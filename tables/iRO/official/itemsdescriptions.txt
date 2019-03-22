@@ -9467,62 +9467,105 @@ If ^008080Burning Bow [1]^000000 upgrade level is +10 or higher,
 Aspd + 1
 #
 1731#
-^808080A frozen bow whose drawstring seems too solid to be pulled.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Bow
-Attack: 100
-Property: Neutral
-Weight: 140
-Weapon Level: 3
-Required Level: 55
-Required Job: Rogue Jobs, Archer Jobs
-^FFFFFF_^000000
-Adds a 10% chance of inflicting ^800000Frozen^000000 on the target when dealing ranged attacks.
-^FFFFFF_^000000
+A frozen bow whose drawstring seems too solid to be pulled.
+Class: ^808080Bow^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^808080140^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Archer Jobs, Rogue Jobs^000000
+Adds a 10% chance of inflicting ^800000Frozen^000000 on the target when performing a long-ranged attack.
+
 ^800080Set Bonus^000000
-^008080Crystal Arrow^000000
 ^008080Frozen Bow [1]^000000
+^008080Crystal Arrow^000000
 Increases long-ranged damage on targets by 25%.
+
+^800080Set Bonus^000000
+^008080Frozen Bow [1]^000000
+^008080Elemental Tights [1]^000000
+^008080Crystal Arrow^000000
+Increases long-ranged damage on targets by an additional 20%.
+Disables the following effects of ^008080Frozen Bow [1]^000000, Adds a 10% chance of inflicting ^800000Frozen^000000 on the target when performing a long-ranged attack.
+If ^008080Frozen Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Frozen Bow [1]^000000
+^008080Elemental Towel [1]^000000
+^008080Crystal Arrow^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+If ^008080Frozen Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
 #
 1732#
-^808080A bow that is perfectly balanced in every aspect.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Bow
-Attack: 105
-Property: Neutral
-Weight: 140
-Weapon Level: 3
-Required Level: 55
-Required Job: Rogue Jobs, Archer Jobs
-^FFFFFF_^000000
+A bow that is perfectly balanced in every aspect.
+Class: ^808080Bow^000000
+Attack: ^808080105^000000
+Property: ^808080Neutral^000000
+Weight: ^808080140^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Archer Jobs, Rogue Jobs^000000
 ^800080Set Bonus^000000
 ^008080Earth Bow [1]^000000
 ^008080Stone Arrow^000000
 Increases long-ranged damage on targets by 25%.
-Adds a 10% chance of inflicting ^800000Stone Curse^000000 on the target when dealing ranged attacks.
+Adds a 10% chance of inflicting ^800000Stone^000000 on the target when performing a long-ranged attack.
+
+^800080Set Bonus^000000
+^008080Elemental Tights [1]^000000
+^008080Earth Bow [1]^000000
+^008080Stone Arrow^000000
+Increases long-ranged damage on targets by an additional 20%.
+Disables the following effects of ^008080Earth Bow [1]^000000, Adds a 10% chance of inflicting ^800000Stone^000000 on the target when performing a long-ranged attack.
+If ^008080Earth Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Elemental Towel [1]^000000
+^008080Earth Bow [1]^000000
+^008080Stone Arrow^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+If ^008080Earth Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
 #
 1733#
-^808080A light bow that has been enhanced with the power of whirlwinds.^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Bow
-Attack: 95
-Property: Neutral
-Weight: 140
-Weapon Level: 3
-Required Level: 55
-Required Job: Rogue Jobs, Archer Jobs
-^FFFFFF_^000000
+A light bow that has been enhanced with the power of whirlwinds.
+Class: ^808080Bow^000000
+Attack: ^80808095^000000
+Property: ^808080Neutral^000000
+Weight: ^808080140^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808055^000000
+Usable By: ^808080Archer Jobs, Rogue Jobs^000000
 ^800080Set Bonus^000000
 ^008080Gust Bow [1]^000000
-^008080Wind Arrow^000000
+^008080Arrow of Wind^000000
 Increases long-ranged damage on targets by 25%.
-Adds a 10% chance of casting ^0000FFLevel 2 Wind Blade^000000 on the target when dealing ranged attacks.
-^FFFFFF_^000000
-If base INT is 40 or higher,
-^0000FFLevel 5 Wind Blade^000000 will be cast instead.
+Adds a 10% chance of casting ^0000FFLevel 5 Wind Blade^000000 on the target when performing a long-ranged attack.
+If the user's base Int is 40 or higher, Adds an additional chance of casting ^0000FFLevel 5 Wind Blade^000000.
+
+^800080Set Bonus^000000
+^008080Elemental Tights [1]^000000
+^008080Gust Bow [1]^000000
+^008080Arrow of Wind^000000
+Increases long-ranged damage on targets by an additional 20%.
+Disables the following effects of ^008080Gust Bow [1]^000000, Adds a 10% chance of casting ^0000FFLevel 5 Wind Blade^000000 on the target when performing a long-ranged attack.
+If ^008080Gust Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Elemental Towel [1]^000000
+^008080Gust Bow [1]^000000
+^008080Arrow of Wind^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+If ^008080Gust Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
 #
 1734#
 A large, powerful bow used by Orc Archers.
@@ -9771,51 +9814,124 @@ Weight: ^8080800.2^000000
 Increases long-ranged damage on targets by 50%.
 #
 1754#
-^808080An arrow made of blue crystal imbued with the power of Water.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 30
-Property: Water
-Weight: 0.2
-^FFFFFF_^000000
+An arrow made of blue crystal imbued with the power of Water.
+Class: ^808080Arrow^000000
+Attack: ^80808030^000000
+Property: ^808080Water^000000
+Weight: ^8080800.2^000000
 ^800080Set Bonus^000000
-^008080Crystal Arrow^000000
 ^008080Frozen Bow [1]^000000
+^008080Crystal Arrow^000000
 Increases long-ranged damage on targets by 25%.
+
+^800080Set Bonus^000000
+^008080Frozen Bow [1]^000000
+^008080Elemental Tights [1]^000000
+^008080Crystal Arrow^000000
+Increases long-ranged damage on targets by an additional 20%.
+Disables the following effects of ^008080Frozen Bow [1]^000000, Adds a 10% chance of inflicting ^800000Frozen^000000 on the target when performing a long-ranged attack.
+If ^008080Frozen Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Frozen Bow [1]^000000
+^008080Elemental Towel [1]^000000
+^008080Crystal Arrow^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+If ^008080Frozen Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Prism Rangers Scarf^000000
+^008080Crystal Arrow^000000
+Reduces damage taken from Water property attacks by 75%.
+
+^800080Set Bonus^000000
+^008080Rainbow Muffler^000000
+^008080Crystal Arrow^000000
+Reduces damage taken from Water property attacks by 75%.
 #
 1755#
-^808080An arrow enchanted by the power of the Wind.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 30
-Property: Wind
-Weight: 0.2
-^FFFFFF_^000000
+An arrow enchanted by the power of the Wind.
+Class: ^808080Arrow^000000
+Attack: ^80808030^000000
+Property: ^808080Wind^000000
+Weight: ^8080800.2^000000
 ^800080Set Bonus^000000
 ^008080Gust Bow [1]^000000
-^008080Wind Arrow^000000
+^008080Arrow of Wind^000000
 Increases long-ranged damage on targets by 25%.
-Adds a 10% chance of casting ^0000FFLevel 2 Wind Blade^000000 on the target when dealing ranged attacks.
-^FFFFFF_^000000
-If base INT is 40 or higher,
-^0000FFLevel 5 Wind Blade^000000 will be cast instead.
+Adds a 10% chance of casting ^0000FFLevel 5 Wind Blade^000000 on the target when performing a long-ranged attack.
+If the user's base Int is 40 or higher, Adds an additional chance of casting ^0000FFLevel 5 Wind Blade^000000.
+
+^800080Set Bonus^000000
+^008080Elemental Tights [1]^000000
+^008080Gust Bow [1]^000000
+^008080Arrow of Wind^000000
+Increases long-ranged damage on targets by an additional 20%.
+Disables the following effects of ^008080Gust Bow [1]^000000, Adds a 10% chance of casting ^0000FFLevel 5 Wind Blade^000000 on the target when performing a physical attack.
+If ^008080Gust Bow^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Elemental Towel [1]^000000
+^008080Gust Bow [1]^000000
+^008080Arrow of Wind^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+If ^008080Gust Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Prism Rangers Scarf^000000
+^008080Arrow of Wind^000000
+Reduces damage taken from Wind property attacks by 75%.
+
+^800080Set Bonus^000000
+^008080Rainbow Muffler^000000
+^008080Arrow of Wind^000000
+Reduces damage taken from Wind property attacks by 75%.
 #
 1756#
-^808080An arrow made of stone imbued with the power of Earth.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 30
-Property: Earth
-Weight: 0.2
-^FFFFFF_^000000
+An arrow made of stone imbued with the power of Earth.
+Class: ^808080Arrow^000000
+Attack: ^80808030^000000
+Property: ^808080Earth^000000
+Weight: ^8080800.2^000000
 ^800080Set Bonus^000000
 ^008080Earth Bow [1]^000000
 ^008080Stone Arrow^000000
 Increases long-ranged damage on targets by 25%.
-Adds a 10% chance of inflicting ^800000Stone Curse^000000 on the target when dealing ranged attacks.
+Adds a 10% chance of inflicting ^800000Stone^000000 on the target when performing a long-ranged attack.
+
+^800080Set Bonus^000000
+^008080Elemental Tights [1]^000000
+^008080Earth Bow [1]^000000
+^008080Stone Arrow^000000
+Increases long-ranged damage on targets by an additional 20%.
+Disables the following effects of ^008080Earth Bow [1]^000000, Adds a 10% chance of inflicting ^800000Stone^000000 on the target when performing a long-ranged attack.
+If ^008080Earth Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Elemental Towel [1]^000000
+^008080Earth Bow [1]^000000
+^008080Stone Arrow^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+If ^008080Earth Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Prism Rangers Scarf^000000
+^008080Stone Arrow^000000
+Reduces damage taken from Earth property attacks by 75%.
+
+^800080Set Bonus^000000
+^008080Rainbow Muffler^000000
+^008080Stone Arrow^000000
+Reduces damage taken from Earth property attacks by 75%.
 #
 1757#
 A shining arrow that doesn't have a discernible shape.
@@ -13727,18 +13843,30 @@ Novice Job
 (Parental Advisory)^000000
 #
 2268#
-A refined, wooden
-pipe used for smoking
-high quality tobacco.
-Reduces damage from
-Insect monsters by 3%.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Jobs: ^777777All except
-except Novice Job
-(Parental Advisory)^000000
+A refined, wooden pipe used for smoking high quality tobacco.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Reduces damage taken from Insect race enemies by 3%.
+
+^800080Set Bonus^000000
+^800080Mechanical Plant Hat [1]^000000
+^800080Pipe^000000
+Reduces the global delay of skills by 5%.
+
+^800080Set Bonus^000000
+^008080Bio Protector^000000
+^008080Pipe^000000
+Reduces the global delay of skills by 5%.
+
+^800080Set Bonus^000000
+^008080Bio Protector^000000
+^008080Mechanical Plant Hat [1]^000000
+^008080Pipe^000000
+Reduces the SP cost of ^0000FFSpore Explosion^000000 by 20.
 #
 2269#
 A delicate flower that is placed in the mouth, you can feel the romance while wearing it and sitting still.
@@ -15553,16 +15681,12 @@ Jobs: ^777777All Jobs^000000
 placeholder
 #
 2432#
-Striped high heeled
-shoes said to have been worn by a wicked witch
-since they enhanced
-her magical powers.
-MDEF + 5
-Class : ^777777Footwear^000000
-Defense : ^77777710^000000
-Weight : ^77777760^000000
-Jobs: ^777777Every Job
-except Novice^000000
+Striped high heeled shoes said to have been worn by a wicked witch since they enhanced her magical powers.
+Class: ^808080Shoes^000000
+Defense: ^80808010^000000
+Weight: ^80808060^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Mdef + 5
 #
 2433#
 Mysterious boots that automatically adjust their size to the wearer's size. They seem alive.
@@ -15776,18 +15900,18 @@ Usable By: ^808080All Jobs except Novice Jobs^000000
 Max HP + 5%
 #
 2450#
-Shoes made out of the stem of the Tree of Life.
-They are comfortable and provide life energy to the wearer.
-HP recovery speed increases by 5%.
-MaxHP +10%
-Recover 30 HP every 10 seconds.
-HP Recovery and Heal skill on the wearer increased by 5%.
-Mdef + 3, Vit + 2
-Class : ^777777Footwear^000000
-Defense : ^77777716^000000
-Weight : ^77777750^000000
-Required Level : ^77777760^000000
-Job : ^777777All Transcendent Job Classes except Novice Classes^000000
+Shoes made out of the stem of the Tree of Life. They are comfortable and provide life energy to the wearer.
+Class: ^808080Shoes^000000
+Defense: ^80808016^000000
+Weight: ^80808050^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Vit + 2
+Max HP + 10%
+HP Recovery + 5%
+Mdef + 3
+Restores 30 HP to the user every 10 seconds.
+Increases the recovery rate of recovery skills and recovery items by 5%.
 #
 2451#
 ^000088Rental Item^000000
@@ -15826,40 +15950,40 @@ Required Level : ^77777720^000000
 Jobs : ^777777All^000000
 #
 2456#
-Boots that are provided only for members of the Eden Group.
-These are designed to fit comfortably throughout long-walks.
-HP recovery +10%.
-SP recovery +2%.
-Cannot be upgraded.
-Class : ^777777Footwear^000000
-Defense : ^77777714^000000
-Weight : ^7777770^000000
-Required Level : ^77777712^000000
-Jobs : ^777777All Jobs^000000
+Boots that are provided only for members of the Eden Group. These are designed to fit comfortably throughout long-walks.
+^FF0000Character Bound^000000
+Class: ^808080Shoes^000000
+Defense: ^80808014^000000
+Weight: ^8080800^000000
+Requires Level: ^8080807^000000
+Usable By: ^808080All Jobs^000000
+HP Recovery + 10%
+SP Recovery + 2%
+This item cannot be upgraded.
 #
 2457#
-Boots that are provided only for members of the Eden Group.
-These are designed to fit comfortably throughout long-walks.
-HP recovery +12%
-SP recovery +4%
-Cannot be upgraded.
-Class : ^777777Footwear^000000
-Defense : ^77777716^000000
-Weight : ^7777770^000000
-Required Level : ^77777726^000000
-Jobs : ^777777All Jobs^000000
+Boots that are provided only for members of the Eden Group. These are designed to fit comfortably throughout long-walks.\
+^FF0000Character Bound^000000
+Class: ^808080Shoes^000000
+Defense: ^80808016^000000
+Weight: ^8080800^000000
+Requires Level: ^80808026^000000
+Usable By: ^808080All Jobs^000000
+HP Recovery + 12%
+SP Recovery + 4%
+This item cannot be upgraded.
 #
 2458#
-Boots that are provided only for members of the Eden Group.
-These are designed to fit comfortably throughout long-walks.
-HP recovery   +14%
-SP recovery +6%
-Cannot be upgraded.
-Class : ^777777Footwear^000000
-Defense : ^77777718^000000
-Weight : ^7777770^000000
-Required Level : ^77777740^000000
-Jobs : ^777777All Jobs^000000
+Boots that are provided only for members of the Eden Group. These are designed to fit comfortably throughout long-walks.
+^FF0000Character Bound^000000
+Class: ^808080Shoes^000000
+Defense: ^80808018^000000
+Weight: ^8080800^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080All Jobs^000000
+HP Recovery + 14%
+SP Recovery + 6%
+This item cannot be upgraded.
 #
 2459#
 MHP + 3%
@@ -15921,13 +16045,14 @@ Jobs : ^777777All^000000
 #
 2465#
 Shoes fit for dancing.
-AGI + 1, Aspd increase. (2% decrease of delay after ATK).
-32 SP decrease of Swing Dance.
-Class : ^777777Shoes^000000
-Defense : ^77777715^000000
-Weight : ^77777730^000000
-Required Level : ^777777105^000000
-Jobs : ^777777Wanderer Only^000000
+Class: ^808080Shoes^000000
+Defense: ^80808015^000000
+Weight: ^80808030^000000
+Requires Level: ^808080105^000000
+Usable By: ^808080Wanderer^000000
+Agi + 1
+Aspd + 2%
+Reduces the SP cost of ^0000FFSwing Dance^000000 by 32.
 #
 2467#
 A pair of golden long boots imbued with the power of the wind.
@@ -16086,27 +16211,39 @@ Required Level : ^777777100^000000
 Job : ^777777Archbishop^000000
 #
 2473#
-Boots that are provided only for members of the Eden Group.
-These are designed to fit comfortably throughout long-walks.
-HP recovery   +28%
-SP recovery +12%
-Vit +1, Agi +1
-Cannot be upgraded.
-Class : ^777777Footwear^000000
-Defense : ^77777720^000000
-Weight : ^7777770^000000
-Required Level : ^77777760^000000
-Jobs : ^777777All Jobs^000000
+Boots that are provided only for members of the Eden Group. These are designed to fit comfortably throughout long-walks.
+^FF0000Character Bound^000000
+Class: ^808080Shoes^000000
+Defense: ^80808020^000000
+Weight: ^8080800^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080All Jobs^000000
+Agi + 1
+Vit + 1
+HP Recovery + 28%
+SP Recovery +  12%
+This item cannot be upgraded.
 #
 2475#
 Greaves made by purifying an Ur Rune.
-MaxSP + 40.
-Reduces MaxHP by 7%. Refine rate reduces the MaxHP reduction by 1% for each level up to +8.
-Class : ^777777Shoes^000000
-Defense : ^77777732^000000
-Weight : ^77777790^000000
-Required Level : ^777777100^000000
-Job : ^777777Rune Knight^000000
+Class: ^808080Shoes^000000
+Defense: ^80808032^000000
+Weight: ^80808090^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight^000000
+Max HP + 1% per upgrade level of the item past the upgrade level of 7.
+Max SP + 40
+
+^800080Set Bonus^000000
+^008080Ur's Plate^000000
+^008080Ur's Greaves [1]^000000
+^008080Ur's Manteau^000000
+^008080Ur's Seal [1]^000000
+Max HP + 14%
+Reduces damage taken from Neutral property attacks by 10%.
+Increases the damage of ^0000FFHundred Spears^000000 by 50%.
+Enables ^0000FFLevel 1 Guard^000000.
+Increases the SP cost of skills by 10%.
 #
 2476#
 Greates made by purifying a Peuz Rune.
@@ -17224,13 +17361,25 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 2574#
-A manteau created by Ur Runestones
-MHP + 2%, Increases tolerance to Neutral property attacks by 10%.
-Class : ^777777Garment^000000
-Defense : ^77777720^000000
-Weight : ^77777760^000000
-Required Level : ^777777100^000000
-Job : ^777777Rune Knight^000000
+A manteau created by Ur Runestones.
+Class: ^808080Garment^000000
+Defense: ^80808020^000000
+Weight: ^80808060^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight^000000
+Max HP + 2%
+Reduces damage taken from Neutral property attacks by 10%.
+
+^800080Set Bonus^000000
+^008080Ur's Plate^000000
+^008080Ur's Greaves [1]^000000
+^008080Ur's Manteau^000000
+^008080Ur's Seal [1]^000000
+Max HP + 14%
+Reduces damage taken from Neutral property attacks by 10%.
+Increases the damage of ^0000FFHundred Spears^000000 by 50%.
+Enables ^0000FFLevel 1 Guard^000000.
+Increases the SP cost of skills by 10%.
 #
 2575#
 A manteau created by refining Peuz Runestones
@@ -20130,14 +20279,23 @@ Reduces the variable casting time of skills by 15%.
 Matk + 2 per upgrade level of ^008080Orleans's Server [1]^000000.
 #
 2883#
-A seal created by refining an Ur Runestone
-MHP + 2%,
-Reduces the SP cost of Spiral Pierce and Hundred Spears by 5.
-Class : ^777777Accessory^000000
-Defense : ^7777774^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Job : ^777777Rune Knight^000000
+A seal created by refining an Ur Runestone.
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight^000000
+Max HP + 2%
+Reduces the SP cost of ^0000FFClashing Spiral^000000 and ^0000FFHundred Spears^000000 by 5.
+^800080Set Bonus^000000
+^008080Ur's Plate^000000
+^008080Ur's Greaves [1]^000000
+^008080Ur's Manteau^000000
+^008080Ur's Seal [1]^000000
+Max HP + 14%
+Reduces damage taken from Neutral property attacks by 10%.
+Increases the damage of ^0000FFHundred Spears^000000 by 50%.
+Enables ^0000FFLevel 1 Guard^000000.
+Increases the SP cost of skills by 10%.
 #
 2884#
 A seal created by refining a Peuz Runestone
@@ -21891,10 +22049,15 @@ Reduces damage taken from Water property attacks by 5%.
 Immune to ^800000Frozen^000000.
 #
 4106#
-Hit +20
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Hit + 20
+
+^800080Set Bonus^000000
+^008080Ancient Mummy Card^000000
+^008080Mummy Card^000000
+Perfect Hit + 20
 #
 4107#
 Class: ^808080Card^000000
@@ -22651,29 +22814,28 @@ Compound on: ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4191#
-Loli Ruri Card.
-Add the chance of auto
-casting level 3 Heal skill
-on the user when receiving
-Physical Damage.
-^99FF66Wizard Card Set^000000
-^00FF00Parasite Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Evil Nymph^000000
-^00FF00Harpy Card^000000
-^00FF00Bloody Butterfly Card^000000
-+500 HP
-+5 MDEF
-+5 DEF
-+10% Damage using
-the Cold Bolt, Fire Bolt,
-Lightning Bolt skills.
-^00FF00Mage Class only Bonuses^000000
-+3% MATK
-15% Faster Cast
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Adds a 5% chance of casting ^0000FFLevel 3 Heal^000000 on the user when receiving a physical attack.
+
+^800080Set Bonus^000000
+^008080Loli Ruri Card^000000
+^008080Parasite Card^000000
+^008080Miyabi Doll Card^000000
+^008080Evil Nymph^000000
+^008080Harpy Card^000000
+^008080Bloody Butterfly Card^000000
+Max HP + 500
+Def + 5
+Mdef + 5
+Increases the damage of
+^0000FFCold Bolt^000000,
+^0000FFFire Bolt^000000, and
+^0000FFLightning Bolt^000000 by 10%.
+^F4AD42Mage Bonus^000000
+Matk + 3%
+Reduces the variable casting time of skills by 15%.
 #
 4192#
 Rotar Zairo Card.
@@ -22836,44 +22998,42 @@ Compound on: ^777777Shield^000000
 Weight : ^7777771^000000
 #
 4208#
-Miyabi Doll Card.
-Max SP +10%.
-Inflict 5% more damage with Frost Diver skill.
-^99FF66Sage Card Set^000000
-^00FF00Yellow Novus Card^000000
-^00FF00Evil Nymph Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Bloody Butterfly Card^000000
-^00FF00Harpy Card^000000
-+3 INT
-+10% Thunderstorm Damage
-+10% Heaven Drive Damage
-^00FF00Sage only Bonuses^000000
-+20% chance to reflect Magic
-20% Faster cast
-Adds a low chance of
-dropping Red or Yellow
-Gemstones when defeating
-monsters.
-^99FF66Wizard Card Set^000000
-^00FF00Loli Ruri Card^000000
-^00FF00Parasite Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Evil Nymph^000000
-^00FF00Harpy Card^000000
-^00FF00Bloody Butterfly Card^000000
-+500 HP
-+5 MDEF
-+5 DEF
-+10% Damage using
-the Cold Bolt, Fire Bolt,
-and Lightning Bolt skills.
-^00FF00Mage Class only Bonuses^000000
-+3% MATK
-15% Faster Cast
-Class : ^777777Card^000000
-Compound on: ^777777Footwear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Max SP + 10%.
+Increases the damage of ^0000FFFrost Diver^000000 by 5%.
+
+^800080Set Bonus^000000
+^008080Loli Ruri Card^000000
+^008080Parasite Card^000000
+^008080Miyabi Doll Card^000000
+^008080Evil Nymph^000000
+^008080Harpy Card^000000
+^008080Bloody Butterfly Card^000000
+Max HP + 500
+Def + 5
+Mdef + 5
+Increases the damage of
+^0000FFCold Bolt^000000,
+^0000FFFire Bolt^000000, and
+^0000FFLightning Bolt^000000 by 10%.
+^F4AD42Mage Bonus^000000
+Matk + 3%
+Reduces the variable casting time of skills by 15%.
+
+^800080Set Bonus^000000
+^008080Yellow Novus Card^000000
+^008080Evil Nymph Card^000000
+^008080Miyabi Doll Card^000000
+^008080Bloody Butterfly Card^000000
+^008080Harpy Card^000000
+Int + 3
+Increases the damage of ^0000FFThunder Storm^000000 and ^0000FFHeaven's Drive^000000 by 10%.
+^F4AD42Sage Bonus^000000
+Adds a 20% chance to reflect magical attacks that do not target the ground back to the attacker.
+Reduces the variable casting time of skills by 20%.
+Adds a chance of gaining ^008080Red Gemstone^000000 or ^008080Yellow Gemstone^000000 when a monster is killed.
 #
 4209#
 Violy Card.
@@ -23425,13 +23585,15 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4248#
-Ancient Mummy Card.
-Add the chance of auto casting level 5 Signum Crucis on an enemy when the user receives Physical Damage.
-If the user is equipped with an item compounded to the Mummy card,
-it adds Seeking Attack (which never miss its target) +20.
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Adds a 5% chance of casting ^0000FFLevel 5 Signum Crucis^000000 on the attacker when receiving a physical attack.
+
+^800080Set Bonus^000000
+^008080Ancient Mummy Card^000000
+^008080Mummy Card^000000
+Perfect Hit + 20
 #
 4249#
 Ancient Worm Card.
@@ -23572,43 +23734,42 @@ Compound on: ^777777Footwear^000000
 Weight : ^7777771^000000
 #
 4258#
-Evil Nymph Card.
-Int +1, Max SP +50.
-^99FF66Sage Card Set^000000
-^00FF00Yellow Novus Card^000000
-^00FF00Evil Nymph Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Bloody Butterfly Card^000000
-^00FF00Harpy Card^000000
-+3 INT
-+10% Thunderstorm Damage
-+10% Heaven Drive Damage
-^00FF00Sage only Bonuses^000000
-+20% chance to reflect Magic
-20% Faster cast
-Adds a low chance of
-dropping Red or Yellow
-Gemstones when defeating
-monsters.
-^99FF66Wizard Card Set^000000
-^00FF00Loli Ruri Card^000000
-^00FF00Parasite Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Evil Nymph^000000
-^00FF00Harpy Card^000000
-^00FF00Bloody Butterfly Card^000000
-+500 HP
-+5 MDEF
-+5 DEF
-+10% Damage using
-the Cold Bolt, Fire Bolt,
-and Lightning Bolt skills.
-^00FF00Mage Class only Bonuses^000000
-+3% MATK
-15% Faster Cast
-Class : ^777777Card^000000
-Compound on: ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Int + 1
+Max SP + 50
+
+^800080Set Bonus^000000
+^008080Loli Ruri Card^000000
+^008080Parasite Card^000000
+^008080Miyabi Doll Card^000000
+^008080Evil Nymph^000000
+^008080Harpy Card^000000
+^008080Bloody Butterfly Card^000000
+Max HP + 500
+Def + 5
+Mdef + 5
+Increases the damage of
+^0000FFCold Bolt^000000,
+^0000FFFire Bolt^000000, and
+^0000FFLightning Bolt^000000 by 10%.
+^F4AD42Mage Bonus^000000
+Matk + 3%
+Reduces the variable casting time of skills by 15%.
+
+^800080Set Bonus^000000
+^008080Yellow Novus Card^000000
+^008080Evil Nymph Card^000000
+^008080Miyabi Doll Card^000000
+^008080Bloody Butterfly Card^000000
+^008080Harpy Card^000000
+Int + 3
+Increases the damage of ^0000FFThunder Storm^000000 and ^0000FFHeaven's Drive^000000 by 10%.
+^F4AD42Sage Bonus^000000
+Adds a 20% chance to reflect magical attacks that do not target the ground back to the attacker.
+Reduces the variable casting time of skills by 20%.
+Adds a chance of gaining ^008080Red Gemstone^000000 or ^008080Yellow Gemstone^000000 when a monster is killed.
 #
 4259#
 Wooden Golem Card.
@@ -24165,28 +24326,29 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4309#
-Parasite Card.
-DEF +1.
-Add 5% more tolerance against Neutral Attack.
-^99FF66Wizard Card Set^000000
-^00FF00Loli Ruri Card^000000
-^00FF00Parasite Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Evil Nymph^000000
-^00FF00Harpy Card^000000
-^00FF00Bloody Butterfly Card^000000
-+500 HP
-+5 MDEF
-+5 DEF
-+10% Damage using
-the Cold Bolt, Fire Bolt,
-and Lightning Bolt skills.
-^00FF00Mage Class only Bonuses^000000
-+3% MATK
-15% Faster Cast
-Class : ^777777Card^000000
-Compound on: ^777777Shield^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Def + 1
+Reduces damage taken from Neutral property attacks by 5%.
+
+^800080Set Bonus^000000
+^008080Loli Ruri Card^000000
+^008080Parasite Card^000000
+^008080Miyabi Doll Card^000000
+^008080Evil Nymph^000000
+^008080Harpy Card^000000
+^008080Bloody Butterfly Card^000000
+Max HP + 500
+Def + 5
+Mdef + 5
+Increases the damage of
+^0000FFCold Bolt^000000,
+^0000FFFire Bolt^000000, and
+^0000FFLightning Bolt^000000 by 10%.
+^F4AD42Mage Bonus^000000
+Matk + 3%
+Reduces the variable casting time of skills by 15%.
 #
 4310#
 Panzer Goblin Card.
@@ -24436,44 +24598,42 @@ Compound on: ^777777Armor^000000
 Weight : ^7777771^000000
 #
 4325#
-Harpy Card.
-Add 15% more tolerance against Neutral Attack.
-Inflict 5% more damage with Napalm Beat skill.
-^99FF66Sage Card Set^000000
-^00FF00Yellow Novus Card^000000
-^00FF00Evil Nymph Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Bloody Butterfly Card^000000
-^00FF00Harpy Card^000000
-+3 INT
-+10% Thunderstorm Damage
-+10% Heaven Drive Damage
-^00FF00Sage only Bonuses^000000
-+20% chance to reflect Magic
-20% Faster Cast
-Adds a low chance of
-dropping Red or Yellow
-Gemstones when defeating
-monsters.
-^99FF66Wizard Card Set^000000
-^00FF00Loli Ruri Card^000000
-^00FF00Parasite Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Evil Nymph^000000
-^00FF00Harpy Card^000000
-^00FF00Bloody Butterfly Card^000000
-+500 HP
-+5 MDEF
-+5 DEF
-+10% Damage using
-the Cold Bolt, Fire Bolt,
-and Lightning Bolt skills.
-^00FF00Mage Class only Bonuses^000000
-+3% MATK
-15% Faster Cast
-Class : ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Reduces damage taken from Neutral property attacks by 15%.
+Increases the damage of ^0000FFNapalm Beat^000000 by 5%.
+
+^800080Set Bonus^000000
+^008080Loli Ruri Card^000000
+^008080Parasite Card^000000
+^008080Miyabi Doll Card^000000
+^008080Evil Nymph^000000
+^008080Harpy Card^000000
+^008080Bloody Butterfly Card^000000
+Max HP + 500
+Def + 5
+Mdef + 5
+Increases the damage of
+^0000FFCold Bolt^000000,
+^0000FFFire Bolt^000000, and
+^0000FFLightning Bolt^000000 by 10%.
+^F4AD42Mage Bonus^000000
+Matk + 3%
+Reduces the variable casting time of skills by 15%.
+
+^800080Set Bonus^000000
+^008080Yellow Novus Card^000000
+^008080Evil Nymph Card^000000
+^008080Miyabi Doll Card^000000
+^008080Bloody Butterfly Card^000000
+^008080Harpy Card^000000
+Int + 3
+Increases the damage of ^0000FFThunder Storm^000000 and ^0000FFHeaven's Drive^000000 by 10%.
+^F4AD42Sage Bonus^000000
+Adds a 20% chance to reflect magical attacks that do not target the ground back to the attacker.
+Reduces the variable casting time of skills by 20%.
+Adds a chance of gaining ^008080Red Gemstone^000000 or ^008080Yellow Gemstone^000000 when a monster is killed.
 #
 4326#
 Sea-Otter Card.
@@ -24484,45 +24644,48 @@ Compound on: ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4327#
-Bloody Butterfly Card.
-Spell casting cannot be interrupted.
-Increase Variable Casting Time by 30%.
-Inflict 5% more damage with Fire Wall skill.
-^99FF66Sage Card Set^000000
-^00FF00Yellow Novus Card^000000
-^00FF00Evil Nymph Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Bloody Butterfly Card^000000
-^00FF00Harpy Card^000000
-+3 INT
-+10% Thunderstorm damage
-+10% Heaven Drive Damage
-^00FF00Sage only Bonuses^000000
-+20% chance to reflect Magic
-20% Faster cast
-Adds a low chance of
-dropping Red or Yellow
-Gemstones when defeating
-monsters.
-^99FF66Wizard Card Set^000000
-^00FF00Loli Ruri Card^000000
-^00FF00Parasite Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Evil Nymph^000000
-^00FF00Harpy Card^000000
-^00FF00Bloody Butterfly Card^000000
-+500 HP
-+5 MDEF
-+5 DEF
-+10% Damage using
-the Cold Bolt, Fire Bolt,
-and Lightning Bolt skills.
-^00FF00Mage Class only Bonuses^000000
-+3% MATK
-15% Faster Cast
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+The users casting cannot be interrupted outside of WoE.
+Increases the variable casting time of skills by 30%.
+Increases the damage of ^0000FFFire Wall^000000 by 5%.
+
+^800080Set Bonus^000000
+^008080Loli Ruri Card^000000
+^008080Parasite Card^000000
+^008080Miyabi Doll Card^000000
+^008080Evil Nymph^000000
+^008080Harpy Card^000000
+^008080Bloody Butterfly Card^000000
+Max HP + 500
+Def + 5
+Mdef + 5
+Increases the damage of
+^0000FFCold Bolt^000000,
+^0000FFFire Bolt^000000, and
+^0000FFLightning Bolt^000000 by 10%.
+^F4AD42Mage Bonus^000000
+Matk + 3%
+Reduces the variable casting time of skills by 15%.
+
+^800080Set Bonus^000000
+^008080Yellow Novus Card^000000
+^008080Evil Nymph Card^000000
+^008080Miyabi Doll Card^000000
+^008080Bloody Butterfly Card^000000
+^008080Harpy Card^000000
+Int + 3
+Increases the damage of ^0000FFThunder Storm^000000 and ^0000FFHeaven's Drive^000000 by 10%.
+^F4AD42Sage Bonus^000000
+Adds a 20% chance to reflect magical attacks that do not target the ground back to the attacker.
+Reduces the variable casting time of skills by 20%.
+Adds a chance of gaining ^008080Red Gemstone^000000 or ^008080Yellow Gemstone^000000 when a monster is killed.
+
+^800080Set Bonus^000000
+^008080New Year Hairpin [1]^000000
+^008080Blood Butterfly Card^000000
+Reduces the variable casting time of skills by 2%, increases the damage of ^0000FFFire Wall^000000 by 5% per upgrade level of ^008080New Year Hairpin^000000.
 #
 4328#
 Yao Jun Card.
@@ -24924,16 +25087,11 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4363#
-Adds a chance
-of autocasting
-Lv. 1 Assumptio
-on the wearer each
-time the wearer
-is physically or
-magically attacked.
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Adds a chance of casting ^0000FFLevel 5 Assumptio^000000 on the user when receiving a physical or a magical attack.
 #
 4364#
 Int +1.
@@ -25159,27 +25317,24 @@ Compound on: ^777777Footwear^000000
 Weight : ^7777771^000000
 #
 4382#
-HP +500. Increases
-HP Recovery by 10%.
-^99FF66Sage Card Set^000000
-^00FF00Yellow Novus Card^000000
-^00FF00Evil Nymph Card^000000
-^00FF00Miyabi Doll Card^000000
-^00FF00Bloody Butterfly Card^000000
-^00FF00Harpy Card^000000
-+3 INT
-+10% Thunderstorm Damage
-+10% Heaven's Drive Damage
-^00FF00Sage only Bonuses^000000
-+20% chance to reflect Magic
-20% Faster Variable Casting Time
-Adds a low chance of
-dropping Red or Yellow
-Gemstones when defeating
-monsters.
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Max HP + 500
+HP Recovery + 10%
+
+^800080Set Bonus^000000
+^008080Yellow Novus Card^000000
+^008080Evil Nymph Card^000000
+^008080Miyabi Doll Card^000000
+^008080Bloody Butterfly Card^000000
+^008080Harpy Card^000000
+Int + 3
+Increases the damage of ^0000FFThunder Storm^000000 and ^0000FFHeaven's Drive^000000 by 10%.
+^F4AD42Sage Bonus^000000
+Adds a 20% chance to reflect magical attacks that do not target the ground back to the attacker.
+Reduces the variable casting time of skills by 20%.
+Adds a chance of gaining ^008080Red Gemstone^000000 or ^008080Yellow Gemstone^000000 when a monster is killed.
 #
 4383#
 Adds a high chance
@@ -60350,13 +60505,21 @@ Defense: ^808080110^000000
 Weight: ^808080300^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080Rune Knight^000000
-MDEF + 10.
-Increases MaxHP per refine level and tolerance to Demi-human, human Player and Neutral property damage by 5%.
+Mdef + 10
+Max HP + 1% per upgrade level of the item.
+Reduces damage taken from Demi-Human and Human Player race enemies by 5%.
+Reduces damage taken from Neutral property attacks by 5%.
 
-^99FF66Ur's armor set^000000
-If worn with Ur's Greave, Manteau, and Seal,
-MaxHP +14%, Increases SP consumption of all skills by 10% and tolerance to Neutral property by 10%.
-Increases damage of Hundred Spears by 50%, enables Crusader skill Guard Level 1
+^800080Set Bonus^000000
+^008080Ur's Plate^000000
+^008080Ur's Greaves [1]^000000
+^008080Ur's Manteau^000000
+^008080Ur's Seal [1]^000000
+Max HP + 14%
+Reduces damage taken from Neutral property attacks by 10%.
+Increases the damage of ^0000FFHundred Spears^000000 by 50%.
+Enables ^0000FFLevel 1 Guard^000000.
+Increases the SP cost of skills by 10%.
 #
 15037#
 Armor created by purifying Peuz runestones.
@@ -62150,28 +62313,28 @@ Increases the recovery rate of recovery skills by an additional 10%.
 Immune to ^800000Freeze^000000.
 #
 15417#
+An armor once belonged to a brave, righteous warrior.
 Class: ^808080Armor^000000
 Defense: ^80808060^000000
+Property: ^808080Neutral^000000
 Weight: ^80808080^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 Atk + 10
 Perfect Hit +5
 
-If refined to + 7 or higher
-Atk + 20
-Perfect Hit + 5
+If upgrade level is +7 or higher,
+Additional Atk + 20
+Additional Perfect Hit + 5
 
-If refined to + 8 or higher
-Atk + 20
-Perfect Hit + 10
-Indestructible
+If upgrade level is +8 or higher,
+Additional Atk + 20
+Additional Perfect Hit + 10
+Indestructible in battle.
 
-If refined to + 9 or higher
-Atk + 30
-Perfect Hit + 10
-
-
+If upgrade level is +9 or higher,
+Additional Atk + 30
+Additional Perfect Hit + 10
 #
 16000#
 This mace's shape is inspired by a Snake, which symbolizes the fountain of knowledge.
@@ -63855,6 +64018,22 @@ Bf Recruiter Hat
 Gf Recruiter Hat
 AFK Hat
 Weight : ^7777771^000000
+#
+16591#
+When opened always receive
+-Bloody Dead Branch x 1
+and one of the following at random
+-Heroic Backpack
+-Fallen Angelwings
+-Leek in Mouth
+-Hat of Girl
+-MVP Basket Ball
+-Trans Scroll Raydric x 10
+-HE Bubble Gum x 4
+-Evil Marching Hat
+-Trans Scroll Marduk x 10
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 16601#
 #
@@ -69667,16 +69846,19 @@ Usable By: ^808080All Jobs^000000
 #
 18508#
 A hat which is very unique and rare, made from the feathers of a legendary bird Garuda.
-Reduces damage from all elements by 5%.
-Luk +5, Hit +10, Reduces casting delay by 5%.
-If refined to +7 or higher, has a chance of getting Mastela Fruit when attacking monsters. Chance to drop increases by 1% for each refine level over 7.
-^ff0000Can be traded, stored, and vended^000000
-Class : ^777777Headgear^000000
-Defense : ^7777774^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Required Level : ^77777730^000000
-Jobs : ^777777All except Novices^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Luk + 5
+Mdef + 3
+Hit + 10
+Reduces the global delay of skills by 5%.
+Reduces damage taken from All property attacks by 5%.
+If upgrade level is +7 or higher,
+Adds a chance of gaining ^008080Mastela Fruit^000000 when a monster is killed; Adds an additional 1% chance per upgrade level of the item.
 #
 18509#
 A special cap with a neon sign above, dedicated to celebrating RWC 2010 in Indonesia.
@@ -72542,12 +72724,15 @@ Perfect Dodge + 2
 #
 18845#
 Kiss of Banshee Master. It could give the powerful force.
-When be attacked, Resistance + 100% 3 seconds in 1% chance.
-MaxSP + 3%.
-Class : ^777777Helmet^000000 Defense : ^7777775^000000
-Location : ^777777bottom ^000000Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080805^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max SP + 3%
+Adds a 1% chance of buffing the user for 3 seconds when receiving a physical or a magical attack;
+Reduces damage taken from Human Player and Doram Player race enemies by 100%.
 #
 18848#
 Nobody knows when this beautiful rose was picked and decorated, but it has still managed to keep its freshness all this time.
@@ -73356,24 +73541,38 @@ Adds a chance of casting ^0000FFLevel 5 Lord of Vermilion^000000 when receiving 
 Vit + 1 per upgrade level of the item past the upgrade level of 7.
 #
 18933#
-^808080A hat decorated with mechanical parts and plants.^000000
-Class: Headgear
-Position: Upper
-Defense: 1
-Weight: 0
-Required Jobs: All Jobs
+A hat decorated with mechanical parts and plants.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808050^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080All Jobs^000000
 Dex + 2
 Mdef + 7
-Increases the damage of Spore Explosion by 5%.
-Increases the damage of Spore Explosion by an additional 5% per 2 upgrade levels of the item.
+Increases the damage of ^0000FFSpore Explosion^000000 by 5%.
+Increases the damage of ^0000FFSpore Explosion^000000 by an additional 5% per 2 upgrade levels of the item.
+
 ^800080Set Bonus^000000
-^800080Mechanical Plant Hat^000000
+^008080Bio Protector^000000
+^008080Mechanical Plant Hat [1]^000000
+Increases the damage of ^0000FFSpore Explosion^000000 by 5% per upgrade level of ^008080Mechanical Plant Hat [1]^000000.
+
+^800080Set Bonus^000000
+^800080Mechanical Plant Hat [1]^000000
 ^800080Pipe^000000
-Reduces the cast delay of skills by 5%.
+Reduces the global delay of skills by 5%.
+
 ^800080Set Bonus^000000
-^800080Mechanical Plant Hat^000000
+^800080Mechanical Plant Hat [1]^000000
 ^800080Tower Keeper Card^000000
 Reduces the variable casting time of skills by 10%.
+
+^800080Set Bonus^000000
+^008080Bio Protector^000000
+^008080Mechanical Plant Hat [1]^000000
+^008080Pipe^000000
+Reduces the SP cost of ^0000FFSpore Explosion^000000 by 20.
 #
 18937#
 A component left by a robotic doll which mourned the death of its owner. It's filled with their memories of love.
@@ -74727,27 +74926,30 @@ Increases physical and magical damage on Faceworm Nest monsters by an additional
 Reduces damage taken from Faceworm Nest monsters by an additional 20%.
 #
 19082#
-^808080Protector used to protect the eyes of a bio scientist. Wear safety glasses when performing tests.^000000
-Class: Headgear
-Position: Middle
-Defense: 3
-Weight: 50
-Required Level: 50
-Required Jobs: All Jobs
+Protector used to protect the eyes of a bio scientist. Wear safety glasses when performing tests.
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080803^000000
+Weight: ^80808050^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 Hit + 10
 Perfect Hit + 5
-Reduces the cast delay of skills by 5%.
+Reduces the variable casting time of skills by 5%.
+
 ^800080Set Bonus^000000
 ^008080Bio Protector^000000
 ^008080Pipe^000000
-Reduces the cast delay of skills by 5%.
+Reduces the global delay of skills by 5%.
+
 ^800080Set Bonus^000000
 ^008080Bio Protector^000000
-^008080Mechanical Plant Hat^000000
-Increases the damage of ^0000FFSpore Explosion^000000 by 5% per upgrade level of ^008080Mechanical Plant Hat^000000.
+^008080Mechanical Plant Hat [1]^000000
+Increases the damage of ^0000FFSpore Explosion^000000 by 5% per upgrade level of ^008080Mechanical Plant Hat [1]^000000.
+
 ^800080Set Bonus^000000
 ^008080Bio Protector^000000
-^008080Mechanical Plant Hat^000000
+^008080Mechanical Plant Hat [1]^000000
 ^008080Pipe^000000
 Reduces the SP cost of ^0000FFSpore Explosion^000000 by 20.
 #
@@ -76405,6 +76607,7 @@ Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
 #
 19460#
+A black veil once said to be worn by a lonesome lady who lost someone dear.
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080802^000000
@@ -76412,18 +76615,19 @@ Weight: ^80808050^000000
 Requires Level: ^808080130^000000
 Usable By: ^808080All Jobs^000000
 Hit + 20
-Increases Physical and Magical Damage on Illusion of Vampire Monsters by 15%
-Reduces Damage taken from Illusion of Vampire Monsters by 15%
+Increases physical and magical damage on [Illusion of Vampire] monsters by 15%.
+Reduces damage taken from [Illusion of Vampire] monsters by 15%.
 
-If refined to +7 or higher
-Increases Physical and Magical Damage on Illusion of Vampire Monsters by an additional 15%
-Reduces Damage taken from Illusion of Vampire Monsters by an additional 15%
+If upgrade level is +7 or higher,
+Increases physical and magical damage on [Illusion of Vampire] monsters by an additional 15%
+Reduces damage taken from [Illusion of Vampire] monsters by an additional 15%
 
-If refined to +9 or higher
-Increases Physical and Magical Damage on Illusion of Vampire Monsters by an additional 20%
-Reduces Damage taken from Illusion of Vampire Monsters by an additional 20%
+If upgrade level is +8 or higher,
+Additional Hit + 30.
 
-
+If upgrade level is +9 or higher,
+Increases physical and magical damage on [Illusion of Vampire] monsters by an additional 20%
+Reduces damage taken from [Illusion of Vampire] monsters by an additional 20%
 #
 19500#
 #
@@ -82366,8 +82570,10 @@ Increases long-ranged damage on targets by 2%.
 If upgrade level is +7 or higher,
 Reduces the SP cost of ^0000FFArrow Storm^000000 by 20.
 Reduces the SP cost of ^0000FFSevere Rainstorm^000000 by 60.
+
 If upgrade level is +8 or higher,
 Increases long-ranged damage on targets by an additional 2%.
+
 If upgrade level is +9 or higher,
 Increases long-ranged damage on targets by an additional 3%.
 
@@ -82390,7 +82596,7 @@ If ^008080Frozen Bow [1]^000000 upgrade level is +10 or higher,
 Aspd + 1
 
 ^800080Set Bonus^000000
-^008080Elemental Towel^000000
+^008080Elemental Towel [1]^000000
 ^008080Earth Bow [1]^000000
 ^008080Stone Arrow^000000
 Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
@@ -83282,7 +83488,7 @@ Reduces damage taken from Human Players and Doram race enemies by 5%.
 
 If ^0000FFFrigg's Song^000000 is at level 5 or higher,
 Aspd + 10%
-Reduces the cooldown of ^0000FFMetallic Sound ^000000 by 0.2 seconds.
+Reduces the cooldown of ^0000FFMetallic Sound^000000 by 0.2 seconds.
 
 For every level of ^0000FFGloomy Shyness^000000 known,
 Matk + 4%
