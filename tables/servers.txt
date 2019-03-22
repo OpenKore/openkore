@@ -139,14 +139,14 @@ ip 128.241.92.195
 port 6800
 master_version 14
 version 18
-serverType iRO_Renewal #it use same iRO:RE  ? / made new servertype for it 
+serverType iRO_Sakray
 serverEncoding Western
-addTableFolders iRO/Renewal;iRO #it use same iRO:RE  ?
-charDeleteDateType 1
+addTableFolders iRO/Sakray;iRO
 charBlockSize 147
-sendCryptKeys 0x389B389B, 0x389B389B, 0x389B389B #it use same iRO:RE  ?
+sendCryptKeys 0x389B389B, 0x389B389B, 0x389B389B
 rankingSystemType 1
 blockingPlayerCancel 1
+charDeleteDateType 1
 
 # Pre-renewal
 # http://playragnarok.com
