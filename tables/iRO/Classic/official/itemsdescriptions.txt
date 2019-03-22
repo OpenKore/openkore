@@ -40283,18 +40283,22 @@ Jobs : ^777777All^000000
 #
 16548#
 Contains one Ephemeral Brysingamen.
+Note that the item within is a rental and has an expiration date!
 Weight : ^7777771^000000
 #
 16549#
 Contains one Ephemeral Sleipnir.
+Note that the item within is a rental and has an expiration date!
 Weight : ^7777771^000000
 #
 16550#
 Contains one Ephemeral Mjolnir.
+Note that the item within is a rental and has an expiration date!
 Weight : ^7777771^000000
 #
 16551#
 Contains one Ephemeral Megingiorde.
+Note that the item within is a rental and has an expiration date!
 Weight : ^7777771^000000
 #
 5738#
@@ -72110,6 +72114,20 @@ Return this certificate and the following items to Frank, the owner of the Laure
 Shadowy rumors say the following about this certificate:
 It is Tier 3
 It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20083#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Party Recruiter Hat!
+100 Pieces of Black Cloth
+50 Ectoplasm
+25 Oil Paper
+5 Slick Paper
+1 Party Recruiter Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
 #
