@@ -6589,7 +6589,7 @@ sub cmdRodex {
 		
 	} elsif ($arg1 eq 'send') {
 		if (!defined $rodexList) {
-			error T("Your rodex mail box is closed\n");
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (!defined $rodexWrite) {
@@ -6638,7 +6638,7 @@ sub cmdRodex {
 		
 	} elsif ($arg1 eq 'getzeny') {
 		if (!defined $rodexList) {
-			error T("Your rodex mail box is closed\n");
+			error T("Your rodex mail box is closed.\n");
 			return;
 			
 		} elsif (defined $rodexWrite) {
