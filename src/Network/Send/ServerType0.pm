@@ -263,6 +263,7 @@ sub new {
 		'08C9' => ['request_cashitems'],#2
 		'08D7' => ['bg_queue_request', 'v Z24', [qw(type bg_name)]],
 		'08DA' => ['bg_queue_cancel_request', 'Z24', [qw(bg_name)]],
+		'08E0' => ['enter_bgqueue_from_lobby', 'V', [qw(result bg_name lobby_name)]],
 		'090A' => ['bg_queue_enter_rank', 'Z24', [qw(bg_name)]],
 		'090E' => ['bg_queue_exit'],
 		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
@@ -517,5 +518,16 @@ sub sendBattlegroundExit {
 		switch => 'bg_queue_exit'
 	}));
 }
+
+sub sendEnterBgfromLobby {
+	my ($self, $result, $bg_name, $bg_lobby) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'enter_bgqueue_from_lobby',
+		result => $result,
+		bg_name => $bg_name,
+		lobby_name => $bg_lobby
+	}));
+}	
 
 1;

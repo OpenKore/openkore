@@ -537,6 +537,8 @@ sub new {
 		'08D8' => ['enter_bgqueue_result', 'C Z24', [qw(result bg_name)]],
 		'08D9' => ['enter_bgqueue_notify_apply', 'Z24 V', [qw(bg_name queue_number)]],
 		'08DB' => ['enter_bgqueue_cancel', 'C Z24', [qw(result bg_name)]],
+		'08DF' => ['enter_bgqueue_notify_lobby', 'Z24 Z24', [qw(bg_name lobby_name)]],
+		'08E1' => ['ZC_REPLY_ACK_LOBBY_ADMISSION', 'C Z24 Z24', [qw(result bg_name lobby_name)]], #TODO
 		'08FF' => ['actor_status_active', 'a4 v V4', [qw(ID type tick unknown1 unknown2 unknown3)]],
 		'0900' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
@@ -2643,6 +2645,13 @@ sub enter_bgqueue_cancel {
 		message TF("You can cancel %s.",bytesToString($args->{bg_name})),"info";			
 	}
 
+}
+
+sub enter_bgqueue_notify_lobby {
+	my($self, $args) = @_;
+	$bg_name = $args->{bg_name};
+	$bg_lobby = $args->{lobby_name};
+	message TF("[%s] %s is ready to be joined.",bytesToString($bg_lobby), bytesToString($bg_name)),"info";
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;
