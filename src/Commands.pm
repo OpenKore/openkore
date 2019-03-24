@@ -351,8 +351,10 @@ sub register {
 
 	foreach my $cmd (@_) {
 		my $name = $cmd->[0];
+		my $desc = (ref($cmd->[1]) eq 'ARRAY') ? $cmd->[1] : [$cmd->[1]];
+		
 		my %item = (
-			desc => $cmd->[1],
+			desc => $desc,
 			callback => $cmd->[2]
 		);
 		$customCommands{$name} = \%item;
