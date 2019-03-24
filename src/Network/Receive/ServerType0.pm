@@ -534,6 +534,9 @@ sub new {
 		'08CD' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]],
+		'08D8' => ['enter_bgqueue_result', 'C Z24', [qw(result bg_name)]],
+		'08D9' => ['enter_bgqueue_notify_apply', 'Z24 V', [qw(bg_name queue_number)]],
+		'08DB' => ['enter_bgqueue_cancel', 'C Z24', [qw(result bg_name)]],
 		'08FF' => ['actor_status_active', 'a4 v V4', [qw(ID type tick unknown1 unknown2 unknown3)]],
 		'0900' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'0901' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
@@ -2586,6 +2589,60 @@ sub monster_hp_info_tiny {
 sub move_interrupt {
 	my ($self, $args) = @_;
 	debug "Movement interrupted by casting a skill/fleeing a mob/etc\n";
+}
+
+use constant {
+	BG_APPLY_NONE => 0x0,
+	BG_APPLY_ACCEPT => 0x1,
+	BG_APPLY_QUEUE_FINISHED => 0x2,
+	BG_APPLY_INVALID_NAME => 0x3,
+	BG_APPLY_INVALID_APP => 0x4,
+	BG_APPLY_PLAYER_COUNT => 0x5,
+	BG_APPLY_PLAYER_LEVEL => 0x6,
+	BG_APPLY_DUPLICATE => 0x7,
+	BG_APPLY_RECONNECT => 0x8,
+	BG_APPLY_PARTYGUILD_LEADER => 0x9,
+	BG_APPLY_PLAYER_CLASS => 0xa,
+};
+sub enter_bgqueue_result {
+	my($self, $args) = @_;
+	if ($args->{result} == BG_APPLY_ACCEPT) {
+		message TF("Accept to Join Battleground Queue."),"info";
+	} elsif ($args->{result} == BG_APPLY_QUEUE_FINISHED) {
+		message TF("Battleground Queue Finished."),"info";
+	} elsif ($args->{result} == BG_APPLY_INVALID_NAME) {
+		message TF("Invalid name of Battleground Queue."),"info";
+	} elsif ($args->{result} == BG_APPLY_INVALID_APP ) {	
+		message TF("Invalid application of Battleground Queue."),"info";
+	} elsif ($args->{result} == BG_APPLY_PLAYER_COUNT) {	
+		message TF("Too many players in party/guild for join Battleground Queue."),"info";
+	} elsif ($args->{result} == BG_APPLY_PLAYER_LEVEL) {
+		message TF("Level too low or high for join Battleground Queue."),"info";
+	} elsif ($args->{result} == BG_APPLY_DUPLICATE) {
+		message TF("Duplicate application of Battleground Queue."),"info";	
+	} elsif ($args->{result} == BG_APPLY_RECONNECT) {
+		message TF("Reconnect then apply Battleground Queue."),"info";
+	} elsif ($args->{result} == BG_APPLY_PARTYGUILD_LEADER) {		
+		message TF("Only party/guild leader can apply Battleground Queue."),"info";
+	} elsif ($args->{result} == BG_APPLY_PLAYER_CLASS) {
+		message TF("Your class can't apply Battleground Queue."),"info";
+	}
+}
+
+sub enter_bgqueue_notify_apply {
+	my($self, $args) = @_;
+	message TF("Battleground Queue: %s has %s players.",bytesToString($args->{bg_name}), $args->{queue_number}),"info";
+
+}
+
+sub enter_bgqueue_cancel {
+	my($self, $args) = @_;
+	if ($args->{result}) {
+		message TF("You cannot cancel %s.",bytesToString($args->{bg_name})),"info";	
+	} else {
+		message TF("You can cancel %s.",bytesToString($args->{bg_name})),"info";			
+	}
+
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;
