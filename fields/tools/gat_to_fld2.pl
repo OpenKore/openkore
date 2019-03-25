@@ -12,15 +12,13 @@ use constant {
 };
 
 # conversion (ex. $TILE_TYPE[0] = TILE_WALK = 1), (ex. $TILE_TYPE[1] = TILE_NOWALK = 0)
-my @TILE_TYPE = (
-	TILE_WALK,					# 0) Walkable
-	TILE_NOWALK,				# 1) Non-walkable
-	TILE_WATER,					# 2) Non-walkable water (not snipable)
-	TILE_WALK|TILE_WATER,		# 3) Walkable water
-	TILE_WATER|TILE_SNIPE,		# 4) Non-walkable water (snipable)
-	TILE_CLIFF|TILE_SNIPE,		# 5) Cliff (snipable)
-	TILE_CLIFF					# 6) Cliff (not snipable)
-);
+my @TILE_TYPE = (	TILE_WALK,				# 0) Walkable
+					TILE_NOWALK,			# 1) Non-walkable
+					TILE_WATER,				# 2) Non-walkable water
+					TILE_WALK|TILE_WATER,	# 3) Walkable water
+					TILE_WATER|TILE_SNIPE,	# 4) Non-walkable water (snipable)
+					TILE_CLIFF|TILE_SNIPE,	# 5) Cliff (snipable)
+					TILE_CLIFF);			# 6) Cliff (not snipable)
 
 my $i = 0;
 foreach my $name (sort(listMaps("."))) {
@@ -81,29 +79,38 @@ sub gat_to_fld2 {
 	binmode $in;
 	binmode $out;
 
-	# Read gat header. Yes we're assuming that maps are never larger than 2^16-1 blocks.
+	# Read header. Yes we're assuming that maps are never
+	# larger than 2^16-1 blocks.
 	read($in, $data, 14);
 	my ($width, $height) = unpack("V2", substr($data, 6, 8));
-	
 	my $size = $width * $height;
+
 	# when y = height, we variate x from 0 to width
 	# thus, we variate block offset from size - width to size
 	my $max_Y = $size - $width;
-	
+
+	#print $out pack("v", $index);
 	print $out pack ("v2", $width, $height);
-	
+
+	my ($y, $x) = (1, 1);
 	while (read($in, $data, 20)) {
+
 		my ($a, $b, $c, $d) = unpack("f4", $data);
 		my $type = unpack("C", substr($data, 16, 1));
 		my $averageDepth = ($a + $b + $c + $d) / 4;
-		
+
 		# warn us for unknown/new block types
 		if ($type > $#TILE_TYPE) {
-			#print "An unknown blocktype ($type) was found, please report this to the OpenKore devs.\n";
-			#exit 1;
-			#Treat as unwalkable
-			print $out pack("C", $TILE_TYPE[1]);
-			
+			print "An unknown blocktype($type) was found, please report this to the OpenKore devs.\n";
+			exit 1;
+		# make upper blocks unwalkable
+		} elsif ($y > $max_Y ) {
+			print $out pack("C", TILE_NOWALK);
+		# make rightern blocks unwalkable
+		} elsif ($y == $x * $width) {
+			$x++;
+			print $out pack("C", TILE_NOWALK);
+
 		# In contrast to what the elsif-condition tells you,
 		# we're actually checking whether this block
 		# is below the map's water level.
@@ -115,6 +122,7 @@ sub gat_to_fld2 {
 		} else {
 			print $out pack("C", $TILE_TYPE[$type]);
 		}
+	$y++;
 	}
 
 	close $in;
