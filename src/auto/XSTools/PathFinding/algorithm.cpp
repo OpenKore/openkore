@@ -10,13 +10,10 @@ extern "C" {
 
 #define DIAGONAL 14
 #define ORTOGONAL 10
+
 #define NONE 0
 #define OPEN 1
 #define CLOSED 2
-#define PATH 3
-#define LCHILD(currentIndex) 2 * currentIndex + 1
-#define RCHILD(currentIndex) 2 * currentIndex + 2
-#define PARENT(currentIndex) (int)floor((currentIndex - 1) / 2)
 
 #ifdef WIN32
 	#include <windows.h>
@@ -75,8 +72,7 @@ openListAdd (CalcPath_session *session, Node* currentNode)
 	// Index will be 1 + last index in openList, which is also its size
 	// Save in currentNode its index in openList
     currentNode->openListIndex = session->openListSize;
-	// Change here
-	//currentNode->isInOpenList = 1;
+	currentNode->whichlist = OPEN;
 	
 	// Defines openList[index] to currentNode adress
     session->openList[currentNode->openListIndex] = currentNode->nodeAdress;
@@ -170,7 +166,7 @@ openListGetLowest (CalcPath_session *session)
 	
 	// Saves in lowestNode that it is no longer in openList
 	// Change here
-	//lowestNode->isInOpenList = 0;
+	lowestNode->whichlist = CLOSED;
 	lowestNode->openListIndex = 0;
 	
 	long smallerChildIndex;
@@ -192,7 +188,7 @@ openListGetLowest (CalcPath_session *session)
 			rightChildNode = &session->currentMap[session->openList[rightChildIndex]];
 			leftChildNode = &session->currentMap[session->openList[leftChildIndex]];
 			
-			if (rightChildNode->key1 > leftChildNode->key1 || (rightChildNode->key1 == leftChildNode->key1 && rightChildNode->key2 > leftChildNode->key2)) {
+			if (rightChildNode->f > leftChildNode->f) {
 				smallerChildIndex = leftChildIndex;
 			} else {
 				smallerChildIndex = rightChildIndex;
@@ -205,7 +201,7 @@ openListGetLowest (CalcPath_session *session)
 		
 		smallerChildNode = &session->currentMap[session->openList[smallerChildIndex]];
 		
-		if (movedNode->key1 > smallerChildNode->key1 || (movedNode->key1 == smallerChildNode->key1 && movedNode->key2 > smallerChildNode->key2)) {
+		if (movedNode->f > smallerChildNode->f) {
 			
 			// Changes the node adress of openList[movedNode->openListIndex] (which is 'movedNode') to that of openList[smallerChildIndex] (which is the current child of 'movedNode')
 			session->openList[movedNode->openListIndex] = smallerChildNode->nodeAdress;
@@ -251,6 +247,7 @@ CalcPath_pathStep (CalcPath_session *session)
 	}
 	
 	Node* start = &session->currentMap[((session->startY * session->width) + session->startX)];
+	Node* goal = &session->currentMap[((session->endY * session->width) + session->endX)];
 	
 	if (!session->run) {
 		session->run = 1;
@@ -273,8 +270,6 @@ CalcPath_pathStep (CalcPath_session *session)
 	
 	unsigned int g_score = 0;
 	
-	int next_nodeAdress = 0;
-	
 	unsigned long timeout = (unsigned long) GetTickCount();
 	int loop = 0;
 	
@@ -292,21 +287,12 @@ CalcPath_pathStep (CalcPath_session *session)
 				loop = 0;
 		}
 		
-        //get lowest F score member of openlist and delete it from it
-		if (next_nodeAdress > 0) {
-			currentNode = &session->currentMap[next_nodeAdress];
-			next_nodeAdress = 0;
-		} else {
-			currentNode = openListGetLowest (session);
-		}
-
-        //add currentNode to closedList
-        currentNode->whichlist = CLOSED;
+		currentNode = openListGetLowest (session);
 
 		//if current is the goal, return the path.
 		if (currentNode->x == session->endX && currentNode->y == session->endY) {
             //return path
-            reconstruct_path(session, currentNode);
+            reconstruct_path(session, goal, start);
 			return 1;
 		}
 		
@@ -332,10 +318,12 @@ CalcPath_pathStep (CalcPath_session *session)
 				
 				neighborNode = &session->currentMap[neighbor_adress];
 				
-				if (neighborNode->whichlist == CLOSED) { continue; }
+				if (neighborNode->whichlist == CLOSED) {
+					continue;
+				}
 				
 				if (i != 0 && j != 0) {
-				   if (session->map[(currentNode->y * session->width) + neighbor_x] == 0 || session->map[(neighbor_y * session->width) + currentNode->x] == 0) {
+				   if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == 0 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == 0) {
 						continue;
 					}
 					distanceFromCurrent = DIAGONAL;
@@ -343,7 +331,7 @@ CalcPath_pathStep (CalcPath_session *session)
 					distanceFromCurrent = ORTOGONAL;
 				}
 				if (session->avoidWalls) {
-					distanceFromCurrent += session->map[neighbor_adress];
+					distanceFromCurrent += session->map_base_weight[neighbor_adress];
 				}
 				
 				g_score = currentNode->g + distanceFromCurrent;
@@ -355,14 +343,7 @@ CalcPath_pathStep (CalcPath_session *session)
 					neighborNode->g = g_score;
 					neighborNode->h = heuristic_cost_estimate(neighborNode->x, neighborNode->y, session->endX, session->endY, session->avoidWalls);
 					neighborNode->f = neighborNode->g + neighborNode->h;
-					if (next_nodeAdress == 0 && neighborNode->f == currentNode->f) {
-						neighborNode->whichlist = CLOSED;
-						next_nodeAdress = neighbor_adress;
-					} else {
-						neighborNode->whichlist = OPEN;
-						openListAdd (session, neighborNode);
-						session->openListSize++;
-					}
+					openListAdd (session, neighborNode);
 				} else {
 					if (g_score < neighborNode->g) {
 						neighborNode->predecessor = currentNode->nodeAdress;
@@ -380,24 +361,22 @@ CalcPath_pathStep (CalcPath_session *session)
 // Create a new pathfinding session, or reset an existing session.
 // Resetting is preferred over destroying and creating, because it saves
 // unnecessary memory allocations, thus improving performance.
-CalcPath_session *
+void
 CalcPath_init (CalcPath_session *session)
 {
 	/* Allocate enough memory in currentMap to hold all cells in the map */
 	session->currentMap = (Node*) calloc(session->height * session->width, sizeof(Node));
 	
 	Node* goal = &session->currentMap[((session->endY * session->width) + session->endX)];
-	goal->x = endX;
-	goal->y = endY;
+	goal->x = session->endX;
+	goal->y = session->endY;
 	
 	Node* start = &session->currentMap[(session->startY * session->width) + session->startX];
-	start->x = startX;
-	start->y = startY;
+	start->x = session->startX;
+	start->y = session->startY;
 	start->g = 0;
 	
 	session->initialized = 1;
-	
-	return session;
 }
 
 void
