@@ -6,8 +6,8 @@ extern "C" {
 #endif /* __cplusplus */
 
 typedef struct {
-    int x;
-    int y;
+	int x;
+	int y;
 	
 	unsigned long nodeAdress;
 	
