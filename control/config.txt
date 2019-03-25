@@ -69,7 +69,7 @@ attackAuto_notInTown 1
 attackDistance 1.5
 attackDistanceAuto 0
 attackMaxDistance 2.5
-attackMaxRouteDistance 100
+attackMaxRouteDistance 50
 attackMaxRouteTime 4
 attackMinPlayerDistance 2
 attackMinPortalDistance 4
@@ -202,7 +202,7 @@ route_randomWalk_maxRouteTime 75
 route_maxWarpFee
 route_maxNpcTries 5
 route_teleport 0
-route_teleport_minDistance 150
+route_teleport_minDistance 75
 route_teleport_maxTries 8
 route_teleport_notInMaps
 route_step 7
@@ -700,7 +700,7 @@ useSelf_item {
 buyAuto {
 	npc
 	standpoint
-	distance 5
+	distance 3
 	price
 	minAmount 2
 	maxAmount 3
@@ -713,13 +713,13 @@ buyAuto {
 sellAuto 0
 sellAuto_npc
 sellAuto_standpoint
-sellAuto_distance 5
+sellAuto_distance 3
 sellAuto_npc_steps s
 
 storageAuto 0
 storageAuto_npc
 storageAuto_standpoint
-storageAuto_distance 5
+storageAuto_distance 3
 storageAuto_npc_type 1
 storageAuto_npc_steps
 storageAuto_password

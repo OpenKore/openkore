@@ -29,7 +29,7 @@ use Log qw(message debug warning error);
 use Network;
 use Plugins;
 use Misc qw(useTeleport portalExists);
-use Utils qw(timeOut distance existsInList);
+use Utils qw(timeOut blockDistance existsInList);
 use Utils::PathFinding;
 use Utils::Exceptions;
 
@@ -193,7 +193,7 @@ sub iterate {
 				}
 			}
 
-		} elsif (distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= $dist) {
+		} elsif (blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= $dist) {
 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
 			if (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
 				# We have enough money for this service.
@@ -241,7 +241,7 @@ sub iterate {
 		my $distFromGoal = $self->{pyDistFromGoal}
 			? $self->{pyDistFromGoal}
 			: ($self->{distFromGoal} ? $self->{distFromGoal} : 0);
-		if ( $self->{mapSolution}[0]{routed} || $distFromGoal + 2 > distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos})) {
+		if ( $self->{mapSolution}[0]{routed} || $distFromGoal + 2 > blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos})) {
 			# We need to specify +2 because sometimes the exact spot is occupied by someone else
 			shift @{$self->{mapSolution}};
 
@@ -299,7 +299,7 @@ sub iterate {
 					my $closest_portal_binID;
 					my $closest_portal_dist;
 					for my $portal (@$portalsList) {
-						my $dist = distance($self->{actor}{pos_to}, $portal->{pos});
+						my $dist = blockDistance($self->{actor}{pos_to}, $portal->{pos});
 						next if (exists $self->{guess_skip} && exists $self->{guess_skip}{$portal->{binID}});
 						next if (defined $closest_portal_dist && $closest_portal_dist < $dist);
 						next if (portalExists($field->baseName, $portal->{pos})); # Only guess unknown portals
@@ -342,7 +342,7 @@ sub iterate {
 				}
 			}
 			
-		} elsif ( $config{route_removeMissingPortals} && distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 ) {
+		} elsif ( $config{route_removeMissingPortals} && blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) == 0 ) {
 				if (!exists $timeout{ai_portal_give_up}{time}) {
 					$timeout{ai_portal_give_up}{time} = time;
 					$timeout{ai_portal_give_up}{timeout} = $timeout{ai_portal_give_up}{timeout} || 10;
@@ -360,7 +360,7 @@ sub iterate {
 				
 				$self->{missing_portal} = 1;
 
-		} elsif ( distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) < 2 ) {
+		} elsif ( blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) < 2 ) {
 			
 			# Portal is within 'Enter Distance'
 			$timeout{ai_portal_wait}{timeout} = $timeout{ai_portal_wait}{timeout} || 0.5;

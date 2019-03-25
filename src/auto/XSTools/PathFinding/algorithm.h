@@ -5,58 +5,68 @@
 extern "C" {
 #endif /* __cplusplus */
 
-typedef struct Nodes{
-    unsigned short x;
-    unsigned short y;
-    unsigned short parentX;
-    unsigned short parentY;
-	unsigned int whichlist : 2;
-	unsigned int openListIndex;
-	unsigned int g;
-	unsigned short h;
-	unsigned int f;
-} Node;
-
 typedef struct {
     int x;
     int y;
-    int f;
-} TypeList;
+	
+	unsigned long nodeAdress;
+	
+	unsigned int predecessor;
+	
+	unsigned int whichlist;
+	long openListIndex;
+	
+	unsigned long g;
+	unsigned long h;
+	unsigned long f;
+} Node;
 
 typedef struct {
-	int avoidWalls;
+	bool avoidWalls;
+	
 	unsigned long time_max;
-	int solution_size;
-	unsigned int width;
-	unsigned int height;
+	
+	int width;
+	int height;
+	
 	int startX;
 	int startY;
 	int endX;
 	int endY;
+	
+	int solution_size;
 	int initialized;
 	int run;
+	
+	long openListSize;
+	
 	int size;
-	int openListSize;
-	TypeList* openList;
-	const char *map;
+	
+	const char *map_base_weight;
 	Node *currentMap;
+	
+	unsigned long *openList;
 } CalcPath_session;
 
 CalcPath_session *CalcPath_new ();
 
 int heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY, int avoidWalls);
 
-void openListAdd (CalcPath_session *session, Node* infoAdress);
+void openListAdd (CalcPath_session *session, Node* node);
 
-void reajustOpenListItem (CalcPath_session *session, Node* infoAdress);
+void reajustOpenListItem (CalcPath_session *session, Node* node);
 
 Node* openListGetLowest (CalcPath_session *session);
 
-void reconstruct_path(CalcPath_session *session, Node* currentNode);
+void reconstruct_path(CalcPath_session *session, Node* goal, Node* start);
 
 int CalcPath_pathStep (CalcPath_session *session);
  
-CalcPath_session *CalcPath_init (CalcPath_session *session);
+void CalcPath_init (CalcPath_session *session);
+
+void free_currentMap (CalcPath_session *session);
+
+void free_openList (CalcPath_session *session);
 
 void CalcPath_destroy (CalcPath_session *session);
 

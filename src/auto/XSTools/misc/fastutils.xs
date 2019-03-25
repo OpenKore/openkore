@@ -212,7 +212,7 @@ makeDistMap(rawMap, width, height)
 INIT:
 	STRLEN len;
 	int i, x, y;
-	int dist, val;
+	int dist_current, val;
 	unsigned char *c_rawMap, *data;
 	bool done;
 CODE:
@@ -249,41 +249,51 @@ CODE:
 		for (y = 0; y < height; y++) {
 			for (x = 0; x < width; x++) {
 				i = y * width + x; // i: cell to examine
-				dist = data[i]; // dist: initial dist of i from walkable/nonwalkable check above
-				if (x != width - 1) { // ignore the width-1 because this is marked walkable in .gat but its not
-					int ir = y * width + x + 1; // ir: cell to the right
-					int distr = (int) data[ir]; // distr: initial dist of ir from walkable/nonwalkable check above
-					int comp = dist - distr; // comp: 
-					if (comp > 1) { // dist > distr: real dist is distr + 1
-						val = distr + 1;
-						if (val > 255)
+				
+				if (data[i] > 0 && (x == 0 || y == 0 || x == width - 1 || y == height - 1)) {
+					data[i] = 1;
+				}
+				
+				dist_current = data[i]; // dist_current: initial dist of i from walkable/nonwalkable check above
+				
+				if (x != width - 1) {
+					int east_cell = y * width + x + 1; // ir: cell to the right
+					int dist_east_cell = (int) data[east_cell]; // dist_east_cell: initial dist of ir from walkable/nonwalkable check above
+					int delta_dist = dist_current - dist_east_cell; // delta_dist: 
+					if (delta_dist > 1) { // dist_current > dist_east_cell: real dist_current is dist_east_cell + 1
+						val = dist_east_cell + 1;
+						if (val > 255) {
 							val = 255;
+						}
 						data[i] = val;
 						done = false;
-					} else if (comp < -1) { // dist < distr: real distr is dist + 1
-						val = dist + 1;
-						if (val > 255)
+					} else if (delta_dist < -1) { // dist_current < dist_east_cell: real dist_east_cell is dist_current + 1
+						val = dist_current + 1;
+						if (val > 255) {
 							val = 255;
-						data[ir] = val;
+						}
+						data[east_cell] = val;
 						done = false;
 					}
 				}
 
 				if (y != height - 1) {
-					int iu = (y + 1) * width + x;
-					int distu = (int) data[iu];
-					int comp = dist - distu;
-					if (comp > 1) {
-						int val = distu + 1;
-						if (val > 255)
+					int north_cell = (y + 1) * width + x;
+					int dist_north_cell = (int) data[north_cell];
+					int delta_dist = dist_current - dist_north_cell;
+					if (delta_dist > 1) {
+						int val = dist_north_cell + 1;
+						if (val > 255) {
 							val = 255;
+						}
 						data[i] = (char) val;
 						done = false;
-					} else if (comp < -1) {
-						int val = dist + 1;
-						if (val > 255)
+					} else if (delta_dist < -1) {
+						int val = dist_current + 1;
+						if (val > 255) {
 							val = 255;
-						data[iu] = (char) val;
+						}
+						data[north_cell] = (char) val;
 						done = true;
 					}
 				}
@@ -294,40 +304,46 @@ CODE:
 		for (y = height - 1; y >= 0; y--) {
 			for (x = width - 1; x >= 0 ; x--) {
 				i = y * width + x;
-				dist = data[i];
+				dist_current = data[i];
+				
 				if (x != 0) {
-					int il = y * width + x - 1;
-					int distl = data[il];
-					int comp = dist - distl;
-					if (comp > 1) {
-						val = distl + 1;
-						if (val > 255)
+					int west_cell = y * width + x - 1;
+					int dist_west_cell = data[west_cell];
+					int delta_dist = dist_current - dist_west_cell;
+					if (delta_dist > 1) {
+						val = dist_west_cell + 1;
+						if (val > 255) {
 							val = 255;
+						}
 						data[i] = val;
 						done = false;
-					} else if (comp < -1) {
-						val = dist + 1;
-						if (val > 255)
+					} else if (delta_dist < -1) {
+						val = dist_current + 1;
+						if (val > 255) {
 							val = 255;
-						data[il] = val;
+						}
+						data[west_cell] = val;
 						done = false;
 					}
 				}
+				
 				if (y != 0) {
-					int id = (y - 1) * width + x;
-					int distd = data[id];
-					int comp = dist - distd;
-					if (comp > 1) {
-						val = distd + 1;
-						if (val > 255)
+					int south_cell = (y - 1) * width + x;
+					int dist_south_cell = data[south_cell];
+					int delta_dist = dist_current - dist_south_cell;
+					if (delta_dist > 1) {
+						val = dist_south_cell + 1;
+						if (val > 255) {
 							val = 255;
+						}
 						data[i] = val;
 						done = false;
-					} else if (comp < -1) {
-						val = dist + 1;
-						if (val > 255)
+					} else if (delta_dist < -1) {
+						val = dist_current + 1;
+						if (val > 255) {
 							val = 255;
-						data[id] = val;
+						}
+						data[south_cell] = val;
 						done = false;
 					}
 				}
@@ -348,7 +364,7 @@ makeWeightMap(distMap, width, height)
 INIT:
 	STRLEN len;
 	int i, x, y;
-	int dist, val;
+	int dist;
 	unsigned char *c_weightMap, *data;
 CODE:
 	if (!SvOK (distMap))

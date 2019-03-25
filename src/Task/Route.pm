@@ -34,7 +34,7 @@ use Network;
 use Field;
 use Translation qw(T TF);
 use Misc;
-use Utils qw(timeOut distance calcPosition);
+use Utils qw(timeOut distance blockDistance calcPosition);
 use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
@@ -319,7 +319,7 @@ sub iterate {
 				# If it is, then we've moved to an unexpected place. This could be caused by auto-attack,
 				# for example.
 				my %nextPos = (x => $self->{new_x}, y => $self->{new_y});
-				if (distance(\%nextPos, $pos) > ($config{$self->{actor}{configPrefix}.'route_step'} * 2)) {
+				if (blockDistance(\%nextPos, $pos) > 10) {
 					debug "Route $self->{actor} - movement interrupted: reset route\n", "route";
 					$self->{stage} = '';
 

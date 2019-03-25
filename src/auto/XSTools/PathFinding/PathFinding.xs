@@ -6,23 +6,8 @@
 #include "algorithm.h"
 typedef CalcPath_session * PathFinding;
 
-
-/* Convenience function for checking whether pv is a reference, and dereference it if necessary */
-static inline SV *
-derefPV (SV *pv)
-{
-	if (SvTYPE (pv) == SVt_RV) {
-		return SvRV (pv);
-	} else
-		return pv;
-}
-
-
 MODULE = PathFinding		PACKAGE = PathFinding		PREFIX = PathFinding_
 PROTOTYPES: ENABLE
-
-
-
 
 PathFinding
 PathFinding_create()
@@ -37,67 +22,139 @@ void
 PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, starty, destx, desty, time_max)
 		PathFinding session
 		SV *weight_map
-		unsigned short avoidWalls
-		unsigned long width
-		unsigned long height
-		unsigned short startx
-		unsigned short starty
-		unsigned short destx
-		unsigned short desty
-		unsigned int time_max
+		SV * avoidWalls
+		SV * width
+		SV * height
+		SV * startx
+		SV * starty
+		SV * destx
+		SV * desty
+		SV * time_max
 	
 	PREINIT:
-		char *data = NULL;
+		char *weight_map_data = NULL;
 	
 	CODE:
 		
+		/* If the object was already initiated, clean map memory */
 		if (session->initialized) {
-			free(session->currentMap);
+			free_currentMap(session);
 			session->initialized = 0;
 		}
 		
+		/* If the path has already been calculated on this object, clean openlist memory */
 		if (session->run) {
-			free(session->openList);
+			free_openList(session);
 			session->run = 0;
 		}
 		
-		/* Sanity check the weight_map parameter and get the weight_map data */
-        if (weight_map && SvOK (weight_map))
-            data = (char *) SvPV_nolen (derefPV (weight_map));
-        if (!data)
-            croak("The 'weight_map' parameter must be a valid scalar.\n");
+		/* Check for any missing arguments */
+		if (!session || !weight_map || !avoidWalls || !width || !height || !startx || !starty || !destx || !desty || !time_max) {
+			printf("[pathfinding reset error] missing argument\n");
+			XSRETURN_NO;
+		}
 		
-		session->width = width;
-		session->height = height;
-		session->map = data;
+		/* Check for any bad arguments */
+		if (SvROK(avoidWalls) || SvTYPE(avoidWalls) >= SVt_PVAV || !SvOK(avoidWalls)) {
+			printf("[pathfinding reset error] bad avoidWalls argument\n");
+			XSRETURN_NO;
+		}
 		
-		session->currentMap = (Node*) calloc(session->height * session->width, sizeof(Node));
+		if (SvROK(width) || SvTYPE(width) >= SVt_PVAV || !SvOK(width)) {
+			printf("[pathfinding reset error] bad width argument\n");
+			XSRETURN_NO;
+		}
 		
-		session->startX = startx;
-		session->startY = starty;
-		session->endX = destx;
-		session->endY = desty;
+		if (SvROK(height) || SvTYPE(height) >= SVt_PVAV || !SvOK(height)) {
+			printf("[pathfinding reset error] bad height argument\n");
+			XSRETURN_NO;
+		}
 		
-		session->avoidWalls = avoidWalls;
-		session->time_max = time_max;
+		if (SvROK(startx) || SvTYPE(startx) >= SVt_PVAV || !SvOK(startx)) {
+			printf("[pathfinding reset error] bad startx argument\n");
+			XSRETURN_NO;
+		}
 		
-		CalcPath_init (session);
-
+		if (SvROK(starty) || SvTYPE(starty) >= SVt_PVAV || !SvOK(starty)) {
+			printf("[pathfinding reset error] bad starty argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(destx) || SvTYPE(destx) >= SVt_PVAV || !SvOK(destx)) {
+			printf("[pathfinding reset error] bad destx argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(desty) || SvTYPE(desty) >= SVt_PVAV || !SvOK(desty)) {
+			printf("[pathfinding reset error] bad desty argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(time_max) || SvTYPE(time_max) >= SVt_PVAV || !SvOK(time_max)) {
+			printf("[pathfinding reset error] bad time_max argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (!SvROK(weight_map) || !SvOK(weight_map)) {
+			printf("[pathfinding reset error] bad weight_map argument\n");
+			XSRETURN_NO;
+		}
+		
+		/* Get the weight_map data */
+		weight_map_data = (char *) SvPV_nolen (SvRV (weight_map));
+		session->map_base_weight = weight_map_data;
+		
+		session->width = (unsigned long) SvUV (width);
+		session->height = (unsigned long) SvUV (height);
+		
+		session->startX = (int) SvUV (startx);
+		session->startY = (int) SvUV (starty);
+		session->endX = (int) SvUV (destx);
+		session->endY = (int) SvUV (desty);
+		
+		session->avoidWalls = (unsigned short) SvUV (avoidWalls);
+		session->time_max = (unsigned int) SvUV (time_max);
+		
+		/* Initializes all cells in the map */
+		CalcPath_init(session);
 
 int
-PathFinding_run(session, r_array)
+PathFinding_run(session, solution_array)
 		PathFinding session
-		SV *r_array
+		SV *solution_array
 	PREINIT:
 		int status;
 	CODE:
-		if (!r_array || !SvOK (r_array) || SvTYPE (r_array) != SVt_RV || SvTYPE (SvRV (r_array)) != SVt_PVAV) {
-			croak ("PathFinding::run(session, r_array): r_array must be a reference to an array\n");
-			XSRETURN_IV (-1);
+		
+		/* Check for any missing arguments */
+		if (!session || !solution_array) {
+			printf("[pathfinding run error] missing argument\n");
+			XSRETURN_NO;
+		}
+		
+		/* solution_array should be a reference to an array */
+		if (!SvROK(solution_array)) {
+			printf("[pathfinding run error] solution_array is not a reference\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvTYPE(SvRV(solution_array)) != SVt_PVAV) {
+			printf("[pathfinding run error] solution_array is not an array reference\n");
+			XSRETURN_NO;
+		}
+		
+		if (!SvOK(solution_array)) {
+			printf("[pathfinding run error] solution_array is not defined\n");
+			XSRETURN_NO;
 		}
 
 		status = CalcPath_pathStep (session);
-		if (status < 0) {
+		
+		if (status == -2) {
+			printf("[pathfinding run error] You must call 'reset' before 'run'.\n");
+			RETVAL = -2;
+		
+		} else if (status == -1) {
 			RETVAL = -1;
 
 		} else if (status > 0) {
@@ -105,33 +162,35 @@ PathFinding_run(session, r_array)
 			int size;
 
 			size = session->solution_size;
-			array = (AV *) SvRV (r_array);
+ 			array = (AV *) SvRV (solution_array);
 			if (av_len (array) > size)
 				av_clear (array);
 			
 			av_extend (array, session->solution_size);
 			
 			Node currentNode = session->currentMap[(session->endY * session->width) + session->endX];
+			
+			Node predecessor;
 
 			while (currentNode.x != session->startX || currentNode.y != session->startY)
 			{
-
+				predecessor = session->currentMap[currentNode.predecessor];
+				
 				HV * rh = (HV *)sv_2mortal((SV *)newHV());
 
-				hv_store(rh, "x", 1, newSViv(currentNode.x), 0);
+				hv_store(rh, "x", 1, newSViv(predecessor.x), 0);
 
-				hv_store(rh, "y", 1, newSViv(currentNode.y), 0);
+				hv_store(rh, "y", 1, newSViv(predecessor.y), 0);
 				
-				av_unshift(array, 1);
-
-				av_store(array, 0, newRV((SV *)rh));
+				av_push(array, newRV((SV *)rh));
 				
-				currentNode = session->currentMap[(currentNode.parentY * session->width) + currentNode.parentX];
+				currentNode = predecessor;
 			}
 			
 			RETVAL = size;
 
 		} else {
+			printf("[pathfinding run error] Pathfinding ended before provided time.\n");
 			RETVAL = 0;
 		}
 	OUTPUT:
@@ -155,20 +214,23 @@ PathFinding_runref(session)
 			
 			Node currentNode = session->currentMap[(session->endY * session->width) + session->endX];
 			
+			Node predecessor;
+
 			while (currentNode.x != session->startX || currentNode.y != session->startY)
 			{
-
+				predecessor = session->currentMap[currentNode.predecessor];
+				
 				HV * rh = (HV *)sv_2mortal((SV *)newHV());
 
-				hv_store(rh, "x", 1, newSViv(currentNode.x), 0);
+				hv_store(rh, "x", 1, newSViv(predecessor.x), 0);
 
-				hv_store(rh, "y", 1, newSViv(currentNode.y), 0);
+				hv_store(rh, "y", 1, newSViv(predecessor.y), 0);
 				
 				av_unshift(results, 1);
 
 				av_store(results, 0, newRV((SV *)rh));
-
-				currentNode = session->currentMap[(currentNode.parentY * session->width) + currentNode.parentX];
+				
+				currentNode = predecessor;
 			}
 			
 			RETVAL = newRV((SV *)results);
