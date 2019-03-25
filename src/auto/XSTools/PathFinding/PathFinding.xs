@@ -156,6 +156,10 @@ PathFinding_run(session, solution_array)
 		
 		} else if (status == -1) {
 			RETVAL = -1;
+		
+		} else if (status == 0) {
+			printf("[pathfinding run error] Pathfinding ended before provided time.\n");
+			RETVAL = 0;
 
 		} else if (status > 0) {
 			AV *array;
@@ -189,9 +193,6 @@ PathFinding_run(session, solution_array)
 			
 			RETVAL = size;
 
-		} else {
-			printf("[pathfinding run error] Pathfinding ended before provided time.\n");
-			RETVAL = 0;
 		}
 	OUTPUT:
 		RETVAL

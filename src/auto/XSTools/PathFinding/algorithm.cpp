@@ -223,6 +223,7 @@ openListGetLowest (CalcPath_session *session)
 			break;
 		}
 	}
+	
 	return lowestNode;
 }
 
@@ -339,6 +340,7 @@ CalcPath_pathStep (CalcPath_session *session)
 				if (neighborNode->whichlist == NONE) {
 					neighborNode->x = neighbor_x;
 					neighborNode->y = neighbor_y;
+					neighborNode->nodeAdress = neighbor_adress;
 					neighborNode->predecessor = currentNode->nodeAdress;
 					neighborNode->g = g_score;
 					neighborNode->h = heuristic_cost_estimate(neighborNode->x, neighborNode->y, session->endX, session->endY, session->avoidWalls);
@@ -367,14 +369,19 @@ CalcPath_init (CalcPath_session *session)
 	/* Allocate enough memory in currentMap to hold all cells in the map */
 	session->currentMap = (Node*) calloc(session->height * session->width, sizeof(Node));
 	
-	Node* goal = &session->currentMap[((session->endY * session->width) + session->endX)];
+	unsigned long goalAdress = (session->endY * session->width) + session->endX;
+	Node* goal = &session->currentMap[goalAdress];
 	goal->x = session->endX;
 	goal->y = session->endY;
+	goal->nodeAdress = goalAdress;
 	
-	Node* start = &session->currentMap[(session->startY * session->width) + session->startX];
+	unsigned long startAdress = (session->startY * session->width) + session->startX;
+	Node* start = &session->currentMap[startAdress];
 	start->x = session->startX;
 	start->y = session->startY;
-	start->g = 0;
+	start->nodeAdress = startAdress;
+	start->h = heuristic_cost_estimate(start->x, start->y, goal->x, goal->y, session->avoidWalls);
+	start->f = start->h;
 	
 	session->initialized = 1;
 }
