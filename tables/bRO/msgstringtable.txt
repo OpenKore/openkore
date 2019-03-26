@@ -1093,7 +1093,7 @@ Armadura#
 Carta#
 Variados#
 N° do Leilão#
-Encontrar#
+Pesquisa#
 O Leilão Selecionado foi fechado.#
 O Leilão Selecionado não pode ser fechado.#
 O N° do Leilão está incorreto.#
@@ -1845,13 +1845,13 @@ esvaziar carrinho#
 primeira página#
 última página#
 Novo#
-Popular#
-limitado#
-Equipamento de aluguel#
-Equipamento permanente#
-Buff#
 Consumível#
-Outros#
+Utilitário#
+Equipamento de Aluguel#
+Chapéus#
+Equipamentos Permanentes#
+Mascotes#
+Cartas#
 preço#
 Qtd:#
 Unidade(s)#
@@ -2497,7 +2497,7 @@ ITEM#
 Você não pode utilizar o Armazém do Clã.#
 Você não faz parte de um Clã. Tente novamente após se juntar a um Clã.#
 Outro membro do Clã está usando o sistema. Tente novamente mais tarde.#
-Autorização do Armazém#
+Armazém#
 Armazém do Clã#
 Você não possuí autorização para usar o Armazém do Clã.#
 Limited item sales registration window#
@@ -2536,17 +2536,17 @@ It has failed to purchase due to some item's out of stock.#
 The warp spot cannot be memorized in current position.#
 Item cannot be purchased due to the bag's overweight.#
 No.#
-item#
-count#
-Name#
-Time#
-Withdraw#
-the log is not exist.#
-Entire#
-Put#
-Out#
+Item#
+Qtd#
+Jogador#
+Data#
+Ação#
+Não existe log nesse período.#
+Completo#
+Adição#
+Remoção#
 Lista do Armazém do Clã#
-A lista só monstra os 100 itens mais recentes.#
+Log dos últimos 100 itens#
 O Armazém do Clã é fechado após 2 minutos de uso.#
 Incorrect GameSamba ID. Please Try Again.#
 %s [%doption] : %d #
@@ -2562,7 +2562,7 @@ Histórico da Compra#
 Um lança granada deve estar equipado.#
 Não pode ser usada junto com [Furor], [Proteção Platina] e [Pânico do Justiceiro].#
 This skill cannot be used in this map.#
-When you are using the guild storage, all the items in the storage will be disappeared.#
+Todos os itens contido no Armazém de Clã serão excluídos e não podem ser recuperados.#
 http://ragnarok.gamesamba.com/#
 Enter your password to log in#
 Pet evolution#
@@ -2803,8 +2803,8 @@ Memorial dungeon enterance failed due to excessive number of people.#
 %.1f%% ( %s Server: %.1f%% + Premium:%.1f%% )#
 Unable to use due to the duplicated item.#
 Unable to use due to the duplicated effect.#
-Screen flicker effect ON#
-Screen flicker effect OFF#
+Efeito de tremedeira da tela [Ligado]#
+Efeito de tremedeira da tela [Desligado]#
 An illegal program has been detected.#
 Enviar Carta#
 E X P: %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
@@ -2992,8 +2992,8 @@ Moving to destination.#
 #
 #
 #
-#
-#
+Efeito de aura normalizado. [Aura ligada]#
+Efeito de aura simplificado. [Aura desligada]#
 #
 Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
@@ -3524,13 +3524,13 @@ O usuário e/ou senha estão incorretos, por favor, confira e tente novamente#
 #
 #
 #
+Fundo de Emblema#
+Exibir fundo do Emblema de Clã#
+Não exibir fundo do Emblema de Clã#
 #
 #
 #
-#
-#
-#
-#
+/frame#
 #
 #
 #
