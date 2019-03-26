@@ -18648,11 +18648,12 @@ Utilização: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4197#
-^0000ffSOR +1.
-Taxa de Esquiva +18 se o usuário estiver equipado com um item que tenha a carta Poring.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Capa^000000
+^0000ffSOR +1.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Poring]^000000
+^0000ffEsquiva +18.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4198#
@@ -18755,11 +18756,11 @@ Utilização: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4210#
-^0000ffAdiciona a chance de conjurar automaticamente a habilidade Rapto (nível 1), no inimigo, ao realizar um Ataque Físico.
-Se usada por personagens da Classe Gatuno e suas evoluções, receberá +20 de Taxa de Esquiva.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Capa^000000
+^0000ffAo realizar ataques físicos, 2% de chance de autoconjurar [Rapto] nv. 1.^000000
+Gatunos e evoluções:
+^0000ffEsquiva +20.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4211#
@@ -19370,10 +19371,10 @@ Utilização: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4285#
-^0000ffEsquiva Perfeita +5, Taxa de Esquiva +10.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Capa^000000
+^0000ffEsquiva +10.^000000
+^0000ffEsquiva perfeita +5.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4286#
@@ -19514,13 +19515,15 @@ Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4303#
-^0000ffTaxa de Esquiva +10.
-ATQ +20 se o usuário tiver 80 ou mais pontos de FOR.
-Máximo HP +3% se o usuário tiver 80 ou mais pontos de VIT.
-Crítico +3 se o usuário tiver 80 ou mais pontos de SOR.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Capa^000000
+^0000ffEsquiva +10.^000000
+FOR base 80 ou mais:
+^0000ffATQ +20.^000000
+VIT base 80 ou mais:
+^0000ffHP máx. +3%.^000000
+SOR base 80 ou mais:
+^0000ffCRIT +3.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4304#
@@ -19540,11 +19543,12 @@ Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4306#
-^0000ffEsquiva Perfeita +1.
-Se o usuário estiver equipado com um item que tenha a carta Sapo de Rodda, Taxa de Esquiva +18.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Utilização: ^777777Capa^000000
+^0000ffEsquiva perfeita +1.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Sapo de Rodda]^000000
+^0000ffEsquiva +18.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4307#
@@ -23967,21 +23971,21 @@ Classes que utilizam: ^777777Aprendiz^000000
 5126#
 Um capuz que é uma das das quatro chaves para o selo que prende Morpheus.
 ^0000ffINT +2.^000000
-^FF6347Conjunto^000000
-^FF6347[Véu de Morpheus]^000000
-^FF6347[Anel de Morpheus]^000000
-^FF6347[Bracelete de Morpheus]^000000
+^FA4E09Conjunto^000000
+^FA4E09[Véu de Morpheus]^000000
+^FA4E09[Anel de Morpheus]^000000
+^FA4E09[Bracelete de Morpheus]^000000
 ^0000ffDEFM +11.^000000
 ^0000ffSP máx. +20%.^000000
 ^0000ffINT +5 adicional.^000000
-^0000ffConjuração variável^000000 ^ff0000-25%.^00000
+^0000ffConjuração variável^000000 ^ff0000-25%.^000000
 ^0000ffA conjuração não pode ser interrompida.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777773^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777733^000000
-Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 5127#
 Um elmo que um dia pertenceu a Morrigane, a deusa da guerra.
@@ -38562,14 +38566,14 @@ Peso: ^7777771^000000
 #
 12661#
 Um misterioso pergaminho mágico que permite se transformar em Marduk, garantindo efeitos especiais durante a transformação.
-^0000ffATQM +25.^000000
+^0000ffATQM +25%.^000000
 ^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
 Duração: ^77777720 minutos^000000
 Peso: ^7777771^000000
 #
 12662#
 Um misterioso pergaminho mágico que permite se transformar em Banshee, garantindo efeitos especiais durante a transformação.
-^0000ffATQM +25.^000000
+^0000ffATQM +25%.^000000
 ^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
 Duração: ^77777720 minutos^000000
 Peso: ^7777771^000000
@@ -47484,7 +47488,7 @@ Peso: ^7777771^000000
 17040#
 Uma caixa contendo 10 pergaminhos de Transformação - Mavka e 1 pergaminho de Transformação - Poring adicional.
 --------------------------
-^0000ffATQM +25.^000000
+^0000ffATQM +25%.^000000
 Duração: ^77777720 minutos^000000
 --------------------------
 Peso: ^7777771^000000
@@ -47492,7 +47496,7 @@ Peso: ^7777771^000000
 17041#
 Uma caixa contendo 10 pergaminhos de Transformação - Banshee e 1 pergaminho de Transformação - Poring adicional.
 --------------------------
-^0000ffATQM +25.^000000
+^0000ffATQM +25%.^000000
 Duração: ^77777720 minutos^000000
 --------------------------
 Peso: ^7777771^000000
@@ -61584,6 +61588,78 @@ Uma peruca inspirada no Homunculus S Eleanor. Apesar de parecerem muito realista
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31063#
+Resplandece e vibra como o azul de um vasto oceano. Dá até vontade de dar um mergulho, ou singrar os sete mares e explorar águas jamais conhecidas!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31064#
+Pra aqueles dias que você acordou com o pé esquerdo e tá com a fúria pra derrotar mil Porings. Use esse coque vermelhão pra mostrar que você não tá pra brincadeira!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31065#
+Nem tudo que brilha é ouro - pode ser só alguém muito estiloso que decidiu usar esse par de belos coques áureos, feitos para te acompanhar em uma aventura bizarra.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31066#
+Verdejantes como a natureza, estes adornos complementam o visual de um amante da primavera que quer viver da arte.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31067#
+O acessório ideal pra qualquer ocasião que seja um pouquinho mais macabra: Festas à fantasia! Dia das Bruxas! Rituais de sacrifício de adoração ao Bafomé!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31068#
+A pureza do branco nesse par de coques reflete a paz de espírito de quem o usa. Um aventureiro usando o Coque Puro não quer guerra com ninguém!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31069#
+Se você já se perguntou qual é a cor de burro-quando-foge, suas dúvidas acabaram - é da cor deste coque aqui. Mas sem julgamentos, OK? Essa cor não é... Incomum. Não é não. Nadinha.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31070#
+Se alguém te ver usando um desses, a pessoa já vai saber que você aprecia ou está envolvido com temas esotéricos. Talvez magias negras e invocações, ou talvez só leitura de signos e mapas astrais.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000

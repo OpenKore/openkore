@@ -7035,6 +7035,14 @@
 31055#Sopra-Poring de Sabão#
 31057#Cachecol Preto do Eremes#
 31062#Peruca de Eleanor #
+31063#Coque Oceano#
+31064#Coque Labareda#
+31065#Coque Áureo#
+31066#Coque Primavera#
+31067#Coque Trevoso#
+31068#Coque Puro#
+31069#Coque Castanho#
+31070#Coque Místico#
 31087#Barba Viking#
 31088#Chapéu de Bicho Papão#
 31089#Fúria dos Shuras#
