@@ -291,7 +291,7 @@ CalcPath_pathStep (CalcPath_session *session)
 		currentNode = openListGetLowest (session);
 
 		//if current is the goal, return the path.
-		if (currentNode->x == session->endX && currentNode->y == session->endY) {
+		if (currentNode->nodeAdress == goal->nodeAdress) {
 			//return path
 			reconstruct_path(session, goal, start);
 			return 1;
