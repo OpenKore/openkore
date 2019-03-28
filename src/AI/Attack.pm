@@ -64,7 +64,7 @@ sub process {
 		my $target = Actor::get($ID);
 
 		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && round(distance(calcPosition($target), $attackSeq->{monsterPos})) > $attackSeq->{attackMethod}{maxDistance}) {
+		 && blockDistance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -73,7 +73,7 @@ sub process {
 			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
 		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && round(distance(calcPosition($target), calcPosition($char))) <= $attackSeq->{attackMethod}{maxDistance}) {
+		 && blockDistance(calcPosition($target), calcPosition($char)) <= $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster is within attack range; stop moving
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -249,12 +249,12 @@ sub main {
 	my $target = Actor::get($ID);
 	my $myPos = $char->{pos_to};
 	my $monsterPos = $target->{pos_to};
-	my $monsterDist = round(distance($myPos, $monsterPos));
+	my $monsterDist = blockDistance($myPos, $monsterPos);
 
 	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 	my $realMyPos = calcPosition($char);
 	my $realMonsterPos = calcPosition($target);
-	my $realMonsterDist = round(distance($realMyPos, $realMonsterPos));
+	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	if (!$config{'runFromTarget'}) {
 		$myPos = $realMyPos;
 		$monsterPos = $realMonsterPos;
@@ -430,7 +430,7 @@ sub main {
 				|| checkLineWalkable($spot, $realMonsterPos))
 				&& $field->isWalkable($spot->{x}, $spot->{y})
 				&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
-				&& (!$master || round(distance($spot, $masterPos)) <= $config{followDistanceMax})
+				&& (!$master || blockDistance($spot, $masterPos) <= $config{followDistanceMax})
 			) {
 				my $dist = distance($realMyPos, $spot);
 				if (!defined($best_dist) || $dist < $best_dist) {

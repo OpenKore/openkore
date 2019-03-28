@@ -777,7 +777,7 @@ sub processTake {
 
 	} elsif (AI::action eq "take") {
 		my $myPos = $char->{pos};
-		my $dist = round(distance($item->{pos}, $myPos));
+		my $dist = blockDistance($item->{pos}, $myPos);
 		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
 
 		if ($char->{sitting}) {
@@ -1294,7 +1294,7 @@ sub processAutoStorage {
 			if ($field->baseName ne $args->{npc}{map}) {
 				$do_route = 1;
 			} else {
-				my $distance_from_char = distance($args->{npc}{pos}, $char->{pos_to});
+				my $distance_from_char = blockDistance($args->{npc}{pos}, $char->{pos_to});
 				if (($distance_from_char > AI::args->{distance}) && !defined($args->{sentStore}) && !$char->storage->isReady()) {
 					$do_route = 1;
 				}
@@ -1700,7 +1700,7 @@ sub processAutoSell {
 				}
 			}
 			unless ($found) {
-				$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
+				$ai_v{'temp'}{'distance'} = blockDistance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
 				if (($ai_v{'temp'}{'distance'} > $args->{distance}) && !defined($args->{sentSell})) {
 					$ai_v{'temp'}{'do_route'} = 1;
 				}
@@ -1951,7 +1951,7 @@ sub processAutoBuy {
 					}
 				}
 				unless ($found) {
-					$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
+					$ai_v{'temp'}{'distance'} = blockDistance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
 					if (($ai_v{'temp'}{'distance'} > $args->{distance}) && !exists $args->{'sentNpcTalk'}) {
 						$ai_v{'temp'}{'do_route'} = 1;
 					}
@@ -2289,7 +2289,7 @@ sub processFollow {
 			my $player = $players{$ID};
 
 			if ($args->{following} && $player->{pos_to}) {
-				my $dist = distance($char->{pos_to}, $player->{pos_to});
+				my $dist = blockDistance($char->{pos_to}, $player->{pos_to});
 				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
 					$args->{move_timeout} = time;
 					if ( $dist > 15 || ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
@@ -2411,7 +2411,7 @@ sub processFollow {
 			my $smallDist;
 			foreach (@portalsID) {
 				next if (!defined $_);
-				$ai_v{'temp'}{'dist'} = distance($players_old{$args->{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
+				$ai_v{'temp'}{'dist'} = blockDistance($players_old{$args->{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
 				if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
 					$smallDist = $ai_v{'temp'}{'dist'};
 					$foundID = $_;
@@ -2995,7 +2995,7 @@ sub processAutoAttack {
 				 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && ($attackOnRoute >= 2 || $LOSSubRoute)
 				 && !$monster->{dmgFromYou}
-				 && ($control->{dist} eq '' || distance($monster->{pos}, calcPosition($char)) <= $control->{dist})
+				 && ($control->{dist} eq '' || blockDistance($monster->{pos}, calcPosition($char)) <= $control->{dist})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					my %hookArgs;
 					$hookArgs{monster} = $monster;
@@ -3149,7 +3149,7 @@ sub processItemsGather {
 			AI::suspend();
 			stand();
 
-		} elsif (( $dist = distance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
+		} elsif (( $dist = blockDistance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
 			if (!$config{itemsTakeAuto_new}) {
 				my (%vec, %pos);
 				getVector(\%vec, $items{$ID}{pos}, $myPos);
