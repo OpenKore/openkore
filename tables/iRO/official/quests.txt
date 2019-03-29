@@ -22507,3 +22507,16 @@ Explore Duffy's Pub Crawl#
 63039#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
 Explore Duffy's Pub Crawl.#
 #
+
+
+63243#A Simple Request#SG_FEEL#QUE_NOIMAGE#
+
+Mema Coco needed: 12x J_llop, 12x Zar_on, 9x B_tt_rf_y W__g, 1x B_ac_ Ro_e, and 1x Pa_tie.#
+
+Get Mema Coco's Groceries.#
+
+63244#A Simple Request#SG_FEEL#QUE_NOIMAGE#
+
+Mema Coco wants you to go into Knut's dreams and get rid of the demon possessing him.#
+
+Help rid the demon in Knut's dreams.#

@@ -6953,8 +6953,8 @@
 15039#Nab's_Cloth#
 15040#Prisoner's_Uniform#
 15041#Boitata_Armor#
-15042#White_Wing_Suits#
-15043#Black_Wing_Suits#
+15042#White_Wing_Suit#
+15043#Black_Wing_Suit#
 15044#Green_Operation_Coat#
 15046#WoE_Plate#
 15047#WoE_Suits#
@@ -9356,7 +9356,7 @@
 25425#Magical_Snow_Flower#
 25426#Warm_Cotton#
 25479#Dogly_Bottle#
-25745#Piece_of_Five#
+25745#Super_Large_Jellopy#
 25753#Khalitzburg_Map_Piece#
 25754#Scaled_Map_Piece			#
 25755#Undead_Servant's_Map_Piece			#
