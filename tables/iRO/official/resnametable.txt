@@ -2211,3 +2211,8 @@ vday19ms_f.rsw#job_duncer.rsw#
 vday19dd.gat#airplane.gat#
 vday19dd.rsw#airplane.rsw#
 삯샺샎엍웤샌붺\map\vday19dd.bmp#삯샺샎엍웤샌붺\map\airplane.bmp#
+
+//April Fools 2019 Island
+fool19.gat#izlu2dun.gat#
+fool19.rsw#izlu2dun.rsw#
+삯샺샎엍웤샌붺\map\fool19.bmp#삯샺샎엍웤샌붺\map\izlu2dun.bmp#
