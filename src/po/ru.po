@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-30 01:37-0300\n"
+"POT-Creation-Date: 2019-03-30 14:08-0300\n"
 "PO-Revision-Date: 2015-11-23 14:20+0300\n"
 "Last-Translator: ya4ept <ya4ept@ya.ru>\n"
 "Language-Team: ya4ept <ya4ept@ya.ru>\n"
@@ -289,7 +289,7 @@ msgstr ""
 
 #: ../Commands.pm:57
 #, fuzzy
-msgid "<monster #>)"
+msgid "<monster #>"
 msgstr "Список &мобов"
 
 #: ../Commands.pm:57

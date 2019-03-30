@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openkore 2.0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-30 01:37-0300\n"
+"POT-Creation-Date: 2019-03-30 14:08-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: lututui <lututui@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -281,9 +281,8 @@ msgid "Attack a monster."
 msgstr "Ataca um monstro."
 
 #: ../Commands.pm:57
-#, fuzzy
-msgid "<monster #>)"
-msgstr "Monstro"
+msgid "<monster #>"
+msgstr "<índice do monstro>"
 
 #: ../Commands.pm:57
 msgid "attack the specified monster"

@@ -54,7 +54,7 @@ sub initHandlers {
 	register(
 		['a', [
 			T("Attack a monster."),
-			[ T("<monster #>)"), T("attack the specified monster") ],
+			[ T("<monster #>"), T("attack the specified monster") ],
 			], \&cmdAttack],
 		['achieve', undef, \&cmdAchieve],
 		['ai', [

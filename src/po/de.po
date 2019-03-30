@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gKore (OpenKore 2.0.5.1)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-30 01:37-0300\n"
+"POT-Creation-Date: 2019-03-30 14:08-0300\n"
 "PO-Revision-Date: 2010-11-29 20:08+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: German <thrice007@yahoo.de>\n"
@@ -292,7 +292,7 @@ msgid "Attack a monster."
 msgstr ""
 
 #: ../Commands.pm:57
-msgid "<monster #>)"
+msgid "<monster #>"
 msgstr ""
 
 #: ../Commands.pm:57
