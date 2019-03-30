@@ -3,14 +3,14 @@ msgstr ""
 "Project-Id-Version: OpenKore\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-30 14:08-0300\n"
-"PO-Revision-Date: 2015-11-23 14:20+0300\n"
+"PO-Revision-Date: 2019-03-30 16:10-0300\n"
 "Last-Translator: ya4ept <ya4ept@ya.ru>\n"
 "Language-Team: ya4ept <ya4ept@ya.ru>\n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: T;TF\n"
 "X-Poedit-Basepath: .\n"
@@ -285,267 +285,251 @@ msgstr "Локации %s не существует.\n"
 
 #: ../Commands.pm:56
 msgid "Attack a monster."
-msgstr ""
+msgstr "атаковать моба"
 
 #: ../Commands.pm:57
-#, fuzzy
 msgid "<monster #>"
-msgstr "Список &мобов"
+msgstr "<monster #>"
 
 #: ../Commands.pm:57
 msgid "attack the specified monster"
-msgstr ""
+msgstr "атаковать указанного моба"
 
 #: ../Commands.pm:61
 msgid "Enable/disable AI."
-msgstr ""
+msgstr "включает и выключает AI (искусственный интеллект)"
 
 #: ../Commands.pm:62
 msgid "toggles AI on/manual/off"
-msgstr ""
+msgstr "переключает AI - вкл/ручной/выкл"
 
 #: ../Commands.pm:63
 msgid "enables AI"
-msgstr ""
+msgstr "включить AI"
 
 #: ../Commands.pm:64
 msgid "disables AI"
-msgstr ""
+msgstr "выключить AI"
 
 #: ../Commands.pm:65
-#, fuzzy
 msgid "makes AI manual"
-msgstr "Читать руководство по OpenKore"
+msgstr "перевести AI в ручное управление"
 
 #: ../Commands.pm:66
 msgid "displays the contents of the %ai_v hash, for debugging purposes"
-msgstr ""
+msgstr "вывести содежание хеша %ai_v hash (отладка)"
 
 #: ../Commands.pm:67
-#, fuzzy
 msgid "clears AI sequences"
-msgstr "Очередь ИИ."
+msgstr "очистить очередь AI"
 
 #: ../Commands.pm:68
 msgid "displays detailed info about current AI sequence"
-msgstr ""
+msgstr "вывести подробную инфу про элемент очереди AI"
 
 #: ../Commands.pm:70
 msgid "Display current AI sequences."
-msgstr ""
+msgstr "вывести очередь AI"
 
 #: ../Commands.pm:71
 msgid "Display the status of your vending shop."
-msgstr ""
+msgstr "вывести состояние вашей торговой лавки"
 
 #: ../Commands.pm:73
 msgid "Create Arrows."
-msgstr ""
+msgstr "создать стрелы"
 
 #: ../Commands.pm:74
 msgid "lists available arrow-crafting items"
-msgstr ""
+msgstr "вывести список предметов для изготовления стрел"
 
 #: ../Commands.pm:75
 msgid "use the Archer's Arrow Craft skill"
-msgstr ""
+msgstr "использовать умение лучников - Arrow Craft"
 
 #: ../Commands.pm:76
 msgid "<arrowcraft #>"
-msgstr ""
+msgstr "<arrowcraft #>"
 
 #: ../Commands.pm:76
 msgid "create arrows using an item from the 'arrowcraft' list"
-msgstr ""
+msgstr "создать стрелы используя предмет из 'arrowcraft' списка"
 
 #: ../Commands.pm:77
 msgid "forceuse <inventory item #>"
-msgstr ""
+msgstr "forceuse <inventory item #>"
 
 #: ../Commands.pm:77
 msgid "craft arrows immediately from an item without using the skill"
-msgstr ""
+msgstr "немедленно создать стрелы из предмета, не используя умение"
 
 #: ../Commands.pm:79
-#, fuzzy
 msgid "Stop attacking a monster."
-msgstr "Атака прекращена: %s (%s)\n"
+msgstr "прекратить атаковать моба"
 
 #: ../Commands.pm:80
-#, fuzzy
 msgid "Initiate auto-buy AI sequence."
-msgstr "Инициализация авто-покупки.\n"
+msgstr "начать авто-покупку предметов"
 
 #: ../Commands.pm:81
-#, fuzzy
 msgid "Initiate auto-sell AI sequence."
-msgstr "Инициализация авто-продажи.\n"
+msgstr "начать авто-продажу предметов"
 
 #: ../Commands.pm:82
-#, fuzzy
 msgid "Initiate auto-storage AI sequence."
-msgstr "Инициализация авто-снабжения.\n"
+msgstr "начать авто-складирование предметов"
 
 #: ../Commands.pm:84
 msgid "(Un)authorize a user for using Kore chat commands."
-msgstr ""
+msgstr "наделение другого игрока правом управлять Kore командами чата"
 
 #: ../Commands.pm:85
 msgid "<player name> 0"
-msgstr ""
+msgstr "<player name> 0"
 
 #: ../Commands.pm:85
 msgid "unauthorize <player name>"
-msgstr ""
+msgstr "не подчиняться командам чата указанного игрока <player name>"
 
 #: ../Commands.pm:86
 msgid "<player name> 1"
-msgstr ""
+msgstr "<player name> 1"
 
 #: ../Commands.pm:86
 msgid "authorize <player name>"
-msgstr ""
+msgstr "подчиняться командам чата указанного игрока <player name>"
 
 #: ../Commands.pm:88
 msgid "Does a bangbang body turn."
-msgstr ""
+msgstr "повернуться по часовой стрелке на 45 градусов"
 
 #: ../Commands.pm:89
 msgid "Does a bingbing body turn."
-msgstr ""
+msgstr "повернуться против часовой стрелки на 45 градусов"
 
 #: ../Commands.pm:91
 msgid "Send a message in the battlegrounds chat."
-msgstr ""
+msgstr "отправить сообщение в турнирный чат"
 
 #: ../Commands.pm:92 ../Commands.pm:104 ../Commands.pm:372
 msgid "<message>"
-msgstr ""
+msgstr "<message>"
 
 #: ../Commands.pm:92
 msgid "send <message> in the battlegrounds chat"
-msgstr ""
+msgstr "отправить сообщение <message> в турнирный чат"
 
 #: ../Commands.pm:95
 msgid "Interact with a group booking"
-msgstr ""
+msgstr "Взаимодействовать с группой бронирования"
 
 #: ../Commands.pm:97
 msgid "Buy an item from the current NPC shop"
-msgstr ""
+msgstr "купить предмет у неписи в магазине"
 
 #: ../Commands.pm:98
 msgid "<store item #> [<amount>]"
-msgstr ""
+msgstr "<store item #> [<amount>]"
 
 #: ../Commands.pm:98
 msgid "buy <amount> items from the 'store' list"
-msgstr ""
+msgstr "купить <amount> шт. предмета из 'store' списка"
 
 #: ../Commands.pm:103
 msgid "Chat in the public chat."
-msgstr ""
+msgstr "послать сообщение в публичный чат"
 
 #: ../Commands.pm:104
 msgid "send <message> to public chat"
-msgstr ""
+msgstr "send <message> to public chat"
 
 #: ../Commands.pm:108
 msgid "Card compounding."
-msgstr ""
+msgstr "вставить карту"
 
 #: ../Commands.pm:109
 msgid "lists cards in the inventory"
-msgstr ""
+msgstr "вывести список карт в инвентаре"
 
 #: ../Commands.pm:110
 msgid "initiate card compounding using the specified card"
-msgstr ""
+msgstr "начать вставку выбранной карты"
 
 #: ../Commands.pm:111
 msgid "lists items to merge card with"
-msgstr ""
+msgstr "вывести список предметов, куда можно вставить карту"
 
 #: ../Commands.pm:112
-#, fuzzy
 msgid "cancel a card merge request"
-msgstr "Отмена вставки карты.\n"
+msgstr "отменить вставку карты"
 
 #: ../Commands.pm:113
 msgid "merge card with item and finalize card compounding"
-msgstr ""
+msgstr "вставить карту в предмет и закончить процесс"
 
 #: ../Commands.pm:114
 msgid "instantly merge the card with an item"
-msgstr ""
+msgstr "немедленно вставить карту в указанный предмет"
 
 #: ../Commands.pm:117
 msgid "Cart management"
-msgstr ""
+msgstr "управление телегой"
 
 #: ../Commands.pm:118
-#, fuzzy
 msgid "lists items in cart."
-msgstr "На аукцион не выставлен ни один предмет.\n"
+msgstr "вывести список предметов в телеге"
 
 #: ../Commands.pm:119
 msgid "add <amount> items from inventory to cart"
-msgstr ""
+msgstr "добавить в телегу <amount> шт. предмета из инвентаря"
 
 #: ../Commands.pm:120
 msgid "get <amount> items from cart to inventory"
-msgstr ""
+msgstr "взять из телеги <amount> шт. предмета в инвентарь"
 
 #: ../Commands.pm:121
-#, fuzzy
 msgid "displays cart item description"
-msgstr " Список Умений "
+msgstr "вывести описание предмета из телеги"
 
 #: ../Commands.pm:125
-#, fuzzy
 msgid "Ask server to exit to the character selection screen."
-msgstr "Выйти в меню выбора персонажа."
+msgstr "попросить сервер вывести диалог выбора персонажа"
 
 #: ../Commands.pm:127
 msgid "Chat room management."
-msgstr ""
+msgstr "управление чатом"
 
 #: ../Commands.pm:128
 msgid "lists chat rooms on screen"
-msgstr ""
+msgstr "вывести список всех чатов на экране"
 
 #: ../Commands.pm:129
 msgid "join <chat room #>"
-msgstr ""
+msgstr "join <chat room #>"
 
 #: ../Commands.pm:129
 msgid "join a chat room"
-msgstr ""
+msgstr "войти в указанный чат"
 
 #: ../Commands.pm:130
 msgid "displays info about the current chat room"
-msgstr ""
+msgstr "вывести справку о текущем чате"
 
 #: ../Commands.pm:131
 msgid "leave the current chat room"
-msgstr ""
+msgstr "покинуть чат"
 
 #: ../Commands.pm:132
 msgid "create \"<title>\" [<limit #> <public flag> <password>]"
 msgstr ""
 
 #: ../Commands.pm:132
-#, fuzzy
 msgid "create a chat room"
-msgstr "Создать нового персонажа"
+msgstr "создать чат"
 
 #: ../Commands.pm:133
-#, fuzzy
 msgid "modify \"<title>\" [<limit #> <public flag> <password>]"
-msgstr ""
-"Синтаксическая ошибка в консольной команде 'chatmod' (изменение чата)\n"
-"Используйте: chat modify \"<Название>\" [<Лимит> <флаг публичности> "
-"<пароль>]\n"
+msgstr "modify \\\"<title>\\\" [<limit #> <public flag> <password>]"
 
 #: ../Commands.pm:133
 msgid "modify the current chat room"
@@ -553,1861 +537,1734 @@ msgstr ""
 
 #: ../Commands.pm:134
 msgid "bestow <user #>"
-msgstr ""
+msgstr "bestow <user #>"
 
 #: ../Commands.pm:134
 msgid "bestow admin to chat room user"
-msgstr ""
+msgstr "наделить игрока админскими правами"
 
 #: ../Commands.pm:135
 msgid "kick <user #>"
-msgstr ""
+msgstr "kick <user #>"
 
 #: ../Commands.pm:135
 msgid "kick a chat room user"
-msgstr ""
+msgstr "выпнуть игрока из чата"
 
 #: ../Commands.pm:138
 msgid "Display last few entries from the chat log."
-msgstr ""
+msgstr "вывести последние несколько строк из чата"
 
 #: ../Commands.pm:139 ../Commands.pm:330
 msgid "display last 5 entries"
-msgstr ""
+msgstr "вывести последние 5 записей"
 
 #: ../Commands.pm:140 ../Commands.pm:331
 msgid "<number>"
-msgstr ""
+msgstr "<number>"
 
 #: ../Commands.pm:140 ../Commands.pm:331
 msgid "display last <number> entries"
-msgstr ""
+msgstr "вывести последние <number> строк"
 
 #: ../Commands.pm:142
-#, fuzzy
 msgid "Clear the item log."
-msgstr "Очистить историю предметов"
+msgstr "очистить лог предметов"
 
 #: ../Commands.pm:144
-#, fuzzy
 msgid "Clear the chat log."
-msgstr "Показать журнал сообщений из чата."
+msgstr "очистить чат-лог"
 
 #: ../Commands.pm:145
 msgid "Close your vending shop."
-msgstr ""
+msgstr "закрыть вашу торговую лавку"
 
 #: ../Commands.pm:149
-#, fuzzy
 msgid "Change a configuration key"
-msgstr "Редактор конфига"
+msgstr "изменить значение параметра конфига"
 
 #: ../Commands.pm:150
 msgid "<key>"
-msgstr ""
+msgstr "<key>"
 
 #: ../Commands.pm:150
 msgid "displays value of <key>"
-msgstr ""
+msgstr "вывести значение параметра <key>"
 
 #: ../Commands.pm:151
 msgid "<key> <value>"
-msgstr ""
+msgstr "<key> <value>"
 
 #: ../Commands.pm:151
 msgid "sets value of <key> to <value>"
-msgstr ""
+msgstr "дать парметру <key> новое значение <value>"
 
 #: ../Commands.pm:152
 msgid "<key> none"
-msgstr ""
+msgstr "<key> none"
 
 #: ../Commands.pm:152
 msgid "unsets <key>"
-msgstr ""
+msgstr "очистить значение параметра <key>"
 
 #: ../Commands.pm:153
 msgid "<label.attribute> <value>"
-msgstr ""
+msgstr "<label.attribute> <value>"
 
 #: ../Commands.pm:153
 msgid "set a new value for the specified configuration key through label"
-msgstr ""
+msgstr "дать новое значение заданного меткой атрибуту"
 
 #: ../Commands.pm:154
 msgid "<label.attribute> none"
-msgstr ""
+msgstr "<label.attribute> none"
 
 #: ../Commands.pm:154
 msgid "unset the specified configuration key through label"
-msgstr ""
+msgstr "очистить значение заданного меткой атрибута"
 
 #: ../Commands.pm:159
-#, fuzzy
 msgid "Damage taken report"
-msgstr "Отчет о полученном уроне:\n"
+msgstr "вывести отчет о полученном уроне"
 
 #: ../Commands.pm:160
-#, fuzzy
 msgid "displays the damage taken report"
-msgstr "Отчет о полученном уроне:\n"
+msgstr "вывести отчет"
 
 #: ../Commands.pm:161
-#, fuzzy
 msgid "resets the damage taken report"
-msgstr "Отчет о полученном уроне:\n"
+msgstr "обнулить отчет"
 
 #: ../Commands.pm:165
 msgid "Trade items with another player."
-msgstr ""
+msgstr "торговля предметами с другими игроками"
 
 #: ../Commands.pm:166
 msgid "accept an incoming deal/finalize the current deal/trade"
-msgstr ""
+msgstr "принять входящую сделку, подтвердить/заключить текущую сделку"
 
 #: ../Commands.pm:167 ../Commands.pm:348 ../Commands.pm:356 ../Commands.pm:407
-#, fuzzy
 msgid "<player #>"
-msgstr "Список &игроков"
+msgstr "<player #>"
 
 #: ../Commands.pm:167
 msgid "request a deal with player"
-msgstr ""
+msgstr "запросить сделку у игрока"
 
 #: ../Commands.pm:168 ../Commands.pm:474
-#, fuzzy
 msgid "add <inventory item #> [<amount>]"
-msgstr "Используйте: aua (<№ предмета>|<имя предмета>) <количество>\n"
+msgstr "add <inventory item #> [<amount>]"
 
 #: ../Commands.pm:168
-#, fuzzy
 msgid "add items to current deal"
-msgstr "%s хочет стать Вашим другом.\n"
+msgstr "добавить предметы в сделку"
 
 #: ../Commands.pm:169
 msgid "add z [<amount>]"
-msgstr ""
+msgstr "add z [<amount>]"
 
 #: ../Commands.pm:169
 msgid "add zenny to current deal"
-msgstr ""
+msgstr "добавить зени в сделку"
 
 #: ../Commands.pm:170
 msgid "deny an incoming deal/cancel the current deal"
-msgstr ""
+msgstr "отклонить входящую сделку, отменить текущую сделку"
 
 #: ../Commands.pm:173
 msgid "Toggle debug on/off."
-msgstr ""
+msgstr "включает и выключает режим отладки"
 
 #: ../Commands.pm:174
 msgid "<level>"
-msgstr ""
+msgstr "<level>"
 
 #: ../Commands.pm:174
 msgid "sets debug level to <level>"
-msgstr ""
+msgstr "задать уровень отладки - <level>"
 
 #: ../Commands.pm:175
-#, fuzzy
 msgid "displays debug information"
-msgstr " Отладочная информация "
+msgstr "вывести отладочную информацию"
 
 #: ../Commands.pm:177
-#, fuzzy
 msgid "List items in the current deal."
-msgstr "%s хочет стать Вашим другом.\n"
+msgstr "вывести список предметов в текущей сделке"
 
 #: ../Commands.pm:178
 msgid "Does a doridori head turn."
-msgstr ""
+msgstr "повернуть голову персонажа"
 
 #: ../Commands.pm:180
-#, fuzzy
 msgid "Drop an item from the inventory."
-msgstr "Переложить всё в инвентарь"
+msgstr "выбросить предмет из инвентаря на землю"
 
 #: ../Commands.pm:181 ../Commands.pm:450
-#, fuzzy
 msgid "<inventory item #> [<amount>]"
-msgstr "Используйте: aua (<№ предмета>|<имя предмета>) <количество>\n"
+msgstr "<inventory item #> [<amount>]"
 
 #: ../Commands.pm:181
-#, fuzzy
 msgid "drop an item from inventory"
-msgstr "Переложить всё в инвентарь"
+msgstr "выбросить предмет"
 
 #: ../Commands.pm:183
 msgid "Dump the current packet receive buffer and quit."
-msgstr ""
+msgstr "сдампить буфер принятых пакетов и выйти"
 
 #: ../Commands.pm:184
 msgid "Dump the current packet receive buffer without quitting."
-msgstr ""
+msgstr "сдампить буфер принятых пакетов, но не выходить"
 
 #: ../Commands.pm:186
-#, fuzzy
 msgid "Show emotion."
-msgstr "Показывать маршрут на карте"
+msgstr "отобразить эмоцию"
 
 #: ../Commands.pm:187
-#, fuzzy
 msgid "<emotion>"
-msgstr "Эмоции"
+msgstr "<emotion>"
 
 #: ../Commands.pm:187
 msgid "show specified emotion (see tables/emotions.txt)"
-msgstr ""
+msgstr "отображает указаную эмоцию (смотри tables\\emotions.txt)"
 
 #: ../Commands.pm:190
 msgid "Equip an item."
-msgstr ""
+msgstr "экипировать предмет"
 
 #: ../Commands.pm:191 ../Commands.pm:344 ../Commands.pm:560
-#, fuzzy
 msgid "<inventory item #>"
-msgstr "Инвентарь пуст\n"
+msgstr "<inventory item #>"
 
 #: ../Commands.pm:191
-#, fuzzy
 msgid "equips the specified item"
-msgstr "Указан неверный слот экипировки.\n"
+msgstr "экипировать указанный предмет"
 
 #: ../Commands.pm:192
 msgid "<slotname> <inventory item #>"
-msgstr ""
+msgstr "<slotname> <inventory item #>"
 
 #: ../Commands.pm:192
 msgid "equips the specified item on the specified slot"
-msgstr ""
+msgstr "экипировать предмет в указанный слот"
 
 #: ../Commands.pm:193
 msgid "lists slot names"
-msgstr ""
+msgstr "вывести список с названиями слотов экипировки"
 
 #: ../Commands.pm:197
 msgid "Evaluate a Perl expression."
-msgstr ""
+msgstr "выполнить perl'овый код (только для разрабочиков)"
 
 #: ../Commands.pm:198
 msgid "<expression>"
-msgstr ""
+msgstr "<expression>"
 
 #: ../Commands.pm:198
 msgid "evaluate a Perl expression"
-msgstr ""
+msgstr "выполнить perl'овый код"
 
 #: ../Commands.pm:201
-#, fuzzy
 msgid "Experience report."
-msgstr "&Отчёт по опыту"
+msgstr "вывести отчет по полученному опыту"
 
 #: ../Commands.pm:202
-#, fuzzy
 msgid "displays the experience report"
-msgstr "&Отчёт по опыту"
+msgstr "вывести отчет по полученному опыту"
 
 #: ../Commands.pm:203
-#, fuzzy
 msgid "resets the experience report"
-msgstr "&Отчёт по опыту"
+msgstr "обнулить отчет по полученному опыту"
 
 #: ../Commands.pm:206
 msgid "Falcon status."
-msgstr ""
+msgstr "проверить наличие сокола"
 
 #: ../Commands.pm:207
 msgid "displays falcon status"
-msgstr ""
+msgstr "вывести состояние сокола"
 
 #: ../Commands.pm:208
 msgid "releases your falcon"
-msgstr ""
+msgstr "отпустить вашего сокола"
 
 #: ../Commands.pm:211
 msgid "Follow another player."
-msgstr ""
+msgstr "следовать за ведущим игроком"
 
 #: ../Commands.pm:212 ../Commands.pm:541
 msgid "<player name|player #>"
-msgstr ""
+msgstr "<player name|player #>"
 
 #: ../Commands.pm:212
 msgid "follow the specified player"
-msgstr ""
+msgstr "следовать за указанным игроком"
 
 #: ../Commands.pm:213
 msgid "stop following"
-msgstr ""
+msgstr "прекратить следование"
 
 #: ../Commands.pm:216
 msgid "Friend management."
-msgstr ""
+msgstr "управление списком друзей"
 
 #: ../Commands.pm:217
-#, fuzzy
 msgid "lists friends"
-msgstr " Список друзей "
+msgstr "вывести список друзей"
 
 #: ../Commands.pm:218 ../Commands.pm:300
 msgid "request <player name|player #>"
-msgstr ""
+msgstr "request <player name|player #>"
 
 #: ../Commands.pm:218
-#, fuzzy
 msgid "requests player to be your friend"
-msgstr "%s хочет стать Вашим другом.\n"
+msgstr "попросить игрока стать вашим другом"
 
 #: ../Commands.pm:219
-#, fuzzy
 msgid "accepts a friend request"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "согласиться принять дружбу"
 
 #: ../Commands.pm:220
-#, fuzzy
 msgid "rejects a friend request"
-msgstr "Авто отклонение запроса на дружбу."
+msgstr "отказаться от дружбы"
 
 #: ../Commands.pm:221
-#, fuzzy
 msgid "pm <friend #>"
-msgstr " Список друзей "
+msgstr "pm <friend #>"
 
 #: ../Commands.pm:221
-#, fuzzy
 msgid "pm a friend"
-msgstr " Список друзей "
+msgstr "послать приват другу с указанным номером"
 
 #: ../Commands.pm:222
 msgid "remove <friend #>"
-msgstr ""
+msgstr "remove <friend #>"
 
 #: ../Commands.pm:222
-#, fuzzy
 msgid "remove a friend from friends list"
-msgstr "Попытка удаления %s из списка Ваших друзей.\n"
+msgstr "вычеркнуть из списка друга с указанным номером"
 
 #: ../Commands.pm:225
 msgid "Interact with homunculus."
-msgstr ""
+msgstr "взаимодействие с гомункулом"
 
 #: ../Commands.pm:226 ../Commands.pm:227
-#, fuzzy
 msgid "display homunculus status"
-msgstr "Кормление Гомункула кормом: %s\n"
+msgstr "вывести состояние гомункула"
 
 #: ../Commands.pm:228
-#, fuzzy
 msgid "feed your homunculus. (Food needed)"
-msgstr "Кормление Вашего гомонкула.\n"
+msgstr "покормить гомункула (нужна еда)"
 
 #: ../Commands.pm:229
-#, fuzzy
 msgid "rename your homunculus"
-msgstr "Кормление Вашего гомонкула.\n"
+msgstr "переименовать гомункула"
 
 #: ../Commands.pm:230 ../Commands.pm:231
-#, fuzzy
 msgid "delete your homunculus"
-msgstr "Кормление Вашего гомонкула.\n"
+msgstr "удалить гомункула"
 
 #: ../Commands.pm:232
-#, fuzzy
 msgid "moves your homunculus"
-msgstr "Кормление Вашего гомонкула.\n"
+msgstr "походить гомункулом"
 
 #: ../Commands.pm:233
-#, fuzzy
 msgid "makes your homunculus standby"
-msgstr "Кормление Вашего гомонкула.\n"
+msgstr "перевести гомункула в режим ожидания"
 
 #: ../Commands.pm:234
 msgid "display current homunculus AI "
-msgstr ""
+msgstr "вывести очередь AI гомункула"
 
 #: ../Commands.pm:235
 msgid "toggles AI on, off or manual "
-msgstr ""
+msgstr "переключение AI - вкл, выкл, ручное"
 
 #: ../Commands.pm:236 ../Commands.pm:237
 msgid "turns homunculus AI on"
-msgstr ""
+msgstr "вкл AI гомункула"
 
 #: ../Commands.pm:238
 msgid "turns homunculus AI to manual"
-msgstr ""
+msgstr "ручное управление AI гомункула"
 
 #: ../Commands.pm:239
 msgid "turns homunculus AI off"
-msgstr ""
+msgstr "выкл AI гомункула"
 
 #: ../Commands.pm:240
-#, fuzzy
 msgid "clears homunculus AI"
-msgstr "Кормление Гомункула кормом: %s\n"
+msgstr "очистить очередь AI гомункула"
 
 #: ../Commands.pm:241
-#, fuzzy
 msgid "prints homunculus AI"
-msgstr "Гомункул"
+msgstr "вывести очередь AI гомункула"
 
 #: ../Commands.pm:242
-#, fuzzy
 msgid "displays homunculus skills"
-msgstr "Кормление Гомункула кормом: %s\n"
+msgstr "вывести список умений гомункула"
 
 #: ../Commands.pm:243 ../Commands.pm:262
 msgid "skills add <skill #>"
-msgstr ""
+msgstr "skills add <skill #>"
 
 #: ../Commands.pm:243
 msgid "add a skill point to the current homunculus skill"
-msgstr ""
+msgstr "прокачать умение гомункула"
 
 #: ../Commands.pm:244 ../Commands.pm:263 ../Commands.pm:464
 msgid "desc <skill #>"
-msgstr ""
+msgstr "desc <skill #>"
 
 #: ../Commands.pm:244
 msgid "display a description of the specified homunculus skill"
-msgstr ""
+msgstr "вывести описание для умения гомункула"
 
 #: ../Commands.pm:247
 msgid "Interact with Mercenary."
-msgstr ""
+msgstr "взаимодействие с наёмником"
 
 #: ../Commands.pm:248 ../Commands.pm:249
 msgid "display mercenary status"
-msgstr ""
+msgstr "вывести состояние наёмника"
 
 #: ../Commands.pm:250
 msgid "fires your mercenary"
-msgstr ""
+msgstr "уволить наёмника"
 
 #: ../Commands.pm:251
 msgid "moves your mercenary"
-msgstr ""
+msgstr "походить наёмником"
 
 #: ../Commands.pm:252
 msgid "makes your mercenary standby"
-msgstr ""
+msgstr "перевести наёмника в режим ожидания"
 
 #: ../Commands.pm:253
 msgid "display current mercenary AI"
-msgstr ""
+msgstr "вывести очередь AI наёмника"
 
 #: ../Commands.pm:254
 msgid "toggles AI on, off or manual"
-msgstr ""
+msgstr "переключение AI - вкл, выкл, ручное"
 
 #: ../Commands.pm:255 ../Commands.pm:256
 msgid "turns mercenary AI on"
-msgstr ""
+msgstr "вкл AI наёмника"
 
 #: ../Commands.pm:257
 msgid "turns mercenary AI to manual"
-msgstr ""
+msgstr "ручное управление AI наёмника"
 
 #: ../Commands.pm:258
 msgid "turns mercenary AI off"
-msgstr ""
+msgstr "выкл AI наёмника"
 
 #: ../Commands.pm:259
 msgid "clears mercenary AI"
-msgstr ""
+msgstr "очистить очередь AI наёмника"
 
 #: ../Commands.pm:260
 msgid "prints mercenary AI"
-msgstr ""
+msgstr "вывести очередь AI наёмника"
 
 #: ../Commands.pm:261
 msgid "displays mercenary skills"
-msgstr ""
+msgstr "вывести список умений наёмника"
 
 #: ../Commands.pm:262
 msgid "add a skill point to the current mercenary skill"
-msgstr ""
+msgstr "прокачать умение наёмника"
 
 #: ../Commands.pm:263
 msgid "display a description of the specified mercenary skill"
-msgstr ""
+msgstr "вывести описание для умения наёмника"
 
 #: ../Commands.pm:266
 msgid "Chat in the guild chat."
-msgstr ""
+msgstr "послать сообщение в гильд-чат"
 
 #: ../Commands.pm:267
 msgid "send <message> to guild chat"
-msgstr ""
+msgstr "послать сообщение <message> в гильд-чат"
 
 #: ../Commands.pm:270
 msgid "Get the name of the player with specified ID"
-msgstr ""
+msgstr "вывести имя объекта с указанным ID"
 
 #: ../Commands.pm:271
 msgid "show the name of the specified ID (needs debug 2)"
-msgstr ""
+msgstr "вывести имя объекта с указанным ID (нужен debug 2)"
 
 #: ../Commands.pm:296
-#, fuzzy
 msgid "Guild management."
-msgstr "Состав Гильдии"
+msgstr "управление гильдией"
 
 #: ../Commands.pm:297
-#, fuzzy
 msgid "request guild info"
-msgstr "Запроси информации о гильдии...\n"
+msgstr "запросить информацию о гильдии"
 
 #: ../Commands.pm:298
 msgid "displays guild info"
-msgstr ""
+msgstr "вывести информацию о гильдии"
 
 #: ../Commands.pm:299
-#, fuzzy
 msgid "displays guild member info"
-msgstr "Гилд инфо"
+msgstr "вывести список членов гильдии"
 
 #: ../Commands.pm:300
-#, fuzzy
 msgid "request player to join your guild"
-msgstr "'%s' хочет вступить в Ваше пати.\n"
+msgstr "пригласить игрока в гильдию"
 
 #: ../Commands.pm:301 ../Commands.pm:380
 msgid "join <flag>"
-msgstr ""
+msgstr "join <flag>"
 
 #: ../Commands.pm:301
 msgid "accepts a guild join request if <flag> is 1, deny if 0"
-msgstr ""
+msgstr "принять 1 или отклонить 0 приглашение в гильдию"
 
 #: ../Commands.pm:302
-#, fuzzy
 msgid "leave the guild"
-msgstr "Читать руководство по OpenKore"
+msgstr "выйти из гильдии"
 
 #: ../Commands.pm:305
-#, fuzzy
 msgid "Help displays commands"
-msgstr " Список консольных команд "
+msgstr "вывести справку по консольным командам"
 
 #: ../Commands.pm:306
-#, fuzzy
 msgid "lists available commands"
-msgstr " Список консольных команд "
+msgstr "вывести список консольных команд"
 
 #: ../Commands.pm:307
-#, fuzzy
 msgid "<command>"
-msgstr "Команда"
+msgstr "<command>"
 
 #: ../Commands.pm:307
 msgid "displays detailed information about a command"
-msgstr ""
+msgstr "вывести подробную справку по указанным через запятую командам"
 
 #: ../Commands.pm:310
 msgid "Display inventory items."
-msgstr ""
+msgstr "вывести список предметов в инвентаре"
 
 #: ../Commands.pm:311
 msgid "display all inventory items."
-msgstr ""
+msgstr "вывести список всех предметов в инвентаре"
 
 #: ../Commands.pm:312
-#, fuzzy
 msgid "lists equipped items"
-msgstr " (Экипирован)"
+msgstr "вывести список экипировки на персонаже"
 
 #: ../Commands.pm:313
 msgid "lists unequipped items"
-msgstr ""
+msgstr "вывести список экипировки в инвентаре"
 
 #: ../Commands.pm:314
 msgid "lists non-usable items"
-msgstr ""
+msgstr "вывести список несъедобных предметов"
 
 #: ../Commands.pm:315
 msgid "lists usable items"
-msgstr ""
+msgstr "вывести список съедобных предметов"
 
 #: ../Commands.pm:316
-#, fuzzy
 msgid "desc <inventory item #>"
-msgstr "Используйте: aua (<№ предмета>|<имя предмета>) <количество>\n"
+msgstr "desc <inventory item #>"
 
 #: ../Commands.pm:316
 msgid "displays inventory item description"
-msgstr ""
+msgstr "вывести описание предмета в инвентаре"
 
 #: ../Commands.pm:319
 msgid "Identify an unindentified item."
-msgstr ""
+msgstr "рассмотреть под лупой неопознанный предмет"
 
 #: ../Commands.pm:320
 msgid "lists items to be identified"
-msgstr ""
+msgstr "вывести список предметов для опознания"
 
 #: ../Commands.pm:321
 msgid "<identify #>"
-msgstr ""
+msgstr "<identify #>"
 
 #: ../Commands.pm:321
-#, fuzzy
 msgid "identify an item"
-msgstr " Список предметов для идентификации "
+msgstr "провести опознание предмета"
 
 #: ../Commands.pm:324
 msgid "Ignore a user (block their messages)."
-msgstr ""
+msgstr "игнорировать сообщения игрока"
 
 #: ../Commands.pm:325
 msgid "<flag> <player name>"
-msgstr ""
+msgstr "<flag> <player name>"
 
 #: ../Commands.pm:325
 msgid "ignores a player if <flag> is 1, unignore if 0"
-msgstr ""
+msgstr "игнор игрока если <flag> = 1, игнор снимается если <flag> = 0"
 
 #: ../Commands.pm:326
 msgid "<flag> all"
-msgstr ""
+msgstr "<flag> all"
 
 #: ../Commands.pm:326
 msgid "ignores all players if <flag> is 1, unignore if 0"
-msgstr ""
+msgstr "игнор всех игроков если <flag> = 1, игнор снимается если <flag> = 0"
 
 #: ../Commands.pm:329
 msgid "Displays last few entries of the item log."
-msgstr ""
+msgstr "вывести последние записи из лога предметов"
 
 #: ../Commands.pm:333
-#, fuzzy
 msgid "Display items on the ground."
-msgstr "Товар '%s' не найден в магазине.\n"
+msgstr "вывести список лежащих на земле предметов"
 
 #: ../Commands.pm:335
-#, fuzzy
 msgid "Use item on monster."
-msgstr "Использовать 1 шт. на себя"
+msgstr "применить предмет на моба"
 
 #: ../Commands.pm:336
-#, fuzzy
 msgid "<inventory item #> <monster #>"
-msgstr "Используйте: aua (<№ предмета>|<имя предмета>) <количество>\n"
+msgstr "<inventory item #> <monster #>"
 
 #: ../Commands.pm:336
 msgid "use item on monster"
-msgstr ""
+msgstr "применить предмет на моба"
 
 #: ../Commands.pm:339
 msgid "Use item on player."
-msgstr ""
+msgstr "применить предмет на игрока"
 
 #: ../Commands.pm:340
 msgid "<inventory item #> <player #>"
-msgstr ""
+msgstr "<inventory item #> <player #>"
 
 #: ../Commands.pm:340
 msgid "use item on player"
-msgstr ""
+msgstr "применить предмет на игрока"
 
 #: ../Commands.pm:343
-#, fuzzy
 msgid "Use item on yourself."
-msgstr "Использовать 1 шт. на себя"
+msgstr "применить предмет на себя"
 
 #: ../Commands.pm:344
-#, fuzzy
 msgid "use item on yourself"
-msgstr "Использовать 1 шт. на себя"
+msgstr "применить предмет на себя"
 
 #: ../Commands.pm:347
 msgid "Attack another player (PVP/GVG only)."
-msgstr ""
+msgstr "атаковать другого игрока (только дляPVP/GVG)"
 
 #: ../Commands.pm:348
 msgid "attack the specified player"
-msgstr ""
+msgstr "атаковать указанного игрока"
 
 #: ../Commands.pm:351
 msgid "Look in a certain direction."
-msgstr ""
+msgstr "повернуться и посмотреть в указанном направлении"
 
 #: ../Commands.pm:352
 msgid "<body dir> [<head dir>]"
-msgstr ""
+msgstr "<body dir> [<head dir>]"
 
 #: ../Commands.pm:352
 msgid "look at <body dir> (0-7) with head at <head dir> (0-2)"
 msgstr ""
+"повернуться в направлении <body dir> (0-7) и посмотреть в направлении <head "
+"dir> (0-2)"
 
 #: ../Commands.pm:355
 msgid "Look at a certain player."
-msgstr ""
+msgstr "посмотреть на указанного игрока"
 
 #: ../Commands.pm:356
 msgid "look at player"
-msgstr ""
+msgstr "посмотреть на игрока"
 
 #: ../Commands.pm:358
 msgid "Save current position for warp portal."
-msgstr ""
+msgstr "запомнить текущее место как место для варп-портала"
 
 #: ../Commands.pm:359
 msgid "List monsters that are on screen."
-msgstr ""
+msgstr "вывести список всех мобов на экране"
 
 #: ../Commands.pm:361
-#, fuzzy
 msgid "Move your character."
-msgstr "Удалить персонажа"
+msgstr "походить вашим персонажем"
 
 #: ../Commands.pm:362
 msgid "<x> <y> [<map name>]"
-msgstr ""
+msgstr "<x> <y> [<map name>]"
 
 #: ../Commands.pm:362
 msgid "move to the coordinates on a map"
-msgstr ""
+msgstr "пойти персонажем на указанные координаты"
 
 #: ../Commands.pm:363
 msgid "<map name>"
-msgstr ""
+msgstr "<map name>"
 
 #: ../Commands.pm:363
 msgid "move to map"
-msgstr ""
+msgstr "пойти на указанную локацию"
 
 #: ../Commands.pm:364
-#, fuzzy
 msgid "<portal #>"
-msgstr " Список порталов "
+msgstr "<portal #>"
 
 #: ../Commands.pm:364
 msgid "move to nearby portal"
-msgstr ""
+msgstr "войти в расположенный рядом портал"
 
 #: ../Commands.pm:365
-#, fuzzy
 msgid "stop all movement"
-msgstr "Движение прекращено.\n"
+msgstr "остановиться"
 
 #: ../Commands.pm:367
 msgid "List NPCs that are on screen."
-msgstr ""
+msgstr "вывести список всех неписей на экране"
 
 #: ../Commands.pm:369
 msgid "Open your vending shop."
-msgstr ""
+msgstr "открыть вашу торговую лавку"
 
 #: ../Commands.pm:371
 msgid "Chat in the party chat."
-msgstr ""
+msgstr "отправить сообщение в пати-чат"
 
 #: ../Commands.pm:372
 msgid "send <message> to party chat"
-msgstr ""
+msgstr "отправить сообщение <message> в пати-чат"
 
 #: ../Commands.pm:375
 msgid "Party management."
-msgstr ""
+msgstr "управление патей"
 
 #: ../Commands.pm:376
 msgid "displays party member info"
-msgstr ""
+msgstr "вывести информацию про сопартийцев"
 
 #: ../Commands.pm:377
 msgid "create \"<party name>\""
-msgstr ""
+msgstr "create \"<party name>\""
 
 #: ../Commands.pm:377
 msgid "organize a party"
-msgstr ""
+msgstr "создать пати с указанным названием"
 
 #: ../Commands.pm:378
 msgid "share <flag>"
-msgstr ""
+msgstr "share <flag>"
 
 #: ../Commands.pm:378
 msgid "sets party exp sharing to even if flag is 1, individual take if 0"
-msgstr ""
+msgstr "<flag> = 1, опыт делится поровну; <flag> = 0, кто сколько набил"
 
 #: ../Commands.pm:379
 msgid "request <player #>"
-msgstr ""
+msgstr "request <player #>"
 
 #: ../Commands.pm:379
-#, fuzzy
 msgid "request player to join your party"
-msgstr "'%s' хочет вступить в Ваше пати.\n"
+msgstr "пригласить игрока в пати"
 
 #: ../Commands.pm:380
 msgid "accept a party join request if <flag> is 1, deny if 0"
 msgstr ""
+"<flag> = 1, принять приглашение в пати; <flag> = 0, отклонить приглашение"
 
 #: ../Commands.pm:381
 msgid "kick <party member #>"
-msgstr ""
+msgstr "kick <party member #>"
 
 #: ../Commands.pm:381
 msgid "kick party member from party"
-msgstr ""
+msgstr "выпнуть сопартийца из пати"
 
 #: ../Commands.pm:382
-#, fuzzy
 msgid "leave the party"
-msgstr "%s покинул пати.\n"
+msgstr "выйти из пати"
 
 #: ../Commands.pm:385
-#, fuzzy
 msgid "Pecopeco status."
-msgstr "Ваш Пекопеко активен.\n"
+msgstr "проверить наличие пекопеко"
 
 #: ../Commands.pm:386
 msgid "display pecopeco status"
-msgstr ""
+msgstr "вывести состояние пекопеко"
 
 #: ../Commands.pm:387
 msgid "release your pecopeco"
-msgstr ""
+msgstr "отпустить пекопеко"
 
 #: ../Commands.pm:390
 msgid "Pet management."
-msgstr ""
+msgstr "управление питомцем"
 
 #: ../Commands.pm:391 ../Commands.pm:392
 msgid "displays pet status"
-msgstr ""
+msgstr "отобразить статус питомца"
 
 #: ../Commands.pm:393
-#, fuzzy
 msgid "c <monster #>"
-msgstr "Список &мобов"
+msgstr "c <monster #>"
 
 #: ../Commands.pm:393 ../Commands.pm:394
 msgid "captures a monster"
-msgstr ""
+msgstr "поймать монстра (указать номер монстра, см. help ml)"
 
 #: ../Commands.pm:394
 msgid "capture <monster #>"
-msgstr ""
+msgstr "capture <monster #>"
 
 #: ../Commands.pm:395
 msgid "hatch <egg #>"
-msgstr ""
+msgstr "hatch <egg #>"
 
 #: ../Commands.pm:395
 msgid "hatches a pet egg, but first you should use the item Pet Incubator"
-msgstr ""
+msgstr "hatches a pet egg, но сначала вы должны использовать \"Инкубатор\""
 
 #: ../Commands.pm:396
 msgid "sends pet menu"
-msgstr ""
+msgstr "sends pet menu"
 
 #: ../Commands.pm:397
 msgid "feeds your pet"
-msgstr ""
+msgstr "покормить питомца"
 
 #: ../Commands.pm:398
 msgid "plays with your pet"
-msgstr ""
+msgstr "поиграть с питомцем"
 
 #: ../Commands.pm:399
 msgid "sends your pet back to the egg"
-msgstr ""
+msgstr "посадить питомца в яйцо"
 
 #: ../Commands.pm:400
 msgid "unequips your pet"
-msgstr ""
+msgstr "снять экиперовку с питомца"
 
 #: ../Commands.pm:401
 msgid "name <name>"
-msgstr ""
+msgstr "name <name>"
 
 #: ../Commands.pm:401
 msgid "changes the name of the pet"
-msgstr ""
+msgstr "изменить имя питомца"
 
 #: ../Commands.pm:403
-#, fuzzy
 msgid "List pets that are on screen."
-msgstr "Выйти в меню выбора персонажа."
+msgstr "вывести список питомцев на экране"
 
 #: ../Commands.pm:405
 msgid "List players that are on screen."
-msgstr ""
+msgstr "вывести список игроков на экране"
 
 #: ../Commands.pm:406
 msgid "lists players on screen"
-msgstr ""
+msgstr "вывести список игроков на экране"
 
 #: ../Commands.pm:407
 msgid "displays detailed info about a player"
-msgstr ""
+msgstr "вывести подробную информацию про указанного игрока"
 
 #: ../Commands.pm:408
-#, fuzzy
 msgid "lists party players on screen"
-msgstr "Всего игроков в пати: %s \n"
+msgstr "вывести список сопартийцев на экране"
 
 #: ../Commands.pm:409
-#, fuzzy
 msgid "lists guild players on screen"
-msgstr "Всего игроков из гильдии: %s\n"
+msgstr "вывести список согильдийцев на экране"
 
 #: ../Commands.pm:412
-#, fuzzy
 msgid "Control plugins."
-msgstr "Загрузка всех плагинов...\n"
+msgstr "управление плагинами"
 
 #: ../Commands.pm:413
 msgid "lists loaded plugins"
-msgstr ""
+msgstr "вывести список загруженных плагинов"
 
 #: ../Commands.pm:414
 msgid "load <filename>"
-msgstr ""
+msgstr "load <filename>"
 
 #: ../Commands.pm:414
 msgid "loads a plugin file"
-msgstr ""
+msgstr "загрузить плагин из файла"
 
 #: ../Commands.pm:415
 msgid "reload <plugin name|plugin #>"
-msgstr ""
+msgstr "reload <plugin name|plugin #>"
 
 #: ../Commands.pm:415
 msgid "reloads a loaded plugin"
-msgstr ""
+msgstr "перезагрузить указанный плагин"
 
 #: ../Commands.pm:416
 msgid "unload <plugin name|plugin #>"
-msgstr ""
+msgstr "unload <plugin name|plugin #>"
 
 #: ../Commands.pm:416
 msgid "unloads a loaded plugin"
-msgstr ""
+msgstr "выгрузить указанный плагин"
 
 #: ../Commands.pm:417
 msgid "displays plugin help"
-msgstr ""
+msgstr "вывести справку по команде plugin"
 
 #: ../Commands.pm:420
 msgid "Send a private message."
-msgstr ""
+msgstr "отправить приватное сообщение"
 
 #: ../Commands.pm:421
 msgid "<player name|PM list #> <message>"
-msgstr ""
+msgstr "<player name|PM list #> <message>"
 
 #: ../Commands.pm:421
 msgid "send <message> to player through PM"
-msgstr ""
+msgstr "отправить сообщение <message> указанному игроку в приват"
 
 #: ../Commands.pm:423
-#, fuzzy
 msgid "Quick PM list."
-msgstr " Список собеседников "
+msgstr "список игроков, получавших или отправлявших личные сообщения"
 
 #: ../Commands.pm:424
-#, fuzzy
 msgid "List portals that are on screen."
-msgstr "Выйти в меню выбора персонажа."
+msgstr "вывести список порталов на экране"
 
 #: ../Commands.pm:425
-#, fuzzy
 msgid "Exit this program."
-msgstr "Выйти из программы."
+msgstr "выйти из программы"
 
 #: ../Commands.pm:427
 msgid "Reload source code files."
-msgstr ""
+msgstr "перечитать исходники"
 
 #: ../Commands.pm:428
 msgid "reload functions.pl"
-msgstr ""
+msgstr "перечитать functions.pl"
 
 #: ../Commands.pm:429
 msgid "<module names>"
-msgstr ""
+msgstr "<module names>"
 
 #: ../Commands.pm:429
 msgid "reload module files in the space-separated <module names>"
-msgstr ""
+msgstr "перечитать указанные через пробел модули"
 
 #: ../Commands.pm:433
-#, fuzzy
 msgid "Reload configuration files."
-msgstr "Правка параметров конфига - config.txt."
+msgstr "перечитать конфигурационные файлы"
 
 #: ../Commands.pm:434
-#, fuzzy
 msgid "reload all control and table files"
-msgstr "Не получается загрузить табличный файл %s."
+msgstr "перечитать все конфигурационные и табличные файлы"
 
 #: ../Commands.pm:435
 msgid "<names>"
-msgstr ""
+msgstr "<names>"
 
 #: ../Commands.pm:435
 msgid "reload control files in the list of <names>"
-msgstr ""
+msgstr "перечитать конфигурационные файлы из указанного списка"
 
 #: ../Commands.pm:436
 msgid "all except <names>"
-msgstr ""
+msgstr "all except <names>"
 
 #: ../Commands.pm:436
 msgid "reload all files except those in the list of <names>"
-msgstr ""
+msgstr "перечитать все файлы кроме тех, что указаны после except"
 
 #: ../Commands.pm:439
 msgid "Log out then log in again."
-msgstr ""
+msgstr "перезайти в игру"
 
 #: ../Commands.pm:440
 msgid "logout and login after 5 seconds"
-msgstr ""
+msgstr "выйти и через 5 секунд зайти снова"
 
 #: ../Commands.pm:441 ../Commands.pm:691
 msgid "<seconds>"
-msgstr ""
+msgstr "<seconds>"
 
 #: ../Commands.pm:441
 msgid "logout and login after <seconds>"
-msgstr ""
+msgstr "выйти и через <seconds> секунд зайти снова"
 
 #: ../Commands.pm:444
-#, fuzzy
 msgid "Respawn back to the save point."
-msgstr "Возврат в точку сохранения.\n"
+msgstr "вернуться на точку сохранения"
 
 #: ../Commands.pm:447
-#, fuzzy
 msgid "Display character status."
-msgstr "Удалить персонажа"
+msgstr "вывести состояние персонажа"
 
 #: ../Commands.pm:449
 msgid "Sell items to an NPC."
-msgstr ""
+msgstr "продать предмет неписи"
 
 #: ../Commands.pm:450
-#, fuzzy
 msgid "put inventory items in sell list"
-msgstr "Предмет %s отсутствует в инвентаре.\n"
+msgstr "пометить указанный итем на продажу"
 
 #: ../Commands.pm:451
-#, fuzzy
 msgid "show items in the sell list"
-msgstr "%s (%s) уже в списке продажи.\n"
+msgstr "вывести список помеченных на продажу итемов"
 
 #: ../Commands.pm:452
-#, fuzzy
 msgid "sell everything in the sell list"
-msgstr "Напишите 'sell done' для продажи всего списка продажи.\n"
+msgstr "продать все помеченные на продажу итемы неписи"
 
 #: ../Commands.pm:453
-#, fuzzy
 msgid "clear the sell list"
-msgstr "%s (%s) уже в списке продажи.\n"
+msgstr "очистить список, отменить продажу"
 
 #: ../Commands.pm:456
 msgid "Send a raw packet to the server."
-msgstr ""
+msgstr "послать \"сырой\" пакет серверу"
 
 #: ../Commands.pm:457
 msgid "<hex string>"
-msgstr ""
+msgstr "<hex string>"
 
 #: ../Commands.pm:457
 msgid "sends a raw packet to connected server"
-msgstr ""
+msgstr "послать \"сырой\" пакет серверу"
 
 #: ../Commands.pm:459
 msgid "Sit down."
-msgstr ""
+msgstr "сесть"
 
 #: ../Commands.pm:461
 msgid "Skills management."
-msgstr ""
+msgstr "вывести список умений или прокачать умение"
 
 #: ../Commands.pm:462
 msgid "Lists available skills."
-msgstr ""
+msgstr "вывести список умений персонажа"
 
 #: ../Commands.pm:463
 msgid "add <skill #>"
-msgstr ""
+msgstr "add <skill #>"
 
 #: ../Commands.pm:463
-#, fuzzy
 msgid "add a skill point"
-msgstr "Скилл поинтов"
+msgstr "прокачать указанное умение"
 
 #: ../Commands.pm:464
-#, fuzzy
 msgid "displays skill description"
-msgstr " Список Умений "
+msgstr "вывести описание умения"
 
 #: ../Commands.pm:466
 msgid "Display a list of slaves in your immediate area."
-msgstr ""
+msgstr "вывести список всех слуг вокруг вас"
 
 #: ../Commands.pm:467
 msgid "List area effect spells on screen."
-msgstr ""
+msgstr "вывести список наземных эффектов на экране"
 
 #: ../Commands.pm:469
 msgid "Handle items in Kafra storage."
-msgstr ""
+msgstr "работа со складом Кафры"
 
 #: ../Commands.pm:470
 msgid "lists items in storage"
-msgstr ""
+msgstr "вывести список всех предметов на складе"
 
 #: ../Commands.pm:471
 msgid "lists equipments in storage"
-msgstr ""
+msgstr "вывести список экипировки на складе"
 
 #: ../Commands.pm:472
 msgid "lists non-usable items in storage"
-msgstr ""
+msgstr "вывести список несъедобных предметов на складе"
 
 #: ../Commands.pm:473
 msgid "lists usable items in storage"
-msgstr ""
+msgstr "вывести список съедобных предметов на складе"
 
 #: ../Commands.pm:474
-#, fuzzy
 msgid "adds inventory item to storage"
-msgstr "%s перемещён на склад\n"
+msgstr "переложить указанный предмет с инвентаря на склад"
 
 #: ../Commands.pm:475
-#, fuzzy
 msgid "addfromcart <cart item #> [<amount>]"
-msgstr "Используйте: aua (<№ предмета>|<имя предмета>) <количество>\n"
+msgstr "addfromcart <cart item #> [<amount>]"
 
 #: ../Commands.pm:475
-#, fuzzy
 msgid "adds cart item to storage"
-msgstr "%s перемещён на склад\n"
+msgstr "переложить указанный предмет из телеги на склад"
 
 #: ../Commands.pm:476
-#, fuzzy
 msgid "get <storage item #> [<amount>]"
-msgstr "Используйте: aua (<№ предмета>|<имя предмета>) <количество>\n"
+msgstr "get <storage item #> [<amount>]"
 
 #: ../Commands.pm:476
 msgid "gets item from storage to inventory"
-msgstr ""
+msgstr "взять со склада предмет и положить его в инвентарь"
 
 #: ../Commands.pm:477
-#, fuzzy
 msgid "gettocart <storage item #> [<amount>]"
-msgstr "Используйте: aua (<№ предмета>|<имя предмета>) <количество>\n"
+msgstr "gettocart <storage item #> [<amount>]"
 
 #: ../Commands.pm:477
 msgid "gets item from storage to cart"
-msgstr ""
+msgstr "взять со склада предмет и положить его в телегу"
 
 #: ../Commands.pm:478
-#, fuzzy
 msgid "close storage"
-msgstr "Автоскладирование"
+msgstr "закрыть склад"
 
 #: ../Commands.pm:479
 msgid "logs storage items to logs/storage.txt"
-msgstr ""
+msgstr "записать лог предметов со склада в файл logs\\storage.txt"
 
 #: ../Commands.pm:482
 msgid "Display shop items from NPC."
-msgstr ""
+msgstr "вывести список продаваемых неписью предметов"
 
 #: ../Commands.pm:483
 msgid "lists available shop items from NPC"
-msgstr ""
+msgstr "вывести список предлагаемых неписью товаров"
 
 #: ../Commands.pm:484
-#, fuzzy
 msgid "desc <store item #>"
-msgstr "Используйте: cart change <1-5>\n"
+msgstr "desc <store item #>"
 
 #: ../Commands.pm:484
-#, fuzzy
 msgid "displays store item description"
-msgstr " Список Умений "
+msgstr "вывести описание для указанного предмета"
 
 #: ../Commands.pm:487
-#, fuzzy
 msgid "Use skill on location."
-msgstr "по координатам"
+msgstr "применить умение по координатам"
 
 #: ../Commands.pm:488
 msgid "<skill #> <x> <y> [<level>]"
-msgstr ""
+msgstr "<skill #> <x> <y> [<level>]"
 
 #: ../Commands.pm:488
-#, fuzzy
 msgid "use skill on location"
-msgstr "по координатам"
+msgstr "применить умение по указанным координатампо координатам"
 
 #: ../Commands.pm:491
-#, fuzzy
 msgid "Use skill on monster."
-msgstr "Использовать 1 шт. на себя"
+msgstr "применить умение на моба"
 
 #: ../Commands.pm:492
 msgid "<skill #> <monster #> [<level>]"
-msgstr ""
+msgstr "<skill #> <monster #> [<level>]"
 
 #: ../Commands.pm:492
 msgid "use skill on monster"
-msgstr ""
+msgstr "применить умение по указанному мобу"
 
 #: ../Commands.pm:495
 msgid "Use skill on player."
-msgstr ""
+msgstr "применить умение на игрока"
 
 #: ../Commands.pm:496
 msgid "<skill #> <player #> [<level>]"
-msgstr ""
+msgstr "<skill #> <player #> [<level>]"
 
 #: ../Commands.pm:496
 msgid "use skill on player"
-msgstr ""
+msgstr "применить умение по указанному игроку"
 
 #: ../Commands.pm:499
-#, fuzzy
 msgid "Use skill on self."
-msgstr "Использовать 1 шт. на себя"
+msgstr "применить умение на себя"
 
 #: ../Commands.pm:500
 msgid "<skill #> [<level>]"
-msgstr ""
+msgstr "<skill #> [<level>]"
 
 #: ../Commands.pm:500
-#, fuzzy
 msgid "use skill on self"
-msgstr "Использовать 1 шт. на себя"
+msgstr "применить умение на себя"
 
 #: ../Commands.pm:503
 msgid "Use skill on slave."
-msgstr ""
+msgstr "применить умение на слугу"
 
 #: ../Commands.pm:504
 msgid "<skill #> <target #> <skill level>"
-msgstr ""
+msgstr "<skill #> <target #> <skill level>"
 
 #: ../Commands.pm:504
 msgid "use skill on slave"
-msgstr ""
+msgstr "применить умение на слугу"
 
 #: ../Commands.pm:507
-#, fuzzy
 msgid "Use skill on ground spell."
-msgstr "Использовать 1 шт. на себя"
+msgstr "применить умение на наземном эффекте"
 
 #: ../Commands.pm:508
 msgid "<skill #> <target #> [<skill level>]"
-msgstr ""
+msgstr "<skill #> <target #> [<skill level>]"
 
 #: ../Commands.pm:508
-#, fuzzy
 msgid "use skill on ground spell"
-msgstr "Использовать 1 шт. на себя"
+msgstr "применить умение на наземном эффекте"
 
 #: ../Commands.pm:510
 msgid "Display stats."
-msgstr ""
+msgstr "вывести статы персонажа"
 
 #: ../Commands.pm:511
 msgid "Stand up."
-msgstr ""
+msgstr "встать"
 
 #: ../Commands.pm:513
-#, fuzzy
 msgid "Add status point."
-msgstr "Статус поинтов"
+msgstr "добавить статус-поинт."
 
 #: ../Commands.pm:514
 msgid "add status points to a stat"
-msgstr ""
+msgstr "прокачать выбранный стат"
 
 #: ../Commands.pm:517
-#, fuzzy
 msgid "Switch configuration file."
-msgstr "Конфиг переключен на файл \"%s\".\n"
+msgstr "переключиться на другой конфиг"
 
 #: ../Commands.pm:518
 msgid "<filename>"
-msgstr ""
+msgstr "<filename>"
 
 #: ../Commands.pm:518
-#, fuzzy
 msgid "switches configuration file to <filename>"
-msgstr "Конфиг переключен на файл \"%s\".\n"
+msgstr "переключить конфиг на файл <filename>"
 
 #: ../Commands.pm:521
 msgid "Take an item from the ground."
-msgstr ""
+msgstr "поднять предмет с земли"
 
 #: ../Commands.pm:522
-#, fuzzy
 msgid "<item #>"
-msgstr "предмет: "
+msgstr "<item #>"
 
 #: ../Commands.pm:522
 msgid "take an item from the ground"
-msgstr ""
+msgstr "поднять указанный предмет с земли"
 
 #: ../Commands.pm:523
 msgid "take the first item on the ground"
-msgstr ""
+msgstr "поднять с земли первый попавшийся предмет"
 
 #: ../Commands.pm:526
-#, fuzzy
 msgid "Manually talk to an NPC."
-msgstr "Вы не говорите ни с одной неписью.\n"
+msgstr "пошаговый разговор с неписью"
 
 #: ../Commands.pm:527
 msgid "<NPC #>"
-msgstr ""
+msgstr "<NPC #>"
 
 #: ../Commands.pm:527
-#, fuzzy
 msgid "talk to an NPC"
-msgstr "Вы не говорите ни с одной неписью.\n"
+msgstr "начать разговор с указанной неписью"
 
 #: ../Commands.pm:528
-#, fuzzy
 msgid "continue talking to NPC"
-msgstr "Продолжить разговор"
+msgstr "продолжить слушать непись"
 
 #: ../Commands.pm:529
 msgid "lists response options to NPC"
-msgstr ""
+msgstr "вывести список возможных вариантов ответа"
 
 #: ../Commands.pm:530
 msgid "resp <response #>"
-msgstr ""
+msgstr "resp <response #>"
 
 #: ../Commands.pm:530
-#, fuzzy
 msgid "select a response to NPC"
-msgstr "Выберите ответ"
+msgstr "выбрать вариант ответа"
 
 #: ../Commands.pm:531
-#, fuzzy
 msgid "num <number>"
-msgstr "Ввести число"
+msgstr "num <number>"
 
 #: ../Commands.pm:531
 msgid "send a number to NPC"
-msgstr ""
+msgstr "сказать неписи число"
 
 #: ../Commands.pm:532
 msgid "text <string>"
-msgstr ""
+msgstr "text <string>"
 
 #: ../Commands.pm:532
-#, fuzzy
 msgid "send text to NPC"
-msgstr "Ответ для неписи"
+msgstr "сказать неписи текст"
 
 #: ../Commands.pm:533
 msgid "ends/cancels conversation with NPC"
-msgstr ""
+msgstr "завершить/отменить разговор с неписью"
 
 #: ../Commands.pm:536
 msgid "Send a sequence of responses to an NPC."
-msgstr ""
+msgstr "поговорить с неписью согласно заданной последовательности"
 
 #: ../Commands.pm:537
 msgid "<x> <y> <NPC talk codes>"
-msgstr ""
+msgstr "<x> <y> <NPC talk codes>"
 
 #: ../Commands.pm:537
 msgid "talk to the NPC standing at <x> <y> and use <NPC talk codes>"
-msgstr ""
+msgstr "поговорить со стоящей на <x> <y> неписью, используя <NPC talk codes>"
 
 #: ../Commands.pm:540
 msgid "Tank for a player."
-msgstr ""
+msgstr "танковать мобов для игрока"
 
 #: ../Commands.pm:541
 msgid "starts tank mode with player as tankModeTarget"
-msgstr ""
+msgstr "начать танковать мобов для указанного в tankModeTarget игрока"
 
 #: ../Commands.pm:542
 msgid "stops tank mode"
-msgstr ""
+msgstr "прекратить танковать мобов"
 
 #: ../Commands.pm:544
-#, fuzzy
 msgid "Teleport to a random location."
-msgstr "Телепорт на точку сохранения."
+msgstr "телепорт, винг, на случайное место на локации"
 
 #: ../Commands.pm:545
 msgid "Show what your vending shop would sell."
-msgstr ""
+msgstr "предпросмотр вашей торговой лавки"
 
 #: ../Commands.pm:547
 msgid "Set a timeout."
-msgstr ""
+msgstr "задать таймаут"
 
 #: ../Commands.pm:548
 msgid "<type>"
-msgstr ""
+msgstr "<type>"
 
 #: ../Commands.pm:548
 msgid "displays value of <type>"
-msgstr ""
+msgstr "вывести значение таймаута <type>"
 
 #: ../Commands.pm:549
 msgid "<type> <second>"
-msgstr ""
+msgstr "<type> <second>"
 
 #: ../Commands.pm:549
 msgid "sets value of <type> to <seconds>"
-msgstr ""
+msgstr "задать таймауту <type> новое значение <seconds>"
 
 #: ../Commands.pm:552
 msgid "Displays top10 ranking."
-msgstr ""
+msgstr "вывести топ10"
 
 #: ../Commands.pm:553
 msgid "displays Alchemist's top10 ranking"
-msgstr ""
+msgstr "вывести список лучших алхимиков"
 
 #: ../Commands.pm:554
 msgid "displays Blackmith's top10 ranking"
-msgstr ""
+msgstr "вывести список лучших кузнецов"
 
 #: ../Commands.pm:555
 msgid "displays PVP top10 ranking"
-msgstr ""
+msgstr "вывести десятку лучших игроков в PVP"
 
 #: ../Commands.pm:556
 msgid "displays Taekwon's top10 ranking"
-msgstr ""
+msgstr "вывести десятку лучших тэквондистов"
 
 #: ../Commands.pm:559
 msgid "Unequp an item."
-msgstr ""
+msgstr "снять экипировку"
 
 #: ../Commands.pm:560
-#, fuzzy
 msgid "unequips the specified item"
-msgstr "Указан неверный слот экипировки.\n"
+msgstr "снять указанный предмет с персонажа и положить его в инвентарь"
 
 #: ../Commands.pm:563
 msgid "Buy items from vending shops."
-msgstr ""
+msgstr "купить предмет в торговой лавке"
 
 #: ../Commands.pm:564
 msgid "<vender #>"
-msgstr ""
+msgstr "<vender #>"
 
 #: ../Commands.pm:564
 msgid "enter vender shop"
-msgstr ""
+msgstr "войти в указанную торговую лавку"
 
 #: ../Commands.pm:565
-#, fuzzy
 msgid "<vender #> <vender item #> [<amount>]"
-msgstr "Используйте: aua (<№ предмета>|<имя предмета>) <количество>\n"
+msgstr "<vender #> <vender item #> [<amount>]"
 
 #: ../Commands.pm:565
 msgid "buy items from vender shop"
-msgstr ""
+msgstr "купить указанный предмет в торговой лавке"
 
 #: ../Commands.pm:566
 msgid "leave current vender shop"
-msgstr ""
+msgstr "выйти из текущей торговой лавки"
 
 #: ../Commands.pm:568
 msgid "Toggle verbose on/off."
-msgstr ""
+msgstr "вкл/выкл режима подробностей"
 
 #: ../Commands.pm:569
 msgid "Display the version of openkore."
-msgstr ""
+msgstr "вывести версию OpenKore"
 
 #: ../Commands.pm:570
 msgid "List nearby vending shops."
-msgstr ""
+msgstr "вывести список стоящих рядом торговых лавок"
 
 #: ../Commands.pm:573
-#, fuzzy
 msgid "Open warp portal."
-msgstr "Вы не скастовали варп-портал.\n"
+msgstr "открыть варп-портал"
 
 #: ../Commands.pm:574
 msgid "lists available warp portals to open"
-msgstr ""
+msgstr "список доступных для открытия варп-порталов"
 
 #: ../Commands.pm:575
 msgid "<warp portal #|map name>"
-msgstr ""
+msgstr "<warp portal #|map name>"
 
 #: ../Commands.pm:575
-#, fuzzy
 msgid "opens a warp portal to a map"
-msgstr "Попытка открыть варп-портал в %s (%s).\n"
+msgstr "открыть варп-портал до указанной локации"
 
 #: ../Commands.pm:578
 msgid "Gives a report about your inventory weight."
-msgstr ""
+msgstr "вывести отчет о весе инвентаря"
 
 #: ../Commands.pm:579
 msgid "displays info about current weight"
-msgstr ""
+msgstr "вывести информацию про текущий вес инвентаря"
 
 #: ../Commands.pm:580
-#, fuzzy
 msgid "<item weight>"
-msgstr "перевес"
+msgstr "<item weight>"
 
 #: ../Commands.pm:580
 msgid "calculates how much more items of specified weight can be carried"
-msgstr ""
+msgstr "посчитать сколько еще предметов указанного веса поместится в инвентарь"
 
 #: ../Commands.pm:582
 msgid "Shows your current location."
-msgstr ""
+msgstr "вывести текущее местоположение"
 
 #: ../Commands.pm:583
 msgid "Display the number of people on the current server."
-msgstr ""
+msgstr "вывести текущий онлайн сервера"
 
 #: ../Commands.pm:584
-#, fuzzy
 msgid "Display your character and account ID."
-msgstr "Персонажи на данном аккаунте отсутствуют.\n"
+msgstr "вывести информацию о своём персонаже и своём аккаунте"
 
 #: ../Commands.pm:586
-#, fuzzy
 msgid "Displays Mail commands."
-msgstr " Список консольных команд "
+msgstr "вывести список команд для работы с почтой"
 
 #: ../Commands.pm:588
 msgid "Sends Mail."
-msgstr ""
+msgstr "отправить письмо"
 
 #: ../Commands.pm:589
-#, fuzzy
 msgid "<receiver> <title> <message>"
-msgstr "Используйте: ms <получатель> <тема> <сообщение>\n"
+msgstr "<receiver> <title> <message>"
 
 #: ../Commands.pm:589
 msgid "sends mail to <receiver>"
-msgstr ""
+msgstr "отправить письмо игроку <receiver>"
 
 #: ../Commands.pm:591
 msgid "Opens Mailbox."
-msgstr ""
+msgstr "открыть почтовый ящик"
 
 #: ../Commands.pm:593
 msgid "Open a mail."
-msgstr ""
+msgstr "открыть письмо"
 
 #: ../Commands.pm:594 ../Commands.pm:598 ../Commands.pm:608
 msgid "<mail #>"
-msgstr ""
+msgstr "<mail #>"
 
 #: ../Commands.pm:594
 msgid ""
 "open the mail with a corresponding number from the mail list when you open "
 "your mailbox"
-msgstr ""
+msgstr "открыть письмо с указанным номером из списка в почтовом ящике"
 
 #: ../Commands.pm:597
-#, fuzzy
 msgid "Deletes a Mail."
-msgstr "Удалить персонажа"
+msgstr "удалить письмо"
 
 #: ../Commands.pm:598
 msgid ""
 "delete a mail with a corresponding number from the mail list when you open "
 "your mailbox"
-msgstr ""
+msgstr "удалить письмо с указанным номером из списка писем в почтовом ящике"
 
 #: ../Commands.pm:601
 msgid "Interacts with mail box window."
-msgstr ""
+msgstr "взаимодействие с почтовым ящиком"
 
 #: ../Commands.pm:602
 msgid "write mail"
-msgstr ""
+msgstr "написать письмо"
 
 #: ../Commands.pm:603
 msgid "take attached items back"
-msgstr ""
+msgstr "забрать вложенный предмет назад"
 
 #: ../Commands.pm:604
 msgid "inputs zenys"
-msgstr ""
+msgstr "вложить в письмо зени"
 
 #: ../Commands.pm:607
 msgid "Returns the mail to the sender."
-msgstr ""
+msgstr "вернуть письмо отправителю"
 
 #: ../Commands.pm:608
 msgid "a corresponding number from the mail list when you open your mailbox"
-msgstr ""
+msgstr "вернуть письмо с указанным номером отправителю"
 
 #: ../Commands.pm:611
 msgid "Mail & Attachment."
-msgstr ""
+msgstr "письмо и вложения"
 
 #: ../Commands.pm:612
-#, fuzzy
 msgid "get <mail #>"
-msgstr "Используйте: mo <№ письма>\n"
+msgstr "get <mail #>"
 
 #: ../Commands.pm:612
 msgid "takes items attached from mail"
-msgstr ""
+msgstr "взять предметы из вложения к письму"
 
 #: ../Commands.pm:613
 msgid "add zeny <amount>"
-msgstr ""
+msgstr "add zeny <amount>"
 
 #: ../Commands.pm:613
 msgid "attaches zenys in the mail"
-msgstr ""
+msgstr "вложить зени в письмо"
 
 #: ../Commands.pm:614
 msgid "add item <amount> <inventory item>"
-msgstr ""
+msgstr "add item <amount> <inventory item>"
 
 #: ../Commands.pm:614
 msgid "attaches items in the mail"
-msgstr ""
+msgstr "вложить указанный предмет в письмо"
 
 #: ../Commands.pm:617
 msgid "Display possible commands for auction."
-msgstr ""
+msgstr "вывести список команд для работы с аукционом"
 
 #: ../Commands.pm:619
-#, fuzzy
 msgid "Adds an item to the auction."
-msgstr "Вы победили в аукционе.\n"
+msgstr "добавить предмет в аукцион"
 
 #: ../Commands.pm:620
-#, fuzzy
 msgid "<inventory item> <amount>"
-msgstr "Используйте: aua (<№ предмета>|<имя предмета>) <количество>\n"
+msgstr "<inventory item> <amount>"
 
 #: ../Commands.pm:620
-#, fuzzy
 msgid "adds an item to the auction"
-msgstr "Вы победили в аукционе.\n"
+msgstr "добавить указанный предмет в аукцион"
 
 #: ../Commands.pm:622
-#, fuzzy
 msgid "Removes item from auction."
-msgstr "На аукцион не выставлен ни один предмет.\n"
+msgstr "убрать предмет с аукциона"
 
 #: ../Commands.pm:624
-#, fuzzy
 msgid "Creates an auction."
-msgstr "На аукцион не выставлен ни один предмет.\n"
+msgstr "создать аукцион"
 
 #: ../Commands.pm:625
-#, fuzzy
 msgid "<current price> <instant buy price> <hours>"
-msgstr "Используйте: auc <текущая цена> <цена \"купить сейчас\"> <часы>\n"
+msgstr "<current price> <instant buy price> <hours>"
 
 #: ../Commands.pm:625
-#, fuzzy
 msgid "creates an auction"
-msgstr "На аукцион не выставлен ни один предмет.\n"
+msgstr "создать аукцион"
 
 #: ../Commands.pm:628
-#, fuzzy
 msgid "Ends an auction."
-msgstr "В аукционе найдено %s предметов.\n"
+msgstr "завершить аукцион"
 
 #: ../Commands.pm:629 ../Commands.pm:646
 msgid "<index>"
-msgstr ""
+msgstr "<index>"
 
 #: ../Commands.pm:629
-#, fuzzy
 msgid "ends an auction"
-msgstr "На аукцион не выставлен ни один предмет.\n"
+msgstr "завершить аукцион"
 
 #: ../Commands.pm:632
 msgid "Search for an auction according to the criteria."
-msgstr ""
+msgstr "поискать подходящий аукцион"
 
 #: ../Commands.pm:633
 msgid "<type> <price> <text>"
-msgstr ""
+msgstr "<type> <price> <text>"
 
 #: ../Commands.pm:633
 msgid ""
 "Item's search criteria. Type: 1 Armor, 2 Weapon, 3 Card, 4 Misc, 5 By Text, "
 "6 By Price, 7 Sell, 8 Buy"
 msgstr ""
+"критерии поиска. Тип: 1 Armor, 2 Weapon, 3 Card, 4 Misc, 5 By Text, 6 By "
+"Price, 7 Sell, 8 Buy"
 
 #: ../Commands.pm:636
-#, fuzzy
 msgid "Bids an auction."
-msgstr "На аукцион не выставлен ни один предмет.\n"
+msgstr "сделать ставку на предмет в аукционе"
 
 #: ../Commands.pm:637
-#, fuzzy
 msgid "<id> <price>"
-msgstr "Используйте: aub <id> <цена>\n"
+msgstr "<id> <price>"
 
 #: ../Commands.pm:637
-#, fuzzy
 msgid "bids an auction"
-msgstr "На аукцион не выставлен ни один предмет.\n"
+msgstr "предложить за указанный предмет новую цену"
 
 #: ../Commands.pm:640
 msgid "Displays your auction info."
-msgstr ""
+msgstr "Вывести справку по вашим аукционам"
 
 #: ../Commands.pm:641
 msgid "display selling info"
-msgstr ""
+msgstr "информация о продажах"
 
 #: ../Commands.pm:642
 msgid "display buying info"
-msgstr ""
+msgstr "информация о покупках"
 
 #: ../Commands.pm:645
-#, fuzzy
 msgid "Deletes an auction."
-msgstr "На аукцион не выставлен ни один предмет.\n"
+msgstr "удалить аукцион"
 
 #: ../Commands.pm:646
-#, fuzzy
 msgid "deletes an auction"
-msgstr "На аукцион не выставлен ни один предмет.\n"
+msgstr "удалить аукцион"
 
 #: ../Commands.pm:650
 msgid "Quest management."
-msgstr ""
+msgstr "управление квестами"
 
 #: ../Commands.pm:651
 msgid "displays possible commands for quest"
-msgstr ""
+msgstr "вывести команды для работы с квестами"
 
 #: ../Commands.pm:652
-#, fuzzy
 msgid "set <questID> on"
-msgstr "Используйте: quest set <ID квеста> <on|off>\n"
+msgstr "set <questID> on"
 
 #: ../Commands.pm:652
 msgid "enable quest"
-msgstr ""
+msgstr "включить квест"
 
 #: ../Commands.pm:653
-#, fuzzy
 msgid "set <questID> off"
-msgstr "Используйте: quest set <ID квеста> <on|off>\n"
+msgstr "set <questID> off"
 
 #: ../Commands.pm:653
 msgid "disable quest"
-msgstr ""
+msgstr "выключить квест"
 
 #: ../Commands.pm:654
 msgid "displays a list of your quests"
-msgstr ""
+msgstr "вывести список взятых квестов"
 
 #: ../Commands.pm:657
 msgid "Equipment showing."
-msgstr ""
+msgstr "просмотреть экипировку"
 
 #: ../Commands.pm:658
-#, fuzzy
 msgid "<player>"
-msgstr "Список &игроков"
+msgstr "<player>"
 
 #: ../Commands.pm:658
-#, fuzzy
 msgid "request equipment information for player"
-msgstr "Запрос информации об экипировке игрока: %s\n"
+msgstr "посмотреть экипировку у заданного игрока"
 
 #: ../Commands.pm:659
 msgid "enables equipment showing"
-msgstr ""
+msgstr "разрешить показывать всем свою экипировку"
 
 #: ../Commands.pm:660
 msgid "disables equipment showing"
-msgstr ""
+msgstr "запретить показывать всем свою экипировку"
 
 #: ../Commands.pm:663
-#, fuzzy
 msgid "Attempt to create a food item."
-msgstr "Попытка починить предмет: %s\n"
+msgstr "попытаться приготовить еду"
 
 #: ../Commands.pm:664
 msgid "<cook list #>"
-msgstr ""
+msgstr "<cook list #>"
 
 #: ../Commands.pm:664
-#, fuzzy
 msgid "attempt to create a food item"
-msgstr "Попытка починить предмет: %s\n"
+msgstr "попытаться приготовить еду"
 
 #: ../Commands.pm:667 ../Commands.pm:668
 msgid "Refine an item (using the whitesmith skill)"
-msgstr ""
+msgstr "заточить предмет используя умение кузнеца"
 
 #: ../Commands.pm:668
 msgid "(<item name>|<item index>)"
-msgstr ""
+msgstr "(<item name> | <item index>)"
 
 #: ../Commands.pm:671
 msgid "Move 5 steps north."
-msgstr ""
+msgstr "пройти 5 шагов на север"
 
 #: ../Commands.pm:672
 msgid "Move 5 steps south."
-msgstr ""
+msgstr "пройти 5 шагов на юг"
 
 #: ../Commands.pm:673
 msgid "Move 5 steps east."
-msgstr ""
+msgstr "пройти 5 шагов на восток"
 
 #: ../Commands.pm:674
 msgid "Move 5 steps west."
-msgstr ""
+msgstr "пройти 5 шагов на запад"
 
 #: ../Commands.pm:675
 msgid "Move 5 steps northeast."
-msgstr ""
+msgstr "пройти 5 шагов на северовосток"
 
 #: ../Commands.pm:676
 msgid "Move 5 steps northwest."
-msgstr ""
+msgstr "пройти 5 шагов на северозапад"
 
 #: ../Commands.pm:677
 msgid "Move 5 steps southeast."
-msgstr ""
+msgstr "пройти 5 шагов на юговосток"
 
 #: ../Commands.pm:678
 msgid "Move 5 steps southwest."
-msgstr ""
+msgstr "пройти 5 шагов на югозапад"
 
 #: ../Commands.pm:679
-#, fuzzy
 msgid "Answer captcha"
-msgstr "Применить Wx-капчу"
+msgstr "Ответить на капчу"
 
 #: ../Commands.pm:690
 msgid "Delay the next console commands."
-msgstr ""
+msgstr "задержать выполнение следущей консольной команды"
 
 #: ../Commands.pm:691
 msgid ""
 "delay the next console commands by a specified number of seconds (default: 1 "
 "sec.)"
 msgstr ""
+"задерживать следующую консольную команду на указанное количество секунд (по "
+"умолчанию 1 с)"
 
 #: ../Commands.pm:752
 msgid "Cannot use pause command now.\n"
@@ -6291,14 +6148,14 @@ msgstr ""
 "Используйте: reload <имя|\"all\">\n"
 
 #: ../Commands.pm:6905
-#, fuzzy, perl-format
+#, perl-format
 msgid "Changed the rodex mail message body to '%s'.\n"
-msgstr "Предмет добавлен в инвентарь: %s (%d) x %d шт. - %s."
+msgstr ""
 
 #: ../Commands.pm:6907
-#, fuzzy, perl-format
+#, perl-format
 msgid "Set the rodex mail message body to '%s'.\n"
-msgstr "Предмет добавлен в инвентарь: %s (%d) x %d шт. - %s."
+msgstr ""
 
 #: ../Commands.pm:6922
 #, fuzzy
@@ -6877,9 +6734,9 @@ msgid "Selected item is not same. Index:'%d' nameID:'%d' first selected:'%d'\n"
 msgstr ""
 
 #: ../Commands.pm:7873
-#, fuzzy, perl-format
+#, perl-format
 msgid "Cannot find item with id '%d'.\n"
-msgstr "Не удалось найти НПЦ с ИД (%d)."
+msgstr "Не удалось найти НПЦ с ИД (%d).\n"
 
 #: ../Commands.pm:7879
 #, fuzzy
@@ -8636,9 +8493,8 @@ msgid "Accept all deals (2)"
 msgstr ""
 
 #: ../Interface/Wx.pm:518
-#, fuzzy
 msgid "Accept all incoming deal requests"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:521
 msgid "Open shop"
@@ -8733,34 +8589,28 @@ msgid "Enable sharing party EXP"
 msgstr ""
 
 #: ../Interface/Wx.pm:552
-#, fuzzy
 msgid "Auto ignore party request (0)"
-msgstr "Авто-отказ от приглашения в пати.\n"
+msgstr "Авто-отказ от приглашения в пати."
 
 #: ../Interface/Wx.pm:552
-#, fuzzy
 msgid "Ignore all incoming party request"
-msgstr "Авто-отказ от приглашения в пати.\n"
+msgstr "Авто-отказ от приглашения в пати."
 
 #: ../Interface/Wx.pm:553
-#, fuzzy
 msgid "Auto reject party request (1)"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:553
-#, fuzzy
 msgid "Reject all incoming party request"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:554
-#, fuzzy
 msgid "Auto accept party request (2)"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:554
-#, fuzzy
 msgid "Accept all incoming party request"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:556
 #, fuzzy
@@ -8768,19 +8618,16 @@ msgid "Accept party request"
 msgstr "Авто-приём приглашения в пати.\n"
 
 #: ../Interface/Wx.pm:556
-#, fuzzy
 msgid "Accept incoming party request"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:557
-#, fuzzy
 msgid "Reject party request"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:557
-#, fuzzy
 msgid "Reject incoming party request"
-msgstr "Авто-отказ от приглашения в пати.\n"
+msgstr "Авто-отказ от приглашения в пати."
 
 #: ../Interface/Wx.pm:558
 msgid "Leave party"
@@ -8800,14 +8647,12 @@ msgid "Friend list"
 msgstr ""
 
 #: ../Interface/Wx.pm:565
-#, fuzzy
 msgid "Auto accept friend request"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:565
-#, fuzzy
 msgid "Auto accept all incoming friend requests"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:566
 msgid "Auto reject friend request"
@@ -8845,9 +8690,8 @@ msgid "Auto accept guild request"
 msgstr "Вы приняли приглашение в гильдию.\n"
 
 #: ../Interface/Wx.pm:574
-#, fuzzy
 msgid "Auto accept all incoming guild requests"
-msgstr "Авто-приём приглашения в пати.\n"
+msgstr "Авто-приём приглашения в пати."
 
 #: ../Interface/Wx.pm:575
 #, fuzzy
@@ -9948,9 +9792,9 @@ msgid "%s lost %s zeny.\n"
 msgstr "%s отдали %s зени.\n"
 
 #: ../Network/Receive.pm:1204
-#, fuzzy, perl-format
+#, perl-format
 msgid "Auto disconnecting due to zeny lower than %s!\n"
-msgstr "Отключение, ибо у персонажа меньше чем %s зени."
+msgstr "Отключение, ибо у персонажа меньше чем %s зени.\n"
 
 #: ../Network/Receive.pm:1205
 #, fuzzy
@@ -10520,9 +10364,9 @@ msgid "Storage closed.\n"
 msgstr "Склад закрыт.\n"
 
 #: ../Network/Receive.pm:3936
-#, fuzzy, perl-format
+#, perl-format
 msgid "Storage Item Added: %s (%d) x %d - %s"
-msgstr "Предмет добавлен на склад: %s (%d) x %s шт.\n"
+msgstr ""
 
 #: ../Network/Receive.pm:4005
 #, fuzzy, perl-format
@@ -13791,9 +13635,9 @@ msgid "File [%s] cannot be created: $!"
 msgstr ""
 
 #: ../Utils/TextReader.pm:94
-#, fuzzy, perl-format
+#, perl-format
 msgid "File [%s] does not exist."
-msgstr "Игрок %s отсутствует.\n"
+msgstr "Игрок %s отсутствует."
 
 #~ msgid ""
 #~ "------------- Character List -------------\n"
