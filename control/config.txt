@@ -705,6 +705,8 @@ buyAuto {
 	maxAmount 3
 	batchSize
 	disabled 0
+	maxBase
+	minBase
 }
 
 sellAuto 0
