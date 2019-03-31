@@ -3331,6 +3331,7 @@ sub useTeleport {
 			unless ($item) { $item = $char->inventory->getByNameID(12323); } # only if we don't have any fly wing
 		} else {
 			$item = $char->inventory->getByName($config{teleportAuto_item1});
+			$item = $char->inventory->getByNameID($config{teleportAuto_item1}) if (!($item) && $config{teleportAuto_item1} =~ /^\d{3,}$/);
 		}
 	} elsif ($use_lvl == 2) { #Butterfly Wing
 		if (!$config{teleportAuto_item2}) {
@@ -3338,6 +3339,7 @@ sub useTeleport {
 			unless ($item) { $item = $char->inventory->getByNameID(12324); } # only if we don't have any butterfly wing
 		} else {
 			$item = $char->inventory->getByName($config{teleportAuto_item2});
+			$item = $char->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
 		}
 	}
 
