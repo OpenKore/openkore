@@ -214,8 +214,6 @@ sub loadDataFiles {
 	# Load all other tables
 	Settings::addTableFile('cities.txt',
 		loader => [\&parseROLUT, \%cities_lut]);
-	Settings::addTableFile('commanddescriptions.txt',
-		loader => [\&parseCommandsDescription, \%descriptions], mustExist => 0);
 	Settings::addTableFile('directions.txt',
 		loader => [\&parseDataFile2, \%directions_lut]);
 	Settings::addTableFile('elements.txt',
