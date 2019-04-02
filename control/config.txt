@@ -42,6 +42,7 @@ commandPrefix ;
 callSignGM 0
 inGameAuth 0
 
+pauseCharLogin 1
 pauseCharServer 0
 pauseMapServer 0
 ignoreInvalidLogin 0
