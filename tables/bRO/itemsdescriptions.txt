@@ -29321,6 +29321,34 @@ Peso: ^77777780^000000
 Nível necessário: ^77777730^000000
 Classes: ^777777Todas^000000
 #
+5932#
+O pássaro livre sobre uma gaiola dominada por vinhas e flores é a representação perfeita de que quem prevalece no final sempre é a natureza.
+--------------------------
+^0000ffSOR +5. CRIT +5.^000000
+^0000ffEsquiva perfeita +5.^000000
+--------------------------
+Sentinelas e evoluções:
+^0000ffA cada refino:^000000
+^0000ffDano de [Ataque Aéreo] +5%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Asas de Ixion]^000000
+Sentinelas e evoluções:
+^0000ffA cada refino do arco:^000000
+^0000ffDano de [Ataque Aéreo] +5%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Grand Peco]^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Glória] nv. 5.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777776^000000
+Peso: ^7777778^000000
+Nível necessário: ^77777740^000000
+Classes: ^777777Todas^000000
+#
 5933#
 Essa máscara representa um Karasu Tengu, ou Tengu Corvo, uma variação do Tengu de nariz comprido. De acordo com as investigações da jornalista Aia Xameimaru, os Karasu Tengus são os seres místicos mais poderosos de Amatsu. Mas Aia é conhecida por exagerar...
 ^0000ffDano físico a distância +2%.^000000
@@ -34286,7 +34314,7 @@ Ingresso especial que permite a entrada nos Mapas Especiais somente para persona
 ^CD3278Coord.:^000000 prontera 162, 326
 <NAVI>[Navegar]<INFO>prontera,162,326,0,000,0</INFO></NAVI>
 --------------------------
-Este ticket desaparecerá durante a manutenção de 02/10/2018. Aproveite e divirta-se!
+Este ticket desaparecerá durante a manutenção de 30/04/2019. Aproveite e divirta-se!
 --------------------------
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
 --------------------------
@@ -34477,8 +34505,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000025.03.2019.^000000
-Este item será removido no dia ^ff000026.03.2019.^000000
+Promoção limitada até o dia ^ff000015.04.2019.^000000
+Este item será removido no dia ^ff000016.04.2019.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -35570,7 +35598,7 @@ Peso: ^7777770^000000
 Um ovo onde a Mascote Buzzy Brother dorme.
 Bônus para lealdade alta: Aumenta a resistência a ataques Neutros em 1%, HP Máx -1%.
 Você pode acordá-lo com uma Incubadora.
-Alimento: ^777777Ração para Bichinho^000000
+Alimento: ^777777Erva Verde^000000
 Tipo: ^777777Ovo de Bichinho^000000
 #
 9029#
@@ -51892,6 +51920,31 @@ Peso: ^77777710^000000
 Nível necessário: ^77777710^000000
 Classes: ^777777Todas^000000
 #
+19024#
+Angelical e imaculada, essa diadema caiu dos céus para abençoar os bem-afortunados com aventuras repletas de memórias inesquecíveis e tesouros preciosos.
+^0000ffDEFM +2.^000000
+^0000ffVelocidade de ataque^000000 ^ff0000-5%.^000000
+^0000ffResistência a Personagens +2%.^000000
+VIT base 108 ou mais:
+^0000ffVelocidade de ataque^000000 ^ff0000-5%^000000 ^0000ffadicional.^000000
+^0000ffResistência a Personagens +3% adicional.^000000
+VIT base 120 ou mais:
+^0000ffHP máx. +3%.^000000
+^0000ffDEFM +3 adicional.^000000
+^FA4E09Conjunto^000000
+^FA4E09Boina Alada [0]^000000
+^0000ffVelocidade de ataque +5%.^000000
+Boina com refino +7 ou mais:
+^0000ffVelocidade de ataque +5% adicional.^000000
+Boina com refino +9 ou mais:
+^0000ffHP máx. +5% adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
+#
 19038#
 Criada pelo Guardião de Midgard Fox, essa coroa comemorativa brilha tanto que você pode ter certeza que ele a limpou até ela ficar livre de germes. Curiosidade: 11 anos também já é o tempo que o Fox passou na Universidade de Juno, tentando se decidir em qual curso se formar.
 Todos os atributos + 2.
@@ -53200,6 +53253,31 @@ Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
 Peso: ^777777100^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+19381#
+Larga faixa de um tecido de maciez e textura incomparáveis. Especula-se que o brasão da ombreira e a asa de Valquíria fazem desse equipamento um acessório de origens celestiais.
+^0000ffDEFM +5.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Diadema do Paraíso]^000000
+^0000ffVIT +5. DEF +50.^000000
+^0000ffDEFM +5 adicional.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffResistência a Personagens +3%.^000000
+VIT base 108 ou mais:
+^0000ffVIT +5 adicional.^000000
+^0000ffDEF +50 adicional.^000000
+^0000ffDEFM +5 adicional.^000000
+^0000ffVelocidade de ataque +5% adicional.^000000
+VIT base 120 ou mais:
+^0000ffVIT +10 adicional.^000000
+^0000ffDEF +100 adicional.^000000
+^0000ffDEFM +10 adicional.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
 Nível necessário: ^77777790^000000
 Classes: ^777777Todas^000000
 #
@@ -60314,6 +60392,46 @@ Peso: ^77777740^000000
 Nível necessário: ^77777790^000000
 Classes: ^777777Todas^000000
 #
+28484#
+Pertenceu a um Insurgente que, após causar muita destruição, se amargurou com o que fez e abandonou essa vida, bem como este acessório.
+--------------------------
+^0000ffDano físico +5%.^000000
+^0000ffConjuração variável -10%.^000000
+^0000ffCusto de SP de [Descarregar Tambor] -5.^000000
+--------------------------
+A cada nível de [Lançar Míssil]:
+^0000ffDano crítico +3%.^000000
+A cada nível de [Reação Ilimitada]:
+^0000ffDano de [Saque Rápido] +5%.^000000
+A cada nível de [Disparo Labareda]:
+^0000ffPós-conjuração -1%.^000000
+^0000ffDano de [Disparo Labareda] +5%.^000000
+^0000ffCusto de SP de [Disparo Labareda] -4.^000000
+A cada nível de [Rajada Estilhaçante]:
+^0000ffRecarga de [Furor] -4 segundos.^000000
+^0000ffDano de [Rajada Estilhaçante] +10%.^000000
+^0000ffRecarga de [Rajada Estilhaçante] -0,1 segundo.^000000
+A cada nível de [Espiral Perfurante]:
+^0000ffVelocidade de ataque +2%.^000000
+^0000ffDano de [Espiral Perfurante] +5%.^000000
+^0000ffCusto de SP de [Espiral Perfurante] -2.^000000
+--------------------------
+Ao aprender [Lançar Míssil] nv. 1:
+^0000ffAo usar [Marcar em Brasa], 100% de chance de ativar um [efeito] por 50 segundos.^000000
+--------------------------
+^CD3278Efeito:^000000
+^008080Tem 50 segundos de recarga.^000000
+Ao realizar ataques físicos com Lança-Granadas:
+^0000ffChance de autoconjurar [Lançar Míssil] nv. 1 ou no nível aprendido.^000000
+A cada nível de [Lançar Míssil]:
+^0000ffChance de autoconjurar [Lançar Míssil] +1%.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 28492#
 Normalmente, espiar o diário de alguém seria falta de educação, mas não se preocupe: os conhecimentos descritos nesse livro são repassados de geração em geração aos Renegados para que eles aprimorem suas técnicas.
 ^0000ffFOR +5. AGI +5. INT +5.^000000
@@ -60640,6 +60758,24 @@ Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+28551#
+Um par de luvas pertencente aos guardiões da elite do reino de Rune-Midgard. O reforço e a aderência extras as tornam perfeitas para empunhar qualquer tipo de arma.
+^0000ffDano físico +5%.^000000
+^0000ffConjuração variável -10%.^000000
+^0000ffA conjuração não pode ser interrompida.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Diadema do Grifo]^000000
+^0000ffDano de [Lança do Destino] e [Disparo Perfurante] +20%.^000000
+A cada nível de [Lança do Destino]:
+^0000ffDano físico a distância +2%.^000000
+A cada nível de [Disparo Perfurante]:
+^0000ffDano físico a distância +2%.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 28561#
