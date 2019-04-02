@@ -3199,6 +3199,7 @@
 5919#Kanzashi de Camélias#
 5930#Tiara da Valquíria Mágica#
 5931#Chapéu de Poltergeist#
+5932#Liberdade da Natureza#
 5933#Máscara do Tengu Corvo#
 5945#Lápis Mastigado#
 5967#Galapago Voador#
@@ -6236,6 +6237,7 @@
 19019#Coroa da Rainha de Copas#
 19020#Tiara Arcana#
 19022#Cristal Filosofal#
+19024#Diadema do Paraíso#
 19038#Coroa do 11º Aniversário do bRO#
 19039#Orelhas do 11º Aniversário do bRO#
 19048#Traje de Luta Jogos Vorags#
@@ -6300,6 +6302,7 @@
 19318#Rosário da Guarda Real#
 19321#Pombinho Branco#
 19326#Livros da Sabedoria #
+19381#Echarpe do Paraíso#
 19507#Sol Risonho#
 19509#Asas de Borboleta#
 19510#Parafusos Soltos#
@@ -6968,6 +6971,7 @@
 28434#Luvas do Pugilista#
 28437#Luvas de Restauração#
 28438#Pó de Fada#
+28484#Lenço do Insurgente#
 28492#Diário do Renegado#
 28501#Chifres de Kirin#
 28502#Lenço Infame#
@@ -6981,6 +6985,7 @@
 28535#Amuleto da Sabedoria#
 28537#Colar de Juperos#
 28538#Luvas de H. Motto#
+28551#Luvas Imperiais#
 28561#Anel Dracônico do Veterano#
 28564#Lágrima de Valquíria#
 28572#Broche da Celine#
