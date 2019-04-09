@@ -7131,9 +7131,9 @@ Um cajado com uma gema que emana ondas de energia constantes. Dizem que essas on
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffATQM +145.^000000
 ^0000ffINT +4.^000000
-^0000ffIgnora 10% da DEFM do oponente.^000000
+^0000ffIgnora 10% da DEFM de monstros normais, chefes e personagens.^000000
 A cada refino:
-^0000ffIgnora +1% da DEFM do oponente.^000000
+^0000ffIgnora +1 de DEFM adicional.^000000
 Tipo: ^777777Cajado^000000
 Ataque: ^77777780^000000
 Peso: ^77777750^000000
@@ -7250,7 +7250,7 @@ Cajado coberto de espinhos criado por feiticeiros poderosos.
 ^0000ffATQM +160.^000000
 ^0000ffINT +3. DES +3.^000000
 A cada refino:
-^0000ffIgnora 1% da DEFM do oponente.^000000
+^0000ffIgnora 1% da DEFM de monstros normais, chefes e personagens.^000000
 A cada 2 refinos:
 ^0000ffPós-conjuração -3%.^000000
 Tipo: ^777777Cajado^000000
@@ -7540,7 +7540,7 @@ Cajado coberto de espinhos criado por feiticeiros poderosos.
 ^0000ffATQM +160.^000000
 ^0000ffINT +3. DES +3.^000000
 A cada refino:
-^0000ffIgnora 1% da DEFM do oponente.^000000
+^0000ffIgnora 1% da DEFM de monstros normais, chefes e personagens.^000000
 A cada 2 refinos:
 ^0000ffPós-conjuração -3%.^000000
 Tipo: ^777777Cajado^000000
@@ -7744,7 +7744,7 @@ A cada refino:
 ^0000ffDano de [Chamas de Hela] +10%.^000000
 ^0000ffChance de ativar o [efeito] +4%.^000000
 A cada refino até o +10:
-^0000ffIgnora 5% da DEFM de monstros normais e Chefes.^000000
+^0000ffIgnora 5% da DEFM de monstros normais, chefes e personagens.^000000
 ^CD3278Efeito:^000000
 ^0000ffConjuração variável de [Chamas de Hela] -30%.^000000
 Tipo: ^777777Cajado^000000
@@ -10215,7 +10215,7 @@ A cada nível de [Passos de Salamandra]:
 A cada nível de [Passos de Sílfide]:
 ^0000ffDano mágico de propriedade Vento +10%.^000000
 A cada 2 refinos:
-^0000ffIgnora 5% da DEFM.^000000
+^0000ffIgnora 5% da DEFM de monstros normais, chefes, personagens e guardiões.^000000
 ^0000ffDano mágico de propriedade Fogo e Vento +5%.^000000
 ^0000ffDano de [Passos de Salamandra] e [Passos de Sílfide] +30%.^000000
 Refino +9 ou mais:
@@ -20040,9 +20040,9 @@ Equipado em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4365#
-^0000ffIgnora 100% da DEFM dos monstros normais.^000000
-^0000ffTempo de conjuração variável +100%.^000000
-^0000ffRegeneração natural de SP -100%.^000000
+^0000ffConjuração variável^000000 ^ff0000+100%.^000000
+^0000ffIgnora 100% da DEFM de monstros normais e personagens.^000000
+^0000ffRegeneração natural de SP^000000 ^ff0000-100%.^000000
 Ao desequipar:
 ^0000ffDrena 2.000 de SP.^000000
 Tipo: ^777777Carta^000000
@@ -20656,7 +20656,7 @@ Peso: ^7777771^000000
 4440#
 Em Cajados de uma ou duas mãos:
 ^0000ffINT +1.^000000
-^0000ffIgnora 2% da DEFM de monstros normais e chefes.^000000
+^0000ffIgnora 2% da DEFM de monstros normais, chefes e personagens.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
@@ -23978,7 +23978,7 @@ Um capuz que é uma das das quatro chaves para o selo que prende Morpheus.
 ^0000ffDEFM +11.^000000
 ^0000ffSP máx. +20%.^000000
 ^0000ffINT +5 adicional.^000000
-^0000ffConjuração variável^000000 ^ff0000-25%.^000000
+^0000ffConjuração variável^000000 ^ff0000+25%.^000000
 ^0000ffA conjuração não pode ser interrompida.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
@@ -38594,14 +38594,14 @@ Peso: ^7777771^000000
 #
 12661#
 Um misterioso pergaminho mágico que permite se transformar em Marduk, garantindo efeitos especiais durante a transformação.
-^0000ffATQM +25%.^000000
+^0000ffATQM +25.^000000
 ^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
 Duração: ^77777720 minutos^000000
 Peso: ^7777771^000000
 #
 12662#
 Um misterioso pergaminho mágico que permite se transformar em Banshee, garantindo efeitos especiais durante a transformação.
-^0000ffATQM +25%.^000000
+^0000ffATQM +25.^000000
 ^ff0000É cancelado ao morrer ou ativar/desativar MECHA.^000000
 Duração: ^77777720 minutos^000000
 Peso: ^7777771^000000
@@ -47516,7 +47516,7 @@ Peso: ^7777771^000000
 17040#
 Uma caixa contendo 10 pergaminhos de Transformação - Mavka e 1 pergaminho de Transformação - Poring adicional.
 --------------------------
-^0000ffATQM +25%.^000000
+^0000ffATQM +25.^000000
 Duração: ^77777720 minutos^000000
 --------------------------
 Peso: ^7777771^000000
@@ -47524,7 +47524,7 @@ Peso: ^7777771^000000
 17041#
 Uma caixa contendo 10 pergaminhos de Transformação - Banshee e 1 pergaminho de Transformação - Poring adicional.
 --------------------------
-^0000ffATQM +25%.^000000
+^0000ffATQM +25.^000000
 Duração: ^77777720 minutos^000000
 --------------------------
 Peso: ^7777771^000000
@@ -48840,7 +48840,7 @@ Classes que utilizam: ^777777Todas^000000
 Aí um dia você resolveu adotar um gatinho de rua. Até aí tudo bem. Você só não esperava que ele fosse super arredio e nervoso e grudasse na sua cabeça ao menor sinal de... bem, qualquer coisa! Agora ele passa a maior parte do tempo grudado em você e miando em sinal de reclamação de tudo. E nem pense em tirá-lo à força, se não quiser ficar careca.
 ^0000ffINT +2.^000000
 ^0000ffDEFM +5.^000000
-^0000ffIgnora 5% da DEFM dos oponentes.^000000
+^0000ffIgnora 5% da DEFM de monstros normais, chefes e personagens.^000000
 A cada refino:
 ^0000ffIgnora +1% da DEFM.^000000
 Refino +7 ou mais:
@@ -50763,9 +50763,9 @@ Quem poderia imaginar que essa gracinha de chapéu escondesse tanto poder mágic
 ^0000ffAGI +1. INT +2.^000000
 ^0000ffDano de [Abalo Sísmico] [Meteoro Escarlate] e [Esquife de Gelo] +10%.^000000
 Refino +7 ou mais:
-^0000ffIgnora 20% da DEFM dos monstros normais.^000000
+^0000ffIgnora 20% da DEFM de monstros normais e personagens.^000000
 Refino +9 ou mais:
-^0000ffIgnora +20% adicional da DEFM dos monstros normais.^000000
+^0000ffIgnora +20% de DEFM adicional.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
@@ -53824,6 +53824,15 @@ Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+19654#
+Comande sua frota, pegue o leme e inicie uma expedição de norte a sul em busca de terras, tesouros e aventuras intensas em alto-mar. NÃO acompanha saquinhos de emergência, caso você não se dê muito bem com longas viagens pelos oceanos.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas ^000000
+#
 19656#
 Esse chapéu de abas bem largas ajuda a esconder a identidade secreta do herói de Prontera, o Bardo Verde, que veio punir aqueles que falharam com a cidade contando piadas sem graça para eles. Somente poucas pessoas, como Ricardão, Alegrity Smokes e você, sabem que o Bardo Verde é na verdade o playboy riquinho Oliveira King.
 Tipo: ^777777Visual^000000
@@ -56749,6 +56758,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20495#
+Nada como manter o cocuruto aquecido com um bichinho desses na sua cabeça. Mas nem tente ensiná-lo truques ou fazê-lo dar um passeio: apesar de ser uma fofura que só, ele não quer saber de nada que não seja ficar de boas na sua cabeça!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas ^000000
+#
 20499#
 Uma cartola usada originalmente pelos magnatas mais bem sucedidos da Corporação Pata de Gato. Ela representa não apenas a capacidade de se fazer bons negócios, mas a habilidade de se fazer bons amigos, já que os gatos da corporação são conhecidos por serem muito simpáticos e sociáveis!
 Tipo: ^777777Visual^000000
@@ -58053,7 +58071,7 @@ Refino +7 ou mais:
 A cada ponto investido em [Esfera d'Água]:
 ^0000ffDano de [Esfera d'Água] +30%.^000000
 A cada ponto investido em [Congelar]:
-^0000ffIgnora +5% da DEFM do oponente.^000000
+^0000ffIgnora 5% da DEFM de monstros normais, chefes e personagens.^000000
 A cada refino da arma:
 ^0000ffDano de [Esfera d'Água] +20%.^000000
 ^0000ffDano mágico de propriedade Água +4%.^000000
@@ -59276,7 +59294,6 @@ Apesar de serem produzidos de puro aço, esses sapatos possuem um vínculo arcan
 ^0000ffHP máx. +10 por refino.^000000
 A cada 4 refinos:
 ^0000ffEXP adquirida por monstros +1%.^000000
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Tipo: ^777777Equipamento Sombrio^000000
 Posição: ^777777Grevas^000000
 Defesa: ^7777770^000000
@@ -59294,7 +59311,6 @@ A cada 4 refinos:
 ^0000ffEXP adquirida por monstros +1% adicional.^000000
 Soma dos refinos do escudo + grevas maior ou igual a 15:
 ^0000ffEXP adquirida por monstros +1% adicional.^000000
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Tipo: ^777777Equipamento Sombrio^000000
 Posição: ^777777Escudo^000000
 Defesa: ^7777770^000000
@@ -59307,7 +59323,6 @@ Apesar de serem produzidos de puro ferro, esses sapatos possuem um vínculo arca
 ^0000ffHP máx. +10 por refino.^000000
 A cada 2 refinos:
 ^0000ffEXP adquirida por monstros +1%.^000000
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Tipo: ^777777Equipamento Sombrio^000000
 Posição: ^777777Grevas^000000
 Defesa: ^7777770^000000
@@ -59325,7 +59340,6 @@ A cada 2 refinos:
 ^0000ffEXP adquirida por monstros +5% adicional.^000000
 Soma dos refinos do escudo + grevas maior ou igual a 15:
 ^0000ffEXP adquirida por monstros +5% adicional.^000000
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Tipo: ^777777Equipamento Sombrio^000000
 Posição: ^777777Escudo^000000
 Defesa: ^7777770^000000
@@ -59338,7 +59352,6 @@ Apesar de serem produzidos de puro duralumínio, esses sapatos possuem um víncu
 ^0000ffHP máx. +10 por refino.^000000
 A cada 3 refinos:
 ^0000ffEXP adquirida por monstros +1%.^000000
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Tipo: ^777777Equipamento Sombrio^000000
 Posição: ^777777Grevas^000000
 Defesa: ^7777770^000000
@@ -59356,7 +59369,6 @@ A cada 3 refinos:
 ^0000ffEXP adquirida por monstros +2% adicional.^000000
 Soma dos refinos do escudo + grevas maior ou igual a 15:
 ^0000ffEXP adquirida por monstros +2% adicional.^000000
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 Tipo: ^777777Equipamento Sombrio^000000
 Posição: ^777777Escudo^000000
 Defesa: ^7777770^000000
@@ -60953,7 +60965,7 @@ Refino +1 ou mais:
 A cada refino a partir do +2:
 ^0000ffDuração do [efeito] +1 segundo.^000000
 ^CD3278Efeito:^000000
-^0000ffIgnora 100% da DEFM de monstros normais e Chefes.^000000
+^0000ffIgnora 100% da DEFM de monstros normais, chefes e personagens.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Anel Espiritual]^000000
 ^0000ffConjuração variável de [Magnus Exorcismus] -25%.^000000

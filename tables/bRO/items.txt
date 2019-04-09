@@ -6366,6 +6366,7 @@
 19649#Orelhas Brancas de Gatinho#
 19650#Adorno Arco-íris#
 19652#Cartola Visual de Mágico#
+19654#Chapéu do Timoneiro#
 19656#Chapéu do Bardo Verde#
 19657#Quepe do Capitão#
 19661#Cartola Adocicada#
@@ -6692,6 +6693,7 @@
 20472#Elmo do Anjo#
 20482#Gaiola Florida#
 20487#Valsa da Primavera#
+20495#Quati Preguiçoso#
 20499#Cartola da Pata de Gato#
 20504#Asas da Sarakura#
 20506#Manto Invisível#
