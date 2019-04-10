@@ -486,9 +486,9 @@ sub removeFile {
 # </pre>
 sub loadByHandle {
 	my ($handle, $progressHandler) = @_;
-	assert(defined $handle) if DEBUG;
+	assert(defined $handle, "Can't load by handle with undefined handle") if DEBUG;
 	my $object = $files->get($handle);
-	assert(defined $object) if DEBUG;
+	assert(defined $object, "Can't retrieve file in list from handle") if DEBUG;
 
 	my $filename;
 	my $internalFilename = $object->{internalName} || $object->{name};

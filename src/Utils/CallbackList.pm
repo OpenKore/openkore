@@ -136,8 +136,8 @@ sub new {
 # a member of $object.
 sub add {
 	my ($self, $object, $function, $userData) = @_;
-	assert(defined $function) if DEBUG;
-	assert(!defined($object) || Scalar::Util::blessed($object)) if DEBUG;
+	assert(defined $function, "Callback function is undefined") if DEBUG;
+	assert(!defined($object) || Scalar::Util::blessed($object), "Object to pass to callback function is defined but not blessed") if DEBUG;
 
 	my @item;
 	$item[FUNCTION] = $function;
@@ -164,7 +164,7 @@ sub add {
 # Removes a callback from this CallbackList.
 sub remove {
 	my ($self, $ID) = @_;
-	assert(defined $ID) if DEBUG;
+	assert(defined $ID, "Can't remove object from callback list without providing an ID") if DEBUG;
 	return if (!defined($$ID) || $$ID < 0 || $$ID >= @{$self});
 
 	my $callbacks = $self;
@@ -251,10 +251,10 @@ sub checkValidity {
 
 	for (my $i = 0; $i < @{$self}; $i++) {
 		my $k = $self->[$i];
-		assert defined($k);
-		assert defined($k->[FUNCTION]);
-		assert defined($k->[ID]);
-		assert ${$k->[ID]} == $i;
+		assert(defined($k), "Element in callback list is undefined");
+		assert(defined($k->[FUNCTION]), "Element in callback list has undefined function");
+		assert(defined($k->[ID]), "Element in callback list has undefined ID");
+		assert(${$k->[ID]} == $i, "Element in callback list has wrong ID");
 	}
 }
 

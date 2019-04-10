@@ -25,6 +25,7 @@ use Network::PacketParser; # import
 use base qw(Network::PacketParser);
 use utf8;
 use Carp::Assert;
+use Utils::Assert;
 use Scalar::Util;
 use Socket qw(inet_aton inet_ntoa);
 
@@ -5186,7 +5187,7 @@ sub job_equipment_hair_change {
 	return unless changeToInGameState();
 
 	my $actor = Actor::get($args->{ID});
-	assert(UNIVERSAL::isa($actor, "Actor")) if DEBUG;
+	assertClass($actor, "Actor") if DEBUG;
 
 	if ($args->{part} == 0) {
 		# Job change

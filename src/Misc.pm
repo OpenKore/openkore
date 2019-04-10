@@ -1045,14 +1045,14 @@ sub actorAdded {
 				"ObjectList:\n" .
 				$ol;
 		}
-		assert(binSize($list) + 1 == $source->size()) if DEBUG;
+		should(binSize($list) + 1, $source->size()) if DEBUG;
 
 		binAdd($list, $actor->{ID});
 		$hash->{$actor->{ID}} = $actor;
 		objectAdded($type, $actor->{ID}, $actor);
 
-		assert(scalar(keys %{$hash}) == $source->size()) if DEBUG;
-		assert(binSize($list) == $source->size()) if DEBUG;
+		should(scalar(keys %{$hash}), $source->size()) if DEBUG;
+		should(binSize($list), $source->size()) if DEBUG;
 	} else {
 		warning "Unknown actor type in actorAdded\n", 'actorlist' if DEBUG;
 	}
@@ -1084,7 +1084,7 @@ sub actorRemoved {
 				"ObjectList:\n" .
 				$ol;
 		}
-		assert(binSize($list) - 1 == $source->size()) if DEBUG;
+		should(binSize($list) - 1, $source->size()) if DEBUG;
 
 		binRemove($list, $actor->{ID});
 		delete $hash->{$actor->{ID}};
@@ -1100,8 +1100,8 @@ sub actorRemoved {
 			delete $buyerLists{$actor->{ID}};
 		}
 
-		assert(scalar(keys %{$hash}) == $source->size()) if DEBUG;
-		assert(binSize($list) == $source->size()) if DEBUG;
+		should(scalar(keys %{$hash}), $source->size()) if DEBUG;
+		should(binSize($list), $source->size()) if DEBUG;
 	} else {
 		warning "Unknown actor type in actorRemoved\n", 'actorlist' if DEBUG;
 	}
@@ -1671,8 +1671,8 @@ sub createCharacter {
 # Sends $player a deal request.
 sub deal {
 	my $player = $_[0];
-	assert(defined $player) if DEBUG;
-	assert(UNIVERSAL::isa($player, 'Actor::Player')) if DEBUG;
+	assert(defined $player, "Can't deal with undef player") if DEBUG;
+	assertClass($player, 'Actor::Player') if DEBUG;
 
 	$outgoingDeal{ID} = $player->{ID};
 	$messageSender->sendDeal($player->{ID});
@@ -2130,7 +2130,7 @@ sub storageGet {
 # items: reference to an array of Actor::Items.
 # amount: the maximum amount to get, for each item, or 0 for unlimited.
 # source: where the items come from; one of 'inventory', 'storage', 'cart'
-# target: where the items shoudl go; one of 'inventory', 'storage', 'cart'
+# target: where the items should go; one of 'inventory', 'storage', 'cart'
 #
 # Transfer one or more items from their current location to another location.
 #
@@ -2667,8 +2667,8 @@ sub setPartySkillTimer {
 # TODO: move to Actor?
 sub setStatus {
 	my ($actor, $opt1, $opt2, $option) = @_;
-	assert(defined $actor) if DEBUG;
-	assert(UNIVERSAL::isa($actor, 'Actor')) if DEBUG;
+	assert(defined $actor, "Can't set status of undef actor") if DEBUG;
+	assertClass($actor, 'Actor') if DEBUG;
 	my $verbosity = $actor->{ID} eq $accountID ? 1 : 2;
 	my $changed = 0;
 
@@ -2793,8 +2793,8 @@ sub countCastOn {
 
 	my $source = Actor::get($sourceID);
 	my $target = Actor::get($targetID);
-	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
-	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
+	assertClass($source, 'Actor') if DEBUG;
+	assertClass($target, 'Actor') if DEBUG;
 
 	if ($targetID eq $accountID) {
 		$source->{castOnToYou}++;
@@ -3587,8 +3587,8 @@ sub isSafeActorQuery {
 # Generates a proper message string for when actor $source attacks actor $target.
 sub attack_string {
 	my ($source, $target, $damage, $delay) = @_;
-	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
-	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
+	assertClass($source, 'Actor') if DEBUG;
+	assertClass($target, 'Actor') if DEBUG;
 
 	return TF("%s %s %s (Dmg: %s) (Delay: %sms)\n",
 		$source->nameString,
@@ -3599,8 +3599,8 @@ sub attack_string {
 
 sub skillCast_string {
 	my ($source, $target, $x, $y, $skillName, $delay) = @_;
-	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
-	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
+	assertClass($source, 'Actor') if DEBUG;
+	assertClass($target, 'Actor') if DEBUG;
 	
 	return TF("%s %s %s on %s (Delay: %sms)\n",
 		$source->nameString(),
@@ -3612,8 +3612,8 @@ sub skillCast_string {
 
 sub skillUse_string {
 	my ($source, $target, $skillName, $damage, $level, $delay) = @_;
-	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
-	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
+	assertClass($source, 'Actor') if DEBUG;
+	assertClass($target, 'Actor') if DEBUG;
 
 	return sprintf("%s %s %s%s %s %s%s%s\n",
 		$source->nameString(),
@@ -3628,7 +3628,7 @@ sub skillUse_string {
 
 sub skillUseLocation_string {
 	my ($source, $skillName, $args) = @_;
-	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
+	assertClass($source, 'Actor') if DEBUG;
 	
 	return sprintf("%s %s %s%s %s (%d, %d)\n",
 		$source->nameString(),
@@ -3643,8 +3643,8 @@ sub skillUseLocation_string {
 # TODO: maybe add other healing skill ID's?
 sub skillUseNoDamage_string {
 	my ($source, $target, $skillID, $skillName, $amount) = @_;
-	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
-	assert(UNIVERSAL::isa($target, 'Actor')) if DEBUG;
+	assertClass($source, 'Actor') if DEBUG;
+	assertClass($target, 'Actor') if DEBUG;
 
 	return sprintf("%s %s %s %s %s%s\n",
 		$source->nameString(),
@@ -3657,7 +3657,7 @@ sub skillUseNoDamage_string {
 
 sub status_string {
 	my ($source, $statusName, $mode, $seconds) = @_;
-	assert(UNIVERSAL::isa($source, 'Actor')) if DEBUG;
+	assertClass($source, 'Actor') if DEBUG;
 
 	# Translation Comment: "you/actor" "are/is now/again/nolonger" "status" "(duration)"
 	TF("%s %s: %s%s\n",
