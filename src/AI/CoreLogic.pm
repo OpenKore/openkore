@@ -1861,6 +1861,8 @@ sub processAutoBuy {
 			delete $args->{index};
 			for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
 				next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
+				next if ($config{"buyAuto_${i}_maxBase"} =~ /^\d{1,}$/ && $char->{lv} > $config{"buyAuto_${i}_maxBase"});
+				next if ($config{"buyAuto_${i}_minBase"} =~ /^\d{1,}$/ && $char->{lv} < $config{"buyAuto_${i}_minBase"});
 				# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
 				next if (exists $args->{index_failed}{$i});
 
@@ -1991,9 +1993,18 @@ sub processAutoBuy {
 		
 		my @buyList;
 		
-		my $item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
+		my $item;
+		if ($config{"buyAuto_".$args->{lastIndex}} =~ /^\d{3,}$/) {
+			$item = $storeList->getByNameID( $config{"buyAuto_".$args->{lastIndex}} );
+		}
+		else {
+			$item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
+		}
 		
-		if (defined $item) {
+		if ($config{"buyAuto_".$args->{lastIndex}} =~ /^\d{3,}$/ && defined $item) {
+			$args->{'nameID'} = $config{"buyAuto_".$args->{lastIndex}};
+		}
+		elsif (defined $item) {
 			$args->{'nameID'} = $item->{nameID};
 		}
 		
