@@ -1777,7 +1777,13 @@ sub processAutoBuy {
 		
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
 			next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
-			my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+			my $amount;
+			if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
+				$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"});
+			}
+			else {
+				$amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+			}
 			if (
 				$config{"buyAuto_$i"."_minAmount"} ne "" &&
 				$config{"buyAuto_$i"."_maxAmount"} ne "" &&
