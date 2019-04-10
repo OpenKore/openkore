@@ -1866,7 +1866,14 @@ sub processAutoBuy {
 				# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
 				next if (exists $args->{index_failed}{$i});
 
-				my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+				my $amount;
+				if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
+					$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"});
+				}
+				else {
+					$amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+				}
+				
 				if ($config{"buyAuto_$i"."_maxAmount"} ne "" && $amount < $config{"buyAuto_$i"."_maxAmount"}) {
 					next if (($config{"buyAuto_$i"."_price"} && ($char->{zeny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zeny}, $config{"buyAuto_$i"."_zeny"})));
 
