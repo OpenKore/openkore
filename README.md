@@ -3,12 +3,12 @@
 * OpenKore is an custom client & intelligent automated assistant for Ragnarok Online.
 * It is a **free**, open source & cross-platform program _(Linux, Windows & MacOS are supported)_.
 
-## Prerequisites.
+## Prerequisites
 
 To run OpenKore you will need:
 * [Read the Requirements page on our wiki](http://wiki.openkore.com/index.php/How_to_run_OpenKore#Requirements)
 
-## Quickstart.
+## Quickstart
 
 1. [Download OpenKore](https://github.com/OpenKore/openkore/archive/master.zip) & extract it. Alternatively, you could press the **Windows Key + R**, type in ``cmd`` & enter. Run the following command in the cmd to clone.
 ***Note: [Git](https://git-scm.com/) required.***
@@ -19,7 +19,7 @@ git clone https://github.com/OpenKore/openkore.git
 2. Configure OpenKore: [documentation](http://openkore.com/index.php/Category:Control).
 3. Run openkore.pl _(You can run start.exe or wxstart.exe if you use Windows)_.
 
-## F.A.Q. (Frequently Asked Questions).
+## F.A.Q. (Frequently Asked Questions)
 <!-- Source: http://forums.openkore.com/viewtopic.php?f=0&t=11287 -->
  1. **Have a problem?**
     - Update your openkore.
@@ -34,7 +34,7 @@ git clone https://github.com/OpenKore/openkore.git
  5. **Its a problem with Openkore?**
     - Read [things to know](https://github.com/OpenKore/openkore#things-to-know) before reporting.
 
-## Things to know.
+## Things to know
 
 * Make sure you've read [FAQ](https://github.com/OpenKore/openkore#faq-frequently-asked-questions) especially to [run latest commit on master branch](https://github.com/OpenKore/openkore/commits/master) & checking [existed issue for your request.](https://github.com/OpenKore/openkore/issues?utf8=%E2%9C%93&q=)
 * Please post in English if possible.
@@ -43,14 +43,14 @@ git clone https://github.com/OpenKore/openkore.git
     * Briefly explain what happened, take a screenhot & include the error message _(If available)_.
 * Please be advised any developers here are doing this on their free time. Please give some time for anyone to respond.
 
-## Weekly Maintenance on Official Servers.
+## Weekly Maintenance on Official Servers
 All official servers _(especially bRO & iRO)_ have weekly maintenance & after maintenance is over, usually openkore will stop working on these servers.
 If you are seeing a green message written: `timeout on map server... reconnecting....`
 that means you have to wait for developer to update openkore.
 So please wait. You don't need to make an issue to tell this.
 Check the [status of botting on official servers](https://github.com/OpenKore/openkore#status-of-botting-on-official-servers) regarding your servers; how often it being updated & who's supporting it.
 
-## Status of botting on Official Servers.
+## Status of botting on Official Servers
 
 | Server | Description | Protection | Status | Supporter |
 | --- | --- | --- | --- | --- |
@@ -69,11 +69,11 @@ Check the [status of botting on official servers](https://github.com/OpenKore/op
 | [ruRO](https://ru.4game.com/ro/play/) | Russia RO | Frost Security | Not Working | ya4ept |
 | [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | Cdclient | Not working | N/A |
 
-## Contributing.
+## Contributing
 
 OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/contributors) located around the world. Check out the [documentation](http://openkore.com/index.php/Manual) and if necessary submit a pull request!
 
-## Contacts.
+## Contacts
 
 * [OpenKore Wiki](http://wiki.openkore.com/)
 * [OpenKore forum](http://forums.openkore.com/)
@@ -82,18 +82,18 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 * [Brazilian Community](http://openkorebrasil.org/)
 * [Russian Community](https://RO-fan.ru/)
 
-## **WARNING!!!**
+## **Warning**
 
 Other communities are not affiliated to openkore.com
 
-## Other Links.
+## Other Links
 
 1. [Openkore History](http://openkore.com/index.php/OpenKore)
 2. [Legacy Changelog](https://github.com/OpenKore/openkore/blob/master/LegacyChangelog.md)
 3. [Openkore RoadMap](http://openkore.com/index.php/Roadmap)
 4. [Feature Requests and TODO Wiki](http://openkore.com/index.php/Category:Feature_Request) and [Feature Requests GitHub](https://github.com/OpenKore/openkore/issues?q=is%3Aopen+is%3Aissue+label%3A%22feature+request%22)
 
-## License.
+## License
 
 This software is open source, licensed under the GNU General Public License, version 2. 
 Basically, this means that you're free to use and allowed to modify and distribute this software. 
