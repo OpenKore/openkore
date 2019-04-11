@@ -44,6 +44,7 @@ use Task;
 use Translation qw(T TF);
 use Actor::Unknown;
 use Task::Timeout;
+use Utils::Assert;
 
 # Make it so that
 #     print $actor;
@@ -116,12 +117,12 @@ sub new {
 # a new Actor::Unknown object.
 sub get {
 	my ($ID) = @_;
-	assert(defined $ID) if DEBUG;
+	assert(defined $ID, "ID must be provided to retrieve and Actor class") if DEBUG;
 
 	if ($ID eq $accountID) {
 		# I put assertions here because $char seems to be unblessed sometimes.
 		assert(defined $char, '$char must be defined') if DEBUG;
-		assert(UNIVERSAL::isa($char, 'Actor::You'), '$char must be of class Actor::You') if DEBUG;
+		assertClass($char, 'Actor::You') if DEBUG;
 		return $char;
 	} elsif ($items{$ID}) {
 		return $items{$ID};
