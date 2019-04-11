@@ -365,24 +365,23 @@ INIT:
 	STRLEN len;
 	int i, x, y;
 	int dist;
-	unsigned char *c_weightMap, *data;
+	char *c_weightMap, *data;
 CODE:
 	if (!SvOK (distMap))
 		XSRETURN_UNDEF;
 
-	c_weightMap = (unsigned char *) SvPV (distMap, len);
+	c_weightMap = (char *) SvPV (distMap, len);
 	if ((int) len != width * height)
 		XSRETURN_UNDEF;
 
 	/* Simplify the raw map data. Each byte in the raw map data
 	   represents a block on the field, but only some bytes are
 	   interesting to pathfinding. */
-	New (0, data, len, unsigned char);
-	Copy (c_weightMap, data, len, unsigned char);
+	New (0, data, len, char);
+	Copy (c_weightMap, data, len, char);
 	
-	int distance_to_weight[5] = { 0, 70, 60, 30, 20 };
-	int max_distance = 4;
-	int fill_weight = 10;
+	int distance_to_weight[6] = { -1, 60, 50, 20, 10, 0 };
+	int max_distance = 5;
 
 	for (y = 0; y < height; y++) {
 		for (x = 0; x < width; x++) {
@@ -390,10 +389,9 @@ CODE:
 			dist = data[i]; // dist: dist of i from wall
 			
 			if (dist > max_distance) {
-				data[i] = fill_weight;
-			} else {
-				data[i] = distance_to_weight[dist];
+				dist = max_distance;
 			}
+			data[i] = distance_to_weight[dist];
 		}
 	}
 

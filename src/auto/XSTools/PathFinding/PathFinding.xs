@@ -113,22 +113,22 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		session->endY = (int) SvUV (desty);
 	
 		if (session->startX >= session->width || session->startY >= session->height || session->startX < 0 || session->startY < 0) {
-			printf("[pathfinding reset error] Start coordinate is out of the map.\n");
+			//printf("[pathfinding reset error] Start coordinate is out of the map.\n");
 			XSRETURN_NO;
 		}
 		
 		if (session->map_base_weight[((session->startY * session->width) + session->startX)] == 0) {
-			printf("[pathfinding reset error] Start coordinate is not a walkable cell.\n");
+			//printf("[pathfinding reset error] Start coordinate is not a walkable cell.\n");
 			XSRETURN_NO;
 		}
 	
 		if (session->endX >= session->width   || session->endY >= session->height   || session->endX < 0   || session->endY < 0) {
-			printf("[pathfinding reset error] End coordinate is out of the map.\n");
+			//printf("[pathfinding reset error] End coordinate is out of the map.\n");
 			XSRETURN_NO;
 		}
 		
 		if (session->map_base_weight[((session->endY * session->width) + session->endX)] == 0) {
-			printf("[pathfinding reset error] End coordinate is not a walkable cell.\n");
+			//printf("[pathfinding reset error] End coordinate is not a walkable cell.\n");
 			XSRETURN_NO;
 		}
 		
@@ -171,7 +171,7 @@ PathFinding_run(session, solution_array)
 		status = CalcPath_pathStep (session);
 		
 		if (status == -2) {
-			printf("[pathfinding run error] You must call 'reset' before 'run'.\n");
+			//printf("[pathfinding run error] You must call 'reset' before 'run'.\n");
 			RETVAL = -2;
 		
 		} else if (status == -1) {

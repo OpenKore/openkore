@@ -55,10 +55,6 @@ heuristic_cost_estimate (int currentX, int currentY, int goalX, int goalY, int a
 	
 	int hScore = (ORTOGONAL * (xDistance + yDistance)) + ((DIAGONAL - (2 * ORTOGONAL)) * ((xDistance > yDistance) ? yDistance : xDistance));
 	
-	if (avoidWalls) {
-		hScore += (((xDistance > yDistance) ? xDistance : yDistance) * 10);
-	}
-	
 	return hScore;
 }
 
@@ -313,7 +309,7 @@ CalcPath_pathStep (CalcPath_session *session)
 
 				neighbor_adress = (neighbor_y * session->width) + neighbor_x;
 
-				if (session->map_base_weight[neighbor_adress] == 0) {
+				if (session->map_base_weight[neighbor_adress] == -1) {
 					continue;
 				}
 				
@@ -324,7 +320,7 @@ CalcPath_pathStep (CalcPath_session *session)
 				}
 				
 				if (i != 0 && j != 0) {
-				   if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == 0 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == 0) {
+				   if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == -1 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == -1) {
 						continue;
 					}
 					distanceFromCurrent = DIAGONAL;
