@@ -8,9 +8,6 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define DIAGONAL 14
-#define ORTOGONAL 10
-
 #define NONE 0
 #define OPEN 1
 #define CLOSED 2
@@ -53,7 +50,7 @@ heuristic_cost_estimate (int currentX, int currentY, int goalX, int goalY, int a
 	int xDistance = abs(currentX - goalX);
 	int yDistance = abs(currentY - goalY);
 	
-	int hScore = (ORTOGONAL * (xDistance + yDistance)) + ((DIAGONAL - (2 * ORTOGONAL)) * ((xDistance > yDistance) ? yDistance : xDistance));
+	int hScore = (10 * (xDistance + yDistance)) - (6 * ((xDistance > yDistance) ? yDistance : xDistance));
 	
 	return hScore;
 }
@@ -257,8 +254,10 @@ CalcPath_pathStep (CalcPath_session *session)
 	Node* currentNode;
 	Node* neighborNode;
 	
-	int i;
-	int j;
+	short i;
+	
+	short i_x[8] = {0, 0, 1, -1, 1, 1, -1, -1};
+	short i_y[8] = {1, -1, 0, 0, 1, -1, -1, 1};
 	
 	int neighbor_x;
 	int neighbor_y;
@@ -293,62 +292,57 @@ CalcPath_pathStep (CalcPath_session *session)
 			return 1;
 		}
 		
-		for (i = -1; i <= 1; i++)
+		for (i = 0; i <= 7; i++)
 		{
-			for (j = -1; j <= 1; j++)
-			{
-				if (i == 0 && j == 0) {
-					continue;
-				}
-				neighbor_x = currentNode->x + i;
-				neighbor_y = currentNode->y + j;
+			neighbor_x = currentNode->x + i_x[i];
+			neighbor_y = currentNode->y + i_y[i];
 
-				if (neighbor_x >= session->width || neighbor_y >= session->height || neighbor_x < 0 || neighbor_y < 0) {
-					continue;
-				}
+			if (neighbor_x >= session->width || neighbor_y >= session->height || neighbor_x < 0 || neighbor_y < 0) {
+				continue;
+			}
 
-				neighbor_adress = (neighbor_y * session->width) + neighbor_x;
+			neighbor_adress = (neighbor_y * session->width) + neighbor_x;
 
-				if (session->map_base_weight[neighbor_adress] == -1) {
+			if (session->map_base_weight[neighbor_adress] == -1) {
+				continue;
+			}
+				
+			neighborNode = &session->currentMap[neighbor_adress];
+				
+			if (neighborNode->whichlist == CLOSED) {
+				continue;
+			}
+				
+			if (i >= 4) {
+			   if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == -1 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == -1) {
 					continue;
 				}
+				distanceFromCurrent = 14;
+			} else {
+				distanceFromCurrent = 10;
+			}
+			
+			if (session->avoidWalls) {
+				distanceFromCurrent += session->map_base_weight[neighbor_adress];
+			}
 				
-				neighborNode = &session->currentMap[neighbor_adress];
+			g_score = currentNode->g + distanceFromCurrent;
 				
-				if (neighborNode->whichlist == CLOSED) {
-					continue;
-				}
-				
-				if (i != 0 && j != 0) {
-				   if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == -1 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == -1) {
-						continue;
-					}
-					distanceFromCurrent = DIAGONAL;
-				} else {
-					distanceFromCurrent = ORTOGONAL;
-				}
-				if (session->avoidWalls) {
-					distanceFromCurrent += session->map_base_weight[neighbor_adress];
-				}
-				
-				g_score = currentNode->g + distanceFromCurrent;
-				
-				if (neighborNode->whichlist == NONE) {
-					neighborNode->x = neighbor_x;
-					neighborNode->y = neighbor_y;
-					neighborNode->nodeAdress = neighbor_adress;
+			if (neighborNode->whichlist == NONE) {
+				neighborNode->x = neighbor_x;
+				neighborNode->y = neighbor_y;
+				neighborNode->nodeAdress = neighbor_adress;
+				neighborNode->predecessor = currentNode->nodeAdress;
+				neighborNode->g = g_score;
+				neighborNode->h = heuristic_cost_estimate(neighborNode->x, neighborNode->y, session->endX, session->endY, session->avoidWalls);
+				neighborNode->f = neighborNode->g + neighborNode->h;
+				openListAdd (session, neighborNode);
+			} else {
+				if (g_score < neighborNode->g) {
 					neighborNode->predecessor = currentNode->nodeAdress;
 					neighborNode->g = g_score;
-					neighborNode->h = heuristic_cost_estimate(neighborNode->x, neighborNode->y, session->endX, session->endY, session->avoidWalls);
 					neighborNode->f = neighborNode->g + neighborNode->h;
-					openListAdd (session, neighborNode);
-				} else {
-					if (g_score < neighborNode->g) {
-						neighborNode->predecessor = currentNode->nodeAdress;
-						neighborNode->g = g_score;
-						neighborNode->f = neighborNode->g + neighborNode->h;
-						reajustOpenListItem (session, neighborNode);
-					}
+					reajustOpenListItem (session, neighborNode);
 				}
 			}
 		}
