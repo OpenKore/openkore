@@ -184,8 +184,8 @@ sub getSubtask {
 # When the subtask is done or stopped, getSubtask() will return undef.
 sub setSubtask {
 	my ($self, $subtask) = @_;
-	assert(!defined($self->getSubtask())) if DEBUG;
-	assert($subtask->getStatus() == Task::INACTIVE) if DEBUG;
+	assert(!defined($self->getSubtask()), "There's already a subtask defined") if DEBUG;
+	assert($subtask->getStatus() == Task::INACTIVE, "Current subtask is not inactive") if DEBUG;
 	$self->{ST_subtask} = $subtask;
 	if ($subtask) {
 		$subtask->activate();

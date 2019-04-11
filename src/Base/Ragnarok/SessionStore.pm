@@ -18,7 +18,7 @@ sub new {
 
 sub add {
 	my ($self, $session) = @_;
-	assert(defined $session->{sessionID}) if DEBUG;
+	assert(defined $session->{sessionID}, "Session ID must be defined when adding to SessionStore") if DEBUG;
 	$session->{time} = time;
 	$self->{sessions}{$session->{sessionID}} = $session;
 	push @{$self->{sessionsByTime}}, $session;

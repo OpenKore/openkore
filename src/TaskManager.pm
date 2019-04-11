@@ -99,8 +99,8 @@ sub new {
 # Add a new task to this task manager.
 sub add {
 	my ($self, $task) = @_;
-	assert(defined $task) if DEBUG;
-	assert($task->getStatus() == Task::INACTIVE) if DEBUG;
+	assert(defined $task, "Can't add undefined task to Task Manager") if DEBUG;
+	assert($task->getStatus() == Task::INACTIVE, "Can only add inactive tasks to Task Manager (Current status: " . $task->getStatus() . ")") if DEBUG;
 	$self->{inactiveTasks}->add($task);
 	$self->{tasksByName}{$task->getName()}++;
 	$self->{shouldReschedule} = 1;
@@ -231,37 +231,37 @@ sub checkValidity {
 	my $activeMutexes = $self->{activeMutexes};
 
 	foreach my $task (@{$activeTasks}) {
-		assert($task->getStatus() == Task::RUNNING || $task->getStatus() == Task::STOPPED);
-		assert(!$inactiveTasks->has($task));
+		assert($task->getStatus() == Task::RUNNING || $task->getStatus() == Task::STOPPED, "Active task has wrong status (Current status: ". $task->getStatus() . ")");
+		assert(!$inactiveTasks->has($task), "Task is both in the inactive and active tasks lists");
 		if (!$grayTasks->has($task)) {
 	 		foreach my $mutex (@{$task->getMutexes()}) {
-	 			assert($activeMutexes->{$mutex} == $task);
+	 			assert($activeMutexes->{$mutex} == $task, "Active mutex hash has invalid content");
  			}
  		}
 	}
 	foreach my $task (@{$inactiveTasks}) {
 		my $status = $task->getStatus();
-		assert($status = Task::INTERRUPTED || $status == Task::INACTIVE || $status == Task::STOPPED);
-		assert(!$activeTasks->has($task));
+		assert($status = Task::INTERRUPTED || $status == Task::INACTIVE || $status == Task::STOPPED, "Inactive task has wrong status (Current status: ". $task->getStatus() . ")");
+		assert(!$activeTasks->has($task), "Task is both in the inactive and active tasks lists");
 		foreach my $mutex (@{$task->getMutexes()}) {
-			assert($activeMutexes->{$mutex} != $task);
+			assert($activeMutexes->{$mutex} != $task, "Active mutex hash has invalid content");
 		}
 	}
 	foreach my $task (@{$grayTasks}) {
-		assert($activeTasks->has($task));
-		assert(!$inactiveTasks->has($task));
+		assert($activeTasks->has($task), "Active task set has invalid content");
+		assert(!$inactiveTasks->has($task), "Inactive task set has invalid content");
 	}
 
 	my $activeMutexes = $self->{activeMutexes};
 	foreach my $mutex (keys %{$activeMutexes}) {
 		my $owner = $activeMutexes->{$mutex};
-		assert($self->{activeTasks}->has($owner));
+		assert($activeTasks->has($owner), "Active task set has invalid content");
 	}
 
 	my $tasksByName = $self->{tasksByName};
 	foreach my $value (values %{$tasksByName}) {
-		assert(defined $value);
-		assert($value > 0);
+		assert(defined $value, "Task in tasksByName hash has undefined value");
+		assert($value > 0, "Task in tasksByName hash has zero value");
 	}
 }
 
@@ -463,7 +463,7 @@ sub deactivateTask {
 	} else {
 		my $name = $task->getName();
 		$tasksByName->{$name}--;
-		assert($tasksByName->{$name} >= 0) if DEBUG;
+		assert($tasksByName->{$name} >= 0, "Task isn't registered in tasksByName hash") if DEBUG;
 		if ($tasksByName->{$name} == 0) {
 			delete $tasksByName->{$name};
 		}

@@ -208,7 +208,7 @@ sub getLevel {
 # Returns the SP required for level $level of this skill, or undef if that's unknown.
 sub getSP {
 	my ($self, $level) = @_;
-	assert($level > 0) if DEBUG;
+	assert($level > 0, "Can't get SP cost of skill with level below zero (lvl: $level)") if DEBUG;
 
 	my $targetType = $self->getTargetType();
 	if (defined $targetType && $targetType == TARGET_PASSIVE) {

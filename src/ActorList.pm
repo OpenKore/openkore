@@ -27,6 +27,7 @@ package ActorList;
 
 use strict;
 use Carp::Assert;
+use Utils::Assert;
 use Utils::ObjectList;
 use base qw(ObjectList);
 
@@ -54,10 +55,10 @@ use Actor::Elemental;
 # Creates a new ActorList object.
 sub new {
 	my ($class, $type) = @_;
-	assert(defined $type) if DEBUG;
+	assert(defined $type, "You must specify a type for the new Actor list") if DEBUG;
 	# Note: we pass a string to ActorList's new method, not an object: http://stackoverflow.com/questions/204316/why-shouldnt-i-use-universalisa
 	#		this might cause problems
-	assert(UNIVERSAL::isa($type, "Actor")) if DEBUG;
+	assertClass($type, "Actor") if DEBUG;
 
 	my $self = $class->SUPER::new();
 
@@ -92,10 +93,10 @@ sub new {
 # method.
 sub add {
 	my ($self, $actor) = @_;
-	assert(defined $actor) if DEBUG;
-	assert($actor->isa($self->{AL_type})) if DEBUG;
-	assert(defined $actor->{ID}) if DEBUG;
-	assert(!exists $self->{IDmap}{$actor->{ID}}) if DEBUG;
+	assert(defined $actor, "Actor must be defined when adding to ActorList") if DEBUG;
+	assert($actor->isa($self->{AL_type}), "Actor type must match with ActorList type") if DEBUG;
+	assert(defined $actor->{ID}, "Actor must have an ID when adding to ActorList") if DEBUG;
+	assert(!exists $self->{IDmap}{$actor->{ID}}, "Actor ID in ActorList must be unique") if DEBUG;
 
 	$self->{IDmap}{$actor->{ID}} = $actor;
 	return $self->SUPER::add($actor);
@@ -112,7 +113,7 @@ sub add {
 # See also: $Actor->{ID}
 sub getByID {
 	my ($self, $ID) = @_;
-	assert(defined $ID) if DEBUG;
+	assert(defined $ID, "This method requires a defined ID") if DEBUG;
 	return $self->{IDmap}{$ID};
 }
 
@@ -127,9 +128,9 @@ sub getByID {
 # method.
 sub remove {
 	my ($self, $actor) = @_;
-	assert(defined $actor) if DEBUG;
-	assert(UNIVERSAL::isa($actor, $self->{AL_type})) if DEBUG;
-	assert(defined $actor->{ID}) if DEBUG;
+	assert(defined $actor, "This method requires a defined actor as argument") if DEBUG;
+	assertClass($actor, $self->{AL_type}) if DEBUG;
+	assert(defined $actor->{ID}, "Actor must have an ID when removing from ActorList") if DEBUG;
 
 	my $result = $self->SUPER::remove($actor);
 	if ($result) {
@@ -170,11 +171,11 @@ sub checkValidity {
 	my ($self) = @_;
 	$self->SUPER::checkValidity();
 
-	assert(defined $self->{AL_type});
-	assert(defined $self->{IDmap});
+	assert(defined $self->{AL_type}, "ActorList has no type");
+	assert(defined $self->{IDmap}, "ActorList has invalid content (IDmap is undefined)");
 	should(scalar(keys %{$self->{IDmap}}), $self->size());
 	foreach my $v (values %{$self->{IDmap}}) {
-		assert($self->find($v) != -1);
+		assert($self->find($v) != -1, "Failed to find a value that should be in ActorList");
 	}
 }
 
