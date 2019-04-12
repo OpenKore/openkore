@@ -45,7 +45,7 @@ CalcPath_new ()
 }
 
 int
-heuristic_cost_estimate (int currentX, int currentY, int goalX, int goalY, int avoidWalls)
+heuristic_cost_estimate (int currentX, int currentY, int goalX, int goalY)
 {
 	int xDistance = abs(currentX - goalX);
 	int yDistance = abs(currentY - goalY);
@@ -339,7 +339,7 @@ CalcPath_pathStep (CalcPath_session *session)
 				neighborNode->nodeAdress = neighbor_adress;
 				neighborNode->predecessor = currentNode->nodeAdress;
 				neighborNode->g = g_score;
-				neighborNode->h = heuristic_cost_estimate(neighborNode->x, neighborNode->y, session->endX, session->endY, session->avoidWalls);
+				neighborNode->h = heuristic_cost_estimate(neighborNode->x, neighborNode->y, session->endX, session->endY);
 				neighborNode->f = neighborNode->g + neighborNode->h;
 				openListAdd (session, neighborNode);
 			} else {
@@ -375,7 +375,7 @@ CalcPath_init (CalcPath_session *session)
 	start->x = session->startX;
 	start->y = session->startY;
 	start->nodeAdress = startAdress;
-	start->h = heuristic_cost_estimate(start->x, start->y, goal->x, goal->y, session->avoidWalls);
+	start->h = heuristic_cost_estimate(start->x, start->y, goal->x, goal->y);
 	start->f = start->h;
 	
 	session->initialized = 1;

@@ -50,7 +50,7 @@ typedef struct {
 
 CalcPath_session *CalcPath_new ();
 
-int heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY, int avoidWalls);
+int heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY);
 
 void openListAdd (CalcPath_session *session, Node* node);
 
