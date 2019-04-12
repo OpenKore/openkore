@@ -251,6 +251,11 @@ CalcPath_pathStep (CalcPath_session *session)
 		openListAdd (session, start);
 	}
 	
+	if (goal->nodeAdress == start->nodeAdress) {
+		session->solution_size = 0;
+		return 1;
+	}
+	
 	Node* currentNode;
 	Node* neighborNode;
 	
@@ -286,7 +291,7 @@ CalcPath_pathStep (CalcPath_session *session)
 		currentNode = openListGetLowest (session);
 
 		//if current is the goal, return the path.
-		if (currentNode->nodeAdress == goal->nodeAdress) {
+		if (goal->predecessor) {
 			//return path
 			reconstruct_path(session, goal, start);
 			return 1;

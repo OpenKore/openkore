@@ -165,7 +165,10 @@ sub iterate {
 	} elsif ($self->{stage} eq '') {
 		my $pos = calcPosition($self->{actor});
 		my $begin = time;
-		if ($self->getRoute($self->{solution}, $field, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
+		if ($pos->{x} == $self->{dest}{pos}{x} && $pos->{y} == $self->{dest}{pos}{y}) {
+			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
+			$self->setDone();
+		} elsif ($self->getRoute($self->{solution}, $field, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = 'Route Solution Ready';
 			debug "Route $self->{actor} Solution Ready!\n", "route";
 
@@ -176,7 +179,7 @@ sub iterate {
 			}
 
 		} else {
-			debug "Something's wrong; there is no path to " . $field->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
+			debug "Something's wrong; there is no path from " . $field->baseName . "($pos->{x},$pos->{y}) to " . $field->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
 			$self->setError(CANNOT_CALCULATE_ROUTE, "Unable to calculate a route.");
 		}
 
