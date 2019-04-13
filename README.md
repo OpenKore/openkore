@@ -1,6 +1,6 @@
 ![logo](https://upload.wikimedia.org/wikipedia/commons/b/b5/Kore_2g_logo.png)
 
-* OpenKore is an custom client & intelligent automated assistant for Ragnarok Online.
+* OpenKore is a custom client & intelligent automated assistant for Ragnarok Online.
 * It is a **free**, open source & cross-platform program _(Linux, Windows & MacOS are supported)_.
 
 ## Prerequisites
@@ -71,7 +71,7 @@ Check the [status of botting on official servers](https://github.com/OpenKore/op
 
 ## Contributing
 
-OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/contributors) located around the world. Check out the [documentation](http://openkore.com/index.php/Manual) and if necessary submit a pull request!
+OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/contributors) located around the world. Check out the [documentation](http://openkore.com/index.php/Manual) and if necessary, submit a pull request.
 
 ## Contacts
 
