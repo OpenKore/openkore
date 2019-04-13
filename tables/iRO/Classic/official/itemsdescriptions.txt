@@ -72145,3 +72145,31 @@ It is worth 2 Forgery Tokens
 Weight: 1
 Character Bound
 #
+
+20085#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Brown Deviruchi Hat!
+100 Fabric
+100 Brown Roots
+50 Burning Hairs
+20 Worn-out Magic Scroll
+1 Brown Deviruchi Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20086#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Brown Drooping Cat!
+250 Golden Hair
+2 Cat's Eyes
+1 Black Cat Doll
+2 White Dyestuffs
+1 Brown Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
