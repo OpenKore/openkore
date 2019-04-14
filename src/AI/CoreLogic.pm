@@ -2009,9 +2009,11 @@ sub processAutoBuy {
 		my $item;
 		if ($config{"buyAuto_".$args->{lastIndex}} =~ /^\d{3,}$/) {
 			$item = $storeList->getByNameID( $config{"buyAuto_".$args->{lastIndex}} );
+			$args->{'nameID'} = $config{"buyAuto_".$args->{lastIndex}} if (defined $item);
 		}
 		else {
 			$item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
+			$args->{'nameID'} = $item->{nameID} if (defined $item);
 		}
 		
 		if ($config{"buyAuto_".$args->{lastIndex}} =~ /^\d{3,}$/ && defined $item) {
