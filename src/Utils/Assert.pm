@@ -27,7 +27,6 @@ our @EXPORT = qw(assertClass);
 sub assertClass {
 	my ($object, $expectedClassName) = @_;
 	my $objectName = defined($object) ? $object : "(undefined)";
-	assert(blessed($object), "'$objectName' must be blessed");
 	assert($object->isa($expectedClassName), "'$objectName' must be of class '$expectedClassName'");
 }
 
