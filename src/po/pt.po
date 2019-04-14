@@ -11278,11 +11278,11 @@ msgstr "%s aberto para pesquisar em lojas neste mapa.\n"
 
 #: ../Network/Receive.pm:6819
 msgid "Universal Catalog Gold"
-msgstr "Catálogo de Vendas Prata"
+msgstr "Catálogo de Vendas Ouro"
 
 #: ../Network/Receive.pm:6819
 msgid "Universal Catalog Silver"
-msgstr "Catálogo de Vendas Ouro"
+msgstr "Catálogo de Vendas Prata"
 
 #: ../Network/Receive.pm:6821
 #, perl-format
