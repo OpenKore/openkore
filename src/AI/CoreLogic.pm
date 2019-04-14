@@ -2016,13 +2016,6 @@ sub processAutoBuy {
 			$args->{'nameID'} = $item->{nameID} if (defined $item);
 		}
 		
-		if ($config{"buyAuto_".$args->{lastIndex}} =~ /^\d{3,}$/ && defined $item) {
-			$args->{'nameID'} = $config{"buyAuto_".$args->{lastIndex}};
-		}
-		elsif (defined $item) {
-			$args->{'nameID'} = $item->{nameID};
-		}
-		
 		if (!exists $args->{'nameID'}) {
 			$args->{index_failed}{$args->{lastIndex}} = 1;
 			error "buyAuto index ".$args->{lastIndex}." (".$config{"buyAuto_".$args->{lastIndex}}.") failed, item doesn't exist in npc sell list.\n", "npc";
