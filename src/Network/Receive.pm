@@ -6856,7 +6856,7 @@ sub search_store_result {
 	my @universalCatalogPage;
 
 	for (my $i = 0; $i < length($args->{storeInfo}); $i += $step) {
-		my ($storeID, $accountID, $shopName, $nameID, $itemType, $price, $amount, $refine, $cards, $unknown) = unpack($unpackString, substr($args->{storeInfo}, $i));
+		my ($storeID, $accountID, $shopName, $nameID, $itemType, $price, $amount, $refine, $cards, $unknown) = unpack($unpackString, substr($args->{storeInfo}, $i, $step));
 
 		my @cards = unpack "v4", $cards;
 
