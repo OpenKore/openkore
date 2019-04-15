@@ -6847,15 +6847,16 @@ sub search_store_fail {
 
 sub search_store_result {
 	my ($self, $args) = @_;
-	my $unpackString = "a4 a4 a80 v C V v C a16";
+	my $step = (length($args->{storeInfo}) % 114 == 0) ? 114 : 131;
+	my $unpackString = "a4 a4 a80 v C V v C a16" . (($step == 114) ? "" : " a17");
 
 	@{$universalCatalog{list}} = () if $args->{first_page};
 	$universalCatalog{has_next} = $args->{has_next};
 
 	my @universalCatalogPage;
 
-	for (my $i = 0; $i < length($args->{storeInfo}); $i += 106) {
-		my ($storeID, $accountID, $shopName, $nameID, $itemType, $price, $amount, $refine, $cards) = unpack($unpackString, substr($args->{storeInfo}, $i));
+	for (my $i = 0; $i < length($args->{storeInfo}); $i += $step) {
+		my ($storeID, $accountID, $shopName, $nameID, $itemType, $price, $amount, $refine, $cards, $unknown) = unpack($unpackString, substr($args->{storeInfo}, $i));
 
 		my @cards = unpack "v4", $cards;
 
@@ -6870,6 +6871,7 @@ sub search_store_result {
 			refine => $refine,
 			cards_nameID => $cards,
 			cards => \@cards,
+			unknown => $unknown
 		};
 
 		push(@universalCatalogPage, $universalCatalogInfo);
