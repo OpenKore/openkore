@@ -1777,7 +1777,13 @@ sub processAutoBuy {
 		
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
 			next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
-			my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+			my $amount;
+			if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
+				$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"});
+			}
+			else {
+				$amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+			}
 			if (
 				$config{"buyAuto_$i"."_minAmount"} ne "" &&
 				$config{"buyAuto_$i"."_maxAmount"} ne "" &&
@@ -1861,10 +1867,19 @@ sub processAutoBuy {
 			delete $args->{index};
 			for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
 				next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
+				next if ($config{"buyAuto_${i}_maxBase"} =~ /^\d{1,}$/ && $char->{lv} > $config{"buyAuto_${i}_maxBase"});
+				next if ($config{"buyAuto_${i}_minBase"} =~ /^\d{1,}$/ && $char->{lv} < $config{"buyAuto_${i}_minBase"});
 				# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
 				next if (exists $args->{index_failed}{$i});
 
-				my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+				my $amount;
+				if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
+					$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"});
+				}
+				else {
+					$amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+				}
+				
 				if ($config{"buyAuto_$i"."_maxAmount"} ne "" && $amount < $config{"buyAuto_$i"."_maxAmount"}) {
 					next if (($config{"buyAuto_$i"."_price"} && ($char->{zeny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zeny}, $config{"buyAuto_$i"."_zeny"})));
 
@@ -1991,10 +2006,14 @@ sub processAutoBuy {
 		
 		my @buyList;
 		
-		my $item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
-		
-		if (defined $item) {
-			$args->{'nameID'} = $item->{nameID};
+		my $item;
+		if ($config{"buyAuto_".$args->{lastIndex}} =~ /^\d{3,}$/) {
+			$item = $storeList->getByNameID( $config{"buyAuto_".$args->{lastIndex}} );
+			$args->{'nameID'} = $config{"buyAuto_".$args->{lastIndex}} if (defined $item);
+		}
+		else {
+			$item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
+			$args->{'nameID'} = $item->{nameID} if (defined $item);
 		}
 		
 		if (!exists $args->{'nameID'}) {
