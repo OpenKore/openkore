@@ -6955,6 +6955,7 @@
 28200#Lança-Granadas Caos Total#
 28201#Cruz Meridional#
 28202#Cruz Meridional#
+28256#Escopeta Ancestral#
 28319#Cauda Demoníaca#
 28321#Garra do Falcoeiro#
 28322#Luva do Falcoeiro#
@@ -7097,6 +7098,14 @@
 31203#Churrasquelmo#
 31208#Cabelo Longo Loiro#
 31209#Cabelo Longo Branco#
+31218#Rabo de Unicórnio Céu#
+31219#Rabo de Unicórnio Rubi#
+31220#Rabo de Unicórnio Ouro#
+31221#Rabo de Unicórnio Limão#
+31222#Rabo de Unicórnio Choco#
+31223#Rabo de Unicórnio Neve#
+31224#Rabo de Unicórnio Bronze#
+31225#Rabo de Unicórnio Lilás#
 31244#Elmo das Falcoeiras de Rapina#
 31249#Orelhas do Coelho da Lua#
 31251#Boca de Gatinho#
