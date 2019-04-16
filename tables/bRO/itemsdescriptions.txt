@@ -24652,7 +24652,7 @@ Classes que utilizam: ^777777Todas^000000
 5195#
 Lacinho colorido usado para prender o cabelo. Ele parece simples, mas protege o usuário contra magias ofensivas.
 DEFM + 3.
-Tipo: ^777777Equipamento para a cabeça^00000
+Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
 Equipa em: ^777777Topo^000000
 Peso: ^77777710^000000
@@ -38544,7 +38544,29 @@ Peso: ^77777750^000000
 #
 12641#
 Um ovo amaldiçoado criado em Niflheim capaz de trazer uma grande sorte a quem o carrega. Ao ser aberto, revela um presente especial.
-Peso : ^7777771^000000
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Pergaminho de Arma +9 - 0,01%.^000000
+^0000ff 1 - Pergaminho de Armadura +9 - 0,01%.^000000
+^0000ff 1 - Galho Sangrento - 0,50%.^000000
+^0000ff 1 - Álbum Mágico de Cartas - 0,50%.^000000
+^0000ff 1 - Pergaminho de Arma +7 - 0,90%.^000000
+^0000ff 1 - Pergaminho de Armadura +7 - 0,90%.^000000
+^0000ff 1 - Boneca da Vaidade - 1,40%.^000000
+^0000ff 1 - Chapéu Chinês do Andarilho - 1,98%.^000000
+^0000ff 1 - Velho Álbum de Cartas - 3,80%.^000000
+^0000ff 4 - Pergaminhos de Fantasma - 5%.^000000
+^0000ff 5 - Galhos Secos - 6%.^000000
+^0000ff 10 - Pergaminhos de Aspersio - 7%.^000000
+^0000ff 2 - Manuais de Combate - 8%.^000000
+^0000ff 2 - Gomas de Mascar - 9%.^000000
+^0000ff 3 - Seguros de Vida - 9%.^000000
+^0000ff 1 - Caixa de Mastela [100] - 10%.^000000
+^0000ff 1 - Arca do Tesouro - 12%.^000000
+^0000ff 1 - Caixa de Poção Branca Compacta [100] - 12%.^000000
+^0000ff 1 - Caixa de Veneno Mortal [30] - 12%.^000000
+--------------------------
+Peso: 1
 #
 12642#
 Uma caixa contendo 100 Mastelas. Uma fruta roxa, muito bela.
@@ -43973,8 +43995,26 @@ Caixa do Anel Crítico Aprimorado
 #
 14229#
 Dizem que é um ovo deixado pelos espíritos guardiões das Cerejeiras de Amatsu. Ao ser aberto, revela um presente especial.
-^ffffff_^000000
-Peso: ^7777771^000000
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Carta Osíris - 1%.^000000
+^0000ff 1 - Hélices - 1%.^000000
+^0000ff 1 - Carta Freeoni - 1%.^000000
+^0000ff 1 - Chifre de Unicórnio - 2%.^000000
+^0000ff 1 - Antenas Verdes - 2%.^000000
+^0000ff 1 - Asas de Anjo - 2%.^000000
+^0000ff 1 - Asas de Demônio - 2%.^000000
+^0000ff 1 - Coroa da Flor de Lótus [1] - 2%.^000000
+^0000ff 1 - Elmo de Orc Herói - 2%.^000000
+^0000ff 1 - Máscara de Kabuki [1] - 2%.^000000
+^0000ff 1 - Rosa Mística - 2%.^000000
+^0000ff 2 - Sementes de Yggdrasil - 15%.^000000
+^0000ff 10 - Gomas de Mascar - 16%.^000000
+^0000ff 10 - Seguros de Vida - 16%.^000000
+^0000ff 15 - Cartões Kafra - 17%.^000000
+^0000ff 10 - Manuais de Combate - 17%.^000000
+--------------------------
+Peso: 1
 #
 14232#
 Uma caixa contendo 10 Frutos de Yggdrasil.
@@ -44269,12 +44309,38 @@ Peso: ^7777771^000000
 #
 14308#
 Um ovo cheio de surpresas. Ao ser usado, concede um item aleatório.
-^ffffff_^000000
-Peso: ^7777771^000000
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 3 - Seguro Estendido - 1%.^000000
+^0000ff 1 - Galho Sangrento - 1%.^000000
+^0000ff 1 - Lacinho Rosa [1] - 5,50%.^000000
+^0000ff 1 - Lacinho Vermelho [1] - 5,50%.^000000
+^0000ff 3 - Manual de Combate - 7%.^000000
+^0000ff 1 - Seguro de Vida[10] - 9%.^000000
+^0000ff 3 - Cartões Kafra - 17%.^000000
+^0000ff 3 - Pudim de Guyak - 17%.^000000
+^0000ff 1 - Caixa de Galhos Secos [10] - 18%.^000000
+^0000ff 5 - Acarajés - 19%.^000000
+--------------------------
+Peso: 1
 #
 14316#
 Um ovo que emana uma animada energia amorosa. Ao ser aberto, você encontrará incrível prêmio em seu interior!
-Peso: ^7777771^000000
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Carta Algoz Eremes - 0,10%.^000000
+^0000ff 1 - Álbum Mágico de Cartas - 0,30%.^000000
+^0000ff 1 - Carta Tirfing - 0,50%.^000000
+^0000ff 1 - Boneca de Alice [1] - 1%.^000000
+^0000ff 1 - Fones Poringzor Ex71 [1] - 2,00%.^000000
+^0000ff 1 - Caixa de Corte de Cabelo - 11%.^000000
+^0000ff 10 - Pudins de Guyak - 12,10%.^000000
+^0000ff 3 - Enciclopédias de Combate - 15%.^000000
+^0000ff 20 - Fogos de Artifício: Dia dos Namorados - 18%.^000000
+^0000ff 10 - Chocolates dos Apaixonados - 20%.^000000
+^0000ff 10 - Tortas de Chocolate Cremosas - 20%.^000000
+--------------------------
+Peso: 1
 #
 14317#
 Qual surpresa a Lady Branca terá reservado para você? Ao ser aberto, revela um presente especial.
@@ -44740,9 +44806,30 @@ Aumenta a resistência a ataques mágicos em 3% por 2 minutos.
 Peso : ^7777771^000000
 #
 14613#
-Ovo do RWC 2012
 Feito para celebrar o Ragnarök World Championship. Você poderá receber vários prêmios exclusivos.
-Peso : ^7777771^000000
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Pergaminho de Armadura +9 - 0,05%.^000000
+^0000ff 1 - Pergaminho de Arma +9 - 0,05%.^000000
+^0000ff 1 - Pergaminho de Armadura +7 - 0,9%.^000000
+^0000ff 1 - Pergaminho de Arma +7 - 0,9%.^000000
+^0000ff 1 - Álbum Mágico de Cartas - 1%.^000000
+^0000ff 1 - Adorno Arco-íris - 1,1%.^000000
+^0000ff 1 - Cajado Memorável do RWC [1] - 1,5%.^000000
+^0000ff 1 - Maça Memorável do RWC [1] - 1,5%.^000000
+^0000ff 1 - Adaga Memorável do RWC [1] - 1,5%.^000000
+^0000ff 1 - Chapéu de Penas Arco-íris [1] - 1,5%.^000000
+^0000ff 1 - Álbum para Armas - 5%.^000000
+^0000ff 1 - Álbum para Acessórios - 5%.^000000
+^0000ff 1 - Cupom de Aprimoramento do RWC - 10%.^000000
+^0000ff 1 - Caixa de Poção Branca Compacta [100] - 10%.^000000
+^0000ff 1 - Caixa de Veneno Mortal [30] - 10%.^000000
+^0000ff 1 - Arca do Tesouro - 10%.^000000
+^0000ff 3 - Galhos Secos - 10%.^000000
+^0000ff 2 - Chiclete Bola - 15%.^000000
+^0000ff 2 - Manual de Campo - 15%.^000000
+--------------------------
+Peso: 1
 #
 14614#
 Poção que faz com que o usuário consiga enrijecer sua pele e criar uma aura em torno de si, preparada a partir de escamas e saliva de dragões além de ervas especiais.
@@ -46898,9 +46985,24 @@ Peso: ^7777771^000000
 #
 16253#
 Um ovinho muito gracioso, com orelhas de coelho.
-Esse item não pode ser negociado, derrubado no chão e colocado no carrinho, mas pode ser colocado no armazém.
-^ffffff_^000000
-Peso: ^7777771^000000
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Boina de Coelho [1] - 0,50%.^000000
+^0000ff 1 - Anel do Caçador Veterano [A] - 5%.^000000
+^0000ff 1 - Anel do Caçador de Morto-Vivo [A] - 5%.^000000
+^0000ff 1 - Anel do Ganhador [A] - 5%.^000000
+^0000ff 1 - Anel do Devastador [A] - 5%.^000000
+^0000ff 1 - Anel do Colecionador de Insetos [A] - 5%.^000000
+^0000ff 1 - Anel do Pescador [A] - 5%.^000000
+^0000ff 1 - Anel do Exorcista [A] - 5%.^000000
+^0000ff 1 - Anel do Açougueiro [A] - 5%.^000000
+^0000ff 1 - Anel do Anjo Caído [A] - 5%.^000000
+^0000ff 1 - Anel do Caçador de Dragões [A] - 5%.^000000
+^0000ff 1 - Doce Hiper Açucarado [10] - 5%.^000000
+^0000ff 1 - Caixa de Ovo da Fortuna [1] - 20%.^000000
+^0000ff 1 - Caixa de Fruto de Yggdrasil [10] - 24,50%.^000000
+--------------------------
+Peso: 1
 #
 16257#
 Um ovo que contém a promessa de surpresas contidas num novo amanhecer.
@@ -47062,8 +47164,24 @@ Peso: ^7777771^000000
 #
 16578#
 Ovo marcando a estréia do Instituto Kiel Hyre no mercado de ovos. Diferentemente dos outros, você não quebra o ovo; ele vem com um dispositivo ultra-tecnológico de fusão a frio que choca o ovo instantaneamente e lhe entrega o prêmio com uma garra mecânica.
-^0000ffAo ser aberto, concede uma surpresa aleatória.^000000
-Peso: ^7777771^000000
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Carta Kiel-D-01 - 0,10%.^000000
+^0000ff 5 - Grimórios de Combate - 0,50%.^000000
+^0000ff 1 - Hélices 2.0 - 0,50%.^000000
+^0000ff 1 - Caixa de Coquetéis Sopro do Dragão [10] - 1%.^000000
+^0000ff 1 - Olhos Biônicos - 1%.^000000
+^0000ff 1 - Caixa de Sashimi [10] - 3%.^000000
+^0000ff 5 - Gomas de Mascar - 3,90%.^000000
+^0000ff 10 - Pudins de Guyak - 10%.^000000
+^0000ff 2 - Manuais de Combate de Classe - 10%.^000000
+^0000ff 1 - Caixa Abençoada [10] - 10%.^000000
+^0000ff 1 - Elunium Enriquecido - 15%.^000000
+^0000ff 2 - Gomas de Mascar - 15%.^000000
+^0000ff 10 - Seguros de Vida - 15%.^000000
+^0000ff 1 - Caixa de Geleia Real [5] - 15%.^000000
+--------------------------
+Peso: 1
 #
 16579#
 Um ovo que carrega as promessas de uma nova chance. Ao ser aberto, ele é consumido por chamas mágicas, e em suas cinzas você encontrará um incrível prêmio!
@@ -47397,8 +47515,28 @@ Peso: ^7777770^000000
 Peso: ^7777771^000000
 #
 16774#
-Um belíssimo ovo que emana uma energia dourada revigorante. ^CD3278Ao ser aberto, revela um presente especial vindo diretamente da morada dos deuses.^000000
-Peso: ^7777771^000000
+Um belíssimo ovo que emana uma energia dourada revigorante.
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Carta Isilla - 0,10%.^000000
+^0000ff 1 - Diadema de Fricca - 0,10%.^000000
+^0000ff 1 - Escudo da Valquíria [1] - 0,10%.^000000
+^0000ff 1 - Medicina Secreta - 0,20%.^000000
+^0000ff 1 - Bênção de Asgard [1] - 0,50%.^000000
+^0000ff 1 - Bênção de Odin [1] - 0,50%.^000000
+^0000ff 1 - Carta Raydric - 0,50%.^000000
+^0000ff 1 - Elmo Sombrio - 2%.^000000
+^0000ff 1 - Penacho da Valquíria [1] - 2%.^000000
+^0000ff 30 - Bênçãos de Tyr - 10%.^000000
+^0000ff 1 - Caixa de Regeneração [10] - 10%.^000000
+^0000ff 10 - Doces Hiper Açucarados - 10%.^000000
+^0000ff 10 - Enciclopédias de Combate - 10%.^000000
+^0000ff 1 - Caixa de Amuletos [10] - 12%.^000000
+^0000ff 10 - Pudins de Guyak - 12%.^000000
+^0000ff 30 - Biscoitos da Sorte: Magnificat - 15%.^000000
+^0000ff 10 - Frutos de Yggdrasil - 15%.^000000
+--------------------------
+Peso: 1
 #
 16972#
 Uma caixa contendo os equipamentos visuais Sol Risonho, Arco Íris, Nuvem Chuvosa e Nuvem com Raios
@@ -48273,16 +48411,54 @@ Peso: ^7777771^000000
 #
 17305#
 Item criado pela Motoyo Doidage para disponibilizar suas incríveis criações de forma inusitada. É possível perceber que ele foi encantado para gerar aleatoriamente uma das criações de Doidage assim que aberto.
-^ffffff_^000000
-Peso: ^7777771^000000
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Fivela de Sakura - 10%.^000000
+^0000ff 1 - Tiara de Sakura - 10%.^000000
+^0000ff 1 - Orelhas de Fada Travessa - 10%.^000000
+^0000ff 1 - Caneca de Chá Oriental - 10%.^000000
+^0000ff 1 - Presilha de Borboleta - 10%.^000000
+^0000ff 1 - Touca de Abelha - 10%.^000000
+^0000ff 1 - Presilha de Angeling - 10%.^000000
+^0000ff 1 - Coroa do Imperador - 10%.^000000
+^0000ff 1 - Peruca Maravilinda - 10%.^000000
+^0000ff 1 - Orelhas de Fada Animada - 10%.^000000
+--------------------------
+Peso: 1
 #
 17323#
-Uma coleção de itens de Shinobis. ^0000FFAo ser aberto, você encontrará um incrível prêmio aleatório.^000000
-Peso : ^7777771^000000
+Uma coleção de itens de Shinobis.
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Presilha do Festival - 5%.^000000
+^0000ff 1 - Elmo do Xogum - 5%.^000000
+^0000ff 1 - Máscara da ANBU - 5%.^000000
+^0000ff 1 - Pergaminho dos Selos - 10%.^000000
+^0000ff 1 - Chapéu do Gama-sama - 10%.^000000
+^0000ff 1 - Nove Caudas Dorminhoca - 10%.^000000
+^0000ff 1 - Elmo da Lua Crescente - 10%.^000000
+^0000ff 1 - Cata-vento Elegante - 15,00%.^000000
+^0000ff 1 - Máscara do Xogum - 15%.^000000
+^0000ff 1 - Cata-vento Vermelho - 15%.^000000
+--------------------------
+Peso: 1
 #
 17428#
 Um ovo representando os Coelhos da Páscoa e seus parentes. Ao ser aberto, concede um item visual aleatório.
-Peso : ^7777771^000000
+--------------------------
+^CD3278Ao abrir, concede 1 item aleatório abaixo:^000000
+^0000ff 1 - Tiara Satélite - 10%.^000000
+^0000ff 1 - Touca de Coelho - 10%.^000000
+^0000ff 1 - Cartola da Mekoro - 10%.^000000
+^0000ff 1 - Olho do Beholder - 10%.^000000
+^0000ff 1 - Coelho de Pano - 10%.^000000
+^0000ff 1 - Orelhas Fabulosas - 10%.^000000
+^0000ff 1 - Tiara Estelar - 10%.^000000
+^0000ff 1 - Coelhinho Carinhoso - 10%.^000000
+^0000ff 1 - Vaso de Planta Anti-Z - 10%.^000000
+^0000ff 1 - Gorro da Piamette - 10%.^000000
+--------------------------
+Peso: 1
 #
 18000#
 Projétil redondo utilizado em canhões.
@@ -60049,6 +60225,36 @@ Nível da arma: ^7777773^000000
 Nível mínimo: ^777777141^000000
 Classes: ^777777Insurgentes^000000
 #
+28256#
+Uma escopeta mágica de cano serrado. Suas origens sobrenaturais fazem dela uma arma de fogo muito procurada por caçadores de demônios do mundo inteiro.
+^CD3278Mantém [Espalhar Dano] ativo.^000000
+A cada 2 refinos:
+^0000ffDano físico a distância +3%.^000000
+A cada 3 refinos:
+^0000ffSP máx. +2%.^000000
+Refino +7 ou mais:
+^0000ffDano físico contra monstros chefes +10%.^000000
+Refino +9 ou mais:
+^0000ffAo usar [Proteção de Platina], ativa o [Efeito 1] por 90 segundos.^000000
+Refino +11 ou mais:
+^0000ffDano físico contra as raças Demônio e Morto-Vivo +15%.^000000
+^CD3278Efeito 1:^000000
+^0000ffATQ +50.^000000
+^0000ffDano físico a distância +10%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar o [Efeito 2] por 7 segundos.^000000
+^CD3278Efeito 2:^000000
+^0000ffDES +20.^000000
+^0000ffDano físico a distância +10%.^000000
+Tipo: ^777777Espingarda^000000
+Ataque: ^777777275^000000
+Peso: ^777777140^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Insurgentes^000000
+#
 28319#
 Uma cauda peluda que fará com que você pareça um demônio. Melhor tomar cuidado com demônios sem cauda, vai que eles roubem a sua.
 ^FF6347Conjunto^000000
@@ -62221,6 +62427,78 @@ Classes: ^777777Todas^000000
 #
 31209#
 Você finalmente deixou suas belas madeixas crescerem e agora é dono de uma vasta cabeleira... Mesmo que isso seja apenas uma peruca! Se você sempre quis se parecer com o guerreiro yokai Inu Se Acha, com o líder do Bando do Falcão, Graffite ou com a famosa arruaceira Gatuna Negra, essa é a sua chance.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31218#
+O azul exótico dessas madeixas representa a infinidade dos céus de uma bela tarde. E não se preocupe: esse é só o nome do penteado; nenhum unicórnio foi maltratado!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31219#
+Rabo de cavalo? Nada disso, este aqui é um Rabo de Unicórnio! O vermelho intenso desses cabelos vai mostrar a todos a sua personalidade eufórica e otimista.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31220#
+Agora você sabe que unicórnios têm rabos mais longos que os de cavalos. Coloque esse penteado dourado e mostre ao mundo que você veio pra brilhar e ser o número um!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31221#
+Apesar do nome, equipar este item não significa que você é uma pessoa azeda e de mal com tudo e todos. Se a vida te der um Rabo de Unicórnio Limão, use-o!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31222#
+Doce como um Sniquers, esse é um rabo de unicórnio que você vai querer ter – principalmente se for um chocólatra de marca maior!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31223#
+Leve, discreto e elegante. E também a desculpa perfeita pra você pedir para os seus amigos “respeitarem seus cabelos brancos”.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31224#
+Uma bela mecha comprida e bronzeada. Só não se esqueça de sempre andar no sol, porque essas madeixas vão reluzir intensamente sob a luz!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31225#
+De 0 a 10, esse acessório é nota 11 na extravagância. Viaje pelos quatro cantos de Rune-Midgard ostentando esse cabelo roxão e chame a atenção de todo mundo!
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
