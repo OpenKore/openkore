@@ -761,6 +761,12 @@ sub get_split_var {
 sub get_var {
 	my ($self, $type, $variable_name, $complement) = @_;
 	
+	if (ref($type) eq 'HASH') {
+		$variable_name = $type->{real_name};
+		$complement = $type->{complement};
+		$type = $type->{type};
+	}
+	
 	if ($type eq 'scalar') {
 		return ($self->get_scalar_var($variable_name));
 		
