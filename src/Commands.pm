@@ -5067,6 +5067,7 @@ sub cmdStats {
 		}
 	} else {
 		my $guildName = $char->{guild} ? $char->{guild}{name} : T("None");
+		my $hairColor = $char->{hair_pallete} ? $char->{hair_pallete} : $char->{hair_color};
 		my $msg = center(T(" Char Stats "), 44, '-') ."\n".
 			swrite(TF(
 			"Str: \@<<+\@<< #\@< Atk:  \@<<+\@<< Def:  \@<<+\@<<\n" .
@@ -5083,7 +5084,7 @@ sub cmdStats {
 			$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'},
 			$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
 			$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $guildName,
-			"$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
+			"$haircolors{$hairColor} ($hairColor)"]);
 
 		$msg .= T("You are sitting.\n") if $char->{sitting};
 		$msg .= ('-'x44) . "\n";
