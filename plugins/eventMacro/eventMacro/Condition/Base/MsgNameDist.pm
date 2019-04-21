@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseMsgNameDist;
+package eventMacro::Condition::Base::MsgNameDist;
 
 use strict;
 use Globals qw( $field $char);

@@ -1,4 +1,4 @@
-package eventMacro::Condition::ActorNearCount;
+package eventMacro::Condition::Base::ActorNearCount;
 
 use strict;
 

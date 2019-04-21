@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseMsg;
+package eventMacro::Condition::Base::Msg;
 
 use strict;
 

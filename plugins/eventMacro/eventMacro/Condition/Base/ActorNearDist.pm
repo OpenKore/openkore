@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseActorNearDist;
+package eventMacro::Condition::Base::ActorNearDist;
 
 use strict;
 use Globals qw( $char );

@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseInventory;
+package eventMacro::Condition::Base::Inventory;
 
 use strict;
 

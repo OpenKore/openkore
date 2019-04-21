@@ -1,8 +1,8 @@
-package eventMacro::Condition::BaseInStorage;
+package eventMacro::Condition::Base::InStorage;
 
 use strict;
 
-use base 'eventMacro::Condition::BaseInventory';
+use base 'eventMacro::Condition::Base::Inventory';
 
 use Globals qw( $char );
 

@@ -3,7 +3,7 @@ package eventMacro::Condition::GuildMsgName;
 use strict;
 
 
-use base 'eventMacro::Condition::BaseMsgName';
+use base 'eventMacro::Condition::Base::MsgName';
 
 sub _hooks {
 	my ( $self ) = @_;
@@ -24,10 +24,6 @@ sub validate_condition {
 		$self->{source} = $args->{MsgUser};
 	}
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
-}
-
-sub usable {
-	1;
 }
 
 1;

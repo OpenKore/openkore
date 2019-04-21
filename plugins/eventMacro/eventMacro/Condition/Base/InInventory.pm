@@ -1,14 +1,11 @@
-package eventMacro::Condition::BaseInCart;
+package eventMacro::Condition::Base::InInventory;
 
 use strict;
 
-use base 'eventMacro::Condition::BaseInventory';
-
-use Globals qw( $char );
-
+use base 'eventMacro::Condition::Base::Inventory';
 
 sub _hooks {
-	['packet_mapChange','cart_ready','packet/cart_item_added','cart_item_removed','packet/cart_off'];
+	['packet_mapChange','inventory_ready','item_gathered','inventory_item_removed'];
 }
 
 sub validate_condition {
@@ -19,15 +16,12 @@ sub validate_condition {
 		if ($callback_name eq 'packet_mapChange') {
 			$self->{is_on_stand_by} = 1;
 			
-		} elsif ($callback_name eq 'cart_ready') {
+		} elsif ($callback_name eq 'inventory_ready') {
 			$self->{is_on_stand_by} = 0;
-			
-		} elsif ($callback_name eq 'packet/cart_off') {
-			$self->{is_on_stand_by} = 1;
 		}
 		
 	} elsif ($callback_type eq 'recheck') {
-		$self->{is_on_stand_by} = $char->cart->isReady ? 0 : 1;
+		$self->{is_on_stand_by} = 0;
 	}
 	
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );

@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseActorNotNear;
+package eventMacro::Condition::Base::ActorNotNear;
 
 use strict;
 

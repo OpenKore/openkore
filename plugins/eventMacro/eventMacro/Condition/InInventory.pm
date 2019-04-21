@@ -2,7 +2,7 @@ package eventMacro::Condition::InInventory;
 
 use strict;
 
-use base 'eventMacro::Condition::BaseInInventory';
+use base 'eventMacro::Condition::Base::InInventory';
 
 use Globals qw( $char );
 
@@ -25,10 +25,6 @@ sub _parse_syntax {
 sub _get_val {
 	my ( $self ) = @_;
 	$char->inventory->sumByName($self->{wanted});
-}
-
-sub usable {
-	1;
 }
 
 1;

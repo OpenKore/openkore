@@ -3,7 +3,7 @@ package eventMacro::Condition::NpcNearCount;
 use strict;
 use Globals;
 use Utils;
-use base 'eventMacro::Condition::ActorNearCount';
+use base 'eventMacro::Condition::Base::ActorNearCount';
 
 sub _hooks {
 	my ( $self ) = @_;
@@ -26,10 +26,6 @@ sub validate_condition {
 		$self->{change} = 0;
 	}
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
-}
-
-sub usable {
-	1;
 }
 
 1;
