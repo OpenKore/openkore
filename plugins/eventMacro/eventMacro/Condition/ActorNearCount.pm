@@ -34,6 +34,8 @@ sub validate_condition {
 		}
 	} elsif ($callback_type eq 'recheck') {
 		$self->{is_on_stand_by} = 0;
+	} elsif ($callback_type eq 'variable') {
+		$self->update_validator_var($callback_name, $args);
 	}
 	
 	return $self->SUPER::validate_condition(0) if ($self->{is_on_stand_by} == 1);
