@@ -4405,7 +4405,7 @@ sub cmdPlayerList {
 		itemName({nameID => $player->{weapon}}),
 		itemName({nameID => $player->{shield}}),
 		$headTop, $headMid,
-			  $headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})",
+			  $headLow, $haircolors{$player->hairColor()} . " (" . $player->hairColor() . ")",
 			  $player->{walk_speed});
 		if ($player->{dead}) {
 			$msg .= T("Player is dead.\n");
@@ -5083,7 +5083,7 @@ sub cmdStats {
 			$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'},
 			$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
 			$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $guildName,
-			"$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
+			$haircolors{$char->hairColor()} . " (" . $char->hairColor() . ")"]);
 
 		$msg .= T("You are sitting.\n") if $char->{sitting};
 		$msg .= ('-'x44) . "\n";

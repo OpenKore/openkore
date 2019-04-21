@@ -866,4 +866,16 @@ sub sendAttackStop {
 #
 # Send "standby" to the server.
 
+##
+# void $Actor->hairColor()
+#
+# Returns proper hair color
+sub hairColor {
+	my ($self) = @_;
+	
+	return $self->{hair_pallete} if exists $self->{hair_pallete} && $self->{hair_pallete};
+	return $self->{hair_color} if exists $self->{hair_color};
+	return undef;
+}
+
 1;

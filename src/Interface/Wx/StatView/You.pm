@@ -82,7 +82,7 @@ sub update {
 	
 	$self->setStatus ($char->statusesString);
 	
-	$self->setImage ('bitmaps/heads/' . $char->{sex} . '/' . $char->{hair_style} . '.gif', {x => 1, y => $char->{hair_color}, w => 8, h => 9});
+	$self->setImage ('bitmaps/heads/' . $char->{sex} . '/' . $char->{hair_style} . '.gif', {x => 1, y => $char->hairColor(), w => 8, h => 9});
 	
 	$self->GetSizer->Layout;
 	
