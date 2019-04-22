@@ -28,8 +28,4 @@ sub get_new_variable_list {
 	return $new_variables;
 }
 
-sub usable {
-	0;
-}
-
 1;

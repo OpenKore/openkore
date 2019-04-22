@@ -86,10 +86,6 @@ sub _parse_syntax {
 	} continue {
 		$member_counter++;
 	}
-	use Data::Dumper;
-	use Log qw(warning);
-
-	warning(Dumper($self));
 }
 
 sub update_vars {

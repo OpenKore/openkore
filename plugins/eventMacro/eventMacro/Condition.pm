@@ -114,5 +114,4 @@ sub is_unique_condition {
 	0;
 }
 
-# Default: true
 1;

@@ -85,8 +85,4 @@ sub recheck_all_actor_names {
 	}
 }
 
-sub usable {
-	0;
-}
-
 1;

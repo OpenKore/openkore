@@ -2,7 +2,7 @@ package eventMacro::Condition::NoNpcNear;
 
 use strict;
 use Globals qw( $npcsList );
-use base 'eventMacro::Condition::NoActorNear';
+use base 'eventMacro::Condition::Base::NoActorNear';
 
 use Globals;
 

@@ -129,8 +129,4 @@ sub condition_type {
 	EVENT_TYPE;
 }
 
-sub usable {
-	0;
-}
-
 1;
