@@ -44826,7 +44826,7 @@ Feito para celebrar o Ragnarök World Championship. Você poderá receber vário
 ^0000ff 1 - Caixa de Veneno Mortal [30] - 10%.^000000
 ^0000ff 1 - Arca do Tesouro - 10%.^000000
 ^0000ff 3 - Galhos Secos - 10%.^000000
-^0000ff 2 - Chiclete Bola - 15%.^000000
+^0000ff 2 - Chiclete - 15%.^000000
 ^0000ff 2 - Manual de Campo - 15%.^000000
 --------------------------
 Peso: 1
@@ -57043,6 +57043,7 @@ Classes: ^777777Todas^000000
 #
 20535#
 Uma projeção de várias interfaces complexas. As pessoas provavelmente não farão ideia do que isso significa... Aliás, talvez nem você saiba o que todos aqueles códigos e números querem dizer. Mas parece muito futurista e legal.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Capa^000000
 Defesa: ^7777770^000000
@@ -58945,37 +58946,37 @@ Peso: ^7777770^000000
 #
 22521#
 Uma caixa contendo 1 Caixa de Poções Compactas Brancas e 5 Manuais de Campo de Classe,
-Esta caixa não pode ser derrubada no chão, negociada entre personagens, colocada no carrinho e na kafra.
+Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode se transferido para o armazém
 ^FF0000Só é possível abri-la quando seu personagem alcançar nível 80.^000000
 Peso: ^7777770^000000
 #
 22522#
 Uma caixa contendo 1 Álbum Velho de Cartas e 5 Manuais de Campo
-Esta caixa não pode ser derrubada no chão, negociada entre personagens, colocada no carrinho e na kafra.
+Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode se transferido para o armazém
 ^FF0000Só é possível abri-la quando seu personagem alcançar nível 100.^000000
 Peso: ^7777770^000000
 #
 22523#
 Uma caixa contendo 5 Manuais de Campo, 5 Manuais de Campo de Classe, 5 Chicletes, 5 Tickets de Seguro e 1 Caixa das Melhores Armas
-Esta caixa não pode ser derrubada no chão, negociada entre personagens, colocada no carrinho e na kafra.
+Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode se transferido para o armazém
 ^FF0000Só é possível abri-la quando seu personagem alcançar nível 120.^000000
 Peso: ^7777770^000000
 #
 22524#
 Uma caixa contendo 5 Manuais de Campo, 5 Chicletes, 5 Tickets de Seguro e 1 Álbum Mágico de Cartas.
-Esta caixa não pode ser derrubada no chão, negociada entre personagens, colocada no carrinho e na kafra.
+Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode se transferido para o armazém
 ^FF0000Só é possível abri-la quando seu personagem alcançar nível 130.^000000
 Peso: ^7777770^000000
 #
 22525#
 Uma caixa contendo 5 Manuais de Campo, 5 Chicletes, 5 Tickets de Seguro e 1 Pergaminho de Arma +7.
-Esta caixa não pode ser derrubada no chão, negociada entre personagens, colocada no carrinho e na kafra.
+Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode se transferido para o armazém
 ^FF0000Só é possível abri-la quando seu personagem alcançar nível 140.^000000
 Peso: ^7777770^000000
 #
 22526#
 Uma caixa contendo 5 Manuais de Campo, 5 Chicletes, 5 Tickets de Seguro e 1 Pergaminho de Armadura +7.
-Esta caixa não pode ser derrubada no chão, negociada entre personagens, colocada no carrinho e na kafra.
+Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode se transferido para o armazém
 ^FF0000Só é possível abri-la quando seu personagem alcançar nível 150.^000000
 Peso: ^7777770^000000
 #
