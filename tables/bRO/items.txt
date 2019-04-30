@@ -2348,6 +2348,13 @@
 4630#Carta Diretor#
 4631#Carta Visconde Coruja#
 4632#Carta Marquês Coruja#
+4652#Carta Amon Ra do Pesadelo#
+4653#Carta Arclouse do Pesadelo#
+4654#Carta Mímico do Pesadelo#
+4655# Carta Minorous do Pesadelo#
+4656#Carta Múmia do Pesadelo#
+4657#Carta Múmia Anciã do Pesadelo#
+4658#Carta Verit do Pesadelo#
 4697#Carta Charleston 03#
 4698#Carta Roboring#
 4699#Carta Mecha v2.0#
@@ -4765,6 +4772,7 @@
 12276#Assistente Mímico#
 12277#Assistente Mascarado#
 12278#Assistente Alice#
+12291#Garrafa de Água#
 12292#Fruto de Yggdrasil Amargo#
 12293#Fruto de Yggdrasil Desidratado#
 12298#Suco de Gato#
@@ -6353,6 +6361,7 @@
 19602#Chapéu Invisível#
 19603#Óculos Invisíveis#
 19604#Máscara Invisível#
+19605#Lenço do Fora da Lei#
 19607#Filhote de Fênix#
 19612#Fones Audio-Poring#
 19614#Supervisual de Aprendiz#
@@ -7177,6 +7186,7 @@
 31575#Peruca Turquesa de Waifu#
 31586#Cachecol de Poporing#
 31587#Super Capacete de Kunlun#
+31598#Chapéu Natureba#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#
