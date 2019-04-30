@@ -105,7 +105,7 @@ sub new {
 ##############################
 
 ##
-# Actor::Item::get(name, skipIndex, notEquipped)
+# Actor::Item::get(item, skipIndex, notEquipped)
 # item: can be either an object itself, an binID or a name.
 # skipIndex: tells this function to not select a certain item (used for getting another item with the same name).
 # notEquipped: 1 = not equipped item; 0 = equipped item; undef = all item
@@ -178,25 +178,25 @@ sub bulkEquip {
 	my $list = $_[0];
 	return unless $list && %{$list};
 	my ($item, $rightHand, $rightAccessory);
-	foreach (keys %{$list}) {
-		error "Wrong Itemslot specified: $_\n",'Actor::Item' if (!exists $equipSlot_rlut{$_});
+	foreach my $itemSlot (keys %{$list}) {
+		error "Wrong Itemslot specified: $itemSlot\n",'Actor::Item' if (!exists $equipSlot_rlut{$itemSlot});
 		
 		my $skipIndex;
-		$skipIndex = $rightHand if ($_ eq 'leftHand');
-		$skipIndex = $rightAccessory if ($_ eq 'leftAccessory');
+		$skipIndex = $rightHand if ($itemSlot eq 'leftHand');
+		$skipIndex = $rightAccessory if ($itemSlot eq 'leftAccessory');
 		
-		if ($list->{$_} eq "[NONE]") {
-			next unless ($char->{equipment} && $char->{equipment}{$_});
-			$char->{equipment}{$_}->unequip();
+		if ($list->{$itemSlot} eq "[NONE]") {
+			next unless ($char->{equipment} && $char->{equipment}{$itemSlot});
+			$char->{equipment}{$itemSlot}->unequip();
 		} else {
-			$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
+			$item = Actor::Item::get($list->{$itemSlot}, $skipIndex, 1);
 
-			next unless ($item && $char->{equipment} && (!$char->{equipment}{$_} || $char->{equipment}{$_}{name} ne $item->{name}));
+			next unless ($item && $char->{equipment} && (!$char->{equipment}{$itemSlot} || $char->{equipment}{$itemSlot}{name} ne $item->{name}));
 
-			$item->equipInSlot($_);
+			$taskManager->add(Task::Equip->new({item => $item, slot => $itemSlot}));
 			
-			$rightHand = $item->{binID} if ($_ eq 'rightHand');
-			$rightAccessory = $item->{binID} if ($_ eq 'rightAccessory');
+			$rightHand = $item->{binID} if ($itemSlot eq 'rightHand');
+			$rightAccessory = $item->{binID} if ($itemSlot eq 'rightAccessory');
 		}
 	}
 }
@@ -249,20 +249,6 @@ sub scanConfigAndCheck {
 		}
 	}
 	return $count;
-}
-
-
-##
-# Actor::Item::queueEquip(count)
-# count: how many items need to be equipped.
-#
-# Queues equip sequence.
-sub queueEquip {
-	my $count = shift;
-	return unless $count;
-	$ai_v{temp}{waitForEquip} += $count;
-	AI::queue('equip') unless AI::action eq 'equip';
-	$timeout{ai_equip_giveup}{time} = time;
 }
 
 ##########
@@ -397,7 +383,6 @@ sub equip {
 	my $self = shift;
 	return 1 if $self->{equipped};
 	$messageSender->sendEquip($self->{ID}, $self->{type_equip});
-	queueEquip(1);
 	return 0;
 }
 
@@ -449,7 +434,6 @@ sub equipInSlot {
 		return 1;
 	}
 	$messageSender->sendEquip($self->{ID}, $equipSlot_rlut{$slot});
-	queueEquip(1);
 	return 0;
 }
 

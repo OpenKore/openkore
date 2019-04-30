@@ -326,7 +326,7 @@ sub attack {
 				$arrow = $char->inventory->getByName($config{"autoSwitch_${i}_arrow"}) if ($config{"autoSwitch_${i}_arrow"});
 				if ($arrow && !$arrow->{equipped}) {
 					message TF("Auto Equiping [A]: %s\n", $config{"autoSwitch_$i"."_arrow"}), "equip";
-					$arrow->equip();
+					$taskManager->add(Task::Equip({item => $arrow}));
 				}
 				if ($config{"autoSwitch_$i"."_distance"} && $config{"autoSwitch_$i"."_distance"} != $config{'attackDistance'}) {
 					$ai_v{'attackDistance'} = $config{'attackDistance'};
@@ -397,7 +397,7 @@ sub attack {
 			$arrow = $char->inventory->getByName($config{"autoSwitch_default_arrow"});
 			if ($arrow && !$arrow->{equipped}) {
 				message TF("Auto equiping default [A]: %s\n", $config{'autoSwitch_default_arrow'}), "equip";
-				$arrow->equip();
+				$taskManager->add(Task::Equip({item => $arrow}));
 			}
 		}
 		if ($ai_v{'attackDistance'} && $config{'attackDistance'} != $ai_v{'attackDistance'}) {

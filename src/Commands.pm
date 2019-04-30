@@ -2238,15 +2238,14 @@ sub cmdEmotion {
 	}
 }
 
+# Equip an item
 sub cmdEquip {
-
-	# Equip an item
 	my (undef, $args) = @_;
-	my ($arg1,$arg2) = $args =~ /^(\S+)\s*(.*)/;
-	my $slot;
-	my $item;
+	
+	my ($arg1, $arg2) = parseArgs($args, 2);
+	my ($slot, $item, $itemSearch);
 
-	if ($arg1 eq "") {
+	if (!$arg1) {
 		cmdEquip_list();
 		return;
 	}
@@ -2262,29 +2261,32 @@ sub cmdEquip {
 		return;
 	}
 
-	if ($equipSlot_rlut{$arg1}) {
+	if (exists $equipSlot_rlut{$arg1} && $equipSlot_rlut{$arg1}) {
+		# User has provided a slot
 		$slot = $arg1;
+		$itemSearch = $arg2;
 	} else {
-		$arg1 .= " $arg2" if $arg2;
+		$itemSearch = $args;
 	}
 
-	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, undef, 1);
+	$item = Actor::Item::get($itemSearch);
+	
 	if (!$item) {
-		$args =~ s/^($slot)\s//g if ($slot);
-		error TF("No such non-equipped Inventory Item: %s\n", $args);
+		error TF("No such inventory item: %s\n", $itemSearch);
+		return;
+	}
+	
+	if ($item->{equipped}) {
+		error TF("Inventory item %s is already equipped\n", $item->nameString);
 		return;
 	}
 
-	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17 && $item->{type} != 8) {
-		error TF("Inventory Item %s (%s) can't be equipped.\n",
-			$item->{name}, $item->{binID});
+	if (!$item->equippable()) {
+		error TF("Inventory item %s can't be equipped.\n", $item->nameString);
 		return;
 	}
-	if ($slot) {
-		$item->equipInSlot($slot);
-	} else {
-		$item->equip();
-	}
+	
+	$taskManager->add(Task::Equip->new({item => $item, slot => $slot}));
 }
 
 sub cmdEquip_list {

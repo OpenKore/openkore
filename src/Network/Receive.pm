@@ -8022,6 +8022,7 @@ sub equip_item {
 	my $item = $char->inventory->getByID($args->{ID});
 	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999")) {
 		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+		Plugins::callHook('equip_item_fail', { item => $item });
 	} else {
 		$item->{equipped} = $args->{type};
 		if ($args->{type} == 10 || $args->{type} == 32768) {
