@@ -21843,6 +21843,74 @@ Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
+4652#
+^0000ffDano mágico contra as raças Demônio e Morto-Vivo +50%.^000000
+^0000ffDano mágico contra as propriedades Sombrio e Maldito +50%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
+Peso: ^7777771^000000
+#
+4653#
+^0000ffResistência as raças Bruto e Morto-Vivo +20%.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Mímico do Pesadelo]^000000
+^0000ffResistência as raças Bruto e Morto-Vivo +5% adicional.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Minouros do Pesadelo]^000000
+^0000ffResistência as raças Bruto e Morto-Vivo +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
+Peso: ^7777771^000000
+#
+4654#
+^0000ffDano mágico contra as raças Bruto e Morto-Vivo +5%.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Arclouse do Pesadelo]^000000
+^0000ffIgnora 50% da DEFM das raças Bruto e Morto-Vivo.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4655#
+^0000ffDano físico contra as raças Bruto e Morto-Vivo +10%.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Arclouse do Pesadelo]^000000
+^0000ffIgnora 50% da DEF das raças Bruto e Morto-Vivo.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
+Peso: ^7777771^000000
+#
+4656#
+Ao receber ataques físicos ou mágicos:
+^0000ff3% de chance de autoconjurar [Sussurro de Morfeu] nv. 2.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Múmia Anciã do Pesadelo]^000000
+^0000ffChance de autoconjurar [Sussurro de Morfeu] +2%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+4657#
+^0000ffResistência a propriedade Neutro +15%.^000000
+A cada refino:
+^0000ffDano mágico de propriedade Fogo +3%.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Carta Múmia do Pesadelo]^000000
+^0000ffResistência a propriedade Neutro +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777771^000000
+#
+4658#
+^0000ffDano mágico +5%.^000000
+Refino +7 ou mais:
+^0000ffDano mágico +3% adicional.^000000
+Refino +9 ou mais:
+^0000ffDano mágico +2% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
 4697#
 ^0000ffSP máx. -300.^000000
 Ao realizar ataques físicos:
@@ -37663,15 +37731,19 @@ Lanche para pessoas que vivem apressadas. O sabor não é dos melhores.
 Peso: ^7777777^000000
 #
 12274#
+^ff0000Intransferível.^000000
 Uma pílula feita de várias ervas e raízes medicinais.
-^0000ffMHP +5% e recuperação de HP +10% durante 1 hora.^000000
-Esse item não pode ser trocado entre personagens, vendido no npc, colocado no carrinho e colocado no armazém.
+^0000ffHP máx. +5%.^000000
+^0000ffRegeneração natural de HP +10%.^000000
+Duração: ^7777771 hora^000000
 Peso: ^7777771^000000
 #
 12275#
+^ff0000Intransferível.^000000
 Uma pílula feita de várias ervas e raízes mágicas.
-^0000ffMSP +5% e recuperação de SP +10% durante 1 hora.^000000
-Esse item não pode ser trocado entre personagens, vendido no npc, colocado no carrinho e colocado no armazém.
+^0000ffSP máx. +5%.^000000
+^0000ffRegeneração natural de SP +10%.^000000
+Duração: ^7777771 hora^000000
 Peso: ^7777771^000000
 #
 12276#
@@ -37688,6 +37760,14 @@ Peso: ^7777771^000000
 Um livro que permite invocar uma assistente Alice. Não é necessário alimentá-la.
 ^ffffff_^000000
 Peso: ^7777770^000000
+#
+12291#
+^ff0000Intransferível.^000000
+Garrafa com água potável.
+Sempre beba água, nos orgulhamos quando você se hidrata.
+^0000ffRecupera 5% de SP.^000000
+^0000ffAtiva [Aumentar Agilidade] nv. 5.^000000
+Peso: ^77777710^000000
 #
 12292#
 Um Fruto de Yggdrasil que ainda não amadureceu. Algumas pessoas gostam do sabor amargo da fruta que ainda verde, mas sua eficácia em recuperação é parecida com seu sabor.
@@ -44525,9 +44605,12 @@ Um pergaminho que quando usado teleporta seu personagem diretamente para a entra
 Peso: ^7777771^000000
 #
 14529#
-Permite o uso da habilidade "Ganância".
-Se o personagem estiver em cidades quando utilizar o pergaminho, este será gasto mas não será atribuído o efeito.
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho ou no armazém.^000000
+Pergaminho mágico contendo uma habilidade de uso único.
+^0000ffUsa [Ganânica] nv. 1.^000000
+--------------------------
+^ff0000Intransferível.^000000
+^ff0000Em cidades, o item é gasto e a habilidade não é ativada.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 14530#
@@ -53888,6 +53971,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+19605#
+É melhor te respeitarem, porque pra você, a lei não é nada! Ninguém manda em você, só você mesmo!
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Baixo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
 19607#
 Dizem que quando um filhote de fênix resolve se alojar em sua cabeça é sinal que você sempre voltará da morte. É o caso, por exemplo, do famoso cavaleiro Irk de Fênix, famoso por sempre reaparecer no ponto de retorno. Dizem que quando seu irmão caçula, Chun de Andrômeda, foi sorteado para ser treinado por Hela, a Rainha da Morte, em Niflheim, Irk acabou indo em seu lugar. Lá, ele se apaixonou pela jovem Chuna de Esmeralda, que estranhamente parecia muito seu irmão. Não se sabe os detalhes, mas ao voltar do treinamento, Irk havia se transformado num cavaleiro frio e sem coração, exceto quando corria para salvar seu irmão ou para cuidar do filhote de fênix em sua cabeça.
 Tipo : ^777777Visual^000000
@@ -63104,6 +63195,14 @@ Classes : ^777777Todas^000000
 #
 31587#
 É o Sol? Uma bola de boliche? Um Vigia do Tempo que criou pernas? Não! É só alguém usando esse SENHOR capacete que deixa qualquer um com uma cabeça de nós todos. Ele foi projetado para resistir a uma queda das alturas de Kunlun até o chão!
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Topo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
+31598#
+Com todas essas folhas e galhos, você estará convertendo dióxido de carbono em oxigênio onde quer que esteja. Bem orgânico – só não se esqueça de regar o chapéu!
 Tipo : ^777777Visual^000000
 Equipa em : ^777777Topo^000000
 Peso : ^7777770^000000
