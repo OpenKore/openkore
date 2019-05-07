@@ -6808,6 +6808,7 @@
 22182#Sapatos da Penitência#
 22189#Sapato Social#
 22191#Sapato Infernal#
+22195#Sapatos Inteligentes#
 22204#Botas do Senhor do Tempo#
 22507#Velho Pergaminho#
 22508#Emblema do Éden#
@@ -6989,6 +6990,7 @@
 28502#Lenço Infame#
 28503#Keraunos#
 28505#Anel do Capiroto#
+28506#Pedra Tempestuosa#
 28515#Anel Imperial#
 28517#Anel do Rei Abissal#
 28521#Proteção do Gigante#
@@ -7140,6 +7142,7 @@
 31387#Jakk Aventureiro#
 31388#Chapéu Dupliponta#
 31390#Chapéu da Nevasca#
+31393#Vajra Dourada#
 31394#Chapéu Mágico#
 31395#Conhecimento Flutuante#
 31396#Capuz Trevoso#
@@ -7186,7 +7189,10 @@
 31575#Peruca Turquesa de Waifu#
 31586#Cachecol de Poporing#
 31587#Super Capacete de Kunlun#
+31596#Chapéu Biológico#
 31598#Chapéu Natureba#
+31611#Manto do Riso Macabro#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#
+32227#Grilhões de Hrodvitnir#

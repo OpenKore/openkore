@@ -322,7 +322,8 @@ Peso: ^7777773^000000
 #
 573#
 Bebida feita de chocolate e leite quente. Muito popular nos dias frios. É costume dos habitantes de Rune-Midgard, apreciar um bom chocolate quente no inverno. Bebida muito popular entre casais.
-^ffffff_^000000
+^0000ffRecupera um pouco de HP e SP.^000000
+^0000ffRemove Cegueira, Alucinação, Envenenamento, Silêncio e Maldição.^000000
 Peso: ^77777715^000000
 #
 574#
@@ -782,10 +783,14 @@ Peso: ^7777771^000000
 #
 682#
 Uma bebida misteriosa que aumenta o poder de ataque de quem beber.
+^0000ffATQ +30.^000000
+Duração: ^7777771 minuto^000000
 Peso: ^77777710^000000
 #
 683#
 Um vegetal misterioso que aumenta o poder de ataque mágico de quem ingerir.
+^0000ffATQM +30.^000000
+Duração: ^7777771 minuto^000000
 Peso: ^7777775^000000
 #
 684#
@@ -7776,7 +7781,7 @@ Classes que utilizam: ^777777Arqueiro e suas evoluções/ Gatuno/ Arruaceiro^000
 Arco básico. Esta arma necessita de flechas para ser utilizada. Arraste esta arma para a janela de equipamento para utilizar.
 Classe: ^777777Arco^000000
 Força de Ataque: ^77777715^000000
-Peso: ^77777750^000000
+Peso: ^7777770^000000
 Nível da arma: ^7777771^000000
 Nível necessário: ^7777774^000000
 Classes que utilizam: ^777777Arqueiro e suas evoluções/ Gatuno/ Arruaceiro^000000
@@ -21542,8 +21547,7 @@ Peso ^7777771^000000
 #
 4585#
 ^0000ffSP máx. +10%.^000000
-A cada monstro morto:
-^0000ffAnula o efeito de recuperar em até 666 de HP ao derrotar monstros com ataques físicos de curta distância.^000000
+^0000ffAnula o efeito de recuperar HP (em até 666) por monstro morto.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
 Peso ^7777771^000000
@@ -30913,8 +30917,9 @@ Peso: ^7777771^000000
 Peso: ^77777710^000000
 #
 6413#
-Um talismã com um estranho símbolo. Ao ser utilizado, recebe toda a penalidade de morte.
-Esse item é consumido automaticamente quando o personagem for derrotado mantendo sua EXP.
+Um talismã com um estranho símbolo.
+^0000ffAnula a perda de EXP ao morrer com esse item no inventário.^000000
+-^008080É consumido ao morrer.^000000
 Peso: ^7777771^000000
 #
 6415#
@@ -34573,8 +34578,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000015.04.2019.^000000
-Este item será removido no dia ^ff000016.04.2019.^000000
+Promoção limitada até o dia ^ff000020.05.2019.^000000
+Este item será removido no dia ^ff000021.05.2019.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -34615,9 +34620,10 @@ Negociação: ^777777Pode ser colocado na Kafra, mas não pode ser derrubado, ne
 Peso: ^7777771^000000
 #
 7621#
-Se você for nocauteado (seu HP chegar a zero) e tiver este item em seu inventário, uma nova opção surgirá para que você possa ressuscitar, no lugar em que foi nocauteado. Você ainda sofre a penalidade de perda de EXP caso seja nocauteado. Pode ser usado em conjunto com o Seguro de Vida.
+Amuleto usado pelo herói da saga dos volsungos.
+^0000ffAo morrer, permite reviver selecionando a opção "Ressuscitar".^000000
+-^008080EXP ainda será perdida ao morrer.^000000
 Peso: ^7777771^000000
-Negociação: ^777777O item não pode ser derrubado mas pode ser negociado, colocado na Kafra e no Carrinho^000000
 #
 7622#
 Este é um Cupom para Corte de Cabelo que você pode trocar na Estilista em Alberta por um dos mais novos cortes de cabelo.
@@ -37450,9 +37456,12 @@ Duração: ^77777730 minutos^000000
 Peso: ^7777770^000000
 #
 12209#
-Garante um Buff que impede a perda de EXP ao ser nocauteado (seu HP chegar a zero). O efeito do Buff desaparece assim que você for nocauteado ou até que passem 30 minutos – o que acontecer primeiro. Pode ser usado em conjunto com o Amuleto de Siegfried.
+^ff0000Intransferível.^000000
+Um contrato de seguro de vida.
+^0000ffAnula a perda de EXP ao morrer com o seguro ativado.^000000
+-^008080O efeito termina ao morrer ou até o término da duração.^000000
+Duração: ^77777730 minutos^000000
 Peso: ^7777771^000000
-Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra e no Carrinho. ^000000
 #
 12210#
 Uma goma de mascar muito gostosa, cujo sabor dura por meia hora. Ela deixa você 'maneiro', o que faz com que os monstros tenham medo de sua atitude e derrubem ainda mais itens!
@@ -37480,10 +37489,13 @@ Guarde todos os seus itens, equipamentos e flechas em seu armazém, remova seu P
 Peso: ^7777771^000000
 #
 12214#
-Um espelho convexo limpo. A pessoa que possui o espelho pode detectar a aparição de MVPs. Tem um período de duração de 10 minutos e perde o efeito se o personagem sair do mapa.
-Alguns MVPs não podem ser detectados, como Senhor dos Mortos, Chefes do Laboratório de Somatologia, Ktullanux, Memória de Thanatos, e Chefes de Evento.
+^ff0000Intransferível.^000000
+Um espelho convexo limpo.
+^0000ffExibe a localização de um MVP no mini-mapa.^000000
+-^008080Perde o efeito ao sair do mapa.^000000
+-^008080Não exibe certos MVPs e chefes de instância.^000000
+Duração: ^77777710 minutos^000000
 Peso: ^7777771^000000
-Negociação: ^777777Pode ser colocado na Kafra mas não pode ser derrubado, negociado e nem colocado no carrinho^000000
 #
 12215#
 Pergaminho mágico criado com a essência de magia antiga. Permite o uso da habilidade "Bênção" em nível 10. Se o personagem estiver sentado quando utilizar o pergaminho, este será gasto mas não será atribuído o efeito.
@@ -38146,7 +38158,8 @@ Peso: ^7777771^000000
 #
 12399#
 Baú de tesouro ricamente trabalhado. Pode ter muito dinheiro dentro.
-Peso : ^777777100^000000
+^0000ffFornece 1.000.000 zenys.^000000
+Peso: ^777777100^000000
 #
 12404#
 Melhora a condição física do usuário, deixando-o pronto para a batalha.
@@ -44606,10 +44619,10 @@ Peso: ^7777771^000000
 #
 14529#
 Pergaminho mágico contendo uma habilidade de uso único.
-^0000ffUsa [Ganânica] nv. 1.^000000
+^0000ffUsa [Ganância] nv. 1.^000000
 --------------------------
 ^ff0000Intransferível.^000000
-^ff0000Em cidades, o item é gasto e a habilidade não é ativada.^000000
+^ff0000A habilidade não é ativada em cidades.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -58983,6 +58996,50 @@ Peso: ^777777100^000000
 Nível necessário: ^77777799^000000
 Classes: ^777777Todas^000000
 #
+22195#
+Na era dos dispositivos inteligentes, esses sapatos eram tudo o que te faltava, pois se adaptam aos atributos que você priorizar. É um milagre da tecnologia!
+--------------------------
+^0000ffDEFM +30.^000000
+^0000ffHP máx. +10%.^000000
+^0000ffSP máx. +10%.^000000
+^0000ffResistência a personagens +5%.^000000
+--------------------------
+Refino +8 ou mais:
+-
+FOR base 125 ou mais:
+^0000ffATQ +90.^000000
+AGI base 125 ou mais:
+^0000ffVelocidade de ataque +2.^000000
+VIT base 125 ou mais:
+^0000ffHP máx. +5%.^000000
+INT base 125 ou mais:
+^0000ffATQM +120.^000000
+DES base 125 ou mais:
+^0000ffDano físico a distância +10%.^000000
+SOR base 125 ou mais:
+^0000ffDano crítico +20%.^000000
+--------------------------
+Refino +12 ou mais:
+-
+FOR base 125 ou mais:
+^0000ffATQ +90 adicional.^000000
+AGI base 125 ou mais:
+^0000ffVelocidade de ataque +2 adicional.^000000
+VIT base 125 ou mais:
+^0000ffHP máx. +5% adicional.^000000
+INT base 125 ou mais:
+^0000ffATQM +120 adicional.^000000
+DES base 125 ou mais:
+^0000ffDano físico a distância +10% adicional.^000000
+SOR base 125 ou mais:
+^0000ffDano crítico +20% adicional.^000000
+--------------------------
+Tipo: ^777777Calçado^000000
+Defesa: ^7777770^000000
+Peso: ^77777780^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 22204#
 Botas indispensáveis para um Senhor do Tempo. Basta equipá-las, entrar na sua cabine telefônica e viajar rumo a aventuras espaço-temporais.
 ^0000ffCRIT +10.^000000
@@ -60894,6 +60951,46 @@ Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777750^000000
 Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+28506#
+Uma pedra que ganhou propriedades mágicas após ser atingida por um raio no meio de um temporal.
+^0000ffSP máx. +5%.^000000
+^0000ffDano físico +5%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Selo de Peuz]^000000
+^0000ffSP máx. +5% adicional.^000000
+^0000ffDano físico +5% adicional.^000000
+^0000ffVelocidade de ataque +5% adicional.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Armadura de Peuz]^000000
+^0000ffTolerância a Congelamento +100%.^000000
+Armadura com refino +7 ou mais:
+^0000ffHP máx. +15%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Grevas de Peuz]^000000
+Calçado com refino +7 ou mais:
+^0000ffVelocidade de ataque +10%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Manteau de Peuz]^000000
+^0000ffCusto de SP de [Vento Cortante] -18.^000000
+Capa com refino +7 ou mais:
+^0000ffResistência a danos físicos a distância +10%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Gelerdria]^000000
+Arma com refino +7 ou mais:
+^0000ffDano de [Vento Cortante] +30%.^000000
+^0000ffDano físico contra monstros Chefes +30%.^000000
+^0000ffDano físico contra as raças Peixe e Inseto +30%.^000000
+Arma com  refino +9 ou mais:
+^0000ffDano de [Vento Cortante] +20% adicional.^000000
+^0000ffDano físico contra monstros Chefes +20% adicional.^000000
+^0000ffDano físico contra as raças Peixe e Inseto +20% adicional.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777790^000000
 Classes: ^777777Todas^000000
 #
 28515#
@@ -62818,6 +62915,15 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31393#
+A vajra representa o equilíbrio espiritual conquistado ao atingir o nirvana. Definitivamente NÃO foi usada pra ser segurada com a boca, mas você ri na cara dos ensinamentos e quer mais é parecer descolado a qualquer custo.
+Tipo: ^777777Visual^000000
+Defesa : ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classe : ^777777Todas^000000
+#
 31394#
 Um chapéu divertido e engraçado, inspirado em uma antiga história sobre um pai amoroso e simples que trabalhava arduamente durante o dia, mas ao chegar em casa, vestia-se de mágico para alegrar suas filhas e mostrar a elas que sempre estariam protegidas pela magia dele.
 Tipo: ^777777Visual^000000
@@ -63201,10 +63307,26 @@ Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
+31596#
+Alguém achou que seria uma boa ideia colocar um miniecossistema em um chapéu. Até que é confortável, mas antes você vai ter que se acostumar com o orvalho caindo das folhas, o zumbido das abelhas nas flores, as borboletas voando e as aranhas na teia.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Topo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
 31598#
 Com todas essas folhas e galhos, você estará convertendo dióxido de carbono em oxigênio onde quer que esteja. Bem orgânico – só não se esqueça de regar o chapéu!
 Tipo : ^777777Visual^000000
 Equipa em : ^777777Topo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
+31611#
+Como se já não bastasse o aspecto maltrapilho e esfarrapado desse manto, tem um rosto bizarrão na parte de trás dele. Se você acha que não consegue meter medo nos inimigos, basta virar as costas para eles e esse riso macabro vai fazer o trabalho por você!
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Baixo^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
@@ -63264,5 +63386,27 @@ Tipo: ^777777Acessório^000000
 Defesa: ^77777715^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+32227#
+Uma réplica das correntes que foram usadas para aprisionar Fenrir na tentativa de impedir que sua ira devastasse o mundo.
+^0000ffPós-conjuração -5%.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Elmo de Vanargand]^000000
+Elmo com refino +7 ou mais:
+^0000ffDano físico +5%.^000000
+^0000ffPós-conjuração -5% adicional.^000000
+^0000ffVelocidade de ataque +5% adicional.^000000
+^0000ffIgnora 25% da DEF de todas as raças.^000000
+Elmo com refino +9 ou mais:
+^0000ffDano físico +5% adicional.^000000
+^0000ffPós-conjuração -10% adicional.^000000
+^0000ffVelocidade de ataque +10% adicional.^000000
+^0000ffIgnora +25% da DEF de todas as raças.^000000
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
