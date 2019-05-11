@@ -983,8 +983,7 @@ A skeleton-shaped bottle that contains deadly poison.
 ^FF0000If any class other than Assassin Cross Classes use this item, it will kill the user instantly.^000000
 Class: ^808080Stat Boost^000000
 Weight: ^80808010^000000
-Usable By: ^808080All Jobs^000000
-ASPD + 20% for 1 minute.
+Adds a 2% chance of buffing the user for 1 minute; Aspd + 20%.
 #
 679#
 An herbal medicine from an old eastern country that is rumored to cure every illness.
@@ -4588,6 +4587,13 @@ Increases the damage of ^0000FFMammonite^000000 by an additional 15%, if the use
 This item is indestructible in battle.
 #
 1313#
+^FF0000Character Bound^000000
+Class: ^808080One-Handed Axe^000000
+Attack: ^80808077^000000
+Weight: ^80808050^000000
+Weapon Level: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Assassin Jobs^000000
 #
 1314#
 A light axe imbued with the Wind property which can be hurled at enemies.
@@ -5512,16 +5518,18 @@ Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
 Enables ^0000FFLevel 1 Detoxify^000000.
 Adds a 5% chance of inflicting ^800000Bleed^000000 on the target when performing a physical attack.
 This item is indestructible in battle.
-^F4AD42Knight Bonus^000000
-Aspd - 5%
+
 ^800080Set Bonus^000000
-^008080Battle Hook [1]^000000 or ^008080Hunting Spear [1]^000000 or ^008080Long Horn [1]^000000
 ^008080Tournament Shield [1]^000000
+^008080Long Horn [1]^000000
 Atk + 4%
 Def + 2
+^F4AD42Knight Bonus^000000
+Aspd - 5%
+
 ^800080Set Bonus^000000
-^008080Long Horn [1]^000000
 ^008080Valkyrja's Shield [1]^000000
+^008080Long Horn [1]^000000
 Adds a 0.5% chance of casting ^0000FFLevel 2 Assumptio^000000 on the user when receiving a physical attack.
 #
 1421#
@@ -6176,13 +6184,13 @@ Weight: ^808080200^000000
 Weapon Level: ^8080804^000000
 Requires Level: ^80808075^000000
 Usable By: ^808080Swordman Jobs^000000
-Increases physical damage on Demon race targets by 20%.
 Increases physical damage on Shadow and Undead property targets by 20%.
-Reduces damage taken from Demon race enemies by 20%.
-Reduces damage taken from Shadow and Undead property attacks by 20%.
+Increases physical damage on Demon race targets by 20%.
+Reduces damage taken from Shadow property attacks by 10%.
+Reduces damage taken from Demon and Undead race enemies by 10%.
+
 Restores 50 HP to the user when a monster is killed by a physical attack.
 Adds a 10% chance of inflicting ^800000Chaos^000000 on the user when performing a physical attack.
-
 
 ^800080Set Bonus^000000
 ^008080Spectral Spear^000000
@@ -6360,6 +6368,7 @@ Increases the cooldown of ^0000FFClashing Spiral^000000 by 20 seconds.
 Drains 600 SP from the user when the item is unequipped.
 #
 1492#
+A two-handed spear that has been designed specifically for battles against players.
 Class: ^808080Two-Handed Spear^000000
 Attack: ^808080250^000000
 Property: ^808080Neutral^000000
@@ -6368,12 +6377,14 @@ Weapon Level: ^8080804^000000
 Requires Level: ^80808095^000000
 Usable By: ^808080Swordman Jobs^000000
 ^800080Stats during WoE, PvP^000000
-Increases physical damage on players by 80%.
+Increases physical damage on Human Player and Doram Player race targets by 80%.
 If upgrade level is +6 or higher,
-Increases the damage of ^0000FFClashing Spiral^000000 by 100%.
 Increases the damage of ^0000FFOverbrand^000000 by 50%.
+Increases the damage of ^0000FFClashing Spiral^000000 by 100%.
 If upgrade level is +9 or higher,
-Adds a 2% chance to reflect physical and magical attacks that do not target the ground back to the attacker.
+Reflects 20% of the received short-ranged damage back to the attacker.
+Reflects magical attacks that do not target the ground back to the attacker.
+Adds a 3% chance of casting ^0000FFLevel 7 Magic Mirror^000000 on the user when receiving a magical attack.
 #
 1495#
 ^FF0000Character Bound^000000
@@ -7960,22 +7971,19 @@ Additional Matk + 50
 Reduces the cast delay of skills by 10%.
 #
 1623#
-^808080A rare staff that can convert psychic energy into brute strength.^000000
-^FF0000Account Bound^000000
+A rare staff that can convert psychic energy into brute strength.
+^FF0000Character Bound^000000
 ^FF0000Rental Item^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: One-Handed Staff
-Attack: 165
-Property: Neutral
-Weight: 0
-Weapon Level: 3
-Required Level: 1
-Required Job: Acolyte Jobs, Mage Jobs, Soul Linker
-^FFFFFF_^000000
-STR + 10
-INT + 4
-MATK + 100
+Class: ^808080One-Handed Staff^000000
+Attack: ^808080165^000000
+Magic Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Str + 10
+Int + 4
 Drains 1 SP from the user when performing a physical attack.
 #
 1624#
@@ -8027,26 +8035,12 @@ Bypass 10% of hard magic defense of normal monsters and boss monsters when perfo
 Bypass an additional 1% of hard magic defense of normal monsters and boss monsters when performing a magical attack per upgrade level of the item.
 #
 1628#
+Class: One-Handed Staff\r\nAttack: 71\r\nProperty: Neutral\r\nWeight: 0\r\nWeapon Level: 4\r\nRequired Level: 1\r\nRequired Job: Acolyte Jobs, Mage Jobs, Soul Linker\r\n^FFFFFF_^000000\r\nDEX + 4\r\nMATK + 20%\r\n^FFFFFF_^000000\r\n^800080Set Bonus^000000\r\n^008080Survivor's Manteau (Rental)^000000\r\n^008080Survivor's Rod (Rental)^000000\r\nMATK + 5%\r\nReduces damage taken from Neutral property attacks by 25%.\r\n
 ^FF0000Account Bound^000000
 ^FF0000Rental Item^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: One-Handed Staff
-Attack: 71
-Property: Neutral
-Weight: 0
-Weapon Level: 4
-Required Level: 1
-Required Job: Acolyte Jobs, Mage Jobs, Soul Linker
-^FFFFFF_^000000
-DEX + 4
-MATK + 20%
-^FFFFFF_^000000
-^800080Set Bonus^000000
-^008080Survivor's Manteau (Rental)^000000
-^008080Survivor's Rod (Rental)^000000
-MATK + 5%
-Reduces damage taken from Neutral property attacks by 25%.
+Attack: ^8080800^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080800^000000
 #
 1629#
 A staff once used by a very gentle man somewhere long ago. A very narrow sword is hidden inside the staff.
@@ -9388,19 +9382,16 @@ Requires Level: ^80808077^000000
 Usable By: ^808080Hunter Jobs, Bard Jobs, Dancer Jobs^000000
 #
 1728#
-^808080A giant bow used in ancient battles.^000000
-^FF0000Account Bound^000000
+A giant bow used in ancient battles.
+^FF0000Character Bound^000000
 ^FF0000Rental Item^000000
-^FFFFFF_^000000
-Type: Weapon
-Class: Bow
-Attack: 194
-Property: Neutral
-Weight: 0
-Weapon Level: 4
-Required Level: 1
-Required Job: Hunter Jobs, Bard Jobs, Dancer Jobs
-^FFFFFF_^000000
+Class: ^808080Bow^000000
+Attack: ^808080194^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Hunter Jobs, Bard Jobs, Dancer Jobs^000000
 Increases long-ranged damage on targets by 20%.
 #
 1729#
@@ -10076,36 +10067,30 @@ Weight: ^8080800.1^000000
 Increases long-ranged damage on targets by 50%.
 #
 1775#
-^808080Porous mass produced arrows for War of Emperium.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 45
-Property: Neutral
-Weight: 0.1
-Required Level: 130
-^FFFFFF_^000000
+Porous mass produced arrows for War of Emperium.
+Class: ^808080Arrow^000000
+Attack: ^80808045^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800.1^000000
+Requires Level: ^808080130^000000
+^800080Stats during WoE, WoE TE, PvP^000000
 ^800080Set Bonus^000000
 ^008080Bellum Crossbow^000000
 ^008080WoE Arrow S^000000
-^800080Set Stats during PVP, WOE^000000
-Increases physical damage on Demi-Human race targets by 70%.
+Increases long-ranged damage on targets by 70%.
 #
 1776#
-^808080Mass produced arrows for War of Emperium.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 30
-Property: Neutral
-Weight: 0.1
-Required Level: 95
-^FFFFFF_^000000
+Mass produced arrows for War of Emperium.
+Class: ^808080Arrow^000000
+Attack: ^80808030^000000
+Property: ^808080Neutral^000000
+Weight: ^8080800.1^000000
+Requires Level: ^80808095^000000
+^800080Stats during WoE, WoE TE, PvP^000000
 ^800080Set Bonus^000000
 ^008080Bellum Crossbow^000000
 ^008080WoE Arrow A^000000
-^800080Set Stats during PVP, WOE^000000
-Increases physical damage on Demi-Human race targets by 40%.
+Increases long-ranged damage on targets by 40%.
 #
 1800#
 The knuckle of an evil spirit.
@@ -12395,10 +12380,17 @@ Prevents the user from being knocked back.
 Increases damage taken from physical and magical attacks by 20%.
 #
 2126#
-placeholder
+Placeholder.
+Class: ^808080Shield^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
 #
 2127#
-placeholder
+Placeholder.
+^FF0000Account Bound^000000
+Class: ^808080Shield^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
 #
 2128#
 A symbolic shield, rumored to have been given from God to his messenger.
@@ -17422,14 +17414,16 @@ Atk + 30, if the user's base Str is 120 or higher.
 Crit - 20
 #
 2579#
-a shawl with magical needlework in it
-MDEF + 3.
-when using all skills, decrease SP -5%, MaxSP + 3%.
-if refined lv 6 over, add  MaxSP 3%.
-Class : ^777777costume^000000 Defense : ^7777778^000000
-Weight : ^77777770^000000
-Req Level : ^7777771^000000
-Jobs : ^777777All^000000
+a shawl with magical needlework in it.
+Class: ^808080Garment^000000
+Defense: ^8080808^000000
+Weight: ^80808070^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max SP + 3%
+Mdef + 3
+Reduces the SP cost of skills by 5%.
+If upgrade level is +6 or higher, additional Max SP + 3%.
 #
 2580#
 A manteau from an archer guild known as Icarus.
@@ -17704,13 +17698,13 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 2614#
-...
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777750^000000
-Jobs: ^777777Every Job
-except Novice^000000
+An accessory perfectly designed to resemble the eye of the Dullahan.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Reduces damage taken from Demon and Undead race enemies by 4%.
+Immune to ^800000Poison^000000.
 #
 2615#
 A strange ring that curiously raises its wearer's defense.
@@ -17730,35 +17724,28 @@ Usable By: ^808080All Jobs except Novice Jobs^000000
 Crit + 5
 #
 2617#
-Gloves blessed with
-holiness that increases its wearer's intelligence.
+Gloves blessed with holiness that increases its wearer's intelligence.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808035^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 Int + 1
-Class : ^777777Accessory^000000
-Defense : ^7777771^000000
-Weight : ^77777710^000000
-Required Level : ^77777735^000000
-Jobs: ^777777Every Job
-except Novice^000000
 #
 2618#
-Matyr's leash.
+A collar imbued with agility powers, rumored to have been seen around Matyr's neck.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808035^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 Agi + 1
-Class : ^777777Accessory^000000
-Defense : ^7777771^000000
-Weight : ^77777710^000000
-Required Level : ^77777735^000000
-Jobs: ^777777Every Job
-except Novice^000000
 #
 2619#
-A finger accessory
-for archers which helps improve their accuracy.
-Increases damage inflicted with Bow class weapons.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777765^000000
-Jobs: ^777777Archer Class^000000
+A finger accessory for archers which helps improve their accuracy.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080Archer Jobs^000000
+Increases long-ranged damage on targets by 3%.
 #
 2620#
 An exclusive ring
@@ -17832,23 +17819,18 @@ Increases the damage of ^0000FFHeal^000000 on Undead race enemies by 50%.
 Increases the damage of ^0000FFMagnus Exorcismus^000000 by 30%.
 #
 2627#
-A simple, very
-practical belt that
-has little fashion value.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^777777120^000000
-Required Level : ^77777725^000000
-Jobs: ^777777All^000000
+A simple, very practical belt that has little fashion value.
+Class: ^808080Accessory^000000
+Weight: ^808080120^000000
+Requires Level: ^80808025^000000
+Usable By: ^808080All Jobs^000000
 #
 2628#
-An easy to wear
-bracelet made just
-for young Novices.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Jobs : ^777777Novice^000000
+An easy to wear bracelet made just for young Novices.
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Novice Jobs^000000
 #
 2629#
 A reproduction of the girdle of might that Thor wore to enhance his prodigious strength.
@@ -17931,21 +17913,21 @@ Usable By: ^808080All Jobs^000000
 #
 2638#
 A incense bag which is carried to avoid bad things.
-Str +1, Luk +1
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^777777NA^000000
-Jobs: ^777777All^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Str + 1
+Luk + 1
 #
 2639#
 A incense bag which is carried to ward off evil.
-Int +1, Agi +1
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^777777NA^000000
-Jobs: ^777777All^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Int + 1
+Agi + 1
 #
 2640#
 A mysterious ring rumored to be worn by Kafra Employees.
@@ -17961,12 +17943,11 @@ Mdef + 1
 #
 2641#
 A fashionable hip sack which is ideal for merchants who have to carry many goods with them.
-Str +2
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777770^000000
-Requirement: ^77777750^000000
-Jobs : ^777777Merchant^000000
+Class: ^808080Accessory^000000
+Weight: ^80808070^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Merchant Jobs^000000
+Str + 2
 #
 2642#
 A beautiful golden ring engraved with the words, 'In celebration of Serin's 17th birthday.'
@@ -17985,11 +17966,13 @@ Usable By: ^808080All Jobs^000000
 #
 2644#
 A captivatingly beautiful artifact rewarded by the gods to a chosen warrior. However, it seems to be more than just a voucher that grants entrance into Valhalla...
-+5% Atk / Matk
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Requirement: ^777777N/A^000000
-Jobs: ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Atk + 5%
+Matk + 5%
 #
 2645#
 An enchanted ring that was forged by the dead under the moonlight.
@@ -17999,33 +17982,20 @@ Requires Level: ^80808060^000000
 Usable By: ^808080Thief Jobs, Ninja Jobs^000000
 #
 2646#
-A carnation bouquet
-given as gifts to mothers.
-All Stats +3
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A carnation bouquet given as gifts to mothers.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 3
 #
 2647#
-Anniversary of the world of International Ragnarok.
-HP +10
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
-An extremely rare
-jewel attached to
-a solid silver chain
-bracelet symbolizing
-strength, growth and
-energy. This bracelet
-was crafted to mark
-iRO's second anniversary. HP +10
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777710^000000
-Jobs : ^777777All^000000
+An extremely rare jewel attached to an solid silver chain bracelet symbolizing strength, growth and energy. This bracelet was crafted to mark iRO's second anniversary.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10
 #
 2648#
 A ring, enchanted with the power of the Fate Stone, that is one of the three keys for the seal which binds Morpheus.
@@ -18068,61 +18038,44 @@ The user's casting cannot be interrupted outside of WoE.
 Increases the variable casting time of skills by 25%.
 #
 2650#
-The belt that
-Morrigane kept
-as a memento of
-CuChulain after he
-perished in battle.
-ATK +5, Critical
-Attack Rate +3.
-^ffffff_^000000
-^6A5ACDMorrigane's Set^000000
-^3CB371Morrigane's Helm^000000
-^3CB371Morrigane's Manteau^000000
-^3CB371Morrigane's Pendant^000000
-^3CB371Morrigane's Belt^000000
-Str +2
-Luk +9
-ATK +18
-Critical Attack Rate +13
-Perfect Dodge +13
-^ffffff_^000000
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^77777761^000000
-Jobs: ^777777All except
-Novice Class^000000
+The belt that Morrigane kept as a memento of CuChulain after he perished in battle.
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808061^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Atk + 5
+Crit + 3
+
+^800080Set Bonus^000000
+^008080Morrigane's Helm^000000
+^008080Morrigane's Manteau^000000
+^008080Morrigane's Pendant^000000
+^008080Morrigane's Belt^000000
+Str + 2
+Luk + 9
+Atk + 18
+Crit + 13
+Perfect Dodge + 13
 #
 2651#
-The pendant that
-ChuChulain gave to
-Morrigane when they
-were both still in love. It's symoblic of her
-endless devotion, as
-she stood by his side
-even after he had
-abandoned her.
-Str +2, Critical
-Attack Rate +3.
-^ffffff_^000000
-^6A5ACDMorrigane's Set^000000
-^3CB371Morrigane's Helm^000000
-^3CB371Morrigane's Manteau^000000
-^3CB371Morrigane's Pendant^000000
-^3CB371Morrigane's Belt^000000
-Str +2
-Luk +9
-ATK +18
-Critical Attack Rate +13
-Perfect Dodge +13
-^ffffff_^000000
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^77777761^000000
-Jobs: ^777777All except
-Novice Class^000000
+The pendant that ChuChulain gave to Morrigane when they were both still in love. It's symbolic of her endless devotion, as she stood by his side even after he had abandoned her.
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808061^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Str + 2
+Crit + 3
+
+^800080Set Bonus^000000
+^008080Morrigane's Helm^000000
+^008080Morrigane's Manteau^000000
+^008080Morrigane's Pendant^000000
+^008080Morrigane's Belt^000000
+Str + 2
+Luk + 9
+Atk + 18
+Crit + 13
+Perfect Dodge + 13
 #
 2652#
 A cursed brooch which, ironically, was owned by the goddess of fortune.
@@ -18181,88 +18134,101 @@ Max HP + 150
 Def + 5
 #
 2657#
-A pass for Regenschirm
-Laboratory employees
-that should allow you
-access around the lab.
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A pass for Regenschirm Laboratory employees that should allow you access around the lab.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2658#
-A bracelet on which
-the Hellion's jewel
-is affixed in order to
-seal its evil power.
-HP + 10
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+A bracelet on which the Hellion's jewel is affixed in order to seal its evil power.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10
 #
 2659#
-An object which seems
-to be part of the Vesper. Possesses a mysterious
-power that enables its
-owner to clear his mind. MDEF +3, Int +2,
-Max SP + 5%.
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
-Weight : ^77777750^000000
-Jobs:^FFFFFF ^7777772-1 or 2-2
-Transcendent Classes^000000
+An object which seems to be part of the Vesper. Possesses a mysterious power that enables its owner to clear his mind.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Int + 2
+Max SP + 5%
+Mdef + 3
+
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 01^000000
+Int + 8
+Max SP + 5%
 #
 2660#
-An object which seems
-to be part of the Vesper. Possesses a mysterious
-power that grants great strength to its owner.
-MDEF +3, Str +3, ATK +10
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
-Weight : ^77777750^000000
-Jobs:^FFFFFF ^7777772-1 or 2-2
-Transcendent Classes^000000
+An object which seems to be part of the Vesper. Possesses a mysterious power that grants great strength to its owner.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Str + 3
+Atk + 10
+Mdef + 3
+
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 02^000000
+Str + 7
+Atk + 20
 #
 2661#
-An object which seems
-to be part of the Vesper. Possesses a mysterious
-power that grants agility to he who wears it.
-MDEF +3, Agi +3,
-Flee +5
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
-Weight : ^77777750^000000
-Jobs:^FFFFFF ^7777772-1 or 2-2
-Transcendent Classes^000000
+An object which seems to be part of the Vesper. Possesses a mysterious power that grants agility to he who wears it.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Agi + 3
+Flee + 5
+Mdef + 3
+
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 03^000000
+Agi + 7
+Flee + 15
 #
 2662#
-An object which seems
-to be part of the Vesper. Possesses a mysterious
-power that endows the
-owner with greater
-accuracy and dexterity. MDEF +3, Dex +3,  Hit +10
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
-Weight : ^77777750^000000
-Jobs:^FFFFFF ^7777772-1 or 2-2
-Transcendent Classes^000000
+An object which seems to be part of the Vesper. Possesses a mysterious power that endows the owner with greater accuracy and dexterity.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Dex + 3
+Hit + 10
+Mdef + 3
+
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Core 04^000000
+Dex + 7
+Hit + 10
 #
 2663#
-It covers with pine resin to prevent slippery hands. It helps to increasing an accuracy rate.
-HIT + 15 , STR + 1.
-Item Class : ^777777Accessory^000000
-Defense : ^7777770^000000      Weight : ^77777790^000000
-Required Level : ^77777775^000000
-Jobs : ^777777All^000000
+A gauntlet covered with pine resin to strengthen the grip's accuracy rate.
+Class: ^808080Accessory^000000
+Weight: ^80808090^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080All Jobs^000000
+Str + 1
+Hit + 15
 #
 2664#
 To be a fashionista you need this Scarf to complete your style.
-DEX + 2, INT + 1
-Item Class : ^777777Accessory^000000
-Defense : ^7777770^000000      Weight : ^77777720^000000
-Required Level : ^77777775^000000
-Jobs : ^777777All Jobs except Novice^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Int + 1
+Dex + 2
 #
 2665#
 A symbol of faith
@@ -18279,15 +18245,13 @@ Required Level : ^77777760^000000
 Jobs: ^777777Acolyte Class^000000
 #
 2666#
-A coconut oil lamp
-in which a dim light
-that repels evil is
-burning. Adds +10% Blind resistance, +2 STR.
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^777777N/A^000000
-Jobs: ^777777All^000000
+A coconut oil lamp in which a dim light that repels evil is burning.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Str + 2
+Increases resistance to ^800000Blind^000000 by 10%.
 #
 2667#
 A pair of gloves
@@ -18309,17 +18273,12 @@ except Novice^000000
 2670#
 #
 2671#
-A thimble for archers
-that enhances their
-shooting accuracy.
-Increases damage
-inflicted with Bow
-Class Weapons.
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777765^000000
-Jobs: ^777777Archer Class^000000
+A thimble for archers that enhances their shooting accuracy.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808065^000000
+Usable By: ^808080Archer Jobs^000000
+Increases long-ranged damage on targets by 3%.
 #
 2672#
 #
@@ -18471,20 +18430,16 @@ Requires Level: ^80808020^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2686#
-^000088Rental Item^000000
-A fashion accessory
-that gives ears that
-vaunted, elvish look.
-For some, it is an
-incredible turn-on.
-Int +1
-This item cannot be Dropped or Traded.
-Class : ^777777Headgear^000000
-Defense: ^7777772^000000
-Location : ^777777Middle^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All Except Novice^000000
+A fashion accessory that gives ears that vaunted, elvish look. For some, it is an incredible turn-on.
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Int + 1
 #
 2687#
 ^000088Rental Item^000000
@@ -18584,78 +18539,68 @@ Required Level : ^7777771^000000
 Jobs: ^777777All Except Novice^000000
 #
 2696#
-^000088Rental Item^000000
-An object that seems
-to have been part of
-a Vesper. It has the
-mysterious power to
-clear its owner's
-mind. MDEF +3,
-Int +2, Max SP +5%
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
+An object that seems to have been part of a Vesper. It has the mysterious power to clear its owner's mind.
+^FF0000Character Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Int + 2
+Max SP + 5%
+Mdef + 4
 #
 2697#
-^000088Rental Item^000000
-An object which
-seems to be part
-of a Vesper that
-can mysteriously
-empower its wearer
-with enhanced strength.
-MDEF +3, STR+3, ATK +10
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
-Weight : ^7777770^000000
-Required Level : ^7777771
-Jobs: ^777777All except Novice^000000
+An object which seems to be part of a Vesper that can mysteriously empower its wearer with enhanced strength.
+^FF0000Character Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Str + 3
+Atk + 10
+Mdef + 3
 #
 2698#
-^000088Rental Item^000000
-An object which
-seems to be part
-of a Vesper that
-can mysteriously
-empower its wearer
-with enhanced agility.
-MDEF +3, Agi +3, Flee +5
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
-Weight : ^7777770^000000
-Required Level : ^7777771
-Jobs: ^777777All except Novice^000000
+An object which seems to be part of a Vesper that can mysteriously empower its wearer with enhanced agility.
+^FF0000Character Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Agi + 3
+Flee + 5
+Mdef + 3
 #
 2699#
-^000088Rental Item^000000
-An object which
-seems to be part
-of a Vesper that
-can mysteriously
-empower its wearer
-by enhancing his
-accuracy and dexterity.
-MDEF +3, Dex +3, Hit +10
-Class : ^777777Accessory^000000
-Defense: ^7777771^000000
-Weight : ^7777770^000000
-Required Level : ^7777771
-Jobs: ^777777All except Novice^000000
+An object which seems to be part of a Vesper that can mysteriously empower its wearer by enhancing his accuracy and dexterity.
+^FF0000Character Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Dex + 3
+Hit + 10
+Mdef + 3
 #
 2700#
-Red silk that a
-female saint could
-use to seal evil.
-Reduced chance
-of being inflicted
-with the Confused
-status when worn
-with Spectral Spear.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777760^000000
-Jobs: ^777777Transcendent
-Swordman Classes^000000
+Red silk that a female saint could use to seal evil.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
+^800080Set Bonus^000000
+^008080Spectral Spear^000000
+^008080Red Silk Seal^000000
+Reduces the chance of inflicting ^800000Chaos^000000 on the user when performing a physical attack by 9.5%.
+
+^800080Set Bonus^000000
+^008080Spectral Spear [1]^000000
+^008080Red Silk Seal^000000
+Reduces the chance of inflicting ^800000Chaos^000000 on the user when performing a physical attack by 9.5%.
 #
 2701#
 A pair of gloves that were once worn by a palace chef. Wearing these make you feel as if you could draw upon the dexterity that chef used in cooking.
@@ -18713,25 +18658,44 @@ Weight : ^77777710^000000
 Applicable job : ^777777Every job^000000
 #
 2708#
-placeholder
+Placeholder.
+^FF0000Account Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2709#
 placeholder
 #
 2710#
-placeholder
+Placeholder.
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 2711#
 placeholder
 #
 2712#
-placeholder
+Placeholder
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
 #
 2713#
-placeholder
+Placeholder
+^FF0000Character Bound^000000
+Weight: ^8080800^000000
 #
 2714#
-placeholder
+Placeholder.
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 2715#
 A weird ring adorned with a skull in which the words, '^990000Forever, until death...^000000' are engraved. Giving this as a gift might send a mixed message.
@@ -18810,12 +18774,12 @@ SP Recovery + 10%
 #
 2719#
 A strong steel wrist protector.
-Increases damage of ^FF0000Bash^000000 and ^FF0000Mammonite^000000 by 6%.
-Class : ^777777Accessory^000000
-Defense : ^7777771^000000
-Weight : ^77777770^000000
-Required Level : ^77777750^000000
-Jobs : ^777777Swordman, Merchant Class Jobs^000000
+Class: ^808080Accessory^000000
+Weight: ^80808070^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
+Increases the damage of ^0000FFBash^000000 by 6%.
+Increases the damage of ^0000FFMammonite^000000 by 6%.
 #
 2720#
 A badge rewarded to honorable warriors.
@@ -18937,22 +18901,31 @@ Increases the recovery rate of recovery skills by 3%.
 #
 2726#
 A brooch shaped like beautiful white wings for the Icarus members.
-SP + 50. Dex + 3.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777770^000000
-Jobs: ^777777Sniper only^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Sniper Jobs^000000
+Dex + 3
+Max SP + 50
+
+^800080Set Bonus^000000
+^008080Bowman Scarf^000000
+^008080Icarus Wings^000000
+Reduces the SP cost of skills by 25%.
 #
 2727#
 A nice arm-wrapping red scarf.
-SP + 50. Dex + 3.
-When equipped with Icarus Wings, SP skill consumption decreases by 25%.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^77777770^000000
-Jobs : ^777777Sniper only^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Sniper Jobs^000000
+Dex + 3
+Max SP + 50
+
+^800080Set Bonus^000000
+^008080Bowman Scarf^000000
+^008080Icarus Wings^000000
+Reduces the SP cost of skills by 25%.
 #
 2728#
 A dried bone hand. It releases a feeling of mystery.
@@ -19057,21 +19030,18 @@ placeholder
 placeholder
 #
 2741#
-^000088Rental Item^000000
-A Jewelry Ring
-that contains a
-3 Seal Magic Spell.
-Enables use of Level 1 Heal
-and Level 1 Teleport.
-Casting cannot be interrupted.
-All Stats +1.
-Increases Variable Casting Time by 10%.
-This item cannot be Dropped or Traded.
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All^000000
+A Jewelry Ring that contains a 3 Seal Magic Spell.
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
+Enables ^0000FFLevel 1 Heal^000000.
+Enables ^0000FFLevel 1 Teleport^000000.
+Increases the variable casting time of skills by 10%.
+The users casting cannot be interrupted outside of WoE.
 #
 2742#
 placeholder
@@ -19258,51 +19228,58 @@ Usable By: ^808080All Jobs^000000
 Increases the experience given from Fish race monsters by 15%.
 #
 2759#
-^000088Rental Item^000000
 A ring that has special power in each shape.
-Receive 15% more EXP from ^000088Demon monsters^000000.
-Item Class: ^777777Accessory^000000
-Defense : ^7777770^000000      Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from Demon race monsters by 15%.
 #
 2760#
-^000088Rental Item^000000
 A ring that has special power in each shape.
-Receive 15% more EXP from ^000088Demi Human monsters^000000.
-Item Class: ^777777Accessory^000000
-Defense : ^7777770^000000      Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from Demi-Human race monsters by 15%.
 #
 2761#
-^000088Rental Item^000000
 A ring that has special power in each shape.
-Receive 15% more EXP from ^000088Angel type monsters^000000.
-Item Class: ^777777Accessory^000000
-Defense : ^7777770^000000      Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from Angel race monsters by 15%.
 #
 2762#
-^000088Rental Item^000000
 A ring that has special power in each shape.
-Receive 15% more EXP from ^000088Dragon type monsters^000000.
-Item Class: ^777777Accessory^000000
-Defense : ^7777770^000000      Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Increases the experience given from Dragon race monsters by 15%.
 #
 2763#
-^000088Rental Item^000000
 A unique ring adorned with skull. Engraved are the words '^990000Forever, until Death...^000000.'
-ATK + 5%, MATK + 5%
-MaxHP + 5%, Cast Delay reduced by 5%
-Enables use of Lv.1 Sight.
-Item Class : ^777777Accessory^000000
-Defense : ^7777770^000000      Weight : ^7777770^000000
-Required Level : ^77777795^000000
-Jobs : ^777777All Transcendent Jobs except Novice^000000
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^80808095^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Max HP + 5%
+Atk + 5%
+Matk + 5%
+Reduces the global delay of skills by 5%.
+Enables ^0000FFLevel 1 Sight^000000.
 #
 2764#
 A small sized fishing rod.
@@ -19313,11 +19290,14 @@ Usable By: ^808080All Jobs^000000
 #
 2765#
 A fine figure of a Novice. A mere glance at it makes you feel like you have more strength.
-HP + 70, extra effect of HP + 30 when equipped on Novice
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Jobs : ^777777All^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 70
+
+^F4AD42Novice Bonus^000000
+Additional Max HP + 30
 #
 2766#
 A fine figure of a Swordman. It exudes the honor of the class it represents.
@@ -19501,23 +19481,28 @@ Required Level : ^7777771^000000
 Jobs: ^777777All^000000
 #
 2782#
-A ring imitating the legendary ring of the Ancient Wise King who used to communicate with animals.
-Rune-Midgart's Magical Power, Schwarzwalt's technology, and Arunafeltz's linguistic ability are put together in this ring.
-By equipping this ring, you can talk freely with the people of in Ash Vacuum.
-MaxHP +50, MaxSP +20.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Job : ^777777All Classes^000000
+A ring imitating the legendary ring of the Ancient Wise King who used to communicate with animals. Rune-Midgart's Magical Power, Schwarzwalt's technology, and Arunafeltz's linguistic ability are put together in this ring. By equipping this ring, you can talk freely with the people of in Ash Vacuum.
+^FF0000Account Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 50
+Max SP + 20
+
+^800080Set Bonus^000000
+^008080Lunar Rainbow [1]^000000
+^008080Ring of the Ancient Wise King^000000
+Adds a 4% chance of casting ^0000FFLevel 4 Water Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 #
 2783#
 A ring with a small bead set in. It feels like the bead is watching you.
-Cri +2, MaxSP +25.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777770^000000
-Job : ^777777All Classes except Novice^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Max SP + 25
+Crit + 2
 #
 2784#
 A cute music box which contains a Singing Crystal in it. Listen carefully, and you can hear Christmas carols.
@@ -19548,13 +19533,13 @@ Job : ^777777All Transcendent Job Classes except Novice Classes^000000
 #
 2789#
 A very tough ring made out of Bradium Ore.
-Str +1, Vit +1,
-Increases attack damage on all monsters by 2%.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777720^000000
-Required Level : ^77777760^000000
-Job : ^777777All Transcendent Job Classes except Novice Classes^000000
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, High Priest Jobs, High Wizard Jobs, Sniper Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Champion Jobs, Scholar Jobs, Minstrel Jobs, Gypsy Jobs^000000
+Str + 1
+Vit + 1
+Atk + 5
 #
 2790#
 A brooch made out of Bradium Ore.
@@ -19568,12 +19553,12 @@ Job : ^777777All Transcendent Job Classes except Novice Classes^000000
 #
 2794#
 A bluish ring engraved with a mysterious rune. You can feel a mysterious energy from the sparkling rune.
-Str +2.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777770^000000
-Jobs : ^777777Swordman Class^000000
+^FF0000Character Bound^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Rune Knight^000000
+Str + 2
 #
 2795#
 A Green Apple ring for those who have ascended to their third job. Once you are accustomed to your specific job skills it's effects begin to wear off.
@@ -19625,12 +19610,11 @@ Jobs : ^777777Mechanic only^000000
 #
 2801#
 A component to use the Mechanic Magic Gear Skill, Hovering.
-Agi +1.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^777777200^000000
-Required Level : ^77777799^000000
-Jobs : ^777777Mechanic only^000000
+Class: ^808080Accessory^000000
+Weight: ^808080200^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080Mechanic^000000
+Agi + 1
 #
 2802#
 A component to use the Mechanic Magic Gear Skill, Self Destruction.
@@ -19912,33 +19896,28 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 2834#
-^000088Rental Item^000000
-A Jewelry Ring
-that contains a
-3 Seal Magic Spell.
-Enables use of Level 1 Heal
-and Level 1 Teleport.
-Casting cannot be interrupted.
-All Stats +1.
-Increases casting time by 10%.
-This item cannot be Dropped or Traded.
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All^000000
+A Jewelry Ring that contains a 3 Seal Magic Spell.
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
+Enables ^0000FFLevel 1 Heal^000000.
+Enables ^0000FFLevel 1 Teleport^000000.
+Increases the variable casting time of skills by 10%.
+The users casting cannot be interrupted outside of WoE.
 #
 2835#
-^000088Rental Item^000000
-An esoteric ring that
-enables its wearer to amplify his hidden powers.
-Critical +10%
-This item cannot be Dropped or Traded.
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All Except Novice^000000
+An esoteric ring that enables its wearer to amplify his hidden powers.
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Increases critical damage on targets by 10%.
 #
 2836#
 An ancient glove.
@@ -19951,17 +19930,15 @@ Usable By: ^808080All Jobs except Novice Jobs^000000
 Dex + 4
 #
 2837#
-^000088Rental Item^000000
-A strange ring that
-curiously raises its
-wearer's defenses.
-DEF +5 , MDEF +5
-This item cannot be Dropped or Traded.
-Class : ^777777Accessory^000000
-Defense: ^7777775^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All Except Novice^000000
+A strange ring that curiously raises its wearer's defenses.
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Def + 5
+Mdef + 5
 #
 2838#
 An ancient necklace.
@@ -19974,15 +19951,14 @@ Usable By: ^808080All Jobs except Novice Jobs^000000
 Vit + 4
 #
 2839#
-^000088Rental Item^000000
 An ancient ring.
-Str +4
-This item cannot be Dropped or Traded.
-Class : ^777777Accessory^000000
-Defense: ^7777770^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Jobs: ^777777All Except Novice^000000
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+Class: ^808080Accessory^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Str + 4
 #
 2840#
 An ancient rosary.
@@ -20830,12 +20806,13 @@ Enables ^0000FFLevel 1 Yggdrasil Dust^000000.
 #
 2956#
 Magical ring that reduces damage towards the wearer.
-DEF + 10 , MDEF + 5, All Stats + 1.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777750^000000
-Job : ^777777All except Novice^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+All Stats + 1
+Def + 10
+Mdef + 5
 #
 2957#
 Fire Spirit king's power ring. Once worn, your weapon will spout its boiling spirit power.
@@ -20879,25 +20856,41 @@ Decrease 3% of damage received from Doram monster.
 #
 2963#
 This magic ring, developed in Geffen, enhances its wearer's physical abilities.
-ATK +5%.
-Increases Attack Speed 5% when equipped with Anti-magic Suit.
-Decrease after skill delay by 5% when equipped with Geffen Magic Robe. 5% Demi-Human resistance.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777790^000000
-Job : ^777777All Classes^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
+Atk + 5%
+
+^800080Set Bonus^000000
+^008080Anti-magic Suit [1]^000000
+^008080Physical Enhancer Ring [1]^000000
+Aspd + 5%
+
+^800080Set Bonus^000000
+^008080Geffen Magic Robe [1]^000000
+^008080Physical Enhancer Ring [1]^000000
+Reduces the global delay of skills by 5%.
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 2964#
 This magic ring developed in Geffen enhances its wearer's magical abilities.
-MATK +5%.
-Variable Cast Time -5% when equipped with Geffen Magic Robe.
-Decrease after skill delay by 5% when equipped with Anti-magic Suit. 5% Demi-Human resistance.
-Class : ^777777Accessory^000000
-Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^77777790^000000
-Job : ^777777All Classes^000000
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
+Matk + 5%
+
+^800080Set Bonus^000000
+^008080Anti-magic Suit [1]^000000
+^008080Magic Intensifier Ring [1]^000000
+Reduces the global delay of skills by 5%.
+Reduces damage taken from Demi-Human race enemies by 5%.
+
+^800080Set Bonus^000000
+^008080Geffen Magic Robe [1]^000000
+^008080Magic Intensifier Ring [1]^000000
+Reduces the variable casting time of skills by 5%.
 #
 2966#
 A ring made of pure gold imbued with mystical powers to commemorate the 2012 RWC.
@@ -24844,15 +24837,16 @@ Compound on: ^777777Garment^000000
 Weight : ^7777771^000000
 #
 4335#
-Increases damage
-of Earth Spike and
-Heaven's Drive by 5%.
-Drains 50 SP when
-compounded weapon
-is unequipped.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases the damage of ^0000FFEarth Spike^000000 and ^0000FFHeaven's Drive^000000 by 5%.
+Drains 50 SP from the user when the compounded item is unequipped.
+
+^800080Set Bonus^000000
+^008080Lunar Rainbow [1]^000000
+^008080Pitman Card^000000
+Adds a 4% chance of casting ^0000FFLevel 4 Earth Spike^000000 or ^0000FFLevel 4 Heaven's Drive^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 #
 4336#
 Adds immunity to
@@ -24947,15 +24941,19 @@ Compound on: ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4345#
-Increases damage
-of Thunderstorm,
-Jupitel Thunder,
-and Lord of Vermilion
-skills by 5%. Drains 50^FFFFFF   ^000000 SP when the compounded
-weapon is unequipped.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases the damage of
+^0000FFThunderstorm^000000,
+^0000FFJupitel Thunder^000000, and
+^0000FFLord of Vermilion^000000 by 5%.
+Drains 50 SP from the user when the compounded item is unequipped.
+
+^800080Set Bonus^000000
+^008080Lunar Rainbow [1]^000000
+^008080Hill Wind Card^000000
+Adds a 4% chance of casting ^0000FFLevel 4 Lightning Bolt^000000 or ^0000FFLevel 4 Thunderstorm^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 #
 4346#
 Adds 1 STR for every
@@ -25012,15 +25010,16 @@ Compound on: ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4350#
-Increases damage of
-Frost Nova and Storm
-Gust skills by 3%.
-Drains 50 SP when
-compounded weapon
-is unequipped.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases the damage of ^0000FFFrost Nova^000000 and ^0000FFStorm Gust^000000 by 3%.
+Drains 50 SP from the user when the compounded item is unequipped.
+
+^800080Set Bonus^000000
+^008080Lunar Rainbow [1]^000000
+^008080Laurell Weinder Card^000000
+Adds a 4% chance of casting ^0000FFLevel 4 Cold Bolt^000000 or ^0000FFLevel 4 Frost Nova^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 #
 4351#
 Flee +10
@@ -25328,15 +25327,16 @@ Compound on: ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4380#
-Increases damage
-of the Fire Pillar and
-Meteor Storm skills
-by 5%. Drains 50 SP
-when the compounded
-weapon is unequipped.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases the damage of ^0000FFFire Pillar^000000 and ^0000FFMeteor Storm^000000 by 5%.
+Drains 50 SP from the user when the compounded item is unequipped.
+
+^800080Set Bonus^000000
+^008080Lunar Rainbow [1]^000000
+^008080Red Ferus Card^000000
+Adds a 4% chance of casting ^0000FFLevel 4 Fire Bolt^000000 or ^0000FFLevel 4 Fire Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 #
 4381#
 Vit +1, Max HP +10%.
@@ -27181,10 +27181,14 @@ Reduces damage taken from Water, Earth, Fire, Wind, Shadow, and Undead property 
 Increases damage taken from Holy and Ghost property attacks by 100%.
 #
 4581#
-Physical attacks from enemies create a chance of increasing Attack Speed for 3 seconds, increasing AGI +44, and casting Endure at the cost of 40 SP.
-Class: ^777777Card^000000
-Compound on: ^777777Shoes^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Adds a chance of buffing the user with the following effects for 3 seconds when receiving a physical attack;
+Agi + 44
+Increased Movement Speed.
+Casts ^0000FFLevel 1 Endure^000000.
+Drains 40 SP from the user.
 #
 4582#
 MaxHP +1% every 2 Upgrade levels.
@@ -29561,13 +29565,13 @@ except Novice^000000
 #
 5039#
 A mysteriously colorful egg shell.
-It is impossible to upgrade this item.
-Class : ^777777Headgear^000000
-Defense: ^7777778^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Required Level : ^77777719^000000
-Jobs: ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808040^000000
+Requires Level: ^80808019^000000
+Usable By: ^808080All Jobs^000000
+This item cannot be upgraded.
 #
 5040#
 Two red dots that can be worn on the face to give a blushing impression.
@@ -29716,12 +29720,13 @@ Jobs : ^777777Assassin^000000
 #
 5055#
 An exclusive helmet for new adventurers.
-Impossible to refine this item.
-Class : ^777777Headgear^000000
-Defense : ^7777776^000000
-Weight : ^7777770.1^000000
-Required Level : ^777777NA^000000
-Jobs : ^777777Novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^8080800.1^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Novice Jobs^000000
+This item cannot be upgraded.
 #
 5056#
 Hairpin with three red berries attached which
@@ -30068,12 +30073,12 @@ Jobs: ^777777All^000000
 #
 5090#
 A mask worn by the Goblin leader. It looks so ferocious, it's ridiculous.
-Class : ^777777Headgear^000000
-Defense: ^7777772^000000
-Location: ^777777Mid, Lower^000000
-Weight : ^77777710^000000
-Required Level : ^777777NA^000000
-Jobs: ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 5091#
 A hair accessory which is made after Sohee's golden bell.
@@ -30561,27 +30566,26 @@ The user's casting cannot be interrupted outside of WoE.
 Increases the variable casting time of skills by 25%.
 #
 5127#
-A helm that was once
-owned by Morrigane,
-the goddess of war.
-Luk +2, ATK +3.
-^6A5ACDMorrigane's Set^000000
-^3CB371Morrigane's Helm^000000
-^3CB371Morrigane's Manteau^000000
-^3CB371Morrigane's Pendant^000000
-^3CB371Morrigane's Belt^000000
-Str +2
-Luk +9
-ATK +18
-Critical Attack Rate +13
-Perfect Dodge +13
-Class : ^777777Headgear^000000
-Defense: ^7777778^000000
-Location: ^777777Upper^000000
-Weight : ^77777750^000000
-Required Level : ^77777761^000000
-Jobs: ^777777All except
-Novice Class^000000
+A helm that was once owned by Morrigane, the goddess of war.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808050^000000
+Requires Level: ^80808061^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Luk + 2
+Atk + 3
+
+^800080Set Bonus^000000
+^008080Morrigane's Helm^000000
+^008080Morrigane's Manteau^000000
+^008080Morrigane's Pendant^000000
+^008080Morrigane's Belt^000000
+Str + 2
+Luk + 9
+Atk + 18
+Crit + 13
+Perfect Dodge + 13
 #
 5128#
 One of the few armors that was forged by Goibe the blacksmith. It is said that the gods valued his armors more than the weapons he had forged.
@@ -33622,10 +33626,14 @@ Job : ^777777All^000000
 #
 5429#
 A hobgoblin's cute hat.
-Increases HP and SP recovery rate by 5%.
-Item Class : ^777777Headgear^000000    Defense : ^7777772^000000
-Location : ^777777Upper^000000    Weight : ^77777710^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080804^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+HP Recovery + 5%.
+SP Recovery + 5%.
 #
 5430#
 Adds 10% bonus experience for each monster killed.
@@ -33866,13 +33874,15 @@ Required Level : ^77777790^000000
 Jobs : ^777777All^000000
 #
 5463#
-Rainbow Scarf
-INT + 1. MDEF + 2.
-MATK + 1%
-Item Class: ^777777Headgear^000000    Defense : ^7777771^000000
-Location : ^777777Lower^000000    Weight : ^77777710^000000
-Required Level : ^77777790^000000
-Jobs : ^777777All^000000
+A colorful scarf.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Matk + 30
+Max SP - 2%
 #
 5464#
 Zaha doll hat which resembles angel of Zaha. It looks great on your head.
@@ -37674,9 +37684,10 @@ Weight: ^8080801^000000
 6103#
 #
 6104#
-A shell of an animal that's surprisingly edible.
-Class : ^777777Pet Food^000000
-Weight : ^7777771^000000
+A big crystallization created by some monsters. Rare, but worthless.
+^FF0000This is considered food for Goblin Leader pets.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 6105#
 Fresh water harvested from the leaves of plants early in the morning.
@@ -45850,6 +45861,41 @@ Party Hard Pack
 Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
 #
+9600#
+Redeem ticket by visiting the Yggdrasil Tree Explorer in the second floor of the Eden Group (moc_para_up.gat 17, 176)
+When redeemed randomly provides of the the following
+Fafnir Scale
+Sacred Crown
+Chemical Glove
+Toy Ring
+Fotia Shield
+Fenrir Chain
+Rasen Fuma's Orb
+Spirit King's Ring
+Tengu Scroll
+Hero Manteau
+Memory of Lovers
+Kirin Armor
+Party Hard Pack
+Blacksmith Blessing x 8
+Battle Manual X3 x 6
+Bloody Dead Branch x 5
+
+More Details can be found by visiting the NPC in person.
+Class: ^808080Scroll^000000
+Weight: ^8080800^000000
+#
+9618#
+When opened gives one of the following
+Costume Drooping Elven Ears
+Costume Heart Wing Headband
+Costume Kururinpa Tails
+Costume Fluffy Semi Long
+Costume Desert Wolf Baby
+Costume Alchemist Bag
+Costume Poring On Shoulder
+Weight: ^8080800^000000
+#
 10001#
 A pristine helmet made from an animal skull.
 Class: ^808080Pet Accessory^000000
@@ -46038,6 +46084,10 @@ Weight: ^8080800^000000
 Equips on Whisper pets.
 #
 10028#
+A floral patterned badge that symbolizes a high rank.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Goblin Leader pets.
 #
 10029#
 An oriental ornament made from mysterious green threads.
@@ -46161,7 +46211,7 @@ Costume Low Volume Twin (White)
 Costume Cowlick (White)
 Costume Hair Buns (White)
 Costume Pony Tail (White)
-Costume Twin Point Tail (White)
+Costume Long Twin Tail (White)
 Costume Chignon (White)
 Costume Side Tail (White)
 Costume Straight Long (Black)
@@ -47702,12 +47752,10 @@ in the far East are made of mixed flour, honey and sweet liquor. Temporarily add
 Weight : ^7777777^000000
 #
 12124#
-A colorful rice cake
-that is used as a party food in the far East.
-Temporarily adds
-+10 MATK.
-^ffffff_^000000
-Weight : ^7777777^000000
+A colorful rice cake that is used as a party food in the far East.
+Class: ^808080Stat Boost^000000
+Weight: ^8080807^000000
+Atk + 10 and Matk + 10 for 1 minute.
 #
 12125#
 A cooking kit that is
@@ -47868,66 +47916,64 @@ Weight : ^77777725^000000
 12152#
 #
 12153#
-Summon a 1st
-Grade Bow Mercenary.
-^ffffff_^000000
-Weight : ^77777710^000000
+Summon a 1st Grade Bow Mercenary.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^80808010^000000
 #
 12154#
-Summon a 2nd
-Grade Bow Mercenary.
-^ffffff_^000000
-Weight : ^77777710^000000
+Summon a 2nd Grade Bow Mercenary.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^80808010^000000
 #
 12155#
-Summon a 3rd
-Grade Bow Mercenary.
-^ffffff_^000000
-Weight : ^77777710^000000
+Summon a 3rd Grade Bow Mercenary.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^80808010^000000
 #
 12156#
-Summon a 4th
-Grade Bow Mercenary.
-^ffffff_^000000
-Weight : ^77777710^000000
+Summon a 4th Grade Bow Mercenary.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^80808010^000000
 #
 12157#
-Summon a 5th
-Grade Bow Mercenary.
-^ffffff_^000000
-Weight : ^77777710^000000
+Summon a 5th Grade Bow Mercenary.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^80808010^000000
 #
 12158#
-Summon a 6th
-Grade Bow Mercenary.
-^ffffff_^000000
-Weight : ^77777710^000000
+Summon a 6th Grade Bow Mercenary.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^80808010^000000
 #
 12159#
-Summon a 7th
-Grade Bow Mercenary.
-^ffffff_^000000
-Weight : ^77777710^000000
+Summon a 7th Grade Bow Mercenary.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^80808010^000000
 #
 12160#
-Summon a 8th
-Grade Bow Mercenary.
-^ffffff_^000000
-Weight : ^77777710^000000
+Summon a 8th Grade Bow Mercenary.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^80808010^000000
 #
 12161#
-Summon a 9th
-Grade Bow Mercenary.
-^ffffff_^000000
-Weight : ^77777710^000000
+Summon a 9th Grade Bow Mercenary.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^80808010^000000
 #
 12162#
-Summon a 10th Grade,
-which is the top rank,
-Bow Mercenary.
-^ff0000This item can only be put into storage.^000000
-^ffffff_^000000
-Weight : ^7777770^000000
+Summon a 10th Grade, which is the top rank Bow Mercenary.
+^FF0000Account Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^8080800^000000
 #
 12163#
 Summon a 1st Grade
@@ -48677,6 +48723,15 @@ Contains one of the following headgears:
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
+12297#
+A special box, contains a stack of buff scrolls.
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+Produces the following:
+^0000FF6^000000 ^008080Party Assumptio 5 Scroll^000000.
+^0000FF10^000000 ^008080Party Increase Agi 10^000000.
+^0000FF10^000000 ^008080Party Blessing 10 Scroll^000000.
+#
 12299#
 Adds 10% resistance to the status effects of:
 ^880000Stun^000000
@@ -48929,8 +48984,8 @@ Weight: ^8080805^000000
 #
 12364#
 Goblin leader's always need a spare staff.
-Class : ^777777Taming Item^000000
-Weight : ^7777775^000000
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12365#
 Evil Nymphs chase these pink flowers.
@@ -49037,20 +49092,36 @@ A magazine with a thousand Vulcan Bullets. It's portable.
 Weight : ^77777750^000000
 #
 12384#
-Strong magic energy is whirling about in a rainbow color sealed with a Warlock's Frost Misty magic.
-Weight : ^7777775^000000
+A shimmering ruby sealed with magic spells, strong energy is whirling within.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^8080805^000000
+Casts ^0000FFLevel 5 Frost Misty^000000.
+Only works in the Warlock Job Change Testing Room
 #
 12385#
-Strong magic energy is whirling about in a rainbow color sealed with a Warlock's Crimson Lock magic.
-Weight : ^7777775^000000
+A shimmering ruby sealed with magic spells, strong energy is whirling within.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^8080805^000000
+Casts ^0000FFLevel 5 Crimson Rock^000000.
+Only works in the Warlock Job Change Testing Room
 #
 12386#
-Strong magic energy is whirling about in a rainbow color sealed with a Warlock's Chain Lightning magic.
-Weight : ^7777775^000000
+A shimmering ruby sealed with magic spells, strong energy is whirling within.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^8080805^000000
+Casts ^0000FFLevel 5 Chain Lightning^000000.
+Only works in the Warlock Job Change Testing Room
 #
 12387#
-Strong magic energy is whirling about in a rainbow color sealed with a Warlock's Earth Strain magic.
-Weight : ^7777775^000000
+A shimmering ruby sealed with magic spells, strong energy is whirling within.
+^FF0000Character Bound^000000
+Class: ^808080Scroll^000000
+Weight: ^8080805^000000
+Casts ^0000FFLevel 5 Earth Strain^000000.
+Only works in the Warlock Job Change Testing Room
 #
 12388#
 A rune stone for probationary Rune Knights.
@@ -50002,12 +50073,15 @@ This is a bag with E coin, If you are lucky, you will get extra cans or coins.
 Weight : ^7777771^000000
 #
 12622#
-An animal halter lead that summons a creature to ride on.
-Mount creatures increase movement speed by 25%.
-Cannot attack while on a mount.
-^ff0000When this item expires, so does the mount.
-This item is account bound.^000000
-Weight : ^7777770^000000
+An animal halter lead that summons a creature appropriate to each occupation to ride on.
+^FF0000Account Bound^000000
+^FF0000Rental Item^000000
+^FF0000When this item expires, so does the mount.
+^000000
+Class: ^808080Generic^000000
+Weight: ^80808070^000000
+Increased Movement Speed.
+This item forbids the user from attacking or using skills while equipped.
 #
 12623#
 A hard box with beautiful details. there are many high-end equipments.
@@ -61084,25 +61158,51 @@ Max SP + 1% per 2 upgrade levels of the item.
 #
 15073#
 This suit, developed in Geffen over a long period of time, effectively protects its wearer against potent magic.
-MHP +5%. MDEF +10.
-MDEF +5 when upgraded to +7. MHP +2% when upgraded to +9.
-Class : ^777777Armor^000000
-Defense : ^77777750^000000
-Weight : ^777777150^000000
-Required Level : ^77777799^000000
-Job : ^777777All Classes^000000
+Class: ^808080Armor^000000
+Defense: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 5%
+Mdef + 10
+If upgrade level is +7 or higher, additional Mdef + 5.
+If upgrade level is +9 or higher, additional Max HP + 2%.
+
+^800080Set Bonus^000000
+^008080Anti-magic Suit [1]^000000
+^008080Physical Enhancer Ring [1]^000000
+Aspd + 5%
+
+^800080Set Bonus^000000
+^008080Anti-magic Suit [1]^000000
+^008080Magic Intensifier Ring [1]^000000
+Reduces the global delay of skills by 5%.
+Reduces damage taken from Demi-Human race enemies by 5%.
 #
 15074#
 This uniform worn by the Geffen Mages enhances its wearer's concentration while he casts spells.
-10% SP Cost Reduction.
-Increased Variable Cast Time +15%.  Casting cannot be interrupted.
-Additional 5% SP Cost Reduction when upgraded to +7.
-Reduce Variable Cast Time 5% when upgraded to +9.
-Class : ^777777Armor^000000
-Defense : ^77777740^000000
-Weight : ^777777100^000000
-Required Level : ^77777799^000000
-Job : ^777777All Classes^000000
+Class: ^808080Armor^000000
+Defense: ^80808040^000000
+Weight: ^808080100^000000
+Requires Level: ^80808099^000000
+Usable By: ^808080All Jobs^000000
+Reduces the SP cost of skills by 10%.
+The users casting cannot be interrupted outside of WoE.
+Increases the variable casting time of skills by 15%.
+If upgrade level is +7 or higher, reduces the SP cost of skills by an additional 5%.
+If upgrade level is +9 or higher, reduces the variable casting time of skills by 5%.
+
+^800080Set Bonus^000000
+^008080Geffen Magic Robe [1]^000000
+^008080Physical Enhancer Ring [1]^000000
+Reduces the global delay of skills by 5%.
+Reduces damage taken from Demi-Human race enemies by 5%.
+
+^800080Set Bonus^000000
+^008080Geffen Magic Robe [1]^000000
+^008080Magic Intensifier Ring [1]^000000
+Reduces the variable casting time of skills by 5%.
 #
 15087#
 ^808080This armor contains the soul of the Azure Dragon.^000000
@@ -61832,20 +61932,19 @@ If upgrade level is +10 or higher,
 Adds an additional 2% chance of restoring an additional 2% of damage as HP when performing a physical attack.
 Adds an additional 2% chance of restoring an additional 2% of damage as SP when performing a physical attack.
 
-^800080Set Bonus^000000
+^800080Set Malus^000000
 ^008080Evil Dragon Armor [1]^000000
 ^008080Rideword Hat [1]^000000
 Disables the following effect of ^008080Rideword Hat [1]^000000,
 Restoring damage as HP/SP when performing a physical attack.
 
-^800080Set Bonus^000000
+^800080Set Malus^000000
 ^008080Evil Dragon Armor [1]^000000
 ^008080Vanargand Helm [1]^000000
-^ff0000Updated 4/4/2019^000000
 Disables the following effect of ^008080Vanargand Helm [1]^000000,
 Restoring damage as HP/SP when performing a physical attack.
 
-^800080Set Bonus^000000
+^800080Set Malus^000000
 ^008080Evil Dragon Armor [1]^000000
 ^008080Nidhoggur's Shadow Garb [1]^000000
 Disables the following effect of ^008080Nidhoggur's Shadow Garb [1]^000000,
@@ -62495,6 +62594,33 @@ Increases the recovery rate of recovery skills by an additional 10%.
 ^008080Ritual Robe^000000
 ^008080Bathory Card^000000
 Immune to ^800000Freeze^000000.
+#
+15405#
+Fafnir scaled armor that was defeated by heroic Sigurd. As the name implies, It feels the strength being around the whole body.
+Class: ^808080Armor^000000
+Defense: ^808080120^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 10%
+Max SP + 10%
+Mdef + 15
+This item is indestructible in battle.
+
+Increases the damage of ^0000FFDragon's Breath^000000 and ^0000FFDragon's Water Breath^000000 by 50%.
+Increases long-ranged damage on targets by 2% per level of ^0000FFDragon's Breath^000000 known.
+Reduces the global delay of skills by 2% per level of ^0000FFDragon's Water Breath^000000 known.
+
+If ^008080Fafnir Scale^000000 upgrade level is +5 or higher,
+Additional Max HP + 20%.
+Additional Max SP + 20%.
+Reduces the global delay of skills by 5%.
+
+If upgrade level is +7 or higher,
+Additional Max HP + 20%.
+Additional Max SP + 20%.
+Reduces the global delay of skills by an additional 5%.
 #
 15417#
 An armor once belonged to a brave, righteous warrior.
@@ -69841,12 +69967,28 @@ Required Level : ^77777795^000000
 Jobs: ^777777Archer Class, Thief and Rogue Jobs^000000
 #
 18114#
-*Stats during WoE & PVP
-Increases damage to enemy players by 30% while bypassing 30% Def and increases by 1% per refine level.
-Weight : ^777777110^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777795^000000
-Jobs: ^777777Archer Class, Thief and Rogue Jobs^000000
+A bow that has been designed specifically for battles against players.
+Class: ^808080Bow^000000
+Attack: ^808080110^000000
+Property: ^808080Neutral^000000
+Weight: ^808080110^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808095^000000
+Usable By: ^808080Thief, Archer Jobs, Rogue Jobs^000000
+^800080Stats during WoE, PvP^000000
+Increases physical damage on players by 30%.
+Increases physical damage on players by an additional 1% per upgrade level of the item.
+Bypass 30% of hard defense of players when performing a physical attack.
+
+^800080Set Bonus^000000
+^008080Bellum Crossbow^000000
+^008080WoE Arrow S^000000
+Increases long-ranged damage on targets by 70%.
+
+^800080Set Bonus^000000
+^008080Bellum Crossbow^000000
+^008080WoE Arrow A^000000
+Increases long-ranged damage on targets by 40%.
 #
 18118#
 ^ff0000Cannot be traded.^000000
@@ -71157,19 +71299,38 @@ Jobs : ^777777All^000000
 18651#
 #
 18652#
-Vanargand is a another name of Fenrir: the God Biter, which inspired the design of this helmit.
-Under the +5 refine level, the effect is, absorb 1% of damage dealt to enemy into HP, and 1% into SP with certain rate.
-If refined to  +5 and +6, absorb 3% of damage dealt to enemy into HP, 1% into SP with certain rate.
-If refined to +7, absorb 5% of damage dealt to enemy into HP, 2% into SP with certain rate.
-If refined to +8, absorb 5% of damage dealt to enemy into HP, 2% into SP with a higher rate.
-If refined to +9 or above, absorb 8% of damage dealt to enemy into HP, 4% into SP with a higher rate.
-^ff0000Can be traded, stored, and vended^000000
-Class : ^777777Helmet^000000
-Defense : ^77777710^000000
-Location : ^777777Upper^000000
-Weight : ^777777150^000000
-Required Level : ^77777780^000000
-Job : ^777777All jobs ^000000
+Vanargand is a another name of Fenrir: the God Biter, which inspired the design of this helmet.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^808080150^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
+If upgrade level is +4 or less, adds a chance of restoring 1% of damage as HP/SP when performing a physical attack.
+If upgrade level is +5 or higher, adds a chance of restoring additional 2% of damage as HP when performing a physical attack.
+If upgrade level is +7 or higher, adds an additional chance of restoring additional 2% of damage as HP and additional 1% of damage as SP when performing a physical attack.
+If upgrade level is +8 or higher, adds an additional chance of restoring additional X% of damage as HP and X% of damage as SP when performing a physical attack.
+If upgrade level is +9 or higher, adds an additional chance of restoring additional 3% of damage as HP and additional 2% of damage as SP when performing a physical attack.
+
+^800080Set Malus^000000
+^008080Evil Dragon Armor [1]^000000
+^008080Vanargand Helm [1]^000000
+Disables the following effect of ^008080Vanargand Helm [1]^000000,
+Restoring damage as HP/SP when performing a physical attack.
+
+^800080Set Bonus^000000
+^008080Fenrir Chain [1]^000000
+^008080Vanargand Helm [1]^000000
+If ^008080Vanargand Helm [1]^000000 upgrade level is +6 or higher,
+Atk + 5%
+Aspd + 5%
+Reduces the global delay of skills by 5%.
+Bypass 25% of hard defense of all race targets when performing a physical attack.
+If ^008080Vanargand Helm [1]^000000 upgrade level is +8 or higher,
+Additional Atk + 5%.
+Additional Aspd + 10%.
+Reduces the global delay of skills by an additional 10%.
+Bypass an additional 25% of hard defense of all race targets when performing a physical attack.
 #
 18653#
 a headphone from Devil Deviruchi. It is good to block the noise from outside
@@ -71838,14 +71999,18 @@ Jobs : ^777777All^000000
 #
 18729#
 Thank you for supporting pRO SMART RWC 2012 Team Pilipinas.
-Decreases 10% damage from human property monsters.
-Decrease 3% of variable casting.
-When refining with Lv over +12, decreases additional 1% variable casting.
-When refining with Lv over +14, decreases additional 1% variable casting (Total 5%).
-Class : ^777777Headgear^000000 Defense : ^7777776^000000
-Location : ^777777Upper ^000000Weight : ^77777715^000000
-Required Level : ^7777771^000000
-Job : ^777777All Jobs^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808015^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Human Player and Demi-Human race enemies by 10%.
+^d3d3d3Increases the recovery rate of Mastela Fruit consumables by 30%.^000000
+
+Reduces the variable casting time of skills by 3%.
+If upgrade level is +12 or higher, reduces the variable casting time of skills by an additional 1%.
+If upgrade level is +14 or higher, reduces the variable casting time of skills by an additional 1%.
 #
 18730#
 A beginner's hat for newbie adventurers. Also known as a chick cap.
@@ -72082,15 +72247,14 @@ When equipped with Fidelity Necklace, while attacking has a low chance to increa
 #
 18759#
 The nose of a wood goblin fashioned into a noseguard. Though comic in nature, it helps to track the scent of certain plants.
-When killing monsters, has a chance of dropping 'Maneater Blossoms', 'Maneater Root' at a low rate.
-When killing Plant type monsters, has a low chance of dropping 'Prickly Fruit'.
-^ff0000Can be traded, stored, and vended^000000
-Class : ^777777Helmet^000000
-Defense : ^7777770^000000
-Location : ^777777Mid ^000000
-Weight : ^77777720^000000
-Required Level : ^77777750^000000
-Job : ^777777All jobs^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
+Adds a chance of gaining ^008080Maneater Blossom^000000, ^008080Maneater Root^000000 when a monster is killed.
+Adds a chance of gaining ^008080Prickly Fruit^000000 when a Plant race monster is killed.
 #
 18760#
 Talented Wizard's magic hat. It looks weird, but works just fine. Remodeled for extra effect.
@@ -73775,70 +73939,66 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Max HP + 2%
 Mdef + 7
+
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
 ^008080Vesper Core 01^000000
 Int + 8
 Max SP + 5%
-^800080Set Bonus^000000
-^008080Memory of Lovers^000000
-^008080Vesper Core 01^000000
-^008080Vesper Core 01 [1]^000000
-Int + 8
-Max SP + 5%
+
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
 ^008080Vesper Core 01 [1]^000000
 Int + 8
 Max SP + 5%
+
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
 ^008080Vesper Core 02^000000
 Str + 7
 Atk + 20
-^800080Set Bonus^000000
-^008080Memory of Lovers^000000
-^008080Vesper Core 02^000000
-^008080Vesper Core 02 [1]^000000
-Str + 7
-Atk + 20
+
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
 ^008080Vesper Core 02 [1]^000000
 Str + 7
 Atk + 20
+
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
 ^008080Vesper Core 03^000000
 Agi + 7
 Flee + 15
-^800080Set Bonus^000000
-^008080Memory of Lovers^000000
-^008080Vesper Core 03^000000
-^008080Vesper Core 03 [1]^000000
-Agi + 7
-Flee + 15
+
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
 ^008080Vesper Core 03 [1]^000000
 Agi + 7
 Flee + 15
+
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
 ^008080Vesper Core 04^000000
 Dex + 7
 Hit + 10
-^800080Set Bonus^000000
-^008080Memory of Lovers^000000
-^008080Vesper Core 04^000000
-^008080Vesper Core 04 [1]^000000
-Dex + 7
-Hit + 10
+
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
 ^008080Vesper Core 04 [1]^000000
 Dex + 7
 Hit + 10
+
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Gear 02 [1]^000000
+Max HP + 5%
+For every 20 base levels, Str + 1.
+
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Gear 04 [1]^000000
+Reduces the variable casting time of skills by 5%.
+For every 20 base levels, Dex + 1.
 #
 18944#
 A balloon made afte a small and shy devil.
@@ -74062,22 +74222,26 @@ Increases the recovery rate of recovery skills by 2% per upgrade level of the it
 Max HP + 50%
 #
 18973#
-^808080An old, abandoned driver band that emanates a mysterious aura.^000000
+An old, abandoned driver band that emanates a mysterious aura.
 ^FF0000Account Bound^000000
-Class: Headgear
-Position: Upper
-Defense: 10
-Weight: 10
-Required Level: 170
-Required Jobs: Mechanic
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808010^000000
+Requires Level: ^808080170^000000
+Usable By: ^808080Mechanic^000000
 All Stat + 1
 Max HP + 1% per 2 upgrade levels of the item.
 Max SP + 1% per 2 upgrade levels of the item.
 Atk + 4 per upgrade level of the item.
-Mdef + 5
 Aspd + 1 per 5 upgrade levels of the item.
 Increases the damage of ^0000FFAxe Tornado^000000 by 20% per 2 upgrade levels of the item.
 Increases the damage of ^0000FFPower Swing^000000 by 20% per 2 upgrade levels of the item.
+
+^800080Set Bonus^000000
+^008080Old Detachments Ring^000000
+^008080Old Driver Band (Red) [1]^000000
+Increases the damage of ^0000FFFlame Launcher^000000 and ^0000FFIce Launcher^000000 by 70%.
 #
 18974#
 An old, abandoned driver band that emanates a mysterious aura.
@@ -74419,6 +74583,7 @@ Usable By: ^808080Rune Knight, Mechanic, Guillotine Cross, Arch Bishop, Warlock,
 Max SP - 50%
 Hit + 50
 Flee + 50
+
 ^800080Set Bonus^000000
 ^008080Runaway Chip [1]^000000
 ^008080Broken Chip 1 [1]^000000
@@ -74426,7 +74591,9 @@ Flee + 50
 Atk + 50
 Matk + 50
 Increased Movement Speed.
-If ^008080Runaway Chip [1]^000000 upgrade level is +9 or higher, Max HP + 10% and Max SP + 50%.
+If ^008080Runaway Chip [1]^000000 upgrade level is +9 or higher,
+Max HP + 10%
+Max SP + 50%
 #
 19001#
 A box that contains 1 Classic Apple of Archer 2 Week Rental
@@ -75657,35 +75824,40 @@ Reduces damage taken from Water, Earth, Fire and Wind property attacks by 5%.
 Reduces damage taken from Demi-Human race enemies by 5%.
 #
 19156#
-^808080A beautiful moon rainbow which is caused by the moonlight.^000000
+A beautiful moon rainbow which is caused by the moonlight.
 ^FF0000A +10 version of this hat will casts a level 10 skill at 10% chance.^000000
-Class: Headgear
-Position: Upper
-Defense: 10
-Weight: 20
-Required Level: 80
-Required Jobs: All Jobs
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808010^000000
+Weight: ^80808020^000000
+Requires Level: ^80808080^000000
+Usable By: ^808080All Jobs^000000
 Agi + 3
 Matk + 10 per upgrade level of the item.
 Mdef + 10
+
 ^800080Set Bonus^000000
-^008080Lunar Rainbow^000000
+^008080Lunar Rainbow [1]^000000
 ^008080Ring of the Ancient Wise King^000000
 Adds a 4% chance of casting ^0000FFLevel 4 Water Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
+
 ^800080Set Bonus^000000
-^008080Lunar Rainbow^000000
+^008080Lunar Rainbow [1]^000000
 ^008080Pitman Card^000000
 Adds a 4% chance of casting ^0000FFLevel 4 Earth Spike^000000 or ^0000FFLevel 4 Heaven's Drive^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
+
 ^800080Set Bonus^000000
-^008080Lunar Rainbow^000000
+^008080Lunar Rainbow [1]^000000
 ^008080Hill Wind Card^000000
 Adds a 4% chance of casting ^0000FFLevel 4 Lightning Bolt^000000 or ^0000FFLevel 4 Thunderstorm^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
+
 ^800080Set Bonus^000000
-^008080Lunar Rainbow^000000
+^008080Lunar Rainbow [1]^000000
 ^008080Laurell Weinder Card^000000
 Adds a 4% chance of casting ^0000FFLevel 4 Cold Bolt^000000 or ^0000FFLevel 4 Frost Nova^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
+
 ^800080Set Bonus^000000
-^008080Lunar Rainbow^000000
+^008080Lunar Rainbow [1]^000000
 ^008080Red Ferus Card^000000
 Adds a 4% chance of casting ^0000FFLevel 4 Fire Bolt^000000 or ^0000FFLevel 4 Fire Ball^000000 on the target when performing a physical attack, where the level of the skill is equal to and where the chance to cast is increased by 1% per upgrade level of the item past the upgrade level of 4 to a maximum upgrade level of 10.
 #
@@ -75938,9 +76110,9 @@ Additional Atk + 80, if the users base Agi is 120 or higher.
 Aspd + 3%
 Additional Aspd + 5%, if the users base Agi is 108 or higher.
 Additional Aspd + 7%, if the users base Agi is 120 or higher.
-Reduces damage taken from Player race enemies by 2%.
-Reduces damage taken from Player race enemies by an additional 2%, if the users base Agi is 108 or higher.
-Reduces damage taken from Player race enemies by an additional 4%, if the users base Agi is 120 or higher.
+Reduces damage taken from Human Player and Doram race enemies by 2%.
+Reduces damage taken from Human Player and Doram race enemies by an additional 2%, if the users base Agi is 108 or higher.
+Reduces damage taken from Human Player and Doram race enemies by an additional 4%, if the users base Agi is 120 or higher.
 Immune to ^800000Blind^000000 and ^800000Silence^000000.
 #
 19269#
@@ -76877,6 +77049,34 @@ Additional Hit + 30.
 If upgrade level is +9 or higher,
 Increases physical and magical damage on [Illusion of Vampire] monsters by an additional 20%
 Reduces damage taken from [Illusion of Vampire] monsters by an additional 20%
+#
+19469#
+A crown with the sacred aura.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808012^000000
+Weight: ^80808060^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 15
+Aspd + 10%
+Reduces the SP cost of ^0000FFAdoramus^000000 and ^0000FFJudex^000000 by 15.
+Increases the damage of ^0000FFAdoramus^000000 and ^0000FFJudex^000000 by 20%.
+Reduces the variable casting time of ^0000FFAdoramus^000000 and ^0000FFJudex^000000 by 5% per level of ^0000FFOratio^000000 known.
+
+If ^0000FFClearance^000000 is level 5, increases magical damage on boss monsters by 25%.
+Increases magical damage on Earth, Ghost, Neutral and Undead property targets by 5% per level of ^0000FFLauda Agnus^000000 and ^0000FFLauda Ramus^000000 known
+For every upgrade level of ^008080Sacred Crown^000000, increases magical damage on Demi-Human race targets by 2%.
+
+If ^008080Sacred Crown^000000 upgrade level is +7 or higher,
+Aspd + 5%
+Increases the damage of ^0000FFAdoramus^000000 and ^0000FFJudex^000000 by an additional 30%.
+
+If upgrade level is +9 or higher,
+Additional Aspd + 5%.
+Increases the damage of ^0000FFAdoramus^000000 and ^0000FFJudex^000000 by an additional 50%.
+
+If upgrade level is +10 or higher, nullifies the number of Gemstones required for certain skills.
 #
 19500#
 #
@@ -78751,11 +78951,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19842#
-A hat with small brown puppy.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+A hat with a small brown puppy.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19848#
 ^808080It is a hat made in the appearance of Angeling, the mother of all Porings, whose duty is to protect them from human beings.^000000
@@ -80774,13 +80975,13 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20246#
-^808080It feels as if I'm locked inside the cascading time.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+It feels as if I'm locked inside the cascading time.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20247#
 ^808080It feels as if destiny is grabbing the back of my head to carry me around.^000000
@@ -81484,60 +81685,60 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20357#
-Stylish Wig.
-An extended ponytail that comes in different colors.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. An extended ponytail that comes in different colors.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20358#
-Stylish Wig.
-An extended ponytail that comes in different colors.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. An extended ponytail that comes in different colors.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20359#
-Stylish Wig.
-An extended ponytail that comes in different colors.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. An extended ponytail that comes in different colors.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20360#
-Stylish Wig.
-An extended ponytail that comes in different colors.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. An extended ponytail that comes in different colors.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20361#
-Stylish Wig.
-An extended ponytail that comes in different colors.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. An extended ponytail that comes in different colors.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20362#
-Stylish Wig.
-An extended ponytail that comes in different colors.
-Class : ^777777Costume^000000 Def : ^7777770^000000
-Location : ^777777Lower ^000000Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Stylish Wig. An extended ponytail that comes in different colors.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20363#
-^808080Stylish Wig. An extended ponytail that comes in different colors.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+Stylish Wig. An extended ponytail that comes in different colors.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20364#
 Stylish Wig. A hair extension that looks like a wavy twin tail.
@@ -81887,6 +82088,7 @@ Usable By: ^808080All Jobs^000000
 #
 20459#
 A headdress worn by a girl during fights in the battlefield. The light protecting the girl shines like a spotlight.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
@@ -81977,6 +82179,8 @@ The legendary sword of the Demonic Swordsman, Thanatos. Even if you can't equip 
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20515#
 A mystical, magical circle beneath your feet.
@@ -81989,9 +82193,12 @@ Usable By: ^808080All Jobs^000000
 #
 20519#
 Inner peace fills you as soft blossom petals float all around.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20524#
 
@@ -82000,11 +82207,12 @@ Position: ^808080Garment^000000
 Weight: ^8080800^000000
 #
 20534#
-Enjoy having a really, REALLY big cat on your back!
-It's very comfortable.
+Enjoy having a really, REALLY big cat on your back! It's very comfortable.
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20535#
 Class: ^808080Costume^000000
@@ -82024,9 +82232,12 @@ Weight: ^8080800^000000
 #
 20547#
 Is... is something following you? While it may seem creepy, it is actually a blessing and not a curse.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20700#
 Egir's Manteau. It looks defending your body
@@ -83626,22 +83837,23 @@ Defense: ^80808018^000000
 Weight: ^80808020^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
+Mdef + 5
 Increases physical and magical damage on Fire property targets by 15%
-Reduces damage taken from Player race enemies by 5%.
+Reduces damage taken from Human Player and Doram race enemies by 5%.
 
-For each refine level
+For every upgrade level of the item,
+Aspd + 1%
 Increases physical and magical damage on Fire property targets by an additional 1%
-ASPD + 1%
 
-If refined to + 10 or higher
+If upgrade level is +10 or higher,
 Reduces damage taken from Fire property attacks by 100%.
+
 ^800080Set Bonus^000000
+^008080Phoenix Muffler [1]^000000
 ^008080Mastering Card^000000
-Mdef +10
+Mdef + 10
 Flee + 20
 Reduces damage taken from Neutral property attacks by 20%.
-
-
 #
 20942#
 A garment adorned with beautiful gemstones. Unlike other garments, it seems to be made of solid material.
@@ -83725,20 +83937,23 @@ Defense: ^80808015^000000
 Weight: ^80808060^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
+Agi + 5
+Vit + 5
+
 Reduces damage taken from Fish race enemies by 5%.
 Reduces damage taken from Player race enemies by 5%.
 Reduces damage taken from Demi Human race enemies by 5%.
 Reduces damage taken from Neutral property attacks by 5%.
 Reduces damage taken from Poison property attacks by 5%.
 
-If refined to + 7 or higher
+If upgrade level is +7 or higher,
 Restores 10 SP to the user when a monster is killed by a magical attack
 
-If refined to + 8 or higher
-mAtk + 15 for every 20 base Agi/Vit.
-Def + 20 for every 20 base Agi/Vit.
+If upgrade level is +8 or higher,
+Matk + 15 for every combined sum of 20 base Agi and Vit.
+Def + 20 for every combined sum of 20 base Agi and Vit.
 
-If refined to + 9 or higher
+If upgrade level is +9 or higher,
 Restores an additional 10 SP to the user when a monster is killed by a magical attack
 #
 20969#
@@ -85838,6 +86053,13 @@ Jobs: ^777777All except
 Acolyte, Priest, Bard,
 and Dancer Jobs^000000
 Weight : ^77777715^000000
+#
+22549#
+A skeleton-shaped bottle that contains deadly poison.
+^FF0000If any class other than Assassin Cross Classes use this item, it will kill the user instantly.^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+Adds a 2% chance of buffing the user for 1 minute; Aspd + 20%.
 #
 22550#
 This bag is packed with snacks and goodies for Christmas
@@ -88851,6 +89073,11 @@ Weight: 120
 Type: Miscellaneous
 Weight: 1
 #
+25240#
+A certificate required to emancipate a child from the parents welfare to a larger world. Only one copy of the independent certificate is required per household.
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
+#
 25245#
 ^808080There are small bones that seem to belong to a small animal. Among the bones, there is a necklace with a red bell.^000000
 ^FF0000Account Bound^000000
@@ -89851,9 +90078,10 @@ MAtk + 40 if users base Int is 120 or higher.
 #
 27178#
 Class: ^808080Card^000000
-Weight: ^8080800^000000
-Reduce damage on normal monsters by 25%.
-Increase damage on boss monsters by 50%.
+Compounds On: ^808080Shield^000000
+Weight: ^8080801^000000
+Reduces damage taken from normal monsters by 25%.
+Increases damage taken from boss monsters by 50%.
 #
 27179#
 Class: ^808080Card^000000
@@ -90518,60 +90746,52 @@ Required Level : ^7777771^000000
 Job : ^777777All Jobs^000000
 #
 28326#
-^808080It seems to have been broken in half during the uproar.^000000
-^FFFFFF_^000000
-Type: Accessory
-Defense: 0
-Weight: 10
-Required Level: 100
-Required Job: All Jobs
-^FFFFFF_^000000
-STR + 4
-^FFFFFF_^000000
+It seems to have been broken in half during the uproar.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Str + 4
+
 ^800080Set Bonus^000000
+^008080Broken Chip 01 [1]^000000
+^008080Broken Chip 02 [1]^000000
+Str + 8
+Int + 8
+
+^800080Set Bonus^000000
+^008080Runaway Chip [1]^000000
 ^008080Broken Chip 1 [1]^000000
 ^008080Broken Chip 2 [1]^000000
-STR + 8
-INT + 8
-^FFFFFF_^000000
-^800080Set Bonus^000000
-^008080Broken Chip 1 [1]^000000
-^008080Broken Chip 2 [1]^000000
-^008080Riot Chip [1]^000000
-ATK + 50
-MATK + 50
-Movement Speed + 40%
-^FFFFFF_^000000
-If ^008080Riot Chip [1]^000000 upgrade level is +9 or higher,
+Atk + 50
+Matk + 50
+Increased Movement Speed.
+If ^008080Runaway Chip [1]^000000 upgrade level is +9 or higher,
 Max HP + 10%
 Max SP + 50%
 #
 28327#
-^808080It seems to have been broken in half during the uproar.^000000
-^FFFFFF_^000000
-Type: Accessory
-Defense: 0
-Weight: 10
-Required Level: 100
-Required Job: All Jobs
-^FFFFFF_^000000
-INT + 4
-^FFFFFF_^000000
+It seems to have been broken in half during the uproar.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Int + 4
+
 ^800080Set Bonus^000000
+^008080Broken Chip 01 [1]^000000
+^008080Broken Chip 02 [1]^000000
+Str + 8
+Int + 8
+
+^800080Set Bonus^000000
+^008080Runaway Chip [1]^000000
 ^008080Broken Chip 1 [1]^000000
 ^008080Broken Chip 2 [1]^000000
-STR + 8
-INT + 8
-^FFFFFF_^000000
-^800080Set Bonus^000000
-^008080Broken Chip 1 [1]^000000
-^008080Broken Chip 2 [1]^000000
-^008080Riot Chip [1]^000000
-ATK + 50
-MATK + 50
-Movement Speed + 40%
-^FFFFFF_^000000
-If ^008080Riot Chip [1]^000000 upgrade level is +9 or higher,
+Atk + 50
+Matk + 50
+Increased Movement Speed.
+If ^008080Runaway Chip [1]^000000 upgrade level is +9 or higher,
 Max HP + 10%
 Max SP + 50%
 #
@@ -90594,17 +90814,19 @@ Mdef + 3
 Crit + 5
 #
 28353#
-^808080An object which seems to be a part of the Vesper. It seems to function differently than the core.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Accessory
-Defense: 1
-Weight: 10
-Required Level: 90
-Required Jobs: All Jobs
-^FFFFFF_^000000
+An object which seems to be a part of the Vesper. It seems to function differently than the core.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
 Atk + 5%
 Mdef + 3
+
+^800080Set Bonus^000000
+^008080Memory of Lovers^000000
+^008080Vesper Gear 02 [1]^000000
+Max HP + 5%
+For every 20 base levels, Str + 1.
 #
 28354#
 ^808080A map used to guide someone through the city of Prontera, making it quicker to navigate.^000000
@@ -90658,23 +90880,19 @@ Adds a 0.5% chance of inflicting ^800000Curse^000000 on the user when performing
 Enables ^0000FFLevel 1 Cloaking^000000.
 #
 28359#
-^808080An object which seems to be a part of the Vesper. It seems to function differently than the core.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Accessory
-Defense: 1
-Weight: 10
-Required Level: 90
-Required Jobs: All Jobs
-^FFFFFF_^000000
+An object which seems to be a part of the Vesper. It seems to function differently than the core.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
 Mdef + 3
-Hit +10
-^FFFFFF_^000000
+Hit + 10
+
 ^800080Set Bonus^000000
 ^008080Memory of Lovers^000000
-^008080Vesper Gear 04^000000
-Dex + 1 for every 20 base levels.
+^008080Vesper Gear 04 [1]^000000
 Reduces the variable casting time of skills by 5%.
+For every 20 base levels, Dex + 1.
 #
 28372#
 A beautiful ring engraved with the patterns of the Rune Midgard Kingdom.
@@ -91531,20 +91749,23 @@ Requires Level: ^80808050^000000
 Usable By: ^808080All Jobs^000000
 Agi + 2
 Aspd + 2%
+Enables ^0000FFLevel 6 Increase Agility^000000.
 Reduces damage taken from Demi-Human, Brute and Fish race enemies by 1%.
 Reduces damage taken from Demon and Undead race enemies by 2%.
-Enables ^0000FFLevel 6 Increase Agility^000000.
-If the users base Agi is 100 or higher,
+If the user's base Agi is 100 or higher,
 Additional Aspd + 5%
+
 ^800080Set Bonus^000000
 ^008080ASPD 1^000000
-^008080Kirin Horn^000000
+^008080Kirin Horn [1]^000000
 Aspd + 1
+Reduces damage taken from Demi-Human, Brute, Fish, Demon, and Undead race enemies by 1%.
 
 ^800080Set Bonus^000000
 ^008080ASPD 2^000000
-^008080Kirin Horn^000000
+^008080Kirin Horn [1]^000000
 Aspd + 1
+Reduces damage taken from Demi-Human, Brute, Fish, Demon, and Undead race enemies by 1%.
 #
 28502#
 A scarf worn during a revolt. It gives the user the courage they need to never yield to anyone!
@@ -91555,13 +91776,14 @@ Weight: ^80808010^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 Enables ^0000FFLevel 2 Spell Breaker^000000.
+
 ^800080Set Bonus^000000
-^008080Glasses^000000 or ^008080Sunglasses^000000
+^008080Glasses/Glasses [1]^000000 or ^008080Sunglasses/Sunglasses [1]^000000
 ^008080Mob Scarf^000000
-Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces damage taken from Demi-Human and Human Players race enemies by 2%.
 Max HP + 5% for every combined sum of 80 base Agi and Vit.
 Aspd + 5% for every combined sum of 80 base Agi and Vit.
-Reduces damage taken from Demi-Human race enemies by an additional 2% for every combined sum of 80 base Agi and Vit.
+Reduces damage taken from Demi-Human and Human Players race enemies by an additional 2% for every combined sum of 80 base Agi and Vit.
 Atk + 6% for every combined sum of 80 base Str and Luk.
 Crit + 5 for every combined sum of 80 base Str and Luk.
 Increases critical damage on targets by 10% for every combined sum of 80 base Str and Luk.
@@ -91904,6 +92126,33 @@ Increases physical damage on boss monsters by 5%.
 Reduces the global delay of skills by 10%.
 Bypass 50% of hard defense of All Races when performing a physical attack.
 #
+28533#
+Make it possible to handle many kinds of chemicals.
+
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^80808020^000000
+Usable By: ^808080All Jobs^000000
+Hit + 20
+Aspd + 5%
+Increases the recovery rate of
+^008080Red Potion^000000,
+^008080Orange Potion^000000,
+^008080Yellow Potion^000000, and
+^008080White Potion^000000 consumables by 100%.
+
+For every known level of ^0000FFCart Remodeling^000000;
+Atk + 15
+Max HP + 2%
+Aspd + 1%
+Reduces the SP cost of ^0000FFCart Tornado^000000 by 1.
+
+For every base level, increases the damage of ^0000FFCart Revolution^000000 by 1%.
+For every 20 base levels, increases the damage of ^0000FFCart Cannon^000000 by 2%.
+For every 30 base levels, increases the damage of ^0000FFCart Tornado^000000 by 2%.
+
+Has no effect in WoE TE
+#
 28551#
 A strengthened glove engraved with the patterns of the Rune Midgard Kingdom.
 Class: ^808080Accessory^000000
@@ -92081,6 +92330,31 @@ Max SP + 10%
 ^008080Temporal Ring^000000
 Flee + 40
 Reduces the global delay of skills by 30%.
+#
+28596#
+A ring that gives a loud sound when you shake it. You can feel your attack getting stronger.
+Class: ^808080Accessory^000000
+Weight: ^80808050^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Str + 5
+Agi + 5
+Vit + 5
+Enables ^0000FFLevel 5 Hammer Fall^000000.
+For every base level, increases the damage of ^0000FFBash^000000 by 1%.
+For every 5 base levels, increases the damage of ^0000FFBowling Bash^000000 by 3%.
+
+For every 2 levels of ^0000FFSword Mastery^000000 known,
+Str + 1
+Agi + 1
+Vit + 1
+Atk + 10
+
+^d3d3d3Set Bonus^000000
+^d3d3d3Toy Ring [1]^000000
+^d3d3d3Meteor Strike [2]^000000
+^d3d3d3Atk + 100^000000
+^d3d3d3Increases the damage of Bowling Bash by 50%.^000000
 #
 28598#
 A special chip that amplifies natural abilities for a powerful effect.
@@ -92720,6 +92994,31 @@ Matk + 30, if the users base Int is 90 or higher.
 Increases the recovery rate of recovery items by 10%, if the users base Vit is 90 or higher.
 Reduces the variable casting time of skills by 5%, if the users base Dex is 90 or higher.
 Increases critical damage on targets by 5%, if the users base Luk is 90 or higher.
+#
+28955#
+A shield with the power of fire. There are various effects depending on the user's stats.
+Class: ^808080Shield^000000
+Defense: ^808080120^000000
+Weight: ^808080100^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 10
+This item is indestructible in battle.
+Reduces damage taken from Fire property attacks by 10%.
+Increases physical and magical damage on Fire property targets by 5%.
+
+If ^008080Fotia Shield [1]^000000 upgrade level is +6 or higher,
+Reduces damage taken from Fire property attacks by an additional 15%.
+Increases physical and magical damage on Fire property targets by an additional 10%.
+
+If upgrade level is +8 or higher,
+If the user's base Str is 90 or higher, Atk + 50.
+If the user's base Agi is 90 or higher, Aspd + 5%.
+If the user's base Vit is 90 or higher, increases the recovery rate of recovery skills and recovery items by 10%.
+If the user's base Int is 90 or higher, Matk + 30.
+If the user's base Dex is 90 or higher, reduces the variable casting time of skills by 5%.
+If the user's base Luk is 90 or higher, increases critical damage on targets by 5%.
+
 #
 29000#
 Type: Miscellaneous
@@ -94070,68 +94369,68 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31226#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31227#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31228#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31229#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31230#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31231#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31232#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31233#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31234#
 ^808080A hair accessory decorated with a spray of peach blossoms. It smells very sweet, and reminds you of Springtime.^000000
@@ -94206,12 +94505,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31295#
-^808080A red driver's hat decorated with white wings.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A red driver's hat decorated with white wings.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31296#
 The sweet and delicious strawberry in the mouth.
@@ -94701,6 +95000,8 @@ These cute earrings will keep your ears warm all year long!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31463#
 A miniature replica of a cool aircraft, it is designed to be always here by your side.
@@ -94791,10 +95092,10 @@ Weight: ^8080800^000000
 #
 31488#
 Experience the exciting MVP feeling with this unique costume.
-
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31489#
@@ -94807,18 +95108,18 @@ Usable By: ^808080All Jobs^000000
 #
 31490#
 Now you can be extra stylish with this cute Costume Poring Muffler! Made of 100% organic Jellopy.
-
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31491#
 A cute, orange tabby cat that will happily join you on your adventures through Rune Midgard.
-
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31492#
@@ -94826,6 +95127,8 @@ An adorable brown cape. Oh look! It also has cat ears.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31493#
 A voluminous, white pigtail wig. Super trendy!
@@ -95030,51 +95333,64 @@ Cute nurse's cap! It's just a costume though, doesn't give you any nursing crede
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31561#
 Wings made of dark flame, its shape formless and twisting, intimidating all who pass by!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31562#
 You've always wanted a tiny Zealotus doll sitting on your head? Well, today's your lucky day!
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31563#
 Lush blue eye shadow to make your whole look pop.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31564#
 This fancy veil also has horns on it!
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31565#
-An elaborate headpiece fit for royalty!
-Make your debut in this wondrous costume and you'll be sure to turn heads.
+An elaborate headpiece fit for royalty! Make your debut in this wondrous costume and you'll be sure to turn heads.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31566#
-This heavenly stole comes with the wings of an angel.
-Put it on and feel the prestige of the gods themselves!
+This heavenly stole comes with the wings of an angel. Put it on and feel the prestige of the gods themselves!
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31567#
-Large sheep's horns to decorate the sides of your head.
-Don't try to headbutt anyone with it, it's just a costume!
+Large sheep's horns to decorate the sides of your head. Don't try to headbutt anyone with it, it's just a costume!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31569#
 Open air headphones to increase concentration and flowing of sound.
@@ -95250,36 +95566,48 @@ A costume wig that makes you feel like you have flowing long blonde hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31636#
 A costume wig that makes you feel like you have flowing long silver hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31637#
 A costume wig that makes you feel like you have straight long blue hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31638#
 A costume wig that makes you feel like you have straight long red hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31639#
 A costume wig that makes you feel like you have straight long blonde hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31640#
 A costume wig that makes you feel like you have straight long green hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31641#
 A costume wig that makes you feel like you have straight long black hair.
@@ -95292,114 +95620,152 @@ A costume wig that makes you feel like you have straight long light purple hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31643#
 A costume wig that makes you feel like you have straight long brown hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31644#
 A costume wig that makes you feel like you have straight long purple hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31645#
 A costume wig that makes you feel like you have a blue side ponytail in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31646#
 A costume wig that makes you feel like you have a red side ponytail in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31647#
 A costume wig that makes you feel like you have a blonde side ponytail in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31648#
 A costume wig that makes you feel like you have a green side ponytail in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31649#
 A costume wig that makes you feel like you have a black side ponytail in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31650#
 A costume wig that makes you feel like you have a white side ponytail in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31651#
 A costume wig that makes you feel like you have a brown side ponytail in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31652#
 A costume wig that makes you feel like you have a purple side ponytail in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31653#
 A costume wig that makes you feel like you have a blue chignon in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31654#
 A costume wig that makes you feel like you have a red chignon in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31655#
 A costume wig that makes you feel like you have a blonde chignon in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31656#
 A costume wig that makes you feel like you have a green chignon in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31657#
 A costume wig that makes you feel like you have a black chignon in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31658#
 A costume wig that makes you feel like you have a white chignon in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31659#
 A costume wig that makes you feel like you have a brown chignon in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31660#
 A costume wig that makes you feel like you have a purple chignon in your hair.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31664#
 An Ernst Von Wolf 11th, conveniently sized for your noggin.
@@ -95428,6 +95794,8 @@ A facial mask based off of a Whisper. Woo scary!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31670#
 The long, flowing hair of a Miyabi Doll.
@@ -95436,6 +95804,49 @@ Position: ^808080Lower^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+31682#
+These ears are softer than your regular ears. Wearing them makes you a real elf!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31683#
+The white feathers and frills on this headband are perfect for anyone with a pure and lovely heart.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31684#
+When you want to try a new hairstyle, try this trendy look that uses ribbons.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31685#
+A cute hair style that makes you feel light and energetic!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31686#
+A cute baby desert wolf that follows you as you adventure. Now you have become the leader of the pack.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31687#
+The official bag of the Alchemist Guild! You don't need to be part of the guild to wear it though. Simple and Chic. Perfect for holding your flask or homunculus.
+
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31688#
+It's a poring on your shoulder! Smaller than your average poring, but just as cute.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
 #
 32203#
 A high performance microchip that is said to have been used on a mainframe computer, known as 'MOTHER'. It contains valuable data of lost technology.
@@ -95446,10 +95857,11 @@ Usable By: ^808080All Jobs^000000
 Atk + 5%
 Matk + 5%
 Aspd + 5%
+
 ^d3d3d3
 Set Bonus
 Accelerator Chip [1]
-Runaway Chip [1]
+Riot Chip [1]
 Additional Aspd + 10%
 Increases physical and magical damage on targets by an additional 10%.
 Bypass 30% of hard defense of all races.
@@ -95544,6 +95956,30 @@ Disables the following effects of ^008080Hero Plate [1]^000000, chance of castin
 Increases the damage of ^0000FFStorm Blast^000000 by 5% per upgrade level of the armor.
 Increases the damage of ^0000FFVanishing Point^000000 by 5% per upgrade level of the armor.
 #
+32227#
+It's an imitation of a chain that holds Fenrir. Strong enough told hold anything in place.
+Class: ^808080Accessory^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Aspd + 5%
+Reduces the global delay of skills by 5%.
+Enables ^0000FFLevel 1 Teleport^000000.
+
+^800080Set Bonus^000000
+^008080Fenrir Chain [1]^000000
+^008080Vanargand Helm [1]^000000
+If ^008080Vanargand Helm [1]^000000 upgrade level is +6 or higher,
+Atk + 5%
+Aspd + 5%
+Reduces the global delay of skills by 5%.
+Bypass 25% of hard defense of all race targets when performing a physical attack.
+If ^008080Vanargand Helm [1]^000000 upgrade level is +8 or higher,
+Additional Atk + 5%.
+Additional Aspd + 10%.
+Reduces the global delay of skills by an additional 10%.
+Bypass an additional 25% of hard defense of all race targets when performing a physical attack.
+#
 32234#
 Physical?Magical attack DMG + 5%
 ¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
@@ -95578,71 +96014,79 @@ Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
 #
 32242#
-A ring with omnious power.
-It seems that the spirit of the master is resonating with the power nearby.
-
+A ring with ominous power. It seems that the spirit of the master is resonating with the power nearby.
 Class: ^808080Accessory^000000
 Weight: ^8080800^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Mdef + 10
-Reduces damage taken from Player race enemies by 3%.
-^800080Set Bonus^000000
-^008080Old Wind Whisper^000000
-Enable [Trample] Level 3
+Reduces damage taken from Human Player race enemies by 3%.
 
 ^800080Set Bonus^000000
-^008080Old Shadow Handicraft^000000
+^008080Old Detachments Ring^000000
+^008080Old Wind Whisper [1]^000000
+Enables ^0000FFLevel 3 Trample^000000.
+
+^800080Set Bonus^000000
+^008080Old Detachments Ring^000000
+^008080Old Shadow Handicraft [1]^000000
 Increases the damage of ^0000FFTriangle Shot^000000 by 70%.
 
 ^800080Set Bonus^000000
-^008080Old Crown of Protection^000000
+^008080Old Detachments Ring^000000
+^008080Old Casket of Protection [1]^000000
 Increases the damage of ^0000FFCannon Spear^000000 by 70%.
 
 ^800080Set Bonus^000000
-^008080Old Driver Band Y^000000
-Increases the damage of ^0000FFFlame Launcher^000000 by 70%.
-Increases the damage of ^0000FFIce Launcher^000000 by 70%.
+^008080Old Detachments Ring^000000
+^008080Old Driver Band (Red) [1]^000000 or ^008080Old Driver Band (Yellow) [1]^000000
+Increases the damage of ^0000FFFlame Launcher^000000 and ^0000FFIce Launcher^000000 by 70%.
 
 ^800080Set Bonus^000000
-^008080Old Driver Band R^000000
-Increases the damage of ^0000FFFlame Launcher^000000 by 70%.
-Increases the damage of ^0000FFIce Launcher^000000 by 70%.
-
-^800080Set Bonus^000000
-^008080Old Dying Swan^000000
+^008080Old Detachments Ring^000000
+^008080Old Dying Swan [1]^000000
 Immune to ^800000Stun^000000.
 
 ^800080Set Bonus^000000
-^008080Old Blazing Soul^000000
+^008080Old Detachments Ring^000000
+^008080Old Blazing Soul [1]^000000
 Increases the damage of ^0000FFLightning Ride^000000 by 70%.
 
 ^800080Set Bonus^000000
-^008080Old Circlet of Bone^000000
-Str + 200 for 10 seconds when using Counter Slash
+^008080Old Detachments Ring^000000
+^008080Old Bone Circlet [1]^000000
+Adds a 1% chance of buffing the user for 10 second when using ^0000FFCounter Slash^000000; Str + 200.
 
 ^800080Set Bonus^000000
-^008080Old Magic Stone Hat^000000
-mAtk + 100
-Reduces the cooldown of ^0000FFCrimson Rock^000000 by .5 seconds
+^008080Old Detachments Ring^000000
+^008080Old Magic Stone Hat [1]^000000
+Matk + 100
+Reduces the cooldown of ^0000FFCrimson Rock^000000 by 0.5 seconds.
 
 ^800080Set Bonus^000000
-^008080Old Midas Whisper^000000
+^008080Old Detachments Ring^000000
+^008080Old Midas Whisper [1]^000000
 Reduces the variable casting time of ^0000FFMandragora Howl^000000 by 100%.
 
 ^800080Set Bonus^000000
-^008080Old Mitra^000000
-MaxHP + 50%
+^008080Old Detachments Ring^000000
+^008080Old Mitra [1]^000000
+Max HP + 50%
 
 ^800080Set Bonus^000000
-^008080Old Minstrel Song Hat^000000
-Immune to ^800000Freeze^000000.
+^008080Old Detachments Ring^000000
+^008080Old Maestro Song's Hat [1]^000000
+Immune to ^800000Frozen^000000.
 
 ^800080Set Bonus^000000
-^008080Old Camo Rabbit Hat^000000
-Cri + 70
-Cri DMG + 70%
+^008080Old Detachments Ring^000000
+^008080Old Camouflage Bunny Hood [1]^000000
+Crit + 70
+Increases critical damage on targets by 70%.
 
 ^800080Set Bonus^000000
-^008080Old Rune Circlet^000000
+^008080Old Detachments Ring^000000
+^008080Old Rune Circlet [1]^000000
 ^d3d3d3Reduces the fixed casting time of Storm Blast by 100%.^000000
 #
 32258#
@@ -95668,4 +96112,34 @@ If the user's base Vit is 125 or higher,
 Def + 300
 Mdef + 50
 Reduces damage taken from Human Player and Doram race enemies by 3%.
+#
+32262#
+It's a treasure known only to Fuma. It's all about the magic skills.
+
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Str + 5
+Agi + 5
+Vit + 5
+Atk + 5%
+
+If ^0000FFIllusion - Shadow^000000 is level 5,
+Increases the damage of ^0000FFThrow Huuma Shuriken^000000 by 2% for every 4 base levels.
+Increases the damage of ^0000FFSwirling Petal^000000 by 1% for every 4 base levels.
+
+If ^0000FFIllusion - Shock^000000 is level 5,
+Reduces the SP cost of ^0000FFSwirling Petal^000000 by 10.
+Reduces the cooldown of ^0000FFSwirling Petal^000000 by 0.1 second.
+
+If ^0000FFRapid Throw^000000 is level 10,
+Adds a chance of restoring 1% of damage as HP when performing a physical attack.
+
+If ^0000FFPure Soul^000000 is level 5,
+Restores 2 SP to the user when performing a physical attack.
+Reduces the cooldown of ^0000FF16th Night^000000 by 25 seconds.
+
+If ^0000FFSoul Cutter^000000 is level 5,
+Reduces the variable casting time of ^0000FFSwirling Petal^000000 by 50%.
 #
