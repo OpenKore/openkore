@@ -641,6 +641,7 @@ sub new {
 		'0B02' => ['login_error', 'V Z20', [qw(type date)]],
 		'0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
 		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
+		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate type hotkeys)]],#herc PR 2468
 		};
 
 	# Item RECORD Struct's
