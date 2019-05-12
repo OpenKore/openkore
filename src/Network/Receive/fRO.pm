@@ -20,24 +20,25 @@ use base qw(Network::Receive::ServerType0);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-		my %packets = (
+	
+	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]],
-		'082D' => ['received_characters_info', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
 	);
 	
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
-
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+	
 	my %handlers = qw(
-		actor_exists 0915
-		actor_connected 090F
-		actor_moved 0914
-		npc_talk 00B4
-		actor_status_active 043F
-		actor_action 08C8
-	);	
+		received_characters 099D
+		received_characters_info 082D
+		sync_received_characters 09A0
+	);
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
 }
+
+1;
+
 
 1;
