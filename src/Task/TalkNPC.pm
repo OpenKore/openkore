@@ -327,6 +327,9 @@ sub iterate {
 					$self->{x}, $self->{y}));
 			}
 
+		} elsif (defined $self->{error_code}) {
+			debug "Can't talk with $self->{target}, because of errors\n", 'ai_npcTalk';
+			$self->setError($self->{error_code}, $self->{error_message});
 		} else {
 			my $target = $self->find_and_set_target;
 			
