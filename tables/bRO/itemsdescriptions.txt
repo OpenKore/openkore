@@ -13568,14 +13568,20 @@ Classes: ^777777Todas^000000
 #
 2495#
 Calçados criados pelo lendário deus dos oceanos, Aegir. Dizem que estas botas foram criadas especialmente para suprir as fraquezas dos mais poderosos guerreiros.
-Aumenta o HP Máximo em (Nível Base*5) quando usado pelas Classes Mago, Arqueiro e Noviço.
-Aumenta o SP Máximo em (Nível de Classe*2) quando usado pelas Classes Espadachim, Mercador e Gatuno.
-Não pode ser destruído em batalha.
-Tipo : ^777777Calçado^000000
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
+Magos, Arqueiros e Noviços:
+^0000ffHP máx. +5 por nível de base.^000000
+--------------------------
+Espadachins, Mercadores e Gatunos:
+^0000ffSP máx. +2 por nível de classe.^000000
+--------------------------
+Tipo: ^777777Calçado^000000
 Defesa: ^77777713^000000
-Peso : ^77777730^000000
-Nível Necessário : ^777777110^000000
-Classe : ^777777Todas^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Todas^000000
 #
 2496#
 ^ff0000Não pode ser negociado.^000000
@@ -38672,10 +38678,13 @@ Um saco velho e fino para carregar moedas.
 Peso: ^7777771^000000
 #
 12646#
-Polvo assado muito saboroso, feito em Malangdo para a comemoração da chegada do Ano do Macaco.
-SOR + 10, ATQ + 20, ATQM + 20 por 10 minutos.
-^ff0000O buff desaparece caso você receba um mesmo buff que seja maior. O item desaparecerá após o fim do evento^000000
-Peso : ^7777773^000000
+Polvo assado muito saboroso.
+^0000ffSOR +10.^000000
+^0000ffATQ e ATQM +20.^000000
+^008080Bônus não cumulativo com outros consumíveis.^000000
+^ff0000Será deletado no final do evento.^000000
+Duração: ^77777710 minutos^000000
+Peso: ^7777773^000000
 #
 12647#
 Uma pequena esfera feita com tinta de polvo.
@@ -45586,15 +45595,22 @@ Classes: ^777777Todas as Transclasses, exceto Aprendizes^000000
 #
 15061#
 Uma armadura forjada pelo lendário deus dos oceanos, Aegir. De belíssimo acabamento, dizem que foi forjada para uma sereia, o que pode ser verdade, pois apesar de ser feita de metal, você tem a sensação de que ela não afundaria na água e poderia ser usada para nadar facilmente.
-Aumenta a resistência ao efeito Silêncio quando usada pelas Classes Mago, Arqueiro e Noviço e respectivas evoluções.
-Aumenta a resistência ao efeito Atordoar quando usada pelas Classes Espadachim, Mercador e Gatuno e respectivas evoluções.
-Não pode ser destruída em batalha.
-Todos os atributos +1.
-Tipo : ^777777Armadura^000000
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
+^0000ffTodos os atributos +1.^000000
+--------------------------
+Magos, Arqueiros e Noviços:
+^0000ffTolerância a [Silêncio] +50%.^000000
+--------------------------
+Espadachins, Mercadores e Gatunos:
+^0000ffTolerância a [Atordoamento] +50%.^000000
+--------------------------
+Tipo: ^777777Armadura^000000
 Defesa: ^77777755^000000
-Peso : ^777777260^000000
-Nível Necessário : ^777777110^000000
-Classe : ^777777Todas^000000
+Peso: ^777777260^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Todas^000000
 #
 15062#
 ^ff0000Não pode ser negociado.^000000
@@ -50611,14 +50627,19 @@ Classes: ^777777Todas^000000
 #
 18728#
 Elmo semelhante ao de Aegir, deus dos mares. Seu design foi projetado para quem luta em ambientes aquáticos. Pode-se sentir o poder do oceano ao equipar este item.
-+5 DEFM
-Quando usado com Manteau  de Aegir, Armadura de Aegir e Sapatos de Aegir, todos os atributos +1.
-Tipo : ^777777Equipamento para Cabeça^000000
+^a400cdIndestrutível em batalha.^000000
+^0000ffDEFM +5.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Sapatos de Aegir]^000000
+^fa4e09[Manteau de Aegir]^000000
+^fa4e09[Armadura de Aegir]^000000
+^0000ffTodos os atributos +1.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^77777710^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777780^000000
-Nível Necessário : ^777777110^000000
-Classes :  ^777777Todas^000000
+Peso: ^77777780^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Todas^000000
 #
 18729#
 Dizem que na família mafiosa mais famosa de Lighthalzen havia o único minijusticeiro de Midgard. Conhecido como Rebourne, o pequeno bebê era extremamente poderoso, e entre suas armas secretas estava a Bola Rebourne. Também conhecida como 'bola do último desejo', quando atinge seu alvo na cabeça ela se incendeia e teoricamente mata seu alvo. Para sua sorte, ela também instantaneamente o ressuscita, liberando uma incrível força interior capaz de transformar qualquer pessoa que não seja boa em nada, mas que possua um último desejo, em um verdadeiro herói!
@@ -54713,7 +54734,7 @@ Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
 19811#
-Um visual perfeito para aquecer suas orelhas, capaz de queimar qualquer comentário maldoso que façam sobre você.
+Dizem que essa bebida gourmet foi “batizada”, mas ninguém sabe ao certo o que esse termo significa. Com um sabor estranhamente amargo, nem parece guaraná... Aliás, será que é guaraná mesmo?
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Nível Necessário: ^7777771^000000
@@ -57157,17 +57178,24 @@ Classes: ^777777Todas^000000
 #
 20700#
 Manto forjado em águas calmas do oceano. Dizem que pertenceu a Aegir, deus dos mares e que pode-se sentir seu poder ao toque.
-^0000ffAdiciona Esquiva Perfeita +5 quando usado pelas Classes Mago, Arqueiro e Noviço.
-Aprimorar essa armadura aumentará o bônus de Esquiva Perfeita existente, adicionando Esquiva Perfeita +2 para cada Nível de Aprimoramento.
-Reflete 5% de dano recebido de volta aos inimigos quando usada pelas Classes Espadachim, Mercador e Gatuno.
-Aprimorar essa armadura aumentará a taxa de reflexão de danos em 2% para cada Nível de Aprimoramento.
-(O bônus por nível de aprimoramento só será válido até o nível +10 da armadura)
-Não pode ser destruído em batalha.^000000
-Tipo : ^777777Capa^000000
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
+Magos, Arqueiros e Noviços:
+^0000ffEsquiva perfeita +5.^000000
+A cada refino até o +10:
+^0000ffEsquiva perfeita +2.^000000
+--------------------------
+Espadachins, Mercadores e Gatunos:
+^0000ffReflete 5% dos ataques físicos recebidos.^000000
+A cada refino até o +10:
+^0000ffReflete +2%.^000000
+--------------------------
+Tipo: ^777777Capa^000000
 Defesa: ^77777710^000000
-Peso : ^77777730^000000
-Nível Necessário : ^777777110^000000
-Classes :  ^777777Todas^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777110^000000
+Classes: ^777777Todas^000000
 #
 20701#
 Um manto mágico, usado nas cerimônias sagradas para a deusa Sigel, também chamada de Sunna ou Sol.
@@ -59641,6 +59669,35 @@ Posição: ^777777Escudo^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Níveis permitidos: ^777777150 a 175^000000
+Classes: ^777777Todas^000000
+#
+24210#
+Ideais para aspirantes a heróis que acabaram de começar suas aventuras. Calce esses sapatos em conjunto com o Escudo do Iniciante para garantir o sucesso em suas jornadas!
+^0000ffA cada refino:^000000
+^0000ffHP máx. +10.^000000
+^0000ffEXP adquirida por monstros +1%.^000000
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Grevas^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Níveis permitidos: ^7777771 a 49^000000
+Classes: ^777777Todas^000000
+#
+24211#
+Ideais para aspirantes a heróis que acabaram de começar suas aventuras. Calce esses sapatos em conjunto com o Escudo do Iniciante para garantir o sucesso em suas jornadas!
+^0000ffA cada refino:^000000
+^0000ffHP máx. +10.^000000
+^0000ffEXP adquirida por monstros +1%.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Sapatos do Iniciante]^000000
+^0000ffEXP adquirida por monstros +10% adicional.^000000
+Soma dos refinos do escudo + grevas maior ou igual a 15:
+^0000ffEXP adquirida por monstros +10% adicional.^000000
+Tipo: ^777777Equipamento Sombrio^000000
+Posição: ^777777Grevas^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Níveis permitidos: ^7777771 a 49^000000
 Classes: ^777777Todas^000000
 #
 24212#
@@ -62721,6 +62778,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31252#
+Uma cartola de um velhinho conhecido por adotar todo gato que via na rua – dizia-se que ele morava com 120 gatos na sua casa. A convivência com os felinos até o fez crescer orelhinhas de gato!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31260#
 Um novo modelo de Rastreador projetado por uma brilhante cientista. Ela realizou algumas modificações, como o ajuste de idioma de acordo com o usuário e um sistema mais potente. Assim, as chances de ele explodir serão mínimas quando você se deparar com um inimigo cujo poder é de mais de 8 mil!
 Tipo: ^777777Visual^000000
@@ -63319,6 +63384,14 @@ Classes : ^777777Todas^000000
 Com todas essas folhas e galhos, você estará convertendo dióxido de carbono em oxigênio onde quer que esteja. Bem orgânico – só não se esqueça de regar o chapéu!
 Tipo : ^777777Visual^000000
 Equipa em : ^777777Topo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
+#
+31599#
+Belíssimas madeixas onduladas e sedosas. Com uma cabeleira dessas, você nem vai precisar se esforçar muito pro senpai te notar!
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Baixo^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
