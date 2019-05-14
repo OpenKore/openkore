@@ -6444,7 +6444,7 @@
 19805#Pergaminho dos Selos#
 19806#Presilha do Festival#
 19807#Elmo do Xogum#
-19811#ÀÇ»ó ¸ÆÁÖ ¸ðÀÚ#
+19811#Chapéu de Guaraná Chique#
 19816#Chapéu de Peco#
 19817#Sopro do Ifrit#
 19819#Capuz do Mestre Necromante#
@@ -6891,6 +6891,8 @@
 24017#Colar Sombrio Festivo#
 24208#Sapatos do Perito#
 24209#Escudo do Perito#
+24210#Sapatos do Iniciante#
+24211#Escudo do Iniciante#
 24212#Sapatos do Novato#
 24213#Escudo do Novato#
 24214#Sapatos Avançados#
@@ -7120,6 +7122,7 @@
 31244#Elmo das Falcoeiras de Rapina#
 31249#Orelhas do Coelho da Lua#
 31251#Boca de Gatinho#
+31252#Cartola do Gatomaníaco#
 31260#Rastreador Sofisticado#
 31264#Asinhas Elegantes (Baixo)#
 31289#Asinhas Estilosas (Baixo)#
@@ -7191,6 +7194,7 @@
 31587#Super Capacete de Kunlun#
 31596#Chapéu Biológico#
 31598#Chapéu Natureba#
+31599#Peruca Bronze de Waifu#
 31611#Manto do Riso Macabro#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
