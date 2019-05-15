@@ -22459,45 +22459,14 @@ Find Carl.#
 
 Find Carl.#
 
-63040#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-You have introduced yourself to the first Prontera Brewmaster.#
-#
+63243#A Simple Request#SG_FEEL#QUE_NOIMAGE#
 
-63041#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-You have introduced yourself to the second Prontera Brewmaster.#
-#
+Mema Coco needed: 12x J_llop, 12x Zar_on, 9x B_tt_rf_y W__g, 1x B_ac_ Ro_e, and 1x Pa_tie.#
 
-63042#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-You have introduced yourself to the Geffen Brewmaster.#
-#
+Get Mema Coco's Groceries.#
 
-63043#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-You have introduced yourself to the Aldebaran Brewmaster.#
-#
+63244#A Simple Request#SG_FEEL#QUE_NOIMAGE#
 
-63044#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-You have received the Pub Crawl Prize#
-#
+Mema Coco wants you to go into Knut's dreams and get rid of the demon possessing him.#
 
-63045#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-The first Prontera Brewmaster can't accept more supplies until the timer is finished.#
-#
-
-63046#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-The second Prontera Brewmaster can't accept more supplies until the timer is finished.#
-#
-
-63047#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-The Geffen Brewmaster can't accept more supplies until the timer is finished.#
-#
-
-63048#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-The Aldebaran Brewmaster can't accept more supplies until the timer is finished.#
-#
-
-63049#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-Explore Duffy's Pub Crawl#
-#
-63039#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
-Explore Duffy's Pub Crawl.#
-#
+Help rid the demon in Knut's dreams.#
