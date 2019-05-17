@@ -3126,4 +3126,17 @@ sub sendMergeItemCancel {
 #	my ($self, $args) = @_;
 #}
 
+sub sendStylistChange {
+	my ($self, $hair_color, $hair_style, $cloth_color, $head_top, $head_mid, $head_bottom ) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'stylist_change',
+		hair_color => $hair_color, 
+		hair_style => $hair_style, 
+		cloth_color => $cloth_color,
+		head_top => $head_top,
+		head_mid => $head_mid,
+		head_bottom => $head_bottom
+	}));
+}
+
 1;
