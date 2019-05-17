@@ -124,7 +124,7 @@ patchpath /patch02
 addTableFolders iRO/Renewal;iRO
 charBlockSize 147
 charDeleteDateType 1
-sendCryptKeys 0x7EA92944, 0x748E3B75, 0x5DBA1F51
+sendCryptKeys 0x108971DB, 0x4B051EF7, 0x13AF4934
 blockingPlayerCancel 1
 rankingSystemType 1
 
