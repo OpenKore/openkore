@@ -6531,8 +6531,7 @@ Weight : ^77777710^000000
 Jobs: ^777777All^000000
 #
 5014#
-Helment accessories
-that look just like fins.
+Helmet accessories that look just like fins.
 Class : ^777777Headgear^000000
 Defense : ^7777772^000000
 Location : ^777777Middle^000000
@@ -6541,9 +6540,7 @@ Required Level : ^77777765^000000
 Jobs: ^777777Swordman Class^000000
 #
 5015#
-A peculiar hat that
-makes it wearer look
-freshly hatched.
+A peculiar hat that makes it wearer look freshly hatched.
 Class : ^777777Headgear^000000
 Defense : ^7777773^000000
 Location : ^777777Upper^000000
@@ -65876,8 +65873,7 @@ except Novice^000000
 #
 
 27213#
-Helment accessories
-that look just like fins.
+Helmet accessories that look just like fins.
 Class : ^777777Headgear^000000
 Defense : ^7777772^000000
 Location : ^777777Middle^000000
@@ -72169,6 +72165,76 @@ Return this certificate and the following items to Frank, the owner of the Laure
 1 Brown Drooping Cat Certificate
 Shadowy rumors say the following about this certificate:
 It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20087#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Tulip Hairpin!
+200 Large Jellopy
+100 Broken Shell
+5 Iron
+1 Flower
+1 Tulip Hairpin Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20088#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Red Glasses!
+100 Steel
+50 Glass Beads
+20 Star Dust
+1 Scarlet Dyestuffs
+1 Red Glasses Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20089#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Aquarius Diadem!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamonds
+25 Garnets
+1 Aquarius Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20090#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Yellow Drooping Cat!
+250 Golden Hair
+2 Cat's Eyes
+1 Black Cat Doll
+2 Lemon Dyestuffs
+1 Yellow Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20091#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gray Deviruchi Hat!
+100 Fabric
+100 Maneater Roots
+50 Burning Hairs
+20 Worn-out Magic Scroll
+1 Gray Deviruchi Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1 Set Two
 It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound
