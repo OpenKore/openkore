@@ -138,7 +138,7 @@ serverType iRO_Sakray
 serverEncoding Western
 addTableFolders iRO/Sakray;iRO
 charBlockSize 147
-sendCryptKeys 0x389B389B, 0x389B389B, 0x389B389B
+#sendCryptKeys 0x00000000, 0x00000000, 0x00000000
 rankingSystemType 1
 blockingPlayerCancel 1
 charDeleteDateType 1
