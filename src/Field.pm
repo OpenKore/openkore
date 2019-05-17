@@ -250,6 +250,13 @@ sub getBlockWeight {
 	return ord(substr($self->{weightMap}, $offset, 1));
 }
 
+sub getBlockDist {
+	my ($self, $x, $y) = @_;
+	return 0 if ($self->isOffMap($x, $y));
+	my $offset = $self->getOffset($x, $y);
+	return ord(substr($self->{dstMap}, $offset, 1));
+}
+
 ##
 # void $Field->loadFile(String filename, [boolean loadWeightMap = true])
 # filename: The filename of the field file to load.
