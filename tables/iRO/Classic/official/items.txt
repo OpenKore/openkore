@@ -7012,3 +7012,8 @@
 20084#Aries_Crown_Certificate#
 20085#Brown_Deviruchi_Hat_Certificate#
 20086#Brown_Drooping_Cat_Certificate#
+20087#Tulip_Hairpin_Certificate#
+20088#Red_Glasses_Certificate#
+20089#Aquarius_Diadem_Certificate#
+20090#Yellow_Drooping_Cat_Certificate#
+20091#Gray_Deviruchi_Hat_Certificate#
