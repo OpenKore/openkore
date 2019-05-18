@@ -396,7 +396,7 @@ sub main {
 
 	} elsif (
 		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 2
-		&& (($config{attackCanSnipe} && !checkLineSnipable($realMyPos, $realMonsterPos))
+		&& (($config{attackCanSnipe} && !checkLineSnipable($realMyPos, $realMonsterPos) && !checkLineWalkable($realMyPos, $realMonsterPos, 1))
 		|| (!$config{attackCanSnipe} && $realMonsterDist <= $args->{attackMethod}{maxDistance} && !checkLineWalkable($realMyPos, $realMonsterPos, 1)))
 	) {
 		# We are a ranged attacker without LOS
@@ -420,25 +420,33 @@ sub main {
 		# Determine which of these spots are snipable
 		my $best_spot;
 		my $best_dist;
-		for my $spot (@stand) {
+		SPOT: for my $spot (@stand) {
 			# Is this spot acceptable?
 			# 1. It must have LOS to the target ($realMonsterPos).
 			# 2. It must be within $config{followDistanceMax} of $masterPos, if we have a master.
 			# 3. It must have at max $config{attackAdjustLOSMaxRouteDistance} of route distance to it from our current position.
 			if (
-			    (($config{attackCanSnipe} && checkLineSnipable($spot, $realMonsterPos))
-				|| checkLineWalkable($spot, $realMonsterPos))
+			    (($config{attackCanSnipe} && (checkLineSnipable($spot, $realMonsterPos) || checkLineWalkable($spot, $realMonsterPos, 1)))
+				#|| (!$config{attackCanSnipe} && checkLineWalkable($spot, $realMonsterPos)))
+				|| (!$config{attackCanSnipe} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && checkLineWalkable($spot, $realMonsterPos, 1)))
 				&& $field->isWalkable($spot->{x}, $spot->{y})
 				&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
 				&& (!$master || blockDistance($spot, $masterPos) <= $config{followDistanceMax})
 			) {
+				my $solution = [];
 				my $dist = new PathFinding(
 					field => $field,
 					start => $realMyPos,
 					dest => $spot,
-				)->runcount;
+				)->run($solution);
 				
-				if ($dist > 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance} && (!defined($best_dist) || $dist < $best_dist)) {
+				next unless ($dist > 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
+				
+				foreach my $step (@{$solution}) {
+					next SPOT if (blockDistance($step, $realMonsterPos) > 14);
+				}
+				
+				if (!defined($best_dist) || $dist < $best_dist) {
 					$best_dist = $dist;
 					$best_spot = $spot;
 				}
@@ -449,13 +457,7 @@ sub main {
 		my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			if ($config{attackChangeTarget} == 1) {
-				# Restart attack from processAutoAttack
-				AI::dequeue;
-				$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);
-			} else {
-				$char->route(undef, @{$best_spot}{qw(x y)});
-			}
+			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			$target->{attack_failedLOS} = time;

@@ -44,6 +44,7 @@ use warnings;
 no warnings 'redefine';
 use Compress::Zlib;
 use File::Spec;
+use Log qw(message);
 
 use Globals qw($masterServer %mapAlias_lut %maps_lut %cities_lut);
 use Modules 'register';
@@ -207,6 +208,28 @@ sub isOffMap {
 	return ($x < 0 || $x >= $self->{width} || $y < 0 || $y >= $self->{height});
 }
 
+sub getCellInfo {
+	my ($self, $x, $y) = @_;
+	if ($self->isOffMap($x, $y)) {
+		message "Cell $x $y is off the map.\n";
+		return;
+	}
+	if ($self->isWalkable($x, $y)) {
+		message "Cell $x $y is walkable.\n";
+		my $weight = $self->getBlockWeight($x, $y);
+		message "Cell $x $y has weight $weight.\n";
+	}
+	if ($self->isSnipable($x, $y)) {
+		message "Cell $x $y is snipable.\n";
+	}
+	if ($self->isWater($x, $y)) {
+		message "Cell $x $y is water.\n";
+	}
+	if ($self->isCliff($x, $y)) {
+		message "Cell $x $y is a Cliff.\n";
+	}
+}
+
 ##
 # boolean $Field->isWalkable(int x, int y)
 #
@@ -241,6 +264,18 @@ sub isWater {
 	my $offset = $self->getOffset($x, $y);
 	my $value = $self->getBlock($offset);
 	return ($value & TILE_WATER);
+}
+
+##
+# boolean $Field->isCliff(int x, int y)
+#
+# Check whether cell ($x,$y) in a cliff on this field.
+sub isCliff {
+	my ($self, $x, $y) = @_;
+	return 0 if ($self->isOffMap($x, $y));
+	my $offset = $self->getOffset($x, $y);
+	my $value = $self->getBlock($offset);
+	return ($value & TILE_CLIFF);
 }
 
 sub getBlockWeight {
