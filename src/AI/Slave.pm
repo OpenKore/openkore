@@ -382,7 +382,7 @@ sub processAttack {
 		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 		my $realMyPos = calcPosition($slave);
 		my $realMonsterPos = calcPosition($target);
-		my $realMonsterDist = distance($realMyPos, $realMonsterPos);
+		my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 		if (!$config{$slave->{configPrefix}.'runFromTarget'}) {
 			$myPos = $realMyPos;
 			$monsterPos = $realMonsterPos;
@@ -466,13 +466,22 @@ sub processAttack {
 			for my $spot (@stand) {
 				# Is this spot acceptable?
 				# 1. It must have LOS to the target ($realMonsterPos).
-				# 2. It must be within $config{followDistanceMax} of
-				#    $masterPos, if we have a master.
-				if (checkLineSnipable($spot, $realMonsterPos) &&
-				    (distance($spot, $char->{pos_to}) <= 15)) {
-					# FIXME: use route distance, not pythagorean distance
-					my $dist = distance($realMyPos, $spot);
-					if (!defined($best_dist) || $dist < $best_dist) {
+				# 2. It must be within $config{$slave->{configPrefix}.'followDistanceMax'} of master Pos.
+				# 3. It must have at max $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteDistance'} of route distance to it from our current position.
+				if (
+					(($config{$slave->{configPrefix}.'attackCanSnipe'} && checkLineSnipable($spot, $realMonsterPos))
+					|| checkLineWalkable($spot, $realMonsterPos))
+					&& $field->isWalkable($spot->{x}, $spot->{y})
+					&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
+					&& blockDistance($spot, $char->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'}
+				) {
+					my $dist = new PathFinding(
+						field => $field,
+						start => $realMyPos,
+						dest => $spot,
+					)->runcount;
+					
+					if ($dist > 0 && $dist <= $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteDistance'} && (!defined($best_dist) || $dist < $best_dist)) {
 						$best_dist = $dist;
 						$best_spot = $spot;
 					}
@@ -534,7 +543,7 @@ sub processAttack {
 			my $bestBlock;
 			foreach (@blocks) {
 				next unless defined $_;
-				my $dist = distance($monsterPos, $_);
+				my $dist = adjustedBlockDistance($monsterPos, $_);
 				if (!defined $largestDist || $dist > $largestDist) {
 					$largestDist = $dist;
 					$bestBlock = $_;

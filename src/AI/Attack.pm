@@ -423,8 +423,8 @@ sub main {
 		for my $spot (@stand) {
 			# Is this spot acceptable?
 			# 1. It must have LOS to the target ($realMonsterPos).
-			# 2. It must be within $config{followDistanceMax} of
-			#    $masterPos, if we have a master.
+			# 2. It must be within $config{followDistanceMax} of $masterPos, if we have a master.
+			# 3. It must have at max $config{attackAdjustLOSMaxRouteDistance} of route distance to it from our current position.
 			if (
 			    (($config{attackCanSnipe} && checkLineSnipable($spot, $realMonsterPos))
 				|| checkLineWalkable($spot, $realMonsterPos))
@@ -432,8 +432,13 @@ sub main {
 				&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
 				&& (!$master || blockDistance($spot, $masterPos) <= $config{followDistanceMax})
 			) {
-				my $dist = distance($realMyPos, $spot);
-				if (!defined($best_dist) || $dist < $best_dist) {
+				my $dist = new PathFinding(
+					field => $field,
+					start => $realMyPos,
+					dest => $spot,
+				)->runcount;
+				
+				if ($dist > 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance} && (!defined($best_dist) || $dist < $best_dist)) {
 					$best_dist = $dist;
 					$best_spot = $spot;
 				}
@@ -504,7 +509,7 @@ sub main {
 		my $bestBlock;
 		foreach (@blocks) {
 			next unless defined $_;
-			my $dist = distance($monsterPos, $_);
+			my $dist = adjustedBlockDistance($monsterPos, $_);
 			if (!defined $largestDist || $dist > $largestDist) {
 				$largestDist = $dist;
 				$bestBlock = $_;
