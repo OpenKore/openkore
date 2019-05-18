@@ -348,7 +348,7 @@ sub adjustedBlockDistance {
 	my $xDistance = abs($pos1->{x} - $pos2->{x});
 	my $yDistance = abs($pos1->{y} - $pos2->{y});
 	
-	my $dist = $xDistance + $yDistance - (0.5858 * min($xDistance, $yDistance));
+	my $dist = $xDistance + $yDistance - ((2-sqrt(2)) * min($xDistance, $yDistance));
 	
 	return $dist;
 }
