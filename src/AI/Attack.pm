@@ -395,16 +395,26 @@ sub main {
 		}
 
 	} elsif (
+		# We are a ranged attacker without LOS
 		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 2
+		# Every Walkable cell is also a Snipable cell, so we check for both
+		# FIXME: Should make a CheckLineWalkableOrSnipable function
 		&& (($config{attackCanSnipe} && !checkLineSnipable($realMyPos, $realMonsterPos) && !checkLineWalkable($realMyPos, $realMonsterPos, 1))
 		|| (!$config{attackCanSnipe} && $realMonsterDist <= $args->{attackMethod}{maxDistance} && !checkLineWalkable($realMyPos, $realMonsterPos, 1)))
 	) {
-		# We are a ranged attacker without LOS
+		
+		my $min_dist = 0;
+		if ($config{runFromTarget}) {
+			$min_dist = $config{runFromTarget_dist};
+		}
+		
 		# Calculate squares around monster within shooting range, but not
 		# closer than runFromTarget_dist
-		my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
-					  $args->{attackMethod}{distance},
-								  $config{runFromTarget} ? $config{runFromTarget_dist} : 0);
+		my @stand = calcRectArea2(
+			$realMonsterPos->{x}, $realMonsterPos->{y},
+			$args->{attackMethod}{distance},
+			$min_dist
+		);
 
 		my ($master, $masterPos);
 		if ($config{follow}) {
@@ -424,13 +434,15 @@ sub main {
 			# Is this spot acceptable?
 			# 1. It must have LOS to the target ($realMonsterPos).
 			# 2. It must be within $config{followDistanceMax} of $masterPos, if we have a master.
-			# 3. It must have at max $config{attackAdjustLOSMaxRouteDistance} of route distance to it from our current position.
+			# 3. It must be within $args->{attackMethod}{maxDistance} of target.
+			# 4. It must have at max $config{attackAdjustLOSMaxRouteDistance} of route distance to it from our current position.
+			# 5. The route should not exceed at any point $config{attackAdjustLOSMaxRouteTargetDistance} distance from the target.
+			# 5. The route should not get any closer to target than $config{runFromTarget_dist}.
 			if (
-			    (($config{attackCanSnipe} && (checkLineSnipable($spot, $realMonsterPos) || checkLineWalkable($spot, $realMonsterPos, 1)))
-				#|| (!$config{attackCanSnipe} && checkLineWalkable($spot, $realMonsterPos)))
-				|| (!$config{attackCanSnipe} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && checkLineWalkable($spot, $realMonsterPos, 1)))
-				&& $field->isWalkable($spot->{x}, $spot->{y})
+				$field->isWalkable($spot->{x}, $spot->{y})
 				&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
+			    &&    (($config{attackCanSnipe} && (checkLineSnipable($spot, $realMonsterPos) || checkLineWalkable($spot, $realMonsterPos, 1)))
+				   || (!$config{attackCanSnipe} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && checkLineWalkable($spot, $realMonsterPos, 1)))
 				&& (!$master || blockDistance($spot, $masterPos) <= $config{followDistanceMax})
 			) {
 				my $solution = [];
@@ -442,8 +454,11 @@ sub main {
 				
 				next unless ($dist > 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
 				
+				# FIXME: This should be done with new args in the actual PathFinding algorithm
 				foreach my $step (@{$solution}) {
-					next SPOT if (blockDistance($step, $realMonsterPos) > 14);
+					my $target_dist = blockDistance($step, $realMonsterPos);
+					next SPOT if ($target_dist > $config{attackAdjustLOSMaxRouteTargetDistance});
+					next SPOT if ($target_dist < $min_dist);
 				}
 				
 				if (!defined($best_dist) || $dist < $best_dist) {
@@ -459,6 +474,7 @@ sub main {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
 			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);
 		} else {
+			# FIXME: Should blacklist this target so we dont keep re-trying to attack it
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			$target->{attack_failedLOS} = time;
 			AI::dequeue;

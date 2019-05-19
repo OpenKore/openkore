@@ -78,6 +78,7 @@ attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 0
 attackAdjustLOSMaxRouteDistance 10
+attackAdjustLOSMaxRouteTargetDistance 12
 attackLooters 0
 attackChangeTarget 1
 aggressiveAntiKS 0
@@ -366,6 +367,7 @@ mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 0
 mercenary_attackAdjustLOSMaxRouteDistance 10
+mercenary_attackAdjustLOSMaxRouteTargetDistance 12
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
 
@@ -399,7 +401,8 @@ homunculus_attackMaxDistance 2.5
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 0
-mercenary_attackAdjustLOSMaxRouteDistance 10
+homunculus_attackAdjustLOSMaxRouteDistance 10
+homunculus_attackAdjustLOSMaxRouteTargetDistance 12
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 
