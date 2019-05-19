@@ -210,23 +210,36 @@ sub isOffMap {
 
 sub getCellInfo {
 	my ($self, $x, $y) = @_;
+	
 	if ($self->isOffMap($x, $y)) {
 		message "Cell $x $y is off the map.\n";
 		return;
 	}
+	
 	if ($self->isWalkable($x, $y)) {
 		message "Cell $x $y is walkable.\n";
 		my $weight = $self->getBlockWeight($x, $y);
 		message "Cell $x $y has weight $weight.\n";
+	} else {
+		message "Cell $x $y is not walkable.\n";
 	}
+	
 	if ($self->isSnipable($x, $y)) {
 		message "Cell $x $y is snipable.\n";
+	} else {
+		message "Cell $x $y is not snipable.\n";
 	}
+	
 	if ($self->isWater($x, $y)) {
 		message "Cell $x $y is water.\n";
+	} else {
+		message "Cell $x $y is not water.\n";
 	}
+	
 	if ($self->isCliff($x, $y)) {
 		message "Cell $x $y is a Cliff.\n";
+	} else {
+		message "Cell $x $y is not a Cliff.\n";
 	}
 }
 
