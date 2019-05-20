@@ -814,7 +814,7 @@ sub findTarget {
 	my ($self, $actorList) = @_;
 	if ($self->{nameID}) {
 		my ($actor) = grep { $self->{nameID} eq $_->{nameID} } @{$actorList->getItems};
-		if ($actor && $actor->{statuses}->{EFFECTSTATE_BURROW}) {
+		if ($actor && $actor->{statuses}->{EFFECTSTATE_BURROW} && $self->{type} ne 'autotalk') {
 			$self->setError(NPC_NOT_FOUND, T("Talk with a hidden NPC prevented."));
 			return;
 		}
