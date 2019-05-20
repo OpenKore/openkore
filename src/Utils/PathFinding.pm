@@ -76,6 +76,10 @@ sub new {
 # `l
 # - timeout: the number of milliseconds to run each step for, defaults to 1500
 # - avoidWalls: of walls should be avoided during pathing, defaults to 1
+# - min_x: limits the map in a certain minimum x coordinate, defaults to 0
+# - max_x: limits the map in a certain maximum x coordinate, defaults to width-1
+# - min_y: limits the map in a certain minimum y coordinate, defaults to 0
+# - max_y: limits the map in a certain maximum y coordinate, defaults to height-1
 # `l`
 sub reset {
 	my $class = shift;
@@ -83,7 +87,7 @@ sub reset {
 
 	# Check arguments
 	croak "Required arguments missing or wrong, specify correct 'field' or 'weight_map' and 'width' and 'height'\n"
-		unless ($args{field} && UNIVERSAL::isa($args{field}, 'Field')) || ($args{weight_map} && $args{width} && $args{height});
+	unless ($args{field} && UNIVERSAL::isa($args{field}, 'Field')) || ($args{weight_map} && $args{width} && $args{height});
 	croak "Required argument 'start' missing\n" unless $args{start};
 	croak "Required argument 'dest' missing\n" unless $args{dest};
 
@@ -103,6 +107,10 @@ sub reset {
 		$args{height} = $args{field}{height} unless (defined $args{height});
 		$args{timeout} = 1500 unless (defined $args{timeout});
 		$args{avoidWalls} = 1 unless (defined $args{avoidWalls});
+		$args{min_x} = 0 unless (defined $args{min_x});
+		$args{max_x} = ($args{width}-1) unless (defined $args{max_x});
+		$args{min_y} = 0 unless (defined $args{min_y});
+		$args{max_y} = ($args{height}-1) unless (defined $args{max_y});
 	}
 
 	return $class->_reset(
@@ -114,7 +122,11 @@ sub reset {
 		$args{start}{y},
 		$args{dest}{x}, 
 		$args{dest}{y},
-		$args{timeout}
+		$args{timeout},
+		$args{min_x},
+		$args{max_x},
+		$args{min_y},
+		$args{max_y}
 	);
 }
 

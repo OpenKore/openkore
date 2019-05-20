@@ -393,6 +393,12 @@ sub main {
 			message T("Teleport due to dropping attack target\n"), "teleport";
 			useTeleport(1);
 		}
+		
+	} elsif ($realMonsterDist > 14) {
+		# Drop target if it's more than 14 cells away (mob is already out of the screen but was not removed from monsterList)
+		message T("Dropping target - It is too far away\n"), "ai_attack";
+		$char->sendMove(@{$realMyPos}{qw(x y)});
+		AI::dequeue;
 
 	} elsif (
 		# We are a ranged attacker without LOS
@@ -450,16 +456,13 @@ sub main {
 					field => $field,
 					start => $realMyPos,
 					dest => $spot,
+					min_x => ($realMonsterPos->{x} - $config{attackAdjustLOSMaxRouteTargetDistance}),
+					max_x => ($realMonsterPos->{x} + $config{attackAdjustLOSMaxRouteTargetDistance}),
+					min_y => ($realMonsterPos->{y} - $config{attackAdjustLOSMaxRouteTargetDistance}),
+					max_y => ($realMonsterPos->{y} + $config{attackAdjustLOSMaxRouteTargetDistance}),
 				)->run($solution);
 				
 				next unless ($dist > 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
-				
-				# FIXME: This should be done with new args in the actual PathFinding algorithm
-				foreach my $step (@{$solution}) {
-					my $target_dist = blockDistance($step, $realMonsterPos);
-					next SPOT if ($target_dist > $config{attackAdjustLOSMaxRouteTargetDistance});
-					next SPOT if ($target_dist < $min_dist);
-				}
 				
 				if (!defined($best_dist) || $dist < $best_dist) {
 					$best_dist = $dist;
@@ -469,7 +472,7 @@ sub main {
 		}
 
 		# Move to the closest spot
-		my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
+		my $msg = "No LOS from $char ($realMyPos->{x}, $realMyPos->{y}) to target $target ($realMonsterPos->{x}, $realMonsterPos->{y}) (distance: $realMonsterDist)";
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
 			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);

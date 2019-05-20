@@ -302,7 +302,7 @@ CalcPath_pathStep (CalcPath_session *session)
 			neighbor_x = currentNode->x + i_x[i];
 			neighbor_y = currentNode->y + i_y[i];
 
-			if (neighbor_x >= session->width || neighbor_y >= session->height || neighbor_x < 0 || neighbor_y < 0) {
+			if (neighbor_x > session->max_x || neighbor_y > session->max_y || neighbor_x < session->min_x || neighbor_y < session->min_y) {
 				continue;
 			}
 

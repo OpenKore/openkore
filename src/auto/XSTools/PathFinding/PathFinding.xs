@@ -19,7 +19,7 @@ PathFinding_create()
 
 
 void
-PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, starty, destx, desty, time_max)
+PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, starty, destx, desty, time_max, min_x, max_x, min_y, max_y)
 		PathFinding session
 		SV *weight_map
 		SV * avoidWalls
@@ -30,6 +30,10 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		SV * destx
 		SV * desty
 		SV * time_max
+		SV * min_x
+		SV * max_x
+		SV * min_y
+		SV * max_y
 	
 	PREINIT:
 		char *weight_map_data = NULL;
@@ -100,6 +104,26 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 			XSRETURN_NO;
 		}
 		
+		if (SvROK(min_x) || SvTYPE(min_x) >= SVt_PVAV || !SvOK(min_x)) {
+			printf("[pathfinding reset error] bad min_x argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(max_x) || SvTYPE(max_x) >= SVt_PVAV || !SvOK(max_x)) {
+			printf("[pathfinding reset error] bad max_x argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(min_y) || SvTYPE(min_y) >= SVt_PVAV || !SvOK(min_y)) {
+			printf("[pathfinding reset error] bad min_y argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(max_y) || SvTYPE(max_y) >= SVt_PVAV || !SvOK(max_y)) {
+			printf("[pathfinding reset error] bad max_y argument\n");
+			XSRETURN_NO;
+		}
+		
 		/* Get the weight_map data */
 		weight_map_data = (char *) SvPV_nolen (SvRV (weight_map));
 		session->map_base_weight = weight_map_data;
@@ -111,6 +135,15 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		session->startY = (int) SvUV (starty);
 		session->endX = (int) SvUV (destx);
 		session->endY = (int) SvUV (desty);
+		session->min_x = (int) SvUV (min_x);
+		session->max_x = (int) SvUV (max_x);
+		session->min_y = (int) SvUV (min_y);
+		session->max_y = (int) SvUV (max_y);
+	
+		if (session->max_x >= session->width || session->max_y >= session->height || session->min_x < 0 || session->min_y < 0) {
+			//printf("[pathfinding reset error] Minimum or maximum coordinates are out of the map.\n");
+			XSRETURN_NO;
+		}
 	
 		if (session->startX >= session->width || session->startY >= session->height || session->startX < 0 || session->startY < 0) {
 			//printf("[pathfinding reset error] Start coordinate is out of the map.\n");
@@ -129,6 +162,11 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		
 		if (session->map_base_weight[((session->endY * session->width) + session->endX)] == -1) {
 			//printf("[pathfinding reset error] End coordinate is not a walkable cell.\n");
+			XSRETURN_NO;
+		}
+	
+		if (session->startX > session->max_x || session->startY > session->max_y || session->startX < session->min_x || session->startY < session->min_y) {
+			//printf("[pathfinding reset error] Start coordinate is out of the minimum and maximum coordinates.\n");
 			XSRETURN_NO;
 		}
 		
