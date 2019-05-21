@@ -21671,30 +21671,29 @@ Equipa em: ^777777Equipamento para Cabeça^000000
 Peso ^7777771^000000
 #
 4601#
-^0000ffDano físico +15%.^000000
-^0000ffDano mágico +15%.^000000
-^0000ffDrena 666 de HP e 66 de SP do usuário a cada 4 segundos.^000000
+^0000ffDano físico e mágico +15%.^000000
+A cada 4 segundos:
+^0000ffDrena 666 de HP e 66 de SP do usuário.^000000
 Ao desequipar:
-^0000ffDrena 6.666 de HP e 666 de SP.^000000
+^0000ffDrena 6.666 de HP e 666 de SP do usuário.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4602#
-^0000ffDano físico +20%.^000000
-^0000ffDano mágico +20%.^000000
+^0000ffDano físico e mágico +20%.^000000
 A cada 6 segundos:
 ^0000ffDrena 666 de HP e 66 de SP do usuário.^000000
 Ao desequipar:
-^0000ffDrena 6.666 de HP e 666 de SP.^000000
-Tipo :  ^777777Carta^000000
+^0000ffDrena 6.666 de HP e 666 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4603#
 ^0000ffATQ +20.^000000
 Ao realizar ataques físicos:
-^0000ffAlta chance de autoconjurar [Espírito dos Amaldiçoados] nv. 1, [Olhar da Medusa] nv. 1 ou [Sussurro de Morfeu] nv. 1.^000000
+^0000ff5% de chance de autoconjurar [Espírito dos Amaldiçoados], [Olhar da Medusa] ou [Sussurro de Morfeu] nv. 1.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
@@ -21702,8 +21701,8 @@ Peso: ^7777771^000000
 4604#
 ^0000ffATQ +30.^000000
 Ao realizar ataques físicos:
-^0000ff2% de chance de autoconjurar [Espírito dos Amaldiçoados] nv. 1, [Olhar da Medusa] nv. 1 ou [Sussurro de Morfeu] nv. 1.^000000
-Tipo :  ^777777Carta^000000
+^0000ff5% de chance de autoconjurar [Espírito dos Amaldiçoados], [Olhar da Medusa] ou [Sussurro de Morfeu] nv. 2.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
@@ -54735,6 +54734,7 @@ Classes : ^777777Todas^000000
 #
 19811#
 Dizem que essa bebida gourmet foi “batizada”, mas ninguém sabe ao certo o que esse termo significa. Com um sabor estranhamente amargo, nem parece guaraná... Aliás, será que é guaraná mesmo?
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode se transferido para o armazém^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Nível Necessário: ^7777771^000000
@@ -55430,6 +55430,15 @@ Este item deixa todos que o usam com um visual mais másculo e elegante. Normalm
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Baixo ^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+20016#
+Uma suculenta lagosta, acompanhada de folhas bem temperadas e um drink maravilhoso. Um banquetão desses é pra você devorar? Não! É pra colocar na cabeça e dar água na boca de todo mundo. Mas cuidado, talvez você acabe se tornando um alvo mais interessante pros monstros...
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
@@ -62947,6 +62956,15 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31386#
+Assim como planetas orbitam em torno do Sol, esses artefatos vão flutuar ao seu redor. Quer prova maior que essa de que você é o centro das atenções, da vida, do universo e tudo mais?
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31387#
 É o Jakk com um corpo pouco desenvolvido.
 Ele não consegue se mover, mas isso não impede que ele te acompanhe nas suas aventuras.
@@ -63193,6 +63211,14 @@ Classes: ^777777Todas^000000
 De primeira ele parece esquisito e gelatinoso demais para um cachecol, mas não se deixe levar por primeiras impressões. Com a textura de um Poring por fora, ele se encaixa perfeitamente no seu pescoço, e por dentro é forrado de uma lã bem quentinha e aconchegante. É vantagem dupla!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31491#
+Uma bela felina amarelinha que a seguirá independentemente de onde você for. Mas seu nome já entrega sua fama – essa gatinha vai estar atrás de comida o tempo inteiro!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000

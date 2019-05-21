@@ -6523,6 +6523,7 @@
 20011#Elmo Primarino#
 20012#Chapéu Deciduai#
 20015#Barba Charmosa#
+20016#Chapéu de Lagosta#
 20023#Boina Militar Vermelha#
 20027#Chapéu da Mimosa Rosa#
 20032#Turbante do Oráculo#
@@ -7142,6 +7143,7 @@
 31381#Gola Diabólica#
 31382#Touca de Patinhas#
 31383#Peruca Azul de Waifu#
+31386#Orbes Místicos#
 31387#Jakk Aventureiro#
 31388#Chapéu Dupliponta#
 31390#Chapéu da Nevasca#
@@ -7171,6 +7173,7 @@
 31487#Tapa-Olho Pirata#
 31488#Balão de MVP#
 31490#Cachecol de Poring#
+31491#Gata Lasanhinha#
 31493#Peruca Branca de Waifu#
 31510#Peruca Curta de Gatinho#
 31511#Peruca Longa de Gatinho#
