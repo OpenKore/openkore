@@ -45811,7 +45811,7 @@ Weight: ^8080800^000000
 Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 100%.
 #
 9518#
-Randomly gives 1 of the following items when opened:
+Randomly gives one of the following items when opened:
 
 Costume Flying Drone
 Costume Open Air Headset
@@ -45944,6 +45944,39 @@ Costume Fluffy Semi Long
 Costume Desert Wolf Baby
 Costume Alchemist Bag
 Costume Poring On Shoulder
+Weight: ^8080800^000000
+#
+9620#
+Redeem ticket by visiting the Yggdrasil Tree Explorer in the second floor of the Eden Group (moc_para_up.gat 17, 176)
+When redeemed randomly provides of the the following
+Armor of White Thread
+Icefall Dress
+Black Feather
+Anemos Shield
+Survivor's Orb
+Survival Circlet
+Cloak of Survival
+Temporal Manteau
+Prontera Militia Glove
+Pure White Marching Hat
+Shepherd Cloth
+Gray Wing Boots
+Dragon Cloth
+Pilgrim Shoes
+Party Hard Pack
+Blacksmith Blessing x 8
+Battle Manual X3 x 6
+Bloody Dead Branch x 5
+
+More Details can be found by visiting the NPC in person.
+Class: ^808080Scroll^000000
+Weight: ^8080800^000000
+#
+9621#
+^FF0000^000000
+Class: ^808080^000000
+Position: ^808080^000000
+Compounds On: ^808080^000000
 Weight: ^8080800^000000
 #
 10001#
@@ -54978,13 +55011,25 @@ Increases long-ranged damage on targets by 15%.
 Shuriken with Water Property. Can cause snowstorms. Use with caution.
 Class: ^808080Huuma Shuriken^000000
 Attack: ^808080250^000000
+Magic Attack: ^80808050^000000
+Property: ^808080Water^000000
 Weight: ^808080150^000000
 Weapon Level: ^8080804^000000
 Requires Level: ^808080120^000000
-Usable By: ^808080Ninja Jobs^000000
-Atk + 30  per 3 upgrade levels of the item
-Increases damage with ranged attacks by 3% per upgrade level of the item
-Matk + 50
+Usable By: ^808080Kagerou/Oboro^000000
+Atk + 30 per 3 upgrade levels of the item.
+Increases long-ranged damage on targets by 3% per upgrade level of the item.
+
+^800080Set Bonus^000000
+^008080Illusion Huuma Fluttering Snow [2]^000000
+^008080Illusion Apple of Archer [1]^000000
+Reduces the variable casting time of skills by 15%.
+If the combined upgrade levels of ^008080Illusion Huuma Fluttering Snow [2]^000000 and ^008080Illusion Apple of Archer [1]^000000 are +7 or higher,
+Increases the damage of ^0000FFSwirling Petal^000000 by 25%.
+If the combined upgrade levels are +18 or higher,
+Increases the damage by an additional 25%.
+If the combined upgrade levels are +22 or higher,
+Reduces the cooldown of ^0000FFSwirling Petal^000000 by 1 second.
 #
 13400#
 A practical sword
@@ -62707,6 +62752,56 @@ Indestructible in battle.
 If upgrade level is +9 or higher,
 Additional Atk + 30
 Additional Perfect Hit + 10
+#
+15419#
+Class: ^808080Armor^000000
+Defense: ^80808060^000000
+Weight: ^80808080^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Matk + 10
+Bypass 10% of hard magic defense of targets when performing a Magical attack.
+
+If upgrade level is +7 or higher
+Matk + 20
+Bypass an additional 20% of hard magic defense of targets when performing a Magical attack.
+
+If upgrade level is +8 or higher
+Matk + 20
+Bypass an additional 20% of hard magic defense of targets when performing a Magical attack.
+This item is indestructible in battle.
+
+If upgrade level is +9 or higher
+Matk + 20
+Bypass an additional 30% of hard magic defense of targets when performing a Magical attack.
+
+#
+15420#
+A blue dress made from icy rivers. It is said it contains powers to create ice that cannot be melted for eternity.
+Class: ^808080Armor^000000
+Defense: ^808080120^000000
+Property: ^808080Water^000000
+Weight: ^80808040^000000
+Requires Level: ^80808090^000000
+Usable By: ^808080All Jobs^000000
+Prevents the user from being knocked back.
+This item is indestructible in battle.
+
+If upgrade level is +5 or higher,
+Increases physical and magical damage on Formless and Demi-Human race targets by 10%.
+Increases physical and magical damage on Doram Player and Human Player race targets by 10%.
+Increases physical and magical damage on Fire and Water property targets by 10%.
+
+If upgrade level is +7 or higher,
+Increases physical and magical damage on Formless and Demi-Human race targets by an additional 15%.
+Increases physical and magical damage on Doram Player and Human Player race targets by an additional 15%.
+Increases physical and magical damage on Fire and Water property targets by an additional 15%.
+
+If upgrade level is +9 or higher,
+Increases physical and magical damage on Formless and Demi-Human race targets by an additional 15%.
+Increases physical and magical damage on Doram Player and Human Player race targets by an additional 15%.
+Increases physical and magical damage on Fire and Water property targets by an additional 15%.
+^800080Disabled during WoE TE^000000
 #
 16000#
 This mace's shape is inspired by a Snake, which symbolizes the fountain of knowledge.
@@ -76161,9 +76256,9 @@ Position: ^808080Upper^000000
 Defense: ^80808015^000000
 Weight: ^80808040^000000
 Requires Level: ^808080120^000000
-Usable By: ^808080Novice Jobs, Swordman, Merchant, Thief, Knight Jobs, Blacksmith Jobs, Assassin Jobs, Crusader, Alchemist, Rogue, Paladin, Biochemist, Stalker^000000
+Usable By: ^808080Super Novice, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Rune Knight, Mechanic, Guillotine Cross^000000
 Atk + 1%
-Atk + 2 For every upgrade level of ^008080Illusion Cap^000000,
+Atk + 2 per upgrade level of the item.
 #
 19246#
 A necklace designed specifically for Royal Guards. It stands for the act of protecting others.
@@ -76912,24 +77007,39 @@ Required Level : ^77777710^000000
 Jobs : ^777777All^000000
 #
 19409#
-A Box that contains 1 Sheep Hat
-Description:
-A hat that looks like
-a sheep's head that is
-so adorable, an enemy
-might change his mind
-about attacking. Reflects 5% physical damage.
-Impossible to Upgrade
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000
-Defense: ^7777773^000000
-Location: ^777777Upper^000000
-Weight : ^77777715^000000
-Required Level : ^77777750^000000
-Jobs: ^777777Acolyte Class^000000
-Box Weight : ^7777771^000000
+A winged hat that is said to have been used by an executive of a certain organization.
+Brings out high performance on top secret missions.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^80808018^000000
+Weight: ^808080100^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Dex + 10
+Mdef + 15
+
+Restores 50 SP to the user when a monster is killed.
+Increases the damage of ^0000FFFeint Bomb^000000 by 10%.
+
+If ^0000FFInvisibility^000000 is level 5,
+Increases physical damage on boss monsters by 50%.
+
+If ^0000FFMaelstrom^000000 is level 3,
+Enables ^0000FFLevel 7 Flying Kick^000000.
+
+If ^0000FFReproduce^000000 is level 10,
+Reduces the SP cost of skills by 30%.
+
+If upgrade level is +7 or higher,
+Hit + 30
+Increases the damage of ^0000FFFeint Bomb^000000 by an additional 15%.
+
+If upgrade level is +9 or higher,
+Additional Hit + 20
+Increases the damage of ^0000FFFeint Bomb^000000 by an additional 25%.
+
+If upgrade level is +10 or higher,
+Bypass 100% of hard defense of all race targets when performing a physical attack.
 #
 19410#
 A Box that contains 1 Charming Ribbon
@@ -89945,6 +90055,17 @@ If compounded garment upgrade level is +9 or higher,
 Additional Max HP + 1000
 Additonal Max SP + 50
 #
+27110#
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Reduces damage taken from long-ranged attacks by 20%.
+
+^800080Set Bonus^000000
+^008080Angry Gazeti Card^000000
+^008080Angry Snowier Card^000000
+Reduces damage taken from small size enemies by 20%.
+#
 27111#
 Class: ^808080Card^000000
 Compounds On: ^808080Accessory^000000
@@ -89975,6 +90096,18 @@ Def + 5 per upgrade level of the compounded item.
 ^008080Angry Ice Titan Card^000000
 ^008080Angry Snowier Card^000000
 Reduces damage taken from Medium size enemies by 20%.
+#
+27113#
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Increases the damage of Water property magical attacks on targets by 20%.
+Increases the damage of Water property magical attacks on targets by an additional 3% per upgrade level of the compounded armor.
+
+^800080Set Bonus^000000
+^008080Awakened Ktullanux Card^000000
+^008080Saphien's Armor of Ocean [1]^000000
+Adds a 5% chance of casting ^0000FFLevel 5 Waterball^000000 on the attacker when receiving a short-ranged attack.
 #
 27147#
 Class: ^808080Card^000000
@@ -92359,6 +92492,18 @@ Increases the damage of ^0000FFJudex^000000 by 10% per upgrade level of the weap
 Additional Hit + 5 per upgrade level of the weapon.
 Additional Aspd + 4% per upgrade level of the weapon.
 #
+28561#
+A ring made by the adventurers who fought to bring down Morroc. Some say they used the skin of Morroc.
+Class: ^808080Accessory^000000
+Weight: ^80808010^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Aspd + 10%
+If the user's base Str is 120 or higher,
+Atk + 50
+Max HP + 5%
+Max SP + 5%
+#
 28564#
 Crystallized teardrops of a Valkyrie who mourned for the death of a comrade. The drop possesses divine powers.
 Class: ^808080Accessory^000000
@@ -92974,7 +93119,8 @@ Usable By: ^808080Royal Guard^000000
 Int + 2
 Vit + 3
 Mdef + 3
-Increases the skill damage bonus of ^0000FFEarth Drive^000000 by 7% for every upgrade level of ^008080Illusion Sacred Mission^000000,
+Increases the damage of ^0000FFEarth Drive^000000 by 7% per upgrade level of the item.
+This item is indestructible in battle.
 #
 28929#
 A shield that fills the user with so much joy.
@@ -96295,4 +96441,31 @@ Reduces the cooldown of ^0000FF16th Night^000000 by 25 seconds.
 
 If ^0000FFSoul Cutter^000000 is level 5,
 Reduces the variable casting time of ^0000FFSwirling Petal^000000 by 50%.
+#
+32263#
+A ring worn by the Holy Knight who served the Rune Midgarts Kingdom.
+Class: ^808080Accessory^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Str + 5
+Int + 5
+Dex + 5
+Atk + 5%
+
+If ^0000FFEarth Drive^000000 is level 5,
+Reduces the global delay of skills by 30%.
+
+If ^0000FFInspiration^000000 is level 5,
+Reduces the cooldown of ^0000FFEarth Drive^000000 by 1.5 seconds.
+
+If ^0000FFSacrifice^000000 is level 5,
+Additional Str +5
+Additional Int +5
+Additional Dex +5
+Additional Atk + 100
+
+If ^0000FFPinpoint Attack^000000 is level 5,
+Reduces the variable casting time of ^0000FFEarth Drive^000000 by 0.5 seconds.
+Reduces the SP cost of ^0000FFEarth Drive^000000 by 25.
 #

@@ -4530,10 +4530,10 @@
 7353#Transparent_Plate_(Red)#
 7354#Transparent_Plate_(Orange)#
 7355#Transparent_Plate_(Blue)#
-7356#Crest_Piece_(Purple)#
+7356#Crest_Piece_(Blue)#
 7357#Crest_Piece_(Green)#
 7358#Crest_Piece_(Orange)#
-7359#Crest_Piece_(Blue)#
+7359#Crest_Piece_(Purple)#
 7360#RO_Festival_Invitation#
 7361#Tattered_Map_1#
 7362#Tattered_Map_2#
@@ -5059,6 +5059,8 @@
 9565#Overseas_Care_Package_XXVII#
 9600#April_2019_Yggdrasil_Ticket#
 9618#2019_May_Costume_Box#
+9620#May_2019_Yggdrasil_Ticket#
+9621##
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
@@ -7056,6 +7058,8 @@
 15384#Ritual_Robe#
 15405#Fafnir_Scale#
 15417#Armor_of_Purple_Thread#
+15419#Armor_of_the_White_Thread#
+15420#Icefall_Dress#
 16000#Erde#
 16001#Red_Square_Bag#
 16003#Carga_Mace#
@@ -8240,7 +8244,7 @@
 19406#Classic_Pecopeco_Hairband_Box#
 19407#Work_Cap#
 19408#Classic_Robo_Eye_Box#
-19409#Classic_Sheep_Hat_Box#
+19409#Black_Feather#
 19410#Classic_Charming_Ribbon_Box#
 19411#Classic_Parade_Hat_Box#
 19412#Classic_Vacation_Hat_Box#
@@ -9417,8 +9421,10 @@
 27103#Restless_Dead_Card#
 27104#Angry_Dracula_Card#
 27105#Bomi_Card#
+27110#Angry_Gazeti_Card#
 27111#Angry_Snowier_Card#
 27112#Angry_Ice_Titan_Card#
+27113#Awakened_Ktullanux_Card#
 27147#Humanoid_Chimera_Card#
 27148#Material_Type_Chimera_Card#
 27149#Heart_Hunter_Card#
@@ -9563,6 +9569,7 @@
 28533#Chemical_Glove#
 28551#Imperial_Glove#
 28560#Yin_Yang_Talisman#
+28561#Ring_of_Hero#
 28564#Valkyrie_Drop#
 28565#Perverse_Demon_Mask_#
 28573#Emerald_Ring#
@@ -10004,3 +10011,4 @@
 32242#Old_Detachments_Ring#
 32258#Ring_of_Jupiter#
 32262#Rasen_Fuma's_Orb#
+32263#Shield_Ring#
