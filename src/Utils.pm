@@ -40,7 +40,7 @@ our @EXPORT = (
 	# Math
 	qw(calcPosFromTime calcPosition calcTime checkMovementDirection countSteps distance
 	intToSignedInt intToSignedShort
-	blockDistance getVector moveAlong moveAlongVector
+	blockDistance adjustedBlockDistance getVector moveAlong moveAlongVector
 	normalize vectorToDegree max min round ceil),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
