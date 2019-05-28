@@ -55496,6 +55496,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
 #
+20037#
+Adote o visual de elite com essa cartola extremamente elegante e despojada, mas viva sabendo que se você está usando esse chapelão, algum Duque Coruja está por aí com seu cocuruto à mostra.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes que utilizam: ^777777Todas^000000
+#
 20044#
 Um colorido conjunto de frutas tropicais, perfeito pra você usar e descobrir o que é que a Baiana tem ou se o Tico-tico está comendo seu fubá.
 Tipo: ^777777Visual ^000000
@@ -62754,6 +62763,78 @@ Classes: ^777777Todas^000000
 #
 31225#
 De 0 a 10, esse acessório é nota 11 na extravagância. Viaje pelos quatro cantos de Rune-Midgard ostentando esse cabelo roxão e chame a atenção de todo mundo!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31226#
+Apliques maravilhosos pertencentes a uma cantora digital de muito sucesso em Amatsu. Seu azul “royal” reflete a sua fama como uma rainha da música.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31227#
+Marias-chiquinhas gigantescas que são muito conhecidas por uma celebridade de Amatsu. O ruivo intenso reluz intensamente sob os holofotes!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31228#
+Um penteado dourado que vai te deixar fabuloso (ou fabulosa) da cabeça aos pés. O ouro representa o primeiro lugar, e é lá que você pertence.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31229#
+Uma popstar de Amatsu ditou a moda e agora todo mundo quer usar esse tom de verde. Não se deixe enganar pelo nome “natureba”; essa aqui é só pra quem tá por dentro!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31230#
+Você queria uma versão mais modesta da Peruca Miku? Sentimos muito! Essa pode até ser uma cor mais discreta, mas você ainda vai chamar a atenção de Odin e o mundo mesmo assim!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31231#
+Hipsters de verdade vão amar essa variação da Peruca Miku. Sabemos que platinar o cabelo é um processo chato e difícil de fazer direito, então aproveite esses apliques!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31232#
+Mostre todo o seu apoio e amor incondicional à Miku com uma peruca de tingimento mais discreto que não abre a mão de toda a excentricidade desse penteado longo e fabuloso.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31233#
+Quer chegar chegando? Ser notado por tudo e todos? Então é esse penteado que você busca! Com um tom “cheguei” desses, essa peruca vai passar muito bem a mensagem de que você chegou pra causar.
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
