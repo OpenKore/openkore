@@ -6530,6 +6530,7 @@
 20033#Coroa de Dewata#
 20034#Familiar de Estimação#
 20035#Rosa Celeste#
+20037#Chapelão do Duque Coruja#
 20044#Chapéu de Carmen Miranda#
 20048#Tiara Elegante#
 20052#Balão de AFK#
@@ -7120,6 +7121,14 @@
 31223#Rabo de Unicórnio Neve#
 31224#Rabo de Unicórnio Bronze#
 31225#Rabo de Unicórnio Lilás#
+31226#Peruca Miku Royal#
+31227#Peruca Miku Ruiva#
+31228#Peruca Miku Dourada#
+31229#Peruca Miku Capim#
+31230#Peruca Miku Petróleo#
+31231#Peruca Miku Platinada#
+31232#Peruca Miku Castanha#
+31233#Peruca Miku Violeta#
 31244#Elmo das Falcoeiras de Rapina#
 31249#Orelhas do Coelho da Lua#
 31251#Boca de Gatinho#
