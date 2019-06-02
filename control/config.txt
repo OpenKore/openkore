@@ -738,6 +738,7 @@ npcWrongStepsMethod 0
 getAuto {
 	minAmount
 	maxAmount
+	batchSize
 	passive
 	disabled 0
 }
