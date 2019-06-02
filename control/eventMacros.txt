@@ -3,10 +3,14 @@ automacro test_slot1 {
 	exclusive 1
 	InMap prontera
 	disabled 0
+	overrideAI 1
 	slot 1
 	call {
-		log This is working in slot 1
-		pause 3
+		log This is working in slot 1 start
+		pause 1
+		do c hey
+		pause 1.5
+		log This is working in slot 1 end
 	}
 }
 
@@ -14,10 +18,14 @@ automacro test_slot2 {
 	exclusive 1
 	InMap prontera
 	disabled 0
+	overrideAI 1
 	slot 2
 	call {
-		log This is working in slot 2
+		log This is working in slot 2 start
+		pause 1.5
+		do c there
 		pause 1
+		log This is working in slot 2 end
 	}
 }
 
@@ -25,9 +33,13 @@ automacro test_slot3 {
 	exclusive 1
 	InMap prontera
 	disabled 0
+	overrideAI 1
 	slot 3
 	call {
-		log This is working in slot 3
+		log This is working in slot 3 start
 		pause 2
+		do c man
+		pause 0.5
+		log This is working in slot 3 end
 	}
 }
