@@ -1497,6 +1497,7 @@ sub processAutoStorage {
 				return;
 			}
 
+			# Repeat until there is no more items to get
 			if (defined($args->{getStart}) && $args->{done} != 1) {
 				Misc::checkValidity("AutoStorage part 3");
 				while (exists $config{"getAuto_$args->{index}"}) {
@@ -1533,7 +1534,26 @@ sub processAutoStorage {
 
 					# Try at most 3 times to get the item
 					if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
-						message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
+						
+						my $batchSize = $config{"getAuto_$args->{index}"."_batchSize"};
+						
+						if ($batchSize && $batchSize < $item{amount_get}) {
+							
+							my $remaining = $item{amount_get} - $batchSize;
+							$item{amount_get} = $batchSize;
+							
+							# Last loop attempted to get batchSize of item and succeeded
+							if ($args->{getAuto_batchSize_remaining} && $args->{getAuto_batchSize_remaining} != $remaining) {
+								$args->{retry} = 0;
+							}
+							
+							$args->{getAuto_batchSize_remaining} = $remaining;
+							
+							message TF("Attempt to get %s (batchSize) x %s from storage, retry: %s, remaining %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}, $args->{getAuto_batchSize_remaining}), "storage", 1;
+						} else {
+							message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
+						}
+						
 						$messageSender->sendStorageGet($storeItem->{ID}, $item{amount_get});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{retry}++;
@@ -1566,6 +1586,7 @@ sub processAutoStorage {
 					# We got the item, or we tried 3 times to get it, but failed.
 					# Increment index and process the next item.
 					$args->{index}++;
+					$args->{getAuto_batchSize_remaining} = 0;
 					$args->{retry} = 0;
 				}
 				Misc::checkValidity("AutoStorage part 4");
