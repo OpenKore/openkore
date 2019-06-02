@@ -1,0 +1,33 @@
+
+automacro test_slot1 {
+	exclusive 1
+	InMap prontera
+	disabled 0
+	slot 1
+	call {
+		log This is working in slot 1
+		pause 3
+	}
+}
+
+automacro test_slot2 {
+	exclusive 1
+	InMap prontera
+	disabled 0
+	slot 2
+	call {
+		log This is working in slot 2
+		pause 1
+	}
+}
+
+automacro test_slot3 {
+	exclusive 1
+	InMap prontera
+	disabled 0
+	slot 3
+	call {
+		log This is working in slot 3
+		pause 2
+	}
+}

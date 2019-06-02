@@ -24,7 +24,7 @@ use eventMacro::Automacro;
 
 # Creates the object
 sub new {
-	my ($class, $name, $repeat, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
+	my ($class, $name, $repeat, $slot, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
 
 	return undef unless ($eventMacro->{Macro_List}->getByName($name));
 	
@@ -55,7 +55,7 @@ sub new {
 	
 	if ($is_submacro) {
 		$self->{submacro} = 1;
-		$eventMacro->{Macro_Runner}->last_subcall_name($self->get_name);
+		$eventMacro->{Macro_Runner}{$slot}->last_subcall_name($self->get_name);
 	} else {
 		$self->{submacro} = 0;
 		$self->last_subcall_name($self->get_name);
@@ -65,6 +65,12 @@ sub new {
 		$self->repeat($repeat);
 	} else {
 		$self->repeat(1);
+	}
+	
+	if (defined $slot && $slot =~ /^\d+$/) {
+		$self->slot($slot);
+	} else {
+		$self->slot(1);
 	}
 	
 	if (defined $interruptible && $interruptible =~ /^[01]$/) {
@@ -162,12 +168,12 @@ sub interruptible {
 sub validate_automacro_checking_to_interruptible {
 	my ($self, $interruptible) = @_;
 	
-	my $checking_status = $eventMacro->get_automacro_checking_status();
+	my $checking_status = $eventMacro->get_automacro_checking_status($self->slot);
 	
 	if (!$self->{submacro}) {
 		$self->last_subcall_interruptible($interruptible);
 	} else {
-		$eventMacro->{Macro_Runner}->last_subcall_interruptible($interruptible);
+		$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_interruptible($interruptible);
 	}
 	
 	if (($checking_status == CHECKING_AUTOMACROS && $interruptible == 1) || ($checking_status == PAUSED_BY_EXCLUSIVE_MACRO && $interruptible == 0)) {
@@ -182,11 +188,11 @@ sub validate_automacro_checking_to_interruptible {
 	
 	if ($interruptible == 0) {
 		debug "[eventMacro] Macro '".$self->{name}."' is now stopping automacro checking..\n", "eventMacro", 2;
-		$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
+		$eventMacro->set_automacro_checking_status($self->slot, PAUSED_BY_EXCLUSIVE_MACRO);
 	
 	} elsif ($interruptible == 1) {
 		debug "[eventMacro] Macro '".$self->{name}."' is now starting automacro checking..\n", "eventMacro", 2;
-		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
+		$eventMacro->set_automacro_checking_status($self->slot, CHECKING_AUTOMACROS);
 	}
 }
 
@@ -221,7 +227,7 @@ sub validate_AI_queue_to_overrideAI {
 	if (!$self->{submacro}) {
 		$self->last_subcall_overrideAI($overrideAI);
 	} else {
-		$eventMacro->{Macro_Runner}->last_subcall_overrideAI($overrideAI);
+		$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_overrideAI($overrideAI);
 	}
 	
 	if (($is_in_AI_queue && $overrideAI == 0) || (!$is_in_AI_queue && $overrideAI == 1)) {
@@ -275,7 +281,7 @@ sub orphan {
 			if (!$self->{submacro}) {
 				$self->last_subcall_orphan($orphan);
 			} else {
-				$eventMacro->{Macro_Runner}->last_subcall_orphan($orphan);
+				$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_orphan($orphan);
 			}
 		}
 	}
@@ -316,6 +322,16 @@ sub repeat {
 	return $self->{repeat};
 }
 
+# Sets/Gets the current running slot
+sub slot {
+	my ($self, $slot) = @_;
+	if (defined $slot) {
+		debug "[eventMacro] Now macro '".$self->{name}."' will run on slot '".$slot."'.\n", "eventMacro", 2;
+		$self->{slot} = $slot;
+	}
+	return $self->{slot};
+}
+
 # Pauses the macro
 sub pause {
 	my ($self) = @_;
@@ -352,13 +368,13 @@ sub clear_subcall {
 		if (!$self->{submacro}) {
 			$self->last_subcall_orphan($self->orphan);
 		} else {
-			$eventMacro->{Macro_Runner}->last_subcall_orphan($self->orphan);
+			$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_orphan($self->orphan);
 		}
 	} else {
 		debug "[eventMacro] No need to change orphan method because it already is compatible with this macro.\n", "eventMacro", 2;
 	}
 	if ($self->{submacro}) {
-		$eventMacro->{Macro_Runner}->last_subcall_name($self->get_name);
+		$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_name($self->get_name);
 	} else {
 		$self->last_subcall_name($self->get_name);
 	}
@@ -369,7 +385,7 @@ sub clear_subcall {
 sub create_subcall {
 	my ($self, $name, $repeat) = @_;
 	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{name}."'.\n", "eventMacro", 2;
-	$self->{subcall} = new eventMacro::Runner($name, $repeat, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
+	$self->{subcall} = new eventMacro::Runner($name, $repeat, $self->slot, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
 }
 
 # destructor
@@ -1622,6 +1638,7 @@ sub perl_sub_command {
 	$self->next_line;
 }
 
+# TODO: add slot change here too
 sub parse_set {
 	my ($self, $parameter, $new_value) = @_;
 	if ($parameter eq 'macro_delay') {
@@ -1723,6 +1740,7 @@ sub parse_release_and_lock {
 	$self->next_line;
 }
 
+# TODO: add a way to call a macro to be run in another slot
 sub parse_call {
 	my ($self, $call_command) = @_;
 	

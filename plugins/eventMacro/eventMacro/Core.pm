@@ -40,9 +40,6 @@ sub new {
 	$self->{Array_Variable_List_Hash} = {};
 	$self->{Hash_Variable_List_Hash} = {};
 
-	#must add a sorting algorithm here later
-	$self->{triggered_prioritized_automacros_index_list} = [];
-
 	$self->{automacro_index_to_queue_index} = {};
 
 	my $parse_result = parseMacroFile($file, 0);
@@ -52,6 +49,8 @@ sub new {
 	}
 
 	$self->create_macro_list($parse_result->{macros});
+	
+	$self->{Automacro_Checking_slots} = {};
 
 	$self->create_automacro_list($parse_result->{automacros});
 	
@@ -61,19 +60,27 @@ sub new {
 	
 	$self->{AI_state_change_Hook_Handle} = Plugins::addHook( 'AI_state_change',  sub { my $state = $_[1]->{new}; $self->adapt_to_AI_state($state); }, undef );
 	
-	$self->{Currently_AI_state_Adapted_Automacros} = undef;
+	$self->{Currently_AI_state_Adapted_Automacros} = {};
 	
 	$self->adapt_to_AI_state(AI::state);
 
-	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
-	$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
-	$self->set_automacro_checking_status();
+	$self->{AI_start_Macros_Running_Hook_Handle} = {};
+	$self->{AI_start_Automacros_Check_Hook_Handle} = {};
+	
+	$self->{Automacros_Checking_Status} = {};
+	
+	foreach my $slot (keys %{$self->{Automacro_Checking_slots}}) {
+	
+		#must add a sorting algorithm here later
+		$self->{triggered_prioritized_automacros_index_list}{$slot} = [];
+		
+		$self->{number_of_triggered_automacros}{$slot} = 0;
+		$self->set_automacro_checking_status($slot);
+	}
 
 	$self->create_callbacks();
 
-	$self->{Macro_Runner} = undef;
-
-	$self->{number_of_triggered_automacros} = 0;
+	$self->{Macro_Runner} = {};
 
 	$self->set_arrays_size_to_zero();
 	$self->set_hashes_size_to_zero();
@@ -84,21 +91,23 @@ sub new {
 sub adapt_to_AI_state {
 	my ($self, $state) = @_;
 	
-	$self->{Currently_AI_state_Adapted_Automacros} = undef;
-	
-	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
-		my $automacro_index = $automacro->get_index;
+	foreach my $slot (keys %{$self->{Automacro_Checking_slots}}) {
+		$self->{Currently_AI_state_Adapted_Automacros}{$slot} = undef;
 		
-		if ($self->{automacros_index_to_AI_check_state}{$automacro_index}{$state} == 1) {
+		foreach my $automacro_index (@{$self->{Automacro_Checking_slots}{$slot}}) {
+			my $automacro = $self->{Automacro_List}->get($automacro_index);
 			
-			$self->{Currently_AI_state_Adapted_Automacros}{$automacro_index} = 1;
-			if (!$automacro->running_status && $automacro->can_be_added_to_queue) {
-				$self->add_to_triggered_prioritized_automacros_index_list($automacro);
-			}
-			
-		} else {
-			if ($automacro->running_status) {
-				$self->remove_from_triggered_prioritized_automacros_index_list($automacro);
+			if ($self->{automacros_index_to_AI_check_state}{$automacro_index}{$state} == 1) {
+				
+				$self->{Currently_AI_state_Adapted_Automacros}{$slot}{$automacro_index} = 1;
+				if (!$automacro->running_status && $automacro->can_be_added_to_queue) {
+					$self->add_to_triggered_prioritized_automacros_index_list($automacro, $slot);
+				}
+				
+			} else {
+				if ($automacro->running_status) {
+					$self->remove_from_triggered_prioritized_automacros_index_list($automacro, $slot);
+				}
 			}
 		}
 	}
@@ -106,9 +115,17 @@ sub adapt_to_AI_state {
 
 sub unload {
 	my ($self) = @_;
-	$self->clear_queue();
+	
+	foreach my $slot (keys %{$self->{Macro_Runner}}) {
+		$self->clear_queue($slot);
+	}
+	
 	$self->clean_hooks();
-	Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}) if ($self->{AI_start_Automacros_Check_Hook_Handle});
+	
+	foreach my $slot (keys %{$self->{Automacro_Checking_slots}}) {
+		Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}{$slot});
+	}
+	
 	Plugins::delHook($self->{AI_state_change_Hook_Handle}) if ($self->{AI_state_change_Hook_Handle});
 }
 
@@ -118,46 +135,46 @@ sub clean_hooks {
 }
 
 sub set_automacro_checking_status {
-	my ($self, $status) = @_;
+	my ($self, $slot, $status) = @_;
 	
-	if (!defined $self->{Automacros_Checking_Status}) {
-		debug "[eventMacro] Initializing automacro checking by default.\n", "eventMacro", 2;
-		$self->{Automacros_Checking_Status} = CHECKING_AUTOMACROS;
-		$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start', sub { my $state = $_[1]->{state}; $self->AI_start_checker($state); }, undef );
+	if (!exists $self->{Automacros_Checking_Status}{$slot}) {
+		debug "[eventMacro] Initializing automacro checking by default in slot ".$slot.".\n", "eventMacro", 2;
+		$self->{Automacros_Checking_Status}{$slot} = CHECKING_AUTOMACROS;
+		$self->{AI_start_Automacros_Check_Hook_Handle}{$slot} = Plugins::addHook( 'AI_start', sub { my $state = $_[1]->{state}; $self->AI_start_checker($state, $slot); }, undef );
 		return;
-	} elsif ($self->{Automacros_Checking_Status} == $status) {
-		debug "[eventMacro] automacro checking status is already $status.\n", "eventMacro", 2;
+	} elsif ($self->{Automacros_Checking_Status}{$slot} == $status) {
+		debug "[eventMacro] automacro checking status is already $status in slot ".$slot.".\n", "eventMacro", 2;
 	} else {
-		debug "[eventMacro] Changing automacro checking status from '".$self->{Automacros_Checking_Status}."' to '".$status."'.\n", "eventMacro", 2;
+		debug "[eventMacro] Changing automacro checking status from '".$self->{Automacros_Checking_Status}{$slot}."' to '".$status."' in slot ".$slot.".\n", "eventMacro", 2;
 		if (
-		  ($self->{Automacros_Checking_Status} == CHECKING_AUTOMACROS || $self->{Automacros_Checking_Status} == CHECKING_FORCED_BY_USER) &&
+		  ($self->{Automacros_Checking_Status}{$slot} == CHECKING_AUTOMACROS || $self->{Automacros_Checking_Status}{$slot} == CHECKING_FORCED_BY_USER) &&
 		  ($status == PAUSED_BY_EXCLUSIVE_MACRO || $status == PAUSE_FORCED_BY_USER)
 		) {
-			if (defined $self->{AI_start_Automacros_Check_Hook_Handle}) {
-				debug "[eventMacro] Deleting AI_start hook.\n", "eventMacro", 2;
-				Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle});
-				$self->{AI_start_Automacros_Check_Hook_Handle} = undef;
+			if (exists $self->{AI_start_Automacros_Check_Hook_Handle}{$slot}) {
+				debug "[eventMacro] Deleting AI_start hook in slot ".$slot.".\n", "eventMacro", 2;
+				Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}{$slot});
+				delete $self->{AI_start_Automacros_Check_Hook_Handle}{$slot};
 			} else {
-				error "[eventMacro] Tried to delete AI_start hook and for some reason it is already undefined.\n";
+				error "[eventMacro] Tried to delete AI_start hook in slot ".$slot." and for some reason it is already undefined.\n";
 			}
 		} elsif (
-		  ($self->{Automacros_Checking_Status} == PAUSED_BY_EXCLUSIVE_MACRO || $self->{Automacros_Checking_Status} == PAUSE_FORCED_BY_USER) &&
+		  ($self->{Automacros_Checking_Status}{$slot} == PAUSED_BY_EXCLUSIVE_MACRO || $self->{Automacros_Checking_Status}{$slot} == PAUSE_FORCED_BY_USER) &&
 		  ($status == CHECKING_AUTOMACROS || $status == CHECKING_FORCED_BY_USER)
 		) {
-			if (defined $self->{AI_start_Automacros_Check_Hook_Handle}) {
-				error "[eventMacro] Tried to add AI_start hook and for some reason it is already defined.\n";
+			if (exists $self->{AI_start_Automacros_Check_Hook_Handle}{$slot}) {
+				error "[eventMacro] Tried to add AI_start hook in slot ".$slot." and for some reason it is already defined.\n";
 			} else {
-				debug "[eventMacro] Adding AI_start hook.\n", "eventMacro", 2;
-				$self->{AI_start_Automacros_Check_Hook_Handle} = Plugins::addHook( 'AI_start',  sub { my $state = $_[1]->{state}; $self->AI_start_checker($state); }, undef );
+				debug "[eventMacro] Adding AI_start hook in slot ".$slot.".\n", "eventMacro", 2;
+				$self->{AI_start_Automacros_Check_Hook_Handle}{$slot} = Plugins::addHook( 'AI_start',  sub { my $state = $_[1]->{state}; $self->AI_start_checker($state, $slot); }, undef );
 			}
 		}
-		$self->{Automacros_Checking_Status} = $status;
+		$self->{Automacros_Checking_Status}{$slot} = $status;
 	}
 }
 
 sub get_automacro_checking_status {
-	my ($self) = @_;
-	return $self->{Automacros_Checking_Status};
+	my ($self, $slot) = @_;
+	return $self->{Automacros_Checking_Status}{$slot};
 }
 
 sub create_macro_list {
@@ -289,6 +306,10 @@ sub create_automacro_list {
 			} elsif ($parameter->{'key'} eq "repeat" && $parameter->{'value'} !~ /\d+/) {
 				error "[eventMacro] Ignoring automacro '$name' (repeat parameter should be a number)\n";
 				next AUTOMACRO;
+			###Parameter: slot
+			} elsif ($parameter->{'key'} eq "slot" && $parameter->{'value'} !~ /\d+/) {
+				error "[eventMacro] Ignoring automacro '$name' (slot parameter should be a number)\n";
+				next AUTOMACRO;
 			} else {
 				$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
 			}
@@ -359,6 +380,7 @@ sub create_automacro_list {
 		$currentAutomacro = new eventMacro::Automacro($name, \%currentParameters);
 		my $new_index = $self->{Automacro_List}->add($currentAutomacro);
 		$self->{Automacro_List}->get($new_index)->parse_and_create_conditions(\%currentConditions);
+		push(@{$self->{Automacro_Checking_slots}{$currentAutomacro->get_parameter('slot')}}, $new_index);
 	}
 }
 
@@ -733,6 +755,8 @@ sub set_hashes_size_to_zero {
 	}
 }
 
+
+# TODO: does Currently_AI_state_Adapted_Automacros need slot?
 sub check_all_conditions {
 	my ($self) = @_;
 	debug "[eventMacro] Starting to check all state type conditions\n", "eventMacro", 2;
@@ -745,8 +769,8 @@ sub check_all_conditions {
 			debug "[eventMacro] Checking condition of index '".$condition->get_index."' in automacro '".$automacro->get_name."'\n", "eventMacro", 2;
 			$automacro->check_state_type_condition($condition->get_index, 'recheck')
 		}
-		if (exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro->get_index} && $automacro->can_be_added_to_queue) {
-			$self->add_to_triggered_prioritized_automacros_index_list($automacro);
+		if (exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro->get_parameter('slot')}{$automacro->get_index} && $automacro->can_be_added_to_queue) {
+			$self->add_to_triggered_prioritized_automacros_index_list($automacro, $automacro->get_parameter('slot'));
 		}
 	}
 }
@@ -1242,14 +1266,16 @@ sub manage_variables_callbacks {
 	}
 }
 
+
+# TODO: get the slot inside the these subs
 sub add_to_triggered_prioritized_automacros_index_list {
-	my ($self, $automacro) = @_;
+	my ($self, $automacro, $slot) = @_;
 	my $priority = $automacro->get_parameter('priority');
 	my $index = $automacro->get_index;
 	
-	my $list = $self->{triggered_prioritized_automacros_index_list} ||= [];
+	my $list = $self->{triggered_prioritized_automacros_index_list}{$slot};
 	
-	my $index_hash = $self->{automacro_index_to_queue_index};
+	my $index_hash = $self->{automacro_index_to_queue_index}{$slot};
 
 	# Find where we should insert this item.
 	my $new_index;
@@ -1263,23 +1289,23 @@ sub add_to_triggered_prioritized_automacros_index_list {
 		$index_hash->{$list->[$auto_index_in_queue]->{index}} = $auto_index_in_queue;
 	}
 	
-	$self->{number_of_triggered_automacros}++;
+	$self->{number_of_triggered_automacros}{$slot}++;
 	$automacro->running_status(1);
 
-	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue in position '".$new_index."'.\n", "eventMacro";
+	debug "[eventMacro] Automacro '".$automacro->get_name()."' met it's conditions. Adding it to running queue of slot ".$slot." in position '".$new_index."'.\n", "eventMacro";
 	
 	# Return the insertion index.
 	return $new_index;
 }
 
 sub remove_from_triggered_prioritized_automacros_index_list {
-	my ($self, $automacro) = @_;
+	my ($self, $automacro, $slot) = @_;
 	my $priority = $automacro->get_parameter('priority');
 	my $index = $automacro->get_index;
 	
-	my $list = $self->{triggered_prioritized_automacros_index_list};
+	my $list = $self->{triggered_prioritized_automacros_index_list}{$slot};
 	
-	my $index_hash = $self->{automacro_index_to_queue_index};
+	my $index_hash = $self->{automacro_index_to_queue_index}{$slot};
 	
 	# Find from where we should delete this item.
 	my $queue_index = delete $index_hash->{$index};
@@ -1292,10 +1318,10 @@ sub remove_from_triggered_prioritized_automacros_index_list {
 		$index_hash->{$list->[$auto_index_in_queue]->{index}} = $auto_index_in_queue;
 	}
 	
-	$self->{number_of_triggered_automacros}--;
+	$self->{number_of_triggered_automacros}{$slot}--;
 	$automacro->running_status(0);
 	
-	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue from position '".$queue_index."'.\n", "eventMacro";
+	debug "[eventMacro] Automacro '".$automacro->get_name()."' no longer meets it's conditions. Removing it from running queue of slot ".$slot." from position '".$queue_index."'.\n", "eventMacro";
 	
 	# Return the removal index.
 	return $queue_index;
@@ -1360,13 +1386,13 @@ sub manage_event_callbacks {
 				
 				my $result = $automacro->check_state_type_condition($condition_index, $callback_type, $callback_name, $callback_args);
 				
-				#add to running queue
-				if (!$result && $automacro->running_status) {
-					$self->remove_from_triggered_prioritized_automacros_index_list($automacro);
-				
 				#remove from running queue
-				} elsif ($result && exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro_index} && $automacro->can_be_added_to_queue) {
-					$self->add_to_triggered_prioritized_automacros_index_list($automacro);
+				if (!$result && $automacro->running_status) {
+					$self->remove_from_triggered_prioritized_automacros_index_list($automacro, $automacro->get_parameter('slot'));
+				
+				#add to running queue
+				} elsif ($result && exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro->get_parameter('slot')}{$automacro_index} && $automacro->can_be_added_to_queue) {
+					$self->add_to_triggered_prioritized_automacros_index_list($automacro, $automacro->get_parameter('slot'));
 					
 				}
 			}
@@ -1378,7 +1404,7 @@ sub manage_event_callbacks {
 				debug "[eventMacro] Variable value will be updated in condition of event type in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 				$automacro->check_event_type_condition($callback_type, $callback_name, $callback_args);
 				
-			} elsif (exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro_index} && ($self->get_automacro_checking_status == CHECKING_AUTOMACROS || $self->get_automacro_checking_status == CHECKING_FORCED_BY_USER) && $automacro->can_be_run_from_event) {
+			} elsif (exists $self->{Currently_AI_state_Adapted_Automacros}{$automacro->get_parameter('slot')}{$automacro_index} && ($self->get_automacro_checking_status($automacro->get_parameter('slot')) == CHECKING_AUTOMACROS || $self->get_automacro_checking_status($automacro->get_parameter('slot')) == CHECKING_FORCED_BY_USER) && $automacro->can_be_run_from_event) {
 				debug "[eventMacro] Condition of event type will be checked in automacro '".$automacro->get_name()."'.\n", "eventMacro", 3;
 				
 				if ($automacro->check_event_type_condition($callback_type, $callback_name, $callback_args)) {
@@ -1469,14 +1495,26 @@ sub manage_dynamic_hook_add_and_delete {
 }
 
 sub AI_start_checker {
-	my ($self, $state) = @_;
+	my ($self, $state, $slot) = @_;
 	
-	foreach my $array_member (@{$self->{triggered_prioritized_automacros_index_list}}) {
+=pod
+	use Data::Dumper;
+	
+	warning Dumper($self->{triggered_prioritized_automacros_index_list});
+	
+	warning "\n\n\n";
+	
+	warning Dumper($self);
+=cut
+	
+	debug "[eventMacro] In AI start check for slot $slot with state $state\n", "eventMacro", 3;
+	
+	foreach my $array_member (@{$self->{triggered_prioritized_automacros_index_list}{$slot}}) {
 		
 		my $automacro = $self->{Automacro_List}->get($array_member->{index});
 		
 		next unless $automacro->is_timed_out;	
-		message "[eventMacro] Conditions met for automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
+		message "[eventMacro] Conditions met for automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."' in slot ".$slot."\n", "system";
 		
 		$self->call_macro($automacro);
 		
@@ -1502,7 +1540,7 @@ sub disable_automacro {
 	my ($self, $automacro) = @_;
 	$automacro->disable;
 	if ($automacro->running_status) {
-		$self->remove_from_triggered_prioritized_automacros_index_list($automacro);
+		$self->remove_from_triggered_prioritized_automacros_index_list($automacro, $automacro->get_parameter('slot'));
 	}
 }
 
@@ -1510,15 +1548,12 @@ sub enable_automacro {
 	my ($self, $automacro) = @_;
 	$automacro->enable;
 	if ($automacro->can_be_added_to_queue) {
-		$self->add_to_triggered_prioritized_automacros_index_list($automacro);
+		$self->add_to_triggered_prioritized_automacros_index_list($automacro, $automacro->get_parameter('slot'));
 	}
 }
 
 sub call_macro {
 	my ($self, $automacro) = @_;
-	if (defined $self->{Macro_Runner}) {
-		$self->clear_queue();
-	}
 	
 	if ($automacro->get_parameter('call') =~ /\s+/) {
 		
@@ -1545,9 +1580,16 @@ sub call_macro {
 		$self->set_scalar_var($variable_name, $variable_value, 0);
 	}
 	
-	$self->{Macro_Runner} = new eventMacro::Runner(
+	my $slot = $automacro->get_parameter('slot');
+	
+	if (exists $self->{Macro_Runner}{$slot}) {
+		$self->clear_queue($slot);
+	}
+	
+	$self->{Macro_Runner}{$slot} = new eventMacro::Runner(
 		$automacro->get_parameter('call'),
 		$automacro->get_parameter('repeat'),
+		$slot,
 		$automacro->get_parameter('exclusive') ? 0 : 1,
 		$automacro->get_parameter('overrideAI'),
 		$automacro->get_parameter('orphan'),
@@ -1556,9 +1598,9 @@ sub call_macro {
 		0
 	);
 	
-	if (defined $self->{Macro_Runner}) {
-		my $iterate_macro_sub = sub { $self->iterate_macro(); };
-		$self->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', $iterate_macro_sub, undef );
+	if (defined $self->{Macro_Runner}{$slot}) {
+		my $iterate_macro_sub = sub { $self->iterate_macro($slot); };
+		$self->{AI_start_Macros_Running_Hook_Handle}{$slot} = Plugins::addHook( 'AI_start', $iterate_macro_sub, undef );
 	} else {
 		error "[eventMacro] unable to create macro queue.\n"
 	}
@@ -1567,55 +1609,65 @@ sub call_macro {
 # Function responsible for actually running the macro script
 sub iterate_macro {
 	my $self = shift;
+	my $slot = shift;
 	
 	# These two cheks are actually not necessary, but they can prevent future code bugs.
-	if ( !defined $self->{Macro_Runner} ) {
-		debug "[eventMacro] For some reason the running macro object got undefined, clearing queue to prevent errors.\n", "eventMacro", 2;
-		$self->clear_queue();
+	if ( !exists $self->{Macro_Runner}{$slot} ) {
+		#TODO: is this enough?
+		debug "[eventMacro] For some reason the running macro slot got deleted, clearing queue slot to prevent errors.\n", "eventMacro", 2;
+		$self->clear_queue($slot);
 		return;
-	} elsif ($self->{Macro_Runner}->finished) {
-		debug "[eventMacro] For some reason macro '".$self->{Macro_Runner}->get_name()."' finished but 'processCmd' did not clear it, clearing queue to prevent errors.\n", "eventMacro", 2;
-		$self->clear_queue();
+	} elsif ( !defined $self->{Macro_Runner}{$slot} ) {
+		debug "[eventMacro] For some reason the running macro object got undefined, clearing queue to prevent errors.\n", "eventMacro", 2;
+		$self->clear_queue($slot);
+		return;
+	} elsif ($self->{Macro_Runner}{$slot}->finished) {
+		debug "[eventMacro] For some reason macro '".$self->{Macro_Runner}{$slot}->get_name()."' finished but 'processCmd' did not clear it, clearing queue to prevent errors.\n", "eventMacro", 2;
+		$self->clear_queue($slot);
 		return;
 	}
 	
-	return if $self->{Macro_Runner}->is_paused();
+	return if $self->{Macro_Runner}{$slot}->is_paused();
 	
-	my $macro_timeout = $self->{Macro_Runner}->timeout;
+	my $macro_timeout = $self->{Macro_Runner}{$slot}->timeout;
 	
-	if (timeOut($macro_timeout) && $self->ai_is_eventMacro) {
+	if (timeOut($macro_timeout) && $self->ai_is_eventMacro($slot)) {
 		do {
-			last unless ( $self->processCmd( $self->{Macro_Runner}->next ) );
-		} while ($self->{Macro_Runner} && !$self->{Macro_Runner}->is_paused() && $self->{Macro_Runner}->macro_block);
+			last unless ( $self->processCmd( $self->{Macro_Runner}{$slot}->next, $slot ) );
+		} while ($self->{Macro_Runner}{$slot} && !$self->{Macro_Runner}{$slot}->is_paused() && $self->{Macro_Runner}{$slot}->macro_block);
 	}
 }
 
+# TODO: Fix this for slot
 sub ai_is_eventMacro {
 	my $self = shift;
-	return 1 if $self->{Macro_Runner}->last_subcall_overrideAI;
+	my $slot = shift;
+	return 1 if $self->{Macro_Runner}{$slot}->last_subcall_overrideAI;
 
 	# now check for orphaned script object
 	# may happen when messing around with "ai clear" and stuff.
-	$self->enforce_orphan if (defined $self->{Macro_Runner} && !AI::inQueue('eventMacro'));
+	$self->enforce_orphan($slot) if (defined $self->{Macro_Runner}{$slot} && !AI::inQueue('eventMacro'));
 	
 	return 1 if (AI::is('eventMacro', 'deal'));
 	return 1 if (AI::is('NPC') && $char->args->waitingForSteps);
 	return 0;
 }
 
+# TODO: fix for slot
 sub enforce_orphan {
 	my $self = shift;
-	my $method = $self->{Macro_Runner}->last_subcall_orphan;
-	message "[eventMacro] Running macro '".$self->{Macro_Runner}->last_subcall_name."' got orphaned, its orphan method is '".$method."'.\n";
+	my $slot = shift;
+	my $method = $self->{Macro_Runner}{$slot}->last_subcall_orphan;
+	message "[eventMacro] Running macro '".$self->{Macro_Runner}{$slot}->last_subcall_name."' got orphaned, its orphan method is '".$method."'.\n";
 	
 	# 'terminate' undefs the whole macro tree and returns "ai is not idle"
 	if ($method eq 'terminate') {
-		$self->clear_queue();
+		$self->clear_queue($slot);
 		return 0;
 		
 	# 'terminate_last_call' undefs only the specific macro call that got orphaned, keeping the rest of the macro call tree.
 	} elsif ($method eq 'terminate_last_call') {
-		my $macro = $self->{Macro_Runner};
+		my $macro = $self->{Macro_Runner}{$slot};
 		if (defined $macro->{subcall}) {
 			while (defined $macro->{subcall}) {
 				#cheap way of stopping on the second to last subcall
@@ -1625,13 +1677,13 @@ sub enforce_orphan {
 			$macro->clear_subcall;
 		} else {
 			#since there was no subcall we delete all macro tree
-			$self->clear_queue();
+			$self->clear_queue($slot);
 		}
 		return 0;
 		
 	# 'reregister' re-inserts "eventMacro" in ai_queue at the first position
 	} elsif ($method eq 'reregister') {
-		my $macro = $self->{Macro_Runner};
+		my $macro = $self->{Macro_Runner}{$slot};
 		while (defined $macro->{subcall}) {
 			$macro = $macro->{subcall};
 		}
@@ -1641,7 +1693,7 @@ sub enforce_orphan {
 	# 'reregister_safe' waits until AI is idle then re-inserts "eventMacro"
 	} elsif ($method eq 'reregister_safe') {
 		if (AI::isIdle || AI::is('deal')) {
-			my $macro = $self->{Macro_Runner};
+			my $macro = $self->{Macro_Runner}{$slot};
 			while (defined $macro->{subcall}) {
 				$macro = $macro->{subcall};
 			}
@@ -1652,43 +1704,43 @@ sub enforce_orphan {
 		
 	} else {
 		error "[eventMacro] Unknown orphan method '".$method."'. terminating whole macro tree\n", "eventMacro";
-		$self->clear_queue();
+		$self->clear_queue($slot);
 		return 0;
 	}
 }
 
 sub processCmd {
-	my ($self, $command) = @_;
-	my $macro_name = $self->{Macro_Runner}->last_subcall_name;
+	my ($self, $command, $slot) = @_;
+	my $macro_name = $self->{Macro_Runner}{$slot}->last_subcall_name;
 	if (defined $command) {
 		if ($command ne '') {
 			unless (Commands::run($command)) {
 				my $error_message = sprintf("[eventMacro] %s failed with %s\n", $macro_name, $command);
 				
 				error $error_message, "eventMacro";
-				$self->clear_queue();
+				$self->clear_queue($slot);
 				return;
 			}
 		}
-		if (defined $self->{Macro_Runner} && $self->{Macro_Runner}->finished) {
-			$self->clear_queue();
+		if (defined $self->{Macro_Runner}{$slot} && $self->{Macro_Runner}{$slot}->finished) {
+			$self->clear_queue($slot);
 			
-		} elsif (!defined $self->{Macro_Runner}) {
+		} elsif (!defined $self->{Macro_Runner}{$slot}) {
 			debug "[eventMacro] Macro runner object got undefined during a command.\n", "eventMacro", 2;
 			return;
 			
 		} else {
-			$self->{Macro_Runner}->ok;
+			$self->{Macro_Runner}{$slot}->ok;
 		}
 	} else {
-		my $macro = $self->{Macro_Runner};
+		my $macro = $self->{Macro_Runner}{$slot};
 		while (defined $macro->{subcall}) {
 			$macro = $macro->{subcall};
 		}
 		my $error_message = $macro->error_message;
 		
 		error $error_message, "eventMacro";
-		$self->clear_queue();
+		$self->clear_queue($slot);
 		return;
 	}
 	
@@ -1696,15 +1748,15 @@ sub processCmd {
 }
 
 sub clear_queue {
-	my ($self) = @_;
-	debug "[eventMacro] Clearing queue\n", "eventMacro", 2;
-	if ( defined $self->{Macro_Runner} && $self->get_automacro_checking_status() == PAUSED_BY_EXCLUSIVE_MACRO ) {
-		debug "[eventMacro] Uninterruptible macro '".$self->{Macro_Runner}->last_subcall_name."' ended. Automacros will return to being checked.\n", "eventMacro", 2;
-		$self->set_automacro_checking_status(CHECKING_AUTOMACROS);
+	my ($self, $slot) = @_;
+	debug "[eventMacro] Clearing queue in slot ".$slot.".\n", "eventMacro", 2;
+	if (exists $self->{Macro_Runner}{$slot} && defined $self->{Macro_Runner}{$slot} && $self->get_automacro_checking_status($slot) == PAUSED_BY_EXCLUSIVE_MACRO ) {
+		debug "[eventMacro] Uninterruptible macro '".$self->{Macro_Runner}{$slot}->last_subcall_name."' in slot ".$slot." ended. Automacros in slot ".$slot." will return to being checked.\n", "eventMacro", 2;
+		$self->set_automacro_checking_status($slot, CHECKING_AUTOMACROS);
 	}
-	$self->{Macro_Runner} = undef;
-	Plugins::delHook($self->{AI_start_Macros_Running_Hook_Handle}) if (defined $self->{AI_start_Macros_Running_Hook_Handle});
-	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
+	delete $self->{Macro_Runner}{$slot};
+	Plugins::delHook($self->{AI_start_Macros_Running_Hook_Handle}{$slot});
+	delete $self->{AI_start_Macros_Running_Hook_Handle}{$slot};
 }
 
 sub include {

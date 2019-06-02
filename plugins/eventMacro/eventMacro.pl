@@ -104,6 +104,8 @@ sub parseAndHook {
 	}
 }
 
+
+# TODO: fix the command to work with slots
 sub commandHandler {
 	### no parameter given
 	if (!defined $_[1]) {
@@ -218,6 +220,7 @@ sub commandHandler {
 					message( sprintf( "interruptible: %s\n", $macro->interruptible ), "list" );
 					message( sprintf( "orphan method: %s\n", $macro->orphan ), "list" );
 					message( sprintf( "remaining repeats: %s\n", $macro->repeat ), "list" );
+					message( sprintf( "slot: %s\n", $macro->slot ), "list" );
 					message( sprintf( "macro delay: %s\n", $macro->macro_delay ), "list" );
 					
 					message( sprintf( "current command: %s\n", $macro->{current_line} ), "list" );
@@ -578,18 +581,24 @@ sub commandHandler {
 	### if nothing triggered until here it's probably a macro name
 	} elsif ( !$eventMacro->{Macro_List}->getByName( $arg ) ) {
 		error "[eventMacro] Macro $arg not found\n";
-	} elsif ( $eventMacro->{Macro_Runner} ) {
-		warning "[eventMacro] A macro is already running. Wait until the macro has finished or call 'eventMacro stop'\n";
-		return;
+		
 	} else {
 		my $opt = {};
-		GetOptionsFromArray( \@params, $opt, 'repeat|r=i', 'overrideAI', 'exclusive', 'macro_delay=f', 'orphan=s' );
+		GetOptionsFromArray( \@params, $opt, 'repeat|r=i', 'slot=i', 'overrideAI', 'exclusive', 'macro_delay=f', 'orphan=s' );
+		
+		my $slot = defined $opt->{slot} ? $opt->{slot} : 1;
+		
+		if ( exists $eventMacro->{Macro_Runner}{$slot} ) {
+			warning "[eventMacro] A macro is already running in slot ".$slot.". Wait until the macro has finished or call 'eventMacro [".$slot."] stop'\n";
+			return;
+		}
 		
 		$eventMacro->set_full_array( ".param", \@params );
 		
-		$eventMacro->{Macro_Runner} = new eventMacro::Runner(
+		$eventMacro->{Macro_Runner}{$slot} = new eventMacro::Runner(
 			$arg,
 			defined $opt->{repeat} ? $opt->{repeat} : 1,
+			$slot,
 			defined $opt->{exclusive} ? $opt->{exclusive} ? 0 : 1 : undef,
 			defined $opt->{overrideAI} ? $opt->{overrideAI} : undef,
 			defined $opt->{orphan} ? $opt->{orphan} : undef,
@@ -598,9 +607,10 @@ sub commandHandler {
 			0
 		);
 
-		if ( defined $eventMacro->{Macro_Runner} ) {
-			$eventMacro->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', sub { $eventMacro->iterate_macro }, undef );
+		if ( defined $eventMacro->{Macro_Runner}{$slot} ) {
+			$eventMacro->{AI_start_Macros_Running_Hook_Handle}{$slot} = Plugins::addHook( 'AI_start', sub { $eventMacro->iterate_macro($slot) }, undef );
 		} else {
+			delete $eventMacro->{Macro_Runner}{$slot};
 			error "[eventMacro] unable to create macro queue.\n";
 		}
 	}
