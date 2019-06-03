@@ -1705,7 +1705,6 @@ sub perl_sub_command {
 	$self->next_line;
 }
 
-# TODO: add slot change here too
 sub parse_set {
 	my ($self, $parameter, $new_value) = @_;
 	if ($parameter eq 'macro_delay') {
@@ -1807,7 +1806,6 @@ sub parse_release_and_lock {
 	$self->next_line;
 }
 
-# TODO: add a way to call a macro to be run in another slot
 sub parse_call {
 	my ($self, $call_command) = @_;
 	

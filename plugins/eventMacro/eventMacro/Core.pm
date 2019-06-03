@@ -1615,7 +1615,6 @@ sub iterate_macro {
 		
 		# These two cheks are actually not necessary, but they can prevent future code bugs.
 		if (!exists $self->{Macro_Runner}{$slot}) {
-			#TODO: is this enough?
 			debug "[eventMacro] For some reason the running macro slot ".$slot." got deleted, clearing queue slot to prevent errors.\n", "eventMacro", 2;
 			$self->clear_queue($slot);
 			next;
