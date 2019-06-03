@@ -1669,7 +1669,6 @@ sub is_current_macro_in_AI {
 	return 0;
 }
 
-# TODO: fix for slot
 sub enforce_orphan {
 	my ($self, $slot, $index) = @_;
 	my $method = $self->{Macro_Runner}{$slot}->last_subcall_orphan;

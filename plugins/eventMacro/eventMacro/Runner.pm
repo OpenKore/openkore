@@ -282,7 +282,7 @@ sub register_new {
 	debug "[eventMacro] Macro '".$self->{name}."' is now adding eventMacro to the AI queue sequence.\n", "eventMacro", 2;
 	if (AI::is("NPC")) {
 		splice(@AI::ai_seq, 1, 0, 'eventMacro');
-		splice(@AI::ai_seq_args, 1, 0, {});
+		splice(@AI::ai_seq_args, 1, 0, { $self->{slot} => $self->{name} });
 	} else {
 		AI::queue('eventMacro', { $self->{slot} => $self->{name} });
 	}
