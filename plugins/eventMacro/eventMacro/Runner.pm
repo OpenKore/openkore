@@ -168,12 +168,12 @@ sub interruptible {
 sub validate_automacro_checking_to_interruptible {
 	my ($self, $interruptible) = @_;
 	
-	my $checking_status = $eventMacro->get_automacro_checking_status($self->slot);
+	my $checking_status = $eventMacro->get_automacro_checking_status($self->{slot});
 	
 	if (!$self->{submacro}) {
 		$self->last_subcall_interruptible($interruptible);
 	} else {
-		$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_interruptible($interruptible);
+		$eventMacro->{Macro_Runner}{$self->{slot}}->last_subcall_interruptible($interruptible);
 	}
 	
 	if (($checking_status == CHECKING_AUTOMACROS && $interruptible == 1) || ($checking_status == PAUSED_BY_EXCLUSIVE_MACRO && $interruptible == 0)) {
@@ -188,11 +188,11 @@ sub validate_automacro_checking_to_interruptible {
 	
 	if ($interruptible == 0) {
 		debug "[eventMacro] Macro '".$self->{name}."' is now stopping automacro checking..\n", "eventMacro", 2;
-		$eventMacro->set_automacro_checking_status($self->slot, PAUSED_BY_EXCLUSIVE_MACRO);
+		$eventMacro->set_automacro_checking_status($self->{slot}, PAUSED_BY_EXCLUSIVE_MACRO);
 	
 	} elsif ($interruptible == 1) {
 		debug "[eventMacro] Macro '".$self->{name}."' is now starting automacro checking..\n", "eventMacro", 2;
-		$eventMacro->set_automacro_checking_status($self->slot, CHECKING_AUTOMACROS);
+		$eventMacro->set_automacro_checking_status($self->{slot}, CHECKING_AUTOMACROS);
 	}
 }
 
@@ -222,46 +222,101 @@ sub overrideAI {
 sub validate_AI_queue_to_overrideAI {
 	my ($self, $overrideAI) = @_;
 	
-	my $is_in_AI_queue = AI::inQueue('eventMacro');
+	my $macro_index = AI::findAction('eventMacro');
 	
 	if (!$self->{submacro}) {
 		$self->last_subcall_overrideAI($overrideAI);
 	} else {
-		$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_overrideAI($overrideAI);
+		$eventMacro->{Macro_Runner}{$self->{slot}}->last_subcall_overrideAI($overrideAI);
 	}
 	
-	if (($is_in_AI_queue && $overrideAI == 0) || (!$is_in_AI_queue && $overrideAI == 1)) {
-		debug "[eventMacro] No need to add/clear AI_queue because it already is compatible with this macro.\n", "eventMacro", 2;
-		return;
-	}
-	
-	if ($overrideAI == 0) {
-		$self->register;
+	# Current macro should not be in AI queue
+	if ($overrideAI == 1) {
 		
-	} elsif ($overrideAI == 1) {
-		$self->unregister;
+		# There is an eventMacro sequence in AI queue
+		if (defined $macro_index) {
+			my $macro_args = AI::args($macro_index);
+			
+			# And it contains the current macro
+			if (exists $macro_args->{$self->{slot}}) {
+			
+				# If this is the only macro in the eventMacro sequence remove it from the AI queue
+				if (keys %{$macro_args} == 1) {
+					$self->unregister;
+				
+				# If there are more macros in the eventMacro sequence only remove this one
+				} else {
+					$self->register_remove($macro_args);
+				}
+			} else {
+				debug "[eventMacro] No need to add/clear AI_queue because it already is compatible with this macro.\n", "eventMacro", 2;
+				return;
+			}
+			
+		} else {
+			debug "[eventMacro] No need to add/clear AI_queue because it already is compatible with this macro.\n", "eventMacro", 2;
+			return;
+		}
+	
+	} else {
+	
+		if (defined $macro_index) {
+			my $macro_args = AI::args($macro_index);
+			
+			if (exists $macro_args->{$self->{slot}}) {
+				debug "[eventMacro] No need to add/clear AI_queue because it already is compatible with this macro.\n", "eventMacro", 2;
+				return;
+			} else {
+				$self->register_add($macro_args);
+			}
+			
+		} else {
+			$self->register_new;
+		}
 	}
 }
 
-# Registers to AI queue
-sub register {
+# Registers new eventMacro sequence to AI queue
+sub register_new {
 	my ($self) = @_;
-	debug "[eventMacro] Macro '".$self->{name}."' is now registering itself to AI queue.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' is now adding eventMacro to the AI queue sequence.\n", "eventMacro", 2;
 	if (AI::is("NPC")) {
 		splice(@AI::ai_seq, 1, 0, 'eventMacro');
 		splice(@AI::ai_seq_args, 1, 0, {});
 	} else {
-		AI::queue('eventMacro');
+		AI::queue('eventMacro', { $self->{slot} => $self->{name} });
 	}
 	$self->{registered} = 1;
 }
 
-# Unregisters from AI queue
+# Unregisters eventMacro sequence from AI queue
 sub unregister {
 	my ($self) = @_;
-	debug "[eventMacro] Macro '".$self->{name}."' is now deleting itself from AI queue.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' is now deleting eventMacro from AI queue.\n", "eventMacro", 2;
 	AI::clear('eventMacro');
 	$self->{registered} = 0;
+}
+
+# Adds the current macro to the already existent eventMacro sequence in AI queue
+sub register_add {
+	my ($self, $macro_args) = @_;
+	debug "[eventMacro] Macro '".$self->{name}."' is now adding itself to the eventMacro sequente in AI queue.\n", "eventMacro", 2;
+	$macro_args->{$self->{slot}} = $self->{name};
+	$self->{registered} = 1;
+}
+
+# Removes the current macro from the eventMacro sequence in AI queue
+sub register_remove {
+	my ($self, $macro_args) = @_;
+	debug "[eventMacro] Macro '".$self->{name}."' is now deleting itself from the eventMacro sequente in AI queue.\n", "eventMacro", 2;
+	delete $macro_args->{$self->{slot}};
+	$self->{registered} = 0;
+}
+
+# Returns true if the macro is registered to AI queue
+sub registered {
+	my ($self) = @_;
+	return $self->{registered};
 }
 
 # Sets/Gets the current orphan method
@@ -281,7 +336,7 @@ sub orphan {
 			if (!$self->{submacro}) {
 				$self->last_subcall_orphan($orphan);
 			} else {
-				$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_orphan($orphan);
+				$eventMacro->{Macro_Runner}{$self->{slot}}->last_subcall_orphan($orphan);
 			}
 		}
 	}
@@ -304,12 +359,6 @@ sub macro_delay {
 		$self->{macro_delay} = $macro_delay;
 	}
 	return $self->{macro_delay};
-}
-
-# Returns true if the macro is registered to AI queue
-sub registered {
-	my ($self) = @_;
-	return $self->{registered};
 }
 
 # Sets/Gets the current repeat count
@@ -368,13 +417,13 @@ sub clear_subcall {
 		if (!$self->{submacro}) {
 			$self->last_subcall_orphan($self->orphan);
 		} else {
-			$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_orphan($self->orphan);
+			$eventMacro->{Macro_Runner}{$self->{slot}}->last_subcall_orphan($self->orphan);
 		}
 	} else {
 		debug "[eventMacro] No need to change orphan method because it already is compatible with this macro.\n", "eventMacro", 2;
 	}
 	if ($self->{submacro}) {
-		$eventMacro->{Macro_Runner}{$self->slot}->last_subcall_name($self->get_name);
+		$eventMacro->{Macro_Runner}{$self->{slot}}->last_subcall_name($self->get_name);
 	} else {
 		$self->last_subcall_name($self->get_name);
 	}
@@ -385,13 +434,31 @@ sub clear_subcall {
 sub create_subcall {
 	my ($self, $name, $repeat) = @_;
 	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{name}."'.\n", "eventMacro", 2;
-	$self->{subcall} = new eventMacro::Runner($name, $repeat, $self->slot, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
+	$self->{subcall} = new eventMacro::Runner($name, $repeat, $self->{slot}, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
 }
 
 # destructor
 sub DESTROY {
 	my ($self) = @_;
-	$self->unregister if (AI::inQueue('eventMacro') && !$self->{submacro});
+	if (!$self->{submacro}) {
+		
+		my $macro_index = AI::findAction('eventMacro');
+		
+		return if (!defined $macro_index);
+		
+		my $macro_args = AI::args($macro_index);
+		
+		return if (!exists $macro_args->{$self->{slot}});
+		
+		# If this is the only macro in the eventMacro sequence remove it from the AI queue
+		if (keys %{$macro_args} == 1) {
+			$self->unregister;
+		
+		# If there are more macros in the eventMacro sequence only remove this one
+		} else {
+			$self->register_remove($macro_args);
+		}
+	}
 }
 
 # TODO: Check this

@@ -606,12 +606,16 @@ sub commandHandler {
 			defined $opt->{macro_delay} ? $opt->{macro_delay} : undef,
 			0
 		);
-
-		if ( defined $eventMacro->{Macro_Runner}{$slot} ) {
-			$eventMacro->{AI_start_Macros_Running_Hook_Handle}{$slot} = Plugins::addHook( 'AI_start', sub { $eventMacro->iterate_macro($slot) }, undef );
-		} else {
-			delete $eventMacro->{Macro_Runner}{$slot};
+	
+		if (!defined $eventMacro->{Macro_Runner}{$slot}) {
 			error "[eventMacro] unable to create macro queue.\n";
+			delete $eventMacro->{Macro_Runner}{$slot};
+			return;
+		}
+		
+		if (keys %{$eventMacro->{Macro_Runner}} == 1) {
+			my $iterate_macro_sub = sub { $eventMacro->iterate_macro(); };
+			$eventMacro->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', $iterate_macro_sub, undef );
 		}
 	}
 }

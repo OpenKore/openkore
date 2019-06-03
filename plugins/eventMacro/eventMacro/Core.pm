@@ -64,7 +64,8 @@ sub new {
 	$self->{Currently_AI_state_Adapted_Automacros} = undef;
 	$self->adapt_to_AI_state(AI::state);
 
-	$self->{AI_start_Macros_Running_Hook_Handle} = {};
+	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
+	
 	$self->{AI_start_Automacros_Check_Hook_Handle} = {};
 	
 	$self->{Automacros_Checking_Status} = {};
@@ -1503,18 +1504,6 @@ sub manage_dynamic_hook_add_and_delete {
 sub AI_start_checker {
 	my ($self, $state, $slot) = @_;
 	
-=pod
-	use Data::Dumper;
-	
-	warning Dumper($self->{triggered_prioritized_automacros_index_list});
-	
-	warning "\n\n\n";
-	
-	warning Dumper($self);
-=cut
-	
-	debug "[eventMacro] In AI start check for slot $slot with state $state\n", "eventMacro", 3;
-	
 	foreach my $array_member (@{$self->{triggered_prioritized_automacros_index_list}{$slot}}) {
 		
 		my $automacro = $self->{Automacro_List}->get($array_member->{index});
@@ -1604,65 +1593,85 @@ sub call_macro {
 		0
 	);
 	
-	if (defined $self->{Macro_Runner}{$slot}) {
-		my $iterate_macro_sub = sub { $self->iterate_macro($slot); };
-		$self->{AI_start_Macros_Running_Hook_Handle}{$slot} = Plugins::addHook( 'AI_start', $iterate_macro_sub, undef );
-	} else {
-		error "[eventMacro] unable to create macro queue.\n"
+	if (!defined $self->{Macro_Runner}{$slot}) {
+		error "[eventMacro] unable to create macro queue.\n";
+		delete $self->{Macro_Runner}{$slot};
+		return;
+	}
+	
+	if (keys %{$self->{Macro_Runner}} == 1) {
+		my $iterate_macro_sub = sub { $self->iterate_macro(); };
+		$self->{AI_start_Macros_Running_Hook_Handle} = Plugins::addHook( 'AI_start', $iterate_macro_sub, undef );
 	}
 }
 
 # Function responsible for actually running the macro script
 sub iterate_macro {
 	my $self = shift;
-	my $slot = shift;
 	
-	# These two cheks are actually not necessary, but they can prevent future code bugs.
-	if ( !exists $self->{Macro_Runner}{$slot} ) {
-		#TODO: is this enough?
-		debug "[eventMacro] For some reason the running macro slot ".$slot." got deleted, clearing queue slot to prevent errors.\n", "eventMacro", 2;
-		$self->clear_queue($slot);
-		return;
-	} elsif ( !defined $self->{Macro_Runner}{$slot} ) {
-		debug "[eventMacro] For some reason the running macro object got undefined on slot ".$slot.", clearing queue slot to prevent errors.\n", "eventMacro", 2;
-		$self->clear_queue($slot);
-		return;
-	} elsif ($self->{Macro_Runner}{$slot}->finished) {
-		debug "[eventMacro] For some reason macro '".$self->{Macro_Runner}{$slot}->get_name()."' on slot ".$slot." finished but 'processCmd' did not clear it, clearing queue slot to prevent errors.\n", "eventMacro", 2;
-		$self->clear_queue($slot);
-		return;
-	}
+	my @slots = sort(keys %{$self->{Macro_Runner}});
 	
-	return if $self->{Macro_Runner}{$slot}->is_paused();
-	
-	my $macro_timeout = $self->{Macro_Runner}{$slot}->timeout;
-	
-	if (timeOut($macro_timeout) && $self->ai_is_eventMacro($slot)) {
-		do {
-			last unless ( $self->processCmd( $self->{Macro_Runner}{$slot}->next, $slot ) );
-		} while ($self->{Macro_Runner}{$slot} && !$self->{Macro_Runner}{$slot}->is_paused() && $self->{Macro_Runner}{$slot}->macro_block);
+	foreach my $slot (@slots) {
+		
+		# These two cheks are actually not necessary, but they can prevent future code bugs.
+		if (!exists $self->{Macro_Runner}{$slot}) {
+			#TODO: is this enough?
+			debug "[eventMacro] For some reason the running macro slot ".$slot." got deleted, clearing queue slot to prevent errors.\n", "eventMacro", 2;
+			$self->clear_queue($slot);
+			next;
+			
+		} elsif (!defined $self->{Macro_Runner}{$slot}) {
+			debug "[eventMacro] For some reason the running macro object got undefined on slot ".$slot.", clearing queue slot to prevent errors.\n", "eventMacro", 2;
+			$self->clear_queue($slot);
+			next;
+		}
+		
+		my $macro = $self->{Macro_Runner}{$slot};
+		
+		if ($macro->finished) {
+			debug "[eventMacro] For some reason macro '".$macro->get_name()."' on slot ".$slot." finished but 'processCmd' did not clear it, clearing queue slot to prevent errors.\n", "eventMacro", 2;
+			$self->clear_queue($slot);
+			next;
+		}
+		
+		next if $macro->is_paused();
+		
+		if (timeOut($macro->timeout) && $self->is_current_macro_in_AI($slot)) {
+			do {
+				last unless ( $self->processCmd( $macro ) );
+			} while ($macro && !$macro->is_paused() && $macro->macro_block);
+		}
+		
 	}
 }
 
-# TODO: Fix this for slot
-sub ai_is_eventMacro {
-	my $self = shift;
-	my $slot = shift;
+sub is_current_macro_in_AI {
+	my ($self, $slot) = @_;
 	return 1 if $self->{Macro_Runner}{$slot}->last_subcall_overrideAI;
-
-	# now check for orphaned script object
-	# may happen when messing around with "ai clear" and stuff.
-	$self->enforce_orphan($slot) if (defined $self->{Macro_Runner}{$slot} && !AI::inQueue('eventMacro'));
 	
-	return 1 if (AI::is('eventMacro', 'deal'));
-	return 1 if (AI::is('NPC') && $char->args->waitingForSteps);
+	my $macro_index = AI::findAction('eventMacro');
+	
+	if (defined $macro_index) {
+		my $macro_args = AI::args($macro_index);
+		
+		if (exists $macro_args->{$slot}) {
+			return 1 if ($macro_index == 0);
+			return 1 if (AI::is('deal'));
+			return 1 if (AI::is('NPC') && $char->args->waitingForSteps);
+		} else {
+			$self->enforce_orphan($slot, $macro_index);
+		}
+		
+	} else {
+		$self->enforce_orphan($slot);
+	}
+	
 	return 0;
 }
 
 # TODO: fix for slot
 sub enforce_orphan {
-	my $self = shift;
-	my $slot = shift;
+	my ($self, $slot, $index) = @_;
 	my $method = $self->{Macro_Runner}{$slot}->last_subcall_orphan;
 	message "[eventMacro] Running macro '".$self->{Macro_Runner}{$slot}->last_subcall_name."' on slot ".$slot." got orphaned, its orphan method is '".$method."'.\n";
 	
@@ -1693,7 +1702,12 @@ sub enforce_orphan {
 		while (defined $macro->{subcall}) {
 			$macro = $macro->{subcall};
 		}
-		$macro->register;
+		if (defined $index) {
+			my $macro_args = AI::args($index);
+			$macro->register_add($macro_args);
+		} else {
+			$macro->register_new;
+		}
 		return 1;
 		
 	# 'reregister_safe' waits until AI is idle then re-inserts "eventMacro"
@@ -1703,7 +1717,12 @@ sub enforce_orphan {
 			while (defined $macro->{subcall}) {
 				$macro = $macro->{subcall};
 			}
-			$macro->register;
+			if (defined $index) {
+				my $macro_args = AI::args($index);
+				$macro->register_add($macro_args);
+			} else {
+				$macro->register_new;
+			}
 			return 1
 		}
 		return 0;
@@ -1716,8 +1735,10 @@ sub enforce_orphan {
 }
 
 sub processCmd {
-	my ($self, $command, $slot) = @_;
-	my $macro_name = $self->{Macro_Runner}{$slot}->last_subcall_name;
+	my ($self, $macro) = @_;
+	my $command = $macro->next;
+	my $slot = $macro->slot;
+	my $macro_name = $macro->last_subcall_name;
 	if (defined $command) {
 		if ($command ne '') {
 			unless (Commands::run($command)) {
@@ -1728,18 +1749,17 @@ sub processCmd {
 				return;
 			}
 		}
-		if (defined $self->{Macro_Runner}{$slot} && $self->{Macro_Runner}{$slot}->finished) {
+		if (defined $macro && $macro->finished) {
 			$self->clear_queue($slot);
 			
-		} elsif (!defined $self->{Macro_Runner}{$slot}) {
+		} elsif (!defined $macro) {
 			debug "[eventMacro] Macro runner object got undefined during a command.\n", "eventMacro", 2;
 			return;
 			
 		} else {
-			$self->{Macro_Runner}{$slot}->ok;
+			$macro->ok;
 		}
 	} else {
-		my $macro = $self->{Macro_Runner}{$slot};
 		while (defined $macro->{subcall}) {
 			$macro = $macro->{subcall};
 		}
@@ -1761,8 +1781,11 @@ sub clear_queue {
 		$self->set_automacro_checking_status($slot, CHECKING_AUTOMACROS);
 	}
 	delete $self->{Macro_Runner}{$slot};
-	Plugins::delHook($self->{AI_start_Macros_Running_Hook_Handle}{$slot});
-	delete $self->{AI_start_Macros_Running_Hook_Handle}{$slot};
+	
+	if (!keys %{$self->{Macro_Runner}}) {
+		Plugins::delHook($self->{AI_start_Macros_Running_Hook_Handle});
+		undef $self->{AI_start_Macros_Running_Hook_Handle};
+	}
 }
 
 sub include {
