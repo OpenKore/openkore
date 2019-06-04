@@ -34583,8 +34583,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000020.05.2019.^000000
-Este item será removido no dia ^ff000021.05.2019.^000000
+Promoção limitada até o dia ^ff000017.06.2019.^000000
+Este item será removido no dia ^ff000018.06.2019.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -57648,6 +57648,26 @@ Peso: ^77777730^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
+20922#
+Este manto emana as forças da água e foi confeccionado com inspiração em uma serpente marinha mitológica, temida pelos sete mares.
+^0000ffDEFM +5.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Água +15%.^000000
+A cada refino:
+^0000ffVelocidade de ataque +1%.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Água +1%.^000000
+Refino +11 ou mais:
+^0000ffResistência a propriedade Água +75%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Sapo Cururu]^000000
+^0000ffHP máx. +10%.^000000
+^0000ffDEFM +10 adicional.^000000
+^0000ffResistência a propriedade Neutro +20%.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777718^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 20939#
 Manto indispensável para um Senhor do Tempo. Basta equipá-lo, entrar na sua cabine telefônica e viajar rumo a aventuras espaço-temporais.
 ^0000ffEsquiva +30.^000000
@@ -57663,6 +57683,26 @@ Tipo: ^777777Capa^000000
 Defesa: ^77777730^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+20941#
+Este manto emana as forças do fogo e foi confeccionado com inspiração em um pássaro flamejante lendário e famoso por se erguer a partir das próprias cinzas.
+^0000ffDEFM +5.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Fogo +15%.^000000
+A cada refino:
+^0000ffVelocidade de ataque +1%.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Fogo +1%.^000000
+Refino +11 ou mais:
+^0000ffResistência a propriedade Fogo +75%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Mastering]^000000
+^0000ffEsquiva +20.^000000
+^0000ffDEFM +10 adicional.^000000
+^0000ffResistência a propriedade Neutro +20%.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777718^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 21000#
@@ -60170,6 +60210,79 @@ A cada ataque:
 ^0000ffRecupera 5 de SP.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Equipamento para cabeça^000000
+Peso: ^7777771^000000
+#
+27163#
+^0000ffAGI e DES^000000 ^ff0000-1.^000000
+^0000ffVelocidade de ataque +3%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Verme Sombrio]^000000
+^0000ffAGI e DES +2.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+27164#
+^0000ffCRIT +15.^000000
+^0000ffHP máx.^000000 ^ff0000-10%.^000000
+A cada refino:
+^0000ffCRIT +1.^000000
+^0000ffDano crítico +1%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+27165#
+^0000ffVIT e INT^000000 ^ff0000-1.^000000
+^0000ffPós-conjuração -3%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Verme com Rosto]^000000
+^0000ffVIT e INT +2.^000000
+^0000ffPós-conjuração -3% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+27166#
+^0000ffResistência a propriedade Fogo +2%.^000000
+Refino +7 ou mais:
+^0000ffResistência a propriedade Fogo +1% adicional.^000000
+Refino +9 ou mais:
+^0000ffResistência a propriedade Fogo +2% adicional.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Larva de Verme]^000000
+^0000ffDano mágico contra oponentes de propriedade Fogo +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+27167#
+^0000ffResistência a propriedade Neutro +15%.^000000
+A cada refino:
+^0000ffDano mágico de propriedade Água +3%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Ovo de Verme]^000000
+^0000ffResistência a propriedade Neutro +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777771^000000
+#
+27168#
+^0000ffPrecisão +10.^000000
+A cada 3 refinos:
+^0000ffPrecisão +5.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777771^000000
+#
+27169#
+^0000ffATQ e ATQM +5.^000000
+Lança com refino +10 ou mais:
+^0000ffATQ e ATQM +20 adicional.^000000
+Lança com refino +14 ou mais:
+^0000ffATQ e ATQM +20 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 28000#

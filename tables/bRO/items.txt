@@ -6745,7 +6745,9 @@
 20904#Bata de Etran#
 20908#Manto da Bruxa#
 20909#Haori de Batalha#
+20922#Manto Leviatã#
 20939#Manto do Senhor do Tempo#
+20941#Manto Fênix#
 21000#Espada Aprimorada de Duas Mãos#
 21001#Claymore de Vellum#
 21002#Katzbalger de Vellum#
@@ -6955,6 +6957,13 @@
 27160#Carta Baba-Yaga#
 27161#Carta Mavka#
 27162#Carta Gorynych#
+27163#Carta Verme com Rosto#
+27164#Carta Rainha Verme#
+27165#Carta Verme Sombrio com Rosto#
+27166#Carta Ovo de Verme com Rosto#
+27167#Carta Larva de Verme#
+27168#Carta Lorde Irine#
+27169#Carta Guarda de Payon#
 28000#Katar de Cinzas#
 28001#Katar Esconjurante#
 28007#Katar Rubi#
