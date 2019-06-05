@@ -689,7 +689,7 @@ useSelf_item {
 	inLockOnly 0
 	notWhileSitting 0
 	notInTown 0
-	timeout
+	timeout 0
 	disabled 0
 	inInventory
 	manualAI 0
