@@ -3649,10 +3649,147 @@ sub progress_bar_stop {
 sub quest_all_list {
 	my ($self, $args) = @_;
 	$questList = {};
-	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
-		my ($questID, $active) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
+	
+	my ($questID, $active);
+	
+	my $msg = $args->{RAW_MSG};
+	my $headerlen = 8;
+	my $offset = $headerlen;
+	
+	my $quest_pack = 'V C';
+	my $quest_len = length pack $quest_pack;
+	
+	for (my $i = 0 ; $i < $args->{amount} ; $i++) {
+		($questID, $active) = unpack($quest_pack, substr($msg, $offset, $quest_len));
 		$questList->{$questID}->{active} = $active;
+		
 		debug "$questID $active\n", "info";
+		
+		$offset += $quest_len;
+	}
+}
+
+# 097a <packet len>.W <num>.L { <quest id>.L <active>.B <remaining time>.L <time>.L <count>.W { <mob_id>.L <killed>.W <total>.W <mob name>.24B }*count }*num (ZC_ALL_QUEST_LIST2)
+sub quest_all_list2 {
+	my ($self, $args) = @_;
+	
+	$questList = {};
+	
+	my ($questID, $active, $time_start, $time_expire, $mission_amount);
+	my ($mobID, $count, $amount, $mobName);
+	my ($quest, $mission);
+	
+	my $msg = $args->{RAW_MSG};
+	my $headerlen = 8;
+	my $offset = $headerlen;
+	
+	my $quest_pack = 'V C V2 v';
+	my $quest_len = length pack $quest_pack;
+	
+	my $mission_pack = 'V v2 Z24';
+	my $mission_len = length pack $mission_pack;
+	
+	for (my $i = 0 ; $i < $args->{amount} ; $i++) {
+		($questID, $active, $time_start, $time_expire, $mission_amount) = unpack($quest_pack, substr($msg, $offset, $quest_len));
+		
+		$quest = \%{$questList->{$questID}};
+		
+		$quest->{active} = $active;
+		$quest->{time_start} = $time_start;
+		$quest->{time_expire} = $time_expire;
+		$quest->{mission_amount} = $mission_amount;
+		
+		debug "$questID $active\n", "info";
+		
+		$offset += $quest_len;
+		
+		for (my $j = 0 ; $j < $mission_amount ; $j++) {
+			($mobID, $count, $amount, $mobName) = unpack($mission_pack, substr($msg, $offset, $mission_len));
+			
+			$mission = \%{$quest->{missions}->{$mobID}};
+			$mission->{mob_id} = $mobID;
+			$mission->{mob_count} = $count;
+			$mission->{mob_goal} = $amount;
+			$mission->{mob_name_original} = $mobName;
+			$mission->{mob_name} = bytesToString($mobName);
+			$mission->{mission_index} = $j;
+			
+			debug "- $mobID $count / $amount $mobName\n", "info";
+			
+			$offset += $mission_len;
+			Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mission_id => $mobID
+			});
+		}
+	}
+}
+
+# 09f8 <packet len>.W <num>.L { <quest id>.L <active>.B <remaining time>.L <time>.L <count>.W { <hunt identification>.L <mob type>.L <mob_id>.L <min level>.W <max level>.W <killed>.W <total>.W <mob name>.24B }*count }*num  (ZC_ALL_QUEST_LIST3)
+sub quest_all_list3 {
+	my ( $self, $args ) = @_;
+
+	# Long quest lists are split up over multiple packets. Only reset the quest list if we've switched maps.
+	our $quest_generation      ||= 0;
+	our $last_quest_generation ||= 0;
+	if ( $last_quest_generation != $quest_generation ) {
+		$last_quest_generation = $quest_generation;
+		$questList             = {};
+	}
+	
+	my ($questID, $active, $time_start, $time_expire, $mission_amount);
+	my ($hunt_id, $mob_type, $mob_id, $min_evel, $max_level, $mob_count, $mob_name);
+	my ($quest, $mission);
+	
+	my $msg = $args->{RAW_MSG};
+	my $headerlen = 8;
+	my $offset = $headerlen;
+	
+	my $quest_pack = 'V C V2 v';
+	my $quest_len = length pack $quest_pack;
+	
+	my $mission_pack = 'V3 v3 Z24';
+	my $mission_len = length pack $mission_pack;
+
+	for (my $i = 0 ; $i < $args->{amount} ; $i++) {
+		($questID, $active, $time_start, $time_expire, $mission_amount) = unpack($quest_pack, substr($msg, $offset, $quest_len));
+		
+		$quest = \%{$questList->{$questID}};
+		
+		$quest->{active} = $active;
+		$quest->{time_start} = $time_start;
+		$quest->{time_expire} = $time_expire;
+		$quest->{mission_amount} = $mission_amount;
+		
+		debug "$questID $active\n", "info";
+		
+		$offset += $quest_len;
+
+		for ( my $j = 0 ; $j < $mission_amount ; $j++ ) {
+			($hunt_id, $mob_type, $mob_id, $min_evel, $max_level, $mob_count, $mob_name) = unpack($mission_pack, substr($msg, $offset, $mission_len));
+			
+			$mission = \%{$quest->{missions}->{$mob_id}};
+			
+			$mission->{hunt_id} = $hunt_id;
+			$mission->{mob_type} = $mob_type;
+			$mission->{mob_id} = $mob_id;
+			$mission->{min_evel} = $min_evel;
+			$mission->{max_level} = $max_level;
+			$mission->{mob_count} = $mob_count;
+			$mission->{mob_name_original} = $mob_name;
+			$mission->{mob_name} = bytesToString($mob_name);
+			
+			$mission->{mission_index} = $j;
+			
+			debug "- $mob_id $mob_count / ? $mission->{mob_name}\n", "info";
+			
+			$offset += $mission_len;
+			
+			Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mission_id => $mob_id
+			});
+		}
 	}
 }
 
@@ -3661,20 +3798,47 @@ sub quest_all_list {
 sub quest_all_mission {
 	my ($self, $args) = @_;
 	
-	for (my $i = 8; $i < $args->{amount}*104+8; $i += 104) {
-		my ($questID, $time_start, $time_expire, $mission_amount) = unpack('V3 v', substr($args->{RAW_MSG}, $i, 14));
+	my ($questID, $time_start, $time_expire, $mission_amount);
+	my ($mobID, $count, $mobName);
+	my ($quest, $mission);
+	
+	my $msg = $args->{RAW_MSG};
+	my $headerlen = 8;
+	my $offset = $headerlen;
+	
+	my $quest_pack = 'V3 v';
+	my $quest_len = length pack $quest_pack;
+	
+	my $mission_pack = 'V v Z24';
+	my $mission_len = length pack $mission_pack;
+	
+	my $block_len = ($quest_len + ($mission_len * 3));
+	
+	for (my $i = 0 ; $i < $args->{amount} ; $i++) {
+		$offset = $headerlen + ($i * $block_len);
+		($questID, $time_start, $time_expire, $mission_amount) = unpack($quest_pack, substr($msg, $offset, $quest_len));
 		
-		my $quest = \%{$questList->{$questID}};
+		$quest = \%{$questList->{$questID}};
 		$quest->{time_start} = $time_start;
 		$quest->{time_expire} = $time_expire;
 		
+		$offset += $quest_len;
+		
 		for (my $j = 0; $j < $mission_amount; $j++) {
-			my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 14+$i+$j*30, 30));
-			my $mission = \%{$quest->{missions}->{$mobID}};
+			($mobID, $count, $mobName) = unpack($mission_pack, substr($msg, $offset, $mission_len));
+			
+			$mission = \%{$quest->{missions}->{$mobID}};
 			$mission->{mob_id} = $mobID;
 			$mission->{mob_count} = $count;
 			$mission->{mob_name_original} = $mobName;
 			$mission->{mob_name} = bytesToString($mobName);
+			
+			$mission->{mission_index} = $j;
+			
+			debug "- $mobID $count / ? $mobName\n", "info";
+			
+			$offset += $mission_len;
+			
 			Plugins::callHook('quest_mission_added', {
 				questID => $questID,
 				mission_id => $mobID
@@ -3692,6 +3856,8 @@ sub quest_add {
 	my $quest = \%{$questList->{$questID}};
 	
 	my $msg = $args->{RAW_MSG};
+	my $headerlen = 17;
+	my $offset = $headerlen;
 	
 	my $mission_pack;
 	my @mission_info;
@@ -3706,8 +3872,6 @@ sub quest_add {
 	
 	my $mission_len = length pack $mission_pack;
 	
-	my $headerlen = 17;
-	
 	$quest->{active} = $args->{active};
 	$quest->{time_start} = $args->{time_start};
 	$quest->{time_expire} = $args->{time_expire};
@@ -3718,8 +3882,6 @@ sub quest_add {
 	}
 	
 	for (my $i = 0; $i < $quest->{mission_amount}; $i++) {
-		my $offset = $headerlen + $i * $mission_len;
-		
 		my %mission;
 		
 		@mission{@mission_info} = unpack($mission_pack, substr($msg, $offset, $mission_len));
@@ -3728,6 +3890,10 @@ sub quest_add {
 		$mission{mob_name} = bytesToString($mission{mob_name_original});
 		
 		$quest->{missions}->{$mission{mob_id}} = \%mission;
+		
+		debug "- $mission{mob_id} $mission{mob_count} / ? $mission{mob_name}\n", "info";
+		
+		$offset += $mission_len;
 
 		Plugins::callHook('quest_mission_added', {
 			questID => $questID,
@@ -3814,6 +3980,8 @@ sub quest_update_mission_hunt {
 		
 		$mission->{mob_goal} = $mission{mob_goal};
 		$mission->{mob_count} = $mission{mob_count};
+		
+		debug "- $mission_id $mission->{mob_count} / $mission->{mob_goal} $mission->{mob_name}\n", "info";
 
 		Plugins::callHook('quest_mission_updated', {
 			questID => $mission{questID},
@@ -7048,61 +7216,6 @@ sub achievement_list {
 
 		$achievementList->{$achieve->{ach_id}} = $achieve;
 		message TF("Achievement %s added.\n", $achieve->{ach_id}), "info";
-	}
-}
-
-# 097a <packet len>.W <num>.L { <quest id>.L <active>.B <remaining time>.L <time>.L <count>.W { <mob_id>.L <killed>.W <total>.W <mob name>.24B }*count }*num (ZC_ALL_QUEST_LIST2)
-sub quest_all_list2 {
-	my ($self, $args) = @_;
-	
-	$questList = {};
-	
-	my ($questID, $active, $time_start, $time_expire, $mission_amount);
-	my ($mobID, $count, $amount, $mobName);
-	
-	my $msg = $args->{RAW_MSG};
-	my $headerlen = 8;
-	my $offset = $headerlen;
-	
-	my $quest_pack = 'V C V2 v';
-	my $quest_len = length pack $quest_pack;
-	
-	my $mission_pack = 'V v2 Z24';
-	my $mission_len = length pack $mission_pack;
-	
-	for (my $i = 0 ; $i < $args->{amount} ; $i++) {
-		($questID, $active, $time_start, $time_expire, $mission_amount) = unpack($quest_pack, substr($msg, $offset, $quest_len));
-		
-		my $quest = \%{$questList->{$questID}};
-		
-		$quest->{active} = $active;
-		$quest->{time_start} = $time_start;
-		$quest->{time_expire} = $time_expire;
-		$quest->{mission_amount} = $mission_amount;
-		
-		debug "$questID $active\n", "info";
-		
-		$offset += $quest_len;
-		
-		for (my $j = 0 ; $j < $mission_amount ; $j++) {
-			($mobID, $count, $amount, $mobName) = unpack($mission_pack, substr($msg, $offset, $mission_len));
-			
-			my $mission = \%{$quest->{missions}->{$mobID}};
-			$mission->{mob_id} = $mobID;
-			$mission->{mob_count} = $count;
-			$mission->{mob_goal} = $amount;
-			$mission->{mob_name_original} = $mobName;
-			$mission->{mob_name} = bytesToString($mobName);
-			$mission->{mission_index} = $j;
-			
-			debug "- $mobID $count / $amount $mobName\n", "info";
-			
-			$offset += $mission_len;
-			Plugins::callHook('quest_mission_added', {
-				questID => $questID,
-				mission_id => $mobID
-			});
-		}
 	}
 }
 
