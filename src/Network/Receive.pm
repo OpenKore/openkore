@@ -3777,14 +3777,17 @@ sub quest_update_mission_hunt {
 		my $quest = \%{$questList->{$mission{questID}}};
 		
 		my $mission;
+		my $mission_id;
 		
 		# Mission is saved as hunt_id and server sent hunt_id
 		if (exists $mission{hunt_id} && exists $quest->{missions}->{$mission{hunt_id}}) {
 			$mission = \%{$quest->{missions}->{$mission{hunt_id}}};
+			$mission_id = $mission{hunt_id};
 		
 		# Mission is saved as mob_id and server sent mob_id
 		} elsif (exists $mission{mob_id} && exists $quest->{missions}->{$mission{mob_id}}) {
 			$mission = \%{$quest->{missions}->{$mission{mob_id}}};
+			$mission_id = $mission{mob_id};
 		
 		# Mission is saved as hunt_id and server sent mob_id
 		} elsif (exists $mission{mob_id} && !exists $quest->{missions}->{$mission{mob_id}}) {
@@ -3792,6 +3795,7 @@ sub quest_update_mission_hunt {
 			foreach my $current_key (keys %{$quest->{missions}}) {
 				if (exists $quest->{missions}->{$current_key}{mob_id} && $quest->{missions}->{$current_key}{mob_id} == $mission{mob_id}) {
 					$mission = \%{$quest->{missions}->{$current_key}};
+					$mission_id = $mission{mob_id};
 					last;
 				}
 			}
@@ -3802,6 +3806,7 @@ sub quest_update_mission_hunt {
 			foreach my $current_key (keys %{$quest->{missions}}) {
 				if (exists $quest->{missions}->{$current_key}{hunt_id} && $quest->{missions}->{$current_key}{hunt_id} == $mission{hunt_id}) {
 					$mission = \%{$quest->{missions}->{$current_key}};
+					$mission_id = $mission{hunt_id};
 					last;
 				}
 			}
@@ -3812,7 +3817,7 @@ sub quest_update_mission_hunt {
 
 		Plugins::callHook('quest_mission_updated', {
 			questID => $mission{questID},
-			mission_id => $current_key,
+			mission_id => $mission_id,
 			mobID => $mission{mob_id},
 			count => $mission{mob_count},
 			goal => $mission{mob_goal}
