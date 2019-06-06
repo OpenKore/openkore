@@ -2580,6 +2580,10 @@ sub quest_all_list3 {
 			debug "- $mobID $count / $amount $mobName\n", "info";
 			
 			$offset += $mission_len;
+			Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mission_id => $mobID
+			});
 		}
 	}
 }

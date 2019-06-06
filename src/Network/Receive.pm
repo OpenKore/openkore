@@ -3812,6 +3812,7 @@ sub quest_update_mission_hunt {
 
 		Plugins::callHook('quest_mission_updated', {
 			questID => $mission{questID},
+			mission_id => $current_key,
 			mobID => $mission{mob_id},
 			count => $mission{mob_count},
 			goal => $mission{mob_goal}
@@ -7092,6 +7093,10 @@ sub quest_all_list2 {
 			debug "- $mobID $count / $amount $mobName\n", "info";
 			
 			$offset += $mission_len;
+			Plugins::callHook('quest_mission_added', {
+				questID => $questID,
+				mission_id => $mobID
+			});
 		}
 	}
 }
