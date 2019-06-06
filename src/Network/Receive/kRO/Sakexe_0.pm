@@ -422,9 +422,9 @@ sub new {
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
 		'02B1' => ['quest_all_list', 'v V', [qw(len amount)]], # -1
 		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]], # -1
-		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]], # 107
+		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time_start time_expire mission_amount)]], # 107
 		'02B4' => ['quest_delete', 'V', [qw(questID)]], # 6
-		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],#-1
+		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount mobInfo)]],#-1
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]], # 7
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
 		'02B9' => ['hotkeys'], # 191 # hotkeys:27
@@ -544,7 +544,7 @@ sub new {
 		'096D' => ['merge_item_open', 'v a*', [qw(length itemList)]], #-1
 		'096F' => ['merge_item_result', 'a2 v C', [qw(itemIndex total result)]], #5
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
-		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
+		'097A' => ['quest_all_list2', 'v V', [qw(len amount)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
 		'0988' => ['clan_user', 'v2' ,[qw(onlineuser totalmembers)]],

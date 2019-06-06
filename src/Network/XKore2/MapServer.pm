@@ -217,10 +217,10 @@ sub send_quest_info {
 		$mi = 0;
 		foreach my $mobID (keys %{$quest->{missions}}) {
 			my $mission = $quest->{missions}->{$mobID};
-			$tmp = pack('V v Z24', $mission->{mobID}, $mission->{count}, $mission->{mobName_org});
+			$tmp = pack('V v Z24', $mission->{mob_id}, $mission->{mob_count}, $mission->{mob_name_original});
 			$mi++;
 		}
-		$m_output .= pack('V3 v a90', $questID, $quest->{time_start}, $quest->{time}, $mi, $tmp);
+		$m_output .= pack('V3 v a90', $questID, $quest->{time_start}, $quest->{time_expire}, $mi, $tmp);
 		$k++;
 	}
 	if ($k > 0 && length($q_output) > 0) {

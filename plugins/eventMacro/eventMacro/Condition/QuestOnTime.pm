@@ -8,7 +8,7 @@ use base 'eventMacro::Condition';
 
 # Using 'inventory_ready' is not optimal, but it works.
 sub _hooks {
-	['packet/received_sync','packet_mapChange','inventory_ready','packet/quest_all_list2','packet/quest_all_list','packet/quest_all_mission','packet/quest_add','packet/quest_delete','packet/quest_update_mission_hunt','packet/quest_active'];
+	['packet_mapChange','inventory_ready','packet/quest_all_list','packet/quest_all_list2','packet/quest_all_list3','packet/quest_all_mission','packet/quest_add','packet/quest_delete','packet/quest_update_mission_hunt','packet/quest_active'];
 }
 
 sub _parse_syntax {
@@ -73,8 +73,8 @@ sub check_quests {
 		next unless (exists $questList->{$quest_ID});
 		next unless (exists $questList->{$quest_ID}->{active});
 		next unless ($questList->{$quest_ID}->{active});
-		next unless (exists $questList->{$quest_ID}->{time});
-		next unless ($questList->{$quest_ID}->{time} > time);
+		next unless (exists $questList->{$quest_ID}->{time_expire});
+		next unless ($questList->{$quest_ID}->{time_expire} > time);
 		
 		$self->{fulfilled_ID} = $quest_ID;
 		$self->{fulfilled_member_index} = $member_index;
