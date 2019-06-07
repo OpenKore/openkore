@@ -22520,3 +22520,45 @@ Get Mema Coco's Groceries.#
 Mema Coco wants you to go into Knut's dreams and get rid of the demon possessing him.#
 
 Help rid the demon in Knut's dreams.#
+
+
+//Illusion of Frozen
+15110#Fighting Ice with Fire#SG_FEEL#QUE_NOIMAGE#
+Collect Dry Twigs to thaw out Zeith and Vrid in the Ice Cave.#
+Collect 10 Dry Twigs.#
+
+15111#Hunt Furious Ice Titans#SG_FEEL#QUE_NOIMAGE#
+Vrid wants to break the ice with ice. Hunt 10 Furious Ice Titans.#
+Hunt 10 Furious Ice Titans.#
+
+15112#Direct Approach#SG_FEEL#QUE_NOIMAGE#
+Let's just break the ice by hitting it. Hit the ice around Zeith first.#
+Hit Zeith to break the ice around him.#
+
+15113#Direct Approach#SG_FEEL#QUE_NOIMAGE#
+Let's just break the ice by hitting it. Hit the ice around Vrid first.#
+Hit Vrid to break the ice around him.#
+
+15114#Catch a Strange Lizard#SG_FEEL#QUE_NOIMAGE#
+Vrid and Zeith want to get revenge on the strange lizard that froze them. Eliminate Ktullanux in the center of the cave.#
+Eliminate Awakened Ktullanux.#
+
+15115#Vrid and Zeith#SG_FEEL#QUE_NOIMAGE#
+You can re-receive this quest after 4:00 a.m.#
+Quest resets at 4:00 a.m.#
+
+15116#Clear the Illusion of the Frozen#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+15117#Hunt Furious Gazetis#SG_FEEL#QUE_NOIMAGE#
+Vrid wants to break the ice with ice. Hunt 10 Furious Gazetis.#
+Hunt 10 Furious Gazetis.#
+
+15118#Hunt Furious Snowiers#SG_FEEL#QUE_NOIMAGE#
+Vrid wants to break the ice with ice. Hunt 10 Furious Snowiers.#
+Hunt 10 Furious Snowiers.#
+
+15119#Hunt Hard Icicles#SG_FEEL#QUE_NOIMAGE#
+Vrid wants to break the ice with ice. Hunt 10 Hard Icicles.#
+Hunt 10 Hard Icicles.#
