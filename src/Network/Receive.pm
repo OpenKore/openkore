@@ -3738,7 +3738,7 @@ sub quest_all_list3 {
 	}
 	
 	my ($questID, $active, $time_start, $time_expire, $mission_amount);
-	my ($hunt_id, $mob_type, $mob_id, $min_evel, $max_level, $mob_count, $mob_name);
+	my ($hunt_id, $mob_type, $mob_id, $min_level, $max_level, $mob_count, $mob_name);
 	my ($quest, $mission);
 	
 	my $msg = $args->{RAW_MSG};
@@ -3766,14 +3766,14 @@ sub quest_all_list3 {
 		$offset += $quest_len;
 
 		for ( my $j = 0 ; $j < $mission_amount ; $j++ ) {
-			($hunt_id, $mob_type, $mob_id, $min_evel, $max_level, $mob_count, $mob_name) = unpack($mission_pack, substr($msg, $offset, $mission_len));
+			($hunt_id, $mob_type, $mob_id, $min_level, $max_level, $mob_count, $mob_name) = unpack($mission_pack, substr($msg, $offset, $mission_len));
 			
 			$mission = \%{$quest->{missions}->{$mob_id}};
 			
 			$mission->{hunt_id} = $hunt_id;
 			$mission->{mob_type} = $mob_type;
 			$mission->{mob_id} = $mob_id;
-			$mission->{min_evel} = $min_evel;
+			$mission->{min_level} = $min_level;
 			$mission->{max_level} = $max_level;
 			$mission->{mob_count} = $mob_count;
 			$mission->{mob_name_original} = $mob_name;
@@ -3864,7 +3864,7 @@ sub quest_add {
 	
 	if ($args->{switch} eq '09F9') {
 		$mission_pack = 'V3 v3 Z24';
-		@mission_info = qw(hunt_id mob_type mob_id min_evel max_level mob_count mob_name_original);
+		@mission_info = qw(hunt_id mob_type mob_id min_level max_level mob_count mob_name_original);
 	} else {
 		$mission_pack = 'V v Z24';
 		@mission_info = qw(mob_id mob_count mob_name_original);
