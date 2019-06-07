@@ -74,6 +74,7 @@ sub check_quests {
 		next unless (exists $questList->{$quest_ID}->{active});
 		next unless ($questList->{$quest_ID}->{active});
 		next unless (exists $questList->{$quest_ID}->{time_expire});
+		next unless ($questList->{$quest_ID}->{time_expire} > 0);
 		next unless ($questList->{$quest_ID}->{time_expire} < time);
 		
 		$self->{fulfilled_ID} = $quest_ID;
