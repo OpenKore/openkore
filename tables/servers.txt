@@ -171,7 +171,7 @@ charBlockSize 145
 pauseCharLogin 1
 patchserver ropatch1.gravityus.com
 patchpath /repatch
-sendCryptKeys 0x23DB2D35, 0x40721112, 0x09DA6317
+sendCryptKeys 0x023B2EEA, 0x03336445, 0x4A3E6664
 rankingSystemType 1
 
 # TODO: needs a servertype & table folder
