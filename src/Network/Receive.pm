@@ -3748,7 +3748,7 @@ sub quest_all_list3 {
 	my $quest_pack = 'V C V2 v';
 	my $quest_len = length pack $quest_pack;
 	
-	my $mission_pack = 'V3 v3 Z24';
+	my $mission_pack = 'V3 v4 Z24';
 	my $mission_len = length pack $mission_pack;
 
 	for (my $i = 0 ; $i < $args->{amount} ; $i++) {
@@ -3766,7 +3766,7 @@ sub quest_all_list3 {
 		$offset += $quest_len;
 
 		for ( my $j = 0 ; $j < $mission_amount ; $j++ ) {
-			($hunt_id, $mob_type, $mob_id, $min_level, $max_level, $mob_count, $mob_name) = unpack($mission_pack, substr($msg, $offset, $mission_len));
+			($hunt_id, $mob_type, $mob_id, $min_level, $max_level, $mob_count, $mob_goal, $mob_name) = unpack($mission_pack, substr($msg, $offset, $mission_len));
 			
 			$mission = \%{$quest->{missions}->{$mob_id}};
 			
@@ -3776,12 +3776,13 @@ sub quest_all_list3 {
 			$mission->{min_level} = $min_level;
 			$mission->{max_level} = $max_level;
 			$mission->{mob_count} = $mob_count;
+			$mission->{mob_goal} = $mob_goal;
 			$mission->{mob_name_original} = $mob_name;
 			$mission->{mob_name} = bytesToString($mob_name);
 			
 			$mission->{mission_index} = $j;
 			
-			debug "- $mob_id $mob_count / ? $mission->{mob_name}\n", "info";
+			debug "- $mob_id $mob_count / $mob_goal $mission->{mob_name}\n", "info";
 			
 			$offset += $mission_len;
 			
