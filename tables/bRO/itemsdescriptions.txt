@@ -21671,30 +21671,29 @@ Equipa em: ^777777Equipamento para Cabeça^000000
 Peso ^7777771^000000
 #
 4601#
-^0000ffDano físico +15%.^000000
-^0000ffDano mágico +15%.^000000
-^0000ffDrena 666 de HP e 66 de SP do usuário a cada 4 segundos.^000000
+^0000ffDano físico e mágico +15%.^000000
+A cada 4 segundos:
+^0000ffDrena 666 de HP e 66 de SP do usuário.^000000
 Ao desequipar:
-^0000ffDrena 6.666 de HP e 666 de SP.^000000
+^0000ffDrena 6.666 de HP e 666 de SP do usuário.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4602#
-^0000ffDano físico +20%.^000000
-^0000ffDano mágico +20%.^000000
+^0000ffDano físico e mágico +20%.^000000
 A cada 6 segundos:
 ^0000ffDrena 666 de HP e 66 de SP do usuário.^000000
 Ao desequipar:
-^0000ffDrena 6.666 de HP e 666 de SP.^000000
-Tipo :  ^777777Carta^000000
+^0000ffDrena 6.666 de HP e 666 de SP do usuário.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4603#
 ^0000ffATQ +20.^000000
 Ao realizar ataques físicos:
-^0000ffAlta chance de autoconjurar [Espírito dos Amaldiçoados] nv. 1, [Olhar da Medusa] nv. 1 ou [Sussurro de Morfeu] nv. 1.^000000
+^0000ff5% de chance de autoconjurar [Espírito dos Amaldiçoados], [Olhar da Medusa] ou [Sussurro de Morfeu] nv. 1.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
@@ -21702,8 +21701,8 @@ Peso: ^7777771^000000
 4604#
 ^0000ffATQ +30.^000000
 Ao realizar ataques físicos:
-^0000ff2% de chance de autoconjurar [Espírito dos Amaldiçoados] nv. 1, [Olhar da Medusa] nv. 1 ou [Sussurro de Morfeu] nv. 1.^000000
-Tipo :  ^777777Carta^000000
+^0000ff5% de chance de autoconjurar [Espírito dos Amaldiçoados], [Olhar da Medusa] ou [Sussurro de Morfeu] nv. 2.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
@@ -34584,8 +34583,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000020.05.2019.^000000
-Este item será removido no dia ^ff000021.05.2019.^000000
+Promoção limitada até o dia ^ff000017.06.2019.^000000
+Este item será removido no dia ^ff000018.06.2019.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -54735,6 +54734,7 @@ Classes : ^777777Todas^000000
 #
 19811#
 Dizem que essa bebida gourmet foi “batizada”, mas ninguém sabe ao certo o que esse termo significa. Com um sabor estranhamente amargo, nem parece guaraná... Aliás, será que é guaraná mesmo?
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode se transferido para o armazém^000000
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Nível Necessário: ^7777771^000000
@@ -55434,6 +55434,15 @@ Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+20016#
+Uma suculenta lagosta, acompanhada de folhas bem temperadas e um drink maravilhoso. Um banquetão desses é pra você devorar? Não! É pra colocar na cabeça e dar água na boca de todo mundo. Mas cuidado, talvez você acabe se tornando um alvo mais interessante pros monstros...
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 20023#
 Objeto que um dia pertenceu a um bravo soldado, essa boina é muito mais do que a peça de um uniforme militar – é símbolo de coragem e força.  Pode ser até que você sinta uma estranha vontade de bater continência com ela na cabeça, mas é completamente normal.
 Tipo: ^777777Visual^000000
@@ -55483,6 +55492,15 @@ Uma rosa azul que possui a fragrância da morte, usada como arma pelo cavaleiro 
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes que utilizam: ^777777Todas^000000
+#
+20037#
+Adote o visual de elite com essa cartola extremamente elegante e despojada, mas viva sabendo que se você está usando esse chapelão, algum Duque Coruja está por aí com seu cocuruto à mostra.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
@@ -57630,6 +57648,26 @@ Peso: ^77777730^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
+20922#
+Este manto emana as forças da água e foi confeccionado com inspiração em uma serpente marinha mitológica, temida pelos sete mares.
+^0000ffDEFM +5.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Água +15%.^000000
+A cada refino:
+^0000ffVelocidade de ataque +1%.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Água +1%.^000000
+Refino +11 ou mais:
+^0000ffResistência a propriedade Água +75%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Sapo Cururu]^000000
+^0000ffHP máx. +10%.^000000
+^0000ffDEFM +10 adicional.^000000
+^0000ffResistência a propriedade Neutro +20%.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777718^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 20939#
 Manto indispensável para um Senhor do Tempo. Basta equipá-lo, entrar na sua cabine telefônica e viajar rumo a aventuras espaço-temporais.
 ^0000ffEsquiva +30.^000000
@@ -57645,6 +57683,26 @@ Tipo: ^777777Capa^000000
 Defesa: ^77777730^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+20941#
+Este manto emana as forças do fogo e foi confeccionado com inspiração em um pássaro flamejante lendário e famoso por se erguer a partir das próprias cinzas.
+^0000ffDEFM +5.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Fogo +15%.^000000
+A cada refino:
+^0000ffVelocidade de ataque +1%.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Fogo +1%.^000000
+Refino +11 ou mais:
+^0000ffResistência a propriedade Fogo +75%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Mastering]^000000
+^0000ffEsquiva +20.^000000
+^0000ffDEFM +10 adicional.^000000
+^0000ffResistência a propriedade Neutro +20%.^000000
+Tipo: ^777777Capa^000000
+Defesa: ^77777718^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 21000#
@@ -60152,6 +60210,79 @@ A cada ataque:
 ^0000ffRecupera 5 de SP.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Equipamento para cabeça^000000
+Peso: ^7777771^000000
+#
+27163#
+^0000ffAGI e DES^000000 ^ff0000-1.^000000
+^0000ffVelocidade de ataque +3%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Verme Sombrio]^000000
+^0000ffAGI e DES +2.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+27164#
+^0000ffCRIT +15.^000000
+^0000ffHP máx.^000000 ^ff0000-10%.^000000
+A cada refino:
+^0000ffCRIT +1.^000000
+^0000ffDano crítico +1%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+27165#
+^0000ffVIT e INT^000000 ^ff0000-1.^000000
+^0000ffPós-conjuração -3%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Verme com Rosto]^000000
+^0000ffVIT e INT +2.^000000
+^0000ffPós-conjuração -3% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
+Peso: ^7777771^000000
+#
+27166#
+^0000ffResistência a propriedade Fogo +2%.^000000
+Refino +7 ou mais:
+^0000ffResistência a propriedade Fogo +1% adicional.^000000
+Refino +9 ou mais:
+^0000ffResistência a propriedade Fogo +2% adicional.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Larva de Verme]^000000
+^0000ffDano mágico contra oponentes de propriedade Fogo +10%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Calçado^000000
+Peso: ^7777771^000000
+#
+27167#
+^0000ffResistência a propriedade Neutro +15%.^000000
+A cada refino:
+^0000ffDano mágico de propriedade Água +3%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Carta Ovo de Verme]^000000
+^0000ffResistência a propriedade Neutro +5% adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777771^000000
+#
+27168#
+^0000ffPrecisão +10.^000000
+A cada 3 refinos:
+^0000ffPrecisão +5.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777771^000000
+#
+27169#
+^0000ffATQ e ATQM +5.^000000
+Lança com refino +10 ou mais:
+^0000ffATQ e ATQM +20 adicional.^000000
+Lança com refino +14 ou mais:
+^0000ffATQ e ATQM +20 adicional.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 28000#
@@ -62752,6 +62883,78 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31226#
+Apliques maravilhosos pertencentes a uma cantora digital de muito sucesso em Amatsu. Seu azul “royal” reflete a sua fama como uma rainha da música.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31227#
+Marias-chiquinhas gigantescas que são muito conhecidas por uma celebridade de Amatsu. O ruivo intenso reluz intensamente sob os holofotes!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31228#
+Um penteado dourado que vai te deixar fabuloso (ou fabulosa) da cabeça aos pés. O ouro representa o primeiro lugar, e é lá que você pertence.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31229#
+Uma popstar de Amatsu ditou a moda e agora todo mundo quer usar esse tom de verde. Não se deixe enganar pelo nome “natureba”; essa aqui é só pra quem tá por dentro!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31230#
+Você queria uma versão mais modesta da Peruca Miku? Sentimos muito! Essa pode até ser uma cor mais discreta, mas você ainda vai chamar a atenção de Odin e o mundo mesmo assim!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31231#
+Hipsters de verdade vão amar essa variação da Peruca Miku. Sabemos que platinar o cabelo é um processo chato e difícil de fazer direito, então aproveite esses apliques!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31232#
+Mostre todo o seu apoio e amor incondicional à Miku com uma peruca de tingimento mais discreto que não abre a mão de toda a excentricidade desse penteado longo e fabuloso.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31233#
+Quer chegar chegando? Ser notado por tudo e todos? Então é esse penteado que você busca! Com um tom “cheguei” desses, essa peruca vai passar muito bem a mensagem de que você chegou pra causar.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31244#
 Um visual que demonstra que você é fã do famoso grupo de heroínas conhecido como Falcoeiras de Rapina. Nele, você vê o brasão da sentinela oráculo conhecida como Barbaria Gordin (ou Familiar Girl), que lutava ao lado da Condor Negro e da Caçadora (que depois evoluiu e virou Atiradora de Elite).
 Tipo: ^777777Visual^000000
@@ -62943,6 +63146,15 @@ Classes: ^777777Todas^000000
 Esta peruca azul é o mais novo destaque da coleção de perucas Waifu, desenvolvidas pelo famoso cabeleireiro de Amatsu, Delso Kamyura. Feitas especialmente sob encomenda, estas perucas completamente sedosas farão com que todos acreditem que você é a Waifu prometida enviada pelos deuses.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31386#
+Assim como planetas orbitam em torno do Sol, esses artefatos vão flutuar ao seu redor. Quer prova maior que essa de que você é o centro das atenções, da vida, do universo e tudo mais?
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -63193,6 +63405,14 @@ Classes: ^777777Todas^000000
 De primeira ele parece esquisito e gelatinoso demais para um cachecol, mas não se deixe levar por primeiras impressões. Com a textura de um Poring por fora, ele se encaixa perfeitamente no seu pescoço, e por dentro é forrado de uma lã bem quentinha e aconchegante. É vantagem dupla!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31491#
+Uma bela felina amarelinha que a seguirá independentemente de onde você for. Mas seu nome já entrega sua fama – essa gatinha vai estar atrás de comida o tempo inteiro!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000

@@ -2216,3 +2216,12 @@ vday19dd.rsw#airplane.rsw#
 fool19.gat#izlu2dun.gat#
 fool19.rsw#izlu2dun.rsw#
 삯샺샎엍웤샌붺\map\fool19.bmp#삯샺샎엍웤샌붺\map\izlu2dun.bmp#
+
+bat_a03.gnd#bat_a01.gnd#
+bat_a03.gat#bat_a01.gat#
+bat_a03.rsw#bat_a01.rsw#
+삯샺샎엍웤샌붺\map\bat_a03.bmp#삯샺샎엍웤샌붺\map\bat_a01.bmp#
+bat_b03.gnd#bat_b01.gnd#
+bat_b03.gat#bat_b01.gat#
+bat_b03.rsw#bat_b01.rsw#
+삯샺샎엍웤샌붺\map\bat_b03.bmp#삯샺샎엍웤샌붺\map\bat_b01.bmp#

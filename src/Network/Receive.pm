@@ -8805,4 +8805,14 @@ sub open_store_status {
 	}
 }
 
+sub stylist_res {
+	my ($self, $args) = @_;
+	
+	if ($args->{res}) {
+		message T("[Stylist UI] Success.\n"), "info";
+	} else {
+		error T("[Stylist UI] Fail.\n");
+	}
+}
+
 1;
