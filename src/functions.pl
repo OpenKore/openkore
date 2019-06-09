@@ -428,6 +428,7 @@ sub promptFirstTimeInformation {
 
 sub processServerSettings {
 	my $filename = shift;
+	exit(0) if ($Settings::travis_ci);
 	# Select Master server on Demand
 
 	if ($config{master} eq "" || $config{master} =~ /^\d+$/ || !exists $masterServers{$config{master}}) {
@@ -554,7 +555,6 @@ sub finalInitialization {
 	Log::message("\n");
 
 	Log::message("Initialized, use 'connect' to continue\n") if $Settings::no_connect;
-	exit if ($Settings::travis_ci);
 	Plugins::callHook('initialized');
 	XSTools::initVersion();
 }
