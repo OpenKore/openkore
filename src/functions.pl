@@ -554,7 +554,7 @@ sub finalInitialization {
 	Log::message("\n");
 
 	Log::message("Initialized, use 'connect' to continue\n") if $Settings::no_connect;
-
+	exit if ($Settings::travis_ci);
 	Plugins::callHook('initialized');
 	XSTools::initVersion();
 }

@@ -1,0 +1,19 @@
+language: perl
+perl:
+   - "5.12"
+
+before_install:
+   - git clone git://github.com/haarg/perl-travis-helper
+   - source perl-travis-helper/init
+   - build-perl
+   - perl -V
+   - sudo apt-get install -y libgmp-dev
+   - sudo apt-get install -y build-essential g++
+   - sudo apt-get install -y libreadline6-dev
+
+install:
+   - cpanm --quiet --notest Time::HiRes
+   - cpanm --quiet --notest Compress::Zlib
+
+script:
+   - perl openkore.pl --travis-ci
