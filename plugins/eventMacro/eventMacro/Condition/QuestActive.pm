@@ -8,7 +8,7 @@ use base 'eventMacro::Condition';
 
 # Using 'inventory_ready' is not optimal, but it works.
 sub _hooks {
-	['packet_mapChange','inventory_ready','packet/quest_all_list2','packet/quest_all_list','packet/quest_all_mission','packet/quest_add','packet/quest_delete','packet/quest_update_mission_hunt','packet/quest_active'];
+	['packet_mapChange','inventory_ready','packet/quest_all_list','packet/quest_all_list2','packet/quest_all_list3','packet/quest_all_mission','packet/quest_add','packet/quest_delete','packet/quest_update_mission_hunt','packet/quest_active'];
 }
 
 sub _parse_syntax {

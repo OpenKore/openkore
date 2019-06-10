@@ -204,11 +204,11 @@ sub getQuestStatus {
 		my $quest = $questList->{$quest_id};
 		if ( !$quest || !$quest->{active} ) {
 			$result->{$quest_id} = 'inactive';
-		} elsif ( $quest->{time} && $quest->{time} > time ) {
+		} elsif ( $quest->{time_expire} && $quest->{time_expire} > time ) {
 			$result->{$quest_id} = 'incomplete';
-        } elsif ( grep { $_->{goal} && $_->{count} < $_->{goal} } values %{ $quest->{missions} } ) {
+        } elsif ( grep { $_->{mob_goal} && $_->{mob_count} < $_->{mob_goal} } values %{ $quest->{missions} } ) {
 			$result->{$quest_id} = 'incomplete';
-        } elsif ( grep { !$_->{goal} && $_->{count} == 0 } values %{ $quest->{missions} } ) {
+        } elsif ( grep { !$_->{mob_goal} && $_->{mob_count} == 0 } values %{ $quest->{missions} } ) {
 			$result->{$quest_id} = 'incomplete';
 		} else {
 			$result->{$quest_id} = 'complete';

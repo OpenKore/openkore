@@ -35,13 +35,15 @@ sub onstart2 {
 sub onAdd {
 	my ($self, $args) = @_;
 	
-	message "[killcountFix] New mission added without goal. Quest id: '".$args->{'questID'}."' | Mob id: '".$args->{'mobID'}."'\n", "system";
+	return if (exists $questList->{$args->{'questID'}}{'missions'}{$args->{'mission_id'}}{'mob_goal'});
 	
-	if (exists $quests_kill_count{$args->{'questID'}} && exists $quests_kill_count{$args->{'questID'}}{$args->{'mobID'}}) {
-		$questList->{$args->{'questID'}}{'missions'}{$args->{'mobID'}}{'goal'} = $quests_kill_count{$args->{'questID'}}{$args->{'mobID'}};
-		message "[killcountFix] Setting hunt goal to '".$quests_kill_count{$args->{'questID'}}{$args->{'mobID'}}."' using data file information.\n", "system";
+	message "[killcountFix] New mission added without goal. Quest id: '".$args->{'questID'}."' | Mob id: '".$args->{'mission_id'}."'\n", "system";
+	
+	if (exists $quests_kill_count{$args->{'questID'}} && exists $quests_kill_count{$args->{'questID'}}{$args->{'mission_id'}}) {
+		$questList->{$args->{'questID'}}{'missions'}{$args->{'mission_id'}}{'mob_goal'} = $quests_kill_count{$args->{'questID'}}{$args->{'mission_id'}};
+		message "[killcountFix] Setting hunt goal to '".$quests_kill_count{$args->{'questID'}}{$args->{'mission_id'}}."' using data file information.\n", "system";
 	} else {
-		message "[killcountFix] Data file has no information on questID '".$args->{'questID'}."' and MobID '".$args->{'mobID'}."'.\n", "system";
+		message "[killcountFix] Data file has no information on questID '".$args->{'questID'}."' and MobID '".$args->{'mission_id'}."'.\n", "system";
 		message "[killcountFix] Data file will be updated once you kill the first mob.\n", "system";
 	}
 	
@@ -51,11 +53,11 @@ sub onAdd {
 sub onUpdate {
 	my ($self, $args) = @_;
 	if (
-	  !exists $quests_kill_count{$args->{'questID'}} ||                              # Received questID isn't in %quests_kill_count
-	  !exists $quests_kill_count{$args->{'questID'}}{$args->{'mobID'}} ||            # Received mobID from quest questID isn't in %quests_kill_count
-	  $quests_kill_count{$args->{'questID'}}{$args->{'mobID'}} != $args->{'goal'}    # Received quest goal is different from %quests_kill_count
+	  !exists $quests_kill_count{$args->{'questID'}} ||                                   # Received questID isn't in %quests_kill_count
+	  !exists $quests_kill_count{$args->{'questID'}}{$args->{'mission_id'}} ||            # Received mobID from quest questID isn't in %quests_kill_count
+	  $quests_kill_count{$args->{'questID'}}{$args->{'mission_id'}} != $args->{'goal'}    # Received quest goal is different from %quests_kill_count
 	){
-		updateQuestsKillcount(Settings::getTableFilename($filename), $args->{'questID'}, $args->{'mobID'}, $args->{'goal'});
+		updateQuestsKillcount(Settings::getTableFilename($filename), $args->{'questID'}, $args->{'mission_id'}, $args->{'goal'});
 	}
 }
 
@@ -78,12 +80,12 @@ sub parseROQuestsKillcount {
 }
 
 sub updateQuestsKillcount {
-	my ($file, $questID, $mobID, $goal) = @_;
+	my ($file, $questID, $mission_id, $goal) = @_;
 
-	$quests_kill_count{$questID}{$mobID} = $goal;
+	$quests_kill_count{$questID}{$mission_id} = $goal;
 
 	message "[killcountFix] Updating data file to add or update quest information\n", "system";
-	message "[killcountFix] Adding goal of ".$goal." to mobID ".$mobID." in questID ".$questID."\n", "system";
+	message "[killcountFix] Adding goal of ".$goal." to mobID ".$mission_id." in questID ".$questID."\n", "system";
 
 	open REWRITE, ">:utf8", $file;
 	print REWRITE to_json(\%quests_kill_count, {utf8 => 1, pretty => 1});
