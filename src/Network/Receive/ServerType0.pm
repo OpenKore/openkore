@@ -405,11 +405,11 @@ sub new {
 		# Packet Prefix encryption Support
 		'02AE' => ['initialize_message_id_encryption', 'V2', [qw(param1 param2)]],
 		# tRO new packets (2008-09-16Ragexe12_Th)
-		'02B1' => ['quest_all_list', 'v V', [qw(len amount)]],
-		'02B2' => ['quest_all_mission', 'v V', [qw(len amount)]],				# var len
-		'02B3' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]],
+		'097A' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
+		'02B2' => ['quest_all_mission', 'v V a*', [qw(len mission_amount message)]],
+		'02B3' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'02B4' => ['quest_delete', 'V', [qw(questID)]],
-		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],		# var len
+		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]],
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]],
 		'02B9' => ['hotkeys', 'a*', [qw(hotkeys)]],
@@ -549,7 +549,7 @@ sub new {
 		'0975' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0976' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
-		'097A' => ['quest_all_list2', 'v3 a*', [qw(len count unknown message)]],
+		'097A' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'097B' => ['rates_info2', 's V3 a*', [qw(len exp death drop detail)]],
 		'097D' => ['top10', 'v a*', [qw(type message)]],
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
@@ -595,9 +595,9 @@ sub new {
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
 		'09F7' => ['homunculus_property', 'Z24 C v12 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
-		'09F8' => ['quest_all_list3', 'v3 a*', [qw(len count unknown message)]],
-		'09F9' => ['quest_add', 'V C V2 v', [qw(questID active time_start time amount)]],
-		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len amount mobInfo)]],
+		'097A' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
+		'09F9' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
+		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
 		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font opt4 name)]],
@@ -2526,48 +2526,6 @@ sub skill_post_delaylist2 {
 		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
 
 		$char->setStatus($skillName." ".$status, 1, $remainDelay);
-	}
-}
-
-sub quest_all_list3 {
-	my ( $self, $args ) = @_;
-
-	# Long quest lists are split up over multiple packets. Only reset the quest list if we've switched maps.
-	our $quest_generation      ||= 0;
-	our $last_quest_generation ||= 0;
-	if ( $last_quest_generation != $quest_generation ) {
-		$last_quest_generation = $quest_generation;
-		$questList             = {};
-	}
-
-	my $i = 0;
-	while ( $i < $args->{RAW_MSG_SIZE} - 8 ) {
-		my ( $questID, $active, $time_start, $time, $mission_amount ) = unpack( 'V C V2 v', substr( $args->{message}, $i, 15 ) );
-		$i += 15;
-
-		$questList->{$questID}->{active} = $active;
-		debug "$questID $active\n", "info";
-
-		my $quest = \%{ $questList->{$questID} };
-		$quest->{time_start}     = $time_start;
-		$quest->{time}           = $time;
-		$quest->{mission_amount} = $mission_amount;
-		debug "$questID $time_start $time $mission_amount\n", "info";
-
-		if ( $mission_amount > 0 ) {
-			for ( my $j = 0 ; $j < $mission_amount ; $j++ ) {
-				my ( $conditionID, $mobID, $count, $goal, $mobName ) = unpack( 'V x4 V x4 v2 Z24', substr( $args->{message}, $i, 44 ) );
-				$i += 44;
-				my $mission = \%{ $quest->{missions}->{$conditionID} };
-				$mission->{conditionID} = $conditionID;
-				$mission->{mobID}       = $mobID;
-				$mission->{count}       = $count;
-				$mission->{goal}        = $goal;
-				$mission->{mobName_org} = $mobName;
-				$mission->{mobName}     = bytesToString( $mobName );
-				debug "- $mobID $count / $goal $mobName\n", "info";
-			}
-		}
 	}
 }
 

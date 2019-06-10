@@ -6452,11 +6452,11 @@ sub cmdQuest {
 		foreach my $questID (keys %{$questList}) {
 			my $quest = $questList->{$questID};
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x4), ('<'x30), ('<'x10), ('<'x24)),
-				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $quest->{time} ? scalar localtime $quest->{time} : '']);
+				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $quest->{time_expire} ? scalar localtime $quest->{time_expire} : '']);
 			foreach my $mobID (keys %{$quest->{missions}}) {
 				my $mission = $quest->{missions}->{$mobID};
 				$msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x30)),
-					[" -", $mission->{mobName}, sprintf(defined $mission->{goal} ? '%d/%d' : '%d', @{$mission}{qw(count goal)})]);
+					[" -", $mission->{mob_name}, sprintf(defined $mission->{mob_goal} ? '%d/%d' : '%d', @{$mission}{qw(mob_count mob_goal)})]);
 			}
 			$k++;
 		}

@@ -3645,144 +3645,310 @@ sub progress_bar_stop {
 	message TF("Progress bar finished.\n", 'info');
 }
 
-# 02B1
+# Sends list of all quest states
+# 02b1 <packet len>.W <num>.L { <quest id>.L <active>.B }*num (ZC_ALL_QUEST_LIST)
+# 097a <packet len>.W <num>.L { <quest id>.L <active>.B <remaining time>.L <time>.L <count>.W { <mob_id>.L <killed>.W <total>.W <mob name>.24B }*count }*num (ZC_ALL_QUEST_LIST2)
+# 09f8 <packet len>.W <num>.L { <quest id>.L <active>.B <remaining time>.L <time>.L <count>.W { <hunt identification>.L <mob type>.L <mob_id>.L <min level>.W <max level>.W <killed>.W <total>.W <mob name>.24B }*count }*num  (ZC_ALL_QUEST_LIST3)
 sub quest_all_list {
-	my ($self, $args) = @_;
-	$questList = {};
-	for (my $i = 8; $i < $args->{amount}*5+8; $i += 5) {
-		my ($questID, $active) = unpack('V C', substr($args->{RAW_MSG}, $i, 5));
-		$questList->{$questID}->{active} = $active;
-		debug "$questID $active\n", "info";
-	}
+    my ( $self, $args ) = @_;
+ 
+    my $offset = 0;
+ 
+    my $quest_info;
+ 
+    if ($args->{switch} eq '02B1') {  # DEFAULT PACKET
+        $quest_info = {
+            quest_pack => 'V C',
+            quest_keys => [qw(quest_id active)],
+            quest_len => 5,
+            mission_pack => '',
+            mission_keys => [],
+            mission_len => 0,
+        };
+ 
+    } elsif ($args->{switch} eq '097A') { # SERVERTYPE >= 20141022
+        $quest_info = {
+            quest_pack => 'V C V2 v',
+            quest_keys => [qw(quest_id active time_expire time_start mission_amount)],
+            quest_len => 15,
+            mission_pack => 'V v2 Z24',
+            mission_keys => [qw(mob_id mob_count mob_goal mob_name_original)],
+            mission_len => 32,
+        };
+ 
+    } elsif ($args->{switch} eq '09F8') { # SERVERTYPE >= 20150513
+        $quest_info = {
+            quest_pack => 'V C V2 v',
+            quest_keys => [qw(quest_id active time_expire time_start mission_amount)],
+            quest_len => 15,
+            mission_pack => 'V3 v4 Z24',
+            mission_keys => [qw(hunt_id mob_type mob_id min_level max_level mob_count mob_goal mob_name_original)],
+            mission_len => 44,
+        };
+       
+    } else { # this can't happen
+        return;
+    }
+ 
+    # Long quest lists are split up over multiple packets. Only reset the quest list if we've switched maps.
+    our $quest_generation      ||= 0;
+    our $last_quest_generation ||= 0;
+    if ( $last_quest_generation != $quest_generation ) {
+        $last_quest_generation = $quest_generation;
+        $questList             = {};
+    }
+ 
+    for (my $i = 0 ; $i < $args->{quest_amount} ; $i++) {
+        my $quest;
+       
+        @{$quest}{@{$quest_info->{quest_keys}}} = unpack($quest_info->{quest_pack}, substr($args->{message}, $offset, $quest_info->{quest_len}));
+       
+        %{$questList->{$quest->{quest_id}}} = %$quest;
+ 
+        debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
+ 
+        $offset += $quest_info->{quest_len};
+       
+        next if !exists $quest->{mission_amount};
+ 
+        for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
+            my $mission;
+           
+            @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
+			$mission->{mob_name} = bytesToString($mission->{mob_name_original});
+            $mission->{mission_index} = $j;
+ 
+            %{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
+           
+            debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
+ 
+            $offset += $quest_info->{mission_len};
+ 
+            Plugins::callHook('quest_mission_added', {
+                questID => $quest->{quest_id},
+                mission_id => $mission->{mob_id}
+            });
+        }
+    }
+	
+	Plugins::callHook('quest_list');
 }
-
-# 02B2
+ 
+# 02b2 <packet len>.W <num>.L { <quest id>.L <start time>.L <expire time>.L <mobs>.W { <mob id>.L <mob count>.W <mob name>.24B }*3 }*num
 # note: this packet shows all quests + their missions and has variable length
 sub quest_all_mission {
-	my ($self, $args) = @_;
-	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
-	for (my $i = 8; $i < $args->{amount}*104+8; $i += 104) {
-		my ($questID, $time_start, $time, $mission_amount) = unpack('V3 v', substr($args->{RAW_MSG}, $i, 14));
-		my $quest = \%{$questList->{$questID}};
-		$quest->{time_start} = $time_start;
-		$quest->{time} = $time;
-		debug "$questID $time_start $time $mission_amount\n", "info";
-		for (my $j = 0; $j < $mission_amount; $j++) {
-			my ($mobID, $count, $mobName) = unpack('V v Z24', substr($args->{RAW_MSG}, 14+$i+$j*30, 30));
-			my $mission = \%{$quest->{missions}->{$mobID}};
-			$mission->{mobID} = $mobID;
-			$mission->{count} = $count;
-			$mission->{mobName} = bytesToString($mobName);
-			Plugins::callHook('quest_mission_added', {
-				questID => $questID,
-				mobID => $mobID,
-				count => $count
-
+    my ($self, $args) = @_;
+ 
+    my $offset = 0;
+   
+    my $quest_info = {
+            quest_pack => 'V3 v',
+            quest_keys => [qw(quest_id time_start time_expire mission_amount)],
+            quest_len => 14,
+            mission_pack => 'V v Z24',
+            mission_keys => [qw(mob_id mob_count mob_name_original)],
+            mission_len => 30,
+    };
+   
+    for (my $i = 0 ; $i < $args->{mission_amount} ; $i++) {
+        my $quest;
+       
+        @{$quest}{@{$quest_info->{quest_keys}}} = unpack($quest_info->{quest_pack}, substr($args->{message}, $offset, $quest_info->{quest_len}));
+       
+        %{$questList->{$quest->{quest_id}}} = %$quest;
+ 
+        debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
+ 
+        $offset += $quest_info->{quest_len};
+       
+        for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
+            my $mission;
+           
+            @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
+			$mission->{mob_name} = bytesToString($mission->{mob_name_original});
+            $mission->{mission_index} = $j;
+ 
+            %{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
+           
+            debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count}\n", "info";
+ 
+            $offset += $quest_info->{mission_len};
+ 
+            Plugins::callHook('quest_mission_added', {
+				questID => $quest->{quest_id},
+				mission_id => $mission->{mob_id}
 			});
-			debug "- $mobID $count $mobName\n", "info";
-		}
-	}
+        }
+    }
 }
-
-# 02B3
-# 09F9
+ 
+# 02b3 <quest id>.L <active>.B <start time>.L <expire time>.L <mobs>.W { <mob id>.L <mob count>.W <mob name>.24B }*3 (ZC_ADD_QUEST)
+# 09f9 <quest id>.L <active>.B <start time>.L <expire time>.L <mobs>.W { <hunt identification>.L <mob type>.L <mob id>.L <min level>.W <max level>.W <mob count>.W <mob name>.24B }*3 (ZC_ADD_QUEST_EX)
 # note: this packet shows all missions for 1 quest and has fixed length
 sub quest_add {
+    my ($self, $args) = @_;
+ 
+    my $offset = 0;
+   
+    my $quest_info;
+ 
+    if ($args->{switch} eq '09F9') {  # SERVERTYPE >= 20150513
+        $quest_info = {
+            mission_pack => 'V3 v3 Z24',
+            mission_keys => [qw(hunt_id mob_type mob_id min_level max_level mob_count mob_name_original)],
+            mission_len => 42,
+        };
+ 
+    } else { # DEFAULT PACKET - 02B3
+        $quest_info = {
+            mission_pack => 'V v Z24',
+            mission_keys => [qw(mob_id mob_count mob_name_original)],
+            mission_len => 30,
+        };
+    }
+ 
+    my $quest = \%{$questList->{$args->{questID}}};
+    $quest->{active} = $args->{active};
+    $quest->{time_start} = $args->{time_start};
+    $quest->{time_expire} = $args->{time_expire};
+    $quest->{mission_amount} = $args->{mission_amount};
+   
+    unless (%$quest) {
+        message TF("Quest: %s has been added.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
+    }
+   
+    for (my $i = 0 ; $i < $args->{mission_amount}; $i++) {
+        my $quest;
+       
+        @{$quest}{@{$quest_info->{quest_keys}}} = unpack($quest_info->{quest_pack}, substr($args->{message}, $offset, $quest_info->{quest_len}));
+       
+        %{$questList->{$quest->{quest_id}}} = %$quest;
+ 
+        debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
+ 
+        $offset += $quest_info->{quest_len};
+       
+        for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
+            my $mission;
+           
+            @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
+			$mission->{mob_name} = bytesToString($mission->{mob_name_original});
+            $mission->{mission_index} = $j;
+ 
+            %{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
+           
+            debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count}\n", "info";
+ 
+            $offset += $quest_info->{mission_len};
+ 
+            Plugins::callHook('quest_mission_added', {
+                questID => $quest->{quest_id},
+                mission_id => $mission->{mob_id}
+            });
+        }
+    }
+    
+    Plugins::callHook('quest_added', {
+        questID => $args->{questID}
+    });
+}
+
+# 02b5 <packet len>.W <mobs>.W { <quest id>.L <mob id>.L <total count>.W <current count>.W }*3 (ZC_UPDATE_MISSION_HUNT)
+# 09fa <packet len>.W <mobs>.W { <quest id>.L <hunt identification>.L <total count>.W <current count>.W }*3 (ZC_UPDATE_MISSION_HUNT_EX) (Sends hunt identification which is quest_id * 1000 + mission_id)
+sub quest_update_mission_hunt {
 	my ($self, $args) = @_;
-	my $questID = $args->{questID};
-	my $quest = \%{$questList->{$questID}};
+ 
+    my $offset = 0;
+	
+    my $quest_info;
+ 
+    if ($args->{switch} eq '09FA') {
+        $quest_info = {
+            mission_pack => 'V2 v2',
+            mission_keys => [qw(questID hunt_id mob_goal mob_count)],
+            mission_len => 12,
+        };
+ 
+    } else {
+        $quest_info = {
+            mission_pack => 'V2 v2',
+            mission_keys => [qw(questID mob_id mob_goal mob_count)],
+            mission_len => 12,
+        };
+    }
+	
+	for (my $i = 0; $i < $args->{mission_amount}; $i++) {
+		my $mission;
+        
+        @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
+		
+		my $quest = \%{$questList->{$mission->{questID}}};
+		
+		my $mission_id;
+		
+		# Mission is saved as hunt_id and server sent hunt_id
+		if (exists $mission->{hunt_id} && exists $quest->{missions}->{$mission->{hunt_id}}) {
+			$mission_id = $mission->{hunt_id};
+		
+		# Mission is saved as mob_id and server sent mob_id
+		} elsif (exists $mission->{mob_id} && exists $quest->{missions}->{$mission->{mob_id}}) {
+			$mission_id = $mission->{mob_id};
+		
+		# Mission is saved as hunt_id and server sent mob_id
+		} elsif (exists $mission->{mob_id} && !exists $quest->{missions}->{$mission->{mob_id}}) {
+			# Search in the quest of a mission with this mob_id
+			foreach my $current_key (keys %{$quest->{missions}}) {
+				if (exists $quest->{missions}->{$current_key}{mob_id} && $quest->{missions}->{$current_key}{mob_id} == $mission->{mob_id}) {
+					$mission_id = $mission->{mob_id};
+					last;
+				}
+			}
+		
+		# Mission is saved as mob_id and server sent hunt_id
+		} elsif (exists $mission->{hunt_id} && !exists $quest->{missions}->{$mission->{hunt_id}}) {
+			# Search in the quest of a mission with this hunt_id
+			foreach my $current_key (keys %{$quest->{missions}}) {
+				if (exists $quest->{missions}->{$current_key}{hunt_id} && $quest->{missions}->{$current_key}{hunt_id} == $mission->{hunt_id}) {
+					$mission_id = $mission->{hunt_id};
+					last;
+				}
+			}
+		}
+		
+		my $quest_mission = \%{$quest->{missions}->{$mission_id}};
+		
+		$quest_mission->{mob_count} = $mission->{mob_count};
+		$quest_mission->{mob_goal} = $mission->{mob_goal};
+		
+		
+		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
+		
+        $offset += $quest_info->{mission_len};
 
-	unless (%$quest) {
-		message TF("Quest: %s has been added.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
-	}
-
-	my $pack = 'a0 V v Z24';
-	$pack = 'V x4 V x4 v Z24' if $args->{switch} eq '09F9';
-	my $pack_len = length pack $pack, ( 0 ) x 7;
-
-	$quest->{time_start} = $args->{time_start};
-	$quest->{time} = $args->{time};
-	$quest->{active} = $args->{active};
-	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) ."\n";
-	my $o = 17;
-	for (my $i = 0; $i < $args->{amount}; $i++) {
-		my ( $conditionID, $mobID, $count, $mobName ) = unpack $pack, substr $args->{RAW_MSG}, $o + $i * $pack_len, $pack_len;
-		my $mission = \%{$quest->{missions}->{$conditionID || $mobID}};
-		$mission->{mobID} = $mobID;
-		$mission->{conditionID} = $conditionID;
-		$mission->{count} = $count;
-		$mission->{mobName} = bytesToString($mobName);
-		Plugins::callHook('quest_mission_added', {
-				questID => $questID,
-				mobID => $mobID,
-				count => $count
+		Plugins::callHook('quest_mission_updated', {
+			questID => $quest_mission->{questID},
+			mission_id => $mission_id,
+			mobID => $quest_mission->{mob_id},
+			count => $quest_mission->{mob_count},
+			goal => $quest_mission->{mob_goal}
 		});
-		debug "- $mobID $count $mobName\n", "info";
 	}
 }
 
 # 02B4
 sub quest_delete {
 	my ($self, $args) = @_;
-	my $questID = $args->{questID};
-	message TF("Quest: %s has been deleted.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID), "info";
-	delete $questList->{$questID};
-}
-
-sub parse_quest_update_mission_hunt {
-	my ( $self, $args ) = @_;
-	if ( $args->{switch} eq '09FA' ) {
-		@{ $args->{mobs} } = map { my %result; @result{qw(questID mobID goal count)} = unpack 'V2 v2', $_; \%result } unpack '(a12)*', $args->{mobInfo};
-	} else {
-		@{ $args->{mobs} } = map { my %result; @result{qw(questID mobID count)} = unpack 'V2 v', $_; \%result } unpack '(a10)*', $args->{mobInfo};
-	}
-}
-
-sub reconstruct_quest_update_mission_hunt {
-	my ($self, $args) = @_;
-	$args->{mobInfo} = pack '(a10)*', map { pack 'V2 v', @{$_}{qw(questID mobID count)} } @{$args->{mobs}};
-}
-
-sub parse_quest_update_mission_hunt_v2 {
-	my ($self, $args) = @_;
-	@{$args->{mobs}} = map {
-		my %result; @result{qw(questID mobID goal count)} = unpack 'V2 v2', $_; \%result
-	} unpack '(a12)*', $args->{mobInfo};
-}
-
-sub reconstruct_quest_update_mission_hunt_v2 {
-	my ($self, $args) = @_;
-	$args->{mobInfo} = pack '(a12)*', map { pack 'V2 v2', @{$_}{qw(questID mobID goal count)} } @{$args->{mobs}};
-}
-
-# 02B5
-# 09FA
-sub quest_update_mission_hunt {
-	my ($self, $args) = @_;
-	my ($questID, $mobID, $goal, $count) = unpack('V2 v2', substr($args->{RAW_MSG}, 6));
-	debug "- $questID $mobID $count $goal\n", "info";
-	if ($questID) {
-		my $quest = \%{$questList->{$questID}};
-		my $mission = \%{$quest->{missions}->{$mobID}};
-		$mission->{goal} = $goal;
-		$mission->{count} = $count;
-		Plugins::callHook('quest_mission_updated', {
-				questID => $questID,
-				mobID => $mobID,
-				count => $count,
-				goal => $goal
-		});
-	}
+	message TF("Quest: %s has been deleted.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
+	delete $questList->{$args->{questID}};
 }
 
 # 02B7
 sub quest_active {
 	my ($self, $args) = @_;
-	my $questID = $args->{questID};
 
 	message $args->{active}
-		? TF("Quest %s is now active.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID)
-		: TF("Quest %s is now inactive.\n", $quests_lut{$questID} ? "$quests_lut{$questID}{title} ($questID)" : $questID)
+		? TF("Quest %s is now active.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID})
+		: TF("Quest %s is now inactive.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID})
 	, "info";
 
 	$questList->{$args->{questID}}->{active} = $args->{active};
@@ -6998,43 +7164,6 @@ sub achievement_list {
 
 		$achievementList->{$achieve->{ach_id}} = $achieve;
 		message TF("Achievement %s added.\n", $achieve->{ach_id}), "info";
-	}
-}
-
-sub quest_all_list2 {
-	my ($self, $args) = @_;
-	$questList = {};
-	my $msg;
-	my ($questID, $active, $time_start, $time, $mission_amount);
-	my $i = 0;
-	my ($mobID, $count, $amount, $mobName);
-	while ($i < $args->{RAW_MSG_SIZE} - 8) {
-		$msg = substr($args->{message}, $i, 15);
-		($questID, $active, $time_start, $time, $mission_amount) = unpack('V C V2 v', $msg);
-		$questList->{$questID}->{active} = $active;
-		debug "$questID $active\n", "info";
-
-		my $quest = \%{$questList->{$questID}};
-		$quest->{time_start} = $time_start;
-		$quest->{time} = $time;
-		$quest->{mission_amount} = $mission_amount;
-		debug "$questID $time_start $time $mission_amount\n", "info";
-		$i += 15;
-
-		if ($mission_amount > 0) {
-			for (my $j = 0 ; $j < $mission_amount ; $j++) {
-				$msg = substr($args->{message}, $i, 32);
-				($mobID, $count, $amount, $mobName) = unpack('V v2 Z24', $msg);
-				my $mission = \%{$quest->{missions}->{$mobID}};
-				$mission->{mobID} = $mobID;
-				$mission->{count} = $count;
-				$mission->{amount} = $amount;
-				$mission->{mobName_org} = $mobName;
-				$mission->{mobName} = bytesToString($mobName);
-				debug "- $mobID $count / $amount $mobName\n", "info";
-				$i += 32;
-			}
-		}
 	}
 }
 
