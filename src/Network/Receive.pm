@@ -8022,10 +8022,18 @@ sub cash_buy_fail {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
-	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999")) {
-		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999") || (($args->{success} == 1 || $args->{success} == 2 ) && $args->{switch} eq "0A98")) {
+		if ($args->{switch} == '0A98') {
+			message TF("[Equip Switch] You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+		} else {	
+			message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+		}	
 	} else {
-		$item->{equipped} = $args->{type};
+		if ($args->{switch} == '0A98') {
+			$item->{eqswitch} = $args->{type};
+		} else {
+			$item->{equipped} = $args->{type};
+		}
 		if ($args->{type} == 10 || $args->{type} == 32768) {
 			$char->{equipment}{arrow} = $item;
 		} else {
@@ -8033,13 +8041,21 @@ sub equip_item {
 				if ($_ & $args->{type}){
 					next if $_ == 10; # work around Arrow bug
 					next if $_ == 32768;
-					$char->{equipment}{$equipSlot_lut{$_}} = $item;
-					Plugins::callHook('equipped_item', {slot => $equipSlot_lut{$_}, item => $item});
+					if ($args->{switch} == '0A98') {
+						$char->{eqswitch}{$equipSlot_lut{$_}} = $item;
+						Plugins::callHook('equipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+					} else {	
+						$char->{equipment}{$equipSlot_lut{$_}} = $item;
+						Plugins::callHook('equipped_item', {slot => $equipSlot_lut{$_}, item => $item});
+					}
 				}
 			}
 		}
-		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID},
-			$equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+		if ($args->{switch} == '0A98') {
+			message TF("[Equip Switch] You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID}, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+		} else {
+			message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID}, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+		}
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 }
@@ -8706,25 +8722,40 @@ sub unequip_item {
 
 	return unless changeToInGameState();
 	my $item = $char->inventory->getByID($args->{ID});
-	delete $item->{equipped};
-
+	if ($args->{switch} == '0A9A') {
+		delete $item->{eqswitch};
+	} else {
+		delete $item->{equipped};
+	}
 	if ($args->{type} == 10 || $args->{type} == 32768) {
-		delete $char->{equipment}{arrow};
-		delete $char->{arrow};
+		if ($args->{switch} == '0A9A') {
+			delete $char->{eqswitch}{arrow};
+		} else {
+			delete $char->{equipment}{arrow};
+			delete $char->{arrow};
+		}
+
 	} else {
 		foreach (%equipSlot_rlut){
 			if ($_ & $args->{type}){
 				next if $_ == 10; #work around Arrow bug
 				next if $_ == 32768;
-				delete $char->{equipment}{$equipSlot_lut{$_}};
-				Plugins::callHook('unequipped_item', {slot => $equipSlot_lut{$_}, item => $item});
+				if ($args->{switch} == '0A9A') {
+					delete $char->{eqswitch}{$equipSlot_lut{$_}};
+					Plugins::callHook('unequipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+				} else {	
+					delete $char->{equipment}{$equipSlot_lut{$_}};
+					Plugins::callHook('unequipped_item', {slot => $equipSlot_lut{$_}, item => $item});
+				}
 			}
 		}
 	}
 	if ($item) {
-		message TF("You unequip %s (%d) - %s\n",
-			$item->{name}, $item->{binID},
-			$equipTypes_lut{$item->{type_equip}}), 'inventory';
+		if ($args->{switch} == '0A9A') {
+			message TF("[Equip Switch] You unequip %s (%d) - %s\n",$item->{name}, $item->{binID},$equipTypes_lut{$item->{type_equip}}), 'inventory';
+		} else {
+			message TF("You unequip %s (%d) - %s\n",$item->{name}, $item->{binID},$equipTypes_lut{$item->{type_equip}}), 'inventory';
+		}
 	}
 }
 # TODO: only used to report failure? $args->{success}
