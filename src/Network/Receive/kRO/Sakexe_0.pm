@@ -420,7 +420,7 @@ sub new {
 		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
 		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
-		'097A' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
+		'02B1' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'02B2' => ['quest_all_mission', 'v V a*', [qw(len mission_amount message)]],
 		'02B3' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'02B4' => ['quest_delete', 'V', [qw(questID)]],
@@ -581,7 +581,7 @@ sub new {
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
 		'09F7' => ['homunculus_property', 'Z24 C v12 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
-		'097A' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
+		'09F8' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'09F9' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 a9 Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
