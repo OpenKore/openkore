@@ -3705,7 +3705,7 @@ sub quest_all_list {
        
         %{$questList->{$quest->{quest_id}}} = %$quest;
  
-        message "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
+        debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
  
         $offset += $quest_info->{quest_len};
        
@@ -3720,7 +3720,7 @@ sub quest_all_list {
  
             %{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
            
-            message "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
+            debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
  
             $offset += $quest_info->{mission_len};
  
@@ -3757,7 +3757,7 @@ sub quest_all_mission {
        
         %{$questList->{$quest->{quest_id}}} = %$quest;
  
-        message "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
+        debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
  
         $offset += $quest_info->{quest_len};
        
@@ -3770,7 +3770,7 @@ sub quest_all_mission {
  
             %{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
            
-            message "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count}\n", "info";
+            debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count}\n", "info";
  
             $offset += $quest_info->{mission_len};
  
@@ -3824,7 +3824,7 @@ sub quest_add {
        
         %{$questList->{$quest->{quest_id}}} = %$quest;
  
-        message "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
+        debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
  
         $offset += $quest_info->{quest_len};
        
@@ -3837,7 +3837,7 @@ sub quest_add {
  
             %{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
            
-            message "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count}\n", "info";
+            debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count}\n", "info";
  
             $offset += $quest_info->{mission_len};
  
@@ -3921,7 +3921,7 @@ sub quest_update_mission_hunt {
 		$quest_mission->{mob_goal} = $mission->{mob_goal};
 		
 		
-		message "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
+		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
 		
         $offset += $quest_info->{mission_len};
 
