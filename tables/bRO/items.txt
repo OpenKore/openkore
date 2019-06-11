@@ -7061,6 +7061,7 @@
 31040#Tiara das Plumas Mágicas#
 31045#Laço Azul Delicado#
 31046#Diadema de Rosas Brancas#
+31047#Bochechas da Paixão#
 31048#Par de Lírios#
 31052#Máscara do Alquimista#
 31054#Chapéu do Sting Vitorioso#
@@ -7177,6 +7178,7 @@
 31435#Gorro de Tricô Hipster#
 31437#Pequeno Pinguim#
 31438#Capa Angelical#
+31439#Abafadores de Orelha de Coração#
 31449#Tapa-Olho Floreado#
 31450#Peruca Rosa de Waifu#
 31451#Laço Azul Listrado#
