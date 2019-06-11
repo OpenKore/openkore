@@ -517,7 +517,7 @@ GS_DUST#Crowd_Control_Shot#
 GS_FULLBUSTER#Full_Blast#
 GS_SPREADATTACK#Spread_Shot#
 GS_GROUNDDRIFT#Gunslinger_Mine#
-ALL_INCCARRY#Enlarge_Weight_Limit#			
+ALL_INCCARRY#Enlarge_Weight_Limit#
 MS_BASH#Bash#
 MS_MAGNUM#Magnum_Break#
 MS_BOWLINGBASH#Bowling_Bash#

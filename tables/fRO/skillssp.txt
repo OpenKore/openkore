@@ -1880,7 +1880,7 @@ RA_WUGBITE#
 50#
 @
 
-//±æ·ÎÆŸ Å©·Îœº
+//±æ·ÎÆ¾ Å©·Î½º
 GC_VENOMIMPRESS#
 12#
 16#
@@ -2532,7 +2532,7 @@ LG_HESPERUSLIT#
 10#
 10#
 120#
-@	
+@
 LG_PINPOINTATTACK#
 30#
 30#

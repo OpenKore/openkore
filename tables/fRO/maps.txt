@@ -829,7 +829,7 @@ ma_zif07.rsw#Inside of Jeepney#
 ma_zif08.rsw#Inside of Jeepney#
 ma_zif09.rsw#Inside of Jeepney#
 job_ko.rsw#Hidden Place#
-//14.2
+#14.2
 eclage.rsw#Eclage#
 ecl_fild01.rsw#Blooming Flower Land#
 ecl_in01.rsw#Inside of Eclage#
@@ -844,7 +844,7 @@ ecl_tdun04.rsw#Bifrost Floor 4#
 ecl_hub01.rsw#Eclage Perimeter#
 que_avan01.rsw#Avant's Laboratory#
 
-//냸벺샼 TE 몹믧룊
+#°ø¼ºÀü TE º¹»ç¸Ê
 te_prt_gld.rsw#Gloria#
 te_prtcas01.rsw#Gaebolg#
 te_prtcas02.rsw#Richard#
@@ -862,7 +862,7 @@ teg_dun02.rsw#Subterranean Guild Dungeon#
 
 niflxmas.rsw#Deadman's land Nifflheim#
 
-//Hero's trail
+#Hero's trail
 
 1@face.rsw#Nest of Faceworm#
 1@sara.rsw#Memory of Sara#
@@ -870,16 +870,16 @@ dali.rsw#Gap of Dimension#
 
 moc_para01.rsw#Morocc Eden Group Inside#
 
-//Old Glast Heim
+#Old Glast Heim
 gl_cas02_.rsw#2nd Hall#
 gl_chyard_.rsw#Churchyard#
 2@gl_k.rsw#1st floor of Old Glast Heim Chivalry#
 1@gl_k.rsw#2nd floor of Old Glast Heim Chivalry#
 
-//Clocktower_nightmare
+#Clocktower_nightmare
 c_tower2_.rsw#Twisted Time Clock Tower 2nd Floor#
 c_tower3_.rsw#Twisted Time Clock Tower 3rd Floor#
-//뾵뿵샇죧샻
+#¿µ¿õÀÇÈçÀû
 dali02.rsw#Crack of Dimension#
 1@tnm1.rsw#Darklord Tower High Floor#
 1@tnm2.rsw#Darklord Tower Top Floor#
@@ -889,7 +889,7 @@ dali02.rsw#Crack of Dimension#
 1@gef_in.rsw#Geffen Magic Competition#
 1@spa.rsw#Lost Soul's Palace#
 
-//EP.14.3
+#EP.14.3
 moro_vol.rsw#Flame Basin#
 moro_cav.rsw#Flame Cave#
 1@dth1.rsw#Bios Island#
@@ -899,7 +899,7 @@ moro_cav.rsw#Flame Cave#
 1@eom.rsw#Dark Lord Temple#
 1@jtb.rsw#Nightmare Jitterbug#
 
-//Hero Trail Part3
+#Hero Trail Part3
 1@glast.rsw#Old Glast Heim#
 1@air1.rsw#Airship#
 1@air2.rsw#Airship#
@@ -909,3 +909,22 @@ malangdo.rsw#Malangdo#
 mal_in01.rsw#Dalam Malangdo#
 mal_in02.rsw#Dalam Malangdo Kapal#
 mal_dun01.rsw#Starry Coral Area#
+
+# ep15.1 ÆÇÅ¸½º¸¶°í¸®Ä«
+ver_eju.rsw#Juperos Eastern Ruin#
+ver_tunn.rsw#Verus Outter Tunnel#
+verus04.rsw#Verus Findspot#
+verus03.rsw#Verus Center Square#
+
+1@mcd.rsw#Charleston Factory#
+
+# ¸®º§¸®¿Â ÀüÁ÷¸Ê
+job_gun.rsw#ÇØ¹æÀÇ ½°ÅÍ#
+# ep15.2 ÆÇÅ¸½º¸¶°í¸®Ä«
+verus01.rsw#Lab-OPTATIO#
+verus02.rsw#R&D-WISH#
+un_bk_q.rsw#Under Bunker#
+un_bunker.rsw#Under Bunker#
+un_myst.rsw#Under Tunnel#
+1@uns.rsw#The Last Room#
+1@lab.rsw#Center Lab#
