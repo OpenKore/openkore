@@ -61,7 +61,7 @@ sub new {
 	$self->{automacros_index_to_AI_check_state} = {};
 	$self->define_automacro_check_state;
 	
-	$self->{Currently_AI_state_Adapted_Automacros} = undef;
+	#$self->{Currently_AI_state_Adapted_Automacros} = {};
 	$self->adapt_to_AI_state(AI::state);
 
 	$self->{AI_start_Macros_Running_Hook_Handle} = undef;
@@ -92,7 +92,7 @@ sub new {
 sub adapt_to_AI_state {
 	my ($self, $state) = @_;
 	
-	$self->{Currently_AI_state_Adapted_Automacros} = undef;
+	$self->{Currently_AI_state_Adapted_Automacros} = {};
 	
 	foreach my $automacro (@{$self->{Automacro_List}->getItems()}) {
 		my $automacro_index = $automacro->get_index;

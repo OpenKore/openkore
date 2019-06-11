@@ -14,18 +14,21 @@ use eventMacro::Utilities qw(find_variable);
 sub start {
 	$eventMacro = eventMacro::Core->new( "$RealBin/textfiles/LoadConditionsTest.txt" );
 	
-	$eventMacro->{Macro_Runner} = new eventMacro::Runner(
-			'testmacro1',
-			1,
-			undef,
-			undef,
-			undef,
-			undef,
-			undef,
-			0
-		);
+	$eventMacro->{Macro_Runner}{'1'} = new eventMacro::Runner(
+			'testmacro1',  # name
+			1,             # repeat
+			1,             # slot
+			undef,         # exclusive
+			undef,         # overrideAI
+			undef,         # orphan
+			undef,         # delay
+			undef,         # macro_delay
+			0              # is_subcall
+	);
 	
-	ok (defined $eventMacro->{Macro_Runner});
+	ok (exists $eventMacro->{Macro_Runner}{'1'});
+	
+	ok (defined $eventMacro->{Macro_Runner}{'1'});
 	
 	subtest 'math simple' => sub {
 		is ($eventMacro->{Macro_Runner}{'1'}->parse_and_check_condition_text( '1 > 0' ), 1);
