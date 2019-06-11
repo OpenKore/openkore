@@ -24,19 +24,17 @@ sub new {
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]],
 		'082D' => ['received_characters_info', 'v C x2 C2 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]],
 	);
-	
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
+
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
 
 	my %handlers = qw(
-		actor_exists 0915
-		actor_connected 090F
-		actor_moved 0914
-		npc_talk 00B4
-		actor_status_active 043F
-		actor_action 08C8
-	);	
+		received_characters_info 082D
+	);
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+	$self->{vender_items_list_item_pack} = 'V v2 C v C3 a8 a25';
 	return $self;
 }
 
