@@ -653,7 +653,7 @@ sub commandHandler {
 		my $slot = defined $opt->{slot} ? $opt->{slot} : 1;
 		
 		if ( exists $eventMacro->{Macro_Runner}{$slot} ) {
-			warning "[eventMacro] A macro is already running in slot ".$slot.". Wait until the macro has finished or call 'eventMacro [".$slot."] stop'\n";
+			warning "[eventMacro] A macro is already running in slot ".$slot.". Wait until the macro has finished or call 'eventMacro stop [".$slot."]'\n";
 			return;
 		}
 		
