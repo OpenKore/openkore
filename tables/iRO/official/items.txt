@@ -1817,7 +1817,7 @@
 2855#Whikebain's_Black_Tail#
 2856#Half_Megin#
 2857#Half_Brysing#
-2858#Pendant_Of_Guardian#
+2858#Pendant_of_Guardian#
 2859#Golden_Rod_Orb#
 2860#Aqua_Orb#
 2861#Crimson_Orb#
@@ -1898,9 +1898,9 @@
 2985#Gyges's_Ring#
 2988#Hero_Ring_Of_Newoz#
 2989#Floral_Bracelet_Of_Aigu#
-2990#Pendant_Of_Harmony#
-2991#Pendant_Of_Chaos#
-2992#Pendant_Of_Maelstorm#
+2990#Pendant_of_Harmony#
+2991#Pendant_of_Chaos#
+2992#Pendant_of_Maelstorm#
 2995#Supplement_Part_Dex#
 2996#Upgrade_Part_-_Gun_Barrel#
 3629#Brisingamen_Token#
@@ -4530,10 +4530,10 @@
 7353#Transparent_Plate_(Red)#
 7354#Transparent_Plate_(Orange)#
 7355#Transparent_Plate_(Blue)#
-7356#Crest_Piece_(Purple)#
+7356#Crest_Piece_(Blue)#
 7357#Crest_Piece_(Green)#
 7358#Crest_Piece_(Orange)#
-7359#Crest_Piece_(Blue)#
+7359#Crest_Piece_(Purple)#
 7360#RO_Festival_Invitation#
 7361#Tattered_Map_1#
 7362#Tattered_Map_2#
@@ -5059,6 +5059,9 @@
 9565#Overseas_Care_Package_XXVII#
 9600#April_2019_Yggdrasil_Ticket#
 9618#2019_May_Costume_Box#
+9620#May_2019_Yggdrasil_Ticket#
+9621##
+9630#June_Costume_Box_2019#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
@@ -7056,6 +7059,8 @@
 15384#Ritual_Robe#
 15405#Fafnir_Scale#
 15417#Armor_of_Purple_Thread#
+15419#Armor_of_White_Thread#
+15420#Icefall_Dress#
 16000#Erde#
 16001#Red_Square_Bag#
 16003#Carga_Mace#
@@ -8240,7 +8245,7 @@
 19406#Classic_Pecopeco_Hairband_Box#
 19407#Work_Cap#
 19408#Classic_Robo_Eye_Box#
-19409#Classic_Sheep_Hat_Box#
+19409#Black_Feather#
 19410#Classic_Charming_Ribbon_Box#
 19411#Classic_Parade_Hat_Box#
 19412#Classic_Vacation_Hat_Box#
@@ -8581,6 +8586,7 @@
 19991#Costume_Galanthus_Guard#
 19992#Costume_Chilly_Breath#
 19994#Costume_saLUsalo_Hat#
+19995#Costume_Flower_Blossom#
 19996#Costume_Horse_King#
 19997#Costume_Bomb_Hat#
 19998#Costume_Dragon_Turtle_Hat#
@@ -8839,6 +8845,7 @@
 20537#Costume_Falling_Red_Foliage#
 20538#Costume_Magic_Circle_Rainbow#
 20547#Costume_Whisper's_Blessing#
+20571#Costume_Valkyrie_Wings#
 20700#Egir_Manteau#
 20701#Sol_Manteau#
 20702#TE_WoE_Muffler#
@@ -9417,8 +9424,10 @@
 27103#Restless_Dead_Card#
 27104#Angry_Dracula_Card#
 27105#Bomi_Card#
+27110#Angry_Gazeti_Card#
 27111#Angry_Snowier_Card#
 27112#Angry_Ice_Titan_Card#
+27113#Awakened_Ktullanux_Card#
 27147#Humanoid_Chimera_Card#
 27148#Material_Type_Chimera_Card#
 27149#Heart_Hunter_Card#
@@ -9563,6 +9572,7 @@
 28533#Chemical_Glove#
 28551#Imperial_Glove#
 28560#Yin_Yang_Talisman#
+28561#Ring_of_Hero#
 28564#Valkyrie_Drop#
 28565#Perverse_Demon_Mask_#
 28573#Emerald_Ring#
@@ -9821,6 +9831,7 @@
 31251#Costume_Cat's_Mouth#
 31252#Costume_White_Cat_Ears_Hat#
 31256#Costume_Jaguar_Mask#
+31258#Costume_Glowing_White_Blush#
 31295#Costume_Red_Wing_Hat#
 31296#Costume_Strawberry_in_Mouth#
 31298#Costume_Eden_Group_Hat_II#
@@ -9872,6 +9883,7 @@
 31439#Costume_Fluffy_Heart_Earmuffs#
 31440#Costume_Snow_Bear_Hood#
 31441#Costume_Penguin_Cap#
+31445#Costume_Feather_Fedora#
 31446#Costume_Toy_Syringe#
 31447#Costume_Pale_Moon_Hat#
 31448#Costume_Sting_Silk_Ribbon#
@@ -9995,6 +10007,11 @@
 31686#Costume_Desert_Wolf_Baby#
 31687#Costume_Alchemist_Bag#
 31688#Costume_Poring_On_Shoulder#
+31695#Costume_Tree_Sprout#
+31696#Costume_Shark_Hat#
+31697#Costume_Bird_Nest#
+31698#Costume_Red_Riding_Hood#
+31699#Costume_Smiling_Eyes#
 32203#Accelerator_Chip#
 32204#Immortal_Dog_Tag#
 32206#Prontera_Militia_Glove#
@@ -10004,3 +10021,4 @@
 32242#Old_Detachments_Ring#
 32258#Ring_of_Jupiter#
 32262#Rasen_Fuma's_Orb#
+32263#Shield_Ring#

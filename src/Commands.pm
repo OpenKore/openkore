@@ -2248,6 +2248,7 @@ sub cmdEquip {
 
 	if ($arg1 eq "") {
 		cmdEquip_list();
+		cmdEquipsw_list();
 		return;
 	}
 
@@ -2292,6 +2293,7 @@ sub cmdEquip_list {
 		error T("Character equipment not yet ready\n");
 		return;
 	}
+	message TF("=====[Character Equip List]=====\n"), "info";
 	for my $slot (@Actor::Item::slots) {
 		my $item = $char->{equipment}{$slot};
 		my $name = $item ? $item->{name} : '-';
@@ -2299,7 +2301,25 @@ sub cmdEquip_list {
 			message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list" :
 			message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
+	message TF("================================\n"), "info";
 }
+
+sub cmdEquipsw_list {
+	if (!$char) {
+		error T("Character equipment not yet ready\n");
+		return;
+	}
+	message TF("=====[Equip Switch List]=====\n"), "info";
+	for my $slot (@Actor::Item::slots) {
+		my $item = $char->{eqswitch}{$slot};
+		my $name = $item ? $item->{name} : '-';
+		($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) 
+			? message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list" 
+			: message sprintf("%-15s: %s\n", $slot, $name), "list";
+	}
+	message TF("=============================\n"), "info";
+}
+
 
 sub cmdEval {
 	if (!$Settings::lockdown) {
@@ -6432,11 +6452,11 @@ sub cmdQuest {
 		foreach my $questID (keys %{$questList}) {
 			my $quest = $questList->{$questID};
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x4), ('<'x30), ('<'x10), ('<'x24)),
-				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $quest->{time} ? scalar localtime $quest->{time} : '']);
+				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $quest->{time_expire} ? scalar localtime $quest->{time_expire} : '']);
 			foreach my $mobID (keys %{$quest->{missions}}) {
 				my $mission = $quest->{missions}->{$mobID};
 				$msg .= swrite(sprintf("\@%s \@%s \@%s", ('>'x2), ('<'x30), ('<'x30)),
-					[" -", $mission->{mobName}, sprintf(defined $mission->{goal} ? '%d/%d' : '%d', @{$mission}{qw(count goal)})]);
+					[" -", $mission->{mob_name}, sprintf(defined $mission->{mob_goal} ? '%d/%d' : '%d', @{$mission}{qw(mob_count mob_goal)})]);
 			}
 			$k++;
 		}

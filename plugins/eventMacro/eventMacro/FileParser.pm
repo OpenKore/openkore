@@ -22,10 +22,6 @@ use eventMacro::Automacro;
 use eventMacro::FileParser;
 use eventMacro::Macro;
 
-
-
-
-my $tempmacro = 0;
 my %macro;
 my %automacro;
 
@@ -133,7 +129,7 @@ sub parseMacroFile {
 				push(@{$automacro{$block{name}}{parameters}}, {key => 'call', value => $value});
 			} elsif ($_ eq "call {") {
 				$block{loadmacro} = 1;
-				$block{loadmacro_name} = "tempMacro".$tempmacro++;
+				$block{loadmacro_name} = "automacro_".$block{name}."_call_block";
 				push(@{$automacro{$block{name}}{parameters}}, {key => 'call', value => $block{loadmacro_name}});
 				$macro{$block{loadmacro_name}} = {}
 			} elsif ($block{loadmacro}) {
