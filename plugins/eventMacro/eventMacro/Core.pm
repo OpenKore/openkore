@@ -121,7 +121,7 @@ sub unload {
 	
 	$self->clean_hooks();
 	
-	foreach my $slot (keys %{$self->{Automacro_Checking_slots}}) {
+	foreach my $slot (keys %{$self->{AI_start_Automacros_Check_Hook_Handle}}) {
 		Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}{$slot});
 	}
 	
@@ -134,40 +134,43 @@ sub clean_hooks {
 }
 
 sub set_automacro_checking_status {
-	my ($self, $slot, $status) = @_;
+	my ($self, $slot, $new_status) = @_;
 	
 	if (!exists $self->{Automacros_Checking_Status}{$slot}) {
 		debug "[eventMacro] Initializing automacro checking by default in slot ".$slot.".\n", "eventMacro", 2;
 		$self->{Automacros_Checking_Status}{$slot} = CHECKING_AUTOMACROS;
 		$self->{AI_start_Automacros_Check_Hook_Handle}{$slot} = Plugins::addHook( 'AI_start', sub { my $state = $_[1]->{state}; $self->AI_start_checker($state, $slot); }, undef );
 		return;
-	} elsif ($self->{Automacros_Checking_Status}{$slot} == $status) {
-		debug "[eventMacro] automacro checking status is already $status in slot ".$slot.".\n", "eventMacro", 2;
+	}
+	
+	my $current_status = $self->{Automacros_Checking_Status}{$slot};
+	
+	if ($current_status == $new_status) {
+		debug "[eventMacro] automacro checking status is already '".$new_status."' in slot ".$slot.".\n", "eventMacro", 2;
+		
 	} else {
-		debug "[eventMacro] Changing automacro checking status from '".$self->{Automacros_Checking_Status}{$slot}."' to '".$status."' in slot ".$slot.".\n", "eventMacro", 2;
-		if (
-		  ($self->{Automacros_Checking_Status}{$slot} == CHECKING_AUTOMACROS || $self->{Automacros_Checking_Status}{$slot} == CHECKING_FORCED_BY_USER) &&
-		  ($status == PAUSED_BY_EXCLUSIVE_MACRO || $status == PAUSE_FORCED_BY_USER)
-		) {
+		debug "[eventMacro] Changing automacro checking status from '".$current_status."' to '".$new_status."' in slot ".$slot.".\n", "eventMacro", 2;
+		
+		if (($current_status == CHECKING_AUTOMACROS || $current_status == CHECKING_FORCED_BY_USER) && ($new_status == PAUSED_BY_EXCLUSIVE_MACRO || $new_status == PAUSE_FORCED_BY_USER)) {
 			if (exists $self->{AI_start_Automacros_Check_Hook_Handle}{$slot}) {
 				debug "[eventMacro] Deleting AI_start hook in slot ".$slot.".\n", "eventMacro", 2;
 				Plugins::delHook($self->{AI_start_Automacros_Check_Hook_Handle}{$slot});
 				delete $self->{AI_start_Automacros_Check_Hook_Handle}{$slot};
+				
 			} else {
 				error "[eventMacro] Tried to delete AI_start hook in slot ".$slot." and for some reason it is already undefined.\n";
 			}
-		} elsif (
-		  ($self->{Automacros_Checking_Status}{$slot} == PAUSED_BY_EXCLUSIVE_MACRO || $self->{Automacros_Checking_Status}{$slot} == PAUSE_FORCED_BY_USER) &&
-		  ($status == CHECKING_AUTOMACROS || $status == CHECKING_FORCED_BY_USER)
-		) {
-			if (exists $self->{AI_start_Automacros_Check_Hook_Handle}{$slot}) {
-				error "[eventMacro] Tried to add AI_start hook in slot ".$slot." and for some reason it is already defined.\n";
-			} else {
+			
+		} elsif (($current_status == PAUSED_BY_EXCLUSIVE_MACRO || $current_status == PAUSE_FORCED_BY_USER) && ($new_status == CHECKING_AUTOMACROS || $new_status == CHECKING_FORCED_BY_USER)) {
+			if (!exists $self->{AI_start_Automacros_Check_Hook_Handle}{$slot}) {
 				debug "[eventMacro] Adding AI_start hook in slot ".$slot.".\n", "eventMacro", 2;
 				$self->{AI_start_Automacros_Check_Hook_Handle}{$slot} = Plugins::addHook( 'AI_start',  sub { my $state = $_[1]->{state}; $self->AI_start_checker($state, $slot); }, undef );
+				
+			} else {
+				error "[eventMacro] Tried to add AI_start hook in slot ".$slot." and for some reason it is already defined.\n";
 			}
 		}
-		$self->{Automacros_Checking_Status}{$slot} = $status;
+		$self->{Automacros_Checking_Status}{$slot} = $new_status;
 	}
 }
 
