@@ -51947,3 +51947,32 @@ Costume: Eleanor Wig Yellow
 Costume: Short Hair Cat^000000
 Berat : ^7777770^000000
 #
+
+//====================update 22042019=================
+31411#Lucky Box Reworked I
+Jika dibuka, kamu bisa mendapatkan :
+^777777Sunglasses [1]
+Cylinder Hairband [1]
+Royal Guard Necklace
+Kardui Robe [1]
+Drake Coat [1]
+Love Dad Wings 2012 [1]
+Imuke Upper Shield [1]
+Giant's Protection [1]
+Hibram Gloves [1]
+20 HD Bradium
+20 HD Carnium
+Weapon Certificate +9
+Armor Certificate +9
+Weapon Certificate +8
+Armor Certificate +8
+3 Blessed Armor Ore
+3 Blessed Weapon Ore^000000
+Berat : ^7777770^000000
+#
+
+//====================update 14052019=================
+32513#
+Ticket Special Gravity
+Tiket Daily Login Spesial Gravity Game Link. Simpan dengan baik karena kamu bisa mendapatkan hadiah menarik dengan menukarkan tiket ini.
+Berat : ^7777770^000000#
