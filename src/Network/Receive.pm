@@ -3808,6 +3808,7 @@ sub quest_add {
     }
  
     my $quest = \%{$questList->{$args->{questID}}};
+	$quest->{quest_id} = $args->{questID};
     $quest->{active} = $args->{active};
     $quest->{time_start} = $args->{time_start};
     $quest->{time_expire} = $args->{time_expire};
@@ -3816,37 +3817,25 @@ sub quest_add {
     unless (%$quest) {
         message TF("Quest: %s has been added.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
     }
-   
-    for (my $i = 0 ; $i < $args->{mission_amount}; $i++) {
-        my $quest;
        
-        @{$quest}{@{$quest_info->{quest_keys}}} = unpack($quest_info->{quest_pack}, substr($args->{message}, $offset, $quest_info->{quest_len}));
-       
-        %{$questList->{$quest->{quest_id}}} = %$quest;
+	for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
+		my $mission;
+		
+		@{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
+		$mission->{mob_name} = bytesToString($mission->{mob_name_original});
+		$mission->{mission_index} = $j;
  
-        debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
+		%{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
+        
+		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count}\n", "info";
  
-        $offset += $quest_info->{quest_len};
-       
-        for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
-            my $mission;
-           
-            @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
-			$mission->{mob_name} = bytesToString($mission->{mob_name_original});
-            $mission->{mission_index} = $j;
+		$offset += $quest_info->{mission_len};
  
-            %{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
-           
-            debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count}\n", "info";
- 
-            $offset += $quest_info->{mission_len};
- 
-            Plugins::callHook('quest_mission_added', {
-                questID => $quest->{quest_id},
-                mission_id => $mission->{mob_id}
-            });
-        }
-    }
+		Plugins::callHook('quest_mission_added', {
+			questID => $quest->{quest_id},
+			mission_id => $mission->{mob_id}
+		});
+	}
     
     Plugins::callHook('quest_added', {
         questID => $args->{questID}
