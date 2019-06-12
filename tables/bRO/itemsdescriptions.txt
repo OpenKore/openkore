@@ -60216,7 +60216,7 @@ Peso: ^7777771^000000
 ^0000ffAGI e DES^000000 ^ff0000-1.^000000
 ^0000ffVelocidade de ataque +3%.^000000
 ^FA4E09Conjunto^000000
-^FA4E09[Carta Verme Sombrio]^000000
+^FA4E09[Carta Verme Sombrio com Rosto]^000000
 ^0000ffAGI e DES +2.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
@@ -60244,14 +60244,14 @@ Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 27166#
-^0000ffResistência a propriedade Fogo +2%.^000000
+^0000ffResistência a oponentes de propriedade Fogo +2%..^000000
 Refino +7 ou mais:
-^0000ffResistência a propriedade Fogo +1% adicional.^000000
+^0000ffResistência a oponentes de propriedade Fogo +1% adicional.^000000
 Refino +9 ou mais:
-^0000ffResistência a propriedade Fogo +2% adicional.^000000
+^0000ffResistência a oponentes de propriedade Fogo +2% adicional.^000000
 ^FA4E09Conjunto^000000
 ^FA4E09[Carta Larva de Verme]^000000
-^0000ffDano mágico contra oponentes de propriedade Fogo +10%.^000000
+^0000ffDano mágico de propriedade Fogo +10%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
@@ -60261,7 +60261,7 @@ Peso: ^7777771^000000
 A cada refino:
 ^0000ffDano mágico de propriedade Água +3%.^000000
 ^FA4E09Conjunto^000000
-^FA4E09[Carta Ovo de Verme]^000000
+^FA4E09[Carta Ovo de Verme com Rosto]^000000
 ^0000ffResistência a propriedade Neutro +5% adicional.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
@@ -62273,6 +62273,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31047#
+Quando seu crush aparece em cena, fica impossível controlar as emoções! Ignore o que qualquer um possa pensar e permita que a paixão fique estampada em seu rosto.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31048#
 De exuberante ar campestre, esse par de lírios acompanhado de fitas marrons em cetim exala um perfume forte e inebriante. Poucos em Rune-Midgard conhecem a lenda dos lírios do campo: segundo ela, essa flor tem a capacidade de reconciliar os amantes separados; então, se você precisar, não perca a chance!
 Tipo: ^777777Visual^000000
@@ -63287,6 +63296,15 @@ Uma capa quentinha e perfeita pra quando você precisar fazer um passeio rápido
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+31439#
+Esses abafadores vão deixar suas orelhas aquecidas da mesma forma que o seu coração fica quando você pensa no seu amorzinho.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
