@@ -74,6 +74,7 @@ sub new {
 	
 		#must add a sorting algorithm here later
 		$self->{triggered_prioritized_automacros_index_list}{$slot} = [];
+		$self->{automacro_index_to_queue_index}{$slot} = {};
 		
 		$self->{number_of_triggered_automacros}{$slot} = 0;
 		$self->set_automacro_checking_status($slot);
