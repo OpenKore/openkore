@@ -67,7 +67,7 @@ sub new {
 		$self->repeat(1);
 	}
 	
-	if (defined $slot && $slot =~ /^\d+$/) {
+	if (defined $slot && $slot =~ /^\d+$/ && $slot >= 1) {
 		$self->slot($slot);
 	} else {
 		$self->slot(1);
@@ -292,7 +292,7 @@ sub register_new {
 # Unregisters eventMacro sequence from AI queue
 sub unregister {
 	my ($self) = @_;
-	debug "[eventMacro] Macro '".$self->{name}."' is now deleting eventMacro from AI queue.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' is now deleting eventMacro from the AI queue sequence.\n", "eventMacro", 2;
 	AI::clear('eventMacro');
 	$self->{registered} = 0;
 }
@@ -300,7 +300,7 @@ sub unregister {
 # Adds the current macro to the already existent eventMacro sequence in AI queue
 sub register_add {
 	my ($self, $macro_args) = @_;
-	debug "[eventMacro] Macro '".$self->{name}."' is now adding itself to the eventMacro sequente in AI queue.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' is now adding itself to the eventMacro sequence in the AI queue.\n", "eventMacro", 2;
 	$macro_args->{$self->{slot}} = $self->{name};
 	$self->{registered} = 1;
 }
@@ -308,7 +308,7 @@ sub register_add {
 # Removes the current macro from the eventMacro sequence in AI queue
 sub register_remove {
 	my ($self, $macro_args) = @_;
-	debug "[eventMacro] Macro '".$self->{name}."' is now deleting itself from the eventMacro sequente in AI queue.\n", "eventMacro", 2;
+	debug "[eventMacro] Macro '".$self->{name}."' is now deleting itself from the eventMacro sequence in the AI queue.\n", "eventMacro", 2;
 	delete $macro_args->{$self->{slot}};
 	$self->{registered} = 0;
 }

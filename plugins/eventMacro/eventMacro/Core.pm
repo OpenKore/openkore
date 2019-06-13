@@ -310,8 +310,8 @@ sub create_automacro_list {
 				error "[eventMacro] Ignoring automacro '$name' (repeat parameter should be a number)\n";
 				next AUTOMACRO;
 			###Parameter: slot
-			} elsif ($parameter->{'key'} eq "slot" && $parameter->{'value'} !~ /\d+/) {
-				error "[eventMacro] Ignoring automacro '$name' (slot parameter should be a number)\n";
+			} elsif ($parameter->{'key'} eq "slot" && ($parameter->{'value'} !~ /^\d+$/ || $parameter->{'value'} == 0)) {
+				error "[eventMacro] Ignoring automacro '$name' (slot parameter should be a number 1 or bigger)\n";
 				next AUTOMACRO;
 			} else {
 				$currentParameters{$parameter->{'key'}} = $parameter->{'value'};

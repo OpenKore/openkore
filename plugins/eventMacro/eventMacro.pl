@@ -104,8 +104,6 @@ sub parseAndHook {
 	}
 }
 
-
-# TODO: fix the command to work with slots
 sub commandHandler {
 	### no parameter given
 	if (!defined $_[1]) {
@@ -264,34 +262,34 @@ sub commandHandler {
 		
 	### parameter: check
 	} elsif ($arg eq 'check') {
-        if (!defined $params[0] || (defined $params[0] && $params[0] ne 'force_stop' && $params[0] ne 'force_start' && $params[0] ne 'resume')) {
-            message "usage: eventMacro check [force_stop|force_start|resume]\n", "list";
-            message
-                "eventMacro check force_stop [slot]: forces the stop of automacros checking [in a certain slot].\n".
-                "eventMacro check force_start [slot]: forces the start of automacros checking [in a certain slot].\n".
-                "eventMacro check resume [slot]: return automacros checking to the normal state [in a certain slot].\n";
-            return;
-        }
+		if (!defined $params[0] || (defined $params[0] && $params[0] ne 'force_stop' && $params[0] ne 'force_start' && $params[0] ne 'resume')) {
+			message "usage: eventMacro check [force_stop|force_start|resume] [slot]\n", "list";
+			message
+				"eventMacro check force_stop [slot]: forces the stop of automacros checking [in a certain slot].\n".
+				"eventMacro check force_start [slot]: forces the start of automacros checking [in a certain slot].\n".
+				"eventMacro check resume [slot]: return automacros checking to the normal state [in a certain slot].\n";
+			return;
+		}
 		
 		my $new_status = $params[0];
-       
-        if (defined $params[1]) {
-            my $slot = $params[1];
+		
+		if (defined $params[1]) {
+			my $slot = $params[1];
 			
-            if ($slot !~ /^\d+$/) {
-                message "[eventMacro] '".$slot."' is not a valid option\n";
-                return;
-            }
-            if (!exists $eventMacro->{Automacros_Checking_Status}{$slot}) {
-                message "[eventMacro] Slot '".$slot."' does not exist\n";
-                return;
-            }
+			if ($slot !~ /^\d+$/) {
+				message "[eventMacro] '".$slot."' is not a valid option\n";
+				return;
+			}
+			if (!exists $eventMacro->{Automacros_Checking_Status}{$slot}) {
+				message "[eventMacro] Slot '".$slot."' does not exist\n";
+				return;
+			}
 			
-            debug "[eventMacro] Command 'check' used with parameter '".$new_status."' and slot ".$slot.".\n", "eventMacro", 2;
-           
+			debug "[eventMacro] Command 'check' used with parameter '".$new_status."' and slot ".$slot.".\n", "eventMacro", 2;
+		   
 			check_command_enforce($new_status, $slot);
 			
-        } else {
+		} else {
 			debug "[eventMacro] Command 'check' used with parameter '".$new_status."' and no slot defined.\n", "eventMacro", 2;
 			foreach my $slot (sort keys %{$eventMacro->{Automacro_Checking_slots}}) {
 				check_command_enforce($new_status, $slot);
@@ -690,39 +688,39 @@ sub check_command_enforce {
 	debug "[eventMacro] Previous slot ".$slot." checking status '".$old_status."'.\n", "eventMacro", 2;
 	
 	if ($new_status eq 'force_stop') {
-	    if ($old_status == CHECKING_AUTOMACROS) {
+		if ($old_status == CHECKING_AUTOMACROS) {
 			message "[eventMacro] Slot ".$slot.": Automacros checking forcely stopped.\n";
 			$eventMacro->set_automacro_checking_status($slot, PAUSE_FORCED_BY_USER);
-	    } elsif ($old_status == PAUSED_BY_EXCLUSIVE_MACRO) {
+		} elsif ($old_status == PAUSED_BY_EXCLUSIVE_MACRO) {
 			message "[eventMacro] Slot ".$slot.": Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}{$slot}->last_subcall_name."').\n".
 					"Now they will be forcely stopped even after macro ends (caution).\n";
 			$eventMacro->set_automacro_checking_status($slot, PAUSE_FORCED_BY_USER);
-	    } elsif ($old_status == PAUSE_FORCED_BY_USER) {
+		} elsif ($old_status == PAUSE_FORCED_BY_USER) {
 			message "[eventMacro] Slot ".$slot.": Automacros checking is already forcely stopped.\n";
-	    } else {
+		} else {
 			message "[eventMacro] Slot ".$slot.": Automacros checking is forcely active, now it will be forcely stopped.\n";
 			$eventMacro->set_automacro_checking_status($slot, PAUSE_FORCED_BY_USER);
-	    }
+		}
 			
 	} elsif ($new_status eq 'force_start') {
-	    if ($old_status == CHECKING_AUTOMACROS) {
+		if ($old_status == CHECKING_AUTOMACROS) {
 			message "[eventMacro] Slot ".$slot.": Automacros are already being checked, now it will be forcely kept this way.\n";
 			$eventMacro->set_automacro_checking_status($slot, CHECKING_FORCED_BY_USER);
-	    } elsif ($old_status == PAUSED_BY_EXCLUSIVE_MACRO) {
+		} elsif ($old_status == PAUSED_BY_EXCLUSIVE_MACRO) {
 			message "[eventMacro] Slot ".$slot.": Automacros were not being checked because there's an uninterruptible macro running ('".$eventMacro->{Macro_Runner}{$slot}->last_subcall_name."').\n".
 					"Now automacros checking will be forcely activated (caution).\n";
 			$eventMacro->set_automacro_checking_status($slot, CHECKING_FORCED_BY_USER);
-	    } elsif ($old_status == PAUSE_FORCED_BY_USER) {
+		} elsif ($old_status == PAUSE_FORCED_BY_USER) {
 			message "[eventMacro] Slot ".$slot.": Automacros checking is forcely stopped, now it will be forcely activated.\n";
 			$eventMacro->set_automacro_checking_status($slot, CHECKING_FORCED_BY_USER);
-	    } else {
+		} else {
 			message "[eventMacro] Slot ".$slot.": Automacros checking is already forcely active.\n";
-	    }
+		}
 			
 	} elsif ($new_status eq 'resume') {
-	    if ($old_status == CHECKING_AUTOMACROS || $old_status == PAUSED_BY_EXCLUSIVE_MACRO) {
+		if ($old_status == CHECKING_AUTOMACROS || $old_status == PAUSED_BY_EXCLUSIVE_MACRO) {
 			message "[eventMacro] Slot ".$slot.": Automacros checking is not forced by the user to be able to resume.\n";
-	    } else {
+		} else {
 			if (!exists $eventMacro->{Macro_Runner}{$slot}) {
 				message "[eventMacro] Slot ".$slot.": Since there's no macro in execution automacros will resume to being normally checked.\n";
 				$eventMacro->set_automacro_checking_status($slot, CHECKING_AUTOMACROS);
@@ -733,7 +731,7 @@ sub check_command_enforce {
 				message "[eventMacro] Slot ".$slot.": Since there's a macro in execution ('".$eventMacro->{Macro_Runner}{$slot}->last_subcall_name."'), and it is not interruptible, automacros won't resume to being checked until it ends.\n";
 				$eventMacro->set_automacro_checking_status($slot, PAUSED_BY_EXCLUSIVE_MACRO);
 			}
-	    }
+		}
 	}
 }
 
