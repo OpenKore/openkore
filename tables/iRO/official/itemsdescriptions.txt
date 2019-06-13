@@ -21704,21 +21704,26 @@ Weight: ^8080801^000000
 HP Recovery + 20%
 #
 4039#
-Type: Miscellaneous
-Class: Card
-Compounds On: Headgear
-Weight: 1
-^FFFFFF_^000000
-Increases resistance to [Silence] status by 20%. Def+1?
-^FFFFFF_^000000
-Set bonus with Wanderer Card, Shinobi Card, Wild Rose Card, Wickebine Tres Card:
-Str +6
-Agi +4
-Increases the damage inflicted with [Back Stab] by 10%.
-If the user has learned [Divest Armor] Lv 5, adds a 5% chance of using it on the target when doing a physical attack.
-If used by a Rogue job type:
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Def + 1
+Increases resistance to ^800000Silence^000000 by 20%.
+
+^800080Set Bonus^000000
+^008080Shinobi Card^000000
+^008080Stainer Card^000000
+^008080Wanderer Card^000000
+^008080Wickebine Tres^000000
+^008080Wild Rose Card^000000
+Str + 6
+Agi + 4
+Increases the damage of ^0000FFBack Stab^000000 by 10%.
+If ^0000FFDivest Armor^000000 is at maximum level,
+Adds a 5% chance of casting ^0000FFLevel 5 Divest Armor^000000 on the target when performing a physical attack.
+^F4AD42Rogue Bonus^000000
 Reduces the SP cost of skills by 20%.
-Removes the chance of using [Snatch].
+^d3d3d3Disables the following effects of Wanderer Card, Adds a 2% chance of casting Level 1 Snatch on the target when performing a physical attack.^000000
 #
 4040#
 Class: ^808080Card^000000
@@ -22684,29 +22689,26 @@ If used by Sage,
 Restores 1 SP to the user when performing a physical attack.
 #
 4172#
-The Paper Card.
-Inflict 20% more damage with Critical Attack.
-Drain 1 SP every time when attacking.
-^6A5ACDThief Card Set^000000
-^3CB371Wanderer Card^000000
-^3CB371Wild Rose Card^000000
-^3CB371Shinobi Card^000000
-^3CB371Zhu Po Long Card^000000
-^3CB371The Paper Card^000000
-Increase aspd,
-after-attack delay reduces by 5%
-Agi +5, Str +5
-ASPD +5%
-+1 SP per attack
-Disable the Auto-Snatch
-ability of the
-Wanderer Card
-Thief Class Bonus:
-No Gemstones required to
-use certain skills.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Increases critical damage on targets by 20%.
+Drains 1 SP from the user when performing a physical attack.
+
+^800080Set Bonus^000000
+^008080Shinobi Card^000000
+^008080The Paper Card^000000
+^008080Wanderer Card^000000
+^008080Wild Rose Card^000000
+^008080Zhu Po Long Card^000000
+Str + 5
+Agi + 5
+Aspd + 5%
+Increased Movement Speed.
+Disables the following effects of ^008080The Paper Card^000000, Drains 1 SP from the user when performing a physical attack.
+^d3d3d3Disables the following effects of Wanderer Card, Adds a 2% chance of casting Level 1 Snatch on the target when performing a physical attack.^000000
+^F4AD42Thief Bonus^000000
+Reduces the number of gems required for skills by 1.
 #
 4173#
 Demon Fungus Card.
@@ -23799,47 +23801,42 @@ Compound on: ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4257#
-Wild Rose Card.
-Agi +1.
-Perfect Dodge +5 if worn
-by Thief Class characters.
-^6A5ACDThief Card Set^000000
-^3CB371Wanderer Card^000000
-^3CB371Wild Rose Card^000000
-^3CB371Shinobi Card^000000
-^3CB371Zhu Po Long Card^000000
-^3CB371The Paper Card^000000
-Agi +5
-Str +5
-ASPD +5%
-+1 SP per attack
-Disable the Auto-Snatch
-ability of the
-Wanderer Card
-Thief Class Bonus:
-No Gemstones required to
-use certain skills.
-^6A5ACDRogue Card Set^000000
-^3CB371Wanderer Card^000000
-^3CB371Wild Rose Card^000000
-^3CB371Shinobi Card^000000
-^3CB371Stainer Card^000000
-^3CB371Wickebine Tres Card^000000
-Str +6
-Agi +4
-Backstab Damage +10%
-A chance of auto casting
-level 5 Strip Armor
-if level 5 Strip Armor is
-learned.
-Rogue Class Bonus:
--20% SP Consumption
-Disables the Auto-Snatch
-ability of the
-Wanderer Card.
-Class : ^777777Card^000000
-Compound on: ^777777Footwear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Agi + 1
+^F4AD42Thief Bonus^000000
+Perfect Dodge + 5
+
+^800080Set Bonus^000000
+^008080Shinobi Card^000000
+^008080The Paper Card^000000
+^008080Wanderer Card^000000
+^008080Wild Rose Card^000000
+^008080Zhu Po Long Card^000000
+Str + 5
+Agi + 5
+Aspd + 5%
+Increased Movement Speed.
+Disables the following effects of ^008080The Paper Card^000000, Drains 1 SP from the user when performing a physical attack.
+^d3d3d3Disables the following effects of Wanderer Card, Adds a 2% chance of casting Level 1 Snatch on the target when performing a physical attack.^000000
+^F4AD42Thief Bonus^000000
+Reduces the number of gems required for skills by 1.
+
+^800080Set Bonus^000000
+^008080Shinobi Card^000000
+^008080Stainer Card^000000
+^008080Wanderer Card^000000
+^008080Wickebine Tres^000000
+^008080Wild Rose Card^000000
+Str + 6
+Agi + 4
+Increases the damage of ^0000FFBack Stab^000000 by 10%.
+If ^0000FFDivest Armor^000000 is at maximum level,
+Adds a 5% chance of casting ^0000FFLevel 5 Divest Armor^000000 on the target when performing a physical attack.
+^F4AD42Rogue Bonus^000000
+Reduces the SP cost of skills by 20%.
+^d3d3d3Disables the following effects of Wanderer Card, Adds a 2% chance of casting Level 1 Snatch on the target when performing a physical attack.^000000
 #
 4258#
 Class: ^808080Card^000000
@@ -23984,27 +23981,26 @@ Compound on: ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4272#
-Zhu Po Long Card.
-Agi +1, Critical +3.
-^6A5ACDThief Card Set^000000
-^3CB371Wanderer Card^000000
-^3CB371Wild Rose Card^000000
-^3CB371Shinobi Card^000000
-^3CB371Zhu Po Long Card^000000
-^3CB371The Paper Card^000000
-Agi +5
-Str +5
-ASPD +5%
-+1 SP per attack
-Disable the Auto-Snatch
-ability of the
-Wanderer Card
-Thief Class Bonus:
-No Gemstones required to
-use certain skills.
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Agi + 1
+Crit + 3
+
+^800080Set Bonus^000000
+^008080Shinobi Card^000000
+^008080The Paper Card^000000
+^008080Wanderer Card^000000
+^008080Wild Rose Card^000000
+^008080Zhu Po Long Card^000000
+Str + 5
+Agi + 5
+Aspd + 5%
+Increased Movement Speed.
+Disables the following effects of ^008080The Paper Card^000000, Drains 1 SP from the user when performing a physical attack.
+^d3d3d3Disables the following effects of Wanderer Card, Adds a 2% chance of casting Level 1 Snatch on the target when performing a physical attack.^000000
+^F4AD42Thief Bonus^000000
+Reduces the number of gems required for skills by 1.
 #
 4273#
 Shell Fish Card.
@@ -25044,32 +25040,25 @@ Compound on: ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4348#
-Adds a chance of
-autocasting Lv.1
-Strip Armor each
-time the wearer
-physically attacks.
-^6A5ACDRogue Card Set^000000
-^3CB371Wanderer Card^000000
-^3CB371Wild Rose Card^000000
-^3CB371Shinobi Card^000000
-^3CB371Stainer Card^000000
-^3CB371Wickebine Tres Card^000000
-Str +6
-Agi +4
-Backstab Damage +10%
-A chance of auto casting
-level 5 Strip Armor
-if level 5 Strip Armor is
-learned.
-Rogue Class Bonus:
--20% SP Consumption
-Disables the Auto-Snatch
-ability of the
-Wanderer Card.
-Class : ^777777Card^000000
-Compound on: ^777777Accessory^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Accessory^000000
+Weight: ^8080801^000000
+Adds a chance of casting ^0000FFLevel 1 Divest Armor^000000 on the target when performing a physical attack.
+
+^800080Set Bonus^000000
+^008080Shinobi Card^000000
+^008080Stainer Card^000000
+^008080Wanderer Card^000000
+^008080Wickebine Tres^000000
+^008080Wild Rose Card^000000
+Str + 6
+Agi + 4
+Increases the damage of ^0000FFBack Stab^000000 by 10%.
+If ^0000FFDivest Armor^000000 is at maximum level,
+Adds a 5% chance of casting ^0000FFLevel 5 Divest Armor^000000 on the target when performing a physical attack.
+^F4AD42Rogue Bonus^000000
+Reduces the SP cost of skills by 20%.
+^d3d3d3Disables the following effects of Wanderer Card, Adds a 2% chance of casting Level 1 Snatch on the target when performing a physical attack.^000000
 #
 4349#
 Adds a chance
@@ -50264,7 +50253,7 @@ An old and thin coin bag. . 50 E coins are in the bag.
 Weight : ^7777771^000000
 #
 12646#
-A baked snack served at bars all over Rune Midgard
+Chewing on this deliciously glazed ring-shaped fried cake will make you happy.
 Class: ^808080Stat Boost^000000
 Weight: ^8080803^000000
 Luk + 9 for 10 minutes.
