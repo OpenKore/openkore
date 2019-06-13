@@ -5686,7 +5686,7 @@
 12641#New_Recruit_Pack#
 12642#Fruit_Of_Mastela_Box#
 12643#E_Coin_Pack50#
-12646#Poring_Pretzel#
+12646#Donut#
 12647#Ink_Ball#
 12654#Recruit's_Mount_Gift#
 12658#Transformation_Scroll_(Deviruchi)#
