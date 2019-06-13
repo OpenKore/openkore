@@ -286,7 +286,7 @@ sub commandHandler {
 			}
 			
 			debug "[eventMacro] Command 'check' used with parameter '".$new_status."' and slot ".$slot.".\n", "eventMacro", 2;
-		   
+			
 			check_command_enforce($new_status, $slot);
 			
 		} else {
@@ -295,9 +295,9 @@ sub commandHandler {
 				check_command_enforce($new_status, $slot);
 			}
 		}
-   
-   
-    ### parameter: stop
+	
+	
+	### parameter: stop
 	} elsif ($arg eq 'stop') {
 	
 		if (defined $params[0]) {
