@@ -3754,28 +3754,32 @@ sub quest_all_mission {
         my $quest;
        
         @{$quest}{@{$quest_info->{quest_keys}}} = unpack($quest_info->{quest_pack}, substr($args->{message}, $offset, $quest_info->{quest_len}));
-       
-        %{$questList->{$quest->{quest_id}}} = %$quest;
+		
+		my $char_quest = \%{$questList->{$quest->{quest_id}}};
+		
+		foreach my $key (keys %{$quest}) {
+			$char_quest->{$key} = $quest->{$key};
+		}
  
-        debug "Quest ID: $quest->{quest_id} - active: $quest->{active}\n", "info";
+        debug "Quest ID: $char_quest->{quest_id} - active: $char_quest->{active}\n", "info";
  
         $offset += $quest_info->{quest_len};
        
-        for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
+        for ( my $j = 0 ; $j < $char_quest->{mission_amount}; $j++ ) {
             my $mission;
            
             @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
 			$mission->{mob_name} = bytesToString($mission->{mob_name_original});
             $mission->{mission_index} = $j;
  
-            %{$questList->{$quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
+            %{$questList->{$char_quest->{quest_id}}->{missions}->{$mission->{mob_id}}} = %$mission;
            
             debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count}\n", "info";
  
             $offset += $quest_info->{mission_len};
  
             Plugins::callHook('quest_mission_added', {
-				questID => $quest->{quest_id},
+				questID => $char_quest->{quest_id},
 				mission_id => $mission->{mob_id}
 			});
         }
