@@ -2554,7 +2554,7 @@ sub processSitAuto {
 		debug "HP is now > $config{sitAuto_hp_upper}\n", "sitAuto";
 		stand() if (!AI::isIdle && !AI::is(qw(follow sitting clientSuspend)) && !$config{'sitAuto_idle'} && $char->{sitting});
 
-	} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'}) && AI::action ne "sitAuto") {
+	} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'}) && AI::action ne "sitAuto" && ($char->{skills}{NV_BASIC}{lv} >= 3 || $char->{skills}{SU_BASIC_SKILL}{lv} == 1)) {
 		if ($action eq "" || $action eq "follow"
 		|| ($action eq "route" && !AI::args->{noSitAuto})
 		|| ($action eq "mapRoute" && !AI::args->{noSitAuto})
