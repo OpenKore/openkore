@@ -4907,6 +4907,10 @@ sub cmdSit {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
+	if ($char->{skills}{NV_BASIC}{lv} < 3 || $char->{skills}{SU_BASIC_SKILL}{lv} == 1) {
+		error T("Basic Skill level 3 is required in order to sit or stand.")."\n";
+		return;
+	}
 	$ai_v{sitAuto_forcedBySitCommand} = 1;
 	AI::clear("move", "route", "mapRoute");
 	AI::clear("attack") unless ai_getAggressives();
