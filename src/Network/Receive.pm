@@ -3068,8 +3068,8 @@ sub show_eq {
 		my $item;
 		@{$item}{@{$item_info->{keys}}} = unpack($item_info->{types}, substr($args->{equips_info}, $i, $item_info->{len}));
 		$item->{broken} = 0;
-		$item->{identified} = 1;
-		$msg .= sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item));
+		$item->{identified} = 1;		
+		message sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item)), "list";
 	}
 	$msg .= sprintf("%s\n", ('-'x50));
 	message($msg, "list");
@@ -4434,17 +4434,7 @@ sub quest_all_list {
             mission_keys => [qw(hunt_id mob_type mob_id min_level max_level mob_count mob_goal mob_name_original)],
             mission_len => 44,
         };
-
-    } elsif ($args->{switch} eq '0AFF') { # SERVERTYPE >= 20150513
-        $quest_info = {
-            quest_pack => 'V C V2 v',
-            quest_keys => [qw(quest_id active time_expire time_start mission_amount)],
-            quest_len => 15,
-            mission_pack => 'V4 v4 Z24',
-            mission_keys => [qw(hunt_id hunt_id_cont mob_type mob_id min_level max_level mob_count mob_goal mob_name_original)],
-            mission_len => 48,
-        };
-
+       
     } else { # this can't happen
         return;
     }
@@ -4523,14 +4513,8 @@ sub quest_all_mission {
         debug "Quest ID: $char_quest->{quest_id} - active: $char_quest->{active}\n", "info";
 
         $offset += $quest_info->{quest_len};
-
-        for ( my $j = 0 ; $j < 3; $j++ ) {
-
-			if($j >= $char_quest->{mission_amount}) {
-				$offset += $quest_info->{mission_len};
-				next;
-			}
-
+       
+        for ( my $j = 0 ; $j < $char_quest->{mission_amount}; $j++ ) {
             my $mission;
 
             @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
@@ -4567,14 +4551,7 @@ sub quest_add {
             mission_keys => [qw(hunt_id mob_type mob_id min_level max_level mob_count mob_name_original)],
             mission_len => 42,
         };
-
-    } elsif ($args->{switch} eq '0B0C') {  # SERVERTYPE >= 20150513
-        $quest_info = {
-            mission_pack => 'V4 v3 Z24',
-            mission_keys => [qw(hunt_id hunt_id_cont mob_type mob_id min_level max_level mob_count mob_name_original)],
-            mission_len => 46,
-        };
-
+ 
     } else { # DEFAULT PACKET - 02B3
         $quest_info = {
             mission_pack => 'V v Z24',
@@ -4589,16 +4566,12 @@ sub quest_add {
     $quest->{time_start} = $args->{time_start};
     $quest->{time_expire} = $args->{time_expire};
     $quest->{mission_amount} = $args->{mission_amount};
-
-    if ($args->{questID}) {
+   
+    unless (%$quest) {
         message TF("Quest: %s has been added.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
     }
-
-	for ( my $j = 0 ; $j < 3; $j++ ) {
-		if($j >= $quest->{mission_amount}) {
-			$offset += $quest_info->{mission_len};
-			next;
-		}
+       
+	for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
 		my $mission;
 
 		@{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
@@ -4637,26 +4610,15 @@ sub quest_update_mission_hunt {
             mission_keys => [qw(questID hunt_id mob_goal mob_count)],
             mission_len => 12,
         };
-
-    } elsif($args->{switch} eq '0AFE') {
-		$quest_info = {
-            mission_pack => 'V3 v2',
-            mission_keys => [qw(questID hunt_id hunt_id_cont mob_goal mob_count)],
-            mission_len => 16,
-        };
-	} else { # 02B5 and 08FE
+ 
+    } else {
         $quest_info = {
             mission_pack => 'V2 v2',
             mission_keys => [qw(questID mob_id mob_goal mob_count)],
             mission_len => 12,
         };
     }
-
-	# workaround 08FE dont have mission_count
-	if ($args->{switch} eq '08FE') {
-		$args->{mission_amount} = (length $args->{message}) / ($quest_info->{mission_len});
-	}
-
+	
 	for (my $i = 0; $i < $args->{mission_amount}; $i++) {
 		my $mission;
 
@@ -4699,17 +4661,10 @@ sub quest_update_mission_hunt {
 
 		$quest_mission->{mob_count} = $mission->{mob_count};
 		$quest_mission->{mob_goal} = $mission->{mob_goal};
-
+		
+		
 		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
-
-		if ($config{questDisplayStyle}) {
-			if($config{questDisplayStyle} >= 2) {
-				warning TF("[%s] Quest - defeated [%s] progress (%s/%s)\n", $quests_lut{$mission->{questID}} ? "$quests_lut{$mission->{questID}}{title} ($mission->{questID})" : $mission->{questID}, $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
-			} else {
-				warning TF("%s [%s/%s]\n", $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
-			}
-		}
-
+		
         $offset += $quest_info->{mission_len};
 
 		Plugins::callHook('quest_mission_updated', {
@@ -10355,8 +10310,12 @@ sub cash_buy_fail {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
-	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999")) {
-		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999") || (($args->{success} == 1 || $args->{success} == 2 ) && $args->{switch} eq "0A98")) {
+		if ($args->{switch} == '0A98') {
+			message TF("[Equip Switch] You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+		} else {	
+			message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+		}	
 	} else {
 		$item->{equipped} = $args->{type};
 
@@ -10395,8 +10354,13 @@ sub equip_item_switch {
 				if ($_ & $args->{type}) {
 					next if $_ == 10; # work around Arrow bug
 					next if $_ == 32768;
-					$char->{eqswitch}{$equipSlot_lut{$_}} = $item;
-					Plugins::callHook('equipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+					if ($args->{switch} == '0A98') {
+						$char->{eqswitch}{$equipSlot_lut{$_}} = $item;
+						Plugins::callHook('equipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+					} else {	
+						$char->{equipment}{$equipSlot_lut{$_}} = $item;
+						Plugins::callHook('equipped_item', {slot => $equipSlot_lut{$_}, item => $item});
+					}
 				}
 			}
 		}
@@ -11359,9 +11323,13 @@ sub unequip_item_switch {
 			if ($_ & $args->{type}){
 				next if $_ == 10; #work around Arrow bug
 				next if $_ == 32768;
-
-				delete $char->{eqswitch}{$equipSlot_lut{$_}};
-				Plugins::callHook('unequipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+				if ($args->{switch} == '0A9A') {
+					delete $char->{eqswitch}{$equipSlot_lut{$_}};
+					Plugins::callHook('unequipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+				} else {	
+					delete $char->{equipment}{$equipSlot_lut{$_}};
+					Plugins::callHook('unequipped_item', {slot => $equipSlot_lut{$_}, item => $item});
+				}
 			}
 		}
 	}
@@ -11433,83 +11401,6 @@ sub skill_add {
 		level => $args->{lv},
 		upgradable => $args->{upgradable},
 		level2 => $args->{lv2},
-	});
-}
-
-sub isvr_disconnect {
-	debug "Received the package 'isvr_disconnect'\n";
-}
-
-sub skill_use_failed {
-	my ($self, $args) = @_;
-
-	# skill fail/delay
-	my $skillID = $args->{skillID};
-	my $btype = $args->{btype};
-	my $fail = $args->{fail};
-	my $type = $args->{type};
-
-	my %basefailtype = (
-		0 => $msgTable[160],#"skill failed"
-		1 => $msgTable[161],#"no emotions"
-		2 => $msgTable[162],#"no sit"
-		3 => $msgTable[163],#"no chat"
-		4 => $msgTable[164],#"no party"
-		5 => $msgTable[165],#"no shout"
-		6 => $msgTable[166],#"no PKing"
-		7 => $msgTable[384],#"no aligning"
-		#? = ignored
-	);
-
-	my %failtype = (
-		0 => T('Basic'),
-		1 => T('Insufficient SP'),
-		2 => T('Insufficient HP'),
-		3 => T('No Memo'),
-		4 => T('Mid-Delay'),
-		5 => T('No Zeny'),
-		6 => T('Wrong Weapon Type'),
-		7 => T('Red Gem Needed'),
-		8 => T('Blue Gem Needed'),
-		9 => TF('%s Overweight', '90%'),
-		10 => T('Requirement'),
-		11 => T('Failed to use in Target'),
-		12 => T('Maximum Ancilla exceed'),
-		13 => T('Need this within the Holy water'),
-		14 => T('Missing Ancilla'),
-		19 => T('Full Amulet'),
-		24 => T('[Purchase Street Stall License] need 1'),
-		29 => TF('Must have at least %s of base XP', '1%'),
-		30 => T('Insufficient SP'),
-		33 => T('Failed to use Madogear'),
-		34 => T('Kunai is Required'),
-		37 => T('Canon ball is Required'),
-		43 => T('Failed to use Guillotine Poison'),
-		50 => T('Failed to use Madogear'),
-		71 => T('Missing Required Item'), # (item name) required x amount
-		72 => T('Equipment is required'),
-		73 => T('Combo Skill Failed'),
-		76 => T('Too many HP'),
-		77 => T('Need Royal Guard Branding'),
-		78 => T('Required Equiped Weapon Class'),
-		83 => T('Location not allowed to create chatroom/market'),
-		84 => T('Need more bullet'),
-		);
-
-	my $errorMessage;
-	if ($skillID == 1 && $type == 0 && exists $basefailtype{$btype}) {
-		$errorMessage = $basefailtype{$btype};
-	} elsif (exists $failtype{$type}) {
-		$errorMessage = $failtype{$type};
-	} else {
-		$errorMessage = T('Unknown error');
-	}
-
-	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
-	Plugins::callHook('packet_skillfail', {
-		skillID     => $skillID,
-		failType    => $type,
-		failMessage => $errorMessage
 	});
 }
 
