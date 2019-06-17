@@ -786,16 +786,8 @@ sub initHandlers {
 		# Skill Exchange Item
 		['cm', undef, \&cmdExchangeItem],
 		['analysis', undef, \&cmdExchangeItem],
-
-		['searchstore', [
-			T("Universal catalog command"),
-			["close", T("Closes search store catalog")],
-			["next", T("Requests catalog next page")],
-			["view <page #>", T("Shows catalog page # (0-indexed)")],
-			["search [match|exact] ...", T("Searches for an item")],
-			["select <page #> <store #>", T("Selects a store")],
-			["buy [view|end|<item #> [<amount>]]", T("Buys from a store using Universal Catalog Gold")],
-			], \&cmdSearchStore],
+		
+		['searchstore', undef, \&cmdSearchStore],
 		['pause', [
 			T("Delay the next console commands."),
 			["", T("delay the next console commands for 1 second")],
@@ -1678,39 +1670,7 @@ sub cmdCash {
 		$messageSender->sendCashShopClose();
 		return;
 	}
-
-	if ($args[0] eq 'list') {
-		if (not defined $cashShop{list}) {
-			error T("The list of items of Cash shop is not available\n");
-			return;
-		}
-		my %cashitem_tab = (
-			0 => T('New'),
-			1 => T('Popular'),
-			2 => T('Limited'),
-			3 => T('Rental'),
-			4 => T('Perpetuity'),
-			5 => T('Buff'),
-			6 => T('Recovery'),
-			7 => T('Etc'),
-		);
-
-		my $msg;
-		for (my $tabcode = 0; $tabcode < @{$cashShop{list}}; $tabcode++) {
-			$msg .= center(T(' Tab: ') . $cashitem_tab{$tabcode} . ' ', 50, '-') ."\n".
-			T ("ID      Item Name                            Price\n");
-			foreach my $itemloop (@{$cashShop{list}[$tabcode]}) {
-				$msg .= swrite(
-					"@<<<<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>C",
-					[$itemloop->{item_id}, itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price})]);
-			}
-		}
-		$msg .= ('-'x50) . "\n";
-		message $msg, "list";
-
-		return;
-	}
-
+	
 	if (not defined $cashShop{points}) {
 		error T("Cash shop is not open\n");
 		error T("Please use 'cash open' first\n");
@@ -1780,7 +1740,35 @@ sub cmdCash {
 		message TF("Cash Points: %sC - Kafra Points: %sC\n", formatNumber($cashShop{points}->{cash}), formatNumber($cashShop{points}->{kafra}));
 		return;
 	}
+	
+	if ($args[0] eq 'list') {
+		my %cashitem_tab = (
+			0 => T('New'),
+			1 => T('Popular'),
+			2 => T('Limited'),
+			3 => T('Rental'),
+			4 => T('Perpetuity'),
+			5 => T('Buff'),
+			6 => T('Recovery'),
+			7 => T('Etc'),
+		);
 
+		my $msg;
+		for (my $tabcode = 0; $tabcode < @{$cashShop{list}}; $tabcode++) {
+			$msg .= center(T(' Tab: ') . $cashitem_tab{$tabcode} . ' ', 50, '-') ."\n".
+			T ("ID      Item Name                            Price\n");
+			foreach my $itemloop (@{$cashShop{list}[$tabcode]}) {
+				$msg .= swrite(
+					"@<<<<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>C",
+					[$itemloop->{item_id}, itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price})]);
+			}
+		}
+		$msg .= ('-'x50) . "\n";
+		message $msg, "list";
+		
+		return;
+	}
+	
 	error T("Syntax Error in function 'cash' (Cash shop)\n" .
 			"Usage: cash <open | close | buy | points | list>\n");
 }
@@ -4231,8 +4219,8 @@ sub cmdParty {
 		error T("Error in function 'party' (Party Functions)\n" .
 			"You're already in a party.\n");
 	} elsif ($arg1 eq "" || $arg1 eq "info") {
-		my $msg = center(T(" Party Information "), 84, '-') ."\n".
-			TF("Party name: %s\n" .
+		my $msg = center(T(" Party Information "), 79, '-') ."\n".
+			TF("Party name: %s\n" . 
 			"EXP Take: %s       Item Take: %s       Item Division: %s\n\n".
 			"#    Name                   Map           Coord     Online  HP\n",
 			$char->{'party'}{'name'},
@@ -5296,8 +5284,9 @@ sub cmdSpells {
 	for my $ID (@spellsID) {
 		my $spell = $spells{$ID};
 		next unless $spell;
-		$msg .=  sprintf("%3d %-20s %-20s   %3d %3d    %3d  %2d\n",
-				$spell->{binID}, getSpellName($spell->{type}), main::getActorName($spell->{sourceID}), $spell->{pos}{x}, $spell->{pos}{y}, $spell->{range}, $spell->{lvl});
+
+		$msg .=  sprintf("%3d %-20s %-20s   %3d %3d\n", 
+				$spell->{binID}, getSpellName($spell->{type}), main::getActorName($spell->{sourceID}), $spell->{pos}{x}, $spell->{pos}{y});
 	}
 	$msg .= ('-'x66) . "\n";
 	message $msg, "list";
@@ -7065,8 +7054,17 @@ sub cmdDeadTime {
 }
 
 sub cmdAchieve {
-	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command '%s'\n", shift);
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
+	
+	if (($arg1 ne 'list' && $arg1 ne 'reward') || ($arg1 eq 'list' && defined $arg2) || ($arg1 eq 'reward' && !defined $arg2)) {
+		error T("Syntax Error in function 'achieve'\n".
+			"Usage: achieve [<list|reward>] [<achievemente_id>]\n".
+			"Usage: achieve list: Shows all current achievements\n".
+			"Usage: achieve reward achievemente_id: Request reward for the achievement of id achievemente_id\n"
+			);
+			
 		return;
 	}
 	my ($cmd, $args_string) = @_;
@@ -7077,7 +7075,23 @@ sub cmdAchieve {
 			return;
 		}
 
-		my $msg = center(" " . T("Achievement List") . " ", 79, '-') . "\n";
+	if ($arg1 eq 'reward') {
+		if (!exists $achievementList->{$arg2}) {
+			error TF("You don't have the achievement %s.\n", $arg2);
+			
+		} elsif ($achievementList->{$arg2}{completed} != 1) {
+			error TF("You haven't completed the achievement %s.\n", $arg2);
+		
+		} elsif ($achievementList->{$arg2}{reward} == 1) {
+			error TF("You have already claimed the achievement %s reward.\n", $arg2);
+			
+		} else {
+			message TF("Sending request for reward of achievement %s.\n", $arg2);
+			$messageSender->sendAchievementGetReward($arg2);
+		}
+	
+	} elsif ($arg1 eq 'list') {
+		my $msg = center(" " . "Achievement List" . " ", 79, '-') . "\n";
 		my $index = 0;
 		foreach my $achievementID (keys %{$achievementList}) {
 			my $achieve = $achievementList->{$achievementID};
@@ -7219,13 +7233,8 @@ sub cmdRodex {
 			debug "Send rodex mail to yourself\n";
 			$arg2 = $char->{'name'};
 		}
-		if ($arg2 eq "none") {
-			undef $arg2;
-			message T("Opening rodex mail write box. No recipient specified.\n");
-		} else {
-			message TF("Opening rodex mail write box. Recipient: %s\n", $arg2);
-		}
-
+		
+		message T("Opening rodex mail write box.\n");
 		$messageSender->rodex_open_write_mail($arg2);
 
 	} elsif ($arg1 eq 'cancel') {
@@ -7668,8 +7677,8 @@ sub cmdCancelTransaction {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-
-	if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' || $ai_v{'npc_talk'}{'talk'} eq 'store') {
+	
+	if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
 		cancelNpcBuySell();
 	} else {
 		error T("You are not on a sell or store npc interaction.\n");
@@ -8241,12 +8250,8 @@ sub cmdRevive {
 				"Cannot use item '%s' in attempt to revive: item not found in inventory\n", $args[0]);
 		return;
 	}
-
-	if ($item && $args[0] ne "force") {
-		message TF("Trying to use item '%s' to self-revive\n", $item->name());
-	} else {
-		message TF("Trying to self-revive using 'force'\n");
-	}
+	
+	message TF("Trying to use item %s to self-revive\n", $item->name());
 	$messageSender->sendAutoRevive();
 }
 
