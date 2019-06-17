@@ -1916,65 +1916,6 @@ sub skill_use {
 	}
 }
 
-sub skill_use_failed {
-	my ($self, $args) = @_;
-
-	# skill fail/delay
-	my $skillID = $args->{skillID};
-	my $btype = $args->{btype};
-	my $fail = $args->{fail};
-	my $type = $args->{type};
-
-	my %basefailtype = (
-		0 => $msgTable[160],#"skill failed"
-		1 => $msgTable[161],#"no emotions"
-		2 => $msgTable[162],#"no sit"
-		3 => $msgTable[163],#"no chat"
-		4 => $msgTable[164],#"no party"
-		5 => $msgTable[165],#"no shout"
-		6 => $msgTable[166],#"no PKing"
-		7 => $msgTable[384],#"no aligning"
-		#? = ignored
-	);
-
-	my %failtype = (
-		0 => T('Basic'),
-		1 => T('Insufficient SP'),
-		2 => T('Insufficient HP'),
-		3 => T('No Memo'),
-		4 => T('Mid-Delay'),
-		5 => T('No Zeny'),
-		6 => T('Wrong Weapon Type'),
-		7 => T('Red Gem Needed'),
-		8 => T('Blue Gem Needed'),
-		9 => TF('%s Overweight', '90%'),
-		10 => T('Requirement'),
-		13 => T('Need this within the water'),
-		19 => T('Full Amulet'),
-		29 => TF('Must have at least %s of base XP', '1%'),
-		71 => T('Missing Required Item'), # (item name) required x amount
-		78 => T('Required Equiped Weapon Class'),
-		83 => T('Location not allowed to create chatroom/market'),
-		84 => T('Need more bullet'),
-		);
-
-	my $errorMessage;
-	if ($skillID == 1 && $type == 0 && exists $basefailtype{$btype}) {
-		$errorMessage = $basefailtype{$btype};
-	} elsif (exists $failtype{$type}) {
-		$errorMessage = $failtype{$type};
-	} else {
-		$errorMessage = T('Unknown error');
-	}
-
-	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
-	Plugins::callHook('packet_skillfail', {
-		skillID     => $skillID,
-		failType    => $type,
-		failMessage => $errorMessage
-	});
-}
-
 # Skill used on a set of map tile coordinates.
 # Examples: Warp Portal/Teleport, Bard/Dancer skills, etc.
 #
