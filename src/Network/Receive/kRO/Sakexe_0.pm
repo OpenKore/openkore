@@ -69,7 +69,7 @@ sub new {
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
 		'0070' => ['character_deletion_failed', 'C',[qw(error_code)]], # 6
-		'0072' => ['received_characters', 'v a*', [qw(len charInfo)]], # last known struct 
+		'0072' => ['received_characters', 'v a*', [qw(len charInfo)]], # last known struct
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], # 28
 		'0073' => ['map_loaded', 'V a3 C2', [qw(syncMapSync coords xSize ySize)]], # 11
 		'0074' => ['map_load_error', 'C', [qw(error)]], # 3
@@ -83,7 +83,7 @@ sub new {
 		'0079' => ['actor_connected',	'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], #spawning # 53
 		'007A' => ['changeToInGameState'], # 58
 		'007B' => ['actor_moved',	'a4 v8 V v6 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead tick shield tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], #walking # 60
-		'007C' => ($rpackets{'007C'} == 41 )# or 42		
+		'007C' => ($rpackets{'007C'} == 41 )# or 42
 			? ['actor_connected',	'a4 v14 C2 a3 C2', [qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords xSize ySize)]] #spawning (eA does not send this for players) # 41
 			: ['actor_connected', 'C a4 v14 C2 a3 C2', [qw(object_type ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords xSize ySize)]] #spawning (eA does not send this for players) # 42
 		,
@@ -270,7 +270,7 @@ sub new {
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
 		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
 		'019E' => ['pet_capture_process'], # 2
-		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3		
+		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3
 		'01A2' => ($rpackets{'01A2'} == 35) # or 37
 			? ['pet_info', 'Z24 C v4', [qw(name renameflag level hungry friendly accessory)]]
 			: ['pet_info', 'Z24 C v5', [qw(name renameflag level hungry friendly accessory type)]]
@@ -384,7 +384,7 @@ sub new {
 		'0250' => ['auction_result', 'C', [qw(flag)]], # 3
 		'0252' => ['auction_item_request_search', 'v V2', [qw(size pages count)]], # -1
 		'0253' => ['taekwon_feel_save', 'C', [qw(which)]], # 3
-		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5		
+		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5
 		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]], # 5
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8
 		'0259' => ['gameguard_grant', 'C', [qw(server)]], # 3
@@ -395,7 +395,7 @@ sub new {
 		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]], #v 14
 		'0283' => ['account_id', 'a4', [qw(accountID)]], # 6
 		'0287' => ['cash_dealer', 'v V2 a*', [qw(len cash_points kafra_points item_list)]], # -1
-		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]], # 12		
+		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]], # 12
 		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]], # 18
 		'028E' => ['charname_is_valid', 'v', [qw(result)]], # 4
 		'0290' => ['charname_change_result', 'v', [qw(result)]], # 4
@@ -413,10 +413,10 @@ sub new {
 			: ['mercenary_init', 'a4 v8 Z24 v V5 v V2 v',	[qw(ID atk matk hit critical def mdef flee aspd name level hp hp_max sp sp_max contract_end faith summons kills attack_range)]] # 80
 		,
 		'029C' => ['mercenary_property', 'v8 Z24 v5 a4 v V2', [qw(atk matk hit crit def mdef flee aspd name lv hp max_hp sp max_sp contract_end faith summons kills)]], # 66
-		'029D' => ['skills_list'], # -1 # mercenary skills		
+		'029D' => ['skills_list'], # -1 # mercenary skills
 		'02A2' => ['stat_info', 'v V', [qw(type val)]], # 8 was "mercenary_param_change"
 		'02A3' => ['gameguard_lingo_key', 'a4 a4 a4 a4', [qw(dwAlgNum dwAlgKey1 dwAlgKey2 dwSeed)]], # 18
-		'02A6' => ['gameguard_request'], # 22		
+		'02A6' => ['gameguard_request'], # 22
 		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
 		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
@@ -437,7 +437,7 @@ sub new {
 		'02CB' => ['instance_window_start', 'Z61 v', [qw(name flag)]], # 65
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]], # 4
 		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]], # 71
-		'02CE' => ['instance_window_leave', 'V a4', [qw(flag enter_limit_date)]], # 10		
+		'02CE' => ['instance_window_leave', 'V a4', [qw(flag enter_limit_date)]], # 10
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
 		'02F2' => ['progress_bar_stop'],
 		'02D0' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
@@ -471,7 +471,7 @@ sub new {
 		'0441' => ['skill_delete', 'v', [qw(skillID)]], # 4 # TODO: use (ex. rogue can copy a skill)
 		'0442' => ['sage_autospell', 'x2 V a*', [qw(why autoshadowspell_list)]], # -1
 		'0446' => ['minimap_indicator', 'a4 v4', [qw(npcID x y effect qtype)]], # 14
-		'0449' => ['hack_shield_alarm', 'x2', [qw(unknown)]], # 4		
+		'0449' => ['hack_shield_alarm', 'x2', [qw(unknown)]], # 4
 		'07D8' => ['party_exp', 'V C2', [qw(type itemPickup itemDivision)]],
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
@@ -1038,7 +1038,7 @@ sub chat_users {
 	}
 
 	message TF("You have joined the Chat Room %s\n", $chat->{title});
-	
+
 	Plugins::callHook('chat_joined', {
 		chat => $chat,
 	});
@@ -1102,7 +1102,7 @@ sub mercenary_init {
 	$slave->{name} = bytesToString($args->{name});
 
 	Network::Receive::slave_calcproperty_handler($slave, $args);
-	
+
 	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range}) {
 		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
 		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
@@ -1592,7 +1592,7 @@ sub npc_sell_list {
 	if (length($args->{RAW_MSG}) > 4) {
 		my $msg = $args->{RAW_MSG};
 	}
-	
+
 	debug T("You can sell:\n"), "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
 		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
@@ -1600,12 +1600,12 @@ sub npc_sell_list {
 		$item->{sellable} = 1; # flag this item as sellable
 		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
 	}
-	
+
 	foreach my $item (@{$char->inventory->getItems()}) {
 		next if ($item->{equipped} || $item->{sellable});
 		$item->{unsellable} = 1; # flag this item as unsellable
 	}
-	
+
 	undef %talk;
 	message T("Ready to start selling items\n");
 
@@ -1616,7 +1616,7 @@ sub npc_sell_list {
 
 sub npc_talk {
 	my ($self, $args) = @_;
-	
+
 	#Auto-create Task::TalkNPC if not active
 	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
 		my $nameID = unpack 'V', $args->{ID};
@@ -1907,6 +1907,18 @@ sub skill_use_failed {
 	my $fail = $args->{fail};
 	my $type = $args->{type};
 
+	my %basefailtype = (
+		0 => $msgTable[160],#"skill failed"
+		1 => $msgTable[161],#"no emotions"
+		2 => $msgTable[162],#"no sit"
+		3 => $msgTable[163],#"no chat"
+		4 => $msgTable[164],#"no party"
+		5 => $msgTable[165],#"no shout"
+		6 => $msgTable[166],#"no PKing"
+		7 => $msgTable[384],#"no aligning"
+		#? = ignored
+	);
+
 	my %failtype = (
 		0 => T('Basic'),
 		1 => T('Insufficient SP'),
@@ -1926,10 +1938,12 @@ sub skill_use_failed {
 		);
 
 	my $errorMessage;
-	if (exists $failtype{$type}) {
+	if ($skillID == 1 && $type == 0 && exists $basefailtype{$btype}) {
+		$errorMessage = $basefailtype{$btype};
+	} elsif (exists $failtype{$type}) {
 		$errorMessage = $failtype{$type};
 	} else {
-		$errorMessage = 'Unknown error';
+		$errorMessage = T('Unknown error');
 	}
 
 	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
@@ -2271,21 +2285,21 @@ sub party_dead {
 	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
 	if ($args->{isDead} == 1) {
 		message TF("Party member %s is dead.\n", $string), "info";
-	}	
+	}
 }
 
 sub progress_bar_unit {
 	my($self, $args) = @_;
-	debug "Displays progress bar (GID: $args->{GID} time: $args->{time})\n";	
+	debug "Displays progress bar (GID: $args->{GID} time: $args->{time})\n";
 }
 
 sub inventory_expansion_info {
 	my($self, $args) = @_;
-	#sd->inventorySize - FIXED_INVENTORY_SIZE; 
+	#sd->inventorySize - FIXED_INVENTORY_SIZE;
 	#hardcode inventorysize ? [sctnightcore]
 }
 
-#expand_inventory_result 
+#expand_inventory_result
 use constant {
 	EXPAND_INVENTORY_RESULT_SUCCESS => 0x0,
 	EXPAND_INVENTORY_RESULT_FAILED => 0x1,
@@ -2303,11 +2317,11 @@ sub inventory_expansion_result {
 		message TF("Failed to expand the maximum possession limit."),"info";
 	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_OTHER_WORK) {
 		message TF("To expand the possession limit, please close other windows"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MISSING_ITEM) {	
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MISSING_ITEM) {
 		message TF("Failed to expand the maximum possession limit, insufficient required item"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {	
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {
 		message TF("You can no longer expand the maximum possession limit."),"info";
-	}	
+	}
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;

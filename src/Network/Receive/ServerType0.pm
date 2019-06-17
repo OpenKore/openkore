@@ -62,14 +62,14 @@ sub new {
 	$self->{packet_list} = {
 		'0069' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'006A' => ['login_error', 'C Z20', [qw(type date)]],
-		'006B' => ['received_characters_info', 'v C3', [qw(len total_slot premium_start_slot premium_end_slot)]], # last known struct 
+		'006B' => ['received_characters_info', 'v C3', [qw(len total_slot premium_start_slot premium_end_slot)]], # last known struct
 		'006C' => ['login_error_game_login_server'],
 		'006D' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]],
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
-		'0072' => ['received_characters', 'v a*', [qw(len charInfo)]], # last known struct 
+		'0072' => ['received_characters', 'v a*', [qw(len charInfo)]], # last known struct
 		'0073' => ['map_loaded', 'V a3', [qw(syncMapSync coords)]],
 		'0075' => ['changeToInGameState'],
 		'0077' => ['changeToInGameState'],
@@ -168,7 +168,7 @@ sub new {
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
 		'0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]],
-		'0110' => ['skill_use_failed', 'v3 C2', [qw(skillID btype unknown fail type)]],
+		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]],
 		'010A' => ['mvp_item', 'v', [qw(itemID)]],
 		'010B' => ['mvp_you', 'V', [qw(expAmount)]],
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
@@ -589,7 +589,7 @@ sub new {
 		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
 		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
-		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3		
+		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
 		'09F0' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
@@ -637,16 +637,16 @@ sub new {
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3', [qw(len type amount isEnd)]],   # -1
 		'0A89' => ['clone_vender_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
-		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],	
+		'0A8A' => ['clone_vender_lost', 'v a4', [qw(len ID)]],
 		'0A98' => ($rpackets{'0A98'}{length} == 10) # or 12
-			? ['equip_item_switch', 'a2 V v', [qw(ID type success)]] 
+			? ['equip_item_switch', 'a2 V v', [qw(ID type success)]]
 			: ['equip_item_switch', 'a2 V2', [qw(ID type success)]] #kRO <= 20170502
 		,
 		'0A9A' => ['unequip_item_switch', 'a2 V C', [qw(ID type success)]],
 		'0A9B' => ['equipswitch_log', 'v a*', [qw(len log)]], # -1
 		'0A9D' => ['equipswitch_run_res', 'v', [qw(success)]],
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
-		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],	
+		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0AB8' => ['move_interrupt'],
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
@@ -985,7 +985,7 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-	
+
 	# request to unfreeze char - alisonrag
 	$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
 }
@@ -1113,7 +1113,7 @@ sub chat_users {
 	}
 
 	message TF("You have joined the Chat Room %s\n", $chat->{title});
-	
+
 	Plugins::callHook('chat_joined', {
 		chat => $chat,
 	});
@@ -1609,7 +1609,7 @@ sub monster_typechange {
 sub npc_sell_list {
 	my ($self, $args) = @_;
 	#sell list, similar to buy list
-	
+
 	debug T("You can sell:\n"), "info";
 	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
 		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
@@ -1617,12 +1617,12 @@ sub npc_sell_list {
 		$item->{sellable} = 1; # flag this item as sellable
 		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
 	}
-	
+
 	foreach my $item (@{$char->inventory->getItems()}) {
 		next if ($item->{equipped} || $item->{sellable});
 		$item->{unsellable} = 1; # flag this item as unsellable
 	}
-	
+
 	undef %talk;
 	message T("Ready to start selling items\n");
 
@@ -1633,7 +1633,7 @@ sub npc_sell_list {
 
 sub npc_talk {
 	my ($self, $args) = @_;
-	
+
 	#Auto-create Task::TalkNPC if not active
 	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
 		my $nameID = unpack 'V', $args->{ID};
@@ -1656,7 +1656,7 @@ sub npc_talk {
 	# Remove RO color codes
 	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
 	$msg =~ s/\^[a-fA-F0-9]{6}//g;
- 
+
 	# Prepend existing conversation.
 	$talk{msg} .= "\n" if $talk{msg};
 	$talk{msg} .= $msg;
@@ -1898,7 +1898,7 @@ sub skill_use {
 	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {
 		$char->setStatus("EFST_MAGICPOWER", 0);
 	}
-	
+
 	Plugins::callHook('packet_skilluse', {
 			'skillID' => $args->{skillID},
 			'sourceID' => $args->{sourceID},
@@ -1925,6 +1925,18 @@ sub skill_use_failed {
 	my $fail = $args->{fail};
 	my $type = $args->{type};
 
+	my %basefailtype = (
+		0 => $msgTable[160],#"skill failed"
+		1 => $msgTable[161],#"no emotions"
+		2 => $msgTable[162],#"no sit"
+		3 => $msgTable[163],#"no chat"
+		4 => $msgTable[164],#"no party"
+		5 => $msgTable[165],#"no shout"
+		6 => $msgTable[166],#"no PKing"
+		7 => $msgTable[384],#"no aligning"
+		#? = ignored
+	);
+
 	my %failtype = (
 		0 => T('Basic'),
 		1 => T('Insufficient SP'),
@@ -1947,10 +1959,12 @@ sub skill_use_failed {
 		);
 
 	my $errorMessage;
-	if (exists $failtype{$type}) {
+	if ($skillID == 1 && $type == 0 && exists $basefailtype{$btype}) {
+		$errorMessage = $basefailtype{$btype};
+	} elsif (exists $failtype{$type}) {
 		$errorMessage = $failtype{$type};
 	} else {
-		$errorMessage = 'Unknown error';
+		$errorMessage = T('Unknown error');
 	}
 
 	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
@@ -1990,7 +2004,7 @@ sub skill_use_location {
 	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {
 		$char->setStatus("EFST_MAGICPOWER", 0);
 	}
-	
+
 	Plugins::callHook('packet_skilluse', {
 		'skillID' => $skillID,
 		'sourceID' => $sourceID,
@@ -2070,12 +2084,12 @@ sub skill_used_no_damage {
 			}
 		}
 	}
-	
+
 	#EFST_MAGICPOWER OVERRIDE
 	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {
 		$char->setStatus("EFST_MAGICPOWER", 0);
 	}
-	
+
 	Plugins::callHook('packet_skilluse', {
 		skillID => $args->{skillID},
 		sourceID => $args->{sourceID},
@@ -2295,15 +2309,15 @@ sub rates_info {
 
 sub rates_info2 {
 	my ($self, $args) = @_;
-	
+
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $header_pack = 'v V3';
 	my $header_len = ((length pack $header_pack) + 2);
-	
+
 	my $detail_pack = 'C l3';
 	my $detail_len = length pack $detail_pack;
-	
+
 	my %rates = (
 		exp => { total => $args->{exp}/1000 }, # Value to Percentage => /100
 		death => { total => $args->{death}/1000 }, # 1 d.p. => /10
@@ -2312,9 +2326,9 @@ sub rates_info2 {
 
 	# get details
 	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i += $detail_len) {
-	
+
 		my ($type, $exp, $death, $drop) = unpack($detail_pack, substr($msg, $i, $detail_len));
-		
+
 		$rates{exp}{$type} = $exp/1000;
 		$rates{death}{$type} = $death/1000;
 		$rates{drop}{$type} = $drop/1000;
@@ -2409,7 +2423,7 @@ sub guild_emblem_img {
 # TODO: test if correct message displays, no type == 0 ?
 sub instance_window_leave {
 	my ($self, $args) = @_;
-	
+
 	if ($args->{flag} == 0) { # TYPE_NOTIFY =  0x0; Ihis one will pop up Memory Dungeon Window
 		debug T("Received Memory Dungeon reservation update\n");
 	} elsif ($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
@@ -2531,13 +2545,13 @@ sub skill_post_delaylist2 {
 
 sub show_script {
 	my ($self, $args) = @_;
-	
+
 	debug "$args->{ID}\n", 'parseMsg';
 }
 
 sub senbei_amount {
 	my ($self, $args) = @_;
-	
+
 	$char->{senbei} = $args->{senbei};
 }
 
@@ -2546,7 +2560,7 @@ sub monster_hp_info_tiny {
 	my $monster = $monstersList->getByID($args->{ID});
 	if ($monster) {
 		$monster->{hp_percent} = $args->{hp} * 5;
-		
+
 		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage";
 	}
 }
