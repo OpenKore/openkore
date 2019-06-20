@@ -22470,3 +22470,95 @@ Get Mema Coco's Groceries.#
 Mema Coco wants you to go into Knut's dreams and get rid of the demon possessing him.#
 
 Help rid the demon in Knut's dreams.#
+
+63259#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+Help Moose and Squirrel get to the bottom of the mystery of Ferus Faire. You should start looking for clues to the west of Moose and Squirrel near all the attendees.#
+Look for clues.#
+
+63260#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The clue mentions 'Sure is cold in here. Could use a nice open fire.' Maybe the clue is near the firepit to the north.#
+Look for the next clue.#
+
+63261#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The clue mentions 'Only the mightiest at this stage.' Maybe the clue is near the a concert stage to the south.#
+Look for the next clue.#
+
+63262#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You found a casino coin. Perhaps it is related to the next clue.#
+Look for the next clue.#
+
+63263#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You found a Star Crumb. These are dropped by the golems in the north cave. We should check it out.#
+Head to the cave north of Comodo.#
+
+63264#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You found a mysterious mailbox in the cave. You should examine it to see if it is connected to the case.#
+Examine the myserious mailbox.#
+
+63265#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+A Mysterious Presence asks you to complete its trials. The first one involves finding and solving three riddles on the map.#
+Find and solve the three riddles for the first trial.#
+
+63266#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You solved one of the riddles of the first trial. When you solved all three, go back and speak with the Mysterious Presence.#
+You solved a riddle!#
+
+63267#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You solved one of the riddles of the first trial. When you solved all three, go back and speak with the Mysterious Presence.#
+You solved a riddle!#
+
+63268#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You solved one of the riddles of the first trial. When you solved all three, go back and speak with the Mysterious Presence.#
+You solved a riddle!#
+
+63269#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You solved all of the riddles and passed the first trial of the Mysterious Presence. You should go in the portal that leads to the next trial.#
+Enter the portal to the second trial.#
+
+63270#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The Myserious Presence asks that you complete the second trial by touching the three objects located around the map.#
+Locate and touch each of the three objects around the map.#
+
+63271#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You touched one of the objects for the second trial. When you find all three, go back and enter the portal in the center of the map.#
+You located one of the objects.#
+
+63272#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You touched one of the objects for the second trial. When you find all three, go back and enter the portal in the center of the map.#
+You located one of the objects.#
+
+63273#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You touched one of the objects for the second trial. When you find all three, go back and enter the portal in the center of the map.#
+You located one of the objects.#
+
+63274#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You completed the second trial and only have one left to go. You should speak to the Mysterious Presence on the third floor.#
+Speak to the Mysterious Presence for the third trial.#
+
+63275#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The Mysterious Presence asks you to slay the monsters at the end of the hallway.#
+Slay the monsters at the end of the hallway.#
+
+63276#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+As you approached the end of the hallway, you were saved by a familiar voice.#
+Speak to the strangers that saved you.#
+
+63277#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The myserious strangers from the future warn you of disaster coming towards Comodo. They suggest you look for Grandma Boxter for answers.#
+Look for Grandma Boxter.#
+
+63278#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+Grandma Boxter says that Gramps has been acting strange lately. Perhaps it is time to confront him and get to the bottom of this mystery.#
+Look for Gramps nearby...?#
+
+63279#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+Gramps has found a new subspecies of Ferus monsters and needs you and fellow adventurers to slay them for his research. When ready, head to the well outside to the east to fight the Ferus Twins.#
+Head to the well outside to east of Gramps' hut.#
+
+63280#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The Ferus Twins need time to rest. You can fight the Ferus Twins again in 8 hours.#
+Please wait 8 hours before fighting the Ferus Twins again.#
+
+63281#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+Slay the Ferus Twins: Furious and Ferocious!#
+Slay Furious and Ferocious.#
