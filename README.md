@@ -55,7 +55,7 @@ Check the [status of botting on official servers](https://github.com/OpenKore/op
 | Server | Description | Protection | Status | Supporter |
 | --- | --- | --- | --- | --- |
 | [iRO](http://www.warpportal.com/) | International(US) RO | *** | Botable, Weekly Update | allanon |
-| [bRO](http://ragnarok.uol.com.br/) | Brazil RO | nProtect | Botable, Weekly Update | lututui, Henrybk, alisonrag |
+| [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | lututui, Henrybk, alisonrag |
 | [idRO](https://ror.gravindo.id/) | Indonesia RO (Renewal) | *** | Botable | alisonrag |
 | [idRO](https://ragnarok.gravindo.id/) | Indonesia RO (classic) | *** | Not Working | N/A  |
 | [fRO](https://www.ragnarokeurope.com/) | Europe(french) RO | *** | Botable | allanon | 
