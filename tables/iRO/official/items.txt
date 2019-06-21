@@ -3194,7 +3194,7 @@
 5387#Neko_Mimi_Kafra#
 5388#Snake_Head#
 5389#Angel_Spirit#
-5390#Costume:_Blue_Christmas_Cheer#
+5390#Costume_Blue_Christmas_Cheer#
 5391#Toast#
 5392#Louyang_NewYear_Hat#
 5393#Cupid's_Target#
@@ -5061,6 +5061,7 @@
 9618#2019_May_Costume_Box#
 9620#May_2019_Yggdrasil_Ticket#
 9621##
+9629#June_2019_Yggdrasil_Ticket#
 9630#June_Costume_Box_2019#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
@@ -8181,6 +8182,7 @@
 19141#Maero_Mask#
 19156#Lunar_Rainbow#
 19163#Catherina_Von_Blood#
+19170#Guardian_Processor#
 19171#Magician_Knit_Hat#
 19201#Classic_Battle_Manual_10_Box#
 19202#Classic_Bubble_Gum_10_Box#
@@ -8255,6 +8257,7 @@
 19453#Jejecap_JP#
 19460#Black_Veil#
 19469#Sacred_Crown#
+19495#Diabolus_Wing#
 19500#(null)#
 19501#(null)#
 19502#Costume_Goggles#
@@ -8634,7 +8637,7 @@
 20095#Costume_Red_Ribbon_Headband#
 20096#Costume_Blue_Ribbon_Headband#
 20097#Costume_White_Ribbon_Headband#
-20099#Costume:_Ljosalfar#
+20099#Costume_Ljosalfar#
 20100#Costume_Volume_Feather_Hat#
 20106#Costume_Classic_Hat#
 20113#Costume_Star_Reading_Hat#
@@ -8711,7 +8714,7 @@
 20237#Costume_Pink_Wool_Hat#
 20238#Costume_Blue_Drooping_Cat#
 20239#Costume_Large_Ribbon_Muffler_(Orange)#
-20240#Costume_Present_Of_Snow#
+20240#Costume_Present_of_Snow#
 20241#Costume_Eclipse_Hat#
 20242#Costume_Snowysnow_Hat#
 20243#Costume_Mint_Chocolate_Bonnet#
@@ -8992,6 +8995,7 @@
 22084#Luxurious_Doram_Shoes#
 22085#Elegant_Doram_Shoes#
 22091#Fisherman's_Shoes#
+22092##
 22093#Exorcist's_Shoes#
 22094#Gardener_Shoes#
 22095#Gravekeeper_Shoes#
@@ -9384,7 +9388,7 @@
 25425#Magical_Snow_Flower#
 25426#Warm_Cotton#
 25479#Dogly_Bottle#
-25745#Super_Large_Jellopy#
+25745#Ferus_Coin#
 25753#Khalitzburg_Map_Piece#
 25754#Scaled_Map_Piece			#
 25755#Undead_Servant's_Map_Piece			#
@@ -9612,6 +9616,7 @@
 28941#Excelion_Shield#
 28951#Nero_Shield#
 28955#Fotia_Shield#
+28956##
 29000#Rune_of_Intellect_Lv_1#
 29001#Rune_of_Intellect_Lv_2#
 29002#Rune_of_Intellect_Lv_3#
@@ -10022,3 +10027,4 @@
 32258#Ring_of_Jupiter#
 32262#Rasen_Fuma's_Orb#
 32263#Shield_Ring#
+32265##
