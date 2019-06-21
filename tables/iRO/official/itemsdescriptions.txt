@@ -6999,6 +6999,22 @@ Weight: ^808080300^000000
 Weapon Level: ^8080803^000000
 Requires Level: ^80808099^000000
 Usable By: ^808080Mechanic^000000
+^800080Set Bonus^000000
+^008080Guardian Processor^000000
+^008080Pile Bunker^000000
+If ^008080Pile Bunker^000000 upgrade level is +7 or higher,
+Aspd + 10%
+Increases the skill damage bonus of ^0000FFKnuckle Boost^000000 by 30%.
+Increases the skill damage bonus of ^0000FFVulcan Arm^000000 by 50%.
+
+If ^008080Pile Bunker^000000 upgrade level is +9 or higher,
+Aspd + 10%
+Increases the skill damage bonus of ^0000FFKnuckle Boost^000000 by an additional 30%.
+Increases the skill damage bonus of ^0000FFVulcan Arm^000000 by an additional 50%.
+
+If ^008080Pile Bunker^000000 upgrade level is +10 or higher,
+Reduces/Increases the cooldown of ^0000FFPile Bunker^000000 by 1 second.
+
 #
 1550#
 A book that's been put together sturdily enough to be wielded as a weapon in an emergency situation.
@@ -12637,25 +12653,31 @@ Requires Level: ^808080100^000000
 Usable By: ^808080Rune Knight, Royal Guard^000000
 #
 2149#
-MHP + 3%
-Class: ^777777Shield^000000 DEF: ^7777775^000000
-Weight : ^77777715^000000
-Required Level: ^7777771^000000
-Jobs: ^777777All Jobs^000000
+A guard coated with a mixture of gold and elunium.
+Class: ^808080Shield^000000
+Defense: ^80808025^000000
+Weight: ^80808015^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 3%
 #
 2150#
-MHP + 3%
-Class: ^777777Shield^000000 DEF: ^7777776^000000
-Weight : ^77777730^000000
-Required Level: ^7777771^000000
-Jobs: ^777777Swordman Class, Acolyte Class, Merchant Class, Thief Class, Bard, Dancer^000000
+A buckler coated with a mixture of gold and elunium.
+Class: ^808080Shield^000000
+Defense: ^80808045^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Acolyte Jobs, Bard Jobs, Dancer Jobs^000000
+Max HP + 3%
 #
 2151#
-MHP + 3%
-Class: ^777777Shield^000000 DEF: ^7777778^000000
-Weight : ^77777765^000000
-Required Level: ^7777771^000000
-Jobs: ^777777Swordman Class^000000
+A shield coated with a mixture of gold and elunium.
+Class: ^808080Shield^000000
+Defense: ^80808065^000000
+Weight: ^80808065^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs^000000
+Max HP + 3%
 #
 2153#
 A beautiful shield engraved with the patterns of the Rune Kingdom.
@@ -14951,6 +14973,17 @@ Increases the recovery rate of recovery skills by 6%.
 ^008080Diabolus Ring [1]^000000
 Atk + 3%
 Matk + 3%
+
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Robe^000000
+MDef + 25
+MaxSP + 350
+Reduces the cast delay of skills by 10%
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+mAtk + 15 for every upgrade level of ^008080Diabolus Robe^000000,
+Increases the recovery rate of recovery skills by 2% for every upgrade level of ^008080Diabolus Robe^000000
 #
 2375#
 An Armor which is made of an unknown metal in the human-world. Mysterious power is hidden in the armor.
@@ -14969,6 +15002,16 @@ Increases resistance to ^800000Stone^000000 and ^800000Stun^000000 by 5%.
 ^008080Diabolus Ring [1]^000000
 Atk + 3%
 Matk + 3%
+
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Armor^000000
+Str + 8
+Dex + 4
+MaxHP + 1350
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+Atk + 15 for every upgrade level of ^008080Diabolus Armor^000000,
 #
 2376#
 Designed for brave warriors who face enemies at the forefront. It gives off multiple effects when compounded as a set.
@@ -15708,6 +15751,14 @@ Max HP + 10 for every base level.
 ^008080Diabolus Boots [1]^000000
 ^008080Diabolus Manteau [1]^000000
 Max HP + 6%
+
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Boots^000000
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+MaxHP + 100 for every Base Level
+Atk/mAtk + 20 for every upgrade level of ^008080Diabolus Boots^000000
 #
 2434#
 A pair of boots made of light, resilient leather that makes you want to run when you wear them.
@@ -15993,18 +16044,22 @@ SP Recovery + 6%
 This item cannot be upgraded.
 #
 2459#
-MHP + 3%
-Class: ^777777Shoes^000000 DEF: ^7777774^000000
-Weight : ^77777720^000000
-Required Level: ^7777771^000000
-Jobs: ^777777All Jobs except Novice^000000
+Shoes coated with a mixture of gold and elunium.
+Class: ^808080Shoes^000000
+Defense: ^80808015^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Max HP + 3%
 #
 2460#
-MHP + 3%
-Class: ^777777Shoes^000000 DEF: ^7777776^000000
-Weight : ^77777730^000000
-Required Level: ^7777771^000000
-Jobs: ^777777Swordman,Merchant,Thief Classes,Archer,Taekwon Class,Gunslinger^000000
+Boots coated with a mixture of gold and elunium.
+Class: ^808080Shoes^000000
+Defense: ^80808021^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Archer Jobs, Taekwon, Taekwon Master, Gunslinger Jobs^000000
+Max HP + 3%
 #
 2461#
 MHP + 3%
@@ -16964,6 +17019,15 @@ Increases physical damage on Satan Morocc and Wounded Morocc by 10%.
 ^008080Diabolus Boots [1]^000000
 ^008080Diabolus Manteau [1]^000000
 Max HP + 6%
+
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Manteau^000000
+MaxHP + 900
+Reduces damage taken from long-ranged attacks by 10%.
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+Reduces damage taken from Fire, Water, and Wind property attacks by 3% for every upgrade level of ^008080Diabolus Manteau^000000
 #
 2538#
 A dignified, splendid Manteau that is provided to any warrior who brings great honor from the battlefield.
@@ -18111,7 +18175,7 @@ Class: ^808080Accessory^000000
 Weight: ^80808010^000000
 Requires Level: ^80808040^000000
 Usable By: ^808080All Jobs^000000
-Increases critical damage on targets by 6%.
+Crit + 6
 Adds a chance of inflicting ^800000Curse^000000 on the user when performing a physical attack.
 #
 2653#
@@ -18987,6 +19051,15 @@ Matk + 3%
 ^008080Diabolus Ring [1]^000000
 Atk + 3%
 Matk + 3%
+
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Ring^000000
+MaxHP + 2000
+MaxSp + 200
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+Increases the recovery rate of recovery skills by 15%
 #
 2730#
 A royal gift to a member of the Continental Guard.
@@ -28895,169 +28968,276 @@ Matk + 7%
 #
 4908#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-^FF0000Caution: This is a special enchant item. It is exempt from card protection and card desocketing.^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
 Class: ^808080Essence^000000
 Compounds On: ^808080All^000000
 Weight: ^8080801^000000
 Str + 1
 Int - 1
 Atk + 3
+
+^800080Set Bonus^000000
+^008080Darklord Essence Force1^000000
+^008080Demon God's Ring [1]^000000
+Atk + 5%
 #
 4909#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-STR + 2
-ATK + 6
-INT - 2
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item. It is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Str + 2
+Int - 2
+Atk + 6
+
+^800080Set Bonus^000000
+^008080Darklord Essence Force2^000000
+^008080Demon God's Ring [1]^000000
+Atk + 5%
 #
 4910#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-STR + 4
-ATK + 12
-INT - 4
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item. It is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Str + 4
+Int - 4
+Atk + 12
+
+^800080Set Bonus^000000
+^008080Darklord Essence Force3^000000
+^008080Demon God's Ring [1]^000000
+Atk + 5%
 #
 4911#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-INT + 1
-MATK + 3
-STR - 1
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Str - 1
+Int + 1
+Matk + 3
+
+^800080Set Bonus^000000
+^008080Darklord Essence Intelligence1^000000
+^008080Demon God's Ring [1]^000000
+Matk + 5%
 #
 4912#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-INT + 2
-MATK + 6
-STR - 2
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Str - 2
+Int + 2
+Matk + 6
+
+^800080Set Bonus^000000
+^008080Darklord Essence Intelligence2^000000
+^008080Demon God's Ring [1]^000000
+Matk + 5%
 #
 4913#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-INT + 4
-MATK + 12
-STR - 4
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Str - 4
+Int + 4
+Matk + 12
+
+^800080Set Bonus^000000
+^008080Darklord Essence Intelligence3^000000
+^008080Demon God's Ring [1]^000000
+Matk + 5%
 #
 4914#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-AGI + 1
-Evade + 2
-VIT - 1
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Agi + 1
+Vit - 1
+Flee + 2
+
+^800080Set Bonus^000000
+^008080Darklord Essence Speed1^000000
+^008080Demon God's Ring [1]^000000
+Aspd + 5%
 #
 4915#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-AGI + 2
-Evade + 4
-VIT - 2
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Agi + 2
+Vit - 2
+Flee + 4
+
+^800080Set Bonus^000000
+^008080Darklord Essence Speed2^000000
+^008080Demon God's Ring [1]^000000
+Aspd + 5%
 #
 4916#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-AGI + 4
-Evade + 8
-VIT - 4
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Agi + 4
+Vit - 4
+Flee + 8
+
+^800080Set Bonus^000000
+^008080Darklord Essence Speed3^000000
+^008080Demon God's Ring [1]^000000
+Aspd + 5%
 #
 4917#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-VIT + 1
-DEF + 3
-MDEF + 2
-AGI - 1
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Agi - 1
+Vit + 1
+Def + 3
+Mdef + 2
+
+^800080Set Bonus^000000
+^008080Darklord Essence Vitality1^000000
+^008080Demon God's Ring [1]^000000
+Max HP + 5%
 #
 4918#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-VIT + 2
-DEF + 6
-MDEF + 4
-AGI - 2
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Agi - 2
+Vit + 2
+Def + 6
+Mdef + 4
+
+^800080Set Bonus^000000
+^008080Darklord Essence Vitality2^000000
+^008080Demon God's Ring  [1]^000000
+Max HP + 5%
 #
 4919#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-VIT + 4
-DEF + 12
-MDEF + 8
-AGI - 4
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Agi - 4
+Vit + 4
+Def + 12
+Mdef + 8
+
+^800080Set Bonus^000000
+^008080Darklord Essence Vitality3^000000
+^008080Demon God's Ring [1]^000000
+Max HP + 5%
 #
 4920#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-DEX + 1
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Dex + 1
+Luk - 1
 Hit + 2
-LUK - 1
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+
+^800080Set Bonus^000000
+^008080Darklord Essence Concentration1^000000
+^008080Demon God's Ring [1]^000000
+Reduces the variable casting time of skills by 5%.
 #
 4921#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-DEX + 2
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Dex + 2
+Luk - 2
 Hit + 4
-LUK - 2
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+
+^800080Set Bonus^000000
+^008080Darklord Essence Concentration2^000000
+^008080Demon God's Ring [1]^000000
+Reduces the variable casting time of skills by 5%.
 #
 4922#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-DEX + 4
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Dex + 4
+Luk - 4
 Hit + 8
-LUK - 4
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+
+^800080Set Bonus^000000
+^008080Darklord Essence Concentration3^000000
+^008080Demon God's Ring [1]^000000
+Reduces the variable casting time of skills by 5%.
 #
 4923#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-LUK + 1
-Critical + 1
-DEX - 1
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Dex - 1
+Luk + 1
+Crit + 1
+
+^800080Set Bonus^000000
+^008080Darklord Essence Luck1^000000
+^008080Demon God's Ring [1]^000000
+Increases critical damage on targets by 5%.
 #
 4924#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-LUK + 2
-Critical + 2
-DEX - 2
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Dex - 2
+Luk + 2
+Crit + 2
+
+^800080Set Bonus^000000
+^008080Darklord Essence Luck2^000000
+^008080Demon God's Ring [1]^000000
+Increases critical damage on targets by 5%.
 #
 4925#
 An essence of Dark Lord Morocc. Contains part of Morroc's ability.
-LUK + 4
-Critical + 4
-DEX - 4
-^ff0000Caution : Special enchant item. Exception to all protection from card destruction or card disassembly.^000000
-Location : ^777777All slot^000000
-Weight : ^7777771^000000
+^FF0000Caution: This is a special enchant item, it is exempt from card protection and card desocketing.^000000
+Class: ^808080Essence^000000
+Compounds On: ^808080All^000000
+Weight: ^8080801^000000
+Dex - 4
+Luk + 4
+Crit + 4
+
+^800080Set Bonus^000000
+^008080Darklord Essence Luck3^000000
+^008080Demon God's Ring [1]^000000
+Increases critical damage on targets by 5%.
 #
 4926#
 Crit + 1
@@ -33394,13 +33574,13 @@ Enables ^0000FFLevel 5 Double Attack^000000.
 placeholder
 #
 5390#
-A double-pommed Blue Christmas Cap
-On Monster Kill has chance to drop a Xmas Gift!
-Location: ^777777Upper^000000
-Defense: ^7777770^000000
-Weight: ^7777770^000000
-Required Level: ^7777771^000000
-Jobs: ^777777All^000000
+A double-pommed Blue Christmas Cap.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Adds a chance of gaining ^008080Gift Box^000000 when a monster is killed.
 #
 5391#
 placeholder
@@ -45989,6 +46169,31 @@ Weight: ^8080800^000000
 Class: ^808080^000000
 Position: ^808080^000000
 Compounds On: ^808080^000000
+Weight: ^8080800^000000
+#
+9629#
+Redeem ticket by visiting the Yggdrasil Tree Explorer in the second floor of the Eden Group (moc_para_up.gat 17, 176)
+When redeemed randomly provides of the the following
+Diabolus Wing [1]
+Circlet of Phoenix
+Phoenix Muffler [1]
+Red Baby Dragon Hat [1]
+Guardian Processor
+Manteau Of Guardsman [1]
+Mysterious Muffler [1]
+Traveler Shoes
+Old Morroc Shawl [1]
+Pure White Marching Hat [1]
+Critical Anklet [1]
+Thieves' Guide Vol. 1 [1]
+Sting Silk Ribbon [1]
+Hero Manteau [1]
+Party Hard Pack
+Blacksmith Blessing x 8
+Battle Manual X3 x 6
+Bloody Dead Branch x 5
+More Details can be found by visiting the NPC in person.
+Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
 9630#
@@ -75163,12 +75368,13 @@ Usable By: ^808080All Jobs^000000
 Mdef + 2
 Aspd + 5%
 Reduces damage taken from Human Player and Doram race enemies by 2%.
-If the users base Vit is 108 or higher,
+If the user's base Vit is 108 or higher,
 Additional Aspd + 5%
 Reduces damage taken from Human Player and Doram race enemies by an additional 3%.
-If the users base Vit is 120 or higher,
+If the user's base Vit is 120 or higher,
 Max HP + 3%
-Additional MDef + 3
+Additional Mdef + 3
+
 ^800080Set Bonus^000000
 ^008080Feather Beret^000000
 ^008080Feathers of Protection^000000
@@ -76071,6 +76277,37 @@ If pet is Loyal,
 Restores additional 500 HP to the user every 5 seconds.
 Restores additional 20 SP to the user every 5 seconds.
 #
+19170#
+Processor to control Madogear's power. Allow players to push the envelope when piloting the suit.
+
+Class: ^808080Headgear^000000
+Defense: ^8080800^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Reduces damage taken from Demi Human race enemies by 10%.
+Reduces damage taken from Human Player race enemies by 10%.
+
+If upgrade level is +7 or higher,
+Reduces damage taken from Demi Human race enemies by an additional 2%.
+Reduces damage taken from Human race enemies by an additional 2%.
+^800080Set Bonus^000000
+^008080Guardian Processor^000000
+^008080Pile Bunker^000000
+If ^008080Pile Bunker^000000 upgrade level is +7 or higher,
+Aspd + 10%
+Increases the skill damage bonus of ^0000FFKnuckle Boost^000000 by 30%.
+Increases the skill damage bonus of ^0000FFVulcan Arm^000000 by 50%.
+
+If ^008080Pile Bunker^000000 upgrade level is +9 or higher,
+Aspd + 10%
+Increases the skill damage bonus of ^0000FFKnuckle Boost^000000 by an additional 30%.
+Increases the skill damage bonus of ^0000FFVulcan Arm^000000 by an additional 50%.
+
+If ^008080Pile Bunker^000000 upgrade level is +10 or higher,
+Reduces the cooldown of ^0000FFPile Bunker^000000 by 1 second.
+
+#
 19171#
 A knit hat worn by a great magician. It contains fibers that has an absolute effect on the undead.
 
@@ -76373,12 +76610,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 19290#
-^808080The horns from an elder devil. It has great magical powers.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+The horns from an elder devil. It has great magical powers.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19291#
 ^808080This shiba inu took a liking to you and now it won't leave you alone. Aren't you lucky!^000000
@@ -77293,6 +77530,63 @@ Increases the damage of ^0000FFAdoramus^000000 and ^0000FFJudex^000000 by an add
 
 If upgrade level is +10 or higher, nullifies the number of Gemstones required for certain skills.
 #
+19495#
+Class: ^808080Headgear^000000
+Defense: ^8080802^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 10
+Increases physical and magical damage on Temple of the Demon God monsters by 30%.
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Armor^000000
+Str + 8
+Dex + 4
+MaxHP + 1350
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+For every upgrade level of ^008080Diabolos Armor [1]^000000,
+Atk + 15
+Increases resistance to ^800000Stun^000000 and ^800000Stone^000000 by 5%.
+
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Robe^000000
+MDef + 25
+MaxSP + 350
+Reduces the cast delay of skills by 10%
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+mAtk + 15 for every upgrade level of ^008080Diabolus Robe^000000,
+Increases the recovery rate of recovery skills by 2% for every upgrade level of ^008080Diabolus Robe^000000
+
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Manteau^000000
+MaxHP + 900
+Reduces damage taken from long-ranged attacks by 10%.
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+Reduces damage taken from Fire, Water, and Wind property attacks by 3% for every upgrade level of ^008080Diabolus Manteau^000000
+
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Boots^000000
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+MaxHP + 100 for every Base Level
+Atk/mAtk + 20 for every upgrade level of ^008080Diabolus Boots^000000
+
+^800080Set Bonus^000000
+^008080Diabolus Wing^000000
+^008080Diabolus Ring^000000
+MaxHP + 2000
+MaxSp + 200
+Increases physical and magical damage on Temple of the Demon God monsters by 20%.
+Reduces damage taken from Temple of the Demon God monsters by 5%,
+Increases the recovery rate of recovery skills by 15%
+#
 19500#
 #
 19501#
@@ -78097,11 +78391,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19667#
-^808080A helm worn by a dragonslayer. It is told that the treasure which belonged to the slain dragon was cursed.^000000
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A helm worn by a dragonslayer. It is told that the treasure which belonged to the slain dragon was cursed.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19668#
 ^808080A red beret that is shaped like the wind.^000000
@@ -78111,11 +78406,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 19669#
-^808080Valkyrie Reginleif Wings. The wearer will receive blessings from the gods.^000000
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+Valkyrie Reginleif Wings. The wearer will receive blessings from the gods.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19670#
 ^808080A cool-looking magical cotton hairband. The blue jewelry decoration is also 100% handmade.^000000
@@ -80291,14 +80587,15 @@ A fancy green hair ribbon.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20095#
 A fancy red hair ribbon.
-
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20096#
@@ -80306,23 +80603,25 @@ A fancy blue hair ribbon.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20097#
 A fancy white hair ribbon.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20099#
 This fairy loves to bless adventurers with good luck!
-^ff0000Obtained from a sales event that is running from 4/15/2016-4/30/2016^000000
-Class : ^777777Costume Gear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Lv : ^7777771^000000
-Job : ^777777All Jobs^000000
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20100#
 A costume of the Volume Hat Item! Wear it with pride.
@@ -81068,12 +81367,12 @@ Required Lv. : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 20222#
-^808080A double-pommed cap dyed blue designed with the spirit of Christmas in mind.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A double-pommed cap dyed blue designed with the spirit of Christmas in mind.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20227#
 Class: ^808080Costume^000000
@@ -81167,11 +81466,13 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20240#
-A present of snow
-Type: ^777777Costume equipment^000000 DEF: ^7777770^000000
-Location: ^777777Lower ^000000Weight: ^7777770^000000
-Lv. req.: ^7777771^000000
-Class: ^777777All classes^000000
+A costume of shimmering snow crystals. It looks like being dressed in diamond dust, which was seen on cold sunny day.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20241#
 A hat modeled after Eclipse, the leader of Lunatics.
@@ -83706,11 +84007,15 @@ Vit + 5
 Mdef + 10
 Reduces damage taken from Water and Fire property attacks by 5%.
 Reduces damage taken from Demi-Human, Human Player, and Dragon race enemies by 5%.
+
 If upgrade level is +7 or higher,
 Enables ^0000FFLevel 1 Hiding^000000.
+
 If upgrade level is +8 or higher,
-Max HP + 1% for every 20 base Agi and Vit.
-Reduces the variable casting time of skills by 2% for every 20 base Agi and Vit.
+For every combined sum of 20 base Agi and Vit provides the following,
+Max HP + 1%
+Reduces the variable casting time of skills by 2%.
+
 If upgrade level is +9 or higher,
 Enables ^0000FFLevel 1 Cloaking^000000.
 #
@@ -84027,31 +84332,50 @@ Defense: ^80808012^000000
 Weight: ^80808030^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
+Max HP + 2%
+Max SP + 2%
 Reduces damage taken from Demi-Human race enemies by 5%.
-Max HP and Max SP + 2%.
 Increases long-ranged damage on targets by 2%.
-If ^008080Prism Rangers Scarf^000000 upgrade level is +5 or higher, additional Max HP and Max SP + 3%.
-Increases long-ranged damage on targets by an additional 3%.
-If ^008080Prism Rangers Scarf^000000 upgrade level is +7 or higher, additional Max HP and Max SP + 5%.
-Increases long-ranged damage on targets by an additional 5%.
-Reduces the cooldown of ^0000FFNo Limits^000000 by 180 seconds, if ^0000FFWarg Ride^000000 is at maximum level.
-Reduces the global delay of skills by 10% if ^0000FFCamouflage^000000 is at maximum level.
+
+If ^0000FFWarg Ride^000000 is level 3,
+Reduces the cooldown of ^0000FFNo Limits^000000 by 180 seconds.
+
+If ^0000FFCamouflage^000000 is level 5,
+Reduces the global delay of skills by 10%.
 Reduces the cooldown of ^0000FFArrow Storm^000000 by 0.2 seconds.
-Increases long-ranged damage on targets by an additional 2% per level of ^0000FFAimed Bolt^000000 known.
+
+For every level of ^0000FFAimed Bolt^000000 known,
+Increases long-ranged damage on targets by an additional 2%.
 Increases the damage of ^0000FFArrow Storm^000000 by 1%.
-When ^008080Prism Rangers Scarf^000000 is unequipped, ^0000FFNo Limits^000000 effect is disabled.
+
+When ^008080Prism Rangers Scarf^000000 is unequipped,
+^0000FFNo Limits^000000 effect is disabled.
+
+If ^008080Prism Rangers Scarf^000000 upgrade level is +5 or higher,
+Additional Max HP + 3%
+Additional Max SP + 3%
+Increases long-ranged damage on targets by an additional 3%.
+
+If ^008080Prism Rangers Scarf^000000 upgrade level is +7 or higher,
+Additional Max HP + 5%
+Additional Max SP + 5%
+Increases long-ranged damage on targets by an additional 5%.
+
 ^800080Set Bonus^000000
 ^008080Prism Rangers Scarf^000000
 ^008080Fire Arrow^000000
 Reduces damage taken from Fire property attacks by 75%.
+
 ^800080Set Bonus^000000
 ^008080Prism Rangers Scarf^000000
 ^008080Crystal Arrow^000000
 Reduces damage taken from Water property attacks by 75%.
+
 ^800080Set Bonus^000000
 ^008080Prism Rangers Scarf^000000
 ^008080Arrow of Wind^000000
 Reduces damage taken from Wind property attacks by 75%.
+
 ^800080Set Bonus^000000
 ^008080Prism Rangers Scarf^000000
 ^008080Stone Arrow^000000
@@ -84271,14 +84595,17 @@ Required Level : ^77777795^000000
 Jobs: ^777777Swordman Class^000000
 #
 21002#
-*Stats during WoE & PVP
-Decreases target's HP by 8% per hit. (This effect does not work with skills)
-Class : ^777777Two-handed Sword^000000
-Attack Strength : ^777777100^000000
-Weight : ^777777250^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777795^000000
-Jobs: ^777777Swordman Class^000000
+A two-handed sword that has been designed specifically for battles against players.
+^FF0000Skills are not counted as a physical attack for this item.^000000
+Class: ^808080Two-Handed Sword^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^808080250^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808095^000000
+Usable By: ^808080Swordman Jobs^000000
+^800080Stats during WoE, PvP^000000
+Adds a chance to drain 8% HP from Human Player and Doram Player race targets when performing a short-ranged attack.
 #
 21003#
 An oriental sword
@@ -85406,6 +85733,13 @@ Requires Level: ^80808030^000000
 Usable By: ^808080All Jobs^000000
 EXP from fish monster + 5%
 For every refinement upgrade, EXP from fish monster increases by +1%.
+#
+22092#
+^FF0000^000000
+Class: ^808080^000000
+Position: ^808080^000000
+Compounds On: ^808080^000000
+Weight: ^8080800^000000
 #
 22093#
 These shoes were worn by a man who made a living out of performing exorcisms. These shoes contains the man's many years of experience.
@@ -89614,6 +89948,7 @@ Class: ^808080Pet Tame^000000
 Weight: ^8080800^000000
 #
 25745#
+Perhaps this is the 'booty' that Jacques is so thirsty for.
 ^FF0000Account Bound^000000
 Weight: ^8080800^000000
 #
@@ -93376,6 +93711,13 @@ If the user's base Dex is 90 or higher, reduces the variable casting time of ski
 If the user's base Luk is 90 or higher, increases critical damage on targets by 5%.
 
 #
+28956#
+^FF0000^000000
+Class: ^808080^000000
+Position: ^808080^000000
+Compounds On: ^808080^000000
+Weight: ^8080800^000000
+#
 29000#
 Type: Miscellaneous
 Class: Enchant
@@ -94419,12 +94761,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31180#
-^808080A headband that only the strongest sura were thought to wear. It truly leaves in impact.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A headband that only the strongest sura were thought to wear. It truly leaves in impact.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31181#
 The necklace of the Holy Rosary, who received powers from the apostle of God. It's filled with mystical powers.
@@ -94661,68 +95003,68 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31218#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31219#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31220#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31221#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31222#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31223#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31224#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31225#
-^808080You will feel and look brand new once you attach this to your hair.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+You will feel and look brand new once you attach this to your hair.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31226#
 You will feel and look brand new once you attach this to your hair.
@@ -95050,7 +95392,8 @@ Usable By: ^808080All Jobs^000000
 31382#
 A stylish hat with two large cat paws drooping down the sides.
 Class: ^808080Costume^000000
-Weight: ^8080801^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
@@ -95852,6 +96195,8 @@ Beautiful, elegant, and a little bit spooky, this hat is decorated with only the
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31597#
 The best thing about this hat, aside from the fact that it's literally a giant fish on your head, is that it doesn't even smell! You can take the real fish off your head now and use this instead.
@@ -95894,6 +96239,8 @@ A gemstone decoration once used by a powerful wizard. Who knows what power lies 
 Class: ^808080Costume^000000
 Position: ^808080Upper, Middle, Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31609#
 A renaissance-style mask. Great for partying or concealing your identity.
@@ -96222,8 +96569,6 @@ Weight: ^8080800^000000
 #
 31695#
 The magical power from this Eclage tree sprout is overwhelming.
-
-
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
@@ -96232,7 +96577,6 @@ Usable By: ^808080All Jobs^000000
 #
 31696#
 Sharks are amazingly gentle creatures if you stay away from their food supply.
-
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
@@ -96248,9 +96592,7 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31698#
-Be wary of the Vagabond Wolf
-
-
+Be wary of the Vagabond Wolf.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
@@ -96586,4 +96928,11 @@ Additional Atk + 100
 If ^0000FFPinpoint Attack^000000 is level 5,
 Reduces the variable casting time of ^0000FFEarth Drive^000000 by 0.5 seconds.
 Reduces the SP cost of ^0000FFEarth Drive^000000 by 25.
+#
+32265#
+^FF0000^000000
+Class: ^808080^000000
+Position: ^808080^000000
+Compounds On: ^808080^000000
+Weight: ^8080800^000000
 #
