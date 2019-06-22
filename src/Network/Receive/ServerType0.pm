@@ -667,6 +667,10 @@ sub new {
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
  		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0B08' => ['item_list_start', 'v C', [qw(len type)]],
+		'0B09' => ['item_list_stackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B0A' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B0B' => ['item_list_end', 'C2', [qw(type flag)]],
 		'0B20' => ['hotkeys', 'C v a*', [qw(rotate tab hotkeys)]],#herc PR 2468
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
@@ -737,6 +741,20 @@ sub new {
 				keys => [qw(ID nameID type amount type_equip cards expire identified)],
 			},
 		},
+		items_list_stackable => {
+			type1 => {
+				len => 34,
+				types => 'a2 V C V2 C2 a8 l v2 C',
+				keys => [qw(ID nameID type amount type_equip broken upgrade cards expire bindOnEquipType sprite_id identified)],
+			}
+		},
+		items_list_nonstackable => {
+			type1 => {
+				len => 67,
+				types => 'a2 V C V2 C a8 l v2 x8 C a25 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+			}
+		}
 	};
 
 	my %sync_ex;
@@ -861,6 +879,32 @@ sub items_stackable {
 	}
 }
 
+# Override this function if you need to.
+sub items_list_nonstackable {
+	my ($self, $args) = @_;
+
+	my $items = $self->{nested}->{items_list_nonstackable};
+
+	if($args->{switch} eq '0B0A') { # inventory / storage / cart
+		return $items->{type1};
+	} else {
+		warning "items_list_nonstackable: unsupported packet ($args->{switch})!\n";
+	}
+}
+
+# Override this function if you need to.
+sub items_list_stackable {
+	my ($self, $args) = @_;
+
+	my $items = $self->{nested}->{items_list_stackable};
+
+	if($args->{switch} eq '0B09') { # inventory / storage / cart
+		return $items->{type1};
+	} else {
+		warning "items_list_stackable: unsupported packet ($args->{switch})!\n";
+	}
+}
+
 sub parse_items {
 	my ($self, $args, $unpack, $process) = @_;
 	my @itemInfo;
@@ -909,6 +953,28 @@ sub parse_items_stackable {
 		my ($item) = @_;
 
 		#$item->{placeEtcTab} = $item->{identified} & (1 << 1);
+		$item->{identified} = $item->{identified} & (1 << 0);
+	})
+}
+
+sub parse_items_list_nonstackable {
+	my ($self, $args) = @_;
+
+	$self->parse_items($args, $self->items_list_nonstackable($args), sub {
+		my ($item) = @_;
+
+		$item->{amount} = 1 unless ($item->{amount});
+		$item->{broken} = $item->{identified} & (1 << 1) unless exists $item->{broken};
+		$item->{identified} = $item->{identified} & (1 << 0);
+	})
+}
+
+sub parse_items_list_stackable {
+	my ($self, $args) = @_;
+
+	$self->parse_items($args, $self->items_list_stackable($args), sub {
+		my ($item) = @_;
+
 		$item->{identified} = $item->{identified} & (1 << 0);
 	})
 }

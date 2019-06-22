@@ -448,6 +448,14 @@ use constant {
 	EXP_FROM_QUEST => 0x1,
 };
 
+# item list type
+use constant {
+	INVTYPE_INVENTORY => 0x0,
+	INVTYPE_CART => 0x1,
+	INVTYPE_STORAGE => 0x2,
+	INVTYPE_GUILD_STORAGE => 0x3,
+};
+
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
 # r7643 - copy-pasted to RagexeRE_2009_10_27a.pm
 sub exp {
@@ -4199,6 +4207,19 @@ sub cart_add_failed {
 		$reason = TF("Unknown code %s",$args->{fail});
 	}
 	error TF("Can't Add Cart Item (%s)\n", $reason);
+}
+
+
+sub item_list_stackable {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+	
+	my $arguments = {
+		class => 'Actor::Item',
+sub item_list_end {
+	my ($self, $args) = @_;
+	debug TF("Ending Item List. ID: %s\n", $args->{type}), "info";
+	undef $current_item_list;
 }
 
 sub inventory_items_stackable {
