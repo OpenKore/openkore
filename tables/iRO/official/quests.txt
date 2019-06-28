@@ -22662,3 +22662,11 @@ Hunt 400 DR815 monsters.#
 63283#GC109 Hunting#SG_FEEL#QUE_NOIMAGE#
 Hunt the GC109 monsters and return to Gramps at the Eden Group to get your reward.#
 Hunt 400 GC109 monsters.#
+
+63285#Kick Step Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Kick Step monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Kick Step monsters.#
+
+63286#Kick and Kick Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Kick and Kick monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Kick and Kick monsters.#
