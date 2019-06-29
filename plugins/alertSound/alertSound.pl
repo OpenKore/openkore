@@ -1,7 +1,7 @@
 # alertsound plugin by joseph
-# Modified by 4epT (04.04.2011)
+# Modified by 4epT (29.06.2019)
 #
-# Alert Plugin Version 4
+# Alert Plugin Version 5
 #
 # This software is open source, licensed under the GNU General Public
 # License, ver. (2 * (2 + cos(pi)))
@@ -15,7 +15,8 @@
 #
 # Supported events:
 #	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near,
-#	private GM chat, private chat, public GM chat, npc chat, public chat, system message
+#	private GM chat, private chat, public GM chat, npc chat, public chat, system message, disconnected,
+#   item <item name>, item <item ID>, item cards
 #
 # example:
 #	alertSound - {
@@ -29,7 +30,7 @@ package alertsound;
 
 use strict;
 use Plugins;
-use Globals qw($accountID %config %cities_lut $field %players);
+use Globals qw($accountID %config %cities_lut $field %items_lut %players);
 use Log qw(message);
 use Utils::Win32;
 
@@ -44,12 +45,15 @@ my $packetHook = Plugins::addHooks (
 	['packet_sysMsg', \&system_message, undef],
 	['packet_emotion', \&emotion, undef],
 	['Network::Receive::map_changed', \&map_change, undef],
+	['disconnected', \&disconnected, undef],
+	['packet/item_appeared', \&item_appeared, undef],
 );
 sub Reload {
-	message "alertsound plugin reloading, ";
+	message "alertsound plugin reloading, ", 'system';
 	Plugins::delHooks($packetHook);
 }
 sub Unload {
+	message "alertsound plugin unloading, ", 'system';
 	Plugins::delHooks($packetHook);
 }
 
@@ -57,12 +61,30 @@ sub death {
 #eventList death
 	alertSound("death");
 }
+sub disconnected {
+#eventList disconnected
+	alertSound("disconnected");
+}
 sub emotion {
 #eventList emotion
 	my (undef, $args) = @_;
 	if ($players{$args->{ID}} && $args->{ID} ne $accountID) {
 		alertSound("emotion");
 	}
+}
+sub item_appeared {
+# eventList item <item name>
+# eventlist item <item ID>
+# eventList item cards
+	my (undef, $args) = @_;
+	my $nameID = $args->{nameID};
+	my $type = $args->{type};
+	my $name = $items_lut{$nameID};
+	if ($type == 6) {
+		alertSound("item cards");
+	}
+	alertSound("item $nameID");
+	alertSound("item $name");
 }
 sub map_change {
 # eventList teleport
@@ -90,7 +112,7 @@ sub player {
 # eventList GM near
 	my (undef, $args) = @_;
 	my $name = $args->{player}{name};
-	
+
 	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
 		next if (!$config{"alertSound_".$i."_eventList"});
 		if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, "player *")) {
