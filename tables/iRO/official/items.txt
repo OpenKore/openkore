@@ -5063,6 +5063,8 @@
 9621##
 9629#June_2019_Yggdrasil_Ticket#
 9630#June_Costume_Box_2019#
+9636#2019_July_Costume_Box#
+9645#2019_July_Costume_Box_2#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
@@ -8454,6 +8456,7 @@
 19788#Costume_Heart_Eyepatch#
 19789#Costume_Sweet_Gents#
 19790#Costume_Wedding_Veil#
+19793#Costume_Goblin_Mask#
 19798#(null)#
 19800#Costume_Carnation_Hairband#
 19801#Costume_Fox_Hat#
@@ -8699,6 +8702,7 @@
 20201#Costume_Banshee_Master_Kiss#
 20202#Costume_Deviruchi_Balloon#
 20204#Costume_Hunting_Cap#
+20207#Costume_Striped_Headband#
 20217#Costume_Veil#
 20218#Costume_Spell_Circuit#
 20219#(null)#
@@ -8849,6 +8853,8 @@
 20538#Costume_Magic_Circle_Rainbow#
 20547#Costume_Whisper's_Blessing#
 20571#Costume_Valkyrie_Wings#
+20574#Costume_Backpack_(Red)#
+20575#Costume_Backpack_(Black)#
 20700#Egir_Manteau#
 20701#Sol_Manteau#
 20702#TE_WoE_Muffler#
@@ -9957,6 +9963,7 @@
 31573#Costume_Mecha_Cat_Ears#
 31574#Costume_Cyber_Income#
 31575#Costume_Electric_Two_Sides_Up_Hair#
+31586#Costume_Poporing_Muffler#
 31588#Costume_Snow_Flower#
 31593#Costume_Yellow_Scarf#
 31594#Costume_Red_Pencil_in_Mouth#
@@ -10017,6 +10024,18 @@
 31697#Costume_Bird_Nest#
 31698#Costume_Red_Riding_Hood#
 31699#Costume_Smiling_Eyes#
+31710#Costume_Lace_Flower_Crown#
+31711#Costume_Jewel_Crown#
+31712#Costume_Oxygen_Mask#
+31713#Costume_Mystical_Fruit_Hat#
+31714#Costume_Indian_Headband#
+31715#Costume_Orange_Rabbit#
+31716#Costume_Twinkling_Red_Eyes#
+31717#Costume_Medium_Wave_(Yellow)#
+31718#Costume_Sky_Lantern#
+31800#Costume_Brazil_Twin_Ribbon#
+31801#Costume_Creative_Convention_Cap#
+31802#Costume_Creative_Convention_Chapeau#
 32203#Accelerator_Chip#
 32204#Immortal_Dog_Tag#
 32206#Prontera_Militia_Glove#

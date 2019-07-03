@@ -2242,3 +2242,7 @@ aq19_sa.rsw#ra_san01.rsw#
 1@arena.gat#arena_room.gat#
 1@arena.rsw#arena_room.rsw#
 삯샺샎엍웤샌붺\map\1@arena.bmp#삯샺샎엍웤샌붺\map\arena_room.bmp#
+
+det_dun01.gat#rockmi2.gat#
+det_dun01.rsw#rockmi2.rsw#
+삯샺샎엍웤샌붺\map\det_dun01.bmp#삯샺샎엍웤샌붺\map\rockmi2.bmp#
