@@ -2484,12 +2484,6 @@ sub skill_post_delaylist2 {
 	}
 }
 
-sub show_script {
-	my ($self, $args) = @_;
-
-	debug "$args->{ID}\n", 'parseMsg';
-}
-
 sub senbei_amount {
 	my ($self, $args) = @_;
 

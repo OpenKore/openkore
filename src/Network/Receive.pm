@@ -2647,6 +2647,13 @@ sub show_eq_msg_self {
 	}
 }
 
+#08B3
+sub show_script {
+	my ($self, $args) = @_;
+
+	debug "$args->{ID}\n", 'parseMsg';
+}
+
 # 043D
 sub skill_post_delay {
 	my ($self, $args) = @_;
