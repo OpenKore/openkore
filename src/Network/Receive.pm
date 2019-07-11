@@ -2650,8 +2650,12 @@ sub show_eq_msg_self {
 #08B3
 sub show_script {
 	my ($self, $args) = @_;
-
-	debug "$args->{ID}\n", 'parseMsg';
+	my $ID = $args->{ID};
+	my $message = $args->{message};
+	if (defined $npcsList->getByID($ID)) {
+		my $npc = $npcsList->getByID($ID);
+		debug $npc->name . " ($npc->{nameID}): $message\n", 'parseMsg';
+	}
 }
 
 # 043D
