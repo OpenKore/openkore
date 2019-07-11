@@ -521,7 +521,7 @@ sub new {
 		'0857' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
 		'0858' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
 		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
-		'08B3' => ['show_script', 'v a4', [qw(len ID)]],
+		'08B3' => ['show_script', 'v a4 Z*', [qw(len ID message)]],
 		'08B4' => ['pet_capture_process'],
 		'08B6' => ['pet_capture_result', 'C', [qw(success)]],
 		#'08B9' => ['account_id', 'x4 V v', [qw(accountID unknown)]], # len: 12 Conflict with the struct (found in twRO 29032013)
@@ -2482,12 +2482,6 @@ sub skill_post_delaylist2 {
 
 		$char->setStatus($skillName." ".$status, 1, $remainDelay);
 	}
-}
-
-sub show_script {
-	my ($self, $args) = @_;
-
-	debug "$args->{ID}\n", 'parseMsg';
 }
 
 sub senbei_amount {

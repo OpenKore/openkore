@@ -534,6 +534,7 @@ sub new {
 		'08D1' => ['unequip_item', 'a2 v C', [qw(ID type success)]],
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'08D6' => ['npc_clear_dialog', 'a4', [qw(ID)]], #6
+		'08B3' => ['show_script', 'v a4 Z*', [qw(len ID message)]], #-1
 		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'0906' => ['show_eq', 'v Z24 x17 a*', [qw(len name equips_info)]],
