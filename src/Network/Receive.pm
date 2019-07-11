@@ -2651,7 +2651,7 @@ sub show_eq_msg_self {
 sub show_script {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
-	my $message = $args->{message};
+	my $message = bytesToString($args->{message});
 	if (defined $npcsList->getByID($ID)) {
 		my $npc = $npcsList->getByID($ID);
 		debug $npc->name . " ($npc->{nameID}): $message\n", 'parseMsg';
