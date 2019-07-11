@@ -2655,6 +2655,10 @@ sub show_script {
 	if (defined $npcsList->getByID($ID)) {
 		my $npc = $npcsList->getByID($ID);
 		debug $npc->name . " ($npc->{nameID}): $message\n", 'parseMsg';
+		Plugins::callHook('show_script', {
+			ID => $ID,
+			message => $message,
+		});
 	}
 }
 
