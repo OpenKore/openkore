@@ -1,2 +1,0 @@
-Version 4 (2015.03.02)
-	add "eventList player *"
