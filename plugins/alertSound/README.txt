@@ -14,43 +14,43 @@ Supported events:
 
 example config.txt:
 
-alertSound - {
+alertSound {
 	eventList public gm chat
 	notInTown 0
 	inLockOnly 0
 	play plugins\alertSound\sounds\alarm.wav
 }
-alertSound - {
+alertSound {
 	eventList private chat
 	notInTown 0
 	inLockOnly 0
 	play plugins\alertSound\sounds\phone.wav
 }
-alertSound - {
+alertSound {
 	eventList death, disconnected
 	notInTown 0
 	inLockOnly 0
 	play plugins\alertSound\sounds\warning.wav
 }
-alertSound - {
+alertSound {
 	eventList monster Poring, player 4epT
 	notInTown 1
 	inLockOnly 1
 	play plugins\alertSound\sounds\birds.wav
 }
-alertSound - {
+alertSound {
 	eventList teleport, public chat, emotion
 	notInTown 1
 	inLockOnly 0
 	play plugins\alertSound\sounds\birds.wav
 }
-alertSound - {
+alertSound {
 	eventList private GM chat, map change
 	notInTown 0
 	inLockOnly 0
 	play plugins\alertSound\sounds\alarm.wav
 }
-alertSound - {
+alertSound {
 	eventList item Jellopy, item Red Potion, item cards
 	notInTown 0
 	inLockOnly 0

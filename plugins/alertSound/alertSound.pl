@@ -19,7 +19,7 @@
 #   item <item name>, item <item ID>, item cards
 #
 # example:
-#	alertSound - {
+#	alertSound {
 #		eventList monster Poring
 #		notInTown 1
 #		inLockOnly 0
