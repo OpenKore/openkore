@@ -1649,7 +1649,7 @@ sub parse_set {
 			$self->interruptible($new_value?0:1);
 		}
 	} elsif ($parameter eq 'orphan') {
-		if ($new_value !~ /(terminate|terminate_last_call|reregister|reregister_safe)/) {
+		if ($new_value !~ /^(terminate|terminate_last_call|reregister|reregister_safe)$/) {
 			$self->error("orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe'. Given value: '$new_value'");
 		} else {
 			$self->orphan($new_value);
