@@ -124,7 +124,7 @@ patchpath /patch02
 addTableFolders iRO/Renewal;iRO
 charBlockSize 147
 charDeleteDateType 1
-sendCryptKeys 0x79805FBF, 0x3A030958, 0x184F36A3
+sendCryptKeys 0x063C5154, 0x20013450, 0x77F40B09
 blockingPlayerCancel 1
 rankingSystemType 1
 
@@ -155,23 +155,6 @@ serverType iRO_Classic
 serverEncoding Western
 addTableFolders iRO/Classic;iRO
 charBlockSize 108
-rankingSystemType 1
-
-# Re:Start
-# http://playragnarokrestart.com/
-[International - iRO: Re:Start]
-ip 128.241.92.133
-port 6800
-version 18
-master_version 1
-serverType iRO_Restart
-addTableFolders iRO/Restart;iRO
-serverEncoding Western
-charBlockSize 145
-pauseCharLogin 1
-patchserver ropatch1.gravityus.com
-patchpath /repatch
-sendCryptKeys 0x12CF76B5, 0x784F7C5E, 0x76A0763D
 rankingSystemType 1
 
 # TODO: needs a servertype & table folder
@@ -380,3 +363,9 @@ pinCode 1
 [Europe - euRO]
 dead 1
 dead_message euRO was closed on September 30, 2010. There used to be transfers to fRO, check out their website.
+
+# Re:Start
+# http://playragnarokrestart.com/
+[International - iRO: Re:Start]
+dead 1
+dead_message iRO Re:Start was merged into iRO Renewal on 11th July 2019. Visit official website for more details.
