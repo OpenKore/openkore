@@ -22691,7 +22691,7 @@ Head to Kristen Glisterine outside of Prontera.#
 
 63306#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
 Kristin Glisterine is asking for 10 Ice Fireworks.#
-Bring 10 Ice Fireworks to Kristin Glisterine.#
+Bring 10 Live Coals to Kristin Glisterine.#
 
 63307#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
 You're the new Detonation Celebration supplier, speak with Kay D. Kaboom for details.#
@@ -22761,3 +22761,29 @@ Search the area.#
 63303#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
 Ifrit has been running amuck here.#
 Defeat Ifrit.#
+
+
+63313#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63314#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63315#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63316#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63317#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63318#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63319#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63320#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
