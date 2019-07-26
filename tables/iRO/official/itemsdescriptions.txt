@@ -33322,13 +33322,13 @@ Adds a 5% chance to bypass 25% of magical defense on normal monsters and players
 #
 5361#
 A gangster's red scarf.
-Atk +5
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Head Location : ^777777Lower^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Except Novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice^000000
+Atk+5
 #
 5362#
 A scroll used by Ninjas to cast spells.
@@ -34921,16 +34921,18 @@ Jobs : ^777777All^000000
 #
 5555#
 A hat which resembles a cute Leaf Cat. The power to cure dwells within it.
-Agi +2
-Has a low chance of auto casting Level 3 Heal on the user when receiving physical melee attack.
-^00cc00+7 or higher, gives 25% extra EXP for every monster killed and decreases attack of monsters in Ayothaya Dungeon by 30% except for Whispers.^000000
-^ff0000This item can be traded, stored, and put into a cart^000000
-Class : ^777777Headgear^000000
-Defense: ^7777776^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Required Level: ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Agi + 2
+Adds a chance of casting ^0000FFLevel 3 Heal^000000 on the user when receiving a short-ranged attack.
+
+If upgrade level is +7 or higher,
+Increases the experience given from monsters by 25%.
+Reduces damage taken from Ayothaya Dungeon monsters by 30% except for Whisper.
 #
 5556#
 Very warm hat which a monster 'Fur Seal' is wearing.
@@ -37026,16 +37028,15 @@ Job : ^777777Jobchanged Magician/Acolyte Class^000000
 #
 5876#
 This stylish bandeezy expresses your patriotic spirit and makes you feel like some kind of professional grappler.
-All Stats +1.
-Enables the use of Level 1 [Bash].
-If upgraded to +7 or higher, Increases damage for all races by 10%
-^ff0000Account Bound^000000
-Class : ^777777Headgear^000000
-Defense : ^7777777^000000
-Location : ^777777Upper ^000000
-Weight : ^77777720^000000
-Required Level : ^77777730^000000
-Job : ^777777All jobs^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080807^000000
+Weight: ^80808020^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
+Enables ^0000FFLevel 1 Bash^000000.
+Increases physical damage on all race targets by 10%.
 #
 5877#
 These colors don't run, but you will (faster) when wearing this Old Glory adorned hat.
@@ -38805,10 +38806,9 @@ Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
 6302#
-A special bond received from a GM.
-Each bond is worth 2,147,483,647 zeny.
-^ff0000This item is character bound^000000
-Weight : ^7777770^000000
+A special bond received from the game master team. Each bond is worth 100,000 zeny. Visit the Eden Group Bondsman in the kitchen at 185 14.
+^FF0000Character Bound^000000
+Weight: ^8080801^000000
 #
 6304#
 A certificate given by Sapha leaders for meritorious deeds.
@@ -39830,73 +39830,73 @@ Only apply to a maximum of +10 refine.
 #
 6636#
 A stone with strength.
-Gives below stats to Costume slot 1
-STR + 1.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Str + 1
 #
 6637#
-A stone with Intelligence
-Gives below stats to Costume slot 1
-INT + 1.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone with Intelligence.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Int + 1
 #
 6638#
-A stone with AGI.
-Gives below stats to Costume slot 1
-AGI + 1.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone with agility.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Agi + 1
 #
 6639#
-A stone with DEX
-Gives below stats to Costume slot 1
-DEX + 1.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone with dexterity.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Dex + 1
 #
 6640#
-A stone with VIT
-Gives below stats to Costume slot 1
-VIT + 1.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone with vitality.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Vit + 1
 #
 6641#
-A stone with Luck.
-Gives below stats to Costume slot 1
-LUK + 1.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone with luck.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Luk + 1
 #
 6642#
-A stone with Physical attack power.
-Gives below stats on Costume slot 2
-ATK + 1%.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone with physical attack power.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Atk + 1%
 #
 6643#
-A stone with Magical attack power
-Gives below stats on Costume slot 2
-MATK + 1%.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone with magical attack power.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Matk + 1%
 #
 6644#
-A stone with HIT
-Gives below stats on Costume slot 3
-HIT + 1.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone with accuracy power.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your lower costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Hit + 1
 #
 6645#
 A stone which gives good flee.
-Gives below stats on Costume slot 3
-FLEE + 1.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your lower costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Flee + 1
 #
 6648#
 An old, dented crown that is missing gemstones made of pure gold. It can be sold to a Merchant for zeny.
@@ -40065,25 +40065,25 @@ Feel the power of the Great Dark Lord Morocc.
 Weight : ^7777771^000000
 #
 6716#
-A stone that increases Critical rate.
-Gives below stats on Costume upper slot
-CRI + 1.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone that increases critical rate.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Crit + 1
 #
 6717#
-A stone that increases HP.
-Gives below stats on Costume mid slot
-MaxHP + 50.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone that increases health.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Max HP + 50
 #
 6718#
-A stone that increases Magic HP.
-Gives below stats on Costume bottom slot
-MaxSP + 10.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone that increases SP power.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your lower costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Max SP + 10
 #
 6719#
 A tooth pulled from the monster piano, Jitterbug. It's shaped like a piano key.
@@ -40091,46 +40091,46 @@ A tooth pulled from the monster piano, Jitterbug. It's shaped like a piano key.
 Weight: ^77777710^000000
 #
 6740#
-A stone which increases recovery amount
-Gives below stats to Costume slot 1.
-HP recovery by Heal, items + 2%.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone which increases recovery amount.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Increases the recovery rate of recovery skills and recovery items 2%.
 #
 6741#
-A stone which makes to use recovery skills well.
-Gives below stats to Costume slot 1.
-Increase 3% of recovery amount from recovery type skill.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone which increases skill recovery amount.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Increases the recovery rate of recovery skills by 3%.
 #
 6742#
-A stone which makes good recovery power.
-Gives below stats on Costume slot 2
-Every 10 sec, recover HP 10.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone with recovery power.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Restores 10 HP to the user every 10 seconds.
 #
 6743#
-A stone increase your HP.
-Gives below stats on Costume slot 2
-MaxHP + 1%
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone that increases health.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Max HP + 1%
 #
 6744#
-A stone which increases your Magic power.
-Gives below stats on Costume slot 2
-MaxSP + 1%
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone that increases magical power.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Max SP + 1%
 #
 6745#
 A stone which gives SP during Battle.
-Gives below stats on Costume slot 3
-When enemies got killed by your Physical attacking, Magical attacking, recover 1 SP.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your lower costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Restores 1 SP to the user when a monster is killed by a physical or a magical attack.
 #
 6746#
 Standard sized gun part. Sadly poorly made and unusable.
@@ -40280,25 +40280,25 @@ Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 6790#
-A stone for big enemies.
-Gives below stats to Costume slot 1
-Increase 1% of damage to big monsters.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone for large sized enemies.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Increases physical damage on Large size targets by 1%.
 #
 6791#
-A stone for mid-sized enemies.
-Gives below stats to Costume slot 1
-Increase 1% of damage to mid-sized monsters.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone for medium sized enemies.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Increases physical damage on Medium size targets by 1%.
 #
 6792#
-A stone for small-sized enemies.
-Gives below stats to Costume slot 1
-Increase 1% of damage to small-sized monsters.
-Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^77777710^000000
+A stone for small sized enemies.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Increases physical damage on Small size targets by 1%.
 #
 6797#
 A coin engraved with Angeling, made for the 10th anniversary. There will be someone who will know the value of this if you collect a lot.
@@ -40514,11 +40514,11 @@ Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 6908#
-Stone which increases ASPD.
-Gives below stats on Costume Garment's slot 1
-ASPD + 1.
-[Lace La Zard] at the Fashion Stone building at Malangdo 115 150 can help you enchant this into a costume item.
-Weight : ^77777710^000000
+Stone which increases attack speed.
+Bring this to [Lace La Zard] in Malangdo at the building location 115 150 to enchant your garment costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Aspd + 1
 #
 6909#
 Purr-ency coins that can be exchanged for costume headgears by talking to Designer Heidam at the Malangdo building located at 115 150.
@@ -40651,157 +40651,67 @@ It looks as if it is used to operate a life created by the powerful evil spell.
 Weight: ^8080801^000000
 #
 6943#
-A stone with Physical attack power.
-Gives below stats on Costume upper slot.
-ATK + 1%.
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with physical attack power.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Upper)
-^FFFFFF_^000000
-ATK + 1%
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+A stone with physical attack power.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Atk + 1%
 #
 6944#
-A stone with Magical attack power.
-Gives below stats on Costume upper slot.
-MATK + 1%.
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with magical attack power.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Upper)
-^FFFFFF_^000000
-MATK + 1%
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+A stone with magical attack power.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Matk + 1%
 #
 6945#
 A stone with strength.
-Gives below stats to Costume Middle slot.
-STR + 1.
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with strength.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Middle)
-^FFFFFF_^000000
-STR + 1
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
-^808080A stone with health.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Lower)
-^FFFFFF_^000000
-Max HP + 1%
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Str + 1
 #
 6946#
 A stone with Intelligence.
-Gives below stats to Costume middle slot.
-INT + 1.
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with intelligence.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Middle)
-^FFFFFF_^000000
-INT + 1
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Int + 1
 #
 6947#
-A stone with AGI.
-Gives below stats to Costume middle slot.
-AGI + 1.
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with agility.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Middle)
-^FFFFFF_^000000
-AGI + 1
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+A stone with agility.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Agi + 1
 #
 6948#
-A stone with DEX.
-Gives below stats to Costume middle slot.
-DEX + 1.
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with dexterity.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Middle)
-^FFFFFF_^000000
-DEX + 1
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+A stone with dexterity.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Dex + 1
 #
 6949#
-A stone with VIT.
-Gives below stats to Costume middle slot.
-VIT + 1.
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with vitality.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Middle)
-^FFFFFF_^000000
-VIT + 1
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+A stone with vitality.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Vit + 1
 #
 6950#
-A stone with Luck
-Gives below stats to Costume middle slot.
-LUK + 1.
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with luck.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Middle)
-^FFFFFF_^000000
-LUK + 1
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
+A stone with luck.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your middle costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Luk + 1
 #
 6951#
-A stone increase your Max HP
-Gives below stats to Costume lower slot.
-MaxHP + 1%
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
+A stone that increases health.
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your lower costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
+Max HP + 1%
 #
 6956#
 A captured lost lamb. Bring it back to Bori the Shepherd.
@@ -40827,37 +40737,17 @@ Weight: ^8080801^000000
 #
 6963#
 A stone with HP absorption ability.
-Gives below stats on Costume Mantle's slot.
-Absorb 1% of damage dealt to enemy into HP with 1% chance.
-^ffffff<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with HP absorption ability.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Garment
-^FFFFFF_^000000
+Bring this to [Lace La Zard] in Malangdo at the building location 115 150 to enchant your garment costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
 Adds a 1% chance of restoring 1% of damage as HP when performing a physical attack.
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
 #
 6964#
 A stone with SP absorption ability.
-Gives below stats on Costume Mantle's slot.
-Absorb 1% of damage dealt to enemy into SP with 1% chance.
-^ffffff<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with SP absorption ability.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Garment
-^FFFFFF_^000000
+Bring this to [Lace La Zard] in Malangdo at the building location 115 150 to enchant your garment costume item.
+Class: ^808080Enchant Stone^000000
+Weight: ^80808010^000000
 Adds a 1% chance of restoring 1% of damage as SP when performing a physical attack.
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
 #
 6999#
 ^808080A stone with HP absorption ability.^000000
@@ -46255,13 +46145,44 @@ Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
 9645#
-믳샚뢦 낳뫀쟏뾴삻뚧 쟏뎪샇 뻆샌엛삻 뻲삻 볶 샖듙.
-^ff0000언 냨솤냺 냅랡낡 뫒낡듉쟑 뻆샌엛 샔듏듙.^000000
-릫냔: ^7777771^000000
-
-Attack: ^8080800^000000
+When opened gives one of the following
+Costume Shiba Inu
+Costume Sleeping Kitty Hat
+Costume Drooping Gray Kitty
+Costume Warg in Mouth
+Costume Scratching Cat
+Costume Black Cat
+Costume Cat's Mouth
+Costume Baby Penguin
+Costume White Cat
+Costume Orange Tabby Cat
+Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
-Weapon Level: ^8080800^000000
+#
+9654#
+Redeem ticket by visiting the Yggdrasil Tree Explorer in the second floor of the Eden Group (moc_para_up.gat 17, 176)
+When redeemed randomly provides of the the following
+Work Cap
+Shield Ring
+Seraphim Coronet
+Mob Scarf
+Toy Syringe
+Ring of Hero
+Flying Galapago
+Malach's Skin
+Magical Booster
+Siegfried's Helmet
+Aqua Bunny Band
+Moon Eyepatch
+Ixion Wing
+Military Mail
+Party Hard Pack
+Blacksmith Blessing x 8
+Battle Manual X3 x 6
+Bloody Dead Branch x 5
+More Details can be found by visiting the NPC in person.
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 10001#
 A pristine helmet made from an animal skull.
@@ -47272,7 +47193,7 @@ Produces ^0000FF500^000000 ^008080Rusty Arrow^000000.
 #
 12016#
 A potion which increases the moving speed of a character for a set duration.
-Class: ^808080Generic^000000
+Class: ^808080Stat Boost^000000
 Weight: ^80808010^000000
 Adds a 100% chance of inflicting ^800000Increased Movement Speed^000000 on the user when using this item for 5 seconds.
 #
@@ -49608,12 +49529,11 @@ A well packed gift box. No one knows what is in it.
 Weight :: ^7777771^000000
 #
 12414#
-A candy made of guarana berries. Don't eat too much at once beacuse it increases concentration.
-Slightly increases attack speed.
-Weight : ^7777771^000000
-A candy made of guarana berries. Don't eat too much at once beacuse it increases concentration.
-Slightly increases agility.
-Weight : ^7777771^000000
+A candy made of guarana berries. Don't eat too much at once because it increases concentration.
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Aspd + 10% for 30 minutes.
+Casts ^0000FFLevel 5 Increase Agility^000000 on the user.
 #
 12415#
 #
@@ -68091,7 +68011,7 @@ Costume Chilly Breath
 Weight : ^7777771^000000
 #
 17470#
-A box containing 100 Silvervine Fruits. These are used as currency to exchange for special items or services.
+A box containing 10 Silvervine Fruits. These are used as currency to exchange for special items or services.
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
@@ -68384,15 +68304,15 @@ Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
 17523#
-^808080Box containing 10 Silvervine 100 Boxes
+Box containing 10 Silvervine 10 Boxes
 Use these as currency to exchange for special items
 Weight : ^7777770^000000
 ^ff0000Box is trade/store/vend, once opened the item becomes account bound^000000
 Weight : ^7777771^000000
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+
+Attack: ^8080800^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080800^000000
 #
 17528#
 Just in time for Christmas is our assortment of fun wintertime costume hats! For 300 points you can let it go with this stylish box. Gives one of the following at random when opened
@@ -69161,19 +69081,19 @@ Class: Item Giver
 Weight: 1
 #
 17837#
-^808080A box containing 10 Silvervine Fruits. These are used as currency to exchange for special items or services.^000000
-Class: Item Giver
-Weight: 1
+A box containing 1 Silvervine Fruits. These are used as currency to exchange for special items or services.
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 17838#
-^808080A box containing 25 Silvervine Fruits. These are used as currency to exchange for special items or services.^000000
-Class: Item Giver
-Weight: 1
+A box containing 3 Silvervine Fruits. These are used as currency to exchange for special items or services.
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 17839#
-^808080A box containing 100 Silvervine Fruits. These are used as currency to exchange for special items or services.^000000
-Class: Item Giver
-Weight: 1
+A box containing 10 Silvervine Fruits. These are used as currency to exchange for special items or services.
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 17840#
 ^808080A box which contains 5 Arrow Quiver.^000000
@@ -72559,10 +72479,12 @@ Job : ^777777All Jobs^000000
 #
 18741#
 To feel the fear of those who see in the eerie paranormal.
-Class: ^777777Costume ^000000 DEF: ^7777770 ^000000
-Location: ^777777Upper ^000000 Weight: ^7777770 ^000000
-Req LV: ^7777771 ^000000
-jobs: ^777777All Jobs ^000000
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 18742#
 A strong feeling of being one with the night skies.
@@ -77951,7 +77873,7 @@ Wear this when you want to look cute for your beloved.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^80808010^000000
-Requires Level: ^8080801^000000
+Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 #
 19551#
@@ -78868,11 +78790,11 @@ Usable By: ^808080All Jobs^000000
 #
 19739#
 This kitty makes a good costume (for now) because cats only take a break from being jerks while asleep.
-Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19743#
 A hat sculpted like Anubis, an Egyptian god of the dead. It belongs to the holy priests who make a mummy.
@@ -87371,9 +87293,11 @@ Class: Item Giver
 Weight: 25
 #
 23164#
-A potion created and distributed by 13th anniversary NPC Granpa Boxter.
-No matter who you race with, you will pass everyone.
-Weight : ^7777771^000000
+A potion which increases the moving speed of a character for a set duration.
+Created for iRO 13th anniversary event. No matter who you race with, you will pass everyone.
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Adds a 100% chance of inflicting ^800000Increased Movement Speed^000000 on the user when using this item for 5 seconds.
 #
 23189#
 ^808080A needle for making and fixing small dolls.^000000
@@ -89316,20 +89240,11 @@ Reduces damage taken from Undead property enemies by 2%.
 #
 25000#
 A stone with SP absorption ability.
-Gives below stats on Costume upper slot.
-Absorb 1% of damage dealt to enemy into SP with 1% chance.
-^ffffff<NAVI>^4D4DFF[Aver De Dosh]^000000<INFO>mal_in01,23,113,0,100,0,0</INFO></NAVI>^000000
-Weight : ^77777710^000000
-^808080A stone with SP absorption ability.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Class: Enchant Stone
-Weight: 10
-Compounds On: Headgear (Upper)
-^FFFFFF_^000000
+Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your upper costume item.
+Class: ^808080Enchant Stone^000000
+Compounds On: ^808080Upper^000000
+Weight: ^80808010^000000
 Adds a 1% chance of restoring 1% of damage as SP when performing a physical attack.
-^FFFFFF_^000000
-^FFFFFF<NAVI>^4D4DFF[Lace La Zard]^000000<INFO>mal_in01,20,107,0,100,0,0</INFO></NAVI>^000000
 #
 25001#
 ^808080A stone with defense.^000000
@@ -93307,52 +93222,65 @@ Matk + 50
 Additional Matk + ((upgrade level * upgrade level) / 2) up to a maximum upgrade level of 15.
 #
 28717#
-^808080The royal knife of a powerful warrior maiden. Though its power is mighty, it is easy to handle, even by those less experienced.^000000
-Class: Dagger
-Attack: 50
-Property: Neutral
-Weight: 10
-Weapon Level: 4
-Required Level: 70
-Required Jobs: Novice Jobs, Swordman, Merchant Jobs, Thief Jobs, Archer Jobs, Knight Jobs, Wizard Jobs, Crusader, Sage Jobs, Royal Guard, Soul Linker, Ninja Jobs
-Matk + 50
+The royal knife of a powerful warrior maiden. Though its power is mighty, it is easy to handle, even by those less experienced.
+Class: ^808080Dagger^000000
+Attack: ^80808050^000000
+Magic Attack: ^80808050^000000
+Property: ^808080Neutral^000000
+Weight: ^80808010^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080Novice Jobs, Swordman, Merchant Jobs, Thief Jobs, Archer Jobs, Knight Jobs, Wizard Jobs, Crusader, Sage Jobs, Royal Guard, Soul Linker, Ninja Jobs^000000
 ^F4AD42Novice Bonus^000000
-Int + 2 per upgrade level of the item past the upgrade level of 7.
-Dex + 2 per upgrade level of the item past the upgrade level of 7.
-Dex - 1 for every 10 base Dex per upgrade level of the item past the upgrade level of 7.
-Max HP + 300
-Max HP + 200 per upgrade level of the item past the upgrade level of 7.
-Max SP + 300
-Max SP + 20 per upgrade level of the item past the upgrade level of 7.
 Atk + 100
-Additional Matk + 150
-Additional Matk + 15 per upgrade level of the item past the upgrade level of 7.
-Crit + 7 per upgrade level of the item past the upgrade level of 7.
-Aspd + 10% per upgrade level of the item past the upgrade level of 7.
-Increases critical damage on targets by 1% per upgrade level of the item past the upgrade level of 7.
+Matk + 150
+Max HP + 300
+Max SP + 300
 Reduces the SP cost of skills by 5%.
 This item is indestructible in battle.
+
+For every upgrade level of ^008080Valkyrie Knife [4]^000000,
+Int + 2
+Dex + 2
+Dex - 1 for every 10 base Dex.
+Additional Max HP + 200.
+Additional Max SP + 20.
+Additional Matk + 15.
+Crit + 7
+Aspd + 10%
+Increases critical damage on targets by 1%.
 If upgrade level is +7 or higher,
 Reduces damage taken from Demi-Human race enemies by 10%.
+
+^F4AD42Mage Bonus^000000
+For every upgrade level of ^008080Valkyrie Knife [4]^000000,
+Max HP + 200
+Max SP + 20
+If upgrade level is +7 or higher,
+Reduces damage taken from Demi-Human race enemies by 10%.
+
+^F4AD42Hunter Bonus^000000
+Max HP + 200
+Reduces the SP cost of skills by 5%.
+
+For every upgrade level of ^008080Valkyrie Knife [4]^000000,
+Int + 2
+Dex + 2
+
+^F4AD42Dancer and Bard Bonus^000000
+Atk + 100
+This item is indestructible in battle.
+
+For every upgrade level of ^008080Valkyrie Knife [4]^000000,
+Aspd + 10%
+Dex - 1 for every 10 base Dex.
+
 ^F4AD42Thief Bonus^000000
 Max SP + 100
 Matk + 150
-Increases critical damage on targets by 1% per upgrade level of the item.
-^F4AD42Mage Bonus^000000
-Max HP + 200 per upgrade level of the item past the upgrade level of 7.
-Max SP + 20 per upgrade level of the item past the upgrade level of 7.
-If upgrade level is +7 or higher,
-Reduces damage taken from Demi-Human race enemies by 10%.
-^F4AD42Hunter Bonus^000000
-Int + 2 per upgrade level of the item.
-Dex + 2 per upgrade level of the item.
-Max HP + 200
-Reduces the SP cost of skills by 5%.
-^F4AD42Dancer and Bard Bonus^000000
-Dex - 1 for every 10 base Dex per upgrade level of the item.
-Atk + 100
-Aspd + 10% per upgrade level of the item.
-This item is indestructible in battle.
+
+For every upgrade level of ^008080Valkyrie Knife [4]^000000,
+Increases critical damage on targets by 1%.
 #
 28721#
 ^808080A sharp, purple-tinged dagger used by the ninjas who were hired to secure ownership of some gold mine.^000000
@@ -96697,6 +96625,8 @@ A lace crown decorated with flowers. Wearing this brings good luck.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31711#
 A classy crown with a jewel on it. Wearing it will make you feel like royalty.
