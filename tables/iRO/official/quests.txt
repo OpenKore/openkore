@@ -22670,3 +22670,94 @@ Hunt 400 Kick Step monsters.#
 63286#Kick and Kick Hunting#SG_FEEL#QUE_NOIMAGE#
 Hunt the Kick and Kick monsters and return to Gramps at the Eden Group to get your reward.#
 Hunt 400 Kick and Kick monsters.#
+
+63287#Rock Step#SG_FEEL#QUE_NOIMAGE#
+Hunt the Rock Step monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Rock Step monsters.#
+
+63288#Step Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Step monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Step monsters.#
+
+
+
+63304#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Old-Man Boomy needs Burning Hair to for the Detonation Celebration.#
+Bring 30 Burning Hair to Old-Man Boomy.#
+
+63305#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Talk to Kristin Glisterine about helping the Detonation Celebration.#
+Head to Kristen Glisterine outside of Prontera.#
+
+63306#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Kristin Glisterine is asking for 10 Ice Fireworks.#
+Bring 10 Ice Fireworks to Kristin Glisterine.#
+
+63307#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+You're the new Detonation Celebration supplier, speak with Kay D. Kaboom for details.#
+Talk to Kay D. Kaboom.#
+
+63308#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+You can now complete supply requisitions for the Detonation Celebration. You also have access to Chefcular Meow, get GAINS!#
+Bring items to trade with Kay D. Kaboom or Chefcular Meow.#
+
+63289#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Talk to Lt. Don Tyler for more work.#
+Talk to Lt. Don Tyler.#
+
+63290#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Cull Monsters around Prontera and keep the roadways safe.#
+Bring Lt. Don 25 Sharp Leaf and 25 Browny Root.#
+
+63291#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Go to the town of Umbala and meet with 2 soldiers from the 1337th.#
+Talk to Woods and Buddy.#
+
+63292#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Find the report that Woods dropped in the forest outside of town.#
+Find the report and bring it back to Lt. Don.#
+
+
+63293#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+You found the report Woods lost. Bring it back to Lt. Don Tyler.#
+Return to Lt. Don Tyler.#
+
+63294#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Help Woods and Buddy find the monster responsible for the activity in the Hoomga Forest.#
+Find Woods and Buddy in Hoomga Forest.#
+
+63295#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Track down signs of inteligent monster activity in the Hoomga Forest.#
+Find clues and talk to Woods in the Hoomga Jungle.#
+
+63296#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Track down signs of inteligent monster activity in the Hoomga Forest.#
+Find clues and talk to Woods in the Hoomga Jungle.#
+
+63297#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Track down signs of inteligent monster activity in the Hoomga Forest.#
+Find clues and talk to Woods in the Hoomga Jungle.#
+
+63298#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Once you have all the clues, talk return to woods in the Umbala Forest.#
+Bring 3 Clues to Woods.#
+
+63299#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Once you have all the clues, talk return to woods in the Umbala Forest.#
+Bring 3 Clues to Woods.#
+
+63300#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Once you have all the clues, talk return to woods in the Umbala Forest.#
+Bring 3 Clues to Woods.#
+
+63301#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Ambush! Find a way to survive.#
+Survive the ambush.#
+
+63302#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Investigate the area that Woods and Buddy lead you to.#
+Search the area.#
+
+63303#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Ifrit has been running amuck here.#
+Defeat Ifrit.#

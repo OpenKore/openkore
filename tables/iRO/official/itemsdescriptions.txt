@@ -9780,18 +9780,43 @@ Property: ^808080Holy^000000
 Weight: ^8080800.2^000000
 #
 1752#
-^808080A flaming arrow that will inflict Fire property damage.^000000
-^FFFFFF_^000000
-Type: Ammunition
-Class: Arrow
-Attack: 30
-Property: Fire
-Weight: 0.2
-^FFFFFF_^000000
+A flaming arrow that will inflict Fire property damage.
+Class: ^808080Arrow^000000
+Attack: ^80808030^000000
+Property: ^808080Fire^000000
+Weight: ^8080800.2^000000
 ^800080Set Bonus^000000
 ^008080Burning Bow [1]^000000
 ^008080Fire Arrow^000000
 Increases long-ranged damage on targets by 25%.
+
+^800080Set Bonus^000000
+^008080Elemental Tights [1]^000000
+^008080Burning Bow [1]^000000
+^008080Fire Arrow^000000
+Increases long-ranged damage on targets by 20%.
+Disables the following effects of ^008080Burning Bow [1]^000000, Reduces damage taken from Fire property attacks by 10%.
+If ^008080Burning Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Elemental Towel [1]^000000
+^008080Burning Bow [1]^000000
+^008080Fire Arrow^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+Increases the damage of ^0000FFSevere Rainstorm^000000 by 5% per upgrade level of ^008080Elemental Towel [1]^000000.
+If ^008080Burning Bow [1]^000000 upgrade level is +10 or higher,
+Aspd + 1
+
+^800080Set Bonus^000000
+^008080Rainbow Muffler^000000
+^008080Fire Arrow^000000
+Reduces damage taken from Fire property attacks by 75%.
+
+^800080Set Bonus^000000
+^008080Prism Rangers Scarf^000000
+^008080Fire Arrow^000000
+Reduces damage taken from Fire property attacks by 75%.
 #
 1753#
 An arrow constructed from hardened steel.
@@ -46210,6 +46235,34 @@ Costume Smiling Eyes
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
+9636#
+When opened gives one of the following at Random
+Costume Striped Headband
+Costume Backpack (Red)
+Costume Backpack (Black)
+Costume Poporing Muffler
+Costume Lace Flower Crown
+Costume Jewel Crown
+Costume Oxygen Mask
+Costume Mystical Fruit Hat
+Costume Indian Headband
+Costume Orange Rabbit
+Costume Twinkling Red Eyes
+Costume Medium Wave (Yellow)
+Costume Sky Lantern
+Costume Goblin Mask
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+9645#
+믳샚뢦 낳뫀쟏뾴삻뚧 쟏뎪샇 뻆샌엛삻 뻲삻 볶 샖듙.
+^ff0000언 냨솤냺 냅랡낡 뫒낡듉쟑 뻆샌엛 샔듏듙.^000000
+릫냔: ^7777771^000000
+
+Attack: ^8080800^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080800^000000
+#
 10001#
 A pristine helmet made from an animal skull.
 Class: ^808080Pet Accessory^000000
@@ -79123,6 +79176,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+19793#
+A mask with a large, round facial expression. Let's try it on!
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+#
 19798#
 An angry mouth
 Bring this to [Aver De Dosh] in Malangdo at the building location 115 150 to add enchantments to it.
@@ -81343,6 +81402,13 @@ Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
 #
+20207#
+A headband with cool stripes.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 20217#
 This lovely veil can be worn in all sorts of social situations.
 Class: ^808080Costume^000000
@@ -82771,6 +82837,19 @@ Position: ^808080Garment^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+20574#
+A small, cute red backpack.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
+20575#
+A small, cute black backpack.
+
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
 #
 20700#
 Egir's Manteau. It looks defending your body
@@ -96163,6 +96242,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31586#
+A stylish Poporing muffler. Super cute and cool enough to wear in the summer. Look at it dangle!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
 31588#
 Like snowflakes on your hair. It twinkles like the stars
 Class: ^808080Costume^000000
@@ -96606,6 +96691,91 @@ Position: ^808080Middle^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs except Doram^000000
+#
+31710#
+A lace crown decorated with flowers. Wearing this brings good luck.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31711#
+A classy crown with a jewel on it. Wearing it will make you feel like royalty.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31712#
+If it smells outside, put on this handy Costume Oxygen Mask to filter everything out! May or may not work on farts.
+
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31713#
+Oh great mystical fruit! Place this on your head and feel the magic of fruit on your noggin.
+
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31714#
+A decorative band with a wave pattern and feather.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31715#
+A cute orange rabbit that follows you around as you adventure. It's so fluffy!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31716#
+Colored contact lenses for your eyes.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31717#
+Enjoy these fluffy, luscious locks
+in the color of gold.
+
+
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31718#
+A soft glow of yellow light emits from the body of the lantern.
+
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31800#
+A cute ribbon where the sides reflect that national colors of Brazil.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31801#
+This hat was awarded to adventurers that displayed exceptional examples of creativity.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31802#
+This hat was awarded to adventurers that displayed exceptional examples of creativity.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
 #
 32203#
 A high performance microchip that is said to have been used on a mainframe computer, known as 'MOTHER'. It contains valuable data of lost technology.

@@ -2647,6 +2647,21 @@ sub show_eq_msg_self {
 	}
 }
 
+#08B3
+sub show_script {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	my $message = bytesToString($args->{message});
+	if (defined $npcsList->getByID($ID)) {
+		my $npc = $npcsList->getByID($ID);
+		debug $npc->name . " ($npc->{nameID}): $message\n", 'parseMsg';
+		Plugins::callHook('show_script', {
+			ID => $ID,
+			message => $message,
+		});
+	}
+}
+
 # 043D
 sub skill_post_delay {
 	my ($self, $args) = @_;
