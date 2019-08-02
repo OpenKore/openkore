@@ -17622,35 +17622,35 @@ Hunt 150 Dolomedes monsters and return to the Bounty Board at El Dicastes#
 #
 
 62560#Bounty Board Skeleton#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Skeleton monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Skeleton monsters and return to the Bounty Board at Payon#
 #
 
 62561#Bounty Board Soldier Skeleton#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Soldier Skeleton monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Soldier Skeleton monsters and return to the Bounty Board at Payon#
 #
 
 62562#Bounty Board Archer Skeleton#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Archer Skeleton monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Archer Skeleton monsters and return to the Bounty Board at Payon#
 #
 
 62563#Bounty Board Munak#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Munak monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Munak monsters and return to the Bounty Board at Payon#
 #
 
 62564#Bounty Board Bongun#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Bongun monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Bongun monsters and return to the Bounty Board at Payon#
 #
 
 62565#Bounty Board Spore#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Spore monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Spore monsters and return to the Bounty Board at Payon#
 #
 
 62566#Bounty Board Snake#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Snake monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Snake monsters and return to the Bounty Board at Payon#
 #
 
 62567#Bounty Board Bigfoot#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Bigfoot monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Bigfoot monsters and return to the Bounty Board at Payon#
 #
 
 62568#Bounty Board Elder Willow#SG_FEEL#QUE_NOIMAGE#
@@ -17658,7 +17658,7 @@ Hunt 150 Elder Willow monsters and return to the Bounty Board at Archer Village#
 #
 
 62569#Bounty Board Greatest General#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Elder Greatest General monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Elder Greatest General monsters and return to the Bounty Board at Payon#
 #
 
 62617#Bounty Board Thara Frog#SG_FEEL#QUE_NOIMAGE#
@@ -17738,31 +17738,31 @@ Memorial dungeon : Speak to the adventurer Leon after you've been through Sara's
 #
 
 62644#Bounty Board Willow#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Willow monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Willow monsters and return to the Bounty Board at Payon#
 #
 
 62645#Bounty Board Wolf#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Wolf monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Wolf monsters and return to the Bounty Board at Payon#
 #
 
 62646#Bounty Board Munak#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Munak monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Munak monsters and return to the Bounty Board at Payon#
 #
 
 62647#Bounty Board Bongun#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Bongun monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Bongun monsters and return to the Bounty Board at Payon#
 #
 
 62648#Bounty Board Sohee#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Sohee monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Sohee monsters and return to the Bounty Board at Payon#
 #
 
 62649#Bounty Board Dokebi#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Dokebi monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Dokebi monsters and return to the Bounty Board at Payon#
 #
 
 62650#Bounty Board Nine Tail#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Nine Tail monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Nine Tail monsters and return to the Bounty Board at Payon#
 #
 
 62660#Bounty Board Chonchon#SG_FEEL#QUE_NOIMAGE#
@@ -22691,7 +22691,7 @@ Head to Kristen Glisterine outside of Prontera.#
 
 63306#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
 Kristin Glisterine is asking for 10 Ice Fireworks.#
-Bring 10 Live Coals to Kristin Glisterine.#
+Bring 10 Ice Fireworks to Kristin Glisterine.#
 
 63307#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
 You're the new Detonation Celebration supplier, speak with Kay D. Kaboom for details.#
@@ -22786,4 +22786,23 @@ Hunt 150 of the listed monster and return to it's bounty board#
 #
 63320#Bounty Board#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 of the listed monster and return to it's bounty board#
+#
+
+63321#Bounty Board Worm Tail#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Worm Tail monsters and return to the Bounty Board at Alberta#
+#
+63322#Bounty Board Hydra#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hydra monsters and return to the Bounty Board at Alberta#
+#
+63323#Bounty Board Pirate Skeleton#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Pirate Skeleton monsters and return to the Bounty Board at Alberta#
+#
+63324#Bounty Board Freezer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Freezer monsters and return to the Bounty Board at Alberta#
+#
+63325#Bounty Board Permeter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Permeter monsters and return to the Bounty Board at Alberta#
+#
+63326#Bounty Board Solider#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Solider monsters and return to the Bounty Board at Alberta#
 #
