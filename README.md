@@ -58,7 +58,7 @@ Check the [status of botting on official servers](https://github.com/OpenKore/op
 | [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | lututui, Henrybk, alisonrag |
 | [idRO](https://ror.gravindo.id/) | Indonesia RO (Renewal) | *** | Botable | alisonrag |
 | [idRO](https://ragnarok.gravindo.id/) | Indonesia RO (classic) | *** | Not Working | N/A  |
-| [fRO](https://www.ragnarokeurope.com/) | Europe(french) RO | *** | Botable | allanon | 
+| [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | allanon | 
 | [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | alisonrag |
 | [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | alisonrag  |
 | [kRO](http://ro.gnjoy.com/) | Korea RO | Cdclient | Need Verification |  N/A |
