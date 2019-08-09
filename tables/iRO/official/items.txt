@@ -1496,7 +1496,7 @@
 2485#WoE_Shoes#
 2486#Shadow_Walk#
 2491#Bangungot_Boots_of_Nightmare#
-2492#Bangungot_Boots(Bayani)#
+2492#Bangungot_Boots_of_Nightmare_(Bayani)#
 2495#Egir_Shoes#
 2496#WoE_TE_Shoes#
 2497#WoE_TE_Boots#
@@ -5066,6 +5066,7 @@
 9636#2019_July_Costume_Box#
 9645#July_Animal_Costume_Box_#
 9654#Yggdrasil_Ticket_IV#
+9664#2019_August_Costume_Box#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
@@ -8555,7 +8556,7 @@
 19939#Costume_Antler#
 19951#placeholder#
 19952#placeholder#
-19953#placeholder#
+19953#Costume_Parade_Hat#
 19954#Costume_3D_Glasses#
 19955#Costume_Christmas_Tree_Hat#
 19956#placeholder#
