@@ -5175,10 +5175,21 @@ Weight: ^808080400^000000
 Weapon Level: ^8080803^000000
 Requires Level: ^80808050^000000
 Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Paladin Jobs, Biochemist Jobs^000000
-Hit + 10, if the users base Str is 96 or higher.
-Aspd + 3%, if the users base Str is 96 or higher.
 Increases the damage of ^0000FFHigh Speed Cart Ram^000000 by 15%.
-This item is indestructible in battle.
+If the user's base Str is 95 or higher,
+Hit + 10
+Aspd + 3%
+
+^800080Set Bonus^000000
+^008080Giant Axe [1]^000000
+^008080Giant's Protection [1]^000000
+Reduces damage taken from Demi-Human race enemies by 3%.
+If ^008080Giant Axe [1]^000000 upgrade level is +7 or higher,
+Increases physical damage on Boss monsters by 5%.
+Increases the damage of ^0000FFHigh Speed Cart Ram^000000 by 5%.
+If ^008080Giant Axe [1]^000000 upgrade level is +9 or higher,
+Increases physical damage on Boss monsters by an additional 10%.
+Increases the damage of ^0000FFHigh Speed Cart Ram^000000 by an additional 10%.
 #
 1391#
 An axe that is made by the Eden Group. It is suitable for those who have more advanced experience handling two-handed axes.
@@ -29533,12 +29544,12 @@ Jobs: ^777777All^000000
 #
 5012#
 A ceremonial hat worn during one's graduation.
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777Every Job
-except Novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 5013#
 A special headgear
@@ -29643,27 +29654,24 @@ Required Level : ^77777738^000000
 Jobs: ^777777Merchant Class^000000
 #
 5022#
-A hat that is said to
-have been worn by
-the god of the sun.
-Str +3 , Int +2
-Class : ^777777Headgear^000000
-Defense: ^7777774^000000
-Location : ^777777Upper/Mid^000000
-Weight : ^777777240^000000
-Jobs: ^7777772-1 and
-2-2 Classes^000000
+A hat that is said to have been worn by the god of the sun.
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle^000000
+Defense: ^8080804^000000
+Weight: ^808080240^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Knight Jobs, Blacksmith Jobs, Assassin Jobs, Priest Jobs, Wizard Jobs, Hunter Jobs, Crusader Jobs, Alchemist Jobs, Rogue Jobs, Monk Jobs, Sage Jobs, Bard Jobs, Dancer Jobs, Taekwon Master, Soul Linker^000000
+Str + 3
+Int + 2
 #
 5023#
-A large piece of
-cloth, usually polka
-dotted, that is wrapped around goods which are
-then carried on the head.
-Class : ^777777Headgear^000000
-Defense: ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^777777100^000000
-Jobs: ^777777Merchant Class^000000
+A large piece of cloth, usually polka dotted, that is wrapped around goods which are then carried on the head.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^808080100^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Merchant Jobs^000000
 #
 5024#
 A birthday cake replica that won't fit a Dancer
@@ -46184,6 +46192,22 @@ More Details can be found by visiting the NPC in person.
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
+9664#
+When Opened gives one of the following at random
+Costume Falling Leaves
+Costume Pumpkin Head
+Costume Dwarf Beard
+Costume Husky Hat
+Costume Wonderful Beast Ears
+Costume Squirrel Ear Hat
+Costume Eremes Scarf (Blue)
+Costume Red Gemini Eyes
+Costume Falling Red Foliage
+Costume Book of Soyga
+Attack: ^8080800^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080800^000000
+#
 10001#
 A pristine helmet made from an animal skull.
 Class: ^808080Pet Accessory^000000
@@ -46974,6 +46998,10 @@ Weight : ^7777773^000000
 11596#
 #
 11597#
+A terrible worm that feeds on iron and other metals. However, it is likely a good source of protein.
+Class: ^808080Recovery^000000
+Weight: ^8080801^000000
+Restores ^00800070^000000 to ^008000110^000000 HP.
 #
 11598#
 A raw cacao bean. This tastes rather bitter.
@@ -62145,15 +62173,31 @@ Reduces damage taken from Dragon race enemies by an additional 1% per upgrade le
 #
 15138#
 Egir, the God of Sea's Armor. It has a shape of a beautiful mermaid and seems to enable wearer swim in the water.
-MHP + 500.
-MSP + 50.
-Decreases 10% damage from Fish type enemy, when equipping Egir Helm and Egir Armor together.
-Additional decrease of damage by 1%, per refinement of the armor.
-Indestructible
-Class : ^777777Armour^000000 Def : ^77777725^000000
-Weight : ^777777160^000000
-Required LvL : ^77777740^000000
-Job : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Armor^000000
+Defense: ^80808025^000000
+Weight: ^808080160^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 500
+Max SP + 50
+
+^800080Set Bonus^000000
+^008080Egir Helm [1]^000000
+^008080Egir Armour [1]^000000
+Reduces damage taken from Fish race enemies by 10%.
+Reduces damage taken from Fish race enemies by an additional 1% per upgrade level of ^008080Egir Armour [1]^000000.
+
+^800080Set Bonus^000000
+^008080Egir Armour [1]^000000
+^008080Egir Helm [1]^000000
+^008080Egir Manteau [1]^000000
+^008080Egir Shoes [1]^000000
+Max HP + 1000
+Max SP + 100
+Increases physical and magical damage on Fish race targets by 50%.
+Reduces damage taken from Water property attacks by 50%.
+Increases the experience given from Fish race monsters by 20%.
 #
 15139#
 Ritualistic clothing that appears to offend animals far and wide.
@@ -72118,11 +72162,13 @@ Req Level : ^77777750^000000
 jobs : ^777777all jobs jobs^000000
 #
 18691#
-A hat made in the appearance of black dragon's ascension.  A helm that applied the Black Dragon's will, has fabulous side view and always keeps the side view.
-Class : ^777777Headgear^000000 Defense : ^7777773^000000
-Location : ^777777Upper ^000000 Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+A helm that applied the Black Dragon's will, has fabulous side view and always keeps the side view.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 18692#
 Karaoke party begins ~~
@@ -75385,6 +75431,7 @@ Weight: ^80808080^000000
 Requires Level: ^80808040^000000
 Usable By: ^808080All Jobs^000000
 Vit + 3
+
 ^800080Set Bonus^000000
 ^008080Egir Helm [1]^000000
 ^008080Egir Armour [1]^000000
@@ -75394,23 +75441,28 @@ Reduces damage taken from Fish race enemies by an additional 1% per upgrade leve
 ^800080Set Bonus^000000
 ^008080Egir Helm [1]^000000
 ^008080Egir Manteau [1]^000000
-Restores 10 SP to the user when a Fish race monster is killed by a physical attack.
+Restores 10 SP to the user when a Fish race monster is killed by a short-ranged attack.
+Adds a chance of gaining ^008080Sushi^000000 or ^008080Raw Fish^000000 when a Fish race monster is killed.
+Increases the drop rate of these items per upgrade level of ^008080Egir Manteau [1]^000000.
+Increases the recovery rate of ^008080Sushi^000000 and ^008080Raw Fish^000000 consumables by 5%.
+Increases the recovery rate of these items by an additional 5% per upgrade level of ^008080Egir Manteau [1]^000000.
 
 ^800080Set Bonus^000000
 ^008080Egir Helm [1]^000000
 ^008080Egir Shoes [1]^000000
 Crit + 10 on Fish race targets.
+Additional Crit + 1 on Fish race targets per upgrade level of ^008080Egir Shoes [1]^000000.
 
 ^800080Set Bonus^000000
+^008080Egir Armour [1]^000000
 ^008080Egir Helm [1]^000000
 ^008080Egir Manteau [1]^000000
-^008080Egir Armour [1]^000000
 ^008080Egir Shoes [1]^000000
 Max HP + 1000
 Max SP + 100
-Increases the experience given from Fish race monsters by 20%.
 Increases physical and magical damage on Fish race targets by 50%.
-Reduces damage taken from water property attacks by 50%.
+Reduces damage taken from Water property attacks by 50%.
+Increases the experience given from Fish race monsters by 20%.
 #
 19027#
 A box that contains:
@@ -79878,10 +79930,11 @@ Job : ^777777All^000000
 #
 19953#
 A hat brings happy feeling as much to hold a parade unconsciously.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Req Lvl. : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19954#
 A mysterious glasses which shows objects in 3-dimentional.
@@ -83319,24 +83372,26 @@ Requires Level: ^80808040^000000
 Usable By: ^808080All Jobs^000000
 Max HP + 500
 Max SP + 50
-Adds a chance of gaining ^008080Sushi^000000 or ^008080Raw Fish^000000 when a Fish race monster is killed.
-Increases the drop rate of these items per upgrade level of ^008080Egir Manteau [1]^000000.
-Increases the recovery rate of ^008080Sushi^000000 and ^008080Raw Fish^000000 consumables by 5%.
-Increases the recovery rate of these items by an additional 5% per upgrade level of ^008080Egir Manteau [1]^000000.
+
 ^800080Set Bonus^000000
 ^008080Egir Helm [1]^000000
 ^008080Egir Manteau [1]^000000
 Restores 10 SP to the user when a Fish race monster is killed by a short-ranged attack.
+Adds a chance of gaining ^008080Sushi^000000 or ^008080Raw Fish^000000 when a Fish race monster is killed.
+Increases the drop rate of these items per upgrade level of ^008080Egir Manteau [1]^000000.
+Increases the recovery rate of ^008080Sushi^000000 and ^008080Raw Fish^000000 consumables by 5%.
+Increases the recovery rate of these items by an additional 5% per upgrade level of ^008080Egir Manteau [1]^000000.
+
 ^800080Set Bonus^000000
+^008080Egir Armour [1]^000000
 ^008080Egir Helm [1]^000000
 ^008080Egir Manteau [1]^000000
-^008080Egir Armour [1]^000000
 ^008080Egir Shoes [1]^000000
 Max HP + 1000
 Max SP + 100
-Increases the experience given from Fish race monsters by 20%.
 Increases physical and magical damage on Fish race targets by 50%.
-Reduces damage taken from water property attacks by 50%.
+Reduces damage taken from Water property attacks by 50%.
+Increases the experience given from Fish race monsters by 20%.
 #
 20757#
 ^ff0000Cannot be traded with others.^000000
@@ -85486,16 +85541,32 @@ Increases the experience given from Dragon race monsters by 5%.
 Increases the experience given from Dragon race monsters by an additional 1% per upgrade level of the item.
 #
 22059#
-Egir, the God of Sea's Shoes. It seems to strengthen one's weakness.
-Indestructible
-MHP + 500.
-MSP + 50.
-Increases CRI by 10 at Fish type enemy, when equipping Egir Helm and Egir Shoes together.
-Increases CRI at Fish type enemy by 1%, per refinement of the Shoes.
-Class : ^777777Shoes^000000 Def : ^77777713^000000
-Weight : ^77777730^000000
-Required LvL : ^77777740^000000
-Job : ^777777All^000000
+A pair of shoes owned by Egir, the god of the sea. It seems to strengthen one's weakness to water.
+^FF0000Account Bound^000000
+Class: ^808080Shoes^000000
+Defense: ^80808013^000000
+Weight: ^80808030^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080All Jobs^000000
+Max HP + 500
+Max SP + 50
+
+^800080Set Bonus^000000
+^008080Egir Helm [1]^000000
+^008080Egir Shoes [1]^000000
+Crit + 10 on Fish race targets.
+Additional Crit + 1 on Fish race targets per upgrade level of ^008080Egir Shoes [1]^000000.
+
+^800080Set Bonus^000000
+^008080Egir Armour [1]^000000
+^008080Egir Helm [1]^000000
+^008080Egir Manteau [1]^000000
+^008080Egir Shoes [1]^000000
+Max HP + 1000
+Max SP + 100
+Increases physical and magical damage on Fish race targets by 50%.
+Reduces damage taken from Water property attacks by 50%.
+Increases the experience given from Fish race monsters by 20%.
 #
 22060#
 ^808080These shoes were worn by a man who made a living out of hunting animals. These shoes contains the man's many years of experience.^000000
@@ -87058,10 +87129,40 @@ Weight : ^7777771^000000
 #
 22826#
 A box that contains enchantment stones for costume equipment.
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 Opening this will give you one of the following enchantment stones:
-ASPD Stone, Atk Stone, Matk Stone, Vital Stone, Heal Stone, HP Stone, SP Stone, Power Stone, Intelligent Stone, Agility Stone, Dexterity Stone, Vitality Stone, Lucky Stone, Critical Stone, Heal Stone, Heal Skill Stone, Medium Monster Stone, and Small Monster Stone.
-Take the enchantment stone inside and bring it to [Aver De Dosh] in Malangdo at the building location 115 150 to enchant your Kitcoin costume item.
-Weight : ^7777771^000000
+^008080HP Absorption Stone (Garment)^000000
+^008080SP Absorption Stone (Garment)^000000
+^008080ASPD Stone(Garment)^000000
+^008080ATK Stone (Upper)^000000
+^008080MATK Stone (Upper)^000000
+^008080ATK Stone (Middle)^000000
+^008080MATK Stone (Middle)^000000
+^008080STR Stone (Upper)^000000
+^008080INT Stone (Upper)^000000
+^008080AGI Stone (Upper)^000000
+^008080DEX Stone (Upper)^000000
+^008080VIT Stone (Upper)^000000
+^008080LUK Stone (Upper)^000000
+^008080STR Stone (Middle)^000000
+^008080INT Stone (Middle)^000000
+^008080AGI Stone (Middle)^000000
+^008080DEX Stone (Middle)^000000
+^008080VIT Stone (Middle)^000000
+^008080LUK Stone (Middle)^000000
+^008080HP Stone (Middle)^000000
+^008080SP Stone (Middle)^000000
+^008080HP Stone (Lower)^000000
+^008080Large Stone (Upper)^000000
+^008080Medium Stone (Upper)^000000
+^008080Small Stone (Upper)^000000
+^008080Recovery Stone (Upper)^000000
+^008080Recovery Skill Stone (Upper)^000000
+^008080Recovery Stone (Middle)^000000
+^008080Recovery Stone (Lower)^000000
+^008080HIT Stone (Lower)^000000
+^008080FLEE Stone (Lower)^000000
 #
 22838#
 A basket for Halloween candies. When opened, various goodies and old stuffs will be found.
@@ -87093,35 +87194,37 @@ A box that contains enchantment stones for costume equipment.
 Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
 Opening this will give you one of the following enchantment stones:
-^008080ASPD Stone (Garment)^000000
-^008080ATK Stone (Slot 1)^000000
-^008080MATK Stone (Slot 1)^000000
-^008080ATK Stone (Slot 2)^000000
-^008080MATK Stone (Slot 2)^000000
-^008080STR Stone (Slot 1)^000000
-^008080INT Stone (Slot 1)^000000
-^008080AGI Stone (Slot 1)^000000
-^008080DEX Stone (Slot 1)^000000
-^008080VIT Stone (Slot 1)^000000
-^008080LUK Stone (Slot 1)^000000
-^008080STR Stone (Slot 2)^000000
-^008080INT Stone (Slot 2)^000000
-^008080AGI Stone (Slot 2)^000000
-^008080DEX Stone (Slot 2)^000000
-^008080VIT Stone (Slot 2)^000000
-^008080LUK Stone (Slot 2)^000000
-^008080HP Stone (Slot 2)^000000
-^008080SP Stone (Slot 2)^000000
-^008080HP Stone (Slot 3)^000000
-^008080Big Stone (Slot 1)^000000
-^008080Medium Stone (Slot 1)^000000
-^008080Small Stone (Slot 1)^000000
-^008080Recovery Stone (Slot 1)^000000
-^008080Recovery Skill Stone (Slot 1)^000000
-^008080Recovery Stone (Slot 2)^000000
-^008080Recovery Stone (Slot 3)^000000
-^008080HIT Stone (Slot 3)^000000
-^008080FLEE Stone (Slot 3)^000000
+^008080HP Absorption Stone (Garment)^000000
+^008080SP Absorption Stone (Garment)^000000
+^008080ASPD Stone(Garment)^000000
+^008080ATK Stone (Upper)^000000
+^008080MATK Stone (Upper)^000000
+^008080ATK Stone (Middle)^000000
+^008080MATK Stone (Middle)^000000
+^008080STR Stone (Upper)^000000
+^008080INT Stone (Upper)^000000
+^008080AGI Stone (Upper)^000000
+^008080DEX Stone (Upper)^000000
+^008080VIT Stone (Upper)^000000
+^008080LUK Stone (Upper)^000000
+^008080STR Stone (Middle)^000000
+^008080INT Stone (Middle)^000000
+^008080AGI Stone (Middle)^000000
+^008080DEX Stone (Middle)^000000
+^008080VIT Stone (Middle)^000000
+^008080LUK Stone (Middle)^000000
+^008080HP Stone (Middle)^000000
+^008080SP Stone (Middle)^000000
+^008080HP Stone (Lower)^000000
+^008080Large Stone (Upper)^000000
+^008080Medium Stone (Upper)^000000
+^008080Small Stone (Upper)^000000
+^008080Recovery Stone (Upper)^000000
+^008080Recovery Skill Stone (Upper)^000000
+^008080Recovery Stone (Middle)^000000
+^008080Recovery Stone (Lower)^000000
+^008080HIT Stone (Lower)^000000
+^008080FLEE Stone (Lower)^000000
 #
 22870#
 You could feel Christmas cheer from this fancy package.
@@ -87159,34 +87262,34 @@ Opening this will give you one of the following enchantment stones:
 ^008080HP Absorption Stone (Garment)^000000
 ^008080SP Absorption Stone (Garment)^000000
 ^008080ASPD Stone(Garment)^000000
-^008080ATK Stone (Slot 1)^000000
-^008080MATK Stone (Slot 1)^000000
-^008080ATK Stone (Slot 2)^000000
-^008080MATK Stone (Slot 2)^000000
-^008080STR Stone (Slot 1)^000000
-^008080INT Stone (Slot 1)^000000
-^008080AGI Stone (Slot 1)^000000
-^008080DEX Stone (Slot 1)^000000
-^008080VIT Stone (Slot 1)^000000
-^008080LUK Stone (Slot 1)^000000
-^008080STR Stone (Slot 2)^000000
-^008080INT Stone (Slot 2)^000000
-^008080AGI Stone (Slot 2)^000000
-^008080DEX Stone (Slot 2)^000000
-^008080VIT Stone (Slot 2)^000000
-^008080LUK Stone (Slot 2)^000000
-^008080HP Stone (Slot 2)^000000
-^008080SP Stone (Slot 2)^000000
-^008080HP Stone (Slot 3)^000000
-^008080Big Stone (Slot 1)^000000
-^008080Medium Stone (Slot 1)^000000
-^008080Small Stone (Slot 1)^000000
-^008080Recovery Stone (Slot 1)^000000
-^008080Recovery Skill Stone (Slot 1)^000000
-^008080Recovery Stone (Slot 2)^000000
-^008080Recovery Stone (Slot 3)^000000
-^008080HIT Stone (Slot 3)^000000
-^008080FLEE Stone (Slot 3)^000000
+^008080ATK Stone (Upper)^000000
+^008080MATK Stone (Upper)^000000
+^008080ATK Stone (Middle)^000000
+^008080MATK Stone (Middle)^000000
+^008080STR Stone (Upper)^000000
+^008080INT Stone (Upper)^000000
+^008080AGI Stone (Upper)^000000
+^008080DEX Stone (Upper)^000000
+^008080VIT Stone (Upper)^000000
+^008080LUK Stone (Upper)^000000
+^008080STR Stone (Middle)^000000
+^008080INT Stone (Middle)^000000
+^008080AGI Stone (Middle)^000000
+^008080DEX Stone (Middle)^000000
+^008080VIT Stone (Middle)^000000
+^008080LUK Stone (Middle)^000000
+^008080HP Stone (Middle)^000000
+^008080SP Stone (Middle)^000000
+^008080HP Stone (Lower)^000000
+^008080Large Stone (Upper)^000000
+^008080Medium Stone (Upper)^000000
+^008080Small Stone (Upper)^000000
+^008080Recovery Stone (Upper)^000000
+^008080Recovery Skill Stone (Upper)^000000
+^008080Recovery Stone (Middle)^000000
+^008080Recovery Stone (Lower)^000000
+^008080HIT Stone (Lower)^000000
+^008080FLEE Stone (Lower)^000000
 #
 22971#
 Limited time offer.
@@ -92788,18 +92891,18 @@ Bypass 50% of hard defense of All Races when performing a physical attack.
 #
 28533#
 Make it possible to handle many kinds of chemicals.
-
 Class: ^808080Accessory^000000
 Weight: ^80808010^000000
 Requires Level: ^80808020^000000
 Usable By: ^808080All Jobs^000000
 Hit + 20
 Aspd + 5%
-Increases the recovery rate of
-^008080Red Potion^000000,
-^008080Orange Potion^000000,
-^008080Yellow Potion^000000, and
-^008080White Potion^000000 consumables by 100%.
+
+Increases the recovery rate of the following consumables by 100%;
+^008080Red Potion^000000
+^008080Orange Potion^000000
+^008080Yellow Potion^000000
+^008080White Potion^000000
 
 For every known level of ^0000FFCart Remodeling^000000;
 Atk + 15

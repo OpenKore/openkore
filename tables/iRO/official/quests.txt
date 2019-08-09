@@ -22806,3 +22806,79 @@ Hunt 150 Permeter monsters and return to the Bounty Board at Alberta#
 63326#Bounty Board Solider#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Solider monsters and return to the Bounty Board at Alberta#
 #
+
+63327#Bounty Board Baby Desert Wolf#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Baby Desert Wolf monsters and return to the Bounty Board at Morroc#
+#
+63328#Bounty Board Drops#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Drops monsters and return to the Bounty Board at Morroc#
+#
+63329#Bounty Board Picky#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Picky monsters and return to the Bounty Board at Morroc#
+#
+63330#Bounty Board Picky Egg#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Picky Egg monsters and return to the Bounty Board at Morroc#
+#
+63331#Bounty Board Scorpion#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Scorpion monsters and return to the Bounty Board at Morroc#
+#
+63332#Bounty Board Andre#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Andre monsters and return to the Bounty Board at Morroc#
+#
+63333#Bounty Board Ant Egg#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ant Egg monsters and return to the Bounty Board at Morroc#
+#
+63334#Bounty Board Deniro#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deniro monsters and return to the Bounty Board at Morroc#
+#
+63335#Bounty Board Familiar#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Familiar monsters and return to the Bounty Board at Morroc#
+#
+63336#Bounty Board Piere#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Piere monsters and return to the Bounty Board at Morroc#
+#
+63337#Bounty Board Isis#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Isis monsters and return to the Bounty Board at Morroc#
+#
+63338#Bounty Board Metaller#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Metaller monsters and return to the Bounty Board at Morroc#
+#
+63339#Bounty Board Minorous#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Minorous monsters and return to the Bounty Board at Morroc#
+#
+63340#Bounty Board Mummy#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Mummy monsters and return to the Bounty Board at Morroc#
+#
+63341#Bounty Board Verit#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Verit monsters and return to the Bounty Board at Morroc#
+#
+63342#Bounty Board Golem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Golem monsters and return to the Bounty Board at Morroc#
+#
+63343#Bounty Board Hode#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hode monsters and return to the Bounty Board at Morroc#
+#
+63344#Bounty Board Marduk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Marduk monsters and return to the Bounty Board at Morroc#
+#
+63345#Bounty Board Pasana#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Pasana monsters and return to the Bounty Board at Morroc#
+#
+63346#Bounty Board Requiem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Requiem monsters and return to the Bounty Board at Morroc#
+#
+63347#Bounty Board Sandman#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sandman monsters and return to the Bounty Board at Morroc#
+#
+63348#Bounty Board Zerom#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Zerom monsters and return to the Bounty Board at Morroc#
+#
+63349#Bounty Board Nightmare Minorous#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Minorous monsters and return to the Bounty Board at Morroc#
+#
+63350#Bounty Board Nightmare Mimic#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Mimic monsters and return to the Bounty Board at Morroc#
+#
+63351#Bounty Board Nightmare Verit#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Verit monsters and return to the Bounty Board at Morroc#
+#
