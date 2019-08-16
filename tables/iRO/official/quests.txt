@@ -18391,19 +18391,19 @@ Hunt 150 Majoruros monsters and return to the Bounty Board at Geffen#
 #
 
 62816#Bounty Board Lunatic#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Lunatic monsters and return to the Bounty Board at Prontera#
+Hunt 150 Lunatic monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
 
 62817#Bounty Board Ambernite#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Ambernite monsters and return to the Bounty Board at Prontera#
+Hunt 150 Ambernite monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
 
 62818#Bounty Board Muka#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Muka monsters and return to the Bounty Board at Prontera#
+Hunt 150 Muka monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
 
 62819#Bounty Board Magnolia#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Magnolia monsters and return to the Bounty Board at Prontera#
+Hunt 150 Magnolia monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
 
 62820#Bounty Board Skel Worker#SG_FEEL#QUE_NOIMAGE#
@@ -22881,4 +22881,8 @@ Hunt 150 Nightmare Mimic monsters and return to the Bounty Board at Morroc#
 #
 63351#Bounty Board Nightmare Verit#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Nightmare Verit monsters and return to the Bounty Board at Morroc#
+#
+
+63352#Bounty Board Fabre#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Fabre monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
