@@ -7123,6 +7123,14 @@
 31203#Churrasquelmo#
 31208#Cabelo Longo Loiro#
 31209#Cabelo Longo Branco#
+31210#Trança de Azulzinha#
+31211#Trança de Camélia#
+31212#Trança de Calêndula#
+31213#Trança de Onze-horas#
+31214#Trança de Flor Morcego#
+31215#Trança de Magnólia#
+31216#Trança de Margarida#
+31217#Trança de Violeta#
 31218#Rabo de Unicórnio Céu#
 31219#Rabo de Unicórnio Rubi#
 31220#Rabo de Unicórnio Ouro#
@@ -7184,6 +7192,7 @@
 31451#Laço Azul Listrado#
 31452#Gata Branca#
 31453#Cachecol Marrom com Laço#
+31455#Cabeça de Doge#
 31460#Lanternas da Serenidade#
 31463#Super Drone A1000#
 31472#Asinhas Floridas#
