@@ -2246,3 +2246,24 @@ aq19_sa.rsw#ra_san01.rsw#
 det_dun01.gat#rockmi2.gat#
 det_dun01.rsw#rockmi2.rsw#
 삯샺샎엍웤샌붺\map\det_dun01.bmp#삯샺샎엍웤샌붺\map\rockmi2.bmp#
+
+testspn.gat#bat_c01.gat#
+testspn.rsw#bat_c01.rsw#
+삯샺샎엍웤샌붺\map\testspn.bmp#삯샺샎엍웤샌붺\map\bat_c01.bmp#
+
+// End of Summer 2019
+pisle19.gat#cmd_fild02.gat#
+pisle19.rsw#cmd_fild02.rsw#
+삯샺샎엍웤샌붺\map\pisle19.bmp#삯샺샎엍웤샌붺\map\cmd_fild02.bmp#
+
+pinn19.gat#cmd_in02.gat#
+pinn19.rsw#cmd_in02.rsw#
+삯샺샎엍웤샌붺\map\pinn19.bmp#삯샺샎엍웤샌붺\map\cmd_in02.bmp#
+
+odun19.gat#abyss_02.gat#
+odun19.rsw#abyss_02.rsw#
+삯샺샎엍웤샌붺\map\odun19.bmp#삯샺샎엍웤샌붺\map\abyss_02.bmp#
+
+1@parena.gat#poring_w01.gat#
+1@parena.rsw#poring_w01.rsw#
+삯샺샎엍웤샌붺\map\1@parena.bmp#삯샺샎엍웤샌붺\map\poring_w01.bmp#

@@ -22886,3 +22886,86 @@ Hunt 150 Nightmare Verit monsters and return to the Bounty Board at Morroc#
 63352#Bounty Board Fabre#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Fabre monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
+
+63353#Bounty Board Marina#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Marina monsters and return to the Bounty Board at Izlude#
+#
+63354#Bounty Board Merman#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Merman monsters and return to the Bounty Board at Izlude#
+#
+63355#Bounty Board Plankton#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Plankton monsters and return to the Bounty Board at Izlude#
+#
+63356#Bounty Board Strouf#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Strouf monsters and return to the Bounty Board at Izlude#
+#
+63357#Bounty Board Vadon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Vadon monsters and return to the Bounty Board at Izlude#
+#
+
+63358#Bounty Board Red Eruma#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Red Eruma monsters and return to the Bounty Board at Malangdo#
+#
+63359#Bounty Board Siorava#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Siorava monsters and return to the Bounty Board at Malangdo#
+#
+
+63360#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You ran into some kids that need help raising money for one last Summer Adventure. Help raise enough money and speak to their leader, Penny.#
+Gather enough money for the kids#
+
+63361#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You helped the kids raise enough money! Time to set sail for adventure. Speak to Penny when you are ready.#
+Speak to Penny and set sail!#
+
+63362#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+Your adventure plans aren't going as expected. Maybe you should spend this time to explore the island and see if anyone is around.#
+Explore the desolate island#
+
+63363#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You find out that the Porings that watch over the island have gone missing. Help look for the first missing Poring Guardian in the Ocean Cavern.#
+Look for the first Poring Guardian#
+
+63364#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You find out that the Porings that watch over the island have gone missing. Help look for the second missing Poring Guardian in the Ocean Cavern.#
+Look for the second Poring Guardian#
+
+63365#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You find out that the Porings that watch over the island have gone missing. Help look for the third missing Poring Guardian in the Ocean Cavern.#
+Look for the third Poring Guardian#
+
+63366#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You find out that the Porings that watch over the island have gone missing in the Ocean Cavern. Head back to Penny and set sail for the Ocean Cavern.#
+Speak to Penny and set sail!#
+
+63367#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You found all of the missing Poring Guardians! Go back and speak to the lone Poring on the island.#
+Speak to the Lone Poring.#
+
+63368#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+The Lone Poring ran outside out of excitement before you could ask any questions. Follow it outside to the beach!#
+Follow the Lone Poring outside.#
+
+63369#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+One of the Poring Guardians needs your help rebuilding the Poring Island Resort. Speak to Poring Man and help Ms. Marin build a Supply Room using 20 Heart of Mermaids.#
+Help Ms. Marin#
+
+63370#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+One of the Poring Guardians needs your help rebuilding the Poring Island Resort. Speak to Poring Man and help Dr. Drops build an Infirmary using 20 Gills.#
+Help Dr. Drops#
+
+63371#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+One of the Poring Guardians needs your help rebuilding the Poring Island Resort. Speak to Poring Man and help Popo the Kid build a Cantina using 10 Horrendous Hair.#
+Help Popo the Kid#
+
+63372#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+With the Poring Island fully restored, it's time to bring the fight to the Witch! Speak to Poring Man to begin the assault on the Witch's Lair.#
+Speak to Poring Man#
+
+63373#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+Who knows what the Witch will summon. Be sure to slay her creation!#
+Slay the Witch's monster#
+
+63374#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+We attacked the Witch's Lair recently, so she won't return for another 6 hours.#
+Wait 6 hours before attacking again#
