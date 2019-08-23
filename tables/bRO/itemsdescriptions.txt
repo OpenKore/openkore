@@ -16373,12 +16373,12 @@ Classe: ^777777Shura^000000
 #
 2898#
 Um rosário feito com um minério preto, purificado e raro.
-+15 de DEFM.
+^0000ffDEFM +15.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
-Nível Necessário: ^77777790^000000
-Classe: ^777777Todas^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
 #
 2899#
 Estranho objeto usado para amplificar ondas sonoras.
@@ -16456,12 +16456,13 @@ Classes: ^777777Todas^000000
 #
 2914#
 Uma lendária pedra mágica no formato de um olho que se acredita carregar todo o conhecimento de magia de Midgard. Dizem que este é o olho que Odin ofereceu a Mimir, o deus da sabedoria, em troca do conhecimento supremo, e que por isso ele carrega todo o conhecimento mágico compartilhado pelos deuses.
-INT + 4, DEFM + 3, Tempo de Conjuração + 3%
+^0000ffINT +4. DEFM +3.^000000
+^0000ffConjuração variável +3%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777771^000000
 Peso: ^77777710^000000
-Nível Necessário: ^7777771^000000
-Classe: ^7777772ª Classe ou superior^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Classes 2, exceto Expandidas^000000
 #
 2915#
 ^ff0000Não pode ser negociado.^000000
@@ -27968,18 +27969,31 @@ Classes que utilizam: ^777777Todas^000000
 5653#
 Um elmo demoníaco especial forjado para o uso exclusivo do Senhor das Trevas.
 Muitos poderes passados de geração em geração foram utilizados para que este elmo fosse criado.
-Alguns bônus podem ser adquiridos ao utilizar este chapéu com certos equipamentos para o meio da cabeça.
-Caso o chapéu seja utilizado com 'Orelhas de Anjo', concederá +1 de FOR e 2% de Velocidade de ATQ.
-Caso o chapéu seja utilizado com 'Asas Malignas', concederá +1 de FOR e +5 de ATQ.
-Caso o chapéu seja utilizado com 'Asinhas de Peco Peco', concederá +1 de AGI e +3 de Esquiva.
-Caso o chapéu seja utilizado com 'Óculos Pretos', concederá +1 de INT e 2% de ATQM.
-Caso o chapéu seja utilizado com 'Olho de Mimir', concederá +1 de DES e +3 de ATQ físico de longo alcance.
-Tipo : ^777777Equipamento para a cabeça^000000
+^fa4e09Conjunto^000000
+^fa4e09[Orelhas de Anjo]^000000
+^0000ffFOR +1.^000000
+^0000ffVelocidade de ataque +2%.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Asas Malignas]^000000
+^0000ffFOR +1. ATQ +5.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Asinhas de Peco Peco]^000000
+^0000ffAGI +1.^000000
+^0000ffEsquiva +3.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Óculos Pretos]^000000
+^0000ffINT +1.^000000
+^0000ffDano mágico +2%.^000000
+^fa4e09Conjunto^000000
+^fa4e09[Olho de Mimir]^000000
+^0000ffDES +1.^000000
+^0000ffDano físico a distância +3%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
 Defesa: ^7777773^000000
-Equipa em : ^777777Topo^000000
-Peso : ^77777750^000000
+Peso: ^77777750^000000
 Nível necessário: ^77777770^000000
-Classe : ^777777Todas as classes^000000
+Classes: ^777777Todas^000000
 #
 5654#
 Utilizado pela Banda Marcial Gleeter, da Universidade de Juno, esse chapéu logo se tornou o terror de todos os valentões que praticam o 'bullying'. Isso porque a banda conseguiu realizar uma apresentação tão magnífica que impressionou até o próprio Bragi, e este, em recompensa abençoou seus uniformes com poderes sagrados.
@@ -57658,7 +57672,7 @@ A cada refino:
 Refino +11 ou mais:
 ^0000ffResistência a propriedade Água +75%.^000000
 ^FA4E09Conjunto^000000
-^FA4E09[Carta Sapo Cururu]^000000
+^FA4E09[Carta Sapo-Cururu]^000000
 ^0000ffHP máx. +10%.^000000
 ^0000ffDEFM +10 adicional.^000000
 ^0000ffResistência a propriedade Neutro +20%.^000000
@@ -62820,6 +62834,78 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31210#
+Você pode ser a primavera florida em pessoa com essas trancinhas feitas das flores mais especiais de Rune-Midgard. Elas sempre estarão cheirosas e com certeza vão deixar seu dia mais colorido.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31211#
+Você pode ser a primavera florida em pessoa com essas trancinhas feitas das flores mais especiais de Rune-Midgard. Elas sempre estarão cheirosas e com certeza vão deixar seu dia mais colorido.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31212#
+Você pode ser a primavera florida em pessoa com essas trancinhas feitas das flores mais especiais de Rune-Midgard. Elas sempre estarão cheirosas e com certeza vão deixar seu dia mais colorido.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31213#
+Você pode ser a primavera florida em pessoa com essas trancinhas feitas das flores mais especiais de Rune-Midgard. Elas sempre estarão cheirosas e com certeza vão deixar seu dia mais colorido.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31214#
+Você pode ser a primavera florida em pessoa com essas trancinhas feitas das flores mais especiais de Rune-Midgard. Elas sempre estarão cheirosas e com certeza vão deixar seu dia mais colorido.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31215#
+Você pode ser a primavera florida em pessoa com essas trancinhas feitas das flores mais especiais de Rune-Midgard. Elas sempre estarão cheirosas e com certeza vão deixar seu dia mais colorido.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31216#
+Você pode ser a primavera florida em pessoa com essas trancinhas feitas das flores mais especiais de Rune-Midgard. Elas sempre estarão cheirosas e com certeza vão deixar seu dia mais colorido.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31217#
+Você pode ser a primavera florida em pessoa com essas trancinhas feitas das flores mais especiais de Rune-Midgard. Elas sempre estarão cheirosas e com certeza vão deixar seu dia mais colorido.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31218#
 O azul exótico dessas madeixas representa a infinidade dos céus de uma bela tarde. E não se preocupe: esse é só o nome do penteado; nenhum unicórnio foi maltratado!
 Tipo: ^777777Visual^000000
@@ -63349,6 +63435,15 @@ Equipa em : ^777777Baixo^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
+#
+31455#
+WOW! Parece que você não tira memes fofinhos da cabeça. Tudo bem, porque agora você não precisa mais pesquisar imagens de catioríneos na internet.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio e Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 31460#
 Em homenagem à sentinela Desirèe Olivier, dedicados artesãos confeccionaram lanternas flutuantes que parecem subir aos céus, como símbolo de abrigo para a sua alma. Após tantos anos de dedicação, uma das maiores guerreiras que desbravou Rune-Midgard lutando contra inúmeros obstáculos agora encontrará repouso e serenidade. Que seu bravo espírito seja guia e inspiração para a sua jornada.

@@ -2759,23 +2759,14 @@ Nível l ATQ
 [Nv 10]: ^777777+30^000000
 #
 AM_LEARNINGPOTION#
-Pesquisa de Poções ^777777(Learning Potion)^000000
-Nv máximo: ^77777710^000000
-Tipo: ^777777Passiva^000000
-Descrição:
-^777777Aumenta as chances de produzir poções e
-melhora a efetividade de cura das poções.^000000
-Nível l Chance l Efetividade
-[Nv 1]: ^777777+1%^000000 l ^777777+5%^000000
-[Nv 2]: ^777777+2%^000000 l ^777777+10%^000000
-[Nv 3]: ^777777+3%^000000 l ^777777+15%^000000
-[Nv 4]: ^777777+4%^000000 l ^777777+20%^000000
-[Nv 5]: ^777777+5%^000000 l ^777777+25%^000000
-[Nv 6]: ^777777+6%^000000 l ^777777+30%^000000
-[Nv 7]: ^777777+7%^000000 l ^777777+35%^000000
-[Nv 8]: ^777777+8%^000000 l ^777777+40%^000000
-[Nv 9]: ^777777+9%^000000 l ^777777+45%^000000
-[Nv 10]: ^777777+10%^000000 l ^777777+50%^000000
+Pesquisa de Poções
+Nv máximo: 10
+Tipo: ^000099Passiva^000000
+Resultado: ^777777Cada nível dessa habilidade
+eleva em +5% (num máximo de 50%) na chance de
+sucesso da produção de Poções. Além disso, poções
+passam a recuperar 5% + HP ou SP por nível da
+habilidade, excluindo-se os bônus por VIT.^000000
 #
 AM_PHARMACY#
 Preparar Poção
@@ -8286,7 +8277,8 @@ Descrição:
 ^777777Revive personagens na área de 5x5
 células, aumenta o HP máx. e regenera o
 HP e SP dos alvos a cada 3 segundos.^000000
-^000088Consome 1 Ancilla e 1 Água Benta.^000000
+^000088Consome 1 Ancilla e
+1 Água Benta.^000000
 Nível l Duração l HP máx. l Regen.
 [Nv 1]: ^77777718 segundos^000000 l ^777777+5%^000000
             ^7777773% de HP^000000 / ^7777772% de SP^000000
@@ -11957,15 +11949,15 @@ Descrição:
 ativa, alterando o efeito da habilidade.^000000
 ^000088Consome 1 item.^000000
 Nível l Item l Efeito
-[Nv 1]: ^777777Garrafa com Óleo^000000
+[Nv. 1]: ^777777Garrafa com Óleo^000000
              ^777777Aumenta o dano mágico causado.^000000
-[Nv 2]: ^777777Pó Explosivo^000000
+[Nv. 2]: ^777777Pó Explosivo^000000
              ^777777Causa dano mágico maior.^000000
-[Nv 3]: ^777777Gás de Fumaça^000000
+[Nv. 3]: ^777777Gás de Fumaça^000000
              ^777777Reduz o dano a distância.^000000
-[Nv 4]: ^777777Gás Lacrimejante^000000
+[Nv. 4]: ^777777Gás Lacrimejante^000000
              ^777777Drena HP continuamente.^000000
-[Nv 5]: ^777777Frasco de Ácido^000000
+[Nv. 5]: ^777777Frasco de Ácido^000000
              ^777777Altera para [Bomba Ácida] em área.^000000
 #
 GN_HELLS_PLANT#
@@ -12071,16 +12063,16 @@ O número de poções criadas de uma só vez
 aumenta com o nível da habilidade.^000000
 ^000088Precisa de 1 Manual.^000000
 Nível l Quantidade
-[Nv 1]: ^777777Até 7 poções^000000
-[Nv 2]: ^777777Até 8 poções^000000
-[Nv 3]: ^777777Até 8 poções^000000
-[Nv 4]: ^777777Até 9 poções^000000
-[Nv 5]: ^777777Até 9 poções^000000
-[Nv 6]: ^777777Até 10 poções^000000
-[Nv 7]: ^777777Até 10 poções^000000
-[Nv 8]: ^777777Até 11 poções^000000
-[Nv 9]: ^777777Até 11 poções^000000
-[Nv 10]: ^777777Até 12 poções^000000
+[Nv.1]: ^777777Até 7 poções^000000
+[Nv.2]: ^777777Até 8 poções^000000
+[Nv.3]: ^777777Até 8 poções^000000
+[Nv.4]: ^777777Até 9 poções^000000
+[Nv.5]: ^777777Até 9 poções^000000
+[Nv.6]: ^777777Até 10 poções^000000
+[Nv.7]: ^777777Até 10 poções^000000
+[Nv.8]: ^777777Até 11 poções^000000
+[Nv.9]: ^777777Até 11 poções^000000
+[Nv.10]: ^777777Até 12 poções^000000
 #
 AB_SECRAMENT#
 Sacramentum
@@ -12978,6 +12970,13 @@ Conjuração fixa: ^7777773 segundos^000000
 Tempo de recarga: ^7777775 minutos^000000
 Descrição:
 ^777777Teleporta para Eclage.^000000
+#
+ALL_PRONTERA_RECALL#
+Para Prontera
+Nível máximo: ^7777771^000000
+Tipo: ^777777Ativa^000000
+Recarga: ^77777715 minutos^000000
+Descrição: ^777777Teleporta para Prontera.^000000
 #
 GC_DARKCROW#
 Garra Sombria ^777777(Dark Claw)^000000
@@ -14136,23 +14135,4 @@ Conteúdo: ^777777Quando se desenvolve, esta habilidade acrescenta uma chance de
 ^777777Isso quer dizer que esta habilidade pode acrescentar 1 ou 2 pontos em um desenvolvimento.^000000
 #
 GD_ITEMEMERGENCYCALL#
-#
-GD_GUILD_STORAGE#
-Armazém do Clã ^777777(Warehouse)^000000
-Nível máximo: ^7777775^000000
-Pré requisitos:
-^777777Coração Frio 1, Olhar Apurado 1
-Chamado Urgente 1, Expandir Clã 10^000000
-Tipo: ^777777Passiva^000000
-Descrição:
-^777777Permite que todos os membros do clã
-possam acessar o armazém da guilda.
-Para restringir membros, o líder poderá
-definir o acesso pela aba [Posição].^000000
-Nível l Limite de itens
-[Nv 1] : ^777777até 100 itens^000000
-[Nv 2] : ^777777até 200 itens^000000
-[Nv 3] : ^777777até 300 itens^000000
-[Nv 4] : ^777777até 400 itens^000000
-[Nv 5] : ^777777até 500 itens^000000
 #

@@ -2017,7 +2017,7 @@ Não disponível#
 Você confirma a mudança de Slot?#
 Ocorreu um erro na mudança de Slot.#
 Character name is wrong.#
-Quest window#
+Exibir Missões#
 The game will be limited to under 16 age during 0~6am by law.#
 By the Korean law, the under 16 age users will be^ff0000limited to play games until 0~6am^000000and game will be closed.#
 Para que você consiga mudar o nome do seu personagem, é necessário que você deixe seu clã.#
@@ -2193,7 +2193,7 @@ Hunting monsters#
 Reward items#
 Required items#
 Limited time#
-Closing time#
+Retorne após#
 Busca#
 Calcular Rota#
 Indicação de Rota#
@@ -2594,7 +2594,7 @@ Falha ao retirar os Zenys.#
 Limite máximo de Zeny excedido#
 Item anexado com sucesso.#
 É necessário digitar um destinatário.#
-Title should be 4 to 24 chracters long.#
+Assunto deve conter entre 4 à 24 caracteres.#
 Falha no envio da Carta.#
 Envio falhou devido a item impróprio.#
 Personagem não existe#
@@ -2611,9 +2611,9 @@ In %d horas#
 In %d dias#
 Clique no botão Conferir antes de Enviar a Carta.#
 Você poderá deletá-la após retirar todos os anexos.#
-You cannot attach more Zeny than that you have#
+Você não pode anexar mais Zenys do que possui#
 Charge: %s Zeny#
-Inexistent addressee#
+Destinatário inexistente#
 EXP  : %.1f%% (Basic %.1f%% Premium %.1f%% + %s %.1f%%)#
 DROP : %.1f%% (Basic %.1f%% Premium %.1f%% + %s %.1f%%)#
 DEATH: %.1f%% (Basic %.1f%% Premium %.1f%% + %s %.1f%%)#
@@ -2635,56 +2635,56 @@ You cannot close Lucky Roulette window.#
 You cannot start Lucky Roulette.#
 You need points to start Lucky Roulette.#
 You cannot claim the prize.#
-The maximum number of items has exceeded.#
+O limite máximo de itens foi excedido.#
 You are overburdened. Please clear some items from the inventory.#
 Vending skill failed#
 Roulette is rotating. Please try again after checking the winning items#
 Lucky Roulette#
 Alertar quando vender#
-Please check the charge#
+Você não tem Zenys suficientes para enviar a carta#
 Check user name#
 Scheduled to be removed#
-Achievement Quests#
-Achievement Total Score#
-Achievement Rank#
-Remaining scores to the next rank: [%5d]#
-Progress#
-Recently Attained Achievements#
+Conquistas#
+Pontuação Total#
+Ranking de Conquistas#
+Pontos para o próximo nível: [%5d]#
+Progresso#
+Conquistas Recentes#
 Xianbei item list#
 Xianbei: %d / %d #
 You are short of Xianbei#
 %s #
-Overview#
-Basic#
-Character#
-Actions#
+Visão Geral#
+Básico#
+Personagem#
+Ações#
 Etc.#
-Adventure#
-Rune Midgards#
-Schwartzvald#
+Aventuras#
+Rune-Midgard#
+Schwartzwald#
 Arunafeltz#
-New World#
-Localized Map#
-Dungeon#
-Battle#
+Novo Mundo#
+Ilha Nação#
+Cavernas#
+Batalhas#
 PvP#
-Training#
+Treino#
 Quest#
-Episode#
-Basic#
-Memorial Dungeon#
+Episódio#
+Outros#
+Instância#
 Midgard#
-New World#
+Ash Vacuum#
 Etc.#
-Great Achievement#
-Attained quest#
-You cannot add any more#
-You have achieved < %s >.#
+Nível#
+Conquistas desbloqueadas#
+Impossível adicionar mais#
+Conquista desbloqueada < %s >.#
 Only OTP users are allowed#
 If you press this button, you will get the prize and the roulette will be initialized.#
 If you press this button, the roulette will start from the line indicated by a blinking arrow.#
-Title#
-Title Off#
+Título#
+Remover Título#
 You cannot create the guild in this area.#
 You cannot disband the guild in this area.#
 You cannot join the guild in this area.#
@@ -2697,7 +2697,7 @@ DROP : %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 DEATH: %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 Limite de Itens anexados foi excedido.#
 Alarms when purchasing items#
-This item is banned to attach#
+Esse item não pode ser anexado no Rodex.#
 Drawing the blank in the previous roulette, you cannot play the higher roulette.#
 Escrever Resposta#
 Carta Lida#
@@ -2732,7 +2732,7 @@ Feche a janela do Rodex, Por Favor.#
 Server access denied(A)#
 Server access denied(B)#
 You should disarm the equipped arrows/bullets.#
-An item has been consumed in the inventory. RODEX writing window will be closed.#
+Você realizou uma ação com um item no inventário. A janela do Rodex foi fechada.#
 You don't have Magnifier.#
 Para dropar itens, por favor feche a janela do Rodex.#
 The opponent has already requested you to be a friend.#
@@ -2741,19 +2741,19 @@ SCRIPT ERROR AID#
 ^ff0000Do you want to purchase the item? %d points and %d Xianbei will be used.#
 Close#
 Quest#
-View quest icons#
-Amenities#
-View amenity icons#
-Guild member/Party member#
-View guild member/party member#
-Record#
-MVP Monster#
-YOU#
-Do you want to delete it?#
+Ativar ícones#
+Utilitários#
+Ativar Utilitários#
+Membros#
+Ativar Membros#
+Anotação#
+MVP#
+Você#
+Deseja deletar a Anotação?#
 Quest NPC#
-Fill out the notes#
-Save#
-Leave notes#
+Anotar#
+Salvar#
+Anotações#
 %s [%d Option] %d ea#
 %s [%d Option] %s Zeny#
 %s [%d Option] %d %s %d -> %s %s#
@@ -2847,17 +2847,17 @@ Twitter#
 Message#
 Notice#
 Returned#
-Refresh#
+Atualizar#
 %dMinuto(s)#
 %dHora(s)#
 %dDia(s)#
 Return#
-Você deseja deletar as Cartas selecionadas?#
-Show Location#
+Deletar e-mails selecionados?#
+Exibir NPC#
 Zoom In#
 Zoom Out#
-Map View#
-World View#
+Ampliar#
+Mapa-Múndi#
 Qtd. de itens#
 /minimap#
 Show Mini-Map button#
@@ -3026,11 +3026,14 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Palavrões não são permitidos.\nTente novamente.#
 #
 #
 #
 #
 #
+/200#
+/2000#
 #
 #
 #
@@ -3101,6 +3104,8 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Todas#
+A completar#
 #
 #
 #
@@ -3183,6 +3188,10 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Carregando.\n^c92114Delete^000000 e-mails desnecessários.#
+CARREGANDO.."#
+Assunto#
+Remetente#
 #
 #
 #
@@ -3304,7 +3313,11 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Usuário não encontrado#
+Conta bloqueada#
 #
+Senha ou usuário incorreto#
+Entre em contato com Suporte#
 #
 #
 #
@@ -3312,20 +3325,7 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
-#
-#
-#
-#
-O usuário e/ou senha estão incorretos, por favor, confira e tente novamente#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Sistema indisponível#
 #
 #
 #
@@ -3537,14 +3537,40 @@ Não exibir fundo do Emblema de Clã#
 #
 #
 #
-Você não possui o Item de Acesso ao Valhalla#
+Conta não possui passe de acesso ao Valhalla#
 #
 #
 Deletar#
 Responder#
 Enviar#
-Verificar#
+Conferir#
 Notícias#
 Entrada#
-Enviados#
+Expirados#
 Buscar#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Capturar Monstro#
+Mensagem#
+Título#
