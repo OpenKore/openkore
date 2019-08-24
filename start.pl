@@ -85,12 +85,16 @@ if (0) {
 	require encoding;
 	require Storable;
 	require Compress::Zlib;
-	# new Perl 5.12 and more
+	# new Perl 5.22 and more
 	require "unicore/lib/Perl/SpacePer.pl";
 	require "unicore/lib/Perl/Word.pl";
-	require "unicore/lib/Nt/De.pl";
-	require "unicore/lib/Gc/Cc.pl";
-	require "unicore/lib/Blk/ASCII.pl";
+	require "unicore/lib/Gc/Nd.pl";
+	# Old Perl 5.12 and more
+	# require "unicore/lib/Perl/SpacePer.pl";
+	# require "unicore/lib/Perl/Word.pl";
+	# require "unicore/lib/Nt/De.pl";
+	# require "unicore/lib/Gc/Cc.pl";
+	# require "unicore/lib/Blk/ASCII.pl";
 	# Old Perl 5.10 and less
 	# require "unicore/lib/gc_sc/SpacePer.pl";
 	# require "unicore/lib/gc_sc/Word.pl";
