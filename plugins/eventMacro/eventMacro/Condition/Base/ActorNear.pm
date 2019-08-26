@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseActorNear;
+package eventMacro::Condition::Base::ActorNear;
 
 use strict;
 
@@ -66,10 +66,6 @@ sub recheck_all_actor_names {
 		$self->{fulfilled_actor} = $actor;
 		last;
 	}
-}
-
-sub usable {
-	0;
 }
 
 1;

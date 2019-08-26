@@ -3,7 +3,7 @@ package eventMacro::Condition::NpcMsgDist;
 use strict;
 
 use Globals qw( $npcsList );
-use base 'eventMacro::Condition::BaseMsgDist';
+use base 'eventMacro::Condition::Base::MsgDist';
 
 sub _hooks {
 	my ( $self ) = @_;
@@ -33,10 +33,6 @@ sub validate_condition {
 	}
 	
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
-}
-
-sub usable {
-	1;
 }
 
 1;

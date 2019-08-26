@@ -4,7 +4,7 @@ use strict;
 use Globals qw( $playersList $char $field );
 use Utils qw( distance );
 
-use base 'eventMacro::Condition::BaseActorNearDist';
+use base 'eventMacro::Condition::Base::ActorNearDist';
 
 sub _hooks {
 	my ( $self ) = @_;
@@ -77,10 +77,6 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."Last"."AccountId"} = $self->{fulfilled_actor}->{binID};
 	
 	return $new_variables;
-}
-
-sub usable {
-	1;
 }
 
 1;

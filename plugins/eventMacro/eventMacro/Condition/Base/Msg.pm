@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseMsg;
+package eventMacro::Condition::Base::Msg;
 
 use strict;
 
@@ -26,10 +26,6 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."Last"."Msg"} = $self->{message};
 	
 	return $new_variables;
-}
-
-sub usable {
-	0;
 }
 
 1;

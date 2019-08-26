@@ -1,4 +1,4 @@
-package eventMacro::Condition::NoActorNear;
+package eventMacro::Condition::Base::NoActorNear;
 
 use strict;
 use base 'eventMacro::Condition';
@@ -36,10 +36,6 @@ sub validate_condition {
 	
 	return $self->SUPER::validate_condition(0) if ($self->{is_on_stand_by} == 1);
 	return $self->SUPER::validate_condition( ($self->get_size > 0 ? 0 : 1) );
-}
-
-sub usable {
-	0;
 }
 
 1;

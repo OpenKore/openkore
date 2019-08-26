@@ -3,7 +3,7 @@ package eventMacro::Condition::PlayerNearCount;
 use strict;
 use Globals qw( $playersList );
 
-use base 'eventMacro::Condition::ActorNearCount';
+use base 'eventMacro::Condition::Base::ActorNearCount';
 
 use Globals;
 
@@ -28,10 +28,6 @@ sub validate_condition {
 		$self->{change} = 0;
 	}
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
-}
-
-sub usable {
-	1;
 }
 
 1;

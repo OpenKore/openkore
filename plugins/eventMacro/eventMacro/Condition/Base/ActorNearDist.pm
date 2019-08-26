@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseActorNearDist;
+package eventMacro::Condition::Base::ActorNearDist;
 
 use strict;
 use Globals qw( $char );
@@ -241,10 +241,6 @@ sub recheck_all_actor_names {
 	} elsif ($pre_number > 0 && $self->{number_of_possible_fulfill_actors} == 0) {
 		$self->add_or_remove_dynamic_hooks(0);
 	}
-}
-
-sub usable {
-	0;
 }
 
 1;

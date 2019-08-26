@@ -1,4 +1,4 @@
-package eventMacro::Condition::ActorNearCount;
+package eventMacro::Condition::Base::ActorNearCount;
 
 use strict;
 
@@ -55,10 +55,6 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."Last"} = $self->{fulfilled_size};
 	
 	return $new_variables;
-}
-
-sub usable {
-	0;
 }
 
 1;
