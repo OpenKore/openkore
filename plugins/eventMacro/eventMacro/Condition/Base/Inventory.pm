@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseInventory;
+package eventMacro::Condition::Base::Inventory;
 
 use strict;
 
@@ -34,10 +34,6 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."LastAmount"} = $self->_get_val;
 	
 	return $new_variables;
-}
-
-sub usable {
-	0;
 }
 
 1;

@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseActorNotNear;
+package eventMacro::Condition::Base::ActorNotNear;
 
 use strict;
 
@@ -83,10 +83,6 @@ sub recheck_all_actor_names {
 		$self->{not_fulfilled_actor} = $actor;
 		last;
 	}
-}
-
-sub usable {
-	0;
 }
 
 1;

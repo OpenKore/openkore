@@ -1,4 +1,4 @@
-package eventMacro::Condition::BaseMsgNameDist;
+package eventMacro::Condition::Base::MsgDist;
 
 use strict;
 use Globals qw( $field $char);
@@ -16,34 +16,29 @@ sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
 	
 	$self->{message_validator} = undef;
-	$self->{name_validator} = undef;
 	$self->{dist_validator} = undef;
 	
 	$self->{var_in_message} = {};
-	$self->{var_in_name} = {};
 	$self->{var_in_dist} = {};
 	
 	my $var_exists_hash = {};
 	
-	if ($condition_code =~ /^(\/.*?\/\w?)\s+(\/.*?\/\w?)\s+(.*?)$/) {
-		my $message_regex = $1;
-		my $name_regex = $2;
-		my $dist = $3;
+	if ($condition_code =~ /^(\/.*?\/\w?)\s+(.*?)$/) {
+		my $regex = $1;
+		my $dist = $2;
 		
-		unless (defined $message_regex && defined $name_regex) {
-			$self->{error} = "Condition code '".$condition_code."' must have a message regex, a name regex and a numeric comparison defined";
+		unless (defined $regex && defined $dist) {
+			$self->{error} = "Condition code '".$condition_code."' must have a message regex and a distance comaparison defined";
 			return 0;
 		}
 		
 		my @validators = (
-			eventMacro::Validator::RegexCheck->new( $message_regex ),
-			eventMacro::Validator::RegexCheck->new( $name_regex ),
+			eventMacro::Validator::RegexCheck->new( $regex ),
 			eventMacro::Validator::NumericComparison->new( $dist ),
 		);
 		
 		my @var_setting = (
 			$self->{var_in_message},
-			$self->{var_in_name},
 			$self->{var_in_dist},
 		);
 		
@@ -64,11 +59,10 @@ sub _parse_syntax {
 		}
 		
 		$self->{message_validator} = $validators[0];
-		$self->{name_validator} = $validators[1];
-		$self->{dist_validator} = $validators[2];
+		$self->{dist_validator} = $validators[1];
 		
 	} else {
-		$self->{error} = "Condition code '".$condition_code."' must have a message regex, a name regex and a numeric comparison defined";
+		$self->{error} = "Condition code '".$condition_code."' must have a message regex and a distance comparison defined";
 		return 0;
 	}
 	
@@ -82,10 +76,6 @@ sub update_validator_var {
 		$self->{message_validator}->update_vars($var_name, $var_value);
 	}
 	
-	if (exists $self->{var_in_name}{$var_name}) {
-		$self->{name_validator}->update_vars($var_name, $var_value);
-	}
-	
 	if (exists $self->{var_in_dist}{$var_name}) {
 		$self->{dist_validator}->update_vars($var_name, $var_value);
 	}
@@ -94,11 +84,6 @@ sub update_validator_var {
 sub validator_message_check {
 	my ( $self, $check ) = @_;
 	return $self->{message_validator}->validate($check);
-}
-
-sub validator_name_check {
-	my ( $self, $check ) = @_;
-	return $self->{name_validator}->validate($check);
 }
 
 sub validator_dist_check {
@@ -111,8 +96,6 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		return $self->SUPER::validate_condition( 0 ) unless $self->validator_message_check( $self->{message} );
-		
-		return $self->SUPER::validate_condition( 0 ) unless $self->validator_name_check( $self->{source} );
 		
 		foreach my $actor (@{${$self->{actorList}}->getItems}) {
 			next unless ($actor->{name} eq $self->{source});
@@ -144,10 +127,6 @@ sub get_new_variable_list {
 
 sub condition_type {
 	EVENT_TYPE;
-}
-
-sub usable {
-	0;
 }
 
 1;
