@@ -6,6 +6,7 @@
 # 最後修改日期為 2012/3/1                             #
 # 新增綿綿島路徑.飛空艇路徑                           #
 #######################################################
+#format: <source coordinate><destination coordinate>[zenny cost][allow ticket][conversation sequence]
 
 #飛空艇(國內線)
 airplane 208 53 airplane 245 160
@@ -1820,7 +1821,7 @@ lhz_in01 43 114 lhz_in01 278 132
 lhz_in01 278 132 lhz_in01 43 114
 lhz_in01 58 129 lhz_in01 191 127
 lhz_in01 191 127 lhz_in01 58 129
-lhz_in01 15 129 lhz_in01 35 226 
+lhz_in01 15 129 lhz_in01 35 226
 lhz_in01 106 15 lhz_in01 88 215
 lhz_in01 88 215 lhz_in01 106 15
 lhz_in01 149 179 lhz_in01 11 24
@@ -2056,7 +2057,7 @@ hu_fild05 353 126 hu_fild06 28 119
 hu_fild06 28 119 hu_fild05 353 126
 hu_fild06 200 372 hugel 95 33
 # 毀葛-深淵湖水 地下洞穴 1F~3F
-# 每次進入消耗 龍牙x 1 龍鱗x 1 龍尾x 1 
+# 每次進入消耗 龍牙x 1 龍鱗x 1 龍尾x 1
 hu_fild05 168 304 abyss_01 275 280 0 c r0 c c c n
 #跟石頭對話去湖中央
 hu_fild05 171 211 hu_fild05 169 305 0 c r0 c c c c n
@@ -2553,7 +2554,7 @@ gl_in01 106 125 glast_01 220 360
 gl_in01 83 174 glast_01 179 360
 gl_in01 81 68 glast_01 162 330
 #########################################
-T#r#y#7#1#0#2#3#僅#發#表#於#月#光#論#壇 
+T#r#y#7#1#0#2#3#僅#發#表#於#月#光#論#壇
 #妙勒尼山脈
 mjolnir_01 284 18 gef_fild04 261 362
 mjolnir_01 381 256 mjolnir_02 28 258
@@ -3237,7 +3238,7 @@ alberta 124 67 moc_para01 30 10 0 c c r0 n
 #moc_para01 30 10 alberta 117 56
 #斐楊
 payon 177 111 moc_para01 30 10 0 c c r0 n
-#moc_para01 30 10 payon 161 58 
+#moc_para01 30 10 payon 161 58
 #夢-金字塔外
 moc_ruins 68 164 moc_para01 30 10 0 c c r0 n
 #moc_para01 30 10 moc_ruins 64 161
