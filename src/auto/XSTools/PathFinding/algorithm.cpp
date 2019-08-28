@@ -237,6 +237,7 @@ int
 CalcPath_pathStep (CalcPath_session *session)
 {
 	if (!session->initialized) {
+		printf("[pathfinding run error] You must call 'reset' before 'run'.\n");
 		return -2;
 	}
 	
@@ -283,7 +284,8 @@ CalcPath_pathStep (CalcPath_session *session)
 		loop++;
 		if (loop == 100) {
 			if (GetTickCount() - timeout > session->time_max) {
-				return 0;
+				printf("[pathfinding run error] Pathfinding ended before provided time.\n");
+				return -3;
 			} else
 				loop = 0;
 		}
@@ -399,7 +401,6 @@ CalcPath_destroy (CalcPath_session *session)
 	if (session->initialized) {
 		free(session->currentMap);
 	}
-	
 	if (session->run) {
 		free(session->openList);
 	}

@@ -400,7 +400,7 @@ sub iterate {
 					)->runcount;
 					debug "Distance to portal ($portal->{portal}) is $dist\n", "route_teleport";
 
-					if ($dist <= 0 || $dist > $minDist) {
+					if ($dist < 0 || $dist > $minDist) {
 						if ($dist > 0 && $config{route_teleport_maxTries} && $self->{teleportTries} >= $config{route_teleport_maxTries}) {
 							debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "route_teleport";
 						} else {

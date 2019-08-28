@@ -498,7 +498,7 @@ sub processAttack {
 						max_y => ($realMonsterPos->{y} + $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteTargetDistance'}),
 					)->runcount;
 					
-					next unless ($dist > 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
+					next unless ($dist >= 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
 					
 					if (!defined($best_dist) || $dist < $best_dist) {
 						$best_dist = $dist;
@@ -551,7 +551,7 @@ sub processAttack {
 					start => $myPos,
 					dest => $blocks[$i]);
 				my $ret = $pathfinding->runcount;
-				if ($ret <= 0 || $ret > $config{$slave->{configPrefix}.'runFromTarget_dist'} * 2) {
+				if ($ret < 0 || $ret > $config{$slave->{configPrefix}.'runFromTarget_dist'} * 2) {
 					delete $blocks[$i];
 					next;
 				}

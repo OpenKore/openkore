@@ -208,18 +208,9 @@ PathFinding_run(session, solution_array)
 
 		status = CalcPath_pathStep (session);
 		
-		if (status == -2) {
-			//printf("[pathfinding run error] You must call 'reset' before 'run'.\n");
-			RETVAL = -2;
-		
-		} else if (status == -1) {
-			RETVAL = -1;
-		
-		} else if (status == 0) {
-			printf("[pathfinding run error] Pathfinding ended before provided time.\n");
-			RETVAL = 0;
-
-		} else if (status > 0) {
+		if (status < 0) {
+			RETVAL = status;
+		} else {
 			AV *array;
 			int size;
 
@@ -248,48 +239,6 @@ PathFinding_run(session, solution_array)
 			}
 			
 			RETVAL = size;
-
-		}
-	OUTPUT:
-		RETVAL
-
-SV *
-PathFinding_runref(session)
-		PathFinding session
-	PREINIT:
-		int status;
-	CODE:
-		status = CalcPath_pathStep (session);
-		if (status < 0) {
-			XSRETURN_UNDEF;
-
-		} else if (status > 0) {
-			AV * results;
-
-			results = (AV *)sv_2mortal((SV *)newAV());
-			av_extend(results, session->solution_size);
-			
-			Node currentNode = session->currentMap[(session->endY * session->width) + session->endX];
-
-			while (currentNode.x != session->startX || currentNode.y != session->startY)
-			{
-				HV * rh = (HV *)sv_2mortal((SV *)newHV());
-
-				hv_store(rh, "x", 1, newSViv(currentNode.x), 0);
-
-				hv_store(rh, "y", 1, newSViv(currentNode.y), 0);
-				
-				av_unshift(results, 1);
-
-				av_store(results, 0, newRV((SV *)rh));
-				
-				currentNode = session->currentMap[currentNode.predecessor];
-			}
-			
-			RETVAL = newRV((SV *)results);
-
-		} else {
-			XSRETURN_NO;
 		}
 	OUTPUT:
 		RETVAL
@@ -302,14 +251,12 @@ PathFinding_runcount(session)
 	CODE:
 
 		status = CalcPath_pathStep (session);
+		
 		if (status < 0) {
-
-			RETVAL = -1;
-		} else if (status > 0) {
+			RETVAL = status;
+		} else {
 			RETVAL = (int) session->solution_size;
-
-		} else
-			RETVAL = 0;
+		}
 	OUTPUT:
 		RETVAL
 

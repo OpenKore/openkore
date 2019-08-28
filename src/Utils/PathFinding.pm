@@ -133,20 +133,19 @@ sub reset {
 
 ##
 # $PathFinding->run(solution_array)
-# solution_array: Reference to an array in which the solution is stored. It will contain
-#     hashes of x and y coordinates from the start to the end of the path.
-# Returns: -1 on failure, 0 when pathfinding is not yet complete, or the number
-#     of steps required to walk from source to destination.
-
-##
-# $PathFinding->runref()
-# Returns: undef on failure, 0 when pathfinding is not yet complete, or an array
-#     reference when a path is found. The array reference contains hashes of x
-#     and y coordinates from the start to the end of the path.
+# solution_array: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path.
+# Returns:
+#    -3 when pathfinding is not yet complete.
+#    -2 when Pathfinding->reset was not called.
+#    -1 on no path found.
+#    The number of steps required to walk from source to destination on success.
 
 ##
 # $PathFinding->runcount()
-# Returns: -1 on failure, 0 when pathfinding is not yet complete, or the
-#     number of steps required to walk from source to destination.
+# Returns:
+#    -3 when pathfinding is not yet complete.
+#    -2 when Pathfinding->reset was not called.
+#    -1 on no path found.
+#    The number of steps required to walk from source to destination on success.
 
 1;

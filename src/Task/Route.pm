@@ -416,7 +416,8 @@ sub getRoute {
 	} else {
 		$ret = $pathfinding->runcount();
 	}
-	return $ret > 0;
+	
+	return ($ret >= 0 ? 1 : 0);
 }
 
 sub mapChanged {

@@ -443,7 +443,6 @@ sub main {
 			    &&    (($config{attackCanSnipe} && (checkLineSnipable($spot, $realMonsterPos) || checkLineWalkable($spot, $realMonsterPos, 1)))
 				   || (!$config{attackCanSnipe} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && checkLineWalkable($spot, $realMonsterPos, 1)))
 			) {
-				my $solution = [];
 				my $dist = new PathFinding(
 					field => $field,
 					start => $realMyPos,
@@ -452,9 +451,9 @@ sub main {
 					max_x => ($realMonsterPos->{x} + $config{attackAdjustLOSMaxRouteTargetDistance}),
 					min_y => ($realMonsterPos->{y} - $config{attackAdjustLOSMaxRouteTargetDistance}),
 					max_y => ($realMonsterPos->{y} + $config{attackAdjustLOSMaxRouteTargetDistance}),
-				)->run($solution);
+				)->runcount;
 				
-				next unless ($dist > 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
+				next unless ($dist >= 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
 				
 				if (!defined($best_dist) || $dist < $best_dist) {
 					$best_dist = $dist;
@@ -478,7 +477,7 @@ sub main {
 		}
 
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-		#my $begin = time;
+		# my $begin = time;
 		# Get a list of blocks that we can run to
 		my @blocks = calcRectArea($myPos->{x}, $myPos->{y},
 			# If the monster hit you while you're running, then your recorded
@@ -509,9 +508,11 @@ sub main {
 			$pathfinding->reset(
 				field => $field,
 				start => $myPos,
-				dest => $blocks[$i]);
+				dest => $blocks[$i]
+			);
+			
 			my $ret = $pathfinding->runcount;
-			if ($ret <= 0 || $ret > $config{'runFromTarget_dist'} * 2) {
+			if ($ret < 0 || $ret > $config{'runFromTarget_dist'} * 2) {
 				delete $blocks[$i];
 				next;
 			}
