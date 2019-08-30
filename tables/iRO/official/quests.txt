@@ -22969,3 +22969,32 @@ Slay the Witch's monster#
 63374#Poring Summers#SG_FEEL#QUE_NOIMAGE#
 We attacked the Witch's Lair recently, so she won't return for another 6 hours.#
 Wait 6 hours before attacking again#
+
+
+63375#Bounty Board Eggring#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Eggring monsters and return to the Bounty Board at Lasagna#
+#
+63376#Bounty Board Grass Fabre#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Grass Fabre monsters and return to the Bounty Board at Lasagna#
+#
+63377#Bounty Board Hunter Desert Wolf#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hunter Desert Wolf monsters and return to the Bounty Board at Lasagna#
+#
+63378#Bounty Board Leaf Lunatic#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Leaf Lunatic monsters and return to the Bounty Board at Lasagna#
+#
+63379#Bounty Board Sweet Roda Frog#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sweet Roda Frog monsters and return to the Bounty Board at Lasagna#
+#
+63380#Bounty Board Wild Hornet#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wild Hornet monsters and return to the Bounty Board at Lasagna#
+#
+63381#Bounty Board Charge Basilisk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Charge Basilisk monsters and return to the Bounty Board at Lasagna#
+#
+63382#Bounty Board Combat Basilisk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Combat Basilisk monsters and return to the Bounty Board at Lasagna#
+#
+63383#Bounty Board Jungle Mandragora#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Jungle Mandragora monsters and return to the Bounty Board at Lasagna#
+#

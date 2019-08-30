@@ -99,7 +99,7 @@
 604#Dead_Branch#
 605#Anodyne#
 606#Aloevera#
-607#Yggdrasilberry#
+607#Yggdrasil_Berry#
 608#Yggdrasil_Seed#
 609#Amulet#
 610#Yggdrasil_Leaf#
@@ -889,7 +889,7 @@
 1651#Eden_Staff_II#
 1652#Traveler's_Rod#
 1654#Mental_Stick#
-1657#Wand_Of_Affection#
+1657#Wand_of_Affection#
 1658#Eden_Group_Staff_III#
 1659#Recovery_Light#
 1660#Empowered_Wand_Of_Affection#
@@ -1482,7 +1482,7 @@
 2469#Crimson_Shoes#
 2470#Forest_Shoes#
 2471#Shoes_Of_Affection#
-2472#Shoes_Of_Judgement#
+2472#Shoes_of_Judgement#
 2473#Eden_Group_Boots_IV#
 2475#Ur's_Greaves#
 2476#Peuz's_Greaves#
@@ -1566,7 +1566,7 @@
 2566#Half_Asprika#
 2568#Loki's_Muffler#
 2569#Shawl_Of_Affection#
-2570#Shawl_Of_Judgement#
+2570#Shawl_of_Judgement#
 2571#Eden_Group_Manteau_II#
 2573#Archangel_Wings#
 2574#Ur's_Manteau#
@@ -2855,7 +2855,7 @@
 5045#Magician_Hat#
 5046#Bongun_Hat#
 5047#Fashionable_Glasses#
-5048#Cresent_Hairpin#
+5048#Crescent_Hairpin_#
 5049#Striped_Hairband#
 5050#Wonder_Nutshell#
 5051#Pussy_Cat_Bell#
@@ -3116,7 +3116,7 @@
 5307#Carmen_Miranda's_Hat#
 5308#Brazilian_Flag_Hat#
 5310#Shining_Electric_Bulb_Hairband#
-5311#Large_Hisbiscus#
+5311#Large_Hibiscus#
 5312#Ayothaya_King's_Hat#
 5313#Diadem#
 5314#Hockey_Mask#
@@ -3282,7 +3282,7 @@
 5495#Power_Of_Thor#
 5496#Dice_Hat#
 5497#Edgga_Doll#
-5498#Vagabond_Wolf_Hat#
+5498#Costume_Vagabond_Wolf_Hat#
 5499#Pizza_Pie_of_Plenty#
 5500#Ice_Cream_Hat#
 5501#Pirate's_Pride#
@@ -3580,7 +3580,7 @@
 5937#Flying_Helmet#
 5938#Octopus_Hat#
 5945#Well-Chewed_Pencil_(Red)#
-5948#Loki_Assassin_Mask#
+5948#Loki's_Assassin_Mask#
 5949#Bra_Hat#
 5963#Wing_Headphone#
 5967#Flying_Galapago#
@@ -4261,7 +4261,7 @@
 7083#Spirit_of_Fish#
 7084#Sputum_of_Bird#
 7085#Sinew_of_Bear#
-7086#Amblem_of_the_Sun_God#
+7086#Emblem_of_the_Sun_God#
 7087#Breath_of_Spirit#
 7088#Snow_Crystal#
 7089#Omen_of_Tempest#
@@ -5065,7 +5065,7 @@
 9630#June_Costume_Box_2019#
 9636#2019_July_Costume_Box#
 9645#July_Animal_Costume_Box_#
-9654#Yggdrasil_Ticket_IV#
+9654#July_2019_Yggdrasil_Ticket#
 9664#2019_August_Costume_Box#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
@@ -5469,8 +5469,8 @@
 12278#Alice_Contract#
 12290#Mysterious_Can#
 12291#Mysterious_PET_Bottle#
-12292#Unripe_Yggdrasilberry#
-12293#Dried_Yggdrasilberry#
+12292#Unripe_Yggdrasil_Berry#
+12293#Dried_Yggdrasil_Berry#
 12294#Costume:_Blue_Christmas_Cheer_Box#
 12295#Groove_Pack_1#
 12296#Splendid_Spring_Hat_Box#
@@ -6226,7 +6226,7 @@
 13514#Wrench_Box#
 13515#(null)#
 13516#Royal_Jelly_5_Box#
-13517#Yggdrasilberry_3_Box#
+13517#Yggdrasil_Berry_3_Box#
 13518#(null)#
 13519#(null)#
 13520#(null)#
@@ -6700,7 +6700,7 @@
 14220#Enriched_Oridecon_5_Box#
 14223#Mystical_Amplification_50_Box#
 14229#Cherry_Blossom_Scroll#
-14232#Yggdrasilberry_10_Box#
+14232#Yggdrasil_Berry_10_Box#
 14234#Dead_Branch25_Box#
 14236#Steamed_Tongue_60_Box#
 14237#Steamed_Scorpion_60_Box#
@@ -6957,7 +6957,7 @@
 15027#Crimson_Robe#
 15028#Forest_Robe#
 15029#Robe_Of_Affection#
-15030#Robe_Of_Judgement#
+15030#Robe_of_Judgement#
 15031#Eden_Group_Armor#
 15032#Tidung#
 15033#Tutorial_Mantle#
@@ -7075,7 +7075,7 @@
 16007#Ephemeral_Mjolnir#
 16008#Rental_Wrench#
 16010#Red_Ether_Bag#
-16013#Mace_Of_Judgement#
+16013#Mace_of_Judgement#
 16014#Eden_Group_Mace3#
 16015#Cat_Club#
 16016#Tuna#
@@ -8402,7 +8402,7 @@
 19702#Costume_Santa's_Hat#
 19707#Costume_Polar_Bear_Cap#
 19709#Costume_Yellow_Ribbon#
-19710#Costume:_Wings_Of_Victory#
+19710#Costume_Wings_of_Victory#
 19712#Costume_Little_Angel_Doll#
 19713#Costume_Lucky_Clover#
 19714#Costume_Lady_Tanee_Doll#
@@ -8449,7 +8449,7 @@
 19773#Costume_Angeling_Hairpin#
 19774#Costume_Emperor_Wreath#
 19775#Costume_Marvelous_Wig#
-19776#Costume:_Tomboy_Fairy#
+19776#Costume_Tomboy_Fairy#
 19780#Costume_Lunatic_Knit_Hat#
 19781#Costume:_Angel_Wing_Ears#
 19783#Costume_Granpa_Stache#
@@ -8540,7 +8540,7 @@
 19914#Costume_Ferlock's_Hat#
 19915#Costume_Little_Devil's_Horn#
 19917#Costume:_Gloomy_Pumpkin_Hat#
-19918#Costume:_Lude_Mask#
+19918#Costume_Lude_Mask#
 19919#Costume:_Quve_Mask_#
 19920#Costume:_Whisper_Mask#
 19922#Costume:_Noah_Hat#
@@ -8750,7 +8750,7 @@
 20299#Costume_Face_Crasher#
 20300#Costume_Hill_Wind_Mask#
 20301#Costume_Golden_Savage_Hat#
-20302#Costume:_Beelzebub's_Crown#
+20302#Costume_Beelzebub's_Crown#
 20306#Costume_Artist's_Hat#
 20311#Costume_Magical_Booster#
 20312#Costume_Baron's_Evil_Eye#
@@ -9396,7 +9396,7 @@
 25425#Magical_Snow_Flower#
 25426#Warm_Cotton#
 25479#Dogly_Bottle#
-25745#Ferus_Coin#
+25745#Poring_Coin#
 25753#Khalitzburg_Map_Piece#
 25754#Scaled_Map_Piece			#
 25755#Undead_Servant's_Map_Piece			#
@@ -10020,7 +10020,7 @@
 31685#Costume_Fluffy_Semi_Long#
 31686#Costume_Desert_Wolf_Baby#
 31687#Costume_Alchemist_Bag#
-31688#Costume_Poring_On_Shoulder#
+31688#Costume_Poring_on_Shoulder#
 31695#Costume_Tree_Sprout#
 31696#Costume_Shark_Hat#
 31697#Costume_Bird_Nest#
