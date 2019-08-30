@@ -617,20 +617,18 @@ Weight: 10
 Casts ^0000FFLevel 1 Provoke^000000.
 #
 607#
-^808080Fruit from the Yggdrasil tree which brings life to our world. Its fantastic taste is full of life.^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Recovery
-Weight: 30
-^FFFFFF_^000000
-Restores 100% HP and SP.
+A fruit from the Yggdrasil tree, which brings life to our world. Its fantastic taste is full of life.
+Class: ^808080Recovery^000000
+Weight: ^80808030^000000
+Restores 100% HP and 100% SP.
+(5 Seconds Cooldown)
 #
 608#
 A seed from the Yggdrasil tree, which brings life to our world. It has a weird, energizing pungency.
 Class: ^808080Recovery^000000
 Weight: ^80808030^000000
-Restores 50% HP.
-Restores 50% SP.
+Restores 50% HP and 50% SP.
+(3 Seconds Cooldown)
 #
 609#
 A forbidden talisman that can reanimate the dead, resulting in a walking corpse or undead zombie.
@@ -16299,14 +16297,24 @@ Increases SP cost of ^0000FFHeal^000000 by 50.
 Reduces the cooldown of ^0000FFLauda Agnus^000000, ^0000FFLauda Ramus^000000 and ^0000FFSacrament^000000 by 3 seconds.
 #
 2472#
-Decreases tolerance to all races by 10%
-Increases tolerance to Demon and Undead by 10%
-MaxSP +150
-Type : ^777777Shoes^000000
-Defense : ^77777712^000000
-Weight : ^77777730^000000
-Required Level : ^777777100^000000
-Job : ^777777Archbishop^000000
+A footwear artifact used by a priest who had struggled with many demons during the ancient war.
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Arch Bishop^000000
+Max SP + 150
+Increases the damage of ^0000FFJudex^000000 by 30%.
+Increases the SP cost of ^0000FFJudex^000000 by 40.
+
+^800080Set Bonus^000000
+^008080Mace of Judgement [2]^000000
+^008080Robe of Judgement^000000
+^008080Shoes of Judgement^000000
+^008080Shawl of Judgement^000000
+Increases physical and magical damage on Undead race targets by 15%.
+Increases the damage of ^0000FFAdoramus^000000 by 200%.
+Increases the SP cost of ^0000FFAdoramus^000000 by 30.
 #
 2473#
 Boots that are provided only for members of the Eden Group. These are designed to fit comfortably throughout long-walks.
@@ -17419,14 +17427,25 @@ Increases SP cost of ^0000FFHeal^000000 by 50.
 Reduces the cooldown of ^0000FFLauda Agnus^000000, ^0000FFLauda Ramus^000000 and ^0000FFSacrament^000000 by 3 seconds.
 #
 2570#
-Flee +5
-Has a chance of casting Oratio Level 2 while being physically or magically attacked
-If a higher level of this skill is learned then that level will activate.
-Type : ^777777Manteau^000000
-Defense : ^77777712^000000
-Weight : ^77777730^000000
-Required Level : ^777777100^000000
-Job : ^777777Archbishop^000000
+A garment artifact used by a priest who had struggled with many demons during the ancient war.
+Class: ^808080Garment^000000
+Defense: ^80808012^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Arch Bishop^000000
+Flee + 5
+
+Adds a chance of casting ^0000FFLevel 2 Oratio^000000 on the user when receiving a physical or a magical attack.
+If a higher level of this skill is known, it will be cast instead.
+
+^800080Set Bonus^000000
+^008080Mace of Judgement [2]^000000
+^008080Robe of Judgement^000000
+^008080Shoes of Judgement^000000
+^008080Shawl of Judgement^000000
+Increases physical and magical damage on Undead race targets by 15%.
+Increases the damage of ^0000FFAdoramus^000000 by 200%.
+Increases the SP cost of ^0000FFAdoramus^000000 by 30.
 #
 2571#
 A manteau which is only for Eden Group members. It is designed to flatter anyone's backside.
@@ -22571,6 +22590,14 @@ Class: ^808080Card^000000
 Compounds On: ^808080Accessory^000000
 Weight: ^8080801^000000
 Restores 100% HP and SP to the user when resurrected.
+
+^800080Set Bonus^000000
+^008080Old Morroc Shawl [1]^000000
+^008080Osiris Card^000000
+Additional Max HP + 15%
+Reduces damage taken from Fire property attacks by 50%.
+Reduces damage taken from Shadow property attacks by 100%.
+Immune to ^800000Curse^000000.
 #
 4145#
 ^FF0000Account Bound^000000
@@ -24922,12 +24949,12 @@ Drain 5 SP as the weapon is unequipped.
 
 #
 4330#
-Evil Snake Lord Card.
-Never be affected by Blind and Curse effect.
-Int +3.
-Class : ^777777Card^000000
-Compound on: ^777777Headgear^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Int + 3
+Immune to ^800000Blind^000000 and ^800000Curse^000000.
 #
 4331#
 Heater Card.
@@ -25550,14 +25577,10 @@ Reduces the variable casting time of skills by 20%.
 Adds a chance of gaining ^008080Red Gemstone^000000 or ^008080Yellow Gemstone^000000 when a monster is killed.
 #
 4383#
-Adds a high chance
-of confusing the
-attacking enemy each
-time the wearer is
-physically attacked.
-Class : ^777777Card^000000
-Compound on: ^777777Armor^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
+Weight: ^8080801^000000
+Adds a chance of inflicting ^800000Chaos^000000 on the attacker and the user when receiving a physical attack.
 #
 4384#
 Adds a high chance
@@ -28787,8 +28810,8 @@ Hit + 6
 Crit + 15%
 #
 4846#
-Atk + 10
-Matk + 10
+^d3d3d3Atk + 10^000000
+^d3d3d3Matk + 10^000000
 #
 4847#
 Atk + 10
@@ -29357,8 +29380,15 @@ Reduces the global delay of skills by 6%.
 Class: ^808080Card^000000
 Compounds On: ^808080Accessory^000000
 Weight: ^8080801^000000
-10% Resistance to fire/wind/water/earth/holy/shadow elements
-2% chance to increase resistance to fire/wind/water/earth/holy/shadow elements by 10% for 10 seconds when receiving magic damage
+Reduces damage taken from the following property attacks by 10%,
+Water
+Earth
+Fire
+Wind
+Holy
+Shadow
+Adds a 2% chance of buffing the user for 10 seconds when receiving a magical attack;
+Reduces damage taken from the property attacks by an additional 10%.
 #
 4992#
 Absorb 1% of damage dealt to enemy into HP with 1% chance.
@@ -29933,11 +29963,12 @@ except Novice^000000
 #
 5048#
 A hairpin in the shape of a crescent.
-Class : ^777777Headgear^000000
-Defense: ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Jobs: ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 5049#
 A striped hair band which is good for preventing hair from covering the eyes.
@@ -32882,13 +32913,13 @@ placeholder
 #
 5311#
 A large hibiscus flower decoration. These flowers can only be seen in Ayothaya.
-Mdef +15
-Class : ^777777Headgear^000000
-Location : ^777777Upper^000000
-Defense : ^7777772^000000
-Weight : ^77777710^000000
-Required Level : ^777777None^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Mdef + 15
 #
 5312#
 placeholder
@@ -33691,13 +33722,14 @@ Jobs : ^7777772nd Transcendent Class^000000
 #
 5401#
 Dark-colored plastic frame Locs.
-Int + 1, MDEF + 2
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Middle^000000
-Weight : ^77777720^000000
-Required Level : ^77777770^000000
-Jobs : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Int + 1
+Mdef + 2
 #
 5402#
 Naughty fairies have slightly pointier ears than elves do.
@@ -34409,12 +34441,11 @@ Jobs : ^777777All^000000
 #
 5498#
 Made out of a Wolf King's fur and feels like you're surrounded by a dignified force when worn but basically worn for its looks.
-Class : ^777777Costume^000000
-Location: ^777777Upper/Middle^000000
-Defense : ^7777770^000000
-Weight : ^77777760^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^80808060^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 5499#
 Empowered with your extreme cooking skills and some magic probably, this pizza remains hot \r\nEven when worn on your head and can re-generate itself slowly when eaten.\r\nEvent effect: Small chance to drop restorative Pizza consumables when attacking monsters.\r\nWhen upgraded to +7 gives 3% chance to use agi up Lv 1 when hit with a physical attack\r\nWhen upgraded to +9 or higher gives SP regen +15% HP regen +15%\r\nClass : ^777777Headgear^000000\r\nDefense: ^7777770^000000\r\nLocation : ^777777Upper^000000\r\nWeight : ^77777760^000000\r\nRequired Level : ^7777771^000000\r\nJobs: ^777777All^000000\r\n
@@ -35228,20 +35259,22 @@ Jobs : ^777777All^000000
 #
 5592#
 Ear adornments that symbolize rebirth. They have the ability to change its effects depending on the job of the wearer.
-If worn by a Swordman, Merchant, Thief or Taekwon Classes, Str +1.
-If worn by a Mage, Acolyte, Ninja or Soul Linker Classes, Int +1.
-If worn by Archer or Gunslinger Classes, Dex +1.
-If worn by Novice Class, MaxHP +80, MaxSP +30.
-^FFFFFF_^000000
-^FF0000Concept created during the Summer 2008 Create a headgear Contest.
-Created by Eleotea^000000
-^FFFFFF_^000000
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Middle^000000
-Weight : ^77777710^000000
-Level : ^77777780^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^F4AD42Novice Bonus^000000
+Max HP + 80
+Max SP + 30
+^F4AD42Swordman, Merchant, Thief, Taekwon Bonus^000000
+Str + 1
+^F4AD42Mage, Acolyte, Ninja, Soul Linker Bonus^000000
+Int + 1
+^F4AD42Archer, Gunslinger Bonus^000000
+Dex + 1
+^67CDC9Concept by Eleotea.^000000
 #
 5593#
 A bonnet made to resemble a rabbit. Despite it's cute appearance this hat gives it's wearer attack strength.
@@ -36138,18 +36171,15 @@ Job : ^777777All^000000
 #
 5664#
 A cute headgear made in the form of Filir's wings, the most popular bird-like homunclus.
-Aspd +2%.
-Reduce the after-attack delay by 2%.
-^FFFFFF_^000000
-^FF0000Concept created during the Summer 2008 Create a headgear Contest.
-Created by Bara-chan^000000
-^FFFFFF_^000000
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Mid ^000000
-Weight : ^77777710^000000
-Required Level : ^77777770^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080801^000000
+Weight: ^80808010^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Aspd + 2%
+Reduces the global delay of skills by 2%.
+^67CDC9Concept by Bara-chan.^000000
 #
 5665#
 placeholder
@@ -36217,13 +36247,12 @@ Job : ^777777All^000000
 #
 5675#
 A love letter sealed with a cute poring sticker.
-Class : ^777777Headgear^000000
-Defense: ^7777770^000000
-Location : ^777777Lower^000000
-Weight: ^77777710^000000
-Required Level: ^77777710^000000
-Job: ^777777All^000000
-placeholder
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
 #
 5676#
 A magnificent crown created to pay tribute to the 8th sign of the zodiac, Scorpio the Scorpion.  Attached to the crown is a Topaz gemstone, the birthstone for those born under this sign.
@@ -37396,12 +37425,17 @@ Str + 1
 Adds a 5% chance of endowing the users weapon with Fire property for 60 seconds.
 #
 5948#
-A mask for Assassins
-Increases attack speed by 10%
-Decreases ATK/MATK by 10%
-Def: 1
-Weight : ^7777771^000000
-Equippable by Assassins Only
+The mask of a famous Assassin Cross. Only members of the Assassins Guild have the fortitude to wield its power.
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080801^000000
+Weight: ^8080801^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080Assassin Jobs^000000
+Atk - 10%
+Matk - 10%
+Aspd + 10%
+^67CDC9Concept by ZeroTigress.^000000
 #
 5949#
 This stylish hat is always in seasons. When worn it fills it's wearer with a sense of confidence.
@@ -41230,10 +41264,10 @@ Class: ^808080Generic^000000
 Weight: ^80808050^000000
 #
 7086#
-A golden, shining
-bead that is a symbol
-of the god of the sun.
-Weight : ^77777750^000000
+A golden, shining bead that is a symbol of the god of the sun.
+^F67E04Used for War of Emperium God Item Creation.^000000
+Class: ^808080Generic^000000
+Weight: ^80808050^000000
 #
 7087#
 Exhaled from a spirit, this breath causes the living to feel an unnatural chill.
@@ -48825,10 +48859,9 @@ Attack Speed.
 Weight : ^77777710^000000
 #
 12242#
-An Awakening Potion
-for Mercenaries that^FFFFFF      ^000000 increases Attack Speed.
-^ffffff_^000000
-Weight : ^777777150^000000
+An Awakening Potion for Mercenaries that increases Attack Speed.
+Class: ^808080Stat Boost^000000
+Weight: ^80808015^000000
 #
 12243#
 A Berserk Potion
@@ -48992,12 +49025,15 @@ Casts ^0000FFLevel 5 Increase AGI^000000.
 #
 12292#
 Unripe Fruit from the Yggdrasil tree which brings life to our world.
+Class: ^808080Recovery^000000
+Weight: ^80808020^000000
 Restores 20% HP.
-Weight : ^77777720^000000
 #
 12293#
-A Dried candied Yggdrasilberry that recovers 20% SP when consumed
-Weight : ^77777720^000000
+A Dried candied Yggdrasil Berry.
+Class: ^808080Recovery^000000
+Weight: ^80808020^000000
+Restores 20% SP.
 #
 12294#
 A costume box that contains 1 Blue Christmas Cheer
@@ -50403,9 +50439,10 @@ A hard box with beautiful details. there are many high-end equipments.
 Weight : ^7777771^000000
 #
 12624#
-Yummy brown jelly. you will be happy when you eat. It might melt, so please not to keep in warm place.
-Recover 3% of HP and SP.
-Weight : ^7777775^000000
+Quite delicious brown jelly. Do not store in a hot place as it may melt.
+Class: ^808080Recovery^000000
+Weight: ^8080805^000000
+Restores 3% HP and 3% SP.
 #
 12633#
 Special produce from Malangdo, made as a can so you can save easily. Strangely It was known to give power to people.
@@ -50953,9 +50990,17 @@ Weight : ^7777771^000000
 #
 12815#
 Dust from the sacred tree Yggdrasil. Even as dust, this seems to be useful for meditation.
-Cures effect of ^000088Stone, Dark, Curse, Poison, Decrease Agility, Reverse Orcish^000000.
-5 second cool time.
-Weight : ^7777771^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
+Casts ^0000FFLevel 1 Yggdrasil Dust^000000: Cures the following status
+^800000Blind^000000
+^800000Curse^000000
+^800000Decrease Agility^000000
+^800000Grampus Morph^000000
+^800000Poison^000000
+^800000Stone^000000
+
+(5 Seconds Cooldown)
 #
 12817#
 An antique album that contains a single intact card.
@@ -52433,8 +52478,7 @@ Weight: ^80808070^000000
 Weapon Level: ^8080802^000000
 Requires Level: ^80808024^000000
 Usable By: ^808080Ninja^000000
-Add Critical +10 against^FFFFFF ^000000 Demihuman monsters when inflicting short^FFFFFF ^000000 range physical attacks.
-Add Critical +10 against^FFFFFF ^000000 Human Player monsters when inflicting short^FFFFFF ^000000 range physical attacks.
+Crit + 10 on Demi-Human and Human Player race targets when performing a short-ranged attack.
 #
 13013#
 A famous sword that is said to be sharp enough to divide oceans or cut through the air to make it bleed water.
@@ -55936,10 +55980,10 @@ Weight: ^8080801^000000
 Produces ^0000FF5^000000 ^008080Royal Jelly^000000.
 #
 13517#
-A box that contains a stack of Yggdrasilberry.
+A box that contains a stack of Yggdrasil Berry.
 Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
-Produces ^0000FF3^000000 ^008080Yggdrasilberry^000000.
+Produces ^0000FF3^000000 ^008080Yggdrasil Berry^000000.
 #
 13518#
 #
@@ -59461,11 +59505,11 @@ Weight : ^7777771^000000
 14229#
 #
 14232#
-A box that contains a stack of Yggdrasilberry.
+A box that contains a stack of Yggdrasil Berry.
 ^FF0000Account Bound^000000
 Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
-Produces ^0000FF10^000000 ^008080Yggdrasilberry^000000.
+Produces ^0000FF10^000000 ^008080Yggdrasil Berry^000000.
 #
 14234#
 #
@@ -60722,7 +60766,7 @@ Class: ^808080Armor^000000
 Defense: ^80808060^000000
 Property: ^808080Neutral^000000
 Weight: ^808080100^000000
-Requires Level: ^80808085^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080Lord Knight Jobs, Master Smith Jobs, Assassin Cross Jobs, Paladin Jobs, Biochemist Jobs, Stalker Jobs^000000
 Str + 1
 Mdef + 3
@@ -60996,15 +61040,27 @@ Increases SP cost of ^0000FFHeal^000000 by 50.
 Reduces the cooldown of ^0000FFLauda Agnus^000000, ^0000FFLauda Ramus^000000 and ^0000FFSacrament^000000 by 3 seconds.
 #
 15030#
-Blesses the wearer with the Shadow Property
-Increases damage of Judex skill by 30%
-Increases SP Consumption of Judex skill by 40
-Str +1, Int +1, Mdef +10
-Type : ^777777Garment^000000
-Defense : ^77777722^000000
-Weight : ^77777730^000000
-Required Level : ^777777100^000000
-Job : ^777777Archbishop^000000
+An armor artifact used by a priest who had struggled with many demons during the ancient war.
+Class: ^808080Armor^000000
+Defense: ^80808022^000000
+Property: ^808080Shadow^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Arch Bishop^000000
+Str + 1
+Int + 1
+Mdef + 10
+Reduces damage taken from Demon and Undead race enemies by 10%.
+Increases damage taken from All race enemies by 10% expect Demon and Undead.
+
+^800080Set Bonus^000000
+^008080Mace of Judgement [2]^000000
+^008080Robe of Judgement^000000
+^008080Shoes of Judgement^000000
+^008080Shawl of Judgement^000000
+Increases physical and magical damage on Undead race targets by 15%.
+Increases the damage of ^0000FFAdoramus^000000 by 200%.
+Increases the SP cost of ^0000FFAdoramus^000000 by 30.
 #
 15031#
 Armor that is only provided for members of the Eden Group.
@@ -63155,16 +63211,27 @@ Jobs : ^777777Generic Only^000000
 #
 16013#
 A mace that strikes like the Judges gavel in deciding the fate of evil.
-Physical and Magical Attacks have a chance to increase damage by 20% to Demon monsters for 7 seconds.
-MATK + 140, STR + 1, INT + 1.
-If worn with Judgement Robe, Shoes and Shawl, increase Damage against Undead by 15%.
-Increase damage of Adoramus by 200%, and increase SP cost of Adoramus by 30.
-Type : ^777777Mace^000000
-Attack : ^777777170^000000
-Weight : ^777777120^000000
-Weapon Level : ^7777773^000000
-Required Level : ^777777100^000000
-Job : ^777777"Archbishop^000000
+Class: ^808080Mace^000000
+Attack: ^808080140^000000
+Magic Attack: ^808080180^000000
+Property: ^808080Holy^000000
+Weight: ^808080120^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Arch Bishop^000000
+Str + 1
+Int + 1
+Adds a chance of buffing the user for 7 seconds when performing a physical or a magical attack;
+Increases physical and magical on Demon race targets by 20%.
+
+^800080Set Bonus^000000
+^008080Mace of Judgement [2]^000000
+^008080Robe of Judgement^000000
+^008080Shoes of Judgement^000000
+^008080Shawl of Judgement^000000
+Increases physical and magical damage on Undead race targets by 15%.
+Increases the damage of ^0000FFAdoramus^000000 by 200%.
+Increases the SP cost of ^0000FFAdoramus^000000 by 30.
 #
 16014#
 A mace that is made by the Eden Group. It's suitable for an experienced mace wielder.
@@ -63200,14 +63267,16 @@ Required Level : ^77777750^000000
 Job : ^777777Sword Man Class/AcolyteClass/Merchant Class^000000
 #
 16017#
-A mace in the shape of a blood red cross infused with dark power. It's blood red color makes you feel uneasy. When dealing melee physical damage, has a chance to autospell Hell Inferno Lv1.
-Increased refine rate increases the chance of activation.
-Class : ^777777Mace^000000
-Attack : ^777777170^000000
-Weight : ^777777150^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777100^000000
-Jobs : ^777777Transcendent Acolyte Class^000000
+A mace in the shape of a blood red cross infused with dark power. It's blood red color makes you feel uneasy.
+Class: ^808080Mace^000000
+Attack: ^808080170^000000
+Property: ^808080Shadow^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Arch Bishop, Sura^000000
+Adds a chance of casting ^0000FFLevel 1 Hell Inferno^000000 on the target when performing a physical attack.
+For every upgrade level of the item, adds an additional chance of casting ^0000FFLevel 1 Hell Inferno^000000.
 #
 16018#
 A mace that strikes like the Judges gavel in deciding the fate of evil.
@@ -71477,13 +71546,13 @@ Jobs: ^777777All^000000
 #
 18621#
 A gift given to you by Agent York which he retrieved from thugs in Geffen that used this mask to disguise themselves while committing crimes and extorting citizens.
-^ff0000From August 16-September 13 special effect: 15% chance to resist Silence, 1% chance to reflect targeted magic, and 15% bonus to EXP from monsters.
-Class : ^777777Headgear^000000
-Defense : ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Required Level : ^77777770^000000
-Job : ^777777All^000000
+^FF0000Account Bound^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
 #
 18626#
 A delectable frozen treat served with a cherry on top.
@@ -71575,13 +71644,18 @@ Job : ^777777All jobs^000000
 18636#
 #
 18637#
-Helmet generals of the kingdom was the cry of the ancient continent was using. Weather in general that the word of command many soldiers outpouring from all over the body Using this pitch.
-STR + 2, VIT + 1.
-if refined lv8, able to increase the move speed
-Class : ^777777headgear^000000 Defense : ^7777774^000000
-Location : ^777777upper-mid ^000000Weight : ^77777770^000000
-Req Level : ^7777771^000000
-Jobs : ^777777All^000000
+A helmet used by the generals of the kingdom that used to command the ancient continent. With this helmet, the general's ancient warcry will embolden your step.
+Class: ^808080Headgear^000000
+Position: ^808080Upper, Middle^000000
+Defense: ^8080804^000000
+Weight: ^80808070^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Str + 2
+Vit + 1
+
+If upgrade level is +8 or higher,
+Increased Movement Speed.
 #
 18638#
 A hat that looks like a sour citron. Fresh fragrance makes you feel happy and lucky.
@@ -72673,15 +72747,15 @@ Adds a chance of gaining ^008080Prickly Fruit^000000 when a Plant race monster i
 #
 18760#
 Talented Wizard's magic hat. It looks weird, but works just fine. Remodeled for extra effect.
-INT + 2 , SP + 150.
-Each Refine adds MATK + 1
-When refined to +7 or higher, each refine adds INT +1.
-Class : ^777777Headgear^000000
-Defense : ^7777772^000000
-Location : ^777777Upper ^000000
-Weight : ^77777730^000000
-Required Level : ^7777771^000000
-Job : ^777777Magic Class/Soul Linker^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+Int + 2
+SP + 150
+For every upgrade level of the item, Matk + 1.
+Additional Int + 1 per upgrade level of the item past the upgrade level of +6.
 #
 18761#
 Healthy live rabbit looking wizard hat. Very firm and strong item. Remodeled for extra effect.
@@ -74091,7 +74165,7 @@ Reduces damage taken from Human Player race enemies by 5%.
 Increases physical damage on medium size targets by 10%.
 #
 18908#
-Children's favorite Isabella's red hat.
+Isabella's red hat. It's a favorite among children.
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080808^000000
@@ -74101,11 +74175,12 @@ Usable By: ^808080All Jobs^000000
 Str + 5
 Max HP + 5%
 Reduces damage taken from Fire property attacks by 10%.
+
 If upgrade level is +9, Aspd + 1.
 Additional Aspd + 1 per 2 upgrade levels of the item past the upgrade level of +9.
 #
 18909#
-Children's favorite Isabella's brown hat.
+Isabella's brown hat. It's a favorite among children.
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080808^000000
@@ -74118,7 +74193,7 @@ Reduces damage taken from Human Player race enemies by 5%.
 Matk + 2 per upgrade level of the item.
 #
 18910#
-Children's favorite Isabella's blue hat.
+Isabella's blue hat. It's a favorite among children.
 Class: ^808080Headgear^000000
 Position: ^808080Upper^000000
 Defense: ^8080808^000000
@@ -78332,6 +78407,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19650#
+Decorated with colorful feathers to commemorate the 2012 RWC.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19651#
 a mouth would have been advocated as unknowingly 'RWC! Fighting!
@@ -78701,11 +78782,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19710#
-A hair ornament made from Valkyrie's Feathers and precious gems. Rumored to protect it's wearer from any harm.
-Class : ^777777Costume^000000 Defense : ^7777770^000000
-Location : ^777777Upper Mid ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Job : ^777777all jobs^000000
+A hair ornament made from Valkyrie's Feathers and precious gems. It is rumored to protect it's wearer from any harm.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19712#
 You'll never feel anything less than blessed with this adorable angel relaxing atop your head!
@@ -79079,11 +79161,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19776#
-A headgear looks like the ears of a mischievous fairy.
-Class : ^777777Costume^000000
-Location : ^777777Middle ^000000Weight : ^7777770^000000
-Required LV : ^7777771^000000
-Jobs : ^777777All^000000
+A headgear that looks like the ears of a mischievous fairy.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19780#
 A knitted hat inspired by the lunatic which can be worn daily due to its' simple design. It is really useful for cold weather.
@@ -79792,14 +79875,14 @@ Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
 19918#
-Quve's mask, who is one of the mascots of  Niflheim
-Heal skills and effect of recovery items will be increased by 20%
-^ff0000Item effect will remain until December 3, 2014^000000
-Class : ^777777Costume^000000
-Location : ^777777Middle & Lower^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+Quve's mask, who is one of the mascots of  Niflheim.
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^FF0000The following effects are active during the month of October.^000000
+Increases the recovery rate of recovery skills and recovery items by 20%.
 #
 19919#
 Quve's mask, who is one of the mascots of  Niflheim
@@ -81755,18 +81838,18 @@ Usable By: ^808080All Jobs^000000
 20301#
 A Savage Babe doll dyed with gold. It is a pretty doll but makes you feel hunger when you look at it.
 Class: ^808080Costume^000000
+Position: ^808080Upper^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20302#
-^808080A crown taken after Beelzebub known for exposing its existence from a depth of Nameless Island. A crown exduing elegance.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+A crown modeled after Beelzebub's, who resides deep within Nameless Island. It exudes elegance.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20306#
 ^808080A strange hat that seems to be attracted to people skilled in the arts...^000000
@@ -82186,12 +82269,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20349#
-^808080A flying Galapago. This creature hopes to fly by itself one day.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A flying Galapago. This creature hopes to fly by itself one day.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20350#
 A yellow hair extension that looks like a sharp cowlick.
@@ -82919,12 +83002,12 @@ Max HP + 1%
 Max SP + 1%
 #
 20706#
-^808080A bag that resembles the homunculus, Amistr.^000000
-Class: Garment
-Defense: 18
-Weight: 50
-Required Level: 1
-Required Jobs: All Jobs
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808018^000000
+Weight: ^80808050^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 All Stats + 1
 Reduces damage taken from Neutral property attacks by 5%.
 #
@@ -84450,8 +84533,9 @@ If upgrade level is +7 or higher, additional Flee + 20.
 If upgrade level is +8 or higher, additional Flee + 30 and restores 100% HP and SP to the user when resurrected.
 If upgrade level is +9 or higher, additional Flee + 40.
 If upgrade level is +10 or higher, Perfect Dodge + 25.
+
 ^800080Set Bonus^000000
-^008080Old Morroc Shawl^000000
+^008080Old Morroc Shawl [1]^000000
 ^008080Osiris Card^000000
 Additional Max HP + 15%
 Reduces damage taken from Fire property attacks by 50%.
@@ -86560,15 +86644,15 @@ Prevents the user from being knocked back.
 
 Reduces the variable casting time of Seafood-based Skills by 10% per level of ^0000FFTasty Shrimp Party^000000 known.
 Seafood-Based Skills:
-^0000FFFresh Shrimp^000000,
 ^0000FFBunch of Shrimp^000000,
 ^0000FFTuna Belly^000000,
-^0000FFTuna Party^000000,
 ^0000FFGrooming^000000,
-^0000FFPurring^000000, and
-^0000FFTasty Shrimp Party^000000.
+^0000FFPurring^000000,
+^0000FFTasty Shrimp Party^000000,
+^d3d3d3Fresh Shrimp^000000,
+^d3d3d3Tuna Party^000000.
 
-Increases the recovery rate of recovery skills by 10% per level of ^0000FFPurring^000000 Known.
+Increases the recovery rate of recovery skills by 10% per level of ^0000FFPurring^000000 known.
 
 If upgrade level is +5 or higher,
 Additional Max HP + 7%
@@ -90669,10 +90753,14 @@ Reduces the global delay of skills by 3%
 #
 27164#
 Class: ^808080Card^000000
-Weight: ^8080800^000000
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
 Max HP - 10%
 Crit + 15
-For every upgrade level, Crit + 1 and Increases critical damage on targets by an additional 1%.
+
+For every upgrade level of the compounded item,
+Crit + 1
+Increases critical damage on targets by 1%.
 #
 27165#
 Class: ^808080Card^000000
@@ -94512,12 +94600,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31055#
-^808080A fancy pipe which is popular among the Jack gang members.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A fancy pipe which is popular among the Jack gang members.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31056#
 ^808080It is time to demonstrate your true power!^000000
@@ -94616,12 +94704,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31090#
-^808080A hat mimicking an Angeling flapping its feeble wings because it wants to fly.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A hat mimicking an Angeling flapping its feeble wings because it wants to fly.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31091#
 Thoughts of zeny cloud the mind. Created to celebrate the launch of Ragnarok Clicker!
@@ -95009,20 +95097,20 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31202#
-^808080Life is ruff for a pawfficer of the law, but times never get bark for those with dogged determination.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+Life is ruff for a pawfficer of the law, but times never get bark for those with dogged determination.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31203#
-^808080For all those times you ever wanted to have a grill for a head. Since it's for decorative purposes only, it does not actually cook anything.^000000
-Class: Costume
-Position: Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+For all those times you ever wanted to have a grill for a head. Since it's for decorative purposes only, it does not actually cook anything.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31207#
 ^808080A mask that resembles a fearsome monster who once had a secret group of followers. Some say he still does...^000000
@@ -95265,12 +95353,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31248#
-^808080The red hat of Isabella which is really popular among small children.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+The red hat of Isabella which is really popular among small children.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31249#
 ^808080A cute hat with long ears hanging off it!^000000
@@ -95444,7 +95532,6 @@ Usable By: ^808080All Jobs^000000
 #
 31332#
 A costume helm with the looks of the helm of a Khalitzburg Knight.
-
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
@@ -95993,6 +96080,8 @@ Isabella's blue hat, a crowd favorite!
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31509#
  Fancy to fawn over these fancy fawn ears?
@@ -96375,6 +96464,8 @@ The stole of a great, dragon rider. Maybe you can be one of the three with these
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31612#
 An elegant sorcerer crown adorned with golden tassels. Now you too can be a fire lord.
@@ -96645,6 +96736,8 @@ These ears are softer than your regular ears. Wearing them makes you a real elf!
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31683#
 The white feathers and frills on this headband are perfect for anyone with a pure and lovely heart.
@@ -96682,6 +96775,8 @@ It's a poring on your shoulder! Smaller than your average poring, but just as cu
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31695#
 The magical power from this Eclage tree sprout is overwhelming.
@@ -96838,6 +96933,7 @@ Usable By: ^808080All Jobs^000000
 Atk + 50
 Matk + 50
 Reduces damage taken from Undead race enemies by 4%.
+
 ^800080Set Bonus^000000
 ^008080Immortal Dog Tag [1]^000000
 ^008080Juliette D Rachel [2]^000000
@@ -96848,7 +96944,8 @@ Adds a 10% chance of casting ^0000FFLevel 10 Oratio^000000 on the target when us
 ^800080Set Bonus^000000
 ^008080Immortal Dog Tag [1]^000000
 ^008080Sunflower Boy [2]^000000
-Int + 2 per upgrade levels of ^008080Sunflower Boy [2]^000000.
+For every upgrade level of ^008080Sunflower Boy [2]^000000,
+Int + 2
 Increases the damage of ^0000FFCrimson Rock^000000 by 1%.
 If ^008080Sunflower Boy [2]^000000 upgrade level is +9 or higher,
 Adds a 1% chance to increase the damage of Fire property magical attacks on targets by 50% for 10 seconds when performing a magical attack.
