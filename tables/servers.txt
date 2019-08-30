@@ -113,7 +113,7 @@ rankingSystemType 1
 # http://playragnarok.com
 [International - iRO: Ymir/Yggdrasil/Valkyrie]
 title International - iRO: Thor|Chaos (Renewal-compatible)
-ip 128.241.92.162
+ip 128.241.92.36
 port 6800
 master_version 1
 version 18
@@ -124,7 +124,7 @@ patchpath /patch02
 addTableFolders iRO/Renewal;iRO
 charBlockSize 147
 charDeleteDateType 1
-sendCryptKeys 0x2CE90149, 0x0B490B49, 0x2B490B49
+sendCryptKeys 0x639573FD, 0x30007ABA, 0x18EC45FF
 blockingPlayerCancel 1
 rankingSystemType 1
 
