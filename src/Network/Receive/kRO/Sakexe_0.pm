@@ -941,6 +941,7 @@ sub area_spell {
 	my $type = $args->{type};
 	my $fail = $args->{fail};
 
+	$spells{$ID}{'ID'} = $ID;
 	$spells{$ID}{'sourceID'} = $sourceID;
 	$spells{$ID}{'pos'}{'x'} = $x;
 	$spells{$ID}{'pos'}{'y'} = $y;
@@ -959,11 +960,12 @@ sub area_spell {
 	}
 
 	Plugins::callHook('packet_areaSpell', {
-		fail => $fail,
+		ID => $ID,
 		sourceID => $sourceID,
-		type => $type,
 		x => $x,
-		y => $y
+		y => $y,
+		type => $type,
+		fail => $fail,
 	});
 }
 
