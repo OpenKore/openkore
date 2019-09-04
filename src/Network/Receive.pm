@@ -3431,6 +3431,7 @@ sub area_spell_multiple2 {
 			$binID = binAdd(\@spellsID, $ID);
 		}
 
+		$spells{$ID}{'ID'} = $ID;
 		$spells{$ID}{'sourceID'} = $sourceID;
 		$spells{$ID}{'pos'}{'x'} = $x;
 		$spells{$ID}{'pos'}{'y'} = $y;
@@ -3477,6 +3478,7 @@ sub area_spell_multiple3 {
 			$binID = binAdd(\@spellsID, $ID);
 		}
 
+		$spells{$ID}{'ID'} = $ID;
 		$spells{$ID}{'sourceID'} = $sourceID;
 		$spells{$ID}{'pos'}{'x'} = $x;
 		$spells{$ID}{'pos'}{'y'} = $y;
