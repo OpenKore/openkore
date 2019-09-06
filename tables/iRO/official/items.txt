@@ -5067,6 +5067,8 @@
 9645#July_Animal_Costume_Box_#
 9654#July_2019_Yggdrasil_Ticket#
 9664#2019_August_Costume_Box#
+9665#Yggdrasil_Retro_Ticket_I#
+9670#Yggdrasil_Retro_Ticket_II#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#

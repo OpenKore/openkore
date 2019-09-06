@@ -46242,6 +46242,16 @@ Attack: ^8080800^000000
 Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
 #
+9665#
+Redeem ticket by visiting the Yggdrasil Tree Retro Explorer in the second floor of the Eden Group (moc_para_up.gat 17, 176)
+More Details can be found by visiting the NPC in person.
+Weight: ^8080801^000000
+#
+9670#
+Redeem ticket by visiting the Yggdrasil Tree Retro Explorer in the second floor of the Eden Group (moc_para_up.gat 17, 176)
+More Details can be found by visiting the NPC in person.
+Weight: ^8080801^000000
+#
 10001#
 A pristine helmet made from an animal skull.
 Class: ^808080Pet Accessory^000000
@@ -76213,35 +76223,43 @@ Weight: ^80808030^000000
 Requires Level: ^80808070^000000
 Usable By: ^808080All Jobs^000000
 Str + 2
-Atk + 5 for every 8 base Int.
-Additional Atk + 50, if the users base Int is 108 or higher.
-Additional Atk + 125, if the users base Int is 120 or higher.
-Increases the variable casting time of skills by 1% for every 8 base Int.
-Increases the variable casting time of skills by 1%, if the users base Int is 108 or higher.
-Increases the variable casting time of skills by 1%, if the users base Int is 120 or higher.
-Increases the recovery rate of recovery skills by 1% for every 8 base Int.
-Increases the recovery rate of recovery skills by an additional 5%, if the users base Int is 108 or higher.
-Increases the recovery rate of recovery skills by an additional 10%, if the users base Int is 120 or higher.
+
+For every 8 base Int,
+Atk + 5
+Increases the recovery rate of recovery skills by 1%.
+Increases the variable casting time of skills by 1%.
+
+If the user's base Int is 108 or higher,
+Additional Atk + 50.
+Increases the recovery rate of recovery skills by an additional 5%.
+Increases the variable casting time of skills by an additional 4%.
+
+If the user's base Int is 120 or higher,
+Additional Atk + 125.
+Increases the recovery rate of recovery skills by an additional 10%.
+Increases the variable casting time of skills by an additional 6%.
+
 ^800080Set Bonus^000000
 ^008080Seraphim Coronet^000000
 ^008080Seraphim Feather^000000
-Reduces the variable casting time of skills by 1% for every 8 base Int.
-Reduces the variable casting time of skills by an additional 4%, if the users base Int is 108 or higher.
-Reduces the variable casting time of skills by an additional 6%, if the users base Int is 120 or higher.
-Reduces the variable casting time of ^0000FFColuseo Heal^000000 by 100%.
-Reduces damage taken from Demi-Human race enemies by 2%.
-Reduces damage taken from Demi-Human race enemies by an additional 2%, if the users base Int is 108 or higher.
-Reduces damage taken from Demi-Human race enemies by an additional 4%, if the users base Int is 120 or higher.
-Increases the recovery rate of recovery skills by 5%.
-Increases the recovery rate of recovery skills by an additional 10%, if the users base Int is 108 or higher.
-Increases the recovery rate of recovery skills by an additional 15%, if the users base Int is 120 or higher.
+Increases the recovery rate of recovery skills and recovery items by 5%.
 Increases the recovery rate of incoming recovery skills by 5%.
-Increases the recovery rate of incoming recovery skills by an additional 10%, if the users base Int is 108 or higher.
-Increases the recovery rate of incoming recovery skills by an additional 15%, if the users base Int is 120 or higher.
-Increases the recovery rate of recovery items by 5%.
-Increases the recovery rate of recovery items by an additional 10%, if the users base Int is 108 or higher.
-Increases the recovery rate of recovery items by an additional 15%, if the users base Int is 120 or higher.
+Reduces damage taken from Demi-Human race enemies by 2%.
+Reduces the variable casting time of ^0000FFColuseo Heal^000000 by 100%.
 Immune to ^800000Bleed^000000 and ^800000Chaos^000000.
+Reduces the variable casting time of skills by 1% for every 8 base Int.
+
+If the user's base Int is 108 or higher,
+Reduces the variable casting time of skills by an additional 4%.
+Increases the recovery rate of recovery skills and recovery items by an additional 10%.
+Increases the recovery rate of incoming recovery skills by an additional 10%.
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+
+If the user's base Int is 120 or higher,
+Reduces the variable casting time of skills by an additional 6%.
+Increases the recovery rate of recovery skills and recovery items by an additional 15%.
+Increases the recovery rate of incoming recovery skills by an additional 15%.
+Reduces damage taken from Demi-Human race enemies by an additional 4%.
 #
 19139#
 A orb that automatically protects its' owner.
