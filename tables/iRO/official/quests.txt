@@ -22998,3 +22998,33 @@ Hunt 150 Combat Basilisk monsters and return to the Bounty Board at Lasagna#
 63383#Bounty Board Jungle Mandragora#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Jungle Mandragora monsters and return to the Bounty Board at Lasagna#
 #
+
+63384#Bounty Board Alligator#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Alligator  monsters and return to the Bounty Board at Comodo#
+#
+63385#Bounty Board Flora#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Flora monsters and return to the Bounty Board at Comodo#
+#
+63386#Bounty Board Fur Seal#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Fur Seal monsters and return to the Bounty Board at Comodo#
+#
+63387#Bounty Board Grove#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Grove monsters and return to the Bounty Board at Comodo#
+#
+63388#Bounty Board Raggler#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Raggler monsters and return to the Bounty Board at Comodo#
+#
+63389#Bounty Board Sea Otter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sea Otter monsters and return to the Bounty Board at Comodo#
+#
+63390#Bounty Board Thara Frog#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Thara Frog monsters and return to the Bounty Board at Comodo#
+#
+
+63391#Bounty Board Stalactic Golem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stalactic Golem monsters and return to the Bounty Board at Comodo#
+#
+
+63392#Bounty Board Medusa#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Medusa monsters and return to the Bounty Board at Comodo#
+#
