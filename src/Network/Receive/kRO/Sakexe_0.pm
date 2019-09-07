@@ -930,45 +930,6 @@ sub map_loaded {
 	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
 }
 
-sub area_spell {
-	my ($self, $args) = @_;
-
-	# Area effect spell; including traps!
-	my $ID = $args->{ID};
-	my $sourceID = $args->{sourceID};
-	my $x = $args->{x};
-	my $y = $args->{y};
-	my $type = $args->{type};
-	my $fail = $args->{fail};
-
-	$spells{$ID}{'ID'} = $ID;
-	$spells{$ID}{'sourceID'} = $sourceID;
-	$spells{$ID}{'pos'}{'x'} = $x;
-	$spells{$ID}{'pos'}{'y'} = $y;
-	$spells{$ID}{'pos_to'}{'x'} = $x;
-	$spells{$ID}{'pos_to'}{'y'} = $y;
-	my $binID = binAdd(\@spellsID, $ID);
-	$spells{$ID}{'binID'} = $binID;
-	$spells{$ID}{'type'} = $type;
-	if ($type == 0x81) {
-		message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
-	}
-	debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
-
-	if ($args->{switch} eq "01C9") {
-		message TF("%s has scribbled: %s on (%d, %d)\n", getActorName($sourceID), $args->{scribbleMsg}, $x, $y);
-	}
-
-	Plugins::callHook('packet_areaSpell', {
-		ID => $ID,
-		sourceID => $sourceID,
-		x => $x,
-		y => $y,
-		type => $type,
-		fail => $fail,
-	});
-}
-
 sub buy_result {
 	my ($self, $args) = @_;
 	if ($args->{fail} == 0) {

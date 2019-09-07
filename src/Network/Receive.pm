@@ -3410,6 +3410,53 @@ sub map_property3 {
 	}
 }
 
+#011F, 01C9, 08C7
+sub area_spell {
+	my ($self, $args) = @_;
+
+	# Area effect spell; including traps!
+	my $ID = $args->{ID};
+	my $sourceID = $args->{sourceID};
+	my $x = $args->{x};
+	my $y = $args->{y};
+	my $type = $args->{type};
+	my $fail = $args->{fail};
+	my $binID;
+
+	if ($spells{$ID} && $spells{$ID}{'sourceID'} eq $sourceID) {
+		$binID = binFind(\@spellsID, $ID);
+		$binID = binAdd(\@spellsID, $ID) if ($binID eq "");
+	} else {
+		$binID = binAdd(\@spellsID, $ID);
+	}
+
+	$spells{$ID}{'ID'} = $ID;
+	$spells{$ID}{'sourceID'} = $sourceID;
+	$spells{$ID}{'pos'}{'x'} = $x;
+	$spells{$ID}{'pos'}{'y'} = $y;
+	$spells{$ID}{'pos_to'}{'x'} = $x;
+	$spells{$ID}{'pos_to'}{'y'} = $y;
+	$spells{$ID}{'binID'} = $binID;
+	$spells{$ID}{'type'} = $type;
+	if ($type == 0x81) {
+		message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
+	}
+	debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
+
+	if ($args->{switch} eq "01C9") {
+		message TF("%s has scribbled: %s on (%d, %d)\n", getActorName($sourceID), $args->{scribbleMsg}, $x, $y);
+	}
+
+	Plugins::callHook('packet_areaSpell', {
+		ID => $ID,
+		sourceID => $sourceID,
+		x => $x,
+		y => $y,
+		type => $type,
+		fail => $fail,
+	});
+}
+
 #099F
 sub area_spell_multiple2 {
 	my ($self, $args) = @_;
