@@ -5017,16 +5017,15 @@ sub cmdSlaveList {
 }
 
 sub cmdSpells {
-	my $msg = center(T(" Area Effects List "), 55, '-') ."\n".
-			T("  # Type                 Source                   X   Y\n");
+	my $msg = center(T(" Area Effects List "), 66, '-') ."\n".
+			T("  # Type                 Source                   X   Y  Range lvl\n");
 	for my $ID (@spellsID) {
 		my $spell = $spells{$ID};
 		next unless $spell;
-
-		$msg .=  sprintf("%3d %-20s %-20s   %3d %3d\n",
-				$spell->{binID}, getSpellName($spell->{type}), main::getActorName($spell->{sourceID}), $spell->{pos}{x}, $spell->{pos}{y});
+		$msg .=  sprintf("%3d %-20s %-20s   %3d %3d    %3d  %2d\n",
+				$spell->{binID}, getSpellName($spell->{type}), main::getActorName($spell->{sourceID}), $spell->{pos}{x}, $spell->{pos}{y}, $spell->{range}, $spell->{lvl});
 	}
-	$msg .= ('-'x55) . "\n";
+	$msg .= ('-'x66) . "\n";
 	message $msg, "list";
 }
 
