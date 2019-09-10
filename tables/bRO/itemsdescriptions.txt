@@ -4943,6 +4943,7 @@ Ataque: ^777777140^000000
 Peso: ^777777140^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777160^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1401#
 Lança geralmente usada para arremessar.
@@ -6890,7 +6891,7 @@ Classes: ^777777Sacerdotes, Mestres Taekwons, Sábios e evoluções^000000
 Arma sinistra que vicia a mente do usuário.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffATQM +120. INT +5.^000000
-Bônus de ATQ de acordo com o refino:
+Bônus de ATQM de acordo com o refino:
 +1: ^0000ffATQM +1.^000000
 +2: ^0000ffATQM +4.^000000
 +3: ^0000ffATQM +9.^000000
@@ -10386,7 +10387,7 @@ Classes: ^777777Magos, Espiritualistas e evoluções^000000
 Arma sinistra que vicia a mente do usuário.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffATQM +200. INT +6.^000000
-Bônus de ATQ de acordo com o refino:
+Bônus de ATQM de acordo com o refino:
 +1: ^0000ffATQM +1.^000000
 +2: ^0000ffATQM +4.^000000
 +3: ^0000ffATQM +9.^000000
@@ -22155,7 +22156,7 @@ Peso: ^7777771^000000
 4638#
 ^0000ffATQ +30.^000000
 --------------------------
-Ao realizar ataques físicos:
+Ao sofrer ataques físicos:
 ^0000ffDrena 5 de SP do usuário.^000000
 --------------------------
 Tipo: ^777777Carta^000000
@@ -22177,7 +22178,7 @@ Peso: ^7777771^000000
 4641#
 ^0000ffRegeneração natural de SP^000000 ^ff0000-100%.^000000
 --------------------------
-Ao realizar ataques físicos:
+Ao sofrer ataques físicos:
 ^0000ffRecupera 1 de SP.^000000
 --------------------------
 Tipo: ^777777Carta^000000
@@ -34901,7 +34902,7 @@ Ingresso especial que permite a entrada nos Mapas Especiais somente para persona
 ^CD3278Coord.:^000000 prontera 162, 326
 <NAVI>[Navegar]<INFO>prontera,162,326,0,000,0</INFO></NAVI>
 --------------------------
-Este ticket desaparecerá durante a manutenção de 30/04/2019. Aproveite e divirta-se!
+Este ticket desaparecerá durante a manutenção de 30/09/2019. Aproveite e divirta-se!
 --------------------------
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
 --------------------------
@@ -43193,6 +43194,32 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^777777160^000000
 Classes: ^777777Ninjas e evoluções^000000
 #
+13345#
+Uma arma ninja cujas lâminas cortam o vento com a violência de uma turbina. Apesar deste modelo de shuriken datar de séculos, seu uso até hoje confirma sua eficiência.
+^0000ffATQ +10 a cada 2 refinos.^000000
+A cada 3 refinos:
+^0000ffDano físico a distância +2%.^000000
+Refino +7 ou mais:
+^0000ffDano de [Turbilhão de Pétalas] +30%.^000000
+Refino +9 ou mais:
+^0000ffRecarga de [Turbilhão de Pétalas] -1 segundo.^000000
+Refino +11 ou mais:
+^0000ffDano físico contra raças Morto-Vivo e Demônio +20%.^000000
+^0000ffDano físico contra as propriedades Fogo e Sombrio +15%.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um efeito por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffFOR +20.^000000
+^0000ffDano físico a distância +10%.^000000
+Tipo: ^777777Shuriken Huuma^000000
+Ataque: ^777777230^000000
+Peso: ^777777130^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
+#
 13400#
 Espada de uma mão, geralmente usada por marujos. Permite usar a habilidade
 [Golpe Fulminante nv 5].  FOR +2, DEF +1.
@@ -45213,7 +45240,7 @@ Peso: ^7777770^000000
 #
 14506#
 ^ff0000Intransferível.^000000
-Ticket para acessar a fortaleza do Sussurro Sombrio memorizada.
+Ticket para acessar a fortaleza do Sussurro Sombrio.
 ^0000ffTeleporta para a entrada da instância.^000000
 Peso: ^7777770^000000
 #
@@ -58042,6 +58069,16 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20510#
+Um par de asas feitas de lâminas finas e extremamente polidas. O material garante a leveza e conforto que você espera de um visual; só tome cuidado com as pontas: dar uma volta em Prontera no horário de pico é uma ótima forma de sair espetando os outros a torto e direito.
+^008080Exibe o visual nas costas do personagem.^000000
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20511#
 Quem diria que na verdade você descende de uma linhagem de nobres de Alfheim? Será que você herdou suas asas de Oberon e Titânia, ou seria do próprio Kardui? Talvez tenha sido do Rei Arlequim, o esplêndido mais conhecido como o Pecado da Preguiça do Pé Grande. Seja como for, o recente contato dos humanos com os Esplêndidos em Ash Vacuum fez suas asas de fada despertarem. Pena que você ainda pesa demais pra voar.
 ^008080Exibe o visual nas costas do personagem.^000000
@@ -60108,6 +60145,41 @@ Peso: ^77777780^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+22198#
+Não podem te falar pra “descer do salto” se você estiver calçando estes tamancos. Afinal, o que as pessoas do seu grupo de up fariam sem uma Musa com os bônus incríveis destes saltos?
+--------------------------
+^0000ffDEFM +15.^000000
+^0000ffHP e SP máx. +3%.^000000
+^0000ffDano mágico +2%.^000000
+^0000ffDano mágico de propriedade Neutro +2%.^000000
+--------------------------
+Ao aprender [Canção de Frigga] nv. 5:
+^0000ffHP máx. +10%.^000000
+Ao aprender [Ritmo Contagiante] nv. 5:
+^0000ffTodos os atributos +5.^000000
+Ao aprender [Harmonizar] nv. 5:
+^0000ffVelocidade de ataque +5%.^000000
+Ao aprender [Ode a Hela] nv. 5:
+^0000ffDano de [Ruído Estridente] +20%.^000000
+^0000ffConjuração variável de [Ruído Estridente] -20%.^000000
+Ao aprender [Melodia de Morfeu] nv. 5:
+^0000ffAo realizar ataques mágicos, 4% de chance de infligir Sono Profundo no alvo.^000000
+--------------------------
+Refino +5 ou mais:
+^0000ffHP e SP máx. +7% adicional.^000000
+^0000ffDano mágico +3% adicional.^000000
+^0000ffDano mágico de propriedade Neutro +3% adicional.^000000
+Refino +7 ou mais:
+^0000ffHP e SP máx. +10% adicional.^000000
+^0000ffDano mágico +5% adicional.^000000
+^0000ffDano mágico de propriedade Neutro +5% adicional.^000000
+--------------------------
+Tipo: ^777777Calçado^000000
+Defesa: ^77777715^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 22204#
 Botas indispensáveis para um Senhor do Tempo. Basta equipá-las, entrar na sua cabine telefônica e viajar rumo a aventuras espaço-temporais.
 ^0000ffCRIT +10.^000000
@@ -60936,6 +61008,8 @@ Um ticket que pode ser trocado por um Ovo de Unicórnio.
 ^CD3278NPC:^000000 Negociadora de Ovos
 ^CD3278Local:^000000 prontera 221, 209
 <NAVI>[Navegar]<INFO> prontera, 221,209,0,000,0</INFO></NAVI>
+--------------------------
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho e nem derrubado no chão, mas pode ser colocado no armazém.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -62135,6 +62209,34 @@ Peso: ^77777740^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+28491#
+Um punhal multiuso portado pelos Matagis, caçadores que vivem nos arredores Amatsu. Se você for um aficionado pelo estilo de vida da caça e sobrevivência, esta é a arma ideal.
+--------------------------
+^0000ffSOR +2.^000000
+^0000ffPrecisão +10.^000000
+^0000ffCRIT +5 a distância.^000000
+^0000ffHabilita [Esconderijo] nv. 1.^000000
+--------------------------
+SOR base 100 ou mais:
+^0000ffPrecisão +5 adicional.^000000
+^0000ffCRIT +10 a distância adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Faro Aguçado 1]^000000
+^0000ffPrecisão +15 adicional.^000000
+^0000ffCRIT +10 a distância adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Faro Aguçado 2]^000000
+^0000ffPrecisão +15 adicional.^000000
+^0000ffCRIT +10 a distância adicional.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
 28492#
 Normalmente, espiar o diário de alguém seria falta de educação, mas não se preocupe: os conhecimentos descritos nesse livro são repassados de geração em geração aos Renegados para que eles aprimorem suas técnicas.
 ^0000ffFOR +5. AGI +5. INT +5.^000000
@@ -62937,6 +63039,47 @@ Peso: ^77777780^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Renegados^000000
+#
+28763#
+Conhecida como “lâmina do vento”, essa lâmina é usada frequentemente em conjunto com uma Wakizashi Ancestral. O conjunto de espadas curtas permite combinações de ataque de velocidade e mortalidade ímpares.
+^FA4E09Conjunto^000000
+^FA4E09[Wakizashi Ancestral]^000000
+^FA4E09[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um efeito por 7 segundos.^000000
+^CD3278Efeito:^000000
+^0000ffFOR +20.^000000
+^0000ffATQ da arma +10%.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777150^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
+#
+28764#
+Também chamada de “espada do orvalho”, esta é uma lâmina curta e afiadíssima. Use-a com uma Kodachi Ancestral para garantir máxima eficiência em combate e acabar com seus oponentes em um piscar de olhos.
+^FA4E09Conjunto^000000
+^FA4E09[Kodachi Ancestral]^000000
+A cada 3 refinos das duas armas:
+^0000ffATQ +10.^000000
+A cada 5 refinos das duas armas:
+^0000ffATQ da arma +2%.^000000
+Soma dos refinos das armas +14 ou mais:
+^0000ffDano de [Impacto Cruzado] +25%.^000000
+Soma dos refinos das armas +16 ou mais:
+^0000ffRecarga de [Impacto Cruzado] -2 segundos.^000000
+Soma dos refinos das armas +18 ou mais:
+^0000ffHabilita [Esmagamento Sombrio] no mesmo nível aprendido de [Distorção Crescente].^000000
+^0000ffHabilita [Distorção Crescente] no mesmo nível aprendido de [Esmagamento Sombrio].^000000
+Soma dos refinos das armas +20 ou mais:
+^0000ffDano de [Impacto Cruzado] +25% adicional.^000000
+Tipo: ^777777Adaga^000000
+Ataque: ^777777150^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Ninjas e evoluções^000000
 #
 28900#
 Escudo oficial dos Guardiões Reais do Reino de Rune-Midgard.
@@ -64949,6 +65092,15 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31505#
+Faça os outros lhe conhecerem como o temível Adventureus Rapinum: um raro e imponente espécime de falcão caracterizado pela sua velocidade ímpar, força avassaladora, visão aguçada e... metabolismo extremamente acelerado? É melhor você ir aprendendo a balancear suas refeições com as suas jornadas para não ter uma surpresa indesejada...
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Meio e Baixo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 31510#
 Cabelos curtos são tão bonitos e estilosos quanto os longos. Por isso, essa peruca esbanja um visual bem diferente e moderno, contando ainda com duas imitações de orelhas de gatinho. Mas saiba que, com ela, pode ser que te confundam com algum personagem famoso de Amatsu.
 Tipo: ^777777Visual^000000
@@ -65066,6 +65218,15 @@ Peso : ^7777770^000000
 Nível necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
+31566#
+Sedosa e confortável, essa estola é parecida com a usada por emissários divinos. O enfeite de Poporing está ali só pra não te confundirem com um enviado celestial de verdade, afinal, eles jamais perderiam seu tempo com bonecagens (mas se está lendo isso, você provavelmente perderia).
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 31568#
 Com origens na filosofia de Kunlun, esses espíritos representam a harmonia do mundo: o bem e o mal, o cheio e o vazio. O equilíbrio dessas forças é o caminho para atingir o potencial máximo do seu Chi.
 Tipo : ^777777Visual^000000
@@ -65171,6 +65332,14 @@ Equipa em : ^777777Baixo^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
+#
+31614#
+Uma raposinha simpática e companheira. Lembra até certo alguém, que usava o apelido de “Fox” e era muito querido pelos aventureiros de Rune-Midgard...
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 31635#
 Longos cabelos loiros que esbanjam um luxo que só. Vestindo a roupa certa, podem cair muito bem num cosplay também!
