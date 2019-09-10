@@ -189,7 +189,7 @@ sub new {
 		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID success)]], # 15
 		'011C' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C', [qw(fail)]], # 3
-		'011F' => ['area_spell', 'a4 a4 v2 C2', [qw(ID sourceID x y type fail)]], # 16
+		'011F' => ['area_spell', 'a4 a4 v2 C2', [qw(ID sourceID x y type isVisible)]], # 16
 		'0120' => ['area_spell_disappears', 'a4', [qw(ID)]], # 6
 		'0121' => ['cart_info', 'v2 V2', [qw(items items_max weight weight_max)]], # 14
 		'0122' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
@@ -298,7 +298,7 @@ sub new {
 		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]], # 22
 		'01C7' => ['encryption_acknowledge'], # 2
 		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]], # 13
-		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]], # 97
+		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type isVisible scribbleLen scribbleMsg)]], # 97
 		'01CC' => ['monster_talk', 'a4 C3', [qw(ID stateID skillID arg)]], # 9
 		'01CD' => ['sage_autospell', 'a*', [qw(autospell_list)]], # 30
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]], # 28
@@ -526,7 +526,7 @@ sub new {
 		'0857' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
 		'0858' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
 		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
-		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
+		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range isVisible)]], # -1
 		'08CA' => ['cash_shop_list', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
 		'08CD' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
