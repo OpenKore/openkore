@@ -38,7 +38,7 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(calcPosFromTime calcPosition calcTime checkMovementDirection countSteps distance
+	qw(calcPosFromTime calcPosition calcStepsWalkedFromTimeAndRoute calcTime checkMovementDirection countSteps distance
 	intToSignedInt intToSignedShort
 	blockDistance adjustedBlockDistance getVector moveAlong moveAlongVector
 	normalize vectorToDegree max min round ceil),
@@ -207,6 +207,66 @@ sub calcPosition {
 		$result{y} = int sprintf("%.0f", $result{y}) if (!$float);
 		return \%result;
 	}
+}
+
+##
+# calcStepsWalkedFromTimeAndRoute(solution, speed, time_elapsed)
+# solution: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path, the first array element should be the current position.
+# speed: The actor speed in blocks / second.
+# time_elapsed: The amount of time that has passed since movement started.
+#
+# Returns in which step of solution the character currently is, including possibly step 0.
+#
+# Example:
+# my $steps_walked;
+# $steps_walked = calcStepsWalkedFromTimeAndRoute($solution, $speed, $time_elapsed)
+# print "You are currently at: $solution->[$steps_walked]{x} $solution->[$steps_walked]{y}\n";
+sub calcStepsWalkedFromTimeAndRoute {
+    my ($solution, $speed, $time_elapsed) = @_;
+
+    my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
+    my $current_step = 0; # step
+	
+	my %current_pos = ( x => $solution->[0]{x}, y => $solution->[0]{y} );
+    my %next_pos;
+	
+	my @steps = @{$solution}[1..$#{$solution}];
+	
+    my $dist = @steps;
+
+    my $time_needed_ortogonal = 1 * $speed;
+    my $time_needed_diagonal = sqrt(2) * $speed;
+    my $time_needed;
+
+    while ($current_step < $dist) {
+        %next_pos = ( x => $steps[$current_step]{x}, y => $steps[$current_step]{y} );
+
+        $stepType = 0;
+
+        if ($current_pos{x} != $next_pos{x}) {
+            $stepType++;
+        }
+
+        if ($current_pos{y} != $next_pos{y}) {
+            $stepType++;
+        }
+
+        if ($stepType == 2) {
+            $time_needed = $time_needed_diagonal;
+        } elsif ($stepType == 1) {
+            $time_needed = $time_needed_ortogonal;
+        }
+
+        if ($time_elapsed > $time_needed) {
+            $time_elapsed -= $time_needed;
+            %current_pos = %next_pos;
+            $current_step++;
+        } else {
+            last;
+        }
+    }
+
+    return $current_step;
 }
 
 ##
