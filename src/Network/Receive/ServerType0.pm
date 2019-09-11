@@ -668,6 +668,7 @@ sub new {
  		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
 		'0B20' => ['hotkeys', 'C v a*', [qw(rotate tab hotkeys)]],#herc PR 2468
+		'0B03' => ['show_eq', 'v Z24 v9 C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color clothes_color2 sex equips_info)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 

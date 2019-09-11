@@ -2618,6 +2618,12 @@ sub show_eq {
 			types => 'a2 v C V2 C a8 l v2 C a25 C',
 			keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
 		};
+	} elsif ($args->{switch} eq '0B03') { # PACKETVER >= 20150226
+		$item_info = {
+			len => 67,
+			types => 'a2 V C V2 C a16 l v2 C a25 C',
+			keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+		};
 	} else { # this can't happen
 		return;
 	}
