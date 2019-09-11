@@ -1900,7 +1900,11 @@ sub inventoryItemRemoved {
 			delete $char->{equipment}{arrow};
 			delete $char->{arrow};
 		}
-		$char->inventory->remove($item);
+		if( defined $item->{'name'}) {
+			$char->inventory->remove($item);
+		} else {
+			warning "Server sended item_removed but we not have this item anymore. binID: ".$binID."\n";
+		}
 	}
 	$itemChange{$item->{name}} -= $amount;
 	Plugins::callHook('inventory_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
