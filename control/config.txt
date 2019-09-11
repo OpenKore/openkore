@@ -69,7 +69,7 @@ attackAuto_notInTown 1
 attackDistance 1.5
 attackDistanceAuto 0
 attackMaxDistance 2.5
-attackMaxRouteDistance 100
+attackMaxRouteDistance 50
 attackMaxRouteTime 4
 attackMinPlayerDistance 2
 attackMinPortalDistance 4
@@ -77,6 +77,8 @@ attackUseWeapon 1
 attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 0
+attackAdjustLOSMaxRouteDistance 10
+attackAdjustLOSMaxRouteTargetDistance 14
 attackLooters 0
 attackChangeTarget 1
 aggressiveAntiKS 0
@@ -202,10 +204,10 @@ route_randomWalk_maxRouteTime 75
 route_maxWarpFee
 route_maxNpcTries 5
 route_teleport 0
-route_teleport_minDistance 150
+route_teleport_minDistance 75
 route_teleport_maxTries 8
 route_teleport_notInMaps
-route_step 15
+route_step 7
 route_removeMissingPortals_NPC 1
 route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
@@ -364,13 +366,15 @@ mercenary_attackMaxDistance 2.5
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 0
+mercenary_attackAdjustLOSMaxRouteDistance 10
+mercenary_attackAdjustLOSMaxRouteTargetDistance 14
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
 
 mercenary_followDistanceMax 10
 mercenary_followDistanceMin 3
 
-mercenary_route_step 15
+mercenary_route_step 7
 
 mercenary_tankMode 0
 mercenary_tankModeTarget
@@ -397,13 +401,15 @@ homunculus_attackMaxDistance 2.5
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 0
+homunculus_attackAdjustLOSMaxRouteDistance 10
+homunculus_attackAdjustLOSMaxRouteTargetDistance 14
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 
 homunculus_followDistanceMax 10
 homunculus_followDistanceMin 3
 
-homunculus_route_step 15
+homunculus_route_step 7
 
 homunculus_tankMode 0
 homunculus_tankModeTarget
@@ -700,7 +706,7 @@ useSelf_item {
 buyAuto {
 	npc
 	standpoint
-	distance 5
+	distance 3
 	price
 	minAmount 2
 	maxAmount 3
@@ -713,13 +719,13 @@ buyAuto {
 sellAuto 0
 sellAuto_npc
 sellAuto_standpoint
-sellAuto_distance 5
+sellAuto_distance 3
 sellAuto_npc_steps s
 
 storageAuto 0
 storageAuto_npc
 storageAuto_standpoint
-storageAuto_distance 5
+storageAuto_distance 3
 storageAuto_npc_type 1
 storageAuto_npc_steps
 storageAuto_password
