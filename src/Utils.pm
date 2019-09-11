@@ -40,7 +40,7 @@ our @EXPORT = (
 	# Math
 	qw(calcPosFromTime calcPosition calcTime checkMovementDirection countSteps distance
 	intToSignedInt intToSignedShort
-	blockDistance getVector moveAlong moveAlongVector
+	blockDistance adjustedBlockDistance getVector moveAlong moveAlongVector
 	normalize vectorToDegree max min round ceil),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
@@ -333,6 +333,24 @@ sub blockDistance {
 
 	return max(abs($pos1->{x} - $pos2->{x}),
 	           abs($pos1->{y} - $pos2->{y}));
+}
+
+##
+# adjustedBlockDistance(pos1, pos2)
+# pos1, pos2: references to position hash tables.
+# Returns: the distance in "time to walk blocks" (in RO walking diagonally takes square root of 2 times longer than walking the same amount of cells orthogonally).
+#
+# Calculates the distance between pos1 and pos2.
+# This is used for e.g. walking time calculation.
+sub adjustedBlockDistance {
+	my ($pos1, $pos2) = @_;
+	
+	my $xDistance = abs($pos1->{x} - $pos2->{x});
+	my $yDistance = abs($pos1->{y} - $pos2->{y});
+	
+	my $dist = $xDistance + $yDistance - ((2-sqrt(2)) * min($xDistance, $yDistance));
+	
+	return $dist;
 }
 
 ##

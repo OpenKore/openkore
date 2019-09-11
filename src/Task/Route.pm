@@ -34,7 +34,7 @@ use Network;
 use Field;
 use Translation qw(T TF);
 use Misc;
-use Utils qw(timeOut distance calcPosition);
+use Utils qw(timeOut distance blockDistance calcPosition);
 use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
@@ -165,7 +165,10 @@ sub iterate {
 	} elsif ($self->{stage} eq '') {
 		my $pos = calcPosition($self->{actor});
 		my $begin = time;
-		if ($self->getRoute($self->{solution}, $field, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
+		if ($pos->{x} == $self->{dest}{pos}{x} && $pos->{y} == $self->{dest}{pos}{y}) {
+			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
+			$self->setDone();
+		} elsif ($self->getRoute($self->{solution}, $field, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = 'Route Solution Ready';
 			debug "Route $self->{actor} Solution Ready!\n", "route";
 
@@ -176,7 +179,7 @@ sub iterate {
 			}
 
 		} else {
-			debug "Something's wrong; there is no path to " . $field->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
+			debug "Something's wrong; there is no path from " . $field->baseName . "($pos->{x},$pos->{y}) to " . $field->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
 			$self->setError(CANNOT_CALCULATE_ROUTE, "Unable to calculate a route.");
 		}
 
@@ -319,7 +322,7 @@ sub iterate {
 				# If it is, then we've moved to an unexpected place. This could be caused by auto-attack,
 				# for example.
 				my %nextPos = (x => $self->{new_x}, y => $self->{new_y});
-				if (distance(\%nextPos, $pos) > $config{$self->{actor}{configPrefix}.'route_step'}) {
+				if (blockDistance(\%nextPos, $pos) > 10) {
 					debug "Route $self->{actor} - movement interrupted: reset route\n", "route";
 					$self->{stage} = '';
 
@@ -398,22 +401,12 @@ sub getRoute {
 	Misc::closestWalkableSpot($field, \%start);
 	Misc::closestWalkableSpot($field, \%dest);
 
-	# Generate map weights (for wall avoidance)
-	my $weights;
-	if ($avoidWalls) {
-		#$weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
-		$weights = join('', (map chr($_), (255, 7, 6, 3, 2, 1)));
-		$weights .= chr(1) x (256 - length($weights));
-	} else {
-		$weights = chr(255) . (chr(1) x 255);
-	}
-
 	# Calculate path
 	my $pathfinding = new PathFinding(
 		start => \%start,
 		dest  => \%dest,
 		field => $field,
-		weights => $weights
+		avoidWalls => $avoidWalls
 	);
 	return undef if (!$pathfinding);
 
@@ -423,7 +416,8 @@ sub getRoute {
 	} else {
 		$ret = $pathfinding->runcount();
 	}
-	return $ret > 0;
+	
+	return ($ret >= 0 ? 1 : 0);
 }
 
 sub mapChanged {

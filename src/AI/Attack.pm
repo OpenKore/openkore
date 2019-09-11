@@ -64,7 +64,7 @@ sub process {
 		my $target = Actor::get($ID);
 
 		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && round(distance(calcPosition($target), $attackSeq->{monsterPos})) > $attackSeq->{attackMethod}{maxDistance}) {
+		 && blockDistance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -73,7 +73,7 @@ sub process {
 			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
 		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && round(distance(calcPosition($target), calcPosition($char))) <= $attackSeq->{attackMethod}{maxDistance}) {
+		 && blockDistance(calcPosition($target), calcPosition($char)) <= $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster is within attack range; stop moving
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -249,12 +249,12 @@ sub main {
 	my $target = Actor::get($ID);
 	my $myPos = $char->{pos_to};
 	my $monsterPos = $target->{pos_to};
-	my $monsterDist = round(distance($myPos, $monsterPos));
+	my $monsterDist = blockDistance($myPos, $monsterPos);
 
 	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 	my $realMyPos = calcPosition($char);
 	my $realMonsterPos = calcPosition($target);
-	my $realMonsterDist = round(distance($realMyPos, $realMonsterPos));
+	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	if (!$config{'runFromTarget'}) {
 		$myPos = $realMyPos;
 		$monsterPos = $realMonsterPos;
@@ -395,16 +395,26 @@ sub main {
 		}
 
 	} elsif (
+		# We are a ranged attacker without LOS
 		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 2
-		&& (($config{attackCanSnipe} && !checkLineSnipable($realMyPos, $realMonsterPos))
+		# Every Walkable cell is also a Snipable cell, so we check for both
+		# FIXME: Should make a CheckLineWalkableOrSnipable function
+		&& (($config{attackCanSnipe} && !checkLineSnipable($realMyPos, $realMonsterPos) && !checkLineWalkable($realMyPos, $realMonsterPos, 1))
 		|| (!$config{attackCanSnipe} && $realMonsterDist <= $args->{attackMethod}{maxDistance} && !checkLineWalkable($realMyPos, $realMonsterPos, 1)))
 	) {
-		# We are a ranged attacker without LOS
+		
+		my $min_dist = 0;
+		if ($config{runFromTarget}) {
+			$min_dist = $config{runFromTarget_dist};
+		}
+		
 		# Calculate squares around monster within shooting range, but not
 		# closer than runFromTarget_dist
-		my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
-					  $args->{attackMethod}{distance},
-								  $config{runFromTarget} ? $config{runFromTarget_dist} : 0);
+		my @stand = calcRectArea2(
+			$realMonsterPos->{x}, $realMonsterPos->{y},
+			$args->{attackMethod}{distance},
+			$min_dist
+		);
 
 		my ($master, $masterPos);
 		if ($config{follow}) {
@@ -423,16 +433,31 @@ sub main {
 		for my $spot (@stand) {
 			# Is this spot acceptable?
 			# 1. It must have LOS to the target ($realMonsterPos).
-			# 2. It must be within $config{followDistanceMax} of
-			#    $masterPos, if we have a master.
+			# 2. It must be within $config{followDistanceMax} of $masterPos, if we have a master.
+			# 3. It must have at max $config{attackAdjustLOSMaxRouteDistance} of route distance to it from our current position.
+			# 4. The route should not exceed at any point $config{attackAdjustLOSMaxRouteTargetDistance} distance from the target.
 			if (
-			    (($config{attackCanSnipe} && checkLineSnipable($spot, $realMonsterPos))
-				|| checkLineWalkable($spot, $realMonsterPos))
-				&& $field->isWalkable($spot->{x}, $spot->{y})
+				$field->isWalkable($spot->{x}, $spot->{y})
 				&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
-				&& (!$master || round(distance($spot, $masterPos)) <= $config{followDistanceMax})
+				&& (!$master || blockDistance($spot, $masterPos) <= $config{followDistanceMax})
+			    &&    (($config{attackCanSnipe} && (checkLineSnipable($spot, $realMonsterPos) || checkLineWalkable($spot, $realMonsterPos, 1)))
+				   || (!$config{attackCanSnipe} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && checkLineWalkable($spot, $realMonsterPos, 1)))
+				&& (!$master || blockDistance($spot, $masterPos) <= $config{followDistanceMax})
+			    &&    (($config{attackCanSnipe} && (checkLineSnipable($spot, $realMonsterPos) || checkLineWalkable($spot, $realMonsterPos, 1)))
+				   || (!$config{attackCanSnipe} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && checkLineWalkable($spot, $realMonsterPos, 1)))
 			) {
-				my $dist = distance($realMyPos, $spot);
+				my $dist = new PathFinding(
+					field => $field,
+					start => $realMyPos,
+					dest => $spot,
+					min_x => ($realMonsterPos->{x} - $config{attackAdjustLOSMaxRouteTargetDistance}),
+					max_x => ($realMonsterPos->{x} + $config{attackAdjustLOSMaxRouteTargetDistance}),
+					min_y => ($realMonsterPos->{y} - $config{attackAdjustLOSMaxRouteTargetDistance}),
+					max_y => ($realMonsterPos->{y} + $config{attackAdjustLOSMaxRouteTargetDistance}),
+				)->runcount;
+				
+				next unless ($dist >= 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
+				
 				if (!defined($best_dist) || $dist < $best_dist) {
 					$best_dist = $dist;
 					$best_spot = $spot;
@@ -441,17 +466,12 @@ sub main {
 		}
 
 		# Move to the closest spot
-		my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
+		my $msg = "No LOS from $char ($realMyPos->{x}, $realMyPos->{y}) to target $target ($realMonsterPos->{x}, $realMonsterPos->{y}) (distance: $realMonsterDist)";
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			if ($config{attackChangeTarget} == 1) {
-				# Restart attack from processAutoAttack
-				AI::dequeue;
-				$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);
-			} else {
-				$char->route(undef, @{$best_spot}{qw(x y)});
-			}
+			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);
 		} else {
+			# FIXME: Should blacklist this target so we dont keep re-trying to attack it
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			$target->{attack_failedLOS} = time;
 			AI::dequeue;
@@ -460,7 +480,7 @@ sub main {
 		}
 
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-		#my $begin = time;
+		# my $begin = time;
 		# Get a list of blocks that we can run to
 		my @blocks = calcRectArea($myPos->{x}, $myPos->{y},
 			# If the monster hit you while you're running, then your recorded
@@ -470,7 +490,7 @@ sub main {
 		# Find the distance value of the block that's farthest away from a wall
 		my $highest;
 		foreach (@blocks) {
-			my $dist = ord(substr($field->{dstMap}, $_->{y} * $field->width + $_->{x}));
+			my $dist = $field->getBlockDist($_->{x}, $_->{y});
 			if (!defined $highest || $dist > $highest) {
 				$highest = $dist;
 			}
@@ -482,7 +502,7 @@ sub main {
 		use constant AVOID_WALLS => 4;
 		for (my $i = 0; $i < @blocks; $i++) {
 			# We want to avoid walls (so we don't get cornered), if possible
-			my $dist = ord(substr($field->{dstMap}, $blocks[$i]{y} * $field->width + $blocks[$i]{x}));
+			my $dist = $field->getBlockDist($blocks[$i]{x}, $blocks[$i]{y});
 			if ($highest >= AVOID_WALLS && $dist < AVOID_WALLS) {
 				delete $blocks[$i];
 				next;
@@ -491,9 +511,11 @@ sub main {
 			$pathfinding->reset(
 				field => $field,
 				start => $myPos,
-				dest => $blocks[$i]);
+				dest => $blocks[$i]
+			);
+			
 			my $ret = $pathfinding->runcount;
-			if ($ret <= 0 || $ret > $config{'runFromTarget_dist'} * 2) {
+			if ($ret < 0 || $ret > $config{'runFromTarget_dist'} * 2) {
 				delete $blocks[$i];
 				next;
 			}
@@ -504,7 +526,7 @@ sub main {
 		my $bestBlock;
 		foreach (@blocks) {
 			next unless defined $_;
-			my $dist = distance($monsterPos, $_);
+			my $dist = adjustedBlockDistance($monsterPos, $_);
 			if (!defined $largestDist || $dist > $largestDist) {
 				$largestDist = $dist;
 				$bestBlock = $_;
