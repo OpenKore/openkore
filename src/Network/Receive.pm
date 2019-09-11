@@ -20,6 +20,7 @@
 package Network::Receive;
 
 use strict;
+use Time::HiRes qw(time);
 use Exporter;
 use Network::PacketParser; # import
 use base qw(Network::PacketParser);
