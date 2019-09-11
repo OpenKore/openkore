@@ -181,7 +181,7 @@ sub new {
 		'011A' => ['skill_used_no_damage', 'v2 a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'011C' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C', [qw(fail)]],
-		'011F' => ['area_spell', 'a4 a4 v2 C2', [qw(ID sourceID x y type fail)]],
+		'011F' => ['area_spell', 'a4 a4 v2 C2', [qw(ID sourceID x y type isVisible)]],
 		'0120' => ['area_spell_disappears', 'a4', [qw(ID)]],
 		'0121' => ['cart_info', 'v2 V2', [qw(items items_max weight weight_max)]],
 		'0122' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
@@ -280,7 +280,7 @@ sub new {
 		'01C4' => ['storage_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'a2 V v C4 a8', [qw(ID amount nameID type identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'a2 v a4 v C', [qw(ID itemID actorID remaining success)]],
-		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
+		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type isVisible scribbleLen scribbleMsg)]],
 		'01CD' => ['sage_autospell', 'a*', [qw(autospell_list)]],
 		'01CF' => ['devotion', 'a4 a20 v', [qw(sourceID targetIDs range)]],
 		'01D0' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
@@ -527,7 +527,7 @@ sub new {
 		#'08B9' => ['account_id', 'x4 V v', [qw(accountID unknown)]], # len: 12 Conflict with the struct (found in twRO 29032013)
 		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
 		'08BB' => ['login_pin_new_code_result', 'v V', [qw(flag seed)]],
-		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range fail)]], # -1
+		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range isVisible)]], # -1
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08CA' => ['cash_shop_list', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
 		'08CB' => ['rates_info', 's4 a*', [qw(len exp death drop detail)]],
@@ -989,52 +989,6 @@ sub map_loaded {
 
 	# request to unfreeze char - alisonrag
 	$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
-}
-
-sub area_spell {
-	my ($self, $args) = @_;
-
-	# Area effect spell; including traps!
-	my $ID = $args->{ID};
-	my $sourceID = $args->{sourceID};
-	my $x = $args->{x};
-	my $y = $args->{y};
-	my $type = $args->{type};
-	my $fail = $args->{fail};
-	my $binID;
-
-	if ($spells{$ID} && $spells{$ID}{'sourceID'} eq $sourceID) {
-		$binID = binFind(\@spellsID, $ID);
-		$binID = binAdd(\@spellsID, $ID) if ($binID eq "");
-	} else {
-		$binID = binAdd(\@spellsID, $ID);
-	}
-
-	$spells{$ID}{'ID'} = $ID;
-	$spells{$ID}{'sourceID'} = $sourceID;
-	$spells{$ID}{'pos'}{'x'} = $x;
-	$spells{$ID}{'pos'}{'y'} = $y;
-	$spells{$ID}{'pos_to'}{'x'} = $x;
-	$spells{$ID}{'pos_to'}{'y'} = $y;
-	$spells{$ID}{'binID'} = $binID;
-	$spells{$ID}{'type'} = $type;
-	if ($type == 0x81) {
-		message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
-	}
-	debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
-
-	if ($args->{switch} eq "01C9") {
-		message TF("%s has scribbled: %s on (%d, %d)\n", getActorName($sourceID), $args->{scribbleMsg}, $x, $y);
-	}
-
-	Plugins::callHook('packet_areaSpell', {
-		ID => $ID,
-		sourceID => $sourceID,
-		x => $x,
-		y => $y,
-		type => $type,
-		fail => $fail,
-	});
 }
 
 sub buy_result {
