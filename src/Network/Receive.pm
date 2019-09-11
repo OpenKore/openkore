@@ -443,6 +443,14 @@ use constant {
 	GROUPMEMBER_DELETE_EXPEL => 0x1,
 };
 
+# item list type
+use constant {
+	INVTYPE_INVENTORY => 0x0,
+	INVTYPE_CART => 0x1,
+	INVTYPE_STORAGE => 0x2,
+	INVTYPE_GUILD_STORAGE => 0x3,
+};
+
 # exp origin
 use constant {
 	EXP_FROM_BATTLE => 0x0,
@@ -4300,6 +4308,106 @@ sub inventory_items_stackable {
 			}
 		}
 	});
+}
+
+sub item_list_start {
+	my ($self, $args) = @_;
+	debug TF("Starting Item List. ID: %s\n", $args->{type}), "info";
+	$current_item_list = $args->{type};
+}
+
+sub item_list_stackable {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $arguments = {
+		class => 'Actor::Item',
+		debug_str => 'Stackable Item List',
+		items => [$self->parse_items_stackable($args)],
+		callback => sub {
+			my ($local_item) = @_;
+
+			if (defined $char->{arrow} && $local_item->{ID} eq $char->{arrow}) {
+				$local_item->{equipped} = 32768;
+				$char->{equipment}{arrow} = $local_item;
+			}
+
+		}
+	};
+
+	if ( $args->{type} == INVTYPE_INVENTORY ) {
+		$arguments->{hook} = 'packet_inventory';
+		$arguments->{getter} = sub { $char->inventory->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->inventory->add($_[0]) };
+	} elsif ( $args->{type} == INVTYPE_CART ) {
+		$arguments->{hook} = 'packet_cart',
+		$arguments->{getter} = sub { $char->cart->getByID($_[0]{ID}) },
+		$arguments->{adder} = sub { $char->cart->add($_[0]) },
+	} elsif ( $args->{type} == INVTYPE_STORAGE ) {
+		$arguments->{hook} = 'packet_storage';
+		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->storage->add($_[0]) };
+	} elsif ( $args->{type} == INVTYPE_GUILD_STORAGE ) {
+		return; # guild storage not implemented yet =/ (2019-06-21)
+	} else {
+		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
+	}
+
+	$self->_items_list($arguments);
+}
+
+sub item_list_nonstackable {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $arguments = {
+		class => 'Actor::Item',
+		debug_str => 'Non-Stackable Item List',
+		items => [$self->parse_items_nonstackable($args)],
+		callback => sub {
+			my ($local_item) = @_;
+
+			if ($local_item->{equipped}) {
+				foreach (%equipSlot_rlut){
+					if ($_ & $local_item->{equipped}){
+						next if $_ == 10; #work around Arrow bug
+						next if $_ == 32768;
+						$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
+					}
+				}
+			}
+		}
+	};
+
+	if ( $args->{type} == INVTYPE_INVENTORY ) {
+		$arguments->{hook} = 'packet_inventory';
+		$arguments->{getter} = sub { $char->inventory->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->inventory->add($_[0]) };
+
+	} elsif ( $args->{type} == INVTYPE_CART ) {
+		$arguments->{hook} = 'packet_cart',
+		$arguments->{getter} = sub { $char->cart->getByID($_[0]{ID}) },
+		$arguments->{adder} = sub { $char->cart->add($_[0]) },
+
+	} elsif ( $args->{type} == INVTYPE_STORAGE ) {
+		$arguments->{hook} = 'packet_storage';
+		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->storage->add($_[0]) };
+
+	} elsif ( $args->{type} == INVTYPE_GUILD_STORAGE ) {
+		return; # guild storage not implemented yet =/ (2019-06-21)
+
+	} else {
+		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
+	}
+
+	$self->_items_list($arguments);
+}
+
+sub item_list_end {
+	my ($self, $args) = @_;
+	debug TF("Ending Item List. ID: %s\n", $args->{type}), "info";
+	undef $current_item_list;
 }
 
 sub login_error {
