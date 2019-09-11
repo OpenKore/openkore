@@ -12,14 +12,15 @@ use constant {
 };
 
 # conversion (ex. $TILE_TYPE[0] = TILE_WALK = 1), (ex. $TILE_TYPE[1] = TILE_NOWALK = 0)
-my @TILE_TYPE = (	TILE_WALK,				# 0) Walkable
-					TILE_NOWALK,			# 1) Non-walkable
-					TILE_WATER,				# 2) Non-walkable water (not snipable)
-					TILE_WALK|TILE_WATER,	# 3) Walkable water
-					TILE_WATER|TILE_SNIPE,	# 4) Non-walkable water (snipable)
-					TILE_CLIFF|TILE_SNIPE,	# 5) Cliff (snipable)
-					TILE_CLIFF);			# 6) Cliff (not snipable)
-
+my @TILE_TYPE = (
+	TILE_WALK,					# 0) Walkable
+	TILE_NOWALK,				# 1) Non-walkable
+	TILE_WATER,					# 2) Non-walkable water (not snipable)
+	TILE_WALK|TILE_WATER,		# 3) Walkable water
+	TILE_WATER|TILE_SNIPE,		# 4) Non-walkable water (snipable)
+	TILE_CLIFF|TILE_SNIPE,		# 5) Cliff (snipable)
+	TILE_CLIFF					# 6) Cliff (not snipable)
+);
 
 my $i = 0;
 foreach my $name (sort(listMaps("."))) {
@@ -69,29 +70,25 @@ sub fld_to_fld2 {
 	my $max_Y = $size - $width;
 
 	print $out pack ("v2", $width, $height);
-
-	my ($y, $x) = (1, 1);
+	my ($y, $x) = (0, 0);
 	while (read($in, $data, 1)) {
 		my $type = unpack("C", $data);
-
 		# warn us for unknown/new block types
 		if ($type > $#TILE_TYPE) {
-			print "An unknown blocktype ($type) was found, please report this to the OpenKore devs.\n";
-			exit 1;
-		# make upper blocks unwalkable
-		} elsif ($y > $max_Y ) {
-			print $out pack("C", TILE_NOWALK);
-		# make rightern blocks unwalkable
-		} elsif ($y == $x * $width) {
-			$x++;
-			print $out pack("C", TILE_NOWALK);
-		# convert fld to fld2
+			#print "An unknown blocktype ($type) was found, please report this to the OpenKore devs.\n";
+			#exit 1;
+			#Treat as unwalkable
+			print $out pack("C", $TILE_TYPE[1]);
 		} else {
 			print $out pack("C", $TILE_TYPE[$type]);
 		}
-	$y++;
+		if ($x == $width-1) {
+			$y++;
+			$x = 0;
+		} else {
+			$x++;
+		}
 	}
-
 	close $in;
 	close $out;
 }
