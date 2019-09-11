@@ -108,11 +108,12 @@ sub cast {
 				}
 
 				$pathfinding->reset(
-				field => $field,
-				start => $myPos,
-				dest => $blocks[$i]);
+					field => $field,
+					start => $myPos,
+					dest => $blocks[$i]
+				);
 				my $ret = $pathfinding->runcount;
-				if ($ret <= 0 || $ret > $config{'runFromTargetFree_min'} * 2) {
+				if ($ret < 0 || $ret > $config{'runFromTargetFree_min'} * 2) {
 					delete $blocks[$i];
 					next;
 				}
