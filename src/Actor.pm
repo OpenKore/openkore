@@ -767,7 +767,6 @@ sub route {
 		actor => $self,
 		x => $x,
 		y => $y,
-		map => $map,
 		maxDistance => $args{maxRouteDistance},
 		maxTime => $args{maxRouteTime},
 		avoidWalls => !$args{noAvoidWalls},

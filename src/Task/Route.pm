@@ -98,6 +98,10 @@ sub new {
 		ArgumentException->throw(error => "Invalid arguments.");
 	}
 
+	unless ($args{field}->isa('Field')) {
+		ArgumentException->throw(error => "Invalid arguments.");
+	}
+
 	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal', 'avoidWalls', 'notifyUponArrival');
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
@@ -107,7 +111,7 @@ sub new {
 
 	$self->{actor} = $args{actor};
 	# FIXME: don't use global $field in tasks
-	$self->{dest}{map} = $field->baseName;
+	$self->{dest}{map} = $args{field}->baseName;
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
 	if ($config{$self->{actor}{configPrefix}.'route_avoidWalls'}) {
