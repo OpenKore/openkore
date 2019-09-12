@@ -39,6 +39,14 @@ use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
 
+# Stage constants.
+use constant {
+	NOT_INITIALIZED => 1,
+	CALCULATE_ROUTE => 2,
+	ROUTE_SOLUTION_READY => 3,
+	WALK_ROUTE_SOLUTION => 4
+};
+
 # Error code constants.
 use enum qw(
 	TOO_MUCH_TIME
@@ -83,8 +91,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid arguments.");
 	}
 
-	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal',
-		'avoidWalls', 'notifyUponArrival');
+	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal', 'avoidWalls', 'notifyUponArrival');
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
@@ -98,9 +105,11 @@ sub new {
 	$self->{dest}{pos}{y} = $args{y};
 	if ($config{$self->{actor}{configPrefix}.'route_avoidWalls'}) {
 		$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
-	} else {$self->{avoidWalls} = 0;}
+	} else {
+		$self->{avoidWalls} = 0;
+	}
 	$self->{solution} = [];
-	$self->{stage} = '';
+	$self->{stage} = NOT_INITIALIZED;
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
 	# to avoid circular references (memory leaks).
@@ -129,6 +138,7 @@ sub destCoords {
 sub activate {
 	my ($self) = @_;
 	$self->SUPER::activate();
+	$self->{stage} = CALCULATE_ROUTE;
 	$self->{time_start} = time;
 }
 
@@ -162,14 +172,18 @@ sub iterate {
 		debug "Map changed: " . $field->baseName . " $self->{dest}{map}\n", "route";
 		$self->setDone();
 
-	} elsif ($self->{stage} eq '') {
+	} elsif ($self->{stage} == CALCULATE_ROUTE) {
 		my $pos = calcPosition($self->{actor});
 		my $begin = time;
 		if ($pos->{x} == $self->{dest}{pos}{x} && $pos->{y} == $self->{dest}{pos}{y}) {
 			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
 			$self->setDone();
 		} elsif ($self->getRoute($self->{solution}, $field, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
-			$self->{stage} = 'Route Solution Ready';
+			$self->{stage} = ROUTE_SOLUTION_READY;
+			
+			# During the walking stage it is a good idea to keep the last position in the solution but since it is also a bad idea for the pathfinding algorithm to return a solution with the start position we add it here.
+			unshift(@{$self->{solution}}, { x => $pos->{x}, y => $pos->{y} });
+			
 			debug "Route $self->{actor} Solution Ready!\n", "route";
 
 			if (time - $begin < 0.01) {
@@ -182,7 +196,7 @@ sub iterate {
 			$self->setError(CANNOT_CALCULATE_ROUTE, "Unable to calculate a route.");
 		}
 
-	} elsif ($self->{stage} eq 'Route Solution Ready') {
+	} elsif ($self->{stage} == ROUTE_SOLUTION_READY) {
 		my $begin = time;
 		my $solution = $self->{solution};
 		if ($self->{maxDistance} > 0 && $self->{maxDistance} < 1) {
@@ -216,7 +230,7 @@ sub iterate {
 		undef $self->{new_x};
 		undef $self->{new_y};
 		$self->{time_step} = time;
-		$self->{stage} = 'Walk the Route Solution';
+		$self->{stage} = WALK_ROUTE_SOLUTION;
 
 		if (time - $begin < 0.01) {
 			# Optimization: immediately go to the next stage if we spent neglible time in this step.
@@ -224,7 +238,7 @@ sub iterate {
 		}
 
 	# Actual walking algorithm
-	} elsif ($self->{stage} eq 'Walk the Route Solution') {
+	} elsif ($self->{stage} == WALK_ROUTE_SOLUTION) {
 		my $solution = $self->{solution};
 		my ($cur_x, $cur_y);
 		
@@ -265,7 +279,7 @@ sub iterate {
 			# Last change in pos and pos_to put us in a walk path oposite to the desired one
 			if ($best_pos_step > $best_pos_to_step) {
 				debug "Route $self->{actor} - movement interrupted: reset route (last change in pos and pos_to put us in a walk path oposite to the desired one)\n", "route";
-				$self->{stage} = '';
+				$self->{stage} = CALCULATE_ROUTE;
 				return;
 			
 			} elsif ($best_pos_step == $best_pos_to_step) {
@@ -367,7 +381,7 @@ sub iterate {
 			my %nextPos = (x => $self->{new_x}, y => $self->{new_y});
 			if (blockDistance(\%nextPos, $guessed_pos) > 10) {
 				debug "Route $self->{actor} - movement interrupted: reset route (the distance of the next point is abnormally large)\n", "route";
-				$self->{stage} = '';
+				$self->{stage} = CALCULATE_ROUTE;
 
 			} else {
 				$self->{time_step} = time if ($cur_x != $self->{old_x} || $cur_y != $self->{old_y});
@@ -389,15 +403,15 @@ sub iterate {
 
 	} else {
 		# This statement should never be reached.
-		debug "Unexpected route stage [$self->{stage}] occured.\n", "route";
-		$self->setError(UNEXPECTED_STATE, "Unexpected route stage [$self->{stage}] occured.\n");
+		debug "Unexpected route stage [".$self->{stage}."] occured.\n", "route";
+		$self->setError(UNEXPECTED_STATE, "Unexpected route stage [".$self->{stage}."] occured.\n");
 	}
 }
 
 sub resetRoute {
 	my ($self) = @_;
 	$self->{solution} = [];
-	$self->{stage} = '';
+	$self->{stage} = CALCULATE_ROUTE;
 }
 
 ##
