@@ -170,7 +170,7 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 			XSRETURN_NO;
 		}
 	
-		if (session->endX > session->max_x || session->endY > session->max_y || session->endtX < session->min_x || session->endY < session->min_y) {
+		if (session->endX > session->max_x || session->endY > session->max_y || session->endX < session->min_x || session->endY < session->min_y) {
 			printf("[pathfinding reset error] End coordinate is out of the minimum and maximum coordinates.\n");
 			XSRETURN_NO;
 		}
