@@ -673,6 +673,10 @@ sub new {
 		'0B0C' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'0B20' => ['hotkeys', 'C v a*', [qw(rotate tab hotkeys)]],#herc PR 2468
 		'0B03' => ['show_eq', 'v Z24 v9 C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color clothes_color2 sex equips_info)]],
+		'0B08' => ['item_list_start', 'v C', [qw(len type)]],
+		'0B09' => ['item_list_stackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B0A' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B0B' => ['item_list_end', 'C2', [qw(type flag)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
@@ -714,6 +718,11 @@ sub new {
 				types => 'a2 v C V2 C a8 l v2 C a25 C',
 				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
 			},
+			type8 => {
+				len => 67,
+				types => 'a2 V C V2 C a16 l v2 C a25 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+			},
 		},
 		items_stackable => {
 			type1 => {
@@ -740,6 +749,11 @@ sub new {
 				len => 24,
 				types => 'a2 v C v V a8 l C',
 				keys => [qw(ID nameID type amount type_equip cards expire identified)],
+			},
+			type7 => {
+				len => 34,
+				types => 'a2 V C V2 C2 a16 l v2 C',
+				keys => [qw(ID nameID type amount type_equip broken upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
 		},
 	};
@@ -821,6 +835,8 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0A2D' # other player
 	) {
 		return $items->{type7};
+	} elsif ($args->{switch} eq '0B0A') { # item_list
+		return $items->{type8};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -861,6 +877,8 @@ sub items_stackable {
 		|| $args->{switch} eq '0995' # storage
 	) {
 		return $items->{type6};
+	} elsif ($args->{switch} eq '0B09') { # item_list
+		return $items->{type7};
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -874,6 +892,10 @@ sub parse_items {
 	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
+		
+		if ( $args->{switch} eq '0B09' && $item->{type} == 10 ) { # workaround arrow byte bug
+			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
+		}
 
 		$process->($item);
 
