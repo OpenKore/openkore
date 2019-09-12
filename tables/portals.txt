@@ -450,10 +450,10 @@ mid_camp 336 171 man_fild01 36 235 c r0 n
 man_fild01 35 232 mid_camp 341 176
 man_fild01 103 55 man_fild03 84 366
 man_fild03 84 369 man_fild01 103 58
-man_fild01 373 238 man_fild02 37 262
-man_fild03 32 226 man_fild01 367 328
-man_fild02 138 40 manuk 112 352
-manuk 112 357 man_fild02 138 45
+man_fild01 372 230 man_fild02 34 261
+man_fild02 32 261 man_fild01 369 230
+man_fild02 139 41 manuk 112 356
+manuk 114 357 man_fild02 138 43
 man_in01 61 173 man_in01 20 173
 man_in01 20 175 man_in01 61 175
 man_in01 61 190 man_in01 63 238
@@ -770,7 +770,7 @@ aldeg_cas05 70 189 aldeg_cas05 166 81
 aldeg_cas05 150 67 aldeg_cas05 9 187
 aldeg_cas05 5 187 aldeg_cas05 151 62
 aldeg_cas05 165 232 aldeg_cas05 193 49
-aldeg_cas05 188 49 aldeg_cas05 165 288
+aldeg_cas05 188 49 aldeg_cas05 165 228
 aldeg_cas05 195 42 aldeg_cas05 19 227
 aldeg_cas05 15 227 aldeg_cas05 195 46
 aldeg_cas05 13 175 aldeg_cas05 162 194
