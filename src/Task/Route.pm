@@ -62,11 +62,18 @@ use enum qw(
 # Task::Route->new(options...)
 #
 # Create a new Task::Route object. The following options are allowed:
-# `l
 # - All options allowed by Task::WithSubtask->new(), except 'mutexes', 'autostop' and 'autofail'.
-# - actor (required) - Which Actor this task should move.
-# - x (required) - The X-coordinate that you want to move to.
-# - y (required) - The Y-coordinate that you want to move to.
+#
+# Required arguments:
+# `l
+# - actor - Which Actor this task should move.
+# - x - The X-coordinate that you want to move to.
+# - y - The Y-coordinate that you want to move to.
+# - field: The Field object of the map that you want to move to.
+# `l`
+#
+# Optional arguments:
+# `l`
 # - maxDistance - The maximum distance (in blocks) that the route may be. If
 #                 not specified, then there is no limit.
 # - maxTime - The maximum time that may be spent on walking the route. If not
@@ -182,6 +189,7 @@ sub iterate {
 			$self->{stage} = ROUTE_SOLUTION_READY;
 			
 			# During the walking stage it is a good idea to keep the last position in the solution but since it is also a bad idea for the pathfinding algorithm to return a solution with the start position we add it here.
+			# Should this be done in a separate variable? (for example $self->{current_pos})
 			unshift(@{$self->{solution}}, { x => $pos->{x}, y => $pos->{y} });
 			
 			debug "Route $self->{actor} Solution Ready!\n", "route";

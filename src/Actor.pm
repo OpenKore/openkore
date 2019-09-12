@@ -767,6 +767,7 @@ sub route {
 		actor => $self,
 		x => $x,
 		y => $y,
+		map => $map,
 		maxDistance => $args{maxRouteDistance},
 		maxTime => $args{maxRouteTime},
 		avoidWalls => !$args{noAvoidWalls},
@@ -776,7 +777,7 @@ sub route {
 	if ($map && !$args{noMapRoute}) {
 		$task = new Task::MapRoute(map => $map, @params);
 	} else {
-		$task = new Task::Route(@params);
+		$task = new Task::Route(field => $field, @params);
 	}
 	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute isRandomWalk);
 	
