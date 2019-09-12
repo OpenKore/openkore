@@ -403,16 +403,26 @@ sub main {
 		|| (!$config{attackCanSnipe} && $realMonsterDist <= $args->{attackMethod}{maxDistance} && !checkLineWalkable($realMyPos, $realMonsterPos, 1)))
 	) {
 		
-		my $min_dist = 0;
+		# Current position doesn't have LOS to the target anyway, so exclude it here and save many chekcs later
+		my $min_dist = 1;
 		if ($config{runFromTarget}) {
 			$min_dist = $config{runFromTarget_dist};
+		}
+		
+		# We should not stray further than $args->{attackMethod}{distance} or attackAdjustLOSMaxRouteTargetDistance but if we are further away than it we should accept it
+		my $max_dist = $args->{attackMethod}{distance};
+		if ($max_dist > $config{attackAdjustLOSMaxRouteTargetDistance}) {
+			$max_dist = $config{attackAdjustLOSMaxRouteTargetDistance};
+		}
+		if ($realMonsterDist > $max_dist) {
+			$max_dist = $realMonsterDist;
 		}
 		
 		# Calculate squares around monster within shooting range, but not
 		# closer than runFromTarget_dist
 		my @stand = calcRectArea2(
 			$realMonsterPos->{x}, $realMonsterPos->{y},
-			$args->{attackMethod}{distance},
+			$max_dist,
 			$min_dist
 		);
 
@@ -435,10 +445,9 @@ sub main {
 			# 1. It must have LOS to the target ($realMonsterPos).
 			# 2. It must be within $config{followDistanceMax} of $masterPos, if we have a master.
 			# 3. It must have at max $config{attackAdjustLOSMaxRouteDistance} of route distance to it from our current position.
-			# 4. The route should not exceed at any point $config{attackAdjustLOSMaxRouteTargetDistance} distance from the target.
+			# 4. The route should not exceed at any point $max_dist distance from the target.
 			if (
 				$field->isWalkable($spot->{x}, $spot->{y})
-				&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
 				&& (!$master || blockDistance($spot, $masterPos) <= $config{followDistanceMax})
 			    &&    (($config{attackCanSnipe} && (checkLineSnipable($spot, $realMonsterPos) || checkLineWalkable($spot, $realMonsterPos, 1)))
 				   || (!$config{attackCanSnipe} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && checkLineWalkable($spot, $realMonsterPos, 1)))
@@ -450,10 +459,10 @@ sub main {
 					field => $field,
 					start => $realMyPos,
 					dest => $spot,
-					min_x => ($realMonsterPos->{x} - $config{attackAdjustLOSMaxRouteTargetDistance}),
-					max_x => ($realMonsterPos->{x} + $config{attackAdjustLOSMaxRouteTargetDistance}),
-					min_y => ($realMonsterPos->{y} - $config{attackAdjustLOSMaxRouteTargetDistance}),
-					max_y => ($realMonsterPos->{y} + $config{attackAdjustLOSMaxRouteTargetDistance}),
+					min_x => ($realMonsterPos->{x} - $max_dist),
+					max_x => ($realMonsterPos->{x} + $max_dist),
+					min_y => ($realMonsterPos->{y} - $max_dist),
+					max_y => ($realMonsterPos->{y} + $max_dist),
 				)->runcount;
 				
 				next unless ($dist >= 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
