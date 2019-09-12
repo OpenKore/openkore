@@ -530,13 +530,13 @@ sub visualDump {
 #######################################
 
 ##
-# calcRectArea($x, $y, $radius)
+# calcRectArea($x, $y, $radius, $field)
 # Returns: an array with position hashes. Each has contains an x and a y key.
 #
 # Creates a rectangle with center ($x,$y) and radius $radius,
 # and returns a list of positions of the border of the rectangle.
 sub calcRectArea {
-	my ($x, $y, $radius) = @_;
+	my ($x, $y, $radius, $field) = @_;
 	my (%topLeft, %topRight, %bottomLeft, %bottomRight);
 
 	sub capX {
@@ -751,36 +751,35 @@ sub checkWallLength {
 }
 
 ##
-# closestWalkableSpot(r_field, pos)
-# r_field: a reference to a field hash.
+# closestWalkableSpot(r_field, pos, max_distance)
+# r_field: a reference to a field object.
 # pos: reference to a position hash (which contains 'x' and 'y' keys).
-# Returns: 1 if %pos has been modified, 0 of not.
-#
-# If the position specified in $pos is walkable, this function will do nothing.
-# If it's not walkable, this function will find the closest position that is walkable (up to N blocks away),
-# and modify the x and y values in $pos.
-# TODO: move to Field?
-{
-	my @spots;
-	sub closestWalkableSpot {
-		my $field = shift;
-		my $pos = shift;
-
-		unless (@spots) {
-			@spots = ([0, 0]);
-			for my $dist (1 .. 7) {
-				push @spots, map { [$_, $dist-$_], [$dist-$_, -$_], [-$_, $_-$dist], [$_-$dist, $_] } 0 .. $dist-1;
-			}
-		}
-
-		foreach my $z (@spots) {
-			next if (!$field->isWalkable(($pos->{x} + $z->[0]), ($pos->{y} + $z->[1])));
-			$pos->{x} += $z->[0];
-			$pos->{y} += $z->[1];
-			return 1;
-		}
-		return 0;
+# max_distance: max possible distance in blocks from pos
+# Returns: walkable position in a reference to a position hash (which contains 'x' and 'y' keys) on success or undef on failure.
+sub closestWalkableSpot {
+	my $field = shift;
+	my $pos = shift;
+	my $max_distance = shift;
+	
+	my %center = ( x => $pos->{x}, y => $pos->{y} );
+	
+	if ($field->isWalkable($pos->{x}, $pos->{y})) {
+		return \%center;
 	}
+	
+	return if (!$max_distance);
+	
+	my @current_distance = (1..$max_distance);
+	
+	foreach my $distance (@current_distance) {
+		my @blocks = calcRectArea($center{x}, $center{y}, $distance, $field);
+		foreach my $block (@blocks) {
+			next if (!$field->isWalkable($block->{x}, $block->{y}));
+			return $block;
+		}
+	}
+	
+	return undef;
 }
 
 ##
@@ -3874,15 +3873,20 @@ sub compilePortals {
 
 				my %start = %{$mapSpawns{$map}{$spawn}};
 				my %dest = %{$mapPortals{$map}{$portal}};
-				closestWalkableSpot($field, \%start);
-				closestWalkableSpot($field, \%dest);
-
-				$pathfinding->reset(
-					start => \%start,
-					dest  => \%dest,
-					field => $field
-					);
-				my $count = $pathfinding->runcount;
+				my $closest_start = closestWalkableSpot($field, \%start, 1);
+				my $closest_dest = closestWalkableSpot($field, \%dest, 1);
+				my $count;
+				
+				if (!defined $closest_start || !defined $closest_dest) {
+					$count = 0;
+				} else {
+					$pathfinding->reset(
+						start => $closest_start,
+						dest  => $closest_dest,
+						field => $field
+						);
+					$count = $pathfinding->runcount;
+				}
 				$portals_los{$spawn}{$portal} = ($count >= 0) ? $count : 0;
 				debug "LOS in $map from $start{x},$start{y} to $dest{x},$dest{y}: $portals_los{$spawn}{$portal}\n";
 			}

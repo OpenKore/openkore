@@ -485,7 +485,8 @@ sub main {
 		my @blocks = calcRectArea($myPos->{x}, $myPos->{y},
 			# If the monster hit you while you're running, then your recorded
 			# location may be out of date. So we use a smaller distance so we can still move.
-			($hitYou) ? $config{'runFromTarget_dist'} / 2 : $config{'runFromTarget_dist'});
+			($hitYou) ? $config{'runFromTarget_dist'} / 2 : $config{'runFromTarget_dist'},
+			$field);
 
 		# Find the distance value of the block that's farthest away from a wall
 		my $highest;

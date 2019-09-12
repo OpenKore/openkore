@@ -453,11 +453,18 @@ sub getRoute {
 	my %dest = %{$dest};
 	Misc::closestWalkableSpot($field, \%start);
 	Misc::closestWalkableSpot($field, \%dest);
+	
+	my $closest_start = closestWalkableSpot($field, \%start, 1);
+	my $closest_dest = closestWalkableSpot($field, \%dest, 1);
+	
+	if (!defined $closest_start || !defined $closest_dest) {
+		return 0;
+	}
 
 	# Calculate path
 	my $pathfinding = new PathFinding(
-		start => \%start,
-		dest  => \%dest,
+		start => $closest_start,
+		dest  => $closest_dest,
 		field => $field,
 		avoidWalls => $avoidWalls
 	);
