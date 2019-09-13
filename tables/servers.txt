@@ -128,7 +128,7 @@ rankingSystemType 1
 
 # http://playragnarok.com
 [International - iRO: Sakray]
-ip 128.241.92.195
+ip 128.241.92.36
 port 6800
 master_version 14
 version 18
