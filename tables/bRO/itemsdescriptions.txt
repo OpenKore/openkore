@@ -14601,9 +14601,9 @@ A cada 20 de SOR base:
 --------------------------
 ^0000ffPode receber encantamentos aleatórios.^000000
 --------------------------
-^CD3278NPC:^000000 Valquíria Obscura
-^CD3278Local:^000000 geffen 136, 55
-<NAVI>[Navegar]<INFO>geffen,136,55,0,000,0</INFO></NAVI>
+^CD3278NPC:^000000 Valquíria Iluminada
+^CD3278Local:^000000 geffen 149, 64
+<NAVI>[Navegar]<INFO>geffen,149,64,0,000,0</INFO></NAVI>
 --------------------------
 Tipo: ^777777Capa^000000
 Defesa: ^77777718^000000
@@ -34929,10 +34929,16 @@ Uma bela flor rosa que exala um delicioso perfume. Dizem que à noite ela se tor
 Peso: ^7777770^000000
 #
 7558#
-Ticket promocional criado pela Corporação Kafra.
-Troque-o por um item aleatório na NPC de Promoções Especiais em Prontera, coordenadas 141 226.
-Esta promoção está disponível apenas até a manutenção do dia 21/10, então troque agora mesmo seu ticket!
-^FF0000ATENÇÃO: Este ticket será removido durante a manutenção do dia 21/10. O item conseguido na troca com A NPC é aleatório!^000000 Boa sorte!
+Ticket temporário criado pela Corporação Kafra.
+^0000ffPermite adquirir 1 item aleatório na Máquina de Cupons.^000000
+--------------------------
+^CD3278NPC:^000000 Máquina de Cupons
+^CD3278Coord.:^000000 prontera 141, 226
+<NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
+--------------------------
+Promoção limitada até o dia ^ff000016.09.2019.^000000
+Este item será removido no dia ^ff000017.09.2019.^000000
+--------------------------
 Peso: ^7777771^000000
 #
 7561#
@@ -47007,9 +47013,11 @@ Classes: ^777777Todas^000000
 #
 15272#
 Esta era a armadura original usada pela maior espadachim que viveu na antiga capital de Rune-Midgard. A capitã da Ordem dos Khalitzburg era perita no uso do florete, mas infelizmente acabou sucumbindo à Maldição de Glast Heim, lançada pela maligna valquíria necromante, Himelmez.
-^0000ffResistência a raça Humanoide +1%.^000000
+--------------------------
+^0000ffResistência as raças Humano e Humanoide +1%.^000000
 A cada 3 refinos até o +15:
-^0000ffDano físico a distância +6%.^000000
+^0000ffDano físco a distância +6%.^000000
+--------------------------
 Tipo: ^777777Armadura^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
@@ -54620,6 +54628,15 @@ Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+19532#
+Um belo par de orelhas que, embora não lhe deem velocidade ímpar, audição extremamente aguçada ou te façam finalmente gostar de cenouras, certamente garantem a superfofura pela qual você busca.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo ^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 19533#
 Diferente do chapéu original que é pesado e demora dois anos pra fazer a quest, essa touquinha aqui é perfeita pra você ir aos eventos de anime se divertir com os amigos!
 ^0000ffVIT +1.^000000
@@ -58678,6 +58695,93 @@ Refino +11 ou mais:
 Tipo: ^777777Capa^000000
 Defesa: ^77777718^000000
 Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+20963#
+Embora o estilo desse manto e os símbolos nele inscritos sejam de outrora, ele, inexplicavelmente, não possui qualquer sinal de envelhecimento ou uso. Tão enigmática quanto a sua origem são as suas propriedades: ele parece possuir uma forte ligação arcana com Botas Temporais ou Botas Modificadas do mesmo tipo.
+--------------------------
+A cada 2 refinos:
+^0000ffATQ +10.^000000
+^0000ffATQ da arma +1%.^000000
+A cada 4 refinos:
+^0000ffDano físico contra todos os tamanhos +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffATQ da arma +7%.^000000
+Refino +9 ou mais:
+^0000ffIgnora 20% da DEF e DEFM das raças Bruto e Demônio.^000000
+Refino +11 ou mais:
+^0000ffIgnora +10% da DEF e DEFM das raças Bruto e Demônio adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09Botas Temporais FOR [1]^000000 ou
+^FA4E09Botas Modificadas FOR [1]^000000
+^0000ffATQ +50.^000000
+Botas com refino +10 ou mais:
+^0000ffIgnora +30% da DEF e DEFM das raças Bruto e Demônio adicional.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+Defesa: ^77777738^000000
+Peso: ^77777740^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+20966#
+Embora o estilo desse manto e os símbolos nele inscritos sejam de outrora, ele, inexplicavelmente, não possui qualquer sinal de envelhecimento ou uso. Tão enigmática quanto a sua origem são as suas propriedades: ele parece possuir uma forte ligação arcana com Botas Temporais ou Botas Modificadas do mesmo tipo.
+--------------------------
+A cada 2 refinos:
+^0000ffATQM +10.^000000
+^0000ffDano mágico +1%.^000000
+A cada 4 refinos:
+^0000ffDano mágico de todas as propriedades +3%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDano mágico +7%.^000000
+Refino +9 ou mais:
+^0000ffIgnora 20% da DEF e DEFM das raças Bruto e Demônio.^000000
+Refino +11 ou mais:
+^0000ffIgnora +10% da DEF e DEFM das raças Bruto e Demônio adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09Botas Temporais INT [1]^000000 ou
+^FA4E09Botas Modificadas INT [1]^000000
+^0000ffATQM +50.^000000
+Botas com refino +10 ou mais:
+^0000ffIgnora +30% da DEF e DEFM das raças Bruto e Demônio adicional.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+Defesa: ^77777738^000000
+Peso: ^77777740^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+20967#
+Embora o estilo desse manto e os símbolos nele inscritos sejam de outrora, ele, inexplicavelmente, não possui qualquer sinal de envelhecimento ou uso. Tão enigmática quanto a sua origem são as suas propriedades: ele parece possuir uma forte ligação arcana com Botas Temporais ou Botas Modificadas do mesmo tipo.
+--------------------------
+A cada 2 refinos:
+^0000ffATQ +10.^000000
+^0000ffDano físico a distância +1%.^000000
+A cada 4 refinos:
+^0000ffDano crítico +3%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffATQ da arma +7%.^000000
+Refino +9 ou mais:
+^0000ffIgnora 20% da DEF e DEFM das raças Bruto e Demônio.^000000
+Refino +11 ou mais:
+^0000ffIgnora +10% da DEF e DEFM das raças Bruto e Demônio adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09Botas Temporais DES [1]^000000 ou
+^FA4E09Botas Modificadas DES [1]^000000
+^0000ffDano físico a distância +7%.^000000
+Botas com refino +10 ou mais:
+^0000ffIgnora +30% da DEF e DEFM das raças Bruto e Demônio adicional.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+Defesa: ^77777738^000000
+Peso: ^77777740^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
@@ -65030,6 +65134,15 @@ Classes: ^777777Todas^000000
 Você finalmente deixou suas belas madeixas crescerem e agora é dono de uma vasta cabeleira preta... Mesmo que isso seja apenas uma peruca! Se você sempre quis se sentir como a lendária guerreira Sailor Arte, habilidosa dominadora do fogo, com essa peruca não tem erro!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31479#
+Se você não pode ir até o universo, leve toda a plena infinitude do cosmos até você. Talvez você até possa ser considerado um astronauta de mármore... Só não se esqueça de reportar a sua situação ao Major Tom!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
