@@ -455,11 +455,9 @@ sub getRoute {
 	# So we find a nearby spot that is walkable.
 	my %start = %{$start};
 	my %dest = %{$dest};
-	Misc::closestWalkableSpot($field, \%start);
-	Misc::closestWalkableSpot($field, \%dest);
 	
-	my $closest_start = closestWalkableSpot($field, \%start, 1);
-	my $closest_dest = closestWalkableSpot($field, \%dest, 1);
+	my $closest_start = $field->closestWalkableSpot(\%start, 1);
+	my $closest_dest = $field->closestWalkableSpot(\%dest, 1);
 	
 	if (!defined $closest_start || !defined $closest_dest) {
 		return 0;

@@ -148,7 +148,7 @@ sub iterate {
 			&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{follow_route})
 		) {
 			$slave->clear('move', 'route');
-			if (!checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
+			if (!$field->checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
 				$slave->route(undef, @{$char->{pos_to}}{qw(x y)});
 				$slave->args->{follow_route} = 1 if $slave->action eq 'route';
 				debug sprintf("Slave follow route (distance: %.2f)\n", $slave->distance()), 'homunculus';
@@ -454,9 +454,9 @@ sub processAttack {
 			$config{$slave->{configPrefix}.'attackCheckLOS'} && $args->{attackMethod}{distance} > 2
 			# Every Walkable cell is also a Snipable cell, so we check for both
 			# FIXME: Should make a CheckLineWalkableOrSnipable function
-			#!checkLineSnipable($realMyPos, $realMonsterPos)
-			&& (($config{$slave->{configPrefix}.'attackCanSnipe'} && !checkLineSnipable($realMyPos, $realMonsterPos) && !checkLineWalkable($realMyPos, $realMonsterPos, 1))
-			|| (!$config{$slave->{configPrefix}.'attackCanSnipe'} && $realMonsterDist <= $args->{attackMethod}{maxDistance} && !checkLineWalkable($realMyPos, $realMonsterPos, 1)))
+			#!$field->checkLineSnipable($realMyPos, $realMonsterPos)
+			&& (($config{$slave->{configPrefix}.'attackCanSnipe'} && !$field->checkLineSnipable($realMyPos, $realMonsterPos) && !$field->checkLineWalkable($realMyPos, $realMonsterPos, 1))
+			|| (!$config{$slave->{configPrefix}.'attackCanSnipe'} && $realMonsterDist <= $args->{attackMethod}{maxDistance} && !$field->checkLineWalkable($realMyPos, $realMonsterPos, 1)))
 		) {
 			# Current position doesn't have LOS to the target anyway, so exclude it here and save many chekcs later
 			my $min_dist = 1;
@@ -493,8 +493,8 @@ sub processAttack {
 				if (
 					$field->isWalkable($spot->{x}, $spot->{y})
 					&& blockDistance($spot, $char->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'}
-					&&    (($config{$slave->{configPrefix}.'attackCanSnipe'} && (checkLineSnipable($spot, $realMonsterPos) || checkLineWalkable($spot, $realMonsterPos, 1)))
-					   || (!$config{$slave->{configPrefix}.'attackCanSnipe'} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && checkLineWalkable($spot, $realMonsterPos, 1)))
+					&&    (($config{$slave->{configPrefix}.'attackCanSnipe'} && ($field->checkLineSnipable($spot, $realMonsterPos) || $field->checkLineWalkable($spot, $realMonsterPos, 1)))
+					   || (!$config{$slave->{configPrefix}.'attackCanSnipe'} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && $field->checkLineWalkable($spot, $realMonsterPos, 1)))
 				) {
 					my $dist = new PathFinding(
 						field => $field,
@@ -812,7 +812,7 @@ sub processAutoAttack {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
 				next if !$field->isWalkable($monster->{pos}{x}, $monster->{pos}{y}); # this should NEVER happen
-				next if !checkLineWalkable($myPos, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
+				next if !$field->checkLineWalkable($myPos, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
 
 				my $pos = calcPosition($monster);
 
@@ -837,9 +837,9 @@ sub processAutoAttack {
 					|| objectIsMovingTowardsPlayer($monster));
 					
 				if ($config{$slave->{configPrefix}.'attackCanSnipe'}) {
-					next if (!checkLineSnipable($slave->{pos_to}, $pos));
+					next if (!$field->checkLineSnipable($slave->{pos_to}, $pos));
 				} else {
-					next if (!checkLineWalkable($slave->{pos_to}, $pos));
+					next if (!$field->checkLineWalkable($slave->{pos_to}, $pos));
 				}
 
 				my $safe = 1;

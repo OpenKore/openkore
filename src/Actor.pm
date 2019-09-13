@@ -464,7 +464,7 @@ sub blockDistance {
 sub snipable {
 	my ($self) = @_;
 
-	return checkLineSnipable($char->position, $self->position);
+	return $field->checkLineSnipable($char->position, $self->position);
 }
 
 ##

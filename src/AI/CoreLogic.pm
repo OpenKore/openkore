@@ -2292,7 +2292,7 @@ sub processFollow {
 				my $dist = blockDistance($char->{pos_to}, $player->{pos_to});
 				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
 					$args->{move_timeout} = time;
-					if ( $dist > 15 || ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
+					if ( $dist > 15 || ($config{followCheckLOS} && !$field->checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
 						ai_route($field->baseName, $player->{pos_to}{x}, $player->{pos_to}{y},
 							attackOnRoute => 1,
 							distFromGoal => $config{followDistanceMin});
@@ -2445,7 +2445,7 @@ sub processFollow {
 		} elsif ($args->{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
 			my $pos = $ai_v{'temp'}{'warp_pos'};
 
-			if ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $pos)) {
+			if ($config{followCheckLOS} && !$field->checkLineWalkable($char->{pos_to}, $pos)) {
 				ai_route($field->baseName, $pos->{x}, $pos->{y},
 					attackOnRoute => 0); #distFromGoal => 0);
 			} else {
@@ -2965,7 +2965,7 @@ sub processAutoAttack {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
 				next if !$field->isWalkable($monster->{pos}{x}, $monster->{pos}{y}); # this should NEVER happen
-				next if !checkLineWalkable($char->{pos}, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
+				next if !$field->checkLineWalkable($char->{pos}, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
 
 				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
 
@@ -3254,7 +3254,7 @@ sub processAutoTeleport {
 				my $myPos = calcPosition($char);
 				my $dist = distance($pos, $myPos);
 				if ($dist <= abs($teleAuto)) {
-					if(checkLineWalkable($myPos, $pos) || checkLineSnipable($myPos, $pos)) {
+					if($field->checkLineWalkable($myPos, $pos) || $field->checkLineSnipable($myPos, $pos)) {
 						message TF("Teleporting due to monster being too close %s\n", $monsters{$_}{name}), "teleport";
 						$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 						$timeout{ai_teleport_away}{time} = time;
