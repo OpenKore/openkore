@@ -4213,7 +4213,7 @@
 7551#Ticket de Segunda Profissão#
 7552#Nota com Horários dos Jogos#
 7553#Flor de Vitória-Régia#
-7558#Ticket de Promoção#
+7558#Cupom de Promoção#
 7561#Coração Glacial#
 7562#Escama de Gelo#
 7563#Runa Sangrenta#
@@ -6405,6 +6405,7 @@
 19524#Cospobre de Rocker#
 19526#Elmo de Sucata#
 19528#Bevor de Plástico#
+19532#Orelhas da Lebre Rubra#
 19533#Touca de Esporo#
 19537#Bebê Grifo#
 19538#Luar Intenso#
@@ -6832,6 +6833,9 @@
 20922#Manto Leviatã#
 20939#Manto do Senhor do Tempo#
 20941#Manto Fênix#
+20963#Manto Temporal FOR#
+20966#Manto Temporal INT#
+20967#Manto Temporal DES#
 21000#Espada Aprimorada de Duas Mãos#
 21001#Claymore de Vellum#
 21002#Katzbalger de Vellum#
@@ -7325,6 +7329,7 @@
 31463#Super Drone A1000#
 31472#Asinhas Floridas#
 31474#Cabelo Longo Preto#
+31479#Projeção do Infinito#
 31480#Gioia Dorminhoco#
 31482#Cachecol de Lunático#
 31487#Tapa-Olho Pirata#
