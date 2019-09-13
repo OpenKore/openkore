@@ -276,17 +276,49 @@ sub iterate {
 			($cur_x, $cur_y) = ($guessed_pos->{x}, $guessed_pos->{y});
 			
 		} else {
+			# Failsafe
+			my $lookahead_failsafe_max = 5;
+			my $lookahead_failsafe_count = 0;
+			
 			my $best_pos_step = 0;
-			while ($best_pos_step < @{$solution} && adjustedBlockDistance( { x => $actor_pos->{x}, y => $actor_pos->{y} }, $solution->[$best_pos_step]) > adjustedBlockDistance( { x => $actor_pos->{x}, y => $actor_pos->{y} }, $solution->[$best_pos_step + 1])) {
-				$best_pos_step++;
+			my $next_best_pos_step_try = 1;
+			while (1) {
+				if (adjustedBlockDistance($actor_pos, $solution->[$best_pos_step]) > adjustedBlockDistance($actor_pos, $solution->[$next_best_pos_step_try])) {
+					$best_pos_step = $next_best_pos_step_try;
+					$lookahead_failsafe_count = 0;
+				} else {
+					$lookahead_failsafe_count++;
+					if ($lookahead_failsafe_count == $lookahead_failsafe_max) {
+						$lookahead_failsafe_count = 0;
+						last;
+					}
+				}
+				$next_best_pos_step_try++;
+				
+				if ($next_best_pos_step_try > $#{$solution}) {
+					last;
+				}
 			}
-			$best_pos_step = @{$solution} - 1 if ($best_pos_step == @{$solution});
 			
 			my $best_pos_to_step = 0;
-			while ($best_pos_to_step < @{$solution} && adjustedBlockDistance( { x => $actor_pos_to->{x}, y => $actor_pos_to->{y} }, $solution->[$best_pos_to_step]) > adjustedBlockDistance( { x => $actor_pos_to->{x}, y => $actor_pos_to->{y} }, $solution->[$best_pos_to_step + 1])) {
-				$best_pos_to_step++;
+			my $next_best_pos_to_step_try = 1;
+			while (1) {
+				if (adjustedBlockDistance($actor_pos_to, $solution->[$best_pos_to_step]) > adjustedBlockDistance($actor_pos_to, $solution->[$next_best_pos_to_step_try])) {
+					$best_pos_to_step = $next_best_pos_to_step_try;
+					$lookahead_failsafe_count = 0;
+				} else {
+					$lookahead_failsafe_count++;
+					if ($lookahead_failsafe_count == $lookahead_failsafe_max) {
+						$lookahead_failsafe_count = 0;
+						last;
+					}
+				}
+				$next_best_pos_to_step_try++;
+				
+				if ($next_best_pos_to_step_try > $#{$solution}) {
+					last;
+				}
 			}
-			$best_pos_to_step = @{$solution} - 1 if ($best_pos_to_step == @{$solution});
 			
 			# Last change in pos and pos_to put us in a walk path oposite to the desired one
 			if ($best_pos_step > $best_pos_to_step) {
@@ -298,7 +330,7 @@ sub iterate {
 				$guessed_pos = $solution->[$best_pos_step];
 				($cur_x, $cur_y) = ($guessed_pos->{x}, $guessed_pos->{y});
 				
-				debug "Route $self->{actor} - trimming down solution (" . @{$solution} . ") by ".($best_pos_step+1)." steps\n", "route";
+				debug "Route $self->{actor} - trimming down solution (" . @{$solution} . ") by ".$best_pos_step." steps\n", "route";
 				# Never trimm the current guessed cell, because if we get stuck we will keep deleting the first cell of the solution over and over
 				splice(@{$solution}, 0, $best_pos_step) if ($best_pos_step > 0);
 				
@@ -323,6 +355,18 @@ sub iterate {
 
 		if (@{$self->{solution}} == 0) {
 			# No more points to cover; we've arrived at the destination
+			if ($self->{notifyUponArrival}) {
+				message TF("%s reached the destination.\n", $self->{actor}), "success";
+			} else {
+				debug "$self->{actor} reached the destination.\n", "route";
+			}
+
+			Plugins::callHook('route', {status => 'success'});
+			$self->setDone();
+
+		} elsif (@{$self->{solution}} == 2 && isCellOccupied($solution->[-1])) {
+			# 2 more steps to cover (current position and the destination)
+			debug "Stoping 1 cell away from destination because there is an obstacle in it.\n", "route";
 			if ($self->{notifyUponArrival}) {
 				message TF("%s reached the destination.\n", $self->{actor}), "success";
 			} else {
@@ -380,8 +424,10 @@ sub iterate {
 				$self->{index}++ ;
 			}
 
-			my $stepsleft = @{$solution};
 			# If we still have more points to cover, walk to next point
+			my $stepsleft = @{$solution};
+
+			# If there are less steps to cover than the step size move to the last step (the destination).
 			if ($self->{index} >= $stepsleft) {
 				$self->{index} = $stepsleft - 1;
 			}

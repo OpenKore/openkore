@@ -160,7 +160,8 @@ our @EXPORT = (
 	writeStorageLog
 	getBestTarget
 	isSafe
-	isSafeActorQuery/,
+	isSafeActorQuery
+	isCellOccupied/,
 
 	# Actor's Actions Text
 	qw/attack_string
@@ -2478,6 +2479,19 @@ sub setPartySkillTimer {
 	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i ne "";
 }
 
+##
+# boolean isCellOccupied(pos)
+# pos: position hash.
+#
+# Returns 1 if there is a player, npc or mob in the cell, otherwise return 0.
+# TODO: Check if a character can move to a cell with a pet, elemental, homunculus or mercenary
+sub isCellOccupied {
+	my ($pos) = @_;
+	foreach my $actor (@$playersList, @$monstersList, @$npcsList) {
+		return 1 if ($actor->{pos}{x} == $pos->{x} && $actor->{pos}{y} == $pos->{y});
+	}
+	return 0;
+}
 
 ##
 # boolean setStatus(Actor actor, opt1, opt2, option)
