@@ -443,6 +443,14 @@ use constant {
 	GROUPMEMBER_DELETE_EXPEL => 0x1,
 };
 
+# item list type
+use constant {
+	INVTYPE_INVENTORY => 0x0,
+	INVTYPE_CART => 0x1,
+	INVTYPE_STORAGE => 0x2,
+	INVTYPE_GUILD_STORAGE => 0x3,
+};
+
 # exp origin
 use constant {
 	EXP_FROM_BATTLE => 0x0,
@@ -3765,6 +3773,16 @@ sub quest_all_list {
             mission_len => 44,
         };
 
+    } elsif ($args->{switch} eq '0AFF') { # SERVERTYPE >= 20150513
+        $quest_info = {
+            quest_pack => 'V C V2 v',
+            quest_keys => [qw(quest_id active time_expire time_start mission_amount)],
+            quest_len => 15,
+            mission_pack => 'V4 v4 Z24',
+            mission_keys => [qw(hunt_id hunt_id_cont mob_type mob_id min_level max_level mob_count mob_goal mob_name_original)],
+            mission_len => 48,
+        };
+
     } else { # this can't happen
         return;
     }
@@ -3882,6 +3900,13 @@ sub quest_add {
             mission_len => 42,
         };
 
+    } elsif ($args->{switch} eq '0B0C') {  # SERVERTYPE >= 20150513
+        $quest_info = {
+            mission_pack => 'V4 v3 Z24',
+            mission_keys => [qw(hunt_id hunt_id_cont mob_type mob_id min_level max_level mob_count mob_name_original)],
+            mission_len => 46,
+        };
+
     } else { # DEFAULT PACKET - 02B3
         $quest_info = {
             mission_pack => 'V v Z24',
@@ -3941,7 +3966,13 @@ sub quest_update_mission_hunt {
             mission_len => 12,
         };
 
-    } else {
+    } elsif($args->{switch} eq '0AFE') {
+		$quest_info = {
+            mission_pack => 'V3 v2',
+            mission_keys => [qw(questID hunt_id hunt_id_cont mob_goal mob_count)],
+            mission_len => 16,
+        };
+	} else { # 02B5 and 08FE
         $quest_info = {
             mission_pack => 'V2 v2',
             mission_keys => [qw(questID mob_id mob_goal mob_count)],
@@ -3949,11 +3980,16 @@ sub quest_update_mission_hunt {
         };
     }
 
+	# workaround 08FE dont have mission_count
+	if ($args->{switch} eq '08FE') {
+		$args->{mission_amount} = (length $args->{message}) / ($quest_info->{mission_len});
+	}
+
 	for (my $i = 0; $i < $args->{mission_amount}; $i++) {
 		my $mission;
 
         @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
-
+		
 		my $quest = \%{$questList->{$mission->{questID}}};
 
 		my $mission_id;
@@ -3971,7 +4007,7 @@ sub quest_update_mission_hunt {
 			# Search in the quest of a mission with this mob_id
 			foreach my $current_key (keys %{$quest->{missions}}) {
 				if (exists $quest->{missions}->{$current_key}{mob_id} && $quest->{missions}->{$current_key}{mob_id} == $mission->{mob_id}) {
-					$mission_id = $mission->{mob_id};
+					$mission_id = $quest->{missions}->{$current_key}{hunt_id};
 					last;
 				}
 			}
@@ -3981,7 +4017,7 @@ sub quest_update_mission_hunt {
 			# Search in the quest of a mission with this hunt_id
 			foreach my $current_key (keys %{$quest->{missions}}) {
 				if (exists $quest->{missions}->{$current_key}{hunt_id} && $quest->{missions}->{$current_key}{hunt_id} == $mission->{hunt_id}) {
-					$mission_id = $mission->{hunt_id};
+					$mission_id = $quest->{missions}->{$current_key}{mob_id};
 					last;
 				}
 			}
@@ -3992,9 +4028,8 @@ sub quest_update_mission_hunt {
 		$quest_mission->{mob_count} = $mission->{mob_count};
 		$quest_mission->{mob_goal} = $mission->{mob_goal};
 
-
 		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
-
+		
         $offset += $quest_info->{mission_len};
 
 		Plugins::callHook('quest_mission_updated', {
@@ -4300,6 +4335,106 @@ sub inventory_items_stackable {
 			}
 		}
 	});
+}
+
+sub item_list_start {
+	my ($self, $args) = @_;
+	debug TF("Starting Item List. ID: %s\n", $args->{type}), "info";
+	$current_item_list = $args->{type};
+}
+
+sub item_list_stackable {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $arguments = {
+		class => 'Actor::Item',
+		debug_str => 'Stackable Item List',
+		items => [$self->parse_items_stackable($args)],
+		callback => sub {
+			my ($local_item) = @_;
+
+			if (defined $char->{arrow} && $local_item->{ID} eq $char->{arrow}) {
+				$local_item->{equipped} = 32768;
+				$char->{equipment}{arrow} = $local_item;
+			}
+
+		}
+	};
+
+	if ( $args->{type} == INVTYPE_INVENTORY ) {
+		$arguments->{hook} = 'packet_inventory';
+		$arguments->{getter} = sub { $char->inventory->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->inventory->add($_[0]) };
+	} elsif ( $args->{type} == INVTYPE_CART ) {
+		$arguments->{hook} = 'packet_cart',
+		$arguments->{getter} = sub { $char->cart->getByID($_[0]{ID}) },
+		$arguments->{adder} = sub { $char->cart->add($_[0]) },
+	} elsif ( $args->{type} == INVTYPE_STORAGE ) {
+		$arguments->{hook} = 'packet_storage';
+		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->storage->add($_[0]) };
+	} elsif ( $args->{type} == INVTYPE_GUILD_STORAGE ) {
+		return; # guild storage not implemented yet =/ (2019-06-21)
+	} else {
+		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
+	}
+
+	$self->_items_list($arguments);
+}
+
+sub item_list_nonstackable {
+	my ($self, $args) = @_;
+	return unless changeToInGameState();
+
+	my $arguments = {
+		class => 'Actor::Item',
+		debug_str => 'Non-Stackable Item List',
+		items => [$self->parse_items_nonstackable($args)],
+		callback => sub {
+			my ($local_item) = @_;
+
+			if ($local_item->{equipped}) {
+				foreach (%equipSlot_rlut){
+					if ($_ & $local_item->{equipped}){
+						next if $_ == 10; #work around Arrow bug
+						next if $_ == 32768;
+						$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
+					}
+				}
+			}
+		}
+	};
+
+	if ( $args->{type} == INVTYPE_INVENTORY ) {
+		$arguments->{hook} = 'packet_inventory';
+		$arguments->{getter} = sub { $char->inventory->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->inventory->add($_[0]) };
+
+	} elsif ( $args->{type} == INVTYPE_CART ) {
+		$arguments->{hook} = 'packet_cart',
+		$arguments->{getter} = sub { $char->cart->getByID($_[0]{ID}) },
+		$arguments->{adder} = sub { $char->cart->add($_[0]) },
+
+	} elsif ( $args->{type} == INVTYPE_STORAGE ) {
+		$arguments->{hook} = 'packet_storage';
+		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->storage->add($_[0]) };
+
+	} elsif ( $args->{type} == INVTYPE_GUILD_STORAGE ) {
+		return; # guild storage not implemented yet =/ (2019-06-21)
+
+	} else {
+		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
+	}
+
+	$self->_items_list($arguments);
+}
+
+sub item_list_end {
+	my ($self, $args) = @_;
+	debug TF("Ending Item List. ID: %s\n", $args->{type}), "info";
+	undef $current_item_list;
 }
 
 sub login_error {

@@ -537,6 +537,7 @@ sub new {
 		'08B3' => ['show_script', 'v a4 Z*', [qw(len ID message)]], #-1
 		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
 		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
+		'08FE' => ['quest_update_mission_hunt', 'v a*', [qw(len message)]],
 		'0906' => ['show_eq', 'v Z24 x17 a*', [qw(len name equips_info)]],
 		'0908' => ['inventory_item_favorite', 'a2 C', [qw(ID flag)]],#5
 		'090F' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 a9 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font opt4 name)]],
@@ -643,8 +644,15 @@ sub new {
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AE9' => ['login_pin_code_request', 'V a4 v2', [qw(seed accountID flag lock)]],
 		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0AFE' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
+		'0AFF' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
+		'0B0C' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'0B02' => ['login_error', 'V Z20', [qw(type date)]],
 		'0B03' => ['show_eq', 'v Z24 v9 C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color clothes_color2 sex equips_info)]],
+		'0B08' => ['item_list_start', 'v C', [qw(len type)]],
+		'0B09' => ['item_list_stackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B0A' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B0B' => ['item_list_end', 'C2', [qw(type flag)]],
 		'0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
 		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
 		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate tab hotkeys)]],#herc PR 2468
@@ -688,6 +696,11 @@ sub new {
 				types => 'a2 v C V2 C a8 l v2 C a25 C',
 				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
 			},
+			type8 => {
+				len => 67,
+				types => 'a2 V C V2 C a16 l v2 C a25 C',
+				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+			},
 		},
 		items_stackable => {
 			type1 => {
@@ -714,6 +727,11 @@ sub new {
 				len => 24,
 				types => 'a2 v C v V a8 l C',
 				keys => [qw(ID nameID type amount type_equip cards expire identified)],
+			},
+			type7 => {
+				len => 34,
+				types => 'a2 V C V2 C2 a16 l v2 C',
+				keys => [qw(ID nameID type amount type_equip broken upgrade cards expire bindOnEquipType sprite_id identified)],
 			},
 		},
 	};
@@ -766,6 +784,8 @@ sub items_nonstackable {
 		|| $args->{switch} eq '0A2D' # other player
 	) {
 		return $items->{type7};
+	} elsif ($args->{switch} eq '0B0A') { # item_list
+		return $items->{type8};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -806,6 +826,8 @@ sub items_stackable {
 		|| $args->{switch} eq '0995' # storage
 	) {
 		return $items->{type6};
+	} elsif ($args->{switch} eq '0B09') { # item_list
+		return $items->{type7};
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -819,6 +841,10 @@ sub parse_items {
 	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
+		
+		if ( $args->{switch} eq '0B09' && $item->{type} == 10 ) { # workaround arrow byte bug
+			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
+		}
 
 		$process->($item);
 
