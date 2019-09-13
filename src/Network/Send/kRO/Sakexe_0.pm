@@ -195,6 +195,7 @@ sub new {
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
+		'0447' => ['blocking_play_cancel'],
 		'044A' => ['client_version', 'V', [qw(clientVersion)]],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'07E7' => ['captcha_answer', 'v a4 a24', [qw(len accountID answer)]],

@@ -5710,7 +5710,7 @@ sub map_change {
 		# $messageSender->sendSync(1);
 
 		# request to unfreeze char alisonrag
-		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
+		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel} || $self->{blockingPlayerCancel};
 
 		$timeout{ai}{time} = time;
 	}
