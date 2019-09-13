@@ -3837,13 +3837,15 @@ sub cmdMove {
 				$file .= ".gz" if (! -f $file); # compressed file
 				if ($maps_lut{"${map_or_portal}.rsw"} || -f $file) {
 					my $move_field = new Field(name => $map_or_portal);
-					if ($move_field->isOffMap($x, $y)) {
-						error TF("Coordinates %s %s are off the map %s\n",$x, $y, $map_or_portal);
-						return;
-					}
-					if (!$move_field->isWalkable($x, $y)) {
-						error TF("Coordinates %s %s are not walkable on the map %s\n",$x, $y, $map_or_portal);
-						return;
+					if (defined $x && defined $y) {
+						if ($move_field->isOffMap($x, $y)) {
+							error TF("Coordinates %s %s are off the map %s\n",$x, $y, $map_or_portal);
+							return;
+						}
+						if (!$move_field->isWalkable($x, $y)) {
+							error TF("Coordinates %s %s are not walkable on the map %s\n",$x, $y, $map_or_portal);
+							return;
+						}
 					}
 					my $map_name = $maps_lut{"${map_or_portal}.rsw"} ? $maps_lut{"${map_or_portal}.rsw"} : T('Unknown Map');
 					if ($dist) {

@@ -22998,7 +22998,6 @@ Hunt 150 Combat Basilisk monsters and return to the Bounty Board at Lasagna#
 63383#Bounty Board Jungle Mandragora#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Jungle Mandragora monsters and return to the Bounty Board at Lasagna#
 #
-
 63384#Bounty Board Alligator#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Alligator  monsters and return to the Bounty Board at Comodo#
 #
@@ -23020,11 +23019,122 @@ Hunt 150 Sea Otter monsters and return to the Bounty Board at Comodo#
 63390#Bounty Board Thara Frog#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Thara Frog monsters and return to the Bounty Board at Comodo#
 #
-
 63391#Bounty Board Stalactic Golem#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Stalactic Golem monsters and return to the Bounty Board at Comodo#
 #
-
 63392#Bounty Board Medusa#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Medusa monsters and return to the Bounty Board at Comodo#
 #
+63393#Bounty Board Cookie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cookie monsters and return to the Bounty Board at Lutie#
+#
+63394#Bounty Board Cookie (Red)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cookie (Red) monsters and return to the Bounty Board at Lutie#
+#
+63395#Bounty Board Cruiser#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cruiser monsters and return to the Bounty Board at Lutie#
+#
+63396#Bounty Board Marin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Marin monsters and return to the Bounty Board at Lutie#
+#
+63397#Bounty Board Myst Case#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Myst Case monsters and return to the Bounty Board at Lutie#
+#
+63398#Bounty Board Dryad#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dryad monsters and return to the Bounty Board at Umbala#
+#
+63399#Bounty Board Parasite#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Parasite monsters and return to the Bounty Board at Umbala#
+#
+63400#Bounty Board Stone Shooter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stone Shooter monsters and return to the Bounty Board at Umbala#
+#
+63401#Bounty Board Wild Rose#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wild Rose monsters and return to the Bounty Board at Umbala#
+#
+63402#Bounty Board Wootan Fighter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wootan Fighter monsters and return to the Bounty Board at Umbala#
+#
+63403#Bounty Board Wootan Shooter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wootan Shooter monsters and return to the Bounty Board at Umbala#
+#
+
+63404#F13#SG_FEEL#QUE_NOIMAGE#
+I've joined an investigation, I should speak with Detective Moose#
+Speak to Detective Moose.#
+
+63405#F13#SG_FEEL#QUE_NOIMAGE#
+There's been a murder, I can join the investigation by speaking with Lt. Don.#
+Speak to Lt. Don Tyler.#
+
+63406#F13#SG_FEEL#QUE_NOIMAGE#
+The only lead we have is a former Fence named Maria, her shop is on the North East side of town along the main road.#
+Go to Maria's Shop in North East Prontera.#
+
+63407#F13#SG_FEEL#QUE_NOIMAGE#
+I've been sent to speak to Maria ahead of the Detectives.#
+Speak to Maria.#
+
+63408#F13#SG_FEEL#QUE_NOIMAGE#
+Maria gave is information, I should speak to Moose & Squirrel again regarding instructions near the Guard Station.#
+Speak to Detective Moose.#
+
+63409#F13#SG_FEEL#QUE_NOIMAGE#
+I should head to Big Geno's warehouse just north of the West Entrance of town. There may be a way in around back.#
+Enter the Warehouse and investigate.#
+
+63410#F13#SG_FEEL#QUE_NOIMAGE#
+Frederick Kruggah was behind the Crime Scene with a staged death. Now he's opened a portal to another dimension!#
+I should inform Lt. Don.#
+
+63411#F13#SG_FEEL#QUE_NOIMAGE#
+I should go back into the portal in the Guard Station south of where Lt. Don is and hunt 5 of something fiery.#
+Hunt 5 Torturous Redeemers.#
+
+63412#F13#SG_FEEL#QUE_NOIMAGE#
+I should go back into the portal in the Guard Station south of where Lt. Don is and hunt 5 of some demon thing.#
+Hunt 5 Deviruchi.#
+
+63413#F13#SG_FEEL#QUE_NOIMAGE#
+Lt. Don sent me to speak with Maria again, apparently she's a dark arts expert of some sort. North East side of town along the main road#
+Speak to Maria again.#
+
+63414#F13#SG_FEEL#QUE_NOIMAGE#
+I should tell Lt. Don what I've learned from Maria. She seems like she's more than she was made out to be.#
+Speak to Lt. Don.#
+
+63415#F13#SG_FEEL#QUE_NOIMAGE#
+I'm being sent on a strike mission against the nightmare realm. We need to thin their numbers out.#
+Hunt 30 Bloody Murderer, 30 Phendark, and 30 Deviruchi.#
+
+63416#F13#SG_FEEL#QUE_NOIMAGE#
+I'm being sent to take out Charlie, Frederick's Demon Child accomplice.#
+Hunt down and eliminate Charlie.#
+
+63417#F13#SG_FEEL#QUE_NOIMAGE#
+I'm being sent to take out Mitchel Mayors, a wanted murderer who's teamed up with Frederick.#
+Hunt down and eliminate Mitchel Mayors.#
+
+63418#F13#SG_FEEL#QUE_NOIMAGE#
+I'm being sent to take out Jaysun Vorheezio, an undead killer who's teamed up with Frederick.#
+Hunt down and eliminate Jaysun Vorheezio.#
+
+63419#F13#SG_FEEL#QUE_NOIMAGE#
+I've succeeded in my tasks. Seems like all that's left are to strike against Frederick's realm.#
+Talk to Lt. Don for more Missions.#
+
+63420#F13#SG_FEEL#QUE_NOIMAGE#
+We've taken Big Geno and the Russo Brothers into custody. Moose & Squirrel will question them.#
+Talk to Detective Moose inside the Station.#
+
+63421#F13#SG_FEEL#QUE_NOIMAGE#
+Strike Mission. Seek and destroy 30 Bloody Murderers for bounty rewards from the 1337th.#
+Hunt 30 Bloody Murderer.#
+
+63422#F13#SG_FEEL#QUE_NOIMAGE#
+Strike Mission. Seek and destroy 30 Phendarks for bounty rewards from the 1337th.#
+Hunt 30 Phendark.#
+
+63423#F13#SG_FEEL#QUE_NOIMAGE#
+Strike Mission. Seek and destroy 30 Deviruchis for bounty rewards from the 1337th.#
+Hunt 30 Deviruchi.#

@@ -33971,15 +33971,20 @@ Jobs: ^777777All^000000
 placeholder
 #
 5435#
-A jaunty red hat. Given by way of a thank you from Gravity to creative community members
-Account bound, cannot be refined.
-INT+1 MDEF+3
-Class : ^777777Headgear^000000
-Defense : ^7777771^000000
-Location : ^777777Upper^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+A jaunty red hat. Given by way of a thank you from Gravity to creative community members.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^80808040^000000
+Usable By: ^808080All Jobs^000000
+Int + 1
+Max SP + 80
+Mdef + 3
+
+For every upgrade level past the upgrade level of +6,
+Additional Max SP + 10
+Additional Mdef + 1
 #
 5436#
 A neatly made wedding corolla. A huge silk ribbon is attached to the back of it.
@@ -46251,6 +46256,18 @@ Weight: ^8080801^000000
 Redeem ticket by visiting the Yggdrasil Tree Retro Explorer in the second floor of the Eden Group (moc_para_up.gat 17, 176)
 More Details can be found by visiting the NPC in person.
 Weight: ^8080801^000000
+#
+9673#
+When opened gives one of the following
+Costume Bear Backpack
+Costume Bubbly Arc Angeling Hairband
+Costume Cute Poring Earmuffs
+Costume Experimental Goat Cap
+Costume Monster Fish Gills
+Costume Red Baby Dragon Hat
+Costume Piamette Doll Hair (Silver)
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 10001#
 A pristine helmet made from an animal skull.
@@ -73855,17 +73872,18 @@ Job : ^777777all jobs^000000
 #
 18868#
 A mask that is worn by a group of Eastern assassins. It's shaped like a skull to notify victims of their imminent death.
-CRI +5.
-Class : ^777777HeadGear^000000 Defense : ^7777772^000000
-Location : ^777777MiddleLow ^000000Weight : ^77777750^000000
-Required Level : ^77777770^000000
-Job : ^777777All^000000
-A mask that is worn by a group of Eastern assassins. It's shaped like a skull to notify victims of their imminent death.
-CRI +5.
-Class : ^777777HeadGear^000000 Defense : ^7777772^000000
-Location : ^777777MiddleLow ^000000Weight : ^77777750^000000
-Required Level : ^77777770^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080802^000000
+Weight: ^80808050^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Crit + 5
+
+^800080Set Bonus^000000
+^008080Assassin's Despair [1]^000000
+^008080Assassin's Skull Mask^000000
+Increases physical damage on Demi-Human race targets by 10%.
 #
 18873#
 A heart-shaped yellow hat celebrating 2013 Valentine's Day.
@@ -82927,6 +82945,13 @@ Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
 #
+20582#
+A cute bear backpack for the stylish adventurer.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
 20700#
 Egir's Manteau. It looks defending your body
 can not be destroyed
@@ -83099,20 +83124,17 @@ Perfect DODGE + 5
 Additional Perfect DODGE + 2 per upgrade 2 upgrade levels of the item up to a maximum upgrade level of 10.
 #
 20714#
-^808080Muffler worn by an assassin group from the far east. This muffler will strengthen the wearer's legs.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 16
-Weight: 10
-Required Level: 50
-Required Jobs: All Jobs
-^FFFFFF_^000000
+Muffler worn by an assassin group from the far east. This muffler will strengthen the wearer's legs.
+Class: ^808080Garment^000000
+Defense: ^80808016^000000
+Weight: ^80808010^000000
+Requires Level: ^80808050^000000
+Usable By: ^808080All Jobs^000000
 Agi + 2 per upgrade level of the item past the upgrade level of 5.
-^FFFFFF_^000000
+
 ^800080Set Bonus^000000
-^008080Assassin's Despair^000000
-^008080Assassin's Muffler^000000
+^008080Assassin's Despair [1]^000000
+^008080Assassin's Muffler [1]^000000
 Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
 #
 20717#
@@ -85359,6 +85381,11 @@ Requires Level: ^80808030^000000
 Usable By: ^808080All Jobs^000000
 Increases the experience given from Demi-Human race monsters by 5%.
 Increases the experience given from Demi-Human race monsters by an additional 1% per upgrade level of the item.
+
+^800080Set Bonus^000000
+^008080Assassin's Despair [1]^000000
+^008080Assassin's Shoes^000000
+Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
 #
 22017#
 ^808080These shoes were worn by a man who made a living out of catching fish. They contain the man's many years of experience.^000000
@@ -91595,13 +91622,20 @@ Weight: ^80808010^000000
 Requires Level: ^80808050^000000
 Usable By: ^808080All Jobs^000000
 Aspd + 1
+
 ^800080Set Bonus^000000
-^008080Assassin's Despair^000000
+^008080Assassin's Despair [1]^000000
 ^008080Assassin's Skull Mask^000000
 Increases physical damage on Demi-Human race targets by 10%.
+
 ^800080Set Bonus^000000
-^008080Assassin's Despair^000000
+^008080Assassin's Despair [1]^000000
 ^008080Assassin's Shoes^000000
+Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
+
+^800080Set Bonus^000000
+^008080Assassin's Despair [1]^000000
+^008080Assassin's Muffler [1]^000000
 Increases physical damage on Demi-Human race targets by 1% per upgrade level of the item up to a maximum upgrade level of 12.
 #
 28324#
@@ -95426,6 +95460,13 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31259#
+A cute hairband showing an arc angeling
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
 31295#
 A red driver's hat decorated with white wings.
 Class: ^808080Costume^000000
@@ -95931,6 +95972,13 @@ Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31462#
+More Ribbons! More Cute!
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
 Usable By: ^808080All Jobs^000000
 #
 31463#
@@ -96903,6 +96951,40 @@ Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31784#
+A hat modeled on the experimental goat by Werner Laboratories.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31785#
+Gills of a black and red monster fish.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31786#
+A baby red dragon who has been trained to help its master.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31787#
+Straight from the cute clothing store! A plush shaped like a savage bebe. Advanced technology makes it balance perfectly on the shoulder.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31788#
+Cute hair made to look like the Piamette Doll. Comes in silver.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
 Usable By: ^808080All Jobs^000000
 #
 31800#
