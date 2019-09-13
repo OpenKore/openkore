@@ -45,8 +45,6 @@ typedef struct {
 	
 	long openListSize;
 	
-	int size;
-	
 	const char *map_base_weight;
 	Node *currentMap;
 	

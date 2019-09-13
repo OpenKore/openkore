@@ -44,6 +44,7 @@ CalcPath_new ()
 	return session;
 }
 
+// The heuristic used is diagonal distance.
 int
 heuristic_cost_estimate (int currentX, int currentY, int goalX, int goalY)
 {
@@ -151,14 +152,11 @@ openListGetLowest (CalcPath_session *session)
 	
 	Node* movedNode;
 	
-	// TODO
+	// Saves in movedNode that it now is the top node in openList
 	movedNode = &session->currentMap[session->openList[lowestNode->openListIndex]];
-	
-	// TODO
 	movedNode->openListIndex = lowestNode->openListIndex;
 	
 	// Saves in lowestNode that it is no longer in openList
-	// Change here
 	lowestNode->whichlist = CLOSED;
 	lowestNode->openListIndex = 0;
 	
@@ -220,6 +218,7 @@ openListGetLowest (CalcPath_session *session)
 	return lowestNode;
 }
 
+// Starts from goal node and each loop changes to the current node predecessor until it reaches the start node, increasing solution size by 1 each loop.
 void
 reconstruct_path(CalcPath_session *session, Node* goal, Node* start)
 {
@@ -233,6 +232,7 @@ reconstruct_path(CalcPath_session *session, Node* goal, Node* start)
 	}
 }
 
+// The actual A* pathfinding algorithm, loops until it finds a path or runs out of time.
 int 
 CalcPath_pathStep (CalcPath_session *session)
 {
@@ -247,11 +247,14 @@ CalcPath_pathStep (CalcPath_session *session)
 	if (!session->run) {
 		session->run = 1;
 		session->openListSize = 0;
+		// Allocate enough memory in openList to hold the adress of all nodes in the map
 		session->openList = (unsigned long*) malloc((session->height * session->width) * sizeof(unsigned long));
 		
+		// To initialize the pathfinding add only the start node to openList
 		openListAdd (session, start);
 	}
 	
+	// If the start node and goal node are the same return a valid path with length 0
 	if (goal->nodeAdress == start->nodeAdress) {
 		session->solution_size = 0;
 		return 1;
@@ -262,6 +265,7 @@ CalcPath_pathStep (CalcPath_session *session)
 	
 	short i;
 	
+	// All possible directions the character can move (in order: north, south, east, west, northeast, southeast, southwest, northwest)
 	short i_x[8] = {0, 0, 1, -1, 1, 1, -1, -1};
 	short i_y[8] = {1, -1, 0, 0, 1, -1, -1, 1};
 	
@@ -276,11 +280,12 @@ CalcPath_pathStep (CalcPath_session *session)
 	int loop = 0;
 	
 	while (1) {
-		// No path exists
+		// If the openList is empty no path exists
 		if (session->openListSize == 0) {
 			return -1;
 		}
 		
+		// Every 100th loop check if we have ran out if time
 		loop++;
 		if (loop == 100) {
 			if (GetTickCount() - timeout > session->time_max) {
@@ -290,15 +295,17 @@ CalcPath_pathStep (CalcPath_session *session)
 				loop = 0;
 		}
 		
+		// Set currentNode to the top node in openList, and remove it from openList.
 		currentNode = openListGetLowest (session);
 
-		//if current is the goal, return the path.
+		// If currentNode is the goal we have reached the destination, reconstruct and return the path.
 		if (goal->predecessor) {
 			//return path
 			reconstruct_path(session, goal, start);
 			return 1;
 		}
 		
+		// Loop between all neighbors
 		for (i = 0; i <= 7; i++)
 		{
 			neighbor_x = currentNode->x + i_x[i];
@@ -310,31 +317,40 @@ CalcPath_pathStep (CalcPath_session *session)
 
 			neighbor_adress = (neighbor_y * session->width) + neighbor_x;
 
+			// Unwalkable nodes have weight -1, if a neighbor is unwalkable ignore it.
 			if (session->map_base_weight[neighbor_adress] == -1) {
 				continue;
 			}
-				
+			
 			neighborNode = &session->currentMap[neighbor_adress];
-				
+			
+			// If a neighbor is in closedList ignore it, it has already been expanded and has its lowest possible g_score
 			if (neighborNode->whichlist == CLOSED) {
 				continue;
 			}
-				
+			
+			// First 4 neighbors in the list are in a ortogonal path and the last 4 are in a diagonal path from currentNode.
 			if (i >= 4) {
+				// If neighborNode has a diagonal path from currentNode then we can only move to it if both ortogonal composite nodes are walkable. (example: To move to the northeast both north and east must be walkable)
 			   if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == -1 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == -1) {
 					continue;
 				}
+				// We use 14 as the diagonal movement weight
 				distanceFromCurrent = 14;
 			} else {
+				// We use 10 for ortogonal movement weight
 				distanceFromCurrent = 10;
 			}
 			
+			// If avoidWalls is true we add weight to cells near walls to disencourage the algorithm to move to them.
 			if (session->avoidWalls) {
 				distanceFromCurrent += session->map_base_weight[neighbor_adress];
 			}
-				
+			
+			// g_score is the summed weight of all nodes from start node to neighborNode, which is the g_score of currentNode + the weight to move from currentNode to neighborNode.
 			g_score = currentNode->g + distanceFromCurrent;
-				
+			
+			// If neighborNode is not in openList neither in closedList it has not been reached yet, initialize it and add it to openList
 			if (neighborNode->whichlist == NONE) {
 				neighborNode->x = neighbor_x;
 				neighborNode->y = neighbor_y;
@@ -344,11 +360,15 @@ CalcPath_pathStep (CalcPath_session *session)
 				neighborNode->h = heuristic_cost_estimate(neighborNode->x, neighborNode->y, session->endX, session->endY);
 				neighborNode->f = neighborNode->g + neighborNode->h;
 				openListAdd (session, neighborNode);
+			
+			// If neighborNode is in a list it has to be in openList, since we cannot access nodes in closedList. 
 			} else {
+				// Check if we have found a shorter path to neighborNode, if so update it to have currentNode as its predecessor.
 				if (g_score < neighborNode->g) {
 					neighborNode->predecessor = currentNode->nodeAdress;
 					neighborNode->g = g_score;
 					neighborNode->f = neighborNode->g + neighborNode->h;
+					// Here we could remove neighborNode from openList and add it again to get it to the right position, but reajusting it saves time.
 					reajustOpenListItem (session, neighborNode);
 				}
 			}
@@ -358,12 +378,12 @@ CalcPath_pathStep (CalcPath_session *session)
 }
 
 // Create a new pathfinding session, or reset an existing session.
-// Resetting is preferred over destroying and creating, because it saves
-// unnecessary memory allocations, thus improving performance.
+// Resetting is preferred over destroying and creating, because it saves unnecessary memory allocations, thus improving performance.
 void
 CalcPath_init (CalcPath_session *session)
 {
-	/* Allocate enough memory in currentMap to hold all cells in the map */
+	// Allocate enough memory in currentMap to hold all nodes in the map
+	// Here we use calloc instead of malloc (calloc sets all memory allocated to 0's) so all uninitialized cells have whichlist set to NONE
 	session->currentMap = (Node*) calloc(session->height * session->width, sizeof(Node));
 	
 	unsigned long goalAdress = (session->endY * session->width) + session->endX;
@@ -383,18 +403,21 @@ CalcPath_init (CalcPath_session *session)
 	session->initialized = 1;
 }
 
+// Frees the memory allocated by currentMap
 void
 free_currentMap (CalcPath_session *session)
 {
 	free(session->currentMap);
 }
 
+// Frees the memory allocated by openList
 void
 free_openList (CalcPath_session *session)
 {
 	free(session->openList);
 }
 
+// Garantees that all memory allocations have been freed the pathfinding object is destroyed
 void
 CalcPath_destroy (CalcPath_session *session)
 {
