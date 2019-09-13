@@ -2243,6 +2243,7 @@ aq19_sa.rsw#ra_san01.rsw#
 1@arena.rsw#arena_room.rsw#
 삯샺샎엍웤샌붺\map\1@arena.bmp#삯샺샎엍웤샌붺\map\arena_room.bmp#
 
+// July 4th 2019
 det_dun01.gat#rockmi2.gat#
 det_dun01.rsw#rockmi2.rsw#
 삯샺샎엍웤샌붺\map\det_dun01.bmp#삯샺샎엍웤샌붺\map\rockmi2.bmp#
@@ -2267,3 +2268,27 @@ odun19.rsw#abyss_02.rsw#
 1@parena.gat#poring_w01.gat#
 1@parena.rsw#poring_w01.rsw#
 삯샺샎엍웤샌붺\map\1@parena.bmp#삯샺샎엍웤샌붺\map\poring_w01.bmp#
+
+// Friday the 13th - Nightmare Prontera
+prt_f1319.gnd#prt_q.gnd#
+prt_f1319.gat#prt_q.gat#
+prt_f1319.rsw#prt_q.rsw#
+삯샺샎엍웤샌붺\map\prt_f1319.bmp#삯샺샎엍웤샌붺\map\prt_q.bmp#
+
+// Friday the 13th 2019 - Nightmare Cathedral
+cath_f13nm.gnd#gl_cas01.gnd#
+cath_f13nm.gat#gl_cas01.gat#
+cath_f13nm.rsw#gl_cas01.rsw#
+삯샺샎엍웤샌붺\map\cath_f13nm.bmp#삯샺샎엍웤샌붺\map\gl_cas01.bmp#
+
+// Friday the 13th Police Station
+station_f13.gnd#sec_pri.gnd#
+station_f13.gat#sec_pri.gat#
+station_f13.rsw#sec_pri.rsw#
+삯샺샎엍웤샌붺\map\station_f13.bmp#삯샺샎엍웤샌붺\map\sec_pri.bmp#
+
+// Friday the 13th Interior Cells
+prt_f1319in.gnd#prt_in.gnd#
+prt_f1319in.gat#prt_in.gat#
+prt_f1319in.rsw#prt_in.rsw#
+삯샺샎엍웤샌붺\map\prt_f1319in.bmp#삯샺샎엍웤샌붺\map\prt_in.bmp#
