@@ -5069,6 +5069,7 @@
 9664#2019_August_Costume_Box#
 9665#Yggdrasil_Retro_Ticket_I#
 9670#Yggdrasil_Retro_Ticket_II#
+9673#September_2019_Costume_Box#
 10001#Skull_Helmet#
 10002#Monster_Oxygen_Mask#
 10003#Transparent_Head_Protector#
@@ -8039,7 +8040,7 @@
 18865#Sword_Master_Crown#
 18866#Owlduke_Silk_Hat#
 18867#Vajra#
-18868#Assassin_Mask#
+18868#Assassin's_Skull_Mask#
 18873#Sweet_Valentine#
 18874#Monocle#
 18877#Baron's_Evil_Eye#
@@ -8859,6 +8860,7 @@
 20571#Costume_Valkyrie_Wings#
 20574#Costume_Backpack_(Red)#
 20575#Costume_Backpack_(Black)#
+20582#Costume_Bear_Backpack#
 20700#Egir_Manteau#
 20701#Sol_Manteau#
 20702#TE_WoE_Muffler#
@@ -9847,6 +9849,7 @@
 31252#Costume_White_Cat_Ears_Hat#
 31256#Costume_Jaguar_Mask#
 31258#Costume_Glowing_White_Blush#
+31259#Costume_Bubbly_Arc_Angeling_Hairband#
 31295#Costume_Red_Wing_Hat#
 31296#Costume_Strawberry_in_Mouth#
 31298#Costume_Eden_Group_Hat_II#
@@ -9909,6 +9912,7 @@
 31453#Costume_Large_Ribbon_Muffler_(Black)#
 31455#Costume_Super_Cute_Dog#
 31461#Costume_Marin_Earrings#
+31462#Costume_Cute_Poring_Earmuffs#
 31463#Costume_Flying_Drone#
 31470#Costume_Tengu_Scroll#
 31471#Costume_Celestial_Woman_Flower#
@@ -10037,6 +10041,11 @@
 31716#Costume_Twinkling_Red_Eyes#
 31717#Costume_Medium_Wave_(Yellow)#
 31718#Costume_Sky_Lantern#
+31784#Costume_Experimental_Goat_Cap#
+31785#Costume_Monster_Fish_Gills#
+31786#Costume_Red_Baby_Dragon_Hat#
+31787#Costume_Savage_Shoulder_Bebe_#
+31788#Costume_Piamette_Doll_Hair_(Silver)#
 31800#Costume_Brazil_Twin_Ribbon#
 31801#Costume_Creative_Convention_Cap#
 31802#Costume_Creative_Convention_Chapeau#
