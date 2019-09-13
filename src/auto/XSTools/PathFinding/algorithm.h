@@ -53,19 +53,19 @@ typedef struct {
 
 CalcPath_session *CalcPath_new ();
 
+void CalcPath_init (CalcPath_session *session);
+
+int CalcPath_pathStep (CalcPath_session *session);
+
 int heuristic_cost_estimate(int currentX, int currentY, int goalX, int goalY);
+
+void reconstruct_path(CalcPath_session *session, Node* goal, Node* start);
 
 void openListAdd (CalcPath_session *session, Node* node);
 
 void reajustOpenListItem (CalcPath_session *session, Node* node);
 
 Node* openListGetLowest (CalcPath_session *session);
-
-void reconstruct_path(CalcPath_session *session, Node* goal, Node* start);
-
-int CalcPath_pathStep (CalcPath_session *session);
- 
-void CalcPath_init (CalcPath_session *session);
 
 void free_currentMap (CalcPath_session *session);
 
