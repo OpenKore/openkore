@@ -29,6 +29,7 @@ pinCode 1
 charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
+itemListType 1
 
 # http://ragnarok.uol.com.br
 [Brazil - bRO: Thor]
@@ -50,6 +51,7 @@ pinCode 1
 charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
+itemListType 1
 
 # http://ro.zhaouc.com/
 [cRO - China: Taren]

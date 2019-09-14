@@ -2461,8 +2461,9 @@ sub sendBuyBulk {
 
 sub reconstruct_buy_bulk {
 	my ($self, $args) = @_;
+	my $pack = $self->{send_buy_bulk_pack} || "v2";
 	
-	$args->{buyInfo} = pack "(a*)*", map { pack "v2", $_->{amount}, $_->{itemID} } @{$args->{items}};
+	$args->{buyInfo} = pack "(a*)*", map { pack $pack, $_->{amount}, $_->{itemID} } @{$args->{items}};
 }
 
 sub sendSellBulk {

@@ -72,7 +72,7 @@ our %EXPORT_TAGS = (
 						REFUSE_SSO_NOTHING_USER REFUSE_SSO_OTHER_2 REFUSE_SSO_WRONG_RATETYPE_1 REFUSE_SSO_EXTENSION_PCBANG_TIME
 						REFUSE_SSO_WRONG_RATETYPE_2 REFUSE_UNKNOWN REFUSE_INVALID_ID2 REFUSE_BLOCKED_ID REFUSE_BLOCKED_COUNTRY REFUSE_INVALID_PASSWD2
 						REFUSE_EMAIL_NOT_CONFIRMED2 REFUSE_BILLING REFUSE_BILLING2 REFUSE_WEB REFUSE_CHANGE_PASSWD_FORCE2 REFUSE_SERVER_ERROR
-						REFUSE_SERVER_ERROR2 REFUSE_SERVER_ERROR3)],
+						REFUSE_SERVER_ERROR2 REFUSE_SERVER_ERROR3 REFUSE_ACCOUNT_NOT_PREMIUM)],
 	stat_info => [qw(VAR_SPEED VAR_EXP VAR_JOBEXP VAR_VIRTUE VAR_HONOR VAR_HP VAR_MAXHP VAR_SP VAR_MAXSP VAR_POINT VAR_HAIRCOLOR VAR_CLEVEL VAR_SPPOINT
 						VAR_STR VAR_AGI VAR_VIT VAR_INT VAR_DEX VAR_LUK VAR_JOB VAR_MONEY VAR_SEX VAR_MAXEXP VAR_MAXJOBEXP VAR_WEIGHT VAR_MAXWEIGHT VAR_POISON
 						VAR_STONE VAR_CURSE VAR_FREEZING VAR_SILENCE VAR_CONFUSION VAR_STANDARD_STR VAR_STANDARD_AGI VAR_STANDARD_VIT VAR_STANDARD_INT
@@ -212,6 +212,7 @@ use constant {
 	REFUSE_SERVER_ERROR => 0x145A,
 	REFUSE_SERVER_ERROR2 => 0x145B,
 	REFUSE_SERVER_ERROR3 => 0x145C,
+	REFUSE_ACCOUNT_NOT_PREMIUM => 0x14B5,
 };
 
 # stat_info
@@ -4110,11 +4111,13 @@ sub npc_chat {
 sub makable_item_list {
 	my ($self, $args) = @_;
 	undef $makableList;
+	my $unpack = $self->{makable_item_list_pack} || 'v4';
+	my $len = length pack $unpack;
 	my $k = 0;
 	my $msg;
 	$msg .= center(" " . T("Create Item List") . " ", 79, '-') . "\n";
-	for (my $i = 0; $i < length($args->{item_list}); $i += 8) {
-		my $nameID = unpack("v", substr($args->{item_list}, $i, 2));
+	for (my $i = 0; $i < length($args->{item_list}); $i += $len) {
+		my ($nameID, $material_1, $material_2, $material_3) = unpack($unpack, substr($args->{item_list}, $i, $len));
 		$makableList->[$k] = $nameID;
 		$msg .= swrite(sprintf("\@%s \@%s (\@%s)", ('>'x2), ('<'x50), ('<'x6)), [$k, itemNameSimple($nameID), $nameID]);
 		$k++;
@@ -4515,6 +4518,10 @@ sub login_error {
 				return;
 			}
 		}
+	} elsif ($args->{type} == REFUSE_ACCOUNT_NOT_PREMIUM) {
+		error TF("Account [%s] doesn't have access to Premium Server\n", $config{'username'}), "connection";
+		quit();
+		return;
 	} else {
 		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
 	}
@@ -5882,7 +5889,7 @@ sub npc_store_begin {
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
-	my $pack = 'V V C v';
+	my $pack = $self->{npc_store_info_pack} || 'V V C v';
 	my $len = length pack $pack;
 	$storeList->clear;
 	undef %talk;
@@ -7664,17 +7671,19 @@ sub buying_store_items_list {
 	$buyingStoreID = $args->{buyingStoreID};
 	my $player = Actor::get($buyerID);
 	my $index = 0;
-
+	my $pack = $self->{buying_store_items_list_pack} || 'V v C v';
+	my $len = length pack $pack;
+	
 	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 79, '-') ."\n".
 		T("#   Name                                      Type        Amount          Price\n");
 
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$len) {
 		my $item = {};
 
 		($item->{price},
 		$item->{amount},
 		$item->{type},
-		$item->{nameID})	= unpack('V v C v', substr($args->{RAW_MSG}, $i, 9));
+		$item->{nameID})	= unpack($pack, substr($args->{RAW_MSG}, $i, $len));
 
 		$item->{name} = itemName($item);
 		$buyerItemList[$index] = $item;
