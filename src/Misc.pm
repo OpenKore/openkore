@@ -1995,8 +1995,18 @@ sub itemName {
 	my $suffix = "";
 	my @cards;
 	my %cards;
-	my $card_upack = $self->{card_unpack} || "v";
-	my $card_len = length pack $card_upack;
+	
+	my $item_len = length($item);
+	my $card_unpack;
+	
+	# FIXME WORKAROUND TO ITEMID 4BYTES
+	if ($item_len == 67 || $item_len == 34) {
+		$card_unpack = "V";
+	} else {
+		$card_unpack = "v";
+	}
+	
+	my $card_len = length pack $card_unpack;
 	for (my $i = 0; $i < 4; $i++) {
 		my $card = unpack($card_unpack, substr($item->{cards}, $i*$card_len, $card_len));
 		next unless $card;
