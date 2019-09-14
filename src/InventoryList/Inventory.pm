@@ -7,7 +7,7 @@ use base qw(InventoryList);
 
 use constant {
 	MAP_LOADED_OR_NEW => 0,
-	RECV_STAT_INFO2 => 1
+	INVENTORT_READY => 1
 };
 
 sub new {
@@ -37,7 +37,7 @@ sub onitemListEnd {
 	my ($self) = @_;
 	if($current_item_list == 0x0) {
 		if ($self->{state} == MAP_LOADED_OR_NEW) {
-			$self->{state} = RECV_STAT_INFO2;
+			$self->{state} = INVENTORT_READY;
 			Plugins::callHook('inventory_ready');
 		}
 	}
@@ -46,7 +46,7 @@ sub onitemListEnd {
 sub onStatInfo2 {
 	my ($self) = @_;
 	if ($self->{state} == MAP_LOADED_OR_NEW) {
-		$self->{state} = RECV_STAT_INFO2;
+		$self->{state} = INVENTORT_READY;
 		Plugins::callHook('inventory_ready');
 	}
 }
