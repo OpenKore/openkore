@@ -4110,11 +4110,13 @@ sub npc_chat {
 sub makable_item_list {
 	my ($self, $args) = @_;
 	undef $makableList;
+	my $unpack = $self->{makable_item_list_pack} || 'v4';
+	my $len = length pack $unpack;
 	my $k = 0;
 	my $msg;
 	$msg .= center(" " . T("Create Item List") . " ", 79, '-') . "\n";
-	for (my $i = 0; $i < length($args->{item_list}); $i += 8) {
-		my $nameID = unpack("v", substr($args->{item_list}, $i, 2));
+	for (my $i = 0; $i < length($args->{item_list}); $i += $len) {
+		my ($nameID, $material_1, $material_2, $material_3) = unpack($unpack, substr($args->{item_list}, $i, $len));
 		$makableList->[$k] = $nameID;
 		$msg .= swrite(sprintf("\@%s \@%s (\@%s)", ('>'x2), ('<'x50), ('<'x6)), [$k, itemNameSimple($nameID), $nameID]);
 		$k++;
