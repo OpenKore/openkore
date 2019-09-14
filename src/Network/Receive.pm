@@ -5882,7 +5882,7 @@ sub npc_store_begin {
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
-	my $pack = 'V V C v';
+	my $pack = $self->{npc_store_info_pack} || 'V V C v';
 	my $len = length pack $pack;
 	$storeList->clear;
 	undef %talk;
@@ -7664,17 +7664,19 @@ sub buying_store_items_list {
 	$buyingStoreID = $args->{buyingStoreID};
 	my $player = Actor::get($buyerID);
 	my $index = 0;
-
+	my $pack = $self->{buying_store_items_list_pack} || 'V v C v';
+	my $len = length pack $pack;
+	
 	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 79, '-') ."\n".
 		T("#   Name                                      Type        Amount          Price\n");
 
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=9) {
+	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$len) {
 		my $item = {};
 
 		($item->{price},
 		$item->{amount},
 		$item->{type},
-		$item->{nameID})	= unpack('V v C v', substr($args->{RAW_MSG}, $i, 9));
+		$item->{nameID})	= unpack($pack, substr($args->{RAW_MSG}, $i, $len));
 
 		$item->{name} = itemName($item);
 		$buyerItemList[$index] = $item;
