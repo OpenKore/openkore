@@ -18,41 +18,48 @@ alertSound {
 	eventList public gm chat
 	notInTown 0
 	inLockOnly 0
+	disabled 0
 	play plugins\alertSound\sounds\alarm.wav
 }
 alertSound {
 	eventList private chat
 	notInTown 0
 	inLockOnly 0
+	disabled 0
 	play plugins\alertSound\sounds\phone.wav
 }
 alertSound {
 	eventList death, disconnected
 	notInTown 0
 	inLockOnly 0
+	disabled 0
 	play plugins\alertSound\sounds\warning.wav
 }
 alertSound {
 	eventList monster Poring, player 4epT
 	notInTown 1
 	inLockOnly 1
+	disabled 1
 	play plugins\alertSound\sounds\birds.wav
 }
 alertSound {
 	eventList teleport, public chat, emotion
 	notInTown 1
 	inLockOnly 0
+	disabled 0
 	play plugins\alertSound\sounds\birds.wav
 }
 alertSound {
 	eventList private GM chat, map change
 	notInTown 0
 	inLockOnly 0
+	disabled 0
 	play plugins\alertSound\sounds\alarm.wav
 }
 alertSound {
 	eventList item Jellopy, item Red Potion, item cards, item *Card*, item *potion*
 	notInTown 0
 	inLockOnly 0
+	disabled 1
 	play SystemDefault
 }

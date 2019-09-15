@@ -23,6 +23,7 @@
 #		eventList monster Poring
 #		notInTown 1
 #		inLockOnly 0
+#		disabled 0
 #		play sounds\birds.wav
 #	}
 ######################
@@ -181,7 +182,7 @@ sub system_message {
 sub alertSound {
 	my $event = shift;
 	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
-		next if (!$config{"alertSound_".$i."_eventList"});
+		next if (!$config{"alertSound_".$i."_eventList"} or $config{"alertSound_".$i."_disabled"});
 		if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, $event)
 			&& (!$config{"alertSound_".$i."_notInTown"} || !$cities_lut{$field->baseName().'.rsw'})
 			&& (!$config{"alertSound_".$i."_inLockOnly"} || $field->baseName() eq $config{'lockMap'})) {
