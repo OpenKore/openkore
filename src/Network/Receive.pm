@@ -5384,7 +5384,8 @@ sub identify {
 sub ignore_all_result {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
-		message T("All Players ignored\n");
+		$ignored_all = 1;
+		message T("All Players ignored\n");		
 	} elsif ($args->{type} == 1) {
 		if ($args->{error} == 0) {
 			message T("All players unignored\n");
