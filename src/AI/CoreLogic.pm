@@ -182,6 +182,7 @@ sub iterate {
 	processAutoShopOpen();
 	processAutoBuyerShopOpen();
 	processRepairAuto();
+	processSendIgnoreAll();
 	Benchmark::end("AI (part 4)") if DEBUG;
 
 
@@ -3446,6 +3447,20 @@ sub processRepairAuto {
 				return;
 			}
 		}
+	}
+}
+
+sub processSendIgnoreAll {
+	return if($net->getState() != Network::IN_GAME || !$config{ignoreAll} || $ignored_all);
+
+	if(!$timeout{'ai_ignoreAll'}{'time'}) {
+		$timeout{'ai_ignoreAll'}{'time'} = time;
+		return;
+	} elsif(timeOut($timeout{ai_ignoreAll})) {
+		warning "sending ignoreAll... \n";
+		$messageSender->sendIgnoreAll(0);
+		$timeout{'ai_ignoreAll'}{'time'} = time;
+		$ignored_all = 1;
 	}
 }
 

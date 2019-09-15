@@ -1004,14 +1004,16 @@ sub map_loaded {
 		our $quest_generation++;
 
 		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
-		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
-		$messageSender->sendIgnoreAll("all") if ($config{ignoreAll}); # broking xkore 1 and 3 when use cryptkey
+		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});		
 	}
 
 	$char->{pos} = {};
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+	
+	# ignoreAll
+	$ignored_all = 0;
 
 	# request to unfreeze char - alisonrag
 	$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
