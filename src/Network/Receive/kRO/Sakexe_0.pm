@@ -954,7 +954,8 @@ sub map_loaded {
 
 	setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); # set initial status from data received from the char server (seems needed on eA, dunno about kRO)
 
-	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
+	# ignoreAll
+	$ignored_all = 0;
 }
 
 sub buy_result {
