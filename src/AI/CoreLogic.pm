@@ -3457,10 +3457,10 @@ sub processSendIgnoreAll {
 		$timeout{'ai_ignoreAll'}{'time'} = time;
 		return;
 	} elsif(timeOut($timeout{ai_ignoreAll})) {
-		warning "sending ignoreAll... \n";
+		warning "Sending ignoreAll... \n";
 		$messageSender->sendIgnoreAll(0);
-		$timeout{'ai_ignoreAll'}{'time'} = time;
 		$ignored_all = 1;
+		$timeout{'ai_ignoreAll'}{'time'} = time;
 	}
 }
 
