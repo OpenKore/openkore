@@ -1,4 +1,4 @@
-Version 5
+Version 6
 
 alertSound($event)
 $event: unique event name
@@ -10,7 +10,7 @@ The config option "alertSound_#_eventList" should have a comma seperated list of
 Supported events:
 	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near,
 	private GM chat, private chat, public GM chat, npc chat, public chat, system message, disconnected
-	item <item name>, item <item ID>, item cards
+	item <item name>, item <item ID>, item cards, item *<part item name>*
 
 example config.txt:
 
@@ -51,7 +51,7 @@ alertSound {
 	play plugins\alertSound\sounds\alarm.wav
 }
 alertSound {
-	eventList item Jellopy, item Red Potion, item cards
+	eventList item Jellopy, item Red Potion, item cards, item *Card*, item *potion*
 	notInTown 0
 	inLockOnly 0
 	play SystemDefault

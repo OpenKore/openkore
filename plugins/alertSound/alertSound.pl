@@ -1,7 +1,7 @@
 # alertsound plugin by joseph
-# Modified by 4epT (29.06.2019)
+# Modified by 4epT (16.06.2019)
 #
-# Alert Plugin Version 5
+# Alert Plugin Version 6
 #
 # This software is open source, licensed under the GNU General Public
 # License, ver. (2 * (2 + cos(pi)))
@@ -16,7 +16,7 @@
 # Supported events:
 #	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near,
 #	private GM chat, private chat, public GM chat, npc chat, public chat, system message, disconnected,
-#   item <item name>, item <item ID>, item cards
+#   item <item name>, item <item ID>, item cards, item *<part item name>*
 #
 # example:
 #	alertSound {
@@ -62,10 +62,12 @@ sub death {
 #eventList death
 	alertSound("death");
 }
+
 sub disconnected {
 #eventList disconnected
 	alertSound("disconnected");
 }
+
 sub emotion {
 #eventList emotion
 	my (undef, $args) = @_;
@@ -73,18 +75,35 @@ sub emotion {
 		alertSound("emotion");
 	}
 }
+
 sub item_appeared {
-# eventList item <item name>
-# eventlist item <item ID>
 # eventList item cards
+# eventlist item <item ID>
+# eventList item <item name>
+# eventList item *<part item name>*
 	my (undef, $args) = @_;
 	my $item = $args->{item};
+	#only works with the new '084B' package
 	if ($args->{type} == 6) {
 		alertSound("item cards");
 	}
 	alertSound("item $item->{nameID}");
 	alertSound("item $item->{name}");
+
+	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
+		my $eventList = $config{"alertSound_".$i."_eventList"};
+		next if (!$eventList or $eventList !~ /item /i);
+		foreach (split /\,/, $eventList) {
+			my ($part_itemName) = $eventList =~ /item (\*\w+\*)$/;
+			next if (!$part_itemName);
+			if ($item->{name} =~ /^$part_itemName/i) {
+				alertSound("item $part_itemName");
+				return;
+			}
+		}
+	}
 }
+
 sub map_change {
 # eventList teleport
 # eventList map change
@@ -95,6 +114,7 @@ sub map_change {
 		alertSound("map change");
 	}
 }
+
 sub monster {
 #eventList monster <monster name>
 	my (undef, $args) = @_;
@@ -105,6 +125,7 @@ sub monster {
 		alertSound("monster $display");
 	}
 }
+
 sub player {
 # eventList player <player name>
 # eventlist player *
@@ -126,6 +147,7 @@ sub player {
 		alertSound("player $name");
 	}
 }
+
 sub private {
 # eventList private GM chat
 # eventList private chat
@@ -136,6 +158,7 @@ sub private {
 		alertSound("private chat");
 	}
 }
+
 sub public {
 # eventList public GM chat
 # eventList npc chat
@@ -149,6 +172,7 @@ sub public {
 		alertSound("public chat");
 	}
 }
+
 sub system_message {
 # eventList system message
 	alertSound("system message");
