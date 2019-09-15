@@ -6193,6 +6193,16 @@ sub received_character_ID_and_Map {
 		$map_port = $args->{mapPort};
 	}
 
+	# Workaround. Current xKore 1 is not able to define the $char
+	if($config{XKore} == 1) {
+		foreach my $character (@chars) {
+			if (getHex($charID) eq getHex($character->{charID})) {
+				configModify("char", $character->{slot});
+				$char = $chars[$character->{slot}];
+			}                                                 
+		}
+	}
+
 	message TF("----------Game Info----------\n" .
 		"Char ID: %s (%s)\n" .
 		"MAP Name: %s\n" .
