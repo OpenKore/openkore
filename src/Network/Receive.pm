@@ -5491,6 +5491,10 @@ sub item_appeared {
 
 	message TF("Item Appeared: %s (%d) x %d (%d, %d)\n", $item->{name}, $item->{binID}, $item->{amount}, $args->{x}, $args->{y}), "drop", 1;
 
+	Plugins::callHook('item_appeared', {
+		item	=> $item,
+		type => $args->{type}
+	});
 }
 
 sub item_exists {

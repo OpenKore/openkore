@@ -30,8 +30,9 @@ package alertsound;
 
 use strict;
 use Plugins;
-use Globals qw($accountID %config %cities_lut $field %items_lut %players);
+use Globals qw($accountID %config %cities_lut $field %items_lut $itemsList %players);
 use Log qw(message);
+use Misc qw(itemName);
 use Utils::Win32;
 
 Plugins::register('alertsound', 'plays sounds on certain events', \&Unload, \&Reload);
@@ -46,7 +47,7 @@ my $packetHook = Plugins::addHooks (
 	['packet_emotion', \&emotion, undef],
 	['Network::Receive::map_changed', \&map_change, undef],
 	['disconnected', \&disconnected, undef],
-	['packet/item_appeared', \&item_appeared, undef],
+	['item_appeared', \&item_appeared, undef],
 );
 sub Reload {
 	message "alertsound plugin reloading, ", 'system';
@@ -77,14 +78,12 @@ sub item_appeared {
 # eventlist item <item ID>
 # eventList item cards
 	my (undef, $args) = @_;
-	my $nameID = $args->{nameID};
-	my $type = $args->{type};
-	my $name = $items_lut{$nameID};
-	if ($type == 6) {
+	my $item = $args->{item};
+	if ($args->{type} == 6) {
 		alertSound("item cards");
 	}
-	alertSound("item $nameID");
-	alertSound("item $name");
+	alertSound("item $item->{nameID}");
+	alertSound("item $item->{name}");
 }
 sub map_change {
 # eventList teleport
