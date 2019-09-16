@@ -384,7 +384,7 @@ sub iterate {
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 
-		} elsif ($self->{last_pos}{x} == $current_pos->{x} && $self->{last_pos}{y} == $current_pos->{y} && timeOut($self->{time_step}, 3)) {
+		} elsif (defined $self->{last_pos} && $self->{last_pos}{x} == $current_pos->{x} && $self->{last_pos}{y} == $current_pos->{y} && timeOut($self->{time_step}, 3)) {
 			# We tried to move for 3 seconds, but we are still on the same spot, decrease step size.
 			# However, if $self->{step_index} was already 0, then that means we were almost at the destination (only 1 more step is needed).
 			# But we got interrupted (by auto-attack for example). Don't count that as stuck.
@@ -431,7 +431,7 @@ sub iterate {
 			unless ($self->{step_index}) {
 				$self->{step_index} = $config{$self->{actor}{configPrefix}.'route_step'} - 1;
 			}
-			if (($self->{step_index} < ($config{$self->{actor}{configPrefix}.'route_step'} - 1)) && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
+			if ($self->{step_index} < ($config{$self->{actor}{configPrefix}.'route_step'} - 1) && defined $self->{last_pos} && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
 				$self->{step_index}++ ;
 			}
 
@@ -451,7 +451,9 @@ sub iterate {
 				$self->{stage} = CALCULATE_ROUTE;
 
 			} else {
-				$self->{time_step} = time if ($current_pos->{x} != $self->{last_pos}{x} || $current_pos->{y} != $self->{last_pos}{y});
+				if (defined $self->{last_pos} && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
+					$self->{time_step} = time;
+				}
 				$self->{last_pos}{x} = $current_pos->{x};
 				$self->{last_pos}{y} = $current_pos->{y};
 				debug "Route $self->{actor} - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
