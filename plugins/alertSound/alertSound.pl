@@ -21,9 +21,11 @@
 # example:
 #	alertSound {
 #		eventList monster Poring
-#		notInTown 1
-#		inLockOnly 0
 #		play plugins\alertSound\sounds\birds.wav
+#		disabled 0
+#		notInTown 0
+#		inLockOnly 0
+#		# other Self Conditions
 #	}
 ######################
 package alertsound;
@@ -32,7 +34,7 @@ use strict;
 use Plugins;
 use Globals qw($accountID %config %cities_lut $field %items_lut $itemsList %players);
 use Log qw(message);
-use Misc qw(itemName);
+use Misc qw(checkSelfCondition itemName);
 use Utils::Win32;
 
 Plugins::register('alertsound', 'plays sounds on certain events', \&Unload, \&Reload);
@@ -183,8 +185,7 @@ sub alertSound {
 	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
 		next if (!$config{"alertSound_".$i."_eventList"});
 		if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, $event)
-			&& (!$config{"alertSound_".$i."_notInTown"} || !$cities_lut{$field->baseName().'.rsw'})
-			&& (!$config{"alertSound_".$i."_inLockOnly"} || $field->baseName() eq $config{'lockMap'})) {
+			&& checkSelfCondition("alertSound_$i")) {
 				message "Sound alert: $event\n", "alertSound";
 				Utils::Win32::playSound($config{"alertSound_".$i."_play"});
 		}
