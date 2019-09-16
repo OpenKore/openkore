@@ -3990,7 +3990,7 @@ sub quest_update_mission_hunt {
 		my $mission;
 
         @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
-		
+
 		my $quest = \%{$questList->{$mission->{questID}}};
 
 		my $mission_id;
@@ -4030,7 +4030,7 @@ sub quest_update_mission_hunt {
 		$quest_mission->{mob_goal} = $mission->{mob_goal};
 
 		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
-		
+
         $offset += $quest_info->{mission_len};
 
 		Plugins::callHook('quest_mission_updated', {
@@ -5385,7 +5385,7 @@ sub ignore_all_result {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
 		$ignored_all = 1;
-		message T("All Players ignored\n");		
+		message T("All Players ignored\n");
 	} elsif ($args->{type} == 1) {
 		if ($args->{error} == 0) {
 			message T("All players unignored\n");
@@ -5508,9 +5508,9 @@ sub item_exists {
 		$item->{appear_time} = time;
 		$item->{amount} = $args->{amount};
 		$item->{nameID} = $args->{nameID};
-		$item->{ID} = $args->{ID};
 		$item->{identified} = $args->{identified};
 		$item->{name} = itemName($item);
+		$item->{ID} = $args->{ID};
 		$mustAdd = 1;
 	}
 	$item->{pos}{x} = $args->{x};
@@ -5520,6 +5520,13 @@ sub item_exists {
 	$itemsList->add($item) if ($mustAdd);
 
 	message TF("Item Exists: %s (%d) x %d\n", $item->{name}, $item->{binID}, $item->{amount}), "drop", 1;
+
+	Plugins::callHook('item_exists', {
+		item	=> $item,
+		type => $args->{type},
+		show_effect => $args->{show_effect},
+		effect_type => $args->{effect_type}
+	});
 }
 
 sub item_disappeared {
@@ -6204,7 +6211,7 @@ sub received_character_ID_and_Map {
 			if (getHex($charID) eq getHex($character->{charID})) {
 				configModify("char", $character->{slot});
 				$char = $chars[$character->{slot}];
-			}                                                 
+			}
 		}
 	}
 
@@ -7688,7 +7695,7 @@ sub buying_store_items_list {
 	my $index = 0;
 	my $pack = $self->{buying_store_items_list_pack} || 'V v C v';
 	my $len = length pack $pack;
-	
+
 	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 79, '-') ."\n".
 		T("#   Name                                      Type        Amount          Price\n");
 
