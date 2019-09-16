@@ -1,4 +1,4 @@
-Version 5
+Version 6
 
 alertSound($event)
 $event: unique event name
@@ -10,49 +10,63 @@ The config option "alertSound_#_eventList" should have a comma seperated list of
 Supported events:
 	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near,
 	private GM chat, private chat, public GM chat, npc chat, public chat, system message, disconnected
-	item <item name>, item <item ID>, item cards
+	item <item name>, item <item ID>, item cards, item *<part item name>*
 
 example config.txt:
 
 alertSound {
 	eventList public gm chat
+	play plugins\alertSound\sounds\alarm.wav
+	disabled 0
 	notInTown 0
 	inLockOnly 0
-	play plugins\alertSound\sounds\alarm.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList private chat
+	play plugins\alertSound\sounds\phone.wav
+	disabled 0
 	notInTown 0
 	inLockOnly 0
-	play plugins\alertSound\sounds\phone.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList death, disconnected
+	play plugins\alertSound\sounds\warning.wav
+	disabled 0
 	notInTown 0
 	inLockOnly 0
-	play plugins\alertSound\sounds\warning.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList monster Poring, player 4epT
+	disabled 1
+	play plugins\alertSound\sounds\birds.wav
 	notInTown 1
 	inLockOnly 1
-	play plugins\alertSound\sounds\birds.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList teleport, public chat, emotion
 	notInTown 1
 	inLockOnly 0
+	disabled 0
 	play plugins\alertSound\sounds\birds.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList private GM chat, map change
+	play plugins\alertSound\sounds\alarm.wav
+	disabled 0
 	notInTown 0
 	inLockOnly 0
-	play plugins\alertSound\sounds\alarm.wav
+	# other Self Conditions
 }
 alertSound {
-	eventList item Jellopy, item Red Potion, item cards
+	eventList item Jellopy, item Red Potion, item cards, item *Card*, item *potion*
+	play SystemDefault
+	disabled 1
 	notInTown 0
 	inLockOnly 0
-	play SystemDefault
+	# other Self Conditions
 }
