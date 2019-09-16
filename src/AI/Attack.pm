@@ -396,11 +396,7 @@ sub main {
 
 	} elsif (
 		# We are a ranged attacker without LOS
-		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 2
-		# Every Walkable cell is also a Snipable cell, so we check for both
-		# FIXME: Should make a CheckLineWalkableOrSnipable function
-		&& (($config{attackCanSnipe} && !$field->checkLineSnipable($realMyPos, $realMonsterPos) && !$field->checkLineWalkable($realMyPos, $realMonsterPos, 1))
-		|| (!$config{attackCanSnipe} && $realMonsterDist <= $args->{attackMethod}{maxDistance} && !$field->checkLineWalkable($realMyPos, $realMonsterPos, 1)))
+		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 2 && !$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
 	) {
 		
 		# Current position doesn't have LOS to the target anyway, so exclude it here and save many chekcs later
@@ -449,11 +445,7 @@ sub main {
 			if (
 				$field->isWalkable($spot->{x}, $spot->{y})
 				&& (!$master || blockDistance($spot, $masterPos) <= $config{followDistanceMax})
-			    &&    (($config{attackCanSnipe} && ($field->checkLineSnipable($spot, $realMonsterPos) || $field->checkLineWalkable($spot, $realMonsterPos, 1)))
-				   || (!$config{attackCanSnipe} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && $field->checkLineWalkable($spot, $realMonsterPos, 1)))
-				&& (!$master || blockDistance($spot, $masterPos) <= $config{followDistanceMax})
-			    &&    (($config{attackCanSnipe} && ($field->checkLineSnipable($spot, $realMonsterPos) || $field->checkLineWalkable($spot, $realMonsterPos, 1)))
-				   || (!$config{attackCanSnipe} && blockDistance($spot, $realMonsterPos) <= $args->{attackMethod}{maxDistance} && $field->checkLineWalkable($spot, $realMonsterPos, 1)))
+			    &&  $field->checkLOS($spot, $realMonsterPos, $config{attackCanSnipe})
 			) {
 				my $dist = new PathFinding(
 					field => $field,

@@ -345,6 +345,29 @@ sub closestWalkableSpot {
 	return undef;
 }
 
+sub checkLOS {
+	my ($self, $from, $to, $can_snipe) = @_;
+
+	my $dist = round(distance($from, $to));
+	my %vec;
+
+	getVector(\%vec, $to, $from);
+	# Simulate walking from $from to $to
+	for (my $i = 1; $i < $dist; $i++) {
+		my %p;
+		moveAlongVector(\%p, $from, \%vec, $i);
+		$p{x} = int $p{x};
+		$p{y} = int $p{y};
+
+		if ( !$self->isWalkable($p{x}, $p{y}) ) {
+			return 0 if (!$can_snipe);
+			return 0 if (!$self->isSnipable($p{x}, $p{y}))
+		}
+	}
+	
+	return 1;
+}
+
 ##
 # $Field->checkLineSnipable(from, to)
 # from, to: references to position hashes.
