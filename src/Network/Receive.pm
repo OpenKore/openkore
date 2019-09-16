@@ -6600,9 +6600,9 @@ sub rodex_mail_list {
 
 		$mail->{page} = $rodexList->{current_page};
 		$mail->{page_index} = $index;
-		
+
 		$i+= $mail->{Titlelength};
-		
+
 		$rodexList->{mails}{$mail->{mailID1}} = $mail;
 
 		$rodexList->{current_page_last_mailID} = $mail->{mailID1};
@@ -6629,7 +6629,7 @@ sub rodex_read_mail {
 	$mail->{zeny1} = $args->{zeny1};
 	$mail->{zeny2} = $args->{zeny2};
 
-	my $item_pack = $self->{rodex_read_mail_item_pack} || 'v2 C3 a8 a4 C a4 a25';	
+	my $item_pack = $self->{rodex_read_mail_item_pack} || 'v2 C3 a8 a4 C a4 a25';
 	my $item_len = length pack $item_pack;
 
 	my $mail_len;
