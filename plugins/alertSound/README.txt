@@ -16,31 +16,35 @@ example config.txt:
 
 alertSound {
 	eventList public gm chat
+	play plugins\alertSound\sounds\alarm.wav
+	disabled 0
 	notInTown 0
 	inLockOnly 0
-	disabled 0
-	play plugins\alertSound\sounds\alarm.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList private chat
+	play plugins\alertSound\sounds\phone.wav
+	disabled 0
 	notInTown 0
 	inLockOnly 0
-	disabled 0
-	play plugins\alertSound\sounds\phone.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList death, disconnected
+	play plugins\alertSound\sounds\warning.wav
+	disabled 0
 	notInTown 0
 	inLockOnly 0
-	disabled 0
-	play plugins\alertSound\sounds\warning.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList monster Poring, player 4epT
-	notInTown 1
-	inLockOnly 1
 	disabled 1
 	play plugins\alertSound\sounds\birds.wav
+	notInTown 1
+	inLockOnly 1
+	# other Self Conditions
 }
 alertSound {
 	eventList teleport, public chat, emotion
@@ -48,18 +52,21 @@ alertSound {
 	inLockOnly 0
 	disabled 0
 	play plugins\alertSound\sounds\birds.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList private GM chat, map change
+	play plugins\alertSound\sounds\alarm.wav
+	disabled 0
 	notInTown 0
 	inLockOnly 0
-	disabled 0
-	play plugins\alertSound\sounds\alarm.wav
+	# other Self Conditions
 }
 alertSound {
 	eventList item Jellopy, item Red Potion, item cards, item *Card*, item *potion*
+	play SystemDefault
+	disabled 1
 	notInTown 0
 	inLockOnly 0
-	disabled 1
-	play SystemDefault
+	# other Self Conditions
 }
