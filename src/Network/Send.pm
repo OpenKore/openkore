@@ -1454,6 +1454,11 @@ sub rodex_refresh_maillist {
 		type => $type,
 		mailID1 => $mailID1,
 		mailID2 => $mailID2,
+		# seems that is not current used by client/server 2019-09-16
+		mailReturnID1 => 0,
+		mailReturnID2 => 0,
+		mailAccountID1 => 0,
+		mailAccountID2 => 0,
 	}));
 }
 
@@ -1484,6 +1489,11 @@ sub rodex_open_mailbox {
 		type => $type,
 		mailID1 => $mailID1,
 		mailID2 => $mailID2,
+		# seems that is not current used by client/server 2019-09-16
+		mailReturnID1 => 0,
+		mailReturnID2 => 0,
+		mailAccountID1 => 0,
+		mailAccountID2 => 0,
 	}));
 }
 

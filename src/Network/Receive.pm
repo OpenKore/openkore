@@ -6557,16 +6557,24 @@ sub party_users_info {
 
 sub rodex_mail_list {
 	my ( $self, $args ) = @_;
+	
+	my $mail_info;
 
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $header_pack = 'v C C C';
-	my $header_len = ((length pack $header_pack) + 2);
+	if ($args->{switch} eq '0AC2') {  
+		$mail_info = {
+			len => 41,
+			types => 'C V2 C2 Z24 V v',
+			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
+		};
+	} else { # 09F0, 0A7D
+		$mail_info = {
+			len => 44,
+			types => 'V2 C2 Z24 V2 v',
+			keys => [qw(mailID1 mailID2 isRead type sender regDateTime expireDateTime Titlelength)],
+		};
+	}
 
-	my $mail_pack = 'V2 C C Z24 V V v';
-	my $base_mail_len = length pack $mail_pack;
-
-	if ($args->{switch} eq '0A7D') {
+	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2') {
 		$rodexList->{current_page} = 0;
 		$rodexList = {};
 		$rodexList->{mails} = {};
@@ -6580,30 +6588,21 @@ sub rodex_mail_list {
 		$rodexList->{mails_per_page} = $args->{amount};
 	}
 
-	my $mail_len;
-
 	my $print_msg = center(" " . "Rodex Mail Page ". $rodexList->{current_page} . " ", 79, '-') . "\n";
 
 	my $index = 0;
-	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i+=$mail_len) {
+	for (my $i = 0; $i < length($args->{mailList}); $i+=$mail_info->{len}) {
 		my $mail;
 
-		($mail->{mailID1},
-		$mail->{mailID2},
-		$mail->{isRead},
-		$mail->{type},
-		$mail->{sender},
-		$mail->{regDateTime},
-		$mail->{expireDateTime},
-		$mail->{Titlelength}) = unpack($mail_pack, substr($msg, $i, $base_mail_len));
+		@{$mail}{@{$mail_info->{keys}}} = unpack($mail_info->{types}, substr($args->{mailList}, $i, $mail_info->{len}));
 
-		$mail->{title} = bytesToString(substr($msg, ($i+$base_mail_len), $mail->{Titlelength}));
+		$mail->{title} = bytesToString(substr($args->{mailList}, ($i+$mail_info->{len}), $mail->{Titlelength}));
 
 		$mail->{page} = $rodexList->{current_page};
 		$mail->{page_index} = $index;
-
-		$mail_len = $base_mail_len + $mail->{Titlelength};
-
+		
+		$i+= $mail->{Titlelength};
+		
 		$rodexList->{mails}{$mail->{mailID1}} = $mail;
 
 		$rodexList->{current_page_last_mailID} = $mail->{mailID1};
@@ -6630,7 +6629,7 @@ sub rodex_read_mail {
 	$mail->{zeny1} = $args->{zeny1};
 	$mail->{zeny2} = $args->{zeny2};
 
-	my $item_pack = 'v2 C3 a8 a4 C a4 a25';
+	my $item_pack = $self->{rodex_read_mail_item_pack} || 'v2 C3 a8 a4 C a4 a25';	
 	my $item_len = length pack $item_pack;
 
 	my $mail_len;
