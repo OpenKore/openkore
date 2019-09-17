@@ -7758,7 +7758,11 @@ sub cmdRevive {
 		return;
 	}
 
-	message TF("Trying to use item %s to self-revive\n", $item->name());
+	if ($item && $args[0] ne "force") {
+		message TF("Trying to use item %s to self-revive\n", $item->name());
+	} else {
+		message TF("Trying to self-revive using 'force'\n");
+	}
 	$messageSender->sendAutoRevive();
 }
 
