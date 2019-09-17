@@ -442,6 +442,11 @@ sub main {
 			$target_moving = 1;
 		}
 		
+		my $min_x = ($realMonsterPos->{x} - $max_pathfinding_dist);
+		my $max_x = ($realMonsterPos->{x} + $max_pathfinding_dist);
+		my $min_y = ($realMonsterPos->{y} - $max_pathfinding_dist);
+		my $max_y = ($realMonsterPos->{y} + $max_pathfinding_dist);
+		
 		my $best_spot;
 		my $best_dist;
 		for (my $x = $realMonsterPos->{x} - $max_destination_dist; $x <= $realMonsterPos->{x} + $max_destination_dist; $x++) {
@@ -466,10 +471,10 @@ sub main {
 					start => $realMyPos,
 					dest => $spot,
 					avoidWalls => 0,
-					min_x => ($realMonsterPos->{x} - $max_pathfinding_dist),
-					max_x => ($realMonsterPos->{x} + $max_pathfinding_dist),
-					min_y => ($realMonsterPos->{y} - $max_pathfinding_dist),
-					max_y => ($realMonsterPos->{y} + $max_pathfinding_dist),
+					min_x => $min_x,
+					max_x => $max_x,
+					min_y => $min_y,
+					max_y => $max_y
 				);
 				
 				my $solution = [];
@@ -501,7 +506,7 @@ sub main {
 		# Move to the closest spot
 		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 		if ($best_spot) {
-			message TF("%s; moving to (%s, %s) (distance: %s)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist);
+			message TF("%s; moving to (%s, %s) (%d steps)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist);
 			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);
 		} else {
 			# FIXME: Should blacklist this target so we dont keep re-trying to attack it
@@ -588,7 +593,7 @@ sub main {
 			maxRouteTime => $config{'attackMaxRouteTime'},
 			attackID => $ID,
 			noMapRoute => 1,
-			noAvoidWalls => 1);
+			avoidWalls => 0);
 		if (!$result) {
 			# Unable to calculate a route to target
 			$target->{attack_failed} = time;

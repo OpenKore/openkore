@@ -769,8 +769,7 @@ sub route {
 		y => $y,
 		maxDistance => $args{maxRouteDistance},
 		maxTime => $args{maxRouteTime},
-		avoidWalls => !$args{noAvoidWalls},
-		map { $_ => $args{$_} } qw(distFromGoal pyDistFromGoal notifyUponArrival)
+		map { $_ => $args{$_} } qw(distFromGoal pyDistFromGoal notifyUponArrival avoidWalls min_x max_x min_y max_y)
 	);
 	
 	if ($map && !$args{noMapRoute}) {

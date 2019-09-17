@@ -490,7 +490,7 @@ sub resetRoute {
 # field: the field on which a route must be calculated.
 # start: The is the start coordinate.
 # dest: The destination coordinate.
-# noAvoidWalls: 1 if you don't want to avoid walls on route.
+# avoidWalls: 0 if you don't want to avoid walls on route.
 # Returns: 1 if the calculation succeeded, 0 if not.
 #
 # Calculate how to walk from $start to $dest on field $field, or check whether there
