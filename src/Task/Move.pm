@@ -137,7 +137,7 @@ sub iterate {
 		$self->setDone();
 
 	# Stop if we've moved.
-	} elsif ($self->{actor}{time_move} > $self->{start_time}) {
+	} elsif ($self->{actor}{time_move} > $self->{start_time} && $self->{actor}{pos_to}{x} == $self->{x} && $self->{actor}{pos_to}{y} == $self->{y}) {
 		debug "Move $self->{actor} - done\n", "move";
 		$self->setDone();
 
