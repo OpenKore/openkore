@@ -545,7 +545,7 @@ sub processAttack {
 			my $msg = TF("%s has no LOS from (%d, %d) to target (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 			if ($best_spot) {
 				message TF("%s; moving to (%d, %d) (distance: %d)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist), 'homunculus_attack';
-				$slave->route(undef, @{$best_spot}{qw(x y)});
+				$slave->route(undef, @{$best_spot}{qw(x y)}, avoidWalls => 0);
 			} else {
 				# FIXME: Should blacklist this target so we dont keep re-trying to attack it
 				warning TF("%s; no acceptable place to stand\n", $msg);

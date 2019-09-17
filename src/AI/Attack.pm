@@ -507,7 +507,7 @@ sub main {
 		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s) (%d steps)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist);
-			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);
+			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
 		} else {
 			# FIXME: Should blacklist this target so we dont keep re-trying to attack it
 			warning TF("%s; no acceptable place to stand\n", $msg);
