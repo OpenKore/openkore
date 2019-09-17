@@ -15,6 +15,21 @@ package Network::Send::idRO::Renewal;
 use strict;
 use base qw(Network::Send::idRO);
 
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+
+	my %handlers = qw(
+		char_create 0A39
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	$self->{char_create_version} = 0x0A39;
+
+	return $self;
+}
+
+=for comment
 sub sendMasterSecureLogin {
 	my ($self, $username, $password, $salt, $version, $master_version, $type, $account) = @_;
 
@@ -37,6 +52,7 @@ sub sendMasterSecureLogin {
 	
 	$self->sendToServer($self->encrypt_packet(@msg));
 }
+=cut
 
 # here's what the packet look like
 # 75 0A 43 00 yy yy yy yy 94 39 00 00 3F 00 00 00
