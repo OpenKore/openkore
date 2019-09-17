@@ -1258,6 +1258,7 @@ sub processAutoStorage {
 		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
 		my $forcedBySell = AI::args->{forcedBySell};
 		my $forcedByBuy = AI::args->{forcedByBuy};
+		undef $timeout{ai_storageAuto_wait_before_action}{time};
 		AI::dequeue;
 		if ($config{sellAuto} && ai_sellAutoCheck()) {
 			if ($forcedByBuy) {
@@ -1401,6 +1402,13 @@ sub processAutoStorage {
 			my %pluginArgs;
 			Plugins::callHook("AI_storage_open", \%pluginArgs); # we can hook here to perform actions BEFORE any storage function
 			return if ($pluginArgs{return});
+
+			if(!$timeout{ai_storageAuto_wait_before_action}{time}) {
+				$timeout{ai_storageAuto_wait_before_action}{time} = time;
+				return;
+			} elsif(!timeOut($timeout{ai_storageAuto_wait_before_action})) {
+				return;
+			}
 
 			if (!$args->{getStart}) {
 				$args->{done} = 1;
