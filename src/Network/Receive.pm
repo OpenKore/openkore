@@ -3990,7 +3990,7 @@ sub quest_update_mission_hunt {
 		my $mission;
 
         @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
-		
+
 		my $quest = \%{$questList->{$mission->{questID}}};
 
 		my $mission_id;
@@ -4030,7 +4030,7 @@ sub quest_update_mission_hunt {
 		$quest_mission->{mob_goal} = $mission->{mob_goal};
 
 		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
-		
+
         $offset += $quest_info->{mission_len};
 
 		Plugins::callHook('quest_mission_updated', {
@@ -5384,6 +5384,7 @@ sub identify {
 sub ignore_all_result {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
+		$ignored_all = 1;
 		message T("All Players ignored\n");
 	} elsif ($args->{type} == 1) {
 		if ($args->{error} == 0) {
@@ -5490,6 +5491,10 @@ sub item_appeared {
 
 	message TF("Item Appeared: %s (%d) x %d (%d, %d)\n", $item->{name}, $item->{binID}, $item->{amount}, $args->{x}, $args->{y}), "drop", 1;
 
+	Plugins::callHook('item_appeared', {
+		item	=> $item,
+		type => $args->{type}
+	});
 }
 
 sub item_exists {
@@ -5503,9 +5508,9 @@ sub item_exists {
 		$item->{appear_time} = time;
 		$item->{amount} = $args->{amount};
 		$item->{nameID} = $args->{nameID};
-		$item->{ID} = $args->{ID};
 		$item->{identified} = $args->{identified};
 		$item->{name} = itemName($item);
+		$item->{ID} = $args->{ID};
 		$mustAdd = 1;
 	}
 	$item->{pos}{x} = $args->{x};
@@ -5515,6 +5520,13 @@ sub item_exists {
 	$itemsList->add($item) if ($mustAdd);
 
 	message TF("Item Exists: %s (%d) x %d\n", $item->{name}, $item->{binID}, $item->{amount}), "drop", 1;
+
+	Plugins::callHook('item_exists', {
+		item	=> $item,
+		type => $args->{type},
+		show_effect => $args->{show_effect},
+		effect_type => $args->{effect_type}
+	});
 }
 
 sub item_disappeared {
@@ -6193,6 +6205,16 @@ sub received_character_ID_and_Map {
 		$map_port = $args->{mapPort};
 	}
 
+	# Workaround. Current xKore 1 is not able to define the $char
+	if($config{XKore} == 1) {
+		foreach my $character (@chars) {
+			if (getHex($charID) eq getHex($character->{charID})) {
+				configModify("char", $character->{slot});
+				$char = $chars[$character->{slot}];
+			}
+		}
+	}
+
 	message TF("----------Game Info----------\n" .
 		"Char ID: %s (%s)\n" .
 		"MAP Name: %s\n" .
@@ -6546,16 +6568,24 @@ sub party_users_info {
 
 sub rodex_mail_list {
 	my ( $self, $args ) = @_;
+	
+	my $mail_info;
 
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $header_pack = 'v C C C';
-	my $header_len = ((length pack $header_pack) + 2);
+	if ($args->{switch} eq '0AC2') {  
+		$mail_info = {
+			len => 41,
+			types => 'C V2 C2 Z24 V v',
+			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
+		};
+	} else { # 09F0, 0A7D
+		$mail_info = {
+			len => 44,
+			types => 'V2 C2 Z24 V2 v',
+			keys => [qw(mailID1 mailID2 isRead type sender regDateTime expireDateTime Titlelength)],
+		};
+	}
 
-	my $mail_pack = 'V2 C C Z24 V V v';
-	my $base_mail_len = length pack $mail_pack;
-
-	if ($args->{switch} eq '0A7D') {
+	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2') {
 		$rodexList->{current_page} = 0;
 		$rodexList = {};
 		$rodexList->{mails} = {};
@@ -6569,29 +6599,20 @@ sub rodex_mail_list {
 		$rodexList->{mails_per_page} = $args->{amount};
 	}
 
-	my $mail_len;
-
 	my $print_msg = center(" " . "Rodex Mail Page ". $rodexList->{current_page} . " ", 79, '-') . "\n";
 
 	my $index = 0;
-	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i+=$mail_len) {
+	for (my $i = 0; $i < length($args->{mailList}); $i+=$mail_info->{len}) {
 		my $mail;
 
-		($mail->{mailID1},
-		$mail->{mailID2},
-		$mail->{isRead},
-		$mail->{type},
-		$mail->{sender},
-		$mail->{regDateTime},
-		$mail->{expireDateTime},
-		$mail->{Titlelength}) = unpack($mail_pack, substr($msg, $i, $base_mail_len));
+		@{$mail}{@{$mail_info->{keys}}} = unpack($mail_info->{types}, substr($args->{mailList}, $i, $mail_info->{len}));
 
-		$mail->{title} = bytesToString(substr($msg, ($i+$base_mail_len), $mail->{Titlelength}));
+		$mail->{title} = bytesToString(substr($args->{mailList}, ($i+$mail_info->{len}), $mail->{Titlelength}));
 
 		$mail->{page} = $rodexList->{current_page};
 		$mail->{page_index} = $index;
 
-		$mail_len = $base_mail_len + $mail->{Titlelength};
+		$i+= $mail->{Titlelength};
 
 		$rodexList->{mails}{$mail->{mailID1}} = $mail;
 
@@ -6619,7 +6640,7 @@ sub rodex_read_mail {
 	$mail->{zeny1} = $args->{zeny1};
 	$mail->{zeny2} = $args->{zeny2};
 
-	my $item_pack = 'v2 C3 a8 a4 C a4 a25';
+	my $item_pack = $self->{rodex_read_mail_item_pack} || 'v2 C3 a8 a4 C a4 a25';
 	my $item_len = length pack $item_pack;
 
 	my $mail_len;
@@ -7673,7 +7694,7 @@ sub buying_store_items_list {
 	my $index = 0;
 	my $pack = $self->{buying_store_items_list_pack} || 'V v C v';
 	my $len = length pack $pack;
-	
+
 	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 79, '-') ."\n".
 		T("#   Name                                      Type        Amount          Price\n");
 

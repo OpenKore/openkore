@@ -1,7 +1,7 @@
 # alertsound plugin by joseph
-# Modified by 4epT (29.06.2019)
+# Modified by 4epT (16.06.2019)
 #
-# Alert Plugin Version 5
+# Alert Plugin Version 6
 #
 # This software is open source, licensed under the GNU General Public
 # License, ver. (2 * (2 + cos(pi)))
@@ -16,22 +16,25 @@
 # Supported events:
 #	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near,
 #	private GM chat, private chat, public GM chat, npc chat, public chat, system message, disconnected,
-#   item <item name>, item <item ID>, item cards
+#   item <item name>, item <item ID>, item cards, item *<part item name>*
 #
 # example:
 #	alertSound {
 #		eventList monster Poring
-#		notInTown 1
+#		play plugins\alertSound\sounds\birds.wav
+#		disabled 0
+#		notInTown 0
 #		inLockOnly 0
-#		play sounds\birds.wav
+#		# other Self Conditions
 #	}
 ######################
 package alertsound;
 
 use strict;
 use Plugins;
-use Globals qw($accountID %config %cities_lut $field %items_lut %players);
+use Globals qw($accountID %config %cities_lut $field %items_lut $itemsList %players);
 use Log qw(message);
+use Misc qw(checkSelfCondition itemName);
 use Utils::Win32;
 
 Plugins::register('alertsound', 'plays sounds on certain events', \&Unload, \&Reload);
@@ -46,7 +49,7 @@ my $packetHook = Plugins::addHooks (
 	['packet_emotion', \&emotion, undef],
 	['Network::Receive::map_changed', \&map_change, undef],
 	['disconnected', \&disconnected, undef],
-	['packet/item_appeared', \&item_appeared, undef],
+	['item_appeared', \&item_appeared, undef],
 );
 sub Reload {
 	message "alertsound plugin reloading, ", 'system';
@@ -61,10 +64,12 @@ sub death {
 #eventList death
 	alertSound("death");
 }
+
 sub disconnected {
 #eventList disconnected
 	alertSound("disconnected");
 }
+
 sub emotion {
 #eventList emotion
 	my (undef, $args) = @_;
@@ -72,20 +77,35 @@ sub emotion {
 		alertSound("emotion");
 	}
 }
+
 sub item_appeared {
-# eventList item <item name>
-# eventlist item <item ID>
 # eventList item cards
+# eventlist item <item ID>
+# eventList item <item name>
+# eventList item *<part item name>*
 	my (undef, $args) = @_;
-	my $nameID = $args->{nameID};
-	my $type = $args->{type};
-	my $name = $items_lut{$nameID};
-	if ($type == 6) {
+	my $item = $args->{item};
+	#only works with the new '084B' package
+	if ($args->{type} == 6) {
 		alertSound("item cards");
 	}
-	alertSound("item $nameID");
-	alertSound("item $name");
+	alertSound("item $item->{nameID}");
+	alertSound("item $item->{name}");
+
+	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
+		my $eventList = $config{"alertSound_".$i."_eventList"};
+		next if (!$eventList or $eventList !~ /item /i);
+		foreach (split /\,/, $eventList) {
+			my ($part_itemName) = $eventList =~ /item (\*\w+\*)$/;
+			next if (!$part_itemName);
+			if ($item->{name} =~ /^$part_itemName/i) {
+				alertSound("item $part_itemName");
+				return;
+			}
+		}
+	}
 }
+
 sub map_change {
 # eventList teleport
 # eventList map change
@@ -96,6 +116,7 @@ sub map_change {
 		alertSound("map change");
 	}
 }
+
 sub monster {
 #eventList monster <monster name>
 	my (undef, $args) = @_;
@@ -106,6 +127,7 @@ sub monster {
 		alertSound("monster $display");
 	}
 }
+
 sub player {
 # eventList player <player name>
 # eventlist player *
@@ -127,6 +149,7 @@ sub player {
 		alertSound("player $name");
 	}
 }
+
 sub private {
 # eventList private GM chat
 # eventList private chat
@@ -137,6 +160,7 @@ sub private {
 		alertSound("private chat");
 	}
 }
+
 sub public {
 # eventList public GM chat
 # eventList npc chat
@@ -150,6 +174,7 @@ sub public {
 		alertSound("public chat");
 	}
 }
+
 sub system_message {
 # eventList system message
 	alertSound("system message");
@@ -160,8 +185,7 @@ sub alertSound {
 	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
 		next if (!$config{"alertSound_".$i."_eventList"});
 		if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, $event)
-			&& (!$config{"alertSound_".$i."_notInTown"} || !$cities_lut{$field->baseName().'.rsw'})
-			&& (!$config{"alertSound_".$i."_inLockOnly"} || $field->baseName() eq $config{'lockMap'})) {
+			&& checkSelfCondition("alertSound_$i")) {
 				message "Sound alert: $event\n", "alertSound";
 				Utils::Win32::playSound($config{"alertSound_".$i."_play"});
 		}
