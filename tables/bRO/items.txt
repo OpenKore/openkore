@@ -5850,6 +5850,8 @@
 15375#Armadura Eclipse Desgastada#
 15383#Sobretudo do Senhor do Tempo#
 15385#Robozinho Sabe-Tudo#
+15421#Robe da Graça Divina#
+15422#Robe Milagroso#
 16000#Erde#
 16001#Bolsa Quadrada Vermelha#
 16003#Maça Carga#
@@ -6402,11 +6404,16 @@
 19520#Nuvem Chuvosa#
 19521#Chapéu Antigo#
 19522#Minicoroa#
+19523#Pequeno Laço Verde#
 19524#Cospobre de Rocker#
 19526#Elmo de Sucata#
 19528#Bevor de Plástico#
+19530#Miniatura Selvagem#
 19532#Orelhas da Lebre Rubra#
 19533#Touca de Esporo#
+19534#Rosto do Despero#
+19535#Caule de Ginseng#
+19536#Tiara de Rosas#
 19537#Bebê Grifo#
 19538#Luar Intenso#
 19540#Protetor com Coelhinhos#
@@ -6800,6 +6807,7 @@
 20521#Miau-chila de Bichano Preto#
 20527#Asas da Borboleta do Vale#
 20528#Asas Douradas da Borboleta#
+20530#Asas de Gabriel#
 20535#Holograma Futurista#
 20700#Manteau de Aegir#
 20701#Manteau Solar#
@@ -6834,8 +6842,11 @@
 20939#Manto do Senhor do Tempo#
 20941#Manto Fênix#
 20963#Manto Temporal FOR#
+20964#Manto Temporal AGI#
+20965#Manto Temporal VIT#
 20966#Manto Temporal INT#
 20967#Manto Temporal DES#
+20968#Manto Temporal SOR#
 21000#Espada Aprimorada de Duas Mãos#
 21001#Claymore de Vellum#
 21002#Katzbalger de Vellum#
@@ -6876,6 +6887,7 @@
 22044#Autopeça - Acelerador#
 22067#Sapatos de Bruxa#
 22070#Salto Alto de Gala#
+22071#Salto Alto Elegante#
 22082#Sapatos Luxuosos#
 22101#Botas do ArchAngeling#
 22104#Botas da Pororoca#
@@ -7111,6 +7123,7 @@
 28506#Pedra Tempestuosa#
 28515#Anel Imperial#
 28517#Anel do Rei Abissal#
+28520#Anel de Aegir#
 28521#Proteção do Gigante#
 28531#Luvas do Vigor#
 28534#Amuleto da Coragem#
@@ -7120,6 +7133,7 @@
 28551#Luvas Imperiais#
 28561#Anel Dracônico do Veterano#
 28564#Lágrima de Valquíria#
+28565#Máscara de Oni#
 28572#Broche da Celine#
 28596#Anel de Brinquedo#
 28598#Fragmento de Chip #
@@ -7388,6 +7402,8 @@
 31667#Boina de Poring#
 31668#Chifres de Majoruros#
 31670#Peruca de Miyabi#
+31687#Bolsa do Alquimista#
+31707#Peruca de Youkai#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#
