@@ -38,7 +38,7 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(calcPosFromTime calcPosition calcStepsWalkedFromTimeAndRoute calcTime checkMovementDirection countSteps distance
+	qw(calcPosFromTime calcPosition calcStepsWalkedFromTimeAndRoute calcTimeFromRoute calcTime checkMovementDirection countSteps distance
 	intToSignedInt intToSignedShort
 	blockDistance adjustedBlockDistance getVector moveAlong moveAlongVector
 	normalize vectorToDegree max min round ceil),
@@ -267,6 +267,58 @@ sub calcStepsWalkedFromTimeAndRoute {
     }
 
     return $current_step;
+}
+
+##
+# calcTimeFromRoute(solution, speed)
+# solution: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path, the first array element should be the current position.
+# speed: The actor speed in blocks / second.
+#
+# Returns the amount of seconds to walk the given route with the given speed.
+sub calcTimeFromRoute {
+    my ($solution, $speed) = @_;
+
+    my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
+    my $current_step = 0; # step
+	
+	my %current_pos = ( x => $solution->[0]{x}, y => $solution->[0]{y} );
+    my %next_pos;
+	
+	my @steps = @{$solution}[1..$#{$solution}];
+	
+    my $dist = @steps;
+
+    my $time_needed_ortogonal = 1 * $speed;
+    my $time_needed_diagonal = sqrt(2) * $speed;
+    my $time_needed;
+
+	my $summed_time = 0;
+
+    while ($current_step < $dist) {
+        %next_pos = ( x => $steps[$current_step]{x}, y => $steps[$current_step]{y} );
+
+        $stepType = 0;
+
+        if ($current_pos{x} != $next_pos{x}) {
+            $stepType++;
+        }
+
+        if ($current_pos{y} != $next_pos{y}) {
+            $stepType++;
+        }
+
+        if ($stepType == 2) {
+            $time_needed = $time_needed_diagonal;
+        } elsif ($stepType == 1) {
+            $time_needed = $time_needed_ortogonal;
+        }
+		
+		$summed_time += $time_needed;
+		%current_pos = %next_pos;
+        $current_step++;
+    }
+
+    return $summed_time;
 }
 
 ##

@@ -453,54 +453,86 @@ sub processAttack {
 			# We are a ranged attacker without LOS
 			$config{$slave->{configPrefix}.'attackCheckLOS'} && $args->{attackMethod}{distance} > 2 && !$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
 		) {
+			my $attackAdjustLOSMaxRouteTargetDistance = $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteTargetDistance'};
+			my $runFromTarget = $config{$slave->{configPrefix}.'runFromTarget'};
+			my $runFromTarget_dist = $config{$slave->{configPrefix}.'runFromTarget_dist'};
+			my $followDistanceMax = $config{$slave->{configPrefix}.'followDistanceMax'};
+			my $attackAdjustLOSMaxRouteDistance = $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteDistance'};
+			my $attackCanSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
+			
 			# Current position doesn't have LOS to the target anyway, so exclude it here and save many chekcs later
 			my $min_dist = 1;
-			if ($config{$slave->{configPrefix}.'runFromTarget'}) {
-				$min_dist = $config{$slave->{configPrefix}.'runFromTarget_dist'};
+			if ($runFromTarget) {
+				$min_dist = $runFromTarget_dist;
 			}
-
+			
 			# We should not stray further than $args->{attackMethod}{distance} or attackAdjustLOSMaxRouteTargetDistance but if we are further away than it we should accept it
-			my $max_dist = $args->{attackMethod}{distance};
-			if ($max_dist > $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteTargetDistance'}) {
-				$max_dist = $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteTargetDistance'};
+			my $max_destination_dist = $args->{attackMethod}{distance};
+			if ($max_destination_dist > $attackAdjustLOSMaxRouteTargetDistance) {
+				$max_destination_dist = $attackAdjustLOSMaxRouteTargetDistance;
 			}
-			if ($realMonsterDist > $max_dist) {
-				$max_dist = $realMonsterDist;
+			my $max_pathfinding_dist = $max_destination_dist;
+			if ($realMonsterDist > $max_pathfinding_dist) {
+				$max_pathfinding_dist = $realMonsterDist;
 			}
-
-			# Calculate squares around monster within shooting range, but not
-			# closer than runFromTarget_dist
-			my @stand = calcRectArea2(
-				$realMonsterPos->{x}, $realMonsterPos->{y},
-				$max_dist,
-				$min_dist
-			);
-
-			# Determine which of these spots are snipable
+			
+			my $masterPos = $char->{pos_to};
+			
+			my $speed = ($slave->{walk_speed} || 0.12);
+			
+			my $target_moving = 0;
+			if (!timeOut($target->{time_move}, $target->{time_move_calc})) {
+				$target_moving = 1;
+			}
+			
 			my $best_spot;
 			my $best_dist;
-			for my $spot (@stand) {
-				# Is this spot acceptable?
-				# 1. It must have LOS to the target ($realMonsterPos).
-				# 2. It must be within $config{$slave->{configPrefix}.'followDistanceMax'} of master Pos.
-				# 3. It must have at max $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteDistance'} of route distance to it from our current position.
-				# 4. The route should not exceed at any point $max_dist distance from the target.
-				if (
-					$field->isWalkable($spot->{x}, $spot->{y})
-					&& blockDistance($spot, $char->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'}
-					&& $field->checkLOS($spot, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
-				) {
-					my $dist = new PathFinding(
+			for (my $x = $realMonsterPos->{x} - $max_destination_dist; $x <= $realMonsterPos->{x} + $max_destination_dist; $x++) {
+				for (my $y = $realMonsterPos->{y} - $max_destination_dist; $y <= $realMonsterPos->{y} + $max_destination_dist; $y++) {
+					my $spot = {x => $x, y => $y};
+					
+					next unless ($x != $realMyPos->{x} || $y != $realMyPos->{y});
+					
+					# Is this spot acceptable?
+					
+					# 1. It must be walkable
+					next unless ($field->isWalkable($spot->{x}, $spot->{y}));
+					
+					# 2. It must be within $followDistanceMax of $masterPos, if we have a master.
+					if ($masterPos) {
+						next unless (blockDistance($spot, $masterPos) <= $followDistanceMax);
+					}
+					
+					# 3. The route should not exceed at any point $max_pathfinding_dist distance from the target.
+					my $pathfinding = new PathFinding(
 						field => $field,
 						start => $realMyPos,
 						dest => $spot,
-						min_x => ($realMonsterPos->{x} - $max_dist),
-						max_x => ($realMonsterPos->{x} + $max_dist),
-						min_y => ($realMonsterPos->{y} - $max_dist),
-						max_y => ($realMonsterPos->{y} + $max_dist),
-					)->runcount;
+						avoidWalls => 0,
+						min_x => ($realMonsterPos->{x} - $max_pathfinding_dist),
+						max_x => ($realMonsterPos->{x} + $max_pathfinding_dist),
+						min_y => ($realMonsterPos->{y} - $max_pathfinding_dist),
+						max_y => ($realMonsterPos->{y} + $max_pathfinding_dist),
+					);
 					
-					next unless ($dist >= 0 && $dist <= $config{attackAdjustLOSMaxRouteDistance});
+					my $solution = [];
+					my $dist = $pathfinding->run($solution);
+					
+					# 4. It must be reachable and have at max $attackAdjustLOSMaxRouteDistance of route distance to it from our current position.
+					next unless ($dist >= 0 && $dist <= $attackAdjustLOSMaxRouteDistance);
+					
+					# No need to calculate calcTimeFromRoute, calcPosition and checkLOS if it's not gonna be our best position
+					next if (defined($best_dist) && $dist >= $best_dist);
+					
+					# 5. It must have LOS to the target ($realMonsterPos in a stopped target or $new_realMonsterPos in a moving one).
+					if ($target_moving) {
+						unshift(@{$solution}, $realMyPos);
+						my $time_needed = calcTimeFromRoute($solution, $speed);
+						my $new_realMonsterPos = calcPosition($target, $time_needed);
+						next unless ($field->checkLOS($spot, $new_realMonsterPos, $attackCanSnipe));
+					} else {
+						next unless ($field->checkLOS($spot, $realMonsterPos, $attackCanSnipe));
+					}
 					
 					if (!defined($best_dist) || $dist < $best_dist) {
 						$best_dist = $dist;
@@ -510,11 +542,12 @@ sub processAttack {
 			}
 
 			# Move to the closest spot
-			my $msg = TF("%s has no LOS from (%d, %d) to target (%d, %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y});
+			my $msg = TF("%s has no LOS from (%d, %d) to target (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 			if ($best_spot) {
-				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'homunculus_attack';
+				message TF("%s; moving to (%d, %d) (distance: %d)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist), 'homunculus_attack';
 				$slave->route(undef, @{$best_spot}{qw(x y)});
 			} else {
+				# FIXME: Should blacklist this target so we dont keep re-trying to attack it
 				warning TF("%s; no acceptable place to stand\n", $msg);
 				$slave->dequeue;
 			}
