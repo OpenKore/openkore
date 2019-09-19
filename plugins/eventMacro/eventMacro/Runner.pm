@@ -625,11 +625,30 @@ sub define_next_valid_command {
 		######################################
 		# Initial 'if'
 		######################################
-	    } elsif ($self->{current_line} =~ /^if\s*\(/ || $self->{current_line} =~ /^}\s*elsif.*{$/) {
-            my $type = $self->line_index($self->{block}{start_to_end}{$self->line_index}{type});
-			debug "[eventMacro] Script is a $type condition.\n", "eventMacro", 3;
-
-			my ($result, $post_if) = $self->parse_and_check_condition_text($self->{current_line});
+	} elsif ($self->{current_line} =~ /^if\s*(.+)$/ || $self->{current_line} =~ /^}\s*elsif\s*(.+)$/ || $self->{current_line} =~ /^elsif\s*(.+)$/ ) {
+			my $condition_text = $1;
+			
+			my $type = $self->{block}{start_to_end}{$self->line_index}{type};
+			debug "[eventMacro] Script is a '$type' condition.\n", "eventMacro", 3; #type can be 'if' or 'elsif'
+			
+			if ($type eq 'elsif') {
+				
+				my $previous_block_type;
+				if (exists $self->{block}{end_to_start}{$self->line_index}{type}) {
+					$previous_block_type = $self->{block}{end_to_start}{$self->line_index}{type};
+					
+				} elsif (exists $self->{block}{end_to_start}{$self->line_index-1}{type}) {
+					$previous_block_type = $self->{block}{end_to_start}{$self->line_index-1}{type};
+				}
+				
+				#check if block is precedeed by an if
+				# this is done by checking the '}' on the same line or on the line before is the end of an if
+				unless ($self->{block}{end_to_start}{$self->line_index}{type} eq 'if' || $self->{block}{end_to_start}{$self->line_index-1}{type} eq 'if') {
+					$self->error("An elsif must be exactly after an if");
+					return;
+				}
+			}
+			my ($result, $post_if) = $self->parse_and_check_condition_text($condition_text);
 			return if (defined $self->error);
 			if ($result == 1) {
 				debug "[eventMacro] Condition of $type is true.\n", "eventMacro", 3;
@@ -646,8 +665,7 @@ sub define_next_valid_command {
 				debug "[eventMacro] Condition of $type is false.\n", "eventMacro", 3;
 				if ($post_if eq "{") {
 					debug "[eventMacro] Moving to the end of $type block.\n", "eventMacro", 3;
-					my $end_line = $self->{block}{start_to_end}{$self->line_index}{end};
-					warning("current line is ". $self->line_index .", endline is $end_line\n");
+					my $end_line = $self->{block}{start_to_end}{$self->line_index()}{end};
 					$self->line_index($end_line);
 					$self->define_current_line;
 					next DEFINE_COMMAND;
@@ -778,16 +796,30 @@ sub define_next_valid_command {
 			}
 		
 		######################################
-		# If arriving at a line 'else' or 'elsif'
+		# Arriving on a else block or line
 		######################################
-		######################################
-		# Switch arriving at a line 'else' or 'case'
-		######################################
-		#$self->{current_line} =~ /^case/ ||
-		} elsif ( $self->{current_line} =~ /^else/) {
-			my (undef, $post_else) = $self->{current_line} =~ /^else\s*(.*)/;
-
-			debug "[eventMacro] Script is a not important condition block ('else' or 'case') after an 'switch' block, cleaning it.\n", "eventMacro", 3;
+		} elsif ( $self->{current_line} =~ /^else\s*(.+)/) {
+			my $post_else = $1;
+			debug "[eventMacro] Script is a 'else' block.\n", "eventMacro", 3;
+			
+			my $previous_block_type;
+			
+			#checking current line to see if there is a } in beggining
+			if (exists $self->{block}{end_to_start}{$self->line_index}{type}) {
+				$previous_block_type = $self->{block}{end_to_start}{$self->line_index}{type};
+			
+			#cheking the previous line to see if there is a } 
+			} elsif (exists $self->{block}{end_to_start}{$self->line_index-1}{type}) {
+				$previous_block_type = $self->{block}{end_to_start}{$self->line_index-1}{type};
+			}
+			
+			# check if is precedeed by an if or elsif
+			# this is done by checking the '}' on the same line or on the line before is the end of an if or elsif
+			unless ($previous_block_type eq 'if' || $previous_block_type eq 'elsif' || $previous_block_type eq 'case') {
+				$self->error("An elsif must be exactly after an if");
+				return;
+			}
+			
 			if ($post_else ne "{") {
 				debug "[eventMacro] Code after the 'else' is a command, cleaning 'else' and rechecking line.\n", "eventMacro", 3;
 				$self->{current_line} = $post_else;

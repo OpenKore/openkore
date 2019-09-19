@@ -225,8 +225,8 @@ sub isNewCommandBlock {
 
 sub isNewWrongCommandBlock {
 	my ($line) = @_;
-
-	if ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif.*{$/ || $_ =~ /^case.*{$/) {
+	
+	if ($line =~ /^}\s*(else|elsif|case).*{$/) {
 		return 1;
 	} else {
 		return 0;
