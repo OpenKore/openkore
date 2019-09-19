@@ -423,21 +423,46 @@ sub scanLabels {
 
 # Scans the script for blocks
 sub scanBlocks {
-	my $script = $_[0];
-	my $blocks = {};
-	my $block_starts = [];
-	
-	for (my $line = 0; $line < @{$script}; $line++) {
-		if ($script->[$line] =~ /^(if|switch|while|case)\s+\(.*\)\s+{$|^(else)\s+.*{/) {
-			push @$block_starts, { type => $1 || $2, start => $line };
-		} elsif ($script->[$line] eq '}') {
-			my $block = pop @$block_starts;
-			$block->{end} = $line;
-			$blocks->{end_to_start}{$line} = $block;
-			$blocks->{start_to_end}{$block->{start}} = $block;
-		}
+    my $script_lines       = $_[0];
+    my $blocks       = {};
+    my $block_starts = [];
+
+    for ( my $index = 0 ; $index < @{$script_lines} ; $index++ ) {
+		$script_lines->[$index] =~ s/^\s+|\s+$//g;
+		print("parsing line $index\n");
+
+        if (   $script_lines->[$index] =~ /^(if|switch|while|case|elsif)\s+\(.*\)\s+{$/
+            || $script_lines->[$index] =~ /^(else)\s+.*{/ )
+        {
+			print("line $index have beggining if switch and whatever\n");
+            push @$block_starts, { type => $1, start => $index };
+
+        } elsif ( $script_lines->[$index] eq '}' ) {
+			print("line $index is closing block\n");
+            my $block = pop @$block_starts;
+            $block->{end}                              = $index;
+            $blocks->{end_to_start}{$index}             = $block;
+            $blocks->{start_to_end}{ $block->{start} } = $block;
+
+        } elsif ($script_lines->[$index] =~ /^}\s*(elsif|case).+{$/
+            || $script_lines->[$index] =~ /^}\s*(else)\s*{/ )
+        {
+						print("line $index is closing and opening\n");
+            my $block = pop @$block_starts;
+            $block->{end}                              = $index;
+            $blocks->{end_to_start}{$index}             = $block;
+            $blocks->{start_to_end}{ $block->{start} } = $block;
+
+            push @$block_starts, { type => $1, start => $index };
+
+        }
+    }
+    use Data::Dumper::Perltidy;
+    print( Dumper($blocks) );
+	for (my $i = 0; $i < scalar(@{$script_lines});$i++) {
+		print ("$i: ".$script_lines->[$i] . "\n");
 	}
-	$blocks;
+    return $blocks;
 }
 
 # Decides what to do when we get to the end of a macro script
@@ -600,74 +625,35 @@ sub define_next_valid_command {
 		######################################
 		# Initial 'if'
 		######################################
-		} elsif ($self->{current_line} =~ /^if\s*\(/) {
-			
-			debug "[eventMacro] Script is a 'if' condition.\n", "eventMacro", 3;
-			
+	    } elsif ($self->{current_line} =~ /^if\s*\(/ || $self->{current_line} =~ /^}\s*elsif.*{$/) {
+            my $type = $self->line_index($self->{block}{start_to_end}{$self->line_index}{type});
+			debug "[eventMacro] Script is a $type condition.\n", "eventMacro", 3;
+
 			my ($result, $post_if) = $self->parse_and_check_condition_text($self->{current_line});
 			return if (defined $self->error);
 			if ($result == 1) {
-				debug "[eventMacro] Condition of 'if' is true.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of $type is true.\n", "eventMacro", 3;
 				if ($post_if ne "{") {
-					debug "[eventMacro] Code after the 'if' is a command, cleaning 'if' and rechecking line.\n", "eventMacro", 3;
+					debug "[eventMacro] Code after the $type is a command, cleaning $type and rechecking line.\n", "eventMacro", 3;
 					$self->{current_line} = $post_if;
 					$check_need = 0;
 					next DEFINE_COMMAND;
 				} else {
-					debug "[eventMacro] Entering true 'if' block.\n", "eventMacro", 3;
+					debug "[eventMacro] Entering true $type block.\n", "eventMacro", 3;
 				}
-				
+
 			} else {
-				debug "[eventMacro] Condition of 'if' is false.\n", "eventMacro", 3;
+				debug "[eventMacro] Condition of $type is false.\n", "eventMacro", 3;
 				if ($post_if eq "{") {
-					debug "[eventMacro] There's a block after it to be cleaned.\n", "eventMacro", 3;
-					
-					my $block_count = 1;
-					CHECK_IF: while ($block_count > 0) {
-					
-						$self->next_line;
-						$self->define_current_line;
-						
-						if ($self->{finished}) {
-							$self->{finished} = 0;
-							$self->error("All 'if' blocks must be closed before the end of the macro)");
-							return;
-						}
-						
-						#Start of another if/switch/case/while block
-						if ( $self->{current_line} =~ /^(if|switch|case|while|else).*{$/ ) {
-							$block_count++;
-							
-						#End of an if block or start of else block
-						} elsif ($self->{current_line} =~ /^}\s*else\s*{$/ && $block_count == 1) {
-							debug "[eventMacro] Entering true 'else' block after false 'if' block.\n", "eventMacro", 3;
-							last CHECK_IF;
-							
-						#End of an if block or start of else block
-						} elsif ($self->{current_line} eq '}') {
-							$block_count--;
-							
-						#Elsif check
-						} elsif ( $self->{current_line} =~ /^}\s*elsif\s*(\(.*\)).*{$/ && $block_count == 1 ) {
-							($result) = $self->parse_and_check_condition_text($1);
-							return if (defined $self->error);
-							debug "[eventMacro] Found an 'elsif' block inside an 'if' block.\n", "eventMacro", 3;
-							debug "[eventMacro] Script of 'elsif' block: '".$self->{current_line}."'.\n", "eventMacro", 3;
-							
-							if ($result) {
-								debug "[eventMacro] Condition of 'elsif' is true, entering 'elsif' block.\n", "eventMacro", 3;
-								last CHECK_IF;
-							} else {
-								debug "[eventMacro] Condition of 'elsif' is false, cleaning 'elsif' block.\n", "eventMacro", 3;
-								next;
-							}
-						}
-						
-						debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'if' block.\n", "eventMacro", 3;
-						
-					}
+					debug "[eventMacro] Moving to the end of $type block.\n", "eventMacro", 3;
+					my $end_line = $self->{block}{start_to_end}{$self->line_index}{end};
+					warning("current line is ". $self->line_index .", endline is $end_line\n");
+					$self->line_index($end_line);
+					$self->define_current_line;
+					next DEFINE_COMMAND;
+
 				} else {
-					debug "[eventMacro] Code after 'if' is a command, ignoring it and moving to next line\n", "eventMacro", 3;
+					debug "[eventMacro] Code after $type is a command, ignoring it and moving to next line\n", "eventMacro", 3;
 				}
 			}
 			$self->next_line;
@@ -794,63 +780,21 @@ sub define_next_valid_command {
 		######################################
 		# If arriving at a line 'else' or 'elsif'
 		######################################
-		} elsif ($self->{current_line} =~ /^}\s*else\s*{/ || $self->{current_line} =~ /^}\s*elsif.*{$/) {
-			
-			debug "[eventMacro] Script is a not important condition block ('else' or 'elsif') after an 'if' block, cleaning it.\n", "eventMacro", 3;
-			
-			my $open_blocks = 1;
-			while ($open_blocks > 0) {
-				
-				$self->next_line;
-				$self->define_current_line;
-					
-				if ($self->{finished}) {
-					$self->{finished} = 0;
-					$self->error("All 'else' and 'elsif' blocks must be closed before the end of the macro)");
-					return;
-				}
-				
-				debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'else' or 'elsif' block.\n", "eventMacro", 3;
-				
-				if (isNewCommandBlock($self->{current_line})) {
-					$open_blocks++;
-				} elsif ($self->{current_line} eq '}') {
-					$open_blocks--;
-				}
-			}
-			$self->next_line;
-			
 		######################################
 		# Switch arriving at a line 'else' or 'case'
 		######################################
-		} elsif ($self->{current_line} =~ /^case/ || $self->{current_line} =~ /^else/) {
-			my (undef, $after_case) = $self->{current_line} =~ /^(case\s*\(.*\)|else)\s*(.*)/;
-			
+		#$self->{current_line} =~ /^case/ ||
+		} elsif ( $self->{current_line} =~ /^else/) {
+			my (undef, $post_else) = $self->{current_line} =~ /^else\s*(.*)/;
+
 			debug "[eventMacro] Script is a not important condition block ('else' or 'case') after an 'switch' block, cleaning it.\n", "eventMacro", 3;
-			
-			if ($after_case eq "{") {
-				debug "[eventMacro] There's a 'case' or 'else' block to be cleaned.\n", "eventMacro", 3;
-				my $block_count = 1;
-				while ($block_count > 0) {
-					$self->next_line;
-					$self->define_current_line;
-					
-					if ($self->{finished}) {
-						$self->{finished} = 0;
-						$self->error("All 'case' and 'else' blocks must be closed before the end of the macro");
-						return;
-					}
-								
-					debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' or 'else' block.\n", "eventMacro", 3;
-					
-					if (isNewCommandBlock($self->{current_line})) {
-						$block_count++;
-					} elsif ($self->{current_line} eq '}') {
-						$block_count--;
-					}
-				}
+			if ($post_else ne "{") {
+				debug "[eventMacro] Code after the 'else' is a command, cleaning 'else' and rechecking line.\n", "eventMacro", 3;
+				$self->{current_line} = $post_else;
+				$check_need = 0;
+				next DEFINE_COMMAND;
 			} else {
-				debug "[eventMacro] After 'case' or 'else' there is a command, ignoring it.\n", "eventMacro", 3;
+				debug "[eventMacro] Entering else block.\n", "eventMacro", 3;
 			}
 			$self->next_line;
 		
@@ -871,14 +815,14 @@ sub define_next_valid_command {
 			$self->next_line;
 		
 		######################################
-		# End block of "if", "switch" or "while"
+		# End block of "if", "switch", "case", "elsif", "else" or "while"
 		######################################
 		} elsif ($self->{current_line} eq '}') {
 			if ($self->{block}{end_to_start}{$self->line_index}{type} eq 'while') {
 				debug "[eventMacro] Script is the end of a while 'block', moving to its start.\n", "eventMacro", 3;
 				$self->line_index($self->{block}{end_to_start}{$self->line_index}{start});
 			} else {
-				debug "[eventMacro] Script is the end of a not important block (if or switch).\n", "eventMacro", 3;
+				debug "[eventMacro] Script is the end of a '". $self->{block}{end_to_start}{$self->line_index}{type} ."' block.\n", "eventMacro", 3;
 				$self->next_line;
 			}
 		

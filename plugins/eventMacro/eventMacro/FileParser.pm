@@ -215,8 +215,8 @@ sub sub_execute {
 # check if on the line there commands that open new command blocks
 sub isNewCommandBlock {
 	my ($line) = @_;
-	
-	if ($line =~ /^if.*{$/ || $line =~ /^case.*{$/ || $line =~ /^switch.*{$/ || $line =~ /^else.*{$/ || $line =~ /^while.*{$/) {
+
+	if ($line =~ /^(if|case|switch|else|elsif|while).*{$/) {
 		return 1;
 	} else {
 		return 0;
@@ -225,8 +225,8 @@ sub isNewCommandBlock {
 
 sub isNewWrongCommandBlock {
 	my ($line) = @_;
-	
-	if ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif.*{$/ || $_ =~ /^case.*{$/ || $_ =~ /^else*{$/) {
+
+	if ($_ =~ /^}\s*else\s*{$/ || $_ =~ /}\s*elsif.*{$/ || $_ =~ /^case.*{$/) {
 		return 1;
 	} else {
 		return 0;
