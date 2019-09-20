@@ -73768,7 +73768,7 @@ Weight: ^8080805^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 Max HP + 200
-Aspd + 1%
+Aspd + 1
 #
 18859#
 We shall fly far higher in the sky flapping big Angel ring.
@@ -74330,15 +74330,19 @@ Max SP + 30
 #
 18919#
 A common familiar often summoned by vampires. Very useful in scouting danger ahead of time.
-FLEE + 5
-When equipped with Magestic Goat[1], STR +3 and FLEE +5
-Unrefinable
-Class : ^777777Headgear^000000
-Location : ^777777Lower ^000000
-Defense : ^7777775^000000
-Weight : ^77777720^000000
-Required Level : ^7777771^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080805^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Flee + 5
+
+^800080Set Bonus^000000
+^008080Jakk's Castle Bat^000000
+^008080Magestic Goat [1]^000000
+Str + 3
+Flee + 5
 #
 18921#
 A moroccan style lamp that has lucky powers in it.
@@ -82950,6 +82954,14 @@ A cute bear backpack for the stylish adventurer.
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+20584#
+A groomed foxtail bigger than a Doram
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20700#
@@ -95531,6 +95543,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31324#
+Cute DJ Headphones.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 31325#
 Fantastic helm fashioned after the head of the Queen Scaraba.
 Class: ^808080Costume^000000
@@ -96545,6 +96563,12 @@ Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
 #
+31616#
+Don't be afraid to take a nap.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
 31628#
 A miniature Dokebi made for children. Don't worry, it won't attack you!
 Class: ^808080Costume^000000
@@ -96985,6 +97009,61 @@ Cute hair made to look like the Piamette Doll. Comes in silver.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+31793#
+Feather said to have fallen from an angel's wings.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31794#
+A hat with cute dog's ears
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31795#
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31796#
+The Boto slumps over your head. It's strange, but cute.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31797#
+So you can match your best friend.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31798#
+A doll so well made some mistake it for the real thing.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
+31799#
+Decorative costume with a stylish ribbon on the white bear's ear.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31800#
