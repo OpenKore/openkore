@@ -40,7 +40,7 @@ sub new {
 	$self->{line_index} = 0;
 	
 	$self->{label} = {scanLabels($self->{lines_array})};
-	$self->{block} = scanBlocks($self->{lines_array});
+	($self->{block}, $self->{blocks_depth}) = scanBlocks($self->{lines_array});
 	
 	$self->{time} = time;
 	
@@ -423,46 +423,43 @@ sub scanLabels {
 
 # Scans the script for blocks
 sub scanBlocks {
-    my $script_lines       = $_[0];
-    my $blocks       = {};
-    my $block_starts = [];
-
-    for ( my $index = 0 ; $index < @{$script_lines} ; $index++ ) {
-		$script_lines->[$index] =~ s/^\s+|\s+$//g;
-		print("parsing line $index\n");
-
-        if (   $script_lines->[$index] =~ /^(if|switch|while|case|elsif)\s+\(.*\)\s+{$/
-            || $script_lines->[$index] =~ /^(else)\s+.*{/ )
-        {
-			print("line $index have beggining if switch and whatever\n");
-            push @$block_starts, { type => $1, start => $index };
-
-        } elsif ( $script_lines->[$index] eq '}' ) {
-			print("line $index is closing block\n");
-            my $block = pop @$block_starts;
-            $block->{end}                              = $index;
-            $blocks->{end_to_start}{$index}             = $block;
-            $blocks->{start_to_end}{ $block->{start} } = $block;
-
-        } elsif ($script_lines->[$index] =~ /^}\s*(elsif|case).+{$/
-            || $script_lines->[$index] =~ /^}\s*(else)\s*{/ )
-        {
-						print("line $index is closing and opening\n");
-            my $block = pop @$block_starts;
-            $block->{end}                              = $index;
-            $blocks->{end_to_start}{$index}             = $block;
-            $blocks->{start_to_end}{ $block->{start} } = $block;
-
-            push @$block_starts, { type => $1, start => $index };
-
+	my $script_lines = $_[0];
+	my $blocks       = {};
+	my $block_starts = [];
+	my $index_depth  = 0;
+	my $depth        = {};
+	for ( my $index = 0 ; $index < @{$script_lines} ; $index++ ) {
+		
+		$script_lines->[$index] =~ s/^\s+|\s+$//g; # TODO nipo: remove this before merge
+		warning("parsing line $index: '".$script_lines->[$index]."'          "); # TODO nipo: remove this before merge
+		if (   $script_lines->[$index] =~ /^(}\s*)?(if|switch|while|case|elsif)\s+\(.*\)\s+{$/
+			|| $script_lines->[$index] =~ /^(}\s*)?(else)\s+.*{/
+			|| $script_lines->[$index] =~ /^(})$/ ) {
+			
+			my ($end_of_block, $type) = ($1, $2);
+			
+			if (defined $end_of_block) {
+				$index_depth--;
+				my $block = pop @$block_starts;
+				die "block is not defined\n" if !$block; # TODO nipo: remove this before merge
+				warning("nipo: it is the end of a '". $block->{type}."'  "); # TODO nipo: remove this before merge
+				
+				$blocks->{end_to_start}{$index}            = {start => $block->{start}, type => $block->{type}, depth => $index_depth};
+				$blocks->{start_to_end}{ $block->{start} } = {end => $index, type => $block->{type}, depth => $index_depth};
+			}
+			
+			if ( defined $type) {
+				warning("nipo:is a beggining of a $type block"); # TODO nipo: remove this before merge
+				
+            	push @$block_starts, { type => $type, start => $index};
+				$depth->{$index_depth} = $type;
+				$index_depth++;
+			}
         }
+		warning("\n"); # TODO nipo: remove this before merge
     }
-    use Data::Dumper::Perltidy;
-    print( Dumper($blocks) );
-	for (my $i = 0; $i < scalar(@{$script_lines});$i++) {
-		print ("$i: ".$script_lines->[$i] . "\n");
-	}
-    return $blocks;
+	warning("\n\n"); # TODO nipo: remove this before merge
+    return $blocks, $depth;
 }
 
 # Decides what to do when we get to the end of a macro script
@@ -684,116 +681,49 @@ sub define_next_valid_command {
 			# this regex may look wrong, but it's not
 			# when the line is "switch ( $name ) {" for example, i want to get only "( $name" whitout the closing parenthesis
 			# the reason is because the closing parenthesis will come from $second_part on case block :D
-			my ($first_part) = $self->{current_line} =~ /^switch\s*(\(.*)\)\s*{$/;
-
+			($self->{switch_first_part}) = $self->{current_line} =~ /^switch\s*(\(.*)\)\s*{$/;
+			if (!defined $self->{switch_first_part}) {
+				$self->error("Syntax error on switch block");
+				return;
+			}
 			debug "[eventMacro] Script is a 'switch' block, searching all 'case' and 'else' blocks.\n", "eventMacro", 3;
+			$self->next_line;
 			
-			SWITCH: while () {
-				$self->next_line;
-				$self->define_current_line;
-				
-				if ($self->{finished}) {
-					$self->{finished} = 0;
-					$self->error("All 'switch' blocks must be closed before the end of the macro)");
-					return;
-				}
-				
-				debug "[eventMacro] Script inside 'switch' block is '".$self->{current_line}."'.\n", "eventMacro", 3;
-				
-				#Else on switch
-				if ($self->{current_line} =~ /^else/) {
-					my ($after_else) = $self->{current_line} =~ /^else\s*(.*)/;
-					debug "[eventMacro] Found valid 'else' inside 'switch' block.\n", "eventMacro", 3;
-					
-					if ($after_else ne "{") {
-						debug "[eventMacro] Code after the 'else' is a command, cleaning 'else' and rechecking line.\n", "eventMacro", 3;
-						$self->{current_line} =~ s/^else\s*//;
-						$check_need = 0;
-						next DEFINE_COMMAND;
-					} else {
-						debug "[eventMacro] Entering true 'else' block inside 'switch' block.\n", "eventMacro", 3;
-						$self->next_line;
-						last SWITCH;
-					}
-				
-				#Case on switch
-				} elsif ($self->{current_line} =~ /^case/) {
-					
-					debug "[eventMacro] Found a 'case' block inside a 'switch' block.\n", "eventMacro", 3;
-					
-					# and on this part i am not getting the opening parenthsis, just the closing one
-					# example: "case (= nipodemos) {" the regex will get only "= nipodemos) {"
-					# the reason is because the opening parenthsis are coming from first part on switch block
-					# creating the complete sentence "($name = nipodemos) {"
-					my ($second_part) = $self->{current_line} =~ /^case\s*\(\s*(.*)/;
-					
-					unless ($second_part) {
-						$self->error("All 'case' blocks must have a condition");
-						return;
-					}
-					
-					my $complete_condition = $first_part . $second_part ;
-					debug "[eventMacro] complete condition is: '".$complete_condition."'.\n", "eventMacro", 3;
-					my ($result, $after_case) = $self->parse_and_check_condition_text($complete_condition);
-					return if (defined $self->error);
-					unless ($after_case) {
-						$self->error("All 'case' blocks must have a macro command or a block after it");
-						return;
-					}
-					
-					#True case check
-					if ($result == 1) {
-						debug "[eventMacro] Condition of 'case' is true.\n", "eventMacro", 3;
-						if ($after_case ne "{") {
-							debug "[eventMacro] Code after the 'case' is a command, cleaning 'case' and rechecking line.\n", "eventMacro", 3;
-							$self->{current_line} =~ s/^case\s*\(.*\)\s*//;
-							$check_need = 0;
-							next DEFINE_COMMAND;
-						} else {
-							debug "[eventMacro] Entering true 'case' block.\n", "eventMacro", 3;
-							$self->next_line;
-							last SWITCH;
-						}
-					
-					} else {
-						debug "[eventMacro] Condition of 'case' is false.\n", "eventMacro", 3;
-						if ($after_case eq "{") {
-							debug "[eventMacro] There's a 'case' block to be cleaned.\n", "eventMacro", 3;
-							my $block_count = 1;
-							while ($block_count > 0) {
-								$self->next_line;
-								$self->define_current_line;
-								
-								if ($self->{finished}) {
-									$self->{finished} = 0;
-									$self->error("All 'case' blocks must be closed before the end of the macro");
-									return;
-								}
-								
-								debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' block.\n", "eventMacro", 3;
-								
-								if (isNewCommandBlock($self->{current_line})) {
-									$block_count++;
-								} elsif ($self->{current_line} eq '}') {
-									$block_count--;
-								}
-							}
-							
-						} else {
-							debug "[eventMacro] There is a command after case, ignoring it\n", "eventMacro", 3;
-						}
-						
-						#if after clean case block exist a '}', that means end of switch block
-						if ($self->line_script(($self->line_index + 1)) eq '}') {
-							debug "[eventMacro] End of 'switch' block\n", "eventMacro", 3;
-							last SWITCH;
-						}
-					}
+		# and on this part i am not getting the opening parenthsis, just the closing one
+		# example: "case (= nipodemos) {" the regex will get only "= nipodemos) {"
+		# the reason is because the opening parenthsis are coming from first part on switch block
+		# creating the complete sentence "($name = nipodemos) {"
+		} elsif ($self->{current_line} =~ /^case\s*\((.+)/) {
+			my $condition_text = $1;
+			my ($result, $post_if) = $self->parse_and_check_condition_text($self->{switch_first_part}.$condition_text);
+			return if (defined $self->error);
+			if ($result == 1) {
+				debug "[eventMacro] Condition of 'case' is true.\n", "eventMacro", 3;
+				if ($post_if ne "{") {
+					debug "[eventMacro] Code after the 'case' is a command, cleaning 'case' and rechecking line.\n", "eventMacro", 3;
+					$self->{current_line} = $post_if;
+					$check_need = 0;
+					next DEFINE_COMMAND;
 				} else {
-					$self->error("Only 'else' and 'case' blocks are allowed inside switch blocks");
-					return;
+					debug "[eventMacro] Entering true 'case' block.\n", "eventMacro", 3;
+				}
+
+			} else {
+				debug "[eventMacro] Condition of 'case' is false.\n", "eventMacro", 3;
+				if ($post_if eq "{") {
+					debug "[eventMacro] Moving to the end of 'case' block.\n", "eventMacro", 3;
+					my $end_line = $self->{block}{start_to_end}{$self->line_index()}{end};
+					$self->line_index($end_line);
+					$self->define_current_line;
+					next DEFINE_COMMAND;
+
+				} else {
+					debug "[eventMacro] Code after 'case' is a command, ignoring it and moving to next line\n", "eventMacro", 3;
 				}
 			}
+			$self->next_line;
+		
+		
 		
 		######################################
 		# Arriving on a else block or line
@@ -850,13 +780,17 @@ sub define_next_valid_command {
 		# End block of "if", "switch", "case", "elsif", "else" or "while"
 		######################################
 		} elsif ($self->{current_line} eq '}') {
-			if ($self->{block}{end_to_start}{$self->line_index}{type} eq 'while') {
-				debug "[eventMacro] Script is the end of a while 'block', moving to its start.\n", "eventMacro", 3;
+			my $type = $self->{block}{end_to_start}{$self->line_index}{type};
+			debug "[eventMacro] Script is the end of a '". $type ."' block.\n", "eventMacro", 3;
+			if ($type eq 'while') {
+				debug "[eventMacro] Moving to its start.\n", "eventMacro", 3;
 				$self->line_index($self->{block}{end_to_start}{$self->line_index}{start});
-			} else {
-				debug "[eventMacro] Script is the end of a '". $self->{block}{end_to_start}{$self->line_index}{type} ."' block.\n", "eventMacro", 3;
-				$self->next_line;
+				next DEFINE_COMMAND;
+			} elsif ($type eq 'switch') {
+				#debug "[eventMacro] Deleting first part value which\n", "eventMacro", 3; #TODO check the relevance of this comment
+				delete $self->{switch_first_part};
 			}
+			$self->next_line;
 		
 		######################################
 		# Label statement
