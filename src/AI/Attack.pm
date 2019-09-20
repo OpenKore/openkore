@@ -406,9 +406,9 @@ sub main {
 		my $attackCanSnipe = $config{attackCanSnipe};
 		
 		# Current position doesn't have LOS to the target anyway, so exclude it here and save many chekcs later
-		my $min_dist = 1;
+		my $min_destination_dist = 1;
 		if ($runFromTarget) {
-			$min_dist = $runFromTarget_dist;
+			$min_destination_dist = $runFromTarget_dist;
 		}
 		
 		# We should not stray further than $args->{attackMethod}{distance} or attackAdjustLOSMaxRouteTargetDistance but if we are further away than it we should accept it
@@ -416,6 +416,7 @@ sub main {
 		if ($max_destination_dist > $attackAdjustLOSMaxRouteTargetDistance) {
 			$max_destination_dist = $attackAdjustLOSMaxRouteTargetDistance;
 		}
+		
 		my $max_pathfinding_dist = $max_destination_dist;
 		if ($realMonsterDist > $max_pathfinding_dist) {
 			$max_pathfinding_dist = $realMonsterDist;
@@ -442,18 +443,17 @@ sub main {
 			$target_moving = 1;
 		}
 		
-		my $min_x = ($realMonsterPos->{x} - $max_pathfinding_dist);
-		my $max_x = ($realMonsterPos->{x} + $max_pathfinding_dist);
-		my $min_y = ($realMonsterPos->{y} - $max_pathfinding_dist);
-		my $max_y = ($realMonsterPos->{y} + $max_pathfinding_dist);
+		my $min_pathfinding_x = ($realMonsterPos->{x} - $max_pathfinding_dist);
+		my $max_pathfinding_x = ($realMonsterPos->{x} + $max_pathfinding_dist);
+		my $min_pathfinding_y = ($realMonsterPos->{y} - $max_pathfinding_dist);
+		my $max_pathfinding_y = ($realMonsterPos->{y} + $max_pathfinding_dist);
 		
 		my $best_spot;
 		my $best_dist;
-		for (my $x = $realMonsterPos->{x} - $max_destination_dist; $x <= $realMonsterPos->{x} + $max_destination_dist; $x++) {
-			for (my $y = $realMonsterPos->{y} - $max_destination_dist; $y <= $realMonsterPos->{y} + $max_destination_dist; $y++) {
-				my $spot = {x => $x, y => $y};
-				
-				next unless ($x != $realMyPos->{x} || $y != $realMyPos->{y});
+		foreach my $distance (reverse ($min_destination_dist..$max_destination_dist)) {
+			my @blocks = calcRectArea($realMonsterPos->{x}, $realMonsterPos->{y}, $distance, $field);
+			foreach my $spot (@blocks) {
+				next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
 				
 				# Is this spot acceptable?
 				
@@ -466,19 +466,17 @@ sub main {
 				}
 				
 				# 3. The route should not exceed at any point $max_pathfinding_dist distance from the target.
-				my $pathfinding = new PathFinding(
+				my $solution = [];
+				my $dist = new PathFinding(
 					field => $field,
 					start => $realMyPos,
 					dest => $spot,
 					avoidWalls => 0,
-					min_x => $min_x,
-					max_x => $max_x,
-					min_y => $min_y,
-					max_y => $max_y
-				);
-				
-				my $solution = [];
-				my $dist = $pathfinding->run($solution);
+					min_x => $min_pathfinding_x,
+					max_x => $max_pathfinding_x,
+					min_y => $min_pathfinding_y,
+					max_y => $max_pathfinding_y
+				)->run($solution);
 				
 				# 4. It must be reachable and have at max $attackAdjustLOSMaxRouteDistance of route distance to it from our current position.
 				next unless ($dist >= 0 && $dist <= $attackAdjustLOSMaxRouteDistance);
