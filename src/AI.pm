@@ -331,7 +331,7 @@ sub ai_getAggressives {
 			my $pos = calcPosition($monster);
 
 			next if (($type && $control->{attack_auto} == 2)
-				&& (($config{'attackCanSnipe'}) ? !Misc::checkLineSnipable($myPos, $pos) : (!Misc::checkLineWalkable($myPos, $pos) || !Misc::checkLineSnipable($myPos, $pos)))
+				&& (($config{'attackCanSnipe'}) ? !$field->checkLineSnipable($myPos, $pos) : (!$field->checkLineWalkable($myPos, $pos) || !$field->checkLineSnipable($myPos, $pos)))
 				&& !$monster->{dmgToYou} && !$monster->{missedYou}
 				&& ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty}))
 				);

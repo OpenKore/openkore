@@ -70,10 +70,6 @@ our @EXPORT = (
 	# Field math
 	qw/calcRectArea
 	calcRectArea2
-	checkLineSnipable
-	checkLineWalkable
-	checkWallLength
-	closestWalkableSpot
 	objectInsideSpell
 	objectIsMovingTowards
 	objectIsMovingTowardsPlayer/,
@@ -164,7 +160,8 @@ our @EXPORT = (
 	writeStorageLog
 	getBestTarget
 	isSafe
-	isSafeActorQuery/,
+	isSafeActorQuery
+	isCellOccupied/,
 
 	# Actor's Actions Text
 	qw/attack_string
@@ -530,13 +527,13 @@ sub visualDump {
 #######################################
 
 ##
-# calcRectArea($x, $y, $radius)
+# calcRectArea($x, $y, $radius, $field)
 # Returns: an array with position hashes. Each has contains an x and a y key.
 #
 # Creates a rectangle with center ($x,$y) and radius $radius,
 # and returns a list of positions of the border of the rectangle.
 sub calcRectArea {
-	my ($x, $y, $radius) = @_;
+	my ($x, $y, $radius, $field) = @_;
 	my (%topLeft, %topRight, %bottomLeft, %bottomRight);
 
 	sub capX {
@@ -605,182 +602,6 @@ sub calcRectArea2 {
 		}
 	}
 	return @rectangle;
-}
-
-##
-# checkLineSnipable(from, to)
-# from, to: references to position hashes.
-#
-# Check whether you can snipe a target standing at $to,
-# from the position $from, without being blocked by any
-# obstacles.
-# TODO: move to Field?
-sub checkLineSnipable {
-	return 0 if (!$field);
-	my $from = shift;
-	my $to = shift;
-
-	# Simulate tracing a line to the location (modified Bresenham's algorithm)
-	my ($X0, $Y0, $X1, $Y1) = ($from->{x}, $from->{y}, $to->{x}, $to->{y});
-
-	my $steep;
-	my $posX = 1;
-	my $posY = 1;
-	if ($X1 - $X0 < 0) {
-		$posX = -1;
-	}
-	if ($Y1 - $Y0 < 0) {
-		$posY = -1;
-	}
-	if (abs($Y0 - $Y1) < abs($X0 - $X1)) {
-		$steep = 0;
-	} else {
-		$steep = 1;
-	}
-	if ($steep == 1) {
-		my $Yt = $Y0;
-		$Y0 = $X0;
-		$X0 = $Yt;
-
-		$Yt = $Y1;
-		$Y1 = $X1;
-		$X1 = $Yt;
-	}
-	if ($X0 > $X1) {
-		my $Xt = $X0;
-		$X0 = $X1;
-		$X1 = $Xt;
-
-		my $Yt = $Y0;
-		$Y0 = $Y1;
-		$Y1 = $Yt;
-	}
-	my $dX = $X1 - $X0;
-	my $dY = abs($Y1 - $Y0);
-	my $E = 0;
-	my $dE;
-	if ($dX) {
-		$dE = $dY / $dX;
-	} else {
-		# Delta X is 0, it only occures when $from is equal to $to
-		return 1;
-	}
-	my $stepY;
-	if ($Y0 < $Y1) {
-		$stepY = 1;
-	} else {
-		$stepY = -1;
-	}
-	my $Y = $Y0;
-	my $Erate = 0.99;
-	if (($posY == -1 && $posX == 1) || ($posY == 1 && $posX == -1)) {
-		$Erate = 0.01;
-	}
-	for (my $X=$X0;$X<=$X1;$X++) {
-		$E += $dE;
-		if ($steep == 1) {
-			return 0 if (!$field->isSnipable($Y, $X));
-		} else {
-			return 0 if (!$field->isSnipable($X, $Y));
-		}
-		if ($E >= $Erate) {
-			$Y += $stepY;
-			$E -= 1;
-		}
-	}
-	return 1;
-}
-
-##
-# checkLineWalkable(from, to, [min_obstacle_size = 5])
-# from, to: references to position hashes.
-#
-# Check whether you can walk from $from to $to in an (almost)
-# straight line, without obstacles that are too large.
-# Obstacles are considered too large, if they are at least
-# the size of a rectangle with "radius" $min_obstacle_size.
-# TODO: move to Field?
-sub checkLineWalkable {
-	return 0 if (!$field);
-	my $from = shift;
-	my $to = shift;
-	my $min_obstacle_size = shift;
-	$min_obstacle_size = 5 if (!defined $min_obstacle_size);
-
-	my $dist = round(distance($from, $to));
-	my %vec;
-
-	getVector(\%vec, $to, $from);
-	# Simulate walking from $from to $to
-	for (my $i = 1; $i < $dist; $i++) {
-		my %p;
-		moveAlongVector(\%p, $from, \%vec, $i);
-		$p{x} = int $p{x};
-		$p{y} = int $p{y};
-
-		if ( !$field->isWalkable($p{x}, $p{y}) ) {
-			# The current spot is not walkable. Check whether
-			# this the obstacle is small enough.
-			if (checkWallLength(\%p, -1,  0, $min_obstacle_size) || checkWallLength(\%p,  1, 0, $min_obstacle_size)
-			 || checkWallLength(\%p,  0, -1, $min_obstacle_size) || checkWallLength(\%p,  0, 1, $min_obstacle_size)
-			 || checkWallLength(\%p, -1, -1, $min_obstacle_size) || checkWallLength(\%p,  1, 1, $min_obstacle_size)
-			 || checkWallLength(\%p,  1, -1, $min_obstacle_size) || checkWallLength(\%p, -1, 1, $min_obstacle_size)) {
-				return 0;
-			}
-		}
-	}
-	return 1;
-}
-
-sub checkWallLength {
-	my $pos = shift;
-	my $dx = shift;
-	my $dy = shift;
-	my $length = shift;
-
-	my $x = $pos->{x};
-	my $y = $pos->{y};
-	my $len = 0;
-	do {
-		last if ($x < 0 || $x >= $field->width || $y < 0 || $y >= $field->height);
-		$x += $dx;
-		$y += $dy;
-		$len++;
-	} while (!$field->isWalkable($x, $y) && $len < $length);
-	return $len >= $length;
-}
-
-##
-# closestWalkableSpot(r_field, pos)
-# r_field: a reference to a field hash.
-# pos: reference to a position hash (which contains 'x' and 'y' keys).
-# Returns: 1 if %pos has been modified, 0 of not.
-#
-# If the position specified in $pos is walkable, this function will do nothing.
-# If it's not walkable, this function will find the closest position that is walkable (up to N blocks away),
-# and modify the x and y values in $pos.
-# TODO: move to Field?
-{
-	my @spots;
-	sub closestWalkableSpot {
-		my $field = shift;
-		my $pos = shift;
-
-		unless (@spots) {
-			@spots = ([0, 0]);
-			for my $dist (1 .. 7) {
-				push @spots, map { [$_, $dist-$_], [$dist-$_, -$_], [-$_, $_-$dist], [$_-$dist, $_] } 0 .. $dist-1;
-			}
-		}
-
-		foreach my $z (@spots) {
-			next if (!$field->isWalkable(($pos->{x} + $z->[0]), ($pos->{y} + $z->[1])));
-			$pos->{x} += $z->[0];
-			$pos->{y} += $z->[1];
-			return 1;
-		}
-		return 0;
-	}
 }
 
 ##
@@ -2670,6 +2491,19 @@ sub setPartySkillTimer {
 	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i ne "";
 }
 
+##
+# boolean isCellOccupied(pos)
+# pos: position hash.
+#
+# Returns 1 if there is a player, npc or mob in the cell, otherwise return 0.
+# TODO: Check if a character can move to a cell with a pet, elemental, homunculus or mercenary
+sub isCellOccupied {
+	my ($pos) = @_;
+	foreach my $actor (@$playersList, @$monstersList, @$npcsList) {
+		return 1 if ($actor->{pos}{x} == $pos->{x} && $actor->{pos}{y} == $pos->{y});
+	}
+	return 0;
+}
 
 ##
 # boolean setStatus(Actor actor, opt1, opt2, option)
@@ -3501,12 +3335,12 @@ sub getBestTarget {
 			);
 		}
 		if ($config{'attackCanSnipe'}) {
-			if (!checkLineSnipable($myPos, $pos)) {
+			if (!$field->checkLineSnipable($myPos, $pos)) {
 				push(@noLOSMonsters, $_);
 				next;
 			}
 		} else {
-			if (!checkLineWalkable($myPos, $pos)) {
+			if (!$field->checkLineWalkable($myPos, $pos)) {
 				push(@noLOSMonsters, $_);
 				next;
 			}
@@ -3886,15 +3720,20 @@ sub compilePortals {
 
 				my %start = %{$mapSpawns{$map}{$spawn}};
 				my %dest = %{$mapPortals{$map}{$portal}};
-				closestWalkableSpot($field, \%start);
-				closestWalkableSpot($field, \%dest);
-
-				$pathfinding->reset(
-					start => \%start,
-					dest  => \%dest,
-					field => $field
-					);
-				my $count = $pathfinding->runcount;
+				my $closest_start = $field->closestWalkableSpot(\%start, 1);
+				my $closest_dest = $field->closestWalkableSpot(\%dest, 1);
+				my $count;
+				
+				if (!defined $closest_start || !defined $closest_dest) {
+					$count = 0;
+				} else {
+					$pathfinding->reset(
+						start => $closest_start,
+						dest  => $closest_dest,
+						field => $field
+						);
+					$count = $pathfinding->runcount;
+				}
 				$portals_los{$spawn}{$portal} = ($count >= 0) ? $count : 0;
 				debug "LOS in $map from $start{x},$start{y} to $dest{x},$dest{y}: $portals_los{$spawn}{$portal}\n";
 			}

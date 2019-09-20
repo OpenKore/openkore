@@ -5814,7 +5814,7 @@ sub cmdUseSkill {
 		}
 		# This was the code for choosing a random location when x and y are not given:
 		# my $pos = calcPosition($char);
-		# my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2);
+		# my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2, $field);
 		# $pos = $positions[rand(@positions)];
 		# ($x, $y) = ($pos->{x}, $pos->{y});
 

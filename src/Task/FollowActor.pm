@@ -138,6 +138,7 @@ sub processFollow {
 				actor => $char,
 				x => $interceptPoint->{x},
 				y => $interceptPoint->{y},
+				field => $field,
 				maxTime => 5);
 			$task->activate();
 			$self->setMutexes('movement');
