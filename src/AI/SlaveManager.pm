@@ -22,10 +22,14 @@ sub addSlave {
 
 	if ($actor->isa("Actor::Slave::Homunculus")) {
 		$actor->{configPrefix} = 'homunculus_';
+		$actor->{ai_attack_timeout} = 'ai_homunculus_attack';
+		$actor->{ai_attack_auto_timeout} = 'ai_homunculus_attack_auto';
 		bless $actor, 'AI::Slave::Homunculus';
 		
 	} elsif ($actor->isa("Actor::Slave::Mercenary")) {
 		$actor->{configPrefix} = 'mercenary_';
+		$actor->{ai_attack_timeout} = 'ai_mercenary_attack';
+		$actor->{ai_attack_auto_timeout} = 'ai_mercenary_attack_auto';
 		bless $actor, 'AI::Slave::Mercenary';
 		
 	} else {
