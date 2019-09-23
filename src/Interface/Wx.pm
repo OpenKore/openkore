@@ -457,9 +457,7 @@ sub createMenuBar {
 	$self->addMenu($infoMenu, T('&Monsters').'	Alt-M',	sub { Commands::run("ml"); });
 	$self->addMenu($infoMenu, T('&NPCs'),		sub { Commands::run("nl"); });
 	$infoMenu->AppendSeparator;
-	$self->addMenu($infoMenu, T('&Experience Report'),	sub {
-		$self->openWindow (T('Report'), 'Interface::Wx::StatView::Exp', 1) 
-	});
+	$self->addMenu($infoMenu, T('&Experience Report'),	sub { Commands::run("exp"); });
 	$self->addMenu($infoMenu, T('&Item Change Report'),	sub { Commands::run("exp item"); });
 	$self->addMenu($infoMenu, T('&Monsiter Kill Report'),	sub { Commands::run("exp monster"); });
 	$menu->Append($infoMenu, T('I&nfo'));
