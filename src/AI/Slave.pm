@@ -158,10 +158,10 @@ sub iterate {
 				# We do this every 0.5 secs
 				$slave->{move_retry} = time;
 				# NOTE:
-				# The default LUA uses sendHomunculusStandBy() for the follow AI
+				# The default LUA uses sendSlaveStandBy() for the follow AI
 				# however, the server-side routing is very inefficient
 				# (e.g. can't route properly around obstacles and corners)
-				# so we make use of the sendHomunculusMove() to make up for a more efficient routing
+				# so we make use of the sendSlaveMove() to make up for a more efficient routing
 				$slave->sendMove ($char->{pos_to}{x}, $char->{pos_to}{y});
 				debug sprintf("Slave follow move (distance: %.2f)\n", $slave->distance()), 'homunculus';
 			}
@@ -945,17 +945,17 @@ sub processAutoAttack {
 
 sub sendAttack {
 	my ($slave, $targetID) = @_;
-	$messageSender->sendHomunculusAttack ($slave->{ID}, $targetID);
+	$messageSender->sendSlaveAttack ($slave->{ID}, $targetID);
 }
 
 sub sendMove {
 	my ($slave, $x, $y) = @_;
-	$messageSender->sendHomunculusMove ($slave->{ID}, $x, $y);
+	$messageSender->sendSlaveMove ($slave->{ID}, $x, $y);
 }
 
 sub sendStandBy {
 	my ($slave) = @_;
-	$messageSender->sendHomunculusStandBy ($slave->{ID});
+	$messageSender->sendSlaveStandBy ($slave->{ID});
 }
 
 1;

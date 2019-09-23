@@ -2736,7 +2736,7 @@ sub cmdSlave {
 			return;
 		} else {
 			# max distance that homunculus can follow: 17
-			$messageSender->sendHomunculusMove($slave->{ID}, $args[1], $args[2]);
+			$messageSender->sendSlaveMove($slave->{ID}, $args[1], $args[2]);
 		}
 
 	} elsif ($subcmd eq "standby") {
@@ -2744,7 +2744,7 @@ sub cmdSlave {
 			error TF("You must be logged in the game to use this command '%s'\n", $cmd .' ' .$subcmd);
 			return;
 		}
-		$messageSender->sendHomunculusStandBy($slave->{ID});
+		$messageSender->sendSlaveStandBy($slave->{ID});
 
 	} elsif ($args[0] eq 'ai') {
 		if ($args[1] eq 'clear') {
