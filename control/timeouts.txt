@@ -32,9 +32,12 @@ ai_move_giveup 1.5
 # Send the attack packet every x seconds, if it hasn't been send already
 ai_attack 1
 ai_homunculus_attack 1
+ai_mercenary_attack 1
 
 # Check for monsters to attack every x seconds
 ai_attack_auto 0.5
+ai_homunculus_attack_auto 0.5
+ai_mercenary_attack_auto 0.5
 
 # Give up attacking a monster if it can't be reached within x seconds
 ai_attack_giveup 12
