@@ -324,7 +324,7 @@ sub processAttack {
 
 	} elsif ($slave->action eq "attack" && !$monsters{$slave->args->{ID}} && (!$players{$slave->args->{ID}} || $players{$slave->args->{ID}}{dead})) {
 		# Monster died or disappeared
-		$timeout{'ai_homunculus_attack'}{'time'} -= $timeout{'ai_homunculus_attack'}{'timeout'};
+		$timeout{$slave->{ai_attack_timeout}}{time} -= $timeout{$slave->{ai_attack_timeout}}{timeout};
 		my $ID = $slave->args->{ID};
 		$slave->dequeue;
 
@@ -660,9 +660,9 @@ sub processAttack {
 				$args->{unstuck}{count}++;
 			}
 
-			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_homunculus_attack})) {
+			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{$slave->{ai_attack_timeout}})) {
 				$slave->sendAttack ($ID);
-				$timeout{ai_homunculus_attack}{time} = time;
+				$timeout{$slave->{ai_attack_timeout}}{time} = time;
 				delete $args->{attackMethod};
 			}
 
@@ -778,7 +778,7 @@ sub processAutoAttack {
 
 	if ((($slave->isIdle || $slave->action eq 'route') && (AI::isIdle || AI::is(qw(follow sitAuto take items_gather items_take attack skill_use))))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
-	  && timeOut($timeout{ai_homunculus_attack_auto})
+	  && timeOut($timeout{$slave->{ai_attack_auto_timeout}})
 	  && (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity)) {
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
@@ -990,7 +990,7 @@ sub processAutoAttack {
 			$slave->setSuspend(0);
 			$slave->attack($attackTarget, $priorityAttack);
 		} else {
-			$timeout{'ai_homunculus_attack_auto'}{'time'} = time;
+			$timeout{$slave->{ai_attack_auto_timeout}}{time} = time;
 		}
 	}
 

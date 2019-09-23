@@ -8076,7 +8076,7 @@
 18916#Bear_Balloon#
 18917#99_Love_Balloons#
 18918#Long_Octopus_Balloon#
-18919#GM_Vazilos'_Familiar#
+18919#Jakk's_Castle_Bat#
 18921#Costume_Tarnished_Lamp#
 18924#Gentleman_Fez#
 18929#Elephant_Model_Hat#
@@ -8861,6 +8861,7 @@
 20574#Costume_Backpack_(Red)#
 20575#Costume_Backpack_(Black)#
 20582#Costume_Bear_Backpack#
+20584#Costume_Fox_Tail#
 20700#Egir_Manteau#
 20701#Sol_Manteau#
 20702#TE_WoE_Muffler#
@@ -9858,6 +9859,7 @@
 31301#Costume_Blinking_Eyes#
 31302#Costume_Black_Magenta_Ribbon#
 31318#Costume_Gerhard_Von_Deviruchi_83_Years#
+31324#Costume_Kitty_DJ#
 31325#Costume_Queen_Scaraba_Helm#
 31326#Costume_Rolf_Von_Gigue_666#
 31327#Costume_Wood_Goblin_Nose#
@@ -9988,6 +9990,7 @@
 31611#Costume_Dark_Snake_Lord_Stole#
 31612#Costume_Large_Sorcerer_Crown#
 31615#Costume_Geisha_Make_Up#
+31616#Costume_Sleep_Sheep#
 31628#Costume_Dokebi#
 31635#Costume_Flowing_Long_(Blonde)#
 31636#Costume_Flowing_Long_(Silver)#
@@ -10046,6 +10049,13 @@
 31786#Costume_Red_Baby_Dragon_Hat#
 31787#Costume_Savage_Shoulder_Bebe_#
 31788#Costume_Piamette_Doll_Hair_(Silver)#
+31793#Costume_Seraphim's_Feather#
+31794#Costume_Dog_Ear_Cap#
+31795#Costume_Elephant_Fairy#
+31796#Costume_Drooping_Boto#
+31797#Costume_Shih_Tzu_Hair#
+31798#Costume_Baby_Panda#
+31799#Costume_Pretty_White_Bear#
 31800#Costume_Brazil_Twin_Ribbon#
 31801#Costume_Creative_Convention_Cap#
 31802#Costume_Creative_Convention_Chapeau#
