@@ -3833,8 +3833,7 @@ sub cmdMove {
 				$map_or_portal =~ s/^(\w{3})?(\d@.*)/$2/; # remove instance. is it possible to move to an instance? if not, we could throw an error here
 				# TODO: implement Field::sourceName function here once they are implemented there - 2013.11.26
 				my $file = $map_or_portal.'.fld';
-				$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
-				$file .= ".gz" if (! -f $file); # compressed file
+				$file = Settings::getFieldsFilename($file) || Settings::getFieldsFilename($file . ".gz");
 				if ($maps_lut{"${map_or_portal}.rsw"} || -f $file) {
 					my $move_field = new Field(name => $map_or_portal);
 					if (defined $x && defined $y) {
@@ -4619,14 +4618,11 @@ sub cmdPortalList {
 		debug "Input: $args\n";
 		my ($srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY, $seq) = $args =~ /^add ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3}) ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3})(.*)$/; #CHECKING
 		my $srcfile = $srcMap.'.fld';
-		$srcfile = File::Spec->catfile($Settings::fields_folder, $srcfile) if ($Settings::fields_folder);
-		$srcfile .= ".gz" if (! -f $srcfile); # compressed file
+		$srcfile = Settings::getFieldsFilename($srcfile) || Settings::getFieldsFilename($srcfile . ".gz");
 		my $dstfile = $dstMap.'.fld';
-		$dstfile = File::Spec->catfile($Settings::fields_folder, $dstfile) if ($Settings::fields_folder);
-		$dstfile .= ".gz" if (! -f $dstfile); # compressed file
+		$dstfile = Settings::getFieldsFilename($dstfile) || Settings::getFieldsFilename($dstfile . ".gz");
 		error TF("Files '%s' or '%s' does not exist.\n", $srcfile, $dstfile) if (! -f $srcfile || ! -f $dstfile);
-		if ($srcX > 0 && $srcY > 0 && $dstX > 0 && $dstY > 0
-			&& -f $srcfile && -f $dstfile) { #found map and valid corrdinates
+		if ($srcX > 0 && $srcY > 0 && $dstX > 0 && $dstY > 0 && $srcfile && $dstfile) { #found map and valid corrdinates
 			if ($seq) {
 				message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s) [%s]\n", $srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY, $seq), "portalRecord";
 

@@ -3877,15 +3877,19 @@ sub compilePortals {
 				return 1 if $checkOnly;
 				if ((!$field || $field->baseName ne $map) && !$missingMap{$map}) {
 					eval {
-						$field = new Field(name => $map);
+						$field = new Field(name => $map);;
 					};
 					if ($@) {
+						debug "$@", "fields", 2;
 						$missingMap{$map} = 1;
 					}
 				}
+				
+				next unless $field;
 
 				my %start = %{$mapSpawns{$map}{$spawn}};
 				my %dest = %{$mapPortals{$map}{$portal}};
+
 				closestWalkableSpot($field, \%start);
 				closestWalkableSpot($field, \%dest);
 

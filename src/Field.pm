@@ -408,15 +408,9 @@ sub loadByName {
 	($baseName, $self->{instanceID}) = $self->nameToBaseName($name);
 	$self->{baseName} = $baseName;
 	my $file = $self->sourceName . ".fld";
+	$file = Settings::getFieldsFilename($file) || Settings::getFieldsFilename($file . ".gz");
 
-	if ($Settings::fields_folder) {
-		$file = File::Spec->catfile($Settings::fields_folder, $file);
-	}
-	if (! -f $file) {
-		$file .= ".gz";
-	}
-
-	if (-f $file) {
+	if ($file) {
 		$self->loadFile($file, $loadDistanceMap);
 		$self->{baseName} = $baseName;
 		$self->{name} = $name;

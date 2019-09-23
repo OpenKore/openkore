@@ -89,13 +89,13 @@ our $welcomeText = TF("Welcome to %s.", $NAME);
 our @controlFolders;
 our @tablesFolders;
 our @pluginsFolders;
+our @fieldsFolders;
 # The registered data files.
 our $files;
 # System configuration.
 our %sys;
 our %options;
 
-our $fields_folder;
 our $logs_folder;
 our $maps_folder;
 
@@ -161,7 +161,6 @@ our @EXPORT_OK = qw(%sys %options);
 sub parseArguments {
 	# my %options;
 
-	undef $fields_folder;
 	undef $logs_folder;
 	undef $maps_folder;
 	undef $config_file;
@@ -183,7 +182,7 @@ sub parseArguments {
 		'control=s',          \$options{control},
 		'tables=s',           \$options{tables},
 		'plugins=s',          \$options{plugins},
-		'fields=s',           \$fields_folder,
+		'fields=s',           \$options{fields},
 		'logs=s',             \$logs_folder,
 		'maps=s',             \$maps_folder,
 
@@ -212,18 +211,25 @@ sub parseArguments {
 	} else {
 		setControlFolders("control");
 	}
+	
 	if ($options{tables}) {
 		setTablesFolders(split($pathDelimiter, $options{tables}));
 	} else {
 		setTablesFolders("tables");
 	}
+	
 	if ($options{plugins}) {
 		setPluginsFolders(split($pathDelimiter, $options{plugins}));
 	} else {
 		setPluginsFolders("plugins");
 	}
+	
+	if ($options{fields}) {
+		setFieldsFolders(split($pathDelimiter, $options{fields}));
+	} else {
+		setFieldsFolders("fields");
+	}
 
-	$fields_folder = "fields" if (!defined $fields_folder);
 	$logs_folder = "logs" if (!defined $logs_folder);
 	$maps_folder = "map" unless defined $maps_folder;
 	$base_chat_log_file ||= File::Spec->catfile($logs_folder, "chat.txt");
@@ -391,6 +397,32 @@ sub getTablesFolders {
 # TODO: way to reconfigure only that path? (by now it's always 'tables')
 sub getTablepackFolder {
 	return $tablesFolders[$#tablesFolders];
+}
+
+##
+# void Settings::setFieldsFolders(Array<String> folders)
+#
+# Set the folders in which to look for fields files.
+sub setFieldsFolders {
+	@fieldsFolders = @_;
+}
+
+##
+# void Settings::addFieldsFolders(String folders)
+#
+# Add directories to fields folder list
+sub addFieldsFolders {
+	if (defined(my $root = $fieldsFolders[$#fieldsFolders])) {
+		unshift @fieldsFolders, grep -d, map { File::Spec->catdir($root, $_) } split ';', shift;
+	}
+}
+
+##
+# void Settings::getFieldsFolder(Array<String> folders)
+#
+# Gets the folder list in which to look for fields files.
+sub getFieldsFolder {
+	return @fieldsFolders;
 }
 
 ##
@@ -682,6 +714,18 @@ sub getControlFilename {
 # to Settings::setTablesFolders().
 sub getTableFilename {
 	return _findFileFromFolders($_[0], \@tablesFolders);
+}
+
+##
+# String Settings::getFieldsFilename(String name)
+# name: A valid base file name.
+# Ensures: if defined($result): -f $result
+#
+# Get a field file by its name. This file will be looked up
+# in all possible locations, as specified by earlier calls
+# to Settings::setFieldsFolders().
+sub getFieldsFilename {
+	return _findFileFromFolders($_[0], \@fieldsFolders);
 }
 
 sub getConfigFilename {
