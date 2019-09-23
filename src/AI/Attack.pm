@@ -581,10 +581,9 @@ sub main {
 		$args->{move_start} = time;
 		$args->{monsterPos} = {%{$monsterPos}};
 
-		my $pos = meetingPosition($target, $args->{attackMethod}{maxDistance});
+		my $pos = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
 
-		my $dist = sprintf("%.1f", $monsterDist);
-		debug "Target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
+		debug "Target distance $realMonsterDist is >$args->{attackMethod}{maxDistance}; moving to target: " .
 			"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
 		my $result = $char->route(undef, @{$pos}{qw(x y)},

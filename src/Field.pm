@@ -524,10 +524,16 @@ sub checkLineWalkable {
 		if ( !$self->isWalkable($p{x}, $p{y}) ) {
 			# The current spot is not walkable. Check whether
 			# this the obstacle is small enough.
-			if ($self->checkWallLength(\%p, -1,  0, $min_obstacle_size) || $self->checkWallLength(\%p,  1, 0, $min_obstacle_size)
-			 || $self->checkWallLength(\%p,  0, -1, $min_obstacle_size) || $self->checkWallLength(\%p,  0, 1, $min_obstacle_size)
-			 || $self->checkWallLength(\%p, -1, -1, $min_obstacle_size) || $self->checkWallLength(\%p,  1, 1, $min_obstacle_size)
-			 || $self->checkWallLength(\%p,  1, -1, $min_obstacle_size) || $self->checkWallLength(\%p, -1, 1, $min_obstacle_size)) {
+			if (
+				$self->checkWallLength(\%p, -1,  0, $min_obstacle_size) ||
+				$self->checkWallLength(\%p,  1,  0, $min_obstacle_size) ||
+				$self->checkWallLength(\%p,  0, -1, $min_obstacle_size) ||
+				$self->checkWallLength(\%p,  0,  1, $min_obstacle_size) ||
+				$self->checkWallLength(\%p, -1, -1, $min_obstacle_size) ||
+				$self->checkWallLength(\%p,  1,  1, $min_obstacle_size) ||
+				$self->checkWallLength(\%p,  1, -1, $min_obstacle_size) ||
+				$self->checkWallLength(\%p, -1,  1, $min_obstacle_size)
+			 ) {
 				return 0;
 			}
 		}
@@ -541,13 +547,16 @@ sub checkWallLength {
 	my $x = $pos->{x};
 	my $y = $pos->{y};
 	my $len = 0;
-	do {
-		last if ($x < 0 || $x >= $self->width || $y < 0 || $y >= $self->height);
+
+	while (1) {
+		last if ($self->isOffMap($x, $y));
 		$x += $dx;
 		$y += $dy;
 		$len++;
-	} while (!$self->isWalkable($x, $y) && $len < $length);
-	return $len >= $length;
+		last unless (!$self->isWalkable($x, $y) && $len < $length);
+	}
+
+	return (($len >= $length) ? 1 : 0);
 }
 
 ##

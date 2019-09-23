@@ -2099,77 +2099,78 @@ sub manualMove {
 }
 
 ##
-# meetingPosition(ID, attackMaxDistance)
-# ID: ID of the character to meet.
+# meetingPosition(actor, target_actor, attackMaxDistance)
+# actor: current object.
+# target_actor: actor to meet.
 # attackMaxDistance: attack distance based on attack method.
 #
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
-	my ($target, $attackMaxDistance) = @_;
-	my $monsterSpeed = ($target->{walk_speed}) ? 1 / $target->{walk_speed} : 0;
-	my $timeMonsterMoves = time - $target->{time_move};
+	my ($actor, $target, $attackMaxDistance) = @_;
+	my $targetSpeed = ($target->{walk_speed}) ? 1 / $target->{walk_speed} : 0;
+	my $timeTargetMoves = time - $target->{time_move};
 
-	my %monsterPos;
-	$monsterPos{x} = $target->{pos}{x};
-	$monsterPos{y} = $target->{pos}{y};
-	my %monsterPosTo;
-	$monsterPosTo{x} = $target->{pos_to}{x};
-	$monsterPosTo{y} = $target->{pos_to}{y};
+	my %targetPos;
+	$targetPos{x} = $target->{pos}{x};
+	$targetPos{y} = $target->{pos}{y};
+	my %targetPosTo;
+	$targetPosTo{x} = $target->{pos_to}{x};
+	$targetPosTo{y} = $target->{pos_to}{y};
 
-	my %realMonsterPos = calcPosFromTime(\%monsterPos, \%monsterPosTo, $monsterSpeed, $timeMonsterMoves);
+	my %realTargetPos = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, $timeTargetMoves);
 	
-	my $mySpeed = ($char->{walk_speed}) ? 1 / $char->{walk_speed} : 0;
-	my $timeCharMoves = time - $char->{time_move};
+	my $mySpeed = ($actor->{walk_speed}) ? 1 / $actor->{walk_speed} : 0;
+	my $timeActorMoves = time - $actor->{time_move};
 
 	my %myPos;
-	$myPos{x} = $char->{pos}{x};
-	$myPos{y} = $char->{pos}{y};
+	$myPos{x} = $actor->{pos}{x};
+	$myPos{y} = $actor->{pos}{y};
 	my %myPosTo;
-	$myPosTo{x} = $char->{pos_to}{x};
-	$myPosTo{y} = $char->{pos_to}{y};
+	$myPosTo{x} = $actor->{pos_to}{x};
+	$myPosTo{y} = $actor->{pos_to}{y};
 
-	my %realMyPos = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeCharMoves);
+	my %realMyPos = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeActorMoves);
 
-	my $timeMonsterWalks;
-	my $timeCharWalks;
-	my %monsterStep;
-	my %charStep;
-	# There can not be zero step if monster moves
-	for (my $monsterStep = 1; $monsterStep <= countSteps(\%realMonsterPos, \%monsterPosTo); $monsterStep++) {
+	my $timeTargetWalks;
+	my $timeActorWalks;
+	my %targetStep;
+	my %actorStep;
+	# There can not be zero step if target moves
+	for (my $targetStep = 1; $targetStep <= countSteps(\%realTargetPos, \%targetPosTo); $targetStep++) {
 		# Calculate the steps
-		%monsterStep = moveAlong(\%realMonsterPos, \%monsterPosTo, $monsterStep);
+		%targetStep = moveAlong(\%realTargetPos, \%targetPosTo, $targetStep);
 
-		# Calculate time to walk for monster
-		$timeMonsterWalks = calcTime(\%realMonsterPos, \%monsterStep, $monsterSpeed);
+		# Calculate time to walk for target
+		$timeTargetWalks = calcTime(\%realTargetPos, \%targetStep, $targetSpeed);
 
-		# Character's route to monsterStep position
-		for (my $charStep = 0; $charStep <= countSteps(\%realMyPos, \%monsterStep); $charStep++) {
+		# Actoracter's route to targetStep position
+		for (my $actorStep = 0; $actorStep <= countSteps(\%realMyPos, \%targetStep); $actorStep++) {
 			# Calculate the steps
-			%charStep = moveAlong(\%realMyPos, \%monsterStep, $charStep);
+			%actorStep = moveAlong(\%realMyPos, \%targetStep, $actorStep);
 
 			# Check whether the distance is fine
-			if (round(distance(\%charStep, \%monsterStep)) <= $attackMaxDistance) {
-				# Calculate time to walk for char
-				$timeCharWalks = calcTime(\%realMyPos, \%charStep, $mySpeed);
+			if (round(distance(\%actorStep, \%targetStep)) <= $attackMaxDistance) {
+				# Calculate time to walk for actor
+				$timeActorWalks = calcTime(\%realMyPos, \%actorStep, $mySpeed);
 
-				# Check whether character comes earlier or at the same time
-				if ($timeCharWalks <= $timeMonsterWalks) {
-					return \%charStep;
+				# Check whether actoracter comes earlier or at the same time
+				if ($timeActorWalks <= $timeTargetWalks) {
+					return \%actorStep;
 				}
 			}
 		}
 	}
-	# If the monster is too fast, move to its pos_to plus attackMaxDistance
-	for (my $charStep = 0; $charStep <= countSteps(\%realMyPos, \%monsterPosTo); $charStep++) {
+	# If the target is too fast, move to its pos_to plus attackMaxDistance
+	for (my $actorStep = 0; $actorStep <= countSteps(\%realMyPos, \%targetPosTo); $actorStep++) {
 		# Calculate the steps
-		%charStep = moveAlong(\%realMyPos, \%monsterPosTo, $charStep);
+		%actorStep = moveAlong(\%realMyPos, \%targetPosTo, $actorStep);
 
 		# Check whether the distance is fine
-		if (round(distance(\%charStep, \%monsterPosTo)) <= $attackMaxDistance) {
+		if (round(distance(\%actorStep, \%targetPosTo)) <= $attackMaxDistance) {
 			last;
 		}
 	}
-	return \%charStep;
+	return \%actorStep;
 }
 
 sub objectAdded {
@@ -2499,7 +2500,7 @@ sub setPartySkillTimer {
 # TODO: Check if a character can move to a cell with a pet, elemental, homunculus or mercenary
 sub isCellOccupied {
 	my ($pos) = @_;
-	foreach my $actor (@$playersList, @$monstersList, @$npcsList) {
+	foreach my $actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
 		return 1 if ($actor->{pos}{x} == $pos->{x} && $actor->{pos}{y} == $pos->{y});
 	}
 	return 0;

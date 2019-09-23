@@ -245,7 +245,10 @@ sub iterate {
 		$self->{time_step} = time;
 		$self->{stage} = WALK_ROUTE_SOLUTION;
 
-		if (time - $begin < 0.01) {
+		if (@{$self->{solution}} == 0) {
+			debug "Route $self->{actor}: DistFromGoal|pyDistFromGoal trimmed all solution steps.\n", "route";
+			$self->setDone();
+		} elsif (time - $begin < 0.01) {
 			# Optimization: immediately go to the next stage if we spent neglible time in this step.
 			$self->iterate();
 		}

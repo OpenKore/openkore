@@ -287,22 +287,22 @@ sub processAttack {
 		my $target = Actor::get($ID);
 
 		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
+		 && blockDistance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			$slave->dequeue;
 			$slave->dequeue if $slave->action eq "route";
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "Slave target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
+			debug "$slave target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
 		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($target), calcPosition($slave)) <= $attackSeq->{attackMethod}{maxDistance}) {
+		 && blockDistance(calcPosition($target), calcPosition($slave)) <= $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster is within attack range; stop moving
 			$slave->dequeue;
 			$slave->dequeue if $slave->action eq "route";
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "Slave target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
+			debug "$slave target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
 				"$attackSeq->{attackMethod}{maxDistance} blocks; stop moving\n", "ai_attack";
 		}
 		$slave->{slave_attack_route_adjust} = time;
@@ -377,7 +377,7 @@ sub processAttack {
 		my $target = Actor::get($ID);
 		my $myPos = $slave->{pos_to};
 		my $monsterPos = $target->{pos_to};
-		my $monsterDist = distance($myPos, $monsterPos);
+		my $monsterDist = blockDistance($myPos, $monsterPos);
 
 		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 		my $realMyPos = calcPosition($slave);
@@ -613,30 +613,18 @@ sub processAttack {
 			$slave->args->{avoiding} = 1;
 			$slave->move($bestBlock->{x}, $bestBlock->{y}, $ID);
 
-		} elsif (!$config{$slave->{configPrefix}.'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
+		} elsif (!$config{$slave->{configPrefix}.'runFromTarget'} && $realMonsterDist > $args->{attackMethod}{maxDistance}
 		  && !timeOut($args->{ai_attack_giveup})) {
 			# The target monster moved; move to target
 			$args->{move_start} = time;
 			$args->{monsterPos} = {%{$monsterPos}};
-
-			# Calculate how long it would take to reach the monster.
-			# Calculate where the monster would be when you've reached its
-			# previous position.
-			my $time_needed;
-			if (objectIsMovingTowards($target, $slave, 45)) {
-				$time_needed = $monsterDist * $slave->{walk_speed};
-			} else {
-				# If monster is not moving towards you, then you need more time to walk
-				$time_needed = $monsterDist * $slave->{walk_speed} + 2;
-			}
-			my $pos = calcPosition($target, $time_needed);
-
-			my $dist = sprintf("%.1f", $monsterDist);
-			debug "Slave target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
+			
+			my $pos = meetingPosition($slave, $target, $args->{attackMethod}{maxDistance});
+			
+			debug "$slave target distance $realMonsterDist is >$args->{attackMethod}{maxDistance}; moving to target: " .
 				"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
 			my $result = $slave->route(undef, @{$pos}{qw(x y)},
-				distFromGoal => $args->{attackMethod}{distance},
 				maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
 				attackID => $ID,
 				noMapRoute => 1,
@@ -657,9 +645,8 @@ sub processAttack {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 			if (!$slave->args->{firstAttack}) {
 				$slave->args->{firstAttack} = 1;
-				my $dist = sprintf("%.1f", $monsterDist);
 				my $pos = "$myPos->{x},$myPos->{y}";
-				debug "Slave is ready to attack target (which is $dist blocks away); we're at ($pos)\n", "ai_attack";
+				debug "$slave is ready to attack target $target (which is $realMonsterDist blocks away); we're at ($pos)\n", "ai_attack";
 			}
 
 			$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
@@ -668,14 +655,13 @@ sub processAttack {
 				# but some time has passed and we still haven't dealed any damage.
 				# Our recorded position might be out of sync, so try to unstuck
 				$args->{unstuck}{time} = time;
-				debug("Slave attack - trying to unstuck\n", "ai_attack");
+				debug("$slave attack - trying to unstuck\n", "ai_attack");
 				$slave->move($myPos->{x}, $myPos->{y});
 				$args->{unstuck}{count}++;
 			}
 
 			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_homunculus_attack})) {
-				$slave->sendAttack ($ID);#,
-					#($config{homunculus_tankMode}) ? 0 : 7);
+				$slave->sendAttack ($ID);
 				$timeout{ai_homunculus_attack}{time} = time;
 				delete $args->{attackMethod};
 			}
