@@ -6323,6 +6323,7 @@
 19020#Tiara Arcana#
 19022#Cristal Filosofal#
 19024#Diadema do Paraíso#
+19029#Miniatura de Alice#
 19038#Coroa do 11º Aniversário do bRO#
 19039#Orelhas do 11º Aniversário do bRO#
 19048#Traje de Luta Jogos Vorags#
@@ -6389,6 +6390,7 @@
 19321#Pombinho Branco#
 19326#Livros da Sabedoria #
 19381#Echarpe do Paraíso#
+19393#Pedra do Desbravador#
 19507#Sol Risonho#
 19509#Asas de Borboleta#
 19510#Parafusos Soltos#
@@ -6809,6 +6811,10 @@
 20528#Asas Douradas da Borboleta#
 20530#Asas de Gabriel#
 20535#Holograma Futurista#
+20571#Voo das Valquírias#
+20574#Mochila do Aluno Rebelde#
+20575#Mochila do Aluno Esperto#
+20576#Garfo do Glutão#
 20700#Manteau de Aegir#
 20701#Manteau Solar#
 20702#Sobrepeliz TE#
@@ -7091,7 +7097,10 @@
 28200#Lança-Granadas Caos Total#
 28201#Cruz Meridional#
 28202#Cruz Meridional#
+28255#Rifle Ancestral#
 28256#Escopeta Ancestral#
+28257#Lança-Granadas Ancestral#
+28258#Gatling Ancestral#
 28319#Cauda Demoníaca#
 28321#Garra do Falcoeiro#
 28322#Luva do Falcoeiro#
@@ -7402,9 +7411,15 @@
 31667#Boina de Poring#
 31668#Chifres de Majoruros#
 31670#Peruca de Miyabi#
+31671#Canhões Gêmeos#
+31672#Peruca de Nereida#
 31687#Bolsa do Alquimista#
 31707#Peruca de Youkai#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#
 32227#Grilhões de Hrodvitnir#
+32243#Anel do Desbravador#
+32302#Revólver Ancestral#
+570002#Concha Ancestral#
+580002#Concertina Ancestral#
