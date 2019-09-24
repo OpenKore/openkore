@@ -2425,13 +2425,18 @@ Nível necessário: ^77777727^000000
 Classes que utilizam: ^777777Cavaleiro/ Templário^000000
 #
 1130#
-Espada de uma mão com muitas pontas no topo. Apenas um golpe basta para causar ferimentos profundos. Algumas poucas vezes faz ataque duplo.
-Classe: ^777777Espada^000000
-Força de Ataque: ^777777120^000000
+Espada de uma mão com muitas pontas no topo. Apenas um golpe basta para causar ferimentos profundos.
+--------------------------
+^0000ffHabilita [Ataque Duplo] nv.5.^000000
+--------------------------
+^0000ffDano físco contra as raças Humano e Humanoide +5%.^000000
+--------------------------
+Tipo: ^777777Espada^000000
+Ataque: ^777777120^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777740^000000
-Classes que utilizam: ^777777Espadachim/ Mercador/ Gatuno e as respectivas evoluções^000000
+Classes: ^777777Espadachins, Mercadores, Gatunos e evoluções^000000
 #
 1131#
 Espada de uma mão de aparência solene.
@@ -3466,13 +3471,17 @@ Classes que utilizam: ^777777Mercenário^000000
 #
 1233#
 Adaga cerimonial para exorcismo. Contém grande poder contra o mal.
-^0000ffIgnora a defesa de monstros da raça Demônio.^000000
+--------------------------
+^0000ffResistência a raça Demônio +5%.^000000
+^0000ffIgnora 100% da DEF da raça Demônio.^000000
+^0000ffResistência as raças Humano e Humanoide^000000 ^ff0000-10%.^000000
+--------------------------
 Tipo: ^777777Adaga^000000
-Força de Ataque: ^77777790^000000
+Ataque: ^77777790^000000
 Peso: ^77777770^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777736^000000
-Classes que utilizam: ^777777Espadachim/ Mago/ Arqueiro/ Mercador/ Gatuno e as respectivas evoluções^000000
+Classes: ^777777Aprendizes, Espadachins, Magos Mercadores, Arqueiros, Gatunos, Ninjas, Espiritualistas e evoluções^000000
 #
 1234#
 Tesouro da tribo das estrelas. Drena a alma da vítima quando usada.
@@ -4126,11 +4135,15 @@ Classes: ^777777Sicários^000000
 #
 1291#
 Katar utilizado por sicários para punir traidores em suas guildas a muito tempo atrás.
+--------------------------
 ^CD3278Duplica a chance de causar um ataque crítico.^000000
+--------------------------
 ^0000ffDES +2.^000000
-^0000ffEsquiva -30.^000000
+^0000ffEsquiva^000000 ^ff0000-30.^000000
+--------------------------
 ^0000ffDano de [Lâminas Retalhadoras] +30%.^000000
-^0000ffDano físico contra a raça Humanoide +50%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +50%.^000000
+--------------------------
 Tipo: ^777777Katar^000000
 Ataque: ^777777200^000000
 Peso: ^777777150^000000
@@ -5520,12 +5533,16 @@ Classes: ^777777Espadachins e evoluções^000000
 #
 1467#
 Lança com uma lâmina fina e de aparência esquisita.
-Classe: ^777777Lança de duas mãos^000000
-Força de Ataque: ^777777180^000000
+--------------------------
+^0000ffDano físico contra as raças Doram e Bruto +10%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +5%.^000000
+--------------------------
+Tipo: ^777777Lança de Duas Mãos^000000
+Ataque: ^777777180^000000
 Peso: ^777777100^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777748^000000
-Classes que utilizam: ^777777Espadachim e suas evoluções^000000
+Classes: ^777777Espadachins e evoluções^000000
 #
 1468#
 Lança inspirada nas direções que os raios percorrem no céu.
@@ -6601,23 +6618,30 @@ Nível necessário: ^77777770^000000
 Classes: ^777777Sacerdotes, Mestres Taekwons, Sábios e evoluções^000000
 #
 1565#
-Um "caderno da morte" usado por demônios. Sabe-se que alguns desses cadernos perdidos pelos demônios estão espalhados neste mundo.
+Um "caderno da morte" usado por demônios.
+Sabe-se que alguns desses cadernos perdidos pelos demônios estão espalhados neste mundo.
 Ele está cheio de nomes de pessoas, e alguns nomes parecem familiares.
 Hollg... "a página está danificada e o nome não está legível".
+--------------------------
 ^0000ffATQM +100.^000000
+^0000ffSOR^000000 ^ff0000-20.^000000
 ^0000ffINT +3. FOR +3.^000000
-^0000ffSOR -20.^000000
-^0000ffAo realizar ataques físicos, pequena chance de infligir [Coma] em oponentes da raça Humanoide.^000000
-A cada refino:
+--------------------------
+Ao realizar ataques físicos:
+^0000ff0,1% de chance de infligir [Coma] em oponentes das raças Humano e Humanoide.^000000
+--------------------------
+A  cada refino:
 ^0000ffVelocidade de ataque +1%.^000000
-^FF6347Sábios e evoluções:^000000
-^0000ffAo realizar ataques físicos, chance de autoconjurar [Julgamento Infernal] nv. 5.^000000
+--------------------------
+Sábios e evoluções:
+^0000ffAo realizar ataques físicos, 2% de chance de autoconjurar [Julgamento Infernal] nv. 5.^000000
+--------------------------
 Tipo: ^777777Livro^000000
 Ataque: ^777777137^000000
 Peso: ^777777100^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777785^000000
-Classes: ^777777Sacerdotes, Mestres Taekwons, Sábios e evoluções^000000
+Classes: ^777777Sacerdotes, Sábios, Mestres Taekwons e evoluções^000000
 #
 1568#
 Livro encantado com a propriedade Água.
@@ -13568,14 +13592,17 @@ Classe: ^777777Arcano^000000
 #
 2471#
 Sapatos criados para simbolizar a preocupação com o próximo.
-^0000ffHP Máx. +500.^000000
-^0000ffResistência contra Humanoides +10%.^000000
-^0000ffResistência contra outras raças -10%.^000000
-Tipo : ^777777Sapato^000000
+--------------------------
+^0000ffHP máx. +500.^000000
+--------------------------
+^0000ffResistência a outras raças^000000 ^ff0000-10%.^000000
+^0000ffResistência as raças Humano e Humanoide +10%^000000
+--------------------------
+Tipo: ^777777Calçado^000000
 Defesa: ^77777712^000000
-Peso : ^77777730^000000
-Nível Necessário : ^777777100^000000
-Classe: ^777777Arcebispo^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Arcebispos^000000
 #
 2472#
 Sapatos para o dia do Juízo Final, onde todos serão julgados.
@@ -18317,7 +18344,7 @@ Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4125#
-^0000ffDano físico contra as raças Humanoide, Bruto, Planta e Inseto +7%.^000000
+^0000ffDano físico contra as raças Humano, Humanoide, Bruto, Doram, Planta e Inseto +7%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
@@ -20191,10 +20218,12 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4353#
-Carta Remover.
-Aumenta a recuperação de HP em 10%. HP +800, mas esse bônus diminui à medida que a armadura equipada é aprimorada.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Armadura^000000
+^0000ffHP máx. +800.^000000
+^0000ffRegeneração natural de HP +10%.^000000
+A cada refino:
+^0000ffHP máx.^000000 ^ff0000-40.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4354#
@@ -22744,7 +22773,7 @@ ATQ + 10, ATQM + 10.
 Resistência a propriedade Neutro +5%.
 #
 4849#
-Resistência a raça Humanoide +5%.
+^0000ffResistência a raça Humano +5%.^000000
 #
 4850#
 Efetividade de cura +6%.
@@ -45718,11 +45747,14 @@ Um biscoito em forma de palito com uma deliciosa cobertura de morango. Perfeito 
 Peso: ^7777771^000000
 #
 15000#
-Armadura de placas, coberta com ossos afiados
+Armadura de placas, coberta com ossos afiados.
+--------------------------
 ^0000ffFOR +1. DEFM +3.^000000
-^0000ffIgnora 10% da DEF de oponentes da raça Bruto e Humanoide.^000000
+--------------------------
+^0000ffIgnora 10% da DEF das raças Humano, Humanoide, Bruto e Doram.^000000
 Ao receber danos físicos:
 ^0000ff1% de chance de autoconjurar [Sangria] nv. 1.^000000
+--------------------------
 Tipo: ^777777Armadura^000000
 Defesa: ^77777760^000000
 Peso: ^777777100^000000
@@ -46826,29 +46858,33 @@ Nível necessário: ^77777760^000000
 Classes: ^777777Todas^000000
 #
 15169#
-Dizem que esse belíssimo manto de tecido etéreo foi usado pelo próprio “Rei das Fadas”, Jun Kardui, líder da Tribo dos Esplêndidos. O tecido, feito de algum tipo especial de seda de Alfheim, parece ajudar a concentrar energia mágica. Sob os encantamentos certos, o manto também é capaz de proteger contra humanoides.
-^0000ffATQM +10.^000000
-^0000ffDEFM +5.^000000
-^0000ffResistência a raça Humanoide +1%.^000000
+Dizem que esse belíssimo manto de tecido etéreo foi usado pelo próprio “Rei das Fadas”, Jun Kardui, líder da Tribo dos Esplêndidos. O tecido, feito de algum tipo especial de seda de Alfheim, parece ajudar a concentrar energia mágica.
+--------------------------
+^0000ffATQM +10. DEFM +5.^000000
+^0000ffResistência as raças Humano e Humanoide +1%.^000000
+--------------------------
 Refino +7 ou mais:
-^0000ffResistência a raça Humanoide +2% adicional.^000000
+^0000ffResistência as raças Humano e Humanoide +2% adicional.^000000
 Refino +8 ou mais:
-^0000ffResistência a raça Humanoide +2% adicional.^000000
+^0000ffTorna a armadura indestrutível em batalha.^000000
+^0000ffResistência as raças Humano e Humanoide +2% adicional.^000000
 Refino +9 ou mais:
-^0000ffTorna-se indestrutível em batalha.^000000
-^0000ffResistência a raça Humanoide +2% adicional.^000000
-^FF6347Conjunto^000000
-^FF6347[Carta Angeling]^000000
+^0000ffResistência as raças Humano e Humanoide +2% adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Angeling]^000000
 Refino +9 ou mais:
-^0000ffTolerância a [Congelamento] +100%.^000000
-^FF6347Conjunto^000000
-^FF6347[Cajado dos Esplêndidos]^000000
-A cada refino do cajado:
+^0000ffTolerância a Congelamento +100%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Cajado dos Esplêndidos]^000000
+A cada refino da arma:
 ^0000ffATQM +3.^000000
 Manto com refino +7 ou mais:
-^0000ffATQM +5 adicional por refino do cajado.^000000
+^0000ffA cada refino da arma, ATQM +5 adicional.^000000
 Manto com refino +8 ou mais:
-^0000ffATQM +7 adicional por refino do cajado.^000000
+^0000ffA cada refino da arma, ATQM +7 adicional.^000000
+--------------------------
 Tipo: ^777777Armadura^000000
 Defesa: ^77777760^000000
 Peso: ^77777780^000000
@@ -53222,6 +53258,26 @@ Peso: ^77777750^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
+19029#
+Mais um visual relacionado à Alice pra você adicionar à sua coleção. Com essa versão simpática do monstro no cocuruto, você não vai mais tirar a neura de limpeza da cabeça. É o presente ideal para aquela sua amizade que só quer saber de acumular coisa e fazer bagunça!
+--------------------------
+^a400cdNão pode ser refinado.^000000
+--------------------------
+^0000ffDano físico contra Chefes +5%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^CD3278Mascote [Alice]^000000
+^0000ffDano físico contra Chefes +10% adicional.^000000
+Lealdade Normal:
+^0000ffDano físico contra Chefes +15% adicional.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19038#
 Criada pelo Guardião de Midgard Fox, essa coroa comemorativa brilha tanto que você pode ter certeza que ele a limpou até ela ficar livre de germes. Curiosidade: 11 anos também já é o tempo que o Fox passou na Universidade de Juno, tentando se decidir em qual curso se formar.
 Todos os atributos + 2.
@@ -54552,6 +54608,36 @@ Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
+19393#
+Um artefato cuja cor lembra a amplitude dos oceanos. Marinheiros acreditam que enquanto estiverem em posse desse artigo, serão agraciados por uma bênção inestimável.
+--------------------------
+^0000ffConjuração variável -5%.^000000
+--------------------------
+A cada 12 de FOR base:
+^0000ffDano mágico de propriedade Neutro +2%.^000000
+--------------------------
+A cada 12 de AGI base:
+^0000ffDano mágico de propriedade Vento +2%.^000000
+--------------------------
+A cada 12 de VIT base:
+^0000ffDano mágico de propriedade Água +2%.^000000
+--------------------------
+A cada 12 de INT base:
+^0000ffDano mágico de propriedade Fogo +2%.^000000
+--------------------------
+A cada 12 de DES base:
+^0000ffDano mágico de propriedade Terra +2%.^000000
+--------------------------
+A cada 12 de SOR base:
+^0000ffDano mágico de propriedade Sagrado +2%.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^77777720^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 19507#
@@ -58320,6 +58406,54 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20571#
+Asas majestosas que deixam um rastro de plumas cintilantes por onde quer que você passe. O efeito é puramente estético, então não precisa ficar com medo de acabar parecendo um frango depenado!
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20574#
+Você pode até ser nível alto, mas a sua sede de aprendizado é eterna. Ou talvez você só sinta falta da época despreocupada de escola, de dormir nas aulas e deixar os coleguinhas fazerem todo o trabalho pra você.
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20575#
+Você pode até ser nível alto, mas a sua sede de aprendizado é eterna. Ou talvez você só sinta falta da época da escola, em que tudo você precisava se preocupar era de decorar a fórmula para calcular o raio da rebimboca da parafuseta pra tirar 10 na prova.
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20576#
+Um belo garfão pra quem tá com a fome de mil Eddgas. Perfeito pra você esvaziar o prato rapidinho (e encher o buchinho) em poucas garfadas.
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20700#
 Manto forjado em águas calmas do oceano. Dizem que pertenceu a Aegir, deus dos mares e que pode-se sentir seu poder ao toque.
 --------------------------
@@ -59752,14 +59886,14 @@ A cada refino:
 ^0000ffPós-conjuração -2%.^000000
 --------------------------
 ^FA4E09Conjunto^000000
-^FA4E09[Coroa[0]]^000000
+^FA4E09[Coroa[0]^000000
 ^0000ffConjuração variável -10%.^000000
 A cada 2 refinos do Calçado e do Chapéu:
 ^0000ffDano físico +1%.^000000
 ^0000ffConjuração variável -1%.^000000
 --------------------------
 ^FA4E09Conjunto^000000
-^FA4E09[Diadema[0]]^000000
+^FA4E09[Diadema[0]^000000
 ^0000ffConjuração variável -10%.^000000
 A cada 2 refinos do Calçado e do Chapéu:
 ^0000ffDano mágico +1%.^000000
@@ -60411,25 +60545,29 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 22189#
-Um par de sapatos chique e elegante que dizem ter pertencido a um homem poderoso. Após a morte dele, eles foram passados para as gerações seguintes, sendo usados tanto pelos filhos quanto pelas filhas.
+Sapatos criados para simbolizar a preocupação com o próximo.
+--------------------------
 ^0000ffDEFM +15.^000000
 ^0000ffHP e SP máx. +3%.^000000
 ^0000ffRecarga de [Praefatio] -1 segundo.^000000
+--------------------------
 A cada nível de [Canto Candidus]:
 ^0000ffVelocidade de ataque +4%.^000000
 A cada nível de [Sacramentum]:
 ^0000ffDEF +50.^000000
-^0000ffResistência a raça Humanoide +2%.^000000
+^0000ffResistência as raças Humano e Humanoide +2%.^000000
 A cada nível de [Curatio]:
 ^0000ffEfetividade de cura +5%.^000000
 A cada nível de [Praefatio]:
 ^0000ffPós-conjuração -6%.^000000
+--------------------------
 Refino +5 ou mais:
 ^0000ffHP e SP máx. +7% adicional.^000000
-^0000ffCusto de SP de habilidades -3%.^000000
+^0000ffCusto de SP das habilidades -3%.^000000
 Refino +7 ou mais:
 ^0000ffHP e SP máx. +10% adicional.^000000
-^0000ffCusto de SP de habilidades -5% adicional.^000000
+^0000ffCusto de SP das habilidades -5% adicional.^000000
+--------------------------
 Tipo: ^777777Calçado^000000
 Defesa: ^77777715^000000
 Peso: ^77777750^000000
@@ -60469,9 +60607,8 @@ Classes: ^777777Todas^000000
 Na era dos dispositivos inteligentes, esses sapatos eram tudo o que te faltava, pois se adaptam aos atributos que você priorizar. É um milagre da tecnologia!
 --------------------------
 ^0000ffDEFM +30.^000000
-^0000ffHP máx. +10%.^000000
-^0000ffSP máx. +10%.^000000
-^0000ffResistência a personagens +5%.^000000
+^0000ffHP e SP máx. +10%.^000000
+^0000ffResistência as raças Humano e Doram +5%.^000000
 --------------------------
 Refino +8 ou mais:
 -
@@ -62109,6 +62246,41 @@ Nível da arma: ^7777773^000000
 Nível mínimo: ^777777141^000000
 Classes: ^777777Insurgentes^000000
 #
+28255#
+Use a lente certa, compense a queda do projétil, mire e puxe o gatilho. Se o tiro foi bem dado, será difícil seu alvo peitá-lo e continuar de pé!
+--------------------------
+^0000ffATQM +210.^000000
+--------------------------
+A cada 2 refinos:
+^0000ffATQM +10 adicional.^000000
+A cada 3 refinos:
+^0000ffVelocidade de ataque +3%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDano mágico +5%.^000000
+^0000ffVelocidade de ataque +1.^000000
+Refino +9 ou mais:
+^0000ffAo realizar ataques físicos a distância, 4% de chance de autoconjurar [Espíritos Anciões] nv. 10.^000000
+Refino +11 ou mais:
+^0000ffChance de autoconjurar [Espíritos Anciões] +8% adicional.^000000
+^0000ffAo realizar ataques físicos a distância, 4% de chance de autoconjurar [Impacto Espiritual] nv. 3.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+--------------------------
+^CD3278Efeito:^000000
+^0000ffINT +20.^000000
+^0000ffDano mágico de propriedade Fantasma +10%.^000000
+--------------------------
+Tipo: ^777777Rifle^000000
+Ataque: ^777777150^000000
+Peso: ^777777100^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Insurgentes^000000
+#
 28256#
 Uma escopeta mágica de cano serrado. Suas origens sobrenaturais fazem dela uma arma de fogo muito procurada por caçadores de demônios do mundo inteiro.
 ^CD3278Mantém [Espalhar Dano] ativo.^000000
@@ -62135,6 +62307,73 @@ Ao realizar ataques físicos:
 Tipo: ^777777Espingarda^000000
 Ataque: ^777777275^000000
 Peso: ^777777140^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Insurgentes^000000
+#
+28257#
+Arme-se com esse lança-granadas e saia explodindo seus inimigos por aí a torto e a direito. Quando te perguntarem se isso não é perigoso, responda a eles que VOCÊ é o perigo!
+--------------------------
+A cada 2 refinos:
+^0000ffDano físico a distância +3%.^000000
+A cada 3 refinos:
+^0000ffATQ +15.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDano de [Lançar Míssil] +15%.^000000
+Refino +9 ou mais:
+^0000ffRecarga de [Lançar Míssil] -1 segundo.^000000
+Refino +11 ou mais:
+^0000ffDano de [Lançar Míssil] +15% adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+--------------------------
+^CD3278Efeito:^000000
+^0000ffDES +20.^000000
+^0000ffDano físico a distância +10%.^000000
+--------------------------
+Tipo: ^777777Lança-Granada^000000
+Ataque: ^777777320^000000
+Peso: ^777777210^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Insurgentes^000000
+#
+28258#
+Quando o tambor desta arma começar a girar, é melhor que os seus inimigos comecem a rezar pro Santo da Esquiva!
+--------------------------
+A cada 2 refinos:
+^0000ffATQ +10.^000000
+A cada 3 refinos:
+^0000ffDano físico a distância +2%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDano de [Expurgar] +15%.^000000
+^0000ffCusto de SP de [Expurgar] +10%.^000000
+Refino +9 ou mais:
+^0000ffAo usar [Proteção de Platina], ativa o [Efeito 1] por 90 segundos.^000000
+Refino +11 ou mais:
+^0000ffDano de [Expurgar] +15%.^000000
+--------------------------
+^CD3278Efeito 1:^000000
+^0000ffATQ +50.^000000
+^0000ffDano físico a distância +10% adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar o [Efeito 2] por 7 segundos.^000000
+--------------------------
+^CD3278Efeito 2:^000000
+^0000ffDES +20.^000000
+^0000ffDano físico a distância +10%.^000000
+--------------------------
+Tipo: ^777777Metralhadora^000000
+Ataque: ^777777205^000000
+Peso: ^777777270^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Insurgentes^000000
@@ -62626,7 +62865,7 @@ Chifres decepados de um poderoso Kirin. Dizem que os Kirin, benevolentes criatur
 ^0000ffVelocidade de ataque +2%.^000000
 ^0000ffHabilita [Aumentar Agilidade] nv. 3.^000000
 ^0000ffResistência as raças Demônio e Morto-Vivo +2%.^000000
-^0000ffResistência as raças Humanoide, Peixe e Bruto +1%.^000000
+^0000ffResistência as raças Humano, Humanoide, Peixe, Bruto e Doram +1%.^000000
 --------------------------
 AGI base 100 ou mais:
 ^0000ffVelocidade de ataque +5% adicional.^000000
@@ -62634,12 +62873,12 @@ AGI base 100 ou mais:
 ^FF6347Conjunto^000000
 ^FF6347[Anti-Atraso 1]^000000
 ^0000ffVelocidade de ataque +1.^000000
-^0000ffResistência as raças Humanoide, Demônio, Morto-Vivo, Peixe e Bruto +1%.^000000
+^0000ffResistência as raças Humano, Humanoide, Peixe, Bruto e Doram +1%.^000000
 --------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Anti-Atraso 2]^000000
 ^0000ffVelocidade de ataque +1.^000000
-^0000ffResistência as raças Humanoide, Demônio, Morto-Vivo, Peixe e Bruto +1%.^000000
+^0000ffResistência as raças Humano, Humanoide, Peixe, Bruto e Doram +1%.^000000
 --------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777773^000000
@@ -62664,7 +62903,7 @@ A cada vez que INT e DES base somarem 80:
 A cada vez que AGI e VIT base somarem 80:
 ^0000ffHP máx. +5%.^000000
 ^0000ffVelocidade de ataque +5%.^000000
-^0000ffResistência a personagens +2%.^000000
+^0000ffResistência as raças Humano e Doram +2%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
@@ -63359,7 +63598,7 @@ A cada 10 de DES base:
 ^ff0000DES -1^000000 ^0000ffa cada 2 refinos.^000000
 -
 Refino +7 ou mais:
-^0000ffResistência a monstros da raça Humanoide +10%.^000000
+^0000ffResistência as raças Humano e Humanoide +10%.^000000
 A cada 2 refinos a partir do +7:
 ^0000ffINT e DES +2.^000000
 ^0000ffATQM +15. CRIT +7.^000000
@@ -63377,7 +63616,7 @@ A cada 2 refinos:
 Magos e evoluções:
 -
 Refino +7 ou mais:
-^0000ffResistência a monstros da raça Humanoide +10%.^000000
+^0000ffResistência as raças Humano e Humanoide +10%.^000000
 A cada 2 refinos a partir do +7:
 ^0000ffHP máx. +200.^000000
 ^0000ffSP máx. +20.^000000
@@ -65946,6 +66185,22 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31671#
+Esteja sempre preparado para explodir a cara de quem vier te importunar com a ajuda desse par de canhões que repousa sobre os seus ombros. Se você tiver um comportamento menos... er, explosivo, pode usá-los para fazer um belo cosplay de Blaz Tóis também.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31672#
+Cabelos adornados similares ao penteado das ninfas do mar. Essa é a oportunidade perfeita de conseguir essas mechas sem ter que mergulhar na água salgada pra fazer uma visitinha às nereidas, afinal, não vale a pena ressecar todo o seu cabelo só por causa de uma peruca, né?
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31687#
 Uma bolsinha de mão muito simpática. Suas repartições de poções são ótimas pra quando você precisar jogar um Fogo Grego na cara do primeiro monstro que vier te importunar!
 Tipo: ^777777Visual^000000
@@ -66040,4 +66295,120 @@ Defesa: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
+#
+32243#
+Acessório adornado com uma joia cuja cor lembra a amplitude dos oceanos. Marinheiros acreditam que enquanto estiverem em posse desse artigo, serão agraciados por uma bênção inestimável.
+--------------------------
+^0000ffVelocidade de ataque +1.^000000
+^0000ffConjuração variável -20%.^000000
+--------------------------
+Ao realizar ataques mágicos:
+^0000ff1% de chance de autoconjurar [Maestria Arcana] nv.1.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de autoconjurar [Bolas de Fogo] [Lanças de Gelo] e [Relâmpago] nv.3.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Cristal Universal]^000000
+^0000ffATQ e ATQM +30.^000000
+^0000ffConjuração variável -5%.^000000
+^0000ffConjuração fixa -0,2 segundos.^000000
+^0000ffDano físico e mágico contra monstros Chefes +20%.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+Defesa: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+32302#
+Arma usada pelo lendário Jaguatirica Revólver. De acordo com suas palavras, seis disparos eram mais do que o suficiente para abater qualquer alvo que se movesse.
+--------------------------
+A cada 2 refinos:
+^0000ffATQ +10.^000000
+A cada 3 refinos:
+^0000ffVelocidade de ataque +3%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffATQ da arma +5%.^000000
+^0000ffVelocidade de ataque +1.^000000
+Refino +9 ou mais:
+^0000ffDano crítico +20%.^000000
+Refino +11 ou mais:
+^0000ffAo usar [Furor], ativa o [Efeito 1] por 90 segundos.^000000
+--------------------------
+^CD3278Efeito 1:^000000
+^0000ffCRIT +20.^000000
+^0000ffDano físico a distância +15%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas Ancestrais]^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de ativar um [Efeito 2] por 7 segundos.^000000
+--------------------------
+^CD3278Efeito 2:^000000
+^0000ffDES +20.^000000
+^0000ffDano físico a distância +10%.^000000
+--------------------------
+Tipo: ^777777Pistola^000000
+Ataque: ^777777150^000000
+Peso: ^77777770^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Insurgentes^000000
+#
+570002#
+O formato dessa concha faz com que até mesmo um fraco sopro seja capaz de emitir o som mais agradável (ou incômodo). Imagina, então, se você ousar usar todo o seu fôlego num sopro só!
+--------------------------
+^0000ffATQM +190.^000000
+--------------------------
+A cada 2 refinos:
+^0000ffATQM +10 adicional.^000000
+A cada 3 refinos:
+^0000ffDano mágico de propriedade Neutro +4%.^000000
+Refino +9 ou mais:
+^0000ffDano de [Ressonância] e [Ruído Estridente] +10%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas Ancestrais]^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+--------------------------
+^CD3278Efeito:^000000
+^0000ffINT +20.^000000
+^0000ffDano mágico +15%.^000000
+--------------------------
+Tipo: ^777777Instrumento Musical^000000
+Ataque: ^777777160^000000
+Peso: ^77777770^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Trovadores^000000
+#
+580002#
+Não deixe seus alvos escaparem com esse comprido chicote que uma vez pertenceu à família dos Bell Montes. Com um desses em posse, nem explorar um castelo de ponta-cabeça vai ser difícil pra você!
+--------------------------
+^0000ffATQM +190.^000000
+--------------------------
+A cada 2 refinos:
+^0000ffATQM +10 adicional.^000000
+A cada 3 refinos:
+^0000ffDano mágico de propriedade Neutro +4%.^000000
+Refino +9 ou mais:
+^0000ffDano de [Ressonância] e [Ruído Estridente] +10%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas Ancestrais]^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff3% de chance de ativar um [efeito] por 7 segundos.^000000
+--------------------------
+^CD3278Efeito:^000000
+^0000ffINT +20.^000000
+^0000ffDano mágico +15%.^000000
+--------------------------
+Tipo: ^777777Chicote^000000
+Ataque: ^777777160^000000
+Peso: ^77777770^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Musas^000000
 #
