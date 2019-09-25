@@ -256,7 +256,7 @@ sub sendTake {
 	debug "Sent take\n", "sendPacket", 2;
 }
 
-sub sendHomunculusMove {
+sub sendSlaveMove {
 	my $self = shift;
 	my $homunID = shift;
 	my $x = int scalar shift;
