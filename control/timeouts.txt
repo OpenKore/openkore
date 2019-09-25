@@ -29,6 +29,9 @@ ai 2
 ai_move_retry 0.25
 ai_move_giveup 1.5
 
+ai_homunculus_standby 2
+ai_mercenary_standby 2
+
 # Send the attack packet every x seconds, if it hasn't been send already
 ai_attack 1
 ai_homunculus_attack 1
