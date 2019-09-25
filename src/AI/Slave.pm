@@ -12,8 +12,8 @@ use Translation;
 use AI::Slave::Homunculus;
 use AI::Slave::Mercenary;
 
-# homunculus commands/skills can only be used
-# if the homunculus is within this range
+# Slave's commands and skills can only be used
+# if the slave is within this range
 use constant MAX_DISTANCE => 17;
 
 sub checkSkillOwnership {}
@@ -130,107 +130,73 @@ sub is {
 
 sub iterate {
 	my $slave = shift;
-	
+
 	if ($slave->{appear_time} && $field->baseName eq $slave->{map}) {
 		my $slave_dist = blockDistance ($slave->position, $char->position);
-		
-		# auto-follow
+
+		# teleport near master if distance is > MAX_DISTANCE
 		if (
+			$slave->{slave_AI} == AI::AUTO
+			&& !AI::args->{mapChanged}
+			&& $slave_dist >= MAX_DISTANCE
+			&& timeOut($timeout{$slave->{ai_standby_timeout}})
+		) {
+			$slave->clear('move', 'route');
+			$slave->sendStandBy;
+			$timeout{$slave->{ai_standby_timeout}}{time} = time;
+			debug sprintf("Slave standby (distance: %d)\n", $slave_dist), 'slave';
+
+		# auto-follow
+		} elsif (
 			$slave->{slave_AI} == AI::AUTO
 			&& (AI::action eq "move" || AI::action eq "route")
 			&& !$char->{sitting}
 			&& !AI::args->{mapChanged}
-			&& !AI::args->{time_move} != $char->{time_move}
-			&& !timeOut(AI::args->{ai_move_giveup})
 			&& $slave_dist < MAX_DISTANCE
-			&& ($slave->isIdle
-				|| blockDistance(AI::args->{move_to}, $slave->{pos_to}) >= MAX_DISTANCE)
-			&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{follow_route})
+			&& ($slave->isIdle || blockDistance(AI::args->{move_to}, $slave->{pos_to}) >= MAX_DISTANCE)
+			&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{isFollow})
 		) {
 			$slave->clear('move', 'route');
 			if (!checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
-				$slave->route(undef, @{$char->{pos_to}}{qw(x y)});
-				$slave->args->{follow_route} = 1 if $slave->action eq 'route';
-				debug sprintf("Slave follow route (distance: %.2f)\n", $slave->distance()), 'homunculus';
+				$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, isFollow => 1);
+				debug sprintf("Slave follow route (distance: %d)\n", $slave_dist), 'slave';
 	
 			} elsif (timeOut($slave->{move_retry}, 0.5)) {
 				# No update yet, send move request again.
 				# We do this every 0.5 secs
 				$slave->{move_retry} = time;
 				# NOTE:
-				# The default LUA uses sendHomunculusStandBy() for the follow AI
+				# The default LUA uses sendSlaveStandBy() for the follow AI
 				# however, the server-side routing is very inefficient
 				# (e.g. can't route properly around obstacles and corners)
-				# so we make use of the sendHomunculusMove() to make up for a more efficient routing
+				# so we make use of the sendSlaveMove() to make up for a more efficient routing
 				$slave->sendMove ($char->{pos_to}{x}, $char->{pos_to}{y});
-				debug sprintf("Slave follow move (distance: %.2f)\n", $slave->distance()), 'homunculus';
+				debug sprintf("Slave follow move (distance: %d)\n", $slave_dist), 'slave';
 			}
-=pod
-		# homunculus is found
-		} elsif ($slave->{slave_lost}) {
-			if ($slave_dist < MAX_DISTANCE) {
-				delete $slave->{slave_lost};
-				delete $slave->{lostRoute};
-				my $action = $slave->findAction('route');
-				if (defined $action && $slave->args($action)->{lost_route}) {
-					for (my $i = 0; $i <= $action; $i++) {
-						$slave->dequeue
-					}
-				}
-				if (timeOut($slave->{standby_time}, 1)) {
-					$slave->sendStandBy;
-					$slave->{standby_time} = time;
-				}
-				message TF("Found %s!\n", $slave), 'homunculus';
-	
-			# attempt to find homunculus on it's last known coordinates
-			} elsif (AI::state == AI::AUTO && !$slave->{lostRoute}) {
-				if ($config{homunculus_StandByAuto}) {
-					message TF("Stand By Homun\n", $slave), 'teleport';
-					$slave->sendStandBy;
-				} elsif ($config{teleportAuto_lostHomunculus}) {
-					message TF("Teleporting to get %s back\n", $slave), 'teleport';
-					useTeleport(1);
-				} else {
-					my $x = $slave->{pos_to}{x};
-					my $y = $slave->{pos_to}{y};
-					my $distFromGoal = $config{$slave->{configPrefix}.'followDistanceMax'};
-					$distFromGoal = MAX_DISTANCE if ($distFromGoal > MAX_DISTANCE);
-					main::ai_route($field->baseName, $x, $y, distFromGoal => $distFromGoal, attackOnRoute => 1, noSitAuto => 1);
-					$slave->args->{lost_route} = 1 if $slave->action eq 'route';
-					message TF("Trying to find %s at location %d, %d (you are currently at %d, %d)\n", $slave, $x, $y, $char->{pos_to}{x}, $char->{pos_to}{y}), 'homunculus';
-				}
-				$slave->{lostRoute} = 1;
-			}
-		
-		# homunculus is lost
-		} elsif ($slave->isa("Actor::Slave::Homunculus") && $slave_dist >= MAX_DISTANCE && !$slave->{slave_lost}) {
-			$slave->{slave_lost} = 1;
-			message TF("You lost %s!\n", $slave), 'homunculus';
-=cut
-		# if your homunculus is idle, make it move near you
+
+		# if your slave is idle, make it move near you
 		} elsif (
 			$slave->{slave_AI} == AI::AUTO
 			&& $slave->isIdle
 			&& $slave_dist > ($config{$slave->{configPrefix}.'followDistanceMin'} || 3)
 			&& $slave_dist < MAX_DISTANCE
-			&& timeOut($slave->{standby_time}, 2)
+			&& timeOut($timeout{$slave->{ai_standby_timeout}})
 		) {
 			$slave->sendStandBy;
-			$slave->{standby_time} = time;
-			debug sprintf("Slave standby (distance: %.2f)\n", $slave->distance()), 'homunculus';
-	
-		# if you are idle, move near the homunculus
+			$timeout{$slave->{ai_standby_timeout}}{time} = time;
+			debug sprintf("Slave standby (distance: %d)\n", $slave_dist), 'slave';
+
+		# if you are idle, move near the slave
 		} elsif (
-			$slave->isa("Actor::Slave::Homunculus") &&
+			$slave->isa("AI::Slave::Homunculus") &&
 			AI::state == AI::AUTO && AI::isIdle && !$slave->isIdle
 			&& $config{$slave->{configPrefix}.'followDistanceMax'}
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
 		) {
 			main::ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
-			message TF("%s moves too far (distance: %.2f) - Moving near\n", $slave, $slave->distance), 'homunculus';
-	
-		# Main Homunculus AI
+			message TF("%s moves too far (distance: %d) - Moving near\n", $slave, $slave_dist), 'slave';
+
+		# Main slave AI
 		} else {
 			return unless $slave->{slave_AI};
 			return if $slave->processClientSuspend;
@@ -314,9 +280,9 @@ sub processAttack {
 		!$config{$slave->{configPrefix}.'attackNoGiveup'}) {
 		my $ID = $slave->args->{ID};
 		my $target = Actor::get($ID);
-		$target->{homunculus_attack_failed} = time if $monsters{$ID};
+		$target->{$slave->{ai_attack_failed_timeout}} = time if $monsters{$ID};
 		$slave->dequeue;
-		message TF("%s can't reach or damage target, dropping target\n", $slave), 'homunculus_attack';
+		message TF("%s can't reach or damage target, dropping target\n", $slave), 'slave_attack';
 		if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 			message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 			useTeleport(1);
@@ -329,12 +295,12 @@ sub processAttack {
 		$slave->dequeue;
 
 		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
-			message TF("%s target died\n", $slave), 'homunculus_attack';
+			message TF("%s target died\n", $slave), 'slave_attack';
 			Plugins::callHook("homonulus_target_died");
 			monKilled();
 
 			# Pickup loot when monster's dead
-			if (AI::state == AI::AUTO && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{homunculus_ignore}) {
+			if (AI::state == AI::AUTO && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{slave_ignore}) {
 				AI::clear("items_take");
 				AI::ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
 					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
@@ -365,7 +331,7 @@ sub processAttack {
 			## kokal end
 
 		} else {
-			message TF("%s target lost\n", $slave), 'homunculus_attack';
+			message TF("%s target lost\n", $slave), 'slave_attack';
 		}
 
 	} elsif ($slave->action eq "attack") {
@@ -440,8 +406,8 @@ sub processAttack {
 
 		if (!$cleanMonster) {
 			# Drop target if it's already attacked by someone else
-			$target->{homunculus_attack_failed} = time if $monsters{$ID};
-			message TF("Dropping target - %s will not kill steal others\n", $slave), 'homunculus_attack';
+			$target->{$slave->{ai_attack_failed_timeout}} = time if $monsters{$ID};
+			message TF("Dropping target - %s will not kill steal others\n", $slave), 'slave_attack';
 			$slave->sendMove ($realMyPos->{x}, $realMyPos->{y});
 			$slave->dequeue;
 			if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
@@ -482,7 +448,7 @@ sub processAttack {
 			# Move to the closest spot
 			my $msg = TF("%s has no LOS from (%d, %d) to target (%d, %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y});
 			if ($best_spot) {
-				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'homunculus_attack';
+				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
 				$slave->route(undef, @{$best_spot}{qw(x y)});
 			} else {
 				warning TF("%s; no acceptable place to stand\n", $msg);
@@ -576,9 +542,9 @@ sub processAttack {
 				noAvoidWalls => 1);
 			if (!$result) {
 				# Unable to calculate a route to target
-				$target->{homunculus_attack_failed} = time;
+				$target->{$slave->{ai_attack_failed_timeout}} = time;
 				$slave->dequeue;
- 				message TF("Unable to calculate a route to %s target, dropping target\n", $slave), 'homunculus_attack';
+ 				message TF("Unable to calculate a route to %s target, dropping target\n", $slave), 'slave_attack';
 				if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 					message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 					useTeleport(1);
@@ -625,10 +591,10 @@ sub processAttack {
 	if ($slave->is("move", "route") && $slave->args->{attackID} && $slave->inQueue("attack")) {
 		my $ID = $slave->args->{attackID};
 		if ((my $target = $monsters{$ID}) && !checkMonsterCleanness($ID)) {
-			$target->{homunculus_attack_failed} = time;
-			message TF("Dropping target - %s will not kill steal others\n", $slave), 'homunculus_attack';
+			$target->{$slave->{ai_attack_failed_timeout}} = time;
+			message TF("Dropping target - %s will not kill steal others\n", $slave), 'slave_attack';
 			$slave->sendAttackStop;
-			$monsters{$ID}{homunculus_ignore} = 1;
+			$monsters{$ID}{slave_ignore} = 1;
 
 			# Right now, the queue is either
 			#   move, route, attack
@@ -767,7 +733,7 @@ sub processAutoAttack {
 			my $myPos = calcPosition($slave);
 
 			# List aggressive monsters
-			@aggressives = AI::ai_getPlayerAggressives($slave->{ID}) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
+			@aggressives = AI::ai_slave_getAggressives($slave, 1) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
 
 			# There are two types of non-aggressive monsters. We generate two lists:
 			foreach (@monstersID) {
@@ -781,7 +747,7 @@ sub processAutoAttack {
 				# List monsters that party members are attacking
 				if ($config{$slave->{configPrefix}.'attackAuto_party'} && $attackOnRoute
 				 && ($monster->{dmgFromYou} || $monster->{dmgFromParty} || $monster->{dmgToYou} || $monster->{dmgToParty} || $monster->{missedYou} || $monster->{missedToParty})
-				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+				 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
 					next;
 				}
@@ -821,116 +787,18 @@ sub processAutoAttack {
 				 && $attackOnRoute >= 2 && $safe
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
 				 && !$monster->{dmgFromYou}
-				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+				 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
 					push @cleanMonsters, $_;
 				}
 			}
 
 			### Step 2: Pick out the "best" monster ###
 
-			my $highestPri;
-
-			# Look for the aggressive monster that has the highest priority
-			foreach (@aggressives) {
-				my $monster = $monsters{$_};
-				my $pos = calcPosition($monster);
-				# Don't attack monsters near portals
-				next if (positionNearPortal($pos, $portalDist));
-
-				# Don't attack ignored monsters
-				if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
-					next if ( ($control->{attack_auto} == -1)
-						|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-						|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-						|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-						);
-				}
-
-				my $name = lc $monster->{name};
-				if (defined($priority{$name}) && $priority{$name} > $highestPri) {
-					$highestPri = $priority{$name};
-				}
-			}
-
-			my $smallestDist;
-			if (!defined $highestPri) {
-				# If not found, look for the closest aggressive monster (without priority)
-				foreach (@aggressives) {
-					my $monster = $monsters{$_};
-					next if !timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout});
-					my $pos = calcPosition($monster);
-					# Don't attack monsters near portals
-					next if (positionNearPortal($pos, $portalDist));
-
-					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-					}
-				}
-			} else {
-				# If found, look for the closest aggressive monster with the highest priority
-				foreach (@aggressives) {
-					my $monster = $monsters{$_};
-					my $pos = calcPosition($monster);
-					# Don't attack monsters near portals
-					next if (positionNearPortal($pos, $portalDist));
-
-					# Don't attack ignored monsters
-					if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
-						next if ( ($control->{attack_auto} == -1)
-							|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-							|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-							|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-							|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-							);
-					}
-
-					my $name = lc $monster->{name};
-					if ((!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist)
-					  && $priority{$name} == $highestPri) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-						$priorityAttack = 1;
-					}
-				}
-			}
-
-			if (!$attackTarget) {
-				undef $smallestDist;
-				# There are no aggressive monsters; look for the closest monster that a party member/master is attacking
-				foreach (@partyMonsters) {
-					my $monster = $monsters{$_};
-					my $pos = calcPosition($monster);
-					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-					}
-				}
-			}
-
-			if (!$attackTarget) {
-				# No party monsters either; look for the closest, non-aggressive monster that:
-				# 1) nobody's attacking
-				# 2) has the highest priority
-
-				undef $smallestDist;
-				foreach (@cleanMonsters) {
-					my $monster = $monsters{$_};
-					next unless $monster;
-					my $pos = calcPosition($monster);
-					my $dist = distance($myPos, $pos);
-					my $name = lc $monster->{name};
-
-					if (!defined($smallestDist) || $priority{$name} > $highestPri
-					  || ( $priority{$name} == $highestPri && $dist < $smallestDist )) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-						$highestPri = $priority{$monster};
-					}
-				}
-			}
+			# We define whether we should attack only monsters in LOS or not
+			my $nonLOSNotAllowed = !$config{$slave->{configPrefix}.'attackCheckLOS'};
+			$attackTarget = getBestTarget(\@aggressives, $nonLOSNotAllowed) || getBestTarget(\@partyMonsters, $nonLOSNotAllowed) || getBestTarget(\@cleanMonsters, $nonLOSNotAllowed);
 		}
+
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($attackTarget) {
 			$slave->setSuspend(0);
@@ -945,17 +813,17 @@ sub processAutoAttack {
 
 sub sendAttack {
 	my ($slave, $targetID) = @_;
-	$messageSender->sendHomunculusAttack ($slave->{ID}, $targetID);
+	$messageSender->sendSlaveAttack ($slave->{ID}, $targetID);
 }
 
 sub sendMove {
 	my ($slave, $x, $y) = @_;
-	$messageSender->sendHomunculusMove ($slave->{ID}, $x, $y);
+	$messageSender->sendSlaveMove ($slave->{ID}, $x, $y);
 }
 
 sub sendStandBy {
 	my ($slave) = @_;
-	$messageSender->sendHomunculusStandBy ($slave->{ID});
+	$messageSender->sendSlaveStandBy ($slave->{ID});
 }
 
 1;

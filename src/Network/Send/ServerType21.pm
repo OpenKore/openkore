@@ -44,7 +44,7 @@ sub sendMove {
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
-sub sendHomunculusMove {
+sub sendSlaveMove {
 	my ($self, $homunID, $x, $y) = @_;
 	
 	$self->sendToServer($self->reconstruct({
