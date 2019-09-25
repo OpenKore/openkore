@@ -533,13 +533,8 @@ sub processAttack {
 			# Move to the closest spot
 			my $msg = TF("%s has no LOS from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 			if ($best_spot) {
-<<<<<<< HEAD
-				message TF("%s; moving to (%d, %d) (distance: %d)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist), 'homunculus_attack';
+				message TF("%s; moving to (%d, %d) (distance: %d)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist), 'slave_attack';
 				$slave->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
-=======
-				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
-				$slave->route(undef, @{$best_spot}{qw(x y)});
->>>>>>> master
 			} else {
 				$target->{attack_failedLOS} = time;
 				warning TF("%s; no acceptable place to stand\n", $msg);
