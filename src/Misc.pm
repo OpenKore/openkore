@@ -4068,7 +4068,7 @@ sub checkSelfCondition {
 	return 0 if (!$prefix);
 	return 0 if ($config{$prefix . "_disabled"});
 
-	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle);
+	return 0 unless ($config{$prefix."_whenIdle"} && AI::isIdle);
 
 	return 0 if ($config{$prefix."_whenNotIdle"} && AI::isIdle);
 
@@ -4136,16 +4136,16 @@ sub checkSelfCondition {
 			return 0 unless ($char->{homunculus}{state} & 2); # 2 = rest
 		}
 		
+		if ($config{$prefix."_homunculus_onAction"}) {
+			return 0 unless (existsInList($config{$prefix . "_homunculus_onAction"}, $char->{homunculus}->action()));
+		}
+		
 		if ($config{$prefix."_homunculus_notOnAction"}) {
 			return 0 if (existsInList($config{$prefix . "_homunculus_notOnAction"}, $char->{homunculus}->action()));
 		}
 		
-		if ($config{$prefix."_homunculus_notOnAction"}) {
-			return 0 unless (existsInList($config{$prefix . "_homunculus_notOnAction"}, $char->{homunculus}->action()));
-		}
-		
 		if ($config{$prefix."_homunculus_whenIdle"}) {
-			return 0 if (!$char->{homunculus}->isIdle);
+			return 0 unless ($char->{homunculus}->isIdle);
 		}
 		
 		if ($config{$prefix."_homunculus_whenNotIdle"}) {
@@ -4181,16 +4181,16 @@ sub checkSelfCondition {
 			return 0 if $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusInactive"});
 		}
 		
+		if ($config{$prefix."_mercenary_onAction"}) {
+			return 0 unless (existsInList($config{$prefix . "_mercenary_onAction"}, $char->{mercenary}->action()));
+		}
+		
 		if ($config{$prefix."_mercenary_notOnAction"}) {
 			return 0 if (existsInList($config{$prefix . "_mercenary_notOnAction"}, $char->{mercenary}->action()));
 		}
 		
-		if ($config{$prefix."_mercenary_notOnAction"}) {
-			return 0 unless (existsInList($config{$prefix . "_mercenary_notOnAction"}, $char->{mercenary}->action()));
-		}
-		
 		if ($config{$prefix."_mercenary_whenIdle"}) {
-			return 0 if (!$char->{mercenary}->isIdle);
+			return 0 unless ($char->{mercenary}->isIdle);
 		}
 		
 		if ($config{$prefix."_mercenary_whenNotIdle"}) {
