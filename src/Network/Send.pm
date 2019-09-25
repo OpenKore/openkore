@@ -979,8 +979,7 @@ sub reconstruct_actor_move {
 	$args->{coords} = getCoordString(@{$args}{qw(x y)}, $args->{no_padding});
 }
 
-# should be called sendSlaveMove...
-sub sendHomunculusMove {
+sub sendSlaveMove {
 	my ($self, $ID, $x, $y) = @_;
 	
 	$self->sendToServer($self->reconstruct({
@@ -1151,8 +1150,7 @@ sub sendShowEquipTickbox {
 	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
 }
 
-# should be sendSlaveAttack...
-sub sendHomunculusAttack {
+sub sendSlaveAttack {
 	my $self = shift;
 	my $slaveID = shift;
 	my $targetID = shift;
@@ -1168,8 +1166,7 @@ sub sendHomunculusAttack {
 	debug "Sent Slave attack: ".getHex($targetID)."\n", "sendPacket", 2;
 }
 
-# should be sendSlaveStandBy...
-sub sendHomunculusStandBy {
+sub sendSlaveStandBy {
 	my $self = shift;
 	my $slaveID = shift;
 	$self->sendToServer($self->reconstruct({
