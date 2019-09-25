@@ -39,6 +39,9 @@ ai_attack_auto 0.5
 ai_homunculus_attack_auto 0.5
 ai_mercenary_attack_auto 0.5
 
+# Ignore monster for x seconds if there is no route to it
+ai_attack_failedLOS 6
+
 # Give up attacking a monster if it can't be reached within x seconds
 ai_attack_giveup 12
 

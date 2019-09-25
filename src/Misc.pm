@@ -3301,11 +3301,11 @@ sub writeStorageLog {
 ##
 # getBestTarget(possibleTargets, nonLOSNotAllowed)
 # possibleTargets: reference to an array of monsters' IDs
-# nonLOSNotAllowed: if set, non-LOS monsters (and monsters that aren't in attackMaxDistance) aren't checked up
+# nonLOSNotAllowed: if set, non-LOS monsters aren't checked up
 #
 # Returns ID of the best target
 sub getBestTarget {
-	my ($possibleTargets, $nonLOSNotAllowed) = @_;
+	my ($possibleTargets, $nonLOSNotAllowed, $attackCanSnipe) = @_;
 	if (!$possibleTargets) {
 		return;
 	}
@@ -3335,27 +3335,15 @@ sub getBestTarget {
 				|| ($control->{attack_auto} == 0 && !($monster->{dmgToYou} || $monster->{missedYou}))
 			);
 		}
-		if ($config{'attackCanSnipe'}) {
-			if (!$field->checkLineSnipable($myPos, $pos)) {
-				push(@noLOSMonsters, $_);
-				next;
-			}
-		} else {
-			if (!$field->checkLineWalkable($myPos, $pos)) {
-				push(@noLOSMonsters, $_);
-				next;
-			}
+		
+		if (!$field->checkLOS($myPos, $pos, $attackCanSnipe)) {
+			push(@noLOSMonsters, $_);
+			next;
 		}
+		
 		my $name = lc $monster->{name};
 		my $dist = round(distance($myPos, $pos));
 		
-		# COMMENTED (FIX THIS): attackMaxDistance should never be used as indication of LOS
-		#     The objective of attackMaxDistance is to determine the range of normal attack,
-		#     and not the range of character's ability to engage monsters
-		## Monsters that aren't in attackMaxDistance are not checked up
-		##if ($nonLOSNotAllowed && ($config{'attackMaxDistance'} < $dist)) {
-		##	next;
-		##}
 		if (!defined($bestTarget) || ($priority{$name} > $highestPri)) {
 			$highestPri = $priority{$name};
 			$smallestDist = $dist;

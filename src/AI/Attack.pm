@@ -448,6 +448,26 @@ sub main {
 		my $min_pathfinding_y = ($realMonsterPos->{y} - $max_pathfinding_dist);
 		my $max_pathfinding_y = ($realMonsterPos->{y} + $max_pathfinding_dist);
 		
+		if ($min_pathfinding_x < 0) {
+			$min_pathfinding_x = 0;
+		}
+		
+		if ($min_pathfinding_y < 0) {
+			$min_pathfinding_y = 0;
+		}
+		
+		if ($max_pathfinding_x >= $field->width) {
+			$max_pathfinding_x = $field->width-1;
+		}
+		
+		if ($max_pathfinding_y >= $field->height) {
+			$max_pathfinding_y = $field->height-1;
+		}
+		
+		unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
+			$realMyPos = $field->closestWalkableSpot($realMyPos, 1);
+		}
+		
 		my $best_spot;
 		my $best_dist;
 		foreach my $distance (reverse ($min_destination_dist..$max_destination_dist)) {
@@ -507,7 +527,6 @@ sub main {
 			message TF("%s; moving to (%s, %s) (%d steps)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist);
 			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
 		} else {
-			# FIXME: Should blacklist this target so we dont keep re-trying to attack it
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			$target->{attack_failedLOS} = time;
 			AI::dequeue;

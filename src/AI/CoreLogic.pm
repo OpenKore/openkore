@@ -2954,9 +2954,7 @@ sub processAutoAttack {
 			}
 
 			my $LOSSubRoute = 0;
-			if ($config{attackCheckLOS}
-			 && AI::args(0)->{LOSSubRoute}
-			) {
+			if ($config{attackCheckLOS} && AI::args(0)->{LOSSubRoute}) {
 				$LOSSubRoute = 1;
 			}
 
@@ -2973,9 +2971,9 @@ sub processAutoAttack {
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
-				#next if !$field->isWalkable($monster->{pos}{x}, $monster->{pos}{y}); # this should NEVER happen
-				#next if !$field->checkLineWalkable($char->{pos}, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
-				#next if !$field->checkLOS($char->{pos}, $monster->{pos}, $config{attackCanSnipe})
+				
+				# Never attack monsters that we failed to get LOS with
+				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
 				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
 
@@ -3020,9 +3018,9 @@ sub processAutoAttack {
 
 			# We define whether we should attack only monsters in LOS or not
 			my $nonLOSNotAllowed = !$config{attackCheckLOS} || $LOSSubRoute;
-			$attackTarget = getBestTarget(\@aggressives, $nonLOSNotAllowed)
-							|| getBestTarget(\@partyMonsters, $nonLOSNotAllowed)
-							|| getBestTarget(\@cleanMonsters, $nonLOSNotAllowed);
+			$attackTarget = getBestTarget(\@aggressives, $nonLOSNotAllowed, $config{attackCanSnipe}) ||
+			                getBestTarget(\@partyMonsters, $nonLOSNotAllowed, $config{attackCanSnipe}) ||
+			                getBestTarget(\@cleanMonsters, $nonLOSNotAllowed, $config{attackCanSnipe});
 
 			if ($LOSSubRoute && $attackTarget) {
 				Log::message("New target was choosen\n");

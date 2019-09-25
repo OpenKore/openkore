@@ -491,6 +491,26 @@ sub processAttack {
 			my $min_pathfinding_y = ($realMonsterPos->{y} - $max_pathfinding_dist);
 			my $max_pathfinding_y = ($realMonsterPos->{y} + $max_pathfinding_dist);
 		
+			if ($min_pathfinding_x < 0) {
+				$min_pathfinding_x = 0;
+			}
+			
+			if ($min_pathfinding_y < 0) {
+				$min_pathfinding_y = 0;
+			}
+			
+			if ($max_pathfinding_x >= $field->width) {
+				$max_pathfinding_x = $field->width-1;
+			}
+			
+			if ($max_pathfinding_y >= $field->height) {
+				$max_pathfinding_y = $field->height-1;
+			}
+		
+			unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
+				$realMyPos = $field->closestWalkableSpot($realMyPos, 1);
+			}
+		
 			my $best_spot;
 			my $best_dist;
 			foreach my $distance (reverse ($min_destination_dist..$max_destination_dist)) {
@@ -545,12 +565,12 @@ sub processAttack {
 			}
 
 			# Move to the closest spot
-			my $msg = TF("%s has no LOS from (%d, %d) to target (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+			my $msg = TF("%s has no LOS from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 			if ($best_spot) {
 				message TF("%s; moving to (%d, %d) (distance: %d)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist), 'homunculus_attack';
-				$slave->route(undef, @{$best_spot}{qw(x y)}, avoidWalls => 0);
+				$slave->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
 			} else {
-				# FIXME: Should blacklist this target so we dont keep re-trying to attack it
+				$target->{attack_failedLOS} = time;
 				warning TF("%s; no acceptable place to stand\n", $msg);
 				$slave->dequeue;
 			}
@@ -827,8 +847,9 @@ sub processAutoAttack {
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
-				next if !$field->isWalkable($monster->{pos}{x}, $monster->{pos}{y}); # this should NEVER happen
-				next if !$field->checkLineWalkable($myPos, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
+
+				# Never attack monsters that we failed to get LOS with
+				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
 				my $pos = calcPosition($monster);
 
@@ -843,20 +864,9 @@ sub processAutoAttack {
 				### List normal, non-aggressive monsters. ###
 
 				# Ignore monsters that
-				# - Have a status (such as poisoned), because there's a high chance (WHY?)
-				#   they're being attacked by other players
 				# - Are inside others' area spells (this includes being trapped).
 				# - Are moving towards other players.
-				# - Are behind a wall
-				next if (#( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) ) || 
-					objectInsideSpell($monster)
-					|| objectIsMovingTowardsPlayer($monster));
-					
-				if ($config{$slave->{configPrefix}.'attackCanSnipe'}) {
-					next if (!$field->checkLineSnipable($slave->{pos_to}, $pos));
-				} else {
-					next if (!$field->checkLineWalkable($slave->{pos_to}, $pos));
-				}
+				next if (objectInsideSpell($monster) || objectIsMovingTowardsPlayer($monster));
 
 				my $safe = 1;
 				if ($config{$slave->{configPrefix}.'attackAuto_onlyWhenSafe'}) {
