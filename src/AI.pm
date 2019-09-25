@@ -362,7 +362,7 @@ sub ai_getAggressives {
 }
 
 ##
-# ai_slave_getAggressives(slaveID, [check_mon_control])
+# ai_slave_getAggressives(slave, [check_mon_control])
 # Returns: an array of monster IDs, or a number.
 #
 # Get a list of all aggressive monsters on screen for a given slave.
@@ -372,7 +372,7 @@ sub ai_getAggressives {
 # with the 'attack_auto' flag set to 2, will be considered as aggressive.
 # See also the manual for more information about this.
 sub ai_slave_getAggressives {
-	my ($slaveID, $type) = @_;
+	my ($slave, $type) = @_;
 	my $wantArray = wantarray;
 	my $num = 0;
 	my @agMonsters;
@@ -381,12 +381,20 @@ sub ai_slave_getAggressives {
 		my $control = Misc::mon_control($monster->name,$monster->{nameID}) if $type || !$wantArray;
 		my $ID = $monster->{ID};
 		# Never attack monsters that we failed to get LOS with
-		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+		next if (!timeOut($monster->{attack_failedLOS}, 6));
 
 		if ((($type && ($control->{attack_auto} == 2)) ||
-			(($monster->{dmgToPlayer}{$slaveID} > 0 || $monster->{missedToPlayer}{$slaveID} > 0 || $monster->{dmgFromPlayer}{$slaveID} > 0 || $monster->{missedFromPlayer}{$slaveID} > 0) && Misc::checkMonsterCleanness($ID))) &&
+			(($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) && Misc::checkMonsterCleanness($ID))) &&
 			timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout}))
 		{
+			my $myPos = calcPosition($slave);
+			my $pos = calcPosition($monster);
+
+			next if (($type && $control->{attack_auto} == 2)
+				&& (($config{$slave->{configPrefix}.'attackCanSnipe'}) ? !Misc::checkLineSnipable($myPos, $pos) : (!Misc::checkLineWalkable($myPos, $pos) || !Misc::checkLineSnipable($myPos, $pos)))
+				&& !$monster->{dmgToPlayer}{$slave->{ID}} && !$monster->{missedToPlayer}{$slave->{ID}} && !$monster->{dmgFromPlayer}{$slave->{ID}} && !$monster->{missedFromPlayer}{$slave->{ID}}
+				);
+
 			# Continuing, check whether the forced Agro is really a clean monster;
 			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
 

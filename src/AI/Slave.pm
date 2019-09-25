@@ -734,7 +734,7 @@ sub processAutoAttack {
 			my $myPos = calcPosition($slave);
 
 			# List aggressive monsters
-			@aggressives = AI::ai_slave_getAggressives($slave->{ID}, 1) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
+			@aggressives = AI::ai_slave_getAggressives($slave, 1) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
 
 			# There are two types of non-aggressive monsters. We generate two lists:
 			foreach (@monstersID) {
@@ -742,9 +742,6 @@ sub processAutoAttack {
 				my $monster = $monsters{$_};
 				next if !$field->isWalkable($monster->{pos}{x}, $monster->{pos}{y}); # this should NEVER happen
 				next if !checkLineWalkable($myPos, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
-
-				# Never attack monsters that we failed to get LOS with
-				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
 				my $pos = calcPosition($monster);
 
