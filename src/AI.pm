@@ -385,7 +385,7 @@ sub ai_slave_getAggressives {
 
 		if ((($type && ($control->{attack_auto} == 2)) ||
 			(($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) && Misc::checkMonsterCleanness($ID))) &&
-			timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout}))
+			timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}))
 		{
 			my $myPos = calcPosition($slave);
 			my $pos = calcPosition($monster);

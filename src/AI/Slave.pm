@@ -12,8 +12,8 @@ use Translation;
 use AI::Slave::Homunculus;
 use AI::Slave::Mercenary;
 
-# homunculus commands/skills can only be used
-# if the homunculus is within this range
+# Slave's commands and skills can only be used
+# if the slave is within this range
 use constant MAX_DISTANCE => 17;
 
 sub checkSkillOwnership {}
@@ -144,7 +144,7 @@ sub iterate {
 			$slave->clear('move', 'route');
 			$slave->sendStandBy;
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
-			debug sprintf("Slave standby (distance: %.2f)\n", $slave_dist), 'homunculus';
+			debug sprintf("Slave standby (distance: %.2f)\n", $slave_dist), 'slave';
 
 		# auto-follow
 		} elsif (
@@ -160,7 +160,7 @@ sub iterate {
 			$slave->clear('move', 'route');
 			if (!checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
 				$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, isFollow => 1);
-				debug sprintf("Slave follow route (distance: %.2f)\n", $slave->distance()), 'homunculus';
+				debug sprintf("Slave follow route (distance: %.2f)\n", $slave->distance()), 'slave';
 	
 			} elsif (timeOut($slave->{move_retry}, 0.5)) {
 				# No update yet, send move request again.
@@ -172,10 +172,10 @@ sub iterate {
 				# (e.g. can't route properly around obstacles and corners)
 				# so we make use of the sendSlaveMove() to make up for a more efficient routing
 				$slave->sendMove ($char->{pos_to}{x}, $char->{pos_to}{y});
-				debug sprintf("Slave follow move (distance: %.2f)\n", $slave->distance()), 'homunculus';
+				debug sprintf("Slave follow move (distance: %.2f)\n", $slave->distance()), 'slave';
 			}
 
-		# if your homunculus is idle, make it move near you
+		# if your slave is idle, make it move near you
 		} elsif (
 			$slave->{slave_AI} == AI::AUTO
 			&& $slave->isIdle
@@ -185,9 +185,9 @@ sub iterate {
 		) {
 			$slave->sendStandBy;
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
-			debug sprintf("Slave standby (distance: %.2f)\n", $slave_dist), 'homunculus';
+			debug sprintf("Slave standby (distance: %.2f)\n", $slave_dist), 'slave';
 
-		# if you are idle, move near the homunculus
+		# if you are idle, move near the slave
 		} elsif (
 			$slave->isa("Actor::Slave::Homunculus") &&
 			AI::state == AI::AUTO && AI::isIdle && !$slave->isIdle
@@ -195,9 +195,9 @@ sub iterate {
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
 		) {
 			main::ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
-			message TF("%s moves too far (distance: %.2f) - Moving near\n", $slave, $slave->distance), 'homunculus';
+			message TF("%s moves too far (distance: %.2f) - Moving near\n", $slave, $slave->distance), 'slave';
 
-		# Main Homunculus AI
+		# Main slave AI
 		} else {
 			return unless $slave->{slave_AI};
 			return if $slave->processClientSuspend;
@@ -281,9 +281,9 @@ sub processAttack {
 		!$config{$slave->{configPrefix}.'attackNoGiveup'}) {
 		my $ID = $slave->args->{ID};
 		my $target = Actor::get($ID);
-		$target->{homunculus_attack_failed} = time if $monsters{$ID};
+		$target->{$slave->{ai_attack_failed_timeout}} = time if $monsters{$ID};
 		$slave->dequeue;
-		message TF("%s can't reach or damage target, dropping target\n", $slave), 'homunculus_attack';
+		message TF("%s can't reach or damage target, dropping target\n", $slave), 'slave_attack';
 		if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 			message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 			useTeleport(1);
@@ -296,12 +296,12 @@ sub processAttack {
 		$slave->dequeue;
 
 		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
-			message TF("%s target died\n", $slave), 'homunculus_attack';
+			message TF("%s target died\n", $slave), 'slave_attack';
 			Plugins::callHook("homonulus_target_died");
 			monKilled();
 
 			# Pickup loot when monster's dead
-			if (AI::state == AI::AUTO && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{homunculus_ignore}) {
+			if (AI::state == AI::AUTO && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{slave_ignore}) {
 				AI::clear("items_take");
 				AI::ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
 					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
@@ -332,7 +332,7 @@ sub processAttack {
 			## kokal end
 
 		} else {
-			message TF("%s target lost\n", $slave), 'homunculus_attack';
+			message TF("%s target lost\n", $slave), 'slave_attack';
 		}
 
 	} elsif ($slave->action eq "attack") {
@@ -407,8 +407,8 @@ sub processAttack {
 
 		if (!$cleanMonster) {
 			# Drop target if it's already attacked by someone else
-			$target->{homunculus_attack_failed} = time if $monsters{$ID};
-			message TF("Dropping target - %s will not kill steal others\n", $slave), 'homunculus_attack';
+			$target->{$slave->{ai_attack_failed_timeout}} = time if $monsters{$ID};
+			message TF("Dropping target - %s will not kill steal others\n", $slave), 'slave_attack';
 			$slave->sendMove ($realMyPos->{x}, $realMyPos->{y});
 			$slave->dequeue;
 			if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
@@ -449,7 +449,7 @@ sub processAttack {
 			# Move to the closest spot
 			my $msg = TF("%s has no LOS from (%d, %d) to target (%d, %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y});
 			if ($best_spot) {
-				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'homunculus_attack';
+				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
 				$slave->route(undef, @{$best_spot}{qw(x y)});
 			} else {
 				warning TF("%s; no acceptable place to stand\n", $msg);
@@ -543,9 +543,9 @@ sub processAttack {
 				noAvoidWalls => 1);
 			if (!$result) {
 				# Unable to calculate a route to target
-				$target->{homunculus_attack_failed} = time;
+				$target->{$slave->{ai_attack_failed_timeout}} = time;
 				$slave->dequeue;
- 				message TF("Unable to calculate a route to %s target, dropping target\n", $slave), 'homunculus_attack';
+ 				message TF("Unable to calculate a route to %s target, dropping target\n", $slave), 'slave_attack';
 				if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 					message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 					useTeleport(1);
@@ -592,10 +592,10 @@ sub processAttack {
 	if ($slave->is("move", "route") && $slave->args->{attackID} && $slave->inQueue("attack")) {
 		my $ID = $slave->args->{attackID};
 		if ((my $target = $monsters{$ID}) && !checkMonsterCleanness($ID)) {
-			$target->{homunculus_attack_failed} = time;
-			message TF("Dropping target - %s will not kill steal others\n", $slave), 'homunculus_attack';
+			$target->{$slave->{ai_attack_failed_timeout}} = time;
+			message TF("Dropping target - %s will not kill steal others\n", $slave), 'slave_attack';
 			$slave->sendAttackStop;
-			$monsters{$ID}{homunculus_ignore} = 1;
+			$monsters{$ID}{slave_ignore} = 1;
 
 			# Right now, the queue is either
 			#   move, route, attack
@@ -748,7 +748,7 @@ sub processAutoAttack {
 				# List monsters that party members are attacking
 				if ($config{$slave->{configPrefix}.'attackAuto_party'} && $attackOnRoute
 				 && ($monster->{dmgFromYou} || $monster->{dmgFromParty} || $monster->{dmgToYou} || $monster->{dmgToParty} || $monster->{missedYou} || $monster->{missedToParty})
-				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+				 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
 					next;
 				}
@@ -789,7 +789,7 @@ sub processAutoAttack {
 				 && $attackOnRoute >= 2
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
 				 && !$monster->{dmgFromYou}
-				 && timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+				 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
 					push @cleanMonsters, $_;
 				}
 			}
