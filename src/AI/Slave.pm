@@ -188,7 +188,7 @@ sub iterate {
 
 		# if you are idle, move near the slave
 		} elsif (
-			$slave->isa("Actor::Slave::Homunculus") &&
+			$slave->isa("AI::Slave::Homunculus") &&
 			AI::state == AI::AUTO && AI::isIdle && !$slave->isIdle
 			&& $config{$slave->{configPrefix}.'followDistanceMax'}
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
