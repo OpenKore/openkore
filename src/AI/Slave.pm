@@ -144,7 +144,7 @@ sub iterate {
 			$slave->clear('move', 'route');
 			$slave->sendStandBy;
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
-			debug sprintf("Slave standby (distance: %.2f)\n", $slave_dist), 'slave';
+			debug sprintf("Slave standby (distance: %d)\n", $slave_dist), 'slave';
 
 		# auto-follow
 		} elsif (
@@ -153,14 +153,13 @@ sub iterate {
 			&& !$char->{sitting}
 			&& !AI::args->{mapChanged}
 			&& $slave_dist < MAX_DISTANCE
-			&& ($slave->isIdle
-				|| blockDistance(AI::args->{move_to}, $slave->{pos_to}) >= MAX_DISTANCE)
+			&& ($slave->isIdle || blockDistance(AI::args->{move_to}, $slave->{pos_to}) >= MAX_DISTANCE)
 			&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{isFollow})
 		) {
 			$slave->clear('move', 'route');
 			if (!checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
 				$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, isFollow => 1);
-				debug sprintf("Slave follow route (distance: %.2f)\n", $slave->distance()), 'slave';
+				debug sprintf("Slave follow route (distance: %d)\n", $slave_dist), 'slave';
 	
 			} elsif (timeOut($slave->{move_retry}, 0.5)) {
 				# No update yet, send move request again.
@@ -172,7 +171,7 @@ sub iterate {
 				# (e.g. can't route properly around obstacles and corners)
 				# so we make use of the sendSlaveMove() to make up for a more efficient routing
 				$slave->sendMove ($char->{pos_to}{x}, $char->{pos_to}{y});
-				debug sprintf("Slave follow move (distance: %.2f)\n", $slave->distance()), 'slave';
+				debug sprintf("Slave follow move (distance: %d)\n", $slave_dist), 'slave';
 			}
 
 		# if your slave is idle, make it move near you
@@ -185,7 +184,7 @@ sub iterate {
 		) {
 			$slave->sendStandBy;
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
-			debug sprintf("Slave standby (distance: %.2f)\n", $slave_dist), 'slave';
+			debug sprintf("Slave standby (distance: %d)\n", $slave_dist), 'slave';
 
 		# if you are idle, move near the slave
 		} elsif (
@@ -195,7 +194,7 @@ sub iterate {
 			&& $slave_dist > $config{$slave->{configPrefix}.'followDistanceMax'}
 		) {
 			main::ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
-			message TF("%s moves too far (distance: %.2f) - Moving near\n", $slave, $slave->distance), 'slave';
+			message TF("%s moves too far (distance: %d) - Moving near\n", $slave, $slave_dist), 'slave';
 
 		# Main slave AI
 		} else {
