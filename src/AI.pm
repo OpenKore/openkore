@@ -361,6 +361,57 @@ sub ai_getAggressives {
 	}
 }
 
+##
+# ai_slave_getAggressives(slaveID, [check_mon_control])
+# Returns: an array of monster IDs, or a number.
+#
+# Get a list of all aggressive monsters on screen for a given slave.
+# The definition of "aggressive" is: a monster who has hit or missed me.
+#
+# If $check_mon_control is set, then all monsters in mon_control.txt
+# with the 'attack_auto' flag set to 2, will be considered as aggressive.
+# See also the manual for more information about this.
+sub ai_slave_getAggressives {
+	my ($slaveID, $type) = @_;
+	my $wantArray = wantarray;
+	my $num = 0;
+	my @agMonsters;
+
+	for my $monster (@$monstersList) {
+		my $control = Misc::mon_control($monster->name,$monster->{nameID}) if $type || !$wantArray;
+		my $ID = $monster->{ID};
+		# Never attack monsters that we failed to get LOS with
+		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+
+		if ((($type && ($control->{attack_auto} == 2)) ||
+			(($monster->{dmgToPlayer}{$slaveID} > 0 || $monster->{missedToPlayer}{$slaveID} > 0 || $monster->{dmgFromPlayer}{$slaveID} > 0 || $monster->{missedFromPlayer}{$slaveID} > 0) && Misc::checkMonsterCleanness($ID))) &&
+			timeOut($monster->{homunculus_attack_failed}, $timeout{ai_attack_unfail}{timeout}))
+		{
+			# Continuing, check whether the forced Agro is really a clean monster;
+			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
+
+			if ($wantArray) {
+				# Function is called in array context
+				push @agMonsters, $ID;
+
+			} else {
+				# Function is called in scalar context
+				if ($control->{weight} > 0) {
+					$num += $control->{weight};
+				} elsif ($control->{weight} != -1) {
+					$num++;
+				}
+			}
+		}
+	}
+
+	if ($wantArray) {
+		return @agMonsters;
+	} else {
+		return $num;
+	}
+}
+
 sub ai_getPlayerAggressives {
 	my $ID = shift;
 	my @agMonsters;
