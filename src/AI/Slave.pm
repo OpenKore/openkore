@@ -785,8 +785,7 @@ sub processAutoAttack {
 				my $control = mon_control($monster->{name}, $monster->{nameID});
 				if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
-				 && $safe
-				 && $attackOnRoute >= 2
+				 && $attackOnRoute >= 2 && $safe
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
 				 && !$monster->{dmgFromYou}
 				 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
@@ -798,9 +797,9 @@ sub processAutoAttack {
 
 			# We define whether we should attack only monsters in LOS or not
 			my $nonLOSNotAllowed = !$config{$slave->{configPrefix}.'attackCheckLOS'};
-			$attackTarget = getBestTarget(\@aggressives, $nonLOSNotAllowed, $config{$slave->{configPrefix}.'attackCanSnipe'}) ||
-			                getBestTarget(\@partyMonsters, $nonLOSNotAllowed, $config{$slave->{configPrefix}.'attackCanSnipe'}) ||
-			                getBestTarget(\@cleanMonsters, $nonLOSNotAllowed, $config{$slave->{configPrefix}.'attackCanSnipe'});
+			$attackTarget = getBestTarget(\@aggressives, $nonLOSNotAllowed) ||
+			                getBestTarget(\@partyMonsters, $nonLOSNotAllowed}) ||
+			                getBestTarget(\@cleanMonsters, $nonLOSNotAllowed);
 		}
 
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
