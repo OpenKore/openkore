@@ -4068,7 +4068,7 @@ sub checkSelfCondition {
 	return 0 if (!$prefix);
 	return 0 if ($config{$prefix . "_disabled"});
 
-	return 0 unless ($config{$prefix."_whenIdle"} && AI::isIdle);
+	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle);
 
 	return 0 if ($config{$prefix."_whenNotIdle"} && AI::isIdle);
 
