@@ -197,6 +197,7 @@ route_escape_randomWalk 1
 route_escape_shout
 route_avoidWalls 1
 route_randomWalk 1
+route_randomWalk_stopForSlave 1
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
@@ -400,6 +401,12 @@ homunculus_attackAuto 2
 homunculus_attackAuto_party 1
 homunculus_attackAuto_notInTown 1
 homunculus_attackAuto_onlyWhenSafe 0
+
+homunculus_attackAuto_duringRandomWalk 1
+homunculus_attackAuto_duringItemsTake 1
+
+homunculus_attack_dance 0
+
 homunculus_attackDistance 1.5
 homunculus_attackMaxDistance 2.5
 homunculus_attackDistanceAuto 0
@@ -409,8 +416,11 @@ homunculus_attackCheckLOS 0
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 
-homunculus_followDistanceMax 10
-homunculus_followDistanceMin 3
+homunculus_followDistanceMax 8
+homunculus_followDistanceMin 2
+
+homunculus_follow_lostTeleportRetry 6
+homunculus_follow_lostRescue 1
 
 homunculus_route_step 15
 

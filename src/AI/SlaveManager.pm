@@ -25,6 +25,7 @@ sub addSlave {
 		$actor->{ai_attack_timeout} = 'ai_homunculus_attack';
 		$actor->{ai_attack_auto_timeout} = 'ai_homunculus_attack_auto';
 		$actor->{ai_standby_timeout} = 'ai_homunculus_standby';
+		$actor->{ai_dance_attack_timeout} = 'ai_homunculus_dance_attack';
 		$actor->{ai_attack_failed_timeout} = 'homunculus_attack_failed';
 		bless $actor, 'AI::Slave::Homunculus';
 		
@@ -33,6 +34,7 @@ sub addSlave {
 		$actor->{ai_attack_timeout} = 'ai_mercenary_attack';
 		$actor->{ai_attack_auto_timeout} = 'ai_mercenary_attack_auto';
 		$actor->{ai_standby_timeout} = 'ai_mercenary_standby';
+		$actor->{ai_dance_attack_timeout} = 'ai_mercenary_dance_attack';
 		$actor->{ai_attack_failed_timeout} = 'mercenary_attack_failed';
 		bless $actor, 'AI::Slave::Mercenary';
 		
@@ -74,6 +76,17 @@ sub isIdle {
 		}
 	}
 	return 1;
+}
+
+sub isLost {
+	return 0 unless defined $char;
+	
+	foreach my $slave (values %{$char->{slaves}}) {
+		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
+			return 1 if $slave->isLost;
+		}
+	}
+	return 0;
 }
 
 sub setMapChanged {
