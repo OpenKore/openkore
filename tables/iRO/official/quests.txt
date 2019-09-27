@@ -23180,9 +23180,6 @@ Hunt 150 Big Bell monsters and return to the Bounty Board at Aldebaran#
 63436#Bounty Board Neo Punk#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Neo Punk monsters and return to the Bounty Board at Aldebaran#
 #
-63437#Bounty Board Disguise#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Disguise monsters and return to the Bounty Board at Niflheim#
-#
 63438#Bounty Board Loli Ruri#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Loli Ruri monsters and return to the Bounty Board at Niflheim#
 #
@@ -23236,4 +23233,7 @@ Hunt 150 Smelly Zombie monsters and return to the Bounty Board at Verus City#
 #
 63455#Bounty Board Smelly Ghoul#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Smelly Ghoul monsters and return to the Bounty Board at Verus City#
+#
+63456#Bounty Board Disguise#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Disguise monsters and return to the Bounty Board at Niflheim#
 #
