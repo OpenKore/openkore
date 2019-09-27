@@ -23180,3 +23180,60 @@ Hunt 150 Big Bell monsters and return to the Bounty Board at Aldebaran#
 63436#Bounty Board Neo Punk#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Neo Punk monsters and return to the Bounty Board at Aldebaran#
 #
+63437#Bounty Board Disguise#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Disguise monsters and return to the Bounty Board at Niflheim#
+#
+63438#Bounty Board Loli Ruri#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Loli Ruri monsters and return to the Bounty Board at Niflheim#
+#
+63439#Bounty Board Goat#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Goat monsters and return to the Bounty Board at Juno#
+#
+63440#Bounty Board Grand Peco#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Grand Peco monsters and return to the Bounty Board at Juno#
+#
+63441#Bounty Board Harpy#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Harpy monsters and return to the Bounty Board at Juno#
+#
+63442#Bounty Board Sleeper#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sleeper monsters and return to the Bounty Board at Juno#
+#
+63443#Bounty Board Deleter (Ground)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deleter (Ground) monsters and return to the Bounty Board at Juno#
+#
+63444#Bounty Board Deleter (Sky)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deleter (Sky) monsters and return to the Bounty Board at Juno#
+#
+63445#Bounty Board Nightmare Terror#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Terror monsters and return to the Bounty Board at Juno#
+#
+63446#Bounty Board Apocalypse#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Apocalypse monsters and return to the Bounty Board at Verus City#
+#
+63447#Bounty Board Venatu (Blue)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venatu (Blue) monsters and return to the Bounty Board at Verus City#
+#
+63448#Bounty Board Venatu (Green)(Ground)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deleter (Ground) monsters and return to the Bounty Board at Verus City#
+#
+63449#Bounty Board Venatu (Orange)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venatu (Orange) monsters and return to the Bounty Board at Verus City#
+#
+63450#Bounty Board Venatu (Purple)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venatu (Purple) monsters and return to the Bounty Board at Verus City#
+#
+63451#Bounty Board Cenere (Green)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cenere (Green) monsters and return to the Bounty Board at Verus City#
+#
+63452#Bounty Board Explorer Robot Turbo#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Explorer Robot Turbo monsters and return to the Bounty Board at Verus City#
+#
+63453#Bounty Board Repair Robot Turbo#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Repair Robot Turbo monsters and return to the Bounty Board at Verus City#
+#
+63454#Bounty Board Smelly Zombie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Smelly Zombie monsters and return to the Bounty Board at Verus City#
+#
+63455#Bounty Board Smelly Ghoul#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Smelly Ghoul monsters and return to the Bounty Board at Verus City#
+#
