@@ -49,8 +49,6 @@ sub new {
 		map_login 0436
 		actor_action 0437
 		skill_use 0438
-		rodex_open_mailbox 0AC0
-		rodex_refresh_maillist 0AC1
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
