@@ -132,6 +132,7 @@ sub set_parameters {
 	if (!defined $self->{parameters}{'repeat'}) {
 		$self->{parameters}{'repeat'} = 1;
 	}
+	$self->{parameters}{'slot'} ||= 1;
 	$self->{parameters}{time} = 0;
 }
 
