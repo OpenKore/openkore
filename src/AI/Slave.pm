@@ -610,12 +610,80 @@ sub processAttack {
 	#Benchmark::end("ai_homunculus_attack") if DEBUG;
 }
 
+# my %from = (x => 100, y => 100);
+# my %to = (x => 120, y => 120);
+# my %vec;
+# getVector(\%vec, \%to, \%from);
+# vectorToDegree(\%vec);	# => 45
+
+use Math::Trig;
+
+sub DoMyKite {
+	my ($slave, $target) = @_;
+	my $min_dist = 5; #Kitestep = 5
+	my $bounds = 13; #KiteBounds = 10
+	my $move_dist = 7;
+	
+	my $slave_pos = calcPosition($slave);
+	my $char_pos = calcPosition($char);
+	my $enemy_pos = calcPosition($target);
+	
+	my %vec;
+	getVector(\%vec, $char_pos, $enemy_pos);
+	my $degree = vectorToDegree(\%vec);
+	
+	my $cur_degree = $degree;
+	my $cos_cur = cos($degree); # norm x
+	my $sin_cur = sin($degree); # norm y
+	
+
+	my $side_sin_a = ($move_dist-1)/$move_dist;
+	my $angle_a = atan($side_sin_a);
+	
+	my $side_sin_b = ($move_dist-1)/($move_dist+1);
+	my $angle_b = atan($side_sin_b);
+	
+	my $big_angle = $angle_a > $angle_b ? $angle_a : $angle_b;
+	
+	my $adjust_vec = 45 - int($big_angle);
+	
+	my $added_degree = 0;
+	
+	my $max_degree = 360;
+	
+	my %result;
+	while ($added_degree < $max_degree) {
+		$result{x} = $slave_pos->{x} + int($move_dist * $cos_cur);
+		$result{y} = $slave_pos->{y} + int($move_dist * $sin_cur);
+		
+		next if (!$field->isWalkable($result{x}, $result{y}));
+		next if (blockDistance($char_pos, \%result) > $bounds);
+		next if (distance(\%result, $slave_pos) > distance(\%result, $enemy_pos));
+		next if (!checkLineWalkable($slave_pos, \%result, 2));
+		
+		
+		message ("[test] Kiteing my style in degree ".$cur_degree." (from ($slave_pos->{x} $slave_pos->{y}) to ($result{x}, $result{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) char at ($char_pos->{x} $char_pos->{y}).\n");
+		#return \%result;
+		my $cell = [$result{x}, $result{y}];
+		return $cell;
+		
+	} continue {
+		$added_degree += $adjust_vec;
+		$cur_degree = $degree + $added_degree;
+		$cos_cur = cos($cur_degree); # norm x
+		$sin_cur = sin($cur_degree); # norm y
+	}
+	
+	return undef;
+}
+
 # Kite
 
 #function DoKiteAdjust(myid,enemy)
 sub DoKiteAdjust {
 	my ($slave, $target) = @_;
 	my $step = 5; #Kitestep = 5
+	my $bounds = 10; #KiteBounds = 10
 	my ($slave_x,$slave_y) = @{calcPosition($slave)}{qw(x y)};
 	my ($char_x,$char_y) = @{calcPosition($char)}{qw(x y)};
 	my ($enemy_x,$enemy_y) = @{calcPosition($target)}{qw(x y)};
@@ -642,7 +710,7 @@ sub DoKiteAdjust {
 			$xdirection = 1;
 		} elsif ($xoptions[0] == 1) {
 			$xdirection = 0;
-		} elsif ($xoptions[2] == 1 && ($char_x - $slave_x + $step) <= 10) { #KiteBounds = 10
+		} elsif ($xoptions[2] == 1 && ($char_x - $slave_x + $step) <= $bounds) {
 			$xdirection = -1;
 		} elsif	($enemy_y < $slave_y) {
 			$xdirection = 0;
@@ -654,7 +722,7 @@ sub DoKiteAdjust {
 			$xdirection = -1;
 		} elsif ($xoptions[0] == 1) {
 			$xdirection = 0;
-		} elsif ($xoptions[1] == 1 && ($slave_x - $char_x + $step) <= 10) {
+		} elsif ($xoptions[1] == 1 && ($slave_x - $char_x + $step) <= $bounds) {
 			$xdirection = 1;
 		} elsif	($enemy_y > $slave_y) {
 			$xdirection = 0;
@@ -679,7 +747,7 @@ sub DoKiteAdjust {
 			$ydirection = -1;
 		} elsif ($yoptions[0] == 1 && $xdirection != 0) {
 			$ydirection = 0;
-		} elsif ($yoptions[1] == 1 && $slave_y - $char_y + $step <= 10) {
+		} elsif ($yoptions[1] == 1 && $slave_y - $char_y + $step <= $bounds) {
 			$ydirection = 1;
 		} elsif	($enemy_x < $slave_x && $xdirection != 0) {
 			$ydirection = 0;
