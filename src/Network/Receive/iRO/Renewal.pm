@@ -34,13 +34,6 @@ sub new {
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
-	# TODO !
-	$self->{vender_items_list_item_pack} = 'V v2 C V C3 a16 a25';
-	$self->{npc_store_info_pack} = "V V C V";
-	$self->{buying_store_items_list_pack} = "V v C V";
-	$self->{makable_item_list_pack} = "V4";
-	$self->{rodex_read_mail_item_pack} = "v V C3 a16 a4 C a4 a25";
-	
 	return $self;
 }
 
