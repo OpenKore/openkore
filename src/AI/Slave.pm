@@ -296,7 +296,7 @@ sub processAttack {
 			$slave->dequeue if $slave->action eq "route";
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "Slave target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
+			debug "$slave target $target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
 				"$attackSeq->{attackMethod}{maxDistance} blocks; stop moving\n", "ai_attack";
 		}
 		$slave->{slave_attack_route_adjust} = time;
@@ -503,14 +503,14 @@ sub processAttack {
 			# previous position.
 			my $time_needed;
 			if (objectIsMovingTowards($target, $slave, 45)) {
-				$time_needed = $monsterDist * $slave->{walk_speed};
+				$time_needed = $realMonsterDist * $slave->{walk_speed};
 			} else {
 				# If monster is not moving towards you, then you need more time to walk
-				$time_needed = $monsterDist * $slave->{walk_speed} + 2;
+				$time_needed = $realMonsterDist * $slave->{walk_speed} + 2;
 			}
 			my $pos = calcPosition($target, $time_needed);
 
-			my $dist = sprintf("%.1f", $monsterDist);
+			my $dist = sprintf("%.1f", $realMonsterDist);
 			debug "Slave target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
 				"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
@@ -536,9 +536,8 @@ sub processAttack {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 			if (!$slave->args->{firstAttack}) {
 				$slave->args->{firstAttack} = 1;
-				my $dist = sprintf("%.1f", $monsterDist);
 				my $pos = "$myPos->{x},$myPos->{y}";
-				debug "Slave is ready to attack target (which is $dist blocks away); we're at ($pos)\n", "ai_attack";
+				debug "Slave is ready to attack target $target (which is $realMonsterDist blocks away); we're at ($pos)\n", "ai_attack";
 			}
 
 			$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
@@ -556,8 +555,7 @@ sub processAttack {
 				if ($config{$slave->{configPrefix}.'attack_dance'}) {
 					if (timeOut($timeout{$slave->{ai_dance_attack_timeout}})) {
 						#warning "Dancing...\n";
-						my $cells;
-						$cells = GetDanceCell($realMyPos->{x},$realMyPos->{y},$realMonsterPos->{x},$realMonsterPos->{y});
+						my $cells = GetDanceCell($realMyPos->{x},$realMyPos->{y},$realMonsterPos->{x},$realMonsterPos->{y});
 						my $nx = $cells->[0];
 						my $ny = $cells->[1];
 						$slave->sendMove ($nx, $ny);
@@ -611,6 +609,92 @@ sub processAttack {
 
 	#Benchmark::end("ai_homunculus_attack") if DEBUG;
 }
+
+# Kite
+
+#function DoKiteAdjust(myid,enemy)
+sub DoKiteAdjust {
+	my ($slave, $target) = @_;
+	my $step = 5; #Kitestep = 5
+	my ($slave_x,$slave_y) = @{calcPosition($slave)}{qw(x y)};
+	my ($char_x,$char_y) = @{calcPosition($char)}{qw(x y)};
+	my ($enemy_x,$enemy_y) = @{calcPosition($target)}{qw(x y)};
+	
+	my @xoptions = (1, 1, 1);
+	my @yoptions = (1, 1, 1);
+	my ($xdirection,$ydirection) = (0,0);
+	if ($slave_x > $enemy_x) {
+		$xoptions[2] = 0;
+	} elsif ($slave_x < $enemy_x) {
+		$xoptions[1] = 0;
+	} else {
+		$yoptions[0] = 0;
+	}
+	if ($slave_y > $enemy_y) {
+		$yoptions[2] = 0;
+	} elsif ($slave_y < $enemy_y) {
+		$yoptions[1] = 0;
+	} else {
+		$xoptions[0] = 0;
+	}
+	if ($char_x > $slave_x) {
+		if ($xoptions[1] == 1) {
+			$xdirection = 1;
+		} elsif ($xoptions[0] == 1) {
+			$xdirection = 0;
+		} elsif ($xoptions[2] == 1 && ($char_x - $slave_x + $step) <= 10) { #KiteBounds = 10
+			$xdirection = -1;
+		} elsif	($enemy_y < $slave_y) {
+			$xdirection = 0;
+		} else {
+			$xdirection = 1;
+		}
+	} else {
+		if ($xoptions[2] == 1) {
+			$xdirection = -1;
+		} elsif ($xoptions[0] == 1) {
+			$xdirection = 0;
+		} elsif ($xoptions[1] == 1 && ($slave_x - $char_x + $step) <= 10) {
+			$xdirection = 1;
+		} elsif	($enemy_y > $slave_y) {
+			$xdirection = 0;
+		} else {
+			$xdirection = -1;
+		}
+	}
+	if ($char_y > $slave_y) {
+		if ($yoptions[1] == 1) {
+			$ydirection = 1;
+		} elsif ($yoptions[0] == 1 && $xdirection != 0) {
+			$ydirection = 0;
+		} elsif ($yoptions[2] == 1 && $char_y - $slave_y + $step <= $step) {
+			$ydirection = -1;
+		} elsif	($enemy_x > $slave_x && $xdirection != 0) {
+			$ydirection = 0;
+		} else {
+			$ydirection = 1;
+		}
+	} else { 
+		if ($yoptions[2] == 1) {
+			$ydirection = -1;
+		} elsif ($yoptions[0] == 1 && $xdirection != 0) {
+			$ydirection = 0;
+		} elsif ($yoptions[1] == 1 && $slave_y - $char_y + $step <= 10) {
+			$ydirection = 1;
+		} elsif	($enemy_x < $slave_x && $xdirection != 0) {
+			$ydirection = 0;
+		} else {
+			$ydirection = -1;
+		}
+	}
+	my $MyDestX = $slave_x + $step * $xdirection;
+	my $MyDestY = $slave_y + $step * $ydirection;
+	message ("Kiteing in ".$xdirection." ".$ydirection." direction (".$MyDestX." ".$MyDestY.").\n");
+	my $cell = [$MyDestX,$MyDestY];
+	return $cell;
+}
+
+# Dance
 
 =pod
 MyAttackStanceX,MyAttackStanceY = pos
