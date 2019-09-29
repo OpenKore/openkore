@@ -902,7 +902,7 @@ sub parse_items {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
 		
-		if ( $args->{switch} eq '0B09' && $item->{type} == 10 ) { # workaround arrow byte bug
+		if ( $args->{switch} eq '0B09' && $item->{type} == 10  && $masterServer->{serverType} ne 'iRO_Renewal') { # workaround arrow byte bug
 			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
 		}
 

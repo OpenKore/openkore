@@ -628,7 +628,7 @@ sub initMapChangeVars {
 		delete $char->{casting};
 		delete $char->{homunculus}{appear_time} if $char->{homunculus};
 		#Dont clear item on Map change [sctnightcore]
-		if ( !grep { $masterServer->{serverType} eq $_ } qw(iRO_Renewal)) {
+		if ($masterServer->{serverType} ne 'iRO_Renewal') {
 			$char->inventory->onMapChange();
 			# Clear the cart but do not close it.
 			$char->cart->clear;
