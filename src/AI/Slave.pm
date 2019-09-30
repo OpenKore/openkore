@@ -621,29 +621,43 @@ use Math::Trig;
 sub DoMyKite {
 	my ($slave, $target) = @_;
 	my $min_dist = 5; #Kitestep = 5
-	my $bounds = 13; #KiteBounds = 10
+	my $bounds = 12; #KiteBounds = 10
 	my $move_dist = 7;
 	
 	my $slave_pos = calcPosition($slave);
 	my $char_pos = calcPosition($char);
 	my $enemy_pos = calcPosition($target);
 	
-	my %vec;
-	getVector(\%vec, $char_pos, $enemy_pos);
-	my $degree = vectorToDegree(\%vec);
+	my %vec = (
+		x => $slave_pos->{x} - $enemy_pos->{x},
+		y => $slave_pos->{y} - $enemy_pos->{y}
+	);
 	
-	my $cur_degree = $degree;
-	my $cos_cur = cos($degree); # norm x
-	my $sin_cur = sin($degree); # norm y
+	# Atan2 is switched in vectodegree
+	my $initial_rad = atan2($vec{y}, $vec{x});
+	my $initial_deg = rad2deg($initial_rad);
+	if ($initial_deg < 0) {
+		$initial_deg += 360;
+	}
+	
+	message ("[test] Kiteing my style slave at ($slave_pos->{x} $slave_pos->{y}) mob at ($enemy_pos->{x} $enemy_pos->{y}) char at ($char_pos->{x} $char_pos->{y}).\n");
+	message ("[test] Vec is ($vec{x} $vec{y}).\n");
+	message ("[test] Initial degree is $initial_deg (Rad $initial_rad).\n");
+	
+	my $cur_rad = $initial_rad;
+	my $cur_degree = $initial_deg;
+	my $cos_cur = cos($cur_rad); # norm x
+	my $sin_cur = sin($cur_rad); # norm y
 	
 
-	my $side_sin_a = ($move_dist-1)/$move_dist;
-	my $angle_a = atan($side_sin_a);
-	
-	my $side_sin_b = ($move_dist-1)/($move_dist+1);
-	my $angle_b = atan($side_sin_b);
+	my $angle_a = rad2deg(atan2(($move_dist-1), $move_dist));
+	message ("[test] Angle A $angle_a\n");
+
+	my $angle_b = rad2deg(atan2(($move_dist-1), ($move_dist+1)));
+	message ("[test] Angle B $angle_b\n");
 	
 	my $big_angle = $angle_a > $angle_b ? $angle_a : $angle_b;
+	message ("[test] big_angle $big_angle\n");
 	
 	my $adjust_vec = 45 - int($big_angle);
 	
@@ -651,16 +665,49 @@ sub DoMyKite {
 	
 	my $max_degree = 360;
 	
+	message ("[test] Rotating counterclockwise by $adjust_vec degrees each time.\n");
+	
+	my %last_pos = (
+		x => undef,
+		y => undef
+	);
 	my %result;
 	while ($added_degree < $max_degree) {
-		$result{x} = $slave_pos->{x} + int($move_dist * $cos_cur);
-		$result{y} = $slave_pos->{y} + int($move_dist * $sin_cur);
+		my $add_x = int($move_dist * $cos_cur);
+		my $add_y = int($move_dist * $sin_cur);
+		$result{x} = $enemy_pos->{x} + $add_x;
+		$result{y} = $enemy_pos->{y} + $add_y;
+		if (defined $last_pos{x}) {
+			if($result{x} == $last_pos{x} && $result{y} == $last_pos{y}) {
+				message ("[test] It was the same pos as last loop - Next\n");
+				next;
+			} else {
+				$last_pos{x} = $result{x};
+				$last_pos{y} = $result{y};
+			}
+		}
+		message ("[test] Testing degree $cur_degree (cos $cos_cur - sin $sin_cur), adjusted by degree $added_degree and dist $move_dist (added $add_x $add_y). Position: $result{x} $result{y}\n");
 		
-		next if (!$field->isWalkable($result{x}, $result{y}));
-		next if (blockDistance($char_pos, \%result) > $bounds);
-		next if (distance(\%result, $slave_pos) > distance(\%result, $enemy_pos));
-		next if (!checkLineWalkable($slave_pos, \%result, 2));
-		
+		if (!$field->isWalkable($result{x}, $result{y})) {
+			message ("[test] It was not walkable - Next\n");
+			next;
+		}
+		if (blockDistance($char_pos, \%result) > $bounds) {
+			message ("[test] It was out of bounds - Next\n");
+			next;
+		}
+		if (distance(\%result, $enemy_pos) < $min_dist) {
+			message ("[test] It was too close to target- Next\n");
+			next;
+		}
+		if (distance(\%result, $slave_pos) > distance(\%result, $enemy_pos)) {
+			message ("[test] It was closer to target than to slave - Next\n");
+			next;
+		}
+		if (!checkLineWalkable($slave_pos, \%result, 2)) {
+			message ("[test] It did not have a walkable line - Next\n");
+			next;
+		}
 		
 		message ("[test] Kiteing my style in degree ".$cur_degree." (from ($slave_pos->{x} $slave_pos->{y}) to ($result{x}, $result{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) char at ($char_pos->{x} $char_pos->{y}).\n");
 		#return \%result;
@@ -669,9 +716,13 @@ sub DoMyKite {
 		
 	} continue {
 		$added_degree += $adjust_vec;
-		$cur_degree = $degree + $added_degree;
-		$cos_cur = cos($cur_degree); # norm x
-		$sin_cur = sin($cur_degree); # norm y
+		$cur_degree = $initial_deg + $added_degree;
+		if ($cur_degree >= 360) {
+			$cur_degree -= 360;
+		}
+		$cur_rad = deg2rad($cur_degree);
+		$cos_cur = cos($cur_rad); # norm x
+		$sin_cur = sin($cur_rad); # norm y
 	}
 	
 	return undef;
