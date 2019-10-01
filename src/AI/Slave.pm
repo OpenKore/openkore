@@ -618,6 +618,7 @@ sub processAttack {
 
 use Math::Trig;
 
+# My Kite algorithm
 sub DoMyKite {
 	my ($slave, $target) = @_;
 	my $min_dist = 5; #Kitestep = 5
@@ -659,7 +660,7 @@ sub DoMyKite {
 	my $big_angle = $angle_a > $angle_b ? $angle_a : $angle_b;
 	message ("[test] big_angle $big_angle\n");
 	
-	my $adjust_vec = 45 - int($big_angle);
+	my $adjust_vec = 45 - $big_angle;
 	
 	my $added_degree = 0;
 	
@@ -728,7 +729,7 @@ sub DoMyKite {
 	return undef;
 }
 
-# Kite
+# AzzyAI Kite
 
 #function DoKiteAdjust(myid,enemy)
 sub DoKiteAdjust {
@@ -813,7 +814,7 @@ sub DoKiteAdjust {
 	return $cell;
 }
 
-# Dance
+# AzzyAI dance
 
 =pod
 MyAttackStanceX,MyAttackStanceY = pos
