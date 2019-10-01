@@ -617,6 +617,8 @@ sub processAttack {
 # vectorToDegree(\%vec);	# => 45
 
 use Math::Trig;
+use Math::Trig qw/pi pi2 pi4 pip2 pip4/;
+#use Math::Trig;
 
 # My Kite algorithm
 sub DoMyKite {
@@ -636,58 +638,60 @@ sub DoMyKite {
 	
 	# Atan2 is switched in vectodegree
 	my $initial_rad = atan2($vec{y}, $vec{x});
-	my $initial_deg = rad2deg($initial_rad);
-	if ($initial_deg < 0) {
-		$initial_deg += 360;
+	if ($initial_rad < 0) {
+		$initial_rad += pi2;
 	}
 	
 	message ("[test] Kiteing my style slave at ($slave_pos->{x} $slave_pos->{y}) mob at ($enemy_pos->{x} $enemy_pos->{y}) char at ($char_pos->{x} $char_pos->{y}).\n");
 	message ("[test] Vec is ($vec{x} $vec{y}).\n");
-	message ("[test] Initial degree is $initial_deg (Rad $initial_rad).\n");
+	message ("[test] Initial rad is $initial_rad.\n");
 	
-	my $cur_rad = $initial_rad;
-	my $cur_degree = $initial_deg;
-	my $cos_cur = cos($cur_rad); # norm x
-	my $sin_cur = sin($cur_rad); # norm y
-	
+	my $current_rad = $initial_rad;
+	my $cos_cur = cos($current_rad);
+	my $sin_cur = sin($current_rad);
 
-	my $angle_a = rad2deg(atan2(($move_dist-1), $move_dist));
-	message ("[test] Angle A $angle_a\n");
-
-	my $angle_b = rad2deg(atan2(($move_dist-1), ($move_dist+1)));
-	message ("[test] Angle B $angle_b\n");
-	
+	# Biggest possible angle between 2 adjacent cells in dist $move_dist
+	my $angle_a = atan2(($move_dist-1), $move_dist);
+	my $angle_b = atan2(($move_dist-1), ($move_dist+1));
 	my $big_angle = $angle_a > $angle_b ? $angle_a : $angle_b;
-	message ("[test] big_angle $big_angle\n");
-	
-	my $adjust_vec = 45 - $big_angle;
-	
-	my $added_degree = 0;
-	
-	my $max_degree = 360;
-	
-	message ("[test] Rotating counterclockwise by $adjust_vec degrees each time.\n");
-	
-	my %last_pos = (
+	my $added_rad_per_loop = pip4 - $big_angle;
+
+	my $current_mod = 1;
+	my $total_added_rad = 0;
+	my $max_rad = pi;
+	my %best_not_distant_cell = (
 		x => undef,
-		y => undef
+		y => undef,
+		distance_dif => undef,
 	);
+
+	message ("[test] Rotating by $added_rad_per_loop rads each loop.\n");
+
+	my %last_pos_by_mod = (
+		'1' => {
+			x => undef,
+			y => undef
+		},
+		'-1' => {
+			x => undef,
+			y => undef
+		}
+	);
+	
 	my %result;
-	while ($added_degree < $max_degree) {
+	while ($total_added_rad < $max_rad) {
 		my $add_x = int($move_dist * $cos_cur);
 		my $add_y = int($move_dist * $sin_cur);
 		$result{x} = $enemy_pos->{x} + $add_x;
 		$result{y} = $enemy_pos->{y} + $add_y;
-		if (defined $last_pos{x}) {
-			if($result{x} == $last_pos{x} && $result{y} == $last_pos{y}) {
-				message ("[test] It was the same pos as last loop - Next\n");
-				next;
-			} else {
-				$last_pos{x} = $result{x};
-				$last_pos{y} = $result{y};
-			}
+		if (defined $last_pos_by_mod{$current_mod}{x} && $result{x} == $last_pos_by_mod{$current_mod}{x} && $result{y} == $last_pos_by_mod{$current_mod}{y}) {
+			message ("[test] It was the same pos as last loop mod $current_mod - Next\n");
+			next;
+		} else {
+			$last_pos_by_mod{$current_mod}{x} = $result{x};
+			$last_pos_by_mod{$current_mod}{y} = $result{y};
 		}
-		message ("[test] Testing degree $cur_degree (cos $cos_cur - sin $sin_cur), adjusted by degree $added_degree and dist $move_dist (added $add_x $add_y). Position: $result{x} $result{y}\n");
+		message ("[test] Testing rad $current_rad (cos $cos_cur - sin $sin_cur), adjusted by rad $total_added_rad on mod $current_mod and dist $move_dist (added $add_x $add_y). Position: $result{x} $result{y}\n");
 		
 		if (!$field->isWalkable($result{x}, $result{y})) {
 			message ("[test] It was not walkable - Next\n");
@@ -701,29 +705,53 @@ sub DoMyKite {
 			message ("[test] It was too close to target- Next\n");
 			next;
 		}
-		if (distance(\%result, $slave_pos) > distance(\%result, $enemy_pos)) {
-			message ("[test] It was closer to target than to slave - Next\n");
-			next;
-		}
 		if (!checkLineWalkable($slave_pos, \%result, 2)) {
 			message ("[test] It did not have a walkable line - Next\n");
 			next;
 		}
+		my $dist_dif = distance(\%result, $slave_pos) - distance(\%result, $enemy_pos);
+		if ($dist_dif > 0) {
+			message ("[test] It was closer to target than to slave - Next - Maybe saving it?\n");
+			if (defined $best_not_distant_cell{x} && $best_not_distant_cell{distance_dif} < $dist_dif) {
+				message ("[test2] It has dist $dist_dif, we already have a best_not_distant_cell at position $best_not_distant_cell{x} $best_not_distant_cell{y} (dist $best_not_distant_cell{distance_dif})\n");
+			} else {
+				$best_not_distant_cell{x} = $result{x};
+				$best_not_distant_cell{y} = $result{y};
+				$best_not_distant_cell{distance_dif} = $dist_dif;
+				message ("[test2] It has a better dist than our other better cell, it has dist $dist_dif, while $best_not_distant_cell{x} $best_not_distant_cell{y} had dist $best_not_distant_cell{distance_dif} saving it.\n");
+			}
+			next;
+		}
 		
-		message ("[test] Kiteing my style in degree ".$cur_degree." (from ($slave_pos->{x} $slave_pos->{y}) to ($result{x}, $result{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) char at ($char_pos->{x} $char_pos->{y}).\n");
+		message ("[test] Kiteing my style in rad ".$current_rad." (from ($slave_pos->{x} $slave_pos->{y}) to ($result{x}, $result{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) char at ($char_pos->{x} $char_pos->{y}).\n");
 		#return \%result;
 		my $cell = [$result{x}, $result{y}];
 		return $cell;
 		
 	} continue {
-		$added_degree += $adjust_vec;
-		$cur_degree = $initial_deg + $added_degree;
-		if ($cur_degree >= 360) {
-			$cur_degree -= 360;
+		if ($current_mod == 1 && $total_added_rad > 0) {
+			$current_mod = -1;
+		} else {
+			$current_mod = 1;
+			$total_added_rad += $added_rad_per_loop;
 		}
-		$cur_rad = deg2rad($cur_degree);
-		$cos_cur = cos($cur_rad); # norm x
-		$sin_cur = sin($cur_rad); # norm y
+		
+		$current_rad = $initial_rad + ($total_added_rad * $current_mod);
+		
+		if ($current_rad >= pi2) {
+			$current_rad -= pi2;
+		} elsif ($current_rad < 0) {
+			$current_rad += pi2;
+		}
+		
+		$cos_cur = cos($current_rad);
+		$sin_cur = sin($current_rad);
+	}
+	
+	if (defined $best_not_distant_cell{x}) {
+		message ("[test3] There was no perfect cell, using best_not_distant_cell $best_not_distant_cell{x} $best_not_distant_cell{y} (dist $best_not_distant_cell{distance_dif})\n");
+		my $cell = [$best_not_distant_cell{x}, $best_not_distant_cell{y}];
+		return $cell;
 	}
 	
 	return undef;
