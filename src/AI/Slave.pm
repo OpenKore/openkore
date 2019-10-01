@@ -147,17 +147,6 @@ sub iterate {
 	return if ($slave->{slave_AI} == AI::OFF);
 	
 	$slave->{master_dist} = blockDistance ($slave->position, $char->position);
-	
-	
-	if ($slave->{isLost} && $slave->{master_dist} < MAX_DISTANCE) {
-		$slave->{follow_lostTeleportRetry} = 0;
-		$slave->{isLost} = 0;
-		warning "[test] $slave was rescued. Thanks Senpaaaaai.\n";
-	}
-	
-	if ($slave->{slave_AI} == AI::AUTO) {
-		$slave->processTeleportToMaster;
-	}
 
 	##### MANUAL AI STARTS HERE #####
 	
@@ -175,9 +164,20 @@ sub iterate {
 
 	##### AUTOMATIC AI STARTS HERE #####
 	
+	$slave->processWasFound;
+	$slave->processTeleportToMaster;
+	$slave->processAutoAttack;
 	$slave->processFollow;
 	$slave->processMoveNearMaster;
-	$slave->processAutoAttack;
+}
+
+sub processWasFound {
+	my $slave = shift;
+	if ($slave->{isLost} && $slave->{master_dist} < MAX_DISTANCE) {
+		$slave->{follow_lostTeleportRetry} = 0;
+		$slave->{isLost} = 0;
+		warning "[test] $slave was rescued. Thanks Senpaaaaai.\n";
+	}
 }
 
 sub processTeleportToMaster {
@@ -209,7 +209,7 @@ sub processFollow {
 		&& !$char->{sitting}
 		&& !AI::args->{mapChanged}
 		&& $slave->{master_dist} < MAX_DISTANCE
-		&& ($slave->isIdle || blockDistance(AI::args->{move_to}, $slave->{pos_to}) >= MAX_DISTANCE)
+		&& ($slave->isIdle || $slave->{master_dist} > $config{$slave->{configPrefix}.'followDistanceMax'} || blockDistance(AI::args->{move_to}, $slave->{pos_to}) > $config{$slave->{configPrefix}.'followDistanceMax'})
 		&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{isFollow})
 	) {
 		$slave->clear('move', 'route');
@@ -226,7 +226,7 @@ sub processFollow {
 			# however, the server-side routing is very inefficient
 			# (e.g. can't route properly around obstacles and corners)
 			# so we make use of the sendSlaveMove() to make up for a more efficient routing
-			$slave->sendMove ($char->{pos_to}{x}, $char->{pos_to}{y});
+			$slave->move($char->{pos_to}{x}, $char->{pos_to}{y});
 			debug sprintf("Slave follow move (distance: %d)\n", $slave->{master_dist}), 'slave';
 		}
 	}
@@ -335,9 +335,9 @@ sub processAttack {
 				AI::clear("items_take");
 				AI::ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
 					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
-			} else {
+			} elsif ($timeout{$slave->{ai_attack_waitAfterKill_timeout}}{'timeout'} > 0) {
 				# Cheap way to suspend all movement to make it look real
-				$slave->clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
+				$slave->clientSuspend(0, $timeout{$slave->{ai_attack_waitAfterKill_timeout}}{'timeout'});
 			}
 
 			## kokal start
@@ -949,6 +949,8 @@ sub processAutoAttack {
 		|| ($config{$slave->{configPrefix}.'attackAuto_duringRandomWalk'} && AI::is('route') && AI::args()->{isRandomWalk}))
 	 && timeOut($timeout{$slave->{ai_attack_auto_timeout}})
 	 && (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity)
+	 && $slave->{master_dist} <= $config{$slave->{configPrefix}.'followDistanceMax'}
+	 && ((AI::action ne "move" && AI::action ne "route") || blockDistance(AI::args->{move_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'})
 	) {
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
@@ -1001,6 +1003,9 @@ sub processAutoAttack {
 				next if !checkLineWalkable($myPos, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
 
 				my $pos = calcPosition($monster);
+				my $master_pos = $char->position;
+				
+				next if (blockDistance($master_pos, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
 				# List monsters that party members are attacking
 				if ($config{$slave->{configPrefix}.'attackAuto_party'} && $attackOnRoute

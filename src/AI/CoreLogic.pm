@@ -153,7 +153,7 @@ sub iterate {
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
 	processRescueSlave();
-	processRandomWalk_stopForSlave();
+	processRandomWalk_waitSlave();
 	processMoveNearSlave();
 	processRandomWalk();
 	processFollow();
@@ -2239,15 +2239,15 @@ sub processMoveNearSlave {
 	}
 }
 
-# route_randomWalk_stopForSlave
-sub processRandomWalk_stopForSlave {
+# route_randomWalk_waitSlave
+sub processRandomWalk_waitSlave {
 	if (AI::is('route') && AI::args()->{isRandomWalk}
-		&& $config{route_randomWalk_stopForSlave}
+		&& $config{route_randomWalk_waitSlave}
 		&& $char->{slaves}
 		&&    (($char->{homunculus} && $char->{homunculus}->action eq "attack")
 			|| ($char->{mercenary} && $char->{mercenary}->action eq "attack"))
 	){
-		warning "[test] processRandomWalk_stopForSlave - Stoping for slave.\n";
+		warning "[test] processRandomWalk_waitSlave - Stoping for slave.\n";
 		AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 	}
 }
