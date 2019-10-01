@@ -12,6 +12,9 @@ use Translation;
 use AI::Slave::Homunculus;
 use AI::Slave::Mercenary;
 
+use Math::Trig;
+use Math::Trig qw/pi pi2 pip4/;
+
 # Slave's commands and skills can only be used
 # if the slave is within this range
 use constant MAX_DISTANCE => 17;
@@ -554,7 +557,6 @@ sub processAttack {
 			if ($args->{attackMethod}{type} eq "weapon") {
 				if ($config{$slave->{configPrefix}.'attack_dance'}) {
 					if (timeOut($timeout{$slave->{ai_dance_attack_timeout}})) {
-						#warning "Dancing...\n";
 						my $cells = GetDanceCell($realMyPos->{x},$realMyPos->{y},$realMonsterPos->{x},$realMonsterPos->{y});
 						my $nx = $cells->[0];
 						my $ny = $cells->[1];
@@ -562,10 +564,16 @@ sub processAttack {
 						$slave->sendAttack ($ID);
 						$slave->sendMove ($realMyPos->{x},$realMyPos->{y});
 						$timeout{$slave->{ai_dance_attack_timeout}}{time} = time;
-						#Move(MyID,nx,ny)
-						#Attack(MyID,MyEnemy)
-						#Move(MyID,MyAttackStanceX,MyAttackStanceY)
 					}
+					
+				} elsif ($config{$slave->{configPrefix}.'attack_dance_dist'} && $args->{attackMethod}{distance} > 2) {
+					if (timeOut($timeout{$slave->{ai_dance_attack_timeout}})) {
+						my $cell = get_kite_cell($slave, $target, $realMonsterDist, $realMonsterDist+1, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
+						$slave->sendAttack ($ID);
+						$slave->sendMove ($cell->{x}, $cell->{y});
+						$timeout{$slave->{ai_dance_attack_timeout}}{time} = time;
+					}
+				
 				} else {
 					if (timeOut($timeout{$slave->{ai_attack_timeout}})) {
 						$slave->sendAttack ($ID);
@@ -610,26 +618,16 @@ sub processAttack {
 	#Benchmark::end("ai_homunculus_attack") if DEBUG;
 }
 
-# my %from = (x => 100, y => 100);
-# my %to = (x => 120, y => 120);
-# my %vec;
-# getVector(\%vec, \%to, \%from);
-# vectorToDegree(\%vec);	# => 45
-
-use Math::Trig;
-use Math::Trig qw/pi pi2 pi4 pip2 pip4/;
-#use Math::Trig;
-
 # My Kite algorithm
-sub DoMyKite {
-	my ($slave, $target) = @_;
-	my $min_dist = 5; #Kitestep = 5
-	my $bounds = 12; #KiteBounds = 10
-	my $move_dist = 7;
+sub get_kite_cell {
+	my ($slave, $target, $min_dist_from_target, $move_distance, $master, $max_dist_to_master) = @_;
+	#my $min_dist_from_target = 5; #Kitestep = 5
+	#my $max_dist_to_master = 12; #KiteBounds = 10
+	#my $move_distance = 7;
 	
 	my $slave_pos = calcPosition($slave);
-	my $char_pos = calcPosition($char);
 	my $enemy_pos = calcPosition($target);
+	my $master_pos = calcPosition($master);
 	
 	my %vec = (
 		x => $slave_pos->{x} - $enemy_pos->{x},
@@ -642,17 +640,17 @@ sub DoMyKite {
 		$initial_rad += pi2;
 	}
 	
-	message ("[test] Kiteing my style slave at ($slave_pos->{x} $slave_pos->{y}) mob at ($enemy_pos->{x} $enemy_pos->{y}) char at ($char_pos->{x} $char_pos->{y}).\n");
-	message ("[test] Vec is ($vec{x} $vec{y}).\n");
-	message ("[test] Initial rad is $initial_rad.\n");
+	#message ("[test] Kiteing my style slave at ($slave_pos->{x} $slave_pos->{y}) mob at ($enemy_pos->{x} $enemy_pos->{y}) master at ($master_pos->{x} $master_pos->{y}).\n");
+	#message ("[test] Vec is ($vec{x} $vec{y}).\n");
+	#message ("[test] Initial rad is $initial_rad.\n");
 	
 	my $current_rad = $initial_rad;
 	my $cos_cur = cos($current_rad);
 	my $sin_cur = sin($current_rad);
 
-	# Biggest possible angle between 2 adjacent cells in dist $move_dist
-	my $angle_a = atan2(($move_dist-1), $move_dist);
-	my $angle_b = atan2(($move_dist-1), ($move_dist+1));
+	# Biggest possible angle between 2 adjacent cells in dist $move_distance
+	my $angle_a = atan2(($move_distance-1), $move_distance);
+	my $angle_b = atan2(($move_distance-1), ($move_distance+1));
 	my $big_angle = $angle_a > $angle_b ? $angle_a : $angle_b;
 	my $added_rad_per_loop = pip4 - $big_angle;
 
@@ -665,7 +663,7 @@ sub DoMyKite {
 		distance_dif => undef,
 	);
 
-	message ("[test] Rotating by $added_rad_per_loop rads each loop.\n");
+	#message ("[test] Rotating by $added_rad_per_loop rads each loop.\n");
 
 	my %last_pos_by_mod = (
 		'1' => {
@@ -680,53 +678,51 @@ sub DoMyKite {
 	
 	my %result;
 	while ($total_added_rad < $max_rad) {
-		my $add_x = int($move_dist * $cos_cur);
-		my $add_y = int($move_dist * $sin_cur);
+		my $add_x = int($move_distance * $cos_cur);
+		my $add_y = int($move_distance * $sin_cur);
 		$result{x} = $enemy_pos->{x} + $add_x;
 		$result{y} = $enemy_pos->{y} + $add_y;
 		if (defined $last_pos_by_mod{$current_mod}{x} && $result{x} == $last_pos_by_mod{$current_mod}{x} && $result{y} == $last_pos_by_mod{$current_mod}{y}) {
-			message ("[test] It was the same pos as last loop mod $current_mod - Next\n");
+			#message ("[test] It was the same pos as last loop mod $current_mod - Next\n");
 			next;
 		} else {
 			$last_pos_by_mod{$current_mod}{x} = $result{x};
 			$last_pos_by_mod{$current_mod}{y} = $result{y};
 		}
-		message ("[test] Testing rad $current_rad (cos $cos_cur - sin $sin_cur), adjusted by rad $total_added_rad on mod $current_mod and dist $move_dist (added $add_x $add_y). Position: $result{x} $result{y}\n");
+		#message ("[test] Testing rad $current_rad (cos $cos_cur - sin $sin_cur), adjusted by rad $total_added_rad on mod $current_mod and dist $move_distance (added $add_x $add_y). Position: $result{x} $result{y}\n");
 		
 		if (!$field->isWalkable($result{x}, $result{y})) {
-			message ("[test] It was not walkable - Next\n");
+			#message ("[test] It was not walkable - Next\n");
 			next;
 		}
-		if (blockDistance($char_pos, \%result) > $bounds) {
-			message ("[test] It was out of bounds - Next\n");
+		if (blockDistance($master_pos, \%result) > $max_dist_to_master) {
+			#message ("[test] It was out of bounds - Next\n");
 			next;
 		}
-		if (distance(\%result, $enemy_pos) < $min_dist) {
-			message ("[test] It was too close to target- Next\n");
+		if (distance(\%result, $enemy_pos) < $min_dist_from_target) {
+			#message ("[test] It was too close to target- Next\n");
 			next;
 		}
 		if (!checkLineWalkable($slave_pos, \%result, 2)) {
-			message ("[test] It did not have a walkable line - Next\n");
+			#message ("[test] It did not have a walkable line - Next\n");
 			next;
 		}
 		my $dist_dif = distance(\%result, $slave_pos) - distance(\%result, $enemy_pos);
 		if ($dist_dif > 0) {
-			message ("[test] It was closer to target than to slave - Next - Maybe saving it?\n");
+			#message ("[test] It was closer to target than to slave - Next - Maybe saving it?\n");
 			if (defined $best_not_distant_cell{x} && $best_not_distant_cell{distance_dif} < $dist_dif) {
-				message ("[test2] It has dist $dist_dif, we already have a best_not_distant_cell at position $best_not_distant_cell{x} $best_not_distant_cell{y} (dist $best_not_distant_cell{distance_dif})\n");
+				#message ("[test2] It has dist $dist_dif, we already have a best_not_distant_cell at position $best_not_distant_cell{x} $best_not_distant_cell{y} (dist $best_not_distant_cell{distance_dif})\n");
 			} else {
 				$best_not_distant_cell{x} = $result{x};
 				$best_not_distant_cell{y} = $result{y};
 				$best_not_distant_cell{distance_dif} = $dist_dif;
-				message ("[test2] It has a better dist than our other better cell, it has dist $dist_dif, while $best_not_distant_cell{x} $best_not_distant_cell{y} had dist $best_not_distant_cell{distance_dif} saving it.\n");
+				#message ("[test2] It has a better dist than our other better cell, it has dist $dist_dif, while $best_not_distant_cell{x} $best_not_distant_cell{y} had dist $best_not_distant_cell{distance_dif} saving it.\n");
 			}
 			next;
 		}
 		
-		message ("[test] Kiteing my style in rad ".$current_rad." (from ($slave_pos->{x} $slave_pos->{y}) to ($result{x}, $result{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) char at ($char_pos->{x} $char_pos->{y}).\n");
-		#return \%result;
-		my $cell = [$result{x}, $result{y}];
-		return $cell;
+		message ("[test] Kiteing my style in rad ".$current_rad." (from ($slave_pos->{x} $slave_pos->{y}) to ($result{x}, $result{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) master at ($master_pos->{x} $master_pos->{y}).\n");
+		return \%result;
 		
 	} continue {
 		if ($current_mod == 1 && $total_added_rad > 0) {
@@ -750,107 +746,15 @@ sub DoMyKite {
 	
 	if (defined $best_not_distant_cell{x}) {
 		message ("[test3] There was no perfect cell, using best_not_distant_cell $best_not_distant_cell{x} $best_not_distant_cell{y} (dist $best_not_distant_cell{distance_dif})\n");
-		my $cell = [$best_not_distant_cell{x}, $best_not_distant_cell{y}];
-		return $cell;
+		$result{x} = $best_not_distant_cell{x};
+		$result{y} = $best_not_distant_cell{y};
+		return \%result;
 	}
 	
 	return undef;
 }
 
-# AzzyAI Kite
-
-#function DoKiteAdjust(myid,enemy)
-sub DoKiteAdjust {
-	my ($slave, $target) = @_;
-	my $step = 5; #Kitestep = 5
-	my $bounds = 10; #KiteBounds = 10
-	my ($slave_x,$slave_y) = @{calcPosition($slave)}{qw(x y)};
-	my ($char_x,$char_y) = @{calcPosition($char)}{qw(x y)};
-	my ($enemy_x,$enemy_y) = @{calcPosition($target)}{qw(x y)};
-	
-	my @xoptions = (1, 1, 1);
-	my @yoptions = (1, 1, 1);
-	my ($xdirection,$ydirection) = (0,0);
-	if ($slave_x > $enemy_x) {
-		$xoptions[2] = 0;
-	} elsif ($slave_x < $enemy_x) {
-		$xoptions[1] = 0;
-	} else {
-		$yoptions[0] = 0;
-	}
-	if ($slave_y > $enemy_y) {
-		$yoptions[2] = 0;
-	} elsif ($slave_y < $enemy_y) {
-		$yoptions[1] = 0;
-	} else {
-		$xoptions[0] = 0;
-	}
-	if ($char_x > $slave_x) {
-		if ($xoptions[1] == 1) {
-			$xdirection = 1;
-		} elsif ($xoptions[0] == 1) {
-			$xdirection = 0;
-		} elsif ($xoptions[2] == 1 && ($char_x - $slave_x + $step) <= $bounds) {
-			$xdirection = -1;
-		} elsif	($enemy_y < $slave_y) {
-			$xdirection = 0;
-		} else {
-			$xdirection = 1;
-		}
-	} else {
-		if ($xoptions[2] == 1) {
-			$xdirection = -1;
-		} elsif ($xoptions[0] == 1) {
-			$xdirection = 0;
-		} elsif ($xoptions[1] == 1 && ($slave_x - $char_x + $step) <= $bounds) {
-			$xdirection = 1;
-		} elsif	($enemy_y > $slave_y) {
-			$xdirection = 0;
-		} else {
-			$xdirection = -1;
-		}
-	}
-	if ($char_y > $slave_y) {
-		if ($yoptions[1] == 1) {
-			$ydirection = 1;
-		} elsif ($yoptions[0] == 1 && $xdirection != 0) {
-			$ydirection = 0;
-		} elsif ($yoptions[2] == 1 && $char_y - $slave_y + $step <= $step) {
-			$ydirection = -1;
-		} elsif	($enemy_x > $slave_x && $xdirection != 0) {
-			$ydirection = 0;
-		} else {
-			$ydirection = 1;
-		}
-	} else { 
-		if ($yoptions[2] == 1) {
-			$ydirection = -1;
-		} elsif ($yoptions[0] == 1 && $xdirection != 0) {
-			$ydirection = 0;
-		} elsif ($yoptions[1] == 1 && $slave_y - $char_y + $step <= $bounds) {
-			$ydirection = 1;
-		} elsif	($enemy_x < $slave_x && $xdirection != 0) {
-			$ydirection = 0;
-		} else {
-			$ydirection = -1;
-		}
-	}
-	my $MyDestX = $slave_x + $step * $xdirection;
-	my $MyDestY = $slave_y + $step * $ydirection;
-	message ("Kiteing in ".$xdirection." ".$ydirection." direction (".$MyDestX." ".$MyDestY.").\n");
-	my $cell = [$MyDestX,$MyDestY];
-	return $cell;
-}
-
 # AzzyAI dance
-
-=pod
-MyAttackStanceX,MyAttackStanceY = pos
-nx,ny=GetDanceCell(MyAttackStanceX,MyAttackStanceY,MyEnemy)
-Move(MyID,nx,ny)
-Attack(MyID,MyEnemy)
-Move(MyID,MyAttackStanceX,MyAttackStanceY)
-=cut
 
 # (x, y, enemyx, enemyy)
 sub GetDanceCell {

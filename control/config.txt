@@ -376,7 +376,10 @@ mercenary_runFromTarget_dist 5
 mercenary_runFromTarget_minStep 7
 mercenary_runFromTarget_maxStep 9
 
-mercenary_followDistanceMax 10
+mercenary_attack_dance_dist 1
+mercenary_attack_dance 0
+
+mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
 
 mercenary_route_step 15
