@@ -209,7 +209,7 @@ sub processFollow {
 		&& !$char->{sitting}
 		&& !AI::args->{mapChanged}
 		&& $slave->{master_dist} < MAX_DISTANCE
-		&& ($slave->isIdle || $slave->{master_dist} > $config{$slave->{configPrefix}.'followDistanceMax'} || blockDistance(AI::args->{move_to}, $slave->{pos_to}) > $config{$slave->{configPrefix}.'followDistanceMax'})
+		&& ($slave->isIdle || $slave->{master_dist} > $config{$slave->{configPrefix}.'followDistanceMax'} || blockDistance($char->{pos_to}, $slave->{pos_to}) > $config{$slave->{configPrefix}.'followDistanceMax'})
 		&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{isFollow})
 	) {
 		$slave->clear('move', 'route');
@@ -950,7 +950,7 @@ sub processAutoAttack {
 	 && timeOut($timeout{$slave->{ai_attack_auto_timeout}})
 	 && (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity)
 	 && $slave->{master_dist} <= $config{$slave->{configPrefix}.'followDistanceMax'}
-	 && ((AI::action ne "move" && AI::action ne "route") || blockDistance(AI::args->{move_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'})
+	 && ((AI::action ne "move" && AI::action ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'})
 	) {
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
