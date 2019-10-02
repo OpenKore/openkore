@@ -16,7 +16,9 @@ sub start {
 	
 	$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			'testmacro1',
+			'auto_name',
 			1,
+			undef,
 			undef,
 			undef,
 			undef,
