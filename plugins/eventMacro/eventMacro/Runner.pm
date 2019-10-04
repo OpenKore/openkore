@@ -24,13 +24,14 @@ use eventMacro::Automacro;
 
 # Creates the object
 sub new {
-	my ($class, $name, $repeat, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
+	my ($class, $name, $caller_name, $repeat, $interruptible, $self_interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
 
 	return undef unless ($eventMacro->{Macro_List}->getByName($name));
 	
 	my $self = bless {}, $class;
 	
 	$self->{name} = $name;
+	$self->{caller_name} = $caller_name;
 	$self->{Paused} = 0;
 	$self->{registered} = 0;
 	$self->{finished} = 0;
@@ -71,6 +72,12 @@ sub new {
 		$self->interruptible($interruptible);
 	} else {
 		$self->interruptible(1);
+	}
+	
+	if (defined $self_interruptible && $self_interruptible =~ /^[01]$/) {
+		$self->self_interruptible($self_interruptible);
+	} else {
+		$self->self_interruptible(0);
 	}
 	
 	if (defined $overrideAI && $overrideAI =~ /^[01]$/) {
@@ -156,6 +163,23 @@ sub interruptible {
 		
 	}
 	return $self->{interruptible};
+}
+
+# Sets/Gets the current self_interruptible flag
+sub self_interruptible {
+	my ($self, $self_interruptible) = @_;
+	
+	if (defined $self_interruptible) {
+		
+		if (defined $self->{self_interruptible} && $self->{self_interruptible} == $self_interruptible) {
+			debug "[eventMacro] Macro '".$self->{name}."' self_interruptible state is already '".$self_interruptible."'.\n", "eventMacro", 2;
+		} else {
+			debug "[eventMacro] Now macro '".$self->{name}."' self_interruptible state is '".$self_interruptible."'.\n", "eventMacro", 2;
+			$self->{self_interruptible} = $self_interruptible;
+		}
+		
+	}
+	return $self->{self_interruptible};
 }
 
 # Makes sure the automacro checking state is compatible with this macro interruptible
@@ -340,6 +364,12 @@ sub get_name {
 	return $self->{name};
 }
 
+# Returns the name of the automacro that called this macro
+sub get_caller_name {
+	my ($self) = @_;
+	return $self->{caller_name};
+}
+
 # Deletes the subcall object
 sub clear_subcall {
 	my ($self) = @_;
@@ -369,7 +399,7 @@ sub clear_subcall {
 sub create_subcall {
 	my ($self, $name, $repeat) = @_;
 	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{name}."'.\n", "eventMacro", 2;
-	$self->{subcall} = new eventMacro::Runner($name, $repeat, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
+	$self->{subcall} = new eventMacro::Runner($name, $self->get_caller_name, $repeat, $self->interruptible, $self->self_interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
 }
 
 # destructor
@@ -1647,6 +1677,12 @@ sub parse_set {
 			$self->error("exclusive parameter should be '0' or '1'. Given value: '$new_value'");
 		} else {
 			$self->interruptible($new_value?0:1);
+		}
+	} elsif ($parameter eq 'self_interruptible') {
+		if ($new_value !~ /^[01]$/) {
+			$self->error("self_interruptible parameter should be '0' or '1'. Given value: '$new_value'");
+		} else {
+			$self->self_interruptible($new_value);
 		}
 	} elsif ($parameter eq 'orphan') {
 		if ($new_value !~ /^(terminate|terminate_last_call|reregister|reregister_safe)$/) {

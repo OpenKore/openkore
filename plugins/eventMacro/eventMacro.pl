@@ -589,13 +589,15 @@ sub commandHandler {
 		
 		$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			$arg,
+			'command',
 			defined $opt->{repeat} ? $opt->{repeat} : 1,
 			defined $opt->{exclusive} ? $opt->{exclusive} ? 0 : 1 : undef,
+			0, # is self_interruptible? (in this case is always negative)
 			defined $opt->{overrideAI} ? $opt->{overrideAI} : undef,
 			defined $opt->{orphan} ? $opt->{orphan} : undef,
 			undef,
 			defined $opt->{macro_delay} ? $opt->{macro_delay} : undef,
-			0
+			0 # is subcall? (in this case is always negative)
 		);
 
 		if ( defined $eventMacro->{Macro_Runner} ) {

@@ -129,6 +129,9 @@ sub set_parameters {
 	if (!defined $self->{parameters}{'exclusive'}) {
 		$self->{parameters}{'exclusive'} = 0;
 	}
+	if (!defined $self->{parameters}{'self_interruptible'}) {
+		$self->{parameters}{'self_interruptible'} = 0;
+	}
 	if (!defined $self->{parameters}{'repeat'}) {
 		$self->{parameters}{'repeat'} = 1;
 	}
