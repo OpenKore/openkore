@@ -23237,3 +23237,152 @@ Hunt 150 Smelly Ghoul monsters and return to the Bounty Board at Verus City#
 63456#Bounty Board Disguise#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Disguise monsters and return to the Bounty Board at Niflheim#
 #
+63457#Bounty Board Holden#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Holden monsters and return to the Bounty Board at Einbroch#
+#
+63458#Bounty Board Metaling#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Metaling monsters and return to the Bounty Board at Einbroch#
+#
+63459#Bounty Board Noxious#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Noxious monsters and return to the Bounty Board at Einbroch#
+#
+63460#Bounty Board Porcellio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Porcellio monsters and return to the Bounty Board at Einbroch#
+#
+63461#Bounty Board Teddy Bear#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Teddy Bear monsters and return to the Bounty Board at Einbroch#
+#
+63462#Bounty Board Venomous#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venomous monsters and return to the Bounty Board at Einbroch#
+#
+63463#Bounty Board Breeze#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Breeze monsters and return to the Bounty Board at Lighthalzen#
+#
+63464#Bounty Board Metaling#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Metaling monsters and return to the Bounty Board at Lighthalzen#
+#
+63465#Bounty Board Rafflesia#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rafflesia monsters and return to the Bounty Board at Lighthalzen#
+#
+63466#Bounty Board Stem Worm#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stem Worm monsters and return to the Bounty Board at Lighthalzen#
+#
+63467#Bounty Board Kobold (Axe)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold (Axe) monsters and return to the Bounty Board at Lighthalzen#
+#
+63468#Bounty Board Kobold (Hammer)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold (Hammer) monsters and return to the Bounty Board at Lighthalzen#
+#
+63469#Bounty Board Kobold (Mace)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold (Mace) monsters and return to the Bounty Board at Lighthalzen#
+#
+63470#Bounty Board Kobold Archer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold Archer monsters and return to the Bounty Board at Lighthalzen#
+#
+63471#Bounty Board Armeyer Dinze#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Armeyer Dinze monsters and return to the Bounty Board at Lighthalzen#
+#
+63472#Bounty Board Egnigem Cenia#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Egnigem Cenia monsters and return to the Bounty Board at Lighthalzen#
+#
+63473#Bounty Board Errende Ebecee#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Errende Ebecee monsters and return to the Bounty Board at Lighthalzen#
+#
+63474#Bounty Board Kavach Icarus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kavach Icarus monsters and return to the Bounty Board at Lighthalzen#
+#
+63475#Bounty Board Laurell Weinder#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Laurell Weinder monsters and return to the Bounty Board at Lighthalzen#
+#
+63476#Bounty Board Remover#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Remover monsters and return to the Bounty Board at Lighthalzen#
+#
+63477#Bounty Board Wickbine Tres#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wickbine Tres monsters and return to the Bounty Board at Lighthalzen#
+#
+63478#Bounty Board Alphoccio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Alphoccio monsters and return to the Bounty Board at Lighthalzen#
+#
+63479#Bounty Board Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cecil Damon monsters and return to the Bounty Board at Lighthalzen#
+#
+63480#Bounty Board Celia Alde#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Celia Alde monsters and return to the Bounty Board at Lighthalzen#
+#
+63481#Bounty Board Chen Lio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Chen Lio monsters and return to the Bounty Board at Lighthalzen#
+#
+63482#Bounty Board Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Eremes Guile monsters and return to the Bounty Board at Lighthalzen#
+#
+63483#Bounty Board Flamel Emure#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Flamel Emure monsters and return to the Bounty Board at Lighthalzen#
+#
+63484#Bounty Board Gertie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Gertie monsters and return to the Bounty Board at Lighthalzen#
+#
+63485#Bounty Board Howard Alteisen#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Howard Alteisen monsters and return to the Bounty Board at Lighthalzen#
+#
+63486#Bounty Board Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kathryne Keyron monsters and return to the Bounty Board at Lighthalzen#
+#
+63487#Bounty Board Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Margaretha Sorin monsters and return to the Bounty Board at Lighthalzen#
+#
+63488#Bounty Board Randel Lawrence#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Randel Lawrence monsters and return to the Bounty Board at Lighthalzen#
+#
+63489#Bounty Board Seyren Windsor#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Seyren Windsor monsters and return to the Bounty Board at Lighthalzen#
+#
+63490#Bounty Board Trentini#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Trentini monsters and return to the Bounty Board at Lighthalzen#
+#
+
+
+
+
+
+
+
+
+63491#Bounty Board Nightmare Alphoccio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Alphoccio monsters and return to the Bounty Board at Lighthalzen#
+#
+63492#Bounty Board Nightmare Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Cecil Damon monsters and return to the Bounty Board at Lighthalzen#
+#
+63493#Bounty Board Nightmare Celia Alde#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Celia Alde monsters and return to the Bounty Board at Lighthalzen#
+#
+63494#Bounty Board Nightmare Chen Lio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Chen Lio monsters and return to the Bounty Board at Lighthalzen#
+#
+63495#Bounty Board Nightmare Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Eremes Guile monsters and return to the Bounty Board at Lighthalzen#
+#
+63496#Bounty Board Nightmare Flamel Emure#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Flamel Emure monsters and return to the Bounty Board at Lighthalzen#
+#
+63497#Bounty Board Nightmare Gertie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Gertie monsters and return to the Bounty Board at Lighthalzen#
+#
+63498#Bounty Board Nightmare Howard Alteisen#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Howard Alteisen monsters and return to the Bounty Board at Lighthalzen#
+#
+63499#Bounty Board Nightmare Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Kathryne Keyron monsters and return to the Bounty Board at Lighthalzen#
+#
+63500#Bounty Board Nightmare Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Margaretha Sorin monsters and return to the Bounty Board at Lighthalzen#
+#
+63501#Bounty Board Nightmare Randel Lawrence#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Randel Lawrence monsters and return to the Bounty Board at Lighthalzen#
+#
+63502#Bounty Board Nightmare Seyren Windsor#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Seyren Windsor monsters and return to the Bounty Board at Lighthalzen#
+#
+63503#Bounty Board Nightmare Trentini#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Trentini monsters and return to the Bounty Board at Lighthalzen#
+#
