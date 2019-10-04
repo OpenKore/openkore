@@ -626,7 +626,7 @@ sub new {
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
-		'0ABE' => ['warp_portal_list', 'v Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
+		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC2' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]],   # -1
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
@@ -842,7 +842,7 @@ sub parse_items {
 	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
-		
+
 		if ( $args->{switch} eq '0B09' && $item->{type} == 10 ) { # workaround arrow byte bug
 			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
 		}
