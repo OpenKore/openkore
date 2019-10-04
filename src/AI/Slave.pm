@@ -137,6 +137,14 @@ sub isLost {
 	return 0;
 }
 
+sub slave_setMapChanged {
+	my ($slave, $index) = @_;
+	$index = 0 if ($index eq "");
+	if ($index < @{$slave->{slave_seq_args}}) {
+		$slave->{slave_seq_args}[$index]{'mapChanged'} = time;
+	}
+}
+
 sub iterate {
 	my $slave = shift;
 	
@@ -168,7 +176,7 @@ sub iterate {
 	$slave->processTeleportToMaster;
 	$slave->processAutoAttack;
 	$slave->processFollow;
-	$slave->processMoveNearMaster;
+	$slave->processIdleWalk;
 }
 
 sub processWasFound {
@@ -177,6 +185,10 @@ sub processWasFound {
 		$slave->{follow_lostTeleportRetry} = 0;
 		$slave->{isLost} = 0;
 		warning "[test] $slave was rescued. Thanks Senpaaaaai.\n";
+		if (AI::is('route') && AI::args()->{isSlaveRescue}) {
+			warning "[test] Cleaning senpai AI.\n";
+			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isSlaveRescue});
+		}
 	}
 }
 
@@ -232,25 +244,40 @@ sub processFollow {
 	}
 }
 
-sub processMoveNearMaster {
+sub processIdleWalk {
 	my $slave = shift;
 	if (
 		$slave->isIdle
-		&& $slave->{master_dist} > ($config{$slave->{configPrefix}.'followDistanceMin'} || 3)
-		&& $slave->{master_dist} < MAX_DISTANCE
-		&& timeOut($timeout{$slave->{ai_standby_timeout}})
+		&& $slave->{master_dist} <= MAX_DISTANCE
+		&& $config{$slave->{configPrefix}.'idleWalk'}
 	) {
-		$slave->sendStandBy;
-		$timeout{$slave->{ai_standby_timeout}}{time} = time;
-		debug sprintf("Slave standby (distance: %d)\n", $slave->{master_dist}), 'slave';
-	}
-}
-
-sub slave_setMapChanged {
-	my ($slave, $index) = @_;
-	$index = 0 if ($index eq "");
-	if ($index < @{$slave->{slave_seq_args}}) {
-		$slave->{slave_seq_args}[$index]{'mapChanged'} = time;
+		# Standby
+		if ($config{$slave->{configPrefix}.'idleWalk_type'} == 1) {
+			return unless ($slave->{master_dist} > ($config{$slave->{configPrefix}.'followDistanceMin'} || 3));
+			return unless (timeOut($timeout{$slave->{ai_standby_timeout}}));
+			$timeout{$slave->{ai_standby_timeout}}{time} = time;
+			$slave->sendStandBy;
+			debug sprintf("Slave standby\n"), 'slave';
+		
+		# Random square
+		} elsif ($config{$slave->{configPrefix}.'idleWalk_type'} == 2) {
+			my @cells = calcRectArea2($char->{pos_to}{x}, $char->{pos_to}{y}, $config{$slave->{configPrefix}.'followDistanceMax'}, $config{$slave->{configPrefix}.'followDistanceMin'});
+			my $walk_pos;
+			my $index;
+			while (@cells) {
+				$index = int(rand(@cells));
+				my $cell = $cells[$index];
+				next if (!$field->isWalkable($cell->{x}, $cell->{y}));
+				
+				$walk_pos = $cell;
+				last;
+			} continue {
+				splice(@cells, $index, 1);
+			}
+			return unless ($walk_pos);
+			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, noAvoidWalls => 1, isIdleWalk => 1);
+			debug sprintf("Slave IdleWalk route\n"), 'slave';
+		}
 	}
 }
 

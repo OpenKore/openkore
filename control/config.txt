@@ -386,6 +386,16 @@ mercenary_attack_dance 0
 mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
 
+mercenary_follow_lostTeleportRetry 6
+mercenary_follow_lostRescue 1
+
+mercenary_moveNearIdle 1
+mercenary_moveNearIdle_distance 4
+mercenary_moveNearIdle_maxDistance 8
+
+mercenary_idleWalk 1
+mercenary_idleWalk_type 1
+
 mercenary_route_step 15
 
 mercenary_tankMode 0
@@ -412,8 +422,6 @@ homunculus_attackAuto_onlyWhenSafe 0
 homunculus_attackAuto_duringRandomWalk 1
 homunculus_attackAuto_duringItemsTake 1
 
-homunculus_attack_dance 0
-
 homunculus_attackDistance 1.5
 homunculus_attackMaxDistance 2.5
 homunculus_attackDistanceAuto 0
@@ -423,11 +431,24 @@ homunculus_attackCheckLOS 0
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 
+homunculus_attack_dance 1
+
+homunculus_runFromTarget 0
+homunculus_runFromTarget_dist 6
+mercenary_runFromTarget_step 7
+
 homunculus_followDistanceMax 12
 homunculus_followDistanceMin 3
 
 homunculus_follow_lostTeleportRetry 6
 homunculus_follow_lostRescue 1
+
+homunculus_moveNearIdle 1
+homunculus_moveNearIdle_distance 4
+homunculus_moveNearIdle_maxDistance 8
+
+homunculus_idleWalk 1
+homunculus_idleWalk_type 1
 
 homunculus_route_step 15
 

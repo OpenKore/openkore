@@ -2211,7 +2211,7 @@ sub processRescueSlave {
 			if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
 				if ($slave->isLost) {
 					AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
-					ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
+					ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1, isSlaveRescue => 1);
 					warning TF("[test] %s is lost (distance: %d) - Rescuing it\n", $slave, $slave->blockDistance), 'slave';
 					return;
 				}
@@ -2226,16 +2226,19 @@ sub processMoveNearSlave {
 		&& $char->{slaves}
 		&& !AI::SlaveManager::isIdle()
 	) {
-		my $slave;
-		if ($char->{homunculus} && !$char->{homunculus}->isIdle && $config{$char->{homunculus}{configPrefix}.'followDistanceMax'} && blockDistance($char->{homunculus}->position, $char->position) > $config{$char->{homunculus}{configPrefix}.'followDistanceMax'}) {
-			$slave = $char->{homunculus};
-		} elsif ($char->{mercenary} && !$char->{mercenary}->isIdle && $config{$char->{mercenary}{configPrefix}.'followDistanceMax'} && blockDistance($char->{mercenary}->position, $char->position) > $config{$char->{mercenary}{configPrefix}.'followDistanceMax'}) {
-			$slave = $char->{mercenary};
-		} else {
-			return;
+		my $move_slave;
+		foreach my $slave (values %{$char->{slaves}}) {
+			if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
+				if ($config{$slave->{configPrefix}.'moveNearIdle'} && !$slave->isIdle && blockDistance($slave->position, $char->position) > ($config{$slave->{configPrefix}.'moveNearIdle_maxDistance'} || 8)) {
+					$move_slave = $slave;
+					last;
+				}
+			}
 		}
-		ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1);
-		warning TF("[test] %s moves too far (distance: %d) - Moving near\n", $slave, blockDistance($slave->position, $char->position)), 'slave';
+		return unless ($move_slave);
+		
+		ai_route($field->baseName, $move_slave->{pos_to}{x}, $move_slave->{pos_to}{y}, distFromGoal => ($config{$move_slave->{configPrefix}.'moveNearIdle_distance'} || 4), attackOnRoute => 1, noSitAuto => 1, isMoveNearSlave => 1);
+		warning TF("[test] %s moves too far (distance: %d is > %d) - Moving near\n", $move_slave, blockDistance($move_slave->position, $char->position), ($config{$move_slave->{configPrefix}.'moveNearIdle_maxDistance'} || 8)), 'slave';
 	}
 }
 
@@ -2244,10 +2247,19 @@ sub processRandomWalk_waitSlave {
 	if (AI::is('route') && AI::args()->{isRandomWalk}
 		&& $config{route_randomWalk_waitSlave}
 		&& $char->{slaves}
-		&&    (($char->{homunculus} && $char->{homunculus}->action eq "attack")
-			|| ($char->{mercenary} && $char->{mercenary}->action eq "attack"))
+		&& !AI::SlaveManager::isIdle()
 	){
-		warning "[test] processRandomWalk_waitSlave - Stoping for slave.\n";
+		my $wait_slave;
+		foreach my $slave (values %{$char->{slaves}}) {
+			if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
+				if ($slave->action eq "attack") {
+					$wait_slave = $slave;
+					last;
+				}
+			}
+		}
+		return unless ($wait_slave);
+		warning TF("[test] processRandomWalk_waitSlave - Stoping for %s.\n", $wait_slave), 'slave';
 		AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 	}
 }

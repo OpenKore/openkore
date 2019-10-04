@@ -74,7 +74,9 @@ sub isIdle {
 	
 	foreach my $slave (values %{$char->{slaves}}) {
 		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
-			return 0 unless $slave->isIdle;
+			next if ($slave->isIdle);
+			next if ($slave->action eq 'route' && $slave->args($slave->findAction('route'))->{isIdleWalk});
+			return 0;
 		}
 	}
 	return 1;
