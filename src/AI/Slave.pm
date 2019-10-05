@@ -703,6 +703,10 @@ sub get_kite_cell {
 		}
 	);
 	
+	my %kite_pos = (
+		x => undef,
+		y => undef,
+	);
 	my %result;
 	while ($total_added_rad < $max_rad) {
 		my $add_x = int($move_distance * $cos_cur);
@@ -748,8 +752,9 @@ sub get_kite_cell {
 			next;
 		}
 		
-		message ("[test] Kiteing my style in rad ".$current_rad." (from ($slave_pos->{x} $slave_pos->{y}) to ($result{x}, $result{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) master at ($master_pos->{x} $master_pos->{y}).\n");
-		return \%result;
+		$kite_pos{x} = $result{x}
+		$kite_pos{y} = $result{y}
+		last;
 		
 	} continue {
 		if ($current_mod == 1 && $total_added_rad > 0) {
@@ -771,11 +776,14 @@ sub get_kite_cell {
 		$sin_cur = sin($current_rad);
 	}
 	
-	if (defined $best_not_distant_cell{x}) {
-		message ("[test3] There was no perfect cell, using best_not_distant_cell $best_not_distant_cell{x} $best_not_distant_cell{y} (dist $best_not_distant_cell{distance_dif})\n");
-		$result{x} = $best_not_distant_cell{x};
-		$result{y} = $best_not_distant_cell{y};
-		return \%result;
+	if (!defined $kite_pos{x} && defined $best_not_distant_cell{x}) {
+		$kite_pos{x} = $best_not_distant_cell{x};
+		$kite_pos{y} = $best_not_distant_cell{y};
+	}
+	
+	if (defined $kite_pos{x}) {
+		message ("[test] Kiteing (from ($slave_pos->{x} $slave_pos->{y}) to ($kite_pos{x}, $kite_pos{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) master at ($master_pos->{x} $master_pos->{y}).\n");
+		return \%kite_pos;
 	}
 	
 	return undef;

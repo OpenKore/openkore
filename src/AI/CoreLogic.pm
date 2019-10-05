@@ -153,7 +153,7 @@ sub iterate {
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
 	processRescueSlave();
-	processRandomWalk_waitSlave();
+	processRandomWalk_stopDuringSlaveAttack();
 	processMoveNearSlave();
 	processRandomWalk();
 	processFollow();
@@ -2209,7 +2209,7 @@ sub processRescueSlave {
 	) {
 		foreach my $slave (values %{$char->{slaves}}) {
 			if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
-				if ($slave->isLost) {
+				if ($slave->isLost && $config{$slave->{configPrefix}.'lost_rescue_randomWalk'}) {
 					AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 					ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1, isSlaveRescue => 1);
 					warning TF("[test] %s is lost (distance: %d) - Rescuing it\n", $slave, $slave->blockDistance), 'slave';
@@ -2242,10 +2242,10 @@ sub processMoveNearSlave {
 	}
 }
 
-# route_randomWalk_waitSlave
-sub processRandomWalk_waitSlave {
+# route_randomWalk_stopDuringSlaveAttack
+sub processRandomWalk_stopDuringSlaveAttack {
 	if (AI::is('route') && AI::args()->{isRandomWalk}
-		&& $config{route_randomWalk_waitSlave}
+		&& $config{route_randomWalk_stopDuringSlaveAttack}
 		&& $char->{slaves}
 		&& !AI::SlaveManager::isIdle()
 	){
@@ -2259,7 +2259,7 @@ sub processRandomWalk_waitSlave {
 			}
 		}
 		return unless ($wait_slave);
-		warning TF("[test] processRandomWalk_waitSlave - Stoping for %s.\n", $wait_slave), 'slave';
+		warning TF("[test] processRandomWalk_stopDuringSlaveAttack - Stoping for %s.\n", $wait_slave), 'slave';
 		AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 	}
 }
