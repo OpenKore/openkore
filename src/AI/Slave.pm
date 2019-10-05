@@ -752,8 +752,8 @@ sub get_kite_cell {
 			next;
 		}
 		
-		$kite_pos{x} = $result{x}
-		$kite_pos{y} = $result{y}
+		$kite_pos{x} = $result{x};
+		$kite_pos{y} = $result{y};
 		last;
 		
 	} continue {
