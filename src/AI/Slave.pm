@@ -249,10 +249,10 @@ sub processIdleWalk {
 	if (
 		$slave->isIdle
 		&& $slave->{master_dist} <= MAX_DISTANCE
-		&& $config{$slave->{configPrefix}.'idleWalk'}
+		&& $config{$slave->{configPrefix}.'idleWalkType'}
 	) {
 		# Standby
-		if ($config{$slave->{configPrefix}.'idleWalk_type'} == 1) {
+		if ($config{$slave->{configPrefix}.'idleWalkType'} == 1) {
 			return unless ($slave->{master_dist} > ($config{$slave->{configPrefix}.'followDistanceMin'} || 3));
 			return unless (timeOut($timeout{$slave->{ai_standby_timeout}}));
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
@@ -260,7 +260,7 @@ sub processIdleWalk {
 			debug sprintf("Slave standby\n"), 'slave';
 		
 		# Random square
-		} elsif ($config{$slave->{configPrefix}.'idleWalk_type'} == 2) {
+		} elsif ($config{$slave->{configPrefix}.'idleWalkType'} == 2) {
 			my @cells = calcRectArea2($char->{pos_to}{x}, $char->{pos_to}{y}, $config{$slave->{configPrefix}.'followDistanceMax'}, $config{$slave->{configPrefix}.'followDistanceMin'});
 			my $walk_pos;
 			my $index;

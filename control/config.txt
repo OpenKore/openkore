@@ -395,8 +395,7 @@ mercenary_moveNearIdle 1
 mercenary_moveNearIdle_distance 4
 mercenary_moveNearIdle_maxDistance 8
 
-mercenary_idleWalk 1
-mercenary_idleWalk_type 1
+mercenary_idleWalkType 1
 
 mercenary_route_step 15
 
@@ -449,8 +448,7 @@ homunculus_moveNearIdle 1
 homunculus_moveNearIdle_distance 4
 homunculus_moveNearIdle_maxDistance 8
 
-homunculus_idleWalk 1
-homunculus_idleWalk_type 1
+homunculus_idleWalkType 1
 
 homunculus_route_step 15
 
