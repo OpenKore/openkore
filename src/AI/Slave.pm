@@ -154,7 +154,7 @@ sub iterate {
 	
 	return if ($slave->{slave_AI} == AI::OFF);
 	
-	$slave->{master_dist} = blockDistance ($slave->position, $char->position);
+	$slave->{master_dist} = $slave->blockDistance_master;
 
 	##### MANUAL AI STARTS HERE #####
 	

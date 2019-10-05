@@ -199,6 +199,7 @@ route_avoidWalls 1
 route_randomWalk 1
 
 route_randomWalk_stopDuringSlaveAttack 0
+route_randomWalk_waitSlaveMinDistance 0
 
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
