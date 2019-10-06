@@ -179,14 +179,80 @@ sub iterate {
 	$slave->processIdleWalk;
 }
 
+sub processClientSuspend {
+	my $slave = shift;
+	##### CLIENT SUSPEND #####
+	# The clientSuspend AI sequence is used to freeze all other AI activity
+	# for a certain period of time.
+
+	if ($slave->action eq 'clientSuspend' && timeOut($slave->args)) {
+		debug "Slave AI suspend by clientSuspend dequeued\n";
+		$slave->dequeue;
+	} elsif ($slave->action eq "clientSuspend" && $net->clientAlive()) {
+		# When XKore mode is turned on, clientSuspend will increase it's timeout
+		# every time the user tries to do something manually.
+		my $args = $slave->args;
+
+		if ($args->{'type'} eq "0089") {
+			# Player's manually attacking
+			if ($args->{'args'}[0] == 2) {
+				if ($chars[$config{'char'}]{'sitting'}) {
+					$args->{'time'} = time;
+				}
+			} elsif ($args->{'args'}[0] == 3) {
+				$args->{'timeout'} = 6;
+			} else {
+				my $ID = $args->{args}[1];
+				my $monster = $monstersList->getByID($ID);
+
+				if (!$args->{'forceGiveup'}{'timeout'}) {
+					$args->{'forceGiveup'}{'timeout'} = 6;
+					$args->{'forceGiveup'}{'time'} = time;
+				}
+				if ($monster) {
+					$args->{time} = time;
+					$args->{dmgFromYou_last} = $monster->{dmgFromYou};
+					$args->{missedFromYou_last} = $monster->{missedFromYou};
+					if ($args->{dmgFromYou_last} != $monster->{dmgFromYou}) {
+						$args->{forceGiveup}{time} = time;
+					}
+				} else {
+					$args->{time} -= $args->{'timeout'};
+				}
+				if (timeOut($args->{forceGiveup})) {
+					$args->{time} -= $args->{timeout};
+				}
+			}
+
+		} elsif ($args->{'type'} eq "009F") {
+			# Player's manually picking up an item
+			if (!$args->{'forceGiveup'}{'timeout'}) {
+				$args->{'forceGiveup'}{'timeout'} = 4;
+				$args->{'forceGiveup'}{'time'} = time;
+			}
+			if ($items{$args->{'args'}[0]}) {
+				$args->{'time'} = time;
+			} else {
+				$args->{'time'} -= $args->{'timeout'};
+			}
+			if (timeOut($args->{'forceGiveup'})) {
+				$args->{'time'} -= $args->{'timeout'};
+			}
+		}
+
+		# Client suspended, do not continue with AI
+		return 1;
+	}
+}
+
 sub processWasFound {
 	my $slave = shift;
 	if ($slave->{isLost} && $slave->{master_dist} < MAX_DISTANCE) {
 		$slave->{follow_lostTeleportRetry} = 0;
 		$slave->{isLost} = 0;
-		warning "[test] $slave was rescued. Thanks Senpaaaaai.\n";
+		warning sprintf("%s was rescued.\n", $slave), 'slave';
 		if (AI::is('route') && AI::args()->{isSlaveRescue}) {
-			warning "[test] Cleaning senpai AI.\n";
+			warning sprintf("Cleaning AI rescue sequence\n"), 'slave';
 			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isSlaveRescue});
 		}
 	}
@@ -205,9 +271,9 @@ sub processTeleportToMaster {
 			$slave->sendStandBy;
 			$slave->{follow_lostTeleportRetry}++;
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
-			warning sprintf("[test] Slave standby (distance: %d) (re)try: %d\n", $slave->{master_dist}, $slave->{follow_lostTeleportRetry}), 'slave';
+			warning sprintf("%s trying to teleport to master (distance: %d) (re)try: %d\n", $slave, $slave->{master_dist}, $slave->{follow_lostTeleportRetry}), 'slave';
 		} else {
-			warning "[test] $slave is lost. Please rescue meeeeeeee.\n";
+			warning sprintf("%s is lost (distance: %d).\n", $slave, $slave->{master_dist}), 'slave';
 			$slave->{isLost} = 1;
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
 		}
@@ -227,7 +293,7 @@ sub processFollow {
 		$slave->clear('move', 'route');
 		if (!checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
 			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, isFollow => 1);
-			debug sprintf("Slave follow route (distance: %d)\n", $slave->{master_dist}), 'slave';
+			debug sprintf("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 
 		} elsif (timeOut($slave->{move_retry}, 0.5)) {
 			# No update yet, send move request again.
@@ -239,7 +305,7 @@ sub processFollow {
 			# (e.g. can't route properly around obstacles and corners)
 			# so we make use of the sendSlaveMove() to make up for a more efficient routing
 			$slave->move($char->{pos_to}{x}, $char->{pos_to}{y});
-			debug sprintf("Slave follow move (distance: %d)\n", $slave->{master_dist}), 'slave';
+			debug sprintf("%s follow move (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 		}
 	}
 }
@@ -257,8 +323,8 @@ sub processIdleWalk {
 			return unless (timeOut($timeout{$slave->{ai_standby_timeout}}));
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
 			$slave->sendStandBy;
-			debug sprintf("Slave standby\n"), 'slave';
-		
+			debug sprintf("%s standby\n", $slave), 'slave';
+
 		# Random square
 		} elsif ($config{$slave->{configPrefix}.'idleWalkType'} == 2) {
 			my @cells = calcRectArea2($char->{pos_to}{x}, $char->{pos_to}{y}, $config{$slave->{configPrefix}.'followDistanceMax'}, $config{$slave->{configPrefix}.'followDistanceMin'});
@@ -276,7 +342,7 @@ sub processIdleWalk {
 			}
 			return unless ($walk_pos);
 			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, noAvoidWalls => 1, isIdleWalk => 1);
-			debug sprintf("Slave IdleWalk route\n"), 'slave';
+			debug sprintf("%s IdleWalk route\n", $slave), 'slave';
 		}
 	}
 }
@@ -584,10 +650,8 @@ sub processAttack {
 			if ($args->{attackMethod}{type} eq "weapon") {
 				if ($config{$slave->{configPrefix}.'attack_dance'}) {
 					if (timeOut($timeout{$slave->{ai_dance_attack_timeout}})) {
-						my $cells = GetDanceCell($realMyPos->{x},$realMyPos->{y},$realMonsterPos->{x},$realMonsterPos->{y});
-						my $nx = $cells->[0];
-						my $ny = $cells->[1];
-						$slave->sendMove ($nx, $ny);
+						my $cell = GetDanceCell($slave, $target);
+						$slave->sendMove ($cell->{x}, $cell->{y});
 						$slave->sendAttack ($ID);
 						$slave->sendMove ($realMyPos->{x},$realMyPos->{y});
 						$timeout{$slave->{ai_dance_attack_timeout}}{time} = time;
@@ -648,29 +712,26 @@ sub processAttack {
 # My Kite algorithm
 sub get_kite_cell {
 	my ($slave, $target, $min_dist_from_target, $move_distance, $master, $max_dist_to_master) = @_;
-	#my $min_dist_from_target = 5; #Kitestep = 5
-	#my $max_dist_to_master = 12; #KiteBounds = 10
-	#my $move_distance = 7;
-	
+
 	my $slave_pos = calcPosition($slave);
 	my $enemy_pos = calcPosition($target);
 	my $master_pos = calcPosition($master);
-	
+
 	my %vec = (
 		x => $slave_pos->{x} - $enemy_pos->{x},
 		y => $slave_pos->{y} - $enemy_pos->{y}
 	);
-	
+
 	# Atan2 is switched in vectodegree
 	my $initial_rad = atan2($vec{y}, $vec{x});
 	if ($initial_rad < 0) {
 		$initial_rad += pi2;
 	}
-	
+
 	#message ("[test] Kiteing my style slave at ($slave_pos->{x} $slave_pos->{y}) mob at ($enemy_pos->{x} $enemy_pos->{y}) master at ($master_pos->{x} $master_pos->{y}).\n");
 	#message ("[test] Vec is ($vec{x} $vec{y}).\n");
 	#message ("[test] Initial rad is $initial_rad.\n");
-	
+
 	my $current_rad = $initial_rad;
 	my $cos_cur = cos($current_rad);
 	my $sin_cur = sin($current_rad);
@@ -702,7 +763,7 @@ sub get_kite_cell {
 			y => undef
 		}
 	);
-	
+
 	my %kite_pos = (
 		x => undef,
 		y => undef,
@@ -721,7 +782,7 @@ sub get_kite_cell {
 			$last_pos_by_mod{$current_mod}{y} = $result{y};
 		}
 		#message ("[test] Testing rad $current_rad (cos $cos_cur - sin $sin_cur), adjusted by rad $total_added_rad on mod $current_mod and dist $move_distance (added $add_x $add_y). Position: $result{x} $result{y}\n");
-		
+
 		if (!$field->isWalkable($result{x}, $result{y})) {
 			#message ("[test] It was not walkable - Next\n");
 			next;
@@ -751,11 +812,11 @@ sub get_kite_cell {
 			}
 			next;
 		}
-		
+
 		$kite_pos{x} = $result{x};
 		$kite_pos{y} = $result{y};
 		last;
-		
+
 	} continue {
 		if ($current_mod == 1 && $total_added_rad > 0) {
 			$current_mod = -1;
@@ -763,204 +824,161 @@ sub get_kite_cell {
 			$current_mod = 1;
 			$total_added_rad += $added_rad_per_loop;
 		}
-		
+
 		$current_rad = $initial_rad + ($total_added_rad * $current_mod);
-		
+
 		if ($current_rad >= pi2) {
 			$current_rad -= pi2;
 		} elsif ($current_rad < 0) {
 			$current_rad += pi2;
 		}
-		
+
 		$cos_cur = cos($current_rad);
 		$sin_cur = sin($current_rad);
 	}
-	
+
 	if (!defined $kite_pos{x} && defined $best_not_distant_cell{x}) {
 		$kite_pos{x} = $best_not_distant_cell{x};
 		$kite_pos{y} = $best_not_distant_cell{y};
 	}
-	
+
 	if (defined $kite_pos{x}) {
-		message ("[test] Kiteing (from ($slave_pos->{x} $slave_pos->{y}) to ($kite_pos{x}, $kite_pos{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) master at ($master_pos->{x} $master_pos->{y}).\n");
+		message ("$slave kiteing (from ($slave_pos->{x} $slave_pos->{y}) to ($kite_pos{x}, $kite_pos{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) master at ($master_pos->{x} $master_pos->{y}).\n");
 		return \%kite_pos;
 	}
-	
+
 	return undef;
 }
 
 # AzzyAI dance
 
-# (x, y, enemyx, enemyy)
 sub GetDanceCell {
-	my ($x, $y, $enemyx, $enemyy) = @_;
+	my ($slave, $target) = @_;
+
+	my $slave_pos = calcPosition($slave);
+	my $enemy_pos = calcPosition($target);
+
 	my $t = int(rand(2));
-	my $cell;
+
+	my $dance_pos;
 	if ($t == 1) {
-		$cell = AdjustCW($x,$y,$enemyx,$enemyy);
+		$dance_pos = AdjustCW($slave_pos->{x}, $slave_pos->{y}, $enemy_pos->{x}, $enemy_pos->{y});
 	} elsif ($t == 2) {
-		$cell = AdjustCCW($x,$y,$enemyx,$enemyy);
+		$dance_pos = AdjustCCW($slave_pos->{x}, $slave_pos->{y}, $enemy_pos->{x}, $enemy_pos->{y});
 	} else {
-		$cell = AdjustOpp($x,$y,$enemyx,$enemyy);
+		$dance_pos = AdjustOpp($slave_pos->{x}, $slave_pos->{y}, $enemy_pos->{x}, $enemy_pos->{y});
 	}
-	return $cell;
+	return $dance_pos;
 }
 
-#(x,y,ox,oy)
 sub AdjustOpp {
 	my ($x, $y, $ox, $oy) = @_;
-	my $dx=$ox-$x;
-	my $dy=$oy-$y;
-	my $cell = [$x+2*$dx, $y+2*$dy];
-	return $cell;
+
+	my $dx = $ox - $x;
+	my $dy = $oy - $y;
+
+	my %dance_pos = (
+		x => $x + (2 * $dx),
+		y => $y + (2 * $dy),
+	);
+
+	return \%dance_pos;
 }
 
 sub AdjustCW {
 	my ($x, $y, $ox, $oy) = @_;
-	my ($newx,$newy,$dy,$dx);
-	if ($x==$ox) {
-		if ($y==$oy) {
-			$newx,$newy=$ox+1,$oy;
+	my ($newx, $newy, $dy, $dx);
+
+	if ($x == $ox) {
+		if ($y == $oy) {
+			$newx = $ox + 1;
+			$newy = $oy;
 		} else {
-			$dy=$y-$oy;
-			$newx=$x+absunit($dy);
-			$newy=$y;
+			$dy = $y - $oy;
+			$newx = $x + absunit($dy);
+			$newy = $y;
 		}
-	} elsif ($y==$oy) {
-		$dx=$x-$ox;
-		$newy=$y-absunit($dx);
-		$newx=$x;
-	} elsif ($y>$oy) {
-		if ($x>$ox) {
-			$newy=$y-1;
-			$newx=$x;
+	} elsif ($y == $oy) {
+		$dx = $x - $ox;
+		$newy = $y - absunit($dx);
+		$newx = $x;
+	} elsif ($y > $oy) {
+		if ($x > $ox) {
+			$newy = $y - 1;
+			$newx = $x;
 		} else {
-			$newy=$y;
-			$newx=$x+1;
+			$newy = $y;
+			$newx = $x + 1;
 		}
 	} else {
-		if ($x>$ox) {
-			$newx=$x-1;
-			$newy=$y;
+		if ($x > $ox) {
+			$newx = $x - 1;
+			$newy = $y;
 		} else {
-			$newx=$x;
-			$newy=$y+1;
+			$newx = $x;
+			$newy = $y + 1;
 		}
 	}
-	my $cell = [$newx,$newy];
-	return $cell;
+
+	my %dance_pos = (
+		x => $newx,
+		y => $newy,
+	);
+
+	return \%dance_pos;
 }
 
 sub AdjustCCW {
 	my ($x, $y, $ox, $oy) = @_;
-	my ($newx,$newy,$dy,$dx);
-	if ($x==$ox) {
-		if ($y==$oy) {
-			$newx,$newy=$ox-1,$oy;
+	my ($newx, $newy, $dy, $dx);
+
+	if ($x == $ox) {
+		if ($y == $oy) {
+			$newx = $ox - 1;
+			$newy = $oy;
 		} else {
-			$dy=$y-$oy;
-			$newx=$x-absunit($dy);
-			$newy=$y;
+			$dy = $y - $oy;
+			$newx = $x - absunit($dy);
+			$newy = $y;
 		}
-	} elsif ($y==$oy) {
-		$dx=$x-$ox;
-		$newy=$y+absunit($dx);
-		$newx=$x;
-	} elsif ($y>$oy) {
-		if ($x>$ox) {
-			$newy=$y;
-			$newx=$x-1;
+	} elsif ($y == $oy) {
+		$dx = $x - $ox;
+		$newy = $y + absunit($dx);
+		$newx = $x;
+	} elsif ($y > $oy) {
+		if ($x > $ox) {
+			$newy = $y;
+			$newx = $x - 1;
 		} else {
-			$newy=$y-1;
-			$newx=$x;
+			$newy = $y - 1;
+			$newx = $x;
 		}
 	} else {
-		if ($x>$ox) {
-			$newx=$x;
-			$newy=$y+1;
+		if ($x > $ox) {
+			$newx = $x;
+			$newy = $y + 1;
 		} else {
-			$newx=$x+1;
-			$newy=$y;
+			$newx = $x + 1;
+			$newy = $y;
 		}
 	}
-	my $cell = [$newx,$newy];
-	return $cell;
+
+	my %dance_pos = (
+		x => $newx,
+		y => $newy,
+	);
+
+	return \%dance_pos;
 }
 
 sub absunit {
 	my ($x) = @_;
-	if ($x==0) {
+	if ($x == 0) {
 		return 0;
 	} elsif ($x > 0) {
 		return 1;
 	} else {
 		return -1;
-	}
-}
-
-sub processClientSuspend {
-	my $slave = shift;
-	##### CLIENT SUSPEND #####
-	# The clientSuspend AI sequence is used to freeze all other AI activity
-	# for a certain period of time.
-
-	if ($slave->action eq 'clientSuspend' && timeOut($slave->args)) {
-		debug "Slave AI suspend by clientSuspend dequeued\n";
-		$slave->dequeue;
-	} elsif ($slave->action eq "clientSuspend" && $net->clientAlive()) {
-		# When XKore mode is turned on, clientSuspend will increase it's timeout
-		# every time the user tries to do something manually.
-		my $args = $slave->args;
-
-		if ($args->{'type'} eq "0089") {
-			# Player's manually attacking
-			if ($args->{'args'}[0] == 2) {
-				if ($chars[$config{'char'}]{'sitting'}) {
-					$args->{'time'} = time;
-				}
-			} elsif ($args->{'args'}[0] == 3) {
-				$args->{'timeout'} = 6;
-			} else {
-				my $ID = $args->{args}[1];
-				my $monster = $monstersList->getByID($ID);
-
-				if (!$args->{'forceGiveup'}{'timeout'}) {
-					$args->{'forceGiveup'}{'timeout'} = 6;
-					$args->{'forceGiveup'}{'time'} = time;
-				}
-				if ($monster) {
-					$args->{time} = time;
-					$args->{dmgFromYou_last} = $monster->{dmgFromYou};
-					$args->{missedFromYou_last} = $monster->{missedFromYou};
-					if ($args->{dmgFromYou_last} != $monster->{dmgFromYou}) {
-						$args->{forceGiveup}{time} = time;
-					}
-				} else {
-					$args->{time} -= $args->{'timeout'};
-				}
-				if (timeOut($args->{forceGiveup})) {
-					$args->{time} -= $args->{timeout};
-				}
-			}
-
-		} elsif ($args->{'type'} eq "009F") {
-			# Player's manually picking up an item
-			if (!$args->{'forceGiveup'}{'timeout'}) {
-				$args->{'forceGiveup'}{'timeout'} = 4;
-				$args->{'forceGiveup'}{'time'} = time;
-			}
-			if ($items{$args->{'args'}[0]}) {
-				$args->{'time'} = time;
-			} else {
-				$args->{'time'} -= $args->{'timeout'};
-			}
-			if (timeOut($args->{'forceGiveup'})) {
-				$args->{'time'} -= $args->{'timeout'};
-			}
-		}
-
-		# Client suspended, do not continue with AI
-		return 1;
 	}
 }
 
@@ -1099,12 +1117,6 @@ sub processAutoAttack {
 
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($attackTarget) {
-			if ($config{$slave->{configPrefix}.'attackAuto_duringItemsTake'} && AI::is(qw(take items_gather items_take))) {
-				Log::warning "[test] Attacking during items take.\n";
-			} elsif ($config{$slave->{configPrefix}.'attackAuto_duringRandomWalk'} && AI::is('route') && AI::args()->{isRandomWalk}) {
-				Log::warning "[test] Attacking during randomwalk.\n";
-			}
-
 			$slave->setSuspend(0);
 			$slave->attack($attackTarget, $priorityAttack);
 		} else {

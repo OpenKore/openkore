@@ -197,10 +197,8 @@ route_escape_randomWalk 1
 route_escape_shout
 route_avoidWalls 1
 route_randomWalk 1
-
 route_randomWalk_stopDuringSlaveAttack 0
 route_randomWalk_waitSlaveMinDistance 0
-
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
@@ -365,10 +363,8 @@ mercenary_attackAuto 2
 mercenary_attackAuto_party 1
 mercenary_attackAuto_notInTown 1
 mercenary_attackAuto_onlyWhenSafe 0
-
 mercenary_attackAuto_duringRandomWalk 0
 mercenary_attackAuto_duringItemsTake 0
-
 mercenary_attackDistance 1.5
 mercenary_attackMaxDistance 2.5
 mercenary_attackDistanceAuto 0
@@ -377,6 +373,8 @@ mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 0
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
+mercenary_attack_dance 0
+mercenary_attack_dance_dist 0
 
 mercenary_runFromTarget 0
 mercenary_runFromTarget_dist 5
@@ -388,7 +386,6 @@ mercenary_attack_dance 0
 
 mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
-
 mercenary_follow_lostTeleportRetry 6
 mercenary_follow_lost_rescue_randomWalk 0
 
@@ -420,10 +417,8 @@ homunculus_attackAuto 2
 homunculus_attackAuto_party 1
 homunculus_attackAuto_notInTown 1
 homunculus_attackAuto_onlyWhenSafe 0
-
 homunculus_attackAuto_duringRandomWalk 0
 homunculus_attackAuto_duringItemsTake 0
-
 homunculus_attackDistance 1.5
 homunculus_attackMaxDistance 2.5
 homunculus_attackDistanceAuto 0
@@ -432,7 +427,6 @@ homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 0
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
-
 homunculus_attack_dance 0
 
 homunculus_runFromTarget 0
@@ -441,7 +435,6 @@ mercenary_runFromTarget_step 7
 
 homunculus_followDistanceMax 12
 homunculus_followDistanceMin 3
-
 homunculus_follow_lostTeleportRetry 6
 homunculus_follow_lost_rescue_randomWalk 0
 

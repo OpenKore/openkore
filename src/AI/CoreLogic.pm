@@ -2212,7 +2212,7 @@ sub processRescueSlave {
 				if ($slave->isLost && $config{$slave->{configPrefix}.'lost_rescue_randomWalk'}) {
 					AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 					ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1, isSlaveRescue => 1);
-					warning TF("[test] %s is lost (distance: %d) - Rescuing it\n", $slave, $slave->blockDistance), 'slave';
+					warning TF("%s got lost during randomWalk (distance: %d) - Rescuing it.\n", $slave, $slave->blockDistance_master), 'slave';
 					return;
 				}
 			}
@@ -2227,9 +2227,11 @@ sub processMoveNearSlave {
 		&& !AI::SlaveManager::isIdle()
 	) {
 		my $move_slave;
+		my $dist;
 		foreach my $slave (values %{$char->{slaves}}) {
 			if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
-				if ($config{$slave->{configPrefix}.'moveNearIdle'} && !$slave->isIdle && blockDistance($slave->position, $char->position) > ($config{$slave->{configPrefix}.'moveNearIdle_maxDistance'} || 8)) {
+				$dist = $slave->blockDistance_master;
+				if ($config{$slave->{configPrefix}.'moveNearIdle'} && !$slave->isIdle && $dist > ($config{$slave->{configPrefix}.'moveNearIdle_maxDistance'} || 8)) {
 					$move_slave = $slave;
 					last;
 				}
@@ -2238,7 +2240,7 @@ sub processMoveNearSlave {
 		return unless ($move_slave);
 		
 		ai_route($field->baseName, $move_slave->{pos_to}{x}, $move_slave->{pos_to}{y}, distFromGoal => ($config{$move_slave->{configPrefix}.'moveNearIdle_distance'} || 4), attackOnRoute => 1, noSitAuto => 1, isMoveNearSlave => 1);
-		warning TF("[test] %s moves too far (distance: %d is > %d) - Moving near\n", $move_slave, blockDistance($move_slave->position, $char->position), ($config{$move_slave->{configPrefix}.'moveNearIdle_maxDistance'} || 8)), 'slave';
+		warning TF("%s moved too far (distance: %d) - Moving near it.\n", $move_slave, $dist), 'slave';
 	}
 }
 
@@ -2259,7 +2261,7 @@ sub processRandomWalk_stopDuringSlaveAttack {
 			}
 		}
 		return unless ($wait_slave);
-		warning TF("[test] processRandomWalk_stopDuringSlaveAttack - Stoping for %s.\n", $wait_slave), 'slave';
+		warning TF("%s started attacking during randomWalk - Stoping movement for it.\n", $wait_slave), 'slave';
 		AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 	}
 }
