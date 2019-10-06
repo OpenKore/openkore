@@ -250,9 +250,9 @@ sub processWasFound {
 	if ($slave->{isLost} && $slave->{master_dist} < MAX_DISTANCE) {
 		$slave->{follow_lostTeleportRetry} = 0;
 		$slave->{isLost} = 0;
-		warning sprintf("%s was rescued.\n", $slave), 'slave';
+		warning TF("%s was rescued.\n", $slave), 'slave';
 		if (AI::is('route') && AI::args()->{isSlaveRescue}) {
-			warning sprintf("Cleaning AI rescue sequence\n"), 'slave';
+			warning TF("Cleaning AI rescue sequence\n"), 'slave';
 			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isSlaveRescue});
 		}
 	}
@@ -271,9 +271,9 @@ sub processTeleportToMaster {
 			$slave->sendStandBy;
 			$slave->{follow_lostTeleportRetry}++;
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
-			warning sprintf("%s trying to teleport to master (distance: %d) (re)try: %d\n", $slave, $slave->{master_dist}, $slave->{follow_lostTeleportRetry}), 'slave';
+			warning TF("%s trying to teleport to master (distance: %d) (re)try: %d\n", $slave, $slave->{master_dist}, $slave->{follow_lostTeleportRetry}), 'slave';
 		} else {
-			warning sprintf("%s is lost (distance: %d).\n", $slave, $slave->{master_dist}), 'slave';
+			warning TF("%s is lost (distance: %d).\n", $slave, $slave->{master_dist}), 'slave';
 			$slave->{isLost} = 1;
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
 		}
@@ -293,7 +293,7 @@ sub processFollow {
 		$slave->clear('move', 'route');
 		if (!checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
 			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, isFollow => 1);
-			debug sprintf("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
+			debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 
 		} elsif (timeOut($slave->{move_retry}, 0.5)) {
 			# No update yet, send move request again.
@@ -305,7 +305,7 @@ sub processFollow {
 			# (e.g. can't route properly around obstacles and corners)
 			# so we make use of the sendSlaveMove() to make up for a more efficient routing
 			$slave->move($char->{pos_to}{x}, $char->{pos_to}{y});
-			debug sprintf("%s follow move (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
+			debug TF("%s follow move (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 		}
 	}
 }
@@ -323,7 +323,7 @@ sub processIdleWalk {
 			return unless (timeOut($timeout{$slave->{ai_standby_timeout}}));
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
 			$slave->sendStandBy;
-			debug sprintf("%s standby\n", $slave), 'slave';
+			debug TF("%s standby\n", $slave), 'slave';
 
 		# Random square
 		} elsif ($config{$slave->{configPrefix}.'idleWalkType'} == 2) {
@@ -342,7 +342,7 @@ sub processIdleWalk {
 			}
 			return unless ($walk_pos);
 			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, noAvoidWalls => 1, isIdleWalk => 1);
-			debug sprintf("%s IdleWalk route\n", $slave), 'slave';
+			debug TF("%s IdleWalk route\n", $slave), 'slave';
 		}
 	}
 }
@@ -722,15 +722,10 @@ sub get_kite_cell {
 		y => $slave_pos->{y} - $enemy_pos->{y}
 	);
 
-	# Atan2 is switched in vectodegree
 	my $initial_rad = atan2($vec{y}, $vec{x});
 	if ($initial_rad < 0) {
 		$initial_rad += pi2;
 	}
-
-	#message ("[test] Kiteing my style slave at ($slave_pos->{x} $slave_pos->{y}) mob at ($enemy_pos->{x} $enemy_pos->{y}) master at ($master_pos->{x} $master_pos->{y}).\n");
-	#message ("[test] Vec is ($vec{x} $vec{y}).\n");
-	#message ("[test] Initial rad is $initial_rad.\n");
 
 	my $current_rad = $initial_rad;
 	my $cos_cur = cos($current_rad);
@@ -745,14 +740,6 @@ sub get_kite_cell {
 	my $current_mod = 1;
 	my $total_added_rad = 0;
 	my $max_rad = pi;
-	my %best_not_distant_cell = (
-		x => undef,
-		y => undef,
-		distance_dif => undef,
-	);
-
-	#message ("[test] Rotating by $added_rad_per_loop rads each loop.\n");
-
 	my %last_pos_by_mod = (
 		'1' => {
 			x => undef,
@@ -763,52 +750,35 @@ sub get_kite_cell {
 			y => undef
 		}
 	);
-
+	my %best_not_distant_cell = (
+		x => undef,
+		y => undef,
+		distance_dif => undef,
+	);
 	my %kite_pos = (
 		x => undef,
 		y => undef,
 	);
 	my %result;
 	while ($total_added_rad < $max_rad) {
-		my $add_x = int($move_distance * $cos_cur);
-		my $add_y = int($move_distance * $sin_cur);
-		$result{x} = $enemy_pos->{x} + $add_x;
-		$result{y} = $enemy_pos->{y} + $add_y;
-		if (defined $last_pos_by_mod{$current_mod}{x} && $result{x} == $last_pos_by_mod{$current_mod}{x} && $result{y} == $last_pos_by_mod{$current_mod}{y}) {
-			#message ("[test] It was the same pos as last loop mod $current_mod - Next\n");
-			next;
-		} else {
-			$last_pos_by_mod{$current_mod}{x} = $result{x};
-			$last_pos_by_mod{$current_mod}{y} = $result{y};
-		}
-		#message ("[test] Testing rad $current_rad (cos $cos_cur - sin $sin_cur), adjusted by rad $total_added_rad on mod $current_mod and dist $move_distance (added $add_x $add_y). Position: $result{x} $result{y}\n");
+		$result{x} = $enemy_pos->{x} + int($move_distance * $cos_cur);
+		$result{y} = $enemy_pos->{y} + int($move_distance * $sin_cur);
+		next if (defined $last_pos_by_mod{$current_mod}{x} && $result{x} == $last_pos_by_mod{$current_mod}{x} && $result{y} == $last_pos_by_mod{$current_mod}{y});
+		
+		$last_pos_by_mod{$current_mod}{x} = $result{x};
+		$last_pos_by_mod{$current_mod}{y} = $result{y};
 
-		if (!$field->isWalkable($result{x}, $result{y})) {
-			#message ("[test] It was not walkable - Next\n");
-			next;
-		}
-		if (blockDistance($master_pos, \%result) > $max_dist_to_master) {
-			#message ("[test] It was out of bounds - Next\n");
-			next;
-		}
-		if (distance(\%result, $enemy_pos) < $min_dist_from_target) {
-			#message ("[test] It was too close to target- Next\n");
-			next;
-		}
-		if (!checkLineWalkable($slave_pos, \%result, 2)) {
-			#message ("[test] It did not have a walkable line - Next\n");
-			next;
-		}
+		next if (!$field->isWalkable($result{x}, $result{y}));
+		next if (blockDistance($master_pos, \%result) > $max_dist_to_master);
+		next if (distance(\%result, $enemy_pos) < $min_dist_from_target);
+		next if (!checkLineWalkable($slave_pos, \%result, 2));
+		
 		my $dist_dif = distance(\%result, $slave_pos) - distance(\%result, $enemy_pos);
 		if ($dist_dif > 0) {
-			#message ("[test] It was closer to target than to slave - Next - Maybe saving it?\n");
-			if (defined $best_not_distant_cell{x} && $best_not_distant_cell{distance_dif} < $dist_dif) {
-				#message ("[test2] It has dist $dist_dif, we already have a best_not_distant_cell at position $best_not_distant_cell{x} $best_not_distant_cell{y} (dist $best_not_distant_cell{distance_dif})\n");
-			} else {
+			if (!defined $best_not_distant_cell{x} || $best_not_distant_cell{distance_dif} > $dist_dif) {
 				$best_not_distant_cell{x} = $result{x};
 				$best_not_distant_cell{y} = $result{y};
 				$best_not_distant_cell{distance_dif} = $dist_dif;
-				#message ("[test2] It has a better dist than our other better cell, it has dist $dist_dif, while $best_not_distant_cell{x} $best_not_distant_cell{y} had dist $best_not_distant_cell{distance_dif} saving it.\n");
 			}
 			next;
 		}
@@ -843,7 +813,7 @@ sub get_kite_cell {
 	}
 
 	if (defined $kite_pos{x}) {
-		message ("$slave kiteing (from ($slave_pos->{x} $slave_pos->{y}) to ($kite_pos{x}, $kite_pos{y})) mob at ($enemy_pos->{x} $enemy_pos->{y}) master at ($master_pos->{x} $master_pos->{y}).\n");
+		message TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d), master at (%d %d).\n", $slave, $slave_pos->{x}, $slave_pos->{y}, $kite_pos{x}, $kite_pos{y}, $enemy_pos->{x}, $enemy_pos->{y}, $master_pos->{x}, $master_pos->{y}), 'slave';
 		return \%kite_pos;
 	}
 
