@@ -460,7 +460,7 @@ sub main {
 		}
 
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-		my $cell = get_kite_position($field, $char, $target, $config{'runFromTarget_dist'}, $config{'runFromTarget_step'});
+		my $cell = get_kite_position($field, $char, $target, $config{'runFromTarget_dist'}, $config{'runFromTarget_minStep'}, $config{'runFromTarget_maxStep'});
 		if ($cell) {
 			$args->{avoiding} = 1;
 			$char->move($cell->{x}, $cell->{y}, $ID);

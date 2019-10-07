@@ -456,7 +456,7 @@ sub processAttack {
 			}
 
 		} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
-			my $cell = get_kite_position($field, $slave, $target, $config{$slave->{configPrefix}.'runFromTarget_dist'}, $config{$slave->{configPrefix}.'runFromTarget_step'}, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
+			my $cell = get_kite_position($field, $slave, $target, $config{$slave->{configPrefix}.'runFromTarget_dist'}, $config{$slave->{configPrefix}.'runFromTarget_minStep'}, $config{$slave->{configPrefix}.'runFromTarget_maxStep'}, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
 			if ($cell) {
 				$slave->args->{avoiding} = 1;
 				$slave->move($cell->{x}, $cell->{y}, $ID);

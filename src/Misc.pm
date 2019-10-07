@@ -29,7 +29,7 @@ use Compress::Zlib;
 use base qw(Exporter);
 use utf8;
 use Math::Trig;
-use Math::Trig qw/pi pi2 pip4/;
+use Math::Trig qw/pi pi2 pip2 pip4/;
 
 use Globals;
 use Log qw(message warning error debug);
@@ -855,6 +855,9 @@ sub objectIsMovingTowardsPlayer {
 	return 0;
 }
 
+use constant AVOID_WALLS => 4;
+use constant AVOID_MASTER_BOUND => 2;
+
 ##
 # get_kite_position(field, actor, target, min_dist_from_target, move_distance, master, max_dist_to_master)
 # field: Field object of the map 'actor' should kite on.
@@ -869,9 +872,12 @@ sub objectIsMovingTowardsPlayer {
 #
 # Kite algorithm used in runFromTarget
 sub get_kite_position {
-	my ($field, $actor, $target, $min_dist_from_target, $move_distance, $master, $max_dist_to_master) = @_;
+	my ($field, $actor, $target, $min_dist_from_target, $move_distance_min, $move_distance_max, $master, $max_dist_to_master) = @_;
+	
+	message TF("[test kite] min_dist_from_target %d, move_distance_min %d, move_distance_max %d, max_dist_to_master %d.\n", $min_dist_from_target, $move_distance_min, $move_distance_max, $max_dist_to_master), 'slave';
 
 	my ($actor_pos, $enemy_pos, $master_pos);
+	my $pathfinding = new PathFinding;
 	
 	$actor_pos = calcPosition($actor);
 	$enemy_pos = calcPosition($target);
@@ -883,91 +889,115 @@ sub get_kite_position {
 	if ($initial_rad < 0) {
 		$initial_rad += pi2;
 	}
-
-	my $current_rad = $initial_rad;
-	my $cos_cur = cos($current_rad);
-	my $sin_cur = sin($current_rad);
-
-	# Biggest possible angle between 2 adjacent cells in dist $move_distance
-	my $angle_a = atan2(($move_distance-1), $move_distance);
-	my $angle_b = atan2(($move_distance-1), ($move_distance+1));
-	my $added_rad_per_loop = pip4 - max($angle_a, $angle_b);
-
-	my $current_mod = 1;
-	my $total_added_rad = 0;
-	my $max_rad = pi;
-	my %last_pos_by_mod = (
-		'1' => {
-			x => undef,
-			y => undef
-		},
-		'-1' => {
-			x => undef,
-			y => undef
-		}
-	);
-	my %best_not_distant_cell = (
-		x => undef,
-		y => undef,
-		distance_dif => undef,
-	);
-	my %kite_pos = (
-		x => undef,
-		y => undef,
-	);
-	my %result;
-	while ($total_added_rad < $max_rad) {
-		$result{x} = $enemy_pos->{x} + int($move_distance * $cos_cur);
-		$result{y} = $enemy_pos->{y} + int($move_distance * $sin_cur);
-		next if (defined $last_pos_by_mod{$current_mod}{x} && $result{x} == $last_pos_by_mod{$current_mod}{x} && $result{y} == $last_pos_by_mod{$current_mod}{y});
+	
+	my @best_not_distant_cells;
+	my @best_distant_cells;
+	
+	my $farthest_wall_dist = 0;
+	my $farthest_master_bound = 0;
+	
+	foreach my $move_distance ($move_distance_min..$move_distance_max) {
+		my $current_rad = $initial_rad;
 		
-		$last_pos_by_mod{$current_mod}{x} = $result{x};
-		$last_pos_by_mod{$current_mod}{y} = $result{y};
+		# Biggest possible angle between 2 adjacent cells in dist $move_distance
+		my $angle_a = atan2(($move_distance-1), $move_distance);
+		my $angle_b = atan2(($move_distance-1), ($move_distance+1));
+		my $added_rad_per_loop = pip4 - max($angle_a, $angle_b);
 
-		next if (!$field->isWalkable($result{x}, $result{y}));
-		if ($master) {
-			next if (blockDistance($master_pos, \%result) > $max_dist_to_master);
-		}
-		next if (distance(\%result, $enemy_pos) < $min_dist_from_target);
-		next if (!checkLineWalkable($actor_pos, \%result, 2));
+		my $current_mod = 1;
+		my $total_added_rad = 0;
+		my $max_rad = pi;
+		my %last_pos_by_mod = (
+			'1'  => { x => undef, y => undef },
+			'-1' => { x => undef, y => undef },
+		);
 		
-		my $dist_dif = distance(\%result, $actor_pos) - distance(\%result, $enemy_pos);
-		if ($dist_dif > 0) {
-			if (!defined $best_not_distant_cell{x} || $best_not_distant_cell{distance_dif} > $dist_dif) {
-				$best_not_distant_cell{x} = $result{x};
-				$best_not_distant_cell{y} = $result{y};
-				$best_not_distant_cell{distance_dif} = $dist_dif;
+		while ($total_added_rad < $max_rad) {
+			my $cos_cur = cos($current_rad);
+			my $sin_cur = sin($current_rad);
+			
+			my %current_cell;
+			$current_cell{x} = $enemy_pos->{x} + int($move_distance * $cos_cur);
+			$current_cell{y} = $enemy_pos->{y} + int($move_distance * $sin_cur);
+			
+			next if (defined $last_pos_by_mod{$current_mod}{x} && $current_cell{x} == $last_pos_by_mod{$current_mod}{x} && $current_cell{y} == $last_pos_by_mod{$current_mod}{y});
+			
+			$last_pos_by_mod{$current_mod}{x} = $current_cell{x};
+			$last_pos_by_mod{$current_mod}{y} = $current_cell{y};
+
+			next if (!$field->isWalkable($current_cell{x}, $current_cell{y}));
+			if ($master) {
+				$current_cell{master_bound_dist} = $max_dist_to_master - blockDistance($master_pos, \%current_cell);
+				next if ($current_cell{master_bound_dist} < 0);
+				
+				if ($current_cell{master_bound_dist} > $farthest_master_bound) {
+					$farthest_master_bound = $current_cell{master_bound_dist};
+				}
 			}
-			next;
+			next if (blockDistance(\%current_cell, $enemy_pos) < $min_dist_from_target);
+			
+			$current_cell{wall_dist} = ord(substr($field->{dstMap}, $current_cell{y} * $field->width + $current_cell{x}));
+			if ($current_cell{wall_dist} > $farthest_wall_dist) {
+				$farthest_wall_dist = $current_cell{wall_dist};
+			}
+			
+			# Get rid of ridiculously large route distances (such as spots that are on a hill)
+			$pathfinding->reset(
+				field => $field,
+				start => $actor_pos,
+				dest => \%current_cell);
+			$current_cell{path_dist} = $pathfinding->runcount;
+			next if ($current_cell{path_dist} <= 0 || $current_cell{path_dist} > $move_distance_max * 2);
+			
+			$current_cell{dist_dif} = distance(\%current_cell, $actor_pos) - distance(\%current_cell, $enemy_pos);
+			if ($current_cell{dist_dif} > 0) {
+				push(@best_not_distant_cells, \%current_cell);
+			} else {
+				push(@best_distant_cells, \%current_cell);
+			}
+
+		} continue {
+			if ($current_mod == 1 && $total_added_rad > 0) {
+				$current_mod = -1;
+			} else {
+				$current_mod = 1;
+				$total_added_rad += $added_rad_per_loop;
+			}
+
+			$current_rad = $initial_rad + ($total_added_rad * $current_mod);
+
+			if ($current_rad >= pi2) {
+				$current_rad -= pi2;
+			} elsif ($current_rad < 0) {
+				$current_rad += pi2;
+			}
 		}
-
-		$kite_pos{x} = $result{x};
-		$kite_pos{y} = $result{y};
-		last;
-
-	} continue {
-		if ($current_mod == 1 && $total_added_rad > 0) {
-			$current_mod = -1;
-		} else {
-			$current_mod = 1;
-			$total_added_rad += $added_rad_per_loop;
-		}
-
-		$current_rad = $initial_rad + ($total_added_rad * $current_mod);
-
-		if ($current_rad >= pi2) {
-			$current_rad -= pi2;
-		} elsif ($current_rad < 0) {
-			$current_rad += pi2;
-		}
-
-		$cos_cur = cos($current_rad);
-		$sin_cur = sin($current_rad);
 	}
-
-	if (!defined $kite_pos{x} && defined $best_not_distant_cell{x}) {
-		$kite_pos{x} = $best_not_distant_cell{x};
-		$kite_pos{y} = $best_not_distant_cell{y};
+	
+	my $skip_near_wall_cells = $farthest_wall_dist >= AVOID_WALLS ? 1 : 0;
+	my $skip_near_master_bound = ($master && $farthest_master_bound >= AVOID_MASTER_BOUND) ? 1 : 0;
+	
+	my %kite_pos;
+	
+	my @cells = @best_distant_cells;
+	
+	foreach my $cell (@cells) {
+		next if ($skip_near_wall_cells && $cell->{wall_dist} < AVOID_WALLS);
+		next if ($skip_near_master_bound && $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
+		$kite_pos{x} = $cell->{x};
+		$kite_pos{y} = $cell->{y};
+		last;
+	}
+	
+	if (!defined $kite_pos{x}) {
+		@cells = sort { $a->{distance_dif} <=> $b->{distance_dif} } @best_not_distant_cells;
+		foreach my $cell (@cells) {
+			next if ($skip_near_wall_cells && $cell->{wall_dist} < AVOID_WALLS);
+			next if ($skip_near_master_bound && $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
+			$kite_pos{x} = $cell->{x};
+			$kite_pos{y} = $cell->{y};
+			last;
+		}
 	}
 
 	if (defined $kite_pos{x}) {
