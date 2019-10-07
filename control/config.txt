@@ -212,7 +212,8 @@ route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
 
 runFromTarget 0
-runFromTarget_dist 6
+runFromTarget_dist 5
+runFromTarget_step 7
 
 saveMap
 saveMap_warpToBuyOrSell 1
@@ -368,6 +369,10 @@ mercenary_attackCheckLOS 0
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
 
+mercenary_runFromTarget 0
+mercenary_runFromTarget_dist 5
+mercenary_runFromTarget_step 7
+
 mercenary_followDistanceMax 10
 mercenary_followDistanceMin 3
 
@@ -411,7 +416,8 @@ homunculus_tankMode 0
 homunculus_tankModeTarget
 
 homunculus_runFromTarget 0
-homunculus_runFromTarget_dist 6
+homunculus_runFromTarget_dist 5
+homunculus_runFromTarget_step 7
 
 homunculus_StandByAuto 0
 homunculus_teleportAuto_hp 10
