@@ -859,14 +859,15 @@ use constant AVOID_WALLS => 4;
 use constant AVOID_MASTER_BOUND => 2;
 
 ##
-# get_kite_position(field, actor, target, min_dist_from_target, move_distance, master, max_dist_to_master)
+# get_kite_position(field, actor, target, min_dist_from_target, move_distance_min, move_distance_max, master, max_dist_to_master)
 # field: Field object of the map 'actor' should kite on.
 # actor: reference to the actor which is kiting.
 # target: reference to the actor which you are kiting.
-# min_dist_from_target: the minimun distance 'actor' should keep from 'target'.
-# move_distance: the distance which 'actor' should try to move away from 'target'.
+# min_dist_from_target: the minimum distance 'actor' should keep from 'target'.
+# move_distance: the minimum distance which 'actor' should try to move away from 'target'.
+# move_distance: the maximum distance which 'actor' should try to move away from 'target'.
 # master: reference to the actor which is the master of 'actor', if 'actor' is a slave (homunculus or mercenary).
-# max_dist_to_master: the maximun distance 'actor' should move away from 'master'.
+# max_dist_to_master: the maximum distance 'actor' should move away from 'master'.
 #
 # Returns: reference to a hash containing both x and y coordinates of the best kite position found on success, and undef on failure
 #
