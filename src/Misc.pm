@@ -874,12 +874,12 @@ use constant AVOID_MASTER_BOUND => 2;
 # Kite algorithm used in runFromTarget
 sub get_kite_position {
 	my ($field, $actor, $target, $min_dist_from_target, $move_distance_min, $move_distance_max, $master, $max_dist_to_master) = @_;
-	
+
 	message TF("[test kite] min_dist_from_target %d, move_distance_min %d, move_distance_max %d, max_dist_to_master %d.\n", $min_dist_from_target, $move_distance_min, $move_distance_max, $max_dist_to_master), 'slave';
 
 	my ($actor_pos, $enemy_pos, $master_pos);
 	my $pathfinding = new PathFinding;
-	
+
 	$actor_pos = calcPosition($actor);
 	$enemy_pos = calcPosition($target);
 	if ($master) {
@@ -890,16 +890,16 @@ sub get_kite_position {
 	if ($initial_rad < 0) {
 		$initial_rad += pi2;
 	}
-	
+
 	my @best_not_distant_cells;
 	my @best_distant_cells;
-	
+
 	my $farthest_wall_dist = 0;
 	my $farthest_master_bound = 0;
-	
+
 	foreach my $move_distance ($move_distance_min..$move_distance_max) {
 		my $current_rad = $initial_rad;
-		
+
 		# Biggest possible angle between 2 adjacent cells in dist $move_distance
 		my $angle_a = atan2(($move_distance-1), $move_distance);
 		my $angle_b = atan2(($move_distance-1), ($move_distance+1));
@@ -912,17 +912,17 @@ sub get_kite_position {
 			'1'  => { x => undef, y => undef },
 			'-1' => { x => undef, y => undef },
 		);
-		
+
 		while ($total_added_rad < $max_rad) {
 			my $cos_cur = cos($current_rad);
 			my $sin_cur = sin($current_rad);
-			
+
 			my %current_cell;
 			$current_cell{x} = $enemy_pos->{x} + int($move_distance * $cos_cur);
 			$current_cell{y} = $enemy_pos->{y} + int($move_distance * $sin_cur);
-			
+
 			next if (defined $last_pos_by_mod{$current_mod}{x} && $current_cell{x} == $last_pos_by_mod{$current_mod}{x} && $current_cell{y} == $last_pos_by_mod{$current_mod}{y});
-			
+
 			$last_pos_by_mod{$current_mod}{x} = $current_cell{x};
 			$last_pos_by_mod{$current_mod}{y} = $current_cell{y};
 
@@ -936,12 +936,12 @@ sub get_kite_position {
 				}
 			}
 			next if (blockDistance(\%current_cell, $enemy_pos) < $min_dist_from_target);
-			
+
 			$current_cell{wall_dist} = ord(substr($field->{dstMap}, $current_cell{y} * $field->width + $current_cell{x}));
 			if ($current_cell{wall_dist} > $farthest_wall_dist) {
 				$farthest_wall_dist = $current_cell{wall_dist};
 			}
-			
+
 			# Get rid of ridiculously large route distances (such as spots that are on a hill)
 			$pathfinding->reset(
 				field => $field,
@@ -949,7 +949,7 @@ sub get_kite_position {
 				dest => \%current_cell);
 			$current_cell{path_dist} = $pathfinding->runcount;
 			next if ($current_cell{path_dist} <= 0 || $current_cell{path_dist} > $move_distance_max * 2);
-			
+
 			$current_cell{dist_dif} = distance(\%current_cell, $actor_pos) - distance(\%current_cell, $enemy_pos);
 			if ($current_cell{dist_dif} > 0) {
 				push(@best_not_distant_cells, \%current_cell);
@@ -974,40 +974,25 @@ sub get_kite_position {
 			}
 		}
 	}
-	
+
 	my $skip_near_wall_cells = $farthest_wall_dist >= AVOID_WALLS ? 1 : 0;
 	my $skip_near_master_bound = ($master && $farthest_master_bound >= AVOID_MASTER_BOUND) ? 1 : 0;
-	
-	my %kite_pos;
-	
-	my @cells = @best_distant_cells;
-	
+
+	@best_not_distant_cells = sort { $a->{distance_dif} <=> $b->{distance_dif} } @best_not_distant_cells;
+
+	my @cells = (@best_distant_cells, @best_not_distant_cells);
+
 	foreach my $cell (@cells) {
 		next if ($skip_near_wall_cells && $cell->{wall_dist} < AVOID_WALLS);
 		next if ($skip_near_master_bound && $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
-		$kite_pos{x} = $cell->{x};
-		$kite_pos{y} = $cell->{y};
-		last;
-	}
-	
-	if (!defined $kite_pos{x}) {
-		@cells = sort { $a->{distance_dif} <=> $b->{distance_dif} } @best_not_distant_cells;
-		foreach my $cell (@cells) {
-			next if ($skip_near_wall_cells && $cell->{wall_dist} < AVOID_WALLS);
-			next if ($skip_near_master_bound && $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
-			$kite_pos{x} = $cell->{x};
-			$kite_pos{y} = $cell->{y};
-			last;
-		}
-	}
 
-	if (defined $kite_pos{x}) {
 		my $master_string;
 		if ($master) {
 			$master_string = TF(", master at (%d %d)", $master_pos->{x}, $master_pos->{y});
 		}
-		message TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d)%s.\n", $actor, $actor_pos->{x}, $actor_pos->{y}, $kite_pos{x}, $kite_pos{y}, $enemy_pos->{x}, $enemy_pos->{y}, $master_string), 'slave';
-		return \%kite_pos;
+		message TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d)%s.\n", $actor, $actor_pos->{x}, $actor_pos->{y}, $cell->{x}, $cell->{y}, $enemy_pos->{x}, $enemy_pos->{y}, $master_string), 'slave';
+
+		return { x => $cell->{x}, y => $cell->{y} };
 	}
 
 	return undef;
