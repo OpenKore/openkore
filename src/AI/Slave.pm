@@ -12,9 +12,6 @@ use Translation;
 use AI::Slave::Homunculus;
 use AI::Slave::Mercenary;
 
-use Math::Trig;
-use Math::Trig qw/pi pi2 pip4/;
-
 # Slave's commands and skills can only be used
 # if the slave is within this range
 use constant MAX_DISTANCE => 17;
@@ -659,7 +656,7 @@ sub processAttack {
 					
 				} elsif ($config{$slave->{configPrefix}.'attack_dance_dist'} && $args->{attackMethod}{distance} > 2) {
 					if (timeOut($timeout{$slave->{ai_dance_attack_timeout}})) {
-						my $cell = get_kite_cell($slave, $target, $realMonsterDist, $realMonsterDist+1, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
+						my $cell = get_kite_position($field, $slave, $target, $realMonsterDist, $realMonsterDist+1, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
 						$slave->sendAttack ($ID);
 						$slave->sendMove ($cell->{x}, $cell->{y});
 						$timeout{$slave->{ai_dance_attack_timeout}}{time} = time;
@@ -707,117 +704,6 @@ sub processAttack {
 	}
 
 	#Benchmark::end("ai_homunculus_attack") if DEBUG;
-}
-
-# My Kite algorithm
-sub get_kite_cell {
-	my ($slave, $target, $min_dist_from_target, $move_distance, $master, $max_dist_to_master) = @_;
-
-	my $slave_pos = calcPosition($slave);
-	my $enemy_pos = calcPosition($target);
-	my $master_pos = calcPosition($master);
-
-	my %vec = (
-		x => $slave_pos->{x} - $enemy_pos->{x},
-		y => $slave_pos->{y} - $enemy_pos->{y}
-	);
-
-	my $initial_rad = atan2($vec{y}, $vec{x});
-	if ($initial_rad < 0) {
-		$initial_rad += pi2;
-	}
-
-	my $current_rad = $initial_rad;
-	my $cos_cur = cos($current_rad);
-	my $sin_cur = sin($current_rad);
-
-	# Biggest possible angle between 2 adjacent cells in dist $move_distance
-	my $angle_a = atan2(($move_distance-1), $move_distance);
-	my $angle_b = atan2(($move_distance-1), ($move_distance+1));
-	my $big_angle = $angle_a > $angle_b ? $angle_a : $angle_b;
-	my $added_rad_per_loop = pip4 - $big_angle;
-
-	my $current_mod = 1;
-	my $total_added_rad = 0;
-	my $max_rad = pi;
-	my %last_pos_by_mod = (
-		'1' => {
-			x => undef,
-			y => undef
-		},
-		'-1' => {
-			x => undef,
-			y => undef
-		}
-	);
-	my %best_not_distant_cell = (
-		x => undef,
-		y => undef,
-		distance_dif => undef,
-	);
-	my %kite_pos = (
-		x => undef,
-		y => undef,
-	);
-	my %result;
-	while ($total_added_rad < $max_rad) {
-		$result{x} = $enemy_pos->{x} + int($move_distance * $cos_cur);
-		$result{y} = $enemy_pos->{y} + int($move_distance * $sin_cur);
-		next if (defined $last_pos_by_mod{$current_mod}{x} && $result{x} == $last_pos_by_mod{$current_mod}{x} && $result{y} == $last_pos_by_mod{$current_mod}{y});
-		
-		$last_pos_by_mod{$current_mod}{x} = $result{x};
-		$last_pos_by_mod{$current_mod}{y} = $result{y};
-
-		next if (!$field->isWalkable($result{x}, $result{y}));
-		next if (blockDistance($master_pos, \%result) > $max_dist_to_master);
-		next if (distance(\%result, $enemy_pos) < $min_dist_from_target);
-		next if (!checkLineWalkable($slave_pos, \%result, 2));
-		
-		my $dist_dif = distance(\%result, $slave_pos) - distance(\%result, $enemy_pos);
-		if ($dist_dif > 0) {
-			if (!defined $best_not_distant_cell{x} || $best_not_distant_cell{distance_dif} > $dist_dif) {
-				$best_not_distant_cell{x} = $result{x};
-				$best_not_distant_cell{y} = $result{y};
-				$best_not_distant_cell{distance_dif} = $dist_dif;
-			}
-			next;
-		}
-
-		$kite_pos{x} = $result{x};
-		$kite_pos{y} = $result{y};
-		last;
-
-	} continue {
-		if ($current_mod == 1 && $total_added_rad > 0) {
-			$current_mod = -1;
-		} else {
-			$current_mod = 1;
-			$total_added_rad += $added_rad_per_loop;
-		}
-
-		$current_rad = $initial_rad + ($total_added_rad * $current_mod);
-
-		if ($current_rad >= pi2) {
-			$current_rad -= pi2;
-		} elsif ($current_rad < 0) {
-			$current_rad += pi2;
-		}
-
-		$cos_cur = cos($current_rad);
-		$sin_cur = sin($current_rad);
-	}
-
-	if (!defined $kite_pos{x} && defined $best_not_distant_cell{x}) {
-		$kite_pos{x} = $best_not_distant_cell{x};
-		$kite_pos{y} = $best_not_distant_cell{y};
-	}
-
-	if (defined $kite_pos{x}) {
-		message TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d), master at (%d %d).\n", $slave, $slave_pos->{x}, $slave_pos->{y}, $kite_pos{x}, $kite_pos{y}, $enemy_pos->{x}, $enemy_pos->{y}, $master_pos->{x}, $master_pos->{y}), 'slave';
-		return \%kite_pos;
-	}
-
-	return undef;
 }
 
 # AzzyAI dance

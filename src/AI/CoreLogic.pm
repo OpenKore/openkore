@@ -2240,7 +2240,7 @@ sub processMoveNearSlave {
 		return unless ($move_slave);
 		
 		ai_route($field->baseName, $move_slave->{pos_to}{x}, $move_slave->{pos_to}{y}, distFromGoal => ($config{$move_slave->{configPrefix}.'moveNearIdle_distance'} || 4), attackOnRoute => 1, noSitAuto => 1, isMoveNearSlave => 1);
-		warning TF("%s moved too far (distance: %d) - Moving near it.\n", $move_slave, $dist), 'slave';
+		message TF("%s moved too far (distance: %d) - Moving near it.\n", $move_slave, $dist), 'slave';
 	}
 }
 
@@ -2261,7 +2261,7 @@ sub processRandomWalk_stopDuringSlaveAttack {
 			}
 		}
 		return unless ($wait_slave);
-		warning TF("%s started attacking during randomWalk - Stoping movement for it.\n", $wait_slave), 'slave';
+		message TF("%s started attacking during randomWalk - Stoping movement for it.\n", $wait_slave), 'slave';
 		AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 	}
 }
