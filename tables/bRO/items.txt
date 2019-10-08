@@ -6606,6 +6606,7 @@
 19991#Tiara de Galanthus#
 19992#Hálito Gelado#
 19996#Cavalo Rei#
+19998#Casco de Espinhoso#
 20006#Máscara do Chefão do Mal#
 20010#Orelhas Solares#
 20011#Elmo Primarino#
@@ -6620,6 +6621,7 @@
 20035#Rosa Celeste#
 20037#Chapelão do Duque Coruja#
 20044#Chapéu de Carmen Miranda#
+20047#Guizos de Cerejeira#
 20048#Tiara Elegante#
 20052#Balão de AFK#
 20054#Chupeta de Neném#
@@ -7269,6 +7271,7 @@
 31187#Laço da Princesa Guerreira#
 31188#Chapéu Gótico-Lolita#
 31189#Capa Vermelha de Gatinho#
+31190#Cartolinha das Valquírias#
 31193#Chapéu de Ahat#
 31199#Cavanhaque Bifurcado#
 31200#Laço Esplêndido#
@@ -7415,6 +7418,8 @@
 31672#Peruca de Nereida#
 31687#Bolsa do Alquimista#
 31707#Peruca de Youkai#
+31721#Tambores de Invocação#
+31731#Guloseimas Encantadas#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#
