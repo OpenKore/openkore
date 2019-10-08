@@ -15242,7 +15242,7 @@ Classes: ^777777Classes 2 T. e evoluções^000000
 Um anel que ressoa com o Anel do Senhor das Chamas: juntos, eles formam um par.
 ^0000ffDEFM +2.^000000
 ^0000ffAGI +2. VIT +1.^000000
-Ao realizar ataques físicos:
+Ao receber danos físicos:
 ^0000ffChances de autoconjurar [Pântano dos Mortos] nv. 1, [Explosão Tóxica] nv. 10, [Curar] nv. 10, [Assumptio] nv. 3 e [Destino nas Cartas] nv. 5.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Anel do Senhor das Chamas]^000000
@@ -22701,7 +22701,7 @@ ATQ +27, Precisão +5.
 ATQ +30, Precisão +5.
 #
 4825#
-ATQ + 50, HIT + 15.
+ATQ +50. Precisão +15.
 #
 4826#
 ATQM +18. Tempo de conjuração variável -10%.
@@ -29734,14 +29734,17 @@ Classes: ^777777Todas^000000
 #
 5918#
 Uma maquiagem especial representando naipes de baralho e dos jogos encontrados no cassino da Caverna de Comodo. Se tornou bastante popular quando passou a ser usada pelo Me Soka Morô, um arruaceiro assassino que participou do reality show “CaçadorXCaçador” e é especialista no uso do “Ah Nen” com Goma de Mascar.
+--------------------------
 ^0000ffCRIT +3.^000000
 ^0000ffDano crítico +3%.^000000
 ^0000ffResistência a [Tempestade de Flechas] e [Portões do Inferno] +10%.^000000
+--------------------------
 A cada 10 de DES base:
-^0000ffDano crítico -2%.^000000
+^0000ffDano crítico^000000 ^ff0000-2%.^000000
 A cada 10 de SOR base:
-^0000ffCRIT +1 adicional.^000000
-^0000ffATQ +2. ATQM +2.^000000
+^0000ffCRIT +1.^000000
+^0000ffATQ e ATQM +2.^000000
+--------------------------
 SOR base 108 ou mais:
 ^0000ffCRIT +5 adicional.^000000
 ^0000ffDano crítico +10% adicional.^000000
@@ -29749,7 +29752,8 @@ SOR base 120 ou mais:
 ^0000ffCRIT +10 adicional.^000000
 ^0000ffDano crítico +17% adicional.^000000
 ^0000ffResistência a [Tempestade de Flechas] e [Portões do Inferno] +30% adicional.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
 Peso: ^77777750^000000
@@ -38070,7 +38074,7 @@ Peso: ^7777771^000000
 Um bastão que brilha quando é utilizado. As pessoas que vêem essas luzes parecem perder parte de sua memória.
 ^0000ffRestaura a Árvore de Habilidades e lhe dá o numero correspondente em pontos para fazer a redistribuição.^000000
 ^000088Atenção: para usar o Neuralizador você deve seguir as mesmas exigências do NPC de Reset de Habilidades.^000000
-Guarde todos os seus itens, equipamentos e flechas em seu armazém, remova seu PecoPeco, GrandPeco, Carrinho ou Falcão e só então clique duas vezes no Neuralizador. Do contrário, mesmo que você tente usá-lo, ele não será gasto, mas nada acontecerá!
+Guarde todos os seus itens, equipamentos e flechas em seu armazém, remova seu PecoPeco, GrandPeco, Carrinho, Worg ou Falcão e só então clique duas vezes no Neuralizador. Do contrário, mesmo que você tente usá-lo, ele não será gasto, mas nada acontecerá!
 ^ff0000Atenção: ^777777O item não pode ser derrubado no chão, mas pode ser negociado, colocado na Kafra e no Carrinho^000000
 Peso: ^7777771^000000
 #
@@ -40123,7 +40127,7 @@ Peso: ^7777771^000000
 Uma caixa contendo um bastão brilhante. Frágil!
 Neuralizador - ^000088Um bastão que brilha quando é utilizado. As pessoas que vêem essas luzes parecem perder parte de sua memória. Restaura a Árvore de Habilidades e lhe dá o numero correspondente em pontos para fazer a redistribuição.^000000
 Mas atenção: para usar o Neuralizador você deve seguir as mesmas exigências do NPC de Reset Skill.
-Guarde todos os seus itens, equipamentos e flechas em seu armazém, remova seu PecoPeco, GrandPeco, Carrinho ou Falcão e só então clique duas vezes no Neuralizador.
+Guarde todos os seus itens, equipamentos e flechas em seu armazém, remova seu PecoPeco, GrandPeco, Carrinho, Worg ou Falcão e só então clique duas vezes no Neuralizador.
 Do contrário, mesmo que você tente usá-lo, ele não será gasto, mas nada acontecerá!
 ^ff0000Atenção: ^777777O item não pode ser derrubado no chão, mas pode ser negociado, colocado na Kafra e no Carrinho^000000
 Peso: ^7777771^000000
@@ -50448,11 +50452,13 @@ Classes: ^777777Todas^000000
 18561#
 Um nobre chapéu de alta qualidade feito com tecidos de
 luxo. A pena branca o torna ainda mais bonito.
+--------------------------
 ^0000ffVIT +2. DEFM +3.^000000
-^0000ffResistência a raça Humanoide +10%.^000000
+^0000ffResistência as raças Humano e Humanoide +10%.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777775^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777775^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777740^000000
 Classes: ^777777Todas^000000
@@ -51634,6 +51640,7 @@ Elmo semelhante ao de Aegir, deus dos mares. Seu design foi projetado para quem 
 ^0000ffTodos os atributos +5.^000000
 ^0000ffDano físico e mágico +5%.^000000
 Refino +7 ou mais:
+^0000ffTodos os atributos +5 adicional.^000000
 ^0000ffDano físico e mágico +5% adicional.^000000
 --------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
@@ -52386,21 +52393,27 @@ Classes: ^777777Todas^000000
 #
 18856#
 Este chapéu foi criado pelo Guardião de Midgard, Torin Tigerfist. No formato de um tigre branco, considerado pelo Shura como seu guia espiritual, ele também representa seu estilo favorito de artes marciais. Claro que quem conhece o Torin já imaginava que ele também poderia aprontar alguma gracinha com o chapéu, e talvez seja por isso que surgiu o boato que ao lutar com ele, você pode acabar se transformando em um MVP. Só há um jeito de descobrir a verdade: você está pronto?
+--------------------------
 ^0000ffFOR +2. DES +2.^000000
-A cada refino:
-^0000ffDano físico contra a raça Bruto +1%.^000000
 Ao receber ou causar ataques físicos:
-^0000ffChance de se transformar em Eddga por alguns segundos.^000000
-^0000ffChance de transformação aumenta a cada refino.^000000
-^FF6347Durante a transformação: ^000000
-^0000ffATQ +25 por refino.^000000
-^0000ffDrena 5 de SP por segundo.^000000
-Tipo: ^777777Equipamento para Cabeça.^000000
-Defesa: ^77777710.^000000
+^0000ff0,3% de chance de se transformar em Eddga por 3 segundos.^000000
+--------------------------
+A cada refino:
+^0000ffChance de transformação +0,1%.^000000
+^0000ffDano físico contra as raças Bruto e Doram +1%.^000000
+--------------------------
+^CD3278Durante a transformação:^000000
+A cada refino:
+^0000ffATQ +25.^000000
+A cada segundo:
+^0000ffDrena 5 de SP do usuário.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
-Peso: ^77777740.^000000
-Nível necessário: ^7777771.^000000
-Classes: ^777777Todas.^000000
+Defesa: ^77777710^000000
+Peso: ^77777740^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18857#
 De acordo com os nativos de Brasilis, o Curupira é um guardião da floresta e dos animais locais, que afugenta os caçadores que não respeitam a natureza. Deixando pegadas invertidas com seus pés virados para trás, pregando peças e imitando animais, o Curupira os deixa confusos até se perderem na floresta. Agora você pode andar com o boneco deste defensor da natureza de cabelos de fogo na cabeça, mostrando seu amor por Brasilis!
@@ -53235,15 +53248,18 @@ Classes: ^777777Todas^000000
 #
 19024#
 Angelical e imaculada, essa diadema caiu dos céus para abençoar os bem-afortunados com aventuras repletas de memórias inesquecíveis e tesouros preciosos.
+--------------------------
 ^0000ffDEFM +2.^000000
 ^0000ffVelocidade de ataque^000000 ^ff0000-5%.^000000
-^0000ffResistência a Personagens +2%.^000000
+^0000ffResistência as raças Humano e Doram +2%.^000000
+--------------------------
 VIT base 108 ou mais:
-^0000ffVelocidade de ataque^000000 ^ff0000-5%^000000 ^0000ffadicional.^000000
-^0000ffResistência a Personagens +3% adicional.^000000
+^0000ffVelocidade de ataque^000000 ^ff0000-5%.^000000 ^0000ffadicional.^000000
+^0000ffResistência as raças Humano e Doram +3% adicional.^000000
 VIT base 120 ou mais:
 ^0000ffHP máx. +3%.^000000
 ^0000ffDEFM +3 adicional.^000000
+--------------------------
 ^FA4E09Conjunto^000000
 ^FA4E09Boina Alada [0]^000000
 ^0000ffVelocidade de ataque +5%.^000000
@@ -53251,6 +53267,7 @@ Boina com refino +7 ou mais:
 ^0000ffVelocidade de ataque +5% adicional.^000000
 Boina com refino +9 ou mais:
 ^0000ffHP máx. +5% adicional.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
@@ -54062,19 +54079,23 @@ Classes: ^777777Todas^000000
 #
 19252#
 Agora suas orelhas são idênticas às orelhas de Kardui, o Rei dos Esplêndidos. Seria você um descendente da raça das fadas de Alfheim, criadas pelos mesmos deuses que criaram os elfos? Ou seria apenas uma fantasia, feita com penas e papel machê? E Betty, a Azarada, arrumará um namorado apesar de ter 1 de sorte? Será que Maria do Reino conseguirá escapar da sua irmã gêmea maligna? A vida é cheia de mistérios!
-^0000ffA cada 10 de DES base:^000000
+--------------------------
+A cada 10 de DES base:
 ^0000ffATQM +2.^000000
+--------------------------
 DES base 108 ou mais:
 ^0000ffATQM +30.^000000
 ^0000ffConjuração variável -10%.^000000
 DES base 120 ou mais:
 ^0000ffATQM +80 adicional.^000000
 ^0000ffConjuração variável -5% adicional.^000000
-^FF6347Conjunto^000000
-^FF6347Arma do tipo Cajado, Livro ou Cajado de Duas Mãos^000000
-^FF6347[Carta Leão de Vinhas]^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09Arma do tipo Cajado, Livro ou Cajado de Duas Mãos^000000
+^FA4E09[Carta Leão de Vinhas]^000000
 A cada 2 refinos da arma até o +14:
-^0000ffDano mágico contra Personagens +2%.^000000
+^0000ffDano mágico contra as raças Humano e Doram +2%.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
@@ -54214,22 +54235,28 @@ Nível necessário: ^77777730^000000
 Classes: ^777777Todas^000000
 #
 19271#
-Dizem que o tigrinho de pelúcia deste lendário chapéu foi recheado com sementes mágicas de sugrilhos, capazes de fazer despertar o tigre em você. Não se assuste então se, quando você ficar muito nervoso, acabar se transformando num Eddga. Mesmo que não seja um Eddga albino.
+Este chapéu foi criado pelo Guardião de Midgard, Torin Tigerfist. No formato de um tigre branco, considerado pelo Shura como seu guia espiritual, ele também representa seu estilo favorito de artes marciais. Claro que quem conhece o Torin já imaginava que ele também poderia aprontar alguma gracinha com o chapéu, e talvez seja por isso que surgiu o boato que ao lutar com ele, você pode acabar se transformando em um MVP. Só há um jeito de descobrir a verdade: você está pronto?
+--------------------------
 ^0000ffFOR +2. DES +2.^000000
-A cada refino:
-^0000ffDano físico contra a raça Bruto +1%.^000000
 Ao receber ou causar ataques físicos:
-^0000ffChance de se transformar em Eddga por alguns segundos.^000000
-^0000ffChance de transformação aumenta a cada refino.^000000
-^FF6347Durante a transformação: ^000000
-^0000ffATQ +20 por refino.^000000
-^0000ffDrena 10 de SP por segundo.^000000
-Tipo: ^777777Equipamento para Cabeça.^000000
-Defesa: ^77777710.^000000
+^0000ff0,3% de chance de se transformar em Eddga por 3 segundos.^000000
+--------------------------
+A cada refino:
+^0000ffChance de transformação +0,1%.^000000
+^0000ffDano físico contra as raças Bruto e Doram +1%.^000000
+--------------------------
+^CD3278Durante a transformação:^000000
+A cada refino:
+^0000ffATQ +20.^000000
+A cada segundo:
+^0000ffDrena 10 de SP do usuário.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
-Peso: ^77777740.^000000
-Nível necessário: ^7777771.^000000
-Classes: ^777777Todas.^000000
+Defesa: ^77777710^000000
+Peso: ^77777740^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 19274#
 Moderno e discreto, esse fone se ajusta perfeitamente ao tamanho da sua cabeça. Por isso, ele não cai de jeito nenhum, e você ainda pode curtir um som no meio da briga.
@@ -54379,24 +54406,27 @@ Classes: ^777777Todas^000000
 #
 19306#
 Uma carta especial do baralho de Me Soka Morô, o arruaceiro assassino que participou do reality show ‘CaçadorXCaçador’. Ela é extremamente afiada e um poderoso aliado para as suas habilidades, sejam elas quais forem.
+--------------------------
 ^0000ffDano crítico +5%.^000000
-^FF6347Conjunto^000000
-^FF6347[Marcas de Comodo]^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Marcas de Comodo]^000000
 ^0000ffVelocidade de ataque +1.^000000
 ^0000ffDano crítico +2% adicional.^000000
-^0000ffResistência a personagens +2%.^000000
-^0000ffResistência a [Ataque Crítico] de monstros +100%.^000000
+^0000ffResistência as raças Humano e Doram +2%.^000000
+^0000ffResistência a [Ataque Crítico] dos monstros +100%.^000000
 A cada 10 de DES base:
 ^0000ffDano crítico +2%.^000000
 SOR base 108 ou mais:
 ^0000ffDano crítico +2% adicional.^000000
 ^0000ffVelocidade de ataque +1 adicional.^000000
-^0000ffResistência a personagens +2% adicional.^000000
+^0000ffResistência as raças Humano e Doram +2% adicional.^000000
 SOR base 120 ou mais:
 ^0000ffDano crítico +4% adicional.^000000
 ^0000ffVelocidade de ataque +2 adicional.^000000
-^0000ffResistência a personagens +4% adicional.^000000
-^0000ffAo realizar ataques físicos normais, espalha o dano básico na área de 3x3 células.^000000
+^0000ffResistência as raças Humano e Doram +4% adicional.^000000
+^0000ffMantém [Espalhar Dano] ativo.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
@@ -54498,21 +54528,24 @@ Classes: ^777777Todas^000000
 #
 19318#
 Um crucifixo contemplado com a graça divina, dado aos Guardiões Reais originais de Glast Heim. Que a fé dos antigos Guardiões Reais protejam o seu caminho.
+--------------------------
 ^0000ffVelocidade de ataque +1.^000000
-^FF6347Conjunto^000000
-^FF6347[Diadema do Grifo]^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Diadema do Grifo]^000000
 ^0000ffATQ +10.^000000
 ^0000ffVelocidade de ataque +3%.^000000
-^0000ffResistência a personagens +2%.^000000
 ^0000ffTolerância a Cegueira e Silêncio +100%.^000000
+^0000ffResistência as raças Humano e Doram +2%.^000000
 AGI base 108 ou mais:
 ^0000ffATQ +20 adicional.^000000
 ^0000ffVelocidade de ataque +5% adicional.^000000
-^0000ffResistência a personagens +2% adicional.^000000
+^0000ffResistência as raças Humano e Doram +2% adicional.^000000
 AGI base 120 ou mais:
 ^0000ffATQ +40 adicional.^000000
 ^0000ffVelocidade de ataque +7% adicional.^000000
-^0000ffResistência a personagens +4% adicional.^000000
+^0000ffResistência as raças Humano e Doram +4% adicional.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
@@ -54838,7 +54871,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 19535#
-Caule arrancado de um Ginseng Selvagem. Parecem emitir um ruído, mas em menor frequência que uma Madrágora.
+Caule arrancado de um Ginseng Selvagem. Parecem emitir um ruído, mas em menor frequência que uma Mandrágora.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
@@ -56527,6 +56560,15 @@ Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
+19998#
+Um casco grandão e com espinhos que não só vai proteger seu cocuruto se você levar um capote, como também servirá como uma ótima arma pra quem vier encher a sua paciência. Dá uma cabeçada nele!
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 20006#
 Se você planeja dominar o mundo ou escravizar a humanidade, essa é a máscara perfeita pra fazer isso com estilo! Vai até parecer que você é o chefão final de um jogo ou o inimigo principal da história.
 Tipo: ^777777Visual ^000000
@@ -56649,6 +56691,15 @@ Um colorido conjunto de frutas tropicais, perfeito pra você usar e descobrir o 
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+20047#
+Alguém achou que seria uma boa ideia reaproveitar uns furins pra fazer esses adereços exóticos. Talvez tenha sido, se você gostar de infernizar a vida de meio mundo fazendo bling-bling-bling por aí com uns guizos.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
@@ -59886,14 +59937,14 @@ A cada refino:
 ^0000ffPós-conjuração -2%.^000000
 --------------------------
 ^FA4E09Conjunto^000000
-^FA4E09[Coroa[0]^000000
+^FA4E09Coroa[0]^000000
 ^0000ffConjuração variável -10%.^000000
 A cada 2 refinos do Calçado e do Chapéu:
 ^0000ffDano físico +1%.^000000
 ^0000ffConjuração variável -1%.^000000
 --------------------------
 ^FA4E09Conjunto^000000
-^FA4E09[Diadema[0]^000000
+^FA4E09Diadema[0]^000000
 ^0000ffConjuração variável -10%.^000000
 A cada 2 refinos do Calçado e do Chapéu:
 ^0000ffDano mágico +1%.^000000
@@ -60545,7 +60596,7 @@ Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 22189#
-Sapatos criados para simbolizar a preocupação com o próximo.
+Um par de sapatos chique e elegante que dizem ter pertencido a um homem poderoso. Após a morte dele, eles foram passados para as gerações seguintes, sendo usados tanto pelos filhos quanto pelas filhas.
 --------------------------
 ^0000ffDEFM +15.^000000
 ^0000ffHP e SP máx. +3%.^000000
@@ -62352,7 +62403,7 @@ A cada 3 refinos:
 --------------------------
 Refino +7 ou mais:
 ^0000ffDano de [Expurgar] +15%.^000000
-^0000ffCusto de SP de [Expurgar] +10%.^000000
+^0000ffCusto de SP de [Expurgar]^000000 ^ff0000+10%.^000000
 Refino +9 ou mais:
 ^0000ffAo usar [Proteção de Platina], ativa o [Efeito 1] por 90 segundos.^000000
 Refino +11 ou mais:
@@ -62873,12 +62924,12 @@ AGI base 100 ou mais:
 ^FF6347Conjunto^000000
 ^FF6347[Anti-Atraso 1]^000000
 ^0000ffVelocidade de ataque +1.^000000
-^0000ffResistência as raças Humano, Humanoide, Peixe, Bruto e Doram +1%.^000000
+^0000ffResistência as raças Humano, Humanoide, Demônio, Morto-Vivo, Peixe, Bruto e Doram +1%.^000000
 --------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Anti-Atraso 2]^000000
 ^0000ffVelocidade de ataque +1.^000000
-^0000ffResistência as raças Humano, Humanoide, Peixe, Bruto e Doram +1%.^000000
+^0000ffResistência as raças Humano, Humanoide, Demônio, Morto-Vivo, Peixe, Bruto e Doram +1%.^000000
 --------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777773^000000
@@ -62935,58 +62986,58 @@ Um anel dado por Nephisto, o lorde infernal, quando vocês fizeram um pacto para
 ^0000ffDano mágico +5%.^000000
 ^0000ffATQ da arma +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de FOR 1]^000000
+^FF6347[Essência de Morroc FOR1]^000000
 ^0000ffATQ da arma +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de FOR 2]^000000
+^FF6347[Essência de Morroc FOR2]^000000
 ^0000ffATQ da arma +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de FOR 3]^000000
+^FF6347[Essência de Morroc FOR3]^000000
 ^0000ffATQ da arma +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de AGI 1]^000000
+^FF6347[Essência de Morroc AGI1]^000000
 ^0000ffVelocidade de ataque +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de AGI 2]^000000
+^FF6347[Essência de Morroc AGI2]^000000
 ^0000ffVelocidade de ataque +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de AGI 3]^000000
+^FF6347[Essência de Morroc AGI3]^000000
 ^0000ffVelocidade de ataque +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de VIT 1]^000000
+^FF6347[Essência de Morroc VIT1]^000000
 ^0000ffHP máx. +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de VIT 2]^000000
+^FF6347[Essência de Morroc VIT2]^000000
 ^0000ffHP máx. +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de VIT 3]^000000
+^FF6347[Essência de Morroc VIT3]^000000
 ^0000ffHP máx. +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de INT 1]^000000
+^FF6347[Essência de Morroc INT1]^000000
 ^0000ffDano mágico +5% adicional.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de INT 2]^000000
+^FF6347[Essência de Morroc INT2]^000000
 ^0000ffDano mágico +5% adicional.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de INT 3]^000000
+^FF6347[Essência de Morroc INT3]^000000
 ^0000ffDano mágico +5% adicional.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de DES 1]^000000
+^FF6347[Essência de Morroc DES1]^000000
 ^0000ffConjuração variável -5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de DES 2]^000000
+^FF6347[Essência de Morroc DES2]^000000
 ^0000ffConjuração variável -5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de DES 3]^000000
+^FF6347[Essência de Morroc DES3]^000000
 ^0000ffConjuração variável -5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de SOR 1]^000000
+^FF6347[Essência de Morroc SOR1]^000000
 ^0000ffDano crítico +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de SOR 2]^000000
+^FF6347[Essência de Morroc SOR2]^000000
 ^0000ffDano crítico +5%.^000000
 ^FF6347Conjunto^000000
-^FF6347[Essência de SOR 3]^000000
+^FF6347[Essência de Morroc SOR3]^000000
 ^0000ffDano crítico +5%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
@@ -64976,6 +65027,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31190#
+Uma minicartola usada apenas pelas mais estilosas Valquírias. Se você achou que elas eram só uns rostinhos bonitos de Freyja, saibam que Valquíria também é gente, e gente de muito bom gosto pra moda, aliás!
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 31193#
 A crença dos Manuks sobre a beleza soberana do Ministro Ahat os levaram a criar uma espécie de chapéu totalmente inspirado nele. Totalmente mesmo, porque você vai ter uma miniatura do ministro sobre a sua cabeça, que de quebra ainda muda de aparência de acordo com o seu gênero
 Tipo: ^777777Visual^000000
@@ -66196,7 +66256,7 @@ Classes: ^777777Todas^000000
 31672#
 Cabelos adornados similares ao penteado das ninfas do mar. Essa é a oportunidade perfeita de conseguir essas mechas sem ter que mergulhar na água salgada pra fazer uma visitinha às nereidas, afinal, não vale a pena ressecar todo o seu cabelo só por causa de uma peruca, né?
 Tipo: ^777777Visual^000000
-Equipa em: ^777777Topo^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -66213,6 +66273,23 @@ Classes: ^777777Todas^000000
 Uma bela peruca de nove pontas, cada uma representando uma cauda da Kitsune, a raposa de extrema coragem e bravura. Essas são as qualidades de alguém que quer mudar o mundo; cruzar os céus e nada temer.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31721#
+Basta algumas batucadas nesses tambores no ritmo certo para despertar Raijin, o deus do trovão de Amatsu, em sua forma de dragão. Se você achar a presença dele meio... “cheguei”, você pode colocá-lo para dormir de volta e só esbanjar esses belos instrumentos de percussão.
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31731#
+Deu a louca no confeiteiro e ele inventou de colocar uma lasca de Emperium Perfeito na receita da massa dos seus doces. O sabor não ficou lá dos melhores, mas com essas guloseimas flutuando ao seu redor, todo mundo vai saber que você gosta de um biscoito. Aliás, só resta uma dúvida agora: será que são biscoitos ou bolachas? Hum...
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -66308,7 +66385,7 @@ Ao realizar ataques físicos:
 ^0000ff3% de chance de autoconjurar [Bolas de Fogo] [Lanças de Gelo] e [Relâmpago] nv.3.^000000
 --------------------------
 ^FA4E09Conjunto^000000
-^FA4E09[Cristal Universal]^000000
+^FA4E09[Pedra do Desbravador]^000000
 ^0000ffATQ e ATQM +30.^000000
 ^0000ffConjuração variável -5%.^000000
 ^0000ffConjuração fixa -0,2 segundos.^000000
@@ -66334,7 +66411,7 @@ Refino +7 ou mais:
 Refino +9 ou mais:
 ^0000ffDano crítico +20%.^000000
 Refino +11 ou mais:
-^0000ffAo usar [Furor], ativa o [Efeito 1] por 90 segundos.^000000
+^0000ffAo usar [Furor], ativa o [Efeito 1] por 60 segundos.^000000
 --------------------------
 ^CD3278Efeito 1:^000000
 ^0000ffCRIT +20.^000000
