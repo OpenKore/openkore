@@ -875,8 +875,6 @@ use constant AVOID_MASTER_BOUND => 2;
 sub get_kite_position {
 	my ($field, $actor, $target, $min_dist_from_target, $move_distance_min, $move_distance_max, $master, $max_dist_to_master) = @_;
 
-	message TF("[test kite] min_dist_from_target %d, move_distance_min %d, move_distance_max %d, max_dist_to_master %d.\n", $min_dist_from_target, $move_distance_min, $move_distance_max, $max_dist_to_master), 'slave';
-
 	my ($actor_pos, $enemy_pos, $master_pos);
 	my $pathfinding = new PathFinding;
 
@@ -998,13 +996,6 @@ sub get_kite_position {
 		} elsif ($skip_near_master_bound) {
 			next if ($cell->{master_bound_dist} < AVOID_MASTER_BOUND);
 		}
-
-		my $master_string;
-		if ($master) {
-			$master_string = TF(", master at (%d %d)", $master_pos->{x}, $master_pos->{y});
-		}
-		message TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d)%s.\n", $actor, $actor_pos->{x}, $actor_pos->{y}, $cell->{x}, $cell->{y}, $enemy_pos->{x}, $enemy_pos->{y}, $master_string), 'slave';
-
 		return { x => $cell->{x}, y => $cell->{y} };
 	}
 

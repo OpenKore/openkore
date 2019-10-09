@@ -458,8 +458,11 @@ sub processAttack {
 		} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
 			my $cell = get_kite_position($field, $slave, $target, $config{$slave->{configPrefix}.'runFromTarget_dist'}, ($config{$slave->{configPrefix}.'runFromTarget_minStep'} || 7), ($config{$slave->{configPrefix}.'runFromTarget_maxStep'} || 9), $char, $config{$slave->{configPrefix}.'followDistanceMax'});
 			if ($cell) {
+				debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave';
 				$slave->args->{avoiding} = 1;
 				$slave->move($cell->{x}, $cell->{y}, $ID);
+			} else {
+				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave';
 			}
 
 		} elsif ($realMonsterDist > $args->{attackMethod}{maxDistance} && !timeOut($args->{ai_attack_giveup})) {

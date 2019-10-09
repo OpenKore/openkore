@@ -462,8 +462,11 @@ sub main {
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 		my $cell = get_kite_position($field, $char, $target, $config{'runFromTarget_dist'}, ($config{'runFromTarget_minStep'} || 7), ($config{'runFromTarget_maxStep'} || 9));
 		if ($cell) {
+			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
 			$char->move($cell->{x}, $cell->{y}, $ID);
+		} else {
+			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
 
 	} elsif ($realMonsterDist > $args->{attackMethod}{maxDistance}
