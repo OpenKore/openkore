@@ -894,8 +894,9 @@ sub get_kite_position {
 	my @best_not_distant_cells;
 	my @best_distant_cells;
 
-	my $farthest_wall_dist = 0;
-	my $farthest_master_bound = 0;
+	my $skip_near_wall_cells = 0;
+	my $skip_near_master_bound = 0;
+	my $skip_both = 0;
 
 	foreach my $move_distance ($move_distance_min..$move_distance_max) {
 		my $current_rad = $initial_rad;
@@ -927,19 +928,23 @@ sub get_kite_position {
 			$last_pos_by_mod{$current_mod}{y} = $current_cell{y};
 
 			next if (!$field->isWalkable($current_cell{x}, $current_cell{y}));
+			next if (blockDistance(\%current_cell, $enemy_pos) < $min_dist_from_target);
+
+			$current_cell{wall_dist} = ord(substr($field->{dstMap}, $current_cell{y} * $field->width + $current_cell{x}));
+			if ($current_cell{wall_dist} >= AVOID_WALLS) {
+				$skip_near_wall_cells = 1;
+			}
 			if ($master) {
 				$current_cell{master_bound_dist} = $max_dist_to_master - blockDistance($master_pos, \%current_cell);
 				next if ($current_cell{master_bound_dist} < 0);
 				
-				if ($current_cell{master_bound_dist} > $farthest_master_bound) {
-					$farthest_master_bound = $current_cell{master_bound_dist};
+				if ($current_cell{master_bound_dist} >= AVOID_MASTER_BOUND) {
+					$skip_near_master_bound = 1;
+					
+					if ($current_cell{wall_dist} >= AVOID_WALLS) {
+						$skip_both = 1;
+					}
 				}
-			}
-			next if (blockDistance(\%current_cell, $enemy_pos) < $min_dist_from_target);
-
-			$current_cell{wall_dist} = ord(substr($field->{dstMap}, $current_cell{y} * $field->width + $current_cell{x}));
-			if ($current_cell{wall_dist} > $farthest_wall_dist) {
-				$farthest_wall_dist = $current_cell{wall_dist};
 			}
 
 			# Get rid of ridiculously large route distances (such as spots that are on a hill)
@@ -975,16 +980,24 @@ sub get_kite_position {
 		}
 	}
 
-	my $skip_near_wall_cells = $farthest_wall_dist >= AVOID_WALLS ? 1 : 0;
-	my $skip_near_master_bound = ($master && $farthest_master_bound >= AVOID_MASTER_BOUND) ? 1 : 0;
+	# If you can't avoid both walls and master follow distance, choose one or the other
+	if (!$skip_both && $skip_near_wall_cells && $skip_near_master_bound) {
+		$skip_near_master_bound = 0;
+		#$skip_near_wall_cells = 0;
+	}
 
 	@best_not_distant_cells = sort { $a->{distance_dif} <=> $b->{distance_dif} } @best_not_distant_cells;
 
 	my @cells = (@best_distant_cells, @best_not_distant_cells);
 
 	foreach my $cell (@cells) {
-		next if ($skip_near_wall_cells && $cell->{wall_dist} < AVOID_WALLS);
-		next if ($skip_near_master_bound && $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
+		if ($skip_both) {
+			next if ($cell->{wall_dist} < AVOID_WALLS || $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
+		} elsif ($skip_near_wall_cells) {
+			next if ($cell->{wall_dist} < AVOID_WALLS);
+		} elsif ($skip_near_master_bound) {
+			next if ($cell->{master_bound_dist} < AVOID_MASTER_BOUND);
+		}
 
 		my $master_string;
 		if ($master) {
