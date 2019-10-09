@@ -878,13 +878,17 @@ sub get_kite_position {
 	my ($actor_pos, $enemy_pos, $master_pos);
 	my $pathfinding = new PathFinding;
 
+	# Calculate the current position of actor, target and master
 	$actor_pos = calcPosition($actor);
 	$enemy_pos = calcPosition($target);
 	if ($master) {
 		$master_pos = calcPosition($master);
 	}
 
+	# Get the angle (using a vector) in radians from target to actor
 	my $initial_rad = atan2(($actor_pos->{y} - $enemy_pos->{y}), ($actor_pos->{x} - $enemy_pos->{x}));
+	
+	# atan2 returns radians between -pi and pi, adust it to between 0 and 2*pi
 	if ($initial_rad < 0) {
 		$initial_rad += pi2;
 	}
@@ -892,8 +896,13 @@ sub get_kite_position {
 	my @best_not_distant_cells;
 	my @best_distant_cells;
 
+	# If there are any valid cells at least AVOID_WALLS blocks away from a wall ignore all blocks closer than AVOID_WALLS
 	my $skip_near_wall_cells = 0;
+	
+	# If there are any valid cells at least AVOID_MASTER_BOUND blocks away from the master follow max distance ignore all blocks closer to the max distance than AVOID_MASTER_BOUND
 	my $skip_near_master_bound = 0;
+	
+	# If there are any valid cells that qualify both criteria, ignore all blocks that are closer to a wall than AVOID_WALLS and closer to the max distance than AVOID_MASTER_BOUND
 	my $skip_both = 0;
 
 	foreach my $move_distance ($move_distance_min..$move_distance_max) {
@@ -906,7 +915,10 @@ sub get_kite_position {
 
 		my $current_mod = 1;
 		my $total_added_rad = 0;
+		
+		# We count the total amount of radians checked on each side, adding pi to each side means doing half a turn clockwise and counterclockwise, so we check the whole perimeter
 		my $max_rad = pi;
+		
 		my %last_pos_by_mod = (
 			'1'  => { x => undef, y => undef },
 			'-1' => { x => undef, y => undef },
@@ -920,11 +932,13 @@ sub get_kite_position {
 			$current_cell{x} = $enemy_pos->{x} + int($move_distance * $cos_cur);
 			$current_cell{y} = $enemy_pos->{y} + int($move_distance * $sin_cur);
 
+			# Skip if the last iteration resulted in the same cell as this one
 			next if (defined $last_pos_by_mod{$current_mod}{x} && $current_cell{x} == $last_pos_by_mod{$current_mod}{x} && $current_cell{y} == $last_pos_by_mod{$current_mod}{y});
 
 			$last_pos_by_mod{$current_mod}{x} = $current_cell{x};
 			$last_pos_by_mod{$current_mod}{y} = $current_cell{y};
 
+			# Skip if the cell is not walkable or if it is too close to target
 			next if (!$field->isWalkable($current_cell{x}, $current_cell{y}));
 			next if (blockDistance(\%current_cell, $enemy_pos) < $min_dist_from_target);
 
@@ -954,13 +968,18 @@ sub get_kite_position {
 			next if ($current_cell{path_dist} <= 0 || $current_cell{path_dist} > $move_distance_max * 2);
 
 			$current_cell{dist_dif} = distance(\%current_cell, $actor_pos) - distance(\%current_cell, $enemy_pos);
+			# If this is a valid cell but it is closer to target than to actor we could run into target while pathing to it
+			# So add it to a lower priority list
 			if ($current_cell{dist_dif} > 0) {
 				push(@best_not_distant_cells, \%current_cell);
+
+			# Otherwise add it to the normal priority list
 			} else {
 				push(@best_distant_cells, \%current_cell);
 			}
 
 		} continue {
+			# We start at $initial_rad and move $added_rad_per_loop radians both clockwise and counterclockwise each loop checking for cells
 			if ($current_mod == 1 && $total_added_rad > 0) {
 				$current_mod = -1;
 			} else {
@@ -970,6 +989,7 @@ sub get_kite_position {
 
 			$current_rad = $initial_rad + ($total_added_rad * $current_mod);
 
+			# Again, adjust $current_rad to be between 0 and 2*pi
 			if ($current_rad >= pi2) {
 				$current_rad -= pi2;
 			} elsif ($current_rad < 0) {
@@ -978,16 +998,19 @@ sub get_kite_position {
 		}
 	}
 
-	# If you can't avoid both walls and master follow distance, choose one or the other
+	# If you can't avoid both walls and master follow max distance at the same time, choose one or the other
+	# Here we choose to avoid walls
 	if (!$skip_both && $skip_near_wall_cells && $skip_near_master_bound) {
 		$skip_near_master_bound = 0;
-		#$skip_near_wall_cells = 0;
 	}
 
+	# Sort all the cells that were closer to target than to actor by distance difference
 	@best_not_distant_cells = sort { $a->{distance_dif} <=> $b->{distance_dif} } @best_not_distant_cells;
 
+	# And than add the lower priority list (now sorted) at the end of the normal priority list
 	my @cells = (@best_distant_cells, @best_not_distant_cells);
 
+	# Loop all valid cells that were found in priority order
 	foreach my $cell (@cells) {
 		if ($skip_both) {
 			next if ($cell->{wall_dist} < AVOID_WALLS || $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
@@ -999,6 +1022,7 @@ sub get_kite_position {
 		return { x => $cell->{x}, y => $cell->{y} };
 	}
 
+	# Return undef if no valid cell was found
 	return undef;
 }
 
