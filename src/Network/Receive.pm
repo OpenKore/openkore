@@ -7807,30 +7807,47 @@ use constant {
 	TYPE_MONSTER_ITEM => 0x1,
 };
 
-# TODO: more meaningful messages?
 sub special_item_obtain {
 	my ($self, $args) = @_;
 
 	my $item_name = itemNameSimple($args->{nameID});
 	my $holder =  bytesToString($args->{holder});
+	my ($source_item_id, $source_name, $msg);
+
 	stripLanguageCode(\$holder);
 	if ($args->{type} == TYPE_BOXITEM) {
 		@{$args}{qw(box_nameID)} = unpack 'c/v', $args->{etc};
 
 		my $box_item_name = itemNameSimple($args->{box_nameID});
+		$source_name = $box_item_name;
+		$source_item_id = $args->{box_nameID};
 		chatLog("GM", "$holder has got $item_name from $box_item_name\n") if ($config{logSystemChat});
-		message TF("%s has got %s from %s.\n", $holder, $item_name, $box_item_name), 'schat';
+		$msg = TF("%s has got %s from %s.\n", $holder, $item_name, $box_item_name);
+		message $msg, 'schat';
 
 	} elsif ($args->{type} == TYPE_MONSTER_ITEM) {
 		@{$args}{qw(len monster_name)} = unpack 'c Z*', $args->{etc};
 		my $monster_name = bytesToString($args->{monster_name});
+		$source_name = $monster_name;
 		stripLanguageCode(\$monster_name);
 		chatLog("GM", "$holder has got $item_name from $monster_name\n") if ($config{logSystemChat});
-		message TF("%s has got %s from %s.\n", $holder, $item_name, $monster_name), 'schat';
+		$msg = TF("%s has got %s from %s.\n", $holder, $item_name, $monster_name);
+		message $msg, 'schat';
 
 	} else {
-		warning TF("%s has got %s (from Unknown type %d).\n", $holder, $item_name, $args->{type}), 'schat';
+		$msg = TF("%s has got %s (from Unknown type %d).\n", $holder, $item_name, $args->{type});
+		warning $msg, 'schat';
 	}
+
+	Plugins::callHook('packet_special_item_obtain', {
+		ObtainType => $args->{type},
+		ItemName => $item_name,
+		ItemID => $args->{nameID},
+		Holder => $holder,
+		SourceItemID => $source_item_id, # ItemID if type (0) TYPE_BOXITEM
+		SourceName => $source_name, # Monster if type (1) TYPE_MONSTER_ITEM
+		Msg => $msg,
+	});
 }
 
 sub inventory_item_favorite {
