@@ -455,65 +455,17 @@ sub processAttack {
 				$slave->dequeue;
 			}
 
-		} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($monsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
-			#my $begin = time;
-			# Get a list of blocks that we can run to
-			my @blocks = calcRectArea($myPos->{x}, $myPos->{y},
-				# If the monster hit you while you're running, then your recorded
-				# location may be out of date. So we use a smaller distance so we can still move.
-				($hitYou) ? $config{$slave->{configPrefix}.'runFromTarget_dist'} / 2 : $config{$slave->{configPrefix}.'runFromTarget_dist'});
-
-			# Find the distance value of the block that's farthest away from a wall
-			my $highest;
-			foreach (@blocks) {
-				my $dist = ord(substr($field->{dstMap}, $_->{y} * $field->width + $_->{x}));
-				if (!defined $highest || $dist > $highest) {
-					$highest = $dist;
-				}
+		} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
+			my $cell = get_kite_position($field, $slave, $target, $config{$slave->{configPrefix}.'runFromTarget_dist'}, ($config{$slave->{configPrefix}.'runFromTarget_minStep'} || 7), ($config{$slave->{configPrefix}.'runFromTarget_maxStep'} || 9), $char, $config{$slave->{configPrefix}.'followDistanceMax'});
+			if ($cell) {
+				debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave';
+				$slave->args->{avoiding} = 1;
+				$slave->move($cell->{x}, $cell->{y}, $ID);
+			} else {
+				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave';
 			}
 
-			# Get rid of rediculously large route distances (such as spots that are on a hill)
-			# Get rid of blocks that are near a wall
-			my $pathfinding = new PathFinding;
-			use constant AVOID_WALLS => 4;
-			for (my $i = 0; $i < @blocks; $i++) {
-				# We want to avoid walls (so we don't get cornered), if possible
-				my $dist = ord(substr($field->{dstMap}, $blocks[$i]{y} * $field->width + $blocks[$i]{x}));
-				if ($highest >= AVOID_WALLS && $dist < AVOID_WALLS) {
-					delete $blocks[$i];
-					next;
-				}
-
-				$pathfinding->reset(
-					field => $field,
-					start => $myPos,
-					dest => $blocks[$i]);
-				my $ret = $pathfinding->runcount;
-				if ($ret <= 0 || $ret > $config{$slave->{configPrefix}.'runFromTarget_dist'} * 2) {
-					delete $blocks[$i];
-					next;
-				}
-			}
-
-			# Find the block that's farthest to us
-			my $largestDist;
-			my $bestBlock;
-			foreach (@blocks) {
-				next unless defined $_;
-				my $dist = distance($monsterPos, $_);
-				if (!defined $largestDist || $dist > $largestDist) {
-					$largestDist = $dist;
-					$bestBlock = $_;
-				}
-			}
-
-			#message "Time spent: " . (time - $begin) . "\n";
-			#debug_showSpots('runFromTarget', \@blocks, $bestBlock);
-			$slave->args->{avoiding} = 1;
-			$slave->move($bestBlock->{x}, $bestBlock->{y}, $ID);
-
-		} elsif (!$config{$slave->{configPrefix}.'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
-		  && !timeOut($args->{ai_attack_giveup})) {
+		} elsif ($realMonsterDist > $args->{attackMethod}{maxDistance} && !timeOut($args->{ai_attack_giveup})) {
 			# The target monster moved; move to target
 			$args->{move_start} = time;
 			$args->{monsterPos} = {%{$monsterPos}};
