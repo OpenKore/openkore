@@ -28,6 +28,8 @@ use Data::Dumper;
 use Compress::Zlib;
 use base qw(Exporter);
 use utf8;
+use Math::Trig;
+use Math::Trig qw/pi pi2 pip2 pip4/;
 
 use Globals;
 use Log qw(message warning error debug);
@@ -76,7 +78,8 @@ our @EXPORT = (
 	closestWalkableSpot
 	objectInsideSpell
 	objectIsMovingTowards
-	objectIsMovingTowardsPlayer/,
+	objectIsMovingTowardsPlayer
+	get_kite_position/,
 
 	# Inventory management
 	qw/inInventory
@@ -854,6 +857,177 @@ sub objectIsMovingTowardsPlayer {
 		}
 	}
 	return 0;
+}
+
+use constant AVOID_WALLS => 4;
+use constant AVOID_MASTER_BOUND => 2;
+
+##
+# get_kite_position(field, actor, target, min_dist_from_target, move_distance_min, move_distance_max, master, max_dist_to_master)
+# field: Field object of the map 'actor' should kite on.
+# actor: reference to the actor which is kiting.
+# target: reference to the actor which you are kiting.
+# min_dist_from_target: the minimum distance 'actor' should keep from 'target'.
+# move_distance: the minimum distance which 'actor' should try to move away from 'target'.
+# move_distance: the maximum distance which 'actor' should try to move away from 'target'.
+# master: reference to the actor which is the master of 'actor', if 'actor' is a slave (homunculus or mercenary).
+# max_dist_to_master: the maximum distance 'actor' should move away from 'master'.
+#
+# Returns: reference to a hash containing both x and y coordinates of the best kite position found on success, and undef on failure
+#
+# Kite algorithm used in runFromTarget
+sub get_kite_position {
+	my ($field, $actor, $target, $min_dist_from_target, $move_distance_min, $move_distance_max, $master, $max_dist_to_master) = @_;
+
+	my ($actor_pos, $enemy_pos, $master_pos);
+	my $pathfinding = new PathFinding;
+
+	# Calculate the current position of actor, target and master
+	$actor_pos = calcPosition($actor);
+	$enemy_pos = calcPosition($target);
+	if ($master) {
+		$master_pos = calcPosition($master);
+	}
+
+	# Get the angle (using a vector) in radians from target to actor
+	my $initial_rad = atan2(($actor_pos->{y} - $enemy_pos->{y}), ($actor_pos->{x} - $enemy_pos->{x}));
+	
+	# atan2 returns radians between -pi and pi, adust it to between 0 and 2*pi
+	if ($initial_rad < 0) {
+		$initial_rad += pi2;
+	}
+
+	my @best_not_distant_cells;
+	my @best_distant_cells;
+
+	# If there are any valid cells at least AVOID_WALLS blocks away from a wall ignore all blocks closer than AVOID_WALLS
+	my $skip_near_wall_cells = 0;
+	
+	# If there are any valid cells at least AVOID_MASTER_BOUND blocks away from the master follow max distance ignore all blocks closer to the max distance than AVOID_MASTER_BOUND
+	my $skip_near_master_bound = 0;
+	
+	# If there are any valid cells that qualify both criteria, ignore all blocks that are closer to a wall than AVOID_WALLS and closer to the max distance than AVOID_MASTER_BOUND
+	my $skip_both = 0;
+
+	foreach my $move_distance ($move_distance_min..$move_distance_max) {
+		my $current_rad = $initial_rad;
+
+		# Biggest possible angle between 2 adjacent cells in dist $move_distance
+		my $angle_a = atan2(($move_distance-1), $move_distance);
+		my $angle_b = atan2(($move_distance-1), ($move_distance+1));
+		my $added_rad_per_loop = pip4 - max($angle_a, $angle_b);
+
+		my $current_mod = 1;
+		my $total_added_rad = 0;
+		
+		# We count the total amount of radians checked on each side, adding pi to each side means doing half a turn clockwise and counterclockwise, so we check the whole perimeter
+		my $max_rad = pi;
+		
+		my %last_pos_by_mod = (
+			'1'  => { x => undef, y => undef },
+			'-1' => { x => undef, y => undef },
+		);
+
+		while ($total_added_rad < $max_rad) {
+			my $cos_cur = cos($current_rad);
+			my $sin_cur = sin($current_rad);
+
+			my %current_cell;
+			$current_cell{x} = $enemy_pos->{x} + int($move_distance * $cos_cur);
+			$current_cell{y} = $enemy_pos->{y} + int($move_distance * $sin_cur);
+
+			# Skip if the last iteration resulted in the same cell as this one
+			next if (defined $last_pos_by_mod{$current_mod}{x} && $current_cell{x} == $last_pos_by_mod{$current_mod}{x} && $current_cell{y} == $last_pos_by_mod{$current_mod}{y});
+
+			$last_pos_by_mod{$current_mod}{x} = $current_cell{x};
+			$last_pos_by_mod{$current_mod}{y} = $current_cell{y};
+
+			# Skip if the cell is not walkable or if it is too close to target
+			next if (!$field->isWalkable($current_cell{x}, $current_cell{y}));
+			next if (blockDistance(\%current_cell, $enemy_pos) < $min_dist_from_target);
+
+			$current_cell{wall_dist} = ord(substr($field->{dstMap}, $current_cell{y} * $field->width + $current_cell{x}));
+			if ($current_cell{wall_dist} >= AVOID_WALLS) {
+				$skip_near_wall_cells = 1;
+			}
+			if ($master) {
+				$current_cell{master_bound_dist} = $max_dist_to_master - blockDistance($master_pos, \%current_cell);
+				next if ($current_cell{master_bound_dist} < 0);
+				
+				if ($current_cell{master_bound_dist} >= AVOID_MASTER_BOUND) {
+					$skip_near_master_bound = 1;
+					
+					if ($current_cell{wall_dist} >= AVOID_WALLS) {
+						$skip_both = 1;
+					}
+				}
+			}
+
+			# Get rid of ridiculously large route distances (such as spots that are on a hill)
+			$pathfinding->reset(
+				field => $field,
+				start => $actor_pos,
+				dest => \%current_cell);
+			$current_cell{path_dist} = $pathfinding->runcount;
+			next if ($current_cell{path_dist} <= 0 || $current_cell{path_dist} > $move_distance_max * 2);
+
+			$current_cell{dist_dif} = distance(\%current_cell, $actor_pos) - distance(\%current_cell, $enemy_pos);
+			# If this is a valid cell but it is closer to target than to actor we could run into target while pathing to it
+			# So add it to a lower priority list
+			if ($current_cell{dist_dif} > 0) {
+				push(@best_not_distant_cells, \%current_cell);
+
+			# Otherwise add it to the normal priority list
+			} else {
+				push(@best_distant_cells, \%current_cell);
+			}
+
+		} continue {
+			# We start at $initial_rad and move $added_rad_per_loop radians both clockwise and counterclockwise each loop checking for cells
+			if ($current_mod == 1 && $total_added_rad > 0) {
+				$current_mod = -1;
+			} else {
+				$current_mod = 1;
+				$total_added_rad += $added_rad_per_loop;
+			}
+
+			$current_rad = $initial_rad + ($total_added_rad * $current_mod);
+
+			# Again, adjust $current_rad to be between 0 and 2*pi
+			if ($current_rad >= pi2) {
+				$current_rad -= pi2;
+			} elsif ($current_rad < 0) {
+				$current_rad += pi2;
+			}
+		}
+	}
+
+	# If you can't avoid both walls and master follow max distance at the same time, choose one or the other
+	# Here we choose to avoid walls
+	if (!$skip_both && $skip_near_wall_cells && $skip_near_master_bound) {
+		$skip_near_master_bound = 0;
+	}
+
+	# Sort all the cells that were closer to target than to actor by distance difference
+	@best_not_distant_cells = sort { $a->{distance_dif} <=> $b->{distance_dif} } @best_not_distant_cells;
+
+	# And than add the lower priority list (now sorted) at the end of the normal priority list
+	my @cells = (@best_distant_cells, @best_not_distant_cells);
+
+	# Loop all valid cells that were found in priority order
+	foreach my $cell (@cells) {
+		if ($skip_both) {
+			next if ($cell->{wall_dist} < AVOID_WALLS || $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
+		} elsif ($skip_near_wall_cells) {
+			next if ($cell->{wall_dist} < AVOID_WALLS);
+		} elsif ($skip_near_master_bound) {
+			next if ($cell->{master_bound_dist} < AVOID_MASTER_BOUND);
+		}
+		return { x => $cell->{x}, y => $cell->{y} };
+	}
+
+	# Return undef if no valid cell was found
+	return undef;
 }
 
 
