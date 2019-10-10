@@ -8804,26 +8804,29 @@ sub private_message {
 	# Type: String
 	my $privMsgUser = bytesToString($args->{privMsgUser});
 	my $privMsg = bytesToString($args->{privMsg});
+	stripLanguageCode(\$privMsg);
+	my $parsed_msg = solveMessage($privMsg);
 
 	if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
 		push @privMsgUsers, $privMsgUser;
 		Plugins::callHook('parseMsg/addPrivMsgUser', {
 			user => $privMsgUser,
-			msg => $privMsg,
-			userList => \@privMsgUsers
+			msg => $parsed_msg,
+			rawMsg => $privMsg,
+			userList => \@privMsgUsers,
 		});
 	}
 
-	stripLanguageCode(\$privMsg);
-	chatLog("pm", TF("(From: %s) : %s\n", $privMsgUser, $privMsg)) if ($config{'logPrivateChat'});
- 	message TF("(From: %s) : %s\n", $privMsgUser, $privMsg), "pm";
+	chatLog("pm", TF("(From: %s) : %s\n", $privMsgUser, $parsed_msg)) if ($config{'logPrivateChat'});
+	message TF("(From: %s) : %s\n", $privMsgUser, $parsed_msg), "pm";
 
-	ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
+	ChatQueue::add('pm', undef, $privMsgUser, $parsed_msg);
 	Plugins::callHook('packet_privMsg', {
 		privMsgUser => $privMsgUser,
-		privMsg => $privMsg,
+		privMsg => $parsed_msg,
 		MsgUser => $privMsgUser,
-		Msg => $privMsg
+		Msg => $parsed_msg,
+		RawMsg => $privMsg,
 	});
 
 	if ($config{dcOnPM} && AI::state == AI::AUTO) {

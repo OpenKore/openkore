@@ -1688,7 +1688,8 @@ sub public_chat {
 		$message = "$chatMsgUser ($actor->{binID}): $parsed_msg";
 
 	} else {
-		$chatMsg = $parsed_msg = solveMessage($message);
+		$chatMsg = $message;
+		$message = $parsed_msg = solveMessage($message);
 	}
 
 	my $position = sprintf("[%s %d, %d]",
