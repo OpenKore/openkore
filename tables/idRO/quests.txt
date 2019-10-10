@@ -4711,8 +4711,8 @@ Berbicara dengan Zed#
 
 
 2187#Quest Profesi Archbishop#SG_FEEL#QUE_NOIMAGE#
-Menteri Gereja Prontera bertemu Priest Dayan di Umbala dan mengatakan "Saya datang kesini untuk melakukan ziarah ke tanah suci" dengan suara keras.#
-Berbicara dengan dayan prist in Umbala#
+Menteri Gereja Prontera bertemu Priest Dayan di Umbala dan mengatakan "Saya kesini untuk melakukan Holy Pilgrimage" dengan suara keras.#
+Berbicara dengan Dayan Priest di Umbala#
 
 2188#Quest Profesi Archbishop#SG_FEEL#QUE_NOIMAGE#
 Priest Dayan berkata kalau kamu mesti mempunyai misa di sumber kehidupan Yggdrasilberry. Kamu bisa mendapatkan informasinya lewat pembicaraan dengan Priest Dayan.#
@@ -5734,7 +5734,7 @@ Itu adalah kunci khayalan yang kamu temukan jauh di dalam ince dungeon. Tapi har
 #
 
 7173#Pesan untuk Halled dari Paul#SG_FEEL#QUE_NOIMAGE#
-Paul sangat kecewa bahwa itu bukan harta dan menyuruh anda untuk pergi ke Halled, manajer cabang Yuno, yang memiliki petunjuk lain. Bila dia tidak mau membantu Anda, dia bilang kau harus mengatakan pesannya. Pesan dari Paul:^4d4dffAku tahu apa yang kamu lakukan musim panas lalu!^000000#
+Paul sangat kecewa bahwa itu bukan harta dan menyuruh anda untuk pergi ke Halled, manajer cabang Yuno, yang memiliki petunjuk lain. Bila dia tidak mau membantu Anda, dia bilang kau harus mengatakan pesannya. Pesan dari Paul:^4d4dffAku tahu apa yang Anda lakukan musim panas lalu!^000000#
 Ke Halled, manajer bengkel bayangan cabang Yuno.#
 
 7174#Cryptogram Misterius - 4th#SG_FEEL#QUE_NOIMAGE#
@@ -11931,7 +11931,1145 @@ Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 Expert Turn-in : Kalahkan ^ff0000400 Monster Angra Mantis ^000000 #
 Setelah selesai, kembalilah kepada WarAngel untuk dapat menerima hadiah#
 
-// -- Daily Quest Special Gravindo
-19303#Cooldown Login Spesial#HT_CLAYMORETRAP#QUE_NOIMAGE#
-Cooldown Login Spesial 1 Hari#
-Kembali lah lagi setelah tengah malam#
+
+
+// DORAM
+
+7711#Permulaan#SG_FEEL#QUE_NOIMAGE#
+Yo Ho! Aku adalah Doram yang paling terkenal di seantero dunia! Aku datang dari desa Lasagna, setelah berhasil menempuh perjalanan jauh melewati Gunung Ravioli. Dan akulah yang akan menguasai dataran Rune Midgard!#
+Berbicara dengan Ajena#
+
+7712#Dimanakah Aku??#SG_FEEL#QUE_NOIMAGE#
+Yo Ho! Aku adalah Doram yang paling terkenal di seantero dunia! Apakah kamu ingin mengetahui rute menuju desa Lasagna? Vigilante Aglio akan memberitahumu.#
+Berbicara dengan Aglio#
+
+7713#Pertempuran Pertama!#SG_FEEL#QUE_NOIMAGE#
+Sudah kuduga! Vigilante Aglio ingin mengetes sejauh mana kemampuanku. Eggring tidak akan menjadi masalah bagiku!#
+#
+
+7714#Jus Apel Yang Menyegarkan#SG_FEEL#QUE_NOIMAGE#
+Tidak ada yang lebih nikmat dan menyegarkan selain dari meneguk minuman manis yang dingin setelah bekerja. Vigilante Aglio tampaknya sangat memahamiku.#
+Minum Jus Apel#
+
+7715#Kotak Yang Hilang#SG_FEEL#QUE_NOIMAGE#
+Seorang anak dari kota mengatakan bahwa dia telah kehilangan kotak pengiriman. Sudah menjadi kewajibanku untuk menolongnya! Kalahkan Eggring untuk menemukan kotak itu. Temui Aglio setelah kamu berhasil menemukannya.#
+Mengumpulkan Kotak Pengiriman#
+
+7716#Menuju Ke Desa!#SG_FEEL#QUE_NOIMAGE#
+Setelah berhasil mengumpulkan kotak pengiriman, Vigilante Aglio memintaku untuk mengirimkannya kepada Kucing yang bekerja di Lasagna Tool Shop. Bagiku ini adalah suatu petualangan!#
+Berbicara dengan Kucing di Tool Shop#
+
+7717#Kebaikan Hati Pedagang#SG_FEEL#QUE_NOIMAGE#
+Pemilik Tool Shop memberiku beberapa barang yang berguna, dan memintaku untuk menemui ^4d4dffHaru Sang Penyembuh^000000. Ia tinggal di ^4d4dffsebuah rumah berbentuk pot bunga, yang terletak di sebelah timur Tool Shop^000000.#
+Berbicara dengan Haru Sang Penyembuh#
+
+7718#Akan Kugunakan Ini#SG_FEEL#QUE_NOIMAGE#
+Pergi ke sebuah padang rumput di dekat desa, ambil ^4d4dffRed Grass^000000 dan ^4d4dff1 Red Herb^000000. Barang itu akan dibutuhkan untuk membuat obat.#
+1 Red Herb#
+
+7719#Saatnya Mencerna#SG_FEEL#QUE_NOIMAGE#
+Untuk membantu kucing yang berada di depan desa Lasagna mari kita lakukan beberapa pekerjaan. Ambil ^4d4dffRed Grass dan kumpulkan 2 buah Red Herb^000000. Ini akan jadi pekerjaan yang sangat mudah buatku!#
+2 Red Herb#
+
+7720#Panduan Penggunaan#SG_FEEL#QUE_NOIMAGE#
+Mempelajari mengenai cara menggunakan gudang, dan menyimpan posisi.#
+#
+
+7721#Kontes Kucing#SG_FEEL#QUE_NOIMAGE#
+Perlombaan telah dimulai! Untuk memenangkannya kalahkan 3 Lunatic dan 2 Fabre secepat mungkin. Lunatic dan Fabre tampaknya dapat ditemui di sekitar sini.#
+Kamu memiliki waktu 10 menit untuk mengalahkannya:#
+
+7722#EMT#SG_FEEL#QUE_NOIMAGE#
+Mempelajari pengobatan medis darurat.#
+#
+
+7723#Potensi Tersembunyi#SG_FEEL#QUE_NOIMAGE#
+Mempelajari mengenai Status dan Ability. Bicaralah dengan Vigilante Nyoki untuk mengetahui hal ini lebih lanjut.#
+Berbicara dengan Nyoki#
+
+// DORAM
+11432#Tugas Yang Mencurigakan#SG_FEEL#QUE_NOIMAGE#
+Bicaralah dengan [Pria Yang Mencurigakan] yang berada di dekat Pelabuhan Izlude.#
+Pergi ke Pelabuhan Izlude#
+
+11433#Tugas Yang Mencurigakan#SG_FEEL#QUE_NOIMAGE#
+Kumpulkan 100 buah 'Basil' dari desa Lasagna dan laporkan kembali kepada [Pria Yang Mencurigakan].#
+Kumpulkan 100 buah Basil#
+
+11434#Tugas Yang Mencurigakan#SG_FEEL#QUE_NOIMAGE#
+Kirimkan Basil kepada [Royal Chef] yang berada di dapur Prontera. Ini adalah misi rahasia, jangan sampai hal ini diketahui.#
+Kirimkan Basil#
+
+11435#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Temui Pimpinan dari Vigilante Corp, Chief Peperoncino. Kamu dapat menemukannya di sekitar [Adventurer's Club] yang berada di sebelah timur desa Lasagna.#
+Berbicara dengan Chief Peperoncino#
+
+11436#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Berbicaralah dengan Vigilante Chief Peperoncino. Jika ada hal lainnya, silahkan bicara dengan Olio.#
+Berbicara dengan Olio#
+
+11437#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Membutuhkan persetujuan dari Pimpinan. Ayo temui Peperoncino.#
+Berbicara dengan Peperoncino#
+
+11438#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Ujian pertama telah dimulai. Ikuti Peperoncino.#
+Berbicara dengan Peperoncino#
+
+11439#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Dapatkan beberapa informasi dari pada Tahanan Basilisk.#
+Berbicara dengan Tahanan Basilisk#
+
+11440#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Pergilah ke bagian timur [Hutan Ravioli], di dekat gua, terdapat Hard Thorn Vines. Kumpulkan dan segera temui Pimpinan.#
+Kumpulkan 5 buah Hard Thorn Vines#
+
+11441#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Gunakan Thorn Vine Pipe untuk mendapatkan informasi dari Tahanan Basilisk.#
+Berbicara dengan Tahanan Basilisk#
+
+11442#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Dapatkan beberapa informasi dari pada Tahanan Basilisk. Bicaralah dengan Peperoncino yang berada di [Adventurer's Club].#
+Berbicara dengan Peperoncino#
+
+11443#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Ujian kedua. Bicaralah kepada Tali yang dapat ditemui di sebelah barat laut desa Lasagna.#
+Berbicara dengan Tali#
+
+11444#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Pergilah ke Hutan Ravioli. kalahlan beberapa Sweet Roda Frogs, kemudian kumpulkan 2 buah [Luxurious Cloth].#
+Kumpulkan 2 buah Luxurious Cloth#
+
+11445#Vigilante Corp#SG_FEEL#QUE_NOIMAGE#
+Bicaralah dengan Peperoncino yang berada di [Adventurer's Club].#
+Berbicara dengan Peperoncino#
+
+//Con-Chliina
+
+14531#Tentang Con-Chliina#SG_FEEL#QUE_NOIMAGE#
+Jika ini adalah yang pertama kalinya kamu berkunjung ke Con-Chliina, akan sangat menyenangkan untuk mendengarkan cerita dari Nahkoda#
+Temui Nahkoda#
+
+14532#Hormat Kepada Kapten Gamberi#SG_FEEL#QUE_NOIMAGE#
+Sekarang setelah tiba di Con-Chliina untuk menjelajahi benua baru, saatnya untuk bertemu para anggota. Pertama-taa bicaralah dengan Kapten Gamberi.#
+Berbicara dengan Gamberi#
+
+14533#Temui Recorder#SG_FEEL#QUE_NOIMAGE#
+Jika kamu ingin mengetahui lebih lengkap lagi mengenai Lasagna dan Con-Chliina, silahkan temui Recorder.#
+Recorder mengetahui segalanya#
+
+14534#Pergi Ke Dapur#SG_FEEL#QUE_NOIMAGE#
+Semua orang mungkin sedang berada di dapur sekarang. Pergi ke dapur.#
+Pergi Ke Dapur#
+
+14535#Temui Nahkoda#SG_FEEL#QUE_NOIMAGE#
+Periksa seluruh bagian kapal, tetapi tidak banyak yang bisa diajak berbicara. Mari kita kembali temui Nahkoda.#
+Berbicara dengan Nahkoda#
+
+14536#Kiriman Untuk Chef#SG_FEEL#QUE_NOIMAGE#
+Bukankah sudah kukatakan untuk mengirimkan Calunac ini kepada Chef? Bahan makanan harus selalu dalam kondisi segar, jangan mengecewakanku!#
+Kirim ke Chef#
+
+14537#Kapan Kita Berangkat?#SG_FEEL#QUE_NOIMAGE#
+Tanda keberangkatan terlambat, maukah kamu untuk menemui Nahkoda?#
+Berbicara dengan Nahkoda#
+
+14538#Kapan Kita Berangkat?#SG_FEEL#QUE_NOIMAGE#
+Kabut asap tebal telah muncul di laut, tanyakan kepada Chief Officer Stello apakah kita bisa berlayar hari ini atau tidak. Kamu harus segera melakukan tugas tersebut secepatnya.#
+Laporkan kepada Chief Officer Stello#
+
+14539#Crazy Dragon#SG_FEEL#QUE_NOIMAGE#
+Sepertinya Naga yang tinggal di dalam Gua terlihat agak marah akhir-akhir ini. Kondisi sang Naga sedang diperiksa setiap hari oleh petugas Vigilante, Tolong periksa apakah ada yang salah. Anggota Vigilante tinggal di dekat sisi selatan jembatan #
+Periksalah bersama Vigilante#
+
+14540#Sebuah Tugas Misterius#SG_FEEL#QUE_NOIMAGE#
+Kamu benar-benar melakukannya? Aku dimarahi oleh Sous Chef karena ulahmu, jadi kamu berhutang padaku kali ini. Bawakan aku 3 Basilac Clams. Kamu bisa mendapatkannya dari berburu Basilisks. Ini untukmu, kau tahu?#
+3 Basilac Clams#
+
+14541#Tidak Ada Kabar Berarti Bukan Kabar Baik#SG_FEEL#QUE_NOIMAGE#
+Orang yang pergi untuk memeriksa keadaan Naga belum juga kembali. Sesuatu pasti sedang terjadi. Ikuti aku, kita pergi ke Gua.#
+Cave Adventure#
+
+14542#How is the Dragon#SG_FEEL#QUE_NOIMAGE#
+Menemukan musuh yang besar dan menakutkan hari ini... Apakah Tarufi baik-baik saja?... Tolong periksalah...#
+Periksa kesehatan sang Naga#
+
+14543#Basilisk Hunt#SG_FEEL#QUE_NOIMAGE#
+Ada yang aneh dengan Basilisk hari ini. Sakit sekali. Jaga itu untuk Machie, kamu mau?#
+Hunt Basilisk#
+
+14544#Sekarang Aku Bisa Pergi#SG_FEEL#QUE_NOIMAGE#
+Untuk saat ini, Basilisk tidak akan menggangguku lagi. Aku akan pergi tidur sekarang. Ini saatnya mengucapkan selamat tinggal. Adios.#
+Melapor pada Officer pertama#
+
+14545#To Purser#SG_FEEL#QUE_NOIMAGE#
+Jika ini pertama kalinya kamu mendapatkan Con-Chliina, tolong dapatkan beberapa informasi dari tuan Purser.#
+To Purser#
+
+14547#Bisakah Kita Pergi Berlayar?#SG_FEEL#QUE_NOIMAGE#
+Kita tidak bisa mengetahui apakah kita bisa mulai berlayar atau tidak karena kabut laut. Tanyalah pada Kapten untuk informasi lebih detail. Kapten Kabin ada di depan#
+To Mr.Captain#
+
+14548#Crazy Dragon#SG_FEEL#QUE_NOIMAGE#
+Sepertinya Naga yang tinggal di dalam Gua terlihat agak marah akhir-akhir ini. Kondisi sang Naga sedang diperiksa setiap hari oleh petugas Vigilante, Tolong periksa apakah ada yang salah.#
+Periksalah bersama Vigilante#
+
+14549#Tidak Ada Kabar Berarti Bukan Kabar Baik#SG_FEEL#QUE_NOIMAGE#
+Orang yang memeriksa keadaan sang Naga belum juga kembali. Sesuatu pasti telah terjadi. Ikuti aku, kita pergi ke Gua.#
+Cave Adventure#
+
+14550#How is the Dragon#SG_FEEL#QUE_NOIMAGE#
+Menemukan musuh yang besar dan menakutkan hari ini... Apakah Tarufi baik-baik saja?... Tolong periksalah...#
+Periksa kesehatan sang Naga#
+
+14551#Chief Basilisk#SG_FEEL#QUE_NOIMAGE#
+Tolong temui Imoogi, Kepala Basilisks dan minta mereka tetap tenang. Disanna entah dmana, ada alat yang bisa kamu gunakan untuk berkomunikasi. #
+Bicara pada Imoogi#
+
+14552#Pesan Lord Imuk#SG_FEEL#QUE_NOIMAGE#
+Basilisk akan melanjutkan tugas mereka sampai yang muda menyerahkan Yeouiju.#
+To Tartufi#
+
+14553#Basilisk Hunt#SG_FEEL#QUE_NOIMAGE#
+Berhati-hatilah selama aku mencari Yeouiju. Biasanya membunuh 20 dari mereka sudah cukup.#
+Basilisk Hunt#
+
+14554#Kita Bisa Mulai Berlayar sekarang#SG_FEEL#QUE_NOIMAGE#
+Basilisk merawatnya, Tartufi sudah tenang sekarang. Laporkan kembali pada First officer Stello.#
+Lapor pada First Officer Stello#
+
+14555#Cita Rasa Baru#SG_FEEL#QUE_NOIMAGE#
+Aku berusaha mencari bahan makanan yang baru. Maukah kamu memberiku 4 Fruits of Mastera? Dan aku juga membutuhkan 1 Cat shape hard biscuit.#
+4 Mastera's Fruit dan 1 Cat shape Hard Biscuit#
+
+14556#Sebuah hal menakutkan bagiku#SG_FEEL#QUE_NOIMAGE#
+Dia datang saat malam hari dan membuatku sangat takut. Mereka bilang Pahlawan yang baru akan menyelamatkanku. Temuilah Shamanyang dan dengarkan solusi dari masalahku. Shamanyang tinggal di sekitar jalan masuk desa.#
+To Shamanyang#
+
+14557#Kenyataan Selalu Kejam#SG_FEEL#QUE_NOIMAGE#
+Beritahu Boatswain tentang kisah yang aku ceritakan padamu.#
+To Boatswain#
+
+14558#Mahluk Kotor#SG_FEEL#QUE_NOIMAGE#
+Aku tidak akan pergi dengan Basilisk. Jadi beri aku 20 Basils dan 5 Basilrocks. Tentu itu akan menyenangkan.#
+Basil dan Basilrock#
+
+14559#Durasi Efek Charm#SG_FEEL#QUE_NOIMAGE#
+Efek Charm akan hilang pada pukul 4#
+Initialize at 4 O'clock#
+
+14560#Bahan yang Baru#SG_FEEL#QUE_NOIMAGE#
+Semakin banyak kontak dengan orang baru terjadi, Kami menemukan bahwa Charm mereka juga semakin efektif. Hari ini, kami membutuhkan 5 Basilrocks dan 1 Holy water. Dapatkan semuanya dan laporkan kepada Boatswain.#
+Basilrock dan Holi Water#
+
+14561#Kotor dan Dekil#SG_FEEL#QUE_NOIMAGE#
+Basilrock sangat kotor dan dekil. Kumpukan 20 Basilrocks hari ini. Dapatkan semuanya dan melaporlah pada Boatswain segera.#
+Basilrock#
+
+14562#The basic are the best#SG_FEEL#QUE_NOIMAGE#
+Stick to the basic is the most effective way. Collect Basil 20 ea and Basil lock 5 ea. As soon as you get them, go to Boatswain right away.#
+Basil and Basilrock#
+
+14563#Free time#SG_FEEL#QUE_NOIMAGE#
+Pekerjaan hari ini belum selesai. Kita tidak bisa melakukan penelitian tanpa menyelesaikan pekerjaan kita. Kembalilah saat fajar tiba.#
+Reset at 4 am#
+
+14564#I love buns, too#SG_FEEL#QUE_NOIMAGE#
+Dikatakan terdapat roti di dataran yang baru. Ada makanan serupa di Lasagna, jadi aku ingin membandingkan keduanya. Bisakah kamu membawakanku 20 dari #
+Bun 20 ea#
+
+14565#Persediaan Makanan Darurat#SG_FEEL#QUE_NOIMAGE#
+Aku bertanya-tanya apakah Nyas digunakan untuk memberi makan semua pelaut dari Navi. Tolong bawakan aku 5 masing-masing dari mereka.#
+Cat Hardtack, Malangdo Canned Food#
+
+14566#Ide Brilian#SG_FEEL#QUE_NOIMAGE#
+Es yang tidak bisa mencair!! Jika itu ada, maka akan menjadi sebuah revolusi dalam menyimpan bahan! Rasa ingin tahuku tertantang! Tolong kumpulkan 20 buah!#
+Ice Chunk#
+
+14567#Kaluna milk is in Danger!#SG_FEEL#QUE_NOIMAGE#
+Tidak pernah terdengar apapun dari Mr.Legalas yang seharusnya mengantarku pada Kahlugna. Tolong temui Mr.Legalas, periksalah apa yang terjadi. Dia tinggal di selatan bagian bawah.#
+To Mr.Legalas#
+
+14568#Waktunya untuk meyakinkan#SG_FEEL#QUE_NOIMAGE#
+Kita akan kelaparan sampai mati! Lakukan sesuatu! Katakan pada mereka, berhenti memakan Kahlugna!!#
+Mr.Sea Otter dan Mr.Galapago#
+
+14569#Babysitter#SG_FEEL#QUE_NOIMAGE#
+Ayo temukan bayi yang membutuhkan perhatian.#
+Merawat Bayi#
+
+14570#Memproses Anchovy#SG_FEEL#QUE_NOIMAGE#
+Mereka ingin melakukan sesuatu pada anchovy. Ayo pergi ke anchovy workshop.#
+Anchovy workshop#
+
+14571#Anchovy fishing ship#SG_FEEL#QUE_NOIMAGE#
+Mereka ingin memiliki kapal, sehingga mereka dapat mengantarkan anchovy. Ayo kunjungi anchovy fishing ship.#
+Anchovy fishing ship#
+
+14572#Helpless...#SG_FEEL#QUE_NOIMAGE#
+Aku muak dan lelah bersama dua orang yang tidak ingin melakukan apapun dan tidak memiliki keinginan untuk melakukan apapun. Tidak ada jalan lain, aku harus kembali ke Mr.Legalas#
+To Mr.Legalas#
+
+14573#Aku Butuh Waktuku Sendiri#SG_FEEL#QUE_NOIMAGE#
+Aku akan mengerjakan pekerjaanku selagi mereka tidak disini. Aku harus menyelesaikan sesuatu, jadi tolong temani mereka selama beberapa waktu. Dan tolong beritahu Mr.Kalu kalau aku akan menganta.#
+Report to Mr.Kalu#
+
+14574#Meal Box Delivery#SG_FEEL#QUE_NOIMAGE#
+I can make them stay away from Mr.Legalas to let him do his work. Could you deliver this lunch box to vigilante Panna in the cave? Of course, you should bring them along.#
+To vigilante in the cave#
+
+14575#Delivery Complete Report#SG_FEEL#QUE_NOIMAGE#
+Finished deliver meal box to Vigilante member. Let's go back to Kalu.#
+To Kalu#
+
+14576#Meal Box Delivery Time#SG_FEEL#QUE_NOIMAGE#
+Delivery time is not now. Wait for after dawn and come back.#
+Initialize at 04 O'clock#
+
+14577#Meal Box Delivery#SG_FEEL#QUE_NOIMAGE#
+Tolong aku mengirimkan makan siang pada Vigilante Pana dalam Gua!#
+Antarkan pada Vigilante member di dalam Gua#
+
+14578#Delivery Complete Report#SG_FEEL#QUE_NOIMAGE#
+Selesaikan mengantar makan siang pada anggota Vigilante. Ayo kembali ke Kalu.#
+To Kalu#
+
+14579#Interview with Captain#SG_FEEL#QUE_NOIMAGE#
+Berbicara dengan Captain Gamberi, tanyakan padanya berbagai hal. Dan beritahu padaku apa saja yang kau dengar.#
+To Captain Gamberi#
+
+14580#To Recorder#SG_FEEL#QUE_NOIMAGE#
+Seelesaikan interview dengan Captain Gamberi. Ayo kembali untuk merekam.#
+Back to Recorder#
+
+14581#Interview with the Chief#SG_FEEL#QUE_NOIMAGE#
+Bicara pada Peperoncino, tanyakan padanya mengenai Captain Gamberi dan lainnya. Kembalilah dan beritahu aku apa saja yang kau dengar. Chief Peperoncino berada di Adventurer Club's diner.#
+To Chief Peperoncino#
+
+14582#To Recorder#SG_FEEL#QUE_NOIMAGE#
+Selesaikan interview dengan Peperoncino. Ayo kembali untuk merekam.#
+Back to Recorder#
+
+14583#To Granma#SG_FEEL#QUE_NOIMAGE#
+Temukan Granma yang terperangkap dalam waktu, tanyakan pada Captain dan Chief. Kelmbali dan beritahu apa yang dia katakan. Granma tinggal di dekat Pub-Oven.#
+To Granma#
+
+14584#Back to Recorder#SG_FEEL#QUE_NOIMAGE#
+Selesaikan semua interview sekarang, ayo kembali untuk merekam.#
+Back to Recorder#
+
+// DAILY HUNT QUEST
+
+14546#Take care of grass thief#SG_FEEL#QUE_NOIMAGE#
+Untuk membantu sapi-sapi kita makan rumput mereka dengan damai, buru 5 dari Grass Fabre dan Reef Lunatics, dan laporkan kembali pada Chef atau Shepherd.#
+Urus para pencuri rumput#
+
+14588#The Competition#SG_FEEL#QUE_NOIMAGE#
+Tangkap 10 Wild Hornets untuk kompetisi panen madu, dan laporkan kembali pada Chef di kota atau Florin di sudut barat laut Ravioli forest.#
+Wild Hornet#
+
+14589#Sticky ingredient#SG_FEEL#QUE_NOIMAGE#
+Kami kekurangan Webfoot untuk membuat puddings. Kalahkan 10 Sweet Roda Frogs dan kumpulkan 5 Sticky Webfoots, laporkan kembali pada Chef atau Shepherd.#
+Kalahkan Sweet Roda Frog dan kumpulkan 5 Sticky Webfoots#
+
+14590#Hunter's destination#SG_FEEL#QUE_NOIMAGE#
+Mereka bilang Hunter Desert Wolves mencuri dry fishes. Kalahkan 10 dari mereka dan laporkan kembali pada Chef atau Shepherd.#
+Hunter Desert Wolf#
+
+14591#Secret Ingredient#SG_FEEL#QUE_NOIMAGE#
+Mushroom Spore dari Trance Spore adalah bahan rahasia dari fish cake. Cari 10 Trance Spore dan bawakan 5 mashroom spore untuk Chef atau Shepherd.#
+Trance Spore#
+
+14592#Waktunya Istirahat#SG_FEEL#QUE_NOIMAGE#
+Istirahatlah sekarang, pekerjaan yang berat telah menuggumu di kemudian hari.#
+Initialized at 4 O'clock#
+
+// DORAM
+
+14154#Campuran Herbal yang Wangi#SG_FEEL#QUE_NOIMAGE#
+Untuk membuat campuran herbal yang wangi, ada bahan yang dibutuhkan. Cari dan bawakan masing-masing 1 Clover, Green Herb dan Red Herb.#
+Cari bahannya#
+
+14155#Crunchy salad#SG_FEEL#QUE_NOIMAGE#
+Untuk membuat Salad Renyah, ada bahan yang dibutuhkan. Cari dan bawakan masing-masing 1 Apple dan 2 Carrot.#
+Cari bahannya#
+
+14156#Shabushabu apapun#SG_FEEL#QUE_NOIMAGE#
+Untuk membuat Shabushabu apapun, ada bahan yang dibutuhkan. Cari dan bawakan masing-masing 1 Jellopy, Fluff dan Feather.#
+Cari bahannya#
+
+14157#Apel Emas Panggang#SG_FEEL#QUE_NOIMAGE#
+Untuk membuat Apel Emas Panggang, ada bahan yang dibutuhkan. Cari dan bawakan masing-masing 1 Apple dan Clover.#
+Cari bahannya#
+
+14158#Presentasi dari Buku Panduan Archer#SG_FEEL#QUE_NOIMAGE#
+Presentasi dari Panduan untuk mempelajari Skill Archer.#
+Presentasi dari Buku Panduan Archer#
+
+
+14159#Bertemu dengan PR Staff#SG_FEEL#QUE_NOIMAGE#
+Bertemu dengan PR Staff Hunter.#
+Bertemu dengan PR Staff.#
+
+
+
+14160#Bertemu dengan PR Staff#SG_FEEL#QUE_NOIMAGE#
+Bertemu dengan PR Staff Bard dan Dancer.#
+Bertemu dengan PR Staff.#
+
+14161#Ujian Stats#SG_FEEL#QUE_NOIMAGE#
+Ambil ujian dari Pelatih Archer mengenai Stats.#
+#
+
+
+14162#Ujian Skill#SG_FEEL#QUE_NOIMAGE#
+Ambil ujian dari Pelatih Archer mengenai skill.#
+#
+
+14163#Tangkap Spore#SG_FEEL#QUE_NOIMAGE#
+Tangkap 10 Spores#
+#
+
+14164#Tangkap Creamy#SG_FEEL#QUE_NOIMAGE#
+Tangkap 10 Creamy#
+#
+
+14165#Tangkap Skeletons#SG_FEEL#QUE_NOIMAGE#
+Tangkap 10 Skeletons.#
+#
+
+292000#Login and Get Free Item CBT#SG_FEEL#QUE_NOIMAGE#
+Nikmati Item Gratis yang disediakan oleh Staff CBT setiap hari selama Closed Beta Ragnarok : Forever Love#
+Login and Get Free Item Reset setiap jam 04:00 WIB setiap harinya.#
+
+292001#Daily Attendance#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu dapat berbicara kembali ke ^0000ffKaren^000000 untuk mengambil hadiah Daily Login setiap pergantian hari yaitu pukul ^00008804.00 WIB^000000#
+Daily Attendance reset setiap hari pukul 04.00 WIB#
+
+292002#Bounty Boards#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+292003#Lunatic Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Lunatic sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Lunatic#
+
+292004#Hornet Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Hornet sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Hornet#
+
+292005#Roda Frog Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Roda Frog sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Roda Frog#
+
+292006#Rocker Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Rocker sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Rocker#
+
+292007#Savage Babe Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Savage Babe sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Savage Babe#
+
+292008#Thief Bug Egg Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Thief Bug Egg sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Thief Bug Egg#
+
+292009#Ambernite Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Ambernite sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Ambernite#
+
+292010#Thief Bug Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Thief Bug sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Thief Bug#
+
+292011#Tarou Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Tarou sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Tarou#
+
+292012#Stainer Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Stainer sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Stainer#
+
+292013#Pecopeco Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Pecopeco sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Pecopeco#
+
+292014#Coco Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Coco sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Coco#
+
+292015#Yoyo Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Yoyo sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Yoyo#
+
+292016#Thief Bug Female Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Thief Bug Female sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Thief Bug Female#
+
+292017#Thief Bug Male Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Thief Bug Male sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Thief Bug Male#
+
+292018#Poporing Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Poporing sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Poporing#
+
+292019#Elder Willow Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Elder Willow sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Elder Willow#
+
+292020#Muka Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Muka sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Muka#
+
+292021#Magnolia Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Magnolia sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Magnolia#
+
+292022#Argos Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Argos sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Argos#
+
+292023#Beetle King Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Beetle King sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Beetle King#
+
+292024#Savage Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Savage sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Savage#
+
+292025#Driller Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Driller sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Driller#
+
+292026#Hunter Fly Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Hunter Fly sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Hunter Fly#
+
+292027#Mantis Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Mantis sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Mantis#
+
+292028#Sidewinder Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Sidewinder sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Sidewinder#
+
+292029#Argiope Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Argiope sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Argiope#
+
+292030#Willow Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Willow sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Willow#
+
+292031#Spore Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Spore sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Spore#
+
+292032#Boa Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Boa sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Boa#
+
+292033#Bigfoot Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Bigfoot sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Bigfoot#
+
+292034#Horn Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Horn sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Horn#
+
+292035#Skeleton Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Skeleton sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Skeleton#
+
+292036#Soldier Skeleton Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Soldier Skeleton sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Soldier Skeleton#
+
+292037#Greatest General Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Greatest General sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Greatest General#
+
+292038#Wolf Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Wolf sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Wolf#
+
+292039#Archer Skeleton Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Archer Skeleton sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Archer Skeleton#
+
+292040#Munak Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Munak sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Munak#
+
+292041#Bongun Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Bongun sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Bongun#
+
+292042#Sohee Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Sohee sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Sohee#
+
+292043#Dokebi Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Dokebi sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Dokebi#
+
+292044#Nine Tail Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Nine Tail sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Nine Tail#
+
+292045#Chonchon Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Chonchon sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Chonchon#
+
+292046#Mandragora Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Mandragora sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Mandragora#
+
+292047#Creamy Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Creamy sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Creamy#
+
+292048#Caramel Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Caramel sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Caramel#
+
+292049#Poison Spore Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Poison Spore sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Poison Spore#
+
+292050#Smokie Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Smokie sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Smokie#
+
+292051#Martin Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Martin sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Martin#
+
+292052#Orc Warrior Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Orc Warrior sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Orc Warrior#
+
+292053#Orc Lady Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Orc Lady sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Orc Lady#
+
+292054#Goblin Dagger Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Goblin Dagger sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Goblin Dagger#
+
+292055#Goblin Archer Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Goblin Archer sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Goblin Archer#
+
+292056#Skel Worker Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Skel Worker sebanyak 30 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 30 Skel Worker#
+
+292057#Ghoul Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Ghoul sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Ghoul#
+
+292058#Jakk Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Jakk sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Jakk#
+
+292059#Nightmare Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Nightmare sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Nightmare#
+
+292060#Deviruchi Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Deviruchi sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Deviruchi#
+
+292061#Marionette Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Marionette sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Marionette#
+
+292062#Wraith Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Wraith sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Wraith#
+
+292063#Dark Priest Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Dark Priest sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Dark Priest#
+
+292064#Gargoyle Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Gargoyle sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Gargoyle#
+
+292065#Flying Petite Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Flying Petite sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Flying Petite#
+
+292066#Petite Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Petite sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Petite#
+
+292067#Evil Druid Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Evil Druid sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Evil Druid#
+
+292068#Wind Ghost Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Wind Ghost sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Wind Ghost#
+
+292069#Carat Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Carat sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Carat#
+
+292070#Majoruros Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Majoruros sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Majoruros#
+
+292071#Wanderer Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Wanderer sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Wanderer#
+
+292072#Sting Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Sting sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Sting#
+
+292073#Arclouze Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Arclouze sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Arclouze#
+
+292074#Raydric Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Raydric sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Raydric#
+
+292075#Khalitzburg Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Khalitzburg sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Khalitzburg#
+
+292076#Anolian Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Anolian sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Anolian#
+
+292077#False Angel Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan False Angel sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 False Angel#
+
+292078#Violy Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Violy sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Violy#
+
+292079#Mini Demon Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Mini Demon sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Mini Demon#
+
+292080#Cursed Box Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Cursed Box sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Cursed Box#
+
+292081#Cursed Book Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Cursed Book sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Cursed Book#
+
+292082#Big Bell Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Big Bell sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Big Bell#
+
+292083#Big Ben Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Big Ben sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Big Ben#
+
+292084#Neo Punk Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Neo Punk sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Neo Punk#
+
+292085#Goat Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Goat sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Goat#
+
+292086#Harpy Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Harpy sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Harpy#
+
+292087#Sleeper Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Sleeper sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Sleeper#
+
+292088#Grand Peco Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Grand Peco sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Grand Peco#
+
+292089#Deleter (Ground) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Deleter (Ground) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Deleter (Ground)#
+
+292090#Deleter (Sky) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Deleter (Sky) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Deleter (Sky)#
+
+292091#Nightmare Terror Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Nightmare Terror sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Nightmare Terror#
+
+292092#Venatu (Purple) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Venatu (Purple) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Venatu (Purple)#
+
+292093#Venatu (Green) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Venatu (Green) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Venatu (Green)#
+
+292094#Venatu (Orange) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Venatu (Orange) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Venatu (Orange)#
+
+292095#Venatu (Blue) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Venatu (Blue) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Venatu (Blue)#
+
+292096#Apocalipse Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Apocalipse sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Apocalipse#
+
+292097#Centipede Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Centipede sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Centipede#
+
+292098#Centipede Larva Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Centipede Larva sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Centipede Larva#
+
+292099#Tatacho Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Tatacho sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Tatacho#
+
+292100#Dolomedes Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Dolomedes sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Dolomedes#
+
+292101#Uni-Horn Scaraba Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Uni-Horn Scaraba sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Uni-Horn Scaraba#
+
+292102#Horn Scaraba Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Horn Scaraba sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Horn Scaraba#
+
+292103#Antler Scaraba Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Antler Scaraba sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Antler Scaraba#
+
+292104#Rake-Horn Scaraba Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Rake-Horn Scaraba sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Rake-Horn Scaraba#
+
+292105#Miming Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Miming sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Miming#
+
+292106#Little Fatum Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Little Fatum sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Little Fatum#
+
+292107#Cenere Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Cenere sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Cenere#
+
+292108#Menblatt Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Menblatt sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Menblatt#
+
+292109#Petal Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Petal sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Petal#
+
+292110#Angra Mantis Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Angra Mantis sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Angra Mantis#
+
+292111#Antique Book Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Antique Book sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Antique Book#
+
+292112#Lichtern (Yellow) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Lichtern (Yellow) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Lichtern (Yellow)#
+
+292113#Lichtern (Blue) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Lichtern (Blue) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Lichtern (Blue)#
+
+292114#Lichtern (Red) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Lichtern (Red) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Lichtern (Red)#
+
+292115#Lichtern (Green) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Lichtern (Green) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Lichtern (Green)#
+
+292116#Metaling Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Metaling sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Metaling#
+
+292117#Rafflesia Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Rafflesia sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Rafflesia#
+
+292118#Stem Worm Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Stem Worm sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Stem Worm#
+
+292119#Breeze Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Breeze sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Breeze#
+
+292120#Anopheles Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Anopheles sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Anopheles#
+
+292121#Kobold (Axe) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Kobold (Axe) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Kobold (Axe)#
+
+292122#Kobold (Hammer) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Kobold (Hammer) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Kobold (Hammer)#
+
+292123#Kobold (Mace) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Kobold (Mace) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Kobold (Mace)#
+
+292124#Kobold (Archer) Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Kobold (Archer) sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Kobold (Archer)#
+
+292125#Remover Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Remover sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Remover#
+
+292126#Laurell Weinder Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Laurell Weinder sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Laurell Weinder#
+
+292127#Errende Ebecee Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Errende Ebecee sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Errende Ebecee#
+
+292128#Armeyer Dinze Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Armeyer Dinze sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Armeyer Dinze#
+
+292129#Wickebine Tres Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Wickebine Tres sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Wickebine Tres#
+
+292130#Kavach Icarus Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Kavach Icarus sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Kavach Icarus#
+
+292131#Egnigem Cenia Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Egnigem Cenia sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Egnigem Cenia#
+
+292132#Kathryne Keyron Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Kathryne Keyron sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Kathryne Keyron#
+
+292133#Margaretha Sorin Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Margaretha Sorin sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Margaretha Sorin#
+
+292134#Cecil Damon Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Cecil Damon sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Cecil Damon#
+
+292135#Eremes Guile Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Eremes Guile sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Eremes Guile#
+
+292136#Seyren Windsor Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Seyren Windsor sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Seyren Windsor#
+
+292137#Howard Alt-Eisen Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Howard Alt-Eisen sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Howard Alt-Eisen#
+
+292138#Trentini Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Trentini sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Trentini#
+
+292139#Celia Alde Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Celia Alde sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Celia Alde#
+
+292140#Alphoccio Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Alphoccio sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Alphoccio#
+
+292141#Gertie Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Gertie sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Gertie#
+
+292142#Chen Lio Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Chen Lio sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Chen Lio#
+
+292143#Flamel Emure Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Flamel Emure sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Flamel Emure#
+
+292144#Randel Lawrence Hunting - Bounty Boards#LG_RAGEBURST#QUE_NOIMAGE#
+Cari dan kalahkan Randel Lawrence sebanyak 150 dan laporkan kembali di Bounty Boards tempat kamu mengambil quest ini.#
+Kalahkan 150 Randel Lawrence#
+
+292145#Quest Turn-in Baba#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+292146#Baba Turn-in - Les Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Les dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Les#
+
+292147#Baba Turn-in - Metaling Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Metaling dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Metaling#
+
+292148#Baba Turn-in - Anolian Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Anolian dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Anolian#
+
+292149#Baba Turn-in - Remover Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Remover dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Remover#
+
+292150#Baba Turn-in - Errende Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Errende dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Errende#
+
+292151#Baba Turn-in - Frus Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Frus dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Frus#
+
+292152#Baba Turn-in - Stapo Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Stapo dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Stapo#
+
+292153#Baba Turn-in - Porcellio Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Porcellio dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Porcellio#
+
+292154#Baba Turn-in - Ice Titan Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Ice Titan dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Ice Titan#
+
+292155#Baba Turn-in - Zakudam Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Zakudam dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Zakudam#
+
+292156#Baba Turn-in - Banshee Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Banshee dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Banshee#
+
+292157#Baba Turn-in - Antler Scaraba Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Antler Scaraba dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Antler Scaraba#
+
+292158#Baba Turn-in - Pasana Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Pasana dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Pasana#
+
+292159#Baba Turn-in - Teddy Bear Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Teddy Bear dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Teddy Bear#
+
+292160#Baba Turn-in - Raydric Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Raydric dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Raydric#
+
+292161#Baba Turn-in - Incubus Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Incubus dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Incubus#
+
+292162#Baba Turn-in - Uni-horn Scaraba Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Uni-horn Scaraba dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Uni-horn Scaraba#
+
+292163#Baba Turn-in - Dolomedes Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Dolomedes dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Dolomedes#
+
+292164#Baba Turn-in - Petite Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Petite dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Petite#
+
+292165#Baba Turn-in - Alarm Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Alarm dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Alarm#
+
+292166#Baba Turn-in - Vanberk Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Vanberk dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Vanberk#
+
+292167#Baba Turn-in - Dimik Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Dimik dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Dimik#
+
+292168#Baba Turn-in - Cenia Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Cenia dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Cenia#
+
+292169#Baba Turn-in - Kavach Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Kavach dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Kavach#
+
+292170#Baba Turn-in - High Orc Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 High Orc dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 High Orc#
+
+292171#Baba Turn-in - Firelock Soldier Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Firelock Soldier dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Firelock Soldier#
+
+292172#Baba Turn-in - Loli Ruri Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Loli Ruri dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Loli Ruri#
+
+292173#Baba Turn-in - Isilla Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Isilla dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Isilla#
+
+292174#Baba Turn-in - Bradium Golem Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Bradium Golem dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Bradium Golem#
+
+292175#Baba Turn-in - Petal Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Petal dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Petal#
+
+292176#Baba Turn-in - Wood Goblin Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Wood Goblin dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Wood Goblin#
+
+292177#Baba Turn-in - Bloody Murderer Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Bloody Murderer dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Bloody Murderer#
+
+292178#Baba Turn-in - Khalitzburg Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Khalitzburg dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Khalitzburg#
+
+292179#Baba Turn-in - Evil Druid Hunting#LG_RAGEBURST#QUE_NOIMAGE#
+Kalahkan 400 Wood Goblin dan laporkan kembali kepada Baba di Eden Headquarter.#
+Kalahkan 400 Wood Goblin#
+
+292180#Baba Turn-in - Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu selama 23 jam setelah mengambil Quest Turn-in.#
+Tunggu selama 23 jam dan coba kembali untuk mengambil Quest.#
+
+292181#Free Reset Status - Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu selama 10 Hari jika ingin menggunakan Jasa Free Reset Status.#
+Tunggu selama 10 Hari dan coba kembali untuk menggunakan jasa.#
+
+292182#Free Reset Skill - Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu harus menunggu selama 10 Hari jika ingin menggunakan Jasa Free Reset Skill.#
+Tunggu selama 10 Hari dan coba kembali untuk menggunakan jasa.#
+
+292183#Webseries Quiz - Cooldown#HT_CLAYMORETRAP#QUE_NOIMAGE#
+Kamu salah menjawab pertanyaan Leonhart. Pastikan besok kamu menjawab pertanyaan dengan benar.#
+Tunggu selama 1 Hari dan coba kembali menjawab pertanyaan Leonhart.#
