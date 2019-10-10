@@ -205,7 +205,11 @@ our @EXPORT = (
 	closeBuyerShop
 	inLockMap
 	parseReload
-	setCharDeleteDate/,
+	setCharDeleteDate
+	toBase62
+	fromBase62
+	solveItemLink
+	solveMessage/,
 	
 	# Npc buy and sell
 	qw/cancelNpcBuySell
@@ -4998,6 +5002,83 @@ sub searchStoreInfo {
 	}
 	$msg .= ('-'x79) . "\n";
 	message $msg, "list";
+}
+
+my @base62_dictionary = qw(0 1 2 3 4 5 6 7 8 9 a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z);
+my %base62_map = map { $base62_dictionary[$_] => $_ } 0..$#base62_dictionary;
+
+# Convert number to Base62 string
+# [lututui]
+sub toBase62 {
+    my ($k) = @_;
+    my @result;
+
+    return "0" if ($k == 0);
+
+    while ($k != 0) {
+        use integer;
+        unshift (@result, $base62_dictionary[$k % 62]);
+        $k /= 62;
+    }
+
+    return join "", @result;
+}
+
+# Convert Base62 string to number
+# [lututui]
+sub fromBase62 {
+    my ($k) = @_;
+
+    my @arr = split "", $k;
+    my $base10 = 0;
+
+    for (my $i = 0; $i < scalar @arr; ++$i) {
+        $base10 += $base62_map{$arr[$i]} * (62**(scalar(@arr) - $i - 1));
+    }
+
+    return $base10;
+}
+
+# Solve each <ITEML>.*</ITEML> to kore-style item name
+sub solveItemLink {
+	my ($itemlstr) = @_;
+
+	# Item ID as minimum requirement
+	if (!($itemlstr =~ /^([\d\w]+)(.*)/)) {
+		return $itemlstr;
+	}
+
+	my ($itemstr, $infostr) = ($1, $2);
+	my ($loc, $showslots, $id) = $itemstr =~ /([\d\w]{5})(\d)([\d\w]+)/;
+	my ($refine) = $infostr =~ /%([\d\w]+)/;
+	my ($itemtype) = $infostr =~ /&([\d\w]+)/;
+	my $item_info = {
+		nameID => fromBase62($id),
+		upgrade => fromBase62($refine),
+	};
+
+	foreach my $card (map { $_ } $infostr =~ /\(([\d\w]+)/g) {
+		$item_info->{cards} .= pack('v', fromBase62($card));
+	}
+
+	foreach my $opt (map { $_ } $infostr =~ /\*([\d\w\+,]+)/g) {
+		# The Random Option's order from client is type-param-value, itemName needs type-value-param
+		my ($type, $param, $value) = $opt =~ /([a-zA-Z0-9]+)\+([a-zA-Z0-9]+),([a-zA-Z0-9]+)/;
+		$item_info->{options} .= pack 'vvC', ( fromBase62($type), fromBase62($value), fromBase62($param) );
+	}
+
+	return "<".itemName($item_info).">";
+}
+
+# Solve plain message string that contains client's special functions
+sub solveMessage {
+	my ($msg) = @_;
+
+	# <ITEML>.*</ITEML> to readable item name
+	if ($msg =~ /<ITEML>([a-zA-Z0-9\%\&\(\,\+\*]*)<\/ITEML>/) {
+		$msg =~ s/<ITEML>([a-zA-Z0-9\%\&\(\,\+\*]*)<\/ITEML>/solveItemLink($1)/eg;
+	}
+	return $msg;
 }
 
 return 1;
