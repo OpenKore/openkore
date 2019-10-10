@@ -2,7 +2,7 @@ package eventMacro::Condition::MobNearCount;
 
 use strict;
 use Globals qw( $monstersList );
-use base 'eventMacro::Condition::ActorNearCount';
+use base 'eventMacro::Condition::Base::ActorNearCount';
 
 sub _hooks {
 	my ( $self ) = @_;
@@ -25,10 +25,6 @@ sub validate_condition {
 		$self->{change} = 0;
 	}
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
-}
-
-sub usable {
-	1;
 }
 
 

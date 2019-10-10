@@ -4336,10 +4336,10 @@
 16462#Red_Wing_Hat_Box#
 16543#Snowman_Hat_Box#
 16544#Snowman_Hat_Box#
-16548#Ephemeral_Brysingamen_Box#
-16549#Ephemeral_Sleipnir_Box#
-16550#Ephemeral_Mjolnir_Box#
-16551#Ephemeral_Megingiorde_Box#
+16548#Rental_Ephemeral_Brysingamen_Box#
+16549#Rental_Ephemeral_Sleipnir_Box#
+16550#Rental_Ephemeral_Mjolnir_Box#
+16551#Rental_Ephemeral_Megingiorde_Box#
 16554#Elven_Sunglasses_Box#
 16555#Playspan_Reset_Stone_Box#
 16556#Reset_Stone_Box#
@@ -6094,10 +6094,10 @@
 3633#Mjolnir_Token#
 3634#Megingiorde_Token#
 
-2831#Ephemeral_Brysingamen#
-2462#Ephemeral_Sleipnir#
-16007#Ephemeral_Mjolnir#
-2830#Ephemeral_Megingiorde#
+2831#Rental_Ephemeral_Brysingamen#
+2462#Rental_Ephemeral_Sleipnir#
+16007#Rental_Ephemeral_Mjolnir#
+2830#Rental_Ephemeral_Megingiorde#
 19424#Splendid_Spring_Hat_Box#
 19425#Classic_April_Groove_Pack#
 19426#Classic_April_Random_Pack#
@@ -7006,3 +7006,14 @@
 20078#Gf_Recruiter_Hat_Certificate#
 20079#Scorpio_Crown_Certificate#
 20080#Vintage_Orc_Helm_Certificate#
+20081#Pink_Drooping_Cat_Certificate#
+20082#Mini_Glasses_Certificate#
+20083#Party_Recruiter_Hat_Certificate#
+20084#Aries_Crown_Certificate#
+20085#Brown_Deviruchi_Hat_Certificate#
+20086#Brown_Drooping_Cat_Certificate#
+20087#Tulip_Hairpin_Certificate#
+20088#Red_Glasses_Certificate#
+20089#Aquarius_Diadem_Certificate#
+20090#Yellow_Drooping_Cat_Certificate#
+20091#Gray_Deviruchi_Hat_Certificate#

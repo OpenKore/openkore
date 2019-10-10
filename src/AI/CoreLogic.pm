@@ -182,6 +182,7 @@ sub iterate {
 	processAutoShopOpen();
 	processAutoBuyerShopOpen();
 	processRepairAuto();
+	processSendIgnoreAll();
 	Benchmark::end("AI (part 4)") if DEBUG;
 
 
@@ -1257,6 +1258,7 @@ sub processAutoStorage {
 		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
 		my $forcedBySell = AI::args->{forcedBySell};
 		my $forcedByBuy = AI::args->{forcedByBuy};
+		undef $timeout{ai_storageAuto_wait_before_action}{time};
 		AI::dequeue;
 		if ($config{sellAuto} && ai_sellAutoCheck()) {
 			if ($forcedByBuy) {
@@ -1401,6 +1403,13 @@ sub processAutoStorage {
 			Plugins::callHook("AI_storage_open", \%pluginArgs); # we can hook here to perform actions BEFORE any storage function
 			return if ($pluginArgs{return});
 
+			if(!$timeout{ai_storageAuto_wait_before_action}{time}) {
+				$timeout{ai_storageAuto_wait_before_action}{time} = time;
+				return;
+			} elsif(!timeOut($timeout{ai_storageAuto_wait_before_action})) {
+				return;
+			}
+
 			if (!$args->{getStart}) {
 				$args->{done} = 1;
 				
@@ -1497,6 +1506,7 @@ sub processAutoStorage {
 				return;
 			}
 
+			# Repeat until there is no more items to get
 			if (defined($args->{getStart}) && $args->{done} != 1) {
 				Misc::checkValidity("AutoStorage part 3");
 				while (exists $config{"getAuto_$args->{index}"}) {
@@ -1533,7 +1543,26 @@ sub processAutoStorage {
 
 					# Try at most 3 times to get the item
 					if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
-						message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
+						
+						my $batchSize = $config{"getAuto_$args->{index}"."_batchSize"};
+						
+						if ($batchSize && $batchSize < $item{amount_get}) {
+							
+							my $remaining = $item{amount_get} - $batchSize;
+							$item{amount_get} = $batchSize;
+							
+							# Last loop attempted to get batchSize of item and succeeded
+							if ($args->{getAuto_batchSize_remaining} && $args->{getAuto_batchSize_remaining} != $remaining) {
+								$args->{retry} = 0;
+							}
+							
+							$args->{getAuto_batchSize_remaining} = $remaining;
+							
+							message TF("Attempt to get %s (batchSize) x %s from storage, retry: %s, remaining %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}, $args->{getAuto_batchSize_remaining}), "storage", 1;
+						} else {
+							message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
+						}
+						
 						$messageSender->sendStorageGet($storeItem->{ID}, $item{amount_get});
 						$timeout{ai_storageAuto}{time} = time;
 						$args->{retry}++;
@@ -1566,6 +1595,7 @@ sub processAutoStorage {
 					# We got the item, or we tried 3 times to get it, but failed.
 					# Increment index and process the next item.
 					$args->{index}++;
+					$args->{getAuto_batchSize_remaining} = 0;
 					$args->{retry} = 0;
 				}
 				Misc::checkValidity("AutoStorage part 4");
@@ -1777,7 +1807,13 @@ sub processAutoBuy {
 		
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
 			next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
-			my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+			my $amount;
+			if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
+				$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"});
+			}
+			else {
+				$amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+			}
 			if (
 				$config{"buyAuto_$i"."_minAmount"} ne "" &&
 				$config{"buyAuto_$i"."_maxAmount"} ne "" &&
@@ -1861,10 +1897,19 @@ sub processAutoBuy {
 			delete $args->{index};
 			for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
 				next if (!$config{"buyAuto_$i"} || $config{"buyAuto_${i}_disabled"});
+				next if ($config{"buyAuto_${i}_maxBase"} =~ /^\d{1,}$/ && $char->{lv} > $config{"buyAuto_${i}_maxBase"});
+				next if ($config{"buyAuto_${i}_minBase"} =~ /^\d{1,}$/ && $char->{lv} < $config{"buyAuto_${i}_minBase"});
 				# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
 				next if (exists $args->{index_failed}{$i});
 
-				my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+				my $amount;
+				if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
+					$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"});
+				}
+				else {
+					$amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+				}
+				
 				if ($config{"buyAuto_$i"."_maxAmount"} ne "" && $amount < $config{"buyAuto_$i"."_maxAmount"}) {
 					next if (($config{"buyAuto_$i"."_price"} && ($char->{zeny} < $config{"buyAuto_$i"."_price"})) || ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zeny}, $config{"buyAuto_$i"."_zeny"})));
 
@@ -1991,10 +2036,14 @@ sub processAutoBuy {
 		
 		my @buyList;
 		
-		my $item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
-		
-		if (defined $item) {
-			$args->{'nameID'} = $item->{nameID};
+		my $item;
+		if ($config{"buyAuto_".$args->{lastIndex}} =~ /^\d{3,}$/) {
+			$item = $storeList->getByNameID( $config{"buyAuto_".$args->{lastIndex}} );
+			$args->{'nameID'} = $config{"buyAuto_".$args->{lastIndex}} if (defined $item);
+		}
+		else {
+			$item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
+			$args->{'nameID'} = $item->{nameID} if (defined $item);
 		}
 		
 		if (!exists $args->{'nameID'}) {
@@ -2514,7 +2563,7 @@ sub processSitAuto {
 		debug "HP is now > $config{sitAuto_hp_upper}\n", "sitAuto";
 		stand() if (!AI::isIdle && !AI::is(qw(follow sitting clientSuspend)) && !$config{'sitAuto_idle'} && $char->{sitting});
 
-	} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'}) && AI::action ne "sitAuto") {
+	} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'}) && AI::action ne "sitAuto" && ($char->{skills}{NV_BASIC}{lv} >= 3 || $char->{skills}{SU_BASIC_SKILL}{lv} == 1)) {
 		if ($action eq "" || $action eq "follow"
 		|| ($action eq "route" && !AI::args->{noSitAuto})
 		|| ($action eq "mapRoute" && !AI::args->{noSitAuto})
@@ -3406,6 +3455,19 @@ sub processRepairAuto {
 				return;
 			}
 		}
+	}
+}
+
+sub processSendIgnoreAll {
+	return if($net->getState() != Network::IN_GAME || !$config{ignoreAll} || $ignored_all);
+
+	if(!$timeout{'ai_ignoreAll'}{'time'}) {
+		$timeout{'ai_ignoreAll'}{'time'} = time;
+		return;
+	} elsif(timeOut($timeout{ai_ignoreAll})) {
+		warning "Sending ignoreAll... \n";
+		$messageSender->sendIgnoreAll(0);
+		$timeout{'ai_ignoreAll'}{'time'} = time;
 	}
 }
 

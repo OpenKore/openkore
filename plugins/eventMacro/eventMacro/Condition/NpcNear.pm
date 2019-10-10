@@ -4,7 +4,7 @@ use strict;
 use Globals qw( $npcsList $char $field );
 use Utils qw( distance );
 
-use base 'eventMacro::Condition::BaseActorNear';
+use base 'eventMacro::Condition::Base::ActorNear';
 
 sub _hooks {
 	my ( $self ) = @_;
@@ -56,10 +56,6 @@ sub get_new_variable_list {
 	$new_variables->{".".$self->{name}."Last"."Dist"} = distance($char->{pos_to}, $self->{fulfilled_actor}->{pos_to});
 	
 	return $new_variables;
-}
-
-sub usable {
-	1;
 }
 
 1;

@@ -27,7 +27,7 @@ our @EXPORT = qw(assertClass);
 sub assertClass {
 	my ($object, $expectedClassName) = @_;
 	my $objectName = defined($object) ? $object : "(undefined)";
-	assert(UNIVERSAL::isa($object, $expectedClassName), "'$objectName' must be of class '$expectedClassName'");
+	assert($object->isa($expectedClassName), "'$objectName' must be of class '$expectedClassName'");
 }
 
 1;

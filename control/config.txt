@@ -42,6 +42,7 @@ commandPrefix ;
 callSignGM 0
 inGameAuth 0
 
+pauseCharLogin 1
 pauseCharServer 0
 pauseMapServer 0
 ignoreInvalidLogin 0
@@ -360,6 +361,7 @@ mercenary_attackAuto_notInTown 1
 mercenary_attackAuto_onlyWhenSafe 0
 mercenary_attackDistance 1.5
 mercenary_attackMaxDistance 2.5
+mercenary_attackDistanceAuto 0
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 0
@@ -393,6 +395,7 @@ homunculus_attackAuto_notInTown 1
 homunculus_attackAuto_onlyWhenSafe 0
 homunculus_attackDistance 1.5
 homunculus_attackMaxDistance 2.5
+homunculus_attackDistanceAuto 0
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 0
@@ -688,7 +691,7 @@ useSelf_item {
 	inLockOnly 0
 	notWhileSitting 0
 	notInTown 0
-	timeout
+	timeout 0
 	disabled 0
 	inInventory
 	manualAI 0
@@ -705,6 +708,8 @@ buyAuto {
 	maxAmount 3
 	batchSize
 	disabled 0
+	maxBase
+	minBase
 }
 
 sellAuto 0
@@ -735,6 +740,7 @@ npcWrongStepsMethod 0
 getAuto {
 	minAmount
 	maxAmount
+	batchSize
 	passive
 	disabled 0
 }

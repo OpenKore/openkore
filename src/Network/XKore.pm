@@ -67,9 +67,6 @@ sub new {
 	$self->{tokenizer} = new Network::MessageTokenizer($self->getRecvPackets());
 	$self->{kore_map_changed_hook} = Plugins::addHook('packet/map_changed', \&kore_map_changed, $self);
 
-	Plugins::addHook("Network::Receive/willMangle", \&willMangle);
-	Plugins::addHook("Network::Receive/mangle", \&mangle);
-
 	message T("X-Kore mode intialized.\n"), "startup";
 
 	return $self;
@@ -448,25 +445,6 @@ sub recv {
 	}
 	
 	return 1;
-}
-
-sub willMangle {
-	my (undef, $args) = @_;
-    
-	$args->{return} = 0;
-#	if ($args->{messageID} eq '02AE') {
-#		$args->{return} = 1;
-#	}
-}
-
-sub mangle {
-	my (undef, $args) = @_;
-	my $message_args = $args->{messageArgs};
-
-	$args->{return} = 0;
-#	if ($message_args->{switch} eq '02AE') {
-#		$args->{return} = 2;
-#	}
 }
 
 ##

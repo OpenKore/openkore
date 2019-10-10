@@ -1,3 +1,35 @@
+//========start hotfix patch 23042019
+5656#5656#
+2777#2777#
+5417#5417#
+5457#5457#
+5465#5465#
+5623#5623#
+5627#5627#
+5629#5629#
+5630#5630#
+5631#5631#
+5681#5681#
+19998#19998#
+19999#19999#
+19995#19995#
+19994#19994#
+14438#14438#
+9040#9040#
+9041#9041#
+9044#9044#
+9046#9046#
+9047#9047#
+9048#9048#
+9049#9049#
+9050#9050#
+9051#9051#
+9053#9053#
+9054#9054#
+14700#14700#
+22540#22540#
+//========end hotfix patch 23042019
+
 //========start hotfix patch 06122018
 556#556#
 557#557#
@@ -8564,3 +8596,47 @@
 31380#Costume: Piamette Roll Hair#
 31381#Costume: Lolita Two Side#
 31382#Costume: Shrine Maiden Hat#
+
+//====================update 25022019=================
+31383#Costume: Kururinpa Hair#
+31384#Costume: Fluffy_Semi_Long#
+31385#Costume: Alchemist_Square_Bag#
+31386#Costume: Maiden_Twin_Ribbon#
+31387#Costume: Heart_Wing_Band#
+31388#Costume: Shoulder_Riding_Poring#
+31389#Costume: Night_Protector#
+31390#Costume: Poring_Soap_Pipe#
+31391#Costume: Charming_Ribbon#
+31392#Costume: Monochrome_Ribbon#
+31393#Girls Love Selection Egg#
+
+//====================update 09032019=================
+15175#Fire_Dragon_Armor#
+15205#Medical_Scrubs#
+19112#Tengu_Scroll#
+19299#Tree_Sprout#
+20859#Phreeoni_Wings#
+20863#Menblatt_Wing_Manteau#
+22145#Tengu_Shoes#
+22189#Pilgrim_Shoes#
+28502#Mob_Scarf#
+28520#Egir_Ring#
+28551#Imperial_Glove#
+28565#Perverse_Demon_Mask#
+31400#March Madness Lucky Box#
+31401#Costume: Short Hair Cat#
+31402#Costume: Eleanor Wig Yellow#
+31403#Costume: Lunatic_Muffler#
+31404#Costume: Blinking Thin_Eyes#
+31405#Costume: Secret Zipper#
+31406#Costume: Anniversary Star_Hat#
+31407#Costume: Smokie Transform#
+31408#Costume: Little Angel#
+31409#Costume: Pope Hat#
+31410#March Costume Box#
+
+//====================update 22042019=================
+31411#Lucky Box Reworked I#
+
+//====================update 14052019=================
+32513#Ticket Special Gravity#
