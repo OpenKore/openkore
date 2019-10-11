@@ -74,16 +74,14 @@ msgstr "Até breve!\n"
 #: ../functions.pl:121
 #, perl-format
 msgid ""
-"This plugin cannot be loaded because of a problem in the plugin. Please "
-"notify the plugin's author about this problem, or remove the plugin so %s "
-"can start.\n"
+"This plugin cannot be loaded because of a problem in the plugin. Please notify the plugin's "
+"author about this problem, or remove the plugin so %s can start.\n"
 "\n"
 "The error message is:\n"
 "%s"
 msgstr ""
-"Este plugin não pôde ser carregado devido a um problema no plugin. Por favor "
-"notifique o autor sobre o problema, ou remova o plugin para que o %s possa "
-"inicializar.\n"
+"Este plugin não pôde ser carregado devido a um problema no plugin. Por favor notifique o autor "
+"sobre o problema, ou remova o plugin para que o %s possa inicializar.\n"
 "\n"
 "A mensagem de erro é:\n"
 "%s"
@@ -129,13 +127,11 @@ msgstr "novos portais encontrados!\n"
 
 #: ../functions.pl:391
 msgid ""
-"New portals have been added to the portals database. The portals database "
-"must be compiled before the new portals can be used. Would you like to "
-"compile portals now?\n"
+"New portals have been added to the portals database. The portals database must be compiled "
+"before the new portals can be used. Would you like to compile portals now?\n"
 msgstr ""
-"Novos portais foram adicionados ao banco de portais. O banco de portais "
-"deverá ser compilado antes que os novos portais possam ser utilizados. Você "
-"deseja compilá-los agora?\n"
+"Novos portais foram adicionados ao banco de portais. O banco de portais deverá ser compilado "
+"antes que os novos portais possam ser utilizados. Você deseja compilá-los agora?\n"
 
 #: ../functions.pl:394
 msgid "Yes, compile now."
@@ -618,8 +614,7 @@ msgstr "<rótulo.atributo> none"
 
 #: ../Commands.pm:154
 msgid "unset the specified configuration key through label"
-msgstr ""
-"remove o valor da chave de configuração especificada utilizando o rótulo"
+msgstr "remove o valor da chave de configuração especificada utilizando o rótulo"
 
 #: ../Commands.pm:159
 msgid "Damage taken report"
@@ -1319,9 +1314,7 @@ msgstr "hatch <índice do ovo>"
 
 #: ../Commands.pm:395
 msgid "hatches a pet egg, but first you should use the item Pet Incubator"
-msgstr ""
-"choca um ovo de mascote, mas requer que o item Incubadora seja utilizado "
-"antes"
+msgstr "choca um ovo de mascote, mas requer que o item Incubadora seja utilizado antes"
 
 #: ../Commands.pm:396
 msgid "sends pet menu"
@@ -1432,18 +1425,16 @@ msgid "List portals that are on screen."
 msgstr "Lista portais na tela."
 
 #: ../Commands.pm:426
-#, fuzzy
 msgid "list portals that are on screen"
-msgstr "Lista portais na tela."
+msgstr "lista portais que estiverem na tela"
 
 #: ../Commands.pm:427
-#, fuzzy
 msgid "recompile portals"
-msgstr "Compilar portais?"
+msgstr "recompila portais"
 
 #: ../Commands.pm:428
 msgid "add new portals: <map1> <x> <y> <map2> <x> <y>"
-msgstr ""
+msgstr "adicionar novos portais: <mapa1> <x> <y> <mapa2> <x> <y>"
 
 #: ../Commands.pm:430
 msgid "Exit this program."
@@ -1463,9 +1454,7 @@ msgstr "<nome de módulos>"
 
 #: ../Commands.pm:434
 msgid "reload module files in the space-separated <module names>"
-msgstr ""
-"recarrega os módulos especificados na lista separada por espaço <nome de "
-"módulos>"
+msgstr "recarrega os módulos especificados na lista separada por espaço <nome de módulos>"
 
 #: ../Commands.pm:438
 msgid "Reload configuration files."
@@ -1826,8 +1815,7 @@ msgstr "<x> <y> <códigos de conversação NPC>"
 #: ../Commands.pm:542
 msgid "talk to the NPC standing at <x> <y> and use <NPC talk codes>"
 msgstr ""
-"conversa com um NPC que está nas coordenadas <x> <y> utilizando os <códigos "
-"de conversação NPC>"
+"conversa com um NPC que está nas coordenadas <x> <y> utilizando os <códigos de conversação NPC>"
 
 #: ../Commands.pm:545
 msgid "Tank for a player."
@@ -2006,9 +1994,7 @@ msgid "<mail #>"
 msgstr "<índice da correspondência>"
 
 #: ../Commands.pm:599
-msgid ""
-"open the mail with a corresponding number from the mail list when you open "
-"your mailbox"
+msgid "open the mail with a corresponding number from the mail list when you open your mailbox"
 msgstr "abre a correspondência especificada"
 
 #: ../Commands.pm:602
@@ -2016,9 +2002,7 @@ msgid "Deletes a Mail."
 msgstr "Deleta uma correspondência."
 
 #: ../Commands.pm:603
-msgid ""
-"delete a mail with a corresponding number from the mail list when you open "
-"your mailbox"
+msgid "delete a mail with a corresponding number from the mail list when you open your mailbox"
 msgstr "deleta a correspondência especificada"
 
 #: ../Commands.pm:606
@@ -2127,11 +2111,11 @@ msgstr "<tipo> <preço> <texto>"
 
 #: ../Commands.pm:638
 msgid ""
-"Item's search criteria. Type: 1 Armor, 2 Weapon, 3 Card, 4 Misc, 5 By Text, "
-"6 By Price, 7 Sell, 8 Buy"
+"Item's search criteria. Type: 1 Armor, 2 Weapon, 3 Card, 4 Misc, 5 By Text, 6 By Price, 7 "
+"Sell, 8 Buy"
 msgstr ""
-"Critério de pesquisa de itens. Tipo: 1 Armadura, 2 Arma, 3 Carta, 4 "
-"Miscelânea, 5 Por texto, 6 Por preço, 7 Venda, 8 Compra"
+"Critério de pesquisa de itens. Tipo: 1 Armadura, 2 Arma, 3 Carta, 4 Miscelânea, 5 Por texto, 6 "
+"Por preço, 7 Venda, 8 Compra"
 
 #: ../Commands.pm:641
 msgid "Bids an auction."
@@ -2274,12 +2258,10 @@ msgid "Delay the next console commands."
 msgstr "Atrasa os próximos comandos de console."
 
 #: ../Commands.pm:696
-msgid ""
-"delay the next console commands by a specified number of seconds (default: 1 "
-"sec.)"
+msgid "delay the next console commands by a specified number of seconds (default: 1 sec.)"
 msgstr ""
-"atrasa os próximos comandos de console por um determinado número de segundos "
-"(padrão: 1 segundo)"
+"atrasa os próximos comandos de console por um determinado número de segundos (padrão: 1 "
+"segundo)"
 
 #: ../Commands.pm:757
 msgid "Cannot use pause command now.\n"
@@ -2291,8 +2273,8 @@ msgid ""
 "Unknown command '%s'. Please read the documentation for a list of commands.\n"
 "http://openkore.com/index.php/Category:Console_Command\n"
 msgstr ""
-"Comando '%s' desconhecido. Por favor, leia a documentação para uma lista de "
-"comandos disponíveis.\n"
+"Comando '%s' desconhecido. Por favor, leia a documentação para uma lista de comandos "
+"disponíveis.\n"
 "http://openkore.com/index.php/Category:Console_Command\n"
 
 #: ../Commands.pm:807
@@ -2369,34 +2351,27 @@ msgstr "Tarefas ativas: %s\n"
 msgid "Inactive tasks: %s\n"
 msgstr "Tarefas inativas: %s\n"
 
-#: ../Commands.pm:1020 ../Commands.pm:1162 ../Commands.pm:1172
-#: ../Commands.pm:1181 ../Commands.pm:1214 ../Commands.pm:1338
-#: ../Commands.pm:1625 ../Commands.pm:1640 ../Commands.pm:1659
-#: ../Commands.pm:1847 ../Commands.pm:1855 ../Commands.pm:1864
-#: ../Commands.pm:1966 ../Commands.pm:2176 ../Commands.pm:2188
-#: ../Commands.pm:2231 ../Commands.pm:2267 ../Commands.pm:2492
-#: ../Commands.pm:2543 ../Commands.pm:2708 ../Commands.pm:2720
-#: ../Commands.pm:2730 ../Commands.pm:2744 ../Commands.pm:2841
-#: ../Commands.pm:2896 ../Commands.pm:2906 ../Commands.pm:2915
-#: ../Commands.pm:2940 ../Commands.pm:2961 ../Commands.pm:2977
-#: ../Commands.pm:2993 ../Commands.pm:3002 ../Commands.pm:3017
-#: ../Commands.pm:3026 ../Commands.pm:3035 ../Commands.pm:3044
-#: ../Commands.pm:3059 ../Commands.pm:3074 ../Commands.pm:3089
-#: ../Commands.pm:3104 ../Commands.pm:3204 ../Commands.pm:3384
-#: ../Commands.pm:3416 ../Commands.pm:3685 ../Commands.pm:3717
-#: ../Commands.pm:3767 ../Commands.pm:3910 ../Commands.pm:3948
-#: ../Commands.pm:4186 ../Commands.pm:4203 ../Commands.pm:4653
-#: ../Commands.pm:4746 ../Commands.pm:4766 ../Commands.pm:4778
-#: ../Commands.pm:4908 ../Commands.pm:4955 ../Commands.pm:5027
-#: ../Commands.pm:5386 ../Commands.pm:5594 ../Commands.pm:5641
-#: ../Commands.pm:5686 ../Commands.pm:5719 ../Commands.pm:5742
-#: ../Commands.pm:5764 ../Commands.pm:5784 ../Commands.pm:5910
-#: ../Commands.pm:5976 ../Commands.pm:6037 ../Commands.pm:6087
-#: ../Commands.pm:6209 ../Commands.pm:6325 ../Commands.pm:6441
-#: ../Commands.pm:6490 ../Commands.pm:6522 ../Commands.pm:6543
-#: ../Commands.pm:6644 ../Commands.pm:7184 ../Commands.pm:7202
-#: ../Commands.pm:7285 ../Commands.pm:7390 ../Commands.pm:7418
-#: ../Commands.pm:7506 ../Commands.pm:7533 ../Commands.pm:7725
+#: ../Commands.pm:1020 ../Commands.pm:1162 ../Commands.pm:1172 ../Commands.pm:1181
+#: ../Commands.pm:1214 ../Commands.pm:1338 ../Commands.pm:1625 ../Commands.pm:1640
+#: ../Commands.pm:1659 ../Commands.pm:1847 ../Commands.pm:1855 ../Commands.pm:1864
+#: ../Commands.pm:1966 ../Commands.pm:2176 ../Commands.pm:2188 ../Commands.pm:2231
+#: ../Commands.pm:2267 ../Commands.pm:2492 ../Commands.pm:2543 ../Commands.pm:2708
+#: ../Commands.pm:2720 ../Commands.pm:2730 ../Commands.pm:2744 ../Commands.pm:2841
+#: ../Commands.pm:2896 ../Commands.pm:2906 ../Commands.pm:2915 ../Commands.pm:2940
+#: ../Commands.pm:2961 ../Commands.pm:2977 ../Commands.pm:2993 ../Commands.pm:3002
+#: ../Commands.pm:3017 ../Commands.pm:3026 ../Commands.pm:3035 ../Commands.pm:3044
+#: ../Commands.pm:3059 ../Commands.pm:3074 ../Commands.pm:3089 ../Commands.pm:3104
+#: ../Commands.pm:3204 ../Commands.pm:3384 ../Commands.pm:3416 ../Commands.pm:3685
+#: ../Commands.pm:3717 ../Commands.pm:3767 ../Commands.pm:3910 ../Commands.pm:3948
+#: ../Commands.pm:4186 ../Commands.pm:4203 ../Commands.pm:4653 ../Commands.pm:4746
+#: ../Commands.pm:4766 ../Commands.pm:4778 ../Commands.pm:4908 ../Commands.pm:4955
+#: ../Commands.pm:5027 ../Commands.pm:5386 ../Commands.pm:5594 ../Commands.pm:5641
+#: ../Commands.pm:5686 ../Commands.pm:5719 ../Commands.pm:5742 ../Commands.pm:5764
+#: ../Commands.pm:5784 ../Commands.pm:5910 ../Commands.pm:5976 ../Commands.pm:6037
+#: ../Commands.pm:6087 ../Commands.pm:6209 ../Commands.pm:6325 ../Commands.pm:6441
+#: ../Commands.pm:6490 ../Commands.pm:6522 ../Commands.pm:6543 ../Commands.pm:6644
+#: ../Commands.pm:7184 ../Commands.pm:7202 ../Commands.pm:7285 ../Commands.pm:7390
+#: ../Commands.pm:7418 ../Commands.pm:7506 ../Commands.pm:7533 ../Commands.pm:7725
 #: ../Commands.pm:7771 ../Commands.pm:7829
 #, perl-format
 msgid "You must be logged in the game to use this command '%s'\n"
@@ -2494,12 +2469,11 @@ msgstr "Inicializando armazenagem automática.\n"
 #: ../Commands.pm:1155
 msgid ""
 "Error in function 'autostorage' (Automatic storage of items)\n"
-"You cannot use the Storage Service. Very low level of basic skills or not "
-"enough zeny.\n"
+"You cannot use the Storage Service. Very low level of basic skills or not enough zeny.\n"
 msgstr ""
 "Erro na função 'autostorage' (Armazenagem automática de itens)\n"
-"Você não pode usar o serviço de armazém. Nível da habilidade básica muito "
-"baixo ou zeny insuficiente.\n"
+"Você não pode usar o serviço de armazém. Nível da habilidade básica muito baixo ou zeny "
+"insuficiente.\n"
 
 #: ../Commands.pm:1192
 msgid ""
@@ -2547,8 +2521,7 @@ msgid ""
 "Error in function 'card mergelist' (List availible card merge items)\n"
 "You are not currently in a card merge session.\n"
 msgstr ""
-"Erro na função 'card mergelist' (Lista os itens disponíveis para compor "
-"cartas)\n"
+"Erro na função 'card mergelist' (Lista os itens disponíveis para compor cartas)\n"
 "Você não está numa sessão para compor cartas.\n"
 
 #: ../Commands.pm:1258
@@ -2576,8 +2549,8 @@ msgid ""
 msgstr ""
 "Erro na função 'card merge' (Finaliza a composição da carta)\n"
 "Uso: card merge <número do item>\n"
-"<número do item> - Número correspondente ao item . Digite 'card mergelist' "
-"para obter o número.\n"
+"<número do item> - Número correspondente ao item . Digite 'card mergelist' para obter o "
+"número.\n"
 
 #: ../Commands.pm:1275
 #, perl-format
@@ -2595,16 +2568,13 @@ msgstr ""
 
 #: ../Commands.pm:1282
 msgid ""
-"Syntax Error in function 'card use' (Request list of items for merging with "
-"card)\n"
+"Syntax Error in function 'card use' (Request list of items for merging with card)\n"
 "Usage: card use <item number>\n"
 "<item number> - Card inventory number. Type 'i' to get number.\n"
 msgstr ""
-"Erro de sintaxe na função 'card use' (Solicita lista de itens para compor a "
-"carta)\n"
+"Erro de sintaxe na função 'card use' (Solicita lista de itens para compor a carta)\n"
 "Uso: card use <número do item>\n"
-"<número do item> - Número da carta no inventário. Digite 'i' para obter a "
-"lista.\n"
+"<número do item> - Número da carta no inventário. Digite 'i' para obter a lista.\n"
 
 #: ../Commands.pm:1287
 msgid " Card List "
@@ -2665,8 +2635,7 @@ msgid ""
 "Syntax Error in function 'cart desc' (Show Cart Item Description)\n"
 "'%s' is not a valid cart item number.\n"
 msgstr ""
-"Erro de sintaxe na função 'cart desc' (Mostra a Descrição dos Itens do "
-"Carrinho)\n"
+"Erro de sintaxe na função 'cart desc' (Mostra a Descrição dos Itens do Carrinho)\n"
 "'%s' não é um número de item válido.\n"
 
 #: ../Commands.pm:1378
@@ -2675,14 +2644,13 @@ msgid ""
 "Error in function 'cart desc' (Show Cart Item Description)\n"
 "Cart Item %s does not exist.\n"
 msgstr ""
-"Erro de sintaxe na função 'cart desc' (Mostra a Descrição dos Itens do "
-"Carrinho)\n"
+"Erro de sintaxe na função 'cart desc' (Mostra a Descrição dos Itens do Carrinho)\n"
 "Item %s não existe.\n"
 
 #. Translation Comment: Mark to tell item not identified
 #. Translation Comment: Mark to show not identified items
-#: ../Commands.pm:1404 ../Commands.pm:3520 ../Commands.pm:6590
-#: ../Commands.pm:6847 ../Misc.pm:3627
+#: ../Commands.pm:1404 ../Commands.pm:3520 ../Commands.pm:6590 ../Commands.pm:6847
+#: ../Misc.pm:3627
 msgid "Not Identified"
 msgstr "Não Identificado"
 
@@ -2695,8 +2663,7 @@ msgid "#  Name\n"
 msgstr "#  Nome\n"
 
 #. Translation Comment: List of usable items
-#: ../Commands.pm:1416 ../Commands.pm:3573 ../Commands.pm:6601
-#: ../Commands.pm:6857
+#: ../Commands.pm:1416 ../Commands.pm:3573 ../Commands.pm:6601 ../Commands.pm:6857
 msgid "-- Usable --\n"
 msgstr "-- Utilizável --\n"
 
@@ -2756,22 +2723,18 @@ msgstr ""
 "Uso: cash buy <item> [<amount>] [<pontos kafra>]\n"
 
 #: ../Commands.pm:1538
-msgid ""
-"Error in function 'cash buy': invalid item name or tables needs to be "
-"updated \n"
+msgid "Error in function 'cash buy': invalid item name or tables needs to be updated \n"
 msgstr "Erro na função 'cash buy': nome inválido ou tables desatualizada\n"
 
 #: ../Commands.pm:1558
 #, perl-format
-msgid ""
-"You don't have that many kafra shop points (Requested: %d, Available: %d)"
+msgid "You don't have that many kafra shop points (Requested: %d, Available: %d)"
 msgstr "Você não tem Kafra Points suficientes (Necessário: %d, Disponível: %d)"
 
 #: ../Commands.pm:1566
 #, perl-format
 msgid "Not enough cash to buy item %s x %d (%sC), we have %sC\n"
-msgstr ""
-"Cash insuficiente para comprar o item %s %d (%sC), cash disponível: %sC\n"
+msgstr "Cash insuficiente para comprar o item %s %d (%sC), cash disponível: %sC\n"
 
 #: ../Commands.pm:1573
 #, perl-format
@@ -2780,12 +2743,10 @@ msgstr "Comprando %s da loja de shop \n"
 
 #: ../Commands.pm:1580
 #, perl-format
-msgid ""
-"Error in function 'cash buy': item %s not found or shop list is not ready "
-"yet."
+msgid "Error in function 'cash buy': item %s not found or shop list is not ready yet."
 msgstr ""
-"Erro na função 'cash buy': item %s não foi encontrado ou a lista de itens "
-"disponíveis ainda não está pronta."
+"Erro na função 'cash buy': item %s não foi encontrado ou a lista de itens disponíveis ainda "
+"não está pronta."
 
 #: ../Commands.pm:1586 ../Network/Receive.pm:3656
 #, perl-format
@@ -2876,8 +2837,7 @@ msgid ""
 "Chat Room User %s doesn't exist; type 'chat info' to see the list of users\n"
 msgstr ""
 "Erro na função 'chat bestow' (Concede Administração no Chat)\n"
-"Usuário %s não está na sala; digite 'chat info' para ver a lista de "
-"usuários.\n"
+"Usuário %s não está na sala; digite 'chat info' para ver a lista de usuários.\n"
 
 #: ../Commands.pm:1693
 msgid ""
@@ -2966,17 +2926,13 @@ msgid " Chat Room List "
 msgstr " Lista de Salas de Chat "
 
 #: ../Commands.pm:1778
-msgid ""
-"#   Title                                  Owner                Users   "
-"Type\n"
+msgid "#   Title                                  Owner                Users   Type\n"
 msgstr ""
-"#   Título                                  Proprietário                "
-"Usuários   Tipo\n"
+"#   Título                                  Proprietário                Usuários   Tipo\n"
 
 #: ../Commands.pm:1793
 msgid "There is no chat room info - you are not in a chat room\n"
-msgstr ""
-"Não há informações sobre a sala de chat - você não está em nenhuma sala.\n"
+msgstr "Não há informações sobre a sala de chat - você não está em nenhuma sala.\n"
 
 #: ../Commands.pm:1795
 msgid " Chat Room Info "
@@ -3029,12 +2985,9 @@ msgid "Usage: conf [-f] <variable> [<value>|none]\n"
 msgstr "Uso: conf [-f] <chave de configuração> [<valor>|none]\n"
 
 #: ../Commands.pm:1899
-msgid ""
-"  -f  force variable to be set, even if it does not already exist in config."
-"txt\n"
+msgid "  -f  force variable to be set, even if it does not already exist in config.txt\n"
 msgstr ""
-"  -f força uma chave de configuração a ser definida, mesmo se esta não "
-"existir no config.txt\n"
+"  -f força uma chave de configuração a ser definida, mesmo se esta não existir no config.txt\n"
 
 #: ../Commands.pm:1905
 #, perl-format
@@ -3293,13 +3246,12 @@ msgid "Character equipment not yet ready\n"
 msgstr "Equipamentos do Personagem ainda não estão prontos.\n"
 
 #: ../Commands.pm:2301
-#, fuzzy
 msgid "=====[Character Equip List]=====\n"
-msgstr "======Lista de Forja======\n"
+msgstr "=====[Lista de Equipamentos do Personagem]=====\n"
 
 #: ../Commands.pm:2317
 msgid "=====[Equip Switch List]=====\n"
-msgstr ""
+msgstr "=====[Lista de Switch de Equipamento]=====\n"
 
 #: ../Commands.pm:2332
 msgid ""
@@ -3487,8 +3439,7 @@ msgstr ""
 
 #: ../Commands.pm:2620
 msgid "Error: Can't detect slaves - character is not yet ready\n"
-msgstr ""
-"Erro: Não foi possível achar slaves - personagem ainda não está pronto.\n"
+msgstr "Erro: Não foi possível achar slaves - personagem ainda não está pronto.\n"
 
 #: ../Commands.pm:2630
 msgid "Error: Unknown command in cmdSlave\n"
@@ -3524,8 +3475,8 @@ msgstr "Lealdade:"
 msgid "Faith:"
 msgstr "Fidelidade:"
 
-#: ../Commands.pm:2668 ../Commands.pm:2669 ../Commands.pm:2670
-#: ../Commands.pm:2671 ../Commands.pm:2672 ../Commands.pm:2673
+#: ../Commands.pm:2668 ../Commands.pm:2669 ../Commands.pm:2670 ../Commands.pm:2671
+#: ../Commands.pm:2672 ../Commands.pm:2673
 msgid "N/A"
 msgstr "N/A"
 
@@ -3569,11 +3520,8 @@ msgid "This slave can not be feeded\n"
 msgstr "Este slave não pode ser alimentado.\n"
 
 #: ../Commands.pm:2712
-msgid ""
-"Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
-msgstr ""
-"Seu Homúnculo não está com fome. Alimentá-lo agora baixará o level de "
-"intimidade.\n"
+msgid "Your homunculus is not yet hungry. Feeding it now will lower intimacy.\n"
+msgstr "Seu Homúnculo não está com fome. Alimentá-lo agora baixará o level de intimidade.\n"
 
 #: ../Commands.pm:2715
 msgid "Feeding your homunculus.\n"
@@ -3714,12 +3662,8 @@ msgstr "Seu homúnculo já foi nomeado e não pode ser renomeado!\n"
 
 #: ../Commands.pm:2890
 #, perl-format
-msgid ""
-"Usage: %s <feed | s | status | move | standby | ai | aiv | skills | delete | "
-"rename>\n"
-msgstr ""
-"Uso: %s <feed | s | status | move | standby | ai | aiv | skills | delete | "
-"rename>\n"
+msgid "Usage: %s <feed | s | status | move | standby | ai | aiv | skills | delete | rename>\n"
+msgstr "Uso: %s <feed | s | status | move | standby | ai | aiv | skills | delete | rename>\n"
 
 #: ../Commands.pm:2927
 #, perl-format
@@ -3732,8 +3676,7 @@ msgid ""
 "FIELD is a field name including .gat extension, like: gef_fild01.gat\n"
 msgstr ""
 "Uso: gmmapmove <mapa>\n"
-"<mapa> é o nome do mapa não localizado, incluindo a extensão .gat, p. ex. "
-"gef_fild01.gat\n"
+"<mapa> é o nome do mapa não localizado, incluindo a extensão .gat, p. ex. gef_fild01.gat\n"
 
 #: ../Commands.pm:2968
 msgid ""
@@ -3777,11 +3720,11 @@ msgstr "Você deve estar logado no jogo para solicitar informações sobre clã.
 
 #: ../Commands.pm:3126
 msgid ""
-"Guild information is not yet available. You must login to the game and use "
-"the 'guild' command first\n"
+"Guild information is not yet available. You must login to the game and use the 'guild' command "
+"first\n"
 msgstr ""
-"Informações sobre clã ainda não estão disponíveis. Você deve conectar-se ao "
-"jogo e usar o comando '%s' primeiro.\n"
+"Informações sobre clã ainda não estão disponíveis. Você deve conectar-se ao jogo e usar o "
+"comando '%s' primeiro.\n"
 
 #: ../Commands.pm:3130
 msgid "Requesting guild information...\n"
@@ -3789,11 +3732,11 @@ msgstr "Solicitando informações do clã...\n"
 
 #: ../Commands.pm:3149
 msgid ""
-"Enter command to view guild information: guild <info | member | request | "
-"join | leave | kick | ally | create | break>\n"
+"Enter command to view guild information: guild <info | member | request | join | leave | kick "
+"| ally | create | break>\n"
 msgstr ""
-"Digite o comando para visualizar informações do clã: guild <info | member | "
-"request | join | leave | kick | ally | create | break>\n"
+"Digite o comando para visualizar informações do clã: guild <info | member | request | join | "
+"leave | kick | ally | create | break>\n"
 
 #: ../Commands.pm:3151
 #, perl-format
@@ -3840,17 +3783,12 @@ msgid " Guild  Member "
 msgstr " Membros do Clã "
 
 #: ../Commands.pm:3181
-msgid ""
-"#  Name                       Job           Lv  Title                    "
-"Online\n"
-msgstr ""
-"#  Nome                       Classe           Nv  Título                    "
-"Online\n"
+msgid "#  Name                       Job           Lv  Title                    Online\n"
+msgstr "#  Nome                       Classe           Nv  Título                    Online\n"
 
 #. Translation Comment: Guild member online
 #. Translation Comment: Is the party user on list online?
-#: ../Commands.pm:3193 ../Commands.pm:4015 ../Commands.pm:4022
-#: ../Commands.pm:4234
+#: ../Commands.pm:3193 ../Commands.pm:4015 ../Commands.pm:4022 ../Commands.pm:4234
 msgid "Yes"
 msgstr "Sim"
 
@@ -3905,11 +3843,9 @@ msgid "Sent guild join request to %s\n"
 msgstr "Enviado convite para entrar no clã para %s\n"
 
 #: ../Commands.pm:3248
-msgid ""
-"No guild information available. Type guild to refresh and then try again.\n"
+msgid "No guild information available. Type guild to refresh and then try again.\n"
 msgstr ""
-"Não há informações do clã disponíveis. Digite 'guild' para atualizar e tente "
-"novamente.\n"
+"Não há informações do clã disponíveis. Digite 'guild' para atualizar e tente novamente.\n"
 
 #: ../Commands.pm:3255
 msgid "You must be guildmaster to set an alliance\n"
@@ -3983,12 +3919,10 @@ msgid " Identify List "
 msgstr " Lista de Identificação "
 
 #: ../Commands.pm:3399
-msgid ""
-"The identify list is empty, please use the identify skill or a magnifier "
-"first.\n"
+msgid "The identify list is empty, please use the identify skill or a magnifier first.\n"
 msgstr ""
-"A lista de identificação está vazia, por favor use a habilidade Identificar "
-"Item ou uma Lupa primeiro.\n"
+"A lista de identificação está vazia, por favor use a habilidade Identificar Item ou uma Lupa "
+"primeiro.\n"
 
 #: ../Commands.pm:3402
 #, perl-format
@@ -4041,8 +3975,7 @@ msgid "-- Equipment (Equipped) --\n"
 msgstr "-- Equipamento (Equipado) --\n"
 
 #. Translation Comment: Tell if the item is marked to be sold
-#: ../Commands.pm:3537 ../Commands.pm:3547 ../Commands.pm:3564
-#: ../Commands.pm:3579
+#: ../Commands.pm:3537 ../Commands.pm:3547 ../Commands.pm:3564 ../Commands.pm:3579
 msgid "Will be sold"
 msgstr "Será vendido"
 
@@ -4142,12 +4075,10 @@ msgid " Monster List "
 msgstr " Lista de Monstros "
 
 #: ../Commands.pm:3741
-msgid ""
-"#   Name                        ID      DmgTo DmgFrom  Distance    "
-"Coordinates\n"
+msgid "#   Name                        ID      DmgTo DmgFrom  Distance    Coordinates\n"
 msgstr ""
-"#   Nome                        ID      Dano Causado   Dano Sofrido   "
-"Distância    Coordenadas\n"
+"#   Nome                        ID      Dano Causado   Dano Sofrido   Distância    "
+"Coordenadas\n"
 
 #: ../Commands.pm:3793
 msgid ""
@@ -4197,12 +4128,12 @@ msgstr "Nenhum portal existe.\n"
 #: ../Commands.pm:3842
 #, perl-format
 msgid "Coordinates %s %s are off the map %s\n"
-msgstr ""
+msgstr "Coordenadas %s %s estão fora do mapa %s\n"
 
 #: ../Commands.pm:3846
 #, perl-format
 msgid "Coordinates %s %s are not walkable on the map %s\n"
-msgstr ""
+msgstr "Coordenadas %s %s não são andáveis no mapa %s\n"
 
 #: ../Commands.pm:3850
 msgid "Unknown Map"
@@ -4303,13 +4234,13 @@ msgstr ""
 "\n"
 "#    Nome                   Mapa           Coord     Online  HP\n"
 
-#: ../Commands.pm:4001 ../Commands.pm:4002 ../Commands.pm:4003
-#: ../Commands.pm:4076 ../Commands.pm:4088 ../Commands.pm:4100
+#: ../Commands.pm:4001 ../Commands.pm:4002 ../Commands.pm:4003 ../Commands.pm:4076
+#: ../Commands.pm:4088 ../Commands.pm:4100
 msgid "Even"
 msgstr "Igualmente"
 
-#: ../Commands.pm:4001 ../Commands.pm:4002 ../Commands.pm:4003
-#: ../Commands.pm:4076 ../Commands.pm:4088 ../Commands.pm:4100
+#: ../Commands.pm:4001 ../Commands.pm:4002 ../Commands.pm:4003 ../Commands.pm:4076
+#: ../Commands.pm:4088 ../Commands.pm:4100
 msgid "Individual"
 msgstr "Individualmente"
 
@@ -4367,8 +4298,7 @@ msgid ""
 "Syntax Error in function 'party shareitem' (Set Party Share Item)\n"
 "Usage: party shareitem <flag>\n"
 msgstr ""
-"Erro de Sintaxe na função 'party shareitem' (Configura Divisão de Itens do "
-"Grupo)\n"
+"Erro de Sintaxe na função 'party shareitem' (Configura Divisão de Itens do Grupo)\n"
 "Uso: party shareitem <booleano>\n"
 
 #: ../Commands.pm:4100
@@ -4381,8 +4311,7 @@ msgid ""
 "Syntax Error in function 'party sharediv' (Set Party Item Division)\n"
 "Usage: party sharediv <flag>\n"
 msgstr ""
-"Erro de Sintaxe na função 'party sharediv' (Configurar Dividir Itens do "
-"Grupo)\n"
+"Erro de Sintaxe na função 'party sharediv' (Configurar Dividir Itens do Grupo)\n"
 "Uso: party sharediv <booleano>\n"
 
 #: ../Commands.pm:4114
@@ -4426,12 +4355,11 @@ msgstr "Não foi possível mudar o líder do grupo - você já é o líder.\n"
 #: ../Commands.pm:4169
 msgid ""
 "Syntax Error in function 'party' (Party Management)\n"
-"Usage: party [<info|create|join|request|leave|share|shareitem|sharediv|"
-"shareauto|kick|leader>]\n"
+"Usage: party [<info|create|join|request|leave|share|shareitem|sharediv|shareauto|kick|"
+"leader>]\n"
 msgstr ""
 "Erro de sintaxe na função 'party' (Gerenciamento de Grupo)\n"
-"Uso: party [<info|create|join|request|leave|share|shareitem|sharediv|"
-"shareauto|kick|leader>]\n"
+"Uso: party [<info|create|join|request|leave|share|shareitem|sharediv|shareauto|kick|leader>]\n"
 
 #: ../Commands.pm:4180
 msgid "Your Pecopeco is active\n"
@@ -4519,11 +4447,11 @@ msgstr ""
 
 #: ../Commands.pm:4267
 msgid ""
-"Usage: pet [capture <monster #> | hatch <item #> | status | info | feed | "
-"performance | return | unequip | name <name>] | emotion <number>\n"
+"Usage: pet [capture <monster #> | hatch <item #> | status | info | feed | performance | return "
+"| unequip | name <name>] | emotion <number>\n"
 msgstr ""
-"Uso: pet [capture <# do monstro> | hatch <# do item> | status | info | feed "
-"| performance | return | unequip | name <nome>] | emotion <número>\n"
+"Uso: pet [capture <# do monstro> | hatch <# do item> | status | info | feed | performance | "
+"return | unequip | name <nome>] | emotion <número>\n"
 
 #: ../Commands.pm:4273
 msgid " Pet List "
@@ -4531,19 +4459,15 @@ msgstr " Lista de Mascotes "
 
 #: ../Commands.pm:4274
 msgid "#   Name                      Type             Distance  Coordinates\n"
-msgstr ""
-"#   Nome                      Tipo             Distância  Coordenadas\n"
+msgstr "#   Nome                      Tipo             Distância  Coordenadas\n"
 
 #: ../Commands.pm:4296
 msgid " Guild Player List "
 msgstr " Lista de Jogadores no Clã "
 
 #: ../Commands.pm:4297 ../Commands.pm:4332 ../Commands.pm:4445
-msgid ""
-"#    Name                                Sex   Lv   Job         Dist Coord\n"
-msgstr ""
-"#    Nome                                Sexo  Nv  Classe      Distância  "
-"Coordenada\n"
+msgid "#    Name                                Sex   Lv   Job         Dist Coord\n"
+msgstr "#    Nome                                Sexo  Nv  Classe      Distância  Coordenada\n"
 
 #: ../Commands.pm:4318
 #, perl-format
@@ -4696,21 +4620,17 @@ msgid ""
 "Command:                                              Description:\n"
 " plugin                                                List loaded plugins\n"
 " plugin load <filename>                                Load a plugin\n"
-" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded "
-"plugin\n"
-" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded "
-"plugin\n"
+" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded plugin\n"
+" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded plugin\n"
 msgstr ""
 "Comando:                                                                                    "
 "Descrição:\n"
 " plugin                                                                                        "
 "Lista plugins carregados\n"
-" plugin load <nome de arquivo>                                               "
-"Carrega um plugin\n"
-" plugin unload <nome do plugin|número do plugin|\"all\">    Descarrega um "
+" plugin load <nome de arquivo>                                               Carrega um "
 "plugin\n"
-" plugin reload <nome do plugin|número do plugin|\"all\">    Recarrega um "
-"plugin\n"
+" plugin unload <nome do plugin|número do plugin|\"all\">    Descarrega um plugin\n"
+" plugin reload <nome do plugin|número do plugin|\"all\">    Recarrega um plugin\n"
 
 #: ../Commands.pm:4580
 msgid "Syntax Error in function 'plugin' (Control Plugins)\n"
@@ -4736,8 +4656,7 @@ msgstr "Arquivos '%s' ou '%s' não existem.\n"
 #: ../Commands.pm:4631
 #, perl-format
 msgid "Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s) [%s]\n"
-msgstr ""
-"Nova destinação de portal memorizada: %s (%s, %s) -> %s (%s, %s) [%s]\n"
+msgstr "Nova destinação de portal memorizada: %s (%s, %s) -> %s (%s, %s) [%s]\n"
 
 #: ../Commands.pm:4638
 #, perl-format
@@ -4745,13 +4664,12 @@ msgid "Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n"
 msgstr "Novo portal gravado (destinação): %s (%s, %s) -> %s (%s, %s)\n"
 
 #: ../Commands.pm:4646
-#, fuzzy
 msgid ""
 "Syntax Error in function 'portals' (List portals)\n"
 "Usage: portals or portals <recompile|add>\n"
 msgstr ""
-"Erro de sintaxe na função 'nl' (Lista NPCs)\n"
-"Uso: nl [<npc #>]\n"
+"Erro de sintaxe na função 'portals' (Listar portais)\n"
+"Uso: portals ou portals <recompile|add>\n"
 
 #: ../Commands.pm:4660
 msgid ""
@@ -4807,11 +4725,8 @@ msgstr "Tentando consertar item: %s\n"
 
 #: ../Commands.pm:4756
 #, perl-format
-msgid ""
-"Item with index: %s does either not exist in the 'Repair List' or the list "
-"is empty.\n"
-msgstr ""
-"Item com índice: %s ou não existe na Lista de Reparo ou a lista está vazia.\n"
+msgid "Item with index: %s does either not exist in the 'Repair List' or the list is empty.\n"
+msgstr "Item com índice: %s ou não existe na Lista de Reparo ou a lista está vazia.\n"
 
 #: ../Commands.pm:4759
 msgid ""
@@ -4877,8 +4792,7 @@ msgid ""
 "'%s' is not a valid item index #; no item has been added to the sell list.\n"
 msgstr ""
 "Erro na função 'sell' (Vende um Item do Inventário)\n"
-"'%s' não é um índice de item válido #; nenhum item foi adicionado à lista de "
-"vendas.\n"
+"'%s' não é um índice de item válido #; nenhum item foi adicionado à lista de vendas.\n"
 
 #: ../Commands.pm:4850
 #, perl-format
@@ -4890,12 +4804,8 @@ msgid "You do not have a shop open.\n"
 msgstr "Você não possui uma loja aberta.\n"
 
 #: ../Commands.pm:4865
-msgid ""
-"#  Name                               Type            Amount        Price  "
-"Sold\n"
-msgstr ""
-"#  Nome                               Tipo            Quant.        Preço  "
-"Vendido\n"
+msgid "#  Name                               Type            Amount        Price  Sold\n"
+msgstr "#  Nome                               Tipo            Quant.        Preço  Vendido\n"
 
 #: ../Commands.pm:4876
 #, perl-format
@@ -4915,16 +4825,12 @@ msgid "You do not have a buying shop open.\n"
 msgstr "Você não possui uma loja de compras aberta.\n"
 
 #: ../Commands.pm:4894
-msgid ""
-"#   Name                               Type           Amount       Price\n"
-msgstr ""
-"#   Nome                               Tipo           Quant.       Preço\n"
+msgid "#   Name                               Type           Amount       Price\n"
+msgstr "#   Nome                               Tipo           Quant.       Preço\n"
 
 #: ../Commands.pm:4912 ../Task/SitStand.pm:100
 msgid "Basic Skill level 3 is required in order to sit or stand."
-msgstr ""
-"A habilidade Habilidades Básicas level 3 é necessária para poder sentar ou "
-"levantar."
+msgstr "A habilidade Habilidades Básicas level 3 é necessária para poder sentar ou levantar."
 
 #: ../Commands.pm:4936
 msgid ""
@@ -4967,8 +4873,7 @@ msgid ""
 "Skill %s reached its maximum level or prerequisite not reached\n"
 msgstr ""
 "Erro na função 'skills add' (Adiciona Pontos na Habilidade)\n"
-"A habilidade %s ou atingiu seu nível máximo ou seus pré-requisitos ainda não "
-"foram obtidos\n"
+"A habilidade %s ou atingiu seu nível máximo ou seus pré-requisitos ainda não foram obtidos\n"
 
 #: ../Commands.pm:4975
 #, perl-format
@@ -5001,21 +4906,16 @@ msgid " Slave List "
 msgstr " Lista de Slaves "
 
 #: ../Commands.pm:4994
-msgid ""
-"#   Name                                   Type         Distance    "
-"Coordinates\n"
-msgstr ""
-"#   Nome                                   Tipo         Distância    "
-"Coordenadas\n"
+msgid "#   Name                                   Type         Distance    Coordinates\n"
+msgstr "#   Nome                                   Tipo         Distância    Coordenadas\n"
 
 #: ../Commands.pm:5013
 msgid " Area Effects List "
 msgstr " Lista de Efeitos em Área "
 
 #: ../Commands.pm:5014
-#, fuzzy
 msgid "  # Type                 Source                   X   Y  Range lvl\n"
-msgstr "  # Tipo                 Fonte                   X   Y\n"
+msgstr "  # Tipo                 Fonte                   X   Y  Alcance lvl\n"
 
 #: ../Commands.pm:5049
 msgid "Character stats information not yet available.\n"
@@ -5023,8 +4923,7 @@ msgstr "Atributos do personagem ainda não está disponível.\n"
 
 #: ../Commands.pm:5057
 msgid "You must be logged in the game to use this command 'st add'\n"
-msgstr ""
-"Você precisa estar conectado no jogo para usar este comando ('st add')\n"
+msgstr "Você precisa estar conectado no jogo para usar este comando ('st add')\n"
 
 #: ../Commands.pm:5062
 msgid ""
@@ -5148,10 +5047,8 @@ msgstr ""
 "         storage log\n"
 
 #: ../Commands.pm:5237
-msgid ""
-"No information about storage; it has not been opened before in this session\n"
-msgstr ""
-"Nenhuma informação do armazém; ele não foi aberto ainda nessa sessão.\n"
+msgid "No information about storage; it has not been opened before in this session\n"
+msgstr "Nenhuma informação do armazém; ele não foi aberto ainda nessa sessão.\n"
 
 #: ../Commands.pm:5257 ../Commands.pm:5286
 msgid ""
@@ -5267,12 +5164,10 @@ msgstr "# Resposta\n"
 #: ../Commands.pm:5414 ../Commands.pm:5516
 msgid ""
 "Syntax Error in function 'talk' (Talk to NPC)\n"
-"Usage: talk <NPC # | \"NPC name\" | cont | resp | num | text > [<response #>|"
-"<number #>]\n"
+"Usage: talk <NPC # | \"NPC name\" | cont | resp | num | text > [<response #>|<number #>]\n"
 msgstr ""
 "Erro de sintaxe na função 'talk' (Conversa com NPC)\n"
-"Uso: talk <índice do NPC | cont | resp | num | text > [<índice da resposta>|"
-"<número>]\n"
+"Uso: talk <índice do NPC | cont | resp | num | text > [<índice da resposta>|<número>]\n"
 
 #: ../Commands.pm:5470
 msgid ""
@@ -5388,12 +5283,10 @@ msgstr "Timeout '%s' é %s\n"
 #: ../Commands.pm:5648
 msgid ""
 "Function 'top10' (Show Top 10 Lists)\n"
-"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|"
-"pvp>\n"
+"Usage: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
 msgstr ""
 "Função 'top10' (Lista o Rank do Top 10)\n"
-"Uso: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|"
-"pvp>\n"
+"Uso: top10 <b|a|t|p> | <black|alche|tk|pk> | <blacksmith|alchemist|taekwon|pvp>\n"
 
 #: ../Commands.pm:5659
 msgid ""
@@ -5762,16 +5655,12 @@ msgstr "Uso: ms <destinário> <título> <mensagem>\n"
 msgid "Usage: mo <mail #>\n"
 msgstr "Uso: mo <mensageml #>\n"
 
-#: ../Commands.pm:6232 ../Commands.pm:6261 ../Commands.pm:6295
-#: ../Commands.pm:6309
+#: ../Commands.pm:6232 ../Commands.pm:6261 ../Commands.pm:6295 ../Commands.pm:6309
 #, perl-format
 msgid "No mail found with index: %s. (might need to re-open mailbox)\n"
-msgstr ""
-"Nenhuma carta encontrada com o índice: %s. (talvez precise reabrir o "
-"correio)\n"
+msgstr "Nenhuma carta encontrada com o índice: %s. (talvez precise reabrir o correio)\n"
 
-#: ../Commands.pm:6234 ../Commands.pm:6263 ../Commands.pm:6297
-#: ../Commands.pm:6311
+#: ../Commands.pm:6234 ../Commands.pm:6263 ../Commands.pm:6297 ../Commands.pm:6311
 msgid "Mailbox has not been opened or is empty.\n"
 msgstr "Correio não foi aberto ou está vazio.\n"
 
@@ -5789,9 +5678,7 @@ msgstr ""
 
 #: ../Commands.pm:6270
 msgid "Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"
-msgstr ""
-"Uso: ma add [zeny <quantidade>]|[item <quantidade> (<item #>|<nome do "
-"item>)]\n"
+msgstr "Uso: ma add [zeny <quantidade>]|[item <quantidade> (<item #>|<nome do item>)]\n"
 
 #: ../Commands.pm:6279
 #, perl-format
@@ -5804,16 +5691,13 @@ msgid ""
 "Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"
 msgstr ""
 "Erro de sintaxe na função 'ma' (Gerenciamento do Correio)\n"
-"Uso:: ma add [zeny <quantidade>]|[item <quantidade> (<item #>|<nome do "
-"item>)]\n"
+"Uso:: ma add [zeny <quantidade>]|[item <quantidade> (<item #>|<nome do item>)]\n"
 
 #: ../Commands.pm:6286
-msgid ""
-"Usage: ma (get <mail #>)|(add [zeny <amount>]|[item <amount> (<item #>|<item "
-"name>)])\n"
+msgid "Usage: ma (get <mail #>)|(add [zeny <amount>]|[item <amount> (<item #>|<item name>)])\n"
 msgstr ""
-"Uso: ma (get <mail #>)|(add [zeny <quantidade>])|[item <quantidade> (<item "
-"#>|<nome do item>)]\n"
+"Uso: ma (get <mail #>)|(add [zeny <quantidade>])|[item <quantidade> (<item #>|<nome do "
+"item>)]\n"
 
 #: ../Commands.pm:6292
 msgid "Usage: md <mail #>\n"
@@ -5841,12 +5725,8 @@ msgstr "Uso: aub <ID> <preço>\n"
 
 #: ../Commands.pm:6359 ../Commands.pm:6383 ../Commands.pm:6398
 #, perl-format
-msgid ""
-"No auction item found with index: %s. (might need to re-open auction "
-"window)\n"
-msgstr ""
-"Nenhum item leiloado com índice: %s. (talvez precise reabrir a janela do "
-"leilão)\n"
+msgid "No auction item found with index: %s. (might need to re-open auction window)\n"
+msgstr "Nenhum item leiloado com índice: %s. (talvez precise reabrir a janela do leilão)\n"
 
 #: ../Commands.pm:6361 ../Commands.pm:6385 ../Commands.pm:6400
 msgid "Auction window has not been opened or is empty.\n"
@@ -5867,12 +5747,10 @@ msgstr "Uso: aue <índice>\n"
 #: ../Commands.pm:6410
 msgid ""
 "Usage: aus <type> [<price>|<text>]\n"
-"      types (0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:"
-"Buy)\n"
+"      types (0:Armor 1:Weapon 2:Card 3:Misc 4:By Text 5:By Price 6:Sell 7:Buy)\n"
 msgstr ""
 "Uso: aus <tipo> [<preço>|<texto>]\n"
-"              tipos (0:Armadura 1:Arma 2:Carta 3:Outros 4:Texto 5:Preço 6:"
-"Venda 7:Compra)\n"
+"              tipos (0:Armadura 1:Arma 2:Carta 3:Outros 4:Texto 5:Preço 6:Venda 7:Compra)\n"
 
 #: ../Commands.pm:6418
 msgid "Usage: aus 5 <text>\n"
@@ -6002,14 +5880,13 @@ msgid ""
 "Syntax Error in function 'achieve'\n"
 "Usage: achieve [<list|reward>] [<achievemente_id>]\n"
 "Usage: achieve list: Shows all current achievements\n"
-"Usage: achieve reward achievemente_id: Request reward for the achievement of "
-"id achievemente_id\n"
+"Usage: achieve reward achievemente_id: Request reward for the achievement of id "
+"achievemente_id\n"
 msgstr ""
 "Erro de sintaxe na função 'achieve'\n"
 "Uso: achieve [<list|reward>] [<id_do_objetivo>]\n"
 "Uso: achieve list: Mostra todos os objetivos atuais\n"
-"Uso: achieve reward id_do_objetivo: Pede a lista de recompensas para o "
-"objetivo especificado\n"
+"Uso: achieve reward id_do_objetivo: Pede a lista de recompensas para o objetivo especificado\n"
 
 #: ../Commands.pm:6678
 #, perl-format
@@ -6039,13 +5916,11 @@ msgstr "Seu rodex já está aberto.\n"
 msgid "Sending request to open rodex mailbox.\n"
 msgstr "Enviando pedido para abrir rodex.\n"
 
-#: ../Commands.pm:6719 ../Commands.pm:6727 ../Commands.pm:6746
-#: ../Commands.pm:6754 ../Commands.pm:6771 ../Commands.pm:6789
-#: ../Commands.pm:6802 ../Commands.pm:6824 ../Commands.pm:6892
-#: ../Commands.pm:6915 ../Commands.pm:6938 ../Commands.pm:6964
-#: ../Commands.pm:7014 ../Commands.pm:7045 ../Commands.pm:7073
-#: ../Commands.pm:7094 ../Commands.pm:7115 ../Commands.pm:7132
-#: ../Commands.pm:7161
+#: ../Commands.pm:6719 ../Commands.pm:6727 ../Commands.pm:6746 ../Commands.pm:6754
+#: ../Commands.pm:6771 ../Commands.pm:6789 ../Commands.pm:6802 ../Commands.pm:6824
+#: ../Commands.pm:6892 ../Commands.pm:6915 ../Commands.pm:6938 ../Commands.pm:6964
+#: ../Commands.pm:7014 ../Commands.pm:7045 ../Commands.pm:7073 ../Commands.pm:7094
+#: ../Commands.pm:7115 ../Commands.pm:7132 ../Commands.pm:7161
 msgid "Your rodex mail box is closed.\n"
 msgstr "Seu rodex está fechado.\n"
 
@@ -6086,9 +5961,9 @@ msgstr ""
 msgid "Opening rodex mail write box.\n"
 msgstr "Abrindo a caixa de escrita do rodex.\n"
 
-#: ../Commands.pm:6793 ../Commands.pm:6806 ../Commands.pm:6828
-#: ../Commands.pm:6896 ../Commands.pm:6919 ../Commands.pm:6942
-#: ../Commands.pm:6968 ../Commands.pm:7018 ../Commands.pm:7049
+#: ../Commands.pm:6793 ../Commands.pm:6806 ../Commands.pm:6828 ../Commands.pm:6896
+#: ../Commands.pm:6919 ../Commands.pm:6942 ../Commands.pm:6968 ../Commands.pm:7018
+#: ../Commands.pm:7049
 msgid "You are not writing a rodex mail.\n"
 msgstr "Você não está escrevendo um rodex.\n"
 
@@ -6105,8 +5980,7 @@ msgid ""
 "Syntax Error in function 'rodex settarget' (Set target of rodex mail)\n"
 "Usage: rodex settarget <player_name>\n"
 msgstr ""
-"Erro de sintaxe na função 'rodex settarget' (Definir o destinatário do "
-"rodex)\n"
+"Erro de sintaxe na função 'rodex settarget' (Definir o destinatário do rodex)\n"
 "Uso: rodex settarget <nome do personagem>\n"
 
 #: ../Commands.pm:6819
@@ -6206,11 +6080,10 @@ msgstr "Item '%s' está equipado.\n"
 #: ../Commands.pm:6996
 #, perl-format
 msgid ""
-"You can't add more of Item '%s' to rodex mail because you have already added "
-"all you have of it.\n"
+"You can't add more of Item '%s' to rodex mail because you have already added all you have of "
+"it.\n"
 msgstr ""
-"Você não pode adicionar mais do item '%s' ao Rodex porque você não tem mais "
-"deste item.\n"
+"Você não pode adicionar mais do item '%s' ao Rodex porque você não tem mais deste item.\n"
 
 #: ../Commands.pm:7009
 #, perl-format
@@ -6242,18 +6115,15 @@ msgstr "Removendo %d do item %s do rodex.\n"
 #: ../Commands.pm:7053
 msgid ""
 "Error in function 'rodex send' (Send finished rodex mail)\n"
-"You still have to set something to send the mail (title, body, zeny or "
-"target)\n"
+"You still have to set something to send the mail (title, body, zeny or target)\n"
 msgstr ""
 "Erro na função 'rodex send' (Enviar Rodex concluído)\n"
-"Você ainda precisa setar alguma coisa antes de enviar o Rodex (título, "
-"corpo, zeny ou destinatário)\n"
+"Você ainda precisa setar alguma coisa antes de enviar o Rodex (título, corpo, zeny ou "
+"destinatário)\n"
 
 #: ../Commands.pm:7064
 #, perl-format
-msgid ""
-"The current tax for this rodex mail is %dz, you don't have enough zeny to "
-"pay for it.\n"
+msgid "The current tax for this rodex mail is %dz, you don't have enough zeny to pay for it.\n"
 msgstr "A taxa deste rodex é %dz, você não tem zeny suficiente para pagar.\n"
 
 #: ../Commands.pm:7068
@@ -6303,14 +6173,12 @@ msgstr ""
 #: ../Commands.pm:7177
 msgid ""
 "Syntax Error in function 'rodex' (rodex mail)\n"
-"Usage: rodex [<open|close|refresh|nextpage|maillist|read|getitems|getzeny|"
-"delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|"
-"send>]\n"
+"Usage: rodex [<open|close|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|"
+"settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n"
 msgstr ""
 "Erro na função 'rodex' (Rodex)\n"
-"Uso: rodex [<open|close|refresh|nextpage|maillist|read|getitems|getzeny|"
-"delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|"
-"send>]\n"
+"Uso: rodex [<open|close|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|"
+"settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n"
 
 #: ../Commands.pm:7191
 msgid "You are not on a sell or store npc interaction.\n"
@@ -6318,15 +6186,11 @@ msgstr "Você não está numa interação de NPC de compra ou venda.\n"
 
 #: ../Commands.pm:7212
 msgid "This command only available after using 'Change Material' skill!\n"
-msgstr ""
-"Este comando só estará disponível depois de utilizar a habilidade 'Reação "
-"Alquímica'!\n"
+msgstr "Este comando só estará disponível depois de utilizar a habilidade 'Reação Alquímica'!\n"
 
 #: ../Commands.pm:7218
 msgid "This command only available after using 'Four Spirit Analysis' skill!\n"
-msgstr ""
-"Este comando só estará disponível depois de utilizer a habilidade 'Análise "
-"Elemental'!\n"
+msgstr "Este comando só estará disponível depois de utilizer a habilidade 'Análise Elemental'!\n"
 
 #: ../Commands.pm:7223 ../Commands.pm:7380
 msgid "Invalid usage!\n"
@@ -6374,8 +6238,8 @@ msgid ""
 msgstr ""
 "Erro de sintaxe na função '%s'. Uso:\n"
 "Item único: %s <índice do item> <quantidade>\n"
-"Combinação: %s <índice do item> <quantidade>, <índice do item> <quantidade>, "
-"<índice do item> <quantidade>\n"
+"Combinação: %s <índice do item> <quantidade>, <índice do item> <quantidade>, <índice do item> "
+"<quantidade>\n"
 
 #: ../Commands.pm:7290
 msgid "Cannot use RefineUI yet.\n"
@@ -6398,8 +6262,7 @@ msgstr "Informação sobre o refino do item %s (%d) requisitada\n"
 #: ../Commands.pm:7344
 #, perl-format
 msgid "You don't have enough '%s' (%d) as refine material.\n"
-msgstr ""
-"Você não tem o suficiente de '%s' (%d) para utilizar de material de refino.\n"
+msgstr "Você não tem o suficiente de '%s' (%d) para utilizar de material de refino.\n"
 
 #: ../Commands.pm:7355
 #, perl-format
@@ -6535,8 +6398,7 @@ msgstr ""
 "\n"
 "\t\t\t\tlist: lista todos os elementais na tela.\n"
 "\n"
-"\t\t\t\tlist <índice do elemental> mostra informação sobre um elemental "
-"específico"
+"\t\t\t\tlist <índice do elemental> mostra informação sobre um elemental específico"
 
 #: ../Commands.pm:7519
 #, perl-format
@@ -6546,13 +6408,11 @@ msgstr "Item com índice %s na lista de criação não encontrado.\n"
 #: ../Commands.pm:7521
 msgid ""
 "Error in function 'create'\n"
-"Usage: create <index number> <material 1 nameID> <material 2 nameID> "
-"<material 3 nameID>\n"
+"Usage: create <index number> <material 1 nameID> <material 2 nameID> <material 3 nameID>\n"
 "material # nameID: can be 0 or undefined.\n"
 msgstr ""
 "Erro na função 'create'\n"
-"Uso: create <índice> <nameID do material 1> <nameID do material 2> <nameID "
-"do material 3>\n"
+"Uso: create <índice> <nameID do material 1> <nameID do material 2> <nameID do material 3>\n"
 "nameID do enésimo material: pode ser 0 ou indefinido.\n"
 
 #: ../Commands.pm:7540
@@ -6593,8 +6453,7 @@ msgid ""
 "No store selected. Please select a store with 'searchstore select' first\n"
 msgstr ""
 "Erro na função 'searchstore' (catálogo de vendas)\n"
-"Nenhuma loja selecionada. Por favor selecione uma loja com 'searchstore "
-"select' antes\n"
+"Nenhuma loja selecionada. Por favor selecione uma loja com 'searchstore select' antes\n"
 
 #: ../Commands.pm:7592
 #, perl-format
@@ -6610,8 +6469,7 @@ msgid ""
 "Error in function 'searchstore buy' (Buy using a Gold Search Catalog\n"
 "Syntax: buy [view|end|<item #> [<amount>]]\n"
 msgstr ""
-"Erro de sintaxe na função 'searchstore buy' (comprar utilizando Catálogo de "
-"Vendas Prata)\n"
+"Erro de sintaxe na função 'searchstore buy' (comprar utilizando Catálogo de Vendas Prata)\n"
 "Sintaxe: buyer [view|end|<índice do item> [<quantidade>]]\n"
 
 #: ../Commands.pm:7610
@@ -6634,12 +6492,12 @@ msgstr ""
 #: ../Commands.pm:7631
 msgid ""
 "Error in function 'searchstore search' (store search)\n"
-"Syntax: searchstore search [match|exact] \"<item name>\" [card <card name>] "
-"[price <min_price>..<max_price>] [sell|buy]\n"
+"Syntax: searchstore search [match|exact] \"<item name>\" [card <card name>] [price "
+"<min_price>..<max_price>] [sell|buy]\n"
 msgstr ""
 "Erro na função 'searchstore search' (pesquisa no catálogo de vendas)\n"
-"Sintaxe: searchstore search [match|exact] \"<item name>\" [card <card name>] "
-"[price <min_price>..<max_price>] [sell|buy]\n"
+"Sintaxe: searchstore search [match|exact] \"<item name>\" [card <card name>] [price "
+"<min_price>..<max_price>] [sell|buy]\n"
 
 #: ../Commands.pm:7643
 #, perl-format
@@ -6682,23 +6540,21 @@ msgid ""
 "searchstore close : Closes search store catalog\n"
 "searchstore next : Requests catalog next page\n"
 "searchstore view <page #> : Shows catalog page # (0-indexed)\n"
-"searchstore search [match|exact] \"<item name>\" [card \"<card name>\"] "
-"[price <min_price>..<max_price>] [sell|buy] : Searches for an item\n"
+"searchstore search [match|exact] \"<item name>\" [card \"<card name>\"] [price <min_price>.."
+"<max_price>] [sell|buy] : Searches for an item\n"
 "searchstore select <page #> <store #> : Selects a store\n"
-"searchstore buy [view|end|<item #> [<amount>]] : Buys from a store using "
-"Universal Catalog Gold\n"
+"searchstore buy [view|end|<item #> [<amount>]] : Buys from a store using Universal Catalog "
+"Gold\n"
 msgstr ""
 "Erro de sintaxe no comando 'searchstore' (comando dos Catálogos de Vendas)\n"
 "searchstore close: Fecha o Catálogo de Vendas\n"
 "searchstore next: Requisita a próxima página do Catálogo\n"
-"searchstore view: <índice da página>: Mostra a página especificada (a partir "
-"de zero)\n"
-"searchstore search [match|exact] \"<item name>\" [card <card name>] [price "
-"<min_price>..<max_price>] [sell|buy]: Pesquisa por um item\n"
-"searchstore select <índice da página> <índice da loja loja>: Seleciona uma "
-"loja\n"
-"searchstore buy [view|end|<índice do item> [<quantidade>]]: Compra de uma "
-"loja usando o Catálogo de Vendas Ouro\n"
+"searchstore view: <índice da página>: Mostra a página especificada (a partir de zero)\n"
+"searchstore search [match|exact] \"<item name>\" [card <card name>] [price <min_price>.."
+"<max_price>] [sell|buy]: Pesquisa por um item\n"
+"searchstore select <índice da página> <índice da loja loja>: Seleciona uma loja\n"
+"searchstore buy [view|end|<índice do item> [<quantidade>]]: Compra de uma loja usando o "
+"Catálogo de Vendas Ouro\n"
 
 #: ../Commands.pm:7730
 #, perl-format
@@ -6720,8 +6576,7 @@ msgid ""
 "Cannot use item %d in attempt to revive: item not found in inventory\n"
 msgstr ""
 "Erro no comando 'revive'\n"
-"Impossível usar o item %d para tentar ressuscitar: item não encontrado no "
-"inventário\n"
+"Impossível usar o item %d para tentar ressuscitar: item não encontrado no inventário\n"
 
 #: ../Commands.pm:7762
 #, perl-format
@@ -6729,9 +6584,8 @@ msgid "Trying to use item %s to self-revive\n"
 msgstr "Tentando usar o item %s para ressuscitar\n"
 
 #: ../Commands.pm:7764
-#, fuzzy
 msgid "Trying to self-revive using 'force'\n"
-msgstr "Tentando usar o item %s para ressuscitar\n"
+msgstr "Tentando forçar a se ressuscitar.\n"
 
 #: ../Commands.pm:7776
 msgid "No cash shop info to buy\n"
@@ -6743,8 +6597,7 @@ msgid ""
 "Usage: cashbuy <kafra_points> <item #> [<amount>][, <item #> [<amount>]]...\n"
 msgstr ""
 "Erro de sintaxe na função 'cashbuy' (Comprar Item da Loja de Cash)\n"
-"Uso: cashbuy <pontos kafra> <item #> [<quantidade>][, <item #> "
-"[<quantidade>]]...\n"
+"Uso: cashbuy <pontos kafra> <item #> [<quantidade>][, <item #> [<quantidade>]]...\n"
 
 #: ../Commands.pm:7796
 #, perl-format
@@ -6761,12 +6614,10 @@ msgid "Attempt to buy %d items from cash dealer\n"
 msgstr "Tentando comprar %d itens da loja de cash\n"
 
 #: ../Commands.pm:7834
-msgid ""
-"You cannot use this command yet. Only available after talking with Mergician-"
-"like NPC!\n"
+msgid "You cannot use this command yet. Only available after talking with Mergician-like NPC!\n"
 msgstr ""
-"Você não pode usar esse comando ainda. Disponível apenas depois de conversar "
-"com um NPC de combinar itens!\n"
+"Você não pode usar esse comando ainda. Disponível apenas depois de conversar com um NPC de "
+"combinar itens!\n"
 
 #: ../Commands.pm:7842
 msgid "Available Items to merge"
@@ -6791,9 +6642,7 @@ msgstr "Combinação de itens cancelada.\n"
 #: ../Commands.pm:7888
 #, perl-format
 msgid "Selected item is not same. Index:'%d' nameID:'%d' first selected:'%d'\n"
-msgstr ""
-"Item selecionado não é igual. Índice:'%d' nameID:'%d\" primeiro "
-"selecionado:'%d'\n"
+msgstr "Item selecionado não é igual. Índice:'%d' nameID:'%d\" primeiro selecionado:'%d'\n"
 
 #: ../Commands.pm:7901
 #, perl-format
@@ -6806,8 +6655,7 @@ msgstr "======== Lista de Itens para Combinar ========\n"
 
 #: ../Commands.pm:7915
 msgid "No item was selected or at least need 2 same items.\n"
-msgstr ""
-"Nenhum item foi selecionado ou são necessários pelo menos 2 do mesmo item.\n"
+msgstr "Nenhum item foi selecionado ou são necessários pelo menos 2 do mesmo item.\n"
 
 #: ../ErrorHandler.pm:33
 #, perl-format
@@ -6821,33 +6669,30 @@ msgstr ""
 #: ../ErrorHandler.pm:59
 #, perl-format
 msgid ""
-"This program has encountered an unexpected problem. This is probably because "
-"of a recent server update, a bug in this program, or in one of the plugins. "
-"We apologize for this problem. You may get support from IRC or the forums.\n"
+"This program has encountered an unexpected problem. This is probably because of a recent "
+"server update, a bug in this program, or in one of the plugins. We apologize for this problem. "
+"You may get support from IRC or the forums.\n"
 "\n"
-"A detailed error report has been saved to errors.txt. Before posting a bug "
-"report, please try out the latest release GIT version first. If you are "
-"already using the latest release GIT version, search the forums first to see "
-"if your problem had already been solved, or has already been reported. If "
-"you truly believe you have encountered a bug in the program, please include "
-"the contents of the errors.txt in your bug report (https://github.com/"
-"openkore/openkore/issues), or we may not be able to help you!\n"
+"A detailed error report has been saved to errors.txt. Before posting a bug report, please try "
+"out the latest release GIT version first. If you are already using the latest release GIT "
+"version, search the forums first to see if your problem had already been solved, or has "
+"already been reported. If you truly believe you have encountered a bug in the program, please "
+"include the contents of the errors.txt in your bug report (https://github.com/openkore/"
+"openkore/issues), or we may not be able to help you!\n"
 "\n"
 "The error message is:\n"
 "%s"
 msgstr ""
-"Este programa encontrou um problema inesperado. Isto aconteceu provavelmente "
-"por causa de uma atualização recente do servidor, um bug no programa ou em "
-"um dos plugins. Pedimos desculpas. Você pode pedir suporte no IRC ou nos "
-"fóruns.\n"
+"Este programa encontrou um problema inesperado. Isto aconteceu provavelmente por causa de uma "
+"atualização recente do servidor, um bug no programa ou em um dos plugins. Pedimos desculpas. "
+"Você pode pedir suporte no IRC ou nos fóruns.\n"
 "\n"
-"Um relatório detalhado foi salvado no errors.txt na pasta raiz. Antes de "
-"reportar um bug, por favor experimente a última versão no GIT. Se você já "
-"está utilizando a última versão no GIT, pesquise nos fóruns primeiro para "
-"ver se seu problema já tem uma solução ou se já foi reportado. Se você "
-"realmente acredita que entrou um bug no programa, por favor inclua o errors."
-"txt no seu bug report (https://github.com/openkore/openkore/issues), ou não "
-"seremos capazes de ajudar!\n"
+"Um relatório detalhado foi salvado no errors.txt na pasta raiz. Antes de reportar um bug, por "
+"favor experimente a última versão no GIT. Se você já está utilizando a última versão no GIT, "
+"pesquise nos fóruns primeiro para ver se seu problema já tem uma solução ou se já foi "
+"reportado. Se você realmente acredita que entrou um bug no programa, por favor inclua o errors."
+"txt no seu bug report (https://github.com/openkore/openkore/issues), ou não seremos capazes de "
+"ajudar!\n"
 "\n"
 "A mensagem de erro é:\n"
 "%s"
@@ -6876,25 +6721,19 @@ msgstr " de instanceID %s"
 
 #: ../FileParsers.pm:146
 msgid ""
-"The chat_resp.txt format has changed. Please read News.txt and upgrade to "
-"the new format.\n"
+"The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n"
 msgstr ""
-"O formato do chat_resp.txt mudou. Por favor leia o News.txt e atualize-se "
-"para o novo formato.\n"
+"O formato do chat_resp.txt mudou. Por favor leia o News.txt e atualize-se para o novo "
+"formato.\n"
 
 #: ../FileParsers.pm:233
-msgid ""
-"Mid-line comments are not allowed in this file and therefore might cause "
-"problems.\n"
+msgid "Mid-line comments are not allowed in this file and therefore might cause problems.\n"
 msgstr ""
-"Comentários no meio da linha não são permitidos neste arquivo e podem causar "
-"problemas.\n"
+"Comentários no meio da linha não são permitidos neste arquivo e podem causar problemas.\n"
 
 #: ../FileParsers.pm:234
 msgid "If the '#' found is not a comment, this can be ignored.\n"
-msgstr ""
-"Se o '#' encontrado não significar um comentário, este aviso pode ser "
-"ignorado.\n"
+msgstr "Se o '#' encontrado não significar um comentário, este aviso pode ser ignorado.\n"
 
 #: ../FileParsers.pm:235
 #, perl-format
@@ -7039,12 +6878,10 @@ msgstr "Timeout '%s' ajustado para %s (era %s)\n"
 #: ../Misc.pm:1160
 #, perl-format
 msgid ""
-"No suitable browser detected. Please launch your favorite browser and go "
-"to:\n"
+"No suitable browser detected. Please launch your favorite browser and go to:\n"
 "%s"
 msgstr ""
-"Nenhum browser compatível detectado. Por favor, rode seu browser favorito e "
-"vá para:\n"
+"Nenhum browser compatível detectado. Por favor, rode seu browser favorito e vá para:\n"
 "%s"
 
 #: ../Misc.pm:1207
@@ -7135,9 +6972,7 @@ msgstr " Lista de Personagens "
 #: ../Misc.pm:1457 ../Misc.pm:1495
 #, perl-format
 msgid "Cannot select character \"%s\" that requested for deletion.\n"
-msgstr ""
-"Impossível selecionar o personagem \"%s\" porque este está marcado para "
-"exclusão.\n"
+msgstr "Impossível selecionar o personagem \"%s\" porque este está marcado para exclusão.\n"
 
 #: ../Misc.pm:1469
 msgid "Create a new character"
@@ -7156,12 +6991,8 @@ msgid "There are no characters on this account.\n"
 msgstr "Não existem personagens nesta conta.\n"
 
 #: ../Misc.pm:1479
-msgid ""
-"Please use the : \"conf char switch\" command, if you are switching your "
-"account.\n"
-msgstr ""
-"Por favor, use o comando \"conf char switch\" caso você esteja trocando de "
-"conta.\n"
+msgid "Please use the : \"conf char switch\" command, if you are switching your account.\n"
+msgstr "Por favor, use o comando \"conf char switch\" caso você esteja trocando de conta.\n"
 
 #: ../Misc.pm:1486
 msgid "Please choose a character or an action."
@@ -7172,16 +7003,12 @@ msgid "Character selection"
 msgstr "Seleção de Personagem"
 
 #: ../Misc.pm:1519
-msgid ""
-"Please enter the desired properties for your characters, in this form:\n"
-msgstr ""
-"Favor entrar com as propriedades desejadas para seu personagem, neste "
-"formato:\n"
+msgid "Please enter the desired properties for your characters, in this form:\n"
+msgstr "Favor entrar com as propriedades desejadas para seu personagem, neste formato:\n"
 
 #: ../Misc.pm:1520
 msgid "(slot) \"(name)\" [ (hairstyle) [(haircolor)] ] [(job)] [(sex)]\n"
-msgstr ""
-"(vaga) \"nome)\" [ (corte de cabelo) [(cor de cabelo)] ] [(raça)] [(sexo)]\n"
+msgstr "(vaga) \"nome)\" [ (corte de cabelo) [(cor de cabelo)] ] [(raça)] [(sexo)]\n"
 
 #: ../Misc.pm:1521
 msgid "Job should be one of 'novice' or 'summoner' (default is 'novice').\n"
@@ -7196,19 +7023,16 @@ msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
 "(slot) \"(name)\" [ (hairstyle) [(haircolor)] ]"
 msgstr ""
-"Favor entrar com as propriedades desejadas para seu personagem, neste "
-"formato:\n"
+"Favor entrar com as propriedades desejadas para seu personagem, neste formato:\n"
 "(vaga) \"(nome)\" [ (corte de cabelo) [(cor de cabelo)] ]"
 
 #: ../Misc.pm:1527
 msgid ""
 "Please enter the desired properties for your characters, in this form:\n"
-"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) "
-"[(haircolor)] ] ]"
+"(slot) \"(name)\" [ (str) (agi) (vit) (int) (dex) (luk) [ (hairstyle) [(haircolor)] ] ]"
 msgstr ""
 "Favor entrar com as propriedades desejadas para seu personagem nesta forma:\n"
-"(slot) \"(nome)\" [(for) (agi) (vit) (int) (des) (sor) [(estilo_cabelo) "
-"[(cor)]]]"
+"(slot) \"(nome)\" [(for) (agi) (vit) (int) (des) (sor) [(estilo_cabelo) [(cor)]]]"
 
 #: ../Misc.pm:1537
 msgid "You didn't specify enough parameters."
@@ -7344,9 +7168,8 @@ msgstr "Item retirado do armazém: %s (%d) x %s\n"
 msgid "Cart Item Removed: %s (%d) x %s\n"
 msgstr "Item Removido do Carrinho: %s (%d) x %s\n"
 
-#: ../Misc.pm:2154 ../Actor/Unknown.pm:32 ../Actor/Slave/Unknown.pm:30
-#: ../Network/Receive.pm:1645 ../Network/Receive.pm:5901
-#: ../Network/Receive/ServerType0.pm:1117
+#: ../Misc.pm:2154 ../Actor/Unknown.pm:32 ../Actor/Slave/Unknown.pm:30 ../Network/Receive.pm:1645
+#: ../Network/Receive.pm:5901 ../Network/Receive/ServerType0.pm:1117
 #: ../Network/Receive/kRO/Sakexe_0.pm:1049
 msgid "Unknown"
 msgstr "Desconhecido"
@@ -7403,12 +7226,9 @@ msgid "Exiting...\n"
 msgstr "Saindo...\n"
 
 #: ../Misc.pm:2714
-msgid ""
-"Openkore will stay disconnected. Type \"connect\" in order to connect "
-"again.\n"
+msgid "Openkore will stay disconnected. Type \"connect\" in order to connect again.\n"
 msgstr ""
-"O Openkore permanecerá desconectado. Use o comando \"connect\" para conectar-"
-"se novamente.\n"
+"O Openkore permanecerá desconectado. Use o comando \"connect\" para conectar-se novamente.\n"
 
 #: ../Misc.pm:2725
 #, perl-format
@@ -7511,8 +7331,7 @@ msgstr "Usando habilidade Teleporte level 2 apesar de não a termos!\n"
 
 #: ../Misc.pm:3553
 msgid "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"
-msgstr ""
-"Sem Asa de Mosca ou Asa de Borboleta, utilizando habilidade Teleporte.\n"
+msgstr "Sem Asa de Mosca ou Asa de Borboleta, utilizando habilidade Teleporte.\n"
 
 #: ../Misc.pm:3558
 msgid "You don't have the Teleport skill or a Fly Wing\n"
@@ -7704,8 +7523,7 @@ msgstr "Portais LOS salvo em '%s/portalsLOS.txt'.\n"
 
 #: ../Misc.pm:4089
 msgid "----------------------------Error Summary----------------------------\n"
-msgstr ""
-"---------------------------Sumário de Erros--------------------------\n"
+msgstr "---------------------------Sumário de Erros--------------------------\n"
 
 #: ../Misc.pm:4090
 #, perl-format
@@ -7718,15 +7536,12 @@ msgid ""
 "      however it is safe to ignore if those map(s) are not used\n"
 msgstr ""
 "Nota: As informações LOS nos mapas acima estão imprecisas;\n"
-"      entretanto é seguro ignorá-las se estes mapas não estão sendo "
-"utilizados\n"
+"      entretanto é seguro ignorá-las se estes mapas não estão sendo utilizados\n"
 
 #: ../Misc.pm:4240
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
-msgstr ""
-"Configurações do NPC para autoBuy, autoSell ou autoStorage são inválidas! "
-"(%s)\n"
+msgstr "Configurações do NPC para autoBuy, autoSell ou autoStorage são inválidas! (%s)\n"
 
 #: ../Misc.pm:4843 ../Misc.pm:4938
 msgid "A shop has already been opened.\n"
@@ -7761,18 +7576,12 @@ msgid "Shop closed.\n"
 msgstr "Loja fechada.\n"
 
 #: ../Misc.pm:4989
-msgid ""
-"You don't have the Buying Store skill or Black Market Bulk Buyer Shop "
-"License.\n"
-msgstr ""
-"Você não possui uma Licença de Loja de Compras ou uma Licença Falsa de "
-"Loja.\n"
+msgid "You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n"
+msgstr "Você não possui uma Licença de Loja de Compras ou uma Licença Falsa de Loja.\n"
 
 #: ../Misc.pm:4995
 msgid "You don't have Bulk Buyer Shop License.\n"
-msgstr ""
-"Você não possui uma Licença de Loja de Compras ou uma Licença Falsa de "
-"Loja.\n"
+msgstr "Você não possui uma Licença de Loja de Compras ou uma Licença Falsa de Loja.\n"
 
 #: ../Misc.pm:5003
 msgid "Your buyer shop does not have a title.\n"
@@ -7914,18 +7723,17 @@ msgstr "Carregando plugin %s...\n"
 
 #: ../Plugins.pm:143
 #, perl-format
-msgid ""
-"File %s does not exist. (usage ex: plugin load plugins/macro/macro.pl)\n"
+msgid "File %s does not exist. (usage ex: plugin load plugins/macro/macro.pl)\n"
 msgstr "O arquivo %s não existe.\n"
 
 #: ../Plugins.pm:145
 #, perl-format
 msgid ""
-"The ROPP plugin (ropp.pl) is obsolete and is no longer necessary. Please "
-"remove it, or %s will not work correctly."
+"The ROPP plugin (ropp.pl) is obsolete and is no longer necessary. Please remove it, or %s will "
+"not work correctly."
 msgstr ""
-"O plugin ROPP (ropp.pl) é desatualizado e seu uso não é mais necessário. Por "
-"favor delete ele ou %s não irá funcionar corretamente."
+"O plugin ROPP (ropp.pl) é desatualizado e seu uso não é mais necessário. Por favor delete ele "
+"ou %s não irá funcionar corretamente."
 
 #: ../Plugins.pm:157
 #, perl-format
@@ -8077,13 +7885,11 @@ msgstr "Alterando 'attackDistance' para padrão: %s\n"
 msgid "Change Attack useWeapon to default : %s\n"
 msgstr "Mudando 'attackUseWeapon' para padrão: %s\n"
 
-#: ../Actor/Slave/Homunculus.pm:27 ../Interface/Wx.pm:477
-#: ../Interface/Wx.pm:1240
+#: ../Actor/Slave/Homunculus.pm:27 ../Interface/Wx.pm:477 ../Interface/Wx.pm:1240
 msgid "Homunculus"
 msgstr "Homúnculo"
 
-#: ../Actor/Slave/Mercenary.pm:27 ../Interface/Wx.pm:478
-#: ../Interface/Wx.pm:1247
+#: ../Actor/Slave/Mercenary.pm:27 ../Interface/Wx.pm:478 ../Interface/Wx.pm:1247
 msgid "Mercenary"
 msgstr "Assistente"
 
@@ -8100,8 +7906,7 @@ msgstr "Desistindo do alvo - %s (%s) foi provocado.\n"
 msgid "Can't reach or damage target, dropping target\n"
 msgstr "Não foi possível atingir ou acertar o alvo, desistindo.\n"
 
-#: ../AI/Attack.pm:150 ../AI/Attack.pm:226 ../AI/Attack.pm:393
-#: ../AI/Attack.pm:495
+#: ../AI/Attack.pm:150 ../AI/Attack.pm:226 ../AI/Attack.pm:393 ../AI/Attack.pm:495
 msgid "Teleport due to dropping attack target\n"
 msgstr "Teleportando devido ao desistimento de alvo.\n"
 
@@ -8132,9 +7937,9 @@ msgid "%s; no acceptable place to stand\n"
 msgstr "%s; nenhum lugar disponível para ficar.\n"
 
 #: ../AI/Attack.pm:465 ../AI/Slave.pm:461
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n"
-msgstr "Sem LOS de %s (%s,%s) ao Portal em (%s,%s).\n"
+msgstr "%s fazendo kite de (%d %d) para (%d %d), monstro em (%d %d).\n"
 
 #: ../AI/Attack.pm:493
 msgid "Unable to calculate a route to target, dropping target\n"
@@ -8221,11 +8026,8 @@ msgstr "Item do %s '%s' desapareceu!\n"
 
 #: ../AI/CoreLogic.pm:1064
 #, perl-format
-msgid ""
-"Amount of %s is more than you can carry, getting the maximum possible (%d)\n"
-msgstr ""
-"A quantidade de %s excede o que você pode carregar, pegando o máximo "
-"possível de (%d)\n"
+msgid "Amount of %s is more than you can carry, getting the maximum possible (%d)\n"
+msgstr "A quantidade de %s excede o que você pode carregar, pegando o máximo possível de (%d)\n"
 
 #: ../AI/CoreLogic.pm:1069
 #, perl-format
@@ -8235,18 +8037,13 @@ msgstr "Item do inventário '%s' está equipado.\n"
 #: ../AI/CoreLogic.pm:1078
 #, perl-format
 msgid "Unable to add %s to %s. You can't stack over %s of this item\n"
-msgstr ""
-"Impossível mover %s para %s. Você não pode ter stacks maiores que %s deste "
-"item\n"
+msgstr "Impossível mover %s para %s. Você não pode ter stacks maiores que %s deste item\n"
 
 #: ../AI/CoreLogic.pm:1082
 #, perl-format
 msgid ""
-"Amount of %s will surpass the maximum %s capacity (%d), transfering maximum "
-"possible (%d)\n"
-msgstr ""
-"A quantidade de %s excede a capacidade do %s (%d), transferindo o máximo "
-"possível (%d)\n"
+"Amount of %s will surpass the maximum %s capacity (%d), transfering maximum possible (%d)\n"
+msgstr "A quantidade de %s excede a capacidade do %s (%d), transferindo o máximo possível (%d)\n"
 
 #: ../AI/CoreLogic.pm:1181
 msgid "Auto-storaging due to excess weight\n"
@@ -8259,46 +8056,44 @@ msgid "Disconnecting on empty %s!\n"
 msgstr "Desconectando-se devido a falta de %s!\n"
 
 #: ../AI/Slave.pm:197
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s moves too far (distance: %d) - Moving near\n"
-msgstr ""
-"Seu Slave está muito longe (distância: %.2f) - Movendo-se perto do seu "
-"Slave.\n"
+msgstr "%s moveu-se para longe (distância: %d) - Aproximando-se\n"
 
 #: ../AI/Slave.pm:285
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s can't reach or damage target, dropping target\n"
-msgstr "Não foi possível atingir ou acertar o alvo, desistindo.\n"
+msgstr "%s não consegue alcançar ou atingir o alvo, desistindo\n"
 
 #: ../AI/Slave.pm:287 ../AI/Slave.pm:414 ../AI/Slave.pm:501 ../AI/Slave.pm:559
-#, fuzzy, perl-format
+#, perl-format
 msgid "Teleport due to dropping %s attack target\n"
-msgstr "Teleportando devido ao desistimento de alvo.\n"
+msgstr "Teleportando-se devido a desistir do alvo %s\n"
 
 #: ../AI/Slave.pm:298
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s target died\n"
-msgstr "Alvo morreu.\n"
+msgstr "Alvo de %s morreu\n"
 
 #: ../AI/Slave.pm:334
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s target lost\n"
-msgstr "Alvo perdido.\n"
+msgstr "Alvo de %s perdido\n"
 
 #: ../AI/Slave.pm:410 ../AI/Slave.pm:547
-#, fuzzy, perl-format
+#, perl-format
 msgid "Dropping target - %s will not kill steal others\n"
-msgstr "Desistindo do alvo - slave não roubará o monstro de outros.\n"
+msgstr "Desistindo do alvo - %s não roubará o monstro de outros.\n"
 
 #: ../AI/Slave.pm:449
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s has no LOS from (%d, %d) to target (%d, %d)"
-msgstr "Sem LOS de %s (%s,%s) ao Portal em (%s,%s).\n"
+msgstr "%s não tem linha de visão de (%d, %d) para o alvo (%d, %d)"
 
 #: ../AI/Slave.pm:499
-#, fuzzy, perl-format
+#, perl-format
 msgid "Unable to calculate a route to %s target, dropping target\n"
-msgstr "Não foi possível calcular uma rota para o alvo, desistindo.\n"
+msgstr "Não foi possível calcular uma rota para o alvo de %s, desistindo.\n"
 
 #: ../AI/Slave/Homunculus.pm:36
 #, perl-format
@@ -8977,9 +8772,8 @@ msgstr "Chat de grupo"
 msgid "Guild chat"
 msgstr "Chat de clã"
 
-#: ../Interface/Wx.pm:742 ../Interface/Wx.pm:1032 ../Interface/Wx.pm:1186
-#: ../Interface/Wx.pm:1188 ../Interface/Wx.pm:1189 ../Interface/Wx.pm:1200
-#: ../Interface/Wx.pm:1387
+#: ../Interface/Wx.pm:742 ../Interface/Wx.pm:1032 ../Interface/Wx.pm:1186 ../Interface/Wx.pm:1188
+#: ../Interface/Wx.pm:1189 ../Interface/Wx.pm:1200 ../Interface/Wx.pm:1387
 msgid "Chat Log"
 msgstr "Registro de Chat"
 
@@ -9083,12 +8877,12 @@ msgstr "Movendo-se para %s, %s\n"
 #: ../Interface/Console/Win32.pm:199
 msgid ""
 "Your Windows's default language is not supported by OpenKore.\n"
-"Please go to 'Start->Control Panel->Regional and language options' and set "
-"the Windows default language to English."
+"Please go to 'Start->Control Panel->Regional and language options' and set the Windows default "
+"language to English."
 msgstr ""
 "Seu idioma padrão do windows não é suportado pelo OpenKore.\n"
-"Por favor, vá para 'Start->Control Panel->Regional and language options' e "
-"defina o idioma padrão do windows para inglês."
+"Por favor, vá para 'Start->Control Panel->Regional and language options' e defina o idioma "
+"padrão do windows para inglês."
 
 #: ../Interface/Wx/ConfigEditor.pm:24
 msgid "Categories:"
@@ -9232,19 +9026,16 @@ msgstr "Fechar aba"
 msgid "%d x %s..."
 msgstr "%d x %s..."
 
-#: ../Interface/Wx/List/ItemList/Cart.pm:16
-#: ../Interface/Wx/List/ItemList/Storage.pm:17
+#: ../Interface/Wx/List/ItemList/Cart.pm:16 ../Interface/Wx/List/ItemList/Storage.pm:17
 #: ../Interface/Wx/StatView/You.pm:23
 msgid "Weight"
 msgstr "Peso"
 
-#: ../Interface/Wx/List/ItemList/Cart.pm:59
-#: ../Interface/Wx/List/ItemList/Storage.pm:65
+#: ../Interface/Wx/List/ItemList/Cart.pm:59 ../Interface/Wx/List/ItemList/Storage.pm:65
 msgid "Move all to inventory"
 msgstr "Transferir tudo para o inventário"
 
-#: ../Interface/Wx/List/ItemList/Cart.pm:61
-#: ../Interface/Wx/List/ItemList/Inventory.pm:74
+#: ../Interface/Wx/List/ItemList/Cart.pm:61 ../Interface/Wx/List/ItemList/Inventory.pm:74
 msgid "Move all to storage"
 msgstr "Transferir tudo para o armazém"
 
@@ -9252,8 +9043,7 @@ msgstr "Transferir tudo para o armazém"
 msgid "Use one on self"
 msgstr "Usar um em si"
 
-#: ../Interface/Wx/List/ItemList/Inventory.pm:58
-#: ../Interface/Wx/StatView/Pet.pm:23
+#: ../Interface/Wx/List/ItemList/Inventory.pm:58 ../Interface/Wx/StatView/Pet.pm:23
 msgid "Unequip"
 msgstr "Remover"
 
@@ -9269,8 +9059,7 @@ msgstr "Iniciar composição de carta"
 msgid "Drop one"
 msgstr "Derrubar um"
 
-#: ../Interface/Wx/List/ItemList/Inventory.pm:71
-#: ../Interface/Wx/List/ItemList/Storage.pm:67
+#: ../Interface/Wx/List/ItemList/Inventory.pm:71 ../Interface/Wx/List/ItemList/Storage.pm:67
 msgid "Move all to cart"
 msgstr "Transferir tudo para o carrinho"
 
@@ -9330,13 +9119,13 @@ msgstr "Bytes Recebidos"
 msgid "Reset"
 msgstr "Reiniciar"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:29
-#: ../Interface/Wx/StatView/Mercenary.pm:18 ../Interface/Wx/StatView/You.pm:19
+#: ../Interface/Wx/StatView/Homunculus.pm:29 ../Interface/Wx/StatView/Mercenary.pm:18
+#: ../Interface/Wx/StatView/You.pm:19
 msgid "HP"
 msgstr "HP"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:30
-#: ../Interface/Wx/StatView/Mercenary.pm:19 ../Interface/Wx/StatView/You.pm:20
+#: ../Interface/Wx/StatView/Homunculus.pm:30 ../Interface/Wx/StatView/Mercenary.pm:19
+#: ../Interface/Wx/StatView/You.pm:20
 msgid "SP"
 msgstr "SP"
 
@@ -9352,43 +9141,43 @@ msgstr "Lealdade"
 msgid "Hunger"
 msgstr "Fome"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:34
-#: ../Interface/Wx/StatView/Mercenary.pm:21 ../Interface/Wx/StatView/You.pm:31
+#: ../Interface/Wx/StatView/Homunculus.pm:34 ../Interface/Wx/StatView/Mercenary.pm:21
+#: ../Interface/Wx/StatView/You.pm:31
 msgid "Atk"
 msgstr "Atq"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:35
-#: ../Interface/Wx/StatView/Mercenary.pm:22 ../Interface/Wx/StatView/You.pm:32
+#: ../Interface/Wx/StatView/Homunculus.pm:35 ../Interface/Wx/StatView/Mercenary.pm:22
+#: ../Interface/Wx/StatView/You.pm:32
 msgid "Matk"
 msgstr "Matq"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:36
-#: ../Interface/Wx/StatView/Mercenary.pm:23 ../Interface/Wx/StatView/You.pm:33
+#: ../Interface/Wx/StatView/Homunculus.pm:36 ../Interface/Wx/StatView/Mercenary.pm:23
+#: ../Interface/Wx/StatView/You.pm:33
 msgid "Hit"
 msgstr "Precisão"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:37
-#: ../Interface/Wx/StatView/Mercenary.pm:24 ../Interface/Wx/StatView/You.pm:34
+#: ../Interface/Wx/StatView/Homunculus.pm:37 ../Interface/Wx/StatView/Mercenary.pm:24
+#: ../Interface/Wx/StatView/You.pm:34
 msgid "Critical"
 msgstr "Crítico"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:38
-#: ../Interface/Wx/StatView/Mercenary.pm:25 ../Interface/Wx/StatView/You.pm:35
+#: ../Interface/Wx/StatView/Homunculus.pm:38 ../Interface/Wx/StatView/Mercenary.pm:25
+#: ../Interface/Wx/StatView/You.pm:35
 msgid "Def"
 msgstr "Def"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:39
-#: ../Interface/Wx/StatView/Mercenary.pm:26 ../Interface/Wx/StatView/You.pm:36
+#: ../Interface/Wx/StatView/Homunculus.pm:39 ../Interface/Wx/StatView/Mercenary.pm:26
+#: ../Interface/Wx/StatView/You.pm:36
 msgid "Mdef"
 msgstr "Mdef"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:40
-#: ../Interface/Wx/StatView/Mercenary.pm:27 ../Interface/Wx/StatView/You.pm:37
+#: ../Interface/Wx/StatView/Homunculus.pm:40 ../Interface/Wx/StatView/Mercenary.pm:27
+#: ../Interface/Wx/StatView/You.pm:37
 msgid "Flee"
 msgstr "Esquiva"
 
-#: ../Interface/Wx/StatView/Homunculus.pm:41
-#: ../Interface/Wx/StatView/Mercenary.pm:28 ../Interface/Wx/StatView/You.pm:38
+#: ../Interface/Wx/StatView/Homunculus.pm:41 ../Interface/Wx/StatView/Mercenary.pm:28
+#: ../Interface/Wx/StatView/You.pm:38
 msgid "Aspd"
 msgstr "Aspd"
 
@@ -9510,11 +9299,11 @@ msgstr "Dados recebidos deixados no buffer:\n"
 #: ../Network/DirectConnection.pm:232
 #, perl-format
 msgid ""
-"Only %d bytes in the buffer, when %s's packet length is supposed to be %d "
-"(wrong recvpackets?)\n"
+"Only %d bytes in the buffer, when %s's packet length is supposed to be %d (wrong "
+"recvpackets?)\n"
 msgstr ""
-"Apenas %d atingiram o buffer, quando o comprimento do pacote %s é "
-"supostamente %d (recvpackets incorreto?)\n"
+"Apenas %d atingiram o buffer, quando o comprimento do pacote %s é supostamente %d (recvpackets "
+"incorreto?)\n"
 
 #: ../Network/DirectConnection.pm:239
 #, perl-format
@@ -9568,17 +9357,13 @@ msgid "Auto disconnecting on MaxReconnections!\n"
 msgstr "Desconectando automaticamente devido ao número de reconexões!\n"
 
 #: ../Network/DirectConnection.pm:472
-msgid ""
-"*** Exceeded the maximum number attempts to reconnect, auto disconnect! ***\n"
-msgstr ""
-"*** Número de reconexões excedido, desconectando automaticamente! ***\n"
+msgid "*** Exceeded the maximum number attempts to reconnect, auto disconnect! ***\n"
+msgstr "*** Número de reconexões excedido, desconectando automaticamente! ***\n"
 
 #: ../Network/DirectConnection.pm:476
 #, perl-format
 msgid "Timeout on Account Server, reconnecting. Wait %s seconds...\n"
-msgstr ""
-"Tempo esgotado no Servidor de Contas, reconectando-se. Aguarde %s "
-"segundos...\n"
+msgstr "Tempo esgotado no Servidor de Contas, reconectando-se. Aguarde %s segundos...\n"
 
 #: ../Network/DirectConnection.pm:499
 msgid "Connecting to Character Server...\n"
@@ -9607,9 +9392,7 @@ msgstr "Selecione o Servidor de Login"
 #: ../Network/DirectConnection.pm:551
 #, perl-format
 msgid "Timeout on Character Server, reconnecting. Wait %s seconds...\n"
-msgstr ""
-"Tempo esgotado no Servidor de Personagens, reconectando-se. Aguarde %s "
-"segundos...\n"
+msgstr "Tempo esgotado no Servidor de Personagens, reconectando-se. Aguarde %s segundos...\n"
 
 #: ../Network/DirectConnection.pm:560
 msgid "Connecting to Character Select Server...\n"
@@ -9617,8 +9400,7 @@ msgstr "Conectando-se ao Servidor de Seleção de Personagens...\n"
 
 #: ../Network/DirectConnection.pm:574
 msgid "Timeout on Character Select Server, reconnecting...\n"
-msgstr ""
-"Tempo esgotado no Servidor de Seleção de Personagens, reconectando-se...\n"
+msgstr "Tempo esgotado no Servidor de Seleção de Personagens, reconectando-se...\n"
 
 #: ../Network/DirectConnection.pm:588
 msgid "Connecting to Map Server...\n"
@@ -9626,8 +9408,7 @@ msgstr "Conectando-se ao Servidor de Mapas...\n"
 
 #: ../Network/DirectConnection.pm:614
 msgid "Timeout on Map Server, connecting to Account Server...\n"
-msgstr ""
-"Tempo esgotado no Servidor de Mapas, conectando-se ao Servidor de Contas...\n"
+msgstr "Tempo esgotado no Servidor de Mapas, conectando-se ao Servidor de Contas...\n"
 
 #: ../Network/DirectConnection.pm:624 ../Network/DirectConnection.pm:639
 #: ../Network/Receive.pm:4994 ../Network/XKore.pm:245
@@ -9637,16 +9418,13 @@ msgstr "Desconectando-se ao ser desconectado do servidor!\n"
 #: ../Network/DirectConnection.pm:625 ../Network/DirectConnection.pm:640
 #: ../Network/Receive.pm:4995 ../Network/XKore.pm:246
 msgid "*** You disconnected, auto disconnect! ***\n"
-msgstr ""
-"*** Você foi desconectado do servidor, desconectando automaticamente! ***\n"
+msgstr "*** Você foi desconectado do servidor, desconectando automaticamente! ***\n"
 
 #: ../Network/DirectConnection.pm:628
 #, perl-format
-msgid ""
-"Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
+msgid "Disconnected from Map Server, connecting to Account Server in %s seconds...\n"
 msgstr ""
-"Desconectado do Servidor de Mapas, conectando-se ao Servidor de Contas em %s "
-"segundos...\n"
+"Desconectado do Servidor de Mapas, conectando-se ao Servidor de Contas em %s segundos...\n"
 
 #: ../Network/DirectConnection.pm:636 ../Network/XKore.pm:242
 msgid "Timeout on Map Server, "
@@ -9660,18 +9438,15 @@ msgstr "conectando-se ao Servidor de Contas em %s segundos...\n"
 #: ../Network/PacketParser.pm:132
 #, perl-format
 msgid "Cannot load server message parser for server type '%s'."
-msgstr ""
-"Não foi possível carregar o interpretador de pacotes para o ServerType '%s'."
+msgstr "Não foi possível carregar o interpretador de pacotes para o ServerType '%s'."
 
 #: ../Network/PacketParser.pm:136
 #, perl-format
 msgid ""
-"An error occured while loading the server message parser for server type "
-"'%s':\n"
+"An error occured while loading the server message parser for server type '%s':\n"
 "%s"
 msgstr ""
-"Um erro ocorreu enquanto o interpretador de mensagens do serverType '%s' "
-"carregava:\n"
+"Um erro ocorreu enquanto o interpretador de mensagens do serverType '%s' carregava:\n"
 "%s"
 
 #: ../Network/PacketParser.pm:499
@@ -9777,8 +9552,7 @@ msgstr " Servidores "
 msgid "#   Name                  Users  IP              Port\n"
 msgstr "#   Nome                  Usuários  IP              Porta\n"
 
-#: ../Network/Receive.pm:1005 ../Network/XKoreProxy.pm:530
-#: ../Network/Receive/ServerType17.pm:77
+#: ../Network/Receive.pm:1005 ../Network/XKoreProxy.pm:530 ../Network/Receive/ServerType17.pm:77
 msgid "Closing connection to Account Server\n"
 msgstr "Fechando conexão com o Servidor de Contas\n"
 
@@ -9825,8 +9599,7 @@ msgstr "Desconectando automaticamente, %s foi silenciado por %s minutos!\n"
 #: ../Network/Receive.pm:1153
 #, perl-format
 msgid "*** %s have been muted for %d minutes, auto disconnect! ***\n"
-msgstr ""
-"*** %s foi Silenciado por %d minutos, desconectando automaticamente! ***\n"
+msgstr "*** %s foi Silenciado por %d minutos, desconectando automaticamente! ***\n"
 
 #: ../Network/Receive.pm:1177
 #, perl-format
@@ -9873,12 +9646,10 @@ msgstr "Pontos de atributos insuficientes.\n"
 
 #: ../Network/Receive.pm:1512
 #, perl-format
-msgid ""
-"Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,"
-"%d)\n"
+msgid "Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n"
 msgstr ""
-"Actor removido cujas coordenadas estavam fora do limite do mapa: (%d,%d)-"
-">(%d,%d), máximo do mapa: (%d,%d)\n"
+"Actor removido cujas coordenadas estavam fora do limite do mapa: (%d,%d)->(%d,%d), máximo do "
+"mapa: (%d,%d)\n"
 
 #: ../Network/Receive.pm:1869
 #, perl-format
@@ -9994,19 +9765,15 @@ msgstr "Desative 'autoSpell_safe' para usá-la de qualquer maneira.\n"
 #: ../Network/Receive.pm:2582
 msgid "Configure autoSpell to automatically select skill for Auto Spell.\n"
 msgstr ""
-"Configure 'autoSpell' para selecionar automaticamente a habilidade para o "
-"Desejo Arcano.\n"
+"Configure 'autoSpell' para selecionar automaticamente a habilidade para o Desejo Arcano.\n"
 
 #: ../Network/Receive.pm:2657
 msgid "Allowed to view the other player's Equipment.\n"
-msgstr ""
-"Informações dos equipamentos deste personagem estão disponíveis ao público.\n"
+msgstr "Informações dos equipamentos deste personagem estão disponíveis ao público.\n"
 
 #: ../Network/Receive.pm:2659
 msgid "Not allowed to view the other player's Equipment.\n"
-msgstr ""
-"Informações dos equipamentos deste personagem não estão disponíveis ao "
-"público.\n"
+msgstr "Informações dos equipamentos deste personagem não estão disponíveis ao público.\n"
 
 #: ../Network/Receive.pm:2666
 msgid "Other players are allowed to view your Equipment.\n"
@@ -10020,9 +9787,8 @@ msgstr "Não mostrar seus equipamentos ao público.\n"
 msgid "[WoE]"
 msgstr "[GdE]"
 
-#: ../Network/Receive.pm:2712 ../Network/Receive.pm:2715
-#: ../Network/Receive.pm:2717 ../Network/Receive.pm:2720
-#: ../Network/Receive.pm:2722
+#: ../Network/Receive.pm:2712 ../Network/Receive.pm:2715 ../Network/Receive.pm:2717
+#: ../Network/Receive.pm:2720 ../Network/Receive.pm:2722
 msgid "[S]"
 msgstr "[S]"
 
@@ -10082,12 +9848,8 @@ msgid "Your entered birthday does not match.\n"
 msgstr "A data inserida não coincide com seu aniversário fornecido.\n"
 
 #: ../Network/Receive.pm:2842
-msgid ""
-"Character Deletion has failed because you have entered an incorrect e-mail "
-"address.\n"
-msgstr ""
-"A exclusão do personagem falhou porque você digitou um endereço de e-mail "
-"incorreto.\n"
+msgid "Character Deletion has failed because you have entered an incorrect e-mail address.\n"
+msgstr "A exclusão do personagem falhou porque você digitou um endereço de e-mail incorreto.\n"
 
 #: ../Network/Receive.pm:2844
 #, perl-format
@@ -10100,11 +9862,8 @@ msgstr "O personagem não está mais marcado para exclusão.\n"
 
 #: ../Network/Receive.pm:2867
 #, perl-format
-msgid ""
-"Unknown error when trying to cancel the deletion of the character! (Error "
-"number: %s)\n"
-msgstr ""
-"Um erro desconhecido ocorreu ao tentar deletar o personagem! (Erro: %s)\n"
+msgid "Unknown error when trying to cancel the deletion of the character! (Error number: %s)\n"
+msgstr "Um erro desconhecido ocorreu ao tentar deletar o personagem! (Erro: %s)\n"
 
 #: ../Network/Receive.pm:2885
 #, perl-format
@@ -10217,23 +9976,17 @@ msgid "Shop '%s' opened!\n"
 msgstr "Loja '%s' aberta!\n"
 
 #: ../Network/Receive.pm:3143
-msgid ""
-"#  Name                                       Type        Amount          "
-"Price\n"
-msgstr ""
-"#  Nome                                       Tipo           Quant.       "
-"Preço\n"
+msgid "#  Name                                       Type        Amount          Price\n"
+msgstr "#  Nome                                       Tipo           Quant.       Preço\n"
 
 #: ../Network/Receive.pm:3176
 #, perl-format
 msgid ""
 "%s\n"
-"#   Name                                      Type        Amount          "
-"Price\n"
+"#   Name                                      Type        Amount          Price\n"
 msgstr ""
 "%s\n"
-"#  Nome                                       Tipo           Quant.       "
-"Preço\n"
+"#  Nome                                       Tipo           Quant.       Preço\n"
 
 #. Translation Comment: Spirit sphere of the monks
 #: ../Network/Receive.pm:3217
@@ -10293,16 +10046,14 @@ msgstr "Código PIN correto.\n"
 
 #: ../Network/Receive.pm:3313 ../Network/Receive/RMS.pm:54
 msgid "Server requested PIN password in order to select your character.\n"
-msgstr ""
-"O servidor pediu o código PIN para permitir a seleção de personagens.\n"
+msgstr "O servidor pediu o código PIN para permitir a seleção de personagens.\n"
 
 #: ../Network/Receive.pm:3318 ../Network/Receive/RMS.pm:59
 msgid "PIN password is not set for this account.\n"
 msgstr "Código PIN não foi definido para esta conta.\n"
 
-#: ../Network/Receive.pm:3323 ../Network/Receive.pm:3333
-#: ../Network/Receive.pm:3382 ../Network/Receive/RMS.pm:64
-#: ../Network/Receive/RMS.pm:74
+#: ../Network/Receive.pm:3323 ../Network/Receive.pm:3333 ../Network/Receive.pm:3382
+#: ../Network/Receive/RMS.pm:64 ../Network/Receive/RMS.pm:74
 msgid "Your PIN should never contain anything but exactly 4 numbers.\n"
 msgstr "Seu código PIN deve conter exatamente 4 números.\n"
 
@@ -10310,35 +10061,25 @@ msgstr "Seu código PIN deve conter exatamente 4 números.\n"
 msgid "PIN password expired.\n"
 msgstr "Código PIN expirou.\n"
 
-#: ../Network/Receive.pm:3338 ../Network/Receive.pm:3372
-#: ../Network/Receive.pm:3374
+#: ../Network/Receive.pm:3338 ../Network/Receive.pm:3372 ../Network/Receive.pm:3374
 msgid "PIN code is invalid, don't use sequences or repeated numbers.\n"
-msgstr ""
-"O código PIN é inválido, não utilize sequências ou números repetidos.\n"
+msgstr "O código PIN é inválido, não utilize sequências ou números repetidos.\n"
 
 #: ../Network/Receive.pm:3340
-msgid ""
-"The login PIN code that you entered is invalid. Please re-enter your login "
-"PIN code."
-msgstr ""
-"O código PIN que você digitou é inválido. Por favor digite seu código PIN "
-"novamente."
+msgid "The login PIN code that you entered is invalid. Please re-enter your login PIN code."
+msgstr "O código PIN que você digitou é inválido. Por favor digite seu código PIN novamente."
 
 #: ../Network/Receive.pm:3356 ../Network/Receive/RMS.pm:79
 msgid "PIN code is incorrect.\n"
 msgstr "Código PIN incorreto.\n"
 
-#: ../Network/Receive.pm:3358 ../Network/Receive/mRO.pm:94
-#: ../Network/Receive/RMS.pm:81
-msgid ""
-"The login PIN code that you entered is incorrect. Please re-enter your login "
-"PIN code."
+#: ../Network/Receive.pm:3358 ../Network/Receive/mRO.pm:94 ../Network/Receive/RMS.pm:81
+msgid "The login PIN code that you entered is incorrect. Please re-enter your login PIN code."
 msgstr ""
-"O login PIN code que você digitou está incorreto. Por favor digite seu login "
-"PIN code novamente."
+"O login PIN code que você digitou está incorreto. Por favor digite seu login PIN code "
+"novamente."
 
-#: ../Network/Receive.pm:3468 ../Network/Receive.pm:3518
-#: ../Network/Receive.pm:3567
+#: ../Network/Receive.pm:3468 ../Network/Receive.pm:3518 ../Network/Receive.pm:3567
 #, perl-format
 msgid "%s opened Warp Portal on (%d, %d)\n"
 msgstr "%s abriu um Portal em (%d, %d)\n"
@@ -10465,17 +10206,17 @@ msgstr "Não foi possível adicionar item (%s) ao carrinho.\n"
 #: ../Network/Receive.pm:4348
 #, perl-format
 msgid "Starting Item List. ID: %s\n"
-msgstr ""
+msgstr "Início da lista de itens. ID: %s\n"
 
 #: ../Network/Receive.pm:4386 ../Network/Receive.pm:4434
 #, perl-format
 msgid "Unsupported item_list type (%s)"
-msgstr ""
+msgstr "Tipo de item_list não suportado (%s)"
 
 #: ../Network/Receive.pm:4442
-#, fuzzy, perl-format
+#, perl-format
 msgid "Ending Item List. ID: %s\n"
-msgstr " Lista de Itens "
+msgstr "Fim da lista de itens. ID: %s\n"
 
 #: ../Network/Receive.pm:4451
 #, perl-format
@@ -10526,10 +10267,8 @@ msgid "Please dial to activate the login procedure.\n"
 msgstr "Por favor entre em contato para ativar o processo de login.\n"
 
 #: ../Network/Receive.pm:4496
-msgid ""
-"Mobile Authentication: Max number of simultaneous IP addresses reached.\n"
-msgstr ""
-"Autenticação Remota: O número máximo de conexões em um mesmo IP atingida.\n"
+msgid "Mobile Authentication: Max number of simultaneous IP addresses reached.\n"
+msgstr "Autenticação Remota: O número máximo de conexões em um mesmo IP atingida.\n"
 
 #: ../Network/Receive.pm:4498
 msgid "Account email address not confirmed.\n"
@@ -10546,20 +10285,17 @@ msgstr "O servidor está bloqueando conexões do seu país.\n"
 
 #: ../Network/Receive.pm:4507
 #, perl-format
-msgid ""
-"The server is blocking your connection due to billing issues (%d) (%d).\n"
-msgstr ""
-"O servidor está bloqueando sua conexão devido a problemas de pagamento (%d) "
-"(%d).\n"
+msgid "The server is blocking your connection due to billing issues (%d) (%d).\n"
+msgstr "O servidor está bloqueando sua conexão devido a problemas de pagamento (%d) (%d).\n"
 
 #: ../Network/Receive.pm:4510
 msgid "The server demands a password change for this account.\n"
 msgstr "O servidor está pedindo uma mudança de senha para esta conta.\n"
 
 #: ../Network/Receive.pm:4525
-#, fuzzy, perl-format
+#, perl-format
 msgid "Account [%s] doesn't have access to Premium Server\n"
-msgstr "Nome de usuário [%s] não existe!\n"
+msgstr "Conta [%s] não tem acesso ao servidor premium\n"
 
 #: ../Network/Receive.pm:4529
 #, perl-format
@@ -10568,14 +10304,11 @@ msgstr "O servidor recusou sua conexão por uma razão desconhecida (%d).\n"
 
 #: ../Network/Receive.pm:4539
 msgid "Error logging into Character Server (invalid character specified)...\n"
-msgstr ""
-"Erro ao se logar ao Servidor de Personagens (personagem especificado "
-"inválido)...\n"
+msgstr "Erro ao se logar ao Servidor de Personagens (personagem especificado inválido)...\n"
 
 #: ../Network/Receive.pm:4568
 msgid "Character cannot be deleted. Your e-mail address was probably wrong.\n"
-msgstr ""
-"Não foi possível excluir personagem. Talvez seu e-mail esteja incorreto.\n"
+msgstr "Não foi possível excluir personagem. Talvez seu e-mail esteja incorreto.\n"
 
 #: ../Network/Receive.pm:4643
 msgid "Chat Room Created\n"
@@ -10752,9 +10485,7 @@ msgstr "Erro: O Servidor está paralizado por excesso populacional.\n"
 
 #: ../Network/Receive.pm:5044
 msgid "Error: You are underaged and cannot join this server.\n"
-msgstr ""
-"Erro: Você não pode se juntar a este servidor, pois não tem idade "
-"suficiente.\n"
+msgstr "Erro: Você não pode se juntar a este servidor, pois não tem idade suficiente.\n"
 
 #: ../Network/Receive.pm:5046
 msgid "Critical Error: You must pay to play this account!\n"
@@ -10766,11 +10497,10 @@ msgstr "Erro: O servidor ainda reconhece sua ultima conexão\n"
 
 #: ../Network/Receive.pm:5051
 msgid ""
-"Error: IP capacity of this Internet Cafe is full. Would you like to pay the "
-"personal base?\n"
+"Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?\n"
 msgstr ""
-"Erro: A capacidade de IPs desse Cyber Cafe está lotada. Você gostaria de "
-"pagar uma base pessoal?\n"
+"Erro: A capacidade de IPs desse Cyber Cafe está lotada. Você gostaria de pagar uma base "
+"pessoal?\n"
 
 #: ../Network/Receive.pm:5053
 msgid "Error: You are out of available time paid for\n"
@@ -10782,19 +10512,19 @@ msgstr "Erro: Um GM te forçou a se desconectar.\n"
 
 #: ../Network/Receive.pm:5057
 msgid ""
-"Error: Your account has been suspended until the next maintenance period for "
-"possible use of 3rd party programs\n"
+"Error: Your account has been suspended until the next maintenance period for possible use of "
+"3rd party programs\n"
 msgstr ""
-"Erro: Sua conta está suspendida até a próxima manutenção por possível uso de "
-"programas ilegais.\n"
+"Erro: Sua conta está suspendida até a próxima manutenção por possível uso de programas "
+"ilegais.\n"
 
 #: ../Network/Receive.pm:5059
 msgid ""
-"Error: For an hour, more than 10 connections having same IP address, have "
-"made. Please check this matter.\n"
+"Error: For an hour, more than 10 connections having same IP address, have made. Please check "
+"this matter.\n"
 msgstr ""
-"Erro: Durante uma hora, mais de 10 conexões com o mesmo ID foram feitas. Por "
-"favor cheque este caso.\n"
+"Erro: Durante uma hora, mais de 10 conexões com o mesmo ID foram feitas. Por favor cheque este "
+"caso.\n"
 
 #: ../Network/Receive.pm:5061
 #, perl-format
@@ -10818,11 +10548,8 @@ msgstr "%s quer ser seu amigo(a).\n"
 
 #: ../Network/Receive.pm:5094
 #, perl-format
-msgid ""
-"Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
-msgstr ""
-"Digite 'friend accept' para ser amigo(a) de %s, ou 'friend reject' para "
-"rejeitar.\n"
+msgid "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
+msgstr "Digite 'friend accept' para ser amigo(a) de %s, ou 'friend reject' para rejeitar.\n"
 
 #: ../Network/Receive.pm:5105
 #, perl-format
@@ -10851,12 +10578,12 @@ msgstr "Falha ao alimentar Homúnculo com %s: não há comida no inventário.\n"
 
 #: ../Network/Receive.pm:5164
 msgid ""
-"The server Denied the login because GameGuard packets where not replied "
-"correctly or too many time has been spent to send the response.\n"
+"The server Denied the login because GameGuard packets where not replied correctly or too many "
+"time has been spent to send the response.\n"
 "Please verify the version of your poseidon server and try again\n"
 msgstr ""
-"O Servidor negou o login porque os pacotes do GameGuard não foram "
-"respondidos corretamente ou muito tempo se passou para enviar a resposta.\n"
+"O Servidor negou o login porque os pacotes do GameGuard não foram respondidos corretamente ou "
+"muito tempo se passou para enviar a resposta.\n"
 "Por favor, verifique a versão de seu poseidon e tente novamente\n"
 
 #: ../Network/Receive.pm:5169
@@ -10865,8 +10592,7 @@ msgstr "Foi autorizado o pedido para se logar no Servidor de Contas\n"
 
 #: ../Network/Receive.pm:5171
 msgid "Server granted login request to char/map server\n"
-msgstr ""
-"Foi autorizado o pedido para se logar no Servidor de personagens/mapas\n"
+msgstr "Foi autorizado o pedido para se logar no Servidor de personagens/mapas\n"
 
 #: ../Network/Receive.pm:5213
 #, perl-format
@@ -11071,8 +10797,7 @@ msgstr "%s alterou seus chapéu do meio: %s\n"
 msgid "%s changed hair color to: %s (%s)\n"
 msgstr "%s mudou a cor do cabelo para: %s (%s)\n"
 
-#: ../Network/Receive.pm:5700 ../Network/Receive.pm:6194
-#: ../Network/Receive/ServerType0.pm:1482
+#: ../Network/Receive.pm:5700 ../Network/Receive.pm:6194 ../Network/Receive/ServerType0.pm:1482
 #: ../Network/Receive/kRO/Sakexe_0.pm:1436
 #, perl-format
 msgid "Cannot load field %s: %s\n"
@@ -11121,16 +10846,15 @@ msgstr "Reação Alquímica está pronta. Use o comando 'cm' para continuar.\n"
 
 #: ../Network/Receive.pm:5983
 msgid "Four Spirit Analysis is ready. Use command 'analysis' to continue.\n"
-msgstr ""
-"Análise elemental está pronta. Use o comando 'analysis' para continuar.\n"
+msgstr "Análise elemental está pronta. Use o comando 'analysis' para continuar.\n"
 
 #: ../Network/Receive.pm:6001
 msgid ""
-"RefineUI is opened. Type 'i' to check equipment and its index. To continue: "
-"refineui select [ItemIdx]\n"
+"RefineUI is opened. Type 'i' to check equipment and its index. To continue: refineui select "
+"[ItemIdx]\n"
 msgstr ""
-"A Janela de Refinamento está aberta. Digite 'i' para checar equipamentos e "
-"seus respectivos índices. Para continuar, utilize: refineui select \n"
+"A Janela de Refinamento está aberta. Digite 'i' para checar equipamentos e seus respectivos "
+"índices. Para continuar, utilize: refineui select \n"
 
 #: ../Network/Receive.pm:6019
 msgid "========= RefineUI Info =========\n"
@@ -11169,17 +10893,14 @@ msgstr "ID          %           Zeny        Material                        \n"
 #: ../Network/Receive.pm:6046
 #, perl-format
 msgid "Continue: refineui refine %d [Mat_ID] [catalyst_toggle] to continue.\n"
-msgstr ""
-"Continuar: refineui refine %d [ID_do_material] [catalizador] para "
-"continuar.\n"
+msgstr "Continuar: refineui refine %d [ID_do_material] [catalizador] para continuar.\n"
 
 #: ../Network/Receive.pm:6048
 msgid ""
-"Equip cannot be refined, try different equipment. Type 'i' to check "
-"equipment and its index.\n"
+"Equip cannot be refined, try different equipment. Type 'i' to check equipment and its index.\n"
 msgstr ""
-"Equipamento não pode ser refinado, tente um outro. Digite 'i' para checar "
-"seu inventário por equipamentos e seus índices.\n"
+"Equipamento não pode ser refinado, tente um outro. Digite 'i' para checar seu inventário por "
+"equipamentos e seus índices.\n"
 
 #: ../Network/Receive.pm:6139
 #, perl-format
@@ -11266,8 +10987,7 @@ msgstr "EXP do grupo Dividida Individualmente.\n"
 msgid "Party EXP set to Even Share\n"
 msgstr "EXP do grupo Dividida Igualmente.\n"
 
-#: ../Network/Receive.pm:6378 ../Network/Receive.pm:6388
-#: ../Network/Receive.pm:6395
+#: ../Network/Receive.pm:6378 ../Network/Receive.pm:6388 ../Network/Receive.pm:6395
 msgid "Error setting party option\n"
 msgstr "Erro ao ajustar a opção do grupo.\n"
 
@@ -11330,9 +11050,7 @@ msgid "Join request failed: unknown error.\n"
 msgstr "Pedido de grupo falhou (erro desconhecido %s).\n"
 
 #: ../Network/Receive.pm:6449
-msgid ""
-"Join request failed: the character is not currently online or does not "
-"exist.\n"
+msgid "Join request failed: the character is not currently online or does not exist.\n"
 msgstr "Pedido de grupo falhou: o personagem não está online ou não existe\n"
 
 #: ../Network/Receive.pm:6451
@@ -11621,9 +11339,7 @@ msgstr "Armamento não aprimorado: %s\n"
 #: ../Network/Receive.pm:7207
 #, perl-format
 msgid "Cannot upgrade %s until you level up the upgrade weapon skill.\n"
-msgstr ""
-"Impossível aprimorar %s até que a habilidade Aprimorar Armamento seja "
-"melhorada.\n"
+msgstr "Impossível aprimorar %s até que a habilidade Aprimorar Armamento seja melhorada.\n"
 
 #: ../Network/Receive.pm:7209
 #, perl-format
@@ -11635,8 +11351,7 @@ msgid "Failed to open Purchasing Store.\n"
 msgstr "Falhou ao abrir a Loja de Compras.\n"
 
 #: ../Network/Receive.pm:7219
-msgid ""
-"The total weight of the item exceeds your weight limit. Please reconfigure.\n"
+msgid "The total weight of the item exceeds your weight limit. Please reconfigure.\n"
 msgstr "O peso total do item excede seu peso limite. Favor reconfigurar.\n"
 
 #: ../Network/Receive.pm:7221
@@ -11663,8 +11378,7 @@ msgstr "Catálogo de Vendas Prata"
 #: ../Network/Receive.pm:7234
 #, perl-format
 msgid "You can now search open vendors in this map. Searches remaining: %d\n"
-msgstr ""
-"Agora você pode pesquisar em lojas abertas neste mapa. Buscas restantes: %d\n"
+msgstr "Agora você pode pesquisar em lojas abertas neste mapa. Buscas restantes: %d\n"
 
 #: ../Network/Receive.pm:7243
 #, perl-format
@@ -11679,20 +11393,16 @@ msgstr "Loja selecionada está em (%d, %d)\n"
 #: ../Network/Receive.pm:7311
 #, perl-format
 msgid ""
-"Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable."
-"txt (from data.grf)\n"
+"Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable.txt (from data."
+"grf)\n"
 msgstr ""
-"ID de mensagem de habilidade desconhecido:%d habilidade:%d. Por favor, "
-"atualize o msgstringtable.txt\n"
+"ID de mensagem de habilidade desconhecido:%d habilidade:%d. Por favor, atualize o "
+"msgstringtable.txt\n"
 
 #: ../Network/Receive.pm:7321
 #, perl-format
-msgid ""
-"Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from "
-"data.grf)\n"
-msgstr ""
-"ID de mensagem desconhecido:%d valor:%d. Por favor, atualize o "
-"msgstringtable.txt\n"
+msgid "Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from data.grf)\n"
+msgstr "ID de mensagem desconhecido:%d valor:%d. Por favor, atualize o msgstringtable.txt\n"
 
 #: ../Network/Receive.pm:7367
 #, perl-format
@@ -11758,8 +11468,7 @@ msgstr "O 'accountName' de ID %s é %s.\n"
 
 #: ../Network/Receive.pm:7465
 msgid "You cannot find any trace of a Boss Monster in this area.\n"
-msgstr ""
-"Você não pôde encontrar qualquer vestígio de um monstro chefe nesta área.\n"
+msgstr "Você não pôde encontrar qualquer vestígio de um monstro chefe nesta área.\n"
 
 #: ../Network/Receive.pm:7467
 #, perl-format
@@ -11773,15 +11482,12 @@ msgstr "MVP %s foi detectado neste mapa!\n"
 
 #: ../Network/Receive.pm:7471
 #, perl-format
-msgid ""
-"MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n"
+msgid "MVP Boss %s is dead, but will spawn again in %d hour(s) and %d minutes(s).\n"
 msgstr "MVP  %s está morto, mas renascerá em %d hora(s) e %d minuto(s)\n"
 
-#: ../Network/Receive.pm:7474 ../Network/Receive.pm:8112
-#: ../Network/Receive.pm:8166 ../Network/Receive.pm:8272
-#: ../Network/Receive.pm:8292 ../Network/Receive.pm:8611
-#: ../Network/Receive/ServerType0.pm:2374
-#: ../Network/Receive/kRO/Sakexe_0.pm:2208
+#: ../Network/Receive.pm:7474 ../Network/Receive.pm:8112 ../Network/Receive.pm:8166
+#: ../Network/Receive.pm:8272 ../Network/Receive.pm:8292 ../Network/Receive.pm:8611
+#: ../Network/Receive/ServerType0.pm:2374 ../Network/Receive/kRO/Sakexe_0.pm:2208
 #, perl-format
 msgid "Unknown results in %s (flag: %s)\n"
 msgstr "Resultado desconhecido em %s (flag: %s)\n"
@@ -11835,11 +11541,11 @@ msgstr "[ Registro de Armazém do Clã ]"
 
 #: ../Network/Receive.pm:7527
 msgid ""
-"#  Name                     Item-"
-"Name                                         Amount  Action          Time\n"
+"#  Name                     Item-Name                                         Amount  "
+"Action          Time\n"
 msgstr ""
-"#  Nome                     Nome do "
-"Item                                      Quant.  Ação          Quando\n"
+"#  Nome                     Nome do Item                                      Quant.  "
+"Ação          Quando\n"
 
 #: ../Network/Receive.pm:7543
 msgid "Guild Storage empty.\n"
@@ -11868,12 +11574,8 @@ msgid " Buyer: "
 msgstr " Comprador: "
 
 #: ../Network/Receive.pm:7708
-msgid ""
-"#   Name                                      Type        Amount          "
-"Price\n"
-msgstr ""
-"#  Nome                                       Tipo           Quant.       "
-"Preço\n"
+msgid "#   Name                                      Type        Amount          Price\n"
+msgstr "#  Nome                                       Tipo           Quant.       Preço\n"
 
 #: ../Network/Receive.pm:7738
 #, perl-format
@@ -11891,12 +11593,8 @@ msgstr "Negociação falhou.\n"
 
 #: ../Network/Receive.pm:7764
 #, perl-format
-msgid ""
-"%s item could not be sold because you do not have the wanted amount of "
-"items.\n"
-msgstr ""
-"O item %s não pôde ser vendido pois você não tem a quantidade de itens "
-"requisitada.\n"
+msgid "%s item could not be sold because you do not have the wanted amount of items.\n"
+msgstr "O item %s não pôde ser vendido pois você não tem a quantidade de itens requisitada.\n"
 
 #: ../Network/Receive.pm:7766
 msgid "Failed to deal because you have not enough Zeny.\n"
@@ -11962,54 +11660,45 @@ msgstr "O jogador %s não quer receber mensagens.\n"
 
 #: ../Network/Receive.pm:7897
 #, perl-format
-msgid ""
-"Failed to buy %s of item #%s from vender (insufficient zeny) (error code "
-"%s).\n"
-msgstr ""
-"Falha ao comprar %s do item #%s do vendedor (zeny insuficiente) (código de "
-"erro %s).\n"
+msgid "Failed to buy %s of item #%s from vender (insufficient zeny) (error code %s).\n"
+msgstr "Falha ao comprar %s do item #%s do vendedor (zeny insuficiente) (código de erro %s).\n"
 
 #: ../Network/Receive.pm:7899
 #, perl-format
-msgid ""
-"Failed to buy %s of item #%s from vender (overweight) (error code %s).\n"
-msgstr ""
-"Falha ao comprar %s do item #%s do vendedor (sobrepeso) (código de erro "
-"%s).\n"
+msgid "Failed to buy %s of item #%s from vender (overweight) (error code %s).\n"
+msgstr "Falha ao comprar %s do item #%s do vendedor (sobrepeso) (código de erro %s).\n"
 
 #: ../Network/Receive.pm:7901
 #, perl-format
 msgid ""
-"Failed to buy %s of item #%s from vender (requested to purchase more than "
-"vender had in stock) (error code %s).\n"
+"Failed to buy %s of item #%s from vender (requested to purchase more than vender had in stock) "
+"(error code %s).\n"
 msgstr ""
-"Falha ao comprar %s do item #%s do vendedor (tentou comprar mais do que o "
-"vendedor tem em estoque) (código de erro %s).\n"
+"Falha ao comprar %s do item #%s do vendedor (tentou comprar mais do que o vendedor tem em "
+"estoque) (código de erro %s).\n"
 
 #: ../Network/Receive.pm:7903
 #, perl-format
 msgid ""
-"Failed to buy %s of item #%s from vender (vender refreshed shop before "
-"purchase request) (error code %s).\n"
+"Failed to buy %s of item #%s from vender (vender refreshed shop before purchase request) "
+"(error code %s).\n"
 msgstr ""
-"Falha ao comprar %s do item #%s do vendedor (vendedor atualizou a loja antes "
-"da compra) (código de erro %s).\n"
+"Falha ao comprar %s do item #%s do vendedor (vendedor atualizou a loja antes da compra) "
+"(código de erro %s).\n"
 
 #: ../Network/Receive.pm:7905
 #, perl-format
 msgid ""
-"Failed to buy %s of item #%s from vender (vender would go over max zeny with "
-"the purchase) (error code %s).\n"
+"Failed to buy %s of item #%s from vender (vender would go over max zeny with the purchase) "
+"(error code %s).\n"
 msgstr ""
-"Falha ao comprar %s do item #%s do vendedor (vendedor excederia o limite de "
-"zeny com a compra) (código de erro %s).\n"
+"Falha ao comprar %s do item #%s do vendedor (vendedor excederia o limite de zeny com a compra) "
+"(código de erro %s).\n"
 
 #: ../Network/Receive.pm:7907
 #, perl-format
 msgid "Failed to buy %s of item #%s from vender (unknown error code %s).\n"
-msgstr ""
-"Falha ao comprar %s do item #%s do vendedor (código de erro desconhecido "
-"%s).\n"
+msgstr "Falha ao comprar %s do item #%s do vendedor (código de erro desconhecido %s).\n"
 
 #: ../Network/Receive.pm:7929
 #, perl-format
@@ -12023,9 +11712,7 @@ msgstr ""
 #: ../Network/Receive.pm:7967
 #, perl-format
 msgid "Received %d items that can be merged. Use 'merge' to continue\n"
-msgstr ""
-"Foram recebidos %d itens que podem ser combinados. Use 'merge' para "
-"continuar\n"
+msgstr "Foram recebidos %d itens que podem ser combinados. Use 'merge' para continuar\n"
 
 #: ../Network/Receive.pm:7984
 msgid "Items were merged successfully!\n"
@@ -12039,9 +11726,7 @@ msgstr "Atualizada a quantidade do item %s (%d): %d -> %d\n"
 #: ../Network/Receive.pm:7990
 #, perl-format
 msgid "Item was moved during merging process. itemIndex: %d. New amount: %d\n"
-msgstr ""
-"Item foi movido durante o processo de combinar. itemIndex: %d. Nova "
-"quantidade: %d\n"
+msgstr "Item foi movido durante o processo de combinar. itemIndex: %d. Nova quantidade: %d\n"
 
 #: ../Network/Receive.pm:7993
 msgid "Items cannot be merged.\n"
@@ -12049,8 +11734,7 @@ msgstr "Itens não podem ser combinados.\n"
 
 #: ../Network/Receive.pm:7995
 msgid "The amount of merged item will be exceed stack limit.\n"
-msgstr ""
-"A quantidade de itens pós-combinados será maior que o limite de stack\n"
+msgstr "A quantidade de itens pós-combinados será maior que o limite de stack\n"
 
 #: ../Network/Receive.pm:7997
 #, perl-format
@@ -12072,20 +11756,13 @@ msgstr "%s deseja adotar-te. Você aceita?\n"
 
 #: ../Network/Receive.pm:8029
 #, perl-format
-msgid ""
-"[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s "
-"points.\n"
-msgstr ""
-"[PONTO] Ranking de Ferreiro aumentou em %s. Agora, o total é de %s pontos.\n"
+msgid "[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n"
+msgstr "[PONTO] Ranking de Ferreiro aumentou em %s. Agora, o total é de %s pontos.\n"
 
 #: ../Network/Receive.pm:8034
 #, perl-format
-msgid ""
-"[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s "
-"points.\n"
-msgstr ""
-"[PONTO] Ranking de Alquimista aumentou em %s. Agora, o total é de %s "
-"pontos.\n"
+msgid "[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n"
+msgstr "[PONTO] Ranking de Alquimista aumentou em %s. Agora, o total é de %s pontos.\n"
 
 #: ../Network/Receive.pm:8054
 msgid "Auto disconnecting on EmptyArrow!\n"
@@ -12130,11 +11807,8 @@ msgstr "A Janela de Leilão está aberta.\n"
 
 #: ../Network/Receive.pm:8129
 #, perl-format
-msgid ""
-"Failed (note: usable items can't be auctioned) to add item with index: %s.\n"
-msgstr ""
-"Falhou ao adicionar o item de index: %s (consumíveis não podem entrar em "
-"leilão)\n"
+msgid "Failed (note: usable items can't be auctioned) to add item with index: %s.\n"
+msgstr "Falhou ao adicionar o item de index: %s (consumíveis não podem entrar em leilão)\n"
 
 #: ../Network/Receive.pm:8132
 #, perl-format
@@ -12265,9 +11939,9 @@ msgid "The '%s' item will disappear in %d minutes.\n"
 msgstr "O item '%s' será removido em %d minutos\n"
 
 #: ../Network/Receive.pm:8419
-#, fuzzy, perl-format
+#, perl-format
 msgid "[Equip Switch] You can't put on %s (%d)\n"
-msgstr "Você não pode equipar %s (%d)\n"
+msgstr "[Switch de Equipamento] Você não pode equipar %s (%d)\n"
 
 #: ../Network/Receive.pm:8421
 #, perl-format
@@ -12275,9 +11949,9 @@ msgid "You can't put on %s (%d)\n"
 msgstr "Você não pode equipar %s (%d)\n"
 
 #: ../Network/Receive.pm:8447
-#, fuzzy, perl-format
+#, perl-format
 msgid "[Equip Switch] You equip %s (%d) - %s (type %s)\n"
-msgstr "Você equipou %s (%d) - %s (tipo %s)\n"
+msgstr "[Switch de Equipamento] Você equipou %s (%d) - %s (tipo %s)\n"
 
 #: ../Network/Receive.pm:8449
 #, perl-format
@@ -12341,8 +12015,7 @@ msgstr "Itens anexados na Mensagem adicionados ao inventário com sucesso.\n"
 
 #: ../Network/Receive.pm:8535
 msgid "Failed to get the attachment to inventory due to your weight.\n"
-msgstr ""
-"Não foi possível pegar os itens anexados na Mensagem devido ao seu peso.\n"
+msgstr "Não foi possível pegar os itens anexados na Mensagem devido ao seu peso.\n"
 
 #: ../Network/Receive.pm:8537
 msgid "Failed to get the attachment to inventory.\n"
@@ -12470,19 +12143,19 @@ msgstr ""
 
 #: ../Network/Receive.pm:8639 ../Network/Receive.pm:8675
 msgid ""
-"Unable to send character password. You must set the 'storageEncryptKey' "
-"option in config.txt or servers.txt.\n"
+"Unable to send character password. You must set the 'storageEncryptKey' option in config.txt "
+"or servers.txt.\n"
 msgstr ""
 "Não foi possível enviar a senha do personagem. Você deve configurar a opção  "
 "'storageEncryptKey' no config.txt ou no servers.txt.\n"
 
 #: ../Network/Receive.pm:8640 ../Network/Receive.pm:8676
 msgid ""
-"Unable to send storage password. You must set the 'storageEncryptKey' option "
-"in config.txt or servers.txt.\n"
+"Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or "
+"servers.txt.\n"
 msgstr ""
-"Não foi possível enviar a senha do armazém. Você deve configurar a opção  "
-"'storageEncryptKey' no config.txt ou no servers.txt.\n"
+"Não foi possível enviar a senha do armazém. Você deve configurar a opção  'storageEncryptKey' "
+"no config.txt ou no servers.txt.\n"
 
 #: ../Network/Receive.pm:8647 ../Network/Receive.pm:8668
 #, perl-format
@@ -12504,8 +12177,7 @@ msgstr "Por favor informe a sua senha do armazém."
 
 #: ../Network/Receive.pm:8687
 msgid "You have entered the wrong password 5 times. Please try again later.\n"
-msgstr ""
-"Você digitou a senha errada 5 vezes seguidas. Por favor tente mais tarde.\n"
+msgstr "Você digitou a senha errada 5 vezes seguidas. Por favor tente mais tarde.\n"
 
 #: ../Network/Receive.pm:8716
 msgid "Successfully changed storage password.\n"
@@ -12521,12 +12193,10 @@ msgstr "Senha do armazém informada corretamente.\n"
 
 #: ../Network/Receive.pm:8756
 #, perl-format
-msgid ""
-"Unknown message_string: %s. Need to update the file msgstringtable.txt (from "
-"data.grf)\n"
+msgid "Unknown message_string: %s. Need to update the file msgstringtable.txt (from data.grf)\n"
 msgstr ""
-"'message_string' desconhecida: %s. É necessário atualizar o arquivo "
-"msgstringtable.txt (a partir da data.grf)\n"
+"'message_string' desconhecida: %s. É necessário atualizar o arquivo msgstringtable.txt (a "
+"partir da data.grf)\n"
 
 #: ../Network/Receive.pm:8784 ../Network/Receive.pm:8785
 #, perl-format
@@ -12633,9 +12303,9 @@ msgid "Avoid casting Skill - switch position to : %s,%s\n"
 msgstr "Evitar conjuração de Habilidade - mudar para a posição : %s,%s\n"
 
 #: ../Network/Receive.pm:9150
-#, fuzzy, perl-format
+#, perl-format
 msgid "[Equip Switch] You unequip %s (%d) - %s\n"
-msgstr "Você desequipou %s (%d) - %s\n"
+msgstr "[Switch de Equipamento] Você desequipou %s (%d) - %s\n"
 
 #: ../Network/Receive.pm:9152
 #, perl-format
@@ -12727,9 +12397,8 @@ msgid "Need more bullet"
 msgstr "Projéteis insuficientes"
 
 #: ../Network/Receive.pm:9268
-#, fuzzy
 msgid "Unknown error"
-msgstr "Erro desconhecido %s\n"
+msgstr "Erro desconhecido"
 
 #: ../Network/Receive.pm:9271
 #, perl-format
@@ -12747,11 +12416,11 @@ msgstr "Falhou ao montar loja com o código de erro %d\n"
 
 #: ../Network/Receive.pm:9297
 msgid "[Stylist UI] Success.\n"
-msgstr ""
+msgstr "[Estilista] Sucesso.\n"
 
 #: ../Network/Receive.pm:9299
 msgid "[Stylist UI] Fail.\n"
-msgstr ""
+msgstr "[Estilista] Falhou.\n"
 
 #: ../Network/XKore.pm:54
 #, perl-format
@@ -12777,12 +12446,10 @@ msgid "Ragnarok Online client found, pid = %i\n"
 msgstr "Client de Ragnarök Online encontrado, índice do processo = %i.\n"
 
 #: ../Network/XKore.pm:291
-msgid ""
-"Found Ragnarok Online client(s), select one: (enter to rescan, quit to "
-"quit)\n"
+msgid "Found Ragnarok Online client(s), select one: (enter to rescan, quit to quit)\n"
 msgstr ""
-"Um ou mais clients de Ragnarök Online foram encontrado(s), selecione um: "
-"('enter' para escanear novamente ou 'quit' para fechar)\n"
+"Um ou mais clients de Ragnarök Online foram encontrado(s), selecione um: ('enter' para "
+"escanear novamente ou 'quit' para fechar)\n"
 
 #: ../Network/XKore.pm:295
 #, perl-format
@@ -12864,22 +12531,19 @@ msgstr "O cliente não respondeu. Forçando desconexão\n"
 
 #: ../Network/XKoreProxy.pm:444
 msgid "Logon-grant packet received twice! Avoiding bug in client.\n"
-msgstr ""
-"Pacote de permissão de logon recebido duplicado! Evitando bug no cliente.\n"
+msgstr "Pacote de permissão de logon recebido duplicado! Evitando bug no cliente.\n"
 
 #: ../Network/XKoreProxy.pm:594 ../Network/Receive/ServerType0.pm:1523
 #: ../Network/Receive/kRO/Sakexe_0.pm:1470
 msgid "Closing connection to Map Server\n"
 msgstr "Fechando conexão com o Servidor de Mapa\n"
 
-#: ../Network/Receive/mRO.pm:48 ../Network/Receive/mRO.pm:59
-#: ../Network/Receive/mRO.pm:85 ../Network/Receive/mRO.pm:98
-msgid ""
-"Unable to send PIN code. You must set the 'PINEncryptKey' option in servers."
-"txt."
+#: ../Network/Receive/mRO.pm:48 ../Network/Receive/mRO.pm:59 ../Network/Receive/mRO.pm:85
+#: ../Network/Receive/mRO.pm:98
+msgid "Unable to send PIN code. You must set the 'PINEncryptKey' option in servers.txt."
 msgstr ""
-"Não foi possível enviar o código PIN. Você deve configurar a opção "
-"'PINEncryptKey' no servers.txt."
+"Não foi possível enviar o código PIN. Você deve configurar a opção 'PINEncryptKey' no servers."
+"txt."
 
 #: ../Network/Receive/mRO.pm:66
 msgid "Login PIN code has been changed successfully.\n"
@@ -12898,10 +12562,8 @@ msgid "Please enter a new login PIN code:"
 msgstr "Por favor digite seu novo código PIN:"
 
 #: ../Network/Receive/mRO.pm:106
-msgid ""
-"You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
-msgstr ""
-"Você digitou 3 login PIN codes incorretos em seguida. Reconectando...\n"
+msgid "You have entered 3 incorrect login PIN codes in a row. Reconnecting...\n"
+msgstr "Você digitou 3 login PIN codes incorretos em seguida. Reconectando...\n"
 
 #: ../Network/Receive/Sakray.pm:67 ../Network/Receive/ServerType0.pm:985
 #: ../Network/Receive/ServerType15.pm:32 ../Network/Receive/ServerType19.pm:32
@@ -12925,23 +12587,19 @@ msgstr "Você está no jogo agora.\n"
 msgid "Your Coordinates: %s, %s\n"
 msgstr "Suas coordenadas: %s, %s\n"
 
-#: ../Network/Receive/ServerType0.pm:1026
-#: ../Network/Receive/kRO/Sakexe_0.pm:965
+#: ../Network/Receive/ServerType0.pm:1026 ../Network/Receive/kRO/Sakexe_0.pm:965
 msgid "Buy completed.\n"
 msgstr "Negociação Concluída.\n"
 
-#: ../Network/Receive/ServerType0.pm:1028
-#: ../Network/Receive/kRO/Sakexe_0.pm:967
+#: ../Network/Receive/ServerType0.pm:1028 ../Network/Receive/kRO/Sakexe_0.pm:967
 msgid "Buy failed (insufficient zeny).\n"
 msgstr "Negociação falhou (zeny insuficiente).\n"
 
-#: ../Network/Receive/ServerType0.pm:1030
-#: ../Network/Receive/kRO/Sakexe_0.pm:969
+#: ../Network/Receive/ServerType0.pm:1030 ../Network/Receive/kRO/Sakexe_0.pm:969
 msgid "Buy failed (insufficient weight capacity).\n"
 msgstr "Negociação falhou (excesso de peso).\n"
 
-#: ../Network/Receive/ServerType0.pm:1032
-#: ../Network/Receive/kRO/Sakexe_0.pm:971
+#: ../Network/Receive/ServerType0.pm:1032 ../Network/Receive/kRO/Sakexe_0.pm:971
 msgid "Buy failed (too many different inventory items).\n"
 msgstr "Negociação falhou (muitos itens diferentes no inventário).\n"
 
@@ -12957,50 +12615,42 @@ msgstr "Compra falhou (item não negociável).\n"
 msgid "Buy failed (invalid store).\n"
 msgstr "Compra falhou (loja inválida).\n"
 
-#: ../Network/Receive/ServerType0.pm:1040
-#: ../Network/Receive/kRO/Sakexe_0.pm:973
+#: ../Network/Receive/ServerType0.pm:1040 ../Network/Receive/kRO/Sakexe_0.pm:973
 #, perl-format
 msgid "Buy failed (failure code %s).\n"
 msgstr "Negociação falhou (código da falha %s).\n"
 
-#: ../Network/Receive/ServerType0.pm:1057
-#: ../Network/Receive/kRO/Sakexe_0.pm:988
+#: ../Network/Receive/ServerType0.pm:1057 ../Network/Receive/kRO/Sakexe_0.pm:988
 msgid "Charname already exists.\n"
 msgstr "Já existe um personagem com este nome.\n"
 
-#: ../Network/Receive/ServerType0.pm:1059
-#: ../Network/Receive/kRO/Sakexe_0.pm:990
+#: ../Network/Receive/ServerType0.pm:1059 ../Network/Receive/kRO/Sakexe_0.pm:990
 msgid "Char creation denied.\n"
 msgstr "Criação de personagem recusada\n"
 
-#: ../Network/Receive/ServerType0.pm:1061
-#: ../Network/Receive/kRO/Sakexe_0.pm:992
+#: ../Network/Receive/ServerType0.pm:1061 ../Network/Receive/kRO/Sakexe_0.pm:992
 msgid "You are underaged.\n"
 msgstr "Você não tem idade suficiente\n"
 
-#: ../Network/Receive/ServerType0.pm:1063
-#: ../Network/Receive/kRO/Sakexe_0.pm:994
+#: ../Network/Receive/ServerType0.pm:1063 ../Network/Receive/kRO/Sakexe_0.pm:994
 msgid ""
-"Character creation failed. If you didn't make any mistake, then the name you "
-"chose already exists.\n"
+"Character creation failed. If you didn't make any mistake, then the name you chose already "
+"exists.\n"
 msgstr ""
-"O personagem não pode ser criado. Se você não cometeu erros, então o nome "
-"que você escolheu já existe.\n"
+"O personagem não pode ser criado. Se você não cometeu erros, então o nome que você escolheu já "
+"existe.\n"
 
-#: ../Network/Receive/ServerType0.pm:1101
-#: ../Network/Receive/kRO/Sakexe_0.pm:1033
+#: ../Network/Receive/ServerType0.pm:1101 ../Network/Receive/kRO/Sakexe_0.pm:1033
 #, perl-format
 msgid "You have joined the Chat Room %s\n"
 msgstr "Você se entrou na Sala de Chat %s\n"
 
-#: ../Network/Receive/ServerType0.pm:1119
-#: ../Network/Receive/kRO/Sakexe_0.pm:1051
+#: ../Network/Receive/ServerType0.pm:1119 ../Network/Receive/kRO/Sakexe_0.pm:1051
 #, perl-format
 msgid "%s failed to cast %s\n"
 msgstr "%s falhou ao conjurar %s\n"
 
-#: ../Network/Receive/ServerType0.pm:1168
-#: ../Network/Receive/kRO/Sakexe_0.pm:1100
+#: ../Network/Receive/ServerType0.pm:1168 ../Network/Receive/kRO/Sakexe_0.pm:1100
 #, perl-format
 msgid "Autodetected attackDistance for mercenary = %s\n"
 msgstr "'attackDistance' detectada automaticamente para assistente = %s\n"
@@ -13010,35 +12660,29 @@ msgstr "'attackDistance' detectada automaticamente para assistente = %s\n"
 msgid "Autodetected attackDistance for homunculus = %s\n"
 msgstr "'attackDistance' detectada automaticamente para homúnculo = %s\n"
 
-#: ../Network/Receive/ServerType0.pm:1222
-#: ../Network/Receive/kRO/Sakexe_0.pm:1144
+#: ../Network/Receive/ServerType0.pm:1222 ../Network/Receive/kRO/Sakexe_0.pm:1144
 msgid "Your Homunculus was vaporized!\n"
 msgstr "Seu Homúnculo foi vaporizado!\n"
 
-#: ../Network/Receive/ServerType0.pm:1224
-#: ../Network/Receive/kRO/Sakexe_0.pm:1146
+#: ../Network/Receive/ServerType0.pm:1224 ../Network/Receive/kRO/Sakexe_0.pm:1146
 msgid "Your Homunculus died!\n"
 msgstr "Seu Homúnculo morreu!\n"
 
-#: ../Network/Receive/ServerType0.pm:1229
-#: ../Network/Receive/kRO/Sakexe_0.pm:1151
+#: ../Network/Receive/ServerType0.pm:1229 ../Network/Receive/kRO/Sakexe_0.pm:1151
 msgid "Your Homunculus was recalled!\n"
 msgstr "Seu Homúnculo foi invocado!\n"
 
-#: ../Network/Receive/ServerType0.pm:1231
-#: ../Network/Receive/kRO/Sakexe_0.pm:1153
+#: ../Network/Receive/ServerType0.pm:1231 ../Network/Receive/kRO/Sakexe_0.pm:1153
 msgid "Your Homunculus was resurrected!\n"
 msgstr "Seu Homúnculo foi resuscitado!\n"
 
 #. Translation Comment: Guild Chat
-#: ../Network/Receive/ServerType0.pm:1302
-#: ../Network/Receive/kRO/Sakexe_0.pm:1223
+#: ../Network/Receive/ServerType0.pm:1302 ../Network/Receive/kRO/Sakexe_0.pm:1223
 #, perl-format
 msgid "[Guild] %s\n"
 msgstr "[Clã] %s\n"
 
-#: ../Network/Receive/ServerType0.pm:1371
-#: ../Network/Receive/kRO/Sakexe_0.pm:1283
+#: ../Network/Receive/ServerType0.pm:1371 ../Network/Receive/kRO/Sakexe_0.pm:1283
 #, perl-format
 msgid ""
 "---Guild Notice---\n"
@@ -13053,93 +12697,75 @@ msgstr ""
 "%s\n"
 "------------------\n"
 
-#: ../Network/Receive/ServerType0.pm:1403
-#: ../Network/Receive/kRO/Sakexe_0.pm:1311
+#: ../Network/Receive/ServerType0.pm:1403 ../Network/Receive/kRO/Sakexe_0.pm:1311
 #, perl-format
 msgid "Received Possible Identify List (%s item(s)) - type 'identify'\n"
-msgstr ""
-"Lista de Itens Identificáveis Recebida (%s item(s)) - digite 'identify'\n"
+msgstr "Lista de Itens Identificáveis Recebida (%s item(s)) - digite 'identify'\n"
 
-#: ../Network/Receive/ServerType0.pm:1451
-#: ../Network/Receive/kRO/Sakexe_0.pm:1405
+#: ../Network/Receive/ServerType0.pm:1451 ../Network/Receive/kRO/Sakexe_0.pm:1405
 #, perl-format
 msgid "Permitted to use %s (%d), level %d\n"
 msgstr "Permitido usar %s (%d), level %d\n"
 
-#: ../Network/Receive/ServerType0.pm:1596
-#: ../Network/Receive/kRO/Sakexe_0.pm:1583
+#: ../Network/Receive/ServerType0.pm:1596 ../Network/Receive/kRO/Sakexe_0.pm:1583
 #, perl-format
 msgid "Monster %s (%d) changed to %s\n"
 msgstr "Monstro %s (%d) foi transmutado em: %s\n"
 
-#: ../Network/Receive/ServerType0.pm:1604
-#: ../Network/Receive/kRO/Sakexe_0.pm:1594
+#: ../Network/Receive/ServerType0.pm:1604 ../Network/Receive/kRO/Sakexe_0.pm:1594
 msgid "You can sell:\n"
 msgstr "Você pode vender:\n"
 
-#: ../Network/Receive/ServerType0.pm:1609
-#: ../Network/Receive/kRO/Sakexe_0.pm:1599
+#: ../Network/Receive/ServerType0.pm:1609 ../Network/Receive/kRO/Sakexe_0.pm:1599
 #, perl-format
 msgid "%s x %s for %sz each. \n"
 msgstr "%s x %s por %sz cada. \n"
 
-#: ../Network/Receive/ServerType0.pm:1618
-#: ../Network/Receive/kRO/Sakexe_0.pm:1608
+#: ../Network/Receive/ServerType0.pm:1618 ../Network/Receive/kRO/Sakexe_0.pm:1608
 msgid "Ready to start selling items\n"
 msgstr "Pronto para iniciar a venda de itens\n"
 
-#: ../Network/Receive/ServerType0.pm:1733
-#: ../Network/Receive/kRO/Sakexe_0.pm:1731
+#: ../Network/Receive/ServerType0.pm:1733 ../Network/Receive/kRO/Sakexe_0.pm:1731
 msgid "--------Repair List--------\n"
 msgstr "------Lista de Reparos-----\n"
 
-#: ../Network/Receive/ServerType0.pm:1756
-#: ../Network/Receive/kRO/Sakexe_0.pm:1753
+#: ../Network/Receive/ServerType0.pm:1756 ../Network/Receive/kRO/Sakexe_0.pm:1753
 msgid "All abnormal status effects have been removed.\n"
 msgstr "Todos os efeitos anormais foram removidos.\n"
 
-#: ../Network/Receive/ServerType0.pm:1758
-#: ../Network/Receive/kRO/Sakexe_0.pm:1755
+#: ../Network/Receive/ServerType0.pm:1758 ../Network/Receive/kRO/Sakexe_0.pm:1755
 msgid "You will be immune to abnormal status effects for the next minute.\n"
 msgstr "Você estará imune aos efeitos anormais até o próximo minuto.\n"
 
-#: ../Network/Receive/ServerType0.pm:1760
-#: ../Network/Receive/kRO/Sakexe_0.pm:1757
+#: ../Network/Receive/ServerType0.pm:1760 ../Network/Receive/kRO/Sakexe_0.pm:1757
 msgid "Your Max HP will stay increased for the next minute.\n"
 msgstr "Seu HP máximo ficará aumentado até o próximo minuto.\n"
 
-#: ../Network/Receive/ServerType0.pm:1762
-#: ../Network/Receive/kRO/Sakexe_0.pm:1759
+#: ../Network/Receive/ServerType0.pm:1762 ../Network/Receive/kRO/Sakexe_0.pm:1759
 msgid "Your Max SP will stay increased for the next minute.\n"
 msgstr "Seu SP máximo ficará aumentado até o próximo minuto.\n"
 
-#: ../Network/Receive/ServerType0.pm:1764
-#: ../Network/Receive/kRO/Sakexe_0.pm:1761
+#: ../Network/Receive/ServerType0.pm:1764 ../Network/Receive/kRO/Sakexe_0.pm:1761
 msgid "All of your Stats will stay increased for the next minute.\n"
 msgstr "Todos os seus Atributos foram aumentados até o próximo minuto.\n"
 
-#: ../Network/Receive/ServerType0.pm:1766
-#: ../Network/Receive/kRO/Sakexe_0.pm:1763
+#: ../Network/Receive/ServerType0.pm:1766 ../Network/Receive/kRO/Sakexe_0.pm:1763
 msgid "Your weapon will remain blessed with Holy power for the next minute.\n"
 msgstr "Sua arma ficará abençoada com Poder Divino até o próximo minuto.\n"
 
-#: ../Network/Receive/ServerType0.pm:1768
-#: ../Network/Receive/kRO/Sakexe_0.pm:1765
+#: ../Network/Receive/ServerType0.pm:1768 ../Network/Receive/kRO/Sakexe_0.pm:1765
 msgid "Your armor will remain blessed with Holy power for the next minute.\n"
 msgstr "Sua armadura ficará abençoada com Poder Divino até o próximo minuto.\n"
 
-#: ../Network/Receive/ServerType0.pm:1770
-#: ../Network/Receive/kRO/Sakexe_0.pm:1767
+#: ../Network/Receive/ServerType0.pm:1770 ../Network/Receive/kRO/Sakexe_0.pm:1767
 msgid "Your Defense will stay increased for the next 10 seconds.\n"
 msgstr "Sua defesa ficará aumentado até os próximo 10 segundos.\n"
 
-#: ../Network/Receive/ServerType0.pm:1772
-#: ../Network/Receive/kRO/Sakexe_0.pm:1769
+#: ../Network/Receive/ServerType0.pm:1772 ../Network/Receive/kRO/Sakexe_0.pm:1769
 msgid "Your Attack strength will stay increased for the next minute.\n"
 msgstr "Sua força de Ataque ficará aumentanda até o próximo minuto.\n"
 
-#: ../Network/Receive/ServerType0.pm:1774
-#: ../Network/Receive/kRO/Sakexe_0.pm:1771
+#: ../Network/Receive/ServerType0.pm:1774 ../Network/Receive/kRO/Sakexe_0.pm:1771
 msgid "Your Accuracy and Flee Rate will stay increased for the next minute.\n"
 msgstr "Sua Precisão e Esquiva ficarão aumentados até o próximo minutos.\n"
 
@@ -13152,26 +12778,22 @@ msgstr "----Lista de Equipamentos----\n"
 msgid "Name: %s\n"
 msgstr "Nome: %s\n"
 
-#: ../Network/Receive/ServerType0.pm:2134
-#: ../Network/Receive/kRO/Sakexe_0.pm:2071
+#: ../Network/Receive/ServerType0.pm:2134 ../Network/Receive/kRO/Sakexe_0.pm:2071
 #, perl-format
 msgid "%s gained a level!\n"
 msgstr "%s ganhou um level!\n"
 
-#: ../Network/Receive/ServerType0.pm:2137
-#: ../Network/Receive/kRO/Sakexe_0.pm:2074
+#: ../Network/Receive/ServerType0.pm:2137 ../Network/Receive/kRO/Sakexe_0.pm:2074
 #, perl-format
 msgid "%s gained a job level!\n"
 msgstr "%s ganhou um level de classe!\n"
 
-#: ../Network/Receive/ServerType0.pm:2140
-#: ../Network/Receive/kRO/Sakexe_0.pm:2077
+#: ../Network/Receive/ServerType0.pm:2140 ../Network/Receive/kRO/Sakexe_0.pm:2077
 #, perl-format
 msgid "%s failed to refine a weapon!\n"
 msgstr "%s falhou em aprimorar uma arma!\n"
 
-#: ../Network/Receive/ServerType0.pm:2142
-#: ../Network/Receive/kRO/Sakexe_0.pm:2079
+#: ../Network/Receive/ServerType0.pm:2142 ../Network/Receive/kRO/Sakexe_0.pm:2079
 #, perl-format
 msgid "%s successfully refined a weapon!\n"
 msgstr "%s aprimorou uma arma com sucesso!\n"
@@ -13191,56 +12813,45 @@ msgstr "%s falhou ao criar uma poção!\n"
 msgid "%s unknown unit_levelup effect (%d)\n"
 msgstr "Actor %s apresentou um 'unit_levelup' desconhecido (%d)\n"
 
-#: ../Network/Receive/ServerType0.pm:2159
-#: ../Network/Receive/kRO/Sakexe_0.pm:2090
+#: ../Network/Receive/ServerType0.pm:2159 ../Network/Receive/kRO/Sakexe_0.pm:2090
 msgid "There is no mail in your inbox.\n"
 msgstr "Nenhuma mensagem no correio.\n"
 
-#: ../Network/Receive/ServerType0.pm:2163
-#: ../Network/Receive/kRO/Sakexe_0.pm:2094
+#: ../Network/Receive/ServerType0.pm:2163 ../Network/Receive/kRO/Sakexe_0.pm:2094
 #, perl-format
 msgid "You've got Mail! (%s)\n"
 msgstr "Você recebeu uma Mensagem! (%s)\n"
 
-#: ../Network/Receive/ServerType0.pm:2165
-#: ../Network/Receive/kRO/Sakexe_0.pm:2096
+#: ../Network/Receive/ServerType0.pm:2165 ../Network/Receive/kRO/Sakexe_0.pm:2096
 msgid "Inbox"
 msgstr "Correio"
 
-#: ../Network/Receive/ServerType0.pm:2168
-#: ../Network/Receive/kRO/Sakexe_0.pm:2099
+#: ../Network/Receive/ServerType0.pm:2168 ../Network/Receive/kRO/Sakexe_0.pm:2099
 #, perl-format
 msgid "@> R @%s @%s @%s"
 msgstr "@> R @%s @%s @%s"
 
-#: ../Network/Receive/ServerType0.pm:2180
-#: ../Network/Receive/kRO/Sakexe_0.pm:2115
+#: ../Network/Receive/ServerType0.pm:2180 ../Network/Receive/kRO/Sakexe_0.pm:2115
 #, perl-format
 msgid "@> %s @%s @%s @%s"
 msgstr "@> %s @%s @%s @%s"
 
-#: ../Network/Receive/ServerType0.pm:2194
-#: ../Network/Receive/kRO/Sakexe_0.pm:2128
+#: ../Network/Receive/ServerType0.pm:2194 ../Network/Receive/kRO/Sakexe_0.pm:2128
 #, perl-format
 msgid "Failed to attach %s.\n"
 msgstr "Falhou ao anexar %s.\n"
 
-#: ../Network/Receive/ServerType0.pm:2194
-#: ../Network/Receive/ServerType0.pm:2197
-#: ../Network/Receive/kRO/Sakexe_0.pm:2128
-#: ../Network/Receive/kRO/Sakexe_0.pm:2130
+#: ../Network/Receive/ServerType0.pm:2194 ../Network/Receive/ServerType0.pm:2197
+#: ../Network/Receive/kRO/Sakexe_0.pm:2128 ../Network/Receive/kRO/Sakexe_0.pm:2130
 msgid "item: "
 msgstr "item: "
 
-#: ../Network/Receive/ServerType0.pm:2194
-#: ../Network/Receive/ServerType0.pm:2208
-#: ../Network/Receive/kRO/Sakexe_0.pm:2128
-#: ../Network/Receive/kRO/Sakexe_0.pm:2130
+#: ../Network/Receive/ServerType0.pm:2194 ../Network/Receive/ServerType0.pm:2208
+#: ../Network/Receive/kRO/Sakexe_0.pm:2128 ../Network/Receive/kRO/Sakexe_0.pm:2130
 msgid "zeny"
 msgstr "zeny"
 
-#: ../Network/Receive/ServerType0.pm:2197
-#: ../Network/Receive/ServerType0.pm:2208
+#: ../Network/Receive/ServerType0.pm:2197 ../Network/Receive/ServerType0.pm:2208
 #: ../Network/Receive/kRO/Sakexe_0.pm:2130
 #, perl-format
 msgid "Succeeded to attach %s.\n"
@@ -13251,57 +12862,40 @@ msgstr "Anexou %s com sucesso.\n"
 msgid "You lost %s zeny.\n"
 msgstr "Você perdeu %s zeny.\n"
 
-#: ../Network/Receive/ServerType0.pm:2239
-#: ../Network/Receive/ServerType0.pm:2279
+#: ../Network/Receive/ServerType0.pm:2239 ../Network/Receive/ServerType0.pm:2279
 msgid "=========================== Server Infos ===========================\n"
 msgstr "===================== Informações do Servidor =====================\n"
 
-#: ../Network/Receive/ServerType0.pm:2240
-#: ../Network/Receive/ServerType0.pm:2280
+#: ../Network/Receive/ServerType0.pm:2240 ../Network/Receive/ServerType0.pm:2280
 #, perl-format
 msgid "EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n"
-msgstr ""
-"Taxa de Experiência: %s%% (Base %s%% + Premium %s%% + Servidor %s%% + "
-"Adicional %s%%) \n"
+msgstr "Taxa de Experiência: %s%% (Base %s%% + Premium %s%% + Servidor %s%% + Adicional %s%%) \n"
 
-#: ../Network/Receive/ServerType0.pm:2241
-#: ../Network/Receive/ServerType0.pm:2281
+#: ../Network/Receive/ServerType0.pm:2241 ../Network/Receive/ServerType0.pm:2281
 #, perl-format
-msgid ""
-"Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n"
-msgstr ""
-"Taxa de Drop: %s%% (Base %s%% + Premium %s%% + Servidor %s%% + Adicional %s"
-"%%) \n"
+msgid "Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n"
+msgstr "Taxa de Drop: %s%% (Base %s%% + Premium %s%% + Servidor %s%% + Adicional %s%%) \n"
 
-#: ../Network/Receive/ServerType0.pm:2242
-#: ../Network/Receive/ServerType0.pm:2282
+#: ../Network/Receive/ServerType0.pm:2242 ../Network/Receive/ServerType0.pm:2282
 #, perl-format
-msgid ""
-"Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n"
-msgstr ""
-"Penalidade de Morte: %s%% (Base %s%% + Premium %s%% + Servidor %s%% + "
-"Adicional %s%%) \n"
+msgid "Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n"
+msgstr "Penalidade de Morte: %s%% (Base %s%% + Premium %s%% + Servidor %s%% + Adicional %s%%) \n"
 
-#: ../Network/Receive/ServerType0.pm:2294
-#: ../Network/Receive/kRO/Sakexe_0.pm:2143
+#: ../Network/Receive/ServerType0.pm:2294 ../Network/Receive/kRO/Sakexe_0.pm:2143
 msgid "No item in auction.\n"
 msgstr "Nenhum item no leilão.\n"
 
-#: ../Network/Receive/ServerType0.pm:2298
-#: ../Network/Receive/kRO/Sakexe_0.pm:2147
+#: ../Network/Receive/ServerType0.pm:2298 ../Network/Receive/kRO/Sakexe_0.pm:2147
 #, perl-format
 msgid "Found %s items in auction.\n"
 msgstr "%s itens encontrados no leilão.\n"
 
-#: ../Network/Receive/ServerType0.pm:2300
-#: ../Network/Receive/kRO/Sakexe_0.pm:2149
+#: ../Network/Receive/ServerType0.pm:2300 ../Network/Receive/kRO/Sakexe_0.pm:2149
 msgid "Auction"
 msgstr "Leilão"
 
-#: ../Network/Receive/ServerType0.pm:2301
-#: ../Network/Receive/ServerType0.pm:2334
-#: ../Network/Receive/kRO/Sakexe_0.pm:2150
-#: ../Network/Receive/kRO/Sakexe_0.pm:2181
+#: ../Network/Receive/ServerType0.pm:2301 ../Network/Receive/ServerType0.pm:2334
+#: ../Network/Receive/kRO/Sakexe_0.pm:2150 ../Network/Receive/kRO/Sakexe_0.pm:2181
 #, perl-format
 msgid "@%s @%s @%s @%s @%s"
 msgstr "@%s @%s @%s @%s @%s"
@@ -13310,33 +12904,26 @@ msgstr "@%s @%s @%s @%s @%s"
 msgid "Received Memory Dungeon reservation update\n"
 msgstr "Recebeu atualização da reserva de Instância\n"
 
-#: ../Network/Receive/ServerType0.pm:2366
-#: ../Network/Receive/kRO/Sakexe_0.pm:2200
+#: ../Network/Receive/ServerType0.pm:2366 ../Network/Receive/kRO/Sakexe_0.pm:2200
 msgid "The Memorial Dungeon expired it has been destroyed.\n"
 msgstr "A instância expirou e foi destruída.\n"
 
-#: ../Network/Receive/ServerType0.pm:2368
-#: ../Network/Receive/kRO/Sakexe_0.pm:2202
-msgid ""
-"The Memorial Dungeon's entry time limit expired it has been destroyed.\n"
+#: ../Network/Receive/ServerType0.pm:2368 ../Network/Receive/kRO/Sakexe_0.pm:2202
+msgid "The Memorial Dungeon's entry time limit expired it has been destroyed.\n"
 msgstr "O tempo de entrada da instância expirou e foi destruída.\n"
 
-#: ../Network/Receive/ServerType0.pm:2370
-#: ../Network/Receive/kRO/Sakexe_0.pm:2204
+#: ../Network/Receive/ServerType0.pm:2370 ../Network/Receive/kRO/Sakexe_0.pm:2204
 msgid "The Memorial Dungeon has been removed.\n"
 msgstr "A instância foi removida.\n"
 
-#: ../Network/Receive/ServerType0.pm:2372
-#: ../Network/Receive/kRO/Sakexe_0.pm:2206
-msgid ""
-"The instance windows has been removed, possibly due to party/guild leave.\n"
+#: ../Network/Receive/ServerType0.pm:2372 ../Network/Receive/kRO/Sakexe_0.pm:2206
+msgid "The instance windows has been removed, possibly due to party/guild leave.\n"
 msgstr "A entrada da instância foi removida devido a saída do grupo/clã.\n"
 
 #: ../Network/Receive/ServerType0.pm:2380
 #, perl-format
 msgid "Battleground score - Lions: '%d' VS Eagles: '%d'\n"
-msgstr ""
-"Pontuação da Batalha Campal - Leões Azuis: '%d' X Águias Vermelhas: '%d'\n"
+msgstr "Pontuação da Batalha Campal - Leões Azuis: '%d' X Águias Vermelhas: '%d'\n"
 
 #: ../Network/Receive/ServerType0.pm:2403
 #, perl-format
@@ -13380,11 +12967,11 @@ msgstr "Monstro %s tem cerca de %d%% de HP restante\n"
 
 #: ../Network/Receive/ServerType0.pm:2506
 msgid "[Equip Switch] Fail !\n"
-msgstr ""
+msgstr "[Switch de Equipamento] Falhou !\n"
 
 #: ../Network/Receive/ServerType0.pm:2508
 msgid "[Equip Switch] Success !\n"
-msgstr ""
+msgstr "[Switch de Equipamento] Sucesso !\n"
 
 #: ../Network/Receive/ServerType17.pm:46
 msgid ""
@@ -13432,8 +13019,7 @@ msgid "To expand the possession limit, please close other windows"
 msgstr "Para expandir o inventário, por favor feche outras janelas de diálogo"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2267
-msgid ""
-"Failed to expand the maximum possession limit, insufficient required item"
+msgid "Failed to expand the maximum possession limit, insufficient required item"
 msgstr "Falhou ao expandir o inventário, item catalisador insuficiente"
 
 #: ../Network/Receive/kRO/Sakexe_0.pm:2269
@@ -13442,10 +13028,8 @@ msgstr "Você não pode mais expandir o inventário."
 
 #: ../Network/Send/kRO/RagexeRE_2010_08_03a.pm:41
 #, perl-format
-msgid ""
-"Sent buying request from cash shop for %d items using %d kafra points.\n"
-msgstr ""
-"Requisitando compra na loja de cash de %d itens usando %d pontos kafra.\n"
+msgid "Sent buying request from cash shop for %d items using %d kafra points.\n"
+msgstr "Requisitando compra na loja de cash de %d itens usando %d pontos kafra.\n"
 
 #: ../Poseidon/EmbedServer.pm:49
 #, perl-format
@@ -13495,18 +13079,18 @@ msgstr "Não foi possível ser teleportado pelo NPC em %s (%s, %s).\n"
 #: ../Task/MapRoute.pm:191
 #, perl-format
 msgid ""
-"Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and "
-"recalculating route.\n"
+"Failed to teleport using NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating "
+"route.\n"
 msgstr ""
-"Não foi possível ser teleportado pelo NPC em %s (%s, %s) após %s tentativas, "
-"ignorando o NPC e recalculando a rota.\n"
+"Não foi possível ser teleportado pelo NPC em %s (%s, %s) após %s tentativas, ignorando o NPC e "
+"recalculando a rota.\n"
 
 #: ../Task/MapRoute.pm:203
 #, perl-format
 msgid "You need %sz to pay for warp service at %s (%s,%s), you have %sz.\n"
 msgstr ""
-"Você precisa de %s zeny para pagar pelo serviço de teleporte em %s (%s, %s), "
-"você tem %s zeny.\n"
+"Você precisa de %s zeny para pagar pelo serviço de teleporte em %s (%s, %s), você tem %s "
+"zeny.\n"
 
 #: ../Task/MapRoute.pm:235
 #, perl-format
@@ -13574,11 +13158,10 @@ msgstr "%s: Digite 'talk resp #' para escolher uma resposta.\n"
 #: ../Task/TalkNPC.pm:147
 #, perl-format
 msgid ""
-"%s: Type 'store' to start buying, type 'sell' to start selling or type "
-"'canceltransaction' to cancel\n"
+"%s: Type 'store' to start buying, type 'sell' to start selling or type 'canceltransaction' to "
+"cancel\n"
 msgstr ""
-"%s: Digite 'store' para comprar, 'sell' para vender ou 'canceltransaction' "
-"para cancelar\n"
+"%s: Digite 'store' para comprar, 'sell' para vender ou 'canceltransaction' para cancelar\n"
 
 #: ../Task/TalkNPC.pm:150
 #, perl-format
@@ -13607,65 +13190,65 @@ msgstr "O NPC não respondeu."
 #: ../Task/TalkNPC.pm:485
 #, perl-format
 msgid ""
-"According to the given NPC instructions, a menu item matching '%s' must now "
-"be selected, but no such menu item exists."
+"According to the given NPC instructions, a menu item matching '%s' must now be selected, but "
+"no such menu item exists."
 msgstr ""
-"De acordo com as informações dadas sobre o NPC, a resposta %s deve ser "
-"selecionada, mas tal resposta não existe."
+"De acordo com as informações dadas sobre o NPC, a resposta %s deve ser selecionada, mas tal "
+"resposta não existe."
 
 #: ../Task/TalkNPC.pm:506
 #, perl-format
 msgid ""
-"According to the given NPC instructions, menu item %d must now be selected, "
-"but there are only %d menu items."
+"According to the given NPC instructions, menu item %d must now be selected, but there are only "
+"%d menu items."
 msgstr ""
-"De acordo com as informações dadas sobre o NPC, a resposta %d deve ser "
-"selecionada, mas só existem %d respostas."
+"De acordo com as informações dadas sobre o NPC, a resposta %d deve ser selecionada, mas só "
+"existem %d respostas."
 
 #: ../Task/TalkNPC.pm:515
 #, perl-format
 msgid ""
-"NPC requires a response to be selected, but the given instructions don't "
-"match that (current step: %s)."
+"NPC requires a response to be selected, but the given instructions don't match that (current "
+"step: %s)."
 msgstr ""
-"O NPC requer que uma resposta seja selecionada, mas as instruções dadas não "
-"combinam (passo atual: %s)"
+"O NPC requer que uma resposta seja selecionada, mas as instruções dadas não combinam (passo "
+"atual: %s)"
 
 #: ../Task/TalkNPC.pm:527
 #, perl-format
 msgid ""
-"NPC requires the next button to be pressed now, but the given instructions "
-"don't match that (current step: %s)."
+"NPC requires the next button to be pressed now, but the given instructions don't match that "
+"(current step: %s)."
 msgstr ""
-"O NPC requer que o botão de 'próximo' seja pressionado agora, mas as "
-"instruções dadas não combinam (passo atual: %s)"
+"O NPC requer que o botão de 'próximo' seja pressionado agora, mas as instruções dadas não "
+"combinam (passo atual: %s)"
 
 #: ../Task/TalkNPC.pm:540
 #, perl-format
 msgid ""
-"NPC requires a number to be sent now, but the given instructions don't match "
-"that (current step: %s)."
+"NPC requires a number to be sent now, but the given instructions don't match that (current "
+"step: %s)."
 msgstr ""
-"O NPC requer que um número seja enviado agora, mas as instruções dadas não "
-"combinam (passo atual: %s)"
+"O NPC requer que um número seja enviado agora, mas as instruções dadas não combinam (passo "
+"atual: %s)"
 
 #: ../Task/TalkNPC.pm:553
 #, perl-format
 msgid ""
-"NPC requires a text to be sent now, but the given instructions don't match "
-"that (current step: %s)."
+"NPC requires a text to be sent now, but the given instructions don't match that (current step: "
+"%s)."
 msgstr ""
-"O NPC requer que um texto seja enviado agora, mas as instruções dadas não "
-"combinam (passo atual: %s)"
+"O NPC requer que um texto seja enviado agora, mas as instruções dadas não combinam (passo "
+"atual: %s)"
 
 #: ../Task/TalkNPC.pm:581
 #, perl-format
 msgid ""
-"This npc requires the sell, buy or cancel button to be pressed, but the "
-"given instructions don't match that (current step: %s)."
+"This npc requires the sell, buy or cancel button to be pressed, but the given instructions "
+"don't match that (current step: %s)."
 msgstr ""
-"O NPC requer que os botões 'Vender', 'Comprar' ou 'Cancelar' sejam "
-"pressionados, mas as instruções dadas não combinam (passo atual: %s)"
+"O NPC requer que os botões 'Vender', 'Comprar' ou 'Cancelar' sejam pressionados, mas as "
+"instruções dadas não combinam (passo atual: %s)"
 
 #: ../Task/TalkNPC.pm:599
 #, perl-format
@@ -13675,17 +13258,15 @@ msgstr "Item %s não encontrado na loja.\n"
 #: ../Task/TalkNPC.pm:630
 #, perl-format
 msgid ""
-"NPC requires the buy or cancel button to be pressed, but the given "
-"instructions don't match that (current step: %s)."
+"NPC requires the buy or cancel button to be pressed, but the given instructions don't match "
+"that (current step: %s)."
 msgstr ""
-"O NPC requer que os botões 'Comprar' ou 'Cancelar' sejam pressionados, mas "
-"as instruções dadas não combinam (passo atual: %s)"
+"O NPC requer que os botões 'Comprar' ou 'Cancelar' sejam pressionados, mas as instruções dadas "
+"não combinam (passo atual: %s)"
 
 #: ../Task/TalkNPC.pm:643
 msgid "According to the given NPC instructions, a npc conversation code "
-msgstr ""
-"De acordo com as instruções fornecidas do NPC, um código de conversação de "
-"npc "
+msgstr "De acordo com as instruções fornecidas do NPC, um código de conversação de npc "
 
 #: ../Task/TalkNPC.pm:644
 #, perl-format
@@ -13709,14 +13290,12 @@ msgstr "Código de conversação com NPC inválido: %s."
 #: ../Task/UseSkill.pm:312
 #, perl-format
 msgid "Skill %s cannot be used because %s have no such skill."
-msgstr ""
-"A habilidade %s não pôde ser usada, pois %s não possui essa habilidade."
+msgstr "A habilidade %s não pôde ser usada, pois %s não possui essa habilidade."
 
 #: ../Task/UseSkill.pm:313
 #, perl-format
 msgid "Skill %s cannot be used because %s has no such skill."
-msgstr ""
-"A habilidade %s não pôde ser usada, pois %s não possui essa habilidade."
+msgstr "A habilidade %s não pôde ser usada, pois %s não possui essa habilidade."
 
 #: ../Task/UseSkill.pm:347 ../Task/UseSkill.pm:363
 msgid "Target lost."
@@ -13788,9 +13367,7 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "Teleportando para reencontrar %s\n"
 
 #~ msgid "Trying to find %s at location %d, %d (you are currently at %d, %d)\n"
-#~ msgstr ""
-#~ "Tentando localizar %s nas coordenadas %d, %d (você está atualmente em %d, "
-#~ "%d)\n"
+#~ msgstr "Tentando localizar %s nas coordenadas %d, %d (você está atualmente em %d, %d)\n"
 
 #~ msgid "You lost %s!\n"
 #~ msgstr "Você perdeu %s!\n"
@@ -13827,14 +13404,10 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "=================================================================================================================\n"
 
 #~ msgid "Your inventory is not available. Unable to transfer item '%s'.\n"
-#~ msgstr ""
-#~ "Seu inventário não está disponível. Não foi possível transferir o item "
-#~ "'%s'.\n"
+#~ msgstr "Seu inventário não está disponível. Não foi possível transferir o item '%s'.\n"
 
 #~ msgid "Your storage is not available. Unable to transfer item '%s'.\n"
-#~ msgstr ""
-#~ "Seu armazém não está disponível. Não foi possível transferir o item "
-#~ "'%s'.\n"
+#~ msgstr "Seu armazém não está disponível. Não foi possível transferir o item '%s'.\n"
 
 #~ msgid "Inventory item '%s' disappeared!\n"
 #~ msgstr "Item do inventário '%s' desapareceu!\n"
@@ -13854,19 +13427,11 @@ msgstr "O arquivo [%s] não existe."
 #~ msgid "id: %s msgid: %s\n"
 #~ msgstr "id: %s msgid: %s\n"
 
-#~ msgid ""
-#~ "#   Name                                      Type           Amount       "
-#~ "Price\n"
-#~ msgstr ""
-#~ "#  Nome                                       Tipo           "
-#~ "Quantidade       Preço\n"
+#~ msgid "#   Name                                      Type           Amount       Price\n"
+#~ msgstr "#  Nome                                       Tipo           Quantidade       Preço\n"
 
-#~ msgid ""
-#~ "#  Name                                   Type            Amount          "
-#~ "Price\n"
-#~ msgstr ""
-#~ "#  Nome                                       Tipo           Quant.       "
-#~ "Preço\n"
+#~ msgid "#  Name                                   Type            Amount          Price\n"
+#~ msgstr "#  Nome                                       Tipo           Quant.       Preço\n"
 
 #~ msgid "Blacksmith"
 #~ msgstr "Ferreiro"
@@ -13908,9 +13473,7 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "Auto desconectando, você foi silenciado por %s minutos!\n"
 
 #~ msgid "*** You have been muted for %s minutes, auto disconnect! ***\n"
-#~ msgstr ""
-#~ "*** Você foi Silenciado por %s minutos, deconectando automaricamente! "
-#~ "***\n"
+#~ msgstr "*** Você foi Silenciado por %s minutos, deconectando automaricamente! ***\n"
 
 #~ msgid "You've been muted for %s minutes\n"
 #~ msgstr "Você foi Silenciado por %s minutos\n"
@@ -13992,15 +13555,14 @@ msgstr "O arquivo [%s] não existe."
 #~ "Impossível alterar líder do grupo - você não está em um grupo.\n"
 
 #~ msgid "Coordinate lockmap is used; randomWalk disabled\n"
-#~ msgstr ""
-#~ "Coordenadas fornecidas para o 'lockMap'; desabilitando o 'randomWalk'\n"
+#~ msgstr "Coordenadas fornecidas para o 'lockMap'; desabilitando o 'randomWalk'\n"
 
 #~ msgid ""
-#~ "Invalid coordinates specified for randomWalk (coordinates are "
-#~ "unwalkable); randomWalk disabled\n"
+#~ "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk "
+#~ "disabled\n"
 #~ msgstr ""
-#~ "Coordenadas especificadas no randomWalk inválidas (coordenadas não "
-#~ "andáveis); randomWalk desabilitado.\n"
+#~ "Coordenadas especificadas no randomWalk inválidas (coordenadas não andáveis); randomWalk "
+#~ "desabilitado.\n"
 
 #~ msgid "Found my master - %s\n"
 #~ msgstr "Encontrei meu mestre - %s\n"
@@ -14051,9 +13613,7 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "Teleportando para evitar todos os jogadores.\n"
 
 #~ msgid "Teleporting due to insufficient HP/SP or too many aggressives\n"
-#~ msgstr ""
-#~ "Teleportando por causa de HP/SP insuficiente ou muitos monstros "
-#~ "agressivos.\n"
+#~ msgstr "Teleportando por causa de HP/SP insuficiente ou muitos monstros agressivos.\n"
 
 #~ msgid "Teleporting to avoid %s\n"
 #~ msgstr "Teleportando para evitar %s\n"
@@ -14080,8 +13640,7 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "Desconectando por causa de jogadores!\n"
 
 #~ msgid "*** Nearby is another player, auto disconnect! ***\n"
-#~ msgstr ""
-#~ "*** Outro jogador está por perto, desconectando automaticamente! ***\n"
+#~ msgstr "*** Outro jogador está por perto, desconectando automaticamente! ***\n"
 
 #~ msgid "Pet hunger reaches the return value.\n"
 #~ msgstr "A fome do mascote atingiu o limite para retornar para o ovo.\n"
@@ -14094,22 +13653,20 @@ msgstr "O arquivo [%s] não existe."
 
 #~ msgid ""
 #~ "%s\n"
-#~ "#  Name                                       Type           Amount       "
-#~ "Price\n"
+#~ "#  Name                                       Type           Amount       Price\n"
 #~ msgstr ""
 #~ "%s\n"
-#~ "#  Nome                                       Tipo           Quant.       "
-#~ "Preço\n"
+#~ "#  Nome                                       Tipo           Quant.       Preço\n"
 
 #~ msgid "NPC is hidden."
 #~ msgstr "O NPC está escondido."
 
 #~ msgid ""
-#~ "According to the given NPC instructions, the Next button must now be "
-#~ "clicked on, but that's not possible."
+#~ "According to the given NPC instructions, the Next button must now be clicked on, but that's "
+#~ "not possible."
 #~ msgstr ""
-#~ "De acordo com as informações dadas sobre o NPC, o botão Próximo deve ser "
-#~ "clicado, mas isso não é possível."
+#~ "De acordo com as informações dadas sobre o NPC, o botão Próximo deve ser clicado, mas isso "
+#~ "não é possível."
 
 #~ msgid ""
 #~ "Error in function 'cart add' (Add Item to Cart)\n"
@@ -14160,13 +13717,10 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "-- Não Identificado"
 
 #, fuzzy
-#~ msgid ""
-#~ "#  Name                                   Type        Qty  "
-#~ "Price           Sold\n"
+#~ msgid "#  Name                                   Type        Qty  Price           Sold\n"
 #~ msgstr ""
 #~ "%s\n"
-#~ "#  Nome                                     Tipo         Quant.    "
-#~ "Preço   Vendidos\n"
+#~ "#  Nome                                     Tipo         Quant.    Preço   Vendidos\n"
 
 #, fuzzy
 #~ msgid "Creating overrides for %s\n"
@@ -14205,12 +13759,10 @@ msgstr "O arquivo [%s] não existe."
 
 #~ msgid ""
 #~ "%s\n"
-#~ "#  Name                                          Type        Amount       "
-#~ "Price\n"
+#~ "#  Name                                          Type        Amount       Price\n"
 #~ msgstr ""
 #~ "%s\n"
-#~ "#  Nome                                          Tipo        Quant.       "
-#~ "Preço\n"
+#~ "#  Nome                                          Tipo        Quant.       Preço\n"
 
 #, fuzzy
 #~ msgid ""
@@ -14262,15 +13814,11 @@ msgstr "O arquivo [%s] não existe."
 #~ "Nome                                      Quant.  Preço\n"
 
 #~ msgid ""
-#~ "------------------------------- Chat Room List "
-#~ "--------------------------------\n"
-#~ "#   Title                                  Owner                Users   "
-#~ "Type\n"
+#~ "------------------------------- Chat Room List --------------------------------\n"
+#~ "#   Title                                  Owner                Users   Type\n"
 #~ msgstr ""
-#~ "------------------------------- Lista da Sala de Chat "
-#~ "-------------------------------\n"
-#~ "#  Título                                  Dono                 "
-#~ "Usuários   Tipo\n"
+#~ "------------------------------- Lista da Sala de Chat -------------------------------\n"
+#~ "#  Título                                  Dono                 Usuários   Tipo\n"
 
 #~ msgid ""
 #~ "-----------Chat Room Info-----------\n"
@@ -14337,12 +13885,10 @@ msgstr "O arquivo [%s] não existe."
 
 #~ msgid ""
 #~ "------------ Guild  Member ------------\n"
-#~ "#  Name                       Job        Lv  Title                    "
-#~ "Online\n"
+#~ "#  Name                       Job        Lv  Title                    Online\n"
 #~ msgstr ""
 #~ "------------ Membro do Clã ------------\n"
-#~ "#  Nome                       Classe     Lv  Título                   "
-#~ "Online\n"
+#~ "#  Nome                       Classe     Lv  Título                   Online\n"
 
 #~ msgid "--------------- Available commands ---------------\n"
 #~ msgstr "-------------- Comandos disponíveis --------------\n"
@@ -14383,12 +13929,10 @@ msgstr "O arquivo [%s] não existe."
 #, fuzzy
 #~ msgid ""
 #~ "------------Pet List------------\n"
-#~ "#   Name                                               Distance    "
-#~ "Coordinates\n"
+#~ "#   Name                                               Distance    Coordinates\n"
 #~ msgstr ""
 #~ "-----------Lista de Slaves-----------\n"
-#~ "#   Nome                        Tipo                   Distância    "
-#~ "Coordenadas\n"
+#~ "#   Nome                        Tipo                   Distância    Coordenadas\n"
 
 #~ msgid ""
 #~ "--------- Currently loaded plugins ---------\n"
@@ -14462,8 +14006,7 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "Usando os passos de armazenagem definidos no config.txt.\n"
 
 #~ msgid "Something is wrong with storageAuto_npc_type in your config.\n"
-#~ msgstr ""
-#~ "Alguma coisa está errada com a opção storageAuto_npc_type no config.txt.\n"
+#~ msgstr "Alguma coisa está errada com a opção storageAuto_npc_type no config.txt.\n"
 
 #, fuzzy
 #~ msgid "Disconnecting because storage is full!\n"
@@ -14486,8 +14029,7 @@ msgstr "O arquivo [%s] não existe."
 
 #~ msgid "Character is still overweight after storageAuto (storage is full?)\n"
 #~ msgstr ""
-#~ "O personagem ainda está sobrecarregado depois da armazenagem automática "
-#~ "(armazém lotado?)\n"
+#~ "O personagem ainda está sobrecarregado depois da armazenagem automática (armazém lotado?)\n"
 
 #~ msgid "Disconnecting on storage full!\n"
 #~ msgstr "Desconectando-se devido ao armazém estar lotado!\n"
@@ -14514,11 +14056,10 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "Servidor especificado inválido ou não existe...\n"
 
 #, fuzzy
-#~ msgid ""
-#~ "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
+#~ msgid "Invalid coordinates specified for lockMap, coordinates are unwalkable\n"
 #~ msgstr ""
-#~ "Coordenadas especificadas no randomWalk inválidas (coordenadas não "
-#~ "andáveis); randomWalk desabilitado.\n"
+#~ "Coordenadas especificadas no randomWalk inválidas (coordenadas não andáveis); randomWalk "
+#~ "desabilitado.\n"
 
 #, fuzzy
 #~ msgid "Calculating lockMap route to: %s(%s): %s, %s\n"
@@ -14533,8 +14074,7 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "Adicionando habilidade %s automaticamente.\n"
 
 #~ msgid "Minimap indicator at location %d, %d with the color %s cleared\n"
-#~ msgstr ""
-#~ "Indicador do minimapa nas coordenadas %d, %d com a cor %s desapareceu.\n"
+#~ msgstr "Indicador do minimapa nas coordenadas %d, %d com a cor %s desapareceu.\n"
 
 #~ msgid "[GM] %s\n"
 #~ msgstr "[GM] %s\n"
@@ -14628,8 +14168,7 @@ msgstr "O arquivo [%s] não existe."
 
 #, fuzzy
 #~ msgid "Slave is stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d)."
-#~ msgstr ""
-#~ "Slave travou em %s (%d,%d), enquanto andávamos de (%d,%d) até (%d,%d)."
+#~ msgstr "Slave travou em %s (%d,%d), enquanto andávamos de (%d,%d) até (%d,%d)."
 
 #, fuzzy
 #~ msgid "Unable to download the manual."
@@ -14696,8 +14235,7 @@ msgstr "O arquivo [%s] não existe."
 #~ msgstr "%s; nenhum lugar disponível para o Slave ficar.\n"
 
 #~ msgid "Unable to calculate a route to slave target, dropping target\n"
-#~ msgstr ""
-#~ "Não foi possível calcular uma rota para o alvo do Slave, desistindo.\n"
+#~ msgstr "Não foi possível calcular uma rota para o alvo do Slave, desistindo.\n"
 
 #, fuzzy
 #~ msgid "Slave destination reached.\n"
@@ -14736,25 +14274,18 @@ msgstr "O arquivo [%s] não existe."
 
 #, fuzzy
 #~ msgid "%s hit your slave for more than %d dmg in lockMap. Teleporting...\n"
-#~ msgstr ""
-#~ "%s atingiu você com mais de %d de dano no lockMap. Teleportando...\n"
+#~ msgstr "%s atingiu você com mais de %d de dano no lockMap. Teleportando...\n"
 
 #, fuzzy
 #~ msgid "%s hit your slave for a total of more than %d dmg. Teleporting...\n"
-#~ msgstr ""
-#~ "%s atingiu seu Slave no total com mais de %d de dano. Teleportando...\n"
+#~ msgstr "%s atingiu seu Slave no total com mais de %d de dano. Teleportando...\n"
 
 #, fuzzy
-#~ msgid ""
-#~ "%s hit your slave for a total of more than %d dmg in lockMap. "
-#~ "Teleporting...\n"
-#~ msgstr ""
-#~ "%s atingiu seu Slave no total com mais de %d de dano no lockMap. "
-#~ "Teleportando...\n"
+#~ msgid "%s hit your slave for a total of more than %d dmg in lockMap. Teleporting...\n"
+#~ msgstr "%s atingiu seu Slave no total com mais de %d de dano no lockMap. Teleportando...\n"
 
 #, fuzzy
-#~ msgid ""
-#~ "%s hit your slave when your homunculus' HP is too low. Teleporting...\n"
+#~ msgid "%s hit your slave when your homunculus' HP is too low. Teleporting...\n"
 #~ msgstr "%s atingiu seu Slave com HP muito baixo. Teleportando...\n"
 
 #~ msgid "Slave change target to aggressive : %s (%s)\n"
