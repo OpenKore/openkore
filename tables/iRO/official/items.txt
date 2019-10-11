@@ -9401,7 +9401,7 @@
 25425#Magical_Snow_Flower#
 25426#Warm_Cotton#
 25479#Dogly_Bottle#
-25745#Poring_Coin#
+25745#Piece_of_Five#
 25753#Khalitzburg_Map_Piece#
 25754#Scaled_Map_Piece			#
 25755#Undead_Servant's_Map_Piece			#
