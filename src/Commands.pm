@@ -2306,7 +2306,7 @@ sub cmdEquip_list {
 			message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list" :
 			message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
-	message TF("================================\n"), "info";
+	message "================================\n", "info";
 }
 
 sub cmdEquipsw_list {
@@ -2322,7 +2322,7 @@ sub cmdEquipsw_list {
 			? message sprintf("%-15s: %s x %s\n", $slot, $name, $item->{amount}), "list"
 			: message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
-	message TF("=============================\n"), "info";
+	message "=============================\n", "info";
 }
 
 
