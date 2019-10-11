@@ -3933,12 +3933,11 @@ sub avoidGM_near {
 		# skip this person if we dont know the name
 		next if (!defined $player->{name});
 
-		# Check whether this "GM" is on the ignore list
-		# in order to prevent false matches
-		last if (existsInList($config{avoidGM_ignoreList}, $player->{name}));
+		# Check whether this "GM" is on the ignore list in order to prevent false matches
+		next if (existsInList($config{avoidGM_ignoreList}, $player->{name}));
 
 		# check if this name matches the GM filter
-		last unless ($config{avoidGM_namePattern} ? $player->{name} =~ /$config{avoidGM_namePattern}/ : $player->{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
+		next unless ($config{avoidGM_namePattern} ? $player->{name} =~ /$config{avoidGM_namePattern}/ : $player->{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
 
 		my %args = (
 			name => $player->{name},
@@ -3988,11 +3987,14 @@ sub avoidList_near {
 	return if ($config{avoidList_inLockOnly} && $field->baseName ne $config{lockMap});
 
 	for my $player (@$playersList) {
+		# skip this person if we dont know the name
+		next if (!defined $player->{name});
+
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
 
-		# Exit if the player is not on the avoid list
-		last if (!$avoidPlayer and !$avoidID);
+		# next if the player is not on the avoid list
+		next if (!$avoidPlayer and !$avoidID);
 
 		my %args = (
 			name => $player->{name},
