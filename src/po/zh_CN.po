@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 08:52-0300\n"
+"POT-Creation-Date: 2019-10-11 08:55-0300\n"
 "PO-Revision-Date: 2010-11-29 20:09+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
@@ -3399,25 +3399,9 @@ msgstr "人物已经删除.\n"
 msgid "=====[Character Equip List]=====\n"
 msgstr "========制造列表========\n"
 
-#: ../Commands.pm:2309
-#, fuzzy
-msgid "================================\n"
-msgstr ""
-"===============技能说明===============\n"
-"技能: %s\n"
-"\n"
-
 #: ../Commands.pm:2317
 msgid "=====[Equip Switch List]=====\n"
 msgstr ""
-
-#: ../Commands.pm:2325
-#, fuzzy
-msgid "=============================\n"
-msgstr ""
-"===============技能说明===============\n"
-"技能: %s\n"
-"\n"
 
 #: ../Commands.pm:2332
 msgid ""
@@ -13972,6 +13956,20 @@ msgstr ""
 #, fuzzy, perl-format
 msgid "File [%s] does not exist."
 msgstr "玩家 %s 不存在.\n"
+
+#, fuzzy
+#~ msgid "================================\n"
+#~ msgstr ""
+#~ "===============技能说明===============\n"
+#~ "技能: %s\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "=============================\n"
+#~ msgstr ""
+#~ "===============技能说明===============\n"
+#~ "技能: %s\n"
+#~ "\n"
 
 #, fuzzy
 #~ msgid "Found %s!\n"

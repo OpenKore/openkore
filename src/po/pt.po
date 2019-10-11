@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openkore 2.0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 08:52-0300\n"
+"POT-Creation-Date: 2019-10-11 08:55-0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: lututui <lututui@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -10,7 +10,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: ../../openkore.pl:154
 #, perl-format
@@ -3297,25 +3297,9 @@ msgstr "Equipamentos do Personagem ainda não estão prontos.\n"
 msgid "=====[Character Equip List]=====\n"
 msgstr "======Lista de Forja======\n"
 
-#: ../Commands.pm:2309
-#, fuzzy
-msgid "================================\n"
-msgstr ""
-"============Descrição da Habilidade============\n"
-"Habilidade: %s\n"
-"\n"
-
 #: ../Commands.pm:2317
 msgid "=====[Equip Switch List]=====\n"
 msgstr ""
-
-#: ../Commands.pm:2325
-#, fuzzy
-msgid "=============================\n"
-msgstr ""
-"============Descrição da Habilidade============\n"
-"Habilidade: %s\n"
-"\n"
 
 #: ../Commands.pm:2332
 msgid ""
@@ -13779,6 +13763,20 @@ msgstr "O arquivo [%s] não pôde ser criado: $!"
 #, perl-format
 msgid "File [%s] does not exist."
 msgstr "O arquivo [%s] não existe."
+
+#, fuzzy
+#~ msgid "================================\n"
+#~ msgstr ""
+#~ "============Descrição da Habilidade============\n"
+#~ "Habilidade: %s\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "=============================\n"
+#~ msgstr ""
+#~ "============Descrição da Habilidade============\n"
+#~ "Habilidade: %s\n"
+#~ "\n"
 
 #~ msgid "Found %s!\n"
 #~ msgstr "Encontrei %s!\n"

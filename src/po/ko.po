@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 08:52-0300\n"
+"POT-Creation-Date: 2019-10-11 08:55-0300\n"
 "PO-Revision-Date: 2010-11-29 20:09+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: skseo <skseo76@hotmail.com>\n"
@@ -3402,25 +3402,9 @@ msgstr "Character deleted.\n"
 msgid "=====[Character Equip List]=====\n"
 msgstr "========Forge List========\n"
 
-#: ../Commands.pm:2309
-#, fuzzy
-msgid "================================\n"
-msgstr ""
-"===============스킬 설명===============\n"
-"Skill: %s\n"
-"\n"
-
 #: ../Commands.pm:2317
 msgid "=====[Equip Switch List]=====\n"
 msgstr ""
-
-#: ../Commands.pm:2325
-#, fuzzy
-msgid "=============================\n"
-msgstr ""
-"===============스킬 설명===============\n"
-"Skill: %s\n"
-"\n"
 
 #: ../Commands.pm:2332
 msgid ""
@@ -13988,6 +13972,20 @@ msgstr ""
 #, fuzzy, perl-format
 msgid "File [%s] does not exist."
 msgstr "Player %s 가 존재하지 않습니다.\n"
+
+#, fuzzy
+#~ msgid "================================\n"
+#~ msgstr ""
+#~ "===============스킬 설명===============\n"
+#~ "Skill: %s\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "=============================\n"
+#~ msgstr ""
+#~ "===============스킬 설명===============\n"
+#~ "Skill: %s\n"
+#~ "\n"
 
 #, fuzzy
 #~ msgid "Found %s!\n"

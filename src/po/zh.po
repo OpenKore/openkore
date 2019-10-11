@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 08:52-0300\n"
+"POT-Creation-Date: 2019-10-11 08:55-0300\n"
 "PO-Revision-Date: 2014-12-02 01:53-0000\n"
 "Last-Translator: \n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
@@ -3426,25 +3426,9 @@ msgstr "角色裝備尚未準備好\n"
 msgid "=====[Character Equip List]=====\n"
 msgstr "=========鍛造清單=========\n"
 
-#: ../Commands.pm:2309
-#, fuzzy
-msgid "================================\n"
-msgstr ""
-"===================技能描述====================\n"
-"技能: %s\n"
-"\n"
-
 #: ../Commands.pm:2317
 msgid "=====[Equip Switch List]=====\n"
 msgstr ""
-
-#: ../Commands.pm:2325
-#, fuzzy
-msgid "=============================\n"
-msgstr ""
-"===================技能描述====================\n"
-"技能: %s\n"
-"\n"
 
 #: ../Commands.pm:2332
 msgid ""
@@ -13942,6 +13926,20 @@ msgstr ""
 #, fuzzy, perl-format
 msgid "File [%s] does not exist."
 msgstr "玩家 %s 不存在.\n"
+
+#, fuzzy
+#~ msgid "================================\n"
+#~ msgstr ""
+#~ "===================技能描述====================\n"
+#~ "技能: %s\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "=============================\n"
+#~ msgstr ""
+#~ "===================技能描述====================\n"
+#~ "技能: %s\n"
+#~ "\n"
 
 #, fuzzy
 #~ msgid "Found %s!\n"

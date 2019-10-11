@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 08:52-0300\n"
+"POT-Creation-Date: 2019-10-11 08:55-0300\n"
 "PO-Revision-Date: 2019-03-30 16:10-0300\n"
 "Last-Translator: ya4ept <ya4ept@ya.ru>\n"
 "Language-Team: ya4ept <ya4ept@ya.ru>\n"
@@ -3307,25 +3307,9 @@ msgstr "Нет данных об экипировке персонажа\n"
 msgid "=====[Character Equip List]=====\n"
 msgstr "====== Список ковки ======\n"
 
-#: ../Commands.pm:2309
-#, fuzzy
-msgid "================================\n"
-msgstr ""
-"=============== Описание умения ===============\n"
-"Умение: %s\n"
-"\n"
-
 #: ../Commands.pm:2317
 msgid "=====[Equip Switch List]=====\n"
 msgstr ""
-
-#: ../Commands.pm:2325
-#, fuzzy
-msgid "=============================\n"
-msgstr ""
-"=============== Описание умения ===============\n"
-"Умение: %s\n"
-"\n"
 
 #: ../Commands.pm:2332
 msgid ""
@@ -13754,6 +13738,20 @@ msgstr ""
 #, perl-format
 msgid "File [%s] does not exist."
 msgstr "Игрок %s отсутствует."
+
+#, fuzzy
+#~ msgid "================================\n"
+#~ msgstr ""
+#~ "=============== Описание умения ===============\n"
+#~ "Умение: %s\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "=============================\n"
+#~ msgstr ""
+#~ "=============== Описание умения ===============\n"
+#~ "Умение: %s\n"
+#~ "\n"
 
 #~ msgid "Found %s!\n"
 #~ msgstr "%s - нашёлся!\n"

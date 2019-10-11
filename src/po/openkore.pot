@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 08:52-0300\n"
+"POT-Creation-Date: 2019-10-11 08:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3110,16 +3110,8 @@ msgstr ""
 msgid "=====[Character Equip List]=====\n"
 msgstr ""
 
-#: ../Commands.pm:2309
-msgid "================================\n"
-msgstr ""
-
 #: ../Commands.pm:2317
 msgid "=====[Equip Switch List]=====\n"
-msgstr ""
-
-#: ../Commands.pm:2325
-msgid "=============================\n"
 msgstr ""
 
 #: ../Commands.pm:2332
