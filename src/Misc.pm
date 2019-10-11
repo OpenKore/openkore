@@ -79,7 +79,8 @@ our @EXPORT = (
 	objectInsideSpell
 	objectIsMovingTowards
 	objectIsMovingTowardsPlayer
-	get_kite_position/,
+	get_kite_position
+	get_dance_position/,
 
 	# Inventory management
 	qw/inInventory
@@ -212,7 +213,8 @@ our @EXPORT = (
 	toBase62
 	fromBase62
 	solveItemLink
-	solveMessage/,
+	solveMessage
+	absunit/,
 	
 	# Npc buy and sell
 	qw/cancelNpcBuySell
@@ -1030,6 +1032,117 @@ sub get_kite_position {
 	return undef;
 }
 
+##
+# get_kite_position(field, actor, target, min_dist_from_target, move_distance_min, move_distance_max, master, max_dist_to_master)
+# field: Field object of the map 'actor' should kite on.
+# actor: reference to the actor which is kiting.
+# target: reference to the actor which you are kiting.
+# min_dist_from_target: the minimum distance 'actor' should keep from 'target'.
+# move_distance: the minimum distance which 'actor' should try to move away from 'target'.
+# move_distance: the maximum distance which 'actor' should try to move away from 'target'.
+# master: reference to the actor which is the master of 'actor', if 'actor' is a slave (homunculus or mercenary).
+# max_dist_to_master: the maximum distance 'actor' should move away from 'master'.
+#
+# Returns: reference to a hash containing both x and y coordinates of the best kite position found on success, and undef on failure
+#
+# Dance algorithm used in attack_dance
+# Based on AzzyAI dance
+sub get_dance_position {
+	my ($slave, $target) = @_;
+	my ($newx, $newy, $dy, $dx);
+
+	my $slave_pos = calcPosition($slave);
+	my $enemy_pos = calcPosition($target);
+
+	my $t = int(rand(2));
+
+	my %dance_pos;
+	
+	if ($t == 1) {
+		if ($slave_pos->{x} == $enemy_pos->{x}) {
+			if ($slave_pos->{y} == $enemy_pos->{y}) {
+				$newx = $enemy_pos->{x} + 1;
+				$newy = $enemy_pos->{y};
+			} else {
+				$dy = $slave_pos->{y} - $enemy_pos->{y};
+				$newx = $slave_pos->{x} + absunit($dy);
+				$newy = $slave_pos->{y};
+			}
+		} elsif ($slave_pos->{y} == $enemy_pos->{y}) {
+			$dx = $slave_pos->{x} - $enemy_pos->{x};
+			$newy = $slave_pos->{y} - absunit($dx);
+			$newx = $slave_pos->{x};
+		} elsif ($slave_pos->{y} > $enemy_pos->{y}) {
+			if ($slave_pos->{x} > $enemy_pos->{x}) {
+				$newy = $slave_pos->{y} - 1;
+				$newx = $slave_pos->{x};
+			} else {
+				$newy = $slave_pos->{y};
+				$newx = $slave_pos->{x} + 1;
+			}
+		} else {
+			if ($slave_pos->{x} > $enemy_pos->{x}) {
+				$newx = $slave_pos->{x} - 1;
+				$newy = $slave_pos->{y};
+			} else {
+				$newx = $slave_pos->{x};
+				$newy = $slave_pos->{y} + 1;
+			}
+		}
+
+		%dance_pos = (
+			x => $newx,
+			y => $newy,
+		);
+		
+	} elsif ($t == 2) {
+		if ($slave_pos->{x} == $enemy_pos->{x}) {
+			if ($slave_pos->{y} == $enemy_pos->{y}) {
+				$newx = $enemy_pos->{x} - 1;
+				$newy = $enemy_pos->{y};
+			} else {
+				$dy = $slave_pos->{y} - $enemy_pos->{y};
+				$newx = $slave_pos->{x} - absunit($dy);
+				$newy = $slave_pos->{y};
+			}
+		} elsif ($slave_pos->{y} == $enemy_pos->{y}) {
+			$dx = $slave_pos->{x} - $enemy_pos->{x};
+			$newy = $slave_pos->{y} + absunit($dx);
+			$newx = $slave_pos->{x};
+		} elsif ($slave_pos->{y} > $enemy_pos->{y}) {
+			if ($slave_pos->{x} > $enemy_pos->{x}) {
+				$newy = $slave_pos->{y};
+				$newx = $slave_pos->{x} - 1;
+			} else {
+				$newy = $slave_pos->{y} - 1;
+				$newx = $slave_pos->{x};
+			}
+		} else {
+			if ($slave_pos->{x} > $enemy_pos->{x}) {
+				$newx = $slave_pos->{x};
+				$newy = $slave_pos->{y} + 1;
+			} else {
+				$newx = $slave_pos->{x} + 1;
+				$newy = $slave_pos->{y};
+			}
+		}
+
+		%dance_pos = (
+			x => $newx,
+			y => $newy,
+		);
+		
+	} else {
+		$dx = $enemy_pos->{x} - $slave_pos->{x};
+		$dy = $enemy_pos->{y} - $slave_pos->{y};
+		%dance_pos = (
+			x => $slave_pos->{x} + (2 * $dx),
+			y => $slave_pos->{y} + (2 * $dy),
+		);
+	}
+	
+	return \%dance_pos;
+}
 
 #########################################
 #########################################
@@ -5253,6 +5366,17 @@ sub solveMessage {
 		$msg =~ s/<ITEML>([a-zA-Z0-9\%\&\(\,\+\*]*)<\/ITEML>/solveItemLink($1)/eg;
 	}
 	return $msg;
+}
+
+sub absunit {
+	my ($x) = @_;
+	if ($x == 0) {
+		return 0;
+	} elsif ($x > 0) {
+		return 1;
+	} else {
+		return -1;
+	}
 }
 
 return 1;

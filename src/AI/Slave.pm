@@ -573,7 +573,7 @@ sub processAttack {
 			if ($args->{attackMethod}{type} eq "weapon") {
 				if ($config{$slave->{configPrefix}.'attack_dance'}) {
 					if (timeOut($timeout{$slave->{ai_dance_attack_timeout}})) {
-						my $cell = GetDanceCell($slave, $target);
+						my $cell = get_dance_position($slave, $target);
 						$slave->sendMove ($cell->{x}, $cell->{y});
 						$slave->sendAttack ($ID);
 						$slave->sendMove ($realMyPos->{x},$realMyPos->{y});
@@ -582,7 +582,8 @@ sub processAttack {
 					
 				} elsif ($config{$slave->{configPrefix}.'attack_dance_dist'} && $args->{attackMethod}{distance} > 2) {
 					if (timeOut($timeout{$slave->{ai_dance_attack_timeout}})) {
-						my $cell = get_kite_position($field, $slave, $target, $realMonsterDist, $realMonsterDist+1, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
+						#my $cell = get_kite_position($field, $slave, $target, $realMonsterDist, $realMonsterDist+1, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
+						my $cell = get_kite_position($field, $slave, $target, $realMonsterDist+1, $realMonsterDist+2, $realMonsterDist+2, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
 						$slave->sendAttack ($ID);
 						$slave->sendMove ($cell->{x}, $cell->{y});
 						$timeout{$slave->{ai_dance_attack_timeout}}{time} = time;
@@ -630,138 +631,6 @@ sub processAttack {
 	}
 
 	#Benchmark::end("ai_homunculus_attack") if DEBUG;
-}
-
-# AzzyAI dance
-
-sub GetDanceCell {
-	my ($slave, $target) = @_;
-
-	my $slave_pos = calcPosition($slave);
-	my $enemy_pos = calcPosition($target);
-
-	my $t = int(rand(2));
-
-	my $dance_pos;
-	if ($t == 1) {
-		$dance_pos = AdjustCW($slave_pos->{x}, $slave_pos->{y}, $enemy_pos->{x}, $enemy_pos->{y});
-	} elsif ($t == 2) {
-		$dance_pos = AdjustCCW($slave_pos->{x}, $slave_pos->{y}, $enemy_pos->{x}, $enemy_pos->{y});
-	} else {
-		$dance_pos = AdjustOpp($slave_pos->{x}, $slave_pos->{y}, $enemy_pos->{x}, $enemy_pos->{y});
-	}
-	return $dance_pos;
-}
-
-sub AdjustOpp {
-	my ($x, $y, $ox, $oy) = @_;
-
-	my $dx = $ox - $x;
-	my $dy = $oy - $y;
-
-	my %dance_pos = (
-		x => $x + (2 * $dx),
-		y => $y + (2 * $dy),
-	);
-
-	return \%dance_pos;
-}
-
-sub AdjustCW {
-	my ($x, $y, $ox, $oy) = @_;
-	my ($newx, $newy, $dy, $dx);
-
-	if ($x == $ox) {
-		if ($y == $oy) {
-			$newx = $ox + 1;
-			$newy = $oy;
-		} else {
-			$dy = $y - $oy;
-			$newx = $x + absunit($dy);
-			$newy = $y;
-		}
-	} elsif ($y == $oy) {
-		$dx = $x - $ox;
-		$newy = $y - absunit($dx);
-		$newx = $x;
-	} elsif ($y > $oy) {
-		if ($x > $ox) {
-			$newy = $y - 1;
-			$newx = $x;
-		} else {
-			$newy = $y;
-			$newx = $x + 1;
-		}
-	} else {
-		if ($x > $ox) {
-			$newx = $x - 1;
-			$newy = $y;
-		} else {
-			$newx = $x;
-			$newy = $y + 1;
-		}
-	}
-
-	my %dance_pos = (
-		x => $newx,
-		y => $newy,
-	);
-
-	return \%dance_pos;
-}
-
-sub AdjustCCW {
-	my ($x, $y, $ox, $oy) = @_;
-	my ($newx, $newy, $dy, $dx);
-
-	if ($x == $ox) {
-		if ($y == $oy) {
-			$newx = $ox - 1;
-			$newy = $oy;
-		} else {
-			$dy = $y - $oy;
-			$newx = $x - absunit($dy);
-			$newy = $y;
-		}
-	} elsif ($y == $oy) {
-		$dx = $x - $ox;
-		$newy = $y + absunit($dx);
-		$newx = $x;
-	} elsif ($y > $oy) {
-		if ($x > $ox) {
-			$newy = $y;
-			$newx = $x - 1;
-		} else {
-			$newy = $y - 1;
-			$newx = $x;
-		}
-	} else {
-		if ($x > $ox) {
-			$newx = $x;
-			$newy = $y + 1;
-		} else {
-			$newx = $x + 1;
-			$newy = $y;
-		}
-	}
-
-	my %dance_pos = (
-		x => $newx,
-		y => $newy,
-	);
-
-	return \%dance_pos;
-}
-
-sub absunit {
-	my ($x) = @_;
-	if ($x == 0) {
-		return 0;
-	} elsif ($x > 0) {
-		return 1;
-	} else {
-		return -1;
-	}
 }
 
 sub processClientSuspend {
@@ -829,9 +698,6 @@ sub processClientSuspend {
 		return 1;
 	}
 }
-
-#homunculus_attackAuto_duringRandomWalk 1
-#homunculus_attackAuto_duringItemsTake 1
 
 ##### AUTO-ATTACK #####
 sub processAutoAttack {
