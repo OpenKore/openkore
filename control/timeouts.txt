@@ -40,6 +40,8 @@ ai_mercenary_attack 1
 ai_homunculus_dance_attack 0.2
 ai_mercenary_dance_attack 0.2
 
+ai_mercenary_dance_dist_attack 0.2
+
 # Check for monsters to attack every x seconds
 ai_attack_auto 0.5
 ai_homunculus_attack_auto 0.5
