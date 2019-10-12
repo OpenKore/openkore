@@ -837,7 +837,11 @@ sub items_nonstackable {
 	) {
 		return $items->{type7};
 	} elsif ($args->{switch} eq '0B0A') { # item_list
-		return $items->{type8};
+		if (grep { $masterServer->{serverType} eq $_ } qw(iRO_Renewal)) {
+			return $items->{type7};
+		} else {
+			return $items->{type8};
+		}
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -879,7 +883,11 @@ sub items_stackable {
 	) {
 		return $items->{type6};
 	} elsif ($args->{switch} eq '0B09') { # item_list
-		return $items->{type7};
+		if (grep { $masterServer->{serverType} eq $_ } qw(iRO_Renewal)) {
+			return $items->{type6};
+		} else {
+			return $items->{type7};
+		}
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -893,8 +901,8 @@ sub parse_items {
 	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
-
-		if ( $args->{switch} eq '0B09' && $item->{type} == 10 ) { # workaround arrow byte bug
+    
+		if ( $args->{switch} eq '0B09' && $item->{type} == 10  && $masterServer->{serverType} ne 'iRO_Renewal') { # workaround arrow byte bug
 			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
 		}
 
