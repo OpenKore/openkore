@@ -29302,7 +29302,7 @@ Increases critical damage on targets by 5%.
 Crit + 1
 #
 4927#
-Max HP +50.
+Max HP + 50
 #
 4928#
 Max SP + 10
@@ -29311,25 +29311,22 @@ Max SP + 10
 Max SP + 1%
 #
 4930#
-HP recovery effect by Heal, items + 2%.
+Increases the recovery rate of recovery skills and recovery items by 2%.
 #
 4931#
-10HP recovered in every 10 sec.
+Restores 10 HP every 10 seconds.
 #
 4932#
 Restores 1 SP to the user when a monster is killed by a physical or a magical attack.
 #
 4933#
 Reduces damage taken from Neutral property attacks by 1%.
-^FFFFFFEnchantment^000000
 #
 4934#
 Reduces damage taken from Neutral property attacks by 2%.
-^FFFFFFEnchantment^000000
 #
 4935#
 Reduces damage taken from Neutral property attacks by 3%.
-^FFFFFFEnchantment^000000
 #
 4936#
 Increases physical damage on Large size targets by 1%.
@@ -29350,22 +29347,22 @@ Crit + 4
 Crit + 6
 #
 4942#
-Perfect Dodge +3
+Perfect Dodge + 3
 #
 4943#
-Perfect Dodge +4
+Perfect Dodge + 4
 #
 4944#
-Perfect Dodge +5
+Perfect Dodge + 5
 #
 4945#
-SP Cost -2%
+Reduces the SP cost of skills by 2%.
 #
 4946#
-SP Cost -4%
+Reduces the SP cost of skills by 4%.
 #
 4947#
-SP Cost -6%
+Reduces the SP cost of skills by 6%.
 #
 4948#
 Reduces the global delay of skills by 2%.
@@ -29391,7 +29388,7 @@ Adds a 2% chance of buffing the user for 10 seconds when receiving a magical att
 Reduces damage taken from the property attacks by an additional 10%.
 #
 4992#
-Absorb 1% of damage dealt to enemy into HP with 1% chance.
+Adds a 1% chance of restoring 1% of damage as HP when performing a physical attack.
 #
 4993#
 Adds a 1% chance of restoring 1% of damage as SP when performing a physical attack.
@@ -54679,10 +54676,11 @@ Attack: 20
 Weight: 0.2
 #
 13231#
-^808080A bullet coated with poison.^000000
-Class: Bullet
-Attack: 20
-Weight: 0.2
+A bullet coated with poison.
+Class: ^808080Bullet^000000
+Attack: ^80808020^000000
+Property: ^808080Poison^000000
+Weight: ^8080800.2^000000
 Adds a 5% chance of inflicting ^800000Poison^000000 on the target when performing a physical attack.
 #
 13232#

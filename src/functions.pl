@@ -627,9 +627,12 @@ sub initMapChangeVars {
 		delete $char->{warp};
 		delete $char->{casting};
 		delete $char->{homunculus}{appear_time} if $char->{homunculus};
-		$char->inventory->onMapChange();
-		# Clear the cart but do not close it.
-		$char->cart->clear;
+		#Dont clear item on Map change [sctnightcore]
+		if ($masterServer->{serverType} ne 'iRO_Renewal') {
+			$char->inventory->onMapChange();
+			# Clear the cart but do not close it.
+			$char->cart->clear;
+		}
 		$char->storage->close() if ($char->storage->isReady());
 	}
 	$timeout{play}{time} = time;
