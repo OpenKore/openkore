@@ -1332,8 +1332,10 @@ sub avoidGM_talk {
 sub avoidList_talk {
 	return 0 if ($net->clientAlive() || !$config{avoidList});
 	my ($user, $msg, $ID) = @_;
+	my $avoidPlayer = $avoid{Players}{lc($user)};
+	my $avoidID = $avoid{ID}{$ID};
 
-	if ($avoid{Players}{lc($user)}{disconnect_on_chat} || $avoid{ID}{$ID}{disconnect_on_chat}) {
+	if ($avoidPlayer->{disconnect_on_chat} || $avoidID->{disconnect_on_chat}) {
 		warning TF("Disconnecting to avoid %s!\n", $user);
 		main::chatLog("k", TF("*** %s talked to you, auto disconnected ***\n", $user));
 		warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
@@ -3931,16 +3933,15 @@ sub avoidGM_near {
 		# skip this person if we dont know the name
 		next if (!defined $player->{name});
 
-		# Check whether this "GM" is on the ignore list
-		# in order to prevent false matches
-		last if (existsInList($config{avoidGM_ignoreList}, $player->{name}));
+		# Check whether this "GM" is on the ignore list in order to prevent false matches
+		next if (existsInList($config{avoidGM_ignoreList}, $player->{name}));
 
 		# check if this name matches the GM filter
-		last unless ($config{avoidGM_namePattern} ? $player->{name} =~ /$config{avoidGM_namePattern}/ : $player->{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
+		next unless ($config{avoidGM_namePattern} ? $player->{name} =~ /$config{avoidGM_namePattern}/ : $player->{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
 
 		my %args = (
 			name => $player->{name},
-			ID => $player->{ID}
+			ID => $player->{nameID}
 		);
 		Plugins::callHook('avoidGM_near', \%args);
 		return 1 if ($args{return});
@@ -3986,8 +3987,21 @@ sub avoidList_near {
 	return if ($config{avoidList_inLockOnly} && $field->baseName ne $config{lockMap});
 
 	for my $player (@$playersList) {
+		# skip this person if we dont know the name
+		next if (!defined $player->{name});
+
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
+
+		# next if the player is not on the avoid list
+		next if (!$avoidPlayer and !$avoidID);
+
+		my %args = (
+			name => $player->{name},
+			ID => $player->{nameID}
+		);
+		Plugins::callHook('avoidList_near', \%args);
+
 		if (!$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
 			warning TF("%s (%s) is nearby, disconnecting...\n", $player->{name}, $player->{nameID});
 			chatLog("k", TF("*** Found %s (%s) nearby and disconnected ***\n", $player->{name}, $player->{nameID}));
