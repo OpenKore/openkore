@@ -8,7 +8,7 @@ lou_fild01 190 100 alberta 235 45 0 c r0
 tur_dun01 165 29 alberta 241 115 0 c r0 c c
 alberta 245 93 amatsu 197 83 10000 c r1 c c c r0 n
 amatsu 194 79 alberta 243 91 0 c r0 n
-alberta 245 69 gon_fild01 258 82 0 c r1 c c r0 n
+alberta 245 62 gon_fild01 258 82 0 c r1 c c r0 n
 gon_fild01 255 79 alberta 243 67 0 c r0 n
 izlude 201 181 izlu2dun 107 50 150 c r0
 izlu2dun 108 27 izlude 176 182 0 c r0
@@ -66,12 +66,14 @@ ama_dun01 229 7 ama_in02 119 181 0 c r0 n
 #prontera 282 200 morocc 156 47 1200 c r2 c r3
 #prontera 282 200 gef_fild10 52 326 1700 c r2 c r4
 #prontera 282 200 alberta 117 56 1800 c r2 c r5
-#prontera 29 207 izlude 94 103 600 c r2 c r0
-#prontera 29 207 geffen 120 39 1200 c r2 c r1
-#prontera 29 207 payon 161 58 1200 c r2 c r2
-#prontera 29 207 morocc 156 47 1200 c r2 c r3
-#prontera 29 207 gef_fild10 52 326 1700 c r2 c r4
-#prontera 29 207 alberta 117 56 1800 c r2 c r5
+#prontera 35 208 izlude 94 103 2000 1 c r2 c r0
+#prontera 35 208 geffen 120 39 2000 1 c r2 c r1
+#prontera 35 208 payon 161 58 2000 1 c r2 c r2
+#prontera 35 208 morocc 156 47 2000 1 c r2 c r3
+#prontera 35 208 alberta 117 56 2000 1 c r2 c r4
+#prontera 35 208 aldebaran 168 112 2000 1 c r2 c r5
+#prontera 35 208 comodo 209 143 3000 1 c r2 c r6
+#prontera 35 208 umbala 100 154 3000 1 c r2 c r7
 #payon 175 226 prontera 116 72 1200 c r2 c r0
 #payon 175 226 alberta 117 56 1200 c r2 c r1
 #payon 175 226 morocc 156 47 1200 c r2 c r2
@@ -3134,14 +3136,13 @@ bra_in01 85 67  bra_in01 50 66
 bra_in01 31 29  bra_in01 23 70
 bra_in01 25 70  bra_in01 32 26
 bra_in01 31 74  bra_in01 148 59
-bra_in01 148 57 bra_in01 31 72
 
 #Dungeon
 bra_dun01 199 35 bra_dun02 261 263
 bra_dun02 261 265 bra_dun01 199 37
 
 #Dungeon Access
-bra_in01 144 187 bra_in01 0 206 102 c r0 n
+bra_in01 144 187 bra_in01 206 102 c r0 n
 bra_in01 206 188 bra_dun01 87 47 0 n
 bra_dun01 87 43 bra_in01 206 185 0 n
 
