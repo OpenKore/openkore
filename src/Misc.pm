@@ -3950,23 +3950,28 @@ sub avoidGM_near {
 		if ($config{avoidGM_near} == 1) {
 			# Mode 1: teleport & disconnect
 			useTeleport(1);
-			$msg = TF("GM %s is nearby, teleport & disconnect for %d seconds", $player->{name}, $config{avoidGM_reconnect});
+			$msg = TF("GM %s (%s) is nearby, teleport & disconnect for %d seconds", $player->{name}, $player->{nameID}, $config{avoidGM_reconnect});
 			relog($config{avoidGM_reconnect}, 1);
 
 		} elsif ($config{avoidGM_near} == 2) {
 			# Mode 2: disconnect
-			$msg = TF("GM %s is nearby, disconnect for %s seconds", $player->{name}, $config{avoidGM_reconnect});
+			$msg = TF("GM %s (%s) is nearby, disconnect for %s seconds", $player->{name}, $player->{nameID}, $config{avoidGM_reconnect});
 			relog($config{avoidGM_reconnect}, 1);
 
 		} elsif ($config{avoidGM_near} == 3) {
 			# Mode 3: teleport
 			useTeleport(1);
-			$msg = TF("GM %s is nearby, teleporting", $player->{name});
+			$msg = TF("GM %s (%s) is nearby, teleporting", $player->{name}, $player->{nameID});
 
-		} elsif ($config{avoidGM_near} >= 4) {
+		} elsif ($config{avoidGM_near} == 4) {
 			# Mode 4: respawn
 			useTeleport(2);
-			$msg = TF("GM %s is nearby, respawning", $player->{name});
+			$msg = TF("GM %s (%s) is nearby, respawning", $player->{name}, $player->{nameID});
+		} elsif ($config{avoidGM_near} >= 5) {
+			# Mode 5: respawn & disconnect
+			useTeleport(2);
+			$msg = TF("GM %s (%s) is nearby, respawning & disconnect for %d seconds", $player->{name}, $player->{nameID}, $config{avoidGM_reconnect});
+			relog($config{avoidGM_reconnect}, 1);
 		}
 
 		warning "$msg\n";
