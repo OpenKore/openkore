@@ -3995,6 +3995,8 @@ sub avoidList_near {
 	for my $player (@$playersList) {
 		# skip this person if we dont know the name
 		next if (!defined $player->{name});
+		# Check whether this Player is on the ignore list in order to prevent false matches
+		next if (existsInList($config{avoidList_ignoreList}, $player->{name}));
 
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
