@@ -3989,6 +3989,7 @@ sub avoidGM_near {
 # Checks if any of the surrounding players are on the avoid.txt avoid list.
 # Disconnects / teleports if a player is detected.
 sub avoidList_near {
+	my $return = 0;
 	return if ($config{avoidList_inLockOnly} && $field->baseName ne $config{lockMap});
 
 	for my $player (@$playersList) {
@@ -4007,21 +4008,47 @@ sub avoidList_near {
 		);
 		Plugins::callHook('avoidList_near', \%args);
 
-		if (!$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
-			warning TF("%s (%s) is nearby, disconnecting...\n", $player->{name}, $player->{nameID});
-			chatLog("k", TF("*** Found %s (%s) nearby and disconnected ***\n", $player->{name}, $player->{nameID}));
-			warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
-			relog($config{avoidList_reconnect}, 1);
-			return 1;
-
-		} elsif (($avoidPlayer && $avoidPlayer->{teleport_on_sight}) || ($avoidID && $avoidID->{teleport_on_sight})) {
-			message TF("Teleporting to avoid player %s (%s)\n", $player->{name}, $player->{nameID}), "teleport";
-			chatLog("k", TF("*** Found %s (%s) nearby and teleported ***\n", $player->{name}, $player->{nameID}));
+		my $msg;
+		if ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 1 && $avoidPlayer->{disconnect_on_sight} == 1) 
+			|| ($avoidID && $avoidID->{teleport_on_sight} &&  $avoidID->{disconnect_on_sight}) ) {
+			# like avoidGM_near Mode 1: teleport & disconnect
 			useTeleport(1);
-			return 1;
+			$msg = TF("Player %s (%s) is nearby, teleport & disconnect for %d seconds", $player->{name}, $player->{nameID}, $config{avoidList_reconnect});
+			relog($config{avoidList_reconnect}, 1);
+			$return = 1;
+
+		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} && $avoidPlayer->{disconnect_on_sight}) 
+			|| ($avoidID && $avoidID->{teleport_on_sight} &&  $avoidID->{disconnect_on_sight}) ) {
+			# like avoidGM_near Mode 5: respawn & disconnect
+			useTeleport(2);
+			$msg = TF("Player %s (%s) is nearby, respawning & disconnect for %d seconds", $player->{name}, $player->{nameID}, $config{avoidList_reconnect});
+			relog($config{avoidList_reconnect}, 1);
+			$return = 1;
+
+		} elsif ( !$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) ) ) {
+			# like avoidGM_near Mode 2: disconnect
+			$msg = TF("Player %s (%s) is nearby, disconnect for %s seconds", $player->{name}, $player->{nameID}, $config{avoidList_reconnect});
+			relog($config{avoidList_reconnect}, 1);
+			$return = 1;
+
+		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 1) || ($avoidID && $avoidID->{teleport_on_sight} == 1) ) {
+			# like avoidGM_near Mode 3: teleport
+			useTeleport(1);
+			$msg = TF("Player %s (%s) is nearby, teleporting", $player->{name}, $player->{nameID});
+			$return = 1;
+
+		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 2) || ($avoidID && $avoidID->{teleport_on_sight} == 2) ) {
+			# like avoidGM_near Mode 4: respawn
+			useTeleport(2);
+			$msg = TF("Player %s (%s) is nearby, respawning", $player->{name}, $player->{nameID});
+			$return = 1;
 		}
+
+		warning "$msg\n";
+		chatLog("k", "*** $msg ***\n");
+		
 	}
-	return 0;
+	return $return;
 }
 
 sub avoidList_ID {
