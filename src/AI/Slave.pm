@@ -171,7 +171,7 @@ sub iterate {
 sub processWasFound {
 	my $slave = shift;
 	if ($slave->{isLost} && $slave->{master_dist} < MAX_DISTANCE) {
-		$slave->{follow_lostTeleportRetry} = 0;
+		$slave->{lost_teleportToMaster_maxTries} = 0;
 		$slave->{isLost} = 0;
 		warning TF("%s was rescued.\n", $slave), 'slave';
 		if (AI::is('route') && AI::args()->{isSlaveRescue}) {
@@ -189,12 +189,12 @@ sub processTeleportToMaster {
 		&& timeOut($timeout{$slave->{ai_standby_timeout}})
 		&& !$slave->{isLost}
 	) {
-		if (!$slave->{follow_lostTeleportRetry} || $config{$slave->{configPrefix}.'follow_lostTeleportRetry'} > $slave->{follow_lostTeleportRetry}) {
+		if (!$slave->{lost_teleportToMaster_maxTries} || $config{$slave->{configPrefix}.'lost_teleportToMaster_maxTries'} > $slave->{lost_teleportToMaster_maxTries}) {
 			$slave->clear('move', 'route');
 			$slave->sendStandBy;
-			$slave->{follow_lostTeleportRetry}++;
+			$slave->{lost_teleportToMaster_maxTries}++;
 			$timeout{$slave->{ai_standby_timeout}}{time} = time;
-			warning TF("%s trying to teleport to master (distance: %d) (re)try: %d\n", $slave, $slave->{master_dist}, $slave->{follow_lostTeleportRetry}), 'slave';
+			warning TF("%s trying to teleport to master (distance: %d) (re)try: %d\n", $slave, $slave->{master_dist}, $slave->{lost_teleportToMaster_maxTries}), 'slave';
 		} else {
 			warning TF("%s is lost (distance: %d).\n", $slave, $slave->{master_dist}), 'slave';
 			$slave->{isLost} = 1;

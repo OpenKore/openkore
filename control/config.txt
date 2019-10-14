@@ -383,8 +383,9 @@ mercenary_runFromTarget_maxStep 9
 
 mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
-mercenary_follow_lostTeleportRetry 6
-mercenary_follow_lost_rescue_randomWalk 0
+
+mercenary_lost_teleportToMaster_maxTries 6
+mercenary_lost_rescue_randomWalk 0
 
 mercenary_moveNearIdle 1
 mercenary_moveNearIdle_distance 4
@@ -433,8 +434,9 @@ homunculus_runFromTarget_maxStep 9
 
 homunculus_followDistanceMax 12
 homunculus_followDistanceMin 3
-homunculus_follow_lostTeleportRetry 6
-homunculus_follow_lost_rescue_randomWalk 0
+
+homunculus_lost_teleportToMaster_maxTries 6
+homunculus_lost_rescue_randomWalk 0
 
 homunculus_moveNearIdle 1
 homunculus_moveNearIdle_distance 4
