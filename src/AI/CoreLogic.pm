@@ -2231,7 +2231,7 @@ sub processMoveNearSlave {
 		foreach my $slave (values %{$char->{slaves}}) {
 			if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
 				$dist = $slave->blockDistance_master;
-				if ($config{$slave->{configPrefix}.'moveNearIdle'} && !$slave->isIdle && $dist > ($config{$slave->{configPrefix}.'moveNearIdle_maxDistance'} || 8)) {
+				if ($config{$slave->{configPrefix}.'moveNearWhenIdle'} && !$slave->isIdle && $dist > ($config{$slave->{configPrefix}.'moveNearWhenIdle_maxDistance'} || 8)) {
 					$move_slave = $slave;
 					last;
 				}
@@ -2239,7 +2239,7 @@ sub processMoveNearSlave {
 		}
 		return unless ($move_slave);
 		
-		ai_route($field->baseName, $move_slave->{pos_to}{x}, $move_slave->{pos_to}{y}, distFromGoal => ($config{$move_slave->{configPrefix}.'moveNearIdle_distance'} || 4), attackOnRoute => 1, noSitAuto => 1, isMoveNearSlave => 1);
+		ai_route($field->baseName, $move_slave->{pos_to}{x}, $move_slave->{pos_to}{y}, distFromGoal => ($config{$move_slave->{configPrefix}.'moveNearWhenIdle_minDistance'} || 4), attackOnRoute => 1, noSitAuto => 1, isMoveNearSlave => 1);
 		message TF("%s moved too far (distance: %d) - Moving near it.\n", $move_slave, $dist), 'slave';
 	}
 }
