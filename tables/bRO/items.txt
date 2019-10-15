@@ -6554,6 +6554,7 @@
 19865#Coroa de Bufão#
 19868#Chapéu do Explorador#
 19871#Ritmo do Momento#
+19873#Chapéu Frelldora#
 19874#Tiara Carnavalesca#
 19875#Touca de Coelho#
 19876#Cartola da Mekoro#
@@ -6632,6 +6633,7 @@
 20080#Visual de Plumas e Paetês#
 20098#Adorno Vampiresco#
 20099#Esplêndido Brilhante#
+20100#Chapéu Ragtoberfest#
 20101#Asas de Bragi#
 20108#Óculos Julieta de Quartzo Rubi#
 20109#Chapéu Jolly Roger#
