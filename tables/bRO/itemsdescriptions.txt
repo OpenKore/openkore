@@ -2982,8 +2982,8 @@ Classes: ^777777Espadachins T. e evoluções^000000
 Uma espada de duas mãos criada especialmente para lutar contra Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffFOR +2.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +55%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +55%.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
 Ataque: ^777777200^000000
 Peso: ^7777770^000000
@@ -2995,8 +2995,8 @@ Classes: ^777777Espadachins e evoluções^000000
 Uma espada de duas mãos criada especialmente para lutar contra Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffCRIT +20.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +55%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +55%.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
 Ataque: ^777777200^000000
 Peso: ^7777770^000000
@@ -3828,7 +3828,7 @@ Classes: ^777777Mercenários e evoluções^000000
 Esse katar é reconhecidamente eficaz contra humanos. Há rumores de que ele dá um rugido bestial quando encharcado de sangue, daí o seu nome.
 ^CD3278Duplica a chance de causar um ataque crítico.^000000
 ^0000ffRegeneração natural de HP e SP -100%.^000000
-^0000ffIgnora 100% da DEF da raça Humanoide.^000000
+^0000ffIgnora 100% da DEF das raças Humano e Humanoide.^000000
 A cada 1 de AGI base:
 ^0000ffEsquiva -1.^000000
 A cada Nível de base:
@@ -3928,7 +3928,8 @@ Classes: ^777777Algozes e evoluções^000000
 1273#
 Este é um item de Aluguel [A]. Quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.
 Esse katar é uma versão melhorada, mas instável, do Rugido Sangrento original, e, portanto é reconhecidamente eficaz contra humanos. Há rumores de que ao fim de 7 dias, ele dá um rugido bestial assustador antes de desaparecer para sempre.
-Ignora a defesa de monstros do tipo Humanoide. Recupera 3 HP a cada 5 segundos.
+^0000ffIgnora 100% da DEF das raças Humano e Humanoide.^000000
+^0000ffRecupera 3 HP a cada 5 segundos.^000000
 Tipo: Katar
 Força de Ataque: 148
 Peso: 0
@@ -3992,8 +3993,8 @@ Katar especialmente criado para enfrentar Humanoides no campo de batalha.
 ^a400cdIndestrutível em batalha.^000000
 ^CD3278Duplica a chance de causar um ataque crítico.^000000
 ^0000ffFOR +1. DES +1. SOR +1.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +70%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +70%.^000000
 Tipo: ^777777Katar^000000
 Ataque: ^777777130^000000
 Peso: ^7777770^000000
@@ -4008,7 +4009,7 @@ Katar especialmente criado para enfrentar Humanoides no campo de batalha.
 ^0000ffFOR +1. DES +1. SOR +1.^000000
 ^0000ffDano crítico +20%.^000000
 ^0000ffVelocidade de ataque +5%.^000000
-^0000ffDano físico contra a raça Humanoide +70%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +70%.^000000
 Tipo: ^777777Katar^000000
 Ataque: ^777777130^000000
 Peso: ^7777770^000000
@@ -4707,8 +4708,8 @@ Classes: ^777777Transcendentais de Espadachins, Mercadores e evoluções^000000
 Um machado de duas mãos aterrorizante. Dizem que estimula os nervos do usuário a matar Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffFOR +3.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +55%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +55%.^000000
 Tipo: ^777777Machado de Duas Mãos^000000
 Ataque: ^777777200^000000
 Peso: ^7777770^000000
@@ -4720,7 +4721,7 @@ Classes: ^777777Espadachins, Mercadores e evoluções^000000
 Um machado de duas mãos aterrorizante. Dizem que estimula os nervos do usuário a matar Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffFOR +3.^000000
-^0000ffDano físico contra a raça Humanoide +55%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +55%.^000000
 ^0000ffAo realizar ataques físicos, chance de ativar um efeito por 3 segundos.^000000
 Enquanto esse efeito esiver ativo:
 ^0000ffAo realizar ataques físicos, 100% de chance de quebrar a armadura do oponente.^000000
@@ -5168,7 +5169,7 @@ Classes: ^777777Espadachins T. e evoluções^000000
 1421#
 Uma lança com um gancho na ponta. O gancho pode ser usado para puxar e empurrar o oponente.
 ^0000ffHabilita [Perfurar] nv. 3.^000000
-^0000ffDano físico contra a raça Humanoide +20%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +20%.^000000
 Ao realizar ataques físicos:
 ^0000ff5% de chance de infligir Atordoamento no oponente.^000000
 Tipo: ^777777Lança^000000
@@ -5196,8 +5197,8 @@ Classes: ^777777Espadachins T. e evoluções^000000
 Uma lança criada para atacar os inimigos a distância. Especialmente desenhada para batalhas contra Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffFOR +2.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +95%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +95%.^000000
 Templários e evoluções:
 ^0000ffVelocidade de ataque +20%.^000000
 Tipo: ^777777Lança^000000
@@ -5662,7 +5663,7 @@ Classes: ^777777Espadachins e evoluções^000000
 #
 1478#
 Lança pontiaguda, eficiente para atacar os pontos fracos do inimigo.
-^0000ffDano físico contra a raça Humanoide +10%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +10%.^000000
 ^0000ffIgnora 100% da DEF de monstros normais e chefes.^000000
 Ao realizar ataques físicos:
 ^0000ff3% de chance de autoconjurar [Perfurar] nv. 5.^000000
@@ -5718,8 +5719,8 @@ Classes: ^777777Espadachins e evoluções^000000
 Lança de duas mãos criada para atacar inimigos no campo de batalha.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffFOR +2.^000000
-^0000ffIgnora 100% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +25%.^000000
+^0000ffIgnora 100% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +25%.^000000
 Tipo: ^777777Lança de Duas Mãos^000000
 Ataque: ^777777160^000000
 Peso: ^7777770^000000
@@ -6345,8 +6346,8 @@ Uma maça mortal utilizada pelos lutadores mais habilidosos para lutar contra Hu
 FOR + 1, DES + 1
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffFOR +1. DES +1.^000000
-^0000ffDano físico contra a raça Humanoide +75%.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +75%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
 Tipo: ^777777Maça^000000
 Ataque: ^777777105^000000
 Peso: ^7777770^000000
@@ -6358,7 +6359,7 @@ Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Noviços, Mercadores e
 Uma maça mortal utilizada pelos lutadores mais habilidosos para lutar contra Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffFOR +1. DES +1.^000000
-^0000ffDano físico contra a raça Humanoide +75%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +75%.^000000
 ^0000ffAo realizar ataques físicos, chance de ativar um efeito por 6 segundos.^000000
 Enquanto esse efeito estiver ativo:
 ^0000ffAo realizar ataques físicos, 50% de chance de infligir [Atordoamento] no oponente.^000000
@@ -6717,8 +6718,8 @@ Livro de batalha escrito por um renomado estrategista.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffATQM +125.^000000
 ^0000ffFOR +2. INT +1.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +75%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +75%.^000000
 Tipo: ^777777Livro^000000
 Ataque: ^77777790^000000
 Peso: ^7777770^000000
@@ -6731,8 +6732,8 @@ Livro de batalha escrito por um renomado estrategista.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffATQM +125.^000000
 ^0000ffFOR +1. INT +2.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +75%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +75%.^000000
 Tipo: ^777777Livro^000000
 Ataque: ^77777790^000000
 Peso: ^7777770^000000
@@ -7320,7 +7321,7 @@ Um cajado modificado para ser empunhado por magos no campo de batalha. Especialm
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffATQM +125.^000000
 ^0000ffDES +3. INT +4.^000000
-^0000ffIgnora 25% da DEFM da raça Humanoide.^000000
+^0000ffIgnora 25% da DEFM das raças Humano e Humanoide.^000000
 ^0000ffAo realizar ataques mágicos, 5% de chance de infligir [Atordoamento] no oponente.^000000
 Tipo: ^777777Cajado^000000
 Ataque: ^77777770^000000
@@ -7334,7 +7335,7 @@ Um cajado modificado para ser empunhado por magos no campo de batalha. Especialm
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffATQM +125.^000000
 ^0000ffDES +3. INT +3.^000000
-^0000ffDano mágico contra a raça Humanoide +15%.^000000
+^0000ffDano mágico contra as raças Humano e Humanoide +15%.^000000
 ^0000ffAo realizar ataques mágicos, 5% de chance de infligir [Atordoamento] no oponente.^000000
 Tipo: ^777777Cajado^000000
 Ataque: ^77777770^000000
@@ -8243,11 +8244,10 @@ Classes: ^777777Atiradores de Elite e evoluções^000000
 #
 1738#
 Uma besta de batalha criada para dar mais dano em Humanoides no campo de batalha.
-DES + 2
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffDES +2.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +55%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +55%.^000000
 Tipo: ^777777Arco^000000
 Ataque: ^777777100^000000
 Peso: ^7777770^000000
@@ -8260,7 +8260,7 @@ Uma besta de batalha criada para dar mais dano em Humanoides no campo de batalha
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffDES +2.^000000
 ^0000ffINT +10.^000000
-^0000ffDano físico contra a raça Humanoide +55%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +55%.^000000
 Tipo: ^777777Arco^000000
 Ataque: ^777777100^000000
 Peso: ^7777770^000000
@@ -8818,11 +8818,11 @@ Classes que utilizam: ^777777Sacerdote/Monge^000000
 #
 1823#
 Punho utilizado por comandantes no campo de batalha.
-FOR + 2, AGI + 1
-Aumenta o Ataque Físico contra Humanoides em 95%.
-Ignora a defesa física de humanoides em 20%.
-Indestrutível em batalha.
-Adiciona a chance de invocar automaticamente a habilidade 'Zen' quando atacar.
+^0000ffFOR + 2, AGI + 1^000000
+^0000ffDano físico contra as raças Humano e Humanoide +95%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffIndestrutível em batalha.^000000
+^0000ffAdiciona a chance de invocar automaticamente a habilidade 'Zen' quando atacar.^000000
 Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777730^000000
 Peso: ^7777770^000000
@@ -8832,11 +8832,11 @@ Classes que utilizam: ^777777Sacerdote, Monge e evoluções^000000
 #
 1824#
 Punho utilizado por comandantes no campo de batalha.
-FOR + 2, INT + 1
-Aumenta o Ataque Físico contra Humanoides em 95%.
-Reduz o tempo de conjuração da habilidade 'Punho Supremo de Asura' em 25%.
-Indestrutível em batalha.
-Ao atacar, adiciona a chance de reduzir por 6 segundos o tempo de conjuração variável da habilidade 'Punho Supremo de Asura' em 100%.
+^0000ffFOR + 2, INT + 1^000000
+^0000ffDano físico contra as raças Humano e Humanoide +95%.^000000
+^0000ffReduz o tempo de conjuração da habilidade 'Punho Supremo de Asura' em 25%.^000000
+^0000ffIndestrutível em batalha.^000000
+^0000ffAo atacar, adiciona a chance de reduzir por 6 segundos o tempo de conjuração variável da habilidade 'Punho Supremo de Asura' em 100%.^000000
 Tipo: ^777777Soqueira^000000
 Força de Ataque: ^77777730^000000
 Peso: ^7777770^000000
@@ -9301,8 +9301,8 @@ Classes: ^777777Bardos e evoluções^000000
 Uma guitarra criada para encorajar exércitos em batalha.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffDES +2.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +95%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +95%.^000000
 Tipo: ^777777Instrumento Musical^000000
 Ataque: ^77777750^000000
 Peso: ^7777770^000000
@@ -9315,7 +9315,7 @@ Uma guitarra criada para encorajar exércitos em batalha.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffDES +2.^000000
 ^0000ffDano de [Vulcão de Flechas] +20%.^000000
-^0000ffDano físico contra a raça Humanoide +95%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +95%.^000000
 Tipo: ^777777Instrumento Musical^000000
 Ataque: ^77777750^000000
 Peso: ^7777770^000000
@@ -9751,8 +9751,8 @@ Classes: ^777777Odaliscas e evoluções^000000
 Um chicote criado especialmente para lutar contra Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffDES +2.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +95%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +95%.^000000
 Tipo: ^777777Chicote^000000
 Ataque: ^77777750^000000
 Peso: ^7777770^000000
@@ -9765,7 +9765,7 @@ Um chicote criado especialmente para lutar contra Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffDES +2.^000000
 ^0000ffDano de [Vulcão de Flechas] +20%.^000000
-^0000ffDano físico contra a raça Humanoide +95%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +95%.^000000
 Tipo: ^777777Chicote^000000
 Ataque: ^77777750^000000
 Peso: ^7777770^000000
@@ -12743,7 +12743,7 @@ Classes: ^777777Espadachim T., Mercador T., Gatuno T. e evoluções^000000
 #
 2376#
 Armadura criada para os guerreiros que enfrentam os inimigos no campo de batalha. Pode ser utilizada em conjunto com outros equipamentos.
-Reduz em 2% o dano recebido de Humanoides.
+Resistência as raças Humano e Humanoide +2%.
 HP Máx + 150. DEFM + 2.
 Quando equipada juntamente com as Grevas de Batalha e o Manteau do Capitão:
 O usuário receberá 3x mais dano de monstros que não sejam Humanoides;
@@ -12773,7 +12773,7 @@ Classes que utilizam: ^777777Mercador e evoluções^000000
 #
 2378#
 Armadura desenhada para aumentar a velocidade do seu usuário. Pode ser utilizada em conjunto com outros equipamentos.
-Reduz em 2% o dano recebido de Humanoides.
+Resistência as raças Humano e Humanoide +2%.
 HP Máx + 150. DEFM + 2.
 Quando equipada juntamente com as Grevas de Batalha e o Manteau do Capitão:
 O usuário receberá 3x mais dano de monstros que não sejam Humanoides;
@@ -13308,8 +13308,8 @@ Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 2435#
 Grevas que aumentam a habilidade em campo de batalha do usuário.
-Reduz em 1% o dano recebido de Humanoides.
-HP Máx + 100. DEFM + 1.
+^0000ffResistência as raças Humano e Humanoide +1%.^000000
+^0000ffHP Máx + 100. DEFM + 1.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^77777715^000000
 Peso: ^7777770^000000
@@ -13318,8 +13318,8 @@ Classes que utilizam: ^777777Espadachim, Mercador, Gatuno, e evoluções; Ninja 
 #
 2436#
 Sapatos que aumentam a habilidade em campo de batalha do usuário.
-Reduz em 1% o dano recebido de Humanoides.
-HP Máx + 100. DEFM + 1.
+^0000ffResistência as raças Humano e Humanoide +1%.^000000
+^0000ffHP Máx + 100. DEFM + 1.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^7777779^000000
 Peso: ^7777770^000000
@@ -13328,8 +13328,8 @@ Classes que utilizam: ^777777Mago, Noviço, Arqueiro, e evoluções; Espirituali
 #
 2437#
 Botas especialmente criadas para Justiceiros usarem no campo de batalha.
-Reduz em 1% o dano recebido de Humanoides.
-HP Máx + 100. DEFM + 1.
+^0000ffResistência as raças Humano e Humanoide +1%.^000000
+^0000ffHP Máx + 100. DEFM + 1.^000000
 Tipo: ^777777Calçado^000000
 Defesa: ^7777779^000000
 Peso: ^7777770^000000
@@ -15898,7 +15898,7 @@ Classes que utilizam: ^777777Todas^000000
 #
 2760#
 ^000088Item de aluguel^000000
-Recebe 15% a mais de experiências de ^000088monstros da raça Humanoide^000000.
+^0000ffEXP adquirida por ^000088oponentes da raça Humanoide^000000 +15%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
@@ -17117,7 +17117,7 @@ Anel desenvolvido em Geffen para melhorar o esforço físico do usuário.
 ^FF6347Conjunto^000000
 ^FF6347[Manto Mágico de Geffen]^000000
 ^0000ffPós-conjuração -5%.^000000
-^0000ffResistência a raça Humanoide +5%.^000000
+^0000ffResistência as raças Humano e Humanoide +5%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
@@ -24552,7 +24552,7 @@ Classes que utilizam: ^777777Espadachim e suas evoluções^000000
 5132#
 Um gorro cor-de-rosa muito bonitinho, criado à imagem da Angeling, a mãe de todos os Porings.
 Se você usá-lo por muito tempo, sentirá vontade de sair saltitando pra lá e pra cá.
-^FF0000Reduz em 10% o dano recebido de monstros da raça Humanoide.^000000
+^FF0000Resistência as raças Humano e Humanoide +10%.^000000
 Defesa: ^7777775^000000
 Equipa em: ^777777Topo^000000
 Peso: ^77777770^000000
@@ -24597,7 +24597,7 @@ Classes que utilizam: ^777777Todas^000000
 5137#
 Uma boneca feita à imagem da Alice, um dos monstros mais queridos de Rune-Midgard.
 ^0000ffFOR +1.^000000
-^0000ffDano físico contra oponentes da raça Humanoide +10%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +10%.^000000
 Ao realizar ataques físicos:
 ^0000ff0,1% de chance de infligir Sono no usuário.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
@@ -24927,7 +24927,7 @@ Classes: ^777777Classes 3 e Transclasses, exceto Aprendizes^000000
 5172#
 Um chapéu reto verde-brilhante que representa a bravura de seu dono.
 ^a400cdNão pode ser refinado.^000000
-^0000ffResistência a oponentes da raça Humanoide +10%.^000000
+^0000ffResistência as raças Humano e Humanoide +10%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
@@ -25730,7 +25730,8 @@ Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
 5266#
 ^000088Este é um item de Aluguel [A]. Quando o tempo de validade se esgotar, ele desaparecerá do seu inventário.^000000
 Uma tiara com fofinhas orelhas de coelho... Altamente tecnológicas. As Orelhas de Coelho RD-110g trazem um sistema de escudo eletrônico, visão noturna, antenas pára-magia, tocador de MP3, além de serem o símbolo da eterna amizade. Pilhas não incluídas.
-Reduz o dano recebido de monstros Humanoides em 10%, DEFM + 5
+^0000ffResistência as raças Humano e Humanoide +10%^000000
+^0000ffDEFM + 5^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^77777710^000000
 Equipa em: ^777777Topo^000000
@@ -26074,7 +26075,7 @@ Classes que utilizam: ^777777Todas^000000
 #
 5312#
 Um chapéu feito de madeira, muito resistente e bem leve. Coberto por tinta preta e adornado com enfeites em prata, ele era símbolo das autoridades nas províncias de Ayothaya. Hoje, se você usá-lo, vão dizer que o carnaval está longe para se fantasiar de abajur...
-^0000FFFOR +2, aumenta o dano contra monstros Humanoides em 5%.^000000
+^0000FFFOR +2, Dano físico contra as raças Humano e Humanoide +5%.^000000
 Defesa: ^7777775^000000
 Equipa em: ^777777Topo^000000
 Peso: ^77777710^000000
@@ -26324,10 +26325,10 @@ Nível necessário: ^77777760^000000
 #
 5344#
 Uma linda bonequinha representando a Kafra Bianca. Conhecida pelo cabelo curtinho, ela é super feminina e adora fofocas ou histórias românticas. Dizem que sua boneca é capaz de deixar as pessoas com um fôlego incrível, provavelmente para falar bastante no celular sem precisar respirar – exatamente como essa Kafra faz o tempo todo.
-Reduz em 5% o dano recebido por monstros do tipo Humanoide.
-Chance de aumentar em 5% a velocidade de ataque durante 30 segundos quando realizar ataque físico.
-VIT + 2
-Não pode ser aprimorado.
+^0000ffResistência as raças Humano e Humanoide +5%.^000000
+^0000ffChance de aumentar em 5% a velocidade de ataque durante 30 segundos quando realizar ataque físico.^000000
+^0000ffVIT + 2^000000
+^0000ffNão pode ser aprimorado.^000000
 Peso: ^77777750^000000
 Defesa: ^7777771^000000
 Equipado em: ^777777Topo^000000
@@ -26895,9 +26896,9 @@ Classes: ^777777Todas^000000
 #
 5410#
 Um saco de papel com furos no lugar dos olhos. Além de funcionar como o disfarce perfeito para qualquer ocasião, ajuda a inibir crises de pânico (tanto em você como nos outros, caso você seja muito feio). Solução perfeita também para quando você não tiver tempo para pentear o cabelo, fazer a maquiagem ou estiver com uma espinha bem no meio da testa. Atenção: pode deixar as pessoas com receio de se aproximar.
-Reduz em 4% o dano causado por monstros do tipo Humanoide.
-Aumenta em 4% a resistência contra Atordoamento.
-+100 de HP máximo
+^0000ffResistência as raças Humano e Humanoide +4%.^000000
+^0000ffAumenta em 4% a resistência contra Atordoamento.^000000
+^0000ff+100 de HP máximo^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777776^000000
 Equipa em: ^777777Topo, Meio e Baixo^000000
@@ -29180,7 +29181,7 @@ Classe : ^777777Todas as classes^000000
 #
 5800#
 Algumas pessoas cheias de candura costumam ficar ruborizadas em momentos de calma, felicidade e timidez. Outras já ficam vermelhas quando estão tomadas pelo calor da batalha, cheias de adrenalina. Este, pelo visto, é o seu caso.
-Reduz em 3% o dano de monstros da raça Humanoide.
+^0000ffResistência as raças Humano e Humanoide +3%.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
@@ -36224,7 +36225,7 @@ Peso: ^7777770^000000
 #
 9027#
 Ovo contendo uma Alice de estimação. Deve ser chocado por uma Incubadora.
-^0000ffCom lealdade normal/alta: DEFM +1, diminui o dano recebido pela raça Humanoide em 1%.^000000
+^0000ffCom lealdade normal/alta: DEFM +1, Resistência as raças Humano e Humanoide +1%.^000000
 Tipo: ^777777Ovo de Bichinho^000000
 Peso: ^7777770^000000
 #
@@ -40945,11 +40946,12 @@ Classes: ^777777Algozes e evoluções^000000
 #
 13036#
 Uma adaga especializada em destruir humanoides.
-FOR + 1, AGI + 1
-Aumenta o Ataque Físico contra Humanoides em 75%.
-Ignora a defesa física de Humanoides em 20%.
-Se utilizada pelas classes Ninja, Arruaceiro, e Desordeiro, adiciona ATQM +90.
-Indestrutível em batalha.
+^0000ffFOR + 1, AGI + 1^000000
+^0000ffDano físico contra as raças Humano e Humanoide +75%.^000000
+^0000ffIgnora a defesa física das raças Humano e Humanoide em 20%.^000000
+^FF6347Ninjas, Arruaceiros e evoluções:^000000
+^0000ffATQM +90.^000000
+^0000ffIndestrutível em batalha.^000000
 Tipo: ^777777Adaga^000000
 Força de Ataque: ^777777120^000000
 Peso: ^7777770^000000
@@ -40960,7 +40962,7 @@ Classes que utilizam: ^777777Aprendiz, Espadachim, Mago, Arqueiro, Mercador, Gat
 13037#
 Uma adaga especializada em destruir humanoides.
 ^0000ffFOR +1. AGI +1.^000000
-^0000ffDano físico contra monstros da raça Humanoide +75%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +75%.^000000
 Ao realizar ataques físicos:
 ^0000ff1% de chance de ativar [Investigar] por 6 segundos.^000000
 ^FF6347Ninjas, Arruaceiros e evoluções:^000000
@@ -41540,11 +41542,11 @@ Classes: ^777777Justiceiros e evoluções^000000
 #
 13108#
 Um revólver criado para batalhas de curto e médio alcance contra Humanoides.
-DES + 2, Precisão - 10
-Aumenta o Ataque Físico contra Humanoides em 55%.
-Ignora a defesa física de humanoides em 20%.
-Adiciona a chance de aumentar por 3 segundos a Vel de Atq quando atacar.
-Indestrutível em batalha.
+^0000ffDES + 2, Precisão - 10^000000
+^0000ffDano físico contra as raças Humano e Humanoide +55%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffAdiciona a chance de aumentar por 3 segundos a Vel de Atq quando atacar.^000000
+^0000ffIndestrutível em batalha.^000000
 Tipo: ^777777Revólver^000000
 Força de Ataque: ^77777770^000000
 Peso: ^7777770^000000
@@ -42003,11 +42005,11 @@ Classes: ^777777Justiceiros e evoluções^000000
 #
 13171#
 Um rifle criado para batalhas de curto e médio alcance contra Humanoides.
-DES + 2, Precisão + 10, Critico + 10
-Aumenta o Ataque Físico contra Humanoides em 75%.
-Ignora a defesa física de humanoides em 20%.
-Reduz o tempo de conjuração variável da habilidade 'Rastrear Alvo' em 25%.
-Indestrutível em batalha.
+^0000ffDES + 2, Precisão + 10, Critico + 10^000000
+^0000ffDano físico contra as raças Humano e Humanoide +75%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffReduz o tempo de conjuração variável da habilidade 'Rastrear Alvo' em 25%.^000000
+^0000ffIndestrutível em batalha.^000000
 Tipo: ^777777Rifle^000000
 Força de Ataque: ^77777750^000000
 Peso: ^7777770^000000
@@ -42017,11 +42019,11 @@ Classes que utilizam: ^777777Justiceiro^000000
 #
 13172#
 Uma metralhadora criada para batalhas de curto e médio alcance contra Humanoides.
-DES + 2
-Aumenta o Ataque Físico contra Humanoides em 35%.
-Ignora a defesa física de humanoides em 20%.
-Adiciona a chance ao atacar de aumentar o ATQ em 80 por 6 segundos e durante este período drenar 120 HP do usuário a cada segundo.
-Indestrutível em batalha.
+^0000ffDES + 2^000000
+^0000ffDano físico contra as raças Humano e Humanoide +35%.^000000
+^0000ffIgnora a defesa física das raças Humano e Humanoide em 20%.^000000
+^0000ffAdiciona a chance ao atacar de aumentar o ATQ em 80 por 6 segundos e durante este período drenar 120 HP do usuário a cada segundo.^000000
+^0000ffIndestrutível em batalha.^000000
 Tipo: ^777777Metralhadora^000000
 Força de Ataque: ^77777780^000000
 Peso: ^7777770^000000
@@ -42031,11 +42033,11 @@ Classes que utilizam: ^777777Justiceiro^000000
 #
 13173#
 Uma espingarda criada para batalhas de curto e médio alcance contra Humanoides.
-DES + 2, causa dano em área.
-Aumenta o Ataque Físico contra Humanoides em 55%.
-Ignora a defesa física de humanoides em 20%.
-Adiciona a chance ao atacar de aumentar o ATQ em 100 por 6 segundos e durante este período drenar 100 HP do usuário a cada segundo.
-Indestrutível em batalha.
+^0000ffDES + 2, causa dano em área.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +55%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffAdiciona a chance ao atacar de aumentar o ATQ em 100 por 6 segundos e durante este período drenar 100 HP do usuário a cada segundo.^000000
+^0000ffIndestrutível em batalha.^000000
 Tipo: ^777777Espingarda^000000
 Força de Ataque: ^777777100^000000
 Peso: ^7777770^000000
@@ -42045,11 +42047,11 @@ Classes que utilizam: ^777777Justiceiro^000000
 #
 13174#
 Um lança-granadas que possui grande poder ofensivo contra Humanoides.
-DES + 2
-Aumenta o Ataque Físico contra Humanoides em 35%.
-Ignora a defesa física de humanoides em 20%.
-Adiciona a chance ao atacar de aumentar o ATQ em 300 por 9 segundos e durante este período drenar 120 HP do usuário a cada segundo.
-Indestrutível em batalha.
+^0000ffDES + 2^000000
+^0000ffDano físico contra as raças Humano e Humanoide +35%.^000000
+^0000ffIgnora 20% de DEF das raças Humano e Humanoide.^000000
+^0000ffAdiciona a chance ao atacar de aumentar o ATQ em 300 por 9 segundos e durante este período drenar 120 HP do usuário a cada segundo.^000000
+^0000ffIndestrutível em batalha.^000000
 Tipo: ^777777Lança Granada^000000
 Força de Ataque: ^777777300^000000
 Peso: ^7777770^000000
@@ -43030,8 +43032,8 @@ Classes: ^777777Ninjas e evoluções^000000
 Shuriken que guarda grande poder interior que inspira o ataque contra Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffFOR +2. DES +1.^000000
-^0000ffIgnora 20% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +95%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +95%.^000000
 Tipo: ^777777Shuriken Huuma^000000
 Ataque: ^77777755^000000
 Peso: ^7777770^000000
@@ -43043,7 +43045,7 @@ Classes: ^777777Ninjas e evoluções^000000
 Shuriken que guarda grande poder interior que inspira o ataque contra Humanoides.
 ^a400cdIndestrutível em batalha.^000000
 ^0000ffFOR +2. DES +1.^000000
-^0000ffDano físico contra a raça Humanoide +95%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +95%.^000000
 Ao realizar ataques físicos:
 ^0000ff5% de chance de ativar um [efeito] por 10 segundos.^000000
 ^CD3278Efeito:^000000
@@ -43322,10 +43324,10 @@ Classes que utilizam: Espadachim /Mercador /Gatuno e suas respectivas evoluçõe
 #
 13410#
 Uma espada de gladiador, desenhada especialmente para batalhas contra Humanoides.
-FOR + 1, DES + 1
-Aumenta o Ataque Físico contra Humanoides em 75%.
-Ignora a defesa física de humanoides em 20%.
-Indestrutível em batalha.
+^0000ffFOR + 1, DES + 1^000000
+^0000ffDano físico contra as raças Humano e Humanoide +75%.^000000
+^0000ffIgnora 20% da DEF das raças Humano e Humanoide.^000000
+^0000ffIndestrutível em batalha.^000000
 Tipo de Arma: ^777777Espada de uma mão^000000
 Força de Ataque: ^777777115^000000
 Peso: ^7777770^000000
@@ -43335,10 +43337,10 @@ Classes que utilizam: ^777777Aprendiz, Espadachim, Mercador, Gatuno e evoluçõe
 #
 13411#
 Uma espada de gladiador, desenhada especialmente para batalhas contra Humanoides.
-FOR + 1, DES + 1
-ATQM + 10%
-Aumenta o Ataque Físico contra Humanoides em 75%.
-Indestrutível em batalha.
+^0000ffFOR + 1, DES + 1^000000
+^0000ffATQM + 10%^000000
+^0000ffDano físico contra as raças Humano e Humanoide +75%.^000000
+^0000ffIndestrutível em batalha.^000000
 Tipo: ^777777Espada de uma mão^000000
 Força de Ataque: ^777777115^000000
 Peso: ^7777770^000000
@@ -47323,7 +47325,7 @@ Refino +6 ou mais:
 Refino +7 ou mais:
 ^0000ffDEFM +10 adicional.^000000
 ^0000ffEsquiva perfeita +1 adicional.^000000
-^0000ffResistência a raça Humanoide +7%.^000000
+^0000ffResistência as raças Humano e Humanoide +7%.^000000
 Refino +11 ou mais:
 ^0000ffDEFM +15 adicional.^000000
 ^0000ffEsquiva perfeita +1 adicional.^000000
@@ -49207,9 +49209,11 @@ Peso : ^7777771^000000
 ^ff0000Este item não pode ser trocado entre personagens.^000000
 Uma caixa contendo um 'Boné de Gatinho'.
 Um bonitinho boné com orelhas de gato. É interessante notar que o sucesso deste boné começou em Amatsu, onde grupos de heróis como a equipe feminina Amatsu Miau Miau ou os explosivos justiceiros Suados Cats o adotaram como parte de seus uniformes.
-ATQ + 5%.
-Se refinado acima de +5, adiciona 1% de bônus no ataque físico contra monstros do tipo Humanoide e reduz em 1% o dano recebido de monstros do tipo Humanoide.
-Este bônus funcionará até +20 de refinamento
+^0000ffATQ + 5%.^000000
+^0000ffSe refinado acima de +5:^000000
+^0000ffResistência as raças Humanoide e Humano +1%. ^000000
+^0000ffDano físico contra as raças Humanoide e Humano +1%.^000000
+^0000ffEste bônus funcionará até +20 de refinamento^000000
 Tipo : ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
 Equipa em : ^777777Topo ^000000
@@ -50005,8 +50009,8 @@ Classes: ^777777Todas, exceto Aprendizes^000000
 #
 18510#
 Essas são asas ensangüentadas de um anjo caído, adquiridas do traidor do evento do Emperium.
-Reduz o dano recebido de Humanoides em 10%.
-Não pode ser refinado.
+^0000ffResistência as raças Humano e Humanoide +10%.^000000
+^0000ffNão pode ser refinado.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
 Equipa em: ^777777Topo^000000
@@ -50805,8 +50809,8 @@ Classes : ^777777Todas as classes^000000
 Um bonitinho boné com orelhas de gato. É interessante notar que o sucesso deste boné começou em Amatsu, onde grupos de heróis como a equipe feminina Amatsu Miau Miau ou os explosivos justiceiros Suados Cats o adotaram como parte de seus uniformes.
 ^0000ffDano físico +5%.^000000
 A cada refino a partir do +6:
-^0000ffResistência a raça Humanoide +1%.^000000
-^0000ffDano físico contra a raça Humanoide +1%.^000000
+^0000ffResistência as raças Humano e Humanoide +1%.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +1%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
@@ -52966,9 +52970,9 @@ Ao sofrer danos físicos ou mágicos:
 ^FF6347Conjunto^000000
 ^FF6347[Bracelete Suntuoso]^000000
 ^0000ffDano físico e mágico +9%.^000000
-^0000ffResistência a raça Humanoide +5%.^000000
+^0000ffResistência as raças Humano e Humanoide +5%.^000000
 Refino +7 ou mais:
-^0000ffResistência a raça Humanoide +5% adicional.^000000
+^0000ffResistência as raças Humano e Humanoide +5% adicional.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
@@ -56098,6 +56102,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+19873#
+É muito conveniente que gângsteres usem um chapéu cujo nome remete a um monstro capaz de ficar invisível, não é mesmo? Pense nisso. Talvez fosse mais eficiente só equipar uma carta Frilldora... Mas e o estilo, como fica?
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19874#
 Uma tiara perfeita pra quem gosta de cair na folia ao ritmo das músicas da Ifrity Semgalo, Cláudia Café ou até do Bercos e Marlutti.
 Tipo: ^777777Visual ^000000
@@ -56790,6 +56803,15 @@ Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20100#
+Adereço indispensável para celebrar um evento anual em que aventureiros dos quatro cantos de Rune-Midgard se reúnem para recitar cantigas de métricas impecáveis e relatar aventuras que mais parecem lorotas muito bem contadas. Tudo isso é regado a muito... refresco e guaraná, é claro!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 20101#
