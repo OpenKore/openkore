@@ -58,3 +58,4 @@ skipPlugins_list
 
 ###### Miscellaneous ######
 sendAnonymousStatisticReport 0
+maxItemBuyIfNotDefined 1
