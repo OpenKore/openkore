@@ -2044,7 +2044,7 @@ sub processAutoBuy {
 			
 			my $inv_amount = $char->inventory->sumByNameID($args->{'nameID'});
 
-			my $needbuy -= $inv_amount;
+			my $needbuy = $config{"buyAuto_".$i."_maxAmount"} - $inv_amount;
 			
 			my $buy_amount = ($maxbuy > $needbuy) ? $needbuy : $maxbuy;
 			
