@@ -2039,7 +2039,7 @@ sub processAutoBuy {
 				$args->{index_failed}{$i} = 1;
 				error "buyAuto index ".$i." (".$config{"buyAuto_".$i}.") failed, item doesn't exist in npc sell list.\n", "npc";
 			}else{
-				my $maxbuy = ($config{"buyAuto_".$i."_price"}) ? int($zenyleft/$config{"buyAuto_".$i."_price"}) : $::sys{'maxItemBuyIfNotDefined'}; # we assume we can buy 1 as default from sys.txt, when price of the item is set to 0 or undef
+				my $maxbuy = ($config{"buyAuto_".$i."_price"} != 0) ? int($zenyleft/$config{"buyAuto_".$i."_price"}) : $::sys{'maxItemBuyIfNotDefined'}; # we assume we can buy 1 as default from sys.txt, when price of the item is set to 0
 				
 			
 			my $inv_amount = $char->inventory->sumByNameID($args->{'nameID'});
