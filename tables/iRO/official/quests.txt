@@ -23489,3 +23489,94 @@ Hunt 150 Salamander monsters and return to the Bounty Board at Veins#
 63540#Bounty Board Zombie Slaughter#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Zombie Slaughter monsters and return to the Bounty Board at Veins#
 #
+63541#Bounty Board Bradium Golem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Bradium Golem monsters and return to the Bounty Board at Manuk#
+#
+63542#Bounty Board Centipede Larva#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Centipede Larva monsters and return to the Bounty Board at Manuk#
+#
+63543#Bounty Board Hillslion#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hillslion monsters and return to the Bounty Board at Manuk#
+#
+63544#Bounty Board Tatacho#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Tatacho monsters and return to the Bounty Board at Manuk#
+#
+63545#Bounty Board Antler Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Antler Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63546#Bounty Board Horn Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Horn Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63547#Bounty Board Rake Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rake Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63548#Bounty Board Uni-horn Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Uni-horn Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63549#Bounty Board Centipede#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Centipede monsters and return to the Bounty Board at El Dicastes#
+#
+63550#Bounty Board Dolomedes#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dolomedes monsters and return to the Bounty Board at El Dicastes#
+#
+63551#Bounty Board Tatacho#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Tatacho monsters and return to the Bounty Board at El Dicastes#
+#
+63552#Bounty Board Cornus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cornus monsters and return to the Bounty Board at Splendide#
+#
+63553#Bounty Board Dark Pinguicula#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dark Pinguicula monsters and return to the Bounty Board at Splendide#
+#
+63554#Bounty Board Luciola Vespa#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Luciola Vespa monsters and return to the Bounty Board at Splendide#
+#
+63555#Bounty Board Naga#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Naga monsters and return to the Bounty Board at Splendide#
+#
+63556#Bounty Board Nepenthes#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nepenthes monsters and return to the Bounty Board at Splendide#
+#
+63557#Bounty Board Pinguicula#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Pinguicula monsters and return to the Bounty Board at Splendide#
+#
+
+63558#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63559#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63560#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63561#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63562#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63563#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63564#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63565#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63566#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63567#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63568#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63569#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63570#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
