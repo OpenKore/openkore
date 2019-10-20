@@ -4487,7 +4487,7 @@ sub cmdPlugin {
 		my @names;
 
 		if ($args[1] =~ /^\d+$/) {
-			if ($Plugins::plugins[$args[1]]{name}) {
+			if ($Plugins::plugins[$args[1]]) {
 				push @names, $Plugins::plugins[$args[1]]{name};
 			}
 
@@ -4546,13 +4546,11 @@ sub cmdPlugin {
 		}
 
 	} elsif ($args[0] eq 'unload') {
+		my $name;
+
 		if ($args[1] =~ /^\d+$/) {
 			if ($Plugins::plugins[$args[1]]) {
-				my $name = $Plugins::plugins[$args[1]]{name};
-				Plugins::unload($name);
-				message TF("Plugin %s unloaded.\n", $name), "system";
-			} else {
-				error TF("'%s' is not a valid plugin number.\n", $args[1]);
+				$name = $Plugins::plugins[$args[1]]{name};
 			}
 
 		} elsif ($args[1] eq '') {
@@ -4562,16 +4560,24 @@ sub cmdPlugin {
 
 		} elsif ($args[1] eq 'all') {
 			Plugins::unloadAll();
+			message T("All plugins have been unloaded.\n"), "system";
+			return;
 
 		} else {
 			foreach my $plugin (@Plugins::plugins) {
 				next unless $plugin;
 				if ($plugin->{name} =~ /$args[1]/i) {
-					my $name = $plugin->{name};
-					Plugins::unload($name);
-					message TF("Plugin %s unloaded.\n", $name), "system";
+					$name = $plugin->{name};
 				}
 			}
+		}
+
+		if ($name) {
+			Plugins::unload($name);
+			message TF("Plugin %s unloaded.\n", $name), "system";
+		} else {
+			warning T("Error in function 'plugin unload' (Unload Plugin)\n" .
+				"The specified plugin do not exist.\n");
 		}
 
 	} else {
