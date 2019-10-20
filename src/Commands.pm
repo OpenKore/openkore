@@ -4530,14 +4530,18 @@ sub cmdPlugin {
 		} elsif ($args[1] eq 'all') {
 			Plugins::loadAll();
 		} else {
-			if (-e $args[1]) {
-			# then search inside plugins folder !
-				Plugins::load($args[1]);
-			} elsif (-e $Plugins::current_plugin_folder."\\".$args[1]) {
-				Plugins::load($Plugins::current_plugin_folder."\\".$args[1]);
-			} elsif (-e $Plugins::current_plugin_folder."\\".$args[1].".pl") {
-				# we'll try to add .pl ....
-				Plugins::load($Plugins::current_plugin_folder."\\".$args[1].".pl");
+			my @folders = Settings::getPluginsFolders();
+			my $name = $args[1];
+			$name =~ s/.pl$//g;
+			if (-f @folders[0]."\\".$name.".pl") {
+				# plugins\$name.pl
+				Plugins::load(@folders[0]."\\".$name.".pl");
+			} elsif (-f @folders[0]."\\".$name."\\".$name.".pl") {
+				# plugins\$name\$name.pl
+				Plugins::load(@folders[0]."\\".$name."\\".$name.".pl");
+			} else {
+				error TF("Plugin '%s' does not exist\n", $name);
+				return;
 			}
 		}
 
