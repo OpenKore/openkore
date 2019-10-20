@@ -4487,7 +4487,9 @@ sub cmdPlugin {
 		my @names;
 
 		if ($args[1] =~ /^\d+$/) {
-			push @names, $Plugins::plugins[$args[1]]{name};
+			if ($Plugins::plugins[$args[1]]{name}) {
+				push @names, $Plugins::plugins[$args[1]]{name};
+			}
 
 		} elsif ($args[1] eq '') {
 			error T("Syntax Error in function 'plugin reload' (Reload Plugin)\n" .
@@ -4497,6 +4499,7 @@ sub cmdPlugin {
 		} elsif ($args[1] eq 'all') {
 			foreach my $plugin (@Plugins::plugins) {
 				next unless $plugin;
+				next unless $plugin->{name};
 				push @names, $plugin->{name};
 			}
 
@@ -4507,11 +4510,12 @@ sub cmdPlugin {
 					push @names, $plugin->{name};
 				}
 			}
-			if (!@names) {
-				error T("Error in function 'plugin reload' (Reload Plugin)\n" .
-					"The specified plugin names do not exist.\n");
-				return;
-			}
+		}
+
+		if (!@names) {
+				warning T("Error in function 'plugin reload' (Reload Plugin)\n" .
+					"The specified plugin do not exist.\n");
+			return;
 		}
 
 		foreach (my $i = 0; $i < @names; $i++) {
