@@ -6467,6 +6467,7 @@
 19657#Quepe do Capitão#
 19661#Cartola Adocicada#
 19668#Boina Vermelha do Mensageiro#
+19669#Legado de Reginleif#
 19676#Chapéu do Poring Prismático#
 19677#Auréola Espiritual#
 19678#Lacinho com Sinos#
@@ -6493,6 +6494,7 @@
 19718#Laço de Niflheim#
 19721#Elmo das Trevas#
 19722#Óculos Intelectuais#
+19723#Coroa Ardente#
 19724#Kafra V.I.P.#
 19726#Rosa da Sedução#
 19728#Boneco da Zonda#
@@ -6671,6 +6673,7 @@
 20200#Chapéu de Camponesa#
 20202#Balão de Deviruchi#
 20203#Bandana para Testa#
+20204#Boina de Caça#
 20209#Bolhas de Sabão#
 20212#Boneco de Loki e Nidhogg#
 20215#Máscara Macabra#

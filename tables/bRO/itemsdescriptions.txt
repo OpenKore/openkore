@@ -423,14 +423,12 @@ Peso: ^77777710^000000
 601#
 Par de asas de mosca encantadas com magia.
 ^000088Dê clique duplo neste item para ser transportar até um local aleatório no mapa.^000000
-^ff0000No servidor Thor, este item não pode ser trocado, jogado ao chão ou colocado no carrinho.^000000
 ^ffffff_^000000
 Peso: ^7777775^000000
 #
 602#
 Asas de borboleta encantadas.
 ^000088Use para transportar-se para o ponto de retorno.^000000
-^ff0000No servidor Thor, este item não pode ser trocado, jogado ao chão ou colocado no carrinho.^000000
 ^ffffff_^000000
 Peso: ^7777775^000000
 #
@@ -2829,9 +2827,9 @@ Classes: ^777777Espadachins e evoluções^000000
 #
 1169#
 Espada usada para executar a pena de morte.
-^0000ffIgnora 100% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +20%.^000000
-^0000ffResistência a ataques de oponentes da raça Humanoide -10%.^000000
+^0000ffIgnora 100% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +20%.^000000
+^0000ffResistência a ataques de oponentes das raças Humano e Humanoide -10%.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
 Ataque: ^777777155^000000
 Propriedade: ^777777Sombrio^000000
@@ -2922,9 +2920,9 @@ Classes: ^777777Espadachins e evoluções^000000
 #
 1179#
 Espada usada para executar a pena de morte.
-^0000ffIgnora 100% da DEF da raça Humanoide.^000000
-^0000ffDano físico contra a raça Humanoide +20%.^000000
-^0000ffResistência a ataques de oponentes da raça Humanoide -10%.^000000
+^0000ffIgnora 100% da DEF das raças Humano e Humanoide.^000000
+^0000ffDano físico contra as raças Humano e Humanoide +20%.^000000
+^0000ffResistência a ataques de oponentes das raças Humano e Humanoide -10%.^000000
 Tipo: ^777777Espada de Duas Mãos^000000
 Ataque: ^777777155^000000
 Propriedade: ^777777Sombrio^000000
@@ -3472,7 +3470,7 @@ Classes que utilizam: ^777777Mercenário^000000
 1233#
 Adaga cerimonial para exorcismo. Contém grande poder contra o mal.
 --------------------------
-^0000ffResistência a raça Demônio +5%.^000000
+^0000ffResistência a ataques de oponentes da raça Demônio +5%.^000000
 ^0000ffIgnora 100% da DEF da raça Demônio.^000000
 ^0000ffResistência as raças Humano e Humanoide^000000 ^ff0000-10%.^000000
 --------------------------
@@ -4286,7 +4284,7 @@ Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Mercadores, Mercenári
 1305#
 Machadinha pesada e de lâmina larga usada especialmente pelos açogueiros.
 ^a400cdIndestrutível em batalha.^000000
-^0000ffDano físico contra a raça Humanoide +5%.^000000
+^0000ffResistência as raças Humanoide e Humano +5%.^000000
 ^0000ffAo derrotar monstros da raça Bruto, 30% de chance de derrubar [Carne].^000000
 Tipo: ^777777Machado^000000
 Ataque: ^777777140^000000
@@ -12757,13 +12755,13 @@ Classes que utilizam: ^777777Espadachim, Mercador, e evoluções; Taekwon, Mestr
 #
 2377#
 Armadura criada para o guerreiro que se destaca no campo de batalha. Pode ser utilizada em conjunto com outros equipamentos.
-Reduz em 2% o dano recebido de Humanoides.
-HP Máx + 150. DEFM + 2.
-Quando equipada juntamente com as Grevas de Batalha e o Manteau do Capitão:
-O usuário receberá 3x mais dano de monstros que não sejam Humanoides;
-FOR + 3, Aumenta o HP Máx em 12%;
-Aumenta em 20% o dano causado pela habilidade Mamonita;
-Aumenta em 10% o valor da Cura e “Arremessar Poção” recebidos.
+^0000ffResistência as raças Humano e Humanoide +2%.^000000
+^0000ffHP Máx + 150. DEFM + 2.^000000
+^0000ffQuando equipada juntamente com as Grevas de Batalha e o Manteau do Capitão:^000000
+^0000ffO usuário receberá 3x mais dano de monstros que não sejam Humanoides;^000000
+^0000ffFOR + 3, Aumenta o HP Máx em 12%;^000000
+^0000ffAumenta em 20% o dano causado pela habilidade Mamonita;^000000
+^0000ffAumenta em 10% o valor da Cura e “Arremessar Poção” recebidos.^000000
 Indestrutível em batalha.
 Tipo: ^777777Armadura^000000
 Defesa: ^77777750^000000
@@ -12820,12 +12818,12 @@ Classes que utilizam: ^777777Noviço e evoluções^000000
 #
 2381#
 Armadura desenvolvida para o guerreiro que quer se especializar em combate. Pode ser utilizada em conjunto com outros equipamentos.
-Reduz em 2% o dano recebido de Humanoides.
-HP Máx + 150. DEFM + 2.
-Quando equipada juntamente com as Botas de Combate e o Manteau do Comandante:
-O usuário receberá 3x mais dano de monstros que não sejam Humanoides;
-DES + 3, Aumenta em 12% o HP Máx;
-Reduz em 25% o tempo de recarga entre as habilidades, e em 10% o dano causado por ataques a longa distância.
+^0000ffResistência as raças Humano e Humanoide +2%.^000000
+^0000ffHP Máx + 150. DEFM + 2.^000000
+^0000ffQuando equipada juntamente com as Botas de Combate e o Manteau do Comandante:^000000
+^0000ffO usuário receberá 3x mais dano de monstros que não sejam Humanoides;^000000
+^0000ffDES + 3, Aumenta em 12% o HP Máx;^000000
+^0000ffReduz em 25% o tempo de recarga entre as habilidades, e em 10% o dano causado por ataques a longa distância.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777735^000000
 Peso: ^7777770^000000
@@ -12834,12 +12832,12 @@ Classes que utilizam: ^777777Arqueiro e evoluções^000000
 #
 2382#
 Armadura desenvolvida especialmente para Justiceiros. Pode ser utilizada em conjunto com outros equipamentos.
-Reduz em 2% o dano recebido de Humanoides.
-HP Máx + 150. DEFM + 2.
-Quando equipada juntamente com os itens Botas de Batalha e Manto do Xerife:
-O usuário receberá 3x mais dano de monstros que não sejam Humanoides;
-DES + 3, Aumenta em 12% o HP Máx
-Reduz em 25% o tempo de recarga entre as habilidades, e em 10% o dano causado por ataques à longa distância.
+^0000ffResistência as raças Humano e Humanoide +2%.^000000
+^0000ffHP Máx + 150. DEFM + 2.^000000
+^0000ffQuando equipada juntamente com os itens Botas de Batalha e Manto do Xerife:^000000
+^0000ffO usuário receberá 3x mais dano de monstros que não sejam Humanoides;^000000
+^0000ffDES + 3, Aumenta em 12% o HP Máx^000000
+^0000ffReduz em 25% o tempo de recarga entre as habilidades, e em 10% o dano causado por ataques à longa distância.^000000
 Tipo: ^777777Armadura^000000
 Defesa: ^77777725^000000
 Peso: ^7777770^000000
@@ -12877,7 +12875,7 @@ Classes: ^777777Todas^000000
 Uma armadura que regenera a vida de seu usuário ao se alimentar da energia de seus inimigos.
 ^0000ffRegeneração natural de HP e SP^000000 ^ff0000-100%.^000000
 Ao derrotar monstros:
-^0000ffRecupera 60 de HP e 6 de SP.^000000
+^0000ffRecupera 60 de HP e 6 de SP se derrotado com ataque de curta distância.^000000
 Ao desequipar:
 ^0000ffDrena 100 de SP.^000000
 Tipo: ^777777Armadura^000000
@@ -14212,8 +14210,8 @@ Classes: ^777777Transclasses 2-1 e 2-2^000000
 #
 2538#
 Um manteau esplêndido criado para o guerreiro honrado que lutou no campo de batalha.
-Reduz em 1% o dano recebido de Humanoides.
-HP Máx + 50. DEFM + 1.
+^0000ffResistência as raças Humano e Humanoide +1%.^000000
+^0000ffHP Máx + 50. DEFM + 1.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^77777728^000000
 Peso: ^7777770^000000
@@ -14222,8 +14220,8 @@ Classes que utilizam: ^777777Espadachim, Mercador, Gatuno e evoluções; Ninja e
 #
 2539#
 Um manteau glorioso criado para o comandante no campo de batalha.
-Reduz em 1% o dano recebido de Humanoides.
-HP Máx + 50. DEFM + 1.
+^0000ffResistência as raças Humano e Humanoide +1%.^000000
+^0000ffHP Máx + 50. DEFM + 1.^000000
 Tipo: ^777777Capa^000000
 Defesa: ^77777720^000000
 Peso: ^7777770^000000
@@ -20274,7 +20272,7 @@ Peso: ^7777771^000000
 #
 4360#
 Carta Eremes Guile.
-Crítico +10 contra inimigos Humanoides.
+^0000ffCrítico +10 contra oponentes Humanos e Humanoides.^000000
 Tipo de Item: ^777777Carta^000000
 Equipado em: ^777777Arma^000000
 Peso: ^7777771^000000
@@ -22773,7 +22771,7 @@ ATQ + 10, ATQM + 10.
 Resistência a propriedade Neutro +5%.
 #
 4849#
-^0000ffResistência a raça Humano +5%.^000000
+^0000ffResistência as raças Humano e Humanoide +5%.^000000
 #
 4850#
 Efetividade de cura +6%.
@@ -24650,7 +24648,7 @@ Classes que utilizam: ^777777Todas, exceto Aprendiz^000000
 #
 5142#
 Um elmo usado pelos militares de alta patente de Amatsu. Ele parece bem sólido e resistente. O emblema no topo representa a família do usuário. Não que sua família tenha algo a ver com uma lua crescente.
-^0000ffVIT +1, reduz em 5% o dano recebido por monstros do tipo Humanoide.^000000
+^0000ffVIT +1, Resistência as raças Humano e Humanoide +5%.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777778^000000
 Equipa em: ^777777Topo e Meio^000000
@@ -25837,10 +25835,10 @@ Classes: ^777777Todas, exceto Aprendizes^000000
 #
 5283#
 Um chapéu muito fofo, com um filhote de galinha no topo. Ele bate as asas e pia, mas felizmente não fará sujeira sobre a sua cabeça. Ou vai...?
-3% de resistência contra danos de monstros humanoides e brutos.
-Permite o uso da habilidade “Ataque Duplo Nv.2”. Diferentemente da versão dos Gatunos, esta pode ser usada com qualquer arma.
-SOR +2.
-HP Máximo +50 e SP Máximo + 50
+^0000ffResistência as raças Humanoide, Humano, Bruto e Doram +3%^000000
+^0000ffPermite o uso da habilidade “Ataque Duplo Nv.2”. Diferentemente da versão dos Gatunos, esta pode ser usada com qualquer arma.^000000
+^0000ffSOR +2.^000000
+^0000ffHP Máximo +50 e SP Máximo + 50^000000
 Este item não pode ser aprimorado.
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777772^000000
@@ -26277,9 +26275,9 @@ Applicable Job: ^777777All class^000000
 #
 5340#
 Uma linda bonequinha representando a Kafra Denise. Sua família está na corporação desde sua fundação. A garota é muito querida pelos aventureiros por defender os ideais de honestidade, confiança e integridade. Isso, além de seu rosto angelical, o que faz com que seu chapéu seja muito cobiçado pelos fãs.
-Reduz em 5% o dano recebido por monstros da raça Humanoide.
-Chance de conjurar “Angelus” nível 10 a cada ataque físico de curto alcance recebido.
-FOR + 2
+^0000ffResistência as raças Humanoide e Humano +5%.^000000
+^0000ffChance de conjurar “Angelus” nível 10 a cada ataque físico de curto alcance recebido.^000000
+^0000ffFOR + 2^000000
 Não pode ser aprimorado.
 Peso: ^77777750^000000
 Defesa: ^7777771^000000
@@ -26289,9 +26287,9 @@ Nível necessário: ^77777760^000000
 #
 5341#
 Uma linda bonequinha representando a Kafra Sofia. Seus fãs adoram seu jeitinho intelectual. Dizem que ela adora filosofia, e sua boneca inspira as pessoas a se tornarem mais espertas. Só tome cuidado, pois seus óculos vivem escorregando!
-Reduz em 5% o dano recebido por monstros do tipo Humanoide.
-Recupera 50 HP ao derrotar um monstro usando um ataque mágico.
-INT + 2
+^0000ffResistência as raças Humanoide e Humano +5%.^000000
+^0000ffRecupera 50 HP ao derrotar um monstro usando um ataque mágico.^000000
+^0000ffINT + 2^000000
 Não pode ser aprimorado.
 Peso: ^77777750^000000
 Defesa: ^7777771^000000
@@ -26337,9 +26335,9 @@ Nível necessário: ^77777760^000000
 #
 5345#
 Uma linda bonequinha representando a Kafra mais nova da Corporação. Seus fãs adoram seu jeitinho infantil, mas ela mesma detesta ser tratada como criança – apesar de ainda chorar e ter pesadelos depois de uma história de terror. Num ponto ela concorda com os fãs: sua boneca ficou uma gracinha!
-Reduz em 5% o dano recebido por monstros da raça Humanoide.
-Causa +5% de dano físico ou mágico em monstros da raça Morto-vivo.
-SOR + 2
+^0000ffResistência as raças Humanoide e Humano +5%.^000000
+^0000ffCausa +5% de dano físico ou mágico em monstros da raça Morto-vivo.^000000
+^0000ffSOR + 2^000000
 Não pode ser aprimorado.
 Peso: ^77777750^000000
 Defesa: ^7777771^000000
@@ -27178,8 +27176,8 @@ Classes que utilizam: ^777777Todas^000000
 #
 5451#
 Um lendário elmo todo feito de ouro, merecido apenas pelos grandes campeões do RBC.
-Aumenta em 10% a resistência contra monstros da raça Humanoides.
-Aumenta em 5% o dano causado a monstros da raça Humanoide.
+^0000ffResistência as raças Humanoide e Humano +10%.^000000
+^0000ffDano físico contra as raças Humanoide e Humano +5%.^000000
 Não pode ser aprimorado.
 ^ff0000Não pode ser trocado entre contas de jogo.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
@@ -27191,8 +27189,8 @@ Classes que utilizam: ^777777Todas^000000
 #
 5452#
 Um lendário elmo todo feito de prata, merecido pelo 2º colocado do RBC.
-Aumenta em 7% a resistência contra monstros da raça Humanoides.
-Aumenta em 3% o dano causado a monstros da raça Humanoide.
+^0000ffResistência as raças Humanoide e Humano +7%.^000000
+^0000ffDano físico contra as raças Humanoide e Humano +3%.^000000
 Não pode ser aprimorado.
 ^ff0000Não pode ser trocado entre contas de jogo.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
@@ -27204,8 +27202,8 @@ Classes que utilizam: ^777777Todas^000000
 #
 5453#
 Um lendário elmo todo feito de bronze, merecido pelo 3º colocado do RBC.
-Aumenta em 5% a resistência contra monstros da raça Humanoides.
-Aumenta em 1% o dano causado a monstros da raça Humanoide.
+^0000ffResistência as raças Humanoide e Humano +5%.^000000
+^0000ffDano físico contra as raças Humanoide e Humano +1%.^000000
 Não pode ser aprimorado.
 ^ff0000Não pode ser trocado entre contas de jogo.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
@@ -28922,7 +28920,7 @@ Classes que utilizam: ^777777Todas^000000
 5762#
 Uma réplica em tamanho menor do imponente elmo de ossos que cobre o rosto de Duneyrr, um dos habitantes da Yggdrasil que vive mastigando seus galhos.
 ^0000ffTodos os atributos +1, DEFM +5.^000000
-^0000ffAcrescenta 2% de resistência a monstros dos tipos Bruto e Humanoide.^000000
+^0000ffResistência as raças Humano, Humanoide, Doram e Bruto +2%.^000000
 Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777775^000000
 Equipa em: ^777777Topo ^000000
@@ -36246,7 +36244,7 @@ Ovo contendo uma Donzela Verde.
 ^008080Pode ser chocado com uma Incubadora.^000000
 Lealdade alta:
 ^0000ffDEF +1.^000000
-^0000ffResistência a raça Humanoide +1%.^000000
+^0000ffResistência as raças Humano e Humanoide +1%.^000000
 Tipo: ^777777Mascote^000000
 Comida: ^777777Bolinho Quente^000000
 Peso: ^7777770^000000
@@ -50937,8 +50935,8 @@ Uma boneca idêntica a uma Alicel, a construto biomecânica construída na Fábr
 Dizem as lendas que a Alicel original foi corrompida por alguma energia sombria e assim saiu de controle.
 Para sua sorte, sua boneca não seguiu o mesmo caminho. O fato de você estar sentindo essa incontrolável sede de sangue não tem relação alguma com isso.
 Pare de pensar besteiras... Hora de estraçalhar os inimigos...
-Aumenta o dano causado contra Humanoides em 10%.
-Quando refinado em +7 ou mais e realizando ataques físicos de curto alcance, adiciona uma pequena chance de ativar 100% de Velocidade de Ataque durante 07 segundos.
+^0000ffDano contra as raças Humano e Humanoide +10%.^000000
+^0000ffQuando refinado em +7 ou mais e realizando ataques físicos de curto alcance, adiciona uma pequena chance de ativar 100% de Velocidade de Ataque durante 07 segundos.^000000
 Tipo : ^777777Equipamento para cabeça^000000
 Defesa: ^7777776^000000
 Equipa em : ^777777Topo^000000
@@ -52701,7 +52699,7 @@ Classes: ^777777Todas^000000
 18893#
 Um elmo criado a partir de uma pata de dragão verdadeira, decepada no exato momento em um poderoso dragão estava prestes a esmagar um herói da Sociedade Draconiana. De alguma forma, a essência do espírito da criatura ficou presa em suas garras após a morte do monstro, e agora você é capaz de sentir suas chamas e toda a sua fúria assim que coloca este elmo em sua cabeça.
 ^0000ffRecuperação de HP da Carne +200%.^000000
-^0000ffResistência as raças Dragão e Humanoide +8%.^000000
+^0000ffResistência as raças Dragão, Humano e Humanoide +8%.^000000
 Refino +12 ou mais:
 ^0000ffHP máx. +7%.^000000
 ^0000ffSP máx. +3%.^000000
@@ -52793,9 +52791,9 @@ Classes: ^777777Todas^000000
 #
 18907#
 Você queria o boneco de um Dragão Guerreiro, mas ganhou este pandinha... Sorte que ele é tão fofinho que dá até vontade de fazer um escândalo e gritar “É TÃO FOFINHO!”, mesmo que ele não seja malvado ou seu unicórnio favorito.
-Reduz o dano de humanoides em 5%.
-Aumenta o dano contra monstros médios em 10%.
-Quando refinado em +9 ou mais, chance de conjurar automaticamente Escândalo Nível 2 quando atacado fisicamente.
+^0000ffResistência as raças Humano e Humanoide +5%.^000000
+^0000ffAumenta o dano contra monstros médios em 10%.^000000
+^0000ffQuando refinado em +9 ou mais, chance de conjurar automaticamente Escândalo Nível 2 quando atacado fisicamente.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Defesa : ^7777778^000000
 Equipa em: ^777777Topo ^000000
@@ -52853,6 +52851,7 @@ Ao receber danos físicos:
 ^0000ffEXP adquirida por monstros +5%.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Defesa: ^7777775^000000
+Equipa em: ^777777Meio^000000
 Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -55335,6 +55334,15 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+19669#
+Diadema que um dia pertenceu à valquíria Reginleif. Depois de infindáveis lutas, ela sucumbiu às forças inimigas, mas deixou este acessório de cabeça como uma herança para alguém que detivesse tanta resiliência quanto ela.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19676#
 Um chapéu perfeito pra quem não consegue decidir entre o poporing, drops, marin e tantos outros monstros fofinhos da família Poring. Com esse poring prismático alterando entre todos os espectros de cor do arco-íris você não precisa decidir entre eles. Só não vale tirar sarro do seu amigo daltônico.
 Tipo: ^777777Visual^000000
@@ -55566,6 +55574,15 @@ Equipa em: ^777777Meio^000000
 Nível Necessário: ^7777771^000000
 Peso: ^7777770^000000
 Classes que Utilizam: ^777777Todas^000000
+#
+19723#
+Tá pegando fogo, bicho! Esse acessório foi feito em homenagem aos reis mais esquentadinhos de Rune-Midgard, afinal, não é fácil tratar de taxas, impostos e aventureiros sem noção causando em Prontera.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 19724#
 Edição Limitada da Boneca Kafra. Ela é entregue apenas em ocasiões especiais.
@@ -57152,6 +57169,15 @@ Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
+#
+20204#
+Indispensável para caçadores que passam muito tempo sob o sol. Sabe como é, tem uns monstros que você precisa esperar por horas até darem sopa. Mas não seja poser: use um desses só se você realmente for à floresta caçar!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 20209#
 E pensar que você estava todo feliz soprando com um frasquinho de bolhas de sabão quando um goblin arteiro deu um tapa nas suas costas e fez você engolir tudo. Agora você está assim, “soltando” bolhas de sabão por onde passa... Vamos apenas torcer pra que esse sabão não seja de Veins!
@@ -60412,17 +60438,17 @@ Refino +7 ou mais:
 ^FF6347Conjunto^000000
 ^FF6347[Capa do Serafim Caído]^000000
 ^FF6347[Cajado da Árvore Morta]^000000
-^0000ffResistência a raça Humanoide +10%.^000000
+^0000ffResistência as raças Humano e Humanoide +10%.^000000
 A cada nível de [Coluna de Fogo]:
 ^0000ffDano mágico de propriedade Fogo +4%.^000000
 A cada nível de [Campo Gravitacional]:
 ^0000ffDano mágico de propriedade Neutro +6%.^000000
 Arma com refino +7 ou mais:
 ^0000ffDano de [Chamas de Hela] +100%.^000000
-^0000ffDano mágico contra a raça Humanoide +20%.^000000
+^0000ffDano mágico contra as raças Humano e Humanoide +20%.^000000
 Arma com refino +9 ou mais:
 ^0000ffDano de [Chamas de Hela] +100% adicional.^000000
-^0000ffDano mágico contra a raça Humanoide +20% adicional.^000000
+^0000ffDano mágico contra as raças Humano e Humanoide +20% adicional.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Epifania]^000000
 ^0000ffDano mágico de propriedade Fogo, Neutro e Sombrio^000000 ^ff0000-100%.^000000
@@ -63451,10 +63477,10 @@ Refino +9 ou mais:
 A cada 3 refinos até o +12:
 ^0000ffTodos os atributos +1.^000000
 Refino +9 ou mais:
-^0000ffResistência a raça Humanoide +10%.^000000
+^0000ffResistência as raças Humano e Humanoide +10%.^000000
 ^0000ffDano mágico contra monstros Chefes +20% adicional.^000000
 Refino +11 ou mais:
-^0000ffResistência a raça Humanoide +2%.^000000
+^0000ffResistência as raças Humano e Humanoide +2% adicional.^000000
 ^0000ffDano mágico contra monstros Chefes +20% adicional.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
