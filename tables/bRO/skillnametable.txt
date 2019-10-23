@@ -601,6 +601,7 @@ ALL_ANGEL_PROTECT#Muito obrigado!#
 ALL_DREAM_SUMMERNIGHT#Sonho de Verão#
 ALL_REVERSEORCISH#Transformação Orc#
 ALL_WEWISH#Noite Feliz!#
+NPC_WIDECRITICALWOUND#Ferida Mortal#
 KN_CHARGEATK#Avanço Ofensivo#
 CR_SHRINK#Submissão#
 AS_SONICACCEL#Lâminas Aceleradas#
@@ -891,7 +892,7 @@ RETURN_TO_ELDICASTES#Para El Dicastes#
 ALL_BUYING_STORE#Loja de Compras!#
 ALL_GUARDIAN_RECALL#Chamado do Guardião#
 ALL_ODINS_POWER#Poder de Odin#
-ALL_RAY_OF_PROTECTION#??? ? #
+ALL_RAY_OF_PROTECTION#Luz Protetora#
 MC_CARTDECORATE#Decorar Carrinho#
 GM_ITEM_ATKMAX#Physical item attack Max#
 GM_ITEM_ATKMIN#Max Physical item attack rate#
@@ -950,10 +951,13 @@ ECL_PEONYMAMY#Peônia#
 ECL_SADAGUI#Erva-Mate#
 ECL_SEQUOIADUST#Pó de Yggdrasil#
 ECLAGE_RECALL#Para Eclage#
+ALL_NIFLHEIM_RECALL#Para Nifflheim#
+ALL_PRONTERA_RECALL#Para Prontera#
 GC_DARKCROW#Garra Sombria#
 RA_UNLIMIT#Ilimitar#
 GN_ILLUSIONDOPING#Alucinógeno#
 RK_DRAGONBREATH_WATER#Sopro de Gelo#
+RK_LUXANIMA#Luz da Alma#
 NC_MAGMA_ERUPTION#Erupção de Magma#
 WM_FRIGG_SONG#Canção de Frigga#
 SO_ELEMENTAL_SHIELD#Escudo Elemental#

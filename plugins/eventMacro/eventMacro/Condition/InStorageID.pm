@@ -2,7 +2,7 @@ package eventMacro::Condition::InStorageID;
 
 use strict;
 
-use base 'eventMacro::Condition::BaseInStorage';
+use base 'eventMacro::Condition::Base::InStorage';
 
 
 use eventMacro::Utilities qw( getStorageAmountbyID );
@@ -26,10 +26,6 @@ sub _parse_syntax {
 sub _get_val {
 	my ( $self ) = @_;
 	getStorageAmountbyID($self->{wanted});
-}
-
-sub usable {
-	1;
 }
 
 1;

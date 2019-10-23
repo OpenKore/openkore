@@ -1,4 +1,4 @@
-#format: <source coordinate><destination coordinate>[zenny cost][conversation sequence]
+#format: <source coordinate><destination coordinate>[zenny cost][allow ticket][conversation sequence]
 alberta 195 151 alb2trea 62 69 0 c c r0
 alb2trea 39 50 alberta 192 169 0 r0
 alberta 247 122 tur_dun01 157 39 10000 c r1 c r0 c c c
@@ -514,7 +514,7 @@ aldeg_cas05 70 189 aldeg_cas05 166 81
 aldeg_cas05 150 67 aldeg_cas05 9 187
 aldeg_cas05 5 187 aldeg_cas05 151 62
 aldeg_cas05 165 232 aldeg_cas05 193 49
-aldeg_cas05 188 49 aldeg_cas05 165 288
+aldeg_cas05 188 49 aldeg_cas05 165 228
 aldeg_cas05 195 42 aldeg_cas05 19 227
 aldeg_cas05 15 227 aldeg_cas05 195 46
 aldeg_cas05 13 175 aldeg_cas05 162 194
@@ -2927,14 +2927,14 @@ moc_prydn1 223 9 moc_prydn2 192 8
 moc_prydn2 195 8 moc_prydn1 220 9
 
 
-# dewata #need add step npc talk 
+# dewata #need add step npc talk
 dewata 44 252 dew_fild01 373 212
 dew_fild01 375 212 dewata 46 256
 dew_fild01 57 273 dew_in01 15 33
 dew_fild01 48 65 dew_dun02 302 30
 dew_dun02 305 30 dew_fild01 50 65
 
-# Lasagna #need add step npc talk 
+# Lasagna #need add step npc talk
 lasa_fild02 348 244 lasa_dun01 24 143
 lasa_dun01 18 143 lasa_fild02 344 243
 lasa_dun_q 190 14 lasa_dun01 152 98
@@ -2967,7 +2967,7 @@ conch_in 140 87 conch_in 137 64
 conch_in 142 60 conch_in 162 61
 conch_in 159 61 conch_in 140 59
 brasilis 316 57 alberta 224 115 0 c r0
-alberta 247 115 brasilis 314 60 0 c c r0 c 
+alberta 247 115 brasilis 314 60 0 c c r0 c
 
 # Rock Ridge
 #alberta 240 103 harboro1 70 215 10000 c r0 n
@@ -3095,3 +3095,55 @@ s_atelier 80 66 s_atelier 32 64
 s_atelier 32 64 s_atelier 80 63
 lighthalzen 41 52 s_atelier 18 75
 s_atelier 18 79 lighthalzen 41 56
+
+# Ep 16.1 - Prontera Castle
+prt_cas 31 120 prt_cas 197 148
+prt_cas 197 148 prt_cas 31 117
+prt_cas 27 47 prt_cas 178 148
+prt_cas 178 148 prt_cas 27 43
+prt_cas 164 177 prt_cas 54 152
+prt_cas 54 152 prt_cas 164 172
+prt_cas_q 154 8 prt_cas 152 163
+prt_cas 152 163 prt_cas_q 150 8
+prt_cas_q 130 8 prt_cas 152 163
+prt_cas_q 34 28 prt_cas_q 130 8
+prt_cas_q 130 32 prt_cas_q 34 78
+prt_cas_q 34 78 prt_cas_q 134 32
+prt_cas_q 130 56 prt_cas_q 34 128
+prt_cas_q 34 128 prt_cas_q 134 56
+prt_cas_q 34 178 prt_cas_q 130 80
+prt_cas_q 130 80 prt_cas_q 30 178
+prt_cas 268 176 prt_cas 110 152
+prt_cas 110 152 prt_cas 268 172
+prt_cas 278 163 prt_cas 110 152
+prt_cas_q 132 119 prt_cas 278 163
+prt_cas_q 74 21 prt_cas_q 153 119
+prt_cas_q 153 119 prt_cas_q 78 21
+prt_cas_q 74 77 prt_cas_q 153 143
+prt_cas_q 153 143 prt_cas_q 78 77
+prt_cas_q 153 167 prt_cas_q 74 131
+prt_cas_q 74 131 prt_cas_q 142 173
+prt_cas_q 74 189 prt_cas_q 153 191
+prt_cas_q 153 191 prt_cas_q 78 189
+prt_cas 174 108 prt_cas 235 148
+prt_cas 235 148 prt_cas 174 104
+prt_cas 174 40 prt_cas 253 148
+prt_cas 253 148 prt_cas 174 37
+prt_cas 93 208 prt_cas 216 184
+prt_cas 216 184 prt_cas 93 212
+prt_cas 320 178 prt_cas 41 275
+prt_cas 41 275 prt_cas 320 182
+prt_cas 247 111 prt_cas 174 234
+prt_cas 174 234 prt_cas 247 107
+prt_pri00 54 139 prt_cas 188 258
+prt_pri00 58 128 prt_lib 9 28 0 c r0 n
+prt_pri00 58 128 prt_pri00 53 128 0 c r1 n
+prt_cas 188 258 prt_pri00 54 134
+prt_lib 9 24 prt_pri00 60 127
+prt_lib_q 91 85 prt_lib 89 43 0 c r1 n
+prontera 156 358 prt_cas 216 146
+prt_cas 216 142 prontera 156 354
+prt_cas 82 175 prt_gld 159 30
+prt_gld 159 24 prt_cas 82 17
+prt_q 155 358 prt_lib_q 9 25
+prt_lib_q 9 25 prt_q 155 354

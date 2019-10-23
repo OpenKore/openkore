@@ -979,8 +979,7 @@ sub reconstruct_actor_move {
 	$args->{coords} = getCoordString(@{$args}{qw(x y)}, $args->{no_padding});
 }
 
-# should be called sendSlaveMove...
-sub sendHomunculusMove {
+sub sendSlaveMove {
 	my ($self, $ID, $x, $y) = @_;
 	
 	$self->sendToServer($self->reconstruct({
@@ -1151,8 +1150,7 @@ sub sendShowEquipTickbox {
 	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
 }
 
-# should be sendSlaveAttack...
-sub sendHomunculusAttack {
+sub sendSlaveAttack {
 	my $self = shift;
 	my $slaveID = shift;
 	my $targetID = shift;
@@ -1168,8 +1166,7 @@ sub sendHomunculusAttack {
 	debug "Sent Slave attack: ".getHex($targetID)."\n", "sendPacket", 2;
 }
 
-# should be sendSlaveStandBy...
-sub sendHomunculusStandBy {
+sub sendSlaveStandBy {
 	my $self = shift;
 	my $slaveID = shift;
 	$self->sendToServer($self->reconstruct({
@@ -1454,6 +1451,11 @@ sub rodex_refresh_maillist {
 		type => $type,
 		mailID1 => $mailID1,
 		mailID2 => $mailID2,
+		# seems that is not current used by client/server 2019-09-16
+		mailReturnID1 => 0,
+		mailReturnID2 => 0,
+		mailAccountID1 => 0,
+		mailAccountID2 => 0,
 	}));
 }
 
@@ -1484,6 +1486,11 @@ sub rodex_open_mailbox {
 		type => $type,
 		mailID1 => $mailID1,
 		mailID2 => $mailID2,
+		# seems that is not current used by client/server 2019-09-16
+		mailReturnID1 => 0,
+		mailReturnID2 => 0,
+		mailAccountID1 => 0,
+		mailAccountID2 => 0,
 	}));
 }
 
@@ -2461,8 +2468,9 @@ sub sendBuyBulk {
 
 sub reconstruct_buy_bulk {
 	my ($self, $args) = @_;
+	my $pack = $self->{send_buy_bulk_pack} || "v2";
 	
-	$args->{buyInfo} = pack "(a*)*", map { pack "v2", $_->{amount}, $_->{itemID} } @{$args->{items}};
+	$args->{buyInfo} = pack "(a*)*", map { pack $pack, $_->{amount}, $_->{itemID} } @{$args->{items}};
 }
 
 sub sendSellBulk {
@@ -3125,5 +3133,18 @@ sub sendMergeItemCancel {
 #sub reconstruct_merge_item_cancel {
 #	my ($self, $args) = @_;
 #}
+
+sub sendStylistChange {
+	my ($self, $hair_color, $hair_style, $cloth_color, $head_top, $head_mid, $head_bottom ) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'stylist_change',
+		hair_color => $hair_color, 
+		hair_style => $hair_style, 
+		cloth_color => $cloth_color,
+		head_top => $head_top,
+		head_mid => $head_mid,
+		head_bottom => $head_bottom
+	}));
+}
 
 1;

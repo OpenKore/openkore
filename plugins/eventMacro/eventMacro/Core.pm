@@ -271,6 +271,11 @@ sub create_automacro_list {
 				error "[eventMacro] Ignoring automacro '$name' (exclusive parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 			
+			###Parameter: self_interruptible
+			} elsif ($parameter->{'key'} eq "self_interruptible" && $parameter->{'value'} !~ /[01]/) {
+				error "[eventMacro] Ignoring automacro '$name' (self_interruptible parameter should be '0' or '1')\n";
+				next AUTOMACRO;
+			
 			###Parameter: priority
 			} elsif ($parameter->{'key'} eq "priority" && $parameter->{'value'} !~ /\d+/) {
 				error "[eventMacro] Ignoring automacro '$name' (priority parameter should be a number)\n";
@@ -282,8 +287,8 @@ sub create_automacro_list {
 				next AUTOMACRO;
 			
 			###Parameter: orphan
-			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /(terminate|terminate_last_call|reregister|reregister_safe)/) {
-				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe')\n";
+			} elsif ($parameter->{'key'} eq "orphan" && $parameter->{'value'} !~ /^(terminate|terminate_last_call|reregister|reregister_safe)$/) {
+				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe'. Given value: '$parameter->{'value'}')\n";
 				next AUTOMACRO;
 			###Parameter: repeat
 			} elsif ($parameter->{'key'} eq "repeat" && $parameter->{'value'} !~ /\d+/) {
@@ -329,12 +334,6 @@ sub create_automacro_list {
 			if (exists $currentConditions{$condition_module} && $condition_object->is_unique_condition()) {
 				error "[eventMacro] Condition '".$condition->{'key'}."' cannot be used more than once in an automacro. It was used twice (or more) in automacro '".$name."'\n";
 				warning "[eventMacro] Ignoring automacro '$name' (multiple unique condition)\n";
-				next AUTOMACRO;
-			}
-			
-			unless ($condition_object->usable) {
-				error "[eventMacro] Condition '".$condition->{'key'}."' is not a usable type of condition, it exists to be a base for other conditions.\n";
-				warning "[eventMacro] Ignoring automacro '$name' (used non usable condition)\n";
 				next AUTOMACRO;
 			}
 			
@@ -1475,7 +1474,12 @@ sub AI_start_checker {
 		
 		my $automacro = $self->{Automacro_List}->get($array_member->{index});
 		
-		next unless $automacro->is_timed_out;	
+		next unless $automacro->is_timed_out;
+		
+		if (!$automacro->get_parameter('self_interruptible') && defined $self->{Macro_Runner} && !$self->{Macro_Runner}->self_interruptible && $self->{Macro_Runner}->get_caller_name eq $automacro->get_name()) {
+			next;
+		}
+		
 		message "[eventMacro] Conditions met for automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
 		
 		$self->call_macro($automacro);
@@ -1547,8 +1551,10 @@ sub call_macro {
 	
 	$self->{Macro_Runner} = new eventMacro::Runner(
 		$automacro->get_parameter('call'),
+		$automacro->get_name,
 		$automacro->get_parameter('repeat'),
 		$automacro->get_parameter('exclusive') ? 0 : 1,
+		$automacro->get_parameter('self_interruptible'),
 		$automacro->get_parameter('overrideAI'),
 		$automacro->get_parameter('orphan'),
 		$automacro->get_parameter('delay'),

@@ -327,6 +327,9 @@ sub iterate {
 					$self->{x}, $self->{y}));
 			}
 
+		} elsif (defined $self->{error_code}) {
+			debug "Can't talk with $self->{target}, because of errors\n", 'ai_npcTalk';
+			$self->setError($self->{error_code}, $self->{error_message});
 		} else {
 			my $target = $self->find_and_set_target;
 			
@@ -814,7 +817,7 @@ sub findTarget {
 	my ($self, $actorList) = @_;
 	if ($self->{nameID}) {
 		my ($actor) = grep { $self->{nameID} eq $_->{nameID} } @{$actorList->getItems};
-		if ($actor && $actor->{statuses}->{EFFECTSTATE_BURROW}) {
+		if ($actor && $actor->{statuses}->{EFFECTSTATE_BURROW} && $self->{type} ne 'autotalk') {
 			$self->setError(NPC_NOT_FOUND, T("Talk with a hidden NPC prevented."));
 			return;
 		}

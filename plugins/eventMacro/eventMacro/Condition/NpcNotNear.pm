@@ -3,7 +3,7 @@ package eventMacro::Condition::NpcNotNear;
 use strict;
 use Globals qw( $npcsList );
 
-use base 'eventMacro::Condition::BaseActorNotNear';
+use base 'eventMacro::Condition::Base::ActorNotNear';
 
 sub _hooks {
 	my ( $self ) = @_;
@@ -43,10 +43,6 @@ sub validate_condition {
 	}
 	
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
-}
-
-sub usable {
-	1;
 }
 
 1;

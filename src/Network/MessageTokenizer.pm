@@ -34,7 +34,7 @@ use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
 # Create a new Network::MessageTokenizer object.
 sub new {
 	my ($class, $rpackets) = @_;
-	assert(defined $rpackets) if DEBUG;
+	assert(defined $rpackets, "Can't create new MessageTokenizer with undef packet length database (\$rpackets is undefined)") if DEBUG;
 	#Log::warning (Data::Dumper::Dumper($rpackets)."\n");
 	my %self = (
 		
@@ -51,7 +51,7 @@ sub new {
 # Add raw data to this tokenizer's buffer.
 sub add {
 	my ($self, $data) = @_;
-	assert(defined $data) if DEBUG;
+	assert(defined $data, "Can't add undefined data to MessageTokenizer buffer") if DEBUG;
 	$self->{buffer} .= $data;
 }
 

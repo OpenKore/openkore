@@ -195,6 +195,7 @@ sub new {
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
+		'0447' => ['blocking_play_cancel'],
 		'044A' => ['client_version', 'V', [qw(clientVersion)]],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'07E7' => ['captcha_answer', 'v a4 a24', [qw(len accountID answer)]],
@@ -242,16 +243,20 @@ sub new {
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
 		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
+		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AE8' => ['change_dress'],
+		'0AC0' => ['rodex_open_mailbox', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]],  # 26 -- RodexOpenMailbox
+		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 		'0B14' => ['inventory_expansion_request'], #2
 		'0B19' => ['inventory_expansion_rejected'], #2
+		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	

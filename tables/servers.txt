@@ -24,12 +24,12 @@ serverEncoding Western
 gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
-charBlockSize 144
+charBlockSize 146
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x0A3E7C00, 0x3429412D, 0x58BA18CE
 blockingPlayerCancel 1
 rankingSystemType 1
+itemListType 1
 
 # http://ragnarok.uol.com.br
 [Brazil - bRO: Thor]
@@ -46,12 +46,12 @@ serverEncoding Western
 gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
-charBlockSize 144
+charBlockSize 146
 pinCode 1
 charDeleteDateType 1
-sendCryptKeys 0x0A3E7C00, 0x3429412D, 0x58BA18CE
 blockingPlayerCancel 1
 rankingSystemType 1
+itemListType 1
 
 # http://ro.zhaouc.com/
 [cRO - China: Taren]
@@ -71,10 +71,8 @@ secureLogin_account 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 pinCode 1
 charDeleteDateType 1
-pauseCharLogin 1
 blockingPlayerCancel 1
 rankingSystemType
-pauseCharLogin 1
 
 # http://www.ragnarokeurope.com/
 [France - fRO]
@@ -89,11 +87,10 @@ serverType fRO
 serverEncoding Western
 addTableFolders fRO
 charBlockSize 116
-pauseCharLogin 1
 
-# https://ror.gravindo.id/
-[Indonesia - idRO: Odin]
-ip 202.93.25.131
+# https://ro.gnjoy.id/
+[Indonesia - idRO: Yggdrasil]
+ip 202.93.26.198
 port 6900
 master_version 12
 version 2
@@ -107,17 +104,16 @@ secureLogin_account 0
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
 addTableFolders idRO
-charBlockSize 144
+charBlockSize 145
 charDeleteDateType 1
 blockingPlayerCancel 1
-pauseCharLogin 1
 rankingSystemType 1
 
 # Renewal
 # http://playragnarok.com
 [International - iRO: Ymir/Yggdrasil/Valkyrie]
 title International - iRO: Thor|Chaos (Renewal-compatible)
-ip 128.241.92.162
+ip 128.241.92.36
 port 6800
 master_version 1
 version 18
@@ -128,25 +124,25 @@ patchpath /patch02
 addTableFolders iRO/Renewal;iRO
 charBlockSize 147
 charDeleteDateType 1
-sendCryptKeys 0x389B389B, 0x389B389B, 0x389B389B
+sendCryptKeys 0x38012567, 0x078F087E, 0x71BD2BEA
 blockingPlayerCancel 1
 rankingSystemType 1
-pauseCharLogin 1
+itemListType 1
 
 # http://playragnarok.com
 [International - iRO: Sakray]
-ip 128.241.92.162
+ip 128.241.92.36
 port 6800
 master_version 14
 version 18
-serverType iRO
+serverType iRO_Sakray
 serverEncoding Western
-paddedPackets 0
-paddedPackets_attackID 0x72
-paddedPackets_skillUseID 0xF5
-addTableFolders iRO
-charBlockSize 145
+addTableFolders iRO/Sakray;iRO
+charBlockSize 147
+#sendCryptKeys 0x00000000, 0x00000000, 0x00000000
 rankingSystemType 1
+blockingPlayerCancel 1
+charDeleteDateType 1
 
 # Pre-renewal
 # http://playragnarok.com
@@ -161,24 +157,6 @@ serverEncoding Western
 addTableFolders iRO/Classic;iRO
 charBlockSize 108
 rankingSystemType 1
-
-# Re:Start
-# http://playragnarokrestart.com/
-[International - iRO: Re:Start]
-ip 128.241.92.133
-port 6800
-version 18
-master_version 1
-serverType iRO_Restart
-addTableFolders iRO/Restart;iRO
-serverEncoding Western
-charBlockSize 145
-pauseCharLogin 1
-patchserver ropatch1.gravityus.com
-patchpath /repatch
-sendCryptKeys 0x68BD5651, 0x168E0C12, 0x2A4D29CB
-rankingSystemType 1
-pauseCharLogin 1
 
 # TODO: needs a servertype & table folder
 # https://ragnarokonline.gungho.jp/
@@ -386,3 +364,9 @@ pinCode 1
 [Europe - euRO]
 dead 1
 dead_message euRO was closed on September 30, 2010. There used to be transfers to fRO, check out their website.
+
+# Re:Start
+# http://playragnarokrestart.com/
+[International - iRO: Re:Start]
+dead 1
+dead_message iRO Re:Start was merged into iRO Renewal on 11th July 2019. Visit official website for more details.

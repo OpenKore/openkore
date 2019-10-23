@@ -2,7 +2,7 @@ package eventMacro::Condition::NoNpcNear;
 
 use strict;
 use Globals qw( $npcsList );
-use base 'eventMacro::Condition::NoActorNear';
+use base 'eventMacro::Condition::Base::NoActorNear';
 
 use Globals;
 
@@ -27,10 +27,6 @@ sub validate_condition {
 		$self->{change} = 0;
 	}
 	return $self->SUPER::validate_condition( $callback_type, $callback_name, $args );
-}
-
-sub usable {
-	1;
 }
 
 1;

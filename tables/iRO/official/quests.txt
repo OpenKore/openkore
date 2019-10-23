@@ -17622,35 +17622,35 @@ Hunt 150 Dolomedes monsters and return to the Bounty Board at El Dicastes#
 #
 
 62560#Bounty Board Skeleton#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Skeleton monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Skeleton monsters and return to the Bounty Board at Payon#
 #
 
 62561#Bounty Board Soldier Skeleton#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Soldier Skeleton monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Soldier Skeleton monsters and return to the Bounty Board at Payon#
 #
 
 62562#Bounty Board Archer Skeleton#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Archer Skeleton monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Archer Skeleton monsters and return to the Bounty Board at Payon#
 #
 
 62563#Bounty Board Munak#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Munak monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Munak monsters and return to the Bounty Board at Payon#
 #
 
 62564#Bounty Board Bongun#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Bongun monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Bongun monsters and return to the Bounty Board at Payon#
 #
 
 62565#Bounty Board Spore#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Spore monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Spore monsters and return to the Bounty Board at Payon#
 #
 
 62566#Bounty Board Snake#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Snake monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Snake monsters and return to the Bounty Board at Payon#
 #
 
 62567#Bounty Board Bigfoot#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Bigfoot monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Bigfoot monsters and return to the Bounty Board at Payon#
 #
 
 62568#Bounty Board Elder Willow#SG_FEEL#QUE_NOIMAGE#
@@ -17658,7 +17658,7 @@ Hunt 150 Elder Willow monsters and return to the Bounty Board at Archer Village#
 #
 
 62569#Bounty Board Greatest General#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Elder Greatest General monsters and return to the Bounty Board at Archer Village#
+Hunt 150 Elder Greatest General monsters and return to the Bounty Board at Payon#
 #
 
 62617#Bounty Board Thara Frog#SG_FEEL#QUE_NOIMAGE#
@@ -17738,31 +17738,31 @@ Memorial dungeon : Speak to the adventurer Leon after you've been through Sara's
 #
 
 62644#Bounty Board Willow#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Willow monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Willow monsters and return to the Bounty Board at Payon#
 #
 
 62645#Bounty Board Wolf#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Wolf monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Wolf monsters and return to the Bounty Board at Payon#
 #
 
 62646#Bounty Board Munak#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Munak monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Munak monsters and return to the Bounty Board at Payon#
 #
 
 62647#Bounty Board Bongun#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Bongun monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Bongun monsters and return to the Bounty Board at Payon#
 #
 
 62648#Bounty Board Sohee#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Sohee monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Sohee monsters and return to the Bounty Board at Payon#
 #
 
 62649#Bounty Board Dokebi#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Dokebi monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Dokebi monsters and return to the Bounty Board at Payon#
 #
 
 62650#Bounty Board Nine Tail#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Nine Tail monsters and return to the Bounty Board at El Dicastes#
+Hunt 150 Nine Tail monsters and return to the Bounty Board at Payon#
 #
 
 62660#Bounty Board Chonchon#SG_FEEL#QUE_NOIMAGE#
@@ -18391,19 +18391,19 @@ Hunt 150 Majoruros monsters and return to the Bounty Board at Geffen#
 #
 
 62816#Bounty Board Lunatic#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Lunatic monsters and return to the Bounty Board at Prontera#
+Hunt 150 Lunatic monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
 
 62817#Bounty Board Ambernite#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Ambernite monsters and return to the Bounty Board at Prontera#
+Hunt 150 Ambernite monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
 
 62818#Bounty Board Muka#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Muka monsters and return to the Bounty Board at Prontera#
+Hunt 150 Muka monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
 
 62819#Bounty Board Magnolia#SG_FEEL#QUE_NOIMAGE#
-Hunt 150 Magnolia monsters and return to the Bounty Board at Prontera#
+Hunt 150 Magnolia monsters and return to the Bounty Board near the Prontera Center Fountain#
 #
 
 62820#Bounty Board Skel Worker#SG_FEEL#QUE_NOIMAGE#
@@ -22506,4 +22506,1077 @@ Explore Duffy's Pub Crawl#
 #
 63039#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
 Explore Duffy's Pub Crawl.#
+#
+
+
+63243#A Simple Request#SG_FEEL#QUE_NOIMAGE#
+
+Mema Coco needed: 12x J_llop, 12x Zar_on, 9x B_tt_rf_y W__g, 1x B_ac_ Ro_e, and 1x Pa_tie.#
+
+Get Mema Coco's Groceries.#
+
+63244#A Simple Request#SG_FEEL#QUE_NOIMAGE#
+
+Mema Coco wants you to go into Knut's dreams and get rid of the demon possessing him.#
+
+Help rid the demon in Knut's dreams.#
+
+
+//Illusion of Frozen
+15110#Fighting Ice with Fire#SG_FEEL#QUE_NOIMAGE#
+Collect Dry Twigs to thaw out Zeith and Vrid in the Ice Cave.#
+Collect 10 Dry Twigs.#
+
+15111#Hunt Furious Ice Titans#SG_FEEL#QUE_NOIMAGE#
+Vrid wants to break the ice with ice. Hunt 10 Furious Ice Titans.#
+Hunt 10 Furious Ice Titans.#
+
+15112#Direct Approach#SG_FEEL#QUE_NOIMAGE#
+Let's just break the ice by hitting it. Hit the ice around Zeith first.#
+Hit Zeith to break the ice around him.#
+
+15113#Direct Approach#SG_FEEL#QUE_NOIMAGE#
+Let's just break the ice by hitting it. Hit the ice around Vrid first.#
+Hit Vrid to break the ice around him.#
+
+15114#Catch a Strange Lizard#SG_FEEL#QUE_NOIMAGE#
+Vrid and Zeith want to get revenge on the strange lizard that froze them. Eliminate Ktullanux in the center of the cave.#
+Eliminate Awakened Ktullanux.#
+
+15115#Vrid and Zeith#SG_FEEL#QUE_NOIMAGE#
+You can re-receive this quest after 4:00 a.m.#
+Quest resets at 4:00 a.m.#
+
+15116#Clear the Illusion of the Frozen#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+15117#Hunt Furious Gazetis#SG_FEEL#QUE_NOIMAGE#
+Vrid wants to break the ice with ice. Hunt 10 Furious Gazetis.#
+Hunt 10 Furious Gazetis.#
+
+15118#Hunt Furious Snowiers#SG_FEEL#QUE_NOIMAGE#
+Vrid wants to break the ice with ice. Hunt 10 Furious Snowiers.#
+Hunt 10 Furious Snowiers.#
+
+15119#Hunt Hard Icicles#SG_FEEL#QUE_NOIMAGE#
+Vrid wants to break the ice with ice. Hunt 10 Hard Icicles.#
+Hunt 10 Hard Icicles.#
+
+63259#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+Help Moose and Squirrel get to the bottom of the mystery of Ferus Faire. You should start looking for clues to the west of Moose and Squirrel near all the attendees.#
+Look for clues.#
+
+63260#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The clue mentions 'Sure is cold in here. Could use a nice open fire.' Maybe the clue is near the firepit to the north.#
+Look for the next clue.#
+
+63261#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The clue mentions 'Only the mightiest at this stage.' Maybe the clue is near the a concert stage to the south.#
+Look for the next clue.#
+
+63262#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You found a casino coin. Perhaps it is related to the next clue.#
+Look for the next clue.#
+
+63263#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You found a Star Crumb. These are dropped by the golems in the north cave. We should check it out.#
+Head to the cave north of Comodo.#
+
+63264#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You found a mysterious mailbox in the cave. You should examine it to see if it is connected to the case.#
+Examine the myserious mailbox.#
+
+63265#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+A Mysterious Presence asks you to complete its trials. The first one involves finding and solving three riddles on the map.#
+Find and solve the three riddles for the first trial.#
+
+63266#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You solved one of the riddles of the first trial. When you solved all three, go back and speak with the Mysterious Presence.#
+You solved a riddle!#
+
+63267#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You solved one of the riddles of the first trial. When you solved all three, go back and speak with the Mysterious Presence.#
+You solved a riddle!#
+
+63268#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You solved one of the riddles of the first trial. When you solved all three, go back and speak with the Mysterious Presence.#
+You solved a riddle!#
+
+63269#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You solved all of the riddles and passed the first trial of the Mysterious Presence. You should go in the portal that leads to the next trial.#
+Enter the portal to the second trial.#
+
+63270#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The Myserious Presence asks that you complete the second trial by touching the three objects located around the map.#
+Locate and touch each of the three objects around the map.#
+
+63271#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You touched one of the objects for the second trial. When you find all three, go back and enter the portal in the center of the map.#
+You located one of the objects.#
+
+63272#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You touched one of the objects for the second trial. When you find all three, go back and enter the portal in the center of the map.#
+You located one of the objects.#
+
+63273#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You touched one of the objects for the second trial. When you find all three, go back and enter the portal in the center of the map.#
+You located one of the objects.#
+
+63274#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+You completed the second trial and only have one left to go. You should speak to the Mysterious Presence on the third floor.#
+Speak to the Mysterious Presence for the third trial.#
+
+63275#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The Mysterious Presence asks you to slay the monsters at the end of the hallway.#
+Slay the monsters at the end of the hallway.#
+
+63276#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+As you approached the end of the hallway, you were saved by a familiar voice.#
+Speak to the strangers that saved you.#
+
+63277#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The myserious strangers from the future warn you of disaster coming towards Comodo. They suggest you look for Grandma Boxter for answers.#
+Look for Grandma Boxter.#
+
+63278#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+Grandma Boxter says that Gramps has been acting strange lately. Perhaps it is time to confront him and get to the bottom of this mystery.#
+Look for Gramps nearby...?#
+
+63279#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+Gramps has found a new subspecies of Ferus monsters and needs you and fellow adventurers to slay them for his research. When ready, head to the well outside to the east to fight the Ferus Twins.#
+Head to the well outside to east of Gramps' hut.#
+
+63280#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+The Ferus Twins need time to rest. You can fight the Ferus Twins again in 8 hours.#
+Please wait 8 hours before fighting the Ferus Twins again.#
+
+63281#Ferus Faire#SG_FEEL#QUE_NOIMAGE#
+Slay the Ferus Twins: Furious and Ferocious!#
+Slay Furious and Ferocious.#
+
+63282#DR815 Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the DR815 monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 DR815 monsters.#
+
+63283#GC109 Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the GC109 monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 GC109 monsters.#
+
+63285#Kick Step Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Kick Step monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Kick Step monsters.#
+
+63286#Kick and Kick Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Kick and Kick monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Kick and Kick monsters.#
+
+63287#Rock Step#SG_FEEL#QUE_NOIMAGE#
+Hunt the Rock Step monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Rock Step monsters.#
+
+63288#Step Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Step monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Step monsters.#
+
+
+
+63304#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Old-Man Boomy needs Burning Hair to for the Detonation Celebration.#
+Bring 30 Burning Hair to Old-Man Boomy.#
+
+63305#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Talk to Kristin Glisterine about helping the Detonation Celebration.#
+Head to Kristen Glisterine outside of Prontera.#
+
+63306#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Kristin Glisterine is asking for 10 Ice Fireworks.#
+Bring 10 Ice Fireworks to Kristin Glisterine.#
+
+63307#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+You're the new Detonation Celebration supplier, speak with Kay D. Kaboom for details.#
+Talk to Kay D. Kaboom.#
+
+63308#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+You can now complete supply requisitions for the Detonation Celebration. You also have access to Chefcular Meow, get GAINS!#
+Bring items to trade with Kay D. Kaboom or Chefcular Meow.#
+
+63289#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Talk to Lt. Don Tyler for more work.#
+Talk to Lt. Don Tyler.#
+
+63290#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Cull Monsters around Prontera and keep the roadways safe.#
+Bring Lt. Don 25 Sharp Leaf and 25 Browny Root.#
+
+63291#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Go to the town of Umbala and meet with 2 soldiers from the 1337th.#
+Talk to Woods and Buddy.#
+
+63292#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Find the report that Woods dropped in the forest outside of town.#
+Find the report and bring it back to Lt. Don.#
+
+
+63293#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+You found the report Woods lost. Bring it back to Lt. Don Tyler.#
+Return to Lt. Don Tyler.#
+
+63294#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Help Woods and Buddy find the monster responsible for the activity in the Hoomga Forest.#
+Find Woods and Buddy in Hoomga Forest.#
+
+63295#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Track down signs of inteligent monster activity in the Hoomga Forest.#
+Find clues and talk to Woods in the Hoomga Jungle.#
+
+63296#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Track down signs of inteligent monster activity in the Hoomga Forest.#
+Find clues and talk to Woods in the Hoomga Jungle.#
+
+63297#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Track down signs of inteligent monster activity in the Hoomga Forest.#
+Find clues and talk to Woods in the Hoomga Jungle.#
+
+63298#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Once you have all the clues, talk return to woods in the Umbala Forest.#
+Bring 3 Clues to Woods.#
+
+63299#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Once you have all the clues, talk return to woods in the Umbala Forest.#
+Bring 3 Clues to Woods.#
+
+63300#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Once you have all the clues, talk return to woods in the Umbala Forest.#
+Bring 3 Clues to Woods.#
+
+63301#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Ambush! Find a way to survive.#
+Survive the ambush.#
+
+63302#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Investigate the area that Woods and Buddy lead you to.#
+Search the area.#
+
+63303#Detonation Celebration#SG_FEEL#QUE_NOIMAGE#
+Ifrit has been running amuck here.#
+Defeat Ifrit.#
+
+
+63313#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63314#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63315#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63316#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63317#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63318#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63319#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+63320#Bounty Board#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 of the listed monster and return to it's bounty board#
+#
+
+63321#Bounty Board Worm Tail#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Worm Tail monsters and return to the Bounty Board at Alberta#
+#
+63322#Bounty Board Hydra#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hydra monsters and return to the Bounty Board at Alberta#
+#
+63323#Bounty Board Pirate Skeleton#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Pirate Skeleton monsters and return to the Bounty Board at Alberta#
+#
+63324#Bounty Board Freezer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Freezer monsters and return to the Bounty Board at Alberta#
+#
+63325#Bounty Board Permeter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Permeter monsters and return to the Bounty Board at Alberta#
+#
+63326#Bounty Board Solider#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Solider monsters and return to the Bounty Board at Alberta#
+#
+
+63327#Bounty Board Baby Desert Wolf#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Baby Desert Wolf monsters and return to the Bounty Board at Morroc#
+#
+63328#Bounty Board Drops#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Drops monsters and return to the Bounty Board at Morroc#
+#
+63329#Bounty Board Picky#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Picky monsters and return to the Bounty Board at Morroc#
+#
+63330#Bounty Board Picky Egg#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Picky Egg monsters and return to the Bounty Board at Morroc#
+#
+63331#Bounty Board Scorpion#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Scorpion monsters and return to the Bounty Board at Morroc#
+#
+63332#Bounty Board Andre#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Andre monsters and return to the Bounty Board at Morroc#
+#
+63333#Bounty Board Ant Egg#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ant Egg monsters and return to the Bounty Board at Morroc#
+#
+63334#Bounty Board Deniro#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deniro monsters and return to the Bounty Board at Morroc#
+#
+63335#Bounty Board Familiar#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Familiar monsters and return to the Bounty Board at Morroc#
+#
+63336#Bounty Board Piere#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Piere monsters and return to the Bounty Board at Morroc#
+#
+63337#Bounty Board Isis#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Isis monsters and return to the Bounty Board at Morroc#
+#
+63338#Bounty Board Metaller#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Metaller monsters and return to the Bounty Board at Morroc#
+#
+63339#Bounty Board Minorous#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Minorous monsters and return to the Bounty Board at Morroc#
+#
+63340#Bounty Board Mummy#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Mummy monsters and return to the Bounty Board at Morroc#
+#
+63341#Bounty Board Verit#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Verit monsters and return to the Bounty Board at Morroc#
+#
+63342#Bounty Board Golem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Golem monsters and return to the Bounty Board at Morroc#
+#
+63343#Bounty Board Hode#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hode monsters and return to the Bounty Board at Morroc#
+#
+63344#Bounty Board Marduk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Marduk monsters and return to the Bounty Board at Morroc#
+#
+63345#Bounty Board Pasana#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Pasana monsters and return to the Bounty Board at Morroc#
+#
+63346#Bounty Board Requiem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Requiem monsters and return to the Bounty Board at Morroc#
+#
+63347#Bounty Board Sandman#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sandman monsters and return to the Bounty Board at Morroc#
+#
+63348#Bounty Board Zerom#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Zerom monsters and return to the Bounty Board at Morroc#
+#
+63349#Bounty Board Nightmare Minorous#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Minorous monsters and return to the Bounty Board at Morroc#
+#
+63350#Bounty Board Nightmare Mimic#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Mimic monsters and return to the Bounty Board at Morroc#
+#
+63351#Bounty Board Nightmare Verit#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Verit monsters and return to the Bounty Board at Morroc#
+#
+
+63352#Bounty Board Fabre#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Fabre monsters and return to the Bounty Board near the Prontera Center Fountain#
+#
+
+63353#Bounty Board Marina#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Marina monsters and return to the Bounty Board at Izlude#
+#
+63354#Bounty Board Merman#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Merman monsters and return to the Bounty Board at Izlude#
+#
+63355#Bounty Board Plankton#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Plankton monsters and return to the Bounty Board at Izlude#
+#
+63356#Bounty Board Strouf#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Strouf monsters and return to the Bounty Board at Izlude#
+#
+63357#Bounty Board Vadon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Vadon monsters and return to the Bounty Board at Izlude#
+#
+
+63358#Bounty Board Red Eruma#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Red Eruma monsters and return to the Bounty Board at Malangdo#
+#
+63359#Bounty Board Siorava#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Siorava monsters and return to the Bounty Board at Malangdo#
+#
+
+63360#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You ran into some kids that need help raising money for one last Summer Adventure. Help raise enough money and speak to their leader, Penny.#
+Gather enough money for the kids#
+
+63361#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You helped the kids raise enough money! Time to set sail for adventure. Speak to Penny when you are ready.#
+Speak to Penny and set sail!#
+
+63362#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+Your adventure plans aren't going as expected. Maybe you should spend this time to explore the island and see if anyone is around.#
+Explore the desolate island#
+
+63363#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You find out that the Porings that watch over the island have gone missing. Help look for the first missing Poring Guardian in the Ocean Cavern.#
+Look for the first Poring Guardian#
+
+63364#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You find out that the Porings that watch over the island have gone missing. Help look for the second missing Poring Guardian in the Ocean Cavern.#
+Look for the second Poring Guardian#
+
+63365#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You find out that the Porings that watch over the island have gone missing. Help look for the third missing Poring Guardian in the Ocean Cavern.#
+Look for the third Poring Guardian#
+
+63366#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You find out that the Porings that watch over the island have gone missing in the Ocean Cavern. Head back to Penny and set sail for the Ocean Cavern.#
+Speak to Penny and set sail!#
+
+63367#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+You found all of the missing Poring Guardians! Go back and speak to the lone Poring on the island.#
+Speak to the Lone Poring.#
+
+63368#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+The Lone Poring ran outside out of excitement before you could ask any questions. Follow it outside to the beach!#
+Follow the Lone Poring outside.#
+
+63369#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+One of the Poring Guardians needs your help rebuilding the Poring Island Resort. Speak to Poring Man and help Ms. Marin build a Supply Room using 20 Heart of Mermaids.#
+Help Ms. Marin#
+
+63370#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+One of the Poring Guardians needs your help rebuilding the Poring Island Resort. Speak to Poring Man and help Dr. Drops build an Infirmary using 20 Gills.#
+Help Dr. Drops#
+
+63371#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+One of the Poring Guardians needs your help rebuilding the Poring Island Resort. Speak to Poring Man and help Popo the Kid build a Cantina using 10 Horrendous Hair.#
+Help Popo the Kid#
+
+63372#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+With the Poring Island fully restored, it's time to bring the fight to the Witch! Speak to Poring Man to begin the assault on the Witch's Lair.#
+Speak to Poring Man#
+
+63373#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+Who knows what the Witch will summon. Be sure to slay her creation!#
+Slay the Witch's monster#
+
+63374#Poring Summers#SG_FEEL#QUE_NOIMAGE#
+We attacked the Witch's Lair recently, so she won't return for another 6 hours.#
+Wait 6 hours before attacking again#
+
+
+63375#Bounty Board Eggring#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Eggring monsters and return to the Bounty Board at Lasagna#
+#
+63376#Bounty Board Grass Fabre#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Grass Fabre monsters and return to the Bounty Board at Lasagna#
+#
+63377#Bounty Board Hunter Desert Wolf#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hunter Desert Wolf monsters and return to the Bounty Board at Lasagna#
+#
+63378#Bounty Board Leaf Lunatic#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Leaf Lunatic monsters and return to the Bounty Board at Lasagna#
+#
+63379#Bounty Board Sweet Roda Frog#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sweet Roda Frog monsters and return to the Bounty Board at Lasagna#
+#
+63380#Bounty Board Wild Hornet#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wild Hornet monsters and return to the Bounty Board at Lasagna#
+#
+63381#Bounty Board Charge Basilisk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Charge Basilisk monsters and return to the Bounty Board at Lasagna#
+#
+63382#Bounty Board Combat Basilisk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Combat Basilisk monsters and return to the Bounty Board at Lasagna#
+#
+63383#Bounty Board Jungle Mandragora#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Jungle Mandragora monsters and return to the Bounty Board at Lasagna#
+#
+63384#Bounty Board Alligator#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Alligator  monsters and return to the Bounty Board at Comodo#
+#
+63385#Bounty Board Flora#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Flora monsters and return to the Bounty Board at Comodo#
+#
+63386#Bounty Board Fur Seal#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Fur Seal monsters and return to the Bounty Board at Comodo#
+#
+63387#Bounty Board Grove#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Grove monsters and return to the Bounty Board at Comodo#
+#
+63388#Bounty Board Raggler#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Raggler monsters and return to the Bounty Board at Comodo#
+#
+63389#Bounty Board Sea Otter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sea Otter monsters and return to the Bounty Board at Comodo#
+#
+63390#Bounty Board Thara Frog#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Thara Frog monsters and return to the Bounty Board at Comodo#
+#
+63391#Bounty Board Stalactic Golem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stalactic Golem monsters and return to the Bounty Board at Comodo#
+#
+63392#Bounty Board Medusa#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Medusa monsters and return to the Bounty Board at Comodo#
+#
+63393#Bounty Board Cookie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cookie monsters and return to the Bounty Board at Lutie#
+#
+63394#Bounty Board Cookie (Red)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cookie (Red) monsters and return to the Bounty Board at Lutie#
+#
+63395#Bounty Board Cruiser#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cruiser monsters and return to the Bounty Board at Lutie#
+#
+63396#Bounty Board Marin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Marin monsters and return to the Bounty Board at Lutie#
+#
+63397#Bounty Board Myst Case#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Myst Case monsters and return to the Bounty Board at Lutie#
+#
+63398#Bounty Board Dryad#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dryad monsters and return to the Bounty Board at Umbala#
+#
+63399#Bounty Board Parasite#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Parasite monsters and return to the Bounty Board at Umbala#
+#
+63400#Bounty Board Stone Shooter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stone Shooter monsters and return to the Bounty Board at Umbala#
+#
+63401#Bounty Board Wild Rose#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wild Rose monsters and return to the Bounty Board at Umbala#
+#
+63402#Bounty Board Wootan Fighter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wootan Fighter monsters and return to the Bounty Board at Umbala#
+#
+63403#Bounty Board Wootan Shooter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wootan Shooter monsters and return to the Bounty Board at Umbala#
+#
+
+63404#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I've joined an investigation, I should speak with Detective Moose#
+Speak to Detective Moose.#
+
+63405#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+There's been a murder, I can join the investigation by speaking with Lt. Don.#
+Speak to Lt. Don Tyler.#
+
+63406#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+The only lead we have is a former Fence named Maria, her shop is on the North East side of town along the main road.#
+Go to Maria's Shop in North East Prontera.#
+
+63407#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I've been sent to speak to Maria ahead of the Detectives.#
+Speak to Maria.#
+
+63408#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+Maria gave is information, I should speak to Moose & Squirrel again regarding instructions near the Guard Station.#
+Speak to Detective Moose.#
+
+63409#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I should head to Big Geno's warehouse just north of the West Entrance of town. There may be a way in around back.#
+Enter the Warehouse and investigate.#
+
+63410#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+Frederick Kruggah was behind the Crime Scene with a staged death. Now he's opened a portal to another dimension!#
+I should inform Lt. Don.#
+
+63411#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I should go back into the portal in the Guard Station south of where Lt. Don is and hunt 5 of something fiery.#
+Hunt 5 Torturous Redeemers.#
+
+63412#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I should go back into the portal in the Guard Station south of where Lt. Don is and hunt 5 of some demon thing.#
+Hunt 5 Deviruchi.#
+
+63413#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+Lt. Don sent me to speak with Maria again, apparently she's a dark arts expert of some sort. North East side of town along the main road#
+Speak to Maria again.#
+
+63414#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I should tell Lt. Don what I've learned from Maria. She seems like she's more than she was made out to be.#
+Speak to Lt. Don.#
+
+63415#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I'm being sent on a strike mission against the nightmare realm. We need to thin their numbers out.#
+Hunt 30 Bloody Murderer, 30 Phendark, and 30 Deviruchi.#
+
+63416#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I'm being sent to take out Charlie, Frederick's Demon Child accomplice.#
+Hunt down and eliminate Charlie.#
+
+63417#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I'm being sent to take out Mitchel Mayors, a wanted murderer who's teamed up with Frederick.#
+Hunt down and eliminate Mitchel Mayors.#
+
+63418#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I'm being sent to take out Jaysun Vorheezio, an undead killer who's teamed up with Frederick.#
+Hunt down and eliminate Jaysun Vorheezio.#
+
+63419#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+I've succeeded in my tasks. Seems like all that's left are to strike against Frederick's realm.#
+Talk to Lt. Don for more Missions.#
+
+63420#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+We've taken Big Geno and the Russo Brothers into custody. Moose & Squirrel will question them.#
+Talk to Detective Moose inside the Station.#
+
+63421#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+Strike Mission. Seek and destroy 30 Bloody Murderers for bounty rewards from the 1337th.#
+Hunt 30 Bloody Murderer.#
+
+63422#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+Strike Mission. Seek and destroy 30 Phendarks for bounty rewards from the 1337th.#
+Hunt 30 Phendark.#
+
+63423#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
+Strike Mission. Seek and destroy 30 Deviruchis for bounty rewards from the 1337th.#
+Hunt 30 Deviruchi.#
+
+
+
+63424#Bounty Board Drainliar#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Drainliar monsters and return to the Bounty Board at Aldebaran#
+#
+63425#Bounty Board Dustiness#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dustiness monsters and return to the Bounty Board at Aldebaran#
+#
+63426#Bounty Board Geographer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Geographer monsters and return to the Bounty Board at Aldebaran#
+#
+63427#Bounty Board Rideword#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rideword monsters and return to the Bounty Board at Aldebaran#
+#
+63428#Bounty Board Alarm#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Alarm monsters and return to the Bounty Board at Aldebaran#
+#
+63429#Bounty Board Bathory#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Bathory monsters and return to the Bounty Board at Aldebaran#
+#
+63430#Bounty Board Clock#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Clock monsters and return to the Bounty Board at Aldebaran#
+#
+63431#Bounty Board High Orc#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 High Orc monsters and return to the Bounty Board at Aldebaran#
+#
+63432#Bounty Board Penomena#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Penomena monsters and return to the Bounty Board at Aldebaran#
+#
+63433#Bounty Board Punk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Punk monsters and return to the Bounty Board at Aldebaran#
+#
+63434#Bounty Board Arclouze#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Arclouze monsters and return to the Bounty Board at Aldebaran#
+#
+63435#Bounty Board Big Bell#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Big Bell monsters and return to the Bounty Board at Aldebaran#
+#
+63436#Bounty Board Neo Punk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Neo Punk monsters and return to the Bounty Board at Aldebaran#
+#
+63438#Bounty Board Loli Ruri#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Loli Ruri monsters and return to the Bounty Board at Niflheim#
+#
+63439#Bounty Board Goat#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Goat monsters and return to the Bounty Board at Juno#
+#
+63440#Bounty Board Grand Peco#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Grand Peco monsters and return to the Bounty Board at Juno#
+#
+63441#Bounty Board Harpy#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Harpy monsters and return to the Bounty Board at Juno#
+#
+63442#Bounty Board Sleeper#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sleeper monsters and return to the Bounty Board at Juno#
+#
+63443#Bounty Board Deleter (Ground)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deleter (Ground) monsters and return to the Bounty Board at Juno#
+#
+63444#Bounty Board Deleter (Sky)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deleter (Sky) monsters and return to the Bounty Board at Juno#
+#
+63445#Bounty Board Nightmare Terror#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Terror monsters and return to the Bounty Board at Juno#
+#
+63446#Bounty Board Apocalypse#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Apocalypse monsters and return to the Bounty Board at Verus City#
+#
+63447#Bounty Board Venatu (Blue)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venatu (Blue) monsters and return to the Bounty Board at Verus City#
+#
+63448#Bounty Board Venatu (Green)(Ground)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deleter (Ground) monsters and return to the Bounty Board at Verus City#
+#
+63449#Bounty Board Venatu (Orange)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venatu (Orange) monsters and return to the Bounty Board at Verus City#
+#
+63450#Bounty Board Venatu (Purple)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venatu (Purple) monsters and return to the Bounty Board at Verus City#
+#
+63451#Bounty Board Cenere (Green)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cenere (Green) monsters and return to the Bounty Board at Verus City#
+#
+63452#Bounty Board Explorer Robot Turbo#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Explorer Robot Turbo monsters and return to the Bounty Board at Verus City#
+#
+63453#Bounty Board Repair Robot Turbo#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Repair Robot Turbo monsters and return to the Bounty Board at Verus City#
+#
+63454#Bounty Board Smelly Zombie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Smelly Zombie monsters and return to the Bounty Board at Verus City#
+#
+63455#Bounty Board Smelly Ghoul#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Smelly Ghoul monsters and return to the Bounty Board at Verus City#
+#
+63456#Bounty Board Disguise#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Disguise monsters and return to the Bounty Board at Niflheim#
+#
+63457#Bounty Board Holden#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Holden monsters and return to the Bounty Board at Einbroch#
+#
+63458#Bounty Board Metaling#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Metaling monsters and return to the Bounty Board at Einbroch#
+#
+63459#Bounty Board Noxious#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Noxious monsters and return to the Bounty Board at Einbroch#
+#
+63460#Bounty Board Porcellio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Porcellio monsters and return to the Bounty Board at Einbroch#
+#
+63461#Bounty Board Teddy Bear#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Teddy Bear monsters and return to the Bounty Board at Einbroch#
+#
+63462#Bounty Board Venomous#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venomous monsters and return to the Bounty Board at Einbroch#
+#
+63463#Bounty Board Breeze#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Breeze monsters and return to the Bounty Board at Lighthalzen#
+#
+63464#Bounty Board Metaling#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Metaling monsters and return to the Bounty Board at Lighthalzen#
+#
+63465#Bounty Board Rafflesia#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rafflesia monsters and return to the Bounty Board at Lighthalzen#
+#
+63466#Bounty Board Stem Worm#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stem Worm monsters and return to the Bounty Board at Lighthalzen#
+#
+63467#Bounty Board Kobold (Axe)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold (Axe) monsters and return to the Bounty Board at Lighthalzen#
+#
+63468#Bounty Board Kobold (Hammer)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold (Hammer) monsters and return to the Bounty Board at Lighthalzen#
+#
+63469#Bounty Board Kobold (Mace)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold (Mace) monsters and return to the Bounty Board at Lighthalzen#
+#
+63470#Bounty Board Kobold Archer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold Archer monsters and return to the Bounty Board at Lighthalzen#
+#
+63471#Bounty Board Armeyer Dinze#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Armeyer Dinze monsters and return to the Bounty Board at Lighthalzen#
+#
+63472#Bounty Board Egnigem Cenia#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Egnigem Cenia monsters and return to the Bounty Board at Lighthalzen#
+#
+63473#Bounty Board Errende Ebecee#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Errende Ebecee monsters and return to the Bounty Board at Lighthalzen#
+#
+63474#Bounty Board Kavach Icarus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kavach Icarus monsters and return to the Bounty Board at Lighthalzen#
+#
+63475#Bounty Board Laurell Weinder#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Laurell Weinder monsters and return to the Bounty Board at Lighthalzen#
+#
+63476#Bounty Board Remover#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Remover monsters and return to the Bounty Board at Lighthalzen#
+#
+63477#Bounty Board Wickbine Tres#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wickbine Tres monsters and return to the Bounty Board at Lighthalzen#
+#
+63478#Bounty Board Alphoccio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Alphoccio monsters and return to the Bounty Board at Lighthalzen#
+#
+63479#Bounty Board Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cecil Damon monsters and return to the Bounty Board at Lighthalzen#
+#
+63480#Bounty Board Celia Alde#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Celia Alde monsters and return to the Bounty Board at Lighthalzen#
+#
+63481#Bounty Board Chen Lio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Chen Lio monsters and return to the Bounty Board at Lighthalzen#
+#
+63482#Bounty Board Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Eremes Guile monsters and return to the Bounty Board at Lighthalzen#
+#
+63483#Bounty Board Flamel Emure#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Flamel Emure monsters and return to the Bounty Board at Lighthalzen#
+#
+63484#Bounty Board Gertie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Gertie monsters and return to the Bounty Board at Lighthalzen#
+#
+63485#Bounty Board Howard Alteisen#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Howard Alteisen monsters and return to the Bounty Board at Lighthalzen#
+#
+63486#Bounty Board Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kathryne Keyron monsters and return to the Bounty Board at Lighthalzen#
+#
+63487#Bounty Board Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Margaretha Sorin monsters and return to the Bounty Board at Lighthalzen#
+#
+63488#Bounty Board Randel Lawrence#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Randel Lawrence monsters and return to the Bounty Board at Lighthalzen#
+#
+63489#Bounty Board Seyren Windsor#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Seyren Windsor monsters and return to the Bounty Board at Lighthalzen#
+#
+63490#Bounty Board Trentini#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Trentini monsters and return to the Bounty Board at Lighthalzen#
+#
+63491#Bounty Board Nightmare Alphoccio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Alphoccio monsters and return to the Bounty Board at Lighthalzen#
+#
+63492#Bounty Board Nightmare Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Cecil Damon monsters and return to the Bounty Board at Lighthalzen#
+#
+63493#Bounty Board Nightmare Celia Alde#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Celia Alde monsters and return to the Bounty Board at Lighthalzen#
+#
+63494#Bounty Board Nightmare Chen Lio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Chen Lio monsters and return to the Bounty Board at Lighthalzen#
+#
+63495#Bounty Board Nightmare Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Eremes Guile monsters and return to the Bounty Board at Lighthalzen#
+#
+63496#Bounty Board Nightmare Flamel Emure#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Flamel Emure monsters and return to the Bounty Board at Lighthalzen#
+#
+63497#Bounty Board Nightmare Gertie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Gertie monsters and return to the Bounty Board at Lighthalzen#
+#
+63498#Bounty Board Nightmare Howard Alteisen#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Howard Alteisen monsters and return to the Bounty Board at Lighthalzen#
+#
+63499#Bounty Board Nightmare Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Kathryne Keyron monsters and return to the Bounty Board at Lighthalzen#
+#
+63500#Bounty Board Nightmare Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Margaretha Sorin monsters and return to the Bounty Board at Lighthalzen#
+#
+63501#Bounty Board Nightmare Randel Lawrence#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Randel Lawrence monsters and return to the Bounty Board at Lighthalzen#
+#
+63502#Bounty Board Nightmare Seyren Windsor#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Seyren Windsor monsters and return to the Bounty Board at Lighthalzen#
+#
+63503#Bounty Board Nightmare Trentini#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Trentini monsters and return to the Bounty Board at Lighthalzen#
+#
+63504#Bounty Board Novus (Red)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Novus (Red) monsters and return to the Bounty Board at Hugel#
+#
+63505#Bounty Board Novus (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Novus (Yellow) monsters and return to the Bounty Board at Hugel#
+#
+63506#Bounty Board Owl Duke#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Owl Duke monsters and return to the Bounty Board at Hugel#
+#
+63507#Bounty Board Ancient Mimic#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ancient Mimic monsters and return to the Bounty Board at Hugel#
+#
+63508#Bounty Board Deathword#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deathword monsters and return to the Bounty Board at Hugel#
+#
+63509#Bounty Board Owl Baron#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Owl Baron monsters and return to the Bounty Board at Hugel#
+#
+63510#Bounty Board Acidus (Blue)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Acidus (Blue) monsters and return to the Bounty Board at Hugel#
+#
+63511#Bounty Board Acidus (Gold)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Acidus (Gold) monsters and return to the Bounty Board at Hugel#
+#
+63512#Bounty Board Ferus (Red)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ferus (Red) monsters and return to the Bounty Board at Hugel#
+#
+63513#Bounty Board Ferus (Green)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ferus (Green) monsters and return to the Bounty Board at Hugel#
+#
+63514#Bounty Board Frus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Frus monsters and return to the Bounty Board at Hugel#
+#
+63515#Bounty Board Skogul#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Skogul monsters and return to the Bounty Board at Hugel#
+#
+63516#Bounty Board Anacondaq#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Anacondaq monsters and return to the Bounty Board at Rachel#
+#
+63517#Bounty Board Roween#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Roween monsters and return to the Bounty Board at Rachel#
+#
+63518#Bounty Board Siroma#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Siroma monsters and return to the Bounty Board at Rachel#
+#
+63519#Bounty Board Desert Wolf#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Desert Wolf monsters and return to the Bounty Board at Rachel#
+#
+63520#Bounty Board Drosera#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Drosera monsters and return to the Bounty Board at Rachel#
+#
+63521#Bounty Board Hill Wind#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hill Wind monsters and return to the Bounty Board at Rachel#
+#
+63522#Bounty Board Ice Titan#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ice Titan monsters and return to the Bounty Board at Rachel#
+#
+63523#Bounty Board Snowier#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Snowier monsters and return to the Bounty Board at Rachel#
+#
+63524#Bounty Board Agav#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Agav monsters and return to the Bounty Board at Rachel#
+#
+63525#Bounty Board Echio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Echio monsters and return to the Bounty Board at Rachel#
+#
+63526#Bounty Board Hodremlin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hodremlin monsters and return to the Bounty Board at Rachel#
+#
+63527#Bounty Board Isilla#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Isilla monsters and return to the Bounty Board at Rachel#
+#
+63528#Bounty Board Seeker#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Seeker monsters and return to the Bounty Board at Rachel#
+#
+63529#Bounty Board Vanberk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Vanberk monsters and return to the Bounty Board at Rachel#
+#
+63530#Bounty Board Stapo#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stapo monsters and return to the Bounty Board at Veins#
+#
+63531#Bounty Board Drosera#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Drosera monsters and return to the Bounty Board at Veins#
+#
+63532#Bounty Board Galion#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Galion monsters and return to the Bounty Board at Veins#
+#
+63533#Bounty Board Magmaring#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Magmaring monsters and return to the Bounty Board at Veins#
+#
+63534#Bounty Board Muscipular#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Muscipular monsters and return to the Bounty Board at Veins#
+#
+63535#Bounty Board Kasa#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kasa monsters and return to the Bounty Board at Veins#
+#
+63536#Bounty Board Knocker#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Knocker monsters and return to the Bounty Board at Veins#
+#
+63537#Bounty Board Necromancer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Necromancer monsters and return to the Bounty Board at Veins#
+#
+63538#Bounty Board Ragged Zombie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ragged Zombie monsters and return to the Bounty Board at Veins#
+#
+63539#Bounty Board Salamander#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Salamander monsters and return to the Bounty Board at Veins#
+#
+63540#Bounty Board Zombie Slaughter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Zombie Slaughter monsters and return to the Bounty Board at Veins#
+#
+63541#Bounty Board Bradium Golem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Bradium Golem monsters and return to the Bounty Board at Manuk#
+#
+63542#Bounty Board Centipede Larva#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Centipede Larva monsters and return to the Bounty Board at Manuk#
+#
+63543#Bounty Board Hillslion#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hillslion monsters and return to the Bounty Board at Manuk#
+#
+63544#Bounty Board Tatacho#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Tatacho monsters and return to the Bounty Board at Manuk#
+#
+63545#Bounty Board Antler Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Antler Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63546#Bounty Board Horn Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Horn Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63547#Bounty Board Rake Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rake Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63548#Bounty Board Uni-horn Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Uni-horn Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63549#Bounty Board Centipede#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Centipede monsters and return to the Bounty Board at El Dicastes#
+#
+63550#Bounty Board Dolomedes#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dolomedes monsters and return to the Bounty Board at El Dicastes#
+#
+63551#Bounty Board Tatacho#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Tatacho monsters and return to the Bounty Board at El Dicastes#
+#
+63552#Bounty Board Cornus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cornus monsters and return to the Bounty Board at Splendide#
+#
+63553#Bounty Board Dark Pinguicula#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dark Pinguicula monsters and return to the Bounty Board at Splendide#
+#
+63554#Bounty Board Luciola Vespa#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Luciola Vespa monsters and return to the Bounty Board at Splendide#
+#
+63555#Bounty Board Naga#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Naga monsters and return to the Bounty Board at Splendide#
+#
+63556#Bounty Board Nepenthes#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nepenthes monsters and return to the Bounty Board at Splendide#
+#
+63557#Bounty Board Pinguicula#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Pinguicula monsters and return to the Bounty Board at Splendide#
+#
+
+63558#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63559#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63560#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63561#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63562#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63563#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63564#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63565#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63566#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63567#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63568#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63569#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63570#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
 #

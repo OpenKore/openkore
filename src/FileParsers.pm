@@ -39,7 +39,6 @@ our @EXPORT = qw(
 	parseArrayFile
 	parseAvoidControl
 	parseChatResp
-	parseCommandsDescription
 	parseConfigFile
 	parseDataFile
 	parseDataFile_lc
@@ -162,7 +161,7 @@ sub parseChatResp {
 	}
 	return 1;
 }
-
+=pod
 sub parseCommandsDescription {
 	my $file = shift;
 	my $r_hash = shift;
@@ -211,7 +210,7 @@ sub parseCommandsDescription {
 	}
 	return 1;
 }
-
+=cut
 sub parseConfigFile {
 	my $file = shift;
 	my $r_hash = shift;

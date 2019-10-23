@@ -606,6 +606,7 @@
 1292#Katar Aprimorada#
 1293#Jamadhar de Vellum#
 1294#Pavor de Vellum#
+1295#Lágrimas Sangrentas#
 1298#Bat-Katar#
 1299#Katar TE#
 1301#Machado#
@@ -661,6 +662,7 @@
 1395#Demolidor de Vellum#
 1396#Guilhotina de Vellum#
 1399#Machado de Duas Mãos TE#
+1400#Pique Sobrenatural#
 1401#Azagaia#
 1402#Azagaia#
 1403#Azagaia#
@@ -693,6 +695,7 @@
 1438#Lança de Cinzas#
 1443#Pique Rubi#
 1449#Gelerdria#
+1450#Arpão Sobrenatural#
 1451#Guisarme#
 1452#Guisarme#
 1453#Guisarme#
@@ -815,6 +818,7 @@
 1590#Compêndio de Criaturas#
 1591#Livro TE#
 1599#Angra Mainyu#
+1600#Cajado Sobrenatural#
 1601#Bastão#
 1602#Bastão#
 1603#Bastão#
@@ -949,6 +953,7 @@
 1774#Flecha de Caça#
 1775#Flecha de Cerco S#
 1776#Flecha de Cerco A#
+1800#Punho Sobrenatural#
 1801#Waghnak#
 1802#Waghnak#
 1803#Soqueira#
@@ -985,6 +990,7 @@
 1839#Garra Rubi#
 1841#Garra Prismática#
 1847#Garra Ancestral#
+1900#Violino Sobrenatural#
 1901#Violino#
 1902#Violino#
 1903#Bandolin#
@@ -1058,6 +1064,7 @@
 1990#Microfone Floral de Igu#
 1993#Concertina de Arame#
 1995#Chicote Rubi#
+1996#Chicote Sobrenatural#
 2000#Bastão da Destruição#
 2001#Cruz Divina#
 2002#Cajado Glorioso da Destruição#
@@ -1079,6 +1086,8 @@
 2022#Cajado de Geffen#
 2023#Cajado Duplo de Cinzas#
 2025#Cetro Rubi#
+2026#Cetro Sobrenatural#
+2027#Jovem Girassol#
 2047#Cajado da Bruxa#
 2048#Cetro Ancestral#
 2101#Vembrassa#
@@ -2204,6 +2213,7 @@
 4443#Carta Elemental da Água#
 4444#Carta Draco#
 4445#Carta Vespa Vagalume#
+4446#Carta Esqueleto Imortal#
 4447#Carta Centopéia#
 4448#Carta Cornus#
 4449#Carta Sombra Obscura#
@@ -2286,6 +2296,7 @@
 4533#Carta Pequeno Polvo#
 4534#Carta Polvo Gigante#
 4539#Carta Bispo Decadente Selada#
+4545#Carta Bebê Poring#
 4556#Carta Fenrir#
 4557#Carta Fenris#
 4559#Carta do Rei Morroc#
@@ -2348,6 +2359,22 @@
 4630#Carta Diretor#
 4631#Carta Visconde Coruja#
 4632#Carta Marquês Coruja#
+4633#Carta Arqueiro Imortal#
+4634#Carta Soldado Imortal#
+4635#Carta Amdarais Imortal#
+4636#Carta Bijou#
+4637#Carta Legião Imortal#
+4638#Carta Observador#
+4639#Carta Tappy#
+4640#Carta Lobo de Gelo#
+4641#Carta Zumbi da Guarda#
+4652#Carta Amon Ra do Pesadelo#
+4653#Carta Arclouse do Pesadelo#
+4654#Carta Mímico do Pesadelo#
+4655# Carta Minorous do Pesadelo#
+4656#Carta Múmia do Pesadelo#
+4657#Carta Múmia Anciã do Pesadelo#
+4658#Carta Verit do Pesadelo#
 4697#Carta Charleston 03#
 4698#Carta Roboring#
 4699#Carta Mecha v2.0#
@@ -2581,6 +2608,12 @@
 4989#A-SP#
 4990#I-Gelo#
 4991#A-VdA#
+4994#Runa do Poder 1#
+4995#Runa do Poder 2#
+4996#Runa do Poder 3#
+4997#Runa da Lábia 1#
+4998#Runa da Lábia 2#
+4999#Runa da Lábia 3#
 5001#Fone de Ouvido#
 5002#Coroa Adornada#
 5003#Chapéu de Bufão#
@@ -3199,6 +3232,7 @@
 5919#Kanzashi de Camélias#
 5930#Tiara da Valquíria Mágica#
 5931#Chapéu de Poltergeist#
+5932#Liberdade da Natureza#
 5933#Máscara do Tengu Corvo#
 5945#Lápis Mastigado#
 5967#Galapago Voador#
@@ -3657,9 +3691,34 @@
 6913#Rosário Sagrado#
 6914#Alma Sombria#
 6915#Alma Capturada#
+6919#Marca de Honra#
+6920#Pó de Runas#
+6921#Desumidificador#
+6922#Lixa#
+6923#Luz Flamejante#
+6924#Olho de Sangue#
+6925#Carta do Prisioneiro#
+6926#A História de Rune-Midgard#
+6927#Pedra do Mar#
+6928#Esponja de Poring#
+6929#Carta com Selo#
+6930#Baú de Negócios#
+6931#Documento Secreto#
+6932#Livro Valioso#
+6933#Convite pro Banquete#
+6934#Comida Exuberante#
+6935#Prato Luxuoso#
+6936#Núcleo Congelante#
+6937#Pele Macia#
+6938#Espinhos de Ouriço#
+6939#Cinto Velho#
+6940#Material Vivo#
+6941#Fragmento da Valquíria#
+6942#Desejo do Mestre#
 6956#Carneiro Capturado#
 6957#Lã Macia#
 6958#Chifre de Carneiro#
+6960#Chave da Fortaleza#
 6961#Bloco de Sucata#
 6962#Tanque Velho#
 6965#Diagrama de E-Fogo#
@@ -4154,7 +4213,7 @@
 7551#Ticket de Segunda Profissão#
 7552#Nota com Horários dos Jogos#
 7553#Flor de Vitória-Régia#
-7558#Ticket de Promoção#
+7558#Cupom de Promoção#
 7561#Coração Glacial#
 7562#Escama de Gelo#
 7563#Runa Sangrenta#
@@ -4416,6 +4475,7 @@
 9056#Ovo de Imp#
 9058#Ovo de Lebre da Neve#
 9059#Ovo de Tikbalang#
+9062#Ovo de Bebê Poring#
 9068#Ovo de Unicórnio#
 9101#Gaiola Portátil do Zumbichano#
 9113#Ovo de Esqueleão#
@@ -4479,6 +4539,7 @@
 11023#Como Aumentar sua Força#
 11024#Como Aumentar sua Energia#
 11056#Guia do Espiritualista#
+11061#Catálogo de Honra#
 11501#Poção Branca Leve#
 11502#Poção Refrescante Azul#
 11503#Poção Branca de Guerra#
@@ -4520,6 +4581,7 @@
 11594#Doce Misterioso Amarelo#
 11595#Doce Misterioso Verde#
 11597#Isoptero#
+11600#Poção Sagrada#
 11605#Biscoito de Morcego#
 11616#Porco Defumado#
 11713#Doce da Joana#
@@ -4764,6 +4826,7 @@
 12276#Assistente Mímico#
 12277#Assistente Mascarado#
 12278#Assistente Alice#
+12291#Garrafa de Água#
 12292#Fruto de Yggdrasil Amargo#
 12293#Fruto de Yggdrasil Desidratado#
 12298#Suco de Gato#
@@ -4803,6 +4866,7 @@
 12359#Folha Macia#
 12360#Suco Vermelho-Sangue#
 12361#Taça Nevada#
+12362#Kuloren#
 12363#Caixão Tenebroso#
 12364#Cajado do Líder#
 12365#Flor de Lótus#
@@ -4811,6 +4875,8 @@
 12368#Espelho de Mão#
 12369#Óleo de Coco#
 12370#Carta de Amor#
+12371#Tábula Mágica#
+12372#Contrato Infernal#
 12373#Coração Puro#
 12374#Chama Azulada#
 12375#Acarajé#
@@ -5022,6 +5088,7 @@
 12832#Água Milagrosa#
 12834#Ovo dos Mortos-Vivos#
 12835#Coração Jovial#
+12846#Maçã Verde Pequena#
 12850#Ovo Celeste#
 12851#Ovo Vocacional#
 12852#Ovo do Patrono#
@@ -5212,6 +5279,7 @@
 13122#Pistola Altair-Ares#
 13124#Pistola Altair-Ares#
 13127#Revólver Rubi#
+13128#Pistola Sobrenatural#
 13150#Branch#
 13151#Ciclone#
 13152#Ciclone#
@@ -5351,6 +5419,8 @@
 13316#Shuriken Huuma Aprimorado#
 13317#Shuriken Huuma TE#
 13327#Shuriken Rubi#
+13328#Shuriken Sobrenatural#
+13345#Shuriken Huuma Ancestral#
 13400#Cutelo#
 13401#Excalibur [A]#
 13404#Foice de Platina#
@@ -5358,8 +5428,8 @@
 13407#Nagan [A]#
 13410#Lâmina Gladiadora A#
 13411#Lâmina Gladiadora B#
-13412#Lâmina Gêmea de Naght Sieger#
-13413#Lâmina Gêmea de Naght Sieger#
+13412#Lâmina Gêmea Azul#
+13413#Lâmina Gêmea Vermelha#
 13414#Espada Elemental#
 13415#Alfanje de Iniciante#
 13416#Flamberge Gloriosa#
@@ -5380,6 +5450,7 @@
 13447#Byeollungum#
 13449#Espada Demoníaca#
 13454#Sabre Rubi#
+13455#Sabre Sobrenatural#
 13463#Excalibur#
 13464#Garra Mágica de Brinquedo#
 13465#Gládio da Nobreza#
@@ -5604,6 +5675,8 @@
 14469#Ovo de Majoruros#
 14494#Caixa de Tiara de Samambaia#
 14499#Caixa de Chapéu de Pavão#
+14505#Ticket de Acesso (1h)#
+14506#Ticket de Acesso#
 14508#Ovo da Fortuna#
 14509#Poção de Concentração Leve#
 14511#Poção da Fúria Selvagem Leve#
@@ -5749,6 +5822,8 @@
 15111#Autopeça - Carburador#
 15128#Colete E.X.C.#
 15136#Vestígio de Tatenashi#
+15146#Vestimenta Arrogante#
+15147#Vestimenta Exuberante#
 15166#Colar com Rosário#
 15169#Manto do Kardui#
 15186#Uniforme de Kafra#
@@ -5775,6 +5850,8 @@
 15375#Armadura Eclipse Desgastada#
 15383#Sobretudo do Senhor do Tempo#
 15385#Robozinho Sabe-Tudo#
+15421#Robe da Graça Divina#
+15422#Robe Milagroso#
 16000#Erde#
 16001#Bolsa Quadrada Vermelha#
 16003#Maça Carga#
@@ -5800,7 +5877,9 @@
 16031#Bate-Estacas P#
 16032#Bate-Estacas T#
 16033#Braço Robótico#
+16039#Colher#
 16040#Clava Rubi#
+16041#Maça Sobrenatural#
 16051#Maça da Valquíria Mágica#
 16056#Martelo Veterano#
 16074#Martelo Cósmico#
@@ -5832,6 +5911,8 @@
 16410#Caixa de Tiara de Donzela#
 16412#Caixa de Asinhas de Gelo#
 16446#Ovo de Pégaso#
+16483#Cx. de Abrasivo (10)#
+16504#Cx. de Chicletes (10)#
 16555#Caixa de Pedra das Valquírias#
 16556#Caixa de Pedra das Valquírias#
 16562#Ovo do Mal Majestoso#
@@ -5966,6 +6047,8 @@
 17305#Ovo Fashion#
 17323#Ovo Shinobi#
 17428#Ovo do Lagomorfo#
+17569#Cx. de Acesso (1h)#
+17570#Cx. de Acesso (3h)#
 18000#Bala de Canhão#
 18001#Bala de Canhão Sagrada#
 18002#Bala de Canhão Sombria#
@@ -5986,12 +6069,14 @@
 18118#Arco TE#
 18119#Arco de Cinzas#
 18120#Arco Esconjurante#
+18121#Arco Sobrenatural#
 18122#Arco Gigante#
 18123#Arco das Tempestades#
 18125#Arco Demoníaco#
 18130#Arco Rubi#
 18164#Balista Ancestral#
 18170#Arco Ancestral#
+18503#Chifrinhos#
 18504#Elmo de Anúbis da Petrificação#
 18505#Piercing de Umbala#
 18507#Orelhas de Elfo#
@@ -6197,6 +6282,7 @@
 18868#Máscara do Esqueleto#
 18874#Monóculo#
 18878#Chapéu da Guarda Real#
+18880#Chapéu Supremo Dourado#
 18885#Jejecap#
 18887#Tiara de Coelho Celeste#
 18888#Tiara de Coelho Flamejante#
@@ -6236,6 +6322,8 @@
 19019#Coroa da Rainha de Copas#
 19020#Tiara Arcana#
 19022#Cristal Filosofal#
+19024#Diadema do Paraíso#
+19029#Miniatura de Alice#
 19038#Coroa do 11º Aniversário do bRO#
 19039#Orelhas do 11º Aniversário do bRO#
 19048#Traje de Luta Jogos Vorags#
@@ -6285,6 +6373,7 @@
 19269#Tiara do Orgulho#
 19271#Chapéu do Tigre Branco#
 19274#Fone Descolado#
+19288#Elmo Titânico#
 19291#Doge Fofinho#
 19292#Boina Selvagem#
 19294#Fones de Ouvido Nekobits#
@@ -6300,6 +6389,8 @@
 19318#Rosário da Guarda Real#
 19321#Pombinho Branco#
 19326#Livros da Sabedoria #
+19381#Echarpe do Paraíso#
+19393#Pedra do Desbravador#
 19507#Sol Risonho#
 19509#Asas de Borboleta#
 19510#Parafusos Soltos#
@@ -6315,10 +6406,17 @@
 19520#Nuvem Chuvosa#
 19521#Chapéu Antigo#
 19522#Minicoroa#
+19523#Pequeno Laço Verde#
 19524#Cospobre de Rocker#
 19526#Elmo de Sucata#
 19528#Bevor de Plástico#
+19530#Miniatura Selvagem#
+19532#Orelhas da Lebre Rubra#
 19533#Touca de Esporo#
+19534#Rosto do Despero#
+19535#Caule de Ginseng#
+19536#Tiara de Rosas#
+19537#Bebê Grifo#
 19538#Luar Intenso#
 19540#Protetor com Coelhinhos#
 19541#Flor Amável Branca#
@@ -6350,6 +6448,7 @@
 19602#Chapéu Invisível#
 19603#Óculos Invisíveis#
 19604#Máscara Invisível#
+19605#Lenço do Fora da Lei#
 19607#Filhote de Fênix#
 19612#Fones Audio-Poring#
 19614#Supervisual de Aprendiz#
@@ -6363,10 +6462,12 @@
 19649#Orelhas Brancas de Gatinho#
 19650#Adorno Arco-íris#
 19652#Cartola Visual de Mágico#
+19654#Chapéu do Timoneiro#
 19656#Chapéu do Bardo Verde#
 19657#Quepe do Capitão#
 19661#Cartola Adocicada#
 19668#Boina Vermelha do Mensageiro#
+19669#Legado de Reginleif#
 19676#Chapéu do Poring Prismático#
 19677#Auréola Espiritual#
 19678#Lacinho com Sinos#
@@ -6393,8 +6494,10 @@
 19718#Laço de Niflheim#
 19721#Elmo das Trevas#
 19722#Óculos Intelectuais#
+19723#Coroa Ardente#
 19724#Kafra V.I.P.#
 19726#Rosa da Sedução#
+19728#Boneco da Zonda#
 19729#Tiara de Gatinha Kafra#
 19735#Presilhas de Barbatana#
 19738#Chapéu do Xerloque#
@@ -6431,7 +6534,7 @@
 19805#Pergaminho dos Selos#
 19806#Presilha do Festival#
 19807#Elmo do Xogum#
-19811#ÀÇ»ó ¸ÆÁÖ ¸ðÀÚ#
+19811#Chapéu de Guaraná Chique#
 19816#Chapéu de Peco#
 19817#Sopro do Ifrit#
 19819#Capuz do Mestre Necromante#
@@ -6447,12 +6550,13 @@
 19839#Bonequinho de Vanilmirth#
 19840#Elmo Solar Dourado#
 19841#Elmo do Espírito do Dragão#
-19848#Chapéu de Angeling#
+19848#Gorro de Angeling#
 19852#Boné de Pingu#
 19862#Chifres de Succubus#
 19865#Coroa de Bufão#
 19868#Chapéu do Explorador#
 19871#Ritmo do Momento#
+19873#Chapéu Frelldora#
 19874#Tiara Carnavalesca#
 19875#Touca de Coelho#
 19876#Cartola da Mekoro#
@@ -6505,18 +6609,22 @@
 19991#Tiara de Galanthus#
 19992#Hálito Gelado#
 19996#Cavalo Rei#
+19998#Casco de Espinhoso#
 20006#Máscara do Chefão do Mal#
 20010#Orelhas Solares#
 20011#Elmo Primarino#
 20012#Chapéu Deciduai#
 20015#Barba Charmosa#
+20016#Chapéu de Lagosta#
 20023#Boina Militar Vermelha#
 20027#Chapéu da Mimosa Rosa#
 20032#Turbante do Oráculo#
 20033#Coroa de Dewata#
 20034#Familiar de Estimação#
 20035#Rosa Celeste#
+20037#Chapelão do Duque Coruja#
 20044#Chapéu de Carmen Miranda#
+20047#Guizos de Cerejeira#
 20048#Tiara Elegante#
 20052#Balão de AFK#
 20054#Chupeta de Neném#
@@ -6527,6 +6635,7 @@
 20080#Visual de Plumas e Paetês#
 20098#Adorno Vampiresco#
 20099#Esplêndido Brilhante#
+20100#Chapéu Ragtoberfest#
 20101#Asas de Bragi#
 20108#Óculos Julieta de Quartzo Rubi#
 20109#Chapéu Jolly Roger#
@@ -6534,7 +6643,7 @@
 20113#Chapéu do Oráculo#
 20115#Óculos do Sabe-Tudo#
 20116#Fones de Sereia#
-20129#Chapéu de Poporing#
+20129#Gorro de Poporing#
 20130#Cartola Sussurrante#
 20131#Fone dos Vocalroks#
 20132#Aura Fantasmagórica#
@@ -6564,6 +6673,7 @@
 20200#Chapéu de Camponesa#
 20202#Balão de Deviruchi#
 20203#Bandana para Testa#
+20204#Boina de Caça#
 20209#Bolhas de Sabão#
 20212#Boneco de Loki e Nidhogg#
 20215#Máscara Macabra#
@@ -6580,6 +6690,8 @@
 20240#Flocos de Neve#
 20242#Chapéu do Jack Frost#
 20243#Cartola do Willie Wootan#
+20246#Ilusões do Tempo#
+20247#Mão Diabólica#
 20248#Peruca de Saiadim#
 20251#Capuz da Pastora#
 20255#Candura do Amor#
@@ -6599,6 +6711,7 @@
 20285#Aura de Amatsu#
 20286#Óculos da Persona#
 20287#Cabeleira do Rei do Rock Saiadim#
+20288#Elmo da Bijou#
 20290#Cartola Carcomida#
 20294#Maximilian Von Babe XXIX#
 20295#Visor de Quartzo-Poring#
@@ -6689,17 +6802,26 @@
 20472#Elmo do Anjo#
 20482#Gaiola Florida#
 20487#Valsa da Primavera#
+20495#Quati Preguiçoso#
 20499#Cartola da Pata de Gato#
 20504#Asas da Sarakura#
 20506#Manto Invisível#
 20507#Mochila de Poring#
+20510#Asas das Mil Lâminas#
 20511#Asas Azuis de Fada#
+20512#Mochila de Caça#
 20514#Espada de Thanatos#
 20516#Asas de Miguel#
 20517#Miau-chila de Bichano#
 20521#Miau-chila de Bichano Preto#
+20527#Asas da Borboleta do Vale#
 20528#Asas Douradas da Borboleta#
+20530#Asas de Gabriel#
 20535#Holograma Futurista#
+20571#Voo das Valquírias#
+20574#Mochila do Aluno Rebelde#
+20575#Mochila do Aluno Esperto#
+20576#Garfo do Glutão#
 20700#Manteau de Aegir#
 20701#Manteau Solar#
 20702#Sobrepeliz TE#
@@ -6729,7 +6851,15 @@
 20904#Bata de Etran#
 20908#Manto da Bruxa#
 20909#Haori de Batalha#
+20922#Manto Leviatã#
 20939#Manto do Senhor do Tempo#
+20941#Manto Fênix#
+20963#Manto Temporal FOR#
+20964#Manto Temporal AGI#
+20965#Manto Temporal VIT#
+20966#Manto Temporal INT#
+20967#Manto Temporal DES#
+20968#Manto Temporal SOR#
 21000#Espada Aprimorada de Duas Mãos#
 21001#Claymore de Vellum#
 21002#Katzbalger de Vellum#
@@ -6742,6 +6872,8 @@
 21011#Lâmina Gigante#
 21012#Espada Mágica Celestial#
 21015#Claymore Rubi#
+21016#Espada Sobrenatural#
+21018#Lindy Hop#
 21024#Espada Veterana#
 21038#Espada Ancestral#
 21042#Espada Onimaru#
@@ -6768,6 +6900,7 @@
 22044#Autopeça - Acelerador#
 22067#Sapatos de Bruxa#
 22070#Salto Alto de Gala#
+22071#Salto Alto Elegante#
 22082#Sapatos Luxuosos#
 22101#Botas do ArchAngeling#
 22104#Botas da Pororoca#
@@ -6794,6 +6927,8 @@
 22182#Sapatos da Penitência#
 22189#Sapato Social#
 22191#Sapato Infernal#
+22195#Sapatos Inteligentes#
+22198#Tamancos Glamurosos#
 22204#Botas do Senhor do Tempo#
 22507#Velho Pergaminho#
 22508#Emblema do Éden#
@@ -6846,10 +6981,17 @@
 22747#Cartucho de Projétil de Eletrochoque#
 22748#Cartucho de Projétil Tectônico#
 22749#Cartucho de Projétil de Purificação#
+22808#Caixa de Iniciante#
 22819#Elixir Ultra Milagroso#
 22822#Bolsa com Roupa de Banho#
 22838#Sacola de Doces Misteriosa#
+22847#Passaporte para Prontera#
+22848#Chaves da Prisão#
+22849#Cristal de Prontera#
+22876#Bolsa de Zenys#
 22881#Corda de Caça#
+22899#Mapa da Cidade#
+22901#Caixa Azul Misteriosa#
 23012#Poção Menor de Mana#
 23044#Doce de Elvira#
 23073#Caixa do ArchAngeling#
@@ -6876,6 +7018,8 @@
 24017#Colar Sombrio Festivo#
 24208#Sapatos do Perito#
 24209#Escudo do Perito#
+24210#Sapatos do Iniciante#
+24211#Escudo do Iniciante#
 24212#Sapatos do Novato#
 24213#Escudo do Novato#
 24214#Sapatos Avançados#
@@ -6936,25 +7080,42 @@
 27160#Carta Baba-Yaga#
 27161#Carta Mavka#
 27162#Carta Gorynych#
+27163#Carta Verme com Rosto#
+27164#Carta Rainha Verme#
+27165#Carta Verme Sombrio com Rosto#
+27166#Carta Ovo de Verme com Rosto#
+27167#Carta Larva de Verme#
+27168#Carta Lorde Irine#
+27169#Carta Guarda de Payon#
 28000#Katar de Cinzas#
 28001#Katar Esconjurante#
 28007#Katar Rubi#
+28008#Katar Sobrenatural#
+28010#Juliette De Rachel#
 28025#Katares do Monarca#
 28039#Katar Ancestral#
 28100#Machado de Cinzas#
 28101#Tufão#
 28105#Machado Rubi#
 28106#Machado Rubi#
+28107#Machado Sobrenatural#
 28114#Machado Veterano#
 28130#Cutelo Ancestral#
 28200#Lança-Granadas Caos Total#
 28201#Cruz Meridional#
 28202#Cruz Meridional#
+28255#Rifle Ancestral#
+28256#Escopeta Ancestral#
+28257#Lança-Granadas Ancestral#
+28258#Gatling Ancestral#
 28319#Cauda Demoníaca#
 28321#Garra do Falcoeiro#
 28322#Luva do Falcoeiro#
 28326#Chip Quebrado 01#
 28327#Chip Quebrado 02#
+28354#Mapa da Capital#
+28355#Água Sagrada#
+28356#Brasão de Prontera#
 28377#Anel Mágico Elemental#
 28379#Anel Sombrio#
 28386#Rosário do Monge Decaído#
@@ -6968,32 +7129,43 @@
 28434#Luvas do Pugilista#
 28437#Luvas de Restauração#
 28438#Pó de Fada#
+28484#Lenço do Insurgente#
+28491#Punhal de Matagi#
 28492#Diário do Renegado#
 28501#Chifres de Kirin#
 28502#Lenço Infame#
 28503#Keraunos#
 28505#Anel do Capiroto#
+28506#Pedra Tempestuosa#
 28515#Anel Imperial#
 28517#Anel do Rei Abissal#
+28520#Anel de Aegir#
 28521#Proteção do Gigante#
 28531#Luvas do Vigor#
 28534#Amuleto da Coragem#
 28535#Amuleto da Sabedoria#
 28537#Colar de Juperos#
 28538#Luvas de H. Motto#
+28551#Luvas Imperiais#
 28561#Anel Dracônico do Veterano#
 28564#Lágrima de Valquíria#
+28565#Máscara de Oni#
 28572#Broche da Celine#
 28596#Anel de Brinquedo#
 28598#Fragmento de Chip #
 28604#Bíblia Rubi#
+28605#Livro Sobrenatural#
 28617#Bíblia Sagrada#
 28630#Tomo Ancestral#
 28705#Adaga Rubi#
+28706#Adaga Sobrenatural#
 28728#Adaga das Valquírias#
 28737#Adaga Mística#
 28739#Lacma#
 28744#Punhal Ancestral#
+28763#Kodachi Ancestral#
+28764#Wakizashi Ancestral#
+28900#Égide da Realeza#
 28901#Coelho Macabro#
 28902#Coelho Macabro#
 28906#Escudo do Fogo#
@@ -7009,6 +7181,23 @@
 28944#Escudo de Sleiporing#
 28947#Escudo de Gaia#
 28951#Escudo de Nero#
+28955#Escudo de Fotia#
+29000#Runa da Magia 1#
+29001#Runa da Magia 2#
+29002#Runa da Magia 3#
+29003#Runa da Visão 1#
+29004#Runa da Visão 2#
+29005#Runa da Visão 3#
+29006#Runa do Acaso 1#
+29007#Runa do Acaso 2#
+29008#Runa do Acaso 3#
+29009#Runa da Saúde 1#
+29010#Runa da Saúde 2#
+29011#Runa da Saúde 3#
+29135#Faro Aguçado 1#
+29136#Faro Aguçado 2#
+29137#Faro Aguçado 3#
+29138#Faro Aguçado 4#
 29148#Gema de Leão#
 29149#Gema de Peixes#
 29150#Gema de Capricórnio#
@@ -7023,18 +7212,30 @@
 31021#Carta Marionete Demoníaca#
 31022#Carta Ursinho Abominável#
 31023#Carta Celine Kimi#
+31024#Carta Cavaleiro Imortal#
+31025#Carta Xamã Imortal#
+31026#Carta Jack Wolf#
 31027#Orelhas de Urso Enfeitadas#
 31028#Sobrepeliz de Gatinho#
 31038#Bandana Xadrez#
 31040#Tiara das Plumas Mágicas#
 31045#Laço Azul Delicado#
 31046#Diadema de Rosas Brancas#
+31047#Bochechas da Paixão#
 31048#Par de Lírios#
 31052#Máscara do Alquimista#
 31054#Chapéu do Sting Vitorioso#
 31055#Sopra-Poring de Sabão#
 31057#Cachecol Preto do Eremes#
 31062#Peruca de Eleanor #
+31063#Coque Oceano#
+31064#Coque Labareda#
+31065#Coque Áureo#
+31066#Coque Primavera#
+31067#Coque Trevoso#
+31068#Coque Puro#
+31069#Coque Castanho#
+31070#Coque Místico#
 31087#Barba Viking#
 31088#Chapéu de Bicho Papão#
 31089#Fúria dos Shuras#
@@ -7070,10 +7271,12 @@
 31178#Cachecol em Chamas#
 31179#Máscara Lupina#
 31180#Faixa do Shurão da Preula#
+31185#Chapéu do Maquinista#
 31186#Gatinho Preto#
 31187#Laço da Princesa Guerreira#
 31188#Chapéu Gótico-Lolita#
 31189#Capa Vermelha de Gatinho#
+31190#Cartolinha das Valquírias#
 31193#Chapéu de Ahat#
 31199#Cavanhaque Bifurcado#
 31200#Laço Esplêndido#
@@ -7082,9 +7285,34 @@
 31203#Churrasquelmo#
 31208#Cabelo Longo Loiro#
 31209#Cabelo Longo Branco#
+31210#Trança de Azulzinha#
+31211#Trança de Camélia#
+31212#Trança de Calêndula#
+31213#Trança de Onze-horas#
+31214#Trança de Flor Morcego#
+31215#Trança de Magnólia#
+31216#Trança de Margarida#
+31217#Trança de Violeta#
+31218#Rabo de Unicórnio Céu#
+31219#Rabo de Unicórnio Rubi#
+31220#Rabo de Unicórnio Ouro#
+31221#Rabo de Unicórnio Limão#
+31222#Rabo de Unicórnio Choco#
+31223#Rabo de Unicórnio Neve#
+31224#Rabo de Unicórnio Bronze#
+31225#Rabo de Unicórnio Lilás#
+31226#Peruca Miku Royal#
+31227#Peruca Miku Ruiva#
+31228#Peruca Miku Dourada#
+31229#Peruca Miku Capim#
+31230#Peruca Miku Petróleo#
+31231#Peruca Miku Platinada#
+31232#Peruca Miku Castanha#
+31233#Peruca Miku Violeta#
 31244#Elmo das Falcoeiras de Rapina#
 31249#Orelhas do Coelho da Lua#
 31251#Boca de Gatinho#
+31252#Cartola do Gatomaníaco#
 31260#Rastreador Sofisticado#
 31264#Asinhas Elegantes (Baixo)#
 31289#Asinhas Estilosas (Baixo)#
@@ -7104,9 +7332,12 @@
 31381#Gola Diabólica#
 31382#Touca de Patinhas#
 31383#Peruca Azul de Waifu#
+31386#Orbes Místicos#
 31387#Jakk Aventureiro#
 31388#Chapéu Dupliponta#
 31390#Chapéu da Nevasca#
+31391#Cristal Exuberante#
+31393#Vajra Dourada#
 31394#Chapéu Mágico#
 31395#Conhecimento Flutuante#
 31396#Capuz Trevoso#
@@ -7118,21 +7349,26 @@
 31435#Gorro de Tricô Hipster#
 31437#Pequeno Pinguim#
 31438#Capa Angelical#
+31439#Abafadores de Orelha de Coração#
 31449#Tapa-Olho Floreado#
 31450#Peruca Rosa de Waifu#
 31451#Laço Azul Listrado#
 31452#Gata Branca#
 31453#Cachecol Marrom com Laço#
+31455#Cabeça de Doge#
 31460#Lanternas da Serenidade#
 31463#Super Drone A1000#
 31472#Asinhas Floridas#
 31474#Cabelo Longo Preto#
+31479#Projeção do Infinito#
 31480#Gioia Dorminhoco#
 31482#Cachecol de Lunático#
 31487#Tapa-Olho Pirata#
 31488#Balão de MVP#
 31490#Cachecol de Poring#
+31491#Gata Lasanhinha#
 31493#Peruca Branca de Waifu#
+31505#Falcoelmo#
 31510#Peruca Curta de Gatinho#
 31511#Peruca Longa de Gatinho#
 31513#Orelhas do Coelho Minguante#
@@ -7147,12 +7383,53 @@
 31561#Asas de Dragão Sombrio#
 31564#Véu do Submundo#
 31565#Laço com Coroa#
+31566#Estola das Divindades#
 31568#Espíritos Taiji#
 31569#Fones de Última Geração#
 31572#Auréolas Digitais#
 31575#Peruca Turquesa de Waifu#
 31586#Cachecol de Poporing#
 31587#Super Capacete de Kunlun#
+31593#Lenço do Deserto#
+31596#Chapéu Biológico#
+31598#Chapéu Natureba#
+31599#Peruca Bronze de Waifu#
+31600#Doge Branquinho#
+31609#Máscara do Aristocrata#
+31611#Manto do Riso Macabro#
+31614#Camarada Fox#
+31635#Mechas Onduladas Loiras#
+31636#Mechas Onduladas Pratas#
+31645#Aplique lateral Safira#
+31646#Aplique lateral Âmbar#
+31647#Aplique lateral Citrino#
+31648#Aplique lateral Peridote#
+31649#Aplique lateral Jasper#
+31650#Aplique lateral Pérola#
+31651#Aplique lateral Topaz#
+31652#Aplique lateral Ametista#
+31653#Coque Veraneio Bleu#
+31654#Coque Veraneio Rouge#
+31655#Coque Veraneio Jaune#
+31656#Coque Veraneio Vert#
+31657#Coque Veraneio Noir#
+31658#Coque Veraneio Blanc#
+31659#Coque Veraneio Brunne#
+31660#Coque Veraneio Violette#
+31667#Boina de Poring#
+31668#Chifres de Majoruros#
+31670#Peruca de Miyabi#
+31671#Canhões Gêmeos#
+31672#Peruca de Nereida#
+31687#Bolsa do Alquimista#
+31707#Peruca de Youkai#
+31721#Tambores de Invocação#
+31731#Guloseimas Encantadas#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#
+32227#Grilhões de Hrodvitnir#
+32243#Anel do Desbravador#
+32302#Revólver Ancestral#
+570002#Concha Ancestral#
+580002#Concertina Ancestral#
