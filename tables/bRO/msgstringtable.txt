@@ -1249,7 +1249,7 @@ Informações do item não estão corretas. A compra foi cancelada.#
  A taxa de Crítico voltou ao normal.#
  EXP ganha de monstros foi aumentada em 1.5 vezes durante 30 minutos.#
  Seu personagem não sofrerá a penalidade na Experiência por ser nocauteado uma vez durante 30 minutos.#
- O Drop normal de monstros foi aumentado em 2 vezes durante 30 minutos.#
+ O Drop normal de monstros foi aumentado em 2 vezes durante 15 minutos.#
  As informações de monstros tipo 'Chefe' do mapa estarão disponíveis por 10 minutos.#
  Você deseja comprar ? %d ROPs serão utilizados.#
  Você não possui ROPs suficientes.#
@@ -2733,7 +2733,7 @@ Server access denied(A)#
 Server access denied(B)#
 You should disarm the equipped arrows/bullets.#
 Você realizou uma ação com um item no inventário. A janela do Rodex foi fechada.#
-You don't have Magnifier.#
+Você não tem uma Lupa.#
 Para dropar itens, por favor feche a janela do Rodex.#
 The opponent has already requested you to be a friend.#
 SCRIPT ERROR AID#
@@ -3573,4 +3573,51 @@ Buscar#
 #
 Capturar Monstro#
 Mensagem#
-Título#
+Título# ( Base 100%% + Premium %.1f%%+ %sServer %.1f%% )#
+Chinese character#
+Shortcut Settings#
+Your subscription will be ended on%s.#
+Cannot find the replay file.#
+Shoes#
+Head#
+Armor#
+Shoulders#
+Accessory#
+Costume#
+Sort Order#
+Normal Gear#
+Special Gear#
+Style#
+/quake : Screen Shaking Effect On/Off#
+/aura2 : You can completely turn off the aurora On/Off#
+Default Settings#
+Advanced Settings#
+The Default Settings will be applied. #
+The Default Settings will be applied. Do you agree?#
+The settings will be applied. Do you agree?#
+Need to restart to apply the settings. Do you agree?#
+Fog#
+Simplified aurora#
+Turn on aurora#
+Show Effect#
+Show Shadows#
+No Shift#
+Select Hardware T&L Acceleration Function#
+Select Game Resolution#
+Use full screen#
+Fix mouse#
+Effect Settings#
+Control Settings#
+Graphic Device Settings#
+Graphic Resolution Settings#
+Full Screen Settings#
+Fix mouse Settings#
+Commission : #
+Total commission amount : #
+Select receiver#
+Select receiving group#
+Change size(F10)#
+Loading the mailbox.\n^c92114Delete^000000unnecessary emails!!#
+NOW LOADING..#
+Title#
+Sender#
