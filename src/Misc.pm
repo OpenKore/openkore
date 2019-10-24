@@ -5161,14 +5161,14 @@ sub checkItemBuyNeed{
 	my $amount = $char->inventory->sumByName($config{"buyAuto_$i"});# getting items amount
 
 										# item needded if:
-	return 1 if (($config{"buyAuto_$i"."_minAmount"} ne "" 
-				  && $amount <= $config{"buyAuto_$i"."_minAmount"})	# minAmount is set and we got less than minAmount
+	return 1 if (($config{"buyAuto_$i"."_minAmount"} eq "" 
+				  || $amount <= $config{"buyAuto_$i"."_minAmount"})	# minAmount is set and we got less than minAmount
 				 && $config{"buyAuto_$i"."_maxAmount"} ne ""		# maxamount is set
 				 && (checkSelfCondition("buyAuto_$i"))			# selfConditions are met
 				  
 				 && $amount < $config{"buyAuto_$i"."_maxAmount"}	# we got less than maxAmount
-				 && ($config{"buyAuto_$i"."_price"}			# the price is set...
-					 && $zeny > $config{"buyAuto_$i"."_price"}	# ...and we can buy at least one of that item
+				 && ($config{"buyAuto_$i"."_price"} eq ""			# the price is set...
+					 || $zeny > $config{"buyAuto_$i"."_price"}	# ...and we can buy at least one of that item
 				    )
 		    );
 	return 0;
