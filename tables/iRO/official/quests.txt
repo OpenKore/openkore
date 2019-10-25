@@ -23580,3 +23580,36 @@ Hunt the targets and return to the Adventurer's Guild Representative in Lighthal
 63570#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
 Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
 #
+63571#Bounty Board Angra Mantis#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Angra Mantis monsters and return to the Bounty Board at Mora#
+#
+63572#Bounty Board Little Fatum#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Little Fatum monsters and return to the Bounty Board at Mora#
+#
+63573#Bounty Board Menblatt#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Menblatt monsters and return to the Bounty Board at Mora#
+#
+63574#Bounty Board Miming#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Miming monsters and return to the Bounty Board at Mora#
+#
+63575#Bounty Board Petal#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Petal monsters and return to the Bounty Board at Mora#
+#
+63576#Bounty Board Antique Book#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Antique Book monsters and return to the Bounty Board at Eclage#
+#
+63577#Bounty Board Cenere#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cenere monsters and return to the Bounty Board at Eclage#
+#
+63578#Bounty Board Lichtern (Blue)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Lichtern (Blue) monsters and return to the Bounty Board at Eclage#
+#
+63579#Bounty Board Lichtern (Green)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Lichtern (Green) monsters and return to the Bounty Board at Eclage#
+#
+63580#Bounty Board Lichtern (Red)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Lichtern (Red) monsters and return to the Bounty Board at Eclage#
+#
+63581#Bounty Board Lichtern (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Lichtern (Yellow) monsters and return to the Bounty Board at Eclage#
+#

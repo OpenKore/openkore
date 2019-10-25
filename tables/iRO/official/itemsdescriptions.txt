@@ -14725,12 +14725,12 @@ Mdef + 5
 Additional Def + 6
 
 ^800080Set Bonus^000000
-^008080IValkyrja's Shield [1]^000000
+^008080Valkyrja's Shield [1]^000000
 ^008080Fricca's Circlet^000000
 ^008080Odin's Blessing [1]^000000
 Def + 2
 Mdef + 5
-For every upgrade level of ^008080IValkyrja's Shield [1],
+For every upgrade level of ^008080Valkyrja's Shield [1],
 Def - 1
 Mdef + 1
 For every upgrade level of ^008080Fricca's Circlet^000000,
@@ -27279,11 +27279,11 @@ Max HP +10%
 Max SP +5%
 #
 4568#
-FLEE +10.
-Enables Level 1 Hocus Pocus.
-Class: ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight: ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Flee + 10
+Enables ^0000FFLevel 1 Hocus Pocus^000000.
 #
 4569#
 Class: ^808080Card^000000
@@ -30815,12 +30815,12 @@ Max SP + 50
 Mdef + 10
 
 ^800080Set Bonus^000000
-^008080IValkyrja's Shield [1]^000000
+^008080Valkyrja's Shield [1]^000000
 ^008080Fricca's Circlet^000000
 ^008080Odin's Blessing [1]^000000
 Def + 2
 Mdef + 5
-For every upgrade level of ^008080IValkyrja's Shield [1],
+For every upgrade level of ^008080Valkyrja's Shield [1],
 Def - 1
 Mdef + 1
 For every upgrade level of ^008080Fricca's Circlet^000000,
@@ -31272,21 +31272,19 @@ Required Level : ^77777740^000000
 Jobs : ^777777All except Novice^000000
 #
 5160#
-A helmet that has been
-fashioned to give its
-wearer the appearance
-of having mighty goat
-horns. It's a helm
-that evokes power!
-Str +1
-Class : ^777777Headgear^000000
-Defense: ^7777779^000000
-Location : ^777777Upper^000000
-Weight : ^77777780^000000
-Jobs: ^777777Swordman and
-Merchant Classes;
-Taekwon Boy/Girl and
-Taekwon Master Jobs^000000
+A helmet that has been fashioned to give its wearer the appearance of having mighty goat horns. It's a helm that evokes power!
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080809^000000
+Weight: ^80808080^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Taekwon, Taekwon Master^000000
+Str + 1
+
+^800080Set Bonus^000000
+^008080Jakk's Castle Bat^000000
+^008080Magestic Goat [1]^000000
+Str + 3
+Flee + 5
 #
 5161#
 A headband with two
@@ -40496,7 +40494,7 @@ An all access pass to Poring Con!
 Weight: ^8080800^000000
 #
 6882#
-A special monster token that can be redeemed at the Kafra Headquarters.
+Jakk is looking to have these returned to him in Niflheim
 ^FF0000Character Bound^000000
 Weight: ^8080800^000000
 #
@@ -46266,6 +46264,13 @@ Costume Piamette Doll Hair (Silver)
 Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
+9702#
+^FF0000^000000
+Class: ^808080^000000
+Position: ^808080^000000
+Compounds On: ^808080^000000
+Weight: ^8080800^000000
+#
 10001#
 A pristine helmet made from an animal skull.
 Class: ^808080Pet Accessory^000000
@@ -48649,13 +48654,11 @@ you eat it. Vit +10,
 Weight : ^7777771^000000
 #
 12208#
-This well written,
-detailed manual
-explains effective
-battle methods.
-^000088EXP rate increases to^000000
-^000088150% for 30 minutes.^000000
-Weight : ^7777771^000000
+This well written, detailed manual explains effective battle methods.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Increases the rate of experience gained by 150% for 30 minutes.
 #
 12209#
 A life insurance
@@ -48673,11 +48676,11 @@ EXP loss penalty.
 Weight : ^7777771^000000
 #
 12210#
-Sweet, tasty bubble
-gum. Item drop rate
-increases by 100%
-for 30 minutes.
-Weight : ^7777771^000000
+Sweet, tasty bubble gum.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Increases the drop rate of items by 100% for 30 minutes.
 #
 12211#
 A Kafra name card
@@ -49601,16 +49604,16 @@ Strengthens relationships with distant friends and family.
 Weight : ^7777770^000000
 #
 12411#
-This well written, detailed manual explains High Efficiency battle methods.
-^000088EXP rate increases to 200% for 15 minutes.^000000
-^ffffff_^000000
-Weight : ^7777771^000000
+This well written, detailed manual explains high efficiency battle methods.
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Increases the rate of experience gained by 200% for 15 minutes.
 #
 12412#
 A High Efficiency bubble gum that packs double the punch.
-^000088Item drop rate increases by 200% for 15 minutes.^000000
-^ffffff_^000000
-Weight : ^7777771^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Increases the drop rate of items by 200% for 15 minutes.
 #
 12413#
 A well packed gift box. No one knows what is in it.
@@ -50794,78 +50797,128 @@ MaxHP decreases by 15% for 15 seconds.
 Weight : ^7777772^000000
 #
 12725#
-Casts 'Refresh' removing all abnormal states and debuffs and prevents any abnormal state or debuff effects for 30 seconds.
-Recover 25% HP and can be used while stunned, frozen or deep sleep.
-Must wait 5 minutes to reuse.
-Maximum carrying amount :10
-^ffffff_^000000
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, buffs the user with Refresh.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+When using the item;
+Restores 25% HP to the user.
+Cures and increases resistance to the following status by 100% for 60 seconds,
+^800000Abyss Curse^000000
+^800000Bleed^000000
+^800000Blind^000000
+^800000Burn^000000
+^800000Chaos^000000
+^800000Crystallization^000000
+^800000Curse^000000
+^800000Deep Sleep^000000
+^800000Freeze^000000
+^800000Frozen^000000
+^800000Howling^000000
+^800000Poison^000000
+^800000Silence^000000
+^800000Sleep^000000
+^800000Stone^000000
+^800000Stun^000000
+
+Can be used while inflicted by ^800000Stun^000000, ^800000Frozen^000000, and ^800000Deep Sleep^000000.
+
+Maximum carry capacity: 60.
+(2 Minutes Cooldown)
 #
 12726#
-Casts 'Crushing Strike' destroying your all equipped weapons while drawing out all of their power to strike a strong blow to your target.
-Must wait  1 minute to reuse.
-Maximum carrying amount :10
-^ffffff_^000000
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, allow the use of Crushing Strike.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+When using the item, buffs the next short-ranged damage on targets.
+Adds a 20% chance of damaging the user's weapon when performing a short-ranged attack.
+
+Maximum carry capacity: 60
+(60 Seconds Cooldown)
 #
 12727#
-Casts 'Millennium Shield' randomly summoning 2~4 magic shields.
-This shield has the same Def and Mdef as the person casting and has 1000 HP.
-Must wait 1 minute and 30 seconds before reusing.
-Maximum carrying amount :10
-^ffffff_^000000
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, buffs the user with Millennium Shield.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+When using the item, buffs the user with 2 to 4 defensive shields for 3 minutes;
+Each shield has 1000 HP and Def/Mdef equal to the user's.
+A defensive shield is consumed upon blocking a single instance of incoming damage, excess damage does not carry over to the next available shield.
+
+Maximum carry capacity: 60
+(60 Seconds Cooldown)
 #
 12728#
-Cast 'Vitality Activation' maximizing your health for one minute. HP recovery potion effect increases one and half times.
-But, it generates instability of mind so SP does not naturally recover while active and the effect of SP recovery potion decreases to half.
-Waiting time for reuse: None.
-Maximum carrying amount :2.
-^ffffff_^000000
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, buffs the user with Vitality Activation.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+When using the item, buffs the user for 3 minutes;
+Increases the recovery rate of HP recovery skills and items by 50%.
+Reduces the recovery rate of SP recovery skills and items by 50%.
+Disables SP Recovery.
+
+Maximum carry capacity: 60
 #
 12729#
-Cast 'Fighting Spirit' increasing Atk of the user and members of a party that the user belongs to.
-The caster gets 7 times increase of Atk as much as the number of the party, and the members of the party get a 25% increase of Atk the caster received.
-Also, the player gets a little increased Attack Strength effect. This effect is better when Rune Mastery level is higher.
-Waiting time for reuse: None.
-Maximum carrying amount: 20.
-^ffffff_^000000
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, buffs the user with Fighting Spirit.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+When using the item, buffs the user and the party members for 3 minutes;
+Atk + 70
+Additional Atk by 7 per party member the user belongs to, party members receive half the buff of the user.
+Additional Atk per level of ^0000FFRune Mastery^000000 known.
+Increases user's Aspd.
 #
 12730#
-Cast 'Abundance' recovering 60 SP for every 10 seconds for 3 minutes.
-Waiting time for reuse: None.
-Maximum carrying amount :5
-^ffffff_^000000
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, buffs the user with Abundance.
+^FF0000Account Bound^000000
+Class: ^808080Recovery^000000
+Weight: ^80808010^000000
+When using the item, buffs the user for 3 minutes;
+Restores 60 SP to the user every 10 seconds.
+
+Maximum carry capacity: 60
 #
 12731#
-Cast 'Giant Cross' heightening your power and attack strength tremendously.
-Str increases by 30 for 4 minutes. Has a chance to hit an enemy for 3 times the damage while melee attacking and has a chance of destroying the target's weapon.
-Waiting time for reuse: None.
-Maximum carrying amount: 10
-^ffffff_^000000
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, buffs the user with Giant Growth.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+When using the item, buffs the user for 4 minutes;
+Str + 30
+Adds a 15% chance of increasing short-ranged damage by 200%.
+If the user is ^F4AD42Rune Knight^000000, increases short-ranged damage on targets by 250%. (Effect is reduced to 125% in WoE and PvP areas).
+Adds a chance of damaging the user's weapon when performing a short-ranged attack.
+(Rhydo Runestone does not benefit from the 250% damage bonus).
 #
 12732#
-Cast 'Storm Blast' momentarily discharging a destructible power from the Rune Stone.
-Generates a 7 x 7 shockwave around yourself and damages all targets and causes knockback effect.
-Waiting time for reuse: None.
-Maximum carrying amount: 10
-^ffffff_^000000
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, allow the use of Storm Blast.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+Casts ^0000FFStorm Blast^000000;
+Inflicts physical damage on any target within 7-7 cells of the user.
+Affected targets gets knocked back by 7 cells.
+
+Increases the damage of ^0000FFStorm Blast^000000 for every base Str.
+Increases the damage of ^0000FFStorm Blast^000000 per level of ^0000FFRune Mastery^000000 known.
+
+(1 Second Cooldown)
 #
 12733#
-Cast 'Stonehard Skin' changing your skin into a solid shell for 3 minutes. Has a chance of destroying weapons of attacking enemies.
-Consumes 25% of your HP and this skin possesses the same amount of HP consumed.
-It disappears when all the HP is consumed.
-For monsters, it decreases 25% of Atk for 10 seconds at a fixed rate.
-This skill cannot be used for a boss monster.
-No waiting time for reuse.
-Maximum carrying amount: 10
-^ffffff_^000000
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, buffs the user with Stonehard Skin.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+When using the item, buffs the user for 3 minutes;
+Consumes 25% of the user's HP to apply a defensive shield equal to the amount consumed; Increases Def and Mdef.
+The defensive shield is removed once its HP is consumed.
+Adds a chance of damaging the attacker's weapon, if the attacker is a monster reduces damage taken by 25% for 10 seconds.
+
+Maximum carry capacity: 60
 #
 12734#
 A rough Rune Stone with a luxurious color that gives a better chance of successfully creating refined Rune Stones.
@@ -60110,10 +60163,9 @@ Weight : ^7777771^000000
 #
 14545#
 This well written, detailed manual explains Extremely Efficient battle methods.
-^000088EXP rate increases to 300% for 30 minutes.^000000
-^ff0000Can be traded, stored, and vended^000000
-^ffffff_^000000
-Weight : ^7777771^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Increases the rate of experience gained by 300% for 30 minutes.
 #
 14546#
 A firecracker that shows 'I LOVE YOU!'. Danger, keep children away from it.
@@ -76734,12 +76786,12 @@ Reduces damage taken from boss monsters by an additional 10%.
 Prevents the user from being knocked back.
 #
 19288#
-^808080A helm that once belonged to an ancient giant.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A helm that once belonged to an ancient giant.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19289#
 ^808080An eye patch containing the great powers of Hatii.^000000
@@ -78693,13 +78745,12 @@ Required Job: All Jobs
 Adds a X% chance of transforming into Antonio for X TIME when dealing a physical or magical attack.
 #
 19687#
-^808080Nobody knows when this beautiful rose was picked and decorated, but it has still managed to keep its freshness all this time.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+Nobody knows when this beautiful rose was picked and decorated, but it has still managed to keep its freshness all this time.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19688#
 A hairband decorated with small flowers.
@@ -79335,12 +79386,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19806#
-^808080A fancy hairpin. You can feel spring flowers.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A fancy hairpin. You can feel spring flowers.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19807#
 A brave headgear that no one can block.
@@ -79750,20 +79801,21 @@ Weight : ^77777710^000000
 Job : ^777777All Jobs^000000
 #
 19893#
-Just an ordinary black magician's hat.  For some reason, you feel somewhat extraordinary while wearing it.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Job : ^777777All Jobs^000000
+Just an ordinary black magician's hat. For some reason, you feel somewhat extraordinary while wearing it.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^67CDC9Concept by Team Inubashiri.^000000
 #
 19894#
 A ribbon once worn by a shrine maiden as she fought off hordes of demons and youkai.
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^77777710^000000
-Job : ^777777All Jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19895#
 A hat that promotes a sophisticated yet sleepy look. It once belonged to an ancient magician who was well known for her vast knowledge and lazy behaviour, to the point she was nicknamed "The Great Unmoving Library."
@@ -79799,14 +79851,13 @@ Adds a chance of gaining ^008080Sealed Envelope^000000 when a monster is killed.
 #
 19903#
 A dark and old hat with a witch's power.
-Floating Casting will be decreased by 10%
-^ff0000Item effect will remain until December 3, 2014^000000
-Class : ^777777Costume^000000
-Defense : ^7777770^000000
-Location : ^777777Upper ^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^FF0000The following effects are active during the month of October.^000000
+Reduces the variable casting time of skills by 10%.
 #
 19904#
 A Skull decorated hat.
@@ -79904,13 +79955,13 @@ Usable By: ^808080All Jobs^000000
 #
 19917#
 Pumpkin hat with gloomy mood.
-Increases movement speed
-^ff0000Item effect will remain until December 3, 2014^000000
-Class : ^777777Costume^000000
-Location : ^777777Upper^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^FF0000The following effects are active during the month of October.^000000
+Increased Movement Speed.
 #
 19918#
 Quve's mask, who is one of the mascots of  Niflheim.
@@ -79923,14 +79974,14 @@ Usable By: ^808080All Jobs^000000
 Increases the recovery rate of recovery skills and recovery items by 20%.
 #
 19919#
-Quve's mask, who is one of the mascots of  Niflheim
-Increases Attack speed (decrease delay after attacking by 10%)
-^ff0000Item effect will remain until December 3, 2014^000000
-Class : ^777777Costume^000000
-Location : ^777777Middle & Lower^000000
-Weight : ^7777770^000000
-Required Level : ^7777771^000000
-Job : ^777777All jobs^000000
+Quve's mask, who is one of the mascots of  Niflheim.
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+^FF0000The following effects are active during the month of October.^000000
+Aspd + 10%
 #
 19920#
 Whisper's mask. It has been even more stronger than before
@@ -80688,12 +80739,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20048#
-^808080A pin decrated with a flower that looks like the wind of the prairie.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A pin decorated with a flower that looks like the wind of the prairie.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20054#
 An item used to shut babies up when they're crying.
@@ -81125,20 +81176,21 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20154#
-^808080A colorful landscape spreads out in front of you as autumn leaves start to fall.^000000
-Class: Costume
-Position: Lower
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A colorful landscape spreads out in front of you as autumn leaves start to fall.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20155#
-^808080The calming shade and extravagant decoration of this hat is sure to turn heads as a symbol of noble elegance.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+The calming shade and extravagant decoration of this hat is sure to turn heads as a symbol of noble elegance.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20156#
 ^808080A cool fan for warm days. Hold it in your mouth when you need to use both hands!^000000
@@ -81414,12 +81466,12 @@ Required Level : ^7777771^000000
 Jobs : ^777777Gunslinger^000000
 #
 20183#
-^808080Although it does not change anything, wearing it gives off a creepy vibe.^000000
-Class: Costume
-Position: Upper, Middle
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+Although it does not change anything, wearing it gives off a creepy vibe.
+Class: ^808080Costume^000000
+Position: ^808080Upper, Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20190#
 A doll hat that resembles a chicken.
@@ -81446,10 +81498,13 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20196#
-Class : ^777777Costume equipment^000000 Defense : ^7777770^000000
-Location : ^777777Upper ^000000Weight : ^7777770^000000
-Required Lv. : ^7777771^000000
-Job : ^777777All jobs^000000
+This charming costume hat is modeled after the ears of a leopard.
+Look, one of its ears is drooping! How cute!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20197#
 A beret decked out to resemble a cute amistr
@@ -82907,9 +82962,12 @@ Weight: ^8080800^000000
 #
 20537#
 Autumn leaves drift gently around you, painting your surroundings with the colorful landscape of the changing of the seasons.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20538#
 Class: ^808080Costume^000000
@@ -82952,6 +83010,7 @@ A cute bear backpack for the stylish adventurer.
 Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20584#
@@ -86820,11 +86879,23 @@ Costume effect lasts for 10 minutes.
 Weight : ^7777771^000000
 #
 22540#
-Transfers the most recent active rune buff to all party members within 7x7 area.
-This can be re-used to transfer more rune buffs in the order that they were received by the Rune Knight.
-Buff duration: 60 seconds
-Eligible Rune buffs: Millennium Shield, Refresh, Giant Cross, Stone Skin, Vitality Activation, Abundance.
-Weight : ^77777710^000000
+A stone crafted by Rune Knights, allow the user to buff party members with runic powers.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^80808010^000000
+When using the item,
+Buffs party members within 7-7 cells of the user with runic power for 60 seconds.
+Multiple buffs can be re-applied in the order that they were received by the user.
+
+Eligible buffs:
+Millennium Shield
+Refresh
+Giant Growth
+Stone Skin
+Vitality Activation
+Abundance
+
+Maximum carry capacity: 60.
 #
 22542#
 This syrup increases concentration by increasing attack speed.
@@ -93583,20 +93654,19 @@ If the combined upgrade levels are +22 or higher,
 Increases the damage of Fire property magical attacks on targets by 15%.
 #
 28900#
-^808080The official shield of the Prontera Royal Guard.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Shield
-Defense: 30
-Weight: 300
-Required Level: 100
-Required Jobs: All Jobs
-^FFFFFF_^000000
-Def + 10 per upgrade level of the item.
-Mdef + 1 per upgrade level of the item.
+The official shield of the Prontera Royal Guard.
+Class: ^808080Shield^000000
+Defense: ^80808030^000000
+Weight: ^808080300^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+For every upgrade level of the item,
+Def + 10
+Mdef + 1
+
 Enables ^0000FFLevel 1 Shield Spell^000000.
 Adds a 0.5% chance of casting ^0000FFLevel 3 Assumptio^000000 on the user when receiving a short-ranged attack.
-Adds an additional 0.3% chance of casting ^0000FFLevel 3 Assumptio^000000 on the user when receiving a short-ranged attack.
+For every upgrade level of the item, adds an additional 0.3% chance of casting ^0000FFLevel 3 Assumptio^000000.
 #
 28901#
 A rag doll that Piamette is using for both attack and defense?
@@ -95013,12 +95083,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31179#
-^808080A mask shaped like a noble wolf.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A mask shaped like a noble wolf.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31180#
 A headband that only the strongest sura were thought to wear. It truly leaves in impact.
@@ -95549,6 +95619,7 @@ Weight: ^8080800^000000
 #
 31325#
 Fantastic helm fashioned after the head of the Queen Scaraba.
+^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
 Class: ^808080Costume^000000
 Position: ^808080Upper, Lower^000000
 Weight: ^8080800^000000
@@ -96490,6 +96561,8 @@ The best thing about this hat, aside from the fact that it's literally a giant f
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31598#
 This hat has everything you need to navigate the forest -
@@ -96513,6 +96586,8 @@ Aren't you so lucky?
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31601#
 Only the bottom of the glasses have a frame.
@@ -96534,6 +96609,8 @@ A renaissance-style mask. Great for partying or concealing your identity.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31610#
 The hat of a talented, young wizard. Yer a wizard fairy!
@@ -96566,6 +96643,8 @@ Don't be afraid to take a nap.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31628#
 A miniature Dokebi made for children. Don't worry, it won't attack you!
@@ -96850,6 +96929,8 @@ A cute baby desert wolf that follows you as you adventure. Now you have become t
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31687#
 The official bag of the Alchemist Guild! You don't need to be part of the guild to wear it though. Simple and Chic. Perfect for holding your flask or homunculus.
@@ -96980,6 +97061,8 @@ A hat modeled on the experimental goat by Werner Laboratories.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31785#
 Gills of a black and red monster fish.
