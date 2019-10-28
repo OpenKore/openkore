@@ -4533,12 +4533,12 @@ sub cmdPlugin {
 			my @folders = Settings::getPluginsFolders();
 			my $name = $args[1];
 			$name =~ s/.pl$//g;
-			if (-f @folders[0]."\\".$name.".pl") {
+			if (-f $folders[0]."\\".$name.".pl") {
 				# plugins\$name.pl
-				Plugins::load(@folders[0]."\\".$name.".pl");
-			} elsif (-f @folders[0]."\\".$name."\\".$name.".pl") {
+				Plugins::load($folders[0]."\\".$name.".pl");
+			} elsif (-f $folders[0]."\\".$name."\\".$name.".pl") {
 				# plugins\$name\$name.pl
-				Plugins::load(@folders[0]."\\".$name."\\".$name.".pl");
+				Plugins::load($folders[0]."\\".$name."\\".$name.".pl");
 			} else {
 				error TF("Plugin '%s' does not exist\n", $name);
 				return;
