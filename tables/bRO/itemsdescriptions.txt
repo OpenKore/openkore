@@ -55098,6 +55098,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+19581#
+Um belo chapéu para te proteger da luz do sol e ajudar na hora da plantação. Coloque seu chapéu, semeie seus pontos de atributo e colha muitos ups!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^77777730^000000
+Classes: ^777777Todas^000000
+#
 19585#
 Um chapéu elegante que garante um caimento perfeito. A pena decorativa complementa belamente o tom de azul.
 Tipo: ^777777Visual^000000
@@ -57025,6 +57034,15 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+20156#
+Ótimo pra fazer um ventinho quando você estiver no calor de rachar o cano na Caverna de Magma. Seu tamanho reduzido permite que você o carregue no bolso, ou... na boca! O que faz sentido – melhor não arriscar largar seu escudo pra dar umas abanadinhas.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20167#
 Um fone de ouvido maneiro com modelo de Deviruchi. A estrutura metálica proporciona grande durabilidade e os fones são estofados em couro de Deviruchi.
 Tipo : ^777777Visual^000000
@@ -58433,6 +58451,18 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20515#
+Mostre a todos a sua alma trevosa com esse círculo de conjuração. Será que com um visual tão sombrio assim os buffs e curas vão ter o efeito inverso em você? Hmmm, só há uma forma de descobrir...
+--------------------------
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20516#
 Asas brancas que representam o Arcanjo Miguel, o baluarte do céu. Asas como essas são extremamente raras de se replicar, até mesmo por mãos experientes. Dizem que existem asas de outros Arcanjos espalhadas por aí.
 ^008080Exibe o visual nas costas do personagem.^000000
@@ -59550,6 +59580,24 @@ Peso: ^777777420^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Cavaleiros Rúnicos^000000
+#
+21203#
+Uma máscara com um Sorriso Maligno que amedronta todas as pessoas ao seu redor.
+Todos Atributos + 1.
+Classe: ^777777Equipamento para cabeça^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Meio e Baixo^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classe: ^777777Todas as classes^000000
+#
+21204#
+Uma máscara de Quve, a mascote de Nifflheim.
+Tipo : ^777777Visual^000000
+Equipa em : ^777777Meio e Baixo^000000
+Peso : ^7777770^000000
+Nível Necessário : ^7777771^000000
+Classes : ^777777Todas^000000
 #
 22000#
 Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.

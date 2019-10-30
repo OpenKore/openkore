@@ -6440,6 +6440,7 @@
 19575#Chapéu de Dragão#
 19577#Chapéu do 10º Aniversário#
 19578#Óculos de Aviação#
+19581#Chapéu de Camponês#
 19585#Boina Alada Visual#
 19587#Visual do Rei Poring#
 19589#Tiara de Randgris#
@@ -6657,6 +6658,7 @@
 20148#Chapéu do Dartanham#
 20154#Folhas Outonais#
 20155#Chapéu de Lady Emplumado#
+20156#Leque Portátil#
 20167#Fone de Ouvido de Deviruchi#
 20168#Lenço de Caveira#
 20171#Chapéu Torta Holandesa#
@@ -6811,6 +6813,7 @@
 20511#Asas Azuis de Fada#
 20512#Mochila de Caça#
 20514#Espada de Thanatos#
+20515#Círculo de Conjuração#
 20516#Asas de Miguel#
 20517#Miau-chila de Bichano#
 20521#Miau-chila de Bichano Preto#
@@ -6877,6 +6880,8 @@
 21024#Espada Veterana#
 21038#Espada Ancestral#
 21042#Espada Onimaru#
+21203#Sorriso Maligno#
+21204#Máscara de Quve#
 22000#Botas Temporais FOR#
 22001#Botas Temporais INT#
 22002#Botas Temporais AGI#
