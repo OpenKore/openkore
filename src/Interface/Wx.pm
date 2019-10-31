@@ -94,6 +94,7 @@ sub OnInit {
 		['mainLoop_pre',                        sub { $self->onUpdateUI(); }],
 		['captcha_file',                        sub { $self->onCaptcha(@_); }],
 		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
+		['start3',				sub { delete $interface->{mapViewer}->{portals} if ($interface->{mapViewer}->{portals});$interface->{mapViewer}->parsePortals(Settings::getTableFilename("portals.txt")); }],
 		
 		# stat changes
 		['packet/map_changed',                  sub { $self->onSelfStatChange (@_); $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
@@ -794,7 +795,7 @@ sub createSplitterContent {
 	$mapView->onMouseMove(\&onMapMouseMove, $self);
 	$mapView->onClick(\&onMapClick, $self);
 	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
-	$mapView->parsePortals(Settings::getTableFilename("portals.txt"));
+	#$mapView->parsePortals(Settings::getTableFilename("portals.txt"));#too early ?
 	if ($field && $char) {
 		$mapView->set($field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
 	}
