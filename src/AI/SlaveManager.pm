@@ -20,12 +20,20 @@ sub addSlave {
 	$actor->{slave_skillsID} = [];
 	$actor->{slave_AI} = AI::AUTO;
 
-	if ($actor->{actorType} eq 'Homunculus') {
+	if ($actor->isa("Actor::Slave::Homunculus")) {
 		$actor->{configPrefix} = 'homunculus_';
+		$actor->{ai_attack_timeout} = 'ai_homunculus_attack';
+		$actor->{ai_attack_auto_timeout} = 'ai_homunculus_attack_auto';
+		$actor->{ai_standby_timeout} = 'ai_homunculus_standby';
+		$actor->{ai_attack_failed_timeout} = 'homunculus_attack_failed';
 		bless $actor, 'AI::Slave::Homunculus';
 		
-	} elsif ($actor->{actorType} eq 'Mercenary') {
+	} elsif ($actor->isa("Actor::Slave::Mercenary")) {
 		$actor->{configPrefix} = 'mercenary_';
+		$actor->{ai_attack_timeout} = 'ai_mercenary_attack';
+		$actor->{ai_attack_auto_timeout} = 'ai_mercenary_attack_auto';
+		$actor->{ai_standby_timeout} = 'ai_mercenary_standby';
+		$actor->{ai_attack_failed_timeout} = 'mercenary_attack_failed';
 		bless $actor, 'AI::Slave::Mercenary';
 		
 	} else {

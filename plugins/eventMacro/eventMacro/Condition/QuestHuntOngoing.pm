@@ -8,7 +8,7 @@ use base 'eventMacro::Condition';
 
 # Using 'inventory_ready' is not optimal, but it works.
 sub _hooks {
-	['packet_mapChange','inventory_ready','packet/quest_all_list2','packet/quest_all_list','packet/quest_all_mission','packet/quest_add','packet/quest_delete','packet/quest_update_mission_hunt','packet/quest_active'];
+	['packet_mapChange','inventory_ready','packet/quest_all_list','packet/quest_all_list2','packet/quest_all_list3','packet/quest_all_mission','packet/quest_add','packet/quest_delete','packet/quest_update_mission_hunt','packet/quest_active'];
 }
 
 sub _parse_syntax {
@@ -118,18 +118,17 @@ sub check_quests {
 		
 		my $quest_hunt_ID;
 		foreach (keys %{$questList->{$quest_ID}->{missions}}) {
-			if ($questList->{$quest_ID}->{missions}->{$_}->{mobID} == $mob_ID) {
+			my $mission = \%{$questList->{$quest_ID}->{missions}->{$_}};
+			if ((exists $mission->{mob_id} && $mission->{mob_id} == $mob_ID) || (exists $mission->{hunt_id} && $mission->{hunt_id} == $mob_ID)) {
 				$quest_hunt_ID = $_;
 				last;
 			}
 		}
 		
-		next unless (exists $questList->{$quest_ID}->{missions}->{$quest_hunt_ID});
-		
 		next if (
-			exists $questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{count} &&
-			exists $questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{goal} &&
-			$questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{count} == $questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{goal}
+			exists $questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{mob_count} &&
+			exists $questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{mob_goal} &&
+			$questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{mob_count} == $questList->{$quest_ID}->{missions}->{$quest_hunt_ID}->{mob_goal}
 		);
 		
 		$self->{fulfilled_quest_id} = $quest_ID;

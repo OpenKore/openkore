@@ -14116,3 +14116,59 @@ Campitor might be right outside Juno according to the Band Members.#
 63180#Poring Con#SG_FEEL#QUE_NOIMAGE#
 Maybe the Poring Con Volunteer at the entrance knows about Camp?#
 #
+
+//Halloween 2018
+
+63223#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+And your trick or treating begins... speak to the Crying Kid again if you haven't already.#
+
+#
+
+63224#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Start by examining the body.#
+
+#
+
+63225#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Maybe there is a clue on the floor...#
+
+#
+
+63226#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+So there are wet footprints. Where could these have come from?#
+
+#
+
+63227#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+There's a book here. I should check the study room.#
+
+#
+
+63228#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+I should check the dresser. He had to have changed out of his clothes to take a bath.#
+
+#
+
+63229#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Inform Detective Squirrel and Moose about the sketchy candy wrappers.#
+
+#
+
+63230#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Looks like you've discovered the source of the mysterious candy. Go back and speak to Jane.#
+
+#
+
+63232#A Supermundane Murder Mystery#SG_FEEL#QUE_NOIMAGE#
+
+Jane asked me to meet her in Niflheim near the bridge to the north-west.#
+
+#

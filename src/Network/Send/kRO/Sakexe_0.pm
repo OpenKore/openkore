@@ -140,6 +140,7 @@ sub new {
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
+		'01A9' => ['pet_emotion', 'V', [qw(ID)]],#6
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
@@ -185,6 +186,7 @@ sub new {
 		'025C' => ['auction_info_self', 'v', [qw(type)]],
 		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
+		'0288' => ['cash_dealer_buy', 'v2 V', [qw(itemid amount kafra_points)]],
 		'0292' => ['auto_revive'],
 		'029F' => ['mercenary_command', 'C', [qw(flag)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
@@ -193,6 +195,7 @@ sub new {
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
+		'0447' => ['blocking_play_cancel'],
 		'044A' => ['client_version', 'V', [qw(clientVersion)]],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'07E7' => ['captcha_answer', 'v a4 a24', [qw(len accountID answer)]],
@@ -219,6 +222,8 @@ sub new {
 		'08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],
 		'08C1' => ['macro_start'],#2
 		'08C2' => ['macro_stop'],#2
+		'08C9' => ['request_cashitems'],#2
+		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
@@ -226,6 +231,7 @@ sub new {
 		'09F5' => ['rodex_delete_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexDeleteMail
 		'09EA' => ['rodex_read_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexReadMail
 		'09E8' => ['rodex_open_mailbox', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexOpenMailbox
+		'09EC' => ['rodex_send_mail', 'v Z24 Z24 V2 v v a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len title body)]],   # -1 -- RodexSendMail
 		'09EE' => ['rodex_next_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexNextMaillist
 		'09F1' => ['rodex_request_zeny', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestZeny
 		'09F3' => ['rodex_request_items', 'V2 C', [qw(mailID1 mailID2 type)]],   # 11 -- RodexRequestItems
@@ -237,12 +243,20 @@ sub new {
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
 		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
+		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AE8' => ['change_dress'],
+		'0AC0' => ['rodex_open_mailbox', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]],  # 26 -- RodexOpenMailbox
+		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
+		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
+		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
+		'0B14' => ['inventory_expansion_request'], #2
+		'0B19' => ['inventory_expansion_rejected'], #2
+		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -618,15 +632,7 @@ sub sendGuildPositionInfo {
 # 0x01a4,11
 # 0x01a6,-1
 # 0x01a8,4
-
 # 0x01a9,6,sendemotion,2
-sub sendPetEmotion{
-	my ($self, $emoticon) = @_;
-	my $msg = pack('v V', 0x01A9, $emoticon);
-	$self->sendToServer($msg);
-	debug "Sent Pet Emotion.\n", "sendPacket", 2;
-}
-
 # 0x01aa,10
 # 0x01ab,12
 # 0x01ac,6
@@ -751,4 +757,13 @@ sub sendPartyOrganize {
 # 0x0206,11
 # 0x0207,34
 
+sub sendInventoryExpansionRequest {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_request' }));
+}
+
+sub sendInventoryExpansionRejected {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
+}
 1;

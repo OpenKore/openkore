@@ -2,7 +2,7 @@ package eventMacro::Condition::InCartID;
 
 use strict;
 
-use base 'eventMacro::Condition::BaseInCart';
+use base 'eventMacro::Condition::Base::InCart';
 use eventMacro::Utilities qw( getCartAmountbyID );
 
 sub _parse_syntax {
@@ -24,10 +24,6 @@ sub _parse_syntax {
 sub _get_val {
 	my ( $self ) = @_;
 	getCartAmountbyID($self->{wanted});
-}
-
-sub usable {
-	1;
 }
 
 1;

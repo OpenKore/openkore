@@ -60,4 +60,12 @@ sub items_max {
 	return $self->{items_max};
 }
 
+sub item_max_stack {
+	my ($self, $nameID) = @_;
+	
+	# TODO:
+	# Support Guild Storage somehow?
+	return $itemStackLimit{$nameID}->{4} || $itemStackLimit{-1}->{4} || 30000;
+}
+
 1;

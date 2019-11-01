@@ -2,7 +2,7 @@ package eventMacro::Condition::InInventoryID;
 
 use strict;
 
-use base 'eventMacro::Condition::BaseInInventory';
+use base 'eventMacro::Condition::Base::InInventory';
 
 use eventMacro::Utilities qw( getInventoryAmountbyID );
 
@@ -25,10 +25,6 @@ sub _parse_syntax {
 sub _get_val {
 	my ( $self ) = @_;
 	return getInventoryAmountbyID($self->{wanted});
-}
-
-sub usable {
-	1;
 }
 
 1;

@@ -41,7 +41,13 @@ sub get_new_variable_list {
 	
 	$new_variables->{".".$self->{name}."Last"} = $self->{last_hook};
 	while( my( $key, $value ) = each %{$self->{vars}} ){
-		$new_variables->{".".$self->{name}."Last".ucfirst($key)} = $value;
+		if (ref($value) eq 'ARRAY') {
+			for (my $i; $i < @{$value}.length ; $i++) {
+				$new_variables->{".".$self->{name}."Last".ucfirst($key).$i} = $value->[$i];
+			}
+		} else{
+			$new_variables->{".".$self->{name}."Last".ucfirst($key)} = $value;
+		}
 	}
 	
 	return $new_variables;

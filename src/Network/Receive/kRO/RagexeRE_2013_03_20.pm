@@ -28,7 +28,7 @@ sub new {
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-
+	$self->{blockingPlayerCancel} = 1; # rathena PR 3640
 	return $self;
 }
 

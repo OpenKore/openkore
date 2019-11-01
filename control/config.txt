@@ -42,6 +42,7 @@ commandPrefix ;
 callSignGM 0
 inGameAuth 0
 
+pauseCharLogin 1
 pauseCharServer 0
 pauseMapServer 0
 ignoreInvalidLogin 0
@@ -137,6 +138,7 @@ avoidGM_ignoreList
 avoidList 1
 avoidList_inLockOnly 0
 avoidList_reconnect 1800
+avoidList_ignoreList
 
 cachePlayerNames 1
 cachePlayerNames_duration 900
@@ -211,7 +213,9 @@ route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
 
 runFromTarget 0
-runFromTarget_dist 6
+runFromTarget_dist 5
+runFromTarget_minStep 7
+runFromTarget_maxStep 9
 
 saveMap
 saveMap_warpToBuyOrSell 1
@@ -318,6 +322,7 @@ logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
 logSystemChat 1
+logLocalBroadcast 1
 logShop 1
 logEmoticons
 logConsole 1
@@ -359,11 +364,17 @@ mercenary_attackAuto_notInTown 1
 mercenary_attackAuto_onlyWhenSafe 0
 mercenary_attackDistance 1.5
 mercenary_attackMaxDistance 2.5
+mercenary_attackDistanceAuto 0
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 0
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
+
+mercenary_runFromTarget 0
+mercenary_runFromTarget_dist 5
+mercenary_runFromTarget_minStep 7
+mercenary_runFromTarget_maxStep 9
 
 mercenary_followDistanceMax 10
 mercenary_followDistanceMin 3
@@ -392,6 +403,7 @@ homunculus_attackAuto_notInTown 1
 homunculus_attackAuto_onlyWhenSafe 0
 homunculus_attackDistance 1.5
 homunculus_attackMaxDistance 2.5
+homunculus_attackDistanceAuto 0
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 0
@@ -407,7 +419,9 @@ homunculus_tankMode 0
 homunculus_tankModeTarget
 
 homunculus_runFromTarget 0
-homunculus_runFromTarget_dist 6
+homunculus_runFromTarget_dist 5
+homunculus_runFromTarget_minStep 7
+homunculus_runFromTarget_maxStep 9
 
 homunculus_StandByAuto 0
 homunculus_teleportAuto_hp 10
@@ -687,7 +701,7 @@ useSelf_item {
 	inLockOnly 0
 	notWhileSitting 0
 	notInTown 0
-	timeout
+	timeout 0
 	disabled 0
 	inInventory
 	manualAI 0
@@ -704,6 +718,8 @@ buyAuto {
 	maxAmount 3
 	batchSize
 	disabled 0
+	maxBase
+	minBase
 }
 
 sellAuto 0
@@ -734,6 +750,7 @@ npcWrongStepsMethod 0
 getAuto {
 	minAmount
 	maxAmount
+	batchSize
 	passive
 	disabled 0
 }
@@ -754,3 +771,4 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
+gameGuard 0

@@ -2,7 +2,7 @@ package eventMacro::Condition::InCart;
 
 use strict;
 
-use base 'eventMacro::Condition::BaseInCart';
+use base 'eventMacro::Condition::Base::InCart';
 
 use Globals qw( $char );
 
@@ -25,10 +25,6 @@ sub _parse_syntax {
 sub _get_val {
 	my ( $self ) = @_;
 	$char->cart->sumByName($self->{wanted});
-}
-
-sub usable {
-	1;
 }
 
 1;

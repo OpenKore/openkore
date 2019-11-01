@@ -114,9 +114,4 @@ sub is_unique_condition {
 	0;
 }
 
-# Default: true
-sub usable {
-	1;
-}
-
 1;

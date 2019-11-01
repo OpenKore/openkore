@@ -21,6 +21,7 @@ use strict;
 use Time::HiRes qw(time);
 use Scalar::Util;
 use Carp::Assert;
+use Utils::Assert;
 
 use Modules 'register';
 use Task::WithSubtask;
@@ -384,7 +385,7 @@ sub resetRoute {
 # in Utils/PathFinding.pm
 sub getRoute {
 	my ($class, $solution, $field, $start, $dest, $avoidWalls) = @_;
-	assert(UNIVERSAL::isa($field, 'Field')) if DEBUG;
+	assertClass($field, 'Field') if DEBUG;
 	if (!defined $dest->{x} || $dest->{y} eq '') {
 		@{$solution} = () if ($solution);
 		return 1;

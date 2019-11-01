@@ -29,7 +29,7 @@ use Translation;
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new('Player');
+	return $class->SUPER::new(T('Player'));
 }
 
 sub selfString {

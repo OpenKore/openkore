@@ -214,7 +214,7 @@ sub commandHandler {
 				while () {
 					message( center( " Macro ", 25, '-' ) . "\n", 'list' );
 					message( sprintf( "Macro name: %s\n", $macro->get_name ), "list" );
-					message( sprintf( "averrideAI: %s\n", $macro->overrideAI ), "list" );
+					message( sprintf( "overrideAI: %s\n", $macro->overrideAI ), "list" );
 					message( sprintf( "interruptible: %s\n", $macro->interruptible ), "list" );
 					message( sprintf( "orphan method: %s\n", $macro->orphan ), "list" );
 					message( sprintf( "remaining repeats: %s\n", $macro->repeat ), "list" );
@@ -583,19 +583,21 @@ sub commandHandler {
 		return;
 	} else {
 		my $opt = {};
-		GetOptionsFromArray( \@params, $opt, 'repeat|r=i', 'override_ai', 'exclusive', 'macro_delay=f', 'orphan=s' );
+		GetOptionsFromArray( \@params, $opt, 'repeat|r=i', 'overrideAI', 'exclusive', 'macro_delay=f', 'orphan=s' );
 		
 		$eventMacro->set_full_array( ".param", \@params );
 		
 		$eventMacro->{Macro_Runner} = new eventMacro::Runner(
 			$arg,
+			'command',
 			defined $opt->{repeat} ? $opt->{repeat} : 1,
 			defined $opt->{exclusive} ? $opt->{exclusive} ? 0 : 1 : undef,
-			defined $opt->{override_ai} ? $opt->{override_ai} : undef,
+			0, # is self_interruptible? (in this case is always negative)
+			defined $opt->{overrideAI} ? $opt->{overrideAI} : undef,
 			defined $opt->{orphan} ? $opt->{orphan} : undef,
 			undef,
 			defined $opt->{macro_delay} ? $opt->{macro_delay} : undef,
-			0
+			0 # is subcall? (in this case is always negative)
 		);
 
 		if ( defined $eventMacro->{Macro_Runner} ) {

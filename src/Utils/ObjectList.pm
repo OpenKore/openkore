@@ -134,8 +134,8 @@ sub new {
 # Note that subclasses of ObjectList may have further preconditions.
 sub add {
 	my ($self, $item) = @_;
-	assert(defined $item) if DEBUG;
-	assert(Scalar::Util::blessed $item) if DEBUG;
+	assert(defined $item, "Can't add undefined item to ObjectList") if DEBUG;
+	assert(Scalar::Util::blessed($item), "Can't add non-blessed item to ObjectList") if DEBUG;
 
 	my $index = _findEmptyIndex($self->{OL_items});
 	$self->{OL_items}[$index] = $item;
@@ -165,7 +165,7 @@ sub _findEmptyIndex {
 # Use getItems() instead. See the overview for more information.
 sub get {
 	my ($self, $index) = @_;
-	assert($index >= 0) if DEBUG;
+	assert($index >= 0, "Can't get item with negative index") if DEBUG;
 	return $self->{OL_items}[$index];
 }
 
@@ -179,8 +179,8 @@ sub get {
 # Returns the index of the first occurence of $item, or -1 if not found.
 sub find {
 	my ($self, $item) = @_;
-	assert(defined $item) if DEBUG;
-	assert(Scalar::Util::blessed $item) if DEBUG;
+	assert(defined $item, "Can't find undefined item") if DEBUG;
+	assert(Scalar::Util::blessed($item), "Can't find unblessed item") if DEBUG;
 	return _findItem($self->{OL_items}, $item);
 }
 
@@ -205,8 +205,8 @@ sub _findItem {
 # an onRemove event, after the item has been removed.
 sub remove {
 	my ($self, $item) = @_;
-	assert(defined $item) if DEBUG;
-	assert(Scalar::Util::blessed $item) if DEBUG;
+	assert(defined $item, "Can't remove undefined item") if DEBUG;
+	assert(Scalar::Util::blessed($item), "Can't remove unblessed item") if DEBUG;
 
 	my $index = _findItem($self->{OL_items}, $item);
 	if ($index == -1) {
@@ -329,16 +329,16 @@ sub checkValidity {
 	my $items = $self->{OL_items};
 	my $cItems = $self->{OL_cItems};
 
-	assert(defined $items);
-	assert(defined $cItems);
-	assert(@{$cItems} <= @{$items});
+	assert(defined $items, "OL_items is undefined");
+	assert(defined $cItems, "OL_cItems is undefined");
+	assert(@{$cItems} <= @{$items}, "OL_cItems has more elements than OL_items");
 	for (my $i = 0; $i < @{$cItems}; $i++) {
-		assert(exists $cItems->[$i]);
+		assert(exists $cItems->[$i], "OL_cItems has invalid content");
 	}
-	assert(defined $self->{OL_onAdd});
-	assert(defined $self->{OL_onRemove});
-	assert(defined $self->{OL_onClearBegin});
-	assert(defined $self->{OL_onClearEnd});
+	assert(defined $self->{OL_onAdd}, "onAdd callback is undefined");
+	assert(defined $self->{OL_onRemove}, "onRemove callback is undefined");
+	assert(defined $self->{OL_onClearBegin}, "onClearBegin callback is undefined");
+	assert(defined $self->{OL_onClearEnd}, "onClearEnd callback is undefined");
 }
 
 1;

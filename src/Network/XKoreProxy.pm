@@ -531,25 +531,37 @@ sub modifyPacketIn {
 		$self->serverDisconnect(1);
 
 	} elsif ($switch eq "0071" || $switch eq "0AC5") { # login in map-server
+		my ($mapInfo, $server_info);
+		
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 
 		# Proxy the Logon to Map server
 		debug "Modifying Map Logon packet...", "connection";
+		
+		if ($switch eq '0AC5') { # cRO 2017
+			$server_info = {
+				types => 'a4 Z16 a4 v a128',
+				keys => [qw(charID mapName mapIP mapPort mapUrl)],
+			};
+			
+		} else { 
+			$server_info = {
+				types => 'a4 Z16 a4 v',
+				keys => [qw(charID mapName mapIP mapPort)],
+			};
+		}
 
 		my $ip = $self->{publicIP} || $self->{proxy}->sockhost;
 		my $port = $self->{proxy}->sockport;
+		
+		@{$mapInfo}{@{$server_info->{keys}}} = unpack($server_info->{types}, substr($msg, 2));
 
-		my $mapInfo;
-		if ($switch eq "0AC5") {
-			@{$mapInfo}{@{[qw(charID mapName mapIP mapPort mapUrl)]}} = unpack('a4 Z16 a4 v a128', substr($msg, 2));
-			if($mapInfo->{'mapUrl'} =~ /.*\:\d+/) { # in cRO we have server.alias.com:port
-				@{$mapInfo}{@{[qw(mapIP port)]}} = split (/\:/, $mapInfo->{'mapUrl'});
-				$mapInfo->{mapIP} =~ s/^\s+|\s+$//g;
-				$mapInfo->{port} =~ tr/0-9//cd;
-			}
+		if (exists $mapInfo->{mapUrl} && $mapInfo->{'mapUrl'} =~ /.*\:\d+/) { # in cRO we have server.alias.com:port
+			@{$mapInfo}{@{[qw(mapIP port)]}} = split (/\:/, $mapInfo->{'mapUrl'});
+			$mapInfo->{mapIP} =~ s/^\s+|\s+$//g;
+			$mapInfo->{port} =~ tr/0-9//cd;
 		} else {
-			@{$mapInfo}{@{[qw(charID mapName mapIP mapPort)]}} = unpack('a4 Z16 a4 v', substr($msg, 2));
 			$mapInfo->{mapIP} = inet_ntoa($mapInfo->{mapIP});
 		}
 
@@ -584,21 +596,36 @@ sub modifyPacketIn {
 		$self->serverDisconnect(1);
 		
 	} elsif($switch eq "0092" || $switch eq "0AC7" || $switch eq "0A4C") { # In Game Map-server changed
-		my $mapInfo;
+		my ($mapInfo, $server_info);
+		
+		if ($switch eq '0AC7') { # cRO 2017
+			$server_info = {
+				types => 'Z16 v2 a4 v a128',
+				keys => [qw(map x y IP port url)],
+			};
+			
+		} else { 
+			$server_info = {
+				types => 'Z16 v2 a4 v',
+				keys => [qw(map x y IP port)],
+			};
+		}
 
 		my $ip = $self->{publicIP} || $self->{proxy}->sockhost;
 		my $port = $self->{proxy}->sockport;
-
-		if ($switch eq "0AC7") {
-			@{$mapInfo}{@{[qw(map x y IP port url)]}} = unpack('Z16 v2 a4 v a128', substr($msg, 2));
-			if($mapInfo->{'url'} =~ /.*\:\d+/) { # in cRO we have server.alias.com:port
-					@{$mapInfo}{@{[qw(ip port)]}} = split (/\:/, $mapInfo->{'url'});
-				$mapInfo->{ip} =~ s/^\s+|\s+$//g;
-				$mapInfo->{port} =~ tr/0-9//cd;
-			}
+		
+		@{$mapInfo}{@{$server_info->{keys}}} = unpack($server_info->{types}, substr($msg, 2));
+		
+		if (exists $mapInfo->{url} && $mapInfo->{'url'} =~ /.*\:\d+/) { # in cRO we have server.alias.com:port
+			@{$mapInfo}{@{[qw(ip port)]}} = split (/\:/, $mapInfo->{'url'});
+			$mapInfo->{ip} =~ s/^\s+|\s+$//g;
+			$mapInfo->{port} =~ tr/0-9//cd;
 		} else {
-			@{$mapInfo}{@{[qw(map x y IP port)]}} = unpack('Z16 v2 a4 v', substr($msg, 2));
-			$mapInfo->{IP} = inet_ntoa($mapInfo->{IP});
+			$mapInfo->{ip} = inet_ntoa($mapInfo->{'IP'});
+		}
+
+		if($masterServer->{'private'}) {
+			$mapInfo->{ip} = $masterServer->{ip};
 		}
 	
 		$msg = $packetParser->reconstruct({
@@ -611,7 +638,7 @@ sub modifyPacketIn {
 			url => $ip.':'.$port,
 		});
 
-		$self->{nextIp} = $mapInfo->{'IP'};
+		$self->{nextIp} = $mapInfo->{ip};
 		$self->{nextPort} = $mapInfo->{'port'};
 		debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
 		

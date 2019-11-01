@@ -106,6 +106,7 @@ sub master_login {
 				name => $charServer->getName,
 				users => $charServer->getPlayersCount,
 				display => 5, # don't show number of players
+				ip_port => $ip . ':' . $charServer->getPort,
 			};
 		}
 		

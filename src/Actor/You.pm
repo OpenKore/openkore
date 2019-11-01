@@ -73,7 +73,7 @@ use Utils;
 
 sub new {
 	my ($class) = @_;
-	my $self = $class->SUPER::new('You');
+	my $self = $class->SUPER::new(T('You'));
 	$self->{__inventory} = new InventoryList::Inventory();
 	$self->{__storage} = new InventoryList::Storage();
 	$self->{__cart} = new InventoryList::Cart();

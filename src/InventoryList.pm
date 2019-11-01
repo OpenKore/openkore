@@ -23,6 +23,7 @@ package InventoryList;
 
 use strict;
 use Carp::Assert;
+use Utils::Assert;
 use Utils::ObjectList;
 use ActorList;
 use base qw(ActorList);
@@ -101,10 +102,10 @@ sub DESTROY {
 # method.
 sub add {
 	my ($self, $item) = @_;
-	assert(defined $item) if DEBUG;
-	assert($item->isa('Actor::Item')) if DEBUG;
-	assert(defined $item->{name}) if DEBUG;
-	assert($self->find($item) == -1) if DEBUG;
+	assert(defined $item, "Item must be defined when adding to InventoryList") if DEBUG;
+	assert($item->isa('Actor::Item'), "Item must be of Actor::Item class") if DEBUG;
+	assert(defined $item->{name}, "Item must have a name when adding to InventoryList") if DEBUG;
+	assert($self->find($item) == -1, "Item must be unique in InvetoryList") if DEBUG;
 
 	my $binID = $self->SUPER::add($item);
 	$item->{binID} = $binID;
@@ -144,7 +145,7 @@ if (DEBUG) {
 # See also: $Actor->{ID}
 sub getByName {
 	my ($self, $name) = @_;
-	assert(defined $name) if DEBUG;
+	assert(defined $name, "This method requires a defined item name") if DEBUG;
 	my $indexSlot = $self->{nameIndex}{lc($name)};
 	if ($indexSlot) {
 		return $self->get($indexSlot->[0]);
@@ -215,7 +216,7 @@ sub getByCondition {
 # first.
 sub getByNameList {
 	my ($self, $lists) = @_;
-	assert(defined $lists) if DEBUG;
+	assert(defined $lists, "This method requires a defined list of item name") if DEBUG;
 	my @items = split / *, */, lc($lists);
 	foreach my $name (@items) {
 		next if (!$name);
@@ -243,7 +244,7 @@ sub getByNameList {
 # <pre>1-5,7,9</pre>
 sub getMultiple {
 	my ( $self, $lists ) = @_;
-	assert( defined $lists ) if DEBUG;
+	assert(defined $lists, "This method requires a defined search pattern") if DEBUG;
 	my @indexes = split / *,+ */, lc( $lists );
 	my @items;
 	foreach my $index ( @indexes ) {
@@ -269,9 +270,9 @@ sub getMultiple {
 # method.
 sub remove {
 	my ($self, $item) = @_;
-	assert(defined $item) if DEBUG;
-	assert(UNIVERSAL::isa($item, 'Actor::Item')) if DEBUG;
-	assert(defined $item->{name}) if DEBUG;
+	assert(defined $item, "This method requires a defined item as argument") if DEBUG;
+	assertClass($item, 'Actor::Item') if DEBUG;
+	assert(defined $item->{name}, "Item must have a defined name") if DEBUG;
 
 	my $result = $self->SUPER::remove($item);
 	if ($result) {
@@ -335,8 +336,8 @@ sub checkValidity {
 	my ($self) = @_;
 	$self->SUPER::checkValidity();
 
-	assert(defined $self->{nameIndex});
-	assert(scalar(keys %{$self->{nameIndex}}) <= $self->size());
+	assert(defined $self->{nameIndex}, "Name-Index hash is undefined");
+	assert(scalar(keys %{$self->{nameIndex}}) <= $self->size(), "InventoryList has invalid size");
 	foreach my $k (keys %{$self->{nameIndex}}) {
 		should(lc($self->getByName($k)->{name}), $k);
 		should(lc $k, $k);
@@ -345,12 +346,12 @@ sub checkValidity {
 	my $sum = 0;
 	my %binIDCount;
 	foreach my $v (values %{$self->{nameIndex}}) {
-		assert(defined $v);
-		assert(@{$v} > 0);
+		assert(defined $v, "Name-Index hash has undefined ID list");
+		assert(@{$v} > 0, "Name-Index hash has empty ID list");
 		foreach my $i (@{$v}) {
-			assert(defined $i);
-			assert(defined $self->get($i));
-			assert($self->get($i)->{binID} == $i);
+			assert(defined $i, "ID list in Name-Index hash has undefined ID as element");
+			assert(defined $self->get($i), "Failed to find an ID that is in this InventoryList");
+			assert($self->get($i)->{binID} == $i, "InventoryList has invalid binID in one of its elements");
 			$binIDCount{$i}++;
 			should($binIDCount{$i}, 1);
 		}
@@ -358,7 +359,7 @@ sub checkValidity {
 	}
 	should($sum, $self->size());
 
-	assert(defined $self->{nameChangeEvents});
+	assert(defined $self->{nameChangeEvents}, "Name-change event hash is undefined");
 	should(scalar(keys %{$self->{nameChangeEvents}}), $self->size());
 }
 
@@ -392,7 +393,7 @@ sub onNameChange {
 # total amount of the same name items
 sub sumByName {
 	my ($self, $name) = @_;
-	assert(defined $name) if DEBUG;
+	assert(defined $name, "This method requires a defined item name") if DEBUG;
 	my $sum = 0;
 	for my $item (@$self) {
 		if (lc($item->{name}) eq lc($name)) {
@@ -406,6 +407,12 @@ sub sumByName {
 # isReady is true if this InventoryList has actionable data. Eg, storage is open, or we have a cart, etc.
 sub isReady {
     1;
+}
+
+sub item_max_stack {
+	my ($self, $nameID) = @_;
+	
+	return 30000;
 }
 
 1;

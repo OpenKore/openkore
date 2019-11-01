@@ -14,6 +14,10 @@ te_aldecas4.rsw#Bennit#
 te_aldecas5.rsw#W#
 teg_dun02.rsw#Subterranean Dungeon of Guild#
 
+ti_high.rsw#Turn-in High level#
+ti_mid.rsw#Turn-in Medium level#
+ti_low.rsw#Turn-in Low level#
+ti_vip.rsw#Turn-in VIP#
 
 gefenia04.rsw#Geffenia #
 gefenia03.rsw#Geffenia #
@@ -871,3 +875,14 @@ c_tower3_.rsw#Twisted Clock Tower 3#
 
 // 리벨리온 전직맵
 job_gun.rsw#Shelter of Rebellion#
+
+//고성메모리얼던전
+gl_cas02_.rsw#Glast Heim 2F#
+gl_chyard_.rsw#Churchyard#
+2@gl_k.rsw#Old Glast Heim Chivalry 2F#
+1@gl_k.rsw#Old Glast Heim Chivalry 1F#
+
+//영웅의흔적
+1@face.rsw#Faceworm's Nest#
+1@sara.rsw#Sara's Memory#
+dali.rsw#Dimensional Gap#

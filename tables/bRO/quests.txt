@@ -711,8 +711,8 @@ Traga 60 Troncos #
 20 Caudas de Yoyo, 5 Minérios de Ferro e 3 Ervas Azuis #
 
 3019#Mudança de Classe: Monge#SG_FEEL#QUE_NOIMAGE#
-'Vou avaliar seu esforço e decidir se você está qualificado ou não. Você deve trazer ^3355FFCaules, Jellopies e Peles de Verme^000000.' #
-30 Caules, 5 Jellopies e 10 Peles de Verme #
+'Vou avaliar seu esforço e decidir se você está qualificado ou não. Você deve trazer ^3355FFCaules, Jellopys e Peles de Verme^000000.' #
+30 Caules, 5 Jellopys e 10 Peles de Verme #
 
 3020#Mudança de Classe: Monge#SG_FEEL#QUE_NOIMAGE#
 'Vou avaliar seu esforço e decidir se você está qualificado ou não. Você deve trazer ^3355FFCascas Rijas, Cascas e Zargônios^000000.' #
@@ -832,7 +832,7 @@ O Sr. Lockenlock diz que precisa de Sabão Chamelepu para fazer um molde da chav
 
 3065#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 O Sabão Chamelepu está esgotado no momento. Mas ela pode fabricar mais se você trouxer os ingredientes. #
-10 unidades de Leite, 100 Ervas Verdes, 50 Jellopies e 5 Garrafas Vazias #
+10 unidades de Leite, 100 Ervas Verdes, 50 Jellopys e 5 Garrafas Vazias #
 
 3066#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Leve os ingredientes ao Sr. Saraman, o dono da Fazenda de Camelos.  Ele lhe dirá o que fazer com eles. Vamos indo! #
@@ -856,23 +856,23 @@ A Camela de Veludo fugiu da fazenda e desapareceu. Vá encontrar a Camela de Vel
 
 3071#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 A Camela de Veludo finalmente apareceu. Vamos conseguir 5 blocos de estrume de camelo. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3072#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você conseguiu 1 bloco de estrume da Camela de Veludo. Você precisa de mais 4. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3073#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você conseguiu 2 blocos de estrume da Camela de Veludo. Você precisa de mais 3. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3074#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você conseguiu 3 blocos de estrume da Camela de Veludo. Você precisa de mais 2. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3075#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você conseguiu 4 blocos de estrume da Camela de Veludo. Você precisa de mais 1. Cada bloco de estrume deve consumir parte dos ingredientes. #
-2 unidades de Leite, 20 Ervas Verdes, 10 Jellopies e 1 Garrafa Vazia #
+2 unidades de Leite, 20 Ervas Verdes, 10 Jellopys e 1 Garrafa Vazia #
 
 3076#Irmãos em Veins#SG_FEEL#QUE_NOIMAGE#
 Você terminou de coletar os blocos de estrume de camelo. Volte ao Sr. Saraman e diga a ele onde está a Camela de Veludo. #
@@ -1337,7 +1337,7 @@ Taxa de 10.000 zenys, 5 Peles de Minhoca e 1 par de Botas #
 
 7003#Mudança de Classe: Odalisca#SG_FEEL#QUE_NOIMAGE#
 Certos materiais devem ser preparados antes da aula de dança.  Confirme a lista de materiais com Ale. #
-Taxa de 10.000 zenys, 2 Cascos de Ostra, 5 Poções Amarelas, 20 Jellopies, 10 Cabelos Morenos e 1 par de Sandálias #
+Taxa de 10.000 zenys, 2 Cascos de Ostra, 5 Poções Amarelas, 20 Jellopys, 10 Cabelos Morenos e 1 par de Sandálias #
 
 7004#Mudança de Classe: Odalisca#SG_FEEL#QUE_NOIMAGE#
 Prepare todos os materiais de que vai precisar. É hora da entrevista com Borwaju! Você precisa passar na entrevista! #
@@ -2448,8 +2448,8 @@ Volte a Hansenne com os documentos que achar #
  #
 
 8203#Rivalidade na Aliança#SG_FEEL#QUE_NOIMAGE#
-"Está ensopado... Por favor, me traga ^0000ff1 Leque Fantasma, 10 Panelas Velhas, 1 Pedra do Fogo, 1 Tinta de Polvo^000000."#
-Traga 1 Leque Fantasma, 10 Panelas Velhas, 1 Pedra do Fogo, 1 Tinta de Polvo #
+"Está ensopado... Por favor, me traga ^0000ff1 Leque Fantasma, 10 Frigideiras Velhas, 1 Pedra do Fogo, 1 Tinta de Polvo^000000."#
+Traga 1 Leque Fantasma, 10 Frigideiras Velhas, 1 Pedra do Fogo, 1 Tinta de Polvo #
 
 8204#Rivalidade na Aliança#SG_FEEL#QUE_NOIMAGE#
 "Entregue este arquivo antes que seja tarde."#
@@ -11622,36 +11622,36 @@ O tempo foi distorcido por Hugin! Qualquer coisa pode acontecer dentro deste cas
 Distorção Espacial#
 
 //13th anniversary
-291000#6 anos de bROWiki#SG_FEEL#QUE_NOIMAGE#
-Você capturou algumas fadas na esperança de que uma delas seja a Garota Mimada, mas infelizmente não era... Será necessário retornar amanhã para pegar mais Bolsas Mágicas com o <NAVI>[Felino]<INFO>prontera,196,263,0,000,0</INFO></NAVI>.#
+291000#Caçadoras de Fada#SG_FEEL#QUE_NOIMAGE#
+Você capturou algumas fadas, então chega por hoje!#
 Volte amanhã.#
 
-291001#6 anos de bROWiki (Dia 1)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+291001#Caçadoras de Fada (Dia 1)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu Bolsas Mágicas para capturar Fadas. Você pode encontra-las espalhadas mundo a fora#
 Capture 10 Fadas.#
 
-291002#6 anos de bROWiki (Dia 2)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+291002#Caçadoras de Fada (Dia 2)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu Bolsas Mágicas para capturar Fadas. Você pode encontra-las espalhadas mundo a fora#
 Capture 10 Fadas.#
 
-291003#6 anos de bROWiki (Dia 3)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+291003#Caçadoras de Fada (Dia 3)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu Bolsas Mágicas para capturar Fadas. Você pode encontra-las espalhadas mundo a fora#
 Capture 10 Fadas.#
 
-291004#6 anos de bROWiki (Dia 4)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+291004#Caçadoras de Fada (Dia 4)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu Bolsas Mágicas para capturar Fadas. Você pode encontra-las espalhadas mundo a fora#
 Capture 10 Fadas.#
 
-291005#6 anos de bROWiki (Dia 5)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+291005#Caçadoras de Fada (Dia 5)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu Bolsas Mágicas para capturar Fadas. Você pode encontra-las espalhadas mundo a fora#
 Capture 10 Fadas.#
 
-291006#6 anos de bROWiki (Dia 6)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+291006#Caçadoras de Fada (Dia 6)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu Bolsas Mágicas para capturar Fadas. Você pode encontra-las espalhadas mundo a fora#
 Capture 10 Fadas.#
 
-291007#6 anos de bROWiki (Dia 7)#SG_FEEL#QUE_NOIMAGE#
-Você recebeu 10 Bolsas Mágicas para capturar 10 Fadas. Você pode encontrar as fadas espalhadas nos campos e cavernas mundo a fora. Se você não tiver Bolsas Mágicas, volte para o Felino e compre quantas for necessário.#
+291007#Caçadoras de Fada (Dia 7)#SG_FEEL#QUE_NOIMAGE#
+Você recebeu Bolsas Mágicas para capturar Fadas. Você pode encontra-las espalhadas mundo a fora#
 Capture 10 Fadas.#
 
 7775#Mudança de Classe: Bioquímicos#SG_FEEL#QUE_NOIMAGE#
@@ -12409,3 +12409,2127 @@ Volte após 3 horas.#
 2421#Votação#SG_FEEL#QUE_NOIMAGE#
 Em um ato de cidadania, você votou! Aguarde os resultados e boa sorte!#
 Voto comfirmado.#
+
+//advanced glast heim
+12334#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+Aventurar-se no tempo pode provocar náuseas se você não aguardar um tempo entre uma viagem e outra.#
+Retorne após 70 horas.#
+
+12335#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+O tempo e espaço foi distorcido por Hugin! Agora você poderá conferir o que se passa no castelo de Glast Heim!#
+Entre na instância Glast Heim Sombria.#
+
+12336#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+No primeiro andar do Castelo de Glast Heim, Himmelmez iniciou o seu ritual de destruição.#
+Elimine a Origem da Escuridão.#
+
+12337#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+Himmelmez está quase conquistando o seu objetivo!#
+Elimine o Amdarais Sombrio.#
+
+12338#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+A viagem temporal para a Glast Heim Sombria foi parcialmente concluída.#
+Reporte o caso a Hugin.#
+
+12339#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
+A viagem temporal para Glast Heim Sombria foi totalmente concluída.#
+Reporte o caso a Hugin.#
+
+//St. Patrick's day
+63040#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+Você conheceu o primeiro Dono da Taverna de Prontera.#
+Traga 10 Avelã, 5 Sacola de Grãos e 1 Garrafa Vazia.#
+
+63041#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+Você conheceu a segunda Dona da Taverna de Prontera.#
+Traga 10 Trevo, 5 Tronco Estéril, 5 Sacola de Grãos e 1 Garrafa Vazia.#
+
+63042#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+Você conheceu o Dono da Taverna de Geffen.#
+Traga 10 Tentáculos, 5 Sorvete, 5 Sacola de Grãos e 1 Garrafa Vazia.#
+
+63043#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+Você conheceu o Dono da Taverna de Al De Baran.#
+Traga 15 Muco Pegajoso, 10 Maçã, 5 Laranja, 5 Sacola de Grãos e 1 Garrafa Vazia.#
+
+63044#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+Você recebeu o prêmio do Festival do Bucho Chei.#
+#
+
+63045#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+O primeiro Dono da Taverna de Prontera não aceitará mais suprimentos por ora.#
+Volte daqui a 30 minutos.#
+
+63046#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+A segunda Dona da Taverna de Prontera não aceitará mais suprimentos por ora.#
+Volte daqui a 30 minutos.#
+
+63047#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+O Dono da Taverna de Geffen não aceitará mais suprimentos por ora.#
+Volte daqui a 30 minutos.#
+
+63048#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+O Dono da Taverna de Al De Baran não aceitará mais suprimentos por ora.#
+Volte daqui a 30 minutos.#
+
+63049#Festival do Bucho Chei#SG_FEEL#QUE_NOIMAGE#
+Participe do Festival do Bucho Chei!.#
+#
+
+//iRO Event - 2018
+60406#Orc Archer Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Orc Archers and return to Derk Novitze at the Eastern warp of Geffen field 14. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60407#Orc Archer Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Orc Archers and return to Derk Novitze at the Eastern warp of Geffen field 14. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60408#High Orc Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 High Orcs and return to Jason Childs at the Eastern warp of Geffen field 14. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60409#High Orc Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 High Orcs and return to Jason Childs at the Eastern warp of Geffen field 14. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60410#Isilla Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Isilla and return to Fitz at the 1st floor of the Rachel Sanctuary Holy Ground. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60411#Isilla Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Isilla and return to Ulrich at the 1st floor of the Rachel Sanctuary Holy Ground. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60412#Vanberk Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Vanberk and return to Ulrich at the 1st floor of the Rachel Sanctuary Holy Ground. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60413#Vanberk Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Vanberk and return to Ulrich at the 1st floor of the Rachel Sanctuary Holy Ground. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60414#Hodremlin Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Hodremlin and return to Stein at the 3rd floor of the Rachel Sanctuary Holy Ground. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60415#Hodremlin Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Hodremlin and return to Stein at the 3rd floor of the Rachel Sanctuary Holy Ground. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60416#Agav Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Agav and return to Robert at the 5th floor of the Rachel Sanctuary Holy Ground. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60417#Agav Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Agav and return to Robert at the 5th floor of the Rachel Sanctuary Holy Ground. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60427#Ground Deleter Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Ground Deleters and return to the Deleter Hunter at the 2nd floor of the Nogg Road. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60428#Ground Deleter Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Ground Deleters and return to the Deleter Hunter at the 2nd floor of the Nogg Road. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60429#Nightmare Terror Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Nightmare Terrors and return to the Nightmare Terror Hunter at the 2nd floor of the Nogg Road. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60430#Nightmare Terror Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Nightmare Terrors and return to the Nightmare Terror Hunter at the 2nd floor of the Nogg Road. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60431#Laurell Weinder Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Laurell Weinder and return to the Mage Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60432#Laurell Weinder Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Laurell Weinder and return to the Mage Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60433#Armeyer Dinze Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Armeyer Dinze and return to the Merchant Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60434#Armeyer Dinze Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Armeyer Dinze and return to the Merchant Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60435#Egnigem Cenia Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Egnigem Cenia and return to the Swordman Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60436#Egnigem Cenia Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Egnigem Cenia and return to the Swordman Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60437#Errende Ebecee Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Errende Ebecee and return to the Acolyte Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60438#Errende Ebecee Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Errende Ebecee and return to the Acolyte Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60439#Kavach Icarus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Kavach Icarus and return to the Archer Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60440#Kavach Icarus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Kavach Icarus and return to the Archer Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60441#Wickebine Tres Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 100 Wickebine Tres and return to the Thief Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60442#Wickebine Tres Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Wickebine Tres and return to the Thief Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60442#Wickebine Tres Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Wickebine Tres and return to the Thief Hunter at the 2nd floor of the Somatology Laboratory. If you have a +7 Yggdrasil Crown you have a choice of breaking up the EXP reward.#
+#
+
+60443#Alarm Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Alarm monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Alarm monsters.#
+
+60444#Contador de Tempo 1#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60445#Desert Wolf Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Desert Wolf monsters at Rachel Field 1. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60446#Ragged Zombie Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Ragged Zombie monsters at Nameless Island. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60447#Cecil Damon Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Cecil Damon monsters at the third level of the Somatology Laboratory. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60448#Contador de Tempo 2#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60449#Contador de Tempo 3#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60450#Contador de Tempo 4#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60451#Enchanted Peach Tree Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Enchanted Peach Tree monsters at Kunlun Dungeon. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60452#Zipper Bear Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Zipper Bear monsters at Kunlun Dungeon. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60453#Caça à Succubus#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Succubus. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60454#Incubus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Incubus monsters at Geffenia. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60455#Uni-Horn Scaraba Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Uni-Horn Scaraba monsters at Kamidal Mountain. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60456#Horn Scaraba Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Horn Scaraba monsters at Kamidal Mountain. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60457#Junte-se ao Grupo Éden!#SG_FEEL#QUE_EDEN_NPC#
+Você recebeu a tarefa de conversar com qualquer um dos Oficiais do Grupo Éden na cidade e se aventurar no Grupo Éden. Encontre a Secretária Lenore no balcão e junte-se ao Grupo Éden!#
+Converse com a Secretária Lenore para se tornar um membro do Grupo Éden#
+
+60459#Gazeti Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Gazeti monsters at Ice Dungeon. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60460#Ice Titan Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Ice Titan monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Ice Titan monsters.#
+
+60461#Skogul Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Skogul monsters at Odin Temple. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60462#Frus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Frus monsters at Odin Temple. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60463#Antler Scaraba Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Antler Scaraba monsters at Scaraba Hall. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60464#Rake Scaraba Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Rake Scaraba monsters at Scaraba Hall. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60465#Poison Toad Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Poison Toad monsters at Amatsu Dungeon. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60466#Firelock Soldier Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Firelock Soldier monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Firelock Soldier monsters#
+
+60467#Dullahan Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Dullahan monsters at Nifflheim. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60468#Loli Ruri Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Loli Ruri monsters at Nifflheim. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60469#Gold Acidus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Gold Acidus monsters at Abyss. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60470#Blue Acidus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt 400 Blue Acidus monsters at Abyss. Return to Gramps at the Eden Group to get your reward.#
+#
+
+60471#Yoyo and Choco Ape Hunt#SG_FEEL#QUE_NOIMAGE#
+George Taylor's 'Ingredient X' was stolen by a group of apes... so you've agreed to help him serve a dish best served cold to those damn dirty apes.#
+Hunt 400 Yoyo and 4 Choco ape monsters around Prontera Field 3 just east of Prontera.#
+
+60472#Wootan Fighter Ape Hunt#SG_FEEL#QUE_NOIMAGE#
+George Taylor's 'Ingredient X' was stolen by a group of apes... so you've agreed to help him serve a dish best served cold to those damn dirty apes.#
+Hunt 400 Wootan Fighter ape monsters around Umbala Field 2 & 3.#
+
+60473#Wootan Shooter Ape Hunt#SG_FEEL#QUE_NOIMAGE#
+George Taylor's 'Ingredient X' was stolen by a group of apes... so you've agreed to help him serve a dish best served cold to those damn dirty apes.#
+Hunt 400 Wootan Fighter ape monsters around Umbala Field 2 & 3.#
+
+60474#Contador de Tempo#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60476#Mineral Hunt Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the monsters at Einbroch Dungeon 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Mineral monsters.#
+
+60477#Obsidian Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the monsters at Einbroch Dungeon 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Obsidian monsters.#
+
+60478#Ferus Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the monsters at Abyss Dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Ferus monsters.#
+
+60479#Bewler Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the monsters at Abyss Dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Bewler monsters.#
+
+60480#Laurell Weinder Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the monsters at the Somatology Laboratory and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Laurell Weinder monsters.#
+
+60481#Armeyer Dinze Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the monsters at the Somatology Laboratory and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Armeyer Dinze monsters.#
+
+60482#Caça a Egnigem Cenia#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Egnigem Cenias. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60483#Errende Ebecee Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the monsters at the Somatology Laboratory and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Errende Ebecee monsters.#
+
+60484#Kavach Icarus Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the monsters at the Somatology Laboratory and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Kavach Icarus monsters.#
+
+60485#Wickebine Tres Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the monsters at the Somatology Laboratory and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Wickebine Tres monsters.#
+
+60486#Contador de Tempo 5#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60487#Contador de Tempo 6#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60488#Solider Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the Solider monsters at the Turtle Dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Solider monsters.#
+
+60489#Permeter Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the Permeter monsters at the Turtle Dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Permeter monsters.#
+
+60490#Caça ao Aliot#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Aliots. Após isso, converse com Mateus Além para resgatar sua recompensa#
+#
+
+60491#Aliza Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the Aliza monsters at the Robot Factory 1 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Aliza monsters.#
+
+60492#Centipede Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the Centipede monsters at Dicastes Field 1 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Centipede monsters.#
+
+60493#Bradium Golem Hunt#SG_FEEL#QUE_NOIMAGE#
+Hunt the Bradium Golem monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Bradium Golem monsters.#
+
+60494#Contador de Tempo 1#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60495#Contador de Tempo 2#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60501#Raydric Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Raydric monsters at Glast Heim Chivalry and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Raydric monsters.#
+
+60502#Wanderer Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Wanderer monsters at Glast Heim Floor 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Wanderer monsters.#
+
+60503#Muscipular Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Muscipular monsters at Veins Field 4 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Muscipular monsters.#
+
+60504#Drosera Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Drosera monsters at Veins Field 4 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Drosera monsters.#
+
+60505#Ancient Tree Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Ancient Tree monsters at the special Nydhoggur dungeon and return to Gramps at the Eden Group to get your reward. Talk to Gramps and ask for a warp to the special dungeon.#
+Hunt 400 Ancient Tree monsters.#
+
+60506#Phylla Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Phylla monsters at the special Nydhoggur dungeon and return to Gramps at the Eden Group to get your reward. Talk to Gramps and ask for a warp to the special dungeon.#
+Hunt 400 Phylla monsters.#
+
+60507#Teddy Bear Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Teddy Bear monsters at Einbroch Mine dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Teddy Bear monsters.#
+
+60508#Waste Stove Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Waste Stove monsters at Einbroch Mine dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Waste Stove monsters.#
+
+60509#Green Dimik Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Green Dimik monsters at the Center of Juperos and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Green Dimik monsters.#
+
+60510#Blue Dimik Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Blue Dimik monsters at the Center of Juperos and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Blue Dimik monsters.#
+
+60511#Orange Dimik Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Orange Dimik monsters at the Center of Juperos and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Orange Dimik monsters.#
+
+60512#Red Dimik Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Red Dimik monsters at the Center of Juperos and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Red Dimik monsters.#
+
+60513#Knocker Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Knocker monsters at Thor Volcano Dungeon 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Knocker monsters.#
+
+60514#Imp Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Imp monsters at Thor Volcano Dungeon 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Imp monsters.#
+
+60515#Anopheles Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Anopheles monsters at Rachel Field 12 which is just east of Rachel and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Anopheles monsters.#
+
+60516#Roween Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Roween monsters at Rachel Field 12 which is just east of Rachel and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Roween monsters.#
+
+60517#Agav Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Agav monsters at Rachel Sanctuary 4 or 5 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Agav monsters.#
+
+60518#Echio Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Echio monsters at Rachel Sanctuary 4 or 5 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Echio monsters.#
+
+60519#Cecil Damon Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Cecil Damon monsters at Somatology Laboratory 3 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Cecil Damon monsters.#
+
+60520#Eremes Guile Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Eremes Guile monsters at Somatology Laboratory 3 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Eremes Guile monsters.#
+
+60521#Caça a Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Margarethas Sorin. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60522#Seyren-Windsor Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Seyren-Windsor monsters at Somatology Laboratory 3 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Seyren-Windsor monsters.#
+
+60523#Caça à Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Kathryne Keyron. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60524#Howard Alt-Eisen Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Howard Alt-Eisen monsters at Somatology Laboratory 3 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Howard Alt-Eisen monsters.#
+
+60525#Metaling Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Metaling monsters at Einbroch Field 8 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Metaling monsters.#
+
+60526#Porcellio Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Porcellio monsters at Einbroch Field 8 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Porcellio monsters.#
+
+60527#Purple Venatu Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Purple Venatu monsters at the Ruins of Juperos and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Purple Venatu monsters.#
+
+60528#Green Venatu Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Green Venatu monsters at the Ruins of Juperos and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Green Venatu monsters.#
+
+60529#Orange Venatu Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Orange Venatu monsters at the Ruins of Juperos and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Orange Venatu monsters.#
+
+60530#Blue Venatu Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Blue Venatu monsters at the Ruins of Juperos and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Blue Venatu monsters.#
+
+60531#Banshee Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Banshee monsters at the Cursed Monastery and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Banshee monsters.#
+
+60532#Necromancer Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Necromancer monsters at the Cursed Monastery and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Necromancer monsters.#
+
+60533#Contador de Tempo 3#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60534#Contador de Tempo 4#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60535#Gargoyle Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Gargoyle monsters at the Glast Heim Culverts and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Gargoyle monsters.#
+
+60536#Arclouse Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Arclouse monsters at the Glast Heim Culverts and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Arclouse monsters.#
+
+60537#Stem Worm Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Stem Worm monsters at Lighthalzen Field 1 and 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Stem Worm monsters.#
+
+60538#Rafflesia Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Rafflesia monsters at Lighthalzen Field 1 and 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Rafflesia monsters.#
+
+60539#Ancient Mimic Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Ancient Mimic monsters at Thanatos Tower 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Ancient Mimic monsters.#
+
+60540#Death Word Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Death Word monsters at Thanatos Tower 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Death Word monsters.#
+
+60541#Tatacho Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Tatacho monsters at Kamidal Mountain and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Tatacho monsters.#
+
+60542#Dolomedes Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Dolomedes monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Dolomedes monsters.#
+
+60543#Axe Kobold Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Axe Kobold monsters at Rachel Field 5 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Axe Kobold monsters.#
+
+60544#Hammer Kobold Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Hammer Kobold monsters at Rachel Field 5 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Hammer Kobold monsters.#
+
+60545#Mace Kobold Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Mace Kobold monsters at Rachel Field 5 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Mace Kobold monsters.#
+
+60546#Kasa Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Kasa monsters at Thor Volcano Dungeon Level 3 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Kasa monsters.#
+
+60547#Salamander Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Salamander monsters at Thor Volcano Dungeon Level 3 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Salamander monsters.#
+
+60548#Upgrade Event timer#SG_FEEL#QUE_NOIMAGE#
+You must wait 23 hours before re-attempting to use the Spooky Machine.#
+#
+
+60549#Caça a Marionette#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Marionettes. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60550#Deviruchi Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Deviruchi monsters at Geffen Dungeon Level 2 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Deviruchi monsters.#
+
+60551#Arclouse Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Arclouse monsters at Morocc Pyramid Level 6 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Arclouse monsters.#
+
+60552#Ancient Mummy Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Ancient Mummy monsters at Morocc Pyramid Level 6 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Ancient Mummy monsters.#
+
+60553#Flying Deleter Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Flying Deleter monsters at Nogg Road and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Flying Deleter monsters.#
+
+60554#Ground Deleter Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Ground Deleter monsters at Nogg Road and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Ground Deleter monsters.#
+
+60555#Caça ao Hodremlin#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Hodremlins. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60556#Seeker Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Seeker monsters at Rachel Sanctuary 3 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Seeker monsters.#
+
+60557#Skel Prisoner Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Skel Prisoner monsters at Glast Heim Underprison and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Skel Prisoner monsters.#
+
+60558#Injustice Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Injustice monsters at Glast Heim Underprison and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Injustice monsters.#
+
+60559#Dark Pinguicula Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Dark Pinguicula monsters at Splendide Field 1 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Dark Pinguicula monsters.#
+
+60560#Naga Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Naga monsters at Splendide Field 1 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Naga monsters.#
+
+60561#Caça ao Lude#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Ludes. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60562#Heirozoist Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Heirozoist monsters at Niffelheim Field 1 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Heirozoist monsters.#
+
+60563#Drocera Herb Stew Ingredients#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Droseras around Veins Field 2 and the Eden Group Chef will give you 6 Drocera Tentacles that can be used to make Drocera Herb Stew.#
+#
+
+60564#Siroma Icetea Ingredients#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Gazeti around Ice Dungeon 3 and the Eden Group Chef will give you 6 Ice Pieces that can be used to make Siroma Icetea.#
+#
+
+60565#Magmaring Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Magmaring monsters at Veins Field 3 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Magmaring monsters.#
+
+60566#Warg Blood Cocktail Ingredients#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Ice Titans around Ice Dungeon 3 and the Eden Group Chef will give you 10 Cold Ice that can be used to make Warg Blood Cocktail.#
+#
+
+60567#Petite Tail Noodle Ingredients#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Ground Petites around Geffen field 6 and the Eden Group Chef will give you 8 Petite's Tail that can be used to make Petite Tail Noodle.#
+#
+
+60568#Savage BBQ Ingredients#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Savages around Mjolnir field 7 and the Eden Group Chef will give you 4 Savage Meat that can be used to make Savage BBQ.#
+#
+
+60569#Minor Brisket Ingredients#SG_FEEL#QUE_NOIMAGE#
+Hunt 200 Minorous at Sphinx level 4 and the Eden Group Chef will give you 4 Beef Head that can be used to make Minor Brisket.#
+#
+
+60570#Hill Wind Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Hill Wind monsters at Rachel Field 4 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Hill Wind monsters.#
+
+60571#Pest Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Pest monsters at Comodo's West Dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Pest monsters.#
+
+60572#Medusa Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Medusa monsters at Comodo's West Dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Medusa monsters.#
+
+60573#Hillslion Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Hillslion monsters at Manuk Field 3 and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Hillslion monsters.#
+
+60574#Reset Stone Hunting Timer#SG_FEEL#QUE_NOIMAGE#
+You must wait for the timer to expire before you can use another Reset Stone for the Gramps hunting quests#
+#
+
+60575#Kobold Archer Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Kobold Archer monsters at Rachel Field 6, just north of Lighthalzen, and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Kobold Archer monsters.#
+
+60576#Violy Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Violy monsters at Geffenia and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Violy monsters.#
+
+60577#Contador de Tempo#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60578#Contador de Tempo#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60579#Red Novus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Red Novus monsters at Hugel Field and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Red Novus monsters.#
+
+60580#Archdam Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Archdam monsters at the Center of Juperos and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Archdam monsters.#
+
+60581#Nepenthes Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Nepenthes monsters at Manuk Field and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Nepenthes monsters.#
+
+60582#Angra Mantis Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Angra Mantis monsters at Bifrost and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Angra Mantis monsters.#
+
+60583#Pom Spider Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Pom Spider monsters at Bifrost and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Pom Spider monsters.#
+
+60584#Yellow Novus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Yellow Novus monsters at Hugel and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Yellow Novus monsters.#
+
+60585#Cornus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Cornus monsters at Splendide Field and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Cornus monsters.#
+
+60586#Miming Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Miming monsters at Bifrost and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Miming monsters.#
+
+60587#Little Fatum Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Little Fatum monsters at Bifrost and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Little Fatum monsters.#
+
+60588#Heater Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Heater monsters at Turtle Dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Heater monsters.#
+
+60589#Assaulter Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Assaulter monsters at Turtle Dungeon and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Assaulter monsters.#
+
+60590#Blazzer Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Blazzer monsters at Nogg Road and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Blazzer monsters.#
+
+60591#Lava Golem Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Lava Golem monsters at Nogg Road and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Lava Golem monsters.#
+
+60592#Owl Baron Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Owl Baron monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Owl Baron monsters.#
+
+60593#Vanberk Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Vanberk monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Vanberk monsters.#
+
+60594#Isilla Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Isilla monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Isilla monsters.#
+
+60595#Ragged Zombie Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Ragged Zombie monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Ragged Zombie monsters.#
+
+60596#Zombie Slaughter Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Zombie Slaughter monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Zombie Slaughter monsters.#
+
+60597#Cecil and Eremes Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Cecil and Eremes monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Cecil and Eremes monsters.#
+
+60598#Kathryne and Seyren Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Kathryne and Seyren monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Kathryne and Seyren monsters.#
+
+60599#Margaretha and Howard Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Margaretha and Howard monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Margaretha and Howard monsters.#
+
+60600#Contador de Tempo 7#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60601#Uzhas Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Uzhas monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Uzhas monsters.#
+
+60602#Bathory Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Bathory monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Bathory monsters.#
+
+60603#Nightmare Terror Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Nightmare Terror monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Nightmare Terror monsters.#
+
+60604#Anolian Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Anolian monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Anolian monsters.#
+
+60605#Lady Solace Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Lady Solace monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Lady Solace monsters.#
+
+60606#Contador de Tempo 5#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60607#Contador de Tempo 6#SG_FEEL#QUE_NOIMAGE#
+Aguarde o contador zerar antes de iniciar outra missão.#
+#
+
+60608#Rybio Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Rybio monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Rybio monsters.#
+
+60609#Alicel Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Alicel monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Alicel monsters.#
+
+60610#Ground Petite Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Ground Petite monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Ground Petite monsters.#
+
+60611#Mavka Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Mavka monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Mavka monsters.#
+
+60612#Pinguicula Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Pinguicula monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Pinguicula monsters.#
+
+60614#Snowier Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Snowier monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Snowier monsters.#
+
+60810#Membro VIP#SG_FEEL#QUE_NOIMAGE#
+Mateus Além o reconhece como um Membro VIP#
+Mateus Além o reconhece como um Membro VIP#
+
+60815#Removal Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Removal monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Removal monsters.#
+
+60816#Khalitzburg Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Khalitzburg monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Khalitzburg monsters.#
+
+60817#Bloody Butterfly Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Bloody Butterfly monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Bloody Butterfly monsters.#
+
+60818#Hell Poodle Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Hell Poodle monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Hell Poodle monsters.#
+
+60819#Contador de Tempo de Buff Diário#SG_FEEL#QUE_NOIMAGE#
+Aguarde o intervalo de 16 horas para receber um novo buff aleatório.#
+#
+
+60820#High Orc Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the High Orc monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 High Orc monsters.#
+
+60821#Freezer Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Freezer monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Freezer monsters.#
+
+60822#Draco Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Draco monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Draco monsters.#
+
+60823#Incarnation of Morroc Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Incarnation of Morroc monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Incarnation of Morroc monsters.#
+
+60824#Holden Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Holden monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Holden monsters.#
+
+60825#Elder Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Elder monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Elder monsters.#
+
+60826#Parus Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Parus monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Parus monsters.#
+
+60827#Siroma Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Siroma monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Siroma monsters.#
+
+60828#Zombie Prisoner Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Zombie Prisoner monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Zombie Prisoner monsters.#
+
+60829#Incarnation of Morroc Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Incarnation of Morroc monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Incarnation of Morroc monsters.#
+
+60830#Evil Druid Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Evil Druid monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Evil Druid monsters.#
+
+60831#Abysmal Knight Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Abysmal Knight monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Abysmal Knight monsters.#
+
+60832#Shinobi Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Shinobi monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Shinobi monsters.#
+
+60833#Harpy Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Harpy monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Harpy monsters.#
+
+60834#Kapha Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Kapha monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Kapha monsters.#
+
+60835#Flame Skull Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Flame Skull monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Flame Skull monsters.#
+
+60836#Aunoe Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Aunoe monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Aunoe monsters.#
+
+60837#Fanat Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Fanat monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Fanat monsters.#
+
+60838#The Paper Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the The Paper monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 The Paper monsters.#
+
+60839#Tengu Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Tengu monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Tengu monsters.#
+
+60840#Caça a Mula Sem Cabeça#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Mulas Sem Cabeça. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60841#Dark Priest Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Dark Priest monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Dark Priest monsters.#
+
+60842#Anubis Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Anubis monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Anubis monsters.#
+
+60843#Yao Jun Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Yao Jun monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Yao Jun monsters.#
+
+60844#Mao Guai Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Mao Guai monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Mao Guai monsters.#
+
+60845#Gajomart Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Gajomart monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Gajomart monsters.#
+
+60846#Cendrawasih Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Cendrawasih monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Cendrawasih monsters.#
+
+60847#Engkanto Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Engkanto monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Engkanto monsters.#
+
+60848#Wraith Dead Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Wraith Dead monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Wraith Dead monsters.#
+
+60849#Centipede Larva Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Centipede Larva monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Centipede Larva monsters.#
+
+60850#Noxious Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Noxious monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Noxious monsters.#
+
+60851#Caça ao Pasana#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Pasanas. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60852#Cramp Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Cramp monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Cramp monsters.#
+
+60853#Wakwak Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Wakwak monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Wakwak monsters.#
+
+60854#Tikbalang Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Tikbalang monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Tikbalang monsters.#
+
+60855#Caça ao Rochoso#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Rochosos. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60856#Cenere Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Cenere monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Cenere monsters.#
+
+60857#Caça ao Antigo Livro Danificado#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Antigos Livros Danificados. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
+
+60858#Punk Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Punk monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Punk monsters.#
+
+60859#Menblatt Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Menblatt monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Menblatt monsters.#
+
+60860#Green Lichtern Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Green Lichtern monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Green Lichtern monsters.#
+
+60862#Engkanto Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Engkanto monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Engkanto monsters.#
+
+60861#Bungisngis Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Bungisngis monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Bungisngis monsters.#
+
+60863#Petal Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Petal monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Petal monsters.#
+
+60864#Breeze Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Breeze monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Breeze monsters.#
+
+60865#Neraid Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Neraid monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Neraid monsters.#
+
+60866#Sedora Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Sedora monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Sedora monsters.#
+
+60867#Ancient Worm Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Ancient Worm monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Ancient Worm monsters.#
+
+
+60868#Red Lichtern Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Red Lichtern monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Red Lichtern monsters.#
+
+60869#Blue Lichtern Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunt the Blue Lichtern monsters and return to Gramps at the Eden Group to get your reward.#
+Hunt 400 Blue Lichtern monsters.#
+
+
+60921#Caso Sem Solução?#SG_FEEL#QUE_NOIMAGE#
+O Agente Peralta disse que algumas pessoas estão tentando investigar um crime no Museu de Brasilis.#
+Museu de Brasilis (localizado ao sudoeste de Brasilis)#
+
+60922#Doggo Douglas E Seus Amigos#SG_FEEL#QUE_NOIMAGE#
+Os caçadores de mistérios disseram que esse é o caso mais difícil que já encontraram.#
+Converse mais com Vilma#
+
+60923#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+A Sra. Fortunato não saiu do seu quarto desde que o assassinato aconteceu. Encontre-a no Hotel de Brasilis.#
+Vá até o Hotel de Brasilis ao sudeste de Brasilis.#
+
+60924#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+A Sra. Fortunato disse que você precisa conversar com o Curador-chefe do Museu.#
+Encontre o Curador-chefe no primeiro andar do Museu de Brasilis.#
+
+60925#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+O Curador-chefe disse que o guarda está sendo interrogado.#
+Converse com o guarda Cardoso Duvidoso.#
+
+60926#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Cardoso Duvidoso disse que o Sr. Fortunato teve seu Medalhão roubado - e ele sempre o usava no pescoço.#
+Volte ao museu e conte a todos sobre sua descoberta.#
+
+60927#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você disse aos demais que Cardoso Duvidoso foi quem assassinou o Sr. Fortunato.#
+Converse com Cardoso e acuse-o do crime!#
+
+60928#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você decidiu continuar procurando por mais pistas antes de fazer qualquer acusação. Talvez a Sra. Fortunato saiba de mais alguma coisa sobre o assassinato.#
+#
+
+60929#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Cardoso Duvidoso acusou Fred de ter cometido o assassinato.#
+#
+
+60930#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você flagrou a Sra. Fortunato guardando alguma coisa em seu bolso...#
+Converse com a Sra. Fortunato.#
+
+60931#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+A Sra. Fortunato está claramente incomodada com algo. Doggo Douglas e seus amigos podem ter encontrado mais pistas enquanto você estava ocupado.#
+Converse com Doggo Douglas e seus amigos.#
+
+60932#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Parece que o grupo encontrou uma passagem secreta que não pode ser acessada com facilidade. Melhor pedir ajuda para alguém que conheça bem o museu.#
+#
+
+60933#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+O Curador-chefe disse que há uma casa próxima à mansão que pertencia aos antigos donos do museu.#
+Encontre a casa e arrombe a porta.#
+
+60934#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você conseguiu entrar na mansão. Investigue-a e encontre a passagem secreta para o museu.#
+#
+
+60935#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você está convencido de que o culpado é o Curador-chefe. Hora de confrontá-lo.#
+#
+
+60936#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você decide investigar mais só para ter certeza das suas suspeitas. Talvez valha a pena consultar a Sra. Fortunato mais uma vez?#
+#
+
+60937#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Com a ajuda da Sra. Fortunato, não há mais nenhuma dúvida de que o Curador-chefe é o assassino. Agora, tudo que você tem que fazer é mostrar as provas para os investigadores.#
+#
+
+60938#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+O Curador-chefe disse que você não tem evidências o suficiente para incriminá-lo. Informe a Sra. Fortunato sobre o ocorrido.#
+#
+
+60939#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Cabe a você confrontar o Curador-chefe.#
+#
+
+60940#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Mostre a evidência da 'Mensagem' to the Head Curator.#
+#
+
+60941#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+O Curador-chefe saiu correndo pela saída pelo sul! Não o deixe fugir!#
+#
+
+60942#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+O Curador-chefe correu para a selva. Procure por ele nos Campos de Brasilis, ele não deve ter ido longe.#
+#
+
+60943#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Agora que você finalmente capturou o Curador-chefe, diga aos investigadores que o criminoso foi encontrado.#
+#
+
+60944#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Aparentemente, a Sra. Fortunato tem uma recompensa para quem encontrasse o assassino. Converse com ela.#
+#
+
+60945#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+A Sra. Fortunato pediu para que você procurasse pelos restos do Medalhão do Sr. Fortunato. Vá aos Esgotos de Brasilis em busca dos pedaços do Medalhão.#
+#
+
+60946#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você encontrou um fragmento do Medalhão sob a terra molhada. Leve-o de volta para a Sra. Fortunato.#
+#
+
+60947#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Espere por 12 horas até ajudar a Sra. Fortunato novamente com os fragmentos do Amuleto.#
+#
+
+60948#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+A Sra. Fortunato pediu para que você procurasse pelos restos do Medalhão do Sr. Fortunato. Vá aos Esgotos de Brasilis em busca dos pedaços do Medalhão.#
+#
+
+60949#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você encontrou um fragmento do Medalhão sob a terra molhada. Leve-o de volta para a Sra. Fortunato.#
+#
+
+60950#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Espere por 12 horas até ajudar a Sra. Fortunato novamente com os fragmentos do Amuleto.#
+#
+
+60951#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+A Sra. Fortunato pediu para que você procurasse pelos restos do Medalhão do Sr. Fortunato. Vá aos Esgotos de Brasilis em busca dos pedaços do Medalhão.#
+#
+
+60952#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você encontrou um fragmento do Medalhão sob a terra molhada. Leve-o de volta para a Sra. Fortunato.#
+#
+
+60953#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Espere por 12 horas até ajudar a Sra. Fortunato novamente com os fragmentos do Amuleto.#
+#
+
+60954#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+A Sra. Fortunato pediu para que você procurasse pelos restos do Medalhão do Sr. Fortunato. Vá aos Esgotos de Brasilis em busca dos pedaços do Medalhão.#
+#
+
+60955#O Mistério do Assassinato no Museu#SG_FEEL#QUE_NOIMAGE#
+Você encontrou um fragmento do Medalhão sob a terra molhada. Leve-o de volta para a Sra. Fortunato.#
+#
+
+70250#Intervalo da Rifa#SG_FEEL#QUE_NOIMAGE#
+Espere pelo intervalo até comprar outro ticket da Rifa.#
+#
+
+62626#Evento de Pesca - Campos de Prontera#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62627#Evento de Pesca - Campos de Prontera#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62628#Evento de Pesca - Campos de Prontera#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62629#Evento de Pesca - Ilha Byalan#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62630#Evento de Pesca - Ilha Byalan#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62631#Evento de Pesca - Ilha Byalan#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62632#Evento de Pesca - Alberta#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62633#Evento de Pesca - Alberta#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62634#Evento de Pesca - Alberta#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62635#Evento de Pesca - Ayotaya#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62636#Evento de Pesca - Ayotaya#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62637#Evento de Pesca - Ayotaya#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62638#Evento de Pesca - Comodo#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62639#Evento de Pesca - Comodo#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62640#Evento de Pesca - Comodo#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62641#Evento de Pesca - Izlude#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62642#Evento de Pesca - Izlude#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62643#Evento de Pesca - Izlude#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62651#Evento de Pesca - Hugel#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62652#Evento de Pesca - Hugel#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62653#Evento de Pesca - Hugel#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62654#Evento de Pesca - Nifflheim#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62655#Evento de Pesca - Nifflheim#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62656#Evento de Pesca - Nifflheim#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62657#Evento de Pesca - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62658#Evento de Pesca - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+62659#Evento de Pesca - Glast Heim#SG_FEEL#QUE_NOIMAGE#
+Há um intervalo de 30 minutos para cada ponto de pesca. Você poderá usá-lo novamente em breve!#
+Retorne daqui a pouco!#
+
+
+// Last updated on April 15, 2015 (10:14 April 14, 2014 This Server
+//-- No. 1 shouldn't be deleted
+1#Blackmail#SG_FEEL#QUE_NOIMAGE#
+Turtle#
+Carapace#
+
+// Episode 16.1 The Richard
+5402#The Royal Richard#SG_FEEL#QUE_NOIMAGE#
+You have made an appointment to meet Po, the head of the Richard family. Go to see Po, the head of the Richard family.#
+#
+
+5403#The Royal Richard#SG_FEEL#QUE_NOIMAGE#
+For some reason he has asked you to proceed with the training program of the Richard family. You will be rewarded for it. Why don't you try?#
+#
+
+5404#[Repeat]Warrior Discipline-Human#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 human monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5405#[Repeat]Warrior Discipline-Animal#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 animal monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5406#[Repeat]Warrior Discipline-Insect#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 insect monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5407#[Repeat]Warrior Discipline-Fish#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 fish monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5408#[Repeat]Warrior Discipline-Plant#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 plant monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5409#[Repeat]Warrior Discipline-Devil#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 demon monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5410#[Repeat]Warrior Discipline-Angel#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 angel monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5411#[Repeat]Warrior Discipline-Immortal#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 undead monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5412#[Repeat]Warrior Discipline-Intangible#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 nothing monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5413#[Repeat]Warrior Discipline-Dragon#SG_FEEL#QUE_NOIMAGE#
+Hunt the 50 dragon monsters as part of the Warrior Discipline program of the Richard family.#
+#
+
+5414#[Stand by]Warrior Discipline#SG_FEEL#QUE_NOIMAGE#
+You can participate in the training of the Richard family again in tomorrow morning.#
+Reset Time 4:00 am#
+
+// Episode 16.1 Underground Dungeon
+5415#Restricted Sector#SG_FEEL#QUE_NOIMAGE#
+You decided to hear about the Restricted Area from Royal Crusader Ellond Lawrence.#
+#
+
+5416#Restricted Sector A#SG_FEEL#QUE_NOIMAGE#
+You have finished exploring Sector A. Report the current situation to Ellond Lawrence.#
+#
+
+5417#Restricted Sector B#SG_FEEL#QUE_NOIMAGE#
+You have finished exploring Sector B. Report the current situation to Ellond Lawrence.#
+#
+
+5418#Restricted Sector C#SG_FEEL#QUE_NOIMAGE#
+You have finished exploring Sector C. Report the current situation to Ellond Lawrence.#
+#
+
+5419#Restricted Sector D#SG_FEEL#QUE_NOIMAGE#
+You have finished exploring Sector D. Report the current situation to Ellond Lawrence.#
+#
+
+5420#Restricted Sector E#SG_FEEL#QUE_NOIMAGE#
+You have finished exploring Sector E. Report the current situation to Ellond Lawrence.#
+#
+
+5421#Restricted Sector F#SG_FEEL#QUE_NOIMAGE#
+You have finished exploring Sector F. Report the current situation to Ellond Lawrence.#
+#
+
+5422#Restricted Sector G#SG_FEEL#QUE_NOIMAGE#
+You have finished exploring Sector G. Report the current situation to Ellond Lawrence.#
+#
+
+5423#Restricted Sector H#SG_FEEL#QUE_NOIMAGE#
+You have finished exploring Sector H. Report the current situation to Ellond Lawrence.#
+#
+
+5424#[Complete]Restricted Sector#SG_FEEL#QUE_NOIMAGE#
+You have finished exploring the Restricted Sector.#
+#
+
+5425#To My Beloved Fellow#SG_FEEL#QUE_NOIMAGE#
+What if you hear a familiar voice in a dark prison? It may scare you a little, but you would feel somewhat nostalgic. Let's find the source of the voice.#
+#
+
+5426#[Stand by]To My Beloved Fellow#SG_FEEL#QUE_NOIMAGE#
+You have sent the news of the old friend. Why don't you allow him some time to be lost in old memories?#
+Reset Time 4:00 am#
+
+5427#[Repeat]To My Beloved Fellow#SG_FEEL#QUE_NOIMAGE#
+Regular exchange of letters is good for the mental health of the prisoners. Get the letter from the friend somewhere in the underground prison.#
+#
+
+5428#Lowly Standards#SG_FEEL#QUE_NOIMAGE#
+The prisoner who seems to collect pretty eyes has asked you to bring 20 red eyes of the monster boasting batwings. Is it a self-esteem issue?#
+#
+
+5429#[Stand by]Lowly Standards#SG_FEEL#QUE_NOIMAGE#
+The prisoner is infatuated with the red eyes. Why don't you bring more later to calm down the prisoner again?#
+Reset Time 4:00 am#
+
+5430#[Repeat]Lowly Standards#SG_FEEL#QUE_NOIMAGE#
+The prisoner asked you to go get some more. Let's bring 20 red eyes to calm down the prisoner.#
+#
+
+5431#Clean Life#SG_FEEL#QUE_NOIMAGE#
+You need to clean the dirty underground prison. Clean with your heart full of joy.#
+#
+
+5432#Cleaning is complete.#SG_FEEL#QUE_NOIMAGE#
+You have finished cleaning the underground prison. Why don't you go back for a check?#
+#
+
+5433#[Stand by]Clean Life#SG_FEEL#QUE_NOIMAGE#
+Do you know? It is the time to wait for the fun of making a mess after the joy of cleaning.#
+Reset Time 4:00 am#
+
+5434#[Repeat]Clean Life#SG_FEEL#QUE_NOIMAGE#
+It is the time to feel the joy of cleaning. Let's clean the underground prison with your heart full of joy.#
+#
+
+5435#[Repeat]Cleaning is complete.#SG_FEEL#QUE_NOIMAGE#
+You have finished cleaning the underground prison. Why don't you go back for a check?#
+#
+
+5436#Finding Lights#SG_FEEL#QUE_NOIMAGE#
+This prisoner seems to hate darkness. Let's bring a bright light from the huge torch in this prison.#
+#
+
+5437#[Stand by]Finding Lights#SG_FEEL#QUE_NOIMAGE#
+He seems to be satisfied with the bright light. Let's bring him once more when the light is about to subside.#
+Reset Time 4:00 am#
+
+5438#[Repeat]Finding Lights#SG_FEEL#QUE_NOIMAGE#
+Let's bring a bright light again from the huge torch in this prison.#
+#
+
+5439#Refreshing Prison Life#SG_FEEL#QUE_NOIMAGE#
+The prisoner seems uncomfortable in the humid prison. Bring 20 Dehumidifier for the pleasant jail life of the prisoner.#
+#
+
+5440#[Stand by]Refreshing Prison Life#SG_FEEL#QUE_NOIMAGE#
+Since the prison is a humid place, the Dehumidifiers would run out sooner or later. Bring more when they run out.#
+Reset Time 4:00 am#
+
+5441#[Repeat]Refreshing Prison Life#SG_FEEL#QUE_NOIMAGE#
+As expected, the Dehumidifiers didn't last long. Bring 20 Dehumidifiers again.#
+#
+
+5442#Suppressing Darkness#SG_FEEL#QUE_NOIMAGE#
+A flower not only brighten up the darkness but also brings peace to a mind. Bring a flower.#
+#
+
+5443#[Stand by]Suppressing Darkness#SG_FEEL#QUE_NOIMAGE#
+The darkness has been calmed down, but it may become unruly again. When the time comes, I may have to bring another flower.#
+Reset Time 4:00 am#
+
+5444#[Repeat]Suppressing Darkness#SG_FEEL#QUE_NOIMAGE#
+Darkness is raging again. Bring a flower. Which flower should I bring this time?#
+#
+
+5445#Bothersome Little Thing#SG_FEEL#QUE_NOIMAGE#
+Little bump on the horn... I can't understand since don't have a horn, but I guess it is supposed to be a bothersome thing. Let's bring 20 pieces of Sandpaper by hunting the Taffies.#
+#
+
+5446#[Stand by]Bothersome Little Thing#SG_FEEL#QUE_NOIMAGE#
+This prisoner who really seems to think of me as a concierge of this prison hotel may call me regularly.#
+Reset Time 4:00 am#
+
+5447#[Repeat]Bothersome Little Thing#SG_FEEL#QUE_NOIMAGE#
+Why does he need more pieces of Sandpaper? Since he asks, hunt Taffies and bring 20 pieces of Sandpaper.#
+#
+
+// Episode 16.1 Prontera Dungeon
+5448#Request from Chief Guard#SG_FEEL#QUE_NOIMAGE#
+Prontera Chief Guard Spiegel asked you to help the villagers in distress in the places marked on the map.#
+#
+
+5449#Request from Chief Guard#SG_FEEL#QUE_NOIMAGE#
+Prontera Chief Guard Spiegel asked you to help the villagers in distress in the places marked on the map.#
+#
+
+5450#Request from Chief Guard#SG_FEEL#QUE_NOIMAGE#
+Prontera Chief Guard Spiegel asked you to help the villagers in distress in the places marked on the map.#
+#
+
+5451#Request from Chief Guard#SG_FEEL#QUE_NOIMAGE#
+Prontera Chief Guard Spiegel asked you to help the villagers in distress in the places marked on the map.#
+#
+
+5452#[Stand by]Request from Chief Guard#SG_FEEL#QUE_NOIMAGE#
+You helped the villager of Prontera. For a while, you need to walk around the town working on defeating the undead.#
+#
+
+5453#Ungrateful(1)#SG_FEEL#QUE_NOIMAGE#
+You met a village lad trembling from fear. First of all, take the village lad to the village office which is the nearest shelter.#
+#
+
+5454#Ungrateful(2)#SG_FEEL#QUE_NOIMAGE#
+When you took the village lad to the nearby shelter, he asked you to find a Tool Bag which he lost near the Smelter.#
+#
+
+5455#Ungrateful(3)#SG_FEEL#QUE_NOIMAGE#
+You found the lost Tool Bag of the village lad in front of the Prontera Smelter.#
+#
+
+5456#Ungrateful(4)#SG_FEEL#QUE_NOIMAGE#
+You delivered the Tool Bag of the village lad safely. You don't feel so good about it, but let's move on since you have done a good thing.#
+#
+
+5457#Find My Sister(1)#SG_FEEL#QUE_NOIMAGE#
+Take the girl who was crying after losing her sister to the cathedral which is the nearest shelter.#
+#
+
+5458#Find My Sister(2)#SG_FEEL#QUE_NOIMAGE#
+Take the girl to her sister in the Knight's building which is another shelter.#
+#
+
+5459#Find My Sister(3)#SG_FEEL#QUE_NOIMAGE#
+You helped the girl who was crying after being separated from her sister meet her sister.#
+#
+
+5460#Blatant Bluff(1)#SG_FEEL#QUE_NOIMAGE#
+Take the solder to the Knight's building which is the nearest shelter.#
+#
+
+5461#Blatant Bluff(2)#SG_FEEL#QUE_NOIMAGE#
+He could have stayed in the Knight's building, but he insisted to go to another place to back up. Let's take him to the village office as he wishes.#
+#
+
+5462#Blatant Bluff(3)#SG_FEEL#QUE_NOIMAGE#
+Why is this bluffer solder from Geffen in Prontera? Let's regard it as meaningful to have helped him.#
+#
+
+5463#Mad Love for Wife(1)#SG_FEEL#QUE_NOIMAGE#
+You promised to find the wife of Eryus. Let's take Eryus to the safe cathedral.#
+#
+
+5464#Mad Love for Wife(2)#SG_FEEL#QUE_NOIMAGE#
+Eryus told you that he had lost his wife near the Prontera employment agency. Let's go find her near the employment agency.#
+#
+
+5465#Mad Love for Wife(3)#SG_FEEL#QUE_NOIMAGE#
+You met Ellie. the wife of Eryus. Since she is a fragile woman, let's take her to the safe cathedral fast.#
+#
+
+5466#Mad Love for WifeQuest(4)#SG_FEEL#QUE_NOIMAGE#
+Ellie's illness seems to have worsened as she loosen up a little. Go to the place where you have met Ellie and look for her lost medicine.#
+#
+
+5467#Mad Love for WifeQuest(5)#SG_FEEL#QUE_NOIMAGE#
+You found the medicine. Take it to Ellie before her illness takes a serious turn.#
+#
+
+5468#Mad Love for Wife(6)#SG_FEEL#QUE_NOIMAGE#
+You have helped the couple, Ellie and Eryus, who seem to be deeply in love. You are happy to see the true lovebirds in a long while.#
+#
+
+//-- ep16.1 Banquet of the Heroes
+7681#Invitation to Royal Banquet#SG_FEEL#QUE_NOIMAGE#
+A banquet is held at the Prontera Palace to honor the sacrifice made by those who went on with the expedition mission in Ash-Bakum to eliminate atrocious Morocc and praise their dedication. All of you are invited to this banquet.#
+Visit Prontera Palace#
+
+7682#Socializing Starts from an Eye Contact#SG_FEEL#QUE_NOIMAGE#
+Visit the seven royal families to exchange greetings. There are the Heine, Nerius and Walther families in the West Villa, and there are the Richard, Wigner, Roegenburg and Geoborg families in the East Villa.#
+Visit each family#
+
+7683#Visit the Heines#SG_FEEL#QUE_NOIMAGE#
+You visited the Heines to exchange greetings.#
+#
+
+7684#Visit the Nerius#SG_FEEL#QUE_NOIMAGE#
+You visited the Nerius to exchange greetings.#
+#
+
+7685#What Is the Next Thing on the Schedule ?#SG_FEEL#QUE_NOIMAGE#
+You have completed everything on the schedule. Ask Chamberlain Bell in your room about the next thing on the schedule.#
+Talk with Belle#
+
+7686#Nyhill and Skia#SG_FEEL#QUE_NOIMAGE#
+You witnessed the conversation between Nyhill and Skia in the hallway.#
+#
+
+7687#Participating in the Banquet#SG_FEEL#QUE_NOIMAGE#
+Belle asked you to participate in the banquet since you had some time to spare. You were told that Spica the lady of the Nerius family wanted to meet you.#
+Talk with Spica#
+
+7688#Suspicious Movement#SG_FEEL#QUE_NOIMAGE#
+While moving to take part in the banquet, you heard about the conversation between the strangers in the guest room.#
+#
+
+7689#Find Nyhill#SG_FEEL#QUE_NOIMAGE#
+Skia felt that Nyhill wasn't walking straight. Skia asked you to follow Nyhill who left the banquet early.#
+Follow Nyhill#
+
+7690#Where Is Nyhill?#SG_FEEL#QUE_NOIMAGE#
+When you were looking for Nyhill, you eavesdropped on a suspicious conversation. Where is Nyhill?#
+Talk with Nyhill#
+
+7691#Waiting for the Ritual#SG_FEEL#QUE_NOIMAGE#
+Go back to the room to talk to Belle. A magician was supposed to come for the ritual...#
+Talk with Belle#
+
+7692#Attend the Ritual#SG_FEEL#QUE_NOIMAGE#
+Participate in the ritual following the lead of the magician.#
+Attend the Ritual#
+
+7693#Surprise Attack#SG_FEEL#QUE_NOIMAGE#
+A surprise attack was casted during the ritual!#
+#
+
+7694#I'd Like to See that Too#SG_FEEL#QUE_NOIMAGE#
+After everyone leaves, let's take a look at the royal document which Kronecker was looking at#
+Talk with the Librarian#
+
+7695#Escape from the Past Memories of the Royal Family#SG_FEEL#QUE_NOIMAGE#
+You need to get out of the place through the emergency exit instead of the gate which doesn't work. The knight guarding in front of the door may guide you.#
+Talk with the Guardian Knight#
+
+7696#What's Next?#SG_FEEL#QUE_NOIMAGE#
+I don't know what to do now. Let's ask Belle.#
+Talk with Belle#
+
+7697#Invitation from the Nerius#SG_FEEL#QUE_NOIMAGE#
+You have been invited to the Nerius family. Let's go visit the Nerius.#
+Visit the Nerius#
+
+7698#Heine Now#SG_FEEL#QUE_NOIMAGE#
+While talking to the Nerius, the request to visit the Heines has arrived.#
+Visit the Heines#
+
+7699#To the Past#SG_FEEL#QUE_NOIMAGE#
+You have been asked to visit the Past Memories of the Royal Family with Nillem by connecting the gaps in the dimension. Where is Nillem?#
+Talk with Nillem#
+
+7700#Once More!#SG_FEEL#QUE_NOIMAGE#
+Move once more through the gap in the dimension which Nillem has twisted by force. What happened in the Room of Consciousness in the past?#
+To the Room of Consciousness#
+
+7701#Lost Imir Heart#SG_FEEL#QUE_NOIMAGE#
+Check what had happened to the actual Imir Heart in the Room of Consciousness.#
+#
+
+7702#Prontera at the Time#SG_FEEL#QUE_NOIMAGE#
+Prontera has been attacked by the Undead before, and it is taking place right now. You have decided to go out there after a persistent persuasion by Nillem.#
+To the Outside#
+
+7703#Who Knows the Truth#SG_FEEL#QUE_NOIMAGE#
+It is the time to go back to the present time, unseal the document and find out about the truth. Everything lies in the Past Memories of the Royal Family.#
+Talk with Kronecker#
+
+7704#Unchangeable Past#SG_FEEL#QUE_NOIMAGE#
+I couldn't save the Imir Heart infringed by Valkyrie today either.#
+#
+
+7705#Hope You Cannot Let Go#SG_FEEL#QUE_NOIMAGE#
+You are not sure whether it would work or not, but you are asked to challenge again in the Room of Consciousness. Defeat Bijou and defend the piece of Imir Heart.#
+Room of Consciousness in the Past#
+
+7706#Nillem Is Not Almighty#SG_FEEL#QUE_NOIMAGE#
+Multiple connection is a difficult thing even for Nillem. I think there is a certain limit to connect to the Room of Consciousness. Let's wait for Nillem's recovery.#
+Reset at 4 o'clock#
+
+// ep16.1 Sky Fortress
+
+
+9418#Attack Sky Fortress Invading Prontera#SG_FEEL#QUE_NOIMAGE#
+You need to attack the Sky Fortress attacking Prontera and defeat the boss.#
+Attack Sky Fortress#
+
+9419#Attack Sky Fortress Invading Prontera#SG_FEEL#QUE_NOIMAGE#
+^8B4513Scientist Doyeon^000000¡®s Message: I need more magical power to activate the warp to the Sky Fortress. Bring me the -Dungeon Pass- or I need about 3 days to collect magic.#
+Visit Doyeon in 3 days.#
+
+9427#Clearing the Sky Fortress for the Same Time#SG_FEEL#QUE_NOIMAGE#
+Clearing the Sky Fortress for the Same Time#
+Clearing the Sky Fortress for the Same Time#
+
+
+//ep16.1
+11400#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+Talk to Queen Catherine D. Geoborg the head of the Geoborg family.#
+Talk with the Queen#
+
+11401#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+The queen seems to be too busy to talk with me. Let's talk to Bodyguard Jerad instead.#
+Talk with Jerad#
+
+11402#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+Go to the Banquet Hall to meet the sister of the queen, Scarlet Jaha.#
+Talk with Scarlet#
+
+11403#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+While talking to Scarlet Jaha about the Geoborgs, Lidion Geoborg interrupted the conversation.#
+Talk with Lidion#
+
+11404#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+Lidion is screaming in anger. It seems impossible to proceed with the conversation. Let's talk to Scarlet again.#
+Talk with Scarlet#
+
+11405#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+Let's go find Prince Ernst of the Geoborg family. He is supposed to be in the Banquet Hall.#
+Investigation in the Banquet Hall (0/7)#
+
+11406#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+You have heard the rumors about the Geoborgs. Keep on searching for Prince Ernst.#
+Investigation in the Banquet Hall (1/7)#
+
+11407#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+You have heard the rumors about the Geoborgs. Keep on searching for Prince Ernst.#
+Investigation in the Banquet Hall (2/7)#
+
+11408#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+You have heard the rumors about the Geoborgs. Keep on searching for Prince Ernst.#
+Investigation in the Banquet Hall (3/7)#
+
+11409#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+You have heard the rumors about the Geoborgs. Keep on searching for Prince Ernst.#
+Investigation in the Banquet Hall (4/7)#
+
+11410#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+You have heard the rumors about the Geoborgs. Keep on searching for Prince Ernst.#
+Investigation in the Banquet Hall (5/7)#
+
+11411#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+You have heard the rumors about the Geoborgs. Keep on searching for Prince Ernst.#
+Investigation in the Banquet Hall (6/7)#
+
+11412#The Geoborgs#SG_FEEL#QUE_NOIMAGE#
+You have heard the rumors about the Geoborgs. Prince Ernst must have left the Banquet Hall. Let's go back to Scarlet.#
+To Scarlet#
+
+11394#Call of the Royal Head Chef#SG_FEEL#QUE_NOIMAGE#
+The Royal Head Chef in the kitchen seems to look for you.#
+Talk with the Royal Head Chef #
+
+11395#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+You are asked to bring the sauce to be used in the dish. Go see the sauce master nearby.#
+Talk with the Sauce Master#
+
+11396#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Make the sauce with the master.#
+Make the Sauce#
+
+11397#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Bring the sauce to the Head Chef#
+Talk with the Head Chef#
+
+11398#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Fill in the empty spot and make the food for the miraculously luxurious and superlatively fabulous banquet.#
+Move to the Empty Spot#
+
+11399#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Move the grilled griffin with crispy crust and juicy meat covered in the special sauce to the dining room.#
+Deliver to the Dining Room#
+
+11413#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Talk to Tamarin working in the dining toom.#
+Talk with Tamarin#
+
+11414#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Go see Dyu in the Banquet Hall.#
+Talk with Dyu#
+
+11415#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Dyu doesn't seem to know. Talk to Magi next to him.#
+Talk with Magi#
+
+11416#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Talk to Mark working upstairs in the Banquet Hall.#
+Talk with Mark#
+
+11417#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Talk to Alice.#
+Talk with Alice#
+
+11418#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Go back to Tamarin.#
+Talk with Tamarin#
+
+11419#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Retrieve 15 dishes in the Dining Hall and bring them to the Dishwasher in the kitchen.#
+Talk with the Dishwasher#
+
+11420#Why Should I Prepare for the Banquets?#SG_FEEL#QUE_NOIMAGE#
+Go back to the Head Chef.#
+Talk with the Head Chef#
+
+11421#Banquet: Unexpected Sauce#SG_FEEL#QUE_NOIMAGE#
+Make the sauce with the master.#
+Make the Sauce#
+
+11422#Complete Today's Sauce#SG_FEEL#QUE_NOIMAGE#
+You have completed making the sauce for today. Come back again tomorrow.#
+#
+
+11423#Banquet: Griffin Barbecue#SG_FEEL#QUE_NOIMAGE#
+Make the grilled griffin following the commands of the Head Chef.#
+Make Grilled Griffin#
+
+11424#Banquet: Griffin Barbecue#SG_FEEL#QUE_NOIMAGE#
+Move the grilled griffin with crispy crust and juicy meat covered in the special sauce to the dining room.#
+Deliver to the Dining Room#
+
+11425#Complete Today's Grilled Griffin#SG_FEEL#QUE_NOIMAGE#
+You have completed making the grilled griffin for today. Come back again tomorrow.#
+#
+
+11426#Banquet: Washing 15 Dishes#SG_FEEL#QUE_NOIMAGE#
+Retrieve 15 dishes in the Dining Hall and bring them to the Dishwasher in the kitchen.#
+Collect Dishes#
+
+11427#Complete Today's Dish Collecting#SG_FEEL#QUE_NOIMAGE#
+You have completed collecting the dishes for today. Come back again tomorrow.#
+#
+
+11428#Ingredient for the Sauce#SG_FEEL#QUE_NOIMAGE#
+Fresh Flavor#
+#
+
+11429#Ingredient for the Sauce#SG_FEEL#QUE_NOIMAGE#
+Gelatinous Texture#
+#
+
+11430#Ingredient for the Sauce#SG_FEEL#QUE_NOIMAGE#
+Gorgeous Light#
+#
+
+11431#Ingredient for the Sauce#SG_FEEL#QUE_NOIMAGE#
+Tender Taste#
+#
+
+// ep16.1 Additional Rewards
+12369#Secret Business Relation#SG_FEEL#QUE_NOIMAGE#
+Build a secret business relation#
+Complete the conversation with the suspicious prisoner#
+
+
+// Ep.16.1 Walther
+
+14469#Look around the Walther Family#SG_FEEL#QUE_NOIMAGE#
+The Wigner family seems rather quiet. Look around and meet Isenhonor who seemed upset.#
+Look around#
+
+14470#In Search of the Guardian Knight#SG_FEEL#QUE_NOIMAGE#
+My Guardian Knight may know nothing. If you have to meet him, you can go to our manor in the south of Alberta.#
+To Alberta#
+
+14471#To the Royal Prison#SG_FEEL#QUE_NOIMAGE#
+There must be a thief named Big Foot trapped in the prison of Prontera Palace. You may hear something from him. Please tell Isenhonor that I would be waiting for his order as always.#
+To the Royal Prison#
+
+14472#Gourmet Bigfoot#SG_FEEL#QUE_NOIMAGE#
+I want to have 3 Spicy Fried Bao and 1 Green Salad. You need to bring them to me to hear my story.#
+Bring the food#
+
+14473#To Veins#SG_FEEL#QUE_NOIMAGE#
+He was in Veins. He really was in Veins!#
+To Veins#
+
+14474#Report to Isenhonor#SG_FEEL#QUE_NOIMAGE#
+You have received the letter sent by Isenarm from his Guardian Knight. Let's go back to Isenhonor now.#
+Report to Isenhonor#
+
+
+
+// Ep.16.1 Wigner
+
+14475#To Jurgen#SG_FEEL#QUE_NOIMAGE#
+Speak more to Jurgen the candidate for the throne.#
+To Jurgen#
+
+14476#To Levuiere and His Wife#SG_FEEL#QUE_NOIMAGE#
+Why don't you go have a cup of tea with my parents if you have time? They really enjoy haring the stories from the adventures.#
+To Levuiere and His Wife#
+
+14477#What Is Going on?#SG_FEEL#QUE_NOIMAGE#
+Katrin, has anything happened to my baby? I wouldn't be able to live if anything has happened to her.#
+To Katrin#
+
+14478#Searching for the Clue#SG_FEEL#QUE_NOIMAGE#
+A maid was here to clean the room. Let's go ask her about the whereabouts of the box.#
+To the Royal Kitchen#
+
+14479#Clean-up out of Apology#SG_FEEL#QUE_NOIMAGE#
+Who else was there? I don't know... I may remember if this place becomes clean again. Would you clean it for me? Oh, thank you. You first need to wipe the mold on the wall, remove the grease and clean the floor.#
+Let's start cleaning#
+
+14480#Conquer the Grease#SG_FEEL#QUE_NOIMAGE#
+You need the mixture of orange and alcohol to clean the grease. Bring 1 Orange and 1 Alcohol.#
+Get the materials for the clean-up#
+
+14481#Conquer the Mold#SG_FEEL#QUE_NOIMAGE#
+You cannot get rid of the mold without the power of its own kind and the power of god. Bring 1 Mold Powder and 1 Holy Water!#
+Get the materials for the clean-up#
+
+14482#Conquer the Dirt of Devil#SG_FEEL#QUE_NOIMAGE#
+In order to remove the target, you need 1 Lemon and 1 Powdery Sand! Go get them now! Go!#
+Get the materials for the clean-up#
+
+14483#Report the Completion of the Clean-up#SG_FEEL#QUE_NOIMAGE#
+The cleaning is completed. Go to see the maid to report and hear her story.#
+To the Maid#
+
+14484#There Was a Furniture Delivery Man#SG_FEEL#QUE_NOIMAGE#
+There was a man delivering the furniture all day. That's why I had to stay there all day to clean the room. He must be near the village office. There are many stores in the area.#
+Find the Delivery Man#
+
+14485#I Am Upset#SG_FEEL#QUE_NOIMAGE#
+Oh, I have been good all my life, and this is what I get? Oh, I have no power to live on... However, 3 Ox Head Slices may cheer me up.#
+Soul Food#
+
+14486#I Heard the Story#SG_FEEL#QUE_NOIMAGE#
+You have heard the story. Let's go back to the palace to report to Jurgen.#
+To Jurgen#
+
+14487#Please Find the Token of Memory#SG_FEEL#QUE_NOIMAGE#
+In order to cheer up my sister, we may have to bring the things your sister has cherished. Let's bring 10 Sea Stones and 1 Witherless Rose. You can get the Sea Stones when you hunt the Medusa.#
+Find the Token of Memory#
+
+14488#Please Deliver My Love#SG_FEEL#QUE_NOIMAGE#
+Please let her know of my love for her. Please help me.#
+To the Maid#
+
+14489#I Have to Turn It Down#SG_FEEL#QUE_NOIMAGE#
+I have never expected this, and I feel pressured. Moreover, I have a reason that I cannot see someone now. Please deliver my words to him without hurting his feelings.#
+To Jurgen#
+
+14490#My Love Once More#SG_FEEL#QUE_NOIMAGE#
+I want to show her my heart as wide as the sea and my undying passion. Please deliver my love for her with 15 Sea Stones which can be acquired upon hunting the Medusa, and 1 Witherless Rose.#
+Gift for the Maid#
+
+14491#I Have to Turn It Down Again#SG_FEEL#QUE_NOIMAGE#
+I am sorry... But I am actually... Please tell Prince Wigner about it without hurting his feelings.#
+To Jurgen#
+
+14492#There Is a Silver Lining#SG_FEEL#QUE_NOIMAGE#
+Would you come back again later? Just enough time for her so that she doesn't feel pressured without forgetting me. After some time, I'd like to deliver my hear to her again!#
+Please come back again.#
+
+14493#Today I Feel#SG_FEEL#QUE_NOIMAGE#
+What should I do? I like Mary even more today. Please deliver my love for her with 15 Sea Stones which can be acquired upon hunting the Medusa, and 1 Witherless Rose.#
+Gift for the Maid#
+
+14494#I Have to Turn It Down Again#SG_FEEL#QUE_NOIMAGE#
+Please, I really appreciate his feelings. However, I cannot accept it. Please tell him without hurting his feelings.#
+To Jurgen#
+
+
+
+// Ep.16.1 Roegenburg
+
+14495#To Wolf#SG_FEEL#QUE_NOIMAGE#
+Let's hear the story about the family from Wolf Roegenburg.#
+To Wolf#
+
+14496#To Isaac#SG_FEEL#QUE_NOIMAGE#
+If you meet Isaac of the Wigner family, please hand him the thing I asked you for. The Wigner residence is at the end of the hallway.#
+To Isaac#
+
+14497#Delivery for Wolf#SG_FEEL#QUE_NOIMAGE#
+Please deliver the box to Wolf. You have to be careful with it. It is dangerous.#
+Delivery for Wolf#
+
+14498#Which Rumor#SG_FEEL#QUE_NOIMAGE#
+If there is a bad rumor about our family going around in Prontera, I cannot just wait and see. I need to know what the rumor is about to deal with it. Please collect the rumors for me. You may hear them from young children.#
+Collect the Rumors#
+
+14499#Prove Yourself#SG_FEEL#QUE_NOIMAGE#
+Prove that you are eligible to hear the story. Hun 33 Majoruros! And bring the history book of Rune Midgarts from the library! Oh, I also need 12 Soft Silk Cloth!#
+Prove Yourself#
+
+14500#Complete checking out the book#SG_FEEL#QUE_NOIMAGE#
+You have checked out the history book of Rune Midgarts.#
+Complete checking out the book#
+
+14501#Report to Wolf#SG_FEEL#QUE_NOIMAGE#
+Since you have heard the rumor, let's go to see Wolf and tell him the whole story.#
+Report to Wolf#
+
+14502#To Isaac#SG_FEEL#QUE_NOIMAGE#
+Please hand this document to Isaac. I have a lot of things to do from now. I am defending on you then.#
+To Isaac#
+
+14503#Report to Wolf#SG_FEEL#QUE_NOIMAGE#
+Please tell Wolf that I respect his decision and trust him as always.#
+To Wolf#
+
+14504#In Search of Helmut#SG_FEEL#QUE_NOIMAGE#
+Would you persuade Helmut and bring him to me? He would be at the Schwaltzvalt Border Garrison.#
+In Search of Helmut#
+
+14505#I Won't go Back#SG_FEEL#QUE_NOIMAGE#
+I belong here. Please tell my grandfather that.#
+To Maximilian#
+
+14506#Things Turned out This Way#SG_FEEL#QUE_NOIMAGE#
+Please tell Myer who left the home that the things have turned out this way at home. He may run away if one of the family members go there.#
+To Myer#
+
+14507#To Maximilian#SG_FEEL#QUE_NOIMAGE#
+It turned out well. Everything is all right now. Please tell him that I'll go visit him when the banquet is over.#
+To Maximilian#
+
+14508#Jewel and Cloth#SG_FEEL#QUE_NOIMAGE#
+Please bring 3 Pearls and 50 strands of soft hair.#
+Jewel and Cloth#
+
+14509#Still Making It#SG_FEEL#QUE_NOIMAGE#
+I am still in the progress of making it with what you have brought me. I'll decide what to make after finishing the work. Would come back after the daybreak?#
+Please wait.#
+
+14510#Pink Petal-like Dress#SG_FEEL#QUE_NOIMAGE#
+I will make a dress as beautiful as a pink petal! Would you bring 15 Soft Silky Cloth, 30 Red Herbs and 10 White Herbs to dye the cloth?#
+Pink Petal#
+
+14511#Beautiful Flower Decoration#SG_FEEL#QUE_NOIMAGE#
+I'll decorate it with humble but beautiful flowers. Please get me 5 pretty flowers, 5 pure flowers and 5 mysterious flowers#.
+Flowers in the Garden#
+
+14512#Dress of the Night Sky#SG_FEEL#QUE_NOIMAGE#
+I'll make a dress as dark as the night sky! I need cloth darker than the night sky. Would you bring 20 pieces of black cloth? Please.#
+Black Night Sky#
+
+14513#Shawl of the Blazing Sun#SG_FEEL#QUE_NOIMAGE#
+I want to make a shawl which resembles the blazing sun in the sky. I think I need 20 hot hairs to make it.#
+Shawl of the Sun#
+
+14514#Step of the Fairy#SG_FEEL#QUE_NOIMAGE#
+I'll make a dress as airy and elegant as the step of a fairy. A gorgeous one! I need 5 splendid fairy wings. It would be enough to make an elegant dress.#
+Step of the Fairy#
+
+14515#Sparkling Star#SG_FEEL#QUE_NOIMAGE#
+I want to sprinkle the dress with sparkling stats! Please get me 5 star dusts to decorate the dress with.#
+Sparkling Star#
+
+14516#Suspicious Shadow#SG_FEEL#QUE_NOIMAGE#
+I heard the conversation between a suspicious person and Ian.#
+Suspicious Shadow#
+
+14517#Midnight Snack Delivery#SG_FEEL#QUE_NOIMAGE#
+You delivered the midnight snack#
+Midnight Snack Delivery#
+
+
+
+
+15125#O resgate dos Grãos Roubados#SG_FEEL#QUE_NOIMAGE#
+Elimine os Drops Doces nos campos e calabouços e colete 20 Grãos de Cacau.#
+Entregue 20 Grãos de Cacau ao Charles.#
+
+15127#O Melhor Entregador de Chocolates de Rune-Midgard#SG_FEEL#QUE_NOIMAGE#
+Entregue os chocolates nas Lojas de Doces na seguinte ordem: Geffen, Payon, Al De Baran e Prontera.#
+Entregue os chocolates nas cidades principais.#
+
+15128#O Melhor Entregador de Chocolates de Rune-Midgard#SG_FEEL#QUE_NOIMAGE#
+Você encerrou a entrega de chocolates de Charles!#
+Retorne no dia seguinte#
+
+15129#Uma Rifa por Dia#SG_FEEL#QUE_NOIMAGE#
+Você já participou da Rifa Doce hoje.#
+Retorne no dia seguinte#
+
+1333#Doce Tentação#SG_FEEL#QUE_NOIMAGE#
+Amenize o cheiro de doce caçando Drops Doces.#
+Cace 5 Drops Doces#
+
+1334#Doce Paz#SG_FEEL#QUE_NOIMAGE#
+O Zé Docinho está em paz mais uma vez. Retorne amanhã.#
+Visite o Zé Docinho após as 4 da manhã.#
+
+1335#Cesta de Doces#SG_FEEL#QUE_NOIMAGE#
+Reúna 5 Balas, 5 Bengalas Doces e 3 Pastilhas Refrescantes.#
+Entregue os itens a Lorenza.#
+
+1336#Missão supersecreta: encha a cesta de doces#SG_FEEL#QUE_NOIMAGE#
+Lorenza pediu para que você volte amanhã para encher a cesta novamente.#
+Visite Lorenza após as 4 da manhã.#
+
+1337#Doces da Sorte#SG_FEEL#QUE_NOIMAGE#
+Reúna 1 Doce da Sorte, 1 Bengala Doce da Sorte e 1 Biscoito da Sorte.#
+Entregue os doces para Fortuna#
+
+1338#Sem mais docinhos#SG_FEEL#QUE_NOIMAGE#
+Fortuna disse que quer mais doces só amanhã.#
+Visite Fortuna após as 4 da manhã.#

@@ -42,10 +42,9 @@ sub new {
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
+	$self->{vender_items_list_item_pack} = 'V v2 C v C3 a8 a25';
+
 	return $self;
 }
-
-*parse_quest_update_mission_hunt = *Network::Receive::ServerType0::parse_quest_update_mission_hunt_v2;
-*reconstruct_quest_update_mission_hunt = *Network::Receive::ServerType0::reconstruct_quest_update_mission_hunt_v2;
 
 1;
