@@ -2,7 +2,7 @@ package eventMacro::Condition::InStorage;
 
 use strict;
 
-use base 'eventMacro::Condition::BaseInStorage';
+use base 'eventMacro::Condition::Base::InStorage';
 
 use Globals qw( $char );
 
@@ -25,10 +25,6 @@ sub _parse_syntax {
 sub _get_val {
 	my ( $self ) = @_;
 	$char->storage->sumByName($self->{wanted});
-}
-
-sub usable {
-	1;
 }
 
 1;

@@ -18,18 +18,20 @@ use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs getInventoryTypeIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght find_variable get_key_or_index getQuestStatus);
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght get_pattern find_variable get_key_or_index getQuestStatus
+	find_hash_and_get_keys find_hash_and_get_values);
 use eventMacro::Automacro;
 
 # Creates the object
 sub new {
-	my ($class, $name, $repeat, $interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
+	my ($class, $name, $caller_name, $repeat, $interruptible, $self_interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
 
 	return undef unless ($eventMacro->{Macro_List}->getByName($name));
 	
 	my $self = bless {}, $class;
 	
 	$self->{name} = $name;
+	$self->{caller_name} = $caller_name;
 	$self->{Paused} = 0;
 	$self->{registered} = 0;
 	$self->{finished} = 0;
@@ -70,6 +72,12 @@ sub new {
 		$self->interruptible($interruptible);
 	} else {
 		$self->interruptible(1);
+	}
+	
+	if (defined $self_interruptible && $self_interruptible =~ /^[01]$/) {
+		$self->self_interruptible($self_interruptible);
+	} else {
+		$self->self_interruptible(0);
 	}
 	
 	if (defined $overrideAI && $overrideAI =~ /^[01]$/) {
@@ -155,6 +163,23 @@ sub interruptible {
 		
 	}
 	return $self->{interruptible};
+}
+
+# Sets/Gets the current self_interruptible flag
+sub self_interruptible {
+	my ($self, $self_interruptible) = @_;
+	
+	if (defined $self_interruptible) {
+		
+		if (defined $self->{self_interruptible} && $self->{self_interruptible} == $self_interruptible) {
+			debug "[eventMacro] Macro '".$self->{name}."' self_interruptible state is already '".$self_interruptible."'.\n", "eventMacro", 2;
+		} else {
+			debug "[eventMacro] Now macro '".$self->{name}."' self_interruptible state is '".$self_interruptible."'.\n", "eventMacro", 2;
+			$self->{self_interruptible} = $self_interruptible;
+		}
+		
+	}
+	return $self->{self_interruptible};
 }
 
 # Makes sure the automacro checking state is compatible with this macro interruptible
@@ -339,6 +364,12 @@ sub get_name {
 	return $self->{name};
 }
 
+# Returns the name of the automacro that called this macro
+sub get_caller_name {
+	my ($self) = @_;
+	return $self->{caller_name};
+}
+
 # Deletes the subcall object
 sub clear_subcall {
 	my ($self) = @_;
@@ -368,7 +399,7 @@ sub clear_subcall {
 sub create_subcall {
 	my ($self, $name, $repeat) = @_;
 	debug "[eventMacro] Creating submacro '".$name."' on macro '".$self->{name}."'.\n", "eventMacro", 2;
-	$self->{subcall} = new eventMacro::Runner($name, $repeat, $self->interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
+	$self->{subcall} = new eventMacro::Runner($name, $self->get_caller_name, $repeat, $self->interruptible, $self->self_interruptible, $self->overrideAI, $self->orphan, undef, $self->macro_delay, 1);
 }
 
 # destructor
@@ -558,8 +589,8 @@ sub define_next_valid_command {
 		######################################
 		# While statement: while (foo <= bar) {
 		######################################
-		if ($self->{current_line} =~ /^while\s/) {
-			my ($condition_text) = $self->{current_line} =~ /^while\s+(\(.*\))\s+{$/;
+		if ($self->{current_line} =~ /^while\s*\(/) {
+			my ($condition_text) = $self->{current_line} =~ /^while\s*(\(.*\))\s+{$/;
 			
 			debug "[eventMacro] Script is the start of a while 'block'.\n", "eventMacro", 3;
 			
@@ -599,7 +630,7 @@ sub define_next_valid_command {
 		######################################
 		# Initial 'if'
 		######################################
-		} elsif ($self->{current_line} =~ /^if\s/) {
+		} elsif ($self->{current_line} =~ /^if\s*\(/) {
 			
 			debug "[eventMacro] Script is a 'if' condition.\n", "eventMacro", 3;
 			
@@ -647,7 +678,7 @@ sub define_next_valid_command {
 							$block_count--;
 							
 						#Elsif check
-						} elsif ( $self->{current_line} =~ /^}\s*elsif\s+(\(.*\)).*{$/ && $block_count == 1 ) {
+						} elsif ( $self->{current_line} =~ /^}\s*elsif\s*(\(.*\)).*{$/ && $block_count == 1 ) {
 							($result) = $self->parse_and_check_condition_text($1);
 							return if (defined $self->error);
 							debug "[eventMacro] Found an 'elsif' block inside an 'if' block.\n", "eventMacro", 3;
@@ -931,14 +962,18 @@ sub next {
 		
 	##########################################
 	# set variable: variable = value
-	if ($self->{current_line} =~ /^($general_variable_qr)/i) {
+	if ($self->{current_line} =~ /^$general_variable_qr/i) {
 		my $line = $self->{current_line};
 		
 		my $variable;
 		my $value;
-		if ($line =~ /^(\$$valid_var_characters(?:\[.+?\]|\{.+?\})?|\@$valid_var_characters|\%$valid_var_characters)\s*([+-]{2}|=\s*(.*))/) {
+		if ($line =~ /^($general_wider_variable_qr)\s*([+-]{2}|=\s*.*)/) {
 			$variable = $1;
 			$value = $2;
+			if ($variable =~ /^[\$\@\%]\./) {
+				$self->error("You can't change the value of read-only variables");
+				return;
+			}
 		} else {
 			$self->error("Could not separate variable name from value");
 			return;
@@ -1004,7 +1039,6 @@ sub next {
 			}
 		
 		} elsif ($var->{type} eq 'array' || $var->{type} eq 'hash') {
-			
 			if ($value =~ /^=\s*(.*)/i) {
 				my $value = $1;
 				
@@ -1033,54 +1067,12 @@ sub next {
 						$eventMacro->set_full_hash($var->{real_name}, \%hash);
 					}
 					
-				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(?:split)\(([^\)]+)\)$/) {
-					my ($pattern, $var_str) = parseArgs("$1", undef, ',');
-					$var_str =~ s/^\s+|\s+$//gos;
-					my $split_var;
-					
-					my $var_hash = $self->find_and_define_key_index($var_str);
-					return if (defined $self->error);
-					
-					if ($var_hash) {
-						$split_var = $var_hash->{var};
-					} else {
-						$split_var = find_variable($var_str);
-						
-						return if (defined $self->error);
-						
-						if (!defined $split_var) {
-							$self->error("Could not define variable type");
-							return;
-						}
-					}
-					
-					$eventMacro->set_full_array( $var->{real_name}, [ split $pattern, $eventMacro->get_split_var( $split_var ) ] );
-    
-				} elsif ($var->{type} eq 'array' && $value =~ /^$macro_keywords_character(keys|values)\(($hash_variable_qr)\)$/) {
-					my $type = $1;
-					my $var2 = find_variable($2);
-					if (defined $self->error) {
-						return;
-					} elsif (!defined $var2) {
-						$self->error("Could not define variable type in keys/values array setting");
-						return;
-					}
-					
-					my @new_array;
-					if ($type eq 'keys') {
-						@new_array = @{$eventMacro->get_hash_keys($var2->{real_name})};
-						
-					} elsif ($type eq 'values') {
-						@new_array = @{$eventMacro->get_hash_values($var2->{real_name})};
-					}
-					
-					$eventMacro->set_full_array($var->{real_name}, \@new_array);
 				} elsif ($value =~ /\w+\s*\(.*\)$/) {
 					my $real_value = $self->parse_command($value);
-					
 					if ( (ref($real_value) eq 'ARRAY' || ref($real_value) eq 'HASH')  && $var->{type} eq 'hash') {
+						
+						#if is a array ref, have to convert into a hash ref
 						if (ref($real_value) eq 'ARRAY') {
-							#if is a array ref, have to convert into a hash ref
 							my %hash = @{$real_value};
 							$real_value = \%hash;
 						}
@@ -1134,10 +1126,10 @@ sub next {
 		
 	##########################################
 	# log command
-	} elsif ($self->{current_line} =~ /^log\s+/) {
-		my ($log_command) = $self->{current_line} =~ /^log\s+(.*)/;
-		$self->parse_log($log_command);
-		
+	} elsif ($self->{current_line} =~ /^(log|warning|error)\s+(.*)/) {
+		my ($type, $log_text) = ($1, $2);
+		$self->parse_log($type, $log_text);
+	
 	##########################################
 	# pause command
 	} elsif ($self->{current_line} =~ /^pause/) {
@@ -1631,14 +1623,22 @@ sub parse_do {
 
 #From here functions are intended to parse/execute macro commands
 sub parse_log {
-	my ($self, $log_command) = @_;
-	my $parsed_log = $self->parse_command($log_command);
-	return if (defined $self->error);
+	my ($self, $type, $log_text) = @_;
+	my $parsed_log = $self->parse_command($log_text);
+	#type can be message, warning or error
+	#log_text have the text that will be printed
 	
+	return if (defined $self->error);
 	unless (defined $parsed_log) {
 		$self->error("Could not define log value");
 	} else {
-		message "[eventmacro log] $parsed_log\n", "eventMacro";
+		$type = "message" if $type eq "log";
+		if (my $sub_ref = Log->can($type)) {
+			$sub_ref->("[eventmacro $type] $parsed_log\n", "eventMacro");
+		} else {
+			$self->error("Unknown error found while trying to print '$type' log. Report to developers");
+			return;
+		}
 	}
 	$self->timeout($self->macro_delay);
 	$self->next_line;
@@ -1678,8 +1678,14 @@ sub parse_set {
 		} else {
 			$self->interruptible($new_value?0:1);
 		}
+	} elsif ($parameter eq 'self_interruptible') {
+		if ($new_value !~ /^[01]$/) {
+			$self->error("self_interruptible parameter should be '0' or '1'. Given value: '$new_value'");
+		} else {
+			$self->self_interruptible($new_value);
+		}
 	} elsif ($parameter eq 'orphan') {
-		if ($new_value !~ /(terminate|terminate_last_call|reregister|reregister_safe)/) {
+		if ($new_value !~ /^(terminate|terminate_last_call|reregister|reregister_safe)$/) {
 			$self->error("orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe'. Given value: '$new_value'");
 		} else {
 			$self->orphan($new_value);
@@ -1805,6 +1811,10 @@ sub resolve_statement {
 	#remove quotes
 	$first =~ s/^"(.+)"$/\1/;
 	$last  =~ s/^"(.+)"$/\1/;
+	
+	#remove backslashes
+	$first =~ s/\\([\/\"\'])/\1/;
+	$last  =~ s/\\([\/\"\'])/\1/;
 	
 	my ($parsed_first, $parsed_last);
 	
@@ -2097,8 +2107,8 @@ sub parse_command {
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
 		
-		# first parse _then_ substitute. slower but safer
-		if ($keyword ne 'nick' && $keyword ne 'push' && $keyword ne 'unshift' && $keyword ne 'pop' && $keyword ne 'shift' && $keyword ne 'exists' && $keyword ne 'delete' && $keyword ne 'defined') {
+		#if $keyword is different of every key inside qw(), then we will substitue variables
+		unless (grep{$_ eq $keyword} qw(nick push unshift pop shift delete exists defined split keys values)) {
 			$parsed = $self->substitue_variables($inside_brackets);
 		}
 		my $only_replace_once = 0;
@@ -2189,6 +2199,17 @@ sub parse_command {
 		} elsif ($keyword eq 'strip') {
 			$parsed =~ s/\(|\)//g;
 			$result = $parsed;
+			
+		} elsif ($keyword eq 'split') {
+			my ($pattern, $string) = get_pattern($inside_brackets);
+			my @values = split($pattern, $self->substitue_variables($string));
+			$result = join (',', @values);
+			
+		} elsif ($keyword eq 'keys') {
+			$result = join ',', find_hash_and_get_keys($inside_brackets);;
+			
+		} elsif ($keyword eq 'values') {
+			$result = join ',', find_hash_and_get_values($inside_brackets);
 			
 		} elsif ($keyword eq 'nick') {
 			$parsed = $self->substitue_variables($inside_brackets);

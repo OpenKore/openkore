@@ -23,7 +23,7 @@ import copy
 #'''))
 
 if win32:
-	osl_libs = ['ws2_32']
+	osl_libs = ['moldname', 'kernel32', 'user32', 'gdi32', 'winspool', 'comdlg32', 'advapi32', 'shell32', 'ole32', 'oleaut32', 'netapi32', 'uuid', 'ws2_32', 'mpr', 'winmm', 'version', 'odbc32', 'odbccp32', 'comctl32']
 else:
 	osl_libs = ['pthread']
 	if platform == "sunos":

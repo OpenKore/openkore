@@ -46,7 +46,7 @@ READLINE_LIB = 'readline'
 perlconfig = {}
 env = Environment()
 if win32:
-	env = Environment(tools = ['mingw', 'gcc', 'cc', 'g++', 'c++'])
+	env = Environment(ENV = {'PATH' : os.environ['PATH']}, tools = ['mingw', 'gcc', 'cc', 'g++', 'c++'])
 
 if darwin:
 	env['LIBPATH'] = DARWIN_LIBRARY_DIRECTORIES
@@ -82,6 +82,7 @@ def CheckPerl(context):
 	print F "typemap=" . search(\\@INC, "ExtUtils/typemap") . "\\n";
 	print F "xsubpp=" . search(\\@INC, "ExtUtils/xsubpp" || search([File::Spec->path()], "xsubpp")) . "\\n";
 	print F "coredir=$coredir\\n";
+	print F "perlversion=" . $^V . "\\n";
 	close F;
 	'''
 
@@ -201,6 +202,13 @@ conf.Finish()
 
 # Standard environment for programs
 env['CCFLAGS'] = [] + EXTRA_COMPILER_FLAGS
+
+if win32:
+	import platform
+	
+	if "64" in platform.machine():
+		env['CCFLAGS'] += ['-fpermissive', '-DWINx86_64']
+
 env['LINKFLAGS'] = []
 env['LIBPATH'] = [] + EXTRA_LIBRARY_DIRECTORIES
 env['LIBS'] = []
@@ -297,13 +305,12 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 # Environment for Perl libraries
 perlenv = libenv.Clone()
 if win32:
+	rawversion = "perl" + ''.join(perlconfig['perlversion'][1:].split('.')[:2])
+	
 	# Windows
-	perlenv['CCFLAGS'] += Split('-Wno-comments -include stdint.h')
-	perlenv['CPPDEFINES'] += Split('__MINGW32__ WIN32IO_IS_STDIO ' +
-		'_UINTPTR_T_DEFINED CHECK_FORMAT')
-	#perlenv['LIBS'] += ['perl58']
-	#perlenv['LIBS'] += ['perl510']
-	perlenv['LIBS'] += ['perl512']
+	perlenv['CCFLAGS'] += Split('-s -Wno-comments -fwrapv -fno-strict-aliasing -mms-bitfields')
+	perlenv['CPPDEFINES'] += Split('__USE_MINGW_ANSI_STDIO PERL_TEXTMODE_SCRIPTS PERL_IMPLICIT_CONTEXT PERL_IMPLICIT_SYS USE_PERLIO')
+	perlenv['LIBS'] += [rawversion]
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 elif not darwin:
 	# Unix (except MacOS X)

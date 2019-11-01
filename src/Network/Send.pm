@@ -33,7 +33,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -746,22 +746,18 @@ sub parse_buy_bulk_buyer {
 }
 
 sub reconstruct_buy_bulk_buyer {
-	my ($self, $args) = @_;
-	# ITEM index. There were any other indexes expected to be in item buying packet?
-	$args->{itemInfo} = pack '(a4)*', map { pack 'v2', @{$_}{qw(amount itemIndex)} } @{$args->{items}};
+    my ($self, $args) = @_;
+    $args->{itemInfo} = pack('(a6)*', map { pack 'a2 v2', @{$_}{qw(ID itemID amount)} } @{$args->{items}});
 }
 
 sub sendBuyBulkBuyer {
-	#FIXME not working yet
-	#field index still wrong and remain unknown
-	my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
-	my $msg = pack('v2', 0x0819, 12+6*@{$r_array});
-	$msg .= pack ('a4 a4', $buyerID, $buyingStoreID);
-	for (my $i = 0; $i < @{$r_array}; $i++) {
-		debug 'Send Buying Buyer Request: '.$r_array->[$i]{itemIndex}.' '.$r_array->[$i]{itemID}.' '.$r_array->[$i]{amount}."\n", "sendPacket", 2;
-		$msg .= pack('v3', $r_array->[$i]{itemIndex}, $r_array->[$i]{itemID}, $r_array->[$i]{amount});
-	}
-	$self->sendToServer($msg);
+    my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
+    $self->sendToServer($self->reconstruct({
+        switch => 'buy_bulk_buyer',
+        buyerID => $buyerID,
+        buyingStoreID => $buyingStoreID,
+        items => $r_array,
+    }));
 }
 
 sub sendEnteringBuyer {
@@ -983,8 +979,7 @@ sub reconstruct_actor_move {
 	$args->{coords} = getCoordString(@{$args}{qw(x y)}, $args->{no_padding});
 }
 
-# should be called sendSlaveMove...
-sub sendHomunculusMove {
+sub sendSlaveMove {
 	my ($self, $ID, $x, $y) = @_;
 	
 	$self->sendToServer($self->reconstruct({
@@ -1155,8 +1150,7 @@ sub sendShowEquipTickbox {
 	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
 }
 
-# should be sendSlaveAttack...
-sub sendHomunculusAttack {
+sub sendSlaveAttack {
 	my $self = shift;
 	my $slaveID = shift;
 	my $targetID = shift;
@@ -1172,8 +1166,7 @@ sub sendHomunculusAttack {
 	debug "Sent Slave attack: ".getHex($targetID)."\n", "sendPacket", 2;
 }
 
-# should be sendSlaveStandBy...
-sub sendHomunculusStandBy {
+sub sendSlaveStandBy {
 	my $self = shift;
 	my $slaveID = shift;
 	$self->sendToServer($self->reconstruct({
@@ -1237,16 +1230,11 @@ sub sendItemListWindowSelected {
 		items => $items,
 	}));
 	if ($act == 1) {
-		debug "Selected items: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$items)."\n", "sendPacket";
+		debug "Selected ".(scalar @{$items})." items: ".(join ', ', map {"".$_->{amount}." x ".$_->{itemName}." (binID:".$_->{itemIndex}.")"} @{$items})."\n", "sendPacket";
 	} else {
 		debug "Selected items were canceled.\n", "sendPacket";
 	}
 	undef $skillExchangeItem;
-}
-
-sub parse_item_list_window_selected {
-	my ($self, $args) = @_;
-	@{$args->{items}} = map {{ itemIndex => unpack('v', $_), amount => unpack('v', $_) }} unpack '(a4)*', $args->{itemInfo};
 }
 
 sub reconstruct_item_list_window_selected {
@@ -1421,7 +1409,7 @@ sub rodex_open_write_mail {
 	my ($self, $name) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_open_write_mail',
-		name => $name,
+		name => stringToBytes($name),
 	}));
 }
 
@@ -1429,10 +1417,12 @@ sub rodex_checkname {
 	my ($self, $name) = @_;
 	$self->sendToServer($self->reconstruct({
 		switch => 'rodex_checkname',
-		name => $name,
+		name => stringToBytes($name),
 	}));
 }
 
+#note ! 
+#merge sub of 0A6E / 09EC ? [sctnightcore]
 sub rodex_send_mail {
 	my ($self) = @_;
 
@@ -1441,7 +1431,7 @@ sub rodex_send_mail {
 	my $pack = $self->reconstruct({
 		switch => 'rodex_send_mail',
 		receiver => $rodexWrite->{target}{name},
-		sender => $char->{name},
+		sender => stringToBytes($char->{name}),
 		zeny1 => $rodexWrite->{zeny},
 		zeny2 => 0,
 		title_len => length $title,
@@ -1461,6 +1451,11 @@ sub rodex_refresh_maillist {
 		type => $type,
 		mailID1 => $mailID1,
 		mailID2 => $mailID2,
+		# seems that is not current used by client/server 2019-09-16
+		mailReturnID1 => 0,
+		mailReturnID2 => 0,
+		mailAccountID1 => 0,
+		mailAccountID2 => 0,
 	}));
 }
 
@@ -1491,6 +1486,11 @@ sub rodex_open_mailbox {
 		type => $type,
 		mailID1 => $mailID1,
 		mailID2 => $mailID2,
+		# seems that is not current used by client/server 2019-09-16
+		mailReturnID1 => 0,
+		mailReturnID2 => 0,
+		mailAccountID1 => 0,
+		mailAccountID2 => 0,
 	}));
 }
 
@@ -2443,6 +2443,18 @@ sub sendPetName {
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
 
+sub sendPetEmotion {
+	my ($self, $ID) = @_;
+	
+	$self->sendToServer($self->reconstruct({
+		switch => 'pet_emotion',
+		ID => $ID,
+	}));
+	
+	debug "Sent Pet Emotion: $ID\n", "sendPacket", 2;
+}
+
+
 sub sendBuyBulk {
 	my ($self, $r_array) = @_;
 	
@@ -2456,8 +2468,9 @@ sub sendBuyBulk {
 
 sub reconstruct_buy_bulk {
 	my ($self, $args) = @_;
+	my $pack = $self->{send_buy_bulk_pack} || "v2";
 	
-	$args->{buyInfo} = pack "(a*)*", map { pack "v2", $_->{amount}, $_->{itemID} } @{$args->{items}};
+	$args->{buyInfo} = pack "(a*)*", map { pack $pack, $_->{amount}, $_->{itemID} } @{$args->{items}};
 }
 
 sub sendSellBulk {
@@ -3049,6 +3062,88 @@ sub sendCaptchaAnswer {
 		
 		# Strangely, this packet has fixed length (dec 32, or hex 0x20) but has it padded into it - lututui
 		len => (exists $rpackets{'07E7'}{length}) ? $rpackets{'07E7'}{length} : 32,
+	}));
+}
+
+# kRO Client before 2010-08-03 only allow 1 item per transaction
+# idRO_Renewal and iRO Chaos use this packet
+#
+# Since RagexeRE_2010_08_03a it's allowed for multiple items at once see Network/Send/kRO/RagexeRE_2010_08_03a.pm
+sub sendCashShopBuy {
+	my ($self, $points, $items) = @_;
+
+	if (scalar @{$items}) {
+		debug sprintf("Sent buying request from cashshop for %d items.\n", scalar @{$items}), "sendPacket", 2;
+		foreach my $item (@{$items}) {
+			$self->sendToServer($self->reconstruct({
+				switch => 'cash_dealer_buy',
+				itemid => $item->{itemID},
+				amount => $item->{amount},
+				kafra_points => $points,
+			}));
+		}
+	}
+}
+
+sub sendStartSkillUse {
+	my ($self, $ID, $lv, $targetID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'start_skill_use', lv => $lv, skillID => $ID, targetID => $targetID}));
+	debug "Start Skill Use: $ID\n", "sendPacket", 2;
+}
+
+sub sendStopSkillUse {
+	my ($self, $ID) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'stop_skill_use',skillID => $ID}));
+	debug "Stop Skill Use: $ID\n", "sendPacket", 2;
+}
+
+##
+# Request to merge item
+# 096E <size>.W { <index>.W }*
+# @author [Cydh]
+##
+sub sendMergeItemRequest {
+	my ($self, $num, $items) = @_;
+	#my $len = ($num * 4) + 12;
+	$self->sendToServer($self->reconstruct({
+		switch => 'merge_item_request',
+		#len => $len,
+		items => $items,
+	}));
+	debug "Sent merge item request: ".(join ', ', map { $_->{info}->{binID}." x ".$_->{info}->{amount} } @$items)."\n", "sendPacket";
+}
+
+sub reconstruct_merge_item_request {
+	my ($self, $args) = @_;
+	$args->{itemList} = pack '(a2)*', map { $_->{ID} } @{$args->{items}};
+}
+
+##
+# Request to cancel merge item
+# 0974
+# @author [Cydh]
+##
+sub sendMergeItemCancel {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'merge_item_cancel' }));
+	debug "Cancel Merge item\n", "sendPacket";
+	$mergeItemList = {};
+}
+
+#sub reconstruct_merge_item_cancel {
+#	my ($self, $args) = @_;
+#}
+
+sub sendStylistChange {
+	my ($self, $hair_color, $hair_style, $cloth_color, $head_top, $head_mid, $head_bottom ) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'stylist_change',
+		hair_color => $hair_color, 
+		hair_style => $hair_style, 
+		cloth_color => $cloth_color,
+		head_top => $head_top,
+		head_mid => $head_mid,
+		head_bottom => $head_bottom
 	}));
 }
 

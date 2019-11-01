@@ -94,6 +94,7 @@ sub OnInit {
 		['mainLoop_pre',                        sub { $self->onUpdateUI(); }],
 		['captcha_file',                        sub { $self->onCaptcha(@_); }],
 		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
+		['start3',				sub { delete $interface->{mapViewer}->{portals} if ($interface->{mapViewer}->{portals});$interface->{mapViewer}->parsePortals(Settings::getTableFilename("portals.txt")); }],
 		
 		# stat changes
 		['packet/map_changed',                  sub { $self->onSelfStatChange (@_); $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
@@ -457,9 +458,7 @@ sub createMenuBar {
 	$self->addMenu($infoMenu, T('&Monsters').'	Alt-M',	sub { Commands::run("ml"); });
 	$self->addMenu($infoMenu, T('&NPCs'),		sub { Commands::run("nl"); });
 	$infoMenu->AppendSeparator;
-	$self->addMenu($infoMenu, T('&Experience Report'),	sub {
-		$self->openWindow (T('Report'), 'Interface::Wx::StatView::Exp', 1) 
-	});
+	$self->addMenu($infoMenu, T('&Experience Report'),	sub { Commands::run("exp"); });
 	$self->addMenu($infoMenu, T('&Item Change Report'),	sub { Commands::run("exp item"); });
 	$self->addMenu($infoMenu, T('&Monsiter Kill Report'),	sub { Commands::run("exp monster"); });
 	$menu->Append($infoMenu, T('I&nfo'));
@@ -562,17 +561,17 @@ sub createMenuBar {
 	$self->{friendMenu} = new Wx::Menu;
 	$self->addMenu($self->{friendMenu}, T('Friend list'), sub {Commands::run("friend")}, 'Friend list');
 	$self->{friendMenu}->AppendSeparator;
-	$self->addMenu($self->{friendMenu}, T('Auto accept friend request'), sub {Commands::run("friend accept")}, 'Auto accept all incoming friend requests');
-	$self->addMenu($self->{friendMenu}, T('Auto reject friend request'), sub {Commands::run("friend reject")}, 'Auto reject all incoming friend requests');
+	$self->addMenu($self->{friendMenu}, T('Auto accept friend request'), sub {Commands::run("friend accept")}, T('Auto accept all incoming friend requests'));
+	$self->addMenu($self->{friendMenu}, T('Auto reject friend request'), sub {Commands::run("friend reject")}, T('Auto reject all incoming friend requests'));
 	$commandMenu->AppendSubMenu($self->{friendMenu}, T('&Friend'), T('Friend'));
 	
 	#Guild menu
 	$self->{guildMenu} = new Wx::Menu;
-	$self->addMenu($self->{guildMenu}, T('Guild information'), sub {Commands::run("guild info")}, 'Guild information');
-	$self->addMenu($self->{guildMenu}, T('Guild member'), sub {Commands::run("guild member")}, 'Guild memberinformation');
+	$self->addMenu($self->{guildMenu}, T('Guild information'), sub {Commands::run("guild info")}, T('Guild information'));
+	$self->addMenu($self->{guildMenu}, T('Guild member'), sub {Commands::run("guild member")}, T('Guild memberinformation'));
 	$self->{guildMenu}->AppendSeparator;
-	$self->addMenu($self->{guildMenu}, T('Auto accept guild request'), sub {Commands::run("guild join 1")}, 'Auto accept all incoming guild requests');
-	$self->addMenu($self->{guildMenu}, T('Auto reject guild request'), sub {Commands::run("guild join 0")}, 'Auto reject all incoming guild requests');
+	$self->addMenu($self->{guildMenu}, T('Auto accept guild request'), sub {Commands::run("guild join 1")}, T('Auto accept all incoming guild requests'));
+	$self->addMenu($self->{guildMenu}, T('Auto reject guild request'), sub {Commands::run("guild join 0")}, T('Auto reject all incoming guild requests'));
 	$commandMenu->AppendSubMenu($self->{guildMenu}, T('&Guild'), T('Guild'));
 	
 	$commandMenu->AppendSeparator;
@@ -796,7 +795,7 @@ sub createSplitterContent {
 	$mapView->onMouseMove(\&onMapMouseMove, $self);
 	$mapView->onClick(\&onMapClick, $self);
 	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
-	$mapView->parsePortals(Settings::getTableFilename("portals.txt"));
+	#$mapView->parsePortals(Settings::getTableFilename("portals.txt"));#too early ?
 	if ($field && $char) {
 		$mapView->set($field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
 	}

@@ -1,8 +1,8 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
-#include <windows.h>
 #include <winsock2.h>
+#include <windows.h>
 
 #ifndef NULL
 	#define NULL ((void *) 0)

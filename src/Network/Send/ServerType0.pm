@@ -140,6 +140,7 @@ sub new {
 		'01A1' => ['pet_menu', 'C', [qw(action)]],
 		'01A5' => ['pet_name', 'a24', [qw(name)]],
 		'01A7' => ['pet_hatch', 'a2', [qw(ID)]],
+		'01A9' => ['pet_emotion', 'V', [qw(ID)]],
 		'01AE' => ['make_arrow', 'v', [qw(nameID)]],
 		'01AF' => ['change_cart', 'v', [qw(lvl)]],
 		'01BA' => ['gm_remove', 'a24', [qw(playerName)]],
@@ -196,6 +197,7 @@ sub new {
 		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
 		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
+		'0288' => ['cash_dealer_buy', 'v2 V', [qw(itemid amount kafra_points)]],
 		'0292' => ['auto_revive'],
 		'029F' => ['mercenary_command', 'C', [qw(flag)]],
 		'02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
@@ -236,7 +238,7 @@ sub new {
 		'0811' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0815' => ['buy_bulk_closeShop'],
 		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
-		'0819' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'0819' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
 		'0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]], # kRO Zero 2017/2018 login
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'0829' => ['char_delete2_accept', 'a4 a6', [qw(charID code)]], # 12
@@ -259,7 +261,9 @@ sub new {
 		'08C1' => ['macro_start'],#2
 		'08C2' => ['macro_stop'],#2
 		'08C9' => ['request_cashitems'],#2
+		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
 		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
+		'0974' => ['merge_item_cancel'], #2
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
@@ -286,14 +290,24 @@ sub new {
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
+		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
+		'0A97' => ['equipswitch_add', 'v V', [qw(index position)]], # Add item to equipswitch
+		'0A99' => ['equipswitch_remove', 'v', [qw(index)]], # remove item in equipswitch
+		'0A9C' => ['equipswitch_run'], # switch Item !
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]],
+		'0AC0' => ['rodex_open_mailbox', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]],  # 26 -- RodexOpenMailbox
+		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
+		'0ACE' => ['equipswitch_single', 'a2', [qw(index)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AE8' => ['change_dress'],
+		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
+		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
+		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
@@ -460,13 +474,6 @@ sub sendRequestMakingHomunculus {
 
 # 0x0213 has no info on eA
 
-sub sendCashShopBuy {
-	my ($self, $ID, $amount, $points) = @_;
-	my $msg = pack("v v2 V", 0x0288, $ID, $amount, $points);
-	$self->sendToServer($msg);
-	debug "Sent My Sell Stop.\n", "sendPacket", 2;
-}
-
 sub sendMessageIDEncryptionInitialized {
 	my $self = shift;
 	my $msg = pack("v", 0x02AF);
@@ -480,6 +487,36 @@ sub sendCaptchaInitiate {
 	my $msg = pack('v2', 0x07E5, 0x0);
 	$self->sendToServer($msg);
 	debug "Sending Captcha Initiate\n";
+}
+
+sub sendEquipswitchAdd {
+	my ($self,$index,$position) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'equipswitch_add',
+		index => $index,
+		position => $position
+	}));
+}
+
+sub sendEquipswitchRemove {
+	my ($self,$index) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'equipswitch_remove',
+		index => $index
+	}));
+}
+sub sendEquipswitchRun { #noidea T.T
+	my ($self) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'equipswitch_run'
+	}));
+}
+sub sendEquipswitchSingle {
+	my ($self,$index) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'equipswitch_single',
+		index => $index
+	}));
 }
 
 1;

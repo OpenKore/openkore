@@ -23,7 +23,7 @@ sub new {
 		'085E' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0883' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0920' => ['actor_name_request', 'a4', [qw(ID)]],
-		'08AD' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
+		'08AD' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
 		'0863' => ['buy_bulk_closeShop'],			
 		'0802' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0939' => ['buy_bulk_request', 'a4', [qw(ID)]], #6

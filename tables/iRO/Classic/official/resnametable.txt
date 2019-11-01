@@ -1627,3 +1627,27 @@ hugel_us.gnd#hugel.gnd#
 hugel_us.gat#hugel.gat#
 hugel_us.rsw#hugel.rsw#
 삯샺샎엍웤샌붺\map\hugel_us.bmp#삯샺샎엍웤샌붺\map\hugel.bmp#
+
+
+//Halloween 2018
+hal_in18.gnd#prt_in.gnd#
+
+hal_in18.gat#prt_in.gat#
+
+hal_in18.rsw#prt_in.rsw#
+
+삯샺샎엍웤샌붺\map\hal_in18.bmp#삯샺샎엍웤샌붺\map\prt_in.bmp#
+
+//Halloween 2018 Instance
+1@niflhe.gat#niflheim.gat#
+
+1@niflhe.rsw#niflheim.rsw#
+
+삯샺샎엍웤샌붺\map\1@niflhe.bmp#삯샺샎엍웤샌붺\map\niflheim.bmp#
+
+//Halloween 2018 Secret Dungeon
+1@rossi.gat#kh_rossi.gat#
+
+1@rossi.rsw#kh_rossi.rsw#
+
+삯샺샎엍웤샌붺\map\1@rossi.bmp#삯샺샎엍웤샌붺\map\kh_rossi.bmp#

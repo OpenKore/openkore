@@ -6531,8 +6531,7 @@ Weight : ^77777710^000000
 Jobs: ^777777All^000000
 #
 5014#
-Helment accessories
-that look just like fins.
+Helmet accessories that look just like fins.
 Class : ^777777Headgear^000000
 Defense : ^7777772^000000
 Location : ^777777Middle^000000
@@ -6541,9 +6540,7 @@ Required Level : ^77777765^000000
 Jobs: ^777777Swordman Class^000000
 #
 5015#
-A peculiar hat that
-makes it wearer look
-freshly hatched.
+A peculiar hat that makes it wearer look freshly hatched.
 Class : ^777777Headgear^000000
 Defense : ^7777773^000000
 Location : ^777777Upper^000000
@@ -40283,18 +40280,22 @@ Jobs : ^777777All^000000
 #
 16548#
 Contains one Ephemeral Brysingamen.
+Note that the item within is a rental and has an expiration date!
 Weight : ^7777771^000000
 #
 16549#
 Contains one Ephemeral Sleipnir.
+Note that the item within is a rental and has an expiration date!
 Weight : ^7777771^000000
 #
 16550#
 Contains one Ephemeral Mjolnir.
+Note that the item within is a rental and has an expiration date!
 Weight : ^7777771^000000
 #
 16551#
 Contains one Ephemeral Megingiorde.
+Note that the item within is a rental and has an expiration date!
 Weight : ^7777771^000000
 #
 5738#
@@ -41639,7 +41640,7 @@ Increases resistence against Fire Property attacks by 10%
 Decreases resistence against Water Property attacks 10%.
 Enables use of Lv.1 Sight.
 Has a chance of auto-casting Lv. 3 Meteor Storm when receiving physical attack.
-Has a chance of auto-casting Lv. 3 Fire Bolt Lv.3 dealing physical damage.
+Has a chance of auto-casting Lv. 3 Fire Bolt when dealing physical damage.
 Unable to refine.
 Item Class : ^777777Headgear^000000
 Defense : ^7777778^000000
@@ -65872,8 +65873,7 @@ except Novice^000000
 #
 
 27213#
-Helment accessories
-that look just like fins.
+Helmet accessories that look just like fins.
 Class : ^777777Headgear^000000
 Defense : ^7777772^000000
 Location : ^777777Middle^000000
@@ -71821,6 +71821,420 @@ Return this certificate and the following items to Frank, the owner of the Laure
 1 Sleeper Hat Certificate
 Shadowy rumors say the following about this certificate:
 It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20063#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Witch's Pumpkin Hat!
+300 Pieces of Black Cloth
+150 Ectoplasm
+75 Black Hairs
+25 Torn Magic Books
+1 Jack o' Pumpkin
+1 Witch's Pumpkin Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20064#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Zaha Doll Hat!
+300 Fabric
+150 Blue Hair
+75 Moth Dust
+5 Cobaltblue Dyestuffs
+1 Zaha Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20065#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Helm Of Abyss!
+400 Mould Powder
+200 Ectoplasm
+100 Black Bear Skin
+50 Crystals of Darkness
+1 Book of the Devil
+1 Helm Of Abyss Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20066#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Mask Of Ifrit!
+500 Burning Hearts
+250 Burning Hair
+1 Level 3 Fire Bolt scroll
+1 Level 5 Fire Ball scroll
+1 Flame Heart
+1 Mask Of Ifrit Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20067#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Mercury Riser!
+400 Fabric
+200 Red Gemstones
+50 Crystal Fragments
+5 Gold
+1 Bapho Jr. Card
+1 Mercury Riser Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20068#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pisces Diadem!
+5 Gold
+50 2carat Diamonds
+150 3carat Diamonds
+10 Amethyst
+1 Pisces Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20069#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gemini Diadem!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamonds
+500 Blue Gemstones
+1 Gemini Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20070#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pink Beanie!
+300 Fabric
+150 Burning Hair
+2 Scarlet Dyestuffs
+2 White Dyestuffs
+1 Pink Beanie Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20071#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Rudolph Santa Hat!
+200 Fabric
+100 Skel-Bones
+50 Sea-Otter Fur
+2 Scarlet Dyestuffs
+1 Rudolph Santa Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20072#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Evolved Big Golden Bell!
+200 Mould Powder
+100 Fabric
+50 Iron
+2 Gold
+1 Evolved Big Golden Bell Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20073#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Evolved Pair of Red Ribbon!
+200 Fabric
+100 Powder of Butterfly
+50 Burning Hair
+1 Scarlet Dyestuffs
+1 Evolved Pair of Red Ribbon Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20074#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Capricon Crown!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamond
+25 Garnet
+1 Capricon Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20075#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gryphon Hat!
+300 Feathers
+200 Feather of Birds
+100 Powder of Butterfly
+2 Spiritual Crystals (Rhyncho)
+1 Gryphon Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20076#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Lif Doll Hat!
+200 Fabric
+100 Golden Hair
+50 Powder of Butterfly
+1 Hung Doll
+1 Darkgreen Dyestuffs
+1 Lif Doll Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20077#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Bf Recruiter Hat!
+100 Pieces of Black Cloth
+50 Ectoplasm
+25 Oil Paper
+5 Slick Paper
+1 Bf Recruiter Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20078#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gf Recruiter Hat!
+100 Pieces of Black Cloth
+50 Ectoplasm
+25 Oil Paper
+5 Slick Paper
+1 Gf Recruiter Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20079#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Scorpio Crown!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamond
+1 Gemstone
+100 Topaz
+1 Scorpio Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 3 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20080#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Vintage Orc Helm!
+200 Feathers
+100 Animal Skins
+50 Dust Pollutant
+50 Sticky Mucus
+5 Gold
+1 Vintage Orc Helm Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20081#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Pink Drooping Cat!
+250 Golden Hair
+2 Cat's Eyes
+1 Black Cat Doll
+1 Scarlet Dyestuffs
+1 White Dyestuffs
+1 Pink Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20082#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Mini Glasses!
+200 Glass Beads
+50 Gold
+50 Dust Pollutants
+50 Star Dust
+1 Mini Glasses Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 3
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20083#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Party Recruiter Hat!
+100 Pieces of Black Cloth
+50 Ectoplasm
+25 Oil Paper
+5 Slick Paper
+1 Party Recruiter Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20084#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Aries Crown!
+5 Gold
+50 2carat Diamonds
+150 3carat Diamonds
+5 1carat Diamonds
+1 Aries Crown Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 2 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20085#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Brown Deviruchi Hat!
+100 Fabric
+100 Brown Roots
+50 Burning Hairs
+20 Worn-out Magic Scroll
+1 Brown Deviruchi Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20086#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Brown Drooping Cat!
+250 Golden Hair
+2 Cat's Eyes
+1 Black Cat Doll
+2 White Dyestuffs
+1 Brown Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20087#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Tulip Hairpin!
+200 Large Jellopy
+100 Broken Shell
+5 Iron
+1 Flower
+1 Tulip Hairpin Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20088#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Red Glasses!
+100 Steel
+50 Glass Beads
+20 Star Dust
+1 Scarlet Dyestuffs
+1 Red Glasses Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20089#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Aquarius Diadem!
+5 Gold
+25 2carat Diamonds
+125 3carat Diamonds
+25 Garnets
+1 Aquarius Diadem Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 2
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20090#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Yellow Drooping Cat!
+250 Golden Hair
+2 Cat's Eyes
+1 Black Cat Doll
+2 Lemon Dyestuffs
+1 Yellow Drooping Cat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1
+It is worth 1 Forgery Tokens
+Weight: 1
+Character Bound
+#
+
+20091#
+Return this certificate and the following items to Frank, the owner of the Laurel and Hatty Co. in Morroc to receive 1 Gray Deviruchi Hat!
+100 Fabric
+100 Maneater Roots
+50 Burning Hairs
+20 Worn-out Magic Scroll
+1 Gray Deviruchi Hat Certificate
+Shadowy rumors say the following about this certificate:
+It is Tier 1 Set Two
 It is worth 1 Forgery Tokens
 Weight: 1
 Character Bound

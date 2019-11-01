@@ -214,8 +214,6 @@ sub loadDataFiles {
 	# Load all other tables
 	Settings::addTableFile('cities.txt',
 		loader => [\&parseROLUT, \%cities_lut]);
-	Settings::addTableFile('commanddescriptions.txt',
-		loader => [\&parseCommandsDescription, \%descriptions], mustExist => 0);
 	Settings::addTableFile('directions.txt',
 		loader => [\&parseDataFile2, \%directions_lut]);
 	Settings::addTableFile('elements.txt',
@@ -279,6 +277,10 @@ sub loadDataFiles {
 	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable, { hide_comments => 0 }], mustExist => 0);
 	Settings::addTableFile('hateffect_id_handle.txt', loader => [\&parseDataFile2, \%hatEffectHandle]);
 	Settings::addTableFile('hateffect_name.txt', loader => [\&parseDataFile2, \%hatEffectName], mustExist => 0);
+	Settings::addTableFile('item_stack_limit.txt', loader => [\&parseItemStackLimit, \%itemStackLimit]);
+	Settings::addTableFile('ITEMOPTION_id_handle.txt', loader => [\&parseDataFile2, \%itemOptionHandle], mustExist => 0);
+	Settings::addTableFile('item_options.txt', loader => [\&parseROLUT, \%itemOption_lut], mustExist => 0);
+	Settings::addTableFile('title_name.txt',loader => [\&parseDataFile2, \%title_lut], mustExist => 0);
 
 	use utf8;
 
@@ -534,6 +536,7 @@ sub finalInitialization {
 	$elementalsList = new ActorList('Actor::Elemental');
 	$venderItemList = InventoryList->new;
 	$storeList = InventoryList->new;
+	$cashList = InventoryList->new;
 	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList, $elementalsList) {
 		$list->onAdd()->add(undef, \&actorAdded);
 		$list->onRemove()->add(undef, \&actorRemoved);
@@ -543,7 +546,7 @@ sub finalInitialization {
 	StdHttpReader::init();
 	initStatVars();
 	initRandomRestart();
-	initUserSeed();
+#	initUserSeed();
 	initConfChange();
 	Log::initLogFiles();
 	$timeout{'injectSync'}{'time'} = time;
@@ -624,9 +627,12 @@ sub initMapChangeVars {
 		delete $char->{warp};
 		delete $char->{casting};
 		delete $char->{homunculus}{appear_time} if $char->{homunculus};
-		$char->inventory->onMapChange();
-		# Clear the cart but do not close it.
-		$char->cart->clear;
+		#Dont clear item on Map change [sctnightcore]
+		if ($masterServer->{serverType} ne 'iRO_Renewal') {
+			$char->inventory->onMapChange();
+			# Clear the cart but do not close it.
+			$char->cart->clear;
+		}
 		$char->storage->close() if ($char->storage->isReady());
 	}
 	$timeout{play}{time} = time;
@@ -676,6 +682,7 @@ sub initMapChangeVars {
 	undef $skillExchangeItem;
 	undef $refineUI;
 	undef $currentCookingType;
+	undef $mergeItemList;
 	$captcha_state = 0;
 	$universalCatalog{open} = 0;
 	$universalCatalog{has_next} = 0;
@@ -691,6 +698,7 @@ sub initMapChangeVars {
 	$elementalsList->clear();
 	$venderItemList->clear;
 	$storeList->clear;
+	$cashList->clear;
 	
 	@{$universalCatalog{list}} = ();
 	@unknownPlayers = ();

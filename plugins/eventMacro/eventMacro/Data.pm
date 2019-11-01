@@ -38,41 +38,46 @@ use constant {
 };
 
 our %parameters = (
-	'timeout' => 1,      # setting: re-check timeout
-	'delay' => 1,        # option: delay before the macro starts
-	'run-once' => 1,     # option: run automacro only once
-	'disabled' => 1,     # option: automacro disabled
-	'call' => 1,         # setting: macro to be called
-	'overrideAI' => 1,   # option: override AI
-	'orphan' => 1,       # option: orphan handling
-	'macro_delay' => 1,  # option: default macro delay
-	'priority' => 1,     # option: automacro priority
-	'exclusive' => 1,    # option: is macro interruptible
-	'repeat' => 1,       # option: the number of times the called macro will repeat itself
-	'CheckOnAI' => 1,    # option: on which AI state the automacro will be checked
+	'timeout' => 1,               # setting: re-check timeout
+	'delay' => 1,                 # option: delay before the macro starts
+	'run-once' => 1,              # option: run automacro only once
+	'disabled' => 1,              # option: automacro disabled
+	'call' => 1,                  # setting: macro to be called
+	'overrideAI' => 1,            # option: override AI
+	'orphan' => 1,                # option: orphan handling
+	'macro_delay' => 1,           # option: default macro delay
+	'priority' => 1,              # option: automacro priority
+	'exclusive' => 1,             # option: is macro interruptible by other automacros
+	'self_interruptible' => 1,    # option: is macro interruptible by its own caller automacro
+	'repeat' => 1,                # option: the number of times the called macro will repeat itself
+	'CheckOnAI' => 1,             # option: on which AI state the automacro will be checked
 );
 
 our $macroKeywords = join '|', qw(
-	npc
-	store
-	player
-	monster
-	vender venderitem venderprice venderamount
-	random rand
-	invamount inventory Inventory InventoryType
-	cartamount cart Cart
-	storamount storage Storage
-	shopamount
-	config
-	eval
 	arg
-	listitem
-	strip
-	nick
-	push pop unshift shift
-	exists delete
+	cartamount cart Cart
+	config
 	defined
+	eval
+	exists
+	delete
+	invamount inventory Inventory InventoryType
+	keys
+	listitem listlenght
+	monster
+	nick
+	npc
+	player
+	push pop unshift shift
+	random rand
+	shopamount
+	split
+	store storamount
+	storage Storage
+	strip
 	questStatus questInactiveCount questIncompleteCount questCompleteCount
+	values
+	vender venderitem venderprice venderamount
 );
 
 1;
