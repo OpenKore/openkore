@@ -55,6 +55,8 @@ sub new {
 	$self->{textColor}{npc}     = new Wx::Colour (127, 0, 127);
 	$self->{brush}{portal}      = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
 	$self->{textColor}{portal}  = new Wx::Colour (191, 95, 47);
+	$self->{brush}{portalNpc}      = new Wx::Brush(new Wx::Colour(0, 255, 255), wxSOLID);
+	$self->{textColor}{portalNpc}  = new Wx::Colour (191, 95, 47);
 	$self->{brush}{slave}       = new Wx::Brush(new Wx::Colour(0, 0, 127), wxSOLID);
 	
 	$self->{brush}{gaugeBg}     = new Wx::Brush(new Wx::Colour(63, 63, 63), wxSOLID);
@@ -331,6 +333,7 @@ sub parsePortals {
 				},
 				zeny => $args[7],
 			});
+			${$self->{portals}->{$args[0]}}[$#{$self->{portals}->{$args[0]}}]->{npcType} = 1 if ($args[6]);
 		}
 	}
 	close FILE;
@@ -630,9 +633,16 @@ sub _onPaint {
 			$dc->SetPen(wxBLACK_PEN);
 		}
 		
-		$dc->SetBrush($self->{brush}{portal});
-		$dc->SetTextForeground ($self->{textColor}{portal});
+		#$dc->SetBrush($self->{brush}{portal});
+		#$dc->SetTextForeground ($self->{textColor}{portal});
 		foreach my $pos (@{$self->{portals}->{$self->{field}{name}}}) {
+			if ($pos->{npcType}) {
+				$dc->SetBrush($self->{brush}{portalNpc});
+				$dc->SetTextForeground ($self->{textColor}{portalNpc});
+			} else {
+				$dc->SetBrush($self->{brush}{portal});
+				$dc->SetTextForeground ($self->{textColor}{portal});
+			}
 			($x, $y) = $self->_posXYToView($pos->{x}, $pos->{y});
 			$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
 			if ($self->{zoom} >= ($config{wx_map_namesDetail} || 8)) {
