@@ -332,7 +332,7 @@ sub parsePortals {
 				},
 				zeny => $args[7],
 			});
-			${$self->{portals}->{$args[0]}}[$#{$self->{portals}->{$args[0]}}]->{npcType} = 1 if ($args[6]);
+			${$self->{portals}->{$args[0]}}[$#{$self->{portals}->{$args[0]}}]->{npcType} = 1 if (@args > 6);
 		}
 	}
 	close FILE;
