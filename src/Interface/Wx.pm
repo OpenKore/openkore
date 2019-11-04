@@ -94,7 +94,7 @@ sub OnInit {
 		['mainLoop_pre',                        sub { $self->onUpdateUI(); }],
 		['captcha_file',                        sub { $self->onCaptcha(@_); }],
 		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
-		['start3',				sub { delete $interface->{mapViewer}->{portals} if ($interface->{mapViewer}->{portals});$interface->{mapViewer}->parsePortals(Settings::getTableFilename("portals.txt")); }],
+		['start3',                              sub { $interface->{mapViewer}->parsePortals(); }],
 		
 		# stat changes
 		['packet/map_changed',                  sub { $self->onSelfStatChange (@_); $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
@@ -795,7 +795,6 @@ sub createSplitterContent {
 	$mapView->onMouseMove(\&onMapMouseMove, $self);
 	$mapView->onClick(\&onMapClick, $self);
 	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
-	#$mapView->parsePortals(Settings::getTableFilename("portals.txt"));#too early ?
 	if ($field && $char) {
 		$mapView->set($field->baseName, $char->{pos_to}{x}, $char->{pos_to}{y}, $field);
 	}
@@ -1419,22 +1418,28 @@ sub onMapMouseMove {
 
 		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field->baseName}}) {
 			if (distance($portal,{x=>$x,y=>$y}) <= ($config{wx_map_portalSticking} || 5)) {
-					$self->{mouseMapText} = TF("Portal at %s %s  -  Destination: %s, at %s %s", $x, $y, $portal->{destination}{field}, $portal->{destination}{x}, $portal->{destination}{y});
+					if ($portal->{npcType}) {
+						# this is a Warp NPC
+						$self->{mouseMapText} = TF("Warp NPC at %d %d", $x, $y);
+					} else {
+						# this is a portal
+						$self->{mouseMapText} = TF("Portal at %d %d  -  Destination: %s, at %d %d", $x, $y, $portal->{destination}{field}, $portal->{destination}{x}, $portal->{destination}{y});
+					}
 				}
 			}
 		foreach my $monster (@{$self->{mapViewer}->{monsters}}) {
 			if (distance($monster->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_monsterSticking} || 1)) {
-				$self->{mouseMapText} = TF("%s at %s, %s", Actor::get($monster->{ID}), $x, $y);
+				$self->{mouseMapText} = TF("%s at %d, %d", Actor::get($monster->{ID}), $x, $y);
 			}
 		}
 		foreach my $players (@{$self->{mapViewer}->{players}}) {
 			if (distance($players->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_playersSticking} || 1)) {
-				$self->{mouseMapText} = TF("%s at %s, %s  -  Class: %s", Actor::get($players->{ID}), $x, $y, $jobs_lut{$players->{jobID}});
+				$self->{mouseMapText} = TF("%s at %d, %d  -  Class: %s", Actor::get($players->{ID}), $x, $y, $jobs_lut{$players->{jobID}});
 			}
 		}
 		foreach my $npc (@{$self->{mapViewer}->{npcs}}){
 			if (distance($npc->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_npcSticking} || 1)) {
-				$self->{mouseMapText} = TF("%s at %s, %s", Actor::get($npc->{ID}), $x, $y);
+				$self->{mouseMapText} = TF("%s at %d, %d", Actor::get($npc->{ID}), $x, $y);
 			}
 		}
 	} else {
