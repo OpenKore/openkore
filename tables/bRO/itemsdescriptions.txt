@@ -19298,15 +19298,15 @@ Utilização: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4245#
-^0000ffResistência a monstros da raça Humanoide -20%.^000000
-^0000ffEXP adquirida por monstros da raça Humanoide +10%.^000000
+^0000ffResistência as raças Humano e Humanoide -20%.^000000
+^0000ffEXP adquirida por oponentes da raça Humanoide +10%.^000000
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4246#
 ^0000ffDano crítico +10%.^000000
-^0000ffCRIT +7 em oponentes da raça Humanoide.^000000
+^0000ffCRIT +7 em oponentes das raças Humano e Humanoide.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Soldado]^000000
 ^FF6347[Carta Batedor]^000000
@@ -45027,7 +45027,7 @@ Peso: ^7777771^000000
 14259#
 Uma caixa contendo um Anel do Açougueiro [A]. Manuseie com cuidado.
 ^000088Item de aluguel (15 dias)^000000
-Recebe 15% a mais de experiências de ^000088monstros da raça Humanoide^000000.
+^0000ffEXP adquirida por ^000088oponentes da raça Humanoide^000000 +15%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
@@ -47459,7 +47459,7 @@ Refino +9 ou mais:
 ^0000ffDesativa a autoconjuração de [Congelar].^000000
 A cada refino:
 ^0000ffDano físico contra oponentes de propriedade Fogo +5%.^000000
-Ao receber danos físicos:
+Ao receber danos físicos e mágicos:
 ^0000ff10% de chance de ativar um [Efeito] por 3 segundos.^000000
 --------------------------
 ^CD3278Efeito:^000000
@@ -52588,6 +52588,36 @@ Equipa em: ^777777Topo^000000
 Defesa: ^7777774^000000
 Peso: ^77777750^000000
 Nível necessário: ^777777175^000000
+Classes: ^777777Todas^000000
+#
+18884#
+Feito apenas para os mais fortes, esse elmo confeccionado aos moldes de Amatsu, quando equipado junto à armadura que leva o nome de Tatenashi, torna o usuário uma verdadeira fortaleza.
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
+^0000ffResistência a danos mágicos^000000 ^ff0000-5%.^000000
+^0000ffResistência a propriedade Neutro +5%.^000000
+--------------------------
+Refino +6 ou mais:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+^0000ffAo receber danos físicos corpo a corpo, 1% de chance de autoconjurar [Aparar Golpe] nv. 1.^000000
+--------------------------
+A cada refino a partir do +7:
+^0000ffResistência a propriedade Neutro +1% adicional.^000000
+^0000ffChance de autoconjurar [Aparar Golpe] +1% adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Armadura Tatenashi]^000000
+A cada refino da Armadura:
+^0000ffDEF +15.^000000
+A cada refino do Elmo:
+^0000ffDEF +15.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo^000000
+Defesa: ^77777715^000000
+Peso: ^777777100^000000
+Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
 18885#
@@ -59580,24 +59610,6 @@ Peso: ^777777420^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Cavaleiros Rúnicos^000000
-#
-21203#
-Uma máscara com um Sorriso Maligno que amedronta todas as pessoas ao seu redor.
-Todos Atributos + 1.
-Classe: ^777777Equipamento para cabeça^000000
-Defesa: ^7777770^000000
-Equipa em: ^777777Meio e Baixo^000000
-Peso: ^77777710^000000
-Nível necessário: ^7777771^000000
-Classe: ^777777Todas as classes^000000
-#
-21204#
-Uma máscara de Quve, a mascote de Nifflheim.
-Tipo : ^777777Visual^000000
-Equipa em : ^777777Meio e Baixo^000000
-Peso : ^7777770^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
 #
 22000#
 Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
