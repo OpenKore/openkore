@@ -6283,6 +6283,7 @@
 18874#Monóculo#
 18878#Chapéu da Guarda Real#
 18880#Chapéu Supremo Dourado#
+18884#Elmo Tatenashi#
 18885#Jejecap#
 18887#Tiara de Coelho Celeste#
 18888#Tiara de Coelho Flamejante#
@@ -6880,8 +6881,6 @@
 21024#Espada Veterana#
 21038#Espada Ancestral#
 21042#Espada Onimaru#
-21203#Sorriso Maligno#
-21204#Máscara de Quve#
 22000#Botas Temporais FOR#
 22001#Botas Temporais INT#
 22002#Botas Temporais AGI#
