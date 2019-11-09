@@ -8,9 +8,9 @@ Plays a sound if plugin alertSound is enabled (see sys.txt), and if a sound is s
 The config option "alertSound_#_eventList" should have a comma seperated list of all the desired events.
 
 Supported events:
-	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near, avoidGM_near, 
+	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near, avoidGM_near,
 	avoidList_near, private GM chat, private avoidList chat (not working for ID), private chat, public GM chat, public avoidList chat,
-	npc chat, public chat, system message, disconnected, item <item name>, item <item ID>, item cards, item *<part item name>*
+	public npc chat, public chat, system message, disconnected, item <item name>, item <item ID>, item cards, item *<part item name>*
 
 example config.txt:
 

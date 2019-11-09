@@ -14,9 +14,9 @@
 # The config option "alertSound_#_eventList" should have a comma seperated list of all the desired events.
 #
 # Supported events:
-#	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near, avoidGM_near, 
+#	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near, avoidGM_near,
 #	avoidList_near, private GM chat, private avoidList chat (not working for ID), private chat, public GM chat, public avoidList chat,
-#	npc chat, public chat, system message, disconnected, item <item name>, item <item ID>, item cards, item *<part item name>*
+#	public npc chat, public chat, system message, disconnected, item <item name>, item <item ID>, item cards, item *<part item name>*
 #
 # example:
 #	alertSound {
@@ -164,7 +164,7 @@ sub private {
 
 sub public {
 # eventList public GM chat
-# eventList npc chat
+# eventList public npc chat
 # eventList public chat
 	my (undef, $args) = @_;
 	my $event = "chat";
@@ -211,7 +211,7 @@ sub alertSound {
 		next if (!$config{"alertSound_".$i."_eventList"});
 		if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, $event)
 			&& checkSelfCondition("alertSound_$i")) {
-				$ai_v{"alertSound_$i"."_time"} = time; 
+				$ai_v{"alertSound_$i"."_time"} = time;
 				message "Sound alert: $event\n", "alertSound";
 				Utils::Win32::playSound($config{"alertSound_".$i."_play"});
 		}
