@@ -3197,6 +3197,7 @@ sub vender_items_list {
 
 	Plugins::callHook('packet_vender_store2', {
 		venderID => $args->{venderID},
+		venderCID => $args->{venderCID},
 		itemList => $venderItemList,
 	});
 }
