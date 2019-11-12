@@ -7674,7 +7674,7 @@ sub buying_store_found {
 
 	if (!$buyerLists{$ID} || !%{$buyerLists{$ID}}) {
 		binAdd(\@buyerListsID, $ID);
-		Plugins::callHook('packet_buying', {ID => unpack 'V', $ID});
+		Plugins::callHook('packet_buying', {ID => $ID});
 	}
 	$buyerLists{$ID}{title} = bytesToString($args->{title});
 	$buyerLists{$ID}{id} = $ID;
