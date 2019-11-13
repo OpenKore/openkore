@@ -64667,6 +64667,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31051#
+Botar o sol na cara? Nada disso! Com esse acessório estiloso e perfeito para dias quentes, você vai ter uma proteçãozinha contra os raios de sol sem a inconveniência de abafar o seu couro cabeludo.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31052#
 Uma antiga máscara que os Alquimistas costumavam usar durante perigosas experiências. Apesar de te dar um ar meio sinistro, ela vai te manter protegido de gases e líquidos nocivos.
 Tipo: ^777777Visual^000000
@@ -64948,6 +64956,14 @@ Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31150#
+Pare a cidade toda com esse lenço cheio de babados e bem na moda. Invejosos dirão que é cafona – não dê ouvidos para eles.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31151#
@@ -65512,6 +65528,14 @@ Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31309#
+Esbanjando pomposidade, esse baita chapéuzão faz parte do uniforme das bandas que apresentam belas performances musicais em Juno. Marcha soldado, cabeça de papel!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31312#

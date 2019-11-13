@@ -7227,6 +7227,7 @@
 31046#Diadema de Rosas Brancas#
 31047#Bochechas da Paixão#
 31048#Par de Lírios#
+31051#Viseira de Verão#
 31052#Máscara do Alquimista#
 31054#Chapéu do Sting Vitorioso#
 31055#Sopra-Poring de Sabão#
@@ -7259,6 +7260,7 @@
 31136#Boina da Torre do Relógio#
 31139#Orelhas do Coelho Branco#
 31149#Peruca da Nidhogg#
+31150#Lencinho Encantador#
 31151#Orelhas Felpudas#
 31152#Lacinho Vermelho da Piamette#
 31158#Chapéu de Esquilo#
@@ -7323,6 +7325,7 @@
 31299#Coelhinho Branco#
 31300#Gatchecol#
 31301#Piscadela#
+31309#Chapéu de Marchinha#
 31312#Elmo de Hades#
 31313#Asas do Anjo Renegado#
 31314#Chifres de Oni Adornados#
