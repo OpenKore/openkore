@@ -772,7 +772,9 @@ Peso: ^77777710^000000
 #
 679#
 É um excelente remédio, bem conhecido há milhares de anos num país do Extremo Oriente.
-^ffffff_^000000
+--------------------------
+^0000ffRemove Envenenamento e Envenenamento Mortal.^000000
+--------------------------
 Peso: ^77777730^000000
 #
 681#
@@ -8368,7 +8370,7 @@ Tipo: ^777777Arco^000000
 Ataque: ^777777120^000000
 Peso: ^7777770^000000
 Nível da arma: ^7777772^000000
-Nível necessário: ^7777740^000000
+Nível necessário: ^77777740^000000
 Classes: ^777777Arqueiros, Arruaceiros e evoluções e Gatunos^000000
 #
 1750#
@@ -17841,9 +17843,9 @@ Equipa em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4053#
-^0000ffPermite o uso da habilidade "Curar" em nível 1. Aumenta o consumo de SP de todas as habilidades utilizadas em 25%.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Curar] nv.1.^000000
+^0000ffCusto de SP das habilidades^000000 ^ff0000+25%.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -17862,9 +17864,9 @@ Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4056#
-^0000ffConcede 30% de resistência contra ataques da Propriedade Vento, Esquiva +5.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffEsquiva +5.^000000
+^0000ffResistência a propriedade Vento +30%.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
@@ -17965,9 +17967,9 @@ Equipa em: ^777777Calçado^000000
 Peso: ^7777771^000000
 #
 4071#
-^0000ffConcede 30% de resistência contra ataques da Propriedade Maldito, Esquiva +5.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffEsquiva +5.^000000
+^0000ffResistência a propriedade Maldito +30%.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
@@ -18035,9 +18037,9 @@ Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4081#
-^0000ffConcede 30% de resistência contra ataques da Propriedade Terra, Esquiva +5.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffEsquiva +5.^000000
+^0000ffResistência a propriedade Terra +30%.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
@@ -18099,10 +18101,11 @@ Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4090#
-^0000ffConcede 15% de resistência contra [Petrificação], concede 5% de resistência contra ataques da propriedade Terra, DEF +1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
-Equipa em:  ^777777Escudo^000000
+^0000ffDEF +1.^000000
+^0000ffTolerância a Petrificação +15%.^000000
+^0000ffResistência a propriedade Terra +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4091#
@@ -18134,9 +18137,9 @@ Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4095#
-^0000ffConcede 30% de resistência contra ataques da propriedade Água.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffEsquiva +5.^000000
+^0000ffResistência a propriedade Água +30%.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
@@ -18232,9 +18235,9 @@ Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4109#
-^0000ffConcede 30% de resistência contra ataques da propriedade Fogo, Esquiva +5.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffEsquiva +5.^000000
+^0000ffResistência a propriedade Fogo +30%.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
@@ -18259,9 +18262,9 @@ Equipa em: ^777777Equipamento para Cabeça^000000
 Peso: ^7777771^000000
 #
 4113#
-^0000ffConcede 30% de resistência contra ataques da propriedade Fantasma, Esquiva +5.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffEsquiva +5.^000000
+^0000ffResistência a propriedade Fantasma +30%.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
@@ -18280,9 +18283,9 @@ Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4116#
-^0000ffConcede 30% de resistência contra ataques da propriedade Sombrio, Esquiva +5.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffEsquiva +5.^000000
+^0000ffResistência a propriedade Sombrio +30%.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
@@ -20286,10 +20289,10 @@ Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4362#
-Carta Howard Alt-Eisen.
-Reduz a VelATQ em 5%, mas oferece +30 em Precisão.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffPrecisão +30.^000000
+^0000ffVelocidade de ataque^000000 ^ff0000-5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4363#
@@ -20335,10 +20338,10 @@ Equipado em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4368#
-Carta Cecil Damon.
-Aumenta a VelATQ em 5%, mas reduz a Precisão em -30.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Arma^000000
+^0000ffPrecisão^000000 ^ff0000-30.^000000
+^0000ffVelocidade de ataque +5%.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Arma^000000
 Peso: ^7777771^000000
 #
 4369#
@@ -27650,14 +27653,18 @@ Classes que utilizam: ^777777Todas^000000
 #
 5510#
 Uma touca para proteger os cabelos no banho. Também é usada nas passeatas em prol da economia de água. Depois de ter ficado um dia inteiro com xampu na cabeça por falta d’água, você aprendeu a importância de preservá-la!
-DEFM + 3, Esquiva + 3.
-10% de resistência a ataques da propriedade Água.
-Reduz em 10% o dano recebido de monstros da raça Peixe.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777774^000000
+--------------------------
+^0000ffDEFM +3.^000000
+^0000ffEsquiva +3.^000000
+--------------------------
+^0000ffResistência a propriedade Água +10%.^000000
+^0000ffResistência a oponentes da raça Peixe +10%.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
+Defesa: ^7777774^000000
 Peso: ^7777770^000000
-Nível Necessário : ^7777771^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 5511#
@@ -29883,6 +29890,29 @@ Peso: ^77777730^000000
 Nível necessário: ^77777730^000000
 Classes: ^777777Todas^000000
 #
+5963#
+Fones com boa qualidade de som infelizmente ainda não são a coisa mais discreta do universo... Mas isso não precisa ser um problema. Com os Fones Alados, você consegue integrar esse acessório ao seu estilo de moda!
+--------------------------
+^0000ffINT +3.^000000
+A cada refino:
+^0000ffDano mágico +1%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDano de [Ressonância] +30%.^000000
+^0000ffCusto de SP de [Ressonância] -18.^000000
+^0000ffRecarga de [Ruído Estridente] -0,5 segundos.^000000
+Refino +9 ou mais:
+^0000ffRecarga de [Ruído Estridente] -0,5 segundos adicional.^000000
+Refino +12 ou mais:
+^0000ffRecarga de [Ruído Estridente] -1 segundo adicional.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Topo e Meio^000000
+Defesa: ^7777770^000000
+Peso: ^7777771^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 5967#
 Cansado da vida na Praia Kokomo, esse Galapago decidiu viajar mundo afora em seu guarda-sol voador (?!). Agora, cabe a você impressioná-lo visitando os locais mais exóticos do mundo!
 ^0000ffAGI +1.^000000
@@ -29965,6 +29995,14 @@ Um belo chapéu da aristocracia de Einbroch, que deu início à moda chamada “
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+5983#
+Um acessório há muito abandonado por um Algoz que, em outros tempos, participara de uma grande batalha em Prontera. As marcas nesse item indicam que seu antigo dono já havia passado por grandes aventuras.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -45806,13 +45844,15 @@ Classes que utilizam: ^777777Todas^000000
 #
 15012#
 Robe branco como a neve encantado com uma forte magia.
-Reduz o tempo de conjuração fixo em 3%. (Apenas o maior efeito sobre o tempo de conjuração fixo será aplicado)
-Aumenta o efeito de Curar conjurado pelo usuário em 5%.
+--------------------------
+^0000ffConjuração fixa -3%.^000000
+^0000ffEfetividade de cura +5%.^000000
+--------------------------
 Tipo: ^777777Armadura^000000
 Defesa: ^77777742^000000
 Peso: ^77777740^000000
 Nível necessário: ^77777722^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 15013#
 Trajes para aventureiros que desejam melhorar a defesa.
@@ -47983,23 +48023,29 @@ Classes:  ^777777Noviços e evoluções^000000
 #
 16074#
 Feito para os Superaprendizes mais brutos e contendo a força de um meteoro, esse martelo pesado é perfeito para a pancadaria! Não se esqueça de aumentar seus níveis de habilidade para que seus inimigos descubram qual é o verdadeiro impacto de uma explosão cósmica!
+--------------------------
 ^a400cdIndestrutível em batalha.^000000
+--------------------------
 ^0000ffHabilita [Impacto de Tyr] no mesmo nível aprendido de [Perícia com Espada].^000000
+--------------------------
+Ao aprender [Usar Carrinho] nv.10:
+^0000ffHabilita [Cavalo-de-Pau] nv.1.^000000
+--------------------------
 A cada nível de [Perícia em Armamento]:
 ^0000ffATQ +5.^000000
 A cada nível de [Perícia com Machado e Espada]:
-^0000ffATQ +7.^000000
-^0000ffPrecisão +5.^000000
+^0000ffATQ +7. Precisão +5.^000000
 A cada nível de [Punho de Ferro]:
 ^0000ffATQ +30.^000000
-Ao aprender [Usar Carrinho] nv. 10:
-^0000ffHabilita [Cavalo-de-Pau] nv. 1.^000000
+--------------------------
 A cada refino até o +10:
 ^0000ffATQ +10.^000000
+--------------------------
 FOR base 108 ou mais:
-^0000ffConsumo de SP -10%.^000000
+^0000ffCusto de SP das habilidades -10%.^000000
 FOR base 120 ou mais:
-^0000ffConsumo de SP -20% adicional.^000000
+^0000ffCusto de SP das habilidades -20% adicional.^000000
+--------------------------
 Tipo: ^777777Maça^000000
 Ataque: ^7777771^000000
 Peso: ^7777772.000^000000
@@ -51723,11 +51769,11 @@ Classes : ^777777Todas^000000
 #
 18740#
 Você é membro da linhagem mais poderosa dos Einherjar, conhecida como Saiadims. Por incrível que pareça, você fica loiro sempre que começa a gritar muito e seus músculos parecem inchar. Só tome cuidado para não explodir com seu nível de poder de mais de 8 mil!
-Tipo : ^777777Visual^000000
-Equipa em : ^777777Topo^000000
-Peso : ^7777770^000000
-Nível Necessário : ^7777771^000000
-Classes : ^777777Todas^000000
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 18741#
 Essas chamas esverdeadas aquecem e iluminam tudo em seu caminho. Apesar de existirem diversas crenças e lendas a respeito do fogo esmeralda, já foi comprovado que o fenômeno surge a partir da inflamação de gases emitidos por um Poporing. Não pergunte quais gases são esses.
@@ -52751,14 +52797,16 @@ Nível necessário: ^77777770^000000
 Classes: ^777777Todas ^000000
 #
 18895#
-Dizem que há muito tempo, a Tribo Utan venerava uma antiga divindade chamada Tapaton. Por meio de sons produzidos por seu tambor místico, Tapaton teria conseguido guiar os Utan por diversos perigos, até alcançarem as raízes de Yggdrasil, onde Odin aguardava por eles.  Ele precisava que seu maior guerreiro recuperasse um tesouro perdido no Vulcão de Thor. Para que a força de Tapaton continuasse a ecoar nos ouvidos do seu herói, Odin transformou a pequena divindade em um par de asas, que iriam coroar a cabeça do guerreiro e protege-lo do fogo do vulcão. Assim surgiram as Asas de Tapaton.
-Aumenta a resistência contra ataques da propriedade fogo em 8%
-Tipo : ^777777Equipamento para Cabeça^000000
+Dizem que há muito tempo, a Tribo Utan venerava uma antiga divindade chamada Tapaton. Por meio de sons produzidos por seu tambor místico, Tapaton teria conseguido guiar os Utan por diversos perigos, até alcançarem as raízes de Yggdrasil, onde Odin aguardava por eles. Ele precisava que seu maior guerreiro recuperasse um tesouro perdido no Vulcão de Thor. Para que a força de Tapaton continuasse a ecoar nos ouvidos do seu herói, Odin transformou a pequena divindade em um par de asas, que iriam coroar a cabeça do guerreiro e protege-lo do fogo do vulcão. Assim surgiram as Asas de Tapaton.
+--------------------------
+^0000ffResistência a propriedade Fogo +8%.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Meio ^000000
-Peso : ^77777720^000000
-Nível Necessário : ^77777750^000000
-Classes : ^777777Todas^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 18896#
 Essas barbatanas foram retiradas dos lendários peixes encontrados no magma do Vulcão de Thor.
@@ -52772,13 +52820,15 @@ Classe : ^777777Todas as Classes^000000
 #
 18897#
 Um diadema feito de cristais de gelo. Ao colocá-lo na cabeça, não pense na sua mãe ou você vai querer chorar.
-Aumenta a resistência contra ataques da propriedade água em 8%
+--------------------------
+^0000ffResistência a propriedade Água +8%.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
 Defesa: ^7777775^000000
-Equipa em : ^777777Meio ^000000
-Peso : ^77777720^000000
-Nível Necessário : ^77777750^000000
-Classe : ^777777Todas as Classes^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 18898#
 À primeira vista, ela se parece com a Coroa de Yggdrasil, mas este artefato em especial foi abençoado pela própria Árvore da Vida para carregar sua energia e com isso dar mais poderes a um herói escolhido para enfrentar o Ragnarök.
@@ -55161,6 +55211,14 @@ Equipa em : ^777777Topo^000000
 Peso : ^7777770^000000
 Nível necessário : ^7777771^000000
 Classe : ^777777Todas^000000
+#
+19597#
+A última vez em que alguém foi visto usando um chapéu desses foi durante o último Torneio Mágico de Geffen. O usuário foi esbofeteado, congelado, queimado e envenenado durante a batalha, mas o chapéu continua intacto... Ele só pode ter algum encanto de conservação em efeito!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 19598#
 Um chapéu usado pelos nobres da família Tonistark, que vieram do norte pra fugir do frio, já que o inverno estava chegando.
@@ -57746,6 +57804,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20327#
+Você vai assumir a capitania, comandará o próprio navio e, se bobear, até mesmo conduzirá uma frota inteira... Mas no futuro. Por ora, você ainda está aprendendo os básicos e precisa usar esse chapéu bobo. Então pegue o esfregão e comece já a limpar o convés! Vamos!!!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20328#
 Uma carpa dourada criada especialmente para ser utilizada como prêmio aos participantes do famoso concurso "Cospobre de Rune-Midgard". Apesar de morta e mirradinha, o que vale é a intenção, não é mesmo? Ostente toda a sua exclusividade por aí, e lembre-se sempre: ESCAMA SÓ DE PEIXE!
 Tipo: ^777777Visual^000000
@@ -58110,6 +58176,14 @@ Essa máscara tem um visual parecido com o da Máscara do Tengu Corvo, e por alg
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20400#
+Proteja-se de qualquer encosto, maldição, simpatia, assombração, fantasma, demônio, entidade ou qualquer outra força maior. Mas ele só protege contra esses males, viu? Se te der uma gripe ou febre, você ainda vai precisar tomar um Ragcetamol!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -59053,20 +59127,20 @@ Classes: ^777777Todas^000000
 #
 20909#
 Réplica de uma Haori usada por um antigo lorde do castelo de Amatsu. Estas Haori são muito utilizadas por diversos mestres de artes marciais de toda Rune-Midgard.
+--------------------------
 ^0000ffEsquiva +10.^000000
 ^0000ffVelocidade de ataque +3%.^000000
-^0000ffHabilita [Ataque Duplo] nv. 3.^000000
-^0000ffHabilita [Combo Triplo] nv. 3.^000000
+^0000ffHabilita [Ataque Duplo] e [Combo Triplo] nv.3.^000000
+--------------------------
 Refino +8 ou mais:
 ^0000ffEsquiva +10 adicional.^000000
 ^0000ffVelocidade de ataque +3% adicional.^000000
-^0000ffHabilita [Ataque Duplo] nv. 5.^000000
-^0000ffHabilita [Combo Triplo] nv. 5.^000000
+^0000ffHabilita [Ataque Duplo] e [Combo Triplo] nv.5.^000000
 Refino +11 ou mais:
 ^0000ffEsquiva +10 adicional.^000000
 ^0000ffVelocidade de ataque +3% adicional.^000000
-^0000ffHabilita [Ataque Duplo] nv. 10.^000000
-^0000ffHabilita [Combo Triplo] nv. 10.^000000
+^0000ffHabilita [Ataque Duplo] e [Combo Triplo] nv.10.^000000
+--------------------------
 Tipo: ^777777Capa^000000
 Defesa: ^77777710^000000
 Peso: ^77777730^000000
@@ -63433,9 +63507,9 @@ FOR base 120 ou mais:
 ^0000ffCusto de SP de [Impacto de Tyr] -10.^000000
 ^0000ffCusto de SP de [Golpe Fulminante] -5.^000000
 Arma com refino +9 ou mais:
-^0000ffDano de [Impacto de Tyr] +100%.^000000
+^0000ffDano de [Impacto de Tyr] e [Golpe Fulminante] +100%.^000000
 Arma com refino +11 ou mais:
-^0000ffDano de [Impacto de Tyr] +100% adicional.^000000
+^0000ffDano de [Impacto de Tyr] e [Golpe Fulminante] +100% adicional.^000000
 --------------------------
 ^FF6347Conjunto^000000
 ^FF6347[Machado Veterano]^000000
@@ -65062,6 +65136,14 @@ Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classes : ^777777Todas^000000
 #
+31172#
+Uma baita cabeçona de fantasia de peru. O tamanho pode ser um pouco incômodo para andar em lugares apertados ou no meio de uma multidão, mas as risadas que você vai causar vão valer a pena. Recomenda-se que você não aperte a cabeça na parte de trás, senão ele vai fazer um barulho irritante!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31176#
 Macia e fofinha, essa boina de ursinho é ideal para os adeptos de um visual mais kawaii, como costumam dizer os jovens de Amatsu.
 Você sente como se o ursinho te observasse o tempo todo. Lendas dizem que quando sua energia acaba, o fofinho Freddy Tazbear cria vida para te assombrar.
@@ -66564,6 +66646,33 @@ Peso: ^77777770^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Insurgentes^000000
+#
+490031#
+Se você é uma pessoa aficionada por bichinhos fofíssimos, esse rabo postiço de Petal é o acessório que faltava pra você. Só não vai se esconder em uma moita enquanto usa um visual desses, senão vai ser muito fácil te confundir com um Petal de verdade!
+--------------------------
+^0000ffDano crítico +5%.^000000
+^0000ffCRIT +5 a distância.^000000
+^0000ffVelocidade de ataque +1.^000000
+^0000ffDano físico contra monstros Chefes +5%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Capuz de Esquilo]^000000
+Chapéu com refino +6 ou mais:
+^0000ffDano crítico +10% adicional.^000000
+^0000ffCRIT +10 a distância adicional.^000000
+^0000ffVelocidade de ataque +1 adicional.^000000
+^0000ffDano físico contra monstros Chefes +10% adicional.^000000
+Chapéu com refino +8 ou mais:
+^0000ffDano crítico +15% adicional.^000000
+^0000ffCRIT +15 a distância adicional.^000000
+^0000ffVelocidade de ataque +1 adicional.^000000
+^0000ffDano físico contra monstros Chefes +15% adicional.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+Defesa: ^7777773^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 570002#
 O formato dessa concha faz com que até mesmo um fraco sopro seja capaz de emitir o som mais agradável (ou incômodo). Imagina, então, se você ousar usar todo o seu fôlego num sopro só!
