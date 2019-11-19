@@ -3235,11 +3235,13 @@
 5932#Liberdade da Natureza#
 5933#Máscara do Tengu Corvo#
 5945#Lápis Mastigado#
+5963#Fones Alados#
 5967#Galapago Voador#
 5975#Boneca da Jirtas#
 5978#Vacina da Cura#
 5979#Penas Clampi ®#
 5980#Chapéu da Zenny Drédiful#
+5983#Máscara de Loki#
 5985#Máscara da Nobreza#
 6000#Cinzas da Escuridão#
 6001#Essência de Fogo#
@@ -6445,6 +6447,7 @@
 19585#Boina Alada Visual#
 19587#Visual do Rei Poring#
 19589#Tiara de Randgris#
+19597#Chapéu da Ordem Arcana#
 19598#Elmo do Rei do Norte#
 19600#Kiel de Pelúcia#
 19602#Chapéu Invisível#
@@ -6734,6 +6737,7 @@
 20324#Chapéu com Pombo#
 20325#Aura de Byalan#
 20326#Gola Escolar de Marinheiro#
+20327#Quepe de Grumete#
 20328#Carpa Dourada de Cospobre#
 20340#Rabo de Cavalo Preto#
 20341#Mecha de Cabelo Preto#
@@ -6775,6 +6779,7 @@
 20397#Máscara de Jakk#
 20398#Chapéu de Coelho Maldito#
 20399#Fantasia do Tengu Corvo#
+20400#Cruz Dourada#
 20401#Espírito angelical#
 20404#Benção Angelingal#
 20405#Cachecol do Eremes#
@@ -7272,6 +7277,7 @@
 31167#Orelhas Pretas de Lunático#
 31168#Abafadores de Orelha de Carneiro#
 31169#Chapéu do Agreste#
+31172#Cabeça de Glugluzão#
 31176#Boina de Ursinho#
 31177#Chapéu Mãe Natureza#
 31178#Cachecol em Chamas#
@@ -7438,5 +7444,6 @@
 32227#Grilhões de Hrodvitnir#
 32243#Anel do Desbravador#
 32302#Revólver Ancestral#
+490031#Cauda de Petal#
 570002#Concha Ancestral#
 580002#Concertina Ancestral#
