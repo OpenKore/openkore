@@ -3495,7 +3495,13 @@ sub useTeleport {
 			return 1;
 		}
 	}
-
+	# We used all not item teleport options.
+	# Cheking inventory->isReady() before looking for items to teleport.
+	# Timing out if not ready.
+	if (!$char->inventory->isReady()){
+		$timeout{ai_teleport}{time} = time;
+		return 0;
+	}
 	# No skill try to equip a Tele clip or something,
 	# if teleportAuto_equip_* is set
 	if (Actor::Item::scanConfigAndCheck('teleportAuto_equip') && ($use_lvl == 1 || !$config{'teleportAuto_useItemForRespawn'})) {
