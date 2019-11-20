@@ -2692,6 +2692,7 @@ sub processPartySkillUse {
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
 			next if (!$config{"partySkill_$i"});
 			next unless checkSelfCondition("partySkill_$i");
+			$ai_v{"partySkill_$i"."_time"} = time;
 			$party_skill{skillObject} = Skill->new(auto => $config{"partySkill_$i"});
 			$party_skill{owner} = $party_skill{skillObject}->getOwner;
 			
@@ -2749,6 +2750,7 @@ sub processPartySkillUse {
 					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
 					$party_skill{isSelfSkill} = $config{"partySkill_$i"."_isSelfSkill"};
 					$party_skill{prefix} = "partySkill_$i";
+					$party_skill{skillTimeoutId} = $i;
 					# This is used by setSkillUseTimer() to set
 					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
 					# when the skill is actually cast
@@ -2802,6 +2804,7 @@ sub processPartySkillUse {
 				$party_skill{isSelfSkill} ? $party_skill{owner} : $party_skill{targetActor},
 				$party_skill{prefix},
 			);
+			$timeout{"partySkill_".$party_skill{skillTimeoutId}."_timeout"}{time} = time;
 		}
 	}
 }
