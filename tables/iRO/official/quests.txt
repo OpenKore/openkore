@@ -23613,3 +23613,159 @@ Hunt 150 Lichtern (Red) monsters and return to the Bounty Board at Eclage#
 63581#Bounty Board Lichtern (Yellow)#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Lichtern (Yellow) monsters and return to the Bounty Board at Eclage#
 #
+63582#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Join the Expedition to The Frozen Lands#
+#
+63583#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Speak with Liefa#
+#
+63584#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Tell Liefa when you're ready to meet Captain Muwuse & Mowose#
+#
+63585#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Meet Captain Muwuse & Mowose#
+#
+63586#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Join the crew of the Rudolph's Quest#
+#
+63587#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Speak with Muwuse once on board the Rudolph's Quest#
+#
+63588#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Liefa, I should ask about the others if I haven't already#
+#
+63589#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Lief, I should ask about the others if I haven't already#
+#
+63590#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about himself, I should ask about the others if I haven't already#
+#
+63591#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Mowose, I should ask about the others if I haven't already#
+#
+63592#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+I've spoken to Muwuse about everyone, I should speak with everyone else#
+#
+63593#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+I spoke with Mowose, I should make sure I speak to everyone also and then head below deck#
+#
+63594#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+I spoke with Liefa, I should make sure to speak with everyone also and then head below deck#
+#
+63595#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+I spoke with Lief, I should make sure to speak with everyone also and then head below deck#
+#
+63596#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Speak with Muwuse at The Frozen Lands landing zone#
+#
+63597#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Speak with Mowose and Receive an adventure package from him#
+#
+63598#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Speak with Liefa at the landing zone#
+#
+63599#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Travel separately and meet at Tapte Stjerner#
+#
+63600#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Investigate 4 of the villagers remains and see what may have killed them#
+#
+63601#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Found 1 of the dead villagers#
+#
+63602#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Found 1 of the dead villagers#
+#
+63603#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Found 1 of the dead villagers#
+#
+63604#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Found 1 of the dead villagers#
+#
+63605#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Meet the others at Trading Post Kapstefna#
+#
+63606#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Meet the others at Outpost HIlfalind#
+#
+63607#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Look around the outpost and see what you can find#
+#
+63608#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Defeat 40 Draugr#
+#
+63609#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Meet the others inside of THe Frozen Caverns#
+#
+63610#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Search the depths of the caverns for something out of the ordinary#
+#
+63611#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Defend yourself then wait for the others at the meeting point near the entrance of The Frozen Caverns#
+#
+63612#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Search for the LIar of THe Moon Slayer and then call the expedition team with a signal flare#
+#
+63613#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Enter The Moon Slayer's lair and see what you can find#
+#
+63614#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+See what happens when you interact with the power well in The Moon Slayer's lair#
+#
+63615#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Defeat The Moon Slayer#
+#
+63616#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+You've thwarted a global disaster, stay on guard as there may be more to come!#
+#
+63617#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63618#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63619#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63620#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63621#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63622#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63623#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63624#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63625#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63626#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63627#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63628#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63629#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63630#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63631#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63632#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
+63633#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
+To be continued#
+#
