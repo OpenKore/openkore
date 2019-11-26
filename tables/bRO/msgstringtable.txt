@@ -2851,7 +2851,7 @@ Atualizar#
 %dMinuto(s)#
 %dHora(s)#
 %dDia(s)#
-Return#
+Expirada#
 Deletar e-mails selecionados?#
 Exibir NPC#
 Zoom In#
@@ -3546,7 +3546,7 @@ Enviar#
 Conferir#
 Notícias#
 Entrada#
-Expirados#
+Vencidos#
 Buscar#
 #
 #
