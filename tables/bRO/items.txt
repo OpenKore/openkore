@@ -3486,7 +3486,7 @@
 6393#Pluma Arredondada#
 6394#Pluma Dourada#
 6395#Poder Mágico Angelical#
-6396#Perfurador Descartável#
+6396#Desentupidor#
 6401#Óleo de Palmeira#
 6402#Fruto da palmeira#
 6403#Couro de Comodo#
@@ -6146,6 +6146,7 @@
 18601#Chapéu de Brioche#
 18602#Fatia de Melancia#
 18603#Máscara Esquisita#
+18609#Venda Sombria#
 18610#Bandana 7º Aniversário bRO#
 18611#Óculos Escuros Especiais#
 18612#Chapéu Branco de Borobudur#
@@ -6365,6 +6366,7 @@
 19159#Bacinete Fortificado#
 19163#Boneca da Succubus#
 19168#Tiara Especial de Kafra#
+19181#Óculos Retrofuturistas#
 19220#Elmo Gigante#
 19244#Rosário Dourado#
 19249#Bênção Celestial#
@@ -6394,6 +6396,10 @@
 19326#Livros da Sabedoria #
 19381#Echarpe do Paraíso#
 19393#Pedra do Desbravador#
+19443#Tapa-Olho Cósmico#
+19444#Tapa-Olho Cósmico#
+19455#Diadema do Paraíso#
+19456#Máscara do Tengu Corvo#
 19507#Sol Risonho#
 19509#Asas de Borboleta#
 19510#Parafusos Soltos#
@@ -6471,6 +6477,7 @@
 19656#Chapéu do Bardo Verde#
 19657#Quepe do Capitão#
 19661#Cartola Adocicada#
+19667#Capacete Dracônico#
 19668#Boina Vermelha do Mensageiro#
 19669#Legado de Reginleif#
 19676#Chapéu do Poring Prismático#
@@ -6575,6 +6582,7 @@
 19884#Elmo do Gato Cavaleiro#
 19892#Chapéu da Amoeba Alada#
 19893#Chapéu de Bruxinha#
+19894#Laço da Donzela do Altar#
 19903#Chapéu de Bruxa Maligna#
 19904#Boina da Caveira#
 19905#Gorro do Bicho Papão#
@@ -6608,6 +6616,7 @@
 19971#Adorno de Penas de Cisne#
 19976#Chapéu de Gato Natalino#
 19984#Chapéu Visual de Inverno#
+19985#Coroa de Cristais Brutos#
 19986#Boné de Lunático#
 19987#Gorro Visual de Inverno#
 19990#Gorro de Coelho de Inverno#
@@ -7381,6 +7390,7 @@
 31490#Cachecol de Poring#
 31491#Gata Lasanhinha#
 31493#Peruca Branca de Waifu#
+31498#Elefante Bumbo#
 31505#Falcoelmo#
 31510#Peruca Curta de Gatinho#
 31511#Peruca Longa de Gatinho#
@@ -7438,6 +7448,8 @@
 31707#Peruca de Youkai#
 31721#Tambores de Invocação#
 31731#Guloseimas Encantadas#
+31814#Balões Lunáticos#
+31827#Capuz Durumagi#
 32018#Lança Ancestral#
 32205#Anel de Esmeralda#
 32221#Anel do Senhor do Tempo#

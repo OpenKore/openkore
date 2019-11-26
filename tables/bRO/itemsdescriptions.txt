@@ -31359,7 +31359,7 @@ Um utensílio feito de magia élfica condensada.
 --------------------------
 ^0000ffPermite criar um slot de carta em certos equipamentos.^000000
 --------------------------
-^CD3278NPC:^000000 Mestre dos Slots
+^CD3278NPC:^000000 Encanador Sinistro
 ^CD3278Local:^000000 prontera 101, 65
 <NAVI>[Navegar]<INFO>prontera,101,65,0,000,0</INFO></NAVI>
 --------------------------
@@ -35175,8 +35175,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 prontera 141, 226
 <NAVI>[Navegar]<INFO>prontera,141,226,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000030.09.2019.^000000
-Este item será removido no dia ^ff000001.10.2019.^000000
+Promoção limitada até o dia ^ff000002.12.2019.^000000
+Este item será removido no dia ^ff000003.12.2019.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -50896,6 +50896,17 @@ Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas as classes^000000
 #
+18609#
+Uma Venda encantada por magia negra.
+^0000ffTolerância a Cegueira +100%.^000000
+^0000ffTolerância a Atordoamento +2%.^000000
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas, exceto Aprendizes e Superaprendizes^000000
+#
 18610#
 Uma bandana feita especialmente em Brasilis para comemorar o 7º aniversário dos servidores brasileiros de Ragnarök Online.
 DEFM + 4.
@@ -54067,6 +54078,18 @@ Peso: ^77777750^000000
 Nível necessário: ^7777771^000000
 Classe: ^777777Todas^000000
 #
+19181#
+Acreditava-se que todos os óculos escuros no futuro seriam como este. Erraram feio, mas pelo menos a noção de estilo deles era certeira. Recomenda-se usá-los até à noite, pois o seu futuro vai ser tão brilhante que você vai precisar de óculos escuros o tempo todo!
+--------------------------
+^0000ffPós-conjuração -5%.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777730^000000
+Classes: ^777777Todas^000000
+#
 19220#
 Réplica em miniatura do elmo usado pelos gigantes guardiões do Templo Antigo. Um ferreiro lendário imbuiu nele o poder destes gigantes!
 --------------------------
@@ -54756,6 +54779,111 @@ Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+19443#
+Veja além do espaço e das constelações com esse acessório. Equipe este tapa-olho e eleve seus poderes aos céus!
+--------------------------
+^0000ffVIT +3.^000000
+^0000ffDEFM +10.^000000
+^0000ffResistência a Atordoamento +30%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Orc Herói]^000000
+^CD3278Nv. base 99:^000000
+A cada 10 de VIT base:
+^0000ffATQ e ATQM +10.^000000
+A cada 10 de SOR base:
+^0000ffVIT e SOR +1.^000000
+-
+^CD3278Nv. base 100 ou mais:^000000
+A cada 10 de VIT base:
+^0000ffATQ e ATQM +30.^000000
+A cada 10 de SOR base:
+^0000ffVIT e SOR +3.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^777777200^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+19444#
+Veja além do espaço e das constelações com esse acessório. Equipe este tapa-olho e eleve seus poderes aos céus!
+--------------------------
+^0000ffVIT +3.^000000
+^0000ffDEFM +10.^000000
+^0000ffResistência a Atordoamento +30%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Orc Herói]^000000
+^CD3278Nv. base 99:^000000
+A cada 10 de VIT base:
+^0000ffATQ e ATQM +10.^000000
+A cada 10 de SOR base:
+^0000ffVIT e SOR +1.^000000
+-
+^CD3278Nv. base 100 ou mais:^000000
+A cada 10 de VIT base:
+^0000ffATQ e ATQM +30.^000000
+A cada 10 de SOR base:
+^0000ffVIT e SOR +3.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^777777200^000000
+Peso: ^77777730^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+19455#
+Angelical e imaculada, essa diadema caiu dos céus para abençoar os bem-afortunados com aventuras repletas de memórias inesquecíveis e tesouros preciosos.
+--------------------------
+^0000ffDEFM +2.^000000
+^0000ffVelocidade de ataque^000000 ^ff0000-5%.^000000
+^0000ffResistência as raças Humano e Doram +2%.^000000
+--------------------------
+VIT base 108 ou mais:
+^0000ffVelocidade de ataque^000000 ^ff0000-5%^000000 ^0000ffadicional.^000000
+^0000ffResistência as raças Humano e Doram +3% adicional.^000000
+VIT base 120 ou mais:
+^0000ffHP máx. +3%.^000000
+^0000ffDEFM +3 adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Boina Alada]^000000
+^0000ffVelocidade de ataque +5%.^000000
+Boina com refino +7 ou mais:
+^0000ffVelocidade de ataque +5% adicional.^000000
+Boina com refino +9 ou mais:
+^0000ffHP máx. +5% adicional.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777770^000000
+Classes: ^777777Todas^000000
+#
+19456#
+Essa máscara representa um Karasu Tengu, ou Tengu Corvo, uma variação do Tengu de nariz comprido. De acordo com as investigações da jornalista Aia Xameimaru, os Karasu Tengus são os seres místicos mais poderosos de Amatsu. Mas Aia é conhecida por exagerar...
+--------------------------
+^0000ffDano físico +1%.^000000
+^0000ffDano físico a distância +2%.^000000
+--------------------------
+FOR base 108 ou mais:
+^0000ffDano físico +1% adicional.^000000
+^0000ffDano físico a distância +2% adicional.^000000
+FOR base 120 ou mais:
+^0000ffDano físico +2% adicional.^000000
+^0000ffDano físico a distância +3% adicional.^000000
+--------------------------
+Tipo: ^777777Equipamento para Cabeça^000000
+Equipa em: ^777777Meio^000000
+Defesa: ^7777770^000000
+Peso: ^7777773^000000
+Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
 19507#
 Um forte e ensolarado Sol com seu sorriso escaldante.
 Tipo : ^777777Visual^000000
@@ -55422,6 +55550,14 @@ Equipa em : ^777777Topo ^000000
 Peso : ^7777770^000000
 Nível Necessário : ^7777771^000000
 Classe : ^777777Todas^000000
+#
+19667#
+Parte da armadura oficial da Ordem Dracônica, um grupo de guerreiros que usavam lanças para eliminar quaisquer monstros da família dos dragões que ameaçavam a civilização. A Ordem há muito foi desfeita, mas seus equipamentos seguem como artigos de luxo almejados por colecionadores.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
 #
 19668#
 Talvez seja só placebo, mas os mensageiros dizem que essa boina te dá a velocidade pra viajar de Al De Baran a Morroc indo em um pé e voltando em outro. É claro que você usaria um acessório desses APENAS caso precisasse fazer o trabalho de um mensageiro... Certo?
@@ -56342,6 +56478,14 @@ Peso: ^77777710^000000
 Nível Necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
 #
+19894#
+Um laço usado por donzelas em cerimônias após atingirem determinada idade. Não se prenda a isso, no entanto – hoje em dia, você pode usar só como um acessório da moda. Não é nenhum sacrilégio!
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 19903#
 Velho chapéu de Bruxa encantado por magia negra.
 Tipo : ^777777Visual^000000
@@ -56626,6 +56770,14 @@ Este chapéu é a última moda em Moscóvia! Dizem que foi usado até mesmo pela
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Topo ^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+19985#
+Acessório luxuoso adornado com diversos cristais muito brutos. A ideia é que eles fossem lapidados até formar a coroa mais bela de toda a Rune-Midgard, mas o artesão (ir)responsável acabou perdendo as suas ferramentas e deixou a coroa assim mesmo. Mesmo assim ainda tem o seu charme, não acha?
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
@@ -66042,6 +66194,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31498#
+Esse bichinho assistiu muito a um filme de um elefante que conseguia voar usando suas orelhas. Infelizmente, ele nunca conseguiu replicar o feito, mas sua força de vontade o fez crescer asas para que ele conquistasse seu sonho de voar.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 31505#
 Faça os outros lhe conhecerem como o temível Adventureus Rapinum: um raro e imponente espécime de falcão caracterizado pela sua velocidade ímpar, força avassaladora, visão aguçada e... metabolismo extremamente acelerado? É melhor você ir aprendendo a balancear suas refeições com as suas jornadas para não ter uma surpresa indesejada...
 Tipo: ^777777Visual ^000000
@@ -66507,6 +66667,22 @@ Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+31814#
+Três balões de Lunáticos que dá vontade de apertar até estourar... Mas não se esqueça de que são balões, então se fizer isso, você vai estourar DE VERDADE essas fofurinhas. Iti malia!
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+31827#
+Capuz muito conhecido entre os habitantes de Payon pela sua relevância cultural. Essa peça é usada não apenas como proteção do frio, como também para caracterização ao conduzir rituais tradicionais da região.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
 #
 32018#
 Uma lança cuja ponta foi afiada com a minúcia de 1000 artesãos, com o intuito de que o primeiro golpe seja o último.
