@@ -858,16 +858,16 @@
 1615#Evil_Bone_Wand#
 1616#Wing_Staff#
 1617#Survivor's_Rod_(Dex)#
-1618#Survivor's_Rod#
+1618#Survivor's_Rod_(Dex)#
 1619#Survivor's_Rod_(Int)#
-1620#Survivor's_Rod#
+1620#Survivor's_Rod_(Int)#
 1621#Hypnotist's_Staff#
 1622#Hypnotist's_Staff#
 1623#Rental_Mighty_Staff#
 1624#Lich's_Bone_Wand#
 1625#Healing_Staff#
 1626#Piercing_Staff#
-1628#Rental_Survival_Rod#
+1628#Rental_Survivor's_Rod#
 1629#Gentleman_Staff#
 1630#Release_of_Wish#
 1631#Holy_Stick#
@@ -7084,7 +7084,7 @@
 16015#Cat_Club#
 16016#Tuna#
 16017#Bloody_Cross#
-16018#Empowered_Mace_Of_Judgement#
+16018#Empowered_Mace_of_Judgement#
 16020#Bellum_Stunner#
 16021#Bellum_Flail#
 16022#Nemesis#
@@ -8140,7 +8140,7 @@
 19017#Classic_Necklace_2_Week_Rental_Box#
 19018#Classic_Ring_2_Week_Rental_Box#
 19019#Classic_Rosary_2_Week_Rental_Box#
-19020#Survival_Circlet#
+19020#Survivor's_Circlet#
 19021#Classic_Pole_Axe_2_Week_Rental_Box#
 19022#Classic_Safety_Ring_2_Week_Rental_Box#
 19023#Classic_Steel_Flower_2_Week_Rental_Box#
@@ -8920,7 +8920,7 @@
 20809#Improve_Concentration_Amistr_Bag#
 20811#Hiding_Amistr_Bag#
 20812#Kirin_Wing#
-20813#Cloak_of_Survival#
+20813#Survivor's_Manteau#
 20814#Wakwak_Manteau#
 20815#Seraphim_Robe#
 20820#Elemental_Cape#
@@ -9741,7 +9741,7 @@
 31030#Costume_Tiger_Face#
 31040#Costume_Magical_Feather#
 31041#Costume_Kitten_Lace_Hairband#
-31042#Costume_Survival_Circlet#
+31042#Costume_Survivor's_Circlet#
 31043#Costume_White_Ribbon#
 31044#Costume_Pink_Drooping_Kitty#
 31045#Costume_Blue_Rear_Ribbon#
@@ -9879,7 +9879,7 @@
 31383#Costume_Volume_Low_Twin#
 31384#Costume_Fake_Ears#
 31385#Costume_Gothic_Pumpkin_Handicraft#
-31386#Costume_Survive_Orb#
+31386#Costume_Survivor's_Orb#
 31389#Costume_White_Bird_Rose#
 31390#Costume_Let_It_Snow#
 31391#Costume_Floating_Sage_Stone#
