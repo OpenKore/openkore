@@ -23613,159 +23613,234 @@ Hunt 150 Lichtern (Red) monsters and return to the Bounty Board at Eclage#
 63581#Bounty Board Lichtern (Yellow)#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Lichtern (Yellow) monsters and return to the Bounty Board at Eclage#
 #
-63582#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Join the Expedition to The Frozen Lands#
-#
-63583#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Speak with Liefa#
-#
-63584#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Tell Liefa when you're ready to meet Captain Muwuse & Mowose#
-#
-63585#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Meet Captain Muwuse & Mowose#
-#
-63586#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Join the crew of the Rudolph's Quest#
-#
-63587#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Speak with Muwuse once on board the Rudolph's Quest#
-#
-63588#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-I spoke with Muwuse about Liefa, I should ask about the others if I haven't already#
-#
-63589#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-I spoke with Muwuse about Lief, I should ask about the others if I haven't already#
-#
-63590#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-I spoke with Muwuse about himself, I should ask about the others if I haven't already#
-#
-63591#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-I spoke with Muwuse about Mowose, I should ask about the others if I haven't already#
-#
-63592#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-I've spoken to Muwuse about everyone, I should speak with everyone else#
-#
-63593#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-I spoke with Mowose, I should make sure I speak to everyone also and then head below deck#
-#
-63594#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-I spoke with Liefa, I should make sure to speak with everyone also and then head below deck#
-#
-63595#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-I spoke with Lief, I should make sure to speak with everyone also and then head below deck#
-#
-63596#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Speak with Muwuse at The Frozen Lands landing zone#
-#
-63597#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Speak with Mowose and Receive an adventure package from him#
-#
-63598#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Speak with Liefa at the landing zone#
-#
-63599#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Travel separately and meet at Tapte Stjerner#
-#
-63600#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Investigate 4 of the villagers remains and see what may have killed them#
-#
-63601#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Found 1 of the dead villagers#
-#
-63602#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Found 1 of the dead villagers#
-#
-63603#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Found 1 of the dead villagers#
-#
-63604#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Found 1 of the dead villagers#
-#
-63605#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Meet the others at Trading Post Kapstefna#
-#
-63606#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Meet the others at Outpost HIlfalind#
-#
-63607#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Look around the outpost and see what you can find#
-#
-63608#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Defeat 40 Draugr#
-#
-63609#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Meet the others inside of THe Frozen Caverns#
-#
-63610#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Search the depths of the caverns for something out of the ordinary#
-#
-63611#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Defend yourself then wait for the others at the meeting point near the entrance of The Frozen Caverns#
-#
-63612#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Search for the LIar of THe Moon Slayer and then call the expedition team with a signal flare#
-#
-63613#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Enter The Moon Slayer's lair and see what you can find#
-#
-63614#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-See what happens when you interact with the power well in The Moon Slayer's lair#
-#
-63615#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-Defeat The Moon Slayer#
-#
-63616#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-You've thwarted a global disaster, stay on guard as there may be more to come!#
-#
-63617#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63618#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63619#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63620#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63621#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63622#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63623#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63624#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63625#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63626#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63627#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63628#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63629#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63630#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63631#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63632#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
-63633#Episode Ragnarok (Yellow)#SG_FEEL#QUE_NOIMAGE#
-To be continued#
-#
+63582#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Father Huntington of the Prontera Church is looking for adventurers for an expedition. Speak to him to join.#
+Join the Expedition team.#
+
+63583#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Father Huntington wants me to introduce myself to Paladin Liefa, I can see her standing behind Father Huntington inside of the Sanctuary.#
+Speak with Liefa.#
+
+63584#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I should get my things ready, then speak with Liefa again inside of the Sanctuary to embark on our expedition.#
+Tell Liefa you're ready.#
+
+63585#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Liefa wants to introduce me to Captain Muwuse and his brother Mowose, they'll be flying us to the frontier in their airship.#
+Find Muwuse at Izlude Airport.#
+
+63586#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Join the crew and board the Airship called 'The Rudolph's Quest'.#
+Enter the Muwuse's Airship.#
+
+63587#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I should get to know Muwuse and speak to him while on board his Airship. He seems like he's known both Liefa and Lief for a long time. I should ask him about everyone on board.#
+Speak to Muwuse.#
+
+63588#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Liefa, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63589#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Lief, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63590#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about himself, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63591#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Mowose, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63592#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about everyone, I should personally get to know the rest of the expedition team.#
+Speak to everyone.#
+
+63593#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Mowose, Muwuse's brother. If I need refreshments I should come to him later.#
+Speak to everyone.#
+
+63594#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Liefa, she's the Expedition leader, she seems nice.#
+Speak to everyone.#
+
+63595#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Lief, Liefa's brother. It seems like everyone on this airhsip has been working together for a long time.#
+Speak to everyone.#
+
+63596#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Speak with Muwuse after landing in The Frozen Lands.#
+Speak to Muwuse.#
+
+63597#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Speak with Mowose after landing in The Frozen Lands. He might have something for me before I set off with Lief and Liefa.#
+Speak to Mowose.#
+
+63598#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+It's time to embark on our expedition through the section of the frontier known as The Frozen Lands. Speak with Liefa when ready to begin.#
+Speak to Liefa.#
+
+63599#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+It appears that we are to split up and travel to Tapte Stjerner separately. It was the main settlement village, north of the landing zone. There's a meeting point near the center of town that we are to meet at.#
+Go north to Tapte Stjerner.#
+
+63600#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We need to investigate what happened here. I'll probably learn the most from studying the remains of the villagers. I need to find 4 of the villagers remains in town then meet back with the others at the meeting point.#
+Find the remains of 4 villagers.#
+
+63601#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63602#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63603#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63604#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63605#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The village is a total loss, we are moving on to investigating the next location. Trading Post Kapstefna is right on the outskirts of Outpost Hilfalind, its a small trading post east / south east of Tapte Stjerner.#
+Meet at Trading Post Kapstefna.#
+
+63606#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The trading post is abandoned, there's not much left here. We need to move east towards Outpost Hilfalind.#
+Meet at Outpost Hilfalind.#
+
+63607#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Search Outpost Hilfalind, there has to be something to explain where the attack came from, regretfully due to the time passed and the snow, finding tracks is out of the question.#
+Search the Outpost.#
+
+63608#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Aslaug and Magnus former comrades have been turned into Draugr and are unable to dispose of them. Dispatch their former comrades to release them from undeath.#
+Hunt 40 Draugr.#
+
+63609#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Aslaug and Magnus are survivors of the attack that devastated the settlement, according to them the attack came from the north, from a place called The Frozen Caverns. We are going to travel north and meet inside of the cavern, there's a meeting point there.#
+Go to The Frozen Caverns.#
+
+63610#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+This is where the wolves who sacked the settlement came from, we might find something in the deepest part of the cavern, we should go there and investigate.#
+Search the caverns.#
+
+63611#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The rest of the team got sucked into another dimension by the two bigger wolves, I need to survive this ordeal and look for them, I should wait for them at the meeting point near the entrance after I take care of my opponent.#
+Survive, then find the others.#
+
+63612#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We need to search for the lair of The Moon Slayer, we can't allow that wolf to continue it's rampage. Lief says The Moon Slayer is going east, I remember an eastward path from Outpost Hilfalind, that might be a good place to start. We're all splitting up to find it, whoever finds it should send up a signal flare to alert the rest of the team.#
+Find the The Moon Slayer.#
+
+63613#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Enter The Moon Slayer's lair and find where The Moon Slayer went.#
+Enter the lair.#
+
+63614#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+There is a power well in the center of the cavern, something might happen if I interact with it.#
+Check with the power well.#
+
+63615#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Defeat The Moon Slayer in combat.#
+Defeat The Moon Slayer.#
+
+63616#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We just defeated The Moon Slayer, seems we've taken care of the threat in The Frozen Lands, we should head back to the landing zone and speak with Muwuse to prepare our flight back to the Kingdom.#
+Go to Muwuse at landing zone.#
+
+63617#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I should speak with Liefa during the flight back to the kingdom while aboard the Airship, we just defeated an Ancient One together.#
+Speak to Leifa during flight.#
+
+63618#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63619#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Mowose, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63620#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Liefa, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63621#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Lief, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63622#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Halvar, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63623#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Aslaug, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63624#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Magnus, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63625#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Our expedition just returned to the Kingdom, we should meet with Father Huntington at the Prontera Church.#
+Talk to Father Huntington.#
+
+63626#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We've been deployed to a new target, an Ancient One has been detected by Lief and Father Huntington closing in on Umbala, we're being sent to investigate. I should speak with Muwuse at the Izlude Airship Docks for further instructions.#
+Speak with Muwuse in Izlude.#
+
+63627#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Something's happening down in Umbala, I should get to the Gang Plank on the deck of the Airship and Carl the 4th will teleport us down to the ground floor.#
+Use the Gang Plank teleporter.#
+
+63628#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The Umbala Guide just informed us that a Giant Wolf just went straight for Yggdrasil, seems to have done some damage to the Umbala village as well. We should head to the base of Yggdrasil to see what we can do.#
+Go to Yggdrasil.#
+
+63629#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The All Father himself came to combat The World Eater, it seems they've gone back to The Frozen Lands. We need to get back to our Airship.#
+Find Carl in the Hoomga Jungle.#
+
+63630#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We're going back to Outpost Hilfalind, they'll be teleporting us down from the deck of the Airship. We need to find the Storage Bunker, Lief says there's a rift there.#
+Find the Storage Bunker.#
+
+63631#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Defeat The World Eater.#
+Defeat The World Eater.#
+
+63632#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Lief has turned against us, he murdered Halvar and his own Sister before they even knew what was going on. He must be stopped.#
+Defeat Lief the Betrayer.#
+
+63633#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The Lingering Spirit in Tapte Stjerner is asking for help to avenge it's death. Defeat 30 Frost Wolves and return to the spirit.#
+Defeat 30 Frost Wolves.#
+
+63634#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I was part of the Cycle of Ragnarok... I shall dream until it is time to awaken again.#
+Dream until awakened.#
+
+63635#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Atroce the Awakened, a henchment of the Ancient Ones has appeared, he took part in the attack against the settlement and should be defeated.#
+Defeat Atroce the Awakened.#
+
+63636#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with Atroce the Awakened in The Frozen Caverns, should I choose to. If I want to challenge him again, I should return to where we fought.#
+Fight Atroce the Awakened again.#
+
+63637#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with The Moon Slayer in it's lair, should I choose to. If I want to challenge it again, I should return to where we fought.#
+Fight The Moon Slayer again.#
+
+63638#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with The World Eater in it's realm, should I choose to. If I want to challenge it again, I should return to where we fought.#
+Fight The World Eater again.#
+
+63639#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with Lief the Betrayer, should I choose to. If I want to challenge him again, I should return to where we fought.#
+Fight Lief again.#
