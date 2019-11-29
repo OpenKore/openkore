@@ -17705,9 +17705,8 @@ Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4033#
-^0000ffPermite o uso da habilidade "Desintoxicar" em nível 1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Desintoxicar] nv.1.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -17753,9 +17752,8 @@ Equipa em: ^777777Equipamento para a cabeça^000000
 Peso: ^7777771^000000
 #
 4040#
-^0000ffPermite o uso da habilidade "Teleporte" em nível 1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Teleporte] nv.1.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -17781,9 +17779,8 @@ Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4044#
-^0000ffPermite o uso da habilidade "Esconderijo" em nível 1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Esconderijo] nv.1.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -17808,9 +17805,8 @@ Equipa em: ^777777Armadura^000000
 Peso: ^7777771^000000
 #
 4048#
-^0000ffPermite o uso da habilidade "Envenenar" em nível 3.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Envenenar] nv.3.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -17981,9 +17977,8 @@ Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4073#
-^0000ffPermite o uso da habilidade "Desconto" em nível 5.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Desconto] nv.5.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -18059,9 +18054,8 @@ Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4084#
-^0000ffPermite o uso da habilidade "Impacto Explosivo" em nível 3.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Impacto Explosivo] nv.3.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -18124,9 +18118,8 @@ Equipa em: ^777777Armamento^000000
 Peso: ^7777771^000000
 #
 4093#
-^0000ffPermite o uso da habilidade "Medicar" em nível 1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Medicar] nv.1.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -18193,9 +18186,8 @@ Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
 #
 4103#
-^0000ffPermite o uso da habilidade "Chama Reveladora" em nível 1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Chama Reveladora] nv.1.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -18439,9 +18431,8 @@ Equipa em:  ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4139#
-^0000ffPermite o uso da habilidade "Furto" em nível 1.^000000
-Combine com um item para utilizar sua propriedade.
-Classe: ^777777Carta^000000
+^0000ffHabilita [Furto] nv.1.^000000
+Tipo: ^777777Carta^000000
 Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
@@ -20246,10 +20237,9 @@ Equipado em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4356#
-Carta Beholder.
-Permite o uso de Cancelar Magia nv. 1.
-Tipo de Item: ^777777Carta^000000
-Equipado em: ^777777Acessório^000000
+^0000ffHabilita [Cancelar Magia] nv.1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4357#
@@ -20795,9 +20785,9 @@ Classe: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4424#
-Ativa habilidades Procurar Pedra e Arremessar Pedra.
-Tipo de Item: ^777777Carta^000000
-Classe: ^777777Acessório^000000
+^0000ffHabilita [Procurar Pedra] e [Arremessar Pedra] nv.1.^000000
+Tipo: ^777777Carta^000000
+Equipa em: ^777777Acessório^000000
 Peso: ^7777771^000000
 #
 4425#
@@ -29865,14 +29855,28 @@ Classes: ^777777Todas^000000
 #
 5933#
 Essa máscara representa um Karasu Tengu, ou Tengu Corvo, uma variação do Tengu de nariz comprido. De acordo com as investigações da jornalista Aia Xameimaru, os Karasu Tengus são os seres místicos mais poderosos de Amatsu. Mas Aia é conhecida por exagerar...
+--------------------------
 ^0000ffDano físico a distância +2%.^000000
 ^0000ffDano físico contra oponentes de todos os Tamanhos +1%.^000000
+--------------------------
 FOR base 108 ou mais:
 ^0000ffDano físico a distância +2% adicional.^000000
 ^0000ffDano físico contra oponentes de todos os Tamanhos +1% adicional.^000000
 FOR base 120 ou mais:
 ^0000ffDano físico a distância +3% adicional.^000000
 ^0000ffDano físico contra oponentes de todos os Tamanhos +2% adicional.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Pergaminho do Tengu]^000000
+^0000ffDano físico a distância +1% adicional.^000000
+^0000ffDano físico contra oponentes de todos os Tamanhos +1% adicional.^000000
+FOR base 108 ou mais:
+^0000ffDano físico a distância +1% adicional.^000000
+^0000ffDano físico contra oponentes de todos os Tamanhos +2% adicional.^000000
+FOR base 120 ou mais:
+^0000ffDano físico a distância +1% adicional.^000000
+^0000ffDano físico contra oponentes de todos os Tamanhos +3% adicional.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
@@ -53687,17 +53691,9 @@ Classe: ^777777Todas^000000
 #
 19112#
 Um pergaminho feito em Amatsu contendo as últimas fofo... digo, furos de reportagens da jornalista Aia Xameimaru. O conteúdo gira em torno principalmente dos Karasu Tengu, ou Tengu Corvos, seres místicos muito poderosos. O pergaminho cita alguns encantamentos e diz que se você usá-los em conjunto com uma Máscara do Tengu Corvo, terá uma prova do poder deles.
-^0000ffChance de converter 5% do dano físico causado em HP.^000000
-^FF6347Conjunto^000000
-^FF6347[Máscara do Tengu Corvo]^000000
-^0000ffDano físico a distância +1%.^000000
-^0000ffDano físico contra todos os Tamanhos +1%.^000000
-FOR base 108 ou mais:
-^0000ffDano físico a distância +1% adicional.^000000
-^0000ffDano físico contra todos os Tamanhos +2% adicional.^000000
-FOR base 120 ou mais:
-^0000ffDano físico a distância +1% adicional.^000000
-^0000ffDano físico contra todos os Tamanhos +3% adicional.^000000
+--------------------------
+^0000ff3% de chance de converter 5% do dano físico causado em HP.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
@@ -54877,10 +54873,21 @@ FOR base 120 ou mais:
 ^0000ffDano físico +2% adicional.^000000
 ^0000ffDano físico a distância +3% adicional.^000000
 --------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Pergaminho do Tengu]^000000
+^0000ffDano físico +1% adicional.^000000
+^0000ffDano físico a distância +1% adicional.^000000
+FOR base 108 ou mais:
+^0000ffDano físico +2% adicional.^000000
+^0000ffDano físico a distância +1% adicional.^000000
+FOR base 120 ou mais:
+^0000ffDano físico +3% adicional.^000000
+^0000ffDano físico a distância +1% adicional.^000000
+--------------------------
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Meio^000000
 Defesa: ^7777770^000000
-Peso: ^7777773^000000
+Peso: ^77777730^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Todas^000000
 #
@@ -59944,7 +59951,7 @@ Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usa
 ^0000ffHP máx. +300.^000000
 ^0000ffSP máx. +30.^000000
 A cada 3 refinos:
-^0000ffDano crítico +3%.^000000
+^0000ffDano crítico +2%.^000000
 ^0000ffHP máx. +100.^000000
 ^0000ffSP máx. +10.^000000
 SOR base 120 ou mais:
@@ -60066,7 +60073,7 @@ Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usa
 ^0000ffHP máx. +300.^000000
 ^0000ffSP máx. +30.^000000
 A cada 3 refinos:
-^0000ffDano crítico +3%.^000000
+^0000ffDano crítico +2%.^000000
 ^0000ffHP máx. +100.^000000
 ^0000ffSP máx. +10.^000000
 SOR base 120 ou mais:
@@ -60513,7 +60520,7 @@ Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usa
 ^0000ffHP máx. +300.^000000
 ^0000ffSP máx. +30.^000000
 A cada 3 refinos:
-^0000ffDano crítico +3%.^000000
+^0000ffDano crítico +2%.^000000
 ^0000ffHP máx. +100.^000000
 ^0000ffSP máx. +10.^000000
 SOR base 120 ou mais:
@@ -60635,7 +60642,7 @@ Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usa
 ^0000ffHP máx. +300.^000000
 ^0000ffSP máx. +30.^000000
 A cada 3 refinos:
-^0000ffDano crítico +3%.^000000
+^0000ffDano crítico +2%.^000000
 ^0000ffHP máx. +100.^000000
 ^0000ffSP máx. +10.^000000
 SOR base 120 ou mais:
@@ -62123,7 +62130,7 @@ Peso: ^7777771^000000
 #
 27122#
 ^0000ffDano mágico contra oponentes de propriedade Água +3%.^000000
-Refino +5 ou mais:
+Refino +7 ou mais:
 ^0000ffDano mágico contra oponentes de propriedade Água +5% adicional.^000000
 Refino +9 ou mais:
 ^0000ffDano mágico contra oponentes de propriedade Água +7% adicional.^000000
