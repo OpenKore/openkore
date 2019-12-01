@@ -412,6 +412,7 @@ sub sendGameLogin {
 		accountID => $accountID,
 		sessionID => $sessionID,
 		sessionID2 => $sessionID2,
+		mac => '111111111111',
 		accountSex => $sex,
 	}));
 	debug "Sent sendGameLogin\n", "sendPacket", 2;
