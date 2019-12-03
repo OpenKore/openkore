@@ -638,6 +638,7 @@
 1319#WoE_TE_Axe#
 1322#Ru_Blue_Axe#
 1323#Ru_Gold_Axe#
+1338#Duggan_Hacker#
 1351#Battle_Axe#
 1352#Battle_Axe#
 1353#Battle_Axe#
@@ -7746,6 +7747,7 @@
 18130#Crimson_Bow#
 18145#Vigilante_Bow#
 18149#Illusion_Ballista#
+18199#The_Big_Bow#
 18505#Umbala_Spirit#
 18507#Elven_Ears#
 18508#Garuda_Hat#
@@ -8747,7 +8749,7 @@
 20288#Costume_Bijou_Hat#
 20293#Costume_Sleeper_Hat#
 20294#Costume:_Maximilian_Von_Babe_XXIX#
-20295#Costume:_Poring_Sunglasses#
+20295#Costume_Poring_Sunglasses#
 20296#Costume_Yoyo_Hat#
 20297#Costume_Cactus_Hat#
 20298#Costume_Happy_Droopy_Lunatic_Ear#
@@ -8962,6 +8964,7 @@
 21015#Crimson_Twohand_Sword#
 21016#Vicious_Mind_Two-Handed_Sword#
 21018#Lindy_Hop#
+21059#The_Ultimate#
 21202#Costume_Eat_Coin#
 22000#Temporal_Str_Boots#
 22001#Temporal_Int_Boots#
@@ -9414,7 +9417,9 @@
 26107#Elder_Staff#
 26109#Illusion_Staff_of_Bordeaux#
 26110#Candy_Cane_Rod#
+26173#The_Rowdy_Pipe#
 26200#Hippie_Rope#
+26219#The_Ol’_Clothesline#
 27012#Kick_Step_Card#
 27013#Kick_and_Kick_Card#
 27014#Green_Cenere_Card#
@@ -9500,6 +9505,7 @@
 28010#Juliette_D_Rachel#
 28022#Illusion_Infiltrator#
 28023#Illusion_Sharpened_Legbone_of_Ghoul#
+28050#Frozen_Creul_Katar#
 28100#Thanatos_Axe#
 28101#Tornado_Axe#
 28103#Ru_Blue_Axe_M#
@@ -9518,6 +9524,7 @@
 28224#Dustfire#
 28225#Burning_Rose#
 28226#Avenger#
+28260#The_Fastest_Shooter#
 28303#Vesper_Core_02#
 28305#Vesper_Core_04#
 28310#Sarah's_Left_Earring#
@@ -9605,6 +9612,7 @@
 28608#Elemental_Origin#
 28612#Illusion_Book_of_the_Apocalypse#
 28618#Book_of_the_Sun_God#
+28640#Papa_HooDoo_Manual#
 28700#Ru_Gold_Dagger#
 28701#Ru_Gold_Knife#
 28702#Ru_Gold_Ashura#
@@ -9613,6 +9621,7 @@
 28717#Valkyrie_Knife#
 28721#Monokage#
 28725#Illusion_Moonlight_Dagger#
+28781#The_Razor_of_Ramona#
 28900#Royal_Guard_Shield#
 28901#Mad_Bunny_Special#
 28902#Mad_Bunny_Special#
@@ -9631,6 +9640,7 @@
 28951#Nero_Shield#
 28955#Fotia_Shield#
 28956##
+28959#Jericho_Wall#
 29000#Rune_of_Intellect_Lv_1#
 29001#Rune_of_Intellect_Lv_2#
 29002#Rune_of_Intellect_Lv_3#
@@ -9948,7 +9958,7 @@
 31528#Costume_Stardust_Hairband#
 31529#Costume_Happy_Rabbit_Ribbon#
 31531#Costume_Lovely_Heart_Cap#
-31533#Costume:_Warm_Black_Cat_Muffler#
+31533#Costume_Warm_Black_Cat_Muffler#
 31538#Costume_Lovely_Feeling#
 31540#Costume_Red_Gemini_Eyes#
 31541#Costume_Drosera_Hairpin#
@@ -10060,6 +10070,8 @@
 31800#Costume_Brazil_Twin_Ribbon#
 31801#Costume_Creative_Convention_Cap#
 31802#Costume_Creative_Convention_Chapeau#
+32032#The_Berg_Golden_Spear#
+32114#Accolade_Lute#
 32203#Accelerator_Chip#
 32204#Immortal_Dog_Tag#
 32206#Prontera_Militia_Glove#
@@ -10071,3 +10083,5 @@
 32262#Rasen_Fuma's_Orb#
 32263#Shield_Ring#
 32265##
+32356#The_Twist_of_Fates#
+32410#The_Spinebuster#
