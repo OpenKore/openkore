@@ -4707,6 +4707,23 @@ Property: N/A
 Weight: 0
 Weapon Level: 0
 #
+1338#
+A mysterious ax given to adventurers who successfully execute missions.
+
+Class: ^808080One-Handed Axe^000000
+Attack: ^808080245^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
+#
 1351#
 A sturdy Two-Handed Axe useful for defeating many foes.
 Class: ^808080Two-Handed Axe^000000
@@ -7863,6 +7880,15 @@ Matk + 1% per upgrade level of ^008080Survivor's Rod (Dex) [1]^000000.
 Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau [1]^000000.
 
 ^800080Set Bonus^000000
+^008080Illusion Survivor's Manteau [1]^000000
+^008080Survivor's Rod (Dex) [1]^000000
+Max HP + 1000
+Matk - 50
+Matk + 20 per upgrade level of ^008080Survivor's Rod (Dex) [1]^000000 up to maximum upgrade of +10.
+Reduces the global delay of skills by 3% per 3 upgrade levels of ^008080Survivor's Rod (Dex) [1]^000000.
+Reduces damage taken from Neutral property attacks by 1% per 2 upgrade levels of ^008080Illusion Survivor's Manteau [1]^000000 up to a maximum upgrade of +10.
+
+^800080Set Bonus^000000
 ^008080Survival Circlet [1]^000000
 ^008080Survivor's Rod (Dex) [1]^000000
 Matk + 10 per upgrade level of ^008080Survivor's Rod (Dex) [1]^000000.
@@ -8017,6 +8043,15 @@ Max HP + 300
 Matk - 5%
 Matk + 1% per upgrade level of ^008080Survivor's Rod (Int) [1]^000000.
 Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau [1]^000000.
+
+^800080Set Bonus^000000
+^008080Illusion Survivor's Manteau [1]^000000
+^008080Survivor's Rod (Int) [1]^000000
+Max HP + 1000
+Matk - 50
+Matk + 20 per upgrade level of ^008080Survivor's Rod (Int) [1]^000000 up to maximum upgrade of +10.
+Reduces the global delay of skills by 3% per 3 upgrade levels of ^008080Survivor's Rod (Int) [1]^000000.
+Reduces damage taken from Neutral property attacks by 1% per 2 upgrade levels of ^008080Illusion Survivor's Manteau [1]^000000 up to a maximum upgrade of +10.
 
 ^800080Set Bonus^000000
 ^008080Survivor's Circlet [1]^000000
@@ -34823,17 +34858,18 @@ placeholder
 #
 5512#
 This diadem honors Aquarius, the 11th astrological sign in the zodiac calendar. Its power increases defense from Wind attacks.
-Str + 2, FLEE + 10,
-Increases attack resistance to Wind property by 5%.
-If refined to 7 or higher,
-DEF + 1, ATK + 15.
-^ffffff_^000000
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Level : ^77777770^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808030^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Str + 2
+Flee + 10
+Reduces damage taken from Wind property attacks by 5%.
+If upgrade level is +7 or higher,
+Atk + 15
+Def + 1
 #
 5513#
 This crown honors Aquarius, the 11th astrological sign in the zodiac calendar.
@@ -40690,7 +40726,7 @@ Weight: ^8080801^000000
 #
 6820#
 A fragment of energy which if left alone will fade away into nothing.
-^FF0000Account Bound^000000
+^A730FBCan be exchanged for Old Nightmare Headgear in Tomb of Honor Dungeon.^000000
 Weight: ^8080801^000000
 #
 6821#
@@ -47364,12 +47400,6 @@ A skull shaped cup filled with blood. It obviously has some mysterious powers.
 Class: ^808080Recovery^000000
 Weight: ^8080805^000000
 Restores ^008000600^000000 HP.
-^800080Set Bonus^000000
-^008080Midgard Serpent Hat [1]^000000
-^008080Blood In Skull^000000
-Increases the recovery rate of ^008080Blood In Skull^000000 consumables by an additional 50%.
-If ^008080Midgard Serpent Hat [1]^000000 upgrade level is +7 or higher,
-Increases the recovery rate of ^008080Blood in Skull^000000 consumable by an additional 20%.
 #
 11597#
 A terrible worm that feeds on iron and other metals. However, it is likely a good source of protein.
@@ -71089,6 +71119,23 @@ Atk + 10%
 If the combined upgrade levels of ^008080Illusion Ballista [2]^000000 and ^008080Illusion Apple of Archer [1]^000000 upgrade levels are +22 or higher,
 Increases the damage of ^0000FFArrow Storm^000000 by an additional 30%.
 #
+18199#
+A mysterious bow given to adventurers who successfully carry out their missions.
+
+Class: ^808080Bow^000000
+Attack: ^808080150^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Thief, Archer, Assassin, Hunter Jobs, Rogue, Bard Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
+#
 18505#
 An accessory which is traditionally used in piercings by the Umbala tribespeople.
 MaxHP +1%.
@@ -73098,11 +73145,13 @@ Job : ^777777All Jobs^000000
 #
 18745#
 A long stick with an addictive choco. You can't seem to get enough of it.
-SP + 50.
-Series : ^777777Headgear^000000 Defense : ^7777770^000000
-Position : ^777777Lower ^000000Weight : ^7777770^000000
-Require LV : ^77777710^000000
-Equipped by : ^777777All Jobs^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Max SP + 50
 #
 18746#
 You can see continuos cold breathe.
@@ -75470,16 +75519,12 @@ Usable By: ^808080All Jobs^000000
 All Stats + 2
 Reduces the global delay of skills by 5%.
 Reduces damage taken from Demi-Human race enemies by 10%.
+Increases the recovery rate of ^008080Blood In Skull^000000 consumables by an additional 50%.
 If upgrade level is +7 or higher,
-Aspd + 1.
+Aspd + 1
+Increases the recovery rate of ^008080Blood in Skull^000000 consumable by an additional 20%.
 If upgrade level is +10 or higher,
 Reduces the global delay of skills by an additional 5%.
-^800080Set Bonus^000000
-^008080Midgard Serpent Hat [1]^000000
-^008080Blood In Skull^000000
-Increases the recovery rate of ^008080Blood In Skull^000000 consumables by an additional 50%.
-If ^008080Midgard Serpent Hat [1]^000000 upgrade level is +7 or higher,
-Increases the recovery rate of ^008080Blood in Skull^000000 consumable by an additional 20%.
 #
 18992#
 An over-sized, pure red ribbon enchanted with hidden magical powers.
@@ -81112,7 +81157,7 @@ Usable By: ^808080All Jobs^000000
 20038#
 A ghostly helmet, one of a kind, it seems to be haunted..
 Class: ^808080Costume^000000
-Position: ^808080Upper, Middle, Lower^000000
+Position: ^808080Upper^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
@@ -82331,13 +82376,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20295#
-^808080Sunglasses with the lenses modeled after Poring. An essential item for drawing everybody's attention.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+Sunglasses with the lenses modeled after the adorable Poring. An essential item for drawing everybody's attention.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20296#
 A hat modeled after mischievous monkey monster Yoyo.
@@ -84895,19 +84939,26 @@ Increases the recovery rate of recovery items by 10%.
 #
 20847#
 A manteau that protects its wearer from the elements.
+
+^FF0000Eligible Survivor's Rod for set combo:
+Survivor's Rod (Dex) [1]
+Survivor's Rod (Int) [1]
+^000000
 Class: ^808080Garment^000000
 Defense: ^80808030^000000
 Weight: ^80808055^000000
 Requires Level: ^808080130^000000
 Usable By: ^808080Mage Jobs, Soul Linker^000000
 Vit + 15
+
 ^800080Set Bonus^000000
-^008080Illusion Survivor's Manteau^000000
+^008080Illusion Survivor's Manteau [1]^000000
 ^008080Survivor's Rod [1]^000000
 Max HP + 1000
 Matk - 50
-Matk + 20 per upgrade level of the ^008080Survivor's Rod [1]^000000 up to +10.
-Reduces damage taken from Neutral property attacks by 1% per every other upgrade level of the ^008080Survivor's Manteau^000000 up to +10.
+Matk + 20 per upgrade level of ^008080Survivor's Rod [1]^000000 up to maximum upgrade of +10.
+Reduces the global delay of skills by 3% per 3 upgrade levels of ^008080Survivor's Rod [1]^000000.
+Reduces damage taken from Neutral property attacks by 1% per 2 upgrade levels of ^008080Illusion Survivor's Manteau [1]^000000 up to a maximum upgrade of +10.
 #
 20856#
 The manteau used by Werner's experiment. Beware, you may be consumed by it's power.
@@ -85473,6 +85524,23 @@ Required Jobs: Rune Knight, Royal Guard
 Atk + 1% per 2 upgrade levels of the item.
 Aspd + 1% per upgrade level of the item.
 This item is indestructible in battle.
+#
+21059#
+A mysterious two-handed sword given to adventurers who successfully carry out their missions.
+
+Class: ^808080Two-Handed Sword^000000
+Attack: ^808080225^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Swordman Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 21202#
 Octo-pig is known to bring luck with money from long time ago. It is said that Octo-pig's legs were used to make ornaments to collect coins.
@@ -90912,6 +90980,25 @@ Flee + 2 per upgrade level of the item.
 If upgrade level is +10 or higher,
 Perfect Dodge + 10
 #
+26173#
+A mysterious staff given to adventurers who have successfully completed their missions.
+
+Class: ^808080One-Handed Staff^000000
+Attack: ^80808050^000000
+Magic Attack: ^808080130^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Int + 5
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+mAtk + 5%
+Reduces the skill usage delay by 5%
+#
 26200#
 ^808080Rope that embodies the wielder's yearning for personal freedom. Old and worn, it bends and thrashes more flexibly than new rope.^000000
 Class: Whip
@@ -90933,6 +91020,22 @@ Aspd + 1
 Atk + 30
 Aspd + 1
 Increases critical damage on targets by 20%.
+#
+26219#
+A mysterious whip given to adventurers who successfully carry out their missions.
+Class: ^808080Whip^000000
+Attack: ^808080125^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Dancer Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 27012#
 Class: ^808080Card^000000
@@ -91698,9 +91801,10 @@ Increases the damage of Shadow property magical attacks on targets by 20%.
 #
 27263#
 Class: ^808080Card^000000
-Weight: ^8080800^000000
-Adds a 20% chance of transforming the user into a Golem for 10 seconds when performing a physical attack.
-DEF + 300 for the duration of the transformation.
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Adds a 20% chance of transforming the user into Golem for 10 seconds when performing a short-ranged attack;
+Def + 300 for the duration of the transformation.
 #
 27264#
 Class: ^808080Card^000000
@@ -91864,6 +91968,23 @@ Usable By: ^808080Guillotine Cross^000000
 Adds a 4% chance of transforming the user into Ghoul for 6 seconds when performing a short-ranged attack;
 The user's property becomes Undead.
 Applies ^0000FFEndure^000000 effect for the duration of the transformation.
+#
+28050#
+A mysterious katar given to adventurers who successfully execute missions.
+
+Class: ^808080Katar^000000
+Attack: ^808080175^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Assassin Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 28100#
 This two-handed axe, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
@@ -92126,6 +92247,23 @@ If upgrade level is +7 or higher,
 Increases the damage of ^0000FFDragon Tail^000000 by 15%.
 If upgrade level is +9 or higher,
 Reduces the cooldown of ^0000FFHowling Mine^000000 by 1 second.
+#
+28260#
+A mysterious rifle given to adventurers who successfully execute missions.
+
+Class: ^808080Rifle^000000
+Attack: ^808080175^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Gunslinger Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 28303#
 ^808080An object which seems to be part of the Vesper. Possesses a mysterious power that grants great strength to its owner.^000000
@@ -93989,6 +94127,24 @@ Adds an additional 5% chance of casting ^0000FFMeteor Storm^000000 on the target
 If upgrade level is +10 or higher,
 Adds an additional 5% chance of casting ^0000FFMeteor Storm^000000 on the target when performing a physical attack, where the level of the skill is 5.
 #
+28640#
+A mysterious book given to adventurers who successfully execute missions.
+Class: ^808080Book^000000
+Attack: ^80808080^000000
+Magic Attack: ^808080145^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Priest Jobs, Sage Jobs, Taekwon Master^000000
+Int + 5
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+mAtk + 5%
+Reduces the skill usage delay by 5%
+#
 28700#
 Attack: 0
 Property: N/A
@@ -94148,6 +94304,23 @@ If the combined upgrade levels of ^008080Illusion Ancient Cape [1]^000000 and ^0
 Additional Matk + 40
 If the combined upgrade levels are +22 or higher,
 Increases the damage of Fire property magical attacks on targets by 15%.
+#
+28781#
+A mysterious dagger given to adventurers who successfully execute missions.
+
+Class: ^808080Dagger^000000
+Attack: ^808080160^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080All Jobs except Acolyte Jobs, Taekwon, Taekwon Master, Gunslinger Jobs, Doram^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 28900#
 The official shield of the Prontera Royal Guard.
@@ -94550,6 +94723,25 @@ Class: ^808080^000000
 Position: ^808080^000000
 Compounds On: ^808080^000000
 Weight: ^8080800^000000
+#
+28959#
+A mysterious shield given to adventurers who successfully carry out their missions.
+Class: ^808080Shield^000000
+Defense: ^808080140^000000
+Weight: ^8080801^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080All Jobs^000000
+MaxHP + 1%
+Additional MaxHP + 1% for every three refine levels
+If refined to +7 or higher
+SP Recovery +1
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+SP Recovery +1
+MaxSP + 5%
+If Character Level is 150 or Higher
+MaxHP + 1%
 #
 29000#
 Type: Miscellaneous
@@ -96815,10 +97007,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31533#
-
+A warm muffler you want to wear when the weather gets cold. The wiggling tail is just too adorable.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31538#
 An aura of love radiates from your entire body!
@@ -97613,6 +97807,7 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31795#
+An ornament made to resemble an elephant-like fairy. The water whirling around with the fairy is beautiful.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
@@ -97668,6 +97863,41 @@ This hat was awarded to adventurers that displayed exceptional examples of creat
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+#
+32032#
+A mysterious one-handed spear given to adventurers who successfully execute missions.
+Class: ^808080One-Handed Spear^000000
+Attack: ^808080135^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
+#
+32114#
+A mysterious lute given to adventurers who successfully carry out their missions.
+
+
+Class: ^808080Musical Instrument^000000
+Attack: ^808080115^000000
+Magic Attack: ^80808060^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Maestro^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 32203#
 A high performance microchip that is said to have been used on a mainframe computer, known as 'MOTHER'. It contains valuable data of lost technology.
@@ -97999,4 +98229,38 @@ Class: ^808080^000000
 Position: ^808080^000000
 Compounds On: ^808080^000000
 Weight: ^8080800^000000
+#
+32356#
+A mysterious one-handed sword given to adventurers who successfully carry out their missions.
+
+Class: ^808080One-Handed Sword^000000
+Attack: ^808080150^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
+#
+32410#
+A mysterious mace given to adventurers who successfully execute missions.
+
+Class: ^808080Mace^000000
+Attack: ^808080140^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
