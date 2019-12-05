@@ -374,6 +374,7 @@ sub new {
 		'0260' => ['mail_window', 'v', [qw(flag)]],
 		'0274' => ['mail_return', 'V v', [qw(mailID fail)]],
 		# mail_return packet: '0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'0276' => ['account_server_info', 'v a4 a4 a4 a4 Z26 C V a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex iAccountSID serverInfo)]],
 		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]],
 		# tRO new packets, need some work on them
 		'0283' => ['account_id', 'a4', [qw(accountID)]],
