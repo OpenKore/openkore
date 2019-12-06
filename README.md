@@ -1,10 +1,11 @@
 ![logo](https://upload.wikimedia.org/wikipedia/commons/b/b5/Kore_2g_logo.png)
 
+![Language](https://img.shields.io/badge/language-Perl-blue.svg)
+
 ![Start](https://img.shields.io/github/stars/OpenKore/openkore)
 ![Fork](https://img.shields.io/github/forks/OpenKore/openkore?label=Fork)
 ![Watch](https://img.shields.io/github/watchers/OpenKore/openkore?label=Watch)
 
-![Language](https://img.shields.io/badge/language-Perl-blue.svg)
 ![Issues](https://img.shields.io/github/issues/OpenKore/openkore)
 ![Pull Requests](https://img.shields.io/github/issues-pr/OpenKore/openkore.svg)
 ![Contributors](https://img.shields.io/github/contributors/OpenKore/openkore.svg)
@@ -32,7 +33,7 @@ git clone https://github.com/OpenKore/openkore.git
 <!-- Source: http://forums.openkore.com/viewtopic.php?f=0&t=11287 -->
  1. **Have a problem?**
     - Update your openkore.
-    - Download anew.
+    - Download a new.
  2. **Still having problems?**
     - Search in [openkore wiki.](http://openkore.com/)
  3. **No information in the wiki?**
@@ -65,16 +66,15 @@ Check the [status of botting on official servers](https://github.com/OpenKore/op
 | --- | --- | --- | --- | --- |
 | [iRO](http://www.warpportal.com/) | International(US) RO | *** | Botable, Weekly Update | allanon |
 | [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | lututui, Henrybk, alisonrag |
-| [idRO](https://ro.gnjoy.id/) | Indonesia RO | EAC | Not Working | alisonrag |
-| [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | allanon | 
-| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | alisonrag |
-| [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | alisonrag  |
-| [kRO](http://ro.gnjoy.com/) | Korea RO | Cdclient | Need Verification |  N/A |
+| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | N/A |
+| [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | N/A | 
+| [idRO](https://ro.gnjoy.id/) | Indonesia RO | EAC | Not Working | N/A |
 | [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | HShield | Need Verification | N/A |
-| [tRO](https://ro.exe.in.th/) | Thailand RO | EAC | Need Verification | N/A |
-| [mRO](https://roextreme.com/mysg/main) | Malaysia RO | EAC | Not Working | N/A |
+| [kRO](http://ro.gnjoy.com/) | Korea RO | Cdclient | Not Working |  N/A |
+| [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | N/A  |
 | [phRO](https://ragnarokonline.com.ph/main) | Philippines RO | EAC | Not Working | N/A |
 | [ruRO](https://ru.4game.com/ro/play/) | Russia RO | Frost Security | Not Working | ya4ept |
+| [tRO](https://ro.exe.in.th/) | Thailand RO | EAC |  Not Working | N/A |
 | [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | Cdclient | Not working | N/A |
 
 ## Contributing
