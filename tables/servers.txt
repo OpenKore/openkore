@@ -262,25 +262,6 @@ addTableFolders tRO
 charBlockSize 112
 gameguard 1
 
-####################
-# Private RO Servers
-
-# http://ggamerz-ro.com/
-[GGamerzRO]
-ip 139.99.21.135
-port 6900
-private 1
-master_version 1
-version 55
-recvpackets recvpackets_20151104.txt
-serverType kRO_RagexeRE_2015_11_04a
-serverEncoding Western
-charBlockSize 147
-pinCode 1
-addTableFolders pserver/ggRO
-clientHash DA4E4A35A46BF326C9C45C653979972A
-sendCryptKeys 0x4C17382A, 0x29961E4F, 0x7ED174C9
-
 [Localhost]
 ip localhost
 port 6900
@@ -348,10 +329,15 @@ dead_message iRO Re:Start was merged into iRO Renewal on 11th July 2019. Visit o
 [International - iRO: Loki Classic]
 title International - iRO: Classic.Loki
 dead 1
-dead_message iRO Classic was closed on  July 11, 2019. Visit official website for more details.
+dead_message iRO Classic was closed on July 11, 2019. Visit official website for more details.
 
 # http://www.ragnarokeurope.com/
 [France - fRO]
 title France - fRO (ragnarokeurope.com): Chaos
 dead 1
-dead_message fRO was closed on  12 of August, 2019. Visit official website for more details.
+dead_message fRO was closed on 12 of August, 2019. Visit official website for more details.
+
+# http://ggamerz-ro.com/
+[GGamerzRO]
+dead 1
+dead_message GGamerzRO was closed on sometime in 2019.
