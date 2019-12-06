@@ -74,20 +74,6 @@ charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType
 
-# http://www.ragnarokeurope.com/
-[France - fRO]
-title France - fRO (ragnarokeurope.com): Chaos
-ip 54.36.76.129
-port 6900
-master_version 31
-version 1
-patchpath /patch01
-patchserver ftp.ragnarokonline.fr
-serverType fRO
-serverEncoding Western
-addTableFolders fRO
-charBlockSize 116
-
 # https://ro.gnjoy.id/
 [Indonesia - idRO: Yggdrasil]
 ip 202.93.26.198
@@ -362,4 +348,10 @@ dead_message iRO Re:Start was merged into iRO Renewal on 11th July 2019. Visit o
 [International - iRO: Loki Classic]
 title International - iRO: Classic.Loki
 dead 1
-dead_message euRO was closed on  July 11, 2019. Visit official website for more details.
+dead_message iRO Classic was closed on  July 11, 2019. Visit official website for more details.
+
+# http://www.ragnarokeurope.com/
+[France - fRO]
+title France - fRO (ragnarokeurope.com): Chaos
+dead 1
+dead_message fRO was closed on  12 of August, 2019. Visit official website for more details.
