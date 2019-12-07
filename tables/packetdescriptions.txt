@@ -268,7 +268,7 @@
 0209 Friend Request Response
 020A Friend Removed
 020D Char Ban List
-020E TaeKwon Misson
+020E Taekwon Misson
 0215 Skill Message (Gospel)
 0216 Adoption Baby Reply
 0219 Blacksmith Top 10 Ranking
@@ -589,7 +589,6 @@
 0A9B Switch Equip System Log
 0A9D Switch Equip System Result
 0AA0 Refine UI Open
-0AA1 Refine UI Select
 0AA2 Refine UI Info
 0AA3 Refine UI Info Refine
 0AA4 Refine UI Info close
@@ -702,6 +701,8 @@
 0130 Vender Sell List
 0134 Vender Buy
 0138 GM PK Mode Change
+013F GM Item Mob Create
+0140 GM Move Player To Map
 0143 Talk Number
 0146 Talk Cancel
 0149 Alignment
@@ -776,16 +777,54 @@
 0204 Client hash
 0208 Friend Request Accept/Reject
 020D Homunculus Feed
+0212 GM Manner by Player Name
+0213 GM Request Status
+0217 Rank Blacksmith Request
+0218 Rank Alchemist Request
+021D Less Effect
 0222 Refine Item
+0225 Rank Taekwon Request
 0228 gameguard_sync
 022D Homunculus Command
+0231 Homunculus Change Name Request
+0232 Homunculus Move
+0233 Homunculus Attack
+0234 Homunculus Move to Master
+0237 Rank Killer Request
 023B Storage Password
+023F Mail Open
+0241 Mail Read
+0243 Mail Delete
+0244 Mail Attachment Get
+0246 Mail Remove
+0247 Mail Attachment Set
+0248 Mail Send
+024B Auction Item Added Cancel
+024C Auction Item Add
+024D Auction Create
+024E Auction Cancel
+024F Auction Buy
+0251 Auction Search
+0254 Star Place Agree
 025B Cooking Request 
+025C Auction Info Self
+025D Auction Sell Stop
+0273 Mail Return
 0275 Character Server Login
 0281 Gangsi Rank
+0288 Cash Dealer Buy Item
+0292 Auto Revive (command, ziegfried token)
+029F Mercenary Command
 02AF Message ID Encryption Initialized
+02B0 Account Server Login
+02B6 Quest Send State
 02BA Hotkey Change
 02C4 Party Join (From You)
+02C7 Party Join
+02D6 View Player Equip Request
+02D8 Allow View Sel Equip Windows
+02DB Battleground Chat
+02F1 Progress Bar Complete
 035F Character Move
 0360 Sync
 0361 Look
@@ -798,13 +837,21 @@
 0369 Actor Get Info (Name)
 0436 Map Login
 0437 Character Move
+0439 Item Use
+0443 Skill Select
 0445 Cash Shop Buy Item
 0447 Request Blocking Player Cancel
+044A Client Version
+07DA Party Leader Change
 07D7 Party Settings
 07E4 Item List Window Selected
+07E7 Captcha Answer
 07EC Battleground Join
 0801 Buy From Vender
 0802 Booking Party Register
+0804 Booking Register
+0806 Booking Search
+0808 Booking Request
 0811 Buying Store Create
 0815 Buying Store Close
 0817 Buying Store Open
@@ -815,18 +862,42 @@
 082B Char Delete Cancel
 0835 Search Store Info 
 0838 Search Store Request Next Page
+083B Search Store Close
 083C SSI Item List on Click
+0842 Recal SSO
+0843 Remove AID SSO
+0844 Cash Shop Open
+0846 Cash Shop Tab Request
+0848 Cash Shop Buy
+084A Cash Shop Close
+08B5 Pet Capture
+08B8 PinCode Password
+08BA Pincode New Password
+08C1 Macro Start
+08C2 Macro Stop
+08C9 Cash Shop Request Items
 096E Merge Item Request
 0970 Char Create Request
 0974 Merge Item Cancel
+097C Rank Request
+0987 Account Server Login
+098D Clan Chat Message
 098F Char Delete Accept
 0998 Send Equip
+09A1 Character Received Sync
+09D0 GameGuard Reply
 09D4 Sell or Buy Complete
 09F1 Rodex Request Zeny
 09F3 Rodex Request Item
 09FB Pet Evolution
 0A01 Hotkey Rotate
 09E8 Rodex Open Mail Box
+09E9 Rodex Close Mail Box
+09EA Rodex Read Mail
+09EE Rodex Next Page
+09F1 Rodex Zeny Request
+09F3 Rodex Item Request
+09FB Pet Evolution
 0A03 Rodex Cancel Write Mail
 0A04 Rodex Add Item
 0A06 Rodex Remove Item
@@ -843,11 +914,22 @@
 0A2E Guild Request Change Title
 0A35 Identify
 0A39 Char Create Request
+0A46 Stylist UI Style Change
+0A49 Private Airship Request
 0A6E Rodex Mail Send
 0A75 Account Server Login (encrypted)
 0A76 Account Server Login
 0A7F Offline Store Open
+0A97 Switch Equip System Add Item
+0A99 Switch Equip System Remove Item
+0A9C Switch Equip System Switch
+0AA1 Refine UI Select
 0AAC Account Server Login
 0AC0 Rodex Open Mail Box
 0AC1 Rodex Refresh Mail Box
+0ACE Switch Equip System
 0ACF Account Server Login With OTP
+0AE8 Stylist UI Change Dress
+0B10 Skill Start Use
+0B11 Skill Stop Use
+0B21 Hotkey Change
