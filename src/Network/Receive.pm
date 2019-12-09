@@ -2227,6 +2227,17 @@ sub actor_action {
 		my $target = Actor::get($args->{targetID});
 		my $verb = $source->verb('attack', 'attacks');
 
+		my $this_timer = time;
+		if ($source->isa('AI::Slave')) {
+			if (exists $source->{last_attack_timer} && exists $source->{last_attack_targetID} && $source->{last_attack_targetID} eq $args->{targetID}) {
+				warning "[test] $source between last attack and this attack to $target passed ". ($this_timer - $source->{last_attack_timer}) ." seconds.\n";
+			} else {
+				warning "[test] $source did the first attack to $target.\n";
+			}
+			$source->{last_attack_timer} = time;
+			$source->{last_attack_targetID} = $args->{targetID};
+		}
+
 		$target->{sitting} = 0 unless $args->{type} == ACTION_ATTACK_NOMOTION || $args->{type} == ACTION_ATTACK_MULTIPLE_NOMOTION || $totalDamage == 0;
 
 		my $msg = attack_string($source, $target, $dmgdisplay, ($args->{src_speed}));
