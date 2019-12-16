@@ -1591,8 +1591,8 @@ sub processAutoStorage {
 					if ($item{storage}{amount} < $item{amount_needed}) {
 						warning TF("storage: %s out of stock\n", $item{name});
 						Plugins::callHook("AI_storage_item_out_of_stock",  {
-								name => $config{"getAuto_$i"},
-								getAutoIndex => $i,
+								name => $config{"getAuto_$args->{index}"},
+								getAutoIndex => $args->{index},
 							}
 						);
 						if ($item{dcOnEmpty}) {
