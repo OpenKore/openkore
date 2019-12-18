@@ -186,7 +186,7 @@ prt_fild08a.gnd#prt_fild08.gnd#
 prt_fild08a.gat#prt_fild08.gat#
 prt_fild08a.rsw#prt_fild08.rsw#
 유저인터페이스\map\prt_fild08a.bmp#유저인터페이스\map\prt_fild08.bmp#
-
+                 
 iz_ac02_d.gnd#iz_ac02.gnd#
 iz_ac02_d.gat#iz_ac02.gat#
 iz_ac02_d.rsw#iz_ac02.rsw#

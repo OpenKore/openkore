@@ -967,6 +967,41 @@ AB_OFFERTORIUM#Offertorium#
 WL_TELEKINESIS_INTENSE#Telecinesia#
 LG_KINGS_GRACE#Graça Real#
 ALL_FULL_THROTTLE#Maximizar Poder#
+SU_BASIC_SKILL#Instintos Básicos#
+SU_BITE#Mordida#
+SU_HIDE#Gato-Mia#
+SU_SCRATCH#Arranhar#
+SU_STOOP#Quatro Patas#
+SU_LOPE#Pulo do Gato#
+SU_SPRITEMABLE#Invocar#
+SU_POWEROFLAND#Poder da Selva#
+SU_SV_STEMSPEAR#Lança Gateira#
+SU_CN_POWDERING#Pulverizar#
+SU_CN_METEOR#Meteoros de Nepeta#
+SU_SV_ROOTTWIST#Hera Venenosa#
+SU_POWEROFLIFE#Poder da Fauna#
+SU_SCAROFTAROU#Ferida de Tarou#
+SU_PICKYPECK#Chilique de Picky#
+SU_ARCLOUSEDASH#Impulso de Arclouse#
+SU_LUNATICCARROTBEAT#Cometas Lunáticos#
+SU_POWEROFSEA#Poder das Marés#
+SU_TUNABELLY#Dádiva do Atum#
+SU_TUNAPARTY#Proteção da Orla#
+SU_BUNCHOFSHRIMP#Chuva de Mariscos#
+SU_FRESHSHRIMP#Camarão Fresquinho#
+SU_SOULATTACK#Ampliar Alcance#
+SU_POWEROFFLOCK#Intimidar#
+SU_SVG_SPIRIT#Ataque Selvagem#
+SU_HISS#Riscar Fósforo#
+SU_NYANGGRASS#Mato de Gato#
+SU_GROOMING#Lambida#
+SU_PURRING#Banho de Lambidas#
+SU_SHRIMPARTY#Festa do Camarão#
+SU_SPIRITOFLIFE#Invocação da Fauna#
+SU_MEOWMEOW#Balaio de Gato#
+SU_SPIRITOFLAND#Invocação da Selva#
+SU_CHATTERING#Despertar#
+SU_SPIRITOFSEA#Invocação das Marés#
 HLIF_HEAL#Cura pelas Mãos#
 HLIF_AVOID#Bater em Retirada#
 HLIF_BRAIN#Cirurgia Cerebral#
