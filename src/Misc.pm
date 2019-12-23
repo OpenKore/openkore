@@ -2180,7 +2180,7 @@ sub itemName {
 	my $card_unpack;
 	
 	# FIXME WORKAROUND TO ITEMID 4BYTES
-	if ($item_len == 67 || $item_len == 34) {
+	if ($masterServer->{itemListType}) {
 		$card_unpack = "V";
 	} else {
 		$card_unpack = "v";
