@@ -35,7 +35,9 @@ sub new {
 		account_id 0283
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
+	$self->{vender_items_list_item_pack} = 'V v2 C v C3 a8 a25';
+
 	return $self;
 }
 
