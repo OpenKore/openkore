@@ -14,6 +14,14 @@ sub new {
 	$self->{weight_max} = 0;
 	$self->{exists} = 0;
 	$self->{type} = 0;
+
+	if($masterServer->{itemListType}) {
+		$self->{hooks} = Plugins::addHooks (
+			['packet/item_list_start',      \&onitemListStart, $self],
+			['packet/item_list_end',       sub { $self->onitemListEnd; }],
+		);
+	}
+
 	return $self;
 }
 
@@ -38,7 +46,7 @@ sub info {
 
 sub onMapChange {
 	my ($self) = @_;
-	$self->{exists} = 0;
+	return if $masterServer->{itemListType};
 	$self->clear();
 }
 
@@ -76,6 +84,23 @@ sub item_max_stack {
 	my ($self, $nameID) = @_;
 	
 	return $itemStackLimit{$nameID}->{2} || $itemStackLimit{-1}->{2} || 30000;
+}
+
+sub onitemListStart {
+	my ($hook_name, $args, $self) = @_;
+	if($args->{type} == 0x1) {
+		$self->clear();
+		if (!$self->{exists}) {
+			$self->{exists} = 1;
+		}
+	}
+}
+
+sub onitemListEnd {
+	my ($self) = @_;
+	if($current_item_list == 0x1) {
+		Plugins::callHook('cart_ready');
+	}
 }
 
 1;
