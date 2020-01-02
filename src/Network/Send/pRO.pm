@@ -14,41 +14,21 @@
 package Network::Send::pRO;
 
 use strict;
-use Globals;
-use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-use Log qw(error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
 	my %handlers = qw(
-		sync 0360
-		character_move 035F
-		actor_info_request 0368
-		actor_look_at 0361
-		item_take 0362
-		item_drop 0363
-		storage_item_add 0364
-		storage_item_remove 0365
-		storage_password 023B
-		skill_use_location 0366
-		party_setting 07D7
-		buy_bulk_vender 0801
+		master_login 0A76
+		game_login 0275
+		char_create 0970
+		send_equip 0998
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
-}
-
-sub sendCharDelete {
-	my ($self, $charID, $email) = @_;
-	my $msg = pack("C*", 0xFB, 0x01) .
-			$charID . pack("a50", stringToBytes($email));
-	$self->sendToServer($msg);
 }
 
 1;

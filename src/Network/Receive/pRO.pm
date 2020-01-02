@@ -16,20 +16,12 @@ package Network::Receive::pRO;
 use strict;
 use base qw(Network::Receive::ServerType0);
 
-use Globals;
-use Log qw(message warning error debug);
-use Translation;
-use Misc;
-use Utils qw(timeOut getFormattedDate);
-use I18N qw(bytesToString stringToBytes);
-
-use Time::HiRes qw(time);
-
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
+		'0A7B' => ['eac_request', 'H*', [qw(eac_key)]],
 	);
 
 	foreach my $switch (keys %packets) {
@@ -40,9 +32,6 @@ sub new {
 		received_characters 099D
 		received_characters_info 082D
 		sync_received_characters 09A0
-		actor_exists 0856
-		actor_connected 0857
-		actor_moved 0858
 		account_id 0283
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
