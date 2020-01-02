@@ -15,7 +15,8 @@ sub new {
 	my $self = $class->SUPER::new;
 	if($masterServer->{itemListType}) {
 		$self->{hooks} = Plugins::addHooks (
-			['packet_pre/item_list_end',        sub { $self->onitemListEnd; }]
+			['packet/item_list_start',      \&onitemListStart, $self],
+			['packet/item_list_end',       sub { $self->onitemListEnd; }],
 		);
 	} else {
 		$self->{hooks} = Plugins::addHooks (
@@ -33,16 +34,6 @@ sub isReady {
 	return $self->{state};
 }
 
-sub onitemListEnd {
-	my ($self) = @_;
-	if($current_item_list == 0x0) {
-		if ($self->{state} == MAP_LOADED_OR_NEW) {
-			$self->{state} = INVENTORT_READY;
-			Plugins::callHook('inventory_ready');
-		}
-	}
-}
-
 sub onStatInfo2 {
 	my ($self) = @_;
 	if ($self->{state} == MAP_LOADED_OR_NEW) {
@@ -53,6 +44,7 @@ sub onStatInfo2 {
 
 sub onMapChange {
 	my ($self) = @_;
+	return if $masterServer->{itemListType};
 	$self->{state} = MAP_LOADED_OR_NEW;
 	$self->clear();
 }
@@ -61,6 +53,24 @@ sub item_max_stack {
 	my ($self, $nameID) = @_;
 	
 	return $itemStackLimit{$nameID}->{1} || $itemStackLimit{-1}->{1} || 30000;
+}
+
+sub onitemListStart {
+	my ($hook_name, $args, $self) = @_;
+	if($args->{type} == 0x0) {
+		$self->{state} = MAP_LOADED_OR_NEW;
+		$self->clear();
+	}
+}
+
+sub onitemListEnd {
+	my ($self) = @_;
+	if($current_item_list == 0x0) {
+		if ($self->{state} == MAP_LOADED_OR_NEW) {
+			$self->{state} = INVENTORT_READY;
+			Plugins::callHook('inventory_ready');
+		}
+	}
 }
 
 1;
