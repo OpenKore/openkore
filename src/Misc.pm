@@ -2180,7 +2180,7 @@ sub itemName {
 	my $card_unpack;
 	
 	# FIXME WORKAROUND TO ITEMID 4BYTES
-	if ($item_len == 67 || $item_len == 34) {
+	if ($masterServer->{itemListType}) {
 		$card_unpack = "V";
 	} else {
 		$card_unpack = "v";
@@ -2847,6 +2847,7 @@ sub setPartySkillTimer {
 
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$handle};
+	$ai_v{"partySkill_${i}_time"} = time if $i ne "";
 	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i ne "";
 }
 
@@ -3495,7 +3496,13 @@ sub useTeleport {
 			return 1;
 		}
 	}
-
+	# We used all not item teleport options.
+	# Cheking inventory->isReady() before looking for items to teleport.
+	# Timing out if not ready.
+	if (!$char->inventory->isReady()){
+		$timeout{ai_teleport}{time} = time;
+		return 0;
+	}
 	# No skill try to equip a Tele clip or something,
 	# if teleportAuto_equip_* is set
 	if (Actor::Item::scanConfigAndCheck('teleportAuto_equip') && ($use_lvl == 1 || !$config{'teleportAuto_useItemForRespawn'})) {

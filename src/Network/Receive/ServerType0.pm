@@ -374,6 +374,7 @@ sub new {
 		'0260' => ['mail_window', 'v', [qw(flag)]],
 		'0274' => ['mail_return', 'V v', [qw(mailID fail)]],
 		# mail_return packet: '0274' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 x4 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'0276' => ['account_server_info', 'v a4 a4 a4 a4 Z26 C V a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex iAccountSID serverInfo)]],
 		'027B' => ['premium_rates_info', 'V3', [qw(exp death drop)]],
 		# tRO new packets, need some work on them
 		'0283' => ['account_id', 'a4', [qw(accountID)]],
@@ -628,6 +629,7 @@ sub new {
 			? ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite)]]
 			: ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]]
 		,
+		'0A38' => ['open_ui', 'C', [qw(type)]],
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
@@ -665,6 +667,7 @@ sub new {
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
 		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0AE0' => ['login_error', 'V V Z20', [qw(type error date)]],
+		'0AE2' => ['open_ui', 'C V', [qw(type data)]],
 		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
  		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
@@ -902,7 +905,7 @@ sub parse_items {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
     
-		if ( $args->{switch} eq '0B09' && $item->{type} == 10  && $masterServer->{serverType} ne 'iRO_Renewal') { # workaround arrow byte bug
+		if ( $args->{switch} eq '0B09' && $masterServer->{serverType} ne 'iRO_Renewal' && existsInList("10, 16, 17, 19", $item->{type}) ) { # workaround arrow/ammunition byte bug
 			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
 		}
 

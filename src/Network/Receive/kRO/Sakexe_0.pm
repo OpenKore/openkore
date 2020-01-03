@@ -613,6 +613,7 @@ sub new {
 			? ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite)]]
 			: ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]]
 		,
+		'0A38' => ['open_ui', 'C', [qw(type)]],
 		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 V', [qw(ID name partyName guildName guildTitle titleID)]],
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
@@ -641,6 +642,7 @@ sub new {
  		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE0' => ['login_error', 'V V Z20', [qw(type error date)]],
+		'0AE2' => ['open_ui', 'C V', [qw(type data)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AE9' => ['login_pin_code_request', 'V a4 v2', [qw(seed accountID flag lock)]],
