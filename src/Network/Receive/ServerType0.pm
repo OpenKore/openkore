@@ -756,8 +756,8 @@ sub new {
 			},
 			type7 => {
 				len => 34,
-				types => 'a2 V C V2 C2 a16 l v2 C',
-				keys => [qw(ID nameID type amount type_equip broken upgrade cards expire bindOnEquipType sprite_id identified)],
+				types => 'a2 V C v V a16 l C',
+				keys => [qw(ID nameID type amount type_equip cards expire identified)],
 			},
 		},
 	};
