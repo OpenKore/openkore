@@ -56,6 +56,4 @@ sub new {
 
 sub eac_request {}
 
-sub vender_items_list {}
-
 1;
