@@ -890,14 +890,7 @@ sub parse_account_server_info {
 	my ($self, $args) = @_;
 	my $server_info;
 
-	if ($args->{switch} eq '0069') {  # DEFAULT PACKET
-		$server_info = {
-			len => 32,
-			types => 'a4 v Z20 v3',
-			keys => [qw(ip port name users display unknown)],
-		};
-
-	} elsif ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
+	if ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
 		$server_info = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
@@ -911,8 +904,12 @@ sub parse_account_server_info {
 			keys => [qw(name users unknown ip_port)],
 		};
 
-	} else { # this can't happen
-		return;
+	} else { # 0069 [default] and 0276 [pRO, tRO]
+		$server_info = {
+			len => 32,
+			types => 'a4 v Z20 v3',
+			keys => [qw(ip port name users display unknown)],
+		};
 	}
 
 	@{$args->{servers}} = map {
