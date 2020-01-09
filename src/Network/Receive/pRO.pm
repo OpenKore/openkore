@@ -41,4 +41,6 @@ sub new {
 	return $self;
 }
 
+sub eac_request {}
+
 1;

@@ -25,6 +25,20 @@ sub new {
 		game_login 0275
 		char_create 0970
 		send_equip 0998
+		skill_use 0438
+		character_move 035F
+		sync 0360
+		actor_look_at 0361
+		item_take 0362
+		item_drop 0363
+		storage_item_add 0364
+		storage_item_remove 0365
+		skill_use_location 0366
+		actor_info_request 0368
+		actor_name_request 0369
+		party_setting 07D7
+		buy_bulk_vender 0801
+		storage_password 023B
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
