@@ -23,7 +23,7 @@ sub new {
 	my %handlers = qw(
 		master_login 0A76
 		game_login 0275
-		char_create 0970
+		char_create 0067
 		send_equip 0998
 		skill_use 0438
 		character_move 035F
