@@ -7818,6 +7818,8 @@ sub buying_buy_fail {
 	if ($args->{result} == 3) {
 		error T("Failed to buying (insufficient zeny).\n");
 	} elsif ($args->{result} == 4) {
+		$buyershopstarted = 0;
+		Plugins::callHook("buyer_shop_closed");
 		message T("Buying up complete.\n");
 	} else {
 		error TF("Failed to buying (unknown error: %s).\n", $args->{result});
