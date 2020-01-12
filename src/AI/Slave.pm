@@ -401,7 +401,7 @@ sub processAttack {
 			$monsterPos = $realMonsterPos;
 		}
 
-		my $cleanMonster = checkMonsterCleanness($ID);
+		my $cleanMonster = slave_checkMonsterCleanness($slave, $ID);
 
 
 		# If the damage numbers have changed, update the giveup time so we don't timeout
@@ -609,7 +609,7 @@ sub processAttack {
 	# Check for kill steal while moving
 	if ($slave->is("move", "route") && $slave->args->{attackID} && $slave->inQueue("attack")) {
 		my $ID = $slave->args->{attackID};
-		if ((my $target = $monsters{$ID}) && !checkMonsterCleanness($ID)) {
+		if ((my $target = $monsters{$ID}) && !slave_checkMonsterCleanness($slave, $ID)) {
 			$target->{$slave->{ai_attack_failed_timeout}} = time;
 			message TF("Dropping target - %s will not kill steal others\n", $slave), 'slave_attack';
 			$slave->sendAttackStop;
@@ -763,7 +763,7 @@ sub processAutoAttack {
 
 			# There are two types of non-aggressive monsters. We generate two lists:
 			foreach (@monstersID) {
-				next if (!$_ || !checkMonsterCleanness($_));
+				next if (!$_ || !slave_checkMonsterCleanness($slave, $_));
 				my $monster = $monsters{$_};
 				next if !$field->isWalkable($monster->{pos}{x}, $monster->{pos}{y}); # this should NEVER happen
 				next if !checkLineWalkable($myPos, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
