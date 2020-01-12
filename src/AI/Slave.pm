@@ -571,22 +571,21 @@ sub processAttack {
 			}
 
 			if ($args->{attackMethod}{type} eq "weapon") {
-				if ($config{$slave->{configPrefix}.'attack_dance'}) {
-					if (timeOut($timeout{$slave->{ai_dance_attack_timeout}})) {
+				if ($config{$slave->{configPrefix}.'attack_dance_melee'}) {
+					if (timeOut($timeout{$slave->{ai_dance_attack_melee_timeout}})) {
 						my $cell = get_dance_position($slave, $target);
 						$slave->sendMove ($cell->{x}, $cell->{y});
 						$slave->sendAttack ($ID);
 						$slave->sendMove ($realMyPos->{x},$realMyPos->{y});
-						$timeout{$slave->{ai_dance_attack_timeout}}{time} = time;
+						$timeout{$slave->{ai_dance_attack_melee_timeout}}{time} = time;
 					}
 					
-				} elsif ($config{$slave->{configPrefix}.'attack_dance_dist'} && $args->{attackMethod}{distance} > 2) {
-					if (timeOut($timeout{$slave->{ai_dance_dist_attack_timeout}})) {
-						#my $cell = get_kite_position($field, $slave, $target, $realMonsterDist, $realMonsterDist+1, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
+				} elsif ($config{$slave->{configPrefix}.'attack_dance_ranged'} && $args->{attackMethod}{distance} > 2) {
+					if (timeOut($timeout{$slave->{ai_dance_attack_ranged_timeout}})) {
 						my $cell = get_kite_position($field, $slave, $target, $realMonsterDist+1, $realMonsterDist+2, $realMonsterDist+2, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
 						$slave->sendAttack ($ID);
 						$slave->sendMove ($cell->{x}, $cell->{y});
-						$timeout{$slave->{ai_dance_dist_attack_timeout}}{time} = time;
+						$timeout{$slave->{ai_dance_attack_ranged_timeout}}{time} = time;
 					}
 				
 				} else {

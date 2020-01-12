@@ -374,8 +374,8 @@ mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 0
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
-mercenary_attack_dance 0
-mercenary_attack_dance_dist 0
+mercenary_attack_dance_melee 0
+mercenary_attack_dance_ranged 0
 
 mercenary_runFromTarget 0
 mercenary_runFromTarget_dist 5
@@ -426,7 +426,7 @@ homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 0
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
-homunculus_attack_dance 0
+homunculus_attack_dance_melee 0
 
 homunculus_runFromTarget 0
 homunculus_runFromTarget_dist 5

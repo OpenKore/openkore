@@ -25,7 +25,7 @@ sub addSlave {
 		$actor->{ai_attack_timeout} = 'ai_homunculus_attack';
 		$actor->{ai_attack_auto_timeout} = 'ai_homunculus_attack_auto';
 		$actor->{ai_standby_timeout} = 'ai_homunculus_standby';
-		$actor->{ai_dance_attack_timeout} = 'ai_homunculus_dance_attack';
+		$actor->{ai_dance_attack_melee_timeout} = 'ai_homunculus_dance_attack_melee';
 		$actor->{ai_attack_waitAfterKill_timeout} = 'ai_homunculus_attack_waitAfterKill';
 		$actor->{ai_attack_failed_timeout} = 'homunculus_attack_failed';
 		bless $actor, 'AI::Slave::Homunculus';
@@ -35,8 +35,8 @@ sub addSlave {
 		$actor->{ai_attack_timeout} = 'ai_mercenary_attack';
 		$actor->{ai_attack_auto_timeout} = 'ai_mercenary_attack_auto';
 		$actor->{ai_standby_timeout} = 'ai_mercenary_standby';
-		$actor->{ai_dance_attack_timeout} = 'ai_mercenary_dance_attack';
-		$actor->{ai_dance_dist_attack_timeout} = 'ai_mercenary_dance_dist_attack';
+		$actor->{ai_dance_attack_melee_timeout} = 'ai_mercenary_dance_attack_melee';
+		$actor->{ai_dance_attack_ranged_timeout} = 'ai_mercenary_dance_attack_ranged';
 		$actor->{ai_attack_waitAfterKill_timeout} = 'ai_mercenary_attack_waitAfterKill';
 		$actor->{ai_attack_failed_timeout} = 'mercenary_attack_failed';
 		bless $actor, 'AI::Slave::Mercenary';
