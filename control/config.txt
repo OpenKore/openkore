@@ -138,6 +138,7 @@ avoidGM_ignoreList
 avoidList 1
 avoidList_inLockOnly 0
 avoidList_reconnect 1800
+avoidList_ignoreList
 
 cachePlayerNames 1
 cachePlayerNames_duration 900

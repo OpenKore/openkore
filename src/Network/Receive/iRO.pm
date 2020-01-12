@@ -16,14 +16,6 @@ package Network::Receive::iRO;
 use strict;
 use base qw(Network::Receive::ServerType0);
 
-use Globals qw($messageSender %timeout %config);
-use Log qw(message debug);
-use Misc qw(center itemName);
-use Translation qw(T TF);
-use Utils qw(formatNumber swrite timeOut);
-
-use Time::HiRes qw(time);
-
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);

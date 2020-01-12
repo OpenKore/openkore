@@ -26141,16 +26141,14 @@ Required Lv. : ^77777770^000000
 Equip : ^777777All classes^000000
 #
 5919#
-t
 Aksesoris yang sangat indah, semua pandangan akan tertuju padamu.
-auto casting Pneuma Lv1 Saat melakukan serangan fisik.
+Autocasting Pneuma Lv1 Saat melakukan serangan fisik.
 Kemungkinan Pneuma Lv1 akan meningkat sesuai dengan tingkat tempa Camellia Hair Pin.
-MDEF +20t
-Class : ^777777Helmet^000000 Defense : ^7777770^000000t
-Location : ^777777Top ^000000Weight : ^777777100^000000t
-Required Level : ^77777750^000000t
-Equip : ^777777All Class^000000t
-t
+MDEF +20.
+Jenis : ^777777Headgear^000000 Defense : ^7777770^000000
+Lokasi : ^777777Upper ^000000Berat : ^777777100^000000
+Lv Minimal : ^77777750^000000
+Job : ^777777All Job^000000
 #
 5920#
 Sepatu yang meningkatkan kemampuan peyembuhan
@@ -39267,7 +39265,7 @@ Berat : ^77777710^000000
 12900#
 Sebuah kotak yang berisi 10 buah gulungan cara pertarungan field manual.
 ^ffffff_^000000
-Field manual ?Meningkatkan EXP sebesar 150% selama 30 menit.
+Field Manual Meningkatkan EXP sebesar 50% selama 30 menit.
 ^ffffff_^000000
 Berat : ^7777771^000000
 #
@@ -56631,7 +56629,18 @@ Job : ^777777Semua^000000
 
 #
 19135#
-
+Jiwa dari Chung E terlihat dikepalamu.
+Meningkatkan EXP + 1% dan Drop Rate + 1% setiap 2 tingkat tempa. 
+Meningkatkan Max HP + 2%, Max SP + 2% setiap 4 tingkat tempa.
+Jika tingkat tempa mencapai 9, HP dan SP Recovery + 40%.
+Jika tingkat tempa mencapai 12, tambahan MaxHP + 3%, MaxSP + 3%.
+___________
+Ketika menggunakan serangan fisik atau magic, terdapat kemungkinan berubah menjadi Chung E selama 5 detik. 
+Ketika berubah, MATK + 30%, Serangan Kritikal + 30%.
+Jenis : ^777777Headgear^000000 Defense : ^7777770^000000
+Lokasi : ^777777Upper ^000000Berat : ^7777771^000000
+Lv Minimal : ^7777771^000000
+Job : ^777777All Job^000000
 #
 19136#
 
@@ -56844,7 +56853,16 @@ Job : ^777777All Jobs^000000
 
 #
 19242#
-
+Penutup kepala yang dihiasi gambar anak kucing yang lucu. 
+All Stat +1, Aspd +5%.
+Jika tingkat tempa mencapai 9, mengurangi Variable Cast Time -10%.
+Jika tingkat tempa mencapai 12, Casting tidak bisa digagalkan.
+Jika dipakai oleh karakter dengan level dibawah 100 : Meningkatkan Experince sebesar 10% 
+Jika dipakai oleh karakter dengan level diatas 100 : Meningkatkan Experince sebesar 4% 
+Jenis : ^777777Headgear^000000 Defense : ^77777720^000000
+Lokasi : ^777777Upper ^000000Weight : ^77777710^000000
+Lv Minimal : ^7777771^000000
+Job : ^777777All Job^000000
 #
 19243#
 
@@ -56904,22 +56922,23 @@ Job : ^777777Semua^000000
 
 #
 19269#
-Happy Flapping Angel Wing
-Penutup kepala yang menyerupai sayap dari bidadari kebahagiaan. Membuat kamu terasa lebih ringan ketika memakainya.
-Meningkatkan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 5%.
-Mengurangi serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 5%.
-Memberikan kemungkinan untuk menjatuhkan Witched Starsand ketika monster Clock Tower or Nightmare Clock Tower dikalahkan.
-Jika tingkat tempa +5 atau lebih, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 10%.
-Jika tingkat tempa +5 or higher, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 10%.
-Jika tingkat tempa +7 or higher, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 15%.
-Jika tingkat tempa +7 or higher, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 15%.
-Jika tingkat tempa +8 or higher, anti Stone Curse.
-Jika tingkat tempa +9 or higher, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 20%.
-Jika tingkat tempa +9 or higher, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 20%
-Class : ^777777Headgear^000000 Def : ^7777772^000000
-Location : ^777777Upper^000000 Weight : ^77777750^000000
-Required Level : ^77777730^000000
-Jobs : ^777777All^000000
+Penutup kepala yang menyerupai sayap dari bidadari kebahagiaan. Membuat kamu terasa lebih ringan ketika memakainya
+Kamu bisa mendapatkan Witched Starsand jika menggunakan barang ini setiap mengalahkan musuh dari Clock Tower / Nightmare Clock Tower.
+___________
+Meningkatkan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 15%.
+Mengurangi serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 15%.
+___________
+Jika tingkat tempa +7 atau lebih, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 15%
+Jika tingkat tempa +7 atau lebih, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 15%
+___________
+Jika tingkat tempa +8 atau lebih, anti Stone Curse
+___________
+Jika tingkat tempa +9 atau lebih, tambahan peningkatan serangan fisik dan magic kepada monster di Clock Tower dan Nightmare Clock Tower sebesar 20%,
+Jika tingkat tempa +9 atau lebih, tambahan pengurangan serangan yang diterima dari monster di Clock Tower dan Nightmare Clock Tower sebesar 20%
+Jenis : ^777777Headgear^000000 Defense : ^7777772^000000
+Lokasi : ^777777Upper ^000000Weight : ^77777750^000000
+Lv Minimal : ^77777730^000000
+Job : ^777777All Job^000000
 #
 19275#
 
@@ -73205,4 +73224,9 @@ Type: ^777777Costume^000000 Def: ^7777770^000000
 Posisi : ^777777Upper ^000000Berat : ^7777770^000000
 Lv Minimal : ^7777771^000000
 Job : ^777777Semua Job^000000
+#
+9710#
+^ff0000Barang ini tidak dapat ditransaksikan.^000000
+Sebuah Scroll Special Refine. Kamu bisa mendapatkan item Special untuk memperkuat karaktermu..
+Berat : ^7777771^000000
 #

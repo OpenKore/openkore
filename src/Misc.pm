@@ -1445,8 +1445,10 @@ sub avoidGM_talk {
 sub avoidList_talk {
 	return 0 if ($net->clientAlive() || !$config{avoidList});
 	my ($user, $msg, $ID) = @_;
+	my $avoidPlayer = $avoid{Players}{lc($user)};
+	my $avoidID = $avoid{ID}{$ID};
 
-	if ($avoid{Players}{lc($user)}{disconnect_on_chat} || $avoid{ID}{$ID}{disconnect_on_chat}) {
+	if ($avoidPlayer->{disconnect_on_chat} || $avoidID->{disconnect_on_chat}) {
 		warning TF("Disconnecting to avoid %s!\n", $user);
 		main::chatLog("k", TF("*** %s talked to you, auto disconnected ***\n", $user));
 		warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
@@ -2291,7 +2293,7 @@ sub itemName {
 	my $card_unpack;
 	
 	# FIXME WORKAROUND TO ITEMID 4BYTES
-	if ($item_len == 67 || $item_len == 34) {
+	if ($masterServer->{itemListType}) {
 		$card_unpack = "V";
 	} else {
 		$card_unpack = "v";
@@ -2958,6 +2960,7 @@ sub setPartySkillTimer {
 
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$handle};
+	$ai_v{"partySkill_${i}_time"} = time if $i ne "";
 	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i ne "";
 }
 
@@ -3606,7 +3609,13 @@ sub useTeleport {
 			return 1;
 		}
 	}
-
+	# We used all not item teleport options.
+	# Cheking inventory->isReady() before looking for items to teleport.
+	# Timing out if not ready.
+	if (!$char->inventory->isReady()){
+		$timeout{ai_teleport}{time} = time;
+		return 0;
+	}
 	# No skill try to equip a Tele clip or something,
 	# if teleportAuto_equip_* is set
 	if (Actor::Item::scanConfigAndCheck('teleportAuto_equip') && ($use_lvl == 1 || !$config{'teleportAuto_useItemForRespawn'})) {
@@ -4044,16 +4053,15 @@ sub avoidGM_near {
 		# skip this person if we dont know the name
 		next if (!defined $player->{name});
 
-		# Check whether this "GM" is on the ignore list
-		# in order to prevent false matches
-		last if (existsInList($config{avoidGM_ignoreList}, $player->{name}));
+		# Check whether this "GM" is on the ignore list in order to prevent false matches
+		next if (existsInList($config{avoidGM_ignoreList}, $player->{name}));
 
 		# check if this name matches the GM filter
-		last unless ($config{avoidGM_namePattern} ? $player->{name} =~ /$config{avoidGM_namePattern}/ : $player->{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
+		next unless ($config{avoidGM_namePattern} ? $player->{name} =~ /$config{avoidGM_namePattern}/ : $player->{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
 
 		my %args = (
 			name => $player->{name},
-			ID => $player->{ID}
+			ID => $player->{nameID}
 		);
 		Plugins::callHook('avoidGM_near', \%args);
 		return 1 if ($args{return});
@@ -4062,23 +4070,28 @@ sub avoidGM_near {
 		if ($config{avoidGM_near} == 1) {
 			# Mode 1: teleport & disconnect
 			useTeleport(1);
-			$msg = TF("GM %s is nearby, teleport & disconnect for %d seconds", $player->{name}, $config{avoidGM_reconnect});
+			$msg = TF("GM %s (%d) is nearby, teleport & disconnect for %d seconds", $player->{name}, $player->{nameID}, $config{avoidGM_reconnect});
 			relog($config{avoidGM_reconnect}, 1);
 
 		} elsif ($config{avoidGM_near} == 2) {
 			# Mode 2: disconnect
-			$msg = TF("GM %s is nearby, disconnect for %s seconds", $player->{name}, $config{avoidGM_reconnect});
+			$msg = TF("GM %s (%d) is nearby, disconnect for %s seconds", $player->{name}, $player->{nameID}, $config{avoidGM_reconnect});
 			relog($config{avoidGM_reconnect}, 1);
 
 		} elsif ($config{avoidGM_near} == 3) {
 			# Mode 3: teleport
 			useTeleport(1);
-			$msg = TF("GM %s is nearby, teleporting", $player->{name});
+			$msg = TF("GM %s (%d) is nearby, teleporting", $player->{name}, $player->{nameID});
 
-		} elsif ($config{avoidGM_near} >= 4) {
+		} elsif ($config{avoidGM_near} == 4) {
 			# Mode 4: respawn
 			useTeleport(2);
-			$msg = TF("GM %s is nearby, respawning", $player->{name});
+			$msg = TF("GM %s (%d) is nearby, respawning", $player->{name}, $player->{nameID});
+		} elsif ($config{avoidGM_near} >= 5) {
+			# Mode 5: respawn & disconnect
+			useTeleport(2);
+			$msg = TF("GM %s (%d) is nearby, respawning & disconnect for %d seconds", $player->{name}, $player->{nameID}, $config{avoidGM_reconnect});
+			relog($config{avoidGM_reconnect}, 1);
 		}
 
 		warning "$msg\n";
@@ -4096,26 +4109,74 @@ sub avoidGM_near {
 # Checks if any of the surrounding players are on the avoid.txt avoid list.
 # Disconnects / teleports if a player is detected.
 sub avoidList_near {
+	my $return = 0;
 	return if ($config{avoidList_inLockOnly} && $field->baseName ne $config{lockMap});
 
 	for my $player (@$playersList) {
+		# skip this person if we dont know the name
+		next if (!defined $player->{name});
+		# Check whether this Player is on the ignore list in order to prevent false matches
+		next if (existsInList($config{avoidList_ignoreList}, $player->{name}));
+
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
-		if (!$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
-			warning TF("%s (%s) is nearby, disconnecting...\n", $player->{name}, $player->{nameID});
-			chatLog("k", TF("*** Found %s (%s) nearby and disconnected ***\n", $player->{name}, $player->{nameID}));
-			warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
-			relog($config{avoidList_reconnect}, 1);
-			return 1;
+		my $avoidJob = $avoid{Jobs}{lc($jobs_lut{$player->{jobID}})};
 
-		} elsif (($avoidPlayer && $avoidPlayer->{teleport_on_sight}) || ($avoidID && $avoidID->{teleport_on_sight})) {
-			message TF("Teleporting to avoid player %s (%s)\n", $player->{name}, $player->{nameID}), "teleport";
-			chatLog("k", TF("*** Found %s (%s) nearby and teleported ***\n", $player->{name}, $player->{nameID}));
+		# next if the player is not on the avoid list
+		next if (!$avoidPlayer and !$avoidID and !$avoidJob);
+
+		my %args = (
+			name => $player->{name},
+			ID => $player->{nameID},
+			jobID => $player->{jobID},
+			Jobs => $jobs_lut{$player->{jobID}}
+		);
+		Plugins::callHook('avoidList_near', \%args);
+
+		my $msg;
+		if ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 1 && $avoidPlayer->{disconnect_on_sight} == 1) 
+			|| ($avoidID && $avoidID->{teleport_on_sight} &&  $avoidID->{disconnect_on_sight}) 
+			|| ($avoidJob && $avoidJob->{teleport_on_sight} &&  $avoidJob->{disconnect_on_sight}) ) {
+			# like avoidGM_near Mode 1: teleport & disconnect
 			useTeleport(1);
-			return 1;
+			$msg = TF("Player %s (%d, %s) is nearby, teleport & disconnect for %d seconds", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $config{avoidList_reconnect});
+			relog($config{avoidList_reconnect}, 1);
+			$return = 1;
+
+		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} && $avoidPlayer->{disconnect_on_sight}) 
+			|| ($avoidID && $avoidID->{teleport_on_sight} &&  $avoidID->{disconnect_on_sight}) 
+			|| ($avoidJob && $avoidJob->{teleport_on_sight} &&  $avoidJob->{disconnect_on_sight}) ) {
+			# like avoidGM_near Mode 5: respawn & disconnect
+			useTeleport(2);
+			$msg = TF("Player %s (%d, %s) is nearby, respawning & disconnect for %d seconds", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $config{avoidList_reconnect});
+			relog($config{avoidList_reconnect}, 1);
+			$return = 1;
+
+		} elsif ( !$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || 
+			($avoidID && $avoidID->{disconnect_on_sight}) && ($avoidJob && $avoidJob->{disconnect_on_sight}) ) ) {
+			# like avoidGM_near Mode 2: disconnect
+			$msg = TF("Player %s (%d, %s) is nearby, disconnect for %s seconds", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $config{avoidList_reconnect});
+			relog($config{avoidList_reconnect}, 1);
+			$return = 1;
+
+		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 1) || ($avoidID && $avoidID->{teleport_on_sight} == 1) || ($avoidJob && $avoidJob->{teleport_on_sight} == 1) ) {
+			# like avoidGM_near Mode 3: teleport
+			useTeleport(1);
+			$msg = TF("Player %s (%d, %s) is nearby, teleporting", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}});
+			$return = 1;
+
+		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 2) || ($avoidID && $avoidID->{teleport_on_sight} == 2) || ($avoidJob && $avoidJob->{teleport_on_sight} == 2) ) {
+			# like avoidGM_near Mode 4: respawn
+			useTeleport(2);
+			$msg = TF("Player %s (%d, %s) is nearby, respawning", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}});
+			$return = 1;
 		}
+
+		warning "$msg\n";
+		chatLog("k", "*** $msg ***\n");
+		
 	}
-	return 0;
+	return $return;
 }
 
 sub avoidList_ID {

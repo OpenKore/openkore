@@ -12,6 +12,14 @@ sub new {
 	$self->{opened} = 0;
 	$self->{items} = 0;
 	$self->{items_max} = 0;
+
+	if($masterServer->{itemListType}) {
+		$self->{hooks} = Plugins::addHooks (
+			['packet/item_list_start',      \&onitemListStart, $self],
+			['packet/item_list_end',       sub { $self->onitemListEnd; }],
+		);
+	}
+
 	return $self;
 }
 
@@ -66,6 +74,20 @@ sub item_max_stack {
 	# TODO:
 	# Support Guild Storage somehow?
 	return $itemStackLimit{$nameID}->{4} || $itemStackLimit{-1}->{4} || 30000;
+}
+
+sub onitemListStart {
+	my ($hook_name, $args, $self) = @_;
+	if($args->{type} == 0x2) {
+		$self->clear();
+	}
+}
+
+sub onitemListEnd {
+	my ($self) = @_;
+	if($current_item_list == 0x2) {
+		Plugins::callHook('storage_ready');
+	}
 }
 
 1;

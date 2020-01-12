@@ -196,7 +196,7 @@ sub new {
 		'025C' => ['auction_info_self', 'v', [qw(type)]],
 		'025D' => ['auction_sell_stop', 'V', [qw(ID)]],
 		'0273' => ['mail_return', 'V Z24', [qw(mailID sender)]],
-		'0275' => ['game_login', 'a4 a4 a4 v C x16 v', [qw(accountID sessionID sessionID2 userLevel accountSex iAccountSID)]],
+		'0275' => ['game_login', 'a4 a4 a4 v C Z16 V', [qw(accountID sessionID sessionID2 userLevel accountSex mac iAccountSID)]],
 		'0288' => ['cash_dealer_buy', 'v2 V', [qw(itemid amount kafra_points)]],
 		'0292' => ['auto_revive'],
 		'029F' => ['mercenary_command', 'C', [qw(flag)]],
@@ -293,6 +293,7 @@ sub new {
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
+		'0A76' => ['master_login', 'V Z40 a32 v', [qw(version username password_rijndael master_version)]],
 		'0A97' => ['equipswitch_add', 'v V', [qw(index position)]], # Add item to equipswitch
 		'0A99' => ['equipswitch_remove', 'v', [qw(index)]], # remove item in equipswitch
 		'0A9C' => ['equipswitch_run'], # switch Item !
