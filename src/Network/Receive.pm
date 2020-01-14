@@ -458,6 +458,18 @@ use constant {
 	EXP_FROM_QUEST => 0x1,
 };
 
+# client UI types
+use constant {
+	BANK_UI => 0x0,
+	STYLIST_UI => 0x1,
+	CAPTCHA_UI => 0x2,
+	MACRO_UI => 0x3,
+	UI_UNUSED => 0x4,
+	TIPBOX_UI => 0x5,
+	RENEWQUEST_UI => 0x6,
+	ATTENDANCE_UI => 0x7,
+};
+
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
 # r7643 - copy-pasted to RagexeRE_2009_10_27a.pm
 sub exp {
@@ -602,19 +614,19 @@ sub received_characters_unpackString {
 	for ($masterServer && $masterServer->{charBlockSize}) {
 		if ($_ == 155) {  # PACKETVER >= 20170830 [base and job exp are now uint64]
 			$char_info = {
-	            types => 'a4 Z8 V Z8 V6 v V2 v4 V v9 Z24 C8 v a16 V4 C',
+	            types => 'a4 Z8 V Z8 V6 v V2 v4 V v9 Z24 C8 v Z16 V4 C',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
 			};
 
 		} elsif ($_ == 147) { # PACKETVER >= 20141022 [iRO Doram Update, walk_speed is now long]
 			$char_info = {
-			    types => 'a4 V9 v V2 v4 V v9 Z24 C8 v a16 V4 C',
+			    types => 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V4 C',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
 			};
 
         } elsif ($_ == 146) { # bRO and tRO update the data to be equal to charblocksize 147, but not added sex. (Sep, 2019)
 			$char_info = {
-			    types => 'a4 V9 v V2 v4 V v9 Z24 C8 v a16 V4',
+			    types => 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V4',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon)],
 			};
 
@@ -3197,6 +3209,7 @@ sub vender_items_list {
 
 	Plugins::callHook('packet_vender_store2', {
 		venderID => $args->{venderID},
+		venderCID => $args->{venderCID},
 		itemList => $venderItemList,
 	});
 }
@@ -7673,7 +7686,7 @@ sub buying_store_found {
 
 	if (!$buyerLists{$ID} || !%{$buyerLists{$ID}}) {
 		binAdd(\@buyerListsID, $ID);
-		Plugins::callHook('packet_buying', {ID => unpack 'V', $ID});
+		Plugins::callHook('packet_buying', {ID => $ID});
 	}
 	$buyerLists{$ID}{title} = bytesToString($args->{title});
 	$buyerLists{$ID}{id} = $ID;
@@ -8008,8 +8021,10 @@ sub memo_success {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
 		warning T("Memo Failed\n");
+		Plugins::callHook('memo_fail', { "field" => $field->baseName });
 	} else {
 		message T("Memo Succeeded\n"), "success";
+		Plugins::callHook('memo_success', { "field" => $field->baseName });
 	}
 }
 
@@ -9297,6 +9312,32 @@ sub stylist_res {
 		message T("[Stylist UI] Success.\n"), "info";
 	} else {
 		error T("[Stylist UI] Fail.\n");
+	}
+}
+
+sub open_ui {
+	my ($self, $args) = @_;
+	
+	debug TF("Received request from server to open UI: %s\n", $args->{type});
+	
+	if($args->{type} == BANK_UI) { # TODO: implement bank system and add Bank open Request
+		message T("Server requested to open Bank UI.\n");
+	} elsif($args->{type} == STYLIST_UI) { # TODO: implement Stylist system and add Stylist open Request
+		message T("Server requested to open Stylist UI.\n");
+	} elsif($args->{type} == CAPTCHA_UI) {
+		message T("Server requested to open Captcha UI.\n");
+	} elsif($args->{type} == MACRO_UI) {
+		message T("Server requested to open Macro Recorder UI.\n");
+	} elsif($args->{type} == UI_UNUSED) {
+		message T("Server requested to open Unused UI.\n"); # why?
+	} elsif($args->{type} == TIPBOX_UI) {
+		message T("Server requested to open Tip Box UI.\n");
+	} elsif($args->{type} == RENEWQUEST_UI) {
+		message T("Server requested to open Quest UI.\n");
+	} elsif($args->{type} == ATTENDANCE_UI) { # TODO: implement Attendance system and add Attendance open Request
+		message T("Server requested to open Attendance UI.\n");
+	} else {
+		error TF("Received request from server to open unknown UI: %s\n", $args->{type});
 	}
 }
 

@@ -1229,6 +1229,12 @@ sub processAutoStorage {
 				} else {
 					if ($char->storage->wasOpenedThisSession() && 
 						!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
+						debug TF("storage: %s out of stock\n\n", $config{"getAuto_$i"});
+						Plugins::callHook("AI_storage_item_out_of_stock",  {
+								name => $config{"getAuto_$i"},
+								getAutoIndex => $i,
+							}
+						);
 					} else {
 							my $sti = $config{"getAuto_$i"};
 							if ($needitem eq "") {
@@ -1414,11 +1420,14 @@ sub processAutoStorage {
 				$args->{done} = 1;
 				
 				# if storage is full disconnect if it says so in conf
-				if($char->storage->wasOpenedThisSession() && $char->storage->isFull() && $config{'dcOnStorageFull'}) {
-					$messageSender->sendQuit();
-					error T("Auto disconnecting on StorageFull!\n");
-					chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
-					quit();
+				if($char->storage->wasOpenedThisSession() && $char->storage->isFull()) {
+					Plugins::callHook("AI_storage_full", \%pluginArgs);
+					if($config{'dcOnStorageFull'}) {
+						$messageSender->sendQuit();
+						error T("Auto disconnecting on StorageFull!\n");
+						chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
+						quit();
+					}
 				}
 
 				# inventory to storage
@@ -1434,6 +1443,13 @@ sub processAutoStorage {
 						$args->{lastAmount} == $item->{amount}
 					) {
 						error TF("Unable to store %s.\n", $item->{name});
+						
+						if($char->storage->getByName($item->{name})) {		
+							Plugins::callHook("AI_storage_item_full", {
+									item => $item,
+								}
+							);
+						}
 						next;
 					}
 
@@ -1574,6 +1590,11 @@ sub processAutoStorage {
 
 					if ($item{storage}{amount} < $item{amount_needed}) {
 						warning TF("storage: %s out of stock\n", $item{name});
+						Plugins::callHook("AI_storage_item_out_of_stock",  {
+								name => $config{"getAuto_$args->{index}"},
+								getAutoIndex => $args->{index},
+							}
+						);
 						if ($item{dcOnEmpty}) {
 							debug TF("Disconnecting on empty %s!\n", $item{name});
 							$char->{dcOnEmptyItems} .= "," if ($char->{dcOnEmptyItems} ne "");

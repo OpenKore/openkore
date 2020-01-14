@@ -141,7 +141,7 @@ PES#
 [Alt] + [End]:  Liga ou Desliga a Barra de HP/SP#
 [Alt] + [Home]:  Liga ou Desliga o Cursor do Solo#
 [Insert]:  Faz o personagem sentar ou levantar.  (Atalho para /sit ou /stand)#
-Parabéns! Você ganhou!! Você recebeu #
+Parabéns! Você ganhou!! Você recebeu # 
 !#
 Parabéns! Você ganhou!! Você recebeu #
  de EXP base!#
@@ -2172,8 +2172,8 @@ Select at least 2 items of the same kind.#
 Unificação dos itens realizada com sucesso.#
 Você deve unificar somente 1 tipo de item por vez.#
 The amount of the item is over 30000 pieces.#
-Turn on left#
-Turn on right#
+Virar pra Esquerda#
+Virar pra Direita#
 See previous server info of (%s)#
 Previous server info#
 ^ff0000Previous server : ^0000ff#
@@ -2795,7 +2795,7 @@ Auction X#
 Guild storage X#
 To sell item to NPC X#
 There is a restriction on movement#
-Please create a character.#
+Por favor, crie seu personagem.#
 You need to disarm the equipped projectiles.#
 You cannot enter the memorial dungeon due to excessive number of people.#
 Memorial dungeon enterance failed due to excessive number of people.#
@@ -2836,7 +2836,7 @@ This hairstyle cannot be dyed.#
 Press an arrow to choose the style you want.#
 Come and see the new styles.\n(? Purchased accessories will be sent via RODEX.)#
 Basic style#
-You can level up the skill from the base Lv. %d.#
+Habilidade disponível somente a partir do nível base %d.#
 You cannot use the special character as a name.#
 Not enough MHP to use the skill.#
 Not enough MSP to use the skill.#
@@ -2851,7 +2851,7 @@ Atualizar#
 %dMinuto(s)#
 %dHora(s)#
 %dDia(s)#
-Return#
+Expirada#
 Deletar e-mails selecionados?#
 Exibir NPC#
 Zoom In#
@@ -2976,9 +2976,9 @@ Moving to destination.#
 #
 #
 #
-#
-#
-#
+Função de chamado (ligada)#
+Função de chamado (desligada)#
+Exibir mensagem de chamado#
 #
 #
 #
@@ -3014,12 +3014,12 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
-#
-#
-#
-#
-#
-#
+Humano#
+Espadachim, Mago, Mercador, Noviço, Gatuno, Arqueiro#
+Doram#
+Invocador#
+A raça com maior presença em Rune-Midgard. São muito talentosos e adaptáveis.#
+Os Doram são seres curiosos por natureza e possuem uma personalidade radiante.#
 #
 #
 #
@@ -3102,7 +3102,7 @@ Palavrões não são permitidos.\nTente novamente.#
 #
 #
 #
-#
+Deletar Data %d/%d#
 #
 Todas#
 A completar#
@@ -3313,7 +3313,7 @@ Remetente#
 #
 #
 #
-Usuário não encontrado#
+Usuário não encontrado#   
 Conta bloqueada#
 #
 Senha ou usuário incorreto#
@@ -3336,11 +3336,24 @@ Sistema indisponível#
 #
 #
 #
+Futuras Informações#
+Deletar#
+Cancelar#
+Iniciar#
+Deletar#
+Seleção de Personagem#
+Aviso#
+Criar#
+Tipo de Penteado#
+Cor do Cabelo#
 #
+%d:%d:%d#
 #
+Voltar#
 #
 #
 #
+Criar Personagem#
 #
 #
 #
@@ -3436,23 +3449,10 @@ Sistema indisponível#
 #
 #
 #
+Exibir Invocações#
+Não exibir Invocações#
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Senha#
 #
 #
 #
@@ -3546,7 +3546,7 @@ Enviar#
 Conferir#
 Notícias#
 Entrada#
-Expirados#
+Vencidos#
 Buscar#
 #
 #
@@ -3601,7 +3601,7 @@ Simplified aurora#
 Turn on aurora#
 Show Effect#
 Show Shadows#
-No Shift#
+Esta janela não pode ser fechada agora.#
 Select Hardware T&L Acceleration Function#
 Select Game Resolution#
 Use full screen#

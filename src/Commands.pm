@@ -4837,6 +4837,7 @@ sub cmdSell {
 					error TF("%s (%s) is already in the sell list.\n", $item->nameString, $item->{binID});
 					next;
 				}
+				next if ($item->{equipped});
 
 				$obj{name} = $item->nameString();
 				$obj{ID} = $item->{ID};

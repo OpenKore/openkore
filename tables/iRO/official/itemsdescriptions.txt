@@ -4707,6 +4707,23 @@ Property: N/A
 Weight: 0
 Weapon Level: 0
 #
+1338#
+A mysterious ax given to adventurers who successfully execute missions.
+
+Class: ^808080One-Handed Axe^000000
+Attack: ^808080245^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
+#
 1351#
 A sturdy Two-Handed Axe useful for defeating many foes.
 Class: ^808080Two-Handed Axe^000000
@@ -7767,35 +7784,70 @@ Requires Level: ^80808024^000000
 Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
 Dex + 2
 Max HP + 300
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Rod (Dex)^000000
+Max HP + 300
+Matk - 5%
+Matk + 1% per upgrade level of ^008080Survivor's Rod (Dex)^000000 up to a maximum upgrade level of +10.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau^000000 up to a maximum upgrade level of +10.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Rod (Dex)^000000
+Max HP + 300
+Matk - 5%
+Matk + 1% per upgrade level of ^008080Survivor's Rod (Dex)^000000.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau [1]^000000.
+
+^800080Set Bonus^000000
+^008080Survivor's Circlet [1]^000000
+^008080Survivor's Rod (Dex)^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod (Dex)^000000.
+If ^008080Survivor's Rod (Dex)^000000 upgrade level is +10 or higher,
+Adds a chance of buffing the user for 5 seconds when performing a magical attack; Reduces the variable casting time of skills by 50%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod^000000
-Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+^008080Survivor's Rod (Dex)^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod (Dex)^000000.
+If ^008080Survivor's Rod (Dex)^000000 upgrade level is +10 or higher,
+If the user's base level is 99 or lower,
 Reduces the variable casting time of skills by 3%.
-Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
 Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
-Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
 Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
-Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+If the user's base level is 100 or higher,
+Reduces the variable casting time of skills by an additional 9%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 45%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 210%.
 
 ^800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod^000000
+^008080Survivor's Rod (Dex)^000000
 Matk + 1%
-If ^008080Survivor's Rod^000000 upgrade level is +5 or higher, additional Matk + 2%.
-If ^008080Survivor's Rod^000000 upgrade level is +7 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Dex)^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Dex)^000000 upgrade level is +7 or higher, additional Matk + 2%.
 
 ^800080Set Bonus^000000
-^008080Survivor's Rod^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod (Dex)^000000
+Matk + 1%
+If ^008080Survivor's Rod (Dex)^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Dex)^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
+^800080Set Bonus^000000
+^008080Survivor's Rod (Dex)^000000
 ^008080Survivor's Shoes^000000
 Reduces damage taken from Demi-Human race enemies by 10%.
 Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
-Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+If ^008080Survivor's Rod (Dex)^000000 upgrade level is +10 or higher,
 Increases magical damage on Demi-Human race targets by 20%.
 Increases the damage of Neutral property magical attacks on targets by 80%.
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Reduces the cooldown of ^0000FFChain Lightning^000000 by 1 second.
 Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 1618#
@@ -7810,42 +7862,79 @@ Requires Level: ^80808024^000000
 Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
 Dex + 3
 Max HP + 400
+
 ^800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
-^008080Survivor's Rod [1]^000000
+^008080Survivor's Rod (Dex) [1]^000000
 Max HP + 300
 Matk - 5%
-Matk + 1% per upgrade level of the ^008080Survivor's Rod [1]^000000.
-Reduces damage taken from Neutral property attacks by 3% per upgrade level of the ^008080Survivor's Manteau^000000.
+Matk + 1% per upgrade level of ^008080Survivor's Rod (Dex) [1]^000000 up to a maximum upgrade level of +10.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau^000000 up to a maximum upgrade level of +10.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Rod (Dex) [1]^000000
+Max HP + 300
+Matk - 5%
+Matk + 1% per upgrade level of ^008080Survivor's Rod (Dex) [1]^000000.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau [1]^000000.
+
+^800080Set Bonus^000000
+^008080Illusion Survivor's Manteau [1]^000000
+^008080Survivor's Rod (Dex) [1]^000000
+Max HP + 1000
+Matk - 50
+Matk + 20 per upgrade level of ^008080Survivor's Rod (Dex) [1]^000000 up to maximum upgrade of +10.
+Reduces the global delay of skills by 3% per 3 upgrade levels of ^008080Survivor's Rod (Dex) [1]^000000.
+Reduces damage taken from Neutral property attacks by 1% per 2 upgrade levels of ^008080Illusion Survivor's Manteau [1]^000000 up to a maximum upgrade of +10.
+
+^800080Set Bonus^000000
+^008080Survival Circlet [1]^000000
+^008080Survivor's Rod (Dex) [1]^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod (Dex) [1]^000000.
+If ^008080Survivor's Rod (Dex) [1]^000000 upgrade level is +10 or higher,
+Adds a chance of buffing the user for 5 seconds when performing a magical attack; Reduces the variable casting time of skills by 50%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod [1]^000000
-Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+^008080Survivor's Rod (Dex) [1]^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod (Dex) [1]^000000.
+If ^008080Survivor's Rod (Dex) [1]^000000 upgrade level is +10 or higher,
+If the user's base level is 99 or lower,
 Reduces the variable casting time of skills by 3%.
-Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
 Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
-Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
 Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
-Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+If the user's base level is 100 or higher,
+Reduces the variable casting time of skills by an additional 9%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 45%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 210%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod [1]^000000
+^008080Survivor's Rod (Dex) [1]^000000
 Matk + 1%
-If ^008080Survivor's Rod^000000 upgrade level is +5 or higher,
-Additional Matk + 2%
-If ^008080Survivor's Rod^000000 upgrade level is +7 or higher,
-Additional Matk + 2%
+If ^008080Survivor's Rod (Dex) [1]^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Dex) [1]^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
 ^800080Set Bonus^000000
-^008080Survivor's Rod [1]^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod (Dex) [1]^000000
+Matk + 1%
+If ^008080Survivor's Rod (Dex) [1]^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Dex) [1]^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
+^800080Set Bonus^000000
+^008080Survivor's Rod (Dex) [1]^000000
 ^008080Survivor's Shoes^000000
 Reduces damage taken from Demi-Human race enemies by 10%.
 Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
-Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+If ^008080Survivor's Rod (Dex) [1]^000000 upgrade level is +10 or higher,
 Increases magical damage on Demi-Human race targets by 20%.
 Increases the damage of Neutral property magical attacks on targets by 80%.
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Reduces the cooldown of ^0000FFChain Lightning^000000 by 1 second.
 Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 1619#
@@ -7860,35 +7949,70 @@ Requires Level: ^80808024^000000
 Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
 Int + 2
 Max HP + 300
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Rod (Int)^000000
+Max HP + 300
+Matk - 5%
+Matk + 1% per upgrade level of ^008080Survivor's Rod (Int)^000000 up to a maximum upgrade level of +10.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau^000000 up to a maximum upgrade level of +10.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Rod (Int)^000000
+Max HP + 300
+Matk - 5%
+Matk + 1% per upgrade level of ^008080Survivor's Rod (Int)^000000.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau [1]^000000.
+
+^800080Set Bonus^000000
+^008080Survivor's Circlet [1]^000000
+^008080Survivor's Rod (int)^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod (Int)^000000.
+If ^008080Survivor's Rod (Int)^000000 upgrade level is +10 or higher,
+Adds a chance of buffing the user for 5 seconds when performing a magical attack; Reduces the variable casting time of skills by 50%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod^000000
-Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+^008080Survivor's Rod (Int)^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod (Int)^000000.
+If ^008080Survivor's Rod (Int)^000000 upgrade level is +10 or higher,
+If the user's base level is 99 or lower,
 Reduces the variable casting time of skills by 3%.
-Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
 Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
-Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
 Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
-Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+If the user's base level is 100 or higher,
+Reduces the variable casting time of skills by an additional 9%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 45%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 210%.
 
 ^800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod^000000
+^008080Survivor's Rod (Int)^000000
 Matk + 1%
-If ^008080Survivor's Rod^000000 upgrade level is +5 or higher, additional Matk + 2%.
-If ^008080Survivor's Rod^000000 upgrade level is +7 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Int)^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Int)^000000 upgrade level is +7 or higher, additional Matk + 2%.
 
 ^800080Set Bonus^000000
-^008080Survivor's Rod^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod (Int)^000000
+Matk + 1%
+If ^008080Survivor's Rod (Int)^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Int)^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
+^800080Set Bonus^000000
+^008080Survivor's Rod (Int)^000000
 ^008080Survivor's Shoes^000000
 Reduces damage taken from Demi-Human race enemies by 10%.
 Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
-Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+If ^008080Survivor's Rod (Int)^000000 upgrade level is +10 or higher,
 Increases magical damage on Demi-Human race targets by 20%.
 Increases the damage of Neutral property magical attacks on targets by 80%.
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Reduces the cooldown of ^0000FFChain Lightning^000000 by 1 seconds.
 Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 1620#
@@ -7903,42 +8027,79 @@ Requires Level: ^80808024^000000
 Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
 Int + 3
 Max HP + 400
+
 ^800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
-^008080Survivor's Rod [1]^000000
+^008080Survivor's Rod (Int) [1]^000000
 Max HP + 300
 Matk - 5%
-Matk + 1% per upgrade level of the ^008080Survivor's Rod [1]^000000.
-Reduces damage taken from Neutral property attacks by 3% per upgrade level of the ^008080Survivor's Manteau^000000.
+Matk + 1% per upgrade level of ^008080Survivor's Rod (Int) [1]^000000 up to a maximum upgrade level of +10.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau^000000 up to a maximum upgrade level of +10.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Rod (Int) [1]^000000
+Max HP + 300
+Matk - 5%
+Matk + 1% per upgrade level of ^008080Survivor's Rod (Int) [1]^000000.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau [1]^000000.
+
+^800080Set Bonus^000000
+^008080Illusion Survivor's Manteau [1]^000000
+^008080Survivor's Rod (Int) [1]^000000
+Max HP + 1000
+Matk - 50
+Matk + 20 per upgrade level of ^008080Survivor's Rod (Int) [1]^000000 up to maximum upgrade of +10.
+Reduces the global delay of skills by 3% per 3 upgrade levels of ^008080Survivor's Rod (Int) [1]^000000.
+Reduces damage taken from Neutral property attacks by 1% per 2 upgrade levels of ^008080Illusion Survivor's Manteau [1]^000000 up to a maximum upgrade of +10.
+
+^800080Set Bonus^000000
+^008080Survivor's Circlet [1]^000000
+^008080Survivor's Rod (Int) [1]^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod (Int) [1]^000000.
+If ^008080Survivor's Rod (Int) [1]^000000 upgrade level is +10 or higher,
+Adds a chance of buffing the user for 5 seconds when performing a magical attack; Reduces the variable casting time of skills by 50%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod [1]^000000
-Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+^008080Survivor's Rod (Int) [1]^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod (Int) [1]^000000.
+If ^008080Survivor's Rod (Int) [1]^000000 upgrade level is +10 or higher,
+If the user's base level is 99 or lower,
 Reduces the variable casting time of skills by 3%.
-Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
 Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
-Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
 Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
-Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+If the user's base level is 100 or higher,
+Reduces the variable casting time of skills by an additional 9%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 45%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 210%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod [1]^000000
+^008080Survivor's Rod [1] (Int) [1]^000000
 Matk + 1%
-If ^008080Survivor's Rod^000000 upgrade level is +5 or higher,
-Additional Matk + 2%
-If ^008080Survivor's Rod^000000 upgrade level is +7 or higher,
-Additional Matk + 2%
+If ^008080Survivor's Rod (Int) [1]^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Int) [1]^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
 ^800080Set Bonus^000000
-^008080Survivor's Rod [1]^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod [1] (Int) [1]^000000
+Matk + 1%
+If ^008080Survivor's Rod (Int) [1]^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod (Int) [1]^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
+^800080Set Bonus^000000
+^008080Survivor's Rod (Int) [1]^000000
 ^008080Survivor's Shoes^000000
 Reduces damage taken from Demi-Human race enemies by 10%.
 Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
-Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+If ^008080Survivor's Rod (Int) [1]^000000 upgrade level is +10 or higher,
 Increases magical damage on Demi-Human race targets by 20%.
 Increases the damage of Neutral property magical attacks on targets by 80%.
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Reduces the cooldown of ^0000FFChain Lightning^000000 by 1 seconds.
 Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 1621#
@@ -8060,10 +8221,28 @@ Dex + 4
 Max HP + 500
 
 ^800080Set Bonus^000000
-^008080Rental Survival Rod^000000
-^008080Rental Survivor's Manteau^000000
+^008080Survivor's Manteau^000000
+^008080Rental Survivor's Rod^000000
 Matk + 5%
 Reduces damage taken from Neutral property attacks by 25%.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+^008080Rental Survivor's Rod^000000
+Matk + 1%
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Rental Survivor's Rod^000000
+Matk + 5%
+Reduces damage taken from Neutral property attacks by 25%.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Orb^000000
+^008080Rental Survivor's Rod^000000
+Matk + 1%
 #
 1629#
 A staff once used by a very gentle man somewhere long ago. A very narrow sword is hidden inside the staff.
@@ -10517,24 +10696,21 @@ Usable By: ^808080Priest Jobs, Monk Jobs^000000
 This item cannot be upgraded.
 #
 1832#
-Type: Weapon
-Class: Knuckle
-Attack: 160
-Property: Neutral
-Weight: 65
-Weapon Level: 4
-Required Level: 95
-Required Job: Priest Jobs, Monk Jobs
-^FFFFFF_^000000
-^800080Stats during PVP, WOE^000000
-Increases physical damage on Player protocol targets by 100%.
-^FFFFFF_^000000
+A knuckle that has been designed specifically for battles against players.
+Class: ^808080Knuckle^000000
+Attack: ^808080160^000000
+Property: ^808080Neutral^000000
+Weight: ^80808065^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808095^000000
+Usable By: ^808080Priest Jobs, Monk Jobs^000000
+^800080Stats during WoE, PvP^000000
+Increases physical damage on Human Player and Doram Player race targets by 100%.
 If upgrade level is +8 or higher,
-Increases physical damage on Player protocol targets by an additional 100%.
-^FFFFFF_^000000
+Increases physical damage on Human Player and Doram Player race targets by an additional 20%.
 If upgrade level is +10 or higher,
-Variable Casting Time - 100% for ^0000FFGuillotine Fist^000000.
-Drains 500 HP of the user every 3 seconds.
+Reduces the variable casting time of ^0000FFGuillotine Fist^000000 by 100%.
+Drains 500 HP from the user every 3 seconds.
 Adds a 100% chance of casting ^0000FFLevel 1 Zen^000000 on the user when using ^0000FFFury^000000.
 #
 1834#
@@ -16315,6 +16491,21 @@ Increases the SP cost of ^0000FFJudex^000000 by 40.
 Increases physical and magical damage on Undead race targets by 15%.
 Increases the damage of ^0000FFAdoramus^000000 by 200%.
 Increases the SP cost of ^0000FFAdoramus^000000 by 30.
+
+^800080Set Bonus^000000
+^008080Empowered Mace of Judgement [1]^000000
+^008080Robe of Judgement^000000
+^008080Shoes of Judgement^000000
+^008080Shawl of Judgement^000000
+Increases physical and magical damage on Undead race targets by 30%.
+Increases the damage of ^0000FFAdoramus^000000 by 200%.
+Increases the SP cost of ^0000FFAdoramus^000000 by 30.
+Reduces the variable casting time of the following skills by 50%,
+^0000FFHoly Light^000000
+^0000FFTurn Undead^000000
+^0000FFMagnus Exorcismus^000000
+^0000FFJudex^000000
+^0000FFAdoramus^000000
 #
 2473#
 Boots that are provided only for members of the Eden Group. These are designed to fit comfortably throughout long-walks.
@@ -16352,14 +16543,25 @@ Enables ^0000FFLevel 1 Guard^000000.
 Increases the SP cost of skills by 10%.
 #
 2476#
-Greates made by purifying a Peuz Rune.
-MaxSP + 40.
-Reduces AGI by 7. Refine rate reduces the AGI reduction by 1% for each level up to +8.
-Class : ^777777Shoes^000000
-Defense : ^77777732^000000
-Weight : ^77777790^000000
-Required Level : ^777777100^000000
-Job : ^777777Rune Knight^000000
+Greave made by purifying a Peuz Rune.
+Class: ^808080Shoes^000000
+Defense: ^80808032^000000
+Weight: ^80808090^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight^000000
+Max SP + 40
+Agi + 1 per upgrade level of the item past the upgrade level of 7.
+
+^800080Set Bonus^000000
+^008080Peuz's Greaves [1]^000000
+^008080Peuz's Plate^000000
+^008080Peuz's Manteau^000000
+^008080Peuz's Seal [1]^000000
+Atk + 10%
+Increases the damage of ^0000FFSonic Wave^000000 and ^0000FFWind Cutter^000000 by 100%.
+Adds a chance of casting ^0000FFLevel 1 Storm Blast^000000 on the target when performing a physical attack.
+Adds a chance of buffing the user for 10 seconds when using ^0000FFSpear Dynamo^000000; Aspd + 2.
+Increases the SP cost of skills by 10%.
 #
 2477#
 Shoes that have long been known to be from the world of darkness.
@@ -16648,6 +16850,15 @@ Weight: ^80808060^000000
 Requires Level: ^80808040^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 Agi + 1
+
+^800080Set Bonus^000000
+^008080Flattery Robe [1]^000000
+^008080Ancient Cape^000000
+Max SP + 10%
+Flee + 10
+For every upgrade level of ^008080Flattery Robe [1]^000000,
+Additional Max SP + 1%.
+Additional Flee + 1.
 #
 2508#
 An old, worn-out cape that can protect its wearer from mystical harm, no matter how powerful it may be.
@@ -16659,27 +16870,82 @@ Usable By: ^808080All Jobs except Novice Jobs^000000
 Mdef + 10
 #
 2509#
-A manteau which protects
-its wearer from
-the elements.
-Vit +10
-^ffffff_^000000
-^6A5ACDSurvivor's Set^000000
-^3CB371Survivor's Manteau^000000
-^3CB371Survivor's Rod [1]^000000
-HP +300
-MATK -5%
-MATK +1% per upgrade level
-of Survivor's Rod
-Resist Neutral Property by
-3 times the upgrade level
-of Survivor's Manteau.
-^ffffff_^000000
-Class : ^777777Garment^000000
-Defense : ^77777710^000000
-Weight : ^77777755^000000
-Required Level : ^77777775^000000
-Jobs : ^777777Mage and Soul Linker^000000
+A manteau which protects its wearer from the elements.
+
+^FF0000Eligible Survivor's Rod for set combo:
+Survivor's Rod (Dex)
+Survivor's Rod (Dex) [1]
+Survivor's Rod (Int)
+Survivor's Rod (Int) [1]
+^000000
+Class: ^808080Garment^000000
+Defense: ^80808010^000000
+Weight: ^80808055^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+Vit + 10
+Mdef + 5
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Rod^000000
+Max HP + 300
+Matk - 5%
+Matk + 1% per upgrade level of ^008080Survivor's Rod^000000 up to a maximum upgrade level of +10.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau^000000 up to a maximum upgrade level of +10.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Rental Survivor's Rod^000000
+Matk + 5%
+Reduces damage taken from Neutral property attacks by 25%.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+Reduces damage taken from Demi-Human race enemies by 1%.
+Reduces the fixed casting time of skills by 50%.
+If ^008080Survivor's Manteau^000000 upgrade level is +5 or higher,
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+If ^008080Survivor's Manteau^000000 upgrade level is +7 or higher,
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod^000000
+Matk + 1%
+If ^008080Survivor's Rod^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Orb^000000
+^008080Rental Survivor's Rod^000000
+Matk + 1%
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
+^008080Survivor's Shoes^000000
+Matk + 10%
+If ^008080Survivor's Manteau^000000 upgrade level is +7 or higher,
+Reduces damage taken from Earth and Wind property attacks by 15%.
+If ^008080Survivor's Manteau^000000 upgrade level is +9 or higher,
+Reduces damage taken from Earth and Wind property attacks by an additional 15%.
+
+^800080Set Bonus^000000
+^008080Flattery Robe [1]^000000
+^008080Survivor's Manteau^000000
+Max HP + 10%
+Matk + 2%
+For every upgrade level of ^008080Flattery Robe [1]^000000,
+Additional Max HP + 1%.
+Additional Matk + 1%.
+
+^800080Set Bonus^000000
+^008080Agenda Robe [1]^000000
+^008080Survivor's Manteau^000000
+Adds a 1% chance of casting ^0000FFLevel 1 Heal^000000 on the user when performing a magical attack per upgrade level of ^008080Agenda Robe [1]^000000.
 #
 2510#
 An exclusive garment for new adventurers.
@@ -16936,6 +17202,15 @@ Weight: ^80808060^000000
 Requires Level: ^80808040^000000
 Usable By: ^808080All Jobs except Novice Jobs^000000
 Agi + 1
+
+^800080Set Bonus^000000
+^008080Flattery Robe [1]^000000
+^008080Ancient Cape [1]^000000
+Max SP + 10%
+Flee + 10
+For every upgrade level of ^008080Flattery Robe [1]^000000,
+Additional Max SP + 1%.
+Additional Flee + 1.
 #
 2526#
 #
@@ -17446,6 +17721,21 @@ If a higher level of this skill is known, it will be cast instead.
 Increases physical and magical damage on Undead race targets by 15%.
 Increases the damage of ^0000FFAdoramus^000000 by 200%.
 Increases the SP cost of ^0000FFAdoramus^000000 by 30.
+
+^800080Set Bonus^000000
+^008080Empowered Mace of Judgement [1]^000000
+^008080Robe of Judgement^000000
+^008080Shoes of Judgement^000000
+^008080Shawl of Judgement^000000
+Increases physical and magical damage on Undead race targets by 30%.
+Increases the damage of ^0000FFAdoramus^000000 by 200%.
+Increases the SP cost of ^0000FFAdoramus^000000 by 30.
+Reduces the variable casting time of the following skills by 50%,
+^0000FFHoly Light^000000
+^0000FFTurn Undead^000000
+^0000FFMagnus Exorcismus^000000
+^0000FFJudex^000000
+^0000FFAdoramus^000000
 #
 2571#
 A manteau which is only for Eden Group members. It is designed to flatter anyone's backside.
@@ -17488,13 +17778,25 @@ Enables ^0000FFLevel 1 Guard^000000.
 Increases the SP cost of skills by 10%.
 #
 2575#
-A manteau created by refining Peuz Runestones
-FLEE + 10, CRI + 10.
-Class : ^777777Garment^000000
-Defense : ^77777716^000000
-Weight : ^77777760^000000
-Required Level : ^777777100^000000
-Job : ^777777Rune Knight^000000
+A manteau created by refining Peuz Runestones.
+Class: ^808080Garment^000000
+Defense: ^80808016^000000
+Weight: ^80808060^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight^000000
+Flee + 10
+Crit + 10
+
+^800080Set Bonus^000000
+^008080Peuz's Greaves [1]^000000
+^008080Peuz's Plate^000000
+^008080Peuz's Manteau^000000
+^008080Peuz's Seal [1]^000000
+Atk + 10%
+Increases the damage of ^0000FFSonic Wave^000000 and ^0000FFWind Cutter^000000 by 100%.
+Adds a chance of casting ^0000FFLevel 1 Storm Blast^000000 on the target when performing a physical attack.
+Adds a chance of buffing the user for 10 seconds when using ^0000FFSpear Dynamo^000000; Aspd + 2.
+Increases the SP cost of skills by 10%.
 #
 2576#
 A backpack befitting of any hero.
@@ -20482,13 +20784,24 @@ Enables ^0000FFLevel 1 Guard^000000.
 Increases the SP cost of skills by 10%.
 #
 2884#
-A seal created by refining a Peuz Runestone
-ATK + 20, MSP + 20.
-Class : ^777777Accessory^000000
-Defense : ^7777773^000000
-Weight : ^77777720^000000
-Required Level : ^777777100^000000
-Job : ^777777Rune Knight^000000
+A seal created by refining a Peuz Runestone.
+Class: ^808080Accessory^000000
+Weight: ^80808020^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Rune Knight^000000
+Atk + 20
+Max SP + 20
+
+^800080Set Bonus^000000
+^008080Peuz's Greaves [1]^000000
+^008080Peuz's Plate^000000
+^008080Peuz's Manteau^000000
+^008080Peuz's Seal [1]^000000
+Atk + 10%
+Increases the damage of ^0000FFSonic Wave^000000 and ^0000FFWind Cutter^000000 by 100%.
+Adds a chance of casting ^0000FFLevel 1 Storm Blast^000000 on the target when performing a physical attack.
+Adds a chance of buffing the user for 10 seconds when using ^0000FFSpear Dynamo^000000; Aspd + 2.
+Increases the SP cost of skills by 10%.
 #
 2886#
 A ring that has long been known to be from the world of darkness.
@@ -22854,12 +23167,27 @@ Compound on: ^777777Armor^000000
 Weight : ^7777771^000000
 #
 4174#
-Deviling Card.
-Add 50% more tolerance against Neutral Property Attack.
-Receive 50% more damage from other Property Attack.
-Class : ^777777Card^000000
-Compound on: ^777777Garment^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Garment^000000
+Weight: ^8080801^000000
+Reduces damage taken from Neutral property attacks by 50%.
+Increases damage taken from Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost and Undead property attacks by 50%.
+
+^800080Set Malus^000000
+^008080Deviling Card^000000
+^008080Hero Manteau [1]^000000
+Disables the following effects of ^008080Deviling Card^000000, Reduces damage taken from Neutral property attacks by 50%.
+
+^800080Set Bonus^000000
+^008080Etran's Undershirt [1]^000000
+^008080Deviling Card^000000
+Disables the following effects of ^008080Deviling Card^000000, Increases damage taken from Water, Earth, Fire, Wind, Poison, Holy, Shadow, Ghost and Undead property attacks by 50%.
+
+^800080Set Malus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Deviling Card^000000
+Increases damage taken from Neutral property attacks by 30%.
 #
 4175#
 Poisonous Toad Card.
@@ -25378,16 +25706,12 @@ Compound on: ^777777Headgear^000000
 Weight : ^7777771^000000
 #
 4367#
-Adds a 5% chance
-of absorbing 20%
-of the physical damage
-inflicted on an enemy
-by the wearer as HP,
-but also reduces HP
-Recovery by 100%.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+HP Recovery - 10%
+Adds a 5% chance of restoring 20% of damage as HP when performing a physical attack.
 #
 4368#
 Increases Attack
@@ -29454,20 +29778,16 @@ Jobs: ^777777Every Job
 except Novice^000000
 #
 5002#
-This crown, adorned
-with precious gems,
-is generally worn by
-monarchs as a symbol
-of their rule. Int +2,
-Luk +1, MDEF +3
-Class : ^777777Headgear^000000
-Defense : ^7777779^000000
-Location : ^777777Upper^000000
-Weight : ^77777760^000000
-Required Level : ^77777760^000000
-Jobs: ^777777Swordman,
-Merchant, and
-Thief Classes^000000
+This crown, adorned with precious gems, is generally worn by monarchs as a symbol of their rule.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080809^000000
+Weight: ^80808060^000000
+Requires Level: ^80808060^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+Int + 2
+Luk + 1
+Mdef + 3
 #
 5003#
 A comical hat worn by
@@ -30278,24 +30598,24 @@ Jobs: ^777777All^000000
 #
 5080#
 A hair ornament worn by ancient queens.
-Class : ^777777Headgear^000000
-Defense: ^7777778^000000
-Location: ^777777Upper^000000
-Weight : ^77777740^000000
-Required Level : ^77777745^000000
-Jobs: ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080808^000000
+Weight: ^80808040^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080All Jobs^000000
 #
 5081#
 A crown which is made after the one worn by Mistress.
-Int +2, SP +100
-Indestructible
-Class : ^777777Headgear^000000
-Defense: ^7777772^000000
-Location: ^777777Upper^000000
-Weight : ^77777710^000000
-Required Level : ^77777775^000000
-Jobs: ^777777Every Job
-except Novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808010^000000
+Requires Level: ^80808075^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Int + 2
+Max SP + 100
+This item is indestructible in battle.
 #
 5082#
 A headgear which you can obtain by chance when you put your head for a prolonged period of time in a dark, damp place.
@@ -31338,18 +31658,14 @@ Required Level : ^77777745^000000
 Jobs : ^777777All except Novice^000000       ^FFFFFF  ^000000
 #
 5165#
-A jeweled crown that
-is said to grant the
-wisdom of a sagacious,
-ancient king that had
-once worn it.
-Int +1
-Class : ^777777Headgear^000000
-Defense: ^7777777^000000
-Location : ^777777Upper^000000
-Weight : ^77777740^000000
-Required Level : ^77777745^000000
-Jobs : ^777777All except Novice^000000       ^FFFFFF  ^000000
+A jeweled crown that is said to grant the wisdom of a sagacious, ancient king that had once worn it.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080807^000000
+Weight: ^80808040^000000
+Requires Level: ^80808045^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
+Int + 1
 #
 5166#
 A traditional
@@ -32645,23 +32961,19 @@ Enables Lv. 2 Double Attack.
 Max HP and SP +50
 #
 5284#
-A training cap that
-lends a sense of
-quiet and stability
-to the wearer.
-DEX  +1, Agi +1,
-Magic Defense +3.
-Increases HP Recovery
-by 5% and SP Recovery by^FFFFFF  ^000000 3%. Cannot be upgraded.
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000
-Defense: ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Required Level: ^77777730^000000
-Jobs : ^777777All^000000
+A headpiece made to resemble a water lily, lends a sense of quiet and stability to the wearer.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+Agi + 1
+Dex + 1
+Mdef + 3
+HP Recovery + 5%
+SP Recovery + 3%
+This item cannot be upgraded.
 #
 5285#
 A hairpin that looks
@@ -34546,31 +34858,33 @@ placeholder
 #
 5512#
 This diadem honors Aquarius, the 11th astrological sign in the zodiac calendar. Its power increases defense from Wind attacks.
-Str + 2, FLEE + 10,
-Increases attack resistance to Wind property by 5%.
-If refined to 7 or higher,
-DEF + 1, ATK + 15.
-^ffffff_^000000
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Level : ^77777770^000000
-Job : ^777777All^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808030^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Str + 2
+Flee + 10
+Reduces damage taken from Wind property attacks by 5%.
+If upgrade level is +7 or higher,
+Atk + 15
+Def + 1
 #
 5513#
-This crown honors Aquarius, the 11th astrological sign in the zodiac calendar. Its power increases defense from Wind attacks.
-Str + 2, FLEE + 10,
-Increases attack resistance to Wind property by 5%.
-If refined to 7 or higher,
-DEF + 1, ATK + 15.
-^ffffff_^000000
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Required Level : ^77777770^000000
-Job : ^777777All^000000
+This crown honors Aquarius, the 11th astrological sign in the zodiac calendar.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808030^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Str + 2
+Flee + 10
+Reduces damage taken from Wind property attacks by 5%.
+If upgrade level is +7 or higher,
+Atk + 15
+Def + 1
 #
 5514#
 This diadem honors Pisces, the 12th astrological sign in the zodiac calendar. Its power increases defense from Water attacks.
@@ -34587,18 +34901,19 @@ Required Level : ^77777770^000000
 Job : ^777777All^000000
 #
 5515#
-This crown honors Pisces, the 12th astrological sign in the zodiac calendar. Its power increases defense from Water attacks.
-Int +2, MDEF +1,
-Increases resistance to Water attacks by 5%.
-If refined to 7 or higher,
-MDEF +5, MATK +2%.
-^ffffff_^000000
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Required Level : ^77777770^000000
-Job : ^777777All^000000
+This crown honors Pisces, the 12th astrological sign in the zodiac calendar.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080806^000000
+Weight: ^80808030^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Int + 2
+Mdef + 5
+Reduces damage taken from Water property attacks by 5%.
+If upgrade level is +7 or higher,
+Def + 1
+Matk + 2%
 #
 5516#
 An artificial eyeball which glitters sharply.
@@ -35179,18 +35494,19 @@ Required Level : ^77777770^000000
 Job : ^777777All^000000
 #
 5582#
-A magnificent crown created to pay tribute to the 4th sign of the zodiac, Cancer the Crab.  Attached to the crown is a Ruby gemstone, the birthstone for those born under this sign.
-Str + 2,
-Increase Resistance to Water Property by 5%.
-If refined to 7 or higher,
-Def +1, Attack +15,
-Flee +10
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Upper^000000
-Weight : ^77777730^000000
-Required Level : ^77777770^000000
-Job : ^777777All^000000
+A magnificent crown created to pay tribute to the 4th sign of the zodiac, Cancer the Crab. Attached to the crown is a Ruby gemstone, the birthstone for those born under this sign.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808030^000000
+Requires Level: ^80808070^000000
+Usable By: ^808080All Jobs^000000
+Str + 2
+Reduces damage taken from Water property attacks by 5%.
+If upgrade level is +7 or higher,
+Atk + 15
+Def + 1
+Flee + 10
 #
 5583#
 A hat that is provided only for members of the Eden Group.
@@ -35760,23 +36076,19 @@ Level Requirement: ^77777710^000000
 Jobs: ^777777All^000000
 #
 5631#
-A training cap that
-lends a sense of
-quiet and stability
-to the wearer.
-DEX  +1, Agi +1,
-Magic Defense +3.
-Increases HP Recovery
-by 5% and SP Recovery by^FFFFFF  ^000000 3%. Cannot be upgraded.
-Cannot be Dropped,
-or Tradable
-Can be placed in Kafra Storage
-Class : ^777777Headgear^000000
-Defense: ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777720^000000
-Required Level: ^77777730^000000
-Jobs : ^777777All^000000
+A headpiece made to resemble a water lily, lends a sense of quiet and stability to the wearer.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808020^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
+Agi + 1
+Dex + 1
+Mdef + 3
+HP Recovery + 5%
+SP Recovery + 3%
+This item cannot be upgraded.
 #
 5632#
 A cold, soft hat that is^FFFFFF  ^000000 shaped like a Vanilmirs.
@@ -36141,19 +36453,20 @@ Required Level : ^77777710^000000
 Job : ^777777All^000000
 #
 5662#
-A magnificent crown created to pay tribute to the 7th sign of the zodiac, Libra the Balance.  Attached to the crown is an Opal gemstone, the birthstone for those born under this sign.
-Dex +3,
-Increase Resistance to Wind Property by 7%.
-If refined to 7 or higher,
-Matk +3%.
-If refined to 9 or higher,
-Matk +5% and adds a chance of casting Lv 5 Frost Nova when physically attacked.
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location: ^777777Upper ^000000
-Weight : ^77777730^000000
-Required level : ^7777771^000000
-Job : ^777777All^000000
+A magnificent crown created to pay tribute to the 7th sign of the zodiac, Libra the Balance. Attached to the crown is an Opal gemstone, the birthstone for those born under this sign.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Dex + 3
+Reduces damage taken from Wind property attacks by 7%.
+If upgrade level is +7 or higher,
+Matk + 3%
+If upgrade level is +9 or higher,
+Additional Matk + 2%.
+Adds a chance of casting ^0000FFLevel 5 Frost Nova^000000 when performing a physical attack.
 #
 5663#
 A magnificent diadem created to pay tribute to the 7th sign of the zodiac, Libra the Balance.  Attached to the crown is an Opal gemstone, the birthstone for those born under this sign.
@@ -36307,12 +36620,12 @@ Jobs : ^777777All Jobs^000000
 #
 5684#
 A carefully imitated Jewel Crown replica that looks quite good.
-Class : ^777777Headgear^000000
-Defense : ^7777775^000000
-Location: ^777777Upper ^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080805^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 5685#
 An well-made replica which can't be distinguished if one doesn't look at it carefully.
@@ -36420,18 +36733,25 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 5739#
-A magnificent crown created to pay tribute to the 9th sign of the zodiac, Sagittarius the Archer.  Attached to the crown is a Zircon gemstone, the birthstone for those born under this sign.
-Dex +2, Increases resistance to Fire property by 7%.
-If refined to 7, Aspd +2% (after-attack delay)
-If refined to 8, Agi +2.
-If refined to 9, ranged attack damage +5%
-If refined to 10, when physically attacking, has a low chance of increasing Dex and Agi by 10 for 10 seconds.
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location : ^777777Uppper ^000000
-Weight : ^77777730^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+A magnificent crown created to pay tribute to the 9th sign of the zodiac, Sagittarius the Archer. Attached to the crown is a Zircon gemstone, the birthstone for those born under this sign.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Dex + 2
+Reduces damage taken from Fire property attacks by 7%.
+If upgrade level is +7 or higher,
+Aspd + 2%
+If upgrade level is +8 or higher,
+Agi + 2
+If upgrade level is +9 or higher,
+Increases long-ranged damage on targets by 5%.
+If upgrade level is +10 or higher,
+Adds a chance of buffing the user for 10 seconds when performing a physical attack;
+Agi + 10
+Dex + 10
 #
 5740#
 A magnificent diadem created to pay tribute to the 9th sign of the zodiac, Sagittarius the Archer.  Attached to the crown is a Zircon gemstone, the birthstone for those born under this sign.
@@ -36471,15 +36791,17 @@ If refined to +5 adds a further 5%
 If refined to +7 adds a further 3% for a total of 10% Damage versus beasts/Doram!
 #
 5744#
-A magnificent crown created to pay tribute to the 10th sign of the zodiac, Capricorn the Goat.  Attached to the crown is a Garnet gemstone, the birthstone for those born under this sign.
-Dex +2, Vit +2
-If refined to 7 or higher, when melee-attacking, has a chance of auto-casting Lv 1 Mild Wind (Earth endow).
-Class : ^777777Headgear^000000
-Defense : ^7777773^000000
-Location: ^777777Upper ^000000
-Weight : ^77777730^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+A magnificent crown created to pay tribute to the 10th sign of the zodiac, Capricorn the Goat. Attached to the crown is a Garnet gemstone, the birthstone for those born under this sign.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080803^000000
+Weight: ^80808030^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Vit + 2
+Dex + 2
+If upgrade level is +7 or higher,
+Adds a chance of casting ^0000FFLevel 1 Mild Wind^000000 on the user when performing a physical attack.
 #
 5745#
 A magnificent diadem created to pay tribute to the 10th sign of the zodiac, Capricorn the Goat.  Attached to the crown is a Garnet gemstone, the birthstone for those born under this sign.
@@ -36708,7 +37030,13 @@ Job : ^777777All^000000
 placeholder
 #
 5768#
-placeholder
+A beautiful pink corolla. It seems to give a new power to flowers.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080801^000000
+Weight: ^80808080^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 5770#
 #
@@ -37138,6 +37466,7 @@ If upgrade level is +9 or higher,
 All Stats + 10
 Max HP + 15%
 Max SP + 15%
+^67CDC9Concept by Team Inubashiri.^000000
 #
 5898#
 A hairband with an array of autumn leaves attached to it. It displays the beauty of an autumn forest for all to see.
@@ -40397,7 +40726,7 @@ Weight: ^8080801^000000
 #
 6820#
 A fragment of energy which if left alone will fade away into nothing.
-^FF0000Account Bound^000000
+^A730FBCan be exchanged for Old Nightmare Headgear in Tomb of Honor Dungeon.^000000
 Weight: ^8080801^000000
 #
 6821#
@@ -45950,6 +46279,10 @@ Diet: Fresh Fish
 Weight: ^8080800^000000
 ^F4AD42Summoned Bonus^000000
 Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 100%.
+
+^FF0000The following effects are active during the month of October.^000000
+^F4AD42Summoned Bonus^000000
+Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 1031%.
 #
 9113#
 An egg in which a cute Skelion pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -45958,6 +46291,10 @@ Diet: Yummy Meat
 Weight: ^8080800^000000
 ^F4AD42Summoned Bonus^000000
 Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 100%.
+
+^FF0000The following effects are active during the month of October.^000000
+^F4AD42Summoned Bonus^000000
+Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 1031%.
 #
 9518#
 Randomly gives one of the following items when opened:
@@ -47059,6 +47396,10 @@ Transforms into Quve for 10 minutes.  HIT + 10, FLEE + 20 while shapeshifting.
 Weight : ^7777773^000000
 #
 11596#
+A skull shaped cup filled with blood. It obviously has some mysterious powers.
+Class: ^808080Recovery^000000
+Weight: ^8080805^000000
+Restores ^008000600^000000 HP.
 #
 11597#
 A terrible worm that feeds on iron and other metals. However, it is likely a good source of protein.
@@ -61138,6 +61479,21 @@ Increases damage taken from All race enemies by 10% expect Demon and Undead.
 Increases physical and magical damage on Undead race targets by 15%.
 Increases the damage of ^0000FFAdoramus^000000 by 200%.
 Increases the SP cost of ^0000FFAdoramus^000000 by 30.
+
+^800080Set Bonus^000000
+^008080Empowered Mace of Judgement [1]^000000
+^008080Robe of Judgement^000000
+^008080Shoes of Judgement^000000
+^008080Shawl of Judgement^000000
+Increases physical and magical damage on Undead race targets by 30%.
+Increases the damage of ^0000FFAdoramus^000000 by 200%.
+Increases the SP cost of ^0000FFAdoramus^000000 by 30.
+Reduces the variable casting time of the following skills by 50%,
+^0000FFHoly Light^000000
+^0000FFTurn Undead^000000
+^0000FFMagnus Exorcismus^000000
+^0000FFJudex^000000
+^0000FFAdoramus^000000
 #
 15031#
 Armor that is only provided for members of the Eden Group.
@@ -61212,14 +61568,20 @@ Property: ^808080Neutral^000000
 Weight: ^808080300^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080Rune Knight^000000
-MDEF + 10.
-ATK + 20, FLEE + 17.
-If worn with Peuz Greaves, Shoes and accessory,
-Increases damage to all monster sizes by 10%.
-Increases damage of Wind Cutter and Sonic Wave by 100%.
-Has a chance of activating Storm Blast and Spear Dynamo while physically attacking
-When using Spear Dynamo has of chance adding 2 Aspd while physically attacking for 1 second
-Increases SP costs of skills by 10%.
+Atk + 20
+Mdef + 10
+Flee + 17
+
+^800080Set Bonus^000000
+^008080Peuz's Greaves [1]^000000
+^008080Peuz's Plate^000000
+^008080Peuz's Manteau^000000
+^008080Peuz's Seal [1]^000000
+Atk + 10%
+Increases the damage of ^0000FFSonic Wave^000000 and ^0000FFWind Cutter^000000 by 100%.
+Adds a chance of casting ^0000FFLevel 1 Storm Blast^000000 on the target when performing a physical attack.
+Adds a chance of buffing the user for 10 seconds when using ^0000FFSpear Dynamo^000000; Aspd + 2.
+Increases the SP cost of skills by 10%.
 #
 15038#
 Armor that contains the reliquary remains of an ancient Assassin.
@@ -62451,33 +62813,46 @@ Requires Level: ^808080100^000000
 Usable By: ^808080All Jobs^000000
 Matk + 50
 Enables ^0000FFLevel 1 Endure^000000.
-If the users base level is 120 or higher,
-Additional Matk + 50
-If the users base level is 140 or higher,
-Additional Matk + 50
+If the user's base level is 120 or higher,
+Additional Matk + 50.
+If the user's base level is 140 or higher,
+Additional Matk + 50.
+
 ^800080Set Bonus^000000
 ^008080Flattery Robe [1]^000000
 ^008080Ancient Cape^000000
 Max SP + 10%
-Additional Max SP + 1% per upgrade level of ^008080Flattery Robe [1]^000000.
 Flee + 10
-Additional Flee + 1 per upgrade level of ^008080Flattery Robe [1]^000000.
+For every upgrade level of ^008080Flattery Robe [1]^000000,
+Additional Max SP + 1%.
+Additional Flee + 1.
 
 ^800080Set Bonus^000000
 ^008080Flattery Robe [1]^000000
 ^008080Ancient Cape [1]^000000
 Max SP + 10%
-Additional Max SP + 1% per upgrade level of ^008080Flattery Robe [1]^000000.
 Flee + 10
-Additional Flee + 1 per upgrade level of ^008080Flattery Robe [1]^000000.
+For every upgrade level of ^008080Flattery Robe [1]^000000,
+Additional Max SP + 1%.
+Additional Flee + 1.
 
 ^800080Set Bonus^000000
 ^008080Flattery Robe [1]^000000
-^008080Cloak of Survival^000000
+^008080Survivor's Manteau^000000
 Max HP + 10%
-Additional Max HP + 1% per upgrade level of ^008080Flattery Robe [1]^000000.
 Matk + 2%
-Additional Matk + 1% per upgrade level of ^008080Flattery Robe [1]^000000.
+For every upgrade level of ^008080Flattery Robe [1]^000000,
+Additional Max HP + 1%.
+Additional Matk + 1%.
+
+^800080Set Bonus^000000
+^008080Flattery Robe [1]^000000
+^008080Survivor's Manteau [1]^000000
+Max HP + 10%
+Matk + 2%
+For every upgrade level of ^008080Flattery Robe [1]^000000,
+Additional Max HP + 1%.
+Additional Matk + 1%.
 #
 15147#
 ^808080Attire for those who can inflict critical damage straight to the soul by talking.^000000
@@ -62583,17 +62958,24 @@ Usable By: ^808080All Jobs^000000
 Matk + 5%
 Enables ^0000FFLevel 1 Spell Breaker^000000.
 If the users base level is 120 or higher,
-Additional Matk + 4%
+Additional Matk + 4%.
 If the users base level is 140 or higher,
-Additional Matk + 5%
+Additional Matk + 5%.
+
 ^800080Set Bonus^000000
-^008080Agenda Robe^000000
+^008080Agenda Robe [1]^000000
 ^008080Ancient Cape^000000
 Reduces the variable casting time of skills by 2% per upgrade level of ^008080Agenda Robe^000000.
 The users casting cannot be interrupted outside of WoE.
+
 ^800080Set Bonus^000000
-^008080Agenda Robe^000000
-^008080Cloak of Survival^000000
+^008080Agenda Robe [1]^000000
+^008080Survivor's Manteau^000000
+Adds a 1% chance of casting ^0000FFLevel 1 Heal^000000 on the user when performing a magical attack per upgrade level of ^008080Agenda Robe^000000.
+
+^800080Set Bonus^000000
+^008080Agenda Robe [1]^000000
+^008080Rental Survivor's Manteau^000000
 Adds a 1% chance of casting ^0000FFLevel 1 Heal^000000 on the user when performing a magical attack per upgrade level of ^008080Agenda Robe^000000.
 #
 15164#
@@ -63357,38 +63739,67 @@ For every upgrade level of the item, adds an additional chance of casting ^0000F
 #
 16018#
 A mace that strikes like the Judges gavel in deciding the fate of evil.
-Physical and Magical Attacks have a chance to increase damage by 40% to Demon monsters for 7 seconds.
-MATK + 180, STR + 2, INT + 2.
-If worn with Judgement Robe, Shoes and Shawl, increase Damage against Undead by 30%.
-Increase damage of Adoramus by 200%, and increase SP cost of Adoramus by 30.
-Type : ^777777Mace^000000
-Attack : ^777777170^000000
-Weight : ^777777120^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777130^000000
-Job : ^777777"Archbishop^000000
+Class: ^808080Mace^000000
+Attack: ^808080170^000000
+Magic Attack: ^808080180^000000
+Property: ^808080Holy^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Arch Bishop^000000
+Str + 2
+Int + 2
+Adds a chance of buffing the user for 7 seconds when performing a physical or a magical attack;
+Increases physical and magical on Demon race targets by 40%.
+
+^800080Set Bonus^000000
+^008080Empowered Mace of Judgement [1]^000000
+^008080Robe of Judgement^000000
+^008080Shoes of Judgement^000000
+^008080Shawl of Judgement^000000
+Increases physical and magical damage on Undead race targets by 30%.
+Increases the damage of ^0000FFAdoramus^000000 by 200%.
+Increases the SP cost of ^0000FFAdoramus^000000 by 30.
+Reduces the variable casting time of the following skills by 50%,
+^0000FFHoly Light^000000
+^0000FFTurn Undead^000000
+^0000FFMagnus Exorcismus^000000
+^0000FFJudex^000000
+^0000FFAdoramus^000000
 #
 16020#
-*Stats during WoE & PVP
-Decreases the target's Def and Mdef to 1 for 5 seconds on successful hit. (This effect does not work with skills)
-Increases Stun chance and ASPD depending on upgrade level.
-Class : ^777777Mace^000000
-Attack Strength : ^777777170^000000
-Weight : ^777777150^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777795^000000
-Jobs: ^777777Novice, Swordman, Acolyte, and Merchant Classes^000000
+A mace that has been designed specifically for battles against players.
+^FF0000Skills are not counted as a physical attack for this item.^000000
+Class: ^808080Mace^000000
+Attack: ^808080170^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808095^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs^000000
+This item is indestructible in battle.
+^800080Stats during WoE, PvP^000000
+Adds a 100% chance to reduce hard defense and hard magic defense to 1 on players for 5 seconds when performing a short-ranged attack.
+Per upgrade level of the item,
+Aspd + 1%
+Adds a 3% chance of inflicting ^800000Stun^000000 on the target when performing a short-ranged or long-ranged attack.
+
 #
 16021#
-*Stats during WoE & PVP
-Chance on hit to disable all healing effects from affecting the target for a duration. (This effect does not work with skills)
-Increases HIT and CRIT depending on upgrade level.
-Class : ^777777Mace^000000
-Attack Strength : ^777777170^000000
-Weight : ^777777150^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777795^000000
-Jobs: ^777777Novice, Swordman, Acolyte, and Merchant Classes^000000
+A mace that has been designed specifically for battles against players.
+^FF0000Skills are not counted as a physical attack for this item.^000000
+Class: ^808080Mace^000000
+Attack: ^808080170^000000
+Property: ^808080Neutral^000000
+Weight: ^808080150^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808095^000000
+This item is indestructible in battle.
+^800080Stats during WoE, PvP^000000
+Adds a chance to disable all healing effects on the target for a short duration when performing a short-ranged attack.
+Per upgrade level of the item,
+Hit + 1
+Crit + 1
 #
 16022#
 ^808080A large silver mace made for exorcisms.^000000
@@ -70708,6 +71119,23 @@ Atk + 10%
 If the combined upgrade levels of ^008080Illusion Ballista [2]^000000 and ^008080Illusion Apple of Archer [1]^000000 upgrade levels are +22 or higher,
 Increases the damage of ^0000FFArrow Storm^000000 by an additional 30%.
 #
+18199#
+A mysterious bow given to adventurers who successfully carry out their missions.
+
+Class: ^808080Bow^000000
+Attack: ^808080150^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Thief, Archer, Assassin, Hunter Jobs, Rogue, Bard Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
+#
 18505#
 An accessory which is traditionally used in piercings by the Umbala tribespeople.
 MaxHP +1%.
@@ -70826,6 +71254,14 @@ Required Level : ^7777771^000000
 Jobs: ^777777All^000000
 #
 18523#
+A small thunder cloud with constant thunder sound.
+^FF0000This item cannot be upgraded.^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
 #
 18524#
 #
@@ -72709,11 +73145,13 @@ Job : ^777777All Jobs^000000
 #
 18745#
 A long stick with an addictive choco. You can't seem to get enough of it.
-SP + 50.
-Series : ^777777Headgear^000000 Defense : ^7777770^000000
-Position : ^777777Lower ^000000Weight : ^7777770^000000
-Require LV : ^77777710^000000
-Equipped by : ^777777All Jobs^000000
+Class: ^808080Headgear^000000
+Position: ^808080Lower^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+Requires Level: ^80808010^000000
+Usable By: ^808080All Jobs^000000
+Max SP + 50
 #
 18746#
 You can see continuos cold breathe.
@@ -74022,6 +74460,7 @@ Defense: ^8080807^000000
 Weight: ^80808040^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+All Stats + 3
 #
 18885#
 A colorful headgear for JeJeling.
@@ -74689,6 +75128,7 @@ Defense: ^8080800^000000
 Weight: ^80808020^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+Aspd + 1
 #
 18963#
 A hat made after pretty mocking bird.
@@ -75076,12 +75516,12 @@ Defense: ^8080805^000000
 Weight: ^80808010^000000
 Requires Level: ^80808070^000000
 Usable By: ^808080All Jobs^000000
-All Stats +2.
+All Stats + 2
 Reduces the global delay of skills by 5%.
 Reduces damage taken from Demi-Human race enemies by 10%.
-Increases the recovery rate of ^008080Blood in Skull^000000 consumable by 50%.
+Increases the recovery rate of ^008080Blood In Skull^000000 consumables by an additional 50%.
 If upgrade level is +7 or higher,
-Aspd + 1.
+Aspd + 1
 Increases the recovery rate of ^008080Blood in Skull^000000 consumable by an additional 20%.
 If upgrade level is +10 or higher,
 Reduces the global delay of skills by an additional 5%.
@@ -75473,21 +75913,55 @@ Required Level : ^7777771^000000^FFFFFF         ^000000 Jobs: ^777777All Except 
 #
 19020#
 A circlet worn by monks. It has the powers to take out the magic of its' wearer.
+
+^FF0000Eligible Survivor's Rod for set combo:
+Survivor's Rod (Dex)
+Survivor's Rod (Dex) [1]
+Survivor's Rod (Int)
+Survivor's Rod (Int) [1]
+^000000
 Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
 Defense: ^80808010^000000
 Weight: ^80808050^000000
 Requires Level: ^80808050^000000
 Usable By: ^808080All Jobs^000000
-INT +3.
-MATK +4%
-For every 2 refinement, INT +1
-For every 130 BaseLV, for every refinement additional INT +1
-When equipped with Survival RodINT, for every refinement level of Survival RodINT, MATK +10
-When refinement level is 10 or higher, When performing magical attack, certain chance to trigger Casting Time -50% for 5 seconds.
-When equipped with Survival RodDEX, for every refinement level of Survival RodDEX additional MATK +10.
-When refinement level is 10 or higher, When performing magical attack, certain chance to trigger Casting Time -50% for 5 seconds.
+Int + 3
+Matk + 4%
+If the user's base level is 99 or lower, additional Int + 1 per 2 upgrade levels of the item.
+If the user's base level is 100 or higher, additional Int + 1 per 1 upgrade level of the item.
 
+^800080Set Bonus^000000
+^008080Survivor's Circlet [1]^000000
+^008080Survivor's Rod^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Adds a chance of buffing the user for 5 seconds when performing a magical attack; Reduces the variable casting time of skills by 50%.
 
+^800080Set Bonus^000000
+^008080Survivor's Circlet [1]^000000
+^008080Survivor's Orb^000000
+Vit + 4
+Reduces damage taken from Demi-Human race enemies by 4%.
+Reduces the variable casting time of skills by 6%.
+Increases the damage of Earth and Wind property magical attacks on targets by 20%.
+If ^008080Survivor's Circlet [1]^000000 upgrade level is +7 or higher,
+Additional Vit + 4
+Reduces damage taken from Demi-Human race enemies by an additional 4%.
+Reduces the variable casting time of skills by an additional 6%.
+If ^008080Survivor's Circlet [1]^000000 upgrade level is +9 or higher,
+Additional Vit + 4
+Reduces damage taken from Demi-Human race enemies by an additional 4%.
+Reduces the variable casting time of skills by an additional 6%.
+
+^800080Set Bonus^000000
+^008080Survivor's Circlet [1]^000000
+^008080Survivor's Shoes^000000
+Matk + 10%
+If ^008080Survivor's Circlet [1]^000000 upgrade level is +7 or higher,
+Increases the damage of Earth and Wind property magical attacks on targets by 10%.
+If ^008080Survivor's Circlet [1]^000000 upgrade level is +9 or higher,
+Increases the damage of Earth and Wind property magical attacks on targets by an additional 10%.
 #
 19021#
 A box that contains 1 Classic Pole Axe 2 Week Rental
@@ -76335,6 +76809,17 @@ Reduces damage taken from Demi-Human race enemies by an additional 4%.
 #
 19139#
 A orb that automatically protects its' owner.
+
+^FF0000Eligible Survivor's Rod for set combo:
+Survivor's Rod (Dex)
+Survivor's Rod (Dex) [1]
+Survivor's Rod (Int)
+Survivor's Rod (Int) [1]
+
+Eligible Survivor's Manteau for set combo:
+Survivor's Manteau
+Survivor's Manteau [1]
+^000000
 Class: ^808080Headgear^000000
 Position: ^808080Lower^000000
 Defense: ^8080800^000000
@@ -76345,50 +76830,61 @@ Atk + 2%
 Matk + 2%
 Reduces the variable casting time of skills by 3%.
 Enables ^0000FFLevel 1 Hiding^000000.
+
 ^800080Set Bonus^000000
-^008080Survivor's Circlet^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod^000000
+Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+If the user's base level is 99 or lower,
+Reduces the variable casting time of skills by 3%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
+If the user's base level is 100 or higher,
+Reduces the variable casting time of skills by an additional 9%.
+Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 45%.
+Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 210%.
+
+^800080Set Bonus^000000
+^008080Survivor's Circlet [1]^000000
 ^008080Survivor's Orb^000000
 Vit + 4
+Reduces damage taken from Demi-Human race enemies by 4%.
 Reduces the variable casting time of skills by 6%.
 Increases the damage of Earth and Wind property magical attacks on targets by 20%.
-Reduces damage taken from Demi-Human race enemies by 4%.
-If ^008080Survivor's Circlet^000000 upgrade level is +7 or higher,
+If ^008080Survivor's Circlet [1]^000000 upgrade level is +7 or higher,
 Additional Vit + 4
-Reduces the variable casting time of skills by an additional 6%.
 Reduces damage taken from Demi-Human race enemies by an additional 4%.
-If ^008080Survivor's Circlet^000000 upgrade level is +9 or higher,
+Reduces the variable casting time of skills by an additional 6%.
+If ^008080Survivor's Circlet [1]^000000 upgrade level is +9 or higher,
 Additional Vit + 4
-Reduces the variable casting time of skills by an additional 6%.
 Reduces damage taken from Demi-Human race enemies by an additional 4%.
+Reduces the variable casting time of skills by an additional 6%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
 ^008080Survivor's Orb^000000
-Reduces the fixed casting time of skills by 50%.
 Reduces damage taken from Demi-Human race enemies by 1%.
+Reduces the fixed casting time of skills by 50%.
 If ^008080Survivor's Manteau^000000 upgrade level is +5 or higher,
 Reduces damage taken from Demi-Human race enemies by an additional 2%.
 If ^008080Survivor's Manteau^000000 upgrade level is +7 or higher,
 Reduces damage taken from Demi-Human race enemies by an additional 2%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod [1]^000000
+^008080Survivor's Rod^000000
 Matk + 1%
-If ^008080Survivor's Rod^000000 upgrade level is +5 or higher,
-Additional Matk + 2%
-If ^008080Survivor's Rod^000000 upgrade level is +7 or higher,
-Additional Matk + 2%
+If ^008080Survivor's Rod^000000 upgrade level is +5 or higher, additional Matk + 2%.
+If ^008080Survivor's Rod^000000 upgrade level is +7 or higher, additional Matk + 2%.
+
 ^800080Set Bonus^000000
+^008080Survivor's Manteau^000000
 ^008080Survivor's Orb^000000
-^008080Survivor's Rod [1]^000000
-Matk + 10 per upgrade level of ^008080Survivor's Rod^000000.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
-Reduces the variable casting time of skills by 3%.
-Reduces the variable casting time of skills by an additional 3%, if the users base level is 100 or higher.
-Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by 15%.
-Increases the damage of ^0000FFChain Lightning^000000 and ^0000FFEarth Strain^000000 by an additional 30%, if the users base level is 100 or higher.
-Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by 70%.
-Increases the damage of ^0000FFHeaven's Drive^000000 and ^0000FFJupitel Thunder^000000 by an additional 140%, if the users base level is 100 or higher.
+^008080Rental Survivor's Rod^000000
+Matk + 1%
+
 ^800080Set Bonus^000000
 ^008080Survivor's Orb^000000
 ^008080Survivor's Shoes^000000
@@ -80346,12 +80842,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 19985#
-^808080A crown made with rare crystals.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A crown made with rare crystals.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19986#
 ^808080A hat molded out of Lunatic fluff.^000000
@@ -80370,12 +80866,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 19988#
-^808080A crown made from an elder's branch.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A crown made from an elder's branch.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 19989#
 ^808080A hairband made with lamb's wool and horn.^000000
@@ -80661,7 +81157,7 @@ Usable By: ^808080All Jobs^000000
 20038#
 A ghostly helmet, one of a kind, it seems to be haunted..
 Class: ^808080Costume^000000
-Position: ^808080Upper, Middle, Lower^000000
+Position: ^808080Upper^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
@@ -80675,12 +81171,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 20040#
-^808080A rose crown worn on weddings in the ancient oriental worlds.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A rose crown worn on weddings in the ancient oriental worlds.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20041#
 A remarkable headpiece reflecting the beauty of Mother Earth.
@@ -81880,13 +82376,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 20295#
-^808080Sunglasses with the lenses modeled after Poring. An essential item for drawing everybody's attention.^000000
-^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Middle)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+Sunglasses with the lenses modeled after the adorable Poring. An essential item for drawing everybody's attention.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 20296#
 A hat modeled after mischievous monkey monster Yoyo.
@@ -83905,183 +84400,147 @@ Disables the following effects of ^008080Horn Card^000000, Reduces damage taken 
 Disables the following effects of ^008080Imuke Upper Shield^000000, Reduces damage taken from long-ranged attacks by 35%.
 #
 20802#
-^808080A bag that resembles the homunculus, Amistr.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-ALL Stats + 1
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Enables ^0000FFLevel 1 Teleport^000000.
-Increases the experience given from monsters by 1% and increases the drop rate of items by 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
-Restores 3 SP to the user when performing a physical or magical attack.
-^FFFFFF_^000000
-If upgrade level is +12 or higher/lower,
+Increases the experience given from monsters by 1% per 2 upgrade levels of the item.
+Increases the drop rate of items by 1% per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 3 SP to the user when a monster is killed by a physical or magical attack.
+If upgrade level is +12 or higher,
 The users casting cannot be interrupted outside of WoE.
 #
 20803#
-^808080A bag that resembles the homunculus, Amistr.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-ALL Stats + 1
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Enables ^0000FFLevel 1 Heal^000000.
-Increases the experience given from monsters by 1% and increases the drop rate of items by 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
-Restores 3 SP to the user when performing a physical or magical attack.
-^FFFFFF_^000000
-If upgrade level is +12 or higher/lower,
+Increases the experience given from monsters by 1% per 2 upgrade levels of the item.
+Increases the drop rate of items by 1% per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 3 SP to the user when a monster is killed by a physical or magical attack.
+If upgrade level is +12 or higher,
 The users casting cannot be interrupted outside of WoE.
 #
 20804#
-^808080A bag that resembles the homunculus, Amistr.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-ALL Stats + 1
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Enables ^0000FFLevel 1 Greed^000000.
-Increases the experience given from monsters by 1% and increases the drop rate of items by 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
-Restores 3 SP to the user when performing a physical or magical attack.
-^FFFFFF_^000000
-If upgrade level is +12 or higher/lower,
+Increases the experience given from monsters by 1% per 2 upgrade levels of the item.
+Increases the drop rate of items by 1% per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 3 SP to the user when a monster is killed by a physical or magical attack.
+If upgrade level is +12 or higher,
 The users casting cannot be interrupted outside of WoE.
 #
 20805#
-^808080A bag that resembles the homunculus, Amistr.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-ALL Stats + 1
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Enables ^0000FFLevel 1 Increase AGI^000000.
-Increases the experience given from monsters by 1% and increases the drop rate of items by 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
-Restores 3 SP to the user when performing a physical or magical attack.
-^FFFFFF_^000000
-If upgrade level is +12 or higher/lower,
+Increases the experience given from monsters by 1% per 2 upgrade levels of the item.
+Increases the drop rate of items by 1% per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 3 SP to the user when a monster is killed by a physical or magical attack.
+If upgrade level is +12 or higher,
 The users casting cannot be interrupted outside of WoE.
 #
 20806#
-^808080A bag that resembles the homunculus, Amistr.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-ALL Stats + 1
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Enables ^0000FFLevel 1 Magnum Break^000000.
-Increases the experience given from monsters by 1% and increases the drop rate of items by 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
-Restores 3 SP to the user when performing a physical or magical attack.
-^FFFFFF_^000000
-If upgrade level is +12 or higher/lower,
+Increases the experience given from monsters by 1% per 2 upgrade levels of the item.
+Increases the drop rate of items by 1% per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 3 SP to the user when a monster is killed by a physical or magical attack.
+If upgrade level is +12 or higher,
 The users casting cannot be interrupted outside of WoE.
 #
 20807#
-^808080A bag that resembles the homunculus, Amistr.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-ALL Stats + 1
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Enables ^0000FFLevel 1 Endure^000000.
-Increases the experience given from monsters by 1% and increases the drop rate of items by 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
-Restores 3 SP to the user when performing a physical or magical attack.
-^FFFFFF_^000000
-If upgrade level is +12 or higher/lower,
+Increases the experience given from monsters by 1% per 2 upgrade levels of the item.
+Increases the drop rate of items by 1% per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 3 SP to the user when a monster is killed by a physical or magical attack.
+If upgrade level is +12 or higher,
 The users casting cannot be interrupted outside of WoE.
 #
 20808#
-^808080A bag that resembles the homunculus, Amistr.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-ALL Stats + 1
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Enables ^0000FFLevel 1 Sight^000000.
-Increases the experience given from monsters by 1% and increases the drop rate of items by 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
-Restores 3 SP to the user when performing a physical or magical attack.
-^FFFFFF_^000000
-If upgrade level is +12 or higher/lower,
+Increases the experience given from monsters by 1% per 2 upgrade levels of the item.
+Increases the drop rate of items by 1% per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 3 SP to the user when a monster is killed by a physical or magical attack.
+If upgrade level is +12 or higher,
 The users casting cannot be interrupted outside of WoE.
 #
 20809#
-^808080A bag that resembles the homunculus, Amistr.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-ALL Stats + 1
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Enables ^0000FFLevel 1 Improve Concentration^000000.
-Increases the experience given from monsters by 1% and increases the drop rate of items by 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
-Restores 3 SP to the user when performing a physical or magical attack.
-^FFFFFF_^000000
-If upgrade level is +12 or higher/lower,
+Increases the experience given from monsters by 1% per 2 upgrade levels of the item.
+Increases the drop rate of items by 1% per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 3 SP to the user when a monster is killed by a physical or magical attack.
+If upgrade level is +12 or higher,
 The users casting cannot be interrupted outside of WoE.
 #
 20811#
-^808080A bag that resembles the homunculus, Amistr.^000000
-^FFFFFF_^000000
-Type: Equipment
-Class: Garment
-Defense: 30
-Weight: 20
-Required Level: 1
-Required Jobs: All Jobs
-^FFFFFF_^000000
-ALL Stats + 1
+A bag that resembles the homunculus, Amistr.
+Class: ^808080Garment^000000
+Defense: ^80808030^000000
+Weight: ^80808020^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+All Stats + 1
 Enables ^0000FFLevel 1 Hiding^000000.
-Increases the experience given from monsters by 1% and increases the drop rate of items by 1% per 2 upgrade levels of the item.
-^FFFFFF_^000000
-If upgrade level is +9 or higher/lower,
-Restores 3 SP to the user when performing a physical or magical attack.
-^FFFFFF_^000000
-If upgrade level is +12 or higher/lower,
+Increases the experience given from monsters by 1% per 2 upgrade levels of the item.
+Increases the drop rate of items by 1% per 2 upgrade levels of the item.
+If upgrade level is +9 or higher,
+Restores 3 SP to the user when a monster is killed by a physical or magical attack.
+If upgrade level is +12 or higher,
 The users casting cannot be interrupted outside of WoE.
 #
 20812#
@@ -84096,15 +84555,74 @@ Usable By: ^808080All Jobs^000000
 #
 20813#
 A cloak that will increase the chance of survival in any circumstances.
+
+^FF0000Eligible Survivor's Rod for set combo:
+Survivor's Rod (Dex)
+Survivor's Rod (Dex) [1]
+Survivor's Rod (Int)
+Survivor's Rod (Int) [1]
+^000000
 Class: ^808080Garment^000000
 Defense: ^80808010^000000
 Weight: ^80808055^000000
 Requires Level: ^8080805^000000
-Usable By: ^808080Mage, Soul Linker^000000
-When equipped with Survivor's Rod[1], Max HP + 300.
-MATK -5%, MATK increase per % for every refinment level of Surivor's Rod[1].
-Additional Non Property Resistance: For every refinement level times 3.
-When equipped with Deviling Card, Non Property Resistance -30%.
+Usable By: ^808080Mage Jobs, Soul Linker^000000
+Vit + 10
+Mdef + 5
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Rod^000000
+Max HP + 300
+Matk - 5%
+Matk + 1% per upgrade level of ^008080Survivor's Rod^000000.
+Reduces damage taken from Neutral property attacks by 3% per upgrade level of ^008080Survivor's Manteau [1]^000000.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Rental Survivor's Rod^000000
+Matk + 5%
+Reduces damage taken from Neutral property attacks by 25%.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Orb^000000
+Reduces damage taken from Demi-Human race enemies by 1%.
+Reduces the fixed casting time of skills by 50%.
+If ^008080Survivor's Manteau [1]^000000 upgrade level is +5 or higher,
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+If ^008080Survivor's Manteau [1]^000000 upgrade level is +7 or higher,
+Reduces damage taken from Demi-Human race enemies by an additional 2%.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Orb^000000
+^008080Survivor's Rod^000000
+Matk + 1%
+If ^008080Survivor's Rod^000000 upgrade level is +5 or higher,
+Additional Matk + 2%
+If ^008080Survivor's Rod^000000 upgrade level is +7 or higher,
+Additional Matk + 2%
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Orb^000000
+^008080Rental Survivor's Rod^000000
+Matk + 1%
+
+^800080Set Malus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Deviling Card^000000
+Increases damage taken from Neutral property attacks by 30%.
+
+^800080Set Bonus^000000
+^008080Survivor's Manteau [1]^000000
+^008080Survivor's Shoes^000000
+Matk + 10%
+If ^008080Survivor's Manteau [1]^000000 upgrade level is +7 or higher,
+Reduces damage taken from Earth and Wind property attacks by 15%.
+If ^008080Survivor's Manteau [1]^000000 upgrade level is +9 or higher,
+Reduces damage taken from Earth and Wind property attacks by an additional 15%.
 #
 20814#
 ^808080A manteau made out of the wings of a Wakwak. By wearing it, you will feel like you can fly.^000000
@@ -84421,19 +84939,26 @@ Increases the recovery rate of recovery items by 10%.
 #
 20847#
 A manteau that protects its wearer from the elements.
+
+^FF0000Eligible Survivor's Rod for set combo:
+Survivor's Rod (Dex) [1]
+Survivor's Rod (Int) [1]
+^000000
 Class: ^808080Garment^000000
 Defense: ^80808030^000000
 Weight: ^80808055^000000
 Requires Level: ^808080130^000000
 Usable By: ^808080Mage Jobs, Soul Linker^000000
 Vit + 15
+
 ^800080Set Bonus^000000
-^008080Illusion Survivor's Manteau^000000
+^008080Illusion Survivor's Manteau [1]^000000
 ^008080Survivor's Rod [1]^000000
 Max HP + 1000
 Matk - 50
-Matk + 20 per upgrade level of the ^008080Survivor's Rod [1]^000000 up to +10.
-Reduces damage taken from Neutral property attacks by 1% per every other upgrade level of the ^008080Survivor's Manteau^000000 up to +10.
+Matk + 20 per upgrade level of ^008080Survivor's Rod [1]^000000 up to maximum upgrade of +10.
+Reduces the global delay of skills by 3% per 3 upgrade levels of ^008080Survivor's Rod [1]^000000.
+Reduces damage taken from Neutral property attacks by 1% per 2 upgrade levels of ^008080Illusion Survivor's Manteau [1]^000000 up to a maximum upgrade of +10.
 #
 20856#
 The manteau used by Werner's experiment. Beware, you may be consumed by it's power.
@@ -84832,16 +85357,22 @@ Reduces damage taken from Wind property attacks by 75%.
 Reduces damage taken from Earth property attacks by 75%.
 #
 21001#
-*Stats during WoE & PVP
-Increases damage to enemy players by 80% and bypasses 30% Def.
-If refined to +6 or higher, increases physical damage to enemy players by an additional 40%.
-If refined to +9 or higher, has a chance of reflecting damage of physical and magic attacks as well as a chance to cast Magic Mirror.
-Class : ^777777Two-handed Sword^000000
-Attack Strength : ^777777260^000000
-Weight : ^777777350^000000
-Weapon Level : ^7777774^000000
-Required Level : ^77777795^000000
-Jobs: ^777777Swordman Class^000000
+A two-handed sword that has been designed specifically for battles against players.
+Class: ^808080Two-Handed Sword^000000
+Attack: ^808080260^000000
+Property: ^808080Neutral^000000
+Weight: ^808080350^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^80808095^000000
+Usable By: ^808080Swordman Jobs^000000
+^800080Stats during WoE, PvP^000000
+Increases physical damage on Human Player and Doram player race targets by 80%.
+Bypass 30% of hard defense of Human Player and Doram Player race targets when performing a physical attack.
+If upgrade level is +6 or higher,
+Increases physical damage on Human Player and Doram Player race targets by an additional 40%.
+If upgrade level is +9 or higher,
+Reflects 20% of the received short-ranged and magical damage back to the attacker.
+Adds a 30% chance of casting ^0000FFLevel 8 Magic Mirror^000000 on the user when receiving a magical attack.
 #
 21002#
 A two-handed sword that has been designed specifically for battles against players.
@@ -84993,6 +85524,23 @@ Required Jobs: Rune Knight, Royal Guard
 Atk + 1% per 2 upgrade levels of the item.
 Aspd + 1% per upgrade level of the item.
 This item is indestructible in battle.
+#
+21059#
+A mysterious two-handed sword given to adventurers who successfully carry out their missions.
+
+Class: ^808080Two-Handed Sword^000000
+Attack: ^808080225^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Swordman Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 21202#
 Octo-pig is known to bring luck with money from long time ago. It is said that Octo-pig's legs were used to make ornaments to collect coins.
@@ -86550,6 +87098,17 @@ Atk + 4 % per level of ^0000FFGentle Touch-Silence^000000 known.
 #
 22170#
 A pair of shoes that automatically protects its' owner.
+
+^FF0000Eligible Survivor's Rod for set combo:
+Survivor's Rod (Dex)
+Survivor's Rod (Dex) [1]
+Survivor's Rod (Int)
+Survivor's Rod (Int) [1]
+
+Eligible Survivor's Manteau for set combo:
+Survivor's Manteau
+Survivor's Manteau [1]
+^000000
 Class: ^808080Shoes^000000
 Defense: ^80808015^000000
 Weight: ^80808050^000000
@@ -86559,8 +87118,8 @@ Max HP + 3%
 Max SP + 3%
 Matk + 2%
 Mdef + 15
-Increases the damage of Earth and Wind property magical attacks on targets by 2%.
 Reduces damage taken from Demi-Human race enemies by 5%.
+Increases the damage of Earth and Wind property magical attacks on targets by 2%.
 If upgrade level is +5 or higher,
 Additional Max HP + 7%
 Additional Max SP + 7%
@@ -86571,14 +87130,28 @@ Additional Max HP + 10%
 Additional Max SP + 10%
 Additional Matk + 5%
 Increases the damage of Earth and Wind property magical attacks on targets by an additional 5%.
+
 ^800080Set Bonus^000000
-^008080Survivor's Circlet^000000
+^008080Survivor's Rod^000000
 ^008080Survivor's Shoes^000000
+Reduces damage taken from Demi-Human race enemies by 10%.
+Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
+If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
+Increases magical damage on Demi-Human race targets by 20%.
+Increases the damage of Neutral property magical attacks on targets by 80%.
+Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
+Reduces the cooldown of ^0000FFChain Lightning^000000 by 1 second.
+Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
+
+^800080Set Bonus^000000
+^008080Survivor's Circlet [1]^000000
+^008080Survivor's Shoes^000000
+Matk + 10%
+If ^008080Survivor's Circlet [1]^000000 upgrade level is +7 or higher,
 Increases the damage of Earth and Wind property magical attacks on targets by 10%.
-If ^008080Survivor's Circlet^000000 upgrade level is +7 or higher,
+If ^008080Survivor's Circlet [1]^000000 upgrade level is +9 or higher,
 Increases the damage of Earth and Wind property magical attacks on targets by an additional 10%.
-If ^008080Survivor's Circlet^000000 upgrade level is +9 or higher,
-Increases the damage of Earth and Wind property magical attacks on targets by an additional 10%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Manteau^000000
 ^008080Survivor's Shoes^000000
@@ -86587,22 +87160,13 @@ If ^008080Survivor's Manteau^000000 upgrade level is +7 or higher,
 Reduces damage taken from Earth and Wind property attacks by 15%.
 If ^008080Survivor's Manteau^000000 upgrade level is +9 or higher,
 Reduces damage taken from Earth and Wind property attacks by an additional 15%.
+
 ^800080Set Bonus^000000
 ^008080Survivor's Orb^000000
 ^008080Survivor's Shoes^000000
 Vit + 5
 Int + 5
 Reduces damage taken from Demi-Human race enemies by 3%.
-^800080Set Bonus^000000
-^008080Survivor's Rod [1]^000000
-^008080Survivor's Shoes^000000
-Reduces damage taken from Demi-Human race enemies by 10%.
-Bypass 50% of hard magic defense of normal monsters and boss monsters when performing a magical attack.
-If ^008080Survivor's Rod^000000 upgrade level is +10 or higher,
-Reduces the cooldown of ^0000FFEarth Strain^000000 by 2.4 seconds.
-Increases magical damage on Demi-Human race targets by 20%.
-Increases the damage of Neutral property magical attacks on targets by 80%.
-Adds a 6% chance of buffing the user for 5 seconds when performing a magical attack; Increases the damage of ^0000FFChain Lightning^000000 by 100%.
 #
 22172#
 A special artifact which empowers both black magic and white magic.
@@ -90416,6 +90980,25 @@ Flee + 2 per upgrade level of the item.
 If upgrade level is +10 or higher,
 Perfect Dodge + 10
 #
+26173#
+A mysterious staff given to adventurers who have successfully completed their missions.
+
+Class: ^808080One-Handed Staff^000000
+Attack: ^80808050^000000
+Magic Attack: ^808080130^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Acolyte Jobs, Mage Jobs, Soul Linker^000000
+Int + 5
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+mAtk + 5%
+Reduces the skill usage delay by 5%
+#
 26200#
 ^808080Rope that embodies the wielder's yearning for personal freedom. Old and worn, it bends and thrashes more flexibly than new rope.^000000
 Class: Whip
@@ -90437,6 +91020,22 @@ Aspd + 1
 Atk + 30
 Aspd + 1
 Increases critical damage on targets by 20%.
+#
+26219#
+A mysterious whip given to adventurers who successfully carry out their missions.
+Class: ^808080Whip^000000
+Attack: ^808080125^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Dancer Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 27012#
 Class: ^808080Card^000000
@@ -91202,9 +91801,10 @@ Increases the damage of Shadow property magical attacks on targets by 20%.
 #
 27263#
 Class: ^808080Card^000000
-Weight: ^8080800^000000
-Adds a 20% chance of transforming the user into a Golem for 10 seconds when performing a physical attack.
-DEF + 300 for the duration of the transformation.
+Compounds On: ^808080Shoes^000000
+Weight: ^8080801^000000
+Adds a 20% chance of transforming the user into Golem for 10 seconds when performing a short-ranged attack;
+Def + 300 for the duration of the transformation.
 #
 27264#
 Class: ^808080Card^000000
@@ -91368,6 +91968,23 @@ Usable By: ^808080Guillotine Cross^000000
 Adds a 4% chance of transforming the user into Ghoul for 6 seconds when performing a short-ranged attack;
 The user's property becomes Undead.
 Applies ^0000FFEndure^000000 effect for the duration of the transformation.
+#
+28050#
+A mysterious katar given to adventurers who successfully execute missions.
+
+Class: ^808080Katar^000000
+Attack: ^808080175^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Assassin Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 28100#
 This two-handed axe, made to counteract the Devil Sword Thanatos, is sculpted out of Gray Shard.
@@ -91630,6 +92247,23 @@ If upgrade level is +7 or higher,
 Increases the damage of ^0000FFDragon Tail^000000 by 15%.
 If upgrade level is +9 or higher,
 Reduces the cooldown of ^0000FFHowling Mine^000000 by 1 second.
+#
+28260#
+A mysterious rifle given to adventurers who successfully execute missions.
+
+Class: ^808080Rifle^000000
+Attack: ^808080175^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Gunslinger Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 28303#
 ^808080An object which seems to be part of the Vesper. Possesses a mysterious power that grants great strength to its owner.^000000
@@ -93493,6 +94127,24 @@ Adds an additional 5% chance of casting ^0000FFMeteor Storm^000000 on the target
 If upgrade level is +10 or higher,
 Adds an additional 5% chance of casting ^0000FFMeteor Storm^000000 on the target when performing a physical attack, where the level of the skill is 5.
 #
+28640#
+A mysterious book given to adventurers who successfully execute missions.
+Class: ^808080Book^000000
+Attack: ^80808080^000000
+Magic Attack: ^808080145^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Priest Jobs, Sage Jobs, Taekwon Master^000000
+Int + 5
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+mAtk + 5%
+Reduces the skill usage delay by 5%
+#
 28700#
 Attack: 0
 Property: N/A
@@ -93653,6 +94305,23 @@ Additional Matk + 40
 If the combined upgrade levels are +22 or higher,
 Increases the damage of Fire property magical attacks on targets by 15%.
 #
+28781#
+A mysterious dagger given to adventurers who successfully execute missions.
+
+Class: ^808080Dagger^000000
+Attack: ^808080160^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080All Jobs except Acolyte Jobs, Taekwon, Taekwon Master, Gunslinger Jobs, Doram^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
+#
 28900#
 The official shield of the Prontera Royal Guard.
 Class: ^808080Shield^000000
@@ -93669,19 +94338,26 @@ Adds a 0.5% chance of casting ^0000FFLevel 3 Assumptio^000000 on the user when r
 For every upgrade level of the item, adds an additional 0.3% chance of casting ^0000FFLevel 3 Assumptio^000000.
 #
 28901#
-A rag doll that Piamette is using for both attack and defense?
-It looks so real and alive!
-ASPD +3.
-ATK +5%, MATK +5%.
-Reflect 10% of close physical attack damage.
-10% chance to reflect magic damage. Reflect magic damage for 2 seconds chanced by 60%.
-Refined to +7, increase ATK +5 and MATK +5.
-Refined to +9, increase ATK +15 and MATK +15
-Refined to +12, Skill casting can not be interrupted and CRI +10.
-Class : ^777777Shield^000000 Defense : ^7777770^000000
-Weight : ^77777710^000000
-Required Level : ^7777771^000000
-Jobs : ^777777All Jobs^000000
+A rag doll that Piamette uses for both offense and defense. It looks so real and alive!
+Class: ^808080Shield^000000
+Defense: ^8080800^000000
+Weight: ^80808010^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+Atk + 5%
+Matk + 5%
+Aspd + 3
+Reflects 10% of the received short-ranged damage back to the attacker.
+Adds a 10% chance of casting ^0000FFLevel 8 Magic Mirror^000000 on the user when receiving a magical attack that lasts for 2 seconds.
+If upgrade level is +7 or higher,
+Atk + 5
+Matk + 5
+If upgrade level is +9 or higher,
+Additional Atk + 15
+Additional Matk + 15
+If upgrade level is +12 or higher,
+Crit + 10
+The users casting cannot be interrupted outside of WoE.
 #
 28902#
 ^808080A rag doll that Piamette uses for both offense and defense. It looks so real and alive!^000000
@@ -94047,6 +94723,25 @@ Class: ^808080^000000
 Position: ^808080^000000
 Compounds On: ^808080^000000
 Weight: ^8080800^000000
+#
+28959#
+A mysterious shield given to adventurers who successfully carry out their missions.
+Class: ^808080Shield^000000
+Defense: ^808080140^000000
+Weight: ^8080801^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080All Jobs^000000
+MaxHP + 1%
+Additional MaxHP + 1% for every three refine levels
+If refined to +7 or higher
+SP Recovery +1
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+SP Recovery +1
+MaxSP + 5%
+If Character Level is 150 or Higher
+MaxHP + 1%
 #
 29000#
 Type: Miscellaneous
@@ -95221,12 +95916,12 @@ Required Level: 1
 Required Jobs: All Jobs
 #
 31201#
-^808080A cute little crown with big rabbit ears on either side.^000000
-Class: Costume
-Position: Upper
-Weight: 0
-Required Level: 1
-Required Jobs: All Jobs
+A cute little crown with big rabbit ears on either side.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31202#
 Life is ruff for a pawfficer of the law, but times never get bark for those with dogged determination.
@@ -95766,10 +96461,11 @@ Usable By: ^808080All Jobs^000000
 #
 31386#
 A pair of glistening, floating orbs.
-
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31389#
 A pink rose decorated with feathers of white birds.
@@ -96311,10 +97007,12 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31533#
-
+A warm muffler you want to wear when the weather gets cold. The wiggling tail is just too adorable.
 Class: ^808080Costume^000000
 Position: ^808080Lower^000000
 Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
 #
 31538#
 An aura of love radiates from your entire body!
@@ -97109,6 +97807,7 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 31795#
+An ornament made to resemble an elephant-like fairy. The water whirling around with the fairy is beautiful.
 Class: ^808080Costume^000000
 Position: ^808080Middle^000000
 Weight: ^8080800^000000
@@ -97164,6 +97863,41 @@ This hat was awarded to adventurers that displayed exceptional examples of creat
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
+#
+32032#
+A mysterious one-handed spear given to adventurers who successfully execute missions.
+Class: ^808080One-Handed Spear^000000
+Attack: ^808080135^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Lord Knight Jobs, Paladin Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
+#
+32114#
+A mysterious lute given to adventurers who successfully carry out their missions.
+
+
+Class: ^808080Musical Instrument^000000
+Attack: ^808080115^000000
+Magic Attack: ^80808060^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Maestro^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
 32203#
 A high performance microchip that is said to have been used on a mainframe computer, known as 'MOTHER'. It contains valuable data of lost technology.
@@ -97495,4 +98229,38 @@ Class: ^808080^000000
 Position: ^808080^000000
 Compounds On: ^808080^000000
 Weight: ^8080800^000000
+#
+32356#
+A mysterious one-handed sword given to adventurers who successfully carry out their missions.
+
+Class: ^808080One-Handed Sword^000000
+Attack: ^808080150^000000
+Weight: ^8080801^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
+#
+32410#
+A mysterious mace given to adventurers who successfully execute missions.
+
+Class: ^808080Mace^000000
+Attack: ^808080140^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Novice Jobs, Swordman Jobs, Merchant Jobs, Acolyte Jobs^000000
+If refined to +7 or higher
+SP Recovery +5
+If refined to +9 or higher
+MaxSP + 10%
+If refined to +12 or higher
+Atk + 5%
+Reduces the skill usage delay by 5%
 #
