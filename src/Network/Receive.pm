@@ -768,7 +768,7 @@ sub received_characters {
 		$character->{headgear}{mid} = $character->{head_mid};
 
 		$character->{nameID} = unpack("V", $character->{ID});
-		$character->{last_map} =~ s/\.gat.*//g;
+		$character->{last_map} =~ s/\.gat.*//g if ($character->{last_map});
 
 		if ($masterServer->{charBlockSize} >= 155) {
 			$character->{exp} = hex (unpack("H*",scalar reverse($character->{exp})));
