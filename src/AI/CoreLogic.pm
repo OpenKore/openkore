@@ -1822,26 +1822,14 @@ sub processAutoSell {
 
 #####AUTO BUY#####
 sub processAutoBuy {
+#Here we check if there any need of initiating autobuy sequence
 	my $needitem;
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && $char->inventory->isReady()) {
 		undef $ai_v{'temp'}{'found'};
 		
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-			next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
-			my $amount;
-			if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
-				$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"});
-			}
-			else {
-				$amount = $char->inventory->sumByName($config{"buyAuto_$i"});
-			}
-			if (
-				$config{"buyAuto_$i"."_minAmount"} ne "" &&
-				$config{"buyAuto_$i"."_maxAmount"} ne "" &&
-				(checkSelfCondition("buyAuto_$i")) &&
-				$amount <= $config{"buyAuto_$i"."_minAmount"} &&
-				$amount < $config{"buyAuto_$i"."_maxAmount"}
-			) {
+		#Begining to break logic here. Replacing checks for new Misc.pm function - checkItemBuyNeed.
+			if (checkItemBuyNeed($i,$char->{zeny})) {
 				$ai_v{'temp'}{'found'} = 1;
 				my $bai = $config{"buyAuto_$i"};
 				if ($needitem eq "") {
@@ -1860,7 +1848,7 @@ sub processAutoBuy {
 		}
 		$timeout{'ai_buyAuto'}{'time'} = time;
 	}
-
+#Here we check if we finished autobuy sequence
 	if (AI::action eq "buyAuto" && AI::args->{'done'}) {
 		
 		if (exists AI::args->{'error'}) {
@@ -2054,53 +2042,56 @@ sub processAutoBuy {
 		} else {
 			return unless (timeOut($args->{'recv_buyList_time'}, $timeout{ai_buyAuto_wait_before_buy}{timeout}));
 		}
-		
+	#We did all we need here
+		return if !$args->{lastIndex};
+	#Creating bulkBuyList
 		my @buyList;
-		
 		my $item;
-		if ($config{"buyAuto_".$args->{lastIndex}} =~ /^\d{3,}$/) {
-			$item = $storeList->getByNameID( $config{"buyAuto_".$args->{lastIndex}} );
-			$args->{'nameID'} = $config{"buyAuto_".$args->{lastIndex}} if (defined $item);
-		}
-		else {
-			$item = $storeList->getByName( $config{"buyAuto_".$args->{lastIndex}} );
-			$args->{'nameID'} = $item->{nameID} if (defined $item);
-		}
-		
-		if (!exists $args->{'nameID'}) {
-			$args->{index_failed}{$args->{lastIndex}} = 1;
-			error "buyAuto index ".$args->{lastIndex}." (".$config{"buyAuto_".$args->{lastIndex}}.") failed, item doesn't exist in npc sell list.\n", "npc";
-			
-		} else {
-			my $maxbuy = ($config{"buyAuto_".$args->{lastIndex}."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
-			my $needbuy = $config{"buyAuto_".$args->{lastIndex}."_maxAmount"};
+		my $zenyleft = $char->{zeny};
+	#Filter all items in buyList to determine those sold by current npc
+		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++){
+			next if (($config{"buyAuto_".$args->{lastIndex}."_npc"} ne $config{"buyAuto_".$i."_npc"})
+				  || (($i != $args->{lastIndex}) && !checkItemBuyNeed($i,$zenyleft)));
+			$item = $storeList->getByName( $config{"buyAuto_".$i} );
+			if (defined $item){
+				$args->{'nameID'} = $item->{nameID};
+			}
+			if (!exists $args->{'nameID'}){
+				$args->{index_failed}{$i} = 1;
+				error "buyAuto index ".$i." (".$config{"buyAuto_".$i}.") failed, item doesn't exist in npc sell list.\n", "npc";
+			}else{
+				my $maxbuy = ($config{"buyAuto_".$i."_price"} ne "") ? int($zenyleft/$config{"buyAuto_".$i."_price"}) : $::sys{'maxItemBuyIfNotDefined'}; # we assume we can buy 1 as default from sys.txt, when price of the item is set to 0
+				
 			
 			my $inv_amount = $char->inventory->sumByNameID($args->{'nameID'});
 
-			$needbuy -= $inv_amount;
+			my $needbuy = $config{"buyAuto_".$i."_maxAmount"} - $inv_amount;
 			
 			my $buy_amount = ($maxbuy > $needbuy) ? $needbuy : $maxbuy;
 			
 			my $batchSize = $config{"buyAuto_".$args->{lastIndex}."_batchSize"};
-			
-			if ($batchSize && $batchSize < $buy_amount) {
-			
-				while ($buy_amount > 0) {
-					my $amount = ($buy_amount > $batchSize) ? $batchSize : $buy_amount;
+		#Batch size is important	
+			if ($batchSize && $batchSize < $buy_amount){
+					while ($buy_amount > 0){
+						my $amount = ($buy_amount > $batchSize) ? $batchSize : $buy_amount;
+						my %buy = (
+							itemID  => $args->{'nameID'},
+							amount => $amount
+						);
+						push(@buyList, \%buy); #push batched
+						$buy_amount -= $amount;
+						#We must understand if there is enough zeny to do all bulkBuing
+						$zenyleft -= $amount * $config{"buyAuto_".$i."_price"};
+					}
+				}else{
 					my %buy = (
 						itemID  => $args->{'nameID'},
-						amount => $amount
+						amount => $buy_amount #Replace to adapt
 					);
-					push(@buyList, \%buy);
-					$buy_amount -= $amount;
+					push(@buyList, \%buy); # push not batched
+					$zenyleft -= $buy_amount * $config{"buyAuto_".$i."_price"};
 				}
 				
-			} else {
-				my %buy = (
-					itemID  => $args->{'nameID'},
-					amount => $buy_amount
-				);
-				push(@buyList, \%buy);
 			}
 		}
 		
