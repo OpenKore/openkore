@@ -8021,8 +8021,10 @@ sub memo_success {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
 		warning T("Memo Failed\n");
+		Plugins::callHook('memo_fail', { "field" => $field->baseName });
 	} else {
 		message T("Memo Succeeded\n"), "success";
+		Plugins::callHook('memo_success', { "field" => $field->baseName });
 	}
 }
 
