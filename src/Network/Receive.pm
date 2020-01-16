@@ -614,7 +614,7 @@ sub received_characters_unpackString {
 	for ($masterServer && $masterServer->{charBlockSize}) {
 		if ($_ == 155) {  # PACKETVER >= 20170830 [base and job exp are now uint64]
 			$char_info = {
-	            types => 'a4 Z8 V Z8 V6 v V2 v4 V v9 Z24 C8 v Z16 V4 C',
+	            types => 'a4 a8 V a8 V6 v V2 v4 V v9 Z24 C8 v Z16 V4 C',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
 			};
 
@@ -743,13 +743,23 @@ sub received_characters {
 	for (my $i = 0; $i < length($args->{charInfo}); $i += $masterServer->{charBlockSize}) {
 		my $character = new Actor::You;
 		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
+		if ($masterServer->{charBlockSize} >= 155) {
+			$character->{RAW_exp} = $character->{exp};
+			$character->{RAW_exp_job} = $character->{exp_job};
+		}
 		$character->{ID} = $accountID;
 
 		$character->{name} = bytesToString($character->{name});
 
 		# Re-use existing $char object instead of re-creating it.
 		# Required because existing AI sequences (eg, route) keep a reference to $char.
-		$character = $char if $char && $char->{ID} eq $accountID && $char->{charID} eq $character->{charID};
+		if ($char && $char->{ID} eq $accountID && $char->{charID} eq $character->{charID}) {
+			$character = $char;
+			if ($masterServer->{charBlockSize} >= 155) {
+				$character->{exp} = $character->{RAW_exp};
+				$character->{exp_job} = $character->{RAW_exp_job};
+			}
+		}
 
 		$character->{lastJobLvl} = $character->{lv_job}; # This is for counting exp
 		$character->{lastBaseLvl} = $character->{lv}; # This is for counting exp
@@ -758,15 +768,11 @@ sub received_characters {
 		$character->{headgear}{mid} = $character->{head_mid};
 
 		$character->{nameID} = unpack("V", $character->{ID});
-		$character->{last_map} = substr($character->{last_map}, 0, length($character->{last_map}) - 4);
+		$character->{last_map} =~ s/\.gat.*//g if ($character->{last_map});
 
 		if ($masterServer->{charBlockSize} >= 155) {
-			$character->{exp} = getHex($character->{exp});
-			$character->{exp} = join '', reverse split / /, $character->{exp};
-			$character->{exp} = hex $character->{exp};
-			$character->{exp_job} = getHex($character->{exp_job});
-			$character->{exp_job} = join '', reverse split / /, $character->{exp_job};
-			$character->{exp_job} = hex $character->{exp_job};
+			$character->{exp} = hex (unpack("H*",scalar reverse($character->{exp})));
+			$character->{exp_job} = hex (unpack("H*",scalar reverse($character->{exp_job})));
 		}
 
 		if ((!exists($character->{sex})) || ($character->{sex} ne "0" && $character->{sex} ne "1")) { $character->{sex} = $accountSex2; }
@@ -6071,18 +6077,14 @@ sub flag {
 sub parse_stat_info {
 	my ($self, $args) = @_;
 	if($args->{switch} eq "0ACB") {
-		$args->{val} = getHex($args->{val});
-		$args->{val} = join '', reverse split / /, $args->{val};
-		$args->{val} = hex $args->{val};
+		$args->{val} = hex (unpack("H*",scalar reverse($args->{val})));
 	}
 }
 
 sub parse_exp {
 	my ($self, $args) = @_;
 	if($args->{switch} eq "0ACC") {
-		$args->{val} = getHex($args->{val});
-		$args->{val} = join '', reverse split / /, $args->{val};
-		$args->{val} = hex $args->{val};
+		$args->{val} = hex (unpack("H*",scalar reverse($args->{val})));
 	}
 }
 
@@ -7815,6 +7817,8 @@ sub buying_buy_fail {
 	if ($args->{result} == 3) {
 		error T("Failed to buying (insufficient zeny).\n");
 	} elsif ($args->{result} == 4) {
+		$buyershopstarted = 0;
+		Plugins::callHook("buyer_shop_closed");
 		message T("Buying up complete.\n");
 	} else {
 		error TF("Failed to buying (unknown error: %s).\n", $args->{result});
