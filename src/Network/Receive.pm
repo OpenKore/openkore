@@ -6537,14 +6537,7 @@ sub party_users_info {
 
 	my $player_info;
 
-	if ($args->{switch} eq '00FB') {  # DEFAULT OLD PACKET
-		$player_info = {
-			len => 46,
-			types => 'V Z24 Z16 C2',
-			keys => [qw(ID name map admin online)],
-		};
-
-	} elsif ($args->{switch} eq '0A44') { # PACKETVER >= 20151007
+	if ($args->{switch} eq '0A44') { # PACKETVER >= 20151007
 		$player_info = {
 			len => 50,
 			types => 'V Z24 Z16 C2 v2',
@@ -6558,15 +6551,19 @@ sub party_users_info {
 			keys => [qw(ID GID name map admin online jobID lv)],
 		};
 
-	} else { # this can't happen
-		return;
+	} else { # 00FB - DEFAULT [OLD]
+		$player_info = {
+			len => 46,
+			types => 'V Z24 Z16 C2',
+			keys => [qw(ID name map admin online)],
+		};
 	}
 
 	$char->{party}{name} = bytesToString($args->{party_name});
 
 	for (my $i = 0; $i < length($args->{playerInfo}); $i += $player_info->{len}) {
 		# in 0a43 lasts bytes: { <item pickup rule>.B <item share rule>.B <unknown>.L }
-		return if(length($args->{playerInfo}) - $i == 6);
+		next if(length($args->{playerInfo}) - $i == 6);
 
 		my $ID = substr($args->{playerInfo}, $i, 4);
 
@@ -6582,6 +6579,7 @@ sub party_users_info {
 
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
 	}
+	Plugins::callHook('party_users_info_ready');
 }
 
 sub rodex_mail_list {
