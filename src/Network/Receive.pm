@@ -3161,7 +3161,7 @@ sub vending_start {
 		T("#  Name                                       Type        Amount          Price\n");
 	for (my $i = 8; $i < $msg_size; $i += $item_len) {
 	    my $item = {};
-	    @$item{qw( price number quantity type nameID identified broken upgrade cards options )} = unpack $item_pack, substr $msg, $i, $item_len;
+	    @$item{qw( price number quantity type nameID identified broken upgrade cards options location sprite_id)} = unpack $item_pack, substr $msg, $i, $item_len;
 		$item->{name} = itemName($item);
 	    $articles[delete $item->{number}] = $item;
 		$articles++;
@@ -3183,6 +3183,7 @@ sub vender_items_list {
     $venderID = $args->{venderID};
     $venderCID = $args->{venderCID};
 
+	my $expireDate = 0;
 	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
 	my $item_len = length pack $item_pack;
 	my $item_list_len = length $args->{itemList};
@@ -3197,7 +3198,7 @@ sub vender_items_list {
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
 		my $item = Actor::Item->new;
 
- 		@$item{qw( price amount ID type nameID identified broken upgrade cards options )} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
+ 		@$item{qw( price amount ID type nameID identified broken upgrade cards options location sprite_id )} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
 
 		$item->{name} = itemName($item);
 		$venderItemList->add($item);
@@ -3213,10 +3214,17 @@ sub vender_items_list {
 	}
 	message("-------------------------------------------------------------------------------\n", $config{showDomain_Shop} || 'list');
 
+	if($args->{expireDate}) {
+		$expireDate = $args->{expireDate};
+		my $date = int(time) + int($args->{expireDate}/1000);
+		message "Expire Date: ".getFormattedDate($date)."\n";
+	}
+
 	Plugins::callHook('packet_vender_store2', {
 		venderID => $args->{venderID},
 		venderCID => $args->{venderCID},
 		itemList => $venderItemList,
+		expireDate => $expireDate,
 	});
 }
 
@@ -6091,23 +6099,19 @@ sub parse_exp {
 	}
 }
 
-sub clone_vender_found {
+sub offline_clone_found {
 	my ($self, $args) = @_;
-	my $ID = unpack("V", $args->{ID});
-	if (!$venderLists{$ID} || !%{$venderLists{$ID}}) {
-		binAdd(\@venderListsID, $ID);
-		Plugins::callHook('packet_vender', {ID => $ID, title => bytesToString($args->{title})});
-	}
-	$venderLists{$ID}{title} = bytesToString($args->{title});
-	$venderLists{$ID}{id} = $ID;
 
 	my $actor = $playersList->getByID($args->{ID});
 	if (!defined $actor) {
 		$actor = new Actor::Player();
 		$actor->{ID} = $args->{ID};
-		$actor->{nameID} = $ID;
+		$actor->{nameID} = $args->{ID};
+		$actor->{name} =  bytesToString($args->{name});
 		$actor->{appear_time} = time;
 		$actor->{jobID} = $args->{jobID};
+		$actor->{pos}{x} = $args->{coord_x};
+		$actor->{pos}{y} = $args->{coord_y};
 		$actor->{pos_to}{x} = $args->{coord_x};
 		$actor->{pos_to}{y} = $args->{coord_y};
 		$actor->{walk_speed} = 1; #hack
@@ -6126,23 +6130,28 @@ sub clone_vender_found {
 	}
 }
 
-sub clone_vender_lost {
+sub offline_clone_lost {
 	my ($self, $args) = @_;
 
-	my $ID = unpack("V", $args->{ID});
-	binRemove(\@venderListsID, $ID);
-	delete $venderLists{$ID};
+	# try to remove from vender list
+	binRemove(\@venderListsID, $args->{ID});
+	delete $venderLists{$args->{ID}};
+	
+	# try to remove from buyer list
+	binRemove(\@buyerListsID, $args->{ID});
+	delete $buyerLists{$args->{ID}};
 
+	# remove from player list
 	if (defined $playersList->getByID($args->{ID})) {
 		my $player = $playersList->getByID($args->{ID});
 
-		if (grep { $ID eq $_ } @venderListsID) {
-			binRemove(\@venderListsID, $ID);
-			delete $venderLists{$ID};
+		if (grep { $args->{ID} eq $_ } @venderListsID) {
+			binRemove(\@venderListsID, $args->{ID});
+			delete $venderLists{$args->{ID}};
 		}
 
 		$player->{gone_time} = time;
-		$players_old{$ID} = $player->deepCopy();
+		$players_old{$args->{ID}} = $player->deepCopy();
 		Plugins::callHook('player_disappeared', {player => $player});
 
 		$playersList->removeByID($args->{ID});
@@ -7703,30 +7712,30 @@ sub buying_store_lost {
 sub buying_store_items_list {
 	my($self, $args) = @_;
 
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $headerlen = 16;
-	my $zeny = $args->{zeny};
 	undef @buyerItemList;
 	undef $buyerID;
 	undef $buyingStoreID;
+
+	my $zeny = $args->{zeny};
+	my $expireDate = 0;
 	$buyerID = $args->{buyerID};
 	$buyingStoreID = $args->{buyingStoreID};
 	my $player = Actor::get($buyerID);
 	my $index = 0;
 	my $pack = $self->{buying_store_items_list_pack} || 'V v C v';
-	my $len = length pack $pack;
+	my $item_len = length pack $pack;
+	my $item_list_len = length $args->{itemList};
 
 	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 79, '-') ."\n".
 		T("#   Name                                      Type        Amount          Price\n");
 
-	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$len) {
+	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
 		my $item = {};
 
 		($item->{price},
 		$item->{amount},
 		$item->{type},
-		$item->{nameID})	= unpack($pack, substr($args->{RAW_MSG}, $i, $len));
+		$item->{nameID})	= unpack($pack, substr($args->{itemList}, $i, $item_len));
 
 		$item->{name} = itemName($item);
 		$buyerItemList[$index] = $item;
@@ -7748,13 +7757,21 @@ sub buying_store_items_list {
 
 		$index++;
 	}
+
 	$msg .= "\n" . TF("Price limit: %s Zeny\n", $zeny) . ('-'x79) . "\n";
 	message $msg, "list";
+	
+	if($args->{expireDate}) {
+		$expireDate = $args->{expireDate};
+		my $date = int(time) + int($args->{expireDate}/1000);
+		message "Expire Date: ".getFormattedDate($date)."\n";
+	}
 
 	Plugins::callHook('packet_buying_store2', {
 		buyerID => $buyerID,
 		buyingStoreID => $buyingStoreID,
-		itemList => \@buyerItemList
+		itemList => \@buyerItemList,
+		expireDate => $expireDate,
 	});
 }
 
