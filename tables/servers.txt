@@ -115,6 +115,22 @@ blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
 
+# Transcendence
+# http://playragnarok.com
+[International - iRO: Poring]
+ip 128.241.92.162
+port 6800
+master_version 1
+version 18
+serverType iRO_Transcendence
+serverEncoding Western
+addTableFolders iRO/Transcendence;iRO
+charBlockSize 155
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+
 # http://playragnarok.com
 [International - iRO: Sakray]
 ip 128.241.92.36
