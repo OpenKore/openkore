@@ -53,18 +53,13 @@ git clone https://github.com/OpenKore/openkore.git
     * Briefly explain what happened, take a screenhot & include the error message _(If available)_.
 * Please be advised any developers here are doing this on their free time. Please give some time for anyone to respond.
 
-## Weekly Maintenance on Official Servers
-All official servers _(especially bRO & iRO)_ have weekly maintenance & after maintenance is over, usually openkore will stop working on these servers.
-If you are seeing a green message written: `timeout on map server... reconnecting....`
-that means you have to wait for developer to update openkore.
-So please wait. You don't need to make an issue to tell this.
-Check the [status of botting on official servers](https://github.com/OpenKore/openkore#status-of-botting-on-official-servers) regarding your servers; how often it being updated & who's supporting it.
-
 ## Status of botting on Official Servers
+Openkore is not working on all official servers, except for cRO.
 
 | Server | Description | Protection | Status | Supporter |
 | --- | --- | --- | --- | --- |
-| [iRO](http://www.warpportal.com/) | International(US) RO | *** | Botable, Weekly Update | allanon |
+| [iRO](http://renewal.playragnarok.com/) | International(US) RO | EAC | Not working | allanon |
+| [iRO-RT](http://www.playragnarok.com/) | RO Transcendence | EAC | Not working | N/A |
 | [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | lututui, Henrybk, alisonrag |
 | [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | N/A |
 | [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | N/A | 
