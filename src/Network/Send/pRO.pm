@@ -14,41 +14,59 @@
 package Network::Send::pRO;
 
 use strict;
-use Globals;
-use Network::Send::ServerType0;
 use base qw(Network::Send::ServerType0);
-use Log qw(error debug);
-use I18N qw(stringToBytes);
-use Utils qw(getTickCount getHex getCoordString);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	
 	my %handlers = qw(
-		sync 0360
+		master_login 0A76
+		game_login 0275
+		char_create 0067
+		send_equip 0998
+		skill_use 0438
 		character_move 035F
-		actor_info_request 0368
+		sync 0360
 		actor_look_at 0361
 		item_take 0362
 		item_drop 0363
 		storage_item_add 0364
 		storage_item_remove 0365
-		storage_password 023B
 		skill_use_location 0366
+		actor_info_request 0368
+		actor_name_request 0369
 		party_setting 07D7
 		buy_bulk_vender 0801
+		storage_password 023B
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;
 }
 
-sub sendCharDelete {
-	my ($self, $charID, $email) = @_;
-	my $msg = pack("C*", 0xFB, 0x01) .
-			$charID . pack("a50", stringToBytes($email));
-	$self->sendToServer($msg);
+sub reconstruct_master_login {
+	my ($self, $args) = @_;
+	
+	$args->{ip} = '192.168.0.2' unless exists $args->{ip}; # gibberish
+	$args->{mac} = '111111111111' unless exists $args->{mac}; # gibberish
+	$args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
+	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
+	
+	if (exists $args->{password}) {
+		for (Digest::MD5->new) {
+			$_->add($args->{password});
+			$args->{password_md5} = $_->clone->digest;
+			$args->{password_md5_hex} = $_->hexdigest;
+		}
+
+		my $key = pack('C32', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
+		my $chain = pack('C32', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
+		my $in = pack('a32', $args->{password});
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 32, 32);
+		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 32, 0);
+	}
 }
 
 1;
