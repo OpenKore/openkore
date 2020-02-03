@@ -279,21 +279,36 @@ addTableFolders twRO
 captcha 0
 
 # https://ro.exe.in.th/
-[Thailand - tRO Main server (Norse)]
-ip 122.155.11.240
+[Thailand - tRO: Revo Classic]
+ip 103.55.55.199
 port 6900
 master_version 7
 version 24
 serverType tRO
-secureLogin 3
-secureLogin_type 0
-secureLogin_account 0
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 112
-gameguard 1
+charBlockSize 146
+gameGuard 0
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+
+# https://ro.exe.in.th/
+[Thailand - tRO: Revo Jellopy]
+ip 103.55.55.200
+port 6900
+master_version 7
+version 24
+serverType tRO
+serverEncoding Thai
+addTableFolders tRO
+charBlockSize 146
+gameGuard 0
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
 
 [Localhost]
 ip localhost
