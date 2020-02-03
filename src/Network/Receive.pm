@@ -909,8 +909,7 @@ sub parse_account_server_info {
 			types => 'a20 V v a126',
 			keys => [qw(name users unknown ip_port)],
 		};
-
-	} else { # 0069 [default] and 0276 [pRO, tRO]
+	} else { # 0069 [default] and 0276 [pRO, tRO
 		$server_info = {
 			len => 32,
 			types => 'a4 v Z20 v3',
