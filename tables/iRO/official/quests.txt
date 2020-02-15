@@ -23844,3 +23844,308 @@ Fight The World Eater again.#
 63639#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
 I can relive the battle with Lief the Betrayer, should I choose to. If I want to challenge him again, I should return to where we fought.#
 Fight Lief again.#
+
+
+//RT 2020 Valentines Day
+63650#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+There's a Cupid in town who goes by Derpy, seems like he's in need of some help.#
+Help Derpy in Prontera.#
+
+63651#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy asked me to check on Martha Gunnarsdottir and to see how she's doing, he accidentally paired her with the wrong target using his cupid arrows.#
+Check on Martha in Prontera.#
+
+63652#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy asked me to check on Shades and to see how he's doing, he accidentally paired him with the wrong target using his cupid arrows.#
+Check on Shades in Prontera.#
+
+63653#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Martha is in a panick, Derpy really caused quite a mess here.#
+Report back to Derpy regarding Martha.#
+
+63654#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Shades seems like he's struggling with thoughts of Martha, Derpy really caused quite a mess here.#
+Report back to Derpy regarding Shades.#
+
+63655#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy asked me to check on Aaron Smith, the intended target to pair with Martha Gunnarsdottir, he suggested helping him out.#
+Talk to Aaron Smith in Prontera.#
+
+63656#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I'm helping Aaron acquire fireworks from the local traveling Pyrotechnician named Katie Kaboom, she's here in Prontera now.#
+Talk to Katie Kaboom.#
+
+63657#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've agreed to help Katie acquire the items for trade on Aarons behalf, she wants 15 Green Plants.#
+Obtain 15 Green Plants for Katie.#
+
+63658#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've completed the trade with Katie on Aaron's behalf, I should go check on Aaron, Katie sent him the package.#
+Follow up with Aaron in Prontera.#
+
+63659#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I'm going to head to the fields outside of the West exit of Prontera, there should be a lake out there, I need to ignite the fireworks that are set up on the southern shore for Aaron.#
+Light Aaron's Fireworks.#
+
+63660#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I lit the fireworks for Aaron, he should be out by the entrance to the Culverts somewhere near the north shore of here, I should go follow up with him.#
+Find Aaron, west of Prontera.#
+
+63661#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I should speak with Aaron back in Prontera again, he'll be paying me for my services.#
+Follow up with Aaron in Prontera.#
+
+63662#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I finished helping Aaron, per Derpy's request. I should follow up with Derpy in Prontera.#
+Talk to Derpy Cupid in Prontera.#
+
+63663#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy believes Shades is part of a criminal smuggling ring, he's hired me to obtain a ledger from their criminal hideout in South West Prontera and to bring it back to him so he can turn Shades into the Authorities.#
+Obtain the Criminal Ledger.#
+
+63664#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy wants me to get Lt. Don Tyler of the 1337th Elite Guard. He'll be in the new bar in East Prontera owned by one of their own members.#
+Talk to Lt. Don Tyler.#
+
+63665#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Lt. Don said he'll find us after he gets his report ready, I should go back to Derpy and speak with him.#
+Talk to Derpy Cupid in Prontera.#
+
+63666#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy wants me to follow up with Aaron and see how things are going.#
+Talk to Aaron Smith in Prontera.#
+
+63667#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've been hired to gather Blue Bellflowers for Aaron Smith, these flowers can be found in Mt. Mjolnir Field 3.#
+Gather Blue Bellflowers.#
+
+63668#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've been hired to gather Red Amaryllis for Aaron Smith, these flowers can be found in Mt. Mjolnir Field 3.#
+Gather Red Amaryllis.#
+
+63669#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've been hired to gather Yellow Marigolds for Aaron Smith, these flowers can be found in Mt. Mjolnir Field 3.#
+Gather Yellow Marigolds.#
+
+63670#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've obtained the Blue Bellflowers for Aaron, when I'm ready I should get these back to him.#
+Give Aaron Smith the Blue Bellflowers.#
+
+63671#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've obtained the Red Amaryllis for Aaron, when I'm ready I should get these back to him.#
+Give Aaron Smith the Red Amaryllis.#
+
+63672#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've obtained the Yellow Marigolds for Aaron, when I'm ready I should get these back to him.#
+Give Aaron Smith the Yellow Marigolds.#
+
+63673#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Aaron stated Derpy got in trouble with the Prontera Guard, I should go check on what happened to him.#
+Go see Derpy Cupid in Prontera.#
+
+63674#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I need to rescue Shades from the Culverts lowest portions. Looks like Derpy tried to set him up, I should let him know his name is clear and Lt. Don isn't going to arrest him.#
+Talk to Shades in the Culverts.#
+
+63675#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy has some explaining to do, I just rescued Shades, I need to talk to Derpy about this.#
+Talk to Derpy Cupid in Prontera.#
+
+63677#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy requested me to get a Fairy Lawyer for him, she goes by the name Laurie Aech Parka and is on Mt. Mjolnir Field 1.#
+Talk to Derpy Cupid in Prontera.#
+
+63678#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Laurie Aech Parka wants me to hunt down Caramels and Bigfoots for soiling her shoes. I don't think I wan't to be on her bad side.#
+#
+
+63679#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Laurie has taken us to the Jail to see Derpy, time to see what fate befalls poor Derpy... he really did bring this upon himself.#
+Talk to Derpy Cupid in Jail.#
+
+63680#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy's going to Helheim after this, he's a free Cupid for now, but he's definitely going to learn some hard lessons. I should go check on him in town one last time.#
+Talk to Derpy Cupid in Prontera.#
+
+63681#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy's going to Jail after this, he's a free Cupid for now, but he's definitely going to learn some hard lessons. I should go check on him in town one last time.#
+Talk to Derpy Cupid in Prontera.#
+
+63682#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Time for some under the table Vigilante Justice. Once 35 Mobsters get beat up, I should inform Lt. Don Tyler of the event and he'll let me know about an anonymous reward someone left.#
+#
+
+
+
+//닞냺 뇗뢲샚 MD
+16215#The Shadowed Dream#SG_FEEL#QUE_NOIMAGE#
+You’ve agreed to accompany Loreche’s investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
+Dimensional Gap Investigation#
+
+16216#The Bubbly Illusion#SG_FEEL#QUE_NOIMAGE#
+You’ve agreed to accompany Loreche’s investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
+Dimensional Gap Investigation#
+
+16217#Rest and Relaxation#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest, and you can re-take it when the cooldown resets. Speak to <NAVI>[Loreche]<INFO>dali02.gat,108,94,0,101,0</INFO></NAVI>in the Dimensional Gap to accept the quest.#
+Resets at 4 am#
+
+16218#Modification and Calculation#SG_FEEL#QUE_NOIMAGE#
+Let’s go seek out <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> so we can enter the Dimensional Gap.#
+Speak with Eugenie#
+
+16219#Kindness and Gratitude#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+
+8323#Hiring a Street Stall Staffer - Standby#SG_FEEL#QUE_NOIMAGE#
+The Merchant Union Human Resources Department commissions only one quest per week to protect client privacy. Wait until the next quest.#
+#
+
+8324#Delivery to Prontera#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Prontera Forge Sheep.#
+Box Delivery#
+
+8325#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8326#Delivery to Payon#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Payon Forge Sheep.#
+Box Delivery#
+
+8327#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8328#Delivery to Comodo#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Comodo Weapon Shop Sheep.#
+Box Delivery#
+
+8329#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8330#Delivery to Al De Baran#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Sheep at the Al De Baran Inn.#
+Box Delivery#
+
+8331#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8332#Delivery to Morroc#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Sheep at the Northern Morroc Kafra Center.#
+Box Delivery#
+
+8333#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8334#Collection from the Prontera Culvert#SG_FEEL#QUE_NOIMAGE#
+An Adventurer by the name ¡°Murian¡± is currently on a quest for the Merchant Union on Prontera Culvert 3F. You need to retrieve the ^4d4dffSlightly Aged Antique Box^000000 from him.#
+Box Retrieved#
+
+8335#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Let’s deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Box Submitted#
+
+8336#Defeat 10 Bongun#SG_FEEL#QUE_NOIMAGE#
+Easy quest: slay 10 Bonguns in Payon Cave 3F, return to Merchant Union of Alberta and receive an examination from the sheep.#
+Bongun Defeated#
+
+8337#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8338#Defeat 10 Megaliths#SG_FEEL#QUE_NOIMAGE#
+Easy quest: slay 10 Megalith in Ruande, the Northern Cave, return to Merchant Union of Alberta and receive an examination from the sheep.#
+#
+
+8339#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8340#Defeat 10 Rideword#SG_FEEL#QUE_NOIMAGE#
+Easy quest: slay 10 Rideword in Clock Tower 1F, return to Merchant Union of Alberta and receive an examination from the sheep.#
+#
+
+8341#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8342#Collection from Morroc Sphinx#SG_FEEL#QUE_NOIMAGE#
+An Adventurer named Elbury is currently at the Sphinx B3F fulfilling a quest for the Merchant Union. You need to retrieve the ^4d4dffSlightly Aged Antique Box^000000 from him.#
+Box Retrieved#
+
+8343#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Let’s deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Box Submitted#
+
+8344#Collection of Biolabs Data#SG_FEEL#QUE_NOIMAGE#
+Check the small sign somewhere in the Biolabs 3F for a slot to insert a card. Take the Data Retrieval Card received by the Alberta Merchant Union and examine the sign to retrieve the data.#
+Data Retrieved#
+
+8345#Deliver Card to Masha#SG_FEEL#QUE_NOIMAGE#
+Let’s deliver the data retrieval card to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Card submitted#
+
+8346#Defeat 3 Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Eremes Guiles in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8347#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8348#Defeat 3 Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Cecil Damons in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8349#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8350#Defeat 3 Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Margaretha Sorin in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8351#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8352#Defeat 3 Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Kathryne Keyron in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8353#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8354#Hiring a Street Stall Staffer#SG_FEEL#QUE_NOIMAGE#
+To hire a street stall staffer, you must have an employment certificate given by the Merchant Union. Once a day, complete a quest from Masha of the Merchant Union, then you can get a different grade of employment certificate depending on the difficulty of the quest. Solve the quest to hire your staffer.#
+#
+
+
+//뷅싻붺엏===MD 뿕샇 놸뗎뇁뾡벭
+
+8401#Into the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+#
+#Enter Dungeon
+
+8538#Tomorrow at the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+I never want to see another card again... But maybe I’ll feel differently tomorrow! Let’s go talk to Dr. Magnatum again tomorrow.#
+Resets at 4 am#
+
+8527#Delay Insurance: EXP Card and step#SG_FEEL#QUE_NOIMAGE#
+If you defeat 50 wild Steps and EXP Cards within the Summoning Room, you can receive your reward from the board over by Summoning Room exit.#
+#
+
+8528#Delay Insurance - Standby#SG_FEEL#QUE_NOIMAGE#
+Delay Insurance re-registration cannot be instantly processed. Please wait and try again.#
+Resets at 4 am#
+
+8529#Master of the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+#
+#
