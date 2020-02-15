@@ -65,7 +65,7 @@ sub map_loaded {
 	if ($net->version == 1) {
 		$net->setState(4);
 		message(T("Waiting for map to load...\n"), "connection");
-		ai_clientSuspend(0, 10);
+		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
 		main::initMapChangeVars();
 	} else {
 		$messageSender->sendReqRemainTime();

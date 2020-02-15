@@ -5749,7 +5749,7 @@ sub map_change {
 	$char->{pos_to} = {%coords};
 	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $char->{pos}{x}, $char->{pos}{y}), "connection";
 	if ($net->version == 1) {
-		ai_clientSuspend(0, 10);
+		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
 	} else {
 		$messageSender->sendMapLoaded();
 		# $messageSender->sendSync(1);
