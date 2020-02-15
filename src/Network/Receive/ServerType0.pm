@@ -673,6 +673,7 @@ sub new {
 		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
  		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
+		'0AF7' => ['character_name', 'v a4 Z24', [qw(flag ID name)]],
 		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
 		'0AFE' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'0AFF' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
