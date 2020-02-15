@@ -187,3 +187,6 @@ patchserver 120
 
 # Time to wait before character connection when pauseCharLogin is active
 char_login_pause 2
+
+# Time to wait before load map in xKore mode
+ai_clientSuspend 10
