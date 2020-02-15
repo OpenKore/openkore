@@ -986,3 +986,5 @@ pay_d03_i.rsw#Nightmare_of_the_Moonlight_Flower#
 
 // Illusion - Geffen (vampire)
 gef_d01_i.rsw#250 Page#
+
+1@jtb.rsw#The Shadowed Dream#
