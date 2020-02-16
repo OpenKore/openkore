@@ -6101,16 +6101,20 @@ sub offline_clone_found {
 	my $actor = $playersList->getByID($args->{ID});
 	if (!defined $actor) {
 		$actor = new Actor::Player();
+		$actor->{object_type} = 0x0; #player
 		$actor->{ID} = $args->{ID};
-		$actor->{nameID} = $args->{ID};
+		$actor->{nameID} = unpack("V", $args->{ID});
 		$actor->{name} =  bytesToString($args->{name});
 		$actor->{appear_time} = time;
 		$actor->{jobID} = $args->{jobID};
+		$actor->{type} = $args->{jobID};
 		$actor->{pos}{x} = $args->{coord_x};
 		$actor->{pos}{y} = $args->{coord_y};
 		$actor->{pos_to}{x} = $args->{coord_x};
 		$actor->{pos_to}{y} = $args->{coord_y};
+		$actor->{time_move} = time;
 		$actor->{walk_speed} = 1; #hack
+		$actor->{lv} = 1;
 		$actor->{robe} = $args->{robe};
 		$actor->{clothes_color} = $args->{clothes_color};
 		$actor->{headgear}{low} = $args->{lowhead};
@@ -6122,36 +6126,34 @@ sub offline_clone_found {
 		$actor->{hair_color} = $args->{hair_color} if (exists $args->{hair_color});
 
 		$playersList->add($actor);
+
 		Plugins::callHook('add_player_list', $actor);
+		Plugins::callHook('player', {player => $actor});  #backwards compatibility
+		Plugins::callHook('player_exist', {player => $actor});
 	}
 }
 
 sub offline_clone_lost {
 	my ($self, $args) = @_;
 
-	# try to remove from vender list
-	binRemove(\@venderListsID, $args->{ID});
-	delete $venderLists{$args->{ID}};
-	
-	# try to remove from buyer list
-	binRemove(\@buyerListsID, $args->{ID});
-	delete $buyerLists{$args->{ID}};
-
 	# remove from player list
 	if (defined $playersList->getByID($args->{ID})) {
 		my $player = $playersList->getByID($args->{ID});
-
-		if (grep { $args->{ID} eq $_ } @venderListsID) {
-			binRemove(\@venderListsID, $args->{ID});
-			delete $venderLists{$args->{ID}};
-		}
 
 		$player->{gone_time} = time;
 		$players_old{$args->{ID}} = $player->deepCopy();
 		Plugins::callHook('player_disappeared', {player => $player});
 
-		$playersList->removeByID($args->{ID});
+		$playersList->remove($player);
 	}
+
+	# try to remove from vender list
+	binRemove(\@venderListsID, $args->{ID});
+	delete $venderLists{$args->{ID}};
+
+	# try to remove from buyer list
+	binRemove(\@buyerListsID, $args->{ID});
+	delete $buyerLists{$args->{ID}};
 }
 
 sub remain_time_info {
