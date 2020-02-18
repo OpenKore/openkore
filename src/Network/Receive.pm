@@ -2102,6 +2102,14 @@ typedef enum <unnamed-tag> {
 	}
 }
 
+# Makes a unit (char, npc, mob, homun) disappear to all clients in area (ZC_NOTIFY_VANISH).
+# 0080 <id>.L <type>.B
+# type:
+#     0 = out of sight
+#     1 = died
+#     2 = logged out
+#     3 = teleport
+#     4 = trickdead
 sub actor_died_or_disappeared {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
