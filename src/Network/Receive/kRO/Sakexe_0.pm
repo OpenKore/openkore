@@ -2233,15 +2233,6 @@ sub character_block_info {
 	#TODO
 }
 
-sub party_dead {
-	my ($self, $args) = @_;
-
-	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
-	if ($args->{isDead} == 1) {
-		message TF("Party member %s is dead.\n", $string), "info";
-	}
-}
-
 sub progress_bar_unit {
 	my($self, $args) = @_;
 	debug "Displays progress bar (GID: $args->{GID} time: $args->{time})\n";
