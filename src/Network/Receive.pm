@@ -6586,10 +6586,34 @@ sub party_users_info {
 		$char->{party}{users}{$ID}{name} = bytesToString($char->{party}{users}{$ID}{name});
 		$char->{party}{users}{$ID}{admin} = !$char->{party}{users}{$ID}{admin};
 		$char->{party}{users}{$ID}{online} = !$char->{party}{users}{$ID}{online};
+		
+		# If party member return to saveMap out of our screen, the server will send to us party_users_info [iRO-RT 2020-jan]
+		undef $char->{party}{users}{$ID}{'dead'};
+		undef $char->{party}{users}{$ID}{'dead_time'};
 
 		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
 	}
 	Plugins::callHook('party_users_info_ready');
+}
+
+# Notifies the party members of a character's death or revival.
+# 0AB2 <GID>.L <dead>.B
+sub party_dead {
+	my ($self, $args) = @_;
+
+	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
+
+	# 0x0 = alive
+	# 0x1 = dead
+	if ($args->{isDead} == 1) {
+		message TF("Party member %s is dead.\n", $string), "info";
+		$char->{party}{users}{$args->{ID}}{dead} = 1;
+		$char->{party}{users}{$args->{ID}}{dead_time} = time;
+	} else {
+		message TF("Party member %s is alive.\n", $string), "info";
+		undef $char->{party}{users}{$args->{ID}}{'dead'};
+		undef $char->{party}{users}{$args->{ID}}{'dead_time'};
+	}
 }
 
 sub rodex_mail_list {
