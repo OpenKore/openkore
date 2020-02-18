@@ -61,32 +61,34 @@ sub map_loaded {
 	undef $conState_tries;
 	$char = $chars[$config{char}];
 	return unless Network::Receive::changeToInGameState;
+	main::initMapChangeVars();
 
 	if ($net->version == 1) {
 		$net->setState(4);
 		message(T("Waiting for map to load...\n"), "connection");
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
-		main::initMapChangeVars();
+		
 	} else {
 		$messageSender->sendReqRemainTime();
 		$messageSender->sendMapLoaded();
 		$messageSender->sendSync(1);
 		$messageSender->sendRequestCashItemsList();
 		$messageSender->sendGuildRequestInfo();
-		
-		message(T("You are now in the game\n"), "connection");
-		Plugins::callHook('in_game');
-		$timeout{'ai'}{'time'} = time;
-		our $quest_generation++;
-
-		$messageSender->sendIgnoreAll("all") if ($config{ignoreAll}); # broking xkore 1 and 3 when use cryptkey
 		$messageSender->sendBlockingPlayerCancel(); # request to unfreeze char
 	}
+
+	message(T("You are now in the game\n"), "connection");
+	Plugins::callHook('in_game');
+	$timeout{'ai'}{'time'} = time;
+	our $quest_generation++;
 
 	$char->{pos} = {};
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+
+	# ignoreAll
+	$ignored_all = 0;
 }
 
 1;

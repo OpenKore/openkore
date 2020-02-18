@@ -994,12 +994,12 @@ sub map_loaded {
 	$char = $chars[$config{char}];
 	return unless changeToInGameState();
 	# assertClass($char, 'Actor::You');
+	main::initMapChangeVars();
 
 	if ($net->version == 1) {
 		$net->setState(4);
 		message(T("Waiting for map to load...\n"), "connection");
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
-		main::initMapChangeVars();
 	} else {
 		$messageSender->sendMapLoaded();
 
@@ -1014,14 +1014,19 @@ sub map_loaded {
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequestInfo(1);
-		message(T("You are now in the game\n"), "connection");
-		Plugins::callHook('in_game');
-		$timeout{'ai'}{'time'} = time;
-		our $quest_generation++;
+		
 
 		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
-		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
+		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});	
+
+		# request to unfreeze char - alisonrag
+		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
 	}
+
+	message(T("You are now in the game\n"), "connection");
+	Plugins::callHook('in_game');
+	$timeout{'ai'}{'time'} = time;
+	our $quest_generation++;
 
 	$char->{pos} = {};
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
@@ -1030,9 +1035,6 @@ sub map_loaded {
 
 	# ignoreAll
 	$ignored_all = 0;
-
-	# request to unfreeze char - alisonrag
-	$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
 }
 
 sub buy_result {
@@ -1509,6 +1511,7 @@ sub map_changed {
 	$char->{pos_to} = {%coords};
 
 	undef $conState_tries;
+	main::initMapChangeVars();
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
 	}

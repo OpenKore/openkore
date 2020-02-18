@@ -26,12 +26,12 @@ sub map_loaded {
 	undef $conState_tries;
 	$char = $chars[$config{char}];
 	$syncMapSync = pack('V1',$args->{syncMapSync});
+	main::initMapChangeVars();
 
 	if ($net->version == 1) {
 		$net->setState(4);
 		message T("Waiting for map to load...\n"), "connection";
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
-		main::initMapChangeVars();
 	} else {
 		$messageSender->sendMapLoaded();
 		$messageSender->sendSync(1);
@@ -43,17 +43,19 @@ sub map_loaded {
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		$messageSender->sendGuildRequestInfo(1);
-		message(T("You are now in the game\n"), "connection");
-		Plugins::callHook('in_game');
-		$timeout{'ai'}{'time'} = time;
 	}
+
+	message(T("You are now in the game\n"), "connection");
+	Plugins::callHook('in_game');
+	$timeout{'ai'}{'time'} = time;
 
 	$char->{pos} = {};
 	makeCoordsDir($char->{pos}, $args->{coords});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 
-	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
+	# ignoreAll
+	$ignored_all = 0;
 }
 
 1;
