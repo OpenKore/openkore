@@ -2536,7 +2536,7 @@ sub objectAdded {
 
 	if ($type eq 'player' || $type eq 'slave') {
 		# Try to retrieve the player name from cache.
-		if (!getPlayerNameFromCache($obj)) {
+		if (!getPlayerNameFromCache($obj) && !$obj->{clone}) {
 			push @unknownPlayers, $ID;
 		}
 
