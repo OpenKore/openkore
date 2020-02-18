@@ -71,6 +71,7 @@ sub new {
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]],
 		'0072' => ['received_characters', 'v a*', [qw(len charInfo)]], # last known struct
 		'0073' => ['map_loaded', 'V a3 C2', [qw(syncMapSync coords xSize ySize)]], # 11
+		'0074' => ['map_load_error', 'C', [qw(error)]], # 3
 		'0075' => ['changeToInGameState'],
 		'0077' => ['changeToInGameState'],
 		# OLD '0078' => ['actor_exists', 'a4 v14 a4 x7 C a3 x2 C v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],

@@ -1110,6 +1110,47 @@ sub map_loaded {
 	$ignored_all = 0;
 }
 
+# Notifies the client, that it's connection attempt was refused (ZC_REFUSE_ENTER).
+# 0074 <error code>.B
+# error code:
+#     0 = client type mismatch
+#     1 = ID mismatch
+#     2 = mobile - out of available time
+#     3 = mobile - already logged in
+#     4 = mobile - waiting state
+sub map_load_error {
+	my ($self, $args) = @_;
+
+	error T("Error while try to login in map-server: ");
+	if($args->{error} == 0) {
+		error TF("Wrong Client Type (%s). \n", $args->{error});
+	} elsif($args->{error} == 1) {
+		error TF("Wrong ID (%s). \n", $args->{error});
+	} elsif($args->{error} == 2) {
+		error TF("Timeout (%s). \n", $args->{error});
+	} elsif($args->{error} == 3) {
+		error TF("Already Logged In (%s). \n", $args->{error});
+	} elsif($args->{error} == 4) {
+		error TF("Waiting State (%s). \n", $args->{error}); # ??
+	} else {
+		error TF("Unknown Error (%s). \n", $args->{error});
+	}
+
+	Plugins::callHook('disconnected');
+	if ($config{dcOnDisconnect}) {
+		error T("Auto disconnecting on Disconnect!\n");
+		chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+		$quit = 1;
+	}
+
+	$net->setState(1);
+	undef $conState_tries;
+
+	$timeout_ex{'master'}{'time'} = time;
+	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+	$net->serverDisconnect();
+}
+
 our %stat_info_handlers = (
 	VAR_SPEED, sub { $_[0]{walk_speed} = $_[1] / 1000 },
 	VAR_EXP, sub {
