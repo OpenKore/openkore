@@ -1544,29 +1544,6 @@ sub map_changed {
 	$timeout{ai}{time} = time;
 }
 
-sub monster_typechange {
-	my ($self, $args) = @_;
-
-	# Class change / monster type change
-	# 01B0 : long ID, byte WhateverThisIs, long type
-	my $ID = $args->{ID};
-	my $type = $args->{type};
-	my $monster = $monstersList->getByID($ID);
-	if ($monster) {
-		my $oldName = $monster->name;
-		if ($monsters_lut{$type}) {
-			$monster->setName($monsters_lut{$type});
-		} else {
-			$monster->setName(undef);
-		}
-		$monster->{nameID} = $type;
-		$monster->{dmgToParty} = 0;
-		$monster->{dmgFromParty} = 0;
-		$monster->{missedToParty} = 0;
-		message TF("Monster %s (%d) changed to %s\n", $oldName, $monster->{binID}, $monster->name);
-	}
-}
-
 sub npc_sell_list {
 	my ($self, $args) = @_;
 	#sell list, similar to buy list
