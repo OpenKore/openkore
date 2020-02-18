@@ -5693,6 +5693,8 @@ sub item_exists {
 	});
 }
 
+# Makes an item disappear from the ground.
+# 00A1 <id>.L (ZC_ITEM_DISAPPEAR)
 sub item_disappeared {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
