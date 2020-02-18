@@ -1051,6 +1051,65 @@ sub connection_refused {
 	error TF("The server has denied your connection (error: %d).\n", $args->{error}), 'connection';
 }
 
+# Notifies the client, that it's connection attempt was accepted.
+# 0073 <start time>.L <position>.3B <x size>.B <y size>.B (ZC_ACCEPT_ENTER)
+# 02EB <start time>.L <position>.3B <x size>.B <y size>.B <font>.W (ZC_ACCEPT_ENTER2)
+# 0A18 <start time>.L <position>.3B <x size>.B <y size>.B <font>.W <sex>.B (ZC_ACCEPT_ENTER3)
+sub map_loaded {
+	my ($self, $args) = @_;
+	$net->setState(Network::IN_GAME);
+	undef $conState_tries;
+	$char = $chars[$config{char}];
+	return unless changeToInGameState();
+	# assertClass($char, 'Actor::You');
+	$syncMapSync = pack('V1',$args->{syncMapSync}); # unused, should we keep this for legacy compatibility?
+	main::initMapChangeVars();
+
+	if ($net->version == 1) {
+		$net->setState(4);
+		message(T("Waiting for map to load...\n"), "connection");
+		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
+	} else {
+		$messageSender->sendReqRemainTime() if (grep { $masterServer->{serverType} eq $_ } qw(Zero Sakray));
+		
+		$messageSender->sendMapLoaded();
+
+		$messageSender->sendSync(1);
+
+		$messageSender->sendGuildMasterMemberCheck();
+
+		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
+		$messageSender->sendGuildRequestInfo(0);
+		
+		$messageSender->sendGuildRequestInfo(0) unless($masterServer->{private});
+
+		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
+		$messageSender->sendGuildRequestInfo(1);
+
+		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
+		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});	
+
+		# request to unfreeze char - alisonrag
+		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
+	}
+
+	message(T("You are now in the game\n"), "connection");
+	Plugins::callHook('in_game');
+	$timeout{'ai'}{'time'} = time;
+	our $quest_generation++;
+
+	$char->{pos} = {};
+	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
+	$char->{pos_to} = {%{$char->{pos}}};
+	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+	
+	# set initial status from data received from the char server (seems needed on eA, dunno about kRO)}
+	if($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
+
+	# ignoreAll
+	$ignored_all = 0;
+}
+
 our %stat_info_handlers = (
 	VAR_SPEED, sub { $_[0]{walk_speed} = $_[1] / 1000 },
 	VAR_EXP, sub {
