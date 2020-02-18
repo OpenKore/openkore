@@ -643,7 +643,7 @@ sub new {
 		'0ACC' => ['exp', 'a4 a8 v2', [qw(ID val type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
- 		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
+ 		'0ADD' => ['item_appeared', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE0' => ['login_error', 'V V Z20', [qw(type error date)]],
 		'0AE2' => ['open_ui', 'C V', [qw(type data)]],

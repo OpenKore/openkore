@@ -670,7 +670,7 @@ sub new {
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
  		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
-		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
+		'0ADD' => ['item_appeared', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0AE0' => ['login_error', 'V V Z20', [qw(type error date)]],
 		'0AE2' => ['open_ui', 'C V', [qw(type data)]],
 		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],

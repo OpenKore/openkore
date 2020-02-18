@@ -5619,6 +5619,10 @@ sub married {
 	message TF("%s got married!\n", $actor);
 }
 
+# Makes an item appear on the ground.
+# 009E <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
+# 084B <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
+# 0ADD <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
 sub item_appeared {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
