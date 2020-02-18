@@ -6102,6 +6102,7 @@ sub offline_clone_found {
 	if (!defined $actor) {
 		$actor = new Actor::Player();
 		$actor->{object_type} = 0x0; #player
+		$actor->{clone} = 1;
 		$actor->{ID} = $args->{ID};
 		$actor->{nameID} = unpack("V", $args->{ID});
 		$actor->{name} =  bytesToString($args->{name});
