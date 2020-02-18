@@ -9288,7 +9288,11 @@ sub skill_cast {
 	}
 }
 
-# 00B3
+# Notifies the client, whether it can disconnect and change servers (ZC_RESTART_ACK).
+# 00B3 <type>.B
+# type:
+#     1 = disconnect, char-select
+#     ? = nothing
 # TODO: add real client messages and logic?
 # ClientLogic: LoginStartMode = 5; ShowLoginScreen;
 sub switch_character {
