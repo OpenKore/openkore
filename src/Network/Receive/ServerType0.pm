@@ -652,6 +652,7 @@ sub new {
 		'0A9D' => ['equipswitch_run_res', 'v', [qw(success)]],
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0AB8' => ['move_interrupt'],
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
