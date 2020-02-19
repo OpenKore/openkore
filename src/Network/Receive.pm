@@ -6647,6 +6647,11 @@ sub actor_look_at {
 	debug $actor->nameString . " looks at $args->{body}, $args->{head}\n", "parseMsg";
 }
 
+# Visually moves(slides) a character to x,y. If the target cell
+# isn't walkable, the char doesn't move at all. If the char is
+# sitting it will stand up (ZC_STOPMOVE).
+# 0088 <id>.L <x>.W <y>.W
+# 08CD <id>.L <x>.W <y>.W
 sub actor_movement_interrupted {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
