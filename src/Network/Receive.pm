@@ -6272,6 +6272,8 @@ sub npc_talk_number {
 	$ai_v{'npc_talk'}{'time'} = time;
 }
 
+# Displays an NPC dialog menu (ZC_MENU_LIST).
+# 00B7 <packet len>.W <npc id>.L <menu items>.?B
 sub npc_talk_responses {
 	my ($self, $args) = @_;
 
