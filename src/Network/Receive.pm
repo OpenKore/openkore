@@ -6306,7 +6306,7 @@ sub npc_store_begin {
 # Presents list of items, that can be bought in an NPC shop (ZC_PC_PURCHASE_ITEMLIST).
 # 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.W }*
 # 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.L }*
-# 2 versions of same packet. $self->{npc_store_info_pack} (ZC_PC_PURCHASE_ITEMLIST_sub) should be changed in own serverType if needed
+# 2 versions of same packet. $self->{npc_store_info_pack} (ZC_PC_PURCHASE_ITEMLIST_sub) should be changed in own serverType file if needed
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
@@ -6342,6 +6342,36 @@ sub npc_store_info {
 	if (AI::action ne 'buyAuto') {
 		Commands::run('store');
 	}
+}
+
+# Presents list of items, that can be sold to an NPC shop (ZC_PC_SELL_ITEMLIST).
+# 00C7 <packet len>.W { <index>.W <price>.L <overcharge price>.L }*
+sub npc_sell_list {
+	my ($self, $args) = @_;
+	#sell list, similar to buy list
+	if (length($args->{RAW_MSG}) > 4) {
+		my $msg = $args->{RAW_MSG};
+	}
+
+	debug T("You can sell:\n"), "info";
+	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
+		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
+		my $item = $char->inventory->getByID($index);
+		$item->{sellable} = 1; # flag this item as sellable
+		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
+	}
+
+	foreach my $item (@{$char->inventory->getItems()}) {
+		next if ($item->{equipped} || $item->{sellable});
+		$item->{unsellable} = 1; # flag this item as unsellable
+	}
+
+	undef %talk;
+	message T("Ready to start selling items\n");
+
+	$ai_v{npc_talk}{talk} = 'sell';
+	# continue talk sequence now
+	$ai_v{'npc_talk'}{'time'} = time;
 }
 
 sub npc_clear_dialog {

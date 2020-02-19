@@ -1342,34 +1342,6 @@ sub item_skill {
 	});
 }
 
-sub npc_sell_list {
-	my ($self, $args) = @_;
-	#sell list, similar to buy list
-	if (length($args->{RAW_MSG}) > 4) {
-		my $msg = $args->{RAW_MSG};
-	}
-
-	debug T("You can sell:\n"), "info";
-	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
-		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
-		my $item = $char->inventory->getByID($index);
-		$item->{sellable} = 1; # flag this item as sellable
-		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
-	}
-
-	foreach my $item (@{$char->inventory->getItems()}) {
-		next if ($item->{equipped} || $item->{sellable});
-		$item->{unsellable} = 1; # flag this item as unsellable
-	}
-
-	undef %talk;
-	message T("Ready to start selling items\n");
-
-	$ai_v{npc_talk}{talk} = 'sell';
-	# continue talk sequence now
-	$ai_v{'npc_talk'}{'time'} = time;
-}
-
 sub npc_talk {
 	my ($self, $args) = @_;
 
