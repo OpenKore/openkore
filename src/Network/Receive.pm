@@ -3332,7 +3332,11 @@ sub vender_items_list {
 	});
 }
 
-# 01D0 (spirits), 01E1 (coins), 08CF (amulets)
+# 01D0 (Monk spirits), 01E1 (Gunslingers coins), 08CF (Kagerou/Oboro amulet spirit)
+# Notifies the client of an object's spirits.
+# 01D0 <id>.L <amount>.W (ZC_SPIRITS)
+# 01E1 <id>.L <amount>.W (ZC_SPIRITS2)
+# 08CF <id>.L <type>.W <amount>.W (ZC_SPIRITS3)
 sub revolving_entity {
 	my ($self, $args) = @_;
 
