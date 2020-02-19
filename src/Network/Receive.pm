@@ -5396,6 +5396,11 @@ sub friend_response {
 	}
 }
 
+# Result of request to feed a homun/merc (ZC_FEED_MER).
+# 022F <result>.B <name id>.W
+# result:
+#     0 = failure
+#     1 = success
 sub homunculus_food {
 	my ($self, $args) = @_;
 	if ($args->{success}) {

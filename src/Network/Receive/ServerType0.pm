@@ -352,7 +352,10 @@ sub new {
 			? ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
 			: ['homunculus_property', 'Z24 C v3 V v12 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
 		,
-		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]],
+		'022F' => ($rpackets{'022F'}{length} == 5) # or 7
+			? ['homunculus_food', 'C v', [qw(success foodID)]]
+			: ['homunculus_food', 'C V', [qw(success foodID)]]
+		,
 		'0230' => ['homunculus_info', 'C2 a4 V',[qw(type state ID val)]],
 		'0235' => ['skills_list'], # homunculus skills
 		'0238' => ['top10_pk_rank'],
