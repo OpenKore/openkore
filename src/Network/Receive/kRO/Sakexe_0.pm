@@ -1342,44 +1342,6 @@ sub item_skill {
 	});
 }
 
-sub npc_talk {
-	my ($self, $args) = @_;
-
-	#Auto-create Task::TalkNPC if not active
-	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
-		my $nameID = unpack 'V', $args->{ID};
-		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $args->{ID});
-		AI::queue("NPC", $task);
-		# TODO: The following npc_talk hook is only added on activation.
-		# Make the task module or AI listen to the hook instead
-		# and wrap up all the logic.
-		$task->activate;
-		Plugins::callHook('npc_autotalk', {
-			task => $task
-		});
-	}
-
-	$talk{ID} = $args->{ID};
-	$talk{nameID} = unpack 'V', $args->{ID};
-	$talk{msg} = bytesToString ($args->{msg});
-
-	# Remove RO color codes
-	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
-
-	$ai_v{npc_talk}{talk} = 'initiated';
-	$ai_v{npc_talk}{time} = time;
-
-	my $name = getNPCName($talk{ID});
-	Plugins::callHook('npc_talk', {
-						ID => $talk{ID},
-						nameID => $talk{nameID},
-						name => $name,
-						msg => $talk{msg},
-						});
-	message "$name: $talk{msg}\n", "npc";
-}
-
 sub public_chat {
 	my ($self, $args) = @_;
 	# Type: String

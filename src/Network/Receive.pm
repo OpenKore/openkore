@@ -6188,6 +6188,51 @@ sub hat_effect {
 	}
 }
 
+# Displays an NPC dialog message (ZC_SAY_DIALOG).
+# 00B4 <packet len>.W <npc id>.L <message>.?B
+sub npc_talk {
+	my ($self, $args) = @_;
+
+	#Auto-create Task::TalkNPC if not active
+	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
+		my $nameID = unpack 'V', $args->{ID};
+		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $args->{ID});
+		AI::queue("NPC", $task);
+		# TODO: The following npc_talk hook is only added on activation.
+		# Make the task module or AI listen to the hook instead
+		# and wrap up all the logic.
+		$task->activate;
+		Plugins::callHook('npc_autotalk', {
+			task => $task
+		});
+	}
+
+	$talk{ID} = $args->{ID};
+	$talk{nameID} = unpack 'V', $args->{ID};
+	my $msg = bytesToString ($args->{msg});
+
+	# Remove RO color codes
+	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
+	$msg =~ s/\^[a-fA-F0-9]{6}//g;
+
+	# Prepend existing conversation.
+	$talk{msg} .= "\n" if $talk{msg};
+	$talk{msg} .= $msg;
+
+	$ai_v{npc_talk}{talk} = 'initiated';
+	$ai_v{npc_talk}{time} = time;
+
+	my $name = getNPCName($talk{ID});
+	Plugins::callHook('npc_talk', {
+						ID => $talk{ID},
+						nameID => $talk{nameID},
+						name => $name,
+						msg => $talk{msg},
+						});
+	message "$name: $msg\n", "npc";
+}
+
 sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
