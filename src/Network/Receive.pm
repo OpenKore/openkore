@@ -5960,6 +5960,10 @@ sub hp_sp_changed {
 	}
 }
 
+# Notifies the client of a position change to coordinates on given map (ZC_NPCACK_MAPMOVE).
+# 0091 <map name>.16B <x>.W <y>.W
+# Notifies the client of a position change (on air ship) to coordinates on given map (ZC_AIRSHIP_MAPMOVE).
+# 0A4B <map name>.16B <x>.W <y>.W
 # The difference between map_change and map_changed is that map_change
 # represents a map change event on the current map server, while
 # map_changed means that you've changed to a different map server.
