@@ -1051,6 +1051,106 @@ sub connection_refused {
 	error TF("The server has denied your connection (error: %d).\n", $args->{error}), 'connection';
 }
 
+# Notifies the client, that it's connection attempt was accepted.
+# 0073 <start time>.L <position>.3B <x size>.B <y size>.B (ZC_ACCEPT_ENTER)
+# 02EB <start time>.L <position>.3B <x size>.B <y size>.B <font>.W (ZC_ACCEPT_ENTER2)
+# 0A18 <start time>.L <position>.3B <x size>.B <y size>.B <font>.W <sex>.B (ZC_ACCEPT_ENTER3)
+sub map_loaded {
+	my ($self, $args) = @_;
+	$net->setState(Network::IN_GAME);
+	undef $conState_tries;
+	$char = $chars[$config{char}];
+	return unless changeToInGameState();
+	# assertClass($char, 'Actor::You');
+	$syncMapSync = pack('V1',$args->{syncMapSync}); # unused, should we keep this for legacy compatibility?
+	main::initMapChangeVars();
+
+	if ($net->version == 1) {
+		$net->setState(4);
+		message(T("Waiting for map to load...\n"), "connection");
+		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
+	} else {
+		$messageSender->sendReqRemainTime() if (grep { $masterServer->{serverType} eq $_ } qw(Zero Sakray));
+		
+		$messageSender->sendMapLoaded();
+
+		$messageSender->sendSync(1);
+
+		$messageSender->sendGuildMasterMemberCheck();
+
+		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
+		$messageSender->sendGuildRequestInfo(0);
+		
+		$messageSender->sendGuildRequestInfo(0) unless($masterServer->{private});
+
+		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
+		$messageSender->sendGuildRequestInfo(1);
+
+		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
+		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});	
+
+		# request to unfreeze char - alisonrag
+		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
+	}
+
+	message(T("You are now in the game\n"), "connection");
+	Plugins::callHook('in_game');
+	$timeout{'ai'}{'time'} = time;
+	our $quest_generation++;
+
+	$char->{pos} = {};
+	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
+	$char->{pos_to} = {%{$char->{pos}}};
+	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+	
+	# set initial status from data received from the char server (seems needed on eA, dunno about kRO)}
+	if($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
+
+	# ignoreAll
+	$ignored_all = 0;
+}
+
+# Notifies the client, that it's connection attempt was refused (ZC_REFUSE_ENTER).
+# 0074 <error code>.B
+# error code:
+#     0 = client type mismatch
+#     1 = ID mismatch
+#     2 = mobile - out of available time
+#     3 = mobile - already logged in
+#     4 = mobile - waiting state
+sub map_load_error {
+	my ($self, $args) = @_;
+
+	error T("Error while try to login in map-server: ");
+	if($args->{error} == 0) {
+		error TF("Wrong Client Type (%s). \n", $args->{error});
+	} elsif($args->{error} == 1) {
+		error TF("Wrong ID (%s). \n", $args->{error});
+	} elsif($args->{error} == 2) {
+		error TF("Timeout (%s). \n", $args->{error});
+	} elsif($args->{error} == 3) {
+		error TF("Already Logged In (%s). \n", $args->{error});
+	} elsif($args->{error} == 4) {
+		error TF("Waiting State (%s). \n", $args->{error}); # ??
+	} else {
+		error TF("Unknown Error (%s). \n", $args->{error});
+	}
+
+	Plugins::callHook('disconnected');
+	if ($config{dcOnDisconnect}) {
+		error T("Auto disconnecting on Disconnect!\n");
+		chatLog("k", T("*** You disconnected, auto disconnect! ***\n"));
+		$quit = 1;
+	}
+
+	$net->setState(1);
+	undef $conState_tries;
+
+	$timeout_ex{'master'}{'time'} = time;
+	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+	$net->serverDisconnect();
+}
+
 our %stat_info_handlers = (
 	VAR_SPEED, sub { $_[0]{walk_speed} = $_[1] / 1000 },
 	VAR_EXP, sub {
@@ -1473,7 +1573,9 @@ sub stat_info2 {
 		debug "Luck: $val + $val2\n", "parseMsg";
 	}
 }
-
+# Notifies clients in an area, that an other visible object is walking (ZC_NOTIFY_PLAYERMOVE).
+# 0086 <id>.L <walk data>.6B <walk start time>.L
+# Note: unit must not be self
 *actor_exists = *actor_display_compatibility;
 *actor_connected = *actor_display_compatibility;
 *actor_moved = *actor_display_compatibility;
@@ -2002,6 +2104,14 @@ typedef enum <unnamed-tag> {
 	}
 }
 
+# Makes a unit (char, npc, mob, homun) disappear to all clients in area (ZC_NOTIFY_VANISH).
+# 0080 <id>.L <type>.B
+# type:
+#     0 = out of sight
+#     1 = died
+#     2 = logged out
+#     3 = teleport
+#     4 = trickdead
 sub actor_died_or_disappeared {
 	my ($self,$args) = @_;
 	return unless changeToInGameState();
@@ -2424,6 +2534,71 @@ sub account_payment_info {
 sub reconstruct_minimap_indicator {
 }
 
+# Sends information about owned homunculus to the client . [orn]
+# 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
+# 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
+# 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_3)
+sub homunculus_property {
+	my ($self, $args) = @_;
+
+	my $slave = $char->{homunculus} or return;
+
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
+	}
+	$slave->{name} = bytesToString($args->{name});
+
+	slave_calcproperty_handler($slave, $args);
+	homunculus_state_handler($slave, $args);
+
+	# ST0's counterpart for ST kRO, since it attempts to support all servers
+	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
+	# or make function in Actor class
+	if ($config{homunculus_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
+		message TF("Autodetected attackDistance for homunculus = %s\n", $slave->{attack_range}), "success";
+		configModify('homunculus_attackDistance', $slave->{attack_range}, 1);
+		configModify('homunculus_attackMaxDistance', $slave->{attack_range}, 1);
+	}
+}
+
+sub homunculus_state_handler {
+	my ($slave, $args) = @_;
+	# Homunculus states:
+	# 0 - alive and unnamed
+	# 2 - rest
+	# 4 - dead
+
+	return unless $char->{homunculus};
+
+	if ($args->{state} == 0) {
+		$char->{homunculus}{renameflag} = 1;
+	} else {
+		$char->{homunculus}{renameflag} = 0;
+	}
+
+	if (($args->{state} & ~8) > 1) {
+		#Disabled these code as homun skills are not resent to client, so we shouldnt do deleting skill sets in this place.
+		#foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
+		#	delete $char->{skills}{$handle};
+		#}
+		$char->{homunculus}->clear(); #TODO: Check for memory leak?
+		#undef @{$char->{homunculus}{slave_skillsID}};
+		if (defined $slave->{state} && $slave->{state} != $args->{state}) {
+			if ($args->{state} & 2) {
+				message T("Your Homunculus was vaporized!\n"), 'homunculus';
+			} elsif ($args->{state} & 4) {
+				message T("Your Homunculus died!\n"), 'homunculus';
+			}
+		}
+	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
+		if ($slave->{state} & 2) {
+			message T("Your Homunculus was recalled!\n"), 'homunculus';
+		} elsif ($slave->{state} & 4) {
+			message T("Your Homunculus was resurrected!\n"), 'homunculus';
+		}
+	}
+}
+
 use constant {
 	HO_PRE_INIT => 0x0,
 	HO_RELATIONSHIP_CHANGED => 0x1,
@@ -2432,8 +2607,16 @@ use constant {
 	HO_HEADTYPE_CHANGED => 0x4,
 };
 
-# 0230
-# TODO: what is type?
+# Notification about a change in homunuculus' state (ZC_CHANGESTATE_MER).
+# 0230 <type>.B <state>.B <id>.L <data>.L
+# type:
+#     unused
+# state:
+#     0 = pre-init
+#     1 = intimacy
+#     2 = hunger
+#     3 = accessory?
+#     ? = ignored
 sub homunculus_info {
 	my ($self, $args) = @_;
 	debug "homunculus_info type: $args->{type}\n", "homunculus";
@@ -2458,6 +2641,11 @@ sub homunculus_info {
 	}
 }
 
+# Marks a position on client's minimap (ZC_COMPASS).
+# 0144 <npc id>.L <type>.L <x>.L <y>.L <id>.B <color>.L
+#
+# Notification about an NPC's quest state (ZC_QUEST_NOTIFY_EFFECT).
+# 0446 <npc id>.L <x>.W <y>.W <effect>.W <color>.W
 ##
 # minimap_indicator({bool show, Actor actor, int x, int y, int red, int green, int blue, int alpha [, int effect]})
 # show: whether indicator is shown or cleared
@@ -2508,6 +2696,9 @@ sub reconstruct_npc_image {
 	$args->{npc_image} = stringToBytes($args->{npc_image});
 }
 
+# Displays an illustration image.
+# 0145 <image name>.16B <type>.B (ZC_SHOW_IMAGE)
+# 01b3 <image name>.64B <type>.B (ZC_SHOW_IMAGE2)
 sub npc_image {
 	my ($self, $args) = @_;
 
@@ -3224,7 +3415,11 @@ sub vender_items_list {
 	});
 }
 
-# 01D0 (spirits), 01E1 (coins), 08CF (amulets)
+# 01D0 (Monk spirits), 01E1 (Gunslingers coins), 08CF (Kagerou/Oboro amulet spirit)
+# Notifies the client of an object's spirits.
+# 01D0 <id>.L <amount>.W (ZC_SPIRITS)
+# 01E1 <id>.L <amount>.W (ZC_SPIRITS2)
+# 08CF <id>.L <type>.W <amount>.W (ZC_SPIRITS3)
 sub revolving_entity {
 	my ($self, $args) = @_;
 
@@ -3266,6 +3461,31 @@ sub revolving_entity {
 			message TF("%s has %s %s(s) of %s now\n", $actor, $entityNum, $entityType, $entityElement), "parseMsg_statuslook", 1 :
 			# Translation Comment: Message displays following: actor, quantity and the name of the entity
 			message TF("%s has %s %s(s) now\n", $actor, $entityNum, $entityType), "parseMsg_statuslook", 1;
+	}
+}
+
+# Changes sprite of an NPC object (ZC_NPCSPRITE_CHANGE).
+# 01B0 <id>.L <type>.B <value>.L
+# type:
+#     unused
+sub monster_typechange {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	my $type = $args->{type};
+	my $monster = $monstersList->getByID($ID);
+	if ($monster) {
+		my $oldName = $monster->name;
+		if ($monsters_lut{$type}) {
+			$monster->setName($monsters_lut{$type});
+		} else {
+			$monster->setName(undef);
+		}
+		$monster->{nameID} = $type;
+		$monster->{dmgToParty} = 0;
+		$monster->{dmgFromParty} = 0;
+		$monster->{missedToParty} = 0;
+		message TF("Monster %s (%d) changed to %s\n", $oldName, $monster->{binID}, $monster->name);
 	}
 }
 
@@ -4598,6 +4818,8 @@ sub character_deletion_failed {
 	}
 }
 
+# Notifies the client, that it is walking (ZC_NOTIFY_PLAYERMOVE).
+# 0087 <walk start time>.L <walk data>.6B
 sub character_moves {
 	my ($self, $args) = @_;
 
@@ -5005,6 +5227,40 @@ sub emoticon {
 	});
 }
 
+# Notifies the client of a ban or forced disconnect (SC_NOTIFY_BAN).
+# 0081 <error code>.B
+# error code:
+#     0 = BAN_UNFAIR -> "disconnected from server" -> MsgStringTable[3]
+#     1 = server closed -> MsgStringTable[4]
+#     2 = ID already logged in -> MsgStringTable[5]
+#     3 = timeout/too much lag -> MsgStringTable[241]
+#     4 = server full -> MsgStringTable[264]
+#     5 = underaged -> MsgStringTable[305]
+#     8 = Server sill recognizes last connection -> MsgStringTable[441]
+#     9 = too many connections from this ip -> MsgStringTable[529]
+#     10 = out of available time paid for -> MsgStringTable[530]
+#     11 = BAN_PAY_SUSPEND
+#     12 = BAN_PAY_CHANGE
+#     13 = BAN_PAY_WRONGIP
+#     14 = BAN_PAY_PNGAMEROOM
+#     15 = disconnected by a GM -> if( servicetype == taiwan ) MsgStringTable[579]
+#     16 = BAN_JAPAN_REFUSE1
+#     17 = BAN_JAPAN_REFUSE2
+#     18 = BAN_INFORMATION_REMAINED_ANOTHER_ACCOUNT
+#     100 = BAN_PC_IP_UNFAIR
+#     101 = BAN_PC_IP_COUNT_ALL
+#     102 = BAN_PC_IP_COUNT
+#     103 = BAN_GRAVITY_MEM_AGREE
+#     104 = BAN_GAME_MEM_AGREE
+#     105 = BAN_HAN_VALID
+#     106 = BAN_PC_IP_LIMIT_ACCESS
+#     107 = BAN_OVER_CHARACTER_LIST
+#     108 = BAN_IP_BLOCK
+#     109 = BAN_INVALID_PWD_CNT
+#     110 = BAN_NOT_ALLOWED_JOBCLASS
+#     113 = access is restricted between the hours of midnight to 6:00am.
+#     115 = You are in game connection ban period.
+#     ? = disconnected -> MsgStringTable[3]
 sub errors {
 	my ($self, $args) = @_;
 
@@ -5152,6 +5408,11 @@ sub friend_response {
 	}
 }
 
+# Result of request to feed a homun/merc (ZC_FEED_MER).
+# 022F <result>.B <name id>.W
+# result:
+#     0 = failure
+#     1 = success
 sub homunculus_food {
 	my ($self, $args) = @_;
 	if ($args->{success}) {
@@ -5485,6 +5746,10 @@ sub married {
 	message TF("%s got married!\n", $actor);
 }
 
+# Makes an item appear on the ground.
+# 009E <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
+# 084B <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
+# 0ADD <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
 sub item_appeared {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -5555,6 +5820,8 @@ sub item_exists {
 	});
 }
 
+# Makes an item disappear from the ground.
+# 00A1 <id>.L (ZC_ITEM_DISAPPEAR)
 sub item_disappeared {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -5701,6 +5968,10 @@ sub hp_sp_changed {
 	}
 }
 
+# Notifies the client of a position change to coordinates on given map (ZC_NPCACK_MAPMOVE).
+# 0091 <map name>.16B <x>.W <y>.W
+# Notifies the client of a position change (on air ship) to coordinates on given map (ZC_AIRSHIP_MAPMOVE).
+# 0A4B <map name>.16B <x>.W <y>.W
 # The difference between map_change and map_changed is that map_change
 # represents a map change event on the current map server, while
 # map_changed means that you've changed to a different map server.
@@ -5766,6 +6037,120 @@ sub map_change {
 	$timeout{ai}{time} = time;
 }
 
+# Notifies the client of a position change to coordinates on given map, which is on another map-server.
+# 0092 <map name>.16B <x>.W <y>.W <ip>.L <port>.W (ZC_NPCACK_SERVERMOVE)
+# 0AC7 <map name>.16B <x>.W <y>.W <ip>.L <port>.W <dns host>.128B (ZC_NPCACK_SERVERMOVE2)
+sub map_changed {
+	my ($self, $args) = @_;
+	$net->setState(4);
+
+	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
+	my ($map) = $args->{map} =~ /([\s\S]*)\./;
+	my $map_noinstance;
+	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
+
+	checkAllowedMap($map_noinstance);
+	if (!$field || $map ne $field->name()) {
+		eval {
+			$field = new Field(name => $map);
+		};
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
+			undef $field;
+		} elsif ($@) {
+			die $@;
+		}
+	}
+
+	my %coords = (
+		x => $args->{x},
+		y => $args->{y}
+	);
+	$char->{pos} = {%coords};
+	$char->{pos_to} = {%coords};
+
+	undef $conState_tries;
+	main::initMapChangeVars();
+	for (my $i = 0; $i < @ai_seq; $i++) {
+		ai_setMapChanged($i);
+	}
+	AI::SlaveManager::setMapChanged ();
+	$ai_v{portalTrace_mapChanged} = time;
+
+	if($args->{'url'} =~ /.*\:\d+/) {
+		$map_ip = $args->{url};
+		$map_ip =~ s/:[0-9\0]+//;
+		$map_port = $args->{port};
+	} else {
+		$map_ip = makeIP($args->{IP});
+		$map_port = $args->{port};
+	}
+
+	message(swrite(
+		"---------Map  Info----------", [],
+		"MAP Name: @<<<<<<<<<<<<<<<<<<",
+		[$args->{map}],
+		"MAP IP: @<<<<<<<<<<<<<<<<<<",
+		[$map_ip],
+		"MAP Port: @<<<<<<<<<<<<<<<<<<",
+		[$map_port],
+		"-------------------------------", []),
+		"connection");
+
+	message T("Closing connection to Map Server\n"), "connection";
+	$net->serverDisconnect unless ($net->version == 1);
+
+	# Reset item and skill times. The effect of items (like aspd potions)
+	# and skills (like Twohand Quicken) disappears when we change map server.
+	# NOTE: with the newer servers, this isn't true anymore
+	my $i = 0;
+	while (exists $config{"useSelf_item_$i"}) {
+		if (!$config{"useSelf_item_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"useSelf_item_$i"."_time"} = 0;
+		$i++;
+	}
+	$i = 0;
+	while (exists $config{"useSelf_skill_$i"}) {
+		if (!$config{"useSelf_skill_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"useSelf_skill_$i"."_time"} = 0;
+		$i++;
+	}
+	$i = 0;
+	while (exists $config{"doCommand_$i"}) {
+		if (!$config{"doCommand_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"doCommand_$i"."_time"} = 0;
+		$i++;
+	}
+	if ($char) {
+		delete $char->{statuses};
+		$char->{spirits} = 0;
+		delete $char->{permitSkill};
+		delete $char->{encoreSkill};
+	}
+	undef %guild;
+	if ( $char->cartActive ) {
+		$char->cart->close;
+		$char->cart->clear;
+	}
+
+	Plugins::callHook('Network::Receive::map_changed', {
+		oldMap => $oldMap,
+	});
+	$timeout{ai}{time} = time;
+}
+
 # Parse 0A3B with structure
 # '0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]],
 # Unpack effect info into HatEFID
@@ -5811,6 +6196,53 @@ sub hat_effect {
 	}
 }
 
+# Displays an NPC dialog message (ZC_SAY_DIALOG).
+# 00B4 <packet len>.W <npc id>.L <message>.?B
+sub npc_talk {
+	my ($self, $args) = @_;
+
+	#Auto-create Task::TalkNPC if not active
+	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
+		my $nameID = unpack 'V', $args->{ID};
+		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $args->{ID});
+		AI::queue("NPC", $task);
+		# TODO: The following npc_talk hook is only added on activation.
+		# Make the task module or AI listen to the hook instead
+		# and wrap up all the logic.
+		$task->activate;
+		Plugins::callHook('npc_autotalk', {
+			task => $task
+		});
+	}
+
+	$talk{ID} = $args->{ID};
+	$talk{nameID} = unpack 'V', $args->{ID};
+	my $msg = bytesToString ($args->{msg});
+
+	# Remove RO color codes
+	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
+	$msg =~ s/\^[a-fA-F0-9]{6}//g;
+
+	# Prepend existing conversation.
+	$talk{msg} .= "\n" if $talk{msg};
+	$talk{msg} .= $msg;
+
+	$ai_v{npc_talk}{talk} = 'initiated';
+	$ai_v{npc_talk}{time} = time;
+
+	my $name = getNPCName($talk{ID});
+	Plugins::callHook('npc_talk', {
+						ID => $talk{ID},
+						nameID => $talk{nameID},
+						name => $name,
+						msg => $talk{msg},
+						});
+	message "$name: $msg\n", "npc";
+}
+
+# Adds a 'close' button to an NPC dialog (ZC_CLOSE_DIALOG).
+# 00B6 <npc id>.L
 sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
@@ -5827,6 +6259,8 @@ sub npc_talk_close {
 	Plugins::callHook('npc_talk_done', {ID => $ID});
 }
 
+# Adds a 'next' button to an NPC dialog (ZC_WAIT_DIALOG).
+# 00B5 <npc id>.L
 sub npc_talk_continue {
 	my ($self, $args) = @_;
 	my $ID = substr($args->{RAW_MSG}, 2, 4);
@@ -5836,6 +6270,8 @@ sub npc_talk_continue {
 	$ai_v{'npc_talk'}{'time'} = time;
 }
 
+# Displays an NPC dialog input box for numbers (ZC_OPEN_EDITDLG).
+# 0142 <npc id>.L
 sub npc_talk_number {
 	my ($self, $args) = @_;
 
@@ -5846,6 +6282,8 @@ sub npc_talk_number {
 	$ai_v{'npc_talk'}{'time'} = time;
 }
 
+# Displays an NPC dialog menu (ZC_MENU_LIST).
+# 00B7 <packet len>.W <npc id>.L <menu items>.?B
 sub npc_talk_responses {
 	my ($self, $args) = @_;
 
@@ -5904,6 +6342,8 @@ sub npc_talk_responses {
 						});
 }
 
+# Displays an NPC dialog input box for numbers (ZC_OPEN_EDITDLGSTR).
+# 01D4 <npc id>.L
 sub npc_talk_text {
 	my ($self, $args) = @_;
 
@@ -5914,6 +6354,8 @@ sub npc_talk_text {
 	$ai_v{'npc_talk'}{'time'} = time;
 }
 
+# Displays the buy/sell dialog of an NPC shop (ZC_SELECT_DEALTYPE).
+# 00C4 <shop id>.L
 sub npc_store_begin {
 	my ($self, $args) = @_;
 	undef %talk;
@@ -5924,6 +6366,10 @@ sub npc_store_begin {
 	$storeList->{npcName} = getNPCName($args->{ID}) || T('Unknown');
 }
 
+# Presents list of items, that can be bought in an NPC shop (ZC_PC_PURCHASE_ITEMLIST).
+# 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.W }*
+# 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.L }*
+# 2 versions of same packet. $self->{npc_store_info_pack} (ZC_PC_PURCHASE_ITEMLIST_sub) should be changed in own serverType file if needed
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
@@ -5959,6 +6405,36 @@ sub npc_store_info {
 	if (AI::action ne 'buyAuto') {
 		Commands::run('store');
 	}
+}
+
+# Presents list of items, that can be sold to an NPC shop (ZC_PC_SELL_ITEMLIST).
+# 00C7 <packet len>.W { <index>.W <price>.L <overcharge price>.L }*
+sub npc_sell_list {
+	my ($self, $args) = @_;
+	#sell list, similar to buy list
+	if (length($args->{RAW_MSG}) > 4) {
+		my $msg = $args->{RAW_MSG};
+	}
+
+	debug T("You can sell:\n"), "info";
+	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
+		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
+		my $item = $char->inventory->getByID($index);
+		$item->{sellable} = 1; # flag this item as sellable
+		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
+	}
+
+	foreach my $item (@{$char->inventory->getItems()}) {
+		next if ($item->{equipped} || $item->{sellable});
+		$item->{unsellable} = 1; # flag this item as unsellable
+	}
+
+	undef %talk;
+	message T("Ready to start selling items\n");
+
+	$ai_v{npc_talk}{talk} = 'sell';
+	# continue talk sequence now
+	$ai_v{'npc_talk'}{'time'} = time;
 }
 
 sub npc_clear_dialog {
@@ -6270,6 +6746,11 @@ sub actor_look_at {
 	debug $actor->nameString . " looks at $args->{body}, $args->{head}\n", "parseMsg";
 }
 
+# Visually moves(slides) a character to x,y. If the target cell
+# isn't walkable, the char doesn't move at all. If the char is
+# sitting it will stand up (ZC_STOPMOVE).
+# 0088 <id>.L <x>.W <y>.W
+# 08CD <id>.L <x>.W <y>.W
 sub actor_movement_interrupted {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -9154,7 +9635,11 @@ sub skill_cast {
 	}
 }
 
-# 00B3
+# Notifies the client, whether it can disconnect and change servers (ZC_RESTART_ACK).
+# 00B3 <type>.B
+# type:
+#     1 = disconnect, char-select
+#     ? = nothing
 # TODO: add real client messages and logic?
 # ClientLogic: LoginStartMode = 5; ShowLoginScreen;
 sub switch_character {

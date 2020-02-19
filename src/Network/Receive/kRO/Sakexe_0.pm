@@ -215,7 +215,7 @@ sub new {
 		'0141' => ['stat_info2', 'V2 l', [qw(type val val2)]], # 14
 		'0142' => ['npc_talk_number', 'a4', [qw(ID)]], # 6
 		'0144' => ['minimap_indicator', 'a4 V3 C5', [qw(npcID type x y ID blue green red alpha)]], # 23
-		'0145' => ['image_show', 'Z16 C', [qw(name type)]], # 19
+		'0145' => ['npc_image', 'Z16 C', [qw(npc_image type)]],
 		'0147' => ['item_skill', 'v V v3 Z24 C', [qw(skillID targetType skillLv sp range skillName upgradable)]], # 39
 		'0148' => ['resurrection', 'a4 v', [qw(targetID type)]], # 8
 		'014A' => ['manner_message', 'V', [qw(type)]], # 6
@@ -364,11 +364,14 @@ sub new {
 			? ['actor_moved', 'a4 v3 V v5 V v5 a4 a2 v V C2 a6 C2 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]] # 64 # walking
 			: ['actor_moved', 'C a4 v3 V v5 V v5 a4 a2 v V C2 a6 C2 v', [qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]] # walking # 65 # TODO: figure out what eA does here (shield is in GEmblemVer?): # v5 => v2 V v
 		,
-		'022E' => ($rpackets{'022E'} == 69) # or 71
-			? ['homunculus_property', 'Z24 C v16 V2 v', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill)]] # 69
-			: ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]] # 71
+		'022E' => ($rpackets{'022E'}{length} == 71) # or 73
+			? ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
+			: ['homunculus_property', 'Z24 C v3 V v12 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
 		,
-		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]], # 5
+		'022F' => ($rpackets{'022F'}{length} == 5) # or 7
+			? ['homunculus_food', 'C v', [qw(success foodID)]]
+			: ['homunculus_food', 'C V', [qw(success foodID)]]
+		,
 		'0230' => ['homunculus_info', 'C2 a4 V',[qw(type state ID val)]], # 12
 		'0235' => ['skills_list'], # -1 # homunculus skills
 		'0238' => ['top10_pk_rank'], #  282
@@ -582,7 +585,10 @@ sub new {
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
-		'09F7' => ['homunculus_property', 'Z24 C v12 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
+		'09F7' => ($rpackets{'09F7'}{length} == 75) # or 77
+			? ['homunculus_property', 'Z24 C v12 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
+			: ['homunculus_property', 'Z24 C v3 V v8 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
+		,
 		'09F8' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'09F9' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
@@ -601,7 +607,7 @@ sub new {
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
 		'0A14' => ['rodex_check_player', 'V v2', [qw(char_id class base_level)]],
-		'0A18' => ['map_loaded', 'V a3 x2 v', [qw(syncMapSync coords unknown)]],
+		'0A18' => ['map_loaded', 'V a3 C2 v C', [qw(syncMapSync coords xSize ySize font sex)]], # 14
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
 		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
 		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
@@ -643,7 +649,7 @@ sub new {
 		'0ACC' => ['exp', 'a4 a8 v2', [qw(ID val type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADC' => ['flag', 'V', [qw(unknown)]],
- 		'0ADD' => ['item_exists', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
+ 		'0ADD' => ['item_appeared', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0AE0' => ['login_error', 'V V Z20', [qw(type error date)]],
 		'0AE2' => ['open_ui', 'C V', [qw(type data)]],
@@ -665,6 +671,7 @@ sub new {
 		'0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
 		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
 		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate tab hotkeys)]],#herc PR 2468
+		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		};
 
 	# Item RECORD Struct's
@@ -928,55 +935,6 @@ sub _items_list {
 ###### Packet handling callbacks ######
 #######################################
 
-sub map_loaded {
-	my ($self, $args) = @_;
-	$net->setState(Network::IN_GAME);
-	undef $conState_tries;
-	$char = $chars[$config{char}];
-	return unless changeToInGameState();
-	# assertClass($char, 'Actor::You');
-	main::initMapChangeVars();
-
-	if ($net->version == 1) {
-		$net->setState(4);
-		message(T("Waiting for map to load...\n"), "connection");
-		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
-	} else {
-		$messageSender->sendMapLoaded();
-
-		$messageSender->sendSync(1);
-
-		$messageSender->sendGuildMasterMemberCheck();
-
-		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		$messageSender->sendGuildRequestInfo(0);
-
-		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		$messageSender->sendGuildRequestInfo(1);
-
-		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
-		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});	
-
-		# request to unfreeze char - alisonrag
-		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
-	}
-
-	message(T("You are now in the game\n"), "connection");
-	Plugins::callHook('in_game');
-	$timeout{'ai'}{'time'} = time;
-	our $quest_generation++;
-
-	$char->{pos} = {};
-	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
-	$char->{pos_to} = {%{$char->{pos}}};
-	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-
-	setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); # set initial status from data received from the char server (seems needed on eA, dunno about kRO)
-
-	# ignoreAll
-	$ignored_all = 0;
-}
-
 sub buy_result {
 	my ($self, $args) = @_;
 	if ($args->{fail} == 0) {
@@ -1118,58 +1076,6 @@ sub mercenary_init {
 		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
 		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
 		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
-	}
-}
-
-# 022E
-sub homunculus_property {
-	my ($self, $args) = @_;
-
-	my $slave = $char->{homunculus} or return;
-
-	foreach (@{$args->{KEYS}}) {
-		$slave->{$_} = $args->{$_};
-	}
-	$slave->{name} = bytesToString($args->{name});
-
-	Network::Receive::slave_calcproperty_handler($slave, $args);
-	homunculus_state_handler($slave, $args);
-}
-
-sub homunculus_state_handler {
-	my ($slave, $args) = @_;
-	# Homunculus states:
-	# 0 - alive and unnamed
-	# 2 - rest
-	# 4 - dead
-
-	return unless $char->{homunculus};
-
-	if ($args->{state} == 0) {
-		$char->{homunculus}{renameflag} = 1;
-	} else {
-		$char->{homunculus}{renameflag} = 0;
-	}
-
-	if (($args->{state} & ~8) > 1) {
-		foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
-			delete $char->{skills}{$handle};
-		}
-		$char->{homunculus}->clear();
-		undef @{$char->{homunculus}{slave_skillsID}};
-		if (defined $slave->{state} && $slave->{state} != $args->{state}) {
-			if ($args->{state} & 2) {
-				message T("Your Homunculus was vaporized!\n"), 'homunculus';
-			} elsif ($args->{state} & 4) {
-				message T("Your Homunculus died!\n"), 'homunculus';
-			}
-		}
-	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
-		if ($slave->{state} & 2) {
-			message T("Your Homunculus was recalled!\n"), 'homunculus';
-		} elsif ($slave->{state} & 4) {
-			message T("Your Homunculus was resurrected!\n"), 'homunculus';
-		}
 	}
 }
 
@@ -1434,239 +1340,6 @@ sub item_skill {
 		level => $skillLv,
 		name => $skillName
 	});
-}
-
-sub map_changed {
-	my ($self, $args) = @_;
-	$net->setState(4);
-
-	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
-	my ($map) = $args->{map} =~ /([\s\S]*)\./;
-	my $map_noinstance;
-	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
-
-	checkAllowedMap($map_noinstance);
-	if (!$field || $map ne $field->name()) {
-		eval {
-			$field = new Field(name => $map);
-		};
-		if (my $e = caught('FileNotFoundException', 'IOException')) {
-			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
-			undef $field;
-		} elsif ($@) {
-			die $@;
-		}
-	}
-
-	my %coords = (
-		x => $args->{x},
-		y => $args->{y}
-	);
-	$char->{pos} = {%coords};
-	$char->{pos_to} = {%coords};
-
-	undef $conState_tries;
-	main::initMapChangeVars();
-	for (my $i = 0; $i < @ai_seq; $i++) {
-		ai_setMapChanged($i);
-	}
-	AI::SlaveManager::setMapChanged ();
-	$ai_v{portalTrace_mapChanged} = time;
-
-	$map_ip = makeIP($args->{IP});
-	$map_port = $args->{port};
-	message(swrite(
-		"---------Map  Info----------", [],
-		"MAP Name: @<<<<<<<<<<<<<<<<<<",
-		[$args->{map}],
-		"MAP IP: @<<<<<<<<<<<<<<<<<<",
-		[$map_ip],
-		"MAP Port: @<<<<<<<<<<<<<<<<<<",
-		[$map_port],
-		"-------------------------------", []),
-		"connection");
-
-	message T("Closing connection to Map Server\n"), "connection";
-	$net->serverDisconnect unless ($net->version == 1);
-
-	# Reset item and skill times. The effect of items (like aspd potions)
-	# and skills (like Twohand Quicken) disappears when we change map server.
-	# NOTE: with the newer servers, this isn't true anymore
-	my $i = 0;
-	while (exists $config{"useSelf_item_$i"}) {
-		if (!$config{"useSelf_item_$i"}) {
-			$i++;
-			next;
-		}
-
-		$ai_v{"useSelf_item_$i"."_time"} = 0;
-		$i++;
-	}
-	$i = 0;
-	while (exists $config{"useSelf_skill_$i"}) {
-		if (!$config{"useSelf_skill_$i"}) {
-			$i++;
-			next;
-		}
-
-		$ai_v{"useSelf_skill_$i"."_time"} = 0;
-		$i++;
-	}
-	$i = 0;
-	while (exists $config{"doCommand_$i"}) {
-		if (!$config{"doCommand_$i"}) {
-			$i++;
-			next;
-		}
-
-		$ai_v{"doCommand_$i"."_time"} = 0;
-		$i++;
-	}
-	if ($char) {
-		delete $char->{statuses};
-		$char->{spirits} = 0;
-		delete $char->{permitSkill};
-		delete $char->{encoreSkill};
-	}
-	undef %guild;
-
-	Plugins::callHook('Network::Receive::map_changed', {
-		oldMap => $oldMap,
-	});
-	$timeout{ai}{time} = time;
-}
-
-# It seems that when we use this, the login won't go smooth
-# this sends a sync packet after the map is loaded
-=pod
-sub map_loaded {
-	# Note: ServerType0 overrides this function
-	my ($self, $args) = @_;
-
-	undef $conState_tries;
-	$char = $chars[$config{char}];
-	$syncMapSync = pack('V1', $args->{syncMapSync});
-
-	if ($net->version == 1) {
-		$net->setState(4);
-		message T("Waiting for map to load...\n"), "connection";
-		ai_clientSuspend(0, 10);
-		main::initMapChangeVars();
-	} else {
-		$messageSender->sendGuildMasterMemberCheck();
-
-		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		$messageSender->sendGuildRequestInfo(0);
-
-		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		$messageSender->sendGuildRequestInfo(1);
-		$messageSender->sendMapLoaded();
-		$messageSender->sendSync(1);
-		debug "Sent initial sync\n", "connection";
-		$timeout{'ai'}{'time'} = time;
-	}
-
-	if ($char && changeToInGameState()) {
-		$net->setState(Network::IN_GAME) if ($net->getState() != Network::IN_GAME);
-		$char->{pos} = {};
-		makeCoordsDir($char->{pos}, $args->{coords});
-		$char->{pos_to} = {%{$char->{pos}}};
-		message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-		message(T("You are now in the game\n"), "connection");
-		Plugins::callHook('in_game');
-	}
-
-	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
-}
-=cut
-
-sub monster_typechange {
-	my ($self, $args) = @_;
-
-	# Class change / monster type change
-	# 01B0 : long ID, byte WhateverThisIs, long type
-	my $ID = $args->{ID};
-	my $nameID = $args->{nameID};
-	my $monster = $monstersList->getByID($ID);
-	if ($monster) {
-		my $oldName = $monster->name;
-		if ($monsters_lut{$nameID}) {
-			$monster->setName($monsters_lut{$nameID});
-		} else {
-			$monster->setName(undef);
-		}
-		$monster->{nameID} = $nameID;
-		$monster->{dmgToParty} = 0;
-		$monster->{dmgFromParty} = 0;
-		$monster->{missedToParty} = 0;
-		message TF("Monster %s (%d) changed to %s\n", $oldName, $monster->{binID}, $monster->name);
-	}
-}
-
-sub npc_sell_list {
-	my ($self, $args) = @_;
-	#sell list, similar to buy list
-	if (length($args->{RAW_MSG}) > 4) {
-		my $msg = $args->{RAW_MSG};
-	}
-
-	debug T("You can sell:\n"), "info";
-	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
-		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
-		my $item = $char->inventory->getByID($index);
-		$item->{sellable} = 1; # flag this item as sellable
-		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
-	}
-
-	foreach my $item (@{$char->inventory->getItems()}) {
-		next if ($item->{equipped} || $item->{sellable});
-		$item->{unsellable} = 1; # flag this item as unsellable
-	}
-
-	undef %talk;
-	message T("Ready to start selling items\n");
-
-	$ai_v{npc_talk}{talk} = 'sell';
-	# continue talk sequence now
-	$ai_v{'npc_talk'}{'time'} = time;
-}
-
-sub npc_talk {
-	my ($self, $args) = @_;
-
-	#Auto-create Task::TalkNPC if not active
-	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
-		my $nameID = unpack 'V', $args->{ID};
-		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $args->{ID});
-		AI::queue("NPC", $task);
-		# TODO: The following npc_talk hook is only added on activation.
-		# Make the task module or AI listen to the hook instead
-		# and wrap up all the logic.
-		$task->activate;
-		Plugins::callHook('npc_autotalk', {
-			task => $task
-		});
-	}
-
-	$talk{ID} = $args->{ID};
-	$talk{nameID} = unpack 'V', $args->{ID};
-	$talk{msg} = bytesToString ($args->{msg});
-
-	# Remove RO color codes
-	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
-
-	$ai_v{npc_talk}{talk} = 'initiated';
-	$ai_v{npc_talk}{time} = time;
-
-	my $name = getNPCName($talk{ID});
-	Plugins::callHook('npc_talk', {
-						ID => $talk{ID},
-						nameID => $talk{nameID},
-						name => $name,
-						msg => $talk{msg},
-						});
-	message "$name: $talk{msg}\n", "npc";
 }
 
 sub public_chat {
