@@ -2696,6 +2696,9 @@ sub reconstruct_npc_image {
 	$args->{npc_image} = stringToBytes($args->{npc_image});
 }
 
+# Displays an illustration image.
+# 0145 <image name>.16B <type>.B (ZC_SHOW_IMAGE)
+# 01b3 <image name>.64B <type>.B (ZC_SHOW_IMAGE2)
 sub npc_image {
 	my ($self, $args) = @_;
 

@@ -215,7 +215,7 @@ sub new {
 		'0141' => ['stat_info2', 'V2 l', [qw(type val val2)]], # 14
 		'0142' => ['npc_talk_number', 'a4', [qw(ID)]], # 6
 		'0144' => ['minimap_indicator', 'a4 V3 C5', [qw(npcID type x y ID blue green red alpha)]], # 23
-		'0145' => ['image_show', 'Z16 C', [qw(name type)]], # 19
+		'0145' => ['npc_image', 'Z16 C', [qw(npc_image type)]],
 		'0147' => ['item_skill', 'v V v3 Z24 C', [qw(skillID targetType skillLv sp range skillName upgradable)]], # 39
 		'0148' => ['resurrection', 'a4 v', [qw(targetID type)]], # 8
 		'014A' => ['manner_message', 'V', [qw(type)]], # 6
