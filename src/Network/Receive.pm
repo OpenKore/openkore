@@ -6233,6 +6233,8 @@ sub npc_talk {
 	message "$name: $msg\n", "npc";
 }
 
+# Adds a 'close' button to an NPC dialog (ZC_CLOSE_DIALOG).
+# 00B6 <npc id>.L
 sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
