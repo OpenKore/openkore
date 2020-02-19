@@ -6334,6 +6334,8 @@ sub npc_talk_responses {
 						});
 }
 
+# Displays an NPC dialog input box for numbers (ZC_OPEN_EDITDLGSTR).
+# 01D4 <npc id>.L
 sub npc_talk_text {
 	my ($self, $args) = @_;
 
