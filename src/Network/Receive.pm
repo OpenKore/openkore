@@ -2605,8 +2605,16 @@ use constant {
 	HO_HEADTYPE_CHANGED => 0x4,
 };
 
-# 0230
-# TODO: what is type?
+# Notification about a change in homunuculus' state (ZC_CHANGESTATE_MER).
+# 0230 <type>.B <state>.B <id>.L <data>.L
+# type:
+#     unused
+# state:
+#     0 = pre-init
+#     1 = intimacy
+#     2 = hunger
+#     3 = accessory?
+#     ? = ignored
 sub homunculus_info {
 	my ($self, $args) = @_;
 	debug "homunculus_info type: $args->{type}\n", "homunculus";
