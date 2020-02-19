@@ -1573,7 +1573,9 @@ sub stat_info2 {
 		debug "Luck: $val + $val2\n", "parseMsg";
 	}
 }
-
+# Notifies clients in an area, that an other visible object is walking (ZC_NOTIFY_PLAYERMOVE).
+# 0086 <id>.L <walk data>.6B <walk start time>.L
+# Note: unit must not be self
 *actor_exists = *actor_display_compatibility;
 *actor_connected = *actor_display_compatibility;
 *actor_moved = *actor_display_compatibility;
