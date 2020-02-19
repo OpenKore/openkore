@@ -6249,6 +6249,8 @@ sub npc_talk_close {
 	Plugins::callHook('npc_talk_done', {ID => $ID});
 }
 
+# Adds a 'next' button to an NPC dialog (ZC_WAIT_DIALOG).
+# 00B5 <npc id>.L
 sub npc_talk_continue {
 	my ($self, $args) = @_;
 	my $ID = substr($args->{RAW_MSG}, 2, 4);
