@@ -364,9 +364,9 @@ sub new {
 			? ['actor_moved', 'a4 v3 V v5 V v5 a4 a2 v V C2 a6 C2 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]] # 64 # walking
 			: ['actor_moved', 'C a4 v3 V v5 V v5 a4 a2 v V C2 a6 C2 v', [qw(object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]] # walking # 65 # TODO: figure out what eA does here (shield is in GEmblemVer?): # v5 => v2 V v
 		,
-		'022E' => ($rpackets{'022E'} == 69) # or 71
-			? ['homunculus_property', 'Z24 C v16 V2 v', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill)]] # 69
-			: ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]] # 71
+		'022E' => ($rpackets{'022E'}{length} == 71) # or 73
+			? ['homunculus_property', 'Z24 C v16 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
+			: ['homunculus_property', 'Z24 C v3 V v12 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
 		,
 		'022F' => ['homunculus_food', 'C v', [qw(success foodID)]], # 5
 		'0230' => ['homunculus_info', 'C2 a4 V',[qw(type state ID val)]], # 12
@@ -582,7 +582,10 @@ sub new {
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F6' => ['rodex_delete', 'C V2', [qw(type mailID1 mailID2)]],   # 11
-		'09F7' => ['homunculus_property', 'Z24 C v12 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
+		'09F7' => ($rpackets{'09F7'}{length} == 75) # or 77
+			? ['homunculus_property', 'Z24 C v12 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
+			: ['homunculus_property', 'Z24 C v3 V v8 V2 v2 V2 v2', [qw(name state level hunger intimacy accessory atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]]
+		,
 		'09F8' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'09F9' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
@@ -665,6 +668,7 @@ sub new {
 		'0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
 		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
 		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate tab hotkeys)]],#herc PR 2468
+		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		};
 
 	# Item RECORD Struct's
@@ -1069,58 +1073,6 @@ sub mercenary_init {
 		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
 		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
 		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
-	}
-}
-
-# 022E
-sub homunculus_property {
-	my ($self, $args) = @_;
-
-	my $slave = $char->{homunculus} or return;
-
-	foreach (@{$args->{KEYS}}) {
-		$slave->{$_} = $args->{$_};
-	}
-	$slave->{name} = bytesToString($args->{name});
-
-	Network::Receive::slave_calcproperty_handler($slave, $args);
-	homunculus_state_handler($slave, $args);
-}
-
-sub homunculus_state_handler {
-	my ($slave, $args) = @_;
-	# Homunculus states:
-	# 0 - alive and unnamed
-	# 2 - rest
-	# 4 - dead
-
-	return unless $char->{homunculus};
-
-	if ($args->{state} == 0) {
-		$char->{homunculus}{renameflag} = 1;
-	} else {
-		$char->{homunculus}{renameflag} = 0;
-	}
-
-	if (($args->{state} & ~8) > 1) {
-		foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
-			delete $char->{skills}{$handle};
-		}
-		$char->{homunculus}->clear();
-		undef @{$char->{homunculus}{slave_skillsID}};
-		if (defined $slave->{state} && $slave->{state} != $args->{state}) {
-			if ($args->{state} & 2) {
-				message T("Your Homunculus was vaporized!\n"), 'homunculus';
-			} elsif ($args->{state} & 4) {
-				message T("Your Homunculus died!\n"), 'homunculus';
-			}
-		}
-	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
-		if ($slave->{state} & 2) {
-			message T("Your Homunculus was recalled!\n"), 'homunculus';
-		} elsif ($slave->{state} & 4) {
-			message T("Your Homunculus was resurrected!\n"), 'homunculus';
-		}
 	}
 }
 
