@@ -6262,6 +6262,8 @@ sub npc_talk_continue {
 	$ai_v{'npc_talk'}{'time'} = time;
 }
 
+# Displays an NPC dialog input box for numbers (ZC_OPEN_EDITDLG).
+# 0142 <npc id>.L
 sub npc_talk_number {
 	my ($self, $args) = @_;
 
