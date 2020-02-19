@@ -6291,6 +6291,8 @@ sub npc_talk_text {
 	$ai_v{'npc_talk'}{'time'} = time;
 }
 
+# Displays the buy/sell dialog of an NPC shop (ZC_SELECT_DEALTYPE).
+# 00C4 <shop id>.L
 sub npc_store_begin {
 	my ($self, $args) = @_;
 	undef %talk;
