@@ -4808,6 +4808,8 @@ sub character_deletion_failed {
 	}
 }
 
+# Notifies the client, that it is walking (ZC_NOTIFY_PLAYERMOVE).
+# 0087 <walk start time>.L <walk data>.6B
 sub character_moves {
 	my ($self, $args) = @_;
 
