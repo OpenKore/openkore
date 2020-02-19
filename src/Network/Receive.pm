@@ -2641,6 +2641,11 @@ sub homunculus_info {
 	}
 }
 
+# Marks a position on client's minimap (ZC_COMPASS).
+# 0144 <npc id>.L <type>.L <x>.L <y>.L <id>.B <color>.L
+#
+# Notification about an NPC's quest state (ZC_QUEST_NOTIFY_EFFECT).
+# 0446 <npc id>.L <x>.W <y>.W <effect>.W <color>.W
 ##
 # minimap_indicator({bool show, Actor actor, int x, int y, int red, int green, int blue, int alpha [, int effect]})
 # show: whether indicator is shown or cleared
