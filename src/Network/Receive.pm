@@ -6303,6 +6303,10 @@ sub npc_store_begin {
 	$storeList->{npcName} = getNPCName($args->{ID}) || T('Unknown');
 }
 
+# Presents list of items, that can be bought in an NPC shop (ZC_PC_PURCHASE_ITEMLIST).
+# 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.W }*
+# 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.L }*
+# 2 versions of same packet. $self->{npc_store_info_pack} (ZC_PC_PURCHASE_ITEMLIST_sub) should be changed in own serverType if needed
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
