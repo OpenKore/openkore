@@ -6450,6 +6450,40 @@ sub npc_clear_dialog {
 	debug "The dialogue with the NPC " .getHex($ID) ." was closed.\n", "parseMsg";
 }
 
+# Notification about the result of a purchase attempt from an NPC shop (ZC_PC_PURCHASE_RESULT).
+# 00CA <result>.B
+# result:
+#     0 = "The deal has successfully completed."
+#     1 = "You do not have enough zeny."
+#     2 = "You are over your Weight Limit."
+#     3 = "Out of the maximum capacity, you have too many items."
+#     4 = "Item does not exist in store"
+#     5 = "Item cannot be exchanged"
+#     6 = "Invalid store"
+sub buy_result {
+	my ($self, $args) = @_;
+	if ($args->{fail} == 0) {
+		message T("Buy completed.\n"), "success";
+	} elsif ($args->{fail} == 1) {
+		error T("Buy failed (insufficient zeny).\n");
+	} elsif ($args->{fail} == 2) {
+		error T("Buy failed (insufficient weight capacity).\n");
+	} elsif ($args->{fail} == 3) {
+		error T("Buy failed (too many different inventory items).\n");
+	} elsif ($args->{fail} == 4) {
+		error T("Buy failed (item does not exist in store).\n");
+	} elsif ($args->{fail} == 5) {
+		error T("Buy failed (item cannot be exchanged).\n");
+	} elsif ($args->{fail} == 6) {
+		error T("Buy failed (invalid store).\n");
+	} else {
+		error TF("Buy failed (failure code %s).\n", $args->{fail});
+	}
+	if (AI::is("buyAuto")) {
+		AI::args->{recv_buy_packet} = 1;
+	}
+}
+
 sub deal_add_you {
 	my ($self, $args) = @_;
 

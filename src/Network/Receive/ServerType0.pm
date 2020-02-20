@@ -1000,30 +1000,6 @@ sub _items_list {
 ###### Packet handling callbacks ######
 #######################################
 
-sub buy_result {
-	my ($self, $args) = @_;
-	if ($args->{fail} == 0) {
-		message T("Buy completed.\n"), "success";
-	} elsif ($args->{fail} == 1) {
-		error T("Buy failed (insufficient zeny).\n");
-	} elsif ($args->{fail} == 2) {
-		error T("Buy failed (insufficient weight capacity).\n");
-	} elsif ($args->{fail} == 3) {
-		error T("Buy failed (too many different inventory items).\n");
-	} elsif ($args->{fail} == 4) {
-		error T("Buy failed (item does not exist in store).\n");
-	} elsif ($args->{fail} == 5) {
-		error T("Buy failed (item cannot be exchanged).\n");
-	} elsif ($args->{fail} == 6) {
-		error T("Buy failed (invalid store).\n");
-	} else {
-		error TF("Buy failed (failure code %s).\n", $args->{fail});
-	}
-	if (AI::is("buyAuto")) {
-		AI::args->{recv_buy_packet} = 1;
-	}
-}
-
 # Non kRO client still use old packet that without kafra_points (equals to kRO 2007-07-11)
 # Confirmed on idRO_Renewal and iRO Chaos
 sub parse_cash_dealer {

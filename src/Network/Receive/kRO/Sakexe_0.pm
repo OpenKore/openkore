@@ -935,24 +935,6 @@ sub _items_list {
 ###### Packet handling callbacks ######
 #######################################
 
-sub buy_result {
-	my ($self, $args) = @_;
-	if ($args->{fail} == 0) {
-		message T("Buy completed.\n"), "success";
-	} elsif ($args->{fail} == 1) {
-		error T("Buy failed (insufficient zeny).\n");
-	} elsif ($args->{fail} == 2) {
-		error T("Buy failed (insufficient weight capacity).\n");
-	} elsif ($args->{fail} == 3) {
-		error T("Buy failed (too many different inventory items).\n");
-	} else {
-		error TF("Buy failed (failure code %s).\n", $args->{fail});
-	}
-	if (AI::is("buyAuto")) {
-		AI::args->{recv_buy_packet} = 1;
-	}
-}
-
 # kRO client from 2007-07-11 sends cash_points and kafra_points
 sub parse_cash_dealer {
 
