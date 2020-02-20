@@ -5400,6 +5400,8 @@ sub friend_logon {
 	}
 }
 
+# Asks a player for permission to be added as friend (ZC_REQ_ADD_FRIENDS).
+# 0207 <req account id>.L <req char id>.L <req char name>.24B
 sub friend_request {
 	my ($self, $args) = @_;
 
