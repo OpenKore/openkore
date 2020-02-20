@@ -1027,34 +1027,6 @@ sub character_creation_failed {
 	}
 }
 
-# 029B
-sub mercenary_init {
-	my ($self, $args) = @_;
-
-	$char->{mercenary} = Actor::get ($args->{ID}); # TODO: was it added to an actorList yet?
-	$char->{mercenary}{map} = $field->baseName;
-	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
-		AI::SlaveManager::addSlave ($char->{mercenary});
-	}
-
-	my $slave = $char->{mercenary};
-
-	foreach (@{$args->{KEYS}}) {
-		$slave->{$_} = $args->{$_};
-	}
-	$slave->{name} = bytesToString($args->{name});
-
-	Network::Receive::slave_calcproperty_handler($slave, $args);
-
-	# ST0's counterpart for ST kRO, since it attempts to support all servers
-	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
-	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
-		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
-		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
-		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
-	}
-}
-
 sub gameguard_request {
 	my ($self, $args) = @_;
 

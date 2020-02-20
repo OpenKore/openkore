@@ -9462,6 +9462,35 @@ sub storage_password_result {
 	# unknown, what is this for?
 }
 
+# Mercenary base status data (ZC_MER_INIT).
+# 029B <id>.L <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <name>.24B <level>.W <hp>.L <maxhp>.L <sp>.L <maxsp>.L <expire time>.L <faith>.W <calls>.L <kills>.L <atk range>.W
+sub mercenary_init {
+	my ($self, $args) = @_;
+
+	$char->{mercenary} = Actor::get ($args->{ID}); # TODO: was it added to an actorList yet?
+	$char->{mercenary}{map} = $field->baseName;
+	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
+		AI::SlaveManager::addSlave ($char->{mercenary});
+	}
+
+	my $slave = $char->{mercenary};
+
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
+	}
+	$slave->{name} = bytesToString($args->{name});
+
+	Network::Receive::slave_calcproperty_handler($slave, $args);
+
+	# ST0's counterpart for ST kRO, since it attempts to support all servers
+	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
+	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
+		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
+		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
+		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
+	}
+}
+
 # +message_string
 sub mercenary_off {
 	$slavesList->removeByID($char->{mercenary}{ID});
