@@ -4885,6 +4885,12 @@ sub character_status {
 	setStatus($actor, $args->{opt1}, $args->{opt2}, $args->{option});
 }
 
+# Inform client whether chatroom creation was successful or not (ZC_ACK_CREATE_CHATROOM).
+# 00D6 <flag>.B
+# flag:
+#     0 = Room has been successfully created (opens chat room)
+#     1 = Room limit exceeded
+#     2 = Same room already exists
 sub chat_created {
 	my ($self, $args) = @_;
 
