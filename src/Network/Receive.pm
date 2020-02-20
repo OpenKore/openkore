@@ -3092,6 +3092,13 @@ sub arrow_equipped {
 	}
 }
 
+# Notifies the client, about a received inventory item or the result of a pick-up request.
+# 00A0 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B (ZC_ITEM_PICKUP_ACK)
+# 029A <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L (ZC_ITEM_PICKUP_ACK2)
+# 02D4 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK3)
+# 0990 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK_V5)
+# 0A0C <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ITEM_PICKUP_ACK_V6)
+# 0A37 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W { <option id>.W <option value>.W <option param>.B }*5 <favorite>.B <view id>.W (ZC_ITEM_PICKUP_ACK_V7)
 sub inventory_item_added {
 	my ($self, $args) = @_;
 
@@ -4878,6 +4885,12 @@ sub character_status {
 	setStatus($actor, $args->{opt1}, $args->{opt2}, $args->{option});
 }
 
+# Inform client whether chatroom creation was successful or not (ZC_ACK_CREATE_CHATROOM).
+# 00D6 <flag>.B
+# flag:
+#     0 = Room has been successfully created (opens chat room)
+#     1 = Room limit exceeded
+#     2 = Same room already exists
 sub chat_created {
 	my ($self, $args) = @_;
 
@@ -4892,6 +4905,13 @@ sub chat_created {
 	});
 }
 
+# Display a chat above the owner (ZC_ROOM_NEWENTRY).
+# 00D7 <packet len>.W <owner id>.L <char id>.L <limit>.W <users>.W <type>.B <title>.?B
+# type:
+#     0 = private (password protected)
+#     1 = public
+#     2 = arena (npc waiting room)
+#     3 = PK zone (non-clickable)
 sub chat_info {
 	my ($self, $args) = @_;
 
@@ -4919,16 +4939,87 @@ sub chat_info {
 	});
 }
 
+# Notifies the client about entering a chatroom (ZC_ENTER_ROOM).
+# 00DB <packet len>.W <chat id>.L { <role>.L <name>.24B }*
+# role:
+#     0 = owner (menu)
+#     1 = normal
+sub chat_users {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+
+	my $ID = substr($args->{RAW_MSG},4,4);
+	$currentChatRoom = $ID;
+
+	my $chat = $chatRooms{$currentChatRoom} ||= {};
+
+	$chat->{num_users} = 0;
+	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 28) {
+		my ($type, $chatUser) = unpack('V Z24', substr($msg, $i, 28));
+
+		$chatUser = bytesToString($chatUser);
+
+		if ($chat->{users}{$chatUser} eq "") {
+			binAdd(\@currentChatRoomUsers, $chatUser);
+			if ($type == 0) {
+				$chat->{users}{$chatUser} = 2;
+			} else {
+				$chat->{users}{$chatUser} = 1;
+			}
+			$chat->{num_users}++;
+		}
+	}
+
+	message TF("You have joined the Chat Room %s\n", $chat->{title});
+
+	Plugins::callHook('chat_joined', {
+		chat => $chat,
+	});
+}
+
+# Displays messages regarding join chat failures (ZC_REFUSE_ENTER_ROOM).
+# 00DA <result>.B
+# result:
+#     0 = room full
+#     1 = wrong password
+#     2 = kicked
+#     3 = success (no message)
+#     4 = no enough zeny
+#     5 = too low level
+#     6 = too high level
+#     7 = unsuitable job class
 sub chat_join_result {
 	my ($self, $args) = @_;
 
-	if ($args->{type} == 1) {
+	if($args->{type} == 0) {
+		message T("Can't join Chat Room - Room is Full\n");
+	} elsif ($args->{type} == 1) {
 		message T("Can't join Chat Room - Incorrect Password\n");
 	} elsif ($args->{type} == 2) {
-		message T("Can't join Chat Room - You're banned\n");
+		message T("Can't join Chat Room - You're Kicked\n");
+	} elsif ($args->{type} == 2) {
+		message T("Joined Chat Room\n");
+	} elsif ($args->{type} == 2) {
+		message T("Can't join Chat Room - No Enough Zeny\n"); # ??
+	} elsif ($args->{type} == 2) {
+		message T("Can't join Chat Room - You're Low Level\n");
+	} elsif ($args->{type} == 2) {
+		message T("Can't join Chat Room - You're High Level\n");
+	} elsif ($args->{type} == 2) {
+		message T("Can't join Chat Room - You're Unsuitable Job Class\n");
+	} else {
+		message TF("Can't join Chat Room - Unknown Reason (%s)\n", $args->{type});
 	}
 }
 
+# Chatroom properties adjustment (ZC_CHANGE_CHATROOM).
+# 00DF <packet len>.W <owner id>.L <chat id>.L <limit>.W <users>.W <type>.B <title>.?B
+# type:
+#     0 = private (password protected)
+#     1 = public
+#     2 = arena (npc waiting room)
+#     3 = PK zone (non-clickable)
 sub chat_modified {
 	my ($self, $args) = @_;
 
@@ -4960,6 +5051,11 @@ sub chat_modified {
 	message T("Chat Room Properties Modified\n");
 }
 
+# Announce the new owner (ZC_ROLE_CHANGE).
+# 00E1 <role>.L <nick>.24B
+# role:
+#     0 = owner (menu)
+#     1 = normal
 sub chat_newowner {
 	my ($self, $args) = @_;
 
@@ -4987,6 +5083,8 @@ sub chat_newowner {
 	}
 }
 
+# Notifies clients in a chat about a new member (ZC_MEMBER_NEWENTRY).
+# 00DC <users>.W <name>.24B
 sub chat_user_join {
 	my ($self, $args) = @_;
 
@@ -4999,6 +5097,11 @@ sub chat_user_join {
 	}
 }
 
+# Notify about user leaving the chatroom (ZC_MEMBER_EXIT).
+# 00DD <users>.W <nick>.24B <flag>.B
+# flag:
+#     0 = left
+#     1 = kicked
 sub chat_user_leave {
 	my ($self, $args) = @_;
 
@@ -5018,6 +5121,8 @@ sub chat_user_leave {
 	}
 }
 
+# Removes the chatroom (ZC_DESTROY_ROOM).
+# 00D8 <chat id>.L
 sub chat_removed {
 	my ($self, $args) = @_;
 
@@ -5341,6 +5446,37 @@ sub errors {
 	}
 }
 
+# Sends the whole friends list (ZC_FRIENDS_LIST).
+# 0201 <packet len>.W { <account id>.L <char id>.L <name>.24B }*
+# 0201 <packet len>.W { <account id>.L <char id>.L }*
+sub friend_list {
+	my ($self, $args) = @_;
+
+	# Friend list
+	undef @friendsID;
+	undef %friends;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+
+	my $ID = 0;
+	for (my $i = 4; $i < $msg_size; $i += 32) {
+		binAdd(\@friendsID, $ID);
+		($friends{$ID}{'accountID'},
+		$friends{$ID}{'charID'},
+		$friends{$ID}{'name'}) = unpack('a4 a4 Z24', substr($args->{RAW_MSG}, $i, 32));
+
+		$friends{$ID}{'name'} = bytesToString($friends{$ID}{'name'});
+		$friends{$ID}{'online'} = 0;
+		$ID++;
+	}
+}
+
+# Toggles a single friend online/offline (ZC_FRIENDS_STATE).
+# 0206 <account id>.L <char id>.L <state>.B
+# 0206 <account id>.L <char id>.L <state>.B <name>.24B
+# state:
+#     0 = online
+#     1 = offline
 sub friend_logon {
 	my ($self, $args) = @_;
 
@@ -5362,6 +5498,8 @@ sub friend_logon {
 	}
 }
 
+# Asks a player for permission to be added as friend (ZC_REQ_ADD_FRIENDS).
+# 0207 <req account id>.L <req char id>.L <req char name>.24B
 sub friend_request {
 	my ($self, $args) = @_;
 
@@ -5373,6 +5511,8 @@ sub friend_request {
 	message TF("Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n", $incomingFriend{'name'});
 }
 
+# Notification about a friend removed (PACKET_ZC_DELETE_FRIENDS).
+# 020A <account id>.L <char id>.L
 sub friend_removed {
 	my ($self, $args) = @_;
 
@@ -5389,22 +5529,35 @@ sub friend_removed {
 	}
 }
 
+# Notification about the result of a friend add request (ZC_ADD_FRIENDS_LIST).
+# 0209 <result>.W <account id>.L <char id>.L <name>.24B
+# result:
+#     0 = MsgStringTable[821]="You have become friends with (%s)."
+#     1 = MsgStringTable[822]="(%s) does not want to be friends with you."
+#     2 = MsgStringTable[819]="Your Friend List is full."
+#     3 = MsgStringTable[820]="(%s)'s Friend List is full."
 sub friend_response {
 	my ($self, $args) = @_;
 
 	# Response to friend request
 	my $type = $args->{type};
 	my $name = bytesToString($args->{name});
-	if ($type) {
-		message TF("%s rejected to be your friend\n", $name);
-	} else {
+	if ($type == 0) {
 		my $ID = @friendsID;
 		binAdd(\@friendsID, $ID);
 		$friends{$ID}{accountID} = substr($args->{RAW_MSG}, 4, 4);
 		$friends{$ID}{charID} = substr($args->{RAW_MSG}, 8, 4);
 		$friends{$ID}{name} = $name;
 		$friends{$ID}{online} = 1;
-		message TF("%s is now your friend\n", $name);
+		message TF("You have become friends with (%s)\n", $name);
+	} elsif ($type == 1) {
+		message TF("(%s) does not want to be friends with you\n", $name);
+	} elsif ($type == 2) {
+		message T("Your Friend List is full");
+	} elsif ($type == 3) {
+		message TF("%s's Friend List is full\n", $name);
+	} else {
+		message TF("%s rejected to be your friend\n", $name);
 	}
 }
 
@@ -6441,6 +6594,40 @@ sub npc_clear_dialog {
 	my ($self, $args) = @_;
 	my $ID = $args->{ID};
 	debug "The dialogue with the NPC " .getHex($ID) ." was closed.\n", "parseMsg";
+}
+
+# Notification about the result of a purchase attempt from an NPC shop (ZC_PC_PURCHASE_RESULT).
+# 00CA <result>.B
+# result:
+#     0 = "The deal has successfully completed."
+#     1 = "You do not have enough zeny."
+#     2 = "You are over your Weight Limit."
+#     3 = "Out of the maximum capacity, you have too many items."
+#     4 = "Item does not exist in store"
+#     5 = "Item cannot be exchanged"
+#     6 = "Invalid store"
+sub buy_result {
+	my ($self, $args) = @_;
+	if ($args->{fail} == 0) {
+		message T("Buy completed.\n"), "success";
+	} elsif ($args->{fail} == 1) {
+		error T("Buy failed (insufficient zeny).\n");
+	} elsif ($args->{fail} == 2) {
+		error T("Buy failed (insufficient weight capacity).\n");
+	} elsif ($args->{fail} == 3) {
+		error T("Buy failed (too many different inventory items).\n");
+	} elsif ($args->{fail} == 4) {
+		error T("Buy failed (item does not exist in store).\n");
+	} elsif ($args->{fail} == 5) {
+		error T("Buy failed (item cannot be exchanged).\n");
+	} elsif ($args->{fail} == 6) {
+		error T("Buy failed (invalid store).\n");
+	} else {
+		error TF("Buy failed (failure code %s).\n", $args->{fail});
+	}
+	if (AI::is("buyAuto")) {
+		AI::args->{recv_buy_packet} = 1;
+	}
 }
 
 sub deal_add_you {
@@ -9275,6 +9462,35 @@ sub storage_password_result {
 	# unknown, what is this for?
 }
 
+# Mercenary base status data (ZC_MER_INIT).
+# 029B <id>.L <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <name>.24B <level>.W <hp>.L <maxhp>.L <sp>.L <maxsp>.L <expire time>.L <faith>.W <calls>.L <kills>.L <atk range>.W
+sub mercenary_init {
+	my ($self, $args) = @_;
+
+	$char->{mercenary} = Actor::get ($args->{ID}); # TODO: was it added to an actorList yet?
+	$char->{mercenary}{map} = $field->baseName;
+	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
+		AI::SlaveManager::addSlave ($char->{mercenary});
+	}
+
+	my $slave = $char->{mercenary};
+
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
+	}
+	$slave->{name} = bytesToString($args->{name});
+
+	Network::Receive::slave_calcproperty_handler($slave, $args);
+
+	# ST0's counterpart for ST kRO, since it attempts to support all servers
+	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
+	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
+		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
+		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
+		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
+	}
+}
+
 # +message_string
 sub mercenary_off {
 	$slavesList->removeByID($char->{mercenary}{ID});
@@ -9633,6 +9849,26 @@ sub skill_cast {
 
 		Misc::checkValidity("skill_cast part 4");
 	}
+}
+
+# Notifies clients in area, that an object canceled casting (ZC_DISPEL).
+# 01B9 <id>.L
+sub cast_cancelled {
+	my ($self, $args) = @_;
+
+	# Cast is cancelled
+	my $ID = $args->{ID};
+
+	my $source = Actor::get($ID);
+	$source->{cast_cancelled} = time;
+	my $skill = $source->{casting}->{skill};
+	my $skillName = $skill ? $skill->getName() : T('Unknown');
+	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
+	message sprintf($source->verb(T("%s failed to cast %s\n"), T("%s failed to cast %s\n")), $source, $skillName), $domain;
+	Plugins::callHook('packet_castCancelled', {
+		sourceID => $ID
+	});
+	delete $source->{casting};
 }
 
 # Notifies the client, whether it can disconnect and change servers (ZC_RESTART_ACK).
