@@ -1079,26 +1079,6 @@ sub cast_cancelled {
 	delete $source->{casting};
 }
 
-sub friend_list {
-	my ($self, $args) = @_;
-
-	# Friend list
-	undef @friendsID;
-	undef %friends;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	my $ID = 0;
-	for (my $i = 4; $i < $msg_size; $i += 32) {
-		binAdd(\@friendsID, $ID);
-		$friends{$ID}{'accountID'} = substr($msg, $i, 4);
-		$friends{$ID}{'charID'} = substr($msg, $i + 4, 4);
-		$friends{$ID}{'name'} = bytesToString(unpack("Z24", substr($msg, $i + 8 , 24)));
-		$friends{$ID}{'online'} = 0;
-		$ID++;
-	}
-}
-
 # 029B
 sub mercenary_init {
 	my ($self, $args) = @_;

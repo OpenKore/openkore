@@ -1013,28 +1013,6 @@ sub cast_cancelled {
 	delete $source->{casting};
 }
 
-# TODO: test optimized unpacking
-sub friend_list {
-	my ($self, $args) = @_;
-
-	# Friend list
-	undef @friendsID;
-	undef %friends;
-
-	my $ID = 0;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 32) {
-		binAdd(\@friendsID, $ID);
-
-		($friends{$ID}{'accountID'},
-		$friends{$ID}{'charID'},
-		$friends{$ID}{'name'}) = unpack('a4 a4 Z24', substr($args->{RAW_MSG}, $i, 32));
-
-		$friends{$ID}{'name'} = bytesToString($friends{$ID}{'name'});
-		$friends{$ID}{'online'} = 0;
-		$ID++;
-	}
-}
-
 # 029B
 sub mercenary_init {
 	my ($self, $args) = @_;

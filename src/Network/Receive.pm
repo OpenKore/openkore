@@ -5348,6 +5348,31 @@ sub errors {
 	}
 }
 
+# Sends the whole friends list (ZC_FRIENDS_LIST).
+# 0201 <packet len>.W { <account id>.L <char id>.L <name>.24B }*
+# 0201 <packet len>.W { <account id>.L <char id>.L }*
+sub friend_list {
+	my ($self, $args) = @_;
+
+	# Friend list
+	undef @friendsID;
+	undef %friends;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+
+	my $ID = 0;
+	for (my $i = 4; $i < $msg_size; $i += 32) {
+		binAdd(\@friendsID, $ID);
+		($friends{$ID}{'accountID'},
+		$friends{$ID}{'charID'},
+		$friends{$ID}{'name'}) = unpack('a4 a4 Z24', substr($args->{RAW_MSG}, $i, 32));
+
+		$friends{$ID}{'name'} = bytesToString($friends{$ID}{'name'});
+		$friends{$ID}{'online'} = 0;
+		$ID++;
+	}
+}
+
 sub friend_logon {
 	my ($self, $args) = @_;
 
