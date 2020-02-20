@@ -935,24 +935,6 @@ sub _items_list {
 ###### Packet handling callbacks ######
 #######################################
 
-sub buy_result {
-	my ($self, $args) = @_;
-	if ($args->{fail} == 0) {
-		message T("Buy completed.\n"), "success";
-	} elsif ($args->{fail} == 1) {
-		error T("Buy failed (insufficient zeny).\n");
-	} elsif ($args->{fail} == 2) {
-		error T("Buy failed (insufficient weight capacity).\n");
-	} elsif ($args->{fail} == 3) {
-		error T("Buy failed (too many different inventory items).\n");
-	} else {
-		error TF("Buy failed (failure code %s).\n", $args->{fail});
-	}
-	if (AI::is("buyAuto")) {
-		AI::args->{recv_buy_packet} = 1;
-	}
-}
-
 # kRO client from 2007-07-11 sends cash_points and kafra_points
 sub parse_cash_dealer {
 
@@ -975,107 +957,6 @@ sub character_creation_failed {
 		$firstLoginMap = 1;
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
-	}
-}
-
-# TODO: test optimized unpacking
-sub chat_users {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-
-	my $ID = substr($args->{RAW_MSG},4,4);
-	$currentChatRoom = $ID;
-
-	my $chat = $chatRooms{$currentChatRoom} ||= {};
-
-	$chat->{num_users} = 0;
-	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 28) {
-		my ($type, $chatUser) = unpack('V Z24', substr($msg, $i, 28));
-
-		$chatUser = bytesToString($chatUser);
-
-		if ($chat->{users}{$chatUser} eq "") {
-			binAdd(\@currentChatRoomUsers, $chatUser);
-			if ($type == 0) {
-				$chat->{users}{$chatUser} = 2;
-			} else {
-				$chat->{users}{$chatUser} = 1;
-			}
-			$chat->{num_users}++;
-		}
-	}
-
-	message TF("You have joined the Chat Room %s\n", $chat->{title});
-
-	Plugins::callHook('chat_joined', {
-		chat => $chat,
-	});
-}
-
-sub cast_cancelled {
-	my ($self, $args) = @_;
-
-	# Cast is cancelled
-	my $ID = $args->{ID};
-
-	my $source = Actor::get($ID);
-	$source->{cast_cancelled} = time;
-	my $skill = $source->{casting}->{skill};
-	my $skillName = $skill ? $skill->getName() : T('Unknown');
-	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
-	message TF("%s failed to cast %s\n", $source, $skillName), $domain;
-	Plugins::callHook('packet_castCancelled', {
-		sourceID => $ID
-	});
-	delete $source->{casting};
-}
-
-# TODO: test optimized unpacking
-sub friend_list {
-	my ($self, $args) = @_;
-
-	# Friend list
-	undef @friendsID;
-	undef %friends;
-
-	my $ID = 0;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 32) {
-		binAdd(\@friendsID, $ID);
-
-		($friends{$ID}{'accountID'},
-		$friends{$ID}{'charID'},
-		$friends{$ID}{'name'}) = unpack('a4 a4 Z24', substr($args->{RAW_MSG}, $i, 32));
-
-		$friends{$ID}{'name'} = bytesToString($friends{$ID}{'name'});
-		$friends{$ID}{'online'} = 0;
-		$ID++;
-	}
-}
-
-# 029B
-sub mercenary_init {
-	my ($self, $args) = @_;
-
-	$char->{mercenary} = Actor::get ($args->{ID}); # TODO: was it added to an actorList yet?
-	$char->{mercenary}{map} = $field->baseName;
-	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
-		AI::SlaveManager::addSlave ($char->{mercenary});
-	}
-
-	my $slave = $char->{mercenary};
-
-	foreach (@{$args->{KEYS}}) {
-		$slave->{$_} = $args->{$_};
-	}
-	$slave->{name} = bytesToString($args->{name});
-
-	Network::Receive::slave_calcproperty_handler($slave, $args);
-
-	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range}) {
-		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
-		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
-		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
 	}
 }
 
