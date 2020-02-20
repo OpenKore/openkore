@@ -4905,6 +4905,13 @@ sub chat_created {
 	});
 }
 
+# Display a chat above the owner (ZC_ROOM_NEWENTRY).
+# 00D7 <packet len>.W <owner id>.L <char id>.L <limit>.W <users>.W <type>.B <title>.?B
+# type:
+#     0 = private (password protected)
+#     1 = public
+#     2 = arena (npc waiting room)
+#     3 = PK zone (non-clickable)
 sub chat_info {
 	my ($self, $args) = @_;
 
@@ -4933,7 +4940,7 @@ sub chat_info {
 }
 
 # Notifies the client about entering a chatroom (ZC_ENTER_ROOM).
-# 00db <packet len>.W <chat id>.L { <role>.L <name>.24B }*
+# 00DB <packet len>.W <chat id>.L { <role>.L <name>.24B }*
 # role:
 #     0 = owner (menu)
 #     1 = normal
