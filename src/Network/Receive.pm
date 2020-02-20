@@ -5013,6 +5013,13 @@ sub chat_join_result {
 	}
 }
 
+# Chatroom properties adjustment (ZC_CHANGE_CHATROOM).
+# 00DF <packet len>.W <owner id>.L <chat id>.L <limit>.W <users>.W <type>.B <title>.?B
+# type:
+#     0 = private (password protected)
+#     1 = public
+#     2 = arena (npc waiting room)
+#     3 = PK zone (non-clickable)
 sub chat_modified {
 	my ($self, $args) = @_;
 
