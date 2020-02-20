@@ -5083,6 +5083,8 @@ sub chat_newowner {
 	}
 }
 
+# Notifies clients in a chat about a new member (ZC_MEMBER_NEWENTRY).
+# 00DC <users>.W <name>.24B
 sub chat_user_join {
 	my ($self, $args) = @_;
 
