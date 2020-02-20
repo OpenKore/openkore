@@ -5373,6 +5373,12 @@ sub friend_list {
 	}
 }
 
+# Toggles a single friend online/offline (ZC_FRIENDS_STATE).
+# 0206 <account id>.L <char id>.L <state>.B
+# 0206 <account id>.L <char id>.L <state>.B <name>.24B
+# state:
+#     0 = online
+#     1 = offline
 sub friend_logon {
 	my ($self, $args) = @_;
 
