@@ -5097,6 +5097,11 @@ sub chat_user_join {
 	}
 }
 
+# Notify about user leaving the chatroom (ZC_MEMBER_EXIT).
+# 00DD <users>.W <nick>.24B <flag>.B
+# flag:
+#     0 = left
+#     1 = kicked
 sub chat_user_leave {
 	my ($self, $args) = @_;
 
