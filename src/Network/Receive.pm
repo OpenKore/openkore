@@ -5051,6 +5051,11 @@ sub chat_modified {
 	message T("Chat Room Properties Modified\n");
 }
 
+# Announce the new owner (ZC_ROLE_CHANGE).
+# 00E1 <role>.L <nick>.24B
+# role:
+#     0 = owner (menu)
+#     1 = normal
 sub chat_newowner {
 	my ($self, $args) = @_;
 
