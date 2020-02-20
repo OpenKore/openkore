@@ -1027,40 +1027,6 @@ sub character_creation_failed {
 	}
 }
 
-sub chat_users {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-
-	my $ID = substr($args->{RAW_MSG},4,4);
-	$currentChatRoom = $ID;
-
-	my $chat = $chatRooms{$currentChatRoom} ||= {};
-
-	$chat->{num_users} = 0;
-	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 28) {
-		my $type = unpack("C1",substr($msg,$i,1));
-		my ($chatUser) = unpack("Z*", substr($msg,$i + 4,24));
-		$chatUser = bytesToString($chatUser);
-
-		if ($chat->{users}{$chatUser} eq "") {
-			binAdd(\@currentChatRoomUsers, $chatUser);
-			if ($type == 0) {
-				$chat->{users}{$chatUser} = 2;
-			} else {
-				$chat->{users}{$chatUser} = 1;
-			}
-			$chat->{num_users}++;
-		}
-	}
-
-	message TF("You have joined the Chat Room %s\n", $chat->{title});
-
-	Plugins::callHook('chat_joined', {
-		chat => $chat,
-	});
-}
-
 sub cast_cancelled {
 	my ($self, $args) = @_;
 

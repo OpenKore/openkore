@@ -4926,6 +4926,45 @@ sub chat_info {
 	});
 }
 
+# Notifies the client about entering a chatroom (ZC_ENTER_ROOM).
+# 00db <packet len>.W <chat id>.L { <role>.L <name>.24B }*
+# role:
+#     0 = owner (menu)
+#     1 = normal
+sub chat_users {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+
+	my $ID = substr($args->{RAW_MSG},4,4);
+	$currentChatRoom = $ID;
+
+	my $chat = $chatRooms{$currentChatRoom} ||= {};
+
+	$chat->{num_users} = 0;
+	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 28) {
+		my ($type, $chatUser) = unpack('V Z24', substr($msg, $i, 28));
+
+		$chatUser = bytesToString($chatUser);
+
+		if ($chat->{users}{$chatUser} eq "") {
+			binAdd(\@currentChatRoomUsers, $chatUser);
+			if ($type == 0) {
+				$chat->{users}{$chatUser} = 2;
+			} else {
+				$chat->{users}{$chatUser} = 1;
+			}
+			$chat->{num_users}++;
+		}
+	}
+
+	message TF("You have joined the Chat Room %s\n", $chat->{title});
+
+	Plugins::callHook('chat_joined', {
+		chat => $chat,
+	});
+}
+
 sub chat_join_result {
 	my ($self, $args) = @_;
 
