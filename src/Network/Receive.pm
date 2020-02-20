@@ -5413,6 +5413,8 @@ sub friend_request {
 	message TF("Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n", $incomingFriend{'name'});
 }
 
+# Notification about a friend removed (PACKET_ZC_DELETE_FRIENDS).
+# 020A <account id>.L <char id>.L
 sub friend_removed {
 	my ($self, $args) = @_;
 
