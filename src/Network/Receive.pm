@@ -1076,15 +1076,8 @@ sub map_loaded {
 
 		$messageSender->sendSync(1);
 
-		$messageSender->sendGuildMasterMemberCheck();
-
-		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
+		# Request for Guild Information
 		$messageSender->sendGuildRequestInfo(0);
-		
-		$messageSender->sendGuildRequestInfo(0) unless($masterServer->{private});
-
-		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		$messageSender->sendGuildRequestInfo(1);
 
 		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
 		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});	
@@ -5789,10 +5782,16 @@ sub guild_name {
 	$char->{guildID} = $guildID;
 	$char->{guild}{emblem} = $emblemID;
 
-	$messageSender->sendGuildMasterMemberCheck();
-	$messageSender->sendGuildRequestInfo(0);	#requests for guild info packet 01B6 and 014C
-	$messageSender->sendGuildRequestInfo(1);	#requests for guild member packet 0166 and 0154
 	debug "guild name: $guildName\n";
+
+	# emulate client behavior
+	$messageSender->sendGuildMasterMemberCheck();
+	$messageSender->sendGuildRequestInfo(4);			# Requests for Expulsion list
+	$messageSender->sendGuildRequestInfo(0);			# Requests for Basic Information Guild, Hostile Alliance Information
+	$messageSender->sendGuildRequestInfo(1);			# Requests for Members list, list job title
+	$messageSender->sendGuildRequestEmblem($guildID);	# Requests for Guild Emblem
+	# TODO: check if is necessary use PAGE 2 (title information list) 
+	# $messageSender->sendGuildRequestInfo(2);			# Requests for List job title, title information list [Guild Title System]
 }
 
 sub guild_request {

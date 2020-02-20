@@ -1091,12 +1091,6 @@ sub guild_notice {
 			"------------------\n", $args->{subject}, $args->{notice});
 		message $msg, "guildnotice";
 	}
-	#message	T("Requesting guild information...\n"), "info"; # Lets Disable this, its kinda useless.
-	$messageSender->sendGuildMasterMemberCheck();
-	# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-	$messageSender->sendGuildRequestInfo(0);
-	# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-	$messageSender->sendGuildRequestInfo(1);
 }
 
 sub identify_list {
