@@ -9822,6 +9822,26 @@ sub skill_cast {
 	}
 }
 
+# Notifies clients in area, that an object canceled casting (ZC_DISPEL).
+# 01B9 <id>.L
+sub cast_cancelled {
+	my ($self, $args) = @_;
+
+	# Cast is cancelled
+	my $ID = $args->{ID};
+
+	my $source = Actor::get($ID);
+	$source->{cast_cancelled} = time;
+	my $skill = $source->{casting}->{skill};
+	my $skillName = $skill ? $skill->getName() : T('Unknown');
+	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
+	message sprintf($source->verb(T("%s failed to cast %s\n"), T("%s failed to cast %s\n")), $source, $skillName), $domain;
+	Plugins::callHook('packet_castCancelled', {
+		sourceID => $ID
+	});
+	delete $source->{casting};
+}
+
 # Notifies the client, whether it can disconnect and change servers (ZC_RESTART_ACK).
 # 00B3 <type>.B
 # type:

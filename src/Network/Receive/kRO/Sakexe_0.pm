@@ -960,24 +960,6 @@ sub character_creation_failed {
 	}
 }
 
-sub cast_cancelled {
-	my ($self, $args) = @_;
-
-	# Cast is cancelled
-	my $ID = $args->{ID};
-
-	my $source = Actor::get($ID);
-	$source->{cast_cancelled} = time;
-	my $skill = $source->{casting}->{skill};
-	my $skillName = $skill ? $skill->getName() : T('Unknown');
-	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
-	message TF("%s failed to cast %s\n", $source, $skillName), $domain;
-	Plugins::callHook('packet_castCancelled', {
-		sourceID => $ID
-	});
-	delete $source->{casting};
-}
-
 # 029B
 sub mercenary_init {
 	my ($self, $args) = @_;
