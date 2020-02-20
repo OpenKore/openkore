@@ -5121,6 +5121,8 @@ sub chat_user_leave {
 	}
 }
 
+# Removes the chatroom (ZC_DESTROY_ROOM).
+# 00D8 <chat id>.L
 sub chat_removed {
 	my ($self, $args) = @_;
 
