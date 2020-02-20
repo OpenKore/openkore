@@ -5429,22 +5429,35 @@ sub friend_removed {
 	}
 }
 
+# Notification about the result of a friend add request (ZC_ADD_FRIENDS_LIST).
+# 0209 <result>.W <account id>.L <char id>.L <name>.24B
+# result:
+#     0 = MsgStringTable[821]="You have become friends with (%s)."
+#     1 = MsgStringTable[822]="(%s) does not want to be friends with you."
+#     2 = MsgStringTable[819]="Your Friend List is full."
+#     3 = MsgStringTable[820]="(%s)'s Friend List is full."
 sub friend_response {
 	my ($self, $args) = @_;
 
 	# Response to friend request
 	my $type = $args->{type};
 	my $name = bytesToString($args->{name});
-	if ($type) {
-		message TF("%s rejected to be your friend\n", $name);
-	} else {
+	if ($type == 0) {
 		my $ID = @friendsID;
 		binAdd(\@friendsID, $ID);
 		$friends{$ID}{accountID} = substr($args->{RAW_MSG}, 4, 4);
 		$friends{$ID}{charID} = substr($args->{RAW_MSG}, 8, 4);
 		$friends{$ID}{name} = $name;
 		$friends{$ID}{online} = 1;
-		message TF("%s is now your friend\n", $name);
+		message TF("You have become friends with (%s)\n", $name);
+	} elsif ($type == 1) {
+		message TF("(%s) does not want to be friends with you\n", $name);
+	} elsif ($type == 2) {
+		message T("Your Friend List is full");
+	} elsif ($type == 3) {
+		message TF("%s's Friend List is full\n", $name);
+	} else {
+		message TF("%s rejected to be your friend\n", $name);
 	}
 }
 
