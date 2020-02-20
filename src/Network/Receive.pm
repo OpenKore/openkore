@@ -4978,13 +4978,38 @@ sub chat_users {
 	});
 }
 
+# Displays messages regarding join chat failures (ZC_REFUSE_ENTER_ROOM).
+# 00DA <result>.B
+# result:
+#     0 = room full
+#     1 = wrong password
+#     2 = kicked
+#     3 = success (no message)
+#     4 = no enough zeny
+#     5 = too low level
+#     6 = too high level
+#     7 = unsuitable job class
 sub chat_join_result {
 	my ($self, $args) = @_;
 
-	if ($args->{type} == 1) {
+	if($args->{type} == 0) {
+		message T("Can't join Chat Room - Room is Full\n");
+	} elsif ($args->{type} == 1) {
 		message T("Can't join Chat Room - Incorrect Password\n");
 	} elsif ($args->{type} == 2) {
-		message T("Can't join Chat Room - You're banned\n");
+		message T("Can't join Chat Room - You're Kicked\n");
+	} elsif ($args->{type} == 2) {
+		message T("Joined Chat Room\n");
+	} elsif ($args->{type} == 2) {
+		message T("Can't join Chat Room - No Enough Zeny\n"); # ??
+	} elsif ($args->{type} == 2) {
+		message T("Can't join Chat Room - You're Low Level\n");
+	} elsif ($args->{type} == 2) {
+		message T("Can't join Chat Room - You're High Level\n");
+	} elsif ($args->{type} == 2) {
+		message T("Can't join Chat Room - You're Unsuitable Job Class\n");
+	} else {
+		message TF("Can't join Chat Room - Unknown Reason (%s)\n", $args->{type});
 	}
 }
 
