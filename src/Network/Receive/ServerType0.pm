@@ -1563,35 +1563,6 @@ sub skills_list {
 	}
 }
 
-sub character_equip {
-	my ($self, $args) = @_;
-
-	my @items;
-	$self->_items_list({
-		class => 'Actor::Item',
-		hook => 'packet_character_equip',
-		debug_str => 'Other Character Equipment',
-		items => [$self->parse_items_nonstackable($args)],
-		adder => sub { push @items, $_[0] },
-	});
-
-	# Sort items by the rough order they'd show up in the official client.
-	my @bits = qw( 8 9 0 10 11 12 4 2 1 5 6 3 7 );
-	foreach my $item ( @items ) {
-		$item->{sort} |= ( ( $item->{equipped} >> $bits[$_] ) & 1 ) << $_ foreach 0 .. $#bits;
-	}
-
-	my $w = 0;
-	$w = max( $w, length $_ ) foreach values %equipTypes_lut;
-
-	my $msg = '';
-	$msg .= T("---------Equipment List--------\n");
-	$msg .= TF("Name: %s\n", $args->{name});
-	$msg .= "%-${w}s : %s\n", $equipTypes_lut{$_->{equipped}}, $_->{name} foreach sort { $a->{sort} <=> $b->{sort} } @items;
-	$msg .= "-------------------------------\n";
-	message($msg, "list");
-}
-
 sub top10 {
 	my ( $self, $args ) = @_;
 
