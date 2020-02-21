@@ -1958,11 +1958,6 @@ sub monster_hp_info_tiny {
 	}
 }
 
-sub move_interrupt {
-	my ($self, $args) = @_;
-	debug "Movement interrupted by casting a skill/fleeing a mob/etc\n";
-}
-
 sub equipswitch_run_res {
 	my ($self, $args) = @_;
 	if ($args->{success}) {

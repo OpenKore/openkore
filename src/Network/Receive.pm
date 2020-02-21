@@ -10375,4 +10375,11 @@ sub open_ui {
 	}
 }
 
+# Notifies a movement interrupted
+# 0AB8
+sub move_interrupt {
+	my ($self, $args) = @_;
+	debug "Movement interrupted by casting a skill/fleeing a mob/etc\n";
+}
+
 1;

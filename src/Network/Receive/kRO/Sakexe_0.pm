@@ -640,6 +640,7 @@ sub new {
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
+		'0AB8' => ['move_interrupt'],
 		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC2' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]],   # -1
