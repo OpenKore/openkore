@@ -1668,27 +1668,6 @@ sub auction_item_request_search {
 	message($msg, "list");
 }
 
-# 02CE
-#1 = The Memorial Dungeon expired; it has been destroyed
-#2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
-#3 = The Memorial Dungeon has been removed.
-#4 = Just remove the window, maybe party/guild leave
-# TODO: test if correct message displays, no type == 0 ?
-sub instance_window_leave {
-	my ($self, $args) = @_;
-	if($args->{type} == 1) {
-		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
-	} elsif($args->{type} == 2) {
-		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
-	} elsif($args->{type} == 3) {
-		message T("The Memorial Dungeon has been removed.\n"), "info";
-	} elsif ($args->{type} == 4) {
-		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
-	} else {
-		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
-	}
-}
-
 # 01D3
 # TODO
 sub sound_effect {

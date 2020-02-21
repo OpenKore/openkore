@@ -1823,33 +1823,6 @@ sub guild_emblem_img {
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
-# 02CE
-#0 = "The Memorial Dungeon reservation has been canceled/updated."
-#    Re-innit Window, in some rare cases.
-#1 = "The Memorial Dungeon expired; it has been destroyed."
-#2 = "The Memorial Dungeon's entry time limit expired; it has been destroyed."
-#3 = "The Memorial Dungeon has been removed."
-#4 = "A system error has occurred in the Memorial Dungeon. Please relog in to the game to continue playing."
-#    Just remove the window, maybe party/guild leave.
-# TODO: test if correct message displays, no type == 0 ?
-sub instance_window_leave {
-	my ($self, $args) = @_;
-
-	if ($args->{flag} == 0) { # TYPE_NOTIFY =  0x0; Ihis one will pop up Memory Dungeon Window
-		debug T("Received Memory Dungeon reservation update\n");
-	} elsif ($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
-		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
-	} elsif($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
-		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
-	} elsif($args->{flag} == 3) { # TYPE_DESTROY_USER_REQUEST =  0x3
-		message T("The Memorial Dungeon has been removed.\n"), "info";
-	} elsif ($args->{flag} == 4) { # TYPE_CREATE_FAIL =  0x4
-		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
-	} else {
-		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
-	}
-}
-
 sub battleground_score {
 	my ($self, $args) = @_;
 	message TF("Battleground score - Lions: '%d' VS Eagles: '%d'\n", $args->{score_lion}, $args->{score_eagle}), "info";
