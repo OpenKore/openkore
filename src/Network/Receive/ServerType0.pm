@@ -214,11 +214,12 @@ sub new {
 		'014B' => ['GM_silence', 'C Z24', [qw(type name)]],
 		'014C' => ['guild_allies_enemy_list'],
 		'014E' => ['guild_master_member', 'V', [qw(type)]],
+		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]],
 		'0152' => ['guild_emblem', 'v a4 a4 a*', [qw(len guildID emblemID emblem)]],
-		'0154' => ['guild_members_list'],
-		'0156' => ['guild_member_position_changed', 'v V3', [qw(unknown accountID charID positionID)]],
+		'0154' => ['guild_members_list', 'v a*', [qw(len member_list)]],
+		'0156' => ['guild_update_member_position', 'v a*', [qw(len member_list)]],
 		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
-		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
+		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message accountName)]],
 		'015E' => ['guild_broken', 'V', [qw(flag)]], # clif_guild_broken
 		'0160' => ['guild_member_setting_list'],
 		'0162' => ['guild_skills_list'],
@@ -227,9 +228,9 @@ sub new {
 		'0167' => ['guild_create_result', 'C', [qw(type)]],
 		'0169' => ['guild_invite_result', 'C', [qw(type)]],
 		'016A' => ['guild_request', 'a4 Z24', [qw(ID name)]],
-		'016C' => ['guild_name', 'a4 a4 V x5 Z24', [qw(guildID emblemID mode guildName)]],
+		'016C' => ['guild_name', 'a4 a4 V C a4 Z24', [qw(guildID emblemID mode is_master interSID guildName)]], # 43
 		'016D' => ['guild_member_online_status', 'a4 a4 V', [qw(ID charID online)]],
-		'016F' => ['guild_notice'],
+		'016F' => ['guild_notice', 'Z60 Z120', [qw(subject notice)]], # 182
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]],
 		'0173' => ['guild_alliance', 'C', [qw(flag)]],
 		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(unknown ID mode sameID exp position_name)]],
@@ -239,7 +240,7 @@ sub new {
 		'017D' => ['card_merge_status', 'a2 a2 C', [qw(item_index card_index fail)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # clif_guild_oppositionack
-		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
+		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position memo name)]], # 106
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # clif_guild_delalliance
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # clif_guild_allianceadded
 		'0187' => ['sync_request', 'a4', [qw(ID)]],
@@ -275,7 +276,7 @@ sub new {
 		'01B3' => ['npc_image', 'Z64 C', [qw(npc_image type)]],
 		'01B4' => ['guild_emblem_update', 'a4 a4 a2', [qw(ID guildID emblemID)]],
 		'01B5' => ['account_payment_info', 'V2', [qw(D_minute H_minute)]],
-		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z20', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]],
+		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]],
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]],
 		'01C1' => ['remain_time_info' , 'a4 a4 a4', [qw(result expiration_date remain_time)]],
 		'01C3' => ['local_broadcast', 'v V v4 Z*', [qw(len color font_type font_size font_align font_y message)]],
@@ -309,7 +310,7 @@ sub new {
 		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]],
-		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
+		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(charID ID mapName)]], # 26
 		'01EE' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'01EF' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],
 		'01F0' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],
@@ -519,7 +520,7 @@ sub new {
 		'082D' => ['received_characters_info', 'v C5 x20', [qw(len normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
 		'0837' => ['search_store_fail', 'C', [qw(reason)]],
-		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
+		'0839' => ['guild_expulsion', 'Z24 Z40', [qw(name message)]],
 		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
 		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
@@ -651,6 +652,7 @@ sub new {
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3 a*', [qw(len type amount isEnd mailList)]],   # -1
+		'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id)]],
 		'0A89' => ['offline_clone_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['offline_clone_lost', 'a4', [qw(ID)]],
 		'0A8D' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], # -1 [offline vending store]
@@ -664,6 +666,7 @@ sub new {
 		'0A9D' => ['equipswitch_run_res', 'v', [qw(success)]],
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0AB8' => ['move_interrupt'],
@@ -1037,43 +1040,6 @@ sub gameguard_request {
 	debug "Querying Poseidon\n", "poseidon";
 }
 
-sub guild_member_setting_list {
-	my ($self, $args) = @_;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $gtIndex;
-	for (my $i = 4; $i < $msg_size; $i += 16) {
-		$gtIndex = unpack("V1", substr($msg, $i, 4));
-		$guild{positions}[$gtIndex]{invite} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x01) ? 1 : '';
-		$guild{positions}[$gtIndex]{punish} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x10) ? 1 : '';
-		$guild{positions}[$gtIndex]{gstorage} = (unpack("C1", substr($msg, $i + 4, 1)) & 0x100) ? 1 : '';
-		$guild{positions}[$gtIndex]{feeEXP} = unpack("V1", substr($msg, $i + 12, 4));
-	}
-}
-
-# TODO: merge with skills_list?
-sub guild_skills_list {
-	my ($self, $args) = @_;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	for (my $i = 6; $i < $msg_size; $i += 37) {
-		my $skillID = unpack("v1", substr($msg, $i, 2));
-		my $targetType = unpack("v1", substr($msg, $i+2, 2));
-		my $level = unpack("v1", substr($msg, $i + 6, 2));
-		my $sp = unpack("v1", substr($msg, $i + 8, 2));
-		my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
-
-		my $up = unpack("C1", substr($msg, $i+36, 1));
-		$guild{skills}{$skillName}{ID} = $skillID;
-		$guild{skills}{$skillName}{sp} = $sp;
-		$guild{skills}{$skillName}{up} = $up;
-		$guild{skills}{$skillName}{targetType} = $targetType;
-		if (!$guild{skills}{$skillName}{lv}) {
-			$guild{skills}{$skillName}{lv} = $level;
-		}
-	}
-}
-
 sub guild_chat {
 	my ($self, $args) = @_;
 	my ($chatMsgUser, $chatMsg, $parsed_msg); # Type: String
@@ -1103,71 +1069,6 @@ sub guild_chat {
 		Msg => $parsed_msg,
 		RawMsg => $chatMsg,
 	});
-}
-
-sub guild_expulsionlist {
-	my ($self, $args) = @_;
-
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 88) {
-		my ($name)  = unpack("Z24", substr($args->{'RAW_MSG'}, $i, 24));
-		my $acc     = unpack("Z24", substr($args->{'RAW_MSG'}, $i + 24, 24));
-		my ($cause) = unpack("Z44", substr($args->{'RAW_MSG'}, $i + 48, 44));
-		$guild{expulsion}{$acc}{name} = bytesToString($name);
-		$guild{expulsion}{$acc}{cause} = bytesToString($cause);
-	}
-}
-
-sub guild_members_list {
-	my ($self, $args) = @_;
-
-	my ($jobID);
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	my $c = 0;
-	delete $guild{member};
-	for (my $i = 4; $i < $msg_size; $i+=104){
-		$guild{member}[$c]{ID}    = substr($msg, $i, 4);
-		$guild{member}[$c]{charID}	  = substr($msg, $i+4, 4);
-		$jobID = unpack('v', substr($msg, $i + 14, 2));
-		# wtf? i guess this was a 'hack' for when the 40xx jobs weren't added to the globals yet...
-		#if ($jobID =~ /^40/) {
-		#	$jobID =~ s/^40/1/;
-		#	$jobID += 60;
-		#}
-		$guild{member}[$c]{jobID} = $jobID;
-		$guild{member}[$c]{lv}   = unpack('v', substr($msg, $i + 16, 2));
-		$guild{member}[$c]{contribution} = unpack('V', substr($msg, $i + 18, 4));
-		$guild{member}[$c]{online} = unpack('v', substr($msg, $i + 22, 2));
-		# TODO: we shouldn't store the guildtitle of a guildmember both in $guild{positions} and $guild{member}, instead we should just store the rank index of the guildmember and get the title from the $guild{positions}
-		my $gtIndex = unpack('V', substr($msg, $i + 26, 4));
-		$guild{member}[$c]{title} = $guild{positions}[$gtIndex]{title};
-		$guild{member}[$c]{name} = bytesToString(unpack('Z24', substr($msg, $i + 80, 24)));
-		$c++;
-	}
-
-}
-
-sub guild_notice {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my ($address) = unpack("Z*", substr($msg, 2, 60));
-	my ($message) = unpack("Z*", substr($msg, 62, 120));
-	stripLanguageCode(\$address);
-	stripLanguageCode(\$message);
-	$address = bytesToString($address);
-	$message = bytesToString($message);
-
-	# don't show the huge guildmessage notice if there is none
-	# the client does something similar to this...
-	if ($address || $message) {
-		my $msg = TF("---Guild Notice---\n"	.
-			"%s\n\n" .
-			"%s\n" .
-			"------------------\n", $address, $message);
-		message $msg, "guildnotice";
-	}
 }
 
 sub identify_list {
@@ -2019,18 +1920,6 @@ sub battlefield_hp {
 	my $ID = $args->{ID};
 	my $name = $args->{name};
 
-}
-
-sub guild_member_map_change {
-	my ($self, $args) = @_;
-	debug("AID: %d (GID: %d) changed map to %s\n",$args->{AID}, $args->{GDID}, $args->{mapName});
-}
-
-sub guild_member_add {
-	my ($self, $args) = @_;
-
-	my $name = bytesToString($args->{name});
-	message TF("Guild member added: %s\n",$name), "guildchat";
 }
 
 sub millenium_shield {

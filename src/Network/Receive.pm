@@ -4857,6 +4857,16 @@ sub character_name {
 	my $name; # Type: String
 
 	$name = bytesToString($args->{name});
+
+	if ($guild{member}) {
+		foreach my $guildmember (@{$guild{member}}) {
+			if ($guildmember->{charID} eq $args->{ID}) {
+				$guildmember->{name} = $name;
+				last;
+			}
+		}
+	}
+
 	debug "Character name received: $name\n";
 }
 
@@ -5605,6 +5615,8 @@ sub gameguard_grant {
 	$net->setState(1.3) if ($net->getState() == 1.2);
 }
 
+# Guild alliance and opposition list (ZC_MYGUILD_BASIC_INFO).
+# 014C <packet len>.W { <relation>.L <guild id>.L <guild name>.24B }*
 sub guild_allies_enemy_list {
 	my ($self, $args) = @_;
 
@@ -5634,6 +5646,8 @@ sub guild_allies_enemy_list {
 	}
 }
 
+# Request for guild alliance (ZC_REQ_ALLY_GUILD).
+# 0171 <inviter account id>.L <guild name>.24B
 sub guild_ally_request {
 	my ($self, $args) = @_;
 
@@ -5646,6 +5660,11 @@ sub guild_ally_request {
 	$timeout{ai_guildAutoDeny}{time} = time;
 }
 
+# Notifies the client about the result of a guild break (ZC_ACK_DISORGANIZE_GUILD_RESULT).
+# 015E <reason>.L
+#     0 = success
+#     1 = invalid key (guild name, @see clif_parse_GuildBreak)
+#     2 = there are still members in the guild
 sub guild_broken {
 	my ($self, $args) = @_;
 	my $flag = $args->{flag};
@@ -5664,6 +5683,13 @@ sub guild_broken {
 	}
 }
 
+# Guild creation result (ZC_RESULT_MAKE_GUILD).
+# 0167 <result>.B
+# result:
+#     0 = "Guild has been created."
+#     1 = "You are already in a Guild."
+#     2 = "That Guild Name already exists."
+#     3 = "You need the neccessary item to create a Guild."
 sub guild_create_result {
 	my ($self, $args) = @_;
 	my $type = $args->{type};
@@ -5680,17 +5706,67 @@ sub guild_create_result {
 	}
 }
 
+# Guild basic information
+# 0150 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <master name>.24B <manage land>.16B (ZC_GUILD_INFO)
+# 01B6 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <master name>.24B <manage land>.16B <zeny>.L (ZC_GUILD_INFO2)
+# 0A84 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <manage land>.16B <zeny>.L <master char id>.L (ZC_GUILD_INFO3)
 sub guild_info {
 	my ($self, $args) = @_;
 	# Guild Info
-	foreach (qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up name master castles_string)) {
+	foreach (@{$args->{KEYS}}) {
 		$guild{$_} = $args->{$_};
 	}
 	$guild{name} = bytesToString($args->{name});
-	$guild{master} = bytesToString($args->{master});
+	$guild{master} = bytesToString($args->{master}) if($args->{master});
 	$guild{members}++; # count ourselves in the guild members count
 }
 
+# Guild member manager information
+# 0154 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <memo>.50B <name>.24B }* (ZC_MEMBERMGR_INFO)
+# 0AA5 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <lastlogin>.L }* 
+# state:
+#     0 = offline
+#     1 = online
+sub guild_members_list {
+	my ($self, $args) = @_;
+	
+	my $guild_member_info;
+	if ($args->{switch} eq "0AA5") { # 0AA5
+		$guild_member_info = {
+			len => 34,
+			types => 'a4 a4 v5 V4',
+			keys => [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime)],
+		};
+
+	} else { # 0154, others
+		$guild_member_info = {
+			len => 104,
+			types => 'a4 a4 v5 V3 Z50 Z24',
+			keys => [qw(ID charID hair_style hair_color sex jobID lv contribution online position memo name)],
+		};
+	} 
+
+	delete $guild{member};
+	my $index = 0;
+
+	for (my $i = 0; $i < length($args->{member_list}); $i += $guild_member_info->{len}) {
+		@{$guild{member}[$index]}{@{$guild_member_info->{keys}}} = unpack($guild_member_info->{types}, substr($args->{member_list}, $i, $guild_member_info->{len}));
+
+		# TODO: we shouldn't store the guildtitle of a guildmember both in $guild{positions} and $guild{member}, instead we should just store the rank index of the guildmember and get the title from the $guild{positions}
+		$guild{member}[$index]{title} = $guild{positions}[$guild{member}[$index]{position}]{title};
+		$guild{member}[$index]{name} = bytesToString($guild{member}[$index]{name}) if ($guild{member}[$index]{name});
+		$messageSender->sendGetCharacterName($guild{member}[$index]{charID}) if ($args->{switch} eq "0AA5");
+		$index++;
+	}
+}
+
+# Reply to invite request (ZC_ACK_REQ_JOIN_GUILD).
+# 0169 <answer>.B
+# answer:
+#     0 = Already in guild.
+#     1 = Offer rejected.
+#     2 = Offer accepted.
+#     3 = Guild full.
 sub guild_invite_result {
 	my ($self, $args) = @_;
 
@@ -5709,16 +5785,27 @@ sub guild_invite_result {
 	}
 }
 
+# Guild XY locators (ZC_NOTIFY_POSITION_TO_GUILDM)
+# 01EB <account id>.L <x>.W <y>.W
 sub guild_location {
-	# FIXME: not implemented
 	my ($self, $args) = @_;
-	unless ($args->{x} > 0 && $args->{y} > 0) {
-		# delete locator for ID
-	} else {
-		# add/replace locator for ID
+
+	foreach my $guildmember (@{$guild{member}}) {
+		# check if char is the online (we can have more then 1 char per account in our guild)
+		# why use accountID instead of charID?
+		if ($guildmember->{ID} eq $args->{ID} && $guildmember->{online}) {
+			last if($args->{x} == 0 || $args->{y} == 0);
+			$guildmember->{pos}{x} = $args->{x};
+			$guildmember->{pos}{y} = $args->{y};
+			$guildmember->{pos_to}{x} = $args->{x};
+			$guildmember->{pos_to}{y} = $args->{y};
+			last;
+		}
 	}
 }
 
+# Notifies clients of a guild of a leaving member (ZC_ACK_LEAVE_GUILD).
+# 015A <char name>.24B <reason>.40B
 sub guild_leave {
 	my ($self, $args) = @_;
 
@@ -5726,6 +5813,9 @@ sub guild_leave {
 		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
 }
 
+# Notifies clients of a guild of an expelled member.
+# 015C <char name>.24B <reason>.40B <account name>.24B (ZC_ACK_BAN_GUILD)
+# 0839 <char name>.24B <reason>.40B (ZC_ACK_BAN_GUILD_SSO)
 sub guild_expulsion {
 	my ($self, $args) = @_;
 
@@ -5733,6 +5823,12 @@ sub guild_expulsion {
 		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
 }
 
+# Guild member login notice.
+# 016D <account id>.L <char id>.L <status>.L (ZC_UPDATE_CHARSTAT)
+# 01F2 <account id>.L <char id>.L <status>.L <gender>.W <hair style>.W <hair color>.W (ZC_UPDATE_CHARSTAT2)
+# status:
+#     0 = offline
+#     1 = online
 sub guild_member_online_status {
 	my ($self, $args) = @_;
 
@@ -5748,16 +5844,33 @@ sub guild_member_online_status {
 	}
 }
 
-sub misc_effect {
+# Notifies clients in a guild about updated member position assignments (ZC_ACK_REQ_CHANGE_MEMBERS).
+# 0156 <packet len>.W { <account id>.L <char id>.L <position id>.L }*
+sub guild_update_member_position {
 	my ($self, $args) = @_;
+	
+	my $guild_position_info = {
+		len => 12,
+		types => 'a4 a4 V',
+		keys => [qw(ID charID position)],
+	};
 
-	my $actor = Actor::get($args->{ID});
-	message sprintf(
-		$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
-		$actor, defined $effectName{$args->{effect}} ? $effectName{$args->{effect}} : T("Unknown #")."$args->{effect}"
-	), 'effect'
+	my $position_info;
+	for (my $i = 0; $i < length($args->{member_list}); $i += $guild_position_info->{len}) {
+		@{$position_info}{@{$guild_position_info->{keys}}} = unpack($guild_position_info->{types}, substr($args->{member_list}, $i, $guild_position_info->{len}));
+		foreach my $guildmember (@{$guild{member}}) {
+			if ($guildmember->{charID} eq $position_info->{charID}) {
+				message TF("Guild Member (%s) has the title changed from %s to %s\n",$guildmember->{name},$guildmember->{title}, $guild{positions}[$position_info->{position}]{title});
+				$guildmember->{position} = $position_info->{position};
+				$guildmember->{title} = $guild{positions}[$position_info->{position}]{title};
+				last;
+			}
+		}
+	}
 }
 
+# Guild position name information (ZC_POSITION_ID_NAME_INFO).
+# 0166 <packet len>.W { <position id>.L <position name>.24B }*
 sub guild_members_title_list {
 	my ($self, $args) = @_;
 
@@ -5771,6 +5884,11 @@ sub guild_members_title_list {
 	}
 }
 
+# Notifies the client that it is belonging to a guild (ZC_UPDATE_GDID).
+# 016C <guild id>.L <emblem id>.L <mode>.L <ismaster>.B <inter sid>.L <guild name>.24B
+# mode:
+#     &0x01 = allow invite
+#     &0x10 = allow expel
 sub guild_name {
 	my ($self, $args) = @_;
 
@@ -5794,6 +5912,8 @@ sub guild_name {
 	# $messageSender->sendGuildRequestInfo(2);			# Requests for List job title, title information list [Guild Title System]
 }
 
+# Guild invite (ZC_REQ_JOIN_GUILD).
+# 016A <guild id>.L <guild name>.24B
 sub guild_request {
 	my ($self, $args) = @_;
 
@@ -5804,6 +5924,174 @@ sub guild_request {
 	$incomingGuild{'ID'} = $ID;
 	$incomingGuild{'Type'} = 1;
 	$timeout{'ai_guildAutoDeny'}{'time'} = time;
+}
+
+# Bitmask of enabled guild window tabs (ZC_ACK_GUILD_MENUINTERFACE).
+# 014E <menu flag>.L
+# menu flag:
+#      0x00 = Basic Info (always on)
+#     &0x01 = Member manager
+#     &0x02 = Positions
+#     &0x04 = Skills
+#     &0x10 = Expulsion list
+#     &0x40 = Unknown (GMENUFLAG_ALLGUILDLIST)
+#     &0x80 = Notice
+sub guild_master_member {
+	my ($self, $args) = @_;
+	if ($args->{type} == 0xd7) {
+	} elsif ($args->{type} == 0x57) {
+		message T("You are not a guildmaster.\n"), "info";
+		return;
+	} else {
+		warning TF("Unknown results in %s (type: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{type});
+		return;
+	}
+	message T("You are a guildmaster.\n"), "info";
+}
+
+# Notifies the client about the result of a alliance request (ZC_ACK_REQ_ALLY_GUILD).
+# 0173 <answer>.B
+# answer:
+#     0 = Already allied.
+#     1 = You rejected the offer.
+#     2 = You accepted the offer.
+#     3 = They have too any alliances.
+#     4 = You have too many alliances.
+#     5 = Alliances are disabled.
+sub guild_alliance {
+	my ($self, $args) = @_;
+	if ($args->{flag} == 0) {
+		message T("Already allied.\n"), "info";
+	} elsif ($args->{flag} == 1) {
+		message T("You rejected the offer.\n"), "info";
+	} elsif ($args->{flag} == 2) {
+		message T("You accepted the offer.\n"), "info";
+	} elsif ($args->{flag} == 3) {
+		message T("They have too any alliances\n"), "info";
+	} elsif ($args->{flag} == 4) {
+		message T("You have too many alliances.\n"), "info";
+	} else {
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
+	}
+}
+
+# Guild position information (ZC_POSITION_INFO).
+# 0160 <packet len>.W { <position id>.L <mode>.L <ranking>.L <pay rate>.L }*
+# mode:
+#     &0x01 = allow invite
+#     &0x10 = allow expel
+# ranking:
+#     TODO
+sub guild_member_setting_list {
+	my ($self, $args) = @_;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+
+	for (my $i = 4; $i < $msg_size; $i += 16) {
+		my ($gtIndex, $invite_punish, $ranking, $freeEXP) = unpack('V4', substr($msg, $i, 16)); # TODO: use ranking
+		# TODO: isn't there a nyble unpack or something and is this even correct?
+		$guild{positions}[$gtIndex]{invite} = ($invite_punish & 0x01) ? 1 : '';
+		$guild{positions}[$gtIndex]{punish} = ($invite_punish & 0x10) ? 1 : '';
+		$guild{positions}[$gtIndex]{gstorage} = ($invite_punish & 0x100) ? 1 : '';
+		$guild{positions}[$gtIndex]{feeEXP} = $freeEXP;
+	}
+}
+
+# Sends guild skills (ZC_GUILD_SKILLINFO).
+# 0162 <packet len>.W <skill points>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <atk range>.W <skill name>.24B <upgradable>.B }*
+# TODO: merge with skills_list?
+sub guild_skills_list {
+	my ($self, $args) = @_;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
+
+		my ($skillID, $targetType, $level, $sp, $range,	$skillName, $up) = unpack('v V v3 Z24 C', substr($msg, $i, 37)); # TODO: use range
+
+		$skillName = bytesToString($skillName);
+		$guild{skills}{$skillName}{ID} = $skillID;
+		$guild{skills}{$skillName}{sp} = $sp;
+		$guild{skills}{$skillName}{up} = $up;
+		$guild{skills}{$skillName}{targetType} = $targetType;
+		if (!$guild{skills}{$skillName}{lv}) {
+			$guild{skills}{$skillName}{lv} = $level;
+		}
+	}
+}
+
+# Guild expulsion list (ZC_BAN_LIST).
+# 0163 <packet len>.W { <char name>.24B <account name>.24B <reason>.40B }*
+# 0163 <packet len>.W { <char name>.24B <reason>.40B }* (PACKETVER >= 20100803)
+# Change 64 to 88 if needed
+sub guild_expulsionlist {
+	my ($self, $args) = @_;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 64) { 
+
+		my ($name, $acc, $cause) = unpack('Z24 Z24 Z40', substr($args->{RAW_MSG}, $i, 64));
+
+		$guild{expulsion}{$acc}{name} = bytesToString($name);
+		$guild{expulsion}{$acc}{cause} = bytesToString($cause);
+	}
+}
+
+# Notifies that a member changed the map
+# 01EC <account id>.L <char id>.L <status>.L <map name>.16B
+sub guild_member_map_change {
+	my ($self, $args) = @_;
+
+	foreach my $guildmember (@{$guild{member}}) {
+		if ($guildmember->{charID} eq $args->{charID}) {
+			$guildmember->{pos} = {};
+			$guildmember->{pos_to} = {};
+			$guildmember->{map} = bytesToString($args->{mapName});
+			debug("Guild Member: %s changed map to %s\n",$guildmember->{name}, $guildmember->{map});
+			last;
+		}
+	}
+}
+# Notifies that a member was added in the guild
+# 0182 <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <memo>.50B <name>.24B
+sub guild_member_add {
+	my ($self, $args) = @_;
+	
+	if($guild{member}) {
+		my $index = scalar $guild{member};
+		foreach (@{$args->{KEYS}}) {
+			$guild{member}[$index]{$_} = $_;
+		}
+		$guild{member}[$index]{title} = $guild{positions}[$guild{member}[$index]{position}]{title};
+		$guild{member}[$index]{name} = bytesToString($guild{member}[$index]{name}) if ($guild{member}[$index]{name});
+	}
+
+	my $name = bytesToString($args->{name});
+	message TF("Guild member added: %s\n",$name), "guildchat";
+}
+
+# Sends guild notice to client (ZC_GUILD_NOTICE).
+# 016F <subject>.60B <notice>.120B
+sub guild_notice {
+	my ($self, $args) = @_;
+	stripLanguageCode(\$args->{subject});
+	stripLanguageCode(\$args->{notice});
+	# don't show the huge guildmessage notice if there is none
+	# the client does something similar to this...
+	if ($args->{subject} || $args->{notice}) {
+		my $msg = TF("---Guild Notice---\n"	.
+			"%s\n\n" .
+			"%s\n" .
+			"------------------\n", $args->{subject}, $args->{notice});
+		message $msg, "guildnotice";
+	}
+}
+
+sub misc_effect {
+	my ($self, $args) = @_;
+
+	my $actor = Actor::get($args->{ID});
+	message sprintf(
+		$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
+		$actor, defined $effectName{$args->{effect}} ? $effectName{$args->{effect}} : T("Unknown #")."$args->{effect}"
+	), 'effect'
 }
 
 sub identify {
@@ -8198,19 +8486,6 @@ sub adopt_reply {
 	}
 }
 
-sub guild_master_member {
-	my ($self, $args) = @_;
-	if ($args->{type} == 0xd7) {
-	} elsif ($args->{type} == 0x57) {
-		message T("You are not a guildmaster.\n"), "info";
-		return;
-	} else {
-		warning TF("Unknown results in %s (type: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{type});
-		return;
-	}
-	message T("You are a guildmaster.\n"), "info";
-}
-
 sub GM_silence {
 	my ($self, $args) = @_;
 	if ($args->{flag}) {
@@ -8910,13 +9185,6 @@ sub guild_emblem {
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
-# 0156
-# TODO
-sub guild_member_position_changed {
-	my ($self, $args) = @_;
-	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-}
-
 # 01B4
 # TODO
 sub guild_emblem_update {
@@ -8978,23 +9246,6 @@ sub divorced {
 sub hack_shield_alarm {
 	error T("Error: You have been forced to disconnect by a Hack Shield.\n Please check Poseidon.\n"), "connection";
 	Commands::run('relog 100000000');
-}
-
-sub guild_alliance {
-	my ($self, $args) = @_;
-	if ($args->{flag} == 0) {
-		message T("Already allied.\n"), "info";
-	} elsif ($args->{flag} == 1) {
-		message T("You rejected the offer.\n"), "info";
-	} elsif ($args->{flag} == 2) {
-		message T("You accepted the offer.\n"), "info";
-	} elsif ($args->{flag} == 3) {
-		message T("They have too any alliances\n"), "info";
-	} elsif ($args->{flag} == 4) {
-		message T("You have too many alliances.\n"), "info";
-	} else {
-		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
-	}
 }
 
 sub talkie_box {
