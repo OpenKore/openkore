@@ -246,7 +246,7 @@ sub new {
 		'0187' => ['sync_request', 'a4', [qw(ID)]],
 		'0188' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0189' => ['no_teleport', 'v', [qw(fail)]],
-		'018B' => ['quit_response', 'v', [qw(fail)]], # 4 # ported from kRO_Sakexe_0
+		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
 		'018D' => ['makable_item_list', 'v a*', [qw(len item_list)]],
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]],
@@ -1881,16 +1881,6 @@ sub sound_effect {
 					: $actor->verb(T("%2\$s stopped playing: %s\n"), T("%2\$s stopped playing: %s\n"))
 			: T("Now playing: %s\n"),
 		$args->{name}, $actor), 'effect'
-}
-
-# 018B
-sub quit_response {
-	my ($self, $args) = @_;
-	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
-		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
-	} else { # DISCONNECTABLE_STATE =  0x0
-		message T("Logged out from the server succesfully.\n"), "success";
-	}
 }
 
 sub define_check {

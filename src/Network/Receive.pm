@@ -8424,7 +8424,12 @@ sub achievement_list {
 	}
 }
 
-# 018B
+# Notification about the result of a disconnect request (ZC_ACK_REQ_DISCONNECT).
+# 018B <result>.W
+# result:
+#     0 = disconnect (quit)
+#     1 = cannot disconnect (wait 10 seconds)
+#     ? = ignored
 sub quit_response {
 	my ($self, $args) = @_;
 	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
