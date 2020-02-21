@@ -9023,11 +9023,30 @@ sub adopt_request {
 	message TF("%s wishes to adopt you. Do you accept?\n", $args->{name}), "info";
 }
 
-sub blacksmith_points {
-	my ($self, $args) = @_;
-	message TF("[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
+# Updates the fame rank points for the given ranking.
+# 097E <RankingType>.W <point>.L <TotalPoint>.L (ZC_UPDATE_RANKING_POINT)
+# RankingType:
+#     0 = Blacksmith
+#     1 = Alchemist
+#     2 = Taekwon
+sub rank_points {
+	my ( $self, $args ) = @_;
+
+	$self->blacksmith_points( $args ) if $args->{type} == 0;
+	$self->alchemist_point( $args )   if $args->{type} == 1;
+	$self->taekwon_rank( { rank => $args->{total} } ) if $args->{type} == 2;
+	message "Unknown rank type %s.\n", $args->{type} if $args->{type} > 2;
 }
 
+# Updates the fame rank points for the Blacksmith ranking. 
+# 021B <points>.L <total points>.L (ZC_BLACKSMITH_POINT)
+sub blacksmith_points {
+	my ($self, $args) = @_;
+	message TF("[POINT] Blacksmith Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
+}
+
+# Updates the fame rank points for the Alchemist ranking.
+# 021C <points>.L <total points>.L (ZC_ALCHEMIST_POINT)
 sub alchemist_point {
 	my ($self, $args) = @_;
 	message TF("[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
@@ -9587,6 +9606,8 @@ sub taekwon_packets {
 	}
 }
 
+# Updates the fame rank points for the Taekwon ranking. 
+# 0224 <points>.L <total points>.L (ZC_TAEKWON_POINT)
 sub taekwon_rank {
 	my ($self, $args) = @_;
 	message T("TaeKwon Mission Rank : ".$args->{rank}."\n"), "info";

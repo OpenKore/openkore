@@ -1203,15 +1203,6 @@ sub public_chat {
 	});
 }
 
-sub rank_points {
-	my ( $self, $args ) = @_;
-
-	$self->blacksmith_points( $args ) if $args->{type} == 0;
-	$self->alchemist_point( $args )   if $args->{type} == 1;
-	$self->taekwon_rank( { rank => $args->{total} } ) if $args->{type} == 2;
-	message "Unknown rank type %s.\n", $args->{type} if $args->{type} > 2;
-}
-
 sub repair_list {
 	my ($self, $args) = @_;
 	my $msg = T("--------Repair List--------\n");
