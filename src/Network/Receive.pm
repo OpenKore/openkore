@@ -2882,7 +2882,8 @@ sub show_script {
 	}
 }
 
-# 043D
+# Skill cooldown display icon (ZC_SKILL_POSTDELAY).
+# 043D <skill ID>.W <tick>.L
 sub skill_post_delay {
 	my ($self, $args) = @_;
 
@@ -2890,6 +2891,38 @@ sub skill_post_delay {
 	my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
 
 	$char->setStatus($skillName." ".$status, 1, $args->{time});
+}
+
+# Skill cooldown display icon List.
+# 043E <len>.w { <skill ID>.W <tick>.L }*
+# 0985 <len>.w { <skill ID>.W <total time>.L <tick>.L }*
+sub skill_post_delaylist {
+	my ($self, $args) = @_;
+
+	my $skill_post_delay_info;
+	if ($args->{switch} eq "0985") { # 0985
+		$skill_post_delay_info = {
+			len => 10,
+			types => 'v V2',
+			keys => [qw(ID total_time remain_time)],
+		};
+
+	} else { # 043E
+		$skill_post_delay_info = {
+			len => 6,
+			types => 'v V',
+			keys => [qw(ID remain_time)],
+		};
+	}
+
+	for (my $i = 0; $i < length($args->{skill_list}); $i += $skill_post_delay_info->{len}) {
+		my $skill;
+		@{$skill}{@{$skill_post_delay_info->{keys}}} = unpack($skill_post_delay_info->{types}, substr($args->{skill_list}, $i, $skill_post_delay_info->{len}));
+		$skill->{name} = (new Skill(idn => $skill->{ID}))->getName;
+		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
+
+		$char->setStatus($skill->{name}." ".$status, 1, $skill->{remain_time});
+	}
 }
 
 # TODO: known prefixes (chat domains): micc | ssss | blue | tool

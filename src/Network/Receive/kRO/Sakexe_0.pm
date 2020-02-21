@@ -469,6 +469,7 @@ sub new {
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]], # 8
 		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], # -1
 		'043D' => ['skill_post_delay', 'v V', [qw(ID time)]],
+		'043E' => ['skill_post_delaylist', 'v a*', [qw(len skill_list)]],
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]], # 25
 		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]], # 10 # TODO: use
 		'0441' => ['skill_delete', 'v', [qw(skillID)]], # 4 # TODO: use (ex. rogue can copy a skill)
@@ -553,6 +554,7 @@ sub new {
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
+		'0985' => ['skill_post_delaylist', 'v a*', [qw(len skill_list)]],
 		'0988' => ['clan_user', 'v2' ,[qw(onlineuser totalmembers)]],
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
