@@ -6237,6 +6237,27 @@ sub misc_effect {
 	), 'effect'
 }
 
+# Presents a list of items that can be identified (ZC_ITEMIDENTIFY_LIST).
+# 0177 <packet len>.W { <name id>.W }*
+sub identify_list {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+
+	undef @identifyID;
+	for (my $i = 4; $i < $msg_size; $i += 2) {
+		my $index = unpack("a2", substr($msg, $i, 2));
+		my $item = $char->inventory->getByID($index);
+		binAdd(\@identifyID, $item->{binID});
+	}
+
+	my $num = @identifyID;
+	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
+}
+
+# Notifies the client about the result of a item identify request (ZC_ACK_ITEMIDENTIFY).
+# 0179 <index>.W <result>.B
 sub identify {
 	my ($self, $args) = @_;
 	if ($args->{flag} == 0) {

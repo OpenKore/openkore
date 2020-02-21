@@ -1058,23 +1058,6 @@ sub guild_chat {
 	});
 }
 
-sub identify_list {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	undef @identifyID;
-	for (my $i = 4; $i < $msg_size; $i += 2) {
-		my $index = unpack("a2", substr($msg, $i, 2));
-		my $item = $char->inventory->getByID($index);
-		binAdd(\@identifyID, $item->{binID});
-	}
-
-	my $num = @identifyID;
-	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
-}
-
 sub whisper_list {
 	my ($self, $args) = @_;
 
