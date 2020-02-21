@@ -3489,7 +3489,8 @@ sub monster_typechange {
 	}
 }
 
-# 0977
+# Show monster HP
+# 0977 <id>.L <HP>.L <maxHP>.L (ZC_HP_INFO).
 sub monster_hp_info {
 	my ($self, $args) = @_;
 	my $monster = $monstersList->getByID($args->{ID});
@@ -3498,6 +3499,18 @@ sub monster_hp_info {
 		$monster->{hp_max} = $args->{hp_max};
 
 		debug TF("Monster %s has hp %s/%s (%s%)\n", $monster->name, $monster->{hp}, $monster->{hp_max}, $monster->{hp} * 100 / $monster->{hp_max}), "parseMsg_damage";
+	}
+}
+
+# Show Monster HP bar
+# 0A36 <id>.L <HP>.B
+sub monster_hp_info_tiny {
+	my ($self, $args) = @_;
+	my $monster = $monstersList->getByID($args->{ID});
+	if ($monster) {
+		$monster->{hp_percent} = $args->{hp} * 5;
+
+		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage";
 	}
 }
 

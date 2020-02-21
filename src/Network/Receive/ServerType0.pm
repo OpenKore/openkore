@@ -1948,16 +1948,6 @@ sub senbei_amount {
 	$char->{senbei} = $args->{senbei};
 }
 
-sub monster_hp_info_tiny {
-	my ($self, $args) = @_;
-	my $monster = $monstersList->getByID($args->{ID});
-	if ($monster) {
-		$monster->{hp_percent} = $args->{hp} * 5;
-
-		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage";
-	}
-}
-
 sub equipswitch_run_res {
 	my ($self, $args) = @_;
 	if ($args->{success}) {

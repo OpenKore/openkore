@@ -616,6 +616,7 @@ sub new {
 		'0A28' => ['open_store_status', 'C', [qw(flag)]],
 		'0A2D' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'0A2F' => ['change_title', 'C V', [qw(result title_id)]],
+		'0A36' => ['monster_hp_info_tiny', 'a4 C', [qw(ID hp)]],
 		'0A37' => ($rpackets{'0A37'}{length} == 57) # or 59
 			? ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite)]]
 			: ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]]
