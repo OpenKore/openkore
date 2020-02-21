@@ -5031,6 +5031,16 @@ sub character_status {
 	setStatus($actor, $args->{opt1}, $args->{opt2}, $args->{option});
 }
 
+# Whisper ignore list (ZC_WHISPER_LIST).
+# 00D4 <packet len>.W { <char name>.24B }*
+sub whisper_list {
+	my ($self, $args) = @_;
+
+	my @whisperList = unpack 'x4' . (' Z24' x (($args->{RAW_MSG_SIZE}-4)/24)), $args->{RAW_MSG};
+
+	debug "whisper_list: @whisperList\n", "parseMsg";
+}
+
 # Inform client whether chatroom creation was successful or not (ZC_ACK_CREATE_CHATROOM).
 # 00D6 <flag>.B
 # flag:

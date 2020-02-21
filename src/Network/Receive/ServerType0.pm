@@ -1058,14 +1058,6 @@ sub guild_chat {
 	});
 }
 
-sub whisper_list {
-	my ($self, $args) = @_;
-
-	my @whisperList = unpack 'x4' . (' Z24' x (($args->{RAW_MSG_SIZE}-4)/24)), $args->{RAW_MSG};
-
-	debug "whisper_list: @whisperList\n", "parseMsg";
-}
-
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
