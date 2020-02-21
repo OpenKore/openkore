@@ -470,6 +470,19 @@ use constant {
 	ATTENDANCE_UI => 0x7,
 };
 
+use constant {
+	LEVELUP_EFFECT => 0x0,
+	JOBLEVELUP_EFFECT => 0x1,
+	REFINING_FAIL_EFFECT => 0x2,
+	REFINING_SUCCESS_EFFECT => 0x3,
+	GAME_OVER_EFFECT => 0x4,
+	MAKEITEM_AM_SUCCESS_EFFECT => 0x5,
+	MAKEITEM_AM_FAIL_EFFECT => 0x6,
+	LEVELUP_EFFECT2 => 0x7,
+	JOBLEVELUP_EFFECT2 => 0x8,
+	LEVELUP_EFFECT3 => 0x9,
+};
+
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
 # r7643 - copy-pasted to RagexeRE_2009_10_27a.pm
 sub exp {
@@ -2481,6 +2494,46 @@ sub actor_info {
 	}
 
 	# TODO: $args->{ID} eq $accountID
+}
+
+# Notifies clients in the area about an special/visual effect (ZC_NOTIFY_EFFECT).
+# 019B <id>.L <effect id>.L
+# effect id:
+#     0 = base level up
+#     1 = job level up
+#     2 = refine failure
+#     3 = refine success
+#     4 = game over
+#     5 = pharmacy success
+#     6 = pharmacy failure
+#     7 = base level up (super novice)
+#     8 = job level up (super novice)
+#     9 = base level up (taekwon)
+sub unit_levelup {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	my $type = $args->{type};
+	my $actor = Actor::get($ID);
+	if ($type == LEVELUP_EFFECT || $type == LEVELUP_EFFECT2 || $type == LEVELUP_EFFECT3) {
+		message TF("%s gained a level!\n", $actor);
+		Plugins::callHook('base_level', {name => $actor});
+	} elsif ($type == JOBLEVELUP_EFFECT || $type == JOBLEVELUP_EFFECT2) {
+		message TF("%s gained a job level!\n", $actor);
+		Plugins::callHook('job_level', {name => $actor});
+	} elsif ($type == REFINING_FAIL_EFFECT) {
+		message TF("%s failed to refine a weapon!\n", $actor), "refine";
+	} elsif ($type == REFINING_SUCCESS_EFFECT) {
+		message TF("%s successfully refined a weapon!\n", $actor), "refine";
+	} elsif ($type == MAKEITEM_AM_SUCCESS_EFFECT) {
+		message TF("%s successfully created a potion!\n", $actor), "refine";
+	} elsif ($type == MAKEITEM_AM_FAIL_EFFECT) {
+		message TF("%s failed to create a potion!\n", $actor), "refine";
+	} elsif ($type == GAME_OVER_EFFECT) {
+		message TF("%s received GAME OVER!\n", $actor);
+	} else {
+		message TF("%s unknown unit_levelup effect (%d)\n", $actor, $type);
+	}
 }
 
 use constant QTYPE => (

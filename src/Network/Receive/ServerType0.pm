@@ -797,19 +797,6 @@ sub new {
 }
 
 use constant {
-	LEVELUP_EFFECT => 0x0,
-	JOBLEVELUP_EFFECT => 0x1,
-	REFINING_FAIL_EFFECT => 0x2,
-	REFINING_SUCCESS_EFFECT => 0x3,
-	GAME_OVER_EFFECT => 0x4,
-	MAKEITEM_AM_SUCCESS_EFFECT => 0x5,
-	MAKEITEM_AM_FAIL_EFFECT => 0x6,
-	LEVELUP_EFFECT2 => 0x7,
-	JOBLEVELUP_EFFECT2 => 0x8,
-	LEVELUP_EFFECT3 => 0x9,
-};
-
-use constant {
 	DEFINE__BROADCASTING_SPECIAL_ITEM_OBTAIN => 1 << 0,
 	DEFINE__RENEWAL_ADD_2                    => 1 << 1,
 	DEFINE__CHANNELING_SERVICE               => 1 << 2,
@@ -1596,31 +1583,6 @@ sub top10 {
 		$self->top10_pk_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
 	} else {
 		message "Unknown top10 type %s.\n", $args->{type};
-	}
-}
-
-sub unit_levelup {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	my $type = $args->{type};
-	my $actor = Actor::get($ID);
-	if ($type == LEVELUP_EFFECT) {
-		message TF("%s gained a level!\n", $actor);
-		Plugins::callHook('base_level', {name => $actor});
-	} elsif ($type == JOBLEVELUP_EFFECT) {
-		message TF("%s gained a job level!\n", $actor);
-		Plugins::callHook('job_level', {name => $actor});
-	} elsif ($type == REFINING_FAIL_EFFECT) {
-		message TF("%s failed to refine a weapon!\n", $actor), "refine";
-	} elsif ($type == REFINING_SUCCESS_EFFECT) {
-		message TF("%s successfully refined a weapon!\n", $actor), "refine";
-	} elsif ($type == MAKEITEM_AM_SUCCESS_EFFECT) {
-		message TF("%s successfully created a potion!\n", $actor), "refine";
-	} elsif ($type == MAKEITEM_AM_FAIL_EFFECT) {
-		message TF("%s failed to create a potion!\n", $actor), "refine";
-	} else {
-		message TF("%s unknown unit_levelup effect (%d)\n", $actor, $type);
 	}
 }
 

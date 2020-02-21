@@ -268,7 +268,7 @@ sub new {
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]], # 9
 		'0199' => ['map_property', 'v', [qw(type)]], #4
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
-		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
+		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
 		'019E' => ['pet_capture_process'], # 2
 		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3
 		'01A2' => ($rpackets{'01A2'} == 35) # or 37
@@ -1540,25 +1540,6 @@ sub skills_list {
 			level => $level,
 			upgradable => $up,
 		});
-	}
-}
-
-sub unit_levelup {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	my $type = $args->{type};
-	my $name = getActorName($ID);
-	if ($type == 0) {
-		message TF("%s gained a level!\n", $name);
-		Plugins::callHook('base_level', {name => $name});
-	} elsif ($type == 1) {
-		message TF("%s gained a job level!\n", $name);
-		Plugins::callHook('job_level', {name => $name});
-	} elsif ($type == 2) {
-		message TF("%s failed to refine a weapon!\n", $name), "refine";
-	} elsif ($type == 3) {
-		message TF("%s successfully refined a weapon!\n", $name), "refine";
 	}
 }
 
