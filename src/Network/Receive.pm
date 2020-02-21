@@ -2978,6 +2978,50 @@ sub skill_post_delaylist {
 	}
 }
 
+# Displays a skill message (thanks to Rayce) (ZC_SKILLMSG).
+# 0215 <msg id>.L
+# msg id:
+#     0x15 = End all negative status (PA_GOSPEL)
+#     0x16 = Immunity to all status (PA_GOSPEL)
+#     0x17 = MaxHP +100% (PA_GOSPEL)
+#     0x18 = MaxSP +100% (PA_GOSPEL)
+#     0x19 = All stats +20 (PA_GOSPEL)
+#     0x1c = Enchant weapon with Holy element (PA_GOSPEL)
+#     0x1d = Enchant armor with Holy element (PA_GOSPEL)
+#     0x1e = DEF +25% (PA_GOSPEL)
+#     0x1f = ATK +100% (PA_GOSPEL)
+#     0x20 = HIT/Flee +50 (PA_GOSPEL)
+#     0x28 = Full strip failed because of coating (ST_FULLSTRIP)
+#     ? = nothing
+sub gospel_buff_aligned {
+	my ($self, $args) = @_;
+	my $status = unpack("V1", $args->{ID});
+
+	if ($status == 21) {
+     		message T("All abnormal status effects have been removed.\n"), "info";
+	} elsif ($status == 22) {
+     		message T("You will be immune to abnormal status effects for the next minute.\n"), "info";
+	} elsif ($status == 23) {
+     		message T("Your Max HP will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 24) {
+     		message T("Your Max SP will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 25) {
+     		message T("All of your Stats will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 28) {
+     		message T("Your weapon will remain blessed with Holy power for the next minute.\n"), "info";
+	} elsif ($status == 29) {
+     		message T("Your armor will remain blessed with Holy power for the next minute.\n"), "info";
+	} elsif ($status == 30) {
+     		message T("Your Defense will stay increased for the next 10 seconds.\n"), "info";
+	} elsif ($status == 31) {
+     		message T("Your Attack strength will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 32) {
+     		message T("Your Accuracy and Flee Rate will stay increased for the next minute.\n"), "info";
+	} else {
+     		#message T("Unknown buff from Gospel: " . $status . "\n"), "info";
+	}
+}
+
 # TODO: known prefixes (chat domains): micc | ssss | blue | tool
 # micc = micc<24 characters, this is the sender name. seems like it's null padded><hex color code><message>
 # micc = Player Broadcast   The struct: micc<23bytes player name+some hex><\x00><colour code><full message>

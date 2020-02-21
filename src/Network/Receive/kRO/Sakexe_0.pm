@@ -1229,33 +1229,6 @@ sub repair_list {
 	message $msg, "list";
 }
 
-sub gospel_buff_aligned {
-	my ($self, $args) = @_;
-	if ($args->{ID} == 21) {
-     		message T("All abnormal status effects have been removed.\n"), "info";
-	} elsif ($args->{ID} == 22) {
-     		message T("You will be immune to abnormal status effects for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 23) {
-     		message T("Your Max HP will stay increased for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 24) {
-     		message T("Your Max SP will stay increased for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 25) {
-     		message T("All of your Stats will stay increased for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 28) {
-     		message T("Your weapon will remain blessed with Holy power for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 29) {
-     		message T("Your armor will remain blessed with Holy power for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 30) {
-     		message T("Your Defense will stay increased for the next 10 seconds.\n"), "info";
-	} elsif ($args->{ID} == 31) {
-     		message T("Your Attack strength will stay increased for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 32) {
-     		message T("Your Accuracy and Flee Rate will stay increased for the next minute.\n"), "info";
-	} else {
-     		warning T("Unknown buff from Gospel: " . $args->{ID} . "\n"), "info";
-	}
-}
-
 sub map_property {
 	my ($self, $args) = @_;
 
