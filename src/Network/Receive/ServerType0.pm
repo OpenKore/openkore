@@ -1165,26 +1165,6 @@ sub public_chat {
 	});
 }
 
-sub repair_list {
-	my ($self, $args) = @_;
-	my $msg = T("--------Repair List--------\n");
-	undef $repairList;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my $listID = unpack("C1", substr($args->{RAW_MSG}, $i+12, 1));
-		$repairList->[$listID]->{ID} = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		$repairList->[$listID]->{nameID} = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
-		# what are these  two?
-		$repairList->[$listID]->{status} = unpack("V1", substr($args->{RAW_MSG}, $i+4, 4));
-		$repairList->[$listID]->{status2} = unpack("V1", substr($args->{RAW_MSG}, $i+8, 4));
-		$repairList->[$listID]->{listID} = $listID;
-
-		my $name = itemNameSimple($repairList->[$listID]->{nameID});
-		$msg .= "$listID $name\n";
-	}
-	$msg .= "---------------------------\n";
-	message $msg, "list";
-}
-
 sub map_property {
 	my ($self, $args) = @_;
 

@@ -1190,28 +1190,6 @@ sub private_message_sent {
 	shift @lastpm;
 }
 
-# TODO: test optimized unpacking
-sub repair_list {
-	my ($self, $args) = @_;
-	my $msg = T("--------Repair List--------\n");
-	undef $repairList;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my $item = {};
-
-		($item->{ID},
-		$item->{nameID},
-		$item->{status},	# what is this?
-		$item->{status2},	# what is this?
-		$item->{ID}) = unpack('v2 V2 C', substr($args->{RAW_MSG}, $i, 13));
-
-		$repairList->[$item->{ID}] = $item;
-		my $name = itemNameSimple($item->{nameID});
-		$msg .= $item->{ID} . " $name\n";
-	}
-	$msg .= "---------------------------\n";
-	message $msg, "list";
-}
-
 sub map_property {
 	my ($self, $args) = @_;
 

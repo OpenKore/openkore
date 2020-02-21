@@ -10107,6 +10107,36 @@ sub pvp_rank {
 	}
 }
 
+# Presents a list of items that can be repaired (ZC_REPAIRITEMLIST).
+# 01FC <packet len>.W { <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }*
+sub repair_list {
+	my ($self, $args) = @_;
+	my $msg = T("--------Repair List--------\n");
+	undef $repairList;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
+		my $item = {};
+
+		($item->{ID},
+		$item->{nameID},
+		$item->{upgrade},
+		$item->{cards},
+		) = unpack('a2 v C a8', substr($args->{RAW_MSG}, $i, 13));
+
+		$repairList->[$item->{ID}] = $item;
+		my $name = itemNameSimple($item->{nameID});
+		$msg .= $item->{ID} . " $name\n";
+	}
+	$msg .= "---------------------------\n";
+	message $msg, "list";
+}
+
+# Notifies the client about the result of a item repair request (ZC_ACK_ITEMREPAIR).
+# 01FE <index>.W <result>.B
+# index:
+#     ignored (inventory index)
+# result:
+#     0 = Item repair success.
+#     1 = Item repair failure.
 sub repair_result {
 	my ($self, $args) = @_;
 	undef $repairList;
