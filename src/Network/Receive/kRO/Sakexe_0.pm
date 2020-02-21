@@ -222,12 +222,12 @@ sub new {
 		'014B' => ['GM_silence', 'C Z24', [qw(type name)]], # 27
 		'014C' => ['guild_allies_enemy_list'], # -1
 		'014E' => ['guild_master_member', 'V', [qw(type)]], # 6
-		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string)]], # 110
+		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]],		
 		'0152' => ['guild_emblem', 'v a4 a4 a*', [qw(len guildID emblemID emblem)]], # -1
-		'0154' => ['guild_members_list'], # -1
-		'0156' => ['guild_member_position_changed', 'v V3', [qw(len accountID charID positionID)]], # -1 # FIXME: this is a variable len message, can hold multiple entries
+		'0154' => ['guild_members_list', 'v a*', [qw(len member_list)]],
+		'0156' => ['guild_update_member_position', 'v a*', [qw(len member_list)]],
 		'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]], # 66
-		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message account)]], # 90
+		'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message accountName)]], # 90
 		'015E' => ['guild_broken', 'V', [qw(flag)]], # 6 # clif_guild_broken
 		'015F' => ['guild_disband', 'Z40', [qw(reason)]], # 42
 		'0160' => ['guild_member_setting_list'], # -1
@@ -251,7 +251,7 @@ sub new {
 		'017D' => ['card_merge_status', 'a2 a2 C', [qw(item_index card_index fail)]], # 7
 		'017F' => ['guild_chat', 'v Z*', [qw(len message)]], # -1
 		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # 3 # clif_guild_oppositionack
-		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
+		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position memo name)]], # 106
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # 10 # clif_guild_delalliance
 		'0185' => ['guild_alliance_added', 'a4 a4 Z24', [qw(opposition alliance_guildID name)]], # 34 # clif_guild_allianceadded
 		'0187' => ['sync_request', 'a4', [qw(ID)]], # 6
@@ -287,7 +287,7 @@ sub new {
 		'01B3' => ['npc_image', 'Z64 C', [qw(npc_image type)]], # 67
 		'01B4' => ['guild_emblem_update', 'a4 a4 a2', [qw(ID guildID emblemID)]], # 12
 		'01B5' => ['account_payment_info', 'V2', [qw(D_minute H_minute)]], # 18
-		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]], # 114
+		'01B6' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]],
 		'01B8' => ['guild_zeny', 'C', [qw(result)]], # 3
 		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]], # 6
 		'01BE' => ['ask_pngameroom'], # 2
@@ -321,7 +321,7 @@ sub new {
 		'01E9' => ['party_join', 'a4 V v2 C Z24 Z24 Z16 v C2', [qw(ID role x y type name user map lv item_pickup item_share)]],
 		'01EA' => ['married', 'a4', [qw(ID)]], # 6
 		'01EB' => ['guild_location', 'a4 v2', [qw(ID x y)]], # 10
-		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(GDID AID mapName)]], # 26 # TODO: change vars, add sub
+		'01EC' => ['guild_member_map_change', 'a4 a4 Z16', [qw(charID ID mapName)]], # 26
 		'01EE' => ['inventory_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'01EF' => ['cart_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
 		'01F0' => ['storage_items_stackable', 'v a*', [qw(len itemInfo)]],#-1
@@ -518,7 +518,7 @@ sub new {
 		'082D' => ['received_characters_info', 'v C5 x20', [qw(len normal_slot premium_slot billing_slot producible_slot valid_slot)]],
 		'0836' => ['search_store_result', 'v C3 a*', [qw(len first_page has_next remaining storeInfo)]],
 		'0837' => ['search_store_fail', 'C', [qw(reason)]],
-		'0839' => ['guild_expulsion', 'Z40 Z24', [qw(message name)]],
+		'0839' => ['guild_expulsion', 'Z24 Z40', [qw(name message)]],
 		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
 		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
@@ -630,12 +630,14 @@ sub new {
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7D' => ['rodex_mail_list', 'v C3 a*', [qw(len type amount isEnd mailList)]],   # -1
+		'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id)]],
 		'0A89' => ['offline_clone_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['offline_clone_lost', 'a4', [qw(ID)]],
 		'0A8D' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], # -1 [offline vending store]
 		'0A91' => ['buying_store_items_list', 'v a4 a4 C V V x4 a*', [qw(len buyerID buyingStoreID flag expireDate zeny itemList)]], # -1 [offline buying store]
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
+		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
@@ -970,42 +972,6 @@ sub gameguard_request {
 	debug "Querying Poseidon\n", "poseidon";
 }
 
-# TODO: test optimized unpacking
-sub guild_member_setting_list {
-	my ($self, $args) = @_;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	for (my $i = 4; $i < $msg_size; $i += 16) {
-		my ($gtIndex, $invite_punish, $ranking, $freeEXP) = unpack('V4', substr($msg, $i, 16)); # TODO: use ranking
-		# TODO: isn't there a nyble unpack or something and is this even correct?
-		$guild{positions}[$gtIndex]{invite} = ($invite_punish & 0x01) ? 1 : '';
-		$guild{positions}[$gtIndex]{punish} = ($invite_punish & 0x10) ? 1 : '';
-		$guild{positions}[$gtIndex]{gstorage} = ($invite_punish & 0x100) ? 1 : '';
-		$guild{positions}[$gtIndex]{feeEXP} = $freeEXP;
-	}
-}
-
-# TODO: test optimized unpacking
-sub guild_skills_list {
-	my ($self, $args) = @_;
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
-
-		my ($skillID, $targetType, $level, $sp, $range,	$skillName, $up) = unpack('v V v3 Z24 C', substr($msg, $i, 37)); # TODO: use range
-
-		$skillName = bytesToString($skillName);
-		$guild{skills}{$skillName}{ID} = $skillID;
-		$guild{skills}{$skillName}{sp} = $sp;
-		$guild{skills}{$skillName}{up} = $up;
-		$guild{skills}{$skillName}{targetType} = $targetType;
-		if (!$guild{skills}{$skillName}{lv}) {
-			$guild{skills}{$skillName}{lv} = $level;
-		}
-	}
-}
-
 sub guild_chat {
 	my ($self, $args) = @_;
 	my ($chatMsgUser, $chatMsg, $parsed_msg); # Type: String
@@ -1035,62 +1001,6 @@ sub guild_chat {
 		Msg => $parsed_msg,
 		RawMsg => $chatMsg,
 	});
-}
-
-sub guild_expulsionlist {
-	my ($self, $args) = @_;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 88) {
-
-		my ($name, $acc, $cause) = unpack('Z24 Z24 Z40', substr($args->{RAW_MSG}, $i, 88));
-
-		$guild{expulsion}{$acc}{name} = bytesToString($name);
-		$guild{expulsion}{$acc}{cause} = bytesToString($cause);
-	}
-}
-
-# TODO: test optimized unpacking
-sub guild_members_list {
-	my ($self, $args) = @_;
-
-	my ($jobID);
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	delete $guild{member};
-
-	my $c = 0;
-	my $gtIndex;
-	for (my $i = 4; $i < $msg_size; $i+=104){
-		($guild{member}[$c]{ID},
-		$guild{member}[$c]{charID},
-		$guild{member}[$c]{jobID},
-		$guild{member}[$c]{lv},
-		$guild{member}[$c]{contribution},
-		$guild{member}[$c]{online},
-		$gtIndex,
-		$guild{member}[$c]{name}) = unpack('a4 a4 x6 v2 V v x2 V x50 Z24', substr($msg, $i, 104)); # TODO: what are the unknown x's?
-
-		# TODO: we shouldn't store the guildtitle of a guildmember both in $guild{positions} and $guild{member}, instead we should just store the rank index of the guildmember and get the title from the $guild{positions}
-		$guild{member}[$c]{title} = $guild{positions}[$gtIndex]{title};
-		$guild{member}[$c]{name} = bytesToString($guild{member}[$c]{name});
-		$c++;
-	}
-
-}
-
-sub guild_notice {
-	my ($self, $args) = @_;
-	stripLanguageCode(\$args->{subject});
-	stripLanguageCode(\$args->{notice});
-	# don't show the huge guildmessage notice if there is none
-	# the client does something similar to this...
-	if ($args->{subject} || $args->{notice}) {
-		my $msg = TF("---Guild Notice---\n"	.
-			"%s\n\n" .
-			"%s\n" .
-			"------------------\n", $args->{subject}, $args->{notice});
-		message $msg, "guildnotice";
-	}
 }
 
 sub identify_list {
