@@ -246,7 +246,7 @@ sub new {
 		'0187' => ['sync_request', 'a4', [qw(ID)]],
 		'0188' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0189' => ['no_teleport', 'v', [qw(fail)]],
-		'018B' => ['quit_response', 'v', [qw(fail)]], # 4 # ported from kRO_Sakexe_0
+		'018B' => ['quit_response', 'v', [qw(fail)]], # 4
 		'018C' => ['sense_result', 'v3 V v4 C9', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
 		'018D' => ['makable_item_list', 'v a*', [qw(len item_list)]],
 		'018F' => ['refine_result', 'v2', [qw(fail nameID)]],
@@ -463,7 +463,7 @@ sub new {
 
 		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], #TODO: PACKET_ZC_BROADCAST3
 		'043D' => ['skill_post_delay', 'v V', [qw(ID time)]],
-		'043E' => ['skill_post_delaylist'],
+		'043E' => ['skill_post_delaylist', 'v a*', [qw(len skill_list)]],
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]],
 		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]],
 		'0441' => ['skill_delete', 'v', [qw(skillID)]],
@@ -566,7 +566,7 @@ sub new {
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
-		'0985' => ['skill_post_delaylist2', 'v a*', [qw(packet_len msg)]],
+		'0985' => ['skill_post_delaylist', 'v a*', [qw(len skill_list)]],
 		'0988' => ['clan_user', 'v2' ,[qw(onlineuser totalmembers)]],
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
@@ -795,19 +795,6 @@ sub new {
 
 	return $self;
 }
-
-use constant {
-	LEVELUP_EFFECT => 0x0,
-	JOBLEVELUP_EFFECT => 0x1,
-	REFINING_FAIL_EFFECT => 0x2,
-	REFINING_SUCCESS_EFFECT => 0x3,
-	GAME_OVER_EFFECT => 0x4,
-	MAKEITEM_AM_SUCCESS_EFFECT => 0x5,
-	MAKEITEM_AM_FAIL_EFFECT => 0x6,
-	LEVELUP_EFFECT2 => 0x7,
-	JOBLEVELUP_EFFECT2 => 0x8,
-	LEVELUP_EFFECT3 => 0x9,
-};
 
 use constant {
 	DEFINE__BROADCASTING_SPECIAL_ITEM_OBTAIN => 1 << 0,
@@ -1071,31 +1058,6 @@ sub guild_chat {
 	});
 }
 
-sub identify_list {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	undef @identifyID;
-	for (my $i = 4; $i < $msg_size; $i += 2) {
-		my $index = unpack("a2", substr($msg, $i, 2));
-		my $item = $char->inventory->getByID($index);
-		binAdd(\@identifyID, $item->{binID});
-	}
-
-	my $num = @identifyID;
-	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
-}
-
-sub whisper_list {
-	my ($self, $args) = @_;
-
-	my @whisperList = unpack 'x4' . (' Z24' x (($args->{RAW_MSG_SIZE}-4)/24)), $args->{RAW_MSG};
-
-	debug "whisper_list: @whisperList\n", "parseMsg";
-}
-
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -1201,64 +1163,6 @@ sub public_chat {
 		Msg => $parsed_msg,
 		RawMsg => $chatMsg,
 	});
-}
-
-sub rank_points {
-	my ( $self, $args ) = @_;
-
-	$self->blacksmith_points( $args ) if $args->{type} == 0;
-	$self->alchemist_point( $args )   if $args->{type} == 1;
-	$self->taekwon_rank( { rank => $args->{total} } ) if $args->{type} == 2;
-	message "Unknown rank type %s.\n", $args->{type} if $args->{type} > 2;
-}
-
-sub repair_list {
-	my ($self, $args) = @_;
-	my $msg = T("--------Repair List--------\n");
-	undef $repairList;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my $listID = unpack("C1", substr($args->{RAW_MSG}, $i+12, 1));
-		$repairList->[$listID]->{ID} = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		$repairList->[$listID]->{nameID} = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
-		# what are these  two?
-		$repairList->[$listID]->{status} = unpack("V1", substr($args->{RAW_MSG}, $i+4, 4));
-		$repairList->[$listID]->{status2} = unpack("V1", substr($args->{RAW_MSG}, $i+8, 4));
-		$repairList->[$listID]->{listID} = $listID;
-
-		my $name = itemNameSimple($repairList->[$listID]->{nameID});
-		$msg .= "$listID $name\n";
-	}
-	$msg .= "---------------------------\n";
-	message $msg, "list";
-}
-
-sub gospel_buff_aligned {
-	my ($self, $args) = @_;
-	my $status = unpack("V1", $args->{ID});
-
-	if ($status == 21) {
-     		message T("All abnormal status effects have been removed.\n"), "info";
-	} elsif ($status == 22) {
-     		message T("You will be immune to abnormal status effects for the next minute.\n"), "info";
-	} elsif ($status == 23) {
-     		message T("Your Max HP will stay increased for the next minute.\n"), "info";
-	} elsif ($status == 24) {
-     		message T("Your Max SP will stay increased for the next minute.\n"), "info";
-	} elsif ($status == 25) {
-     		message T("All of your Stats will stay increased for the next minute.\n"), "info";
-	} elsif ($status == 28) {
-     		message T("Your weapon will remain blessed with Holy power for the next minute.\n"), "info";
-	} elsif ($status == 29) {
-     		message T("Your armor will remain blessed with Holy power for the next minute.\n"), "info";
-	} elsif ($status == 30) {
-     		message T("Your Defense will stay increased for the next 10 seconds.\n"), "info";
-	} elsif ($status == 31) {
-     		message T("Your Attack strength will stay increased for the next minute.\n"), "info";
-	} elsif ($status == 32) {
-     		message T("Your Accuracy and Flee Rate will stay increased for the next minute.\n"), "info";
-	} else {
-     		#message T("Unknown buff from Gospel: " . $status . "\n"), "info";
-	}
 }
 
 sub map_property {
@@ -1579,31 +1483,6 @@ sub top10 {
 	}
 }
 
-sub unit_levelup {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	my $type = $args->{type};
-	my $actor = Actor::get($ID);
-	if ($type == LEVELUP_EFFECT) {
-		message TF("%s gained a level!\n", $actor);
-		Plugins::callHook('base_level', {name => $actor});
-	} elsif ($type == JOBLEVELUP_EFFECT) {
-		message TF("%s gained a job level!\n", $actor);
-		Plugins::callHook('job_level', {name => $actor});
-	} elsif ($type == REFINING_FAIL_EFFECT) {
-		message TF("%s failed to refine a weapon!\n", $actor), "refine";
-	} elsif ($type == REFINING_SUCCESS_EFFECT) {
-		message TF("%s successfully refined a weapon!\n", $actor), "refine";
-	} elsif ($type == MAKEITEM_AM_SUCCESS_EFFECT) {
-		message TF("%s successfully created a potion!\n", $actor), "refine";
-	} elsif ($type == MAKEITEM_AM_FAIL_EFFECT) {
-		message TF("%s failed to create a potion!\n", $actor), "refine";
-	} else {
-		message TF("%s unknown unit_levelup effect (%d)\n", $actor, $type);
-	}
-}
-
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
 
@@ -1803,33 +1682,6 @@ sub guild_emblem_img {
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
-# 02CE
-#0 = "The Memorial Dungeon reservation has been canceled/updated."
-#    Re-innit Window, in some rare cases.
-#1 = "The Memorial Dungeon expired; it has been destroyed."
-#2 = "The Memorial Dungeon's entry time limit expired; it has been destroyed."
-#3 = "The Memorial Dungeon has been removed."
-#4 = "A system error has occurred in the Memorial Dungeon. Please relog in to the game to continue playing."
-#    Just remove the window, maybe party/guild leave.
-# TODO: test if correct message displays, no type == 0 ?
-sub instance_window_leave {
-	my ($self, $args) = @_;
-
-	if ($args->{flag} == 0) { # TYPE_NOTIFY =  0x0; Ihis one will pop up Memory Dungeon Window
-		debug T("Received Memory Dungeon reservation update\n");
-	} elsif ($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
-		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
-	} elsif($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
-		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
-	} elsif($args->{flag} == 3) { # TYPE_DESTROY_USER_REQUEST =  0x3
-		message T("The Memorial Dungeon has been removed.\n"), "info";
-	} elsif ($args->{flag} == 4) { # TYPE_CREATE_FAIL =  0x4
-		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
-	} else {
-		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
-	}
-}
-
 sub battleground_score {
 	my ($self, $args) = @_;
 	message TF("Battleground score - Lions: '%d' VS Eagles: '%d'\n", $args->{score_lion}, $args->{score_eagle}), "info";
@@ -1863,16 +1715,6 @@ sub sound_effect {
 		$args->{name}, $actor), 'effect'
 }
 
-# 018B
-sub quit_response {
-	my ($self, $args) = @_;
-	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
-		error T("Please wait 10 seconds before trying to log out.\n"); # MSI_CANT_EXIT_NOW =  0x1f6
-	} else { # DISCONNECTABLE_STATE =  0x0
-		message T("Logged out from the server succesfully.\n"), "success";
-	}
-}
-
 sub define_check {
 	my ($self, $args) = @_;
 	#TODO
@@ -1897,50 +1739,10 @@ sub millenium_shield {
 	my ($self, $args) = @_;
 }
 
-sub skill_post_delaylist {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	for (my $i = 4; $i < $args->{msg_size}; $i += 6){
-		my ($ID,$time) = unpack("v V", substr($msg, $i,6));
-		my $skillName = (new Skill(idn => $ID))->getName;
-		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : ' Delay';
-		$char->setStatus($skillName.$status, 1, $time);
-	}
-}
-
-sub skill_post_delaylist2 {
-	my ($self, $args) = @_;
-	my $unpack = "v V2";
-	for (my $i = 0; $i < ($args->{packet_len} - 4); $i += 10) {
-		my ($skill, $totalDelay, $remainDelay) = unpack($unpack, substr($args->{msg}, $i));
-		my $skillName = (new Skill(idn => $skill))->getName;
-		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
-
-		$char->setStatus($skillName." ".$status, 1, $remainDelay);
-	}
-}
-
 sub senbei_amount {
 	my ($self, $args) = @_;
 
 	$char->{senbei} = $args->{senbei};
-}
-
-sub monster_hp_info_tiny {
-	my ($self, $args) = @_;
-	my $monster = $monstersList->getByID($args->{ID});
-	if ($monster) {
-		$monster->{hp_percent} = $args->{hp} * 5;
-
-		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage";
-	}
-}
-
-sub move_interrupt {
-	my ($self, $args) = @_;
-	debug "Movement interrupted by casting a skill/fleeing a mob/etc\n";
 }
 
 sub equipswitch_run_res {
