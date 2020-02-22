@@ -268,7 +268,7 @@ sub new {
 		'0196' => ['actor_status_active', 'v a4 C', [qw(type ID flag)]], # 9
 		'0199' => ['map_property', 'v', [qw(type)]], #4
 		'019A' => ['pvp_rank', 'V3', [qw(ID rank num)]], # 14
-		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]], # 10
+		'019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
 		'019E' => ['pet_capture_process'], # 2
 		'01A0' => ['pet_capture_result', 'C', [qw(success)]], # 3
 		'01A2' => ($rpackets{'01A2'} == 35) # or 37
@@ -469,6 +469,7 @@ sub new {
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]], # 8
 		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], # -1
 		'043D' => ['skill_post_delay', 'v V', [qw(ID time)]],
+		'043E' => ['skill_post_delaylist', 'v a*', [qw(len skill_list)]],
 		'043F' => ['actor_status_active', 'v a4 C V4', [qw(type ID flag tick unknown1 unknown2 unknown3)]], # 25
 		'0440' => ['millenium_shield', 'a4 v2', [qw(ID num state)]], # 10 # TODO: use
 		'0441' => ['skill_delete', 'v', [qw(skillID)]], # 4 # TODO: use (ex. rogue can copy a skill)
@@ -550,8 +551,10 @@ sub new {
 		'096F' => ['merge_item_result', 'a2 v C', [qw(itemIndex total result)]], #5
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'097A' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
+		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
+		'0985' => ['skill_post_delaylist', 'v a*', [qw(len skill_list)]],
 		'0988' => ['clan_user', 'v2' ,[qw(onlineuser totalmembers)]],
 		'098A' => ['clan_info', 'v a4 Z24 Z24 Z16 C2 a*', [qw(len clan_ID clan_name clan_master clan_map alliance_count antagonist_count ally_antagonist_names)]],
 		'098D' => ['clan_leave'],
@@ -615,6 +618,7 @@ sub new {
 		'0A28' => ['open_store_status', 'C', [qw(flag)]],
 		'0A2D' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'0A2F' => ['change_title', 'C V', [qw(result title_id)]],
+		'0A36' => ['monster_hp_info_tiny', 'a4 C', [qw(ID hp)]],
 		'0A37' => ($rpackets{'0A37'}{length} == 57) # or 59
 			? ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite)]]
 			: ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]]
@@ -639,6 +643,7 @@ sub new {
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
+		'0AB8' => ['move_interrupt'],
 		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC2' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]],   # -1
@@ -1003,23 +1008,6 @@ sub guild_chat {
 	});
 }
 
-sub identify_list {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-
-	undef @identifyID;
-	for (my $i = 4; $i < $msg_size; $i += 2) {
-		my $index = unpack('a2', substr($msg, $i, 2));
-		my $item = $char->inventory->getByID($index);
-		binAdd(\@identifyID, $item->{binID});
-	}
-
-	my $num = @identifyID;
-	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
-}
-
 # TODO: test extracted unpack string
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
@@ -1200,55 +1188,6 @@ sub private_message_sent {
 		warning TF("Player %s doesn't want to receive messages\n", $lastpm[0]{user});
 	}
 	shift @lastpm;
-}
-
-# TODO: test optimized unpacking
-sub repair_list {
-	my ($self, $args) = @_;
-	my $msg = T("--------Repair List--------\n");
-	undef $repairList;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my $item = {};
-
-		($item->{ID},
-		$item->{nameID},
-		$item->{status},	# what is this?
-		$item->{status2},	# what is this?
-		$item->{ID}) = unpack('v2 V2 C', substr($args->{RAW_MSG}, $i, 13));
-
-		$repairList->[$item->{ID}] = $item;
-		my $name = itemNameSimple($item->{nameID});
-		$msg .= $item->{ID} . " $name\n";
-	}
-	$msg .= "---------------------------\n";
-	message $msg, "list";
-}
-
-sub gospel_buff_aligned {
-	my ($self, $args) = @_;
-	if ($args->{ID} == 21) {
-     		message T("All abnormal status effects have been removed.\n"), "info";
-	} elsif ($args->{ID} == 22) {
-     		message T("You will be immune to abnormal status effects for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 23) {
-     		message T("Your Max HP will stay increased for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 24) {
-     		message T("Your Max SP will stay increased for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 25) {
-     		message T("All of your Stats will stay increased for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 28) {
-     		message T("Your weapon will remain blessed with Holy power for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 29) {
-     		message T("Your armor will remain blessed with Holy power for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 30) {
-     		message T("Your Defense will stay increased for the next 10 seconds.\n"), "info";
-	} elsif ($args->{ID} == 31) {
-     		message T("Your Attack strength will stay increased for the next minute.\n"), "info";
-	} elsif ($args->{ID} == 32) {
-     		message T("Your Accuracy and Flee Rate will stay increased for the next minute.\n"), "info";
-	} else {
-     		warning T("Unknown buff from Gospel: " . $args->{ID} . "\n"), "info";
-	}
 }
 
 sub map_property {
@@ -1538,25 +1477,6 @@ sub skills_list {
 	}
 }
 
-sub unit_levelup {
-	my ($self, $args) = @_;
-
-	my $ID = $args->{ID};
-	my $type = $args->{type};
-	my $name = getActorName($ID);
-	if ($type == 0) {
-		message TF("%s gained a level!\n", $name);
-		Plugins::callHook('base_level', {name => $name});
-	} elsif ($type == 1) {
-		message TF("%s gained a job level!\n", $name);
-		Plugins::callHook('job_level', {name => $name});
-	} elsif ($type == 2) {
-		message TF("%s failed to refine a weapon!\n", $name), "refine";
-	} elsif ($type == 3) {
-		message TF("%s successfully refined a weapon!\n", $name), "refine";
-	}
-}
-
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
 
@@ -1663,27 +1583,6 @@ sub auction_item_request_search {
 
 	$msg .= sprintf("%s\n", ('-'x79));
 	message($msg, "list");
-}
-
-# 02CE
-#1 = The Memorial Dungeon expired; it has been destroyed
-#2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
-#3 = The Memorial Dungeon has been removed.
-#4 = Just remove the window, maybe party/guild leave
-# TODO: test if correct message displays, no type == 0 ?
-sub instance_window_leave {
-	my ($self, $args) = @_;
-	if($args->{type} == 1) {
-		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
-	} elsif($args->{type} == 2) {
-		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
-	} elsif($args->{type} == 3) {
-		message T("The Memorial Dungeon has been removed.\n"), "info";
-	} elsif ($args->{type} == 4) {
-		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
-	} else {
-		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
-	}
 }
 
 # 01D3

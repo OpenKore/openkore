@@ -470,6 +470,19 @@ use constant {
 	ATTENDANCE_UI => 0x7,
 };
 
+use constant {
+	LEVELUP_EFFECT => 0x0,
+	JOBLEVELUP_EFFECT => 0x1,
+	REFINING_FAIL_EFFECT => 0x2,
+	REFINING_SUCCESS_EFFECT => 0x3,
+	GAME_OVER_EFFECT => 0x4,
+	MAKEITEM_AM_SUCCESS_EFFECT => 0x5,
+	MAKEITEM_AM_FAIL_EFFECT => 0x6,
+	LEVELUP_EFFECT2 => 0x7,
+	JOBLEVELUP_EFFECT2 => 0x8,
+	LEVELUP_EFFECT3 => 0x9,
+};
+
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
 # r7643 - copy-pasted to RagexeRE_2009_10_27a.pm
 sub exp {
@@ -2483,6 +2496,46 @@ sub actor_info {
 	# TODO: $args->{ID} eq $accountID
 }
 
+# Notifies clients in the area about an special/visual effect (ZC_NOTIFY_EFFECT).
+# 019B <id>.L <effect id>.L
+# effect id:
+#     0 = base level up
+#     1 = job level up
+#     2 = refine failure
+#     3 = refine success
+#     4 = game over
+#     5 = pharmacy success
+#     6 = pharmacy failure
+#     7 = base level up (super novice)
+#     8 = job level up (super novice)
+#     9 = base level up (taekwon)
+sub unit_levelup {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	my $type = $args->{type};
+	my $actor = Actor::get($ID);
+	if ($type == LEVELUP_EFFECT || $type == LEVELUP_EFFECT2 || $type == LEVELUP_EFFECT3) {
+		message TF("%s gained a level!\n", $actor);
+		Plugins::callHook('base_level', {name => $actor});
+	} elsif ($type == JOBLEVELUP_EFFECT || $type == JOBLEVELUP_EFFECT2) {
+		message TF("%s gained a job level!\n", $actor);
+		Plugins::callHook('job_level', {name => $actor});
+	} elsif ($type == REFINING_FAIL_EFFECT) {
+		message TF("%s failed to refine a weapon!\n", $actor), "refine";
+	} elsif ($type == REFINING_SUCCESS_EFFECT) {
+		message TF("%s successfully refined a weapon!\n", $actor), "refine";
+	} elsif ($type == MAKEITEM_AM_SUCCESS_EFFECT) {
+		message TF("%s successfully created a potion!\n", $actor), "refine";
+	} elsif ($type == MAKEITEM_AM_FAIL_EFFECT) {
+		message TF("%s failed to create a potion!\n", $actor), "refine";
+	} elsif ($type == GAME_OVER_EFFECT) {
+		message TF("%s received GAME OVER!\n", $actor);
+	} else {
+		message TF("%s unknown unit_levelup effect (%d)\n", $actor, $type);
+	}
+}
+
 use constant QTYPE => (
 	0x0 => [0xff, 0xff, 0, 0],
 	0x1 => [0xff, 0x80, 0, 0],
@@ -2882,7 +2935,8 @@ sub show_script {
 	}
 }
 
-# 043D
+# Skill cooldown display icon (ZC_SKILL_POSTDELAY).
+# 043D <skill ID>.W <tick>.L
 sub skill_post_delay {
 	my ($self, $args) = @_;
 
@@ -2890,6 +2944,82 @@ sub skill_post_delay {
 	my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
 
 	$char->setStatus($skillName." ".$status, 1, $args->{time});
+}
+
+# Skill cooldown display icon List.
+# 043E <len>.w { <skill ID>.W <tick>.L }*
+# 0985 <len>.w { <skill ID>.W <total time>.L <tick>.L }*
+sub skill_post_delaylist {
+	my ($self, $args) = @_;
+
+	my $skill_post_delay_info;
+	if ($args->{switch} eq "0985") { # 0985
+		$skill_post_delay_info = {
+			len => 10,
+			types => 'v V2',
+			keys => [qw(ID total_time remain_time)],
+		};
+
+	} else { # 043E
+		$skill_post_delay_info = {
+			len => 6,
+			types => 'v V',
+			keys => [qw(ID remain_time)],
+		};
+	}
+
+	for (my $i = 0; $i < length($args->{skill_list}); $i += $skill_post_delay_info->{len}) {
+		my $skill;
+		@{$skill}{@{$skill_post_delay_info->{keys}}} = unpack($skill_post_delay_info->{types}, substr($args->{skill_list}, $i, $skill_post_delay_info->{len}));
+		$skill->{name} = (new Skill(idn => $skill->{ID}))->getName;
+		my $status = defined $statusName{'EFST_DELAY'} ? $statusName{'EFST_DELAY'} : 'Delay';
+
+		$char->setStatus($skill->{name}." ".$status, 1, $skill->{remain_time});
+	}
+}
+
+# Displays a skill message (thanks to Rayce) (ZC_SKILLMSG).
+# 0215 <msg id>.L
+# msg id:
+#     0x15 = End all negative status (PA_GOSPEL)
+#     0x16 = Immunity to all status (PA_GOSPEL)
+#     0x17 = MaxHP +100% (PA_GOSPEL)
+#     0x18 = MaxSP +100% (PA_GOSPEL)
+#     0x19 = All stats +20 (PA_GOSPEL)
+#     0x1c = Enchant weapon with Holy element (PA_GOSPEL)
+#     0x1d = Enchant armor with Holy element (PA_GOSPEL)
+#     0x1e = DEF +25% (PA_GOSPEL)
+#     0x1f = ATK +100% (PA_GOSPEL)
+#     0x20 = HIT/Flee +50 (PA_GOSPEL)
+#     0x28 = Full strip failed because of coating (ST_FULLSTRIP)
+#     ? = nothing
+sub gospel_buff_aligned {
+	my ($self, $args) = @_;
+	my $status = unpack("V1", $args->{ID});
+
+	if ($status == 21) {
+     		message T("All abnormal status effects have been removed.\n"), "info";
+	} elsif ($status == 22) {
+     		message T("You will be immune to abnormal status effects for the next minute.\n"), "info";
+	} elsif ($status == 23) {
+     		message T("Your Max HP will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 24) {
+     		message T("Your Max SP will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 25) {
+     		message T("All of your Stats will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 28) {
+     		message T("Your weapon will remain blessed with Holy power for the next minute.\n"), "info";
+	} elsif ($status == 29) {
+     		message T("Your armor will remain blessed with Holy power for the next minute.\n"), "info";
+	} elsif ($status == 30) {
+     		message T("Your Defense will stay increased for the next 10 seconds.\n"), "info";
+	} elsif ($status == 31) {
+     		message T("Your Attack strength will stay increased for the next minute.\n"), "info";
+	} elsif ($status == 32) {
+     		message T("Your Accuracy and Flee Rate will stay increased for the next minute.\n"), "info";
+	} else {
+     		#message T("Unknown buff from Gospel: " . $status . "\n"), "info";
+	}
 }
 
 # TODO: known prefixes (chat domains): micc | ssss | blue | tool
@@ -3489,7 +3619,8 @@ sub monster_typechange {
 	}
 }
 
-# 0977
+# Show monster HP
+# 0977 <id>.L <HP>.L <maxHP>.L (ZC_HP_INFO).
 sub monster_hp_info {
 	my ($self, $args) = @_;
 	my $monster = $monstersList->getByID($args->{ID});
@@ -3498,6 +3629,18 @@ sub monster_hp_info {
 		$monster->{hp_max} = $args->{hp_max};
 
 		debug TF("Monster %s has hp %s/%s (%s%)\n", $monster->name, $monster->{hp}, $monster->{hp_max}, $monster->{hp} * 100 / $monster->{hp_max}), "parseMsg_damage";
+	}
+}
+
+# Show Monster HP bar
+# 0A36 <id>.L <HP>.B
+sub monster_hp_info_tiny {
+	my ($self, $args) = @_;
+	my $monster = $monstersList->getByID($args->{ID});
+	if ($monster) {
+		$monster->{hp_percent} = $args->{hp} * 5;
+
+		debug TF("Monster %s has about %d%% hp left\n", $monster->name, $monster->{hp_percent}), "parseMsg_damage";
 	}
 }
 
@@ -4888,6 +5031,16 @@ sub character_status {
 	setStatus($actor, $args->{opt1}, $args->{opt2}, $args->{option});
 }
 
+# Whisper ignore list (ZC_WHISPER_LIST).
+# 00D4 <packet len>.W { <char name>.24B }*
+sub whisper_list {
+	my ($self, $args) = @_;
+
+	my @whisperList = unpack 'x4' . (' Z24' x (($args->{RAW_MSG_SIZE}-4)/24)), $args->{RAW_MSG};
+
+	debug "whisper_list: @whisperList\n", "parseMsg";
+}
+
 # Inform client whether chatroom creation was successful or not (ZC_ACK_CREATE_CHATROOM).
 # 00D6 <flag>.B
 # flag:
@@ -6094,6 +6247,27 @@ sub misc_effect {
 	), 'effect'
 }
 
+# Presents a list of items that can be identified (ZC_ITEMIDENTIFY_LIST).
+# 0177 <packet len>.W { <name id>.W }*
+sub identify_list {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+
+	undef @identifyID;
+	for (my $i = 4; $i < $msg_size; $i += 2) {
+		my $index = unpack("a2", substr($msg, $i, 2));
+		my $item = $char->inventory->getByID($index);
+		binAdd(\@identifyID, $item->{binID});
+	}
+
+	my $num = @identifyID;
+	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
+}
+
+# Notifies the client about the result of a item identify request (ZC_ACK_ITEMIDENTIFY).
+# 0179 <index>.W <result>.B
 sub identify {
 	my ($self, $args) = @_;
 	if ($args->{flag} == 0) {
@@ -8411,7 +8585,12 @@ sub achievement_list {
 	}
 }
 
-# 018B
+# Notification about the result of a disconnect request (ZC_ACK_REQ_DISCONNECT).
+# 018B <result>.W
+# result:
+#     0 = disconnect (quit)
+#     1 = cannot disconnect (wait 10 seconds)
+#     ? = ignored
 sub quit_response {
 	my ($self, $args) = @_;
 	if ($args->{fail}) { # NOTDISCONNECTABLE_STATE =  0x1
@@ -9023,11 +9202,30 @@ sub adopt_request {
 	message TF("%s wishes to adopt you. Do you accept?\n", $args->{name}), "info";
 }
 
-sub blacksmith_points {
-	my ($self, $args) = @_;
-	message TF("[POINT] Blacksmist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
+# Updates the fame rank points for the given ranking.
+# 097E <RankingType>.W <point>.L <TotalPoint>.L (ZC_UPDATE_RANKING_POINT)
+# RankingType:
+#     0 = Blacksmith
+#     1 = Alchemist
+#     2 = Taekwon
+sub rank_points {
+	my ( $self, $args ) = @_;
+
+	$self->blacksmith_points( $args ) if $args->{type} == 0;
+	$self->alchemist_point( $args )   if $args->{type} == 1;
+	$self->taekwon_rank( { rank => $args->{total} } ) if $args->{type} == 2;
+	message "Unknown rank type %s.\n", $args->{type} if $args->{type} > 2;
 }
 
+# Updates the fame rank points for the Blacksmith ranking. 
+# 021B <points>.L <total points>.L (ZC_BLACKSMITH_POINT)
+sub blacksmith_points {
+	my ($self, $args) = @_;
+	message TF("[POINT] Blacksmith Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
+}
+
+# Updates the fame rank points for the Alchemist ranking.
+# 021C <points>.L <total points>.L (ZC_ALCHEMIST_POINT)
 sub alchemist_point {
 	my ($self, $args) = @_;
 	message TF("[POINT] Alchemist Ranking Point is increasing by %s. Now, The total is %s points.\n", $args->{points}, $args->{total}, "list");
@@ -9290,6 +9488,33 @@ sub instance_window_queue {
 sub instance_window_join {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+}
+
+# 02CE
+#0 = "The Memorial Dungeon reservation has been canceled/updated."
+#    Re-innit Window, in some rare cases.
+#1 = "The Memorial Dungeon expired; it has been destroyed."
+#2 = "The Memorial Dungeon's entry time limit expired; it has been destroyed."
+#3 = "The Memorial Dungeon has been removed."
+#4 = "A system error has occurred in the Memorial Dungeon. Please relog in to the game to continue playing."
+#    Just remove the window, maybe party/guild leave.
+# TODO: test if correct message displays, no type == 0 ?
+sub instance_window_leave {
+	my ($self, $args) = @_;
+
+	if ($args->{flag} == 0) { # TYPE_NOTIFY =  0x0; Ihis one will pop up Memory Dungeon Window
+		debug T("Received Memory Dungeon reservation update\n");
+	} elsif ($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
+		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
+	} elsif($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
+		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
+	} elsif($args->{flag} == 3) { # TYPE_DESTROY_USER_REQUEST =  0x3
+		message T("The Memorial Dungeon has been removed.\n"), "info";
+	} elsif ($args->{flag} == 4) { # TYPE_CREATE_FAIL =  0x4
+		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
+	} else {
+		warning TF("Unknown results in %s (flag: %s)\n", $self->{packet_list}{$args->{switch}}->[0], $args->{flag});
+	}
 }
 
 sub card_merge_list {
@@ -9587,6 +9812,8 @@ sub taekwon_packets {
 	}
 }
 
+# Updates the fame rank points for the Taekwon ranking. 
+# 0224 <points>.L <total points>.L (ZC_TAEKWON_POINT)
 sub taekwon_rank {
 	my ($self, $args) = @_;
 	message T("TaeKwon Mission Rank : ".$args->{rank}."\n"), "info";
@@ -9880,6 +10107,36 @@ sub pvp_rank {
 	}
 }
 
+# Presents a list of items that can be repaired (ZC_REPAIRITEMLIST).
+# 01FC <packet len>.W { <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }*
+sub repair_list {
+	my ($self, $args) = @_;
+	my $msg = T("--------Repair List--------\n");
+	undef $repairList;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
+		my $item = {};
+
+		($item->{ID},
+		$item->{nameID},
+		$item->{upgrade},
+		$item->{cards},
+		) = unpack('a2 v C a8', substr($args->{RAW_MSG}, $i, 13));
+
+		$repairList->[$item->{ID}] = $item;
+		my $name = itemNameSimple($item->{nameID});
+		$msg .= $item->{ID} . " $name\n";
+	}
+	$msg .= "---------------------------\n";
+	message $msg, "list";
+}
+
+# Notifies the client about the result of a item repair request (ZC_ACK_ITEMREPAIR).
+# 01FE <index>.W <result>.B
+# index:
+#     ignored (inventory index)
+# result:
+#     0 = Item repair success.
+#     1 = Item repair failure.
 sub repair_result {
 	my ($self, $args) = @_;
 	undef $repairList;
@@ -10352,6 +10609,13 @@ sub open_ui {
 	} else {
 		error TF("Received request from server to open unknown UI: %s\n", $args->{type});
 	}
+}
+
+# Notifies a movement interrupted
+# 0AB8
+sub move_interrupt {
+	my ($self, $args) = @_;
+	debug "Movement interrupted by casting a skill/fleeing a mob/etc\n";
 }
 
 1;
