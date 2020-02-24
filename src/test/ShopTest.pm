@@ -98,9 +98,9 @@ sub testNonstackableItems {
 	local *Actor::You::cartActive = sub { 1 };
 	my @items = makeShop;
 	is_deeply(\@items, [
-		{index => 1, name => SWORD_NAME, price => SWORD_PRICE, amount => 1},
-		{index => 2, name => SWORD_NAME, price => SWORD_PRICE, amount => 1},
-		{index => 0, name => POTION_NAME, price => POTION_PRICE, amount => POTION_AMOUNT},
+		{ID => 1, name => SWORD_NAME, price => SWORD_PRICE, amount => 1},
+		{ID => 2, name => SWORD_NAME, price => SWORD_PRICE, amount => 1},
+		{ID => 0, name => POTION_NAME, price => POTION_PRICE, amount => POTION_AMOUNT},
 	], 'Shop with two identical nonstackable items.');
 }
 
