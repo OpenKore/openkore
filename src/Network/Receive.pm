@@ -483,8 +483,16 @@ use constant {
 	LEVELUP_EFFECT3 => 0x9,
 };
 
+# Display gained exp.
+# 07F6 <account id>.L <amount>.L <var id>.W <exp type>.W (ZC_NOTIFY_EXP)
+# 0ACC <account id>.L <amount>.Q <var id>.W <exp type>.W (ZC_NOTIFY_EXP2)
+# amount: INT32_MIN ~ INT32_MAX
+# var id:
+#     SP_BASEEXP, SP_JOBEXP
+# exp type:
+#     0 = normal exp gained/lost
+#     1 = quest exp gained/lost
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
-# r7643 - copy-pasted to RagexeRE_2009_10_27a.pm
 sub exp {
 	my ($self, $args) = @_;
 
@@ -744,6 +752,9 @@ sub received_characters_slots_info {
 	$self->received_characters($args) if($args->{charInfo});
 }
 
+# Send to client Characters pages in Char Select Screen
+# 099D <size>.W { CHARACTER_INFO_NEO_UNION3 } * (PACKET_HC_ACK_CHARINFO_PER_PAGE)
+# CHARACTER_INFO_NEO_UNION3 is based in charblocksize, check sub received_characters_unpackString
 sub received_characters {
 	my ($self, $args) = @_;
 	my $blockSize = $self->received_characters_blockSize();
@@ -817,6 +828,9 @@ sub received_characters {
 	}
 }
 
+# Tell client how many pages have character selection screen 
+# 09A0 <total count>.W (PACKET_HC_CHARLIST_NOTIFY)
+# total count: Server send from total pages until 1 page
 sub sync_received_characters {
 	my ($self, $args) = @_;
 
@@ -845,6 +859,9 @@ sub reconstruct_received_characters_info {
 	$args->{charInfo} = pack '(a'.$masterServer->{charBlockSize}.')*', map { pack $char_info->{types}, @{$_}{@{$char_info->{keys}}} } @{$args->{chars}};
 }
 
+# Notifies client, that character was succesfull created
+# 006E { CHARACTER_INFO_NEO_UNION } (PACKET_HC_ACCEPT_MAKECHAR_NEO_UNION)
+# CHARACTER_INFO_NEO_UNION is based in charblocksize, check sub received_characters_unpackString
 sub character_creation_successful {
 	my ($self, $args) = @_;
 	return unless exists $args->{charInfo};
@@ -884,6 +901,42 @@ sub character_creation_successful {
 	}
 }
 
+# Notifies Client that the character was not created
+# 006E <error code>.B (PACKET_HC_REFUSE_MAKECHAR)
+# code:
+#    0x00 = Charname already exists
+#    0x01 = You are underaged
+#    0x02 = Symbols in Character Names are forbidden
+#    0x03 = You are not elegible to open the Character Slot
+#    0xFF = Char creation denied
+sub character_creation_failed {
+	my ($self, $args) = @_;
+	if ($args->{flag} == 0x00) {
+		message T("Charname already exists.\n"), "info";
+	} elsif ($args->{flag} == 0xFF) {
+		message T("Char creation denied.\n"), "info";
+	} elsif ($args->{flag} == 0x01) {
+		message T("You are underaged.\n"), "info";
+	} elsif ($args->{flag} == 0x02) {
+		message T("Symbols in Character Names are forbidden .\n"), "info";
+	} elsif ($args->{flag} == 0x03) {
+		message T("You are not elegible to open the Character Slot.\n"), "info";
+	} else {
+		message T("Character creation failed. " .
+			"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
+	}
+	if (charSelectScreen() == 1) {
+		$net->setState(3);
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
+}
+
+# Notifies client about account slots info and chars
+# 006B <size>.W <total slots>.B <premium start slot>.B <premium end slot>.B <dummy1_beginbilling>.B <code>.L <start time>.L <end time>.L  { CHARACTER_INFO_NEO_UNION3 }* (PACKET_HC_ACCEPT_ENTER_NEO_UNION)
+# 082D <size>.W <normal slot>.B <premium slot>.B <billing slot>.B <producible slot>.B <valid slot>.B <m_extension>.20B { CHARACTER_INFO_NEO_UNION2 }* (PACKET_HC_ACCEPT2)
+# CHARACTER_INFO_NEO_UNION3 and CHARACTER_INFO_NEO_UNION2 are based in charblocksize, check sub received_characters_unpackString
 sub received_characters_info {
 	my ($self, $args) = @_;
  	Scalar::Util::weaken(my $weak = $self);
@@ -1418,6 +1471,21 @@ our %stat_info_handlers = (
 	#...
 );
 
+# Notifies client of a character parameter change.
+# 00B0 <var id>.W <value>.L (ZC_PAR_CHANGE)
+# 00B1 <var id>.W <value>.L (ZC_LONGPAR_CHANGE)
+# 00BE <status id>.W <value>.B (ZC_STATUS_CHANGE)
+# 0141 <status id>.L <base status>.L <plus status>.L (ZC_COUPLESTATUS)
+# 0ACB <var id>.W <value>.Q (ZC_LONGPAR_CHANGE2)
+#
+# Notifies client of a parameter change of an another player.
+# 01AB <account id>.L <var id>.W <value>.L (ZC_PAR_CHANGE_USER)
+#
+# Notification about a mercenary status parameter change.
+# 02A2 <var id>.W <value>.L (ZC_MER_PAR_CHANGE)
+#
+# Notification about a homunculus status parameter change.
+# 07DB <var id>.W <value>.L
 sub stat_info {
 	my ($self, $args) = @_;
 
@@ -1460,6 +1528,11 @@ sub stat_info {
 }
 
 # TODO: merge with stat_info
+# Notifies the client, about the result of an status change request (ZC_STATUS_CHANGE_ACK).
+# 00BC <status id>.W <result>.B <value>.B
+# result:
+#     0 = failure
+#     1 = success
 sub stats_added {
 	my ($self, $args) = @_;
 
@@ -1500,6 +1573,9 @@ sub stats_added {
 	});
 }
 
+# Character status (ZC_STATUS).
+# 00BD <stpoint>.W <str>.B <need str>.B <agi>.B <need agi>.B <vit>.B <need vit>.B <int>.B <need int>.B <dex>.B <need dex>.B <luk>.B <need luk>.B 
+# <atk>.W <atk2>.W <matk min>.W <matk max>.W <def>.W <def2>.W <mdef>.W <mdef2>.W <hit>.W <flee>.W <flee2>.W <crit>.W <aspd>.W <aspd2>.W 
 sub stats_info {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -1549,6 +1625,8 @@ sub stats_info {
 		."Status Points: $char->{points_free}\n", "parseMsg";
 }
 
+# Notifies client of a character parameter change.
+# 0141 <status id>.L <base status>.L <plus status>.L (ZC_COUPLESTATUS)
 sub stat_info2 {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -2763,6 +2841,8 @@ sub npc_image {
 	}
 }
 
+# Send broadcast message with font formatting (ZC_BROADCAST2).
+# 01C3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
 sub local_broadcast {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});
@@ -2834,6 +2914,14 @@ sub sage_autospell {
 	}
 }
 
+# Sends info about a player's equipped items.
+# 02D7 <packet len>.W <name>.24B <class>.W <hairstyle>.W <up-viewid>.W <mid-viewid>.W <low-viewid>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.26B* (ZC_EQUIPWIN_MICROSCOPE)
+# 02D7 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.28B* (ZC_EQUIPWIN_MICROSCOPE, PACKETVER >= 20100629)
+# 0859 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.28B* (ZC_EQUIPWIN_MICROSCOPE2, PACKETVER >= 20101124)
+# 0859 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.28B* (ZC_EQUIPWIN_MICROSCOPE2, PACKETVER >= 20110111)
+# 0997 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.31B* (ZC_EQUIPWIN_MICROSCOPE_V5, PACKETVER >= 20120925)
+# 0A2D <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.57B* (ZC_EQUIPWIN_MICROSCOPE_V6, PACKETVER >= 20150225)
+# 0B03 <packet len>.W <name>.24B <class>.W <hairstyle>.W <bottom-viewid>.W <mid-viewid>.W <up-viewid>.W <robe>.W <haircolor>.W <cloth-dye>.W <gender>.B {equip item}.57B* (ZC_EQUIPWIN_MICROSCOPE_V7, PACKETVER >= 201200000)
 sub show_eq {
 	my ($self, $args) = @_;
 	my $item_info;
@@ -4687,6 +4775,8 @@ sub cart_item_removed {
 	}
 }
 
+# Notifies client of a character parameter change.
+# 0121 <current count>.W <max count>.W <current weight>.L <max weight>.L (ZC_NOTIFY_CARTITEM_COUNTINFO)
 sub cart_info {
 	my ($self, $args) = @_;
 	$char->cart->info($args);
@@ -6237,6 +6327,8 @@ sub guild_notice {
 	}
 }
 
+# Displays special effects (npcs, weather, etc) [Valaris] (ZC_NOTIFY_EFFECT2).
+# 01F3 <id>.L <effect id>.L
 sub misc_effect {
 	my ($self, $args) = @_;
 
@@ -6245,6 +6337,33 @@ sub misc_effect {
 		$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
 		$actor, defined $effectName{$args->{effect}} ? $effectName{$args->{effect}} : T("Unknown #")."$args->{effect}"
 	), 'effect'
+}
+
+# Plays/stops a wave sound (ZC_SOUND).
+# 01d3 <file name>.24B <act>.B <term>.L <npc id>.L
+# file name:
+#     relative to data\wav
+# act:
+#     0 = play (once)
+#     1 = play (repeat, does not work)
+#     2 = stops all sound instances of file name (does not work)
+# term:
+#     unknown purpose, only relevant to act = 1
+#     $args->{term} seems like duration or repeat count
+sub sound_effect {
+	my ($self, $args) = @_;
+
+	# continuous sound effects can be implemented as actor statuses
+	my $actor = exists $args->{ID} && Actor::get($args->{ID});
+	message sprintf(
+		$actor
+			? $args->{type} == 0
+				? $actor->verb(T("%2\$s play: %s\n"), T("%2\$s plays: %s\n"))
+				: $args->{type} == 1
+					? $actor->verb(T("%2\$s are now playing: %s\n"), T("%2\$s is now playing: %s\n"))
+					: $actor->verb(T("%2\$s stopped playing: %s\n"), T("%2\$s stopped playing: %s\n"))
+			: T("Now playing: %s\n"),
+		$args->{name}, $actor), 'effect'
 }
 
 # Presents a list of items that can be identified (ZC_ITEMIDENTIFY_LIST).
@@ -9280,6 +9399,8 @@ sub arrowcraft_list {
 	message T("Received Possible Arrow Craft List - type 'arrowcraft'\n");
 }
 
+# Notifies client of a character parameter change.
+# 013A <atk range>.W (ZC_ATTACK_RANGE)
 sub attack_range {
 	my ($self, $args) = @_;
 
@@ -9750,6 +9871,26 @@ sub mail_new {
 	message TF("New mail from sender: %s titled: %s.\n", bytesToString($args->{sender}), bytesToString($args->{title})), "info";
 }
 
+# Top 10 rank
+# 097D <RankingType>.W {<CharName>.24B <point>L}*10 <mypoint>L (ZC_ACK_RANKING)
+sub top10 {
+	my ( $self, $args ) = @_;
+
+	if ( $args->{type} == 0 ) {
+		$self->top10_blacksmith_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} elsif ( $args->{type} == 1 ) {
+		$self->top10_alchemist_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} elsif ( $args->{type} == 2 ) {
+		$self->top10_taekwon_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} elsif ( $args->{type} == 3 ) {
+		$self->top10_pk_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} else {
+		message "Unknown top10 type %s.\n", $args->{type};
+	}
+}
+
+# Alchemist Top 10 rank
+# 021A { <name>.24B }*10 { <point>.L }*10 (ZC_ALCHEMIST_RANK)
 sub top10_alchemist_rank {
 	my ($self, $args) = @_;
 
@@ -9760,6 +9901,8 @@ sub top10_alchemist_rank {
 		"=============================================\n", $textList), "list";
 }
 
+# Blacksmith Top 10 rank
+# 0219 { <name>.24B }*10 { <point>.L }*10 (ZC_BLACKSMITH_RANK)
 sub top10_blacksmith_rank {
 	my ($self, $args) = @_;
 
@@ -9770,6 +9913,8 @@ sub top10_blacksmith_rank {
 		"=============================================\n", $textList), "list";
 }
 
+# PK Top 10 rank
+# 0238 { <name>.24B }*10 { <point>.L }*10 (ZC_KILLER_RANK)
 sub top10_pk_rank {
 	my ($self, $args) = @_;
 
@@ -9780,6 +9925,8 @@ sub top10_pk_rank {
 		"=============================================\n", $textList), "list";
 }
 
+# Taekwon Top 10 rank
+# 0226 { <name>.24B }*10 { <point>.L }*10 (ZC_TAEKWON_RANK)
 sub top10_taekwon_rank {
 	my ($self, $args) = @_;
 

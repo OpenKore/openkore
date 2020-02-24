@@ -997,26 +997,6 @@ sub parse_cash_dealer {
 	$args->{kafra_points} = 0;
 }
 
-sub character_creation_failed {
-	my ($self, $args) = @_;
-	if ($args->{flag} == 0x0) {
-		message T("Charname already exists.\n"), "info";
-	} elsif ($args->{flag} == 0xFF) {
-		message T("Char creation denied.\n"), "info";
-	} elsif ($args->{flag} == 0x01) {
-		message T("You are underaged.\n"), "info";
-	} else {
-		message T("Character creation failed. " .
-			"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
-	}
-	if (charSelectScreen() == 1) {
-		$net->setState(3);
-		$firstLoginMap = 1;
-		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-		$sentWelcomeMessage = 1;
-	}
-}
-
 sub gameguard_request {
 	my ($self, $args) = @_;
 
@@ -1467,22 +1447,6 @@ sub skills_list {
 	}
 }
 
-sub top10 {
-	my ( $self, $args ) = @_;
-
-	if ( $args->{type} == 0 ) {
-		$self->top10_blacksmith_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} elsif ( $args->{type} == 1 ) {
-		$self->top10_alchemist_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} elsif ( $args->{type} == 2 ) {
-		$self->top10_taekwon_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} elsif ( $args->{type} == 3 ) {
-		$self->top10_pk_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} else {
-		message "Unknown top10 type %s.\n", $args->{type};
-	}
-}
-
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
 
@@ -1693,26 +1657,6 @@ sub battleground_position {
 
 sub battleground_hp {
 	my ($self, $args) = @_;
-}
-
-# 01D3
-# TODO
-sub sound_effect {
-	my ($self, $args) = @_;
-	# $args->{type} seems like 0 => once, 1 => start, 2 => stop
-	# $args->{term} seems like duration or repeat count
-	# continuous sound effects can be implemented as actor statuses
-
-	my $actor = exists $args->{ID} && Actor::get($args->{ID});
-	message sprintf(
-		$actor
-			? $args->{type} == 0
-				? $actor->verb(T("%2\$s play: %s\n"), T("%2\$s plays: %s\n"))
-				: $args->{type} == 1
-					? $actor->verb(T("%2\$s are now playing: %s\n"), T("%2\$s is now playing: %s\n"))
-					: $actor->verb(T("%2\$s stopped playing: %s\n"), T("%2\$s stopped playing: %s\n"))
-			: T("Now playing: %s\n"),
-		$args->{name}, $actor), 'effect'
 }
 
 sub define_check {

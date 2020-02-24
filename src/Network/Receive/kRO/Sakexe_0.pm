@@ -551,6 +551,7 @@ sub new {
 		'096F' => ['merge_item_result', 'a2 v C', [qw(itemIndex total result)]], #5
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'097A' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
+		'097D' => ['top10', 'v a*', [qw(type message)]],
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
 		'0984' => ['actor_status_active', 'a4 v V5', [qw(ID type total tick unknown1 unknown2 unknown3)]],
@@ -945,26 +946,6 @@ sub _items_list {
 # kRO client from 2007-07-11 sends cash_points and kafra_points
 sub parse_cash_dealer {
 
-}
-
-sub character_creation_failed {
-	my ($self, $args) = @_;
-	if ($args->{flag} == 0x00) {
-		message T("Charname already exists.\n"), "info";
-	} elsif ($args->{flag} == 0xFF) {
-		message T("Char creation denied.\n"), "info";
-	} elsif ($args->{flag} == 0x01) {
-		message T("You are underaged.\n"), "info";
-	} else {
-		message T("Character creation failed. " .
-			"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
-	}
-	if (charSelectScreen() == 1) {
-		$net->setState(3);
-		$firstLoginMap = 1;
-		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-		$sentWelcomeMessage = 1;
-	}
 }
 
 sub gameguard_request {
@@ -1583,13 +1564,6 @@ sub auction_item_request_search {
 
 	$msg .= sprintf("%s\n", ('-'x79));
 	message($msg, "list");
-}
-
-# 01D3
-# TODO
-sub sound_effect {
-	my ($self, $args) = @_;
-	debug "$args->{name} $args->{type} $args->{unknown} $args->{ID}\n", "info";
 }
 
 sub disconnect_character {
