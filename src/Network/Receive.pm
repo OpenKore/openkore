@@ -1528,6 +1528,11 @@ sub stat_info {
 }
 
 # TODO: merge with stat_info
+# Notifies the client, about the result of an status change request (ZC_STATUS_CHANGE_ACK).
+# 00BC <status id>.W <result>.B <value>.B
+# result:
+#     0 = failure
+#     1 = success
 sub stats_added {
 	my ($self, $args) = @_;
 
