@@ -2841,6 +2841,8 @@ sub npc_image {
 	}
 }
 
+# Send broadcast message with font formatting (ZC_BROADCAST2).
+# 01C3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
 sub local_broadcast {
 	my ($self, $args) = @_;
 	my $message = bytesToString($args->{message});
