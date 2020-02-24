@@ -947,26 +947,6 @@ sub parse_cash_dealer {
 
 }
 
-sub character_creation_failed {
-	my ($self, $args) = @_;
-	if ($args->{flag} == 0x00) {
-		message T("Charname already exists.\n"), "info";
-	} elsif ($args->{flag} == 0xFF) {
-		message T("Char creation denied.\n"), "info";
-	} elsif ($args->{flag} == 0x01) {
-		message T("You are underaged.\n"), "info";
-	} else {
-		message T("Character creation failed. " .
-			"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
-	}
-	if (charSelectScreen() == 1) {
-		$net->setState(3);
-		$firstLoginMap = 1;
-		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-		$sentWelcomeMessage = 1;
-	}
-}
-
 sub gameguard_request {
 	my ($self, $args) = @_;
 
