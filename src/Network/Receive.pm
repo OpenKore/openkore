@@ -1625,6 +1625,8 @@ sub stats_info {
 		."Status Points: $char->{points_free}\n", "parseMsg";
 }
 
+# Notifies client of a character parameter change.
+# 0141 <status id>.L <base status>.L <plus status>.L (ZC_COUPLESTATUS)
 sub stat_info2 {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
