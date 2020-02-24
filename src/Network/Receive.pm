@@ -483,8 +483,16 @@ use constant {
 	LEVELUP_EFFECT3 => 0x9,
 };
 
+# Display gained exp.
+# 07F6 <account id>.L <amount>.L <var id>.W <exp type>.W (ZC_NOTIFY_EXP)
+# 0ACC <account id>.L <amount>.Q <var id>.W <exp type>.W (ZC_NOTIFY_EXP2)
+# amount: INT32_MIN ~ INT32_MAX
+# var id:
+#     SP_BASEEXP, SP_JOBEXP
+# exp type:
+#     0 = normal exp gained/lost
+#     1 = quest exp gained/lost
 # 07F6 (exp) doesn't change any exp information because 00B1 (exp_zeny_info) is always sent with it
-# r7643 - copy-pasted to RagexeRE_2009_10_27a.pm
 sub exp {
 	my ($self, $args) = @_;
 
