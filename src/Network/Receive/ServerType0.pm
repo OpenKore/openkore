@@ -1659,26 +1659,6 @@ sub battleground_hp {
 	my ($self, $args) = @_;
 }
 
-# 01D3
-# TODO
-sub sound_effect {
-	my ($self, $args) = @_;
-	# $args->{type} seems like 0 => once, 1 => start, 2 => stop
-	# $args->{term} seems like duration or repeat count
-	# continuous sound effects can be implemented as actor statuses
-
-	my $actor = exists $args->{ID} && Actor::get($args->{ID});
-	message sprintf(
-		$actor
-			? $args->{type} == 0
-				? $actor->verb(T("%2\$s play: %s\n"), T("%2\$s plays: %s\n"))
-				: $args->{type} == 1
-					? $actor->verb(T("%2\$s are now playing: %s\n"), T("%2\$s is now playing: %s\n"))
-					: $actor->verb(T("%2\$s stopped playing: %s\n"), T("%2\$s stopped playing: %s\n"))
-			: T("Now playing: %s\n"),
-		$args->{name}, $actor), 'effect'
-}
-
 sub define_check {
 	my ($self, $args) = @_;
 	#TODO

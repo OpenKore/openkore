@@ -6282,6 +6282,8 @@ sub guild_notice {
 	}
 }
 
+# Displays special effects (npcs, weather, etc) [Valaris] (ZC_NOTIFY_EFFECT2).
+# 01F3 <id>.L <effect id>.L
 sub misc_effect {
 	my ($self, $args) = @_;
 
@@ -6290,6 +6292,33 @@ sub misc_effect {
 		$actor->verb(T("%s use effect: %s\n"), T("%s uses effect: %s\n")),
 		$actor, defined $effectName{$args->{effect}} ? $effectName{$args->{effect}} : T("Unknown #")."$args->{effect}"
 	), 'effect'
+}
+
+# Plays/stops a wave sound (ZC_SOUND).
+# 01d3 <file name>.24B <act>.B <term>.L <npc id>.L
+# file name:
+#     relative to data\wav
+# act:
+#     0 = play (once)
+#     1 = play (repeat, does not work)
+#     2 = stops all sound instances of file name (does not work)
+# term:
+#     unknown purpose, only relevant to act = 1
+#     $args->{term} seems like duration or repeat count
+sub sound_effect {
+	my ($self, $args) = @_;
+
+	# continuous sound effects can be implemented as actor statuses
+	my $actor = exists $args->{ID} && Actor::get($args->{ID});
+	message sprintf(
+		$actor
+			? $args->{type} == 0
+				? $actor->verb(T("%2\$s play: %s\n"), T("%2\$s plays: %s\n"))
+				: $args->{type} == 1
+					? $actor->verb(T("%2\$s are now playing: %s\n"), T("%2\$s is now playing: %s\n"))
+					: $actor->verb(T("%2\$s stopped playing: %s\n"), T("%2\$s stopped playing: %s\n"))
+			: T("Now playing: %s\n"),
+		$args->{name}, $actor), 'effect'
 }
 
 # Presents a list of items that can be identified (ZC_ITEMIDENTIFY_LIST).

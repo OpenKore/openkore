@@ -1566,13 +1566,6 @@ sub auction_item_request_search {
 	message($msg, "list");
 }
 
-# 01D3
-# TODO
-sub sound_effect {
-	my ($self, $args) = @_;
-	debug "$args->{name} $args->{type} $args->{unknown} $args->{ID}\n", "info";
-}
-
 sub disconnect_character {
 	my ($self, $args) = @_;
 	debug "disconnect_character result: $args->{result}\n";
