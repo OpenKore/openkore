@@ -1447,22 +1447,6 @@ sub skills_list {
 	}
 }
 
-sub top10 {
-	my ( $self, $args ) = @_;
-
-	if ( $args->{type} == 0 ) {
-		$self->top10_blacksmith_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} elsif ( $args->{type} == 1 ) {
-		$self->top10_alchemist_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} elsif ( $args->{type} == 2 ) {
-		$self->top10_taekwon_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} elsif ( $args->{type} == 3 ) {
-		$self->top10_pk_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
-	} else {
-		message "Unknown top10 type %s.\n", $args->{type};
-	}
-}
-
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
 

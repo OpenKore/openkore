@@ -9795,6 +9795,26 @@ sub mail_new {
 	message TF("New mail from sender: %s titled: %s.\n", bytesToString($args->{sender}), bytesToString($args->{title})), "info";
 }
 
+# Top 10 rank
+# 097D <RankingType>.W {<CharName>.24B <point>L}*10 <mypoint>L (ZC_ACK_RANKING)
+sub top10 {
+	my ( $self, $args ) = @_;
+
+	if ( $args->{type} == 0 ) {
+		$self->top10_blacksmith_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} elsif ( $args->{type} == 1 ) {
+		$self->top10_alchemist_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} elsif ( $args->{type} == 2 ) {
+		$self->top10_taekwon_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} elsif ( $args->{type} == 3 ) {
+		$self->top10_pk_rank( { RAW_MSG => substr $args->{RAW_MSG}, 2 } );
+	} else {
+		message "Unknown top10 type %s.\n", $args->{type};
+	}
+}
+
+# Alchemist Top 10 rank
+# 021A { <name>.24B }*10 { <point>.L }*10 (ZC_ALCHEMIST_RANK)
 sub top10_alchemist_rank {
 	my ($self, $args) = @_;
 
@@ -9805,6 +9825,8 @@ sub top10_alchemist_rank {
 		"=============================================\n", $textList), "list";
 }
 
+# Blacksmith Top 10 rank
+# 0219 { <name>.24B }*10 { <point>.L }*10 (ZC_BLACKSMITH_RANK)
 sub top10_blacksmith_rank {
 	my ($self, $args) = @_;
 
@@ -9815,6 +9837,8 @@ sub top10_blacksmith_rank {
 		"=============================================\n", $textList), "list";
 }
 
+# PK Top 10 rank
+# 0238 { <name>.24B }*10 { <point>.L }*10 (ZC_KILLER_RANK)
 sub top10_pk_rank {
 	my ($self, $args) = @_;
 
@@ -9825,6 +9849,8 @@ sub top10_pk_rank {
 		"=============================================\n", $textList), "list";
 }
 
+# Taekwon Top 10 rank
+# 0226 { <name>.24B }*10 { <point>.L }*10 (ZC_TAEKWON_RANK)
 sub top10_taekwon_rank {
 	my ($self, $args) = @_;
 
