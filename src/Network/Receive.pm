@@ -1471,6 +1471,21 @@ our %stat_info_handlers = (
 	#...
 );
 
+# Notifies client of a character parameter change.
+# 00B0 <var id>.W <value>.L (ZC_PAR_CHANGE)
+# 00B1 <var id>.W <value>.L (ZC_LONGPAR_CHANGE)
+# 00BE <status id>.W <value>.B (ZC_STATUS_CHANGE)
+# 0141 <status id>.L <base status>.L <plus status>.L (ZC_COUPLESTATUS)
+# 0ACB <var id>.W <value>.Q (ZC_LONGPAR_CHANGE2)
+#
+# Notifies client of a parameter change of an another player.
+# 01AB <account id>.L <var id>.W <value>.L (ZC_PAR_CHANGE_USER)
+#
+# Notification about a mercenary status parameter change.
+# 02A2 <var id>.W <value>.L (ZC_MER_PAR_CHANGE)
+#
+# Notification about a homunculus status parameter change.
+# 07DB <var id>.W <value>.L
 sub stat_info {
 	my ($self, $args) = @_;
 
@@ -4740,6 +4755,8 @@ sub cart_item_removed {
 	}
 }
 
+# Notifies client of a character parameter change.
+# 0121 <current count>.W <max count>.W <current weight>.L <max weight>.L (ZC_NOTIFY_CARTITEM_COUNTINFO)
 sub cart_info {
 	my ($self, $args) = @_;
 	$char->cart->info($args);
@@ -9362,6 +9379,8 @@ sub arrowcraft_list {
 	message T("Received Possible Arrow Craft List - type 'arrowcraft'\n");
 }
 
+# Notifies client of a character parameter change.
+# 013A <atk range>.W (ZC_ATTACK_RANGE)
 sub attack_range {
 	my ($self, $args) = @_;
 
