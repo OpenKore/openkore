@@ -10834,4 +10834,23 @@ sub banking_withdraw {
 	Plugins::callHook("banking_withdraw_failed", {'reason' => $args->{reason}});
 }
 
+##
+# Navigation System
+##
+
+# start a navigation to designed location/map
+# 08E2 <type>.B <flag>.B <hide>.B <map>.16B <x pos>.W <y pos>.W <mob id>.W
+# TODO: document type and flag 
+sub navigate_to {
+	my ($self, $args) = @_;
+
+	if( $args->{mob_id} ) {
+		message TF("Server asked us to navigate to %s map and look for monster with ID %s\n", $args->{map}, $args->{mob_id}), "info";
+	} else {
+		message TF("Server asked us to navigate to %s (%s,%s)\n", $args->{map}, $args->{x}, $args->{y}), "info";
+	}
+
+	Plugins::callHook('navigate_to', $args);
+}
+
 1;
