@@ -3148,4 +3148,40 @@ sub sendStylistChange {
 	}));
 }
 
+##
+# Banking System
+##
+
+# Requesting the data in bank
+# 09AB <aid>L (PACKET_CZ_REQ_BANKING_CHECK)
+sub sendBankingCheck {
+	my ($self, $accountID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'banking_check_request',
+		accountID => $accountID,
+	}));
+}
+
+# Request Withdrawing some money from bank
+# 09A9 <AID>L <Money>L (PACKET_CZ_REQ_BANKING_WITHDRAW)
+sub sendBankingWithdraw {
+	my ($self, $accountID , $zeny) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'banking_withdraw_request',
+		accountID => $accountID,
+		zeny => $zeny,
+	}));
+}
+
+# Request saving some money in bank
+# 09A7 <AID>L <Money>L (PACKET_CZ_REQ_BANKING_DEPOSIT)
+sub sendBankingDeposit {
+	my ($self, $accountID , $zeny) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'banking_deposit_request',
+		accountID => $accountID,
+		zeny => $zeny,
+	}));
+}
+
 1;

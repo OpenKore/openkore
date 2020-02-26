@@ -703,6 +703,7 @@ sub initMapChangeVars {
 
 	$shopstarted = 0;
 	$buyershopstarted = 0;
+	$bankingopened = 0;
 	$timeout{ai_shop}{time} = time;
 	$timeout{ai_storageAuto}{time} = time + 5;
 	$timeout{ai_buyAuto}{time} = time + 5;

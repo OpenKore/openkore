@@ -87,6 +87,12 @@ sub initHandlers {
 			], \&cmdAuthorize],
 		['bangbang', T("Does a bangbang body turn."), \&cmdBangBang],
 		['bingbing', T("Does a bingbing body turn."), \&cmdBingBing],
+		['bank', [
+			T("Banking management."),
+			["open", T("Open Banking Interface")],
+			["deposit", T("Deposit Zeny in Banking")],
+			["withdraw", T("Withdraw Zeny from Banking")],
+			], \&cmdBank],
 		['bg', [
 			T("Send a message in the battlegrounds chat."),
 			[T("<message>"), T("send <message> in the battlegrounds chat")]
@@ -1174,6 +1180,43 @@ sub cmdBingBing {
 	}
 	my $bodydir = ($char->{look}{body} + 1) % 8;
 	$messageSender->sendLook($bodydir, $char->{look}{head});
+}
+
+sub cmdBank {
+	my (undef, $args) = @_;
+	my ($command, $zeny) = parseArgs( $args );
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	if ( $command eq "open" ) {
+		$messageSender->sendBankingCheck($accountID);
+	} elsif ( ( $command eq "deposit" || $command eq "withdraw" ) && !$bankingopened ) {
+		error T("Bank: You have to open bank before try to use the commands.\n");
+	} elsif ( $command eq "deposit" ) {
+		if( $zeny =~ /\d+/ ) {
+			if( $zeny <= $char->{zeny} ) {
+				$messageSender->sendBankingDeposit($accountID, $zeny);
+			} else {
+				error T("Bank: You don't have that amount of zeny to DEPOSIT in Bank.\n");
+			}
+		} else {
+			error T("Syntax Error in function 'bank' (Banking)\n" .
+				"bank deposit <amount>\n");
+		}
+	} elsif ( $command eq "withdraw" ) {
+		if( $zeny =~ /\d+/ ) {
+			$messageSender->sendBankingWithdraw($accountID, $zeny);			
+		} else {
+			error T("Syntax Error in function 'bank' (Banking)\n" .
+				"bank withdraw <amount>\n");
+		}
+	} else {
+		error T("Syntax Error in function 'bank' (Banking)\n" .
+				"bank <open|deposit|withdraw>\n");
+	}
 }
 
 sub cmdBuy {
