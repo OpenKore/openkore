@@ -10765,4 +10765,73 @@ sub move_interrupt {
 	debug "Movement interrupted by casting a skill/fleeing a mob/etc\n";
 }
 
+##
+# Banking System
+##
+
+# Display how much we have in bank
+# 09A6 <Bank_Vault>Q <Reason>W (PACKET_ZC_BANKING_CHECK)
+# Reason:
+#    1 = mark opening and closing
+sub banking_check {
+	my ($self, $args) = @_;
+	
+	$bankingopened = 1;
+	$banking{zeny} = $args->{zeny};
+
+	message center(T("[Zeny Storage (Bank)]"), 40, '-') ."\n", "info";
+	message TF("In Bank : %s z\n", $args->{zeny}), "info";
+	message TF("On Hand : %s z\n", $char->{zeny}), "info";
+	message ('-'x40) . "\n", "info";
+	
+	Plugins::callHook("banking_opened");
+}
+
+# Acknowledge of deposit some money in bank
+# 09A8 <Reason>W <Money>Q <balance>L (PACKET_ZC_ACK_BANKING_DEPOSIT)
+# reason:
+#    BDA_SUCCESS  = 0x0
+#    BDA_ERROR    = 0x1
+#    BDA_NO_MONEY = 0x2
+#    BDA_OVERFLOW = 0x3
+sub banking_deposit {
+	my ($self, $args) = @_;
+
+	if ($args->{reason} == 0x0) {
+		message T("Bank: Deposit Success.\n"), "success";
+		$char->{zeny} = $args->{balance}; # TODO: check if 'stat_info' is received (if yes, delete this line)
+		Plugins::callHook("banking_deposit_success");
+		return;
+	} elsif ($args->{reason} == 0x1) {
+		error T("Bank: Deposit Error (Try it again).\n");		
+	} elsif ($args->{reason} == 0x2) {
+		error T("Bank: No Money For Deposit.\n");
+	} elsif ($args->{reason} == 0x3) {
+		error T("Bank: Money in the bank overflow.\n");
+	}
+	Plugins::callHook("banking_deposit_failed", {'reason' => $args->{reason}});
+}
+
+# Acknowledge of withdrawing some money from bank
+# 09AA <Reason>W <Money>Q <balance>L (PACKET_ZC_ACK_BANKING_WITHDRAW)
+# reason:
+#    BWA_SUCCESS       = 0x0
+#    BWA_NO_MONEY      = 0x1
+#    BWA_UNKNOWN_ERROR = 0x2
+sub banking_withdraw {
+	my ($self, $args) = @_;
+
+	if ($args->{reason} == 0x0) {
+		message T("Bank: Withdraw Success \n"),"success";
+		$char->{zeny} = $args->{balance}; # TODO: check if 'stat_info' is received (if yes, delete this line)
+		Plugins::callHook("banking_withdraw_success");
+		return;
+	} elsif ($args->{reason} == 0x1) {
+		error T("Bank: No Money for Withdraw.\n");
+	} elsif ($args->{reason} == 0x2) {
+		error T("Bank: Money in the bank overflow.\n");
+	}
+	Plugins::callHook("banking_withdraw_failed", {'reason' => $args->{reason}});
+}
+
 1;

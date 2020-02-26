@@ -585,6 +585,9 @@ sub new {
 		'099D' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'099F' => ['area_spell_multiple2', 'v a*', [qw(len spellInfo)]], # -1
 		'09A0' => ['sync_received_characters', 'V', [qw(sync_Count)]],
+		'09A6' => ['banking_check', 'V2 v',[qw(zeny zeny2 reason)]],
+		'09A8' => ['banking_deposit', 'v V2 V',[qw(reason zeny zeny2 balance)]],
+		'09AA' => ['banking_withdraw', 'v V2 V',[qw(reason zeny zeny2 balance)]],
 		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],

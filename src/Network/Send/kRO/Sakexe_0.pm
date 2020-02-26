@@ -226,6 +226,9 @@ sub new {
 		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
+		'09A7' => ['banking_deposit_request', 'a4 V', [qw(accountID zeny)]],
+		'09A9' => ['banking_withdraw_request', 'a4 V', [qw(accountID zeny)]],
+		'09AB' => ['banking_check_request', 'a4', [qw(accountID)]],
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
 		'09EF' => ['rodex_refresh_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexRefreshMaillist
 		'09F5' => ['rodex_delete_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexDeleteMail
