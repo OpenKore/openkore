@@ -460,6 +460,14 @@ sub initHandlers {
 		['respawn', T("Respawn back to the save point."), \&cmdRespawn],
 		['revive', undef, \&cmdRevive],
 		['rodex', undef, \&cmdRodex],
+		['roulette', [
+			T("Roulette System."),
+			["open", T("Open Roulette System")],
+			["info", T("Send Roulette System Info Request")],
+			["close", T("Close Roulette System")],
+			["start", T("Start Roulette System")],
+			["claim", T("Claim Reward in Roulette System")],
+			], \&cmdRoulette],
 		['s', T("Display character status."), \&cmdStatus],
 		['sell', [
 			T("Sell items to an NPC."),
@@ -7258,6 +7266,40 @@ sub cmdRodex {
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
 			"Usage: rodex [<open|close|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
+	}
+}
+
+sub cmdRoulette {
+	my (undef, $args) = @_;
+	my ($command) = parseArgs( $args );
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	if ( $command eq "open" ) {
+		message T("Sending Roulette Open\n");
+		$messageSender->sendRouletteWindowOpen();
+		$messageSender->sendRouletteInfoRequest();
+	} elsif ( $command eq "close" ) {
+		message T("Roulette System Closed\n");
+		$messageSender->sendRouletteClose();
+		undef %roulette;
+	} elsif ( ( $command eq "info" || $command eq "start" || $command eq "claim" ) && !defined($roulette{items}) ) {
+		error TF("Roulette: Error in command '%s', you must need open Roulette first'\n", $command);
+	} elsif ( $command eq "info" ) {
+		message T("Requesting Roulette Info\n");
+		$messageSender->sendRouletteInfoRequest();
+	}   elsif ( $command eq "start" ) {
+		message T("Sending Roulette Start (roll)\n");
+		$messageSender->sendRouletteStart();
+	} elsif ( $command eq "claim" ) {
+		message T("Trying to Claim Roulette Reward\n");
+		$messageSender->sendRouletteClaimPrize();
+	} else {
+		error T("Syntax Error in function 'roulette'\n" .
+				"roulette <open|info|close|start|claim>\n");
 	}
 }
 
