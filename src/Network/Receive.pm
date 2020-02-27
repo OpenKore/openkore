@@ -7948,14 +7948,8 @@ sub rodex_read_mail {
 
 	my $print_msg = center(" " . "Mail ".$args->{mailID1} . " ", 79, '-') . "\n";
 
-	my @message_parts = unpack("(A51)*", bytesToString($mail->{body}));
-
-	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Message:", $message_parts[0]]);
-
-	foreach my $part (@message_parts[1..$#message_parts]) {
-		$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["", $part]);
-	}
-
+	$print_msg .= bytesToString($mail->{body});
+	
 	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
 
 	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Zeny:", $args->{zeny1}]);
