@@ -10732,6 +10732,21 @@ sub stylist_res {
 	}
 }
 
+##
+# User Interface (open system)
+##
+
+# Opens an UI window of the given type and initializes it with the given data
+# 0AE2 <type>.B <data>.L
+# type:
+#    0x0 = BANK_UI
+#    0x1 = STYLIST_UI
+#    0x2 = CAPTCHA_UI
+#    0x3 = MACRO_UI
+#    0x4 = UI_UNUSED
+#    0x5 = TIPBOX_UI
+#    0x6 = RENEWQUEST_UI
+#    0x7 = ATTENDANCE_UI
 sub open_ui {
 	my ($self, $args) = @_;
 	
@@ -10751,10 +10766,61 @@ sub open_ui {
 		message T("Server requested to open Tip Box UI.\n");
 	} elsif($args->{type} == RENEWQUEST_UI) {
 		message T("Server requested to open Quest UI.\n");
-	} elsif($args->{type} == ATTENDANCE_UI) { # TODO: implement Attendance system and add Attendance open Request
+	} elsif($args->{type} == ATTENDANCE_UI) {
 		message T("Server requested to open Attendance UI.\n");
+		$self->attendance_ui($args);
 	} else {
 		error TF("Received request from server to open unknown UI: %s\n", $args->{type});
+	}
+}
+
+# Response for UI request
+# 0AF0 <type>.L <data>.L (PACKET_ZC_UI_ACTION)
+# type:
+#    0x0 = close current UI
+sub action_ui {
+	my ($self, $args) = @_;
+
+	debug TF("Received request from server to close UI: %s\n", $args->{type});
+}
+
+##
+# Attendance System
+##
+
+# Opens an ATTENDANCE UI window and initializes it with the given data
+# 0AE2 <type>.B <data>.L
+#    type = 0x7
+sub attendance_ui {
+	my ($self, $args) = @_;
+
+	if(defined $attendance_rewards{period}) {
+		my $date = getFormattedDateShort(time, 3);
+
+		if ($date >= $attendance_rewards{period}{start} && $date <= $attendance_rewards{period}{end}) {
+			my $attendance_count  = int($args->{data}/10);
+			my $already_requested = $args->{data}%10;
+			message $args->{data} . " " . $attendance_count . "\n";
+			message center(T("[Attendance)]"), 60, '-') ."\n", "info";
+			message TF("Start: %s  End: %s  Day: %s\n", $attendance_rewards{period}{start}, $attendance_rewards{period}{end}, $attendance_count), "info";
+			message swrite( "@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<", ["Day", "Item", "Amount", "Requested"]), "info";
+
+			for (my $i = 1; $i <= 20; $i++) {
+				my $requested = ($attendance_count >= $i) ? "yes" : "no";				
+				if ($attendance_count == $i && !$already_requested) { $requested = "can"; }
+				message swrite( 
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<", 
+					[$i, itemNameSimple($attendance_rewards{items}{$i}{item_id}), $attendance_rewards{items}{$i}{amount}, $requested]
+				), "info";
+			}
+
+			message center(T("-"), 60, '-') ."\n", "info";
+
+		} else {
+			message T("attendance_rewards.txt is outdated\n"), "info";
+		}
+	} else {
+		message T("attendance_rewards.txt not exist\n"), "info";
 	}
 }
 
