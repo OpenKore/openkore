@@ -55,8 +55,8 @@ sub start {
 					my $instance = eval { $module->create(undef, $serverType) };
 					ok($instance, "create $module") or skip 'failed', 1;
 
-					# idRO and pRO have broken packet_list
-					next if $serverType =~ /^(idRO|pRO)$/;
+					# broken packet_list
+					next if $serverType =~ /^(idRO|pRO|rRO)$/;
 
 					for (keys %{$instance->{packet_lut}}) {
 						subtest sprintf('$_{packet_list}{$_{packet_lut}{%s}}', $_) => sub { SKIP: {
