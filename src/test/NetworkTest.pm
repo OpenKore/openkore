@@ -11,7 +11,7 @@ sub start {
 	my %tests = (
 		'Network::Receive' => [
 			{
-				switch => 'quest_update_mission_hunt',
+				switches => ['quest_update_mission_hunt'],
 				mobs => [
 					{questID => 1001, mobID => 2001, count => 10},
 					{questID => 1002, mobID => 2002, count => 100},
@@ -20,14 +20,14 @@ sub start {
 		],
 		'Network::Send' => [
 			{
-				switch => 'master_login',
+				switches => ['reconstruct_master_login', 'parse_master_login'],
 				version => 1,
 				master_version => 123456,
 				username => 'username',
 				password => 'password',
 			},
 			{
-				switch => 'buy_bulk_vender',
+				switches => ['reconstruct_buy_bulk_vender', 'parse_buy_bulk_vender'],
 				items => [
 					{itemIndex => 0, amount => 1},
 					{itemIndex => 2, amount => 30000},
@@ -69,17 +69,19 @@ sub start {
 					next if $serverType =~ /^kRO/;
 
 					for my $expected (@{$tests{$module}}) {
-						subtest "reconstruct and parse $expected->{switch}" => sub { SKIP: {
-							my ($reconstruct_callback, $parse_callback);
+						subtest "@{$expected->{switches}}" => sub { SKIP: {
+							my @callbacks;
 
 							subtest 'callbacks exist' => sub {
-								ok($reconstruct_callback = $instance->can("reconstruct_$expected->{switch}"), 'reconstruct');
-								ok($parse_callback = $instance->can("parse_$expected->{switch}"), 'parse');
+								for my $switch (@{$expected->{switches}}) {
+									ok(push @callbacks, $instance->can($switch), $switch);
+								}
 							} or skip 'failed', 1;
 
 							my $got = Storable::dclone($expected);
-							$instance->$reconstruct_callback($got);
-							$instance->$parse_callback($got);
+							for my $callback (@callbacks) {
+								$instance->$callback($got);
+							}
 
 							# there may be additional keys after reconstruct_callback
 							$got = reduce_struct($got, $expected);
