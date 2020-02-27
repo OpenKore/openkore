@@ -10918,4 +10918,71 @@ sub navigate_to {
 	Plugins::callHook('navigate_to', $args);
 }
 
+##
+# Roulette System
+##
+# Opens the roulette window
+# 0A1A <result>.B <serial>.L <stage>.B <price index>.B <additional item id>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_OPEN_ROULETTE)
+sub roulette_window {
+	my ($self, $args) = @_;
+
+	foreach (@{$args->{KEYS}}) {
+		$roulette{$_} = $args->{$_};
+	}
+
+	message center(T("[Roulette] - " . $args->{serial}), 60, '-') ."\n", "info";
+	message TF("Attempts: %s  Stage: %s  Price: %s  Bonus Item: %s\n", $args->{result}, $args->{stage}, $args->{price}, itemNameSimple($args->{additional_item})), "info";
+	message T("Coins:\n"), "info";
+	message TF("Gold: %s  Silver: %s  Bronze: %s\n", $args->{gold}, $args->{silver}, $args->{bronze}, itemNameSimple($args->{additional_item})), "info";
+	message center(T("-"), 60, '-') . "\n", "info";
+
+}
+
+# Sends the info about the available roulette rewards to the client
+# 0A1C <length>.W <serial>.L { { <level>.W <column>.W <item>.W <amount>.W } * MAX_ROULETTE_COLUMNS } * MAX_ROULETTE_LEVEL (ZC_ACK_ROULEITTE_INFO)
+# 0A1C <length>.W <serial>.L { { <level>.W <column>.W <item>.L <amount>.L } * MAX_ROULETTE_COLUMNS } * MAX_ROULETTE_LEVEL (ZC_ACK_ROULEITTE_INFO) >= 20180516
+sub roulette_info {
+	my ($self, $args) = @_;
+	
+	my $item_info = {
+			len => 8, # or 12
+			types => 'v4', # or v2 V2
+			keys => [qw(level column item_id amount)],
+		};
+
+	for (my $i = 0; $i < length($args->{roulette_info}); $i += $item_info->{len}) {
+		my $item;
+		@{$item}{@{$item_info->{keys}}} = unpack($item_info->{types}, substr($args->{roulette_info}, $i, $item_info->{len}));
+		$item->{name} = itemNameSimple($item->{item_id});
+		$roulette{items}{$item->{level}}{$item->{column}} = $item;
+		debug TF("Level: %s  Column: %s  Item: %s\n", $item->{level}, $item->{column}, $item->{name});
+	}
+}
+
+# Response to a item reward request
+# 0A22 <type>.B <bonus item>.W (ZC_RECV_ROULETTE_ITEM)
+sub roulette_recv_item {
+	my ($self, $args) = @_;
+	message TF("Roulette Bonus - Type: %s  Bonus Item: %s\n", $args->{type}, itemNameSimple($args->{item_id})), "info";
+	
+}
+
+# Update Roulette window with current stats
+# 0A20 <result>.B <stage>.W <price index>.W <bonus item>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_GENERATE_ROULETTE)
+sub roulette_window_update {
+	my ($self, $args) = @_;
+
+	foreach (@{$args->{KEYS}}) {
+		$roulette{$_} = $args->{$_};
+	}
+
+	message center(T("[Roulette] - " . $roulette{serial}), 60, '-') ."\n", "info";
+	message TF("Attempts: %s  Stage: %s  Price: %s  Bonus Item: %s\n", $args->{result}, $args->{stage}, $args->{price}, itemNameSimple($args->{additional_item})), "info";
+	message T("Coins:\n"), "info";
+	message TF("Gold: %s  Silver: %s  Bronze: %s\n", $args->{gold}, $args->{silver}, $args->{bronze}, itemNameSimple($args->{additional_item})), "info";
+	message T("Result:\n"), "info";
+	message T(">> ".$roulette{items}{$args->{stage}}{$args->{price}}->{name}." << \n"), "info";
+	message center(T("-"), 60, '-') . "\n", "info";
+}
+
 1;
