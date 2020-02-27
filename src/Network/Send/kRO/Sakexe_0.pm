@@ -247,6 +247,7 @@ sub new {
 		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
+		'0A68' => ['open_ui_request', 'C', [qw(UIType)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
@@ -255,6 +256,7 @@ sub new {
 		'0AE8' => ['change_dress'],
 		'0AC0' => ['rodex_open_mailbox', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]],  # 26 -- RodexOpenMailbox
 		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
+		'0AEF' => ['attendance_reward_request'],
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 		'0B14' => ['inventory_expansion_request'], #2
