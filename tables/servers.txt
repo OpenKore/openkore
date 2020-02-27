@@ -61,7 +61,7 @@ master_version 4
 version 1
 serverType cRO
 serverEncoding GBK
-charBlockSize 147
+charBlockSize 155
 addTableFolders cRO
 gameGuard 1
 secureLogin 0
@@ -72,7 +72,8 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 pinCode 1
 charDeleteDateType 1
 blockingPlayerCancel 1
-rankingSystemType
+rankingSystemType 1
+itemListType 1
 
 # https://eu.4game.com/ro/
 [EU - euRO: Revo Classic]
