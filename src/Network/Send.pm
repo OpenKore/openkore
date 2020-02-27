@@ -3219,4 +3219,68 @@ sub sendBankingDeposit {
 	}));
 }
 
+##
+# Roulette System
+##
+
+# Request to open the roulette window
+# 0A19 (CZ_REQ_OPEN_ROULETTE)
+sub sendRouletteWindowOpen {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_window_open',
+	}));
+
+	debug "Sent Roulette Window Open", "sendPacket";
+}
+
+# Request the roulette reward data
+# 0A1B (CZ_REQ_ROULETTE_INFO)
+sub sendRouletteInfoRequest {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_info_request',
+	}));
+
+	debug "Sent Roulette Info Request", "sendPacket";
+}
+
+# Notification of the client that the roulette window was closed
+# 0A1D (CZ_REQ_CLOSE_ROULETTE)
+sub sendRouletteClose {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_close',
+	}));
+
+	debug "Sent Roulette Close", "sendPacket";
+}
+
+# Request to start the roulette
+# 0A1F (CZ_REQ_GENERATE_ROULETTE)
+sub sendRouletteStart {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_start',
+	}));
+
+	debug "Sent Roulette Start", "sendPacket";
+}
+
+# Request to claim a prize
+# 0A21 (CZ_RECV_ROULETTE_ITEM)
+sub sendRouletteClaimPrize {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_claim_prize',
+	}));
+
+	debug "Sent Roulette Claim Prize", "sendPacket";
+}
+
 1;

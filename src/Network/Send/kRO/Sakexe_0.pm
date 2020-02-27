@@ -244,6 +244,11 @@ sub new {
 		'0A06' => ['rodex_remove_item', 'a2 v', [qw(ID amount)]],   # 6 -- RodexRemoveItem
 		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
+		'0A19' => ['roulette_window_open'],
+		'0A1B' => ['roulette_info_request'],
+		'0A1D' => ['roulette_close'],
+		'0A1F' => ['roulette_start'],
+		'0A21' => ['roulette_claim_prize'],
 		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
