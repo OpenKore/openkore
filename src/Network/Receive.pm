@@ -10800,7 +10800,6 @@ sub attendance_ui {
 		if ($date >= $attendance_rewards{period}{start} && $date <= $attendance_rewards{period}{end}) {
 			my $attendance_count  = int($args->{data}/10);
 			my $already_requested = $args->{data}%10;
-			message $args->{data} . " " . $attendance_count . "\n";
 			message center(T("[Attendance)]"), 60, '-') ."\n", "info";
 			message TF("Start: %s  End: %s  Day: %s\n", $attendance_rewards{period}{start}, $attendance_rewards{period}{end}, $attendance_count), "info";
 			message swrite( "@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<", ["Day", "Item", "Amount", "Requested"]), "info";
