@@ -11004,4 +11004,11 @@ sub roulette_window_update {
 	}
 }
 
+# Allow Client Shortcut/Keys Input
+# 0B01
+sub load_confirm {
+	my ($self, $args) = @_;
+	debug TF("You are allowed to use Keyboard"); # this only matter in ragexe client
+}
+
 1;
