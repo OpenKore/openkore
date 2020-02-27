@@ -3149,6 +3149,41 @@ sub sendStylistChange {
 }
 
 ##
+# UI System
+##
+
+# Request to open an UI window of the given type
+# 0A68 <type>.B
+sub sendOpenUIRequest {
+	my ($self, $UIType) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'open_ui_request',
+		UIType => $UIType, 
+	}));
+
+	debug "Sent Open UI Request (".$UIType.")\n", "sendPacket";
+}
+
+##
+# Attendance System
+##
+
+# Request from the client to retrieve today's attendance reward
+# 0AEF
+
+sub sendAttendanceRewardRequest {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'attendance_reward_request',
+	}));
+
+	debug "Sent Attendance Reward Request", "sendPacket";
+}
+
+
+##
 # Banking System
 ##
 

@@ -36,6 +36,7 @@ use Log qw(warning error debug);
 use Translation qw/T TF/;
 
 our @EXPORT = qw(
+	parseAttendanceRewards
 	parseArrayFile
 	parseAvoidControl
 	parseChatResp
@@ -979,6 +980,62 @@ sub parseItemStackLimit {
 			next unless $mask & $i;
 			$r_hash->{$ID}->{$i} = $stack;
 		}
+	}
+
+	return 1;
+}
+
+##
+# parseAttendanceRewards(file, attendance_rewards)
+# file: Filename to parse
+# attendance_rewards: Return hash
+#
+# Parses a attendance_rewards file. The attendance_rewards file should have the start time
+# on its first line, should have end time on its second line followed by "$day\t$item_id\t$amount" on subsequent
+# lines. Blank lines, or lines starting with "#" are ignored.
+#
+# Example:
+# start 20200212
+# end 20200311
+# 1 14553 5
+# 2 14556 5
+# 3 14559 5
+sub parseAttendanceRewards {
+	my ($file, $attendance_rewards) = @_;
+
+	%{$attendance_rewards} = ();
+	my $reader = new Utils::TextReader($file);
+
+	# start attendance rewards vars
+	$attendance_rewards->{period} = ();
+	$attendance_rewards->{items} = ();
+	my $line;
+
+	while (!$reader->eof()) {
+		$line = $reader->readLine();
+		chomp;
+	
+		$line =~ s/[\r\n\x{FEFF}]//g;
+		next if $line =~ /^$/ || $line =~ /^#/;
+
+		# Strip mid-line comments
+		$line =~ s/\s*#.*//;
+		next unless length $line;
+
+		if($line =~ /^start\s(\d+)/) {
+			$attendance_rewards->{period}{start} = $1;
+			next;
+		} elsif ($line =~ /^end\s(\d+)/) {
+			$attendance_rewards->{period}{end} = $1;
+			next;	
+		}
+
+		my ($day, $item_id, $amount) = split(/ /, $line);
+		$item_id =~ s/^\s+//g;
+		$amount =~ s/^\s+//g;
+		
+		$attendance_rewards->{items}{$day}{item_id} = $item_id;
+		$attendance_rewards->{items}{$day}{amount} =  $amount;
 	}
 
 	return 1;

@@ -77,6 +77,11 @@ sub initHandlers {
 			[T("forceuse <inventory item #>"), T("craft arrows immediately from an item without using the skill")]
 			], \&cmdArrowCraft],
 		['as', T("Stop attacking a monster."), \&cmdAttackStop],
+		['attendance', [
+			T("Attendance System."),
+			["open", T("Attendance System")],
+			["request", T("Request the Current Day Reward")],
+			], \&cmdAttendance],
 		['autobuy', T("Initiate auto-buy AI sequence."), \&cmdAutoBuy],
 		['autosell', T("Initiate auto-sell AI sequence."), \&cmdAutoSell],
 		['autostorage', T("Initiate auto-storage AI sequence."), \&cmdAutoStorage],
@@ -1116,6 +1121,25 @@ sub cmdAuthorize {
 			"Usage: auth <username> <flag>\n");
 	} else {
 		auth($arg1, $arg2);
+	}
+}
+
+sub cmdAttendance {
+	my (undef, $args) = @_;
+	my ($command) = parseArgs( $args );
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	if ( $command eq "open" ) {
+		$messageSender->sendOpenUIRequest(5);
+	} elsif ( $command eq "request" ) {
+		$messageSender->sendAttendanceRewardRequest();
+	} else {
+		error T("Syntax Error in function 'attendance'\n" .
+				"attendance <open|request>\n");
 	}
 }
 

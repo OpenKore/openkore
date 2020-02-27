@@ -296,6 +296,7 @@ sub new {
 		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
+		'0A68' => ['open_ui_request', 'C', [qw(UIType)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0A76' => ['master_login', 'V Z40 a32 v', [qw(version username password_rijndael master_version)]],
 		'0A97' => ['equipswitch_add', 'v V', [qw(index position)]], # Add item to equipswitch
@@ -310,6 +311,7 @@ sub new {
 		'0ACE' => ['equipswitch_single', 'a2', [qw(index)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AE8' => ['change_dress'],
+		'0AEF' => ['attendance_reward_request'],
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
