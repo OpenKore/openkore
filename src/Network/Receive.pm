@@ -10925,17 +10925,29 @@ sub navigate_to {
 # 0A1A <result>.B <serial>.L <stage>.B <price index>.B <additional item id>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_OPEN_ROULETTE)
 sub roulette_window {
 	my ($self, $args) = @_;
+	my @result_lut = qw(Success Failed No_Enought_Point Losing);
 
 	foreach (@{$args->{KEYS}}) {
 		$roulette{$_} = $args->{$_};
 	}
 
+	if($args->{result} == 1) {
+		warning T("Roulette: Something went wrong\n");
+		return;
+	} elsif($args->{result} == 2) {
+		warning T("Roulette: No enough Point (coin) to roll\n");
+		return;
+	}
+
 	message center(T("[Roulette] - " . $args->{serial}), 60, '-') ."\n", "info";
-	message TF("Attempts: %s  Stage: %s  Price: %s  Bonus Item: %s\n", $args->{result}, $args->{stage}, $args->{price}, itemNameSimple($args->{additional_item})), "info";
+	message TF("Result: %s  Row: %s  Column: %s  Bonus Item: %s\n", $result_lut[$args->{result}], $args->{stage}, $args->{price}, itemNameSimple($args->{additional_item})), "info";
 	message T("Coins:\n"), "info";
 	message TF("Gold: %s  Silver: %s  Bronze: %s\n", $args->{gold}, $args->{silver}, $args->{bronze}, itemNameSimple($args->{additional_item})), "info";
 	message center(T("-"), 60, '-') . "\n", "info";
 
+	if ($args->{stage} == 6) {
+		warning T("Please Claim Your Prize this was the last roll in this round. (you will lost the gold and the item)\n");
+	}
 }
 
 # Sends the info about the available roulette rewards to the client
@@ -10971,18 +10983,31 @@ sub roulette_recv_item {
 # 0A20 <result>.B <stage>.W <price index>.W <bonus item>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_GENERATE_ROULETTE)
 sub roulette_window_update {
 	my ($self, $args) = @_;
+	my @result_lut = qw(Success Failed No_Enought_Point Losing);
 
 	foreach (@{$args->{KEYS}}) {
 		$roulette{$_} = $args->{$_};
 	}
+	
+	if($args->{result} == 1) {
+		warning T("Roulette: Something went wrong\n");
+		return;
+	} elsif($args->{result} == 2) {
+		warning T("Roulette: No enough Point (coin) to roll\n");
+		return;
+	}
 
 	message center(T("[Roulette] - " . $roulette{serial}), 60, '-') ."\n", "info";
-	message TF("Attempts: %s  Stage: %s  Price: %s  Bonus Item: %s\n", $args->{result}, $args->{stage}, $args->{price}, itemNameSimple($args->{additional_item})), "info";
+	message TF("Result: %s  Row: %s  Column: %s  Bonus Item: %s\n", $result_lut[$args->{result}], $args->{stage}, $args->{price}, itemNameSimple($args->{additional_item})), "info";
 	message T("Coins:\n"), "info";
 	message TF("Gold: %s  Silver: %s  Bronze: %s\n", $args->{gold}, $args->{silver}, $args->{bronze}, itemNameSimple($args->{additional_item})), "info";
 	message T("Result:\n"), "info";
 	message T(">> ".$roulette{items}{$args->{stage}}{$args->{price}}->{name}." << \n"), "info";
 	message center(T("-"), 60, '-') . "\n", "info";
+
+	if ($args->{stage} == 6) {
+		warning T("Please Claim Your Prize this was the last roll in this round. (you will lost the gold and the item)\n");
+	}
 }
 
 1;
