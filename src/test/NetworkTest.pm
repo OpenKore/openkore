@@ -55,8 +55,7 @@ sub start {
 					my $instance = eval { $module->create(undef, $serverType) };
 					ok($instance, "create $module") or skip 'failed', 1;
 
-					# broken packet_list
-					next if $serverType =~ /^(idRO|pRO|rRO)$/;
+					skip 'broken packet_list', 1 if $serverType =~ /^(idRO|rRO)$/;
 
 					for (keys %{$instance->{packet_lut}}) {
 						subtest sprintf('$_{packet_list}{$_{packet_lut}{%s}}', $_) => sub { SKIP: {
@@ -77,6 +76,8 @@ sub start {
 									ok(push @callbacks, $instance->can($switch), $switch);
 								}
 							} or skip 'failed', 1;
+
+							skip 'broken callback', 1 if $serverType =~ /^(pRO|tRO)$/;
 
 							my $got = Storable::dclone($expected);
 							for my $callback (@callbacks) {
