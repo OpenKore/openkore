@@ -11,7 +11,7 @@ sub start {
 	my %tests = (
 		'Network::Receive' => [
 			{
-				switches => ['quest_update_mission_hunt'],
+				switches => ['missing_quest_update_mission_hunt'],
 				mobs => [
 					{questID => 1001, mobID => 2001, count => 10},
 					{questID => 1002, mobID => 2002, count => 100},
