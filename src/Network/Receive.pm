@@ -5840,6 +5840,12 @@ sub slave_calcproperty_handler {
 	$slave->{attack_speed}     = int (200 - (($args->{aspd} < 10) ? 10 : ($args->{aspd} / 10)));
 }
 
+sub EAC_key {
+	chatLog("k", T("*** Easy Anti-Cheat Detected ***\n"));
+	error T("OpenKore don't have support to servers with Easy Anti-Cheat Shield, please read the FAQ (github).\n");
+	quit();
+}
+
 sub gameguard_grant {
 	my ($self, $args) = @_;
 
