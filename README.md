@@ -10,6 +10,9 @@
 ![Pull Requests](https://img.shields.io/github/issues-pr/OpenKore/openkore.svg)
 ![Contributors](https://img.shields.io/github/contributors/OpenKore/openkore.svg)
 
+![Github_Workflow_status](https://img.shields.io/github/workflow/status/OpenKore/openkore/CI)
+![Github_Workflow_CI](https://github.com/OpenKore/openkore/workflows/CI/badge.svg)
+
 * OpenKore is a custom client & intelligent automated assistant for Ragnarok Online.
 * It is a **free**, open source & cross-platform program _(Linux, Windows & MacOS are supported)_.
 
