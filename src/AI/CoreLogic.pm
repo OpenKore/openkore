@@ -3204,9 +3204,11 @@ sub processItemsGather {
 
 ##### AUTO-TELEPORT #####
 sub processAutoTeleport {
+	return if(AI::inQueue("teleport", "NPC"));
+
 	my $safe = 0;
 
-	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
+	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto", "skill_use") && $config{teleportAuto_allPlayers}
 	    && ($config{'lockMap'} eq "" || $field->baseName eq $config{'lockMap'})
 	 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 
