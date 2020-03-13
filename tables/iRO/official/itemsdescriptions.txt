@@ -27245,15 +27245,12 @@ Max HP + 10
 Def + 100
 #
 4528#
-MATK + 2%
-For each 2 refine, MATK + 1%, Max HP - 1%.
-Class : ^777777Card^000000
-Location : ^777777Headgear^000000
-Weight : ^7777771^000000
-MATK + 2%, per  2 refine MATK + 1%, MHP - 1%.
-Class : ^777777Card^000000
-Location : ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Matk + 2%
+Additional Matk + 1% per 2 upgrade levels of the compounded item.
+Max HP - 1% per 2 upgrade levels of the compounded item.
 #
 4529#
 ATK + 2%
@@ -44958,7 +44955,9 @@ Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 7720#
-A peculiar gold coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling. Bring this to Leprechaun O'Riley next to the Izlude Airship.
+A peculiar gold coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling. A Gold Coin is equal to 5 Silver Coins or 25 Bronze Coins.
+
+Bring this to Leprechaun O'Riley outside of Payon and he will surely reward you.
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
@@ -45593,15 +45592,18 @@ Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
 7915#
-A torn scrap of parchment, covered in snake goo, that appears to be a part of a large piece of paper.
-Contains details of Snakepentor's sinister plan.
-^ffffff_^000000
-Weight : ^7777771^000000
+A peculiar bronze coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling.
+
+Bring this to Leprechaun O'Riley outside of Payon and he will surely reward you.
+Class: ^808080Generic^000000
+Weight: ^8080800^000000
 #
 7916#
-A silver coin forged by the leprechauns. Leprechauns use these coins to fill their pots when they run out of gold.
+A peculiar silver coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling. A Silver Coin is equal to 5 Bronze Coins.
+
+Bring this to Leprechaun O'Riley outside of Payon and he will surely reward you.
 Class: ^808080Generic^000000
-Weight: ^8080801^000000
+Weight: ^8080800^000000
 #
 7918#
 #
@@ -47909,7 +47911,7 @@ Weight: ^8080805^000000
 Restores ^00800060^000000 SP.
 #
 11616#
-Skelion’s favorite piece of meat. Pet Food Merchant sells this item.
+The favorite piece of meat for the Skelion. Pet Food Merchant sells this item.
 ^FF0000This is considered food for Skelion pets.^000000
 Class: ^808080Generic^000000
 Weight: ^8080805^000000
@@ -49659,17 +49661,11 @@ Weight : ^77777720^000000
 12244#
 #
 12245#
-A frothy green ale
-brewed by O'Riley
-the Leprechaun.
-Recovers 50%
-of Max HP and SP, but
-has a 10% chance of
-casting the Chaos
-effect on its user.
-This can be consumed 10 seconds after each use.
-^ffffff_^000000
-Weight : ^77777750^000000
+A frothy green ale brewed by O'Riley the Leprechaun. (Expires on April 1st)
+
+Heals 5% HP/SP
+(Does not work in WoE)
+Weight: ^8080801^000000
 #
 12246#
 Powerful spirits are
@@ -70295,7 +70291,7 @@ When opened it gives one of the following at random:
 Costume Black Cat Hoodie
 Costume Tiger Face
 Costume Black and White Temptation
-Costume Pig Head
+Costume Pig Nose
 Costume Pretty Bear
 Costume Cat Ear Hat
 Costume Elephant Hat
@@ -70471,40 +70467,21 @@ Class: ^808080Item Giver^000000
 Weight: ^8080801^000000
 #
 17863#
-^808080^808080A mysterious egg which contains a costume.^000000
-^FF0000Account Bound^000000
-Type: Usable
-Class: Item Giver
-Weight: 1
+A chilly looking box that contains a costume.
+
 When opened it gives one of the following at random:
-Costume Tiger Mask
-Costume Shaving Foam
-Costume Sheep Hat
-Costume Brown Stole
-Costume Piggyback
-Costume Teddy Bear Hood
-Costume Happy Droopy Lunatic Ears (Black)
+Costume Elder Crown
+Costume Blue Beanie
+Costume Lunatic Hat
+Costume Ice Wing Ears
+Costume Aura Quartz Crown
+Costume Lunatic Knit Hat
+Costume Chilly Breath
+Costume Galanthus Guard
+Costume Eclipse Knit Hat
 Costume Mouton Life (Blue)
-Costume Soft Sheep Hat
-Costume Rune Helm
-^808080A mysterious egg which contains a costume.^000000
-^FF0000Account Bound^000000
-Type: Usable
-Class: Item Giver
-Weight: 1
-When opened it gives one of the following at random:
-Costume: Knit Snow Rabbit Hat
-Costume: Knit Rabbit Ear Hat
-Costume: Lunatic Hat
-Costume: Ice Wing Ears
-Costume: Galanthus Guard
-Costume: Elder Crown
-Costume: Chilly Breath
-Costume: Blue Fur Hat
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 17864#
 ^808080^808080A mysterious egg which contains a costume.^000000
@@ -78834,6 +78811,10 @@ Usable By: ^808080All Jobs^000000
 19532#
 #
 19533#
+A costume made in the form of a Spore's head.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
 #
 19534#
 #
@@ -83858,6 +83839,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+20570#
+A big heart-shaped chocolate decoration for chocolate lovers.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20571#
 Now you can be the mighty Valkyrie with these costume wings!
 ^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
@@ -83895,6 +83882,12 @@ Position: ^808080Garment^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+20594#
+A long, bright red, ribbon cloak. Don't leave home without your cloak!
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
 #
 20700#
 Egir's Manteau. It looks defending your body
@@ -88864,14 +88857,13 @@ Weight: ^8080800^000000
 #
 23211#
 A box that provides premium service for 5 days.
-^ffffff_^000000
-When you open the box, all the characters in the server who use the item receive the premium buff effect for 5 days.
-- EXP UP +20%
-- ITEM UP +20%
-- Increase storage limit +300
-^ffffff_^000000
-Weight : ^7777771^000000
 
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 5 days.
+- EXP +50%
+- ITEM UP +50%
+- Access to second account storage
+- Access to a Merchant Voucher (Offline-Vending)
+- Access to a Shopper Voucher (Offline-Buying)
 Weight: ^8080800^000000
 #
 23212#
@@ -91562,7 +91554,7 @@ Weight: ^8080800^000000
 Weight: 120
 #
 25231#
-A bottle containing a suspicious red liquid. Just looking at this bottle makes you think of the Nine Tail’s eyes.
+A bottle containing a suspicious red liquid. Just looking at this bottle makes you think of the Nine Tails eyes.
 ^FF0000This is considered food for Nine Tail pets.^000000
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
@@ -97497,6 +97489,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31372#
+A cute figure of a doll that you can take with you on adventures! Her hobbies include knitting and reading romance novels.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 31377#
 A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.
 Class: ^808080Costume^000000
@@ -98454,6 +98452,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31617#
+Modeled after the real Lady Tanee, many will often mistake the two. This one will always be by your side wherever you go.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
 31628#
 A miniature Dokebi made for children. Don't worry, it won't attack you!
 Class: ^808080Costume^000000
@@ -98982,6 +98986,42 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 When worn during January increases monster EXP by 5%
+#
+31911#
+A flower crown for a dignified costume. It exudes a feeling of elegance and natural beauty.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31912#
+The look of someone who has lost something very important to them. You can feel a sense of sorrow emitting from it.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31913#
+A costume that was once worn by an executive of an organization. It was said that it was part of a high performance and top secret mission.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31914#
+A small hair band featuring a mini beret. Simple design and easy to match.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31915#
+A fancy looking wig for many outfits that features rolled up hair and wrapped low.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31916#
+A simple frilly collar with a bow tie that will help you pull off that Gothic look.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
 #
 32032#
 A mysterious one-handed spear given to adventurers who successfully execute missions.
