@@ -4960,7 +4960,7 @@
 7910#Stolen_Candy#
 7911#Yulia's_Hat#
 7912#Portable_Snowman_Machine#
-7915#Shred_Of_Evidence#
+7915#Copper_Coin#
 7916#Silver_Coin#
 7918#Chunk_Of_Memory#
 7919#Festival_Ticket#
@@ -7757,7 +7757,7 @@
 17860#Costume_Box_IX:_Spooptacular#
 17861#Costume_Box_X:_Dreamland#
 17862#Costume_Box_XI:_Creature_Feature#
-17863#Costume_Box_XII:_Winter_is_here#
+17863#Costume_Box_XII:_Winter_is_Here#
 17864#Costume_Box_I_Feline_Fine#
 17865#Costume_Box_II:_Gothic_Egg#
 17866#Costume_Box_III:_Helmets_Galore#
@@ -8360,7 +8360,7 @@
 19528#Costume_Iron_Cain#
 19529#Costume_Angel_Wing#
 19532#placeholder#
-19533#placeholder#
+19533#Costume_Spore_Hat#
 19534#placeholder#
 19535#Costume_Sinsuncho_Hat#
 19536#Costume:_Rose_Corsage#
@@ -8924,11 +8924,13 @@
 20537#Costume_Falling_Red_Foliage#
 20538#Costume_Magic_Circle_Rainbow#
 20547#Costume_Whisper's_Blessing#
+20570#Costume_Love_Candy_Pack#
 20571#Costume_Valkyrie_Wings#
 20574#Costume_Backpack_(Red)#
 20575#Costume_Backpack_(Black)#
 20582#Costume_Bear_Backpack#
 20584#Costume_Fox_Tail#
+20594#Costume_Big_Ribbon_Manteau#
 20700#Egir_Manteau#
 20701#Sol_Manteau#
 20702#TE_WoE_Muffler#
@@ -9245,7 +9247,7 @@
 23207#[30Day]_Premium_Subscription_Box#
 23209#[1Day]_Premium_Subscription_Box#
 23210#[4Day]_Premium_Subscription_Box#
-23211#[5Day]_Premium_Subscription_Box#
+23211#[5Day]_Premium_Subscription#
 23212#[6Day]_Premium_Subscription_Box#
 23213#[7Day]_Premium_Subscription_Box#
 23214#[8Day]_Premium_Subscription_Box#
@@ -10026,6 +10028,7 @@
 31331#Costume_Chung_E_Shinyon_Cap#
 31332#Costume_Black_Khalitzburg_Knight_Helm#
 31371#Costume_Drooping_Sorin_Doll_Hat#
+31372#Costume_Drooping_Roxie#
 31377#Costume_Glast_Heim_Spectator#
 31378#Costume_Katarina_von_Blood_60#
 31379#Costume_Clock_Winding_Key#
@@ -10148,6 +10151,7 @@
 31612#Costume_Large_Sorcerer_Crown#
 31615#Costume_Geisha_Make_Up#
 31616#Costume_Sleep_Sheep#
+31617#Costume_Lady_Tanee#
 31628#Costume_Dokebi#
 31635#Costume_Flowing_Long_(Blonde)#
 31636#Costume_Flowing_Long_(Silver)#
@@ -10217,6 +10221,12 @@
 31801#Costume_Creative_Convention_Cap#
 31802#Costume_Creative_Convention_Chapeau#
 31899#Costume_Freyja's_Crown#
+31911#Costume_Little_Garden#
+31912#Costume_Black_Veil#
+31913#Costume_Feathered_Black_Cap#
+31914#Costume_Mini_Beret_Hairband#
+31915#Costume_Sweet_Coronet#
+31916#Costume_Bow_Tie#
 32032#The_Berg_Golden_Spear#
 32114#Accolade_Lute#
 32203#Accelerator_Chip#
