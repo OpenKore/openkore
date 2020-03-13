@@ -483,6 +483,16 @@ use constant {
 	LEVELUP_EFFECT3 => 0x9,
 };
 
+# market buy item result
+use constant {
+	MARKET_BUY_RESULT_ERROR => 0xffff,  # -1
+	MARKET_BUY_RESULT_SUCCESS => 0,
+	MARKET_BUY_RESULT_NO_ZENY => 1,
+	MARKET_BUY_RESULT_OVER_WEIGHT => 2,
+	MARKET_BUY_RESULT_OUT_OF_SPACE => 3,
+	MARKET_BUY_RESULT_AMOUNT_TOO_BIG => 9,
+};
+
 # Display gained exp.
 # 07F6 <account id>.L <amount>.L <var id>.W <exp type>.W (ZC_NOTIFY_EXP)
 # 0ACC <account id>.L <amount>.Q <var id>.W <exp type>.W (ZC_NOTIFY_EXP2)
@@ -7214,6 +7224,127 @@ sub buy_result {
 	if (AI::is("buyAuto")) {
 		AI::args->{recv_buy_packet} = 1;
 	}
+}
+
+# Presents list of items, that can be bought in an NPC MARKET shop (PACKET_ZC_NPC_MARKET_OPEN).
+# 09D5 <packet len>.W { <name id>.W <type>.B <price>.L <amount>.L <weight>.W }*
+# 09D5 <packet len>.W { <name id>.L <type>.B <price>.L <amount>.L <weight>.W }*
+# 2 versions of same packet. $self->{npc_market_info_pack} (PACKET_ZC_NPC_MARKET_OPEN_sub) should be changed in own serverType file if needed
+sub npc_market_info {
+	my ($self, $args) = @_;
+	my $pack = $self->{npc_market_info_pack} || 'v C V2 v';
+	my $len = length pack $pack;
+
+	$storeList->clear;
+	undef %talk;
+
+	for (my $i = 0; $i < length($args->{itemList}); $i += $len) {
+		my $item = Actor::Item->new;
+		@$item{qw( nameID type price amount weight )} = unpack $pack, substr $args->{itemList}, $i, $len;
+		next if(!$item->{amount}); # Client behavior (dont show the item in market window)
+		# Workaround some npcs that have items appearing more than once in their store list,
+		# for example the Trader at moc_ruins 90 149 sells only bananas, but 6 times
+		#
+		# Usually, $Actor::Item->{ID} is equal to $Actor::Item->{nameID} - that WILL crash
+		# kore in the event described above
+		#
+		# This workaround causes $Actor::Item->{ID} to be equal to $Actor::Item->{binID} and,
+		# therefore, never overlap
+		# - lututui & alisonrag - Sep, 2018
+		$item->{ID} = $storeList->size;
+
+		$item->{name} = itemName($item);
+		
+		$storeList->add($item);
+
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+	}
+
+	return if !$storeList->size;
+
+	if (AI::action ne 'buyAuto') {
+		Commands::run('store');
+	}
+
+	$in_market = 1;
+
+	# continue talk sequence now
+	$ai_v{'npc_talk'}{'talk'} = 'store';
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
+# Show the purchase result update the list of items, that can be bought in an NPC MARKET shop (PACKET_ZC_NPC_MARKET_OPEN).
+# 09D7 <packet len>.W <result>.B { <name id>.W <type>.B <price>.L <amount>.L <weight>.W }*
+# 09D7 <packet len>.W <result>.B { <name id>.L <type>.B <price>.L <amount>.L <weight>.W }*
+# result:
+#    -1 = error
+#    0 = sucess
+#    1 = no zeny
+#    2 = you are overweight
+#    3 = you dont have space in inventory
+#    4 = amount too big
+sub npc_market_purchase_result {
+	my ($self, $args) = @_;
+
+	if ( $args->{result} == MARKET_BUY_RESULT_ERROR) {
+		error TF("Error while trying to buy in a Market Store. (%s)\n", $args->{result}), "info";
+	} elsif ( $args->{result} == MARKET_BUY_RESULT_SUCCESS) {
+		message TF("Item buyed Successfully. (%s)", $args->{result}), "info";
+	} elsif ( $args->{result} == MARKET_BUY_RESULT_NO_ZENY) {
+		error TF("Error Market Store (You don't have the necessary zeny). (%s)\n", $args->{result}), "info";
+	} elsif ( $args->{result} == MARKET_BUY_RESULT_OVER_WEIGHT) {
+		error TF("Error Market Store (You are Overweight). (%s)", $args->{result}), "info";
+	} elsif ( $args->{result} == MARKET_BUY_RESULT_OUT_OF_SPACE) {
+		error TF("Error Market Store (You dont have space in inventory). (%s)\n", $args->{result}), "info";
+	} elsif ( $args->{result} == MARKET_BUY_RESULT_AMOUNT_TOO_BIG) {
+		error TF("Error Market Store (You tried to buy a amount higher then NPC is selling). (%s)\n", $args->{result}), "info";
+	} else {
+		error TF("Error while trying to buy in a Market Store (Unknown). (%s)\n", $args->{result}), "info";
+	}
+
+	if (AI::is("buyAuto")) {
+		AI::args->{recv_buy_packet} = 1;
+	}
+
+	my $pack = $self->{npc_market_info_pack} || 'v C V2 v';
+	my $len = length pack $pack;
+
+	$storeList->clear;
+	undef %talk;
+
+	for (my $i = 0; $i < length($args->{itemList}); $i += $len) {
+		my $item = Actor::Item->new;
+		@$item{qw( nameID type price amount weight )} = unpack $pack, substr $args->{itemList}, $i, $len;
+		next if(!$item->{amount}); # Client behavior (dont show the item in market window)
+		# Workaround some npcs that have items appearing more than once in their store list,
+		# for example the Trader at moc_ruins 90 149 sells only bananas, but 6 times
+		#
+		# Usually, $Actor::Item->{ID} is equal to $Actor::Item->{nameID} - that WILL crash
+		# kore in the event described above
+		#
+		# This workaround causes $Actor::Item->{ID} to be equal to $Actor::Item->{binID} and,
+		# therefore, never overlap
+		# - lututui & alisonrag - Sep, 2018
+		$item->{ID} = $storeList->size;
+
+		$item->{name} = itemName($item);
+		
+		$storeList->add($item);
+
+		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
+	}
+
+	return if !$storeList->size;
+
+	if (AI::action ne 'buyAuto') {
+		Commands::run('store');
+	}
+
+	$in_market = 1;
+
+	# continue talk sequence now
+	$ai_v{'npc_talk'}{'talk'} = 'store';
+	$ai_v{'npc_talk'}{'time'} = time;
 }
 
 sub deal_add_you {

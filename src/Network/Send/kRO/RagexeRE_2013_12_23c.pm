@@ -77,7 +77,7 @@ sub new {
 		search_store_select 0838
 	);
 	
-	
+	$self->{send_sell_buy_complete} = 1;
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
