@@ -2464,7 +2464,7 @@ sub sendBuyBulk {
 		items => \@{$r_array},
 	}));
 	
-	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "d_sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_buy_bulk {
@@ -2482,7 +2482,7 @@ sub sendSellBulk {
 		items => \@{$r_array},
 	}));
 	
-	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "d_sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_sell_bulk {
@@ -3179,7 +3179,7 @@ sub sendAttendanceRewardRequest {
 		switch => 'attendance_reward_request',
 	}));
 
-	debug "Sent Attendance Reward Request", "sendPacket";
+	debug "Sent Attendance Reward Request\n", "sendPacket";
 }
 
 
@@ -3232,7 +3232,7 @@ sub sendRouletteWindowOpen {
 		switch => 'roulette_window_open',
 	}));
 
-	debug "Sent Roulette Window Open", "sendPacket";
+	debug "Sent Roulette Window Open\n", "sendPacket";
 }
 
 # Request the roulette reward data
@@ -3244,7 +3244,7 @@ sub sendRouletteInfoRequest {
 		switch => 'roulette_info_request',
 	}));
 
-	debug "Sent Roulette Info Request", "sendPacket";
+	debug "Sent Roulette Info Request\n", "sendPacket";
 }
 
 # Notification of the client that the roulette window was closed
@@ -3256,7 +3256,7 @@ sub sendRouletteClose {
 		switch => 'roulette_close',
 	}));
 
-	debug "Sent Roulette Close", "sendPacket";
+	debug "Sent Roulette Close\n", "sendPacket";
 }
 
 # Request to start the roulette
@@ -3268,7 +3268,7 @@ sub sendRouletteStart {
 		switch => 'roulette_start',
 	}));
 
-	debug "Sent Roulette Start", "sendPacket";
+	debug "Sent Roulette Start\n", "sendPacket";
 }
 
 # Request to claim a prize
@@ -3280,7 +3280,55 @@ sub sendRouletteClaimPrize {
 		switch => 'roulette_claim_prize',
 	}));
 
-	debug "Sent Roulette Claim Prize", "sendPacket";
+	debug "Sent Roulette Claim Prize\n", "sendPacket";
+}
+
+##
+# Market System
+##
+
+# Send to Server confirmation that we already close NPC shop
+# 09D4
+sub sendSellBuyComplete {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'sell_buy_complete',
+	}));
+
+	debug "Sent Sell/Buy Complete\n", "sendPacket";
+}
+
+# Buy item from Market
+# 09D6
+sub sendBuyBulkMarket {
+	my ($self, $r_array) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'buy_bulk_market',
+		items => \@{$r_array},
+	}));
+
+	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+}
+
+sub reconstruct_buy_bulk_market {
+	my ($self, $args) = @_;
+	my $pack = $self->{send_buy_bulk_market_pack} || "v V";
+
+	$args->{buyInfo} = pack "(a*)*", map { pack $pack, $_->{itemID}, $_->{amount} } @{$args->{items}};
+}
+
+# Request to close current Market
+# 09D8
+sub sendMarketClose {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'market_close',
+	}));
+
+	debug "Sent Market Close\n", "sendPacket";
 }
 
 1;

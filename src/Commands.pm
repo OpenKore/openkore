@@ -5412,11 +5412,11 @@ sub cmdStore {
 
 	if ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {
 		my $msg = center(TF(" Store List (%s) ", $storeList->{npcName}), 54, '-') ."\n".
-			T("#  Name                    Type                  Price\n");
+			T("#  Name                    Type                  Price   Amnt\n");
 		foreach my $item (@$storeList) {
 			$msg .= swrite(
-				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<  @>>>>>>>>>z",
-				[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{price}]);
+				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<  @>>>>>>>>>z   @<<<<<",
+				[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{price}, $item->{amount}]);
 		}
 		$msg .= "Store list is empty.\n" if !$storeList->size;
 		$msg .= ('-'x54) . "\n";
@@ -7309,7 +7309,7 @@ sub cmdCancelTransaction {
 		return;
 	}
 
-	if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
+	if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' || $ai_v{'npc_talk'}{'talk'} eq 'store') {
 		cancelNpcBuySell();
 	} else {
 		error T("You are not on a sell or store npc interaction.\n");

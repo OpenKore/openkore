@@ -2035,8 +2035,12 @@ sub processAutoBuy {
 			# load the real npc location just in case we used standpoint
 			my $realpos = {};
 			getNPCInfo($config{"buyAuto_".$args->{lastIndex}."_npc"}, $realpos);
-
-			ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
+			
+			if ( $config{"buyAuto_".$args->{lastIndex}."_isMarket"} ) {
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, undef);
+			} else {
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
+			}
 			
 			$args->{'sentNpcTalk'} = 1;
 			$args->{'sentNpcTalk_time'} = time;
@@ -2083,7 +2087,12 @@ sub processAutoBuy {
 			$needbuy -= $inv_amount;
 			
 			my $buy_amount = ($maxbuy > $needbuy) ? $needbuy : $maxbuy;
-			
+
+			# support to market
+			if ($item->{amount} && $item->{amount} < $buy_amount) {
+				$buy_amount = $item->{amount};
+			}
+
 			my $batchSize = $config{"buyAuto_".$args->{lastIndex}."_batchSize"};
 			
 			if ($batchSize && $batchSize < $buy_amount) {

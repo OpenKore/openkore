@@ -59,6 +59,7 @@ sub new {
 
 	$self->{send_buy_bulk_pack} = "v V";
 	$self->{char_create_version} = 0x0A39;
+	$self->{send_sell_buy_complete} = 1;
 
 	return $self;
 }

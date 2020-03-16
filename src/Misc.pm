@@ -5175,7 +5175,11 @@ sub setCharDeleteDate {
 sub cancelNpcBuySell {
 	undef $ai_v{'npc_talk'};
 	
-	if ($messageSender->can('sendSellBuyComplete')) {
+	if ($in_market) {
+		$messageSender->sendMarketClose;
+		$messageSender->sendMarketClose;
+		undef $in_market;
+	} elsif ($messageSender->{send_sell_buy_complete}) {
 		$messageSender->sendSellBuyComplete;
 	}
 }
@@ -5189,7 +5193,7 @@ sub completeNpcSell {
 	
 	undef $ai_v{'npc_talk'};
 	
-	if ($messageSender->can('sendSellBuyComplete')) {
+	if ($messageSender->{send_sell_buy_complete}) {
 		$messageSender->sendSellBuyComplete;
 		$messageSender->sendSellBuyComplete;
 	}
@@ -5199,12 +5203,20 @@ sub completeNpcBuy {
 	my $items = shift;
 	
 	if (@{$items}) {
-		$messageSender->sendBuyBulk($items);
+		if ($in_market) {
+			$messageSender->sendBuyBulkMarket($items);
+		} else {
+			$messageSender->sendBuyBulk($items);
+		}
 	}
 	
 	undef $ai_v{'npc_talk'};
-		
-	if ($messageSender->can('sendSellBuyComplete')) {
+	
+	if ($in_market) {
+		$messageSender->sendMarketClose;
+		$messageSender->sendMarketClose;
+		undef $in_market;
+	} elsif ($messageSender->{send_sell_buy_complete}) {
 		$messageSender->sendSellBuyComplete;
 		$messageSender->sendSellBuyComplete;
 	}
