@@ -229,6 +229,9 @@ sub new {
 		'09A7' => ['banking_deposit_request', 'a4 V', [qw(accountID zeny)]],
 		'09A9' => ['banking_withdraw_request', 'a4 V', [qw(accountID zeny)]],
 		'09AB' => ['banking_check_request', 'a4', [qw(accountID)]],
+		'09D4' => ['sell_buy_complete'],
+		'09D6' => ['buy_bulk_market', 'v a*', [qw(len buyInfo)]],
+		'09D8' => ['market_close'],
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
 		'09EF' => ['rodex_refresh_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexRefreshMaillist
 		'09F5' => ['rodex_delete_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexDeleteMail

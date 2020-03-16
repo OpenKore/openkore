@@ -276,6 +276,8 @@ sub new {
 		'09AB' => ['banking_check_request', 'a4', [qw(accountID)]],
 		'09D0' => ['gameguard_reply'],
 		'09D4' => ['sell_buy_complete'],
+		'09D6' => ['buy_bulk_market', 'v a*', [qw(len buyInfo)]],
+		'09D8' => ['market_close'],
 		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
