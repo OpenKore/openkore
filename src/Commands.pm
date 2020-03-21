@@ -203,6 +203,12 @@ sub initHandlers {
 			[T("<slotname> <inventory item #>"), T("equips the specified item on the specified slot")],
 			["slots", T("lists slot names")]
 			], \&cmdEquip],
+		['eqsw', [
+			T("Equip an switch item."),
+			[T("<inventory item #>"), T("equips the specified item")],
+			[T("<slotname> <inventory item #>"), T("equips the specified item on the specified slot")],
+			["slots", T("lists slot names")]
+			], \&cmdEquipSwitch],
 		['elemental', undef, \&cmdElemental],
 		['eval', [
 			T("Evaluate a Perl expression."),
@@ -541,6 +547,7 @@ sub initHandlers {
 			T("Switch configuration file."),
 			[T("<filename>"), T("switches configuration file to <filename>")]
 			], \&cmdSwitchConf],
+		['switch_equips', T("Switch Equips"), \&cmdSwitchEquips],
 		['take', [
 			T("Take an item from the ground."),
 			[T("<item #>"), T("take an item from the ground")],
@@ -583,6 +590,10 @@ sub initHandlers {
 			T("Unequp an item."),
 			[T("<inventory item #>"), T("unequips the specified item")]
 			], \&cmdUnequip],
+		['uneqsw', [
+			T("Unequp an switch item."),
+			[T("<inventory item #>"), T("unequips the specified item")]
+			], \&cmdUnequipSwitch],
 		['vender', [
 			T("Buy items from vending shops."),
 			[T("<vender #>"), T("enter vender shop")],
@@ -2328,7 +2339,6 @@ sub cmdEquip {
 
 	if ($arg1 eq "") {
 		cmdEquip_list();
-		cmdEquipsw_list();
 		return;
 	}
 
@@ -2382,6 +2392,55 @@ sub cmdEquip_list {
 			message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
 	message "================================\n", "info";
+}
+
+sub cmdEquipSwitch {
+	# Equip an item
+	my (undef, $args) = @_;
+	my ($arg1,$arg2) = $args =~ /^(\S+)\s*(.*)/;
+	my $slot;
+	my $item;
+
+	if ($arg1 eq "") {
+		cmdEquipsw_list();
+		return;
+	}
+
+	if ($arg1 eq "slots") {
+		# Translation Comment: List of equiped items on each slot
+		message T("Slots:\n") . join("\n", @Actor::Item::slots). "\n", "list";
+		return;
+	}
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", 'eqsw ' .$args);
+		return;
+	}
+
+	if ($equipSlot_rlut{$arg1}) {
+		$slot = $arg1;
+	} else {
+		$arg1 .= " $arg2" if $arg2;
+	}
+
+	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, undef, 1);
+	if (!$item) {
+		$args =~ s/^($slot)\s//g if ($slot);
+		error TF("No such non-equipped Inventory Item: %s\n", $args);
+		return;
+	}
+
+	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17 && $item->{type} != 8) {
+		error TF("Inventory Item %s (%s) can't be equipped.\n",
+			$item->{name}, $item->{binID});
+		return;
+	}
+
+	if ($slot) {
+		$item->equip_switch_slot($slot);
+	} else {
+		$item->equip_switch();
+	}
 }
 
 sub cmdEquipsw_list {
@@ -5452,6 +5511,15 @@ sub cmdSwitchConf {
 	}
 }
 
+sub cmdSwitchEquips {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	$messageSender->sendEquipSwitchRun();
+}
+
 sub cmdTake {
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
@@ -5802,6 +5870,54 @@ sub cmdUnequip {
 	} else {
 		$item->unequip();
 	}
+}
+
+sub cmdUnequipSwitch {
+
+	# unequip an item	
+	my (undef, $args) = @_;
+	my ($arg1,$arg2) = $args =~ /^(\S+)\s*(.*)/;
+	my $slot;
+	my $item;
+
+	if ($arg1 eq "") {
+		cmdEquipsw_list();
+		return;
+	}
+
+	if ($arg1 eq "slots") {
+		# Translation Comment: List of equiped items on each slot
+		message T("Slots:\n") . join("\n", @Actor::Item::slots). "\n", "list";
+		return;
+	}
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", 'eq ' .$args);
+		return;
+	}
+
+	if ($equipSlot_rlut{$arg1}) {
+		$slot = $arg1;
+	} else {
+		$arg1 .= " $arg2" if $arg2;
+	}
+
+	$item = Actor::Item::get(defined $slot ? $arg2 : $arg1, undef, 0);
+
+	if (!$item) {
+		$args =~ s/^($slot)\s//g if ($slot);
+		$slot = T("undefined") unless ($slot);
+		error TF("No such equipped Inventory Item: %s in slot: %s\n", $args, $slot);
+		return;
+	}
+
+	if (!$item->{type_equip} && $item->{type} != 10 && $item->{type} != 16 && $item->{type} != 17) {
+		error TF("Inventory Item %s (%s) can't be unequipped.\n",
+			$item->{name}, $item->{binID});
+		return;
+	}
+
+	$item->unequip_switch();
 }
 
 sub cmdUseItemOnMonster {
