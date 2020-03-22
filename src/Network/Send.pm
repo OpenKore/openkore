@@ -1139,16 +1139,28 @@ sub sendShowEquipPlayer {
 	debug "Sent Show Equip Player.\n", "sendPacket", 2;
 }
 
-sub sendShowEquipTickbox {
-	my ($self, $flag) = @_;
+# Send configurations (CZ_CONFIG).
+# 02D8 <type>.L <value>.L
+# type:
+#     0 = show equip windows to other players
+#     1 = being summoned by skills: Urgent Call, Romantic Rendezvous, Come to me, honey~ & Let's Go, Family!
+#     2 = pet autofeeding
+#     3 = homunculus autofeeding
+#     value:
+#         0 = disabled
+#         1 = enabled
+sub sendMiscConfigSet {
+	my ($self, $type, $flag) = @_;
+
 	$self->sendToServer($self->reconstruct({
-				switch => 'equip_window_tick',
-				type => 0, # is it always zero?
-				value => $flag
+				switch => 'misc_config_set',
+				type => $type,
+				flag => $flag
 			}
 		)
 	);
-	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
+
+	debug sprintf("Sent Misc Config Type: %s Flag: %s.\n", $type, $flag), "sendPacket", 2;
 }
 
 sub sendSlaveAttack {
