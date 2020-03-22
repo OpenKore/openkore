@@ -1179,6 +1179,9 @@ sub sendSlaveStandBy {
 	debug "Sent Slave standby\n", "sendPacket", 2;
 }
 
+# Request to equip an item
+# 00A9 <index>.W <position>.W (CZ_REQ_WEAR_EQUIP).
+# 0998 <index>.W <position>.L (CZ_REQ_WEAR_EQUIP_V5)
 sub sendEquip {
 	my ($self, $ID, $type) = @_;
 	$self->sendToServer($self->reconstruct({
@@ -1189,6 +1192,60 @@ sub sendEquip {
 		)
 	);
 	debug sprintf("Sent Equip: %s Type: $type\n", unpack('v', $ID)), 2;
+}
+
+# Request to add an equip to the equip switch window
+# 0A97 <index>.W <position>.L
+sub sendEquipSwitchAdd {
+	my ($self, $ID, $position) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'equip_switch_add',
+		ID => $ID,
+		position => $position,
+	}));
+
+	debug sprintf("Sent Equip Switch Add Item: %s\n", unpack('v', $ID)), "sendPacket", 2;
+}
+
+# Request to remove an equip from the equip switch window
+# 0A99 <index>.W <position>.L <= 20170502
+# 0A99 <index>.W
+sub sendEquipSwitchRemove {
+	my ($self, $ID, $position) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'equip_switch_remove',
+		ID => $ID,
+		position =>  $position,
+	}));
+
+	debug sprintf("Sent Equip Switch Remove Item: %s\n", unpack('v', $ID)), "sendPacket", 2;
+}
+
+# Request to do a full equip switch
+# 0A9C
+sub sendEquipSwitchRun {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'equip_switch_run'
+	}));
+
+	debug "Sent Equip Switch All\n", "sendPacket", 2;
+}
+
+# Request to do a single equip switch
+# 0ACE <index>.W
+sub sendEquipSwitchSingle {
+	my ($self, $ID) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'equip_switch_single',
+		ID => $ID
+	}));
+
+	debug sprintf("Sent Equip Switch Single Item: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendProgress {

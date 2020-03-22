@@ -306,16 +306,16 @@ sub new {
 		'0A68' => ['open_ui_request', 'C', [qw(UIType)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0A76' => ['master_login', 'V Z40 a32 v', [qw(version username password_rijndael master_version)]],
-		'0A97' => ['equipswitch_add', 'v V', [qw(index position)]], # Add item to equipswitch
-		'0A99' => ['equipswitch_remove', 'v', [qw(index)]], # remove item in equipswitch
-		'0A9C' => ['equipswitch_run'], # switch Item !
+		'0A97' => ['equip_switch_add', 'a2 V', [qw(ID position)]], # Add item to equipswitch
+		'0A99' => ['equip_switch_remove', 'a2', [qw(ID)]], # remove item in equipswitch
+		'0A9C' => ['equip_switch_run'], # switch Item !
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]],
 		'0AC0' => ['rodex_open_mailbox', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]],  # 26 -- RodexOpenMailbox
 		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
-		'0ACE' => ['equipswitch_single', 'a2', [qw(index)]],
+		'0ACE' => ['equip_switch_single', 'a2', [qw(ID)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AE8' => ['change_dress'],
 		'0AEF' => ['attendance_reward_request'],
@@ -501,36 +501,6 @@ sub sendCaptchaInitiate {
 	my $msg = pack('v2', 0x07E5, 0x0);
 	$self->sendToServer($msg);
 	debug "Sending Captcha Initiate\n";
-}
-
-sub sendEquipswitchAdd {
-	my ($self,$index,$position) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'equipswitch_add',
-		index => $index,
-		position => $position
-	}));
-}
-
-sub sendEquipswitchRemove {
-	my ($self,$index) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'equipswitch_remove',
-		index => $index
-	}));
-}
-sub sendEquipswitchRun { #noidea T.T
-	my ($self) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'equipswitch_run'
-	}));
-}
-sub sendEquipswitchSingle {
-	my ($self,$index) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'equipswitch_single',
-		index => $index
-	}));
 }
 
 1;
