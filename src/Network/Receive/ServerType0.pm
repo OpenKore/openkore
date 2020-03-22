@@ -674,8 +674,8 @@ sub new {
 			: ['equip_item_switch', 'a2 V2', [qw(ID type success)]] #kRO <= 20170502
 		,
 		'0A9A' => ['unequip_item_switch', 'a2 V C', [qw(ID type success)]],
-		'0A9B' => ['equipswitch_log', 'v a*', [qw(len log)]], # -1
-		'0A9D' => ['equipswitch_run_res', 'v', [qw(success)]],
+		'0A9B' => ['equip_switch_log', 'v a*', [qw(len log)]], # -1
+		'0A9D' => ['equip_switch_run_res', 'v', [qw(success)]],
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
@@ -1704,26 +1704,6 @@ sub senbei_amount {
 	$char->{senbei} = $args->{senbei};
 }
 
-sub equipswitch_run_res {
-	my ($self, $args) = @_;
-	if ($args->{success}) {
-		message TF("[Equip Switch] Fail !\n"), "info";
-	} else {
-		message TF("[Equip Switch] Success !\n"), "info";
-	}
-}
-
-sub equipswitch_log {
-    my ($self, $args) = @_;
-    for (my $i = 0; $i < length($args->{log}); $i+= 6) {
-    	my ($index, $position) = unpack('a2 V', substr($args->{log}, $i, 6));
-    	my $item = $char->inventory->getByID($index);
-    	$char->{eqswitch}{$equipSlot_lut{$position}} = $item;
-    }
-}
-
 *changeToInGameState = *Network::Receive::changeToInGameState;
-*equip_item_switch = *Network::Receive::equip_item;
-*unequip_item_switch = *Network::Receive::unequip_item;
 
 1;

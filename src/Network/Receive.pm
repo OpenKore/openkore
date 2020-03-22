@@ -9944,45 +9944,90 @@ sub cash_buy_fail {
 	debug "cash_buy_fail $args->{cash_points} $args->{kafra_points} $args->{fail}\n";
 }
 
+# Notifies the client about the result of a request to equip an item.
+# 00AA <index>.W <equip location>.W <result>.B (ZC_REQ_WEAR_EQUIP_ACK)
+# 00AA <index>.W <equip location>.W <view id>.W <result>.B (PACKETVER >= 20100629)
+# 08D0 <index>.W <equip location>.W <view id>.W <result>.B (ZC_REQ_WEAR_EQUIP_ACK2)
+# 0999 <index>.W <equip location>.L <view id>.W <result>.B (ZC_ACK_WEAR_EQUIP_V5)
+# @ok: //inversed forv2 v5
+#     0 = failure
+#     1 = success
+#     2 = failure due to low level
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
-	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999") || (($args->{success} == 1 || $args->{success} == 2 ) && $args->{switch} eq "0A98")) {
-		if ($args->{switch} == '0A98') {
-			message TF("[Equip Switch] You can't put on %s (%d)\n", $item->{name}, $item->{binID});
-		} else {
-			message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
-		}
+	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999")) {
+		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
 	} else {
-		if ($args->{switch} == '0A98') {
-			$item->{eqswitch} = $args->{type};
-		} else {
-			$item->{equipped} = $args->{type};
-		}
+		$item->{equipped} = $args->{type};
+
 		if ($args->{type} == 10 || $args->{type} == 32768) {
 			$char->{equipment}{arrow} = $item;
 		} else {
-			foreach (%equipSlot_rlut){
-				if ($_ & $args->{type}){
+			foreach (%equipSlot_rlut) {
+				if ($_ & $args->{type}) {
 					next if $_ == 10; # work around Arrow bug
 					next if $_ == 32768;
-					if ($args->{switch} == '0A98') {
-						$char->{eqswitch}{$equipSlot_lut{$_}} = $item;
-						Plugins::callHook('equipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
-					} else {
-						$char->{equipment}{$equipSlot_lut{$_}} = $item;
-						Plugins::callHook('equipped_item', {slot => $equipSlot_lut{$_}, item => $item});
-					}
+					$char->{equipment}{$equipSlot_lut{$_}} = $item;
+					Plugins::callHook('equipped_item', {slot => $equipSlot_lut{$_}, item => $item});
 				}
 			}
 		}
-		if ($args->{switch} == '0A98') {
-			message TF("[Equip Switch] You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID}, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
-		} else {
-			message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID}, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
-		}
+		message TF("You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID}, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
+}
+
+# Acknowledgement for adding an equip to the equip switch window
+# 0A98 <index>.W <position.>.L <flag>.L  <= 20170502
+# 0A98 <index>.W <position.>.L <flag>.W
+sub equip_item_switch {
+	my ($self, $args) = @_;
+	my $item = $char->inventory->getByID($args->{ID});
+	if ( $args->{success} == 1 || $args->{success} == 2 ) {
+		message TF("[Equip Switch] You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+	} else {
+		$item->{eqswitch} = $args->{type};
+
+		if ($args->{type} == 10 || $args->{type} == 32768) {
+			$char->{equipment}{arrow} = $item;
+		} else {
+			foreach (%equipSlot_rlut) {
+				if ($_ & $args->{type}) {
+					next if $_ == 10; # work around Arrow bug
+					next if $_ == 32768;
+					$char->{eqswitch}{$equipSlot_lut{$_}} = $item;
+					Plugins::callHook('equipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+				}
+			}
+		}
+
+		message TF("[Equip Switch] You equip %s (%d) - %s (type %s)\n", $item->{name}, $item->{binID}, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
+	}
+	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
+}
+
+
+# Acknowledgement packet for the full equip switch
+# 0A9D <failed>.W
+sub equip_switch_run_res {
+	my ($self, $args) = @_;
+	if ($args->{success}) {
+		message TF("[Equip Switch] Fail !\n"), "info";
+	} else {
+		message TF("[Equip Switch] Success !\n"), "info";
+	}
+}
+
+# Set the full list of items in the equip switch window
+# 0A9B <length>.W { <index>.W <position>.L }*
+sub equip_switch_log {
+    my ($self, $args) = @_;
+    for (my $i = 0; $i < length($args->{log}); $i+= 6) {
+    	my ($index, $position) = unpack('a2 V', substr($args->{log}, $i, 6));
+    	my $item = $char->inventory->getByID($index);
+    	$char->{eqswitch}{$equipSlot_lut{$position}} = $item;
+    }
 }
 
 # 02EF
@@ -10756,47 +10801,67 @@ sub switch_character {
 	debug "result: $args->{result}\n";
 }
 
+# Notifies the client about the result of a request to take off an item.
+# 00AC <index>.W <equip location>.W <result>.B (ZC_REQ_TAKEOFF_EQUIP_ACK)
+# 08D1 <index>.W <equip location>.W <result>.B (ZC_REQ_TAKEOFF_EQUIP_ACK2)
+# 099A <index>.W <equip location>.L <result>.B (ZC_ACK_TAKEOFF_EQUIP_V5)
+# @ok : //inversed for v2 v5
+#     0 = failure
+#     1 = success
 sub unequip_item {
 	my ($self, $args) = @_;
 
 	return unless changeToInGameState();
 	my $item = $char->inventory->getByID($args->{ID});
-	if ($args->{switch} == '0A9A') {
-		delete $item->{eqswitch};
-	} else {
-		delete $item->{equipped};
-	}
-	if ($args->{type} == 10 || $args->{type} == 32768) {
-		if ($args->{switch} == '0A9A') {
-			delete $char->{eqswitch}{arrow};
-		} else {
-			delete $char->{equipment}{arrow};
-			delete $char->{arrow};
-		}
+	delete $item->{equipped};
 
+	if ($args->{type} == 10 || $args->{type} == 32768) {
+		delete $char->{equipment}{arrow};
+		delete $char->{arrow};
 	} else {
 		foreach (%equipSlot_rlut){
 			if ($_ & $args->{type}){
 				next if $_ == 10; #work around Arrow bug
 				next if $_ == 32768;
-				if ($args->{switch} == '0A9A') {
-					delete $char->{eqswitch}{$equipSlot_lut{$_}};
-					Plugins::callHook('unequipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
-				} else {
-					delete $char->{equipment}{$equipSlot_lut{$_}};
-					Plugins::callHook('unequipped_item', {slot => $equipSlot_lut{$_}, item => $item});
-				}
+				delete $char->{equipment}{$equipSlot_lut{$_}};
+				Plugins::callHook('unequipped_item', {slot => $equipSlot_lut{$_}, item => $item});
 			}
 		}
 	}
+
 	if ($item) {
-		if ($args->{switch} == '0A9A') {
-			message TF("[Equip Switch] You unequip %s (%d) - %s\n",$item->{name}, $item->{binID},$equipTypes_lut{$item->{type_equip}}), 'inventory';
-		} else {
-			message TF("You unequip %s (%d) - %s\n",$item->{name}, $item->{binID},$equipTypes_lut{$item->{type_equip}}), 'inventory';
-		}
+		message TF("You unequip %s (%d) - %s\n",$item->{name}, $item->{binID},$equipTypes_lut{$item->{type_equip}}), 'inventory';
 	}
 }
+
+# Acknowledgement for removing an equip to the equip switch window
+# 0A9A <index>.W <position.>.L <failure>.W
+sub unequip_item_switch {
+	my ($self, $args) = @_;
+
+	return unless changeToInGameState();
+	my $item = $char->inventory->getByID($args->{ID});
+	delete $item->{eqswitch};
+
+	if ($args->{type} == 10 || $args->{type} == 32768) {
+		delete $char->{eqswitch}{arrow};
+	} else {
+		foreach (%equipSlot_rlut){
+			if ($_ & $args->{type}){
+				next if $_ == 10; #work around Arrow bug
+				next if $_ == 32768;
+
+				delete $char->{eqswitch}{$equipSlot_lut{$_}};
+				Plugins::callHook('unequipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+			}
+		}
+	}
+
+	if ($item) {
+		message TF("[Equip Switch] You unequip %s (%d) - %s\n",$item->{name}, $item->{binID},$equipTypes_lut{$item->{type_equip}}), 'inventory';
+	}
+}
+
 # TODO: only used to report failure? $args->{success}
 sub use_item {
 	my ($self, $args) = @_;
