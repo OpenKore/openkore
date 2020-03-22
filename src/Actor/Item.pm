@@ -402,6 +402,17 @@ sub equip {
 }
 
 ##
+# void $ActorItem->equip_switch()
+#
+# Will simply equip the item in switch window.
+sub equip_switch {
+	my $self = shift;
+	$messageSender->sendEquipSwitchAdd($self->{ID}, $self->{type_equip});
+	queueEquip(1);
+	return 0;
+}
+
+##
 # void $ActorItem->unequip()
 #
 # Unequips the item.
@@ -410,6 +421,16 @@ sub unequip {
 	return 1 unless $self->{equipped};
 	$messageSender->sendUnequip($self->{ID});
 	return 0;
+}
+
+##
+# void $ActorItem->unequip_switch()
+#
+# Unequips the item from switch window.
+sub unequip_switch {
+	my $self = shift;
+	$messageSender->sendEquipSwitchRemove($self->{ID});
+	return 1;
 }
 
 ##
@@ -449,6 +470,22 @@ sub equipInSlot {
 		return 1;
 	}
 	$messageSender->sendEquip($self->{ID}, $equipSlot_rlut{$slot});
+	queueEquip(1);
+	return 0;
+}
+
+##
+# void $ActorItem->equip_switch_slot(slot dontqueue)
+# slot: where item should be equipped.
+#
+# Equips item in $slot switch window.
+sub equip_switch_slot {
+	my ($self,$slot) = @_;
+	unless (defined $equipSlot_rlut{$slot}) {
+		error TF("Wrong equip slot specified\n");
+		return 1;
+	}
+	$messageSender->sendEquipSwitchAdd($self->{ID}, $equipSlot_rlut{$slot});
 	queueEquip(1);
 	return 0;
 }

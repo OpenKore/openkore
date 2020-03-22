@@ -651,6 +651,13 @@ sub new {
 		'0A8A' => ['offline_clone_lost', 'a4', [qw(ID)]],
 		'0A8D' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], # -1 [offline vending store]
 		'0A91' => ['buying_store_items_list', 'v a4 a4 C V V x4 a*', [qw(len buyerID buyingStoreID flag expireDate zeny itemList)]], # -1 [offline buying store]
+		'0A98' => ($rpackets{'0A98'}{length} == 10) # or 12
+			? ['equip_item_switch', 'a2 V v', [qw(ID type success)]]
+			: ['equip_item_switch', 'a2 V2', [qw(ID type success)]] #kRO <= 20170502
+		,
+		'0A9A' => ['unequip_item_switch', 'a2 V C', [qw(ID type success)]],
+		'0A9B' => ['equip_switch_log', 'v a*', [qw(len log)]], # -1
+		'0A9D' => ['equip_switch_run_res', 'v', [qw(success)]],
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
