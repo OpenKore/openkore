@@ -438,7 +438,7 @@ sub new {
 		'02D4' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4 v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
 		'02D5' => ['ISVR_DISCONNECT'], #TODO: PACKET_ZC_ISVR_DISCONNECT
 		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], #type is job
-		'02D9' => ['show_eq_msg_other', 'V2', [qw(unknown flag)]],
+		'02D9' => ['misc_config_reply', 'V2', [qw(type flag)]],
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
 		'02DC' => ['battleground_message', 'v a4 Z24 Z*', [qw(len ID name message)]],
 		'02DD' => ['battleground_emblem', 'a4 Z24 v', [qw(emblemID name ID)]],
@@ -668,6 +668,7 @@ sub new {
 		'0A8A' => ['offline_clone_lost', 'a4', [qw(ID)]],
 		'0A8D' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], # -1 [offline vending store]
 		'0A91' => ['buying_store_items_list', 'v a4 a4 C V V x4 a*', [qw(len buyerID buyingStoreID flag expireDate zeny itemList)]], # -1 [offline buying store]
+		'0A95' => ['misc_config', 'C2', [qw(show_eq_flag call_flag)]],
 		'0A98' => ($rpackets{'0A98'}{length} == 10) # or 12
 			? ['equip_item_switch', 'a2 V v', [qw(ID type success)]]
 			: ['equip_item_switch', 'a2 V2', [qw(ID type success)]] #kRO <= 20170502
@@ -678,6 +679,7 @@ sub new {
 		'0AA0' => ['refineui_opened', '' ,[qw()]],
 		'0AA2' => ['refineui_info', 'v v C a*' ,[qw(len index bless materials)]],
 		'0AA5' => ['guild_members_list', 'v a*', [qw(len member_list)]],
+		'0AA8' => ['misc_config', 'C3', [qw(show_eq_flag call_flag pet_autofeed_flag)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0AB8' => ['move_interrupt'],
@@ -691,7 +693,7 @@ sub new {
 		'0ACB' => ['stat_info', 'v a8', [qw(type val)]],
 		'0ACC' => ['exp', 'a4 a8 v2', [qw(ID val type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
-		'0ADC' => ['flag', 'V', [qw(unknown)]],
+		'0ADC' => ['misc_config', 'C4', [qw(show_eq_flag call_flag pet_autofeed_flag homunculus_autofeed_flag)]],
  		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
 		'0ADD' => ['item_appeared', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],

@@ -493,6 +493,14 @@ use constant {
 	MARKET_BUY_RESULT_AMOUNT_TOO_BIG => 9,
 };
 
+# misc configurations
+use constant {
+	CONFIG_OPEN_EQUIPMENT_WINDOW => 0,
+	CONFIG_CALL => 1,
+	CONFIG_PET_AUTOFEED => 2,
+	CONFIG_HOMUNCULUS_AUTOFEED => 3,
+};
+
 # Display gained exp.
 # 07F6 <account id>.L <amount>.L <var id>.W <exp type>.W (ZC_NOTIFY_EXP)
 # 0ACC <account id>.L <amount>.Q <var id>.W <exp type>.W (ZC_NOTIFY_EXP2)
@@ -3000,21 +3008,94 @@ sub show_eq {
 
 }
 
-sub show_eq_msg_other {
+# The player's 'Configuration' state, sent during login.
+# 0A95 <show_eq flag>.B <call flag>.B
+# 0AA8 <show_eq flag>.B <call flag>.B <pet autofeeding flag>.B
+# 0ADC <show_eq flag>.B <call flag>.B <pet autofeeding flag>.B <homunculus autofeeding flag>.B
+sub misc_config {
 	my ($self, $args) = @_;
-	if ($args->{flag}) {
-		message T("Allowed to view the other player's Equipment.\n");
+
+	if (defined ($args->{show_eq_flag})) {
+		if($args->{show_eq_flag} == 1) {
+			message T("Your Equipment information is now open to the public.\n");
+		} else {
+			message T("Your Equipment information is now not open to the public.\n");
+		}		
+	}
+
+	if (defined ($args->{call_flag})) {
+		if($args->{call_flag} == 1) {
+			message T("Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
+		} else {
+			message T("Not Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
+		}		
+	}
+
+	if (defined ($args->{pet_autofeed_flag})) {
+		if($args->{pet_autofeed_flag} == 1) {
+			message T("Pet automatic feeding is ON. (Ragexe Client Feature)\n");
+		} else {
+			message T("Pet automatic feeding is OFF. (Ragexe Client Feature)\n");
+		}		
+	}
+
+	if (defined ($args->{homunculus_autofeed_flag})) {
+		if($args->{homunculus_autofeed_flag} == 1) {
+			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");
+		} else {
+			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");
+		}		
+	}
+}
+
+# Send configurations (ZC_CONFIG).
+# 02D9 <type>.L <value>.L
+# type:
+#     0 = show equip windows to other players
+#     1 = being summoned by skills: Urgent Call, Romantic Rendezvous, Come to me, honey~ & Let's Go, Family!
+#     2 = pet autofeeding
+#     3 = homunculus autofeeding
+#     value:
+#         0 = disabled
+#         1 = enabled
+sub misc_config_reply {
+	my ($self, $args) = @_;
+
+	if ( $args->{type} == CONFIG_OPEN_EQUIPMENT_WINDOW ) {
+		if ($args->{flag}) {
+			message T("Your Equipment information is now open to the public.\n");
+		} else {
+			message T("Your Equipment information is now not open to the public.\n");
+		}
+	} elsif ( $args->{type} == CONFIG_CALL ) {
+		if ($args->{flag}) {
+			message T("Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
+		} else {
+			message T("Not Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
+		}
+	} elsif ( $args->{type} == CONFIG_PET_AUTOFEED ) {
+		if ($args->{flag}) {
+			message T("Pet automatic feeding is ON. (Ragexe Client Feature)\n");
+		} else {
+			message T("Pet automatic feeding is OFF. (Ragexe Client Feature)\n");
+		}
+	} elsif ( $args->{type} == CONFIG_HOMUNCULUS_AUTOFEED ) {
+		if ($args->{flag}) {
+			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");
+		} else {
+			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");
+		}
 	} else {
-		message T("Not allowed to view the other player's Equipment.\n");
+		message TF("Unknown Config Type: %s, Flag: %s\n", $args->{type}, $args->{flag});
 	}
 }
 
 sub show_eq_msg_self {
 	my ($self, $args) = @_;
 	if ($args->{type}) {
-		message T("Other players are allowed to view your Equipment.\n");
-	} else {
-		message T("Other players are not allowed to view your Equipment.\n");
+		message T("Your Equipment information is now open to the public.\n");
+		} else {
+		message T("Your Equipment information is now not open to the public.\n");
 	}
 }
 

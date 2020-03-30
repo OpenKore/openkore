@@ -206,7 +206,7 @@ sub new {
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
-		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
+		'02D8' => ['misc_config_set', 'V2', [qw(type flag)]],
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'035F' => ['character_move', 'a3', [qw(coords)]],

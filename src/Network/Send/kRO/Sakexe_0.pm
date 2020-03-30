@@ -192,6 +192,7 @@ sub new {
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
+		'02D8' => ['misc_config_set', 'V2', [qw(type flag)]],
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
