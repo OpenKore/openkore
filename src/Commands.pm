@@ -260,6 +260,13 @@ sub initHandlers {
 			[T("skills add <skill #>"), T("add a skill point to the current homunculus skill")],
 			[T("desc <skill #>"), T("display a description of the specified homunculus skill")]
 			], \&cmdSlave],
+		['misc_conf', [
+			T("Send to Server Misc Configuration."),
+			["show_eq (on|off)", T("Allow / Disable Show Equipment Window")],
+			["call (on|off)", T("Allow / Disable being Summoned by Urgent Call or Marriage skills")],
+			["pet_feed (on|off)", T("Enable / Disable Pet Auto-Feed")],
+			["homun_feed (on|off)", T("Enable / Disable Homunculus Auto-Feed")],
+			], \&cmdMiscConf],
 		['merc', [
 			T("Interact with Mercenary."),
 			["s", T("display mercenary status")],
@@ -3022,6 +3029,31 @@ sub cmdSlave {
 
  	} else {
 		error TF("Usage: %s <feed | s | status | move | standby | ai | aiv | skills | delete | rename>\n", $string);
+	}
+}
+
+sub cmdMiscConf {
+	my (undef, $args) = @_;
+	my ($command, $flag) = parseArgs( $args );
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my $check = ($flag eq 'on') ? 1 : 0;
+
+	if ( $command eq "show_eq" ) {
+		$messageSender->sendMiscConfigSet(0, $check);
+	} elsif ( $command eq "call" ) {
+		$messageSender->sendMiscConfigSet(1, $check);
+	} elsif ( $command eq "pet_feed" ) {
+		$messageSender->sendMiscConfigSet(2, $check);
+	} elsif ( $command eq "homun_feed" ) {
+		$messageSender->sendMiscConfigSet(3, $check);
+	} else {
+		error T("Syntax Error in function 'misc_conf' (Misc Configuration)\n" .
+				"misc_conf <show_eq|call|pet_feed|homun_feed> <on|off>\n");
 	}
 }
 
@@ -6708,7 +6740,7 @@ sub cmdShowEquip {
 			message T("Usage: showeq p <index|name|partialname>\n");
 		}
 	} elsif ($args[0] eq 'me') {
-		$messageSender->sendShowEquipTickbox($args[1] eq 'on');
+		$messageSender->sendMiscConfigSet(0, $args[1] eq 'on');
 	} else {
 		message T("Usage: showeq [p <index|name|partialname>] | [me <on|off>]\n"), "info";
 	}
