@@ -2,7 +2,7 @@
 
 ![Language](https://img.shields.io/badge/language-Perl-blue.svg)
 
-![Start](https://img.shields.io/github/stars/OpenKore/openkore)
+![Stars](https://img.shields.io/github/stars/OpenKore/openkore)
 ![Fork](https://img.shields.io/github/forks/OpenKore/openkore?label=Fork)
 ![Watch](https://img.shields.io/github/watchers/OpenKore/openkore?label=Watch)
 
@@ -72,7 +72,7 @@ Openkore is not working on all official servers, except for cRO.
 | [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | N/A  |
 | [phRO](https://ragnarokonline.com.ph/main) | Philippines RO | EAC | Not Working | N/A |
 | [ruRO](https://ru.4game.com/ro/play/) | Russia RO | Frost Security | Not Working | ya4ept |
-| [tRO](https://ro.exe.in.th/) | Thailand RO | EAC |  Not Working | N/A |
+| [tRO](https://ro.gnjoy.in.th/) | Thailand RO | - | Server Closed | N/A |
 | [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | Cdclient | Not working | N/A |
 
 ## Contributing
