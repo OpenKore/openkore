@@ -55,6 +55,7 @@ sub new {
 	$self->{textColor}{npc}     = new Wx::Colour (127, 0, 127);
 	$self->{brush}{portal}      = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
 	$self->{textColor}{portal}  = new Wx::Colour (191, 95, 47);
+	$self->{brush}{portalNpc}   = new Wx::Brush(new Wx::Colour(0, 255, 255), wxSOLID);
 	$self->{brush}{slave}       = new Wx::Brush(new Wx::Colour(0, 0, 127), wxSOLID);
 	
 	$self->{brush}{gaugeBg}     = new Wx::Brush(new Wx::Colour(63, 63, 63), wxSOLID);
@@ -310,30 +311,33 @@ sub setMapDir {
 sub parsePortals {
 	my $self = shift;
 	my $file = shift;
-	return unless (-r $file);
-	open FILE, "< $file";
-	$self->{portals} = {};
-	while (my $line = <FILE>) {
-		next if $line =~ /^#/;
-		$line =~ s/\cM|\cJ//g;
-		$line =~ s/\s+/ /g;
-		$line =~ s/^\s+|\s+$//g;
-		my @args = split /\s/, $line, 8;
-		if (@args > 5) {
-			$self->{portals}->{$args[0]} = [] unless defined $self->{portals}->{$args[0]};
-			push (@{$self->{portals}->{$args[0]}}, {
-				x => $args[1],
-				y => $args[2],
-				destination => {
-					field => $args[3],
-					x => $args[4],
-					y => $args[5],
-				},
-				zeny => $args[7],
-			});
+	delete $self->{portals};
+
+	foreach my $portal (keys %portals_lut) {
+		foreach my $dest (keys %{$portals_lut{$portal}{dest}}) {
+			next if $portals_lut{$portal}{dest}{$dest}{map} eq '';
+			if ($portals_lut{$portal}{dest}{$dest}{steps}) {
+				# this is a Warp NPC
+				push (@{$self->{portals}->{$portals_lut{$portal}{source}{map}}}, {
+					x => $portals_lut{$portal}{source}{x},
+					y => $portals_lut{$portal}{source}{y},
+					npcType => '1',
+				});
+			last;
+			} else {
+				# this is a portal
+				push (@{$self->{portals}->{$portals_lut{$portal}{source}{map}}}, {
+					x => $portals_lut{$portal}{source}{x},
+					y => $portals_lut{$portal}{source}{y},
+					destination => {
+						field => $portals_lut{$portal}{dest}{$dest}{map},
+						x => $portals_lut{$portal}{dest}{$dest}{x},
+						y => $portals_lut{$portal}{dest}{$dest}{y},
+					},
+				});
+			}
 		}
 	}
-	close FILE;
 }
 
 #### Private ####
@@ -630,9 +634,13 @@ sub _onPaint {
 			$dc->SetPen(wxBLACK_PEN);
 		}
 		
-		$dc->SetBrush($self->{brush}{portal});
-		$dc->SetTextForeground ($self->{textColor}{portal});
 		foreach my $pos (@{$self->{portals}->{$self->{field}{name}}}) {
+			if ($pos->{npcType}) {
+				$dc->SetBrush($self->{brush}{portalNpc});
+			} else {
+				$dc->SetBrush($self->{brush}{portal});
+				$dc->SetTextForeground ($self->{textColor}{portal});
+			}
 			($x, $y) = $self->_posXYToView($pos->{x}, $pos->{y});
 			$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
 			if ($self->{zoom} >= ($config{wx_map_namesDetail} || 8)) {

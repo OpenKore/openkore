@@ -13,13 +13,7 @@
 package Network::Receive::Sakray;
 use strict;
 use base qw(Network::Receive::ServerType0);
-use Log qw(warning debug error message);
 use Globals;
-use Translation;
-use I18N qw(bytesToString);
-use Socket qw(inet_ntoa);
-use Utils;
-use Utils::DataStructures;
 
 sub new {
 	my ($class) = @_;
@@ -52,41 +46,6 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	return $self;
-}
-
-# from old ServerType0
-sub map_loaded {
-	my ($self, $args) = @_;
-	$net->setState(Network::IN_GAME);
-	undef $conState_tries;
-	$char = $chars[$config{char}];
-	return unless Network::Receive::changeToInGameState;
-
-	if ($net->version == 1) {
-		$net->setState(4);
-		message(T("Waiting for map to load...\n"), "connection");
-		ai_clientSuspend(0, 10);
-		main::initMapChangeVars();
-	} else {
-		$messageSender->sendReqRemainTime();
-		$messageSender->sendMapLoaded();
-		$messageSender->sendSync(1);
-		$messageSender->sendRequestCashItemsList();
-		$messageSender->sendGuildRequestInfo();
-		
-		message(T("You are now in the game\n"), "connection");
-		Plugins::callHook('in_game');
-		$timeout{'ai'}{'time'} = time;
-		our $quest_generation++;
-
-		$messageSender->sendIgnoreAll("all") if ($config{ignoreAll}); # broking xkore 1 and 3 when use cryptkey
-		$messageSender->sendBlockingPlayerCancel(); # request to unfreeze char
-	}
-
-	$char->{pos} = {};
-	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
-	$char->{pos_to} = {%{$char->{pos}}};
-	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 }
 
 1;

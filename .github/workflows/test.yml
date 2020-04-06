@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check env
+      run: |
+        perl -V
+        python -V
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y libreadline6-dev libcurl4-openssl-dev
+    - name: Run Tests
+      run: make test
