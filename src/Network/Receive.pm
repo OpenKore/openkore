@@ -2765,10 +2765,19 @@ sub homunculus_info {
 	if ($args->{state} == HO_PRE_INIT) {
 		my $state = $char->{homunculus}{state}
 			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
-		$char->{homunculus} = Actor::get($args->{ID});
+		
+		# Some servers won't send 'homunculus_property' after a teleport, so we don't delete $char->{homunculus} object
+		if ($char->{homunculus}{ID} ne $args->{ID}) {
+			$char->{homunculus} = Actor::get($args->{ID});
+		}
+		
 		$char->{homunculus}{state} = $state if (defined $state);
 		$char->{homunculus}{map} = $field->baseName;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
+			if ($char->{homunculus}->isa('AI::Slave::Homunculus')) {
+				# After a teleport the homunculus object is still AI::Slave::Homunculus, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Homunculus, so we change it back
+				bless $char->{homunculus}, 'Actor::Slave::Homunculus';
+			}
 			AI::SlaveManager::addSlave ($char->{homunculus});
 			$char->{homunculus}{appear_time} = time;
 		}
