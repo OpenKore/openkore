@@ -2767,9 +2767,7 @@ sub homunculus_info {
 			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
 		
 		# Some servers won't send 'homunculus_property' after a teleport, so we don't delete $char->{homunculus} object
-		if ($char->{homunculus}{ID} ne $args->{ID}) {
-			$char->{homunculus} = Actor::get($args->{ID});
-		}
+		$char->{homunculus} = Actor::get($args->{ID}) if ($char->{homunculus}{ID} ne $args->{ID});
 		
 		$char->{homunculus}{state} = $state if (defined $state);
 		$char->{homunculus}{map} = $field->baseName;
