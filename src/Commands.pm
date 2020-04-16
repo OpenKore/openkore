@@ -2827,7 +2827,7 @@ sub cmdSlave {
 		"Range: \@>>     Skill pt: \@>>>     Contract End:  \@<<<<<<<<<<\n"),
 		[$slave->{'name'}, $hp_string,
 		$slave->{'actorType'}, $sp_string,
-		$jobs_lut{$slave->{'jobId'}},
+		$jobs_lut{$slave->{'jobID'}},
 		$slave->{'level'}, $exp_string,
 		$slave->{'atk'}, $slave->{'matk'}, $hunger_string,
 		$slave->{'hit'}, $slave->{'critical'}, $intimacy_label, $intimacy_string,
