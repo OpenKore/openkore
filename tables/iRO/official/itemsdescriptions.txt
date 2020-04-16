@@ -18,6 +18,7 @@ Restores ^008000175^000000 to ^008000235^000000 HP.
 #
 504#
 A potion made from ground white herbs.
+^FF0000This is considered food for Alice pets.^000000
 Class: ^808080Recovery^000000
 Weight: ^80808015^000000
 Restores ^008000325^000000 to ^008000405^000000 HP.
@@ -164,6 +165,7 @@ Restores ^00800072^000000 to ^008000108^000000 HP.
 #
 529#
 A confection of sugar, chocolate, and other flavorings. Kids love it!
+^FF0000This is considered food for Christmas Snow Rabbit pets.^000000
 Class: ^808080Recovery^000000
 Weight: ^8080803^000000
 Restores ^00800045^000000 to ^00800065^000000 HP.
@@ -176,13 +178,14 @@ Restores ^008000105^000000 to ^008000145^000000 HP.
 #
 531#
 Bottled apple juice that's easy to digest.
-^FF0000This is considered food for Poring pets.^000000
+^FF0000This is considered food for Poring and Little Poring pets.^000000
 Class: ^808080Recovery^000000
 Weight: ^8080804^000000
 Restores ^00800025^000000 to ^00800035^000000 HP.
 #
 532#
 Bottled banana juice that's easy to digest.
+^FF0000This is considered food for Yoyo pets.^000000
 Class: ^808080Recovery^000000
 Weight: ^8080804^000000
 Restores ^00800026^000000 to ^00800034^000000 HP.
@@ -195,6 +198,7 @@ Restores ^00800015^000000 to ^00800025^000000 SP.
 #
 534#
 Bottled carrot juice that's easy to digest.
+^FF0000This is considered food for Lunatic pets.^000000
 Class: ^808080Recovery^000000
 Weight: ^8080804^000000
 Restores ^00800027^000000 to ^00800033^000000 HP.
@@ -214,6 +218,7 @@ Adds a 25% chance of inflicting ^800000Frozen^000000 to the user when using this
 #
 537#
 Sterilized food that has been fortified with vitamins and minerals.
+^FF0000This is considered food for many pets.^000000
 Class: ^808080Recovery^000000
 Weight: ^8080801^000000
 Restores ^00800050^000000 to ^00800090^000000 HP.
@@ -307,6 +312,7 @@ Restores ^00800035^000000 to ^00800070^000000 HP.
 #
 554#
 A tasty rice cake made for celebrating the Chinese New Year.
+^FF0000This is considered food for New Year Doll pets.^000000
 Class: ^808080Recovery^000000
 Weight: ^8080808^000000
 Restores ^008000105^000000 to ^008000145^000000 HP.
@@ -608,12 +614,9 @@ Weight: ^80808010^000000
 Casts ^0000FFLevel 1 Endure^000000
 #
 606#
-^808080A basic herbal emollient made from Aloe extract. Despite its stench and sour taste, it's addictive if regularly eaten.^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: General
-Weight: 10
-^FFFFFF_^000000
+A basic herbal emollient made from Aloe extract. Despite its stench and sour taste, it's addictive if regularly eaten.
+Class: ^808080Generic^000000
+Weight: ^80808010^000000
 Casts ^0000FFLevel 1 Provoke^000000.
 #
 607#
@@ -688,14 +691,12 @@ Class: General
 Weight: 2
 #
 619#
-An apple that isn't ripe enough for humans to eat.
-^FF0000Taming item for Poring.^000000
+An apple that isn't ripe enough for humans to eat. Used to lure Poring.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 620#
-A small bottle of orange juice.
-^FF0000Taming item for Drops.^000000
+A small bottle of orange juice, used to lure Drops.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
@@ -706,122 +707,102 @@ Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 622#
-A fragrant carrot colored with all the hues of the rainbow.
-^FF0000Taming item for Lunatic.^000000
+A fragrant carrot colored with all the hues of the rainbow. Lunatic really likes it.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 623#
-A rather suave-looking earthworm gifted with womanizing debonairness.
-^FF0000Taming item for Picky.^000000
+A rather suave-looking earthworm gifted with womanizing debonairness. Used to lure Picky.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 624#
-A rotting, dirty fish that attracts flies.
-^FF0000Taming item for Chonchon.^000000
+A rotting, dirty fish that attracts Chonchon flies.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 625#
-A rusty piece of iron that would only interest scavengers and vermin.
-^FF0000Taming item for Steel Chonchon.^000000
+A rusty piece of iron that would only interest scavengers and vermin. Used to lure Steel Chonchon.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 626#
-A fetid drink made of monster blood.
-^FF0000Taming item for Hunter Fly.^000000
+A fetid drink made of monster blood. Hunter Fly really likes it.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 627#
-Sweet, luscious, full bodied milk.
-^FF0000Taming item for Savage Babe.^000000
+Sweet, luscious, full bodied milk. Used to lure Savage Babe.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 628#
-A tough, crunchy bone that has been dried in the sun.
-^FF0000Taming item for Baby Desert Wolf.^000000
+A tough, crunchy bone that has been dried in the sun. Used to lure Baby Desert Wolf.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 629#
-A flower that has been miraculously blessed with the gift of song.
-^FF0000Taming item for Rocker.^000000
+A flower that has been miraculously blessed with the gift of song. Rocker really likes it.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 630#
-A dewy, green moss that grows in cool places.
-^FF0000Taming item for Spore.^000000
+A dewy, green moss that grows in cool places. Used to lure Spore.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 631#
-A plant that contains poisons that would harm most living creatures.
-^FF0000Taming item for Poison Spore.^000000
+A plant that contains poisons that would harm most living creatures. Used to lure Poison Spore.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 632#
-An earthworm that stopped caring about its figure years ago.
-^FF0000Taming item for Peco Peco.^000000
+An earthworm that stopped caring about its figure years ago. Used to lure Peco Peco.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 633#
-A baked sweet potato with an appetizing scent.
-^FF0000Taming item for Smokie.^000000
+A baked sweet potato with an appetizing scent. Used to lure Smokie.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 634#
-A premium quality banana grown in the tropics.
-^FF0000Taming item for Yoyo.^000000
+A premium quality banana grown in the tropics. Yoyo really likes it.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 635#
-A trophy awarded to the bravest of orcs.
-^FF0000Taming item for Orc Warrior.^000000
+A trophy awarded to the bravest of orcs. Used to lure Orc Warrior.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 636#
-An old, heartfelt letter that has never been delivered since it has no recipient.
-^FF0000Taming item for Munak.^000000
+An old, heartfelt letter that has never been delivered since it has no recipient. Munaks are interested in this.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 637#
-An old broom that is handed down within a family.
-^FF0000Taming item for Dokebi.^000000
+An old broom that is handed down within a family. Used to lure Dokebi.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 638#
-A silver knife that is a symbol of a virgins chastity.
-^FF0000Taming item for Sohee.^000000
+A silver knife that is a symbol of a virgins chastity. Used to lure Sohee.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 639#
-A fancy, intricately decorated bracelet.
-^FF0000Taming item for Isis.^000000
+A fancy, intricately decorated bracelet. Used to lure Isis.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 640#
-A stone that softly glimmers with faint light.
-^FF0000Taming item for Ground Petite.^000000
+A stone that softly glimmers with faint light, used to lure Ground Petite.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 641#
-A contract drawn in darkness.
-^FF0000Taming item for Deviruchi.^000000
+A contract drawn in darkness, used to lure Deviruchi.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
@@ -870,20 +851,17 @@ Weight: ^80808050^000000
 Gives the users guild 500,000 to 1,000,000 experience when used.
 #
 659#
-An old book rumored to be enchanted by a girl whose name has been forgotten with time.
-^FF0000Taming item for Bongun.^000000
+An old book rumored to be enchanted by a girl whose name has been forgotten with time. Used to lure Bongun.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 660#
-A candle that has a mysterious purpose.
-^FF0000Taming item for Zealotus.^000000
+A candle that has a mysterious purpose. Used to lure Zealotus.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 661#
-A soft apron that is double stitched for better quality.
-^FF0000Taming item for Alice.^000000
+A soft apron that is double stitched for better quality. Alice will probably like to have it.
 Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
@@ -1153,6 +1131,8 @@ Weight: ^8080801^000000
 #
 711#
 A delicate and fragile plant that is still in the early stages of growth.
+^FF0000This is considered food for Deviruchi pets.^000000
+Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 712#
@@ -1173,6 +1153,8 @@ Weight: ^8080803^000000
 #
 716#
 An enchanted crystal that is used in conjunction with certain magic spells. Once used, it becomes powerless and is destroyed.
+^FF0000This is considered food for Hunter Fly pets.^000000
+Class: ^808080Generic^000000
 Weight: ^8080803^000000
 #
 717#
@@ -1469,6 +1451,7 @@ Weight: ^8080801^000000
 #
 934#
 A box that is buried with the dead. It contains precious items pertaining to a dead individual.
+^FF0000This is considered food for Mummy pets.^000000
 Weight: ^8080801^000000
 #
 935#
@@ -1747,6 +1730,8 @@ Weight: ^8080801^000000
 #
 1002#
 An impure ore that forms iron after being refined.
+^FF0000This is considered food for Steel Chonchon pets.^000000
+Class: ^808080Generic^000000
 Weight: ^80808015^000000
 #
 1003#
@@ -3509,8 +3494,9 @@ A lethal knife made of a special metal that can easily cut straight into the hea
 Class: ^808080Dagger^000000
 Attack: ^808080118^000000
 Property: ^808080Neutral^000000
-Weight: ^808080^000000
-Weapon Level: ^8080800^000000
+Weight: ^80808080^000000
+Weapon Level: ^8080803^000000
+Requires Level: ^80808024^000000
 Usable By: ^808080Swordman Jobs, Merchant Jobs, Thief Jobs, Mage Jobs, Archer Jobs, Soul Linker, Ninja Jobs^000000
 #
 1223#
@@ -12397,6 +12383,7 @@ Defense: ^80808045^000000
 Weight: ^808080100^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080Swordman Jobs, Taekwon Master^000000
+Mdef + 5
 #
 2109#
 A magic book filled with long, impractical spells that is so large, it can actually be used just like a shield.
@@ -24500,12 +24487,17 @@ Compound on: ^777777Footwear^000000
 Weight : ^7777771^000000
 #
 4276#
-Lord of The Dead Card.
-Add the chance of auto casting 'Coma' on an enemy.
-Add the chance of auto casting 'Stun, Curse, Mute, Poison or Bleeding' in random when attacking the enemy with short ranged Physical attack.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Adds a chance of inflicting ^800000Coma^000000 on the target when performing a physical attack.
+Adds a chance of inflicting the following status on the target when performing a short-ranged attack;
+^800000Bleed^000000
+^800000Curse^000000
+^800000Poison^000000
+^800000Silence^000000
+^800000Stun^000000
 #
 4277#
 Zealotus Card.
@@ -25059,12 +25051,12 @@ Compound on: ^777777Weapon^000000
 Weight : ^7777771^000000
 #
 4318#
-Stormy Knight Card.
-Add the chance of auto casting level 1 Storm Gust on enemy when doing Physical Attack.
-Has 20% chance of Freezing an enemy when attacking.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Adds a chance of casting ^0000FFLevel 1 Storm Gust^000000 on the target when performing a short-ranged attack.
+Adds a 20% chance of inflicting ^800000Frozen^000000 on the target when performing a physical attack.
 #
 4319#
 Freezer Card.
@@ -25636,14 +25628,12 @@ Critical +10 against Demihuman enemies.
 Critical +10 against Human Player enemies.
 #
 4361#
-Adds a 10% chance of
-destroying an enemy's
-weapon and a 7% chance^FFFFFF    ^000000 of destroying its armor
-each time the wearer
-physically attacks.
-Class : ^777777Card^000000
-Compound on: ^777777Weapon^000000
-Weight : ^7777771^000000
+^FF0000Account Bound^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Weapon^000000
+Weight: ^8080801^000000
+Adds a 10% chance of destroying the target's weapon when performing a physical attack.
+Adds a 7% chance of destroying the target's armor when performing a physical attack.
 #
 4362#
 Reduces Attack
@@ -27255,15 +27245,12 @@ Max HP + 10
 Def + 100
 #
 4528#
-MATK + 2%
-For each 2 refine, MATK + 1%, Max HP - 1%.
-Class : ^777777Card^000000
-Location : ^777777Headgear^000000
-Weight : ^7777771^000000
-MATK + 2%, per  2 refine MATK + 1%, MHP - 1%.
-Class : ^777777Card^000000
-Location : ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Matk + 2%
+Additional Matk + 1% per 2 upgrade levels of the compounded item.
+Max HP - 1% per 2 upgrade levels of the compounded item.
 #
 4529#
 ATK + 2%
@@ -33249,13 +33236,13 @@ Increases damage on Human Player monsters by 5%.
 #
 5315#
 A device that can measure opponent's power. Commoners have power level 5. Heroes have a power level over 9,000!
-Allows the use of Lv.1 Sense.
-Class : ^777777Headgear^000000
-Location : ^777777Middle^000000
-Defense : ^7777772^000000
-Weight : ^77777710^000000
-Required Level : ^77777735^000000
-Jobs : ^777777All except Novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080802^000000
+Weight: ^8080800^000000
+Requires Level: ^80808035^000000
+Usable By: ^808080All Jobs^000000
+Enables ^0000FFLevel 1 Sense^000000.
 #
 5316#
 placeholder
@@ -38288,9 +38275,10 @@ Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 6096#
-A blue fresh-water fish.
-Class : ^777777Pet Food^000000
-Weight : ^7777771^000000
+A blue freshwater fish.
+^FF0000This is considered food for Leaf Cat pets.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 6097#
 A pie made of fresh pumpkins.
@@ -38336,13 +38324,15 @@ Weight: ^8080801^000000
 #
 6106#
 An exquisitely ripe berry.
-Class : ^777777Pet Food^000000
-Weight : ^7777771^000000
+^FF0000This is considered food for Miyabi Doll pets.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 6107#
-A cocktail made with layers to look like a Rune Midgard sunset.
-Class : ^777777Pet Food^000000
-Weight : ^7777771^000000
+A cocktail made with layers to look like a Rune-Midgard sunset.
+^FF0000This is considered food for Dullahan pets.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 6108#
 Pudding flavored with ripe green apples.
@@ -38352,8 +38342,9 @@ Weight: ^8080801^000000
 #
 6109#
 An additive used to enhance plant growth.
-Class : ^777777Pet Food^000000
-Weight : ^7777771^000000
+^FF0000This is considered food for Stone Shooter pets.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 6110#
 A flower that suppresses the hunger of an Incubus.
@@ -39078,24 +39069,19 @@ Cure Landscape : ^000088Empty Test Tube 10 + elixir 5 + Green Herbs 20 + Mastela
 Weight : ^7777771^000000
 #
 6286#
-A Gym Pass that can be
-given to a special
-NPC to learn a skill
-that will increase your^FFFFFF   ^000000 Maximum Weight
-Capacity by 200 for
-each skill level.
-This special skill
-can only be learned
-up to Level 10.
-^ffffff_^000000
-Weight : ^7777771^000000
+A Gym Pass to increase user's weight capacity. Take this Gym Pass to Ripped Cabus in Payon (173 141) to learn Enlarge Weight Limit that will increase your Maximum Weight Capacity by 200 for each skill level. This special skill can only be learned up to Level 10.
+Speak to Ripped Cabus again to reacquire the skill for free after going through transcendence/rebirth.
+^FF0000Account Bound^000000
+^FF0000This item will be consumed.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 6287#
 A coupon for outfit color styling.
 ^FF0000This item will be consumed.^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
-Take this Omni Clothing Dye to Stylist Dinorah Lacostt at Prontera or Eden Group Headquarters, she will dye your job class outfit to 1 of 3 different color variations.
+Take this Omni Clothing Dye to Stylist Dinorah Lacostt at Prontera (86 91) or Eden Group Headquarters, she will dye your job class outfit to 1 of 3 different color variations.
 #
 6288#
 The joyful color of yellow makes you feel strangely happy. Every time you think about opening it you resist the temptation. Perhaps a professional ^00FF00"Gift Opener"^000000  could be of assistance.
@@ -40895,6 +40881,30 @@ Aspd + 1
 Purr-ency coins that can be exchanged for costume headgears by talking to Designer Heidam at the Malangdo building located at 115 150.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
+#
+6910#
+^ff0000This item cannot be transferred to other accounts.^000000
+Delicate ore that guarantees the safety of precious equipment.
+- When refining equipment with refinement above +7, the equipment won’t disappear or be damaged even on failure! Does not refine above +10. -
+(When refinement fails, refinement level decreases by 1.)
+^ffffff<NAVI>^4D4DFF[Blacksmith Mighthammer]^000000<INFO>itemmall,27,75,0,100,0,0</INFO></NAVI>^000000
+^ffffff<NAVI>^4D4DFF[Shadow Blacksmith]^000000<INFO>itemmall,31,75,0,100,0,0</INFO></NAVI>^000000 ? Shadow Equipment Refinement
+^ffffff_^000000
+Weight: ^7777771^000000
+
+Weight: ^8080800^000000
+#
+6911#
+^ff0000This item cannot be transferred to other accounts.^000000
+Delicate ore that guarantees the safety of precious equipment.
+- When refining equipment with refinement above +7, the equipment won’t disappear or be damaged even on failure! Does not refine above +10. -
+(When refinement fails, refinement level decreases by 1.)
+^ffffff<NAVI>^4D4DFF[Blacksmith Mighthammer]^000000<INFO>itemmall,27,75,0,100,0,0</INFO></NAVI>^000000
+^ffffff<NAVI>^4D4DFF[Shadow Blacksmith]^000000<INFO>itemmall,31,75,0,100,0,0</INFO></NAVI>^000000 ? Shadow Equipment Refinement
+^ffffff_^000000
+Weight: ^7777771^000000
+
+Weight: ^8080800^000000
 #
 6913#
 A blessed Rosary. It can discreet whether dead and alive. Disappears after event period.
@@ -44945,7 +44955,9 @@ Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 7720#
-A peculiar gold coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling. Bring this to Leprechaun O'Riley next to the Izlude Airship.
+A peculiar gold coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling. A Gold Coin is equal to 5 Silver Coins or 25 Bronze Coins.
+
+Bring this to Leprechaun O'Riley outside of Payon and he will surely reward you.
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
@@ -45251,17 +45263,12 @@ A badge indicating that the wearer is currently participated in the war.  It was
 ^ffffff_^000000
 #
 7776#
-A Gym Pass that can be
-given to a special
-NPC to learn a skill
-that will increase your^FFFFFF   ^000000 Maximum Weight
-Capacity by 200 for
-each skill level.
-This special skill
-can only be learned
-up to Level 10.
-^ffffff_^000000
-Weight : ^7777771^000000
+A Gym Pass to increase user's weight capacity. Take this Gym Pass to Ripped Cabus in Payon (173 141) to learn Enlarge Weight Limit that will increase your Maximum Weight Capacity by 200 for each skill level. This special skill can only be learned up to Level 10.
+Speak to Ripped Cabus again to reacquire the skill for free after going through transcendence/rebirth.
+^FF0000Account Bound^000000
+^FF0000This item will be consumed.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 7782#
 The Episode 13.1 Poporing Key allows early access to the Episode 13.1 content, on Valkyrie, to the character holding it.
@@ -45332,9 +45339,9 @@ Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 7823#
-A skewer of meat and veggies that's a favorite of Diabolics.
-Class : ^777777Pet Food^000000
-Weight : ^7777771^000000
+A skewer of grilled meat and veggies.
+^FF0000This is considered food for Diabolic pets.^000000
+Weight: ^8080801^000000
 #
 7824#
 This highly toxic liquid is consumed by Wandering souls.
@@ -45585,15 +45592,18 @@ Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
 7915#
-A torn scrap of parchment, covered in snake goo, that appears to be a part of a large piece of paper.
-Contains details of Snakepentor's sinister plan.
-^ffffff_^000000
-Weight : ^7777771^000000
+A peculiar bronze coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling.
+
+Bring this to Leprechaun O'Riley outside of Payon and he will surely reward you.
+Class: ^808080Generic^000000
+Weight: ^8080800^000000
 #
 7916#
-A silver coin forged by the leprechauns. Leprechauns use these coins to fill their pots when they run out of gold.
+A peculiar silver coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling. A Silver Coin is equal to 5 Bronze Coins.
+
+Bring this to Leprechaun O'Riley outside of Payon and he will surely reward you.
 Class: ^808080Generic^000000
-Weight: ^8080801^000000
+Weight: ^8080800^000000
 #
 7918#
 #
@@ -45750,215 +45760,187 @@ Luk + 2
 Increases resistance to ^800000Poison^000000 by 10%.
 #
 9004#
-An egg containing
-a Lunatic Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Cri +2, Atk +2.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Lunatic pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Carrot Juice
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Atk + 2
+Crit + 2
 #
 9005#
-An egg containing
-a Picky Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Str +1, Atk +5.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Picky pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Red Herb
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Str + 1
+Atk + 5
 #
 9006#
-A Chonchon Cute Pet
-rests inside this egg.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Agi +1, Flee +2.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Chonchon pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Agi + 1
+Flee + 2
 #
 9007#
-An egg in which
-a Steel Chonchon
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Agi -1, Flee +6.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Steel Chonchon pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Iron Ore
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Agi - 1
+Flee + 6
 #
 9008#
-An egg in which
-a Hunter Fly
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Flee -5, Perfect Dodge +2.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Hunter Fly pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Red Gemstone
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Flee - 5
+Perfect Dodge + 2
 #
 9009#
-An egg in which
-a Savage Bebe
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Vit +1, MaxHP +50
-Class : ^777777Monster Egg^000000
+An egg in which a cute Savage Bebe pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Vit + 1
+Max HP + 50
 #
 9010#
-An egg that
-contains a Baby
-Desert Wolf Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Int +1, MaxSP +20.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Baby Desert Wolf pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Int + 1
+Max SP + 20
 #
 9011#
-An egg that contains
-a Rocker Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-HP Recovery +5%, MaxHP +25.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Rocker pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+HP Recovery + 5%
+Max HP + 25
 #
 9012#
-An egg in which a
-Spore Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Hit +5, Atk -2.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Spore pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Atk - 2
+Hit + 5
 #
 9013#
-An egg in which
-a Poison Spore
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Str +1, Int +1.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Poison Spore pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Str + 1
+Int + 1
 #
 9014#
-An egg that
-contains a Peco
-Peco Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-MaxHP +150, MaxSP -10.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Peco Peco pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Max HP + 150
+Max SP - 10
 #
 9015#
-An egg in which a
-Smokie Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Agi +1, Perfect Dodge +1.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Smokie pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Agi + 1
+Perfect Dodge + 1
 #
 9016#
-An egg in which a
-Yoyo Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Cri +3, Luk -1.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Yoyo pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Banana Juice
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Luk - 1
+Crit + 3
 #
 9017#
-An egg in which
-an Orc Warrior Cute
-Pet lies dormant.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Def -3, Atk +10.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Orc Warrior pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Atk + 10
+Def - 3
 #
 9018#
-An egg in which a
-Munak Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Def +1, Int +1.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Munak pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Int + 1
+Def + 1
 #
 9019#
-An egg in which a
-Dokebi Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-Matk +1%, Atk -1%.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Dokebi pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Atk - 1%
+Matk + 1%
 #
 9020#
-An egg that
-contains a
-Sohee Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Str +1, Dex +1.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Sohee pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Str + 1
+Dex + 1
 #
 9021#
-An egg that
-contains an
-Isis Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Matk -1%, Atk +1%.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Isis pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Atk + 1%
+Matk - 1%
 #
 9022#
-An egg in which
-a Green Petite
-Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Def -2, MDef -2,
-Aspd +1% (after-attack delay)
-Class : ^777777Monster Egg^000000
+An egg in which a cute Ground Petite pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Def - 2
+Mdef - 2,
+Aspd + 1%
 #
 9023#
-An egg in which
-a Deviruchi Cute
-Pet lies dormant.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-MaxHP & MaxSP -3%,
-Atk & Matk +1%.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Deviruchi pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Shoot
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Max HP - 3%
+Max SP - 3%
+Atk + 1%
+Matk + 1%
 #
 9024#
 An egg in which a cute Baphomet Jr. pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -45977,14 +45959,13 @@ Adds an additional chance of casting ^0000FFLevel 2 Adrenaline Rush^000000 on th
 Additional chance of casting, if pet is Loyal.
 #
 9025#
-An egg in which
-a Bongun is resting.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Vit + 1, Resistance to Stun + 1%
-Class : ^777777Monster Egg^000000
+An egg in which a cute Bongun pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Vit + 1
+Increases resistance to ^800000Stun^000000 by 1%.
 #
 9026#
 An egg in which a cute Zealotus pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46002,8 +45983,7 @@ Diet: White Potion
 Weight: ^8080800^000000
 ^F4AD42Summoned Bonus^000000
 Mdef + 1
-Increases damage taken from Demi-Human race enemies by 1%.
-Increases damage taken from Human Player race enemies by 1%.
+Increases damage taken from Demi-Human and Human Player race enemies by 1%.
 #
 9028#
 A hardened rice cake. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46015,15 +45995,13 @@ Max HP - 1%
 Reduces damage taken from Neutral property attacks by 1%.
 #
 9029#
-An egg containing
-a sleeping Santa
-Goblin Cute Pet.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-HP + 30, increases resistance against water property attack by 1%.
-Class : ^777777Monster Egg^000000
+An egg in which a cute Christmas Goblin pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Scell
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Max HP + 30
+Reduces damage taken from Water property attacks by 1%.
 #
 9030#
 An egg in which a cute Green Maiden pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46032,8 +46010,7 @@ Diet: Bun
 Weight: ^8080800^000000
 ^F4AD42Summoned Bonus^000000
 Def + 1
-Reduces damage taken from Demi-Human race enemies by 1%.
-Reduces damage taken from Human Player race enemies by 1%.
+Reduces damage taken from Demi-Human and Human Player race enemies by 1%.
 #
 9031#
 An egg in which a cute Eclipse pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46066,10 +46043,10 @@ Diet: Whole Barbecue
 Weight: ^8080800^000000
 #
 9036#
-An egg in which a
-Diabolic Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
+An egg in which a cute Diabolic pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Meat Veggie Skewer
+Weight: ^8080800^000000
 #
 9037#
 An egg in which a cute Wanderer pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46078,15 +46055,10 @@ Diet: Spirit Liquor
 Weight: ^8080800^000000
 #
 9038#
-An egg in which the
-New Year Doll Cute
-Pet is sleeping. You
-can wake it up with
-a [Portable Incubator.]^FFFFFF   ^000000 Class : ^777777Pet Egg^000000
-An egg in which a
-New Year Doll Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
+An egg in which a cute New Year Doll pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Mochi
+Weight: ^8080800^000000
 #
 9039#
 An egg in which a cute White Lady pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46151,8 +46123,7 @@ Class: ^808080Pet^000000
 Diet: Big Scell
 Weight: ^8080800^000000
 ^F4AD42Summoned Bonus^000000
-Increases physical and magical damage on Demi-Human race targets by 3%.
-Increases physical and magical damage on Human Player race targets by 3%.
+Increases physical and magical damage on Demi-Human and Human Player race targets by 3%.
 #
 9047#
 An egg in which a cute Evil Nymph pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46164,22 +46135,21 @@ Max SP + 30
 SP Recovery + 5%
 #
 9048#
-An egg in which a
-Miyabi Doll Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Int +1, decreases spell casting time.
+An egg in which a cute Miyabi Doll pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Well-Ripened Berry
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Int + 3
+Reduces the variable casting time of skills by 3%.
 #
 9049#
-An egg in which a
-Dullahan Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Cri +5.
+An egg in which a cute Dullahan pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Sunset on the Rock
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Crit + 5
 #
 9050#
 An egg in which a cute Medusa pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46191,13 +46161,12 @@ Vit + 1
 Increases resistance to ^800000Stone Curse^000000 by 5%.
 #
 9051#
-An egg in which a
-Stone Shooter Cute Pet rests.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-When summoned,
-Increases tolerance to Fire skills by 3%.
+An egg in which a cute Stone Shooter pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Plant Nutrient
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Reduces damage taken from Fire property attacks by 3%.
 #
 9052#
 An egg in which a cute Incubus pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46242,35 +46211,329 @@ Weight: ^8080800^000000
 Increases physical damage on Fire property targets by 1%.
 Reduces damage taken from Fire property attacks by 2%.
 #
+9057#
+An egg in which a cute Taini pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Apple
+Weight: ^8080800^000000
+#
 9058#
-An egg that has a Christmas Snow Rabbit inside.
-These rabbits love to eat Candy.
-Can be hatched by
-using a ^33CC33Pet Incubator^000000.
-^33CC33Cordial/Loyal Bonus^000000
-During Christmas, increases EXP by 2%.
-Matk +2%
-Type: ^777777Pet Egg^000000
+An egg in which a cute Christmas Snow Rabbit pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Candy
+Weight: ^8080800^000000
+^FF0000The following effects are active during the month of December.^000000
+^F4AD42Summoned Bonus^000000
+Matk + 2%
+Increases the experience given from monsters by 2%.
 #
 9059#
-Qpet Tikbalang egg. Hatch the egg to awaken the monster with the [Pet Incubator].
-Damage to Bakonawa, Bangungot, and Buwaya 10% increase. MDEF + 3.
-Type : ^777777Monster Egg^000000
+An egg in which a cute Tikbalang pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Monster's Feed
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+Mdef + 3
+Increases physical and magical damage on Bakonawa, Bangungot, Buwaya by 10%.
 #
 9062#
-A novie poring is sleeping inside. Use [Pet Incubator] to wake this monster.
-Extra 50% HP recovery rate when pet parameter is in or more than [Friendly].
-Type : ^777777Monster Egg^000000
+An egg in which a cute Little Poring pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Apple Juice
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+HP Recovery + 50%
+#
+9069#
+An egg in which a cute Mastering pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Luk + 2
+Crit + 1
+If intimacy level is Neutral,
+Luk + 3
+Crit + 1
+If intimacy level is Cordial,
+Luk + 3
+Crit + 2
+If intimacy level is Loyal,
+Luk + 3
+Crit + 3
+#
+9070#
+An egg in which a cute Savage pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Vit + 1
+Max HP + 50
+If intimacy level is Neutral,
+Vit + 2
+Max HP + 50
+If intimacy level is Cordial,
+Vit + 2
+Max HP + 100
+If intimacy level is Loyal,
+Vit + 2
+Max HP + 200
+#
+9071#
+An egg in which a cute Grand Peco Peco pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Max HP + 150
+If intimacy level is Neutral,
+Max HP + 200
+If intimacy level is Cordial
+Max HP + 300
+If intimacy level is Loyal
+Max HP + 400
+#
+9087#
+An egg in which a cute High Orc pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Atk + 10
+If intimacy level is Neutral,
+Atk + 15
+If intimacy level is Cordial,
+Atk + 20
+If intimacy level is Loyal,
+Atk + 25
+#
+9088#
+An egg in which a cute Angeling pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Max HP + 1%
+Increases the recovery rate of recovery skills by 2%.
+If intimacy level is Neutral,
+Max HP + 1%
+Increases the recovery rate of recovery skills by 4%.
+If intimacy level is Cordial,
+Max HP + 2%
+Increases the recovery rate of recovery skills by 6%.
+If intimacy level is Loyal,
+Max HP + 2%
+Increases the recovery rate of recovery skills by 8%.
+#
+9089#
+An egg with a Cute Pet Am Mut sleeping inside. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward, Matk + 1%.
+If intimacy level is Neutral, Matk + 2%.
+If intimacy level is Cordial, Matk + 3%.
+If intimacy level is Loyal, Matk + 4%.
+#
+9090#
+An egg in which a cute Little Isis pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Atk + 1%
+If intimacy level is Neutral,
+Atk + 2%
+If intimacy level is Cordial,
+Atk + 3%
+If intimacy level is Loyal,
+Atk + 4%
+#
+9091#
+An egg in which a cute Choco pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Crit + 3
+If intimacy level is Neutral,
+Crit + 5
+Increases long-ranged damage on targets by 1%.
+If intimacy level is Cordial,
+Crit + 7
+Increases long-ranged damage on targets by 2%.
+If intimacy level is Loyal,
+Crit + 9
+Increases long-ranged damage on targets by 3%.
+#
+9092#
+An egg in which a cute Eggring pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Atk + 3
+Hit + 3
+If intimacy level is Neutral,
+Atk + 5
+Hit + 5
+If intimacy level is Cordial,
+Atk + 7
+Hit + 7
+If intimacy level is Loyal,
+Atk + 9
+Hit + 9
+#
+9093#
+An egg in which a cute Yao Jun pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Vit + 1
+Increases resistance to ^800000Stun^000000 by 1%.
+If intimacy level is Neutral,
+Vit + 2
+Increases resistance to ^800000Stun^000000 by 2%.
+If intimacy level is Cordial,
+Vit + 3
+Increases resistance to ^800000Stun^000000 by 3%.
+Adds a chance of restoring 1% of damage as SP when performing a physical attack.
+If intimacy level is Loyal,
+Vit + 4
+Increases resistance to ^800000Stun^000000 by 4%.
+Adds a chance of restoring 1% of damage as SP when performing a physical attack.
+#
+9094#
+An egg in which a cute Leaf Lunatic pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Atk + 2
+Crit + 2
+If intimacy level is Neutral,
+Atk + 3
+Crit + 3
+If intimacy level is Cordial,
+Atk + 4
+Crit + 4
+Increases physical and magical damage on Formless race targets by 3%.
+If intimacy level is Loyal,
+Atk + 5
+Crit + 5
+Increases physical and magical damage on Formless race targets by 6%.
+#
+9095#
+An egg in which a cute Nine Tail pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Cordial,
+Hit + 2
+Crit + 2
+If intimacy level is Loyal,
+Hit + 3
+Crit + 3
+#
+9096#
+An egg in which a cute Cat o' Nine Tails pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Crit + 2
+Hit + 2
+If intimacy level is Neutral,
+Crit + 3
+Hit + 3
+If intimacy level is Cordial,
+Crit + 4
+Hit + 4
+Adds a chance of buffing the user for 5 seconds when performing a short-ranged attack; Restores 300 HP every 1 second.
+If intimacy level is Loyal,
+Crit + 5
+Hit + 5
+Adds a chance of buffing the user for 5 seconds when performing a short-ranged attack; Restores 400 HP every 1 second.
+#
+9097#
+An egg in which a cute Diabolic pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Atk + 1%
+Matk + 1%
+If intimacy level is Neutral,
+Atk + 1%
+Matk + 1%
+Max HP + 1%
+Max SP + 1%
+If intimacy level is Cordial,
+Atk + 2%
+Matk + 2%
+Max HP + 1%
+Max SP + 1%
+Adds a chance of casting ^0000FFLevel 3 Fire Bolt^000000 on the target when performing a short-ranged attack.
+If intimacy level is Loyal,
+Atk + 2%
+Matk + 2%
+Max HP + 2%
+Max SP + 2%
+Adds a chance of casting ^0000FFLevel 3 Fire Bolt^000000 on the target when performing a short-ranged attack.
+#
+9098#
+An egg in which a cute Earth Deleter pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Aspd + 1%
+If intimacy level is Neutral,
+Agi + 1
+Aspd + 1%
+If intimacy level is Cordial,
+Agi + 2
+Aspd + 2%
+If intimacy level is Loyal,
+Agi + 3
+Aspd + 3%
 #
 9099#
-^808080An egg in which a cute Teddy Bear pet rests. This can be hatched using a Pet Incubator.^000000
-^FFFFFF_^000000
-Type: Monster Egg
+An egg in which a cute Teddy Bear pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
 Diet: Cotton Tufts
-Weight: 0
-^FFFFFF_^000000
-If summoned,
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
 Max SP + 150
+#
+9100#
+An egg in which a cute Gremlin pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Cheap Lubricant
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Cordial,
+Dex + 1
+Hit + 1
+If intimacy level is Loyal,
+Dex + 2
+Hit + 1
 #
 9101#
 A cage in which a cute Scatleton pet rests. It can be lured out using a ^008080Pet Incubator^000000.
@@ -46283,6 +46546,113 @@ Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 100%.
 ^FF0000The following effects are active during the month of October.^000000
 ^F4AD42Summoned Bonus^000000
 Increases the recovery rate of ^008080Fresh Fish^000000 consumables by 1031%.
+#
+9102#
+An egg in which a cute Mummy pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Memento
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Cordial,
+Hit + 4
+If intimacy level is Loyal,
+Hit + 5
+#
+9103#
+An egg in which a cute Willow pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Fine-grained Trunk
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Cordial,
+Int + 2
+If intimacy level is Loyal,
+Int + 3
+#
+9104#
+An egg in which a cute Roween pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Rotten Meat
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Cordial,
+Increases the damage of Wind property magical attacks on targets by 2%.
+If intimacy level is Loyal,
+Increases the damage of Wind property magical attacks on targets by 3%.
+#
+9105#
+An egg in which a cute Hodremlin pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Dex + 1
+Hit + 1
+If intimacy level is Neutral,
+Dex + 2
+Hit + 1
+If intimacy level is Cordial,
+Dex + 2
+Hit + 2
+Increases critical damage on targets by 7%.
+If intimacy level is Loyal,
+Dex + 2
+Hit + 2
+Increases critical damage on targets by 9%.
+#
+9106#
+An egg in which a cute Metaller pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Max HP + 25
+HP Recovery + 5%
+If intimacy level is Neutral,
+Max HP + 38
+HP Recovery + 10%
+If intimacy level is Cordial,
+Max HP + 55
+HP Recovery + 15%
+Increases physical and magical damage on Plant race targets by 3%.
+If intimacy level is Loyal,
+Max HP + 70
+HP Recovery + 20%
+Increases physical and magical damage on Plant race targets by 6%.
+#
+9107#
+An egg in which a cute Ancient Mummy pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward, Hit + 4.
+If intimacy level is Neutral, Hit + 5.
+If intimacy level is Cordial,
+Hit + 6
+Increases physical and magical damage on Dragon race targets by 3%.
+If intimacy level is Loyal,
+Hit + 6
+Increases physical and magical damage on Dragon race targets by 6%.
+#
+9108#
+An egg in which a cute Abandoned Teddy Bear pet rests. This can be hatched using a ^008080Pet Incubator^000000.
+Class: ^808080Pet^000000
+Diet: Pet Food
+Weight: ^8080800^000000
+^F4AD42Summoned Bonus^000000
+If intimacy level is Shy or Awkward,
+Max SP + 50
+If intimacy level is Neutral,
+Max SP + 100
+If intimacy level is Cordial,
+Max SP + 150
+Adds a chance of buffing the user for 5 seconds when performing a magical attack; Restores 30 SP to the user every 1 second.
+If intimacy level is Loyal,
+Max SP + 150
+Adds a chance of buffing the user for 5 seconds when performing a magical attack; Restores 40 SP to the user every 1 second.
 #
 9113#
 An egg in which a cute Skelion pet rests. This can be hatched using a ^008080Pet Incubator^000000.
@@ -46608,6 +46978,22 @@ Position: ^808080^000000
 Compounds On: ^808080^000000
 Weight: ^8080800^000000
 #
+9736#
+An enchanted, giant
+wing from an ancient
+creatures. Enables
+instant teleportation
+of many people when used by a Party Master
+Class: ^808080Scroll^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+9737#
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+When opened gives prizes celebrating the launch of Ragnarok Transcendence.
+#
 10001#
 A pristine helmet made from an animal skull.
 Class: ^808080Pet Accessory^000000
@@ -46615,153 +47001,118 @@ Weight: ^8080800^000000
 Equips on Baphomet Jr. pets.
 #
 10002#
-A protective mask
-for tiny Cute Pets.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pets:
-^777777Chonchon, Steel
-Chonchon, Hunter Fly^000000
+A protective mask.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Chonchon, Steel Chonchon, and Hunter Fly pets.
 #
 10003#
-A round, bubble-like
-helmet that offers
-magical protection
-to Cute Pets.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet:
-^777777Baby Desert Wolf^000000
+A round, bubble-like helmet that offers magical protection.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Baby Desert Wolf pets.
 #
 10004#
-A rubber device that
-helps babies endure
-teething, but can also
-be used to silence
-noisy Cute Pets.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Deviruchi^000000
+A rubber device that helps babies endure teething.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Deviruchi pets.
 #
 10005#
-A multi-colored wig
-usually worn by clowns. Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Dokebi^000000
+A multi-colored wig usually worn by clowns.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Dokebi pets.
 #
 10006#
-A hair accessory,
-said to be worn by
-an ancient queen, that
-is fitting for vain, yet glamorous, Cute Pets.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Isis^000000
+A hair accessory, said to be worn by an ancient queen, that is fitting for vain, yet glamorous individuals.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Isis pets.
 #
 10007#
-A cute ribbon knit
-from smooth silk that
-would look cute on
-a fluffy Cute Pet.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Lunatic^000000
+A cute ribbon knit from smooth silk that would look cute on something fluffy.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Lunatic pets.
 #
 10008#
-A club that, in the
-olden days, was used
-to punish stupidity
-in classrooms.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Munak^000000
+A club that, in the olden days, was used to punish stupidity in classrooms.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Munak pets.
 #
 10009#
-A wildflower whose
-scent is so nice that
-even the most savage
-of warriors will admit to enjoying its fragrance.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet:
-^777777Orc Warrior^000000
+A wildflower whose scent is so nice that even the most savage of warriors will admit to enjoying its fragrance.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Orc Warrior pets.
 #
 10010#
-An old cooking pot
-that is just perfect
-(?) for placing on
-a Peco Peco's head.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Peco Peco^000000
+An old cooking pot that is just perfect for placing on ones head.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Peco Peco pets.
 #
 10011#
-A hairpin decorated
-with cute little stars. Class : ^777777Cute Pet Armor^000000
-Applicable Pet:
-^777777Green Petite^000000
+A hairpin decorated with cute little stars.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Ground Petite pets.
 #
 10012#
-A cup shaped fragment
-of eggshell that would
-fit on top of a baby
-chick's head.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Picky^000000
+A cup shaped fragment of eggshell that would fit on top of a baby chick's head.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Picky pets.
 #
 10013#
-A backpack made
-especially for short,
-round shaped, bouncy
-children or Cute Pets.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet:
-^777777Poring, Drops, Poporing^000000
+A backpack made with an image of a Poring printed on it.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Poring, Drops and Poporing pets.
 #
 10014#
-A pair of eyeglasses
-that make its wearer
-look like a total geek. Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Rocker^000000
+A pair of eyeglasses that make its wearer look like a total geek.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Rocker pets.
 #
 10015#
-Green lace that
-can be worn by a
-baby, or even a pig.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet:
-^777777Savage Bebe^000000
+Green lace that can be worn by a baby, or even a pig.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Savage Bebe pets.
 #
 10016#
-A golden bell
-that can be worn
-in the hair of an
-adorable Cute Pet.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Sohee^000000
+A golden bell that can be worn in the hair.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Sohee pets.
 #
 10017#
-A pair of crude
-shorts made from
-rough tree bark.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pets:
-^777777Spore, Poison Spore^000000
+A pair of crude shorts made from rough tree bark.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Spore and Poison Spore pets.
 #
 10018#
-A circlet made
-to fit a monkey,
-just like in the old
-Monkey Hero tales.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Yoyo^000000
+A circlet made to fit a monkey, just like in the old Monkey Hero tales.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Yoyo pets.
 #
 10019#
-A very stylish
-crimson muffler
-inspired by the one
-worn by a retro hero.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Smokie^000000
+A very stylish crimson muffler inspired by the ones adorned by retro heroes.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Smokie pets.
 #
 10020#
-A ceremonial sword
-used by gravekeepers
-to lead the dead to
-the great beyond.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Bongun^000000
+A ceremonial sword used by grave keepers to lead the dead to the great beyond.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Bongun pets.
 #
 10022#
 A pair of golden earrings that cater to the elderly.
@@ -46770,6 +47121,10 @@ Weight: ^8080800^000000
 Equips on Mao Guai pets.
 #
 10023#
+A green silk bag usually filled with trivial items and snacks.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Leaf Cat pets.
 #
 10024#
 Red and blue fashionable glasses that aren't suited for everyone.
@@ -46808,11 +47163,17 @@ Weight: ^8080800^000000
 Equips on Evil Nymph pets.
 #
 10030#
+A fan used in the summer, it has a beautiful picture on it.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Miyabi Doll pets.
 #
 10031#
 A ring that symbolizes one who has surpassed death.
-Class : ^777777Cute Pet Armor^000000
-Applicable Pet: ^777777Dullahan^000000
+^FF0000Dullahan^000000
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Dullahan pets.
 #
 10032#
 A symbol of authority for woman with a high rank.
@@ -46821,6 +47182,10 @@ Weight: ^8080800^000000
 Equips on Medusa pets.
 #
 10033#
+A sensational hairstyle which allows one to stand out gorgeously.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Stone Shooter pets.
 #
 10034#
 A gorgeously decorated mask used to conceal the identity of its wearer.
@@ -46855,21 +47220,16 @@ Equips on Imp pets.
 10039#
 #
 10040#
-^808080A red necklace with a pretty bell. It will go well with a small animal.^000000
-^FFFFFF_^000000
-Type: Pet Equipment
-Weight: 0
-Required Monster: Scatleton
+A red necklace with a pretty bell. It will go well with a small animal.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Scatleton pets.
 #
 10042#
-^808080A cool looking dark mane, you will feel like a true king.
-Type : ^777777Pet Equipment^000000
-Job : ^777777Skelion^000000
-
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+A cool looking dark mane, you will feel like a true king.
+Class: ^808080Pet Accessory^000000
+Weight: ^8080800^000000
+Equips on Skelion pets.
 #
 10516#
 When Opened gives one of the following at random
@@ -47325,6 +47685,68 @@ Required Job: All Jobs
 ^FFFFFF_^000000
 Restores ^0080001000^000000 HP.
 #
+11565#
+^ff0000Cannot be traded.^000000
+A potion made from grinded White Herbs that restores about 325 HP.
+Weight : ^77777715^000000
+
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+#
+11566#
+^ff0000Cannot be traded.^000000
+A potion made from grinded Yellow Herbs that restores about 175 HP.
+^ffffff_^000000
+Weight : ^77777713^000000
+
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+#
+11567#
+^ff0000Cannot be traded.^000000
+An exclusive red potion for Novices! Restore a little HP.
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+#
+11568#
+^ff0000Cannot be traded.^000000
+The effectiveness of a red potion, but much lighter.
+^ffffff_^000000
+Weight : ^7777772^000000
+
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+#
+11569#
+^ff0000Cannot be traded.^000000
+A potion made from grinded Red and Yellow Herbs that restores about 105 HP.
+^ffffff_^000000
+Weight : ^77777710^000000
+
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+#
+11570#
+^ff0000Cannot be traded.^000000
+A potion made from grinded Red and Yellow Herbs that restores about 105 HP.
+^ffffff_^000000
+Weight : ^7777777^000000
+
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+#
+11571#
+^ff0000Cannot be traded.^000000
+A potion which cures Poison, Silence, Blind and Confusion effects.
+^ffffff_^000000
+Weight : ^7777777^000000
+
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+#
 11572#
 ^000088HP Recovery Item^000000
 A potion made from
@@ -47336,6 +47758,15 @@ Weight : ^77777715^000000
 A condensed White Potion  that weighs less.
 ^ffffff_^000000
 Weight : ^7777775^000000
+#
+11574#
+^ff0000Cannot be traded.^000000
+The effectiveness of a yellow potion, but much lighter.
+^ffffff_^000000
+Weight : ^7777773^000000
+
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
 #
 11575#
 ^808080A cookie which is rumored to bring luck to whomever eats it.^000000
@@ -47468,30 +47899,22 @@ Weight: 0
 Weapon Level: 0
 #
 11608#
-^808080A delicious chocolate coated colored egg. It has milk chocolate mousse inside.^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Recovery
-Weight: 5
-^FFFFFF_^000000
+A delicious chocolate coated colored egg. It has milk chocolate mousse inside.
+Class: ^808080Recovery^000000
+Weight: ^8080805^000000
 Restores ^008000325^000000 HP.
 #
 11609#
-^808080Savory and sweet egg decorated with marzipans. Chewy on the outside, but the inside is soft.^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Recovery
-Weight: 5
-^FFFFFF_^000000
+Savory and sweet egg decorated with marzipans. Chewy on the outside, but the inside is soft.
+Class: ^808080Recovery^000000
+Weight: ^8080805^000000
 Restores ^00800060^000000 SP.
 #
 11616#
-^808080Skelion’s favourite piece of meat. Pet Food Merchant sells this item.
-Weight : ^7777775^000000
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+The favorite piece of meat for the Skelion. Pet Food Merchant sells this item.
+^FF0000This is considered food for Skelion pets.^000000
+Class: ^808080Generic^000000
+Weight: ^8080805^000000
 #
 11617#
 A chocoball dropped by a bad catcumber. There is silvervine all over a soft sweet chocolate ball.
@@ -49169,13 +49592,9 @@ wide broadcasting.
 Weight : ^7777771^000000
 #
 12225#
-A candy cane that is
-so sweet, it can melt
-the human tongue.
-However, Santa Goblins
-seem to be fond of it.
-Class : ^777777Taming item^000000
-Weight : ^7777775^000000
+A candy cane that is so sweet, it can melt the human tongue. However, Christmas Goblins seem to be fond of it.
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12232#
 #
@@ -49242,17 +49661,11 @@ Weight : ^77777720^000000
 12244#
 #
 12245#
-A frothy green ale
-brewed by O'Riley
-the Leprechaun.
-Recovers 50%
-of Max HP and SP, but
-has a 10% chance of
-casting the Chaos
-effect on its user.
-This can be consumed 10 seconds after each use.
-^ffffff_^000000
-Weight : ^77777750^000000
+A frothy green ale brewed by O'Riley the Leprechaun. (Expires on April 1st)
+
+Heals 5% HP/SP
+(Does not work in WoE)
+Weight: ^8080801^000000
 #
 12246#
 Powerful spirits are
@@ -49577,10 +49990,10 @@ Weight : ^7777771^000000
 12338#
 #
 12340#
-A chewy rice powder that has a mysterious shine. It can be used harden Hot Rice Cake dough.
-^ffffff_^000000
-Class : ^777777Taming Item^000000
-Weight : ^7777771^000000
+A chewy rice powder that has a mysterious shine. It can be used harden Hot Rice Cake dough. Used to lure Hard Rice Cake.
+^FF0000Character Bound^000000
+Class: ^808080Pet Tame^000000
+Weight: ^8080801^000000
 #
 12341#
 A box that is filled with one hundred reformed traps.
@@ -49674,18 +50087,18 @@ Weight: ^8080805^000000
 #
 12358#
 A fan made of blue feathers used to lure Mao Guai monsters.
-Class : ^777777Taming Item^000000
-Weight : ^7777775^000000
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12359#
 A pliable leaf that lures Leaf Cats.
-Class : ^777777Taming Item^000000
-Weight : ^7777775^000000
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12360#
 Loli Ruris drink this blood-red juice.
-Class : ^777777Taming Item^000000
-Weight : ^7777775^000000
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12361#
 Marionettes can't resist this shaved ice recipe.
@@ -49714,13 +50127,13 @@ Weight: ^8080805^000000
 #
 12366#
 A girl's doll that is irresistible to Miyabi Dolls.
-Class : ^777777Taming Item^000000
-Weight : ^7777775^000000
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12367#
-Dullahan's drink this luxurious whisky.
-Class : ^777777Taming Item^000000
-Weight : ^7777775^000000
+Dullahan drink this luxurious whisky.
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12368#
 Medusas are the only ones that can peer at themselves in this mirror.
@@ -49729,8 +50142,8 @@ Weight: ^8080805^000000
 #
 12369#
 Stone Shooters are drawn to this tropical scent.
-Class : ^777777Taming Item^000000
-Weight : ^7777775^000000
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12370#
 A letter written to a secret love. Incubus is drawn to it's naivety.
@@ -50308,13 +50721,10 @@ for 30 minutes.
 Weight : ^7777771^000000
 #
 12462#
-A secret potion made
-using pixie mustache.
-Adds 3% resistance
-to Magical Attacks
-for 3 minutes.
-^ffffff_^000000
-Weight : ^7777771^000000
+A secret potion made using pixie mustache.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
+Adds 3% resistance to Magical Attacks for 3 minutes.
 #
 12463#
 A secret potion made
@@ -50481,6 +50891,20 @@ Weight : ^7777770^000000
 A very cute egg scroll. It feels so fancy that makes you expect something from it.
 Weight : ^7777771^000000
 #
+12494#
+An enchanted, giant wing from an ancient creatures.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+Enables instant teleportation of many people when used by a Party Master.
+This item can be traded and put into storage.
+#
+12495#
+This well written, detailed manual explains effective battle methods.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080800^000000
+Increases the rate of experience gained by 150% for 30 minutes.
+#
 12507#
 An enchanted butterfly's wing that instantly sends its user to the towns of the Rune Midgarts Kingdom.
 Locations: "Prontera", "Geffen", "Payon", "Morroc", "Al De Baran" or "Alberta" when waved in the air.
@@ -50488,28 +50912,79 @@ Warning: If no town is selected, the item will disappear.
 ^FF0000This item is character bound^000000
 Weight: ^7777771^000000
 #
+12512#
+Enables a single cast of Greed.
+Cannot be traded or dropped.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+#
+12513#
+A glass of illusion made from morning dew from an Illusion Flower. Drink the dew to create an illusion that will make it more difficult for enemies to hit you.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+Increases your Perfect Dodge by 20 for 1 minute.
+Only one may be consumed per 5 minutes.
+If you are incapacitated, the item effect will disappear.
+#
 12514#
-^808080An abrasive that
-adds sharpness to
-a weapon. Increases
-Critical Rate by 30
-for 5 minutes.
-^ffffff_^000000
-Weight: ^7777771^000000
-An abrasive that
-adds sharpness to
-a weapon. Increases
-Critical Rate by 30
-for 5 minutes.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
-^000000
-Attack: 0
-Property: N/A
-Weight: 0
-Weapon Level: 0
+An abrasive that\r\nadds sharpness to\r\na weapon. Increases\r\nCritical Rate by 30\r\nfor 5 minutes.\r\nIf you are incapacitated,\r\nthe item effect will disappear.\r\n^ffffff_^000000\r\nWeight : ^7777771^000000\r\n
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+#
+12516#
+A small bottle of Yggdrasil Tree Sap that is effective in healing wounds.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
+Restores an amount of HP equal of 5% of your Max HP every 5 seconds for a 10 minute duration.
+Not effective in Berserk status.
+If you are incapacitated, the item effect will disappear.
+#
+12517#
+A magic potion made with alchemy and magic.
+A Rosary is rumored to be one of the secret ingredients in making this potion.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+Increases the HP recovery effect of some potions and the Heal skill by 20% for 30 minutes.
+If you are incapacitated, the item effect will disappear.
+#
+12519#
+A secret potion made using pixie mustache.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+Adds 3% resistance to Magical Attacks for 1 minute.
+If you are incapacitated, the item effect will disappear.
+#
+12521#
+A secret potion made using tough dragon scales.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+Adds 3% resistance to Physical Attacks for 1 minute.
+If you are incapacitated, the item effect will disappear.
+#
+12522#
+A scroll in which a single use of Level 10 Blessing has been recorded.
+Caution-- This item won't work while your character is casting a spell or skill.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+#
+12523#
+A scroll in which a single use of Level 10 Increase AGI has been recorded.
+Caution-- This item won't work while your character is casting a spell or skill.
+This item consumes 15 HP and will be ineffective if the character has fewer than 15 HP.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+#
+12524#
+A scroll in which a single use of Level 5 Aspersio has been recorded. If there is no Holy Water, scroll will be damaged when used.
+Caution-- This item won't work while your character is casting a spell or skill.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
+#
+12525#
+A scroll in which a single use of Level 5 Assumptio has been recorded.
+Caution-- This item won't work while your character is casting a spell or skill.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 12530#
 A box containing the essence of Mastela Fruit. Be careful when opening.
@@ -50794,13 +51269,11 @@ Weight : ^7777771^000000
 12622#
 An animal halter lead that summons a creature appropriate to each occupation to ride on.
 ^FF0000Account Bound^000000
-^FF0000Rental Item^000000
-^FF0000When this item expires, so does the mount.
+^FF0000
 ^000000
 Class: ^808080Generic^000000
 Weight: ^80808070^000000
-Increased Movement Speed.
-This item forbids the user from attacking or using skills while equipped.
+Increases movement speed by 25%, but you are unable to attack or use skills while mounted.
 #
 12623#
 A hard box with beautiful details. there are many high-end equipments.
@@ -51034,8 +51507,8 @@ Weight : ^7777775^000000
 #
 12699#
 Special belt made to control Tikbalang as a servant. Be careful since Tikbalang will struggle violently when used.
-Type : ^777777Taming Item^000000
-Weight : ^7777775^000000
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12700#
 Common shirt turned inside out. Used to break Tikbalang's curse that makes people get lost.
@@ -51436,6 +51909,15 @@ Requires Level: ^80808080^000000
 #
 12829#
 #
+12831#
+^ff0000Cannot be traded.^000000
+A box contain: 100 Red slim potions, 100 Yellow slim potions, 100 White slim potions and 100 Blue potions.
+"^ff0000Caution!!! if you exceed the weight limit, all items may be lost.^000000"
+Weight : ^7777775^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
 12845#
 ^ff0000Cannot trade to other user^000000
 Custom made butterfly wing for poor newbie ninjas.
@@ -51443,10 +51925,9 @@ This will take you back to the Ninja occupation office in Amaz village.
 Weight : ^7777770^000000
 #
 12846#
-Little Poring's favorite apple.
-Take a bit of its freshness.
-Type : ^777777Taming Item^000000
-Weight : ^7777775^000000
+Little Poring's favorite apple. Take a bit of its freshness.
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 12847#
 ^ff0000Cannot trade to other user^000000
@@ -51752,47 +52233,46 @@ cannot be detected.
 Weight : ^7777771^000000
 #
 12913#
-A box containing
-20 Blessing Scrolls.
-(Lvl 10 Blessing)
-^ffffff_^000000
-Weight : ^7777771^000000
+A box containing 20 Blessing Scrolls. (Lvl 10 Blessing)
+
+Blessing:
+Buffs the user by increasing their STR, DEX, and INT by 10 for 240 seconds. This skill also removes Curse and Stone status effects.
+Weight: ^8080801^000000
 #
 12914#
-A box containing
-20 Agi Scrolls.
-(Lvl 10 Increase AGI)
-^ffffff_^000000
-Weight : ^7777771^000000
+A box containing 20 Agi Scrolls. (Lvl 10 Increase AGI)
+
+Increase AGI:
+Buffs the user by increasing their AGI by 12 and increasing their movement speed for 240 seconds.
+Weight: ^8080801^000000
 #
 12915#
-A box containing
-20 Aspersio Scrolls.
-(Lvl 5 Aspersio)
-^ffffff_^000000
-Weight : ^7777771^000000
+A box containing 20 Aspersio Scrolls. (Lvl 5 Aspersio)
+
+Aspersio:
+Buffs the user by endowing their weapon with Holy property for 180 seconds.
+Weight: ^8080801^000000
 #
 12916#
-A box containing
-20 Assumptio Scrolls.
-(Lvl 5 Assumptio)
-^ffffff_^000000
-Weight : ^7777771^000000
+A box containing 20 Assumptio Scrolls. (Lvl 5 Assumptio)
+
+Assumptio:
+Buffs the user by doubling their Hard Defense and Hard Magic Defense for 100 seconds.
+Weight: ^8080801^000000
 #
 12917#
-A box containing
-20 Wind Walker Scrolls.^FFFFFF   ^000000 (Lvl 10 Wind Walker Scrolls)
-Lvl 10 Wind Walker gives +20% Walking Speed, +5 Flee
-^ffffff_^000000
-Weight : ^7777771^000000
+A box containing 20 Wind Walker Scrolls. (Lvl 10 Wind Walker Scrolls)
+
+Wind Walker:
+Buff the user and all party members by increasing +20% Walking Speed and +5 Flee for 400 seconds.
+Weight: ^8080801^000000
 #
 12918#
-A box containing
-20 Adrenaline Rush
-Scrolls. (Lvl 5
-Adrenaline Rush)
-^ffffff_^000000
-Weight : ^7777771^000000
+A box containing 20 Adrenaline Rush Scrolls. (Lvl 5 Adrenaline Rush)
+
+Adrenaline Rush:
+Buffs the user and all party members by increasing Attack Speed by 30% with Axe and Mace class weapons for 150 seconds.
+Weight: ^8080801^000000
 #
 12919#
 A box containing
@@ -57530,148 +58010,76 @@ a 30 minute duration.
 Weight : ^7777771^000000
 #
 13746#
-A box that contains
-10 Small Defense
-Potions. Each potion
-adds 3% resistance to
-Physical Attacks for
-a 1 minute duration.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 10 Small Defense Potions.
+Each potion adds 3% resistance to Physical Attacks for a 1 minute duration.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13747#
-A box that contains
-30 Small Defense
-Potions. Each potion
-adds 3% resistance to
-Physical Attacks for
-a 1 minute duration.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 30 Small Defense Potions.
+Each potion adds 3% resistance to Physical Attacks for a 1 minute duration.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13748#
-A box that contains
-50 Small Defense
-Potions. Each potion
-adds 3% resistance to
-Physical Attacks for
-a 1 minute duration.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 50 Small Defense Potions.
+Each potion adds 3% resistance to Physical Attacks for a 1 minute duration.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13749#
-A box that contains
-10 Big Defense
-Potions. Each potion
-adds 3% resistance to
-Physical Attacks for
-a 3 minute duration.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 10 Large Defense Potions.
+Each potion adds 3% resistance to Physical Attacks for a 3 minute duration.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13750#
-A box that contains
-30 Big Defense
-Potions. Each potion
-adds 3% resistance to
-Physical Attacks for
-a 3 minute duration.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 30 Large Defense Potions.
+Each potion adds 3% resistance to Physical Attacks for a 3 minute duration.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13751#
-A box that contains
-50 Big Defense
-Potions. Each potion
-adds 3% resistance to
-Physical Attacks for
-a 3 minute duration.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 50 Large Defense Potions.
+Each potion adds 3% resistance to Physical Attacks for a 3 minute duration.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13752#
-A box that contains
-10 Small Magic
-Defense Potions.
-Each potion adds 3%
-resistance to Magical
-Attacks for 1 minute.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 10 Small Magic Defense Potions.
+Each potion adds 3% resistance to Magical Attacks for 1 minute.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13753#
-A box that contains
-30 Small Magic
-Defense Potions.
-Each potion adds 3%
-resistance to Magical
-Attacks for 1 minute.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 30 Small Magic Defense Potions.
+Each potion adds 3% resistance to Magical Attacks for 1 minute.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13754#
-A box that contains
-50 Small Magic
-Defense Potions.
-Each potion adds 3%
-resistance to Magical
-Attacks for 1 minute.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 50 Small Magic Defense Potions.
+Each potion adds 3% resistance to Magical Attacks for 1 minute.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13755#
-A box that contains
-10 Big Magic Defense
-Potions. Each potion
-adds 3% resistance
-to Magical Attacks
-for 3 minutes.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 10 Large Magic Defense Potions.
+Each potion adds 3% resistance to Magical Attacks for 3 minutes.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13756#
-A box that contains
-30 Big Magic Defense
-Potions. Each potion
-adds 3% resistance
-to Magical Attacks
-for 3 minutes.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 30 Large Magic Defense Potions.
+Each potion adds 3% resistance to Magical Attacks for 3 minutes.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13757#
-A box that contains
-50 Big Magic Defense
-Potions. Each potion
-adds 3% resistance
-to Magical Attacks
-for 3 minutes.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 50 Large Magic Defense Potions.
+Each potion adds 3% resistance to Magical Attacks for 3 minutes.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 13758#
 #
@@ -58728,52 +59136,28 @@ Only one may be consumed per 5 minutes.
 Weight : ^7777771^000000
 #
 14082#
-A box that contains
-10 Small Defense
-Potions. Each potion
-adds 3% resistance to
-Physical Attacks for
-a 1 minute duration.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 10 Small Defense Potions.
+Each potion adds 3% resistance to Physical Attacks for a 1 minute duration.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 14085#
-A box that contains
-10 Big Defense
-Potions. Each potion
-adds 3% resistance to
-Physical Attacks for
-a 3 minute duration.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 10 Large Defense Potions.
+Each potion adds 3% resistance to Physical Attacks for a 3 minute duration.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 14088#
-A box that contains
-10 Small Magic
-Defense Potions.
-Each potion adds 3%
-resistance to Magical
-Attacks for 1 minute.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 10 Small Magic Defense Potions.
+Each potion adds 3% resistance to Magical Attacks for 1 minute.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 14091#
-A box that contains
-10 Big Magic Defense
-Potions. Each potion
-adds 3% resistance
-to Magical Attacks
-for 3 minutes.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box that contains 10 Large Magic Defense Potions.
+Each potion adds 3% resistance to Magical Attacks for 3 minutes.
+If you are incapacitated, the item effect will disappear.
+Weight: ^8080801^000000
 #
 14094#
 A box that contains 1 Flapping Angel Wing
@@ -60474,13 +60858,10 @@ the item effect will disappear.
 Weight : ^7777771^000000
 #
 14542#
-A secret potion made
-using tough dragon
-scales. Adds 3%
-resistance to Physical
-Attacks for 3 minutes.
-^ffffff_^000000
-Weight : ^7777771^000000
+A secret potion made using tough dragon scales.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
+Adds 3% resistance to Physical Attacks for 3 minutes.
 #
 14543#
 A secret potion made
@@ -60492,15 +60873,11 @@ for 1 minute.
 Weight : ^7777771^000000
 #
 14544#
-A secret potion made
-using pixie mustache.
-Adds 3% resistance
-to Magical Attacks
-for 3 minutes.
-If you are incapacitated,
-the item effect will disappear.
-^ffffff_^000000
-Weight : ^7777771^000000
+A secret potion made using pixie mustache.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
+Adds 3% resistance to Magical Attacks for 3 minutes.
+If you are incapacitated, the item effect will disappear.
 #
 14545#
 This well written, detailed manual explains Extremely Efficient battle methods.
@@ -60551,13 +60928,11 @@ Str +2
 Weight : ^7777771^000000
 #
 14553#
-It looks like an
-ordinary steak,
-but it is explosively
-flavorful and juicy.
-Str +3
-^FFFFFF ^000000
-Weight : ^7777771^000000
+It looks like an ordinary steak, but it is explosively flavorful and juicy.
+
+Increases STR by 3 for 20 minutes.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
 #
 14554#
 A sweetly scented
@@ -60577,13 +60952,11 @@ give it a bland flavor. Int + 2
 Weight : ^7777771^000000
 #
 14556#
-An invigoratingly hot
-herbal whose flavor
-is enhanced with the
-sweetness of honey.
-Int +3
-^FFFFFF ^000000
-Weight : ^7777771^000000
+An invigoratingly hot herbal whose flavor is enhanced with the sweetness of honey.
+
+Increases INT by 3 for 20 minutes.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
 #
 14557#
 A simple dish made
@@ -60604,11 +60977,11 @@ this food at home. Vit +2
 Weight : ^7777771^000000
 #
 14559#
-A soup made with
-boiled clam meat.
-Vit +3
-^FFFFFF ^000000
-Weight : ^7777771^000000
+A soup made with boiled clam meat.
+
+Increases VIT by 3 for 20 minutes.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
 #
 14560#
 A soup made with
@@ -60630,13 +61003,11 @@ Agi +2
 Weight : ^7777771^000000
 #
 14562#
-Cheese gratin with
-steamed tentacles
-mixed into it for
-a unique flavor.
-Agi +3
-^FFFFFF ^000000
-Weight : ^7777771^000000
+Cheese gratin with steamed tentacles mixed into it for a unique flavor.
+
+Increases AGI by 3 for 20 minutes.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
 #
 14563#
 A special mixed drink
@@ -60653,11 +61024,11 @@ that even Charles Orleans would be proud of. Dex +2
 Weight : ^7777771^000000
 #
 14565#
-A mix of various,
-crisp fruit flavored
-with light, sweet syrup. Dex +3
-^FFFFFF ^000000
-Weight : ^7777771^000000
+A mix of various, crisp fruit flavored with light, sweet syrup.
+
+Increases DEX by 3 for 20 minutes.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
 #
 14566#
 Lightly spiced
@@ -60676,11 +61047,11 @@ juices. Luk +2
 Weight : ^7777771^000000
 #
 14568#
-Crunchy, fried sweet
-potatoes topped with
-light syrup. Luk +3
-^FFFFFF ^000000
-Weight : ^7777771^000000
+Crunchy, fried sweet potatoes topped with light syrup.
+
+Increases LUK by 3 for 20 minutes.
+^FF0000Account Bound^000000
+Weight: ^8080801^000000
 #
 14569#
 A ring used to ensnare a Knife Goblin.
@@ -60703,9 +61074,9 @@ Class: ^808080Pet Tame^000000
 Weight: ^8080805^000000
 #
 14573#
-A stone used to capture Diabolics
-Class : ^777777Taming Item^000000
-Weight : ^7777775^000000
+A stone used to capture Diabolics.
+Class: ^808080Pet Tame^000000
+Weight: ^8080801^000000
 #
 14574#
 A skull of a vagabond soul. Wanderers seek these eerie trophies.
@@ -60800,16 +61171,12 @@ Cannot be dropped.
 Weight : ^7777771^000000
 #
 14592#
-This well written,
-detailed manual
-explains effective
-battle methods.
-^ff0000This item is account bound^000000
-^000088Job EXP rate increases to
-150% for 30 minutes.
-This bonus stacks with VIP and Battle Manuals to give an additional job bonus.^000000
-^ffffff_^000000
-Weight : ^7777771^000000
+This well written, detailed manual explains effective battle methods.
+^FF0000Account Bound^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080801^000000
+Increases the rate of Job experience gained by 150% for 30 minutes.
+(This bonus stacks with Battle Manuals to give an additional job bonus)
 #
 14593#
 A scroll that will cast Magic Amplification Lvl 10 for you.  Good for making the next magic attack do +50% Magic attack power.
@@ -60963,6 +61330,20 @@ Healing Shadow Weapon
 It's contents can be freely traded once opened.
 ^ff0000Cannot be refunded after opening^000000
 Weight : ^7777771^000000
+#
+14799#
+A guidebook teaching efficient combat methods and a set of chewy and sweet bubble gum.
+EXP and ITEM UP for 7 days.
+Applies to all characters in the server
+- EXP UP +20%
+- ITEM UP +20%
+- Increase Kafra storage space by 600
+^ffffff_^000000
+The buff works together with existing battle manual, and bubble gums.
+(This item will be removed from the inventory on RODEX on October 19th.)
+weight : ^7777771^000000
+
+Weight: ^8080800^000000
 #
 14836#
 Class: ^808080Item Giver^000000
@@ -63405,6 +63786,33 @@ If upgrade level is +9 or higher,
 Additional Atk + 30
 Bypass an additional 20% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
 #
+15343#
+A device scientifically engineered to push your physical strength to the limit. Can be synergized with other devices.
++5% physical damage inflicted to enemies of all types.
+For every 4 levels of refinements, +1% physical damage inflicted to enemies of all types.
+Category: ^777777Armor^000000 Defense: ^77777780^000000
+Weight: ^777777200^000000
+Required Level: ^777777130^000000
+Requires: ^777777Mechanic Group^000000
+
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+#
+15344#
+A component that can be worn over the Madogear gloves to increase its defense. The assembly and disassembly are simple to boot!
+Cannot be destroyed.
+All physical and magic damage taken from Small, Medium Monsters reduced by 10%.
+At level 7 refinement or greater, all physical and magic damage taken from Large Monsters reduced by 10%.
+At level 9 refinement or greater, physical and magical damage taken from Small, Medium Monsters reduced by an additional 5%.
+When equipped with Fortified Patz Engine, Booster, and Gun Barrel, Arm Cannon attack +50%.
+Category: ^777777Armor^000000 Defense: ^777777110^000000
+Weight: ^777777300^000000
+Required Level: ^777777130^000000
+Requires: ^777777Mechanic Group^000000
+
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+#
 15352#
 A dress empowered with nature's essence. Wearing this will prove that you are a member of Nature's Children.
 Class: ^808080Armor^000000
@@ -64636,10 +65044,15 @@ An enchanted, giant wing from an ancient creatures. Enables instant teleportatio
 Weight : ^7777771^000000
 #
 16419#
-A box containing 30 Greed Scrolls, which each enable a single cast of Greed.
-This scroll has the same restrictions as the normal casting of Greed; some maps do not allow Greed to be used.
-^ffffff_^000000
-Weight : ^7777771^000000
+A box containing 30 Greed Scrolls, which each enable a single cast of Greed.\r\nThis scroll has the same restrictions as the normal casting of Greed; some maps do not allow Greed to be used.
+
+Greed:
+Picks up all dropped items in a 5x5 area around the user. This skill does not override loot-priority between players.
+
+Weight : 1
+Attack: ^8080800^000000
+Weight: ^8080800^000000
+Weapon Level: ^8080800^000000
 #
 16420#
 A pack of consumables to
@@ -65034,6 +65447,16 @@ Weight : ^7777771^000000
 #
 16465#
 #
+16481#
+A box containing 10 Small Life Potion.
+^FF0000Account Bound^000000
+^FF0000This item is distributed as a reward of [Event].^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+Restores an amount of HP equal of 5% of your Max HP every 5 seconds for a 10 minute duration.
+Not effective in Berserk status.
+If you are incapacitated, the item effect will disappear.
+#
 16483#
 ^808080A box that contains 10 Abrasives.
 Each Abrasive increases Critical Rate by 30 for a 5 minute duration.
@@ -65076,6 +65499,79 @@ Attack: 0
 Property: N/A
 Weight: 0
 Weapon Level: 0
+#
+16505#
+^ff0000Cannot be traded.^000000
+^800080This item is distributed as a reward of [Event].^000000
+Gives Str +10 for 30 minutes. Do not spoil the dish requires special treatment.
+Weight : ^7777771^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+16506#
+^ff0000Cannot be traded.^000000
+^800080This item is distributed as a reward of [Event].^000000
+Gives Agi +10 for 30 minutes. Do not spoil the dish requires special treatment.
+Weight : ^7777771^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+16507#
+^ff0000Cannot be traded.^000000
+^800080This item is distributed as a reward of [Event].^000000
+Gives Int +10 for 30 minutes. Do not spoil the dish requires special treatment.
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+16508#
+^ff0000Cannot be traded.^000000
+^800080This item is distributed as a reward of [Event].^000000
+Gives Dex +10 for 30 minutes. Do not spoil the dish requires special treatment.
+Weight : ^7777771^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+16509#
+^ff0000Cannot be traded.^000000
+^800080This item is distributed as a reward of [Event].^000000
+Gives Luk +10 for 30 minutes. Do not spoil the dish requires special treatment.
+Weight : ^7777771^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+16510#
+^ff0000Cannot be traded.^000000
+^800080This item is distributed as a reward of [Event].^000000
+Gives Vit +10 for 30 minutes. Do not spoil the dish requires special treatment.
+Weight : ^7777771^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+16514#
+^ff0000Cannot be traded.^000000
+^800080This item is distributed as a reward of [Event].^000000
+A box containing 10 blessing scroll Lv 10.
+Weight : ^7777771^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+16515#
+^ff0000Cannot be traded.^000000
+^800080This item is distributed as a reward of [Event].^000000
+A box containing 10 increase agility scroll Lv 10.
+Weight : ^7777771^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 16543#
 A box containing 1 snow man hat.
@@ -67321,6 +67817,11 @@ You can then enter a new name as long as it is not already taken.
 Weight : ^7777770^000000
 #
 17162#
+An animal halter lead that summons a creature to ride on.
+All mounts provide a 25% increase to movement speed, however you cannot attack while mounted.
+The Halter Lead will expire after 7 Days.
+^FF0000Account Bound^000000
+Weight: ^8080800^000000
 #
 17176#
 #
@@ -69186,6 +69687,33 @@ Heart Wing Hairband
 HE Bubble Gum x 10
 Costume: Moon and Stars
 #
+17689#
+A box containing a Premium Subscription Service Box which gives Premium Buff effect.
+^ffffff_^000000
+[Basic Service]
+When you open the Premium Subscription Service Box, all the characters in the server who use the item receive the Premium Buff effect for 30 days.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+[Additional Services]
+When you consume Nyangvine item, all characters in the server get the following effect.
+- EXP UP (effective for 24hrs, 4 Nyangvine item)
+EXP UP +30%
+- ITEM UP (effective for 24hrs, 2 Nyangvine item)
+ITEM UP +30%
+- DEATH DOWN (effective for 24hrs, 1 Nyangvine item)
+50% reduction in death penalty
+- Advanced Package (effective for 24hrs, 6 Nyangvine item)
+All three above effects
+Attention! - When your character is under the effects of the buff, you are unable to select the same buff that is stackable or advanced package.
+^ffffff_^000000
+^ff0000If you open the item, it will be excluded from withdrawal and refund.^000000
+Weight : ^7777771^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
 17709#
 Contains 1 Costume Amistr Bag
 #
@@ -69757,28 +70285,26 @@ Class: Item Giver
 Weight: 1
 #
 17852#
-^808080A mysterious egg which contains a costume.^000000
-Class: Item Giver
-Weight: 1
+A mysterious egg which contains a costume.
+
 When opened it gives one of the following at random:
 Costume Black Cat Hoodie
 Costume Tiger Face
 Costume Black and White Temptation
-Costume Pig Head
+Costume Pig Nose
 Costume Pretty Bear
 Costume Cat Ear Hat
 Costume Elephant Hat
 Costume Umbala Spirit
 Costume Black Shiba Inu Hat
 Costume Quati Hat
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 17853#
-^808080^808080^000000
-^FFFFFF_^000000
-Type: Costume
-Weight: 0
-^FFFFFF_^000000
-An elegantly decorated egg containing one of the following costumes
+An elegantly decorated egg containing a costume.
+
+When opened it gives one of the following at random:
 Costume Side Cap
 Costume Fallen Angel's Blessing
 Costume Eye of the Hawk
@@ -69789,37 +70315,13 @@ Costume Mono Gothic Bonnet
 Costume Red Cat Ears Cape
 Costume Angel's Black Mini Silk Hat
 Costume Rosary's Necklace
-
-^808080^000000
-^FFFFFF_^000000
-Type: Costume
-Weight: 0
-^FFFFFF_^000000
-An elegantly decorated egg containing one of the following costumes
-Costume Side Cap
-Costume Fallen Angel's Blessing
-Costume Eye of the Hawk
-Costume Engineer Cap
-Costume Black Cat
-Costume War Princess Ribbon
-Costume Mono Gothic Bonnet
-Costume Red Cat Ears Cape
-Costume Angel's Black Mini Silk Hat
-Costume Rosary's Necklace
-
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 17854#
-^808080^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
+An intimidating looking egg that contains a costume.
+
+When opened it gives one of the following at random:
 Costume Bullock Helm
 Costume Dark Knight Mask
 Costume Double Horn Helm
@@ -69830,36 +70332,13 @@ Costume Pegasus Wing Ears
 Costume Pirate Dagger
 Costume Rainbow Wing Ears
 Costume Vanargandr Helm
-^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
-Costume Bullock Helm
-Costume Dark Knight Mask
-Costume Double Horn Helm
-Costume Dragon Skull
-Costume General Helmet
-Costume Lightning Speed
-Costume Pegasus Wing Ears
-Costume Pirate Dagger
-Costume Rainbow Wing Ears
-Costume Vanargandr Helm
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 17855#
-^808080^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
+An adorable looking egg with a costume inside.
+
+When opened it gives one of the following at random:
 Costume Evil Mask
 Costume Helm of Dragoon
 Costume Jumping Poring
@@ -69870,53 +70349,13 @@ Costume Rainbow Poring Hat
 Costume Reginleif Wings
 Costume Southern Cross
 Costume Wind Mildstone
-^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
-Costume Evil Mask
-Costume Helm of Dragoon
-Costume Jumping Poring
-Costume Love Guard
-Costume Piggy Bank
-Costume Poring Letter
-Costume Rainbow Poring Hat
-Costume Reginleif Wings
-Costume Southern Cross
-Costume Wind Mildstone
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 17856#
-^808080^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
-Costume Evil Mask
-Costume Helm of Dragoon
-Costume Jumping Poring
-Costume Love Guard
-Costume Piggy Bank
-Costume Poring Letter
-Costume Rainbow Poring Hat
-Costume Reginleif Wings
-Costume Southern Cross
-Costume Wind Mildstone
-^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
+An ominous looking box that contains a costume.
+
+When opened it gives one of the following at random:
 Costume: Black Cat Ears Beret
 Costume: Bunny Headdress
 Costume: Earth Goddess Flower
@@ -69925,19 +70364,13 @@ Costume: Scratching Cat
 Costume: Spell Circuit
 Costume: Veil
 Costume: Warg in Mouth
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 17857#
-^808080^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
+A sharp looking box that contains a costume.
+
+When opened it gives one of the following at random:
 Costume: Diabolic Headphones
 Costume: Falling Leaves
 Costume: Fan in Mouth
@@ -69948,74 +70381,29 @@ Costume: Pumpkin Head
 Costume: Sepia Cap
 Costume: Straw Rice Bag
 Costume: Test Subject Aura
-^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
-Costume: Diabolic Headphones
-Costume: Falling Leaves
-Costume: Fan in Mouth
-Costume: Lady's Feather Hat
-Costume: Lude Hood
-Costume: Monochrome Cap
-Costume: Pumpkin Head
-Costume: Sepia Cap
-Costume: Straw Rice Bag
-Costume: Test Subject Aura
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 17858#
-^808080^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
-Costume: Diabolic Headphones
-Costume: Falling Leaves
-Costume: Fan in Mouth
-Costume: Lady's Feather Hat
-Costume: Lude Hood
-Costume: Monochrome Cap
-Costume: Pumpkin Head
-Costume: Sepia Cap
-Costume: Straw Rice Bag
-Costume: Test Subject Aura
-^808080^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Item Giver
-Weight: 1
-^FFFFFF_^000000
-Open the box to receive 1 random costume from the following
-Costume: Angel's Masquerade
-Costume: Captain Carocc's Hat
-Costume: Chick Hat
-Costume: Darkness Helm
-Costume: Kitsune Mask Hood
-Costume: Little Angel Doll
-Costume: Pigeon On Shoulder
-Costume: Rabbit Ear Hat
-Costume: Robo Eye
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+A mysterious looking box that contains a costume.
+
+When opened it gives one of the following at random:
+Costume Rabbit Ear Hat
+Costume Carocc's Hat
+Costume Chick Hat
+Costume Little Angel Doll
+Costume Darkness Helm
+Costume Kitsune Mask Hood
+Costume Robo Eye
+Costume Nero Mask
+Costume Pigeon on Shoulder
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 17859#
-^808080As ghosts and goals visit the lands the frightful costumes come to Rune Midgard!^000000
-^FF0000Account Bound^000000
-Class: Item Giver
-Weight: 0
-Required Jobs: All Jobs
-When opened gives one of the following;
+A frightening looking box that contains a costume.
+
+When opened it gives one of the following at random:
 Costume Cat Eye
 Costume Floating Ghost
 Costume Red Subject Aura
@@ -70024,13 +70412,16 @@ Costume Gram Peony
 Costume Dwarf Beard
 Costume Servant Devilring
 Costume Magic Eyes
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+
 
 #
 17860#
-Class: Item Giver
-Weight: 0
-When opened, gives one of the following:
+A scary looking box that contains a costume.
 
+When opened it gives one of the following at random:
 Costume Bapho Jr. Horns
 Costume Niflheim Bunny Hat
 Costume Sky of Memory Hat
@@ -70041,13 +70432,12 @@ Costume Bloody Bandages
 Costume Tall Ghostring Hat
 Costume Assassin's Skull Mask
 Costume Hoplite Helmet
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 17861#
-^808080^808080A mysterious egg which contains a costume.^000000
-^FF0000Account Bound^000000
-Type: Usable
-Class: Item Giver
-Weight: 1
+An illusory looking box that contains a costume.
+
 When opened it gives one of the following at random:
 Costume Tiger Mask
 Costume Shaving Foam
@@ -70059,98 +70449,39 @@ Costume Happy Droopy Lunatic Ears (Black)
 Costume Mouton Life (Blue)
 Costume Soft Sheep Hat
 Costume Rune Helm
-^808080A mysterious egg which contains a costume.^000000
-^FF0000Account Bound^000000
-Type: Usable
-Class: Item Giver
-Weight: 1
-When opened it gives one of the following at random:
-Costume Tiger Mask
-Costume Shaving Foam
-Costume Sheep Hat
-Costume Brown Stole
-Costume Piggyback
-Costume Teddy Bear Hood
-Costume Happy Droopy Lunatic Ears (Black)
-Costume Mouton Life (Blue)
-Costume Soft Sheep Hat
-Costume Rune Helm
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 17862#
-^808080^808080A mysterious egg which contains a costume.^000000
-^FF0000Account Bound^000000
-Type: Usable
-Class: Item Giver
-Weight: 1
-When opened it gives one of the following at random:
-Costume Tiger Mask
-Costume Shaving Foam
-Costume Sheep Hat
-Costume Brown Stole
-Costume Piggyback
-Costume Teddy Bear Hood
-Costume Happy Droopy Lunatic Ears (Black)
-Costume Mouton Life (Blue)
-Costume Soft Sheep Hat
-Costume Rune Helm
-^808080A mysterious egg which contains a costume.^000000
-^FF0000Account Bound^000000
-Type: Usable
-Class: Item Giver
-Weight: 1
+A lively looking box that contains a costume.
+
 When opened it gives one of the following at random:
 Costume Classic Ribbon
-Costume: Gryphon Hat
-Costume: Mochiring Hat
-Costume: Piamette Hood
-Costume: Puppy Hat
-Costume: Sleeping Kitty Hat
-Costume: Tomboy Fairy
-Costume: Wings of Victory
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+Costume Gryphon Hat
+Costume Mochiring Hat
+Costume Piamette Hood
+Costume Puppy Hat
+Costume Tomboy Fairy
+Costume Wings of Victory
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 17863#
-^808080^808080A mysterious egg which contains a costume.^000000
-^FF0000Account Bound^000000
-Type: Usable
-Class: Item Giver
-Weight: 1
+A chilly looking box that contains a costume.
+
 When opened it gives one of the following at random:
-Costume Tiger Mask
-Costume Shaving Foam
-Costume Sheep Hat
-Costume Brown Stole
-Costume Piggyback
-Costume Teddy Bear Hood
-Costume Happy Droopy Lunatic Ears (Black)
+Costume Elder Crown
+Costume Blue Beanie
+Costume Lunatic Hat
+Costume Ice Wing Ears
+Costume Aura Quartz Crown
+Costume Lunatic Knit Hat
+Costume Chilly Breath
+Costume Galanthus Guard
+Costume Eclipse Knit Hat
 Costume Mouton Life (Blue)
-Costume Soft Sheep Hat
-Costume Rune Helm
-^808080A mysterious egg which contains a costume.^000000
-^FF0000Account Bound^000000
-Type: Usable
-Class: Item Giver
-Weight: 1
-When opened it gives one of the following at random:
-Costume: Knit Snow Rabbit Hat
-Costume: Knit Rabbit Ear Hat
-Costume: Lunatic Hat
-Costume: Ice Wing Ears
-Costume: Galanthus Guard
-Costume: Elder Crown
-Costume: Chilly Breath
-Costume: Blue Fur Hat
-^000000
-Attack: 0
-Weight: 0
-Weapon Level: 0
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 17864#
 ^808080^808080A mysterious egg which contains a costume.^000000
@@ -76374,13 +76705,13 @@ If upgrade level is +7 or higher,
 Reduces damage taken from Undead race enemies by an additional 5%.
 #
 19081#
-^808080The broken egg shell of a faceworm.^000000
-Class: Headgear
-Position: Upper
-Defense: 2
-Weight: 50
-Required Level: 30
-Required Jobs: All Jobs
+The broken egg shell of a faceworm.
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080802^000000
+Weight: ^80808050^000000
+Requires Level: ^80808030^000000
+Usable By: ^808080All Jobs^000000
 Hit + 20
 Increases physical and magical damage on Faceworm Nest monsters by 5%.
 Reduces damage taken from Faceworm Nest monsters by 5%.
@@ -77216,6 +77547,32 @@ Requires Level: ^808080120^000000
 Usable By: ^808080Super Novice, Paladin Jobs, Biochemist Jobs, Stalker Jobs, Rune Knight, Mechanic, Guillotine Cross^000000
 Atk + 1%
 Atk + 2 per upgrade level of the item.
+#
+19241#
+A helm which increases the magical powers of the wearer by controlling the brainwaves.
+It has voice recognition function and interacts with other equipment!
+Class : ^777777Headgear^000000 Defense : ^77777710^000000
+Location : ^777777Middle ^000000Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+#
+19245#
+A tool that amplifies your ability by regulating brain waves.
+The design looks like a magical booster, but the purpose of its development is unknown.
+Class : ^777777Headgear^000000 Defense : ^77777710^000000
+Location : ^777777Middle ^000000Weight : ^77777730^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+
+Class: ^808080Headgear^000000
+Position: ^808080Middle^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
 #
 19246#
 A necklace designed specifically for Royal Guards. It stands for the act of protecting others.
@@ -78454,6 +78811,10 @@ Usable By: ^808080All Jobs^000000
 19532#
 #
 19533#
+A costume made in the form of a Spore's head.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
 #
 19534#
 #
@@ -83478,6 +83839,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+20570#
+A big heart-shaped chocolate decoration for chocolate lovers.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20571#
 Now you can be the mighty Valkyrie with these costume wings!
 ^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
@@ -83515,6 +83882,12 @@ Position: ^808080Garment^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+20594#
+A long, bright red, ribbon cloak. Don't leave home without your cloak!
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
 #
 20700#
 Egir's Manteau. It looks defending your body
@@ -85175,6 +85548,26 @@ Additional Max HP + 15%
 Reduces damage taken from Fire property attacks by 50%.
 Reduces damage taken from Shadow property attacks by 100%.
 Immune to ^800000Curse^000000.
+#
+20940#
+Blinking violet wings that float behind you.
+Indestructible.
+Matk + 20, increases long ranged physical damage by 3%, increases critical damage by 3%.
+Additional Matk + 20, increases long ranged physical damage by 3%, increases critical damage by 3% per 3 refine rate.
+If refine rate is 11 or higher, reduces delay after skill by 4%.
+When equipped with Magical Booster, reduces variable casting time by 30%.
+When equipped with Crimson Booster, increases long ranged physical damage by 14%.
+When equipped with Sigrun's Wing or Sigrun's Wing [1], increases critical damage by 14%.
+When equipped with Dark Blinder or Dark Blinder [1], reduces delay after skill by 6%.
+Class : ^777777Garment^000000 Defense : ^7777770^000000
+Weight : ^77777710^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+
+Class: ^808080Garment^000000
+Position: ^808080Garment^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
 #
 20941#
 A magnificent muffler modeled after the wings of a phoenix. The way it wraps around you is beautiful and terrifying.
@@ -87482,6 +87875,38 @@ Acolyte, Priest, Bard,
 and Dancer Jobs^000000
 Weight : ^77777715^000000
 #
+22545#
+^ff0000Cannot be traded.^000000
+A potion which increases the moving speed of a character for a set duration.
+^ffffff_^000000
+Weight : ^77777710^000000
+
+Weight: ^8080800^000000
+#
+22546#
+^ff0000Cannot be traded.^000000
+A potion which increases the moving speed of a character for a set duration.
+^ffffff_^000000
+Weight : ^77777710^000000
+
+Weight: ^8080800^000000
+#
+22547#
+^ff0000Cannot be traded.^000000
+Medicine made from certain plants used as raw materials.
+^ffffff_^000000
+Weight : ^77777710^000000
+
+Weight: ^8080800^000000
+#
+22548#
+^ff0000Cannot be traded.^000000
+A dark purple aura surrounds this cursed water.
+^ffffff_^000000
+Weight : ^7777773^000000
+
+Weight: ^8080800^000000
+#
 22549#
 A skeleton-shaped bottle that contains deadly poison.
 ^FF0000If any class other than Assassin Cross Classes use this item, it will kill the user instantly.^000000
@@ -87493,6 +87918,42 @@ Adds a 2% chance of buffing the user for 1 minute; Aspd + 20%.
 This bag is packed with snacks and goodies for Christmas
 ^ffffff_^000000
 Weight : ^7777777^000000
+#
+22551#
+^ff0000Cannot be traded.^000000
+Diet plate full of sweets made with honey, tea kneaded flour flowers pine, and chestnut flour.
+Delicious traditional sweets filled with the nectar of fruit and honey.
+HIT is temporarily increased by 30.
+^ffffff_^000000
+Weight : ^7777777^000000
+
+Weight: ^8080800^000000
+#
+22552#
+^ff0000Cannot be traded.^000000
+A mix of grain alcohol, honey and sweets used to create a dough.
+Perfect Dodge temporarily increased by 30.
+^ffffff_^000000
+Weight : ^7777777^000000
+
+Weight: ^8080800^000000
+#
+22553#
+^ff0000Cannot be traded.^000000
+Colorful flavored bread. A delicacy often eaten in the far east during a feast.
+Temporarily increase MATK and ATK by 10.
+^ffffff_^000000
+Weight : ^7777777^000000
+
+Weight: ^8080800^000000
+#
+22554#
+^ff0000Cannot be traded.^000000
+A first aid kit that should contain potions, although they're known to hold other things...
+^ffffff_^000000
+Weight : ^77777720^000000
+
+Weight: ^8080800^000000
 #
 22564#
 E'tu Randgris?
@@ -88083,6 +88544,21 @@ Luk Soul Potion
 Blacksmith's Blessing (Save it for later!)
 Weight : ^7777771^000000
 #
+22972#
+Paper box with smiley decoration, decorated with yellow ribbon.
+Contains one of the following items.
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+Evil_Marcher_Hat
+Wondering_Wolf_Helm
+Tare_Neko_Cru
+Imp_Hat
+Holy_Marching_Hat_J
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+Weight : 20
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
 22984#
 ^808080A favorite drink of the Doram.^000000
 ^FFFFFF_^000000
@@ -88100,6 +88576,54 @@ Class: Recovery
 Weight: 1
 ^FFFFFF_^000000
 Restores 5 SP every 10 seconds for 3 minutes.
+#
+22988#
+Well packed red box with purple ribbon.
+Contains one of the following items.
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+Heart_Wing_Hairband
+Tare_Neko_Cru
+Glory_FB_Hat
+Drooping_Morocc_Minion
+Mask_Of_Ifrit
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+Weight : 20
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+22999#
+Includes one of the transform scrolls listed below.
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+Trans_Scroll_Wghost
+Trans_Scroll_Sca
+Trans_Scroll_Wander
+Trans_Scroll_Gazeti
+Trans_Scroll_Karcher
+Trans_Scroll_Necro
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+Weight : ^77777710^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+23008#
+Sweet, tasty bubble gum.
+Increases the drop rate of items!
+Weight: ^8080800^000000
+#
+23010#
+This well written, detailed manual explains effective battle methods.
+Increases the rate of experience gained!
+Weight: ^8080800^000000
+#
+23011#
+A life insurance certificate issued by Kafra Center.
+If the character dies within the 24 hour duration, no loss of EXP will be made.
+^ffffff_^000000
+Weight : ^7777770^000000
+
+Weight: ^8080800^000000
 #
 23016#
 ^808080A fragment of energy formed from the evil thoughts of those in the tomb of honor. Something strange may happen if it is consumed.^000000
@@ -88169,6 +88693,30 @@ Weight: 25
 Class: Item Giver
 Weight: 25
 #
+23148#
+A box that provides premium service for 2 days.
+^ffffff_^000000
+When you open the box, all the characters in the server who use the item receive the premium buff effect for 2 days.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23149#
+A box that provides premium service for 3 days.
+^ffffff_^000000
+When you open the box, all the characters in the server who use the item receive the premium buff effect for 3 days.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
 23164#
 A potion which increases the moving speed of a character for a set duration.
 Created for iRO 13th anniversary event. No matter who you race with, you will pass everyone.
@@ -88176,19 +88724,207 @@ Class: ^808080Stat Boost^000000
 Weight: ^8080801^000000
 Adds a 100% chance of inflicting ^800000Increased Movement Speed^000000 on the user when using this item for 5 seconds.
 #
+23165#
+A magic stick calling for premium subscription service personnel. When you shake it in your hand, the personnel will appear in front of you anytime and anywhere.
+^ffffff_^000000
+[Service information]
+When you consume Nyangvine item, all characters in one server get the following effect.
+- EXP UP (effective for 24hrs, 4 Nyangvine item)
+EXP UP +30%
+- ITEM UP (effective for 24hrs, 2 Nyangvine item)
+ITEM UP +30%
+- DEATH DOWN (effective for 24hrs, 1 Nyangvine item)
+50% reduction in death penalty
+- Advanced Package (effective for 24hrs, 6 Nyangvine item)
+All three above effects
+^ff0000Attention! - When your character is on buff effec, you cannot select same buff that is stackable or advanced package.  ^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23187#
+Sap from an old tree that has hardened into a jelly-like texture.There’s something red inside of it. Nine Tail really likes it.
+Class: ^808080Pet Tame^000000
+Weight: ^8080800^000000
+#
+23188#
+A part that fell from an airship when it was attacked. Gremlin really likes it.
+Class: ^808080Pet Tame^000000
+Weight: ^8080800^000000
+#
 23189#
-^808080A needle for making and fixing small dolls.^000000
-^FF0000Taming item for Teddy Bear.^000000
-^FFFFFF_^000000
-Type: Consumable
-Class: Pet Tame
-Weight: 0
+A needle for making and fixing small dolls. Used to lure Teddy Bear.
+Class: ^808080Pet Tame^000000
+Weight: ^8080800^000000
+#
+23198#
+A wooden box packaged with useful items:
+1x White Slim Potion Box
+3x [Event] First Aid Boxes
+1x Premium Normal Box
+When opening, one of the additional rare items can be obtained.
+Weight : ^7777771^000000
+"^ff0000Attention - If you open the box and are exceeding the weight limit, the items may be lost!^000000"
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+23199#
+A golden box packed with useful items:
+1x White Slim Potion Box
+1x [Event] Box containing Ten Blessing Scrolls
+1x [Event] Box containing Ten Agility Increase Scrolls
+5x Normal Premium Boxes
+10x Speed Up Potions
+10x Poison Potions
+When opening, one of the additional rare items can be obtained.
+Weight : ^7777771^000000
+"^ff0000Attention - If you open the box and are exceeding the weight limit, the items may be lost!^000000"
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+23200#
+A platinum box packed with useful items:
+1x Potion Box
+1x Poison Bottle
+1x [Event] Small Life Potion
+1x [Event] One Abrasive Box
+1x [Event] Box with Ten Blessing Scrolls
+1x [Event] Box with Ten Agility Increase Scrolls
+30x Premium Normal Boxes
+30x Speed Up Potions
+When opening, one of the additional rare items can be obtained.
+Weight : ^7777771^000000
+"^ff0000Attention - If you open the box and are exceeding the weight limit, the items may be lost!^000000"
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+#
+23201#
+A plain box with useful items in it:
+1x [Event] White Slim Potion
+1x [Event] First Aid Kit
+When opened, you'll get one of the rarer items in addition.
+Weight : ^7777771^000000
+"^ff0000Attention - If you open the box and are exceeding the weight limit, the items may be lost!^000000"
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 23202#
 ^ff0000Cannot trade with other account.^000000
 A health drink to prevent flu.
 
 Weight : ^7777774^000000
+#
+23207#
+Box that provides 30 days premium service.
+^ffffff_^000000
+When you open the box, all the characters in the server who use the item receive the premium buff effect for 30 days.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+Includes one magic stick to summon a premium service personnel for additional services.
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23209#
+A box that provides premium service for 1 day.
+^ffffff_^000000
+When you open the box, all the characters in the server who use the item receive the premium buff effect for 1 day.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23210#
+A box that provides premium service for 4 days.
+^ffffff_^000000
+When you open the box, all the characters in the server who use the item receive the premium buff effect for 4 days.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23211#
+A box that provides premium service for 5 days.
+
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 5 days.
+- EXP +50%
+- ITEM UP +50%
+- Access to second account storage
+- Access to a Merchant Voucher (Offline-Vending)
+- Access to a Shopper Voucher (Offline-Buying)
+Weight: ^8080800^000000
+#
+23212#
+A box that provides premium service for 6 days.
+^ffffff_^000000
+When you open the box, all the characters in the server who use the item receive the premium buff effect for 6 days.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23213#
+A box that provides premium service for 7 days.
+^ffffff_^000000
+When you open the box, all the characters in the server who use the item receive the premium buff effect for 7 days.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23214#
+A box that provides premium service for 8 days.
+^ffffff_^000000
+When you open the box, all the characters in the server who use the item receive the premium buff effect for 8 days.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23215#
+A box that provides premium service for 9 days.
+^ffffff_^000000
+When you open the box, all the characters in the server who use the item receive the premium buff effect for 9 days.
+- EXP UP +20%
+- ITEM UP +20%
+- Increase storage limit +300
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23216#
+A box that provides premium service for 10 days.
+
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 10 days.
+- EXP +50%
+- ITEM UP +50%
+- Access to second account storage
+- Access to a Merchant Voucher (Offline-Vending)
+- Access to a Shopper Voucher (Offline-Buying)
+
+Weight: ^8080801^000000
 #
 23228#
 A soft pastry shaped like the moon. Children love it. It looks hazy at certain angles.
@@ -88233,6 +88969,21 @@ Weight: 0
 Type: Consumable
 Class: Item Producer
 Weight: 0
+#
+23256#
+You can feel the power of the afterlife. Mummies like it because of its spiritual energy.
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
+#
+23257#
+A drop of shiny dew from an old tree. Willow likes it a lot.
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
+#
+23258#
+Rotten Meat that stinks terribly. Roween likes it a lot.
+Class: ^808080Pet Tame^000000
+Weight: ^8080805^000000
 #
 23259#
 ^808080^808080An unknown item that requires appraisal. Can be identified by using a ^008080Magnifier^000000.^000000
@@ -88353,6 +89104,122 @@ Weight: 0
 23316#
 Weight: 0
 #
+23340#
+^ff0000Cannot be traded.^000000
+A trumpet shape mechanism that can be carried with hand. If you put it near your mouth when you're talking, it has the ability to send your voice further.
+Allows you to broadcast your speech to the server.
+Warning - It must be used within 3 minutes or the effect will be gone.
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23342#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 1 day employment voucher that you can use to hire a beginner part-time vendor.
+Weight: ^8080801^000000
+#
+23343#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 1 day employment voucher that you can use to hire a part-time vendor.
+Weight: ^8080801^000000
+#
+23344#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 1 day employment voucher that you can use to hire a top-notch part-time vendor.
+Weight: ^8080801^000000
+#
+23345#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 1 day employment voucher that you can use to hire a beginner part-time buyer.
+Weight: ^8080801^000000
+#
+23346#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 1 day employment voucher that you can use to hire a part-time buyer.
+Weight: ^8080801^000000
+#
+23347#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 1 day employment voucher that you can use to hire a top-notch part-time buyer.
+Weight: ^8080801^000000
+#
+23348#
+Employment voucher that you can use to hire a beginner part-time vendor.
+Cannot be used after the voucher expires.
+Weight: ^8080800^000000
+Allows the user to vend up to 3 item stacks.
+#
+23349#
+Employment voucher that you can use to hire a part-time vendor.
+Cannot be used after the voucher expires.
+
+Weight: ^8080800^000000
+Allows the user to vend up to 4 item stacks.
+#
+23350#
+Employment voucher that you can use to hire a top-notch part-time vendor.
+Cannot be used after the voucher expires.
+Weight: ^8080800^000000
+Allows the user to vend up to 5 item stacks.
+#
+23351#
+Employment voucher that you can use to hire a beginner part-time buyer.
+Cannot be used after the voucher expires.
+Weight: ^8080800^000000
+Allows the user to buy up to 3 item stacks.
+#
+23352#
+Employment voucher that you can use to hire a part-time buyer.
+Cannot be used after the voucher expires.
+Weight: ^8080800^000000
+Allows the user to buy up to 4 item stacks.
+#
+23353#
+Employment voucher that you can use to hire a top-notch part-time buyer.
+Cannot be used after the voucher expires.
+Weight: ^8080800^000000
+Allows the user to buy up to 5 item stacks.
+#
+23354#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 3 day employment voucher that you can use to hire a beginner part-time vendor.
+Weight: ^8080801^000000
+#
+23355#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 10 day employment voucher that you can use to hire a part-time vendor.
+Weight: ^8080801^000000
+#
+23356#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 3 day employment voucher that you can use to hire a top-notch part-time vendor.
+Weight: ^8080801^000000
+#
+23357#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 3 day employment voucher that you can use to hire a beginner part-time buyer.
+Weight: ^8080801^000000
+#
+23358#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 10 day employment voucher that you can use to hire a part-time buyer.
+Weight: ^8080801^000000
+#
+23359#
+A sealed envelope containing a document issued by the Merchant Guild.
+Contains a 3 day employment voucher that you can use to hire a top-notch part-time buyer.
+Weight: ^8080803^000000
+#
+23368#
+A special catalog made by the Merchant Guild.
+Lightly touch the screen to view the Street Stall products in the area and easily purchase or sell items.
+
+Only Street Stalls open in the map where the user is standing will be displayed.
+
+Weight: ^7777771^000000
+
+Weight: ^8080800^000000
+#
 23414#
 ^808080Weight : ^7777771^000000
 ^000000
@@ -88400,6 +89267,15 @@ Costume Persica
 Costume Royal Rabbit Crown
 Costume Weird Beard
 Costume Wrapping Ribbon
+#
+23506#
+A box contains 20 [Event] White Potion.
+"^ff0000Caution - Please check your weight or inventory quantity before you open the box.^000000"
+
+Weight : ^7777770^000000
+
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 23507#
 Type: Usable
@@ -88517,6 +89393,16 @@ Weight: 1
 Class: Item Giver
 Weight: 1
 #
+23657#
+A life insurance certificate issued by Kafra Center.
+Once the player receives the benefit from this certificate, the item will lose its effect.
+If the character dies within the 30 minutes duration, no loss of EXP will be made.
+The effect will disappear after your first KO'.
+^ffffff_^000000
+Weight : ^7777770^000000
+
+Weight: ^8080800^000000
+#
 23658#
 ^FF0000Account Bound^000000
 Class: ^808080Item Giver^000000
@@ -88529,6 +89415,148 @@ Class: ^808080Recovery^000000
 Weight: ^80808018^000000
 Restores 18% HP.
 Restores 18% SP.
+#
+23706#
+An upgrade part manufactured in the Charleston factory.
+Weapons manufactured in the factory are optimized for melee combat.
+^ffffff_^000000
+^000088[Target Item]^000000
+Robot's Mechanical Arm
+Pile Bunker
+Pile Bunker S
+Pile Bunker T
+Pile Bunker P
+Tornado Axe
+Giant Blade
+^ffffff_^000000
+Weight: ^7777775^000000
+
+Weight: ^8080800^000000
+#
+23707#
+An upgrade part manufactured in the Charleston factory.
+The weapons manufactured in the factory can be optimized for ranged combat.
+^ffffff_^000000
+^000088[Target Item]^000000
+Robot's Mechanical Arm
+Pile Bunker
+Pile Bunker S
+Pile Bunker T
+Pile Bunker P
+Tornado Axe
+Giant Blade
+^ffffff_^000000
+Weight: ^7777775^000000
+
+Weight: ^8080800^000000
+#
+23725#
+^ff0000It cannot be traded..^000000
+A high-end delicious meal.
+All Stats + 10, ATK + 30, MATK + 30
+Duration: 30 minutes
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23726#
+^ff0000Cannot be traded.^000000
+A drink that activates your body's energy and greatly improves your abilities.
+ATK, MATK + 30
+ATK, MATK + 1%
+HIT, FLEE + 30
+ASPD + 1
+SP Consumption -5%
+Fixed Casting Time -30%
+(The % increase or decrease in static casting is only applied to the largest effect.)
+Duration: 30 minutes
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23727#
+^ff0000Cannot be traded.^000000
+A drink that activates your body's energy and brings your spirit up to make you feel like you have infinite energy!
+MaxHP + 5%, MaxSP + 5%,
+Critical Damage, Ranged Physical ATK, MATK for all properties +5%.
+Enables skill casting that cannot be interrupted by damage from enemies.
+Duration: 30 minutes
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23728#
+^ff0000Cannot be traded.^000000
+A drink that activates your body's energy and improves power.
+MHP, MSP - 10%
+ATK, MATK + 30
+ASPD(Attack Delay) +5%
+Variable Casting Time -5%
+Low chance to trigger Lv 3 Auto-spell Improve Concentration with every physical or magic ATK. (or the highest level the player knows.)
+Duration: 30 minutes
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23729#
+^ff0000Cannot be traded.^000000
+A potion that contains the blessing of Ayer, a god who deals with herbal medicine and alchemy.
+Increases healing for 30 minutes and some recovery items by 20%.
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23732#
+^ff0000Cannot be traded.^000000
+Spring water collected from Mimir's Fountain, often called the Fountain of Wisdom.
+MSP +10%, SP Consumption -10% for 30 mins.
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23733#
+^ff0000Cannot be traded.^000000
+A potion that contains the blessing of Valdur, the god of light.
+For 5 mins, ATK, MATK  + 20, HIT + 30, Flee + 30.
+^ff0000 Caution! - Item effects will disappear if the character is knocked unconscious or is dispelled by [Dispell].^000000
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23734#
+^ff0000Cannot be traded.^000000
+An abrasive tool that adds sharpness to a weapon.
+For 5 minutes, the player will receive +30 Critical Rate.
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23735#
+^ff0000Cannot be traded.^000000
+A potion which can be used at the same time with other Attack Speed Potions.
+Taking it increases your attack speed for 15 minutes.
+Similar to existing attack speed potions, the speed increase can vary depending on AGI.
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
+#
+23736#
+^ff0000Cannot be traded.^000000
+A bottle of mysterious powder that will lighten your body when applied.
+FLEE + 20, LUK + 10 for 5 mins.
+^ffffff_^000000
+Weight : ^7777771^000000
+
+Weight: ^8080800^000000
 #
 23799#
 Class: ^808080Item Giver^000000
@@ -90525,11 +91553,23 @@ Weight: ^8080800^000000
 ^808080A bullet that is made for the Slug Shot skill. It can be used as a normal shot but does not give high damage. It's expensive and very heavy... just what is this thing made of?^000000
 Weight: 120
 #
+25231#
+A bottle containing a suspicious red liquid. Just looking at this bottle makes you think of the Nine Tails eyes.
+^FF0000This is considered food for Nine Tail pets.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
+#
+25232#
+A cheap lubricant that has changed strangely in color. When Gremlins smell this lubricant, they salivate.
+^FF0000This is considered food for Gremlin pets.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
+#
 25233#
-^808080Necessity for making dolls and teddy bears.^000000
-^FFFFFF_^000000
-Type: Miscellaneous
-Weight: 1
+Necessity for making dolls and teddy bears.
+^FF0000This is considered food for Teddy Bear pets.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 25240#
 A certificate required to emancipate a child from the parents welfare to a larger world. Only one copy of the independent certificate is required per household.
@@ -90803,6 +91843,30 @@ A twig that was unearthed from the ground
 ^FF0000Account Bound^000000
 Weight: ^8080801^000000
 #
+25358#
+It looks like operating certain machinery somewhere will cause data to be printed on the card.
+Must be returned once the survey is complete.
+
+Weight: ^77777720^000000
+
+Weight: ^8080800^000000
+#
+25359#
+A sturdy box with three outlines of receipts once stuck to it. Must have been reused.
+Deliver to the designated area.
+
+Weight: ^77777720^000000
+
+Weight: ^8080800^000000
+#
+25360#
+A cleanly written proof of purchase.
+Bring to Masha at the Alberta Merchant Guild to get the promised item.
+
+Weight: ^77777720^000000
+
+Weight: ^8080800^000000
+#
 25425#
 ^808080An ice crystal that is found among monsters with cold energy. It is very useful for making snowman due to its white, cold and binding properties.^000000
 Weight: 0
@@ -90811,11 +91875,33 @@ Weight: 0
 ^808080White warm cotton that can be used to make clothes and decorations.^000000
 Weight: 0
 #
+25462#
+A free costume coupon.
+Please visit ^ffffff<NAVI>^4D4DFF[뇗뛳엁 뇗뛳뷃뻆붺]^000000<INFO>prontera,88,332,0,100,0,0</INFO></NAVI>^000000 with this.
+Weight : ^7777770^000000
+
+Weight: ^8080800^000000
+#
+25464#
+You can move to the place searched and marked on Navigation with this ticket.
+^ffffff_^000000
+"^ff0000Caution - If you search for an NPC, you'll move to the random spot of the map where the NPC resides. You cannot move to a map that isn't searchable by the worldview menu.^000000"
+Weight : ^7777770^000000
+
+Weight: ^8080800^000000
+#
 25479#
 A bottle containing a scent which is irresistible to doggo. It contains something so delicious, it can be dangerous!
 
 ^FF0000This item will have no effect once that event has ended.^000000
 Class: ^808080Pet Tame^000000
+Weight: ^8080800^000000
+#
+25627#
+A standard card not in use.
+It is gold and shiny, so someone might be able to use this.
+Weight: ^7777771^000000
+
 Weight: ^8080800^000000
 #
 25745#
@@ -91349,6 +92435,22 @@ Max SP + 50
 If compounded garment upgrade level is +9 or higher,
 Additional Max HP + 1000
 Additonal Max SP + 50
+#
+27106#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+#
+27107#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+#
+27108#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
+#
+27109#
+Class: ^808080Card^000000
+Weight: ^8080800^000000
 #
 27110#
 Class: ^808080Card^000000
@@ -96387,6 +97489,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31372#
+A cute figure of a doll that you can take with you on adventures! Her hobbies include knitting and reading romance novels.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 31377#
 A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.
 Class: ^808080Costume^000000
@@ -97344,6 +98452,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31617#
+Modeled after the real Lady Tanee, many will often mistake the two. This one will always be by your side wherever you go.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
 31628#
 A miniature Dokebi made for children. Don't worry, it won't attack you!
 Class: ^808080Costume^000000
@@ -97862,6 +98976,51 @@ Weight: ^8080800^000000
 This hat was awarded to adventurers that displayed exceptional examples of creativity.
 Class: ^808080Costume^000000
 Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31899#
+Crown of goddess Freyja. When the whole crystal is embedded in the sunlight, a strange color will appear.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+When worn during January increases monster EXP by 5%
+#
+31911#
+A flower crown for a dignified costume. It exudes a feeling of elegance and natural beauty.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31912#
+The look of someone who has lost something very important to them. You can feel a sense of sorrow emitting from it.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31913#
+A costume that was once worn by an executive of an organization. It was said that it was part of a high performance and top secret mission.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31914#
+A small hair band featuring a mini beret. Simple design and easy to match.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31915#
+A fancy looking wig for many outfits that features rolled up hair and wrapped low.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31916#
+A simple frilly collar with a bow tie that will help you pull off that Gothic look.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
 Weight: ^8080800^000000
 #
 32032#

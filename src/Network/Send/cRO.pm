@@ -44,8 +44,10 @@ sub new {
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
+	$self->{send_buy_bulk_pack} = "v V";
 	$self->{char_create_version} = 0x0A39;
+	$self->{send_sell_buy_complete} = 1;
 
 	return $self;
 }
@@ -95,15 +97,6 @@ sub sendCharCreate {
 	$self->sendToServer( $msg );
 }
 
-sub sendSellBuyComplete {
-	my ($self) = @_;
-
-	my $msg = $self->reconstruct({
-		switch => 'sell_buy_complete',		
-	});
-
-	$messageSender->sendToServer($msg);
-}
 sub reconstruct_char_delete2_accept {
 	my ($self, $args) = @_;
 

@@ -1166,6 +1166,7 @@ sub processAutoMakeArrow {
 
 ##### AUTO STORAGE #####
 sub processAutoStorage {
+	return if( $shopstarted || $buyershopstarted );
 	# storageAuto - chobit aska 20030128
 	if (AI::is("", "route", "sitAuto", "follow")
 		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
@@ -1647,6 +1648,7 @@ sub processAutoStorage {
 
 #####AUTO SELL#####
 sub processAutoSell {
+	return if( $shopstarted || $buyershopstarted );
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "sitAuto" || AI::action eq "follow")
 		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
 			|| ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'})
@@ -1825,6 +1827,7 @@ sub processAutoSell {
 
 #####AUTO BUY#####
 sub processAutoBuy {
+	return if( $shopstarted || $buyershopstarted );
 	my $needitem;
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && $char->inventory->isReady()) {
 		undef $ai_v{'temp'}{'found'};
@@ -2035,8 +2038,12 @@ sub processAutoBuy {
 			# load the real npc location just in case we used standpoint
 			my $realpos = {};
 			getNPCInfo($config{"buyAuto_".$args->{lastIndex}."_npc"}, $realpos);
-
-			ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
+			
+			if ( $config{"buyAuto_".$args->{lastIndex}."_isMarket"} ) {
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, undef);
+			} else {
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
+			}
 			
 			$args->{'sentNpcTalk'} = 1;
 			$args->{'sentNpcTalk_time'} = time;
@@ -2083,7 +2090,12 @@ sub processAutoBuy {
 			$needbuy -= $inv_amount;
 			
 			my $buy_amount = ($maxbuy > $needbuy) ? $needbuy : $maxbuy;
-			
+
+			# support to market
+			if ($item->{amount} && $item->{amount} < $buy_amount) {
+				$buy_amount = $item->{amount};
+			}
+
 			my $batchSize = $config{"buyAuto_".$args->{lastIndex}."_batchSize"};
 			
 			if ($batchSize && $batchSize < $buy_amount) {
@@ -3269,9 +3281,11 @@ sub processItemsGather {
 
 ##### AUTO-TELEPORT #####
 sub processAutoTeleport {
+	return if(AI::inQueue("teleport", "NPC"));
+
 	my $safe = 0;
 
-	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
+	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto", "skill_use") && $config{teleportAuto_allPlayers}
 	    && ($config{'lockMap'} eq "" || $field->baseName eq $config{'lockMap'})
 	 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 

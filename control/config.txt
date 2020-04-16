@@ -738,6 +738,8 @@ useSelf_item {
 
 buyAuto {
 	npc
+	npc_steps b
+	isMarket 0
 	standpoint
 	distance 5
 	price

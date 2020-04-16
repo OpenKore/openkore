@@ -29,7 +29,6 @@ sub new {
 	my %packets = (
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
-		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 

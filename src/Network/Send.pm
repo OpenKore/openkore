@@ -1139,16 +1139,28 @@ sub sendShowEquipPlayer {
 	debug "Sent Show Equip Player.\n", "sendPacket", 2;
 }
 
-sub sendShowEquipTickbox {
-	my ($self, $flag) = @_;
+# Send configurations (CZ_CONFIG).
+# 02D8 <type>.L <value>.L
+# type:
+#     0 = show equip windows to other players
+#     1 = being summoned by skills: Urgent Call, Romantic Rendezvous, Come to me, honey~ & Let's Go, Family!
+#     2 = pet autofeeding
+#     3 = homunculus autofeeding
+#     value:
+#         0 = disabled
+#         1 = enabled
+sub sendMiscConfigSet {
+	my ($self, $type, $flag) = @_;
+
 	$self->sendToServer($self->reconstruct({
-				switch => 'equip_window_tick',
-				type => 0, # is it always zero?
-				value => $flag
+				switch => 'misc_config_set',
+				type => $type,
+				flag => $flag
 			}
 		)
 	);
-	debug "Sent Show Equip Tickbox: flag.\n", "sendPacket", 2;
+
+	debug sprintf("Sent Misc Config Type: %s Flag: %s.\n", $type, $flag), "sendPacket", 2;
 }
 
 sub sendSlaveAttack {
@@ -1179,6 +1191,9 @@ sub sendSlaveStandBy {
 	debug "Sent Slave standby\n", "sendPacket", 2;
 }
 
+# Request to equip an item
+# 00A9 <index>.W <position>.W (CZ_REQ_WEAR_EQUIP).
+# 0998 <index>.W <position>.L (CZ_REQ_WEAR_EQUIP_V5)
 sub sendEquip {
 	my ($self, $ID, $type) = @_;
 	$self->sendToServer($self->reconstruct({
@@ -1189,6 +1204,60 @@ sub sendEquip {
 		)
 	);
 	debug sprintf("Sent Equip: %s Type: $type\n", unpack('v', $ID)), 2;
+}
+
+# Request to add an equip to the equip switch window
+# 0A97 <index>.W <position>.L
+sub sendEquipSwitchAdd {
+	my ($self, $ID, $position) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'equip_switch_add',
+		ID => $ID,
+		position => $position,
+	}));
+
+	debug sprintf("Sent Equip Switch Add Item: %s\n", unpack('v', $ID)), "sendPacket", 2;
+}
+
+# Request to remove an equip from the equip switch window
+# 0A99 <index>.W <position>.L <= 20170502
+# 0A99 <index>.W
+sub sendEquipSwitchRemove {
+	my ($self, $ID, $position) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'equip_switch_remove',
+		ID => $ID,
+		position =>  $position,
+	}));
+
+	debug sprintf("Sent Equip Switch Remove Item: %s\n", unpack('v', $ID)), "sendPacket", 2;
+}
+
+# Request to do a full equip switch
+# 0A9C
+sub sendEquipSwitchRun {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'equip_switch_run'
+	}));
+
+	debug "Sent Equip Switch All\n", "sendPacket", 2;
+}
+
+# Request to do a single equip switch
+# 0ACE <index>.W
+sub sendEquipSwitchSingle {
+	my ($self, $ID) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'equip_switch_single',
+		ID => $ID
+	}));
+
+	debug sprintf("Sent Equip Switch Single Item: %s\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendProgress {
@@ -2464,7 +2533,7 @@ sub sendBuyBulk {
 		items => \@{$r_array},
 	}));
 	
-	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "d_sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_buy_bulk {
@@ -2482,7 +2551,7 @@ sub sendSellBulk {
 		items => \@{$r_array},
 	}));
 	
-	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "d_sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_sell_bulk {
@@ -3146,6 +3215,189 @@ sub sendStylistChange {
 		head_mid => $head_mid,
 		head_bottom => $head_bottom
 	}));
+}
+
+##
+# UI System
+##
+
+# Request to open an UI window of the given type
+# 0A68 <type>.B
+sub sendOpenUIRequest {
+	my ($self, $UIType) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'open_ui_request',
+		UIType => $UIType, 
+	}));
+
+	debug "Sent Open UI Request (".$UIType.")\n", "sendPacket";
+}
+
+##
+# Attendance System
+##
+
+# Request from the client to retrieve today's attendance reward
+# 0AEF
+
+sub sendAttendanceRewardRequest {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'attendance_reward_request',
+	}));
+
+	debug "Sent Attendance Reward Request\n", "sendPacket";
+}
+
+
+##
+# Banking System
+##
+
+# Requesting the data in bank
+# 09AB <aid>L (PACKET_CZ_REQ_BANKING_CHECK)
+sub sendBankingCheck {
+	my ($self, $accountID) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'banking_check_request',
+		accountID => $accountID,
+	}));
+}
+
+# Request Withdrawing some money from bank
+# 09A9 <AID>L <Money>L (PACKET_CZ_REQ_BANKING_WITHDRAW)
+sub sendBankingWithdraw {
+	my ($self, $accountID , $zeny) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'banking_withdraw_request',
+		accountID => $accountID,
+		zeny => $zeny,
+	}));
+}
+
+# Request saving some money in bank
+# 09A7 <AID>L <Money>L (PACKET_CZ_REQ_BANKING_DEPOSIT)
+sub sendBankingDeposit {
+	my ($self, $accountID , $zeny) = @_;
+	$self->sendToServer($self->reconstruct({
+		switch => 'banking_deposit_request',
+		accountID => $accountID,
+		zeny => $zeny,
+	}));
+}
+
+##
+# Roulette System
+##
+
+# Request to open the roulette window
+# 0A19 (CZ_REQ_OPEN_ROULETTE)
+sub sendRouletteWindowOpen {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_window_open',
+	}));
+
+	debug "Sent Roulette Window Open\n", "sendPacket";
+}
+
+# Request the roulette reward data
+# 0A1B (CZ_REQ_ROULETTE_INFO)
+sub sendRouletteInfoRequest {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_info_request',
+	}));
+
+	debug "Sent Roulette Info Request\n", "sendPacket";
+}
+
+# Notification of the client that the roulette window was closed
+# 0A1D (CZ_REQ_CLOSE_ROULETTE)
+sub sendRouletteClose {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_close',
+	}));
+
+	debug "Sent Roulette Close\n", "sendPacket";
+}
+
+# Request to start the roulette
+# 0A1F (CZ_REQ_GENERATE_ROULETTE)
+sub sendRouletteStart {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_start',
+	}));
+
+	debug "Sent Roulette Start\n", "sendPacket";
+}
+
+# Request to claim a prize
+# 0A21 (CZ_RECV_ROULETTE_ITEM)
+sub sendRouletteClaimPrize {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'roulette_claim_prize',
+	}));
+
+	debug "Sent Roulette Claim Prize\n", "sendPacket";
+}
+
+##
+# Market System
+##
+
+# Send to Server confirmation that we already close NPC shop
+# 09D4
+sub sendSellBuyComplete {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'sell_buy_complete',
+	}));
+
+	debug "Sent Sell/Buy Complete\n", "sendPacket";
+}
+
+# Buy item from Market
+# 09D6
+sub sendBuyBulkMarket {
+	my ($self, $r_array) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'buy_bulk_market',
+		items => \@{$r_array},
+	}));
+
+	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+}
+
+sub reconstruct_buy_bulk_market {
+	my ($self, $args) = @_;
+	my $pack = $self->{send_buy_bulk_market_pack} || "v V";
+
+	$args->{buyInfo} = pack "(a*)*", map { pack $pack, $_->{itemID}, $_->{amount} } @{$args->{items}};
+}
+
+# Request to close current Market
+# 09D8
+sub sendMarketClose {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'market_close',
+	}));
+
+	debug "Sent Market Close\n", "sendPacket";
 }
 
 1;

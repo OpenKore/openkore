@@ -281,6 +281,7 @@ sub loadDataFiles {
 	Settings::addTableFile('ITEMOPTION_id_handle.txt', loader => [\&parseDataFile2, \%itemOptionHandle], mustExist => 0);
 	Settings::addTableFile('item_options.txt', loader => [\&parseROLUT, \%itemOption_lut], mustExist => 0);
 	Settings::addTableFile('title_name.txt',loader => [\&parseDataFile2, \%title_lut], mustExist => 0);
+	Settings::addTableFile('attendance_rewards.txt',loader => [\&parseAttendanceRewards, \%attendance_rewards], mustExist => 0);
 
 	use utf8;
 
@@ -703,6 +704,7 @@ sub initMapChangeVars {
 
 	$shopstarted = 0;
 	$buyershopstarted = 0;
+	$bankingopened = 0;
 	$timeout{ai_shop}{time} = time;
 	$timeout{ai_storageAuto}{time} = time + 5;
 	$timeout{ai_buyAuto}{time} = time + 5;

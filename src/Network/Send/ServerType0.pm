@@ -206,7 +206,7 @@ sub new {
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
-		'02D8' => ['equip_window_tick', 'V2', [qw(type value)]],
+		'02D8' => ['misc_config_set', 'V2', [qw(type flag)]],
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
 		'035F' => ['character_move', 'a3', [qw(coords)]],
@@ -222,6 +222,7 @@ sub new {
 		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0437' => ['character_move','a3', [qw(coords)]],
+		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
 		'044A' => ['client_version', 'V', [qw(clientVersion)]],
@@ -270,8 +271,13 @@ sub new {
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 		'0998' => ['send_equip', 'a2 V', [qw(ID type)]],#8
 		'09A1' => ['sync_received_characters'],
+		'09A7' => ['banking_deposit_request', 'a4 V', [qw(accountID zeny)]],
+		'09A9' => ['banking_withdraw_request', 'a4 V', [qw(accountID zeny)]],
+		'09AB' => ['banking_check_request', 'a4', [qw(accountID)]],
 		'09D0' => ['gameguard_reply'],
 		'09D4' => ['sell_buy_complete'],
+		'09D6' => ['buy_bulk_market', 'v a*', [qw(len buyInfo)]],
+		'09D8' => ['market_close'],
 		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
@@ -288,24 +294,31 @@ sub new {
 		'0A06' => ['rodex_remove_item', 'a2 v', [qw(ID amount)]],   # 6 -- RodexRemoveItem
 		'0A08' => ['rodex_open_write_mail', 'Z24', [qw(name)]],   # 26 -- RodexOpenWriteMail
 		'0A13' => ['rodex_checkname', 'Z24', [qw(name)]],   # 26 -- RodexCheckName
+		'0A19' => ['roulette_window_open'],
+		'0A1B' => ['roulette_info_request'],
+		'0A1D' => ['roulette_close'],
+		'0A1F' => ['roulette_start'],
+		'0A21' => ['roulette_claim_prize'],
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
+		'0A68' => ['open_ui_request', 'C', [qw(UIType)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0A76' => ['master_login', 'V Z40 a32 v', [qw(version username password_rijndael master_version)]],
-		'0A97' => ['equipswitch_add', 'v V', [qw(index position)]], # Add item to equipswitch
-		'0A99' => ['equipswitch_remove', 'v', [qw(index)]], # remove item in equipswitch
-		'0A9C' => ['equipswitch_run'], # switch Item !
+		'0A97' => ['equip_switch_add', 'a2 V', [qw(ID position)]], # Add item to equipswitch
+		'0A99' => ['equip_switch_remove', 'a2', [qw(ID)]], # remove item in equipswitch
+		'0A9C' => ['equip_switch_run'], # switch Item !
 		'0AA1' => ['refineui_select', 'a2' ,[qw(index)]],
 		'0AA3' => ['refineui_refine', 'a2 v C' ,[qw(index catalyst bless)]],
 		'0AA4' => ['refineui_close', '' ,[qw()]],
 		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]],
 		'0AC0' => ['rodex_open_mailbox', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]],  # 26 -- RodexOpenMailbox
 		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
-		'0ACE' => ['equipswitch_single', 'a2', [qw(index)]],
+		'0ACE' => ['equip_switch_single', 'a2', [qw(ID)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AE8' => ['change_dress'],
+		'0AEF' => ['attendance_reward_request'],
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
@@ -488,36 +501,6 @@ sub sendCaptchaInitiate {
 	my $msg = pack('v2', 0x07E5, 0x0);
 	$self->sendToServer($msg);
 	debug "Sending Captcha Initiate\n";
-}
-
-sub sendEquipswitchAdd {
-	my ($self,$index,$position) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'equipswitch_add',
-		index => $index,
-		position => $position
-	}));
-}
-
-sub sendEquipswitchRemove {
-	my ($self,$index) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'equipswitch_remove',
-		index => $index
-	}));
-}
-sub sendEquipswitchRun { #noidea T.T
-	my ($self) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'equipswitch_run'
-	}));
-}
-sub sendEquipswitchSingle {
-	my ($self,$index) = @_;
-	$self->sendToServer($self->reconstruct({
-		switch => 'equipswitch_single',
-		index => $index
-	}));
 }
 
 1;

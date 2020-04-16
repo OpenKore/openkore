@@ -815,6 +815,7 @@ sub getFormattedDate {
 # Year-Month-Day (0)
 # Hour:Minute:Second (1)
 # \&getFormattedDate (2)
+# YYYYMMDD (3)
 sub getFormattedDateShort {
 	my $thetime = shift;
 	my $mode = shift;
@@ -828,6 +829,8 @@ sub getFormattedDateShort {
 		$$r_date = sprintf("%4d-%02d-%02d", ($localtime[5] + 1900), $localtime[4] + 1, $localtime[3]);
 	} elsif ($mode == 1) {
 		$$r_date = sprintf("%02d:%02d:%02d", $localtime[2], $localtime[1], $localtime[0]);
+	} elsif($mode == 3) {
+		$$r_date = sprintf("%4d%02d%02d", ($localtime[5] + 1900), $localtime[4] + 1, $localtime[3]);
 	}
 	
 	return $$r_date;
