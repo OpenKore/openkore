@@ -1034,17 +1034,11 @@ sub get_kite_position {
 }
 
 ##
-# get_kite_position(field, actor, target, min_dist_from_target, move_distance_min, move_distance_max, master, max_dist_to_master)
-# field: Field object of the map 'actor' should kite on.
-# actor: reference to the actor which is kiting.
-# target: reference to the actor which you are kiting.
-# min_dist_from_target: the minimum distance 'actor' should keep from 'target'.
-# move_distance: the minimum distance which 'actor' should try to move away from 'target'.
-# move_distance: the maximum distance which 'actor' should try to move away from 'target'.
-# master: reference to the actor which is the master of 'actor', if 'actor' is a slave (homunculus or mercenary).
-# max_dist_to_master: the maximum distance 'actor' should move away from 'master'.
+# get_dance_position(slave, target)
+# slave: reference to the slave actor which is dancing.
+# target: reference to the target actor which you are attacking.
 #
-# Returns: reference to a hash containing both x and y coordinates of the best kite position found on success, and undef on failure
+# Returns: reference to a hash containing both x and y coordinates of the next dance position.
 #
 # Dance algorithm used in attack_dance
 # Based on AzzyAI dance
