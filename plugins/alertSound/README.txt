@@ -1,4 +1,4 @@
-Version 8
+Version 9
 
 alertSound($event)
 $event: unique event name
@@ -59,6 +59,7 @@ alertSound {
 	notInTown 1
 	inLockOnly 0
 	disabled 0
+	notPlayers 4epT, joseph
 	play plugins\alertSound\sounds\birds.wav
 	# other Self Conditions
 }
@@ -92,4 +93,5 @@ alertSound {
 	notInTown 1
 	timeout 5
 	isNotParty 1
+	notPlayers 4epT, joseph
 }

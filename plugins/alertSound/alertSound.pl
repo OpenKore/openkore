@@ -1,7 +1,7 @@
 # alertsound plugin by joseph
-# Modified by 4epT (15.04.2020)
+# Modified by 4epT (16.04.2020)
 #
-# Alert Plugin Version 8
+# Alert Plugin Version 9
 #
 # This software is open source, licensed under the GNU General Public
 # License, ver. (2 * (2 + cos(pi)))
@@ -28,6 +28,7 @@
 #		timeout 0
 #		# other Self Conditions
 #		isNotParty 1 << only works with eventList: player ***,  public ***
+#       notPlayers 4epT, joseph << only works with eventList: player ***,  private ***, public ***
 #	}
 ######################
 package alertsound;
@@ -139,9 +140,9 @@ sub player {
 	my (undef, $args) = @_;
 	my $name = $args->{player}{name};
 	my $id = $args->{player}{ID};
-	if (exist_eventList("player *", $id)) {
+	if (exist_eventList("player *", $name, $id)) {
 		alertSound("player *");
-	} elsif (exist_eventList("GM near", $id) and $name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+	} elsif (exist_eventList("GM near", $name, $id) and $name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
 		alertSound("GM near");
 	} else {
 		alertSound("player $name");
@@ -153,13 +154,16 @@ sub private {
 # eventList private avoidList chat (not working for ID)
 # eventList private chat
 	my (undef, $args) = @_;
-	my $event = "chat";
-	if (exist_eventList("private GM chat") and $args->{privMsgUser} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-		$event = "GM chat";
-	} elsif (exist_eventList("private avoidList chat") and $avoid{Players}{lc($args->{privMsgUser})}) {
-		$event = "avoidList chat";
+	my $name = $args->{privMsgUser};
+	my $event;
+	if (exist_eventList("private GM chat", $name) and $name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+		$event = "private GM chat";
+	} elsif (exist_eventList("private avoidList chat", $name) and $avoid{Players}{lc($name)}) {
+		$event = "private avoidList chat";
+	} elsif ( exist_eventList("private chat", $name) ) {
+		$event = "private chat";
 	}
-	alertSound("private $event");
+	alertSound($event) if $event;
 }
 
 sub public {
@@ -168,15 +172,16 @@ sub public {
 # eventList public npc chat
 # eventList public chat
 	my (undef, $args) = @_;
+	my $name = $args->{pubMsgUser};
 	my $id = $args->{pubID};
 	my $event;
-	if (exist_eventList("public GM chat") and $args->{pubMsgUser} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+	if (exist_eventList("public GM chat") and $name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
 		$event = "public GM chat";
-	} elsif (exist_eventList("public avoidList chat") and $avoid{Players}{lc($args->{pubMsgUser})}) {
+	} elsif (exist_eventList("public avoidList chat") and $avoid{Players}{lc($name)}) {
 		$event = "public avoidList chat";
 	} elsif (unpack("V", $id) == 0) {
 		$event = "public npc chat";
-	} elsif ( exist_eventList("public chat", $id) ) {
+	} elsif ( exist_eventList("public chat", $name, $id) ) {
 		$event = "public chat";
 	}
 	alertSound($event) if $event;
@@ -199,10 +204,12 @@ sub avoidList_near {
 
 sub exist_eventList {
 	my $event = shift;
+	my $name = shift;
 	my $id = shift;
 	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
 		next if (!$config{"alertSound_".$i."_eventList"});
 		next if ( $config{"alertSound_".$i."_isNotParty"} == 1 && $char->{party}{joined} && $char->{party}{users}{$id}{name});
+		next if ( $name && Utils::existsInList($config{"alertSound_".$i."_notPlayers"}, $name) );
 		if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, $event)
 		    && checkSelfCondition("alertSound_$i")) {
 			return 1;
