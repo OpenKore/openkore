@@ -1,4 +1,4 @@
-Version 7
+Version 9
 
 alertSound($event)
 $event: unique event name
@@ -13,6 +13,17 @@ Supported events:
 	public npc chat, public chat, system message, disconnected, item <item name>, item <item ID>, item cards, item *<part item name>*
 
 example config.txt:
+	alertSound {
+		eventList monster Poring
+		play plugins\alertSound\sounds\birds.wav
+		disabled 0
+		notInTown 0
+		inLockOnly 0
+		timeout 0
+		# other Self Conditions
+		notParty 1 << only works with eventList: player ***,  public ***
+		notPlayers 4epT, joseph << only works with eventList: player ***,  private ***, public ***
+	}
 
 alertSound {
 	eventList public GM chat
@@ -59,6 +70,7 @@ alertSound {
 	notInTown 1
 	inLockOnly 0
 	disabled 0
+	notPlayers 4epT, joseph
 	play plugins\alertSound\sounds\birds.wav
 	# other Self Conditions
 }
@@ -84,4 +96,13 @@ alertSound {
 	disabled 0
 	notInTown 1
 	timeout 5
+}
+alertSound {
+	eventList player *
+	play plugins\alertSound\sounds\beep.wav
+	disabled 0
+	notInTown 1
+	timeout 5
+	notParty 1
+	notPlayers 4epT, joseph
 }
