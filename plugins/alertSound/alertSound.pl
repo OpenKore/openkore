@@ -1,7 +1,7 @@
 # alertsound plugin by joseph
-# Modified by 4epT (08.10.2019)
+# Modified by 4epT (15.04.2020)
 #
-# Alert Plugin Version 7
+# Alert Plugin Version 8
 #
 # This software is open source, licensed under the GNU General Public
 # License, ver. (2 * (2 + cos(pi)))
@@ -27,13 +27,14 @@
 #		inLockOnly 0
 #		timeout 0
 #		# other Self Conditions
+#		isNotParty 1 << only works with eventList: player ***,  public ***
 #	}
 ######################
 package alertsound;
 
 use strict;
 use Plugins;
-use Globals qw($accountID %ai_v %avoid %config %cities_lut $field %items_lut $itemsList %players);
+use Globals qw($accountID %ai_v %avoid $char %cities_lut %config $field %items_lut $itemsList %players);
 use Log qw(message);
 use Misc qw(checkSelfCondition itemName);
 use Utils::Win32;
@@ -137,11 +138,10 @@ sub player {
 # eventList GM near
 	my (undef, $args) = @_;
 	my $name = $args->{player}{name};
-
-	if (exist_eventList("player *")) {
+	my $id = $args->{player}{ID};
+	if (exist_eventList("player *", $id)) {
 		alertSound("player *");
-		return;
-	} elsif (exist_eventList("GM near") and $name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+	} elsif (exist_eventList("GM near", $id) and $name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
 		alertSound("GM near");
 	} else {
 		alertSound("player $name");
@@ -164,18 +164,22 @@ sub private {
 
 sub public {
 # eventList public GM chat
+# eventList public avoidList chat (not working for ID)
 # eventList public npc chat
 # eventList public chat
 	my (undef, $args) = @_;
-	my $event = "chat";
+	my $id = $args->{pubID};
+	my $event;
 	if (exist_eventList("public GM chat") and $args->{pubMsgUser} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-		$event = "GM chat";
+		$event = "public GM chat";
 	} elsif (exist_eventList("public avoidList chat") and $avoid{Players}{lc($args->{pubMsgUser})}) {
-		$event = "avoidList chat";
-	} elsif (unpack("V", $args->{pubID}) == 0) {
-		$event = "npc chat";
+		$event = "public avoidList chat";
+	} elsif (unpack("V", $id) == 0) {
+		$event = "public npc chat";
+	} elsif ( exist_eventList("public chat", $id) ) {
+		$event = "public chat";
 	}
-	alertSound("public $event");
+	alertSound($event) if $event;
 }
 
 sub system_message {
@@ -195,8 +199,10 @@ sub avoidList_near {
 
 sub exist_eventList {
 	my $event = shift;
+	my $id = shift;
 	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
 		next if (!$config{"alertSound_".$i."_eventList"});
+		next if ( $config{"alertSound_".$i."_isNotParty"} == 1 && $char->{party}{joined} && $char->{party}{users}{$id}{name});
 		if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, $event)
 		    && checkSelfCondition("alertSound_$i")) {
 			return 1;

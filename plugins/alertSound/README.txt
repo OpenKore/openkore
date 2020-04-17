@@ -1,4 +1,4 @@
-Version 7
+Version 8
 
 alertSound($event)
 $event: unique event name
@@ -84,4 +84,12 @@ alertSound {
 	disabled 0
 	notInTown 1
 	timeout 5
+}
+alertSound {
+	eventList player *
+	play plugins\alertSound\sounds\beep.wav
+	disabled 0
+	notInTown 1
+	timeout 5
+	isNotParty 1
 }
