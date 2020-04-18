@@ -1413,10 +1413,10 @@ sub skill_used_no_damage {
 		if ($player && ($args->{skillID} == 28 || $args->{skillID} == 29 || $args->{skillID} == 34)) {
 			if ($args->{targetID} eq $accountID) {
 				chatLog("k", "***$source ".$skill->getName()." on $target$extra***\n");
-				sendMessage("pm", getResponse("skillgoodM"), $player->name);
+				sendMessage($messageSender, "pm", getResponse("skillgoodM"), $player->name);
 			} elsif ($monstersList->getByID($args->{targetID})) {
 				chatLog("k", "***$source ".$skill->getName()." on $target$extra***\n");
-				sendMessage("pm", getResponse("skillbadM"), $player->name);
+				sendMessage($messageSender, "pm", getResponse("skillbadM"), $player->name);
 			}
 		}
 	}

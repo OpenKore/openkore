@@ -1822,9 +1822,13 @@ sub actor_display {
 		# Actor is a homunculus or a mercenary
 		$actor = $slavesList->getByID($args->{ID});
 		if (!defined $actor) {
-			$actor = ($char->{slaves} && $char->{slaves}{$args->{ID}})
-			? $char->{slaves}{$args->{ID}} : $object_class->new();
-
+			$actor = 
+				($char->{slaves} && $char->{slaves}{$args->{ID}}) ?
+					$char->{slaves}{$args->{ID}} : 
+					(($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} eq $args->{ID}) ?
+						$char->{homunculus} :
+						$object_class->new());
+			
 			$actor->{appear_time} = time;
 			$actor->{name_given} = bytesToString($args->{name}) if exists $args->{name};
 			$actor->{jobID} = $args->{type} if exists $args->{type};
