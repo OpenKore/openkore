@@ -83,15 +83,38 @@ sub isIdle {
 	return 1;
 }
 
-sub isLost {
+sub mustRescue {
 	return 0 unless defined $char;
 	
 	foreach my $slave (values %{$char->{slaves}}) {
 		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
-			return 1 if $slave->isLost;
+			return $slave if ($slave->isLost && $slave->mustRescue);
 		}
 	}
-	return 0;
+	return undef;
+}
+
+sub mustStopForAttack {
+	return 0 unless defined $char;
+	
+	foreach my $slave (values %{$char->{slaves}}) {
+		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
+			return $slave if ($slave->action eq "attack" && $config{$slave->{configPrefix}.'route_randomWalk_stopDuringAttack'});
+		}
+	}
+	return undef;
+}
+
+sub mustMoveNear {
+	return 0 unless defined $char;
+	
+	foreach my $slave (values %{$char->{slaves}}) {
+		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
+			my $dist = $slave->blockDistance_master;
+			return $slave if ($config{$slave->{configPrefix}.'moveNearWhenIdle'} && !$slave->isIdle && $dist > ($config{$slave->{configPrefix}.'moveNearWhenIdle_maxDistance'} || 8));
+		}
+	}
+	return undef;
 }
 
 sub setMapChanged {

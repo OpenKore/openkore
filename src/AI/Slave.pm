@@ -134,6 +134,12 @@ sub isLost {
 	return 0;
 }
 
+sub mustRescue {
+	my $slave = shift;
+	return 1 if ($config{$slave->{configPrefix}.'lost_rescue_randomWalk'});
+	return 0;
+}
+
 sub iterate {
 	my $slave = shift;
 	

@@ -198,7 +198,6 @@ route_escape_randomWalk 1
 route_escape_shout
 route_avoidWalls 1
 route_randomWalk 1
-route_randomWalk_stopDuringSlaveAttack 0
 route_randomWalk_waitSlaveMinDistance 0
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
@@ -377,6 +376,8 @@ mercenary_attackChangeTarget 1
 mercenary_attack_dance_melee 0
 mercenary_attack_dance_ranged 0
 
+mercenary_route_randomWalk_stopDuringAttack 0
+
 mercenary_runFromTarget 0
 mercenary_runFromTarget_dist 5
 mercenary_runFromTarget_minStep 7
@@ -427,6 +428,8 @@ homunculus_attackCheckLOS 0
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 homunculus_attack_dance_melee 0
+
+homunculus_route_randomWalk_stopDuringAttack 0
 
 homunculus_runFromTarget 0
 homunculus_runFromTarget_dist 5
