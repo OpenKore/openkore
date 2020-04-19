@@ -326,12 +326,11 @@ sub iterate {
 
 				} else {
 				
-					if ($self->{actor}->isa('Actor::You') && $self->{isRandomWalk} && $config{route_randomWalk_waitSlaveMinDistance} && $self->{actor}{slaves}) {
-						foreach my $slave (values %{$self->{actor}{slaves}}) {
-							if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
-								next if ($slave->blockDistance_master <= $config{route_randomWalk_waitSlaveMinDistance});
-								return;
-							}
+					if ($self->{actor}->isa('Actor::You') && $self->{isRandomWalk} && $self->{actor}{slaves}) {
+						my $slave = AI::SlaveManager::mustWaitMinDistance();
+						if (defined $slave) {
+							debug TF("Waiting for slave %s before next randomWalk step.\n", $slave), 'slave', 2;
+							return;
 						}
 					}
 				

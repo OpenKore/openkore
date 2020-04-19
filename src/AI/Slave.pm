@@ -136,7 +136,7 @@ sub isLost {
 
 sub mustRescue {
 	my $slave = shift;
-	return 1 if ($config{$slave->{configPrefix}.'lost_rescue_randomWalk'});
+	return 1 if ($config{$slave->{configPrefix}.'route_randomWalk_rescueWhenLost'});
 	return 0;
 }
 

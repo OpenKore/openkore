@@ -198,7 +198,6 @@ route_escape_randomWalk 1
 route_escape_shout
 route_avoidWalls 1
 route_randomWalk 1
-route_randomWalk_waitSlaveMinDistance 0
 route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
@@ -376,7 +375,11 @@ mercenary_attackChangeTarget 1
 mercenary_attack_dance_melee 0
 mercenary_attack_dance_ranged 0
 
+mercenary_lost_teleportToMaster_maxTries 6
+
+mercenary_route_randomWalk_rescueWhenLost 0
 mercenary_route_randomWalk_stopDuringAttack 0
+mercenary_route_randomWalk_waitMinDistance 0
 
 mercenary_runFromTarget 0
 mercenary_runFromTarget_dist 5
@@ -385,9 +388,6 @@ mercenary_runFromTarget_maxStep 9
 
 mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
-
-mercenary_lost_teleportToMaster_maxTries 6
-mercenary_lost_rescue_randomWalk 0
 
 mercenary_moveNearWhenIdle 1
 mercenary_moveNearWhenIdle_minDistance 4
@@ -429,7 +429,11 @@ homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 homunculus_attack_dance_melee 0
 
+homunculus_lost_teleportToMaster_maxTries 6
+
+homunculus_route_randomWalk_rescueWhenLost 0
 homunculus_route_randomWalk_stopDuringAttack 0
+homunculus_route_randomWalk_waitMinDistance 0
 
 homunculus_runFromTarget 0
 homunculus_runFromTarget_dist 5
@@ -438,9 +442,6 @@ homunculus_runFromTarget_maxStep 9
 
 homunculus_followDistanceMax 12
 homunculus_followDistanceMin 3
-
-homunculus_lost_teleportToMaster_maxTries 6
-homunculus_lost_rescue_randomWalk 0
 
 homunculus_moveNearWhenIdle 1
 homunculus_moveNearWhenIdle_minDistance 4

@@ -117,6 +117,18 @@ sub mustMoveNear {
 	return undef;
 }
 
+sub mustWaitMinDistance {
+	return 0 unless defined $char;
+	
+	foreach my $slave (values %{$char->{slaves}}) {
+		if ($slave && %{$slave} && $slave->isa ('AI::Slave')) {
+			my $dist = $slave->blockDistance_master;
+			return $slave if ($config{$slave->{configPrefix}.'route_randomWalk_waitMinDistance'} && $dist > $config{$slave->{configPrefix}.'route_randomWalk_waitMinDistance'});
+		}
+	}
+	return undef;
+}
+
 sub setMapChanged {
 	return unless defined $char;
 	
