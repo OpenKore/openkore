@@ -410,6 +410,11 @@ homunculus_attackCheckLOS 0
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 
+homunculus_runFromTarget 0
+homunculus_runFromTarget_dist 5
+homunculus_runFromTarget_minStep 7
+homunculus_runFromTarget_maxStep 9
+
 homunculus_followDistanceMax 10
 homunculus_followDistanceMin 3
 
@@ -417,11 +422,6 @@ homunculus_route_step 15
 
 homunculus_tankMode 0
 homunculus_tankModeTarget
-
-homunculus_runFromTarget 0
-homunculus_runFromTarget_dist 5
-homunculus_runFromTarget_minStep 7
-homunculus_runFromTarget_maxStep 9
 
 homunculus_StandByAuto 0
 homunculus_teleportAuto_hp 10
