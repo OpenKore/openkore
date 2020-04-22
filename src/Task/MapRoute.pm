@@ -261,7 +261,9 @@ sub iterate {
 				avoidWalls => $self->{avoidWalls},
 				distFromGoal => $self->{distFromGoal},
 				pyDistFromGoal => $self->{pyDistFromGoal},
-				solution => \@solution
+				solution => \@solution,
+				isRandomWalk => $self->{isRandomWalk},
+				isSlaveRescue => $self->{isSlaveRescue}
 			);
 			$self->setSubtask($task);
 			$self->{mapSolution}[0]{routed} = 1;
@@ -330,7 +332,9 @@ sub iterate {
 							y => $self->{guess_portal}{pos}{y},
 							maxTime => $self->{maxTime},
 							avoidWalls => $self->{avoidWalls},
-							solution => \@solution
+							solution => \@solution,
+							isRandomWalk => $self->{isRandomWalk},
+							isSlaveRescue => $self->{isSlaveRescue}
 						);
 						$self->setSubtask($task);
 						
@@ -441,7 +445,9 @@ sub iterate {
 						y => $self->{mapSolution}[0]{pos}{y},
 						maxTime => $self->{maxTime},
 						avoidWalls => $self->{avoidWalls},
-						solution => \@solution
+						solution => \@solution,
+						isRandomWalk => $self->{isRandomWalk},
+						isSlaveRescue => $self->{isSlaveRescue}
 					);
 					$self->setSubtask($task);
 
@@ -511,7 +517,9 @@ sub subtaskDone {
 					maxTime => $self->{maxTime},
 					avoidWalls => $self->{avoidWalls},
 					distFromGoal => $self->{distFromGoal},
-					pyDistFromGoal => $self->{pyDistFromGoal}
+					pyDistFromGoal => $self->{pyDistFromGoal},
+					isRandomWalk => $self->{isRandomWalk},
+					isSlaveRescue => $self->{isSlaveRescue}
 				);
 				$self->setSubtask($task);
 			}

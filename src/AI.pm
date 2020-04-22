@@ -390,6 +390,8 @@ sub ai_slave_getAggressives {
 			my $myPos = calcPosition($slave);
 			my $pos = calcPosition($monster);
 
+			next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
+
 			next if (($type && $control->{attack_auto} == 2)
 				&& (($config{$slave->{configPrefix}.'attackCanSnipe'}) ? !Misc::checkLineSnipable($myPos, $pos) : (!Misc::checkLineWalkable($myPos, $pos) || !Misc::checkLineSnipable($myPos, $pos)))
 				&& !$monster->{dmgToPlayer}{$slave->{ID}} && !$monster->{missedToPlayer}{$slave->{ID}} && !$monster->{dmgFromPlayer}{$slave->{ID}} && !$monster->{missedFromPlayer}{$slave->{ID}}

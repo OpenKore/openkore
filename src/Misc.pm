@@ -79,7 +79,8 @@ our @EXPORT = (
 	objectInsideSpell
 	objectIsMovingTowards
 	objectIsMovingTowardsPlayer
-	get_kite_position/,
+	get_kite_position
+	get_dance_position/,
 
 	# Inventory management
 	qw/inInventory
@@ -121,6 +122,7 @@ our @EXPORT = (
 	checkAllowedMap
 	checkFollowMode
 	checkMonsterCleanness
+	slave_checkMonsterCleanness
 	createCharacter
 	deal
 	dealAddItem
@@ -212,7 +214,8 @@ our @EXPORT = (
 	toBase62
 	fromBase62
 	solveItemLink
-	solveMessage/,
+	solveMessage
+	absunit/,
 	
 	# Npc buy and sell
 	qw/cancelNpcBuySell
@@ -1030,6 +1033,111 @@ sub get_kite_position {
 	return undef;
 }
 
+##
+# get_dance_position(slave, target)
+# slave: reference to the slave actor which is dancing.
+# target: reference to the target actor which you are attacking.
+#
+# Returns: reference to a hash containing both x and y coordinates of the next dance position.
+#
+# Dance algorithm used in attack_dance
+# Based on AzzyAI dance
+sub get_dance_position {
+	my ($slave, $target) = @_;
+	my ($newx, $newy, $dy, $dx);
+
+	my $slave_pos = calcPosition($slave);
+	my $enemy_pos = calcPosition($target);
+
+	my $t = int(rand(2));
+
+	my %dance_pos;
+	
+	if ($t == 1) {
+		if ($slave_pos->{x} == $enemy_pos->{x}) {
+			if ($slave_pos->{y} == $enemy_pos->{y}) {
+				$newx = $enemy_pos->{x} + 1;
+				$newy = $enemy_pos->{y};
+			} else {
+				$dy = $slave_pos->{y} - $enemy_pos->{y};
+				$newx = $slave_pos->{x} + absunit($dy);
+				$newy = $slave_pos->{y};
+			}
+		} elsif ($slave_pos->{y} == $enemy_pos->{y}) {
+			$dx = $slave_pos->{x} - $enemy_pos->{x};
+			$newy = $slave_pos->{y} - absunit($dx);
+			$newx = $slave_pos->{x};
+		} elsif ($slave_pos->{y} > $enemy_pos->{y}) {
+			if ($slave_pos->{x} > $enemy_pos->{x}) {
+				$newy = $slave_pos->{y} - 1;
+				$newx = $slave_pos->{x};
+			} else {
+				$newy = $slave_pos->{y};
+				$newx = $slave_pos->{x} + 1;
+			}
+		} else {
+			if ($slave_pos->{x} > $enemy_pos->{x}) {
+				$newx = $slave_pos->{x} - 1;
+				$newy = $slave_pos->{y};
+			} else {
+				$newx = $slave_pos->{x};
+				$newy = $slave_pos->{y} + 1;
+			}
+		}
+
+		%dance_pos = (
+			x => $newx,
+			y => $newy,
+		);
+		
+	} elsif ($t == 2) {
+		if ($slave_pos->{x} == $enemy_pos->{x}) {
+			if ($slave_pos->{y} == $enemy_pos->{y}) {
+				$newx = $enemy_pos->{x} - 1;
+				$newy = $enemy_pos->{y};
+			} else {
+				$dy = $slave_pos->{y} - $enemy_pos->{y};
+				$newx = $slave_pos->{x} - absunit($dy);
+				$newy = $slave_pos->{y};
+			}
+		} elsif ($slave_pos->{y} == $enemy_pos->{y}) {
+			$dx = $slave_pos->{x} - $enemy_pos->{x};
+			$newy = $slave_pos->{y} + absunit($dx);
+			$newx = $slave_pos->{x};
+		} elsif ($slave_pos->{y} > $enemy_pos->{y}) {
+			if ($slave_pos->{x} > $enemy_pos->{x}) {
+				$newy = $slave_pos->{y};
+				$newx = $slave_pos->{x} - 1;
+			} else {
+				$newy = $slave_pos->{y} - 1;
+				$newx = $slave_pos->{x};
+			}
+		} else {
+			if ($slave_pos->{x} > $enemy_pos->{x}) {
+				$newx = $slave_pos->{x};
+				$newy = $slave_pos->{y} + 1;
+			} else {
+				$newx = $slave_pos->{x} + 1;
+				$newy = $slave_pos->{y};
+			}
+		}
+
+		%dance_pos = (
+			x => $newx,
+			y => $newy,
+		);
+		
+	} else {
+		$dx = $enemy_pos->{x} - $slave_pos->{x};
+		$dy = $enemy_pos->{y} - $slave_pos->{y};
+		%dance_pos = (
+			x => $slave_pos->{x} + (2 * $dx),
+			y => $slave_pos->{y} + (2 * $dy),
+		);
+	}
+	
+	return \%dance_pos;
+}
 
 #########################################
 #########################################
@@ -1753,6 +1861,91 @@ sub checkMonsterCleanness {
 	# The monster didn't attack you.
 	# Other players attacked it, or it attacked other players.
 	if ($monster->{dmgFromYou} || $monster->{missedFromYou}) {
+		# If you have already attacked the monster before, then consider it clean
+		return 1;
+	}
+	# If you haven't attacked the monster yet, it's unclean.
+
+	return 0;
+}
+
+sub slave_checkMonsterCleanness {
+	my ($slave, $ID) = @_;
+	return 1 if (!$config{$slave->{configPrefix}.'attackAuto'});
+	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
+	my $monster = $monstersList->getByID($ID);
+
+	# If party attacked monster, or if monster attacked/missed party
+	# Since openKore considers the slave as a member of the player party this won't work for now
+	#if ($config{$slave->{configPrefix}.'attackAuto_party'} && ($monster->{dmgFromParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0)) {
+	#	return 1;
+	#}
+
+	if ($config{aggressiveAntiKS}) {
+		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
+
+		# If we attacked the monster first, do not drop it, we are being KSed
+		return 1 if ($monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}});
+		
+		# If others attacked the monster then always drop it, wether it attacked us or not!
+		return 0 if (
+			     (grep { $_ ne $slave->{ID} } keys %{$monster->{dmgFromPlayer}})
+			  || (grep { $_ ne $slave->{ID} } keys %{$monster->{missedFromPlayer}})
+			  || (grep { $_ ne $slave->{ID} } keys %{$monster->{castOnByPlayer}})
+			  || (grep { $_ ne $slave->{ID} } keys %{$monster->{castOnToPlayer}})
+		);
+	}
+	
+	# If monster attacked/missed you
+	return 1 if ($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}});
+
+	if (objectInsideSpell($monster)) {
+		# Prohibit attacking this monster in the future
+		$monster->{dmgFromPlayer}{$char->{ID}} = 1;
+		return 0;
+	}
+
+	#check party casting on mob
+	my $allowed = 1; 
+	if (scalar(keys %{$monster->{castOnByPlayer}}) > 0) 
+	{ 
+		foreach (keys %{$monster->{castOnByPlayer}}) 
+		{ 
+			my $ID1=$_; 
+			my $source = Actor::get($_); 
+			unless ( existsInList($config{tankersList}, $source->{name}) || 
+				($char->{party}{joined} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) 
+			{ 
+				$allowed = 0; 
+				last; 
+			} 
+		} 
+	} 
+
+	# If monster hasn't been attacked by other players
+	if (
+		   scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{missedFromPlayer}}) == 0
+		&& scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{dmgFromPlayer}}) == 0
+		&& $allowed
+
+	 # and it hasn't attacked any other player
+		&& scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{missedToPlayer}}) == 0
+		&& scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{dmgToPlayer}})    == 0
+		&& scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{castOnToPlayer}}) == 0
+	) {
+		# The monster might be getting lured by another player.
+		# So we check whether it's walking towards any other player, but only
+		# if we haven't already attacked the monster.
+		if ($monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) {
+			return 1;
+		} else {
+			return !objectIsMovingTowardsPlayer($monster);
+		}
+	}
+
+	# The monster didn't attack you.
+	# Other players attacked it, or it attacked other players.
+	if ($monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) {
 		# If you have already attacked the monster before, then consider it clean
 		return 1;
 	}
@@ -5326,6 +5519,17 @@ sub solveMessage {
 		$msg =~ s/<ITEML>([a-zA-Z0-9\%\&\(\,\+\*]*)<\/ITEML>/solveItemLink($1)/eg;
 	}
 	return $msg;
+}
+
+sub absunit {
+	my ($x) = @_;
+	if ($x == 0) {
+		return 0;
+	} elsif ($x > 0) {
+		return 1;
+	} else {
+		return -1;
+	}
 }
 
 return 1;
