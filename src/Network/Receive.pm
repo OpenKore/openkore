@@ -1515,7 +1515,6 @@ sub stat_info {
 		'00BE' => $char,
 		'0141' => $char,
 		'01AB' => exists $args->{ID} && Actor::get($args->{ID}),
-		'02A2' => $char->{mercenary},
 		'07DB' => $char->{homunculus},
 		'0ACB' => $char,
 	}->{$args->{switch}};
@@ -1525,6 +1524,13 @@ sub stat_info {
 			$char->{elemental} = new Actor::Elemental;
 		}
 		$actor = $char->{elemental}; # Sorcerer's Spirit
+	}
+
+	if($args->{switch} eq "02A2") {
+		if(!$char->{mercenary}) {
+			$char->{mercenary} = new Actor::Slave::Mercenary;
+		}
+		$actor = $char->{mercenary};
 	}
 
 	unless ($actor) {
@@ -1822,12 +1828,15 @@ sub actor_display {
 		# Actor is a homunculus or a mercenary
 		$actor = $slavesList->getByID($args->{ID});
 		if (!defined $actor) {
-			$actor = 
-				($char->{slaves} && $char->{slaves}{$args->{ID}}) ?
-					$char->{slaves}{$args->{ID}} : 
-					(($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} eq $args->{ID}) ?
-						$char->{homunculus} :
-						$object_class->new());
+			if ($char->{slaves} && $char->{slaves}{$args->{ID}}) {
+				$actor = $char->{slaves}{$args->{ID}};
+			} elsif ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} eq $args->{ID}) {
+				$actor = $char->{homunculus};
+			} elsif ($char->{mercenary} && ($char->{mercenary}{ID} && $char->{mercenary}{ID} eq $args->{ID})) {
+				$actor = $char->{mercenary};
+			} else {
+				$actor = $object_class->new();
+			}
 			
 			$actor->{appear_time} = time;
 			$actor->{name_given} = bytesToString($args->{name}) if exists $args->{name};
@@ -10359,11 +10368,8 @@ sub storage_password_result {
 sub mercenary_init {
 	my ($self, $args) = @_;
 
-	$char->{mercenary} = Actor::get ($args->{ID}); # TODO: was it added to an actorList yet?
+	$char->{mercenary} = Actor::get($args->{ID}) if ($char->{mercenary}{ID} ne $args->{ID});
 	$char->{mercenary}{map} = $field->baseName;
-	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
-		AI::SlaveManager::addSlave ($char->{mercenary});
-	}
 
 	my $slave = $char->{mercenary};
 
@@ -10373,6 +10379,14 @@ sub mercenary_init {
 	$slave->{name} = bytesToString($args->{name});
 
 	Network::Receive::slave_calcproperty_handler($slave, $args);
+
+	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
+		if ($char->{mercenary}->isa('AI::Slave::Mercenary')) {
+			# After a teleport the mercenary object is still AI::Slave::Mercenary, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Mercenary, so we change it back
+			bless $char->{mercenary}, 'Actor::Slave::Mercenary';
+		}
+		AI::SlaveManager::addSlave ($char->{mercenary});
+	}
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
