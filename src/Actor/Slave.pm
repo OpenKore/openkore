@@ -21,6 +21,7 @@ use Actor;
 use Globals;
 use base qw/Actor/;
 use ErrorHandler;
+use Utils;
 
 sub new {
 	my ($class, $type) = @_;
@@ -32,6 +33,12 @@ sub new {
 	}
 	
 	die "Requested new Actor::Slave with unset type, this is not allowed\n";
+}
+
+sub blockDistance_master {
+	my ($self) = @_;
+
+	return blockDistance($self->position, $char->position);;
 }
 
 ##

@@ -152,6 +152,9 @@ sub iterate {
 
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
+	processRescueSlave();
+	processRandomWalk_stopDuringSlaveAttack();
+	processMoveNearSlave();
 	processRandomWalk();
 	processFollow();
 	Benchmark::end("AI (part 3.2)") if DEBUG;
@@ -2227,6 +2230,50 @@ sub processLockMap {
 					ai_route($config{'lockMap'}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
 				}
 			}
+		}
+	}
+}
+
+sub processRescueSlave {
+	if (
+		(AI::isIdle || (AI::is('route') && AI::args()->{isRandomWalk}))
+		&& $char->{slaves}
+	) {
+		my $slave = AI::SlaveManager::mustRescue();
+		if (defined $slave) {
+			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
+			ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1, isSlaveRescue => 1);
+			warning TF("%s got lost during randomWalk (distance: %d) - Rescuing it.\n", $slave, $slave->blockDistance_master), 'slave';
+			return;
+		}
+	}
+}
+
+# route_randomWalk_stopDuringSlaveAttack
+sub processRandomWalk_stopDuringSlaveAttack {
+	if (AI::is('route') && AI::args()->{isRandomWalk}
+		&& $char->{slaves}
+		&& !AI::SlaveManager::isIdle()
+	){
+		my $slave = AI::SlaveManager::mustStopForAttack();
+		if (defined $slave) {
+			message TF("%s started attacking during randomWalk - Stoping movement for it.\n", $slave), 'slave';
+			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
+		}
+	}
+}
+
+sub processMoveNearSlave {
+	if (
+		AI::isIdle
+		&& $char->{slaves}
+		&& !AI::SlaveManager::isIdle()
+	) {
+	
+		my $slave = AI::SlaveManager::mustMoveNear();
+		if (defined $slave) {
+			ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'moveNearWhenIdle_minDistance'} || 4), attackOnRoute => 1, noSitAuto => 1, isMoveNearSlave => 1);
+			message TF("%s moved too far - Moving near it.\n", $slave), 'slave';
 		}
 	}
 }
