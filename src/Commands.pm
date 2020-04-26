@@ -1258,7 +1258,7 @@ sub cmdBank {
 		}
 	} elsif ( $command eq "withdraw" ) {
 		if( $zeny =~ /\d+/ ) {
-			$messageSender->sendBankingWithdraw($accountID, $zeny);			
+			$messageSender->sendBankingWithdraw($accountID, $zeny);
 		} else {
 			error T("Syntax Error in function 'bank' (Banking)\n" .
 				"bank withdraw <amount>\n");
@@ -2703,12 +2703,12 @@ sub cmdFriend {
 				error TF("%s is already your friend\n", $player->{name});
 			} else {
 				message TF("Requesting %s to be your friend\n", $player->{name});
-				$messageSender->sendFriendRequest($players{$playersID[$arg2]}{name});
+				$messageSender->sendFriendRequest($player->{name});
 			}
 		}
 
 	} elsif ($arg1 eq "remove") {
-		if ($arg2 < 1 || $arg2 > @friendsID) {
+		if ($arg2 !~ /^\d+$/ || $arg2 < 1 || $arg2 > @friendsID) {
 			error TF("Friend #%s does not exist\n", $arg2);
 		} else {
 			$arg2--;
@@ -2735,7 +2735,7 @@ sub cmdFriend {
 		}
 
 	} elsif ($arg1 eq "pm") {
-		if ($arg2 < 1 || $arg2 > @friendsID) {
+		if ($arg2 !~ /^\d+$/ || $arg2 < 1 || $arg2 > @friendsID) {
 			error TF("Friend #%s does not exist\n", $arg2);
 		} else {
 			$arg2--;
@@ -5906,7 +5906,7 @@ sub cmdUnequip {
 
 sub cmdUnequipSwitch {
 
-	# unequip an item	
+	# unequip an item
 	my (undef, $args) = @_;
 	my ($arg1,$arg2) = $args =~ /^(\S+)\s*(.*)/;
 	my $slot;
