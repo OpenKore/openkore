@@ -512,15 +512,17 @@ sub parseItemsControl {
 	my $reader = new Utils::TextReader($file);
 	until ($reader->eof) {
 		my $line = lc $reader->readLine;
+		chomp $line;
 		next if $line =~ /^\s*#/;
 
-		chomp $line;
-		if (($key, $args_text) = extract_delimited($line) and $key) {
+		if($line =~ /^[\s0-9]+/) {
+			($key, $args_text) = $line =~ /^(\d+)\s(.*)$/;
+		} elsif(($key, $args_text) = extract_delimited($line) and $key) {
 			$key =~ s/^.|.$//g;
 			$args_text =~ s/^\s+//;
-		} elsif ($line =~ /^[\s0-9]+$/) {
-			($key, $args_text) = $line =~ /^(\d+)\s(.*)$/;
 		} else {
+			$line =~ s/#.*//;
+			chomp $line;
 			my @reverseString = reverse(split(//, $line));
 			my $separator = length $line;
 
@@ -535,6 +537,8 @@ sub parseItemsControl {
 		}
 
 		next if $key =~ /^$/;
+		$args_text =~ s/#.*//;
+		chomp $args_text;
 		my @args = split /\s+/, $args_text;
 		# Cache similar entries to save memory.
 		$r_hash->{$key} = $cache{$args_text} ||= { map {$_ => shift @args} qw(keep storage sell cart_add cart_get) };
