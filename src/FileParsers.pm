@@ -521,7 +521,8 @@ sub parseItemsControl {
 			$key =~ s/^.|.$//g;
 			$args_text =~ s/^\s+//;
 		} else {
-			$line =~ s/\s#.*//;
+			$line =~ s/#.*//;
+			chomp $line;
 			my @reverseString = reverse(split(//, $line));
 			my $separator = length $line;
 
@@ -536,7 +537,8 @@ sub parseItemsControl {
 		}
 
 		next if $key =~ /^$/;
-		$args_text =~ s/\s#.*//;
+		$args_text =~ s/#.*//;
+		chomp $args_text;
 		my @args = split /\s+/, $args_text;
 		# Cache similar entries to save memory.
 		$r_hash->{$key} = $cache{$args_text} ||= { map {$_ => shift @args} qw(keep storage sell cart_add cart_get) };
