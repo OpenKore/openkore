@@ -3512,7 +3512,7 @@ sub helpIndent {
 	my @words;
 	my $length = 0;
 
-	$message = center(TF(" Help for '%s' ", $cmd), 79, "=")."\n";
+	$message = center(TF(" Help for '%s' ", $cmd), 119, "=")."\n";
 	$message .= shift(@tmp) . "\n";
 
 	foreach (@tmp) {
@@ -3523,12 +3523,12 @@ sub helpIndent {
 	my $pad = sprintf("%-${padsize}s", '');
 
 	foreach (@tmp) {
-		if ($padsize + length($_->[1]) > 79) {
+		if ($padsize + length($_->[1]) > 120) {
 			@words = split(/ /, $_->[1]);
 			$message .= sprintf("$cmd %-${length}s    ", $_->[0]);
 			$messageTmp = '';
 			foreach my $word (@words) {
-				if ($padsize + length($messageTmp) + length($word) + 1 > 79) {
+				if ($padsize + length($messageTmp) + length($word) + 1 > 119) {
 					$message .= $messageTmp . "\n$pad";
 					$messageTmp = "$word ";
 				} else {
@@ -3541,7 +3541,7 @@ sub helpIndent {
 			$message .= sprintf($pattern, $_->[0], $_->[1]);
 		}
 	}
-	$message .= "=" x 79 . "\n";
+	$message .= "=" x 119 . "\n";
 	message $message, "list";
 }
 
