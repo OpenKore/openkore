@@ -614,7 +614,7 @@ sub initHandlers {
 		['verbose', T("Toggle verbose on/off."), \&cmdVerbose],
 		['version', T("Display the version of openkore."), \&cmdVersion],
 		['vl', T("List nearby vending shops."), \&cmdVenderList],
-		['vs', undef, \&cmdShopInfoSelf],
+		['vs', T("Display the status of your vending shop."), \&cmdShopInfoSelf],
 		['warp', [
 			T("Open warp portal."),
 			["list", T("lists available warp portals to open")],
