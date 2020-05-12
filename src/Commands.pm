@@ -731,7 +731,15 @@ sub initHandlers {
 		['cm', undef, \&cmdExchangeItem],
 		['analysis', undef, \&cmdExchangeItem],
 
-		['searchstore', undef, \&cmdSearchStore],
+		['searchstore', [
+			T("Universal catalog command"),
+			["close", T("Closes search store catalog")],
+			["next", T("Requests catalog next page")],
+			["view <page #>", T("Shows catalog page # (0-indexed)")],
+			["search [match|exact] ...", T("Searches for an item")],
+			["select <page #> <store #>", T("Selects a store")],
+			["buy [view|end|<item #> [<amount>]]", T("Buys from a store using Universal Catalog Gold")],
+			], \&cmdSearchStore],
 		['pause', [
 			T("Delay the next console commands."),
 			[T("<seconds>"), T("delay the next console commands by a specified number of seconds (default: 1 sec.)")]
