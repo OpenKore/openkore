@@ -161,8 +161,12 @@ sub initHandlers {
 			[T("<key>"), T("displays value of <key>")],
 			[T("<key> <value>"), T("sets value of <key> to <value>")],
 			[T("<key> none"), T("unsets <key>")],
-			[T("<label.attribute> <value>"), T("set a new value for the specified configuration key through label")],
-			[T("<label.attribute> none"), T("unset the specified configuration key through label")]
+			[T("<label>.<attribute>"), T("displays value of the specified configuration key through label")],
+			[T("<label>.<attribute> <value>"), T("set a new value for the specified configuration key through label")],
+			[T("<label>.<attribute> none"), T("unset the specified configuration key through label")],
+			[T("<label>.block"), T("display the current value of the specified block")],
+			[T("<label>.block <value>"), T("set a new value for the specified block through <label>")],
+			[T("<label>block none"), T("unset the specified block through <label>")]
 			], \&cmdConf],
 		['connect', undef, \&cmdConnect],
 		['create', undef, \&cmdCreate],
