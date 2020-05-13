@@ -7049,11 +7049,19 @@ sub cmdRodex {
 
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex write' (Start writting a rodex mail)\n" .
-				"Usage: rodex write <player_name>\n");
+				"Usage: rodex write <player_name>|self|none\n");
 			return;
+		} elsif ($arg2 eq "self") {
+			debug "Send rodex mail to yourself\n";
+			$arg2 = $char->{'name'};
+		}
+		if ($arg2 eq "none") {
+			undef $arg2;
+			message T("Opening rodex mail write box. No recipient specified.\n");
+		} else {
+			message TF("Opening rodex mail write box. Recipient: %s\n", $arg2);
 		}
 
-		message T("Opening rodex mail write box.\n");
 		$messageSender->rodex_open_write_mail($arg2);
 
 	} elsif ($arg1 eq 'cancel') {
@@ -7084,8 +7092,11 @@ sub cmdRodex {
 
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex settarget' (Set target of rodex mail)\n" .
-				"Usage: rodex settarget <player_name>\n");
+				"Usage: rodex settarget <player_name>|self\n");
 			return;
+		} elsif ($arg2 eq "self") {
+			debug "Send rodex mail to yourself\n";
+			$arg2 = $char->{'name'};
 		}
 
 		message TF("Setting target of rodex mail to '%s'.\n", $arg2);
