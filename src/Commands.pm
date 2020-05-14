@@ -455,7 +455,11 @@ sub initHandlers {
 			["recompile", T("recompile portals")],
 			["add", T("add new portals: <map1> <x> <y> <map2> <x> <y>")],
 			], \&cmdPortalList],
-		['quit', T("Exit this program."), \&cmdQuit],
+		['quit', [
+			T("Exit this program."),
+			["", T("exit this program")],
+			["2", T("send a special package 'quit_request' to the server, then exit this program")],
+			], \&cmdQuit],
 		['rc', [
 			T("Reload source code files."),
 			["", T("reload functions.pl")],
@@ -4899,6 +4903,10 @@ sub cmdPrivateMessage {
 }
 
 sub cmdQuit {
+	my (undef, $args) = @_;
+	if ($args eq "2") {
+		$messageSender->sendQuit();
+	}
 	quit();
 }
 
