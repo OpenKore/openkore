@@ -487,8 +487,8 @@ sub initHandlers {
 			["read <mail_id>", T("open the selected Rodex mail")],
 			["getitems", T("request ang get items of current rodex mail")],
 			["getzeny", T("request ang get zeny of current rodex mail")],
-			["write <player_name>", T("open a box to start write a rodex mail")],
-			["settarget <player_name>", T("set target of rodex mail")],
+			["write <player_name|self|none>", T("open a box to start write a rodex mail")],
+			["settarget <player_name|self>", T("set target of rodex mail")],
 			["itemslist", T("show current list of items in mail box that you are writting")],
 			["settitle <title>", T("show current list of items in mail box that you are writting")],
 			["setbody <body>", T("set rodex mail body")],
@@ -7049,7 +7049,7 @@ sub cmdRodex {
 
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex write' (Start writting a rodex mail)\n" .
-				"Usage: rodex write <player_name>|self|none\n");
+				"Usage: rodex write <player_name|self|none>\n");
 			return;
 		} elsif ($arg2 eq "self") {
 			debug "Send rodex mail to yourself\n";
@@ -7092,7 +7092,7 @@ sub cmdRodex {
 
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex settarget' (Set target of rodex mail)\n" .
-				"Usage: rodex settarget <player_name>|self\n");
+				"Usage: rodex settarget <player_name|self>\n");
 			return;
 		} elsif ($arg2 eq "self") {
 			debug "Send rodex mail to yourself\n";
