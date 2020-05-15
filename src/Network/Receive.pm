@@ -8155,7 +8155,14 @@ sub rodex_mail_list {
 
 		$rodexList->{current_page_last_mailID} = $mail->{mailID1};
 
-		$print_msg .= swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
+		my @content;
+		push(@content, "Text");
+		push(@content, "Zeny") if( $mail->{type} & (1 << 1) );
+		push(@content, "Item") if( $mail->{type} & (1 << 2) );
+
+		my $content = join(', ', @content);
+
+		$print_msg .= swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<< @<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}, "Content:", $content]);
 
 		$index++;
 	}
@@ -8184,11 +8191,13 @@ sub rodex_read_mail {
 
 	$mail->{items} = [];
 
-	my $print_msg = center(" " . "Mail ".$args->{mailID1} . " ", 79, '-') . "\n";
+	message center(" " . "Mail ".$args->{mailID1} . " ", 79, '-') . "\n";
 
-	$print_msg .= bytesToString($mail->{body});
-	
-	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
+	message "Message:\n" . bytesToString($mail->{body});
+	# FIXME for some reason message can't concatenate bytesToString + "\n"
+	message "\n";
+
+	my $print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
 
 	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Zeny:", $args->{zeny1}]);
 
@@ -8318,7 +8327,7 @@ sub rodex_check_player {
 
 	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
 
-	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $rodexWrite->{name}, "Base Level:", $args->{base_level}, "Class:", $args->{class}, "Char ID:", $args->{char_id}]);
+$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $rodexWrite->{name}, "Base Level:", $args->{base_level}, "Class:", $jobs_lut{$args->{class}}, "Char ID:", $args->{char_id}]);
 
 	$print_msg .= sprintf("%s\n", ('-'x79));
 	message $print_msg, "list";
