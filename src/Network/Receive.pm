@@ -8327,7 +8327,7 @@ sub rodex_check_player {
 
 	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
 
-$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $rodexWrite->{name}, "Base Level:", $args->{base_level}, "Class:", $jobs_lut{$args->{class}}, "Char ID:", $args->{char_id}]);
+	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $rodexWrite->{name}, "Base Level:", $args->{base_level}, "Class:", $jobs_lut{$args->{class}}, "Char ID:", $args->{char_id}]);
 
 	$print_msg .= sprintf("%s\n", ('-'x79));
 	message $print_msg, "list";
