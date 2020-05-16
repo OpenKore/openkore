@@ -8136,7 +8136,7 @@ sub rodex_mail_list {
 		$rodexList->{mails_per_page} = $args->{amount};
 	}
 
-	my $print_msg = center(" " . "Rodex Mail Page ". $rodexList->{current_page} . " ", 79, '-') . "\n";
+	my $print_msg = center(" " . "Rodex Mail Page ". $rodexList->{current_page} . " ", 119, '-') . "\n";
 
 	my $index = 0;
 	for (my $i = 0; $i < length($args->{mailList}); $i+=$mail_info->{len}) {
@@ -8155,11 +8155,18 @@ sub rodex_mail_list {
 
 		$rodexList->{current_page_last_mailID} = $mail->{mailID1};
 
-		$print_msg .= swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
+		my @content;
+		push(@content, "Text");
+		push(@content, "Zeny") if( $mail->{type} & (1 << 1) );
+		push(@content, "Item") if( $mail->{type} & (1 << 2) );
+
+		my $content = join(', ', @content);
+
+		$print_msg .= swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<< @<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}, "Content:", $content]);
 
 		$index++;
 	}
-	$print_msg .= sprintf("%s\n", ('-'x79));
+	$print_msg .= sprintf("%s\n", ('-'x119));
 	message $print_msg, "list";
 }
 
@@ -8184,11 +8191,13 @@ sub rodex_read_mail {
 
 	$mail->{items} = [];
 
-	my $print_msg = center(" " . "Mail ".$args->{mailID1} . " ", 79, '-') . "\n";
+	message center(" " . "Mail ".$args->{mailID1} . " ", 119, '-') . "\n";
 
-	$print_msg .= bytesToString($mail->{body});
-	
-	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
+	message "Message:\n" . bytesToString($mail->{body});
+	# FIXME for some reason message can't concatenate bytesToString + "\n"
+	message "\n";
+
+	my $print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
 
 	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Zeny:", $args->{zeny1}]);
 
@@ -8217,7 +8226,7 @@ sub rodex_read_mail {
 		$index++;
 	}
 
-	$print_msg .= sprintf("%s\n", ('-'x79));
+	$print_msg .= sprintf("%s\n", ('-'x119));
 	message $print_msg, "list";
 
 	@{$rodexList->{mails}{$args->{mailID1}}}{qw(body items zeny1 zeny2)} = @{$mail}{qw(body items zeny1 zeny2)};
@@ -8316,11 +8325,11 @@ sub rodex_check_player {
 		};
 	}
 
-	my $print_msg = center(" " . "Rodex Mail Target" . " ", 79, '-') . "\n";
+	my $print_msg = center(" " . "Rodex Mail Target" . " ", 119, '-') . "\n";
 
-	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $rodexWrite->{name}, "Base Level:", $args->{base_level}, "Class:", $args->{class}, "Char ID:", $args->{char_id}]);
+	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $rodexWrite->{name}, "Base Level:", $args->{base_level}, "Class:", $jobs_lut{$args->{class}}, "Char ID:", $args->{char_id}]);
 
-	$print_msg .= sprintf("%s\n", ('-'x79));
+	$print_msg .= sprintf("%s\n", ('-'x119));
 	message $print_msg, "list";
 
 	@{$rodexWrite->{target}}{@{$rodex_check_player_unpack->{target}}} = @{$args}{@{$rodex_check_player_unpack->{target}}};
@@ -10112,15 +10121,15 @@ sub mail_read {
 	$item->{name} = itemName($item);
 
 	my $msg;
-	$msg .= center(" " . T("Mail") . " ", 79, '-') . "\n";
+	$msg .= center(" " . T("Mail") . " ", 119, '-') . "\n";
 	$msg .= swrite(TF("Title: \@%s Sender: \@%s", ('<'x39), ('<'x24)),
 			[bytesToString($args->{title}), bytesToString($args->{sender})]);
 	$msg .= TF("Message: %s\n", bytesToString($args->{message}));
-	$msg .= ("%s\n", ('-'x79));
+	$msg .= ("%s\n", ('-'x119));
 	$msg .= TF( "Item: %s %s\n" .
 				"Zeny: %sz\n",
 				$item->{name}, ($args->{amount}) ? "x " . $args->{amount} : "", formatNumber($args->{zeny}));
-	$msg .= sprintf("%s\n", ('-'x79));
+	$msg .= sprintf("%s\n", ('-'x119));
 
 	message($msg, "info");
 }
