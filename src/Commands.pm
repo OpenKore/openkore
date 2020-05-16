@@ -479,7 +479,13 @@ sub initHandlers {
 			], \&cmdRelog],
 		['repair', undef, \&cmdRepair],
 		['respawn', T("Respawn back to the save point."), \&cmdRespawn],
-		['revive', undef, \&cmdRevive],
+		['revive', [
+			T("Use of the 'Token Of Siegfried' to self-revive."),
+			["", T("use of the 'Token Of Siegfried' to self-revive")],
+			["force", T("trying to self-revive using")],
+			["\"<item_name>\"", T("check <item_name> availability, then trying to self-revive")],
+			["<item_ID>", T("check <item_ID> availability, then trying to self-revive")],
+			], \&cmdRevive],
 		['rodex', [
 			T("rodex use (Ragnarok Online Delivery Express)"),
 			["open", T("open rodex mailbox")],
@@ -8073,18 +8079,18 @@ sub cmdRevive {
 		$item = $char->inventory->getByNameID(7621);
 	} else {
 		error T("Error in 'revive' command (incorrect syntax)\n".
-				"revive [force|<item name>|<item ID>]\n");
+				"revive [force|\"<item_name>\"|<item_ID>]\n");
 		return;
 	}
 
 	if (!$item && $args[0] ne "force") {
 		error TF("Error in 'revive' command\n".
-				"Cannot use item %d in attempt to revive: item not found in inventory\n", $args[0]);
+				"Cannot use item '%s' in attempt to revive: item not found in inventory\n", $args[0]);
 		return;
 	}
 
 	if ($item && $args[0] ne "force") {
-		message TF("Trying to use item %s to self-revive\n", $item->name());
+		message TF("Trying to use item '%s' to self-revive\n", $item->name());
 	} else {
 		message TF("Trying to self-revive using 'force'\n");
 	}
