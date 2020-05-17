@@ -299,7 +299,7 @@ Você só pode trocar 10 tipos de itens de cada vez.#
 Você é menor de idade.#
 Digite seu endereço de e-mail.#
 Digite seu endereço de e-mail.#
-Não foi possível deletar o personagem porque você digitou um e-mail errado.#
+Confirmação por e-mail indisponível, deixe o campo de e-mail em branco e tente novamente.#
 Digite a segunda série de números de seguridade social.#
 Não foi possível deletar o personagem porque você digitou um SSN incorreto.#
 Você não pode vender mais de 15 tipos de itens de uma só vez.#
