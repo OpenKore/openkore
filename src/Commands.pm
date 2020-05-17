@@ -733,7 +733,7 @@ sub initHandlers {
 			], \&cmdQuest],
 		['showeq', [
 			T("Equipment showing."),
-			[T("<player>"), T("request equipment information for player")],
+			[T("p <index|name|partialname>"), T("request equipment information for player")],
 			["me on", T("enables equipment showing")],
 			["me off", T("disables equipment showing")]
 			], \&cmdShowEquip],
