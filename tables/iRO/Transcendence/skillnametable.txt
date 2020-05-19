@@ -1034,6 +1034,7 @@ SU_SPIRITOFSEA#Spirit Of Sea#
 WE_CALLALLFAMILY#Let's Go Family!#
 WE_ONEFOREVER#Love Conquers Death#
 WE_CHEERUP#Go! Parents Go!#
+SKID_CG_SPECIALSINGER#Skilled Special Singer#
 HLIF_HEAL#Healing Hands#
 HLIF_AVOID#Urgent Escape#
 HLIF_BRAIN#Brain Surgery#

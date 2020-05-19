@@ -2003,11 +2003,11 @@ item#
 NoCtrl#
 Arena#
 (Character/Total Slot)#
-VIP Service#
-VIP #
-Service#
-VIP#
-VIP #
+A#
+ #
+ #
+D#
+E#
 Command List#
 LEVEL#
 MAP#
@@ -2807,9 +2807,9 @@ Screen flicker effect ON#
 Screen flicker effect OFF#
 An illegal program has been detected.#
 Send mail#
-E X P: %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
-DROP : %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
-DEATH: %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+EXP: %.1f%% (Basic 100.0%% + Bonus %.1f%% + %s %.1f%%)#
+DROP: %.1f%% (Basic 100.0%% + Bonus %.1f%% + %s %.1f%%)#
+DEATH: %.1f%% (Basic 100.0%% + Bonus %.1f%% + %s %.1f%%)#
 You cannot use the tag as a name.#
 Styling shop#
 No coupons. Purchase items in Cash Shop#
