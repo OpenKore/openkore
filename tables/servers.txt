@@ -120,9 +120,8 @@ serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO/Renewal;iRO
-charBlockSize 147
+charBlockSize 155
 charDeleteDateType 1
-sendCryptKeys 0x38012567, 0x078F087E, 0x71BD2BEA
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
