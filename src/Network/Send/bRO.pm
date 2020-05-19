@@ -22,6 +22,8 @@ sub new {
 	
 	my %packets = (
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -45,7 +47,7 @@ sub new {
 		buy_bulk_openShop 0811
 		item_list_window_selected 07E4
 		map_login 0436
-		party_join_request_by_name 02C
+		party_join_request_by_name 02C4
 		friend_request 0202
 		homunculus_command 022D
 		storage_password 023B
