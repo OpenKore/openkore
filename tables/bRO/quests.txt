@@ -820,7 +820,7 @@ Cace 5 Quindings#
 
 1334#Doce Paz#SG_FEEL#QUE_NOIMAGE#
 O Zé Docinho está em paz mais uma vez. Retorne amanhã.#
-Visite o Zé Docinho após as 4 da manhã.#
+Visite o Zé Docinho no dia seguinte.#
 
 1335#Cesta de Doces#SG_FEEL#QUE_NOIMAGE#
 Reúna 5 Balas, 5 Bengalas Doces e 3 Pastilhas Refrescantes.#
@@ -828,7 +828,7 @@ Entregue os itens a Lorenza.#
 
 1336#Missão Supersecreta#SG_FEEL#QUE_NOIMAGE#
 Lorenza pediu para que você volte amanhã para encher a cesta novamente.#
-Visite Lorenza após as 4 da manhã.#
+Visite Lorenza no dia seguinte.#
 
 1337#Doces da Sorte#SG_FEEL#QUE_NOIMAGE#
 Reúna 1 Doce da Sorte, 1 Bengala Doce da Sorte e 1 Biscoito da Sorte.#
@@ -836,7 +836,7 @@ Entregue os doces para Fortuna.#
 
 1338#Sem mais docinhos#SG_FEEL#QUE_NOIMAGE#
 Fortuna disse que quer mais doces só amanhã.#
-Visite Fortuna após as 4 da manhã.#
+Visite Fortuna no dia seguinte.#
 
 2000#Mudança de Classe: Ferreiro#SG_FEEL#QUE_NOIMAGE#
 Queremos verificar a dedicação e vontade dos Mercadores que querem se tornar Ferreiros. Como primeiro teste, vá até Einbech e ajude Geschupenschte, um dos membros da guilda. #
@@ -8423,7 +8423,7 @@ Entregue o item para o biólogo ao nordeste de Payon. #
 Faça a entrega #
 
 8272#Missões de Coleta#SG_FEEL#QUE_NOIMAGE#
-Entregue o item para o biólogo a oeste de Prontera. #
+Entregue o item para o biólogo a nordeste do campo de Prontera. #
 Faça a entrega #
 
 8273#Missões de Coleta#SG_FEEL#QUE_NOIMAGE#
@@ -8546,9 +8546,9 @@ Colete ^006400Esfera Mística^000000 que pode ser derrubada pelos ^FF0000Ratos F
 Mensagem do "First Mate": "^404040Muito obrigado por me ajuda. Se quiser, volte em 20 horas.^000000"#
 Você pode falar com o ^0000FFFirst Mate^000000 depois que 20 horas se passarem, para repetir a quest. #
 
-9027#Doação para a Igreja#SG_FEEL#QUE_NOIMAGE#
-Você realizou a Quest de Doação para a Igreja. #
-Quest de Doação para a Igreja #
+9027#Doação ao Fazendeiro#SG_FEEL#QUE_NOIMAGE#
+Você já ajudou o fazendeiro Pete Moon hoje. Volte amanhã.#
+Você ajudou o fazendeiro#
 
 9028#Controle biológico#SG_FEEL#QUE_NOIMAGE#
 Ajude a controlar as anêmonas. #
@@ -14027,7 +14027,7 @@ Desejo fazer um vestido com pétalas rosas! Traga-me 15 Seda Macia, 30 Erva Verm
 Entregue os itens#
 
 14511#Vestido da Primavera#SG_FEEL#QUE_NOIMAGE#
-Desejo fazer um vestido com flores silvestres! Traga-me 5 Flor, 5 Flor das Ilusões e 5 Flor Misteriosa que você consegue em Porto Malaya.#
+Desejo fazer um vestido com flores silvestres! Traga-me 5 Flor Misteriosa, 5 Flor Elegante e 5 Flor Bonita que você consegue em Porto Malaya.#
 Entregue os itens#
 
 14512#Vestido da Alvorada#SG_FEEL#QUE_NOIMAGE#
@@ -16005,6 +16005,86 @@ Fale com qualquer um dos Amassa-Fantasmas#
 70061#Os Amassa-Fantasmas!#SG_FEEL#QUE_NOIMAGE#
 Enfrente o Destruidor e, então, fale com um dos Amassa-Fantasmas para receber sua recompensa.#
 Enfrente o Destruidor e receba sua recompensa#
+
+70070#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna sul de Prontera vamos preprar o Molho Verde. Traga 10 Folhas de Aloe, 5 Folhas de Hinalle e 1 Pilão Yaga.#
+Junte os ingredientes!#
+
+70071#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna central de Prontera vamos preprar o Camarão Apimentado. Traga 10 Frigideiras Velhas, 5 Camarões, 5 Pimentas Vermelhas e 1 Prato Amarelado.#
+Junte os ingredientes!#
+
+70072#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna de Geffen vamos preprar o Suco Azedinho. Traga 10 Laranjas, 5 Mastelas, 5 Uvas e 1 Garrafa Vazia.#
+Junte os ingredientes!#
+
+70073#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna de Geffen vamos preprar o Ensopado de Peixe na Concha. Traga 15 Caudas de Peixes, 10 Nadadeiras, 5 Limões, 5 Peixes Frescos e 1 Concha.#
+Junte os ingredientes!#
+
+70074#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você resgatou a Surpresa do Festival dos Trevos! Bom trabalho!#
+Surpresa Obtida!#
+
+70075#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna Sul de Prontera hoje. Volte mais tarde.#
+Missão cumprida!#
+
+70076#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna Central de Prontera hoje. Volte mais tarde.#
+Missão cumprida!#
+
+70077#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna de Geffen hoje. Volte mais tarde.#
+Missão cumprida!#
+
+70078#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna de Al De Baran hoje. Volte mais tarde.#
+Missão cumprida!#
+
+70079#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Duffy trouxe o Festival dos Trevos pra Rune-Midgard. Participe montando o prato com os donos das tavernas locais.#
+Fale com os donos das tavernas#
+
+70080#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+O orfanato de Geffen está ao norte da cidade. Procure pelo Cuidador.#
+Vá ao Orfanato de Geffen#
+
+70081#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+Traga 10 Ovos Sagrados pro Cuidador brincar com as crianças.#
+Traga 10 Ovos Sagrados#
+
+70082#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+O Cuidador pediu um minuto... Será que aconteceu algo?#
+Fale com o Cuidador#
+
+70083#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+Mais crianças chegarão ao Orfanato. Traga mais 3 Ovos Sagrados pro Cuidador.#
+Traga mais 3 Ovos Sagrados#
+
+70084#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+Leve os 3 Ovos Sagrados e esconda na Caverna de Payon.#
+Esconda os ovos!#
+
+70085#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+Leve os 3 Ovos Sagrados e esconda no Túnel Submarino.#
+Esconda os ovos!#
+
+70086#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+Leve os 3 Ovos Sagrados e esconda nas Minas de Carvão.#
+Esconda os ovos!#
+
+70087#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+Leve os 3 Ovos Sagrados e esconda na Prisão de Glast Heim.#
+Esconda os ovos!#
+
+70088#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+Os Ovos Sagrados foram escondidos, retorne ao Orfatanto de Geffen e fale com o Cuidador.#
+Retorne ao Cuidador#
+
+70089#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
+Você fez uma boa ação para as crianças do Orfanato de Geffen!#
+Obrigado pela ajuda!#
 
 70250#Intervalo da Rifa#SG_FEEL#QUE_NOIMAGE#
 Espere pelo intervalo até comprar outro ticket da Rifa.#
