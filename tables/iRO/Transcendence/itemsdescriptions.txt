@@ -1853,6 +1853,7 @@ Weight: ^8080801^000000
 #
 1033#
 Roots, which resemble human legs, that almost look capable of walking.
+Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 1034#
@@ -2091,7 +2092,7 @@ Weight: ^808080120^000000
 #
 1092#
 An empty test tube that can be used to contain some kind of solution.
-Weight: ^8080802^000000
+Weight: ^8080801^000000
 #
 1093#
 An empty bottle that can be used to contain potions.
@@ -3233,13 +3234,13 @@ Bypass 100% of Def of Human Player race targets when performing a physical attac
 #
 1196#
 A cold etched sword made with refined bradium, a mineral from the another world.
-Class: ^808080One-Handed Sword^000000
+Class: ^808080Two-Handed Sword^000000
 Attack: ^808080280^000000
 Property: ^808080Neutral^000000
 Weight: ^80808040^000000
 Weapon Level: ^8080803^000000
 Requires Level: ^808080110^000000
-Usable By: ^808080Swordman Jobs^000000
+Usable By: ^808080Rune Knight, Royal Guard^000000
 Agi + 3
 Max HP - 10%
 This item is indestructible in battle.
@@ -5497,7 +5498,7 @@ An axe head mounted on a long pole, this weapon was especially made to break thr
 Class: ^808080One-Handed Spear^000000
 Attack: ^808080195^000000
 Property: ^808080Neutral^000000
-Weight: ^8080800^000000
+Weight: ^808080480^000000
 Weapon Level: ^8080803^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080Swordman Jobs^000000
@@ -21737,9 +21738,16 @@ Usable By: ^808080Mechanic^000000
 Reduces the global delay of skills by 10%.
 Reduces the SP cost of skills by 10%.
 Reduces the variable casting time of skills by 10%.
+
 ^800080Set Bonus^000000
 ^008080Supplement Part Dex [1]^000000
 ^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
+Reduces the cooldown of ^0000FFAxe Boomerang^000000 by 2 seconds.
+
+^800080Set Bonus^000000
+^008080Supplement Part Dex [1]^000000
+^008080Supplement Part Str [1]^000000
 Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
 Reduces the cooldown of ^0000FFAxe Boomerang^000000 by 2 seconds.
 #
@@ -21752,11 +21760,19 @@ Usable By: ^808080Mechanic^000000
 Atk + 4%
 Hit + 10
 Increases the damage of ^0000FFKnuckle Boost^000000 by 25%.
+
 ^800080Set Bonus^000000
-^008080Upgrade_Part - Booster [1]^000000
-^008080Upgrade_Part - Engine [1]^000000
-^008080Upgrade_Part - Gun Barrel [1]^000000
-^008080Upgrade_Part - Plate^000000
+^008080Upgrade Part - Plate^000000
+^008080Upgrade Part - Engine [1]^000000
+^008080Upgrade Part - Booster [1]^000000
+^008080Upgrade Part - Gun Barrel [1]^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+
+^800080Set Bonus^000000
+^008080Upgrade Part - Plate [1]^000000
+^008080Upgrade Part - Engine [1]^000000
+^008080Upgrade Part - Booster [1]^000000
+^008080Upgrade Part - Gun Barrel [1]^000000
 Increases the damage of ^0000FFArm Cannon^000000 by 50%.
 #
 3629#
@@ -26583,8 +26599,8 @@ Weight: ^8080801^000000
 Increases magical damage on Demon race targets by 10%.
 #
 4480#
-^808080¸ðµç ½ºÅ³ÀÇ ÈÄ µô·¹ÀÌ°¡ 15% °¨¼ÒÇÑ´Ù.
-15Á¦·Ã ÀÌ»ó ½Ã ½ÃÀü ÈÄ µô·¹ÀÌ 5% Ãß°¡ °¨¼Ò.
+^808080¸𵧠½ºųÀǠȄ µ𷹀̰¡ 15% °¨¼҇Ѵٮ
+15Á¦·àÀ̻󠽃 ½Àü Ȅ µ𷹀̠5% ß°¡ °¨¼Ү
 Class : ^777777Card^000000
 Compound on : ^777777Headgear^000000
 Weight : ^7777771^000000
@@ -26600,11 +26616,11 @@ Weight: 0
 Weapon Level: 0
 #
 4481#
-^808080È­¼Ó¼º ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 25% Ãß°¡.
-¹°¸®, ¸¶¹ý µ¥¹ÌÁö¸¦ ÀÔ¾úÀ» ¶§ ÀÏÁ¤ È®·ü·Î ¿ÀÅä½ºÆç ÇÁ·Î½ºÆ® ³ë¹Ù Lv10 ¹ßµ¿.
-15Á¦·Ã ÀÌ»óÀÏ °æ¿ì È­¼Ó¼º ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 10% Ãß°¡Áõ°¡.
+^808080ȭ¼Ӽº ¸󽺅Ϳ¡°Ԡ¹°¸® µ¥¹́ö 25% ß°¡.
+¹°¸®, ¸¶¹ý µ¥¹́ö¸¦ ÀԾúÀ» ¶§ Àρ¤ Ȯ·ü·Π¿ÀŤ½ºƧ ǁ·νºƮ ³빙 Lv10 ¹ߵ¿.
+15Á¦·àÀ̻󀏠°濬 ȭ¼Ӽº ¸󽺅Ϳ¡°Ԡ¹°¸® µ¥¹́ö 10% ß°¡Áõ°¡.
 Class : ^777777Card^000000
-Compound on : ^777777°©¿Ê^000000
+Compound on : ^777777°©¿ʞ000000
 Weight : ^7777771^000000
 Increases damage to Fire Property monsters by 25%.
 Has a low chance of auto-casting Frost Nova while being attacked.
@@ -26619,11 +26635,11 @@ Weight: 0
 Weapon Level: 0
 #
 4482#
-^80808015ÃÊ¸¶´Ù 50ÀÇ HP, 10ÀÇ Sp È¸º¹.
-MHP¿Í MSP°¡ 5% Áõ°¡ÇÑ´Ù.
-15Á¦·Ã ÀÌ»ó ÀÏ °æ¿ì HP, SPÈ¸º¹¼Óµµ 10ÃÊ·Î ´ÜÃà, MHP, MSP°¡ 2% Ãß°¡ Áõ°¡.
+^80808015Ê¸¶´٠50ÀǠHP, 10ÀǠSp ȸº¹.
+MHP¿͠MSP°¡ 5% Áõ°¡Ǒ´ٮ
+15Á¦·àÀ̻󠀏 °濬 HP, SPȸº¹¼ӵµ 10Ê·Π´܃ଠMHP, MSP°¡ 2% ß°¡ Áõ°¡.
 Class : ^777777Card^000000
-Compound on : ^777777½Å¹ß^000000
+Compound on : ^777777½Źߞ000000
 Weight : ^7777771^000000
 MaxHP +7%
 MaxSP +7%
@@ -26639,9 +26655,9 @@ Weight: 0
 Weapon Level: 0
 #
 4483#
-^808080ÀÏÁ¤È®·ü(5%)·Î Àû¿¡°Ô ÁØ ´ë¹ÌÁöÀÇ 5% ¸¦ ÀÚ½ÅÀÇ SP·Î Èí¼ö ÇÑ´Ù. 15Á¦·Ã ÀÌ»óÀÏ °æ¿ì Èí¼öÇÒ È®·üÀÌ 7%·Î Áõ°¡.
+^808080Àρ¤Ȯ·ü(5%)·ΠÀû¿¡°ԠÁؠ´빌ÁöÀǠ5% ¸¦ ÀڽŀǠSP·Πȭ¼ö Ǒ´ٮ 15Á¦·àÀ̻󀏠°濬 ȭ¼öǒ Ȯ·üÀ̠7%·ΠÁõ°¡.
 Class : ^777777Card^000000
-Compound on : ^777777¹«±â^000000
+Compound on : ^777777¹«±➰00000
 Weight : ^7777771^000000
 ^000000
 Attack: 0
@@ -26650,9 +26666,9 @@ Weight: 0
 Weapon Level: 0
 #
 4484#
-^808080Áª½ºÅæÀ» ¼Ò¸ðÇÏ´Â ¸¶¹ýµéÀ» ¼Ò¸ð¾øÀÌ »ç¿ë°¡´ÉÇÏ°Ô ÇÑ´Ù.
-½ºÅ³ »ç¿ë½Ã SP¼Ò¸ð·®ÀÌ 50% Áõ°¡ÇÑ´Ù.
-15Á¦·Ã ÀÌ»ó ÀÏ °æ¿ì ½ºÅ³ »ç¿ë½Ã SP¼Ò¸ð·®ÀÌ 35% Áõ°¡.
+^808080Áª½ºŦÀ» ¼Ҹퟜ􍂠¸¶¹ýµ逻 ¼Ҹ𾸀̠»翫°¡´ɇϰԠǑ´ٮ
+½ºų »翫½àSP¼Ҹ𷮀̠50% Áõ°¡Ǒ´ٮ
+15Á¦·àÀ̻󠀏 °濬 ½ºų »翫½àSP¼Ҹ𷮀̠35% Áõ°¡.
 Class : ^777777Card^000000
 Compound on : ^777777Headgear^000000
 Weight : ^7777771^000000
@@ -26663,10 +26679,10 @@ Weight: 0
 Weapon Level: 0
 #
 4485#
-^808080¼º¼Ó¼º, ¾Ï¼Ó¼º, Ãµ»çÇü, ¾Ç¸¶Çü ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 20% Ãß°¡.
-15Á¦·Ã ÀÌ»óÀÏ °æ¿ì, ¼º¼Ó¼º, ¾Ï¼Ó¼º, Ãµ»çÇü, ¾Ç¸¶Çü ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 10% Ãß°¡ Áõ°¡.
+^808080¼º¼Ӽº, ¾ϼӼº, õ»燼, ¾Ǹ¶Ǽ ¸󽺅Ϳ¡°Ԡ¹°¸® µ¥¹́ö 20% ß°¡.
+15Á¦·àÀ̻󀏠°濬, ¼º¼Ӽº, ¾ϼӼº, õ»燼, ¾Ǹ¶Ǽ ¸󽺅Ϳ¡°Ԡ¹°¸® µ¥¹́ö 10% ß°¡ Áõ°¡.
 Class : ^777777Card^000000
-Compound on : ^777777°©¿Ê^000000
+Compound on : ^777777°©¿ʞ000000
 Weight : ^7777771^000000
 ^000000
 Attack: 0
@@ -27187,15 +27203,12 @@ Max HP + 10
 Def + 100
 #
 4528#
-MATK + 2%
-For each 2 refine, MATK + 1%, Max HP - 1%.
-Class : ^777777Card^000000
-Location : ^777777Headgear^000000
-Weight : ^7777771^000000
-MATK + 2%, per  2 refine MATK + 1%, MHP - 1%.
-Class : ^777777Card^000000
-Location : ^777777Headgear^000000
-Weight : ^7777771^000000
+Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
+Weight: ^8080801^000000
+Matk + 2%
+Additional Matk + 1% per 2 upgrade levels of the compounded item.
+Max HP - 1% per 2 upgrade levels of the compounded item.
 #
 4529#
 ATK + 2%
@@ -30146,13 +30159,12 @@ Jobs: ^777777All^000000
 #
 5042#
 Well-known item which has been rumored to have been worn by a great woman warrior in ancient times.
-Class : ^777777Headgear^000000
-Defense: ^7777770^000000
-Location : ^777777Upper^000000
-Weight : ^77777715^000000
-Required Level : ^77777714^000000
-Jobs: ^777777Every Job
-except Novice^000000
+Class: ^808080Headgear^000000
+Position: ^808080Upper^000000
+Defense: ^8080800^000000
+Weight: ^80808015^000000
+Requires Level: ^80808014^000000
+Usable By: ^808080All Jobs except Novice Jobs^000000
 #
 5043#
 A mask rumored to have been worn by a romantic hero with an unknown fate.
@@ -38670,8 +38682,10 @@ Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 6252#
-Blood of a Desert Wolf which is used for medications.
-Weight : ^7777771^000000
+Blood of a Desert Wolf, which is used for medications.
+^179AECUsed for Geneticist skills.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 6253#
 A lump of very very cold ice.
@@ -38716,8 +38730,10 @@ Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 6260#
-Tail of Petit. It'll grow again when it's cut.
-Weight : ^7777771^000000
+Tail of Petite. It'll grow again when it's cut.
+^179AECUsed for Geneticist skills.^000000
+Class: ^808080Generic^000000
+Weight: ^8080801^000000
 #
 6261#
 White and thin noodle. It's a summer delicacy.
@@ -38839,19 +38855,51 @@ Material : ^000088Banana + Mould Powder + 4 Gun Powder  + Detonator^000000
 Weight : ^7777771^000000
 #
 6284#
-Thorn Plant Seed, Blood Sucker Plant Seed, Bomb Mushroom Spore plant cultivation.
+A book with instructions for creating Thorn Plant Seed, Blood Sucker Plant Seed, and Bomb Mushroom Spore.
+^179AECUsed for Geneticist skill Special Pharmacy.^000000
+
 Weight: ^8080801^000000
-Thorn Plant Seed: ^00008810 Prickly Fruit^000000.
-Blood Sucker Plant Seed: ^00008810 Maneater Root^000000.
-Bomb Mushroom Spore: ^0000882 Gun Powder^000000, ^00008810 Mushroom Spore^000000 and ^0000885 Poison Spore^000000.
+Crafting Materials:
+^008000Thorn Plant Seed^000000
+^77777710 Prickly Fruit^000000
+
+^A50F0FBlood Sucker Plant Seed^000000
+^77777710 Maneater Root^000000
+
+^800080Bomb Mushroom Spore^000000
+^77777710 Mushroom Spore^000000
+^7777775  Poison Spore^000000
+^7777772 Gun Powder^000000
 #
 6285#
-This is the manual book for producing Enriched White PotionZ, vitata500, Enriched cell juice.
-Enriched White PotionZ : ^000088Empty Test Tube 10  + white potion 20  + white herb 10  + Alcohol 1 ^000000
-vitata 500 : ^000088Empty Test Tube 10  + grape 10 + honey 10 + Blue Herb 10^000000
-Concentrated Juice : ^000088Empty Test Tube 10 + Awakening Potion 5 + Intensive Potion 5 + Hot Sauce 5^000000
-Cure Landscape : ^000088Empty Test Tube 10 + elixir 5 + Green Herbs 20 + Mastela Fruit 1 + Yggdrasil Leaf 1^000000
-Weight : ^7777771^000000
+A book with instructions for creating Enriched White PotionZ, Vitata500, Enrich Celermine Juice and Cure Free.
+^179AECUsed for Geneticist skill Special Pharmacy.^000000
+Weight: ^8080801^000000
+Crafting Materials:
+^0CB090Enriched White PotionZ^000000
+^77777720 White Potion^000000
+^77777710 White Herb^000000
+^7777771 Alcohol^000000
+^77777710 Empty Test Tube^000000
+
+^0639CDVitata 500^000000
+^77777710 Grape^000000
+^77777710 Honey^000000
+^77777710 Blue Herb^000000
+^77777710 Empty Test Tube^000000
+
+^0DAE00Enrich Celermine Juice^000000
+^7777775 Concentration Potion^000000
+^7777775 Awakening Potion^000000
+^7777775 Spicy Sauce^000000
+^77777710 Empty Test Tube^000000
+
+^FF5733Cure Free^000000
+^7777775 Panacea^000000
+^77777720 Green Herb^000000
+^7777771 Mastela Fruit^000000
+^7777771 Yggdrasil Leaf^000000
+^77777710 Empty Test Tube^000000
 #
 6286#
 A Gym Pass to increase user's weight capacity. Take this Gym Pass to Ripped Cabus in Payon (173 141) to learn Enlarge Weight Limit that will increase your Maximum Weight Capacity by 200 for each skill level. This special skill can only be learned up to Level 10.
@@ -38899,13 +38947,13 @@ Take this coupon and the required items from the listing below to Hair Dresser i
 99,800 Zeny
 #
 6291#
-Concentrated Elunium that has been buried deep underground. Used as a material to strengthen armor. Enhances a chance of successful upgrade. Only Suhnbi of Payon is capable of refining with this material.
+Concentrated Elunium that has been buried deep underground. Used as a material to strengthen armor. Enhances a chance of successful upgrade.
 ^FF0000Account Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 6292#
-Dense Oridecon that has been buried deep underground. Used as a material to strengthen weapons. Enhances a chance of successful upgrade. Only Suhnbi of Payon is capable of refining with this material.
+Dense Oridecon that has been buried deep underground. Used as a material to strengthen weapons. Enhances a chance of successful upgrade.
 ^FF0000Account Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
@@ -39348,13 +39396,13 @@ Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
 6440#
-A lubricant which helps removing cards which are already stuck in a slot of an equipment. However, this will only help the card removal. The equipment and its refine level may have a problem after trying.
+A lubricant which helps removing cards from equipment. Using this item while attempting to remove a card from your equipment will increase the odds of success to 40%!
 ^FF0000Account Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
 6441#
-A lubricant which helps removing cards which are already stuck in a slot of an equipment. However, this will only help the card removal. The equipment and its refine level may have a problem after trying.
+A lubricant which helps removing cards from equipment. Using this item while attempting to remove a card from your equipment will increase the odds of success to 80%!
 ^FF0000Account Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
@@ -39367,7 +39415,7 @@ Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
 6443#
-The legendary agent which is said to melt the surface of an object so anything can be separated. It will be perfect for taking off MVP cards.
+The legendary agent which is said to melt the surface of an object so anything can be separated. Using this item while attempting to remove a card from your equipment will guarantee 100% success rate! However, it can only be used for taking off MVP cards.
 ^FF0000Account Bound^000000
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
@@ -39950,13 +39998,15 @@ Weight: ^8080801^000000
 6635#
 The hope from blacksmith around the world is mounted in this bottle.
 Weight: ^8080801^000000
-Take this bottle to Blessed Hammer (moc_paraup 12, 175) in Eden second floor with HD Ores to refine an equipment without reducing the refining level or breaking if fail.
+Used to refine an equipment without reducing the refining level or breaking if fail.
 This item will consume regardless fail or success, the amount needed is increased corresponding to refine level.
 Required number of bottles:
 +7 refine -> +8 refine: 1 ea
 +8 refine -> +9 refine: 2 ea
 +9 refine -> +10 refine: 4 ea
-Only apply to a maximum of +10 refine.
++10 refine -> +11 refine: 7 ea
++11 refine -> +12 refine: 11 ea
+Only applies to a maximum of +12 refine.
 #
 6636#
 A stone with strength.
@@ -44564,7 +44614,9 @@ Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
 7720#
-A peculiar gold coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling. Bring this to Leprechaun O'Riley next to the Izlude Airship.
+A peculiar gold coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling. A Gold Coin is equal to 5 Silver Coins or 25 Bronze Coins.
+
+Bring this to Leprechaun O'Riley outside of Payon and he will surely reward you.
 Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
@@ -45141,15 +45193,18 @@ Class: ^808080Generic^000000
 Weight: ^8080800^000000
 #
 7915#
-A torn scrap of parchment, covered in snake goo, that appears to be a part of a large piece of paper.
-Contains details of Snakepentor's sinister plan.
-^ffffff_^000000
-Weight : ^7777771^000000
+A peculiar bronze coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling.
+
+Bring this to Leprechaun O'Riley outside of Payon and he will surely reward you.
+Class: ^808080Generic^000000
+Weight: ^8080800^000000
 #
 7916#
-A silver coin forged by the leprechauns. Leprechauns use these coins to fill their pots when they run out of gold.
+A peculiar silver coin that doesn't resemble any currency that you can recognize. Still, it'd make for some impressive bling. A Silver Coin is equal to 5 Bronze Coins.
+
+Bring this to Leprechaun O'Riley outside of Payon and he will surely reward you.
 Class: ^808080Generic^000000
-Weight: ^8080801^000000
+Weight: ^8080800^000000
 #
 7919#
 Evidence that you really enjoyed the festival!
@@ -46938,18 +46993,92 @@ Manuk Selling Item
 Weight : ^7777771^000000
 #
 11022#
-The latest book of Alchemist Monthly! It contains recipes of 'Mix cooking' trends and other useful information.
-Weight : ^7777775^000000
+The latest book of Alchemist Monthly! It contains recipes of 'Mix Cooking' trends and other useful information.
+^179AECUsed for Geneticist skill Mixed Cooking.^000000
+Weight: ^8080805^000000
+Crafting Materials:
+^DE0050Savage BBQ^000000
+^7777771 Savage Meat^000000
+^7777771 Black Charcoal^000000
+^7777771 Cooking Skewer^000000
+^7777771 Melange Pot^000000
+
+^DE0000Warg Blood Cocktail^000000
+^7777773 Blood of Wolf^000000
+^7777772 Cold Ice^000000
+^7777771 Melange Pot^000000
+
+^BC4400Minor Brisket^000000
+^7777772 Beef Head^000000
+^7777771 Large Cookpot^000000
+^7777771 Melange Pot^000000
+
+^B2AF00Siroma Icetea^000000
+^7777773 Ice Piece^000000
+^7777772 Ice Crystal^000000
+^7777771 Comodo Tropical Fruit^000000
+^7777771 Melange Pot^000000
+
+^49A100Drosera Herb Stew^000000
+^7777773 Drosera Tentacle^000000
+^7777773 Blue Herb^000000
+^7777773 White Herb^000000
+^7777773 Red Herb^000000
+^7777771 Large Cookpot^000000
+^7777771 Melange Pot^000000
+
+^00913BPetite Tail Noodles^000000
+^7777772 Petite Tail^000000
+^7777771 Fine Noodle^000000
+^7777771 Cool Gravy^000000
+^7777771 Melange Pot^000000
 #
 11023#
-Alchemist Monthly 'Best of' series. [HP of you & me Vol.12]
-Alchemist Darcia's endless study of improvement in strength has finally been accomplished!
-Weight : ^7777775^000000
+Best of Alchemist Monthly series 'HP of you & me Vol.12'. Alchemist Darcia's endless study of improvement in strength has finally been accomplished!
+^179AECUsed for Geneticist skill Special Pharmacy.^000000
+Weight: ^8080805^000000
+Crafting Materials:
+^FF0000HP Increase Potion (Small)^000000
+^7777775 Monster Feed^000000
+^77777710 White Herb^000000
+^7777771 Spicy Sauce^000000
+^77777710 Empty Bottle^000000
+
+^D60000HP Increase Potion (Medium)^000000
+^77777710 White Herb^000000
+^77777710 Yellow Herb^000000
+^7777771 Spicy Sauce^000000
+^77777710 Empty Bottle^000000
+
+^930000HP Increase Potion (Large)^000000
+^77777715 White Herb^000000
+^7777773 Mastela Fruit^000000
+^7777771 Holy Water^000000
+^7777771 Spicy Sauce^000000
+^77777710 Empty Bottle^000000
 #
 11024#
-Alchemist Monthly 'Best of' series. [SP of Dream Vol.10]
-This book contains Alchemist Vain and Vajin's study of increasing SP, and recipes for making reagent.
-Weight : ^7777775^000000
+Best of Alchemist Monthly series 'Dream of SP Vol.10'. This book contains Alchemist Vain and Vajin's study of increasing SP, and recipes for making reagent.
+^179AECUsed for Geneticist skill Special Pharmacy.^000000
+Weight: ^8080805^000000
+Crafting Materials:
+^008FFFSP Increase Potion (Small)^000000
+^77777710 Lemon^000000
+^77777710 Grape^000000
+^7777771 Sweet Sauce^000000
+^77777710 Empty Bottle^000000
+
+^0074CESP Increase Potion (Medium)^000000
+^77777710 Honey^000000
+^77777710 Blue Herb^000000
+^7777771 Sweet Sauce^000000
+^77777710 Empty Bottle^000000
+
+^004B9BSP Increase Potion (Large)^000000
+^77777710 Royal Jelly^000000
+^77777715 Blue Herb^000000
+^7777771 Sweet Sauce^000000
+^77777710 Empty Bottle^000000
 #
 11056#
 A singlepath of the study of spirits! 'Earthde Lagon' unravels the mystery of spirit magic.
@@ -49129,17 +49258,11 @@ Attack Speed.
 Weight : ^77777720^000000
 #
 12245#
-A frothy green ale
-brewed by O'Riley
-the Leprechaun.
-Recovers 50%
-of Max HP and SP, but
-has a 10% chance of
-casting the Chaos
-effect on its user.
-This can be consumed 10 seconds after each use.
-^ffffff_^000000
-Weight : ^77777750^000000
+A frothy green ale brewed by O'Riley the Leprechaun. (Expires on April 1st)
+
+Heals 5% HP/SP
+(Does not work in WoE)
+Weight: ^8080801^000000
 #
 12246#
 Powerful spirits are 
@@ -49824,34 +49947,46 @@ A potion that increases Matk a little. Duration : 500 sec.
 Weight : ^7777775^000000
 #
 12422#
-A small potion that increases MaxHP.
-MaxHP slightly increased for 500 sec, HP recovery +1%.
-Weight : ^7777772^000000
+A small potion that increases Max HP.
+Class: ^808080Recovery^000000
+Weight: ^8080802^000000
+Restores 1% HP to the user.
+Increases Max HP by a small amount for 500 seconds.
 #
 12423#
-A potion that increases MaxHP.
-MaxHP moderately increased for 500 sec, HP recovery +2%.
-Weight : ^7777774^000000
+A potion that increases Max HP.
+Class: ^808080Recovery^000000
+Weight: ^8080804^000000
+Restores 2% HP to the user.
+Increases Max HP by a moderate amount for 500 seconds.
 #
 12424#
-A big potion that increases MaxHP.
-MaxHP increased by a large amount for 500 sec, HP recovery +5%.
-Weight : ^7777778^000000
+A big potion that increases Max HP.
+Class: ^808080Recovery^000000
+Weight: ^8080808^000000
+Restores 5% HP to the user.
+Increases Max HP by a large amount for 500 seconds.
 #
 12425#
-A small potion that increases MaxSP.
-MaxSP slightly increased for 500 sec, SP recovery +2%.
-Weight : ^7777772^000000
+A small potion that increases Max SP.
+Class: ^808080Recovery^000000
+Weight: ^8080802^000000
+Restores 2% SP to the user.
+Increases Max SP by a small amount for 500 seconds.
 #
 12426#
-A potion that increases MaxSP.
-MaxSP moderately increased for 500 sec, SP recovery +4%.
-Weight : ^7777774^000000
+A potion that increases Max SP.
+Class: ^808080Recovery^000000
+Weight: ^8080804^000000
+Restores 4% SP to the user.
+Increases Max SP by a moderate amount for 500 seconds.
 #
 12427#
-A big potion that increases MaxSP.
-MaxSP increased by a large amount for 500 sec, SP recovery +8%.
-Weight : ^7777778^000000
+A big potion that increases Max SP.
+Class: ^808080Recovery^000000
+Weight: ^8080808^000000
+Restores 8% SP to the user.
+Increases Max SP by a large amount for 500 seconds.
 #
 12428#
 Recovers a large amount of HP, increases natural HP recovery speed by 20%. Duration : 500 sec.
@@ -49859,39 +49994,39 @@ Weight : ^7777777^000000
 #
 12429#
 A very wild dish made out of a whole Savage with a slight barbecue flavor!
-Str +20.
-Duration : 5 min.
-Weight : ^7777775^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080805^000000
+Str + 20 for 5 minutes.
 #
 12430#
 A deep red colored cocktail containing wolf's blood.
-Int +20.
-Duration : 5 min.
-Weight : ^7777775^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080805^000000
+Int + 20 for 5 minutes.
 #
 12431#
 Meat of a Minor's head. Famous for it's soft and tender textures.
-Vit +20.
-Duration : 5 min.
-Weight : ^7777775^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080805^000000
+Vit + 20 for 5 minutes.
 #
 12432#
 Fantastic combination of transparent ice and tea.
-Dex +20.
-Duration : 5 min.
-Weight : ^7777775^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080805^000000
+Dex + 20 for 5 minutes.
 #
 12433#
 One of the best delicacies in Arunafeltz that has a chewy texture.
-Agi +20.
-Duration : 5 min.
-Weight : ^7777775^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080805^000000
+Agi + 20 for 5 minutes.
 #
 12434#
 A Geffen delicacy that is decorated with the best part of the Petite, the tail.
-Luk +20.
-Duration : 5 min.
-Weight : ^7777775^000000
+Class: ^808080Stat Boost^000000
+Weight: ^8080805^000000
+Luk + 20 for 5 minutes.
 #
 12435#
 A black scary thing that smells burnt. It looks like a failure of something, so it couldn't preserve it's original shape.
@@ -50172,35 +50307,20 @@ Attacks for 1 minute.
 Weight : ^7777771^000000
 #
 12466#
-A scroll in which
-a single use of
-Level 10 Blessing
-has been recorded.
-Caution-- This item
-won't work while your
-character is casting
-a spell or skill.
-^ff0000This item is character bound.^000000
-^ffffff_^000000
-Weight : ^7777771^000000
+A scroll in which a single use of Level 10 Blessing has been recorded.
+^FF0000Character Bound^000000
+^FF0000This item will not work while your character is casting a skill.^000000
+Class: ^808080Scroll^000000
+Weight: ^8080800^000000
+Casts ^0000FFLevel 10 Blessing^000000.
 #
 12467#
-A scroll in which
-a single use of
-Level 10 Increase AGI
-has been recorded.
-Caution-- This item
-won't work while your
-character is casting
-a spell or skill.
-This item consumes
-15 HP and will be
-ineffective if the
-character has fewer
-than 15 HP.
-^ff0000This item is character bound.^000000
-^ffffff_^000000
-Weight : ^7777771^000000
+A scroll in which a single use of Level 10 Increase Agility has been recorded.
+^FF0000Character Bound^000000
+^FF0000This item will not work while your character is casting a skill or has less than 16 HP.^000000
+Class: ^808080Scroll^000000
+Weight: ^8080800^000000
+Casts ^0000FFLevel 10 Increase Agility^000000.
 #
 12468#
 A scroll in which
@@ -51904,23 +52024,11 @@ Please handle with care.^FFFFFF  ^000000 ^ffffff_^000000
 Weight : ^7777771^000000
 #
 12941#
-A box that contains:
-^000088Rental Item^000000
-^6A5ACD1 Poll Axe^000000
-Duration: 7 Days after opening
-A weapon consisting
-of an axe head mounted
-on a long pole that
-is designed to break
-through thick armor.
-Str +1, Int +2, Dex +1
-This item cannot be Dropped or Traded.
-Class : ^777777Spear^000000
-Attack Strength: ^777777195^000000
-Weight : ^7777771^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman Class^000000
+A box that contains Rental Item Pole Axe.
+^FF0000Account Bound^000000
+^FF0000The content of the box will expire after 7 days from opening.^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 12942#
 A box that contains
@@ -61263,7 +61371,7 @@ Additional Atk + 1% per 4 upgrade levels of the item.
 Atk + 30
 
 ^800080Set Bonus^000000
-^008080Supplement Part Con^000000
+^008080Supplement Part Con [1]^000000
 ^008080Supplement Part Str^000000
 Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
 
@@ -61274,29 +61382,23 @@ Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
 Reduces the cooldown of ^0000FFAxe Boomerang^000000 by 2 seconds.
 #
 15111#
-^808080Designed to be worn over the frames of Madogears for enhanced Defense, this part is easy to assemble and disassemble.^000000
-^FFFFFF_^000000
-Type: Armor
-Defense: 110
-Property: Neutral
-Weight: 300
-Required Level: 100
-Required Job: Mechanic
-^FFFFFF_^000000
-Reduces damage taken from Small, Medium size attackers by 10%.
+Designed to be worn over the frames of Madogears for enhanced Defense, this part is easy to assemble and disassemble.
+Class: ^808080Armor^000000
+Defense: ^808080110^000000
+Property: ^808080Neutral^000000
+Weight: ^808080300^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
+Reduces damage taken from Small and Medium size enemies by 10%.
+If upgrade level is +7 or higher, Reduces damage taken from Large size enemies by 10%.
+If upgrade level is +9 or higher, Reduces damage taken from Small and Medium size enemies by an additional 5%.
 This item is indestructible in battle.
-^FFFFFF_^000000
-If upgrade level is +7 or higher,
-Reduces damage taken from Large size attackers by 10%.
-^FFFFFF_^000000
-If upgrade level is +9 or higher,
-Reduces damage taken from Small, Medium size attackers by 5%.
-^FFFFFF_^000000
+
 ^800080Set Bonus^000000
-^008080Upgrade_Part - Booster^000000
-^008080Upgrade_Part - Engine^000000
-^008080Upgrade_Part - Gun Barrel^000000
-^008080Upgrade_Part - Plate^000000
+^008080Upgrade Part - Plate^000000
+^008080Upgrade Part - Engine [1]^000000
+^008080Upgrade Part - Booster [1]^000000
+^008080Upgrade Part - Gun Barrel [1]^000000
 Increases the damage of ^0000FFArm Cannon^000000 by 50%.
 #
 15112#
@@ -62307,31 +62409,50 @@ Additional Atk + 30
 Bypass an additional 20% of hard defense of normal monsters, boss monsters and players when performing a physical attack.
 #
 15343#
-A device scientifically engineered to push your physical strength to the limit. Can be synergized with other devices.
-+5% physical damage inflicted to enemies of all types.
-For every 4 levels of refinements, +1% physical damage inflicted to enemies of all types.
-Category: ^777777Armor^000000 Defense: ^77777780^000000
-Weight: ^777777200^000000
-Required Level: ^777777130^000000
-Requires: ^777777Mechanic Group^000000
+This mechanical device uses the power of science to optimize your strength. You can combine it with other variants for a synergetic effect.
+Class: ^808080Armor^000000
+Defense: ^80808080^000000
+Weight: ^808080200^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Mechanic^000000
+Atk + 5%
+Additional Atk + 1% per 4 upgrade levels of the item.
 
-Defense: ^8080800^000000
-Weight: ^8080800^000000
+^800080Set Bonus^000000
+^008080Supplement Part Agi [1]^000000
+^008080Supplement Part Str [1]^000000
+Atk + 30
+
+^800080Set Bonus^000000
+^008080Supplement Part Con [1]^000000
+^008080Supplement Part Str [1]^000000
+Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
+
+^800080Set Bonus^000000
+^008080Supplement Part Dex [1]^000000
+^008080Supplement Part Str [1]^000000
+Increases the damage of ^0000FFAxe Boomerang^000000 by 100%.
+Reduces the cooldown of ^0000FFAxe Boomerang^000000 by 2 seconds.
 #
 15344#
-A component that can be worn over the Madogear gloves to increase its defense. The assembly and disassembly are simple to boot!
-Cannot be destroyed.
-All physical and magic damage taken from Small, Medium Monsters reduced by 10%.
-At level 7 refinement or greater, all physical and magic damage taken from Large Monsters reduced by 10%.
-At level 9 refinement or greater, physical and magical damage taken from Small, Medium Monsters reduced by an additional 5%.
-When equipped with Fortified Patz Engine, Booster, and Gun Barrel, Arm Cannon attack +50%.
-Category: ^777777Armor^000000 Defense: ^777777110^000000
-Weight: ^777777300^000000
-Required Level: ^777777130^000000
-Requires: ^777777Mechanic Group^000000
+Designed to be worn over the frames of Madogears for enhanced Defense, this part is easy to assemble and disassemble.
+Class: ^808080Armor^000000
+Defense: ^808080110^000000
+Property: ^808080Neutral^000000
+Weight: ^808080300^000000
+Requires Level: ^808080130^000000
+Usable By: ^808080Mechanic^000000
+Reduces damage taken from Small and Medium size enemies by 10%.
+If upgrade level is +7 or higher, Reduces damage taken from Large size enemies by 10%.
+If upgrade level is +9 or higher, Reduces damage taken from Small and Medium size enemies by an additional 5%.
+This item is indestructible in battle.
 
-Defense: ^8080800^000000
-Weight: ^8080800^000000
+^800080Set Bonus^000000
+^008080Upgrade Part - Plate [1]^000000
+^008080Upgrade Part - Engine [1]^000000
+^008080Upgrade Part - Booster [1]^000000
+^008080Upgrade Part - Gun Barrel [1]^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
 #
 15352#
 A dress empowered with nature's essence. Wearing this will prove that you are a member of Nature's Children.
@@ -63591,23 +63712,11 @@ Jobs: ^777777Archer Class;
 Rogue Job^000000
 #
 16431#
-A box that contains:
-^000088Rental Item^000000
-^6A5ACD1 Poll Axe^000000
-Duration: 7 Days after opening
-A weapon consisting
-of an axe head mounted
-on a long pole that
-is designed to break
-through thick armor.
-Str +1, Int +2, Dex +1
-This item cannot be Dropped or Traded.
-Class : ^777777Spear^000000
-Attack Strength: ^777777195^000000
-Weight : ^7777771^000000
-Weapon Level: ^7777773^000000
-Required Level : ^7777771^000000
-Jobs: ^777777Swordman Class^000000
+A box that contains Rental Item Pole Axe.
+^FF0000Account Bound^000000
+^FF0000The content of the box will expire after 7 days from opening.^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
 #
 16436#
 A box that contains 1 Libra Crown.
@@ -69249,39 +69358,39 @@ Class: ^808080Item Giver^000000
 Weight: ^8080800^000000
 #
 18000#
-A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon. 
-Class : ^777777Cannonball^000000
-Attack Strength : ^777777100^000000
-Weight : ^7777771^000000
-Property : ^777777None^000000
+Ammunition for Mechanic and Geneticist skills Arm Cannon and Cart Cannon.
+Class: ^808080Cannonball^000000
+Attack: ^808080100^000000
+Property: ^808080Neutral^000000
+Weight: ^8080801^000000
 #
 18001#
-A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
-Class : ^777777Cannonball^000000
-Attack Strength : ^777777120^000000
-Weight : ^7777771^000000
-Property : ^777777Holy^000000
+Ammunition for Mechanic and Geneticist skills Arm Cannon and Cart Cannon.
+Class: ^808080Cannonball^000000
+Attack: ^808080120^000000
+Property: ^808080Holy^000000
+Weight: ^8080801^000000
 #
 18002#
-A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
-Class : ^777777Cannonball^000000
-Attack Strength : ^777777120^000000
-Weight : ^7777771^000000
-Property  : ^777777shadow^000000
+Ammunition for Mechanic and Geneticist skills Arm Cannon and Cart Cannon.
+Class: ^808080Cannonball^000000
+Attack: ^808080120^000000
+Property: ^808080Shadow^000000
+Weight: ^8080801^000000
 #
 18003#
-A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
-Class : ^777777Cannonball^000000
-Attack Strength : ^777777120^000000
-Weight : ^7777771^000000
-Property  : ^777777Ghost^000000
+Ammunition for Mechanic and Geneticist skills Arm Cannon and Cart Cannon.
+Class: ^808080Cannonball^000000
+Attack: ^808080120^000000
+Property: ^808080Ghost^000000
+Weight: ^8080801^000000
 #
 18004#
-A consumable item to use the Mechanic Magic Gear Skill, Arm's Cannon.
-Class : ^777777Cannonball^000000
-Attack Strength : ^777777250^000000
-Weight : ^7777771^000000
-Property : ^777777Neutral^000000
+Ammunition for Mechanic and Geneticist skills Arm Cannon and Cart Cannon.
+Class: ^808080Cannonball^000000
+Attack: ^808080250^000000
+Property: ^808080Neutral^000000
+Weight: ^8080801^000000
 #
 18101#
 ^000088Rental Item^000000
@@ -69357,13 +69466,17 @@ Increases the damage of ^0000FFTriangle Shot^000000 by 2% per upgrade level of t
 Increases the SP cost of ^0000FFTriangle Shot^000000 by 2 per upgrade level of the item.
 #
 18110#
-Increases the damage of Arrow Storm depending on refine level as well as increasing SP consumption of the skill.
-If Base AGI is 120, adds 1 ASPD.
-Attack : ^777777160^000000
-Weight : ^77777790^000000
-Weapon Level : ^7777774^000000
-Required Level : ^777777110^000000
-Job : ^777777Ranger^000000
+A bow specialized for continuous shooting, composed of complicated mechanisms. It is difficult to handle.
+Class: ^808080Bow^000000
+Attack: ^808080160^000000
+Property: ^808080Neutral^000000
+Weight: ^80808090^000000
+Weapon Level: ^8080804^000000
+Requires Level: ^808080110^000000
+Usable By: ^808080Ranger^000000
+Increases the damage of ^0000FFArrow Storm^000000 by 5% per upgrade level of the item.
+Increases the SP cost of ^0000FFArrow Storm^000000 by 5 per upgrade level of the item.
+If the user's base Agi is 120 or higher, Aspd + 1.
 #
 18111#
 A bow made with a hard vine of demon plant. It has the power to catch enemies with spider web arrows.
@@ -76854,6 +76967,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+19533#
+A costume made in the form of a Spore's head.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 19535#
 Though its face and its origin is a mystery, it still looks adorable perched atop your head.
 Class: ^808080Costume^000000
@@ -80374,6 +80493,14 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+20194#
+Strike fear into your enemies with this Costume Lion Mask! Rawr!
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+Requires Level: ^8080801^000000
+Usable By: ^808080All Jobs^000000
+#
 20195#
 This darn cat has chosen its target, your face!
 Class: ^808080Costume^000000
@@ -81867,6 +81994,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+20570#
+A big heart-shaped chocolate decoration for chocolate lovers.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20571#
 Now you can be the mighty Valkyrie with these costume wings!
 ^FF0000This equipment's visual appearance relies on special effects. If /effect is turned OFF the headgear will not be fully displayed.^000000
@@ -81904,6 +82037,24 @@ Position: ^808080Garment^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+20589#
+A mechanical costume of an outer wing. There was a time when this wing had a partner, but now this is all that remains.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
+20590#
+An imitation cross that can commonly be seen on an Evil Druid. Great for occasions when you want to feel like a priest.
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
+20594#
+A long, bright red, ribbon cloak. Don't leave home without your cloak!
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
 #
 20700#
 Egir's Manteau. It looks defending your body
@@ -82207,9 +82358,15 @@ Usable By: ^808080Mechanic^000000
 Max HP + 6%
 Max HP + 1% per 2 upgrade levels of the item.
 If upgrade level is +9 or higher, HP Recovery + 50%.
+
 ^800080Set Bonus^000000
 ^008080Supplement Part Con [1]^000000
 ^008080Supplement Part Str^000000
+Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
+
+^800080Set Bonus^000000
+^008080Supplement Part Con [1]^000000
+^008080Supplement Part Str [1]^000000
 Increases the damage of ^0000FFAxe Tornado^000000 by 25%.
 #
 20733#
@@ -82220,13 +82377,21 @@ Weight: ^808080150^000000
 Requires Level: ^808080100^000000
 Usable By: ^808080Mechanic^000000
 Reduces the global delay of skills by 10%.
-If upgrade level is +7 or higher, reduces damage taken from Neutral property attacks by 10%.
-If upgrade level is +9 or higher, reduces the global delay of skills by an additional 10%.
+If upgrade level is +7 or higher, Reduces damage taken from Neutral property attacks by 10%.
+If upgrade level is +9 or higher, Reduces the global delay of skills by an additional 10%.
+
 ^800080Set Bonus^000000
-^008080Upgrade Part - Booster [1]^000000
-^008080Upgrade Part - Engine [1]^000000
-^008080Upgrade Part - Gun Barrel [1]^000000
 ^008080Upgrade Part - Plate^000000
+^008080Upgrade Part - Engine [1]^000000
+^008080Upgrade Part - Booster [1]^000000
+^008080Upgrade Part - Gun Barrel [1]^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+
+^800080Set Bonus^000000
+^008080Upgrade Part - Plate [1]^000000
+^008080Upgrade Part - Engine [1]^000000
+^008080Upgrade Part - Booster [1]^000000
+^008080Upgrade Part - Gun Barrel [1]^000000
 Increases the damage of ^0000FFArm Cannon^000000 by 50%.
 #
 20734#
@@ -83258,16 +83423,19 @@ Increases critical damage on targets by an additional 5% if the users base Luk i
 All Stats + 1
 #
 20845#
-^808080The skin of a dragon which has a mouth large enough to swallow an entire human.^000000
-Class: Garment
-Defense: 15
-Weight: 60
-Required Level: 100
-Required Jobs: All Jobs
+The skin of a dragon which has a mouth large enough to swallow an entire human.
+Class: ^808080Garment^000000
+Defense: ^80808015^000000
+Weight: ^80808060^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
 Str + 5
 Luk + 5
-Reduces damage taken from Holy and Ghost property attacks by 5%.
+Mdef + 10
+
 Reduces damage taken from Formless and Angel race enemies by 5%.
+Reduces damage taken from Holy and Ghost property attacks by 5%.
+
 If upgrade level is +7 or higher,
 Increases critical damage on targets by 5%.
 If upgrade level is +8 or higher,
@@ -83822,7 +83990,7 @@ Class: ^777777Two-handed Sword^000000 Attack : ^777777150^000000
 Weight : ^7777770^000000
 Weapon level : ^7777773^000000
 Required level : ^77777740^000000
-Job : ^777777°Ë»ç°è¿­^000000
+Job : ^777777°˻簨¿­^000000
 #
 21007#
 A heavy broadsword with small cracks along its edges. It must have been used in many battles.
@@ -84523,24 +84691,28 @@ If upgrade level is +4 or higher, Aspd + 1%
 Atk + 30
 #
 22044#
-^808080Designed to significantly improve Movement Speed, this Madogear part is easy to assemble and disassemble.^000000
-^FFFFFF_^000000
-Type: Shoes
-Defense: 23
-Weight: 100
-Required Level: 100
-Required Job: Mechanic
-^FFFFFF_^000000
+Designed to significantly improve movement speed, this madogear part is easy to assemble and disassemble.
+Class: ^808080Shoes^000000
+Defense: ^80808023^000000
+Weight: ^808080100^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080Mechanic^000000
 Reduces the SP cost of ^0000FFHover^000000 by 15.
-^FFFFFF_^000000
 If upgrade level is +7 or higher,
 Reduces the SP cost of ^0000FFAcceleration^000000 by 20.
-^FFFFFF_^000000
+
 ^800080Set Bonus^000000
-^008080Upgrade_Part - Booster^000000
-^008080Upgrade_Part - Engine^000000
-^008080Upgrade_Part - Gun Barrel^000000
-^008080Upgrade_Part - Plate^000000
+^008080Upgrade Part - Plate^000000
+^008080Upgrade Part - Engine [1]^000000
+^008080Upgrade Part - Booster [1]^000000
+^008080Upgrade Part - Gun Barrel [1]^000000
+Increases the damage of ^0000FFArm Cannon^000000 by 50%.
+
+^800080Set Bonus^000000
+^008080Upgrade Part - Plate [1]^000000
+^008080Upgrade Part - Engine [1]^000000
+^008080Upgrade Part - Booster [1]^000000
+^008080Upgrade Part - Gun Barrel [1]^000000
 Increases the damage of ^0000FFArm Cannon^000000 by 50%.
 #
 22046#
@@ -86695,26 +86867,20 @@ Weight: 25
 #
 23148#
 A box that provides premium service for 2 days.
-^ffffff_^000000
-When you open the box, all the characters in the server who use the item receive the premium buff effect for 2 days.
-- EXP UP +20% 
-- ITEM UP +20% 
-- Increase storage limit +300 
-^ffffff_^000000
-Weight : ^7777771^000000
 
-Weight: ^8080800^000000
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 2 days.
+- EXP +50% 
+- ITEM UP +50% 
+- Access to second account storage
+Weight: ^8080801^000000
 #
 23149#
 A box that provides premium service for 3 days.
-^ffffff_^000000
-When you open the box, all the characters in the server who use the item receive the premium buff effect for 3 days.
-- EXP UP +20% 
-- ITEM UP +20% 
-- Increase storage limit +300 
-^ffffff_^000000
-Weight : ^7777771^000000
 
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 3 days.
+- EXP +50% 
+- ITEM UP +50% 
+- Access to second account storage
 Weight: ^8080800^000000
 #
 23164#
@@ -86845,75 +87011,67 @@ Weight: ^8080800^000000
 #
 23210#
 A box that provides premium service for 4 days.
-^ffffff_^000000
-When you open the box, all the characters in the server who use the item receive the premium buff effect for 4 days.
-- EXP UP +20% 
-- ITEM UP +20% 
-- Increase storage limit +300 
-^ffffff_^000000
-Weight : ^7777771^000000
 
-Weight: ^8080800^000000
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 4 days.
+- EXP +50% 
+- ITEM UP +50% 
+- Access to second account storage
+Weight: ^8080801^000000
 #
 23211#
 A box that provides premium service for 5 days.
-^ffffff_^000000
-When you open the box, all the characters in the server who use the item receive the premium buff effect for 5 days.
-- EXP UP +20% 
-- ITEM UP +20% 
-- Increase storage limit +300 
-^ffffff_^000000
-Weight : ^7777771^000000
 
-Weight: ^8080800^000000
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 5 days.
+- EXP +50% 
+- ITEM UP +50% 
+- Access to second account storage
+- Access to a Merchant Voucher (Offline-Vending)
+- Access to a Shopper Voucher (Offline-Buying)
+Weight: ^8080801^000000
 #
 23212#
 A box that provides premium service for 6 days.
-^ffffff_^000000
-When you open the box, all the characters in the server who use the item receive the premium buff effect for 6 days.
-- EXP UP +20% 
-- ITEM UP +20% 
-- Increase storage limit +300 
-^ffffff_^000000
-Weight : ^7777771^000000
 
-Weight: ^8080800^000000
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 6 days.
+- EXP +50% 
+- ITEM UP +50% 
+- Access to second account storage
+- Access to a Merchant Voucher (Offline-Vending)
+- Access to a Shopper Voucher (Offline-Buying)
+Weight: ^8080801^000000
 #
 23213#
 A box that provides premium service for 7 days.
-^ffffff_^000000
-When you open the box, all the characters in the server who use the item receive the premium buff effect for 7 days.
-- EXP UP +20% 
-- ITEM UP +20% 
-- Increase storage limit +300 
-^ffffff_^000000
-Weight : ^7777771^000000
 
-Weight: ^8080800^000000
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 7 days.
+- EXP +50% 
+- ITEM UP +50% 
+- Access to second account storage
+- Access to a Merchant Voucher (Offline-Vending)
+- Access to a Shopper Voucher (Offline-Buying)
+Weight: ^8080801^000000
 #
 23214#
 A box that provides premium service for 8 days.
-^ffffff_^000000
-When you open the box, all the characters in the server who use the item receive the premium buff effect for 8 days.
-- EXP UP +20% 
-- ITEM UP +20% 
-- Increase storage limit +300 
-^ffffff_^000000
-Weight : ^7777771^000000
 
-Weight: ^8080800^000000
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 8 days.
+- EXP +50% 
+- ITEM UP +50% 
+- Access to second account storage
+- Access to a Merchant Voucher (Offline-Vending)
+- Access to a Shopper Voucher (Offline-Buying)
+Weight: ^8080801^000000
 #
 23215#
 A box that provides premium service for 9 days.
-^ffffff_^000000
-When you open the box, all the characters in the server who use the item receive the premium buff effect for 9 days.
-- EXP UP +20% 
-- ITEM UP +20% 
-- Increase storage limit +300 
-^ffffff_^000000
-Weight : ^7777771^000000
 
-Weight: ^8080800^000000
+When you open the box, all of your characters on the same account of the character that used the item will receive the premium buff effect for 9 days.
+- EXP +50% 
+- ITEM UP +50% 
+- Access to second account storage
+- Access to a Merchant Voucher (Offline-Vending)
+- Access to a Shopper Voucher (Offline-Buying)
+Weight: ^8080801^000000
 #
 23216#
 A box that provides premium service for 10 days.
@@ -89555,7 +89713,7 @@ Weight: ^8080800^000000
 Weight: 120
 #
 25231#
-A bottle containing a suspicious red liquid. Just looking at this bottle makes you think of the Nine Tail¡¯s eyes.
+A bottle containing a suspicious red liquid. Just looking at this bottle makes you think of the Nine Tails eyes.
 ^FF0000This is considered food for Nine Tail pets.^000000
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
@@ -89878,7 +90036,7 @@ Weight: 0
 #
 25462#
 A free costume coupon.
-Please visit ^ffffff<NAVI>^4D4DFF[±×¶óÅÁ ±×¶ó½Ã¾Æ½º]^000000<INFO>prontera,88,332,0,100,0,0</INFO></NAVI>^000000 with this.
+Please visit ^ffffff<NAVI>^4D4DFF[±׶󅁠±׶󽃾ƽº]^000000<INFO>prontera,88,332,0,100,0,0</INFO></NAVI>^000000 with this.
 Weight : ^7777770^000000
 
 Weight: ^8080800^000000
@@ -95490,6 +95648,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31372#
+A cute figure of a doll that you can take with you on adventures! Her hobbies include knitting and reading romance novels.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 31377#
 A bat that has lived in Glast Heim for a very long time, observing all the events that have taken place. It doesn't often reveal itself to humans.
 Class: ^808080Costume^000000
@@ -96447,6 +96611,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31617#
+Modeled after the real Lady Tanee, many will often mistake the two. This one will always be by your side wherever you go.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
 31628#
 A miniature Dokebi made for children. Don't worry, it won't attack you!
 Class: ^808080Costume^000000
@@ -96857,6 +97027,12 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31731#
+An aura of delicious sweets and cake that float around you. Perfect for tea time!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
 31784#
 A hat modeled on the experimental goat by Werner Laboratories.
 Class: ^808080Costume^000000
@@ -96967,6 +97143,48 @@ Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
+31842#
+A hat that proudly displays the family crest of the Tsuyoshi Warriors.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31843#
+A costume of earrings said to harness the power of the heavens. Wearing it makes you feel as if you have the power to judge those who oppose you.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31844#
+A costume of a scarf commonly used during a revolution. Gather all of your friends with mob scarves and travel around as a mob!
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31845#
+A costume of a hat commonly worn by the chosen palace guards. Wearing it will make you feel a proud sense of duty.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31846#
+A beautiful wig for many outfits. It features a lovely ribbon for ribbon enthusiasts.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31847#
+Wearing this costume will make you feel so fabulous that you cannot help but blink! Featuring two different color tones, you will be the center of attention at any party.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31848#
+This costume hood is filled with frills and roses. The pattern is stylish and will look great with a variety of outfits.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 31899#
 Crown of goddess Freyja. When the whole crystal is embedded in the sunlight, a strange color will appear.
 Class: ^808080Costume^000000
@@ -96975,6 +97193,42 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 When worn during January increases monster EXP by 5%
+#
+31911#
+A flower crown for a dignified costume. It exudes a feeling of elegance and natural beauty.
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31912#
+The look of someone who has lost something very important to them. You can feel a sense of sorrow emitting from it.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31913#
+A costume that was once worn by an executive of an organization. It was said that it was part of a high performance and top secret mission.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31914#
+A small hair band featuring a mini beret. Simple design and easy to match.
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31915#
+A fancy looking wig for many outfits that features rolled up hair and wrapped low.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31916#
+A simple frilly collar with a bow tie that will help you pull off that Gothic look.
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
 #
 32032#
 A mysterious one-handed spear given to adventurers who successfully execute missions.
@@ -97220,7 +97474,7 @@ Increases the damage of ^0000FFLightning Ride^000000 by 70%.
 ^800080Set Bonus^000000
 ^008080Old Detachments Ring^000000
 ^008080Old Bone Circlet [1]^000000
-Adds a 1% chance of buffing the user for 10 second when using ^0000FFCounter Slash^000000; Str + 200.
+Buffs the user for 10 second when using ^0000FFCounter Slash^000000; Str + 200.
 
 ^800080Set Bonus^000000
 ^008080Old Detachments Ring^000000
@@ -97378,4 +97632,20 @@ Reduces the skill usage delay by 5%
 #
 99999#
 
+#
+200030#
+A box that contains a Mistress Wing. An un-consumable version of a fly wing that teleports your entire party and expires over time.
+^FF0000Account Bound^000000
+^FF0000The item will last 30 days once obtained from the box.^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
+When opened it gives the following:
+1 Mistress Wing
+#
+480052#
+^FF0000^000000
+Class: ^808080^000000
+Position: ^808080^000000
+Compounds On: ^808080^000000
+Weight: ^8080800^000000
 #

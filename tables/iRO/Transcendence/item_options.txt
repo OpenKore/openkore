@@ -51,8 +51,8 @@ DAMAGE_PROPERTY_DARKNESS_USER#Shadow Enemy Resistance +%d%%.#
 DAMAGE_PROPERTY_DARKNESS_TARGET#Damage to Shadow Enemies +%d%%.#
 DAMAGE_PROPERTY_TELEKINESIS_USER#Ghost Enemy Resistance +%d%%.#
 DAMAGE_PROPERTY_TELEKINESIS_TARGET#Damage to Ghost Enemies +%d%%.#
-DAMAGE_PROPERTY_UNDEAD_USER#Undead Enemy Resistance +%d%%.#
-DAMAGE_PROPERTY_UNDEAD_TARGET#Damage to Undead Enemies +%d%%.#
+DAMAGE_PROPERTY_UNDEAD_USER#Undead Property Enemy Resistance +%d%%.#
+DAMAGE_PROPERTY_UNDEAD_TARGET#Damage to Undead Property Enemies +%d%%.#
 MDAMAGE_PROPERTY_NOTHING_USER#Neutral Enemy Magic Resistance +%d%%.#
 MDAMAGE_PROPERTY_NOTHING_TARGET#Magic Damage to Neutral Enemies +%d%%.#
 MDAMAGE_PROPERTY_WATER_USER#Water Enemy Magic Resistance +%d%%.#
@@ -71,8 +71,8 @@ MDAMAGE_PROPERTY_DARKNESS_USER#Shadow Enemy Magic Resistance +%d%%.#
 MDAMAGE_PROPERTY_DARKNESS_TARGET#Magic Damage to Shadow Enemies +%d%%.#
 MDAMAGE_PROPERTY_TELEKINESIS_USER#Ghost Enemy Magic Resistance +%d%%.#
 MDAMAGE_PROPERTY_TELEKINESIS_TARGET#Magic Damage to Ghost Enemies +%d%%.#
-MDAMAGE_PROPERTY_UNDEAD_USER#Undead Enemy Magic Resistance +%d%%.#
-MDAMAGE_PROPERTY_UNDEAD_TARGET#Undead Enemy +%d%%.#
+MDAMAGE_PROPERTY_UNDEAD_USER#Undead Property Enemy Magic Resistance +%d%%.#
+MDAMAGE_PROPERTY_UNDEAD_TARGET#Undead Property Enemy +%d%%.#
 BODY_ATTR_WATER#User's Property Water.#
 BODY_ATTR_GROUND#User's Property Earth.#
 BODY_ATTR_FIRE#User's Property Fire.#
@@ -83,7 +83,7 @@ BODY_ATTR_DARKNESS#User's Property Shadow.#
 BODY_ATTR_TELEKINESIS#User's Property Ghost.#
 BODY_ATTR_UNDEAD#User's Property Undead.#
 RACE_TOLERACE_NOTHING#Formless Enemy Resistance +%d%%.#
-RACE_TOLERACE_UNDEAD#Undead Enemy Resistance +%d%%.#
+RACE_TOLERACE_UNDEAD#Undead Race Enemy Resistance +%d%%.#
 RACE_TOLERACE_ANIMAL#Brute Enemy Resistance +%d%%.#
 RACE_TOLERACE_PLANT#Plant Enemy Resistance +%d%%.#
 RACE_TOLERACE_INSECT#Insect Enemy Resistance +%d%%.#
@@ -93,7 +93,7 @@ RACE_TOLERACE_HUMAN#Demi-Human Enemy Resistance +%d%%.#
 RACE_TOLERACE_ANGEL#Angel Enemy Resistance +%d%%.#
 RACE_TOLERACE_DRAGON#Dragon Enemy Resistance +%d%%.#
 RACE_DAMAGE_NOTHING#Damage to Formless Enemies +%d%%.#
-RACE_DAMAGE_UNDEAD#Damage to Undead Enemies +%d%%.#
+RACE_DAMAGE_UNDEAD#Damage to Undead Race Enemies +%d%%.#
 RACE_DAMAGE_ANIMAL#Damage to Brute Enemies +%d%%.#
 RACE_DAMAGE_PLANT#Damage to Plant Enemies +%d%%.#
 RACE_DAMAGE_INSECT#Damage to Insect Enemies +%d%%.#
@@ -103,7 +103,7 @@ RACE_DAMAGE_HUMAN#Damage to Demi-Human Enemies +%d%%.#
 RACE_DAMAGE_ANGEL#Damage to Angel Enemies +%d%%.#
 RACE_DAMAGE_DRAGON#Damage to Dragon Enemies +%d%%.#
 RACE_MDAMAGE_NOTHING#Magic Damage to Formless Enemies +%d%%.#
-RACE_MDAMAGE_UNDEAD#Magic Damage to Undead Enemies +%d%%.#
+RACE_MDAMAGE_UNDEAD#Magic Damage to Undead Race Enemies +%d%%.#
 RACE_MDAMAGE_ANIMAL#Magic Damage to Brute Enemies +%d%%.#
 RACE_MDAMAGE_PLANT#Magic Damage to Plant Enemies +%d%%.#
 RACE_MDAMAGE_INSECT#Magic Damage to Insect Enemy +%d%%.#
@@ -113,7 +113,7 @@ RACE_MDAMAGE_HUMAN#Magic Damage to Demi-Human Enemies +%d%%.#
 RACE_MDAMAGE_ANGEL#Magic Damage to Angel Enemies +%d%%.#
 RACE_MDAMAGE_DRAGON#Magic Damage to Dragon Enemies +%d%%.#
 RACE_CRI_PERCENT_NOTHING#Crit + (%d / 10) on Formless Enemies.#
-RACE_CRI_PERCENT_UNDEAD#Crit + (%d / 10) on Undead Enemies.#
+RACE_CRI_PERCENT_UNDEAD#Crit + (%d / 10) on Undead Race Enemies.#
 RACE_CRI_PERCENT_ANIMAL#Crit + (%d / 10) on Brute Enemies.#
 RACE_CRI_PERCENT_PLANT#Crit + (%d / 10) on Plant Enemies.#
 RACE_CRI_PERCENT_INSECT#Crit + (%d / 10) on Insect Enemies.#
@@ -123,7 +123,7 @@ RACE_CRI_PERCENT_HUMAN#Crit + (%d / 10) on Demi-Human Enemies.#
 RACE_CRI_PERCENT_ANGEL#Crit + (%d / 10) on Angel Enemies.#
 RACE_CRI_PERCENT_DRAGON#Crit + (%d / 10) on Dragon Enemies.#
 RACE_IGNORE_DEF_PERCENT_NOTHING#Bypass %d%% of Def on Formless Enemies.#
-RACE_IGNORE_DEF_PERCENT_UNDEAD#Bypass %d%% of Def on Undead Enemies.#
+RACE_IGNORE_DEF_PERCENT_UNDEAD#Bypass %d%% of Def on Undead Race Enemies.#
 RACE_IGNORE_DEF_PERCENT_ANIMAL#Bypass %d%% of Def on Brute Enemies.#
 RACE_IGNORE_DEF_PERCENT_PLANT#Bypass %d%% of Def on Plant Enemies.#
 RACE_IGNORE_DEF_PERCENT_INSECT#Bypass %d%% of Def on Insect Enemies.#
@@ -133,7 +133,7 @@ RACE_IGNORE_DEF_PERCENT_HUMAN#Bypass %d%% of Def on Demi-Human Enemies.#
 RACE_IGNORE_DEF_PERCENT_ANGEL#Bypass %d%% of Def on Angel Enemies.#
 RACE_IGNORE_DEF_PERCENT_DRAGON#Bypass %d%% of Def on Dragon Enemies.#
 RACE_IGNORE_MDEF_PERCENT_NOTHING#Bypass %d%% of Mdef on Formless Enemies.#
-RACE_IGNORE_MDEF_PERCENT_UNDEAD#Bypass %d%% of Mdef on Undead Enemies.#
+RACE_IGNORE_MDEF_PERCENT_UNDEAD#Bypass %d%% of Mdef on Undead Race Enemies.#
 RACE_IGNORE_MDEF_PERCENT_ANIMAL#Bypass %d%% of Mdef on Brute Enemies.#
 RACE_IGNORE_MDEF_PERCENT_PLANT#Bypass %d%% of Mdef on Plant Enemies.#
 RACE_IGNORE_MDEF_PERCENT_INSECT#Bypass %d%% of Mdef on Insect Enemies.#
@@ -165,8 +165,8 @@ RANGE_ATTACK_DAMAGE_TARGET#Long-Ranged Damage +%d%%.#
 RANGE_ATTACK_DAMAGE_USER#Long-Ranged Resistance +%d%%.#
 HEAL_VALUE#Skill Healing Recovery Rate +%d%%.#
 HEAL_MODIFY_PERCENT#Received Recovery Rate +%d%%.#
-DEC_SPELL_CAST_TIME#Variable Casting Time +%d%%#
-DEC_SPELL_DELAY_TIME#Cast Delay +%d%%.#
+DEC_SPELL_CAST_TIME#Variable Casting Time -%d%%#
+DEC_SPELL_DELAY_TIME#Cast Delay -%d%%.#
 DEC_SP_CONSUMPTION#Skill SP Cost -%d%%.#
 WEAPON_ATTR_NOTHING#Property: Neutral#
 WEAPON_ATTR_WATER#Property: Water#

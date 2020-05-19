@@ -171,8 +171,8 @@
 689#Level 5 Cold Bolt#
 690#Level 3 Fire Bolt#
 691#Level 5 Fire Bolt#
-692#Level 3 Lightening Bolt#
-693#Level 5 Lightening Bolt#
+692#Level 3 Lightning Bolt#
+693#Level 5 Lightning Bolt#
 694#Level 3 Soul Strike#
 695#Level 5 Soul Strike#
 696#Level 1 Fire Ball#
@@ -694,9 +694,9 @@
 1414#Gelerdria#
 1415#Brocca#
 1416#Tjungkuletti#
-1417#Poll Axe#
+1417#Pole Axe#
 1418#Gungnir#
-1419#Poll Axe#
+1419#Rental Pole Axe#
 1420#Long Horn#
 1421#Battle Hook#
 1422#Hunting Spear#
@@ -727,9 +727,9 @@
 1460#Trident#
 1461#Trident#
 1462#Trident#
-1463#Hallberd#
-1464#Hallberd#
-1465#Hallberd#
+1463#Halberd#
+1464#Halberd#
+1465#Halberd#
 1466#Crescent Scythe#
 1467#Bill Guisarme#
 1468#Zephyrus#
@@ -3667,7 +3667,7 @@
 6249#Savage Meat#
 6250#Cooking Skewer#
 6251#Black Charcoal#
-6252#Blood Of Wolf#
+6252#Blood of Wolf#
 6253#Cold Ice#
 6254#Beef Head#
 6255#Large Cookpot#
@@ -3675,7 +3675,7 @@
 6257#Ice Crystal#
 6258#Comodo Tropical Fruit#
 6259#Drosera Tentacle#
-6260#Petite's Tail#
+6260#Petite Tail#
 6261#Fine Noodle#
 6262#Cool Gravy#
 6263#Coconut Fruit#
@@ -3700,7 +3700,7 @@
 6282#How To Make A Melon Bomb#
 6283#How To Make A Banana Bomb#
 6284#How to Grow Plant Genes#
-6285#How To Make High Quality Potion#
+6285#How to Make High Quality Potions#
 6286#Gym Pass#
 6287#Omni Clothing Dye#
 6288#Summer Happy Box#
@@ -3788,7 +3788,7 @@
 6440#General Lubricant#
 6441#High Ranked Lubricant#
 6442#Octopus Hunting Stick#
-6443#Sillit Pong Bottle#
+6443#Silit Pong Bottle#
 6446#Green Paper#
 6447#Red Paper#
 6448#White Paper#
@@ -4734,7 +4734,7 @@
 7910#Stolen Candy#
 7911#Yulia's Hat#
 7912#Portable Snowman Machine#
-7915#Shred Of Evidence#
+7915#Copper Coin#
 7916#Silver Coin#
 7919#Festival Ticket#
 7923#Krathong#
@@ -4925,9 +4925,9 @@
 11016#Expedition Report Vol4#
 11018#Splendide Selling Item#
 11019#Manuk Selling Item#
-11022#Cooking Book: Mix Cooking#
-11023#How To Increase Stamina#
-11024#How To Increase Vitality#
+11022#Mix Cooking Cookbook#
+11023#How to Increase Stamina#
+11024#How to Increase Vitality#
 11056#Spiritualism Guide#
 11057#February Sweets#
 11058#Novice Combination Book#
@@ -5321,12 +5321,12 @@
 12416#Thanksgiving Groove Pack#
 12418#Full SwingK#
 12419#Mana +#
-12422#HP Increase Potion(Small)#
-12423#HP Increase Potion(Mid)#
-12424#HP Increase Potion(Large)#
-12425#SP Increase Potion(Small)#
-12426#SP Increase Potion(Mid)#
-12427#SP Increase Potion(Large)#
+12422#HP Increase Potion (Small)#
+12423#HP Increase Potion (Medium)#
+12424#HP Increase Potion (Large)#
+12425#SP Increase Potion (Small)#
+12426#SP Increase Potion (Medium)#
+12427#SP Increase Potion (Large)#
 12428#Enriched White PotionZ#
 12429#Savage BBQ#
 12430#Warg Blood Cocktail#
@@ -5365,8 +5365,8 @@
 12463#Small Magic Defense Potion#
 12464#Big Defense Potion#
 12465#Small Defense Potion#
-12466#LV10 Blessing Scroll#
-12467#LV10 Agil Scroll#
+12466#Level 10 Blessing Scroll#
+12467#Level 10 Increase Agility Scroll#
 12468#LV5 Aspersio Scroll#
 12469#LV5 Assumptio Scroll#
 12470#LV10 Wind Walker Scroll#
@@ -5579,7 +5579,7 @@
 12938#Combat Knife Box#
 12939#Dagger of Counter Box#
 12940#Kaiser Knuckle Box#
-12941#Poll Axe Box#
+12941#Pole Axe Box#
 12942#Mighty Staff Box#
 12943#Light Epsilon Box#
 12944#Ballista Box#
@@ -6373,8 +6373,8 @@
 15212#YSF01 Plate#
 15249#Antonio's Coat#
 15283#Mighty Black Threaded Armor#
-15343#Strength Supplement#
-15344#Fortified Patz - Gloves#
+15343#Supplement Part Str#
+15344#Upgrade Part - Plate#
 15352#Nature Dress#
 15384#Ritual Robe#
 15405#Fafnir Scale#
@@ -6468,7 +6468,7 @@
 16428#Solar Sword Box#
 16429#Tomahawk Box#
 16430#Rudra Bow Box#
-16431#Poll Axe Box#
+16431#Pole Axe Box#
 16436#Libra Crown Box#
 16437#Libra Crown Box#
 16438#Libra Diadem Box#
@@ -6854,7 +6854,7 @@
 18107#Malang Snow Crab#
 18108#Brindle Eel#
 18109#Catapult#
-18110#Big CrossBow#
+18110#Big Crossbow#
 18111#Creeper Bow#
 18113#Bellum Arbalest#
 18114#Bellum Crossbow#
@@ -7380,6 +7380,7 @@
 19527#Costume Spiky Band#
 19528#Costume Iron Cain#
 19529#Costume Angel Wing#
+19533#Costume Spore Hat#
 19535#Costume Sinsuncho Hat#
 19536#Costume: Rose Corsage#
 19537#Costume Gryphon Hat#
@@ -7780,6 +7781,7 @@
 20183#Costume Floating Ghost#
 20190#Costume Chicken Hat#
 20191#Costume Black Cat Ears Beret#
+20194#Costume Lion Mask#
 20195#Costume Scratching Cat#
 20196#Costume Leopard Ear Hat#
 20197#Costume:Amistr Beret#
@@ -7938,11 +7940,15 @@
 20537#Costume Falling Red Foliage#
 20538#Costume Magic Circle Rainbow#
 20547#Costume Whisper's Blessing#
+20570#Costume Love Candy Pack#
 20571#Costume Valkyrie Wings#
 20574#Costume Backpack (Red)#
 20575#Costume Backpack (Black)#
 20582#Costume Bear Backpack#
 20584#Costume Fox Tail#
+20589#Costume One Wing#
+20590#Costume Evil Druid Cross#
+20594#Costume Big Ribbon Manteau#
 20700#Egir Manteau#
 20701#Sol Manteau#
 20702#TE WoE Muffler#
@@ -8014,7 +8020,7 @@
 20838#Illusion Muffler#
 20840#Illusion Ancient Cape#
 20841#Golden Angel Wings#
-20845#Malach's Skin#
+20845#Skin of Malach#
 20846#Temporal Manteau#
 20847#Illusion Survivor's Manteau#
 20856#YSF01 Manteau#
@@ -8028,7 +8034,7 @@
 20940#Violet Halo#
 20941#Phoenix Muffler#
 20942#Manteau Of Guardsman#
-20949#Skin Of Ladon#
+20949#Skin of Ladon#
 20952#Mysterious Muffler#
 20962#Skin of Typhon#
 20969#Rainbow Muffler#
@@ -9032,6 +9038,7 @@
 31331#Costume Chung E Shinyon Cap#
 31332#Costume Black Khalitzburg Knight Helm#
 31371#Costume Drooping Sorin Doll Hat#
+31372#Costume Drooping Roxie#
 31377#Costume Glast Heim Spectator#
 31378#Costume Katarina von Blood 60#
 31379#Costume Clock Winding Key#
@@ -9154,6 +9161,7 @@
 31612#Costume Large Sorcerer Crown#
 31615#Costume Geisha Make Up#
 31616#Costume Sleep Sheep#
+31617#Costume Lady Tanee#
 31628#Costume Dokebi#
 31635#Costume Flowing Long (Blonde)#
 31636#Costume Flowing Long (Silver)#
@@ -9207,6 +9215,7 @@
 31716#Costume Twinkling Red Eyes#
 31717#Costume Medium Wave (Yellow)#
 31718#Costume Sky Lantern#
+31731#Costume Sweets Party#
 31784#Costume Experimental Goat Cap#
 31785#Costume Monster Fish Gills#
 31786#Costume Red Baby Dragon Hat#
@@ -9222,7 +9231,20 @@
 31800#Costume Brazil Twin Ribbon#
 31801#Costume Creative Convention Cap#
 31802#Costume Creative Convention Chapeau#
+31842#Costume Striking Hat#
+31843#Costume Heavenly Order#
+31844#Costume Mob Scarf#
+31845#Costume Palace Guard Cap#
+31846#Costume Hair Ribbon Wig#
+31847#Costume Blinking Blue Eyes#
+31848#Costume Gothic Rose Bonnet#
 31899#Costume Freyja's Crown#
+31911#Costume Little Garden#
+31912#Costume Black Veil#
+31913#Costume Feathered Black Cap#
+31914#Costume Mini Beret Hairband#
+31915#Costume Sweet Coronet#
+31916#Costume Bow Tie#
 32032#The Berg Golden Spear#
 32114#Accolade Lute#
 32203#Accelerator Chip#
@@ -9239,3 +9261,5 @@
 32356#The Twist of Fates#
 32410#The Spinebuster#
 99999##
+200030#[30D] Mistress Wing Box#
+480052##
