@@ -23745,7 +23745,7 @@ Ao realizar ataques físicos ou mágicos:
 Ao desequipar:
 ^0000ffDrena 300 de SP.^000000
 --------------------------
-^CD3278Delírio:^000000
+^CD3278Euforia:^000000
 ^0000ffSOR +200.^000000
 ^0000ffAo derrotar monstros, 0,1% de chance de derrubar Arca de Tesouro.^000000
 #
@@ -58387,6 +58387,42 @@ Peso ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classe: ^777777Todas^000000
 #
+19977#
+Deixe o servidor todo saber que você está com pressa e não tem tempo pra responder pesquisa na rua ou ouvir a palavra de Odin, afinal, começou a chover e você esqueceu “as ropa no varal”.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classe: ^777777Todas^000000
+#
+19978#
+“Rápido, a gente precisa upar!”, “A gente precisa fazer a instância!”, “A gente precisa aproveitar os Mapas Especiais!”. Se você é dessas pessoas que acha que PRECISA fazer tudo pra ontem, este sinal é pra você. Mas procure fazer um pouco de meditação também. Costuma ajudar.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classe: ^777777Todas^000000
+#
+19979#
+Existe uma linha muito tênue entre espírito aventureiro e falta de noção. Procure andar com alguém que possa colocar uns freios na sua curiosidade desmedida, senão você ainda vai acabar entrando em algum calabouço de nível alto só porque parecia legal!
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classe: ^777777Todas^000000
+#
+19980#
+“Até quando vai o Ticket de Promoção mesmo?”, “Qual era o caminho pra Hugel?”, “Quem é mesmo que ensina Primeiros Socorros?”. Seu grupo pode até saber que você é muito forte e que eles podem contar com você pra encarar qualquer coisa, mas use esse sinal pra deixá-los cientes de que você não tem a melhor das memórias.
+Tipo: ^777777Visual^000000
+Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classe: ^777777Todas^000000
+#
 19984#
 Este chapéu é a última moda em Moscóvia! Dizem que foi usado até mesmo pela princesa perdida, Anestésia.
 Tipo: ^777777Visual ^000000
@@ -59035,6 +59071,15 @@ Classes: ^777777Todas ^000000
 #
 20188#
 Uma linda faixa que é muito mais do que os olhos podem ver. Ela pertence ao grupo de uma das três chaves para o selo que prende Morpheus.
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+20190#
+Essa amiga galinácea finalmente encontrou um lugar bem confortável pra se aninhar: a sua cuca! Cuide bem dela e ela haverá de deixar sua cabeça bem aquecida com suas penas fofinhas.
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Topo^000000
@@ -70183,6 +70228,15 @@ Defesa: ^7777770^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
+#
+440002#
+Essa gatona vai ficar grudada na sua cabeça por quanto tempo ela quiser. Como o nome diz, sua cauda é longa demais e ela tem o costume de apoiá-la em algum lugar. Provavelmente a sua cara vai ser o lugar perfeito pra isso...
+Tipo: ^777777Visual ^000000
+Defesa: ^7777770 ^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
 #
 490013#
 Ninguém sabe ao certo se esse artefato veio mesmo do reino das trevas, mas o poder supremo que ele manifesta não deixa muitas outras suposições sobre a sua origem.

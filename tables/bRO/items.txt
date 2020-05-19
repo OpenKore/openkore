@@ -6686,6 +6686,10 @@
 19960#Correntes de Marionete#
 19971#Adorno de Penas de Cisne#
 19976#Chapéu de Gato Natalino#
+19977#Sinal dos Apressados#
+19978#Sinal dos Desesperados#
+19979#Sinal dos Curiosos#
+19980#Sinal dos Esquecidos#
 19984#Chapéu Visual de Inverno#
 19985#Coroa de Cristais Brutos#
 19986#Boné de Lunático#
@@ -6759,6 +6763,7 @@
 20176#Máscara Feliz do Pierrot#
 20183#Presença Misteriosa#
 20188#Faixa de Morpheus#
+20190#Cocoricuca#
 20195#Gato Rabugento#
 20196#Gorro de Leopardo#
 20197#Boina de Amistr#
@@ -7660,6 +7665,7 @@
 32302#Revólver Ancestral#
 400006#Cocar do Orc Herói#
 410004#Marcas de Comodo#
+440002#Felina Cauda-Longa#
 490013#Anel do Submundo#
 490031#Cauda de Petal#
 490085#Anel da Evolução#
