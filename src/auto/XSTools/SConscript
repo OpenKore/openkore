@@ -2,6 +2,7 @@
 Import('*')
 import os.path
 import copy
+import sys
 
 
 ############### OpenKore Standard Library ###############
@@ -142,8 +143,12 @@ XS_sources['misc/fastutils.xs'] = 'misc/fastutils.cpp'
 
 ###################################################
 
-for input, output in XS_sources.iteritems():
-	perlenv.XS(output, input)
+if sys.version_info >= (3,0,0):
+    for input, output in XS_sources.items():
+	    perlenv.XS(output, input)
+else:
+    for input, output in XS_sources.iteritems():
+	    perlenv.XS(output, input)
 
 
 ############### XSTools ###############
