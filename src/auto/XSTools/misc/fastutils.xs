@@ -80,106 +80,125 @@ timeOut(r_time, compare_time = NULL)
 	SV *compare_time
 	PREINIT:
 		NV current_time, time, timeout;
-	CODE:
-		// !arg checks if arg is missing
-		if (!r_time) {
-			printf("[timeOut error] r_time is missing\n");
-			XSRETURN_NO;
-		}
-		
 		char *file;
-		I32 line;
+		UV line;
+		STRLEN len;
+	CODE:
 
 		file = OutCopFILE(PL_curcop);
 		line = CopLINE(PL_curcop);
 		
-		printf("[caller] file 0: %s | line: %d\n", file, line);
+		// !arg checks if arg is missing
+		if (!r_time) {
+			printf("[timeOut error] r_time is missing (file: %s | line: %llu)\n", file, line);
+			XSRETURN_NO;
+		}
 		
 		if (compare_time) {
 			// SvROK(arg) checks if arg is a reference
-			if (SvROK(r_time)) {
-				printf("[timeOut error - double argument] r_time is a reference\n");
-				XSRETURN_NO;
-			}
 			if (SvROK(compare_time)) {
-				printf("[timeOut error - double argument] compare_time is a reference\n");
+				printf("[timeOut error - double argument] compare_time is a reference (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
 			// SvTYPE(arg) checks the type of arg (according to perlapi in perldocs "checking SvTYPE(sv) < SVt_PVAV is the best way to see whether something is a scalar")
-			if (SvTYPE(r_time) >= SVt_PVAV) {
-				printf("[timeOut error - double argument] r_time is not a scalar\n");
-				XSRETURN_NO;
-			}
 			if (SvTYPE(compare_time) >= SVt_PVAV) {
-				printf("[timeOut error - double argument] compare_time is not a scalar\n");
+				printf("[timeOut error - double argument] compare_time is not a scalar (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
-			if (SvPOK(r_time) && !looks_like_number(r_time)) {
-				printf("[timeOut error - double argument] r_time is a string and does not look like a number\n");
-				XSRETURN_NO;
-			}
+			// SvPOK(arg) checks if type of arg is a string, looks_like_number(arg) check if that string looks like a number
 			if (SvPOK(compare_time) && !looks_like_number(compare_time)) {
-				printf("[timeOut error - double argument] compare_time is a string and does not look like a number\n");
+				printf("[timeOut error - double argument] compare_time is a string and does not look like a number (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
 			// SvOK(arg) checks if arg is defined, only usable for scalars
-			if (!SvOK(r_time)) {
-				printf("[timeOut error - double argument] r_time is not defined\n");
-				XSRETURN_NO;
-			}
 			if (!SvOK(compare_time)) {
-				printf("[timeOut error - double argument] compare_time is not defined\n");
+				printf("[timeOut error - double argument] compare_time is not defined (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
-			time = SvNV (r_time);
 			timeout = SvNV (compare_time);
+			
+			// If timeout is valid, return true if time is either undefined or an empty string
+			
+			if (SvROK(r_time)) {
+				printf("[timeOut error - double argument] r_time is a reference (file: %s | line: %llu)\n", file, line);
+				XSRETURN_NO;
+			}
+			
+			if (SvTYPE(r_time) >= SVt_PVAV) {
+				printf("[timeOut error - double argument] r_time is not a scalar (file: %s | line: %llu)\n", file, line);
+				XSRETURN_NO;
+			}
+			
+			if (SvPOK(r_time)) {
+				SvPVbyte(r_time, len);
+				if (len == 0) {
+					XSRETURN_YES;
+				} else if (!looks_like_number(r_time)) {
+					printf("[timeOut error - double argument] r_time is a string and does not look like a number (file: %s | line: %llu)\n", file, line);
+					XSRETURN_NO;
+				}
+			}
+			
+			if (!SvOK(r_time)) {
+				XSRETURN_YES;
+			}
+			
+			time = SvNV (r_time);
+			
 		} else {
 			HV *hash;
 			SV **sv_time, **sv_timeout;
 			SV *v_time, *v_timeout;
 			
 			if (!SvROK(r_time)) {
-				printf("[timeOut error - single argument] r_time is not a reference\n");
+				printf("[timeOut error - single argument] r_time is not a reference (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
 			if (SvTYPE(SvRV(r_time)) != SVt_PVHV) {
-				printf("[timeOut error - single argument] r_time is not a hash reference\n");
+				printf("[timeOut error - single argument] r_time is not a hash reference (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
 			hash = (HV *) SvRV (r_time);
 			
 			if (!hv_exists(hash, "timeout", 7)) {
-				printf("[timeOut error - single argument] r_time does not contain a key named 'timeout'\n");
+				printf("[timeOut error - single argument] r_time does not contain a key named 'timeout' (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
 			sv_timeout = hv_fetch (hash, "timeout", 7, 0);
 			
 			if (sv_timeout == NULL) {
-				printf("[timeOut error - single argument] 'timeout' key in r_time is NULL\n");
+				printf("[timeOut error - single argument] 'timeout' key in r_time is NULL (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
 			v_timeout = *sv_timeout;
 			
+			// If timeout is valid, return true if time is either undefined or an empty string
+			
 			if (SvROK(v_timeout)) {
-				printf("[timeOut error - single argument] 'timeout' key in r_time is a reference\n");
+				printf("[timeOut error - single argument] 'timeout' key in r_time is a reference (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
 			if (SvTYPE(v_timeout) >= SVt_PVAV) {
-				printf("[timeOut error - single argument] 'timeout' key in r_time is not a scalar\n");
+				printf("[timeOut error - single argument] 'timeout' key in r_time is not a scalar (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
 			if (SvPOK(v_timeout) && !looks_like_number(v_timeout)) {
-				printf("[timeOut error - single argument] 'timeout' key in r_time is a string and does not look like a number\n");
+				printf("[timeOut error - single argument] 'timeout' key in r_time is a string and does not look like a number (file: %s | line: %llu)\n", file, line);
+				XSRETURN_NO;
+			}
+			
+			if (!SvOK(v_timeout)) {
+				printf("[timeOut error - single argument] 'timeout' key in r_time is not defined (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
@@ -198,18 +217,27 @@ timeOut(r_time, compare_time = NULL)
 			v_time = *sv_time;
 			
 			if (SvROK(v_time)) {
-				printf("[timeOut error - single argument] 'time' key in r_time is a reference\n");
+				printf("[timeOut error - single argument] 'time' key in r_time is a reference (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
 			if (SvTYPE(v_time) >= SVt_PVAV) {
-				printf("[timeOut error - single argument] 'time' key in r_time is not a scalar\n");
+				printf("[timeOut error - single argument] 'time' key in r_time is not a scalar (file: %s | line: %llu)\n", file, line);
 				XSRETURN_NO;
 			}
 			
-			if (SvPOK(v_time) && !looks_like_number(v_time)) {
-				printf("[timeOut error - single argument] 'time' key in r_time is a string and does not look like a number\n");
-				XSRETURN_NO;
+			if (SvPOK(v_time)) {
+				SvPVbyte(v_time, len);
+				if (len == 0) {
+					XSRETURN_YES;
+				} else if (!looks_like_number(v_time)) {
+					printf("[timeOut error - single argument] 'time' key in r_time is a string and does not look like a number (file: %s | line: %llu)\n", file, line);
+					XSRETURN_NO;
+				}
+			}
+			
+			if (!SvOK(v_time)) {
+				XSRETURN_YES;
 			}
 			
 			time = SvNV (v_time);
