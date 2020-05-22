@@ -108,7 +108,6 @@ timeOut(r_time, compare_time = NULL)
 				XSRETURN_NO;
 			}
 			
-			// SvTYPE(arg) checks the type of arg (according to perlapi in perldocs "checking SvTYPE(sv) < SVt_PVAV is the best way to see whether something is a scalar")
 			if (SvPOK(r_time)) {
 				printf("[timeOut error - double argument] r_time is a string\n");
 				XSRETURN_NO;
@@ -147,34 +146,6 @@ timeOut(r_time, compare_time = NULL)
 			
 			hash = (HV *) SvRV (r_time);
 			
-			if (!hv_exists(hash, "time", 4)) {
-				printf("[timeOut error - single argument] r_time does not contain a key named 'time'\n");
-				XSRETURN_NO;
-			}
-			
-			sv_time = hv_fetch (hash, "time", 4, 0);
-			
-			if (sv_time == NULL) {
-				printf("[timeOut error - single argument] 'time' key in r_time is NULL\n");
-				XSRETURN_NO;
-			}
-			
-			v_time = *sv_time;
-			
-			if (SvROK(v_time)) {
-				printf("[timeOut error - single argument] 'time' key in r_time is a reference\n");
-				XSRETURN_NO;
-			}
-			
-			// v_time must be a scalar
-			if (SvTYPE(v_time) >= SVt_PVAV) {
-				printf("[timeOut error - double argument] 'time' key in r_time is not a scalar reference\n");
-				XSRETURN_NO;
-			}
-			
-			time = SvNV (v_time);
-			
-			
 			if (!hv_exists(hash, "timeout", 7)) {
 				printf("[timeOut error - single argument] r_time does not contain a key named 'timeout'\n");
 				XSRETURN_NO;
@@ -194,13 +165,46 @@ timeOut(r_time, compare_time = NULL)
 				XSRETURN_NO;
 			}
 			
-			// v_timeout must be a scalar
 			if (SvTYPE(v_timeout) >= SVt_PVAV) {
-				printf("[timeOut error - double argument] 'timeout' key in r_time is not a scalar reference\n");
+				printf("[timeOut error - single argument] 'timeout' key in r_time is not a scalar\n");
+				XSRETURN_NO;
+			}
+			
+			if (SvPOK(v_timeout)) {
+				printf("[timeOut error - single argument] 'timeout' key in r_time is a string\n");
 				XSRETURN_NO;
 			}
 			
 			timeout = SvNV (v_timeout);
+			
+			if (!hv_exists(hash, "time", 4)) {
+				XSRETURN_YES;
+			}
+			
+			sv_time = hv_fetch (hash, "time", 4, 0);
+			
+			if (sv_time == NULL) {
+				XSRETURN_YES;
+			}
+			
+			v_time = *sv_time;
+			
+			if (SvROK(v_time)) {
+				printf("[timeOut error - single argument] 'time' key in r_time is a reference\n");
+				XSRETURN_NO;
+			}
+			
+			if (SvTYPE(v_time) >= SVt_PVAV) {
+				printf("[timeOut error - single argument] 'time' key in r_time is not a scalar\n");
+				XSRETURN_NO;
+			}
+			
+			if (SvPOK(v_time)) {
+				printf("[timeOut error - single argument] 'time' key in r_time is a string\n");
+				XSRETURN_NO;
+			}
+			
+			time = SvNV (v_time);
 		}
 		
 		if (!NVtime) {
