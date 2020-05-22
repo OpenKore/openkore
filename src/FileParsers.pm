@@ -934,7 +934,7 @@ sub parseTimeouts {
 		my ($key, $value) = $line =~ /([\s\S]+?) ([\s\S]*?)$/;
 		my @args = split (/ /, $value);
 		if ($key ne "") {
-			$$r_hash{$key}{'timeout'} = $args[0];
+			$$r_hash{$key}{'timeout'} = $args[0] + 0;
 		}
 	}
 	return 1;
