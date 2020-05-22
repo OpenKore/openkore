@@ -4904,7 +4904,7 @@ sub cmdRelog {
 	} elsif (!$arg || $arg =~ /^\d+$/) {
 		@cmdQueueList = ();
 		$cmdQueue = 0;
-		relog($arg);
+		relog(int($arg));
 	} elsif ($arg =~ /^\d+\.\.\d+$/) {
 		# range support
 		my @numbers = split(/\.\./, $arg);
@@ -4913,7 +4913,7 @@ sub cmdRelog {
 		} else {
 			@cmdQueueList = ();
 			$cmdQueue = 0;
-			relog(rand($numbers[1] - $numbers[0])+$numbers[0]);
+			relog(int(rand($numbers[1] - $numbers[0])+$numbers[0]));
 		}
 	} else {
 		error T("Syntax Error in function 'relog' (Log out then log in.)\n" .
