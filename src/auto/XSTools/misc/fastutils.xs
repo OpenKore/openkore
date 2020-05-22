@@ -116,12 +116,12 @@ timeOut(r_time, compare_time = NULL)
 				XSRETURN_NO;
 			}
 			
-			if (SvPOK(r_time)) {
-				printf("[timeOut error - double argument] r_time is a string\n");
+			if (SvPOK(r_time) && !looks_like_number(r_time)) {
+				printf("[timeOut error - double argument] r_time is a string and does not look like a number\n");
 				XSRETURN_NO;
 			}
-			if (SvPOK(compare_time)) {
-				printf("[timeOut error - double argument] compare_time is a string\n");
+			if (SvPOK(compare_time) && !looks_like_number(compare_time)) {
+				printf("[timeOut error - double argument] compare_time is a string and does not look like a number\n");
 				XSRETURN_NO;
 			}
 			
@@ -178,8 +178,8 @@ timeOut(r_time, compare_time = NULL)
 				XSRETURN_NO;
 			}
 			
-			if (SvPOK(v_timeout)) {
-				printf("[timeOut error - single argument] 'timeout' key in r_time is a string\n");
+			if (SvPOK(v_timeout) && !looks_like_number(v_timeout)) {
+				printf("[timeOut error - single argument] 'timeout' key in r_time is a string and does not look like a number\n");
 				XSRETURN_NO;
 			}
 			
@@ -207,8 +207,8 @@ timeOut(r_time, compare_time = NULL)
 				XSRETURN_NO;
 			}
 			
-			if (SvPOK(v_time)) {
-				printf("[timeOut error - single argument] 'time' key in r_time is a string\n");
+			if (SvPOK(v_time) && !looks_like_number(v_time)) {
+				printf("[timeOut error - single argument] 'time' key in r_time is a string and does not look like a number\n");
 				XSRETURN_NO;
 			}
 			
