@@ -17,7 +17,7 @@ use Log qw( warning message error );
 use Settings;
 use Globals;
 use Misc;
-use Utils qw( timeOut getFormattedDate );
+use Utils qw( getFormattedDate );
 use Time::HiRes;
 
 use constant {

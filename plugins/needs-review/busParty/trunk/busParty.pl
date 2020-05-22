@@ -11,6 +11,7 @@ package busParty;
 	use Globals;
 	use Utils;
 	use AI;
+	use Time::HiRes qw( &time );
 	
 	# Plugin
 	Plugins::register('busParty', "send and receive info of followTarget coordinates via BUS", \&unload);
@@ -20,7 +21,7 @@ package busParty;
 	);
 	
 	my $bus_message_received;
-	my %bus_sendinfo_timeout = (timeout => 6);
+	$timeout{'bus_sendinfo'}{'timeout'} = 6;
 	
 	# handle plugin loaded manually
 	if ($::net) {
@@ -39,11 +40,11 @@ package busParty;
 	}
 	
 	sub send_my_info {
-		if (timeOut(\%bus_sendinfo_timeout)) {
+		if (timeOut($timeout{'bus_sendinfo'})) {
 			if ($char && $field && ($bus->getState == 4)) {
 				sendInfo();
 			}
-			$bus_sendinfo_timeout{time} = time;
+			$timeout{'bus_sendinfo'}{'time'} = time;
 		}
 		
 	}

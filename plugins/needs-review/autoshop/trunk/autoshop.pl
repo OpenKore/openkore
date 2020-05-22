@@ -125,6 +125,7 @@ use Utils;
 use Misc;
 use Log qw(message warning error);
 use AI;
+use Time::HiRes qw( &time );
 
 my $maxRad = 14;
 my @vendermap;
@@ -188,7 +189,7 @@ sub walkto {
 	my %args;
 	($args{move_to}{x}, $args{move_to}{y}) = @_;
 	$args{time_move} = $char->{time_move};
-	$args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
+	$args{'ai_move_giveup'}{'timeout'} = $timeout{'ai_move_giveup'}{'timeout'};
 	AI::queue("move", \%args)
 }
 
@@ -227,12 +228,12 @@ sub autoshop {
 	return if $shopstarted;
 	# exit when not connected
 	if ($conState < 5) {
-		$timeout{ai_autoshop}{time} = $timeout{ai_shop}{time} = time;
+		$timeout{'ai_autoshop'}{'time'} = $timeout{'ai_shop'}{'time'} = time;
 		return
 	}
 	# exit when ai is not idle
 	unless (AI::isIdle) {
-		$timeout{ai_shop}{time} = time;
+		$timeout{'ai_shop'}{'time'} = time;
 		return
 	}
 	# reset shop status
@@ -242,17 +243,17 @@ sub autoshop {
 	# exit when shop is marked open and we don't want to open it again
 	return if $shopopen;
 	# else
-	if (timeOut($timeout{ai_autoshop}) && !$char->{muted} && !$char->{sitting}) {
+	if (timeOut( $timeout{'ai_autoshop'} ) && !$char->{muted} && !$char->{sitting}) {
 		clearVendermap(); buildVendermap();
 		if ($vendermap[$maxRad][$maxRad] > $::config{autoshop_maxweight}) {
 			my ($x, $y) = suggest($::config{autoshop_radius});
 			walkto($x, $y) if ($x && $y)
-		} elsif (timeOut($timeout{ai_shop}) && !$shopopen) {
+		} elsif (timeOut($timeout{'ai_shop'}) && !$shopopen) {
 			$shopopen = 1;
 			::openShop();
 			return
 		}
-		$timeout{ai_autoshop}{time} = time
+		$timeout{'ai_autoshop'}{'time'} = time;
 	}
 }
 

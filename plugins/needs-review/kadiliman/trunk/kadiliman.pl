@@ -45,6 +45,8 @@
     use Network::Receive;
     use Chatbot::Kadiliman;
     use I18N qw(bytesToString);
+	use Utils qw(timeOut);
+	use Time::HiRes qw( &time );
     #use Utils;
 
 
@@ -189,8 +191,8 @@
                     $average /= (scalar @words);
                     my $typeSpeed = $args->{wpm} * $average / 60;
 
-                    $args->{timeout} = (0.5 + rand(1)) + (length($reply) / $typeSpeed);
-                    $args->{time} = time;
+                    $timeout{'kadiliman'}{'timeout'} = (0.5 + rand(1)) + (length($reply) / $typeSpeed);
+                    $timeout{'kadiliman'}{'time'} = time;
                     $args->{stage} = "start";
                     $args->{reply} = $reply;
                     $args->{prefix} = $prefix.$i;
@@ -226,7 +228,7 @@
                     if ($args->{stage} eq 'end') {
                             AI::dequeue;
                     } elsif ($args->{stage} eq 'start') {
-                            $args->{stage} = 'message' if (main::timeOut($args->{time}, $args->{timeout}));
+                            $args->{stage} = 'message' if (timeOut( $timeout{'kadiliman'} ));
                     } elsif ($args->{stage} eq 'message') {
                             sendMessage($messageSender, $args->{type}, $args->{reply}, $args->{privMsgUser});
                             debug "[Kadiliman] chatBot: $args->{reply}\n", "plugins";

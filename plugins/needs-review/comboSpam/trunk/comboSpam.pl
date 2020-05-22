@@ -15,8 +15,8 @@ Plugins::register('comboSpam', 'spam combo packets', \&on_unload);
 my $hook1 = Plugins::addHook('packet/actor_status_active', \&combo);
 my $hook2 = Plugins::addHook('AI_pre', \&AI_pre);
 my $combo = 0;
-my $delay = .2;
-my $time = time;
+$timeout{'comboSpam'}{'timeout'} = .2;
+$timeout{'comboSpam'}{'time'} = time;
 
 sub on_unload {
 	# This plugin is about to be unloaded; remove hooks
@@ -36,7 +36,7 @@ sub combo {
 sub AI_pre {
 	my ($self, $args) = @_;
 	
-	if ($combo && main::timeOut($time, $delay)) {
+	if ($combo && timeOut( $timeout{'comboSpam'} )) {
 		sendSkillUse($net, 272, 5, $accountID); # Chain Combo
 		if ($char->{spirits}) { # Make sure there is a spirit sphere
 			sendSkillUse($net, 273, 5, $accountID); # Combo Finish

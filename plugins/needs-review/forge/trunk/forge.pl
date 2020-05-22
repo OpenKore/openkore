@@ -30,6 +30,7 @@ use Log qw(message);
 use Network::Send;
 use Settings;
 use FileParsers;
+use Time::HiRes qw( &time );
 
 our %forge;
 our %items_rlut;
@@ -42,6 +43,8 @@ my $hooks = Plugins::addHooks(
 		['start2',		\&loadfile,		undef]
 );
 
+$timeout{'forge'}{'timeout'} = 0.5;
+
 sub Unload {
 	Plugins::delHooks($hooks);
 }
@@ -52,13 +55,13 @@ sub loadfile {
 }
 
 sub AutoForge {
-	if (timeOut($timeout{forge}{time},0.5)) {
+	if (timeOut( $timeout{'forge'} )) {
 		$timeout{forge}{time} = time;
 		if (AI::action eq "Forge" && AI::args->{done}) {
 				AI::dequeue;
 		} elsif (AI::action eq "Forge") {
 			my $args = AI::args;
-			$timeout{forge}{time} = time;	
+			$timeout{'forge'}{'time'} = time;	
 			if (CanForge($allof)) {
 				Forge($allof);
 			} else {

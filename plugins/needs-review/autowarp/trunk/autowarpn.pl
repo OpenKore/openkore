@@ -11,6 +11,7 @@ use Utils;
 use Network::Send;
 use Misc;
 use AI;
+use Time::HiRes qw( &time );
 
 Plugins::register('autowarpn', 'Auto warp before walk to lockmap.', \&unload);
 
@@ -37,8 +38,8 @@ sub cHook {
      existsInList($config{autoWarp_from}, $field->baseName) &&
      $char->{skills}{AL_WARP} && $char->{skills}{AL_WARP}{lv} > 0) {
       AI::queue("autowarp");
-      AI::args->{timeout} = 5;
-      AI::args->{time} = time;
+      $timeout{'autowarpn'}{'timeout'} = 5;
+      $timeout{'autowarpn'}{'time'} = time;
       AI::args->{map} = $field->baseName;
       message "Preparing to cast a warp portal to $config{autoWarp_to}\n";
    }
@@ -52,13 +53,13 @@ sub AI_hook {
          AI::dequeue;
          return;
       }
-      if (timeOut(AI::args)) {
+      if (timeOut( $timeout{'autowarpn'} )) {
          my $pos = getEmptyPos($char, 4);
          $messageSender->sendSkillUseLoc(27, 4, $pos->{x}, $pos->{y});
          stopAttack();
          message "Attempting to open warp portal at $pos->{x} $pos->{y}\n";
-         AI::args->{timeout} = 15;
-         AI::args->{time} = time;
+         $timeout{'autowarpn'}{'timeout'} = 15;
+         $timeout{'autowarpn'}{'time'} = time;
       }
    }
 }

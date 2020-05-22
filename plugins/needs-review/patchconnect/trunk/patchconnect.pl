@@ -17,8 +17,12 @@ use Utils;
 use Settings qw(%sys);
 use Translation qw(T TF);
 use Log qw(message error warning);
+use Time::HiRes qw( &time );
 
-my %cache = (timeout => 30);
+my %cache;
+
+$timeout{'patchconnect_cache'}{'timeout'} = 30;
+$timeout{'patchserver'}{'timeout'} = 30;
 
 Plugins::register('patchconnect', 'asks patchserver for login permission', \&Unload, \&Unload);
 
@@ -102,11 +106,11 @@ sub patchClient {
 sub patchCheck {
 	my (undef, $arg) = @_;
 	my $access;
-	if (timeOut($timeout{patchserver})) {
+	if (timeOut($timeout{'patchserver'})) {
 		my $access;
-		if (timeOut(\%cache)) {
+		if (timeOut( $timeout{'patchconnect_cache'} )) {
 			$access = $cache{response} = patchClient();
-			$cache{time} = time
+			$timeout{'patchconnect_cache'}{'time'} = time;
 		} else {
 			message T("Using cached patchserver's answer, "), 'connection';
 			$access = $cache{response}
@@ -117,7 +121,7 @@ sub patchCheck {
 			return
 		} elsif ($access == 0) {
 			warning T("login prohibited\n"), 'connection';
-			$timeout{patchserver}{time} = time
+			$timeout{'patchserver'}{'time'} = time
 		} else {
 			error T("couldn't connect or neither 'allow' nor 'deny' received"), 'connection';
 			error T(", disallowing connect\n"), 'connection';

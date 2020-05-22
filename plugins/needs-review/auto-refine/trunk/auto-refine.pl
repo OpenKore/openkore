@@ -33,6 +33,7 @@ use Globals;
 use Task;
 use Task::MapRoute;
 use Task::TalkNPC;
+use Time::HiRes qw( &time );
 
 Plugins::register('Auto-Refine', 'What do you think?', \&unload);
 my $hooks = Plugins::addHooks(
@@ -53,11 +54,14 @@ sub unload {
     Plugins::delHooks($hooks);
 }
 
-$timeout{'refine'}{'timeout'} = 2; # No need to go any faster than 1 iteration per second
-$timeout{'refine'}{'time'} = time;
+$timeout{'autoRefine'}{'timeout'} = 2; # No need to go any faster than 1 iteration per second
+$timeout{'autoRefine'}{'time'} = time;
 
 sub main {
-	return if (!$maploaded || !$config{"autoRefine_0"} || !timeOut($timeout{'refine'} || ($item && !$item->{equipped})));
+	return if (!$maploaded || 
+		!$config{"autoRefine_0"} || 
+		!timeOut( $timeout{'autoRefine'} ) || 
+		( $item && !$item->{equipped} ) );
 	selectItem() if (!$item);
 	
 	return if (!$item || !$metal || $metal->{amount} < 1);
@@ -79,7 +83,7 @@ sub main {
 		$startRefine = 0;
 		message("We have run out of items to refine or metals to refine them with!\n","info");
 	}
-	$timeout{'refine'}{'time'} = time;
+	$timeout{'autoRefine'}{'time'} = time;
 }
 
 sub selectItem {

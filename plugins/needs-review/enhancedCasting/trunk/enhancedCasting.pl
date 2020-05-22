@@ -69,6 +69,7 @@ use Log qw(message warning error debug);
 use Misc qw(bulkConfigModify);
 use Translation qw(T TF);
 use Utils;
+use Time::HiRes qw( &time );
 use AI;
 use enum qw(BITMASK:MD_ CANMOVE LOOTER AGGRESSIVE ASSIST CASTSENSOR_IDLE BOSS PLANT CANATTACK DETECTOR CASTSENSOR_CHASE CHANGECHASE ANGRY CHANGETARGET_MELEE CHANGETARGET_CHASE TARGETWEAK RANDOMTARGET);
 use POSIX qw(floor);
@@ -211,8 +212,12 @@ sub selectSkill {
     my $i = 0;
     while (exists $config{$prefix.$i}) {
       my $fellThrough = 0;
+
+		$timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"}{'timeout'} = $config{$prefix.$i."_blockDelayBeforeUse"} || 2 if !$timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"}{'timeout'};
+		$timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"}{'time'} = time if !$timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"}{'time'};
+          
             if ((main::checkSelfCondition($prefix.$i)) &&
-                    main::timeOut($delay{$prefix.$i."_blockDelayBeforeUse"})
+                    timeOut($timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"})
             ) {
                     my $skillObj = Skill->new(name => $config{$prefix.$i});
                     unless ($skillObj->getHandle) {
@@ -232,15 +237,15 @@ sub selectSkill {
                     my $monsterpos = main::calcPosition($currentTarget);
                
                
-                    $delay{$prefix.$i."_blockDelayBeforeUse"}{'timeout'} = $config{$prefix.$i."_blockDelayBeforeUse"};
-                    if (!$delay{$prefix.$i."_blockDelayBeforeUse"}{'set'}) {
-                            $delay{$prefix.$i."_blockDelayBeforeUse"}{'time'} = time;
-                            $delay{$prefix.$i."_blockDelayBeforeUse"}{'set'} = 1;
+                    $timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"}{'timeout'} = $config{$prefix.$i."_blockDelayBeforeUse"};
+                    if (!$timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"}{'set'}) {
+                            $timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"}{'time'} = time;
+                            $timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"}{'set'} = 1;
                     }
    
-                    $delay{$prefix.$skillObj->getHandle."_skillDelay"}{'timeout'} = $config{$prefix.$i."_skillDelay"};
+                    $timeout{'enhancedCasting'}{$prefix.$skillObj->getHandle."_skillDelay"}{'timeout'} = $config{$prefix.$i."_skillDelay"};
                     if ($skillUse{$skillObj->getIDN}) { # set the delays only when the skill gets successfully cast
-                            $delay{$prefix.$skillObj->getHandle."_skillDelay"}{'time'} = time;
+                            $timeout{'enhancedCasting'}{$prefix.$skillObj->getHandle."_skillDelay"}{'time'} = time;
                             $skillUse{$skillObj->getIDN} = 0;
                     }
                
@@ -262,8 +267,8 @@ sub selectSkill {
                   debug("enhancedCasting: Monster $currentTarget->{name} is frozen changing element to Water\n", 'enhancedCasting', 3);
                }
                      
-                    if (    main::timeOut($delay{$prefix.$skillObj->getHandle."_skillDelay"}) &&
-                            main::timeOut($delay{$prefix.$i."_blockDelayAfterUse"}) &&
+                    if (    timeOut($timeout{'enhancedCasting'}{$prefix.$skillObj->getHandle."_skillDelay"}) &&
+                            timeOut($timeout{'enhancedCasting'}{$prefix.$i."_blockDelayAfterUse"}) &&
                             ((!$config{$prefix.$i."_target"}) || existsInList($config{$prefix.$i."_target"}, $currentTarget->{'name'})) &&
                             ((!$config{$prefix.$i."_notTarget"}) || !existsInList($config{$prefix.$i."_notTarget"}, $currentTarget->{'name'})) &&
                     		((!$config{$prefix.$i."_Element"}) || (existsInList($config{$prefix.$i."_Element"}, $element) || existsInList($config{$prefix.$i."_Element"}, $element.$element_lvl))) &&
@@ -306,9 +311,9 @@ sub selectSkill {
                             $skill{'stage'} = 'skillUse';
                             $skillUse{$skill{'skillID'}} = 0;
                             AI::queue('enhancedCasting', \%skill);
-                            $delay{$prefix.$i."_blockDelayAfterUse"}{'timeout'} = $config{$prefix.$i."_blockDelayAfterUse"};
-                            $delay{$prefix.$i."_blockDelayAfterUse"}{'time'} = time;
-                            $delay{$prefix.$i."_blockDelayBeforeUse"}{'set'} = 0;
+                            $timeout{'enhancedCasting'}{$prefix.$i."_blockDelayAfterUse"}{'timeout'} = $config{$prefix.$i."_blockDelayAfterUse"};
+                            $timeout{'enhancedCasting'}{$prefix.$i."_blockDelayAfterUse"}{'time'} = time;
+                            $timeout{'enhancedCasting'}{$prefix.$i."_blockDelayBeforeUse"}{'set'} = 0;
                      debug("Selected level $skill{'lvl'} for $skill{'handle'} to attack $currentTarget->{'name_given'}\n", 'enhancedCasting', 1);
                             last;
                   }

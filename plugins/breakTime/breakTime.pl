@@ -1,11 +1,12 @@
 package autoBreakTime;
 use strict;
 
-use Globals qw/%config $net %timeout_ex/;
+use Globals qw/%config $net %timeout_ex %timeout/;
 use Log qw/message debug/;
 use Misc qw/relog chatLog/;
 use Translation qw/T TF/;
 use Utils qw/timeOut/;
+use Time::HiRes qw( &time );
 
 my $hooks = Plugins::addHooks(
 	['mainLoop_pre', \&mainLoop_pre],
@@ -15,11 +16,11 @@ Plugins::register('breakTime', 'Automatically disconnect and reconnect at certai
 
 *AI::CoreLogic::processAutoBreakTime = sub {}; # for pre-2.1
 
-our $timeout;
 my @wdays = qw/sun mon tue wed thu fri sat/;
+$timeout{'autoBreakTime'}{'timeout'} = 30;
 
 sub mainLoop_pre {
-	return unless timeOut $timeout, 30;
+	return unless timeOut( $timeout{'autoBreakTime'} );
 	
 	my (undef, $min, $hour, undef, undef, undef, $wday) = localtime;
 	debug sprintf("autoBreakTime: %s %s:%s\n", $wdays[$wday], $hour, $min), __PACKAGE__, 2;
@@ -58,7 +59,7 @@ sub mainLoop_pre {
 		}
 	}
 	
-	$timeout = time;
+	$timeout{'autoBreakTime'}{'time'} = time;
 }
 
 1;

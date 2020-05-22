@@ -24,6 +24,8 @@ use AI;
 use Misc;
 use Network;
 use Network::Send;
+use Time::HiRes qw( &time );
+use Utils qw/timeOut/;
  
 Plugins::register('arrowCraft', 'use arrow craft without SP', \&Unload);
 my $hook = Plugins::addHook('AI_pre', \&cast);
@@ -40,16 +42,16 @@ sub cast {
        
         while (exists $config{$prefix.$i}) {
                 my $item = $char->inventory->getByName($config{$prefix.$i});
-                $delay{'timeout'} = $config{$prefix.$i."_delay"} || 1;
+                $timeout{'arrowCraft'}{'timeout'} = $config{$prefix.$i."_delay"} || 1;
                 if ((@{$char->inventory->getItems()}) &&
-                        (main::timeOut(\%delay)) &&
+                        (timeOut($timeout{'arrowCraft'})) &&
                         ($item->{'amount'} > 0) &&
                         (main::checkSelfCondition($prefix.$i))) 
                 {
 						Commands::run('arrowcraft use') if ($masterServer->{private});
                         sendArrowCraft($messageSender,$item->{'nameID'});
                         message ("You use Arrow Craft on item: " . $item->{'name'} . "\n", "selfSkill");
-                        $delay{'time'} = time;
+                        $timeout{'arrowCraft'}{'time'} = time;
                 }
                 $i++;
         }
