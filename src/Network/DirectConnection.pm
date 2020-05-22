@@ -328,6 +328,8 @@ sub checkConnection {
 	
 	return if ($Settings::no_connect);
 
+	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'} if ! $timeout_ex{'master'}{'timeout'};
+
 	if ($self->getState() == Network::NOT_CONNECTED && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServer = $masterServers{$config{master}};
 		
