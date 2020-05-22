@@ -298,6 +298,8 @@ sub processMisc {
 		$messageSender->sendSync();
 	}
 
+	return if !$char->{mute_period};
+
 	if (timeOut($char->{muted}, $char->{mute_period})) {
 		delete $char->{muted};
 		delete $char->{mute_period};
