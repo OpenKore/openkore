@@ -87,6 +87,14 @@ timeOut(r_time, compare_time = NULL)
 			XSRETURN_NO;
 		}
 		
+		char *file;
+		I32 line;
+
+		file = OutCopFILE(PL_curcop);
+		line = CopLINE(PL_curcop);
+		
+		printf("[caller] file 0: %s | line: %d\n", file, line);
+		
 		if (compare_time) {
 			// SvROK(arg) checks if arg is a reference
 			if (SvROK(r_time)) {
