@@ -79,52 +79,141 @@ timeOut(r_time, compare_time = NULL)
 	SV *r_time
 	SV *compare_time
 	PREINIT:
-		NV current_time, v_time, v_timeout;
+		NV current_time, time, timeout;
 	CODE:
+		// !arg checks if arg is missing
+		if (!r_time) {
+			printf("[timeOut error] r_time is missing\n");
+			XSRETURN_NO;
+		}
+		
 		if (compare_time) {
-			/* r_time is a number */
-
-			if (!(v_time = SvNV (r_time)))
-				XSRETURN_YES;
-			if (!(v_timeout = SvNV (compare_time)))
-				XSRETURN_YES;
-
-			if (!NVtime) {
-				SV **svp = hv_fetch (PL_modglobal, "Time::NVtime", 12, 0);
-				if (!svp)
-					croak("Time::HiRes is required");
-				if (!SvIOK (*svp))
-					croak("Time::NVtime isn't a function pointer");
-				NVtime = INT2PTR (void *, SvIV (*svp));
+			// SvROK(arg) checks if arg is a reference
+			if (SvROK(r_time)) {
+				printf("[timeOut error - double argument] r_time is a reference\n");
+				XSRETURN_NO;
 			}
-			current_time = ((NVtime_t) NVtime) ();
-
+			if (SvROK(compare_time)) {
+				printf("[timeOut error - double argument] compare_time is a reference\n");
+				XSRETURN_NO;
+			}
+			
+			// SvTYPE(arg) checks the type of arg (according to perlapi in perldocs "checking SvTYPE(sv) < SVt_PVAV is the best way to see whether something is a scalar")
+			if (SvTYPE(r_time) >= SVt_PVAV) {
+				printf("[timeOut error - double argument] r_time is not a scalar\n");
+				XSRETURN_NO;
+			}
+			if (SvTYPE(compare_time) >= SVt_PVAV) {
+				printf("[timeOut error - double argument] compare_time is not a scalar\n");
+				XSRETURN_NO;
+			}
+			
+			// SvTYPE(arg) checks the type of arg (according to perlapi in perldocs "checking SvTYPE(sv) < SVt_PVAV is the best way to see whether something is a scalar")
+			if (SvPOK(r_time)) {
+				printf("[timeOut error - double argument] r_time is a string\n");
+				XSRETURN_NO;
+			}
+			if (SvPOK(compare_time)) {
+				printf("[timeOut error - double argument] compare_time is a string\n");
+				XSRETURN_NO;
+			}
+			
+			// SvOK(arg) checks if arg is defined, only usable for scalars
+			if (!SvOK(r_time)) {
+				printf("[timeOut error - double argument] r_time is not defined\n");
+				XSRETURN_NO;
+			}
+			if (!SvOK(compare_time)) {
+				printf("[timeOut error - double argument] compare_time is not defined\n");
+				XSRETURN_NO;
+			}
+			
+			time = SvNV (r_time);
+			timeout = SvNV (compare_time);
 		} else {
-			/* r_time is a hash */
 			HV *hash;
 			SV **sv_time, **sv_timeout;
-
-			if (!r_time || !SvOK (r_time) || !SvTYPE (r_time) == SVt_PV)
-				XSRETURN_YES;
-			if (!(hash = (HV *) SvRV (r_time)))
-				XSRETURN_YES;
-			if (!(sv_time = hv_fetch (hash, "time", 4, 0)) || !(v_time = SvNV (*sv_time)))
-				XSRETURN_YES;
-			if (!(sv_timeout = hv_fetch (hash, "timeout", 7, 0)) || !(v_timeout = SvNV (*sv_timeout)))
-				XSRETURN_YES;
-
-			if (!NVtime) {
-				SV **svp = hv_fetch (PL_modglobal, "Time::NVtime", 12, 0);
-				if (!svp)
-					croak("Time::HiRes is required");
-				if (!SvIOK (*svp))
-					croak("Time::NVtime isn't a function pointer");
-				NVtime = INT2PTR (void *, SvIV (*svp));
+			SV *v_time, *v_timeout;
+			
+			if (!SvROK(r_time)) {
+				printf("[timeOut error - single argument] r_time is not a reference\n");
+				XSRETURN_NO;
 			}
-			current_time = ((NVtime_t) NVtime) ();
+			
+			if (SvTYPE(SvRV(r_time)) != SVt_PVHV) {
+				printf("[timeOut error - single argument] r_time is not a hash reference\n");
+				XSRETURN_NO;
+			}
+			
+			hash = (HV *) SvRV (r_time);
+			
+			if (!hv_exists(hash, "time", 4)) {
+				printf("[timeOut error - single argument] r_time does not contain a key named 'time'\n");
+				XSRETURN_NO;
+			}
+			
+			sv_time = hv_fetch (hash, "time", 4, 0);
+			
+			if (sv_time == NULL) {
+				printf("[timeOut error - single argument] 'time' key in r_time is NULL\n");
+				XSRETURN_NO;
+			}
+			
+			v_time = *sv_time;
+			
+			if (SvROK(v_time)) {
+				printf("[timeOut error - single argument] 'time' key in r_time is a reference\n");
+				XSRETURN_NO;
+			}
+			
+			// v_time must be a scalar
+			if (SvTYPE(v_time) >= SVt_PVAV) {
+				printf("[timeOut error - double argument] 'time' key in r_time is not a scalar reference\n");
+				XSRETURN_NO;
+			}
+			
+			time = SvNV (v_time);
+			
+			
+			if (!hv_exists(hash, "timeout", 7)) {
+				printf("[timeOut error - single argument] r_time does not contain a key named 'timeout'\n");
+				XSRETURN_NO;
+			}
+			
+			sv_timeout = hv_fetch (hash, "timeout", 7, 0);
+			
+			if (sv_timeout == NULL) {
+				printf("[timeOut error - single argument] 'timeout' key in r_time is NULL\n");
+				XSRETURN_NO;
+			}
+			
+			v_timeout = *sv_timeout;
+			
+			if (SvROK(v_timeout)) {
+				printf("[timeOut error - single argument] 'timeout' key in r_time is a reference\n");
+				XSRETURN_NO;
+			}
+			
+			// v_timeout must be a scalar
+			if (SvTYPE(v_timeout) >= SVt_PVAV) {
+				printf("[timeOut error - double argument] 'timeout' key in r_time is not a scalar reference\n");
+				XSRETURN_NO;
+			}
+			
+			timeout = SvNV (v_timeout);
 		}
-
-		RETVAL = (current_time - v_time > v_timeout);
+		
+		if (!NVtime) {
+			SV **svp = hv_fetch (PL_modglobal, "Time::NVtime", 12, 0);
+			if (!svp)
+				croak("Time::HiRes is required");
+			if (!SvIOK (*svp))
+				croak("Time::NVtime isn't a function pointer");
+			NVtime = INT2PTR (void *, SvIV (*svp));
+		}
+		current_time = ((NVtime_t) NVtime) ();
+		
+		RETVAL = (current_time - time > timeout);
 	OUTPUT:
 		RETVAL
 
