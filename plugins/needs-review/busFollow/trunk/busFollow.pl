@@ -14,6 +14,7 @@ package busFollow;
 	use Utils;
 	use Translation;
 	use AI;
+	use Time::HiRes qw( &time );
 	
 	use constant {
 		PLUGINNAME                =>    "busFollow",
@@ -47,12 +48,12 @@ package busFollow;
 	}
 	
 	sub send_my_info {
-		if (!$timeout{busFollow_sendInfo}{timeout}) {
-			$timeout{busFollow_sendInfo}{timeout} = 1;
-			error ("[".PLUGINNAME."] busFollow_sendInfo is missing in timeouts.txt ! Defaulting to ".$timeout{busFollow_sendInfo}{timeout}." seconds.\n");
+		if (!$timeout{'busFollow_sendInfo'}{'timeout'}) {
+			$timeout{'busFollow_sendInfo'}{'timeout'} = 1;
+			error ("[".PLUGINNAME."] busFollow_sendInfo is missing in timeouts.txt ! Defaulting to ".$timeout{'busFollow_sendInfo'}{'timeout'}." seconds.\n");
 			return;
-			} elsif (timeOut($timeout{busFollow_sendInfo})) {
-			$timeout{busFollow_sendInfo}{time} = time;
+			} elsif (timeOut($timeout{'busFollow_sendInfo'})) {
+			$timeout{'busFollow_sendInfo'}{'time'} = time;
 			if (defined($chars[$config{'char'}])) {
 				my %args;
 				$args{name} = $chars[$config{'char'}]{'name'};
@@ -90,11 +91,13 @@ package busFollow;
 			}
 			
 			return unless ($master{map} ne $field->name || exists $master{x}); # Compare including InstanceID
-			
+
+			$ai_v{master}{time} = time if !$ai_v{master}{time};
+
 			# Compare map names including InstanceID
 			if ((exists $ai_v{master} && distance(\%master, $ai_v{master}) > 15)
 			|| $master{map} != $ai_v{master}{map}
-			|| (timeOut($ai_v{master}{time}, 15) && distance(\%master, $char->{pos_to}) > $config{followDistanceMax})) {
+			|| (timeOut( { timeout => 15, time => $ai_v{master}{time} } ) && distance(\%master, $char->{pos_to}) > $config{followDistanceMax})) {
 				
 				$ai_v{master}{x} = $master{x};
 				$ai_v{master}{y} = $master{y};
@@ -115,7 +118,7 @@ package busFollow;
 				
 				my $followIndex = AI::findAction("follow");
 				if (defined $followIndex) {
-					$ai_seq_args[$followIndex]{ai_follow_lost_end}{timeout} = $timeout{ai_follow_lost_end}{timeout};
+					$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
 				}
 			}
 		}

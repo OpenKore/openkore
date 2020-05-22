@@ -31,6 +31,7 @@ use Plugins;
 use Utils; 
 use Log qw(debug message warning error); 
 use Misc;
+use Time::HiRes qw( &time );
   
 Plugins::register('I.C.U 0.2.3', 'Detects GM Bot tests.', \&onUnload); 
   
@@ -104,7 +105,7 @@ sub runCommands {
 			@commands = split(/,/, $config{'icu_0_skillOnMonsterCommands'});
 		}
 	$commandInfo{count} = @commands;
-	$commandInfo{time} = time;
+	$timeout{'ICU'}{'time'} = time;
 	$commandInfo{randomTime} = rand(4);
 	logEvent("Preparing to execute ".$commandInfo{count}." commands in response to \"$event\" event. \n");
 }
@@ -127,13 +128,14 @@ sub playSound {
 }
 
 sub checkCommands {
-	return if (!$commandInfo{count} || !timeOut($commandInfo{'time'},($config{'icu_0_commandTimeout'} + $commandInfo{randomTime})));
+	$timeout{'ICU'}{'timeout'} = int($config{'icu_0_commandTimeout'} + $commandInfo{randomTime});
+	return if (!$commandInfo{count} || !timeOut( $timeout{'ICU'} )));
 	Commands::run($commands[$commandInfo{current}]);
 	logEvent("Ran command ".$commands[$commandInfo{current}]." with ".($config{'icu_0_commandTimeout'} + $commandInfo{randomTime})." second delay");
 	$commandInfo{current}++;
 	$commandInfo{count}--;
 	$commandInfo{randomTime} = rand(2);
-	$commandInfo{time} = time;
+	$timeout{'ICU'}{'time'} = time;
 	
 }
 

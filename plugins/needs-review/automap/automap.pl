@@ -98,8 +98,8 @@ sub on_mainLoop {
     return if (AI::state != AI::AUTO);
     return if !$config{autoMapChange};
 
-    my $timeout = $config{autoMapChange_time} + $time_seed;
-    return if !timeOut( $last_change, $timeout );
+	$timeout{'autoMapChange'}{'timeout'} = $config{autoMapChange_time} + $time_seed;
+	return if !timeOut( $timeout{'autoMapChange'} );
 
     change_lock( "after $timeout seconds" );
 }
@@ -202,6 +202,7 @@ sub change_lock {
     message "[automap] Changed lockMap from $old_lock to $new_lock [$reason].\n";
 
     $last_change = int time;
+	$timeout{'autoMapChange'}{'timeout'} = time;
 
     # Randomize the time seed whenever we change lockMap.
     reset_time_seed();

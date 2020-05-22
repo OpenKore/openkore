@@ -28,6 +28,8 @@ my $hooks = Plugins::addHooks(
         ['packet_skilluse', \&avoidSkill, undef]
 );
 
+$timeout{'avoidSkill'}{'timeout'} = 3;
+
 sub on_unload {
         Plugins::delHooks($hooks);
 }
@@ -230,7 +232,7 @@ sub avoidSkill {
                                         $char->sendAttackStop();
                                         main::attack($sourceID);
 
-                                } elsif ($config{"avoidSkill_$i"."_method"} == 5 && timeOut($AI::Timeouts::avoidSkill_skill, 3)) {
+                                } elsif ($config{"avoidSkill_$i"."_method"} == 5 && timeOut( $timeout{'avoidSkill'} )) {
                                         return unless ($source->isa("Actor::Monster"));
                                         message "Avoid skill $skillName from $source->nameString(), use ".$config{"avoidSkill_$i"."_skill"}." to $source->nameString()\n", $domain, 1;
 
@@ -255,7 +257,7 @@ sub avoidSkill {
                                                         $config{"avoidSkill_$i"."_minCastTime"},
                                                         $config{"avoidSkill_${i}_isSelfSkill"} ? $accountID : $sourceID);
                                         }
-                                        $AI::Timeouts::avoidSkill_skill = time;
+                                        $timeout{'avoidSkill'}{'time'} = time;
                                 }
 
                         }

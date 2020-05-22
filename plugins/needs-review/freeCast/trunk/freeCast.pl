@@ -27,17 +27,19 @@ use Misc;
 use Network;
 use Network::Send;
 use Utils;
+use Time::HiRes qw( &time );
 use Math::Trig;
 use Utils::Benchmark;
 use Utils::PathFinding;
+
 
 
 Plugins::register('Free Cast', 'experimental sage free cast support', \&Unload);
 my $hook1 = Plugins::addHook('AI_post', \&call);
 my $ID;
 my $target;
-my %timeout;
 my ($myPos, $monsterPos,$monsterDist);
+$timeout{'freeCast'}{'timeout'} = 1;
 
 ##
 # round($number)
@@ -74,7 +76,7 @@ sub call {
 }
 
 sub cast {
-	if (($char->{skills}{SA_FREECAST}{lv}) && main::timeOut(\%timeout)){
+	if (($char->{skills}{SA_FREECAST}{lv}) && timeOut( $timeout{'freeCast'} )){
 
 		#message "Cast!\n";
 		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
@@ -159,8 +161,7 @@ sub cast {
 		}
 
 	}
-	$timeout{time} = time;
-	$timeout{timeout} = 1;
+	$timeout{'freeCast'}{'time'} = time;
 }
 
 return 1;

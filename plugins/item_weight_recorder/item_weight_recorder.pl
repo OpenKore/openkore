@@ -5,7 +5,7 @@ package OpenKore::Plugins::ItemWeightRecorder;
 
 use strict;
 
-use Globals qw( $char );
+use Globals qw( $char %timeout );
 use Time::HiRes qw( &time );
 
 our $name = 'item_weight_recorder';
@@ -23,6 +23,7 @@ Settings::loadByHandle( $loader );
 our $inventory_changes;
 our $last_item;
 our $last_weight;
+$timeout{'ItemWeightRecorder'}{'timeout'} = 1;
 
 Plugins::register( $name, "$name plugin", \&Unload, \&Unload );
 
@@ -74,7 +75,8 @@ sub onStatInfo {
 
 	# Ignore item changes from more than one second ago. This might result
 	# in some false negatives, but should also prevent some false positives.
-	if ( $inventory_changes == 1 && defined $last_weight && !Utils::timeOut( $last_item->{time}, 1 ) ) {
+	$timeout{'ItemWeightRecorder'}{'time'} = $last_item->{time};
+	if ( $inventory_changes == 1 && defined $last_weight && !Utils::timeOut( $timeout{ItemWeightRecorder} ) ) {
 		my $weight = abs( $args->{val} - $last_weight ) / $last_item->{amount};
 		if ( $item_weights->{ $last_item->{item_id} } ne $weight ) {
 			$item_weights->{ $last_item->{item_id} } = $weight;
