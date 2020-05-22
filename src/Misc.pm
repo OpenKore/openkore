@@ -1886,13 +1886,7 @@ sub slave_checkMonsterCleanness {
 	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
 	my $monster = $monstersList->getByID($ID);
 
-	# If party attacked monster, or if monster attacked/missed party
-	# Since openKore considers the slave as a member of the player party this won't work for now
-	#if ($config{$slave->{configPrefix}.'attackAuto_party'} && ($monster->{dmgFromParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0)) {
-	#	return 1;
-	#}
-
-	# Instead we check for attacks against/made by master and/or other slaves
+	# Since openKore considers the slave as a member of the player party we check for attacks against/made by master and/or other slaves
 	if (
 		$config{$slave->{configPrefix}.'attackAuto_party'} &&
 		(
