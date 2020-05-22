@@ -372,6 +372,8 @@ sub ai_slave_getAggressives {
 			(($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) && Misc::checkMonsterCleanness($ID))) &&
 			timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}))
 		{
+			next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
+
 			# Continuing, check whether the forced Agro is really a clean monster;
 			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
 

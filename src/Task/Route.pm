@@ -106,7 +106,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid Coordinates argument.");
 	}
 
-	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal', 'avoidWalls', 'notifyUponArrival');
+	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal', 'avoidWalls', 'notifyUponArrival', 'isRandomWalk', 'isSlaveRescue');
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
@@ -454,6 +454,13 @@ sub iterate {
 				$self->{stage} = CALCULATE_ROUTE;
 
 			} else {
+                if ($self->{actor}->isa('Actor::You') && $self->{isRandomWalk} && $self->{actor}{slaves}) {
+					my $slave = AI::SlaveManager::mustWaitMinDistance();
+					if (defined $slave) {
+						debug TF("Waiting for slave %s before next randomWalk step.\n", $slave), 'slave', 2;
+						return;
+					}
+				}
 				if (defined $self->{last_pos} && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
 					$self->{time_step} = time;
 				}

@@ -23180,3 +23180,972 @@ Hunt 150 Big Bell monsters and return to the Bounty Board at Aldebaran#
 63436#Bounty Board Neo Punk#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Neo Punk monsters and return to the Bounty Board at Aldebaran#
 #
+63438#Bounty Board Loli Ruri#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Loli Ruri monsters and return to the Bounty Board at Niflheim#
+#
+63439#Bounty Board Goat#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Goat monsters and return to the Bounty Board at Juno#
+#
+63440#Bounty Board Grand Peco#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Grand Peco monsters and return to the Bounty Board at Juno#
+#
+63441#Bounty Board Harpy#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Harpy monsters and return to the Bounty Board at Juno#
+#
+63442#Bounty Board Sleeper#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sleeper monsters and return to the Bounty Board at Juno#
+#
+63443#Bounty Board Deleter (Ground)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deleter (Ground) monsters and return to the Bounty Board at Juno#
+#
+63444#Bounty Board Deleter (Sky)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deleter (Sky) monsters and return to the Bounty Board at Juno#
+#
+63445#Bounty Board Nightmare Terror#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Terror monsters and return to the Bounty Board at Juno#
+#
+63446#Bounty Board Apocalypse#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Apocalypse monsters and return to the Bounty Board at Verus City#
+#
+63447#Bounty Board Venatu (Blue)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venatu (Blue) monsters and return to the Bounty Board at Verus City#
+#
+63448#Bounty Board Venatu (Green)(Ground)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deleter (Ground) monsters and return to the Bounty Board at Verus City#
+#
+63449#Bounty Board Venatu (Orange)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venatu (Orange) monsters and return to the Bounty Board at Verus City#
+#
+63450#Bounty Board Venatu (Purple)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venatu (Purple) monsters and return to the Bounty Board at Verus City#
+#
+63451#Bounty Board Cenere (Green)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cenere (Green) monsters and return to the Bounty Board at Verus City#
+#
+63452#Bounty Board Explorer Robot Turbo#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Explorer Robot Turbo monsters and return to the Bounty Board at Verus City#
+#
+63453#Bounty Board Repair Robot Turbo#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Repair Robot Turbo monsters and return to the Bounty Board at Verus City#
+#
+63454#Bounty Board Smelly Zombie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Smelly Zombie monsters and return to the Bounty Board at Verus City#
+#
+63455#Bounty Board Smelly Ghoul#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Smelly Ghoul monsters and return to the Bounty Board at Verus City#
+#
+63456#Bounty Board Disguise#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Disguise monsters and return to the Bounty Board at Niflheim#
+#
+63457#Bounty Board Holden#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Holden monsters and return to the Bounty Board at Einbroch#
+#
+63458#Bounty Board Metaling#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Metaling monsters and return to the Bounty Board at Einbroch#
+#
+63459#Bounty Board Noxious#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Noxious monsters and return to the Bounty Board at Einbroch#
+#
+63460#Bounty Board Porcellio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Porcellio monsters and return to the Bounty Board at Einbroch#
+#
+63461#Bounty Board Teddy Bear#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Teddy Bear monsters and return to the Bounty Board at Einbroch#
+#
+63462#Bounty Board Venomous#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Venomous monsters and return to the Bounty Board at Einbroch#
+#
+63463#Bounty Board Breeze#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Breeze monsters and return to the Bounty Board at Lighthalzen#
+#
+63464#Bounty Board Metaling#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Metaling monsters and return to the Bounty Board at Lighthalzen#
+#
+63465#Bounty Board Rafflesia#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rafflesia monsters and return to the Bounty Board at Lighthalzen#
+#
+63466#Bounty Board Stem Worm#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stem Worm monsters and return to the Bounty Board at Lighthalzen#
+#
+63467#Bounty Board Kobold (Axe)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold (Axe) monsters and return to the Bounty Board at Lighthalzen#
+#
+63468#Bounty Board Kobold (Hammer)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold (Hammer) monsters and return to the Bounty Board at Lighthalzen#
+#
+63469#Bounty Board Kobold (Mace)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold (Mace) monsters and return to the Bounty Board at Lighthalzen#
+#
+63470#Bounty Board Kobold Archer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kobold Archer monsters and return to the Bounty Board at Lighthalzen#
+#
+63471#Bounty Board Armeyer Dinze#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Armeyer Dinze monsters and return to the Bounty Board at Lighthalzen#
+#
+63472#Bounty Board Egnigem Cenia#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Egnigem Cenia monsters and return to the Bounty Board at Lighthalzen#
+#
+63473#Bounty Board Errende Ebecee#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Errende Ebecee monsters and return to the Bounty Board at Lighthalzen#
+#
+63474#Bounty Board Kavach Icarus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kavach Icarus monsters and return to the Bounty Board at Lighthalzen#
+#
+63475#Bounty Board Laurell Weinder#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Laurell Weinder monsters and return to the Bounty Board at Lighthalzen#
+#
+63476#Bounty Board Remover#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Remover monsters and return to the Bounty Board at Lighthalzen#
+#
+63477#Bounty Board Wickbine Tres#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Wickbine Tres monsters and return to the Bounty Board at Lighthalzen#
+#
+63478#Bounty Board Alphoccio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Alphoccio monsters and return to the Bounty Board at Lighthalzen#
+#
+63479#Bounty Board Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cecil Damon monsters and return to the Bounty Board at Lighthalzen#
+#
+63480#Bounty Board Celia Alde#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Celia Alde monsters and return to the Bounty Board at Lighthalzen#
+#
+63481#Bounty Board Chen Lio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Chen Lio monsters and return to the Bounty Board at Lighthalzen#
+#
+63482#Bounty Board Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Eremes Guile monsters and return to the Bounty Board at Lighthalzen#
+#
+63483#Bounty Board Flamel Emure#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Flamel Emure monsters and return to the Bounty Board at Lighthalzen#
+#
+63484#Bounty Board Gertie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Gertie monsters and return to the Bounty Board at Lighthalzen#
+#
+63485#Bounty Board Howard Alteisen#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Howard Alteisen monsters and return to the Bounty Board at Lighthalzen#
+#
+63486#Bounty Board Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kathryne Keyron monsters and return to the Bounty Board at Lighthalzen#
+#
+63487#Bounty Board Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Margaretha Sorin monsters and return to the Bounty Board at Lighthalzen#
+#
+63488#Bounty Board Randel Lawrence#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Randel Lawrence monsters and return to the Bounty Board at Lighthalzen#
+#
+63489#Bounty Board Seyren Windsor#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Seyren Windsor monsters and return to the Bounty Board at Lighthalzen#
+#
+63490#Bounty Board Trentini#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Trentini monsters and return to the Bounty Board at Lighthalzen#
+#
+63491#Bounty Board Nightmare Alphoccio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Alphoccio monsters and return to the Bounty Board at Lighthalzen#
+#
+63492#Bounty Board Nightmare Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Cecil Damon monsters and return to the Bounty Board at Lighthalzen#
+#
+63493#Bounty Board Nightmare Celia Alde#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Celia Alde monsters and return to the Bounty Board at Lighthalzen#
+#
+63494#Bounty Board Nightmare Chen Lio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Chen Lio monsters and return to the Bounty Board at Lighthalzen#
+#
+63495#Bounty Board Nightmare Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Eremes Guile monsters and return to the Bounty Board at Lighthalzen#
+#
+63496#Bounty Board Nightmare Flamel Emure#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Flamel Emure monsters and return to the Bounty Board at Lighthalzen#
+#
+63497#Bounty Board Nightmare Gertie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Gertie monsters and return to the Bounty Board at Lighthalzen#
+#
+63498#Bounty Board Nightmare Howard Alteisen#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Howard Alteisen monsters and return to the Bounty Board at Lighthalzen#
+#
+63499#Bounty Board Nightmare Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Kathryne Keyron monsters and return to the Bounty Board at Lighthalzen#
+#
+63500#Bounty Board Nightmare Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Margaretha Sorin monsters and return to the Bounty Board at Lighthalzen#
+#
+63501#Bounty Board Nightmare Randel Lawrence#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Randel Lawrence monsters and return to the Bounty Board at Lighthalzen#
+#
+63502#Bounty Board Nightmare Seyren Windsor#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Seyren Windsor monsters and return to the Bounty Board at Lighthalzen#
+#
+63503#Bounty Board Nightmare Trentini#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nightmare Trentini monsters and return to the Bounty Board at Lighthalzen#
+#
+63504#Bounty Board Novus (Red)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Novus (Red) monsters and return to the Bounty Board at Hugel#
+#
+63505#Bounty Board Novus (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Novus (Yellow) monsters and return to the Bounty Board at Hugel#
+#
+63506#Bounty Board Owl Duke#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Owl Duke monsters and return to the Bounty Board at Hugel#
+#
+63507#Bounty Board Ancient Mimic#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ancient Mimic monsters and return to the Bounty Board at Hugel#
+#
+63508#Bounty Board Deathword#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deathword monsters and return to the Bounty Board at Hugel#
+#
+63509#Bounty Board Owl Baron#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Owl Baron monsters and return to the Bounty Board at Hugel#
+#
+63510#Bounty Board Acidus (Blue)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Acidus (Blue) monsters and return to the Bounty Board at Hugel#
+#
+63511#Bounty Board Acidus (Gold)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Acidus (Gold) monsters and return to the Bounty Board at Hugel#
+#
+63512#Bounty Board Ferus (Red)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ferus (Red) monsters and return to the Bounty Board at Hugel#
+#
+63513#Bounty Board Ferus (Green)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ferus (Green) monsters and return to the Bounty Board at Hugel#
+#
+63514#Bounty Board Frus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Frus monsters and return to the Bounty Board at Hugel#
+#
+63515#Bounty Board Skogul#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Skogul monsters and return to the Bounty Board at Hugel#
+#
+63516#Bounty Board Anacondaq#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Anacondaq monsters and return to the Bounty Board at Rachel#
+#
+63517#Bounty Board Roween#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Roween monsters and return to the Bounty Board at Rachel#
+#
+63518#Bounty Board Siroma#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Siroma monsters and return to the Bounty Board at Rachel#
+#
+63519#Bounty Board Desert Wolf#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Desert Wolf monsters and return to the Bounty Board at Rachel#
+#
+63520#Bounty Board Drosera#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Drosera monsters and return to the Bounty Board at Rachel#
+#
+63521#Bounty Board Hill Wind#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hill Wind monsters and return to the Bounty Board at Rachel#
+#
+63522#Bounty Board Ice Titan#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ice Titan monsters and return to the Bounty Board at Rachel#
+#
+63523#Bounty Board Snowier#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Snowier monsters and return to the Bounty Board at Rachel#
+#
+63524#Bounty Board Agav#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Agav monsters and return to the Bounty Board at Rachel#
+#
+63525#Bounty Board Echio#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Echio monsters and return to the Bounty Board at Rachel#
+#
+63526#Bounty Board Hodremlin#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hodremlin monsters and return to the Bounty Board at Rachel#
+#
+63527#Bounty Board Isilla#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Isilla monsters and return to the Bounty Board at Rachel#
+#
+63528#Bounty Board Seeker#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Seeker monsters and return to the Bounty Board at Rachel#
+#
+63529#Bounty Board Vanberk#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Vanberk monsters and return to the Bounty Board at Rachel#
+#
+63530#Bounty Board Stapo#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Stapo monsters and return to the Bounty Board at Veins#
+#
+63531#Bounty Board Drosera#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Drosera monsters and return to the Bounty Board at Veins#
+#
+63532#Bounty Board Galion#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Galion monsters and return to the Bounty Board at Veins#
+#
+63533#Bounty Board Magmaring#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Magmaring monsters and return to the Bounty Board at Veins#
+#
+63534#Bounty Board Muscipular#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Muscipular monsters and return to the Bounty Board at Veins#
+#
+63535#Bounty Board Kasa#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Kasa monsters and return to the Bounty Board at Veins#
+#
+63536#Bounty Board Knocker#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Knocker monsters and return to the Bounty Board at Veins#
+#
+63537#Bounty Board Necromancer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Necromancer monsters and return to the Bounty Board at Veins#
+#
+63538#Bounty Board Ragged Zombie#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Ragged Zombie monsters and return to the Bounty Board at Veins#
+#
+63539#Bounty Board Salamander#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Salamander monsters and return to the Bounty Board at Veins#
+#
+63540#Bounty Board Zombie Slaughter#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Zombie Slaughter monsters and return to the Bounty Board at Veins#
+#
+63541#Bounty Board Bradium Golem#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Bradium Golem monsters and return to the Bounty Board at Manuk#
+#
+63542#Bounty Board Centipede Larva#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Centipede Larva monsters and return to the Bounty Board at Manuk#
+#
+63543#Bounty Board Hillslion#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Hillslion monsters and return to the Bounty Board at Manuk#
+#
+63544#Bounty Board Tatacho#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Tatacho monsters and return to the Bounty Board at Manuk#
+#
+63545#Bounty Board Antler Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Antler Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63546#Bounty Board Horn Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Horn Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63547#Bounty Board Rake Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Rake Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63548#Bounty Board Uni-horn Scaraba#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Uni-horn Scaraba monsters and return to the Bounty Board at Manuk#
+#
+63549#Bounty Board Centipede#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Centipede monsters and return to the Bounty Board at El Dicastes#
+#
+63550#Bounty Board Dolomedes#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dolomedes monsters and return to the Bounty Board at El Dicastes#
+#
+63551#Bounty Board Tatacho#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Tatacho monsters and return to the Bounty Board at El Dicastes#
+#
+63552#Bounty Board Cornus#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cornus monsters and return to the Bounty Board at Splendide#
+#
+63553#Bounty Board Dark Pinguicula#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Dark Pinguicula monsters and return to the Bounty Board at Splendide#
+#
+63554#Bounty Board Luciola Vespa#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Luciola Vespa monsters and return to the Bounty Board at Splendide#
+#
+63555#Bounty Board Naga#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Naga monsters and return to the Bounty Board at Splendide#
+#
+63556#Bounty Board Nepenthes#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Nepenthes monsters and return to the Bounty Board at Splendide#
+#
+63557#Bounty Board Pinguicula#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Pinguicula monsters and return to the Bounty Board at Splendide#
+#
+
+63558#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63559#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63560#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63561#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63562#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63563#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63564#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63565#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63566#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63567#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63568#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63569#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63570#Lighthalzen Adventurer's Guild#SG_FEEL#QUE_NOIMAGE#
+Hunt the targets and return to the Adventurer's Guild Representative in Lighthalzen#
+#
+63571#Bounty Board Angra Mantis#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Angra Mantis monsters and return to the Bounty Board at Mora#
+#
+63572#Bounty Board Little Fatum#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Little Fatum monsters and return to the Bounty Board at Mora#
+#
+63573#Bounty Board Menblatt#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Menblatt monsters and return to the Bounty Board at Mora#
+#
+63574#Bounty Board Miming#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Miming monsters and return to the Bounty Board at Mora#
+#
+63575#Bounty Board Petal#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Petal monsters and return to the Bounty Board at Mora#
+#
+63576#Bounty Board Antique Book#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Antique Book monsters and return to the Bounty Board at Eclage#
+#
+63577#Bounty Board Cenere#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Cenere monsters and return to the Bounty Board at Eclage#
+#
+63578#Bounty Board Lichtern (Blue)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Lichtern (Blue) monsters and return to the Bounty Board at Eclage#
+#
+63579#Bounty Board Lichtern (Green)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Lichtern (Green) monsters and return to the Bounty Board at Eclage#
+#
+63580#Bounty Board Lichtern (Red)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Lichtern (Red) monsters and return to the Bounty Board at Eclage#
+#
+63581#Bounty Board Lichtern (Yellow)#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Lichtern (Yellow) monsters and return to the Bounty Board at Eclage#
+#
+63582#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Father Huntington of the Prontera Church is looking for adventurers for an expedition. Speak to him to join.#
+Join the Expedition team.#
+
+63583#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Father Huntington wants me to introduce myself to Paladin Liefa, I can see her standing behind Father Huntington inside of the Sanctuary.#
+Speak with Liefa.#
+
+63584#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I should get my things ready, then speak with Liefa again inside of the Sanctuary to embark on our expedition.#
+Tell Liefa you're ready.#
+
+63585#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Liefa wants to introduce me to Captain Muwuse and his brother Mowose, they'll be flying us to the frontier in their airship.#
+Find Muwuse at Izlude Airport.#
+
+63586#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Join the crew and board the Airship called 'The Rudolph's Quest'.#
+Enter the Muwuse's Airship.#
+
+63587#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I should get to know Muwuse and speak to him while on board his Airship. He seems like he's known both Liefa and Lief for a long time. I should ask him about everyone on board.#
+Speak to Muwuse.#
+
+63588#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Liefa, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63589#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Lief, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63590#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about himself, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63591#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Mowose, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63592#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about everyone, I should personally get to know the rest of the expedition team.#
+Speak to everyone.#
+
+63593#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Mowose, Muwuse's brother. If I need refreshments I should come to him later.#
+Speak to everyone.#
+
+63594#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Liefa, she's the Expedition leader, she seems nice.#
+Speak to everyone.#
+
+63595#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Lief, Liefa's brother. It seems like everyone on this airhsip has been working together for a long time.#
+Speak to everyone.#
+
+63596#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Speak with Muwuse after landing in The Frozen Lands.#
+Speak to Muwuse.#
+
+63597#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Speak with Mowose after landing in The Frozen Lands. He might have something for me before I set off with Lief and Liefa.#
+Speak to Mowose.#
+
+63598#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+It's time to embark on our expedition through the section of the frontier known as The Frozen Lands. Speak with Liefa when ready to begin.#
+Speak to Liefa.#
+
+63599#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+It appears that we are to split up and travel to Tapte Stjerner separately. It was the main settlement village, north of the landing zone. There's a meeting point near the center of town that we are to meet at.#
+Go north to Tapte Stjerner.#
+
+63600#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We need to investigate what happened here. I'll probably learn the most from studying the remains of the villagers. I need to find 4 of the villagers remains in town then meet back with the others at the meeting point.#
+Find the remains of 4 villagers.#
+
+63601#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63602#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63603#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63604#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63605#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The village is a total loss, we are moving on to investigating the next location. Trading Post Kapstefna is right on the outskirts of Outpost Hilfalind, its a small trading post east / south east of Tapte Stjerner.#
+Meet at Trading Post Kapstefna.#
+
+63606#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The trading post is abandoned, there's not much left here. We need to move east towards Outpost Hilfalind.#
+Meet at Outpost Hilfalind.#
+
+63607#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Search Outpost Hilfalind, there has to be something to explain where the attack came from, regretfully due to the time passed and the snow, finding tracks is out of the question.#
+Search the Outpost.#
+
+63608#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Aslaug and Magnus former comrades have been turned into Draugr and are unable to dispose of them. Dispatch their former comrades to release them from undeath.#
+Hunt 40 Draugr.#
+
+63609#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Aslaug and Magnus are survivors of the attack that devastated the settlement, according to them the attack came from the north, from a place called The Frozen Caverns. We are going to travel north and meet inside of the cavern, there's a meeting point there.#
+Go to The Frozen Caverns.#
+
+63610#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+This is where the wolves who sacked the settlement came from, we might find something in the deepest part of the cavern, we should go there and investigate.#
+Search the caverns.#
+
+63611#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The rest of the team got sucked into another dimension by the two bigger wolves, I need to survive this ordeal and look for them, I should wait for them at the meeting point near the entrance after I take care of my opponent.#
+Survive, then find the others.#
+
+63612#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We need to search for the lair of The Moon Slayer, we can't allow that wolf to continue it's rampage. Lief says The Moon Slayer is going east, I remember an eastward path from Outpost Hilfalind, that might be a good place to start. We're all splitting up to find it, whoever finds it should send up a signal flare to alert the rest of the team.#
+Find the The Moon Slayer.#
+
+63613#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Enter The Moon Slayer's lair and find where The Moon Slayer went.#
+Enter the lair.#
+
+63614#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+There is a power well in the center of the cavern, something might happen if I interact with it.#
+Check with the power well.#
+
+63615#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Defeat The Moon Slayer in combat.#
+Defeat The Moon Slayer.#
+
+63616#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We just defeated The Moon Slayer, seems we've taken care of the threat in The Frozen Lands, we should head back to the landing zone and speak with Muwuse to prepare our flight back to the Kingdom.#
+Go to Muwuse at landing zone.#
+
+63617#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I should speak with Liefa during the flight back to the kingdom while aboard the Airship, we just defeated an Ancient One together.#
+Speak to Leifa during flight.#
+
+63618#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63619#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Mowose, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63620#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Liefa, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63621#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Lief, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63622#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Halvar, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63623#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Aslaug, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63624#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Magnus, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63625#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Our expedition just returned to the Kingdom, we should meet with Father Huntington at the Prontera Church.#
+Talk to Father Huntington.#
+
+63626#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We've been deployed to a new target, an Ancient One has been detected by Lief and Father Huntington closing in on Umbala, we're being sent to investigate. I should speak with Muwuse at the Izlude Airship Docks for further instructions.#
+Speak with Muwuse in Izlude.#
+
+63627#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Something's happening down in Umbala, I should get to the Gang Plank on the deck of the Airship and Carl the 4th will teleport us down to the ground floor.#
+Use the Gang Plank teleporter.#
+
+63628#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The Umbala Guide just informed us that a Giant Wolf just went straight for Yggdrasil, seems to have done some damage to the Umbala village as well. We should head to the base of Yggdrasil to see what we can do.#
+Go to Yggdrasil.#
+
+63629#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The All Father himself came to combat The World Eater, it seems they've gone back to The Frozen Lands. We need to get back to our Airship.#
+Find Carl in the Hoomga Jungle.#
+
+63630#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We're going back to Outpost Hilfalind, they'll be teleporting us down from the deck of the Airship. We need to find the Storage Bunker, Lief says there's a rift there.#
+Find the Storage Bunker.#
+
+63631#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Defeat The World Eater.#
+Defeat The World Eater.#
+
+63632#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Lief has turned against us, he murdered Halvar and his own Sister before they even knew what was going on. He must be stopped.#
+Defeat Lief the Betrayer.#
+
+63633#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The Lingering Spirit in Tapte Stjerner is asking for help to avenge it's death. Defeat 30 Frost Wolves and return to the spirit.#
+Defeat 30 Frost Wolves.#
+
+63634#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I was part of the Cycle of Ragnarok... I shall dream until it is time to awaken again.#
+Dream until awakened.#
+
+63635#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Atroce the Awakened, a henchment of the Ancient Ones has appeared, he took part in the attack against the settlement and should be defeated.#
+Defeat Atroce the Awakened.#
+
+63636#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with Atroce the Awakened in The Frozen Caverns, should I choose to. If I want to challenge him again, I should return to where we fought.#
+Fight Atroce the Awakened again.#
+
+63637#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with The Moon Slayer in it's lair, should I choose to. If I want to challenge it again, I should return to where we fought.#
+Fight The Moon Slayer again.#
+
+63638#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with The World Eater in it's realm, should I choose to. If I want to challenge it again, I should return to where we fought.#
+Fight The World Eater again.#
+
+63639#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with Lief the Betrayer, should I choose to. If I want to challenge him again, I should return to where we fought.#
+Fight Lief again.#
+
+
+//RT 2020 Valentines Day
+63650#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+There's a Cupid in town who goes by Derpy, seems like he's in need of some help.#
+Help Derpy in Prontera.#
+
+63651#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy asked me to check on Martha Gunnarsdottir and to see how she's doing, he accidentally paired her with the wrong target using his cupid arrows.#
+Check on Martha in Prontera.#
+
+63652#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy asked me to check on Shades and to see how he's doing, he accidentally paired him with the wrong target using his cupid arrows.#
+Check on Shades in Prontera.#
+
+63653#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Martha is in a panick, Derpy really caused quite a mess here.#
+Report back to Derpy regarding Martha.#
+
+63654#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Shades seems like he's struggling with thoughts of Martha, Derpy really caused quite a mess here.#
+Report back to Derpy regarding Shades.#
+
+63655#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy asked me to check on Aaron Smith, the intended target to pair with Martha Gunnarsdottir, he suggested helping him out.#
+Talk to Aaron Smith in Prontera.#
+
+63656#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I'm helping Aaron acquire fireworks from the local traveling Pyrotechnician named Katie Kaboom, she's here in Prontera now.#
+Talk to Katie Kaboom.#
+
+63657#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've agreed to help Katie acquire the items for trade on Aarons behalf, she wants 15 Green Plants.#
+Obtain 15 Green Plants for Katie.#
+
+63658#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've completed the trade with Katie on Aaron's behalf, I should go check on Aaron, Katie sent him the package.#
+Follow up with Aaron in Prontera.#
+
+63659#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I'm going to head to the fields outside of the West exit of Prontera, there should be a lake out there, I need to ignite the fireworks that are set up on the southern shore for Aaron.#
+Light Aaron's Fireworks.#
+
+63660#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I lit the fireworks for Aaron, he should be out by the entrance to the Culverts somewhere near the north shore of here, I should go follow up with him.#
+Find Aaron, west of Prontera.#
+
+63661#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I should speak with Aaron back in Prontera again, he'll be paying me for my services.#
+Follow up with Aaron in Prontera.#
+
+63662#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I finished helping Aaron, per Derpy's request. I should follow up with Derpy in Prontera.#
+Talk to Derpy Cupid in Prontera.#
+
+63663#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy believes Shades is part of a criminal smuggling ring, he's hired me to obtain a ledger from their criminal hideout in South West Prontera and to bring it back to him so he can turn Shades into the Authorities.#
+Obtain the Criminal Ledger.#
+
+63664#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy wants me to get Lt. Don Tyler of the 1337th Elite Guard. He'll be in the new bar in East Prontera owned by one of their own members.#
+Talk to Lt. Don Tyler.#
+
+63665#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Lt. Don said he'll find us after he gets his report ready, I should go back to Derpy and speak with him.#
+Talk to Derpy Cupid in Prontera.#
+
+63666#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy wants me to follow up with Aaron and see how things are going.#
+Talk to Aaron Smith in Prontera.#
+
+63667#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've been hired to gather Blue Bellflowers for Aaron Smith, these flowers can be found in Mt. Mjolnir Field 3.#
+Gather Blue Bellflowers.#
+
+63668#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've been hired to gather Red Amaryllis for Aaron Smith, these flowers can be found in Mt. Mjolnir Field 3.#
+Gather Red Amaryllis.#
+
+63669#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've been hired to gather Yellow Marigolds for Aaron Smith, these flowers can be found in Mt. Mjolnir Field 3.#
+Gather Yellow Marigolds.#
+
+63670#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've obtained the Blue Bellflowers for Aaron, when I'm ready I should get these back to him.#
+Give Aaron Smith the Blue Bellflowers.#
+
+63671#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've obtained the Red Amaryllis for Aaron, when I'm ready I should get these back to him.#
+Give Aaron Smith the Red Amaryllis.#
+
+63672#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've obtained the Yellow Marigolds for Aaron, when I'm ready I should get these back to him.#
+Give Aaron Smith the Yellow Marigolds.#
+
+63673#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Aaron stated Derpy got in trouble with the Prontera Guard, I should go check on what happened to him.#
+Go see Derpy Cupid in Prontera.#
+
+63674#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I need to rescue Shades from the Culverts lowest portions. Looks like Derpy tried to set him up, I should let him know his name is clear and Lt. Don isn't going to arrest him.#
+Talk to Shades in the Culverts.#
+
+63675#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy has some explaining to do, I just rescued Shades, I need to talk to Derpy about this.#
+Talk to Derpy Cupid in Prontera.#
+
+63677#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy requested me to get a Fairy Lawyer for him, she goes by the name Laurie Aech Parka and is on Mt. Mjolnir Field 1.#
+Talk to Derpy Cupid in Prontera.#
+
+63678#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Laurie Aech Parka wants me to hunt down Caramels and Bigfoots for soiling her shoes. I don't think I wan't to be on her bad side.#
+#
+
+63679#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Laurie has taken us to the Jail to see Derpy, time to see what fate befalls poor Derpy... he really did bring this upon himself.#
+Talk to Derpy Cupid in Jail.#
+
+63680#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy's going to Helheim after this, he's a free Cupid for now, but he's definitely going to learn some hard lessons. I should go check on him in town one last time.#
+Talk to Derpy Cupid in Prontera.#
+
+63681#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy's going to Jail after this, he's a free Cupid for now, but he's definitely going to learn some hard lessons. I should go check on him in town one last time.#
+Talk to Derpy Cupid in Prontera.#
+
+63682#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Time for some under the table Vigilante Justice. Once 35 Mobsters get beat up, I should inform Lt. Don Tyler of the event and he'll let me know about an anonymous reward someone left.#
+#
+
+
+
+//닞냺 뇗뢲샚 MD
+16215#The Shadowed Dream#SG_FEEL#QUE_NOIMAGE#
+You’ve agreed to accompany Loreche’s investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
+Dimensional Gap Investigation#
+
+16216#The Bubbly Illusion#SG_FEEL#QUE_NOIMAGE#
+You’ve agreed to accompany Loreche’s investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
+Dimensional Gap Investigation#
+
+16217#Rest and Relaxation#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest, and you can re-take it when the cooldown resets. Speak to <NAVI>[Loreche]<INFO>dali02.gat,108,94,0,101,0</INFO></NAVI>in the Dimensional Gap to accept the quest.#
+Resets at 4 am#
+
+16218#Modification and Calculation#SG_FEEL#QUE_NOIMAGE#
+Let’s go seek out <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> so we can enter the Dimensional Gap.#
+Speak with Eugenie#
+
+16219#Kindness and Gratitude#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+
+8323#Hiring a Street Stall Staffer - Standby#SG_FEEL#QUE_NOIMAGE#
+The Merchant Union Human Resources Department commissions only one quest per week to protect client privacy. Wait until the next quest.#
+#
+
+8324#Delivery to Prontera#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Prontera Forge Sheep.#
+Box Delivery#
+
+8325#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8326#Delivery to Payon#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Payon Forge Sheep.#
+Box Delivery#
+
+8327#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8328#Delivery to Comodo#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Comodo Weapon Shop Sheep.#
+Box Delivery#
+
+8329#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8330#Delivery to Al De Baran#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Sheep at the Al De Baran Inn.#
+Box Delivery#
+
+8331#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8332#Delivery to Morroc#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Sheep at the Northern Morroc Kafra Center.#
+Box Delivery#
+
+8333#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8334#Collection from the Prontera Culvert#SG_FEEL#QUE_NOIMAGE#
+An Adventurer by the name ¡°Murian¡± is currently on a quest for the Merchant Union on Prontera Culvert 3F. You need to retrieve the ^4d4dffSlightly Aged Antique Box^000000 from him.#
+Box Retrieved#
+
+8335#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Let’s deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Box Submitted#
+
+8336#Defeat 10 Bongun#SG_FEEL#QUE_NOIMAGE#
+Easy quest: slay 10 Bonguns in Payon Cave 3F, return to Merchant Union of Alberta and receive an examination from the sheep.#
+Bongun Defeated#
+
+8337#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8338#Defeat 10 Megaliths#SG_FEEL#QUE_NOIMAGE#
+Easy quest: slay 10 Megalith in Ruande, the Northern Cave, return to Merchant Union of Alberta and receive an examination from the sheep.#
+#
+
+8339#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8340#Defeat 10 Rideword#SG_FEEL#QUE_NOIMAGE#
+Easy quest: slay 10 Rideword in Clock Tower 1F, return to Merchant Union of Alberta and receive an examination from the sheep.#
+#
+
+8341#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8342#Collection from Morroc Sphinx#SG_FEEL#QUE_NOIMAGE#
+An Adventurer named Elbury is currently at the Sphinx B3F fulfilling a quest for the Merchant Union. You need to retrieve the ^4d4dffSlightly Aged Antique Box^000000 from him.#
+Box Retrieved#
+
+8343#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Let’s deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Box Submitted#
+
+8344#Collection of Biolabs Data#SG_FEEL#QUE_NOIMAGE#
+Check the small sign somewhere in the Biolabs 3F for a slot to insert a card. Take the Data Retrieval Card received by the Alberta Merchant Union and examine the sign to retrieve the data.#
+Data Retrieved#
+
+8345#Deliver Card to Masha#SG_FEEL#QUE_NOIMAGE#
+Let’s deliver the data retrieval card to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Card submitted#
+
+8346#Defeat 3 Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Eremes Guiles in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8347#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8348#Defeat 3 Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Cecil Damons in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8349#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8350#Defeat 3 Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Margaretha Sorin in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8351#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8352#Defeat 3 Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Kathryne Keyron in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8353#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8354#Hiring a Street Stall Staffer#SG_FEEL#QUE_NOIMAGE#
+To hire a street stall staffer, you must have an employment certificate given by the Merchant Union. Once a day, complete a quest from Masha of the Merchant Union, then you can get a different grade of employment certificate depending on the difficulty of the quest. Solve the quest to hire your staffer.#
+#
+
+
+//뷅싻붺엏===MD 뿕샇 놸뗎뇁뾡벭
+
+8401#Into the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+#
+#Enter Dungeon
+
+8538#Tomorrow at the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+I never want to see another card again... But maybe I’ll feel differently tomorrow! Let’s go talk to Dr. Magnatum again tomorrow.#
+Resets at 4 am#
+
+8527#Delay Insurance: EXP Card and step#SG_FEEL#QUE_NOIMAGE#
+If you defeat 50 wild Steps and EXP Cards within the Summoning Room, you can receive your reward from the board over by Summoning Room exit.#
+#
+
+8528#Delay Insurance - Standby#SG_FEEL#QUE_NOIMAGE#
+Delay Insurance re-registration cannot be instantly processed. Please wait and try again.#
+Resets at 4 am#
+
+8529#Master of the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+#
+#

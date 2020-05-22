@@ -24,7 +24,7 @@ serverEncoding Western
 gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
-charBlockSize 146
+charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 blockingPlayerCancel 1
@@ -46,7 +46,7 @@ serverEncoding Western
 gameGuard 0
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 addTableFolders bRO
-charBlockSize 146
+charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 blockingPlayerCancel 1
@@ -61,7 +61,7 @@ master_version 4
 version 1
 serverType cRO
 serverEncoding GBK
-charBlockSize 147
+charBlockSize 155
 addTableFolders cRO
 gameGuard 1
 secureLogin 0
@@ -72,21 +72,19 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 pinCode 1
 charDeleteDateType 1
 blockingPlayerCancel 1
-rankingSystemType
+rankingSystemType 1
+itemListType 1
 
-# http://www.ragnarokeurope.com/
-[France - fRO]
-title France - fRO (ragnarokeurope.com): Chaos
-ip 54.36.76.129
-port 6900
-master_version 31
+# https://eu.4game.com/ro/
+[EU - euRO: Revo Classic]
+ip 185.47.158.72
+port 6800
 version 1
-patchpath /patch01
-patchserver ftp.ragnarokonline.fr
-serverType fRO
+master_version 24
+serverType euRO
 serverEncoding Western
-addTableFolders fRO
-charBlockSize 116
+charBlockSize 155
+addTableFolders euRO
 
 # https://ro.gnjoy.id/
 [Indonesia - idRO: Yggdrasil]
@@ -122,11 +120,27 @@ serverEncoding Western
 patchserver ropatch1.gravityus.com
 patchpath /patch02
 addTableFolders iRO/Renewal;iRO
-charBlockSize 147
+charBlockSize 155
 charDeleteDateType 1
-sendCryptKeys 0x639573FD, 0x30007ABA, 0x18EC45FF
 blockingPlayerCancel 1
 rankingSystemType 1
+itemListType 1
+
+# Transcendence
+# http://playragnarok.com
+[International - iRO: Poring]
+ip 128.241.92.162
+port 6800
+master_version 1
+version 18
+serverType iRO_Transcendence
+serverEncoding Western
+addTableFolders iRO/Transcendence;iRO
+charBlockSize 155
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
 
 # http://playragnarok.com
 [International - iRO: Sakray]
@@ -142,20 +156,6 @@ charBlockSize 147
 rankingSystemType 1
 blockingPlayerCancel 1
 charDeleteDateType 1
-
-# Pre-renewal
-# http://playragnarok.com
-[International - iRO: Loki Classic]
-title International - iRO: Classic.Loki
-ip 128.241.92.202
-port 6900
-master_version 1
-version 18
-serverType iRO_Classic
-serverEncoding Western
-addTableFolders iRO/Classic;iRO
-charBlockSize 108
-rankingSystemType 1
 
 # TODO: needs a servertype & table folder
 # https://ragnarokonline.gungho.jp/
@@ -222,26 +222,43 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 pinCode 1
 gameGuard 0
 
-# https://ragnarokonline.com.ph/main
-[Philippines - pRO: Valkyrie]
+# https://roextreme.com/msp/main
+[Philippines - pRO: Valhalla]
 ip 139.99.113.156
 port 6900
-master_version 217
+master_version 15
 version 24
+serverType pRO
 secureLogin 0
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
-serverType pRO
-patchserver wpatch.ragnarok.com.ph
-patchpath /patch50
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-serverEncoding Tagalog
-charBlockSize 144
-gameGuard 1
-recvpackets recvpackets.txt
+serverEncoding Western
+gameGuard 0
 addTableFolders pRO
+charBlockSize 144
 pinCode 1
+charDeleteDateType 1
+rankingSystemType 1
+
+# https://roextreme.com/msp/main
+[Philippines - pRO: Yggdrasil]
+ip 139.99.7.212
+port 6900
+master_version 15
+version 24
+serverType pRO
+secureLogin 0
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverEncoding Western
+gameGuard 0
+addTableFolders pRO
+charBlockSize 144
+pinCode 1
+charDeleteDateType 1
+rankingSystemType 1
 
 # https://ru.4game.com/ro/play/
 [Russia - rRO-Renewal]
@@ -273,40 +290,36 @@ addTableFolders twRO
 captcha 0
 
 # https://ro.exe.in.th/
-[Thailand - tRO Main server (Norse)]
-ip 122.155.11.240
+[Thailand - tRO: Revo Classic]
+ip 103.55.55.199
 port 6900
 master_version 7
 version 24
 serverType tRO
-secureLogin 3
-secureLogin_type 0
-secureLogin_account 0
-patchserver wpatch.ragnarok.in.th
-patchpath /patch70
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 112
-gameguard 1
+charBlockSize 146
+gameGuard 0
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
 
-####################
-# Private RO Servers
-
-# http://ggamerz-ro.com/
-[GGamerzRO]
-ip 139.99.21.135
+# https://ro.exe.in.th/
+[Thailand - tRO: Revo Jellopy]
+ip 103.55.55.200
 port 6900
-private 1
-master_version 1
-version 55
-recvpackets recvpackets_20151104.txt
-serverType kRO_RagexeRE_2015_11_04a
-serverEncoding Western
-charBlockSize 147
-pinCode 1
-addTableFolders pserver/ggRO
-clientHash DA4E4A35A46BF326C9C45C653979972A
-sendCryptKeys 0x4C17382A, 0x29961E4F, 0x7ED174C9
+master_version 7
+version 24
+serverType tRO
+serverEncoding Thai
+addTableFolders tRO
+charBlockSize 146
+gameGuard 0
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
 
 [Localhost]
 ip localhost
@@ -369,3 +382,26 @@ dead_message euRO was closed on September 30, 2010. There used to be transfers t
 [International - iRO: Re:Start]
 dead 1
 dead_message iRO Re:Start was merged into iRO Renewal on 11th July 2019. Visit official website for more details.
+
+# Pre-renewal
+# http://playragnarok.com
+[International - iRO: Loki Classic]
+title International - iRO: Classic.Loki
+dead 1
+dead_message iRO Classic was closed on July 11, 2019. Visit official website for more details.
+
+# http://www.ragnarokeurope.com/
+[France - fRO]
+title France - fRO (ragnarokeurope.com): Chaos
+dead 1
+dead_message fRO was closed on 12 of August, 2019. Visit official website for more details.
+
+# https://roextreme.com/mysg/main
+[Malaysia - mRO]
+dead 1
+dead_message mRO was merged into phRO on July, 2019. Visit official website for more details.
+
+# http://ggamerz-ro.com/
+[GGamerzRO]
+dead 1
+dead_message GGamerzRO was closed on sometime in 2019.

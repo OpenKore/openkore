@@ -1,31 +1,42 @@
 [Recv]
 0000 Idle
 0069 Account Info
-006A Connection Failed
+006A Connection Failed With Error
 006B Received characters from Game Login Server
 006C Error logging into Game Login Server (invalid character specified)...
+006D Char Creation Successful
+006E Char Creation Failed
+006F Char Deletion Successful
+0070 Char Deletion Failed
 0071 Received character ID and Map IP from Game Login Server
+0072 Received characters Info from Game Login Server
 0073 Enter Map
+0074 Error logging into Map Server...
+0075 Char Init
+0077 Char Update
 0078 actor_display (actor exists)
-0079 Unit Connected
+0079 Actor Connected
+007A Char Entry
 007B actor_display (actor moved)
-007C Unit Spawned
+007C Actor Spawned
 007F Received Sync
-0080 Unit Lost (Died, Disappeared, Disconnected)
-0081 Disconnected from Server
+0080 Actor Lost (Died, Disappeared, Disconnected)
+0081 Disconnected from Server With Error
+0083 Quit Accept
+0084 Quit Reject
 0086 actor_display (actor moved)
 0087 You Move
-0088 Unit Position
-008A Item take / attack damage / sit / stand
+0088 Actor Position
+008A Actor Item take / attack damage / sit / stand
 008D Public message
 008E Public message by yourself
 0091 Map Changed
 0092 Map Server Changed
-0095 Unit Get Info
+0095 Actor Get Info (Name)
 0097 Private Message
 0098 Private Response
-009A Special Message
-009C Unit Look
+009A Special Message (broadcast)
+009C Actor Look
 009D Item Exists
 009E Item Appeared
 00A0 Item Pickup
@@ -56,8 +67,10 @@
 00C7 NPC Sell List
 00CA Buy Result
 00CB Sell Result
+00CD Disconnected from Server
 00D1 Player (Ignored / Unignored)
 00D2 All Player (Ignored / Unignored)
+00D4 Whisper List
 00D6 Chat Room Created
 00D7 Chat Room List
 00D8 Chat Room Closed
@@ -69,14 +82,14 @@
 00E1 Chat Room Owner Changed
 00E5 Deal Request
 00E7 Deal Accept
-00E9 Deal Added (Other)
-00EA Deal Added (You)
+00E9 Deal Item Added (Other)
+00EA Deal Item Added (You)
 00EC Deal Confirm
 00EE Deal Cancelled
 00F0 Deal Completed
 00F2 Storage Capacity
-00F4 Storage Added
-00F6 Storage Removed
+00F4 Storage Item Added
+00F6 Storage Item Removed
 00F8 Storage Closed
 00FA Party Creation Result
 00FB Party Users List
@@ -87,17 +100,20 @@
 0105 Party User Left
 0106 Party HP
 0107 Party Move
+0108 Upgrade
 0109 Party Message
 010A MVP Item
 010B MVP Exp
 010C MVP Player
+010D MVP Item Throw
 010E Skill Level Changed
 010F Skills List
 0110 Skill Use Failed
 0111 New Skill
 0114 Skill Damage
+0115 Skill Position
 0117 Skill Location
-0119 Unit Status (Freeze, Poison, ...)
+0119 Actor Status (Freeze, Poison, ...)
 011A Skill Restore
 011C Warp Portal List
 011E Memo
@@ -106,8 +122,9 @@
 0121 Cart Capacity
 0122 Cart Equipments List
 0123 Cart Items List
-0124 Cart Added
-0125 Cart Removed
+0124 Cart Item Added
+0125 Cart Item Removed
+012B Cart Removed (Off)
 012C Cart Add Failed
 012D Vending
 0131 Vender Founded
@@ -116,13 +133,14 @@
 0135 Vender Item Not Enough
 0136 Sell List
 0137 Sell
-0139 Range Attack with New Position
+0139 Range Attack With New Position
 013A Attack Range
 013B Arrow
 013C Arrow Equip
 013D Your HP/SP Changed
 013E Skill Cast
 0141 Your Status Changed (Str, Agi, Vit, Int, Dex, Luk, Bonus)
+0142 NPC Talk Number Dialog
 0144 Mini Map Indicator
 0145 NPC Image
 0147 Skill Use
@@ -130,15 +148,22 @@
 014A Alignment Failed
 014B Alignment
 014C Guild Allies / Enemy List
+014E Guild Master Flag  
 0150 Guild Info
+0152 Guild Emblem Image
 0154 Guild Members List
 0156 Guild Member Titles Selected
+0158 Guild Member Info
 015A Guild Member Leave
 015C Guild Member Delete
+015E Guild Broken Result
+015F Guild Disorganize
 0160 Guild Member Setting List
 0162 Guild Skills List
 0163 Guild Member Leave
+0164 Guild Info Other
 0166 Guild Member Titles List
+0167 Guild Create Result
 0169 Guild Join Result
 016A Guild Join Request (From Other)
 016C Guild Name
@@ -147,6 +172,7 @@
 0171 Guild Ally Request
 0173 Guild Ally Result
 0174 Guild Member Titles Changed
+0176 Guild Member Info
 0177 Identify List
 0179 Identify
 017B Card Merge Items List
@@ -163,13 +189,14 @@
 018C Sense
 018D Mixture List
 018F Mixture Result
-0192 Map ?
+0191 Skill Talkbox
+0192 Map Change Cell (Ice Wall, Other...)
 0194 Character Name
 0195 Player Guild Info
-0196 Unit Effect (Skill, Weight, ...)
+0196 Actor Effect (Skill, Weight, ...)
 0199 PVP Off
 019A PVP On
-019B Unit Gained Level
+019B Actor Gained Level
 019E Slot Machine
 01A0 Pet Catch
 01A2 Pet Name
@@ -181,68 +208,440 @@
 01AC Stop or Snare
 01AD Arrow Craft
 01B0 Monster Transform
+01B1 Show Digit
 01B3 NPC Image
+01B4 Guild Emblem Updated
 01B5 Account Remain
 01B6 Guild Info : 0150
-01B9 Unit Skill Failed
+01B8 Guild Zeny
+01B9 Actor Skill Failed
+01C1 Remain Time Info
+01C2 Remain Time
+01C3 Special Message (broadcast local)
 01C4 Storage Added
-01C5 Cart Added 
+01C5 Cart Added
+01C7 Encryption
 01C8 Inventory Used
 01C9 Skill Area : 011F
+01CC Monster Talk
 01CD Available Autocast Spells
+01CF Devotion List
 01D0 Spirit or Coin Count (revolving entities)
+01D1 Blade Stop
 01D2 Combo Attack
+01D3 Sound Effect
+01D4 NPC Talk Text
+01D6 Map Property
 01D7 Weapon / Shield Display
 01D8 actor_display (actor exists)
-01D9 Unit Connected : 0079
+01D9 Actor Connected : 0079
 01DA actor_display (actor moved)
 01DB actor_display (actor connected)
 01DC Login Code
 01DE Skill Damage : 0114
+01E0 GM Account Name Result
 01E1 Spirit or Coin Count : 01D0
-01E6 Some Player Name.
+01E2 Marriage Requested Couple
+01E4 Marriage Start Couple
+01E6 Marriage Partner Name.
+01E9 Party Joined (Other Player)
+01EA Married
+01EB Guild Position
+01EC Guild Member Map Changed
 01EE Inventory Items List : 00A3
 01EF Cart Items List : 0123
 01F0 Storage Items List : 00A5
+01F1 Error
 01F2 Guild member in/out
+01F3 Misc Effect
 01F4 Deal Request
 01F5 Deal Accept
+01F6 Adoption Request
+01F8 Adoption Baby
+01FC Repair Item List
+01FE Repair Result
+01FF High Jump
 0201 Friend List
+0205 Divorced
 0206 Friend In/Out
 0207 Friend Request Receive
 0209 Friend Request Response
 020A Friend Removed
+020D Char Ban List
+020E Taekwon Misson
+0215 Skill Message (Gospel)
+0216 Adoption Baby Reply
 0219 Blacksmith Top 10 Ranking
 021A Alchemist Top 10 Ranking
 021B Blacksmith Points
 021C Alchemist Points
+0221 Refinable Item List
+0223 Refine Message
 0224 Taekwon Ranking
 0226 Taekwon Top 10 Ranking
 0227 GameGuard Request
+0229 Actor Status (Freeze, Poison, ...)
 022A actor_display (actor exists)
-022B actor_display (actor connected
+022B actor_display (actor connected)
 022C actor_display (actor moved)
-020E TaeKwon Misson
+022E Homunculus Property
+022F Homunculus Fed
+0230 Homunculus Info
+0235 Homunculus Skills List
 0238 PK Top 10 Ranking
+0239 Skill Update
+023A Storage Password Request
+023C Storage Password Result
+023E Storage Password Request
+0240 Mail Refresh Inbox
+0242 Mail Read
+0245 Mail Get Attachment
+0249 Mail Send
+024A Mail New
+0250 Auction Result
+0252 Auction Item Search Request
+0255 Mail Set Attachment
+0256 Auction Item Added
+0257 Mail Delete
+0259 GameGuard Grant
+025A Cooking List
+025D Auction Self Sell Stop
+025F Auction Window
+0260 Mail Window
+0274 Mail Return
+0276 Account Info With Server Info
+027B Premium Rates Info
+0283 Account ID
+0284 GANSI Rank
+0287 Cash Dealer
+0289 Cash Dealer Buy Failed
+028A Actor Status (Freeze, Poison, ...)
+0291 Message String (stringtable)
+0293 Boss Map Info
+0294 Book Read
+0295 Inventory Equipments List
+0296 Storage Equipments List
+0297 Cart Equipments List
+0298 Item Rental Time
+0299 Item Rental Time Expired
+029A Inventory Item Added
+029B Mercenary Init
+029D Skills List
+02A2 Mercenary Status Info
+02A6 GameGuard Request
+02AA Cash Shop Password Request
+02AC Cash Shop Password Result
+02AD PinCode Request
 02AE Initialize Message ID Encryption
-0A3B Hat Effect Info
+02B1 Quest List
+02B2 Quest List Mission
+02B3 Quest Added
+02B4 Quest Deleted
+02B5 Quest Update Mission Hunt
+02B7 Quest Active
+02B8 Party Pickup Settings Info
+02B9 Hotkey List
+02C1 NPC Talk
+02C5 Party Invite Result
+02C6 Party Invite by Name
+02C9 Party Allow Invite
+02CA Error logging into Game Login Server (invalid character specified)...
+02CB Instance Window Start
+02CC Instance Window Queue
+02CD Instance Window Join
+02CE Instance Window Leave
+02D0 Inventory Equipments List
+02D1 Storage Equipments List
+02D2 Cart Equipments List
+02D4 Inventory Item Added
+02D5 Disconnected from Server (unknown)
+02D7 Equipment Window (Microscope Other)
+02D9 Show Equipment Window Flag (other)
+02DA Show Equipment Window Flag (You)
+02DC Battleground Message
+02DD Battleground Emblem
+02DE Battleground Score
+02DF Battleground Player Position
+02E0 Battleground Player HP
+02E1 Actor Item take / attack damage / sit / stand
+02E7 Map Property
+02E8 Inventory Item List
+02E9 Cart Item List
+02EA Storage Item List
+02EB Enter Map
+02EC actor_display (actor exists)
+02ED Actor Connected
+02EE actor_display (actor moved)
+02EF Font
+02F0 Progress Bar
+02F2 Progress Bar Stop
+040C Special Message (broadcast local)
+043D Skill Post Delay
+043E Skill Post Delay List
+043F Actor Effect (Skill, Weight, ...)
+0440 Millenium Shield
+0441 Skill Delete
+0442 Sage AutoSpell
+0444 Cash Shop Item List
+0446 Mini Map Indicator
+0449 HackShield Alarm
+07D8 Party Exp Setting
+07D9 Hotkey List
+07DB Your Status Info
+07E1 Skill Update
+07E2 Message String (stringtable)
 07E3 Skill Exchange Item
+07E6 Skill Use Message
+07E8 Captcha Image
+07E9 Captcha Answer
+07F6 Exp Gain
+07F7 actor_display (actor exists)
+07F8 Actor Connected
+07F9 actor_display (actor moved)
+07FA Inventory Item RemoveD
+07FB Skill Cast
+07FC Party Leader Changed
+07FD Special Item Obtain
+07FE Sound Effect
+07FF Define Check
+0800 Vender Sell List
+0803 Booking Register Result
+0805 Booking Search Result
+0807 Booking Delete
+0809 Booking insert
+080A Booking Update
+080B Booking Delete
+080E Party User HP Info
+080F Deal Item Added (Other)
+081B Buying Store Item Update
+0810 Buying Store Open
+0812 Buying Store Result
+0813 Buying Store Item List (You)
+0814 Buying Store Found
+0816 Buying Store Lost
+0818 Buying Store Item List (Other)
+081A Buying Store Buy Result
+081B Buying Store Item Update
+081C Buying Store Item Delete
+081D Elemental Info (sage)
+081E Elemental Status Info
+0824 Buying Store Trade Failed
+0828 Char Deletion Result
+082A Char Deletion Accept Result
+082C Char Deletion Cancel Result
+082D Received characters from Game Login Server
+0836 Search Store Result
+0837 Search Store Fail
+0839 Guild Expulsion
+083A Search Store Open
+083D Search Store Position
+083E Connection Failed With Error
+0845 Cash Shop Open Result
+0849 Cash Shop Buy Result
+084B Item Appeared
+0856 actor_display (actor moved)
+0857 actor_display (actor exists)
+0858 Actor Connected
+0859 Equipment Window (Microscope Other)
+08B3 Show Script
+08B4 Pet Capture Process
+08B6 Pet Capture Result
+08B9 PinCode Request
+08BB PinCode New Code Result
+08C7 Skill Area
+08C8 Actor Item take / attack damage / sit / stand
+08CA Cash Shop Item List
+08CB Rates Info
+08CD Actor Position
+08CF Spirit or Coin Count (revolving entities)
+08D2 High Jump
+08E3 Char Update Info
+08FE Quest Update Mission Hunt
+08FF Actor Effect (Skill, Weight, ...)
+0900 Inventory Item List
+0901 Inventory Equipments List
+0902 Cart Item List
+0903 Cart Equipments List
+0906 Equipment Window (Microscope Other)
+0908 Inventory Item Favorite
+090F Actor Connected
+0914 actor_display (actor moved)
+0915 actor_display (actor exists)
 096D Merge Item Open
 096F Merge Item Result
+0975 Storage Item List
+0976 Storage Equipments List
+0977 Monster HP Info
+097A Quest List
+097B Rates Info
+097D Top 10
+097E Top 10 Rank Points
+0983 Actor Effect (Skill, Weight, ...)
+0984 Actor Effect (Skill, Weight, ...)
+0985 Skill Post Delay List
+0988 Clan Users
+098A Clan Info
+098D Clan Leave
+098E Clan Chat Message
+0990 Inventory Item Added
+0991 Inventory Item List
+0992 Inventory Equipments List
+0993 Cart Item List
+0994 Cart Equipments List
+0995 Storage Item List
+0996 Storage Equipments List
+0997 Equipment Window (Microscope Other)
+0999 Equip
+099A Unequip
+099B Map Property
+099D Received characters Info from Game Login Server
+099F Skill AOE Multiple
+09A0 Received characters from Game Login Server
+09AD Bargain Sale Item Info
+09B2 Bargain Sale Selling
+09B3 Bargain Sale Close
+09C4 Bargain Sale Count Item
+09CA Skill AOE Multiple
+09CB Skill Used No Damage
+09CD Message String (stringtable)
+09CF GameGuard Request
+09D1 Progress Bar Unit
+09DA Guild Storage Log
+09DB actor_display (actor moved)
+09DC Actor Connected
+09DD actor_display (actor exists)
+09DE Private Message
+09DF Private Message Result
+09E5 Vender Shop Sold
+09E6 Buying Store Item Update
+09E7 Rodex Unread Mails
+09EB Rodex Read Mail
+09ED Rodex Write Result
+09F0 Rodex Mail List
+09F2 Rodex Zeny Get
+09F4 Rodex Item Get
+09F6 Rodex Delete
+09F7 Homunculus Property
+09F8 Quest List
+09F9 Quest Added
+09FA Quest Update Mision Hunt
+09FC Pet Evolution Result
+09FD actor_display (actor moved)
+09FE Actor Connected
+09FF actor_display (actor exists)
+0A00 Hotkey List
+0A02 Dressroom Open
+0A05 Rodex Item Added
+0A07 Rodex Item Removed
+0A09 Deal Item Added (Other)
+0A0A Storage Item Added
+0A0B Cart Item Added
+0A0C Inventory Item Added
+0A0D Inventory Equipments List
+0A0E Battleground HP Notify
+0A0F Cart Equipments List
+0A10 Storage Equipments List
+0A11 Guild Storage Equipments List
+0A12 Rodex Open to Write
+0A14 Rodex Character Name Received
+0A17 NPC Dynamic Create Result
+0A18 Enter Map
+0A1A Roullete Open 
+0A1C Roullete Info
+0A1E Roullete Close
+0A20 Roullete Generate
+0A22 Roullete Item Received
+0A23 Achievement List
+0A24 Achievement Update
+0A26 Achievement Reward
+0A27 HP/SP Changed
+0A28 Open Store Status
+0A29 Bot AU Request
+0A2B Cash Shop Open
+0A2C Cash Shop Buy Item Result
+0A2D Equipment Window (Microscope Other)
+0A2F Guild Title Change
+0A30 Actor Get Info (Name)
+0A31 Package Item Result
+0A32 Rodex Open Through NPC
+0A33 Roullete Coin Update
+0A34 Cash Shop Senbei Amount
+0A36 Monster HP Info Tiny
+0A37 Inventory Item Added
+0A3B Hat Effect Info
+0A41 Skill AOE Effect
+0A43 Party Join
+0A44 Party Users List
+0A47 Stylist UI Result
+0A49 Private Airship Request                                                                 
+0A4A Private Airship Type
+0A4B Map Changed                                                                                        
+0A4C Map Server Changed
+0A51 Rodex Character Name Received
+0A7D Rodex Mail List
+0A7E Offline Store Items Ready
+0A84 Guild Info
+0A89 Actor Clone Vender Found
+0A8A Actor Clone Vender Lost
+0A8D Offline Store Itens
+0A98 Switch Equip System Item Add Result
+0A9A Switch Equip System Item Remove Result
+0A9B Switch Equip System Log
+0A9D Switch Equip System Result
+0AA0 Refine UI Open
+0AA2 Refine UI Info
+0AA3 Refine UI Info Refine
+0AA4 Refine UI Info close
+0AA5 Guild Members List
+0AB8 Move Interrupt
+0ABD Party User Level Info
+0ABE Warp Portal List
+0AC2 Rodex Mail List
+0AC4 Account Info With Server Info
+0AC5 Received character ID and Map IP from Game Login Server
+0AC7 Map Server Changed
+0AC9 Account Info With Server Info
+0ACA Disconnected from Server With Error
+0ACB Your Status Info
+0ACC Exp Gain
+0ACD Connection Failed With Error
+0ADC Allow Other See Equipment
+0ADD Item Exists
+0ADE Overweight Percent
+0ADF Actor Get Info (Name)
+0AE0 Connection Failed With Error
+0AE3 OTP Token Received
+0AE4 Party Joined (Other Player)
+0AE5 Party Users List
+0AE8 Change Dress
+0AFD Sage AutoSpell
+0AFE Quest Update Mission Hunt
+0AFF Quest List
+0B03 Equipment Window (Microscope Other)
+0B08 Item List Start
+0B09 Item List Stackable
+0B0A Item List Non-Stackable (Equips)
+0B0B Item List End
+0B0C Quest Added
+0B20 Hotkey List
 
 [Send]
 0064 Account Server Login
 0065 Character Server Login
 0066 Char Login
+0067 Char Create Request
+0068 Char Delete Request
 0072 Map Login
 007D Map Loaded
 007E Sync
+0082 Quit Request
 0085 Move
 0089 Attack / Sit / Stand
 008C Chat
 0090 Talk
-0094 Get Unit Info
+0094 Get Actor Info
 0096 Private Msg
+0099 Special Message (broadcast)
 009B Look
 009F Take
 00A2 Drop
@@ -252,12 +651,15 @@
 00B2 Respawn
 00B8 Talk Response
 00B9 Talk Continue
+00BA Request Status
 00BB Add Status Point
 00BF Emotion
 00C1 Who
 00C5 Get Store / Sell List
 00C8 Buy
 00C9 Sell
+00CC GM Kick Char
+00CE GM Kick All
 00CF Ignore
 00D0 Ignore All
 00D3 Ignore List Request
@@ -296,20 +698,31 @@
 012A Companion Release
 012E Shop Close
 012F Shop Open
-0130 Vender Items List
+0130 Vender Sell List
 0134 Vender Buy
+0138 GM PK Mode Change
+013F GM Item Mob Create
+0140 GM Move Player To Map
+0143 Talk Number
 0146 Talk Cancel
 0149 Alignment
 014D Guild First Query
 014F Guild Query Page
 0151 Emblem Request
+0153 Guild Emblem Register
+0155 Guild Request Member Position
+0157 Guild Open Member Info
 0159 Guild Leave
 015B Guild Member Delete
+015D Guild Request Break
+0161 Guild Request Guild Position Info
+0165 Guild Request Create
 0168 Guild Join Request
 016B Guild Join
 016E Guild Notice
 0170 Guild Ally Request
 0172 Guild Ally
+0175 Guild Request Member Info
 0178 Identify
 017A Card Merge Request
 017C Card Merge
@@ -318,29 +731,205 @@
 0183 Guild Delete Request
 0187 Char BAN Check
 018A Exit
-018E Tempering
+018E Make Item Request
+0190 Skill Use Location With Talkbox
 0193 Character Name Request
+0197 GM Request Reset State Skill
+0198 GM Request Change Cell Type
+019C GM Special Message (broadcast local)
+019D GM Request Perfect Hide
 019F Pet Catch
 01A1 Pet Feed
 01A5 Pet Name
 01A7 Pet Incubator
+01A8 Pet Egg info
 01A9 Pet Talk / Emo
+01AE Make Arrow
+01AF Request Change Cart
 01B2 Shop Open
+01B7 Guild Zeny
+01BA GM Remove Account ID
+01BB GM Shift
+01BC GM Recall
+01BD GM Recall Char
+01C0 Request Remain Time
+01C6 Encryption Request
+01CA Homunculus Request Create
+01CB Monster Talk
 01CE Autocast Skill
+01D5 Talk Text
 01DB Login Code Request
 01DD Login
+01DF GM Request Account Name
+01E3 Join Couple
+01E5 Request Join Couple
+01E7 Dori Dori
+01E8 Party Create
+01ED Novice Explosion Spirit
+01F7 Adoption Reply Request
 01F9 Char Adoption Request
 01FA Login
+01FB Char Delete Request
+01FD Request Item Repair
+0200 Connect Info Changed
 0202 Friend Request
 0203 Friend Remove
+0204 Client hash
 0208 Friend Request Accept/Reject
-0228 gameguard_sync
 020D Homunculus Feed
+0212 GM Manner by Player Name
+0213 GM Request Status
+0217 Rank Blacksmith Request
+0218 Rank Alchemist Request
+021D Less Effect
+0222 Refine Item
+0225 Rank Taekwon Request
+0228 gameguard_sync
+022D Homunculus Command
+0231 Homunculus Change Name Request
+0232 Homunculus Move
+0233 Homunculus Attack
+0234 Homunculus Move to Master
+0237 Rank Killer Request
+023B Storage Password
+023F Mail Open
+0241 Mail Read
+0243 Mail Delete
+0244 Mail Attachment Get
+0246 Mail Remove
+0247 Mail Attachment Set
+0248 Mail Send
+024B Auction Item Added Cancel
+024C Auction Item Add
+024D Auction Create
+024E Auction Cancel
+024F Auction Buy
+0251 Auction Search
+0254 Star Place Agree
+025B Cooking Request 
+025C Auction Info Self
+025D Auction Sell Stop
+0273 Mail Return
+0275 Character Server Login
+0281 Gangsi Rank
+0288 Cash Dealer Buy Item
+0292 Auto Revive (command, ziegfried token)
+029F Mercenary Command
 02AF Message ID Encryption Initialized
+02B0 Account Server Login
+02B6 Quest Send State
+02BA Hotkey Change
+02C4 Party Join (From You)
+02C7 Party Join
+02D6 View Player Equip Request
+02D8 Allow View Sel Equip Windows
+02DB Battleground Chat
+02F1 Progress Bar Complete
+035F Character Move
+0360 Sync
+0361 Look
+0362 Actor Item take / attack damage / sit / stand
+0363 Item Drop
+0364 Storage Item Add
+0365 Storage Item Remove
+0366 Skill Use Location
+0368 Actor Get Info
+0369 Actor Get Info (Name)
+0436 Map Login
+0437 Character Move
+0439 Item Use
+0443 Skill Select
+0445 Cash Shop Buy Item
+0447 Request Blocking Player Cancel
+044A Client Version
+07DA Party Leader Change
+07D7 Party Settings
+07E4 Item List Window Selected
+07E7 Captcha Answer
+07EC Battleground Join
+0801 Buy From Vender
+0802 Booking Party Register
+0804 Booking Register
+0806 Booking Search
+0808 Booking Request
+0811 Buying Store Create
+0815 Buying Store Close
+0817 Buying Store Open
+0819 Buying Store Info
+0825 Character Server Login With OTP
 0827 Char Delete
 0829 Char Delete Accept
-098F Char Delete Accept
 082B Char Delete Cancel
-07E4 Item List Window Selected
+0835 Search Store Info 
+0838 Search Store Request Next Page
+083B Search Store Close
+083C SSI Item List on Click
+0842 Recal SSO
+0843 Remove AID SSO
+0844 Cash Shop Open
+0846 Cash Shop Tab Request
+0848 Cash Shop Buy
+084A Cash Shop Close
+08B5 Pet Capture
+08B8 PinCode Password
+08BA Pincode New Password
+08C1 Macro Start
+08C2 Macro Stop
+08C9 Cash Shop Request Items
 096E Merge Item Request
+0970 Char Create Request
 0974 Merge Item Cancel
+097C Rank Request
+0987 Account Server Login
+098D Clan Chat Message
+098F Char Delete Accept
+0998 Send Equip
+09A1 Character Received Sync
+09D0 GameGuard Reply
+09D4 Sell or Buy Complete
+09F1 Rodex Request Zeny
+09F3 Rodex Request Item
+09FB Pet Evolution
+0A01 Hotkey Rotate
+09E8 Rodex Open Mail Box
+09E9 Rodex Close Mail Box
+09EA Rodex Read Mail
+09EE Rodex Next Page
+09F1 Rodex Zeny Request
+09F3 Rodex Item Request
+09FB Pet Evolution
+0A03 Rodex Cancel Write Mail
+0A04 Rodex Add Item
+0A06 Rodex Remove Item
+0A08 Rodex Open Write Mail
+0A13 Rodex Request Check Character Name
+0A16 NPC Dynamic Create Request
+0A19 Roullete Request Open
+0A1B Roullete Request Info
+0A1D Roullete Request Close
+0A1F Roullete Request Generate
+0A21 Roullete Send Item Received Confirmation
+0A25 Achievement Get Reward
+0A2A AU BOT
+0A2E Guild Request Change Title
+0A35 Identify
+0A39 Char Create Request
+0A46 Stylist UI Style Change
+0A49 Private Airship Request
+0A6E Rodex Mail Send
+0A75 Account Server Login (encrypted)
+0A76 Account Server Login
+0A7F Offline Store Open
+0A97 Switch Equip System Add Item
+0A99 Switch Equip System Remove Item
+0A9C Switch Equip System Switch
+0AA1 Refine UI Select
+0AAC Account Server Login
+0AC0 Rodex Open Mail Box
+0AC1 Rodex Refresh Mail Box
+0ACE Switch Equip System
+0ACF Account Server Login With OTP
+0AE8 Stylist UI Change Dress
+0B10 Skill Start Use
+0B11 Skill Stop Use
+0B21 Hotkey Change

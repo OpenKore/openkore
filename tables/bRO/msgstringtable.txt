@@ -141,7 +141,7 @@ PES#
 [Alt] + [End]:  Liga ou Desliga a Barra de HP/SP#
 [Alt] + [Home]:  Liga ou Desliga o Cursor do Solo#
 [Insert]:  Faz o personagem sentar ou levantar.  (Atalho para /sit ou /stand)#
-Parabéns! Você ganhou!! Você recebeu #
+Parabéns! Você ganhou!! Você recebeu # 
 !#
 Parabéns! Você ganhou!! Você recebeu #
  de EXP base!#
@@ -299,7 +299,7 @@ Você só pode trocar 10 tipos de itens de cada vez.#
 Você é menor de idade.#
 Digite seu endereço de e-mail.#
 Digite seu endereço de e-mail.#
-Não foi possível deletar o personagem porque você digitou um e-mail errado.#
+Confirmação por e-mail indisponível, deixe o campo de e-mail em branco e tente novamente.#
 Digite a segunda série de números de seguridade social.#
 Não foi possível deletar o personagem porque você digitou um SSN incorreto.#
 Você não pode vender mais de 15 tipos de itens de uma só vez.#
@@ -1249,7 +1249,7 @@ Informações do item não estão corretas. A compra foi cancelada.#
  A taxa de Crítico voltou ao normal.#
  EXP ganha de monstros foi aumentada em 1.5 vezes durante 30 minutos.#
  Seu personagem não sofrerá a penalidade na Experiência por ser nocauteado uma vez durante 30 minutos.#
- O Drop normal de monstros foi aumentado em 2 vezes durante 30 minutos.#
+ O Drop normal de monstros foi aumentado em 2 vezes durante 15 minutos.#
  As informações de monstros tipo 'Chefe' do mapa estarão disponíveis por 10 minutos.#
  Você deseja comprar ? %d ROPs serão utilizados.#
  Você não possui ROPs suficientes.#
@@ -2172,8 +2172,8 @@ Select at least 2 items of the same kind.#
 Unificação dos itens realizada com sucesso.#
 Você deve unificar somente 1 tipo de item por vez.#
 The amount of the item is over 30000 pieces.#
-Turn on left#
-Turn on right#
+Virar pra Esquerda#
+Virar pra Direita#
 See previous server info of (%s)#
 Previous server info#
 ^ff0000Previous server : ^0000ff#
@@ -2733,7 +2733,7 @@ Server access denied(A)#
 Server access denied(B)#
 You should disarm the equipped arrows/bullets.#
 Você realizou uma ação com um item no inventário. A janela do Rodex foi fechada.#
-You don't have Magnifier.#
+Você não tem uma Lupa.#
 Para dropar itens, por favor feche a janela do Rodex.#
 The opponent has already requested you to be a friend.#
 SCRIPT ERROR AID#
@@ -2795,7 +2795,7 @@ Auction X#
 Guild storage X#
 To sell item to NPC X#
 There is a restriction on movement#
-Please create a character.#
+Por favor, crie seu personagem.#
 You need to disarm the equipped projectiles.#
 You cannot enter the memorial dungeon due to excessive number of people.#
 Memorial dungeon enterance failed due to excessive number of people.#
@@ -2836,7 +2836,7 @@ This hairstyle cannot be dyed.#
 Press an arrow to choose the style you want.#
 Come and see the new styles.\n(? Purchased accessories will be sent via RODEX.)#
 Basic style#
-You can level up the skill from the base Lv. %d.#
+Habilidade disponível somente a partir do nível base %d.#
 You cannot use the special character as a name.#
 Not enough MHP to use the skill.#
 Not enough MSP to use the skill.#
@@ -2851,7 +2851,7 @@ Atualizar#
 %dMinuto(s)#
 %dHora(s)#
 %dDia(s)#
-Return#
+Expirada#
 Deletar e-mails selecionados?#
 Exibir NPC#
 Zoom In#
@@ -2976,9 +2976,9 @@ Moving to destination.#
 #
 #
 #
-#
-#
-#
+Função de chamado (ligada)#
+Função de chamado (desligada)#
+Exibir mensagem de chamado#
 #
 #
 #
@@ -3014,12 +3014,12 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
-#
-#
-#
-#
-#
-#
+Humano#
+Espadachim, Mago, Mercador, Noviço, Gatuno, Arqueiro#
+Doram#
+Invocador#
+A raça com maior presença em Rune-Midgard. São muito talentosos e adaptáveis.#
+Os Doram são seres curiosos por natureza e possuem uma personalidade radiante.#
 #
 #
 #
@@ -3102,7 +3102,7 @@ Palavrões não são permitidos.\nTente novamente.#
 #
 #
 #
-#
+Deletar Data %d/%d#
 #
 Todas#
 A completar#
@@ -3313,7 +3313,7 @@ Remetente#
 #
 #
 #
-Usuário não encontrado#
+Usuário não encontrado#   
 Conta bloqueada#
 #
 Senha ou usuário incorreto#
@@ -3336,11 +3336,24 @@ Sistema indisponível#
 #
 #
 #
+Futuras Informações#
+Deletar#
+Cancelar#
+Iniciar#
+Deletar#
+Seleção de Personagem#
+Aviso#
+Criar#
+Tipo de Penteado#
+Cor do Cabelo#
 #
+%d:%d:%d#
 #
+Voltar#
 #
 #
 #
+Criar Personagem#
 #
 #
 #
@@ -3436,23 +3449,10 @@ Sistema indisponível#
 #
 #
 #
+Exibir Invocações#
+Não exibir Invocações#
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Senha#
 #
 #
 #
@@ -3546,7 +3546,7 @@ Enviar#
 Conferir#
 Notícias#
 Entrada#
-Expirados#
+Vencidos#
 Buscar#
 #
 #
@@ -3573,4 +3573,51 @@ Buscar#
 #
 Capturar Monstro#
 Mensagem#
-Título#
+Título# ( Base 100%% + Premium %.1f%%+ %sServer %.1f%% )#
+Chinese character#
+Shortcut Settings#
+Your subscription will be ended on%s.#
+Cannot find the replay file.#
+Shoes#
+Head#
+Armor#
+Shoulders#
+Accessory#
+Costume#
+Sort Order#
+Normal Gear#
+Special Gear#
+Style#
+/quake : Screen Shaking Effect On/Off#
+/aura2 : You can completely turn off the aurora On/Off#
+Default Settings#
+Advanced Settings#
+The Default Settings will be applied. #
+The Default Settings will be applied. Do you agree?#
+The settings will be applied. Do you agree?#
+Need to restart to apply the settings. Do you agree?#
+Fog#
+Simplified aurora#
+Turn on aurora#
+Show Effect#
+Show Shadows#
+Esta janela não pode ser fechada agora.#
+Select Hardware T&L Acceleration Function#
+Select Game Resolution#
+Use full screen#
+Fix mouse#
+Effect Settings#
+Control Settings#
+Graphic Device Settings#
+Graphic Resolution Settings#
+Full Screen Settings#
+Fix mouse Settings#
+Commission : #
+Total commission amount : #
+Select receiver#
+Select receiving group#
+Change size(F10)#
+Loading the mailbox.\n^c92114Delete^000000unnecessary emails!!#
+NOW LOADING..#
+Title#
+Sender#

@@ -152,6 +152,9 @@ sub iterate {
 
 	Benchmark::begin("AI (part 3.2)") if DEBUG;
 	processLockMap();
+	processRescueSlave();
+	processRandomWalk_stopDuringSlaveAttack();
+	processMoveNearSlave();
 	processRandomWalk();
 	processFollow();
 	Benchmark::end("AI (part 3.2)") if DEBUG;
@@ -1163,6 +1166,7 @@ sub processAutoMakeArrow {
 
 ##### AUTO STORAGE #####
 sub processAutoStorage {
+	return if( $shopstarted || $buyershopstarted );
 	# storageAuto - chobit aska 20030128
 	if (AI::is("", "route", "sitAuto", "follow")
 		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
@@ -1229,6 +1233,12 @@ sub processAutoStorage {
 				} else {
 					if ($char->storage->wasOpenedThisSession() && 
 						!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
+						debug TF("storage: %s out of stock\n\n", $config{"getAuto_$i"});
+						Plugins::callHook("AI_storage_item_out_of_stock",  {
+								name => $config{"getAuto_$i"},
+								getAutoIndex => $i,
+							}
+						);
 					} else {
 							my $sti = $config{"getAuto_$i"};
 							if ($needitem eq "") {
@@ -1414,11 +1424,14 @@ sub processAutoStorage {
 				$args->{done} = 1;
 				
 				# if storage is full disconnect if it says so in conf
-				if($char->storage->wasOpenedThisSession() && $char->storage->isFull() && $config{'dcOnStorageFull'}) {
-					$messageSender->sendQuit();
-					error T("Auto disconnecting on StorageFull!\n");
-					chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
-					quit();
+				if($char->storage->wasOpenedThisSession() && $char->storage->isFull()) {
+					Plugins::callHook("AI_storage_full", \%pluginArgs);
+					if($config{'dcOnStorageFull'}) {
+						$messageSender->sendQuit();
+						error T("Auto disconnecting on StorageFull!\n");
+						chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
+						quit();
+					}
 				}
 
 				# inventory to storage
@@ -1434,6 +1447,13 @@ sub processAutoStorage {
 						$args->{lastAmount} == $item->{amount}
 					) {
 						error TF("Unable to store %s.\n", $item->{name});
+						
+						if($char->storage->getByName($item->{name})) {		
+							Plugins::callHook("AI_storage_item_full", {
+									item => $item,
+								}
+							);
+						}
 						next;
 					}
 
@@ -1574,6 +1594,11 @@ sub processAutoStorage {
 
 					if ($item{storage}{amount} < $item{amount_needed}) {
 						warning TF("storage: %s out of stock\n", $item{name});
+						Plugins::callHook("AI_storage_item_out_of_stock",  {
+								name => $config{"getAuto_$args->{index}"},
+								getAutoIndex => $args->{index},
+							}
+						);
 						if ($item{dcOnEmpty}) {
 							debug TF("Disconnecting on empty %s!\n", $item{name});
 							$char->{dcOnEmptyItems} .= "," if ($char->{dcOnEmptyItems} ne "");
@@ -1623,6 +1648,7 @@ sub processAutoStorage {
 
 #####AUTO SELL#####
 sub processAutoSell {
+	return if( $shopstarted || $buyershopstarted );
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "sitAuto" || AI::action eq "follow")
 		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
 			|| ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'})
@@ -1801,6 +1827,7 @@ sub processAutoSell {
 
 #####AUTO BUY#####
 sub processAutoBuy {
+	return if( $shopstarted || $buyershopstarted );
 	my $needitem;
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && $char->inventory->isReady()) {
 		undef $ai_v{'temp'}{'found'};
@@ -2011,8 +2038,12 @@ sub processAutoBuy {
 			# load the real npc location just in case we used standpoint
 			my $realpos = {};
 			getNPCInfo($config{"buyAuto_".$args->{lastIndex}."_npc"}, $realpos);
-
-			ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
+			
+			if ( $config{"buyAuto_".$args->{lastIndex}."_isMarket"} ) {
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, undef);
+			} else {
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
+			}
 			
 			$args->{'sentNpcTalk'} = 1;
 			$args->{'sentNpcTalk_time'} = time;
@@ -2059,7 +2090,12 @@ sub processAutoBuy {
 			$needbuy -= $inv_amount;
 			
 			my $buy_amount = ($maxbuy > $needbuy) ? $needbuy : $maxbuy;
-			
+
+			# support to market
+			if ($item->{amount} && $item->{amount} < $buy_amount) {
+				$buy_amount = $item->{amount};
+			}
+
 			my $batchSize = $config{"buyAuto_".$args->{lastIndex}."_batchSize"};
 			
 			if ($batchSize && $batchSize < $buy_amount) {
@@ -2194,6 +2230,50 @@ sub processLockMap {
 					ai_route($config{'lockMap'}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
 				}
 			}
+		}
+	}
+}
+
+sub processRescueSlave {
+	if (
+		(AI::isIdle || (AI::is('route') && AI::args()->{isRandomWalk}))
+		&& $char->{slaves}
+	) {
+		my $slave = AI::SlaveManager::mustRescue();
+		if (defined $slave) {
+			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
+			ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1, isSlaveRescue => 1);
+			warning TF("%s got lost during randomWalk (distance: %d) - Rescuing it.\n", $slave, $slave->blockDistance_master), 'slave';
+			return;
+		}
+	}
+}
+
+# route_randomWalk_stopDuringSlaveAttack
+sub processRandomWalk_stopDuringSlaveAttack {
+	if (AI::is('route') && AI::args()->{isRandomWalk}
+		&& $char->{slaves}
+		&& !AI::SlaveManager::isIdle()
+	){
+		my $slave = AI::SlaveManager::mustStopForAttack();
+		if (defined $slave) {
+			message TF("%s started attacking during randomWalk - Stoping movement for it.\n", $slave), 'slave';
+			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
+		}
+	}
+}
+
+sub processMoveNearSlave {
+	if (
+		AI::isIdle
+		&& $char->{slaves}
+		&& !AI::SlaveManager::isIdle()
+	) {
+	
+		my $slave = AI::SlaveManager::mustMoveNear();
+		if (defined $slave) {
+			ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'moveNearWhenIdle_minDistance'} || 4), attackOnRoute => 1, noSitAuto => 1, isMoveNearSlave => 1);
+			message TF("%s moved too far - Moving near it.\n", $slave), 'slave';
 		}
 	}
 }
@@ -3179,9 +3259,11 @@ sub processItemsGather {
 
 ##### AUTO-TELEPORT #####
 sub processAutoTeleport {
+	return if(AI::inQueue("teleport", "NPC"));
+
 	my $safe = 0;
 
-	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
+	if (!$field->isCity && !AI::inQueue("storageAuto", "buyAuto", "skill_use") && $config{teleportAuto_allPlayers}
 	    && ($config{'lockMap'} eq "" || $field->baseName eq $config{'lockMap'})
 	 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 
