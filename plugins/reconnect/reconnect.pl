@@ -53,7 +53,9 @@ sub connected {
 
 # Return the current timeout if there is one.
 sub timeout {
-	my @timeouts = split /\s*,\s*/, $timeout{reconnect_backoff}->{timeout} || '';
+	# After repeated disconnects, wait longer before reconnecting, to reduce load on the server.
+	# The first value in this list overrides the "reconnect" timeout above.
+	my @timeouts = (30,60,120,180,300,600,600,900,900,1800);
 	return $timeout{reconnect}->{timeout} if !@timeouts;
 	$timeouts[ min( $counter, $#timeouts ) ] + int rand( $timeout{reconnect_random}->{timeout} || 0 );
 }
