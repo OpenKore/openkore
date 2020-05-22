@@ -779,10 +779,20 @@ sub processAutoAttack {
 				
 				next if (blockDistance($master_pos, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
-				# List monsters that party members are attacking
-				if ($config{$slave->{configPrefix}.'attackAuto_party'} && $attackOnRoute
-				 && ($monster->{dmgFromYou} || $monster->{dmgFromParty} || $monster->{dmgToYou} || $monster->{dmgToParty} || $monster->{missedYou} || $monster->{missedToParty})
-				 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
+				# List monsters that master and other slaves are attacking
+				if (
+					$config{$slave->{configPrefix}.'attackAuto_party'} &&
+					$attackOnRoute &&
+					(
+						$monster->{dmgFromYou} ||
+						$monster->{dmgToYou} ||
+						$monster->{missedYou} ||
+						scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}}) > 0 ||
+						scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}}) > 0 ||
+						scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}}) > 0
+					) &&
+					timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
+				) {
 					push @partyMonsters, $_;
 					next;
 				}
