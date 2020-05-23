@@ -19,12 +19,15 @@ use base qw(Network::Send::ServerType0);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+
+	my %packets = (
+		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 	
 	my %handlers = qw(
-		master_login 0A76
-		game_login 0275
-		char_create 0067
-		send_equip 0998
+		actor_action 0437
 		skill_use 0438
 		character_move 035F
 		sync 0360
@@ -36,10 +39,24 @@ sub new {
 		skill_use_location 0366
 		actor_info_request 0368
 		actor_name_request 0369
-		party_setting 07D7
-		buy_bulk_vender 0801
+		buy_bulk_buyer 0819
+		buy_bulk_request 0817
+		buy_bulk_closeShop 0815
+		buy_bulk_openShop 0811
+		item_list_window_selected 07E4
+		map_login 0436
+		party_join_request_by_name 02C4
+		friend_request 0202
+		homunculus_command 022D
 		storage_password 023B
+		buy_bulk_vender 0801
+		party_setting 07D7
+		send_equip 0998
+		master_login 0A76
+		game_login 0275
+		char_create 0067
 	);
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	
 	return $self;

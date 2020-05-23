@@ -117,6 +117,7 @@ our @EXPORT = (
 	chatLog_clear
 	checkAllowedMap
 	checkFollowMode
+	isMySlaveID
 	checkMonsterCleanness
 	slave_checkMonsterCleanness
 	createCharacter
@@ -1587,6 +1588,15 @@ sub checkFollowMode {
 	return 0;
 }
 
+sub isMySlaveID {
+	my ($ID, $exclude) = @_;
+	return 0 unless ($char);
+	return 0 unless ($char->{slaves});
+	return 0 if (defined $exclude && $ID eq $exclude);
+	return 0 unless (exists $char->{slaves}{$ID});
+	return 1;
+}
+
 ##
 # boolean checkMonsterCleanness(Bytes ID)
 # ID: the monster's ID.
@@ -1645,17 +1655,18 @@ sub checkMonsterCleanness {
 	my $allowed = 1; 
 	if (scalar(keys %{$monster->{castOnByPlayer}}) > 0) 
 	{ 
-		foreach (keys %{$monster->{castOnByPlayer}}) 
-		{ 
-			my $ID1=$_; 
-			my $source = Actor::get($_); 
-			unless ( existsInList($config{tankersList}, $source->{name}) || 
-				($char->{party}{joined} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) 
-			{ 
+		foreach my $ID1 (keys %{$monster->{castOnByPlayer}}) 
+		{
+			my $source = Actor::get($ID1); 
+			unless (
+				existsInList($config{tankersList}, $source->{name}) ||
+				isMySlaveID($ID1) ||
+				($char->{party}{joined} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})
+			) {
 				$allowed = 0; 
 				last; 
-			} 
-		} 
+			}
+		}
 	} 
 
 	# If monster hasn't been attacked by other players
@@ -1696,11 +1707,22 @@ sub slave_checkMonsterCleanness {
 	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
 	my $monster = $monstersList->getByID($ID);
 
-	# If party attacked monster, or if monster attacked/missed party
-	# Since openKore considers the slave as a member of the player party this won't work for now
-	#if ($config{$slave->{configPrefix}.'attackAuto_party'} && ($monster->{dmgFromParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0)) {
-	#	return 1;
-	#}
+	# Since openKore considers the slave as a member of the player party we check for attacks against/made by master and/or other slaves
+	if (
+		$config{$slave->{configPrefix}.'attackAuto_party'} &&
+		(
+			$monster->{dmgFromYou} ||
+			$monster->{missedFromYou} ||
+			$monster->{dmgToYou} ||
+			$monster->{missedYou} ||
+			scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedFromPlayer}}) > 0 ||
+			scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}}) > 0 ||
+			scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}}) > 0 ||
+			scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}}) > 0
+		)
+	) {
+		return 1;
+	}
 
 	if ($config{aggressiveAntiKS}) {
 		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
@@ -1730,18 +1752,19 @@ sub slave_checkMonsterCleanness {
 	my $allowed = 1; 
 	if (scalar(keys %{$monster->{castOnByPlayer}}) > 0) 
 	{ 
-		foreach (keys %{$monster->{castOnByPlayer}}) 
-		{ 
-			my $ID1=$_; 
-			my $source = Actor::get($_); 
-			unless ( existsInList($config{tankersList}, $source->{name}) || 
-				($char->{party}{joined} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})) 
-			{ 
+		foreach my $ID1 (keys %{$monster->{castOnByPlayer}}) 
+		{
+			my $source = Actor::get($ID1); 
+			unless (
+				existsInList($config{tankersList}, $source->{name}) ||
+				isMySlaveID($ID1, $slave->{ID}) ||
+				($char->{party}{joined} && $char->{party}{users}{$ID1} && %{$char->{party}{users}{$ID1}})
+			) {
 				$allowed = 0; 
 				last; 
-			} 
-		} 
-	} 
+			}
+		}
+	}
 
 	# If monster hasn't been attacked by other players
 	if (
