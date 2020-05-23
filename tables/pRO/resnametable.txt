@@ -1,4 +1,4 @@
-﻿//심연
+//심연
 
 gld_dun01_2.gnd#gld_dun01.gnd#
 gld_dun01_2.gat#gld_dun01.gat#

@@ -3946,7 +3946,7 @@ without any Gemstone requirement.^000000
 BD_SIEGFRIED#
 Acoustic Rhythm
 MAX Lv : 5
-^777777Skill Requirement : Magic Strings 10^000000
+^777777Skill Requirement : Magic Strings 10 or Lady Luck 10^000000
 Skill Form: ^000099Ensemble Skill^000000
 Range: ^7777779 cells
 around the caster^000000

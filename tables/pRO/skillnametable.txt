@@ -479,7 +479,7 @@ MB_M_TELEPORT#Pet Teleport#
 MB_B_GAIN#Bongun Gain#
 MB_M_GAIN#Munak Gain#
 MB_MISSION#Mission Timing#
-MB_MUNAKKNOWLEDGE#Å×ÀÌ¹Ö ¸¶½ºÅÍ#
+MB_MUNAKKNOWLEDGE#테이밍 마스터#
 MB_MUNAKBALL#Munak Ball#
 MB_SCROLL#Pet Scroll#
 MB_B_GATHERING#Bongun Gathering#
@@ -891,9 +891,9 @@ RETURN_TO_ELDICASTES#To El Dicastes#
 ALL_BUYING_STORE#Open Buying Store#
 ALL_GUARDIAN_RECALL#Call of Guardian#
 ALL_ODINS_POWER#Power of Odin#
-ALL_RAY_OF_PROTECTION#¼öÈ£ÀÇ ºû #
+ALL_RAY_OF_PROTECTION#수호의 빛 #
 MC_CARTDECORATE#Cart Decoration#
-GM_ITEM_ATKMAX#¹°¸® ¾ÆÀÌÅÛ °ø°Ý·Â ÃÖ´ë#
+GM_ITEM_ATKMAX#물리 아이템 공격력 최대#
 GM_ITEM_ATKMIN#Max Physical item attack rate#
 GM_ITEM_MATKMAX#Minimize Physical item attack rate#
 GM_ITEM_MATKMIN#Minimize Magic item attack rate#
@@ -949,7 +949,7 @@ ECL_SNOWFLIP#Snow Flip#
 ECL_PEONYMAMY#Peony Mommy#
 ECL_SADAGUI#Slapping Herb#
 ECL_SEQUOIADUST#Yggdrasil Dust#
-ECLAGE_RECALL#¿¡Å¬¶óÁê ±ÍÈ¯#
+ECLAGE_RECALL#에클라쥬 귀환#
 GC_DARKCROW#Dark Claw#
 RA_UNLIMIT#No Limits#
 GN_ILLUSIONDOPING#Hallucination Drug#

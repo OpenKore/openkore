@@ -1224,7 +1224,7 @@ There is no party member to summon in the current map.#
 You cannot find any trace of a Boss Monster in this area.#
 Boss Monster, '%s' will appear in %02d hour(s) and %02d minute(s).#
 The location of Boss Monster, '%s', will be displayed on your Mini-Map.#
-Do you want to open '%s'? Once opened, the contents cannot be placed back inside. The item effect isn't doubled, even if the same items are used more than once.#
+Do you want to open '%s'? Once opened, the contents cannot be placed back inside. The item effect isn't stacked, even if the same items are used more than once.#
 The Purchase has failed because the NPC does not exist.#
 The Purchase has failed because the Kafra Shop System is not working correctly.#
 You cannot purchase items while you are in a trade.#
@@ -2810,7 +2810,7 @@ Send mail#
 E X P: %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
 DROP : %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
 DEATH: %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
-You cannot use the tag as a name.#
+You cannot use it as a name.#
 Styling shop#
 No coupons. Purchase items in Cash Shop#
 Please open the item coupon box in the inventory.#
@@ -3040,8 +3040,10 @@ no msg#
 no msg#
 no msg#
 no msg#
+The message contains prohibited contents#
 no msg#
 no msg#
+Close#
 no msg#
 no msg#
 no msg#
@@ -3064,13 +3066,30 @@ no msg#
 no msg#
 no msg#
 no msg#
+HP#
+SP#
 no msg#
 no msg#
 no msg#
+All On#
 no msg#
 no msg#
 no msg#
+Basicinfo#
+Equip#
+Item#
+Skill#
+Guild#
+Party#
+Chatting#
+Shortcut#
+Status#
+ALL#
+User Defined File Name#
+Repeated File Check#
 no msg#
+<Basic Skin>#
+Select Skin#
 no msg#
 no msg#
 no msg#
@@ -3113,29 +3132,10 @@ no msg#
 no msg#
 no msg#
 no msg#
+Guild#
 no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
+Rodex#
+Cash Shop#
 no msg#
 no msg#
 no msg#
@@ -3276,3 +3276,228 @@ no msg#
 no msg#
 no msg#
 File abusing detected. Please restart the client with clean files.#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Check-In Reward#
+Check-In System#
+You have received the reward.#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+THE DAILY CHECK-IN REWARD#
+Event Period : %02d. %02d. ~ %02d. %02d. 24:00#
+%d Day#
+Click to claim your %d Day for Check-In Reward!#
+Remaining %d Day for The Daily Check-In will be complete!#
+Ends In#
+Days#
+Failed to sign in. Please try again.#
+Daily Sign In#
+The event is not active currently.#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
