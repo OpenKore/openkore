@@ -326,7 +326,7 @@ sub closestWalkableSpot {
 	my @current_distance = (1..$max_distance);
 	
 	foreach my $distance (@current_distance) {
-		my @blocks = calcRectArea($center{x}, $center{y}, $distance, $self);
+		my @blocks = Misc::calcRectArea($center{x}, $center{y}, $distance, $self);
 		foreach my $block (@blocks) {
 			next if (!$self->isWalkable($block->{x}, $block->{y}));
 			return $block;
