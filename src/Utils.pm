@@ -29,7 +29,6 @@ use Exporter;
 use base qw(Exporter);
 use Config;
 use FastUtils;
-use Utils::PathFinding;
 
 use Globals qw($masterServer);
 use Utils::DataStructures (':all', '!/^binFind$/');
