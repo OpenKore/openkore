@@ -29,6 +29,7 @@ use Exporter;
 use base qw(Exporter);
 use Config;
 use FastUtils;
+use Utils::PathFinding;
 
 use Globals qw($masterServer);
 use Utils::DataStructures (':all', '!/^binFind$/');
@@ -38,9 +39,9 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(calcPosFromTime calcPosition calcStepsWalkedFromTimeAndRoute calcTimeFromRoute calcTime checkMovementDirection countSteps distance
+	qw(calcPosFromTime calcPosition fieldAreaCorrectEdges getSquareEdgesFromCoord calcStepsWalkedFromTimeAndRoute calcTimeFromRoute calcTime checkMovementDirection countSteps distance
 	intToSignedInt intToSignedShort
-	blockDistance adjustedBlockDistance getVector moveAlong moveAlongVector
+	blockDistance specifiedBlockDistance adjustedBlockDistance getVector moveAlong moveAlongVector
 	normalize vectorToDegree max min round ceil),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
@@ -207,6 +208,36 @@ sub calcPosition {
 		$result{y} = int sprintf("%.0f", $result{y}) if (!$float);
 		return \%result;
 	}
+}
+
+sub fieldAreaCorrectEdges {
+    my ($field, $x1, $y1, $x2, $y2) = @_;
+	
+	if ($x1 < 0) {
+		$x1 = 0;
+	}
+	
+	if ($y1 < 0) {
+		$y1 = 0;
+	}
+	
+	if ($x2 >= $field->width) {
+		$x2 = $field->width-1;
+	}
+	
+	if ($y2 >= $field->height) {
+		$y2 = $field->height-1;
+	}
+	
+	return ($x1, $y1, $x2, $y2);
+}
+
+sub getSquareEdgesFromCoord {
+    my ($field, $start, $dist_from_center) = @_;
+	
+	my ($min_x, $min_y, $max_x, $max_y) = fieldAreaCorrectEdges($field, ($start->{x} - $dist_from_center), ($start->{y} - $dist_from_center), ($start->{x} + $dist_from_center), ($start->{y} + $dist_from_center));
+	
+	return ($min_x, $min_y, $max_x, $max_y);
 }
 
 ##
@@ -445,6 +476,24 @@ sub blockDistance {
 
 	return max(abs($pos1->{x} - $pos2->{x}),
 	           abs($pos1->{y} - $pos2->{y}));
+}
+
+##
+# specifiedBlockDistance(pos1, pos2)
+# pos1, pos2: references to position hash tables.
+# Returns: array containing [diagonal block dist, ortogonal block dist]
+sub specifiedBlockDistance {
+	my ($pos1, $pos2) = @_;
+
+	my $xDistance = abs($pos1->{x} - $pos2->{x});
+	my $yDistance = abs($pos1->{y} - $pos2->{y});
+	
+	my $max = max($xDistance, $yDistance);
+	my $min = min($xDistance, $yDistance);
+	
+	my $orto = $max - $min;
+	
+	return ($min, $orto);
 }
 
 ##

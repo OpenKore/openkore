@@ -137,6 +137,7 @@ our @EXPORT = (
 	look
 	lookAtPosition
 	manualMove
+	canReachMeeleAttack
 	meetingPosition
 	objectAdded
 	objectRemoved
@@ -2494,6 +2495,18 @@ sub manualMove {
 	main::ai_route($field->baseName, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
+sub canReachMeeleAttack {
+	my ($actor_pos, $target_pos) = @_;
+	
+	my ($diag, $orto) = Utils::specifiedBlockDistance($actor_pos, $target_pos);
+	
+	if (($diag == 0 && $orto <= 2) || ($diag <= 1 && $orto == 0)) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 ##
 # meetingPosition(actor, target_actor, attackMaxDistance)
 # actor: current object.
@@ -2898,7 +2911,7 @@ sub setPartySkillTimer {
 sub isCellOccupied {
 	my ($pos) = @_;
 	foreach my $actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
-		return 1 if ($actor->{pos}{x} == $pos->{x} && $actor->{pos}{y} == $pos->{y});
+		return 1 if ($actor->{pos_to}{x} == $pos->{x} && $actor->{pos_to}{y} == $pos->{y});
 	}
 	return 0;
 }
@@ -3129,6 +3142,14 @@ sub updateDamageTables {
 				debug "Incremented missedFromYou count to $monster->{missedFromYou}\n", "attackMonMiss";
 				$monster->{atkMiss}++;
 			} else {
+				if ($config{attackUpdateMonsterPos} && ($monster->{pos}{x} != $monster->{pos_to}{x} || $monster->{pos}{y} != $monster->{pos_to}{y})) {
+					my $new_monster_pos = calcPosition($monster);
+					$monster->{pos} = $new_monster_pos;
+					$monster->{pos_to} = $new_monster_pos;
+					$monster->{time_move} = time;
+					$monster->{time_move_calc} = 0;
+					debug "Target monster $monster got hit by us during its movement, updating its position to $monster->{pos}{x} $monster->{pos}{y}.\n";
+				}
 				$monster->{atkMiss} = 0;
 			}
 			if ($config{teleportAuto_atkMiss} && $monster->{atkMiss} >= $config{teleportAuto_atkMiss}) {

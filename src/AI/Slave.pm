@@ -505,26 +505,7 @@ sub processAttack {
 				$target_moving = 1;
 			}
 		
-			my $min_pathfinding_x = ($realMonsterPos->{x} - $max_pathfinding_dist);
-			my $max_pathfinding_x = ($realMonsterPos->{x} + $max_pathfinding_dist);
-			my $min_pathfinding_y = ($realMonsterPos->{y} - $max_pathfinding_dist);
-			my $max_pathfinding_y = ($realMonsterPos->{y} + $max_pathfinding_dist);
-		
-			if ($min_pathfinding_x < 0) {
-				$min_pathfinding_x = 0;
-			}
-			
-			if ($min_pathfinding_y < 0) {
-				$min_pathfinding_y = 0;
-			}
-			
-			if ($max_pathfinding_x >= $field->width) {
-				$max_pathfinding_x = $field->width-1;
-			}
-			
-			if ($max_pathfinding_y >= $field->height) {
-				$max_pathfinding_y = $field->height-1;
-			}
+			my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $realMonsterPos, $max_pathfinding_dist);
 		
 			unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
 				$realMyPos = $field->closestWalkableSpot($realMyPos, 1);

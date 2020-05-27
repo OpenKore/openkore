@@ -84,6 +84,8 @@ attackChangeTarget 1
 attackChangeTargetDuringLOSRoute 0
 aggressiveAntiKS 0
 
+attackUpdateMonsterPos 1
+
 autoMoveOnDeath 0
 autoMoveOnDeath_x
 autoMoveOnDeath_y
