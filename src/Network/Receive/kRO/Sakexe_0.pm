@@ -888,8 +888,8 @@ sub parse_items {
 	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
-
-		if ( $args->{switch} eq '0B09' && $item->{type} == 10 ) { # workaround arrow byte bug
+    
+		if ( $args->{switch} eq '0B09' && $masterServer->{serverType} ne 'iRO_Renewal' && existsInList("10, 16, 17, 19", $item->{type}) ) { # workaround arrow/ammunition byte bug
 			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
 		}
 
@@ -1012,85 +1012,31 @@ sub guild_chat {
 	});
 }
 
-# TODO: test extracted unpack string
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my ($psize);
-	my $msg = $args->{RAW_MSG};
 
-	my $unpack = items_nonstackable($self, $args);
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_inventory',
+		debug_str => 'Non-Stackable Inventory Item',
+		items => [$self->parse_items_nonstackable($args)],
+		getter => sub { $char->inventory->getByID($_[0]{ID}) },
+		adder => sub { $char->inventory->add($_[0]) },
+		callback => sub {
+			my ($local_item) = @_;
 
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item, $add);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
-
-		unless($local_item = $char->inventory->getByID($item->{ID})) {
-			$local_item = new Actor::Item();
-			$add = 1;
-		}
-
-		foreach (@{$unpack->{keys}}) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{name} = itemName($local_item);
-		$local_item->{amount} = 1;
-
-		if ($local_item->{equipped}) {
-			foreach (%equipSlot_rlut){
-				if ($_ & $local_item->{equipped}){
-					next if $_ == 10; #work around Arrow bug
-					$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
+			if ($local_item->{equipped}) {
+				foreach (%equipSlot_rlut){
+					if ($_ & $local_item->{equipped}){
+						next if $_ == 10; #work around Arrow bug
+						next if $_ == 32768;
+						$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
+					}
 				}
 			}
 		}
-
-		$char->inventory->add($local_item) if ($add);
-
-		debug "Inventory: $local_item->{name} ($local_item->{binID}) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}} - $equipTypes_lut{$local_item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $local_item->{binID}});
-
-=pod
-		my $index = unpack("v1", substr($msg, $i, 2));
-		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		my $item = $char->inventory->getByID($index);
-		my $add;
-		if (!$item) {
-			$item = new Actor::Item();
-			$add = 1;
-		}
-		$item->{ID} = $index;
-		$item->{nameID} = $ID;
-		$item->{amount} = 1;
-		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
-		$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
-		$item->{type_equip} = unpack("v1", substr($msg, $i + 6, 2));
-		$item->{equipped} = unpack("v1", substr($msg, $i + 8, 2));
-		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{cards} = ($psize == 24) ? unpack("a12", substr($msg, $i + 12, 12)) : unpack("a8", substr($msg, $i + 12, 8));
-		if ($psize == 26) {
-			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
-			$item->{expire} = $expire if (defined $expire);
-			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
-		}
-		$item->{name} = itemName($item);
-		if ($item->{equipped}) {
-			foreach (%equipSlot_rlut){
-				if ($_ & $item->{equipped}){
-					next if $_ == 10; #work around Arrow bug
-					$char->{equipment}{$equipSlot_lut{$_}} = $item;
-				}
-			}
-		}
-
-		$char->inventory->add($item) if ($add);
-
-		debug "Inventory: $item->{name} ($item->{binID}) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $item->{binID}});
-=cut
-	}
+	});
 }
 
 sub item_skill {
