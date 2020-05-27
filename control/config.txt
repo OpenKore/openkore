@@ -81,6 +81,7 @@ attackAdjustLOSMaxRouteDistance 10
 attackAdjustLOSMaxRouteTargetDistance 13
 attackLooters 0
 attackChangeTarget 1
+attackChangeTargetDuringLOSRoute 0
 aggressiveAntiKS 0
 
 autoMoveOnDeath 0

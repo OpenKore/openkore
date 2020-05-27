@@ -3034,7 +3034,7 @@ sub processAutoAttack {
 			}
 
 			my $LOSSubRoute = 0;
-			if ($config{attackCheckLOS} && AI::args(0)->{LOSSubRoute}) {
+			if ($config{attackCheckLOS} && $config{attackChangeTargetDuringLOSRoute} && AI::args(0)->{LOSSubRoute}) {
 				$LOSSubRoute = 1;
 			}
 
