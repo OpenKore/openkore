@@ -299,32 +299,42 @@ sub processAttack {
 		undef $slave->args->{avoiding};
 
 	} elsif ((($slave->action eq "route" && $slave->action (1) eq "attack") || ($slave->action eq "move" && $slave->action (2) eq "attack"))
-	   && $slave->args->{attackID} && timeOut($slave->{slave_attack_route_adjust}, 1)) {
+	   && $slave->args->{attackID} && timeOut($timeout{$slave->{ai_route_adjust_timeout}})) {
 		# We're on route to the monster; check whether the monster has moved
 		my $ID = $slave->args->{attackID};
 		my $attackSeq = ($slave->action eq "route") ? $slave->args (1) : $slave->args (2);
+		my $routeSeqindex = $slave->findAction("route");
+		my $routeArgs = $slave->args($routeSeqindex) if (defined $routeSeqindex);
 		my $target = Actor::get($ID);
 
-		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && blockDistance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
+		if (
+			$target->{type} ne 'Unknown' &&
+			$attackSeq->{monsterPos} &&
+			%{$attackSeq->{monsterPos}} &&
+			$attackSeq->{monsterLastMoveTime} &&
+			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
+		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
+			debug "$slave target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
 			$slave->dequeue;
 			$slave->dequeue if $slave->action eq "route";
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "$slave target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
-		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && blockDistance(calcPosition($target), calcPosition($slave)) <= $attackSeq->{attackMethod}{maxDistance}) {
-			# Monster is within attack range; stop moving
+		} elsif (
+			$target->{type} ne 'Unknown' &&
+			$attackSeq->{monsterPos} &&
+			%{$attackSeq->{monsterPos}} &&
+			$attackSeq->{monsterLastMoveTime} &&
+			($attackSeq->{attackMethod}{distance} == 1 && canReachMeeleAttack(calcPosition($slave), calcPosition($target)))
+		) {
+			debug "$slave target $target is now reachable by meele attacks during routing to it.\n", "ai_attack";
 			$slave->dequeue;
 			$slave->dequeue if $slave->action eq "route";
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "$slave target $target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
-				"$attackSeq->{attackMethod}{maxDistance} blocks; stop moving\n", "ai_attack";
 		}
-		$slave->{slave_attack_route_adjust} = time;
+		$timeout{$slave->{ai_route_adjust_timeout}}{time} = time;
 	}
 
 	if ($slave->action eq "attack" &&
@@ -470,7 +480,8 @@ sub processAttack {
 
 		} elsif (
 			# We are a ranged attacker without LOS
-			$config{$slave->{configPrefix}.'attackCheckLOS'} && $args->{attackMethod}{distance} > 2 && !$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
+			$config{$slave->{configPrefix}.'attackCheckLOS'} && $args->{attackMethod}{distance} >= 2 &&
+			(!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}) || $realMonsterDist > $args->{attackMethod}{maxDistance})
 		) {
 			my $attackAdjustLOSMaxRouteTargetDistance = $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteTargetDistance'};
 			my $runFromTarget = $config{$slave->{configPrefix}.'runFromTarget'};
@@ -585,15 +596,20 @@ sub processAttack {
 				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave';
 			}
 
-		} elsif ($realMonsterDist > $args->{attackMethod}{maxDistance} && !timeOut($args->{ai_attack_giveup})) {
+		} elsif (
+			#$realMonsterDist > $args->{attackMethod}{maxDistance} &&
+			$args->{attackMethod}{distance} == 1 &&
+			!canReachMeeleAttack($realMyPos, $realMonsterPos) &&
+			!timeOut($args->{ai_attack_giveup})
+		) {
 			# The target monster moved; move to target
 			$args->{move_start} = time;
 			$args->{monsterPos} = {%{$monsterPos}};
+			$args->{monsterLastMoveTime} = $target->{time_move};
+			
+			debug "$slave target Target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from slave ($realMyPos->{x} $realMyPos->{y}) for meele attacks, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 			
 			my $pos = meetingPosition($slave, $target, $args->{attackMethod}{maxDistance});
-			
-			debug "$slave target distance $realMonsterDist is >$args->{attackMethod}{maxDistance}; moving to target: " .
-				"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
 			my $result = $slave->route(undef, @{$pos}{qw(x y)},
 				maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},

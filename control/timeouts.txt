@@ -48,6 +48,8 @@ ai_homunculus_attack_auto 0.5
 ai_mercenary_attack_auto 0.5
 
 ai_attack_route_adjust 0.3
+ai_homunculus_route_adjust 0.3
+ai_mercenary_route_adjust 0.3
 
 # Ignore monster for x seconds if there is no route to it
 ai_attack_failedLOS 6

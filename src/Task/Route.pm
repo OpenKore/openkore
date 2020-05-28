@@ -190,16 +190,17 @@ sub iterate {
 
 	} elsif ($self->{stage} == CALCULATE_ROUTE) {
 		my $pos = $self->{actor}{pos};
+		my $pos_to = $self->{actor}{pos_to};
 		
 		my $begin = time;
-		if ($pos->{x} == $self->{dest}{pos}{x} && $pos->{y} == $self->{dest}{pos}{y}) {
+		if ($pos_to->{x} == $self->{dest}{pos}{x} && $pos_to->{y} == $self->{dest}{pos}{y}) {
 			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
 			$self->setDone();
 		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
 			
 			$self->{last_pos} = $pos;
-			$self->{last_pos_to} = $self->{actor}{pos_to};
+			$self->{last_pos_to} = $pos_to;
 			$self->{start} = 1;
 			$self->{confirmed_correct_vector} = 0;
 			
@@ -280,7 +281,7 @@ sub iterate {
 		# $actor->{pos_to} is the position the character moved TO in the last move packet received
 		my $current_pos_to = $self->{actor}{pos_to};
 		
-		if ($current_pos->{x} == $solution->[$#{$solution}]{x} && $current_pos->{y} == $solution->[$#{$solution}]{y}) {
+		if ($current_pos_to->{x} == $solution->[$#{$solution}]{x} && $current_pos_to->{y} == $solution->[$#{$solution}]{y}) {
 			# Actor position is the destination; we've arrived at the destination
 			if ($self->{notifyUponArrival}) {
 				message TF("%s reached the destination.\n", $self->{actor}), "success";

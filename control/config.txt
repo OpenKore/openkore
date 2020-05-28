@@ -369,8 +369,8 @@ mercenary_attackAuto_notInTown 1
 mercenary_attackAuto_onlyWhenSafe 0
 mercenary_attackAuto_duringRandomWalk 0
 mercenary_attackAuto_duringItemsTake 0
-mercenary_attackDistance 1.5
-mercenary_attackMaxDistance 2.5
+mercenary_attackDistance 1
+mercenary_attackMaxDistance 1
 mercenary_attackDistanceAuto 0
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
@@ -426,8 +426,8 @@ homunculus_attackAuto_notInTown 1
 homunculus_attackAuto_onlyWhenSafe 0
 homunculus_attackAuto_duringRandomWalk 0
 homunculus_attackAuto_duringItemsTake 0
-homunculus_attackDistance 1.5
-homunculus_attackMaxDistance 2.5
+homunculus_attackDistance 1
+homunculus_attackMaxDistance 1
 homunculus_attackDistanceAuto 0
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
