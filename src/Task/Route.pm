@@ -201,8 +201,8 @@ sub iterate {
 		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
 			
-			$self->{last_pos} = $pos;
-			$self->{last_pos_to} = $pos_to;
+			@{$self->{last_pos}}{qw(x y)} = @{$pos}{qw(x y)};
+			@{$self->{last_pos_to}}{qw(x y)} = @{$pos_to}{qw(x y)};
 			$self->{start} = 1;
 			$self->{confirmed_correct_vector} = 0;
 			
@@ -479,15 +479,14 @@ sub iterate {
 					}
 				}
 				
-				if (!$self->{start} && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
+				if ($self->{start} || ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
 					$self->{time_step} = time;
 				}
 				
 				$self->{start} = 0;
-				$self->{last_pos}{x} = $current_pos->{x};
-				$self->{last_pos}{y} = $current_pos->{y};
-				$self->{last_pos_to}{x} = $current_pos_to->{x};
-				$self->{last_pos_to}{y} = $current_pos_to->{y};
+				
+				@{$self->{last_pos}}{qw(x y)} = @{$current_pos}{qw(x y)};
+				@{$self->{last_pos_to}}{qw(x y)} = @{$current_pos_to}{qw(x y)};
 				
 				debug "Route $self->{actor} - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
 				
