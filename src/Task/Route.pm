@@ -472,15 +472,15 @@ sub iterate {
 					}
 				}
 				
+				if (!$self->{start} && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
+					$self->{time_step} = time;
+				}
+				
 				$self->{start} = 0;
 				$self->{last_pos} = $current_pos;
 				$self->{last_pos_to} = $current_pos_to;
 				
 				debug "Route $self->{actor} - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
-				
-				if (!$self->{start} && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
-					$self->{time_step} = time;
-				}
 				
 				my $task = new Task::Move(
 					actor => $self->{actor},
