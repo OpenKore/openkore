@@ -27,7 +27,7 @@ poseidon_wait_reply 15
 ai 2
 
 ai_move_retry 0.25
-ai_move_giveup 1.5
+ai_move_giveup 1
 
 ai_homunculus_standby 0.5
 ai_mercenary_standby 0.5
