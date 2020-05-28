@@ -2558,7 +2558,10 @@ sub meetingPosition {
 			%actorStep = moveAlong(\%realMyPos, \%targetStep, $actorStep);
 
 			# Check whether the distance is fine
-			if (round(distance(\%actorStep, \%targetStep)) <= $attackMaxDistance) {
+			if (
+				($attackMaxDistance == 1 && canReachMeeleAttack(\%actorStep, \%targetStep)) ||
+				($attackMaxDistance >= 2 && blockDistance(\%actorStep, \%targetStep) <= $attackMaxDistance)
+			) {
 				# Calculate time to walk for actor
 				$timeActorWalks = calcTime(\%realMyPos, \%actorStep, $mySpeed);
 
@@ -2575,7 +2578,10 @@ sub meetingPosition {
 		%actorStep = moveAlong(\%realMyPos, \%targetPosTo, $actorStep);
 
 		# Check whether the distance is fine
-		if (round(distance(\%actorStep, \%targetPosTo)) <= $attackMaxDistance) {
+		if (
+			($attackMaxDistance == 1 && canReachMeeleAttack(\%actorStep, \%targetStep)) ||
+			($attackMaxDistance >= 2 && blockDistance(\%actorStep, \%targetStep) <= $attackMaxDistance)
+		) {
 			last;
 		}
 	}

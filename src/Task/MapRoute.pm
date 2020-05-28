@@ -265,7 +265,9 @@ sub iterate {
 				pyDistFromGoal => $self->{pyDistFromGoal},
 				solution => \@solution,
 				isRandomWalk => $self->{isRandomWalk},
-				isSlaveRescue => $self->{isSlaveRescue}
+				isSlaveRescue => $self->{isSlaveRescue},
+				LOSSubRoute => $self->{LOSSubRoute},
+				meetingSubRoute => $self->{meetingSubRoute}
 			);
 			$self->setSubtask($task);
 			$self->{mapSolution}[0]{routed} = 1;
@@ -337,7 +339,9 @@ sub iterate {
 							avoidWalls => $self->{avoidWalls},
 							solution => \@solution,
 							isRandomWalk => $self->{isRandomWalk},
-							isSlaveRescue => $self->{isSlaveRescue}
+							isSlaveRescue => $self->{isSlaveRescue},
+							LOSSubRoute => $self->{LOSSubRoute},
+							meetingSubRoute => $self->{meetingSubRoute}
 						);
 						$self->setSubtask($task);
 						
@@ -451,7 +455,9 @@ sub iterate {
 						avoidWalls => $self->{avoidWalls},
 						solution => \@solution,
 						isRandomWalk => $self->{isRandomWalk},
-						isSlaveRescue => $self->{isSlaveRescue}
+						isSlaveRescue => $self->{isSlaveRescue},
+						LOSSubRoute => $self->{LOSSubRoute},
+						meetingSubRoute => $self->{meetingSubRoute}
 					);
 					$self->setSubtask($task);
 
@@ -524,7 +530,9 @@ sub subtaskDone {
 					distFromGoal => $self->{distFromGoal},
 					pyDistFromGoal => $self->{pyDistFromGoal},
 					isRandomWalk => $self->{isRandomWalk},
-					isSlaveRescue => $self->{isSlaveRescue}
+					isSlaveRescue => $self->{isSlaveRescue},
+					LOSSubRoute => $self->{LOSSubRoute},
+					meetingSubRoute => $self->{meetingSubRoute}
 				);
 				$self->setSubtask($task);
 			}

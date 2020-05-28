@@ -106,7 +106,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid Coordinates argument.");
 	}
 
-	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal', 'avoidWalls', 'notifyUponArrival', 'isRandomWalk', 'isSlaveRescue');
+	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal', 'avoidWalls', 'notifyUponArrival', 'isRandomWalk', 'isSlaveRescue', 'LOSSubRoute', 'meetingSubRoute');
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
@@ -193,9 +193,11 @@ sub iterate {
 		my $pos_to = $self->{actor}{pos_to};
 		
 		my $begin = time;
-		if ($pos_to->{x} == $self->{dest}{pos}{x} && $pos_to->{y} == $self->{dest}{pos}{y}) {
+		
+		if (!$self->{meetingSubRoute} && !$self->{LOSSubRoute} && $pos_to->{x} == $self->{dest}{pos}{x} && $pos_to->{y} == $self->{dest}{pos}{y}) {
 			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
 			$self->setDone();
+		
 		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
 			
@@ -275,13 +277,17 @@ sub iterate {
 			$self->{step_index} = $config{$self->{actor}{configPrefix}.'route_step'};
 		}
 		
+		my ($current_pos, $current_pos_to);
+		
 		# $actor->{pos} is the position the character moved FROM in the last move packet received
-		my $current_pos = $self->{actor}{pos};
+		@{$current_pos}{qw(x y)} = @{$self->{actor}{pos}}{qw(x y)};
 		
 		# $actor->{pos_to} is the position the character moved TO in the last move packet received
-		my $current_pos_to = $self->{actor}{pos_to};
+		@{$current_pos_to}{qw(x y)} = @{$self->{actor}{pos_to}}{qw(x y)};
 		
-		if ($current_pos_to->{x} == $solution->[$#{$solution}]{x} && $current_pos_to->{y} == $solution->[$#{$solution}]{y}) {
+		my $current_calc_pos = calcPosition($self->{actor});
+		
+		if ($current_calc_pos->{x} == $solution->[$#{$solution}]{x} && $current_calc_pos->{y} == $solution->[$#{$solution}]{y}) {
 			# Actor position is the destination; we've arrived at the destination
 			if ($self->{notifyUponArrival}) {
 				message TF("%s reached the destination.\n", $self->{actor}), "success";
@@ -358,7 +364,7 @@ sub iterate {
 			
 			# Last move was to the cell we are already at, lag?, buggy code?
 			if ($self->{start} || $best_pos_step == 0) {
-				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because best_pos_step didn't change.\n", "route";
+				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because best_pos_step is 0.\n", "route";
 				
 			} else {
 				# Should we trimm only the known walk ones ($best_pos_step) or the known + the guessed (calcStepsWalkedFromTimeAndRoute)? Default was both.
@@ -459,7 +465,7 @@ sub iterate {
 			# But first, check whether the distance of the next point isn't abnormally large.
 			# If it is, then we've moved to an unexpected place. This could be caused by auto-attack, for example.
 			my %nextPos = (x => $self->{next_pos}{x}, y => $self->{next_pos}{y});
-			if (blockDistance(\%nextPos, $current_pos) > 14) {
+			if (blockDistance(\%nextPos, $current_pos) > 17) {
 				debug "Route $self->{actor} - movement interrupted: reset route (the distance of the next point is abnormally large ($current_pos->{x} $current_pos->{y} -> $nextPos{x} $nextPos{y}))\n", "route";
 				$self->{solution} = [];
 				$self->{stage} = CALCULATE_ROUTE;
@@ -478,8 +484,10 @@ sub iterate {
 				}
 				
 				$self->{start} = 0;
-				$self->{last_pos} = $current_pos;
-				$self->{last_pos_to} = $current_pos_to;
+				$self->{last_pos}{x} = $current_pos->{x};
+				$self->{last_pos}{y} = $current_pos->{y};
+				$self->{last_pos_to}{x} = $current_pos_to->{x};
+				$self->{last_pos_to}{y} = $current_pos_to->{y};
 				
 				debug "Route $self->{actor} - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
 				

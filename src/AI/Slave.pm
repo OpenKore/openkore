@@ -597,9 +597,8 @@ sub processAttack {
 			}
 
 		} elsif (
-			#$realMonsterDist > $args->{attackMethod}{maxDistance} &&
-			$args->{attackMethod}{distance} == 1 &&
-			!canReachMeeleAttack($realMyPos, $realMonsterPos) &&
+			(($args->{attackMethod}{distance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
+			($args->{attackMethod}{distance} >= 2 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 			!timeOut($args->{ai_attack_giveup})
 		) {
 			# The target monster moved; move to target
@@ -607,7 +606,7 @@ sub processAttack {
 			$args->{monsterPos} = {%{$monsterPos}};
 			$args->{monsterLastMoveTime} = $target->{time_move};
 			
-			debug "$slave target Target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from slave ($realMyPos->{x} $realMyPos->{y}) for meele attacks, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
+			debug "$slave target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from slave ($realMyPos->{x} $realMyPos->{y}) to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 			
 			my $pos = meetingPosition($slave, $target, $args->{attackMethod}{maxDistance});
 
@@ -615,7 +614,8 @@ sub processAttack {
 				maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
 				attackID => $ID,
 				noMapRoute => 1,
-				avoidWalls => 0);
+				avoidWalls => 0,
+				meetingSubRoute => 1);
 			if (!$result) {
 				# Unable to calculate a route to target
 				$target->{$slave->{ai_attack_failed_timeout}} = time;
