@@ -28,13 +28,13 @@ use Task::WithSubtask;
 use base qw(Task::WithSubtask);
 use Task::Move;
 
-use Globals qw($field $net %config);
+use Globals qw($field $net %config %timeout);
 use Log qw(message debug warning);
 use Network;
 use Field;
 use Translation qw(T TF);
 use Misc;
-use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosition calcStepsWalkedFromTimeAndRoute);
+use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosition);
 use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
@@ -170,7 +170,7 @@ sub resume {
 	my ($self) = @_;
 	$self->SUPER::resume();
 	$self->{time_start} += time - $self->{interruptionTime};
-	$self->{time_step} += time - $self->{interruptionTime};
+	undef $self->{time_step};
 }
 
 # Overrided method.
@@ -189,7 +189,8 @@ sub iterate {
 		$self->setDone();
 
 	} elsif ($self->{stage} == CALCULATE_ROUTE) {
-		my $pos = calcPosition($self->{actor});
+		my $pos = $self->{actor}{pos};
+		
 		my $begin = time;
 		if ($pos->{x} == $self->{dest}{pos}{x} && $pos->{y} == $self->{dest}{pos}{y}) {
 			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
@@ -197,9 +198,14 @@ sub iterate {
 		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
 			
-			$self->{last_start_pos} = { x => $pos->{x}, y => $pos->{y} };
+			$self->{last_pos} = $pos;
+			$self->{last_pos_to} = $self->{actor}{pos_to};
+			$self->{start} = 1;
+			$self->{confirmed_correct_vector} = 0;
 			
 			debug "Route $self->{actor} Solution Ready! Found path on ".$self->{dest}{map}->baseName." from ".$pos->{x}." ".$pos->{y}." to ".$self->{dest}{pos}{x}." ".$self->{dest}{pos}{y}.". Size: ".@{$self->{solution}}." steps.\n", "route";
+			
+			unshift(@{$self->{solution}}, { x => $pos->{x}, y => $pos->{y}});
 
 			if (time - $begin < 0.01) {
 				# Optimization: immediately go to the next stage if we spent neglible time in this step.
@@ -240,9 +246,16 @@ sub iterate {
 
 		undef $self->{mapChanged};
 		undef $self->{step_index};
-		undef $self->{last_pos};
+		undef $self->{decreasing_step_index};
+		#undef $self->{last_pos};
+		#undef $self->{last_pos_to};
+		#undef $self->{start};
+		#undef $self->{confirmed_correct_vector};
+		undef $self->{last_best_pos_step};
+		undef $self->{last_best_pos_to_step};
 		undef $self->{next_pos};
-		$self->{time_step} = time;
+		undef $self->{time_step};
+		
 		$self->{stage} = WALK_ROUTE_SOLUTION;
 
 		if (@{$self->{solution}} == 0) {
@@ -256,15 +269,18 @@ sub iterate {
 	# Actual walking algorithm
 	} elsif ($self->{stage} == WALK_ROUTE_SOLUTION) {
 		my $solution = $self->{solution};
-		my $current_pos;
+		
+		if (!defined $self->{step_index}) {
+			$self->{step_index} = $config{$self->{actor}{configPrefix}.'route_step'};
+		}
 		
 		# $actor->{pos} is the position the character moved FROM in the last move packet received
-		my $actor_pos = $self->{actor}{pos};
+		my $current_pos = $self->{actor}{pos};
 		
 		# $actor->{pos_to} is the position the character moved TO in the last move packet received
-		my $actor_pos_to = $self->{actor}{pos_to};
+		my $current_pos_to = $self->{actor}{pos_to};
 		
-		if ($actor_pos->{x} == $solution->[$#{$solution}]{x} && $actor_pos->{y} == $solution->[$#{$solution}]{y}) {
+		if ($current_pos->{x} == $solution->[$#{$solution}]{x} && $current_pos->{y} == $solution->[$#{$solution}]{y}) {
 			# Actor position is the destination; we've arrived at the destination
 			if ($self->{notifyUponArrival}) {
 				message TF("%s reached the destination.\n", $self->{actor}), "success";
@@ -275,17 +291,10 @@ sub iterate {
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 			return;
-		
-		# This is the first iteration since stage Walk the Route Solution was set
-		} elsif (!defined $self->{last_pos}) {
-			$current_pos = $self->{last_start_pos};
-			# During the walking stage it is a good idea to keep the last position in the solution but since it is also a bad idea for the pathfinding algorithm to return a solution with the start position we add it here.
-			# Should this be done in a separate variable? (for example $self->{current_pos})
-			unshift(@{$solution}, $self->{last_start_pos});
 			
 		} else {
 			# Failsafe
-			my $lookahead_failsafe_max = 5;
+			my $lookahead_failsafe_max = $self->{step_index} + 1;
 			my $lookahead_failsafe_count = 0;
 			
 			# This looks ahead in the solution array and finds the closest position in it to our current {pos}, then it looks $lookahead_failsafe_max further, just to be sure
@@ -293,7 +302,7 @@ sub iterate {
 			my $next_best_pos_step_try = 1;
 			
 			while (1) {
-				if (adjustedBlockDistance($actor_pos, $solution->[$best_pos_step]) > adjustedBlockDistance($actor_pos, $solution->[$next_best_pos_step_try])) {
+				if (adjustedBlockDistance($current_pos, $solution->[$best_pos_step]) > adjustedBlockDistance($current_pos, $solution->[$next_best_pos_step_try])) {
 					$best_pos_step = $next_best_pos_step_try;
 					$lookahead_failsafe_count = 0;
 				} else {
@@ -314,7 +323,7 @@ sub iterate {
 			my $best_pos_to_step = 0;
 			my $next_best_pos_to_step_try = 1;
 			while (1) {
-				if (adjustedBlockDistance($actor_pos_to, $solution->[$best_pos_to_step]) > adjustedBlockDistance($actor_pos_to, $solution->[$next_best_pos_to_step_try])) {
+				if (adjustedBlockDistance($current_pos_to, $solution->[$best_pos_to_step]) > adjustedBlockDistance($current_pos_to, $solution->[$next_best_pos_to_step_try])) {
 					$best_pos_to_step = $next_best_pos_to_step_try;
 					$lookahead_failsafe_count = 0;
 				} else {
@@ -331,35 +340,36 @@ sub iterate {
 				}
 			}
 			
+			# Here there may be the need to check if 'pos' has changed yet best_pos_step is still the same, creating a lag in the movement
+			
 			# Last change in pos and pos_to put us in a walk path oposite to the desired one
 			if ($best_pos_step > $best_pos_to_step) {
-				debug "Route $self->{actor} - movement interrupted: reset route (last change in pos and pos_to put us in a walk path oposite to the desired one)\n", "route";
-				$self->{solution} = [];
-				$self->{stage} = CALCULATE_ROUTE;
-				return;
+				if ($self->{confirmed_correct_vector}) {
+					debug "Route $self->{actor} - movement interrupted: reset route (last change in pos and pos_to put us in a walk path oposite to the desired one)\n", "route";
+					$self->{solution} = [];
+					$self->{stage} = CALCULATE_ROUTE;
+					return;
+				}
+			} elsif (!$self->{confirmed_correct_vector}) {
+				debug "Route $self->{actor} - movement vector confirmed.\n", "route";
+				$self->{confirmed_correct_vector} = 1;
+			}
 			
-			} elsif ($best_pos_step == $best_pos_to_step) {
-				$current_pos = $solution->[$best_pos_step];
-				
-				debug "Route $self->{actor} - trimming down solution (" . @{$solution} . ") by ".$best_pos_step." steps\n", "route";
-				# Never trimm the current guessed cell, because if we get stuck we will keep deleting the first cell of the solution over and over
-				splice(@{$solution}, 0, $best_pos_step) if ($best_pos_step > 0);
+			# Last move was to the cell we are already at, lag?, buggy code?
+			if ($self->{start} || $best_pos_step == 0) {
+				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because best_pos_step didn't change.\n", "route";
 				
 			} else {
-				my @steps = @{$solution}[$best_pos_step..$best_pos_to_step];
+				# Should we trimm only the known walk ones ($best_pos_step) or the known + the guessed (calcStepsWalkedFromTimeAndRoute)? Default was both.
 				
-				my $speed = ($self->{actor}{walk_speed} || 0.12);
-				my $elapsed = time - $self->{actor}{time_move};
-				my $walked_from_pos = calcStepsWalkedFromTimeAndRoute(\@steps, $speed, $elapsed);
+				# Currently testing delete up to known ($best_pos_step)(exclusive)
+				debug "Route $self->{actor} - trimming down solution (" . @{$solution} . ") by ".($best_pos_step)." steps\n", "route";
 				
-				my $guessed_steps = $best_pos_step + $walked_from_pos;
-				$current_pos = $solution->[$guessed_steps];
-				
-				# Should we trimm only the known walk ones ($best_pos_step) or the known + the guessed (calcStepsWalkedFromTimeAndRoute)? Default was both, keeping it for now.
-				debug "Route $self->{actor} - trimming down solution (" . @{$solution} . ") by ".($guessed_steps)." steps\n", "route";
-				# Never trimm the current guessed cell, because if we get stuck we will keep deleting the first cell of the solution over and over
-				splice(@{$solution}, 0, $guessed_steps);
+				splice(@{$solution}, 0, $best_pos_step);
 			}
+			
+			$self->{last_best_pos_step} = $best_pos_step;
+			$self->{last_best_pos_to_step} = $best_pos_to_step;
 		}
 
 		my $stepsleft = @{$solution};
@@ -387,13 +397,13 @@ sub iterate {
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 
-		} elsif (defined $self->{last_pos} && $self->{last_pos}{x} == $current_pos->{x} && $self->{last_pos}{y} == $current_pos->{y} && timeOut($self->{time_step}, 3)) {
+		} elsif (!$self->{start} && $self->{last_pos}{x} == $current_pos->{x} && $self->{last_pos}{y} == $current_pos->{y} && defined $self->{time_step} && timeOut($self->{time_step}, $timeout{ai_route_unstuck}{timeout})) {
 			# We tried to move for 3 seconds, but we are still on the same spot, decrease step size.
 			# However, if $self->{step_index} was already 0, then that means we were almost at the destination (only 1 more step is needed).
 			# But we got interrupted (by auto-attack for example). Don't count that as stuck.
-			my $wasZero = $self->{step_index} == 0;
-			$self->{step_index} = int($self->{step_index} * 0.8);
-			if ($self->{step_index}) {
+			$self->{decreasing_step_index}++;
+			$self->{step_index}--;
+			if ($self->{step_index} > 0) {
 				debug "Route $self->{actor} - not moving, decreasing step size to $self->{step_index}\n", "route";
 				if ($stepsleft) {
 					# If we still have more points to cover, walk to next point
@@ -411,45 +421,45 @@ sub iterate {
 					$self->setSubtask($task);
 				}
 
-			} elsif (!$wasZero) {
-				# FIXME: this code looks ugly!
+			} else {
 				# We're stuck
 				my $msg = TF("Stuck at %s (%d,%d), while walking from (%d,%d) to (%d,%d).",
 					$self->{dest}{map}->baseName, @{$self->{actor}{pos_to}}{qw(x y)},
-					$current_pos->{x}, $current_pos->{y}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y});
+					$current_pos->{x}, $current_pos->{y}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y}
+				);
 				$msg .= T(" Teleporting to unstuck.") if ($config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'});
 				$msg .= "\n";
 				warning $msg, "route";
 				Misc::useTeleport(1) if $config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'};
 				$self->setError(STUCK, T("Stuck during route."));
 				Plugins::callHook('route', {status => 'stuck'});
-			} else {
-				$self->{time_step} = time;
 			}
 
 		} else {
 			# We're either starting to move or already moving, so send out more
 			# move commands periodically to keep moving and updating our position
 			my $begin = time;
-			unless ($self->{step_index}) {
-				$self->{step_index} = $config{$self->{actor}{configPrefix}.'route_step'} - 1;
-			}
-			if ($self->{step_index} < ($config{$self->{actor}{configPrefix}.'route_step'} - 1) && defined $self->{last_pos} && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
-				$self->{step_index}++ ;
+			
+			if ($self->{decreasing_step_index}) {
+				debug "Route $self->{actor} - started moving again, increasing step size by $self->{decreasing_step_index} (from ".($self->{step_index})." to ".($self->{step_index}+$self->{decreasing_step_index}).")\n", "route";
+				$self->{step_index} += $self->{decreasing_step_index};
+				$self->{decreasing_step_index} = 0;
 			}
 
 			# If there are less steps to cover than the step size move to the last step (the destination).
 			if ($self->{step_index} >= $stepsleft) {
 				$self->{step_index} = $stepsleft - 1;
 			}
-			$self->{next_pos}{x} = $solution->[$self->{step_index}]{x};
-			$self->{next_pos}{y} = $solution->[$self->{step_index}]{y};
+			
+			# Here maybe we should also use pos_to (in the form of best_pos_to_step) to decide the next step index, as it can make the routing way more responsive
+			
+			$self->{next_pos} = $solution->[$self->{step_index}];
 
 			# But first, check whether the distance of the next point isn't abnormally large.
 			# If it is, then we've moved to an unexpected place. This could be caused by auto-attack, for example.
 			my %nextPos = (x => $self->{next_pos}{x}, y => $self->{next_pos}{y});
-			if (blockDistance(\%nextPos, $current_pos) > 10) {
-				debug "Route $self->{actor} - movement interrupted: reset route (the distance of the next point is abnormally large)\n", "route";
+			if (blockDistance(\%nextPos, $current_pos) > 14) {
+				debug "Route $self->{actor} - movement interrupted: reset route (the distance of the next point is abnormally large ($current_pos->{x} $current_pos->{y} -> $nextPos{x} $nextPos{y}))\n", "route";
 				$self->{solution} = [];
 				$self->{stage} = CALCULATE_ROUTE;
 
@@ -461,12 +471,17 @@ sub iterate {
 						return;
 					}
 				}
-				if (defined $self->{last_pos} && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
+				
+				$self->{start} = 0;
+				$self->{last_pos} = $current_pos;
+				$self->{last_pos_to} = $current_pos_to;
+				
+				debug "Route $self->{actor} - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
+				
+				if (!$self->{start} && ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
 					$self->{time_step} = time;
 				}
-				$self->{last_pos}{x} = $current_pos->{x};
-				$self->{last_pos}{y} = $current_pos->{y};
-				debug "Route $self->{actor} - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
+				
 				my $task = new Task::Move(
 					actor => $self->{actor},
 					x => $self->{next_pos}{x},
