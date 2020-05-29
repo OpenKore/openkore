@@ -993,7 +993,13 @@ sub parse_account_server_info {
 			types => 'a20 V v a126',
 			keys => [qw(name users unknown ip_port)],
 		};
-	} else { # 0069 [default] and 0276 [pRO, tRO
+	} elsif ($args->{switch} eq '0276' && $masterServer->{serverType} eq "tRO") { # cRO 2017
+		$server_info = {
+			len => 36,
+			types => 'a4 v Z20 v5',
+			keys => [qw(ip port name users display unknown unknown2 unknown3)],
+		};
+	} else { # 0069 [default] and 0276 [pRO]
 		$server_info = {
 			len => 32,
 			types => 'a4 v Z20 v3',
@@ -1093,8 +1099,8 @@ sub account_server_info {
 			T("#   Name                  Users  IP              Port\n");
 	for (my $num = 0; $num < @servers; $num++) {
 		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
-			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]);
+			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<< @<<<<< @<<<<< @<<<<<",
+			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}, $servers[$num]{unknown}, $servers[$num]{unknown2}, $servers[$num]{unknown3}]);
 	}
 	$msg .= ('-'x53) . "\n";
 	message $msg, "connection";
