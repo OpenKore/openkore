@@ -547,16 +547,21 @@ sub main {
 		$args->{monsterPos} = {%{$monsterPos}};
 		$args->{monsterLastMoveTime} = $target->{time_move};
 
-		debug "Target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us ($realMyPos->{x} $realMyPos->{y}) to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
+		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 
 		my $pos = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
+		
+		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
 
-		my $result = $char->route(undef, @{$pos}{qw(x y)},
+		my $result = $char->route(
+			undef,
+			@{$pos}{qw(x y)},
 			maxRouteTime => $config{'attackMaxRouteTime'},
 			attackID => $ID,
 			noMapRoute => 1,
 			avoidWalls => 0,
-			meetingSubRoute => 1);
+			meetingSubRoute => 1
+		);
 		if (!$result) {
 			# Unable to calculate a route to target
 			$target->{attack_failed} = time;
@@ -566,6 +571,8 @@ sub main {
 				message T("Teleport due to dropping attack target\n");
 				useTeleport(1);
 			}
+		} else {
+			debug "Attack $char - successufully routing to $target\n", 'ai_attack';
 		}
 
 	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
