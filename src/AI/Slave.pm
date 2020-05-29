@@ -480,7 +480,7 @@ sub processAttack {
 
 		} elsif (
 			# We are a ranged attacker without LOS
-			$config{$slave->{configPrefix}.'attackCheckLOS'} && $args->{attackMethod}{distance} >= 2 &&
+			$config{$slave->{configPrefix}.'attackCheckLOS'} && $args->{attackMethod}{distance} > 1 &&
 			(!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}) || $realMonsterDist > $args->{attackMethod}{maxDistance})
 		) {
 			my $attackAdjustLOSMaxRouteTargetDistance = $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteTargetDistance'};
@@ -598,7 +598,7 @@ sub processAttack {
 
 		} elsif (
 			(($args->{attackMethod}{distance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
-			($args->{attackMethod}{distance} >= 2 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
+			($args->{attackMethod}{distance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 			!timeOut($args->{ai_attack_giveup})
 		) {
 			# The target monster moved; move to target
@@ -901,10 +901,11 @@ sub processAutoAttack {
 			### Step 2: Pick out the "best" monster ###
 
 			# We define whether we should attack only monsters in LOS or not
-			my $nonLOSNotAllowed = !$config{$slave->{configPrefix}.'attackCheckLOS'};
-			$attackTarget = getBestTarget(\@aggressives,   $nonLOSNotAllowed, $config{$slave->{configPrefix}.'attackCanSnipe'}) ||
-			                getBestTarget(\@partyMonsters, $nonLOSNotAllowed, $config{$slave->{configPrefix}.'attackCanSnipe'}) ||
-			                getBestTarget(\@cleanMonsters, $nonLOSNotAllowed, $config{$slave->{configPrefix}.'attackCanSnipe'});
+			my $checkLOS = $config{$slave->{configPrefix}.'attackCheckLOS'};
+			my $canSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
+			$attackTarget = getBestTarget(\@aggressives,   $checkLOS, $canSnipe) ||
+			                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
+			                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
 		}
 
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.

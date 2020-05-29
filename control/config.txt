@@ -81,7 +81,6 @@ attackAdjustLOSMaxRouteDistance 10
 attackAdjustLOSMaxRouteTargetDistance 13
 attackLooters 0
 attackChangeTarget 1
-attackChangeTargetDuringLOSRoute 0
 aggressiveAntiKS 0
 
 attackUpdateMonsterPos 1
@@ -497,7 +496,7 @@ pet_return 20
 
 attackSkillSlot {
 	lvl 10
-	dist 1.5
+	dist 1
 	maxCastTime 0
 	minCastTime 0
 	hp
@@ -546,7 +545,7 @@ attackSkillSlot {
 attackComboSlot {
 	afterSkill
 	waitBeforeUse
-	dist 1.5
+	dist 1
 	isSelfSkill 1
 	target_hp
 	target_deltaHp

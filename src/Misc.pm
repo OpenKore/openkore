@@ -2560,7 +2560,7 @@ sub meetingPosition {
 			# Check whether the distance is fine
 			if (
 				($attackMaxDistance == 1 && canReachMeeleAttack(\%actorStep, \%targetStep)) ||
-				($attackMaxDistance >= 2 && blockDistance(\%actorStep, \%targetStep) <= $attackMaxDistance)
+				($attackMaxDistance > 1 && blockDistance(\%actorStep, \%targetStep) <= $attackMaxDistance)
 			) {
 				# Calculate time to walk for actor
 				$timeActorWalks = calcTime(\%realMyPos, \%actorStep, $mySpeed);
@@ -2580,7 +2580,7 @@ sub meetingPosition {
 		# Check whether the distance is fine
 		if (
 			($attackMaxDistance == 1 && canReachMeeleAttack(\%actorStep, \%targetStep)) ||
-			($attackMaxDistance >= 2 && blockDistance(\%actorStep, \%targetStep) <= $attackMaxDistance)
+			($attackMaxDistance > 1 && blockDistance(\%actorStep, \%targetStep) <= $attackMaxDistance)
 		) {
 			last;
 		}
@@ -3729,13 +3729,13 @@ sub writeStorageLog {
 }
 
 ##
-# getBestTarget(possibleTargets, nonLOSNotAllowed)
+# getBestTarget(possibleTargets, attackCheckLOS, $attackCanSnipe)
 # possibleTargets: reference to an array of monsters' IDs
-# nonLOSNotAllowed: if set, non-LOS monsters aren't checked up
+# attackCheckLOS: if set, non-LOS monsters are checked up
 #
 # Returns ID of the best target
 sub getBestTarget {
-	my ($possibleTargets, $nonLOSNotAllowed, $attackCanSnipe) = @_;
+	my ($possibleTargets, $attackCheckLOS, $attackCanSnipe) = @_;
 	if (!$possibleTargets) {
 		return;
 	}
@@ -3786,7 +3786,7 @@ sub getBestTarget {
 			$bestTarget = $_;
 		}
 	}
-	if (!$nonLOSNotAllowed && !$bestTarget && scalar(@noLOSMonsters) > 0) {
+	if ($attackCheckLOS && !$bestTarget && scalar(@noLOSMonsters) > 0) {
 		foreach (@noLOSMonsters) {
 			# The most optimal solution is to include the path lenghts' comparison, however it will take
 			# more time and CPU resources, so, we use rough solution with priority and distance comparison

@@ -3033,11 +3033,6 @@ sub processAutoAttack {
 				$attackOnRoute = 2;
 			}
 
-			my $LOSSubRoute = 0;
-			if ($config{attackCheckLOS} && $config{attackChangeTargetDuringLOSRoute} && AI::args(0)->{LOSSubRoute}) {
-				$LOSSubRoute = 1;
-			}
-
 			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 
 			my @aggressives;
@@ -3045,7 +3040,7 @@ sub processAutoAttack {
 			my @cleanMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && ($attackOnRoute || $LOSSubRoute));
+			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && $attackOnRoute);
 
 			# List party monsters
 			foreach (@monstersID) {
@@ -3081,7 +3076,7 @@ sub processAutoAttack {
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 				 && (!$config{'attackAuto_onlyWhenSafe'} || isSafe())
 				 && !$ai_v{sitAuto_forcedBySitCommand}
-				 && ($attackOnRoute >= 2 || $LOSSubRoute)
+				 && $attackOnRoute >= 2
 				 && !$monster->{dmgFromYou}
 				 && ($control->{dist} eq '' || blockDistance($monster->{pos}, calcPosition($char)) <= $control->{dist})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
@@ -3097,32 +3092,11 @@ sub processAutoAttack {
 			### Step 2: Pick out the "best" monster ###
 
 			# We define whether we should attack only monsters in LOS or not
-			my $nonLOSNotAllowed = !$config{attackCheckLOS} || $LOSSubRoute;
-			$attackTarget = getBestTarget(\@aggressives, $nonLOSNotAllowed, $config{attackCanSnipe}) ||
-			                getBestTarget(\@partyMonsters, $nonLOSNotAllowed, $config{attackCanSnipe}) ||
-			                getBestTarget(\@cleanMonsters, $nonLOSNotAllowed, $config{attackCanSnipe});
-
-			if ($LOSSubRoute && $attackTarget) {
-				Log::message("New target was choosen\n");
-				# Remove all unnecessary actions (attacks and movements but the main route)
-				my $i = scalar(@ai_seq);
-				my (@ai_seq_temp, @ai_seq_args_temp);
-				for(my $c=0;$c<$i;$c++) {
-					if (($ai_seq[$c] ne "route")
-					  && ($ai_seq[$c] ne "move")
-					  && ($ai_seq[$c] ne "attack")) {
-						push(@ai_seq_temp, $ai_seq[$c]);
-						push(@ai_seq_args_temp, $ai_seq_args[$c]);
-					}
-				}
-				# Add the main route and rewrite the sequence
-				push(@ai_seq_temp, $ai_seq[$i-1]);
-				push(@ai_seq_args_temp, $ai_seq_args[$i-1]);
-				@ai_seq = @ai_seq_temp;
-				@ai_seq_args = @ai_seq_args_temp;
-				# We need this timeout not to have attack started many times
-				$timeout{'ai_attack_auto'}{'time'} = time;
-			}
+			my $checkLOS = $config{attackCheckLOS};
+			my $canSnipe = $config{attackCanSnipe};
+			$attackTarget = getBestTarget(\@aggressives, $checkLOS, $canSnipe) ||
+			                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
+			                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
 		}
 
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.

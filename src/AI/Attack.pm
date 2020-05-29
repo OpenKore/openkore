@@ -407,7 +407,7 @@ sub main {
 
 	} elsif (
 		# We are a ranged attacker without LOS
-		$config{attackCheckLOS} && $args->{attackMethod}{distance} >= 2 &&
+		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 1 &&
 		(!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe}) || $realMonsterDist > $args->{attackMethod}{maxDistance})
 	) {
 		my $attackAdjustLOSMaxRouteTargetDistance = $config{attackAdjustLOSMaxRouteTargetDistance};
@@ -539,7 +539,7 @@ sub main {
 
 	} elsif (
 		(($args->{attackMethod}{distance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
-		($args->{attackMethod}{distance} >= 2 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
+		($args->{attackMethod}{distance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 		!timeOut($args->{ai_attack_giveup})
 	) {
 		# The target monster moved; move to target
