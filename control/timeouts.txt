@@ -49,11 +49,12 @@ ai_mercenary_attack_auto 0.5
 
 # Give up attacking a monster if it can't be reached within x seconds
 ai_attack_giveup 12
+ai_check_monster_auto 0.4
 
 # If you've just killed a monster, and there are no aggressives,
 # and you're not picking up any items, wait x seconds before doing
 # anything else.
-ai_attack_waitAfterKill 0.7
+ai_attack_waitAfterKill 0.3
 ai_homunculus_attack_waitAfterKill 0.3
 ai_mercenary_attack_waitAfterKill 0.3
 
