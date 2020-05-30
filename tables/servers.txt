@@ -290,7 +290,22 @@ addTableFolders twRO
 captcha 0
 
 # http://ro.gnjoy.in.th/
-[Thailand - tRO: Ayothaya (Thor, Loki, Freya, Sarah)]
+[Thailand - tRO: Ayothaya (Loki, Freya, Sarah)]
+ip 49.229.28.13
+port 50001
+master_version 7
+version 24
+serverType tRO
+serverEncoding Thai
+gameGuard 0
+addTableFolders tRO
+charBlockSize 146
+pinCode 1
+charDeleteDateType 1
+rankingSystemType 1
+
+# http://ro.gnjoy.in.th/
+[Thailand - tRO: Yuno (Thor)]
 ip 49.229.28.77
 port 50001
 master_version 7
@@ -305,7 +320,7 @@ charDeleteDateType 1
 rankingSystemType 1
 
 # http://ro.gnjoy.in.th/
-[Thailand - tRO: Yuno (Choas)]
+[Thailand - tRO: Choas]
 ip 49.229.28.74
 port 50001
 master_version 7
