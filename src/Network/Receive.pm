@@ -993,7 +993,7 @@ sub parse_account_server_info {
 			types => 'a20 V v a126',
 			keys => [qw(name users unknown ip_port)],
 		};
-	} elsif ($args->{switch} eq '0276') { # tRO 2020
+	} elsif ($args->{switch} eq '0276' && $masterServer->{serverType} eq "tRO") { # tRO 2020
 		$server_info = {
 			len => 36,
 			types => 'a4 v Z25 v2',
@@ -1095,12 +1095,23 @@ sub account_server_info {
 
 	@servers = @{$args->{servers}};
 
-	my $msg = center(T(" Servers "), 53, '-') ."\n" .
-			T("#   Name                  Users  IP              Port\n");
-	for (my $num = 0; $num < @servers; $num++) {
-		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
-			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]);
+	if ($masterServer->{serverType} eq "tRO") {
+		my $msg = center(T(" Servers "), 53, '-') ."\n" .
+				T("#   Name                  IP              Port   SID\n");
+		for (my $num = 0; $num < @servers; $num++) {
+			$msg .= swrite(
+				"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
+				[$num, $servers[$num]{name}, $servers[$num]{ip}, $servers[$num]{port}, $servers[$num]{SID}]);
+		}
+	}
+	else {
+		my $msg = center(T(" Servers "), 53, '-') ."\n" .
+				T("#   Name                  Users  IP              Port\n");
+		for (my $num = 0; $num < @servers; $num++) {
+			$msg .= swrite(
+				"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
+				[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]);
+		}
 	}
 	$msg .= ('-'x53) . "\n";
 	message $msg, "connection";
