@@ -290,7 +290,7 @@ addTableFolders twRO
 captcha 0
 
 # http://ro.gnjoy.in.th/
-[Thailand - tRO: Ayothaya (Loki, Freya, Sarah)]
+[Thailand - tRO: Ayothaya]
 ip 49.229.28.13
 port 50001
 master_version 7
@@ -299,13 +299,13 @@ serverType tRO
 serverEncoding Thai
 gameGuard 0
 addTableFolders tRO
-charBlockSize 146
-pinCode 1
+charBlockSize 147
+gameGuard 0
 charDeleteDateType 1
 rankingSystemType 1
 
 # http://ro.gnjoy.in.th/
-[Thailand - tRO: Yuno (Thor)]
+[Thailand - tRO: Junon]
 ip 49.229.28.77
 port 50001
 master_version 7
@@ -314,25 +314,30 @@ serverType tRO
 serverEncoding Thai
 gameGuard 0
 addTableFolders tRO
-charBlockSize 146
-pinCode 1
-charDeleteDateType 1
-rankingSystemType 1
-
-# http://ro.gnjoy.in.th/
-[Thailand - tRO: Choas]
-ip 49.229.28.74
-port 50001
-master_version 7
-version 24
-serverType tRO
-serverEncoding Thai
+charBlockSize 147
 gameGuard 0
 addTableFolders tRO
 charBlockSize 146
 pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
+
+# http://ro.gnjoy.in.th/
+[Thailand - tRO: Yuno]
+ip 49.229.28.74
+port 50001
+master_version 7
+version 24
+serverType tRO
+serverEncoding Thai
+addTableFolders tRO
+charBlockSize 147
+gameGuard 0
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+
 
 #####################
 # Bottable Private Server
