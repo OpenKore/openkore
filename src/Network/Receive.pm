@@ -996,7 +996,7 @@ sub parse_account_server_info {
 	} elsif ($args->{switch} eq '0276' && $masterServer->{serverType} eq "tRO") { # tRO 2020
 		$server_info = {
 			len => 36,
-			types => 'a4 v Z25 v2',
+			types => 'a4 v Z26 v2',
 			keys => [qw(ip port name sid unknown)],
 		};
 	} else { # 0069 [default] (pRO)
@@ -1051,7 +1051,7 @@ sub reconstruct_account_server_info {
 	} elsif ($args->{switch} eq "0276" && $masterServer->{serverType} eq "tRO") { # tRO 2020
 		$serverInfo = {
 			len => 36,
-			types => 'a4 v Z25 v2',
+			types => 'a4 v Z26 v2',
 			keys => [qw(ip port name sid unknown)],
 		};
 	} else {
@@ -1102,10 +1102,10 @@ sub account_server_info {
 	@servers = @{$args->{servers}};
 	my $msg = center(T(" Servers "), 53, '-') ."\n";
 	if ($masterServer->{serverType} eq "tRO") {
-		$msg .=	T("#   Name                  IP              Port      SID\n");
+		$msg .=	T("#   Name                  IP              Port   SID\n");
 		for (my $num = 0; $num < @servers; $num++) {
 			$msg .= swrite(
-				"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<<< ",
+				"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<<< @<<<<<",
 				[$num, $servers[$num]{name}, $servers[$num]{ip}, $servers[$num]{port}, $servers[$num]{sid}]);
 		}
 	}
