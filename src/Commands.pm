@@ -477,7 +477,10 @@ sub initHandlers {
 			["", T("logout and login after 5 seconds")],
 			[T("<seconds>"), T("logout and login after <seconds>")]
 			], \&cmdRelog],
-		['repair', undef, \&cmdRepair],
+		['repair', [
+			T("Repair player's items."),
+			[T("<item #>"), T("repair the specified player's item")],
+			], \&cmdRepair],
 		['respawn', T("Respawn back to the save point."), \&cmdRespawn],
 		['revive', [
 			T("Use of the 'Token Of Siegfried' to self-revive."),
@@ -4977,9 +4980,9 @@ sub cmdRepair {
 	my (undef, $listID) = @_;
 	if ($listID =~ /^\d+$/) {
 		if ($repairList->[$listID]) {
-			$messageSender->sendRepairItem($repairList->[$listID]);
-			my $name = itemNameSimple($repairList->[$listID]);
+			my $name = itemNameSimple($repairList->[$listID]{nameID});
 			message TF("Attempting to repair item: %s\n", $name);
+			$messageSender->sendRepairItem($repairList->[$listID]);
 		} else {
 			error TF("Item with index: %s does either not exist in the 'Repair List' or the list is empty.\n", $listID);
 		}
