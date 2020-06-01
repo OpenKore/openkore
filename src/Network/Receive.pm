@@ -993,7 +993,7 @@ sub parse_account_server_info {
 			types => 'a20 V v a126',
 			keys => [qw(name users unknown ip_port)],
 		};
-	} elsif ($args->{switch} eq '0276' && $masterServer->{serverType} eq "tRO") { # cRO 2017
+	} elsif ($args->{switch} eq '0276' && $masterServer->{serverType} eq "tRO") { # tRO 2020
 		$server_info = {
 			len => 36,
 			types => 'a4 v Z20 v5',

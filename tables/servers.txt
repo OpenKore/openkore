@@ -290,6 +290,21 @@ addTableFolders twRO
 captcha 0
 
 # http://ro.gnjoy.in.th/
+[Thailand - tRO: Sakray]
+ip 49.229.28.19
+port 50001
+master_version 7
+version 24
+serverType tRO
+serverEncoding Thai
+gameGuard 0
+addTableFolders tRO
+charBlockSize 147
+gameGuard 0
+charDeleteDateType 1
+rankingSystemType 1
+
+# http://ro.gnjoy.in.th/
 [Thailand - tRO: Ayothaya]
 ip 49.229.28.13
 port 50001
