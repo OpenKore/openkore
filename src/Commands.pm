@@ -4929,9 +4929,9 @@ sub cmdRepair {
 	my (undef, $listID) = @_;
 	if ($listID =~ /^\d+$/) {
 		if ($repairList->[$listID]) {
-			$messageSender->sendRepairItem($repairList->[$listID]);
-			my $name = itemNameSimple($repairList->[$listID]);
+			my $name = itemNameSimple($repairList->[$listID]{nameID});
 			message TF("Attempting to repair item: %s\n", $name);
+			$messageSender->sendRepairItem($repairList->[$listID]);
 		} else {
 			error TF("Item with index: %s does either not exist in the 'Repair List' or the list is empty.\n", $listID);
 		}
