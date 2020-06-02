@@ -321,7 +321,7 @@ sub new {
 		'01F6' => ['adopt_request', 'a4 a4 Z24', [qw(sourceID targetID name)]],
 		#'01F8' => ['adopt_unknown'], # clif_adopt_process
 		'01FC' => ['repair_list'],
-		'01FE' => ['repair_result', 'v C', [qw(nameID flag)]],
+		'01FE' => ['repair_result', 'a2 C', [qw(ID flag)]], # 5
 		'01FF' => ['high_jump', 'a4 v2', [qw(ID x y)]],
 		'0201' => ['friend_list'],
 		'0205' => ['divorced', 'Z24', [qw(name)]], # clif_divorced
@@ -927,7 +927,7 @@ sub parse_items {
 	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
-    
+
 		if ( $args->{switch} eq '0B09' && $masterServer->{serverType} ne 'iRO_Renewal' && existsInList("10, 16, 17, 19", $item->{type}) ) { # workaround arrow/ammunition byte bug
 			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
 		}

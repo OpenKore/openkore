@@ -10578,11 +10578,12 @@ sub repair_list {
 sub repair_result {
 	my ($self, $args) = @_;
 	undef $repairList;
-	my $itemName = itemNameSimple($args->{nameID});
+	my $index = $args->{ID};
+	my $item = $char->inventory->getByID($index);
 	if ($args->{flag}) {
-		message TF("Repair of %s failed.\n", $itemName);
+		message TF("Repair of %s failed.\n", $item->{name});
 	} else {
-		message TF("Successfully repaired %s.\n", $itemName);
+		message TF("Successfully repaired '%s'\n", $item->{name});
 	}
 }
 
