@@ -3529,6 +3529,7 @@ sub processRepairAuto {
 		my ($listID, $name);
 		my $brokenIndex = 0;
 		foreach my $repairListItem (@{$repairList}) {
+			next if (!$repairListItem);
 			$name = itemNameSimple($repairListItem->{nameID});
 			if (existsInList($config{'repairAuto_list'}, $name) || !$config{'repairAuto_list'}) {
 				$messageSender->sendRepairItem($repairListItem);
