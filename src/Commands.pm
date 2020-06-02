@@ -161,8 +161,12 @@ sub initHandlers {
 			[T("<key>"), T("displays value of <key>")],
 			[T("<key> <value>"), T("sets value of <key> to <value>")],
 			[T("<key> none"), T("unsets <key>")],
-			[T("<label.attribute> <value>"), T("set a new value for the specified configuration key through label")],
-			[T("<label.attribute> none"), T("unset the specified configuration key through label")]
+			[T("<label>.<attribute>"), T("displays value of the specified configuration key through label")],
+			[T("<label>.<attribute> <value>"), T("set a new value for the specified configuration key through label")],
+			[T("<label>.<attribute> none"), T("unset the specified configuration key through label")],
+			[T("<label>.block"), T("display the current value of the specified block")],
+			[T("<label>.block <value>"), T("set a new value for the specified block through <label>")],
+			[T("<label>block none"), T("unset the specified block through <label>")]
 			], \&cmdConf],
 		['connect', undef, \&cmdConnect],
 		['create', undef, \&cmdCreate],
@@ -451,7 +455,11 @@ sub initHandlers {
 			["recompile", T("recompile portals")],
 			["add", T("add new portals: <map1> <x> <y> <map2> <x> <y>")],
 			], \&cmdPortalList],
-		['quit', T("Exit this program."), \&cmdQuit],
+		['quit', [
+			T("Exit this program."),
+			["", T("exit this program")],
+			["2", T("send a special package 'quit_request' to the server, then exit this program")],
+			], \&cmdQuit],
 		['rc', [
 			T("Reload source code files."),
 			["", T("reload functions.pl")],
@@ -469,10 +477,41 @@ sub initHandlers {
 			["", T("logout and login after 5 seconds")],
 			[T("<seconds>"), T("logout and login after <seconds>")]
 			], \&cmdRelog],
-		['repair', undef, \&cmdRepair],
+		['repair', [
+			T("Repair player's items."),
+			[T("<item #>"), T("repair the specified player's item")],
+			], \&cmdRepair],
 		['respawn', T("Respawn back to the save point."), \&cmdRespawn],
-		['revive', undef, \&cmdRevive],
-		['rodex', undef, \&cmdRodex],
+		['revive', [
+			T("Use of the 'Token Of Siegfried' to self-revive."),
+			["", T("use of the 'Token Of Siegfried' to self-revive")],
+			["force", T("trying to self-revive using")],
+			["\"<item_name>\"", T("check <item_name> availability, then trying to self-revive")],
+			["<item_ID>", T("check <item_ID> availability, then trying to self-revive")],
+			], \&cmdRevive],
+		['rodex', [
+			T("rodex use (Ragnarok Online Delivery Express)"),
+			["open", T("open rodex mailbox")],
+			["close", T("close rodex mailbox")],
+			["list", T("list your first page of rodex mail")],
+			["nextpage", T("request and get the next page of rodex mail")],
+			["maillist", T("show ALL messages from ALL pages of rodex mail")],
+			["refresh", T("send request to refresh and update rodex mailbox")],
+			["read <mail_id>", T("open the selected Rodex mail")],
+			["getitems", T("request ang get items of current rodex mail")],
+			["getzeny", T("request ang get zeny of current rodex mail")],
+			["write <player_name|self|none>", T("open a box to start write a rodex mail")],
+			["settarget <player_name|self>", T("set target of rodex mail")],
+			["itemslist", T("show current list of items in mail box that you are writting")],
+			["settitle <title>", T("show current list of items in mail box that you are writting")],
+			["setbody <body>", T("set rodex mail body")],
+			["setzeny <zeny_amount>", T("set zeny amount in rodex mail")],
+			["add <item #> <amount>", T("add a item from inventory in rodex mail box")],
+			["remove <item #> <amount>", T("remove a item or amount of item from rodex mail")],
+			["send", T("send finished rodex mail")],
+			["cancel", T("close rodex mail write box")],
+			["delete <mail_id>", T("delete selected rodex mail")]
+			], \&cmdRodex],
 		['roulette', [
 			T("Roulette System."),
 			["open", T("Open Roulette System")],
@@ -610,7 +649,7 @@ sub initHandlers {
 		['verbose', T("Toggle verbose on/off."), \&cmdVerbose],
 		['version', T("Display the version of openkore."), \&cmdVersion],
 		['vl', T("List nearby vending shops."), \&cmdVenderList],
-		['vs', undef, \&cmdShopInfoSelf],
+		['vs', T("Display the status of your vending shop."), \&cmdShopInfoSelf],
 		['warp', [
 			T("Open warp portal."),
 			["list", T("lists available warp portals to open")],
@@ -697,7 +736,7 @@ sub initHandlers {
 			], \&cmdQuest],
 		['showeq', [
 			T("Equipment showing."),
-			[T("<player>"), T("request equipment information for player")],
+			[T("p <index|name|partialname>"), T("request equipment information for player")],
 			["me on", T("enables equipment showing")],
 			["me off", T("disables equipment showing")]
 			], \&cmdShowEquip],
@@ -727,7 +766,15 @@ sub initHandlers {
 		['cm', undef, \&cmdExchangeItem],
 		['analysis', undef, \&cmdExchangeItem],
 
-		['searchstore', undef, \&cmdSearchStore],
+		['searchstore', [
+			T("Universal catalog command"),
+			["close", T("Closes search store catalog")],
+			["next", T("Requests catalog next page")],
+			["view <page #>", T("Shows catalog page # (0-indexed)")],
+			["search [match|exact] ...", T("Searches for an item")],
+			["select <page #> <store #>", T("Selects a store")],
+			["buy [view|end|<item #> [<amount>]]", T("Buys from a store using Universal Catalog Gold")],
+			], \&cmdSearchStore],
 		['pause', [
 			T("Delay the next console commands."),
 			[T("<seconds>"), T("delay the next console commands by a specified number of seconds (default: 1 sec.)")]
@@ -3512,7 +3559,7 @@ sub helpIndent {
 	my @words;
 	my $length = 0;
 
-	$message = center(TF(" Help for '%s' ", $cmd), 79, "=")."\n";
+	$message = center(TF(" Help for '%s' ", $cmd), 119, "=")."\n";
 	$message .= shift(@tmp) . "\n";
 
 	foreach (@tmp) {
@@ -3523,12 +3570,12 @@ sub helpIndent {
 	my $pad = sprintf("%-${padsize}s", '');
 
 	foreach (@tmp) {
-		if ($padsize + length($_->[1]) > 79) {
+		if ($padsize + length($_->[1]) > 120) {
 			@words = split(/ /, $_->[1]);
 			$message .= sprintf("$cmd %-${length}s    ", $_->[0]);
 			$messageTmp = '';
 			foreach my $word (@words) {
-				if ($padsize + length($messageTmp) + length($word) + 1 > 79) {
+				if ($padsize + length($messageTmp) + length($word) + 1 > 119) {
 					$message .= $messageTmp . "\n$pad";
 					$messageTmp = "$word ";
 				} else {
@@ -3541,7 +3588,7 @@ sub helpIndent {
 			$message .= sprintf($pattern, $_->[0], $_->[1]);
 		}
 	}
-	$message .= "=" x 79 . "\n";
+	$message .= "=" x 119 . "\n";
 	message $message, "list";
 }
 
@@ -4865,6 +4912,10 @@ sub cmdPrivateMessage {
 }
 
 sub cmdQuit {
+	my (undef, $args) = @_;
+	if ($args eq "2") {
+		$messageSender->sendQuit();
+	}
 	quit();
 }
 
@@ -4929,9 +4980,9 @@ sub cmdRepair {
 	my (undef, $listID) = @_;
 	if ($listID =~ /^\d+$/) {
 		if ($repairList->[$listID]) {
-			$messageSender->sendRepairItem($repairList->[$listID]);
-			my $name = itemNameSimple($repairList->[$listID]);
+			my $name = itemNameSimple($repairList->[$listID]{nameID});
 			message TF("Attempting to repair item: %s\n", $name);
+			$messageSender->sendRepairItem($repairList->[$listID]);
 		} else {
 			error TF("Item with index: %s does either not exist in the 'Repair List' or the list is empty.\n", $listID);
 		}
@@ -7015,11 +7066,19 @@ sub cmdRodex {
 
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex write' (Start writting a rodex mail)\n" .
-				"Usage: rodex write <player_name>\n");
+				"Usage: rodex write <player_name|self|none>\n");
 			return;
+		} elsif ($arg2 eq "self") {
+			debug "Send rodex mail to yourself\n";
+			$arg2 = $char->{'name'};
+		}
+		if ($arg2 eq "none") {
+			undef $arg2;
+			message T("Opening rodex mail write box. No recipient specified.\n");
+		} else {
+			message TF("Opening rodex mail write box. Recipient: %s\n", $arg2);
 		}
 
-		message T("Opening rodex mail write box.\n");
 		$messageSender->rodex_open_write_mail($arg2);
 
 	} elsif ($arg1 eq 'cancel') {
@@ -7050,8 +7109,11 @@ sub cmdRodex {
 
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex settarget' (Set target of rodex mail)\n" .
-				"Usage: rodex settarget <player_name>\n");
+				"Usage: rodex settarget <player_name|self>\n");
 			return;
+		} elsif ($arg2 eq "self") {
+			debug "Send rodex mail to yourself\n";
+			$arg2 = $char->{'name'};
 		}
 
 		message TF("Setting target of rodex mail to '%s'.\n", $arg2);
@@ -7413,7 +7475,7 @@ sub cmdRodex {
 
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
-			"Usage: rodex [<open|close|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
+			"Usage: rodex [<open|close|list|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
 	}
 }
 
@@ -8020,18 +8082,18 @@ sub cmdRevive {
 		$item = $char->inventory->getByNameID(7621);
 	} else {
 		error T("Error in 'revive' command (incorrect syntax)\n".
-				"revive [force|<item name>|<item ID>]\n");
+				"revive [force|\"<item_name>\"|<item_ID>]\n");
 		return;
 	}
 
 	if (!$item && $args[0] ne "force") {
 		error TF("Error in 'revive' command\n".
-				"Cannot use item %d in attempt to revive: item not found in inventory\n", $args[0]);
+				"Cannot use item '%s' in attempt to revive: item not found in inventory\n", $args[0]);
 		return;
 	}
 
 	if ($item && $args[0] ne "force") {
-		message TF("Trying to use item %s to self-revive\n", $item->name());
+		message TF("Trying to use item '%s' to self-revive\n", $item->name());
 	} else {
 		message TF("Trying to self-revive using 'force'\n");
 	}
