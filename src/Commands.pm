@@ -469,7 +469,11 @@ sub initHandlers {
 			["", T("logout and login after 5 seconds")],
 			[T("<seconds>"), T("logout and login after <seconds>")]
 			], \&cmdRelog],
-		['repair', undef, \&cmdRepair],
+		['repair', [
+			T("Repair player's items."),
+			[T("<repair_item #>"), T("repair the specified player's item")],
+			[T("cancel"), T("cancel repair item")],
+			], \&cmdRepair],
 		['respawn', T("Respawn back to the save point."), \&cmdRespawn],
 		['revive', undef, \&cmdRevive],
 		['rodex', undef, \&cmdRodex],
@@ -4927,14 +4931,22 @@ sub cmdRepair {
 		return;
 	}
 	my (undef, $listID) = @_;
-	if ($listID =~ /^\d+$/) {
+	if (!$repairList) {
+		error T("'Repair List' is empty.\n");
+	} elsif ($listID =~ /^\d+$/) {
 		if ($repairList->[$listID]) {
 			my $name = itemNameSimple($repairList->[$listID]{nameID});
 			message TF("Attempting to repair item: %s\n", $name);
 			$messageSender->sendRepairItem($repairList->[$listID]);
 		} else {
-			error TF("Item with index: %s does either not exist in the 'Repair List' or the list is empty.\n", $listID);
+			error TF("Item with index: %s does either not exist in the 'Repair List'.\n", $listID);
 		}
+	} elsif ($listID eq "cancel") {
+		message T("Cancel repair item.\n");
+		my %cancel = (
+			index => 65535, # 0xFFFF
+		);
+		$messageSender->sendRepairItem(\%cancel);
 	} else {
 		error T("Syntax Error in function 'repair' (Repair player's items.)\n" .
 			"Usage: repair [Repair List index]\n");
