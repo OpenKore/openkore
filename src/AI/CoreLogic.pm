@@ -174,6 +174,7 @@ sub iterate {
 	Misc::checkValidity("AI part 3");
 	processAutoEquip();
 	processAutoAttack();
+	processCheckMonster();
 	processItemsTake();
 	processItemsAutoGather();
 	processItemsGather();
@@ -2989,7 +2990,7 @@ sub processAutoAttack {
 	Benchmark::begin("ai_autoAttack") if DEBUG;
 
 	return if (!$field);
-	if ((AI::isIdle || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
+	if ((AI::isIdle || AI::is(qw/route checkMonsters follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
 	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
 	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
@@ -3129,9 +3130,7 @@ sub processAutoAttack {
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($attackTarget) {
 			ai_setSuspend(0);
-			
-			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
-			
+
 			$char->attack($attackTarget);
 		} else {
 			$timeout{'ai_attack_auto'}{'time'} = time;
@@ -3185,7 +3184,7 @@ sub processItemsTake {
 ##### ITEMS AUTO-GATHER #####
 sub processItemsAutoGather {
 	if ( (AI::isIdle || AI::action eq "follow"
-		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2)  && !$config{itemsTakeAuto_new}))
+		|| ( AI::is("route", "mapRoute", "checkMonsters") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2)  && !$config{itemsTakeAuto_new}))
 	  && $config{'itemsGatherAuto'}
 	  && !$ai_v{sitAuto_forcedBySitCommand}
 	  && ($config{'itemsGatherAuto'} >= 2 || !ai_getAggressives())
@@ -3582,6 +3581,19 @@ sub processPartyShareAuto {
 		}
 		$timeout{ai_partyShareCheck}{time} = time;
 	}	
+}
+
+sub processCheckMonster {
+	return if AI::inQueue("attack");
+	return if !AI::inQueue("checkMonsters");
+	return if !AI::is("checkMonsters");
+
+	$timeout{'ai_check_monster_auto'}{'time'} = time if !$timeout{'ai_check_monster_auto'}{'time'};
+
+	if(timeOut($timeout{'ai_check_monster_auto'})) {
+		AI::dequeue;
+		undef $timeout{'ai_check_monster_auto'}{'time'};
+	}
 }
 
 1;
