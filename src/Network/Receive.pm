@@ -10549,22 +10549,27 @@ sub pvp_rank {
 # 01FC <packet len>.W { <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }*
 sub repair_list {
 	my ($self, $args) = @_;
-	my $msg = center(T(" Repair List "), 27, '-') ."\n";
 	undef $repairList;
+	my $msg = center(T(" Repair List "), 80, '-') ."\n".
+			T("   # Short name                     Full name\n");
+
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my $item = {};
+		my $repairItem = {};
 
-		($item->{index},
-		$item->{nameID},
-		$item->{upgrade},
-		$item->{cards},
+		($repairItem->{index},
+		$repairItem->{nameID},
+		$repairItem->{upgrade},
+		$repairItem->{cards},
 		) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, 13));
+		my $ID = $repairItem->{index} + 2;
+		$ID = pack("v", $ID);
+		my $item = $char->inventory->getByID($ID);
+		$repairList->[$item->{binID}] = $repairItem;
 
-		$repairList->[$item->{index}] = $item;
-		my $name = itemNameSimple($item->{nameID});
-		$msg .= $item->{index} . " $name\n";
+		my $name = itemNameSimple($repairItem->{nameID});
+		$msg .= sprintf("%4d %-30s %s\n", $item->{binID}, $name, $item->{name});
 	}
-	$msg .= ('-'x27) . "\n";
+	$msg .= ('-'x80) . "\n";
 	message $msg, "list";
 }
 
