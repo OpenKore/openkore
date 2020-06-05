@@ -100,6 +100,7 @@ sub import {
 sub encryptMessageID {
 	my ($self, $r_message) = @_;
 	my $messageID = unpack("v", $$r_message);
+	my $messageID2 = uc(unpack("H2", substr($$r_message, 1, 1))) . uc(unpack("H2", substr($$r_message, 0, 1)));
 	
 	if ($self->{encryption}->{crypt_key_3}) {
 		if (sprintf("%04X",$messageID) eq $self->{packet_lut}{map_login}) {
@@ -123,7 +124,7 @@ sub encryptMessageID {
 			$$r_message = pack("v", $messageID) . substr($$r_message, 2);
 
 			# Debug Log	
-			debug (sprintf("Encrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF), "sendPacket", 0) if $config{debugPacket_sent};
+			debug (sprintf("Encrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF), "sendPacket", 0) if ($config{debugPacket_sent} || ($config{'debugPacket_include_dumpMethod'} && !existsInList($config{debugPacket_exclude}, $messageID2) && existsInList($config{'debugPacket_include'}, $messageID2)));
 		}
 	} else {
 		use bytes;
@@ -264,7 +265,9 @@ sub sendToServer {
 	if ($config{'debugPacket_include_dumpMethod'} && !existsInList($config{debugPacket_exclude}, $messageID) && existsInList($config{'debugPacket_include'}, $messageID)) {
 		my $label = $packetDescriptions{Send}{$messageID} ?
 			"[$packetDescriptions{Send}{$messageID}]" : '';
-		if ($config{debugPacket_include_dumpMethod} == 3 && existsInList($config{'debugPacket_include'}, $messageID)) {
+		if ($config{debugPacket_include_dumpMethod} == 2) {
+			Misc::visualDump($msg, ">> Sent packet: $messageID  $label");
+		} elsif ($config{debugPacket_include_dumpMethod} == 3 && existsInList($config{'debugPacket_include'}, $messageID)) {
 			#Security concern: Dump only when you included the header in config
 			Misc::dumpData($msg, 1, 1);
 		} elsif ($config{debugPacket_include_dumpMethod} == 4) {
