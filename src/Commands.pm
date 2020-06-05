@@ -4988,16 +4988,16 @@ sub cmdRepair {
 			T("   # Short name                     Full name\n");
 		for (my $i = 0; $i < @{$repairList}; $i++) {
 			next if ($repairList->[$i] eq "");
-			my $name = itemNameSimple($repairList->[$i]{nameID});
-			$msg .= sprintf("%4d %-30s %s\n", $i, $name, $char->inventory->get($i)->{name});
+			my $shortName = itemNameSimple($repairList->[$i]{nameID});
+			$msg .= sprintf("%4d %-30s %s\n", $i, $shortName, $repairList->[$i]->{name});
 		}
 		$msg .= ('-'x80) . "\n";
 		message $msg, "list";
 
 	} elsif ($binID =~ /^\d+$/) {
 		if ($repairList->[$binID]) {
-			my $name = itemNameSimple($repairList->[$binID]{nameID});
-			message TF("Attempting to repair item: %s (%d)\n", $name, $binID);
+			my $shortName = itemNameSimple($repairList->[$binID]{nameID});
+			message TF("Attempting to repair item: %s (%d)\n", $shortName, $binID);
 			$messageSender->sendRepairItem($repairList->[$binID]);
 		} else {
 			error TF("Item with index: %s does either not exist in the 'Repair List'.\n", $binID);

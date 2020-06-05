@@ -1829,7 +1829,6 @@ sub sendRepairItem {
 		upgrade => $args->{upgrade},
 		cards => $args->{cards},
 	}));
-	undef $repairList;
 	debug ("Sent repair item index: ".$args->{index}."\n", "sendPacket", 2);
 }
 

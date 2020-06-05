@@ -10550,12 +10550,12 @@ sub pvp_rank {
 sub repair_list {
 	my ($self, $args) = @_;
 	undef $repairList;
-	my $msg = center(T(" Repair List "), 80, '-') ."\n".
+	my $myself = 1;
+	my $msg1 = center(T(" Repair List "), 80, '-') ."\n".
 			T("   # Short name                     Full name\n");
-
+	my $msg2;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
 		my $repairItem = {};
-
 		($repairItem->{index},
 		$repairItem->{nameID},
 		$repairItem->{upgrade},
@@ -10564,13 +10564,42 @@ sub repair_list {
 		my $ID = $repairItem->{index} + 2;
 		$ID = pack("v", $ID);
 		my $item = $char->inventory->getByID($ID);
-		$repairList->[$item->{binID}] = $repairItem;
+		$repairItem->{name} = $item->{name};
 
-		my $name = itemNameSimple($repairItem->{nameID});
-		$msg .= sprintf("%4d %-30s %s\n", $item->{binID}, $name, $item->{name});
+		#dirty hack - if the item ID does not match, then we repair other people's items
+		if ($repairItem->{nameID} ne $item->{nameID}) {
+			debug "Received 'Repair list' belongs to another player\n", 1;
+			$myself = 0;
+			last;
+		}
+
+		$repairList->[$item->{binID}] = $repairItem;
+		my $shortName = itemNameSimple($repairItem->{nameID});
+		$msg2 .= sprintf("%4d %-30s %s\n", $item->{binID}, $shortName, $item->{name});
 	}
-	$msg .= ('-'x80) . "\n";
-	message $msg, "list";
+
+	if (!$myself) {
+		# then we repair other people's items
+		# we need to rebuild the entire array
+		undef $repairList;
+		undef $msg2;
+		for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
+			my $repairItem = {};
+			($repairItem->{index},
+			$repairItem->{nameID},
+			$repairItem->{upgrade},
+			$repairItem->{cards},
+			) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, 13));
+			my $shortName = itemNameSimple($repairItem->{nameID});
+			my $fullName = itemName($repairItem);
+			$repairItem->{name} = $fullName;
+
+			$repairList->[$repairItem->{index}] = $repairItem;
+			$msg2 .= sprintf("%4d %-30s %s\n", $repairItem->{index}, $shortName, $fullName);
+		}
+	}
+	$msg2 .= ('-'x80) . "\n";
+	message $msg1.$msg2, "list";
 }
 
 # Notifies the client about the result of a item repair request (ZC_ACK_ITEMREPAIR).
@@ -10582,14 +10611,16 @@ sub repair_list {
 #     1 = Item repair failure.
 sub repair_result {
 	my ($self, $args) = @_;
-	undef $repairList;
-	my $index = $args->{ID};
+
+	my $index = $args->{index} - 2;
 	my $item = $char->inventory->getByID($index);
+
 	if ($args->{flag}) {
-		message TF("Repair of %s failed.\n", $item->{name});
+		message TF("Repair of %s failed.\n", $repairList->[$index]->{name});
 	} else {
-		message TF("Successfully repaired '%s'\n", $item->{name});
+		message TF("Successfully repaired '%s'.\n", $repairList->[$index]->{name});
 	}
+	undef $repairList;
 }
 
 sub resurrection {

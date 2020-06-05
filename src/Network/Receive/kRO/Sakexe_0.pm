@@ -332,7 +332,7 @@ sub new {
 		'01F6' => ['adopt_request', 'a4 a4 Z24', [qw(sourceID targetID name)]], # 34
 		'01F8' => ['adopt_start'], # 2
 		'01FC' => ['repair_list'], # -1
-		'01FE' => ['repair_result', 'a2 C', [qw(ID flag)]], # 5
+		'01FE' => ['repair_result', 'v C', [qw(index flag)]], # 5
 		'01FF' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'0201' => ['friend_list'], # -1
 		'0205' => ['divorced', 'Z24', [qw(name)]], # 26 # clif_divorced
