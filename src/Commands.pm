@@ -193,7 +193,7 @@ sub initHandlers {
 		['doridori', T("Does a doridori head turn."), \&cmdDoriDori],
 		['drop', [
 			T("Drop an item from the inventory."),
-			[T("<inventory item #> [<amount>]"), T("drop an item from inventory")]
+			[T("<inventory_item_list> [<amount>]"), T("drop an item from inventory")]
 			], \&cmdDrop],
 		['dump', T("Dump the current packet receive buffer and quit."), \&cmdDump],
 		['dumpnow', T("Dump the current packet receive buffer without quitting."), \&cmdDumpNow],
@@ -2329,11 +2329,12 @@ sub cmdDrop {
 		return;
 	}
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^([\d,-]+)/;
+	my ($arg1) = $args =~ /^(\d+[\d,-]*)/;
 	my ($arg2) = $args =~ /^[\d,-]+ (\d+)$/;
-	if (($arg1 eq "") or ($arg1 < 0)) {
+
+	if ($arg1 eq "") {
 		error T("Syntax Error in function 'drop' (Drop Inventory Item)\n" .
-			"Usage: drop <item #> [<amount>]\n");
+			"Usage: drop <inventory_item_list> [<amount>]\n");
 	} else {
 		my @temp = split(/,/, $arg1);
 		@temp = grep(!/^$/, @temp); # Remove empty entries
