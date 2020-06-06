@@ -479,7 +479,9 @@ sub initHandlers {
 			], \&cmdRelog],
 		['repair', [
 			T("Repair player's items."),
+			["", T("list of items available for repair")],
 			[T("<item #>"), T("repair the specified player's item")],
+			[T("cancel"), T("cancel repair item")],
 			], \&cmdRepair],
 		['respawn', T("Respawn back to the save point."), \&cmdRespawn],
 		['revive', [
@@ -4978,18 +4980,42 @@ sub cmdRepair {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	my (undef, $listID) = @_;
-	if ($listID =~ /^\d+$/) {
-		if ($repairList->[$listID]) {
-			my $name = itemNameSimple($repairList->[$listID]{nameID});
-			message TF("Attempting to repair item: %s\n", $name);
-			$messageSender->sendRepairItem($repairList->[$listID]);
-		} else {
-			error TF("Item with index: %s does either not exist in the 'Repair List' or the list is empty.\n", $listID);
+	my (undef, $binID) = @_;
+	if (!$repairList) {
+		error T("'Repair List' is empty.\n");
+
+	} elsif ($binID eq "") {
+		my $msg = center(T(" Repair List "), 80, '-') ."\n".
+			T("   # Short name                     Full name\n");
+		for (my $i = 0; $i < @{$repairList}; $i++) {
+			next if ($repairList->[$i] eq "");
+			my $shortName = itemNameSimple($repairList->[$i]{nameID});
+			$msg .= sprintf("%4d %-30s %s\n", $i, $shortName, $repairList->[$i]->{name});
 		}
+		$msg .= ('-'x80) . "\n";
+		message $msg, "list";
+
+	} elsif ($binID =~ /^\d+$/) {
+		if ($repairList->[$binID]) {
+			my $shortName = itemNameSimple($repairList->[$binID]{nameID});
+			message TF("Attempting to repair item: %s (%d)\n", $shortName, $binID);
+			$messageSender->sendRepairItem($repairList->[$binID]);
+		} else {
+			error TF("Item with index: %s does either not exist in the 'Repair List'.\n", $binID);
+		}
+
+	} elsif ($binID eq "cancel") {
+		message T("Cancel repair item.\n");
+		my %cancel = (
+			index => 65535, # 0xFFFF
+		);
+		$messageSender->sendRepairItem(\%cancel);
+
 	} else {
-		error T("Syntax Error in function 'repair' (Repair player's items.)\n" .
-			"Usage: repair [Repair List index]\n");
+		error T("Syntax Error in function 'repair' (Repair player's items)\n" .
+			"Usage: repair\n" .
+			"       repair <item #>\n" .
+			"       repair cancel\n");
 	}
 }
 

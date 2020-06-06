@@ -35,7 +35,7 @@ use Utils::Rijndael;
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
@@ -159,7 +159,7 @@ sub new {
 		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
 		'01F9' => ['adopt_request', 'V', [qw(ID)]],
 		'01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
-		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
+		'01FD' => ['repair_item', 'v2 C a8', [qw(index nameID upgrade cards)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
@@ -252,7 +252,7 @@ sub new {
 		'0843' => ['remove_aid_sso', 'V', [qw(ID)]],
 		'0846' => ['req_cash_tabcode', 'v', [qw(ID)]],
 		'0844' => ['cash_shop_open'],#2
-		'0848' => ($rpackets{'0848'}{minLength} == 6) ? 
+		'0848' => ($rpackets{'0848'}{minLength} == 6) ?
 			['cash_shop_buy', 'v v a*', [qw(len count buy_info)]] :
 			['cash_shop_buy', 'v v V a*', [qw(len count kafra_points buy_info)]],
 		'084A' => ['cash_shop_close'],#2
@@ -319,12 +319,12 @@ sub new {
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AE8' => ['change_dress'],
 		'0AEF' => ['attendance_reward_request'],
-		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
+		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	# # it would automatically use the first available if not set
 	# my %handlers = qw(
 	# 	master_login 0064
@@ -334,7 +334,7 @@ sub new {
 	# 	buy_bulk_vender 0134
 	# );
 	# $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -437,7 +437,7 @@ sub sendPartyOrganize {
 	# my $msg = pack("C*", 0xF9, 0x00) . pack("Z24", stringToBytes($name));
 	# I think this is obsolete - which serverTypes still support this packet anyway?
 	# FIXME: what are shared with $share1 and $share2? experience? item? vice-versa?
-	
+
 	my $msg = pack("C*", 0xE8, 0x01) . pack("Z24", stringToBytes($name)) . pack("C*", $share1, $share2);
 
 	$self->sendToServer($msg);
@@ -448,7 +448,7 @@ sub sendPartyOrganize {
 # note: item share changing seems disabled in newest clients
 sub sendPartyOption {
 	my ($self, $exp, $itemPickup, $itemDivision) = @_;
-	
+
 	$self->sendToServer($self->reconstruct({
 		switch => 'party_setting',
 		exp => $exp,
@@ -473,9 +473,9 @@ sub sendPreLoginCode {
 sub sendRequestMakingHomunculus {
 	# WARNING: If you don't really know, what are you doing - don't touch this
 	my ($self, $make_homun) = @_;
-	
+
 	my $skill = new Skill (idn => 241);
-	
+
 	if (
 		Actor::Item::get (997) && Actor::Item::get (998) && Actor::Item::get (999)
 		&& ($char->getSkillLevel ($skill) > 0)

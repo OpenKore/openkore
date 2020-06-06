@@ -222,7 +222,7 @@ sub new {
 		'014B' => ['GM_silence', 'C Z24', [qw(type name)]], # 27
 		'014C' => ['guild_allies_enemy_list'], # -1
 		'014E' => ['guild_master_member', 'V', [qw(type)]], # 6
-		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]],		
+		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]],
 		'0152' => ['guild_emblem', 'v a4 a4 a*', [qw(len guildID emblemID emblem)]], # -1
 		'0154' => ['guild_members_list', 'v a*', [qw(len member_list)]],
 		'0156' => ['guild_update_member_position', 'v a*', [qw(len member_list)]],
@@ -332,7 +332,7 @@ sub new {
 		'01F6' => ['adopt_request', 'a4 a4 Z24', [qw(sourceID targetID name)]], # 34
 		'01F8' => ['adopt_start'], # 2
 		'01FC' => ['repair_list'], # -1
-		'01FE' => ['repair_result', 'v C', [qw(nameID flag)]], # 5
+		'01FE' => ['repair_result', 'v C', [qw(index flag)]], # 5
 		'01FF' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'0201' => ['friend_list'], # -1
 		'0205' => ['divorced', 'Z24', [qw(name)]], # 26 # clif_divorced
@@ -888,7 +888,7 @@ sub parse_items {
 	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
-    
+
 		if ( $args->{switch} eq '0B09' && $masterServer->{serverType} ne 'iRO_Renewal' && existsInList("10, 16, 17, 19", $item->{type}) ) { # workaround arrow/ammunition byte bug
 			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
 		}
