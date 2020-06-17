@@ -663,7 +663,7 @@ sub received_characters_unpackString {
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
 			};
 
-        } elsif ($_ == 146) { # bRO and tRO update the data to be equal to charblocksize 147, but not added sex. (Sep, 2019)
+        } elsif ($_ == 146) { # equal to charblocksize 147, but not added sex. (Sep, 2019)
 			$char_info = {
 			    types => 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V4',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon)],
@@ -979,8 +979,15 @@ sub received_characters_info {
 sub parse_account_server_info {
 	my ($self, $args) = @_;
 	my $server_info;
+	
+	if ($args->{switch} eq '0B60') { # tRO 2020
+		$server_info = {
+			len => 164,
+			types => 'a4 v Z20 v3 a132',
+			keys => [qw(ip port name state users property ip_port)],
+		};
 
-	if ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
+	} elsif ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
 		$server_info = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
@@ -993,7 +1000,13 @@ sub parse_account_server_info {
 			types => 'a20 V v a126',
 			keys => [qw(name users unknown ip_port)],
 		};
-	} else { # 0069 [default] and 0276 [pRO, tRO
+	} elsif ($args->{switch} eq '0276' && $masterServer->{serverType} eq "tRO") { # tRO 2020 # keep this here to future uses
+		$server_info = {
+			len => 36,
+			types => 'a4 v Z20 v5',
+			keys => [qw(ip port name state users property sid unknown)],
+		};
+	} else { # 0069 [default] and 0276 [pRO]
 		$server_info = {
 			len => 32,
 			types => 'a4 v Z20 v3',
@@ -1030,7 +1043,14 @@ sub reconstruct_account_server_info {
 
 	my $serverInfo;
 
-	if ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4") {
+	if ($args->{switch} eq '0B60') { # tRO 2020
+		$serverInfo = {
+			len => 164,
+			types => 'a4 v Z20 v3 a132',
+			keys => [qw(ip port name state users property ip_port)],
+		};
+
+	} elsif ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4") {
 		$serverInfo = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
@@ -1041,6 +1061,12 @@ sub reconstruct_account_server_info {
 			len => 154,
 			types => 'a20 V a2 a126',
 			keys => [qw(name users unknown ip_port)],
+		};
+	}  elsif ($masterServer->{serverType} eq "tRO" && ( $args->{switch} eq "0276" || $self->{packet_lut}{$args->{switch}} eq "0276" )) {
+		$serverInfo = {
+			len => 36,
+			types => 'a4 v Z20 v5',
+			keys => [qw(ip port name state users property sid unknown)],
 		};
 	} else {
 		$serverInfo = {
@@ -1088,13 +1114,14 @@ sub account_server_info {
 		('-'x34) . "\n", 'connection';
 
 	@servers = @{$args->{servers}};
+	my @state = ("Idle", "Normal", "Busy", "Full");
 
 	my $msg = center(T(" Servers "), 53, '-') ."\n" .
-			T("#   Name                  Users  IP              Port\n");
+			T("#   Name                  Users  IP              Port  SID   State\n");
 	for (my $num = 0; $num < @servers; $num++) {
 		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
-			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]);
+			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<< @<<<<< @<<<<<<",
+			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}, ($servers[$num]{sid}) ? $servers[$num]{sid} : 0, defined($servers[$num]{state}) ? $state[$servers[$num]{state}] : 0]);
 	}
 	$msg .= ('-'x53) . "\n";
 	message $msg, "connection";

@@ -717,6 +717,7 @@ sub new {
 		'0B0B' => ['item_list_end', 'C2', [qw(type flag)]],
 		'0B1B' => ['load_confirm'],
 		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
+		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
