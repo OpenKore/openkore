@@ -4271,9 +4271,9 @@ sub avoidList_ID {
 
 	my $avoidID = unpack("V", shift);
 	if ($avoid{ID}{$avoidID} && $avoid{ID}{$avoidID}{disconnect_on_sight}) {
-		warning TF("%s is nearby (%s), disconnecting...\n", $avoidID, $field->baseName);
-		chatLog("k", TF("*** Found %s nearby (%s) and disconnected ***\n", $avoidID, $field->baseName));
-		warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
+		my $msg = TF("Player with ID %s is nearby (%s), disconnect for %s seconds", $avoidID, $field->baseName, $config{avoidList_reconnect});
+		warning "$msg\n";
+		chatLog("k", "*** $msg ***\n");
 		relog($config{avoidList_reconnect}, 1);
 		return 1;
 	}
