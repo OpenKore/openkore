@@ -16,7 +16,7 @@
 package ChatQueue;
 
 #TODO: Review and test the whole document before adding them back
-#use strict; 
+#use strict;
 #use warnings;
 
 use Time::HiRes qw(time);
@@ -89,7 +89,7 @@ sub processFirst {
 	my $userID = $cmd->{userID};
 
 	return if ( $user ne ""
-		&& (avoidGM_talk($user, $msg) || avoidList_talk($user, $msg, unpack("V1", $userID))) );
+		&& (avoidGM_talk($user, unpack("V1", $userID)) || avoidList_talk($user, unpack("V1", $userID))) );
 
 
 	# If the user is not authorized to use chat commands,
@@ -210,7 +210,7 @@ sub processChatCommand {
 				$vars->{gotItems} = sprintf("%-40s %5d", $item, $itemChange{$item});
 				sendMessage($messageSender, $type, getResponse("expItemS2"), $user) if $config{verbose};
 			}
-			
+
 		} else {
 			sendMessage($messageSender, $type, getResponse("expF"), $user) if $config{verbose};
 		}
@@ -398,7 +398,7 @@ sub processChatCommand {
 	} elsif ($switch eq "town") {
 		sendMessage($messageSender, $type, getResponse("moveS"), $user);
 		main::useTeleport(2);
-	
+
 	} elsif ($switch eq "version") {
 		$vars->{ver} = $Settings::VERSION;
 		sendMessage($messageSender, $type, getResponse("versionS"), $user) if $config{verbose};
