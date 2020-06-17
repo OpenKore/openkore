@@ -1044,7 +1044,7 @@ sub reconstruct_account_server_info {
 	my $serverInfo;
 
 	if ($args->{switch} eq '0B60') { # tRO 2020
-		$server_info = {
+		$serverInfo = {
 			len => 164,
 			types => 'a4 v Z20 v3 a132',
 			keys => [qw(ip port name state users property ip_port)],
