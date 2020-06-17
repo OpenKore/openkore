@@ -1440,14 +1440,14 @@ sub avoidGM_talk {
 
 sub avoidList_talk {
 	return 0 if ($net->clientAlive() || !$config{avoidList});
-	my ($user, $msg, $ID) = @_;
-	my $avoidPlayer = $avoid{Players}{lc($user)};
-	my $avoidID = $avoid{ID}{$ID};
+	my ($player_name, $msg, $nameID) = @_;
+	my $avoidPlayer = $avoid{Players}{lc($player_name)};
+	my $avoidID = $avoid{ID}{$nameID};
 
 	if ($avoidPlayer->{disconnect_on_chat} || $avoidID->{disconnect_on_chat}) {
-		warning TF("Disconnecting to avoid %s (%s)!\n", $user, $field->baseName);
-		main::chatLog("k", TF("*** %s talked to you, auto disconnected (%s) ***\n", $user, $field->baseName));
-		warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
+		$msg = TF("Player %s (%d) talked to you (%s), disconnect for %d seconds", $player_name, $nameID, $field->baseName, $config{avoidList_reconnect});
+		warning "$msg\n";
+		chatLog("k", "*** $msg ***\n");
 		relog($config{avoidList_reconnect}, 1);
 		return 1;
 	}
