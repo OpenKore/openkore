@@ -1415,27 +1415,25 @@ sub actorListClearing {
 
 sub avoidGM_talk {
 	return 0 if ($net->clientAlive() || !$config{avoidGM_talk});
-	my ($user, $msg) = @_;
+	my ($player_name, $msg, $nameID) = @_;
 
-	# Check whether this "GM" is on the ignore list
-	# in order to prevent false matches
-	return 0 if (existsInList($config{avoidGM_ignoreList}, $user));
+	# Check whether this "GM" is on the ignore list in order to prevent false matches
+	return 0 if (existsInList($config{avoidGM_ignoreList}, $player_name));
 
-	if ($user =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i || ($config{avoidGM_namePattern} && ($user =~ /$config{avoidGM_namePattern}/))) {
-		my %args = (
-			name => $user,
-		);
-		Plugins::callHook('avoidGM_talk', \%args);
-		return 1 if ($args{return});
+	return 0 unless ($config{avoidGM_namePattern} ? $player_name =~ /$config{avoidGM_namePattern}/ : $player_name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
 
-		warning T("Disconnecting to avoid GM!\n");
-		main::chatLog("k", TF("*** The GM %s talked to you, auto disconnected ***\n", $user));
+	my %args = (
+		name => $player_name,
+		ID => $nameID
+	);
+	Plugins::callHook('avoidGM_talk', \%args);
+	return 1 if ($args{return});
 
-		warning TF("Disconnect for %s seconds...\n", $config{avoidGM_reconnect});
-		relog($config{avoidGM_reconnect}, 1);
-		return 1;
-	}
-	return 0;
+	$msg = TF("GM '%s' (%d) talked to you (%s), disconnect for %s seconds", $player_name, $nameID, $field->baseName, $config{avoidGM_reconnect});
+	warning "$msg\n";
+	chatLog("k", "*** $msg ***\n");
+	relog($config{avoidGM_reconnect}, 1);
+	return 1;
 }
 
 sub avoidList_talk {
@@ -4173,27 +4171,27 @@ sub avoidGM_near {
 		if ($config{avoidGM_near} == 1) {
 			# Mode 1: teleport & disconnect
 			useTeleport(1);
-			$msg = TF("GM %s (%d) is nearby (%s), teleport & disconnect for %d seconds", $player->{name}, $player->{nameID}, $field->baseName, $config{avoidGM_reconnect});
+			$msg = TF("GM '%s' (%d) is nearby (%s), teleport & disconnect for %d seconds", $player->{name}, $player->{nameID}, $field->baseName, $config{avoidGM_reconnect});
 			relog($config{avoidGM_reconnect}, 1);
 
 		} elsif ($config{avoidGM_near} == 2) {
 			# Mode 2: disconnect
-			$msg = TF("GM %s (%d) is nearby (%s), disconnect for %s seconds", $player->{name}, $player->{nameID}, $field->baseName, $config{avoidGM_reconnect});
+			$msg = TF("GM '%s' (%d) is nearby (%s), disconnect for %s seconds", $player->{name}, $player->{nameID}, $field->baseName, $config{avoidGM_reconnect});
 			relog($config{avoidGM_reconnect}, 1);
 
 		} elsif ($config{avoidGM_near} == 3) {
 			# Mode 3: teleport
 			useTeleport(1);
-			$msg = TF("GM %s (%d) is nearby(%s), teleporting", $player->{name}, $player->{nameID}, $field->baseName);
+			$msg = TF("GM '%s' (%d) is nearby(%s), teleporting", $player->{name}, $player->{nameID}, $field->baseName);
 
 		} elsif ($config{avoidGM_near} == 4) {
 			# Mode 4: respawn
 			useTeleport(2);
-			$msg = TF("GM %s (%d) is nearby (%s), respawning", $player->{name}, $player->{nameID}, $field->baseName);
+			$msg = TF("GM '%s' (%d) is nearby (%s), respawning", $player->{name}, $player->{nameID}, $field->baseName);
 		} elsif ($config{avoidGM_near} >= 5) {
 			# Mode 5: respawn & disconnect
 			useTeleport(2);
-			$msg = TF("GM %s (%d) is nearby (%s), respawning & disconnect for %d seconds", $player->{name}, $player->{nameID}, $field->baseName, $config{avoidGM_reconnect});
+			$msg = TF("GM '%s' (%d) is nearby (%s), respawning & disconnect for %d seconds", $player->{name}, $player->{nameID}, $field->baseName, $config{avoidGM_reconnect});
 			relog($config{avoidGM_reconnect}, 1);
 		}
 
