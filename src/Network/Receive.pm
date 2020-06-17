@@ -1893,7 +1893,12 @@ sub actor_display {
 			if ($monsters_lut{$args->{type}}) {
 				$actor->setName($monsters_lut{$args->{type}});
 			}
-			#$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
+			# New actor_display packets include the Monster name
+			if ($args->{switch} eq "0086") {
+				$actor->{name} = $args->{name};
+			} else {
+				$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
+			}
 			$actor->{name_given} = "Unknown";
 			$actor->{binType} = $args->{type};
 			$mustAdd = 1;
