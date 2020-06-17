@@ -1112,7 +1112,7 @@
 2163#Flow Shield#
 2165#Sol Shield#
 2167#Poison Shield#
-2168#2011RWC Immuned Shield#
+2168#Immuned Shield#
 2169#Kalasag#
 2170#Kalasag(Bayani)#
 2171#Fox Armguard#
@@ -1694,6 +1694,7 @@
 2953#Kvasir Ring#
 2954#Kvasir Ring#
 2959#Fidelity Necklace#
+2965#Angel Egg#
 2966#RWC Memorial Ring#
 2967#RWC Memorial Ring#
 2968#RWC Memorial Pendant#
@@ -2206,6 +2207,17 @@
 4502#Sealed MasterSmith Card#
 4503#Sealed Vesper Card#
 4504#Sealed Eddga Card#
+4505#Scaraba Card#
+4511#Little Fatum Card#
+4512#Parus Card#
+4513#Angra Mantis Card#
+4514#Pom Spider Card#
+4515#Alnoldi Card#
+4516#Comodo Card#
+4517#Cendrawasih Card#
+4518#Banaspaty Card#
+4519#Butoijo Card#
+4520#Leak Card#
 4521#Sedora Card#
 4522#Sropho Card#
 4523#Pot Dofle Card#
@@ -4093,6 +4105,19 @@
 9867#Pre-Register Box 5#
 9868#Pre Register Box#
 9869#Pre Order Box#
+9883#Event Special Reward Box#
+9884#Event Special Thank Box#
+9885#Event New Server Box#
+9886#Event PreOrder TopUp Thx Box#
+9887#Event Special Reward MA Box#
+9888#Neo Elven Ear Box#
+9891#Siege White Potion 500ea Box#
+9892#Siege Blue Potion 300ea Box#
+9893#80 Level Up Box#
+9894#[Scroll] Adrenaline Scroll#
+9895#[Scroll] Abrasive#
+9896#[Scroll] Power Booster#
+9898#Angel Wing Egg#
 10001#Skull Helm#
 10002#Monster Oxygen Mask#
 10003#Transparent Head Protector#
@@ -5171,6 +5196,7 @@
 14229#Cherry Blossom Scroll#
 14232#Yggdrasilberry 10 Box#
 14233#Dead Branch 10 Box#
+14234#Dead Branch 25 Box#
 14242#Beholder Ring Box#
 14243#Hallow Ring Box#
 14244#Clamorous Ring Box#
@@ -5306,7 +5332,10 @@
 14841#[Scroll] Korean Rice Cake#
 14843#[Scroll] Life Insurance#
 14844#[Scroll] Kafra Card#
+14845#[Scroll] Blessing Lv.10 Scroll#
 14846#[Scroll] Increase Agility Lv.10 Scroll#
+14847#[Scroll] Small Life Potion#
+14861#[Scroll] Ghostring Scroll#
 14863#Fallen Angel Scroll#
 14864#Dark Feather Scroll#
 14866#[Scroll] Holy Armor Scroll#
@@ -5555,10 +5584,10 @@
 17106#Gym Membership Card 10 Box#
 17117#Aries Scroll#
 17118#ASPD Intensifying Potion Box#
-17122#2011RWC Immuned Shield Box#
-17123#2011RWC Black Devil's Mask Box#
-17124#2011RWC Cat Ears Beret Box#
-17125#2011RWC Red Bread Hat Box#
+17122#Immuned Shield Box#
+17123#Black Devil's Mask Box#
+17124#Cat Ears Beret Box#
+17125#Red Bread Hat Box#
 17126#ASPD Intensifying Potion Box#
 17146#Depressed Alice doll Box#
 17152#Ribbon of bride Box#
@@ -5662,11 +5691,11 @@
 18593#Fancy Mini Crown#
 18595#Horn Of Ancient#
 18596#Sprout Hat#
-18599#2011RWC Black Devil's Mask#
-18600#2011RWC Cat Ears Beret#
-18601#2011RWC Red Bread Hat#
+18599#Black Devil's Mask#
+18600#Cat Ears Beret#
+18601#Red Bread Hat#
 18602#Watermelon Bite#
-18603#2011RWC Black Devil's Mask#
+18603#Black Devil's Mask#
 18607#Blush#
 18608#Small Ribbons#
 18609#Dark Blinkers#
@@ -5739,6 +5768,8 @@
 18791#Shrine Maiden Hat#
 18794#Plain Black Mage Hat#
 18795#Night Sparrow Hat#
+18797#Deep Blue Angel Hairband#
+18798#Pink Angel Hairband#
 18821#Rainbow Feather Decoration#
 18827#Valkyrie Circlet#
 18828#2013 RWC no.1#
@@ -5797,6 +5828,7 @@
 18932#Rhino Model Hat#
 18960#Love Daddy 2013#
 18967#Jinn Poring Balloon#
+18968#Demon Blue Poring Bubble#
 18993#Flower Hat#
 19015#Costume Gemma's Hairband#
 19095#Happy Balloon#
@@ -5927,6 +5959,7 @@
 19810#Costume Ifrit's Ear#
 19811#Costume Beer Cap#
 19813#Costume Icecream Hat#
+19816#Costume PecoPeco Cap#
 19823#Costume White Cat Hood#
 19826#Costume Ice Wing Ear#
 19827#Costume Amistr Cap#
@@ -6031,6 +6064,7 @@
 20234#Costume Baphomet Hat#
 20240#Costume Gift Of Snow#
 20242#Costume Snownow Hat#
+20251#Costume Rose Cascade#
 20253#Costume Alice Doll#
 20254#Costume Yellow Ribbon#
 20255#Costume Love Cheeks#
@@ -6161,6 +6195,7 @@
 22576#Songkran5#
 22577#Songkran6#
 22578#Songkran7#
+22605#Gingerbread#
 22658#Braised ShortRibs#
 22659#Braised Spareribs#
 22685#Solo Christmas Gift#
@@ -6188,6 +6223,8 @@
 23048#[Not For Sale] Regeneration Potion#
 23049#[Not For Sale] Sparkling Candy#
 23079#Strawberry Cream Cake#
+23148#Premium Service 2Day Box#
+23149#Premium Service 3Day Box#
 23156#Dark Wing Scroll#
 23157#Evil Druid Scroll#
 23158#Tengu Scroll#
@@ -6195,6 +6232,14 @@
 23177#[Not For Sale] Kafra Card#
 23202#Vin Chaud#
 23207#Premium Service Box#
+23209#Premium Service 1Day Box#
+23210#Premium Service 4Day Box#
+23211#Premium Service 5Day Box#
+23212#Premium Service 6Day Box#
+23213#Premium Service 7Day Box#
+23214#Premium Service 8Day Box#
+23215#Premium Service 9Day Box#
+23216#Premium Service 10Day Box#
 23221#[Not For Sale] DEX Biscuit Stick#
 23222#[Not For Sale] LUK Biscuit Stick#
 23223#[Not For Sale] STR Biscuit Stick#
@@ -6285,7 +6330,7 @@
 24038#Vital Shoes Shadow#
 24039#Athletic Shield Shadow#
 24040#Lucky Armor Shadow#
-24041#Power Earring Shadow#
+24041#Power Pendant Shadow#
 24042#Int Earring Shadow#
 24043#Dexterous Shadow Weapon#
 24044#Vital Shield Shadow#
@@ -6361,6 +6406,8 @@
 24147#Steal Weapon Shadow#
 24148#Steal Earing Shadow#
 24149#Steal Pendant Shadow#
+24212#Rookie Shadow Shoes#
+24213#Rookie Shadow Shield #
 25132#Pumpkin Deco#
 25133#Dry White Stem#
 25143#Gift Stuffed Doll#
@@ -6381,6 +6428,7 @@
 25290#Sweet Festival Coin#
 25291#Chocolate for Delivery#
 25292#Stolen Cacao Beans#
+25310#[Scroll] Token of Siegfried#
 25318#Sweetie Skin#
 25319#Ice Box#
 25320#Suspicious Melon#
@@ -6433,6 +6481,7 @@
 31300#Costume Warm Cat Muffler#
 31301#Costume Blinking Eyes#
 31302#Costume Black Magenta Ribbon#
+31314#Costume Ghost Holiday#
 31318#Costume Gerhard Von Devi 83#
 31324#[Costume] DJ Kitty#
 31326#Costume Rolf Von Gigue 666#
