@@ -123,7 +123,7 @@ sub encryptMessageID {
 			$messageID = ($messageID ^ (($self->{encryption}->{crypt_key} >> 16) & 0x7FFF)) & 0xFFFF;
 			$$r_message = pack("v", $messageID) . substr($$r_message, 2);
 
-			# Debug Log	
+			# Debug Log
 			debug (sprintf("Encrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $messageID, $oldKey, ($self->{encryption}->{crypt_key} >> 16) & 0x7FFF), "sendPacket", 0) if ($config{debugPacket_sent} || ($config{'debugPacket_include_dumpMethod'} && !existsInList($config{debugPacket_exclude}, $messageID2) && existsInList($config{'debugPacket_include'}, $messageID2)));
 		}
 	} else {
@@ -619,10 +619,9 @@ sub reconstruct_private_message {
 	$args->{privMsgUser} = stringToBytes($args->{privMsgUser});
 }
 
-sub sendPrivateMsg
-{
+sub sendPrivateMsg {
 	my ($self, $user, $message) = @_;
-	Misc::validate($user)?$self->sendToServer($self->reconstruct({ switch => 'private_message', privMsg => $message, privMsgUser => $user, })):return;
+	$self->sendToServer($self->reconstruct({ switch => 'private_message', privMsg => $message, privMsgUser => $user, }));
 }
 
 sub sendLook {
