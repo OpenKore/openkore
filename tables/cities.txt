@@ -122,7 +122,7 @@ que_bingo.rsw#Bingo Game Room #
 pvp_n_room.rsw#PvP : Waiting Room#
 p_track01.rsw#Monster Race Arena#
 p_track02.rsw#Monster Race Arena#
-#cmd_fild07.rsw#Beacon Island, Pharos#
+cmd_fild07.rsw#Beacon Island, Pharos#
 new_1-1.rsw#Training Ground 1#
 new_2-1.rsw#Training Ground 1#
 new_3-1.rsw#Training Ground 1#
