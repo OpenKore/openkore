@@ -10,13 +10,13 @@ EFST_QUAGMIRE Quagmire
 EFST_ANGELUS Angelus
 EFST_BLESSING Blessing
 EFST_CRUCIS Signum Crucis
-EFST_INC_AGI เพิ่ม AGI 
+EFST_INC_AGI Increase AGI
 EFST_DEC_AGI Decrease AGI
 EFST_SLOWPOISON Slow Poison
 EFST_IMPOSITIO Impositio Manus
 EFST_SUFFRAGIUM Suffragium
 EFST_ASPERSIO Aspersio
-EFST_BENEDICTIO เปลี่ยนชุดเกราะเป็น Holy property 
+EFST_BENEDICTIO Give Holy property to Armor
 EFST_KYRIE Kyrie Eleison
 EFST_MAGNIFICAT Magnificat
 EFST_GLORIA Gloria
@@ -33,13 +33,13 @@ EFST_ENERGYCOAT Energy Coat
 EFST_BROKENARMOR Broken Armor
 EFST_BROKENWEAPON Broken Weapon
 EFST_ILLUSION Dark Illusion
-EFST_WEIGHTOVER50 น้ำหนักมากกว่า 50% 
+EFST_WEIGHTOVER50 Weight over 50%
 EFST_WEIGHTOVER90 Weight Over 90%
 EFST_ATTHASTE_POTION1 Concentration Potion
 EFST_ATTHASTE_POTION2 Awakening Potion
-EFST_ATTHASTE_POTION3 เพิ่ม ASPD 
-EFST_MOVHASTE_POTION เพิ่ม Movement Speed 
-EFST_MOVHASTE_INFINITY เพิ่มความเร็วในการเคลื่อนที่ 
+EFST_ATTHASTE_POTION3 Increase ASPD
+EFST_MOVHASTE_POTION Increase Movement Speed
+EFST_MOVHASTE_INFINITY Increase Movement Speed
 EFST_NOEQUIPWEAPON Divest Weapon
 EFST_NOEQUIPSHIELD Divest Shield
 EFST_NOEQUIPARMOR Divest Armor
@@ -55,17 +55,32 @@ EFST_DEFENDER Defending Aura
 EFST_WEAPONPROPERTY Aspersio
 EFST_AUTOSPELL Hindsight
 EFST_SPEARQUICKEN Spear Quicken
+EFST_WHISTLE Perfect Tablature
+EFST_ASSASSINCROSS Impressive Riff
+EFST_POEMBRAGI Magic Strings
+EFST_APPLEIDUN Song of Lutie
+EFST_HUMMING Focus Ballet
+EFST_DONTFORGETME Slow Grace
+EFST_FORTUNEKISS Lady Luck
+EFST_SERVICEFORYOU Gypsy's Kiss
+EFST_RICHMANKIM Mental Sensing
+EFST_ETERNALCHAOS Down Tempo
+EFST_DRUMBATTLEFIELD Battle Theme
+EFST_RINGNIBELUNGEN Harmonic Lick
+EFST_ROKISWEIL Classical Pluck
+EFST_INTOABYSS Power Cord
+EFST_SIEGFRIED Acoustic Rhythm
 EFST_STEELBODY Undestructable 
 EFST_EXTREMITYFIST Guillotine Fist
 EFST_PROPERTYFIRE Flame Launcher
 EFST_PROPERTYWATER Give Tsunami
 EFST_PROPERTYWIND Lightning Loader
 EFST_PROPERTYGROUND Give Quake
-EFST_PROPERTYUNDEAD Give Undead property
+EFST_PROPERTYUNDEAD Apply Undead Attributes
 EFST_PARRYING Parry
 EFST_TENSIONRELAX Relax
 EFST_ASSUMPTIO Assumptio
-EFST_GROUNDMAGIC ได้รับผลของเวทย์มนตร์ที่ร่ายลงพื้น 
+EFST_GROUNDMAGIC Apply the ground magic effects
 EFST_EDP Enchant Deadly Poison
 EFST_TRUESIGHT True Sight
 EFST_WINDWALK Wind Walker
@@ -84,9 +99,9 @@ EFST_TURNKICK_ON Roundhouse Stance
 EFST_COUNTER_ON Counter Kick Stance
 EFST_DODGE_ON Tumbling
 EFST_STRUP Sprint
-EFST_PROPERTYDARK เปลี่ยนธาติของอาวุธเป็น dark property 
+EFST_PROPERTYDARK Give dark property to the target
 EFST_ADRENALINE2 Advanced Adrenaline Rush
-EFST_PROPERTYTELEKINESIS โจมตีศัตรูด้วย Ghost property 
+EFST_PROPERTYTELEKINESIS Inflict Ghost property to the enemy
 EFST_PLUSATTACKPOWER Raise ATK
 EFST_PLUSMAGICPOWER Raise MATK
 EFST_KAIZEL Kaizel
@@ -97,7 +112,7 @@ EFST_SUN_COMFORT Solar Protection
 EFST_MOON_COMFORT Lunar Protection
 EFST_STAR_COMFORT Star Comfort
 EFST_PRESERVE Preserve
-EFST_CHASEWALK2 เพิ่ม STR 
+EFST_CHASEWALK2 Increase STR
 EFST_DOUBLECASTING Double Bolt
 EFST_OVERTHRUSTMAX Maximum Power Thrust
 EFST_TAROTCARD Tarot Card of Fate
@@ -111,30 +126,30 @@ EFST_EARTHSCROLL Happy Break
 EFST_NJ_UTSUSEMI Cicada Skin Shed
 EFST_NJ_BUNSINJYUTSU Mirror Image
 EFST_NJ_NEN Ninja Aura
-EFST_GS_ADJUSTMENT Gunslinger's_Panic
-EFST_GS_ACCURACY เพิ่ม Accuracy 
+EFST_GS_ADJUSTMENT Gunslinger's Panic
+EFST_GS_ACCURACY Increase Accuracy
 EFST_GRIFFON Riding Gryphon
-EFST_FOOD_STR เพิ่ม STR 
-EFST_FOOD_AGI เพิ่ม AGI 
-EFST_FOOD_VIT เพิ่ม VIT 
-EFST_FOOD_DEX เพิ่ม DEX 
-EFST_FOOD_INT เพิ่ม INT 
-EFST_FOOD_LUK เพิ่ม LUK 
-EFST_FOOD_BASICAVOIDANCE เพิ่ม Flee 
-EFST_FOOD_BASICHIT เพิ่ม Accuracy 
-EFST_FOOD_CRITICALSUCCESSVALUE เพิ่ม Critical rate 
+EFST_FOOD_STR Increase STR
+EFST_FOOD_AGI Increase AGI
+EFST_FOOD_VIT Increase VIT
+EFST_FOOD_DEX Increase DEX
+EFST_FOOD_INT Increase INT
+EFST_FOOD_LUK Increase LUK
+EFST_FOOD_BASICAVOIDANCE Increase Flee
+EFST_FOOD_BASICHIT Increase Accuracy
+EFST_FOOD_CRITICALSUCCESSVALUE Increase Critical rate
 EFST_CASH_PLUSEXP Increase amount of EXP acquired
-EFST_CASH_DEATHPENALTY ไม่เสียค่า EXP เมื่อผู้ร่ายหมดสภาพการต่อสู
-EFST_CASH_RECEIVEITEM เพิ่มโอกาศ Drop item ขึ้นสองเท่า 
-EFST_FOOD_STR_CASH เพิ่ม STR 
-EFST_FOOD_AGI_CASH เพิ่ม AGI 
-EFST_FOOD_VIT_CASH เพิ่ม VIT
-EFST_FOOD_DEX_CASH เพิ่ม DEX 
-EFST_FOOD_INT_CASH เพิ่ม INT 
-EFST_FOOD_LUK_CASH เพิ่ม LUK 
+EFST_CASH_DEATHPENALTY Don't lose EXP when the caster is dead
+EFST_CASH_RECEIVEITEM Increase item drop rate two times higher
+EFST_FOOD_STR_CASH Increase STR
+EFST_FOOD_AGI_CASH Increase AGI
+EFST_FOOD_VIT_CASH Increase VIT
+EFST_FOOD_DEX_CASH Increase DEX
+EFST_FOOD_INT_CASH Increase INT
+EFST_FOOD_LUK_CASH Increase LUK
 EFST_SLOWCAST Slow Cast
 EFST_CRITICALWOUND Critical Wound
-EFST_MOVHASTE_HORSE เพิ่ม ASPD 
+EFST_MOVHASTE_HORSE Increase ASPD
 EFST_PROTECT_DEF Physical Defense Potion
 EFST_PROTECT_MDEF MDEF Potion
 EFST_HEALPLUS Regeneration Potion
@@ -143,14 +158,14 @@ EFST_L_LIFEPOTION Medium Life Potion
 EFST_CRITICALPERCENT Abrasive
 EFST_PLUSAVOIDVALUE Welcome Glass
 EFST_ATKER_ASPD Super Medicine
-EFST_TARGET_ASPD เพิ่ม MSP, ลดการใช้ SP ลง 
+EFST_TARGET_ASPD Increase MSP, Decrease SP consumption
 EFST_ATKER_MOVESPEED Revive Medicine
 EFST_ATKER_BLOOD SP Consumption Decrease Potion
 EFST_TARGET_BLOOD Abnormal Status Resistance Potion
 EFST_ARMOR_PROPERTY Change Property Scroll
 EFST_HELLPOWER Hell Power
-EFST_CASH_PLUSONLYJOBEXP ได้รับ 1.5x Job EXP เมื่อกำจัด monsters 
-EFST_PARTYFLEE เพิ่ม Flee 
+EFST_CASH_PLUSONLYJOBEXP Get 1.5x Job EXP when hunting monsters
+EFST_PARTYFLEE Increase Flee
 EFST_ANGEL_PROTECT Thank You So Much
 EFST_ENCHANTBLADE Enchant Blade
 EFST_REFRESH Refresh
@@ -198,8 +213,8 @@ EFST_SPL_DEF Honey Jam
 EFST_REPRODUCE Reproduce
 EFST_MANU_MATK Manuk's Faith
 EFST_SPL_MATK Cornus's Tear
-EFST_STR_SCROLL เพิ่ม STR 
-EFST_INT_SCROLL เพิ่ม INT 
+EFST_STR_SCROLL Increase STR
+EFST_INT_SCROLL Increase INT
 EFST_LG_REFLECTDAMAGE Reflect Damage
 EFST_FORCEOFVANGUARD Vanguard Force
 EFST_AUTOSHADOWSPELL Shadow Spell
@@ -218,7 +233,7 @@ EFST_INSPIRATION Inspiration
 EFST_ENERVATION Masquerade : Enervation
 EFST_GROOMY Masquerade: Gloomy (Mask: Depression)
 EFST_RAISINGDRAGON Rising Dragon
-EFST_IGNORANCE Masquerade : Ignorance (Mask : Ignorance)
+EFST_IGNORANCE Masquerade: Ignorance (Mask : Ignorance)
 EFST_LAZINESS Masquerade: Laziness (Mask: Laziness)
 EFST_LIGHTNINGWALK Lightning Walk
 EFST_UNLUCKY Masquerade : Unlucky (Mask : Unlucky)
@@ -269,6 +284,7 @@ EFST_SIROMA_ICE_TEA Siroma Icetea
 EFST_DROCERA_HERB_STEAMED Drocera Herb Stew
 EFST_PUTTI_TAILS_NOODLES Petit Tail Noodle
 EFST_MORA_BUFF Mora Berry
+EFST_PAIN_KILLER Pain Killer
 EFST_G_LIFEPOTION Life Potion
 EFST_VITALIZE_POTION Vitalize Potion
 EFST_LIGHT_OF_REGENE Playful Light
@@ -311,6 +327,9 @@ EFST_ALMIGHTY Almighty
 EFST_GEFFEN_MAGIC1 Add P.damage
 EFST_GEFFEN_MAGIC2 Add M.damage
 EFST_GEFFEN_MAGIC3 Reduce the damage
+EFST_QUEST_BUFF1 Accumulating Energy
+EFST_QUEST_BUFF2 Accumulating Energy
+EFST_QUEST_BUFF3 Accumulating Energy
 EFST_FENRIR_CARD Power of Fenrir
 EFST_FRIGG_SONG FRIGG'S SON
 EFST_OFFERTORIUM OFFERTORIUM
@@ -326,7 +345,7 @@ EFST_B_TRAP Binding Trap
 EFST_E_CHAIN Eternal Chain
 EFST_C_MARKER Crimson Market
 EFST_H_MINE Howling Mine
-EFST_P_ALTER Platinum Alter
+EFST_P_ALTER Platinum Altar
 EFST_HEAT_BARREL Heat Barrel
 EFST_ANTI_M_BLAST Anti Material Blast
 EFST_SWORDCLAN Sword clan
@@ -344,8 +363,6 @@ EFST_PACKING_ENVELOPE8 Safer 30 seconds
 EFST_PACKING_ENVELOPE9 Lucky 30 seconds
 EFST_PACKING_ENVELOPE10 Accurate 30 seconds
 EFST_HEAT_BARREL_AFTER After Effect
-EFST_CHUSEOK_TUESDAY Enhance property
-EFST_CHUSEOK_WEEKEND Enhance property
 EFST_EP16_DEF Shining Holly Water
 EFST_BODYSTATE_STONECURSE Petrification
 EFST_BODYSTATE_FREEZING Frost
@@ -392,11 +409,24 @@ EFST_SUHIDE Hide
 EFST_DORAM_BUF_01 Kahluna Milk
 EFST_DORAM_BUF_02 Basil
 EFST_SPRITEMABLE Sprite Mable
+EFST_AID_PERIOD_RECEIVEITEM Increase Drop Rate
+EFST_AID_PERIOD_PLUSEXP EXP up
+EFST_AID_PERIOD_PLUSJOBEXP Job EXP up
+EFST_AID_PERIOD_DEADPENALTY Decrease Death Penalty
+EFST_AID_PERIOD_ADDSTOREITEMCOUNT Expand Storage
+EFST_EP16_2_BUFF_SS Build Up Potion SS
+EFST_EP16_2_BUFF_SC Build Up Potion SC
+EFST_EP16_2_BUFF_AC Build Up Potion AC
 EFST_GS_MAGICAL_BULLET Magical Bullet
+EFST_AID_PERIOD_RECEIVEITEM_2ND Increase Drop Rate
+EFST_AID_PERIOD_PLUSEXP_2ND EXP Up
+EFST_AID_PERIOD_PLUSJOBEXP_2ND Job EXP up
+EFST_CHEERUP Go! Mom and Dad.
 EFST_LHZ_DUN_N1 Bed of Honor
 EFST_LHZ_DUN_N2 Bed of Honor
 EFST_LHZ_DUN_N3 Bed of Honor
 EFST_LHZ_DUN_N4 Bed of Honor
-EFST_ATK_POPCORN Enhance attack
-EFST_MATK_POPCORN Enhance magic attack
-EFST_ASPD_POPCORN Enhance attack speed
+EFST_ENSEMBLEFATIGUE Fatigue after duet
+EFST_ADAPTATION Amp
+EFST_ASSUMPTIO_BUFF Assumptio
+EFST_BASILICA_BUFF Basilica

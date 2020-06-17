@@ -289,37 +289,54 @@ recvpackets recvpackets.txt
 addTableFolders twRO
 captcha 0
 
-# https://ro.exe.in.th/
-[Thailand - tRO: Revo Classic]
-ip 103.55.55.199
-port 6900
+# http://ro.gnjoy.in.th/
+[Thailand - tRO: Ayothaya]
+ip 49.229.28.13
+port 50001
 master_version 7
 version 24
 serverType tRO
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 146
+charBlockSize 147
 gameGuard 0
 charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
 
-# https://ro.exe.in.th/
-[Thailand - tRO: Revo Jellopy]
-ip 103.55.55.200
-port 6900
+# http://ro.gnjoy.in.th/
+[Thailand - tRO: Junon]
+ip 49.229.28.77
+port 50001
 master_version 7
 version 24
 serverType tRO
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 146
+charBlockSize 147
 gameGuard 0
 charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
+
+# http://ro.gnjoy.in.th/
+[Thailand - tRO: Yuno]
+ip 49.229.28.74
+port 50001
+master_version 7
+version 24
+serverType tRO
+serverEncoding Thai
+addTableFolders tRO
+charBlockSize 147
+gameGuard 0
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+
 
 #####################
 # Bottable Private Server
