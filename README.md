@@ -72,7 +72,7 @@ Openkore is not working on all official servers, except for cRO.
 | [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | N/A  |
 | [phRO](https://ragnarokonline.com.ph/main) | Philippines RO | EAC | Not Working | N/A |
 | [ruRO](https://ru.4game.com/ro/play/) | Russia RO | Frost Security | Not Working | ya4ept |
-| [tRO](https://ro.gnjoy.in.th/) | Thailand RO | - | Server Closed | N/A |
+| [tRO](https://ro.gnjoy.in.th/) | Thailand RO | EAC | Not Working | N/A |
 | [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | Cdclient | Not working | N/A |
 
 ## Contributing
