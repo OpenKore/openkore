@@ -1413,45 +1413,6 @@ sub actorListClearing {
 	undef @elementalsID;
 }
 
-sub avoidGM_talk {
-	return 0 if ($net->clientAlive() || !$config{avoidGM_talk});
-	my ($player_name, $msg, $nameID) = @_;
-
-	# Check whether this "GM" is on the ignore list in order to prevent false matches
-	return 0 if (existsInList($config{avoidGM_ignoreList}, $player_name));
-
-	return 0 unless ($config{avoidGM_namePattern} ? $player_name =~ /$config{avoidGM_namePattern}/ : $player_name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
-
-	my %args = (
-		name => $player_name,
-		ID => $nameID
-	);
-	Plugins::callHook('avoidGM_talk', \%args);
-	return 1 if ($args{return});
-
-	$msg = TF("GM '%s' (%d) talked to you (%s), disconnect for %s seconds", $player_name, $nameID, $field->baseName, $config{avoidGM_reconnect});
-	warning "$msg\n";
-	chatLog("k", "*** $msg ***\n");
-	relog($config{avoidGM_reconnect}, 1);
-	return 1;
-}
-
-sub avoidList_talk {
-	return 0 if ($net->clientAlive() || !$config{avoidList});
-	my ($player_name, $msg, $nameID) = @_;
-	my $avoidPlayer = $avoid{Players}{lc($player_name)};
-	my $avoidID = $avoid{ID}{$nameID};
-
-	if ($avoidPlayer->{disconnect_on_chat} || $avoidID->{disconnect_on_chat}) {
-		$msg = TF("Player %s (%d) talked to you (%s), disconnect for %d seconds", $player_name, $nameID, $field->baseName, $config{avoidList_reconnect});
-		warning "$msg\n";
-		chatLog("k", "*** $msg ***\n");
-		relog($config{avoidList_reconnect}, 1);
-		return 1;
-	}
-	return 0;
-}
-
 sub calcStat {
 	my $damage = shift;
 	$totaldmg += $damage;
@@ -4203,6 +4164,29 @@ sub avoidGM_near {
 	return 0;
 }
 
+sub avoidGM_talk {
+	return 0 if ($net->clientAlive() || !$config{avoidGM_talk});
+	my ($player_name, $msg, $nameID) = @_;
+
+	# Check whether this "GM" is on the ignore list in order to prevent false matches
+	return 0 if (existsInList($config{avoidGM_ignoreList}, $player_name));
+
+	return 0 unless ($config{avoidGM_namePattern} ? $player_name =~ /$config{avoidGM_namePattern}/ : $player_name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
+
+	my %args = (
+		name => $player_name,
+		ID => $nameID
+	);
+	Plugins::callHook('avoidGM_talk', \%args);
+	return 1 if ($args{return});
+
+	$msg = TF("GM '%s' (%d) talked to you (%s), disconnect for %s seconds", $player_name, $nameID, $field->baseName, $config{avoidGM_reconnect});
+	warning "$msg\n";
+	chatLog("k", "*** $msg ***\n");
+	relog($config{avoidGM_reconnect}, 1);
+	return 1;
+}
+
 ##
 # avoidList_near()
 # Returns: 1 if someone was detected, 0 if no one was detected.
@@ -4290,6 +4274,22 @@ sub avoidList_ID {
 		warning TF("%s is nearby (%s), disconnecting...\n", $avoidID, $field->baseName);
 		chatLog("k", TF("*** Found %s nearby (%s) and disconnected ***\n", $avoidID, $field->baseName));
 		warning TF("Disconnect for %s seconds...\n", $config{avoidList_reconnect});
+		relog($config{avoidList_reconnect}, 1);
+		return 1;
+	}
+	return 0;
+}
+
+sub avoidList_talk {
+	return 0 if ($net->clientAlive() || !$config{avoidList});
+	my ($player_name, $msg, $nameID) = @_;
+	my $avoidPlayer = $avoid{Players}{lc($player_name)};
+	my $avoidID = $avoid{ID}{$nameID};
+
+	if ($avoidPlayer->{disconnect_on_chat} || $avoidID->{disconnect_on_chat}) {
+		$msg = TF("Player %s (%d) talked to you (%s), disconnect for %d seconds", $player_name, $nameID, $field->baseName, $config{avoidList_reconnect});
+		warning "$msg\n";
+		chatLog("k", "*** $msg ***\n");
 		relog($config{avoidList_reconnect}, 1);
 		return 1;
 	}
