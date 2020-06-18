@@ -2335,6 +2335,11 @@ sub actor_died_or_disappeared {
 				delete $venderLists{$ID};
 			}
 
+			if (grep { $ID eq $_ } @buyerListsID) {
+				binRemove(\@buyerListsID, $ID);
+				delete $buyerLists{$ID};
+			}
+
 			$player->{gone_time} = time;
 			$players_old{$ID} = $player->deepCopy();
 			Plugins::callHook('player_disappeared', {player => $player});
