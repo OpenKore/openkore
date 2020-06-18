@@ -3944,7 +3944,7 @@ sub isSafeActorQuery {
 		if ($actor) {
 			# Do not AutoVivify here!
 			if (defined $actor->{statuses} && %{$actor->{statuses}}) {
-				if ( $actor->statusActive('EFFECTSTATE_SPECIALHIDING') || $actor->{type} == 111 || $actor->{type} == 139 || $actor->{type} == 2337 ) { # HIDDEN_ACTOR TYPES
+				if ( $actor->statusActive('EFFECTSTATE_SPECIALHIDING') || ($config{avoidHiddenActors} && ($actor->{type} == 111 || $actor->{type} == 139 || $actor->{type} == 2337)) ) { # HIDDEN_ACTOR TYPES
 					return 0;
 				}
 			}
