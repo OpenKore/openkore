@@ -481,10 +481,10 @@ sub modifyPacketIn {
 					ip => $ip,
 					port => $port,
 					name => $name,
-					users => 0,
-					display => 5, # don't show number of players
-					state => 5,
-					property => 1,
+					users => $charServer->{users},
+					display => $charServer->{display}, # don't show number of players
+					state => $charServer->{state},
+					property => $charServer->{property},
 					unknown => 0,
 					ip_port => $ip.':'.$port,
 				};
@@ -503,10 +503,10 @@ sub modifyPacketIn {
 					ip => $ip,
 					port => $port,
 					name => $name,
-					users => 0,
-					display => 5, # don't show number of players
-					state => 5,
-					property => 1,
+					users => $charServer->{users},
+					display => $charServer->{display}, # don't show number of players
+					state => $charServer->{state},
+					property => $charServer->{property},
 					unknown => 0,
 					ip_port => $ip.':'.$port,
 				};
