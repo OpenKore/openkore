@@ -147,6 +147,7 @@ sub clear {
 	} else {
 		undef @ai_seq;
 		undef @ai_seq_args;
+		undef %ai_v;
 	}
 }
 
