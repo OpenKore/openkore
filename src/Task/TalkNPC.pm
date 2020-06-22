@@ -174,6 +174,7 @@ sub delHooks {
 sub DESTROY {
 	my ($self) = @_;
 	debug "$self->{target}: Task::TalkNPC::DESTROY was called\n", "ai_npcTalk";
+	delete $ai_v{'npc_talk'};
 	$self->delHooks;
 	$self->SUPER::DESTROY;
 }
