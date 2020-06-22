@@ -6207,7 +6207,14 @@ sub cmdUseSkill {
 		$target = { %{$pos} };
 	}
 
+	
 	$skill = new Skill(auto => $args[0], level => $level);
+	
+	if ($char->{skills}{$skill->getHandle()}{lv} < $level) {
+		debug "Attempted to use skill (".$skill->getName().") level ".$level." which you do not have, adjusting to level ".$char->{skills}{$skill->getHandle()}{lv}.".\n";
+		$skill->{level} = $char->{skills}{$skill->getHandle()}{lv};
+	}
+
 
 	require Task::UseSkill;
 	my $skillTask = new Task::UseSkill(
