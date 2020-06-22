@@ -2469,7 +2469,7 @@ sub actor_action {
 			if ($config{sitAuto_idle}) {
 				$timeout{ai_sit_idle}{time} = time;
 			}
-			undef $ai_v{sitAuto_forcedBySitCommand} if $ai_v{sitAuto_forcedBySitCommand};
+			delete $ai_v{sitAuto_forcedBySitCommand} if $ai_v{sitAuto_forcedBySitCommand};
 			$char->{sitting} = 0;
 		} else {
 			message TF("%s is standing.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
