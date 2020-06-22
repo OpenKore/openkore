@@ -443,6 +443,13 @@ sub processAttack {
 				my $minCastTime = $config{"${prefix}_minCastTime"};
 				debug "Slave attackSkillSlot on $target->{name} ($target->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
 				my $skillTarget = $config{"${prefix}_isSelfSkill"} ? $slave : $target;
+
+				if ( !checkSkillLevelValidity($skill, $lvl) ) {
+					error TF("attackSkillSlot attempted to use skill (%s) level %s which you do not have.\n", $skill->getName(), $lvl);
+					configModify("${prefix}_disabled", 1);
+					return;
+				}
+
 				AI::ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $skillTarget, $prefix);
 				$ai_v{$prefix . "_time"} = time;
 				$ai_v{$prefix . "_target_time"}{$ID} = time;

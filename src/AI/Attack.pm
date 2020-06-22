@@ -25,7 +25,7 @@ use Globals;
 use AI;
 use Actor;
 use Field;
-use Log qw(message debug warning);
+use Log qw(message debug warning error);
 use Translation qw(T TF);
 use Misc;
 use Network::Send ();
@@ -536,9 +536,18 @@ sub main {
 
 			ai_setSuspend(0);
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
+			my $lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
+
+			if ( !checkSkillLevelValidity($skill, $lvl) ) {
+				error TF("AttackSkillSlot attempted to use skill (%s) level %s which you do not have.\n", $skill->getName(), $lvl);
+				configModify("attackSkillSlot_${slot}_disabled", 1);
+				delete $args->{attackMethod};
+				return;
+			}
+
 			ai_skillUse2(
 				$skill,
-				$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+				$lvl,
 				$config{"attackSkillSlot_${slot}_maxCastTime"},
 				$config{"attackSkillSlot_${slot}_minCastTime"},
 				$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target,
@@ -559,9 +568,18 @@ sub main {
 			$ai_v{"attackComboSlot_${slot}_time"} = time;
 			$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
 
+			my $lvl = $config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
+
+			if ( !checkSkillLevelValidity($skill, $lvl) ) {
+				error TF("attackComboSlot attempted to use skill (%s) level %s which you do not have.\n", $skill->getName(), $lvl);
+				configModify("attackComboSlot_${slot}_disabled", 1);
+				delete $args->{attackMethod};
+				return;
+			}
+
 			ai_skillUse2(
 				$skill,
-				$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+				$lvl,
 				$config{"attackComboSlot_${slot}_maxCastTime"},
 				$config{"attackComboSlot_${slot}_minCastTime"},
 				$isSelfSkill ? $char : $target,

@@ -200,6 +200,7 @@ our @EXPORT = (
 	findPartyUserID
 	getNPCInfo
 	skillName
+	checkSkillLevelValidity
 	checkSelfCondition
 	checkPlayerCondition
 	checkMonsterCondition
@@ -5538,6 +5539,16 @@ sub absunit {
 	} else {
 		return -1;
 	}
+}
+
+sub checkSkillLevelValidity {
+	my ($skill, $level) = @_;
+
+	if ($char->{skills}{$skill->getHandle()}{lv} >= $level) {
+		return 1;
+	}
+
+	return 0;
 }
 
 return 1;

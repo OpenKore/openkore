@@ -2723,6 +2723,13 @@ sub processAutoSkillUse {
 				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
 				$self_skill{minCastTime} = $config{"useSelf_skill_$i"."_minCastTime"};
 				$self_skill{prefix} = "useSelf_skill_$i";
+
+				if ( !checkSkillLevelValidity($self_skill{skillObject}, $self_skill{lvl}) ) {
+					error TF("useSelf_skill attempted to use skill (%s) level %s which you do not have.\n", $self_skill{skillObject}->getName(), $self_skill{lvl});
+					configModify($self_skill{prefix}."_disabled", 1);
+					next;
+				}
+
 				last;
 			}
 		}
@@ -2834,6 +2841,11 @@ sub processPartySkillUse {
 					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
 					# when the skill is actually cast
 					$targetTimeout{$ID}{$party_skill{ID}} = $i;
+					if ( !checkSkillLevelValidity($party_skill{skillObject}, $party_skill{lvl}) ) {
+						error TF("partySkill attempted to use skill (%s) level %s which you do not have.\n", $party_skill{skillObject}->getName(), $party_skill{lvl});
+						configModify($party_skill{prefix}."_disabled", 1);
+						next;
+					}
 					last PARTYSKILL;
 				}
 
@@ -2911,6 +2923,11 @@ sub processMonsterSkillUse {
 					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->getName()." (lvl $lvl)\n", "monsterSkill";
 					# FIXME: $skill->getOwner (homun, merc) instead of $char?
 					my $target = $config{"${prefix}_isSelfSkill"} ? $char : $monster;
+					if ( !checkSkillLevelValidity($skill, $lvl) ) {
+						error TF("monsterSkill attempted to use skill (%s) level %s which you do not have.\n", $skill->getName(), $lvl);
+						configModify("${prefix}_disabled", 1);
+						next;
+					}
 					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix);
 					$ai_v{$prefix . "_time"} = time;
 					$ai_v{$prefix . "_target_time"}{$monsterID} = time;
