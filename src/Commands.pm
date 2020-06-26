@@ -6206,12 +6206,15 @@ sub cmdUseSkill {
 		my $pos = $spells{$targetID}{pos_to};
 		$target = { %{$pos} };
 	}
-	
+
 	$skill = new Skill(auto => $args[0], level => $level);
 
-	if ($char->{skills}{$skill->getHandle()}{lv} < $level) {
-		debug "Attempted to use skill (".$skill->getName().") level ".$level." which you do not have, adjusting to level ".$char->{skills}{$skill->getHandle()}{lv}.".\n";
-		$skill->{level} = $char->{skills}{$skill->getHandle()}{lv};
+	if ($char->{skills}{$skill->getHandle()}{lv} == 0) {
+		error TF("Skill '%s' cannot be used because you have no such skill.\n", $skill->getName());
+		return;
+	} elsif ($char->{skills}{$skill->getHandle()}{lv} < $level) {
+		error TF("You are trying to use the skill '%s' level %d, but only level %d is available to you.\n", $skill->getName(), $level, $char->{skills}{$skill->getHandle()}{lv});
+		return;
 	}
 
 	require Task::UseSkill;
