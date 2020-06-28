@@ -8889,14 +8889,15 @@ sub skill_msg {
 sub msg_string {
 	my ($self, $args) = @_;
 
-	if ($msgTable[++$args->{index}]) { # show message from msgstringtable.txt
-		message "$msgTable[$args->{index}]. Value: $args->{paral}\n", "info";
+	my $index = ++$args->{index};
+	if ($msgTable[$index]) { # show message from msgstringtable.txt
+		message "$msgTable[$index]. Value: $args->{paral}\n", "info";
 	} else {
-		warning TF("Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{index}, $args->{paral});
+		warning TF("Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $index, $args->{paral});
 	}
 
 	Plugins::callHook('packet_msgstring', {
-		index => $args->{index},
+		index => $index,
 		val => $args->{para1}
 	});
 }
