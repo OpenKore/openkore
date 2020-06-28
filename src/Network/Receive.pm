@@ -8894,6 +8894,11 @@ sub msg_string {
 	} else {
 		warning TF("Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{index}, $args->{paral});
 	}
+
+	Plugins::callHook('packet_msgstring', {
+		index => $args->{index},
+		val => $args->{para1}
+	});
 }
 
 # TODO: use $args->{type} if present
