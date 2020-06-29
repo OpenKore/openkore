@@ -198,7 +198,7 @@ sub iterate {
 			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
 			$self->setDone();
 		
-		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
+		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos_to, $self->{dest}{pos}, $self->{avoidWalls})) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
 			
 			@{$self->{last_pos}}{qw(x y)} = @{$pos}{qw(x y)};
