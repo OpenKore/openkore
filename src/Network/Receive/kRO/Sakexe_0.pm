@@ -480,7 +480,7 @@ sub new {
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
-		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
+		'07E2' => ['msg_string', 'v V', [qw(index paral)]],
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
 		# '07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8 is not used but add here to log
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1

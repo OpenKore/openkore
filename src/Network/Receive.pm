@@ -979,7 +979,7 @@ sub received_characters_info {
 sub parse_account_server_info {
 	my ($self, $args) = @_;
 	my $server_info;
-	
+
 	if ($args->{switch} eq '0B60') { # tRO 2020
 		$server_info = {
 			len => 164,
@@ -8898,7 +8898,7 @@ sub msg_string {
 
 	Plugins::callHook('packet_msgstring', {
 		index => $index,
-		val => $args->{para1}
+		val => $args->{paral}
 	});
 }
 
