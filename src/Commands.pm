@@ -6209,6 +6209,14 @@ sub cmdUseSkill {
 
 	$skill = new Skill(auto => $args[0], level => $level);
 
+	if ($char->{skills}{$skill->getHandle()}{lv} == 0) {
+		error TF("Skill '%s' cannot be used because you have no such skill.\n", $skill->getName());
+		return;
+	} elsif ($char->{skills}{$skill->getHandle()}{lv} < $level) {
+		error TF("You are trying to use the skill '%s' level %d, but only level %d is available to you.\n", $skill->getName(), $level, $char->{skills}{$skill->getHandle()}{lv});
+		return;
+	}
+
 	require Task::UseSkill;
 	my $skillTask = new Task::UseSkill(
 		actor => $skill->getOwner,
