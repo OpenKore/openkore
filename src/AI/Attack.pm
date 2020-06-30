@@ -84,7 +84,8 @@ sub process {
 			$attackSeq->{monsterPos} &&
 			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
-			($attackSeq->{attackMethod}{distance} == 1 && canReachMeeleAttack(calcPosition($char), calcPosition($target)))
+			#($attackSeq->{attackMethod}{distance} == 1 && canReachMeeleAttack(calcPosition($char), calcPosition($target)))
+			($attackSeq->{attackMethod}{distance} == 1 && canReachMeeleAttack($char->{pos_to}, calcPosition($target)))
 		) {
 			debug "Target $target is now reachable by meele attacks during routing to it.\n", "ai_attack";
 			AI::dequeue;
@@ -266,10 +267,6 @@ sub main {
 	my $realMyPos = calcPosition($char);
 	my $realMonsterPos = calcPosition($target);
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
-	if (!$config{'runFromTarget'}) {
-		$myPos = $realMyPos;
-		$monsterPos = $realMonsterPos;
-	}
 
 	my $cleanMonster = checkMonsterCleanness($ID);
 
@@ -538,7 +535,8 @@ sub main {
 		}
 
 	} elsif (
-		(($args->{attackMethod}{distance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
+		#(($args->{attackMethod}{distance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
+		(($args->{attackMethod}{distance} == 1 && !canReachMeeleAttack($myPos, $realMonsterPos)) ||
 		($args->{attackMethod}{distance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 		!timeOut($args->{ai_attack_giveup})
 	) {

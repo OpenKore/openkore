@@ -392,7 +392,7 @@ sub iterate {
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 
-		} elsif ($stepsleft == 2 && isCellOccupied($solution->[-1])) {
+		} elsif ($stepsleft == 2 && isCellOccupied($solution->[-1]) && !$self->{meetingSubRoute}) {
 			# 2 more steps to cover (current position and the destination)
 			debug "Stoping 1 cell away from destination because there is an obstacle in it.\n", "route";
 			if ($self->{notifyUponArrival}) {
