@@ -2579,8 +2579,8 @@ sub meetingPosition {
 
 		# Check whether the distance is fine
 		if (
-			($attackMaxDistance == 1 && canReachMeeleAttack(\%actorStep, \%targetStep)) ||
-			($attackMaxDistance > 1 && blockDistance(\%actorStep, \%targetStep) <= $attackMaxDistance)
+			($attackMaxDistance == 1 && canReachMeeleAttack(\%actorStep, \%targetPosTo)) ||
+			($attackMaxDistance > 1 && blockDistance(\%actorStep, \%targetPosTo) <= $attackMaxDistance)
 		) {
 			last;
 		}
