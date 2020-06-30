@@ -8279,6 +8279,7 @@ sub rodex_read_mail {
 sub unread_rodex {
 	my ( $self, $args ) = @_;
 	message T("You have new unread rodex mails.\n");
+	Plugins::callHook('rodex_unread_mail');
 }
 
 sub rodex_remove_item {
