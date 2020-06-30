@@ -8886,14 +8886,31 @@ sub skill_msg {
 	}
 }
 
-sub msg_string {
+# Display msgstringtable.txt string and fill in a valid for %d format (ZC_MSG_VALUE).
+# 07E2 <message>.W <value>.L
+# Displays msgstringtable.txt string in a color. (ZC_MSG_COLOR).
+# 09CD <msg id>.W <color>.L
+sub message_string {
 	my ($self, $args) = @_;
 
-	if ($msgTable[++$args->{index}]) { # show message from msgstringtable.txt
-		message "$msgTable[$args->{index}]. Value: $args->{paral}\n", "info";
+	my $index = ++$args->{index};
+
+	if ($msgTable[$index]) { # show message from msgstringtable.txt
+		if($args->{param} && $args->{switch} eq '07E2') {
+			warning sprintf($msgTable[$index], $args->{param})."\n";
+		} else {
+			warning "$msgTable[$index]\n";
+		}
 	} else {
-		warning TF("Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{index}, $args->{paral});
+		warning TF("Unknown message_string: %s param: %s. Need to update the file msgstringtable.txt (from data.grf)\n", $index, $args->{param});
 	}
+
+	$self->mercenary_off() if ($index >= 1267 && $index <= 1270);
+
+	Plugins::callHook('packet_message_string', {
+		index => $index,
+		val => $args->{param}
+	});
 }
 
 # TODO: use $args->{type} if present
@@ -10453,18 +10470,6 @@ sub mercenary_off {
 	delete $char->{mercenary};
 }
 # -message_string
-
-# not only for mercenaries, this is an all purpose packet !
-sub message_string {
-	my ($self, $args) = @_;
-
-	if ($msgTable[++$args->{msg_id}]) { # show message from msgstringtable.txt
-		warning "$msgTable[$args->{msg_id}]\n";
-		$self->mercenary_off() if ($args->{msg_id} >= 1267 && $args->{msg_id} <= 1270);
-	} else {
-		warning TF("Unknown message_string: %s. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msg_id});
-	}
-}
 
 sub monster_ranged_attack {
 	my ($self, $args) = @_;
