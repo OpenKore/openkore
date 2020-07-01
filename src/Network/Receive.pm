@@ -777,7 +777,7 @@ sub received_characters {
 	my ($self, $args) = @_;
 	my $blockSize = $self->received_characters_blockSize();
 	my $char_info = $self->received_characters_unpackString;
-
+	$charSvrSet{sync_received_characters}++ if (exists $charSvrSet{sync_received_characters});
 	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER) if $net->getState() != Network::CONNECTED_TO_LOGIN_SERVER;
 
 	return unless exists $args->{charInfo};
@@ -844,6 +844,7 @@ sub sync_received_characters {
 	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
 
 	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
+	$charSvrSet{sync_received_characters} = 0 if (exists $args->{sync_Count});
 
 	unless ($net->clientAlive) {
 		for (1..$args->{sync_Count}) {

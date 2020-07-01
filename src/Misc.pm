@@ -1510,6 +1510,8 @@ sub charSelectScreen {
 		push @charNameIndices, $num;
 	}
 
+	return 0 if (exists $charSvrSet{sync_Count} && $charSvrSet{sync_received_characters} < $charSvrSet{sync_Count});
+
 	if (@charNames) {
 		my $msg =  center(T(" Character List "), 79, '-') ."\n";
 		$msg .= join("\n", @charNames) ."\n";
