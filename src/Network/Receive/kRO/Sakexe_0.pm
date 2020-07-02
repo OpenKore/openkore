@@ -222,7 +222,7 @@ sub new {
 		'014B' => ['GM_silence', 'C Z24', [qw(type name)]], # 27
 		'014C' => ['guild_allies_enemy_list'], # -1
 		'014E' => ['guild_master_member', 'V', [qw(type)]], # 6
-		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]],		
+		'0150' => ['guild_info', 'a4 V9 a4 Z24 Z24 Z16 V', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name master castles_string zeny)]],
 		'0152' => ['guild_emblem', 'v a4 a4 a*', [qw(len guildID emblemID emblem)]], # -1
 		'0154' => ['guild_members_list', 'v a*', [qw(len member_list)]],
 		'0156' => ['guild_update_member_position', 'v a*', [qw(len member_list)]],
@@ -332,7 +332,7 @@ sub new {
 		'01F6' => ['adopt_request', 'a4 a4 Z24', [qw(sourceID targetID name)]], # 34
 		'01F8' => ['adopt_start'], # 2
 		'01FC' => ['repair_list'], # -1
-		'01FE' => ['repair_result', 'v C', [qw(nameID flag)]], # 5
+		'01FE' => ['repair_result', 'v C', [qw(index flag)]], # 5
 		'01FF' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'0201' => ['friend_list'], # -1
 		'0205' => ['divorced', 'Z24', [qw(name)]], # 26 # clif_divorced
@@ -585,9 +585,9 @@ sub new {
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09D1' => ['progress_bar_unit', 'V3', [qw(GID color time)]],
 		'09DA' => ['guild_storage_log', 'v3 a*', [qw(len result count log)]], # -1
-		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss body_style name)]],
-		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss body_style name)]],
-		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font maxHP HP isBoss body_style name)]],
+		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss name)]],
+		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss name)]],
+		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font maxHP HP isBoss name)]],
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
 		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
 		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
@@ -673,8 +673,8 @@ sub new {
 		'0AC7' => ['map_changed', 'Z16 v2 a4 v a128', [qw(map x y IP port url)]], # 156
 		'0AC9' => ['account_server_info', 'v a4 a4 a4 a4 a26 C a6 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex unknown serverInfo)]],
 		'0ACA' => ['errors', 'C', [qw(type)]], #if PACKETVER >= 20170322
-		'0ACB' => ['stat_info', 'v a8', [qw(type val)]],
-		'0ACC' => ['exp', 'a4 a8 v2', [qw(ID val type flag)]],
+		'0ACB' => ['stat_info', 'v V2', [qw(type val val2)]],
+		'0ACC' => ['exp', 'a4 V2 v2', [qw(ID val val2 type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADC' => ['misc_config', 'C4', [qw(show_eq_flag call_flag pet_autofeed_flag homunculus_autofeed_flag)]],
  		'0ADD' => ['item_appeared', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
@@ -889,7 +889,7 @@ sub parse_items {
 		my $item;
 		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{itemInfo}, $i, $unpack->{len}));
 
-		if ( $args->{switch} eq '0B09' && $item->{type} == 10 ) { # workaround arrow byte bug
+		if ( $args->{switch} eq '0B09' && $masterServer->{serverType} ne 'iRO_Renewal' && existsInList("10, 16, 17, 19", $item->{type}) ) { # workaround arrow/ammunition byte bug
 			$item->{amount} = unpack("v", substr($args->{itemInfo}, $i+7, 2));
 		}
 
@@ -1012,85 +1012,31 @@ sub guild_chat {
 	});
 }
 
-# TODO: test extracted unpack string
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
-	my ($psize);
-	my $msg = $args->{RAW_MSG};
 
-	my $unpack = items_nonstackable($self, $args);
+	$self->_items_list({
+		class => 'Actor::Item',
+		hook => 'packet_inventory',
+		debug_str => 'Non-Stackable Inventory Item',
+		items => [$self->parse_items_nonstackable($args)],
+		getter => sub { $char->inventory->getByID($_[0]{ID}) },
+		adder => sub { $char->inventory->add($_[0]) },
+		callback => sub {
+			my ($local_item) = @_;
 
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $unpack->{len}) {
-		my ($item, $local_item, $add);
-
-		@{$item}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($msg, $i, $unpack->{len}));
-
-		unless($local_item = $char->inventory->getByID($item->{ID})) {
-			$local_item = new Actor::Item();
-			$add = 1;
-		}
-
-		foreach (@{$unpack->{keys}}) {
-			$local_item->{$_} = $item->{$_};
-		}
-		$local_item->{name} = itemName($local_item);
-		$local_item->{amount} = 1;
-
-		if ($local_item->{equipped}) {
-			foreach (%equipSlot_rlut){
-				if ($_ & $local_item->{equipped}){
-					next if $_ == 10; #work around Arrow bug
-					$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
+			if ($local_item->{equipped}) {
+				foreach (%equipSlot_rlut){
+					if ($_ & $local_item->{equipped}){
+						next if $_ == 10; #work around Arrow bug
+						next if $_ == 32768;
+						$char->{equipment}{$equipSlot_lut{$_}} = $local_item;
+					}
 				}
 			}
 		}
-
-		$char->inventory->add($local_item) if ($add);
-
-		debug "Inventory: $local_item->{name} ($local_item->{binID}) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}} - $equipTypes_lut{$local_item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $local_item->{binID}});
-
-=pod
-		my $index = unpack("v1", substr($msg, $i, 2));
-		my $ID = unpack("v1", substr($msg, $i + 2, 2));
-		my $item = $char->inventory->getByID($index);
-		my $add;
-		if (!$item) {
-			$item = new Actor::Item();
-			$add = 1;
-		}
-		$item->{ID} = $index;
-		$item->{nameID} = $ID;
-		$item->{amount} = 1;
-		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
-		$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
-		$item->{type_equip} = unpack("v1", substr($msg, $i + 6, 2));
-		$item->{equipped} = unpack("v1", substr($msg, $i + 8, 2));
-		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
-		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
-		$item->{cards} = ($psize == 24) ? unpack("a12", substr($msg, $i + 12, 12)) : unpack("a8", substr($msg, $i + 12, 8));
-		if ($psize == 26) {
-			my $expire =  unpack("a4", substr($msg, $i + 20, 4)); #a4 or V1 unpacking?
-			$item->{expire} = $expire if (defined $expire);
-			#$item->{unknown} = unpack("v1", substr($msg, $i + 24, 2));
-		}
-		$item->{name} = itemName($item);
-		if ($item->{equipped}) {
-			foreach (%equipSlot_rlut){
-				if ($_ & $item->{equipped}){
-					next if $_ == 10; #work around Arrow bug
-					$char->{equipment}{$equipSlot_lut{$_}} = $item;
-				}
-			}
-		}
-
-		$char->inventory->add($item) if ($add);
-
-		debug "Inventory: $item->{name} ($item->{binID}) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $item->{binID}});
-=cut
-	}
+	});
 }
 
 sub item_skill {

@@ -653,8 +653,8 @@ sub received_characters_unpackString {
 	for ($masterServer && $masterServer->{charBlockSize}) {
 		if ($_ == 155) {  # PACKETVER >= 20170830 [base and job exp are now uint64]
 			$char_info = {
-	            types => 'a4 a8 V a8 V6 v V2 v4 V v9 Z24 C8 v Z16 V4 C',
-				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
+	            types => 'a4 V2 V V2 V6 v V2 v4 V v9 Z24 C8 v Z16 V4 C',
+				keys => [qw(charID exp exp_2 zeny exp_job exp_job_2 lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
 			};
 
 		} elsif ($_ == 147) { # PACKETVER >= 20141022 [iRO Doram Update, walk_speed is now long]
@@ -663,7 +663,7 @@ sub received_characters_unpackString {
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
 			};
 
-        } elsif ($_ == 146) { # bRO and tRO update the data to be equal to charblocksize 147, but not added sex. (Sep, 2019)
+        } elsif ($_ == 146) { # equal to charblocksize 147, but not added sex. (Sep, 2019)
 			$char_info = {
 			    types => 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V4',
 				keys => [qw(charID exp zeny exp_job lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon)],
@@ -777,31 +777,25 @@ sub received_characters {
 	my ($self, $args) = @_;
 	my $blockSize = $self->received_characters_blockSize();
 	my $char_info = $self->received_characters_unpackString;
-
+	$charSvrSet{sync_received_characters}++ if (exists $charSvrSet{sync_received_characters});
 	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER) if $net->getState() != Network::CONNECTED_TO_LOGIN_SERVER;
 
 	return unless exists $args->{charInfo};
 
 	for (my $i = 0; $i < length($args->{charInfo}); $i += $masterServer->{charBlockSize}) {
 		my $character = new Actor::You;
-		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
-		if ($masterServer->{charBlockSize} >= 155) {
-			$character->{RAW_exp} = $character->{exp};
-			$character->{RAW_exp_job} = $character->{exp_job};
-		}
-		$character->{ID} = $accountID;
-
-		$character->{name} = bytesToString($character->{name});
 
 		# Re-use existing $char object instead of re-creating it.
 		# Required because existing AI sequences (eg, route) keep a reference to $char.
 		if ($char && $char->{ID} eq $accountID && $char->{charID} eq $character->{charID}) {
 			$character = $char;
-			if ($masterServer->{charBlockSize} >= 155) {
-				$character->{exp} = $character->{RAW_exp};
-				$character->{exp_job} = $character->{RAW_exp_job};
-			}
 		}
+
+		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
+
+		$character->{ID} = $accountID;
+
+		$character->{name} = bytesToString($character->{name});
 
 		$character->{lastJobLvl} = $character->{lv_job}; # This is for counting exp
 		$character->{lastBaseLvl} = $character->{lv}; # This is for counting exp
@@ -811,11 +805,6 @@ sub received_characters {
 
 		$character->{nameID} = unpack("V", $character->{ID});
 		$character->{last_map} =~ s/\.gat.*//g if ($character->{last_map});
-
-		if ($masterServer->{charBlockSize} >= 155) {
-			$character->{exp} = hex (unpack("H*",scalar reverse($character->{exp})));
-			$character->{exp_job} = hex (unpack("H*",scalar reverse($character->{exp_job})));
-		}
 
 		if ((!exists($character->{sex})) || ($character->{sex} ne "0" && $character->{sex} ne "1")) { $character->{sex} = $accountSex2; }
 
@@ -846,7 +835,7 @@ sub received_characters {
 	}
 }
 
-# Tell client how many pages have character selection screen 
+# Tell client how many pages have character selection screen
 # 09A0 <total count>.W (PACKET_HC_CHARLIST_NOTIFY)
 # total count: Server send from total pages until 1 page
 sub sync_received_characters {
@@ -855,6 +844,7 @@ sub sync_received_characters {
 	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
 
 	$charSvrSet{sync_Count} = $args->{sync_Count} if (exists $args->{sync_Count});
+	$charSvrSet{sync_received_characters} = 0 if (exists $args->{sync_Count});
 
 	unless ($net->clientAlive) {
 		for (1..$args->{sync_Count}) {
@@ -979,8 +969,15 @@ sub received_characters_info {
 sub parse_account_server_info {
 	my ($self, $args) = @_;
 	my $server_info;
+	
+	if ($args->{switch} eq '0B60') { # tRO 2020
+		$server_info = {
+			len => 164,
+			types => 'a4 v Z20 v3 a132',
+			keys => [qw(ip port name state users property ip_port)],
+		};
 
-	if ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
+	} elsif ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
 		$server_info = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
@@ -993,7 +990,13 @@ sub parse_account_server_info {
 			types => 'a20 V v a126',
 			keys => [qw(name users unknown ip_port)],
 		};
-	} else { # 0069 [default] and 0276 [pRO, tRO
+	} elsif ($args->{switch} eq '0276' && $masterServer->{serverType} eq "tRO") { # tRO 2020 # keep this here to future uses
+		$server_info = {
+			len => 36,
+			types => 'a4 v Z20 v5',
+			keys => [qw(ip port name state users property sid unknown)],
+		};
+	} else { # 0069 [default] and 0276 [pRO]
 		$server_info = {
 			len => 32,
 			types => 'a4 v Z20 v3',
@@ -1030,7 +1033,14 @@ sub reconstruct_account_server_info {
 
 	my $serverInfo;
 
-	if ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4") {
+	if ($args->{switch} eq '0B60') { # tRO 2020
+		$serverInfo = {
+			len => 164,
+			types => 'a4 v Z20 v3 a132',
+			keys => [qw(ip port name state users property ip_port)],
+		};
+
+	} elsif ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4") {
 		$serverInfo = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
@@ -1041,6 +1051,12 @@ sub reconstruct_account_server_info {
 			len => 154,
 			types => 'a20 V a2 a126',
 			keys => [qw(name users unknown ip_port)],
+		};
+	}  elsif ($masterServer->{serverType} eq "tRO" && ( $args->{switch} eq "0276" || $self->{packet_lut}{$args->{switch}} eq "0276" )) {
+		$serverInfo = {
+			len => 36,
+			types => 'a4 v Z20 v5',
+			keys => [qw(ip port name state users property sid unknown)],
 		};
 	} else {
 		$serverInfo = {
@@ -1088,13 +1104,14 @@ sub account_server_info {
 		('-'x34) . "\n", 'connection';
 
 	@servers = @{$args->{servers}};
+	my @state = ("Idle", "Normal", "Busy", "Full");
 
 	my $msg = center(T(" Servers "), 53, '-') ."\n" .
-			T("#   Name                  Users  IP              Port\n");
+			T("#   Name                  Users  IP              Port  SID   State\n");
 	for (my $num = 0; $num < @servers; $num++) {
 		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
-			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}]);
+			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<< @<<<<< @<<<<<<",
+			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}, ($servers[$num]{sid}) ? $servers[$num]{sid} : 0, defined($servers[$num]{state}) ? $state[$servers[$num]{state}] : 0]);
 	}
 	$msg .= ('-'x53) . "\n";
 	message $msg, "connection";
@@ -1155,7 +1172,7 @@ sub map_loaded {
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
 	} else {
 		$messageSender->sendReqRemainTime() if (grep { $masterServer->{serverType} eq $_ } qw(Zero Sakray));
-		
+
 		$messageSender->sendMapLoaded();
 
 		$messageSender->sendSync(1);
@@ -1164,7 +1181,7 @@ sub map_loaded {
 		$messageSender->sendGuildRequestInfo(0);
 
 		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
-		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});	
+		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 
 		# request to unfreeze char - alisonrag
 		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
@@ -1179,7 +1196,7 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
-	
+
 	# set initial status from data received from the char server (seems needed on eA, dunno about kRO)}
 	if($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
 
@@ -1598,8 +1615,8 @@ sub stats_added {
 }
 
 # Character status (ZC_STATUS).
-# 00BD <stpoint>.W <str>.B <need str>.B <agi>.B <need agi>.B <vit>.B <need vit>.B <int>.B <need int>.B <dex>.B <need dex>.B <luk>.B <need luk>.B 
-# <atk>.W <atk2>.W <matk min>.W <matk max>.W <def>.W <def2>.W <mdef>.W <mdef2>.W <hit>.W <flee>.W <flee2>.W <crit>.W <aspd>.W <aspd2>.W 
+# 00BD <stpoint>.W <str>.B <need str>.B <agi>.B <need agi>.B <vit>.B <need vit>.B <int>.B <need int>.B <dex>.B <need dex>.B <luk>.B <need luk>.B
+# <atk>.W <atk2>.W <matk min>.W <matk max>.W <def>.W <def2>.W <mdef>.W <mdef2>.W <hit>.W <flee>.W <flee2>.W <crit>.W <aspd>.W <aspd2>.W
 sub stats_info {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
@@ -1837,7 +1854,7 @@ sub actor_display {
 			} else {
 				$actor = $object_class->new();
 			}
-			
+
 			$actor->{appear_time} = time;
 			$actor->{name_given} = bytesToString($args->{name}) if exists $args->{name};
 			$actor->{jobID} = $args->{type} if exists $args->{type};
@@ -1893,7 +1910,12 @@ sub actor_display {
 			if ($monsters_lut{$args->{type}}) {
 				$actor->setName($monsters_lut{$args->{type}});
 			}
-			#$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : "Unknown";
+			# New actor_display packets include the Monster name
+			if ($args->{switch} eq "0086") {
+				$actor->{name} = $args->{name};
+			} else {
+				$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
+			}
 			$actor->{name_given} = "Unknown";
 			$actor->{binType} = $args->{type};
 			$mustAdd = 1;
@@ -2303,6 +2325,11 @@ sub actor_died_or_disappeared {
 				delete $venderLists{$ID};
 			}
 
+			if (grep { $ID eq $_ } @buyerListsID) {
+				binRemove(\@buyerListsID, $ID);
+				delete $buyerLists{$ID};
+			}
+
 			$player->{gone_time} = time;
 			$players_old{$ID} = $player->deepCopy();
 			Plugins::callHook('player_disappeared', {player => $player});
@@ -2432,6 +2459,7 @@ sub actor_action {
 			if ($config{sitAuto_idle}) {
 				$timeout{ai_sit_idle}{time} = time;
 			}
+			delete $ai_v{sitAuto_forcedBySitCommand} if $ai_v{sitAuto_forcedBySitCommand};
 			$char->{sitting} = 0;
 		} else {
 			message TF("%s is standing.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
@@ -2778,10 +2806,10 @@ sub homunculus_info {
 	if ($args->{state} == HO_PRE_INIT) {
 		my $state = $char->{homunculus}{state}
 			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
-		
+
 		# Some servers won't send 'homunculus_property' after a teleport, so we don't delete $char->{homunculus} object
 		$char->{homunculus} = Actor::get($args->{ID}) if ($char->{homunculus}{ID} ne $args->{ID});
-		
+
 		$char->{homunculus}{state} = $state if (defined $state);
 		$char->{homunculus}{map} = $field->baseName;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
@@ -3040,7 +3068,7 @@ sub misc_config {
 			message T("Your Equipment information is now open to the public.\n");
 		} else {
 			message T("Your Equipment information is now not open to the public.\n");
-		}		
+		}
 	}
 
 	if (defined ($args->{call_flag})) {
@@ -3048,7 +3076,7 @@ sub misc_config {
 			message T("Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
 		} else {
 			message T("Not Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
-		}		
+		}
 	}
 
 	if (defined ($args->{pet_autofeed_flag})) {
@@ -3056,7 +3084,7 @@ sub misc_config {
 			message T("Pet automatic feeding is ON. (Ragexe Client Feature)\n");
 		} else {
 			message T("Pet automatic feeding is OFF. (Ragexe Client Feature)\n");
-		}		
+		}
 	}
 
 	if (defined ($args->{homunculus_autofeed_flag})) {
@@ -3064,7 +3092,7 @@ sub misc_config {
 			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");
 		} else {
 			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");
-		}		
+		}
 	}
 }
 
@@ -3467,10 +3495,12 @@ sub inventory_item_added {
 		$args->{item} = $item;
 
 		# TODO: move this stuff to AI()
-		if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}, $ai_v{npc_talk}{itemID}) {
+		if(defined($ai_v{npc_talk})) { # avoid autovivification
+			if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}, $ai_v{npc_talk}{itemID}) {
 
-			$ai_v{'npc_talk'}{'talk'} = 'buy';
-			$ai_v{'npc_talk'}{'time'} = time;
+				$ai_v{'npc_talk'}{'talk'} = 'buy';
+				$ai_v{'npc_talk'}{'time'} = time;
+			}
 		}
 
 		if (AI::state == AI::AUTO) {
@@ -6083,13 +6113,13 @@ sub guild_info {
 
 # Guild member manager information
 # 0154 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <memo>.50B <name>.24B }* (ZC_MEMBERMGR_INFO)
-# 0AA5 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <lastlogin>.L }* 
+# 0AA5 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <lastlogin>.L }*
 # state:
 #     0 = offline
 #     1 = online
 sub guild_members_list {
 	my ($self, $args) = @_;
-	
+
 	my $guild_member_info;
 	if ($args->{switch} eq "0AA5") { # 0AA5
 		$guild_member_info = {
@@ -6104,7 +6134,7 @@ sub guild_members_list {
 			types => 'a4 a4 v5 V3 Z50 Z24',
 			keys => [qw(ID charID hair_style hair_color sex jobID lv contribution online position memo name)],
 		};
-	} 
+	}
 
 	delete $guild{member};
 	my $index = 0;
@@ -6208,7 +6238,7 @@ sub guild_member_online_status {
 # 0156 <packet len>.W { <account id>.L <char id>.L <position id>.L }*
 sub guild_update_member_position {
 	my ($self, $args) = @_;
-	
+
 	my $guild_position_info = {
 		len => 12,
 		types => 'a4 a4 V',
@@ -6268,7 +6298,7 @@ sub guild_name {
 	$messageSender->sendGuildRequestInfo(0);			# Requests for Basic Information Guild, Hostile Alliance Information
 	$messageSender->sendGuildRequestInfo(1);			# Requests for Members list, list job title
 	$messageSender->sendGuildRequestEmblem($guildID);	# Requests for Guild Emblem
-	# TODO: check if is necessary use PAGE 2 (title information list) 
+	# TODO: check if is necessary use PAGE 2 (title information list)
 	# $messageSender->sendGuildRequestInfo(2);			# Requests for List job title, title information list [Guild Title System]
 }
 
@@ -6385,7 +6415,7 @@ sub guild_skills_list {
 # Change 64 to 88 if needed
 sub guild_expulsionlist {
 	my ($self, $args) = @_;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 64) { 
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 64) {
 
 		my ($name, $acc, $cause) = unpack('Z24 Z24 Z40', substr($args->{RAW_MSG}, $i, 64));
 
@@ -6413,7 +6443,7 @@ sub guild_member_map_change {
 # 0182 <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <memo>.50B <name>.24B
 sub guild_member_add {
 	my ($self, $args) = @_;
-	
+
 	if($guild{member}) {
 		my $index = scalar $guild{member};
 		foreach (@{$args->{KEYS}}) {
@@ -7355,7 +7385,7 @@ sub npc_market_info {
 		$item->{ID} = $storeList->size;
 
 		$item->{name} = itemName($item);
-		
+
 		$storeList->add($item);
 
 		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
@@ -7429,7 +7459,7 @@ sub npc_market_purchase_result {
 		$item->{ID} = $storeList->size;
 
 		$item->{name} = itemName($item);
-		
+
 		$storeList->add($item);
 
 		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
@@ -7560,20 +7590,6 @@ sub character_ban_list {
 
 sub flag {
 	my ($self, $args) = @_;
-}
-
-sub parse_stat_info {
-	my ($self, $args) = @_;
-	if($args->{switch} eq "0ACB") {
-		$args->{val} = hex (unpack("H*",scalar reverse($args->{val})));
-	}
-}
-
-sub parse_exp {
-	my ($self, $args) = @_;
-	if($args->{switch} eq "0ACC") {
-		$args->{val} = hex (unpack("H*",scalar reverse($args->{val})));
-	}
 }
 
 sub offline_clone_found {
@@ -8075,7 +8091,7 @@ sub party_users_info {
 		$char->{party}{users}{$ID}{name} = bytesToString($char->{party}{users}{$ID}{name});
 		$char->{party}{users}{$ID}{admin} = !$char->{party}{users}{$ID}{admin};
 		$char->{party}{users}{$ID}{online} = !$char->{party}{users}{$ID}{online};
-		
+
 		# If party member return to saveMap out of our screen, the server will send to us party_users_info [iRO-RT 2020-jan]
 		undef $char->{party}{users}{$ID}{'dead'};
 		undef $char->{party}{users}{$ID}{'dead_time'};
@@ -8107,10 +8123,10 @@ sub party_dead {
 
 sub rodex_mail_list {
 	my ( $self, $args ) = @_;
-	
+
 	my $mail_info;
 
-	if ($args->{switch} eq '0AC2') {  
+	if ($args->{switch} eq '0AC2') {
 		$mail_info = {
 			len => 41,
 			types => 'C V2 C2 Z24 V v',
@@ -8241,6 +8257,7 @@ sub rodex_read_mail {
 sub unread_rodex {
 	my ( $self, $args ) = @_;
 	message T("You have new unread rodex mails.\n");
+	Plugins::callHook('rodex_unread_mail');
 }
 
 sub rodex_remove_item {
@@ -9266,7 +9283,7 @@ sub buying_store_items_list {
 
 	$msg .= "\n" . TF("Price limit: %s Zeny\n", $zeny) . ('-'x79) . "\n";
 	message $msg, "list";
-	
+
 	if($args->{expireDate}) {
 		$expireDate = $args->{expireDate};
 		my $date = int(time) + int($args->{expireDate}/1000);
@@ -9579,7 +9596,7 @@ sub rank_points {
 	message "Unknown rank type %s.\n", $args->{type} if $args->{type} > 2;
 }
 
-# Updates the fame rank points for the Blacksmith ranking. 
+# Updates the fame rank points for the Blacksmith ranking.
 # 021B <points>.L <total points>.L (ZC_BLACKSMITH_POINT)
 sub blacksmith_points {
 	my ($self, $args) = @_;
@@ -10247,7 +10264,7 @@ sub taekwon_packets {
 	}
 }
 
-# Updates the fame rank points for the Taekwon ranking. 
+# Updates the fame rank points for the Taekwon ranking.
 # 0224 <points>.L <total points>.L (ZC_TAEKWON_POINT)
 sub taekwon_rank {
 	my ($self, $args) = @_;
@@ -10557,23 +10574,57 @@ sub pvp_rank {
 # 01FC <packet len>.W { <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }*
 sub repair_list {
 	my ($self, $args) = @_;
-	my $msg = T("--------Repair List--------\n");
 	undef $repairList;
+	my $myself = 1;
+	my $msg1 = center(T(" Repair List "), 80, '-') ."\n".
+			T("   # Short name                     Full name\n");
+	my $msg2;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
-		my $item = {};
+		my $repairItem = {};
+		($repairItem->{index},
+		$repairItem->{nameID},
+		$repairItem->{upgrade},
+		$repairItem->{cards},
+		) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, 13));
+		my $ID = $repairItem->{index} + 2;
+		$ID = pack("v", $ID);
+		my $item = $char->inventory->getByID($ID);
+		$repairItem->{name} = $item->{name};
 
-		($item->{ID},
-		$item->{nameID},
-		$item->{upgrade},
-		$item->{cards},
-		) = unpack('a2 v C a8', substr($args->{RAW_MSG}, $i, 13));
+		#dirty hack - if the item ID does not match, then we repair other people's items
+		if ($repairItem->{nameID} ne $item->{nameID}) {
+			debug "Received 'Repair list' belongs to another player\n", 1;
+			$myself = 0;
+			last;
+		}
 
-		$repairList->[$item->{ID}] = $item;
-		my $name = itemNameSimple($item->{nameID});
-		$msg .= $item->{ID} . " $name\n";
+		$repairList->[$item->{binID}] = $repairItem;
+		my $shortName = itemNameSimple($repairItem->{nameID});
+		$msg2 .= sprintf("%4d %-30s %s\n", $item->{binID}, $shortName, $item->{name});
 	}
-	$msg .= "---------------------------\n";
-	message $msg, "list";
+
+	if (!$myself) {
+		# then we repair other people's items
+		# we need to rebuild the entire array
+		undef $repairList;
+		undef $msg2;
+		for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
+			my $repairItem = {};
+			($repairItem->{index},
+			$repairItem->{nameID},
+			$repairItem->{upgrade},
+			$repairItem->{cards},
+			) = unpack('v2 C a8', substr($args->{RAW_MSG}, $i, 13));
+			my $shortName = itemNameSimple($repairItem->{nameID});
+			my $fullName = itemName($repairItem);
+			$repairItem->{name} = $fullName;
+
+			$repairList->[$repairItem->{index}] = $repairItem;
+			$msg2 .= sprintf("%4d %-30s %s\n", $repairItem->{index}, $shortName, $fullName);
+		}
+	}
+	$msg2 .= ('-'x80) . "\n";
+	message $msg1.$msg2, "list";
 }
 
 # Notifies the client about the result of a item repair request (ZC_ACK_ITEMREPAIR).
@@ -10585,13 +10636,16 @@ sub repair_list {
 #     1 = Item repair failure.
 sub repair_result {
 	my ($self, $args) = @_;
-	undef $repairList;
-	my $itemName = itemNameSimple($args->{nameID});
+
+	my $index = $args->{index} - 2;
+	my $item = $char->inventory->getByID($index);
+
 	if ($args->{flag}) {
-		message TF("Repair of %s failed.\n", $itemName);
+		message TF("Repair of %s failed.\n", $repairList->[$index]->{name});
 	} else {
-		message TF("Successfully repaired %s.\n", $itemName);
+		message TF("Successfully repaired '%s'.\n", $repairList->[$index]->{name});
 	}
+	undef $repairList;
 }
 
 sub resurrection {
@@ -11068,9 +11122,9 @@ sub stylist_res {
 #    0x7 = ATTENDANCE_UI
 sub open_ui {
 	my ($self, $args) = @_;
-	
+
 	debug TF("Received request from server to open UI: %s\n", $args->{type});
-	
+
 	if($args->{type} == BANK_UI) { # TODO: implement bank system and add Bank open Request
 		message T("Server requested to open Bank UI.\n");
 	} elsif($args->{type} == STYLIST_UI) { # TODO: implement Stylist system and add Stylist open Request
@@ -11124,10 +11178,10 @@ sub attendance_ui {
 			message swrite( "@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<", ["Day", "Item", "Amount", "Requested"]), "info";
 
 			for (my $i = 1; $i <= 20; $i++) {
-				my $requested = ($attendance_count >= $i) ? "yes" : "no";				
+				my $requested = ($attendance_count >= $i) ? "yes" : "no";
 				if ($attendance_count == $i && !$already_requested) { $requested = "can"; }
-				message swrite( 
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<", 
+				message swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<",
 					[$i, itemNameSimple($attendance_rewards{items}{$i}{item_id}), $attendance_rewards{items}{$i}{amount}, $requested]
 				), "info";
 			}
@@ -11159,7 +11213,7 @@ sub move_interrupt {
 #    1 = mark opening and closing
 sub banking_check {
 	my ($self, $args) = @_;
-	
+
 	$bankingopened = 1;
 	$banking{zeny} = $args->{zeny};
 
@@ -11167,7 +11221,7 @@ sub banking_check {
 	message TF("In Bank : %s z\n", $args->{zeny}), "info";
 	message TF("On Hand : %s z\n", $char->{zeny}), "info";
 	message ('-'x40) . "\n", "info";
-	
+
 	Plugins::callHook("banking_opened");
 }
 
@@ -11187,7 +11241,7 @@ sub banking_deposit {
 		Plugins::callHook("banking_deposit_success");
 		return;
 	} elsif ($args->{reason} == 0x1) {
-		error T("Bank: Deposit Error (Try it again).\n");		
+		error T("Bank: Deposit Error (Try it again).\n");
 	} elsif ($args->{reason} == 0x2) {
 		error T("Bank: No Money For Deposit.\n");
 	} elsif ($args->{reason} == 0x3) {
@@ -11224,7 +11278,7 @@ sub banking_withdraw {
 
 # start a navigation to designed location/map
 # 08E2 <type>.B <flag>.B <hide>.B <map>.16B <x pos>.W <y pos>.W <mob id>.W
-# TODO: document type and flag 
+# TODO: document type and flag
 sub navigate_to {
 	my ($self, $args) = @_;
 
@@ -11274,7 +11328,7 @@ sub roulette_window {
 # 0A1C <length>.W <serial>.L { { <level>.W <column>.W <item>.L <amount>.L } * MAX_ROULETTE_COLUMNS } * MAX_ROULETTE_LEVEL (ZC_ACK_ROULEITTE_INFO) >= 20180516
 sub roulette_info {
 	my ($self, $args) = @_;
-	
+
 	my $item_info = {
 			len => 8, # or 12
 			types => 'v4', # or v2 V2
@@ -11295,7 +11349,7 @@ sub roulette_info {
 sub roulette_recv_item {
 	my ($self, $args) = @_;
 	message TF("Roulette Bonus - Type: %s  Bonus Item: %s\n", $args->{type}, itemNameSimple($args->{item_id})), "info";
-	
+
 }
 
 # Update Roulette window with current stats
@@ -11307,7 +11361,7 @@ sub roulette_window_update {
 	foreach (@{$args->{KEYS}}) {
 		$roulette{$_} = $args->{$_};
 	}
-	
+
 	if($args->{result} == 1) {
 		warning T("Roulette: Something went wrong\n");
 		return;

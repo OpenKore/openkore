@@ -35,7 +35,7 @@ sub version {
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 		'0065' => ['game_login', 'a4 a4 a4 v C', [qw(accountID sessionID sessionID2 userLevel accountSex)]],
@@ -155,7 +155,7 @@ sub new {
 		'01ED' => ['novice_explosion_spirits'],
 		'01F7' => ['adopt_reply_request', 'V3', [qw(parentID1 parentID2 result)]],
 		'01F9' => ['adopt_request', 'V', [qw(ID)]],
-		'01FD' => ['repair_item', 'a2 v V2 C', [qw(index nameID status status2 listID)]],
+		'01FD' => ['repair_item', 'v2 C a8', [qw(index nameID upgrade cards)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
 		'0203' => ['friend_remove', 'a4 a4', [qw(accountID charID)]],
 		'0204' => ['client_hash', 'a16', [qw(hash)]],
@@ -215,8 +215,8 @@ sub new {
 		'0842' => ['recall_sso', 'V', [qw(ID)]],
 		'0843' => ['remove_aid_sso', 'V', [qw(ID)]],
 		'0844' => ['cash_shop_open'],#2
-		'0846' => ['req_cash_tabcode', 'v', [qw(ID)]],	
-		'0848' => (exists $rpackets{'0848'}{minLength} && $rpackets{'0848'}{minLength} == 6) ? 
+		'0846' => ['req_cash_tabcode', 'v', [qw(ID)]],
+		'0848' => (exists $rpackets{'0848'}{minLength} && $rpackets{'0848'}{minLength} == 6) ?
 			['cash_shop_buy', 'v v a*', [qw(len count buy_info)]] :
 			['cash_shop_buy', 'v v V a*', [qw(len count kafra_points buy_info)]],
 		'084A' => ['cash_shop_close'],#2
@@ -270,14 +270,14 @@ sub new {
 		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
 		'0ACE' => ['equip_switch_single', 'a2', [qw(ID)]],
 		'0AEF' => ['attendance_reward_request'],
-		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],		
+		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 		'0B14' => ['inventory_expansion_request'], #2
 		'0B19' => ['inventory_expansion_rejected'], #2
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	$self;
 }
 

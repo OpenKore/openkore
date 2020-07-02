@@ -144,6 +144,8 @@ avoidList_inLockOnly 0
 avoidList_reconnect 1800
 avoidList_ignoreList
 
+avoidHiddenActors 0
+
 cachePlayerNames 1
 cachePlayerNames_duration 900
 cachePlayerNames_maxSize 100
@@ -495,7 +497,7 @@ pet_return 20
 # configure two attack skills, just duplicate the attackSkillSlot block.
 
 attackSkillSlot {
-	lvl 10
+	lvl
 	dist 1
 	maxCastTime 0
 	minCastTime 0
@@ -583,7 +585,7 @@ doCommand {
 }
 
 useSelf_skill {
-	lvl 10
+	lvl
 	maxCastTime 0
 	minCastTime 0
 	hp
@@ -616,7 +618,7 @@ useSelf_skill_smartHeal 1
 partySkillDistance 0..8
 
 partySkill {
-	lvl 10
+	lvl
 	dist 3
 	maxCastTime 0
 	minCastTime 0
