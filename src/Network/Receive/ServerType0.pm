@@ -476,7 +476,7 @@ sub new {
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]], # 268 # hotkeys:38
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
-		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
+		'07E2' => ['message_string', 'v V', [qw(index param)]],
 		'07E3' => ['skill_exchange_item', 'V2', [qw(type val)]], # 8
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
 		# '07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8 is not used but add here to log
@@ -592,7 +592,7 @@ sub new {
 		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
-		'09CD' => ['message_string', 'v V', [qw(msg_id para1)]], #8
+		'09CD' => ['message_string', 'v V', [qw(index param)]],
 		'09CF' => ['gameguard_request'],
 		'09D1' => ['progress_bar_unit', 'V3', [qw(GID color time)]],
 		'09D5' => ['npc_market_info', 'v a*', [qw(len itemList)]],
