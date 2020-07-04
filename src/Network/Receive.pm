@@ -3925,6 +3925,7 @@ sub login_pin_code_request {
 	# 7 - disabled?
 	# 8 - incorrect
 	if ($args->{flag} == 0) { # removed check for seed 0, eA/rA/brA sends a normal seed.
+		$timeout{'char_login_pause'}{'time'} = time;
 		message T("PIN code is correct.\n"), "success";
 	} elsif ($args->{flag} == 1) {
 		# PIN code query request.
@@ -3967,11 +3968,7 @@ sub login_pin_code_request {
 
 		# call charSelectScreen
 		$self->{lockCharScreen} = 0;
-		if (charSelectScreen(1) == 1) {
-			$firstLoginMap = 1;
-			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-			$sentWelcomeMessage = 1;
-		}
+		$timeout{'char_login_pause'}{'time'} = time;
 	} elsif ($args->{flag} == 8) {
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
