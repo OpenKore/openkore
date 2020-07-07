@@ -10688,7 +10688,8 @@ sub self_chat {
 
 	if (defined $chatMsgUser) {
 		stripLanguageCode(\$chatMsg);
-		$message = $chatMsgUser . " : " . $chatMsg;
+		my $parsed_msg = solveMessage($chatMsg);
+		$message = $chatMsgUser . " : " . $parsed_msg;
 	}
 
 	chatLog("c", "$message\n") if ($config{'logChat'});
