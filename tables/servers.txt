@@ -389,8 +389,7 @@ master_version 2
 serverType RMS
 serverEncoding Western
 charBlockSize 147
-addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
-#clientHash 6e1d7aae3838cd7aec434cd10ef861e9
+addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
 
@@ -403,7 +402,7 @@ master_version 2
 serverType RMS
 serverEncoding Western
 charBlockSize 147
-addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
+addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
 

@@ -568,6 +568,7 @@ sub new {
 		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0997' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
 		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
