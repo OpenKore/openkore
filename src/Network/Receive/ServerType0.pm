@@ -391,7 +391,7 @@ sub new {
 		'0287' => ['cash_dealer', 'v V a*', [qw(len cash_points item_list)]], # -1
 		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]],
 		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]],
-		'0291' => ['message_string', 'v', [qw(msg_id)]],
+		'0291' => ['message_string', 'v', [qw(index)]],
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z24', [qw(flag x y hours minutes name)]],
 		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]],
 		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],

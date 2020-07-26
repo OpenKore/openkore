@@ -402,7 +402,7 @@ sub new {
 		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]], # 18
 		'028E' => ['charname_is_valid', 'v', [qw(result)]], # 4
 		'0290' => ['charname_change_result', 'v', [qw(result)]], # 4
-		'0291' => ['message_string', 'v', [qw(msg_id)]], # 4
+		'0291' => ['message_string', 'v', [qw(index)]], # 4
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z40 C11', [qw(flag x y hours minutes name unknown)]], # 70
 		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]], # 10
 		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
