@@ -977,7 +977,7 @@ sub received_characters_info {
 sub parse_account_server_info {
 	my ($self, $args) = @_;
 	my $server_info;
-	
+
 	if ($args->{switch} eq '0B60') { # tRO 2020
 		$server_info = {
 			len => 164,
@@ -4322,10 +4322,13 @@ sub player_equipment {
 			$player->{shield} = $ID2;
 		}
 	} elsif ($type == 3) {
+		message TF("%s changed Lower headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
 		$player->{headgear}{low} = $ID1;
 	} elsif ($type == 4) {
+		message TF("%s changed Upper headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
 		$player->{headgear}{top} = $ID1;
 	} elsif ($type == 5) {
+		message TF("%s changed Middle headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
 		$player->{headgear}{mid} = $ID1;
 	} elsif ($type == 9) {
 		if ($player->{shoes} && $ID1 ne $player->{shoes}) {

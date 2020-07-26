@@ -225,7 +225,7 @@ sub loadDataFiles {
 	Settings::addTableFile('haircolors.txt',
 		loader => [\&parseDataFile2, \%haircolors]);
 	Settings::addTableFile('headgears.txt',
-		loader => [\&parseArrayFile, \@headgears_lut]);
+		loader => [\&parseArrayFile, \@headgears_lut, { hide_comments => 0 }]);
 	Settings::addTableFile('items.txt',
 		loader => [\&parseROLUT, \%items_lut]);
 	Settings::addTableFile('itemsdescriptions.txt',
@@ -696,7 +696,7 @@ sub initMapChangeVars {
 	$venderItemList->clear;
 	$storeList->clear;
 	$cashList->clear;
-	
+
 	@{$universalCatalog{list}} = ();
 	@unknownPlayers = ();
 	@unknownNPCs = ();
@@ -743,7 +743,7 @@ sub mainLoop_initialized {
 
 	# Handle connection states
 	$net->checkConnection();
-	
+
 	if (defined $timeout{'char_login_pause'}{'time'} && timeOut($timeout{'char_login_pause'})) {
 		CharacterLogin();
 		undef $timeout{'char_login_pause'}{'time'};

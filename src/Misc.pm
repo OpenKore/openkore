@@ -2540,8 +2540,8 @@ sub headgearName {
 
 	my $itemID = $headgears_lut[$lookID];
 
-	if (!defined($itemID)) {
-		return T("Unknown lookID") . $lookID;
+	if (!$itemID) {
+		return T("Unknown lookID_") . $lookID;
 	}
 
 	return main::itemName({nameID => $itemID});
