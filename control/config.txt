@@ -333,6 +333,8 @@ logAppendServer 0
 monsterLog 0
 logDead 1
 
+questDisplayStyle 2
+
 chatTitleOversize 0
 shopTitleOversize 0
 buyerShopTitleOversize 0

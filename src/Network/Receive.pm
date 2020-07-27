@@ -4487,7 +4487,13 @@ sub quest_all_mission {
 
         $offset += $quest_info->{quest_len};
 
-        for ( my $j = 0 ; $j < $char_quest->{mission_amount}; $j++ ) {
+        for ( my $j = 0 ; $j < 3; $j++ ) {
+			
+			if($j >= $char_quest->{mission_amount}) {
+				$offset += $quest_info->{mission_len};
+				next;
+			}
+
             my $mission;
 
             @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
@@ -4547,11 +4553,15 @@ sub quest_add {
     $quest->{time_expire} = $args->{time_expire};
     $quest->{mission_amount} = $args->{mission_amount};
 
-    unless (%$quest) {
+    if ($args->{questID}) {
         message TF("Quest: %s has been added.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
     }
 
-	for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
+	for ( my $j = 0 ; $j < 3; $j++ ) {
+		if($j >= $quest->{mission_amount}) {
+			$offset += $quest_info->{mission_len};
+			next;
+		}
 		my $mission;
 
 		@{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
@@ -4654,6 +4664,14 @@ sub quest_update_mission_hunt {
 		$quest_mission->{mob_goal} = $mission->{mob_goal};
 
 		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
+
+		if ($config{questDisplayStyle}) {
+			if($config{questDisplayStyle} >= 2) {
+				warning TF("[%s] Quest - defeated [%s] progress (%s/%s)\n", $quests_lut{$mission->{questID}} ? "$quests_lut{$mission->{questID}}{title} ($mission->{questID})" : $mission->{questID}, $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
+			} else {
+				warning TF("%s [%s/%s]\n", $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
+			}
+		}
 
         $offset += $quest_info->{mission_len};
 
