@@ -777,7 +777,15 @@ sub received_characters {
 	my ($self, $args) = @_;
 	my $blockSize = $self->received_characters_blockSize();
 	my $char_info = $self->received_characters_unpackString;
-	$charSvrSet{sync_received_characters}++ if (exists $charSvrSet{sync_received_characters});
+
+	# rAthena and Hercules send all pages
+	# Official Server send only pages with characters + 1 empty (tested bRO, iRO) Jul-2020
+	if(length($args->{charInfo} == 0)) {
+		$charSvrSet{sync_received_characters} = $charSvrSet{sync_Count} if(exists $charSvrSet{sync_received_characters});
+	} else {
+		$charSvrSet{sync_received_characters}++ if (exists $charSvrSet{sync_received_characters});
+	}
+
 	$net->setState(Network::CONNECTED_TO_LOGIN_SERVER) if $net->getState() != Network::CONNECTED_TO_LOGIN_SERVER;
 
 	return unless exists $args->{charInfo};
@@ -969,7 +977,7 @@ sub received_characters_info {
 sub parse_account_server_info {
 	my ($self, $args) = @_;
 	my $server_info;
-	
+
 	if ($args->{switch} eq '0B60') { # tRO 2020
 		$server_info = {
 			len => 164,
@@ -3904,6 +3912,10 @@ sub login_pin_code_request {
 		return;
 	}
 
+	# tRO "workaround"
+	# receive pincode means that we already received all character pages
+	$charSvrSet{sync_received_characters} = $charSvrSet{sync_Count} if(exists $charSvrSet{sync_received_characters} && !$masterServer->{private});
+
 	# flags:
 	# 0 - correct
 	# 1 - requested (already defined)
@@ -3913,13 +3925,8 @@ sub login_pin_code_request {
 	# 7 - disabled?
 	# 8 - incorrect
 	if ($args->{flag} == 0) { # removed check for seed 0, eA/rA/brA sends a normal seed.
+		$timeout{'char_login_pause'}{'time'} = time;
 		message T("PIN code is correct.\n"), "success";
-		# call charSelectScreen
-		if (charSelectScreen(1) == 1) {
-			$firstLoginMap = 1;
-			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-			$sentWelcomeMessage = 1;
-		}
 	} elsif ($args->{flag} == 1) {
 		# PIN code query request.
 		$accountID = $args->{accountID};
@@ -3961,11 +3968,7 @@ sub login_pin_code_request {
 
 		# call charSelectScreen
 		$self->{lockCharScreen} = 0;
-		if (charSelectScreen(1) == 1) {
-			$firstLoginMap = 1;
-			$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-			$sentWelcomeMessage = 1;
-		}
+		$timeout{'char_login_pause'}{'time'} = time;
 	} elsif ($args->{flag} == 8) {
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
@@ -4319,10 +4322,13 @@ sub player_equipment {
 			$player->{shield} = $ID2;
 		}
 	} elsif ($type == 3) {
+		message TF("%s changed Lower headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
 		$player->{headgear}{low} = $ID1;
 	} elsif ($type == 4) {
+		message TF("%s changed Upper headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
 		$player->{headgear}{top} = $ID1;
 	} elsif ($type == 5) {
+		message TF("%s changed Middle headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
 		$player->{headgear}{mid} = $ID1;
 	} elsif ($type == 9) {
 		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
@@ -4481,7 +4487,13 @@ sub quest_all_mission {
 
         $offset += $quest_info->{quest_len};
 
-        for ( my $j = 0 ; $j < $char_quest->{mission_amount}; $j++ ) {
+        for ( my $j = 0 ; $j < 3; $j++ ) {
+			
+			if($j >= $char_quest->{mission_amount}) {
+				$offset += $quest_info->{mission_len};
+				next;
+			}
+
             my $mission;
 
             @{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
@@ -4541,11 +4553,15 @@ sub quest_add {
     $quest->{time_expire} = $args->{time_expire};
     $quest->{mission_amount} = $args->{mission_amount};
 
-    unless (%$quest) {
+    if ($args->{questID}) {
         message TF("Quest: %s has been added.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
     }
 
-	for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
+	for ( my $j = 0 ; $j < 3; $j++ ) {
+		if($j >= $quest->{mission_amount}) {
+			$offset += $quest_info->{mission_len};
+			next;
+		}
 		my $mission;
 
 		@{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
@@ -4648,6 +4664,14 @@ sub quest_update_mission_hunt {
 		$quest_mission->{mob_goal} = $mission->{mob_goal};
 
 		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
+
+		if ($config{questDisplayStyle}) {
+			if($config{questDisplayStyle} >= 2) {
+				warning TF("[%s] Quest - defeated [%s] progress (%s/%s)\n", $quests_lut{$mission->{questID}} ? "$quests_lut{$mission->{questID}}{title} ($mission->{questID})" : $mission->{questID}, $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
+			} else {
+				warning TF("%s [%s/%s]\n", $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
+			}
+		}
 
         $offset += $quest_info->{mission_len};
 
@@ -8865,14 +8889,31 @@ sub skill_msg {
 	}
 }
 
-sub msg_string {
+# Display msgstringtable.txt string and fill in a valid for %d format (ZC_MSG_VALUE).
+# 07E2 <message>.W <value>.L
+# Displays msgstringtable.txt string in a color. (ZC_MSG_COLOR).
+# 09CD <msg id>.W <color>.L
+sub message_string {
 	my ($self, $args) = @_;
 
-	if ($msgTable[++$args->{index}]) { # show message from msgstringtable.txt
-		message "$msgTable[$args->{index}]. Value: $args->{paral}\n", "info";
+	my $index = ++$args->{index};
+
+	if ($msgTable[$index]) { # show message from msgstringtable.txt
+		if($args->{param} && $args->{switch} eq '07E2') {
+			warning sprintf($msgTable[$index], $args->{param})."\n";
+		} else {
+			warning "$msgTable[$index]\n";
+		}
 	} else {
-		warning TF("Unknown msgid:%d paral:%d. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{index}, $args->{paral});
+		warning TF("Unknown message_string: %s param: %s. Need to update the file msgstringtable.txt (from data.grf)\n", $index, $args->{param});
 	}
+
+	$self->mercenary_off() if ($index >= 1267 && $index <= 1270);
+
+	Plugins::callHook('packet_message_string', {
+		index => $index,
+		val => $args->{param}
+	});
 }
 
 # TODO: use $args->{type} if present
@@ -10433,18 +10474,6 @@ sub mercenary_off {
 }
 # -message_string
 
-# not only for mercenaries, this is an all purpose packet !
-sub message_string {
-	my ($self, $args) = @_;
-
-	if ($msgTable[++$args->{msg_id}]) { # show message from msgstringtable.txt
-		warning "$msgTable[$args->{msg_id}]\n";
-		$self->mercenary_off() if ($args->{msg_id} >= 1267 && $args->{msg_id} <= 1270);
-	} else {
-		warning TF("Unknown message_string: %s. Need to update the file msgstringtable.txt (from data.grf)\n", $args->{msg_id});
-	}
-}
-
 sub monster_ranged_attack {
 	my ($self, $args) = @_;
 
@@ -10688,7 +10717,8 @@ sub self_chat {
 
 	if (defined $chatMsgUser) {
 		stripLanguageCode(\$chatMsg);
-		$message = $chatMsgUser . " : " . $chatMsg;
+		my $parsed_msg = solveMessage($chatMsg);
+		$message = $chatMsgUser . " : " . $parsed_msg;
 	}
 
 	chatLog("c", "$message\n") if ($config{'logChat'});

@@ -304,6 +304,7 @@ charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
+pinCode 1
 
 # http://ro.gnjoy.in.th/
 [Thailand - tRO: Junon]
@@ -320,6 +321,24 @@ charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
+pinCode 1
+
+# http://ro.gnjoy.in.th/
+[Thailand - tRO: Midgard]
+ip 49.229.28.28
+port 50001
+master_version 7
+version 24
+serverType tRO
+serverEncoding Thai
+addTableFolders tRO
+charBlockSize 147
+gameGuard 0
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+pinCode 1
 
 # http://ro.gnjoy.in.th/
 [Thailand - tRO: Yuno]
@@ -336,7 +355,7 @@ charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
-
+pinCode 1
 
 #####################
 # Bottable Private Server
@@ -387,8 +406,7 @@ master_version 2
 serverType RMS
 serverEncoding Western
 charBlockSize 147
-addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
-#clientHash 6e1d7aae3838cd7aec434cd10ef861e9
+addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
 
@@ -401,7 +419,7 @@ master_version 2
 serverType RMS
 serverEncoding Western
 charBlockSize 147
-addTableFolders kRO/RagexeRE_2014_10_22b;translated;translated/kRO_english;kRO
+addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
 

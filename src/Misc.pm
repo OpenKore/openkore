@@ -2362,8 +2362,8 @@ sub headgearName {
 
 	my $itemID = $headgears_lut[$lookID];
 
-	if (!defined($itemID)) {
-		return T("Unknown lookID") . $lookID;
+	if (!$itemID) {
+		return T("Unknown lookID_") . $lookID;
 	}
 
 	return main::itemName({nameID => $itemID});
@@ -5382,6 +5382,8 @@ sub solveMessage {
 	# <ITEML>.*</ITEML> to readable item name
 	if ($msg =~ /<ITEML>([a-zA-Z0-9\%\&\(\,\+\*]*)<\/ITEML>/) {
 		$msg =~ s/<ITEML>([a-zA-Z0-9\%\&\(\,\+\*]*)<\/ITEML>/solveItemLink($1)/eg;
+	} elsif ($msg =~ /\<ITEML\>([a-zA-Z0-9\%\&\(\),\,\+\*]*)\<\/ITEML\>/) {
+		$msg =~ s/\<ITEML\>([a-zA-Z0-9\%\&\(\),\,\+\*]*)\<\/ITEML\>/solveItemLink($1)/eg;
 	}
 	return $msg;
 }

@@ -402,7 +402,7 @@ sub new {
 		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]], # 18
 		'028E' => ['charname_is_valid', 'v', [qw(result)]], # 4
 		'0290' => ['charname_change_result', 'v', [qw(result)]], # 4
-		'0291' => ['message_string', 'v', [qw(msg_id)]], # 4
+		'0291' => ['message_string', 'v', [qw(index)]], # 4
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z40 C11', [qw(flag x y hours minutes name unknown)]], # 70
 		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]], # 10
 		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
@@ -480,7 +480,7 @@ sub new {
 		'07D9' => ['hotkeys', 'a*', [qw(hotkeys)]],
 		'07DB' => ['stat_info', 'v V', [qw(type val)]], # 8
 		'07E1' => ['skill_update', 'v V v3 C', [qw(skillID type lv sp range up)]],
-		'07E2' => ['msg_string', 'v V', [qw(index para1)]],
+		'07E2' => ['message_string', 'v V', [qw(index param)]],
 		'07E6' => ['skill_msg', 'v V', [qw(id msgid)]],
 		# '07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8 is not used but add here to log
 		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
@@ -568,6 +568,7 @@ sub new {
 		'0994' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'0995' => ['storage_items_stackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0996' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
+		'0997' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'0999' => ['equip_item', 'a2 V v C', [qw(ID type viewID success)]], #11
 		'099A' => ['unequip_item', 'a2 V C', [qw(ID type success)]],#9
 		'099B' => ['map_property3', 'v a4', [qw(type info_table)]],
@@ -583,6 +584,7 @@ sub new {
 		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
+		'09CD' => ['message_string', 'v V', [qw(index param)]],
 		'09D1' => ['progress_bar_unit', 'V3', [qw(GID color time)]],
 		'09DA' => ['guild_storage_log', 'v3 a*', [qw(len result count log)]], # -1
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss name)]],
