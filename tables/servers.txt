@@ -324,6 +324,23 @@ itemListType 1
 pinCode 1
 
 # http://ro.gnjoy.in.th/
+[Thailand - tRO: Midgard]
+ip 49.229.28.28
+port 50001
+master_version 7
+version 24
+serverType tRO
+serverEncoding Thai
+addTableFolders tRO
+charBlockSize 147
+gameGuard 0
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+pinCode 1
+
+# http://ro.gnjoy.in.th/
 [Thailand - tRO: Yuno]
 ip 49.229.28.74
 port 50001
