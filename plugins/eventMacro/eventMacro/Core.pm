@@ -971,7 +971,7 @@ sub unshift_array {
 		undef $new_member;
 	}
 
-	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}};
+	my @old_array = @{$self->{Array_Variable_List_Hash}{$variable_name}} if $self->{Array_Variable_List_Hash}{$variable_name};
 	unshift(@{$self->{Array_Variable_List_Hash}{$variable_name}}, $new_member);
 	my $index = $#{$self->{Array_Variable_List_Hash}{$variable_name}};
 
