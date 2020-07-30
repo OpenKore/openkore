@@ -27,7 +27,12 @@ package StarterScript;
 
 BEGIN {
 	if ($ENV{BUILDING_WX} && $^O eq 'MSWin32') {
-		require Wx::Perl::Packager;
+		#require Wx::Perl::Packager;
+		
+	} elsif ($ENv{BUILDING_WX} == 2 && $^O eq 'MSWin32') {
+		require Tk;
+	} elsif ($ENv{BUILDING_WX} == 3 && $^O eq 'MSWin32') {
+		require Win32::GUI;
 	}
 }
 
@@ -106,6 +111,20 @@ if ($PerlApp::TOOL eq "PerlApp") {
 	if (PerlApp::exe() =~ /wxstart\.exe$/i) {
 		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';
 	}
+
+	if (PerlApp::exe() =~ /vxstart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Vx';
+	}
+
+	if (PerlApp::exe() =~ /winguistart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Win32';
+	}
+
+	if (PerlApp::exe() =~ /tkstart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Tk';
+	}
+
+
 } else {
 	print "Do not run start.pl directly! If you're using Perl then run openkore.pl instead!\n";
 	<STDIN>;

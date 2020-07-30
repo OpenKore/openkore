@@ -17,7 +17,9 @@ use Globals;
 use Settings;
 use Misc;
 
-use Win32::GUI();
+use Win32::GUI;
+#use Win32::GUI::Constants;
+
 use Interface::Win32::Map; #Map Viewer
 
 
