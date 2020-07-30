@@ -645,7 +645,7 @@ sub initHandlers {
 		['vender', [
 			T("Buy items from vending shops."),
 			[T("<vender #>"), T("enter vender shop")],
-			[T("<vender #> <vender item #> [<amount>]"), T("buy items from vender shop")],
+			[T("<vender #> <vender_item #> [<amount>]"), T("buy items from vender shop")],
 			["end", T("leave current vender shop")]
 			], \&cmdVender],
 		['verbose', T("Toggle verbose on/off."), \&cmdVerbose],
@@ -6235,19 +6235,23 @@ sub cmdVender {
 		return;
 	}
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^([\d\w]+)/;
-	my ($arg2) = $args =~ /^[\d\w]+ (\d+)/;
-	my ($arg3) = $args =~ /^[\d\w]+ \d+ (\d+)/;
-	if ($arg1 eq "") {
-		error T("Syntax error in function 'vender' (Vender Shop)\n" .
-			"Usage: vender <vender # | end> [<item #> <amount>]\n");
-	} elsif ($arg1 eq "end") {
+
+	if ($args eq "end") {
 		$venderItemList->clear;
 		undef $venderID;
 		undef $venderCID;
+		return;
+	}
+
+	my ($arg1) = $args =~ /^(\d+)/;
+	my ($arg2) = $args =~ /^\d+ (\d+)/;
+	my ($arg3) = $args =~ /^\d+ \d+ (\d+)/;
+	if ($arg1 eq "") {
+		error T("Syntax error in function 'vender' (Vender Shop)\n" .
+			"Usage: vender <vender # | end> [<vender_item #> <amount>]\n");
 	} elsif ($venderListsID[$arg1] eq "") {
 		error TF("Error in function 'vender' (Vender Shop)\n" .
-			"Vender %s does not exist.\n", $arg1);
+			"Vender %d does not exist.\n", $arg1);
 	} elsif ($arg2 eq "") {
 		$messageSender->sendEnteringVender($venderListsID[$arg1]);
 	} elsif ($venderListsID[$arg1] ne $venderID) {
@@ -6255,7 +6259,7 @@ sub cmdVender {
 			"Vender ID is wrong.\n");
 	} elsif (!$venderItemList->get( $arg2 )) {
 		error TF("Error in function 'vender' (Vender Shop)\n" .
-			"Item %s does not exist.\n", $arg2);
+			"Item %d does not exist.\n", $arg2);
 	} else {
 		$arg3 = 1 if $arg3 <= 0;
 		my $item = $venderItemList->get( $arg2 );
