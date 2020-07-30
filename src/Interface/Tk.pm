@@ -1,7 +1,7 @@
 #########################################################################
 #  OpenKore - Tk Interface
 #
-#  Copyright (c) 2004 OpenKore development team 
+#  Copyright (c) 2004 OpenKore development team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -83,22 +83,22 @@ sub getInput{
 	if ($timeout < 0) {
 		until (defined $msg) {
 			$self->update();
-			if (@{ $self->{input_que} }) { 
-				$msg = shift @{ $self->{input_que} }; 
-			} 
+			if (@{ $self->{input_que} }) {
+				$msg = shift @{ $self->{input_que} };
+			}
 		}
 	} elsif ($timeout > 0) {
 		my $end = time + $timeout;
 		until ($end < time || defined $msg) {
 			$self->update();
-			if (@{ $self->{input_que} }) { 
-				$msg = shift @{ $self->{input_que} }; 
-			} 
+			if (@{ $self->{input_que} }) {
+				$msg = shift @{ $self->{input_que} };
+			}
 		}
 	} else {
-		if (@{ $self->{input_que} }) { 
-			$msg = shift @{ $self->{input_que} }; 
-		} 
+		if (@{ $self->{input_que} }) {
+			$msg = shift @{ $self->{input_que} };
+		}
 	}
 	$self->update();
 	$msg =~ s/\n// if defined $msg;
@@ -114,7 +114,7 @@ sub writeOutput {
 
 	my $scroll = 0;
 	$scroll = 1 if (($self->{console}->yview)[1] == 1);
-	
+
 	#keep track of lines to limit the number of lines in the text widget
 	$self->{total_lines} += $message =~ s/\r?\n/\n/g;
 
@@ -233,7 +233,7 @@ sub addPM {
 #FIXME many of thise methods don't support OO calls yet, update them and all their references
 sub initTk {
 	my $self = shift;
-	
+
 	$self->{mw} = MainWindow->new();
 	$self->{mw}->protocol('WM_DELETE_WINDOW', [\&OnExit, $self]);
 	#$self->{mw}->Icon(-image=>$self->{mw}->Photo(-file=>"hyb.gif"));
@@ -390,7 +390,7 @@ if (0) {
 
 if (0) {
 	$self->{mw}->configure(-menu => $self->{mw}->Menu(-menuitems=>
-	[ map 
+	[ map
 		['cascade', $_->[0], -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems => $_->[1]],
 #		['~modKore',
 #			[[qw/command E~xit  -accelerator Ctrl+X/, -font=>[-family=>"Tahoma",-size=>8], -command=>[\&OnExit]],]
@@ -417,7 +417,7 @@ if (0) {
 #					 ],
 #				],
 #				'',
-#				[cascade=>"Font Weight", -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems => 
+#				[cascade=>"Font Weight", -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems =>
 #					[
 #						[Checkbutton  => '~Bold', -variable => \$is_bold,-font=>[-family=>"Tahoma",-size=>8],-command => [\&change_fontWeight]],
 #					]
@@ -465,7 +465,7 @@ if (0) {
 	#$self->{mw}->bind('all','<Alt-z>'=>sub{push(@input_que, "exp");});
 	#cookiemaster cart shortcut
 	#$self->{mw}->bind('all','<Alt-c>'=>sub{push(@input_que, "cart");});
-	#digitalpheer guild shortcut 
+	#digitalpheer guild shortcut
 	#$self->{mw}->bind('all','<Alt-f>'=>sub{push(@input_que, "guild i");});
 	#$self->{mw}->bind('all','<Alt-g>'=>sub{push(@input_que, "guild m");});
 	#$self->{mw}->bind('all','<Alt-h>'=>sub{push(@input_que, "guild p");});
@@ -513,7 +513,7 @@ sub inputUp {
 	}
 	$self->{input_offset}++;
 	$self->{input_offset} -= $#{$self->{input_list}} + 1 while $self->{input_offset} > $#{$self->{input_list}};
-	
+
 	$self->{input}->delete('0', 'end');
 	$self->{input}->insert('end', "$self->{input_list}[$self->{input_offset}]");
 }
@@ -530,7 +530,7 @@ sub inputDown {
 	}
 	$self->{input_offset}--;
 	$self->{input_offset} += $#{$self->{input_list}} + 1 while $self->{input_offset} < 0;
-	
+
 	$self->{input}->delete('0', 'end');
 	$self->{input}->insert('end', "$self->{input_list}[$self->{input_offset}]");
 }
@@ -572,7 +572,7 @@ sub w32mWheel {
 	my $action_area = shift;
 	my $self = shift;
 	my $zDist = shift;
-	
+
 	$self->{console}->yview('scroll', -int($zDist/40), "units");
 }
 
@@ -588,7 +588,14 @@ sub OnExit{
 
 sub showManual {
 	my $self = shift;
-	$self->{ShellExecute}->Call(0, '', 'http://openkore.sourceforge.net/manual/', '', '', 1);
+
+	my $url;
+	if ($config{'manualURL'}) {
+		$url = $config{'manualURL'};
+	} else {
+		$url = 'http://wiki.openkore.com/index.php?title=Manual';
+	}
+	$self->{ShellExecute}->Call(0, '', $url, '', '', 1);
 }
 
 sub resetColors {
@@ -670,7 +677,7 @@ sub mapToggle {
 	}
 	if (!defined($self->{map}) && $chars[$config{'char'}] && $field) {
 		$self->{map}{window} = $self->{mw}->Toplevel();
-		$self->{map}{window}->protocol('WM_DELETE_WINDOW', 
+		$self->{map}{window}->protocol('WM_DELETE_WINDOW',
 			sub {
 				$self->mapToggle();
 			}
@@ -684,8 +691,8 @@ sub mapToggle {
 			-side => 'top'
 		);
 		$self->loadMap();
-		
-			
+
+
 		my $dis = $config{'attackDistance'};
 		$self->{map}{ind}{range} = $self->{map}{canvas}->createOval(
 			-$dis, $self->{map}{height} - $dis,
@@ -698,13 +705,13 @@ sub mapToggle {
 			-fill => '#ffcccc',
 			-outline => '#ff0000',
 		);
-		
+
 #		if ($main::sys{'enableMoveClick'}) {
 #			$map_mw->bind('<Double-1>', [\&dblchk , Ev('x') , Ev('y')]);
 #		}
-		$self->{map}{window}->bind('<1>', [\&mapMove, $self, Ev('x') , Ev('y'), 2]); 
-		$self->{map}{window}->bind('<3>', [\&mapMove, $self, Ev('x') , Ev('y'), 1]); 
-		$self->{map}{window}->bind('<Motion>', [\&pointchk, $self, Ev('x') , Ev('y')]); 
+		$self->{map}{window}->bind('<1>', [\&mapMove, $self, Ev('x') , Ev('y'), 2]);
+		$self->{map}{window}->bind('<3>', [\&mapMove, $self, Ev('x') , Ev('y'), 1]);
+		$self->{map}{window}->bind('<Motion>', [\&pointchk, $self, Ev('x') , Ev('y')]);
 		$self->updatePos();
 	} elsif (defined $self->{map}) {
 		$self->{map}{window}->destroy();
@@ -726,7 +733,7 @@ sub pointchk {
 	$mvcpy = $self->{map}{height} - $mvcpy;
 	my ($x,$y) = @{$char->{'pos_to'}}{'x', 'y'};
 	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d) m:(%3d, %3d)", $field->baseName, $x, $y, $mvcpx, $mvcpy);
-	$self->{map}{window}->update; 
+	$self->{map}{window}->update;
 }
 
 sub mapMove {
