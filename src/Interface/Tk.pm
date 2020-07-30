@@ -173,7 +173,7 @@ sub title {
 
 sub updatePos {
 	my $self = shift;
-	return unless defined($config{'char'}) && defined($chars[$config{'char'}]) && defined($char->{'pos_to'});
+	return unless defined($config{'char'}) && defined($chars[$config{'char'}]) && defined($char) && defined($char->{'pos_to'});
 	my ($x,$y) = @{$char->{'pos_to'}}{'x', 'y'};
 	$self->{status_posx}->configure( -text =>$x);
 	$self->{status_posy}->configure( -text =>$y);
