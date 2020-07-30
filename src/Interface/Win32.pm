@@ -18,7 +18,7 @@ use Settings;
 use Misc;
 
 use Win32::GUI;
-#use Win32::GUI::Constants;
+use Win32::GUI::Constants qw(WS_CHILD WS_VISIBLE WS_VSCROLL ES_LEFT ES_MULTILINE ES_READONLY ES_AUTOVSCROLL MB_OK MB_ICONERROR);
 
 use Interface::Win32::Map; #Map Viewer
 
