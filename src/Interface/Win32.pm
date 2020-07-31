@@ -107,8 +107,8 @@ sub writeOutput {
 	
 	$color = $consoleColors{$type}{$domain} if (defined $type && defined $domain && defined $consoleColors{$type});
 	$color = $consoleColors{$type}{'default'} if (!defined $color && defined $type);
-	
-	$fgcode = $fgcolors{$color} || $fgcolors{'default'};
+	$color = 'default' unless defined $color;
+	$fgcode = $fgcolors{$color};
 	
 	#Chat Window
 	if ($domain eq "pm" || $domain eq "pm/sent" || $domain eq "publicchat" || $domain eq "guildchat" || $domain eq "selfchat" || $domain eq "schat") {
@@ -161,7 +161,9 @@ sub updateHook {
 sub update {
 	my $self = shift;
     $self->UpdateCharacter();
+	$self->updateStatusBar();
 	if ($map->mapIsShown()) {
+		$map->paintMap() unless ($field->baseName eq $map->currentMap());
 		$map->Repaint();
 		$map->paintMiscPos();		
 		$map->paintPos();
@@ -202,37 +204,127 @@ sub setAiText {
 sub initGUI {
 	my $self = shift;
 	
-	my $nameFont = Win32::GUI::Font->new( -name => "Verdana",-size => 10, -bold =>1);
-	my $consoleFont = Win32::GUI::Font->new( -name => "Verdana",-size => 7,);
+	my $nameFont = Win32::GUI::Font->new( -name => "MS Sans Serif", -bold => 1);
+	my $consoleFont = Win32::GUI::Font->new( -name => "Consolas",-size => 10,);
 
 	$self->{AccTable} = new Win32::GUI::AcceleratorTable (
-	 				  "Return" 		=> \&inputEnter,
-	 				  "Up" 		=> \&inputUp,
-	 				  "Down" 		=> \&inputDown,
- 				      "Ctrl-X" 		=> \&onExit,
- 				      "Tab" 		=> sub { $self->{input}->SetFocus(); },
-					"Alt+V"		=> \&comstatus,
-					"Alt+A"		=> \&comstat,
-					"Alt+I"		=> \&comitems,
-					"Alt+S"		=> \&comskills,
-					"Alt+E"		=> \&comstatus,
- 				      );
+	 				# Windows commands
+					"Return"			=> \&inputEnter,
+	 				"Up"				=> \&inputUp,
+	 				"Down"				=> \&inputDown,
+ 				    "Ctrl-W"			=> \&onExit,
+					"Ctrl-F4"			=> \&menuMinimizeToTry,
+					"Ctrl-M"			=> \&openMap,
+ 				    "Tab"				=> sub { $self->{input}->SetFocus(); },
+					"F1"				=> \&menuWikiURL,
+					"Shift+F1"			=> \&menuForumURL,
+					
+					# In-Game commands
+					"Alt+V"				=> \&menuStatus,
+					"Alt+A"				=> \&menuStat,
+					"Alt+S"				=> \&menuSkills,
+					"Alt+E"				=> \&menuInventory,
+					"Alt+Z"				=> \&menuPartyInfo,
+					"Alt+Q"				=> \&menuEquipWindow,
+					"Alt+U"				=> \&menuQuestWindow,
+					"Alt+H"				=> \&menuFriendList,
+					"Alt+W"				=> \&menuCart,
+					"Alt+G"				=> \&menuGuildInfo,
+					"Alt+J"				=> \&menuPetInfo,
+					"Alt+R"				=> \&menuHomunculusInfo,
+					"Ctrl-R"			=> \&menuMercenaryInfo,
+					"Ctrl-G"			=> \&menuClanInfo,
+					"Ctrl-B"			=> \&menuBank,
+					"Ctrl-T"			=> \&menuRodex,
+
+					# Custom commands
+					"Alt+P"				=> \&menuPlayerList,
+					"Alt+M"				=> \&menuMonsterList,
+					"Alt+N"				=> \&menuNPCList,
+					"Alt+X"				=> \&menuFullReport,
+ 				 );
 
 	$self->{Menu} = Win32::GUI::MakeMenu (
+		# Program Menu
 	    "Open&Kore" => "Kore",
-	    "   > &Pause" => { -name => "pause", -onClick => \&compause },
-	    "	  > &Manual" => { -name => "manual", -onClick => \&commanual },
-	    "	  > &Resume" => { -name => "resume", -onClick => \&comresume },
-	    "   > E&xit" 	=> { -name => "Kore_Exit", -onClick => \&onExit },
-	    "&View" => "View",
-	    "   > View &Map" 	=> { -name => "View_Map", -onClick => \&openMap },
-	    "&Info" => "Info",
-	    "	  > &Status		Alt+V"	=> { -name => "Status", -onClick => \&comstatus },
-	    "   > S&tatistics	Alt+A"	=> { -name => "Statistics", -onClick => \&comstat },
-	    "	  > &Inventory	Alt+I"	=> { -name => "Inventory", -onClick => \&comitems },
-	    "   > S&kills		Alt+S"	=> { -name => "Skills", -onClick => \&comskills },
-	    "   > &Experience	Alt+E"	=> { -name => "Experience", -onClick => \&comerooo },
+		"	> &Automatic Botting" => { -name => "AI_Auto", -onClick => \&menuAIAuto },
+	    "	> &Manual Botting" => { -name => "AI_Manual", -onClick => \&menuAIManual },
+		"   > &Pause Botting" => { -name => "AI_Off", -onClick => \&menuAIOff },
+		"	> -" => { -name => "separator" },
+		"   > Respa&wn" => { -name => "Respawn", -onClick => \&menuRespawn },
+		"	> &Character Select" => { -name => "CharSelect", -onClick => \&menuCharSelect },
+	    "	> &Relog" => { -name => "Relog", -onClick => \&menuRelog },
+		"	> -" => { -name => "separator" },
+	    "   > Minimize to Tray		Ctrl-F4" 	=> { -name => "Minimize_Tray", -onClick => \&menuMinimizeToTry },
+		"	> -" => { -name => "separator" },
+		"   > E&xit					Ctrl-W" 	=> { -name => "Exit", -onClick => \&onExit },
+		
+		# Info Menu
+		"&Info" => "Info",
+	    "	> &Status				Alt+V"	=> { -name => "Status", -onClick => \&menuStatus },
+	    "   > S&tat					Alt+A"	=> { -name => "Statistics", -onClick => \&menuStat },
+		"	> -" => { -name => "separator" },
+	    "	> Inventory				Alt+E"	=> { -name => "Inventory", -onClick => \&menuInventory },
+		"   > Cart					Alt+W"	=> { -name => "Skills", -onClick => \&menuCart },
+		"   > Equip Window			Alt+Q"	=> { -name => "Skills", -onClick => \&menuEquipWindow },
+		"   > Storage				Alt+T"	=> { -name => "Skills", -onClick => \&menuStorageInfo },
+		"	> -" => { -name => "separator" },
+	    "   > Skills				Alt+S"	=> { -name => "Skills", -onClick => \&menuSkills },
+		"   > Quests				Alt+U"	=> { -name => "Skills", -onClick => \&menuQuestWindow },
+		"	> -" => { -name => "separator" },
+		"   > Party					Alt+Z"	=> { -name => "Skills", -onClick => \&menuPartyInfo },
+		"   > Friends				Alt+H"	=> { -name => "Skills", -onClick => \&menuFriendList },
+		"   > Guild					Alt+G"	=> { -name => "Skills", -onClick => \&menuGuildInfo },
+		"   > Clan					Ctrl-G"	=> { -name => "Skills", -onClick => \&menuClanInfo },
+		"	> -" => { -name => "separator" },
+		"   > Pet					Alt+J"	=> { -name => "Skills", -onClick => \&menuPetInfo },
+		"   > Homunculus			Alt+R"	=> { -name => "Skills", -onClick => \&menuHomunculusInfo },
+		"   > Mercenary				Ctrl-R"	=> { -name => "Skills", -onClick => \&menuMercenaryInfo },
+		"   > Bank					Ctrl-B"	=> { -name => "Skills", -onClick => \&menuBank },
+		"   > Rodex					Ctrl-T"	=> { -name => "Skills", -onClick => \&menuRodex },		
+		"	> -" => { -name => "separator" },
+		"   > Player List			Alt+P"	=> { -name => "Player_List", -onClick => \&menuPlayerList },
+		"   > Monster List			Alt+M"	=> { -name => "Monster_List", -onClick => \&menuMonsterList },
+		"   > NPC List				Alt+N"	=> { -name => "NPC_List", -onClick => \&menuNPCList },
+		"	> -" => { -name => "separator" },
+		"   > Experience Report	"	=> { -name => "Experience_Report", -onClick => \&menuExpReport },
+		"   > Item Report			"	=> { -name => "Item_Report", -onClick => \&menuItemReport },
+		"   > Monster Report		"	=> { -name => "Monster_Report", -onClick => \&menuMonsterReport },
+		"   > Full &Report			Alt+X"	=> { -name => "Full_Report", -onClick => \&menuFullReport },
 	    
+		# View Menu
+		"&View" => "View",
+	    "   > View &Map				Ctrl-M" 	=> { -name => "View_Map", -onClick => \&openMap },
+		
+		# Commands Menu
+		"&Commands" => "Commands",
+		"   > &Teleport" 	=> { -name => "Teleport", -onClick => \&menuTeleport },
+		"   > &Memo Position" 	=> { -name => "Memo", -onClick => \&menuMemo },
+		"   > &Respawn" 	=> { -name => "Respawn", -onClick => \&menuRespawn },
+		"	> -" => { -name => "separator" },
+		"   > Sit &Down" 	=> { -name => "Sit", -onClick => \&menuSit },
+		"   > Stand &Up" 	=> { -name => "Stand", -onClick => \&menuStand },
+		"	> -" => { -name => "separator" },
+		"   > Aut&o Store" 	=> { -name => "Store", -onClick => \&menuAutoStore },
+		"   > Auto &Sell" 	=> { -name => "Sell", -onClick => \&menuAutoSell },
+		"   > Auto &Buy" 	=> { -name => "Buy", -onClick => \&menuAutoBuy },
+		"	> -" => { -name => "separator" },
+		"   > &Party" 	=> "Party",
+		"   > &Guild" 	=> "Guild",
+		"   > &Friend" 	=> "Friend",
+		
+		# Settings Menu
+		"&Settings" => "Settings",
+		"   > Reload &Config" 	=> { -name => "View_Map", -onClick => \&menuReloadConfig },
+		"   > Reload &All Config" 	=> { -name => "View_Map", -onClick => \&menuReloadFiles },
+		
+		# Help Menu
+		"&Help" => "Help",
+		"	> &Forum				Shift+F1" => { -name => "resume", -onClick => \&menuForumURL },
+	    "	> &Wiki					F1" => { -name => "manual", -onClick => \&menuWikiURL },
+		"	> &Github" => { -name => "manual", -onClick => \&menuGithubURL },
+		"	> -" => { -name => "separator" },
+		"	> &Report Issue" => { -name => "manual", -onClick => \&menuGithubIssueURL },
 );
 
 	$self->{icon} = new Win32::GUI::Icon('SRC/BUILD/openkore.ICO');
@@ -241,16 +333,24 @@ sub initGUI {
 	    -name     => "mw",
 	    -title    => "Ragnarok Online Bot Client",
 	    -pos      => [308, 220],
-	    -size     => [950, 690],
+	    -size     => [900, 700],
+		-minsize   => [450, 350],
 	    -icon	=> $self->{icon},
 	    -menu     => $self->{Menu},
 	    -accel	 => $self->{AccTable},
 	    -maximizebox => 1,
-	    -resizable => 0,
-		-onMinimize => \&OnMinimize,
+	    -resizable => 1,
+		-onResize  => \&onResize,
 	    -onTerminate => \&onExit, 
 		);
-		
+
+	$self->{status_bar} = $self->{mw}->AddStatusBar(
+		-name => 'SB',
+		-SizeGripStyle =>1,
+	);
+	
+	$self->{status_bar}->Parts(225,450,680);
+
 	$self->{mw}->ChangeIcon($self->{icon});
 
 	# create the systray icon.
@@ -262,32 +362,41 @@ sub initGUI {
 	);
 
 	$self->{name} = $self->{mw}->AddLabel(
-	       -text    => "name",
+	       -text    => "Name",
 	       -name    => "name",
-	       -font	=> $nameFont,
 	       -left    => 4,
-	       -top     => 102, #2,
-	       -width   => 100,
+	       -top     => 2, #2,
+	       -width   => 115,
 	       -height  => 13,
 	       -foreground    => 0,
 	    );
 	
 	$self->{class} = $self->{mw}->AddLabel(
-	       -text    => "job",
+	       -text    => "Job",
 	       -name    => "class",
 	       -left    => 4,
-	       -top     => 116, #16,
+	       -top     => 17, #16,
 	       -width   => 100,
 	       -height  => 13,
 	       -foreground    => 0,
 	      );
 	
 	$self->{gender} = $self->{mw}->AddLabel(
-	       -text    => "gender",
+	       -text    => "Gender",
 	       -name    => "gender",
 	       -left    => 4,
-	       -top     => 130, #30,
+	       -top     => 31, #30,
 	       -width   => 40,
+	       -height  => 13,
+	       -foreground    => 0,
+	      );
+	
+	$self->{weight} = $self->{mw}->AddLabel(
+	       -text    => "Weight: 0/0",
+	       -name    => "weight",
+	       -left    => 4,
+	       -top     => 44, #30,
+	       -width   => 115,
 	       -height  => 13,
 	       -foreground    => 0,
 	      );
@@ -296,7 +405,7 @@ sub initGUI {
 	       -text    => "",
 	       -name    => "hp_bar",
 	       -left    => 140,
-	       -top     => 104, #4,
+	       -top     => 4, #4,
 	       -width   => 185,
 	       -height  => 10,
 	       -smooth   => 1,
@@ -306,7 +415,7 @@ sub initGUI {
 	       -text    => "HP",
 	       -name    => "hp_label",
 	       -left    => 120,
-	       -top     => 117, #17,
+	       -top     => 17, #17,
 	       -width   => 15,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -316,7 +425,7 @@ sub initGUI {
 	       -text    => "",
 	       -name    => "sp_bar",
 	       -left    => 140,
-	       -top     => 132, #32,
+	       -top     => 32, #32,
 	       -width   => 185,
 	       -height  => 10,
 	       -smooth   => 1,
@@ -326,7 +435,7 @@ sub initGUI {
 	       -text    => "SP",
 	       -name    => "sp_label",
 	       -left    => 120,
-	       -top     => 145, #45,
+	       -top     => 45, #45,
 	       -width   => 14,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -336,7 +445,7 @@ sub initGUI {
 	       -text    => "0 / 0",
 	       -name    => "hp_val",
 	       -left    => 140,
-	       -top     => 117, #17,
+	       -top     => 17, #17,
 	       -width   => 185,
 	       -height  => 13,
 	       -align    => "center",
@@ -347,7 +456,7 @@ sub initGUI {
 	       -text    => "0 / 0",
 	       -name    => "sp_val",
 	       -left    => 140,
-	       -top     => 145, #45,
+	       -top     => 45, #45,
 	       -width   => 185,
 	       -height  => 13,
 	       -align    => "center",
@@ -358,7 +467,7 @@ sub initGUI {
 	       -text    => "Base Lv.",
 	       -name    => "b_label",
 	       -left    => 7,
-	       -top     => 170, #70,
+	       -top     => 70, #70,
 	       -width   => 45,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -368,7 +477,7 @@ sub initGUI {
 	       -text    => "1",
 	       -name    => "base",
 	       -left    => 50,
-	       -top     => 170, #70,
+	       -top     => 70, #70,
 	       -width   => 20,
 	       -height  => 20,
 	       -foreground    => 0,
@@ -378,7 +487,7 @@ sub initGUI {
 	       -text    => "",
 	       -name    => "b_bar",
 	       -left    => 70,
-	       -top     => 173, #73,
+	       -top     => 73, #73,
 	       -width   => 235,
 	       -height  => 10,
 	       -smooth   => 1,
@@ -388,7 +497,7 @@ sub initGUI {
 	       -text    => "0%",
 	       -name    => "b_percent",
 	       -left    => 307,
-	       -top     => 170, #70,
+	       -top     => 70, #70,
 	       -width   => 28,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -398,7 +507,7 @@ sub initGUI {
 	       -text    => "  Job Lv.",
 	       -name    => "j_label",
 	       -left    => 7,
-	       -top     => 185, #85,
+	       -top     => 85, #85,
 	       -width   => 45,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -408,7 +517,7 @@ sub initGUI {
 	       -text    => "1",
 	       -name    => "job",
 	       -left    => 50,
-	       -top     => 185, #85,
+	       -top     => 85, #85,
 	       -width   => 20,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -418,7 +527,7 @@ sub initGUI {
 	       -text    => "",
 	       -name    => "j_bar",
 	       -left    => 70,
-	       -top     => 188, #88,
+	       -top     => 88, #88,
 	       -width   => 235,
 	       -height  => 10,
 	       -smooth   => 1,
@@ -428,7 +537,7 @@ sub initGUI {
 	       -text    => "0%",
 	       -name    => "j_percent",
 	       -left    => 307,
-	       -top     => 185, #85,
+	       -top     => 85, #85,
 	       -width   => 28,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -438,7 +547,7 @@ sub initGUI {
 	       -text    => "Exp",
 	       -name    => "exp_group",
 	       -left    => 4,
-	       -top     => 158, #58,
+	       -top     => 58, #58,
 	       -width   => 335,
 	       -height  => 48,
 	       -style   => WS_CHILD | WS_VISIBLE | 7,  # GroupBox
@@ -449,7 +558,7 @@ sub initGUI {
 	       -text    => "Status:",
 	       -name    => "status_label",
 	       -left    => 4,
-	       -top     => 208, #108,
+	       -top     => 108, #108,
 	       -width   => 32,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -459,7 +568,7 @@ sub initGUI {
 	       -text    => "None",
 	       -name    => "status",
 	       -left    => 40,
-	       -top     => 208, #108,
+	       -top     => 108, #108,
 	       -width   => 300,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -470,9 +579,9 @@ sub initGUI {
 	       -name    => "console",
 	       -font	=> $consoleFont,
 	       -left    => 4,
-	       -top     => 225, #125,
-	       -width   => 419,
-	       -height  => 361,
+	       -top     => 125, #125,
+	       -width   => 836,
+	       -height  => 460,
            -style   => WS_CHILD | WS_VISIBLE | ES_LEFT
                        | ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL | ES_READONLY,
 	      );
@@ -480,10 +589,10 @@ sub initGUI {
 	$self->{chat} = $self->{mw}->AddRichEdit(
 	       -text    => "",
 	       -name    => "chat",
-	       -left    => 428,
-	       -top     => 5, #250,
-	       -width   => 419,
-	       -height  => 591,
+	       -left    => 350,
+	       -top     => 2, #250,
+	       -width   => 490,
+	       -height  => 105,
            -style   => WS_CHILD | WS_VISIBLE | ES_LEFT
                        | ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL | ES_READONLY,
 	      );
@@ -491,10 +600,10 @@ sub initGUI {
 	$self->{pm_list} = $self->{mw}->AddCombobox(
 	       -text    => "",
 	       -name    => "pm_list",
-	       -left    => 417,
-	       -top     => 596, #325,
+	       -left    => 4,
+	       -top     => 585, #325,
 	       -width   => 95,
-	       -height  => 80,
+	       -height  => 150,
 	       -dropdown => 1,
 #	       -style   => WS_VISIBLE | 2,  # Dropdown Style
 	      );
@@ -502,63 +611,32 @@ sub initGUI {
 	$self->{input} = $self->{mw}->AddTextfield(
 	       -text    => "",
 	       -name    => "input",
-	       -left    => 512,
-	       -top     => 596, #324,
-	       -width   => 245,
-	       -height  => 23,
+	       -left    => 100,
+	       -top     => 585, #324,
+	       -width   => 657,
+	       -height  => 21,
 	      );
 
 	$self->{say_type} = $self->{mw}->AddCombobox(
 	       -text    => "",
 	       -name    => "say_type",
 	       -left    => 758,
-	       -top     => 596, #325,
+	       -top     => 585, #325,
 	       -width   => 80,
-	       -height  => 80,
+	       -height  => 150,
 	       -dropdownlist => 1,
 #	       -style   => WS_VISIBLE | 2,  # Dropdown Style
 	      );
-
-	$self->{mw}->AddButton(
-	       -text    => "View Map",
-	       -name    => "btn_map",
-	       -left    => 353,
-	       -top     => 5,
-	       -width   => 63,
-	       -height  => 50,
-	       -foreground => 0,
-	       -onClick => \&openMap,
-	      );
-	$self->{mw}->AddButton(
-	       -text    => "Sit",
-	       -name    => "sit command",
-	       -left    => 4,
-	       -top     => 5,
-	       -width   => 50,
-	       -height  => 20,
-	       -foreground => 0,
-	       -onClick => sub { Commands::run("sit"); },
-	      );
-	
-	$self->{mw}->AddButton(
-	       -text    => "complete report",
-	       -name    => "Report",
-	       -left    => 60,
-	       -top     => 5,
-	       -width   => 100,
-	       -height  => 20,
-	       -foreground => 0,
-	       -onClick => sub { Commands::run("exp report"); },
-	      );
+	$self->{splitter} = $self->{mw}->AddSplitter(
+			-name      => 'SP',
+			-top       => 0,
+			-left      => $self->{mw}->{console}->Width() + 4,
+			-height    => $self->{mw}->ScaleHeight() - $self->{mw}->{SB}->Height() - $self->{mw}->{input}->Height(),
+			-width     => 3,
+			-onRelease => \&splitterRelease,
+		);
 
 
-
-
-
-
-
-#
-	
 	$self->{say_type}->Add("Command","Public","Party","Guild");
 	$self->{say_type}->Select(0);
 	
@@ -636,12 +714,6 @@ sub inputDown {
 
 }
 
-sub OnMinimize {
-	my $self = shift;
-	$self->Disable();
-	$self->Hide();
-}
-
 sub tray_Click {
 	my $self = shift;
 	$self->Enable();
@@ -651,7 +723,36 @@ sub tray_Click {
 sub errorDialog {
 	my $self = shift;
 	my $msg = shift;
-	Win32::GUI::MessageBox($msg,"Error",MB_ICONERROR | MB_OK,);
+
+	Win32::GUI::MessageBox(undef, $msg,"Error - ". $Settings::NAME, MB_ICONERROR | MB_OK);
+}
+
+sub onResize {
+    my $self = shift;
+	return if (!defined($self->{SB}));
+
+    my $h = $self->ScaleHeight();
+    my $w = $self->ScaleWidth();
+
+    # Move the Status bar
+    $self->{SB}->Top($h - $self->{SB}->Height());
+    $self->{SB}->Width($w);
+
+	# Move Inputs
+	$self->{input}->Top($h - $self->{SB}->Height() - $self->{input}->Height());
+	$self->{input}->Width($w - $self->{say_type}->Width() - $self->{pm_list}->Width() - 7);
+	$self->{say_type}->Left($self->{input}->Width() + $self->{pm_list}->Width() + 5);
+	$self->{say_type}->Top($h - $self->{SB}->Height() - $self->{input}->Height());
+	$self->{pm_list}->Top($h - $self->{SB}->Height() - $self->{input}->Height());
+
+    # Adjust Height of console and splitter
+    $self->{console}->Height($h - $self->{SB}->Height() - $self->{console}->Top() - $self->{input}->Height());
+	$self->{console}->Width($w - 10);
+	$self->{chat}->Width($w - $self->{chat}->Left() - 10);
+	$self->{SP}->Left($w - 5);
+	$self->{SP}->Height($h - $self->{SB}->Height() - $self->{input}->Height()) ;
+
+    return 1;
 }
 
 sub onExit {
@@ -662,50 +763,280 @@ sub onExit {
 	}
 }
 
+sub splitterRelease {
+	return;
+}
+
 sub openMap {
-
-		$map->initMapGUI();
-		$map->paintMap();
-		$map->paintMiscPos();		
-		$map->paintPos();
-	}
-
-sub compause {
-	AI::state(AI::OFF);
+	return unless defined $field && defined $field->baseName;
+	$map->initMapGUI();
+	$map->paintMap();
+	$map->paintMiscPos();		
+	$map->paintPos();
 }
-sub commanual {
-	AI::state(AI::MANUAL);
-}
-sub comresume {
+
+#######
+#
+# Menu onClick Handlers
+#
+#######
+sub menuAIAuto {
 	AI::state(AI::AUTO);
 }
-sub comstatus {
-Commands::run("s"); 
-}
-sub comstat {
-Commands::run("st"); 
-}
-sub comitems {
-Commands::run("i");
-}
-sub comskills {
-Commands::run("skills");
-}
-sub comerooo {
-Commands::run("exp");
+
+sub menuAIManual {
+	AI::state(AI::MANUAL);
 }
 
+sub menuAIOff {
+	AI::state(AI::OFF);
+}
+
+sub menuRespawn {
+	Commands::run ("respawn");
+}
+
+sub menuCharSelect {
+	configModify ('char', undef, 1);
+	Commands::run ("charselect");
+}
+
+sub menuRelog {
+	Commands::run ("relog");
+}
+
+sub menuMinimizeToTry {
+	my $self = shift;
+	$self->Disable();
+	$self->Hide();
+}
+
+sub menuStatus {
+	Commands::run("s"); 
+}
+
+sub menuStat {
+	Commands::run("st"); 
+}
+
+sub menuInventory {
+	Commands::run("i");
+}
+
+sub menuSkills {
+	Commands::run("skills");
+}
+
+sub menuPartyInfo {
+	Commands::run("party");
+}
+
+sub menuEquipWindow {
+	Commands::run("eq");
+}
+
+sub menuQuestWindow {
+	Commands::run("quest list");
+}
+
+sub menuFriendList {
+	Commands::run("friend");
+}
+
+sub menuCart {
+	Commands::run("cart");
+}
+
+sub menuGuildInfo {
+	Commands::run("guild info");
+}
+
+sub menuPetInfo {
+	Commands::run("pet s");
+}
+
+sub menuHomunculusInfo {
+	Commands::run("homun s");
+}
+
+sub menuMercenaryInfo {
+	Commands::run("merc s");
+}
+
+sub menuClanInfo {
+	Commands::run("clan info");
+}
+
+sub menuBank {
+	Commands::run("bank open");
+}
+
+sub menuRodex {
+	Commands::run("rodex open");
+	Commands::run("rodex list");
+}
+
+sub menuPlayerList {
+	Commands::run("pl");
+}
+
+sub menuMonsterList {
+	Commands::run("ml");
+}
+
+sub menuNPCList {
+	Commands::run("nl");
+}
+
+sub menuExpReport {
+	Commands::run("exp");
+}
+
+sub menuItemReport {
+	Commands::run("exp item");
+}
+
+sub menuMonsterReport {
+	Commands::run("exp monster");
+}
+
+sub menuFullReport {
+	Commands::run("exp report");
+}
+
+sub menuTeleport {
+	Commands::run("tele");
+}
+
+sub menuMemo {
+	Commands::run("memo");
+}
+
+sub menuSit {
+	Commands::run("sit");
+}
+
+sub menuStand {
+	Commands::run("stand");
+}
+
+sub menuAutoStore {
+	Commands::run("autostorage");
+}
+
+sub menuAutoSell {
+	Commands::run("autobuy");
+}
+
+sub menuAutoBuy {
+	Commands::run("autosell");
+}
+
+sub menuReloadConfig {
+	Commands::run("reload config.txt");
+}
+
+sub menuReloadFiles {
+	Commands::run("reload all");
+}
+
+sub menuForumURL {
+	my $url;
+	if ($config{'forumURL'}) {
+		$url = $config{'forumURL'};
+	} else {
+		$url = 'http://forums.openkore.com';
+	}
+	launchURL($url);
+}
+
+sub menuWikiURL {
+	my $url;
+	if ($config{'manualURL'}) {
+		$url = $config{'manualURL'};
+	} else {
+		$url = 'http://wiki.openkore.com/index.php?title=Manual';
+	}
+	launchURL($url);
+}
+
+sub menuGithubURL {
+	my $url;
+	if ($config{'githubURL'}) {
+		$url = $config{'githubURL'};
+	} else {
+		$url = 'https://github.com/OpenKore/openkore/';
+	}
+	launchURL($url);
+}
+
+sub menuGithubIssueURL {
+	my $self = shift;
+	my $url;
+	if ($config{'githubIssueURL'}) {
+		$url = $config{'githubIssueURL'};
+	} else {
+		$url = 'https://github.com/OpenKore/openkore/issues/new';
+	}
+	launchURL($url);
+}
+
+sub updateStatusBar {
+	my $self = shift;
+
+	my ($statText, $xyText, $aiText) = ('', '', '');
+	
+	if (!$conState) {
+		$statText = "Initializing...";
+	} elsif ($conState == 1) {
+		$statText = "Not connected";
+	} elsif ($conState > 1 && $conState < 5) {
+		$statText = "Connecting...";
+	} else {
+		$statText = "Connected.";
+	}
+	
+	if (defined $conState && $conState == 5) {
+		if(defined $char && defined $char->{pos}{x}) {
+			$xyText = $field->baseName . " $char->{pos}{x}, $char->{pos}{y}";
+		}
+
+		if (AI::state) {
+			if (@ai_seq) {
+				my @seqs = @ai_seq;
+				foreach (@seqs) {
+					s/^route_//;
+					s/_/ /g;
+					s/([a-z])([A-Z])/$1 $2/g;
+					$_ = lc $_;
+				}
+				substr($seqs[0], 0, 1) = uc substr($seqs[0], 0, 1);
+				$aiText = join(', ', @seqs);
+			} else {
+				$aiText = "";
+			}
+		} else {
+			$aiText = T("Paused");
+		}
+	}
+
+	$self->{status_bar}->PartText(0, $statText, 0);
+	$self->{status_bar}->PartText(1, $xyText, 0);
+	$self->{status_bar}->PartText(2, $aiText, 0);
+}
 
 sub UpdateCharacter {
 	my $self = shift;
 	return if (!$char || !$char->{'hp_max'} || !$char->{'sp_max'} || !$char->{'weight_max'});
-	return if ($currentStatus eq $char->statusesString && $char->{'hp'} == $currentHP && $char->{'sp'} == $currentSP && $char->{'exp'} == $currentLvl && $char->{'exp_job'} == $currentJob);
+	return if (defined $currentHP && $currentStatus eq $char->statusesString && $char->{'hp'} == $currentHP && $char->{'sp'} == $currentSP && $char->{'exp'} == $currentLvl && $char->{'exp_job'} == $currentJob);
 
 	$self->{name}->Text($char->{'name'});
 	$self->{gender}->Text($sex_lut{$char->{'sex'}});
 	$self->{class}->Text($jobs_lut{$char->{'jobID'}});
 	$self->{status}->Text($char->statusesString);
-	
+
+	$self->{weight}->Text("Weight: $char->{'weight'} / $char->{'weight_max'}");
+
 	$self->{base}->Text($char->{'lv'});
 	$self->{job}->Text($char->{'lv_job'});
 	
@@ -720,20 +1051,29 @@ sub UpdateCharacter {
 	
 	if ($percent_hp < 20) {
 		$self->{hp_bar}->SetBarColor([255,89,89]);
+		$self->{hp_val}->Change(-foreground =>[255,89,89]);
 	} elsif ($percent_hp < 50) {
 		$self->{hp_bar}->SetBarColor([223,223,0]);
+		$self->{hp_val}->Change(-foreground =>[223,223,0]);
 	} else {
 		$self->{hp_bar}->SetBarColor([30,100,190]);
+		$self->{hp_val}->Change(-foreground =>[30,100,190]);
 	}
+
+	$self->{hp_val}->Redraw(1);
 
 	if ($percent_sp < 20) {
 		$self->{sp_bar}->SetBarColor([255,89,89]);
+		$self->{sp_val}->Change(-foreground =>[255,89,89]);
 	} elsif ($percent_sp < 50) {
 		$self->{sp_bar}->SetBarColor([223,223,0]);
+		$self->{sp_val}->Change(-foreground =>[223,223,0]);
 	} else {
 		$self->{sp_bar}->SetBarColor([30,100,190]);
+		$self->{sp_val}->Change(-foreground =>[30,100,190]);
 	}
-		
+	$self->{sp_val}->Redraw(1);
+
 	my $percent_base_lv;
 
 	if (!$char->{'exp_max'}) {
