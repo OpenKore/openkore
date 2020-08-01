@@ -1,19 +1,32 @@
-//-- LastDate true 2020-05-02
-//태국채널링 복사맵
-gl_ch_a.rsw#Glast Heim St. Abbey#
-gl_ch_b.rsw#Glast Heim St. Abbey#
-gl_chy_a.rsw#Glast Heim Churchyard#
-gl_chy_b.rsw#Glast Heim Churchyard#
-mag_d02_a.rsw#Nogg Road 2F#
-mag_d02_b.rsw#Nogg Road 2F#
-msk_d03_a.rsw#Dremuci Forest#
-msk_d03_b.rsw#Dremuci Forest#
-jup_01_a.rsw#Ruins of Juperos Outside#
-jup_01_b.rsw#Ruins of Juperos Outside#
-dic_d02_a.rsw#Scaraba Hall#
-dic_d02_b.rsw#Scaraba Hall#
+//-- LastDate 2020-07-02
+//ลฌทฃ MD
+1@ffp.rsw#Remnant Hideout#
 
-//인트로 개편
+//ลยฑนรคณฮธต บนป็ธส 2ย๗
+ecltd03_a.rsw#Bifrost Tower 3F (A)#
+ecltd03_b.rsw#Bifrost Tower 3F (B)#
+ve_fild07_a.rsw#Veins Field (A)#
+ve_fild07_b.rsw#Veins Field (B)#
+ve_fild03_a.rsw#Veins Field (A)#
+ve_fild03_b.rsw#Veins Field (B)#
+abyss_03_a.rsw#Abyss Lake Underground Cave 3F (A)#
+abyss_03_b.rsw#Abyss Lake Underground Cave 3F (B)#
+
+//ลยฑนรคณฮธต บนป็ธส
+gl_ch_a.rsw#Glast Heim St. Abbey (A)#
+gl_ch_b.rsw#Glast Heim St. Abbey (B)#
+gl_chy_a.rsw#Glast Heim Churchyard (A)#
+gl_chy_b.rsw#Glast Heim Churchyard (B)#
+mag_d02_a.rsw#Nogg Road 2F (A)#
+mag_d02_b.rsw#Nogg Road 2F (B)#
+msk_d03_a.rsw#Dremuci Forest (A)#
+msk_d03_b.rsw#Dremuci Forest (B)#
+jup_01_a.rsw#Ruins of Juperos Outside (A)#
+jup_01_b.rsw#Ruins of Juperos Outside (B)#
+dic_d02_a.rsw#Scaraba Hall (A)#
+dic_d02_b.rsw#Scaraba Hall (B)#
+
+//ภฮฦฎทฮ ฐณฦํ
 iz_int.rsw#Stranded Ship#
 iz_int01.rsw#Stranded Ship#
 iz_int02.rsw#Stranded Ship#
@@ -73,27 +86,27 @@ morocc_mem.rsw#Memory of Morroc#
 payon_mem.rsw#Memory of Payon#
 moc_paraup.rsw#Inside of Paradise Group Building in Morroc 2nd floor#
 
-//-크리스마스 이벤트 신규 추가 맵 지역정보
+//-ลฉธฎฝบธถฝบ ภฬบฅฦฎ ฝลฑิ ร฿ฐก ธส ม๖ฟชมคบธ
 niflxmas.rsw#The Dead's Land Nifflheim#
 
-//호러장난감공장
+//ศฃทฏภๅณญฐจฐ๘ภๅ
 1@xm_d.rsw#Horror Toy Factory#
 
-//영웅의흔적
+//ฟตฟ๕ภวศ็ภ๛
 1@face.rsw#Face Worm's Nest#
 1@sara.rsw#Sara's Memory#
 dali.rsw#Crack of Dimension#
 
-//몬스터웨이브
+//ธ๓ฝบลอฟภฬบ๊
 1@def01.rsw#Wave Mode-Forest#
 
-//고성메모리얼던전
+//ฐํผบธธ๐ธฎพ๓ด๘ภ
 gl_cas02_.rsw#Glastheim 2F#
 gl_chyard_.rsw#Monastery Tomb#
 2@gl_k.rsw#Old Knight 2F#
 1@gl_k.rsw#Old Knight 1F#
 
-//공성전 TE 복사맵 
+//ฐ๘ผบภ TE บนป็ธส 
 te_prt_gld.rsw#Gloria#
 te_prtcas01.rsw#Gaebolg#
 te_prtcas02.rsw#Richard#
@@ -110,23 +123,23 @@ te_aldecas5.rsw#W#
 teg_dun02.rsw#Subterranean Dungeon of Guild#
 
 // Izlude tutorial map
-prt_fild08d.rsw#Prontera Field#
-prt_fild08c.rsw#Prontera Field#
-prt_fild08b.rsw#Prontera Field#
 prt_fild08a.rsw#Prontera Field#
+prt_fild08b.rsw#Prontera Field#
+prt_fild08c.rsw#Prontera Field#
+prt_fild08d.rsw#Prontera Field#
 prt_fild08e.rsw#Prontera Field#
 prt_fild08f.rsw#Prontera Field#
 prt_fild08g.rsw#Prontera Field#
 prt_fild08h.rsw#Prontera Field#
 
-iz_ac01_d.rsw#Academy 1F#
-iz_ac02_d.rsw#Academy 2F#
-iz_ac01_c.rsw#Academy 1F#
-iz_ac02_c.rsw#Academy 2F#
-iz_ac01_b.rsw#Academy 1F#
-iz_ac02_b.rsw#Academy 2F#
 iz_ac01_a.rsw#Academy 1F#
 iz_ac02_a.rsw#Academy 2F#
+iz_ac01_b.rsw#Academy 1F#
+iz_ac02_b.rsw#Academy 2F#
+iz_ac01_c.rsw#Academy 1F#
+iz_ac02_c.rsw#Academy 2F#
+iz_ac01_d.rsw#Academy 1F#
+iz_ac02_d.rsw#Academy 2F#
 iz_ac01_e.rsw#Academy 1F#
 iz_ac02_e.rsw#Academy 2F#
 iz_ac01_f.rsw#Academy 1F#
@@ -136,10 +149,10 @@ iz_ac02_g.rsw#Academy 2F#
 iz_ac01_h.rsw#Academy 1F#
 iz_ac02_h.rsw#Academy 2F#
 
-izlude_d.rsw#Satellite City Izlude#
-izlude_c.rsw#Satellite City Izlude#
-izlude_b.rsw#Satellite City Izlude#
 izlude_a.rsw#Satellite City Izlude#
+izlude_b.rsw#Satellite City Izlude#
+izlude_c.rsw#Satellite City Izlude#
+izlude_d.rsw#Satellite City Izlude#
 izlude_e.rsw#Satellite City Izlude#
 izlude_f.rsw#Satellite City Izlude#
 izlude_g.rsw#Satellite City Izlude#
