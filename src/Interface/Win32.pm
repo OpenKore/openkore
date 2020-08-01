@@ -17,6 +17,7 @@ use Globals;
 use Settings;
 use Misc;
 
+use I18N;
 use Win32::GUI;
 use Win32::GUI::Constants qw(WS_CHILD WS_VISIBLE WS_VSCROLL ES_LEFT ES_MULTILINE ES_READONLY ES_AUTOVSCROLL MB_OK MB_ICONERROR);
 
@@ -24,6 +25,7 @@ use Interface::Win32::Map; #Map Viewer
 
 
 our ($currentHP, $currentSP, $currentLvl, $currentJob, $currentStatus);
+our ($statText, $xyText, $aiText) = ('', '', '');
 our $map;
 
 our @input_que;
@@ -104,7 +106,9 @@ sub writeOutput {
 	my $message = shift || '';
 	my $domain = shift || '';
 	my ($color,$fgcode);
-	
+
+	$message = I18N::fromDefaultEncodingToISO88591($message);
+
 	$color = $consoleColors{$type}{$domain} if (defined $type && defined $domain && defined $consoleColors{$type});
 	$color = $consoleColors{$type}{'default'} if (!defined $color && defined $type);
 	$color = 'default' unless defined $color;
@@ -204,8 +208,7 @@ sub setAiText {
 sub initGUI {
 	my $self = shift;
 	
-	my $nameFont = Win32::GUI::Font->new( -name => "MS Sans Serif", -bold => 1);
-	my $consoleFont = Win32::GUI::Font->new( -name => "Consolas",-size => 10,);
+	my $consoleFont = Win32::GUI::Font->new( '-name' => "Courier New", '-size' => 10);
 
 	$self->{AccTable} = new Win32::GUI::AcceleratorTable (
 	 				# Windows commands
@@ -341,7 +344,7 @@ sub initGUI {
 	    -maximizebox => 1,
 	    -resizable => 1,
 		-onResize  => \&onResize,
-	    -onTerminate => \&onExit, 
+	    -onTerminate => \&onExit,
 		);
 
 	$self->{status_bar} = $self->{mw}->AddStatusBar(
@@ -589,6 +592,7 @@ sub initGUI {
 	$self->{chat} = $self->{mw}->AddRichEdit(
 	       -text    => "",
 	       -name    => "chat",
+		   -font	=> $consoleFont,
 	       -left    => 350,
 	       -top     => 2, #250,
 	       -width   => 490,
@@ -983,9 +987,7 @@ sub menuGithubIssueURL {
 
 sub updateStatusBar {
 	my $self = shift;
-
-	my ($statText, $xyText, $aiText) = ('', '', '');
-	
+	my ($old_statText, $old_xyText, $old_aiText) = ($statText, $xyText, $aiText);
 	if (!$conState) {
 		$statText = "Initializing...";
 	} elsif ($conState == 1) {
@@ -1020,9 +1022,9 @@ sub updateStatusBar {
 		}
 	}
 
-	$self->{status_bar}->PartText(0, $statText, 0);
-	$self->{status_bar}->PartText(1, $xyText, 0);
-	$self->{status_bar}->PartText(2, $aiText, 0);
+	$self->{status_bar}->PartText(0, $statText, 0) unless ($old_statText eq $statText);
+	$self->{status_bar}->PartText(1, $xyText, 0) unless ($old_xyText eq $xyText);
+	$self->{status_bar}->PartText(2, $aiText, 0) unless ($old_aiText eq $aiText);
 }
 
 sub UpdateCharacter {

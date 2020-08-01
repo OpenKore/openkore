@@ -24,7 +24,7 @@ use strict;
 use Globals qw($masterServer);
 use Exporter;
 use base qw(Exporter);
-use Encode qw(encode decode);
+use Encode qw(encode decode from_to);
 use Encode::Alias qw(define_alias);
 
 our @EXPORT_OK = qw(bytesToString stringToBytes stringToUTF8 UTF8ToString isUTF8);
@@ -128,5 +128,10 @@ sub isUTF8 {
   )*$/x;
 }
 
+sub fromDefaultEncodingToISO88591 {
+	my $message = shift;
+	from_to($message, $masterServer->{serverEncoding} || "Western", 'iso-8859-1');
+	return $message;
+}
 
 1;
