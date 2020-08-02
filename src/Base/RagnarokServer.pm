@@ -23,6 +23,8 @@ sub new {
 }
 
 sub getServerType {
+	
+	print ">>> server type " . $_[0]->{serverType};
 	return $_[0]->{serverType};
 }
 
