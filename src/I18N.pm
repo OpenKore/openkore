@@ -128,10 +128,4 @@ sub isUTF8 {
   )*$/x;
 }
 
-sub fromDefaultEncodingToISO88591 {
-	my $message = shift;
-	from_to($message, $masterServer->{serverEncoding} || "Western", 'iso-8859-1');
-	return $message;
-}
-
 1;

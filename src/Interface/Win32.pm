@@ -107,8 +107,6 @@ sub writeOutput {
 	my $domain = shift || '';
 	my ($color,$fgcode);
 
-	$message = I18N::fromDefaultEncodingToISO88591($message);
-
 	$color = $consoleColors{$type}{$domain} if (defined $type && defined $domain && defined $consoleColors{$type});
 	$color = $consoleColors{$type}{'default'} if (!defined $color && defined $type);
 	$color = 'default' unless defined $color;
