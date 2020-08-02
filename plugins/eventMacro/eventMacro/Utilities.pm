@@ -30,23 +30,23 @@ sub between {
 
 sub cmpr {
 	my ($first, $cond, $second) = @_;
-	
+
 	if (defined $first && !defined $cond & !defined $second) {
 		if ($first eq '' || $first == 0) {
 			return 0;
 		} else {
 			return 1;
 		}
-		
+
 	} elsif ($first =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($first1, $first2) = ($1, $2);
 		if ($second =~ /^-?[\d.]+$/) {
 			if ($cond eq "!=") {
 				return ((between($first1, $second, $first2)) ? 0 : 1);
-				
+
 			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
 				return between($first1, $second, $first2);
-				
+
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 				return;
@@ -54,16 +54,16 @@ sub cmpr {
 		}
 		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($second) <-- maybe should be numeric?\n", "eventMacro";
 		return;
-		
+
 	} elsif ($second =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($second1, $second2) = ($1, $2);
 		if ($first =~ /^-?[\d.]+$/) {
 			if ($cond eq "!=") {
 				return ((between($second1, $first, $second2)) ? 0 : 1);
-				
+
 			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
 				return between($second1, $first, $second2);
-				
+
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 				return;
@@ -71,7 +71,7 @@ sub cmpr {
 		}
 		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($first) <-- maybe should be numeric?\n", "eventMacro";
 		return;
-		
+
 	} elsif ($first =~ /^-?[\d.]+$/ && $second =~ /^-?[\d.]+$/) {
 		return ($first == $second ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
 		return ($first >= $second ? 1 : 0) if ($cond eq ">=");
@@ -79,19 +79,19 @@ sub cmpr {
 		return ($first >  $second ? 1 : 0) if ($cond eq ">");
 		return ($first <  $second ? 1 : 0) if ($cond eq "<");
 		return ($first != $second ? 1 : 0) if ($cond eq "!=");
-		
+
 	} elsif (($cond eq "=" || $cond eq "==")) {
 		return ($first eq $second ? 1 : 0);
-		
+
 	} elsif ($cond eq "!=") {
 		return ($first ne $second ? 1 : 0);
-		
+
 	} elsif ($cond eq "~") {
 		$first = lc($first);
 		foreach my $member (split(/\s*,\s*/, $second)) {
 			return 1 if ($first eq lc($member));
 		}
-		
+
 	} elsif ($cond eq "=~" && $second =~ /^\/.*?\/\w?\s*$/) {
 		return match($first, $second);
 	}
@@ -106,7 +106,7 @@ sub q4rx {
 }
 
 sub q4rx2 {
-	# We let alone the original q4rx sub routine... 
+	# We let alone the original q4rx sub routine...
 	# instead, we use this for our new @nick ;p
 	my $s = $_[0];
 	$s =~ s/([\/*+(){}\[\]\\\$\^?"'\. ])/\\$1/g;
@@ -157,7 +157,7 @@ sub getWord {
 		return "" unless defined $val;
 		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
 		else {return ""}
-	
+
 	}
 	foreach (@words) {
 		next if /^$/;
@@ -226,8 +226,8 @@ sub getnpcID {
 	elsif (($a, $b) = $arg =~ /^\s*\/(.+?)\/(\w?)\s*$/) {$what = 2}
 	elsif (($a) = $arg =~ /^\s*"(.*?)"\s*$/) {$what = 3}
 	else {return -1}
-	
-	my @ids;	
+
+	my @ids;
 	foreach my $npc (@{$npcsList->getItems()}) {
 		if ($what == 1) {return $npc->{binID} if ($npc->{pos}{x} == $a && $npc->{pos}{y} == $b)}
 		elsif ($what == 2) {
@@ -497,23 +497,23 @@ sub get_pattern {
 
 sub find_variable {
 	my ($text) = @_;
-	
+
 	if (my $scalar = find_scalar_variable($text)) {
 		return ({ display_name => $scalar->{display_name}, type => 'scalar', real_name => $scalar->{real_name} });
 	}
-	
+
 	if (my $array = find_array_variable($text)) {
 		return ({ display_name => $array->{display_name}, type => 'array', real_name => $array->{real_name} });
 	}
-	
+
 	if (my $hash = find_hash_variable($text)) {
 		return ({ display_name => $hash->{display_name}, type => 'hash', real_name => $hash->{real_name} });
 	}
-	
+
 	if (my $accessed_var = find_accessed_variable($text)) {
 		return ({ display_name => $accessed_var->{display_name}, type => $accessed_var->{type}, real_name => $accessed_var->{real_name}, complement => $accessed_var->{complement} });
 	}
-	
+
 	return undef;
 }
 
@@ -560,23 +560,23 @@ sub find_accessed_variable {
 		my $complement = $3;
 		return if (!defined $complement || $complement eq '');
 		my $close_bracket = $4;
-		
+
 		my $type = ($open_bracket eq '[' ? 'accessed_array' : 'accessed_hash');
 		my $close_bracket = (($type eq 'accessed_hash') ? '}' : ']');
-		
+
 		if ($open_to_close_bracket_pair{$open_bracket} ne $close_bracket) {
 			return;
 		}
-		
+
 		if ($type eq 'accessed_array') {
 			return if ($complement !~ /^\d+$/ && !find_variable($complement));
-			
+
 		} elsif ($type eq 'accessed_hash') {
 			return if ($complement !~ /^[a-zA-Z\d]+$/ && !find_variable($complement));
 		}
-		
+
 		my $original_name = ('$'.$name.$open_bracket.$complement.$close_bracket);
-		
+
 		return {real_name => $name, type => $type, display_name => $original_name, complement => $complement};
 	}
 }
