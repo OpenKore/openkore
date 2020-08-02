@@ -63,7 +63,7 @@ our $macroKeywords = join '|', qw(
 	delete
 	invamount inventory Inventory InventoryType
 	keys
-	listitem listlenght
+	listitem listlength
 	monster
 	nick
 	npc
