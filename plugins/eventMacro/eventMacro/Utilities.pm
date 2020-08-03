@@ -206,9 +206,9 @@ sub getQuestStatus {
 			$result->{$quest_id} = 'inactive';
 		} elsif ( $quest->{time_expire} && $quest->{time_expire} > time ) {
 			$result->{$quest_id} = 'incomplete';
-        } elsif ( grep { $_->{mob_goal} && $_->{mob_count} < $_->{mob_goal} } values %{ $quest->{missions} } ) {
+		} elsif ( grep { $_->{mob_goal} && $_->{mob_count} < $_->{mob_goal} } values %{ $quest->{missions} } ) {
 			$result->{$quest_id} = 'incomplete';
-        } elsif ( grep { !$_->{mob_goal} && $_->{mob_count} == 0 } values %{ $quest->{missions} } ) {
+		} elsif ( grep { !$_->{mob_goal} && $_->{mob_count} == 0 } values %{ $quest->{missions} } ) {
 			$result->{$quest_id} = 'incomplete';
 		} else {
 			$result->{$quest_id} = 'complete';
@@ -285,11 +285,11 @@ sub getInventoryTypeIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->inventory->getItems}) {
-        if ( $item->usable() eq 1 && $find eq "usable") { push @ids, $item->{binID} }
-        if ( $item->equippable() eq 1 && $item->{equipped} eq 0 && $find eq "equip") { push @ids, $item->{binID} }
-        if ( $item->usable() eq 0 && $item->equippable() eq 0 && $find eq "etc" ) { push @ids, $item->{binID} }
-        if ( $item->{type} eq 6 && $find eq "card" ) { push @ids, $item->{binID} }
-    }
+		if ( $item->usable() eq 1 && $find eq "usable") { push @ids, $item->{binID} }
+		if ( $item->equippable() eq 1 && $item->{equipped} eq 0 && $find eq "equip") { push @ids, $item->{binID} }
+		if ( $item->usable() eq 0 && $item->equippable() eq 0 && $find eq "etc" ) { push @ids, $item->{binID} }
+		if ( $item->{type} eq 6 && $find eq "card" ) { push @ids, $item->{binID} }
+	}
 	unless (@ids) {push @ids, -1}
 	return @ids
 }
@@ -321,7 +321,7 @@ sub getStorageIDs {
 	my @ids;
 	foreach my $item (@{$char->storage->getItems}) {
 		if (lc($item->name) eq $find|| $item->{nameID} == $find) {push @ids, $item->{binID}}
-  	}
+	}
 	unless (@ids) {push @ids, -1}
 	return @ids
 }
@@ -368,7 +368,7 @@ sub getCartAmount {
 	my $amount = 0;
 	foreach my $item (@{$char->cart->getItems}) {
 		if (lc($item->name) eq $arg || $item->{nameID} == $arg) {$amount += $item->{amount}}
-  	}
+	}
 	return $amount
 }
 
@@ -381,7 +381,7 @@ sub getCartAmountbyID {
 		if ($item->{nameID} == $ID) {
 			$amount += $item->{amount};
 		}
-  	}
+	}
 	return $amount
 }
 
@@ -404,7 +404,7 @@ sub getStorageAmount {
 	my $amount = 0;
 	foreach my $item (@{$char->storage->getItems}) {
 		if (lc($item->name) eq $arg || $item->{nameID} == $arg ) {$amount += $item->{amount}}
-  	}
+	}
 	return $amount
 }
 
@@ -418,16 +418,21 @@ sub getStorageAmountbyID {
 		if ($item->{nameID} == $ID) {
 			$amount += $item->{amount};
 		}
-  	}
+	}
 	return $amount
 }
 
 # get amount of items for the specifical index in another venders shop
 # returns -1 if no shop is being visited
 sub getVendAmount {
-	my ($itemIndex, $pool) = ($_[0], $_[1]);
+	my ($itemIndex, $pool);
 	my $amount = -1;
-	if ($$pool[$itemIndex]) {$amount = $$pool[$itemIndex]{amount}}
+	if ($#_ == 1 and $_[0] >= 0) {
+		($itemIndex, $pool) = ($_[0], $_[1]);
+		$amount = $$pool[$itemIndex]{amount} if ($$pool[$itemIndex]);
+	} elsif ($#_ > 1) {
+		$amount = $#_;
+	}
 	return $amount
 }
 
