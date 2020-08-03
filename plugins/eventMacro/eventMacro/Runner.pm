@@ -2159,7 +2159,7 @@ sub parse_command {
 			$result = getItemPrice($parsed, $venderItemList->getItems);
 
 		} elsif ($keyword eq 'venderamount') {
-			$result = getVendAmount($parsed, $venderItemList->getItems);
+			$result = getVendAmount(getItemIDs($parsed, $venderItemList), $venderItemList->getItems);
 
 		} elsif ($keyword eq 'random') {
 			$result = getRandom($parsed);
