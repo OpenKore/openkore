@@ -631,17 +631,25 @@ sub parsePortals {
 			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $dest_y;
 			$$r_hash{$portal}{dest}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
 			#$$r_hash{$portal}{dest}{$dest}{active} = 1; # TODO: is available right now (otherwise, wait until it becomes available)
-			if ($misc =~ /^(\d+)\s(\d)\s(.*)$/) { # [cost] [allow_ticket] [talk sequence]
+			if ($misc =~ /^(\d+)\s(\d)\s(\d)\s(.*)$/) { # [cost] [allow_ticket] [vip] [talk sequence]
 				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $1;
 				$$r_hash{$portal}{'dest'}{$dest}{'allow_ticket'} = $2;
+				$$r_hash{$portal}{'dest'}{$dest}{'vip'} = $3;
+				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $4;
+			} elsif ($misc =~ /^(\d+)\s(\d)\s(.*)$/) { # [cost] [allow_ticket] [talk sequence]
+				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $1;
+				$$r_hash{$portal}{'dest'}{$dest}{'allow_ticket'} = $2;
+				$$r_hash{$portal}{'dest'}{$dest}{'vip'} = 0;
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $3;
 			} elsif ($misc =~ /^(\d+)\s(.*)$/) { # [cost] [talk sequence]
 				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $1;
 				$$r_hash{$portal}{'dest'}{$dest}{'allow_ticket'} = 0;
+				$$r_hash{$portal}{'dest'}{$dest}{'vip'} = 0;
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $2;
 			} else { # [talk sequence]
 				$$r_hash{$portal}{'dest'}{$dest}{'cost'} = 0;
 				$$r_hash{$portal}{'dest'}{$dest}{'allow_ticket'} = 0;
+				$$r_hash{$portal}{'dest'}{$dest}{'vip'} = 0;
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $misc;
 			}
 		}

@@ -195,7 +195,23 @@ sub iterate {
 
 		} elsif (distance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= $dist) {
 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
-			if (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
+			if( $portals_lut{$from}{dest}{$to}{vip} ) {
+				if ( $config{accountVIP} == 1 
+				|| $char->inventory->getByNameID(6480) 
+				|| $char->inventory->getByNameID(6988) 
+				|| $char->inventory->getByNameID(6989) 
+				|| $char->inventory->getByNameID(6990) 
+				|| $char->inventory->getByNameID(6991) ) {
+					# We are VIP and this NPC is to be used by VIP users
+					$self->setNpcTalk();
+				} else {
+					error TF("You need to be VIP for warp service at %s (%s,%s).\n",
+					$field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+					AI::clear(qw/move route mapRoute/);
+					message T("Stopped all movement\n"), "success";
+					$self->initMapCalculator();	# redo MAP router
+				}
+			} elsif (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
 				# We have enough money for this service.
 				$self->setNpcTalk();
 				

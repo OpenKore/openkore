@@ -48,6 +48,9 @@ pauseMapServer 0
 ignoreInvalidLogin 0
 secureLogin_requestCode
 
+# Define Account as VIP (teleport VIP will be used if configured in portals.txt and is avaliable)
+accountVIP 0
+
 # Opening cash shop when connected to map server (recv/ST0)
 whenInGame_requestCashPoints 0
 
