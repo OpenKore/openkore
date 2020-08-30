@@ -1,4 +1,5 @@
-#format: <source coordinate><destination coordinate>[zenny cost][allow ticket][conversation sequence]
+# format:
+# <source coordinate> <destination coordinate> [zenny cost] [allow ticket] [vip] [conversation sequence]
 #######################################################################################
 #Update here...
 
