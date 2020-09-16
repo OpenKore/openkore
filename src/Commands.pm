@@ -734,7 +734,8 @@ sub initHandlers {
 			["", T("displays possible commands for quest")],
 			[T("set <questID> on"), T("enable quest")],
 			[T("set <questID> off"), T("disable quest")],
-			["list", T("displays a list of your quests")]
+			["list", T("displays a list of your quests")],
+			[T("info <questID>"), T("displays quest description")]
 			], \&cmdQuest],
 		['showeq', [
 			T("Equipment showing."),
