@@ -6784,7 +6784,7 @@ sub cmdQuest {
 		my $msg .= center(" " . T("Quest List") . " ", 79, '-') . "\n";
 		foreach my $questID (keys %{$questList}) {
 			my $quest = $questList->{$questID};
-			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x4), ('<'x30), ('<'x10), ('<'x24)),
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x5), ('<'x30), ('<'x10), ('<'x24)),
 				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $quest->{time_expire} ? scalar localtime $quest->{time_expire} : '']);
 			foreach my $mobID (keys %{$quest->{missions}}) {
 				my $mission = $quest->{missions}->{$mobID};
