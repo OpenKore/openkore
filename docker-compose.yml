@@ -1,0 +1,6 @@
+version: '3.5'
+services: 
+    openkore:
+        build: .
+        volumes:
+            - '.:/root/openkore-master/'
