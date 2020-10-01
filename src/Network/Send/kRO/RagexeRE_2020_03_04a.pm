@@ -98,7 +98,7 @@ sub sendMasterLogin {
 		game_code => '0011', # kRO Ragnarok game code
 		username => $username,
 		password => $password,
-		flag => 'WG000', # Maybe this say that we are connecting from client
+		flag => 'G000', # Maybe this say that we are connecting from client
 	});
 
 	$self->sendToServer($msg);
