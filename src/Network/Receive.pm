@@ -8891,13 +8891,15 @@ sub skill_msg {
 # 07E2 <message>.W <value>.L
 # Displays msgstringtable.txt string in a color. (ZC_MSG_COLOR).
 # 09CD <msg id>.W <color>.L
+# Displays a format string from msgstringtable.txt with a %s value and color (ZC_FORMATSTRING_MSG).
+# 0A6F
 sub message_string {
 	my ($self, $args) = @_;
 
 	my $index = ++$args->{index};
 
 	if ($msgTable[$index]) { # show message from msgstringtable.txt
-		if($args->{param} && $args->{switch} eq '07E2') {
+		if($args->{param} && ($args->{switch} eq '07E2' || $args->{switch} eq '0A6F') ) {
 			warning sprintf($msgTable[$index], $args->{param})."\n";
 		} else {
 			warning "$msgTable[$index]\n";
