@@ -95,10 +95,10 @@ sub sendMasterLogin {
 
 	$msg = $self->reconstruct({
 		switch => 'master_login',
-		game_code => '0036', # kRO Ragnarok game code
+		game_code => '0011', # kRO Ragnarok game code
 		username => $username,
 		password => $password,
-		flag => 'G000', # Maybe this say that we are connecting from client
+		flag => 'WG000', # Maybe this say that we are connecting from client
 	});
 
 	$self->sendToServer($msg);
