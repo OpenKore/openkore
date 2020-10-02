@@ -96,7 +96,7 @@ sub sendMasterLogin {
 		switch => 'master_login',
 		game_code => '0011', # kRO Ragnarok game code
 		username => $username,
-		password => $password,
+		password => $self->encrypt_password($password),
 		flag => 'G000', # Maybe this say that we are connecting from client
 	});
 
