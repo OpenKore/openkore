@@ -661,6 +661,7 @@ sub new {
 		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
+		'0A6F' => ['message_string', 'v2 V Z*', [qw(len index color param)]], # -1
 		'0A7B' => ['EAC_key'],
 		'0A7D' => ['rodex_mail_list', 'v C3 a*', [qw(len type amount isEnd mailList)]],   # -1
 		'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id)]],
