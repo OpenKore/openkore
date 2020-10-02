@@ -27,7 +27,6 @@ sub new {
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password flag)]],
 		'0064' => ['token_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 
-		'00F3' => ['public_chat', 'x2 Z*', [qw(message)]],
 
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
@@ -47,7 +46,7 @@ sub new {
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0364' => ['storage_item_add', 'a4 V', [qw(ID amount)]],
+		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0365' => ['storage_item_remove', 'a4 V', [qw(ID amount)]],
 		'023B' => ['storage_password'],
 		'0360' => ['sync', 'V', [qw(time)]],
