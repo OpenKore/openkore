@@ -21,7 +21,6 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 	);
 
@@ -29,31 +28,32 @@ sub new {
 
 	my %handlers = qw(
 		actor_action 0437
-		skill_use 0438
-		character_move 035F
-		sync 0360
-		actor_look_at 0361
-		item_take 0362
-		item_drop 0363
-		storage_item_add 0364
-		storage_item_remove 0365
-		skill_use_location 0366
 		actor_info_request 0368
+		actor_look_at 0361
 		actor_name_request 0369
 		buy_bulk_buyer 0819
-		buy_bulk_request 0817
 		buy_bulk_closeShop 0815
 		buy_bulk_openShop 0811
-		item_list_window_selected 07E4
-		map_login 0436
-		party_join_request_by_name 02C4
+		buy_bulk_request 0817
+		char_delete2_accept 098F
+		character_move 035F
 		friend_request 0202
 		homunculus_command 022D
-		storage_password 023B
+		item_drop 0363
+		item_list_window_selected 07E4
+		item_take 0362
+		map_login 0436
+		party_join_request_by_name 02C4
 		party_setting 07D7
-		send_equip 0998
 		pet_capture 08B5
-		char_delete2_accept 098F
+		rodex_open_mailbox 0AC0
+		send_equip 0998
+		skill_use 0438
+		skill_use_location 0366
+		storage_item_add 0364
+		storage_item_remove 0365
+		storage_password 023B
+		sync 0360
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
