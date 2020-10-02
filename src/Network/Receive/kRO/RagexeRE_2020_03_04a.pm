@@ -15,12 +15,6 @@ package Network::Receive::kRO::RagexeRE_2020_03_04a;
 use strict;
 use base qw(Network::Receive::kRO::Ragexe_2018_11_14c);
 
-use Log qw(debug);
-use Globals;
-use Translation;
-use I18N qw(bytesToString);
-use Utils::DataStructures;
-
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
