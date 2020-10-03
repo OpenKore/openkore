@@ -84,7 +84,8 @@ sub new {
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+	$self->{send_buy_bulk_pack} = "v V";
+	$self->{send_sell_buy_complete} = 1;
 	return $self;
 }
 
