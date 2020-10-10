@@ -15,7 +15,7 @@ package profiles;
 use strict;
 use File::Spec;
 use Plugins;
-use Globals qw($interface $quit);
+use Globals qw($interface $quit $current_profile_name);
 use Log qw(debug message warning error);
 use Getopt::Long;
 use Settings qw( %sys );
@@ -89,6 +89,7 @@ sub onStart {
 		return $quit = 1 if $choice == -1;
 
 		$profile = $profiles[$choice];
+		$current_profile_name = $profile
 	}
 
 	unshift @Settings::controlFolders, File::Spec->catdir( $profile_folder, $profile ) if $profile;
@@ -209,6 +210,8 @@ sub commandHandler {
 	
 	message "[profiles] Loading finished, profile '".$new_profile."' loaded\n", "system";
 	$profile = $new_profile;
+	$current_profile_name = $profile
+
 }
 
 return 1;

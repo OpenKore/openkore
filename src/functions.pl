@@ -910,17 +910,17 @@ sub mainLoop_initialized {
 		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} " . $field->name if ($char->{pos_to} && $field);
 		my $aiSeq = join(",", @ai_seq);
 		# Translation Comment: Interface Title with character status
-		$title = TF("%s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
-			$charName, $char->{lv}, $basePercent . '%',
+		$title = TF("[%s] %s B%s (%s), J%s (%s) : w%s%s [%s] - %s",
+			$current_profile_name ? $current_profile_name : '', $charName, $char->{lv}, $basePercent . '%',
 			$char->{lv_job}, $jobPercent . '%',
 			$weight, $pos, $aiSeq, $Settings::NAME);
 
 	} elsif ($net->getState() == Network::NOT_CONNECTED) {
 		# Translation Comment: Interface Title
-		$title = TF("%sNot connected - %s", $charName, $Settings::NAME);
+		$title = TF("[%s] %sNot connected - %s", $current_profile_name ? $current_profile_name : '', $charName, $Settings::NAME);
 	} else {
 		# Translation Comment: Interface Title
-		$title = TF("%sConnecting - %s", $charName, $Settings::NAME);
+		$title = TF("[%s] %sConnecting - %s", $current_profile_name ? $current_profile_name : '', $charName, $Settings::NAME);
 	}
 	my %args = (return => $title);
 	Plugins::callHook('mainLoop::setTitle',\%args);
