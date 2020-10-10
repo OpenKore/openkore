@@ -2561,11 +2561,11 @@ sub reconstruct_sell_bulk {
 }
 
 sub sendAchievementGetReward {
-	my ($self, $ach_id) = @_;
+	my ($self, $achievementID) = @_;
 
 	$self->sendToServer($self->reconstruct({
 		switch => 'achievement_get_reward',
-		ach_id => $ach_id,
+		achievementID => $achievementID,
 	}));
 }
 
