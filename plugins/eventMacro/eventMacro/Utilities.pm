@@ -151,20 +151,23 @@ sub getArgs {
 sub getWord {
 	my ($message, $wordno) = $_[0] =~ /^"(.*?)"\s*,\s?(\d+|\$[a-zA-Z][a-zA-Z\d]*)$/s;
 	my @words = split(/[ ,.:;\"\'!?\r\n]/, $message);
-	my $no = 1;
-	if ($wordno =~ /^\$/) {
-		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
-		return "" unless defined $val;
-		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
-		else {return ""}
 
-	}
+# this code is never used
+#	if ($wordno =~ /^\$/) {
+#		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+#		return "" unless defined $val;
+#		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
+#		else {return ""}
+#	}
+
+	my $no = 1;
 	foreach (@words) {
 		next if /^$/;
 		return $_ if $no == $wordno;
 		$no++
 	}
-	return ""
+	warning "[eventMacro] the '$wordno' number item does not exist in &arg\n", "eventMacro";
+	return "";
 }
 
 # gets openkore setting
