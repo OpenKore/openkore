@@ -7033,6 +7033,29 @@ sub cmdAchieve {
 			$messageSender->sendAchievementGetReward($args[1]);
 		}
 
+	} elsif ($args[0] =~ /^\d+$/) {
+		if(defined($achievements{$args[0]})) {
+			# status
+			message center(" " . T("Achievement Info") . " ", 43, '-') . "\n";
+			message TF("ID: %s - Title: %s\n", $achievements{$args[0]}->{ID}, $achievements{$args[0]}->{title});
+			message TF("Group: %s\n", ($achievements{$args[0]}->{group}) ? $achievements{$args[0]}->{group} : "N/A");
+			message TF("Summary: %s\n", ($achievements{$args[0]}->{summary}) ? $achievements{$args[0]}->{summary} : "N/A");
+			message TF("Details: %s\n", ($achievements{$args[0]}->{details}) ? $achievements{$args[0]}->{details} : "N/A");
+			message T("Rewards:\n");
+			message TF("Item: %s\n", ($achievements{$args[0]}->{rewards}->{item}) ? itemNameSimple($achievements{$args[0]}->{rewards}->{item}) : "N/A");
+			message TF("Buff: %s\n", ($achievements{$args[0]}->{rewards}->{buff}) ? $statusName{$statusHandle{$achievements{$args[0]}->{rewards}->{buff}}} : "N/A");
+			message TF("Title: %s\n", ($achievements{$args[0]}->{rewards}->{title}) ? $title_lut{$achievements{$args[0]}->{rewards}->{title}} : "N/A");
+			message T("Status:\n");
+			if ( defined ( $achievementList->{$args[0]} ) ) {
+				my $achieve = $achievementList->{$args[0]};
+				message TF("%s %s\n", $achieve->{completed} ? T("complete") : T("incomplete"), $achieve->{reward}  ? T("rewarded") : T("not rewarded"));
+			} else {
+				message T("N/A\n");
+			}
+			message center("", 43, '-') . "\n";
+		} else {
+			warning T("Achievement not Found, consider update the achievement_list.txt\n");
+		}
 	} else {
 		error T("Syntax Error in function 'achieve'\n" .
 				"see 'help achieve'\n");
