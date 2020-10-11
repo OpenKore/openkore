@@ -8958,17 +8958,17 @@ sub partylv_info {
 
 sub achievement_reward_ack {
 	my ($self, $args) = @_;
-	message TF("Received reward for achievement %s.\n", $args->{ach_id}), "info";
+	message TF("Received reward for achievement %s.\n", $args->{achievementID}), "info";
 }
 
 sub achievement_update {
 	my ($self, $args) = @_;
 
 	my $achieve;
-	@{$achieve}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
+	@{$achieve}{qw(achievementID completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)} = @{$args}{qw(achievementID completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)};
 
-	$achievementList->{$achieve->{ach_id}} = $achieve;
-	message TF("Achievement %s added or updated.\n", $achieve->{ach_id}), "info";
+	$achievementList->{$achieve->{achievementID}} = $achieve;
+	message TF("Achievement %s added or updated.\n", $achieve->{achievementID}), "info";
 }
 
 sub achievement_list {
@@ -8985,7 +8985,7 @@ sub achievement_list {
 	for (my $i = $headerlen; $i < $args->{RAW_MSG_SIZE}; $i+=$achieve_len) {
 		my $achieve;
 
-		($achieve->{ach_id},
+		($achieve->{achievementID},
 		$achieve->{completed},
 		$achieve->{objective1},
 		$achieve->{objective2},
@@ -9000,8 +9000,8 @@ sub achievement_list {
 		$achieve->{completed_at},
 		$achieve->{reward})	= unpack($achieve_pack, substr($msg, $i, $achieve_len));
 
-		$achievementList->{$achieve->{ach_id}} = $achieve;
-		message TF("Achievement %s added.\n", $achieve->{ach_id}), "info";
+		$achievementList->{$achieve->{achievementID}} = $achieve;
+		message TF("Achievement %s added.\n", $achieve->{achievementID}), "info";
 	}
 }
 
