@@ -278,7 +278,7 @@ sub new {
 		'09D4' => ['sell_buy_complete'],
 		'09D6' => ['buy_bulk_market', 'v a*', [qw(len buyInfo)]],
 		'09D8' => ['market_close'],
-		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
+		'0A25' => ['achievement_get_reward', 'V', [qw(achievementID)]],
 		#'08BE' => ['change_pin_password','a*', [qw(accountID oldPin newPin)]], # TODO: PIN change system/command?
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
 		'09EF' => ['rodex_refresh_maillist', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexRefreshMaillist

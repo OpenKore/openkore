@@ -253,7 +253,7 @@ sub new {
 		'0A1D' => ['roulette_close'],
 		'0A1F' => ['roulette_start'],
 		'0A21' => ['roulette_claim_prize'],
-		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
+		'0A25' => ['achievement_get_reward', 'V', [qw(achievementID)]],
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
