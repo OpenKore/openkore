@@ -103,9 +103,9 @@ sub parseAchievementFile {
 		} elsif ( $line =~ /^title\s+\=\s+\"(.*)\"\,$/ ) {
 			$r_hash->{$current_id}->{title} = $1;
 		} elsif ( $line =~ /^content\s+\=\s+\{\s+/ ) {
-			 if ( $line =~ /summary\s+\=\s+\"(.*)\"\,/ ) {
+			if ( $line =~ /summary\s+\=\s+\"(.*)\"\,/ ) {
 				$r_hash->{$current_id}->{summary} = $1;
-			} 
+			}
 			if ( $line =~ /details\s+\=\s+\"(.*)\"/ ) {
 				$r_hash->{$current_id}->{details} = $1;
 			}
@@ -116,7 +116,7 @@ sub parseAchievementFile {
 		} elsif ( $line =~ /^reward\s+\=\s+\{/ ) {
 			if ( $line =~ /buff\s+\=\s+(\d+)/ ) {
 				$r_hash->{$current_id}->{rewards}->{buff} = $1;
-			} 
+			}
 			if ( $line =~ /title\s+\=\s+(\d+)/ ) {
 				$r_hash->{$current_id}->{rewards}->{title} = $1;
 			} 
