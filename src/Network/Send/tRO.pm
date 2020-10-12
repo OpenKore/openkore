@@ -64,6 +64,11 @@ sub new {
 	$self->{char_create_version} = 0x0A39;
 	$self->{send_sell_buy_complete} = 1;
 
+	#buyer shop
+	$self->{buy_bulk_openShop_size} = "(a10)*";
+	$self->{buy_bulk_openShop_size_unpack} = "V v V";
+	$self->{buy_bulk_openShop_size_unpack_args} = qw(nameID amount price);
+	
 	return $self;
 }
 

@@ -788,7 +788,10 @@ sub sendBuyBulkOpenShop {
 
 sub reconstruct_buy_bulk_openShop {
 	my ($self, $args) = @_;
-	$args->{itemInfo} = pack '(a8)*', map { pack 'v2 V', @{$_}{qw(nameID amount price)} } @{$args->{items}};
+	my $packet_size = $self->{buy_bulk_openShop_size} || '(a8)*';
+	my $packet_unpack = $self->{buy_bulk_openShop_size_unpack} || 'v2 V';
+	my $packet_args = $self->{buy_bulk_openShop_size_unpack_args} || qw(nameID amount price);
+	$args->{itemInfo} = pack $packet_size, map { pack $packet_unpack, @{$_}{$packet_args} } @{$args->{items}};
 }
 
 sub sendSkillUse {
