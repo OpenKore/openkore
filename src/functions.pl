@@ -282,6 +282,7 @@ sub loadDataFiles {
 	Settings::addTableFile('item_options.txt', loader => [\&parseROLUT, \%itemOption_lut], mustExist => 0);
 	Settings::addTableFile('title_name.txt',loader => [\&parseDataFile2, \%title_lut], mustExist => 0);
 	Settings::addTableFile('attendance_rewards.txt',loader => [\&parseAttendanceRewards, \%attendance_rewards], mustExist => 0);
+	Settings::addTableFile('achievement_list.txt',loader => [\&parseAchievementFile, \%achievements], mustExist => 0);
 
 	use utf8;
 
