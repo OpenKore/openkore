@@ -59,7 +59,8 @@ sub initHandlers {
 		['achieve', [
 			T("Achievement management"),
 			[ "list", T("shows all current achievements") ],
-			[ T("reward <achievementID>"), T("request reward for the achievement of achievementID") ],
+			[ "info <achievementID>", T("shows information about the achievement") ],
+			[ "reward <achievementID>", T("request reward for the achievement of achievementID") ],
 			], \&cmdAchieve],
 		['ai', [
 			T("Enable/disable AI."),
@@ -736,10 +737,10 @@ sub initHandlers {
 		['quest', [
 			T("Quest management."),
 			["", T("displays possible commands for quest")],
-			[T("set <questID> on"), T("enable quest")],
-			[T("set <questID> off"), T("disable quest")],
+			["set <questID> on", T("enable quest")],
+			["set <questID> off", T("disable quest")],
 			["list", T("displays a list of your quests")],
-			[T("info <questID>"), T("displays quest description")]
+			["info <questID>", T("displays quest description")]
 			], \&cmdQuest],
 		['showeq', [
 			T("Equipment showing."),
@@ -7004,14 +7005,14 @@ sub cmdAchieve {
 			return;
 		}
 
-		my $msg = center(" " . T("Achievement List") . " ", 43, '-') . "\n";
+		my $msg = center(" " . T("Achievement List") . " ", 79, '-') . "\n";
 		my $index = 0;
 		foreach my $achievementID (keys %{$achievementList}) {
 			my $achieve = $achievementList->{$achievementID};
-			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x2), ('<'x7), ('<'x15), ('<'x15)), [$index, $achievementID, $achieve->{completed} ? T("complete") : T("incomplete"), $achieve->{reward}  ? T("rewarded") : T("not rewarded")]);
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x7), ('<'x15), ('<'x15), ('<'x32)), [$index, $achievementID, $achieve->{completed} ? T("complete") : T("incomplete"), $achieve->{reward}  ? T("rewarded") : T("not rewarded"), $achievements{$achievementID}->{title}]);
 			$index++;
 		}
-		$msg .= sprintf("%s\n", ('-'x43));
+		$msg .= sprintf("%s\n", ('-'x79));
 		message $msg, "list";
 
 	} elsif ($args[0] eq 'reward') {
@@ -7033,6 +7034,31 @@ sub cmdAchieve {
 			$messageSender->sendAchievementGetReward($args[1]);
 		}
 
+	} elsif ($args[0] eq 'info' && $args[1] =~ /^\d+$/) {
+		if(defined($achievements{$args[1]})) {
+			# status
+			my $msg;
+			$msg .= center(" " . T("Achievement Info") . " ", 79, '-') . "\n";
+			$msg .= TF("ID: %s - Title: %s\n", $achievements{$args[1]}->{ID}, $achievements{$args[1]}->{title});
+			$msg .= TF("Group: %s\n", ($achievements{$args[1]}->{group}) ? $achievements{$args[1]}->{group} : T("N/A"));
+			$msg .= TF("Summary: %s\n", ($achievements{$args[1]}->{summary}) ? $achievements{$args[1]}->{summary} : T("N/A"));
+			$msg .= TF("Details: %s\n", ($achievements{$args[1]}->{details}) ? $achievements{$args[1]}->{details} : T("N/A"));
+			$msg .= T("Rewards:\n");
+			$msg .= TF("  Item: %s\n", ($achievements{$args[1]}->{rewards}->{item}) ? itemNameSimple($achievements{$args[1]}->{rewards}->{item}) : T("N/A"));
+			$msg .= TF("  Buff: %s\n", ($achievements{$args[1]}->{rewards}->{buff}) ? $statusName{$statusHandle{$achievements{$args[1]}->{rewards}->{buff}}} : T("N/A"));
+			$msg .= TF("  Title: %s\n", ($achievements{$args[1]}->{rewards}->{title}) ? $title_lut{$achievements{$args[1]}->{rewards}->{title}} : T("N/A"));
+			$msg .= T("Status: ");
+			if ( defined ( $achievementList->{$args[1]} ) ) {
+				my $achieve = $achievementList->{$args[1]};
+				$msg .= TF("%s %s\n", $achieve->{completed} ? T("complete") : T("incomplete"), $achieve->{reward}  ? T("rewarded") : T("not rewarded"));
+			} else {
+				$msg .= T("N/A\n");
+			}
+			$msg .= center("", 79, '-') . "\n";
+			message $msg;
+		} else {
+			warning T("The achievement was not found. Update the 'achievement_list.txt' file\n");
+		}
 	} else {
 		error T("Syntax Error in function 'achieve'\n" .
 				"see 'help achieve'\n");
