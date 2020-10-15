@@ -651,7 +651,14 @@ sub received_characters_blockSize {
 sub received_characters_unpackString {
 	my $char_info;
 	for ($masterServer && $masterServer->{charBlockSize}) {
-		if ($_ == 155) {  # PACKETVER >= 20170830 [base and job exp are now uint64]
+		if ($_ == 179) {
+			# kRO_RE PACKETVER >= 20200318 [HERC]
+			$char_info = {
+	            types => 'a4 V2 V V2 V6 v V4 v2 V x16 v9 Z24 C8 v Z16 V4 C',
+				keys => [qw(charID exp exp_2 zeny exp_job exp_job_2 lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
+			};
+
+		} elsif ($_ == 155) {  # PACKETVER >= 20170830 [base and job exp are now uint64]
 			$char_info = {
 	            types => 'a4 V2 V V2 V6 v V2 v4 V v9 Z24 C8 v Z16 V4 C',
 				keys => [qw(charID exp exp_2 zeny exp_job exp_job_2 lv_job body_state health_state effect_state stance manner status_point hp hp_max sp sp_max walkspeed jobID hair_style weapon lv skill_point head_bottom shield head_top head_mid hair_pallete clothes_color name str agi vit int dex luk slot hair_color is_renamed last_map delete_date robe slot_addon rename_addon sex)],
