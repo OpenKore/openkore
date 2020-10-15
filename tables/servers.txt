@@ -298,7 +298,7 @@ version 24
 serverType tRO
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 147
+charBlockSize 175
 gameGuard 0
 charDeleteDateType 1
 blockingPlayerCancel 1
@@ -315,7 +315,7 @@ version 24
 serverType tRO
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 147
+charBlockSize 175
 gameGuard 0
 charDeleteDateType 1
 blockingPlayerCancel 1
@@ -332,7 +332,7 @@ version 24
 serverType tRO
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 147
+charBlockSize 175
 gameGuard 0
 charDeleteDateType 1
 blockingPlayerCancel 1
@@ -349,7 +349,7 @@ version 24
 serverType tRO
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 147
+charBlockSize 175
 gameGuard 0
 charDeleteDateType 1
 blockingPlayerCancel 1
