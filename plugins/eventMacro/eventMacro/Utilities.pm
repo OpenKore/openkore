@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getInventoryTypeIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
+	getWord call_macro getArgFromList sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
 	getStorageAmountbyID getCartAmountbyID getQuestStatus get_pattern find_hash_and_get_keys find_hash_and_get_values);
 
 use Utils;
@@ -151,20 +151,23 @@ sub getArgs {
 sub getWord {
 	my ($message, $wordno) = $_[0] =~ /^"(.*?)"\s*,\s?(\d+|\$[a-zA-Z][a-zA-Z\d]*)$/s;
 	my @words = split(/[ ,.:;\"\'!?\r\n]/, $message);
-	my $no = 1;
-	if ($wordno =~ /^\$/) {
-		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
-		return "" unless defined $val;
-		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
-		else {return ""}
 
-	}
+# this code is never used
+#	if ($wordno =~ /^\$/) {
+#		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+#		return "" unless defined $val;
+#		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
+#		else {return ""}
+#	}
+
+	my $no = 1;
 	foreach (@words) {
 		next if /^$/;
 		return $_ if $no == $wordno;
 		$no++
 	}
-	return ""
+	warning "[eventMacro] the '$wordno' number item does not exist in &arg\n", "eventMacro";
+	return "";
 }
 
 # gets openkore setting
@@ -467,13 +470,6 @@ sub getArgFromList {
 		warning "[eventMacro] the $listID number item does not exist in the list\n", "eventMacro";
 		return -1
 	}
-}
-
-# returns the length of a comma separated list
-sub getListLenght {
-	my $list = $_[0];
-	my @items = split(/,\s*/, $list);
-	return scalar(@items)
 }
 
 # check if player is in party
