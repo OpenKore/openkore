@@ -243,11 +243,11 @@ sub create_automacro_list {
 					$currentParameters{$parameter->{'key'}} = $parameter->{'value'};
 				}
 			###Parameter: delay
-			} elsif ($parameter->{'key'} eq "delay" && $parameter->{'value'} !~ /\d+/) {
+			} elsif ($parameter->{'key'} eq "delay" && $parameter->{'value'} !~ /^[\d\.]*\d+$/) {
 				error "[eventMacro] Ignoring automacro '$name' (delay parameter should be a number)\n";
 				next AUTOMACRO;
 			###Parameter: run-once
-			} elsif ($parameter->{'key'} eq "run-once" && $parameter->{'value'} !~ /[01]/) {
+			} elsif ($parameter->{'key'} eq "run-once" && $parameter->{'value'} !~ /^[01]$/) {
 				error "[eventMacro] Ignoring automacro '$name' (run-once parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 
@@ -257,32 +257,32 @@ sub create_automacro_list {
 				next AUTOMACRO;
 
 			###Parameter: disabled
-			} elsif ($parameter->{'key'} eq "disabled" && $parameter->{'value'} !~ /[01]/) {
+			} elsif ($parameter->{'key'} eq "disabled" && $parameter->{'value'} !~ /^[01]$/) {
 				error "[eventMacro] Ignoring automacro '$name' (disabled parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 
 			###Parameter: overrideAI
-			} elsif ($parameter->{'key'} eq "overrideAI" && $parameter->{'value'} !~ /[01]/) {
+			} elsif ($parameter->{'key'} eq "overrideAI" && $parameter->{'value'} !~ /^[01]$/) {
 				error "[eventMacro] Ignoring automacro '$name' (overrideAI parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 
 			###Parameter: exclusive
-			} elsif ($parameter->{'key'} eq "exclusive" && $parameter->{'value'} !~ /[01]/) {
+			} elsif ($parameter->{'key'} eq "exclusive" && $parameter->{'value'} !~ /^[01]$/) {
 				error "[eventMacro] Ignoring automacro '$name' (exclusive parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 
 			###Parameter: self_interruptible
-			} elsif ($parameter->{'key'} eq "self_interruptible" && $parameter->{'value'} !~ /[01]/) {
+			} elsif ($parameter->{'key'} eq "self_interruptible" && $parameter->{'value'} !~ /^[01]$/) {
 				error "[eventMacro] Ignoring automacro '$name' (self_interruptible parameter should be '0' or '1')\n";
 				next AUTOMACRO;
 
 			###Parameter: priority
-			} elsif ($parameter->{'key'} eq "priority" && $parameter->{'value'} !~ /\d+/) {
+			} elsif ($parameter->{'key'} eq "priority" && $parameter->{'value'} !~ /^\d+$/) {
 				error "[eventMacro] Ignoring automacro '$name' (priority parameter should be a number)\n";
 				next AUTOMACRO;
 
 			###Parameter: macro_delay
-			} elsif ($parameter->{'key'} eq "macro_delay" && $parameter->{'value'} !~ /(\d+|\d+\.\d+)/) {
+			} elsif ($parameter->{'key'} eq "macro_delay" && $parameter->{'value'} !~ /^[\d\.]*\d+$/) {
 				error "[eventMacro] Ignoring automacro '$name' (macro_delay parameter should be a number (decimals are accepted))\n";
 				next AUTOMACRO;
 
@@ -291,7 +291,7 @@ sub create_automacro_list {
 				error "[eventMacro] Ignoring automacro '$name' (orphan parameter should be 'terminate', 'terminate_last_call', 'reregister' or 'reregister_safe'. Given value: '$parameter->{'value'}')\n";
 				next AUTOMACRO;
 			###Parameter: repeat
-			} elsif ($parameter->{'key'} eq "repeat" && $parameter->{'value'} !~ /\d+/) {
+			} elsif ($parameter->{'key'} eq "repeat" && $parameter->{'value'} !~ /^\d+$/) {
 				error "[eventMacro] Ignoring automacro '$name' (repeat parameter should be a number)\n";
 				next AUTOMACRO;
 			} else {
