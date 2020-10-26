@@ -5524,11 +5524,12 @@ sub solveItemLink {
 sub solveMessage {
 	my ($msg) = @_;
 
+	# Example:
 	# <ITEML>.*</ITEML> to readable item name
-	if ($msg =~ /<ITEML>([a-zA-Z0-9\%\&\(\,\+\*]*)<\/ITEML>/) {
-		$msg =~ s/<ITEML>([a-zA-Z0-9\%\&\(\,\+\*]*)<\/ITEML>/solveItemLink($1)/eg;
-	} elsif ($msg =~ /\<ITEML\>([a-zA-Z0-9\%\&\(\),\,\+\*]*)\<\/ITEML\>/) {
-		$msg =~ s/\<ITEML\>([a-zA-Z0-9\%\&\(\),\,\+\*]*)\<\/ITEML\>/solveItemLink($1)/eg;
+	# Sell<ITEML>0000y1kk&0g)00)00)00)00+05,00-01+0B,00-0m</ITEML>500k
+	# S><ITEML>0000y1nC&05)00)00+0h,00-0C+0F,00-0h</ITEML><ITEML>000021jM&01)00)00+0h,00-0N+0B,00-0g</ITEML><ITEML>000021jM&01)00)00+0f,00-02+0B,00-0e</ITEML>
+	if ($msg =~ /<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/) {
+		$msg =~ s/<ITEML>([a-zA-Z0-9%&(),+\-*]*)<\/ITEML>/solveItemLink($1)/eg;
 	}
 	return $msg;
 }
