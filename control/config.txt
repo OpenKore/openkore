@@ -23,6 +23,7 @@ forceMapIP
 XKore 0
 XKore_port 2350
 XKore_dll NetRedirect.dll
+XKore_injectDLL 1
 XKore_autoAttachIfOneExe 1
 XKore_silent 1
 XKore_bypassBotDetection 0
