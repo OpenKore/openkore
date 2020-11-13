@@ -643,7 +643,9 @@ sub received_characters_blockSize {
 	if ($masterServer && $masterServer->{charBlockSize}) {
 		return $masterServer->{charBlockSize};
 	} else {
-		return 144;
+		# last change: 2020-11-13
+		# default in kRO, most of official servers and emulators (rAthena, Hercules)
+		return 155;
 	}
 }
 
