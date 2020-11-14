@@ -134,7 +134,7 @@ sub new {
 		'00C2' => ['users_online', 'V', [qw(users)]], # 6
 		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]], # 8
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]], # 6
-		'00C6' => ['npc_store_info'], # -1
+		'00C6' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
 		'00C7' => ['npc_sell_list', 'v a*', [qw(len itemsdata)]], # -1
 		'00CA' => ['buy_result', 'C', [qw(fail)]], # 3
 		'00CB' => ['sell_result', 'C', [qw(fail)]], # 3

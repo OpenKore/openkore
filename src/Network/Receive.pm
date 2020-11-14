@@ -11055,6 +11055,10 @@ sub skill_add {
 	});
 }
 
+sub isvr_disconnect {
+	debug "Received the package 'isvr_disconnect'\n";
+}
+
 sub skill_use_failed {
 	my ($self, $args) = @_;
 

@@ -133,7 +133,7 @@ sub new {
 		'00C2' => ['users_online', 'V', [qw(users)]],
 		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]],
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]],
-		'00C6' => ['npc_store_info'],
+		'00C6' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
 		'00C7' => ['npc_sell_list', 'v a*', [qw(len itemsdata)]],
 		'00D1' => ['ignore_player_result', 'C2', [qw(type error)]],
 		'00D2' => ['ignore_all_result', 'C2', [qw(type error)]],
@@ -436,7 +436,7 @@ sub new {
 		'02D1' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'02D4' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4 v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
-		'02D5' => ['ISVR_DISCONNECT'], #TODO: PACKET_ZC_ISVR_DISCONNECT
+		'02D5' => ['isvr_disconnect'], #TODO: PACKET_ZC_ISVR_DISCONNECT
 		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], #type is job
 		'02D9' => ['misc_config_reply', 'V2', [qw(type flag)]],
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
