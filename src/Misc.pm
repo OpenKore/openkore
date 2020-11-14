@@ -2540,10 +2540,12 @@ sub headgearName {
 
 	my $itemID = $headgears_lut[$lookID];
 
-	if (!$itemID) {
+	if (!$itemID or $itemID =~ /^#/) {
+		warning TF("Unknown lookID_%d. Need to update the file headgears.txt (from data.grf)\n", $lookID);
 		return T("Unknown lookID_") . $lookID;
 	}
 
+	warning TF("Unknown item (ID=%d). Need to update the file items.txt or headgears.txt (from data.grf)\n", $itemID) unless $items_lut{$itemID};
 	return main::itemName({nameID => $itemID});
 }
 
