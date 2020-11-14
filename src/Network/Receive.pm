@@ -1894,11 +1894,12 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Pet();
 			$actor->{appear_time} = time;
-			$actor->{name} = $args->{name};
+			my $name = bytesToString($args->{name});
+			$actor->{name} = $name;
 #			if ($monsters_lut{$args->{type}}) {
 #				$actor->setName($monsters_lut{$args->{type}});
 #			}
-			$actor->{name_given} = exists $args->{name} ? bytesToString($args->{name}) : T("Unknown");
+			$actor->{name_given} = exists $args->{name} ? $name : T("Unknown");
 			$mustAdd = 1;
 
 			# Previously identified monsters could suddenly be identified as pets.
@@ -3049,19 +3050,18 @@ sub show_eq {
 	} else { # this can't happen
 		return;
 	}
-
-	message "--- $args->{name} Equip Info --- \n";
-
+	
+	my $name = bytesToString($args->{name});
+	my $msg = center(" $name " . T("Equip Info") . " ", 50, '-') . "\n";
 	for (my $i = 0; $i < length($args->{equips_info}); $i += $item_info->{len}) {
 		my $item;
 		@{$item}{@{$item_info->{keys}}} = unpack($item_info->{types}, substr($args->{equips_info}, $i, $item_info->{len}));
 		$item->{broken} = 0;
 		$item->{identified} = 1;
-		message sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item)), "list";
+		$msg .= sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item));
 	}
-
-	message "----------------- \n";
-
+	$msg .= sprintf("%s\n", ('-'x50));
+	message($msg, "list");
 }
 
 # The player's 'Configuration' state, sent during login.
@@ -3746,9 +3746,9 @@ sub vender_items_list {
 
 	$venderItemList->clear;
 
-	message TF("%s\n" .
-		"#   Name                                      Type        Amount          Price\n",
-		center(' Vender: ' . $player->nameIdx . ' ', 79, '-')), $config{showDomain_Shop} || 'list';
+	my $msg = TF("%s\n" .
+		"#   Name                                      Type                  Amount          Price\n",
+		center(' Vender: ' . $player->nameIdx . ' ', 89, '-'));
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
 		my $item = Actor::Item->new;
 
@@ -3761,12 +3761,12 @@ sub vender_items_list {
 
 		Plugins::callHook('packet_vender_store', { item => $item });
 
-		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
-			[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]),
-			$config{showDomain_Shop} || 'list');
+		$msg .= swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
+			[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]);
 	}
-	message("-------------------------------------------------------------------------------\n", $config{showDomain_Shop} || 'list');
+	$msg .= ('-'x89) . "\n";
+	message $msg, $config{showDomain_Shop} || 'list';
 
 	if($args->{expireDate}) {
 		$expireDate = $args->{expireDate};
@@ -7441,18 +7441,19 @@ sub npc_market_info {
 sub npc_market_purchase_result {
 	my ($self, $args) = @_;
 
+	debug "Npc market purchase result: " .$args->{result}. "\n", "parseMsg", 2;
 	if ( $args->{result} == MARKET_BUY_RESULT_ERROR) {
-		error TF("Error while trying to buy in a Market Store. (%s)\n", $args->{result}), "info";
+		error T("Error while trying to buy in a Market Store.\n"), "info";
 	} elsif ( $args->{result} == MARKET_BUY_RESULT_SUCCESS) {
-		message TF("Item buyed Successfully. (%s)", $args->{result}), "info";
+		message T("Item buyed Successfully.\n"), "info";
 	} elsif ( $args->{result} == MARKET_BUY_RESULT_NO_ZENY) {
-		error TF("Error Market Store (You don't have the necessary zeny). (%s)\n", $args->{result}), "info";
+		error T("Error Market Store (You don't have the necessary zeny).\n"), "info";
 	} elsif ( $args->{result} == MARKET_BUY_RESULT_OVER_WEIGHT) {
-		error TF("Error Market Store (You are Overweight). (%s)", $args->{result}), "info";
+		error T("Error Market Store (You are Overweight).\n"), "info";
 	} elsif ( $args->{result} == MARKET_BUY_RESULT_OUT_OF_SPACE) {
-		error TF("Error Market Store (You dont have space in inventory). (%s)\n", $args->{result}), "info";
+		error T("Error Market Store (You dont have space in inventory).\n"), "info";
 	} elsif ( $args->{result} == MARKET_BUY_RESULT_AMOUNT_TOO_BIG) {
-		error TF("Error Market Store (You tried to buy a amount higher then NPC is selling). (%s)\n", $args->{result}), "info";
+		error T("Error Market Store (You tried to buy a amount higher then NPC is selling).\n"), "info";
 	} else {
 		error TF("Error while trying to buy in a Market Store (Unknown). (%s)\n", $args->{result}), "info";
 	}
@@ -7511,6 +7512,8 @@ sub deal_add_you {
 	} elsif ($args->{fail} == 2) {
 		error T("This item cannot be traded.\n"), "deal";
 		return;
+	} elsif ($args->{fail} == 192) {
+		debug "Unknown status (success).\n", "deal";
 	} elsif ($args->{fail}) {
 		error TF("You cannot trade (fail code %s).\n", $args->{fail}), "deal";
 		return;
@@ -9290,8 +9293,8 @@ sub buying_store_items_list {
 	my $item_len = length pack $pack;
 	my $item_list_len = length $args->{itemList};
 
-	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 79, '-') ."\n".
-		T("#   Name                                      Type        Amount          Price\n");
+	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 89, '-') ."\n".
+		T("#   Name                                      Type                  Amount          Price\n");
 
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
 		my $item = {};
@@ -9316,13 +9319,13 @@ sub buying_store_items_list {
 		});
 
 		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
 			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]);
 
 		$index++;
 	}
 
-	$msg .= "\n" . TF("Price limit: %s Zeny\n", $zeny) . ('-'x79) . "\n";
+	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($zeny)) . ('-'x89) . "\n";
 	message $msg, "list";
 
 	if($args->{expireDate}) {
@@ -9426,8 +9429,14 @@ sub special_item_obtain {
 		my $box_item_name = itemNameSimple($args->{box_nameID});
 		$source_name = $box_item_name;
 		$source_item_id = $args->{box_nameID};
-		chatLog("GM", "$holder has got $item_name from $box_item_name\n") if ($config{logSystemChat});
-		$msg = TF("%s has got %s from %s.\n", $holder, $item_name, $box_item_name);
+		
+		if ($msgTable[1629]) {
+			$msg = sprintf($msgTable[1629], $holder, $box_item_name, $item_name)."\n";
+		} else {
+			$msg = TF("%s has got %s from %s.\n", $holder, $item_name, $box_item_name);
+		}
+		
+		chatLog("GM", $msg) if ($config{logSystemChat});
 		message $msg, 'schat';
 
 	} elsif ($args->{type} == TYPE_MONSTER_ITEM) {
