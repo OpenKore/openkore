@@ -149,3 +149,8 @@ ecl_in01.rsw#Inside of Eclage#
 ecl_in02.rsw#Inside of Eclage#
 ecl_in03.rsw#Inside of Eclage#
 ecl_in04.rsw#Inside of Eclage#
+lasagna.rsw#Port City of Lasagna#
+lasa_in01.rsw#Inside Lasagna#
+verus04.rsw#Verus, Excavation Site#
+harboro1.rsw#Rock Ridge#
+har_in01.rsw#Rock Ridge#
