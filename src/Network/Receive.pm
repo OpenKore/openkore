@@ -3050,7 +3050,7 @@ sub show_eq {
 	} else { # this can't happen
 		return;
 	}
-	
+
 	my $name = bytesToString($args->{name});
 	my $msg = center(" $name " . T("Equip Info") . " ", 50, '-') . "\n";
 	for (my $i = 0; $i < length($args->{equips_info}); $i += $item_info->{len}) {
@@ -3698,11 +3698,9 @@ sub shop_sold_long {
 sub vending_start {
 	my ($self, $args) = @_;
 
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = unpack("v1",substr($msg, 2, 2));
 	my $item_pack = $self->{vender_items_list_item_pack_self} || $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
 	my $item_len = length pack $item_pack;
-
+	my $item_list_len = length $args->{itemList};
 	#started a shop.
 	message TF("Shop '%s' opened!\n", $shop{title}), "success";
 	@articles = ();
@@ -3711,23 +3709,23 @@ sub vending_start {
 
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	my $display = center(" $shop{title} ", 79, '-') . "\n" .
-		T("#  Name                                       Type        Amount          Price\n");
-	for (my $i = 8; $i < $msg_size; $i += $item_len) {
+	my $msg = center(" $shop{title} ", 83, '-') . "\n" .
+		T("#  Name                                       Type                     Price Amount\n");
+	for (my $i = 0; $i < $item_list_len; $i += $item_len) {
 	    my $item = {};
-	    @$item{qw( price number quantity type nameID identified broken upgrade cards options location sprite_id)} = unpack $item_pack, substr $msg, $i, $item_len;
+	    @$item{qw( price number quantity type nameID identified broken upgrade cards options location sprite_id)} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
 		$item->{name} = itemName($item);
 	    $articles[delete $item->{number}] = $item;
 		$articles++;
 
 		debug ("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
-		$display .= swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
-			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{quantity}), formatNumber($item->{price})]);
+		$msg .= swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @>>>>>>>>>>>>z @<<<<<",
+			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), formatNumber($item->{quantity})]);
 	}
-	$display .= ('-'x79) . "\n";
-	message $display, "list";
+	$msg .= ('-'x83) . "\n";
+	message $msg, "list";
 	$shopEarned ||= 0;
 }
 
@@ -3747,8 +3745,8 @@ sub vender_items_list {
 	$venderItemList->clear;
 
 	my $msg = TF("%s\n" .
-		"#   Name                                      Type                  Amount          Price\n",
-		center(' Vender: ' . $player->nameIdx . ' ', 89, '-'));
+		"#  Name                                      Type                           Price Amount\n",
+		center(' Vender: ' . $player->nameIdx . ' ', 88, '-'));
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
 		my $item = Actor::Item->new;
 
@@ -3762,10 +3760,10 @@ sub vender_items_list {
 		Plugins::callHook('packet_vender_store', { item => $item });
 
 		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
-			[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]);
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<< @>>>>>>>>>>>>z @<<<<<",
+			[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), formatNumber($item->{amount})]);
 	}
-	$msg .= ('-'x89) . "\n";
+	$msg .= ('-'x88) . "\n";
 	message $msg, $config{showDomain_Shop} || 'list';
 
 	if($args->{expireDate}) {
@@ -4488,7 +4486,7 @@ sub quest_all_mission {
         $offset += $quest_info->{quest_len};
 
         for ( my $j = 0 ; $j < 3; $j++ ) {
-			
+
 			if($j >= $char_quest->{mission_amount}) {
 				$offset += $quest_info->{mission_len};
 				next;
@@ -8782,7 +8780,7 @@ sub upgrade_message {
 		message TF("Weapon not upgraded: %s\n", $item), "info";
 		# message TF("Weapon upgraded: %s\n", $item), "info";
 	} elsif($args->{type} == 2) { # Fail Lvl
-		message TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", $item), "info";
+		error TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", $item), "info";
 	} elsif($args->{type} == 3) { # Fail Item
 		message TF("You lack item %s to upgrade the weapon.\n", $item), "info";
 	}
@@ -8792,13 +8790,13 @@ sub open_buying_store_fail { #0x812
 	my ($self, $args) = @_;
 	my $result = $args->{result};
 	if($result == 1){
-		message TF("Failed to open Purchasing Store.\n"),"info";
+		error T("Failed to open Purchasing Store.\n"),"info";
 	} elsif ($result == 2){
-		message TF("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
+		error T("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
 	} elsif ($result == 8){
-		message TF("Shop information is incorrect and cannot be opened.\n"), "info";
+		error T("Shop information is incorrect and cannot be opened.\n"), "info";
 	} else {
-		message TF("Failed opening your buying store.\n");
+		error T("Failed opening your buying store.\n"), "info";
 	}
 	$buyershopstarted = 0;
 }
@@ -9293,8 +9291,8 @@ sub buying_store_items_list {
 	my $item_len = length pack $pack;
 	my $item_list_len = length $args->{itemList};
 
-	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 89, '-') ."\n".
-		T("#   Name                                      Type                  Amount          Price\n");
+	my $msg = center(T(" Buyer: ") . $player->nameIdx . ' ', 83, '-') ."\n".
+		T("#  Name                                       Type                     Price Amount\n");
 
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
 		my $item = {};
@@ -9319,13 +9317,13 @@ sub buying_store_items_list {
 		});
 
 		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<< @>>>>> @>>>>>>>>>>>>z",
-			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{amount}), formatNumber($item->{price})]);
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @>>>>>>>>>>>>z @<<<<<",
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), formatNumber($item->{amount})]);
 
 		$index++;
 	}
 
-	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($zeny)) . ('-'x89) . "\n";
+	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($zeny)) . ('-'x83) . "\n";
 	message $msg, "list";
 
 	if($args->{expireDate}) {
@@ -9429,13 +9427,13 @@ sub special_item_obtain {
 		my $box_item_name = itemNameSimple($args->{box_nameID});
 		$source_name = $box_item_name;
 		$source_item_id = $args->{box_nameID};
-		
+
 		if ($msgTable[1629]) {
 			$msg = sprintf($msgTable[1629], $holder, $box_item_name, $item_name)."\n";
 		} else {
 			$msg = TF("%s has got %s from %s.\n", $holder, $item_name, $box_item_name);
 		}
-		
+
 		chatLog("GM", $msg) if ($config{logSystemChat});
 		message $msg, 'schat';
 

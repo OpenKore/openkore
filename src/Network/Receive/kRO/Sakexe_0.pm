@@ -203,7 +203,7 @@ sub new {
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4 a*', [qw(len venderID itemList)]], # -1
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(ID amount fail)]], # 7
-		'0136' => ['vending_start'], # -1
+		'0136' => ['vending_start', 'v a4 a*', [qw(len accountID itemList)]], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
 		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]], # 16

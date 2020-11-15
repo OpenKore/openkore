@@ -5127,15 +5127,15 @@ sub cmdShopInfoSelf {
 	}
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	my $msg = center(" $shop{title} ", 79, '-') ."\n".
-		T("#  Name                               Type            Amount        Price  Sold\n");
+	my $msg = center(" $shop{title} ", 90, '-') ."\n".
+		T("#  Name                                       Type                     Price Amount   Sold\n");
 	my $priceAfterSale=0;
 	my $i = 1;
 	for my $item (@articles) {
 		next unless $item;
 		$msg .= swrite(
-		   "@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @>>>>",
-			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price}), $item->{sold}]);
+		   "@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @>>>>>>>>>>>>z @<<<<< @>>>>>",
+			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), $item->{quantity}, formatNumber($item->{sold})]);
 		$priceAfterSale += ($item->{quantity} * $item->{price});
 	}
 	$msg .= "\n" .
@@ -5145,7 +5145,7 @@ sub cmdShopInfoSelf {
 		"Maximum zeny:    %sz.\n",
 		formatNumber($shopEarned), formatNumber($char->{zeny}),
 		formatNumber($priceAfterSale), formatNumber($priceAfterSale + $char->{zeny})) .
-		('-'x79) . "\n";
+		('-'x90) . "\n";
 	message $msg, "list";
 }
 
@@ -5156,16 +5156,16 @@ sub cmdBuyShopInfoSelf {
 	}
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	my $msg = center(" Buyer Shop ", 72, '-') ."\n".
-		T("#   Name                               Type           Amount       Price\n");
+	my $msg = center(" Buyer Shop ", 83, '-') ."\n".
+		T("#  Name                                       Type                     Price Amount\n");
 	my $index = 0;
 	for my $item (@selfBuyerItemList) {
 		next unless $item;
 		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
-			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]);
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @>>>>>>>>>>>>z @<<<<<",
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), $item->{amount}]);
 	}
-	$msg .= ('-'x72) . "\n";
+	$msg .= ('-'x83) . "\n";
 	message $msg, "list";
 }
 
@@ -5588,7 +5588,7 @@ sub cmdStore {
 
 	if ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {
 		my $msg = center(TF(" Store List (%s) ", $storeList->{npcName}), 68, '-') ."\n".
-			  T("#  Name                    Type                       Price   Amnt\n");
+			  T("#  Name                    Type                       Price   Amount\n");
 		foreach my $item (@$storeList) {
 			$msg .= swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<  @>>>>>>>>>z   @<<<<<",
@@ -5883,10 +5883,10 @@ sub cmdTestShop {
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
 
 	my $msg = center(" $shop{title} ", 69, '-') ."\n".
-			T("Name                                           Amount           Price\n");
+			T("Name                                                    Price  Amount\n");
 	for my $item (@items) {
-		$msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @<<<<<  @>>>>>>>>>>>>z",
-			[$item->{name}, $item->{amount}, formatNumber($item->{price})]);
+		$msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>>>>>>>z  @<<<<<",
+			[$item->{name}, formatNumber($item->{price}), $item->{amount}]);
 	}
 	$msg .= "\n" . TF("Total of %d items to sell.\n", binSize(\@items)) .
 			('-'x69) . "\n";
