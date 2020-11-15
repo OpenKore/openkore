@@ -81,6 +81,7 @@ xmas_x.rsw#Lutie, the Snow Village#
 moc_para01.rsw#Eden land#
 moc_paraup.rsw#Eden Upstairs#
 mid_camp.rsw#Rune Midgard Allied Forces Post#
+mid_campin.rsw#Inside Rune Midgard Allied Forces Post#
 splendide.rsw#Forest Village Splendide#
 spl_in01.rsw#Inside Splendide 01#
 spl_in02.rsw#Inside Splendide 02#
@@ -134,3 +135,17 @@ new_2-4.rsw#Training Ground 4#
 new_3-4.rsw#Training Ground 4#
 new_4-4.rsw#Training Ground 4#
 new_5-4.rsw#Training Ground 4#
+nameless_i.rsw#Nameless Island#
+nameless_n.rsw#Nameless Island#
+nameless_in.rsw#Inside Nameless Island#
+brasilis.rsw#Brasilis#
+bra_in01.rsw#Inside Brasilis#
+dewata.rsw#Dewata City#
+dew_in01.rsw#Inside Dewata#
+manuk.rsw#Manuk#
+man_in01.rsw#Inside Manuk#
+eclage.rsw#Eclage#
+ecl_in01.rsw#Inside of Eclage#
+ecl_in02.rsw#Inside of Eclage#
+ecl_in03.rsw#Inside of Eclage#
+ecl_in04.rsw#Inside of Eclage#
