@@ -39,6 +39,7 @@ yuno_in02.rsw#Inside the Sage Castle#
 yuno_in03.rsw#Inside Yuno#
 yuno_in04.rsw#Republic Library#
 yuno_in05.rsw#Power Plant of Ymir's Heart#
+yuno_pre.rsw#Schwarzwald Government Buildings#
 amatsu.rsw#Amatsu, the Land of Destiny#
 ama_in01.rsw#Inside Amatsu#
 ama_in02.rsw#Inside Himezi Castle#
@@ -80,6 +81,7 @@ xmas_x.rsw#Lutie, the Snow Village#
 moc_para01.rsw#Eden land#
 moc_paraup.rsw#Eden Upstairs#
 mid_camp.rsw#Rune Midgard Allied Forces Post#
+mid_campin.rsw#Inside Rune Midgard Allied Forces Post#
 splendide.rsw#Forest Village Splendide#
 spl_in01.rsw#Inside Splendide 01#
 spl_in02.rsw#Inside Splendide 02#
@@ -108,3 +110,47 @@ Hyrule.rsw#Hyrule#
 quiz_00.rsw#Desafio das Perguntas#
 bliss.rsw#Bliss, Hidden Village#
 ra_temsky.rsw#Pope's Room (Sky Garden)#
+airport.rsw#Airport#
+y_airport.rsw#Juno Airport#
+airplane.rsw#Airship#
+airplane_01.rsw#Airship#
+lhz_airport.rsw#Lighthalzen Airport#
+que_bingo.rsw#Bingo Game Room #
+pvp_n_room.rsw#PvP : Waiting Room#
+p_track01.rsw#Monster Race Arena#
+p_track02.rsw#Monster Race Arena#
+#cmd_fild07.rsw#Beacon Island, Pharos#
+new_1-1.rsw#Training Ground 1#
+new_2-1.rsw#Training Ground 1#
+new_3-1.rsw#Training Ground 1#
+new_4-1.rsw#Training Ground 1#
+new_5-1.rsw#Training Ground 1#
+new_1-2.rsw#Training Ground 2#
+new_2-2.rsw#Training Ground 2#
+new_3-2.rsw#Training Ground 2#
+new_4-2.rsw#Training Ground 2#
+new_5-2.rsw#Training Ground 2#
+new_1-4.rsw#Training Ground 4#
+new_2-4.rsw#Training Ground 4#
+new_3-4.rsw#Training Ground 4#
+new_4-4.rsw#Training Ground 4#
+new_5-4.rsw#Training Ground 4#
+nameless_i.rsw#Nameless Island#
+nameless_n.rsw#Nameless Island#
+nameless_in.rsw#Inside Nameless Island#
+brasilis.rsw#Brasilis#
+bra_in01.rsw#Inside Brasilis#
+dewata.rsw#Dewata City#
+dew_in01.rsw#Inside Dewata#
+manuk.rsw#Manuk#
+man_in01.rsw#Inside Manuk#
+eclage.rsw#Eclage#
+ecl_in01.rsw#Inside of Eclage#
+ecl_in02.rsw#Inside of Eclage#
+ecl_in03.rsw#Inside of Eclage#
+ecl_in04.rsw#Inside of Eclage#
+lasagna.rsw#Port City of Lasagna#
+lasa_in01.rsw#Inside Lasagna#
+verus04.rsw#Verus, Excavation Site#
+harboro1.rsw#Rock Ridge#
+har_in01.rsw#Rock Ridge#

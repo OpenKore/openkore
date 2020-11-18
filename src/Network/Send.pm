@@ -2551,7 +2551,7 @@ sub sendSellBulk {
 		items => \@{$r_array},
 	}));
 
-	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk sell: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_sell_bulk {
@@ -3378,7 +3378,7 @@ sub sendBuyBulkMarket {
 		items => \@{$r_array},
 	}));
 
-	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk buy market: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_buy_bulk_market {

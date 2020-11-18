@@ -41,7 +41,6 @@ use Task;
 use Task::ErrorReport;
 use Match;
 use Translation;
-use I18N qw(stringToBytes);
 use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
 
 our (%commands, %completions);
@@ -88,7 +87,11 @@ sub initHandlers {
 			["request", T("Request the Current Day Reward")],
 			], \&cmdAttendance],
 		['autobuy', T("Initiate auto-buy AI sequence."), \&cmdAutoBuy],
-		['autosell', T("Initiate auto-sell AI sequence."), \&cmdAutoSell],
+		['autosell', [
+			T("Auto-sell AI sequence."),
+			["", T("Initiate auto-sell AI sequence")],
+			["test", T("Simulate list of items to sell (synonym: 'simulate' or 'debug')")]
+			], \&cmdAutoSell],
 		['autostorage', T("Initiate auto-storage AI sequence."), \&cmdAutoStorage],
 		['auth', [
 			T("(Un)authorize a user for using Kore chat commands."),
@@ -184,7 +187,7 @@ sub initHandlers {
 		['deal', [
 			T("Trade items with another player."),
 			["", T("accept an incoming deal/finalize the current deal/trade")],
-			[T("<player #>"), T("request a deal with player")],
+			[T("<player #> | <player_name>"), T("request a deal with player")],
 			[T("add <inventory item #> [<amount>]"), T("add items to current deal")],
 			[T("add z [<amount>]"), T("add zenny to current deal")],
 			["no", T("deny an incoming deal/cancel the current deal")]
@@ -480,7 +483,8 @@ sub initHandlers {
 		['relog', [
 			T("Log out then log in again."),
 			["", T("logout and login after 5 seconds")],
-			[T("<seconds>"), T("logout and login after <seconds>")]
+			[T("<seconds>"), T("logout and login after <seconds>")],
+			[T("<min>..<max>"), T("logout and login after random seconds")]
 			], \&cmdRelog],
 		['repair', [
 			T("Repair player's items."),
@@ -1244,7 +1248,7 @@ sub cmdAutoSell {
 				$obj{index} = $item->{ID};
 				$obj{amount} = $item->{amount} - $control->{keep};
 				my $item_name = $item->{name};
-				$item_name .= ' (if unequipped)' if ($item->{equipped});
+				$item_name .= T(" (if unequipped)") if ($item->{equipped});
 				$msg .= swrite(
 						"@>>> x  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 						[$item->{amount}, $item_name]);
@@ -2292,13 +2296,8 @@ sub cmdDebug {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\w\d]+)/;
 
-	if ($arg1 eq "0") {
-		configModify("debug", 0);
-	} elsif ($arg1 eq "1") {
-		configModify("debug", 1);
-	} elsif ($arg1 eq "2") {
-		configModify("debug", 2);
-
+	if ($arg1 =~ /\d/) {
+		configModify("debug", $arg1);
 	} elsif ($arg1 eq "info") {
 		my $connected = $net && "server=".($net->serverAlive ? "yes" : "no").
 			",client=".($net->clientAlive ? "yes" : "no");
@@ -2316,6 +2315,8 @@ sub cmdDebug {
 			('-'x56) . "\n",
 		$conState, $connected, AI::state, "@ai_seq", $time, $ai_timeout,
 		$timeout{'ai'}{'timeout'}, $ai_time), "list";
+	} else {
+		error "Syntax Error in function 'debug' (Toggle debug on/off)\n";
 	}
 }
 
@@ -5126,15 +5127,15 @@ sub cmdShopInfoSelf {
 	}
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	my $msg = center(" $shop{title} ", 79, '-') ."\n".
-		T("#  Name                               Type            Amount        Price  Sold\n");
+	my $msg = center(" $shop{title} ", 90, '-') ."\n".
+		T("#  Name                                       Type                     Price Amount   Sold\n");
 	my $priceAfterSale=0;
 	my $i = 1;
 	for my $item (@articles) {
 		next unless $item;
 		$msg .= swrite(
-		   "@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @>>>>",
-			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price}), $item->{sold}]);
+		   "@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @>>>>>>>>>>>>z @<<<<< @>>>>>",
+			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), $item->{quantity}, formatNumber($item->{sold})]);
 		$priceAfterSale += ($item->{quantity} * $item->{price});
 	}
 	$msg .= "\n" .
@@ -5144,7 +5145,7 @@ sub cmdShopInfoSelf {
 		"Maximum zeny:    %sz.\n",
 		formatNumber($shopEarned), formatNumber($char->{zeny}),
 		formatNumber($priceAfterSale), formatNumber($priceAfterSale + $char->{zeny})) .
-		('-'x79) . "\n";
+		('-'x90) . "\n";
 	message $msg, "list";
 }
 
@@ -5155,16 +5156,16 @@ sub cmdBuyShopInfoSelf {
 	}
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	my $msg = center(" Buyer Shop ", 72, '-') ."\n".
-		T("#   Name                               Type           Amount       Price\n");
+	my $msg = center(" Buyer Shop ", 83, '-') ."\n".
+		T("#  Name                                       Type                     Price Amount\n");
 	my $index = 0;
 	for my $item (@selfBuyerItemList) {
 		next unless $item;
 		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
-			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]);
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @>>>>>>>>>>>>z @<<<<<",
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), $item->{amount}]);
 	}
-	$msg .= ('-'x72) . "\n";
+	$msg .= ('-'x83) . "\n";
 	message $msg, "list";
 }
 
@@ -5586,15 +5587,15 @@ sub cmdStore {
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
 	if ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {
-		my $msg = center(TF(" Store List (%s) ", $storeList->{npcName}), 54, '-') ."\n".
-			T("#  Name                    Type                  Price   Amnt\n");
+		my $msg = center(TF(" Store List (%s) ", $storeList->{npcName}), 68, '-') ."\n".
+			  T("#  Name                    Type                       Price   Amount\n");
 		foreach my $item (@$storeList) {
 			$msg .= swrite(
-				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<  @>>>>>>>>>z   @<<<<<",
-				[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{price}, $item->{amount}]);
+				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<  @>>>>>>>>>z   @<<<<<",
+				[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), $item->{amount}]);
 		}
 		$msg .= "Store list is empty.\n" if !$storeList->size;
-		$msg .= ('-'x54) . "\n";
+		$msg .= ('-'x68) . "\n";
 		message $msg, "list";
 
 	} elsif ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
@@ -5882,10 +5883,10 @@ sub cmdTestShop {
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
 
 	my $msg = center(" $shop{title} ", 69, '-') ."\n".
-			T("Name                                           Amount           Price\n");
+			T("Name                                                    Price  Amount\n");
 	for my $item (@items) {
-		$msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @<<<<<  @>>>>>>>>>>>>z",
-			[$item->{name}, $item->{amount}, formatNumber($item->{price})]);
+		$msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>>>>>>>z  @<<<<<",
+			[$item->{name}, formatNumber($item->{price}), $item->{amount}]);
 	}
 	$msg .= "\n" . TF("Total of %d items to sell.\n", binSize(\@items)) .
 			('-'x69) . "\n";

@@ -134,7 +134,7 @@ sub new {
 		'00C2' => ['users_online', 'V', [qw(users)]], # 6
 		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]], # 8
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]], # 6
-		'00C6' => ['npc_store_info'], # -1
+		'00C6' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
 		'00C7' => ['npc_sell_list', 'v a*', [qw(len itemsdata)]], # -1
 		'00CA' => ['buy_result', 'C', [qw(fail)]], # 3
 		'00CB' => ['sell_result', 'C', [qw(fail)]], # 3
@@ -203,7 +203,7 @@ sub new {
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4 a*', [qw(len venderID itemList)]], # -1
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(ID amount fail)]], # 7
-		'0136' => ['vending_start'], # -1
+		'0136' => ['vending_start', 'v a4 a*', [qw(len accountID itemList)]], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
 		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]], # 16
