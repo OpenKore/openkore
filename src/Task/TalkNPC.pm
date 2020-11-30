@@ -174,6 +174,7 @@ sub delHooks {
 sub DESTROY {
 	my ($self) = @_;
 	debug "$self->{target}: Task::TalkNPC::DESTROY was called\n", "ai_npcTalk";
+	delete $ai_v{'npc_talk'} unless ($ai_v{'npc_talk'}{'talk'} =~ /^(buy_or_sell|store|sell|cash)$/);
 	$self->delHooks;
 	$self->SUPER::DESTROY;
 }
@@ -827,7 +828,7 @@ sub findTarget {
 	if ($self->{nameID}) {
 		my ($actor) = grep { $self->{nameID} eq $_->{nameID} } @{$actorList->getItems};
 		if ( $actor && 
-		( $actor->{statuses}->{EFFECTSTATE_BURROW} || ( $actor->{type} == 111 || $actor->{type} == 139 || $actor->{type} == 2337 ) ) && # HIDDEN_ACTOR TYPES
+		( $actor->{statuses}->{EFFECTSTATE_BURROW} || ($config{avoidHiddenActors} && ($actor->{type} == 111 || $actor->{type} == 139 || $actor->{type} == 2337)) ) && # HIDDEN_ACTOR TYPES
 		$self->{type} ne 'autotalk' )
 		{
 			$self->setError(NPC_NOT_FOUND, T("Talk with a hidden NPC prevented."));
@@ -838,7 +839,7 @@ sub findTarget {
 	foreach my $actor (@{$actorList->getItems()}) {
 		my $pos = ($actor->isa('Actor::NPC')) ? $actor->{pos} : $actor->{pos_to};
 		next if ($actor->{statuses}->{EFFECTSTATE_BURROW});
-		next if ( $actor->{type} == 111 || $actor->{type} == 139 || $actor->{type} == 2337 ); # HIDDEN_ACTOR TYPES
+		next if ($config{avoidHiddenActors} && ($actor->{type} == 111 || $actor->{type} == 139 || $actor->{type} == 2337)); # HIDDEN_ACTOR TYPES
 		if ($pos->{x} == $self->{x} && $pos->{y} == $self->{y}) {
 			if (defined $actor->{name}) {
 				return $actor;

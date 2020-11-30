@@ -54,7 +54,7 @@ our %parameters = (
 );
 
 our $macroKeywords = join '|', qw(
-	arg
+	arg listlength
 	cartamount cart Cart
 	config
 	defined
@@ -63,7 +63,6 @@ our $macroKeywords = join '|', qw(
 	delete
 	invamount inventory Inventory InventoryType
 	keys
-	listitem listlenght
 	monster
 	nick
 	npc

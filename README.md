@@ -61,18 +61,19 @@ Openkore is not working on all official servers, except for cRO.
 
 | Server | Description | Protection | Status | Supporter |
 | --- | --- | --- | --- | --- |
-| [iRO](http://renewal.playragnarok.com/) | International(US) RO | EAC | Not working | allanon |
+| [iRO](http://renewal.playragnarok.com/) | International(US) RO | EAC | Not working | N/A |
 | [iRO-RT](http://www.playragnarok.com/) | RO Transcendence | EAC | Not working | N/A |
-| [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | lututui, Henrybk, alisonrag |
+| [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | N/A |
 | [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | N/A |
 | [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | N/A | 
 | [idRO](https://ro.gnjoy.id/) | Indonesia RO | EAC | Not Working | N/A |
 | [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | HShield | Need Verification | N/A |
-| [kRO](http://ro.gnjoy.com/) | Korea RO | Cdclient | Not Working |  N/A |
-| [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | Cdclient | Not Working | N/A  |
+| [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Not Working |  N/A |
+| [kRO:Zero](http://roz.gnjoy.com/) | Korea Zero server | nProtect | Not Working | N/A  |
 | [phRO](https://ragnarokonline.com.ph/main) | Philippines RO | EAC | Not Working | N/A |
-| [ruRO](https://ru.4game.com/ro/play/) | Russia RO | Frost Security | Not Working | ya4ept |
-| [tRO](https://ro.gnjoy.in.th/) | Thailand RO | - | Server Closed | N/A |
+| [ruRO](https://ru.4game.com/ro/) | Russia RO | Frost Security | Not Working | ya4ept |
+| [ruRO-Prime](https://ru.4game.com/roprime/) | Russia RO | Frost Security | Not Working | ya4ept |
+| [tRO](https://ro.gnjoy.in.th/) | Thailand RO | EAC | Not Working | N/A |
 | [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | Cdclient | Not working | N/A |
 
 ## Contributing

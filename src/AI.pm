@@ -147,6 +147,7 @@ sub clear {
 	} else {
 		undef @ai_seq;
 		undef @ai_seq_args;
+		undef %ai_v;
 	}
 }
 
@@ -227,7 +228,7 @@ sub ai_follow {
 	my $name = shift;
 
 	return 0 if (!$name);
-	
+
 	if (binFind(\@ai_seq, "follow") eq "") {
 		my %args;
 		$args{name} = $name;
@@ -600,6 +601,12 @@ sub ai_skillUse {
 		$args{x} = $args{target};
 		delete $args{target};
 	}
+
+	if ($char->{skills}{$args{skillHandle}}{lv} < $args{lv}) {
+		debug "Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$char->{skills}{$args{skillHandle}}{lv}.".\n";
+		return;
+	}
+
 	AI::queue("skill_use", \%args);
 }
 
@@ -633,7 +640,7 @@ sub ai_skillUse2 {
 # Returns 0 otherwise.
 sub ai_storageAutoCheck {
 	return 0 unless ai_canOpenStorage();
-	
+
 	for my $item (@{$char->inventory}) {
 		next if ($item->{equipped});
 		my $control = Misc::items_control($item->{name}, $item->{nameID});
@@ -648,12 +655,12 @@ sub ai_storageAutoCheck {
 sub ai_canOpenStorage {
 	# Check NV_BASIC and SU_BASIC_SKILL (Doram)
 	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6 && $char->getSkillLevel(new Skill(handle => 'SU_BASIC_SKILL')) < 1);
-	
+
 	# Check if we have enough zeny to open storage (and if it matters)
 	# Also check for a Free Ticket for Kafra Storage (7059)
-	return 0 if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem} && $config{minStorageZeny} > 0 && 
+	return 0 if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem} && $config{minStorageZeny} > 0 &&
 					$char->{zeny} < $config{minStorageZeny} && !$char->inventory->getByNameID(7059));
-	
+
 	return 1;
 }
 

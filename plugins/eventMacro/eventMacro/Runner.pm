@@ -18,7 +18,7 @@ use eventMacro::Core;
 use eventMacro::FileParser qw(isNewCommandBlock);
 use eventMacro::Utilities qw(cmpr getnpcID getItemIDs getItemPrice getStorageIDs getInventoryIDs getInventoryTypeIDs
 	getPlayerID getMonsterID getVenderID getRandom getRandomRange getInventoryAmount getCartAmount getShopAmount
-	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList getListLenght get_pattern find_variable get_key_or_index getQuestStatus
+	getStorageAmount getVendAmount getConfig getWord q4rx q4rx2 getArgFromList get_pattern find_variable get_key_or_index getQuestStatus
 	find_hash_and_get_keys find_hash_and_get_values);
 use eventMacro::Automacro;
 
@@ -27,33 +27,33 @@ sub new {
 	my ($class, $name, $caller_name, $repeat, $interruptible, $self_interruptible, $overrideAI, $orphan, $delay, $macro_delay, $is_submacro) = @_;
 
 	return undef unless ($eventMacro->{Macro_List}->getByName($name));
-	
+
 	my $self = bless {}, $class;
-	
+
 	$self->{name} = $name;
 	$self->{caller_name} = $caller_name;
 	$self->{Paused} = 0;
 	$self->{registered} = 0;
 	$self->{finished} = 0;
 	$self->{macro_block} = 0;
-	
+
 	$self->{lines_array} = $eventMacro->{Macro_List}->getByName($name)->get_lines();
 	$self->{line_index} = 0;
-	
+
 	$self->{label} = {scanLabels($self->{lines_array})};
 	$self->{block} = scanBlocks($self->{lines_array});
-	
+
 	$self->{time} = time;
-	
+
 	$self->{current_line} = undef;
 	$self->{subcall} = undef;
 	$self->{error} = undef;
 	$self->{last_subcall_overrideAI} = undef;
 	$self->{last_subcall_interruptible} = undef;
 	$self->{last_subcall_orphan} = undef;
-	
+
 	debug "[eventMacro] Macro object '".$self->{name}."' created.\n", "eventMacro", 2;
-	
+
 	if ($is_submacro) {
 		$self->{submacro} = 1;
 		$eventMacro->{Macro_Runner}->last_subcall_name($self->get_name);
@@ -61,43 +61,43 @@ sub new {
 		$self->{submacro} = 0;
 		$self->last_subcall_name($self->get_name);
 	}
-	
+
 	if (defined $repeat && $repeat =~ /^\d+$/) {
 		$self->repeat($repeat);
 	} else {
 		$self->repeat(1);
 	}
-	
+
 	if (defined $interruptible && $interruptible =~ /^[01]$/) {
 		$self->interruptible($interruptible);
 	} else {
 		$self->interruptible(1);
 	}
-	
+
 	if (defined $self_interruptible && $self_interruptible =~ /^[01]$/) {
 		$self->self_interruptible($self_interruptible);
 	} else {
 		$self->self_interruptible(0);
 	}
-	
+
 	if (defined $overrideAI && $overrideAI =~ /^[01]$/) {
 		$self->overrideAI($overrideAI);
 	} else {
 		$self->overrideAI(0);
 	}
-	
+
 	if (defined $orphan && $orphan =~ /^(?:terminate(?:_last_call)?|reregister(?:_safe)?)$/) {
 		$self->orphan($orphan);
 	} else {
 		$self->orphan($config{eventMacro_orphans});
 	}
-	
+
 	if (defined $delay && $delay =~ /^[\d\.]*\d+$/) {
 		$self->timeout($delay);
 	} else {
 		$self->timeout(0);
 	}
-	
+
 	if (defined $macro_delay && $macro_delay =~ /^[\d\.]*\d+$/) {
 		$self->macro_delay($macro_delay);
 	} else {
@@ -146,21 +146,21 @@ sub last_subcall_name {
 # Sets/Gets the current interruptible flag
 sub interruptible {
 	my ($self, $interruptible) = @_;
-	
+
 	if (defined $interruptible) {
-		
+
 		if (defined $self->{interruptible} && $self->{interruptible} == $interruptible) {
 			debug "[eventMacro] Macro '".$self->{name}."' interruptible state is already '".$interruptible."'.\n", "eventMacro", 2;
 		} else {
 			debug "[eventMacro] Now macro '".$self->{name}."' interruptible state is '".$interruptible."'.\n", "eventMacro", 2;
 			$self->{interruptible} = $interruptible;
 		}
-		
+
 		if (!defined $self->{subcall}) {
 			debug "[eventMacro] Since this macro is the last in the macro tree we will validate automacro checking to interruptible.\n", "eventMacro", 2;
 			$self->validate_automacro_checking_to_interruptible($interruptible);
 		}
-		
+
 	}
 	return $self->{interruptible};
 }
@@ -168,16 +168,16 @@ sub interruptible {
 # Sets/Gets the current self_interruptible flag
 sub self_interruptible {
 	my ($self, $self_interruptible) = @_;
-	
+
 	if (defined $self_interruptible) {
-		
+
 		if (defined $self->{self_interruptible} && $self->{self_interruptible} == $self_interruptible) {
 			debug "[eventMacro] Macro '".$self->{name}."' self_interruptible state is already '".$self_interruptible."'.\n", "eventMacro", 2;
 		} else {
 			debug "[eventMacro] Now macro '".$self->{name}."' self_interruptible state is '".$self_interruptible."'.\n", "eventMacro", 2;
 			$self->{self_interruptible} = $self_interruptible;
 		}
-		
+
 	}
 	return $self->{self_interruptible};
 }
@@ -185,29 +185,29 @@ sub self_interruptible {
 # Makes sure the automacro checking state is compatible with this macro interruptible
 sub validate_automacro_checking_to_interruptible {
 	my ($self, $interruptible) = @_;
-	
+
 	my $checking_status = $eventMacro->get_automacro_checking_status();
-	
+
 	if (!$self->{submacro}) {
 		$self->last_subcall_interruptible($interruptible);
 	} else {
 		$eventMacro->{Macro_Runner}->last_subcall_interruptible($interruptible);
 	}
-	
+
 	if (($checking_status == CHECKING_AUTOMACROS && $interruptible == 1) || ($checking_status == PAUSED_BY_EXCLUSIVE_MACRO && $interruptible == 0)) {
 		debug "[eventMacro] No need to change automacro checking status because it already is compatible with this macro.\n", "eventMacro", 2;
 		return;
 	}
-	
+
 	if ($checking_status != CHECKING_AUTOMACROS && $checking_status != PAUSED_BY_EXCLUSIVE_MACRO) {
 		debug "[eventMacro] Macro '".$self->{name}."' cannot change automacro checking state because the user forced it into another state.\n", "eventMacro", 2;
 		return;
 	}
-	
+
 	if ($interruptible == 0) {
 		debug "[eventMacro] Macro '".$self->{name}."' is now stopping automacro checking..\n", "eventMacro", 2;
 		$eventMacro->set_automacro_checking_status(PAUSED_BY_EXCLUSIVE_MACRO);
-	
+
 	} elsif ($interruptible == 1) {
 		debug "[eventMacro] Macro '".$self->{name}."' is now starting automacro checking..\n", "eventMacro", 2;
 		$eventMacro->set_automacro_checking_status(CHECKING_AUTOMACROS);
@@ -217,21 +217,21 @@ sub validate_automacro_checking_to_interruptible {
 # Sets/Gets the current override AI value
 sub overrideAI {
 	my ($self, $overrideAI) = @_;
-	
+
 	if (defined $overrideAI) {
-		
+
 		if (defined $self->{overrideAI} && $self->{overrideAI} == $overrideAI) {
 			debug "[eventMacro] Macro '".$self->{name}."' overrideAI state is already '".$overrideAI."'.\n", "eventMacro", 2;
 		} else {
 			debug "[eventMacro] Now macro '".$self->{name}."' overrideAI state is '".$overrideAI."'.\n", "eventMacro", 2;
 			$self->{overrideAI} = $overrideAI;
 		}
-		
+
 		if (!defined $self->{subcall}) {
 			debug "[eventMacro] Since this macro is the last in the macro tree we will validate AI queue to overrideAI.\n", "eventMacro", 2;
 			$self->validate_AI_queue_to_overrideAI($overrideAI);
 		}
-		
+
 	}
 	return $self->{overrideAI};
 }
@@ -239,23 +239,23 @@ sub overrideAI {
 # Makes sure the AI queue state is compatible with this macro overrideAI
 sub validate_AI_queue_to_overrideAI {
 	my ($self, $overrideAI) = @_;
-	
+
 	my $is_in_AI_queue = AI::inQueue('eventMacro');
-	
+
 	if (!$self->{submacro}) {
 		$self->last_subcall_overrideAI($overrideAI);
 	} else {
 		$eventMacro->{Macro_Runner}->last_subcall_overrideAI($overrideAI);
 	}
-	
+
 	if (($is_in_AI_queue && $overrideAI == 0) || (!$is_in_AI_queue && $overrideAI == 1)) {
 		debug "[eventMacro] No need to add/clear AI_queue because it already is compatible with this macro.\n", "eventMacro", 2;
 		return;
 	}
-	
+
 	if ($overrideAI == 0) {
 		$self->register;
-		
+
 	} elsif ($overrideAI == 1) {
 		$self->unregister;
 	}
@@ -285,16 +285,16 @@ sub unregister {
 # Sets/Gets the current orphan method
 sub orphan {
 	my ($self, $orphan) = @_;
-	
+
 	if (defined $orphan) {
-		
+
 		if (defined $self->{orphan} && $self->{orphan} eq $orphan) {
 			debug "[eventMacro] Macro '".$self->{name}."' orphan method is already '".$orphan."'.\n", "eventMacro", 2;
 		} else {
 			debug "[eventMacro] Now macro '".$self->{name}."' orphan method is '".$orphan."'.\n", "eventMacro", 2;
 			$self->{orphan} = $orphan;
 		}
-		
+
 		if (!defined $self->{subcall}) {
 			if (!$self->{submacro}) {
 				$self->last_subcall_orphan($orphan);
@@ -419,7 +419,7 @@ sub macro_block {
 			return $script->{macro_block} if $script->{macro_block};
 		}
 	} while $script = $script->{subcall};
-	
+
 	return $_[1];
 }
 
@@ -456,7 +456,7 @@ sub scanBlocks {
 	my $script = $_[0];
 	my $blocks = {};
 	my $block_starts = [];
-	
+
 	for (my $line = 0; $line < @{$script}; $line++) {
 		if ($script->[$line] =~ /^(if|switch|while|case)\s+\(.*\)\s+{$|^(else)\s+.*{/) {
 			push @$block_starts, { type => $1 || $2, start => $line };
@@ -536,11 +536,11 @@ sub error {
 # Returns an informative error message
 sub error_message {
 	my ($self) = @_;
-	my $error_message = 
+	my $error_message =
 	  "[eventMacro] Error in macro '".$self->{name}."'\n".
 	  "[eventMacro] Line index of the error '".$self->line_index."'\n".
 	  "[eventMacro] Script of the line '".$self->line_script($self->line_index)."'\n";
-	  
+
 	$error_message .= "[eventMacro] Error message '".$self->error."'\n";
 	return $error_message;
 }
@@ -548,7 +548,7 @@ sub error_message {
 # Decides the next script to be read
 sub define_current_line {
 	my ($self) = @_;
-	
+
 	#End of script
 	if ( $self->{line_index} == scalar (@{$self->{lines_array}}) ) {
 		$self->manage_script_end();
@@ -557,7 +557,7 @@ sub define_current_line {
 			return;
 		}
 		$self->define_current_line;
-		
+
 	#Normal script
 	} else {
 		$self->{current_line} = $self->line_script($self->line_index);
@@ -568,10 +568,10 @@ sub define_current_line {
 # All 'if', 'else', 'goto', 'while', etc, will checked here.
 sub define_next_valid_command {
 	my ($self) = @_;
-	
+
 	my $check_need = 1;
 	DEFINE_COMMAND: while () {
-	
+
 		######################################
 		# Get next script line
 		######################################
@@ -585,18 +585,18 @@ sub define_next_valid_command {
 			debug "[eventMacro] New cleaned script '".$self->{current_line}."'.\n", "eventMacro", 3;
 			$check_need = 1;
 		}
-		
+
 		######################################
 		# While statement: while (foo <= bar) {
 		######################################
 		if ($self->{current_line} =~ /^while\s*\(/) {
 			my ($condition_text) = $self->{current_line} =~ /^while\s*(\(.*\))\s+{$/;
-			
+
 			debug "[eventMacro] Script is the start of a while 'block'.\n", "eventMacro", 3;
-			
+
 			my ($result) = $self->parse_and_check_condition_text($condition_text);
 			return if (defined $self->error);
-				
+
 			if ($result == 1) {
 				debug "[eventMacro] Condition of 'while' is true.\n", "eventMacro", 3;
 				debug "[eventMacro] Entering true 'while' 'block'.\n", "eventMacro", 3;
@@ -606,15 +606,15 @@ sub define_next_valid_command {
 				$self->line_index($self->{block}{start_to_end}{$self->line_index}{end});
 			}
 			$self->next_line;
-			
+
 		######################################
 		# Postfix 'if'
 		######################################
 		} elsif ($self->{current_line} =~ /.+\s+if\s*\(.*\)$/) {
 			my ($condition_text) = $self->{current_line} =~ /.+\s+if\s*(\(.*\))$/;
-			
+
 			debug "[eventMacro] Script is a command with a postfixed 'if'.\n", "eventMacro", 3;
-			
+
 			my ($result) = $self->parse_and_check_condition_text($condition_text);
 			return if (defined $self->error);
 			if ($result) {
@@ -626,14 +626,14 @@ sub define_next_valid_command {
 				debug "[eventMacro] Condition of 'if' is false, ignoring command.\n", "eventMacro", 3;
 				$self->next_line;
 			}
-			
+
 		######################################
 		# Initial 'if'
 		######################################
 		} elsif ($self->{current_line} =~ /^if\s*\(/) {
-			
+
 			debug "[eventMacro] Script is a 'if' condition.\n", "eventMacro", 3;
-			
+
 			my ($result, $post_if) = $self->parse_and_check_condition_text($self->{current_line});
 			return if (defined $self->error);
 			if ($result == 1) {
@@ -646,44 +646,44 @@ sub define_next_valid_command {
 				} else {
 					debug "[eventMacro] Entering true 'if' block.\n", "eventMacro", 3;
 				}
-				
+
 			} else {
 				debug "[eventMacro] Condition of 'if' is false.\n", "eventMacro", 3;
 				if ($post_if eq "{") {
 					debug "[eventMacro] There's a block after it to be cleaned.\n", "eventMacro", 3;
-					
+
 					my $block_count = 1;
 					CHECK_IF: while ($block_count > 0) {
-					
+
 						$self->next_line;
 						$self->define_current_line;
-						
+
 						if ($self->{finished}) {
 							$self->{finished} = 0;
 							$self->error("All 'if' blocks must be closed before the end of the macro)");
 							return;
 						}
-						
+
 						#Start of another if/switch/case/while block
 						if ( $self->{current_line} =~ /^(if|switch|case|while|else).*{$/ ) {
 							$block_count++;
-							
+
 						#End of an if block or start of else block
 						} elsif ($self->{current_line} =~ /^}\s*else\s*{$/ && $block_count == 1) {
 							debug "[eventMacro] Entering true 'else' block after false 'if' block.\n", "eventMacro", 3;
 							last CHECK_IF;
-							
+
 						#End of an if block or start of else block
 						} elsif ($self->{current_line} eq '}') {
 							$block_count--;
-							
+
 						#Elsif check
 						} elsif ( $self->{current_line} =~ /^}\s*elsif\s*(\(.*\)).*{$/ && $block_count == 1 ) {
 							($result) = $self->parse_and_check_condition_text($1);
 							return if (defined $self->error);
 							debug "[eventMacro] Found an 'elsif' block inside an 'if' block.\n", "eventMacro", 3;
 							debug "[eventMacro] Script of 'elsif' block: '".$self->{current_line}."'.\n", "eventMacro", 3;
-							
+
 							if ($result) {
 								debug "[eventMacro] Condition of 'elsif' is true, entering 'elsif' block.\n", "eventMacro", 3;
 								last CHECK_IF;
@@ -692,45 +692,45 @@ sub define_next_valid_command {
 								next;
 							}
 						}
-						
+
 						debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'if' block.\n", "eventMacro", 3;
-						
+
 					}
 				} else {
 					debug "[eventMacro] Code after 'if' is a command, ignoring it and moving to next line\n", "eventMacro", 3;
 				}
 			}
 			$self->next_line;
-		
+
 		######################################
 		# Switch statement
 		######################################
 		} elsif ($self->{current_line} =~ /^switch.*{$/) {
-			
+
 			# this regex may look wrong, but it's not
 			# when the line is "switch ( $name ) {" for example, i want to get only "( $name" whitout the closing parenthesis
 			# the reason is because the closing parenthesis will come from $second_part on case block :D
 			my ($first_part) = $self->{current_line} =~ /^switch\s*(\(.*)\)\s*{$/;
 
 			debug "[eventMacro] Script is a 'switch' block, searching all 'case' and 'else' blocks.\n", "eventMacro", 3;
-			
+
 			SWITCH: while () {
 				$self->next_line;
 				$self->define_current_line;
-				
+
 				if ($self->{finished}) {
 					$self->{finished} = 0;
 					$self->error("All 'switch' blocks must be closed before the end of the macro)");
 					return;
 				}
-				
+
 				debug "[eventMacro] Script inside 'switch' block is '".$self->{current_line}."'.\n", "eventMacro", 3;
-				
+
 				#Else on switch
 				if ($self->{current_line} =~ /^else/) {
 					my ($after_else) = $self->{current_line} =~ /^else\s*(.*)/;
 					debug "[eventMacro] Found valid 'else' inside 'switch' block.\n", "eventMacro", 3;
-					
+
 					if ($after_else ne "{") {
 						debug "[eventMacro] Code after the 'else' is a command, cleaning 'else' and rechecking line.\n", "eventMacro", 3;
 						$self->{current_line} =~ s/^else\s*//;
@@ -741,23 +741,23 @@ sub define_next_valid_command {
 						$self->next_line;
 						last SWITCH;
 					}
-				
+
 				#Case on switch
 				} elsif ($self->{current_line} =~ /^case/) {
-					
+
 					debug "[eventMacro] Found a 'case' block inside a 'switch' block.\n", "eventMacro", 3;
-					
+
 					# and on this part i am not getting the opening parenthsis, just the closing one
 					# example: "case (= nipodemos) {" the regex will get only "= nipodemos) {"
 					# the reason is because the opening parenthsis are coming from first part on switch block
 					# creating the complete sentence "($name = nipodemos) {"
 					my ($second_part) = $self->{current_line} =~ /^case\s*\(\s*(.*)/;
-					
+
 					unless ($second_part) {
 						$self->error("All 'case' blocks must have a condition");
 						return;
 					}
-					
+
 					my $complete_condition = $first_part . $second_part ;
 					debug "[eventMacro] complete condition is: '".$complete_condition."'.\n", "eventMacro", 3;
 					my ($result, $after_case) = $self->parse_and_check_condition_text($complete_condition);
@@ -766,7 +766,7 @@ sub define_next_valid_command {
 						$self->error("All 'case' blocks must have a macro command or a block after it");
 						return;
 					}
-					
+
 					#True case check
 					if ($result == 1) {
 						debug "[eventMacro] Condition of 'case' is true.\n", "eventMacro", 3;
@@ -780,7 +780,7 @@ sub define_next_valid_command {
 							$self->next_line;
 							last SWITCH;
 						}
-					
+
 					} else {
 						debug "[eventMacro] Condition of 'case' is false.\n", "eventMacro", 3;
 						if ($after_case eq "{") {
@@ -789,26 +789,26 @@ sub define_next_valid_command {
 							while ($block_count > 0) {
 								$self->next_line;
 								$self->define_current_line;
-								
+
 								if ($self->{finished}) {
 									$self->{finished} = 0;
 									$self->error("All 'case' blocks must be closed before the end of the macro");
 									return;
 								}
-								
+
 								debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' block.\n", "eventMacro", 3;
-								
+
 								if (isNewCommandBlock($self->{current_line})) {
 									$block_count++;
 								} elsif ($self->{current_line} eq '}') {
 									$block_count--;
 								}
 							}
-							
+
 						} else {
 							debug "[eventMacro] There is a command after case, ignoring it\n", "eventMacro", 3;
 						}
-						
+
 						#if after clean case block exist a '}', that means end of switch block
 						if ($self->line_script(($self->line_index + 1)) eq '}') {
 							debug "[eventMacro] End of 'switch' block\n", "eventMacro", 3;
@@ -820,28 +820,28 @@ sub define_next_valid_command {
 					return;
 				}
 			}
-		
+
 		######################################
 		# If arriving at a line 'else' or 'elsif'
 		######################################
 		} elsif ($self->{current_line} =~ /^}\s*else\s*{/ || $self->{current_line} =~ /^}\s*elsif.*{$/) {
-			
+
 			debug "[eventMacro] Script is a not important condition block ('else' or 'elsif') after an 'if' block, cleaning it.\n", "eventMacro", 3;
-			
+
 			my $open_blocks = 1;
 			while ($open_blocks > 0) {
-				
+
 				$self->next_line;
 				$self->define_current_line;
-					
+
 				if ($self->{finished}) {
 					$self->{finished} = 0;
 					$self->error("All 'else' and 'elsif' blocks must be closed before the end of the macro)");
 					return;
 				}
-				
+
 				debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'else' or 'elsif' block.\n", "eventMacro", 3;
-				
+
 				if (isNewCommandBlock($self->{current_line})) {
 					$open_blocks++;
 				} elsif ($self->{current_line} eq '}') {
@@ -849,30 +849,30 @@ sub define_next_valid_command {
 				}
 			}
 			$self->next_line;
-			
+
 		######################################
 		# Switch arriving at a line 'else' or 'case'
 		######################################
 		} elsif ($self->{current_line} =~ /^case/ || $self->{current_line} =~ /^else/) {
 			my (undef, $after_case) = $self->{current_line} =~ /^(case\s*\(.*\)|else)\s*(.*)/;
-			
+
 			debug "[eventMacro] Script is a not important condition block ('else' or 'case') after an 'switch' block, cleaning it.\n", "eventMacro", 3;
-			
+
 			if ($after_case eq "{") {
 				debug "[eventMacro] There's a 'case' or 'else' block to be cleaned.\n", "eventMacro", 3;
 				my $block_count = 1;
 				while ($block_count > 0) {
 					$self->next_line;
 					$self->define_current_line;
-					
+
 					if ($self->{finished}) {
 						$self->{finished} = 0;
 						$self->error("All 'case' and 'else' blocks must be closed before the end of the macro");
 						return;
 					}
-								
+
 					debug "[eventMacro] Cleaning line '".$self->{current_line}."' inside 'case' or 'else' block.\n", "eventMacro", 3;
-					
+
 					if (isNewCommandBlock($self->{current_line})) {
 						$block_count++;
 					} elsif ($self->{current_line} eq '}') {
@@ -883,23 +883,23 @@ sub define_next_valid_command {
 				debug "[eventMacro] After 'case' or 'else' there is a command, ignoring it.\n", "eventMacro", 3;
 			}
 			$self->next_line;
-		
-		######################################	
+
+		######################################
 		# Macro block: begin
 		######################################
 		} elsif ($self->{current_line} eq '[') {
 			debug "[eventMacro] Script is the start of a macro block.\n", "eventMacro", 3;
 			$self->{macro_block} = 1;
 			$self->next_line;
-		
-		######################################	
+
+		######################################
 		# Macro block: end
 		######################################
 		} elsif ($self->{current_line} eq ']') {
 			debug "[eventMacro] Script is the end of a macro block.\n", "eventMacro", 3;
 			$self->{macro_block} = 0;
 			$self->next_line;
-		
+
 		######################################
 		# End block of "if", "switch" or "while"
 		######################################
@@ -911,14 +911,14 @@ sub define_next_valid_command {
 				debug "[eventMacro] Script is the end of a not important block (if or switch).\n", "eventMacro", 3;
 				$self->next_line;
 			}
-		
+
 		######################################
 		# Label statement
 		######################################
 		} elsif ($self->{current_line} =~ /^:/) {
 			debug "[eventMacro] Script is a label definition.\n", "eventMacro", 3;
 			$self->next_line;
-			
+
 		######################################
 		# Goto flow command
 		######################################
@@ -931,8 +931,8 @@ sub define_next_valid_command {
 				$self->error("Cannot find label '$label'");
 				return;
 			}
-		
-		######################################	
+
+		######################################
 		# End (Should be a command)
 		######################################
 		} else {
@@ -945,7 +945,7 @@ sub define_next_valid_command {
 # Processes next line of macro script
 sub next {
 	my $self = $_[0];
-	
+
 	#We must finish the subcall before returning to this macro
 	return $self->manage_subcall if (defined $self->{subcall});
 
@@ -955,16 +955,16 @@ sub next {
 	$self->define_next_valid_command;
 	return if (defined $self->error);
 	return "" if ($self->{finished});
-	
+
 	#Some debug messages
 	debug "[eventMacro] Executing macro '".$self->{name}."', line index '".$self->line_index.".\n", "eventMacro", 2;
 	debug "[eventMacro] Line script '".$self->{current_line}."'.\n", "eventMacro", 2;
-		
+
 	##########################################
 	# set variable: variable = value
 	if ($self->{current_line} =~ /^$general_variable_qr/i) {
 		my $line = $self->{current_line};
-		
+
 		my $variable;
 		my $value;
 		if ($line =~ /^($general_wider_variable_qr)\s*([+-]{2}|=\s*.*)/) {
@@ -978,14 +978,14 @@ sub next {
 			$self->error("Could not separate variable name from value");
 			return;
 		}
-		
+
 		my $var;
 		my $display_name;
-		
+
 		if (my $var_hash = $self->find_and_define_key_index($variable)) {
 			return if (defined $self->error);
 			$var = $var_hash->{var};
-			
+
 		} else {
 			return if (defined $self->error);
 			$var = find_variable($1);
@@ -996,62 +996,62 @@ sub next {
 				return;
 			}
 		}
-		
+
 		if ($var->{type} eq 'scalar' || $var->{type} eq 'accessed_array' || $var->{type} eq 'accessed_hash') {
-		
+
 			my $complement = (exists $var->{complement} ? $var->{complement} : undef);
-			
+
 			if ($value =~ /^=\s*(.*)/i) {
 				my $val = $self->parse_command($1);
-				
+
 				if (defined $self->error) {
 					return;
-					
+
 				} elsif (!defined $val) {
 					$self->error("$val failed");
 					return;
-					
+
 				} else {
 					$eventMacro->set_var(
-						$var->{type}, 
-						$var->{real_name}, 
+						$var->{type},
+						$var->{real_name},
 						($val =~ /^\s*(?:undef|unset)\s*$/i ? ('undef'):($val)),
 						1,
 						$complement
 					);
 				}
-				
+
 			} elsif ($value =~ /^([+-]{2})$/i) {
 				my $change = (($1 eq '++') ? (1) : (-1));
-				
+
 				my $old_value = ($eventMacro->defined_var($var->{type}, $var->{real_name}, $complement) ? ($eventMacro->get_var($var->{type}, $var->{real_name}, $complement)) : 0);
 				$eventMacro->set_var(
-					$var->{type}, 
-					$var->{real_name}, 
-					($old_value + $change), 
-					1, 
+					$var->{type},
+					$var->{real_name},
+					($old_value + $change),
+					1,
 					$complement
 				);
-				
+
 			} else {
 				$self->error("unrecognized assignment");
 				return;
 			}
-		
+
 		} elsif ($var->{type} eq 'array' || $var->{type} eq 'hash') {
 			if ($value =~ /^=\s*(.*)/i) {
 				my $value = $1;
-				
+
 				if ($value =~ /(?:undef|unset)/) {
 					$eventMacro->clear_array($var->{real_name}) if ($var->{type} eq 'array');
 					$eventMacro->clear_hash($var->{real_name}) if ($var->{type} eq 'hash');
-				
+
 				} elsif ($value =~ /^\((.*)\)$/) {
 					my @members = split(/\s*,\s*/, $1);
-					
+
 					if ($var->{type} eq 'array') {
 						$eventMacro->set_full_array($var->{real_name}, \@members);
-						
+
 					} else {
 						my %hash;
 						foreach my $hash_member (@members) {
@@ -1066,33 +1066,33 @@ sub next {
 						}
 						$eventMacro->set_full_hash($var->{real_name}, \%hash);
 					}
-					
+
 				} elsif ($value =~ /\w+\s*\(.*\)$/) {
 					my $real_value = $self->parse_command($value);
 					if ( (ref($real_value) eq 'ARRAY' || ref($real_value) eq 'HASH')  && $var->{type} eq 'hash') {
-						
+
 						#if is a array ref, have to convert into a hash ref
 						if (ref($real_value) eq 'ARRAY') {
 							my %hash = @{$real_value};
 							$real_value = \%hash;
 						}
 						$eventMacro->set_full_hash($var->{real_name}, $real_value);
-						
-					} elsif (ref($real_value) eq '' && $real_value && $var->{type} eq 'array') { 
+
+					} elsif (ref($real_value) eq '' && $real_value && $var->{type} eq 'array') {
 						#elsif real value is defined is because something were returned, so it will make an array of that
-						my @array = split (/,/, $real_value); 
+						my @array = split (/,/, $real_value);
 						$eventMacro->set_full_array($var->{real_name}, \@array);
-						
+
 					} elsif((ref($real_value) eq 'ARRAY' || ref($real_value) eq 'SCALAR') && $var->{type} eq 'array') {
 						$eventMacro->set_full_array($var->{real_name}, $real_value);
-						
+
 					} else {
 						# $real_value not defined, some error happened
 						$self->error("Unable to set array or hash, empty value! (value: '$real_value')");
 						return;
 					}
 				}
-				
+
 			} else {
 				$self->error("unrecognized assignment");
 				return;
@@ -1100,7 +1100,7 @@ sub next {
 		}
 		$self->next_line;
 		$self->timeout(0);
-	
+
 	##########################################
 	# manage array: push|unshift|shift|pop(@array[,new_member])
 	} elsif ($self->{current_line} =~ /^$macro_keywords_character(push|unshift|pop|shift)/i) {
@@ -1108,7 +1108,7 @@ sub next {
 		return if (defined $self->error);
 		$self->timeout(0);
 		$self->next_line;
-	
+
 	##########################################
 	# manage hash: delete($hash{new_member})
 	} elsif ($self->{current_line} =~ /^$macro_keywords_character(delete)/i) {
@@ -1116,72 +1116,72 @@ sub next {
 		return if (defined $self->error);
 		$self->timeout(0);
 		$self->next_line;
-		
+
 	##########################################
 	# returns command: do whatever
 	} elsif ($self->{current_line} =~ /^do\s/) {
 		my ($do_command) = $self->{current_line} =~ /^do\s+(.*)/;
 		my $result = $self->parse_do($do_command);
 		return $result if (defined $result);
-		
+
 	##########################################
 	# log command
 	} elsif ($self->{current_line} =~ /^(log|warning|error)\s+(.*)/) {
 		my ($type, $log_text) = ($1, $2);
 		$self->parse_log($type, $log_text);
-	
+
 	##########################################
 	# pause command
 	} elsif ($self->{current_line} =~ /^pause/) {
 		my ($pause_command) = $self->{current_line} =~ /^pause\s*(.*)/;
 		$self->parse_pause($pause_command);
-		
+
 	##########################################
 	# stop command
 	} elsif ($self->{current_line} eq "stop") {
 		$self->stop_command();
-		
+
 	##########################################
 	# release command
 	} elsif ($self->{current_line} =~ /^release\s+/) {
 		my ($release_command) = $self->{current_line} =~ /^release\s+(.*)/;
 		$self->parse_release_and_lock($release_command, 2);
-		
+
 	##########################################
 	# lock command
 	} elsif ($self->{current_line} =~ /^lock\s+/) {
 		my ($lock_command) = $self->{current_line} =~ /^lock\s+(.*)/;
 		$self->parse_release_and_lock($lock_command, 1);
-		
+
 	##########################################
 	# call command
 	} elsif ($self->{current_line} =~ /^call\s+/) {
 		my ($call_command) = $self->{current_line} =~ /^call\s+(.*)/;
 		$self->parse_call($call_command);
-		
+
 	##########################################
 	# set command
 	} elsif ($self->{current_line} =~ /^set\s+/) {
 		my ($parameter, $new_value) = $self->{current_line} =~ /^set\s+(\w+)\s+(.*)$/;
 		$self->parse_set($parameter, $new_value);
-		
+
 	##########################################
 	# include command
 	} elsif ($self->{current_line} =~ /^include\s+/) {
 		my ($key, $param) = $self->{current_line} =~ /^include\s+(\w+)\s+(.*)$/;
 		$self->parse_include($key, $param);
-		
+
 	##########################################
 	# sub-routine command, still figuring out how to include unclever/fail sub-routine into the error msg
 	} elsif ($self->{current_line} =~ /^(?:\w+)\s*\(.*?\)/) {
 		$self->perl_sub_command;
-		
+
 	##########################################
 	# unrecognized line
 	} else {
 		$self->error("Unrecognized macro command");
 	}
-	
+
 	##########################################
 	# For some reason returning undef is an error while returning an empty string is fine.
 	if (defined $self->error) {
@@ -1193,7 +1193,7 @@ sub next {
 
 sub parse_and_check_condition_text {
 	my ($self, $line_script) = @_;
-	
+
 	#think on this possible statment:
 	# if ( ( 1 = 1 ) && ( foo != bar ) ) {
 	#this code will create an array of groups os parenthesis, starting by the smaller, until the bigger
@@ -1203,7 +1203,7 @@ sub parse_and_check_condition_text {
 	#$group[2] = "( ( 1 = 1 ) && ( foo != bar) )"
 	#so each group will be treated separetedly
 	my @characters = split //, $line_script;
-	
+
 	my ($parenthesis_count,
 		$in_regex,
 		$in_quote,
@@ -1214,36 +1214,36 @@ sub parse_and_check_condition_text {
 		@groups,
 		$start_of_variable,
 	);
-	
+
 	CHAR: for (my $i = 0; $i < @characters ; $i++) {
 		my $previous_char = $characters[$i-1];
 		my $current_char  = $characters[$i];
 		my $next_char     = $characters[$i+1];
-		
+
 		#end of regex if found a '/' and it's not a \/
 		if (defined $in_regex) {
 			if ($current_char eq '/' && $previous_char ne "\\") {
 				undef $in_regex;
 			}
-				
+
 		#end of quoted string if found a " and it's not a \"
 		} elsif (defined $in_quote) {
 			if ($current_char eq '"' && $previous_char ne "\\") {
 				undef $in_quote;
 			}
-			
+
 		#ignore if is inside a regex or if found a escaped \"
 		} elsif (!defined $in_quote && $current_char eq '"') {
 			unless ($previous_char eq "\\" || defined $in_regex) {
 				$in_quote = 1;
 			}
-			
+
 		#ignore if is inside a quoted_string or if found a escaped one '\/'
 		} elsif (!defined $in_regex && $current_char eq '/') {
 			unless ($previous_char eq '\\' || defined $in_quote) {
 				$in_regex = 1;
 			}
-		
+
 		#save every char on $token, until a space or special charecter appear
 		#eventually it will become a macro_keyword or sub
 		} elsif ( $current_char =~ /\w/) {
@@ -1255,9 +1255,9 @@ sub parse_and_check_condition_text {
 					$token .= $current_char;
 				}
 			}
-			
+
 		} elsif ($current_char =~ /\s/) {
-			
+
 			# if a token is defined, then it can be a macro_keyword or a sub
 			# but is treated on other case statement
 			# if not, then undef token and start_of_macro_keyword and start_of_variable
@@ -1266,63 +1266,63 @@ sub parse_and_check_condition_text {
 				undef $token;
 				undef $start_of_variable;
 			}
-			
+
 		#this case block is only to prevent $token to save variables, which is useless
 		#$token is meant to save only macro_keywords and subs
 		} elsif ($current_char eq '$' || $current_char eq '@' || $current_char eq '%') {
 			unless ($previous_char eq "\\") {
 				$start_of_variable = 1;
 			}
-			
+
 		} elsif ($current_char eq '&' ) {
-			
+
 			#ignore if is quoted string or regex or found a &&
 			if ($previous_char eq '&' || $next_char eq '&') {
 				undef $token                  if defined $token;
 				undef $start_of_macro_keyword if defined $start_of_macro_keyword;
-			
+
 			#if is a & followed by a letter or number, is problably a macro keyword
 			} elsif ($previous_char ne '&' && $next_char =~ /\w/) {
 				undef $token;
 				$start_of_macro_keyword = 1;
-				
+
 			# throw error
 			} else {
 				$self->error("unsupported '&' in statment (maybe you put just only one '&' instead of two?)");
 				return;
 			}
-			
+
 		} elsif ( $current_char eq '|' ) {
-			
+
 			#ignore if inside a quoted string or a regex
 			if ($previous_char eq '|' || $next_char eq '|') {
 				undef $token                  if defined $token;
 				undef $start_of_macro_keyword if defined $start_of_macro_keyword;
-			
+
 			#else throw error
 			} else {
 				$self->error("unsupported '|' in statment (maybe you put only one '|' instead of two?)");
 				return;
 			}
 		} elsif ( $current_char eq ')' ) {
-			
+
 			undef $start_of_macro_keyword if defined $start_of_macro_keyword;
 			undef $token                  if defined $token;
-			
+
 			#this is when the ) is a closing pharenthesis of a macrokeyword or a sub
 			#example: &npc(154 89) <--- this closing pharentesis will not be considered as a group end
 			if ($ignore_next_closing_parenthesis > 0) {
 				$ignore_next_closing_parenthesis--;
 				next CHAR;
 			}
-			
+
 			#end of the group
 			$parenthesis_count--;
 			if ($parenthesis_count < 0) {
 				$self->error("missing at least one opening parenthesis or too many closing parenthesis");
 				return;
 			}
-			
+
 			#currently there is something that have to change:
 			#start, end and lenght of group is only used on the main group (the entire statement)
 			#the other groups those informations are irrelevant, so it shouldn't be stored
@@ -1334,17 +1334,17 @@ sub parse_and_check_condition_text {
 				length => $lenght,
 				script => $script
 			};
-			
+
 			#end of entire statement
 			if ($parenthesis_count == 0) {
 				last CHAR;
 			}
-			
+
 		} elsif ($current_char eq '(' ) {
-			
+
 			#oh, this might be a macro keyword or sub!
 			if ($token && length($token) >= 3) {
-				
+
 				#probably a macro_keyword
 				if (defined $start_of_macro_keyword) {
 					#yeah it is
@@ -1353,18 +1353,18 @@ sub parse_and_check_condition_text {
 						undef $token;
 						undef $start_of_macro_keyword;
 						next CHAR;
-						
+
 					#macro_keyword not found, probably typo
 					} else {
 						$self->error("unknown macro_keyword '&$token' (maybe you typed wrong?)");
 						return;
 					}
-					
+
 				#problably is a sub
 				} else {
 					my $sub_found;
 					foreach (@{ $eventMacro->{subs_list} }) {
-						
+
 						#it is a sub!
 						if ( $token eq $_) { #sub name
 							$sub_found = 1;
@@ -1373,7 +1373,7 @@ sub parse_and_check_condition_text {
 							next CHAR;
 						}
 					}
-					
+
 					if (!$sub_found) {
 						$self->error("unknown sub '$token' (maybe you typed wrong?)");
 						return;
@@ -1381,18 +1381,18 @@ sub parse_and_check_condition_text {
 				}
 				undef $start_of_macro_keyword;
 				undef $token;
-				
+
 			#it is nothing, so it will be ignored
 			} else {
 				undef $token;
 				undef $start_of_macro_keyword;
 			}
-			
+
 			push (@start_of_group, $i);
 			$parenthesis_count++;
 		}
 	} #for loop end
-	
+
 	#its error time
 	#multiple checks of commom errors
 	if (defined $in_regex) {
@@ -1408,7 +1408,7 @@ sub parse_and_check_condition_text {
 		$self->error("unclosed parenthesis found, please check your code");
 		return;
 	}
-	
+
 	#the last group in the array is always the full statement
 	#so post_if is what lies after end of main group
 	my $post_if = substr ($line_script, $groups[-1]{end}+1);
@@ -1422,17 +1422,17 @@ sub parse_and_check_condition_text {
 sub parse_condition_text_groups {
 	my ($self, $groups) = @_;
 	my $result;
-	
+
 	#when it is a simple statemente, with only one group, then parse it 1 time only
 	if ( scalar @{$groups} == 1) {
 		$result = $self->parse_single_group($groups->[-1]->{script});
 		return if (defined $self->error);
-		
+
 	#when it is a complex statement, with more than one group, parse each one of them
 	#then replace the group byt its result on entire statement
 	} else {
 		my $entire_statement = pop @{$groups}; #original unparsed statement
-		
+
 		#now we will parse one group at a time, since it has more than one
 		foreach my $group ( @{ $groups } ) {
 			my $script = $group->{script};
@@ -1440,13 +1440,13 @@ sub parse_condition_text_groups {
 			return if defined $self->error;
 			#after parse a group, remove it from original script and replace by it's result
 			$entire_statement->{script} =~ s/\Q$script\E/$parsed/;
-			
+
 		}
 		#now that were parsed other groups inside result, lets parse result itself
 		$result = $self->parse_single_group($entire_statement->{script});
 		return if defined $self->error;
 	}
-	
+
 	return $result;
 }
 
@@ -1456,82 +1456,82 @@ sub parse_single_group {
 	my ($negate, $first, $condition, $second);
 	my $in_quote;
 	my $in_regex;
-	
+
 	CHAR: for (my $i = 0; $i < @characters; $i++) {
 		my $previous_char = $characters[$i-1];
 		my $current_char = $characters[$i];
 		my $next_char = $characters[$i+1];
 		my $result;
-		
+
 		#end of regex if found a '/' and it's not a \/
 		if (defined $in_regex) {
 			if ($current_char eq '/' && $previous_char ne "\\") {
 				undef $in_regex;
 			}
-				
+
 		#end of quoted string if found a " and it's not a \"
 		} elsif (defined $in_quote) {
 			if ($current_char eq '"' && $previous_char ne "\\") {
 				undef $in_quote;
 			}
-			
+
 		#ignore if is inside a regex or if found a escaped\"
 		} elsif (!defined $in_quote && $current_char eq '"') {
 			unless ($previous_char eq "\\" || defined $in_regex) {
 				$in_quote = 1;
 			}
-			
+
 		#ignore if is inside a quoted_string or if found a escaped one '\/'
 		} elsif (!defined $in_regex && $current_char eq '/') {
 			unless ($previous_char eq '\\' || defined $in_quote) {
 				$in_regex = 1;
 			}
-		
+
 		#if there is no other char after ')', that is really end of group
 		#it will be parsed unless is inside a quoted string or a regex
 		} elsif ($current_char eq ')' && !defined $next_char) {
 			#end of group that is being parsed
 			$result = $self->resolve_statement($negate, $first, $condition, $second);
 			return if (defined $self->error);
-			
+
 			$script =~ s/\Q$negate$first$condition$second\E/$result/
 			or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
 			return if (defined $self->error);
-			
-			
+
+
 			$script = $self->resolve_multi_and_remove_parenthesis($script);
 			return if (defined $self->error);
 			undef $negate;
 			undef $first;
 			undef $condition;
 			undef $second;
-			
+
 			return $script;
-			
+
 		#means it is the beginning of script, always a '(''
 		} elsif ( $current_char eq '(' && $i == 0) {
 			next CHAR;
-			
+
 		#if next char is also a & means that were found a '&&', that means that there is one statement to be parsed
 		#if next char is also a | means that were found a '||', that means that there is one statement to be parsed
 		} elsif ( ($current_char eq '&' && $next_char eq '&') || ($current_char eq '|' && $next_char eq '|') ) {
 			$result = $self->resolve_statement($negate, $first, $condition, $second);
 			return if (defined $self->error);
-			
+
 			$script =~ s/\Q$negate$first$condition$second\E/$result/
 			or $self->error("NOT POSSIBLE TO MAKE SUBSTITUTION of '$negate$first$condition$second' in '$script', report to creators of eventMacro\n");
 			return if (defined $self->error);
-			
+
 			undef $negate;
 			undef $first;
 			undef $condition;
 			undef $second;
 			$i++; #intentional, it is to skip the next &
 			next CHAR;
-			
+
 		#special characters found, problably is $condition
 		} elsif ( $current_char =~ /[=!~><]/ ) {
-			
+
 			if ( !defined $first || $first =~ /^\s+$/) {
 				#if found a special character before first be defined, can only be two things
 				#its the $negate char or it's a typo
@@ -1543,7 +1543,7 @@ sub parse_single_group {
 					$self->error("Error in statement '$script': not expected '$current_char' here (use quotes if condition have special characters)");
 					return;
 				}
-				
+
 			#a condition
 			} elsif ( defined $first && !defined $condition ) {
 				$condition .= $current_char;
@@ -1552,23 +1552,23 @@ sub parse_single_group {
 					$i++;
 				}
 				next CHAR;
-				
+
 			#if there is already a condition, then is certainly an error
 			} elsif ( defined $first && defined $condition) {
 				$self->{errror} = "Error in statement '$script': not expected to have '$current_char' at index '$i' (use quotes if condition have special characters)";
 				return;
 			}
 		}
-		
-		
+
+
 		if (!defined $condition) {
 			$first .= $current_char;
 		} elsif ( defined $first && defined $condition ) {
 			$second .= $current_char;
 		}
-		
+
 	} #end of for loop
-	
+
 	#in theory should never gets here, so it's better to leave a error message case it gets here
 	$self->error("unknown error found while parsing at sub parse_single_group, please create an issue on github about this");
 	return;
@@ -1576,16 +1576,16 @@ sub parse_single_group {
 
 sub parse_include {
 	my ($self, $key, $param) = @_;
-	
+
 	my $parsed_key = $self->parse_command($key);
 	my $parsed_param = $self->parse_command($param);
 	return if (defined $self->error);
-	
+
 	if (!defined $parsed_key || !defined $parsed_param) {
 		$self->error("Could not define include command");
 		return;
 	}
-	
+
 	if (
 	($parsed_key ne 'list' && $parsed_key ne 'on' && $parsed_key ne 'off') ||
 	($parsed_key eq 'list' && defined $parsed_param) ||
@@ -1595,7 +1595,7 @@ sub parse_include {
 		return;
 	}
 	$eventMacro->include($parsed_key, $parsed_param);
-	
+
 	$self->timeout($self->macro_delay);
 	$self->next_line;
 }
@@ -1604,12 +1604,12 @@ sub parse_do {
 	my ($self, $do_command) = @_;
 	my $parsed_command = $self->parse_command($do_command);
 	return if (defined $self->error);
-	
+
 	unless (defined $parsed_command) {
 		$self->error("Could not define do command");
 		return;
 	}
-	
+
 	if ($parsed_command =~ /^eventMacro\s+/) {
 		$self->error("Do not use command 'eventMacro' inside macros");
 	} elsif ($parsed_command =~ /^ai\s+clear$/) {
@@ -1627,7 +1627,7 @@ sub parse_log {
 	my $parsed_log = $self->parse_command($log_text);
 	#type can be message, warning or error
 	#log_text have the text that will be printed
-	
+
 	return if (defined $self->error);
 	unless (defined $parsed_log) {
 		$self->error("Could not define log value");
@@ -1729,39 +1729,39 @@ sub parse_release_and_lock {
 
 	my $parsed_automacro_name = $self->parse_command($release_command);
 	return if (defined $self->error);
-		
+
 	if (!defined $parsed_automacro_name) {
 		$self->error("automacro name could not be defined");
 	}
 	return if (defined $self->error);
-	
+
 	if ($parsed_automacro_name eq 'all') {
 		if ($type == 1) {
 			$eventMacro->disable_all_automacros();
 		} else {
 			$eventMacro->enable_all_automacros();
 		}
-		
+
 	} else {
 		my $automacro = $eventMacro->{Automacro_List}->getByName($parsed_automacro_name);
 		if (!defined $automacro) {
 			$self->error("could not find automacro with name '$parsed_automacro_name'");
 		}
-		
+
 		if ($type == 1) {
 			$eventMacro->disable_automacro($automacro);
 		} else {
 			$eventMacro->enable_automacro($automacro);
 		}
 	}
-	
+
 	$self->timeout(0);
 	$self->next_line;
 }
 
 sub parse_call {
 	my ($self, $call_command) = @_;
-	
+
 	# Perform substitutions on the macro, so that macros can be called by variable.
 	# For example:
 	#   $macro = foo
@@ -1781,64 +1781,64 @@ sub parse_call {
 
 	my $parsed_macro_name = $self->parse_command($macro_name);
 	return if (defined $self->error);
-		
+
 	if (!defined $parsed_macro_name) {
 		$self->error("macro name could not be defined");
 	} elsif (!defined $eventMacro->{Macro_List}->getByName($parsed_macro_name)) {
 		$self->error("could not find macro with name '$parsed_macro_name'");
 	}
 	return if (defined $self->error);
-		
+
 	$self->create_subcall($parsed_macro_name, $repeat_times);
-		
+
 	unless (defined $self->{subcall}) {
 		$self->error("failed to create subcall '$parsed_macro_name'");
 		return;
 	}
-	
+
 	$self->timeout($self->macro_delay);
 	$self->next_line;
 }
 
 sub resolve_statement {
 	my ($self, $negate, $first, $cond, $last) = @_;
-	
+
 	#remove trailing whitespaces of beggining and end
 	$first =~ s/^\s+|\s+$//g;
 	$cond  =~ s/^\s+|\s+$//g;
 	$last  =~ s/^\s+|\s+$//g;
-	
+
 	#remove quotes
 	$first =~ s/^"(.+)"$/\1/;
 	$last  =~ s/^"(.+)"$/\1/;
-	
+
 	#remove backslashes
 	$first =~ s/\\([\/\"\'])/\1/;
 	$last  =~ s/\\([\/\"\'])/\1/;
-	
+
 	my ($parsed_first, $parsed_last);
-	
-	
+
+
 	#if none of them are defined, throw error
 	if ( $first eq '' && $cond eq '' && $last eq '' ) {
 		$self->error("syntax error in if statement (is empty?)");
 		return;
-		
+
 	#if $first and $cond are defined and missing $last, throw error
 	} elsif ( $first ne '' && $cond ne '' && $last eq '' ) {
 		$self->error("Last argument doesn't exist (1st: '$first', cond: '$cond', last: '$last')");
 		return;
-		
+
 	#if $cond and $last are defined, but missing $first, throw error
 	} elsif ( $first eq '' && $cond ne '' && $last ne '' ) {
 		$self->error("First argument doesn't exist (1st: '$first', cond: '$cond', last: '$last')");
 		return;
-		
+
 	#if only first is defined, parse only first then
 	} elsif ( $first ne '' && $cond eq '' && $last eq '' ) {
 		$parsed_first = $self->parse_command($first);
 		return if (defined $self->error);
-		
+
 	#if all of them are defined, then is ok and the statement will be tested
 	} elsif ($first ne '' && $cond ne '' && $last ne '') {
 		$parsed_first = $self->parse_command($first);
@@ -1846,14 +1846,14 @@ sub resolve_statement {
 		return if (defined $self->error);
 	}
 	my $result = cmpr($parsed_first, $cond, $parsed_last);
-	
+
 	#if sub cmpr gave some error, result will be empty
 	#else will be 0 or 1
 	if ($result eq '') {
 		$self->error("error shown above while comparing values on sub resolve_statement");
 		return;
 	}
-	
+
 	#if $negate is defined, then return the opposite result
 	if (defined $negate) {
 		return ($result ? 0 : 1);
@@ -1893,7 +1893,7 @@ sub resolve_multi_and_remove_parenthesis {
 			return 1 if $e eq "1";
 		}
 		return 0
-		
+
 	} elsif ($save{$n} eq "&&" && $i > 0) {
 		my @split = split(/\s*\&{2}\s*/, $text);
 		foreach my $e (@split) {
@@ -1902,10 +1902,10 @@ sub resolve_multi_and_remove_parenthesis {
 			return 0
 		}
 		return 1
-		
+
 	} elsif ($i == 0) {
 		return $text if $text =~ /^[0-1]$/;
-		
+
 	} else {
 		$self->error("Could not resolve multi, report this error on github\n");
 		return;
@@ -1946,50 +1946,50 @@ sub parse_perl_subs {
 # %hash = (real_name => parsed_var_name, original_name => original_var_name, var => var)
 sub find_and_define_key_index {
 	my ($self, $text) = @_;
-	
+
 	if ($text =~ /(?:^|(?<=[^\\]))\$($valid_var_characters)(\[|\{)(.+)$/) {
 		my $name = $1;
 		my $open_bracket = $2;
-		
+
 		my $type = ($open_bracket eq '[' ? 'array' : 'hash');
 		my $close_bracket = (($type eq 'hash') ? '}' : ']');
-		
+
 		my $rest = $3;
-			
+
 		my $key_index = get_key_or_index($open_bracket, $close_bracket, $rest);
 		if (!defined $key_index) {
 			$self->error("Could not define key of hash or index of array");
 			return;
-			
+
 		} elsif ($key_index eq '') {
 			$self->error("Empty key of hash or index of array");
 			return;
 		}
-			
+
 		my $parsed_key_index = $self->parse_command($key_index);
 		if (defined $self->error) {
 			return;
 		} elsif (!defined $parsed_key_index) {
 			$self->error("Could not parse key or index code");
 			return;
-				
+
 		} elsif ($parsed_key_index eq '') {
 			$self->error("Empty key of hash or index of array after parsing");
 			return;
-			
+
 		} elsif ($type eq 'hash' && $parsed_key_index !~ /[a-zA-Z\d]+/) {
 			$self->error("Invalid syntax in key of hash (only use letters and numbers)");
 			return;
-			
+
 		} elsif ($type eq 'array' && $parsed_key_index !~ /\d+/) {
 			$self->error("Invalid syntax in index of array (only use numbers)");
 			return;
 		}
-			
+
 		my $real_name = ('$'.$name.$open_bracket.$parsed_key_index.$close_bracket);
-			
+
 		my $original_name = ('$'.$name.$open_bracket.$key_index.$close_bracket);
-		
+
 		my $var = find_variable($real_name);
 		if (!defined $var) {
 			$self->error("Could not define variable type");
@@ -2002,36 +2002,36 @@ sub find_and_define_key_index {
 # substitute variables
 sub substitue_variables {
 	my ($self, $received, $get_entire_array_or_hash) = @_;
-	
+
 	my $remaining = $received;
 	my $substituted;
-	
+
 	VAR: while ($remaining =~ /(?:^|(?<=[^\\]))$general_variable_qr/) {
-	
+
 		#accessed arrays and hashes
 		if (my $var_hash = $self->find_and_define_key_index($remaining)) {
 			return if (defined $self->error);
 			my $var = $var_hash->{var};
 			my $regex_name = quotemeta($var_hash->{original_name});
-			
+
 			if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
 				my $before_var = $1;
 				my $after_var = $2;
 				my $var_value = $eventMacro->get_var($var->{type}, $var->{real_name}, $var->{complement});
 				$var_value = '' unless (defined $var_value);
-				
+
 				$remaining = $before_var.$var_value.$after_var;
-				
+
 			} else {
 				$self->error("Could not find detected variable in code");
 				return;
 			}
 			next VAR;
-			
+
 		} elsif ($remaining =~ /(?:^|(?<=[^\\]))($scalar_variable_qr|$array_variable_qr|$hash_variable_qr)/) {
 			return if (defined $self->error);
 			my $var = find_variable($1);
-			
+
 			my $regex_name = quotemeta($var->{display_name});
 			if ($remaining =~ /^(.*?)(?:^|(?<=[^\\]))$regex_name(.*?)$/) {
 				my $before_var = $1;
@@ -2039,14 +2039,14 @@ sub substitue_variables {
 				my $var_value;
 				if ($var->{type} eq 'scalar') {
 					$var_value = $eventMacro->get_scalar_var($var->{real_name});
-					
+
 				} elsif ($var->{type} eq 'array') {
 					if ($get_entire_array_or_hash) {
 						$var_value = $var->{display_name};
 					} else {
 						$var_value = $eventMacro->get_array_size($var->{real_name});
 					}
-					
+
 				} elsif ($var->{type} eq 'hash') {
 					if ($get_entire_array_or_hash) {
 						$var_value = $var->{display_name};
@@ -2055,10 +2055,10 @@ sub substitue_variables {
 					}
 				}
 				$var_value = '' unless (defined $var_value);
-				
+
 				$substituted = $substituted . $before_var . $var_value;
 				$remaining = $after_var;
-				
+
 			} else {
 				$self->error("Could not find detected variable in code");
 				return;
@@ -2066,9 +2066,9 @@ sub substitue_variables {
 			next VAR;
 		}
 	}
-	
+
 	$substituted .= $remaining;
-	
+
 	#Remove backslashes
 	$substituted =~ s/\\($scalar_variable_qr|$array_variable_qr|$hash_variable_qr)/$1/g;
 
@@ -2106,7 +2106,7 @@ sub parse_command {
 
 	while (($keyword, $inside_brackets) = parse_keywords($command)) {
 		$result = "_%_";
-		
+
 		#if $keyword is different of every key inside qw(), then we will substitue variables
 		unless (grep{$_ eq $keyword} qw(nick push unshift pop shift delete exists defined split keys values)) {
 			$parsed = $self->substitue_variables($inside_brackets);
@@ -2115,116 +2115,113 @@ sub parse_command {
 
 		if ($keyword eq 'npc') {
 			$result = getnpcID($parsed);
-			
+
 		} elsif ($keyword eq 'cart') {
 			$result = (getItemIDs($parsed, $char->cart))[0];
-			
+
 		} elsif ($keyword eq 'Cart') {
 			$result = join ',', getItemIDs($parsed, $char->cart);
-			
+
 		} elsif ($keyword eq 'inventory') {
 			$result = (getInventoryIDs($parsed))[0];
-			
+
 		} elsif ($keyword eq 'Inventory') {
 			$result = join ',', getInventoryIDs($parsed);
-			
+
 		} elsif ($keyword eq 'InventoryType') {
 			$result = join ',', getInventoryTypeIDs($parsed);
-			
+
 		} elsif ($keyword eq 'store') {
 			$result = (getItemIDs($parsed, $storeList))[0];
-			
+
 		} elsif ($keyword eq 'storage') {
 			$result = (getStorageIDs($parsed))[0];
-			
+
 		} elsif ($keyword eq 'Storage') {
 			$result = join ',', getStorageIDs($parsed);
-			
+
 		} elsif ($keyword eq 'player') {
 			$result = getPlayerID($parsed);
-			
+
 		} elsif ($keyword eq 'monster') {
 			$result = getMonsterID($parsed);
-			
+
 		} elsif ($keyword eq 'vender') {
 			$result = getVenderID($parsed);
-			
+
 		} elsif ($keyword eq 'venderitem') {
 			$result = (getItemIDs($parsed, $venderItemList))[0];
-			
+
 		} elsif ($keyword eq 'venderItem') {
 			$result = join ',', getItemIDs($parsed, $venderItemList);
-			
+
 		} elsif ($keyword eq 'venderprice') {
 			$result = getItemPrice($parsed, $venderItemList->getItems);
-			
+
 		} elsif ($keyword eq 'venderamount') {
-			$result = getVendAmount($parsed, $venderItemList->getItems);
-			
+			$result = getVendAmount(getItemIDs($parsed, $venderItemList), $venderItemList->getItems);
+
 		} elsif ($keyword eq 'random') {
 			$result = getRandom($parsed);
 			$only_replace_once = 1;
-			
+
 		} elsif ($keyword eq 'rand') {
 			$result = getRandomRange($parsed);
 			$only_replace_once = 1;
-			
+
 		} elsif ($keyword eq 'invamount') {
 			$result = getInventoryAmount($parsed);
-			
+
 		} elsif ($keyword eq 'cartamount') {
 			$result = getCartAmount($parsed);
-			
+
 		} elsif ($keyword eq 'shopamount') {
 			$result = getShopAmount($parsed);
-			
+
 		} elsif ($keyword eq 'storamount') {
 			$result = getStorageAmount($parsed);
-			
+
 		} elsif ($keyword eq 'config') {
 			$result = getConfig($parsed);
-			
+
 		} elsif ($keyword eq 'arg') {
 			$result = getWord($parsed);
-			
+
 		} elsif ($keyword eq 'eval') {
 			$result = eval($parsed) unless $Settings::lockdown;
-			
+
 		} elsif ($keyword eq 'listitem') {
 			$result = getArgFromList($parsed);
-			
-		} elsif ($keyword eq 'listlength') {
-			$result = getListLenght($parsed);
-			
+
 		} elsif ($keyword eq 'strip') {
 			$parsed =~ s/\(|\)//g;
 			$result = $parsed;
-			
+
 		} elsif ($keyword eq 'split') {
 			my ($pattern, $string) = get_pattern($inside_brackets);
 			my @values = split($pattern, $self->substitue_variables($string));
 			$result = join (',', @values);
-			
+
 		} elsif ($keyword eq 'keys') {
 			$result = join ',', find_hash_and_get_keys($inside_brackets);;
-			
+
 		} elsif ($keyword eq 'values') {
 			$result = join ',', find_hash_and_get_values($inside_brackets);
-			
+
 		} elsif ($keyword eq 'nick') {
 			$parsed = $self->substitue_variables($inside_brackets);
 			$result = q4rx2($parsed);
-		
+
 		} elsif ($keyword eq 'push' || $keyword eq 'unshift' || $keyword eq 'pop' || $keyword eq 'shift') {
 			$result = $self->manage_array($keyword, $inside_brackets);
 			return if (defined $self->error);
 			$only_replace_once = 1;
-			
+
 		} elsif ($keyword eq 'exists' || $keyword eq 'delete') {
 			$result = $self->manage_hash($keyword, $inside_brackets);
 			return if (defined $self->error);
 			$only_replace_once = 1;
-		
+
 		} elsif ($keyword eq 'defined') {
 			$result = $self->parse_defined($inside_brackets);
 			return if (defined $self->error);
@@ -2243,19 +2240,19 @@ sub parse_command {
 			$result = grep { $_ eq 'complete' } values %{ getQuestStatus( split /\s*,\s*/, $parsed ) };
 
 		}
-		
+
 		return unless defined $result;
 		return $command if ($result eq '_%_');
-		
+
 		$inside_brackets = q4rx($inside_brackets);
-		
+
 		unless ($only_replace_once) {
 			$command =~ s/$macro_keywords_character$keyword\s*\(\s*$inside_brackets\s*\)/$result/g
 		} else {
 			$command =~ s/$macro_keywords_character$keyword\s*\(\s*$inside_brackets\s*\)/$result/
 		}
 	}
-	
+
 	unless ($Settings::lockdown) {
 		# any round bracket(pair) found after parse_keywords sub-routine were treated as macro perl sub-routine
 		undef $result; undef $parsed;
@@ -2271,23 +2268,23 @@ sub parse_command {
 				return "";
 			}
 			$parsed = $self->substitue_variables($val, 1);
-			
+
 			#spliting $parsed to check if there is an array or hash
 			my (@array_holder, %hash_holder);
 			foreach (split /\s*,\s*/ , $parsed) {
 				#if don't have quotation marks and it is not a number or a variable, add the quotation marks
-				if ($_ !~ /"[^"]+"/ && $_ !~ /^\s*\d+\s*$/ && $_ !~ /$array_variable_qr|$hash_variable_qr/) { 
+				if ($_ !~ /"[^"]+"/ && $_ !~ /^\s*\d+\s*$/ && $_ !~ /$array_variable_qr|$hash_variable_qr/) {
 					$parsed =~ s/$_/"$_"/;
-					
+
 				#elsif it is a variable or a number but has quotation marks, remove it
 				} elsif ($_ =~ /"\s*$array_variable_qr\s*"|"\s*$hash_variable_qr\s*"/ || $_ =~ /"\s*\d+\s*"/) {
 					#first remove quotation from $_
-					$_ =~ s/\"//g; 
+					$_ =~ s/\"//g;
 					#after remove quotation from $parsed, using the $_ to find the correct place to remove
 					$parsed =~ s/\"$_\"/$_/;
 					#strange but it works
 				}
-				
+
 				if (my $var = find_variable($_)) {
 					#there is an array or a hash to pass to sub
 					if ($var->{type} eq 'array') {
@@ -2299,7 +2296,7 @@ sub parse_command {
 						} else {
 							$self->error("Array '" . $var->{display_name} . "' does not exist");
 						}
-						
+
 					} elsif ($var->{type} eq 'hash') {
 						#if hash exists, gets the content and insert on hash holder
 						#then insert hash_holder on $parsed
@@ -2343,34 +2340,34 @@ sub parse_command {
 
 sub parse_defined {
 	my ($self, $inside_brackets) = @_;
-	
+
 	my $var;
 	if (my $var_hash = $self->find_and_define_key_index($inside_brackets)) {
 		return if (defined $self->error);
 		$var = $var_hash->{var};
-		
+
 	} else {
 		return if (defined $self->error);
 		$var = find_variable($inside_brackets);
 	}
-	
+
 	if (!defined $var) {
 		$self->error("Could not define variable type");
 		return;
-	
+
 	} elsif ($var->{type} ne 'accessed_hash' && $var->{type} ne 'accessed_array' && $var->{type} ne 'scalar') {
 		$self->error("defined function can only be used on scalars, hashes with keys or arrays with indexes, you trie to use it in a ".$var->{type});
 		return;
 	}
-	
+
 	my $complement = (exists $var->{complement} ? $var->{complement} : undef);
-	
+
 	return ($eventMacro->defined_var($var->{type}, $var->{real_name}, $complement));
 }
 
 sub manage_hash {
 	my ($self, $keyword, $inside_brackets) = @_;
-	
+
 	if (my $var_hash = $self->find_and_define_key_index($inside_brackets)) {
 		return if (defined $self->error);
 		my $var = $var_hash->{var};
@@ -2378,16 +2375,16 @@ sub manage_hash {
 			$self->error("Bad exists syntax, variable not a hash name/key pair");
 			return;
 		}
-		
+
 		if ($keyword eq 'exists') {
 			return ($eventMacro->exists_hash($var->{real_name}, $var->{complement}));
-			
+
 		} elsif ($keyword eq 'delete') {
 			my $result = $eventMacro->delete_key($var->{real_name}, $var->{complement});
 			$result = '' unless (defined $result);
 			return $result;
 		}
-		
+
 	} else {
 		return if (defined $self->error);
 		$self->error("Function '".$keyword."' must have a hash and a hash key as argument");
@@ -2397,10 +2394,10 @@ sub manage_hash {
 
 sub manage_array {
 	my ($self, $keyword, $inside_brackets) = @_;
-	
+
 	my @args = split(/\s*,\s*/, $inside_brackets, 2);
 	my ($var);
-	
+
 	if ($args[0] =~ /^($array_variable_qr)/i) {
 		$var = find_variable($1);
 		if (defined $self->error) {
@@ -2413,32 +2410,32 @@ sub manage_array {
 		$self->error("'$args[0]' is not a valid array name");
 		return;
 	}
-	
+
 	my $parsed = $self->parse_command($args[1]);
-	
+
 	my $result;
-	
+
 	if ($keyword eq 'push') {
 		if (@args != 2) {
 			$self->error("push sintax must be 'push(\@var_name, new_member)'");
 			return;
 		}
 		$result = $eventMacro->push_array($var->{real_name}, $parsed);
-			
+
 	} elsif ($keyword eq 'unshift') {
 		if (@args != 2) {
 			$self->error("unshift sintax must be 'unshift(\@var_name, new_member)'");
 			return;
 		}
 		$result = $eventMacro->unshift_array($var->{real_name}, $parsed);
-		
+
 	} elsif ($keyword eq 'pop') {
 		if (@args != 1) {
 			$self->error("pop sintax must be 'pop(\@var_name)'");
 			return;
 		}
 		$result = $eventMacro->pop_array($var->{real_name});
-			
+
 	} elsif ($keyword eq 'shift') {
 		if (@args != 1) {
 			$self->error("shift sintax must be 'shift(\@var_name)'");
@@ -2449,7 +2446,7 @@ sub manage_array {
 		$self->error("Unknown array keyword used '".$keyword."'");
 		return;
 	}
-	
+
 	$result = '' unless (defined $result);
 	return $result;
 }

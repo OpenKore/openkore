@@ -23,6 +23,7 @@ forceMapIP
 XKore 0
 XKore_port 2350
 XKore_dll NetRedirect.dll
+XKore_injectDLL 1
 XKore_autoAttachIfOneExe 1
 XKore_silent 1
 XKore_bypassBotDetection 0
@@ -139,6 +140,8 @@ avoidList 1
 avoidList_inLockOnly 0
 avoidList_reconnect 1800
 avoidList_ignoreList
+
+avoidHiddenActors 0
 
 cachePlayerNames 1
 cachePlayerNames_duration 900
@@ -331,6 +334,8 @@ logAppendServer 0
 monsterLog 0
 logDead 1
 
+questDisplayStyle 2
+
 chatTitleOversize 0
 shopTitleOversize 0
 buyerShopTitleOversize 0
@@ -487,7 +492,7 @@ pet_return 20
 # configure two attack skills, just duplicate the attackSkillSlot block.
 
 attackSkillSlot {
-	lvl 10
+	lvl
 	dist 1.5
 	maxCastTime 0
 	minCastTime 0
@@ -575,7 +580,7 @@ doCommand {
 }
 
 useSelf_skill {
-	lvl 10
+	lvl
 	maxCastTime 0
 	minCastTime 0
 	hp
@@ -608,7 +613,7 @@ useSelf_skill_smartHeal 1
 partySkillDistance 0..8
 
 partySkill {
-	lvl 10
+	lvl
 	dist 3
 	maxCastTime 0
 	minCastTime 0
