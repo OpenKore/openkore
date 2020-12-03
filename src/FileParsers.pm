@@ -119,7 +119,7 @@ sub parseAchievementFile {
 			}
 			if ( $line =~ /title\s+\=\s+(\d+)/ ) {
 				$r_hash->{$current_id}->{rewards}->{title} = $1;
-			} 
+			}
 			if ( $line =~ /item\s+\=\s+(\d+)/ ) {
 				$r_hash->{$current_id}->{rewards}->{item} = $1;
 			}
@@ -304,7 +304,7 @@ sub parseConfigFile {
 		} elsif (!defined $inBlock && $line =~ /{$/) {
 			# Begin of block
 			$line =~ s/ *{$//;
-			($key, $value) = $line =~ /^(.*?) (.*)/;
+			($key, $value) = $line =~ /^(.*?)\s+(.*)/;
 			$key = $line if ($key eq '');
 
 			if (!exists $blocks->{$key}) {
@@ -1070,7 +1070,7 @@ sub parseAttendanceRewards {
 	while (!$reader->eof()) {
 		$line = $reader->readLine();
 		chomp;
-	
+
 		$line =~ s/[\r\n\x{FEFF}]//g;
 		next if $line =~ /^$/ || $line =~ /^#/;
 
@@ -1083,13 +1083,13 @@ sub parseAttendanceRewards {
 			next;
 		} elsif ($line =~ /^end\s(\d+)/) {
 			$attendance_rewards->{period}{end} = $1;
-			next;	
+			next;
 		}
 
 		my ($day, $item_id, $amount) = split(/ /, $line);
 		$item_id =~ s/^\s+//g;
 		$amount =~ s/^\s+//g;
-		
+
 		$attendance_rewards->{items}{$day}{item_id} = $item_id;
 		$attendance_rewards->{items}{$day}{amount} =  $amount;
 	}
