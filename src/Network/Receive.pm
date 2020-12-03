@@ -9429,7 +9429,9 @@ sub special_item_obtain {
 
 	stripLanguageCode(\$holder);
 	if ($args->{type} == TYPE_BOXITEM) {
-		@{$args}{qw(box_nameID)} = unpack 'c/v', $args->{etc};
+		my $c = unpack 'c', $args->{etc};
+		my $unpack = ($c == 2) ?  'c/v' : 'c/V';
+		@{$args}{qw(box_nameID)} = unpack $unpack, $args->{etc};
 
 		my $box_item_name = itemNameSimple($args->{box_nameID});
 		$source_name = $box_item_name;
