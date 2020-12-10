@@ -216,6 +216,7 @@ our @EXPORT = (
 	fromBase62
 	solveItemLink
 	solveMessage
+	solveMSG
 	absunit/,
 
 	# Npc buy and sell
@@ -5489,6 +5490,28 @@ sub fromBase62 {
     }
 
     return $base10;
+}
+
+sub solveMSG {
+	my $msg = shift;
+	my $id;
+
+	if ($msg =~ /<MSG>(\d+)<\/MSG>/) {
+		$id = $1 + 1;
+		if ($msgTable[$id]) { # show message from msgstringtable.txt
+			debug "Replace the original message with: '$msgTable[$id]'\n";
+			$msg = $msgTable[$id];
+		}
+	} elsif ($msg =~ /<MSG>(\d+),(\d+)<\/MSG>/) {
+		$id = $1 + 1;
+		if ($msgTable[$id]) {
+			debug "Replace the original message with: '$msgTable[$id]'\n";
+			$msg = sprintf ($msgTable[$id], $2);
+		}
+	}
+	warning TF("Unknown msgid: %d. Need to update the file msgstringtable.txt (from data.grf)\n", --$id) if !$msgTable[$id];
+
+	return $msg;
 }
 
 # Solve each <ITEML>.*</ITEML> to kore-style item name
