@@ -216,6 +216,7 @@ our @EXPORT = (
 	fromBase62
 	solveItemLink
 	solveMessage
+	solveMSG
 	absunit/,
 
 	# Npc buy and sell
@@ -5491,6 +5492,20 @@ sub fromBase62 {
     return $base10;
 }
 
+sub solveMSG {
+	my ($msg) = @_;
+
+	if ($msg =~ /<MSG>(\d+)<\/MSG>/) {
+		my $id = $1 + 1;
+		$msg = $msgTable[$id];
+	} elsif ($msg =~ /<MSG>(\d+)\,(\d+)<\/MSG>/) {
+		my $id = $1 + 1;
+		$msg = sprintf ($msgTable[$id], $2);
+	}
+
+	return $msg;
+}
+
 # Solve each <ITEML>.*</ITEML> to kore-style item name
 sub solveItemLink {
 	my ($itemlstr) = @_;
@@ -5546,5 +5561,7 @@ sub absunit {
 		return -1;
 	}
 }
+
+
 
 return 1;
