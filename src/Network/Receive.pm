@@ -8193,7 +8193,7 @@ sub rodex_mail_list {
 		@{$mail}{@{$mail_info->{keys}}} = unpack($mail_info->{types}, substr($args->{mailList}, $i, $mail_info->{len}));
 
 		$mail->{title} = solveMSG(bytesToString(substr($args->{mailList}, ($i+$mail_info->{len}), $mail->{Titlelength})));
-		$mail->{sender} = solveMSG($mail->{sender});
+		$mail->{sender} = solveMSG(bytesToString($mail->{sender}));
 		$mail->{page} = $rodexList->{current_page};
 		$mail->{page_index} = $index;
 

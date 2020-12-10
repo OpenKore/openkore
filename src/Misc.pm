@@ -5493,15 +5493,23 @@ sub fromBase62 {
 }
 
 sub solveMSG {
-	my ($msg) = @_;
+	my $msg = shift;
+	my $id;
 
 	if ($msg =~ /<MSG>(\d+)<\/MSG>/) {
-		my $id = $1 + 1;
-		$msg = $msgTable[$id];
-	} elsif ($msg =~ /<MSG>(\d+)\,(\d+)<\/MSG>/) {
-		my $id = $1 + 1;
-		$msg = sprintf ($msgTable[$id], $2);
+		$id = $1 + 1;
+		if ($msgTable[$id]) { # show message from msgstringtable.txt
+			debug "Replace the original message with: '$msgTable[$id]'\n";
+			$msg = $msgTable[$id];
+		}
+	} elsif ($msg =~ /<MSG>(\d+),(\d+)<\/MSG>/) {
+		$id = $1 + 1;
+		if ($msgTable[$id]) {
+			debug "Replace the original message with: '$msgTable[$id]'\n";
+			$msg = sprintf ($msgTable[$id], $2);
+		}
 	}
+	warning TF("Unknown msgid: %d. Need to update the file msgstringtable.txt (from data.grf)\n", --$id) if !$msgTable[$id];
 
 	return $msg;
 }
@@ -5561,7 +5569,5 @@ sub absunit {
 		return -1;
 	}
 }
-
-
 
 return 1;
