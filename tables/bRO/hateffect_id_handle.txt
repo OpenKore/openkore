@@ -128,3 +128,6 @@
 128 HAT_EF_CONS_OF_WIND
 129 HAT_EF_Maple_Falls
 130 HAT_EF_BJ_HeadsetB
+131 HAT_EF_VIP_Hair
+132 HAT_EF_C_Magic_Heir_TW
+134 HAT_EF_C_Romance_Rose_TW

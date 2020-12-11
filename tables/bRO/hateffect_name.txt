@@ -128,3 +128,6 @@ HAT_EF_2019RTC3ST_TW 2019RTC3ST_TW
 HAT_EF_CONS_OF_WIND CONS_OF_WIND
 HAT_EF_Maple_Falls Maple_Falls
 HAT_EF_BJ_HeadsetB BJ_HeadsetB
+HAT_EF_VIP_Hair VIP_Hair
+HAT_EF_C_Magic_Heir_TW C_Magic_Heir_TW
+HAT_EF_C_Romance_Rose_TW C_Romance_Rose_TW

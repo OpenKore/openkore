@@ -1,0 +1,35 @@
+1000 Jovem
+1001 Especialista
+1002 Mestre
+1003 Profissional
+1004 Expert
+1005 Aventureiro
+1006 Oficial
+1007 Ás
+1008 Potente
+1009 Mad
+1010 Stone Immortal
+1011 Golden Flash
+1012 Sharp
+1013 Lucky
+1014 Incarnate of Love and Hatred
+1015 Maniac
+1016 Reborn
+1017 Bloody Red
+1018 Rookie Teleporter
+1019 Choked
+1020 Gambler
+1021 Battle Manual Master
+1022 Cônjuge
+1023 Persistente
+1024 Experiente
+1025 Poring
+1026 Entomologista
+1027 Amante de Bicho
+1028 Devil Contractor
+1029 Weeb
+1030 Monster Boys
+1031 Visionary
+1032 Bebê
+1033 Responsável
+1034 Nobre
