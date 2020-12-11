@@ -82550,6 +82550,15 @@ Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
 #
+20593#
+Costume wings that show the inner beauty of the ice crystals
+
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20594#
 A long, bright red, ribbon cloak. Don't leave home without your cloak!
 Class: ^808080Costume^000000
@@ -88826,41 +88835,41 @@ The key to unlocking Kachua's Secret Box. It contains various treasures!
 ^FF0000The contents of the secret box change every month, so please check and use it.^000000
 Type: ^808080Usable^000000
 Weight: ^8080800^000000
-September Kachua Key Contents:
-SSS Class
+Each Kachua Key you receive will also give you 1 HE Bubble Gum!
+Chance of one of the following
+SSS
 Status Shadow Item Combiner
 Armor +12 Refine Ticket
 Weapon +12 Refine Ticket
-
-
-SS Class
+SS
 Armor +11 Refine Ticket
 Weapon +11 Refine Ticket
-Powerful Essence
-
-S Class
-Cute Little Boar Shoes
-Giant Boots
-Samael Dress
-Star Eyepatch
-
-A Class
-Class Shadow Item Box
-
-B Class
+Essence of Powerful Soul
+S
+Duel Dragon Hat
+Splash Cat Hat
+Juggernaut
+Soul Expansion Ring
+A
+Class Weapon Shadow Cube
+Class Shield Shadow Cube
+Class Armor Shadow Cube
+Class Shoes Shadow Cube
+Class Earring Shadow Cube
+Class Pendant Shadow Cube
+B
 Blacksmith Blessing
 Yggdrasilberry Box
-
-C Class
-WOB Box
-Poison Bottle Box
-Alchemist's Box Box
-Bloody Dead Branch
-Battle Manual and Bubble Gum
-Fencer Scroll 10 x 2
-Bowman Scroll 10 x 2
-Spearman Scroll 10 x 2
-Mystical Amplification Scroll x 5
+C
+Butterfly Wing Box
+Poison Bottle 30 Box
+Alchemist Box
+[Not for Sale] Battle Manual and Bubble Gum
+Bloody Branch
+Spearman Scroll 10 (x2)
+Fencer Scroll 10 (x2)
+Bowman Scroll 10 (x2)
+Mystical Amplification Scroll (x5)
 #
 23921#
 Event Reward
@@ -100668,6 +100677,21 @@ Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
+31620#
+A snowy white fox that when observed seems playful.
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31625#
+A warm scarf secured to the neck and shoulders by a decorative shield. The shield seems to be of fine craftsmanship.
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
 31628#
 A miniature Dokebi made for children. Don't worry, it won't attack you!
 Class: ^808080Costume^000000
@@ -101268,6 +101292,52 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 When worn during January increases monster EXP by 5%
 #
+31902#
+These cool sunglasses project an aura of coolness beyond the lens
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31903#
+A costume of a white snake to rest on your head.
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31904#
+A stylish parade hat to wear in the snow.
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31905#
+A wig for only the coolest adventurers, who can stay frosty in all situations.
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31906#
+There is a decoration in the shape of a cat's paw to act as a good luck charm while adventuring.
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31907#
+There is a decoration in the shape of a cat's paw to act as a good luck charm while adventuring.
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 31911#
 A flower crown for a dignified costume. It exudes a feeling of elegance and natural beauty.
 Class: ^808080Costume^000000
@@ -101867,6 +101937,22 @@ Weight : ^7777771^000000
 Attack: ^8080800^000000
 Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
+#
+200028#
+When opened gives one of the following at Random
+Costume Frozen Crystal Wings
+Costume Snow Flower
+Costume Snow Fox
+Costume Protective Scarf
+Costume Cool Shades
+Costume White Snake
+Costume Snow Parade Hat
+Costume Ice Tails
+Costume Cat's Paw Knit Hat
+Costume Cat's Paw Knit Hat (Brown)
+Type: ^808080Usable^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 200030#
 A box that contains a Mistress Wing. An un-consumable version of a fly wing that teleports your entire party and expires over time.
