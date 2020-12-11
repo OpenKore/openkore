@@ -5326,7 +5326,7 @@
 12410#Thick Pork Belly#
 12411#HE Battle Manual#
 12412#HE Bubble Gum#
-12413#PC Cafe Coupon BoxÂ¥Â±#
+12413#PC Cafe Coupon Box¥±#
 12414#Guarana Candy#
 12416#Thanksgiving Groove Pack#
 12418#Full SwingK#
@@ -5415,7 +5415,7 @@
 12537#Gift Chocolate Basket#
 12538#Firecracker Basket#
 12539#Splendid Box#
-12545#Fortune EggÂ¥Â´#
+12545#Fortune Egg¥´#
 12548#Black Market Bulk Buyer Shop License#
 12549#Condensed White Potion 200 Box#
 12550#Poison Bottle 30 Box#
@@ -6342,8 +6342,8 @@
 15111#Upgrade Part - Plate#
 15112#Military Mail#
 15113#Exorcist Mail#
-15116#AirshipÂ¡Â®s Armor#
-15117#FelrockÂ¡Â®s Armor#
+15116#Airship¡®s Armor#
+15117#Felrock¡®s Armor#
 15118#PRO 10th Armor#
 15119#PRO 10th Robe#
 15120#PRO 10th Shoes#
@@ -7989,6 +7989,7 @@
 20589#Costume One Wing#
 20590#Costume Evil Druid Cross#
 20591#Costume Bow on Back#
+20593#Costume Frozen Crystal Wings#
 20594#Costume Big Ribbon Manteau#
 20603# Costume Ulysses Wings#
 20700#Egir Manteau#
@@ -8347,7 +8348,7 @@
 23254#Valkyrie Bundle A#
 23255#Kardui Bundle A#
 23256#Spiritual Bandage#
-23257#Old TreeÂ¡Â¯s Dew#
+23257#Old Tree¡¯s Dew#
 23258#Stinky Rotten Meat#
 23259#Strawberry Cream Cupcake#
 23260#Fruit Parfait#
@@ -8822,7 +8823,7 @@
 26164#Electric Fox-OS#
 26173#The Rowdy Pipe#
 26200#Hippie Rope#
-26219#The OlÂ¡Â¯ Clothesline#
+26219#The Ol¡¯ Clothesline#
 27012#Kick Step Card#
 27013#Kick and Kick Card#
 27014#Green Cenere Card#
@@ -9504,6 +9505,8 @@
 31616#Costume Sleep Sheep#
 31617#Costume Lady Tanee#
 31618#Costume Dancing Butterfly#
+31620#Costume Snow Fox#
+31625#Costume Protective Scarf#
 31628#Costume Dokebi#
 31635#Costume Flowing Long (Blonde)#
 31636#Costume Flowing Long (Silver)#
@@ -9583,6 +9586,12 @@
 31847#Costume Blinking Blue Eyes#
 31848#Costume Gothic Rose Bonnet#
 31899#Costume Freyja's Crown#
+31902#Costume Cool Shades#
+31903#Costume White Snake#
+31904#Costume Snow Parade Hat#
+31905#Costume Ice Tails#
+31906#Costume Cat's Paw Knit Hat#
+31907#Costume Cat's Paw Knit Hat (Brown)#
 31911#Costume Little Garden#
 31912#Costume Black Veil#
 31913#Costume Feathered Black Cap#
@@ -9621,6 +9630,7 @@
 100540#Class Shield Shadow Cube#
 100541#Class Pendant Shadow Cube#
 100542#Class Earring Shadow Cube#
+200028#Frozen Costume Egg#
 200030#[30D] Mistress Wing Box#
 200052#Costume Thanksgiving Egg#
 200055#Acid Bomb 50 Box#

@@ -26617,8 +26617,8 @@ Weight: ^8080801^000000
 Increases magical damage on Demon race targets by 10%.
 #
 4480#
-^808080Â¸ğµ§ Â½ÂºÅ³Ã€Ç È„ Âµğ·¹€Ì°Â¡ 15% Â°Â¨Â¼Ò‡Ñ´Ù®
-15ÃÂ¦Â·Ã Ã€Ì»ó ½ƒ Â½Ã€Ã¼ È„ Âµğ·¹€Ì 5% ÃŸÂ°Â¡ Â°Â¨Â¼Ò®
+^808080¸ğµç ½ºÅ³ÀÇ ÈÄ µô·¹ÀÌ°¡ 15% °¨¼ÒÇÑ´Ù.
+15Á¦·Ã ÀÌ»ó ½Ã ½ÃÀü ÈÄ µô·¹ÀÌ 5% Ãß°¡ °¨¼Ò.
 Class : ^777777Card^000000
 Compound on : ^777777Headgear^000000
 Weight : ^7777771^000000
@@ -26634,11 +26634,11 @@ Weight: 0
 Weapon Level: 0
 #
 4481#
-^808080È­Â¼Ó¼Âº Â¸ó½º…Í¿Â¡Â°Ô Â¹Â°Â¸Â® ÂµÂ¥Â¹ÌÃ¶ 25% ÃŸÂ°Â¡.
-Â¹Â°Â¸Â®, Â¸Â¶Â¹Ã½ ÂµÂ¥Â¹ÌÃ¶Â¸Â¦ Ã€Ô¾ÃºÃ€Â» Â¶Â§ Ã€ÏÂ¤ È®Â·Ã¼Â·Î Â¿Ã€Å¤Â½ÂºÆ§ ÇÂ·Î½ÂºÆ® Â³ë¹™ Lv10 Â¹ßµÂ¿.
-15ÃÂ¦Â·Ã Ã€Ì»ó€ Â°æ¿¬ È­Â¼Ó¼Âº Â¸ó½º…Í¿Â¡Â°Ô Â¹Â°Â¸Â® ÂµÂ¥Â¹ÌÃ¶ 10% ÃŸÂ°Â¡ÃÃµÂ°Â¡.
+^808080È­¼Ó¼º ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 25% Ãß°¡.
+¹°¸®, ¸¶¹ı µ¥¹ÌÁö¸¦ ÀÔ¾úÀ» ¶§ ÀÏÁ¤ È®·ü·Î ¿ÀÅä½ºÆç ÇÁ·Î½ºÆ® ³ë¹Ù Lv10 ¹ßµ¿.
+15Á¦·Ã ÀÌ»óÀÏ °æ¿ì È­¼Ó¼º ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 10% Ãß°¡Áõ°¡.
 Class : ^777777Card^000000
-Compound on : ^777777Â°Â©Â¿Ê000000
+Compound on : ^777777°©¿Ê^000000
 Weight : ^7777771^000000
 Increases damage to Fire Property monsters by 25%.
 Has a low chance of auto-casting Frost Nova while being attacked.
@@ -26653,11 +26653,11 @@ Weight: 0
 Weapon Level: 0
 #
 4482#
-^80808015ÃŠÂ¸Â¶Â´Ù 50Ã€Ç HP, 10Ã€Ç Sp È¸ÂºÂ¹.
-MHPÂ¿Í MSPÂ°Â¡ 5% ÃÃµÂ°Â¡Ç‘Â´Ù®
-15ÃÂ¦Â·Ã Ã€Ì»ó € Â°æ¿¬ HP, SPÈ¸ÂºÂ¹Â¼ÓµÂµ 10ÃŠÂ·Î Â´Üƒà¬ MHP, MSPÂ°Â¡ 2% ÃŸÂ°Â¡ ÃÃµÂ°Â¡.
+^80808015ÃÊ¸¶´Ù 50ÀÇ HP, 10ÀÇ Sp È¸º¹.
+MHP¿Í MSP°¡ 5% Áõ°¡ÇÑ´Ù.
+15Á¦·Ã ÀÌ»ó ÀÏ °æ¿ì HP, SPÈ¸º¹¼Óµµ 10ÃÊ·Î ´ÜÃà, MHP, MSP°¡ 2% Ãß°¡ Áõ°¡.
 Class : ^777777Card^000000
-Compound on : ^777777Â½Å¹ß000000
+Compound on : ^777777½Å¹ß^000000
 Weight : ^7777771^000000
 MaxHP +7%
 MaxSP +7%
@@ -26673,9 +26673,9 @@ Weight: 0
 Weapon Level: 0
 #
 4483#
-^808080Ã€ÏÂ¤È®Â·Ã¼(5%)Â·Î Ã€Ã»Â¿Â¡Â°Ô ÃØ Â´ë¹ŒÃÃ¶Ã€Ç 5% Â¸Â¦ Ã€Ú½Å€Ç SPÂ·Î È­Â¼Ã¶ Ç‘Â´Ù® 15ÃÂ¦Â·Ã Ã€Ì»ó€ Â°æ¿¬ È­Â¼Ã¶Ç’ È®Â·Ã¼Ã€Ì 7%Â·Î ÃÃµÂ°Â¡.
+^808080ÀÏÁ¤È®·ü(5%)·Î Àû¿¡°Ô ÁØ ´ë¹ÌÁöÀÇ 5% ¸¦ ÀÚ½ÅÀÇ SP·Î Èí¼ö ÇÑ´Ù. 15Á¦·Ã ÀÌ»óÀÏ °æ¿ì Èí¼öÇÒ È®·üÀÌ 7%·Î Áõ°¡.
 Class : ^777777Card^000000
-Compound on : ^777777Â¹Â«Â±â°00000
+Compound on : ^777777¹«±â^000000
 Weight : ^7777771^000000
 ^000000
 Attack: 0
@@ -26684,9 +26684,9 @@ Weight: 0
 Weapon Level: 0
 #
 4484#
-^808080ÃÂªÂ½ÂºÅ¦Ã€Â» Â¼Ò¸íŸœô‚ Â¸Â¶Â¹Ã½Âµé€» Â¼Ò¸ğ¾¸€Ì Â»ç¿«Â°Â¡Â´É‡Ï°Ô Ç‘Â´Ù®
-Â½ÂºÅ³ Â»ç¿«Â½Ã SPÂ¼Ò¸ğ·®€Ì 50% ÃÃµÂ°Â¡Ç‘Â´Ù®
-15ÃÂ¦Â·Ã Ã€Ì»ó € Â°æ¿¬ Â½ÂºÅ³ Â»ç¿«Â½Ã SPÂ¼Ò¸ğ·®€Ì 35% ÃÃµÂ°Â¡.
+^808080Áª½ºÅæÀ» ¼Ò¸ğÇÏ´Â ¸¶¹ıµéÀ» ¼Ò¸ğ¾øÀÌ »ç¿ë°¡´ÉÇÏ°Ô ÇÑ´Ù.
+½ºÅ³ »ç¿ë½Ã SP¼Ò¸ğ·®ÀÌ 50% Áõ°¡ÇÑ´Ù.
+15Á¦·Ã ÀÌ»ó ÀÏ °æ¿ì ½ºÅ³ »ç¿ë½Ã SP¼Ò¸ğ·®ÀÌ 35% Áõ°¡.
 Class : ^777777Card^000000
 Compound on : ^777777Headgear^000000
 Weight : ^7777771^000000
@@ -26697,10 +26697,10 @@ Weight: 0
 Weapon Level: 0
 #
 4485#
-^808080Â¼ÂºÂ¼Ó¼Âº, Â¾Ï¼Ó¼Âº, ÃµÂ»ç‡¼, Â¾Ç¸Â¶Ç¼ Â¸ó½º…Í¿Â¡Â°Ô Â¹Â°Â¸Â® ÂµÂ¥Â¹ÌÃ¶ 20% ÃŸÂ°Â¡.
-15ÃÂ¦Â·Ã Ã€Ì»ó€ Â°æ¿¬, Â¼ÂºÂ¼Ó¼Âº, Â¾Ï¼Ó¼Âº, ÃµÂ»ç‡¼, Â¾Ç¸Â¶Ç¼ Â¸ó½º…Í¿Â¡Â°Ô Â¹Â°Â¸Â® ÂµÂ¥Â¹ÌÃ¶ 10% ÃŸÂ°Â¡ ÃÃµÂ°Â¡.
+^808080¼º¼Ó¼º, ¾Ï¼Ó¼º, Ãµ»çÇü, ¾Ç¸¶Çü ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 20% Ãß°¡.
+15Á¦·Ã ÀÌ»óÀÏ °æ¿ì, ¼º¼Ó¼º, ¾Ï¼Ó¼º, Ãµ»çÇü, ¾Ç¸¶Çü ¸ó½ºÅÍ¿¡°Ô ¹°¸® µ¥¹ÌÁö 10% Ãß°¡ Áõ°¡.
 Class : ^777777Card^000000
-Compound on : ^777777Â°Â©Â¿Ê000000
+Compound on : ^777777°©¿Ê^000000
 Weight : ^7777771^000000
 ^000000
 Attack: 0
@@ -39728,12 +39728,12 @@ Weight: ^8080801^000000
 #
 6535#
 ^ff0000This item cannot be dropped, traded, mailed or vended.^000000
-A material to create Raccoon Hurray Team's Christmas SockÂ¡Â¦ though you're sure they mean Stocking
+A material to create Raccoon Hurray Team's Christmas Sock¡¦ though you're sure they mean Stocking
 Weight : ^7777771^000000
 #
 6536#
 ^ff0000This item cannot be dropped, traded, mailed or vended.^000000
-A material to create Raccoon Hurray Team's Christmas SockÂ¡Â¦ though you're sure they mean Stocking
+A material to create Raccoon Hurray Team's Christmas Sock¡¦ though you're sure they mean Stocking
 Weight : ^7777771^000000
 #
 6539#
@@ -40724,7 +40724,7 @@ Weight: ^8080801^000000
 6910#
 ^ff0000This item cannot be transferred to other accounts.^000000
 Delicate ore that guarantees the safety of precious equipment.
-- When refining equipment with refinement above +7, the equipment wonÂ¡Â¯t disappear or be damaged even on failure! Does not refine above +10. -
+- When refining equipment with refinement above +7, the equipment won¡¯t disappear or be damaged even on failure! Does not refine above +10. -
 (When refinement fails, refinement level decreases by 1.)
 ^ffffff<NAVI>^4D4DFF[Blacksmith Mighthammer]^000000<INFO>itemmall,27,75,0,100,0,0</INFO></NAVI>^000000
 ^ffffff<NAVI>^4D4DFF[Shadow Blacksmith]^000000<INFO>itemmall,31,75,0,100,0,0</INFO></NAVI>^000000 ? Shadow Equipment Refinement
@@ -40736,7 +40736,7 @@ Weight: ^8080800^000000
 6911#
 ^ff0000This item cannot be transferred to other accounts.^000000
 Delicate ore that guarantees the safety of precious equipment.
-- When refining equipment with refinement above +7, the equipment wonÂ¡Â¯t disappear or be damaged even on failure! Does not refine above +10. -
+- When refining equipment with refinement above +7, the equipment won¡¯t disappear or be damaged even on failure! Does not refine above +10. -
 (When refinement fails, refinement level decreases by 1.)
 ^ffffff<NAVI>^4D4DFF[Blacksmith Mighthammer]^000000<INFO>itemmall,27,75,0,100,0,0</INFO></NAVI>^000000
 ^ffffff<NAVI>^4D4DFF[Shadow Blacksmith]^000000<INFO>itemmall,31,75,0,100,0,0</INFO></NAVI>^000000 ? Shadow Equipment Refinement
@@ -50935,7 +50935,7 @@ Weight : ^7777775^000000
 #
 12636#
 Delicious canned food from Malangdo.
-You will think about the sea and see the sights  of  Malangdo in your mind when you eat itÂ¡Â¦ Transports you to Malangdo when consumed.
+You will think about the sea and see the sights  of  Malangdo in your mind when you eat it¡¦ Transports you to Malangdo when consumed.
 Weight : ^7777770^000000
 #
 12637#
@@ -55392,7 +55392,7 @@ Weight : ^7777772^000000 Type : ^777777NothingType^000000
 Special Kunai designed to hold gunpowder in the handle for explosion on target and surroundings. Careful handling is required!
 Class : ^777777Throwing Weapon^000000
 Attack : ^77777750^000000
-Weight : ^7777773^000000      Property : ^777777Â¹Â«^000000
+Weight : ^7777773^000000      Property : ^777777¹«^000000
 Level Limit : ^777777100^000000
 #
 13295#
@@ -60253,7 +60253,7 @@ Military Mail [1]
 Dragon Cloth [1]
 (8) Blacksmith Blessing
 (5) Bloody Branch
-(10) Citizen OdaÂ¡Â¯s Miracle Elixir
+(10) Citizen Oda¡¯s Miracle Elixir
 ^FF0000Account Bound^000000
 Weight: ^8080801^000000
 #
@@ -60270,7 +60270,7 @@ Immortal Dog Tag [1]
 Sting Silk Ribbon [1]
 Mask of Hero
 (5) Bloody Branch
-(10) Citizen OdaÂ¡Â¯s Miracle Elixir
+(10) Citizen Oda¡¯s Miracle Elixir
 (8) HE Bubble Gum
 #
 14977#
@@ -60341,7 +60341,7 @@ Exorcist's Shoes [1]
 Beelzebub Wing Box
 (8) Blacksmith Blessing
 (6) Battle Manual X3
-(10) Citizen OdaÂ¡Â¯s Miracle Elixir
+(10) Citizen Oda¡¯s Miracle Elixir
 (5) Bloody Dead Branch
 #
 15000#
@@ -61574,14 +61574,14 @@ Max SP + 25%
 Increased Movement Speed.
 #
 15117#
-Airship captain FelrockÂ¡Â®s possessions.
+Airship captain Felrock¡®s possessions.
 Resolved the airship attack incident and acquired as a trophy.
 MaxHP + 500, MaxSP + 50, MDEF + 10.
 All State + 1.
 If 7 refined, MaxHP + 500, MaxSP + 50.
 If 9 refined, MaxHP + 200, MaxSP + 20.
 If 12 refined, MaxHP + 300, MaxSP + 30.
-If equipped together with FelrockÂ¡Â®s Armor, FelrockÂ¡Â®s Cloak, FelrockÂ¡Â®s Boots, MaxHP + 25%, MaxSP + 25%, unlimited movement acceleration, if total refined is 30 or over, additional MaxHP + 5%, MaxSP + 5%.
+If equipped together with Felrock¡®s Armor, Felrock¡®s Cloak, Felrock¡®s Boots, MaxHP + 25%, MaxSP + 25%, unlimited movement acceleration, if total refined is 30 or over, additional MaxHP + 5%, MaxSP + 5%.
 Type : ^777777Armor^000000    Defense : ^77777770^000000
 Weight : ^77777775^000000
 Required Level : ^777777125^000000
@@ -65634,7 +65634,7 @@ Weight : ^7777771^000000
 16749#
 A box that has snow crab from malangdo area (1 hour rental)
 ^000088Rental Item^000000
-Crabs usually, live in sand or mud but this is used as a bow for some odd reasonÂ¡Â¦
+Crabs usually, live in sand or mud but this is used as a bow for some odd reason¡¦
 LUK + 3, critical damage increase 50%.
 if base LV over100, ranged  physical Attack +20%
 Class : ^777777bow^000000 Attack : ^777777120^000000
@@ -65648,7 +65648,7 @@ Weight : ^7777771^000000
 16750#
 A box that has snow crab from malangdo area (7 days rental)
 ^000088Rental Item^000000
-Crabs usually, live in sand or mud but this is used as a bow for some odd reasonÂ¡Â¦
+Crabs usually, live in sand or mud but this is used as a bow for some odd reason¡¦
 LUK + 3, critical damage increase 50%.
 if base LV over100, ranged  physical Attack +20%
 Class : ^777777bow^000000 Attack : ^777777120^000000
@@ -68672,7 +68672,7 @@ Chiu Armor
 Cursed Lucky Clover
 (6) Battle Manual X3
 (5) Bloody Branch
-(10) Citizen OdaÂ¡Â¯s Miracle Elixir
+(10) Citizen Oda¡¯s Miracle Elixir
 (2) Safe to 10 Certificate
 (4) Safe to 7 Chance Box
 Syringe Toy
@@ -69761,7 +69761,7 @@ Jobs : ^777777Archer Class / Thief / Rogue^000000
 #
 18107#
 ^000088Rental Item^000000
-Crabs usually, live in sand or mud but this is used as a bow for some odd reasonÂ¡Â¦
+Crabs usually, live in sand or mud but this is used as a bow for some odd reason¡¦
 LUK + 3, critical damage 50%.
 if base LV over100, ranged  physical Attack +20%
 Class : ^777777bow^000000 Attack : ^777777120^000000
@@ -77134,40 +77134,40 @@ For every 10 base LUK, VIT +1 and LUK +1.
 #
 19453#
 Casting is not interrupted.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 Skill delay - 15%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
-[ACIDDEMONSTRATION]Â¡Â¢
-[CRAZYWEED]Â¡Â¢
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+[ACIDDEMONSTRATION]¡¢
+[CRAZYWEED]¡¢
 [FULLPROTECTION]
 Casting time - 50%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
-[ACIDDEMONSTRATION]Â¡Â¢
-[CRAZYWEED]Â¡Â¢
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
+[ACIDDEMONSTRATION]¡¢
+[CRAZYWEED]¡¢
 DMG + 10%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 If [Jejecap JP]'s
-If refine level is 7 or higherÂ¡Â¢additionally
-[ACIDDEMONSTRATION]Â¡Â¢
-[CRAZYWEED]Â¡Â¢
+If refine level is 7 or higher¡¢additionally
+[ACIDDEMONSTRATION]¡¢
+[CRAZYWEED]¡¢
 DMG + 15%
 If [Jejecap JP]'s
-If refine level is 9 or higherÂ¡Â¢additionally
-[ACIDDEMONSTRATION]Â¡Â¢
-[CRAZYWEED]Â¡Â¢
+If refine level is 9 or higher¡¢additionally
+[ACIDDEMONSTRATION]¡¢
+[CRAZYWEED]¡¢
 DMG + 25%
 If [Jejecap JP]'s
-If refine level is 10 or higherÂ¡Â¢additionally
+If refine level is 10 or higher¡¢additionally
 Ignore all races Def 100%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 If [FIRE EXPANSION.] Lv5 is reached
 DMG to boss monster +50%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 If [MANDRAGORA]Lv5 is reached
 skill delay - 25%,
 [CRAZYWEED]'s
 cool down time - 4.5sec
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 For every level up of [CRAZYWEED]
 reduces skill delay by 6%
 Class: ^777777Helm^000000Defense: ^77777718^000000
@@ -77972,7 +77972,7 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
 19643#
-Wickebine's one of favorite ear cap. Cute andÂ¡Â¦ just cute.
+Wickebine's one of favorite ear cap. Cute and¡¦ just cute.
 ^ffffff<NAVI>^4D4DFF[Designer Heidam]^000000<INFO>mal_in01,20,124,0,100,0,0</INFO></NAVI>^000000
 ^b4b4b4Exchangeable for Costume Enchantment Stone Box5.^000000
 Class : ^777777Costume^000000 Def : ^7777770^000000
@@ -82550,6 +82550,15 @@ Class: ^808080Costume^000000
 Position: ^808080Garment^000000
 Weight: ^8080800^000000
 #
+20593#
+Costume wings that show the inner beauty of the ice crystals
+
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 20594#
 A long, bright red, ribbon cloak. Don't leave home without your cloak!
 Class: ^808080Costume^000000
@@ -82942,7 +82951,7 @@ Reduces damage taken from Neutral property attacks by 10%.
 Reduces the variable casting time of skills by 20%.
 This item cannot be upgraded.
 ^800080Set Bonus^000000
-^008080AirshipÂ¡Â®s Cloak [1]^000000
+^008080Airship¡®s Cloak [1]^000000
 ^008080Airship's Armor^000000
 ^008080Airship's Boots^000000
 Max HP + 25%
@@ -82963,13 +82972,13 @@ If upgrade level is +7 or higher, reduces the variable casting time of skills by
 If upgrade level is +9 or higher, reduces the variable casting time of skills by an additional 10%.
 If upgrade level is +12 or higher, reduces the variable casting time of skills by an additional 5%.
 ^800080Set Bonus^000000
-^008080FelrockÂ¡Â®s Cloak [1]^000000
+^008080Felrock¡®s Cloak [1]^000000
 ^008080Ferlock's Armor^000000
 ^008080Ferlock's Boots^000000
 Max HP + 25%
 Max SP + 25%
 Increased Movement Speed.
-If the combined upgrade levels of ^008080FelrockÂ¡Â®s Cloak [1]^000000,  ^008080Ferlock's Armor^000000 and ^008080Ferlock's Boots^000000 are +30 or higher, additional Max HP + 5% and Max SP + 5%.
+If the combined upgrade levels of ^008080Felrock¡®s Cloak [1]^000000,  ^008080Ferlock's Armor^000000 and ^008080Ferlock's Boots^000000 are +30 or higher, additional Max HP + 5% and Max SP + 5%.
 #
 20745#
 ^000088Rental Item^000000
@@ -84567,7 +84576,7 @@ Class: ^777777Two-handed Sword^000000 Attack : ^777777150^000000
 Weight : ^7777770^000000
 Weapon level : ^7777773^000000
 Required level : ^77777740^000000
-Job : ^777777Â°Ë»ç°¨Â¿Â­^000000
+Job : ^777777°Ë»ç°è¿­^000000
 #
 21007#
 A heavy broadsword with small cracks along its edges. It must have been used in many battles.
@@ -85451,7 +85460,7 @@ Reduces damage taken from Fire property attacks by 2% per upgrade level of ^0080
 Reduces damage taken from Fire property enemies by 5%.
 #
 22058#
-^808080These shoes were worn by a man who made a living out of raising dragons. These shoes contains the manÂ¡Â¯s many years of experience.^000000
+^808080These shoes were worn by a man who made a living out of raising dragons. These shoes contains the man¡¯s many years of experience.^000000
 ^FFFFFF_^000000
 Type: Equipment
 Class: Footgear
@@ -85779,7 +85788,7 @@ Increases the experience given from Angel race monsters by 5%.
 Increases the experience given from Angel race monsters by an additional 1% per upgrade level of the item.
 #
 22097#
-These shoes were worn by a man who made a living out of raising dragons. These shoes contains the manÂ¡Â¯s many years of experience.
+These shoes were worn by a man who made a living out of raising dragons. These shoes contains the man¡¯s many years of experience.
 
 Class: ^808080Shoes^000000
 Defense: ^80808010^000000
@@ -87501,13 +87510,13 @@ Weight : ^7777771^000000
 22972#
 Paper box with smiley decoration, decorated with yellow ribbon.
 Contains one of the following items.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 Evil_Marcher_Hat
 Wondering_Wolf_Helm
 Tare_Neko_Cru
 Imp_Hat
 Holy_Marching_Hat_J
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 Weight : 20
 
 Class: ^808080Item Giver^000000
@@ -87542,13 +87551,13 @@ Restores 5 SP every 10 seconds for 3 minutes.
 22988#
 Well packed red box with purple ribbon.
 Contains one of the following items.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 Heart_Wing_Hairband
 Tare_Neko_Cru
 Glory_FB_Hat
 Drooping_Morocc_Minion
 Mask_Of_Ifrit
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 Weight : 20
 
 Class: ^808080Item Giver^000000
@@ -87556,14 +87565,14 @@ Weight: ^8080800^000000
 #
 22999#
 Includes one of the transform scrolls listed below.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 Trans_Scroll_Wghost
 Trans_Scroll_Sca
 Trans_Scroll_Wander
 Trans_Scroll_Gazeti
 Trans_Scroll_Karcher
 Trans_Scroll_Necro
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 Weight : ^77777710^000000
 
 Class: ^808080Item Giver^000000
@@ -87728,7 +87737,7 @@ When opened gives
 50 Mini Bottles
 #
 23187#
-Sap from an old tree that has hardened into a jelly-like texture.ThereÂ¡Â¯s something red inside of it. Nine Tail really likes it.
+Sap from an old tree that has hardened into a jelly-like texture.There¡¯s something red inside of it. Nine Tail really likes it.
 Class: ^808080Pet Tame^000000
 Weight: ^8080800^000000
 #
@@ -88927,7 +88936,7 @@ Maero Mask
 Beelzebub Wing Box
 (8) Blacksmith Blessing
 (6) Battle Manual X3
-(10) Citizen OdaÂ¡Â¯s Miracle Elixir
+(10) Citizen Oda¡¯s Miracle Elixir
 (5) Bloody Dead Branch
 Weight: ^8080800^000000
 #
@@ -90894,7 +90903,7 @@ If upgrade level is +9, ASPD +1, MaxHP +10%, MaxSP +10%
 24285#
 A glove that is mounted on the hand of hold the weapon to elicit potential abilities of the wearer.
 Only for Ninja Classes.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 ATK & MATK +3%
 [Kunai Explosion] Reduces skill cooldown time by 2 seconds.
 [Ninja Mastery] Add MATK +3 by the skill level 
@@ -90912,7 +90921,7 @@ Weapon Level: ^8080800^000000
 24286#
 A glove that is mounted on the hand of hold the weapon to elicit potential abilities of the wearer.
 Only for Doram.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 5% reduction in variable casting time
 Each refine rate additionally reduce 1% in casting time
 [Spirit of Land] Learned the skill, reduced fixed casting by 0.1 seconds
@@ -90931,7 +90940,7 @@ Weapon Level: ^8080800^000000
 24287#
 A glove that is mounted on the hand of hold the weapon to elicit potential abilities of the wearer.
 Only for Doram.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 Each refine rate additionally Range Physical Attack 1%
 [Spirit of Land] Learned the skill, add ASPD +1.
 Refine +7 over, add Perfect Dodge +2.
@@ -91135,9 +91144,9 @@ Only for Rune Knight.
 When using Enchant Blade skill, Increases attack speed for 50 seconds (each refine rate addtionally reduces after attack delay by %.).
 Refine +7 over, when using Enchant Blade skill, add ASPD+1 for 50 seconds. 
 Refine +9 over, when using Enchant Blade skill, add ASPD+1 for 50 seconds.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Rune Knight Weapon Shadow^000000, Get an additional effect.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32 Swordman Shadow^000000 2types, ^32CD32Knight Shadow^000000 2types,  ^32CD32Rune Knight Shadow^000000 2types, Can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91155,10 +91164,10 @@ An additional defense effect can be obtained with a small shield that can be att
 Only for Royal Guard Classes. 
 Add Earth Drive 20% damage.
 Each refine rate additionally Earth Drive 5% damage. 
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Royal Guard Weapon Shadow^000000, can get the additional effects.
 Reduce Cannon Spear SP consumption, able to use Synthesized Shield Lv.3.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Swordman Shadow^000000 2type, ^32CD32Crusader Shadow^000000 2type,  ^32CD32Royal Guard Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91176,10 +91185,10 @@ An additional defense effect can be obtained with a small shield that can be att
 Only for Mechanic Classes. 
 Add Flame Launcher 20% damage.
 Each refine rate additionally Flame Launcher 5%.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Mechanic Weapon Shadow^000000, can get additional effects.
 Add Vulcan Arm 20% damage, reduces Flame Launcher  SP consumption 20%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Merchant Shadow^000000 2type, ^32CD32Blacksmith Shadow^000000 2type,  ^32CD32Mechanic Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91198,10 +91207,10 @@ Only for Geneticist Classes.
 MaxHP + 3%.
 DEF increases by multiplying the refine rate and the skill points used for the active skills related to generic carts.
 ^ff0000Cart Tornado, Cart Cannon, Cart Boost^000000
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Geneticist Weapon Shadow^000000, can get the additional effect.
 Reduces Cart Tornado skill cool down time 1 second, MaxHP + 2%, reduces 100% the variable casting time for Cart Boost.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Merchant Shadow^000000 2type, ^32CD32Alchemist Shadow^000000 2type,  ^32CD32Geneticist Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91219,10 +91228,10 @@ An additional defense effect can be obtained with a small shield that can be att
 Only for Arch Bishop Classes. 
 Add Adoramus 20% damage.
 Each refine rate additionally Adoramus 5%. 
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Arch Bishop Weapon Shadow^000000, can get the additional effect.
 Add Duple Light 20% damage, reduces Adoramus skill cool down time 1 second.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Acolyte Shadow^000000 2type, ^32CD32Priest Shadow^000000 2type,  ^32CD32Arch Bishop Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91240,10 +91249,10 @@ An additional defense effect can be obtained with a small shield that can be att
 Only for Sura Classes 
 Add Sky Blow 20% damage. 
 Each refine rate additionally Sky Blow 5% damage. 
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Sura Weapon Shadow^000000, can get the additional effect.
 Add Rampage Blast 20% damage, reduces Sky Blow SP consumption 20%. 
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Acolyte Shadow^000000 2type, ^32CD32Monk Shadow^000000 2type,  ^32CD32Sura Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91261,10 +91270,10 @@ An additional defense effect can be obtained with a small shield that can be att
 Only for Guillotine Cross Classes. 
 Reduces Dark claw cool down time for 10 seconds.
 Each refine rate additionally reduces Dark claw cool down time for 2 seconds.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Guillotine Cross Weapon Shadow^000000, can get additional effect.
 Add Dark Illusion 20% damage, Black Claw 1Lv activated with a certain probability during a physical attack.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Thief Shadow^000000 2type, ^32CD32Assassin Shadow^000000 2type,  ^32CD32Guillotine Cross Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91283,10 +91292,10 @@ Only for Shadow Chaser Classes.
 When using Shadow Spell, Increases attack speed for 50 seconds (each refine rate additionally reduces after attack delay by 1%).
 Refine +7 over, when using Shadow Spell, ASPD+1 for 50 seconds. 
 Refine +9 over, when using Shadow Spell, ASPD+1 for 50 seconds additionally.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Shadow Chaser Weapon Shadow^000000, can get additional effect.
 Add Triangle Shot 20% damage, ATK + 2%, MATK + 2%, Ranged Physical Attack 2%.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Thief Shadow^000000 2type, ^32CD32Rogue Shadow^000000 2type,  ^32CD32Shadow Chaser Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91304,10 +91313,10 @@ An additional defense effect can be obtained with a small shield that can be att
 Only for Warlock Classes 
 Add Earth Strain 20% damage. 
 Each refine rate additionally Earth Strain 5% damage. 
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Warlock Weapon Shadow^000000, can get the additional effect.
 Drain Life cool time for 1 second, reduces Earth Strain cool down time 4 seconds.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Mage Shadow^000000 2type, ^32CD32Wizard Shadow^000000 2type,  ^32CD32Warlock Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91325,10 +91334,10 @@ An additional defense effect can be obtained with a small shield that can be att
 Only for Sorcerer Classes. 
 Reduces Earth Grave cool down time 1 second.
 Each refine rate additionally reduces Earth Grave cool down time 0.3 seconds.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Sorcerer Weapon Shadow^000000, can get the additional effect.
 Add Diamond Dust and Earth Grave 20% damage.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Mage Shadow^000000 2type, ^32CD32Sage Shadow^000000 2type,  ^32CD32Sorcerer Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91346,10 +91355,10 @@ An additional defense effect can be obtained with a small shield that can be att
 Only for Ranger Classes 
 Reduces Aimed Bolt 20% SP consumption.
 Each refine rate additionally reduces Aimed Bolt 5% SP consumption.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Rogue Weapon Shadow^000000, can get the additional effect.
 Add Aimed Bolt 20% damage, Bomb Cluster 20% damage.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Archer Shadow^000000 2type, ^32CD32Hunter Shadow^000000 2type,  ^32CD32Ranger Shadow^000000 2type, can get the below effec.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91368,10 +91377,10 @@ Only for Minstrel Classes.
 MaxSP + 3%.
 Each refine additionally MDEF+1 for every 5 point of only-Maestro performance skill
 ^ff0000Echo Song, Harmonize, Windmill Rush^000000
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With ^32CD32Maestro Weapon Shadow^000000, can get the additional effect.
 Every 2 point of MaxHP + 2%, MaxSP + 2%, ^ff0000Dance Lessons^000000, add  Ranged Physical Attack 1%. 
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Archer Shadow^000000 2type, ^32CD32Bard Shadow^000000 2type,  ^32CD32Minstrel Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91390,10 +91399,10 @@ Only for Wanderer Classes.
 MaxSP + 3%. 
 Each refine rate additionally MDEF + 1 for every 5 point of Wanderer-only performance skill. 
 ^ff0000Moonlight Serenade, Swing Dance, Lover Symphony^000000
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 with ^32CD32Wanderer Weapon Shadow^000000, can get the additional effect.
 MaxHP + 2%, MaxSP + 2%, Ranged Physical Attack 1% for every 2 point of ^ff0000Dance Lessons^000000 skill.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With the all of ^32CD32Archer Shadow^000000 2type, ^32CD32Dancer Shadow^000000 2type,  ^32CD32Wanderer Shadow^000000 2type, can get the below effect.
 All State + 10, MaxHP + 5%, MaxSP + 5%.
 Ignores 50% of normal enemy's physical and magic defense.
@@ -91409,14 +91418,14 @@ Weapon Level: ^8080800^000000
 24314#
 An additional defense effect can be obtained with a small shield that can be attached to the arm. Can be used singly, but has less defense effect.. 
 Only for Ninja Classes
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 ASPD + 1.
 Each the skill point of [Dagger Throwing Practice] ATK + 3.
 Using [Ninja Aura], add ASPD + 1 for 50 secounds.
 Each refine rate ignores 4% of general enemy's physical and magic defense.
 Refine +7, Ignores 10% physical and magic defense of normal enemies additionally.
 Refine +9, Ignores 10% physical and magic defense of normal enemies additionally.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 With Ninja Weapon Shadow, can get the below effect. 
 All State + 3, MaxHP + 2%, MaxSP + 2%. 
 When using the skill, reduces SP consumption 10%.
@@ -91433,14 +91442,14 @@ Weapon Level: ^8080800^000000
 24315#
 A small shield that can be mounted on the arm can provide additional defensive effects. It can be used as a single, but has little defensive effect. 
 Taekwon Classes Only.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 ATK, MATK + 3%.
 Ignores physical defense rate of normal enemies by 3% per Skill level of [Peaceful Break]
 Ignores magical defense rate of normal enemies by 3% per Skill level of [Happy Break]
 Ignores physical and magical defense rate of normal enemies by 3% per every refine level.
 If the refine level is 7 or higher, ATK, MATK + 2%.
 If the refine level is 9 or higher, ATK, MATK + 3%.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 If equipped with Taekwon Weapon Shadow, it gives additional effect below.
 All State + 3, MaxHP + 2%, MaxSP + 2%. 
 Reduce SP consumption by 10%.
@@ -91457,13 +91466,13 @@ Weapon Level: ^8080800^000000
 24316#
 A small shield that can be mounted on the arm can provide additional defensive effects. It can be used as a single, but has little defensive effect. 
 Only Doram can wear this.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 ATK + 3%.
 If uses [Arclouse Dash] skill to player-self, ASPD + 1 for 50 secs.
 Skill Cooldown of [Lunatic Carrot Beat] - 0.2 sec per every refine level.
 If the refine level is 7 or higher, Damage of [Lunatic Carrot Beat] +5%.
 If the refine level is 9 or higher, Damage of [Lunatic Carrot Beat] +5%.
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª 
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª 
 If equipped with Doram Physical Weapon Shadow, it gives additional effect below.
 All State + 3, MaxHP + 2%, MaxSP + 2%. 
 SP consumption -10%. 
@@ -92604,7 +92613,7 @@ Weight: ^8080800^000000
 #
 25462#
 A free costume coupon.
-Please visit ^ffffff<NAVI>^4D4DFF[Â±×¶ó… Â±×¶ó½ƒ¾Æ½Âº]^000000<INFO>prontera,88,332,0,100,0,0</INFO></NAVI>^000000 with this.
+Please visit ^ffffff<NAVI>^4D4DFF[±×¶óÅÁ ±×¶ó½Ã¾Æ½º]^000000<INFO>prontera,88,332,0,100,0,0</INFO></NAVI>^000000 with this.
 Weight : ^7777770^000000
 
 Weight: ^8080800^000000
@@ -100668,6 +100677,21 @@ Class: ^808080Costume^000000
 Position: ^808080Upper^000000
 Weight: ^8080800^000000
 #
+31620#
+A snowy white fox that when observed seems playful.
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31625#
+A warm scarf secured to the neck and shoulders by a decorative shield. The shield seems to be of fine craftsmanship.
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
 31628#
 A miniature Dokebi made for children. Don't worry, it won't attack you!
 Class: ^808080Costume^000000
@@ -101268,6 +101292,52 @@ Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 When worn during January increases monster EXP by 5%
 #
+31902#
+These cool sunglasses project an aura of coolness beyond the lens
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle^000000
+Weight: ^8080800^000000
+#
+31903#
+A costume of a white snake to rest on your head.
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31904#
+A stylish parade hat to wear in the snow.
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31905#
+A wig for only the coolest adventurers, who can stay frosty in all situations.
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+31906#
+There is a decoration in the shape of a cat's paw to act as a good luck charm while adventuring.
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+31907#
+There is a decoration in the shape of a cat's paw to act as a good luck charm while adventuring.
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 31911#
 A flower crown for a dignified costume. It exudes a feeling of elegance and natural beauty.
 Class: ^808080Costume^000000
@@ -101558,12 +101628,12 @@ Bypass an additional 25% of hard defense of all race targets when performing a p
 #
 32234#
 Physical?Magical attack DMG + 5%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 When Physical?Magical attack, 
 DMG to wind?earth type monster increases by?+?10%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 DMG taken from wind?earth element attack reduced by 5%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 [UnrivaledDagger], [UnrivaledGun], [UnrivaledStaff], 
 [UnrivaledMace], [UnrivaledSpear], 
 [UnrivaledBow] if equip together with
@@ -101573,7 +101643,7 @@ DMG to animal?plant type monster
 increased by?+?20%
 DMG to wind?earth element monster 
 increased by?+?20%
-Â¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡ÂªÂ¡Âª
+¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª¡ª
 If equip with [Sky Ground]
 Physical?Magical attack, 
 to animal?plant type monster 
@@ -101867,6 +101937,22 @@ Weight : ^7777771^000000
 Attack: ^8080800^000000
 Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
+#
+200028#
+When opened gives one of the following at Random
+Costume Frozen Crystal Wings
+Costume Snow Flower
+Costume Snow Fox
+Costume Protective Scarf
+Costume Cool Shades
+Costume White Snake
+Costume Snow Parade Hat
+Costume Ice Tails
+Costume Cat's Paw Knit Hat
+Costume Cat's Paw Knit Hat (Brown)
+Type: ^808080Usable^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080800^000000
 #
 200030#
 A box that contains a Mistress Wing. An un-consumable version of a fly wing that teleports your entire party and expires over time.
