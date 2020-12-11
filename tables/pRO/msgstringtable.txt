@@ -3068,9 +3068,9 @@ no msg#
 no msg#
 HP#
 SP#
-no msg#
-no msg#
-no msg#
+Lv#
+Lv#
+Exp#
 All On#
 no msg#
 no msg#
@@ -3133,7 +3133,7 @@ no msg#
 no msg#
 no msg#
 Guild#
-no msg#
+Bank#
 Rodex#
 Cash Shop#
 no msg#
@@ -3239,6 +3239,42 @@ no msg#
 no msg#
 no msg#
 no msg#
+Try Again#
+[Try Again] is unavailable. Please choose refine ingredient again.#
+Refinement Ores are not enough. [Try Again] is unavailable.#
+Zeny is not enough. [Try Again] is unavailable.#
+Blacksmith's Blessing is not enough. [Try Again] is unavailable.#
+Your item is destroyed..#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+[%s] got [+%d %s] successfully!#
+[%s] failed to refine [+%d %s].#
+no msg#
+no msg#
+no msg#
+no msg#
 File abusing detected. Please restart the client with clean files.#
 no msg#
 no msg#
@@ -3247,70 +3283,34 @@ no msg#
 no msg#
 no msg#
 no msg#
+Probability : %d%%#
+no msg#
+no msg#
+Sale List#
+Purchase List#
+New#
+Hot#
+Limited#
+Item Rental#
+Item Permanent#
+Buff#
+Recover#
+Etc#
+Bargain#
+Top up#
+Purchase#
+https://roextreme.com/msp/topup#
+Search Item#
+Free KP#
+Use free KP#
+Balance#
+Refresh#
 no msg#
 no msg#
 no msg#
 no msg#
 no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-File abusing detected. Please restart the client with clean files.#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
+You can purchase up to 8 different items at a time#
 no msg#
 no msg#
 no msg#

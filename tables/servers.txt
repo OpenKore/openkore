@@ -236,7 +236,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 0
 addTableFolders pRO
-charBlockSize 144
+charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
@@ -255,7 +255,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 0
 addTableFolders pRO
-charBlockSize 144
+charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
