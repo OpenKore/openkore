@@ -7989,6 +7989,7 @@
 20589#Costume One Wing#
 20590#Costume Evil Druid Cross#
 20591#Costume Bow on Back#
+20593#Costume Frozen Crystal Wings#
 20594#Costume Big Ribbon Manteau#
 20603# Costume Ulysses Wings#
 20700#Egir Manteau#
@@ -9504,6 +9505,8 @@
 31616#Costume Sleep Sheep#
 31617#Costume Lady Tanee#
 31618#Costume Dancing Butterfly#
+31620#Costume Snow Fox#
+31625#Costume Protective Scarf#
 31628#Costume Dokebi#
 31635#Costume Flowing Long (Blonde)#
 31636#Costume Flowing Long (Silver)#
@@ -9583,6 +9586,12 @@
 31847#Costume Blinking Blue Eyes#
 31848#Costume Gothic Rose Bonnet#
 31899#Costume Freyja's Crown#
+31902#Costume Cool Shades#
+31903#Costume White Snake#
+31904#Costume Snow Parade Hat#
+31905#Costume Ice Tails#
+31906#Costume Cat's Paw Knit Hat#
+31907#Costume Cat's Paw Knit Hat (Brown)#
 31911#Costume Little Garden#
 31912#Costume Black Veil#
 31913#Costume Feathered Black Cap#
@@ -9621,6 +9630,7 @@
 100540#Class Shield Shadow Cube#
 100541#Class Pendant Shadow Cube#
 100542#Class Earring Shadow Cube#
+200028#Frozen Costume Egg#
 200030#[30D] Mistress Wing Box#
 200052#Costume Thanksgiving Egg#
 200055#Acid Bomb 50 Box#
