@@ -2497,3 +2497,23 @@ orcsdunf4.gnd#orcsdun02.gnd#
 orcsdunf4.gat#orcsdun02.gat#
 orcsdunf4.rsw#orcsdun02.rsw#
 유저인터페이스\map\orcsdunf4.bmp#유저인터페이스\map\orcsdun02.bmp#
+
+
+//2017 초보자 던전
+1@begi.gnd#1@begi.gnd#
+1@begi.gat#1@begi.gat#
+1@begi.rsw#1@begi.rsw#
+유저인터페이스\map\1@begi.bmp#유저인터페이스\map\1@begi.bmp#
+
+
+
+//20161207_초심자 고성
+1@gl_k2.gnd#1@gl_k.gnd#
+1@gl_k2.gat#1@gl_k.gat#
+1@gl_k2.rsw#1@gl_k.rsw#
+유저인터페이스\map\1@gl_k2.bmp#유저인터페이스\map\1@gl_k.bmp#
+
+2@gl_k2.gnd#2@gl_k.gnd#
+2@gl_k2.gat#2@gl_k.gat#
+2@gl_k2.rsw#2@gl_k.rsw#
+유저인터페이스\map\2@gl_k2.bmp#유저인터페이스\map\2@gl_k.bmp#
