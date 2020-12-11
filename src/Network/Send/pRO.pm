@@ -55,6 +55,8 @@ sub new {
 		master_login 0A76
 		game_login 0275
 		char_create 0067
+		rodex_open_mailbox 0AC0
+		rodex_refresh_maillist 0AC1
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
