@@ -603,8 +603,8 @@ sub ai_skillUse {
 	}
 
 	if ($char->{skills}{$args{skillHandle}}{lv} < $args{lv}) {
-		debug "Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$char->{skills}{$args{skillHandle}}{lv}.".\n";
-		return;
+		debug "Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$char->{skills}{$args{skillHandle}}{lv}.".\n", "ai";
+		$args{lv} = $char->{skills}{$args{skillHandle}}{lv};
 	}
 
 	AI::queue("skill_use", \%args);
