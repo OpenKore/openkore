@@ -11434,4 +11434,15 @@ sub load_confirm {
 	debug TF("You are allowed to use Keyboard"); # this only matter in ragexe client
 }
 
+sub item_preview {
+	my ($self, $args) = @_;
+	my $item = $char->inventory->getByID($args->{index});
+	if ($item) {
+		$item->{broken} = $args->{broken} if (defined $args->{broken});
+		$item->{upgrade} = $args->{upgrade};
+		$item->{cards} = $args->{cards};
+		$item->{options} = $args->{options};
+	}
+}
+
 1;
