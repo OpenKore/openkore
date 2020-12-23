@@ -589,7 +589,7 @@ kh_rossi.rsw#A Mansão Rosimier #
 kh_school.rsw#Academia Kiel Hyre #
 kh_vila.rsw#Cabana de Kiel Hyre #
 auction_01.rsw#Sala de Leilão #
-auction_02.rsw#Sala de Leilão #
+auction_02.rsw#Ordem dos Exploradores #
 
 // 11.1 
 
@@ -958,3 +958,59 @@ lasa_dun03.rsw#Ninho do Dragão#
 conch_in.rsw#Dentro do Conchiolina#
 lasa_in01.rsw#Casa em Lasagna#
 lasa_dun_q.rsw#Ninho do Dragão#
+
+//Intro Renewal
+iz_int.rsw#Navio naufragado #
+iz_int01.rsw#Navio naufragado #
+iz_int02.rsw#Navio naufragado #
+iz_int03.rsw#Navio naufragado #
+iz_int04.rsw#Navio naufragado #
+
+int_land.rsw#Ilhota #
+int_land01.rsw#Ilhota #
+int_land02.rsw#Ilhota #
+int_land03.rsw#Ilhota #
+int_land04.rsw#Ilhota #
+
+//Izlude Tutorial
+prt_fild08d.rsw#Arredores de Prontera (08) #
+prt_fild08c.rsw#Arredores de Prontera (08) #
+prt_fild08b.rsw#Arredores de Prontera (08) #
+prt_fild08a.rsw#Arredores de Prontera (08) #
+
+iz_ac01_d.rsw#Instituto do Aprendiz #
+iz_ac02_d.rsw#Instituto do Aprendiz #
+iz_ac01_c.rsw#Instituto do Aprendiz #
+iz_ac02_c.rsw#Instituto do Aprendiz #
+iz_ac01_b.rsw#Instituto do Aprendiz #
+iz_ac02_b.rsw#Instituto do Aprendiz #
+iz_ac01_a.rsw#Instituto do Aprendiz #
+iz_ac02_a.rsw#Instituto do Aprendiz #
+
+izlude_d.rsw#Izlude #
+izlude_c.rsw#Izlude #
+izlude_b.rsw#Izlude #
+izlude_a.rsw#Izlude #
+
+//Izlude Renewal
+//iz_int.rsw#Intro#
+//iz_int01.rsw#Intro#
+//iz_int02.rsw#Intro#
+//iz_int03.rsw#Intro#
+//iz_int04.rsw#Intro#
+iz_ac01.rsw#Instituto do Aprendiz #
+iz_ac02.rsw#Instituto do Aprendiz #
+iz_ng01.rsw#Escola Ninja #
+treasure_n1.rsw#Navio Fantasma 01 - Pesadelo #
+treasure_n2.rsw#Navio Fantasma 02 - Pesadelo #
+
+1@begi.rsw#Vila dos Poring #
+
+// »ýÃ¼´øÀü ½Å±Ô¸Ê ¿ÀÀü 2013-12-18
+lhz_dun_n.rsw#Laboratório de Somatologia - Pesadelo#
+lhz_d_n2.rsw#Laboratório de Somatologia - Pesadelo#
+
+// ¿µ¿õÀÇ ÈçÀû3
+1@glast.rsw#Ruínas Antigas#
+1@air1.rsw#Aeroplano#
+1@air2.rsw#Aeroplano#

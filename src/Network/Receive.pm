@@ -8192,8 +8192,8 @@ sub rodex_mail_list {
 
 		@{$mail}{@{$mail_info->{keys}}} = unpack($mail_info->{types}, substr($args->{mailList}, $i, $mail_info->{len}));
 
-		$mail->{title} = bytesToString(substr($args->{mailList}, ($i+$mail_info->{len}), $mail->{Titlelength}));
-
+		$mail->{title} = solveMSG(bytesToString(substr($args->{mailList}, ($i+$mail_info->{len}), $mail->{Titlelength})));
+		$mail->{sender} = solveMSG(bytesToString($mail->{sender}));
 		$mail->{page} = $rodexList->{current_page};
 		$mail->{page_index} = $index;
 
@@ -8239,9 +8239,9 @@ sub rodex_read_mail {
 
 	$mail->{items} = [];
 
-	message center(" " . "Mail ".$args->{mailID1} . " ", 119, '-') . "\n";
-
-	message "Message:\n" . bytesToString($mail->{body});
+	message center(" " . "Mail (" . $args->{mailID1} . ")" . $rodexList->{mails}{$args->{mailID1}}->{sender} . " ", 119, '-') . "\n";
+	message sprintf("From: %s \n", $rodexList->{mails}{$args->{mailID1}}->{sender});
+	message "Message:\n" . solveMSG(bytesToString($mail->{body}));
 	# FIXME for some reason message can't concatenate bytesToString + "\n"
 	message "\n";
 
@@ -9429,7 +9429,9 @@ sub special_item_obtain {
 
 	stripLanguageCode(\$holder);
 	if ($args->{type} == TYPE_BOXITEM) {
-		@{$args}{qw(box_nameID)} = unpack 'c/v', $args->{etc};
+		my $c = unpack 'c', $args->{etc};
+		my $unpack = ($c == 2) ?  'c/v' : 'c/V';
+		@{$args}{qw(box_nameID)} = unpack $unpack, $args->{etc};
 
 		my $box_item_name = itemNameSimple($args->{box_nameID});
 		$source_name = $box_item_name;

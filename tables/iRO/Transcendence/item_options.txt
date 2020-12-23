@@ -32,7 +32,6 @@ ATTR_TOLERACE_SAINT#Holy Property Resistance +%d%%.#
 ATTR_TOLERACE_DARKNESS#Shadow Property Resistance +%d%%.#
 ATTR_TOLERACE_TELEKINESIS#Ghost Property Resistance +%d%%.#
 ATTR_TOLERACE_UNDEAD#Undead Property Resistance +%d%%.#
-ATTR_TOLERACE_ALL#All Property Resistance +%d%%.#
 DAMAGE_PROPERTY_NOTHING_USER#Neutral Enemies Resistance +%d%%.#
 DAMAGE_PROPERTY_NOTHING_TARGET#Damage to Neutral Enemies +%d%%.#
 DAMAGE_PROPERTY_WATER_USER#Water Enemy Resistance +%d%%.#
@@ -72,7 +71,7 @@ MDAMAGE_PROPERTY_DARKNESS_TARGET#Magic Damage to Shadow Enemies +%d%%.#
 MDAMAGE_PROPERTY_TELEKINESIS_USER#Ghost Enemy Magic Resistance +%d%%.#
 MDAMAGE_PROPERTY_TELEKINESIS_TARGET#Magic Damage to Ghost Enemies +%d%%.#
 MDAMAGE_PROPERTY_UNDEAD_USER#Undead Property Enemy Magic Resistance +%d%%.#
-MDAMAGE_PROPERTY_UNDEAD_TARGET#Undead Property Enemy +%d%%.#
+MDAMAGE_PROPERTY_UNDEAD_TARGET#Magic Damage to Undead Enemy +%d%%.#
 BODY_ATTR_WATER#User's Property Water.#
 BODY_ATTR_GROUND#User's Property Earth.#
 BODY_ATTR_FIRE#User's Property Fire.#
@@ -178,3 +177,49 @@ WEAPON_ATTR_SAINT#Property: Holy#
 WEAPON_ATTR_DARKNESS#Property: Shadow#
 WEAPON_ATTR_TELEKINESIS#Property: Ghost#
 WEAPON_ATTR_UNDEAD#Property: Undead#
+WEAPON_INDESTRUCTIBLE#Destruction chance removed.#
+BODY_INDESTRUCTIBLE#Destruction chance removed.#
+MDAMAGE_SIZE_SMALL_TARGET#Magic Damage to Small Enemies +%d%%#
+MDAMAGE_SIZE_MIDIUM_TARGET#Magic Damage to Medium Enemies +%d%%#
+MDAMAGE_SIZE_LARGE_TARGET#Magic Damage to Large Enemeies +%d%%#
+MDAMAGE_SIZE_SMALL_USER#Magic Damage from Small Enemies -%d%%#
+MDAMAGE_SIZE_MIDIUM_USER#Magic Damage from Medium Enemies -%d%%#
+MDAMAGE_SIZE_LARGE_USER#Magic Damage from Large Enemies -%d%%#
+ATTR_TOLERACE_ALL#All property Resistance +%d%%#
+RACE_WEAPON_TOLERACE_NOTHING#Formless Monster Resistance +%d%%#
+RACE_WEAPON_TOLERACE_UNDEAD#Undead Monster Resistance +%d%%#
+RACE_WEAPON_TOLERACE_ANIMAL#Brute Monster Resistance +%d%%#
+RACE_WEAPON_TOLERACE_PLANT#Plant Monster Resistance +%d%%#
+RACE_WEAPON_TOLERACE_INSECT#Insect Monster Resistance +%d%%#
+RACE_WEAPON_TOLERACE_FISHS#Fish Monster Resistance +%d%%#
+RACE_WEAPON_TOLERACE_DEVIL#Demon Monster Resistance +%d%%#
+RACE_WEAPON_TOLERACE_HUMAN#Demi-Human Monster Resistance +%d%%#
+RACE_WEAPON_TOLERACE_ANGEL#Angel Monster Resistance +%d%%#
+RACE_WEAPON_TOLERACE_DRAGON#Dragon Monster Resistance +%d%%#
+RANGE_WEAPON_ATTACK_DAMAGE_TARGET#Long-Ranged Weapon Physical Damage +%d%%#
+RANGE_WEAPON_ATTACK_DAMAGE_USER#Long-Ranged Weapon Physical Damage -%d%%#
+RACE_TOLERACE_PLAYER_HUMAN#Human Player Resistance +%d%%#
+RACE_TOLERACE_PLAYER_DORAM#Doram Player Resistance +%d%%#
+RACE_DAMAGE_PLAYER_HUMAN#Physical Damage to Human Player +%d%%#
+RACE_DAMAGE_PLAYER_DORAM#Physical Damage to Doram Player +%d%%#
+RACE_MDAMAGE_PLAYER_HUMAN#Magical Damage to Human Player +%d%%#
+RACE_MDAMAGE_PLAYER_DORAM#Magical Damage to Doram Player +%d%%#
+RACE_CRI_PERCENT_PLAYER_HUMAN#CRI to Human Player +%d#
+RACE_CRI_PERCENT_PLAYER_DORAM#CRI to Doram Player +%d#
+RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN#Bypass %d%% of Def on Human Player#
+RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM#Bypass %d%% of Def on Doram Player#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN#Bypass %d%% of MDef on Human Player#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM#Bypass %d%% of MDef on Doram Player#
+REFLECT_DAMAGE_PERCENT#Received Reflect Damage -%d%%#
+MELEE_ATTACK_DAMAGE_TARGET#Physical Damage +%d%%#
+MELEE_ATTACK_DAMAGE_USER#Received Physical Damage -%d%%#
+ADDSKILLMDAMAGE_NOTHING#Magical Damage with Neutral Property +%d%%#
+ADDSKILLMDAMAGE_WATER#Magical Damage with Water Property +%d%%#
+ADDSKILLMDAMAGE_GROUND#Magical Damage with Earth Property +%d%%#
+ADDSKILLMDAMAGE_FIRE#Magical Damage with Fire Property +%d%%#
+ADDSKILLMDAMAGE_WIND#Magical Damage with Wind Property +%d%%#
+ADDSKILLMDAMAGE_POISON#Magical Damage with Poison Property +%d%%#
+ADDSKILLMDAMAGE_SAINT#Magical Damage with Holy Property +%d%%#
+ADDSKILLMDAMAGE_DARKNESS#Magical Damage with Shadow Property +%d%%#
+ADDSKILLMDAMAGE_TELEKINESIS#Magical Damage with Ghost Property +%d%%#
+ADDSKILLMDAMAGE_UNDEAD#Magical Damage with Undead Property +%d%%#

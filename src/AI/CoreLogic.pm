@@ -1533,7 +1533,7 @@ sub processAutoStorage {
 				while (exists $config{"getAuto_$args->{index}"}) {
 					if (!$config{"getAuto_$args->{index}"}
 						|| $config{"getAuto_$args->{index}_disabled"}
-						|| !checkSelfCondition($config{"getAuto_$args->{index}"})) {
+						|| !checkSelfCondition("getAuto_$args->{index}")) {
 						$args->{index}++;
 						next;
 					}
