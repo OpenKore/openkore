@@ -1,0 +1,3 @@
+files:
+  - source: '/src/*.p[ml]'
+    translation: /src/po/%two_letters_code%
