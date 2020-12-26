@@ -11442,7 +11442,8 @@ sub item_preview {
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
 		$item->{options} = $args->{options};
+		$item->setName(itemName($item));
+
 	}
 }
-
 1;
