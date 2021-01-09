@@ -654,6 +654,7 @@ sub new {
 		'0A8D' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], # -1 [offline vending store]
 		'0A91' => ['buying_store_items_list', 'v a4 a4 C V V x4 a*', [qw(len buyerID buyingStoreID flag expireDate zeny itemList)]], # -1 [offline buying store]
 		'0A95' => ['misc_config', 'C2', [qw(show_eq_flag call_flag)]],
+		'0A96' => ['deal_add_other', 'V C V C3 a16 a25 V v', [qw(nameID type amount identified broken upgrade cards options type_equip viewID)]],#61
 		'0A98' => ($rpackets{'0A98'}{length} == 10) # or 12
 			? ['equip_item_switch', 'a2 V v', [qw(ID type success)]]
 			: ['equip_item_switch', 'a2 V2', [qw(ID type success)]] #kRO <= 20170502
