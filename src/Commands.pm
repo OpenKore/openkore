@@ -229,7 +229,11 @@ sub initHandlers {
 		['exp', [
 			T("Experience report."),
 			["", T("displays the experience report")],
-			["reset", T("resets the experience report")]
+			["monster", T("display report on monsters killed")],
+			["item", T("display report on inventory changes")],
+			["report", T("display detailed report on experience gained, monsters killed and items gained")],
+			["reset", T("resets the experience report")],
+			["output", T("output the experience report in file 'exp.txt'")]
 			], \&cmdExp],
 		['falcon', [
 			T("Falcon status."),
@@ -2668,7 +2672,7 @@ sub cmdExp {
 
 	if (!$knownArg) {
 		error T("Syntax error in function 'exp' (Exp Report)\n" .
-			"Usage: exp [<report | monster | item | reset>]\n");
+			"Usage: exp [<report | monster | item | reset | output>]\n");
 	}
 }
 
