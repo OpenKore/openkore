@@ -732,6 +732,7 @@ sub parsePriority {
 	my $file = shift;
 	my $r_hash = shift;
 	return unless my $reader = new Utils::TextReader($file);
+	undef %{$r_hash};
 
 	my @lines;
 	while (!$reader->eof()) {

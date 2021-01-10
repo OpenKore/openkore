@@ -5648,7 +5648,11 @@ sub deal_request {
 	$timeout{ai_dealAutoCancel}{time} = time;
 	message TF("%s (level %s) Requests a Deal\n", $user, $level), "deal";
 	message T("Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"), "deal";
-	Plugins::callHook("incoming_deal", {name => $user});
+	Plugins::callHook("incoming_deal", {
+		name => $user,
+		level => $level,
+		ID => $args->{ID}
+	});
 }
 
 sub devotion {
@@ -7979,10 +7983,15 @@ sub party_hp_info {
 
 sub party_invite {
 	my ($self, $args) = @_;
-	message TF("Incoming Request to join party '%s'\n", bytesToString($args->{name}));
+	my $name = bytesToString($args->{name});
+	message TF("Incoming Request to join party '%s'\n", $name);
 	$incomingParty{ID} = $args->{ID};
 	$incomingParty{ACK} = $args->{switch} eq '02C6' ? '02C7' : '00FF';
 	$timeout{ai_partyAutoDeny}{time} = time;
+	Plugins::callHook("party_invite", {
+		partyID => $args->{ID},
+		partyName => $name
+	});
 }
 
 sub party_invite_result {
