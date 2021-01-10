@@ -242,6 +242,8 @@ sub loadDataFiles {
 		loader => [\&parseROLUT, \%maps_lut]);
 	Settings::addTableFile('monsters.txt',
 		loader => [\&parseDataFile2, \%monsters_lut], createIfMissing => 1);
+	Settings::addTableFile('pets.txt',
+		loader => [\&parseDataFile2, \%pets_lut], mustExist => 0);
 	Settings::addTableFile('npcs.txt',
 		loader => [\&parseNPCs, \%npcs_lut], createIfMissing => 1);
 	Settings::addTableFile('packetdescriptions.txt',
