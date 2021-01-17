@@ -1600,7 +1600,7 @@ sub received_login_token {
 }
 
 sub ping {
-	my ($self, $args) = @_;
+	return if ($config{XKore} eq 1 || $config{XKore} eq 3);
 	$messageSender->sendPing();
 }
 *changeToInGameState = *Network::Receive::changeToInGameState;
