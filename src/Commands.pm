@@ -793,7 +793,8 @@ sub initHandlers {
 			], \&cmdSearchStore],
 		['pause', [
 			T("Delay the next console commands."),
-			[T("<seconds>"), T("delay the next console commands by a specified number of seconds (default: 1 sec.)")]
+			["", T("delay the next console commands for 1 second")],
+			[T("<seconds>"), T("delay the next console commands by a specified number of seconds")]
 			], undef],
 	);
 
@@ -815,7 +816,7 @@ sub initCompletions {
 # Commands::run(input)
 # input: a command.
 #
-# Processes $input. See also <a href="http://openkore.sourceforge.net/docs.php">the user documentation</a>
+# Processes $input. See also <a href="https://openkore.com/wiki/Category:Console_Command">the user documentation</a>
 # for a list of commands.
 #
 # Example:
@@ -842,7 +843,7 @@ sub run {
 		my $handler;
 		$handler = $commands{$switch}{callback} if (exists $commands{$switch} && $commands{$switch});
 
-		if (($switch eq 'pause') && (!$cmdQueue) && AI::state != AI::AUTO && ($net->getState() == Network::IN_GAME)) {
+		if (($switch eq 'pause') && (!$cmdQueue) && AI::state == AI::AUTO && ($net->getState() == Network::IN_GAME)) {
 			$cmdQueue = 1;
 			$cmdQueueStartTime = time;
 			if ($args > 0) {
