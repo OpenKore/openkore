@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gKore (OpenKore 2.0.5.1)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 03:29+0300\n"
+"POT-Creation-Date: 2021-02-01 04:06+0300\n"
 "PO-Revision-Date: 2010-11-29 20:08+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: German <thrice007@yahoo.de>\n"
@@ -95,7 +95,7 @@ msgstr ""
 "Die Fehler Nachricht ist:\n"
 "%s"
 
-#: ../functions.pl:293 ../Misc.pm:5333
+#: ../functions.pl:293 ../Misc.pm:5334
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "Lade %s...\n"
@@ -8062,7 +8062,7 @@ msgstr ""
 msgid "BROKEN "
 msgstr ""
 
-#: ../Misc.pm:2540 ../Misc.pm:4447
+#: ../Misc.pm:2540 ../Misc.pm:4448
 msgid "Nothing"
 msgstr ""
 
@@ -8435,10 +8435,8 @@ msgid "Wrote portals Line of Sight table to '%s'\n"
 msgstr "Schreibe Portal LOS in '%s'\n"
 
 #: ../Misc.pm:4369
-msgid "----------------------------Error Summary----------------------------\n"
+msgid " Error Summary "
 msgstr ""
-"----------------------------"
-"Fehlerzusammenfassung----------------------------\n"
 
 #: ../Misc.pm:4370
 #, perl-format
@@ -8454,82 +8452,82 @@ msgstr ""
 "      Sollten diese Maps nicht genutzt werden kann diese Nachricht ignoriert "
 "werden\n"
 
-#: ../Misc.pm:4507
+#: ../Misc.pm:4508
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr ""
 
-#: ../Misc.pm:5110 ../Misc.pm:5205
+#: ../Misc.pm:5111 ../Misc.pm:5206
 msgid "A shop has already been opened.\n"
 msgstr "Ein Shop wurde bereits geöffnet.\n"
 
-#: ../Misc.pm:5117
+#: ../Misc.pm:5118
 msgid "You don't have the Vending skill.\n"
 msgstr "Du bist nicht im Besitz des Vending Skills.\n"
 
-#: ../Misc.pm:5122
+#: ../Misc.pm:5123
 msgid "You need this with a cart in order to create a shop!\n"
 msgstr ""
 
-#: ../Misc.pm:5127
+#: ../Misc.pm:5128
 msgid "Your shop does not have a title.\n"
 msgstr "Dein Shop hat keinen Namen.\n"
 
-#: ../Misc.pm:5168 ../Misc.pm:5247
+#: ../Misc.pm:5169 ../Misc.pm:5248
 msgid "There are no items to sell.\n"
 msgstr "Keine Items zum Verkauf vorhanden.\n"
 
-#: ../Misc.pm:5182
+#: ../Misc.pm:5183
 #, fuzzy
 msgid "Trying to set up shop...\n"
 msgstr "Versuch ihn zurück zu bekommen\n"
 
-#: ../Misc.pm:5190
+#: ../Misc.pm:5191
 msgid "A shop has not been opened.\n"
 msgstr "Du hast keinen Shop offen.\n"
 
-#: ../Misc.pm:5200
+#: ../Misc.pm:5201
 msgid "Shop closed.\n"
 msgstr "Shop geschlossen.\n"
 
-#: ../Misc.pm:5256
+#: ../Misc.pm:5257
 #, fuzzy
 msgid ""
 "You don't have the Buying Store skill or Black Market Bulk Buyer Shop "
 "License.\n"
 msgstr "Du hast weder den Teleport Skill noch ein Buttlerfly Wing\n"
 
-#: ../Misc.pm:5262
+#: ../Misc.pm:5263
 #, fuzzy
 msgid "You don't have Bulk Buyer Shop License.\n"
 msgstr "Es ist kein Shop offen.\n"
 
-#: ../Misc.pm:5270
+#: ../Misc.pm:5271
 #, fuzzy
 msgid "Your buyer shop does not have a title.\n"
 msgstr "Dein Shop hat keinen Namen.\n"
 
-#: ../Misc.pm:5297
+#: ../Misc.pm:5298
 #, fuzzy
 msgid "Trying to set up buyer shop...\n"
 msgstr "Versuch ihn zurück zu bekommen\n"
 
-#: ../Misc.pm:5303
+#: ../Misc.pm:5304
 #, fuzzy
 msgid "A Buyer Shop has not been opened.\n"
 msgstr "Du hast keinen Shop offen.\n"
 
-#: ../Misc.pm:5312
+#: ../Misc.pm:5313
 #, fuzzy
 msgid "Buyer Shop closed.\n"
 msgstr "Shop geschlossen.\n"
 
-#: ../Misc.pm:5341
+#: ../Misc.pm:5342
 #, fuzzy
 msgid "All files were loaded\n"
 msgstr "Keine Items gedropped.\n"
 
-#: ../Misc.pm:5345
+#: ../Misc.pm:5346
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -8539,38 +8537,38 @@ msgstr ""
 "Die Datei %s muss im UTF-8 Format vorliegen.Bitte speicher die Datei als "
 "UTF-8."
 
-#: ../Misc.pm:5369
+#: ../Misc.pm:5370
 #, perl-format
 msgid "Invalid char in specified slot %d\n"
 msgstr ""
 
-#: ../Misc.pm:5442
+#: ../Misc.pm:5443
 msgid " Search Store Result "
 msgstr ""
 
-#: ../Misc.pm:5443
+#: ../Misc.pm:5444
 #, fuzzy, perl-format
 msgid "Page: %d/%d\n"
 msgstr "Kapazität: %d/%d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Shop Name"
 msgstr ""
 
-#: ../Misc.pm:5445 ../Actor/Item.pm:90
+#: ../Misc.pm:5446 ../Actor/Item.pm:90
 #, fuzzy
 msgid "Item"
 msgstr "Skill Point"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Amount"
 msgstr ""
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Price"
 msgstr ""
 
-#: ../Misc.pm:5512
+#: ../Misc.pm:5513
 #, perl-format
 msgid ""
 "Unknown msgid: %d. Need to update the file msgstringtable.txt (from data."
@@ -14849,6 +14847,12 @@ msgstr ""
 #, fuzzy, perl-format
 msgid "File [%s] does not exist."
 msgstr "Spieler %s existiert nicht\n"
+
+#~ msgid ""
+#~ "----------------------------Error Summary----------------------------\n"
+#~ msgstr ""
+#~ "----------------------------"
+#~ "Fehlerzusammenfassung----------------------------\n"
 
 #, fuzzy
 #~ msgid "<player>"

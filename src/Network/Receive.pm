@@ -1121,15 +1121,15 @@ sub account_server_info {
 	@servers = @{$args->{servers}};
 	my @state = ("Idle", "Normal", "Busy", "Full");
 
-	my $msg = center(T(" Servers "), 53, '-') ."\n" .
+	my $print_msg = center(T(" Servers "), 67, '-') ."\n" .
 			T("#   Name                  Users  IP              Port  SID   State\n");
 	for (my $num = 0; $num < @servers; $num++) {
-		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<< @<<<<< @<<<<<<",
+		$print_msg .= swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<< @<<<< @<<<<<<",
 			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}, ($servers[$num]{sid}) ? $servers[$num]{sid} : 0, defined($servers[$num]{state}) ? $state[$servers[$num]{state}] : 0]);
 	}
-	$msg .= ('-'x53) . "\n";
-	message $msg, "connection";
+	$print_msg .= ('-'x67) . "\n";
+	message $print_msg, "connection";
 
 	if ($net->version != 1) {
 		message T("Closing connection to Account Server\n"), 'connection';
@@ -3080,33 +3080,33 @@ sub misc_config {
 
 	if (defined ($args->{show_eq_flag})) {
 		if($args->{show_eq_flag} == 1) {
-			message T("Your Equipment information is now open to the public.\n");
+			message T("Your Equipment information is now open to the public.\n");#MsgStringTable[1360]
 		} else {
-			message T("Your Equipment information is now not open to the public.\n");
+			message T("Your Equipment information is now not open to the public.\n");#MsgStringTable[1359]
 		}
 	}
 
 	if (defined ($args->{call_flag})) {
 		if($args->{call_flag} == 1) {
-			message T("Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
+			message T("Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");#MsgStringTable[2979]
 		} else {
-			message T("Not Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
+			message T("Not Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");#MsgStringTable[2980]
 		}
 	}
 
 	if (defined ($args->{pet_autofeed_flag})) {
 		if($args->{pet_autofeed_flag} == 1) {
-			message T("Pet automatic feeding is ON. (Ragexe Client Feature)\n");
+			message T("Pet automatic feeding is ON. (Ragexe Client Feature)\n");#MsgStringTable[2580]
 		} else {
-			message T("Pet automatic feeding is OFF. (Ragexe Client Feature)\n");
+			message T("Pet automatic feeding is OFF. (Ragexe Client Feature)\n");#MsgStringTable[2581]
 		}
 	}
 
 	if (defined ($args->{homunculus_autofeed_flag})) {
 		if($args->{homunculus_autofeed_flag} == 1) {
-			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");
+			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");#MsgStringTable[3283]
 		} else {
-			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");
+			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");#MsgStringTable[3284]
 		}
 	}
 }
@@ -3126,27 +3126,27 @@ sub misc_config_reply {
 
 	if ( $args->{type} == CONFIG_OPEN_EQUIPMENT_WINDOW ) {
 		if ($args->{flag}) {
-			message T("Your Equipment information is now open to the public.\n");
+			message T("Your Equipment information is now open to the public.\n");#MsgStringTable[1360]
 		} else {
-			message T("Your Equipment information is now not open to the public.\n");
+			message T("Your Equipment information is now not open to the public.\n");#MsgStringTable[1359]
 		}
 	} elsif ( $args->{type} == CONFIG_CALL ) {
 		if ($args->{flag}) {
-			message T("Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
+			message T("Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");#MsgStringTable[2979]
 		} else {
-			message T("Not Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
+			message T("Not Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");#MsgStringTable[2980]
 		}
 	} elsif ( $args->{type} == CONFIG_PET_AUTOFEED ) {
 		if ($args->{flag}) {
-			message T("Pet automatic feeding is ON. (Ragexe Client Feature)\n");
+			message T("Pet automatic feeding is ON. (Ragexe Client Feature)\n");#MsgStringTable[2580]
 		} else {
-			message T("Pet automatic feeding is OFF. (Ragexe Client Feature)\n");
+			message T("Pet automatic feeding is OFF. (Ragexe Client Feature)\n");#MsgStringTable[2581]
 		}
 	} elsif ( $args->{type} == CONFIG_HOMUNCULUS_AUTOFEED ) {
 		if ($args->{flag}) {
-			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");
+			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");#MsgStringTable[3283]
 		} else {
-			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");
+			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");#MsgStringTable[2584]
 		}
 	} else {
 		message TF("Unknown Config Type: %s, Flag: %s\n", $args->{type}, $args->{flag});
@@ -3156,9 +3156,9 @@ sub misc_config_reply {
 sub show_eq_msg_self {
 	my ($self, $args) = @_;
 	if ($args->{type}) {
-		message T("Your Equipment information is now open to the public.\n");
+		message T("Your Equipment information is now open to the public.\n");#MsgStringTable[1360]
 		} else {
-		message T("Your Equipment information is now not open to the public.\n");
+		message T("Your Equipment information is now not open to the public.\n");#MsgStringTable[1359]
 	}
 }
 
@@ -3905,7 +3905,7 @@ sub account_id {
 sub marriage_partner_name {
 	my ($self, $args) = @_;
 
-	message TF("Marriage partner name: %s\n", $args->{name});
+	message TF("Marriage partner name: %s\n", bytesToString($args->{name}));
 }
 
 sub login_pin_code_request {
@@ -7897,9 +7897,9 @@ sub party_allow_invite {
    my ($self, $args) = @_;
 
    if ($args->{type}) {
-      message T("Not allowed other player invite to Party\n"), "party", 1;
+      message T("Not allowed other player invite to Party\n"), "party", 1;#MsgStringTable[1326]
    } else {
-      message T("Allowed other player invite to Party\n"), "party", 1;
+      message T("Allowed other player invite to Party\n"), "party", 1;#MsgStringTable[1327]
    }
 }
 

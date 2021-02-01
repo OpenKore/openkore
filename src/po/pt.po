@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Openkore 2.0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 03:29+0300\n"
+"POT-Creation-Date: 2021-02-01 04:06+0300\n"
 "PO-Revision-Date: \n"
 "Last-Translator: lututui <lututui@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -88,7 +88,7 @@ msgstr ""
 "A mensagem de erro é:\n"
 "%s"
 
-#: ../functions.pl:293 ../Misc.pm:5333
+#: ../functions.pl:293 ../Misc.pm:5334
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "Carregando %s...\n"
@@ -7994,7 +7994,7 @@ msgstr "FORTÍSSIMO "
 msgid "BROKEN "
 msgstr "DANIFICADO "
 
-#: ../Misc.pm:2540 ../Misc.pm:4447
+#: ../Misc.pm:2540 ../Misc.pm:4448
 msgid "Nothing"
 msgstr "Nada"
 
@@ -8364,9 +8364,8 @@ msgid "Wrote portals Line of Sight table to '%s'\n"
 msgstr "Portais LOS salvo em '%s/portalsLOS.txt'.\n"
 
 #: ../Misc.pm:4369
-msgid "----------------------------Error Summary----------------------------\n"
+msgid " Error Summary "
 msgstr ""
-"---------------------------Sumário de Erros--------------------------\n"
 
 #: ../Misc.pm:4370
 #, perl-format
@@ -8382,46 +8381,46 @@ msgstr ""
 "      entretanto é seguro ignorá-las se estes mapas não estão sendo "
 "utilizados\n"
 
-#: ../Misc.pm:4507
+#: ../Misc.pm:4508
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr ""
 "Configurações do NPC para autoBuy, autoSell ou autoStorage são inválidas! "
 "(%s)\n"
 
-#: ../Misc.pm:5110 ../Misc.pm:5205
+#: ../Misc.pm:5111 ../Misc.pm:5206
 msgid "A shop has already been opened.\n"
 msgstr "Uma loja já foi aberta.\n"
 
-#: ../Misc.pm:5117
+#: ../Misc.pm:5118
 msgid "You don't have the Vending skill.\n"
 msgstr "Você não possui a habilidade Comércio.\n"
 
-#: ../Misc.pm:5122
+#: ../Misc.pm:5123
 msgid "You need this with a cart in order to create a shop!\n"
 msgstr "Você precisa de um carrinho para poder criar uma loja!\n"
 
-#: ../Misc.pm:5127
+#: ../Misc.pm:5128
 msgid "Your shop does not have a title.\n"
 msgstr "Sua loja não tem um nome.\n"
 
-#: ../Misc.pm:5168 ../Misc.pm:5247
+#: ../Misc.pm:5169 ../Misc.pm:5248
 msgid "There are no items to sell.\n"
 msgstr "Não há itens para vender.\n"
 
-#: ../Misc.pm:5182
+#: ../Misc.pm:5183
 msgid "Trying to set up shop...\n"
 msgstr "Tentando montar loja...\n"
 
-#: ../Misc.pm:5190
+#: ../Misc.pm:5191
 msgid "A shop has not been opened.\n"
 msgstr "Não há uma loja aberta.\n"
 
-#: ../Misc.pm:5200
+#: ../Misc.pm:5201
 msgid "Shop closed.\n"
 msgstr "Loja fechada.\n"
 
-#: ../Misc.pm:5256
+#: ../Misc.pm:5257
 msgid ""
 "You don't have the Buying Store skill or Black Market Bulk Buyer Shop "
 "License.\n"
@@ -8429,33 +8428,33 @@ msgstr ""
 "Você não possui uma Licença de Loja de Compras ou uma Licença Falsa de "
 "Loja.\n"
 
-#: ../Misc.pm:5262
+#: ../Misc.pm:5263
 msgid "You don't have Bulk Buyer Shop License.\n"
 msgstr ""
 "Você não possui uma Licença de Loja de Compras ou uma Licença Falsa de "
 "Loja.\n"
 
-#: ../Misc.pm:5270
+#: ../Misc.pm:5271
 msgid "Your buyer shop does not have a title.\n"
 msgstr "Sua loja de compras não tem um nome.\n"
 
-#: ../Misc.pm:5297
+#: ../Misc.pm:5298
 msgid "Trying to set up buyer shop...\n"
 msgstr "Tentando montar loja de comrpas...\n"
 
-#: ../Misc.pm:5303
+#: ../Misc.pm:5304
 msgid "A Buyer Shop has not been opened.\n"
 msgstr "Loja de compras não foi aberta.\n"
 
-#: ../Misc.pm:5312
+#: ../Misc.pm:5313
 msgid "Buyer Shop closed.\n"
 msgstr "Loja de compras fechada.\n"
 
-#: ../Misc.pm:5341
+#: ../Misc.pm:5342
 msgid "All files were loaded\n"
 msgstr "Todos os arquivos foram carregados.\n"
 
-#: ../Misc.pm:5345
+#: ../Misc.pm:5346
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -8466,37 +8465,37 @@ msgstr ""
 "Para resolver este problema, use o Bloco de Notas para salvar o\n"
 "arquivo em UTF-8."
 
-#: ../Misc.pm:5369
+#: ../Misc.pm:5370
 #, perl-format
 msgid "Invalid char in specified slot %d\n"
 msgstr "Personagem inválido no slot especificado %d\n"
 
-#: ../Misc.pm:5442
+#: ../Misc.pm:5443
 msgid " Search Store Result "
 msgstr " Resultado de Pesquisa de Lojas "
 
-#: ../Misc.pm:5443
+#: ../Misc.pm:5444
 #, perl-format
 msgid "Page: %d/%d\n"
 msgstr "Página: %d/%d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Shop Name"
 msgstr "Nome da Loja"
 
-#: ../Misc.pm:5445 ../Actor/Item.pm:90
+#: ../Misc.pm:5446 ../Actor/Item.pm:90
 msgid "Item"
 msgstr "Item"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Amount"
 msgstr "Quantidade"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Price"
 msgstr "Preco"
 
-#: ../Misc.pm:5512
+#: ../Misc.pm:5513
 #, fuzzy, perl-format
 msgid ""
 "Unknown msgid: %d. Need to update the file msgstringtable.txt (from data."
@@ -14736,6 +14735,11 @@ msgstr "O arquivo [%s] não pôde ser criado: $!"
 #, perl-format
 msgid "File [%s] does not exist."
 msgstr "O arquivo [%s] não existe."
+
+#~ msgid ""
+#~ "----------------------------Error Summary----------------------------\n"
+#~ msgstr ""
+#~ "---------------------------Sumário de Erros--------------------------\n"
 
 #~ msgid "set <questID> on"
 #~ msgstr "set <ID da missão> on"

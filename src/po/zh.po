@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 03:29+0300\n"
+"POT-Creation-Date: 2021-02-01 04:06+0300\n"
 "PO-Revision-Date: 2014-12-02 01:53-0000\n"
 "Last-Translator: \n"
 "Language-Team: littlewens <littlewens@yahoo.com.tw>\n"
@@ -92,7 +92,7 @@ msgstr ""
 "錯誤的訊息為:\n"
 "%s"
 
-#: ../functions.pl:293 ../Misc.pm:5333
+#: ../functions.pl:293 ../Misc.pm:5334
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "正在載入 %s...\n"
@@ -8109,7 +8109,7 @@ msgstr ""
 msgid "BROKEN "
 msgstr ""
 
-#: ../Misc.pm:2540 ../Misc.pm:4447
+#: ../Misc.pm:2540 ../Misc.pm:4448
 msgid "Nothing"
 msgstr ""
 
@@ -8481,9 +8481,8 @@ msgid "Wrote portals Line of Sight table to '%s'\n"
 msgstr "Wrote portals Line of Sight table to '%s'\n"
 
 #: ../Misc.pm:4369
-msgid "----------------------------Error Summary----------------------------\n"
+msgid " Error Summary "
 msgstr ""
-"----------------------------Error Summary----------------------------\n"
 
 #: ../Misc.pm:4370
 #, perl-format
@@ -8498,82 +8497,82 @@ msgstr ""
 "注意: 以上列出的地圖的 LOS 資訊不正確;\n"
 "      然而假如這些地圖沒有使用到的話是可安全被忽略的\n"
 
-#: ../Misc.pm:4507
+#: ../Misc.pm:4508
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr "無效的 NPC 資訊對於 autoBuy, autoSell 或 autoStorage! (%s)\n"
 
-#: ../Misc.pm:5110 ../Misc.pm:5205
+#: ../Misc.pm:5111 ../Misc.pm:5206
 msgid "A shop has already been opened.\n"
 msgstr "一個露店已被開啟.\n"
 
-#: ../Misc.pm:5117
+#: ../Misc.pm:5118
 msgid "You don't have the Vending skill.\n"
 msgstr "您並沒有開設露店的技能.\n"
 
-#: ../Misc.pm:5122
+#: ../Misc.pm:5123
 msgid "You need this with a cart in order to create a shop!\n"
 msgstr ""
 
-#: ../Misc.pm:5127
+#: ../Misc.pm:5128
 msgid "Your shop does not have a title.\n"
 msgstr "您的露店沒有店名.\n"
 
-#: ../Misc.pm:5168 ../Misc.pm:5247
+#: ../Misc.pm:5169 ../Misc.pm:5248
 msgid "There are no items to sell.\n"
 msgstr "無物品賣出.\n"
 
-#: ../Misc.pm:5182
+#: ../Misc.pm:5183
 #, fuzzy
 msgid "Trying to set up shop...\n"
 msgstr "試著讓他回來\n"
 
-#: ../Misc.pm:5190
+#: ../Misc.pm:5191
 msgid "A shop has not been opened.\n"
 msgstr "一個露店尚未開啟.\n"
 
-#: ../Misc.pm:5200
+#: ../Misc.pm:5201
 msgid "Shop closed.\n"
 msgstr "露店已關閉.\n"
 
-#: ../Misc.pm:5256
+#: ../Misc.pm:5257
 #, fuzzy
 msgid ""
 "You don't have the Buying Store skill or Black Market Bulk Buyer Shop "
 "License.\n"
 msgstr "您並沒有瞬移技能或蝴蝶翅膀\n"
 
-#: ../Misc.pm:5262
+#: ../Misc.pm:5263
 #, fuzzy
 msgid "You don't have Bulk Buyer Shop License.\n"
 msgstr "您並沒有露天商店開啟.\n"
 
-#: ../Misc.pm:5270
+#: ../Misc.pm:5271
 #, fuzzy
 msgid "Your buyer shop does not have a title.\n"
 msgstr "您的露店沒有店名.\n"
 
-#: ../Misc.pm:5297
+#: ../Misc.pm:5298
 #, fuzzy
 msgid "Trying to set up buyer shop...\n"
 msgstr "試著讓他回來\n"
 
-#: ../Misc.pm:5303
+#: ../Misc.pm:5304
 #, fuzzy
 msgid "A Buyer Shop has not been opened.\n"
 msgstr "一個露店尚未開啟.\n"
 
-#: ../Misc.pm:5312
+#: ../Misc.pm:5313
 #, fuzzy
 msgid "Buyer Shop closed.\n"
 msgstr "露店已關閉.\n"
 
-#: ../Misc.pm:5341
+#: ../Misc.pm:5342
 #, fuzzy
 msgid "All files were loaded\n"
 msgstr "沒有物品被丟棄.\n"
 
-#: ../Misc.pm:5345
+#: ../Misc.pm:5346
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -8584,38 +8583,38 @@ msgstr ""
 "為了解決這個問題, 請使用記事本開啟\n"
 "並將檔案以有效的 UTF-8 儲存."
 
-#: ../Misc.pm:5369
+#: ../Misc.pm:5370
 #, perl-format
 msgid "Invalid char in specified slot %d\n"
 msgstr ""
 
-#: ../Misc.pm:5442
+#: ../Misc.pm:5443
 msgid " Search Store Result "
 msgstr ""
 
-#: ../Misc.pm:5443
+#: ../Misc.pm:5444
 #, fuzzy, perl-format
 msgid "Page: %d/%d\n"
 msgstr "容量: %d/%d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Shop Name"
 msgstr ""
 
-#: ../Misc.pm:5445 ../Actor/Item.pm:90
+#: ../Misc.pm:5446 ../Actor/Item.pm:90
 #, fuzzy
 msgid "Item"
 msgstr "清除物品記錄"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Amount"
 msgstr ""
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Price"
 msgstr ""
 
-#: ../Misc.pm:5512
+#: ../Misc.pm:5513
 #, perl-format
 msgid ""
 "Unknown msgid: %d. Need to update the file msgstringtable.txt (from data."
@@ -14847,6 +14846,11 @@ msgstr ""
 #, fuzzy, perl-format
 msgid "File [%s] does not exist."
 msgstr "玩家 %s 不存在.\n"
+
+#~ msgid ""
+#~ "----------------------------Error Summary----------------------------\n"
+#~ msgstr ""
+#~ "----------------------------Error Summary----------------------------\n"
 
 #, fuzzy
 #~ msgid "<player>"

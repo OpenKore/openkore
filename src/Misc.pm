@@ -502,7 +502,7 @@ sub visualDump {
 	#no encoding 'utf8';
 	#use bytes;
 
-	$dump = "================================================\n";
+	$dump = ('='x86) . "\n";
 	if (defined $label) {
 		$dump .= sprintf("%-15s [%d bytes]   %s\n", $label, length($msg), getFormattedDate(int(time)));
 	} else {
@@ -4366,11 +4366,12 @@ sub compilePortals {
 
 	# Print warning for missing fields
 	if (%missingMap) {
-		warning T("----------------------------Error Summary----------------------------\n");
-		warning TF("Missing: %s.fld\n", $_) foreach (sort keys %missingMap);
-		warning T("Note: LOS information for the above listed map(s) will be inaccurate;\n" .
-			"      however it is safe to ignore if those map(s) are not used\n");
-		warning "---------------------------------------------------------------------\n";
+		my $msg = center(T(" Error Summary "), 95, '-') ."\n";
+		$msg .= TF("Missing: %s.fld\n", $_) foreach (sort keys %missingMap);
+		$msg .= T("Note: LOS information for the above listed map(s) will be inaccurate;\n" .
+				  "      however it is safe to ignore if those map(s) are not used\n");
+		$msg .= "-" x 95 . "\n";
+		error $msg;
 	}
 }
 

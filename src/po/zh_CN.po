@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 03:29+0300\n"
+"POT-Creation-Date: 2021-02-01 04:06+0300\n"
 "PO-Revision-Date: 2010-11-29 20:09+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: Lkm <lj88kc@yhaoo.com.cn>\n"
@@ -87,7 +87,7 @@ msgstr ""
 "错误信息为:\n"
 "%s"
 
-#: ../functions.pl:293 ../Misc.pm:5333
+#: ../functions.pl:293 ../Misc.pm:5334
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "读取 %s...\n"
@@ -8094,7 +8094,7 @@ msgstr ""
 msgid "BROKEN "
 msgstr ""
 
-#: ../Misc.pm:2540 ../Misc.pm:4447
+#: ../Misc.pm:2540 ../Misc.pm:4448
 msgid "Nothing"
 msgstr ""
 
@@ -8466,8 +8466,8 @@ msgid "Wrote portals Line of Sight table to '%s'\n"
 msgstr "写入入口到 '%s'\n"
 
 #: ../Misc.pm:4369
-msgid "----------------------------Error Summary----------------------------\n"
-msgstr "----------------------------错误摘要----------------------------\n"
+msgid " Error Summary "
+msgstr ""
 
 #: ../Misc.pm:4370
 #, perl-format
@@ -8484,82 +8484,82 @@ msgstr ""
 "注意: 部分地图的路点是不精确的;\n"
 "      忽略那些地图不被使用\n"
 
-#: ../Misc.pm:4507
+#: ../Misc.pm:4508
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr ""
 
-#: ../Misc.pm:5110 ../Misc.pm:5205
+#: ../Misc.pm:5111 ../Misc.pm:5206
 msgid "A shop has already been opened.\n"
 msgstr "开了一家商店.\n"
 
-#: ../Misc.pm:5117
+#: ../Misc.pm:5118
 msgid "You don't have the Vending skill.\n"
 msgstr "你没有开店技能.\n"
 
-#: ../Misc.pm:5122
+#: ../Misc.pm:5123
 msgid "You need this with a cart in order to create a shop!\n"
 msgstr ""
 
-#: ../Misc.pm:5127
+#: ../Misc.pm:5128
 msgid "Your shop does not have a title.\n"
 msgstr "你的商店没有名字.\n"
 
-#: ../Misc.pm:5168 ../Misc.pm:5247
+#: ../Misc.pm:5169 ../Misc.pm:5248
 msgid "There are no items to sell.\n"
 msgstr "没有出售的道具.\n"
 
-#: ../Misc.pm:5182
+#: ../Misc.pm:5183
 #, fuzzy
 msgid "Trying to set up shop...\n"
 msgstr "等待主人回来\n"
 
-#: ../Misc.pm:5190
+#: ../Misc.pm:5191
 msgid "A shop has not been opened.\n"
 msgstr "开店失败.\n"
 
-#: ../Misc.pm:5200
+#: ../Misc.pm:5201
 msgid "Shop closed.\n"
 msgstr "停止关闭.\n"
 
-#: ../Misc.pm:5256
+#: ../Misc.pm:5257
 #, fuzzy
 msgid ""
 "You don't have the Buying Store skill or Black Market Bulk Buyer Shop "
 "License.\n"
 msgstr "你没有飞技能和道具\n"
 
-#: ../Misc.pm:5262
+#: ../Misc.pm:5263
 #, fuzzy
 msgid "You don't have Bulk Buyer Shop License.\n"
 msgstr "你还没有开店.\n"
 
-#: ../Misc.pm:5270
+#: ../Misc.pm:5271
 #, fuzzy
 msgid "Your buyer shop does not have a title.\n"
 msgstr "你的商店没有名字.\n"
 
-#: ../Misc.pm:5297
+#: ../Misc.pm:5298
 #, fuzzy
 msgid "Trying to set up buyer shop...\n"
 msgstr "等待主人回来\n"
 
-#: ../Misc.pm:5303
+#: ../Misc.pm:5304
 #, fuzzy
 msgid "A Buyer Shop has not been opened.\n"
 msgstr "开店失败.\n"
 
-#: ../Misc.pm:5312
+#: ../Misc.pm:5313
 #, fuzzy
 msgid "Buyer Shop closed.\n"
 msgstr "停止关闭.\n"
 
-#: ../Misc.pm:5341
+#: ../Misc.pm:5342
 #, fuzzy
 msgid "All files were loaded\n"
 msgstr "没有丢掉任何道具.\n"
 
-#: ../Misc.pm:5345
+#: ../Misc.pm:5346
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -8570,40 +8570,40 @@ msgstr ""
 "为解决这个问题, \n"
 "请使用记事本重新保存编码为 UTF-8 ."
 
-#: ../Misc.pm:5369
+#: ../Misc.pm:5370
 #, perl-format
 msgid "Invalid char in specified slot %d\n"
 msgstr ""
 
-#: ../Misc.pm:5442
+#: ../Misc.pm:5443
 msgid " Search Store Result "
 msgstr ""
 
-#: ../Misc.pm:5443
+#: ../Misc.pm:5444
 #, fuzzy, perl-format
 msgid "Page: %d/%d\n"
 msgstr "容量: %d/%d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Shop Name"
 msgstr ""
 
-#: ../Misc.pm:5445 ../Actor/Item.pm:90
+#: ../Misc.pm:5446 ../Actor/Item.pm:90
 #, fuzzy
 msgid "Item"
 msgstr ""
 "\n"
 "技能点数: %d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Amount"
 msgstr ""
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Price"
 msgstr ""
 
-#: ../Misc.pm:5512
+#: ../Misc.pm:5513
 #, perl-format
 msgid ""
 "Unknown msgid: %d. Need to update the file msgstringtable.txt (from data."
@@ -14878,6 +14878,10 @@ msgstr ""
 #, fuzzy, perl-format
 msgid "File [%s] does not exist."
 msgstr "玩家 %s 不存在.\n"
+
+#~ msgid ""
+#~ "----------------------------Error Summary----------------------------\n"
+#~ msgstr "----------------------------错误摘要----------------------------\n"
 
 #, fuzzy
 #~ msgid "<player>"

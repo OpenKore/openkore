@@ -1555,11 +1555,12 @@ sub rates_info {
 	# 1 = premium acc additional exp
 	# 2 = server additional exp
 	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
-	message T("=========================== Server Infos ===========================\n"), "info";
-	message TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
-	message TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
-	message TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
-	message "=====================================================================\n", "info";
+	my $print_msg = center(T(" Server Infos "), 68, '-') ."\n";
+	$print_msg .= TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3});#MsgStringTable[3536]
+	$print_msg .= TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3});#MsgStringTable[3537]
+	$print_msg .= TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}, $rates{death}{1}, $rates{death}{2}, $rates{death}{3});#MsgStringTable[3538]
+	$print_msg .= ('-'x68) . "\n";
+	message $print_msg, "info";
 }
 
 sub rates_info2 {
@@ -1595,11 +1596,12 @@ sub rates_info2 {
 	# 1 = premium acc additional exp
 	# 2 = server additional exp
 	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
-	message T("=========================== Server Infos ===========================\n"), "info";
-	message TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}+100, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
-	message TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}+100, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
-	message TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}+100, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
-	message "=====================================================================\n", "info";
+	my $print_msg = center(T(" Server Infos "), 68, '-') ."\n";
+	$print_msg .= TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}+100, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3});#MsgStringTable[3536]
+	$print_msg .= TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}+100, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3});#MsgStringTable[3537]
+	$print_msg .= TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}+100, $rates{death}{1}, $rates{death}{2}, $rates{death}{3});#MsgStringTable[3538]
+	$print_msg .= ('-'x68) . "\n";
+	message $print_msg, "info";
 }
 
 sub auction_item_request_search {

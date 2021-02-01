@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore Thai Edition\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 03:29+0300\n"
+"POT-Creation-Date: 2021-02-01 04:06+0300\n"
 "PO-Revision-Date: 2010-11-29 20:09+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: \n"
@@ -88,7 +88,7 @@ msgstr ""
 "ข้อความระบุความผิดพลาด:\n"
 "%s"
 
-#: ../functions.pl:293 ../Misc.pm:5333
+#: ../functions.pl:293 ../Misc.pm:5334
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "กำลังโหลด %s...\n"
@@ -8088,7 +8088,7 @@ msgstr ""
 msgid "BROKEN "
 msgstr ""
 
-#: ../Misc.pm:2540 ../Misc.pm:4447
+#: ../Misc.pm:2540 ../Misc.pm:4448
 msgid "Nothing"
 msgstr ""
 
@@ -8460,10 +8460,8 @@ msgid "Wrote portals Line of Sight table to '%s'\n"
 msgstr "เขียนตาราง LOS ไปยัง '%s'\n"
 
 #: ../Misc.pm:4369
-msgid "----------------------------Error Summary----------------------------\n"
+msgid " Error Summary "
 msgstr ""
-"----------------------------"
-"รายงานสรุปข้อผิดพลาดที่พบ----------------------------\n"
 
 #: ../Misc.pm:4370
 #, perl-format
@@ -8478,82 +8476,82 @@ msgstr ""
 "หมายเหตุ: ข้อมูล LOS ในรายชื่อแผนที่ด้านบน อาจไม่เที่ยงตรงนัก\n"
 "      อย่างไรก็ตาม มันจะปลอดภัยกว่าที่จะไม่ใช้แผนที่ดังกล่าว\n"
 
-#: ../Misc.pm:4507
+#: ../Misc.pm:4508
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr ""
 
-#: ../Misc.pm:5110 ../Misc.pm:5205
+#: ../Misc.pm:5111 ../Misc.pm:5206
 msgid "A shop has already been opened.\n"
 msgstr "ร้านได้เปิดอยู่แล้ว\n"
 
-#: ../Misc.pm:5117
+#: ../Misc.pm:5118
 msgid "You don't have the Vending skill.\n"
 msgstr "คุณไม่มีสกิลขายของ\n"
 
-#: ../Misc.pm:5122
+#: ../Misc.pm:5123
 msgid "You need this with a cart in order to create a shop!\n"
 msgstr ""
 
-#: ../Misc.pm:5127
+#: ../Misc.pm:5128
 msgid "Your shop does not have a title.\n"
 msgstr "ร้านของคุณไม่มีชื่อ\n"
 
-#: ../Misc.pm:5168 ../Misc.pm:5247
+#: ../Misc.pm:5169 ../Misc.pm:5248
 msgid "There are no items to sell.\n"
 msgstr "ไม่มีไอเท็มเหลือให้ขายแล้ว\n"
 
-#: ../Misc.pm:5182
+#: ../Misc.pm:5183
 #, fuzzy
 msgid "Trying to set up shop...\n"
 msgstr "พยายามเอาเขากลับคืนมา\n"
 
-#: ../Misc.pm:5190
+#: ../Misc.pm:5191
 msgid "A shop has not been opened.\n"
 msgstr "ร้านยังไม่ได้เปิด\n"
 
-#: ../Misc.pm:5200
+#: ../Misc.pm:5201
 msgid "Shop closed.\n"
 msgstr "ร้านปิดลงแล้ว\n"
 
-#: ../Misc.pm:5256
+#: ../Misc.pm:5257
 #, fuzzy
 msgid ""
 "You don't have the Buying Store skill or Black Market Bulk Buyer Shop "
 "License.\n"
 msgstr "คุณไม่มีสกิล Teleport หรือไม่มี Butterfly Wing\n"
 
-#: ../Misc.pm:5262
+#: ../Misc.pm:5263
 #, fuzzy
 msgid "You don't have Bulk Buyer Shop License.\n"
 msgstr "คุณไม่มีร้านให้เปิด\n"
 
-#: ../Misc.pm:5270
+#: ../Misc.pm:5271
 #, fuzzy
 msgid "Your buyer shop does not have a title.\n"
 msgstr "ร้านของคุณไม่มีชื่อ\n"
 
-#: ../Misc.pm:5297
+#: ../Misc.pm:5298
 #, fuzzy
 msgid "Trying to set up buyer shop...\n"
 msgstr "พยายามเอาเขากลับคืนมา\n"
 
-#: ../Misc.pm:5303
+#: ../Misc.pm:5304
 #, fuzzy
 msgid "A Buyer Shop has not been opened.\n"
 msgstr "ร้านยังไม่ได้เปิด\n"
 
-#: ../Misc.pm:5312
+#: ../Misc.pm:5313
 #, fuzzy
 msgid "Buyer Shop closed.\n"
 msgstr "ร้านปิดลงแล้ว\n"
 
-#: ../Misc.pm:5341
+#: ../Misc.pm:5342
 #, fuzzy
 msgid "All files were loaded\n"
 msgstr "ไม่มีไอเท็มที่จะทิ้ง\n"
 
-#: ../Misc.pm:5345
+#: ../Misc.pm:5346
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -8564,40 +8562,40 @@ msgstr ""
 "เพื่อที่จะแก้ใขปัญหานี้ ให้ใช้โปรแกรม Notepad เปิดไฟล์แล้ว\n"
 "เซฟเป็นแบบ UTF-8"
 
-#: ../Misc.pm:5369
+#: ../Misc.pm:5370
 #, perl-format
 msgid "Invalid char in specified slot %d\n"
 msgstr ""
 
-#: ../Misc.pm:5442
+#: ../Misc.pm:5443
 msgid " Search Store Result "
 msgstr ""
 
-#: ../Misc.pm:5443
+#: ../Misc.pm:5444
 #, fuzzy, perl-format
 msgid "Page: %d/%d\n"
 msgstr "ความจุ: %d/%d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Shop Name"
 msgstr ""
 
-#: ../Misc.pm:5445 ../Actor/Item.pm:90
+#: ../Misc.pm:5446 ../Actor/Item.pm:90
 #, fuzzy
 msgid "Item"
 msgstr ""
 "\n"
 "Skill Points: %d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Amount"
 msgstr ""
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Price"
 msgstr ""
 
-#: ../Misc.pm:5512
+#: ../Misc.pm:5513
 #, perl-format
 msgid ""
 "Unknown msgid: %d. Need to update the file msgstringtable.txt (from data."
@@ -14886,6 +14884,12 @@ msgstr ""
 #, fuzzy, perl-format
 msgid "File [%s] does not exist."
 msgstr "ผู้เล่น %s ไม่มีอยู่\n"
+
+#~ msgid ""
+#~ "----------------------------Error Summary----------------------------\n"
+#~ msgstr ""
+#~ "----------------------------"
+#~ "รายงานสรุปข้อผิดพลาดที่พบ----------------------------\n"
 
 #, fuzzy
 #~ msgid "<player>"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 03:29+0300\n"
+"POT-Creation-Date: 2021-02-01 04:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,7 +74,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../functions.pl:293 ../Misc.pm:5333
+#: ../functions.pl:293 ../Misc.pm:5334
 #, perl-format
 msgid "Loading %s...\n"
 msgstr ""
@@ -7055,7 +7055,7 @@ msgstr ""
 msgid "BROKEN "
 msgstr ""
 
-#: ../Misc.pm:2540 ../Misc.pm:4447
+#: ../Misc.pm:2540 ../Misc.pm:4448
 msgid "Nothing"
 msgstr ""
 
@@ -7415,7 +7415,7 @@ msgid "Wrote portals Line of Sight table to '%s'\n"
 msgstr ""
 
 #: ../Misc.pm:4369
-msgid "----------------------------Error Summary----------------------------\n"
+msgid " Error Summary "
 msgstr ""
 
 #: ../Misc.pm:4370
@@ -7429,74 +7429,74 @@ msgid ""
 "      however it is safe to ignore if those map(s) are not used\n"
 msgstr ""
 
-#: ../Misc.pm:4507
+#: ../Misc.pm:4508
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr ""
 
-#: ../Misc.pm:5110 ../Misc.pm:5205
+#: ../Misc.pm:5111 ../Misc.pm:5206
 msgid "A shop has already been opened.\n"
 msgstr ""
 
-#: ../Misc.pm:5117
+#: ../Misc.pm:5118
 msgid "You don't have the Vending skill.\n"
 msgstr ""
 
-#: ../Misc.pm:5122
+#: ../Misc.pm:5123
 msgid "You need this with a cart in order to create a shop!\n"
 msgstr ""
 
-#: ../Misc.pm:5127
+#: ../Misc.pm:5128
 msgid "Your shop does not have a title.\n"
 msgstr ""
 
-#: ../Misc.pm:5168 ../Misc.pm:5247
+#: ../Misc.pm:5169 ../Misc.pm:5248
 msgid "There are no items to sell.\n"
 msgstr ""
 
-#: ../Misc.pm:5182
+#: ../Misc.pm:5183
 msgid "Trying to set up shop...\n"
 msgstr ""
 
-#: ../Misc.pm:5190
+#: ../Misc.pm:5191
 msgid "A shop has not been opened.\n"
 msgstr ""
 
-#: ../Misc.pm:5200
+#: ../Misc.pm:5201
 msgid "Shop closed.\n"
 msgstr ""
 
-#: ../Misc.pm:5256
+#: ../Misc.pm:5257
 msgid ""
 "You don't have the Buying Store skill or Black Market Bulk Buyer Shop "
 "License.\n"
 msgstr ""
 
-#: ../Misc.pm:5262
+#: ../Misc.pm:5263
 msgid "You don't have Bulk Buyer Shop License.\n"
 msgstr ""
 
-#: ../Misc.pm:5270
+#: ../Misc.pm:5271
 msgid "Your buyer shop does not have a title.\n"
 msgstr ""
 
-#: ../Misc.pm:5297
+#: ../Misc.pm:5298
 msgid "Trying to set up buyer shop...\n"
 msgstr ""
 
-#: ../Misc.pm:5303
+#: ../Misc.pm:5304
 msgid "A Buyer Shop has not been opened.\n"
 msgstr ""
 
-#: ../Misc.pm:5312
+#: ../Misc.pm:5313
 msgid "Buyer Shop closed.\n"
 msgstr ""
 
-#: ../Misc.pm:5341
+#: ../Misc.pm:5342
 msgid "All files were loaded\n"
 msgstr ""
 
-#: ../Misc.pm:5345
+#: ../Misc.pm:5346
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -7504,37 +7504,37 @@ msgid ""
 "to save that file as valid UTF-8."
 msgstr ""
 
-#: ../Misc.pm:5369
+#: ../Misc.pm:5370
 #, perl-format
 msgid "Invalid char in specified slot %d\n"
 msgstr ""
 
-#: ../Misc.pm:5442
+#: ../Misc.pm:5443
 msgid " Search Store Result "
 msgstr ""
 
-#: ../Misc.pm:5443
+#: ../Misc.pm:5444
 #, perl-format
 msgid "Page: %d/%d\n"
 msgstr ""
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Shop Name"
 msgstr ""
 
-#: ../Misc.pm:5445 ../Actor/Item.pm:90
+#: ../Misc.pm:5446 ../Actor/Item.pm:90
 msgid "Item"
 msgstr ""
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Amount"
 msgstr ""
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Price"
 msgstr ""
 
-#: ../Misc.pm:5512
+#: ../Misc.pm:5513
 #, perl-format
 msgid ""
 "Unknown msgid: %d. Need to update the file msgstringtable.txt (from data."

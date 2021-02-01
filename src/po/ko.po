@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.9.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 03:29+0300\n"
+"POT-Creation-Date: 2021-02-01 04:06+0300\n"
 "PO-Revision-Date: 2010-11-29 20:09+0100\n"
 "Last-Translator: manticora <the-manticora@yandex.ru>\n"
 "Language-Team: skseo <skseo76@hotmail.com>\n"
@@ -84,7 +84,7 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../functions.pl:293 ../Misc.pm:5333
+#: ../functions.pl:293 ../Misc.pm:5334
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "읽는 중 %s...\n"
@@ -8111,7 +8111,7 @@ msgstr ""
 msgid "BROKEN "
 msgstr ""
 
-#: ../Misc.pm:2540 ../Misc.pm:4447
+#: ../Misc.pm:2540 ../Misc.pm:4448
 msgid "Nothing"
 msgstr ""
 
@@ -8483,8 +8483,8 @@ msgid "Wrote portals Line of Sight table to '%s'\n"
 msgstr "시야테이블에 포털 라인 쓰기 '%s/portalsLOS.txt'\n"
 
 #: ../Misc.pm:4369
-msgid "----------------------------Error Summary----------------------------\n"
-msgstr "----------------------------오류 요약----------------------------\n"
+msgid " Error Summary "
+msgstr ""
 
 #: ../Misc.pm:4370
 #, perl-format
@@ -8499,82 +8499,82 @@ msgstr ""
 "Note: LOS information for the above listed map(s) will be inaccurate;\n"
 "      however it is safe to ignore if those map(s) are not used\n"
 
-#: ../Misc.pm:4507
+#: ../Misc.pm:4508
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr ""
 
-#: ../Misc.pm:5110 ../Misc.pm:5205
+#: ../Misc.pm:5111 ../Misc.pm:5206
 msgid "A shop has already been opened.\n"
 msgstr "상점이 이미 열려 있습니다.\n"
 
-#: ../Misc.pm:5117
+#: ../Misc.pm:5118
 msgid "You don't have the Vending skill.\n"
 msgstr "노점 스킬이 없습니다.\n"
 
-#: ../Misc.pm:5122
+#: ../Misc.pm:5123
 msgid "You need this with a cart in order to create a shop!\n"
 msgstr ""
 
-#: ../Misc.pm:5127
+#: ../Misc.pm:5128
 msgid "Your shop does not have a title.\n"
 msgstr "Your shop does not have a title.\n"
 
-#: ../Misc.pm:5168 ../Misc.pm:5247
+#: ../Misc.pm:5169 ../Misc.pm:5248
 msgid "There are no items to sell.\n"
 msgstr "판매할 아이템이 없습니다.\n"
 
-#: ../Misc.pm:5182
+#: ../Misc.pm:5183
 #, fuzzy
 msgid "Trying to set up shop...\n"
 msgstr "뒤에서 획득 시도\n"
 
-#: ../Misc.pm:5190
+#: ../Misc.pm:5191
 msgid "A shop has not been opened.\n"
 msgstr "A shop has not been opened.\n"
 
-#: ../Misc.pm:5200
+#: ../Misc.pm:5201
 msgid "Shop closed.\n"
 msgstr "상점 닫기.\n"
 
-#: ../Misc.pm:5256
+#: ../Misc.pm:5257
 #, fuzzy
 msgid ""
 "You don't have the Buying Store skill or Black Market Bulk Buyer Shop "
 "License.\n"
 msgstr "텔레포트 스킬이나 파리날개가 없습니다.\n"
 
-#: ../Misc.pm:5262
+#: ../Misc.pm:5263
 #, fuzzy
 msgid "You don't have Bulk Buyer Shop License.\n"
 msgstr "상정 개설을 가지고 있지 않음.\n"
 
-#: ../Misc.pm:5270
+#: ../Misc.pm:5271
 #, fuzzy
 msgid "Your buyer shop does not have a title.\n"
 msgstr "Your shop does not have a title.\n"
 
-#: ../Misc.pm:5297
+#: ../Misc.pm:5298
 #, fuzzy
 msgid "Trying to set up buyer shop...\n"
 msgstr "뒤에서 획득 시도\n"
 
-#: ../Misc.pm:5303
+#: ../Misc.pm:5304
 #, fuzzy
 msgid "A Buyer Shop has not been opened.\n"
 msgstr "A shop has not been opened.\n"
 
-#: ../Misc.pm:5312
+#: ../Misc.pm:5313
 #, fuzzy
 msgid "Buyer Shop closed.\n"
 msgstr "상점 닫기.\n"
 
-#: ../Misc.pm:5341
+#: ../Misc.pm:5342
 #, fuzzy
 msgid "All files were loaded\n"
 msgstr "아이템이 드롭되지 않았습니다.\n"
 
-#: ../Misc.pm:5345
+#: ../Misc.pm:5346
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -8582,40 +8582,40 @@ msgid ""
 "to save that file as valid UTF-8."
 msgstr ""
 
-#: ../Misc.pm:5369
+#: ../Misc.pm:5370
 #, perl-format
 msgid "Invalid char in specified slot %d\n"
 msgstr ""
 
-#: ../Misc.pm:5442
+#: ../Misc.pm:5443
 msgid " Search Store Result "
 msgstr ""
 
-#: ../Misc.pm:5443
+#: ../Misc.pm:5444
 #, fuzzy, perl-format
 msgid "Page: %d/%d\n"
 msgstr "용량: %d/%d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Shop Name"
 msgstr ""
 
-#: ../Misc.pm:5445 ../Actor/Item.pm:90
+#: ../Misc.pm:5446 ../Actor/Item.pm:90
 #, fuzzy
 msgid "Item"
 msgstr ""
 "\n"
 "스킬 포인트: %d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Amount"
 msgstr ""
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Price"
 msgstr ""
 
-#: ../Misc.pm:5512
+#: ../Misc.pm:5513
 #, perl-format
 msgid ""
 "Unknown msgid: %d. Need to update the file msgstringtable.txt (from data."
@@ -14889,6 +14889,10 @@ msgstr ""
 #, fuzzy, perl-format
 msgid "File [%s] does not exist."
 msgstr "Player %s 가 존재하지 않습니다.\n"
+
+#~ msgid ""
+#~ "----------------------------Error Summary----------------------------\n"
+#~ msgstr "----------------------------오류 요약----------------------------\n"
 
 #, fuzzy
 #~ msgid "<player>"

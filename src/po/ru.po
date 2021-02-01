@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenKore\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-01 03:29+0300\n"
-"PO-Revision-Date: 2021-02-01 03:42+0300\n"
+"POT-Creation-Date: 2021-02-01 04:06+0300\n"
+"PO-Revision-Date: 2021-02-02 00:35+0300\n"
 "Last-Translator: ya4ept <ya4ept@ya.ru>\n"
 "Language-Team: ya4ept <ya4ept@ya.ru>\n"
 "Language: ru_RU\n"
@@ -91,7 +91,7 @@ msgstr ""
 "Сообщение об ошибке:\n"
 "%s"
 
-#: ../functions.pl:293 ../Misc.pm:5333
+#: ../functions.pl:293 ../Misc.pm:5334
 #, perl-format
 msgid "Loading %s...\n"
 msgstr "Загрузка %s...\n"
@@ -4117,7 +4117,7 @@ msgstr " Список Умений "
 #: ../Commands.pm:3066
 #, perl-format
 msgid "Skill: %s"
-msgstr "Уменее: %s"
+msgstr "Умение: %s"
 
 #: ../Commands.pm:3072
 #, perl-format
@@ -5482,7 +5482,7 @@ msgid ""
 "Skill: %s\n"
 "\n"
 msgstr ""
-"Уменее: %s\n"
+"Умение: %s\n"
 "\n"
 
 #: ../Commands.pm:5257
@@ -7723,19 +7723,18 @@ msgstr ""
 "     -> Будет уделён %s!"
 
 #: ../Misc.pm:1502
-#, fuzzy, perl-format
+#, perl-format
 msgid "Slot %d: %s (%s, %s, level %d/%d%s)%s"
-msgstr "Слот %d: %s (%s, уровень %d/%d)%s"
+msgstr "Слот %d: %s (%s, %s, уровень %d/%d%s)%s"
 
 #: ../Misc.pm:1517
-#, fuzzy
 msgid " Character List "
-msgstr " Список Карт "
+msgstr " Список персонажей "
 
 #: ../Misc.pm:1530 ../Misc.pm:1568
 #, perl-format
 msgid "Cannot select character \"%s\" that requested for deletion.\n"
-msgstr ""
+msgstr "Нельзя выбрать чара \"%s\", он помечен для удаления.\n"
 
 #: ../Misc.pm:1542
 msgid "Create a new character"
@@ -7964,7 +7963,7 @@ msgstr ""
 msgid "BROKEN "
 msgstr ""
 
-#: ../Misc.pm:2540 ../Misc.pm:4447
+#: ../Misc.pm:2540 ../Misc.pm:4448
 msgid "Nothing"
 msgstr ""
 
@@ -8329,13 +8328,11 @@ msgstr "Обработка локации %s...\n"
 #: ../Misc.pm:4365
 #, perl-format
 msgid "Wrote portals Line of Sight table to '%s'\n"
-msgstr ""
-"Записаны данные о прямой видимости (LoS) порталов в табличный файл '%s'\n"
+msgstr "Данные \"Line of Sight\" (LoS) порталов записаны в файл '%s'\n"
 
 #: ../Misc.pm:4369
-msgid "----------------------------Error Summary----------------------------\n"
-msgstr ""
-"-------------------------- Итог ошибок ------------------------------\n"
+msgid " Error Summary "
+msgstr " Перечень ошибок "
 
 #: ../Misc.pm:4370
 #, perl-format
@@ -8348,85 +8345,86 @@ msgid ""
 "      however it is safe to ignore if those map(s) are not used\n"
 msgstr ""
 "Примечание: Информация о Линии Видимости (LOS) для указанных выше локаций "
-"может быть неточной, если эти карты не используются, то можно игнорировать "
-"данную ошибку\n"
+"может быть неточной.\n"
+"            Если эти локации не используются, то можно игнорировать данную "
+"ошибку\n"
 
-#: ../Misc.pm:4507
+#: ../Misc.pm:4508
 #, perl-format
 msgid "Invalid NPC information for autoBuy, autoSell or autoStorage! (%s)\n"
 msgstr ""
 "Неверная информация о неписи в параметрах конфига autoBuy, autoSell или "
 "autoStorage! (%s)\n"
 
-#: ../Misc.pm:5110 ../Misc.pm:5205
+#: ../Misc.pm:5111 ../Misc.pm:5206
 msgid "A shop has already been opened.\n"
 msgstr "Торговая лавка уже открыта.\n"
 
-#: ../Misc.pm:5117
+#: ../Misc.pm:5118
 msgid "You don't have the Vending skill.\n"
 msgstr "У вас нет умения для открытия торговой лавки.\n"
 
-#: ../Misc.pm:5122
+#: ../Misc.pm:5123
 msgid "You need this with a cart in order to create a shop!\n"
 msgstr "Для создания магазина Вам нужна телега!\n"
 
-#: ../Misc.pm:5127
+#: ../Misc.pm:5128
 msgid "Your shop does not have a title.\n"
 msgstr "У Вашей торговой лавки нет названия.\n"
 
-#: ../Misc.pm:5168 ../Misc.pm:5247
+#: ../Misc.pm:5169 ../Misc.pm:5248
 msgid "There are no items to sell.\n"
 msgstr "Отсутствуют предметы для продажи.\n"
 
-#: ../Misc.pm:5182
+#: ../Misc.pm:5183
 msgid "Trying to set up shop...\n"
 msgstr "Попытка настроить магазин...\n"
 
-#: ../Misc.pm:5190
+#: ../Misc.pm:5191
 msgid "A shop has not been opened.\n"
 msgstr "Не получилось открыть торговую лавку.\n"
 
-#: ../Misc.pm:5200
+#: ../Misc.pm:5201
 msgid "Shop closed.\n"
 msgstr "Торговая лавка закрыта.\n"
 
-#: ../Misc.pm:5256
+#: ../Misc.pm:5257
 #, fuzzy
 msgid ""
 "You don't have the Buying Store skill or Black Market Bulk Buyer Shop "
 "License.\n"
 msgstr "Нет умения Телепорт, нет Крыльев бабочки\n"
 
-#: ../Misc.pm:5262
+#: ../Misc.pm:5263
 #, fuzzy
 msgid "You don't have Bulk Buyer Shop License.\n"
 msgstr "У Вас нет открытой лавки.\n"
 
-#: ../Misc.pm:5270
+#: ../Misc.pm:5271
 #, fuzzy
 msgid "Your buyer shop does not have a title.\n"
 msgstr "У Вашей торговой лавки нет названия.\n"
 
-#: ../Misc.pm:5297
+#: ../Misc.pm:5298
 #, fuzzy
 msgid "Trying to set up buyer shop...\n"
 msgstr "Попытка настроить магазин...\n"
 
-#: ../Misc.pm:5303
+#: ../Misc.pm:5304
 #, fuzzy
 msgid "A Buyer Shop has not been opened.\n"
 msgstr "Не получилось открыть торговую лавку.\n"
 
-#: ../Misc.pm:5312
+#: ../Misc.pm:5313
 #, fuzzy
 msgid "Buyer Shop closed.\n"
 msgstr "Торговая лавка закрыта.\n"
 
-#: ../Misc.pm:5341
+#: ../Misc.pm:5342
 msgid "All files were loaded\n"
 msgstr "Все файлы были загружены.\n"
 
-#: ../Misc.pm:5345
+#: ../Misc.pm:5346
 #, perl-format
 msgid ""
 "The file %s must be valid UTF-8 encoded, which it is \n"
@@ -8436,39 +8434,39 @@ msgstr ""
 "Файл %s обязан быть в кодировке UTF-8.\n"
 "Чтобы решить проблему, используйте Notepad для сохранения файла."
 
-#: ../Misc.pm:5369
+#: ../Misc.pm:5370
 #, perl-format
 msgid "Invalid char in specified slot %d\n"
 msgstr ""
 
-#: ../Misc.pm:5442
+#: ../Misc.pm:5443
 msgid " Search Store Result "
 msgstr ""
 
-#: ../Misc.pm:5443
+#: ../Misc.pm:5444
 #, fuzzy, perl-format
 msgid "Page: %d/%d\n"
 msgstr "Вместимость: %d/%d\n"
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 #, fuzzy
 msgid "Shop Name"
 msgstr "Имя"
 
-#: ../Misc.pm:5445 ../Actor/Item.pm:90
+#: ../Misc.pm:5446 ../Actor/Item.pm:90
 #, fuzzy
 msgid "Item"
 msgstr " Список предметов "
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Amount"
 msgstr ""
 
-#: ../Misc.pm:5445
+#: ../Misc.pm:5446
 msgid "Price"
 msgstr ""
 
-#: ../Misc.pm:5512
+#: ../Misc.pm:5513
 #, fuzzy, perl-format
 msgid ""
 "Unknown msgid: %d. Need to update the file msgstringtable.txt (from data."
@@ -10493,34 +10491,27 @@ msgstr ""
 
 #: ../Network/Receive.pm:1111
 msgid " Account Info "
-msgstr ""
+msgstr " Информация об аккаунте "
 
 #: ../Network/Receive.pm:1113
-#, fuzzy
 msgid ""
 "Account ID: @<<<<<<<<< @<<<<<<<<<<\n"
 "Sex:        @<<<<<<<<<<<<<<<<<<<<<\n"
 "Session ID: @<<<<<<<<< @<<<<<<<<<<\n"
 "SessionID2: @<<<<<<<<< @<<<<<<<<<<\n"
 msgstr ""
-"------- Информация об аккаунте -----\n"
-"ID аккаунта: @<<<<<<<<< @<<<<<<<<<<\n"
-"Пол:         @<<<<<<<<<<<<<<<<<<<<<\n"
-"ID сессии:   @<<<<<<<<< @<<<<<<<<<<\n"
-"             @<<<<<<<<< @<<<<<<<<<<\n"
-"------------------------------------"
+"ID Аккаунта: @<<<<<<<< @<<<<<<<<<<\n"
+"Пол:         @<<<<<<<<<<<<<<<<<<<<\n"
+"ID  Сеанса:  @<<<<<<<< @<<<<<<<<<<\n"
+"ID2 Сеанса:  @<<<<<<<< @<<<<<<<<<<\n"
 
 #: ../Network/Receive.pm:1124
-#, fuzzy
 msgid " Servers "
-msgstr "Мастер-сервер"
+msgstr " Список серверов RO "
 
 #: ../Network/Receive.pm:1125
-#, fuzzy
 msgid "#   Name                  Users  IP              Port  SID   State\n"
-msgstr ""
-"%s\n"
-"#   Имя                               Цена\n"
+msgstr "#   Название              Польз. IP адрес        Порт  SID   Статус\n"
 
 #: ../Network/Receive.pm:1135 ../Network/XKoreProxy.pm:530
 #: ../Network/Receive/ServerType17.pm:77
@@ -10857,37 +10848,41 @@ msgstr "Экипировать"
 #: ../Network/Receive.pm:3083 ../Network/Receive.pm:3129
 #: ../Network/Receive.pm:3159
 msgid "Your Equipment information is now open to the public.\n"
-msgstr ""
+msgstr "[Отключено] Показывать снаряжение персонажа другим игрокам.\n"
 
 #: ../Network/Receive.pm:3085 ../Network/Receive.pm:3131
 #: ../Network/Receive.pm:3161
 msgid "Your Equipment information is now not open to the public.\n"
-msgstr ""
+msgstr "[Включено] Показывать снаряжение персонажа другим игрокам.\n"
 
 #: ../Network/Receive.pm:3091 ../Network/Receive.pm:3135
 msgid "Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n"
 msgstr ""
+"[Включено] Использование умений призыва: Призыв Гильдии, Романтическое "
+"свидание и пр.\n"
 
 #: ../Network/Receive.pm:3093 ../Network/Receive.pm:3137
 msgid ""
 "Not Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n"
 msgstr ""
+"[Отключено] Использование умений призыва: Призыв Гильдии, Романтическое "
+"свидание и пр.\n"
 
 #: ../Network/Receive.pm:3099 ../Network/Receive.pm:3141
 msgid "Pet automatic feeding is ON. (Ragexe Client Feature)\n"
-msgstr ""
+msgstr "[Включено] Автоматическое кормление питомца.\n"
 
 #: ../Network/Receive.pm:3101 ../Network/Receive.pm:3143
 msgid "Pet automatic feeding is OFF. (Ragexe Client Feature)\n"
-msgstr ""
+msgstr "[Отключено] Автоматическое кормление питомца.\n"
 
 #: ../Network/Receive.pm:3107 ../Network/Receive.pm:3147
 msgid "Homunculus automatic feeding is ON. (Ragexe Client Feature)\n"
-msgstr ""
+msgstr "[Включено] Самостоятельное кормление Гомункула\n"
 
 #: ../Network/Receive.pm:3109 ../Network/Receive.pm:3149
 msgid "Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n"
-msgstr ""
+msgstr "[Отключено] Самостоятельное кормление Гомункула\n"
 
 #: ../Network/Receive.pm:3152
 #, fuzzy, perl-format
@@ -12435,11 +12430,11 @@ msgstr "%s присоединился к Вашей пати '%s'.\n"
 
 #: ../Network/Receive.pm:7900
 msgid "Not allowed other player invite to Party\n"
-msgstr "Нельзя приглашать других игроков в пати.\n"
+msgstr "[Отключено] Получать приглашения в группу.\n"
 
 #: ../Network/Receive.pm:7902
 msgid "Allowed other player invite to Party\n"
-msgstr "Другие игроки могут приглашать вас в пати.\n"
+msgstr "[Включено] Получать приглашения в группу.\n"
 
 #: ../Network/Receive.pm:7918
 #, perl-format
@@ -12880,37 +12875,39 @@ msgid "Selected store is at (%d, %d)\n"
 msgstr "Выбран сервер: %s\n"
 
 #: ../Network/Receive.pm:8903
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Unknown skill_msg msgid:%d skill:%d. Need to update the file msgstringtable."
 "txt (from data.grf)\n"
 msgstr ""
-"Неизвестное message_string: %s. Необходимо обновить файл msgstringtable.txt "
-"(из data.grf)\n"
+"Строка skill_msg %d с параметром '%d' не найдена. Необходимо обновить файл "
+"msgstringtable.txt (из data.grf)\n"
 
 #: ../Network/Receive.pm:8925
-#, fuzzy, perl-format
+#, perl-format
 msgid ""
 "Unknown message_string: %s param: %s. Need to update the file msgstringtable."
 "txt (from data.grf)\n"
 msgstr ""
-"Неизвестное message_string: %s. Необходимо обновить файл msgstringtable.txt "
-"(из data.grf)\n"
+"Строка message_string %s с параметром '%s' не найдена. Необходимо обновить "
+"файл msgstringtable.txt (из data.grf)\n"
 
 #: ../Network/Receive.pm:8978
-#, fuzzy, perl-format
+#, perl-format
 msgid "Received reward for achievement '%s' (%s).\n"
-msgstr "Poseidon: получены запросы от клиента %s.\n"
+msgstr ""
+"Получена награда за достижение '%s' (%s).\n"
+"\n"
 
 #: ../Network/Receive.pm:8988
 #, perl-format
 msgid "Achievement '%s' (%s) added or updated.\n"
-msgstr ""
+msgstr "Достижение '%s' (%s) добавлено или обновлено.\n"
 
 #: ../Network/Receive.pm:9021
 #, perl-format
 msgid "Achievement '%s' (%s) added.\n"
-msgstr ""
+msgstr "Добавлено достижение '%s' (%s).\n"
 
 #: ../Network/Receive.pm:9034
 msgid "Please wait 10 seconds before trying to log out.\n"
@@ -13001,14 +12998,12 @@ msgid "You have been: unmuted by %s.\n"
 msgstr "Игровой мастер %s разблокировал Ваш чат.\n"
 
 #: ../Network/Receive.pm:9119
-#, fuzzy
 msgid "Get"
-msgstr "Питомец"
+msgstr ""
 
 #: ../Network/Receive.pm:9120
-#, fuzzy
 msgid "Put"
-msgstr "Питомец"
+msgstr ""
 
 #: ../Network/Receive.pm:9129
 #, fuzzy
@@ -13016,13 +13011,12 @@ msgid "[ Guild Storage LOG ]"
 msgstr " Склад "
 
 #: ../Network/Receive.pm:9130
-#, fuzzy
 msgid ""
 "#  Name                     Item-"
 "Name                                         Amount  Action          Time\n"
 msgstr ""
-"#  Название предмета                           Тип          Кол-во         "
-"Цена\n"
+"#  Игрок                    Название "
+"предмета                                 Кол-во  Действие        Время\n"
 
 #: ../Network/Receive.pm:9146
 #, fuzzy
@@ -13030,16 +13024,13 @@ msgid "Guild Storage empty.\n"
 msgstr " Склад "
 
 #: ../Network/Receive.pm:9148
-#, fuzzy
 msgid "You are not currently using Guild Storage. Please try later.\n"
-msgstr "Вы 5 раз неправильно ввели пароль. Пожалуйста, попробуйте позже.\n"
+msgstr "У вас не склад гильдии. Попробуйте позже.\n"
 
 #: ../Network/Receive.pm:9158
-#, fuzzy, perl-format
+#, perl-format
 msgid "Lost skill: %s\n"
-msgstr ""
-"Уменее: %s\n"
-"\n"
+msgstr "Умение: %s удалено\n"
 
 #: ../Network/Receive.pm:9207
 #, perl-format
