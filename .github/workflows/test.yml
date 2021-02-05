@@ -15,13 +15,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y libreadline6-dev libcurl4-openssl-dev python
     - name: Check env
       run: |
         perl -V
         python -V
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y libreadline6-dev libcurl4-openssl-dev build-essential
     - name: Run Tests
-      run: make test 
+      run: make test
