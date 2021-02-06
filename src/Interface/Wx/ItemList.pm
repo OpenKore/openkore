@@ -2,7 +2,7 @@
 #  OpenKore - WxWidgets Interface
 #  Player/monster/item list control
 #
-#  Copyright (c) 2004 OpenKore development team 
+#  Copyright (c) 2004 OpenKore development team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -217,7 +217,7 @@ sub OnGetItemText {
 
 		if (defined $actor->{amount}) {
 			# Translation Comment: Item with amount ("10 x Blue Herb...")
-			$info = TF("%d x %s", $actor->{amount}, $info);
+			$info = $actor->{amount} ." x ". $info;
 		}
 	}
 

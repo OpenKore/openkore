@@ -1111,8 +1111,8 @@ sub public_chat {
 
 	# this code autovivifies $actor->{pos_to} but it doesnt matter
 	chatLog("c", "$position $message\n") if ($config{logChat});
-	message TF("%s%s\n", $distInfo, $message), "publicchat";
-	debug "publicchat: $chatMsg\n", "publicchat", 1;
+	message "$distInfo$message\n", "publicchat";
+	debug "public_chat: $chatMsg\n", "publicchat", 1;
 
 	ChatQueue::add('c', $args->{ID}, $chatMsgUser, $parsed_msg);
 	Plugins::callHook('packet_pubMsg', {

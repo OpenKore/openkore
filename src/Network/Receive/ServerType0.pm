@@ -1152,8 +1152,8 @@ sub public_chat {
 
 	# this code autovivifies $actor->{pos_to} but it doesnt matter
 	chatLog("c", "$position $message\n") if ($config{logChat});
-	message TF("%s%s\n", $distInfo, $message), "publicchat";
-	debug "publicchat: $chatMsg\n", "publicchat", 1;
+	message "$distInfo$message\n", "publicchat";
+	debug "public_chat: $chatMsg\n", "publicchat", 1;
 
 	ChatQueue::add('c', $args->{ID}, $chatMsgUser, $parsed_msg);
 	Plugins::callHook('packet_pubMsg', {
@@ -1556,8 +1556,8 @@ sub rates_info {
 	# 2 = server additional exp
 	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
 	my $print_msg = center(T(" Server Infos "), 68, '-') ."\n";
-	$print_msg .= TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3});#MsgStringTable[3536]
-	$print_msg .= TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3});#MsgStringTable[3537]
+	$print_msg .= TF("EXP   Rates:   %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3});#MsgStringTable[3536]
+	$print_msg .= TF("Drop  Rates:   %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3});#MsgStringTable[3537]
 	$print_msg .= TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}, $rates{death}{1}, $rates{death}{2}, $rates{death}{3});#MsgStringTable[3538]
 	$print_msg .= ('-'x68) . "\n";
 	message $print_msg, "info";
@@ -1597,8 +1597,8 @@ sub rates_info2 {
 	# 2 = server additional exp
 	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
 	my $print_msg = center(T(" Server Infos "), 68, '-') ."\n";
-	$print_msg .= TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}+100, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3});#MsgStringTable[3536]
-	$print_msg .= TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}+100, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3});#MsgStringTable[3537]
+	$print_msg .= TF("EXP   Rates:   %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}+100, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3});#MsgStringTable[3536]
+	$print_msg .= TF("Drop  Rates:   %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}+100, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3});#MsgStringTable[3537]
 	$print_msg .= TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}+100, $rates{death}{1}, $rates{death}{2}, $rates{death}{3});#MsgStringTable[3538]
 	$print_msg .= ('-'x68) . "\n";
 	message $print_msg, "info";

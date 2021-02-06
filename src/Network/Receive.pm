@@ -3067,7 +3067,7 @@ sub show_eq {
 		$item->{identified} = 1;
 		$msg .= sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item));
 	}
-	$msg .= sprintf("%s\n", ('-'x50));
+	$msg .= ('-'x50) . "\n";
 	message($msg, "list");
 }
 
@@ -4687,7 +4687,7 @@ sub quest_update_mission_hunt {
 			if($config{questDisplayStyle} >= 2) {
 				warning TF("[%s] Quest - defeated [%s] progress (%s/%s)\n", $quests_lut{$mission->{questID}} ? "$quests_lut{$mission->{questID}}{title} ($mission->{questID})" : $mission->{questID}, $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
 			} else {
-				warning TF("%s [%s/%s]\n", $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
+				warning sprintf("%s [%s/%s]\n", $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
 			}
 		}
 
@@ -4762,7 +4762,7 @@ sub npc_chat {
 	}
 
 	chatLog("npc", "$position $message\n") if ($config{logChat});
-	message TF("%s%s\n", $dist, $message), "npcchat";
+	message "$dist$message\n", "npcchat";
 
 	# TODO hook
 }
@@ -7720,24 +7720,22 @@ sub received_login_token {
 sub hotkeys {
 	my ($self, $args) = @_;
 	undef $hotkeyList;
-	my $msg;
 
 	# TODO: implement this: $hotkeyList->{rotate} = $args->{rotate} if $args->{rotate};
-	$msg .= center(" " . T("Hotkeys") . " ", 79, '-') . "\n";
-	$msg .=	swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
-			["#", T("Name"), T("Type"), T("Lv")]);
-	$msg .= sprintf("%s\n", ('-'x79));
+	my $msg .= center(" " . T("Hotkeys") . " ", 53, '-') . "\n";
+	$msg .= T("   # Name                            Type     Lvl\n");
+
 	my $j = 0;
 	for (my $i = 0; $i < length($args->{hotkeys}); $i += 7) {
 		@{$hotkeyList->[$j]}{qw(type ID lv)} = unpack('C V v', substr($args->{hotkeys}, $i, 7));
-		$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x5), ('>'x3)),
+		$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x3), ('<'x30), ('<'x7), ('<'x7)),
 			[$j, $hotkeyList->[$j]->{type} ? Skill->new(idn => $hotkeyList->[$j]->{ID})->getName() : itemNameSimple($hotkeyList->[$j]->{ID}),
 			$hotkeyList->[$j]->{type} ? T("skill") : T("item"),
 			$hotkeyList->[$j]->{lv}]);
 		$j++;
 	}
-	$msg .= sprintf("%s\n", ('-'x79));
-	debug($msg, "list");
+	$msg .= ('-'x53) . "\n";
+	debug $msg, "list";
 }
 
 sub received_character_ID_and_Map {
@@ -8751,8 +8749,7 @@ sub upgrade_list {
 		$k++;
 	}
 
-	$msg .= sprintf("%s\n", ('-'x79));
-
+	$msg .= ('-'x79) . "\n";
 	message($msg, "list");
 	message T("You can now use the 'refine' command.\n"), "info";
 }
@@ -8772,8 +8769,8 @@ sub cooking_list {
 		$msg .= swrite(sprintf("\@%s \@%s", ('>'x2), ('<'x50)), [$k, itemNameSimple($nameID)]);
 		$k++;
 	}
-	$msg .= sprintf("%s\n", ('-'x79));
 
+	$msg .= ('-'x79) . "\n";
 	message($msg, "list");
 	message T("You can now use the 'cook' command.\n"), "info";
 
@@ -9152,7 +9149,7 @@ sub guild_storage_log {
             $index++;
         }
 
-        $message .= sprintf("%s\n", ('-'x80));
+		$message .= ('-'x80) . "\n";
         message($message, "list");
 
     } elsif ($args->{result} == 2) {
@@ -10223,11 +10220,11 @@ sub mail_read {
 	$msg .= swrite(TF("Title: \@%s Sender: \@%s", ('<'x39), ('<'x24)),
 			[bytesToString($args->{title}), bytesToString($args->{sender})]);
 	$msg .= TF("Message: %s\n", bytesToString($args->{message}));
-	$msg .= ("%s\n", ('-'x119));
+	$msg .= ('-'x119) . "\n";
 	$msg .= TF( "Item: %s %s\n" .
 				"Zeny: %sz\n",
 				$item->{name}, ($args->{amount}) ? "x " . $args->{amount} : "", formatNumber($args->{zeny}));
-	$msg .= sprintf("%s\n", ('-'x119));
+	$msg .= ('-'x119) . "\n";
 
 	message($msg, "info");
 }
@@ -11252,7 +11249,7 @@ sub attendance_ui {
 				), "info";
 			}
 
-			message center(T("-"), 60, '-') ."\n", "info";
+			message center("-", 60, '-') ."\n", "info";
 
 		} else {
 			message T("attendance_rewards.txt is outdated\n"), "info";
@@ -11382,7 +11379,7 @@ sub roulette_window {
 	message TF("Result: %s  Row: %s  Column: %s  Bonus Item: %s\n", $result_lut[$args->{result}], $args->{stage}, $args->{price}, itemNameSimple($args->{additional_item})), "info";
 	message T("Coins:\n"), "info";
 	message TF("Gold: %s  Silver: %s  Bronze: %s\n", $args->{gold}, $args->{silver}, $args->{bronze}, itemNameSimple($args->{additional_item})), "info";
-	message center(T("-"), 60, '-') . "\n", "info";
+	message center("-", 60, '-') . "\n", "info";
 
 	if ($args->{stage} == 6) {
 		warning T("Please Claim Your Prize this was the last roll in this round. (you will lost the gold and the item)\n");
@@ -11441,8 +11438,8 @@ sub roulette_window_update {
 	message T("Coins:\n"), "info";
 	message TF("Gold: %s  Silver: %s  Bronze: %s\n", $args->{gold}, $args->{silver}, $args->{bronze}, itemNameSimple($args->{additional_item})), "info";
 	message T("Result:\n"), "info";
-	message T(">> ".$roulette{items}{$args->{stage}}{$args->{price}}->{name}." << \n"), "info";
-	message center(T("-"), 60, '-') . "\n", "info";
+	message ">> ".$roulette{items}{$args->{stage}}{$args->{price}}->{name}." << \n", "info";
+	message center("-", 60, '-') . "\n", "info";
 
 	if ($args->{stage} == 6) {
 		warning T("Please Claim Your Prize this was the last roll in this round. (you will lost the gold and the item)\n");

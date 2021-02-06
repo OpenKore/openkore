@@ -7070,7 +7070,7 @@ sub cmdAchieve {
 			$msg .= T("Status: ");
 			if ( defined ( $achievementList->{$args[1]} ) ) {
 				my $achieve = $achievementList->{$args[1]};
-				$msg .= TF("%s %s\n", $achieve->{completed} ? T("complete") : T("incomplete"), $achieve->{reward}  ? T("rewarded") : T("not rewarded"));
+				$msg .= sprintf("%s %s\n", $achieve->{completed} ? T("complete") : T("incomplete"), $achieve->{reward}  ? T("rewarded") : T("not rewarded"));
 			} else {
 				$msg .= T("N/A\n");
 			}
