@@ -3705,7 +3705,7 @@ sub shop_sold_long {
 sub vending_start {
 	my ($self, $args) = @_;
 
-	my $item_pack = $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
+	my $item_pack = $self->{vender_items_list_item_pack_self} || $self->{vender_items_list_item_pack} || 'V v2 C v C3 a8';
 	my $item_len = length pack $item_pack;
 	my $item_list_len = length $args->{itemList};
 	#started a shop.
