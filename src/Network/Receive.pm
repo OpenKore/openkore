@@ -11237,28 +11237,35 @@ sub attendance_ui {
 		my $date = getFormattedDateShort(time, 3);
 
 		if ($date >= $attendance_rewards{period}{start} && $date <= $attendance_rewards{period}{end}) {
-			my $attendance_count  = int($args->{data}/10);
 			my $already_requested = $args->{data}%10;
-			message center(T("[Attendance)]"), 60, '-') ."\n", "info";
-			message TF("Start: %s  End: %s  Day: %s\n", $attendance_rewards{period}{start}, $attendance_rewards{period}{end}, $attendance_count), "info";
-			message swrite( "@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<", ["Day", "Item", "Amount", "Requested"]), "info";
+			my $attendance_count  = int($args->{data}/10) + 1 - $already_requested;
+			my $attendanceAuto;
+			my $msg = center(T(" Attendance "), 54, '-') ."\n";
+			$msg .= TF("Start: %s  End: %s  Day: %s\n", $attendance_rewards{period}{start}, $attendance_rewards{period}{end}, $attendance_count);
 
+			$msg .=  T("Day  Item                            Amount  Requested\n");
 			for (my $i = 1; $i <= 20; $i++) {
-				my $requested = ($attendance_count >= $i) ? "yes" : "no";
-				if ($attendance_count == $i && !$already_requested) { $requested = "can"; }
-				message swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<",
-					[$i, itemNameSimple($attendance_rewards{items}{$i}{item_id}), $attendance_rewards{items}{$i}{amount}, $requested]
-				), "info";
+				my $requested = ($attendance_count >= $i) ? T("yes") : T("no");
+				if ($attendance_count == $i && !$already_requested) {
+					$requested = T("can");
+					$attendanceAuto = 1 if $config{'attendanceAuto'};
+				}
+				$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('<'x3), ('<'x30), ('<'x6), ('<'x9)),
+					[$i, itemNameSimple($attendance_rewards{items}{$i}{item_id}), $attendance_rewards{items}{$i}{amount}, $requested]);
 			}
 
-			message center(T("-"), 60, '-') ."\n", "info";
+			$msg .= ('-'x54) . "\n";
+			message $msg, "info";
 
+			if ($attendanceAuto) {
+				Commands::run('attendance request');
+				message T("Run command: 'attendance request'\n");
+			}
 		} else {
-			message T("attendance_rewards.txt is outdated\n"), "info";
+			warning T("attendance_rewards.txt is outdated\n"), "info";
 		}
 	} else {
-		message T("attendance_rewards.txt not exist\n"), "info";
+		error T("attendance_rewards.txt not exist\n");
 	}
 }
 
