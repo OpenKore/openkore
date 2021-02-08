@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+#    - name: Install dependencies
+#      run: |
+#		echo Hello, world!
+#        sudo apt update
+#        sudo apt install -y libreadline6-dev libcurl4-openssl-dev python
+    - name: Check env
+      run: |
+        echo "------------- check g++ version -------------"
+        g++ -v
+        echo "------------- perl version -------------"
+        perl -V
+        echo "------------- Time::HiRes module -------------"
+        perl -e "use Time::HiRes;"
+        echo "------------- Compress::Zlib module -------------"
+        perl -e "use Compress::Zlib;"
+        echo "------------- python version -------------"
+        python -V
+    - name: Run Tests
+      run: |
+        dir
+        src\scons-local-3.1.1\scons.bat
+        make test
