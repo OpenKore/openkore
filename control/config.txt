@@ -295,6 +295,7 @@ partyAutoShare 0
 partyAutoShareItem 0
 partyAutoShareItemDiv 0
 guildAutoDeny 1
+attendanceAuto 1
 
 verbose 1
 showDomain 0
