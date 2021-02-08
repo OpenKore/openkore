@@ -139,8 +139,18 @@ sub initHandlers {
 			["get <cart item #> [<amount>]", T("get <amount> items from cart to inventory")],
 			["desc <cart item #> [<amount>]", T("displays cart item description")]
 			], \&cmdCart],
-		['cash', undef, \&cmdCash],
-		['cashbuy', undef, \&cmdCashShopBuy],
+		['cash', [
+			T("Cash shop management"),
+			["open", T("open Cash shop")],
+			["close", T("close Cash shop")],
+			[T("buy <item> [<amount>] [<kafra shop points>]"), T("buy items from Cash shop")],
+			["points", T("show the number of available Cash shop points")],
+			["list", T("lists the Cash shop items")],
+			], \&cmdCash],
+		['cashbuy', [
+			T("Buy Cash item"),
+			["<kafra_points> <item #> [<amount>][, <item #> [<amount>]]...", T("buy items from cash dealer")],
+			], \&cmdCashShopBuy],
 		['charselect', T("Ask server to exit to the character selection screen."), \&cmdCharSelect],
 		['chat', [
 			T("Chat room management."),
@@ -793,7 +803,8 @@ sub initHandlers {
 			], \&cmdSearchStore],
 		['pause', [
 			T("Delay the next console commands."),
-			[T("<seconds>"), T("delay the next console commands by a specified number of seconds (default: 1 sec.)")]
+			["", T("delay the next console commands for 1 second")],
+			[T("<seconds>"), T("delay the next console commands by a specified number of seconds")]
 			], undef],
 	);
 
@@ -815,7 +826,7 @@ sub initCompletions {
 # Commands::run(input)
 # input: a command.
 #
-# Processes $input. See also <a href="http://openkore.sourceforge.net/docs.php">the user documentation</a>
+# Processes $input. See also <a href="https://openkore.com/wiki/Category:Console_Command">the user documentation</a>
 # for a list of commands.
 #
 # Example:
@@ -842,7 +853,7 @@ sub run {
 		my $handler;
 		$handler = $commands{$switch}{callback} if (exists $commands{$switch} && $commands{$switch});
 
-		if (($switch eq 'pause') && (!$cmdQueue) && AI::state != AI::AUTO && ($net->getState() == Network::IN_GAME)) {
+		if (($switch eq 'pause') && (!$cmdQueue) && AI::state == AI::AUTO && ($net->getState() == Network::IN_GAME)) {
 			$cmdQueue = 1;
 			$cmdQueueStartTime = time;
 			if ($args > 0) {
@@ -1673,6 +1684,38 @@ sub cmdCash {
 		return;
 	}
 
+	if ($args[0] eq 'list') {
+		if (not defined $cashShop{list}) {
+			error T("The list of items of Cash shop is not available\n");
+			return;
+		}
+		my %cashitem_tab = (
+			0 => T('New'),
+			1 => T('Popular'),
+			2 => T('Limited'),
+			3 => T('Rental'),
+			4 => T('Perpetuity'),
+			5 => T('Buff'),
+			6 => T('Recovery'),
+			7 => T('Etc'),
+		);
+
+		my $msg;
+		for (my $tabcode = 0; $tabcode < @{$cashShop{list}}; $tabcode++) {
+			$msg .= center(T(' Tab: ') . $cashitem_tab{$tabcode} . ' ', 50, '-') ."\n".
+			T ("ID      Item Name                            Price\n");
+			foreach my $itemloop (@{$cashShop{list}[$tabcode]}) {
+				$msg .= swrite(
+					"@<<<<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>C",
+					[$itemloop->{item_id}, itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price})]);
+			}
+		}
+		$msg .= ('-'x50) . "\n";
+		message $msg, "list";
+
+		return;
+	}
+
 	if (not defined $cashShop{points}) {
 		error T("Cash shop is not open\n");
 		error T("Please use 'cash open' first\n");
@@ -1689,9 +1732,9 @@ sub cmdCash {
 		my ($amount, $item, $kafra_points);
 
 		if ($args[1] !~ /^\d+$/) {
-			$item = itemNameToID($item);
+			$item = itemNameToID($args[1]);
 			if (!$item) {
-				error TF("Error in function 'cash buy': invalid item name or tables needs to be updated \n");
+				error TF("Error in function 'cash buy': invalid item name '%s' or tables needs to be updated\n", $args[1]);
 				return;
 			}
 		} else {
@@ -1743,36 +1786,8 @@ sub cmdCash {
 		return;
 	}
 
-	if ($args[0] eq 'list') {
-		my %cashitem_tab = (
-			0 => T('New'),
-			1 => T('Popular'),
-			2 => T('Limited'),
-			3 => T('Rental'),
-			4 => T('Perpetuity'),
-			5 => T('Buff'),
-			6 => T('Recovery'),
-			7 => T('Etc'),
-		);
-
-		my $msg;
-		for (my $tabcode = 0; $tabcode < @{$cashShop{list}}; $tabcode++) {
-			$msg .= center(T(' Tab: ') . $cashitem_tab{$tabcode} . ' ', 50, '-') ."\n".
-			T ("ID      Item Name                            Price\n");
-			foreach my $itemloop (@{$cashShop{list}[$tabcode]}) {
-				$msg .= swrite(
-					"@<<<<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>C",
-					[$itemloop->{item_id}, itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price})]);
-			}
-		}
-		$msg .= ('-'x50) . "\n";
-		message $msg, "list";
-
-		return;
-	}
-
 	error T("Syntax Error in function 'cash' (Cash shop)\n" .
-			"Usage: cash <open|close|buy|points|list>\n");
+			"Usage: cash <open | close | buy | points | list>\n");
 }
 
 sub cmdCharSelect {
