@@ -1,0 +1,49 @@
+name: CI Windows
+on:
+  push:
+#    branches:
+#      - master
+#    tags-ignore:
+#      - '*'
+  pull_request:
+
+jobs:
+  build_XSTools:
+
+    name: Setup default version
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '2.7.18'
+        architecture: 'x64'
+#    - name: Install dependencies
+#      run: |
+#        echo Hello, world!
+#        sudo apt update
+#        sudo apt install -y libreadline6-dev libcurl4-openssl-dev python
+
+    - name: Check env
+      run: |
+        echo "------------- check g++ version -------------"
+        g++ -v
+        echo "------------- perl version -------------"
+        perl -V
+        echo "------------- Time::HiRes module -------------"
+        perl -e "use Time::HiRes;"
+        echo "------------- Compress::Zlib module -------------"
+        perl -e "use Compress::Zlib;"
+        echo "------------- python version -------------"
+        python -V
+#        python2 -V
+    - name: Run make XSTools.dll
+      run: |
+        python2 src\scons-local-3.0.1\scons.py
+#        echo "------------- make test -------------"
+#        dir
+#        make test
