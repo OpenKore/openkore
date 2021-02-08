@@ -11239,10 +11239,10 @@ sub attendance_ui {
 		if ($date >= $attendance_rewards{period}{start} && $date <= $attendance_rewards{period}{end}) {
 			my $already_requested = $args->{data}%10;
 			my $attendance_count  = int($args->{data}/10) + 1 - $already_requested;
-			error "already_requested = $already_requested, data = ".$args->{data}.", attendance_count = $attendance_count\n";
 			my $attendanceAuto;
 			my $msg = center(T(" Attendance "), 54, '-') ."\n";
 			$msg .= TF("Start: %s  End: %s  Day: %s\n", $attendance_rewards{period}{start}, $attendance_rewards{period}{end}, $attendance_count);
+
 			$msg .=  T("Day  Item                            Amount  Requested\n");
 			for (my $i = 1; $i <= 20; $i++) {
 				my $requested = ($attendance_count >= $i) ? T("yes") : T("no");
