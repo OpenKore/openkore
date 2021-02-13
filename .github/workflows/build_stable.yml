@@ -1,0 +1,96 @@
+# runs-on:            https://github.com/actions/virtual-environments
+# setup-python:       https://github.com/actions/setup-python
+# actions-setup-perl: https://github.com/marketplace/actions/setup-perl-environment
+
+name: CI
+on:
+  push:
+#    branches:
+#      - master
+#    tags-ignore:
+#      - '*'
+#  pull_request:
+
+jobs:
+  build_windows:
+    name: XSTools.dll (windows-2016, perl 5.12, python 2.7)
+    runs-on: windows-2016
+    defaults:
+      run:
+        shell: cmd
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: setup-perl 5.12
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.12'
+
+    - name: setup-python 2.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: '2.7'
+        architecture: 'x64'
+
+    - name: Environment check
+      run: |
+        echo 1) CHECK g++ version:
+        g++ --version | find "g++"
+        echo 2) CHECK perl version:
+        perl --version | find "version"
+        echo 2.1) CHECK Time::HiRes module:
+        perl -e "use Time::HiRes;"
+        echo 2.2) CHECK Compress::Zlib module:
+        perl -e "use Compress::Zlib;"
+        echo 3) CHECK python version:
+        python -V
+# g++ --version | Select-String "gcc"
+# python2 -V
+    - name: Run make XSTools.dll
+      run: |
+        python src\scons-local-3.0.1\scons.py
+        echo ======================================================
+        echo DONE:
+        dir src\auto\XSTools\ | find "dll"
+
+  build_ubuntu:
+    name: XSTools.so (ubuntu-18.04, perl 5.12, python 2.7)
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: setup-perl 5.12
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: '5.12'
+
+    - name: setup-python 2.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: '2.7'
+        architecture: 'x64'
+
+    - name: Environment check
+      run: |
+        echo "1) CHECK g++ version:"
+        g++ --version | grep "g++"
+        echo "2) CHECK perl version:"
+        perl --version | grep "version"
+        echo "2.1) CHECK Time::HiRes module:"
+        perl -e "use Time::HiRes;"
+        echo "2.2) CHECK Compress::Zlib module:"
+        perl -e "use Compress::Zlib;"
+        echo "3) CHECK python version:"
+        python -V
+
+    - name: Run make XSTools.dll
+      run: |
+        sudo apt install -y libreadline6-dev libcurl4-openssl-dev
+        make all
+        echo "=========================================================================="
+        echo "DONE:"
+        ls -l src/auto/XSTools/ | grep so

@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: setup default python
-      uses: ./
+      uses: actions/setup-python@v2
 
     - name: Validate version
       run: python --version
@@ -30,23 +30,19 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest, ubuntu-18.04, ubuntu-20.04]
-        python: [2.7, 3.8.1]
+        python: [2.7.18, 3.8.1]
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
     - name: setup-python ${{ matrix.python }}
-      uses: ./
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python }}
 
     - name: Validate version
       run: |
         $pythonVersion = (python --version)
-        if ("Python ${{ matrix.python }}" -ne "$pythonVersion"){
-          Write-Host "The current version is $pythonVersion; expected version is ${{ matrix.python }}"
-          exit 1
-        }
         $pythonVersion
       shell: pwsh
 
@@ -65,7 +61,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: setup-python 3.9.0-beta.4
-      uses: ./
+      uses: actions/setup-python@v2
       with:
         python-version: '3.9.0-beta.4'
 
