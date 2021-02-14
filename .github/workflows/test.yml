@@ -38,7 +38,6 @@ jobs:
       with:
         perl-version: ${{ matrix.perl }}
         distribution: strawberry
-        architecture: 'x64'
 
     - name: Install dependencies
       if: runner.os == 'Linux'

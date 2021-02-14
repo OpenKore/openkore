@@ -42,7 +42,7 @@ jobs:
       with:
         perl-version: ${{ matrix.perl }}
         architecture: 'x64'
-#        distribution: strawberry
+        distribution: strawberry
 
 #    - name: Install dependencies
 #      run: |
