@@ -32,11 +32,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: setup-python ${{ matrix.python }}
+    - name: setup-python ${{ matrix.python }} x86
+      if: runner.os == 'Windows'
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python }}
-        architecture: 'x64'
+        architecture: 'x86'
+    - name: setup-python ${{ matrix.python }} x64
+      if: runner.os == 'Linux'
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python }}
     - name: setup-perl ${{ matrix.perl }}
       uses: shogo82148/actions-setup-perl@v1
       with:
