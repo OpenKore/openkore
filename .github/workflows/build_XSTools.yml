@@ -1,0 +1,80 @@
+# runs-on:				https://github.com/actions/virtual-environments
+# setup-python:			https://github.com/actions/setup-python
+# actions-setup-perl:	https://github.com/marketplace/actions/setup-perl-environment
+
+name: Build XSTools
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  build_XSTools:
+
+    name: XSTools ${{ matrix.os }} (python ${{ matrix.python }}) (perl ${{ matrix.perl }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2016, windows-latest, ubuntu-18.04, ubuntu-latest]
+        python: [2.7, 3]
+        perl: [5.12, latest]
+        exclude:
+        - python: 2.7
+          perl: latest
+        - python: 3
+          perl: 5.12
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: setup-python ${{ matrix.python }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+        architecture: 'x64'
+    - name: setup-perl ${{ matrix.perl }}
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: ${{ matrix.perl }}
+#        distribution: strawberry
+
+#    - name: Install dependencies
+#      run: |
+#        echo Hello, world!
+#        sudo apt update
+#        sudo apt install -y libreadline6-dev libcurl4-openssl-dev python
+
+    - name: Environment check
+      run: |
+        echo "------------- check g++ version -------------"
+        g++ --version
+        echo "------------- perl version -------------"
+        perl --version
+        echo "------------- Time::HiRes module -------------"
+        perl -e "use Time::HiRes;"
+        echo "------------- Compress::Zlib module -------------"
+        perl -e "use Compress::Zlib;"
+        echo "------------- python version -------------"
+        python -V
+
+    - name: Run make XSTools.dll
+      if: runner.os == 'Windows'
+      run: |
+        make all
+        echo "================================================================="
+        echo "DONE:"
+        dir src\auto\XSTools\ | findstr "dll"
+
+    - name: Run make XSTools.so
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt install -y libreadline6-dev libcurl4-openssl-dev
+        make all
+        echo "======================================================"
+        echo "DONE:"
+        ls -l src/auto/XSTools/ | grep so
