@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-2016, windows-latest, ubuntu-18.04, ubuntu-latest]
-        python: [2.7, 3]
+        python: [2.7, 3.9.1]
         perl: [5.12, latest]
         exclude:
         - python: 2.7
