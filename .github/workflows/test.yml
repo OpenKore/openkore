@@ -32,12 +32,12 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python }}
-        architecture: 'x86'
+        architecture: 'x64'
     - name: setup-perl ${{ matrix.perl }}
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: ${{ matrix.perl }}
-        architecture: 'x86'
+        architecture: 'x64'
 
     - name: Install dependencies
       if: runner.os == 'Linux'
