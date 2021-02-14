@@ -37,6 +37,7 @@ jobs:
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: ${{ matrix.perl }}
+        architecture: 'x86'
 
     - name: Install dependencies
       if: runner.os == 'Linux'
