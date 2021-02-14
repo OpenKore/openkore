@@ -2,7 +2,7 @@
 # setup-python:			https://github.com/actions/setup-python
 # actions-setup-perl:	https://github.com/marketplace/actions/setup-perl-environment
 
-name: CI
+name: Build XSTools
 on:
   push:
     branches:
@@ -14,7 +14,7 @@ on:
 jobs:
   build_XSTools:
 
-    name: Setup ${{ matrix.os }} (python ${{ matrix.python }}) (perl ${{ matrix.perl }})
+    name: XSTools ${{ matrix.os }} (python ${{ matrix.python }}) (perl ${{ matrix.perl }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
