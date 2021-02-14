@@ -5,10 +5,11 @@ use Test::More;
 use Utils::HttpReader;
 use Time::HiRes qw(time sleep);
 
-use constant SMALL_TEST_URL => "http://www.openkore.com/misc/testHttpReader.txt";
+use constant SMALL_TEST_URL => "https://misc.openkore.com/NetRedirect.rar";
 use constant SMALL_TEST_CONTENT => "Hello world!\n";
-use constant SMALL_TEST_SIZE => 13;
-use constant SMALL_TEST_CHECKSUM => 2773980202;
+use constant SMALL_TEST_SIZE => 33634;
+use constant SMALL_TEST_CHECKSUM => 2175860960;
+use constant SMALL_TEST_DATA_CHECKSUM => 2856945479;
 
 use constant ERROR_URL => "http://www.openkore.com/FileNotFound.txt";
 use constant ERROR_URL2 => "https://sourceforge.net/fooooooooooo/";
@@ -64,7 +65,7 @@ sub testMirrorSelection {
 		"Status is HTTP_READER_DONE");
 	my $len;
 	my $data = $http->getData($len);
-	is(calcChecksum($data), SMALL_TEST_CHECKSUM,
+	is(calcChecksum($data), SMALL_TEST_DATA_CHECKSUM,
 		"Downloaded data is correct");
 }
 
@@ -83,7 +84,8 @@ sub testDownload {
 	my $totalSize = 0;
 	while (!$done) {
 		my $buf;
-		my $ret = $http->pullData($buf, 2);
+		my $ret = $http->pullData($buf, 1024 * 32);
+
 		ok($ret == int($ret), "pullData() returns an integer");
 		ok($ret >= -2, "pullData() returns >= -2");
 		isnt($ret, -2, "pullData() never fails for valid test URL");

@@ -713,6 +713,7 @@ sub attack {
 		pos_to => { %{$target->{pos_to}} },
 	);
 	
+	$self->queue('checkMonsters') if !AI::inQueue("checkMonsters");
 	$self->queue('attack', \%args);
 	
 	message sprintf($self->verb(T("%s are now attacking %s\n"), T("%s is now attacking %s\n")), $self, $target);
@@ -778,7 +779,7 @@ sub route {
 	} else {
 		$task = new Task::Route(@params);
 	}
-	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute isRandomWalk);
+	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave);
 	
 	$self->queue('route', $task);
 }

@@ -17,49 +17,78 @@ use base qw(Network::Send::ServerType0);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
-		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0437' => ['character_move','a3', [qw(coords)]],
-		'035F' => ['sync', 'V', [qw(time)]],
-		'0922' => ['actor_look_at', 'v C', [qw(head body)]],
-		'07E4' => ['item_take', 'a4', [qw(ID)]],
-		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'0869' => ['storage_password'],
-		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
-		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
-		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'096A' => ['actor_info_request', 'a4', [qw(ID)]],
-		'08AB' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'022D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
-		'0802' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 	);
-	
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;	
-	
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
 	my %handlers = qw(
+		master_login 0A76
 		game_login 0275
-		actor_action 0369
-		character_move 0437
-		sync 035F
-		actor_look_at 0922
-		item_take 07E4
-		item_drop 0362
-		storage_password 0869
-		storage_item_add 07EC
-		storage_item_remove 0364
-		skill_use_location 0438
-		actor_info_request 096A
-		map_login 08AB
-		party_join_request_by_name 022D
-		homunculus_command 0802
-		party_setting 07D7
 		buy_bulk_vender 0801
+		actor_action 0437
+		skill_use 0438
+		character_move 035F
+		sync 0360
+		actor_look_at 0361
+		item_take 0362
+		item_drop 0363
+		storage_item_add 0364
+		storage_item_remove 0365
+		skill_use_location 0366
+		actor_info_request 0368
+		actor_name_request 0369
+		buy_bulk_buyer 0819
+		buy_bulk_request 0817
+		buy_bulk_closeShop 0815
+		buy_bulk_openShop 0811
+		item_list_window_selected 07E4
+		map_login 0436
+		party_join_request_by_name 02C4
+		friend_request 0202
+		homunculus_command 022D
+		storage_password 023B
+		party_setting 07D7
+		send_equip 0998
+		pet_capture 08B5
+		char_delete2_accept 098F
+		char_create 0A39
 	);
 	
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	$self->cryptKeys(0x4d8e77b2, 0x6e7b6757, 0x46ae0414);
+	
+	$self->{send_buy_bulk_pack} = "v V";
+	$self->{char_create_version} = 0x0A39;
+	$self->{send_sell_buy_complete} = 1;
+
 	return $self;
+}
+
+sub reconstruct_master_login {
+	my ($self, $args) = @_;
+
+	$args->{ip} = '192.168.0.2' unless exists $args->{ip}; # gibberish
+	$args->{mac} = '111111111111' unless exists $args->{mac}; # gibberish
+	$args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
+	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
+
+	if (exists $args->{password}) {
+		for (Digest::MD5->new) {
+			$_->add($args->{password});
+			$args->{password_md5} = $_->clone->digest;
+			$args->{password_md5_hex} = $_->hexdigest;
+		}
+
+		my $key = pack('C32', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
+		my $chain = pack('C32', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
+		my $in = pack('a32', $args->{password});
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 32, 32);
+		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 32, 0);
+	}
 }
 
 1;

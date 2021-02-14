@@ -319,12 +319,14 @@ sub checkConnection {
 	sleep 1;
 
 	# Inject DLL
-	if (!$self->inject($pid)) {
-		# Failed to inject
-		$interface->errorDialog($@);
-		exit 1;
+	if($config{XKore_injectDLL}) {
+		if (!$self->inject($pid)) {
+			# Failed to inject
+			$interface->errorDialog($@);
+			exit 1;
+		}
 	}
-	
+
 	# Patch client
 	$self->hackClient($pid) if ($config{XKore_bypassBotDetection});
 

@@ -84,7 +84,8 @@ sub new {
 	}
 
 	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal',
-		'avoidWalls', 'notifyUponArrival');
+		'avoidWalls', 'notifyUponArrival', 'isRandomWalk', 'isSlaveRescue');
+
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
@@ -324,6 +325,15 @@ sub iterate {
 					$self->{stage} = '';
 
 				} else {
+				
+					if ($self->{actor}->isa('Actor::You') && $self->{isRandomWalk} && $self->{actor}{slaves}) {
+						my $slave = AI::SlaveManager::mustWaitMinDistance();
+						if (defined $slave) {
+							debug TF("Waiting for slave %s before next randomWalk step.\n", $slave), 'slave', 2;
+							return;
+						}
+					}
+				
 					$self->{time_step} = time if ($cur_x != $self->{old_x} || $cur_y != $self->{old_y});
 					$self->{old_x} = $cur_x;
 					$self->{old_y} = $cur_y;

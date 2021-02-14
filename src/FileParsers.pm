@@ -36,6 +36,8 @@ use Log qw(warning error debug);
 use Translation qw/T TF/;
 
 our @EXPORT = qw(
+	parseAchievementFile
+	parseAttendanceRewards
 	parseArrayFile
 	parseAvoidControl
 	parseChatResp
@@ -75,6 +77,57 @@ our @EXPORT = qw(
 	updateNPCLUT
 );
 
+##
+# parseAchievementFile(file, achievments)
+# file: Filename to parse
+# achievments: Return hash
+#
+# Parses a achievments file.
+sub parseAchievementFile {
+	my $file = shift;
+	my $r_hash = shift;
+
+	undef %{$r_hash};
+
+	my $reader = new Utils::TextReader($file);
+	my $current_id;
+
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/^\s+|\s+$//g;
+		if ( $line =~ /^\[(\d+)\]\s+\=\s+\{$/ ) {
+			$current_id = $1;
+			$r_hash->{$1}->{ID} = $1;
+		} elsif ( $line =~ /^group\s+\=\s+\"(.*)\"\,$/ ) {
+			$r_hash->{$current_id}->{group} = $1;
+		} elsif ( $line =~ /^title\s+\=\s+\"(.*)\"\,$/ ) {
+			$r_hash->{$current_id}->{title} = $1;
+		} elsif ( $line =~ /^content\s+\=\s+\{\s+/ ) {
+			if ( $line =~ /summary\s+\=\s+\"(.*)\"\,/ ) {
+				$r_hash->{$current_id}->{summary} = $1;
+			}
+			if ( $line =~ /details\s+\=\s+\"(.*)\"/ ) {
+				$r_hash->{$current_id}->{details} = $1;
+			}
+		} elsif ( $line =~ /^summary\s+\=\s+\"(.*)\"\,$/ ) {
+			$r_hash->{$current_id}->{summary} = $1;
+		} elsif ( $line =~ /^details\s+\=\s+\"(.*)\"/ ) {
+			$r_hash->{$current_id}->{details} = $1;
+		} elsif ( $line =~ /^reward\s+\=\s+\{/ ) {
+			if ( $line =~ /buff\s+\=\s+(\d+)/ ) {
+				$r_hash->{$current_id}->{rewards}->{buff} = $1;
+			}
+			if ( $line =~ /title\s+\=\s+(\d+)/ ) {
+				$r_hash->{$current_id}->{rewards}->{title} = $1;
+			}
+			if ( $line =~ /item\s+\=\s+(\d+)/ ) {
+				$r_hash->{$current_id}->{rewards}->{item} = $1;
+			}
+		}
+	}
+
+	return 1;
+}
 
 sub parseArrayFile {
 	my $file = shift;
@@ -169,7 +222,7 @@ sub parseCommandsDescription {
 
 	undef %{$r_hash} unless $no_undef;
 	my ($key, $commentBlock, $description);
-	
+
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -202,11 +255,11 @@ sub parseCommandsDescription {
 
 		} elsif ($line =~ /^(.*?)\t+(.*)$/) {
 			push @{$r_hash->{$key}}, [$1, $2];
-		
+
 		} elsif ($line !~ /\t/) {	#if a console command is without any params
 			push @{$r_hash->{$key}}, ["", $line];
 		}
-		
+
 	}
 	return 1;
 }
@@ -219,7 +272,7 @@ sub parseConfigFile {
 
 	undef %{$r_hash} unless $no_undef;
 	my ($key, $value, $inBlock, $commentBlock);
-	
+
 	my $reader = new Utils::TextReader($file);
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
@@ -228,13 +281,13 @@ sub parseConfigFile {
 		$line =~ s/[\r\n]//g;	# Remove line endings
 		$line =~ s/^[\t\s]*//;	# Remove leading tabs and whitespace
 		$line =~ s/\s+$//g;	# Remove trailing whitespace
-		
+
 		if (index($line, '#') != -1) {
 			warning T("Mid-line comments are not allowed in this file and therefore might cause problems.\n"), "parseConfigFile", 5;
 			warning T("If the '#' found is not a comment, this can be ignored.\n"), "parseConfigFile", 5;
 			warning TF("HERE: %s", $line), "parseConfigFile", 5;
 		}
-		
+
 		next if ($line eq "");
 
 		if (!defined $commentBlock && $line =~ /^\/\*/) {
@@ -251,7 +304,7 @@ sub parseConfigFile {
 		} elsif (!defined $inBlock && $line =~ /{$/) {
 			# Begin of block
 			$line =~ s/ *{$//;
-			($key, $value) = $line =~ /^(.*?) (.*)/;
+			($key, $value) = $line =~ /^(.*?)\s+(.*)/;
 			$key = $line if ($key eq '');
 
 			if (!exists $blocks->{$key}) {
@@ -399,7 +452,7 @@ sub parseDataFile2 {
 		$r_hash->{$key} = $value;
 	}
 	close FILE;
-	
+
 	return 1;
 }
 
@@ -454,11 +507,11 @@ sub parseShopControl {
 		$line =~ s/[\r\n\x{FEFF}]//g;
 		next if $line =~ /^$/ || $line =~ /^#/;
 
-		if (!$shop->{title_line}) { 
+		if (!$shop->{title_line}) {
 			$shop->{title_line} = $line;
 			next;
 		}
-		
+
 		# Strip mid-line comments after parsing the shop title, so shops can use '#' in their titles
 		$line =~ s/\s*#.*//;
 		next unless length $line;
@@ -507,19 +560,21 @@ sub parseItemsControl {
 	my ($file, $r_hash) = @_;
 	undef %{$r_hash};
 	my ($key, $args_text, %cache);
-	
+
 	my $reader = new Utils::TextReader($file);
 	until ($reader->eof) {
 		my $line = lc $reader->readLine;
-		next if $line =~ /^\s*#/;
-		$line =~ s/\s*#.*//;
 		chomp $line;
-		if (($key, $args_text) = extract_delimited($line) and $key) {
+		next if $line =~ /^\s*#/;
+
+		if($line =~ /^[\s0-9]+/) {
+			($key, $args_text) = $line =~ /^(\d+)\s(.*)$/;
+		} elsif(($key, $args_text) = extract_delimited($line) and $key) {
 			$key =~ s/^.|.$//g;
 			$args_text =~ s/^\s+//;
-		} elsif ($line =~ /^[\s0-9]+$/) {
-			($key, $args_text) = $line =~ /^(\d+)\s(.*)$/;
 		} else {
+			$line =~ s/#.*//;
+			chomp $line;
 			my @reverseString = reverse(split(//, $line));
 			my $separator = length $line;
 
@@ -532,8 +587,10 @@ sub parseItemsControl {
 			$args_text =~ s/^\s+//;
 			$key = substr($line, 0, $separator);
 		}
-		
+
 		next if $key =~ /^$/;
+		$args_text =~ s/#.*//;
+		chomp $args_text;
 		my @args = split /\s+/, $args_text;
 		# Cache similar entries to save memory.
 		$r_hash->{$key} = $cache{$args_text} ||= { map {$_ => shift @args} qw(keep storage sell cart_add cart_get) };
@@ -613,7 +670,7 @@ sub parsePortals {
 		$line =~ s/\s+/ /g;
 		$line =~ s/^\s+|\s+$//g;
 		$line =~ s/(.*)[\s\t]+#.*$/$1/;
-		
+
 		if ($line =~ /^([\w|@|-]+)\s(\d{1,3})\s(\d{1,3})\s([\w|@|-]+)\s(\d{1,3})\s(\d{1,3})\s?(.*)/) {
 		my ($source_map, $source_x, $source_y, $dest_map, $dest_x, $dest_y, $misc) = ($1, $2, $3, $4, $5, $6, $7);
 			my $portal = "$source_map $source_x $source_y";
@@ -640,7 +697,7 @@ sub parsePortals {
 				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $misc;
 			}
 		}
-		
+
 	}
 	return 1;
 }
@@ -675,6 +732,7 @@ sub parsePriority {
 	my $file = shift;
 	my $r_hash = shift;
 	return unless my $reader = new Utils::TextReader($file);
+	undef %{$r_hash};
 
 	my @lines;
 	while (!$reader->eof()) {
@@ -795,14 +853,14 @@ sub parseROSlotsLUT {
 
 sub parseROQuestsLUT {
 	my ($file, $r_hash) = @_;
-	
+
 	my %ret = (
 		file => $file,
 		hash => $r_hash,
 	);
 	Plugins::callHook ('FileParsers::ROQuestsLUT', \%ret);
 	return if $ret{return};
-	
+
 	undef %{$r_hash};
 	my ($data, $flag);
 	my $reader = Utils::TextReader->new($file, { hide_comments => 0 });
@@ -825,13 +883,13 @@ sub parseROQuestsLUT {
 				$flag = 1;
 			}
 		}
-		
+
 		if ($flag) {
 			$$r_hash{$data->{id}} = $data;
 			undef $data; undef $flag;
 		}
 	}
-	
+
 	return 1;
 }
 
@@ -857,7 +915,7 @@ sub parseRecvpackets {
 		#warning $r_hash->{$key}." ".$key."\n";
 	}
 	close FILE;
-	
+
 	return 1;
 }
 
@@ -961,26 +1019,82 @@ sub parseWaypoint {
 sub parseItemStackLimit {
 	my ($file, $r_hash) = @_;
 	my $reader = Utils::TextReader->new($file);
-	
+
 	while (!$reader->eof()) {
 		my $line = $reader->readLine();
 		$line =~ s/\x{FEFF}//g;
 		$line =~ s/[\r\n]//g;
 		$line =~ s/#.*$//g;
 		$line =~ s/^\s+//g;
-		
+
 		next unless length $line;
-		
+
 		my ($ID, $stack, $mask) = split /\s+/, $line;
-		
+
 		next unless $mask;
-		
+
 		for (my $i = 1; $i < 16; $i = $i << 1) {
 			next unless $mask & $i;
 			$r_hash->{$ID}->{$i} = $stack;
 		}
 	}
-	
+
+	return 1;
+}
+
+##
+# parseAttendanceRewards(file, attendance_rewards)
+# file: Filename to parse
+# attendance_rewards: Return hash
+#
+# Parses a attendance_rewards file. The attendance_rewards file should have the start time
+# on its first line, should have end time on its second line followed by "$day\t$item_id\t$amount" on subsequent
+# lines. Blank lines, or lines starting with "#" are ignored.
+#
+# Example:
+# start 20200212
+# end 20200311
+# 1 14553 5
+# 2 14556 5
+# 3 14559 5
+sub parseAttendanceRewards {
+	my ($file, $attendance_rewards) = @_;
+
+	%{$attendance_rewards} = ();
+	my $reader = new Utils::TextReader($file);
+
+	# start attendance rewards vars
+	$attendance_rewards->{period} = ();
+	$attendance_rewards->{items} = ();
+	my $line;
+
+	while (!$reader->eof()) {
+		$line = $reader->readLine();
+		chomp;
+
+		$line =~ s/[\r\n\x{FEFF}]//g;
+		next if $line =~ /^$/ || $line =~ /^#/;
+
+		# Strip mid-line comments
+		$line =~ s/\s*#.*//;
+		next unless length $line;
+
+		if($line =~ /^start\s(\d+)/) {
+			$attendance_rewards->{period}{start} = $1;
+			next;
+		} elsif ($line =~ /^end\s(\d+)/) {
+			$attendance_rewards->{period}{end} = $1;
+			next;
+		}
+
+		my ($day, $item_id, $amount) = split(/ /, $line);
+		$item_id =~ s/^\s+//g;
+		$amount =~ s/^\s+//g;
+
+		$attendance_rewards->{items}{$day}{item_id} = $item_id;
+		$attendance_rewards->{items}{$day}{amount} =  $amount;
+	}
+
 	return 1;
 }
 
@@ -1361,10 +1475,10 @@ sub updateMonsterLUT {
 
 sub updatePortalLUT {
 	my ($file, $sourceMap, $sourceX, $sourceY, $destMap, $destX, $destY) = @_;
-	
+
 	my $plugin_args = {file => $file, sourceMap => $sourceMap, sourceX => $sourceX, sourceY => $sourceY, destMap => $destMap, destX => $destX, destY => $destY};
 	Plugins::callHook('updatePortalLUT', $plugin_args);
-	
+
 	unless ($plugin_args->{return}) {
 		open FILE, ">>:utf8", $file;
 		print FILE "$sourceMap $sourceX $sourceY $destMap $destX $destY\n";
@@ -1375,10 +1489,10 @@ sub updatePortalLUT {
 #Add: NPC talk Sequence
 sub updatePortalLUT2 {
 	my ($file, $sourceMap, $sourceX, $sourceY, $destMap, $destX, $destY, $steps) = @_;
-	
+
 	my $plugin_args = {file => $file, sourceMap => $sourceMap, sourceX => $sourceX, sourceY => $sourceY, destMap => $destMap, destX => $destX, destY => $destY, steps => $steps};
 	Plugins::callHook('updatePortalLUT2', $plugin_args);
-	
+
 	unless ($plugin_args->{return}) {
 		open FILE, ">>:utf8", $file;
 		print FILE "$sourceMap $sourceX $sourceY $destMap $destX $destY $steps\n";

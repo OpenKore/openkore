@@ -45,18 +45,18 @@ sub testBasicUsage {
 sub testSetTargetMethod {
 	note "Testing setTarget() method API...";
 	my $task = Task::TalkNPC->new;
-	can_ok($task, 'setTarget', "Task should have setTarget() method") or return;
+	can_ok($task, 'setTarget');
 	my $actor = Actor::Unknown->new("\0\0\0\0");
 	$task->setTarget($actor);
 	is($task->{target}, $actor);
 }
 
 sub testHandleNPCTalkMethod {
-	note "Testing onNPCTalk() method API...";
+	note "Testing handleNPCTalk() method API...";
 	my $task = Task::TalkNPC->new;
-	can_ok($task, 'handleNPCTalk', "Task should have handleNPCTalk() method") or return;
+	can_ok($task, 'handleNPCTalk');
 	my $actor = Actor::Unknown->new("\0\0\0\0");
-	$task->handleNPCTalk($actor);
+	$task->handleNPCTalk($actor, [$task]);
 }
 
 1;

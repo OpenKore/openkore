@@ -147,6 +147,7 @@ sub clear {
 	} else {
 		undef @ai_seq;
 		undef @ai_seq_args;
+		undef %ai_v;
 	}
 }
 
@@ -227,7 +228,7 @@ sub ai_follow {
 	my $name = shift;
 
 	return 0 if (!$name);
-	
+
 	if (binFind(\@ai_seq, "follow") eq "") {
 		my %args;
 		$args{name} = $name;
@@ -334,6 +335,67 @@ sub ai_getAggressives {
 				&& (($config{'attackCanSnipe'}) ? !Misc::checkLineSnipable($myPos, $pos) : (!Misc::checkLineWalkable($myPos, $pos) || !Misc::checkLineSnipable($myPos, $pos)))
 				&& !$monster->{dmgToYou} && !$monster->{missedYou}
 				&& ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty}))
+				);
+
+			# Continuing, check whether the forced Agro is really a clean monster;
+			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
+
+			if ($wantArray) {
+				# Function is called in array context
+				push @agMonsters, $ID;
+
+			} else {
+				# Function is called in scalar context
+				if ($control->{weight} > 0) {
+					$num += $control->{weight};
+				} elsif ($control->{weight} != -1) {
+					$num++;
+				}
+			}
+		}
+	}
+
+	if ($wantArray) {
+		return @agMonsters;
+	} else {
+		return $num;
+	}
+}
+
+##
+# ai_slave_getAggressives(slave, [check_mon_control])
+# Returns: an array of monster IDs, or a number.
+#
+# Get a list of all aggressive monsters on screen for a given slave.
+# The definition of "aggressive" is: a monster who has hit or missed me.
+#
+# If $check_mon_control is set, then all monsters in mon_control.txt
+# with the 'attack_auto' flag set to 2, will be considered as aggressive.
+# See also the manual for more information about this.
+sub ai_slave_getAggressives {
+	my ($slave, $type) = @_;
+	my $wantArray = wantarray;
+	my $num = 0;
+	my @agMonsters;
+
+	for my $monster (@$monstersList) {
+		my $control = Misc::mon_control($monster->name,$monster->{nameID}) if $type || !$wantArray;
+		my $ID = $monster->{ID};
+		# Never attack monsters that we failed to get LOS with
+		next if (!timeOut($monster->{attack_failedLOS}, 6));
+
+		if ((($type && ($control->{attack_auto} == 2)) ||
+			(($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) && Misc::checkMonsterCleanness($ID))) &&
+			timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}))
+		{
+			my $myPos = calcPosition($slave);
+			my $pos = calcPosition($monster);
+
+			next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
+
+			next if (($type && $control->{attack_auto} == 2)
+				&& (($config{$slave->{configPrefix}.'attackCanSnipe'}) ? !Misc::checkLineSnipable($myPos, $pos) : (!Misc::checkLineWalkable($myPos, $pos) || !Misc::checkLineSnipable($myPos, $pos)))
+				&& !$monster->{dmgToPlayer}{$slave->{ID}} && !$monster->{missedToPlayer}{$slave->{ID}} && !$monster->{dmgFromPlayer}{$slave->{ID}} && !$monster->{missedFromPlayer}{$slave->{ID}}
 				);
 
 			# Continuing, check whether the forced Agro is really a clean monster;
@@ -539,6 +601,12 @@ sub ai_skillUse {
 		$args{x} = $args{target};
 		delete $args{target};
 	}
+
+	if ($char->{skills}{$args{skillHandle}}{lv} < $args{lv}) {
+		debug "Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$char->{skills}{$args{skillHandle}}{lv}.".\n", "ai";
+		$args{lv} = $char->{skills}{$args{skillHandle}}{lv};
+	}
+
 	AI::queue("skill_use", \%args);
 }
 
@@ -572,7 +640,7 @@ sub ai_skillUse2 {
 # Returns 0 otherwise.
 sub ai_storageAutoCheck {
 	return 0 unless ai_canOpenStorage();
-	
+
 	for my $item (@{$char->inventory}) {
 		next if ($item->{equipped});
 		my $control = Misc::items_control($item->{name}, $item->{nameID});
@@ -587,12 +655,12 @@ sub ai_storageAutoCheck {
 sub ai_canOpenStorage {
 	# Check NV_BASIC and SU_BASIC_SKILL (Doram)
 	return 0 if ($char->getSkillLevel(new Skill(handle => 'NV_BASIC')) < 6 && $char->getSkillLevel(new Skill(handle => 'SU_BASIC_SKILL')) < 1);
-	
+
 	# Check if we have enough zeny to open storage (and if it matters)
 	# Also check for a Free Ticket for Kafra Storage (7059)
-	return 0 if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem} && $config{minStorageZeny} > 0 && 
+	return 0 if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem} && $config{minStorageZeny} > 0 &&
 					$char->{zeny} < $config{minStorageZeny} && !$char->inventory->getByNameID(7059));
-	
+
 	return 1;
 }
 

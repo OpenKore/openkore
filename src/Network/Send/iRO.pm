@@ -53,13 +53,9 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	$self->{char_create_version} = 0x0A39;
+	$self->{send_sell_buy_complete} = 1;
 	
 	return $self;
-}
-
-sub sendSellBuyComplete {
-	my ($self) = @_;
-	$messageSender->sendToServer(pack 'C*', 0xD4, 0x09);
 }
 
 sub reconstruct_char_delete2_accept {

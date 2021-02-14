@@ -174,6 +174,7 @@ sub delHooks {
 sub DESTROY {
 	my ($self) = @_;
 	debug "$self->{target}: Task::TalkNPC::DESTROY was called\n", "ai_npcTalk";
+	delete $ai_v{'npc_talk'} unless ($ai_v{'npc_talk'}{'talk'} =~ /^(buy_or_sell|store|sell|cash)$/);
 	$self->delHooks;
 	$self->SUPER::DESTROY;
 }
@@ -189,16 +190,18 @@ sub activate {
 	Scalar::Util::weaken($holder[0]);
 
 	push @{$self->{hookHandles}}, Plugins::addHooks(
-		['npc_talk',                  \&handleNPCTalk, \@holder],
-		['packet/npc_talk_continue',  \&handleNPCTalk, \@holder],
-		['npc_talk_done',             \&handleNPCTalk, \@holder],
-		['npc_talk_responses',        \&handleNPCTalk, \@holder],
-		['packet/npc_talk_number',    \&handleNPCTalk, \@holder],
-		['packet/npc_talk_text',      \&handleNPCTalk, \@holder],
-		['packet/npc_store_begin',    \&handleNPCTalk, \@holder],
-		['packet/npc_store_info',     \&handleNPCTalk, \@holder],
-		['packet/npc_sell_list',      \&handleNPCTalk, \@holder],
-		['packet/cash_dealer',        \&handleNPCTalk, \@holder]
+		['npc_talk',                                 \&handleNPCTalk, \@holder],
+		['packet/npc_talk_continue',                 \&handleNPCTalk, \@holder],
+		['npc_talk_done',                            \&handleNPCTalk, \@holder],
+		['npc_talk_responses',                       \&handleNPCTalk, \@holder],
+		['packet/npc_talk_number',                   \&handleNPCTalk, \@holder],
+		['packet/npc_talk_text',                     \&handleNPCTalk, \@holder],
+		['packet/npc_store_begin',                   \&handleNPCTalk, \@holder],
+		['packet/npc_store_info',                    \&handleNPCTalk, \@holder],
+		['packet/npc_sell_list',                     \&handleNPCTalk, \@holder],
+		['packet/cash_dealer',                       \&handleNPCTalk, \@holder],
+		['packet/npc_market_info',                   \&handleNPCTalk, \@holder],
+		['packet/npc_market_purchase_result',        \&handleNPCTalk, \@holder]
 	);
 	
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
@@ -591,6 +594,13 @@ sub iterate {
 					my $index = $1;
 					my $amount = $2;
 					if ($storeList->get($index)) {
+						# support to market
+						my $item = $storeList->get($index);
+
+						if ($item->{amount} && $item->{amount} < $amount) {
+							$amount = $item->{amount};
+						}
+
 						my $itemID = $storeList->get($index)->{nameID};
 						push (@{$ai_v{npc_talk}{itemsIDlist}},$itemID);
 						push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
@@ -817,7 +827,10 @@ sub findTarget {
 	my ($self, $actorList) = @_;
 	if ($self->{nameID}) {
 		my ($actor) = grep { $self->{nameID} eq $_->{nameID} } @{$actorList->getItems};
-		if ($actor && $actor->{statuses}->{EFFECTSTATE_BURROW} && $self->{type} ne 'autotalk') {
+		if ( $actor && 
+		( $actor->{statuses}->{EFFECTSTATE_BURROW} || ($config{avoidHiddenActors} && ($actor->{type} == 111 || $actor->{type} == 139 || $actor->{type} == 2337)) ) && # HIDDEN_ACTOR TYPES
+		$self->{type} ne 'autotalk' )
+		{
 			$self->setError(NPC_NOT_FOUND, T("Talk with a hidden NPC prevented."));
 			return;
 		}
@@ -826,6 +839,7 @@ sub findTarget {
 	foreach my $actor (@{$actorList->getItems()}) {
 		my $pos = ($actor->isa('Actor::NPC')) ? $actor->{pos} : $actor->{pos_to};
 		next if ($actor->{statuses}->{EFFECTSTATE_BURROW});
+		next if ($config{avoidHiddenActors} && ($actor->{type} == 111 || $actor->{type} == 139 || $actor->{type} == 2337)); # HIDDEN_ACTOR TYPES
 		if ($pos->{x} == $self->{x} && $pos->{y} == $self->{y}) {
 			if (defined $actor->{name}) {
 				return $actor;

@@ -141,7 +141,7 @@ PES#
 [Alt] + [End]:  Liga ou Desliga a Barra de HP/SP#
 [Alt] + [Home]:  Liga ou Desliga o Cursor do Solo#
 [Insert]:  Faz o personagem sentar ou levantar.  (Atalho para /sit ou /stand)#
-Parabéns! Você ganhou!! Você recebeu #
+Parabéns! Você ganhou!! Você recebeu # 
 !#
 Parabéns! Você ganhou!! Você recebeu #
  de EXP base!#
@@ -299,7 +299,7 @@ Você só pode trocar 10 tipos de itens de cada vez.#
 Você é menor de idade.#
 Digite seu endereço de e-mail.#
 Digite seu endereço de e-mail.#
-Não foi possível deletar o personagem porque você digitou um e-mail errado.#
+Confirmação por e-mail indisponível, deixe o campo de e-mail em branco e tente novamente.#
 Digite a segunda série de números de seguridade social.#
 Não foi possível deletar o personagem porque você digitou um SSN incorreto.#
 Você não pode vender mais de 15 tipos de itens de uma só vez.#
@@ -1249,7 +1249,7 @@ Informações do item não estão corretas. A compra foi cancelada.#
  A taxa de Crítico voltou ao normal.#
  EXP ganha de monstros foi aumentada em 1.5 vezes durante 30 minutos.#
  Seu personagem não sofrerá a penalidade na Experiência por ser nocauteado uma vez durante 30 minutos.#
- O Drop normal de monstros foi aumentado em 2 vezes durante 30 minutos.#
+ O Drop normal de monstros foi aumentado em 2 vezes durante 15 minutos.#
  As informações de monstros tipo 'Chefe' do mapa estarão disponíveis por 10 minutos.#
  Você deseja comprar ? %d ROPs serão utilizados.#
  Você não possui ROPs suficientes.#
@@ -2017,7 +2017,7 @@ Não disponível#
 Você confirma a mudança de Slot?#
 Ocorreu um erro na mudança de Slot.#
 Character name is wrong.#
-Quest window#
+Exibir Missões#
 The game will be limited to under 16 age during 0~6am by law.#
 By the Korean law, the under 16 age users will be^ff0000limited to play games until 0~6am^000000and game will be closed.#
 Para que você consiga mudar o nome do seu personagem, é necessário que você deixe seu clã.#
@@ -2092,8 +2092,8 @@ It is not logged in or unexist character.#
 Falcon summoning has failed.#
 %d%% ( Premium %d%% + %s server %d%% )#
 The user is currently joining in the Siege.#
-It is not possible to change the party leader in the same map.#
-It is not possible to change the party leader in current area.#
+Não é possível alterar a liderança do grupo caso esteja em um mapa diferente do outro personagem.#
+Não é possível alterar a liderança do grupo nessa área atual.#
 dpwn the Gryphon#
 %d Mês %d Dia %d Hora %d Min %d Sec#
 You canot invite to the guild as you are in the siege.#
@@ -2172,8 +2172,8 @@ Select at least 2 items of the same kind.#
 Unificação dos itens realizada com sucesso.#
 Você deve unificar somente 1 tipo de item por vez.#
 The amount of the item is over 30000 pieces.#
-Turn on left#
-Turn on right#
+Virar pra Esquerda#
+Virar pra Direita#
 See previous server info of (%s)#
 Previous server info#
 ^ff0000Previous server : ^0000ff#
@@ -2193,7 +2193,7 @@ Hunting monsters#
 Reward items#
 Required items#
 Limited time#
-Closing time#
+Retorne após#
 Busca#
 Calcular Rota#
 Indicação de Rota#
@@ -2594,7 +2594,7 @@ Falha ao retirar os Zenys.#
 Limite máximo de Zeny excedido#
 Item anexado com sucesso.#
 É necessário digitar um destinatário.#
-Title should be 4 to 24 chracters long.#
+Assunto deve conter entre 4 à 24 caracteres.#
 Falha no envio da Carta.#
 Envio falhou devido a item impróprio.#
 Personagem não existe#
@@ -2611,9 +2611,9 @@ In %d horas#
 In %d dias#
 Clique no botão Conferir antes de Enviar a Carta.#
 Você poderá deletá-la após retirar todos os anexos.#
-You cannot attach more Zeny than that you have#
+Você não pode anexar mais Zenys do que possui#
 Charge: %s Zeny#
-Inexistent addressee#
+Destinatário inexistente#
 EXP  : %.1f%% (Basic %.1f%% Premium %.1f%% + %s %.1f%%)#
 DROP : %.1f%% (Basic %.1f%% Premium %.1f%% + %s %.1f%%)#
 DEATH: %.1f%% (Basic %.1f%% Premium %.1f%% + %s %.1f%%)#
@@ -2635,56 +2635,56 @@ You cannot close Lucky Roulette window.#
 You cannot start Lucky Roulette.#
 You need points to start Lucky Roulette.#
 You cannot claim the prize.#
-The maximum number of items has exceeded.#
+O limite máximo de itens foi excedido.#
 You are overburdened. Please clear some items from the inventory.#
 Vending skill failed#
 Roulette is rotating. Please try again after checking the winning items#
 Lucky Roulette#
 Alertar quando vender#
-Please check the charge#
+Você não tem Zenys suficientes para enviar a carta#
 Check user name#
 Scheduled to be removed#
-Achievement Quests#
-Achievement Total Score#
-Achievement Rank#
-Remaining scores to the next rank: [%5d]#
-Progress#
-Recently Attained Achievements#
+Conquistas#
+Pontuação Total#
+Ranking de Conquistas#
+Pontos para o próximo nível: [%5d]#
+Progresso#
+Conquistas Recentes#
 Xianbei item list#
 Xianbei: %d / %d #
 You are short of Xianbei#
 %s #
-Overview#
-Basic#
-Character#
-Actions#
+Visão Geral#
+Básico#
+Personagem#
+Ações#
 Etc.#
-Adventure#
-Rune Midgards#
-Schwartzvald#
+Aventuras#
+Rune-Midgard#
+Schwartzwald#
 Arunafeltz#
-New World#
-Localized Map#
-Dungeon#
-Battle#
+Novo Mundo#
+Ilha Nação#
+Cavernas#
+Batalhas#
 PvP#
-Training#
+Treino#
 Quest#
-Episode#
-Basic#
-Memorial Dungeon#
+Episódio#
+Outros#
+Instância#
 Midgard#
-New World#
+Ash Vacuum#
 Etc.#
-Great Achievement#
-Attained quest#
-You cannot add any more#
-You have achieved < %s >.#
+Nível#
+Conquistas desbloqueadas#
+Impossível adicionar mais#
+Conquista desbloqueada < %s >.#
 Only OTP users are allowed#
 If you press this button, you will get the prize and the roulette will be initialized.#
 If you press this button, the roulette will start from the line indicated by a blinking arrow.#
-Title#
-Title Off#
+Título#
+Remover Título#
 You cannot create the guild in this area.#
 You cannot disband the guild in this area.#
 You cannot join the guild in this area.#
@@ -2696,8 +2696,8 @@ E X P: %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 DROP : %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 DEATH: %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 Limite de Itens anexados foi excedido.#
-Alarms when purchasing items#
-This item is banned to attach#
+Notificar ao comprar um item#
+Esse item não pode ser anexado no Rodex.#
 Drawing the blank in the previous roulette, you cannot play the higher roulette.#
 Escrever Resposta#
 Carta Lida#
@@ -2732,8 +2732,8 @@ Feche a janela do Rodex, Por Favor.#
 Server access denied(A)#
 Server access denied(B)#
 You should disarm the equipped arrows/bullets.#
-An item has been consumed in the inventory. RODEX writing window will be closed.#
-You don't have Magnifier.#
+Você realizou uma ação com um item no inventário. A janela do Rodex foi fechada.#
+Você não tem uma Lupa.#
 Para dropar itens, por favor feche a janela do Rodex.#
 The opponent has already requested you to be a friend.#
 SCRIPT ERROR AID#
@@ -2741,19 +2741,19 @@ SCRIPT ERROR AID#
 ^ff0000Do you want to purchase the item? %d points and %d Xianbei will be used.#
 Close#
 Quest#
-View quest icons#
-Amenities#
-View amenity icons#
-Guild member/Party member#
-View guild member/party member#
-Record#
-MVP Monster#
-YOU#
-Do you want to delete it?#
+Ativar ícones#
+Utilitários#
+Ativar Utilitários#
+Membros#
+Ativar Membros#
+Anotação#
+MVP#
+Você#
+Deseja deletar a Anotação?#
 Quest NPC#
-Fill out the notes#
-Save#
-Leave notes#
+Anotar#
+Salvar#
+Anotações#
 %s [%d Option] %d ea#
 %s [%d Option] %s Zeny#
 %s [%d Option] %d %s %d -> %s %s#
@@ -2795,7 +2795,7 @@ Auction X#
 Guild storage X#
 To sell item to NPC X#
 There is a restriction on movement#
-Please create a character.#
+Por favor, crie seu personagem.#
 You need to disarm the equipped projectiles.#
 You cannot enter the memorial dungeon due to excessive number of people.#
 Memorial dungeon enterance failed due to excessive number of people.#
@@ -2836,7 +2836,7 @@ This hairstyle cannot be dyed.#
 Press an arrow to choose the style you want.#
 Come and see the new styles.\n(? Purchased accessories will be sent via RODEX.)#
 Basic style#
-You can level up the skill from the base Lv. %d.#
+Habilidade disponível somente a partir do nível base %d.#
 You cannot use the special character as a name.#
 Not enough MHP to use the skill.#
 Not enough MSP to use the skill.#
@@ -2847,17 +2847,17 @@ Twitter#
 Message#
 Notice#
 Returned#
-Refresh#
+Atualizar#
 %dMinuto(s)#
 %dHora(s)#
 %dDia(s)#
-Return#
-Você deseja deletar as Cartas selecionadas?#
-Show Location#
+Expirada#
+Deletar e-mails selecionados?#
+Exibir NPC#
 Zoom In#
 Zoom Out#
-Map View#
-World View#
+Ampliar#
+Mapa-Múndi#
 Qtd. de itens#
 /minimap#
 Show Mini-Map button#
@@ -2894,10 +2894,10 @@ E X P : %.1f%% ( basic %.1f%% %s %.1f%%)#
 DROP  : %.1f%% ( basic %.1f%% %s %.1f%%)#
 DEATH : %.1f%% ( basic %.1f%% %s %.1f%%)#
 Destinatário da Carta teve o nome alterado. A carta foi enviada para : %s #
-Necessary materials to combine#
-Not enough materials to combine.#
-%d number of materials required.#
-Not enough refine grade to combine.#
+Materiais necessários#
+Materiais insuficientes para combinar.#
+Precisa de %d desse material.#
+Refinamento insuficiente para combinar.#
 Do you want to sign in Adventure Agency?#
 You can leave your comment.#
 Please enter the characters from the image.#
@@ -2913,15 +2913,39 @@ DEATH : %d%% ( basic 100.0%% %s %d%%)#
 Moving to destination.#
 [%s] file is not existing. Activating default AI#
 %.1f%% ( Basic 100.0%% + Premium %.1f%% + %s %.1f%%)#
+Você deseja abrir sua loja na célula escolhida?#
 #
+O item será enviado pelo Rodex.#
 #
 #
 #
 #
+Visualizar#
 #
 #
+Encerrar#
+Deseja encerrar a sua loja?#
+%02dd %02dhr %02dmin %02ds#
 #
 #
+Escolha o local para abrir a loja#
+Nome do mascote alterado para ^0000ff^0000ff %s^000000^000000.#
+Hora da compra#
+Item#
+Quantidade#
+Preço Unitário#
+Preço#
+Item de venda#
+Item de compra#
+Fechar Loja de Venda#
+Fechar Loja de Compra#
+Zeny restante#
+Item da lista#
+Vitrine da Loja#
+Item reembolsado#
+Qtd. reembolsada#
+Hora do reembolso#
+Quantidade de zeny envolvido nessa transação será enviado para o Rodex#
 #
 #
 #
@@ -2931,9 +2955,15 @@ Moving to destination.#
 #
 #
 #
+Tabeliã de Prontera#
+Mudança Familiar#
+Prezado (a).\r\n\r\nA partir de hoje, \"%s\" e \"%s\" não serão mais responsáveis legais de \"%s\".\r\n\r\nEsta mensagem tem intuito informativo.\r\n\r\nSe deseja mais informações sobre relações familiares, por favor, dirija-se ao Escritório de Prontera.\r\n\r\nO referido é verdade e dou fé.#
+Janela de Visualização#
 #
 #
 #
+Quando você se torna mini, você não pode transcender, tem uma limitação nos status e o HP e SP são reduzidos. \nVocê gostaria de prosseguir mesmo com essas restrições?#
+Quando você se torna mini, você não pode transcender, tem uma limitação nos status e o HP e SP são reduzidos. \nVocê gostaria de prosseguir mesmo com essas restrições?#
 #
 #
 #
@@ -2943,46 +2973,16 @@ Moving to destination.#
 #
 #
 #
+Remover#
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Função de chamado (ligada)#
+Função de chamado (desligada)#
+Exibir mensagem de chamado#
+O personagem não pode ser excluído porque ainda possui uma loja aberta.#
+Você já tem uma loja ativa em outro lugar..#
+Não é possível criar uma loja aqui.#
+Não é possível criar uma loja aqui.#
 #
 #
 #
@@ -3014,24 +3014,36 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Humano#
+Espadachim, Mago, Mercador, Noviço, Gatuno, Arqueiro#
+Doram#
+Invocador#
+A raça com maior presença em Rune-Midgard. São muito talentosos e adaptáveis.#
+Os Doram são seres curiosos por natureza e possuem uma personalidade radiante.#
+Você está acima do limite de peso ou você não tem mais de 10 espaços livres no inventário.#
 #
 #
 #
 #
 #
+Palavrões não são permitidos.\nTente novamente.#
 #
 #
 #
 #
 #
+/200#
+/2000#
 #
 #
 #
 #
 #
 #
+A mensagem contém itens que não podem ser usados#
 #
 #
+Fechar#
 #
 #
 #
@@ -3090,7 +3102,10 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Deletar Data %d/%d#
 #
+Todas#
+A completar#
 #
 #
 #
@@ -3173,6 +3188,10 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Carregando.\n^c92114Delete^000000 e-mails desnecessários.#
+CARREGANDO.."#
+Assunto#
+Remetente#
 #
 #
 #
@@ -3200,6 +3219,10 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+^bTaxa de Vendas^/b\n\nConfira as taxas cobradas sobre cada faixa de preço:\n\n0z a 10.000 z\n: Taxa de ^1567fe0%^000000\n10.001z a 100.000z\n: Taxa de ^1567fe0%^000000\n100.001z a 1.000.000z\n: Taxa de ^1567fe0%^000000\n1.000.001z a 10.000.000 z\n: Taxa de ^1567fe0%^000000\n10.000.001z a 100,000,000 z\n: Taxa de ^1567fe5%^000000\nAcima de 100.000.001 z\n: taxa de ^1567fe5%^000000\n#
+Valor: #
+Você receberá por Rodex o zeny referente aos itens vendidos.#
+O zeny será debitado do seu personagem no ato da compra.#
 #
 #
 #
@@ -3212,6 +3235,7 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Minha Loja#
 #
 #
 #
@@ -3289,7 +3313,11 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Usuário não encontrado#   
+Conta bloqueada#
 #
+Senha ou usuário incorreto#
+Entre em contato com Suporte#
 #
 #
 #
@@ -3297,6 +3325,7 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Sistema indisponível#
 #
 #
 #
@@ -3307,16 +3336,28 @@ Você precisa de pelo menos %d Projéteis para usar essa habilidade.#
 #
 #
 #
+Futuras Informações#
+Deletar#
+Cancelar#
+Iniciar#
+Deletar#
+Seleção de Personagem#
+Aviso#
+Criar#
+Tipo de Penteado#
+Cor do Cabelo#
 #
+%d:%d:%d#
 #
+Voltar#
 #
 #
 #
+Criar Personagem#
 #
 #
 #
 #
-O usuário e/ou senha estão incorretos, por favor, confira e tente novamente#
 #
 #
 #
@@ -3408,7 +3449,10 @@ O usuário e/ou senha estão incorretos, por favor, confira e tente novamente#
 #
 #
 #
+Exibir Invocações#
+Não exibir Invocações#
 #
+Senha#
 #
 #
 #
@@ -3438,6 +3482,8 @@ O usuário e/ou senha estão incorretos, por favor, confira e tente novamente#
 #
 #
 #
+Aviso sobre a remoção da sua loja#
+Olá!\r\nSua loja foi fechada antes da hora porque percebemos que ela violava a política de conduta do jogo.\r\n Se precisar se mais informações, envie um ticket.\r\nAgradecemos a compreensão.#
 #
 #
 #
@@ -3445,53 +3491,7 @@ O usuário e/ou senha estão incorretos, por favor, confira e tente novamente#
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Remoção de loja#
 #
 #
 #
@@ -3537,14 +3537,87 @@ Não exibir fundo do Emblema de Clã#
 #
 #
 #
-Você não possui o Item de Acesso ao Valhalla#
+Conta não possui passe de acesso ao Valhalla#
 #
 #
 Deletar#
 Responder#
 Enviar#
-Verificar#
+Conferir#
 Notícias#
 Entrada#
-Enviados#
+Vencidos#
 Buscar#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Expandir inventário#
+Deseja usar 1 ^0000ff%s^000000 para aumentar o inventário de \n(^0000ff%d^000000) para (^0000ff%d^000000) itens?.\n^ff0000 A expansão não pode ser revertida.^000000#
+A expansão do inventário falhou.#
+Feche as janelas de diálogo antes de expandir o inventário.#
+Você não tem o item necessário para expandir o inventário.#
+O inventário foi expandido ao máximo.#
+O inventário foi expandido com sucesso.#
+#
+#
+#
+#
+#
+#
+Capturar Monstro#
+Mensagem#
+Título# ( Base 100%% + Premium %.1f%%+ %sServer %.1f%% )#
+Chinese character#
+Shortcut Settings#
+Your subscription will be ended on%s.#
+Cannot find the replay file.#
+Shoes#
+Head#
+Armor#
+Shoulders#
+Accessory#
+Costume#
+Sort Order#
+Normal Gear#
+Special Gear#
+Style#
+/quake : Screen Shaking Effect On/Off#
+/aura2 : You can completely turn off the aurora On/Off#
+Default Settings#
+Advanced Settings#
+The Default Settings will be applied. #
+The Default Settings will be applied. Do you agree?#
+The settings will be applied. Do you agree?#
+Need to restart to apply the settings. Do you agree?#
+Fog#
+Simplified aurora#
+Turn on aurora#
+Show Effect#
+Show Shadows#
+Esta janela não pode ser fechada agora.#
+Select Hardware T&L Acceleration Function#
+Select Game Resolution#
+Use full screen#
+Fix mouse#
+Effect Settings#
+Control Settings#
+Graphic Device Settings#
+Graphic Resolution Settings#
+Full Screen Settings#
+Fix mouse Settings#
+Taxa : #
+Total commission amount : #
+Select receiver#
+Select receiving group#
+Change size(F10)#
+Loading the mailbox.\n^c92114Delete^000000unnecessary emails!!#
+NOW LOADING..#
+Title#
+Sender#
