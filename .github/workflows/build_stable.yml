@@ -50,7 +50,7 @@ jobs:
 # python2 -V
     - name: Run make XSTools.dll
       run: |
-        python src\scons-local-3.0.1\scons.py
+        make all
         echo ======================================================
         echo DONE:
         dir src\auto\XSTools\ | find "dll"
