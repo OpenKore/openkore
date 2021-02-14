@@ -14,7 +14,7 @@ on:
 jobs:
   build_XSTools:
 
-    name: Setup ${{ matrix.os }} (python ${{ matrix.python }}) (perl ${{ matrix.perl }})
+    name: XSTools ${{ matrix.os }} (python ${{ matrix.python }}) (perl ${{ matrix.perl }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
