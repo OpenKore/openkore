@@ -15,7 +15,7 @@ all:
 	@python src/scons-local-3.1.1/scons.py || echo -e "Compilation failed. Please read http://wiki.openkore.com/index.php/How_to_run_OpenKore for help."
 
 test:
-	@python src/scons-local-3.1.1/scons.py && cd src/test/ && unittests.pl
+	@python src/scons-local-3.1.1/scons.py && cd src/test/ && perl unittests.pl
 
 doc:
 	cd src/doc/ && createdoc.pl
