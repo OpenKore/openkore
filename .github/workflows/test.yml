@@ -1,6 +1,7 @@
-# runs-on:				https://github.com/actions/virtual-environments
-# setup-python:			https://github.com/actions/setup-python
-# actions-setup-perl:	https://github.com/marketplace/actions/setup-perl-environment
+# runs-on:            https://github.com/actions/virtual-environments
+# setup-python:       https://github.com/actions/setup-python
+# actions-setup-perl: https://github.com/marketplace/actions/setup-perl-environment
+
 name: make test
 
 on:
@@ -13,13 +14,14 @@ on:
 
 jobs:
   make_test:
+
     name: make test ${{ matrix.os }} (python ${{ matrix.python }}, perl ${{ matrix.perl }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [windows-2016, windows-latest, ubuntu-18.04, ubuntu-latest]
-        python: [2.7.18, 3]
+        python: [2.7, 3]
         perl: [5.12, latest]
 #        exclude:
 #        - python: 2.7
@@ -53,12 +55,19 @@ jobs:
         sudo apt update
         sudo apt install -y libreadline6-dev libcurl4-openssl-dev
 
-    - name: Environment check
+    - name: Environment check (Windows)
+      if: runner.os == 'Windows'
       run: |
         perl --version
         python -V
         perl -V
         Get-ChildItem -Path "C:\hostedtoolcache\windows\perl\" -Recurse
+
+    - name: Environment check (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        perl --version
+        python -V
 
     - name: Run Tests
       run: make test
