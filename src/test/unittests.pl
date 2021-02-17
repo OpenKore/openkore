@@ -39,5 +39,6 @@ foreach my $module (@tests) {
 		print STDERR "Cannot load unit test $module:\n$@\n";
 		exit 1;
 	}
+	print "#### Starting $module test ####\n";
 	$module->start;
 }

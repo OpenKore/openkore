@@ -19,6 +19,7 @@ sub start {
 		is( $reader->readLine, undef );
 
 		is( $reader->eof, 1 );
+		done_testing();
 	};
 
 	subtest 'hide_includes=0' => sub {
@@ -36,6 +37,7 @@ sub start {
 		is( $reader->readLine, undef );
 
 		is( $reader->eof, 1 );
+		done_testing();
 	};
 
 	subtest 'process_includes=0' => sub {
@@ -49,6 +51,7 @@ sub start {
 		is( $reader->readLine, undef );
 
 		is( $reader->eof, 1 );
+		done_testing();
 	};
 
 	subtest '!include_create_if_missing support' => sub {
@@ -61,6 +64,7 @@ sub start {
 		# Processing the file should create the referenced child.
 		$reader->readLine while !$reader->eof;
 		ok( -e 'data/create_if_missing_child.txt' );
+		done_testing();
 	};
 }
 
