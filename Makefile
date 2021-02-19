@@ -10,11 +10,30 @@
 # If you experience any build problems, read this web page:
 # http://wiki.openkore.com/index.php/How_to_run_OpenKore
 
+ifeq ($(OS),Windows_NT)
 all:
-	@python src/scons-local-3.0.1/scons.py || echo -e "\e[1;31mCompilation failed. Please read http://wiki.openkore.com/index.php/How_to_run_OpenKore for help.\e[0m"
+	@python src/scons-local-3.1.2/scons.py || echo -e "Compilation failed. Please read http://wiki.openkore.com/index.php/How_to_run_OpenKore for help."
+
+test:
+	@python src/scons-local-3.1.2/scons.py && cd src/test/ && perl unittests.pl
+
+doc:
+	cd src/doc/ && createdoc.pl
+else
+
+all:
+	@python src/scons-local-3.1.2/scons.py || echo -e "\e[1;31mCompilation failed. Please read http://wiki.openkore.com/index.php/How_to_run_OpenKore for help.\e[0m"
+
+test:
+	@python src/scons-local-3.1.2/scons.py && cd src/test/ && ./unittests.pl
+
+doc:
+	cd src/doc/ && ./createdoc.pl
+
+endif
 
 clean:
-	python src/scons-local-3.0.1/scons.py -c
+	python src/scons-local-3.1.2/scons.py -c
 
 dist:
 	bash makedist.sh
@@ -22,8 +41,4 @@ dist:
 bindist:
 	bash makedist.sh --bin
 
-test:
-	cd src/test && ./unittests.pl
 
-doc:
-	cd src/doc && ./createdoc.pl

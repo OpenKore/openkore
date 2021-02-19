@@ -85,8 +85,12 @@ def CheckPerl(context):
 	print F "perlversion=" . $^V . "\\n";
 	close F;
 	'''
+	
+	if sys.version_info >= (3,0,0):
+		f = open(".perltest.pl", "w")
+	else:
+		f = file(".perltest.pl", "w")
 
-	f = file(".perltest.pl", "w")
 	f.write(source)
 	f.close()
 
@@ -103,7 +107,11 @@ def CheckPerl(context):
 
 	os.unlink(".perltest.pl")
 	if ret == 0:
-		f = file(".perlconfig.txt", "r")
+		if sys.version_info >= (3,0,0):
+			f = open(".perlconfig.txt", "r")
+		else:
+			f = file(".perlconfig.txt", "r")
+
 		while 1:
 			line = f.readline()
 			if line == "":
@@ -171,14 +179,14 @@ conf = Configure(env, custom_tests = {
 	'CheckLibCurl'  : CheckLibCurl
 })
 if not conf.CheckPerl():
-	print "You do not have Perl installed! Read:"
-	print "http://wiki.openkore.com/index.php/How_to_run_OpenKore#Perl_module:_Time::HiRes"
+	print ("You do not have Perl installed! Read:")
+	print ("http://wiki.openkore.com/index.php/How_to_run_OpenKore#Perl_module:_Time::HiRes")
 	Exit(1)
 if not win32:
 	have_ncurses = conf.CheckLib('ncurses')
 	if not conf.CheckReadline(conf):
-		print "You don't have GNU readline installed, or your version of GNU readline is not recent enough! Read:"
-		print "http://wiki.openkore.com/index.php/How_to_run_OpenKore#GNU_readline"
+		print ("You don't have GNU readline installed, or your version of GNU readline is not recent enough! Read:")
+		print ("http://wiki.openkore.com/index.php/How_to_run_OpenKore#GNU_readline")
 		Exit(1)
 
 	if darwin:
@@ -192,8 +200,8 @@ if not win32:
 			sys.stdout.write(" no\n")
 
 	if not conf.CheckLibCurl():
-		print "You don't have libcurl installed. Please download it at:";
-		print "http://curl.haxx.se/libcurl/";
+		print ("You don't have libcurl installed. Please download it at:");
+		print ("http://curl.haxx.se/libcurl/");
 		Exit(1)
 conf.Finish()
 
@@ -248,7 +256,7 @@ if cygwin:
 			'-l', targetName + '.lib',
 			'--export-all-symbols',
 			'--add-stdcall-alias'] + sources
-		print ' '.join(command)
+		print (' '.join(command))
 		ret = subprocess.call(command)
 		if ret != 0:
 			return 0
@@ -257,14 +265,13 @@ if cygwin:
 			'--def', targetName + '.def', '-mno-cygwin'] + \
 			sources + ['-o', str(target[0])]
 		if env.has_key('LIBPATH'):
-			for dir in env['LIBPATH']:
-				command += ['-L' + dir]
+			for dir in env['LIBPATH']: command += ['-L' + dir]
 		if env.has_key('LIBS'):
-		 	for flag in env['LIBS']:
-				command += ['-l' + flag]
+		 	for flag in env['LIBS']: command += ['-l' + flag]
+
 		command += ['-lstdc++']
 
-		print ' '.join(command)
+		print (' '.join(command))
 		return subprocess.call(command)
 
 	NativeDLLBuilder = Builder(action = linkDLLAction,
@@ -282,13 +289,11 @@ elif darwin:
 			'-undefined', 'dynamic_lookup',
 			'-o', str(target[0])] + sources
 		if env.has_key('LIBPATH'):
-			for dir in env['LIBPATH']:
-				command += ['-L' + dir]
+			for dir in env['LIBPATH']: command += ['-L' + dir]
 		if env.has_key('LIBS'):
-		 	for flag in env['LIBS']:
-				command += ['-l' + flag]
+		 	for flag in env['LIBS']: command += ['-l' + flag]
 
-		print ' '.join(command)
+		print (' '.join(command))
 		return subprocess.call(command)
 
 	NativeDLLBuilder = Builder(action = linkBundleAction,
@@ -350,7 +355,7 @@ def buildXS(target, source, env):
 	do $file;
 	'''
 
-	print "Creating", str(target[0]), "..."
+	print ("Creating", str(target[0]), "...")
 	command = [
 		perlconfig['perl'],
 		'-e',
