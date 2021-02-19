@@ -39,7 +39,7 @@ sub new {
 	}
 
 	my %handlers = qw(
-		received_characters 099D
+		received_characters 0B72
 		received_characters_info 082D
 		sync_received_characters 09A0
 	);

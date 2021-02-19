@@ -23975,6 +23975,133 @@ Talk to Derpy Cupid in Prontera.#
 Time for some under the table Vigilante Justice. Once 35 Mobsters get beat up, I should inform Lt. Don Tyler of the event and he'll let me know about an anonymous reward someone left.#
 #
 
+63684#A Journey Together#SG_FEEL#QUE_NOIMATE#
+Donnie, in the traning grounds wants to know if you'll participate in a friendly challenge.#
+Partake in Donnie's challenge#
+
+63685#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Donnie wants to see how fast you can hunt 20 Drops. Hunt them down then come back and talk to him.#
+Hunt 20 Drops.#
+
+63686#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Donnie says he's going to Payon to do some adventuring regarding some undead in a cave. May be worth checking out what he's doing there.#
+Find Donnie near Payon's Cave.#
+
+63687#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+A girl named Mary in the Training Grounds is asking for 25 apples to feed her pet Poring.#
+Find 25 Apples for Mary.#
+
+63688#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Mary says she's going to Payon to do some adventuring regarding some undead in a cave. May be worth checking out what she's doing there.#
+Find Mary near Payon's Cave.#
+
+63689#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+You've met Knight Greymere, an old veteran adventurer who has a job to offer new adventurers. Take his job request.#
+Accept Knight Greymere's Request.#
+
+63690#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Bring Knight Greymere 15 Skel-Bones and 25 Decayed Nails for a reward. They can be obtained in the Payon Dungeon.#
+Obtain 15 Skel-Bones & 25 Decayed Nails for Greymere.#
+
+63691#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Speak to either Donnie or Mary, and see if they know what they'll do next.#
+Speak to either Donnie or Mary.#
+
+63692#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Donnie said he was interested in the Swordsman Job, check on him in Izlude to see what he's up to.#
+Speak to Donnie in Izlude.#
+
+63693#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Donnie mentioned he was interested in the Merchant Job, check on him in Alberta to see what he's up to.#
+Speak to Donnie in Alberta.#
+
+63694#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Donnie mentioned he was interested in the Mage Job, check on him in Geffen to see what he's up to.#
+Speak to Donnie in Geffen.#
+
+63695#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Mary mentioned she was interested in the Theif Job, check on her near the Morocc Pyramid to see what she's up to.#
+Speak to Mary outside of Morocc Pyramid.#
+
+63696#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Mary mentioned she was interested in the Archer Job, check on her in the Payon Archer Village to see what she's up to.#
+Speak to Mary in Archer Village.#
+
+63697#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Mary mentioned she was interested in the Acolyte Job, check on her in the Prontera Church to see what she's up to.#
+Speak to Mary in Prontera Church.#
+
+63698#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Donnie needs 10 Iron Ore for a custom sword for himself. Bring 10 Iron ore to Donnie in Izlude.#
+Bring Donnie 10 Iron Ore in Izlude.#
+
+63699#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Donnie asked you to deliver a message to Maria in Prontera and tell her he'll be late. Maria can be found in the North East quarter of Prontera.#
+Deliver a message to Maria in Prontera.#
+
+63700#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Donnie needs materials to study for his venture into Mage studies. Bring 20 Jellopy, 15 Fluff, and 5 Milk to Donnie in Geffen.#
+Bring Donnie 20 Jellopy, 15 Fluff, and 5 Milk.#
+
+63701#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Mary needs 10 Red Herbs for her precautionary use since she'll be playing with Thief poisons. Bring Mary 10 Red Herbs outside of the Morocc Pyramid.#
+Bring Mary 10 Red Herbs at Morocc Pyramid.#
+
+63702#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Mary wants 25 Fire Arrows so she can practice being an Archer. They can be obtained from Skeletal Archers in the nearby Payon Dungeon, or from certain vendors. Bring 25 Fire Arrows to Mary at the Payon Archer Village.#
+Bring Mary 25 Fire Arrows in Archer Village.#
+
+63703#A Journey Together#SG_FEEL#QUE_NOIMAGE#
+Mary wants 15 Tooth of Bat so she can participate in a rather shady sounding deal to get a Book of Prayers. Bring Mary 15 Tooth of Bat outside of Prontera Church.#
+Bring Mary 15 Tooth of Bat at Prontera Church.#
+
+63704#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Campitor(Prontera) has asked you to hunt 10 Hornets to help with the Unity Project.#
+Hunt 10 Hornet and return to Campitor#
+
+63705#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Campitor(Prontera) in 20 hours to see if there is more volunteer work.#
+#
+
+63706#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Astra(Morroc) has asked you to hunt 10 Drops to help with the Unity Project.#
+Hunt 10 Drops and return to Astra#
+
+63707#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Astra(Morroc) in 20 hours to see if there is more volunteer work.#
+#
+
+63708#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Magus(Geffen) has asked you to hunt 10 Chonchons to help with the Unity Project.#
+Hunt 10 Chonchons and return to Magus#
+
+63709#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Magus(Geffen) in 20 hours to see if there is more volunteer work.#
+#
+
+63710#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Poring Man(Al De Baran) has asked you to hunt 10 Marins to help with the Unity Project.#
+Hunt 10 Marins and return to Poring Man#
+
+63711#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Poring Man(Al De Baran) in 20 hours to see if there is more volunteer work.#
+#
+
+63712#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Xealot(Alberta) has asked you to hunt 10 Willows to help with the Unity Project.#
+Hunt 10 Willows and return to Xealot#
+
+63713#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Xealot(Alberta) in 20 hours to see if there is more volunteer work.#
+#
+
+63714#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Jelloshaker(Payon) has asked you to hunt 10 Spores to help with the Unity Project.#
+Hunt 10 Spores and return to Jelloshaker#
+
+63715#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Jelloshaker(Payon) in 20 hours to see if there is more volunteer work.#
+#
 
 
 //꿈과 그림자 MD
@@ -24151,3 +24278,99 @@ Resets at 4 am#
 #
 
 
+
+3364#Fire Event#SG_FEEL#QUE_NOIMAGE#
+To participate in setting a fire, you need a few items that can burn well. Please come <NAVI>[to me]<INFO>alberta,138,169,0,101,0</INFO></NAVI> with 5 fine branches, 10 old tree roots and 1 fire arrow.#
+Great Fire Material#
+
+3365#Mage Luna#SG_FEEL#QUE_NOIMAGE#
+Would you like to meet <NAVI>[Mage Luna]<INFO>alberta,134,162,0,101,0</INFO></NAVI>, who was dispatched from Gefen Tower for this lighting event?#
+To Luna#
+
+3366#Capture wild boar#SG_FEEL#QUE_NOIMAGE#
+It takes a lot of work to capture wild boars that ruin crops. Please go to <NAVI>[Serena]<INFO>alberta,152,198,0,101,0</INFO></NAVI>.#
+To Serena#
+
+3367#Preparation for the harvesting agent#SG_FEEL#QUE_NOIMAGE#
+Food is indispensable for the festival. Please go to <NAVI>[Songhwa]<INFO>alberta,119,193,0,101,0</INFO></NAVI>, who prepares food for the harvest festival. There are a lot of delicious food.#
+To Songhwa#
+
+3369#Resurrected Twig#SG_FEEL#QUE_NOIMAGE#
+I hope you will get rid of 10 resurrected branches and get about 10 good quality branches. My Reputation depends on it! <NAVI>[Mage Luna]<INFO>alberta,134,162,0,101,0</INFO></NAVI>#
+10 quality branches#
+
+3370#Atmosphere: Resurrected Branch#SG_FEEL#QUE_NOIMAGE#
+Now, Lana is watching. Will you come back after dawn <NAVI>[Mage Luna]<INFO>alberta,134,162,0,101,0</INFO></NAVI>#
+Initialization time 04:00#
+
+3371#Hungry Boar#SG_FEEL#QUE_NOIMAGE#
+The boars that have already come down to the village must be safely captured and returned home. <NAVI>[My]<INFO>alberta,152,198,0,101,0</INFO></NAVI> Give me a wild boar trap to capture 10 hungry boars.#
+10 captured wild boars#
+
+3372#Waiting: Hungry Boar#SG_FEEL#QUE_NOIMAGE#
+Now I need to trim the boar trap. Would you come back to <NAVI>[I]<INFO>alberta,152,198,0,101,0</INFO></NAVI> after dawn time?#
+Initialization time 04:00#
+
+3373#Songpyeon preparation#SG_FEEL#QUE_NOIMAGE#
+Songpyeon's ingredients are running out. Go get Songpyeon some ingredients? 1 grain, 3 honey, 10 green herbs. <NAVI>[Songhwa]<INFO>alberta,119,193,0,101,0</INFO></NAVI>#
+Songpyeon ingredients#
+
+3374#Prepare Mooncake#SG_FEEL#QUE_NOIMAGE#
+The moon cake's ingredients have run out. Can you get some moon cake ingredients? 1 yellow spice and 3 pieces of wood. <NAVI>[Songhwa]<INFO>alberta,119,193,0,101,0</INFO></NAVI>#
+Mooncake material#
+
+3375#Preparing roast turkey#SG_FEEL#QUE_NOIMAGE#
+The ingredients for roast turkey are running out. Can you get some ingredients for the roast turkey? 1 plain sauce, 3 lemons and 10 carrots. <NAVI>[Songhwa]<INFO>alberta,119,193,0,101,0</INFO></NAVI>#
+Ingredients for roast turkey#
+
+3376#Waiting: Preparing food for the harvest festival#SG_FEEL#QUE_NOIMAGE#
+The food preparation is in full swing, so I can't give you anything. If you come to <NAVI>[I]<INFO>alberta,119,193,0,101,0</INFO></NAVI> after some time, I will give it to you.#
+#
+
+3377#Louise's business#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Lewis]<INFO>alberta,115,198,0,101,0</INFO></NAVI> seems to need help. Let's talk.#
+Talking to Lewis#
+
+3378#Food of turkeys#SG_FEEL#QUE_NOIMAGE#
+The turkeys need food. <ITEM>[Locust hind leg]<INFO>940</INFO></ITEM> 30ea, <ITEM>[Green Herb]<INFO>511</INFO></ITEM> 20ea, <ITEM>[Additive Commemorative snack]<INFO>11613</INFO></ITEM> Let's bring 20 pieces to Lewis.#
+Feeding Turkey#
+
+3379#Turkey's Food-Repeat#SG_FEEL#QUE_NOIMAGE#
+Turkeys continue to need food. <ITEM>[Locust hind leg]<INFO>940</INFO></ITEM> 30ea, <ITEM>[Green Herb]<INFO>511</INFO></ITEM> 20ea, <ITEM>[Additive Commemorative snack]<INFO>11613</INFO></ITEM> Let's bring 20 pieces to Lewis.#
+Feeding Turkey#
+
+3380#Turkey's Food-Repeat#SG_FEEL#QUE_NOIMAGE#
+Turkeys continue to need food. <ITEM>[Locust hind leg]<INFO>940</INFO></ITEM> 30ea, <ITEM>[Green Herb]<INFO>511</INFO></ITEM> 20ea, <ITEM>[Additive Commemorative snack]<INFO>11613</INFO></ITEM> Let's bring 20 pieces to Lewis.#
+Feeding Turkey#
+
+3381#Food of Turkeys-Repeat#SG_FEEL#QUE_NOIMAGE#
+Turkeys continue to need food. <ITEM>[Locust hind leg]<INFO>940</INFO></ITEM> 30ea, <ITEM>[Green Herb]<INFO>511</INFO></ITEM> 20ea, <ITEM>[Additive Commemorative snack]<INFO>11613</INFO></ITEM> Let's bring 20 pieces to Lewis.#
+Feeding Turkey#
+
+3382#Reason for moving to Kunlun#SG_FEEL#QUE_NOIMAGE#
+Seobang Kim asks for two <ITEM>[anywhere ticket]<INFO>25392</INFO></ITEM> to meet her daughter Kejin.#
+Accepting Seobang Kim's request#
+
+3383#Why move to Kunlun-Repeat#SG_FEEL#QUE_NOIMAGE#
+Seobang Kim asks you to bring two <ITEM>[anywhere ticket]<INFO>25392</INFO></ITEM> to meet her daughter Kejin today.#
+Accepting Seobang Kim's request#
+
+3384#Reason for moving to Kunlun- Waiting#SG_FEEL#QUE_NOIMAGE#
+When dawn is over and it's time to launch the boat again, let's visit Kim Seobang again.#
+#
+
+3385#Eunwol's Dragon #SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Eunwol]<INFO>alberta,117,198,0,101,0</INFO></NAVI> seems to need help. Let's talk.#
+Talking to Eunwol#
+
+3386#Delivery of Thanksgiving Confectionery#SG_FEEL#QUE_NOIMAGE#
+For the study of harvest sweets, ask for 10 <ITEM>[Thanksgiving Sweets]<INFO>25392</INFO></ITEM>.#
+Accepting Eunwol's request#
+
+3387#Delivery of Thanksgiving Confectionery-Repeat#SG_FEEL#QUE_NOIMAGE#
+I think I need more <ITEM>[Thanksgiving Confectionery]<INFO>25392</INFO></ITEM>. Collect 10 and bring it to Eunwol.#
+Accepting Eunwol's request#
+
+3388#Delivery of Thanksgiving Confectionery-Waiting#SG_FEEL#QUE_NOIMAGE#
+When Eunwol needs more sweets for the harvest festival, let's come back.#
+#

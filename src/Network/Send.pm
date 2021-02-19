@@ -33,7 +33,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -1106,6 +1106,7 @@ sub sendCashShopOpen {
 sub sendCashShopClose {
 	my ($self) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'cash_shop_close'}));
+	undef $cashShop{points};
 	debug "Requesting sendCashShopClose\n", "sendPacket", 2;
 }
 
@@ -2551,7 +2552,7 @@ sub sendSellBulk {
 		items => \@{$r_array},
 	}));
 
-	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk sell: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_sell_bulk {
@@ -2561,11 +2562,11 @@ sub reconstruct_sell_bulk {
 }
 
 sub sendAchievementGetReward {
-	my ($self, $ach_id) = @_;
+	my ($self, $achievementID) = @_;
 
 	$self->sendToServer($self->reconstruct({
 		switch => 'achievement_get_reward',
-		ach_id => $ach_id,
+		achievementID => $achievementID,
 	}));
 }
 
@@ -3378,7 +3379,7 @@ sub sendBuyBulkMarket {
 		items => \@{$r_array},
 	}));
 
-	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk buy market: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_buy_bulk_market {

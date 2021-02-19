@@ -36,6 +36,7 @@ use Log qw(warning error debug);
 use Translation qw/T TF/;
 
 our @EXPORT = qw(
+	parseAchievementFile
 	parseAttendanceRewards
 	parseArrayFile
 	parseAvoidControl
@@ -76,6 +77,57 @@ our @EXPORT = qw(
 	updateNPCLUT
 );
 
+##
+# parseAchievementFile(file, achievments)
+# file: Filename to parse
+# achievments: Return hash
+#
+# Parses a achievments file.
+sub parseAchievementFile {
+	my $file = shift;
+	my $r_hash = shift;
+
+	undef %{$r_hash};
+
+	my $reader = new Utils::TextReader($file);
+	my $current_id;
+
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		$line =~ s/^\s+|\s+$//g;
+		if ( $line =~ /^\[(\d+)\]\s+\=\s+\{$/ ) {
+			$current_id = $1;
+			$r_hash->{$1}->{ID} = $1;
+		} elsif ( $line =~ /^group\s+\=\s+\"(.*)\"\,$/ ) {
+			$r_hash->{$current_id}->{group} = $1;
+		} elsif ( $line =~ /^title\s+\=\s+\"(.*)\"\,$/ ) {
+			$r_hash->{$current_id}->{title} = $1;
+		} elsif ( $line =~ /^content\s+\=\s+\{\s+/ ) {
+			if ( $line =~ /summary\s+\=\s+\"(.*)\"\,/ ) {
+				$r_hash->{$current_id}->{summary} = $1;
+			}
+			if ( $line =~ /details\s+\=\s+\"(.*)\"/ ) {
+				$r_hash->{$current_id}->{details} = $1;
+			}
+		} elsif ( $line =~ /^summary\s+\=\s+\"(.*)\"\,$/ ) {
+			$r_hash->{$current_id}->{summary} = $1;
+		} elsif ( $line =~ /^details\s+\=\s+\"(.*)\"/ ) {
+			$r_hash->{$current_id}->{details} = $1;
+		} elsif ( $line =~ /^reward\s+\=\s+\{/ ) {
+			if ( $line =~ /buff\s+\=\s+(\d+)/ ) {
+				$r_hash->{$current_id}->{rewards}->{buff} = $1;
+			}
+			if ( $line =~ /title\s+\=\s+(\d+)/ ) {
+				$r_hash->{$current_id}->{rewards}->{title} = $1;
+			}
+			if ( $line =~ /item\s+\=\s+(\d+)/ ) {
+				$r_hash->{$current_id}->{rewards}->{item} = $1;
+			}
+		}
+	}
+
+	return 1;
+}
 
 sub parseArrayFile {
 	my $file = shift;
@@ -252,7 +304,7 @@ sub parseConfigFile {
 		} elsif (!defined $inBlock && $line =~ /{$/) {
 			# Begin of block
 			$line =~ s/ *{$//;
-			($key, $value) = $line =~ /^(.*?) (.*)/;
+			($key, $value) = $line =~ /^(.*?)\s+(.*)/;
 			$key = $line if ($key eq '');
 
 			if (!exists $blocks->{$key}) {
@@ -680,6 +732,7 @@ sub parsePriority {
 	my $file = shift;
 	my $r_hash = shift;
 	return unless my $reader = new Utils::TextReader($file);
+	undef %{$r_hash};
 
 	my @lines;
 	while (!$reader->eof()) {
@@ -1018,7 +1071,7 @@ sub parseAttendanceRewards {
 	while (!$reader->eof()) {
 		$line = $reader->readLine();
 		chomp;
-	
+
 		$line =~ s/[\r\n\x{FEFF}]//g;
 		next if $line =~ /^$/ || $line =~ /^#/;
 
@@ -1031,13 +1084,13 @@ sub parseAttendanceRewards {
 			next;
 		} elsif ($line =~ /^end\s(\d+)/) {
 			$attendance_rewards->{period}{end} = $1;
-			next;	
+			next;
 		}
 
 		my ($day, $item_id, $amount) = split(/ /, $line);
 		$item_id =~ s/^\s+//g;
 		$amount =~ s/^\s+//g;
-		
+
 		$attendance_rewards->{items}{$day}{item_id} = $item_id;
 		$attendance_rewards->{items}{$day}{amount} =  $amount;
 	}

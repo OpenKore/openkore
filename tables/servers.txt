@@ -236,7 +236,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 0
 addTableFolders pRO
-charBlockSize 144
+charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
@@ -255,7 +255,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 0
 addTableFolders pRO
-charBlockSize 144
+charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
@@ -290,66 +290,15 @@ addTableFolders twRO
 captcha 0
 
 # http://ro.gnjoy.in.th/
-[Thailand - tRO: Ayothaya]
-ip 49.229.28.13
+[Thailand - tRO: Chaos, Thor, Iris, Odin]
+ip thro-acc1.gnjoy.in.th
 port 50001
 master_version 7
 version 24
 serverType tRO
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 147
-gameGuard 0
-charDeleteDateType 1
-blockingPlayerCancel 1
-rankingSystemType 1
-itemListType 1
-pinCode 1
-
-# http://ro.gnjoy.in.th/
-[Thailand - tRO: Junon]
-ip 49.229.28.77
-port 50001
-master_version 7
-version 24
-serverType tRO
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 147
-gameGuard 0
-charDeleteDateType 1
-blockingPlayerCancel 1
-rankingSystemType 1
-itemListType 1
-pinCode 1
-
-# http://ro.gnjoy.in.th/
-[Thailand - tRO: Midgard]
-ip 49.229.28.28
-port 50001
-master_version 7
-version 24
-serverType tRO
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 147
-gameGuard 0
-charDeleteDateType 1
-blockingPlayerCancel 1
-rankingSystemType 1
-itemListType 1
-pinCode 1
-
-# http://ro.gnjoy.in.th/
-[Thailand - tRO: Yuno]
-ip 49.229.28.74
-port 50001
-master_version 7
-version 24
-serverType tRO
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 147
+charBlockSize 175
 gameGuard 0
 charDeleteDateType 1
 blockingPlayerCancel 1
