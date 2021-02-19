@@ -1,8 +1,8 @@
-# runs-on:				https://github.com/actions/virtual-environments
-# setup-python:			https://github.com/actions/setup-python
-# actions-setup-perl:	https://github.com/marketplace/actions/setup-perl-environment
+# runs-on:            https://github.com/actions/virtual-environments
+# setup-python:       https://github.com/actions/setup-python
+# actions-setup-perl: https://github.com/marketplace/actions/setup-perl-environment
 
-name: CI
+name: Build XSTools
 on:
   push:
     branches:
@@ -19,35 +19,48 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-2016, windows-latest, ubuntu-18.04, ubuntu-latest]
-        python: [2.7, 3]
-        perl: [5.12, latest]
-        exclude:
-        - python: 2.7
-          perl: latest
-        - python: 3
+        include:
+        - os: windows-2016
+          python: 2.7
+          architecture: x86
           perl: 5.12
+          distribution: default
+
+        - os: windows-latest
+          python: 3
+          architecture: x86
+          perl: latest
+          distribution: strawberry
+
+        - os: ubuntu-18.04
+          python: 2.7
+          architecture: x64
+          perl: 5.12
+          distribution: default
+
+        - os: ubuntu-latest
+          python: 3
+          architecture: x64
+          perl: latest
+          distribution: default
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: setup-python ${{ matrix.python }}
+    # setup Windows matrix: python 2.7_x86, 3_x86 and perl 5.12_x64, strawberry last_x64
+    # setup Linux   matrix: python 2.7_x64, 3_x64 and perl 5.12_x64, last_x64
+    - name: setup-python ${{ matrix.python }} ${{ matrix.architecture }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python }}
-        architecture: 'x64'
-    - name: setup-perl ${{ matrix.perl }}
+        architecture: ${{ matrix.architecture }}
+
+    - name: setup-perl ${{ matrix.perl }} (${{ matrix.distribution }})
       uses: shogo82148/actions-setup-perl@v1
       with:
         perl-version: ${{ matrix.perl }}
-#        distribution: strawberry
-
-#    - name: Install dependencies
-#      run: |
-#        echo Hello, world!
-#        sudo apt update
-#        sudo apt install -y libreadline6-dev libcurl4-openssl-dev python
+        distribution: ${{ matrix.distribution }}
 
     - name: Environment check
       run: |
