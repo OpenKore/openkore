@@ -25,17 +25,7 @@ jobs:
           architecture: x86
           perl: 5.12
           distribution: default
-        - os: windows-2016
-          python: 3
-          architecture: x86
-          perl: latest
-          distribution: strawberry
 
-        - os:  windows-latest
-          python: 2.7
-          architecture: x86
-          perl: 5.12
-          distribution: default
         - os: windows-latest
           python: 3
           architecture: x86
@@ -47,17 +37,7 @@ jobs:
           architecture: x64
           perl: 5.12
           distribution: default
-        - os: ubuntu-18.04
-          python: 3
-          architecture: x64
-          perl: latest
-          distribution: default
 
-        - os: ubuntu-latest
-          python: 2.7
-          architecture: x64
-          perl: 5.12
-          distribution: default
         - os: ubuntu-latest
           python: 3
           architecture: x64
