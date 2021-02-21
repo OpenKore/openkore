@@ -323,7 +323,7 @@ sub main {
 			$args->{attackMethod}{type} = "combo";
 			$args->{attackMethod}{comboSlot} = $i;
 			$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
-			$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_dist"};
+			$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_maxDist"} || $config{"attackComboSlot_${i}_dist"};
 			$args->{attackMethod}{isSelfSkill} = $config{"attackComboSlot_${i}_isSelfSkill"};
 			last;
 		}
@@ -364,7 +364,7 @@ sub main {
 			) {
 				$args->{attackSkillSlot_attempts}{$i}++;
 				$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
-				$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_dist"};
+				$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_maxDist"} || $config{"attackSkillSlot_$i"."_dist"};
 				$args->{attackMethod}{type} = "skill";
 				$args->{attackMethod}{skillSlot} = $i;
 				last;

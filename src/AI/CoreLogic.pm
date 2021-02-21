@@ -2803,11 +2803,12 @@ sub processPartySkillUse {
 					|| UNIVERSAL::isa($player, 'Actor::Player')
 					|| UNIVERSAL::isa($player, 'Actor::Slave')
 				);
-
+				my $dist = $config{"partySkill_$i"."_dist"} || $config{partySkillDistance} || "0..8";
+				if (defined($config{"partySkill_$i"."_dist"}) && defined($config{"partySkill_$i"."_maxDist"})) { $dist = $config{"partySkill_$i"."_dist"} . ".." . $config{"partySkill_$i"."_maxDist"};}
 				if (
 					( # range check
 						$party_skill{owner}{ID} eq $player->{ID}
-						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $config{"partySkill_$i"."_dist"} || $config{partySkillDistance} || "0..8")
+						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $dist)
 					)
 					&& ( # target check
 						!$config{"partySkill_$i"."_target"}
