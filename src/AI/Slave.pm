@@ -314,6 +314,18 @@ sub processAttack {
 			$attackSeq->{monsterPos} &&
 			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
+			($attackSeq->{attackMethod}{distance} == 1 && $attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeeleAttack(calcPosition($slave), calcPosition($target)))
+		) {
+			debug "$slave target $target is now reachable by meele attacks during routing to it.\n", "ai_attack";
+			$slave->dequeue;
+			$slave->dequeue if $slave->action eq "route";
+
+			$attackSeq->{ai_attack_giveup}{time} = time;
+		} elsif (
+			$target->{type} ne 'Unknown' &&
+			$attackSeq->{monsterPos} &&
+			%{$attackSeq->{monsterPos}} &&
+			$attackSeq->{monsterLastMoveTime} &&
 			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
 		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
@@ -323,18 +335,6 @@ sub processAttack {
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
 
-		} elsif (
-			$target->{type} ne 'Unknown' &&
-			$attackSeq->{monsterPos} &&
-			%{$attackSeq->{monsterPos}} &&
-			$attackSeq->{monsterLastMoveTime} &&
-			($attackSeq->{attackMethod}{distance} == 1 && canReachMeeleAttack(calcPosition($slave), calcPosition($target)))
-		) {
-			debug "$slave target $target is now reachable by meele attacks during routing to it.\n", "ai_attack";
-			$slave->dequeue;
-			$slave->dequeue if $slave->action eq "route";
-
-			$attackSeq->{ai_attack_giveup}{time} = time;
 		}
 		$timeout{$slave->{ai_route_adjust_timeout}}{time} = time;
 	}
@@ -599,8 +599,8 @@ sub processAttack {
 			}
 
 		} elsif (
-			(($args->{attackMethod}{distance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
-			($args->{attackMethod}{distance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
+			(($args->{attackMethod}{distance} == 1 && $args->{attackMethod}{maxDistance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
+			($args->{attackMethod}{distance} >= 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 			!timeOut($args->{ai_attack_giveup})
 		) {
 			# The target monster moved; move to target
