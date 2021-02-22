@@ -70,10 +70,10 @@ sub process {
 			$attackSeq->{monsterPos} &&
 			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
-			#($attackSeq->{attackMethod}{distance} == 1 && canReachMeeleAttack(calcPosition($char), calcPosition($target)))
-			($attackSeq->{attackMethod}{distance} == 1 && $attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeeleAttack($char->{pos_to}, calcPosition($target)))
+			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
 		) {
-			debug "Target $target is now reachable by meele attacks during routing to it.\n", "ai_attack";
+			# Monster has moved; stop moving and let the attack AI readjust route
+			debug "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
 
@@ -84,16 +84,17 @@ sub process {
 			$attackSeq->{monsterPos} &&
 			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
-			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
+			#($attackSeq->{attackMethod}{distance} == 1 && canReachMeeleAttack(calcPosition($char), calcPosition($target)))
+			($attackSeq->{attackMethod}{distance} == 1 && $attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeeleAttack($char->{pos_to}, calcPosition($target)))
 		) {
-			# Monster has moved; stop moving and let the attack AI readjust route
-			debug "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
+			debug "Target $target is now reachable by meele attacks during routing to it.\n", "ai_attack";
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
 
 		}
+
 		$timeout{ai_attack_route_adjust}{time} = time;
 	}
 
