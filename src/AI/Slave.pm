@@ -281,6 +281,8 @@ sub processAttack {
 	my $slave = shift;
 	#Benchmark::begin("ai_homunculus_attack") if DEBUG;
 
+	$slave->dequeue if $slave->action eq "checkMonsters";
+	
 	if ($slave->action eq "attack" && $slave->args->{suspended}) {
 		$slave->args->{ai_attack_giveup}{time} += time - $slave->args->{suspended};
 		delete $slave->args->{suspended};
