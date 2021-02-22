@@ -538,7 +538,7 @@ sub main {
 	} elsif (
 		#(($args->{attackMethod}{distance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
 		(($args->{attackMethod}{distance} == 1 && $args->{attackMethod}{maxDistance} == 1 && !canReachMeeleAttack($myPos, $realMonsterPos)) ||
-		($args->{attackMethod}{distance} >= 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
+		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 		!timeOut($args->{ai_attack_giveup})
 	) {
 		# The target monster moved; move to target
