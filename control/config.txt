@@ -402,8 +402,8 @@ mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
 
 mercenary_moveNearWhenIdle 1
-mercenary_moveNearWhenIdle_minDistance 4
-mercenary_moveNearWhenIdle_maxDistance 8
+mercenary_moveNearWhenIdle_minDistance 2
+mercenary_moveNearWhenIdle_maxDistance 12
 
 mercenary_idleWalkType 1
 
@@ -458,8 +458,8 @@ homunculus_followDistanceMax 12
 homunculus_followDistanceMin 3
 
 homunculus_moveNearWhenIdle 1
-homunculus_moveNearWhenIdle_minDistance 4
-homunculus_moveNearWhenIdle_maxDistance 8
+homunculus_moveNearWhenIdle_minDistance 2
+homunculus_moveNearWhenIdle_maxDistance 12
 
 homunculus_idleWalkType 1
 
