@@ -306,25 +306,6 @@ rankingSystemType 1
 itemListType 1
 pinCode 1
 
-#####################
-# Bottable Private Server
-
-# https://ggamerz-ro.com/
-[GGamerzRO]
-ip 139.99.21.130
-port 6900
-private 1
-master_version 1
-version 55
-recvpackets recvpackets_20180620.txt
-serverType kRO_RagexeRE_2018_06_20e
-serverEncoding Western
-charBlockSize 155
-pinCode 1
-addTableFolders pserver/GGamerzRO
-clientHash 6BB2AFD0D3F780730809E3BD0407AF7C
-sendCryptKeys 0x00000000, 0x00000000, 0x00000000
-
 [Localhost]
 ip localhost
 port 6900
@@ -403,3 +384,8 @@ dead_message fRO was closed on 12 of August, 2019. Visit official website for mo
 [Malaysia - mRO]
 dead 1
 dead_message mRO was merged into phRO on July, 2019. Visit official website for more details.
+
+# https://ggamerz-ro.com/
+[GGamerzRO]
+dead 1
+dead_message Server is officially closed on 15/2/2021 due to no more Sponsor.
