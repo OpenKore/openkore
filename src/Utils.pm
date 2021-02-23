@@ -78,6 +78,9 @@ sub calcPosFromTime {
 	my $pos_toY = $$pos_to{y};
 	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
 	my $s = 0; # step
+	
+	my $time_needed_ortogonal = $speed;
+    my $time_needed_diagonal = sqrt(2) * $speed;
 
 	my %result;
 	$result{x} = $pos_toX;
@@ -107,9 +110,9 @@ sub calcPosFromTime {
 		}
 
 		if ($stepType == 2) {
-			$time -= sqrt(2) / $speed;
+			$time -= $time_needed_diagonal;
 		} elsif ($stepType == 1) {
-			$time -= 1 / $speed;
+			$time -= $time_needed_ortogonal;
 		} else {
 			$s--;
 			last;
@@ -121,7 +124,7 @@ sub calcPosFromTime {
 	}
 
 	%result = moveAlong($pos, $pos_to, $s);
-	return %result;
+	return (\%result, $s);
 }
 
 ##
@@ -137,6 +140,9 @@ sub calcTime {
 	my $pos_toY = $$pos_to{y};
 	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
 	my $time = 0;
+	
+	my $time_needed_ortogonal = $speed;
+    my $time_needed_diagonal = sqrt(2) * $speed;
 
 	return if (!$speed); # Make sure $speed actually has a non-zero value...
 
@@ -159,9 +165,9 @@ sub calcTime {
 			$stepType++;
 		}
 		if ($stepType == 2) {
-			$time += sqrt(2) / $speed;
+			$time += $time_needed_diagonal;
 		} elsif ($stepType == 1) {
-			$time += 1 / $speed;
+			$time += $time_needed_ortogonal;
 		}
 	}
 	return $time;
@@ -264,7 +270,7 @@ sub calcStepsWalkedFromTimeAndRoute {
 	
     my $dist = @steps;
 
-    my $time_needed_ortogonal = 1 * $speed;
+    my $time_needed_ortogonal = $speed;
     my $time_needed_diagonal = sqrt(2) * $speed;
     my $time_needed;
 
@@ -318,7 +324,7 @@ sub calcTimeFromRoute {
 	
     my $dist = @steps;
 
-    my $time_needed_ortogonal = 1 * $speed;
+    my $time_needed_ortogonal = $speed;
     my $time_needed_diagonal = sqrt(2) * $speed;
     my $time_needed;
 

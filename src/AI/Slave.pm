@@ -486,102 +486,12 @@ sub processAttack {
 			$config{$slave->{configPrefix}.'attackCheckLOS'} && $args->{attackMethod}{distance} > 1 &&
 			(!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}) || $realMonsterDist > $args->{attackMethod}{maxDistance})
 		) {
-			my $attackAdjustLOSMaxRouteTargetDistance = $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteTargetDistance'};
-			my $runFromTarget = $config{$slave->{configPrefix}.'runFromTarget'};
-			my $runFromTarget_dist = $config{$slave->{configPrefix}.'runFromTarget_dist'};
-			my $followDistanceMax = $config{$slave->{configPrefix}.'followDistanceMax'};
-			my $attackAdjustLOSMaxRouteDistance = $config{$slave->{configPrefix}.'attackAdjustLOSMaxRouteDistance'};
-			my $attackCanSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
-		
-			# Current position doesn't have LOS to the target anyway, so exclude it here and save many chekcs later
-			my $min_destination_dist = 1;
-			if ($runFromTarget) {
-				$min_destination_dist = $runFromTarget_dist;
-			}
-			
-			# We should not stray further than $args->{attackMethod}{distance} or attackAdjustLOSMaxRouteTargetDistance but if we are further away than it we should accept it
-			my $max_destination_dist = $args->{attackMethod}{distance};
-			if ($max_destination_dist > $attackAdjustLOSMaxRouteTargetDistance) {
-				$max_destination_dist = $attackAdjustLOSMaxRouteTargetDistance;
-			}
-			
-			my $max_pathfinding_dist = $max_destination_dist;
-			if ($realMonsterDist > $max_pathfinding_dist) {
-				$max_pathfinding_dist = $realMonsterDist;
-			}
-			
-			my $masterPos = $char->{pos_to};
-			
-			my $speed = ($slave->{walk_speed} || 0.12);
-			
-			my $target_moving = 0;
-			if (!timeOut($target->{time_move}, $target->{time_move_calc})) {
-				$target_moving = 1;
-			}
-		
-			my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $realMonsterPos, $max_pathfinding_dist);
-		
-			unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
-				$realMyPos = $field->closestWalkableSpot($realMyPos, 1);
-			}
-		
-			my $best_spot;
-			my $best_dist;
-			foreach my $distance (reverse ($min_destination_dist..$max_destination_dist)) {
-				my @blocks = calcRectArea($realMonsterPos->{x}, $realMonsterPos->{y}, $distance, $field);
-				foreach my $spot (@blocks) {
-					next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
-					
-					# Is this spot acceptable?
-					
-					# 1. It must be walkable
-					next unless ($field->isWalkable($spot->{x}, $spot->{y}));
-					
-					# 2. It must be within $followDistanceMax of $masterPos, if we have a master.
-					if ($masterPos) {
-						next unless (blockDistance($spot, $masterPos) <= $followDistanceMax);
-					}
-					
-					# 3. The route should not exceed at any point $max_pathfinding_dist distance from the target.
-					my $solution = [];
-					my $dist = new PathFinding(
-						field => $field,
-						start => $realMyPos,
-						dest => $spot,
-						avoidWalls => 0,
-						min_x => $min_pathfinding_x,
-						max_x => $max_pathfinding_x,
-						min_y => $min_pathfinding_y,
-						max_y => $max_pathfinding_y
-					)->run($solution);
-					
-					# 4. It must be reachable and have at max $attackAdjustLOSMaxRouteDistance of route distance to it from our current position.
-					next unless ($dist >= 0 && $dist <= $attackAdjustLOSMaxRouteDistance);
-					
-					# No need to calculate calcTimeFromRoute, calcPosition and checkLOS if it's not gonna be our best position
-					next if (defined($best_dist) && $dist >= $best_dist);
-					
-					# 5. It must have LOS to the target ($realMonsterPos in a stopped target or $new_realMonsterPos in a moving one).
-					if ($target_moving) {
-						unshift(@{$solution}, $realMyPos);
-						my $time_needed = calcTimeFromRoute($solution, $speed);
-						my $new_realMonsterPos = calcPosition($target, $time_needed);
-						next unless ($field->checkLOS($spot, $new_realMonsterPos, $attackCanSnipe));
-					} else {
-						next unless ($field->checkLOS($spot, $realMonsterPos, $attackCanSnipe));
-					}
-					
-					if (!defined($best_dist) || $dist < $best_dist) {
-						$best_dist = $dist;
-						$best_spot = $spot;
-					}
-				}
-			}
+			my $best_spot = meetingPosition_slave($slave, $target, $args->{attackMethod}{maxDistance});
 
 			# Move to the closest spot
 			my $msg = TF("%s has no LOS from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 			if ($best_spot) {
-				message TF("%s; moving to (%d, %d) (distance: %d)\n", $msg, $best_spot->{x}, $best_spot->{y}, $best_dist), 'slave_attack';
+				message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
 				$slave->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
 			} else {
 				$target->{attack_failedLOS} = time;
@@ -600,7 +510,7 @@ sub processAttack {
 			}
 
 		} elsif (
-			(($args->{attackMethod}{distance} == 1 && $args->{attackMethod}{maxDistance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
+			(($args->{attackMethod}{maxDistance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
 			($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 			!timeOut($args->{ai_attack_giveup})
 		) {
@@ -611,14 +521,22 @@ sub processAttack {
 			
 			debug "$slave target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from slave ($realMyPos->{x} $realMyPos->{y}) to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 			
-			my $pos = meetingPosition($slave, $target, $args->{attackMethod}{maxDistance});
-
-			my $result = $slave->route(undef, @{$pos}{qw(x y)},
-				maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
-				attackID => $ID,
-				noMapRoute => 1,
-				avoidWalls => 0,
-				meetingSubRoute => 1);
+			my $pos = meetingPosition_slave($slave, $target, $args->{attackMethod}{maxDistance});
+			my $result;
+			
+			if ($pos) {
+				debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
+				
+				$result = $slave->route(
+					undef,
+					@{$pos}{qw(x y)},
+					maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
+					attackID => $ID,
+					noMapRoute => 1,
+					avoidWalls => 0,
+					meetingSubRoute => 1
+				);
+			}
 			if (!$result) {
 				# Unable to calculate a route to target
 				$target->{$slave->{ai_attack_failed_timeout}} = time;

@@ -78,8 +78,8 @@ attackUseWeapon 1
 attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 0
-attackAdjustLOSMaxRouteDistance 10
-attackAdjustLOSMaxRouteTargetDistance 13
+attackRouteMaxTargetDistance 13
+attackRouteMaxPathDistance 13
 attackLooters 0
 attackChangeTarget 1
 aggressiveAntiKS 0
@@ -380,8 +380,8 @@ mercenary_attackDistanceAuto 0
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 0
-mercenary_attackAdjustLOSMaxRouteDistance 10
-mercenary_attackAdjustLOSMaxRouteTargetDistance 13
+mercenary_attackRouteMaxTargetDistance 13
+mercenary_attackRouteMaxPathDistance 13
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
 mercenary_attack_dance_melee 0
@@ -407,7 +407,7 @@ mercenary_moveNearWhenIdle_maxDistance 12
 
 mercenary_idleWalkType 1
 
-mercenary_route_step 7
+mercenary_route_step 10
 
 mercenary_tankMode 0
 mercenary_tankModeTarget
@@ -437,8 +437,8 @@ homunculus_attackDistanceAuto 0
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 0
-homunculus_attackAdjustLOSMaxRouteDistance 10
-homunculus_attackAdjustLOSMaxRouteTargetDistance 13
+homunculus_attackRouteMaxTargetDistance 13
+homunculus_attackRouteMaxPathDistance 13
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 homunculus_attack_dance_melee 0
@@ -463,7 +463,7 @@ homunculus_moveNearWhenIdle_maxDistance 12
 
 homunculus_idleWalkType 1
 
-homunculus_route_step 7
+homunculus_route_step 10
 
 homunculus_tankMode 0
 homunculus_tankModeTarget

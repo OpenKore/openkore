@@ -139,6 +139,7 @@ our @EXPORT = (
 	manualMove
 	canReachMeeleAttack
 	meetingPosition
+	meetingPosition_slave
 	objectAdded
 	objectRemoved
 	items_control
@@ -2480,8 +2481,6 @@ sub canReachMeeleAttack {
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
 	my ($actor, $target, $attackMaxDistance) = @_;
-	my $targetSpeed = ($target->{walk_speed}) ? 1 / $target->{walk_speed} : 0;
-	my $timeTargetMoves = time - $target->{time_move};
 
 	my %targetPos;
 	$targetPos{x} = $target->{pos}{x};
@@ -2489,11 +2488,27 @@ sub meetingPosition {
 	my %targetPosTo;
 	$targetPosTo{x} = $target->{pos_to}{x};
 	$targetPosTo{y} = $target->{pos_to}{y};
-
-	my %realTargetPos = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, $timeTargetMoves);
 	
-	my $mySpeed = ($actor->{walk_speed}) ? 1 / $actor->{walk_speed} : 0;
-	my $timeActorMoves = time - $actor->{time_move};
+	my $targetSpeed = ($target->{walk_speed} || 0.12);
+	my $timeSinceTargetMoved = time - $target->{time_move};
+	my $timeTargetFinishMove = calcTime(\%targetPos, \%targetPosTo, $targetSpeed);
+	
+	my $target_moving;
+	my $realTargetPos;
+	my $targetTotalSteps;
+	my $targetCurrentStep;
+	# Target has finished moving
+	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
+		$target_moving = 0;
+		$realTargetPos->{x} = $targetPosTo{x};
+		$realTargetPos->{y} = $targetPosTo{y};
+	
+	# Target is currently moving
+	} else {
+		$target_moving = 1;
+		($realTargetPos, $targetCurrentStep) = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, $timeSinceTargetMoved);
+		$targetTotalSteps = countSteps(\%targetPos, \%targetPosTo);
+	}
 
 	my %myPos;
 	$myPos{x} = $actor->{pos}{x};
@@ -2501,55 +2516,404 @@ sub meetingPosition {
 	my %myPosTo;
 	$myPosTo{x} = $actor->{pos_to}{x};
 	$myPosTo{y} = $actor->{pos_to}{y};
+	
+	my $mySpeed = ($char->{walk_speed} || 0.12);
+	my $timeSinceActorMoved = time - $actor->{time_move};
+	my $timeActorFinishMove = calcTime(\%myPos, \%myPosTo, $mySpeed);
+	
+	my $realMyPos;
+	# Actor has finished moving
+	if ($timeSinceActorMoved >= $timeActorFinishMove) {
+		$realMyPos->{x} = $myPosTo{x};
+		$realMyPos->{y} = $myPosTo{y};
+	# Actor is currently moving
+	} else {
+		($realMyPos, undef) = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeSinceActorMoved);
+	}
+	
+	my $melee = 0;
+	my $ranged = 0;
+	my $checkLOS = 0;
+	if ($attackMaxDistance == 1) {
+		$melee = 1;
+		
+	} elsif ($attackMaxDistance > 1) {
+		$ranged = 1;
+		if ($config{attackCheckLOS} == 1) {
+			$checkLOS = 1;
+		}
+	
+	} else {
+		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
+		return;
+	}
 
-	my %realMyPos = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeActorMoves);
-
-	my $timeTargetWalks;
-	my $timeActorWalks;
-	my %targetStep;
-	my %actorStep;
-	# There can not be zero step if target moves
-	for (my $targetStep = 1; $targetStep <= countSteps(\%realTargetPos, \%targetPosTo); $targetStep++) {
-		# Calculate the steps
-		%targetStep = moveAlong(\%realTargetPos, \%targetPosTo, $targetStep);
-
-		# Calculate time to walk for target
-		$timeTargetWalks = calcTime(\%realTargetPos, \%targetStep, $targetSpeed);
-
-		# Actoracter's route to targetStep position
-		for (my $actorStep = 0; $actorStep <= countSteps(\%realMyPos, \%targetStep); $actorStep++) {
+	my @target_pos_to_check;
+	my $timeForTargetToGetToStep;
+	my %targetPosInStep;
+	my $myDistToTargetPosInStep;
+	if ($target_moving) {
+		# Target is currently at $realTargetPos, moving to %targetPosTo, we check if can intercept it at any point during its travel path.
+		my $steps_count = 0;
+		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
 			# Calculate the steps
-			%actorStep = moveAlong(\%realMyPos, \%targetStep, $actorStep);
+			%targetPosInStep = moveAlong(\%targetPos, \%targetPosTo, $currentStep);
 
-			# Check whether the distance is fine
-			if (
-				($attackMaxDistance == 1 && canReachMeeleAttack(\%actorStep, \%targetStep)) ||
-				($attackMaxDistance > 1 && blockDistance(\%actorStep, \%targetStep) <= $attackMaxDistance)
-			) {
-				# Calculate time to walk for actor
-				$timeActorWalks = calcTime(\%realMyPos, \%actorStep, $mySpeed);
-
-				# Check whether actoracter comes earlier or at the same time
-				if ($timeActorWalks <= $timeTargetWalks) {
-					return \%actorStep;
+			# Calculate time to walk for target
+			if ($steps_count == 0) {
+				$timeForTargetToGetToStep = 0;
+			} else {
+				$timeForTargetToGetToStep = calcTime(\%targetPos, \%targetPosInStep, $targetSpeed) - $timeSinceTargetMoved;
+			}
+			
+			$myDistToTargetPosInStep = blockDistance($realMyPos, \%targetPosInStep);
+			
+			$target_pos_to_check[$steps_count] = {
+				targetPosInStep => {
+					x => $targetPosInStep{x},
+					y => $targetPosInStep{y}
+				},
+				timeForTargetToGetToStep => $timeForTargetToGetToStep,
+				myDistToTargetPosInStep => $myDistToTargetPosInStep
+			};
+		} continue {
+			$steps_count++;
+		}
+	} else {
+		$myDistToTargetPosInStep = blockDistance($realMyPos, $realTargetPos);
+		$target_pos_to_check[0] = {
+			targetPosInStep => $realTargetPos,
+			timeForTargetToGetToStep => 0,
+			myDistToTargetPosInStep => $myDistToTargetPosInStep
+		};
+	}
+	
+	my $attackRouteMaxTargetDistance = $config{attackRouteMaxTargetDistance};
+	my $attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance};
+	my $attackCanSnipe = $config{attackCanSnipe};
+	my $runFromTarget = $config{runFromTarget};
+	my $runFromTarget_dist = $config{runFromTarget_dist};
+	my $followDistanceMax = $config{followDistanceMax};
+	my $min_destination_dist = 1;
+	my $max_destination_dist;
+	
+	if ($ranged && $runFromTarget) {
+		$min_destination_dist = $runFromTarget_dist;
+	}
+	
+	# We should not stray further than $attackMaxDistance or attackRouteMaxPathDistance but if we are further away than it we should accept it
+	if ($melee) {
+		$max_destination_dist = 2; # we can atack from a distance of 2 on ortogonal only cells
+	} else {
+		$max_destination_dist = $attackMaxDistance;
+	}
+	
+	my $max_pathfinding_dist = $max_destination_dist;
+	
+	my $masterPos;
+	if ($config{follow}) {
+		my $master;
+		foreach (keys %players) {
+			if ($players{$_}{name} eq $config{followTarget}) {
+				$master = $players{$_};
+				last;
+			}
+		}
+		if ($master) {
+			$masterPos = calcPosition($master);
+		}
+	}
+	
+	unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
+		my $new_pos = $field->closestWalkableSpot($realMyPos, 1);
+		$realMyPos->{x} = $new_pos->{x};
+		$realMyPos->{y} = $new_pos->{y};
+	}
+	
+	my $best_spot;
+	my $best_time;
+	foreach my $possible_target_pos (@target_pos_to_check) {
+		if ($possible_target_pos->{myDistToTargetPosInStep} >= $max_pathfinding_dist) {
+			$max_pathfinding_dist = $possible_target_pos->{myDistToTargetPosInStep} + 1;
+		}
+		
+		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $possible_target_pos->{targetPosInStep}, $max_pathfinding_dist);
+		foreach my $distance (reverse ($min_destination_dist..$max_destination_dist)) {
+			my @blocks = calcRectArea($possible_target_pos->{targetPosInStep}{x}, $possible_target_pos->{targetPosInStep}{y}, $distance, $field);
+			foreach my $spot (@blocks) {
+				next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
+				
+				# Is this spot acceptable?
+				
+				# 1. It must be walkable
+				next unless ($field->isWalkable($spot->{x}, $spot->{y}));
+				
+				# 2. It must be within $followDistanceMax of $masterPos, if we have a master.
+				if ($masterPos) {
+					next unless (blockDistance($spot, $masterPos) <= $followDistanceMax);
+				}
+				
+				# 3. The route should not exceed at any point $max_pathfinding_dist distance from the target.
+				my $solution = [];
+				my $dist = new PathFinding(
+					field => $field,
+					start => $realMyPos,
+					dest => $spot,
+					avoidWalls => 0,
+					min_x => $min_pathfinding_x,
+					max_x => $max_pathfinding_x,
+					min_y => $min_pathfinding_y,
+					max_y => $max_pathfinding_y
+				)->run($solution);
+				
+				# 4. It must be reachable and have at max $attackRouteMaxTargetDistance of route distance to it from our current position.
+				next unless ($dist >= 0 && $dist <= $attackRouteMaxTargetDistance);
+				
+				# 5. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
+				if ($ranged && $checkLOS) {
+					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
+				} elsif ($melee) {
+					next unless (canReachMeeleAttack($spot, $possible_target_pos->{targetPosInStep}));
+				}
+				
+				my $time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
+				my $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
+				
+				if ($time_actor_to_get_to_spot >= $possible_target_pos->{timeForTargetToGetToStep}) {
+					$time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep = 0;
+				} else {
+					$time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep = $possible_target_pos->{timeForTargetToGetToStep} - $time_actor_to_get_to_spot;
+				}
+				
+				my $sum_time = $time_actor_to_get_to_spot + $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
+				
+				if (!defined($best_time) || $sum_time < $best_time) {
+					$best_time = $sum_time;
+					$best_spot = $spot;
 				}
 			}
 		}
 	}
-	# If the target is too fast, move to its pos_to plus attackMaxDistance
-	for (my $actorStep = 0; $actorStep <= countSteps(\%realMyPos, \%targetPosTo); $actorStep++) {
-		# Calculate the steps
-		%actorStep = moveAlong(\%realMyPos, \%targetPosTo, $actorStep);
+	
+	if ($best_spot) {
+		return $best_spot;
+	}
+}
 
-		# Check whether the distance is fine
-		if (
-			($attackMaxDistance == 1 && canReachMeeleAttack(\%actorStep, \%targetPosTo)) ||
-			($attackMaxDistance > 1 && blockDistance(\%actorStep, \%targetPosTo) <= $attackMaxDistance)
-		) {
-			last;
+##
+# meetingPosition_slave(slave, target_actor, attackMaxDistance)
+# slave: current object.
+# target_actor: actor to meet.
+# attackMaxDistance: attack distance based on attack method.
+#
+# Returns: the position where the character should go to meet a moving monster.
+sub meetingPosition_slave {
+	my ($slave, $target, $attackMaxDistance) = @_;
+
+	my %targetPos;
+	$targetPos{x} = $target->{pos}{x};
+	$targetPos{y} = $target->{pos}{y};
+	my %targetPosTo;
+	$targetPosTo{x} = $target->{pos_to}{x};
+	$targetPosTo{y} = $target->{pos_to}{y};
+	
+	my $targetSpeed = ($target->{walk_speed} || 0.12);
+	my $timeSinceTargetMoved = time - $target->{time_move};
+	my $timeTargetFinishMove = calcTime(\%targetPos, \%targetPosTo, $targetSpeed);
+	
+	my $target_moving;
+	my $realTargetPos;
+	my $targetTotalSteps;
+	my $targetCurrentStep;
+	# Target has finished moving
+	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
+		$target_moving = 0;
+		$realTargetPos->{x} = $targetPosTo{x};
+		$realTargetPos->{y} = $targetPosTo{y};
+	
+	# Target is currently moving
+	} else {
+		$target_moving = 1;
+		($realTargetPos, $targetCurrentStep) = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, $timeSinceTargetMoved);
+		$targetTotalSteps = countSteps(\%targetPos, \%targetPosTo);
+	}
+
+	my %myPos;
+	$myPos{x} = $slave->{pos}{x};
+	$myPos{y} = $slave->{pos}{y};
+	my %myPosTo;
+	$myPosTo{x} = $slave->{pos_to}{x};
+	$myPosTo{y} = $slave->{pos_to}{y};
+	
+	my $mySpeed = ($slave->{walk_speed} || 0.12);
+	my $timeSinceSlaveMoved = time - $slave->{time_move};
+	my $timeSlaveFinishMove = calcTime(\%myPos, \%myPosTo, $mySpeed);
+	
+	my $realMyPos;
+	# Slave has finished moving
+	if ($timeSinceSlaveMoved >= $timeSlaveFinishMove) {
+		$realMyPos->{x} = $myPosTo{x};
+		$realMyPos->{y} = $myPosTo{y};
+	# Slave is currently moving
+	} else {
+		($realMyPos, undef) = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeSinceSlaveMoved);
+	}
+	
+	my $melee = 0;
+	my $ranged = 0;
+	my $checkLOS = 0;
+	if ($attackMaxDistance == 1) {
+		$melee = 1;
+		
+	} elsif ($attackMaxDistance > 1) {
+		$ranged = 1;
+		if ($config{$slave->{configPrefix}.'attackCheckLOS'} == 1) {
+			$checkLOS = 1;
+		}
+	
+	} else {
+		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
+		return;
+	}
+
+	my @target_pos_to_check;
+	my $timeForTargetToGetToStep;
+	my %targetPosInStep;
+	my $myDistToTargetPosInStep;
+	if ($target_moving) {
+		# Target is currently at $realTargetPos, moving to %targetPosTo, we check if can intercept it at any point during its travel path.
+		my $steps_count = 0;
+		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
+			# Calculate the steps
+			%targetPosInStep = moveAlong(\%targetPos, \%targetPosTo, $currentStep);
+
+			# Calculate time to walk for target
+			if ($steps_count == 0) {
+				$timeForTargetToGetToStep = 0;
+			} else {
+				$timeForTargetToGetToStep = calcTime(\%targetPos, \%targetPosInStep, $targetSpeed) - $timeSinceTargetMoved;
+			}
+			
+			$myDistToTargetPosInStep = blockDistance($realMyPos, \%targetPosInStep);
+			
+			$target_pos_to_check[$steps_count] = {
+				targetPosInStep => {
+					x => $targetPosInStep{x},
+					y => $targetPosInStep{y}
+				},
+				timeForTargetToGetToStep => $timeForTargetToGetToStep,
+				myDistToTargetPosInStep => $myDistToTargetPosInStep
+			};
+		} continue {
+			$steps_count++;
+		}
+	} else {
+		$myDistToTargetPosInStep = blockDistance($realMyPos, $realTargetPos);
+		$target_pos_to_check[0] = {
+			targetPosInStep => $realTargetPos,
+			timeForTargetToGetToStep => 0,
+			myDistToTargetPosInStep => $myDistToTargetPosInStep
+		};
+	}
+	
+	my $attackRouteMaxTargetDistance = $config{$slave->{configPrefix}.'attackRouteMaxTargetDistance'};
+	my $attackRouteMaxPathDistance = $config{$slave->{configPrefix}.'attackRouteMaxPathDistance'};
+	my $attackCanSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
+	my $runFromTarget = $config{$slave->{configPrefix}.'runFromTarget'};
+	my $runFromTarget_dist = $config{$slave->{configPrefix}.'runFromTarget_dist'};
+	my $followDistanceMax = $config{$slave->{configPrefix}.'followDistanceMax'};
+	my $min_destination_dist = 1;
+	my $max_destination_dist;
+	
+	if ($ranged && $runFromTarget) {
+		$min_destination_dist = $runFromTarget_dist;
+	}
+	
+	# We should not stray further than $attackMaxDistance or attackRouteMaxPathDistance but if we are further away than it we should accept it
+	if ($melee) {
+		$max_destination_dist = 2; # we can atack from a distance of 2 on ortogonal only cells
+	} else {
+		$max_destination_dist = $attackMaxDistance;
+	}
+	
+	my $max_pathfinding_dist = $max_destination_dist;
+	
+	my $masterPos = $char->{pos_to};
+	
+	unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
+		my $new_pos = $field->closestWalkableSpot($realMyPos, 1);
+		$realMyPos->{x} = $new_pos->{x};
+		$realMyPos->{y} = $new_pos->{y};
+	}
+	
+	my $best_spot;
+	my $best_time;
+	foreach my $possible_target_pos (@target_pos_to_check) {
+		if ($possible_target_pos->{myDistToTargetPosInStep} >= $max_pathfinding_dist) {
+			$max_pathfinding_dist = $possible_target_pos->{myDistToTargetPosInStep} + 1;
+		}
+		
+		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $possible_target_pos->{targetPosInStep}, $max_pathfinding_dist);
+		foreach my $distance (reverse ($min_destination_dist..$max_destination_dist)) {
+			my @blocks = calcRectArea($possible_target_pos->{targetPosInStep}{x}, $possible_target_pos->{targetPosInStep}{y}, $distance, $field);
+			foreach my $spot (@blocks) {
+				next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
+				
+				# Is this spot acceptable?
+				
+				# 1. It must be walkable
+				next unless ($field->isWalkable($spot->{x}, $spot->{y}));
+				
+				# 2. It must be within $followDistanceMax of $masterPos, if we have a master.
+				if ($masterPos) {
+					next unless (blockDistance($spot, $masterPos) <= $followDistanceMax);
+				}
+				
+				# 3. The route should not exceed at any point $max_pathfinding_dist distance from the target.
+				my $solution = [];
+				my $dist = new PathFinding(
+					field => $field,
+					start => $realMyPos,
+					dest => $spot,
+					avoidWalls => 0,
+					min_x => $min_pathfinding_x,
+					max_x => $max_pathfinding_x,
+					min_y => $min_pathfinding_y,
+					max_y => $max_pathfinding_y
+				)->run($solution);
+				
+				# 4. It must be reachable and have at max $attackRouteMaxTargetDistance of route distance to it from our current position.
+				next unless ($dist >= 0 && $dist <= $attackRouteMaxTargetDistance);
+				
+				# 5. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
+				if ($ranged && $checkLOS) {
+					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
+				} elsif ($melee) {
+					next unless (canReachMeeleAttack($spot, $possible_target_pos->{targetPosInStep}));
+				}
+				
+				my $time_slave_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
+				my $time_slave_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
+				
+				if ($time_slave_to_get_to_spot >= $possible_target_pos->{timeForTargetToGetToStep}) {
+					$time_slave_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep = 0;
+				} else {
+					$time_slave_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep = $possible_target_pos->{timeForTargetToGetToStep} - $time_slave_to_get_to_spot;
+				}
+				
+				my $sum_time = $time_slave_to_get_to_spot + $time_slave_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
+				
+				if (!defined($best_time) || $sum_time < $best_time) {
+					$best_time = $sum_time;
+					$best_spot = $spot;
+				}
+			}
 		}
 	}
-	return \%actorStep;
+	
+	if ($best_spot) {
+		return $best_spot;
+	}
 }
 
 sub objectAdded {
