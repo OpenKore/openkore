@@ -380,11 +380,6 @@ title France - fRO (ragnarokeurope.com): Chaos
 dead 1
 dead_message fRO was closed on 12 of August, 2019. Visit official website for more details.
 
-# http://euro-ro.net/
-[Europe - euRO]
-dead 1
-dead_message euRO was closed on September 30, 2010. There used to be transfers to fRO, check out their website.
-
 # https://roextreme.com/mysg/main
 [Malaysia - mRO]
 dead 1
