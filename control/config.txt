@@ -77,7 +77,7 @@ attackMinPortalDistance 4
 attackUseWeapon 1
 attackNoGiveup 0
 attackCanSnipe 0
-attackCheckLOS 0
+attackCheckLOS 1
 attackRouteMaxTargetDistance 13
 attackRouteMaxPathDistance 13
 attackLooters 0
@@ -379,7 +379,7 @@ mercenary_attackMaxDistance 1
 mercenary_attackDistanceAuto 0
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
-mercenary_attackCheckLOS 0
+mercenary_attackCheckLOS 1
 mercenary_attackRouteMaxTargetDistance 13
 mercenary_attackRouteMaxPathDistance 13
 mercenary_attackNoGiveup 0
@@ -436,7 +436,7 @@ homunculus_attackMaxDistance 1
 homunculus_attackDistanceAuto 0
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
-homunculus_attackCheckLOS 0
+homunculus_attackCheckLOS 1
 homunculus_attackRouteMaxTargetDistance 13
 homunculus_attackRouteMaxPathDistance 13
 homunculus_attackNoGiveup 0

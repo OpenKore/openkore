@@ -2534,14 +2534,14 @@ sub meetingPosition {
 	my $melee = 0;
 	my $ranged = 0;
 	my $checkLOS = 0;
+	if ($config{attackCheckLOS} == 1) {
+		$checkLOS = 1;
+	}
 	if ($attackMaxDistance == 1) {
 		$melee = 1;
-		
+	
 	} elsif ($attackMaxDistance > 1) {
 		$ranged = 1;
-		if ($config{attackCheckLOS} == 1) {
-			$checkLOS = 1;
-		}
 	
 	} else {
 		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
@@ -2674,6 +2674,9 @@ sub meetingPosition {
 					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 				} elsif ($melee) {
 					next unless (canReachMeeleAttack($spot, $possible_target_pos->{targetPosInStep}));
+					if ($checkLOS && blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
+						next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
+					}
 				}
 				
 				my $time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
@@ -2762,14 +2765,14 @@ sub meetingPosition_slave {
 	my $melee = 0;
 	my $ranged = 0;
 	my $checkLOS = 0;
+	if ($config{attackCheckLOS} == 1) {
+		$checkLOS = 1;
+	}
 	if ($attackMaxDistance == 1) {
 		$melee = 1;
-		
+	
 	} elsif ($attackMaxDistance > 1) {
 		$ranged = 1;
-		if ($config{$slave->{configPrefix}.'attackCheckLOS'} == 1) {
-			$checkLOS = 1;
-		}
 	
 	} else {
 		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
@@ -2890,6 +2893,9 @@ sub meetingPosition_slave {
 					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 				} elsif ($melee) {
 					next unless (canReachMeeleAttack($spot, $possible_target_pos->{targetPosInStep}));
+					if ($checkLOS && blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
+						next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
+					}
 				}
 				
 				my $time_slave_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);

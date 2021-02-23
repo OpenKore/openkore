@@ -64,6 +64,8 @@ sub process {
 		my $routeSeqindex = AI::findAction("route");
 		my $routeArgs = AI::args($routeSeqindex) if (defined $routeSeqindex);
 		my $target = Actor::get($ID);
+		my $realMyPos = calcPosition($char);
+		my $realMonsterPos = calcPosition($target);
 
 		if (
 			$target->{type} ne 'Unknown' &&
@@ -84,8 +86,7 @@ sub process {
 			$attackSeq->{monsterPos} &&
 			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
-			#($attackSeq->{attackMethod}{distance} == 1 && canReachMeeleAttack(calcPosition($char), calcPosition($target)))
-			($attackSeq->{attackMethod}{distance} == 1 && $attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeeleAttack($char->{pos_to}, calcPosition($target)))
+			($attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeeleAttack($realMyPos, $realMonsterPos))
 		) {
 			debug "Target $target is now reachable by meele attacks during routing to it.\n", "ai_attack";
 			AI::dequeue;
