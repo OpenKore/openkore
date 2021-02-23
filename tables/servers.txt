@@ -385,6 +385,11 @@ dead_message fRO was closed on 12 of August, 2019. Visit official website for mo
 dead 1
 dead_message euRO was closed on September 30, 2010. There used to be transfers to fRO, check out their website.
 
+# https://roextreme.com/mysg/main
+[Malaysia - mRO]
+dead 1
+dead_message mRO was merged into phRO on July, 2019. Visit official website for more details.
+
 # https://ggamerz-ro.com/
 [GGamerzRO]
 dead 1
