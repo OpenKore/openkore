@@ -436,6 +436,7 @@ sub main {
 
 	} elsif (
 		(($args->{attackMethod}{maxDistance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
+		($args->{attackMethod}{maxDistance} == 1 && canReachMeeleAttack($realMyPos, $realMonsterPos) && $config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) <= 2 && !$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) ||
 		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 		!timeOut($args->{ai_attack_giveup})
 	) {
