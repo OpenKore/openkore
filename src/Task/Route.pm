@@ -272,6 +272,7 @@ sub iterate {
 	# Actual walking algorithm
 	} elsif ($self->{stage} == WALK_ROUTE_SOLUTION) {
 		my $solution = $self->{solution};
+		$self->{route_out_time} = time if !exists $self->{route_out_time};
 		
 		if (!defined $self->{step_index}) {
 			$self->{step_index} = $config{$self->{actor}{configPrefix}.'route_step'};
@@ -411,6 +412,12 @@ sub iterate {
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 
+		} elsif (timeOut($self->{route_out_time}, 6)) {
+			# Because of attack monster, get item or something else we are out of our route for a long time
+			# recalculate again
+			warning "We are out of our route for a long time, recalculating...\n";
+			$self->{route_out_time} = time;
+			$self->resetRoute();
 		} elsif (!$self->{start} && $pos_changed == 0 && defined $self->{time_step} && timeOut($self->{time_step}, $timeout{ai_route_unstuck}{timeout})) {
 			# We tried to move for 3 seconds, but we are still on the same spot, decrease step size.
 			# However, if $self->{step_index} was already 0, then that means we were almost at the destination (only 1 more step is needed).
@@ -513,7 +520,7 @@ sub iterate {
 				}
 			}
 		}
-
+		$self->{route_out_time} = time;
 	} else {
 		# This statement should never be reached.
 		debug "Unexpected route stage [".$self->{stage}."] occured.\n", "route";
