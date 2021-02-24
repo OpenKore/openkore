@@ -378,6 +378,13 @@ sub iterate {
 			$self->{last_best_pos_step} = $best_pos_step;
 			$self->{last_best_pos_to_step} = $best_pos_to_step;
 		}
+		
+		my $pos_changed;
+		if ($self->{last_pos}{x} == $current_pos->{x} && $self->{last_pos}{y} == $current_pos->{y}) {
+			$pos_changed = 0;
+		} else {
+			$pos_changed = 1;
+		}
 
 		my $stepsleft = @{$solution};
 
@@ -404,7 +411,7 @@ sub iterate {
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 
-		} elsif (!$self->{start} && $self->{last_pos}{x} == $current_pos->{x} && $self->{last_pos}{y} == $current_pos->{y} && defined $self->{time_step} && timeOut($self->{time_step}, $timeout{ai_route_unstuck}{timeout})) {
+		} elsif (!$self->{start} && $pos_changed == 0 && defined $self->{time_step} && timeOut($self->{time_step}, $timeout{ai_route_unstuck}{timeout})) {
 			# We tried to move for 3 seconds, but we are still on the same spot, decrease step size.
 			# However, if $self->{step_index} was already 0, then that means we were almost at the destination (only 1 more step is needed).
 			# But we got interrupted (by auto-attack for example). Don't count that as stuck.
@@ -417,8 +424,7 @@ sub iterate {
 					if ($self->{step_index} >= $stepsleft) {
 						$self->{step_index} = $stepsleft - 1;
 					}
-					$self->{next_pos}{x} = $solution->[$self->{step_index}]{x};
-					$self->{next_pos}{y} = $solution->[$self->{step_index}]{y};
+					@{$self->{next_pos}}{qw(x y)} = @{$solution->[$self->{step_index}]}{qw(x y)};
 					$self->{time_step} = time;
 					my $task = new Task::Move(
 						actor => $self->{actor},
@@ -448,9 +454,13 @@ sub iterate {
 			my $begin = time;
 			
 			if ($self->{decreasing_step_index}) {
-				debug "Route $self->{actor} - started moving again, increasing step size by $self->{decreasing_step_index} (from ".($self->{step_index})." to ".($self->{step_index}+$self->{decreasing_step_index}).")\n", "route";
-				$self->{step_index} += $self->{decreasing_step_index};
-				$self->{decreasing_step_index} = 0;
+				if ($pos_changed) {
+					debug "Route $self->{actor} - started moving again, increasing step size by $self->{decreasing_step_index} (from ".($self->{step_index})." to ".($self->{step_index}+$self->{decreasing_step_index}).")\n", "route";
+					$self->{step_index} += $self->{decreasing_step_index};
+					$self->{decreasing_step_index} = 0;
+				} else {
+					debug "Route $self->{actor} - won't increase step size becouse pos did not change ($current_pos->{x} $current_pos->{y})\n", "route";
+				}
 			}
 
 			# If there are less steps to cover than the step size move to the last step (the destination).
@@ -460,7 +470,7 @@ sub iterate {
 			
 			# Here maybe we should also use pos_to (in the form of best_pos_to_step) to decide the next step index, as it can make the routing way more responsive
 			
-			$self->{next_pos} = $solution->[$self->{step_index}];
+			@{$self->{next_pos}}{qw(x y)} = @{$solution->[$self->{step_index}]}{qw(x y)};
 
 			# But first, check whether the distance of the next point isn't abnormally large.
 			# If it is, then we've moved to an unexpected place. This could be caused by auto-attack, for example.
