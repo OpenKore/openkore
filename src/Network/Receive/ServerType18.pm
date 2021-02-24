@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # iRO (International) as of June 21 2007.
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::ServerType18;
 
 use strict;
@@ -22,7 +22,7 @@ use Translation;
 use Globals;
 use I18N qw(bytesToString);
 use Utils qw(getHex swrite makeIP makeCoordsDir makeCoordsXY makeCoordsFromTo);
- 
+
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new;

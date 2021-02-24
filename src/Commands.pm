@@ -881,7 +881,7 @@ sub run {
 			Plugins::callHook('Command_post', \%params);
 			if (!$params{return}) {
 				error TF("Unknown command '%s'. Please read the documentation for a list of commands.\n"
-						."http://openkore.com/index.php/Category:Console_Command\n", $switch);
+						."http://openkore.com/wiki/Category:Console_Command\n", $switch);
 			} else {
 				return $params{return}
 			}

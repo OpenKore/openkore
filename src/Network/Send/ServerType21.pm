@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # tRO (Thai) for 2008-09-16Ragexe12_Th
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType21;
 
 use strict;
@@ -21,13 +21,13 @@ use Log qw(debug);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %handlers = qw(
 		character_move 0085
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -40,13 +40,13 @@ sub sendMove {
 		y => $y,
 		no_padding => 1,
 	}));
-	
+
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
 sub sendSlaveMove {
 	my ($self, $homunID, $x, $y) = @_;
-	
+
 	$self->sendToServer($self->reconstruct({
 		switch => 'actor_move',
 		ID => $homunID,
@@ -54,7 +54,7 @@ sub sendSlaveMove {
 		y => $y,
 		no_padding => 1,
 	}));
-	
+
 	debug "Sent Homunculus move to: $x, $y\n", "sendPacket", 2;
 }
 

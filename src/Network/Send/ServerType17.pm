@@ -11,7 +11,7 @@
 #########################################################################
 # tRO (Thai) for 2007-05-22bRagexe by kLabMouse (thanks to abt123, championrpg and penz for support)
 # latest updaes will go here. Please don't use this ServerType for other servers except tRO.
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType17;
 
 use strict;
@@ -41,7 +41,7 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_look_at 0072
 		sync 007E
@@ -59,9 +59,9 @@ sub new {
 		actor_info_request 0190
 		game_login 0275
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -99,7 +99,7 @@ sub sendMove {
 		y => $y,
 		no_padding => 1,
 	}));
-	
+
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 

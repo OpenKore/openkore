@@ -24,7 +24,7 @@
 # The submodule @MODULE(Network::Send) contains functions for sending all
 # kinds of messages to the RO server.
 #
-# Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
+# Please also read <a href="https://openkore.com/wiki/Network_subsystem">the
 # network subsystem overview.</a>
 #
 # This implementation establishes a direct connection to the RO server.
@@ -86,7 +86,7 @@ sub version {
 
 sub DESTROY {
 	my $self = shift;
-	
+
 	$self->serverDisconnect();
 }
 
@@ -188,9 +188,9 @@ sub serverSend {
 sub serverRecv {
 	my $self = shift;
 	my $msg;
-	
+
 	return undef unless (dataWaiting(\$self->{remote_socket}));
-	
+
 	$self->{remote_socket}->recv($msg, 1024 * 32);
 	if (Plugins::hasHook("Network::serverRecv")) {
 		Plugins::callHook("Network::serverRecv", { msg => \$msg });
@@ -220,12 +220,12 @@ sub serverAddress {
 # This function is used internally by $net->checkConnection() and should not be used directly.
 sub serverDisconnect {
 	my $self = shift;
-	
+
 	if ($self->serverAlive) {
 		if ($incomingMessages && length(my $incoming = $incomingMessages->getBuffer)) {
 				warning TF("Incoming data left in the buffer:\n");
 				Misc::visualDump($incoming);
-				
+
 				if (defined(my $rplen = $incomingMessages->{rpackets}{my $switch = Network::MessageTokenizer::getMessageID($incoming)})) {
 					my $inlen = do { no encoding 'utf8'; use bytes; length $incoming };
 					if (($rplen->{length} > $inlen) || ($rplen->{minLength} > $inlen)) { # check for minLength too, if defined
@@ -236,10 +236,10 @@ sub serverDisconnect {
 
 		$messageSender->sendQuit() if ($self->getState() == Network::IN_GAME);
 
-		message TF("Disconnecting (%s:%s)...", $self->{remote_socket}->peerhost(), 
+		message TF("Disconnecting (%s:%s)...", $self->{remote_socket}->peerhost(),
 			$self->{remote_socket}->peerport()), "connection";
 		close($self->{remote_socket});
-		
+
 		if ($self->serverAlive()) {
 			error T("couldn't disconnect\n"), "connection";
 			Plugins::callHook("serverDisconnect/fail");
@@ -325,12 +325,12 @@ sub clientRecv {
 # This function is meant to be run in the Kore main loop.
 sub checkConnection {
 	my $self = shift;
-	
+
 	return if ($Settings::no_connect);
 
 	if ($self->getState() == Network::NOT_CONNECTED && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServer = $masterServers{$config{master}};
-		
+
 		message T("Connecting to Account Server...\n"), "connection";
 		$shopstarted = 1;
 		$conState_tries++;
@@ -362,10 +362,10 @@ sub checkConnection {
 			$net->serverSend($msg);
 			message T("Requesting permission to logon on account server...\n");
 			$conState = 1.2;
-			
+
 			# Saving Last Request Time (Logon) (GG/HS Query)
-			$timeout{poseidon_wait_reply}{time} = time;			
-			
+			$timeout{poseidon_wait_reply}{time} = time;
+
 			return;
 		}
 
@@ -392,7 +392,7 @@ sub checkConnection {
 					type => $master->{secureLogin_type},
 				}));
 			}
-			
+
 			$messageSender->sendToServer($messageSender->reconstruct({
 				switch => 'secure_login_key_request',
 			}));
@@ -413,7 +413,7 @@ sub checkConnection {
 			message TF("Address poseidon server: %s\n", $config{'poseidonServer'});
 			message TF("Port poseidon: %s\n", $config{'poseidonPort'});
 			$self->serverDisconnect;
-			$self->setState(Network::NOT_CONNECTED);			
+			$self->setState(Network::NOT_CONNECTED);
 		}
 	# we skipped some required connection operations while waiting for the server to allow as to login,
 	# after we have successfully sent in the reply to the game guard challenge (using the poseidon server)
@@ -444,7 +444,7 @@ sub checkConnection {
 					type => $master->{secureLogin_type},
 				}));
 			}
-			
+
 			$messageSender->sendToServer($messageSender->reconstruct({
 				switch => 'secure_login_key_request',
 			}));
@@ -456,7 +456,7 @@ sub checkConnection {
 		}
 
 		$timeout{'master'}{'time'} = time;
-		
+
 	} elsif ($self->getState() == Network::NOT_CONNECTED) {
 		if($masterServer->{secureLogin} >= 1 && $secureLoginKey ne "" && !timeOut($timeout{'master'}) && $conState_tries) {
 			my $master = $masterServer;
@@ -485,10 +485,10 @@ sub checkConnection {
 			undef $conState_tries;
 			return;
 		}
-		
+
 		# on this special stage, the plugin will know what to do next.
 		Plugins::callHook("Network::serverConnect/special");
-		
+
 	} elsif ($self->getState() == Network::CONNECTED_TO_MASTER_SERVER) {
 		if(!$self->serverAlive() && ($config{'server'} ne "" || $masterServer->{charServer_ip}) && !$conState_tries) {
 			if ($config{pauseCharServer}) {
@@ -540,7 +540,7 @@ sub checkConnection {
 			if ($captcha_state == 0) { # send initiate once, then wait for servers captcha_answer packet
 				$messageSender->sendCaptchaInitiate();
 				$captcha_state = -1;
-			} elsif ($captcha_state == 1) { # captcha answer was correct, sent sendGameLogin once, then wait for servers 
+			} elsif ($captcha_state == 1) { # captcha answer was correct, sent sendGameLogin once, then wait for servers
 				$messageSender->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
 				$timeout{'gamelogin'}{'time'} = time;
 				$captcha_state = -1;
@@ -566,7 +566,7 @@ sub checkConnection {
 				Plugins::callHook("Network::serverConnect/charselect");
 				return if ($conState == 1.5);
 			}
-					
+
 			$messageSender->sendCharLogin($config{'char'});
 			$timeout{'charlogin'}{'time'} = time;
 

@@ -58,7 +58,7 @@ sub onstart3 {
 	&checkConfig;
 	$cfID = Settings::addControlFile($macro_file,loader => [\&parseAndHook,\%macro], mustExist => 0);
 	Settings::loadByHandle($cfID);
-	
+
 	if (
 		$interface->isa ('Interface::Wx')
 		&& $interface->{viewMenu}
@@ -124,7 +124,7 @@ sub hookOnDemand {
 		}
 		if (defined $automacro{$a}->{areaSpell} && !defined $load{'packet_areaSpell'}) {$load{'packet_areaSpell'} = 1}
 		if (defined $automacro{$a}->{pm} && !defined $load{'packet_privMsg'}) {$load{'packet_privMsg'} = 1}
-		if (defined $automacro{$a}->{pubm} && !defined $load{'packet_pubMsg'}) {$load{'packet_pubMsg'} = 1}	
+		if (defined $automacro{$a}->{pubm} && !defined $load{'packet_pubMsg'}) {$load{'packet_pubMsg'} = 1}
 		if (defined $automacro{$a}->{system} && !defined $load{'packet_sysMsg'}) {$load{'packet_sysMsg'} = 1;}
 		if (defined $automacro{$a}->{party} && !defined $load{'packet_partyMsg'}) {$load{'packet_partyMsg'} = 1}
 		if (defined $automacro{$a}->{guild} && !defined $load{'packet_guildMsg'}) {$load{'packet_guildMsg'} = 1}
@@ -262,7 +262,7 @@ sub commandHandler {
 			if ($params[$idx] eq '-orphan') {$orphan = $params[++$idx]}
 			if ($params[$idx] =~ /^--/) {$cparms = substr(join(' ', map { "$_" } @params[$idx..($#params)]), 2); last}
 		}
-		
+
 		delete $varStack{$_} for grep /^\.param\d+$/, keys %varStack;
 		if ($cparms) {
 			#parse macro parameters
@@ -272,7 +272,7 @@ sub commandHandler {
 				$varStack{".param".$p} = substr($varStack{".param".$p}, 1, -1) if ($varStack{".param".$p} =~ /^".*"$/); # remove quotes
 			}
 		}
-		
+
 		$queue = new Macro::Script($arg, $repeat);
 		if (!defined $queue) {error "macro $arg not found or error in queue\n"}
 		else {
@@ -295,10 +295,10 @@ macro.pl - plugin for openkore 2.0.0 and later
 
 =head1 AVAILABILITY
 
-Get the latest release from L<http://www.openkore.com/wiki/index.php/Macro_plugin>
-or from SVN:
+Get the latest release from L<https://openkore.com/wiki/Macro_plugin>
+or from GIT:
 
-C<svn co https://openkore.svn.sourceforge.net/svnroot/openkore/macro/trunk/>
+C<git co https://github.com/OpenKore/openkore/tree/master/plugins/macro>
 
 =head1 AUTHOR
 

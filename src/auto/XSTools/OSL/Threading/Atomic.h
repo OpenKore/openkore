@@ -33,7 +33,7 @@ namespace OSL {
 	 *
 	 * @warning
 	 * Be careful with using these functions, they can cause all kinds of
-	 * weird problems. Read <a href="http://en.wikipedia.org/wiki/Memory_barrier">the
+	 * weird problems. Read <a href="https://en.wikipedia.org/wiki/Memory_barrier">the
 	 * Wikipedia article about memory barriers</a> on why this is so. As such,
 	 * these functions should only be used for simple reference counting,
 	 * unless you really know what goes on behind the scenes.

@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType3;
 
 use strict;
@@ -30,13 +30,13 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		storage_close 0193
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -72,11 +72,11 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 sub sendStand {
 	my $self = shift;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x03);
-	
+
 	$self->sendToServer($msg);
 	debug "Standing\n", "sendPacket", 2;
 }
@@ -96,11 +96,11 @@ sub sendSit {
 sub sendAttack {
 	my ($self, $monID, $flag) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x90, 0x01, 0xc7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		$monID .
 		pack("C*", 0x00, 0x00, 0x21, 0x00, 0x00, 0x00, $flag);
-		
+
  	$self->sendToServer($msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
@@ -113,11 +113,11 @@ sub sendChat {
 	my ($data, $charName); # Type: Bytes
 	$message = stringToBytes($message); # Type: Bytes
 	$charName = stringToBytes($char->{name});
-	
+
 	$data = pack("C*", 0xf3, 0x00) .
 		pack("v*", length($charName) + length($message) + 8) .
 		$charName . " : " . $message . chr(0);
-	
+
 	$self->sendToServer($data);
 }
 
@@ -147,12 +147,12 @@ sub sendGetPlayerInfo {
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x9f, 0x00, 0x12, 0x00, 0x00) .
 		pack("v*", $ID) .
 		pack("C*", 0x20, 0x60, 0xfb, 0x12, 0x00, 0x1c) .
 		$targetID;
-		
+
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
@@ -160,11 +160,11 @@ sub sendItemUse {
 sub sendLook {
 	my ($self, $body, $head) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x85, 0x00, 0xff, 0xff, 0x9c, 0xfb, 0x12, 0x00, 0xc1, 0x12, 0x60, 0x00) .
 		pack("C*", $head, 0x00, 0x72, 0x21, 0x3d, 0x33, 0x52, 0x00, 0x00, 0x00) .
 		pack("C*", $body);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$char->{look}{head} = $head;
@@ -175,7 +175,7 @@ sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	
+
 	$msg = pack("C*", 0x9b, 0, 0) .
 		$accountID .
 		pack("C*", 0, 0, 0, 0, 0) .
@@ -185,7 +185,7 @@ sub sendMapLogin {
 		$sessionID .
 		pack("V", getTickCount()) .
 		pack("C*", $sex);
-		
+
 	$self->sendToServer($msg);
 }
 
@@ -194,11 +194,11 @@ sub sendMove {
 	my $x = int scalar shift;
 	my $y = int scalar shift;
 	my $msg;
-	
+
 	$msg = pack("C*", 0xA7, 0x00, 0x60, 0x00, 0x00, 0x00) .
 		pack("C*", 0xC7, 0x00, 0x00, 0x00) .
 		getCoordString($x, $y, 1);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
@@ -206,14 +206,14 @@ sub sendMove {
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x72, 0x00, 0x83, 0x7C, 0xD8, 0xFE, 0x80, 0x7C) .
 		pack("v*", $lv) .
 		pack("C*", 0xFF, 0xFF, 0xCF, 0xFE, 0x80, 0x7C) .
 		pack("v*", $ID) .
 		pack("C*", 0x6A, 0x0F, 0x00, 0x00) .
 		$targetID;
-	
+
 	$self->sendToServer($msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
@@ -221,7 +221,7 @@ sub sendSkillUse {
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x13, 0x01, 0xbe, 0x44, 0x00, 0x00, 0xa0, 0xc0, 0x00, 0x00) .
 		pack("v*", $lv) .
 		pack("C*", 0x00, 0x00, 0xa0, 0x40, 0x00, 0x00) .
@@ -230,7 +230,7 @@ sub sendSkillUseLoc {
 		pack("v*", $x) .
 		pack("C*", 0x00, 0x00, 0xa0, 0x40, 0xe0, 0x80, 0x09, 0xc2) .
 		pack("v*", $y);
-	
+
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
@@ -238,12 +238,12 @@ sub sendSkillUseLoc {
 sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x94, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00) .
 		pack("a2", $index) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00) .
 		pack("V*", $amount);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
@@ -251,14 +251,14 @@ sub sendStorageAdd {
 sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0xf7, 0x00, 0x00, 0x00) .
 		pack("V*", getTickCount()) .
 		pack("C*", 0x00, 0x00, 0x00) .
 		pack("a2", $index) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00) .
 		pack("V*", $amount);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
@@ -270,7 +270,7 @@ sub sendSync {
 	return if ($self->{net}->version == 1);
 
 	$syncSync = pack("V", getTickCount());
-	
+
 	$msg = pack("C*", 0x89, 0x00);
 	$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 	$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
