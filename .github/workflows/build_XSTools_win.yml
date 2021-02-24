@@ -1,7 +1,8 @@
 # runs-on:                  https://github.com/actions/virtual-environments
 # setup-python:             https://github.com/actions/setup-python
 # actions-setup-perl:       https://github.com/marketplace/actions/setup-perl-environment
-# Strawberry Perl 5.12.3.0: https://strawberryperl.com/download/5.12.3.0/strawberry-perl-5.12.3.0-64bit.zip
+# Strawberry Perl 5.12.3.0: https://strawberryperl.com/download/5.12.3.0/strawberry-perl-5.12.3.0-portable.zip
+# Strawberry Perl 5.32.1.1: https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip
 # actions-upload-artifact:  https://github.com/actions/upload-artifact
 
 name: Build Win
@@ -16,36 +17,36 @@ on:
 jobs:
   build_XSTools:
 
-    name: XSTools ${{ matrix.os }} (python ${{ matrix.python }}) (perl ${{ matrix.perl }}) x${{ matrix.perl_arch }}
+    name: XSTools ${{ matrix.os }} (python ${{ matrix.python }}) (perl ${{ matrix.perl }}) ${{ matrix.architecture }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
         - os: windows-2016
-          python: 3
+          python: 2.7
           architecture: x86
-          perl: '5.30'
-          perl_arch: 64
+          perl: 5.12
+          strawberry_distr: 'https://strawberryperl.com/download/5.12.3.0/strawberry-perl-5.12.3.0-portable.zip'
 
-        - os: windows-2016
+        - os: windows-latest
           python: 3
           architecture: x86
-          perl: '5.30'
-          perl_arch: 32
+          perl: '5.32'
+          strawberry_distr: 'https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip'
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # setup Windows matrix: python 3_x86 and strawberry perl 5.30_x64, 5.30_x86
+    # setup Windows matrix: python 2.7_x86 + strawberry perl 5.12_x86 and python 3_x86 and strawberry perl 5.32_x86
     - name: setup-python ${{ matrix.python }} ${{ matrix.architecture }}
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python }}
         architecture: ${{ matrix.architecture }}
 
-    - name: Replace perl to 5.30.3.1 x${{ matrix.perl_arch }}
+    - name: Replace perl to ${{ matrix.perl }} ${{ matrix.architecture }}
       run: |
         echo "================================================================="
         echo "== previous version of Perl:"
@@ -56,26 +57,27 @@ jobs:
         echo "================================================================="
         rm -r C:/Strawberry/*
         echo "================================================================="
-        echo "== download strawberry perl ${{ matrix.perl }} ${{ matrix.perl_arch }}"
+        echo "== download strawberry perl ${{ matrix.perl }} ${{ matrix.architecture }}"
         echo "================================================================="
-        #Invoke-WebRequest https://strawberryperl.com/download/5.30.3.1/strawberry-perl-5.30.3.1-64bit-portable.zip -OutFile strawberry.zip
-        Invoke-WebRequest https://strawberryperl.com/download/5.30.3.1/strawberry-perl-5.30.3.1-${{ matrix.perl_arch }}bit-portable.zip -OutFile strawberry.zip
+        Invoke-WebRequest ${{ matrix.strawberry_distr }} -OutFile strawberry.zip
         7z.exe x strawberry.zip -o"C:/Strawberry"
         echo "================================================================="
         echo "== a new version of Perl:"
         echo "================================================================="
         perl --version
         echo "================================================================="
-        echo "== uninstall mingw x64"
+        echo "== remove g++ x64"
         echo "================================================================="
-        choco uninstall mingw
+        # package removal takes too long (4 minutes). Instead, we can delete 1 file
+        # choco uninstall mingw
+        rm C:\ProgramData\Chocolatey\bin\g++.exe
 
     - name: Environment check
       run: |
         echo "================================================================="
-        echo "== check g++ version:"
+        echo "== python version:"
         echo "================================================================="
-        g++ --version
+        python -V
         echo "================================================================="
         echo "== perl version:"
         echo "================================================================="
@@ -84,14 +86,20 @@ jobs:
         echo "== Time::HiRes module:"
         echo "================================================================="
         perl -e "use Time::HiRes;"
+        if  ($?)  {echo OK}
         echo "================================================================="
         echo "== Compress::Zlib module:"
         echo "================================================================="
         perl -e "use Compress::Zlib;"
+        if  ($?)  {echo OK}
         echo "================================================================="
-        echo "== python version:"
+        echo "== check g++ version:"
         echo "================================================================="
-        python -V
+        g++ --version
+        echo "================================================================="
+        echo "== check gmake version:"
+        echo "================================================================="
+        gmake --version
 
     - name: Run make XSTools.dll
       run: |
@@ -103,7 +111,7 @@ jobs:
     - name: Making artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.os }}_perl${{ matrix.perl }}x${{ matrix.perl_arch }}
+        name: ${{ matrix.os }}_perl${{ matrix.perl }}${{ matrix.architecture }}
         path: |
           src\auto\XSTools\XSTools.dll
           src\auto\XSTools\NetRedirect.dll
