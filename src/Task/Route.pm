@@ -415,7 +415,7 @@ sub iterate {
 		} elsif (timeOut($self->{route_out_time}, 6)) {
 			# Because of attack monster, get item or something else we are out of our route for a long time
 			# recalculate again
-			warning "We are out of our route for a long time, recalculating...\n";
+			debug "We are out of our route for a long time, recalculating...\n", "route";
 			$self->{route_out_time} = time;
 			$self->resetRoute();
 		} elsif (!$self->{start} && $pos_changed == 0 && defined $self->{time_step} && timeOut($self->{time_step}, $timeout{ai_route_unstuck}{timeout})) {
