@@ -24,7 +24,7 @@ use strict;
 use Globals qw($masterServer);
 use Exporter;
 use base qw(Exporter);
-use Encode qw(encode decode);
+use Encode qw(encode decode from_to);
 use Encode::Alias qw(define_alias);
 
 our @EXPORT_OK = qw(bytesToString stringToBytes stringToUTF8 UTF8ToString isUTF8);
@@ -127,6 +127,5 @@ sub isUTF8 {
    |  \xF4[\x80-\x8F][\x80-\xBF]{2}     # plane 16
   )*$/x;
 }
-
 
 1;
