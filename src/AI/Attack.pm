@@ -86,9 +86,9 @@ sub process {
 			$attackSeq->{monsterPos} &&
 			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
-			($attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeeleAttack($realMyPos, $realMonsterPos))
+			($attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeleeAttack($realMyPos, $realMonsterPos))
 		) {
-			debug "Target $target is now reachable by meele attacks during routing to it.\n", "ai_attack";
+			debug "Target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
 
@@ -435,8 +435,8 @@ sub main {
 		}
 
 	} elsif (
-		(($args->{attackMethod}{maxDistance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
-		($args->{attackMethod}{maxDistance} == 1 && canReachMeeleAttack($realMyPos, $realMonsterPos) && $config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) <= 2 && !$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) ||
+		(($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
+		($args->{attackMethod}{maxDistance} == 1 && canReachMeleeAttack($realMyPos, $realMonsterPos) && $config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) <= 2 && !$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) ||
 		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 		!timeOut($args->{ai_attack_giveup})
 	) {

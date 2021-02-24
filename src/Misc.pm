@@ -137,7 +137,7 @@ our @EXPORT = (
 	look
 	lookAtPosition
 	manualMove
-	canReachMeeleAttack
+	canReachMeleeAttack
 	meetingPosition
 	meetingPosition_slave
 	objectAdded
@@ -2460,7 +2460,7 @@ sub manualMove {
 	main::ai_route($field->baseName, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
-sub canReachMeeleAttack {
+sub canReachMeleeAttack {
 	my ($actor_pos, $target_pos) = @_;
 	
 	my ($diag, $orto) = Utils::specifiedBlockDistance($actor_pos, $target_pos);
@@ -2673,7 +2673,7 @@ sub meetingPosition {
 				if ($ranged && $checkLOS) {
 					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 				} elsif ($melee) {
-					next unless (canReachMeeleAttack($spot, $possible_target_pos->{targetPosInStep}));
+					next unless (canReachMeleeAttack($spot, $possible_target_pos->{targetPosInStep}));
 					if ($checkLOS && blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
 						next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 					}
@@ -2892,7 +2892,7 @@ sub meetingPosition_slave {
 				if ($ranged && $checkLOS) {
 					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 				} elsif ($melee) {
-					next unless (canReachMeeleAttack($spot, $possible_target_pos->{targetPosInStep}));
+					next unless (canReachMeleeAttack($spot, $possible_target_pos->{targetPosInStep}));
 					if ($checkLOS && blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
 						next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 					}

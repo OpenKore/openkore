@@ -328,9 +328,9 @@ sub processAttack {
 			$attackSeq->{monsterPos} &&
 			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
-			($attackSeq->{attackMethod}{distance} == 1 && $attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeeleAttack(calcPosition($slave), calcPosition($target)))
+			($attackSeq->{attackMethod}{distance} == 1 && $attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeleeAttack(calcPosition($slave), calcPosition($target)))
 		) {
-			debug "$slave target $target is now reachable by meele attacks during routing to it.\n", "ai_attack";
+			debug "$slave target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
 			$slave->dequeue;
 			$slave->dequeue if $slave->action eq "route";
 
@@ -510,7 +510,7 @@ sub processAttack {
 			}
 
 		} elsif (
-			(($args->{attackMethod}{maxDistance} == 1 && !canReachMeeleAttack($realMyPos, $realMonsterPos)) ||
+			(($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
 			($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
 			!timeOut($args->{ai_attack_giveup})
 		) {

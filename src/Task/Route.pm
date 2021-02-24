@@ -459,7 +459,7 @@ sub iterate {
 					$self->{step_index} += $self->{decreasing_step_index};
 					$self->{decreasing_step_index} = 0;
 				} else {
-					debug "Route $self->{actor} - won't increase step size becouse pos did not change ($current_pos->{x} $current_pos->{y})\n", "route";
+					debug "Route $self->{actor} - won't increase step size because pos did not change ($current_pos->{x} $current_pos->{y})\n", "route";
 				}
 			}
 
