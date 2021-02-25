@@ -221,7 +221,8 @@ env['LINKFLAGS'] = []
 env['LIBPATH'] = [] + EXTRA_LIBRARY_DIRECTORIES
 env['LIBS'] = []
 env['CPPDEFINES'] = []
-env['CPPPATH'] = [] + EXTRA_INCLUDE_DIRECTORIES
+env['CPPPATH'] = [] + EXTRA_INCLUDE_DIRECTORIES    
+env['LINKFLAGS'] += ['-static-libgcc']
 if cygwin:
 	env['CCFLAGS'] += ['-mno-cygwin']
 	env['LINKFLAGS'] += ['-mno-cygwin']
