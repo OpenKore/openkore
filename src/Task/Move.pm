@@ -79,7 +79,8 @@ sub new {
 	}
 
 	$self->{$_} = $args{$_} for qw(actor x y);
-	$self->{retry}{timeout} = $args{retryTime} || 0.5;
+	$self->{retry}{timeout} = $args{retryTime} || $timeout{ai_move_retry}{timeout} || 0.5;
+	$self->{retry}{count} = 0;
 	$self->{giveup}{timeout} = $args{giveupTime} || $timeout{ai_move_giveup}{timeout} || 3;
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
@@ -127,27 +128,28 @@ sub iterate {
 
 	# If we're sitting, wait until we've stood up.
 	if ($self->{actor}{sitting}) {
-		debug "Move $self->{actor} - trying to stand\n", "move";
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - trying to stand\n", "move";
 		my $task = new Task::SitStand(actor => $self->{actor}, mode => 'stand');
 		$self->setSubtask($task);
 
 	# Stop if the map changed.
 	} elsif ($self->{mapChanged}) {
-		debug "Move $self->{actor} - map change detected\n", "move";
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - map change detected\n", "move";
 		$self->setDone();
 
 	# Stop if we've moved.
 	} elsif ($self->{actor}{time_move} > $self->{start_time} && $self->{actor}{pos_to}{x} == $self->{x} && $self->{actor}{pos_to}{y} == $self->{y}) {
-		debug "Move $self->{actor} - done\n", "move";
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - done\n", "move";
 		$self->setDone();
 
 	# Stop if we've timed out.
 	} elsif (timeOut($self->{giveup})) {
-		debug "Move $self->{actor} - timeout\n", "move";
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - timeout\n", "move";
 		$self->setError(TOO_LONG, TF("%s tried too long to move", $self->{actor}));
 
 	} elsif (timeOut($self->{retry})) {
-		debug "Move $self->{actor} - (re)trying\n", "move";
+		$self->{retry}{count}++;
+		debug "Move $self->{actor} (to $self->{x} $self->{y}) - trying ($self->{retry}{count})\n", "move";
 		$self->{actor}->sendMove(@{$self}{qw(x y)});
 		$self->{retry}{time} = time;
 	}

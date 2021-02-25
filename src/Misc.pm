@@ -72,10 +72,6 @@ our @EXPORT = (
 	# Field math
 	qw/calcRectArea
 	calcRectArea2
-	checkLineSnipable
-	checkLineWalkable
-	checkWallLength
-	closestWalkableSpot
 	objectInsideSpell
 	objectIsMovingTowards
 	objectIsMovingTowardsPlayer
@@ -141,7 +137,9 @@ our @EXPORT = (
 	look
 	lookAtPosition
 	manualMove
+	canReachMeleeAttack
 	meetingPosition
+	meetingPosition_slave
 	objectAdded
 	objectRemoved
 	items_control
@@ -170,7 +168,8 @@ our @EXPORT = (
 	writeStorageLog
 	getBestTarget
 	isSafe
-	isSafeActorQuery/,
+	isSafeActorQuery
+	isCellOccupied/,
 
 	# Actor's Actions Text
 	qw/attack_string
@@ -542,13 +541,13 @@ sub visualDump {
 #######################################
 
 ##
-# calcRectArea($x, $y, $radius)
+# calcRectArea($x, $y, $radius, $field)
 # Returns: an array with position hashes. Each has contains an x and a y key.
 #
 # Creates a rectangle with center ($x,$y) and radius $radius,
 # and returns a list of positions of the border of the rectangle.
 sub calcRectArea {
-	my ($x, $y, $radius) = @_;
+	my ($x, $y, $radius, $field) = @_;
 	my (%topLeft, %topRight, %bottomLeft, %bottomRight);
 
 	sub capX {
@@ -617,182 +616,6 @@ sub calcRectArea2 {
 		}
 	}
 	return @rectangle;
-}
-
-##
-# checkLineSnipable(from, to)
-# from, to: references to position hashes.
-#
-# Check whether you can snipe a target standing at $to,
-# from the position $from, without being blocked by any
-# obstacles.
-# TODO: move to Field?
-sub checkLineSnipable {
-	return 0 if (!$field);
-	my $from = shift;
-	my $to = shift;
-
-	# Simulate tracing a line to the location (modified Bresenham's algorithm)
-	my ($X0, $Y0, $X1, $Y1) = ($from->{x}, $from->{y}, $to->{x}, $to->{y});
-
-	my $steep;
-	my $posX = 1;
-	my $posY = 1;
-	if ($X1 - $X0 < 0) {
-		$posX = -1;
-	}
-	if ($Y1 - $Y0 < 0) {
-		$posY = -1;
-	}
-	if (abs($Y0 - $Y1) < abs($X0 - $X1)) {
-		$steep = 0;
-	} else {
-		$steep = 1;
-	}
-	if ($steep == 1) {
-		my $Yt = $Y0;
-		$Y0 = $X0;
-		$X0 = $Yt;
-
-		$Yt = $Y1;
-		$Y1 = $X1;
-		$X1 = $Yt;
-	}
-	if ($X0 > $X1) {
-		my $Xt = $X0;
-		$X0 = $X1;
-		$X1 = $Xt;
-
-		my $Yt = $Y0;
-		$Y0 = $Y1;
-		$Y1 = $Yt;
-	}
-	my $dX = $X1 - $X0;
-	my $dY = abs($Y1 - $Y0);
-	my $E = 0;
-	my $dE;
-	if ($dX) {
-		$dE = $dY / $dX;
-	} else {
-		# Delta X is 0, it only occures when $from is equal to $to
-		return 1;
-	}
-	my $stepY;
-	if ($Y0 < $Y1) {
-		$stepY = 1;
-	} else {
-		$stepY = -1;
-	}
-	my $Y = $Y0;
-	my $Erate = 0.99;
-	if (($posY == -1 && $posX == 1) || ($posY == 1 && $posX == -1)) {
-		$Erate = 0.01;
-	}
-	for (my $X=$X0;$X<=$X1;$X++) {
-		$E += $dE;
-		if ($steep == 1) {
-			return 0 if (!$field->isSnipable($Y, $X));
-		} else {
-			return 0 if (!$field->isSnipable($X, $Y));
-		}
-		if ($E >= $Erate) {
-			$Y += $stepY;
-			$E -= 1;
-		}
-	}
-	return 1;
-}
-
-##
-# checkLineWalkable(from, to, [min_obstacle_size = 5])
-# from, to: references to position hashes.
-#
-# Check whether you can walk from $from to $to in an (almost)
-# straight line, without obstacles that are too large.
-# Obstacles are considered too large, if they are at least
-# the size of a rectangle with "radius" $min_obstacle_size.
-# TODO: move to Field?
-sub checkLineWalkable {
-	return 0 if (!$field);
-	my $from = shift;
-	my $to = shift;
-	my $min_obstacle_size = shift;
-	$min_obstacle_size = 5 if (!defined $min_obstacle_size);
-
-	my $dist = round(distance($from, $to));
-	my %vec;
-
-	getVector(\%vec, $to, $from);
-	# Simulate walking from $from to $to
-	for (my $i = 1; $i < $dist; $i++) {
-		my %p;
-		moveAlongVector(\%p, $from, \%vec, $i);
-		$p{x} = int $p{x};
-		$p{y} = int $p{y};
-
-		if ( !$field->isWalkable($p{x}, $p{y}) ) {
-			# The current spot is not walkable. Check whether
-			# this the obstacle is small enough.
-			if (checkWallLength(\%p, -1,  0, $min_obstacle_size) || checkWallLength(\%p,  1, 0, $min_obstacle_size)
-			 || checkWallLength(\%p,  0, -1, $min_obstacle_size) || checkWallLength(\%p,  0, 1, $min_obstacle_size)
-			 || checkWallLength(\%p, -1, -1, $min_obstacle_size) || checkWallLength(\%p,  1, 1, $min_obstacle_size)
-			 || checkWallLength(\%p,  1, -1, $min_obstacle_size) || checkWallLength(\%p, -1, 1, $min_obstacle_size)) {
-				return 0;
-			}
-		}
-	}
-	return 1;
-}
-
-sub checkWallLength {
-	my $pos = shift;
-	my $dx = shift;
-	my $dy = shift;
-	my $length = shift;
-
-	my $x = $pos->{x};
-	my $y = $pos->{y};
-	my $len = 0;
-	do {
-		last if ($x < 0 || $x >= $field->width || $y < 0 || $y >= $field->height);
-		$x += $dx;
-		$y += $dy;
-		$len++;
-	} while (!$field->isWalkable($x, $y) && $len < $length);
-	return $len >= $length;
-}
-
-##
-# closestWalkableSpot(r_field, pos)
-# r_field: a reference to a field hash.
-# pos: reference to a position hash (which contains 'x' and 'y' keys).
-# Returns: 1 if %pos has been modified, 0 of not.
-#
-# If the position specified in $pos is walkable, this function will do nothing.
-# If it's not walkable, this function will find the closest position that is walkable (up to N blocks away),
-# and modify the x and y values in $pos.
-# TODO: move to Field?
-{
-	my @spots;
-	sub closestWalkableSpot {
-		my $field = shift;
-		my $pos = shift;
-
-		unless (@spots) {
-			@spots = ([0, 0]);
-			for my $dist (1 .. 7) {
-				push @spots, map { [$_, $dist-$_], [$dist-$_, -$_], [-$_, $_-$dist], [$_-$dist, $_] } 0 .. $dist-1;
-			}
-		}
-
-		foreach my $z (@spots) {
-			next if !$field->isWalkable($pos->{x} + $z->[0], $pos->{y} + $z->[1]);
-			$pos->{x} += $z->[0];
-			$pos->{y} += $z->[1];
-			return 1;
-		}
-		return 0;
-	}
 }
 
 ##
@@ -882,10 +705,9 @@ use constant AVOID_MASTER_BOUND => 2;
 #
 # Kite algorithm used in runFromTarget
 sub get_kite_position {
-	my ($field, $actor, $target, $min_dist_from_target, $move_distance_min, $move_distance_max, $master, $max_dist_to_master) = @_;
+	my ($field, $actor, $target, $min_dist_from_target, $move_distance_min, $move_distance_max, $checkLOS, $canSnipe, $maxPathDistance, $master, $max_dist_to_master) = @_;
 
 	my ($actor_pos, $enemy_pos, $master_pos);
-	my $pathfinding = new PathFinding;
 
 	# Calculate the current position of actor, target and master
 	$actor_pos = calcPosition($actor);
@@ -950,6 +772,23 @@ sub get_kite_position {
 			# Skip if the cell is not walkable or if it is too close to target
 			next if (!$field->isWalkable($current_cell{x}, $current_cell{y}));
 			next if (blockDistance(\%current_cell, $enemy_pos) < $min_dist_from_target);
+			
+			# The route should not exceed at any point $max_pathfinding_dist distance from the target.
+			my $solution = [];
+			my $dist = new PathFinding(
+				field => $field,
+				start => $actor_pos,
+				dest => \%current_cell,
+				avoidWalls => 0
+			)->run($solution);
+				
+			# It must be reachable and have at max $maxPathDistance of route distance to it from our current position.
+			next unless ($dist >= 0 && $dist <= $maxPathDistance);
+				
+			# It must have LOS to the target if that is active and we are ranged
+			if ($checkLOS) {
+				next unless ($field->checkLOS(\%current_cell, $enemy_pos, $canSnipe));
+			}
 
 			$current_cell{wall_dist} = ord(substr($field->{dstMap}, $current_cell{y} * $field->width + $current_cell{x}));
 			if ($current_cell{wall_dist} >= AVOID_WALLS) {
@@ -967,14 +806,6 @@ sub get_kite_position {
 					}
 				}
 			}
-
-			# Get rid of ridiculously large route distances (such as spots that are on a hill)
-			$pathfinding->reset(
-				field => $field,
-				start => $actor_pos,
-				dest => \%current_cell);
-			$current_cell{path_dist} = $pathfinding->runcount;
-			next if ($current_cell{path_dist} <= 0 || $current_cell{path_dist} > $move_distance_max * 2);
 
 			$current_cell{dist_dif} = distance(\%current_cell, $actor_pos) - distance(\%current_cell, $enemy_pos);
 			# If this is a valid cell but it is closer to target than to actor we could run into target while pathing to it
@@ -1014,7 +845,7 @@ sub get_kite_position {
 	}
 
 	# Sort all the cells that were closer to target than to actor by distance difference
-	@best_not_distant_cells = sort { $a->{distance_dif} <=> $b->{distance_dif} } @best_not_distant_cells;
+	@best_not_distant_cells = sort { $a->{dist_dif} <=> $b->{dist_dif} } @best_not_distant_cells;
 
 	# And than add the lower priority list (now sorted) at the end of the normal priority list
 	my @cells = (@best_distant_cells, @best_not_distant_cells);
@@ -2637,78 +2468,464 @@ sub manualMove {
 	main::ai_route($field->baseName, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
+sub canReachMeleeAttack {
+	my ($actor_pos, $target_pos) = @_;
+	
+	my ($diag, $orto) = Utils::specifiedBlockDistance($actor_pos, $target_pos);
+	
+	if (($diag == 0 && $orto <= 2) || ($diag <= 1 && $orto == 0)) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 ##
-# meetingPosition(ID, attackMaxDistance)
-# ID: ID of the character to meet.
+# meetingPosition(actor, target_actor, attackMaxDistance)
+# actor: current object.
+# target_actor: actor to meet.
 # attackMaxDistance: attack distance based on attack method.
 #
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
-	my ($target, $attackMaxDistance) = @_;
-	my $monsterSpeed = ($target->{walk_speed}) ? 1 / $target->{walk_speed} : 0;
-	my $timeMonsterMoves = time - $target->{time_move};
+	my ($actor, $target, $attackMaxDistance) = @_;
 
-	my %monsterPos;
-	$monsterPos{x} = $target->{pos}{x};
-	$monsterPos{y} = $target->{pos}{y};
-	my %monsterPosTo;
-	$monsterPosTo{x} = $target->{pos_to}{x};
-	$monsterPosTo{y} = $target->{pos_to}{y};
-
-	my %realMonsterPos = calcPosFromTime(\%monsterPos, \%monsterPosTo, $monsterSpeed, $timeMonsterMoves);
-
-	my $mySpeed = ($char->{walk_speed}) ? 1 / $char->{walk_speed} : 0;
-	my $timeCharMoves = time - $char->{time_move};
+	my %targetPos;
+	$targetPos{x} = $target->{pos}{x};
+	$targetPos{y} = $target->{pos}{y};
+	my %targetPosTo;
+	$targetPosTo{x} = $target->{pos_to}{x};
+	$targetPosTo{y} = $target->{pos_to}{y};
+	
+	my $targetSpeed = ($target->{walk_speed} || 0.12);
+	my $timeSinceTargetMoved = time - $target->{time_move};
+	my $timeTargetFinishMove = calcTime(\%targetPos, \%targetPosTo, $targetSpeed);
+	
+	my $target_moving;
+	my $realTargetPos;
+	my $targetTotalSteps;
+	my $targetCurrentStep;
+	# Target has finished moving
+	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
+		$target_moving = 0;
+		$realTargetPos->{x} = $targetPosTo{x};
+		$realTargetPos->{y} = $targetPosTo{y};
+	
+	# Target is currently moving
+	} else {
+		$target_moving = 1;
+		($realTargetPos, $targetCurrentStep) = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, $timeSinceTargetMoved);
+		$targetTotalSteps = countSteps(\%targetPos, \%targetPosTo);
+	}
 
 	my %myPos;
-	$myPos{x} = $char->{pos}{x};
-	$myPos{y} = $char->{pos}{y};
+	$myPos{x} = $actor->{pos}{x};
+	$myPos{y} = $actor->{pos}{y};
 	my %myPosTo;
-	$myPosTo{x} = $char->{pos_to}{x};
-	$myPosTo{y} = $char->{pos_to}{y};
+	$myPosTo{x} = $actor->{pos_to}{x};
+	$myPosTo{y} = $actor->{pos_to}{y};
+	
+	my $mySpeed = ($char->{walk_speed} || 0.12);
+	my $timeSinceActorMoved = time - $actor->{time_move};
+	my $timeActorFinishMove = calcTime(\%myPos, \%myPosTo, $mySpeed);
+	
+	my $realMyPos;
+	# Actor has finished moving
+	if ($timeSinceActorMoved >= $timeActorFinishMove) {
+		$realMyPos->{x} = $myPosTo{x};
+		$realMyPos->{y} = $myPosTo{y};
+	# Actor is currently moving
+	} else {
+		($realMyPos, undef) = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeSinceActorMoved);
+	}
+	
+	my $melee = 0;
+	my $ranged = 0;
+	my $checkLOS = 0;
+	if ($config{attackCheckLOS} == 1) {
+		$checkLOS = 1;
+	}
+	if ($attackMaxDistance == 1) {
+		$melee = 1;
+	
+	} elsif ($attackMaxDistance > 1) {
+		$ranged = 1;
+	
+	} else {
+		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
+		return;
+	}
 
-	my %realMyPos = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeCharMoves);
-
-	my $timeMonsterWalks;
-	my $timeCharWalks;
-	my %monsterStep;
-	my %charStep;
-	# There can not be zero step if monster moves
-	for (my $monsterStep = 1; $monsterStep <= countSteps(\%realMonsterPos, \%monsterPosTo); $monsterStep++) {
-		# Calculate the steps
-		%monsterStep = moveAlong(\%realMonsterPos, \%monsterPosTo, $monsterStep);
-
-		# Calculate time to walk for monster
-		$timeMonsterWalks = calcTime(\%realMonsterPos, \%monsterStep, $monsterSpeed);
-
-		# Character's route to monsterStep position
-		for (my $charStep = 0; $charStep <= countSteps(\%realMyPos, \%monsterStep); $charStep++) {
+	my @target_pos_to_check;
+	my $timeForTargetToGetToStep;
+	my %targetPosInStep;
+	my $myDistToTargetPosInStep;
+	if ($target_moving) {
+		# Target is currently at $realTargetPos, moving to %targetPosTo, we check if can intercept it at any point during its travel path.
+		my $steps_count = 0;
+		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
 			# Calculate the steps
-			%charStep = moveAlong(\%realMyPos, \%monsterStep, $charStep);
+			%targetPosInStep = moveAlong(\%targetPos, \%targetPosTo, $currentStep);
 
-			# Check whether the distance is fine
-			if (round(distance(\%charStep, \%monsterStep)) <= $attackMaxDistance) {
-				# Calculate time to walk for char
-				$timeCharWalks = calcTime(\%realMyPos, \%charStep, $mySpeed);
-
-				# Check whether character comes earlier or at the same time
-				if ($timeCharWalks <= $timeMonsterWalks) {
-					return \%charStep;
+			# Calculate time to walk for target
+			if ($steps_count == 0) {
+				$timeForTargetToGetToStep = 0;
+			} else {
+				$timeForTargetToGetToStep = calcTime(\%targetPos, \%targetPosInStep, $targetSpeed) - $timeSinceTargetMoved;
+			}
+			
+			$myDistToTargetPosInStep = blockDistance($realMyPos, \%targetPosInStep);
+			
+			$target_pos_to_check[$steps_count] = {
+				targetPosInStep => {
+					x => $targetPosInStep{x},
+					y => $targetPosInStep{y}
+				},
+				timeForTargetToGetToStep => $timeForTargetToGetToStep,
+				myDistToTargetPosInStep => $myDistToTargetPosInStep
+			};
+		} continue {
+			$steps_count++;
+		}
+	} else {
+		$myDistToTargetPosInStep = blockDistance($realMyPos, $realTargetPos);
+		$target_pos_to_check[0] = {
+			targetPosInStep => $realTargetPos,
+			timeForTargetToGetToStep => 0,
+			myDistToTargetPosInStep => $myDistToTargetPosInStep
+		};
+	}
+	
+	my $attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance};
+	my $attackCanSnipe = $config{attackCanSnipe};
+	my $runFromTarget = $config{runFromTarget};
+	my $runFromTarget_dist = $config{runFromTarget_dist};
+	my $followDistanceMax = $config{followDistanceMax};
+	my $min_destination_dist = 1;
+	my $max_destination_dist;
+	
+	if ($ranged && $runFromTarget) {
+		$min_destination_dist = $runFromTarget_dist;
+	}
+	
+	# We should not stray further than $attackMaxDistance or attackRouteMaxPathDistance but if we are further away than it we should accept it
+	if ($melee) {
+		$max_destination_dist = 2; # we can atack from a distance of 2 on ortogonal only cells
+	} else {
+		$max_destination_dist = $attackMaxDistance;
+	}
+	
+	my $max_pathfinding_dist = $max_destination_dist;
+	
+	my $masterPos;
+	if ($config{follow}) {
+		my $master;
+		foreach (keys %players) {
+			if ($players{$_}{name} eq $config{followTarget}) {
+				$master = $players{$_};
+				last;
+			}
+		}
+		if ($master) {
+			$masterPos = calcPosition($master);
+		}
+	}
+	
+	unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
+		my $new_pos = $field->closestWalkableSpot($realMyPos, 1);
+		$realMyPos->{x} = $new_pos->{x};
+		$realMyPos->{y} = $new_pos->{y};
+	}
+	
+	my $best_spot;
+	my $best_time;
+	foreach my $possible_target_pos (@target_pos_to_check) {
+		if ($possible_target_pos->{myDistToTargetPosInStep} >= $max_pathfinding_dist) {
+			$max_pathfinding_dist = $possible_target_pos->{myDistToTargetPosInStep} + 1;
+		}
+		
+		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $possible_target_pos->{targetPosInStep}, $max_pathfinding_dist);
+		foreach my $distance (reverse ($min_destination_dist..$max_destination_dist)) {
+			my @blocks = calcRectArea($possible_target_pos->{targetPosInStep}{x}, $possible_target_pos->{targetPosInStep}{y}, $distance, $field);
+			foreach my $spot (@blocks) {
+				next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
+				
+				# Is this spot acceptable?
+				
+				# 1. It must be walkable
+				next unless ($field->isWalkable($spot->{x}, $spot->{y}));
+				
+				# 2. It must be within $followDistanceMax of $masterPos, if we have a master.
+				if ($masterPos) {
+					next unless (blockDistance($spot, $masterPos) <= $followDistanceMax);
+				}
+				
+				# 3. The route should not exceed at any point $max_pathfinding_dist distance from the target.
+				my $solution = [];
+				my $dist = new PathFinding(
+					field => $field,
+					start => $realMyPos,
+					dest => $spot,
+					avoidWalls => 0,
+					min_x => $min_pathfinding_x,
+					max_x => $max_pathfinding_x,
+					min_y => $min_pathfinding_y,
+					max_y => $max_pathfinding_y
+				)->run($solution);
+				
+				# 4. It must be reachable and have at max $attackRouteMaxPathDistance of route distance to it from our current position.
+				next unless ($dist >= 0 && $dist <= $attackRouteMaxPathDistance);
+				
+				# 5. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
+				if ($ranged && $checkLOS) {
+					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
+				} elsif ($melee) {
+					next unless (canReachMeleeAttack($spot, $possible_target_pos->{targetPosInStep}));
+					if ($checkLOS && blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
+						next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
+					}
+				}
+				
+				my $time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
+				my $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
+				
+				if ($time_actor_to_get_to_spot >= $possible_target_pos->{timeForTargetToGetToStep}) {
+					$time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep = 0;
+				} else {
+					$time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep = $possible_target_pos->{timeForTargetToGetToStep} - $time_actor_to_get_to_spot;
+				}
+				
+				my $sum_time = $time_actor_to_get_to_spot + $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
+				
+				if (!defined($best_time) || $sum_time < $best_time) {
+					$best_time = $sum_time;
+					$best_spot = $spot;
 				}
 			}
 		}
 	}
-	# If the monster is too fast, move to its pos_to plus attackMaxDistance
-	for (my $charStep = 0; $charStep <= countSteps(\%realMyPos, \%monsterPosTo); $charStep++) {
-		# Calculate the steps
-		%charStep = moveAlong(\%realMyPos, \%monsterPosTo, $charStep);
+	
+	if ($best_spot) {
+		return $best_spot;
+	}
+}
 
-		# Check whether the distance is fine
-		if (round(distance(\%charStep, \%monsterPosTo)) <= $attackMaxDistance) {
-			last;
+##
+# meetingPosition_slave(slave, target_actor, attackMaxDistance)
+# slave: current object.
+# target_actor: actor to meet.
+# attackMaxDistance: attack distance based on attack method.
+#
+# Returns: the position where the character should go to meet a moving monster.
+sub meetingPosition_slave {
+	my ($slave, $target, $attackMaxDistance) = @_;
+
+	my %targetPos;
+	$targetPos{x} = $target->{pos}{x};
+	$targetPos{y} = $target->{pos}{y};
+	my %targetPosTo;
+	$targetPosTo{x} = $target->{pos_to}{x};
+	$targetPosTo{y} = $target->{pos_to}{y};
+	
+	my $targetSpeed = ($target->{walk_speed} || 0.12);
+	my $timeSinceTargetMoved = time - $target->{time_move};
+	my $timeTargetFinishMove = calcTime(\%targetPos, \%targetPosTo, $targetSpeed);
+	
+	my $target_moving;
+	my $realTargetPos;
+	my $targetTotalSteps;
+	my $targetCurrentStep;
+	# Target has finished moving
+	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
+		$target_moving = 0;
+		$realTargetPos->{x} = $targetPosTo{x};
+		$realTargetPos->{y} = $targetPosTo{y};
+	
+	# Target is currently moving
+	} else {
+		$target_moving = 1;
+		($realTargetPos, $targetCurrentStep) = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, $timeSinceTargetMoved);
+		$targetTotalSteps = countSteps(\%targetPos, \%targetPosTo);
+	}
+
+	my %myPos;
+	$myPos{x} = $slave->{pos}{x};
+	$myPos{y} = $slave->{pos}{y};
+	my %myPosTo;
+	$myPosTo{x} = $slave->{pos_to}{x};
+	$myPosTo{y} = $slave->{pos_to}{y};
+	
+	my $mySpeed = ($slave->{walk_speed} || 0.12);
+	my $timeSinceSlaveMoved = time - $slave->{time_move};
+	my $timeSlaveFinishMove = calcTime(\%myPos, \%myPosTo, $mySpeed);
+	
+	my $realMyPos;
+	# Slave has finished moving
+	if ($timeSinceSlaveMoved >= $timeSlaveFinishMove) {
+		$realMyPos->{x} = $myPosTo{x};
+		$realMyPos->{y} = $myPosTo{y};
+	# Slave is currently moving
+	} else {
+		($realMyPos, undef) = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeSinceSlaveMoved);
+	}
+	
+	my $melee = 0;
+	my $ranged = 0;
+	my $checkLOS = 0;
+	if ($config{attackCheckLOS} == 1) {
+		$checkLOS = 1;
+	}
+	if ($attackMaxDistance == 1) {
+		$melee = 1;
+	
+	} elsif ($attackMaxDistance > 1) {
+		$ranged = 1;
+	
+	} else {
+		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
+		return;
+	}
+
+	my @target_pos_to_check;
+	my $timeForTargetToGetToStep;
+	my %targetPosInStep;
+	my $myDistToTargetPosInStep;
+	if ($target_moving) {
+		# Target is currently at $realTargetPos, moving to %targetPosTo, we check if can intercept it at any point during its travel path.
+		my $steps_count = 0;
+		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
+			# Calculate the steps
+			%targetPosInStep = moveAlong(\%targetPos, \%targetPosTo, $currentStep);
+
+			# Calculate time to walk for target
+			if ($steps_count == 0) {
+				$timeForTargetToGetToStep = 0;
+			} else {
+				$timeForTargetToGetToStep = calcTime(\%targetPos, \%targetPosInStep, $targetSpeed) - $timeSinceTargetMoved;
+			}
+			
+			$myDistToTargetPosInStep = blockDistance($realMyPos, \%targetPosInStep);
+			
+			$target_pos_to_check[$steps_count] = {
+				targetPosInStep => {
+					x => $targetPosInStep{x},
+					y => $targetPosInStep{y}
+				},
+				timeForTargetToGetToStep => $timeForTargetToGetToStep,
+				myDistToTargetPosInStep => $myDistToTargetPosInStep
+			};
+		} continue {
+			$steps_count++;
+		}
+	} else {
+		$myDistToTargetPosInStep = blockDistance($realMyPos, $realTargetPos);
+		$target_pos_to_check[0] = {
+			targetPosInStep => $realTargetPos,
+			timeForTargetToGetToStep => 0,
+			myDistToTargetPosInStep => $myDistToTargetPosInStep
+		};
+	}
+	
+	my $attackRouteMaxPathDistance = $config{$slave->{configPrefix}.'attackRouteMaxPathDistance'};
+	my $attackCanSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
+	my $runFromTarget = $config{$slave->{configPrefix}.'runFromTarget'};
+	my $runFromTarget_dist = $config{$slave->{configPrefix}.'runFromTarget_dist'};
+	my $followDistanceMax = $config{$slave->{configPrefix}.'followDistanceMax'};
+	my $min_destination_dist = 1;
+	my $max_destination_dist;
+	
+	if ($ranged && $runFromTarget) {
+		$min_destination_dist = $runFromTarget_dist;
+	}
+	
+	# We should not stray further than $attackMaxDistance or attackRouteMaxPathDistance but if we are further away than it we should accept it
+	if ($melee) {
+		$max_destination_dist = 2; # we can atack from a distance of 2 on ortogonal only cells
+	} else {
+		$max_destination_dist = $attackMaxDistance;
+	}
+	
+	my $max_pathfinding_dist = $max_destination_dist;
+	
+	my $masterPos = $char->{pos_to};
+	
+	unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
+		my $new_pos = $field->closestWalkableSpot($realMyPos, 1);
+		$realMyPos->{x} = $new_pos->{x};
+		$realMyPos->{y} = $new_pos->{y};
+	}
+	
+	my $best_spot;
+	my $best_time;
+	foreach my $possible_target_pos (@target_pos_to_check) {
+		if ($possible_target_pos->{myDistToTargetPosInStep} >= $max_pathfinding_dist) {
+			$max_pathfinding_dist = $possible_target_pos->{myDistToTargetPosInStep} + 1;
+		}
+		
+		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $possible_target_pos->{targetPosInStep}, $max_pathfinding_dist);
+		foreach my $distance (reverse ($min_destination_dist..$max_destination_dist)) {
+			my @blocks = calcRectArea($possible_target_pos->{targetPosInStep}{x}, $possible_target_pos->{targetPosInStep}{y}, $distance, $field);
+			foreach my $spot (@blocks) {
+				next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
+				
+				# Is this spot acceptable?
+				
+				# 1. It must be walkable
+				next unless ($field->isWalkable($spot->{x}, $spot->{y}));
+				
+				# 2. It must be within $followDistanceMax of $masterPos, if we have a master.
+				if ($masterPos) {
+					next unless (blockDistance($spot, $masterPos) <= $followDistanceMax);
+				}
+				
+				# 3. The route should not exceed at any point $max_pathfinding_dist distance from the target.
+				my $solution = [];
+				my $dist = new PathFinding(
+					field => $field,
+					start => $realMyPos,
+					dest => $spot,
+					avoidWalls => 0,
+					min_x => $min_pathfinding_x,
+					max_x => $max_pathfinding_x,
+					min_y => $min_pathfinding_y,
+					max_y => $max_pathfinding_y
+				)->run($solution);
+				
+				# 4. It must be reachable and have at max $attackRouteMaxPathDistance of route distance to it from our current position.
+				next unless ($dist >= 0 && $dist <= $attackRouteMaxPathDistance);
+				
+				# 5. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
+				if ($ranged && $checkLOS) {
+					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
+				} elsif ($melee) {
+					next unless (canReachMeleeAttack($spot, $possible_target_pos->{targetPosInStep}));
+					if ($checkLOS && blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
+						next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
+					}
+				}
+				
+				my $time_slave_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
+				my $time_slave_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
+				
+				if ($time_slave_to_get_to_spot >= $possible_target_pos->{timeForTargetToGetToStep}) {
+					$time_slave_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep = 0;
+				} else {
+					$time_slave_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep = $possible_target_pos->{timeForTargetToGetToStep} - $time_slave_to_get_to_spot;
+				}
+				
+				my $sum_time = $time_slave_to_get_to_spot + $time_slave_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
+				
+				if (!defined($best_time) || $sum_time < $best_time) {
+					$best_time = $sum_time;
+					$best_spot = $spot;
+				}
+			}
 		}
 	}
-	return \%charStep;
+	
+	if ($best_spot) {
+		return $best_spot;
+	}
 }
 
 sub objectAdded {
@@ -3031,6 +3248,19 @@ sub setPartySkillTimer {
 	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i ne "";
 }
 
+##
+# boolean isCellOccupied(pos)
+# pos: position hash.
+#
+# Returns 1 if there is a player, npc or mob in the cell, otherwise return 0.
+# TODO: Check if a character can move to a cell with a pet, elemental, homunculus or mercenary
+sub isCellOccupied {
+	my ($pos) = @_;
+	foreach my $actor (@$playersList, @$monstersList, @$npcsList, @$petsList, @$slavesList, @$elementalsList) {
+		return 1 if ($actor->{pos_to}{x} == $pos->{x} && $actor->{pos_to}{y} == $pos->{y});
+	}
+	return 0;
+}
 
 ##
 # boolean setStatus(Actor actor, opt1, opt2, option)
@@ -3258,6 +3488,14 @@ sub updateDamageTables {
 				debug "Incremented missedFromYou count to $monster->{missedFromYou}\n", "attackMonMiss";
 				$monster->{atkMiss}++;
 			} else {
+				if ($config{attackUpdateMonsterPos} && ($monster->{pos}{x} != $monster->{pos_to}{x} || $monster->{pos}{y} != $monster->{pos_to}{y})) {
+					my $new_monster_pos = calcPosition($monster);
+					$monster->{pos} = $new_monster_pos;
+					$monster->{pos_to} = $new_monster_pos;
+					$monster->{time_move} = time;
+					$monster->{time_move_calc} = 0;
+					debug "Target monster $monster got hit by us during its movement, updating its position to $monster->{pos}{x} $monster->{pos}{y}.\n";
+				}
 				$monster->{atkMiss} = 0;
 			}
 			if ($config{teleportAuto_atkMiss} && $monster->{atkMiss} >= $config{teleportAuto_atkMiss}) {
@@ -3831,13 +4069,13 @@ sub writeStorageLog {
 }
 
 ##
-# getBestTarget(possibleTargets, nonLOSNotAllowed)
+# getBestTarget(possibleTargets, attackCheckLOS, $attackCanSnipe)
 # possibleTargets: reference to an array of monsters' IDs
-# nonLOSNotAllowed: if set, non-LOS monsters (and monsters that aren't in attackMaxDistance) aren't checked up
+# attackCheckLOS: if set, non-LOS monsters are checked up
 #
 # Returns ID of the best target
 sub getBestTarget {
-	my ($possibleTargets, $nonLOSNotAllowed) = @_;
+	my ($possibleTargets, $attackCheckLOS, $attackCanSnipe) = @_;
 	if (!$possibleTargets) {
 		return;
 	}
@@ -3867,27 +4105,15 @@ sub getBestTarget {
 				|| ($control->{attack_auto} == 0 && !($monster->{dmgToYou} || $monster->{missedYou}))
 			);
 		}
-		if ($config{'attackCanSnipe'}) {
-			if (!checkLineSnipable($myPos, $pos)) {
-				push(@noLOSMonsters, $_);
-				next;
-			}
-		} else {
-			if (!checkLineWalkable($myPos, $pos)) {
-				push(@noLOSMonsters, $_);
-				next;
-			}
+		
+		if (!$field->checkLOS($myPos, $pos, $attackCanSnipe)) {
+			push(@noLOSMonsters, $_);
+			next;
 		}
+		
 		my $name = lc $monster->{name};
 		my $dist = round(distance($myPos, $pos));
-
-		# COMMENTED (FIX THIS): attackMaxDistance should never be used as indication of LOS
-		#     The objective of attackMaxDistance is to determine the range of normal attack,
-		#     and not the range of character's ability to engage monsters
-		## Monsters that aren't in attackMaxDistance are not checked up
-		##if ($nonLOSNotAllowed && ($config{'attackMaxDistance'} < $dist)) {
-		##	next;
-		##}
+		
 		if (!defined($bestTarget) || ($priority{$name} > $highestPri)) {
 			$highestPri = $priority{$name};
 			$smallestDist = $dist;
@@ -3900,7 +4126,7 @@ sub getBestTarget {
 			$bestTarget = $_;
 		}
 	}
-	if (!$nonLOSNotAllowed && !$bestTarget && scalar(@noLOSMonsters) > 0) {
+	if ($attackCheckLOS && !$bestTarget && scalar(@noLOSMonsters) > 0) {
 		foreach (@noLOSMonsters) {
 			# The most optimal solution is to include the path lenghts' comparison, however it will take
 			# more time and CPU resources, so, we use rough solution with priority and distance comparison
@@ -4344,15 +4570,20 @@ sub compilePortals {
 
 				my %start = %{$mapSpawns{$map}{$spawn}};
 				my %dest = %{$mapPortals{$map}{$portal}};
-				closestWalkableSpot($field, \%start);
-				closestWalkableSpot($field, \%dest);
-
-				$pathfinding->reset(
-					start => \%start,
-					dest  => \%dest,
-					field => $field
-					);
-				my $count = $pathfinding->runcount;
+				my $closest_start = $field->closestWalkableSpot(\%start, 1);
+				my $closest_dest = $field->closestWalkableSpot(\%dest, 1);
+				my $count;
+				
+				if (!defined $closest_start || !defined $closest_dest) {
+					$count = 0;
+				} else {
+					$pathfinding->reset(
+						start => $closest_start,
+						dest  => $closest_dest,
+						field => $field
+						);
+					$count = $pathfinding->runcount;
+				}
 				$portals_los{$spawn}{$portal} = ($count >= 0) ? $count : 0;
 				debug "LOS in $map from $start{x},$start{y} to $dest{x},$dest{y}: $portals_los{$spawn}{$portal}\n";
 			}
@@ -4367,7 +4598,7 @@ sub compilePortals {
 	# Print warning for missing fields
 	if (%missingMap) {
 		warning T("----------------------------Error Summary----------------------------\n");
-		warning TF("Missing: %s.fld\n", $_) foreach (sort keys %missingMap);
+		warning TF("Missing: %s.fld2\n", $_) foreach (sort keys %missingMap);
 		warning T("Note: LOS information for the above listed map(s) will be inaccurate;\n" .
 			"      however it is safe to ignore if those map(s) are not used\n");
 		warning "---------------------------------------------------------------------\n";
@@ -4816,7 +5047,7 @@ sub checkSelfCondition {
 	# not working yet
 	if ($config{$prefix."_whenWater"}) {
 		my $pos = calcPosition($char);
-		return 0 if ($field->getBlock($pos->{x}, $pos->{y}) != Field::WALKABLE_WATER);
+		return 0 unless ($field->isWater($pos->{x}, $pos->{y}));
 	}
 
 	if ($config{$prefix.'_devotees'}) {

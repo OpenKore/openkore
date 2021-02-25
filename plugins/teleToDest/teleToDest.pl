@@ -224,7 +224,7 @@ sub check_distance {
 			start => $myPos,
 			dest  => $myDest,
 			field => $field
-			);
+		);
 		$dist = $pathfinding->runcount;
 	}
 	return 1 if ($dist > $config{teleToDestDistance});

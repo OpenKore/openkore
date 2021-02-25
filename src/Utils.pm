@@ -38,9 +38,9 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(calcPosFromTime calcPosition calcTime checkMovementDirection countSteps distance
+	qw(calcPosFromTime calcPosition fieldAreaCorrectEdges getSquareEdgesFromCoord calcStepsWalkedFromTimeAndRoute calcTimeFromRoute calcTime checkMovementDirection countSteps distance
 	intToSignedInt intToSignedShort
-	blockDistance getVector moveAlong moveAlongVector
+	blockDistance specifiedBlockDistance adjustedBlockDistance getVector moveAlong moveAlongVector
 	normalize vectorToDegree max min round ceil),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
@@ -78,6 +78,9 @@ sub calcPosFromTime {
 	my $pos_toY = $$pos_to{y};
 	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
 	my $s = 0; # step
+	
+	my $time_needed_ortogonal = $speed;
+    my $time_needed_diagonal = sqrt(2) * $speed;
 
 	my %result;
 	$result{x} = $pos_toX;
@@ -107,9 +110,9 @@ sub calcPosFromTime {
 		}
 
 		if ($stepType == 2) {
-			$time -= sqrt(2) / $speed;
+			$time -= $time_needed_diagonal;
 		} elsif ($stepType == 1) {
-			$time -= 1 / $speed;
+			$time -= $time_needed_ortogonal;
 		} else {
 			$s--;
 			last;
@@ -121,7 +124,7 @@ sub calcPosFromTime {
 	}
 
 	%result = moveAlong($pos, $pos_to, $s);
-	return %result;
+	return (\%result, $s);
 }
 
 ##
@@ -137,6 +140,9 @@ sub calcTime {
 	my $pos_toY = $$pos_to{y};
 	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
 	my $time = 0;
+	
+	my $time_needed_ortogonal = $speed;
+    my $time_needed_diagonal = sqrt(2) * $speed;
 
 	return if (!$speed); # Make sure $speed actually has a non-zero value...
 
@@ -159,9 +165,9 @@ sub calcTime {
 			$stepType++;
 		}
 		if ($stepType == 2) {
-			$time += sqrt(2) / $speed;
+			$time += $time_needed_diagonal;
 		} elsif ($stepType == 1) {
-			$time += 1 / $speed;
+			$time += $time_needed_ortogonal;
 		}
 	}
 	return $time;
@@ -207,6 +213,148 @@ sub calcPosition {
 		$result{y} = int sprintf("%.0f", $result{y}) if (!$float);
 		return \%result;
 	}
+}
+
+sub fieldAreaCorrectEdges {
+    my ($field, $x1, $y1, $x2, $y2) = @_;
+	
+	if ($x1 < 0) {
+		$x1 = 0;
+	}
+	
+	if ($y1 < 0) {
+		$y1 = 0;
+	}
+	
+	if ($x2 >= $field->width) {
+		$x2 = $field->width-1;
+	}
+	
+	if ($y2 >= $field->height) {
+		$y2 = $field->height-1;
+	}
+	
+	return ($x1, $y1, $x2, $y2);
+}
+
+sub getSquareEdgesFromCoord {
+    my ($field, $start, $dist_from_center) = @_;
+	
+	my ($min_x, $min_y, $max_x, $max_y) = fieldAreaCorrectEdges($field, ($start->{x} - $dist_from_center), ($start->{y} - $dist_from_center), ($start->{x} + $dist_from_center), ($start->{y} + $dist_from_center));
+	
+	return ($min_x, $min_y, $max_x, $max_y);
+}
+
+##
+# calcStepsWalkedFromTimeAndRoute(solution, speed, time_elapsed)
+# solution: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path, the first array element should be the current position.
+# speed: The actor speed in blocks / second.
+# time_elapsed: The amount of time that has passed since movement started.
+#
+# Returns in which step of solution the character currently is, including possibly step 0.
+#
+# Example:
+# my $steps_walked;
+# $steps_walked = calcStepsWalkedFromTimeAndRoute($solution, $speed, $time_elapsed)
+# print "You are currently at: $solution->[$steps_walked]{x} $solution->[$steps_walked]{y}\n";
+sub calcStepsWalkedFromTimeAndRoute {
+    my ($solution, $speed, $time_elapsed) = @_;
+
+    my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
+    my $current_step = 0; # step
+	
+	my %current_pos = ( x => $solution->[0]{x}, y => $solution->[0]{y} );
+    my %next_pos;
+	
+	my @steps = @{$solution}[1..$#{$solution}];
+	
+    my $dist = @steps;
+
+    my $time_needed_ortogonal = $speed;
+    my $time_needed_diagonal = sqrt(2) * $speed;
+    my $time_needed;
+
+    while ($current_step < $dist) {
+        %next_pos = ( x => $steps[$current_step]{x}, y => $steps[$current_step]{y} );
+
+        $stepType = 0;
+
+        if ($current_pos{x} != $next_pos{x}) {
+            $stepType++;
+        }
+
+        if ($current_pos{y} != $next_pos{y}) {
+            $stepType++;
+        }
+
+        if ($stepType == 2) {
+            $time_needed = $time_needed_diagonal;
+        } elsif ($stepType == 1) {
+            $time_needed = $time_needed_ortogonal;
+        }
+
+        if ($time_elapsed > $time_needed) {
+            $time_elapsed -= $time_needed;
+            %current_pos = %next_pos;
+            $current_step++;
+        } else {
+            last;
+        }
+    }
+
+    return $current_step;
+}
+
+##
+# calcTimeFromRoute(solution, speed)
+# solution: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path, the first array element should be the current position.
+# speed: The actor speed in blocks / second.
+#
+# Returns the amount of seconds to walk the given route with the given speed.
+sub calcTimeFromRoute {
+    my ($solution, $speed) = @_;
+
+    my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
+    my $current_step = 0; # step
+	
+	my %current_pos = ( x => $solution->[0]{x}, y => $solution->[0]{y} );
+    my %next_pos;
+	
+	my @steps = @{$solution}[1..$#{$solution}];
+	
+    my $dist = @steps;
+
+    my $time_needed_ortogonal = $speed;
+    my $time_needed_diagonal = sqrt(2) * $speed;
+    my $time_needed;
+
+	my $summed_time = 0;
+
+    while ($current_step < $dist) {
+        %next_pos = ( x => $steps[$current_step]{x}, y => $steps[$current_step]{y} );
+
+        $stepType = 0;
+
+        if ($current_pos{x} != $next_pos{x}) {
+            $stepType++;
+        }
+
+        if ($current_pos{y} != $next_pos{y}) {
+            $stepType++;
+        }
+
+        if ($stepType == 2) {
+            $time_needed = $time_needed_diagonal;
+        } elsif ($stepType == 1) {
+            $time_needed = $time_needed_ortogonal;
+        }
+		
+		$summed_time += $time_needed;
+		%current_pos = %next_pos;
+        $current_step++;
+    }
+
+    return $summed_time;
 }
 
 ##
@@ -333,6 +481,42 @@ sub blockDistance {
 
 	return max(abs($pos1->{x} - $pos2->{x}),
 	           abs($pos1->{y} - $pos2->{y}));
+}
+
+##
+# specifiedBlockDistance(pos1, pos2)
+# pos1, pos2: references to position hash tables.
+# Returns: array containing [diagonal block dist, ortogonal block dist]
+sub specifiedBlockDistance {
+	my ($pos1, $pos2) = @_;
+
+	my $xDistance = abs($pos1->{x} - $pos2->{x});
+	my $yDistance = abs($pos1->{y} - $pos2->{y});
+	
+	my $max = max($xDistance, $yDistance);
+	my $min = min($xDistance, $yDistance);
+	
+	my $orto = $max - $min;
+	
+	return ($min, $orto);
+}
+
+##
+# adjustedBlockDistance(pos1, pos2)
+# pos1, pos2: references to position hash tables.
+# Returns: the distance in "time to walk blocks" (in RO walking diagonally takes square root of 2 times longer than walking the same amount of cells orthogonally).
+#
+# Calculates the distance between pos1 and pos2.
+# This is used for e.g. walking time calculation.
+sub adjustedBlockDistance {
+	my ($pos1, $pos2) = @_;
+	
+	my $xDistance = abs($pos1->{x} - $pos2->{x});
+	my $yDistance = abs($pos1->{y} - $pos2->{y});
+	
+	my $dist = $xDistance + $yDistance - ((2-sqrt(2)) * min($xDistance, $yDistance));
+	
+	return $dist;
 }
 
 ##

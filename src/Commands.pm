@@ -4074,7 +4074,7 @@ sub cmdMove {
 				# map
 				$map_or_portal =~ s/^(\w{3})?(\d@.*)/$2/; # remove instance. is it possible to move to an instance? if not, we could throw an error here
 				# TODO: implement Field::sourceName function here once they are implemented there - 2013.11.26
-				my $file = $map_or_portal.'.fld';
+				my $file = $map_or_portal.'.fld2';
 				$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
 				$file .= ".gz" if (! -f $file); # compressed file
 				if ($maps_lut{"${map_or_portal}.rsw"} || -f $file) {
@@ -4874,10 +4874,10 @@ sub cmdPortalList {
 		#Command: portals add y_airport 143 43 y_airport 148 51 0 c r0 c r0
 		debug "Input: $args\n";
 		my ($srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY, $seq) = $args =~ /^add ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3}) ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3})(.*)$/; #CHECKING
-		my $srcfile = $srcMap.'.fld';
+		my $srcfile = $srcMap.'.fld2';
 		$srcfile = File::Spec->catfile($Settings::fields_folder, $srcfile) if ($Settings::fields_folder);
 		$srcfile .= ".gz" if (! -f $srcfile); # compressed file
-		my $dstfile = $dstMap.'.fld';
+		my $dstfile = $dstMap.'.fld2';
 		$dstfile = File::Spec->catfile($Settings::fields_folder, $dstfile) if ($Settings::fields_folder);
 		$dstfile .= ".gz" if (! -f $dstfile); # compressed file
 		error TF("Files '%s' or '%s' does not exist.\n", $srcfile, $dstfile) if (! -f $srcfile || ! -f $dstfile);
@@ -6156,7 +6156,7 @@ sub cmdUseSkill {
 		}
 		# This was the code for choosing a random location when x and y are not given:
 		# my $pos = calcPosition($char);
-		# my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2);
+		# my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2, $field);
 		# $pos = $positions[rand(@positions)];
 		# ($x, $y) = ($pos->{x}, $pos->{y});
 

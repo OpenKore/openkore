@@ -7831,6 +7831,8 @@ sub actor_movement_interrupted {
 	my $actor = Actor::get($args->{ID});
 	$actor->{pos} = {%coords};
 	$actor->{pos_to} = {%coords};
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = 0;
 	if ($actor->isa('Actor::You') || $actor->isa('Actor::Player')) {
 		$actor->{sitting} = 0;
 	}
@@ -10526,11 +10528,17 @@ sub monster_ranged_attack {
 	$coords2{y} = $args->{targetY};
 
 	my $monster = $monstersList->getByID($ID);
-	$monster->{pos_attack_info} = {%coords1} if ($monster);
+	if ($monster) {
+		$monster->{pos} = {%coords1};
+		$monster->{pos_to} = {%coords1};
+		$monster->{time_move} = time;
+		$monster->{time_move_calc} = 0;
+	}
 	$char->{pos} = {%coords2};
 	$char->{pos_to} = {%coords2};
-	debug "Received attack location - monster: $coords1{x},$coords1{y} - " .
-		"you: $coords2{x},$coords2{y}\n", "parseMsg_move", 2;
+	$char->{time_move} = time;
+	$char->{time_move_calc} = 0;
+	debug "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move", 2;
 }
 
 sub mvp_item {

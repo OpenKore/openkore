@@ -24,6 +24,7 @@ sub addSlave {
 		$actor->{configPrefix} = 'homunculus_';
 		$actor->{ai_attack_timeout} = 'ai_homunculus_attack';
 		$actor->{ai_attack_auto_timeout} = 'ai_homunculus_attack_auto';
+		$actor->{ai_route_adjust_timeout} = 'ai_homunculus_route_adjust';
 		$actor->{ai_standby_timeout} = 'ai_homunculus_standby';
 		$actor->{ai_dance_attack_melee_timeout} = 'ai_homunculus_dance_attack_melee';
 		$actor->{ai_attack_waitAfterKill_timeout} = 'ai_homunculus_attack_waitAfterKill';
@@ -34,6 +35,7 @@ sub addSlave {
 		$actor->{configPrefix} = 'mercenary_';
 		$actor->{ai_attack_timeout} = 'ai_mercenary_attack';
 		$actor->{ai_attack_auto_timeout} = 'ai_mercenary_attack_auto';
+		$actor->{ai_route_adjust_timeout} = 'ai_mercenary_route_adjust';
 		$actor->{ai_standby_timeout} = 'ai_mercenary_standby';
 		$actor->{ai_dance_attack_melee_timeout} = 'ai_mercenary_dance_attack_melee';
 		$actor->{ai_dance_attack_ranged_timeout} = 'ai_mercenary_dance_attack_ranged';

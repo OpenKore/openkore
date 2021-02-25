@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 #include <math.h>
 #include "algorithm.h"
 
@@ -7,11 +8,9 @@
 extern "C" {
 #endif /* __cplusplus */
 
-
-#define SOLUTION_MAX 5000
-#define FULL_LIST_MAX 480000
-#define OPEN_LIST_MAX 160000
-#define LOOKUPS_MAX 200000
+#define NONE 0
+#define OPEN 1
+#define CLOSED 2
 
 #ifdef WIN32
 	#include <windows.h>
@@ -29,36 +28,6 @@ extern "C" {
 
 /*******************************************/
 
-
-static unsigned char *default_weight = NULL;
-
-
-static inline int
-QuickfindFloatMax(QuicksortFloat* a, int val, int lo, int hi)
-{
-	int x = (lo+hi)>>1;
-	if (val == a[x].val)
-		return x;
-	if (x != hi - 1 && val < a[x].val)
-		return QuickfindFloatMax(a, val, x, hi);
-	if (x != lo && val > a[x].val)
-		return QuickfindFloatMax(a, val, lo, x);
-	if (val < a[x].val)
-		return x+1;
-	else
-		return x;
-}
-
-static inline char
-CalcPath_getMap(const char *map, unsigned long width, unsigned long height, pos *p) {
-	if (p->x >= width || p->y >= height) {
-		return 0;
-	} else {
-		return map[(p->y*width)+p->x];
-	}
-}
-
-
 // Create a new, empty pathfinding session.
 // You must initialize it with CalcPath_init()
 CalcPath_session *
@@ -67,239 +36,398 @@ CalcPath_new ()
 	CalcPath_session *session;
 
 	session = (CalcPath_session*) malloc (sizeof (CalcPath_session));
-	session->first_time = 1;
-	session->map_sv = NULL;
-	session->weight_sv = NULL;
+	
+	session->initialized = 0;
+	session->run = 0;
+	
 	return session;
 }
 
 // Create a new pathfinding session, or reset an existing session.
-// Resetting is preferred over destroying and creating, because it saves
-// unnecessary memory allocations, thus improving performance.
-CalcPath_session *
-CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* weight,
-	unsigned long width, unsigned long height,
-	pos * start, pos * dest, unsigned long time_max)
+// Resetting is preferred over destroying and creating, because it saves unnecessary memory allocations, thus improving performance.
+void
+CalcPath_init (CalcPath_session *session)
 {
-	if (!session)
-		session = CalcPath_new ();
+	// Allocate enough memory in currentMap to hold all nodes in the map
+	// Here we use calloc instead of malloc (calloc sets all memory allocated to 0's) so all uninitialized cells have whichlist set to NONE
+	session->currentMap = (Node*) calloc(session->height * session->width, sizeof(Node));
 	
-	pos_list * solution = &session->solution;
-	pos_ai_list * fullList = &session->fullList;
-	index_list * openList = &session->openList;
-	lookups_list * lookup = &session->lookup;
+	unsigned long goalAdress = (session->endY * session->width) + session->endX;
+	Node* goal = &session->currentMap[goalAdress];
+	goal->x = session->endX;
+	goal->y = session->endY;
+	goal->nodeAdress = goalAdress;
 	
-	unsigned long i;
-	int index;
-
-	session->width = width;
-	session->height = height;
-	if (!session->first_time) {
-		free (session->start);
-		free (session->dest);
-	}
-	session->start = start;
-	session->dest = dest;
-	session->time_max = time_max;
-
-	session->map = map;
-	if (weight)
-		session->weight = weight;
-	else {
-		if (!default_weight) {
-			default_weight = (unsigned char *) malloc(256);
-			default_weight[0] = 255;
-			memset(default_weight + 1, 1, 255);
-		}
-		session->weight = (const unsigned char *) default_weight;
-	}
-
-	if (session->first_time) {
-		session->solution.array = (pos *) malloc(SOLUTION_MAX * sizeof(pos));
-		session->fullList.array = (pos_ai*) malloc(FULL_LIST_MAX*sizeof(pos_ai));
-		session->openList.array = (QuicksortFloat*) malloc(OPEN_LIST_MAX*sizeof(QuicksortFloat));
-		session->lookup.array = (int*) malloc(LOOKUPS_MAX*sizeof(int));
-	}
-
-	solution->size = 0;
-	openList->size = 1;
-	fullList->size = 1;
-	fullList->array[0].p = *start;
-	fullList->array[0].g = 0;
-	fullList->array[0].f = abs(start->x - dest->x) + abs(start->y - dest->y);
-	fullList->array[0].parent = -1;
-	openList->array[0].val = fullList->array[0].f;
-	openList->array[0].index = 0;
-	for (i = 0; i < width * height;i++) {
-		lookup->array[i] = 999999;
-	}
-	index = fullList->array[0].p.y*width + fullList->array[0].p.x;
-	lookup->array[index] = 0;
-	lookup->size = width*height;
-
-	session->first_time = 0;
-	return session;
+	unsigned long startAdress = (session->startY * session->width) + session->startX;
+	Node* start = &session->currentMap[startAdress];
+	start->x = session->startX;
+	start->y = session->startY;
+	start->nodeAdress = startAdress;
+	start->h = heuristic_cost_estimate(start->x, start->y, goal->x, goal->y);
+	start->f = start->h;
+	
+	session->initialized = 1;
 }
 
-/*
- * Return values:
- * -2 = session not initialized (you must call CalcPath_init() first)
- * -1 = failed (no solution found)
- *  0 = timeout (pathfinding not yet complete; run this function again to resume)
- *  1 = finished
- */
-int
-CalcPath_pathStep(CalcPath_session * session)
+// The actual A* pathfinding algorithm, loops until it finds a path or runs out of time.
+int 
+CalcPath_pathStep (CalcPath_session *session)
 {
-	pos mappos;
-	int newg;
-	unsigned char successors_size;
-	int j, cur, successors_start,suc, found,index;
-	unsigned long timeout = (unsigned long) GetTickCount();
-	unsigned int loop = 0;
-
-	pos_list * solution = &session->solution;
-	pos_ai_list *fullList = &session->fullList;
-	index_list *openList = &session->openList;
-	lookups_list *lookup = &session->lookup;
-	const char* map = session->map;
-	const unsigned char* weight  = session->weight;
-	unsigned long width = session->width;
-	unsigned long height = session->height;
-	pos * start = session->start;
-	pos * dest = session->dest;
-	unsigned long time_max = session->time_max;
-
-	if (session->first_time) {
+	if (!session->initialized) {
+		printf("[pathfinding run error] You must call 'reset' before 'run'.\n");
 		return -2;
 	}
-
-	if (start == NULL && dest == NULL) {
-		return -1;
+	
+	Node* start = &session->currentMap[((session->startY * session->width) + session->startX)];
+	Node* goal = &session->currentMap[((session->endY * session->width) + session->endX)];
+	
+	if (!session->run) {
+		session->run = 1;
+		session->openListSize = 0;
+		// Allocate enough memory in openList to hold the adress of all nodes in the map
+		session->openList = (unsigned long*) malloc((session->height * session->width) * sizeof(unsigned long));
+		
+		// To initialize the pathfinding add only the start node to openList
+		openListAdd (session, start);
 	}
-	if (CalcPath_getMap(map, width, height, start) == 0 || CalcPath_getMap(map, width, height, dest) ==  0) {
-		return -1;
+	
+	// If the start node and goal node are the same return a valid path with length 0
+	if (goal->nodeAdress == start->nodeAdress) {
+		session->solution_size = 0;
+		return 1;
 	}
+	
+	Node* currentNode;
+	Node* neighborNode;
+	
+	short i;
+	
+	// All possible directions the character can move (in order: north, south, east, west, northeast, southeast, southwest, northwest)
+	short i_x[8] = {0, 0, 1, -1, 1, 1, -1, -1};
+	short i_y[8] = {1, -1, 0, 0, 1, -1, -1, 1};
+	
+	int neighbor_x;
+	int neighbor_y;
+	unsigned long neighbor_adress;
+	unsigned long distanceFromCurrent;
+	
+	unsigned int g_score = 0;
+	
+	unsigned long timeout = (unsigned long) GetTickCount();
+	int loop = 0;
+	
 	while (1) {
-		loop++;
-		if (loop == 50) {
-			if (GetTickCount() - timeout > time_max)
-				return 0;
-			else
-				loop = 0;
-		}
-
-		//get next from the list
-		if (openList->size == 0) {
-			//failed!
+		// If the openList is empty no path exists
+		if (session->openListSize == 0) {
 			return -1;
 		}
-		openList->size--;
-		cur = openList->array[openList->size].index;
+		
+		// Every 100th loop check if we have ran out if time
+		loop++;
+		if (loop == 100) {
+			if (GetTickCount() - timeout > session->time_max) {
+				printf("[pathfinding run error] Pathfinding ended before provided time.\n");
+				return -3;
+			} else
+				loop = 0;
+		}
+		
+		// Set currentNode to the top node in openList, and remove it from openList.
+		currentNode = openListGetLowest (session);
 
-		//has higher g value than another with same state?
-		index = fullList->array[cur].p.y*width + fullList->array[cur].p.x;
-		if (fullList->array[cur].g > lookup->array[index])
-			continue;
-
-		//check if finished
-		if (dest->x == fullList->array[cur].p.x && dest->y == fullList->array[cur].p.y) {
-			do {
-				solution->array[solution->size] = fullList->array[cur].p;
-				cur = fullList->array[cur].parent;
-				solution->size++;
-			} while (cur != -1);
+		// If currentNode is the goal we have reached the destination, reconstruct and return the path.
+		if (goal->predecessor) {
+			//return path
+			reconstruct_path(session, goal, start);
 			return 1;
 		}
+		
+		// Loop between all neighbors
+		for (i = 0; i <= 7; i++)
+		{
+			neighbor_x = currentNode->x + i_x[i];
+			neighbor_y = currentNode->y + i_y[i];
 
-		//Get successors
-		successors_start = fullList->size;
-		successors_size = 0;
-		mappos.x = fullList->array[cur].p.x-1;
-		mappos.y = fullList->array[cur].p.y;
-		if (CalcPath_getMap(map, width, height, &mappos) != 0
-			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
-			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
-			fullList->array[fullList->size].p = mappos;
-			fullList->size++;
-			successors_size++;
-		}
-
-		mappos.x = fullList->array[cur].p.x;
-		mappos.y = fullList->array[cur].p.y-1;
-		if (CalcPath_getMap(map, width, height, &mappos) != 0
-			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
-			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
-			fullList->array[fullList->size].p = mappos;
-			fullList->size++;
-			successors_size++;
-		}
-
-		mappos.x = fullList->array[cur].p.x+1;
-		mappos.y = fullList->array[cur].p.y;
-		if (CalcPath_getMap(map, width, height, &mappos) != 0
-			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
-			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
-			fullList->array[fullList->size].p = mappos;
-			fullList->size++;
-			successors_size++;
-		}
-
-		mappos.x = fullList->array[cur].p.x;
-		mappos.y = fullList->array[cur].p.y+1;
-		if (CalcPath_getMap(map, width, height, &mappos) != 0
-			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
-			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
-			fullList->array[fullList->size].p = mappos;
-			fullList->size++;
-			successors_size++;
-		}
-
-		//do the step
-		for (j=0;j < successors_size;j++) {
-			suc = successors_start+j;
-			newg = fullList->array[cur].g + weight[CalcPath_getMap(map, width, height, &fullList->array[suc].p)];
-			index = fullList->array[suc].p.y*width + fullList->array[suc].p.x;
-			if (newg >= lookup->array[index])
+			if (neighbor_x > session->max_x || neighbor_y > session->max_y || neighbor_x < session->min_x || neighbor_y < session->min_y) {
 				continue;
-
-			fullList->array[suc].g = newg;
-			fullList->array[suc].f = newg + abs(fullList->array[suc].p.x - dest->x) + abs(fullList->array[suc].p.y - dest->y);
-			fullList->array[suc].parent = cur;
-
-			lookup->array[index] = fullList->array[suc].g;
-
-			if (openList->size > 0)
-				found = QuickfindFloatMax(openList->array, fullList->array[suc].f, 0, openList->size);
-			else
-				found = 0;
-
-			if (openList->size - found > 0) {
-				memmove(openList->array+found+1,openList->array+found, sizeof(QuicksortFloat)*(openList->size - found));
 			}
 
-			openList->array[found].index = suc;
-			openList->array[found].val = fullList->array[suc].f;
-			openList->size++;
+			neighbor_adress = (neighbor_y * session->width) + neighbor_x;
+
+			// Unwalkable nodes have weight -1, if a neighbor is unwalkable ignore it.
+			if (session->map_base_weight[neighbor_adress] == -1) {
+				continue;
+			}
+			
+			neighborNode = &session->currentMap[neighbor_adress];
+			
+			// If a neighbor is in closedList ignore it, it has already been expanded and has its lowest possible g_score
+			if (neighborNode->whichlist == CLOSED) {
+				continue;
+			}
+			
+			// First 4 neighbors in the list are in a ortogonal path and the last 4 are in a diagonal path from currentNode.
+			if (i >= 4) {
+				// If neighborNode has a diagonal path from currentNode then we can only move to it if both ortogonal composite nodes are walkable. (example: To move to the northeast both north and east must be walkable)
+			   if (session->map_base_weight[(currentNode->y * session->width) + neighbor_x] == -1 || session->map_base_weight[(neighbor_y * session->width) + currentNode->x] == -1) {
+					continue;
+				}
+				// We use 14 as the diagonal movement weight
+				distanceFromCurrent = 14;
+			} else {
+				// We use 10 for ortogonal movement weight
+				distanceFromCurrent = 10;
+			}
+			
+			// If avoidWalls is true we add weight to cells near walls to disencourage the algorithm to move to them.
+			if (session->avoidWalls) {
+				distanceFromCurrent += session->map_base_weight[neighbor_adress];
+			}
+			
+			// g_score is the summed weight of all nodes from start node to neighborNode, which is the g_score of currentNode + the weight to move from currentNode to neighborNode.
+			g_score = currentNode->g + distanceFromCurrent;
+			
+			// If neighborNode is not in openList neither in closedList it has not been reached yet, initialize it and add it to openList
+			if (neighborNode->whichlist == NONE) {
+				neighborNode->x = neighbor_x;
+				neighborNode->y = neighbor_y;
+				neighborNode->nodeAdress = neighbor_adress;
+				neighborNode->predecessor = currentNode->nodeAdress;
+				neighborNode->g = g_score;
+				neighborNode->h = heuristic_cost_estimate(neighborNode->x, neighborNode->y, session->endX, session->endY);
+				neighborNode->f = neighborNode->g + neighborNode->h;
+				openListAdd (session, neighborNode);
+			
+			// If neighborNode is in a list it has to be in openList, since we cannot access nodes in closedList. 
+			} else {
+				// Check if we have found a shorter path to neighborNode, if so update it to have currentNode as its predecessor.
+				if (g_score < neighborNode->g) {
+					neighborNode->predecessor = currentNode->nodeAdress;
+					neighborNode->g = g_score;
+					neighborNode->f = neighborNode->g + neighborNode->h;
+					// Here we could remove neighborNode from openList and add it again to get it to the right position, but reajusting it saves time.
+					reajustOpenListItem (session, neighborNode);
+				}
+			}
 		}
 	}
-	return 0;
+	return -1;
 }
 
+// The heuristic used is diagonal distance.
+int
+heuristic_cost_estimate (int currentX, int currentY, int goalX, int goalY)
+{
+	int xDistance = abs(currentX - goalX);
+	int yDistance = abs(currentY - goalY);
+	
+	int hScore = (10 * (xDistance + yDistance)) - (6 * ((xDistance > yDistance) ? yDistance : xDistance));
+	
+	return hScore;
+}
+
+// Starts from goal node and each loop changes to the current node predecessor until it reaches the start node, increasing solution size by 1 each loop.
+void
+reconstruct_path(CalcPath_session *session, Node* goal, Node* start)
+{
+	Node* currentNode = goal;
+	
+	session->solution_size = 0;
+	while (currentNode->nodeAdress != start->nodeAdress)
+	{
+		currentNode = &session->currentMap[currentNode->predecessor];
+		session->solution_size++;
+	}
+}
+
+// Openlist is a binary heap of min-heap type
+// Each member in openList is the adress (nodeAdress) of a node in the map (session->currentMap)
+
+// Add node 'currentNode' to openList
+void 
+openListAdd (CalcPath_session *session, Node* currentNode)
+{
+	// Index will be 1 + last index in openList, which is also its size
+	// Save in currentNode its index in openList
+	currentNode->openListIndex = session->openListSize;
+	currentNode->whichlist = OPEN;
+	
+	// Defines openList[index] to currentNode adress
+	session->openList[currentNode->openListIndex] = currentNode->nodeAdress;
+	
+	// Increses openListSize by 1, since we just added a new member
+	session->openListSize++;
+	
+	long parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
+	Node* parentNode;
+	
+	// Repeat while currentNode still has a parent node, otherwise currentNode is the top node in the heap
+	while (parentIndex >= 0) {
+		
+		parentNode = &session->currentMap[session->openList[parentIndex]];
+		
+		// If parent node is bigger than currentNode, exchange their positions
+		if (parentNode->f > currentNode->f) {
+			// Changes the node adress of openList[currentNode->openListIndex] (which is 'currentNode') to that of openList[parentIndex] (which is the current parent of 'currentNode')
+			session->openList[currentNode->openListIndex] = session->openList[parentIndex];
+			
+			// Changes openListIndex of the current parent of 'currentNode' to that of 'currentNode' since they exchanged positions
+			parentNode->openListIndex = currentNode->openListIndex;
+			
+			// Changes the node adress of openList[parentIndex] (which is the current parent of 'currentNode') to that of openList[currentNode->openListIndex] (which is 'currentNode')
+			session->openList[parentIndex] = currentNode->nodeAdress;
+			
+			// Changes openListIndex of 'currentNode' to that of the current parent of 'currentNode' since they exchanged positions
+			currentNode->openListIndex = parentIndex;
+			
+			// Updates parentIndex to that of the current parent of 'currentNode'
+			parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
+			
+		} else {
+			break;
+		}
+	}
+}
+
+void 
+reajustOpenListItem (CalcPath_session *session, Node* currentNode)
+{
+	long parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
+	Node* parentNode;
+	
+	// Repeat while currentNode still has a parent node, otherwise currentNode is the top node in the heap
+	while (parentIndex >= 0) {
+		
+		parentNode = &session->currentMap[session->openList[parentIndex]];
+		
+		// If parent node is bigger than currentNode, exchange their positions
+		if (parentNode->f > currentNode->f) {
+			// Changes the node adress of openList[currentNode->openListIndex] (which is 'currentNode') to that of openList[parentIndex] (which is the current parent of 'currentNode')
+			session->openList[currentNode->openListIndex] = session->openList[parentIndex];
+			
+			// Changes openListIndex of the current parent of 'currentNode' to that of 'currentNode' since they exchanged positions
+			parentNode->openListIndex = currentNode->openListIndex;
+			
+			// Changes the node adress of openList[parentIndex] (which is the current parent of 'currentNode') to that of openList[currentNode->openListIndex] (which is 'currentNode')
+			session->openList[parentIndex] = currentNode->nodeAdress;
+			
+			// Changes openListIndex of 'currentNode' to that of the current parent of 'currentNode' since they exchanged positions
+			currentNode->openListIndex = parentIndex;
+			
+			// Updates parentIndex to that of the current parent of 'currentNode'
+			parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
+			
+		} else {
+			break;
+		}
+	}
+}
+
+Node* 
+openListGetLowest (CalcPath_session *session)
+{
+	session->openListSize--;
+	
+	Node* lowestNode = &session->currentMap[session->openList[0]];
+	
+	// Since it was decreaased, but the node was not removed yet, session->openListSize is now also the index of the last node in openList
+	// We move the last node in openList to this position and adjust it down as necessary
+	session->openList[lowestNode->openListIndex] = session->openList[session->openListSize];
+	
+	Node* movedNode;
+	
+	// Saves in movedNode that it now is the top node in openList
+	movedNode = &session->currentMap[session->openList[lowestNode->openListIndex]];
+	movedNode->openListIndex = lowestNode->openListIndex;
+	
+	// Saves in lowestNode that it is no longer in openList
+	lowestNode->whichlist = CLOSED;
+	lowestNode->openListIndex = 0;
+	
+	long smallerChildIndex;
+	Node* smallerChildNode;
+	
+	long rightChildIndex = 2 * movedNode->openListIndex + 2;
+	Node* rightChildNode;
+	
+	long leftChildIndex = 2 * movedNode->openListIndex + 1;
+	Node* leftChildNode;
+	
+	long lastIndex = session->openListSize-1;
+	
+	while (leftChildIndex <= lastIndex) {
+
+		//There are 2 children
+		if (rightChildIndex <= lastIndex) {
+			
+			rightChildNode = &session->currentMap[session->openList[rightChildIndex]];
+			leftChildNode = &session->currentMap[session->openList[leftChildIndex]];
+			
+			if (rightChildNode->f > leftChildNode->f) {
+				smallerChildIndex = leftChildIndex;
+			} else {
+				smallerChildIndex = rightChildIndex;
+			}
+		
+		//There is 1 children
+		} else {
+			smallerChildIndex = leftChildIndex;
+		}
+		
+		smallerChildNode = &session->currentMap[session->openList[smallerChildIndex]];
+		
+		if (movedNode->f > smallerChildNode->f) {
+			
+			// Changes the node adress of openList[movedNode->openListIndex] (which is 'movedNode') to that of openList[smallerChildIndex] (which is the current child of 'movedNode')
+			session->openList[movedNode->openListIndex] = smallerChildNode->nodeAdress;
+			
+			// Changes openListIndex of the current child of 'movedNode' to that of 'movedNode' since they exchanged positions
+			smallerChildNode->openListIndex = movedNode->openListIndex;
+			
+			// Changes the node adress of openList[smallerChildIndex] (which is the current child of 'movedNode') to that of openList[movedNode->openListIndex] (which is 'movedNode')
+			session->openList[smallerChildIndex] = movedNode->nodeAdress;
+			
+			// Changes openListIndex of 'movedNode' to that of the current child of 'movedNode' since they exchanged positions
+			movedNode->openListIndex = smallerChildIndex;
+			
+			// Updates rightChildIndex and leftChildIndex to those of the current children of 'movedNode'
+			rightChildIndex = 2 * movedNode->openListIndex + 2;
+			leftChildIndex = 2 * movedNode->openListIndex + 1;
+			
+		} else {
+			break;
+		}
+	}
+	
+	return lowestNode;
+}
+
+// Frees the memory allocated by currentMap
+void
+free_currentMap (CalcPath_session *session)
+{
+	free(session->currentMap);
+}
+
+// Frees the memory allocated by openList
+void
+free_openList (CalcPath_session *session)
+{
+	free(session->openList);
+}
+
+// Garantees that all memory allocations have been freed the pathfinding object is destroyed
 void
 CalcPath_destroy (CalcPath_session *session)
 {
-	if (!session->first_time) {
-		free (session->start);
-		free (session->dest);
-		free (session->solution.array);
-		free (session->fullList.array);
-		free (session->openList.array);
-		free (session->lookup.array);
+	if (session->initialized) {
+		free(session->currentMap);
 	}
-	free (session);
+	if (session->run) {
+		free(session->openList);
+	}
+	free(session);
 }
-
 
 #ifdef __cplusplus
 }
