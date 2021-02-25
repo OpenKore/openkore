@@ -314,29 +314,14 @@ sub ai_getAggressives {
 	for my $monster (@$monstersList) {
 		my $control = Misc::mon_control($monster->name,$monster->{nameID}) if $type || !$wantArray;
 		my $ID = $monster->{ID};
-		next if (!timeOut($monster->{attack_failedLOS}, 6));
+		# Never attack monsters that we failed to get LOS with
+		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
 		if (($type && ($control->{attack_auto} == 2)) ||
 			(($monster->{dmgToYou} || $monster->{missedYou}) && Misc::checkMonsterCleanness($ID)) ||
 			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty})) &&
 			timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout}))
 		{
-			# Remove monsters that are considered forced agressive (when set to 2 on Mon_Control)
-			# but has not yet been damaged or attacked by party AND currently has no LOS
-			# if this is not done, Kore will keep trying infinitely attack targets set to aggro but who
-			# has no Line of Sight (ex.: GH Cemitery when on a higher position seeing an aggro monster in lower levels).
-			# The other parameters are re-checked along, so you can continue to attack a monster who has
-			# already been hit but lost the line for some reason.
-			# Also, check if the forced aggressive is a clean target when it has not marked as "yours".
-			my $myPos = calcPosition($char);
-			my $pos = calcPosition($monster);
-
-			next if (($type && $control->{attack_auto} == 2)
-				&& (($config{'attackCanSnipe'}) ? !Misc::checkLineSnipable($myPos, $pos) : (!Misc::checkLineWalkable($myPos, $pos) || !Misc::checkLineSnipable($myPos, $pos)))
-				&& !$monster->{dmgToYou} && !$monster->{missedYou}
-				&& ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty}))
-				);
-
 			# Continuing, check whether the forced Agro is really a clean monster;
 			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
 
@@ -382,21 +367,14 @@ sub ai_slave_getAggressives {
 		my $control = Misc::mon_control($monster->name,$monster->{nameID}) if $type || !$wantArray;
 		my $ID = $monster->{ID};
 		# Never attack monsters that we failed to get LOS with
-		next if (!timeOut($monster->{attack_failedLOS}, 6));
+		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
 		if ((($type && ($control->{attack_auto} == 2)) ||
 			(($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) && Misc::checkMonsterCleanness($ID))) &&
 			timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}))
 		{
-			my $myPos = calcPosition($slave);
 			my $pos = calcPosition($monster);
-
 			next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
-
-			next if (($type && $control->{attack_auto} == 2)
-				&& (($config{$slave->{configPrefix}.'attackCanSnipe'}) ? !Misc::checkLineSnipable($myPos, $pos) : (!Misc::checkLineWalkable($myPos, $pos) || !Misc::checkLineSnipable($myPos, $pos)))
-				&& !$monster->{dmgToPlayer}{$slave->{ID}} && !$monster->{missedToPlayer}{$slave->{ID}} && !$monster->{dmgFromPlayer}{$slave->{ID}} && !$monster->{missedFromPlayer}{$slave->{ID}}
-				);
 
 			# Continuing, check whether the forced Agro is really a clean monster;
 			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
