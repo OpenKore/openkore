@@ -210,19 +210,20 @@ conf.Finish()
 
 # Standard environment for programs
 env['CCFLAGS'] = [] + EXTRA_COMPILER_FLAGS
+env['LINKFLAGS'] = []
 
 if win32:
 	import platform
-	
+	# have to use -static-libgcc while compiling with mingw’s g++ to eliminate the dependency on LIBGCC_S_SJLJ-1.DLL
+	env['LINKFLAGS'] += ['-static-libgcc']
 	if "64" in platform.machine():
 		env['CCFLAGS'] += ['-fpermissive', '-DWINx86_64']
 
-env['LINKFLAGS'] = []
+
 env['LIBPATH'] = [] + EXTRA_LIBRARY_DIRECTORIES
 env['LIBS'] = []
 env['CPPDEFINES'] = []
-env['CPPPATH'] = [] + EXTRA_INCLUDE_DIRECTORIES    
-env['LINKFLAGS'] += ['-static-libgcc']
+env['CPPPATH'] = [] + EXTRA_INCLUDE_DIRECTORIES
 if cygwin:
 	env['CCFLAGS'] += ['-mno-cygwin']
 	env['LINKFLAGS'] += ['-mno-cygwin']
