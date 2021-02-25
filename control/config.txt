@@ -78,7 +78,6 @@ attackUseWeapon 1
 attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 1
-attackRouteMaxTargetDistance 13
 attackRouteMaxPathDistance 13
 attackLooters 0
 attackChangeTarget 1
@@ -223,6 +222,7 @@ runFromTarget 0
 runFromTarget_dist 5
 runFromTarget_minStep 7
 runFromTarget_maxStep 9
+runFromTarget_maxPathDistance 13
 
 saveMap
 saveMap_warpToBuyOrSell 1
@@ -380,7 +380,6 @@ mercenary_attackDistanceAuto 0
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 1
-mercenary_attackRouteMaxTargetDistance 13
 mercenary_attackRouteMaxPathDistance 13
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
@@ -397,6 +396,7 @@ mercenary_runFromTarget 0
 mercenary_runFromTarget_dist 5
 mercenary_runFromTarget_minStep 7
 mercenary_runFromTarget_maxStep 9
+mercenary_runFromTarget_maxPathDistance 13
 
 mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
@@ -437,7 +437,6 @@ homunculus_attackDistanceAuto 0
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 1
-homunculus_attackRouteMaxTargetDistance 13
 homunculus_attackRouteMaxPathDistance 13
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
@@ -453,6 +452,7 @@ homunculus_runFromTarget 0
 homunculus_runFromTarget_dist 5
 homunculus_runFromTarget_minStep 7
 homunculus_runFromTarget_maxStep 9
+homunculus_runFromTarget_maxPathDistance 13
 
 homunculus_followDistanceMax 12
 homunculus_followDistanceMin 3

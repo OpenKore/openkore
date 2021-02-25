@@ -308,6 +308,8 @@ sub processAttack {
 		my $routeSeqindex = $slave->findAction("route");
 		my $routeArgs = $slave->args($routeSeqindex) if (defined $routeSeqindex);
 		my $target = Actor::get($ID);
+		my $realMyPos = calcPosition($slave);
+		my $realMonsterPos = calcPosition($target);
 
 		if (
 			$target->{type} ne 'Unknown' &&
@@ -328,7 +330,9 @@ sub processAttack {
 			$attackSeq->{monsterPos} &&
 			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
-			($attackSeq->{attackMethod}{distance} == 1 && $attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeleeAttack(calcPosition($slave), calcPosition($target)))
+			$attackSeq->{attackMethod}{maxDistance} == 1 &&
+			canReachMeleeAttack($realMyPos, $realMonsterPos) &&
+			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{$slave->{configPrefix}.'attackCheckLOS'} ||($config{$slave->{configPrefix}.'attackCheckLOS'} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})))
 		) {
 			debug "$slave target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
 			$slave->dequeue;
@@ -481,26 +485,8 @@ sub processAttack {
 				useTeleport(1);
 			}
 
-		} elsif (
-			# We are a ranged attacker without LOS
-			$config{$slave->{configPrefix}.'attackCheckLOS'} && $args->{attackMethod}{distance} > 1 &&
-			(!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}) || $realMonsterDist > $args->{attackMethod}{maxDistance})
-		) {
-			my $best_spot = meetingPosition_slave($slave, $target, $args->{attackMethod}{maxDistance});
-
-			# Move to the closest spot
-			my $msg = TF("%s has no LOS from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-			if ($best_spot) {
-				message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
-				$slave->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
-			} else {
-				$target->{attack_failedLOS} = time;
-				warning TF("%s; no acceptable place to stand\n", $msg);
-				$slave->dequeue;
-			}
-
 		} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
-			my $cell = get_kite_position($field, $slave, $target, $config{$slave->{configPrefix}.'runFromTarget_dist'}, ($config{$slave->{configPrefix}.'runFromTarget_minStep'} || 7), ($config{$slave->{configPrefix}.'runFromTarget_maxStep'} || 9), $char, $config{$slave->{configPrefix}.'followDistanceMax'});
+			my $cell = get_kite_position($field, $slave, $target, $config{$slave->{configPrefix}.'runFromTarget_dist'}, $config{$slave->{configPrefix}.'runFromTarget_minStep'}, $config{$slave->{configPrefix}.'runFromTarget_maxStep'}, $config{$slave->{configPrefix}.'attackCheckLOS'}, $config{$slave->{configPrefix}.'attackCanSnipe'}, $config{$slave->{configPrefix}.'runFromTarget_maxPathDistance'}, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
 			if ($cell) {
 				debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave';
 				$slave->args->{avoiding} = 1;
@@ -510,9 +496,9 @@ sub processAttack {
 			}
 
 		} elsif (
-			(($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
-			($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
-			!timeOut($args->{ai_attack_giveup})
+			# We are out of range
+			($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
+			($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})
 		) {
 			# The target monster moved; move to target
 			$args->{move_start} = time;
@@ -546,6 +532,45 @@ sub processAttack {
 					message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 					useTeleport(1);
 				}
+			}
+
+		} elsif (
+			# We are a ranged attacker in range without LOS
+			$args->{attackMethod}{maxDistance} > 1 &&
+			$config{$slave->{configPrefix}.'attackCheckLOS'} &&
+			!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
+		) {
+			my $best_spot = meetingPosition_slave($slave, $target, $args->{attackMethod}{maxDistance});
+
+			# Move to the closest spot
+			my $msg = TF("%s has no LOS from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+			if ($best_spot) {
+				message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
+				$slave->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+			} else {
+				$target->{attack_failedLOS} = time;
+				warning TF("%s; no acceptable place to stand\n", $msg);
+				$slave->dequeue;
+			}
+
+		} elsif (
+			# We are a melee attacker in range without LOS
+			$args->{attackMethod}{maxDistance} == 1 &&
+			$config{$slave->{configPrefix}.'attackCheckLOS'} &&
+			blockDistance($realMyPos, $realMonsterPos) == 2 &&
+			!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
+		) {
+			my $best_spot = meetingPosition_slave($slave, $target, $args->{attackMethod}{maxDistance});
+
+			# Move to the closest spot
+			my $msg = TF("%s has no LOS in melee from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+			if ($best_spot) {
+				message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
+				$slave->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+			} else {
+				$target->{attack_failedLOS} = time;
+				warning TF("%s; no acceptable place to stand\n", $msg);
+				$slave->dequeue;
 			}
 
 		} elsif ((!$config{$slave->{configPrefix}.'runFromTarget'} || $realMonsterDist >= $config{$slave->{configPrefix}.'runFromTarget_dist'})

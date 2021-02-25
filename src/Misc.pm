@@ -705,10 +705,9 @@ use constant AVOID_MASTER_BOUND => 2;
 #
 # Kite algorithm used in runFromTarget
 sub get_kite_position {
-	my ($field, $actor, $target, $min_dist_from_target, $move_distance_min, $move_distance_max, $master, $max_dist_to_master) = @_;
+	my ($field, $actor, $target, $min_dist_from_target, $move_distance_min, $move_distance_max, $checkLOS, $canSnipe, $maxPathDistance, $master, $max_dist_to_master) = @_;
 
 	my ($actor_pos, $enemy_pos, $master_pos);
-	my $pathfinding = new PathFinding;
 
 	# Calculate the current position of actor, target and master
 	$actor_pos = calcPosition($actor);
@@ -773,6 +772,23 @@ sub get_kite_position {
 			# Skip if the cell is not walkable or if it is too close to target
 			next if (!$field->isWalkable($current_cell{x}, $current_cell{y}));
 			next if (blockDistance(\%current_cell, $enemy_pos) < $min_dist_from_target);
+			
+			# The route should not exceed at any point $max_pathfinding_dist distance from the target.
+			my $solution = [];
+			my $dist = new PathFinding(
+				field => $field,
+				start => $actor_pos,
+				dest => \%current_cell,
+				avoidWalls => 0
+			)->run($solution);
+				
+			# It must be reachable and have at max $maxPathDistance of route distance to it from our current position.
+			next unless ($dist >= 0 && $dist <= $maxPathDistance);
+				
+			# It must have LOS to the target if that is active and we are ranged
+			if ($checkLOS) {
+				next unless ($field->checkLOS(\%current_cell, $enemy_pos, $canSnipe));
+			}
 
 			$current_cell{wall_dist} = ord(substr($field->{dstMap}, $current_cell{y} * $field->width + $current_cell{x}));
 			if ($current_cell{wall_dist} >= AVOID_WALLS) {
@@ -790,14 +806,6 @@ sub get_kite_position {
 					}
 				}
 			}
-
-			# Get rid of ridiculously large route distances (such as spots that are on a hill)
-			$pathfinding->reset(
-				field => $field,
-				start => $actor_pos,
-				dest => \%current_cell);
-			$current_cell{path_dist} = $pathfinding->runcount;
-			next if ($current_cell{path_dist} <= 0 || $current_cell{path_dist} > $move_distance_max * 2);
 
 			$current_cell{dist_dif} = distance(\%current_cell, $actor_pos) - distance(\%current_cell, $enemy_pos);
 			# If this is a valid cell but it is closer to target than to actor we could run into target while pathing to it
@@ -837,7 +845,7 @@ sub get_kite_position {
 	}
 
 	# Sort all the cells that were closer to target than to actor by distance difference
-	@best_not_distant_cells = sort { $a->{distance_dif} <=> $b->{distance_dif} } @best_not_distant_cells;
+	@best_not_distant_cells = sort { $a->{dist_dif} <=> $b->{dist_dif} } @best_not_distant_cells;
 
 	# And than add the lower priority list (now sorted) at the end of the normal priority list
 	my @cells = (@best_distant_cells, @best_not_distant_cells);
@@ -2588,7 +2596,6 @@ sub meetingPosition {
 		};
 	}
 	
-	my $attackRouteMaxTargetDistance = $config{attackRouteMaxTargetDistance};
 	my $attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance};
 	my $attackCanSnipe = $config{attackCanSnipe};
 	my $runFromTarget = $config{runFromTarget};
@@ -2666,8 +2673,8 @@ sub meetingPosition {
 					max_y => $max_pathfinding_y
 				)->run($solution);
 				
-				# 4. It must be reachable and have at max $attackRouteMaxTargetDistance of route distance to it from our current position.
-				next unless ($dist >= 0 && $dist <= $attackRouteMaxTargetDistance);
+				# 4. It must be reachable and have at max $attackRouteMaxPathDistance of route distance to it from our current position.
+				next unless ($dist >= 0 && $dist <= $attackRouteMaxPathDistance);
 				
 				# 5. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
 				if ($ranged && $checkLOS) {
@@ -2819,7 +2826,6 @@ sub meetingPosition_slave {
 		};
 	}
 	
-	my $attackRouteMaxTargetDistance = $config{$slave->{configPrefix}.'attackRouteMaxTargetDistance'};
 	my $attackRouteMaxPathDistance = $config{$slave->{configPrefix}.'attackRouteMaxPathDistance'};
 	my $attackCanSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
 	my $runFromTarget = $config{$slave->{configPrefix}.'runFromTarget'};
@@ -2885,8 +2891,8 @@ sub meetingPosition_slave {
 					max_y => $max_pathfinding_y
 				)->run($solution);
 				
-				# 4. It must be reachable and have at max $attackRouteMaxTargetDistance of route distance to it from our current position.
-				next unless ($dist >= 0 && $dist <= $attackRouteMaxTargetDistance);
+				# 4. It must be reachable and have at max $attackRouteMaxPathDistance of route distance to it from our current position.
+				next unless ($dist >= 0 && $dist <= $attackRouteMaxPathDistance);
 				
 				# 5. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
 				if ($ranged && $checkLOS) {

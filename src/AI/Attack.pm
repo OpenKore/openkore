@@ -86,7 +86,9 @@ sub process {
 			$attackSeq->{monsterPos} &&
 			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
-			($attackSeq->{attackMethod}{maxDistance} == 1 && canReachMeleeAttack($realMyPos, $realMonsterPos))
+			$attackSeq->{attackMethod}{maxDistance} == 1 &&
+			canReachMeleeAttack($realMyPos, $realMonsterPos) &&
+			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{attackCheckLOS} ||($config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})))
 		) {
 			debug "Target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
 			AI::dequeue;
@@ -404,28 +406,8 @@ sub main {
 			useTeleport(1);
 		}
 
-	} elsif (
-		# We are a ranged attacker without LOS
-		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 1 &&
-		(!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe}) || $realMonsterDist > $args->{attackMethod}{maxDistance})
-	) {
-		my $best_spot = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
-
-		# Move to the closest spot
-		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-		if ($best_spot) {
-			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
-		} else {
-			warning TF("%s; no acceptable place to stand\n", $msg);
-			$target->{attack_failedLOS} = time;
-			AI::dequeue;
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "attack");
-		}
-
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-		my $cell = get_kite_position($field, $char, $target, $config{'runFromTarget_dist'}, ($config{'runFromTarget_minStep'} || 7), ($config{'runFromTarget_maxStep'} || 9));
+		my $cell = get_kite_position($field, $char, $target, $config{'runFromTarget_dist'}, $config{'runFromTarget_minStep'}, $config{'runFromTarget_maxStep'}, $config{'attackCheckLOS'}, $config{'attackCanSnipe'}, $config{'runFromTarget_maxPathDistance'});
 		if ($cell) {
 			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
@@ -433,14 +415,12 @@ sub main {
 		} else {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
-
+		
 	} elsif (
-		(($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
-		($args->{attackMethod}{maxDistance} == 1 && canReachMeleeAttack($realMyPos, $realMonsterPos) && $config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) <= 2 && !$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) ||
-		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})) &&
-		!timeOut($args->{ai_attack_giveup})
+		# We are out of range
+		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
+		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})
 	) {
-		# The target monster moved; move to target
 		$args->{move_start} = time;
 		$args->{monsterPos} = {%{$monsterPos}};
 		$args->{monsterLastMoveTime} = $target->{time_move};
@@ -474,6 +454,49 @@ sub main {
 			}
 		} else {
 			debug "Attack $char - successufully routing to $target\n", 'ai_attack';
+		}
+
+	} elsif (
+		# We are a ranged attacker in range without LOS
+		$args->{attackMethod}{maxDistance} > 1 &&
+		$config{attackCheckLOS} &&
+		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
+	) {
+		my $best_spot = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
+
+		# Move to the closest spot
+		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+		if ($best_spot) {
+			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
+			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+		} else {
+			warning TF("%s; no acceptable place to stand\n", $msg);
+			$target->{attack_failedLOS} = time;
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
+		}
+
+	} elsif (
+		# We are a melee attacker in range without LOS
+		$args->{attackMethod}{maxDistance} == 1 &&
+		$config{attackCheckLOS} &&
+		blockDistance($realMyPos, $realMonsterPos) == 2 &&
+		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
+	) {
+		my $best_spot = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
+
+		# Move to the closest spot
+		my $msg = TF("No LOS in melee from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+		if ($best_spot) {
+			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
+			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+		} else {
+			warning TF("%s; no acceptable place to stand\n", $msg);
+			$target->{attack_failedLOS} = time;
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
 		}
 
 	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
