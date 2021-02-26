@@ -1199,7 +1199,7 @@ sub map_loaded {
 		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 
 		# request to unfreeze char - alisonrag
-		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel};
+		$messageSender->sendBlockingPlayerCancel() if $masterServer->{blockingPlayerCancel}  || $self->{blockingPlayerCancel};
 	}
 
 	message(T("You are now in the game\n"), "connection");

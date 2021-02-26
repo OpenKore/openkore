@@ -686,6 +686,7 @@ sub new {
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
 		'0AE0' => ['login_error', 'V V Z20', [qw(type error date)]],
 		'0AE2' => ['open_ui', 'C V', [qw(type data)]],
+		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AE9' => ['login_pin_code_request', 'V a4 v2', [qw(seed accountID flag lock)]],
@@ -1584,6 +1585,15 @@ sub inventory_expansion_result {
 	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {
 		message TF("You can no longer expand the maximum possession limit."),"info";
 	}
+}
+
+sub received_login_token {
+	my ($self, $args) = @_;
+	# XKore mode 1 / 3.
+	return if ($self->{net}->version == 1);
+	my $master = $masterServers{$config{master}};
+	# rathena use 0064 not 0825
+	$messageSender->sendTokenToServer($config{'username'}, $config{'password'}, $master->{master_version}, $master->{version});
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;
