@@ -220,7 +220,7 @@ sub processFollow {
 		&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{isFollow})
 	) {
 		$slave->clear('move', 'route');
-		if (!$field->checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
+		if (!$field->canMove($slave->{pos_to}, $char->{pos_to})) {
 			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, isFollow => 1);
 			debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 

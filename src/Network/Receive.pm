@@ -5241,7 +5241,7 @@ sub character_moves {
 
 	return unless changeToInGameState();
 	makeCoordsFromTo($char->{pos}, $char->{pos_to}, $args->{coords});
-	my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
+	my $dist = blockDistance($char->{pos}, $char->{pos_to});
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
 	$char->{time_move} = time;
 	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);

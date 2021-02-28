@@ -169,7 +169,7 @@ dcOnJobLevel
 dcOnLevel
 
 follow 0
-followCheckLOS 0
+followCheckLOS 1
 followTarget
 followEmotion 1
 followEmotion_distance 4

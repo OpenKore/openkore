@@ -2382,7 +2382,7 @@ sub processFollow {
 				my $dist = blockDistance($char->{pos_to}, $player->{pos_to});
 				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
 					$args->{move_timeout} = time;
-					if ( $dist > 15 || ($config{followCheckLOS} && !$field->checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
+					if ($config{followCheckLOS} && !$field->canMove($char->{pos_to}, $player->{pos_to})) {
 						ai_route($field->baseName, $player->{pos_to}{x}, $player->{pos_to}{y},
 							attackOnRoute => 1,
 							distFromGoal => $config{followDistanceMin});
@@ -2535,7 +2535,7 @@ sub processFollow {
 		} elsif ($args->{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
 			my $pos = $ai_v{'temp'}{'warp_pos'};
 
-			if ($config{followCheckLOS} && !$field->checkLineWalkable($char->{pos_to}, $pos)) {
+			if ($config{followCheckLOS} && !$field->canMove($char->{pos_to}, $pos)) {
 				ai_route($field->baseName, $pos->{x}, $pos->{y},
 					attackOnRoute => 0); #distFromGoal => 0);
 			} else {
@@ -3316,9 +3316,9 @@ sub processAutoTeleport {
 			} elsif ($teleAuto < 0 && !$char->{dead}) {
 				my $pos = calcPosition($monsters{$_});
 				my $myPos = calcPosition($char);
-				my $dist = distance($pos, $myPos);
+				my $dist = blockDistance($pos, $myPos);
 				if ($dist <= abs($teleAuto)) {
-					if($field->checkLineWalkable($myPos, $pos) || $field->checkLineSnipable($myPos, $pos)) {
+					if($field->canMove($myPos, $pos)) {
 						message TF("Teleporting due to monster being too close %s\n", $monsters{$_}{name}), "teleport";
 						$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 						$timeout{ai_teleport_away}{time} = time;
