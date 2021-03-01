@@ -305,8 +305,6 @@ sub processAttack {
 		# We're on route to the monster; check whether the monster has moved
 		my $ID = $slave->args->{attackID};
 		my $attackSeq = ($slave->action eq "route") ? $slave->args (1) : $slave->args (2);
-		my $routeSeqindex = $slave->findAction("route");
-		my $routeArgs = $slave->args($routeSeqindex) if (defined $routeSeqindex);
 		my $target = Actor::get($ID);
 		my $realMyPos = calcPosition($slave);
 		my $realMonsterPos = calcPosition($target);
