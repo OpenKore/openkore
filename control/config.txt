@@ -169,7 +169,6 @@ dcOnJobLevel
 dcOnLevel
 
 follow 0
-followTarget testCreator
 followTarget
 followEmotion 1
 followEmotion_distance 4
