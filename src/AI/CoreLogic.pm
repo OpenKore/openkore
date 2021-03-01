@@ -2382,32 +2382,15 @@ sub processFollow {
 				my $dist = blockDistance($char->{pos_to}, $player->{pos_to});
 				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
 					$args->{move_timeout} = time;
-					if ($config{followCheckLOS} && !$field->canMove($char->{pos_to}, $player->{pos_to})) {
-						ai_route($field->baseName, $player->{pos_to}{x}, $player->{pos_to}{y},
-							attackOnRoute => 1,
-							distFromGoal => $config{followDistanceMin});
-					} else {
-						my (%vec, %pos);
-
-						stand() if ($char->{sitting});
-						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
-						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
-						$timeout{ai_sit_idle}{time} = time;
-
-						if($config{followRandom}) {
-							if(int(rand(2))) {
-								$pos{x} += int(rand($config{followRandomDistance})); }
-							else {
-								$pos{x} -= int(rand($config{followRandomDistance})); }
-
-							if(int(rand(2))) {
-								$pos{y} += int(rand($config{followRandomDistance})); }
-							else {
-								$pos{y} -= int(rand($config{followRandomDistance})); }
-						}
-
-						$char->sendMove(@pos{qw(x y)});
-					}
+					$args->{masterLastMoveTime} = $player->{time_move};
+					
+					ai_route(
+						$field->baseName,
+						$player->{pos_to}{x},
+						$player->{pos_to}{y},
+						attackOnRoute => 1,
+						distFromGoal => $config{followDistanceMin}
+					);
 				}
 			}
 
@@ -2424,6 +2407,32 @@ sub processFollow {
 					lookAtPosition($players{$args->{'ID'}}{'pos_to'}) if ($config{'followFaceDirection'});
 				}
 			}
+		}
+	} elsif (((AI::action eq "route" && AI::action(1) eq "follow") || (AI::action eq "move" && AI::action(2) eq "follow")) && !$args->{ai_follow_lost}) {
+		my $ID = $args->{ID};
+		my $player = $players{$ID};
+		if (
+			$args->{following} &&
+			$player &&
+			%{$player} &&
+			$player->{pos_to} &&
+			$args->{masterLastMoveTime} &&
+			$args->{masterLastMoveTime} != $player->{time_move}
+		) {
+			debug "Master $player has moved since we started routing to it - Adjusting route\n", "ai_attack";
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "route");
+
+			$args->{move_timeout} = time;
+			$args->{masterLastMoveTime} = $player->{time_move};
+			
+			ai_route(
+				$field->baseName,
+				$player->{pos_to}{x},
+				$player->{pos_to}{y},
+				attackOnRoute => 1,
+				distFromGoal => $config{followDistanceMin}
+			);
 		}
 	}
 
@@ -2545,7 +2554,6 @@ sub processFollow {
 				stand() if ($char->{sitting});
 				getVector(\%vec, $pos, $char->{pos_to});
 				moveAlongVector(\%pos_to, $char->{pos_to}, \%vec, $dist);
-				$timeout{ai_sit_idle}{time} = time;
 				$char->move(@pos_to{qw(x y)});
 				$pos->{x} = int $pos_to{x};
 				$pos->{y} = int $pos_to{y};
@@ -2592,7 +2600,7 @@ sub processFollow {
 ##### SITAUTO-IDLE #####
 sub processSitAutoIdle {
 	if ($config{sitAuto_idle}) {
-		if (!AI::isIdle && AI::action ne "follow") {
+		if (!AI::isIdle) {
 			$timeout{ai_sit_idle}{time} = time;
 		}
 
