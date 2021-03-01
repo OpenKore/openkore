@@ -3316,9 +3316,8 @@ sub processAutoTeleport {
 			} elsif ($teleAuto < 0 && !$char->{dead}) {
 				my $pos = calcPosition($monsters{$_});
 				my $myPos = calcPosition($char);
-				my $dist = distance($pos, $myPos);
-				if ($dist <= abs($teleAuto)) {
-					if($field->checkLineWalkable($myPos, $pos) || $field->checkLineSnipable($myPos, $pos)) {
+				if (blockDistance($pos, $myPos) <= abs($teleAuto)) {
+					if($field->checkLOS($pos, $myPos, 0)) {
 						message TF("Teleporting due to monster being too close %s\n", $monsters{$_}{name}), "teleport";
 						$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 						$timeout{ai_teleport_away}{time} = time;

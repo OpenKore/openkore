@@ -1970,7 +1970,7 @@ sub actor_display {
 	$actor->{pos_to} = {%coordsTo};
 	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed} && $args->{switch} ne "0086");
 	$actor->{time_move} = time;
-	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
+	$actor->{time_move_calc} = adjustedBlockDistance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
 	$actor->{len} = $args->{len} if $args->{len};
 	# 0086 would need that?
 	$actor->{object_type} = $args->{object_type} if (defined $args->{object_type});
@@ -5244,7 +5244,7 @@ sub character_moves {
 	my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
 	$char->{time_move} = time;
-	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);
+	$char->{time_move_calc} = calcTime($char->{pos}, $char->{pos_to}, ($char->{walk_speed} || 0.12));
 
 	# Correct the direction in which we're looking
 	my (%vec, $degree);
@@ -5723,7 +5723,7 @@ sub emoticon {
 		if ($index ne "") {
 			my $masterID = AI::args($index)->{ID};
 			if ($config{'followEmotion'} && $masterID eq $args->{ID} &&
-			       distance($char->{pos_to}, $player->{pos_to}) <= $config{'followEmotion_distance'})
+			       blockDistance($char->{pos_to}, $player->{pos_to}) <= $config{'followEmotion_distance'})
 			{
 				my %args = ();
 				$args{timeout} = time + rand (1) + 0.75;
@@ -10850,7 +10850,7 @@ sub skill_cast {
 		# If $dist is positive we are in range of the attack?
 		$coords{x} = $x;
 		$coords{y} = $y;
-		$dist = judgeSkillArea($skillID) - distance($char->{pos_to}, \%coords);
+		$dist = judgeSkillArea($skillID) - blockDistance($char->{pos_to}, \%coords);
 			$targetString = "location ($x, $y)";
 		undef $targetID;
 	} else {
