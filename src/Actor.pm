@@ -458,16 +458,6 @@ sub blockDistance {
 }
 
 ##
-# boolean $Actor->snipable()
-#
-# Returns whether or not you have snipable LOS to the actor.
-sub snipable {
-	my ($self) = @_;
-
-	return $field->checkLineSnipable($char->position, $self->position);
-}
-
-##
 # Actor $Actor->deepCopy()
 # Ensures: defined(result)
 #

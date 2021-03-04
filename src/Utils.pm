@@ -142,7 +142,7 @@ sub calcTime {
 	my $time = 0;
 	
 	my $time_needed_ortogonal = $speed;
-    my $time_needed_diagonal = sqrt(2) * $speed;
+	my $time_needed_diagonal = sqrt(2) * $speed;
 
 	return if (!$speed); # Make sure $speed actually has a non-zero value...
 
