@@ -118,7 +118,7 @@ sub cast {
 					next;
 				}
 
-				delete $blocks[$i] unless ($field->checkLineSnipable($blocks[$i], $realMonsterPos) || $field->checkLineWalkable($blocks[$i], $realMonsterPos));
+				delete $blocks[$i] unless ($field->checkLOS($blocks[$i], $realMonsterPos, 1));
 			}
 
 			my $largestDist;
@@ -144,8 +144,8 @@ sub cast {
 			my $best_dist;
 			for my $spot (@blocks) {
 				if (
-				(($config{attackCanSnipe} && $field->checkLineSnipable($spot, $realMonsterPos)) || $field->checkLineWalkable($spot, $realMonsterPos))
-				&& $field->isWalkable($spot->{x}, $spot->{y})
+					$field->isWalkable($spot->{x}, $spot->{y}) &&
+					$field->checkLOS($spot, $realMonsterPos, $config{attackCanSnipe})
 				) {
 					my $dist = distance($realMyPos, $spot);
 					if (!defined($best_dist) || $dist < $best_dist) {

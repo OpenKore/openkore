@@ -169,7 +169,6 @@ dcOnJobLevel
 dcOnLevel
 
 follow 0
-followCheckLOS 0
 followTarget
 followEmotion 1
 followEmotion_distance 4
@@ -179,8 +178,6 @@ followDistanceMin 3
 followLostStep 12
 followSitAuto 0
 followBot 0
-followRandom 0
-followRandomDistance 4
 
 itemsTakeAuto 2
 itemsTakeAuto_party 0

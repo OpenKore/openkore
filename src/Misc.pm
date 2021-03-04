@@ -3026,7 +3026,7 @@ sub positionNearPlayer {
 		next if ($char->{party}{joined} && $char->{party}{users} &&
 			$char->{party}{users}{$ID});
 		next if (defined($player->{name}) && existsInList($config{tankersList}, $player->{name}));
-		return 1 if (distance($r_hash, $player->{pos_to}) <= $dist);
+		return 1 if (blockDistance($r_hash, $player->{pos_to}) <= $dist);
 	}
 	return 0;
 }
@@ -3036,7 +3036,7 @@ sub positionNearPortal {
 	my $dist = shift;
 
 	for my $portal (@$portalsList) {
-		return 1 if (distance($r_hash, $portal->{pos}) <= $dist);
+		return 1 if (blockDistance($r_hash, $portal->{pos}) <= $dist);
 	}
 	return 0;
 }
@@ -4112,7 +4112,7 @@ sub getBestTarget {
 		}
 		
 		my $name = lc $monster->{name};
-		my $dist = round(distance($myPos, $pos));
+		my $dist = adjustedBlockDistance($myPos, $pos);
 		
 		if (!defined($bestTarget) || ($priority{$name} > $highestPri)) {
 			$highestPri = $priority{$name};
@@ -4134,7 +4134,7 @@ sub getBestTarget {
 			my $monster = $monsters{$_};
 			my $pos = calcPosition($monster);
 			my $name = lc $monster->{name};
-			my $dist = round(distance($myPos, $pos));
+			my $dist = adjustedBlockDistance($myPos, $pos);
 			if (!defined($bestTarget) || ($priority{$name} > $highestPri)) {
 				$highestPri = $priority{$name};
 				$smallestDist = $dist;
@@ -5044,7 +5044,6 @@ sub checkSelfCondition {
 		return 0 if (!inRange($char->{zeny}, $config{$prefix."_zeny"}));
 	}
 
-	# not working yet
 	if ($config{$prefix."_whenWater"}) {
 		my $pos = calcPosition($char);
 		return 0 unless ($field->isWater($pos->{x}, $pos->{y}));
@@ -5074,7 +5073,7 @@ sub checkSelfCondition {
 
 		foreach my $player (@{$playersList}) {
 			next unless (exists $char->{party}{users}{$player->{ID}} && $char->{party}{users}{$player->{ID}});
-			next unless inRange(distance(calcPosition($char), calcPosition($player)), $dist);
+			next unless inRange(blockDistance(calcPosition($char), calcPosition($player)), $dist);
 
 			++$amountInRange;
 		}
@@ -5231,7 +5230,7 @@ sub checkPlayerCondition {
 	}
 
 	if ($config{$prefix."_dist"}) {
-		return 0 unless inRange(distance(calcPosition($char), calcPosition($player)), $config{$prefix."_dist"});
+		return 0 unless inRange(blockDistance(calcPosition($char), calcPosition($player)), $config{$prefix."_dist"});
 	}
 
 	if ($config{$prefix."_isNotMyDevotee"}) {
@@ -5301,7 +5300,7 @@ sub checkMonsterCondition {
 	}
 
 	if ($config{$prefix."_dist"}) {
-		return 0 unless inRange(distance(calcPosition($char), calcPosition($monster)), $config{$prefix."_dist"});
+		return 0 unless inRange(blockDistance(calcPosition($char), calcPosition($monster)), $config{$prefix."_dist"});
 	}
 
 	if ($config{$prefix."_deltaHp"}){

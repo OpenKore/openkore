@@ -416,128 +416,35 @@ sub checkLOS {
 	return 1;
 }
 
-##
-# $Field->checkLineSnipable(from, to)
-# from, to: references to position hashes.
-#
-# Check whether you can snipe a target standing at $to,
-# from the position $from, without being blocked by any
-# obstacles.
-sub checkLineSnipable {
+sub canMove {
 	my ($self, $from, $to) = @_;
-
-	# Simulate tracing a line to the location (modified Bresenham's algorithm)
-	my ($X0, $Y0, $X1, $Y1) = ($from->{x}, $from->{y}, $to->{x}, $to->{y});
-
-	my $steep;
-	my $posX = 1;
-	my $posY = 1;
-	if ($X1 - $X0 < 0) {
-		$posX = -1;
+	
+	my $dist = blockDistance($from, $to);
+	if ($dist > 17) {
+		return -1;
 	}
-	if ($Y1 - $Y0 < 0) {
-		$posY = -1;
-	}
-	if (abs($Y0 - $Y1) < abs($X0 - $X1)) {
-		$steep = 0;
-	} else {
-		$steep = 1;
-	}
-	if ($steep == 1) {
-		my $Yt = $Y0;
-		$Y0 = $X0;
-		$X0 = $Yt;
-
-		$Yt = $Y1;
-		$Y1 = $X1;
-		$X1 = $Yt;
-	}
-	if ($X0 > $X1) {
-		my $Xt = $X0;
-		$X0 = $X1;
-		$X1 = $Xt;
-
-		my $Yt = $Y0;
-		$Y0 = $Y1;
-		$Y1 = $Yt;
-	}
-	my $dX = $X1 - $X0;
-	my $dY = abs($Y1 - $Y0);
-	my $E = 0;
-	my $dE;
-	if ($dX) {
-		$dE = $dY / $dX;
-	} else {
-		# Delta X is 0, it only occures when $from is equal to $to
+	
+	my $LOS = $self->checkLOS($from, $to, 0);
+	if ($LOS) {
 		return 1;
 	}
-	my $stepY;
-	if ($Y0 < $Y1) {
-		$stepY = 1;
-	} else {
-		$stepY = -1;
-	}
-	my $Y = $Y0;
-	my $Erate = 0.99;
-	if (($posY == -1 && $posX == 1) || ($posY == 1 && $posX == -1)) {
-		$Erate = 0.01;
-	}
-	for (my $X=$X0;$X<=$X1;$X++) {
-		$E += $dE;
-		if ($steep == 1) {
-			return 0 if (!$self->isSnipable($Y, $X));
-		} else {
-			return 0 if (!$self->isSnipable($X, $Y));
-		}
-		if ($E >= $Erate) {
-			$Y += $stepY;
-			$E -= 1;
-		}
-	}
-	return 1;
-}
-
-##
-# $Field->checkLineWalkable(from, to, [min_obstacle_size = 5])
-# from, to: references to position hashes.
-#
-# Check whether you can walk from $from to $to in an (almost)
-# straight line, without obstacles that are too large.
-# Obstacles are considered too large, if they are at least
-# the size of a rectangle with "radius" $min_obstacle_size.
-sub checkLineWalkable {
-	my ($self, $from, $to, $min_obstacle_size) = @_;
 	
-	$min_obstacle_size = 5 if (!defined $min_obstacle_size);
-
-	my $dist = round(distance($from, $to));
-	my %vec;
-
-	getVector(\%vec, $to, $from);
-	# Simulate walking from $from to $to
-	for (my $i = 1; $i < $dist; $i++) {
-		my %p;
-		moveAlongVector(\%p, $from, \%vec, $i);
-		$p{x} = int $p{x};
-		$p{y} = int $p{y};
-
-		if ( !$self->isWalkable($p{x}, $p{y}) ) {
-			# The current spot is not walkable. Check whether
-			# this the obstacle is small enough.
-			if (
-				$self->checkWallLength(\%p, -1,  0, $min_obstacle_size) ||
-				$self->checkWallLength(\%p,  1,  0, $min_obstacle_size) ||
-				$self->checkWallLength(\%p,  0, -1, $min_obstacle_size) ||
-				$self->checkWallLength(\%p,  0,  1, $min_obstacle_size) ||
-				$self->checkWallLength(\%p, -1, -1, $min_obstacle_size) ||
-				$self->checkWallLength(\%p,  1,  1, $min_obstacle_size) ||
-				$self->checkWallLength(\%p,  1, -1, $min_obstacle_size) ||
-				$self->checkWallLength(\%p, -1,  1, $min_obstacle_size)
-			 ) {
-				return 0;
-			}
-		}
+	my $solution = [];
+	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($self, $from, 20);
+	my $dist_path = new PathFinding(
+		field => $self,
+		start => $from,
+		dest => $to,
+		avoidWalls => 0,
+		min_x => $min_pathfinding_x,
+		max_x => $max_pathfinding_x,
+		min_y => $min_pathfinding_y,
+		max_y => $max_pathfinding_y
+	)->run($solution);
+	if ($dist_path > 14) {
+		return -2;
 	}
+	
 	return 1;
 }
 

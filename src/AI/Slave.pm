@@ -220,7 +220,7 @@ sub processFollow {
 		&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{isFollow})
 	) {
 		$slave->clear('move', 'route');
-		if (!$field->checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
+		if (!$field->canMove($slave->{pos_to}, $char->{pos_to})) {
 			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, isFollow => 1);
 			debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 
@@ -305,8 +305,6 @@ sub processAttack {
 		# We're on route to the monster; check whether the monster has moved
 		my $ID = $slave->args->{attackID};
 		my $attackSeq = ($slave->action eq "route") ? $slave->args (1) : $slave->args (2);
-		my $routeSeqindex = $slave->findAction("route");
-		my $routeArgs = $slave->args($routeSeqindex) if (defined $routeSeqindex);
 		my $target = Actor::get($ID);
 		my $realMyPos = calcPosition($slave);
 		my $realMonsterPos = calcPosition($target);

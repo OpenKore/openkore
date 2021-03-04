@@ -61,8 +61,6 @@ sub process {
 		# We're on route to the monster; check whether the monster has moved
 		my $ID = $args->{attackID};
 		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
-		my $routeSeqindex = AI::findAction("route");
-		my $routeArgs = AI::args($routeSeqindex) if (defined $routeSeqindex);
 		my $target = Actor::get($ID);
 		my $realMyPos = calcPosition($char);
 		my $realMonsterPos = calcPosition($target);

@@ -263,9 +263,9 @@ sub ai_partyfollow {
 		return unless ($master{map} ne $field->name || exists $master{x}); # Compare including InstanceID
 
 		# Compare map names including InstanceID
-		if ((exists $ai_v{master} && distance(\%master, $ai_v{master}) > 15)
+		if ((exists $ai_v{master} && blockDistance(\%master, $ai_v{master}) > 15)
 			|| $master{map} != $ai_v{master}{map}
-			|| (timeOut($ai_v{master}{time}, 15) && distance(\%master, $char->{pos_to}) > $config{followDistanceMax})) {
+			|| (timeOut($ai_v{master}{time}, 15) && blockDistance(\%master, $char->{pos_to}) > $config{followDistanceMax})) {
 
 			$ai_v{master}{x} = $master{x};
 			$ai_v{master}{y} = $master{y};
@@ -275,7 +275,7 @@ sub ai_partyfollow {
 
 			if ($ai_v{master}{map} ne $field->name) {
 				message TF("Calculating route to find master: %s\n", $ai_v{master}{map_name}), "follow";
-			} elsif (distance(\%master, $char->{pos_to}) > $config{followDistanceMax} ) {
+			} elsif (blockDistance(\%master, $char->{pos_to}) > $config{followDistanceMax} ) {
 				message TF("Calculating route to find master: %s (%s,%s)\n", $ai_v{master}{map_name}, $ai_v{master}{x}, $ai_v{master}{y}), "follow";
 			} else {
 				return;
