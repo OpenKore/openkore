@@ -8195,7 +8195,7 @@ sub rodex_mail_list {
 		};
 	}
 
-	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2') {
+	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2'  || $args->{switch} eq '0B5F') {
 		$rodexList->{current_page} = 0;
 		$rodexList = {};
 		$rodexList->{mails} = {};
