@@ -33,9 +33,6 @@ BEGIN {
 
 # workaround to wxlocale bug (the following link also fits to perl)
 # https://github.com/wxphp/wxphp/issues/108 
-use Wx::Locale qw(:default);
-Wx::Locale->new( &Wx::wxLANGUAGE_DEFAULT );
-
 use POSIX qw( setlocale LC_ALL );
 setlocale(LC_ALL, 'C');
 
