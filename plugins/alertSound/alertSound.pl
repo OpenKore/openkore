@@ -1,7 +1,7 @@
 # alertsound plugin by joseph
-# Modified by 4epT (18.04.2020)
+# Modified by 4epT (06.03.2021)
 #
-# Alert Plugin Version 9
+# Alert Plugin Version 10
 #
 # This software is open source, licensed under the GNU General Public
 # License, ver. (2 * (2 + cos(pi)))
@@ -101,7 +101,7 @@ sub item_appeared {
 		my $eventList = $config{"alertSound_".$i."_eventList"};
 		next if (!$eventList or $eventList !~ /item /i);
 		foreach (split /\,/, $eventList) {
-			my ($part_itemName) = $eventList =~ /item (\*\w+\*)$/;
+			my ($part_itemName) = $_ =~ /item (\*\w+\*)$/;
 			next if (!$part_itemName);
 			if ($item->{name} =~ /^$part_itemName/i) {
 				alertSound("item $part_itemName");
