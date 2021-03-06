@@ -31,6 +31,14 @@ BEGIN {
 	require Wx::Perl::Packager if ($^O eq 'MSWin32');
 }
 
+# workaround to wxlocale bug (the following link also fits to perl)
+# https://github.com/wxphp/wxphp/issues/108 
+use Wx::Locale qw(:default);
+Wx::Locale->new( &Wx::wxLANGUAGE_DEFAULT );
+
+use POSIX qw( setlocale LC_ALL );
+setlocale(LC_ALL, 'C');
+
 use strict;
 use Wx ':everything';
 use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
