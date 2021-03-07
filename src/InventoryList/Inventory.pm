@@ -16,11 +16,11 @@ sub new {
 	if($masterServer->{itemListType}) {
 		$self->{hooks} = Plugins::addHooks (
 			['packet/item_list_start',      \&onitemListStart, $self],
-			['packet/item_list_end',       sub { $self->onitemListEnd; }],
+			['packet/item_list_end',       \&onitemListEnd, $self],
 		);
 	} else {
 		$self->{hooks} = Plugins::addHooks (
-			['packet/stat_info2',        sub { $self->onStatInfo2; }]
+			['packet/stat_info2',        \&onStatInfo2, $self],
 		);
 	}
 	#Here we use packet/stat_info2 because it was the only safe hook I (henrybk) found for this function, both 'inventory_items_stackable' and 'inventory_items_nonstackable' are
@@ -35,7 +35,7 @@ sub isReady {
 }
 
 sub onStatInfo2 {
-	my ($self) = @_;
+	my ($hook_name, $args, $self) = @_;
 	if ($self->{state} == MAP_LOADED_OR_NEW) {
 		$self->{state} = INVENTORT_READY;
 		Plugins::callHook('inventory_ready');
@@ -64,7 +64,7 @@ sub onitemListStart {
 }
 
 sub onitemListEnd {
-	my ($self) = @_;
+	my ($hook_name, $args, $self) = @_;
 	if($current_item_list == 0x0) {
 		if ($self->{state} == MAP_LOADED_OR_NEW) {
 			$self->{state} = INVENTORT_READY;

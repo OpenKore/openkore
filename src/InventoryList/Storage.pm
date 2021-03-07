@@ -16,7 +16,7 @@ sub new {
 	if($masterServer->{itemListType}) {
 		$self->{hooks} = Plugins::addHooks (
 			['packet/item_list_start',      \&onitemListStart, $self],
-			['packet/item_list_end',       sub { $self->onitemListEnd; }],
+			['packet/item_list_end',      \&onitemListEnd, $self],
 		);
 	}
 
@@ -84,7 +84,7 @@ sub onitemListStart {
 }
 
 sub onitemListEnd {
-	my ($self) = @_;
+	my ($hook_name, $args, $self) = @_;
 	if($current_item_list == 0x2) {
 		Plugins::callHook('storage_ready');
 	}
