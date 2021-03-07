@@ -1711,6 +1711,10 @@ sub stat_info2 {
 		$char->{luk_bonus} = $val2;
 		debug "Luck: $val + $val2\n", "parseMsg";
 	}
+	#Here we use packet/stat_info2 because it was the only safe hook I (henrybk) found for this function, both 'inventory_items_stackable' and 'inventory_items_nonstackable' are
+	#only sent by the server if we have at least 1 item of that category, while 'stat_info2' is always (at least in my tests) sent.
+	$char->inventory->ready() if !$masterServer->{itemListType};
+	
 }
 # Notifies clients in an area, that an other visible object is walking (ZC_NOTIFY_PLAYERMOVE).
 # 0086 <id>.L <walk data>.6B <walk start time>.L
@@ -5012,6 +5016,15 @@ sub item_list_start {
 	debug "Starting Item List. ID: $args->{type}".
 			($args->{name} ? " ($args->{name})\n" : "\n"), "info";
 	$current_item_list = $args->{type};
+	if ( $args->{type} == INVTYPE_INVENTORY ) {
+		$char->inventory->start();
+	} elsif ( $args->{type} == INVTYPE_CART ) {
+		$char->cart->start();
+	} elsif ( $args->{type} == INVTYPE_STORAGE ) {
+		$char->storage->start();
+	} else {
+		error "Unknown item list type : " . $args->{type} . "\n";
+	}
 }
 
 sub item_list_stackable {
@@ -5105,6 +5118,15 @@ sub item_list_nonstackable {
 sub item_list_end {
 	my ($self, $args) = @_;
 	debug TF("Ending Item List. ID: %s\n", $args->{type}), "info";
+	if ( $current_item_list == INVTYPE_INVENTORY ) {
+		$char->inventory->ready();
+	} elsif ( $current_item_list == INVTYPE_CART ) {
+		$char->cart->ready();
+	} elsif ( $current_item_list == INVTYPE_STORAGE ) {
+		$char->storage->ready();
+	} else {
+		error "Unknown item list type : " . $args->{type} . "\n";
+	}
 	undef $current_item_list;
 }
 

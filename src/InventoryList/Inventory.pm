@@ -13,33 +13,14 @@ use constant {
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new;
-	if($masterServer->{itemListType}) {
-		$self->{hooks} = Plugins::addHooks (
-			['packet/item_list_start',      \&onitemListStart, $self],
-			['packet/item_list_end',       \&onitemListEnd, $self],
-		);
-	} else {
-		$self->{hooks} = Plugins::addHooks (
-			['packet/stat_info2',        \&onStatInfo2, $self],
-		);
-	}
-	#Here we use packet/stat_info2 because it was the only safe hook I (henrybk) found for this function, both 'inventory_items_stackable' and 'inventory_items_nonstackable' are
-	#only sent by the server if we have at least 1 item of that category, while 'stat_info2' is always (at least in my tests) sent.
 	$self->{state} = MAP_LOADED_OR_NEW;
+
 	return $self;
 }
 
 sub isReady {
 	my ($self) = @_;
 	return $self->{state};
-}
-
-sub onStatInfo2 {
-	my ($hook_name, $args, $self) = @_;
-	if ($self->{state} == MAP_LOADED_OR_NEW) {
-		$self->{state} = INVENTORT_READY;
-		Plugins::callHook('inventory_ready');
-	}
 }
 
 sub onMapChange {
@@ -55,21 +36,17 @@ sub item_max_stack {
 	return $itemStackLimit{$nameID}->{1} || $itemStackLimit{-1}->{1} || 30000;
 }
 
-sub onitemListStart {
-	my ($hook_name, $args, $self) = @_;
-	if($args->{type} == 0x0) {
-		$self->{state} = MAP_LOADED_OR_NEW;
-		$self->clear();
-	}
+sub start {
+	my ($self) = @_;
+	$self->{state} = MAP_LOADED_OR_NEW;
+	$self->clear();
 }
 
-sub onitemListEnd {
-	my ($hook_name, $args, $self) = @_;
-	if($current_item_list == 0x0) {
-		if ($self->{state} == MAP_LOADED_OR_NEW) {
-			$self->{state} = INVENTORT_READY;
-			Plugins::callHook('inventory_ready');
-		}
+sub ready {
+	my ($self) = @_;
+	if ($self->{state} == MAP_LOADED_OR_NEW) {
+		$self->{state} = INVENTORT_READY;
+		Plugins::callHook('inventory_ready');
 	}
 }
 
