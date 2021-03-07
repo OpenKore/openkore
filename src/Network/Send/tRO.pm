@@ -56,10 +56,12 @@ sub new {
 		pet_capture 08B5
 		char_delete2_accept 098F
 		char_create 0A39
+		rodex_open_mailbox 0AC0
+		rodex_refresh_maillist 0AC1
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self->{send_buy_bulk_pack} = "v V";
 	$self->{char_create_version} = 0x0A39;
 	$self->{send_sell_buy_complete} = 1;
