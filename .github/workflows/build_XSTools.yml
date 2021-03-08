@@ -152,9 +152,7 @@ jobs:
         echo "================================================================="
         echo "DONE:"
         dir src\auto\XSTools\ | findstr "dll"
-        echo "These XSTools.dll and NetRedirect.dll are built using: $OS + python $PYTHON $ARCHITECTURE + strawberry perl PERL $ARCHITECTURE + strawberry g++ x86" > src\auto\XSTools\XSTools_notes.txt
-        cmd /c echo "These XSTools.dll and NetRedirect.dll are built using: $OS + python $PYTHON $ARCHITECTURE + strawberry perl PERL $ARCHITECTURE + strawberry g++ x86"
-        cmd /c echo $OS
+        echo "These XSTools.dll and NetRedirect.dll are built using: $env:OS + python $env:PYTHON $env:ARCHITECTURE + strawberry perl $env:PERL $env:ARCHITECTURE + strawberry g++ x86" > src\auto\XSTools\XSTools_notes.txt
 
     - name: make XSTools.so
       if: runner.os == 'Linux'
@@ -170,7 +168,6 @@ jobs:
         echo "DONE:"
         ls -lh src/auto/XSTools/ | grep so
         echo "These XSTools.dll and NetRedirect.dll are built using: $OS + python $PYTHON $ARCHITECTURE + strawberry perl $PERL $ARCHITECTURE + strawberry g++ x86" > src/auto/XSTools/XSTools_notes.txt
-        ls -lh src/auto/XSTools/
 
     ####################
     # making artifacts #
