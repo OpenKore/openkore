@@ -1,5 +1,5 @@
 #  kRO Client 2009-02-25b (eA packet version 23)
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::ServerType8_5;
 
 use strict;
@@ -10,7 +10,7 @@ use Globals qw($masterServer);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new;
-	
+
 	# OLD $self->{packet_list}{'0078'} = ['actor_exists', 'x1 a4 v14 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed opt1 opt2 option type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]];
 	# OLD $self->{packet_list}{'007C'} = ['actor_connected', 'x1 a4 v14 C2 a3 C2', [qw(ID walk_speed opt1 opt2 option hair_style weapon lowhead type shield tophead midhead hair_color clothes_color head_dir stance sex coords unknown1 unknown2)]];
 	# OLD $self->{packet_list}{'022C'} = ['actor_moved', 'x1 a4 v4 x2 v5 V1 v3 x4 a4 a4 v x2 C2 a5 x3 v', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID emblemID visual_effects stance sex coords lv)]];

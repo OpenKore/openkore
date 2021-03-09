@@ -5,7 +5,7 @@
 # Créditos tradução: Duds, Draigonz, Sayd, Temaki' e Kepler  ---          www.openkore.com.br
 #############################################################################################
 # Consulte a documentação para saber como adicionar respostas
-# http://openkore.com/index.php/Responses.txt
+# https://openkore.com/wiki/Responses.txt
 
 authS Agora você é admin, %$cmd_user. Aproveite! ^^
 authF Você já é um admin, %$cmd_user!

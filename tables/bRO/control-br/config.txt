@@ -9,7 +9,7 @@
 #     http://openkore.com
 ###############################################################################
 # * Fórum internacional do OpenKore:
-#     http://forums.openkore.com
+#     https://forums.openkore.com/
 # * Fórum em português do OpenKore:
 #     http://forums.openkore-brasil.com/
 ###############################################################################
@@ -23,7 +23,7 @@ password
 loginPinCode
 char
 
-# Opções do Poseidon (http://wiki.openkore.com/index.php/PoseidonServer)
+# Opções do Poseidon (https://openkore.com/wiki/Poseidon)
 # Essas configurações devem ser as mesmas do Poseidon.txt
 poseidonServer 127.0.0.1
 poseidonPort 24390
@@ -32,7 +32,7 @@ bindIp
 forceMapIP
 
 # 1 = rodar dentro do cliente do RO, 2 = usar proxy autônomo, proxy = atua como proxy verdadeiro
-# http://wiki.openkore.com/index.php/XKore
+# https://openkore.com/wiki/XKore
 XKore 0
 XKore_port 2350
 XKore_dll NetRedirect.dll
@@ -110,7 +110,7 @@ attackEquip_armor
 attackEquip_shoes
 attackEquip_arrow
 
-#Requer o plugin breakTime: http://wiki.openkore.com/index.php?title=BreakTime
+#Requer o plugin breakTime: https://openkore.com/wiki/BreakTime
 autoBreakTime {
 	startTime
 	stopTime
@@ -323,8 +323,8 @@ wx_map_route
 wx_npcTalk
 wx_captcha
 showAllDamage 0
-manualURL http://wiki.openkore.com/index.php?title=Manual
-forumURL http://forums.openkore.com
+manualURL https://openkore.com/wiki/Manual
+forumURL https://forums.openkore.com/
 
 logChat 0
 logPrivateChat 1
