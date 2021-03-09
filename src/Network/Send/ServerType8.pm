@@ -14,7 +14,7 @@
 ########################################################################
 # Korea (kRO), before February 2007
 # The majority of private servers on Dec 2007; packet_ver 22 of eAthena
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType8;
 
 use strict;
@@ -35,13 +35,13 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		storage_close 0193
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -87,8 +87,8 @@ sub sendAttack {
 		$self->sendToServer($args{msg});
 		return;
 	}
-	
-	$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00) . 
+
+	$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00) .
 		$monID . pack("C*",0x00, 0x00, 0x00, 0x00, 0x37, 0x66, 0x61, 0x32, 0x00, $flag);
 	$self->sendToServer($msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
@@ -105,7 +105,7 @@ sub sendStand {
 		$self->sendToServer($args{msg});
 		return;
 	}
-	
+
 	$msg = pack("C2 x16 C1", 0x90, 0x01, 0x03);
 	$self->sendToServer($msg);
 	debug "Standing\n", "sendPacket", 2;
@@ -122,7 +122,7 @@ sub sendSit {
 		$self->sendToServer($args{msg});
 		return;
 	}
-	
+
 	$msg = pack("C2 x16 C1", 0x90, 0x01, 0x02);
 	$self->sendToServer($msg);
 	debug "Sitting\n", "sendPacket", 2;
@@ -208,7 +208,7 @@ sub sendMapLogin {
 		$accountID .
 		pack("C*", 0x65) .
 		$charID .
-		pack("C*", 0x37, 0x33, 0x36, 0x64) . 
+		pack("C*", 0x37, 0x33, 0x36, 0x64) .
 		$sessionID .
 		pack("V", getTickCount()) .
 		pack("C*", $sex);

@@ -1,5 +1,5 @@
 # Please Read the Users Manual
-# The Manual is located at http://wiki.openkore.com/index.php?title=Manual
+# The Manual is located at https://openkore.com/wiki/Manual
 
 ######## Login options and server-specific options ########
 
@@ -10,7 +10,7 @@ password
 loginPinCode
 char
 
-# Poseidon Settings (http://wiki.openkore.com/index.php/PoseidonServer)
+# Poseidon Settings: https://openkore.com/wiki/Poseidon
 # They must be the same as Query Server config in Poseidon.txt
 poseidonServer 127.0.0.1
 poseidonPort 24390
@@ -19,7 +19,7 @@ bindIp
 forceMapIP
 
 # 1 = hook into RO client, 2 = Act as stand-alone proxy, proxy = act as true proxy
-# http://wiki.openkore.com/index.php/XKore
+# https://openkore.com/wiki/XKore
 XKore 0
 XKore_port 2350
 XKore_dll NetRedirect.dll
@@ -102,7 +102,7 @@ attackEquip_armor
 attackEquip_shoes
 attackEquip_arrow
 
-#You need the breakTime plugin: http://wiki.openkore.com/index.php?title=BreakTime
+# You need the breakTime plugin: https://openkore.com/wiki/BreakTime
 autoBreakTime {
 	startTime
 	stopTime
@@ -319,8 +319,8 @@ wx_map_route
 wx_npcTalk
 wx_captcha
 showAllDamage 0
-manualURL http://wiki.openkore.com/index.php?title=Manual
-forumURL http://forums.openkore.com
+manualURL https://openkore.com/wiki/Manual
+forumURL https://forums.openkore.com
 
 logChat 1
 logPrivateChat 1

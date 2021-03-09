@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::iRO::Transcendence;
 
 use strict;
@@ -18,7 +18,7 @@ use base qw(Network::Receive::iRO);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0131' => ['vender_found', 'a4 Z40 x40', [qw(ID title)]], # x40 = garbage?
 		'0814' => ['buying_store_found', 'a4 Z40 x40', [qw(ID title)]], # x40 = garbage?

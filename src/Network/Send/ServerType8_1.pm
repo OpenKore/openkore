@@ -14,7 +14,7 @@
 #  Modified by skseo, Jan-24-2007, Fixed bugs.
 ########################################################################
 # Korea (kRO), after February 2007
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType8_1;
 
 use strict;
@@ -35,19 +35,19 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		storage_close 0193
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
 sub sendAttack {
 	my ($self, $monID, $flag) = @_;
-	
+
 	my %args;
 	$args{monID} = $monID;
 	$args{flag} = $flag;
@@ -77,7 +77,7 @@ sub sendChat {
 
 sub sendDrop {
 	my ($self, $index, $amount) = @_;
-	
+
 	my $msg = pack("C*", 0x16, 0x01) . pack("x4") .pack("v*", $index) . pack("x7") . pack("v*", $amount);
 	$self->sendToServer($msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
@@ -85,16 +85,16 @@ sub sendDrop {
 
 sub sendGetPlayerInfo {
 	my ($self, $ID) = @_;
-	
+
 	my $msg = pack("C*", 0x8c, 0x00) . pack("x8") . $ID;
-	
+
 	$self->sendToServer($msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
-	
+
 	my $msg = pack("C*", 0x9f, 0x00) . pack("x5") . pack("v*", $ID) . pack("x7") . $targetID;
 
 	$self->sendToServer($msg);
@@ -103,7 +103,7 @@ sub sendItemUse {
 
 sub sendLook {
 	my ($self, $body, $head) = @_;
-	
+
 	my $msg = pack("C*", 0x85, 0x00) . pack("x2") . pack("C*", $head) . pack("x4") . pack("C*", $body);
 
 	$self->sendToServer($msg);
@@ -115,7 +115,7 @@ sub sendLook {
 sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	
+
 	my $msg = pack("C*", 0x9b, 0) . pack("x5") .$accountID . pack("x4") . $charID . pack("x6") . $sessionID . pack("V", getTickCount()) . pack("C*", $sex);
 
 	$self->sendToServer($msg);
@@ -125,7 +125,7 @@ sub sendMove {
 	my $self = shift;
 	my $x = int scalar shift;
 	my $y = int scalar shift;
-	
+
 	my $msg = pack("C*", 0xA7, 0x00) . pack("x3") . getCoordString($x, $y);
 
 	$self->sendToServer($msg);
@@ -135,7 +135,7 @@ sub sendMove {
 
 sub sendSit {
 	my $self = shift;
-	
+
 	my %args;
 	$args{flag} = 2;
 	Plugins::callHook('packet_pre/sendSit', \%args);
@@ -143,7 +143,7 @@ sub sendSit {
 		$self->sendToServer($args{msg});
 		return;
 	}
-	
+
 	my $msg = pack("C2 x20 C1", 0x90, 0x01, 0x02);
 
 	$self->sendToServer($msg);
@@ -161,8 +161,8 @@ sub sendStand {
 	if ($args{return}) {
 		$self->sendToServer($args{msg});
 		return;
-	}	
-	
+	}
+
 	my $msg = pack("C2 x20 C1", 0x90, 0x01, 0x03);
 
 	$self->sendToServer($msg);
@@ -174,7 +174,7 @@ sub sendSkillUse {
 	my $ID = shift;
 	my $lv = shift;
 	my $targetID = shift;
-	
+
 	my %args;
 	$args{ID} = $ID;
 	$args{lv} = $lv;
@@ -193,7 +193,7 @@ sub sendSkillUse {
 
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
-	
+
 	my $msg = pack("C*", 0x17, 0x01) . pack("v*", $ID) . pack("x4") . pack("v*", $lv) . pack("x12") . pack("v*", $x) . pack("C*", 0x19, 0xea, 0x4d, 0x09) . pack("v*", $y);
 
 	$self->sendToServer($msg);
@@ -204,9 +204,9 @@ sub sendStorageAdd {
 	my $self= shift;
 	my $index = shift;
 	my $amount = shift;
-	
+
 	my $msg = pack("C*", 0x94, 0x00) . pack("x1") . pack("a2", $index) . pack("x10") . pack("V*", $amount);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
@@ -226,7 +226,7 @@ sub sendSync {
 	return if ($self->{net}->version == 1);
 
 	$syncSync = pack("V", getTickCount());
-	
+
 	my $msg = pack("C2 x5", 0x89, 0x00) . $syncSync;
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
@@ -235,7 +235,7 @@ sub sendSync {
 sub sendTake {
 	my $self = shift;
 	my $itemID = shift; # $itemID = long
-	
+
 	my $msg = pack("C*", 0xf5, 0x00) . pack("x5") . $itemID;
 	$self->sendToServer($msg);
 	debug "Sent take\n", "sendPacket", 2;

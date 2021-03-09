@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::idRO::Renewal;
 
 use strict;
@@ -34,7 +34,7 @@ sub sendMasterSecureLogin {
 	my ($self, $username, $password, $salt, $version, $master_version, $type, $account) = @_;
 
 	$self->{packet_lut}{master_login} ||= $type < 3 ? '01DD' : '01FA';
-	
+
 	my $packet = $self->reconstruct({
 		switch => 'master_login',
 		version => $version || $self->version,
@@ -43,13 +43,13 @@ sub sendMasterSecureLogin {
 		password_salted_md5 => $self->secureLoginHash($password, $salt, $type),
 		clientInfo => $account > 0 ? $account - 1 : 0,
 	});
-	
+
 	my @msg;
 
 	for(my $i = 0; $i < length($packet); $i++) {
 		push @msg, 0x.unpack("C*", substr($packet, $i, 1));
 	}
-	
+
 	$self->sendToServer($self->encrypt_packet(@msg));
 }
 =cut
@@ -70,7 +70,7 @@ sub encrypt_packet {
 	my ($self, @msg) = @_;
 	my ($temporary_calc, $hex_indexer, $counter) = 0;
 	my @encrypted_packet = (0x75, 0x0A, 0x43, 0x00, 0x00, 0x00, 0x00, 0x00, 0x94, 0x39, 0x00, 0x00, 0x3F, 0x00, 0x00, 0x00, 0x2F, 0x00, 0x00, 0x00);
-	
+
 	my @key = ( 0x00,0x00,0x00,0x00,0x96,0x30,0x07,0x77,0x2C,0x61,0x0E,0xEE,
 	0xBA,0x51,0x09,0x99,0x19,0xC4,0x6D,0x07,0x8F,0xF4,0x6A,0x70,0x35,0xA5,0x63,0xE9,
 	0xA3,0x95,0x64,0x9E,0x32,0x88,0xDB,0x0E,0xA4,0xB8,0xDC,0x79,0x1E,0xE9,0xD5,0xE0,
@@ -150,7 +150,7 @@ sub encrypt_packet {
 		$encrypted_packet[$i + 20] = (($msg[$i] ^ $i) ^ $mini_key[$counter]) ^ 0x3F;
 		$counter++;
 	}
-	
+
 	# Second Phase (5th - 8th byte)
 	for (my $i = 0; $i < 59; $i++) {
 		$hex_indexer = (($encrypted_packet[$i + 8] ^ ($temporary_calc & 0xFF)) * 4);
@@ -167,11 +167,11 @@ sub encrypt_packet {
 	$container[1] = (($temporary_calc >> 8) & 0xFF);
 	$container[2] = (($temporary_calc >> 16) & 0xFF);
 	$container[3] = (($temporary_calc >> 24) & 0xFF);
-	
+
 	for (my	 $i = 0; $i < 4; $i++) {
 		$encrypted_packet[$i + 4] = $container[$i];
 	}
-	
+
 	for(my $i = 0; $i < scalar @encrypted_packet; $i++) {
 		$final_packet .= pack("C*", $encrypted_packet[$i]);
 	}

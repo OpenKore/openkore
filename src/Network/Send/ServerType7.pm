@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType7;
 
 use strict;
@@ -28,7 +28,7 @@ sub new {
 sub sendAttack {
 	my ($self, $monID, $flag) = @_;
 	my $msg;
-	
+
 	my %args;
 	$args{monID} = $monID;
 	$args{flag} = $flag;
@@ -37,7 +37,7 @@ sub sendAttack {
 		$self->sendToServer($args{msg});
 		return;
 	}
-	
+
 	if (AI::action() eq "NPC") {
 		error "Failed to talk to monster NPC.\n";
 		AI::dequeue();
@@ -57,7 +57,7 @@ sub sendSit {
 		$self->sendToServer($args{msg});
 		return;
 	}
-	
+
 	error "Your server is not supported because it uses padded packets.\n";
 	if (AI::action() eq "sitting") {
 		error "Failed to sit.\n";
@@ -74,8 +74,8 @@ sub sendStand {
 	if ($args{return}) {
 		$self->sendToServer($args{msg});
 		return;
-	}	
-	
+	}
+
 	error "Your server is not supported because it uses padded packets.\n";
 	if (AI::action() eq "standing") {
 		error "Failed to stand.\n";
@@ -88,7 +88,7 @@ sub sendSkillUse {
 	my $ID = shift;
 	my $lv = shift;
 	my $targetID = shift;
-	
+
 	my %args;
 	$args{ID} = $ID;
 	$args{lv} = $lv;
@@ -134,12 +134,12 @@ sub sendGetPlayerInfo {
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0xA7, 0x00, 0x12, 0x00, 0xB0, 0x5A, 0x61) .
 		pack("v*", $ID) .
 		pack("C*", 0xFA, 0x12, 0x00, 0xDA, 0xF9, 0x12, 0x00) .
 		$targetID;
-			
+
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
@@ -147,10 +147,10 @@ sub sendItemUse {
 sub sendLook {
 	my ($self, $body, $head) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x9B, 0x00, 0x67, 0x00, $head,
 		0x00, 0x5B, 0x04, 0xE2, $body);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$char->{look}{head} = $head;
@@ -161,7 +161,7 @@ sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	
+
 	$msg = pack("C*", 0x72, 0, 0, 0, 0, 0, 0) .
 		$accountID .
 		pack("C*", 0x00, 0x10, 0xEE, 0x65) .
@@ -170,7 +170,7 @@ sub sendMapLogin {
 		$sessionID .
 		pack("V", getTickCount()) .
 		pack("C*",$sex);
-		
+
 	$self->sendToServer($msg);
 }
 
@@ -179,9 +179,9 @@ sub sendMove {
 	my $x = int scalar shift;
 	my $y = int scalar shift;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x85, 0x00, 0xA8, 0x07, 0xE8) . getCoordString($x, $y);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
@@ -189,16 +189,16 @@ sub sendMove {
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x16, 0x01, 0x7F, 0x00, 0x04, 0xFA, 0x12, 0x00, 0xAF, 0x41) .
 		pack("v", $lv) .
 		pack("C*", 0x20, 0x09) .
 		pack("v*", $ID) .
 		pack("C*", 0xA8, 0xBE) .
-		pack("v*", $x) . 
+		pack("v*", $x) .
 		pack("C*", 0x5B, 0x4E, 0xB4) .
 		pack("v*", $y);
-	
+
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
@@ -206,12 +206,12 @@ sub sendSkillUseLoc {
 sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0xF3, 0x00, 0x1B) .
 		pack("a2", $index) .
 		pack("C*", 0x88, 0xC5, 0x07, 0x00, 0x00, 0x00, 0x00, 0x7F, 0x0C, 0x7F) .
 		pack("V", $amount);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
@@ -224,7 +224,7 @@ sub sendStorageGet {
 		pack("a2", $index) .
 		pack("C*", 0x00, 0x00, 0x00, 0x60, 0xF7, 0x12, 0x00, 0xB8) .
 		pack("V*", $amount);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
@@ -236,12 +236,12 @@ sub sendSync {
 	return if ($self->{net}->version == 1);
 
 	$syncSync = pack("V", getTickCount());
-	
+
 	$msg = pack("C*", 0x7E, 0x00);
 	$msg .= pack("C*", 0x30, 0x00, 0x80, 0x02, 0x00) if ($initialSync);
 	$msg .= pack("C*", 0x00, 0x00, 0xD0, 0x4F, 0x74) if (!$initialSync);
 	$msg .= $syncSync;
-	
+
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
 }

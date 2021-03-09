@@ -12,7 +12,7 @@
 # June 21 2007, this is the server type for:
 # pRO (Philippines), except Sakray and Thor
 # And many other servers.
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType0;
 
 use strict;

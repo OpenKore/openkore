@@ -19,8 +19,8 @@
 # each block has a specific type, like 'walkable', 'not walkable', 'water',
 # 'cliff', etc.
 #
-# This class is closely related to the .fld2 file, as used by OpenKore.
-# See http://wiki.openkore.com/index.php/Field_file_format
+# This class is closely related to the .fld file, as used by OpenKore.
+# See https://openkore.com/wiki/Field_file_format
 # for more information.
 #
 # This class is a hash and has the following hash items:
@@ -192,7 +192,7 @@ sub height {
 #
 # Get the type for the block on the specified coordinate. This type is an integer, which
 # corresponds with the values specified in the field file format specification:
-# http://www.openkore.com/wiki/index.php/Field_file_format#The_FLD_file_format
+# https://openkore.com/wiki/Field_file_format#The_FLD_file_format
 #
 # If you want to check whether the block is walkable, use $field->isWalkable() instead.
 sub getBlock {
@@ -654,13 +654,13 @@ sub loadWeightMap {
 sub loadDistanceMap {
 	my ($self, $filename, $width, $height) = @_;
 	my ($f, $distData);
-	
+
 	$filename .= '.gz' if (-f $filename.'.gz');
-	
+
 	if ($filename =~ /\.gz$/) {
 		use bytes;
 		no encoding 'utf8';
-		
+
 		my $gz = gzopen($filename, 'rb');
 		if (!$gz) {
 			IOException->throw("Cannot open $filename for reading.");
@@ -687,7 +687,7 @@ sub loadDistanceMap {
 		IOException->throw("Cannot open distance map $filename for reading.");
 		return;
 	}
-	
+
 	# Get file version.
 	my $dversion = 0;
 	if (substr($distData, 0, 2) eq "V#") {
@@ -756,7 +756,7 @@ sub loadByName {
 # Map a field name to its field file's base name.
 sub nameToBaseName {
 	my ($self, $name) = @_;
-	
+
 	my ($instanceID);
 
 	if ($name =~ /^(\w{3})(\d@.*)/) { # instanced maps, ex: 0021@cata

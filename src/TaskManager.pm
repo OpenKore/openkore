@@ -13,7 +13,7 @@
 # MODULE DESCRIPTION: Task manager.
 #
 # Please read
-# <a href="http://wiki.openkore.com/index.php/AI_subsystem_and_task_framework_overview">
+# <a href="https://openkore.com/wiki/AI_subsystem_and_task_framework_overview">
 # the AI subsystem and task framework overview
 # </a>
 # for an overview.
@@ -487,7 +487,7 @@ sub deactivateTask {
 # 	}
 # 	print "$name = " . join(',', @names) . "\n";
 # }
-# 
+#
 # sub printActiveMutexes {
 # 	my ($activeMutexes) = @_;
 # 	my @entries;

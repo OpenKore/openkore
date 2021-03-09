@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # tRO (Thai) for 2007-05-22bRagexe by kLabMouse (thanks to abt123 and penz for support)
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::ServerType17;
 
 use strict;
@@ -22,7 +22,7 @@ use Translation;
 use Globals;
 use I18N qw(bytesToString);
 use Utils qw(getHex swrite makeIP makeCoordsDir makeCoordsXY makeCoordsFromTo);
- 
+
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new;
@@ -43,12 +43,12 @@ sub account_server_info {
 	$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
 
 	message swrite(
-		T("-----------Account Info------------\n" . 
+		T("-----------Account Info------------\n" .
 		"Account ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
 		"Sex:        \@<<<<<<<<<<<<<<<<<<<<<\n" .
 		"Session ID: \@<<<<<<<<< \@<<<<<<<<<<\n" .
 		"            \@<<<<<<<<< \@<<<<<<<<<<\n" .
-		"-----------------------------------"), 
+		"-----------------------------------"),
 		[unpack("V1",$accountID), getHex($accountID), $sex_lut{$accountSex}, unpack("V1",$sessionID), getHex($sessionID),
 		unpack("V1",$sessionID2), getHex($sessionID2)]), 'connection';
 
@@ -92,8 +92,8 @@ sub account_server_info {
 			}
 
 		} elsif ($masterServer->{charServer_ip}) {
-			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';	
-			
+			message TF("Forcing connect to char server %s: %s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';
+
 		} else {
 			message TF("Selected server: %s\n", @servers[$config{server}]->{name}), 'connection';
 		}

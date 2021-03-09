@@ -71,16 +71,16 @@ our ($iterationTime, $updateUITime, $updateUITime2);
 
 sub OnInit {
 	my $self = shift;
-	
+
 	$CVS = ($Settings::SVN =~ /SVN/);
 	$self->createInterface;
 	$self->iterate;
-	
+
 	my $onChat =            sub { $self->onChatAdd(@_); };
 	my $onSelfStatChange  = sub { $self->onSelfStatChange (@_); };
 	my $onSlaveStatChange = sub { $self->onSlaveStatChange (@_); };
 	my $onPetStatChange   = sub { $self->onPetStatChange (@_); };
-	
+
 	$self->{hooks} = Plugins::addHooks(
 		['loadfiles',                           sub { $self->onLoadFiles(@_); }],
 		['postloadfiles',                       sub { $self->onLoadFiles(@_); }],
@@ -95,7 +95,7 @@ sub OnInit {
 		['captcha_file',                        sub { $self->onCaptcha(@_); }],
 		['packet/minimap_indicator',            sub { $self->onMapIndicator (@_); }],
 		['start3',                              sub { $interface->{mapViewer}->parsePortals(); }],
-		
+
 		# stat changes
 		['packet/map_changed',                  sub { $self->onSelfStatChange (@_); $self->onSlaveStatChange (@_); $self->onPetStatChange (@_); }],
 		['packet/hp_sp_changed',                $onSelfStatChange],
@@ -111,7 +111,7 @@ sub OnInit {
 		['packet/message_string',               $onSlaveStatChange],
 		['packet/pet_info',                     $onPetStatChange],
 		['packet/pet_info2',                    $onPetStatChange],
-		
+
 		# npc
 		['packet/npc_image',              sub { $self->onNpcImage (@_); }],
 		['npc_talk',                      sub { $self->onNpcTalk (@_); }],
@@ -122,24 +122,24 @@ sub OnInit {
 		['packet/npc_talk_text',          sub { $self->onNpcText (@_); }],
 		['npc_talk_done',                 sub { $self->onNpcClose (@_); }],
 	);
-	
+
 	$self->{history} = [];
 	$self->{historyIndex} = -1;
 
 	$self->{frame}->Update;
-	
+
 	Wx::Image::AddHandler (new Wx::XPMHandler);
 	Wx::Image::AddHandler (new Wx::BMPHandler);
 	Wx::Image::AddHandler (new Wx::PNGHandler);
 	Wx::Image::AddHandler (new Wx::GIFHandler);
 	Wx::Image::AddHandler (new Wx::JPEGHandler);
 	Wx::Image::AddHandler (new Wx::ICOHandler);
-	
+
 	{
 		my $icon = [$0 =~ m{^(.*?)((\w|\.)*)$}]->[0] . 'src/build/openkore.ico';
 		$self->{frame}->SetIcon(new Wx::Icon($icon, wxBITMAP_TYPE_ANY)) if -f $icon;
 	}
-	
+
 	return 1;
 }
 
@@ -478,54 +478,54 @@ sub createMenuBar {
 	$self->addMenu ($viewMenu, T('Homunculus') . "\tAlt+R", sub { $self->openHomunculus (1) });
 	$self->addMenu ($viewMenu, T('Mercenary') . "\tCtrl+R", sub { $self->openMercenary (1) });
 	$self->addMenu ($viewMenu, T('Pet') . "\tAlt+J", sub { $self->openPet (1) });
-	
+
 	$viewMenu->AppendSeparator;
-	
+
 	$self->addMenu ($viewMenu, T('Inventory') . "\tAlt+E", sub { $self->openInventory (1) });
 	$self->addMenu ($viewMenu, T('Cart') . "\tAlt+W", sub { $self->openCart (1) });
 	$self->addMenu ($viewMenu, T('Storage'), sub { $self->openStorage (1) });
-	
+
 	$viewMenu->AppendSeparator;
-	
+
 	$self->addMenu ($viewMenu, T('Emotions'). "\tAlt+L", sub { $self->openEmotions (1) });
-	
+
 	$viewMenu->AppendSeparator;
-	
+
 	$self->addMenu($viewMenu, T('&Experience Report') . "\tCtrl+E", sub {
-		$self->openWindow (T('Report'), 'Interface::Wx::StatView::Exp', 1) 
+		$self->openWindow (T('Report'), 'Interface::Wx::StatView::Exp', 1)
 	});
-	
+
 	$viewMenu->AppendSeparator;
-	
+
 	$self->addMenu ($viewMenu, T('&Font...'), \&onFontChange, T('Change console font'));
 	$self->addMenu($viewMenu, T('Clear Console'), sub {my $self = shift; $self->{console}->Remove(0, 40000)}, T('Clear content of console'));
 	$self->addMenu($viewMenu, T('Clear Chat History'), sub {Commands::run("cl")}, T('Clear chat history'));
 	$self->addMenu($viewMenu, T('Clear Item History'), sub {Commands::run("cil")}, T('Clear item history'));
-	
+
 	$menu->Append($viewMenu, T('&View'));
-	
+
 	# Merchant menu
 	my $merchantMenu = new Wx::Menu;
 	$menu->Append($merchantMenu, T('&Merchant'));
 	$self->addMenu($merchantMenu, T('Accept deal'), sub {Commands::run("deal")}, T('Accept/Finalise current deal'));
 	$self->addMenu($merchantMenu, T('Reject deal'), sub {Commands::run("deal no")}, T('Reject current deal'));
 	$self->addMenu($merchantMenu, T('Deal information'), sub {Commands::run("dl")}, T('View the information of current deal'));
-	
+
 	$merchantMenu->AppendSeparator;
 	$self->addMenu($merchantMenu, T('Ignore all deals (0)'), sub {Commands::run("conf dealAuto 0")}, T('Ignore all incoming deal requests'));
 	$self->addMenu($merchantMenu, T('Reject all deals (1)'), sub {Commands::run("conf dealAuto 1")}, T('Reject all incoming deal requests'));
 	$self->addMenu($merchantMenu, T('Accept all deals (2)'), sub {Commands::run("conf dealAuto 2")}, T('Accept all incoming deal requests'));
-	
+
 	$merchantMenu->AppendSeparator;
 	$self->addMenu($merchantMenu, T('Open shop'), sub {Commands::run("openshop")}, T('Open shop'));
 	$self->addMenu($merchantMenu, T('Close shop'), sub {Commands::run("closeshop")}, T('Close shop'));
 	$self->addMenu($merchantMenu, T('Current shop status'), sub {Commands::run("al")}, T('View your shop status'));
 	$self->addMenu($merchantMenu, T('Nearby shop list'), sub {Commands::run("vl")}, T('View shops nearby'));
-	
+
 	$merchantMenu->AppendSeparator;
 	$self->addMenu($merchantMenu, T('Reload shop.txt'), sub {Commands::run("reload shop.txt")}, T('Reload shop.txt'));
 	$self->addMenu($merchantMenu, T('Test your shop'), sub {Commands::run("testshop")}, T('Test your shop'));
-		
+
 
 	# Command menu
 	my $commandMenu = new Wx::Menu;
@@ -540,7 +540,7 @@ sub createMenuBar {
 	$self->addMenu($commandMenu, T('Auto buying'), sub {Commands::run("autobuy")}, T('Auto buying'));
 	$self->addMenu($commandMenu, T('Auto selling'), sub {Commands::run("autosell")}, T('Auto selling'));
 	$commandMenu->AppendSeparator;
-	
+
 	# Party menu
 	$self->{partyMenu} = new Wx::Menu;
 	$self->addMenu($self->{partyMenu}, T('Party information'), sub {Commands::run("party")}, T('Party information'));
@@ -556,7 +556,7 @@ sub createMenuBar {
 	$self->addMenu($self->{partyMenu}, T('Reject party request'), sub {Commands::run("party join 0")}, T('Reject incoming party request'));
 	$self->addMenu($self->{partyMenu}, T('Leave party'), sub {Commands::run("party leave")}, T('Leave the current party'));
 	$commandMenu->AppendSubMenu($self->{partyMenu}, T('&Party'), T('Party'));
-	
+
 	#Friend menu
 	$self->{friendMenu} = new Wx::Menu;
 	$self->addMenu($self->{friendMenu}, T('Friend list'), sub {Commands::run("friend")}, 'Friend list');
@@ -564,7 +564,7 @@ sub createMenuBar {
 	$self->addMenu($self->{friendMenu}, T('Auto accept friend request'), sub {Commands::run("friend accept")}, T('Auto accept all incoming friend requests'));
 	$self->addMenu($self->{friendMenu}, T('Auto reject friend request'), sub {Commands::run("friend reject")}, T('Auto reject all incoming friend requests'));
 	$commandMenu->AppendSubMenu($self->{friendMenu}, T('&Friend'), T('Friend'));
-	
+
 	#Guild menu
 	$self->{guildMenu} = new Wx::Menu;
 	$self->addMenu($self->{guildMenu}, T('Guild information'), sub {Commands::run("guild info")}, T('Guild information'));
@@ -573,7 +573,7 @@ sub createMenuBar {
 	$self->addMenu($self->{guildMenu}, T('Auto accept guild request'), sub {Commands::run("guild join 1")}, T('Auto accept all incoming guild requests'));
 	$self->addMenu($self->{guildMenu}, T('Auto reject guild request'), sub {Commands::run("guild join 0")}, T('Auto reject all incoming guild requests'));
 	$commandMenu->AppendSubMenu($self->{guildMenu}, T('&Guild'), T('Guild'));
-	
+
 	$commandMenu->AppendSeparator;
 	$self->{aliasMenu} = new Wx::Menu;
 	$commandMenu->AppendSubMenu($self->{aliasMenu}, T('&Alias'), T('Alias'));
@@ -602,7 +602,7 @@ sub createMenuBar {
 	$self->addMenu($settingsMenu, T('&Advanced...'), \&onAdvancedConfig, T('Edit advanced configuration options.'));
 	$menu->Append($settingsMenu, T('&Settings'));
 	$self->createSettingsMenu2($settingsMenu) if ($self->can('createSettingsMenu2'));
-	
+
 	# Help menu
 	my $helpMenu = new Wx::Menu();
 	$self->addMenu($helpMenu, T('&Manual') . "\tF1", \&onManual, T('Read the manual'));
@@ -614,10 +614,10 @@ sub createMenuBar {
 
 sub createSettingsMenu {
 	my ($self, $parentMenu) = @_;
-	
+
 # 	foreach my $menuData (@{$data}) {
 # 		my $subMenu = new Wx::Menu;
-# 		
+#
 # 		foreach my $itemData (@{$menuData->{items}}) {
 # 			if ($itemData->{type} eq 'boolean') {
 # 				$self->{mBooleanSetting}{$itemData->{key}} = $self->addCheckMenu (
@@ -628,25 +628,25 @@ sub createSettingsMenu {
 # 				$subMenu->AppendSeparator;
 # 			}
 # 		}
-# 		
+#
 # 		$self->addSubMenu ($parentMenu, $menuData->{title}, $subMenu, $menuData->{help});
 # 	}
-	
+
 	$self->{mBooleanSetting}{'wx_npcTalk'} = $self->addCheckMenu (
 		$parentMenu, T('Use Wx NPC Talk'), sub { $self->onBooleanSetting ('wx_npcTalk'); },
 		T('Open a dialog when talking with NPCs')
 	);
-	
+
 	$self->{mBooleanSetting}{'wx_captcha'} = $self->addCheckMenu (
 		$parentMenu, T('Use Wx captcha'), sub { $self->onBooleanSetting ('wx_captcha'); },
 		T('Open a dialog when receiving a captcha')
 	);
-	
+
 	$self->{mBooleanSetting}{'wx_map_route'} = $self->addCheckMenu (
 		$parentMenu, T('Show route on map'), sub { $self->onBooleanSetting ('wx_map_route'); },
 		T('Show route solution steps')
 	);
-	
+
 	$parentMenu->AppendSeparator;
 }
 
@@ -748,12 +748,12 @@ sub createSplitterContent {
 	$chatLog->addColor("p", 164, 0, 143);
 	$chatLog->addColor("g", 0, 177, 108);
 	$chatLog->addColor("warning", 214, 93, 0);
-	
+
 	# $page = $notebook->newPage(2, T('Team Chat Log'), 1);
 	# my $TchatLog = $self->{TchatLog} = new Interface::Wx::LogView($page);
 	# $page->set($TchatLog);
 	# $TchatLog->addColor("p", 164, 0, 143);
-	
+
 	# $page = $notebook->newPage(3, T('Guild Chat Log'), 2);
 	# my $GchatLog = $self->{GchatLog} = new Interface::Wx::LogView($page);
 	# $page->set($GchatLog);
@@ -921,7 +921,7 @@ sub updateMapViewer {
 	$myPos = calcPosition($char);
 
 	$map->set($field->baseName, $myPos->{x}, $myPos->{y}, $field, $char->{look});
-	
+
 	my ($i, $args, $routeTask, $solution);
 	if (
 		defined ($i = AI::findAction ('route')) && ($args = AI::args ($i)) && (
@@ -934,13 +934,13 @@ sub updateMapViewer {
 	} else {
 		$map->setRoute;
 	}
-	
+
 	$map->setPlayers ([values %players]);
 	$map->setParty ([values %{$char->{party}{users}}]) if $char->{party}{joined} && $char->{party}{users};
 	$map->setMonsters ([values %monsters]);
 	$map->setNPCs ([values %npcs]);
 	$map->setSlaves ([values %slaves]);
-	
+
 	$map->update;
 	$self->{mapViewTimeout}{time} = time;
 }
@@ -948,7 +948,7 @@ sub updateMapViewer {
 sub updateItemList {
 	my $self = shift;
 	my $value;
-	
+
 	if ($conState == 5) {
 		if ($char->{hp_max}) {
 			$value = $char->{hp} / $char->{hp_max} * 100;
@@ -1030,16 +1030,16 @@ sub onMenuOpen {
 	$self->{mResume}->Enable(AI::state != AI::AUTO);
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
 	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage(T('Chat Log')) ? 1 : 0);
-	
+
 	while (my ($setting, $menu) = each (%{$self->{mBooleanSetting}})) {
 		$menu->Check ($config{$setting} ? 1 : 0);
 	}
-	
+
 	my $menu;
 	while ($menu = $self->{aliasMenu}->FindItemByPosition (0)) {
 		$self->{aliasMenu}->Delete ($menu);
 	}
-	
+
 	for $menu (sort map {/^alias_(.+)$/} keys %config) {
 		$self->addMenu ($self->{aliasMenu}, $menu, sub { Commands::run ($menu) });
 	}
@@ -1052,7 +1052,7 @@ sub onLoadFiles {
 	} else {
 		delete $self->{loadingFiles};
 	}
-	
+
 	$self->updateStatusBar;
 }
 
@@ -1101,7 +1101,7 @@ sub onFontChange {
 
 sub onBooleanSetting {
 	my ($self, $setting) = @_;
-	
+
 	configModify ($setting, !$config{$setting}, 1);
 }
 
@@ -1204,7 +1204,7 @@ sub onChatLogToggle {
 sub openWindow {
 	my ($self, $title, $class, $create) = @_;
 	my ($page, $window);
-	
+
 	if ($page = $self->{notebook}->hasPage ($title)) {
 		$window = $page->{child};
 	} elsif ($create) {
@@ -1219,68 +1219,68 @@ sub openWindow {
 		}
 		$page = $self->{notebook}->newPage (1, $title, 0);
 		$page->set ($window = $class->new ($page, wxID_ANY));
-		
+
 		$window->init if $conState == Network::IN_GAME && $window->can ('init');
 	}
-	
+
 	$self->{notebook}->switchPage ($title) if $page && $create;
-	
+
 	return ($page, $window);
 }
 
 sub openStats {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow (T('Status'), 'Interface::Wx::StatView::You', $create);
-	
+
 	return ($page, $window);
 }
 
 sub openHomunculus {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow (T('Homunculus'), 'Interface::Wx::StatView::Homunculus', $create);
-	
+
 	return ($page, $window);
 }
 
 sub openMercenary {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow (T('Mercenary'), 'Interface::Wx::StatView::Mercenary', $create);
-	
+
 	return ($page, $window);
 }
 
 sub openPet {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow (T('Pet'), 'Interface::Wx::StatView::Pet', $create);
-	
+
 	return ($page, $window);
 }
 
 sub openInventory {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow (T('Inventory'), 'Interface::Wx::List::ItemList::Inventory', $create);
-	
+
 	return ($page, $window);
 }
 
 sub openCart {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow (T('Cart'), 'Interface::Wx::List::ItemList::Cart', $create);
-	
+
 	return ($page, $window);
 }
 
 sub openStorage {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow (T('Storage'), 'Interface::Wx::List::ItemList::Storage', $create);
-	
+
 	return ($page, $window);
 }
 
 sub openEmotions {
 	my ($self, $create) = @_;
 	my ($page, $window) = $self->openWindow (T('Emotions'), 'Interface::Wx::EmotionList', $create);
-	
+
 	if ($window) {
 		$window->onEmotion (sub {
 			Commands::run ('e ' . shift);
@@ -1288,7 +1288,7 @@ sub openEmotions {
 		});
 		$window->setEmotions (\%emotions_lut);
 	}
-	
+
 	return ($page, $window);
 }
 
@@ -1296,7 +1296,7 @@ sub openNpcTalk {
 	my ($self, $create) = @_;
 	return unless $config{wx_npcTalk};
 	my ($page, $window) = $self->openWindow (T('NPC Talk'), 'Interface::Wx::NpcTalk', $create);
-	
+
 	if ($window) {
 		$window->onContinue  (sub { Commands::run ('talk cont'); });
 		$window->onResponses (sub { Commands::run ('talk resp ' . shift); });
@@ -1304,7 +1304,7 @@ sub openNpcTalk {
 		$window->onText      (sub { Commands::run ('talk text ' . shift); });
 		$window->onCancel    (sub { Commands::run ('talk no'); });
 	}
-	
+
 	return ($page, $window);
 }
 
@@ -1314,7 +1314,7 @@ sub onManual {
 	if ($config{'manualURL'}) {
 		$url = $config{'manualURL'};
 	} else {
-		$url = 'http://wiki.openkore.com/index.php?title=Manual';
+		$url = 'https://openkore.com/wiki/Manual';
 	}
 	launchURL($url);
 }
@@ -1325,7 +1325,7 @@ sub onForum {
 	if ($config{'forumURL'}) {
 		$url = $config{'forumURL'};
 	} else {
-		$url = 'http://forums.openkore.com';
+		$url = 'https://forums.openkore.com/';
 	}
 	launchURL($url);
 }
@@ -1455,7 +1455,7 @@ sub onMapClick {
 	my ($self, $x, $y) = @_;
 	my $checkPortal = 0;
 	my $noMove = 0;
-	
+
 	if ($currentChatRoom ne "") {
 		$self->writeOutput("error", T("Error in function 'move' (Move Player)\n" .
 										"Unable to walk while inside a chat room!\n" .
@@ -1479,7 +1479,7 @@ sub onMapClick {
 					last;
 				}
 			}
-			
+
 			foreach my $monster (@{$self->{mapViewer}->{monsters}}){
 				if (distance($monster->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_monsterSticking} || 1)) {
 					main::attack($monster->{ID});
@@ -1487,7 +1487,7 @@ sub onMapClick {
 					last;
 				}
 			}
-			
+
 			foreach my $npc (@{$self->{mapViewer}->{npcs}}){
 				if (distance($npc->{pos},{x=>$x,y=>$y}) <= ($config{wx_map_npcSticking} || 1)) {
 					Commands::run("talk " . $npc->{binID});
@@ -1496,7 +1496,7 @@ sub onMapClick {
 				}
 			}
 		}
-		
+
 		unless ($noMove) {
 			$self->writeOutput("message", TF("Moving to %s, %s\n", $x, $y), "info") unless $checkPortal;
 			AI::clear("mapRoute", "route", "move");
@@ -1517,9 +1517,9 @@ sub onMap_MapChange {
 
 sub onCaptcha {
 	my ($self, undef, $args) = @_;
-	
+
 	return unless $config{wx_captcha};
-	
+
 	require Interface::Wx::CaptchaDialog;
 	my $dialog = new Interface::Wx::CaptchaDialog ($self->{frame}, $args->{file});
 	my $result;
@@ -1528,9 +1528,9 @@ sub onCaptcha {
 	}
 	$dialog->Destroy;
 	return unless defined $result && $result ne '';
-	
+
 	$messageSender->sendCaptchaAnswer ($result);
-	
+
 	$args->{return} = 1;
 }
 
@@ -1538,7 +1538,7 @@ sub onCaptcha {
 
 sub onMapIndicator {
 	my ($self, undef, $args) = @_;
-	
+
 	if ($self->{mapViewer}) {
 		$self->{mapViewer}->mapIndicator ($args->{type} != 2, $args->{x}, $args->{y}, $args->{red}, $args->{green}, $args->{blue}, $args->{alpha});
 	}
@@ -1548,9 +1548,9 @@ sub onMapIndicator {
 
 sub onSelfStatChange {
 	my ($self, $hook, $args) = @_;
-	
+
 	return if $hook eq 'changed_status' && $args->{actor}{ID} ne $accountID;
-	
+
 	my (undef, $window) = $self->openStats;
 	$window->update if $window;
 }
@@ -1558,17 +1558,17 @@ sub onSelfStatChange {
 sub onSlaveStatChange {
 	my ($self, $hook, $args) = @_;
 	my $window;
-	
+
 	(undef, $window) = $self->openHomunculus;
 	$window->update if $window;
-	
+
 	(undef, $window) = $self->openMercenary;
 	$window->update if $window;
 }
 
 sub onPetStatChange {
 	my ($self, $hook, $args) = @_;
-	
+
 	my (undef, $window) = $self->openPet;
 	$window->update if $window;
 }
@@ -1577,7 +1577,7 @@ sub onPetStatChange {
 
 sub onNpcImage {
 	my ($self, undef, $args) = @_;
-	
+
 	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcImage ($args->{type} == 2, bytesToString ($args->{npc_image}));
 	}
@@ -1585,7 +1585,7 @@ sub onNpcImage {
 
 sub onNpcTalk {
 	my ($self, undef, $args) = @_;
-	
+
 	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcName ($args->{ID}, $args->{name});
 	}
@@ -1593,7 +1593,7 @@ sub onNpcTalk {
 
 sub onNpcTalkPacket {
 	my ($self, undef, $args) = @_;
-	
+
 	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcTalk (bytesToString ($args->{msg}));
 	}
@@ -1601,7 +1601,7 @@ sub onNpcTalkPacket {
 
 sub onNpcContinue {
 	my ($self, undef, $args) = @_;
-	
+
 	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcContinue unless $config{autoTalkCont};
 	}
@@ -1609,7 +1609,7 @@ sub onNpcContinue {
 
 sub onNpcResponses {
 	my ($self, undef, $args) = @_;
-	
+
 	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcResponses ($args->{responses});
 	}
@@ -1617,7 +1617,7 @@ sub onNpcResponses {
 
 sub onNpcNumber {
 	my ($self) = @_;
-	
+
 	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcNumber;
 	}
@@ -1625,7 +1625,7 @@ sub onNpcNumber {
 
 sub onNpcText {
 	my ($self) = @_;
-	
+
 	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcText;
 	}
@@ -1633,7 +1633,7 @@ sub onNpcText {
 
 sub onNpcClose {
 	my ($self) = @_;
-	
+
 	if (my ($npcTalk) = $self->openNpcTalk (1)) {
 		$npcTalk->{child}->npcClose;
 	}

@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::idRO::Renewal;
 
 use strict;
@@ -31,7 +31,7 @@ sub new {
 	foreach my $switch (keys %packets) {
 		$self->{packet_list}{$switch} = $packets{$switch};
 	}
-	
+
 	my %handlers = qw(
 		received_characters 099D
 		received_characters_info 082D

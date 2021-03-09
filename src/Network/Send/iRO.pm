@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # tRO (Thai) for 2008-09-16Ragexe12_Th
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::iRO;
 
 use strict;
@@ -24,7 +24,7 @@ use Utils qw(getTickCount getHex getCoordString);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
@@ -54,7 +54,7 @@ sub new {
 
 	$self->{char_create_version} = 0x0A39;
 	$self->{send_sell_buy_complete} = 1;
-	
+
 	return $self;
 }
 

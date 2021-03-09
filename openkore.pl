@@ -154,7 +154,7 @@ sub selfCheck {
 			"Your Windows TCP/IP stack is broken. Please read\n" .
 			"  %s\n" .
 			"to learn how to solve this.",
-			"http://wiki.openkore.com/index.php?title=Frequently_Asked_Questions#How_to_fix_broken_TCP.2FIP_stack"));
+			"https://openkore.com/wiki/Frequently_Asked_Questions#Your_Windows_TCP.2FIP_stack_is_broken"));
 		exit 1;
 	}
 
@@ -169,16 +169,16 @@ sub selfCheck {
 
 	if (!defined &XSTools::majorVersion) {
 		$interface->errorDialog(TF("Your version of the XSTools library is too old.\n" .
-			"Please upgrade it from %s", "http://misc.openkore.com"));
+			"Please upgrade it from %s", "https://misc.openkore.com/"));
 		exit 1;
 	} elsif (XSTools::majorVersion() != 5) {
 		my $error;
 		if (defined $ENV{INTERPRETER}) {
 			$error = TF("Your version of (wx)start.exe is incompatible.\n" .
-				"Please upgrade it from %s", "http://misc.openkore.com");
+				"Please upgrade it from %s", "https://misc.openkore.com/");
 		} else {
 			$error = TF("Your version of XSTools library is incompatible.\n" .
-				"Please upgrade it from %s", "http://misc.openkore.com");
+				"Please upgrade it from %s", "https://misc.openkore.com/");
 		}
 		$interface->errorDialog($error);
 		exit 1;
@@ -186,10 +186,10 @@ sub selfCheck {
 		my $error;
 		if (defined $ENV{INTERPRETER}) {
 			$error = TF("Your version of (wx)start.exe is too old.\n" .
-				"Please upgrade it from %s", "http://misc.openkore.com")
+				"Please upgrade it from %s", "https://misc.openkore.com/")
 		} else {
 			$error = TF("Your version of the XSTools library is too old.\n" .
-				"Please upgrade it from %s", "http://misc.openkore.com")
+				"Please upgrade it from %s", "https://misc.openkore.com/")
 		}
 		$interface->errorDialog($error);
 		exit 1;
