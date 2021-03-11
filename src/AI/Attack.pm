@@ -425,7 +425,7 @@ sub main {
 
 		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 
-		my $pos = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
+		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 		my $result;
 		
 		if ($pos) {
@@ -460,7 +460,7 @@ sub main {
 		$config{attackCheckLOS} &&
 		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
 	) {
-		my $best_spot = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
+		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 
 		# Move to the closest spot
 		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
@@ -482,7 +482,7 @@ sub main {
 		blockDistance($realMyPos, $realMonsterPos) == 2 &&
 		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
 	) {
-		my $best_spot = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
+		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 
 		# Move to the closest spot
 		my $msg = TF("No LOS in melee from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
