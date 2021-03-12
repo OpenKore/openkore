@@ -2489,7 +2489,9 @@ sub canReachMeleeAttack {
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
 	my ($actor, $actorType, $target, $attackMaxDistance) = @_;
-
+	
+	# TODO: Add lots of comments
+	
 	my %targetPos;
 	$targetPos{x} = $target->{pos}{x};
 	$targetPos{y} = $target->{pos}{y};
@@ -2590,11 +2592,11 @@ sub meetingPosition {
 	
 	if ($actorType == 1) {
 		$attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance};
-		$attackCanSnipe = $config{attackCanSnipe};
 		$runFromTarget = $config{runFromTarget};
 		$runFromTarget_dist = $config{runFromTarget_dist};
 		$followDistanceMax = $config{followDistanceMax};
-		$checkLOS = $config{attackCheckLOS};
+		$attackCanSnipe = $config{attackCanSnipe};
+		$attackCheckLOS = $config{attackCheckLOS};
 		if ($config{follow}) {
 			foreach (keys %players) {
 				if ($players{$_}{name} eq $config{followTarget}) {
@@ -2609,17 +2611,17 @@ sub meetingPosition {
 		
 	} elsif ($actorType == 2) {
 		$attackRouteMaxPathDistance = $config{$slave->{configPrefix}.'attackRouteMaxPathDistance'};
-		$attackCanSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
 		$runFromTarget = $config{$slave->{configPrefix}.'runFromTarget'};
 		$runFromTarget_dist = $config{$slave->{configPrefix}.'runFromTarget_dist'};
 		$followDistanceMax = $config{$slave->{configPrefix}.'followDistanceMax'};
-		$checkLOS = $config{$slave->{configPrefix}.'attackCheckLOS'};
+		$attackCanSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
+		$attackCheckLOS = $config{$slave->{configPrefix}.'attackCheckLOS'};
 		$master = $char;
 		$masterPos = calcPosition($char);
 	}
 	
-	my $melee = 0;
-	my $ranged = 0;
+	my $melee;
+	my $ranged;
 	if ($attackMaxDistance == 1) {
 		$melee = 1;
 	
@@ -2659,7 +2661,10 @@ sub meetingPosition {
 			$max_pathfinding_dist = $possible_target_pos->{myDistToTargetPosInStep} + 1;
 		}
 		
+		# TODO: This algorithm is now a lot smarter than runFromTarget, maybe port it here
+		
 		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $possible_target_pos->{targetPosInStep}, $max_pathfinding_dist);
+		# TODO: Check if this reverse is actually any good here
 		foreach my $distance (reverse ($min_destination_dist..$max_destination_dist)) {
 			
 			my @blocks = calcRectArea($possible_target_pos->{targetPosInStep}{x}, $possible_target_pos->{targetPosInStep}{y}, $distance, $field);
@@ -2678,11 +2683,11 @@ sub meetingPosition {
 				}
 				
 				# 3. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
-				if ($ranged && $checkLOS) {
+				if ($ranged && $attackCheckLOS) {
 					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 				} elsif ($melee) {
 					next unless (canReachMeleeAttack($spot, $possible_target_pos->{targetPosInStep}));
-					if ($checkLOS && blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
+					if ($attackCheckLOS && blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
 						next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 					}
 				}
