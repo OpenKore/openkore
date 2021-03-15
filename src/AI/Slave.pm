@@ -509,7 +509,7 @@ sub processAttack {
 			my $result;
 			
 			if ($pos) {
-				debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
+				debug "Attack $slave ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
 				
 				$result = $slave->route(
 					undef,

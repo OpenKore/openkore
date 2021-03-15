@@ -2490,8 +2490,31 @@ sub canReachMeleeAttack {
 sub meetingPosition {
 	my ($actor, $actorType, $target, $attackMaxDistance) = @_;
 	
-	# TODO: Add lots of comments
+	# Actor was going from 'pos' to 'pos_to' in the last movement
+	my %myPos;
+	$myPos{x} = $actor->{pos}{x};
+	$myPos{y} = $actor->{pos}{y};
+	my %myPosTo;
+	$myPosTo{x} = $actor->{pos_to}{x};
+	$myPosTo{y} = $actor->{pos_to}{y};
 	
+	my $mySpeed = ($actor->{walk_speed} || 0.12);
+	my $timeSinceActorMoved = time - $actor->{time_move};
+	
+	# Calculate the time actor will need to finish moving from pos to pos_to
+	my $timeActorFinishMove = calcTime(\%myPos, \%myPosTo, $mySpeed);
+	
+	my $realMyPos;
+	# Actor has finished moving
+	if ($timeSinceActorMoved >= $timeActorFinishMove) {
+		$realMyPos->{x} = $myPosTo{x};
+		$realMyPos->{y} = $myPosTo{y};
+	# Actor is currently moving
+	} else {
+		($realMyPos, undef) = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeSinceActorMoved);
+	}
+	
+	# Target was going from 'pos' to 'pos_to' in the last movement
 	my %targetPos;
 	$targetPos{x} = $target->{pos}{x};
 	$targetPos{y} = $target->{pos}{y};
@@ -2501,6 +2524,8 @@ sub meetingPosition {
 	
 	my $targetSpeed = ($target->{walk_speed} || 0.12);
 	my $timeSinceTargetMoved = time - $target->{time_move};
+	
+	# Calculate the time target will need to finish moving from pos to pos_to
 	my $timeTargetFinishMove = calcTime(\%targetPos, \%targetPosTo, $targetSpeed);
 	
 	my $target_moving;
@@ -2520,33 +2545,13 @@ sub meetingPosition {
 		$targetTotalSteps = countSteps(\%targetPos, \%targetPosTo);
 	}
 
-	my %myPos;
-	$myPos{x} = $actor->{pos}{x};
-	$myPos{y} = $actor->{pos}{y};
-	my %myPosTo;
-	$myPosTo{x} = $actor->{pos_to}{x};
-	$myPosTo{y} = $actor->{pos_to}{y};
-	
-	my $mySpeed = ($actor->{walk_speed} || 0.12);
-	my $timeSinceActorMoved = time - $actor->{time_move};
-	my $timeActorFinishMove = calcTime(\%myPos, \%myPosTo, $mySpeed);
-	
-	my $realMyPos;
-	# Actor has finished moving
-	if ($timeSinceActorMoved >= $timeActorFinishMove) {
-		$realMyPos->{x} = $myPosTo{x};
-		$realMyPos->{y} = $myPosTo{y};
-	# Actor is currently moving
-	} else {
-		($realMyPos, undef) = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeSinceActorMoved);
-	}
-
 	my @target_pos_to_check;
 	my $timeForTargetToGetToStep;
 	my %targetPosInStep;
 	my $myDistToTargetPosInStep;
+	
+	# Target started moving from %targetPos to %targetPosTo and has not finished moving yet, it is currently at $realTargetPos, here we calculate every block still in its path and the time to reach them
 	if ($target_moving) {
-		# Target is currently at $realTargetPos, moving to %targetPosTo, we check if can intercept it at any point during its travel path.
 		my $steps_count = 0;
 		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
 			# Calculate the steps
@@ -2572,6 +2577,8 @@ sub meetingPosition {
 		} continue {
 			$steps_count++;
 		}
+	
+	# Target has finished moving and is at %targetPosTo
 	} else {
 		$myDistToTargetPosInStep = blockDistance($realMyPos, $realTargetPos);
 		$target_pos_to_check[0] = {
@@ -2586,10 +2593,11 @@ sub meetingPosition {
 	my $runFromTarget;
 	my $runFromTarget_dist;
 	my $followDistanceMax;
-	my $checkLOS;
+	my $attackCheckLOS;
 	my $master;
 	my $masterPos;
 	
+	# actor is char
 	if ($actorType == 1) {
 		$attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance};
 		$runFromTarget = $config{runFromTarget};
@@ -2608,14 +2616,15 @@ sub meetingPosition {
 				$masterPos = calcPosition($master);
 			}
 		}
-		
+	
+	# actor is a slave
 	} elsif ($actorType == 2) {
-		$attackRouteMaxPathDistance = $config{$slave->{configPrefix}.'attackRouteMaxPathDistance'};
-		$runFromTarget = $config{$slave->{configPrefix}.'runFromTarget'};
-		$runFromTarget_dist = $config{$slave->{configPrefix}.'runFromTarget_dist'};
-		$followDistanceMax = $config{$slave->{configPrefix}.'followDistanceMax'};
-		$attackCanSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
-		$attackCheckLOS = $config{$slave->{configPrefix}.'attackCheckLOS'};
+		$attackRouteMaxPathDistance = $config{$target->{configPrefix}.'attackRouteMaxPathDistance'};
+		$runFromTarget = $config{$target->{configPrefix}.'runFromTarget'};
+		$runFromTarget_dist = $config{$target->{configPrefix}.'runFromTarget_dist'};
+		$followDistanceMax = $config{$target->{configPrefix}.'followDistanceMax'};
+		$attackCanSnipe = $config{$target->{configPrefix}.'attackCanSnipe'};
+		$attackCheckLOS = $config{$target->{configPrefix}.'attackCheckLOS'};
 		$master = $char;
 		$masterPos = calcPosition($char);
 	}
