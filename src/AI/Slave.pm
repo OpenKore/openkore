@@ -505,11 +505,11 @@ sub processAttack {
 			
 			debug "$slave target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from slave ($realMyPos->{x} $realMyPos->{y}) to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 			
-			my $pos = meetingPosition_slave($slave, $target, $args->{attackMethod}{maxDistance});
+			my $pos = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
 			my $result;
 			
 			if ($pos) {
-				debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
+				debug "Attack $slave ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
 				
 				$result = $slave->route(
 					undef,
@@ -538,7 +538,7 @@ sub processAttack {
 			$config{$slave->{configPrefix}.'attackCheckLOS'} &&
 			!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
 		) {
-			my $best_spot = meetingPosition_slave($slave, $target, $args->{attackMethod}{maxDistance});
+			my $best_spot = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
 
 			# Move to the closest spot
 			my $msg = TF("%s has no LOS from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
@@ -558,7 +558,7 @@ sub processAttack {
 			blockDistance($realMyPos, $realMonsterPos) == 2 &&
 			!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
 		) {
-			my $best_spot = meetingPosition_slave($slave, $target, $args->{attackMethod}{maxDistance});
+			my $best_spot = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
 
 			# Move to the closest spot
 			my $msg = TF("%s has no LOS in melee from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
