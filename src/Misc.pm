@@ -2590,12 +2590,12 @@ sub meetingPosition {
 	
 	my $attackRouteMaxPathDistance;
 	my $attackCanSnipe;
-	my $runFromTarget;
-	my $runFromTarget_dist;
-	my $followDistanceMax;
 	my $attackCheckLOS;
+	my $followDistanceMax;
 	my $master;
 	my $masterPos;
+	my $runFromTarget;
+	my $runFromTarget_dist;
 	
 	# actor is char
 	if ($actorType == 1) {
@@ -2619,12 +2619,12 @@ sub meetingPosition {
 	
 	# actor is a slave
 	} elsif ($actorType == 2) {
-		$attackRouteMaxPathDistance = $config{$target->{configPrefix}.'attackRouteMaxPathDistance'};
-		$runFromTarget = $config{$target->{configPrefix}.'runFromTarget'};
-		$runFromTarget_dist = $config{$target->{configPrefix}.'runFromTarget_dist'};
-		$followDistanceMax = $config{$target->{configPrefix}.'followDistanceMax'};
-		$attackCanSnipe = $config{$target->{configPrefix}.'attackCanSnipe'};
-		$attackCheckLOS = $config{$target->{configPrefix}.'attackCheckLOS'};
+		$attackRouteMaxPathDistance = $config{$actor->{configPrefix}.'attackRouteMaxPathDistance'};
+		$runFromTarget = $config{$actor->{configPrefix}.'runFromTarget'};
+		$runFromTarget_dist = $config{$actor->{configPrefix}.'runFromTarget_dist'};
+		$followDistanceMax = $config{$actor->{configPrefix}.'followDistanceMax'};
+		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
+		$attackCheckLOS = $config{$actor->{configPrefix}.'attackCheckLOS'};
 		$master = $char;
 		$masterPos = calcPosition($char);
 	}
@@ -2685,6 +2685,8 @@ sub meetingPosition {
 				
 				# 1. It must be walkable
 				next unless ($field->isWalkable($spot->{x}, $spot->{y}));
+			
+				next if (positionNearPortal($spot, $config{'attackMinPortalDistance'}));
 				
 				# 2. It must be within $followDistanceMax of $masterPos, if we have a master.
 				if ($masterPos) {
