@@ -686,37 +686,123 @@ sub objectIsMovingTowardsPlayer {
 	return 0;
 }
 
-use constant AVOID_WALLS => 4;
 use constant AVOID_MASTER_BOUND => 2;
 
 ##
-# get_kite_position(field, actor, target, min_dist_from_target, move_distance_min, move_distance_max, master, max_dist_to_master)
-# field: Field object of the map 'actor' should kite on.
-# actor: reference to the actor which is kiting.
-# target: reference to the actor which you are kiting.
-# min_dist_from_target: the minimum distance 'actor' should keep from 'target'.
-# move_distance: the minimum distance which 'actor' should try to move away from 'target'.
-# move_distance: the maximum distance which 'actor' should try to move away from 'target'.
-# master: reference to the actor which is the master of 'actor', if 'actor' is a slave (homunculus or mercenary).
-# max_dist_to_master: the maximum distance 'actor' should move away from 'master'.
+# get_kite_position(actor, actorType, target_actor)
+# actor: current object.
+# actorType: 1 - char | 2 - slave
+# target_actor: actor to run from.
 #
 # Returns: reference to a hash containing both x and y coordinates of the best kite position found on success, and undef on failure
 #
 # Kite algorithm used in runFromTarget
 sub get_kite_position {
-	my ($field, $actor, $target, $min_dist_from_target, $move_distance_min, $move_distance_max, $checkLOS, $canSnipe, $maxPathDistance, $master, $max_dist_to_master) = @_;
-
-	my ($actor_pos, $enemy_pos, $master_pos);
-
-	# Calculate the current position of actor, target and master
-	$actor_pos = calcPosition($actor);
-	$enemy_pos = calcPosition($target);
-	if ($master) {
-		$master_pos = calcPosition($master);
+	my ($actor, $actorType, $target) = @_;
+	
+	my %myPos;
+	$myPos{x} = $actor->{pos}{x};
+	$myPos{y} = $actor->{pos}{y};
+	my %myPosTo;
+	$myPosTo{x} = $actor->{pos_to}{x};
+	$myPosTo{y} = $actor->{pos_to}{y};
+	
+	my $mySpeed = ($actor->{walk_speed} || 0.12);
+	my $timeSinceActorMoved = time - $actor->{time_move};
+	
+	# Calculate the time actor will need to finish moving from pos to pos_to
+	my $timeActorFinishMove = calcTime(\%myPos, \%myPosTo, $mySpeed);
+	
+	my $realMyPos;
+	# Actor has finished moving
+	if ($timeSinceActorMoved >= $timeActorFinishMove) {
+		$realMyPos->{x} = $myPosTo{x};
+		$realMyPos->{y} = $myPosTo{y};
+	# Actor is currently moving
+	} else {
+		($realMyPos, undef) = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeSinceActorMoved);
+	}
+	
+	# Target was going from 'pos' to 'pos_to' in the last movement
+	my %targetPos;
+	$targetPos{x} = $target->{pos}{x};
+	$targetPos{y} = $target->{pos}{y};
+	my %targetPosTo;
+	$targetPosTo{x} = $target->{pos_to}{x};
+	$targetPosTo{y} = $target->{pos_to}{y};
+	
+	my $targetSpeed = ($target->{walk_speed} || 0.12);
+	my $timeSinceTargetMoved = time - $target->{time_move};
+	
+	# Calculate the time target will need to finish moving from pos to pos_to
+	my $timeTargetFinishMove = calcTime(\%targetPos, \%targetPosTo, $targetSpeed);
+	
+	my $target_moving;
+	my $realTargetPos;
+	my $targetTotalSteps;
+	my $targetCurrentStep;
+	# Target has finished moving
+	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
+		$target_moving = 0;
+		$realTargetPos->{x} = $targetPosTo{x};
+		$realTargetPos->{y} = $targetPosTo{y};
+	
+	# Target is currently moving
+	} else {
+		$target_moving = 1;
+		($realTargetPos, $targetCurrentStep) = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, $timeSinceTargetMoved);
+		$targetTotalSteps = countSteps(\%targetPos, \%targetPosTo);
+	}
+	
+	my $attackCanSnipe;
+	my $attackCheckLOS;
+	my $followDistanceMax;
+	my $master;
+	my $masterPos;
+	my $runFromTarget;
+	my $runFromTarget_dist;
+	my $runFromTarget_minStep;
+	my $runFromTarget_maxStep;
+	my $runFromTarget_maxPathDistance;
+	
+	# actor is char
+	if ($actorType == 1) {
+		$attackCanSnipe = $config{attackCanSnipe};
+		$attackCheckLOS = $config{attackCheckLOS};
+		$followDistanceMax = $config{followDistanceMax};
+		if ($config{follow}) {
+			foreach (keys %players) {
+				if ($players{$_}{name} eq $config{followTarget}) {
+					$master = $players{$_};
+					last;
+				}
+			}
+			if ($master) {
+				$masterPos = calcPosition($master);
+			}
+		}
+		$runFromTarget = $config{runFromTarget};
+		$runFromTarget_dist = $config{runFromTarget_dist};
+		$runFromTarget_minStep = $config{runFromTarget_minStep};
+		$runFromTarget_maxStep = $config{runFromTarget_maxStep};
+		$runFromTarget_maxPathDistance = $config{runFromTarget_maxPathDistance};
+	
+	# actor is a slave
+	} elsif ($actorType == 2) {
+		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
+		$attackCheckLOS = $config{$actor->{configPrefix}.'attackCheckLOS'};
+		$followDistanceMax = $config{$actor->{configPrefix}.'followDistanceMax'};
+		$master = $char;
+		$masterPos = calcPosition($char);
+		$runFromTarget = $config{$actor->{configPrefix}.'runFromTarget'};
+		$runFromTarget_dist = $config{$actor->{configPrefix}.'runFromTarget_dist'};
+		$runFromTarget_minStep = $config{$actor->{configPrefix}.'runFromTarget_minStep'};
+		$runFromTarget_maxStep = $config{$actor->{configPrefix}.'runFromTarget_maxStep'};
+		$runFromTarget_maxPathDistance = $config{$actor->{configPrefix}.'runFromTarget_maxPathDistance'};
 	}
 
 	# Get the angle (using a vector) in radians from target to actor
-	my $initial_rad = atan2(($actor_pos->{y} - $enemy_pos->{y}), ($actor_pos->{x} - $enemy_pos->{x}));
+	my $initial_rad = atan2(($realMyPos->{y} - $realTargetPos->{y}), ($realMyPos->{x} - $realTargetPos->{x}));
 
 	# atan2 returns radians between -pi and pi, adust it to between 0 and 2*pi
 	if ($initial_rad < 0) {
@@ -734,79 +820,97 @@ sub get_kite_position {
 
 	# If there are any valid cells that qualify both criteria, ignore all blocks that are closer to a wall than AVOID_WALLS and closer to the max distance than AVOID_MASTER_BOUND
 	my $skip_both = 0;
+	
+	# Biggest possible angle between 2 adjacent cells in dist $move_distance
+	my $angle_a = atan2(($runFromTarget_minStep-1), $runFromTarget_minStep);
+	my $angle_b = atan2(($runFromTarget_minStep-1), ($runFromTarget_minStep+1));
+	my $added_rad_per_loop = pip4 - max($angle_a, $angle_b);
 
-	foreach my $move_distance ($move_distance_min..$move_distance_max) {
-		my $current_rad = $initial_rad;
+	my $current_mod = 1;
+	my $total_added_rad = 0;
+	
+	my $current_rad = $initial_rad;
+	# We count the total amount of radians checked on each side, adding pi to each side means doing half a turn clockwise and counterclockwise, so we check the whole perimeter
+	my $max_rad = pi;
 
-		# Biggest possible angle between 2 adjacent cells in dist $move_distance
-		my $angle_a = atan2(($move_distance-1), $move_distance);
-		my $angle_b = atan2(($move_distance-1), ($move_distance+1));
-		my $added_rad_per_loop = pip4 - max($angle_a, $angle_b);
+	my %tested_pos;
 
-		my $current_mod = 1;
-		my $total_added_rad = 0;
-
-		# We count the total amount of radians checked on each side, adding pi to each side means doing half a turn clockwise and counterclockwise, so we check the whole perimeter
-		my $max_rad = pi;
-
-		my %last_pos_by_mod = (
-			'1'  => { x => undef, y => undef },
-			'-1' => { x => undef, y => undef },
-		);
-
-		while ($total_added_rad < $max_rad) {
-			my $cos_cur = cos($current_rad);
-			my $sin_cur = sin($current_rad);
+	while ($total_added_rad < $max_rad) {
+		my $cos_cur = cos($current_rad);
+		my $sin_cur = sin($current_rad);
+		foreach my $move_distance ($runFromTarget_minStep..$runFromTarget_maxStep) {
 
 			my %current_cell;
-			$current_cell{x} = $enemy_pos->{x} + int($move_distance * $cos_cur);
-			$current_cell{y} = $enemy_pos->{y} + int($move_distance * $sin_cur);
+			$current_cell{x} = $realTargetPos->{x} + int($move_distance * $cos_cur);
+			$current_cell{y} = $realTargetPos->{y} + int($move_distance * $sin_cur);
 
+			next if ($current_cell{x} == $realMyPos->{x} && $current_cell{y} == $realMyPos->{y});
+			
 			# Skip if the last iteration resulted in the same cell as this one
-			next if (defined $last_pos_by_mod{$current_mod}{x} && $current_cell{x} == $last_pos_by_mod{$current_mod}{x} && $current_cell{y} == $last_pos_by_mod{$current_mod}{y});
-
-			$last_pos_by_mod{$current_mod}{x} = $current_cell{x};
-			$last_pos_by_mod{$current_mod}{y} = $current_cell{y};
+			next if (exists $tested_pos{$current_cell{x}} && exists $tested_pos{$current_cell{x}}{$current_cell{y}});
+			
+			$tested_pos{$current_cell{x}}{$current_cell{y}} = 1;
+			
+			my $time_actor_to_get_to_spot = calcTime($realMyPos, \%current_cell, $mySpeed);
+			
+			my $pos_target_will_be_when_we_get_to_spot;
+			
+			if ($target_moving == 1) {
+				my $new_pos;
+				($new_pos, undef) = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, ($timeSinceTargetMoved + $time_actor_to_get_to_spot));
+				$pos_target_will_be_when_we_get_to_spot = $new_pos;
+			} else {
+				$pos_target_will_be_when_we_get_to_spot = $realTargetPos;
+			}
+			
+			my $dist_spot_my_pos = adjustedBlockDistance(\%current_cell, $realMyPos);
+			my $dist_spot_target_pos = adjustedBlockDistance(\%current_cell, $pos_target_will_be_when_we_get_to_spot);
 
 			# Skip if the cell is not walkable or if it is too close to target
 			next if (!$field->isWalkable($current_cell{x}, $current_cell{y}));
-			next if (blockDistance(\%current_cell, $enemy_pos) < $min_dist_from_target);
+			
+			next if (blockDistance(\%current_cell, $pos_target_will_be_when_we_get_to_spot) < $runFromTarget_minStep);
+			
+			next if (positionNearPortal(\%current_cell, $config{'attackMinPortalDistance'}));
+			
+			my $time_target_to_get_to_spot = calcTime($realTargetPos, \%current_cell, $targetSpeed);
+			next if ($time_target_to_get_to_spot < $time_actor_to_get_to_spot);
+				
+			# 3. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
+			if ($attackCheckLOS) {
+				next unless ($field->checkLOS(\%current_cell, $pos_target_will_be_when_we_get_to_spot, $attackCanSnipe));
+			}
 			
 			# The route should not exceed at any point $max_pathfinding_dist distance from the target.
 			my $solution = [];
 			my $dist = new PathFinding(
 				field => $field,
-				start => $actor_pos,
+				start => $realMyPos,
 				dest => \%current_cell,
 				avoidWalls => 0
 			)->run($solution);
 				
-			# It must be reachable and have at max $maxPathDistance of route distance to it from our current position.
-			next unless ($dist >= 0 && $dist <= $maxPathDistance);
-				
-			# It must have LOS to the target if that is active and we are ranged
-			if ($checkLOS) {
-				next unless ($field->checkLOS(\%current_cell, $enemy_pos, $canSnipe));
-			}
-
-			$current_cell{wall_dist} = ord(substr($field->{dstMap}, $current_cell{y} * $field->width + $current_cell{x}));
-			if ($current_cell{wall_dist} >= AVOID_WALLS) {
+			# It must be reachable and have at max $runFromTarget_maxPathDistance of route distance to it from our current position.
+			next unless ($dist >= 0 && $dist <= $runFromTarget_maxPathDistance);
+			
+			$current_cell{weight} = $field->getBlockWeight($current_cell{x}, $current_cell{y});
+			if ($current_cell{weight} > 0) {
 				$skip_near_wall_cells = 1;
 			}
 			if ($master) {
-				$current_cell{master_bound_dist} = $max_dist_to_master - blockDistance($master_pos, \%current_cell);
+				$current_cell{master_bound_dist} = $followDistanceMax - blockDistance(\%current_cell, $masterPos);
 				next if ($current_cell{master_bound_dist} < 0);
 
 				if ($current_cell{master_bound_dist} >= AVOID_MASTER_BOUND) {
 					$skip_near_master_bound = 1;
 
-					if ($current_cell{wall_dist} >= AVOID_WALLS) {
+					if ($current_cell{weight} > 0) {
 						$skip_both = 1;
 					}
 				}
 			}
 
-			$current_cell{dist_dif} = distance(\%current_cell, $actor_pos) - distance(\%current_cell, $enemy_pos);
+			$current_cell{dist_dif} = $dist_spot_my_pos - $dist_spot_target_pos;
 			# If this is a valid cell but it is closer to target than to actor we could run into target while pathing to it
 			# So add it to a lower priority list
 			if ($current_cell{dist_dif} > 0) {
@@ -817,23 +921,23 @@ sub get_kite_position {
 				push(@best_distant_cells, \%current_cell);
 			}
 
-		} continue {
-			# We start at $initial_rad and move $added_rad_per_loop radians both clockwise and counterclockwise each loop checking for cells
-			if ($current_mod == 1 && $total_added_rad > 0) {
-				$current_mod = -1;
-			} else {
-				$current_mod = 1;
-				$total_added_rad += $added_rad_per_loop;
-			}
+		}
+	} continue {
+		# We start at $initial_rad and move $added_rad_per_loop radians both clockwise and counterclockwise each loop checking for cells
+		if ($current_mod == 1 && $total_added_rad > 0) {
+			$current_mod = -1;
+		} else {
+			$current_mod = 1;
+			$total_added_rad += $added_rad_per_loop;
+		}
 
-			$current_rad = $initial_rad + ($total_added_rad * $current_mod);
+		$current_rad = $initial_rad + ($total_added_rad * $current_mod);
 
-			# Again, adjust $current_rad to be between 0 and 2*pi
-			if ($current_rad >= pi2) {
-				$current_rad -= pi2;
-			} elsif ($current_rad < 0) {
-				$current_rad += pi2;
-			}
+		# Again, adjust $current_rad to be between 0 and 2*pi
+		if ($current_rad >= pi2) {
+			$current_rad -= pi2;
+		} elsif ($current_rad < 0) {
+			$current_rad += pi2;
 		}
 	}
 
@@ -852,9 +956,9 @@ sub get_kite_position {
 	# Loop all valid cells that were found in priority order
 	foreach my $cell (@cells) {
 		if ($skip_both) {
-			next if ($cell->{wall_dist} < AVOID_WALLS || $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
+			next if ($cell->{weight} > 0 || $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
 		} elsif ($skip_near_wall_cells) {
-			next if ($cell->{wall_dist} < AVOID_WALLS);
+			next if ($cell->{weight} > 0);
 		} elsif ($skip_near_master_bound) {
 			next if ($cell->{master_bound_dist} < AVOID_MASTER_BOUND);
 		}
@@ -864,6 +968,8 @@ sub get_kite_position {
 	# Return undef if no valid cell was found
 	return undef;
 }
+
+use constant USE_DIAGONAL => 0;
 
 ##
 # get_dance_position(slave, target)
@@ -876,96 +982,166 @@ sub get_kite_position {
 # Based on AzzyAI dance
 sub get_dance_position {
 	my ($slave, $target) = @_;
-	my ($newx, $newy, $dy, $dx);
+	my ($dy, $dx);
 
-	my $slave_pos = calcPosition($slave);
-	my $enemy_pos = calcPosition($target);
-
-	my $t = int(rand(2));
+	my $my_pos = calcPosition($slave);
+	my $target_pos = calcPosition($target);
+	
+	my @possible;
+	
+	# same x and y
+	if ($my_pos->{x} == $target_pos->{x} && $my_pos->{y} == $target_pos->{y}) {
+		push(@possible,(
+			{ x => 1, y => 0 },
+			{ x => 0, y => 1 },
+			{ x => 0, y => -1 },
+			{ x => -1, y => 0 }
+		));
+		push(@possible,(
+			{ x => 1, y => 1 },
+			{ x => -1, y => -1 },
+			{ x => 1, y => -1 },
+			{ x => -1, y => 1 }
+		)) if (USE_DIAGONAL == 1);
+	
+	} elsif ($my_pos->{x} == $target_pos->{x}) {
+		$dy = abs($my_pos->{y} - $target_pos->{y});
+		if ($my_pos->{y} > $target_pos->{y}) {
+			# same x, 2 y north
+			if ($dy == 2) {
+				push(@possible,(
+					{ x => 0, y => -1 }
+				));
+				push(@possible,(
+					{ x => 1, y => -1 },
+					{ x => -1, y => -1 }
+				)) if (USE_DIAGONAL == 1);
+			# same x, 1 y north
+			} else {
+				push(@possible,(
+					{ x => 1, y => 0 },
+					{ x => -1, y => 0 },
+					{ x => 0, y => 1 }
+				));
+			}
+		} else {
+			# same x, 2 y south
+			if ($dy == 2) {
+				push(@possible,(
+					{ x => 0, y => 1 }
+				));
+				push(@possible,(
+					{ x => 1, y => 1 },
+					{ x => -1, y => 1 }
+				)) if (USE_DIAGONAL == 1);
+			# same x, 1 y south
+			} else {
+				push(@possible,(
+					{ x => 1, y => 0 },
+					{ x => -1, y => 0 },
+					{ x => 0, y => -1 }
+				));
+			}
+		}
+	
+	} elsif ($my_pos->{y} == $target_pos->{y}) {
+		$dx = abs($my_pos->{x} - $target_pos->{x});
+		if ($my_pos->{x} > $target_pos->{x}) {
+			# same y, 2 x east
+			if ($dx == 2) {
+				push(@possible,(
+					{ x => -1, y => 0 }
+				));
+				push(@possible,(
+					{ x => -1, y => 1 },
+					{ x => -1, y => -1 }
+				)) if (USE_DIAGONAL == 1);
+			# same y, 1 x east
+			} else {
+				push(@possible,(
+					{ x => 0, y => 1 },
+					{ x => 0, y => -1 },
+					{ x => 1, y => 0 }
+				));
+			}
+		} else {
+			# same y, 2 x west
+			if ($dx == 2) {
+				push(@possible,(
+					{ x => 1, y => 0 }
+				));
+				push(@possible,(
+					{ x => 1, y => 1 },
+					{ x => 1, y => -1 }
+				)) if (USE_DIAGONAL == 1);
+			# same y, 1 x west
+			} else {
+				push(@possible,(
+					{ x => 0, y => 1 },
+					{ x => 0, y => -1 },
+					{ x => -1, y => 0 }
+				));
+			}
+		}
+		
+	} elsif ($my_pos->{y} > $target_pos->{y}) {
+		# 1 northeast
+		if ($my_pos->{x} > $target_pos->{x}) {
+			push(@possible,(
+				{ x => -1, y => 0 },
+				{ x => 0, y => -1 }
+			));
+			push(@possible,(
+				{ x => -1, y => 1 },
+				{ x => 1, y => -1 }
+			)) if (USE_DIAGONAL == 1);
+		# 1 northwest
+		} else {
+			push(@possible,(
+				{ x => 1, y => 0 },
+				{ x => 0, y => -1 }
+			));
+			push(@possible,(
+				{ x => 1, y => 1 },
+				{ x => -1, y => -1 }
+			)) if (USE_DIAGONAL == 1);
+		}
+		
+	} else {
+		# 1 southeast
+		if ($my_pos->{x} > $target_pos->{x}) {
+			push(@possible,(
+				{ x => -1, y => 0 },
+				{ x => 0, y => 1 }
+			));
+			push(@possible,(
+				{ x => -1, y => -1 },
+				{ x => 1, y => 1 }
+			)) if (USE_DIAGONAL == 1);
+		# 1 southwest
+		} else {
+			push(@possible,(
+				{ x => 1, y => 0 },
+				{ x => 0, y => 1 }
+			));
+			push(@possible,(
+				{ x => 1, y => -1 },
+				{ x => -1, y => 1 }
+			)) if (USE_DIAGONAL == 1);
+		}
+	}
+	
+	shuffleArray(\@possible);
 
 	my %dance_pos;
-
-	if ($t == 1) {
-		if ($slave_pos->{x} == $enemy_pos->{x}) {
-			if ($slave_pos->{y} == $enemy_pos->{y}) {
-				$newx = $enemy_pos->{x} + 1;
-				$newy = $enemy_pos->{y};
-			} else {
-				$dy = $slave_pos->{y} - $enemy_pos->{y};
-				$newx = $slave_pos->{x} + absunit($dy);
-				$newy = $slave_pos->{y};
-			}
-		} elsif ($slave_pos->{y} == $enemy_pos->{y}) {
-			$dx = $slave_pos->{x} - $enemy_pos->{x};
-			$newy = $slave_pos->{y} - absunit($dx);
-			$newx = $slave_pos->{x};
-		} elsif ($slave_pos->{y} > $enemy_pos->{y}) {
-			if ($slave_pos->{x} > $enemy_pos->{x}) {
-				$newy = $slave_pos->{y} - 1;
-				$newx = $slave_pos->{x};
-			} else {
-				$newy = $slave_pos->{y};
-				$newx = $slave_pos->{x} + 1;
-			}
-		} else {
-			if ($slave_pos->{x} > $enemy_pos->{x}) {
-				$newx = $slave_pos->{x} - 1;
-				$newy = $slave_pos->{y};
-			} else {
-				$newx = $slave_pos->{x};
-				$newy = $slave_pos->{y} + 1;
-			}
-		}
-
-		%dance_pos = (
-			x => $newx,
-			y => $newy,
-		);
-
-	} elsif ($t == 2) {
-		if ($slave_pos->{x} == $enemy_pos->{x}) {
-			if ($slave_pos->{y} == $enemy_pos->{y}) {
-				$newx = $enemy_pos->{x} - 1;
-				$newy = $enemy_pos->{y};
-			} else {
-				$dy = $slave_pos->{y} - $enemy_pos->{y};
-				$newx = $slave_pos->{x} - absunit($dy);
-				$newy = $slave_pos->{y};
-			}
-		} elsif ($slave_pos->{y} == $enemy_pos->{y}) {
-			$dx = $slave_pos->{x} - $enemy_pos->{x};
-			$newy = $slave_pos->{y} + absunit($dx);
-			$newx = $slave_pos->{x};
-		} elsif ($slave_pos->{y} > $enemy_pos->{y}) {
-			if ($slave_pos->{x} > $enemy_pos->{x}) {
-				$newy = $slave_pos->{y};
-				$newx = $slave_pos->{x} - 1;
-			} else {
-				$newy = $slave_pos->{y} - 1;
-				$newx = $slave_pos->{x};
-			}
-		} else {
-			if ($slave_pos->{x} > $enemy_pos->{x}) {
-				$newx = $slave_pos->{x};
-				$newy = $slave_pos->{y} + 1;
-			} else {
-				$newx = $slave_pos->{x} + 1;
-				$newy = $slave_pos->{y};
-			}
-		}
-
-		%dance_pos = (
-			x => $newx,
-			y => $newy,
-		);
-
-	} else {
-		$dx = $enemy_pos->{x} - $slave_pos->{x};
-		$dy = $enemy_pos->{y} - $slave_pos->{y};
-		%dance_pos = (
-			x => $slave_pos->{x} + (2 * $dx),
-			y => $slave_pos->{y} + (2 * $dy),
-		);
+	foreach my $pos_add (@possible) {
+		my $x = $my_pos->{x} + $pos_add->{x};
+		my $y = $my_pos->{y} + $pos_add->{y};
+		next unless ($field->isWalkable($x, $y));
+		
+		$dance_pos{x} = $x;
+		$dance_pos{y} = $y;
+		last;
 	}
 
 	return \%dance_pos;
