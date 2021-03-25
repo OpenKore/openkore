@@ -31,11 +31,6 @@ BEGIN {
 	require Wx::Perl::Packager if ($^O eq 'MSWin32');
 }
 
-# workaround to wxlocale bug (the following link also fits to perl)
-# https://github.com/wxphp/wxphp/issues/108 
-use POSIX qw( setlocale LC_ALL );
-setlocale(LC_ALL, 'C');
-
 use strict;
 use Wx ':everything';
 use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
@@ -78,6 +73,7 @@ sub OnInit {
 	my $self = shift;
 
 	$CVS = ($Settings::SVN =~ /SVN/);
+	Wx::DisableAssertHandler();
 	$self->createInterface;
 	$self->iterate;
 
