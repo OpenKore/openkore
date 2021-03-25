@@ -89,6 +89,20 @@ if (0) {
 	require encoding;
 	require Storable;
 	require Compress::Zlib;
+	require List::Util;
+	require File::Path;
+	require Text::Balanced;
+	require Digest::MD5;
+	require Math::BigInt;
+	require Math::BigInt::Calc;
+	require Math::BigInt::CalcEmu;
+	require Math::BigInt::FastCalc;
+	require Math::BigInt::Trace;
+	require Math::BigFloat;
+	require Math::BigFloat::Trace;
+	require Math::BigRat;
+	require Math::Complex;
+	require Math::Trig;
 	# new Perl 5.22 and more
 	require "unicore/lib/Perl/SpacePer.pl";
 	require "unicore/lib/Perl/Word.pl";
