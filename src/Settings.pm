@@ -564,6 +564,7 @@ sub loadByHandle {
 			$object->{onLoaded}->($filename);
 		}
 	}
+	$object->{path} = $filename if defined $filename;
 }
 
 ##
@@ -572,7 +573,7 @@ sub loadByHandle {
 # Calls 'loadFiles' with the list of registered data files whose name matches the given regular expression.
 sub loadByRegexp {
     my ($regexp, $progressHandler) = @_;
-    loadFiles([grep { $_->{name} =~ /$regexp/ } @{$files->getItems}], $progressHandler);
+    loadFiles([grep { $_->{path} =~ /$regexp/ } @{$files->getItems}], $progressHandler);
 }
 
 ##

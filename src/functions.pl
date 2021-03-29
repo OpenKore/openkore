@@ -149,8 +149,10 @@ sub loadDataFiles {
 		loader => [\&parseConfigFile, \%config],
 		internalName => 'config.txt',
 		autoSearch => 0);
-	Settings::addControlFile('consolecolors.txt',
-		loader => [\&parseSectionedFile, \%consoleColors]);
+	Settings::addControlFile(Settings::getControlFilename("consolecolors.txt"),
+		internalName => 'consolecolors.txt',
+		loader => [\&parseSectionedFile, \%consoleColors],
+		autoSearch => 0);
 	Settings::addControlFile(Settings::getMonControlFilename(),
 		loader => [\&parseMonControl, \%mon_control],
 		internalName => 'mon_control.txt',
@@ -167,32 +169,52 @@ sub loadDataFiles {
 		loader => [\&parseShopControl, \%shop],
 		internalName => 'shop.txt',
 		autoSearch => 0);
-	Settings::addControlFile('overallAuth.txt',
-		loader => [\&parseDataFile, \%overallAuth]);
-	Settings::addControlFile('pickupitems.txt',
-		loader => [\&parseDataFile_lc, \%pickupitems]);
-	Settings::addControlFile('responses.txt',
-		loader => [\&parseResponses, \%responses]);
-	Settings::addControlFile('timeouts.txt',
-		loader => [\&parseTimeouts, \%timeout]);
-	Settings::addControlFile('chat_resp.txt',
-		loader => [\&parseChatResp, \@chatResponses]);
-	Settings::addControlFile('avoid.txt',
-		loader => [\&parseAvoidControl, \%avoid]);
-	Settings::addControlFile('priority.txt',
-		loader => [\&parsePriority, \%priority]);
-	Settings::addControlFile('routeweights.txt',
-		loader => [\&parseDataFile, \%routeWeights]);
-	Settings::addControlFile('arrowcraft.txt',
-		loader => [\&parseDataFile_lc, \%arrowcraft_items]);
+	Settings::addControlFile(Settings::getControlFilename('overallAuth.txt'),
+		internalName => 'overallAuth.txt',
+		loader => [\&parseDataFile, \%overallAuth],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getControlFilename('pickupitems.txt'),
+		internalName => 'pickupitems.txt',
+		loader => [\&parseDataFile_lc, \%pickupitems],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getControlFilename('responses.txt'),
+		internalName => 'responses.txt',
+		loader => [\&parseResponses, \%responses],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getControlFilename('timeouts.txt'),
+		internalName => 'timeouts.txt',
+		loader => [\&parseTimeouts, \%timeout],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getControlFilename('chat_resp.txt'),
+		internalName => 'chat_resp.txt',
+		loader => [\&parseChatResp, \@chatResponses],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getControlFilename('avoid.txt'),
+		internalName => 'avoid.txt',
+		loader => [\&parseAvoidControl, \%avoid],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getControlFilename('priority.txt'),
+		internalName => 'priority.txt',
+		loader => [\&parsePriority, \%priority],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getControlFilename('routeweights.txt'),
+		internalName => 'routeweights.txt',
+		loader => [\&parseDataFile, \%routeWeights],
+		autoSearch => 0);
+	Settings::addControlFile(Settings::getControlFilename('arrowcraft.txt'),
+		internalName => 'arrowcraft.txt',
+		loader => [\&parseDataFile_lc, \%arrowcraft_items],
+		autoSearch => 0);
 
 	# Loading of Table files
 	# Load Servers.txt first
 	Settings::addTableFile('servers.txt',
+		internalName => 'servers.txt',
 		loader => [\&parseSectionedFile, \%masterServers],
 		onLoaded => \&processServerSettings );
 	# Load RecvPackets.txt second
  	Settings::addTableFile(Settings::getRecvPacketsFilename(),
+		internalName => 'recvpackets.txt',
  		loader => [\&parseRecvpackets, \%rpackets]);
 
 	# Add 'Old' table pack, if user set
@@ -213,76 +235,143 @@ sub loadDataFiles {
 
 	# Load all other tables
 	Settings::addTableFile('cities.txt',
+		internalName => 'cities.txt',
 		loader => [\&parseROLUT, \%cities_lut]);
 	Settings::addTableFile('directions.txt',
+		internalName => 'directions.txt',
 		loader => [\&parseDataFile2, \%directions_lut]);
 	Settings::addTableFile('elements.txt',
+		internalName => 'elements.txt',
 		loader => [\&parseROLUT, \%elements_lut]);
 	Settings::addTableFile('emotions.txt',
+		internalName => 'emotions.txt',
 		loader => [\&parseEmotionsFile, \%emotions_lut]);
 	Settings::addTableFile('equiptypes.txt',
+		internalName => 'equiptypes.txt',
 		loader => [\&parseDataFile2, \%equipTypes_lut]);
 	Settings::addTableFile('haircolors.txt',
+		internalName => 'haircolors.txt',
 		loader => [\&parseDataFile2, \%haircolors]);
 	Settings::addTableFile('headgears.txt',
+		internalName => 'headgears.txt',
 		loader => [\&parseArrayFile, \@headgears_lut, { hide_comments => 0 }]);
 	Settings::addTableFile('items.txt',
+		internalName => 'items.txt',
 		loader => [\&parseROLUT, \%items_lut]);
 	Settings::addTableFile('itemsdescriptions.txt',
+		internalName => 'itemsdescriptions.txt',
 		loader => [\&parseRODescLUT, \%itemsDesc_lut], mustExist => 0);
 	Settings::addTableFile('itemslots.txt',
+		internalName => 'itemslots.txt',
 		loader => [\&parseROSlotsLUT, \%itemSlots_lut]);
 	Settings::addTableFile('itemslotcounttable.txt',
+		internalName => 'itemslotcounttable.txt',
 		loader => [\&parseROLUT, \%itemSlotCount_lut]);
 	Settings::addTableFile('itemtypes.txt',
+		internalName => 'itemtypes.txt',
 		loader => [\&parseDataFile2, \%itemTypes_lut]);
 	Settings::addTableFile('resnametable.txt',
+		internalName => 'resnametable.txt',
 		loader => [\&parseROLUT, \%mapAlias_lut, 1, ".gat"]);
 	Settings::addTableFile('maps.txt',
+		internalName => 'maps.txt',
 		loader => [\&parseROLUT, \%maps_lut]);
 	Settings::addTableFile('monsters.txt',
+		internalName => 'monsters.txt',
 		loader => [\&parseDataFile2, \%monsters_lut], createIfMissing => 1);
 	Settings::addTableFile('npcs.txt',
+		internalName => 'npcs.txt',
 		loader => [\&parseNPCs, \%npcs_lut], createIfMissing => 1);
 	Settings::addTableFile('packetdescriptions.txt',
+		internalName => 'packetdescriptions.txt',
 		loader => [\&parseSectionedFile, \%packetDescriptions], mustExist => 0);
 	Settings::addTableFile('portals.txt',
+		internalName => 'portals.txt',
 		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed]);
 	Settings::addTableFile('portalsLOS.txt',
+		internalName => 'portalsLOS.txt',
 		loader => [\&parsePortalsLOS, \%portals_los], createIfMissing => 1);
 	Settings::addTableFile('sex.txt',
+		internalName => 'sex.txt',
 		loader => [\&parseDataFile2, \%sex_lut]);
 	Settings::addTableFile('SKILL_id_handle.txt',
+		internalName => 'SKILL_id_handle.txt',
 		loader => \&Skill::StaticInfo::parseSkillsDatabase_id2handle);
 	Settings::addTableFile('skillnametable.txt',
+		internalName => 'skillnametable.txt',
 		loader => \&Skill::StaticInfo::parseSkillsDatabase_handle2name, mustExist => 0);
 	Settings::addTableFile('spells.txt',
+		internalName => 'spells.txt',
 		loader => [\&parseDataFile2, \%spells_lut]);
 	Settings::addTableFile('skillsdescriptions.txt',
+		internalName => 'skillsdescriptions.txt',
 		loader => [\&parseRODescLUT, \%skillsDesc_lut], mustExist => 0);
 	Settings::addTableFile('skillssp.txt',
+		internalName => 'skillssp.txt',
 		loader => \&Skill::StaticInfo::parseSPDatabase);
-	Settings::addTableFile('STATUS_id_handle.txt', loader => [\&parseDataFile2, \%statusHandle]);
-	Settings::addTableFile('STATE_id_handle.txt', loader => [\&parseDataFile2, \%stateHandle]);
-	Settings::addTableFile('LOOK_id_handle.txt', loader => [\&parseDataFile2, \%lookHandle]);
-	Settings::addTableFile('AILMENT_id_handle.txt', loader => [\&parseDataFile2, \%ailmentHandle]);
-	Settings::addTableFile('MAPTYPE_id_handle.txt', loader => [\&parseDataFile2, \%mapTypeHandle]);
-	Settings::addTableFile('MAPPROPERTY_TYPE_id_handle.txt', loader => [\&parseDataFile2, \%mapPropertyTypeHandle]);
-	Settings::addTableFile('MAPPROPERTY_INFO_id_handle.txt', loader => [\&parseDataFile2, \%mapPropertyInfoHandle]);
-	Settings::addTableFile('statusnametable.txt', loader => [\&parseDataFile2, \%statusName], mustExist => 0);
-	Settings::addTableFile('skillsarea.txt', loader => [\&parseDataFile2, \%skillsArea]);
-	Settings::addTableFile('skillsencore.txt', loader => [\&parseList, \%skillsEncore]);
-	Settings::addTableFile('quests.txt', loader => [\&parseROQuestsLUT, \%quests_lut], mustExist => 0);
-	Settings::addTableFile('effects.txt', loader => [\&parseDataFile2, \%effectName], mustExist => 0);
-	Settings::addTableFile('msgstringtable.txt', loader => [\&parseArrayFile, \@msgTable, { hide_comments => 0 }], mustExist => 0);
-	Settings::addTableFile('hateffect_id_handle.txt', loader => [\&parseDataFile2, \%hatEffectHandle]);
-	Settings::addTableFile('hateffect_name.txt', loader => [\&parseDataFile2, \%hatEffectName], mustExist => 0);
-	Settings::addTableFile('item_stack_limit.txt', loader => [\&parseItemStackLimit, \%itemStackLimit]);
-	Settings::addTableFile('ITEMOPTION_id_handle.txt', loader => [\&parseDataFile2, \%itemOptionHandle], mustExist => 0);
-	Settings::addTableFile('item_options.txt', loader => [\&parseROLUT, \%itemOption_lut], mustExist => 0);
-	Settings::addTableFile('title_name.txt',loader => [\&parseDataFile2, \%title_lut], mustExist => 0);
-	Settings::addTableFile('attendance_rewards.txt',loader => [\&parseAttendanceRewards, \%attendance_rewards], mustExist => 0);
-	Settings::addTableFile('achievement_list.txt',loader => [\&parseAchievementFile, \%achievements], mustExist => 0);
+	Settings::addTableFile('STATUS_id_handle.txt',
+		internalName => 'STATUS_id_handle.txt',
+		loader => [\&parseDataFile2, \%statusHandle]);
+	Settings::addTableFile('STATE_id_handle.txt',
+		internalName => 'STATE_id_handle.txt',
+		loader => [\&parseDataFile2, \%stateHandle]);
+	Settings::addTableFile('LOOK_id_handle.txt',
+		internalName => 'LOOK_id_handle.txt',
+		loader => [\&parseDataFile2, \%lookHandle]);
+	Settings::addTableFile('AILMENT_id_handle.txt',
+		internalName => 'AILMENT_id_handle.txt',
+		loader => [\&parseDataFile2, \%ailmentHandle]);
+	Settings::addTableFile('MAPTYPE_id_handle.txt',
+		internalName => 'MAPTYPE_id_handle.txt',
+		loader => [\&parseDataFile2, \%mapTypeHandle]);
+	Settings::addTableFile('MAPPROPERTY_TYPE_id_handle.txt',
+		internalName => 'MAPPROPERTY_TYPE_id_handle.txt',
+		loader => [\&parseDataFile2, \%mapPropertyTypeHandle]);
+	Settings::addTableFile('MAPPROPERTY_INFO_id_handle.txt',
+		internalName => 'MAPPROPERTY_INFO_id_handle.txt',
+		loader => [\&parseDataFile2, \%mapPropertyInfoHandle]);
+	Settings::addTableFile('statusnametable.txt',
+		internalName => 'statusnametable.txt',
+		loader => [\&parseDataFile2, \%statusName], mustExist => 0);
+	Settings::addTableFile('skillsarea.txt',
+		internalName => 'skillsarea.txt',
+		loader => [\&parseDataFile2, \%skillsArea]);
+	Settings::addTableFile('skillsencore.txt',
+		internalName => 'skillsencore.txt',
+		loader => [\&parseList, \%skillsEncore]);
+	Settings::addTableFile('quests.txt',
+		internalName => 'quests.txt',
+		loader => [\&parseROQuestsLUT, \%quests_lut], mustExist => 0);
+	Settings::addTableFile('effects.txt',
+		internalName => 'effects.txt',
+		loader => [\&parseDataFile2, \%effectName], mustExist => 0);
+	Settings::addTableFile('msgstringtable.txt',
+		internalName => 'msgstringtable.txt',
+		loader => [\&parseArrayFile, \@msgTable, { hide_comments => 0 }], mustExist => 0);
+	Settings::addTableFile('hateffect_id_handle.txt',
+		internalName => 'hateffect_id_handle.txt',
+		loader => [\&parseDataFile2, \%hatEffectHandle]);
+	Settings::addTableFile('hateffect_name.txt',
+		internalName => 'hateffect_name.txt',
+		loader => [\&parseDataFile2, \%hatEffectName], mustExist => 0);
+	Settings::addTableFile('item_stack_limit.txt',
+		internalName => 'item_stack_limit.txt',
+		loader => [\&parseItemStackLimit, \%itemStackLimit]);
+	Settings::addTableFile('ITEMOPTION_id_handle.txt',
+		internalName => 'ITEMOPTION_id_handle.txt',
+		loader => [\&parseDataFile2, \%itemOptionHandle], mustExist => 0);
+	Settings::addTableFile('item_options.txt',
+		internalName => 'item_options.txt',
+		loader => [\&parseROLUT, \%itemOption_lut], mustExist => 0);
+	Settings::addTableFile('title_name.txt',
+		internalName => 'title_name.txt',
+		loader => [\&parseDataFile2, \%title_lut], mustExist => 0);
+	Settings::addTableFile('attendance_rewards.txt',
+		internalName => 'attendance_rewards.txt',
+		loader => [\&parseAttendanceRewards, \%attendance_rewards], mustExist => 0);
+	Settings::addTableFile('achievement_list.txt',
+		internalName => 'achievement_list.txt',
+		loader => [\&parseAchievementFile, \%achievements], mustExist => 0);
 
 	use utf8;
 
