@@ -8331,14 +8331,16 @@ sub rodex_remove_item {
 	}
 
 	my $rodex_item = $rodexWrite->{items}->getByID($args->{ID});
+	# if rodex already remove
+	if (defined $rodex_item) {
+		my $disp = TF("Item removed from rodex mail message: %s (%d) x %d - %s",
+				$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
+		message "$disp\n", "drop";
 
-	my $disp = TF("Item removed from rodex mail message: %s (%d) x %d - %s",
-			$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
-	message "$disp\n", "drop";
-
-	$rodex_item->{amount} -= $args->{amount};
-	if ($rodex_item->{amount} <= 0) {
-		$rodexWrite->{items}->remove($rodex_item);
+		$rodex_item->{amount} -= $args->{amount};
+		if ($rodex_item->{amount} <= 0) {
+			$rodexWrite->{items}->remove($rodex_item);
+		}
 	}
 }
 
