@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType6;
 
 use strict;
@@ -49,11 +49,11 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 sub sendAttack {
 	my ($self, $monID, $flag) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x25) .
 		$monID .
 		pack("C*", 0x03, 0x04, 0x01, 0xb7, 0x39, 0x03, 0x00, $flag);
-		
+
  	$self->sendToServer($msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
@@ -72,10 +72,10 @@ sub sendSit {
 sub sendStand {
 	my $self = shift;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
-	
+
 	$self->sendToServer($msg);
 	debug "Standing\n", "sendPacket", 2;
 }
@@ -105,10 +105,10 @@ sub sendGetPlayerInfo {
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0xA7, 0x00, 0x49).pack("v*", $ID).
 		pack("C*", 0xfa, 0x12, 0x00, 0xdc, 0xf9, 0x12).$targetID;
-			
+
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
@@ -117,7 +117,7 @@ sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	
+
 	$msg = pack("C*",0x72, 0x00, 0x00) .
 		$accountID .
 		pack("C*", 0x00, 0xe8, 0xfa) .
@@ -135,9 +135,9 @@ sub sendMove {
 	my $x = int scalar shift;
 	my $y = int scalar shift;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x85, 0x00, 0x4b) . getCoordString($x, $y);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
@@ -145,12 +145,12 @@ sub sendMove {
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	my $msg;
-	
+
 	$msg = pack("v*", 0x0113, 0x0000, 0x0045, 0x00, $lv) .
 		pack("v", 0) .
 		pack("v*", $ID, 0) .
 		pack("v", 0x0060) . $targetID;
-	
+
 	$self->sendToServer($msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
@@ -158,12 +158,12 @@ sub sendSkillUse {
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
 	my $msg;
-	
+
 	$msg = pack("v*", 0x0116, 0x0000, $lv) .
 		pack("v*", $ID, 0x1508) .
 		pack("V*", 0, 0, 0) .
 		pack("v*", $x, 0x1ad8, 0x76b4, $y);
-	
+
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
@@ -175,7 +175,7 @@ sub sendSync {
 	return if ($self->{net}->version == 1);
 
 	$syncSync = pack("V", getTickCount());
-	
+
 	$msg = pack("C*", 0x7E, 0x00);
 	$msg .= pack("C*", 0x30) if ($initialSync);
 	$msg .= pack("C*", 0x94) if (!$initialSync);

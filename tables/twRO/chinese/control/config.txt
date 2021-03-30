@@ -179,7 +179,7 @@ allowedMaps_reaction 0
 
 #══════════════════════════════
 #║                            ║
-#║ 攻擊［打怪］ 自動坐下 等設定 ║ 
+#║ 攻擊［打怪］ 自動坐下 等設定 ║
 #║                            ║
 #══════════════════════════════
 #════════════
@@ -272,12 +272,12 @@ attackChangeTarget 1
 #════════════
 # 肉搏系 1.5 ~ 2.5
 # 法術系 1.5 ~ 9
-# 弓手系 1.5 ~ 15 
+# 弓手系 1.5 ~ 15
 
 attackDistance 1.5
 # 最小可攻擊距離
 attackMaxDistance 2.5
-# 最大可攻擊距離 
+# 最大可攻擊距離
 # 此設定相關於角色職業，請參考上面註解列的最佳值，填入合適的數值。
 # 注意，錯誤的設定會導致練功效率下降。
 attackDistanceAuto 0
@@ -308,7 +308,7 @@ autoMakeArrows 0
 # 此處僅是開啟功能［製作箭矢設定檔在 /control/arrowcraft.txt］
 
 attackCheckLOS 0
-# 是否判斷魔物與角色中間有無障礙物阻礙攻擊，自動閃避障礙物 
+# 是否判斷魔物與角色中間有無障礙物阻礙攻擊，自動閃避障礙物
 # 這可以避免因為障礙物阻隔打不到怪物，而原地發呆，
 # 通常打不到魔物時，會在發呆3秒後放棄，改打別隻，
 # 有 LOS 的情況，會自動往旁邊走一格，看能不能避開障礙物攻擊，
@@ -341,7 +341,7 @@ attackAuto_onlyWhenSafe 0
 itemsTakeAuto 1
 #  0 = 不撿取打死魔物後撿取掉落物功能
 #  1 = 打死所有魔物後再撿東西
-#  2 = 打完一隻馬上撿即使正處於被魔物圍毆的狀況 
+#  2 = 打完一隻馬上撿即使正處於被魔物圍毆的狀況
 
 itemsTakeAuto_party 0
 # 是否也撿取隊友打死魔物後掉落的物品
@@ -359,7 +359,7 @@ itemsMaxWeight 89
 # 負重量到達此%數，便不再撿取物品 ［超過 50% 無法回血、回魔］ ［超過 90% 無法攻擊］
 
 itemsMaxWeight_sellOrStore 48
-# 負重量到達此%數，便會啟動自動賣物或存倉功能 ［超過 50% 無法回血、回魔］ ［超過 90% 無法攻擊］ 
+# 負重量到達此%數，便會啟動自動賣物或存倉功能 ［超過 50% 無法回血、回魔］ ［超過 90% 無法攻擊］
 
 itemsMaxNum_sellOrStore 99
 # 物品種類數到達此數，便會啟動自動賣物或存倉功能
@@ -545,7 +545,7 @@ useSelf_item {
 # 一個區塊只能買一件物品，區塊是由兩個花括號"{}"之間組成。
 # 可設定多組，請自行複製區塊貼上。
 #════════════
-#║ 自動買物 ║ 
+#║ 自動買物 ║
 #════════════
 # Npc 座標資料，請參考 /tables/npcs.txt
 # 範例："身上的覺醒藥水少於 1 時啟動買物，買10瓶
@@ -560,7 +560,7 @@ useSelf_item {
 #
 #buyAuto 物品名稱 {
 #	npc
-#	NPC所在的 英文地圖+座標 
+#	NPC所在的 英文地圖+座標
 #	※例如  :  payon 159 96
 #	npc_steps
 #	指定跟NPC 對話順序 ［可省略］
@@ -569,7 +569,7 @@ useSelf_item {
 #       指定買物時要站的位置 X Y 座標 ［特殊用途，可省略，X Y 中間空一格］
 #       與 NPC 的交易距離最大約可 20 格左右。
 #       某些地方可利用跨建築物與 Npc 交易，來節省繞過去的走路時間。
-#       例如:天津商店 無法計算路徑? 
+#       例如:天津商店 無法計算路徑?
 #       因為無法走到商人旁邊 所以加上 ama_in01 30 24 就可以了
 #	distance 5
 #       距離 NPC 多少格開啟對話 ［可省略，預設 5］
@@ -582,7 +582,7 @@ useSelf_item {
 #	可設定 大於 [>] 小於 [<] 等於 [= 或 直接輸入數字]
 #	disabled 0
 #	是否停用此buyAuto 〔1 = 停用〕
-#		
+#
 #}
 #═══ 自訂買物 ════
 
@@ -600,13 +600,13 @@ buyAuto {
 
 
 #════════════
-#║ 自動賣物 ║ 
+#║ 自動賣物 ║
 #════════════
 # 要賣的物品，在  /control/items_control.txt 中設定
 
 sellAuto 0
 # 是否開啟自動賣物功能［0 = 不使用］［1 = 開啟自動賣物］
-sellAuto_npc 
+sellAuto_npc
 # 自動賣物的 NPC 資料 ［英文地圖+NPC的[座標] ］
 # ※不包含NPC的名字 例如: payon 159 96
 sellAuto_distance 5
@@ -625,9 +625,9 @@ sellAuto_standpoint
 # Npc 座標資料，請參考 /tables/npcs.txt
 storageAuto 0
 # 是否開啟自動存倉功能［0 = 不使用］［1 = 開啟自動存倉］
-storageAuto_password 
+storageAuto_password
 # 開倉密碼，請直接輸入設定的數字密碼即可
-storageAuto_npc 
+storageAuto_npc
 # 自動存倉的 npc 座標資料 ［英文地圖+座標 ］
 # ※不包含NPC的名字 例如:  rachel 109 138
 
@@ -640,7 +640,7 @@ storageAuto_npc_steps
 #║ 其它細節 ║
 #════════════
 storageAuto_distance 5
-# 自動存倉時要站在距離 NPC 多遠的位置 預設:5 
+# 自動存倉時要站在距離 NPC 多遠的位置 預設:5
 storageAuto_keepOpen 0
 # 是否保持倉庫開啟
 storageAuto_useChatCommand
@@ -733,7 +733,7 @@ autoSwitch_default_arrow
 # 一個區塊只能對應一套武器，但可對應多個魔物名稱，
 # 區塊是由兩個花括號"{}"之間組成。
 # 無設定［魔物名稱沒有填上］，代表關閉該區塊功能。
-# 可設定多組，請自行複製區塊貼上。                    
+# 可設定多組，請自行複製區塊貼上。
 # 要用空手攻擊，可在 rightHand 後填入 [NONE]。
 #
 # 範例-1："所有草類，用空手打，攻擊距離重新指定為 1.5"
@@ -763,7 +763,7 @@ autoSwitch_default_arrow
 #	rightHand
 #    「右手武器」名稱
 #	leftHand
-#    「左手武器」或「盾牌」名稱   
+#    「左手武器」或「盾牌」名稱
 #	arrow
 #     箭矢
 #	distance
@@ -1028,15 +1028,15 @@ equipAuto {
 #	當 AI 為 ... 時
 #	whenStatusActive
 #	當處於某種狀態時
-#	whenStatusInactive 
+#	whenStatusInactive
 #	當某種狀態失效時
 #	whenFollowing
 #	當跟隨時　［1＝使用］
 #	whenGround
 #	當自己腳下有此技能時使用　［技能名稱］
-#	whenNotGround 
+#	whenNotGround
 #	在自己腳下使用此技能 ［例如:光之障壁］
-#	defendMonsters 
+#	defendMonsters
 #	當受到這些魔物攻擊時使用該區塊的技能 ※魔物名稱 多種時使用逗號 ,分隔
 #	spirit
 #	氣彈數範圍
@@ -1059,9 +1059,9 @@ equipAuto {
 #	假設此項設定30秒，那麼從施放開始30秒內都不會再施放
 #	disabled
 #	是否關閉本區塊技能
-#	monsters 
+#	monsters
 #	限定針對哪些魔物使用
-#	notMonsters 
+#	notMonsters
 #	限定不對哪些魔物使用
 #	maxAttempts
 #	若技能使用失敗，則最多嘗試幾次［施法失敗也算一次］
@@ -1074,9 +1074,9 @@ equipAuto {
 #	target_deltaHp
 #	目標魔物的 HP 改變量［大多皆為負值］
 #	target_dist
-#	當目標在距離多少時使用    
+#	當目標在距離多少時使用
 #	target_misses
-#	攻擊目標 Miss 幾次後放棄 
+#	攻擊目標 Miss 幾次後放棄
 #	target_totalMisses
 #    	對目標使用技能時 總共Miss幾次 後放棄
 #	target_whenGround
@@ -1089,11 +1089,11 @@ equipAuto {
 #	本技能是否為使用在自己身上的技能
 #	inMap
 #    	該區塊僅在此地圖上使用 英文地圖名稱
-#	notInMap 
+#	notInMap
 #    	該區塊永遠不會在指定的地圖上使用
-#	smartEncore 
+#	smartEncore
 #	該選項可以自動使用[安可]技能 0=關 1=開 用於輔助技 ［自己］
-#	zeny 
+#	zeny
 #	當zeny大於多少時使用
 #	manualAI
 #	是否在AI為 手動模式時才使用
@@ -1166,7 +1166,7 @@ attackSkillSlot {
 #	target_whenStatusActive 冰凍狀態
 #	#當目標怪物「在」這個狀態時
 #}
-# 
+#
 # 亦可以先暴風雪，再去怒雷強擊冰住的怪物。
 # 也可以針對某些怪物才使用。
 # 連續技和普通技的差別是：連續技會對同一隻怪攻擊，而不是打別的怪。
@@ -1181,7 +1181,7 @@ attackSkillSlot {
 #	isSelfSkill
 # 		本技能是否為使用在自己身上的技能
 #	target_deltaHp
-#  		施放對象的 HP 改變量 
+#  		施放對象的 HP 改變量
 # }
 
 attackComboSlot {
@@ -1230,7 +1230,7 @@ attackComboSlot {
 #	hp < 75%
 #	equip_leftHand +4 熾天使之弓
 #	equip_rightHand +4 熾天使之弓
-#	stopWhenHit 1 
+#	stopWhenHit 1
 #	正被怪物攻擊時不使用，先把怪清掉
 #}
 #
@@ -1305,7 +1305,7 @@ useSelf_skill {
 #═══════════════════════
 #║ 輔助技［隊友/隊伍］ ║
 #═══════════════════════
-# 
+#
 # 以下區塊為施展至其它玩家身上的輔助技能。
 # 它玩家包括所有人，即使不是隊友也能施展。
 # 大致上同前面的對怪物技能 attackSkillSlot 區塊。
@@ -1329,7 +1329,7 @@ useSelf_skill {
 #	施放對象「在」這個狀態時
 #	target_whenStatusInactive
 # 	施放對象「不在」這個狀態時
-#	施放對象 離開畫面再相遇 將判斷為沒有狀態 
+#	施放對象 離開畫面再相遇 將判斷為沒有狀態
 #	target_isGuild
 #	只對這些公會的"成員"使用  格式:公會名稱   使用逗號 , 分開
 #	target_isNotGuild
@@ -1353,7 +1353,7 @@ useSelf_skill {
 #	開啟後某些功能無法判斷 例如目標血量
 #}
 #
-# 範例 - 1  
+# 範例 - 1
 #［當施放對象不在天賜狀態時和被怪物攻擊時,
 # 當自己不處於技能延遲時,給予目標施放天使之賜福,
 # 下次施放間隔150秒］
@@ -1543,7 +1543,7 @@ teleportAuto_idle 0
 teleportAuto_portal 0
 # 靠近地圖傳點時是否要瞬移
 teleportAuto_search 0
-#設定開啟後必須開啟檔案 mon_control.txt 
+#設定開啟後必須開啟檔案 mon_control.txt
 #設定開啟魔物 <搜尋模式> 才會開攻擊魔物
 #目前建議設定是為 0
 teleportAuto_minAggressives 0
@@ -1679,7 +1679,7 @@ autoResponseOnHeal 0
 #══════════════
 #║ 自動加點數 ║
 #══════════════
-# 自動加 素質/技能 點數設定 
+# 自動加 素質/技能 點數設定
 # 當升級時，有額外的點數，是否讓 kore 自動加上
 # 此為 AI 全自動加點數，適合掛整月都不去理的
 # 一般天天都會去檢查的玩家，可於 kore 視窗打指令手動加點數
@@ -1693,14 +1693,14 @@ statsAddAuto_list
 statsAddAuto_dontUseBonus 0
 # 不將 job 加成的素質點也算在內，詳情請參考英文說明書
 statsAdd_over_99 0
-# 是否允許加超過 99 
+# 是否允許加超過 99
 # 一二轉加超過 99
 # 三轉最高能到120
 skillsAddAuto 0
 # 是否開啟自動加技能點數
 skillsAddAuto_list
 # 要加的技能 ［逗號區隔］
-#例如 
+#例如
 # 基本技能 9,
 
 #═════════════════════════
@@ -1712,7 +1712,7 @@ skillsAddAuto_list
 # doCommand 進階設定: [Self Condition]
 #
 # doCommand 用法與範例，請參考以下連結［目前僅有英文］
-# http://www.openkore.com/index.php/DoCommand
+# https://openkore.com/wiki/DoCommand
 #
 # OpenKore 可用指令全表，請參閱官方說明書之 console command 部份：
 # http://hakore.bot.nu/openkore/manual/
@@ -1803,7 +1803,7 @@ avoidGM_ignoreList
 #════════════
 dealAuto 1
 # 當有人點你交易時要如何處理。
-# 0 = 不處理 
+# 0 = 不處理
 # 1 = 自動取消所有交易
 # 2 = 自動接受交易並立即按確定
 # 3 = 自動接受交易並在對方按確定後才按確定
@@ -1850,7 +1850,7 @@ cachePlayerNames_maxSize 100
 clientSight 20
 # 偵測玩家 魔物 NPC 的視野範圍
 
-removeActorWithDistance 
+removeActorWithDistance
 # 設定讓 kore 忽略幾格外的動態資訊 ［玩家、怪物、寵物..最重要的是GM］
 # 在人多的地圖中，若忽略 5 格以外的動態資訊，
 # 可讓 kore 少送出很多 getPlayerInfo 封包，使移動較不 lag。
@@ -1959,7 +1959,7 @@ homunculus_StandByAuto 0
 # 瞬移的是煉金/創造主人，生命體會跟著瞬移。
 
 homunculus_teleportAuto_hp 10
-# 生命體 HP 多少 % 百分比以下瞬移 
+# 生命體 HP 多少 % 百分比以下瞬移
 homunculus_teleportAuto_maxDmg 500
 # 生命體被怪物打一下，損超過多少 HP 就飛走
 homunculus_teleportAuto_maxDmgInLock 0
@@ -1975,7 +1975,7 @@ homunculus_teleportAuto_dropTargetKS 0
 homunculus_teleportAuto_totalDmg 0
 # 生命體被同一隻怪物打，累積共損多少 HP 就飛走
 homunculus_teleportAuto_totalDmgInLock 0
-# 生命體在鎖定地圖，被同一隻怪物打，累積共損多少 HP 就飛走 
+# 生命體在鎖定地圖，被同一隻怪物打，累積共損多少 HP 就飛走
 homunculus_teleportAuto_attackedWhenSitting 0
 # 生命體回否在人物坐立時被攻擊而飛走
 homunculus_runFromTarget 0
@@ -2090,13 +2090,13 @@ pet_return 20
 #════════════
 #║ 排程功能 ║
 #════════════
-# 需安裝 breakTime 插件 http://wiki.openkore.com/index.php?title=BreakTime
+# 需安裝 breakTime 插件 https://openkore.com/wiki/BreakTime
 # 以下區塊為設定 Kore 休息［停機］的時間，例如：
 # autoBreakTime Sun {
 #	startTime 21:29
 #	stopTime 01:08
 # }
-# 註：Sun 是英文縮寫禮拜日的意思，此處需用英文縮寫，時間為 24H 
+# 註：Sun 是英文縮寫禮拜日的意思，此處需用英文縮寫，時間為 24H
 # 例如：伺服器維修時間
 # 若無設定此功能不開啟
 
@@ -2164,7 +2164,7 @@ squelchDomains
 # skill 技能訊息
 # schat 擴聲器,伺服系統訊息
 # 用,分開
-# 更多參考 http://wiki.openkore.com/index.php/Domain
+# 更多參考 https://openkore.com/wiki/Domain
 
 verboseDomains
 # 設定某些定義域的訊息要出現

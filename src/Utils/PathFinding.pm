@@ -12,7 +12,7 @@
 # MODULE DESCRIPTION: Pathfinding algorithm.
 #
 # This module implements the
-# <a href="http://en.wikipedia.org/wiki/A-star_search_algorithm">A*</a>
+# <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A*</a>
 # (A-Star) pathfinding algorithm, which you can use to calculate how to
 # walk to a certain spot on the map.
 #
