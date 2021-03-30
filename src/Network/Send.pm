@@ -3401,4 +3401,18 @@ sub sendMarketClose {
 	debug "Sent Market Close\n", "sendPacket";
 }
 
+# Request Inventory Expansion
+# 0B14
+sub sendInventoryExpansionRequest {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_request' }));
+}
+
+# Reject Inventory Expansion
+# 0B19
+sub sendInventoryExpansionRejected {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
+}
+
 1;
