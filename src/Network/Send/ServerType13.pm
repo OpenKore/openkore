@@ -18,7 +18,7 @@
 #  23 March    2007: Updated to support rRO 2007-02-26e protocol
 #  12 June     2007: Updated to support rRO 2007-05-29a protocol
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType13;
 
 use strict;
@@ -34,19 +34,19 @@ use Utils qw(getTickCount getHex getCoordString);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0116' => ['storage_close'],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		storage_close 0116
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -141,7 +141,7 @@ sub sendMove {
 	my $x = int scalar shift;
 	my $y = int scalar shift;
 	my $msg;
-	$msg = pack("C*", 0xF7, 0x00) . pack("x8") . getCoordString($x, $y, 1) . pack("x6"); 
+	$msg = pack("C*", 0xF7, 0x00) . pack("x8") . getCoordString($x, $y, 1) . pack("x6");
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
@@ -187,7 +187,7 @@ sub sendSync {
 	return if ($self->{net}->version == 1);
 
 	$syncSync = pack("V", getTickCount());
-	$msg = pack("C*", 0xF5, 0x00) . $syncSync . pack("x1")  . pack("x4"); 
+	$msg = pack("C*", 0xF5, 0x00) . $syncSync . pack("x1")  . pack("x4");
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
 }

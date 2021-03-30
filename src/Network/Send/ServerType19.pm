@@ -12,7 +12,7 @@
 # pRO Valkyrie as of October 17 2007
 # paddedPackets_attackID 0x0190
 # paddedPackets_skillUseID 0x00A7
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType19;
 
 use strict;
@@ -40,7 +40,7 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		skill_use_location 0072
 		public_chat 0085
@@ -56,9 +56,9 @@ sub new {
 		map_login 0116
 		character_move 0193
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -90,7 +90,7 @@ sub sendMove {
 		y => $y,
 		no_padding => 1,
 	}));
-	
+
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 

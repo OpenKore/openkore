@@ -15,7 +15,7 @@
 # server to Kore. Information in the messages are stored in global variables
 # (in the module Globals).
 #
-# Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
+# Please also read <a href="https://openkore.com/wiki/Network_subsystem">the
 # network subsystem overview.</a>
 package Network::Receive;
 
@@ -8180,12 +8180,20 @@ sub rodex_mail_list {
 
 	my $mail_info;
 
-	if ($args->{switch} eq '0AC2') {
+	if ($args->{switch} eq '0B5F') {
+		$mail_info = {
+			len => 67,
+			type => 'C V2 C2 Z24 V v Z24 v',
+			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength sender2 Titlelength2)],
+		};
+
+	} elsif ($args->{switch} eq '0AC2') {
 		$mail_info = {
 			len => 41,
 			types => 'C V2 C2 Z24 V v',
 			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
 		};
+
 	} else { # 09F0, 0A7D
 		$mail_info = {
 			len => 44,
@@ -8194,7 +8202,7 @@ sub rodex_mail_list {
 		};
 	}
 
-	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2') {
+	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2'  || $args->{switch} eq '0B5F') {
 		$rodexList->{current_page} = 0;
 		$rodexList = {};
 		$rodexList->{mails} = {};
