@@ -247,7 +247,7 @@ sub new {
 		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
-		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(len charID code)]],
 		'09A7' => ['banking_deposit_request', 'a4 V', [qw(accountID zeny)]],
 		'09A9' => ['banking_withdraw_request', 'a4 V', [qw(accountID zeny)]],
 		'09AB' => ['banking_check_request', 'a4', [qw(accountID)]],
