@@ -908,7 +908,7 @@ sub character_creation_successful {
 	$character->{exp} = 0;
 	$character->{exp_job} = 0;
 
-	if (!exists($character->{sex})) { $character->{sex} = $accountSex2; }
+	if ((!exists($character->{sex})) || ($character->{sex} ne "0" && $character->{sex} ne "1")) { $character->{sex} = $accountSex2; }
 
 	$chars[$character->{slot}] = $character;
 
