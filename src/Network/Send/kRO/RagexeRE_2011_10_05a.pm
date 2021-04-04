@@ -33,7 +33,6 @@ sub new {
 		'0366' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0367' => ['sync', 'V', [qw(time)]],#6
 		'0369' => undef,
-		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'07E4' => undef,
 		'07EC' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'0802' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8

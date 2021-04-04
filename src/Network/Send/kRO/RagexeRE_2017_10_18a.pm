@@ -38,7 +38,6 @@ sub new {
 		'089F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0438' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0889' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0944' => ['storage_password'],
 		'035F' => ['sync', 'V', [qw(time)]],
@@ -77,14 +76,11 @@ sub new {
 		search_store_select 0838
 	);
 
-
-
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #	elif PACKETVER == 20171018 // 2017-10-18aRagexeRE
 #	packet_keys(0x2CAA109C,0x158C1EC2,0x7A5E58F3);
 #		use = $key1 $key3 $key2
 #	$self->cryptKeys(0x2CAA109C,0x7A5E58F3,0x158C1EC2);
-
 
 	return $self;
 }
