@@ -36,7 +36,7 @@ sub new {
 		'0885' => undef,
 		'088A' => undef,
 		'088D' => undef,
-		'0891' => ['friend_request', 'a*', [qw(username)]],#26 
+		'0891' => ['friend_request', 'a*', [qw(username)]],#26
 		'0892' => ['character_move', 'a3', [qw(coords)]],#5
 		'0893' => ['item_take', 'a4', [qw(ID)]],#6
 		'0895' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
@@ -44,12 +44,12 @@ sub new {
 		'0897' => undef,
 		'0898' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'0899' => ['sync', 'V', [qw(time)]],#6
-		'089E' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'089E' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'08A1' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'08A4' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'08AA' => undef,
 		'08AD' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
-		'0907' => ['item_to_favorite', 'a2 C', [qw(ID flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back) 
+		'0907' => ['item_to_favorite', 'a2 C', [qw(ID flag)]],#5 TODO where 'flag'=0|1 (0 - move item to favorite tab, 1 - move back)
 		'088C' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
 		'089B' => undef,
 		'08A9' => ['buy_bulk_closeShop'],#2

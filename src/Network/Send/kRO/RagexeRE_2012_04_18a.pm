@@ -17,7 +17,7 @@ use base qw(Network::Send::kRO::RagexeRE_2012_04_10a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0891' => undef,
 		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
@@ -40,13 +40,13 @@ sub new {
 		'091C' => undef,
 		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0885' => undef,
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0361' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0884' => undef,
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'08A8' => ['storage_password', 'v a*', [qw(type data)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		friend_request 023B
 		item_drop 0362
@@ -63,7 +63,7 @@ sub new {
 		storage_password 08A8
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self;
 }
 

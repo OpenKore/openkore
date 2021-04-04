@@ -38,7 +38,7 @@ sub new {
 		'07E4' => undef,
 		'0802' => undef,
 		'083C' => undef,
-		'0863' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0863' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0865' => ['item_take', 'a4', [qw(ID)]],#6
 		'086A' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 # TODO 0x0870,-1,itemlistwindowselected,2:4:8
@@ -57,7 +57,7 @@ sub new {
 		'0817' => ['buy_bulk_closeShop'],#2
 		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
@@ -78,7 +78,7 @@ sub new {
 		sync 0887
 		skill_use_location_text 0366
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	return $self;

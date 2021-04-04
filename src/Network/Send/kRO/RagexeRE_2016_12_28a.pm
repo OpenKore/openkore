@@ -18,19 +18,19 @@ use base qw(Network::Send::kRO::RagexeRE_2016_07_06c);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'093D' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'085A' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0871' => ['actor_look_at', 'v C', [qw(head body)]],
 		'08AC' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0362' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
-		'0875' => ['buy_bulk_closeShop'],			
+		'0875' => ['buy_bulk_closeShop'],
 		'086A' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'08A3' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0886' => ['character_move', 'a3', [qw(coordString)]],
 		'091C' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'085E' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'085E' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'0893' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0889' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'086C' => ['item_take', 'a4', [qw(ID)]],
@@ -41,14 +41,14 @@ sub new {
 		'089F' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'08AB' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'08AD' => ['storage_password'],
-		'0944' => ['sync', 'V', [qw(time)]],		
+		'0944' => ['sync', 'V', [qw(time)]],
 		'0870' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'092C' => ['search_store_request_next_page'],
 		'087F' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 093D
 		actor_info_request 085A
@@ -76,9 +76,9 @@ sub new {
 		search_store_request_next_page 092C
 		search_store_select 087F
 	);
-	
-	
-	
+
+
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 # packet_keys(0x09366971,0x005672F1,0x6F3712AE);
 # $key1 $key3 $key2
