@@ -171,7 +171,7 @@ sub new {
 		'021D' => ['less_effect'], # TODO
 		'0222' => ['refine_item', 'V', [qw(ID)]],
 		'0225' => ['rank_taekwon'],
-		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'022D' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'0231' => ['homunculus_name', 'a24', [qw(name)]],
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]], # should be called slave_move...
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
@@ -221,7 +221,7 @@ sub new {
 		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0437' => ['character_move','a3', [qw(coords)]],
+		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0443' => ['skill_select', 'V v', [qw(why skillID)]],
@@ -268,7 +268,7 @@ sub new {
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
-		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
+		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(len charID code)]],
 		'0998' => ['send_equip', 'a2 V', [qw(ID type)]],#8
 		'09A1' => ['sync_received_characters'],
 		'09A7' => ['banking_deposit_request', 'a4 V', [qw(accountID zeny)]],
@@ -321,6 +321,8 @@ sub new {
 		'0AEF' => ['attendance_reward_request'],
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
+		'0B14' => ['inventory_expansion_request'], #2
+		'0B19' => ['inventory_expansion_rejected'], #2
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;

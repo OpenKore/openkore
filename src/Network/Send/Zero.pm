@@ -28,6 +28,7 @@ sub new {
 		token_login 0825
 		send_equip 0998
 		master_login 0ACF
+		char_delete2_accept 098F
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -52,13 +53,6 @@ sub sendMasterLogin {
 
 	$self->sendToServer($msg);
 	debug "Sent sendMasterLogin\n", "sendPacket", 2;
-}
-
-sub reconstruct_char_delete2_accept {
-	my ($self, $args) = @_;
-	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
-	$args->{length} = 8 + length($args->{code});
-	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
 }
 
 sub sendCharCreate {

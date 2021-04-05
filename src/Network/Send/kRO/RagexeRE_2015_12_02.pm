@@ -17,7 +17,7 @@ use base qw(Network::Send::kRO::RagexeRE_2015_11_25d);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
@@ -28,18 +28,17 @@ sub new {
 		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'07EC' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
-		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 		'096A' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'023B' => ['friend_request', 'a*', [qw(username)]],#26
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0361' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0819' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0835' => ['search_store_request_next_page'],
 		'0838' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-  
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
@@ -63,7 +62,7 @@ sub new {
 		search_store_request_next_page 0835
 		search_store_select 0838
 	);
-  
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 #	$self->cryptKeys(, , );

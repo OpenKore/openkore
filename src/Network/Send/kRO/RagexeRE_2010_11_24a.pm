@@ -19,7 +19,7 @@ sub version { 26 }
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0085' => undef,
 		'0089' => undef,
@@ -31,24 +31,11 @@ sub new {
 		'00F7' => undef,
 		'0113' => undef,
 		'0116' => undef,
-		'035F' => ['character_move', 'a3', [qw(coords)]],#5
-		'0360' => ['sync', 'V', [qw(time)]],#6
-		'0361' => ['actor_look_at', 'v C', [qw(head body)]],#5
-		'0362' => ['item_take', 'a4', [qw(ID)]],#6
-		'0363' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
-		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
-		'0365' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
-		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],#10
 		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
-		'0369' => ['actor_name_request', 'a4', [qw(ID)]],#6
-		'0368' => ['actor_info_request', 'a4', [qw(ID)]],#6
-		'0811' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
-		'0815' => ['buy_bulk_closeShop'],#2
-		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_info_request 0368
 		actor_look_at 0361
@@ -65,9 +52,9 @@ sub new {
 		sync 0360
 		skill_use_location_text 0367
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

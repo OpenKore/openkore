@@ -21,7 +21,7 @@ sub new {
 	my %packets = (
 		'0887' => ['friend_request', 'a*', [qw(username)]],#26
 		'0885' => undef,
-		'023B' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'023B' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'083C' => undef,
 		'08A8' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0436' => undef,

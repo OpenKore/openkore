@@ -25,14 +25,18 @@ use Log qw(debug);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
-		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'02D6' => ['view_player_equip_request', 'a4', [qw(ID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
-	$self;
+	my %handlers = qw(
+		party_join_request_by_name 02C4
+	);
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	return $self;
 }
 
 1;

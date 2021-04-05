@@ -20,12 +20,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	my %packets = (
-		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
-	);
-
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
 	my %handlers = qw(
 		actor_action 0437
 		actor_info_request 0368
@@ -63,13 +57,6 @@ sub new {
 	$self->{send_sell_buy_complete} = 1;
 
 	return $self;
-}
-
-sub reconstruct_char_delete2_accept {
-	my ($self, $args) = @_;
-
-	$args->{length} = 8 + length($args->{code});
-	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
 }
 
 1;

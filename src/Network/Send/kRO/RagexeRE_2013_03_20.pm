@@ -17,14 +17,14 @@ use base qw(Network::Send::kRO::RagexeRE_2012_06_18a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		# available via masterLogin_packet in servers.txt
-		'0825' => ['master_login', 'x2 V C Z24 x27 a17 Z15 a*', [qw(version master_version username mac_hyphen_separated ip password)]], # not used by default 
+		'0825' => ['master_login', 'x2 V C Z24 x27 a17 Z15 a*', [qw(version master_version username mac_hyphen_separated ip password)]], # not used by default
 		'023B' => undef,
 		'086D' => ['friend_request', 'a*', [qw(username)]],#26
 		'0361' => undef,
-		'0897' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0897' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0802' => undef,
 		'086F' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'022D' => undef,
@@ -62,7 +62,7 @@ sub new {
 		'0365' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 088E
 		actor_info_request 0898
@@ -87,7 +87,7 @@ sub new {
 		search_store_select 0365
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self;
 }
 

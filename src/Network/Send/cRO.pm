@@ -97,11 +97,4 @@ sub sendCharCreate {
 	$self->sendToServer( $msg );
 }
 
-sub reconstruct_char_delete2_accept {
-	my ($self, $args) = @_;
-
-	$args->{length} = 8 + length($args->{code});
-	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
-}
-
 1;
