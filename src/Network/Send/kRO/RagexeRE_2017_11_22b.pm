@@ -18,19 +18,19 @@ use base qw(Network::Send::kRO::RagexeRE_2017_11_15a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'089E' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'085B' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0897' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0281' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0877' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
-		'0920' => ['buy_bulk_closeShop'],			
+		'0920' => ['buy_bulk_closeShop'],
 		'0968' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'08A9' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0947' => ['character_move', 'a3', [qw(coordString)]],
 		'0946' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'083C' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'083C' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'0898' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0862' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0891' => ['item_take', 'a4', [qw(ID)]],
@@ -41,14 +41,14 @@ sub new {
 		'0838' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'089A' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0934' => ['storage_password'],
-		'0890' => ['sync', 'V', [qw(time)]],		
+		'0890' => ['sync', 'V', [qw(time)]],
 		'02C4' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0945' => ['search_store_request_next_page'],
 		'0893' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 089E
 		actor_info_request 085B
@@ -76,10 +76,10 @@ sub new {
 		search_store_request_next_page 0945
 		search_store_select 0893
 	);
-	
-	
+
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

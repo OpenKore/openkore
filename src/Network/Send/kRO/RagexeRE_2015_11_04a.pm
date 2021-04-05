@@ -23,19 +23,19 @@ use I18N qw(stringToBytes);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0887' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0928' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0815' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
-		'0817' => ['buy_bulk_closeShop'],			
+		'0817' => ['buy_bulk_closeShop'],
 		'023B' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0436' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0363' => ['character_move', 'a3', [qw(coordString)]],
 		'07EC' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'088D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'088D' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'093A' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0866' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0964' => ['item_take', 'a4', [qw(ID)]],
@@ -46,15 +46,15 @@ sub new {
 		'088B' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0940' => ['storage_password'],
-		'0886' => ['sync', 'V', [qw(time)]],	
+		'0886' => ['sync', 'V', [qw(time)]],
 		'0819' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0835' => ['search_store_request_next_page'],
 		'0838' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 		'09EC' => ['rodex_send_mail', 'v Z24 Z24 V v v a* a*', [qw(len receiver sender zeny title_len body_len title body)]],   # -1 -- RodexSendMail
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0369
 		actor_info_request 0887
@@ -82,11 +82,11 @@ sub new {
 		search_store_request_next_page 0835
 		search_store_select 0838
 	);
-	
-	
-	
+
+
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 #	$self->cryptKeys(0x4C17382A, 0x29961E4F, 0x7ED174C9);#				Rakki-RO
 #	$self->cryptKeys(1051849561, 1257926206, 489582586);#				Ank-RO
 

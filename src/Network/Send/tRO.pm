@@ -18,13 +18,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	my %packets = (
-		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
-		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
-	);
-
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
 	my %handlers = qw(
 		master_login 0A76
 		game_login 0275

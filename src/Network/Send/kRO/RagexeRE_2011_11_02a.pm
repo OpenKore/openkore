@@ -19,7 +19,7 @@ sub version { 28 }
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'02C4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'035F' => undef,
@@ -37,7 +37,7 @@ sub new {
 		'0817' => ['sync', 'V', [qw(time)]],#6
 		'0838' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'083C' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
-		'0885' => ['item_drop', 'a2 v', [qw(ID amount)]],#6 
+		'0885' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'088A' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		# TODO 0x088b,2,searchstoreinfonextpage,0
 		'088D' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
@@ -45,7 +45,7 @@ sub new {
 		'0893' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'0894' => undef,
 		'0897' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
-		'0898' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0898' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		# TODO 0x089e,-1,reqtradebuyingstore,2:4:8:12
 		'0360' => undef,
 		'08A1' => ['buy_bulk_request', 'a4', [qw(ID)]],#6

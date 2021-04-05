@@ -22,7 +22,7 @@ sub new {
 		'086D' => undef,
 		'0962' => ['friend_request', 'a*', [qw(username)]],#26
 		'0897' => undef,
-		'0931' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0931' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'086F' => undef,
 		'0947' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0888' => undef,
@@ -58,9 +58,9 @@ sub new {
 		'0838' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 		'0366' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0369
 		actor_info_request 096A
@@ -84,7 +84,7 @@ sub new {
 		search_store_select 0838
 		skill_use_location_text 0366
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	return $self;

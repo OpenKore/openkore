@@ -17,7 +17,7 @@ use base qw(Network::Send::kRO::RagexeRE_2012_05_15a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0369' => undef,
 		'085A' => undef,
@@ -47,7 +47,7 @@ sub new {
 		'0802' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0361' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'07E4' => ['item_take', 'a4', [qw(ID)]],#6
 		'091A' => undef,
@@ -59,9 +59,9 @@ sub new {
 		'0366' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0819' => ['storage_password', 'v a*', [qw(type data)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0369
 		actor_info_request 096A
@@ -85,9 +85,9 @@ sub new {
 		skill_use_location_text 0366
 		storage_password 0819
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

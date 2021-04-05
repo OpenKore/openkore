@@ -17,19 +17,19 @@ use base qw(Network::Send::kRO::RagexeRE_2015_11_18a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'089C' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'085E' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0883' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0920' => ['actor_name_request', 'a4', [qw(ID)]],
 		'08AD' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
-		'0863' => ['buy_bulk_closeShop'],			
+		'0863' => ['buy_bulk_closeShop'],
 		'0802' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0939' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0365' => ['character_move', 'a3', [qw(coordString)]],
 		'0899' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'0951' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0951' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'08A9' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0368' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0438' => ['item_take', 'a4', [qw(ID)]],
@@ -40,14 +40,14 @@ sub new {
 		'085F' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0366' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0884' => ['storage_password'],
-		'088C' => ['sync', 'V', [qw(time)]],		
+		'088C' => ['sync', 'V', [qw(time)]],
 		'089F' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0361' => ['search_store_request_next_page'],
 		'093E' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 089C
 		actor_info_request 085E
@@ -75,9 +75,9 @@ sub new {
 		search_store_request_next_page 0361
 		search_store_select 093E
 	);
-	
-	
-	
+
+
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #elif PACKETVER == 20151125 // 2015-11-25dRagexeRE
 #packet_keys(0x237446C0,0x5EFB343A,0x0EDF06C5);

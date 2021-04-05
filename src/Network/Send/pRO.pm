@@ -20,12 +20,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	my %packets = (
-		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
-	);
-
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
 	my %handlers = qw(
 		actor_action 0437
 		skill_use 0438

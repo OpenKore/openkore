@@ -25,13 +25,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	my %packets = (
-		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
-		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-	);
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
 	my %handlers = qw(
 		sync 0360
 		character_move 035F
@@ -44,7 +37,7 @@ sub new {
 		skill_use_location 0366
 		party_setting 07D7
 		buy_bulk_vender 0801
-		char_delete2_accept 098f
+		char_delete2_accept 098F
 		send_equip 0998
 		map_login 0436
 		actor_action 0437
@@ -58,13 +51,6 @@ sub new {
 	return $self;
 }
 
-sub reconstruct_char_delete2_accept {
-	my ($self, $args) = @_;
-	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
-	$args->{length} = 8 + length($args->{code});
-	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
-}
-
 sub sendCharCreate {
 	my ( $self, $slot, $name, $hair_style, $hair_color, $job_id, $sex ) = @_;
 
@@ -76,12 +62,5 @@ sub sendCharCreate {
 	my $msg = pack 'v a24 CvvvvC', 0x0A39, stringToBytes( $name ), $slot, $hair_color, $hair_style, $job_id, 0, $sex;
 	$self->sendToServer( $msg );
 }
-
-#sub sendCharDelete {
-#	my ($self, $charID, $email) = @_;
-#	my $msg = pack("C*", 0xFB, 0x01) .
-#			$charID . pack("a50", stringToBytes($email));
-#	$self->sendToServer($msg);
-#}
 
 1;

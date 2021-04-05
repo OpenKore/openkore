@@ -20,19 +20,19 @@ use I18N qw(stringToBytes);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0860' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0945' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0926' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0362' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0869' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
-		'0952' => ['buy_bulk_closeShop'],			
+		'0952' => ['buy_bulk_closeShop'],
 		'086B' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0436' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'092D' => ['character_move', 'a3', [qw(coordString)]],
 		'0884' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'0892' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0892' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'093D' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'091B' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0958' => ['item_take', 'a4', [qw(ID)]],
@@ -43,15 +43,15 @@ sub new {
 		'0939' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0929' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'094C' => ['storage_password'],
-		'08A8' => ['sync', 'V', [qw(time)]],		
+		'08A8' => ['sync', 'V', [qw(time)]],
 		'0889' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0927' => ['search_store_request_next_page'],
 		'0957' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   #if PACKETVER > 20160600
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0860
 		actor_info_request 0945
@@ -78,11 +78,11 @@ sub new {
 		search_store_info 0889
 		search_store_request_next_page 0927
 		search_store_select 0957
-		rodex_send_mail 0A6E 
+		rodex_send_mail 0A6E
 	);
-	
-	
-	
+
+
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 # 		#elif PACKETVER == 20160706 // 2016-07-06cRagexeRE
 #		packet_keys(0x33A766D0,0x743F04F8,0x0FA0276C);

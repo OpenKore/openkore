@@ -18,19 +18,19 @@ use base qw(Network::Send::kRO::RagexeRE_2016_01_06a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'089A' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'091B' => ['actor_info_request', 'a4', [qw(ID)]],
 		'085B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0930' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0893' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
-		'088C' => ['buy_bulk_closeShop'],			
+		'088C' => ['buy_bulk_closeShop'],
 		'0967' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0864' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'023B' => ['character_move', 'a3', [qw(coordString)]],
 		'0899' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'086D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'086D' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'0924' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0941' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'08A6' => ['item_take', 'a4', [qw(ID)]],
@@ -41,14 +41,14 @@ sub new {
 		'0932' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'093C' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0815' => ['storage_password'],
-		'08A0' => ['sync', 'V', [qw(time)]],		
+		'08A0' => ['sync', 'V', [qw(time)]],
 		'08AA' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0875' => ['search_store_request_next_page'],
 		'0919' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 089A
 		actor_info_request 091B
@@ -76,9 +76,9 @@ sub new {
 		search_store_request_next_page 0875
 		search_store_select 0919
 	);
-	
-	
-	
+
+
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #	elif PACKETVER == 20160113 // 2016-01-13cRagexeRE
 #		packet_keys(0x18005C4B,0x19A94A72,0x73F678EC);
