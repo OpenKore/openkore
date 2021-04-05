@@ -359,6 +359,8 @@ sub sendMasterLogin {
 			master_version => $master_version,
 			username => $username,
 			password => $password,
+			game_code => '0011', # kRO Ragnarok game code
+			flag => 'G000', # Maybe this say that we are connecting from client
 		});
 	} else {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version || $self->version) .
