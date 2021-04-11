@@ -311,6 +311,7 @@ EFST_GM_BATTLE Battle Pill
 EFST_2011RWC_SCROLL Red Booster
 EFST_MYSTICPOWDER Mystic Powder
 EFST_M_LIFEPOTION Mysterious Water
+EFST_FLOWER_LEAF Full Spray of Flowers
 EFST_ALMIGHTY Almighty
 EFST_GEFFEN_MAGIC1 เพิ่มดาเมจกายภาพ 
 EFST_GEFFEN_MAGIC2 เพิ่มดาเมจเวทย์ 
@@ -350,6 +351,7 @@ EFST_PACKING_ENVELOPE7 Defensive 30 seconds
 EFST_PACKING_ENVELOPE8 Safer 30 seconds
 EFST_PACKING_ENVELOPE9 Lucky 30 seconds
 EFST_PACKING_ENVELOPE10 Accurate 30 seconds
+EFST_GLASTHEIM_TRANS ณ เขตแดนระหว่างคนเป็นและคนตาย!
 EFST_HEAT_BARREL_AFTER After Effect
 EFST_BEEF_RIB_STEW Braised Short Ribs
 EFST_PORK_RIB_STEW Braised Spareribs
@@ -423,3 +425,5 @@ EFST_MATK_POPCORN Enhance magic attack
 EFST_ASPD_POPCORN Enhance attack speed
 EFST_ULTIMATECOOK Ultimate Cook
 EFST_INFINITY_DRINK Unlimited Drink
+EFST_WEAPONBLOCK_ON สถานะถูกโจมตี 
+EFST_FLOWER_LEAF4 Cherry Blossom Cake

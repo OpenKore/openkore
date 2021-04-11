@@ -13,7 +13,7 @@ VAR_SPACCELERATION#เพิ่มความเร็วในการฟื�
 VAR_ATKPERCENT#ATK + %d%%#
 VAR_MAGICATKPERCENT#MATK + %d%%#
 VAR_PLUSASPD#ASPD + %d#
-VAR_PLUSASPDPERCENT#เพิ่มพลังในการโจมตี(ลดดีเลย์ %d%% หลังโจมตี)#
+VAR_PLUSASPDPERCENT#เพิ่มความเร็วในการโจมตี(ลดดีเลย์ %d%% หลังโจมตี)#
 VAR_ATTPOWER#ATK + %d#
 VAR_HITSUCCESSVALUE#HIT + %d#
 VAR_ATTMPOWER#MATK + %d#
@@ -164,8 +164,8 @@ DAMAGE_CRI_TARGET#เพิ่ม Critical Damage %d%%#
 DAMAGE_CRI_USER#ลดอัตรา Critical ที่ได้รับ %d%%#
 RANGE_ATTACK_DAMAGE_TARGET#เพิ่ม Physical Damage ระยะไกล %d%%#
 RANGE_ATTACK_DAMAGE_USER#ลดการถูกโจมตีทางกายภาพระยะไกล %d%%#
-HEAL_VALUE#เพิ่มการ Heal %d%%#
-HEAL_MODIFY_PERCENT#เพิ่ม Heal ที่ได้รับ %d%%#
+HEAL_VALUE#เพิ่มผลของสกิล Heal %d%%#
+HEAL_MODIFY_PERCENT#ได้รับผลของ Heal แรงขึ้น %d%%#
 DEC_SPELL_CAST_TIME#ลดเวลาร่าย %d%%#
 DEC_SPELL_DELAY_TIME#ลดดีเลย์หลังการใช้ Skill %d%%#
 DEC_SP_CONSUMPTION#ลดปริมาณ SP ที่ใช้ Skill %d%%#
