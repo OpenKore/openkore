@@ -264,7 +264,7 @@ Tingkat Penghindaran#
 Kecepatan serangan#
 Hubungan ke server gagal#
 Option#
-ID kamu diblok, untuk penjelasan, silahkan login di ragnarok.gravindo.id#
+ID kamu diblok, untuk penjelasan, silahkan login di ro.gnjoy.id#
 ID atau password yang kamu masukkan salah #
 Pilih gaya rambut#
 Hit Point#
@@ -455,7 +455,7 @@ Kamu dilarang login sampai %s.#
 's Tanah#
 202.43.167.66#
 6900#
-http://ragnarok.gravindo.id#
+https://ro.gnjoy.id/#
 Bunuh %s#
 Sangat Kuat#
 Sangat sangat kuat#
@@ -510,8 +510,8 @@ Meninggalkan Guild#
 Keluar#
 Rank#
 Gelar#
-undang#
-hukum#
+Hak Undang#
+Hak Hukum#
 % Exp#
 Judul#
 Isi#
@@ -529,7 +529,7 @@ Nama Barang#
 https://ragnarok.gravindo.id#
 Kapasitas IP ini penuh.  Apa kamu ingin membayar jalur pribadi?#
 Kamu sudah melewati batas waktu yang kamu bayarkan. Permainan akan dimatikan secara otomatis.#
-Nama terlalu panjang. Silakkan masukkan nama 23 kata panjangnya#
+Nama terlalu panjang. Silahkan masukkan nama 23 kata panjangnya#
 #
 Kamu melakukan pembayaran dengan jalur pribadi.#
 Kamu membayar jalur pribadi. Waktu tersisa xx hrs xx mins xx secs.#
@@ -746,7 +746,7 @@ Proses penginstallan gagal#
 Virtual keyboard akan dilewatkan#
 Beberapa file untuk virtual keyboard tidak ada atau error.  \n\n(npkeyc.vxd, npkeyc.sys, npkeycs.sys)#
 Keyboard USB terdeteksi. \n\nApakah kamu ingin menginstal program USB keyboard ?    \n\n(sistem akan direstart setelah penginstalan)#
-http://ragnarok.gravindo.id#
+https://ro.gnjoy.id/#
 Program keamanan tidak terinstall dengan baik.#
 Program keamanan tidak terinstall dengan baik. Program Ragnarok Online tidak dapat dinyalakan#
 Program keamanan sudah terinstall tetapi belum dibersihkan. Program Ragnarok Online tidak dapat dinyalakan#
@@ -1626,7 +1626,7 @@ Menyerang [%s] #
 menggunakan skill [%s].#
 Fungsi nonaktif#
 Fungsi aktif#
-[%s] memberikan [%s] '%s'.#
+[%s] telah mendapatkan [%s] dari '%s'.#
 Swordman#
 Magician#
 Archer#
@@ -2052,16 +2052,16 @@ Equip#
 Fav#
 Lock Item#
 Notifikasi untuk mencari bagian grup#
-Mengorganisasikan sebuah grup#
+Formasi Grup#
 Keluar grup#
 Undangan grup#
 Registrasi nama grup#
-Nama karakter yang ingin diundang#
-Undangan party telah dikirim ke.#
-Telah menolak undangan grup.#
-Telah menerima undangan grup.#
+Tulis Nama karakter#
+-Undangan party telah terkirim.#
+-Telah menolak undangan grup.#
+-Telah menerima undangan grup.#
 Ini sedang mengumpulkan grup.#
-Ini sama dengan konsidi pencarian sebelumnya.#
+Ini sama dengan kondisi pencarian sebelumnya.#
 Kemungkinan untuk digunakan setelah meninggalkan guild.#
 Kemungkinan untuk digunakan setelah meninggalkan grup.#
 Orang yang anda panggil sedang berada dimap yang tidak bisa dipanggil.#
@@ -2266,11 +2266,11 @@ Ground%d#
 Fire%d#
 Wind%d#
 Poison%d#
-Saint%d#
-Darkness%d#
-Telekinesis%d#
+Holy%d#
+Shadow%d#
+Ghost%d#
 Undead%d#
-Nothing%d#
+Neutral%d#
 Medium#
 Large#
 Small#
@@ -2283,7 +2283,7 @@ Demon#
 Human#
 Angel#
 Dragon#
-Nothing#
+Formless#
 Klik untuk bergerak %s #
 Use NPC move service#
 NPC click#
@@ -2293,7 +2293,7 @@ Menggunakan warp#
 Titik kedatangan : ( %d %d )#
 Hal ini tidak tersedia untuk memberikan navigasi di daerah ini.#
 Anda sedang mencari target yang tidak jelas.#
-it is not matched map.#
+Map tidak sesuai.#
 Gagal untuk menetapkan area keberangkatan#
 Gagal untuk menetapkan area kedatangan!#
 Gagal menemukan jalan#
@@ -2301,7 +2301,7 @@ Gagal menemukan lokasi player#
 Tidak ada informasi dalam navigasi.#
 peta ini tidak memberikan sistem navigasi.#
 Silahkan pilih sasaran.#
-tiba.#
+Tiba.#
 Navigasi dimulai.#
 Ini adalah peta yang memiliki monster yang Anda cari.#
 Ini adalah map yang anda cari.#
@@ -2340,6 +2340,7 @@ Apakah Anda ingin membeli?#
 1#
 1#
 1#
+/monsterhp : Tampilkan HP monster yang kamu serang. On/Off#
 1#
 1#
 1#
@@ -2347,11 +2348,10 @@ Apakah Anda ingin membeli?#
 1#
 1#
 1#
-1#
-1#
+Record#
 1#
 Webbrowser#
-1#
+Navigation#
 UAEURL#
 1#
 1#
@@ -2371,7 +2371,7 @@ https://gfb.gameflier.com/Billing/ingame/index_new.asp?#
 1#
 1#
 1#
-1#
+Item yang akan didapatkan dari membuka item ini adalah item Character Bound (tidak bisa diletakkan di storage). Periksa kembali apakah ini karakter yang benar. Apakah kamu yakin karakter sudah benar?#
 1#
 1#
 1#
@@ -2417,7 +2417,7 @@ $$all         : Menampilkan Semua Daftar (Kamu dapat membagi jenis Outputnya pad
 $$lv30       : Menampilkan Level Monster (Kamu dapat mengubah angkanya)#
 $$lv20~30  : Menampilkan Level Monster (Kamu dapat mengubah angkanya)#
 1 vs 1#
-Costume#
+Special Equipment#
 Informasi Job Karakter Error di Slot %d. Silahkan hubungi GameMaster. ErrorCode(%d)#
 (%s) %d / %d#
 %s-%s(%d/%d)#
@@ -2471,13 +2471,13 @@ ErrorCode : %d, ErrorValue : %d#
 %d%% ( Base 100%% + Premium %d%% + PCCafe %d%% + %s Server %d%% )#
 Drop rate dari monster bertambah selama %dmenit sebesar %dkali.#
 Drop rate dari monster bertambah selama %djam %.2dmenit sebesar %dkali.#
-Harga %s#
+Harga %s #
 100000000#
-^ff0000%d^0000ff Juta#
+^ff0000%d^0000ff Ratus Juta #
 10000000#
-^ff0000%d^0000ff0,000,000#
-Lebih dari ^0000ffZeny^000000.\n Apakah sudah benar?#
-Penyimpanan untuk lebih dari 10,000,000 Zeny#
+^ff0000%d^0000ff Puluh Juta #
+^0000ffZeny atau lebih^000000.\n Apakah sudah benar?#
+Peringatan Harga Jual Barang#
 https://ragnarok.gravindo.id#
 https://ragnarok.gravindo.id#
 #
@@ -2489,17 +2489,17 @@ Mereka menemukan bahwa Laphine dari Eclage sangat terpisah dari saudara mereka d
 Hanya bisa masukkan nomor.#
 Kamu tidak bisa menarik saat window transaksi dan toko sedang aktif.#
 Shortcut#
-Perbandingan barang#
+Perbandingan#
 Senjata tidak sesuai dengan peluru yang kamu gunakan.#
 Peluru tidak sesuai dengan senjata yang kamu gunakan.#
 barang tidak terdaftar untuk dijual. Silahkan daftarkan barang yang ingin kamu jual#
 ITEM#
-Kamu tidak bisa menggunakan Gudang Guild.#
+Kamu tidak bisa menggunakan Guild Warehouse.#
 Kamu tidak tergabung dengan guild. Silahkan coba lagi setelah bergabung dalam guild.#
 Sedang digunakan anggota guild lain. Silahkan coba lagi nanti.#
 Hak penyimpanan#
-Gudang Guild#
-Kamu tidak mempunyai hak untuk menggunakan Gudang Guild.#
+Guild Warehouse#
+Kamu tidak mempunyai hak untuk menggunakan Guild Warehouse.#
 Jendela pendaftaran penjualan barang terbatas#
 Nama Item DB#
 No item DB.#
@@ -2540,14 +2540,14 @@ item#
 jumlah#
 Nama#
 Waktu#
-Ambil#
-log tidak ada.#
+Masuk/Keluar#
+Tidak ada catatan.#
 Semua#
 Masukkan#
 Ambil#
-Daftar gudang Guild#
-Daftar hanya memperlihatkan 100 barang terbaru.#
-Gudang Guild tutup setelah 2 menit penggunaan.#
+History Guild Warehouse#
+History hanya memperlihatkan 100 catatan terakhir.#
+Guild Warehouse tutup setelah 2 menit penggunaan.#
 ID salah. Silahkan coba lagi.#
 %s [%doption] : %d #
 Koin diperlukan.#
@@ -2557,12 +2557,12 @@ Harus memakai tipe Shotgun.#
 Harus memakai tipe Rifle.#
 Harus memakai tipe Revolver.#
 Harus menggunakan peluru tipe Saint.#
-Daftar barang jual#
+Informasi Barang Terjual#
 Daftar barang beli#
 Harus memakai tipe Grenade Launcher.#
 efek skill [Hit Barrel],[Madness Canceler],[Platinum Altar] tidak bisa distack.#
 Skill tidak bisa digunakan diarea ini.#
-Saat kamu menggunakan gudang guild, semua barang di gudang akan hilang.#
+Saat kamu menggunakan Guild Warehouse, semua barang di Warehouse akan hilang.#
 http://ragnarok.gravindo.id/#
 Masukkan password untuk log in#
 Pet evolution#
@@ -2649,7 +2649,7 @@ Achievement Total Score#
 Achievement Rank#
 Sisa skor untuk peringkat berikutnya: [%5d]#
 Progress#
-Achievement didapat# 
+Achievement Terbaru# 
 Daftar barang Xianbei#
 Xianbei: %d / %d #
 Membutuhkan lebih banyak Xianbei#
@@ -2676,10 +2676,10 @@ Memorial Dungeon#
 Midgard#
 New World#
 Lain-lain.#
-Achievement terbaik#
-Quest#
+Achievement Terbaik#
+Achievement#
 Tidak bisa ditambah lagi#
-Kamu mendapatkan < %s >.#
+Kamu berhasil menyelesaikan < %s >.#
 Hanya pemain OTP yang diizinkan#
 Jika kamu menekan tombol ini, kamu akan mendapat hadiah dan roulette dimulai.#
 Jika kamu menekan tombol ini, roulette akan mulai dari garis ditunjukkan oleh panah berkedip.#
@@ -2810,7 +2810,7 @@ Kirim mail#
 E X P: %.1f%% (Base 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
 DROP : %.1f%% (Base 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
 DEATH: %.1f%% (Base 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
-Kamu tidak bisa tag as a name.#
+Kamu tidak bisa menggunakan ini dengan nama.#
 Styling shop#
 Tidak ada kupon. Beli barang di Item Mall#
 Silahkan buka box kupon di inventory.#
@@ -2905,7 +2905,7 @@ Please enter the characters from the image.#
 Please enter 6 digit OTP numbers#
 Auth. No.#
 Not 6 digit numbers. Please check again#
-It's been deleted.#
+Sudah dihapus.#
 Please select destination to private flight.#
 E X P : %d%% ( basic 100.0%% %s %d%%)#
 DROP  : %d%% ( basic 100.0%% %s %d%%)#
@@ -2920,7 +2920,7 @@ The item has sent to RODEX.#
 100 Malangdo Special Can#
 Cannot proceed due to weight has reached to 80%.#
 Unsold item has sent to RODEX.#
-Equiped outfit#
+Preview#
 Entrust guild master#
 Do you really want to entrust GuildMaster to %s? To proceed, your guild position will be exchanged with %s.#
 Cancel#
@@ -2949,8 +2949,8 @@ Trading amount has sent to RODEX.#
 Not available name.#
 Item has arrived.#
 Thanks for purchasing.#
-Cannot sell to NPC.#
-Lock selling item#
+Tidak dapat dijual di NPC.#
+Kunci item untuk dijual#
 Not able to find a place to summon in near.#
 Capture full screen#
 Capture part of screen#
@@ -2965,9 +2965,9 @@ Kamu tidak bisa entrust kepada GuildMaster karena WoE. Silahkan coba lagi nanti.
 Kamu tidak bisa entrust kepada GuildMaster. Belum 24 jam sejak kamu di entrust.#
 Sebagai anak, transcendent dan stats akan dibatasi. HP dan SP juga lebih kecil. Apakah kamu setuju?#
 Tempa#
-Menggunakan Blacksmith Blessing.#
-Tidak cukup Zeny.#
-Tidak cukup Blacksmith Blessing.#
+Menggunakan Blacksmith's Blessing.#
+Zeny tidak mencukupi#
+Blacksmith's Blessing tidak mencukupi.#
 Barang tidak bisa ditempa.#
 Tempa berhasil!#
 Tempa gagal!#
@@ -3020,7 +3020,7 @@ Doram#
 Summoner#
 Delegasi ras dari Midgard. Ras bertalenta tinggi untuk menyelesaikan masalah dengan pontesi tanpa batas dan tingkat adaptasi tinggi.#
 Salah satu delegasi dari ras Far-star continent dengan rasa ingin tahu natural dan karakter yang riang.#
-Batas Weight telah lebih dari 70%. Atau kurang dari 10 inventory space.#
+Batas berat telah melebihi 70%. Atau kurang dari 10 inventory slot.#
 C#
 C#
 Melakukan aktivitas lain.#
@@ -3032,9 +3032,9 @@ Silahkan masukkan password lebih dari %d karakter.#
 Selesaikan tugas saat ini dan coba kembali.#
 %.1f%% (Premium-Warnet %.1f%% + TPLUS %.1f%% + %sServer %.1f%%)#
 Item Tidak Dapat Didaftarkan.#
-/300#
+/100#
 /4000#
-https://ragnarok.gravindo.id/home#
+https://ro.gnjoy.id#
 Emblem tidak ditemukan. Masukan emblem kedalam folder dan coba lagi#
 Ragnarok Ragnarok#
 Jika screenshot atau chatbox termasuk pemain lain selain kamu, silahkan meminta izin sebelum menggunakannya.#
@@ -3099,33 +3099,33 @@ Zeny Lottery Cumulative Purchase Reward#
 Cumulative %d kali Reward: %s#
 Zeny Lottery Refund#
 Jumlah Pengembalian Uang: %d Zeny\r\nAlasan Pengembalian: Gagal Menarik Lottery Pada Server#
-Tambah Mini Party Chat#
-Hapus Mini Party Chat#
+Tambah Mini Party UI#
+Hapus Mini Party UI#
 Undian Lottery Berakhir! Lihat Pemenang!#
-%dBulan %dHari#
+Bulan %d Tanggal %d#
 Sampai Tingkat Berikut#
 Semua#
-Incomplete#
+Belum Selesai#
 (Accomplished!)#
 (Not Accomplished)#
 Ganti Equipment#
 GANTI#
-Power Parameter\n ^cc0000Melee PhysicalAttack^ffffff, Carrying Weight#
-Agility Parameter\n^cc0000Attack Speed^ffffff, Dodge, Physical Defense#
-HP Parameter\n^cc0000Max HP^ffffff, Physical Defense, Magic Defense#
-Intellect Parameter\n^cc0000Magic Attack^ffffff, Casting Time, Magic Defense#
-Handcraft Parameter\n^cc0000Long Range Physical Attack^ffffff, Accuracy, Casting Time, Magic Attack#
-Moon Parameter\n^cc0000Critical Rate^ffffff, Accuracy, Physical Attack, Magic Attack, Dodge#
-Physical Attack#
-Physical Defense#
-Accuracy#
-Critical Rate#
-Affiliated Guild#
-Point untuk tingkatkan level setiap Parameter#
-Magic Attack#
-Magic Defense#
-Dodge#
-Attack Speed#
+Parameter Strength\n ^cc0000Serangan Melee Fisik^ffffff, Batas Barang Bawaan#
+Parameter Agility\n^cc0000Kecepatan Serangan^ffffff, Tingkat Penghindaran, Pertahanan Fisik#
+Parameter HP\n^cc0000Maksimum HP^ffffff, Pertahanan Fisik, Pertahanan Sihir#
+Parameter Intelligent \n^cc0000Serangan Sihir^ffffff, Waktu Casting, Pertahanan Sihir#
+Parameter Dexterity \n^cc0000Serangan Fisik Jarak Jauh^ffffff, Akurasi, Waktu Casting, Serangan Sihir#
+Parameter Lucky\n^cc0000Tingkat Kritikal^ffffff, Akurasi, Serangan Fisik, Serangan Sihir, Tingkat Penghindaran#
+Serangan Fisik#
+Pertahanan Fisik#
+Akurasi#
+Tingkat Kritikal#
+Guild yang Bersangkutan#
+Point untuk meningkatkan level setiap Parameter#
+Serangan Sihir#
+Pertahanan Sihir#
+Tingkat Penghindaran#
+Kecepatan Serangan#
 Shortcut#
 Option#
 Skill Shortcut Key (F1 ~ F9)#
@@ -3190,5 +3190,511 @@ Pilih Grup Penerima#
 Ganti Ukuran(F10)#
 Memuat Mailbox.\n^c92114Hapus^000000 Email Yang Tidak Diperlukan!#
 Tunggu Sebentar Yah...#
-Judul#
-Pengirim#
+Title#
+Sender#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Tetapkan simbol untuk petunjuk arah#
+UI Informasi Petunjuk Jalan#
+Buka Informasi Petunjuk Jalan#
+Bagikan Lokasi Terbaru#
+Hasil Pencarian[0]#
+Pencarian & Petunjuk#
+Lokasi tidak benar.#
+Hasil Pencarian[%d]#
+Tetapkan simbol untuk display petunjuk arah#
+Gunakan Zeny untuk mencari jalan#
+Buka Navigasi#
+no msg#
+Lokasi yang di-klik akan dibagian di Chat Box.#
+4. Jika kamu memilih fungsi Layanan, itu akan memandu sesuai dengan kondisi Zeny dan & Pesawat.#
+5. Tombol [<-] : Moda Petunjuk Jalan <-> atau ganti dengan moda pencarian.#
+Sharing Mode -> Digunakan ketika kamu ingin mengubah menjadi moda pencarian.#
+no msg#
+EXP sebesar '%lld'#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Job EXP sebesar '%lld'#
+no msg#
+no msg#
+no msg#
+Anggota Grup#
+no msg#
+no msg#
+no msg#
+no msg#
+Window Mini Party tertumpuk dan tidak bisa digunakan.#
+no msg#
+no msg#
+no msg#
+no msg#
+Coba Lagi#
+Tidak dapat mengulang, pilih ulang bahan tempa#
+Bahan tempa tidak mencukupi#
+Zeny tidak mencukupi#
+Blacksmith's Blessing tidak mencukupi#
+Barang telah hancur#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Tidak ada yang bisa dijadikan Ketua Grup. Apa kamu ingin membubarkan Grup?#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Hancurkan Dungeon#
+Sukses menempa [%s], kamu mendapatkan [+%d %s].#
+Gagal menempa [%s], gagal mengupgrade item [+%d %s].#
+Kamu bisa keluar setelah menunjuk Ketua Grup.#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Chance : %d%%#
+no msg#
+no msg#
+Daftar Penjualan#
+Daftar Pembelian#
+Baru#
+Populer#
+Edisi Terbatas#
+Equip Rental#
+Equip Permanen#
+Buff#
+Pemulihan#
+Dan Lain-lain#
+Harga Spesial#
+Pengisian#
+Beli#
+ro.gnjoy.id/topup#
+Cari Barang#
+Kupon#
+Kupon Terpakai#
+RO Cash#
+Diskon#
+no msg#
+no msg#
+no msg#
+no msg#
+Jika beratmu melebihi %d persen, HP SP tidak akan regenerasi secara natural.#
+Kamu tidak bisa membeli lebih dari 8 jenis barang sekaligus#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Hapus karakter #
+Batal hapus karakter#
+Mulai#
+Hapus#
+Daftar Karakter#
+Pemberitahuan#
+Buat#
+Gaya Rambut#
+Warna Rambut#
+Periksa Duplikasi#
+Jam %d Menit %d Detik %d#
+no msg#
+Kembali#
+no msg#
+no msg#
+no msg#
+Buat Karakter#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Taekwon#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+QUEST#
+Isi Pesan#
+Monster#
+Hadiah#
+EXP#
+JEXP#
+ITEM#
+Kerjakan/Tunda#
+Pindahkan ke bawah#
+Tampilkan di Simple Quest Bar#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+STR dan Kekuatan Serangan telah ditingkatkan.#
+STR, INT, DEX, dan Akurasi telah ditingkatkan.#
+Defense dan HP telah ditingkatkan.#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+¡ã#
+¡å#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Kamu harus berada di dalam party untuk menggunakan skill ini#
+no msg#
+no msg#
+no msg#
+no msg#
+Kekuatan Serangan Fisik dan Magic telah ditingkatkan.#
+Kekuatan Serangan Fisik dan Magic telah diturunkan.#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+SP Partner mungkin tidak mencukupi atau status tidak memungkinkan untuk menggunakan skill ini.#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Taekwon#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Quest#
+Konten#
+Monster#
+Reward#
+EXP#
+JEXP#
+Item#
+Progress / Hold#
+Menuju ke bawah#
+Tampilkan Layar Quest dalam Mode Sederhana#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Loading Warehouse#
+no msg#
+Delete#
+Reply#
+Send#
+Verify#
+Notice#
+Normal#
+Reply#
+Search#
+no msg#
+no msg#
+no msg#
+%s %dea#
+Transaksi Gagal#
+Transaksi Berhasil#
+Tidak cukup barang untuk ditukar#
+Stok barang habis#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Kamu tidak bisa memiliki barang yang sama sebanyak %dea#
+Kamu tidak bisa membeli barang karena batas berat bawaan#
+Barang hanya bisa dibeli 1 buah per transaksi#
+no msg#
+no msg#
+no msg#
+Tangkap Monster#
+Pesan#
+JUDUL#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Delete#
+Delete All#
+Apa kamu yakin menghapus semua [%s] pesan di dalam kotak surat?#
+Receive#
+Receive All#
+Apa kamu yakin menerima barang lampiran dari surat yang dipilih?#
+Apa kamu yakin menerima barang lampiran dari semua surat [%s] yang ada di kotak surat?#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Window tidak bisa ditutup ketika sedang Loading.#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Delete#
+Reply#
+Send#
+Verify#
+Notice#
+Normal#
+Kembali#
+Search#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Barang yang sedang dipakai tidak bisa dipakai untuk menukar. Coba lagi setelah melepas barangnya.#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Capture Monster#
+Message#
+Title#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+no msg#
+Barang yang akan kamu tukarkan#
+Tujuan#
+no msg#
+no msg#
+Hapus Pilihan#
+Hapus Semua#
+Apa kamu yakin menghapus semua [%s] pesan yang ada di kotak suratmu?#
+Ambil Pilihan#
+Ambil Semua#
+Apa kamu ingin menerima semua attachment dari surat yang telah dipilih?#
+Apa kamu ingin menerima semua attachment[%s] dari seluruh kotak suratmu#
