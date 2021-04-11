@@ -1,5 +1,4 @@
 
-
 achievement_tbl = {
 	[120001] = {
 		UI_Type = 0,
@@ -4635,6 +4634,34 @@ achievement_tbl = {
 		},
 		resource = { [1] = { text = "Winner of the Ragnarok's Got Talent Contest." } },
 		reward = { title = 9982 },
+		score = 5
+	},
+	[999966] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 4,
+		minor = 1,
+		title = "RO's Most Talented 2020",
+		content = {
+			summary = "RO's Most Talented  2020",
+			details = "Winner of the Ragnarok's Got Talent Contest."
+		},
+		resource = { [1] = { text = "Winner of the Ragnarok's Got Talent Contest." } },
+		reward = { title = 9981 },
+		score = 5
+	},
+	[999965] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 4,
+		minor = 1,
+		title = "Lunar Valentines Greeting Card 2021",
+		content = {
+			summary = "Lunar Valentines Greeting Card  2021",
+			details = "Winner of the Lunar Valentines Greeting Card Contest."
+		},
+		resource = { [1] = { text = "Winner of the Lunar Valentines Greeting Card Contest." } },
+		reward = { title = 9980 },
 		score = 5
 	}
 }
