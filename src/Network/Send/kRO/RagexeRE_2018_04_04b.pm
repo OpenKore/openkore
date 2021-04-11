@@ -25,7 +25,7 @@ sub new {
 		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0819' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
-		'0815' => ['buy_bulk_closeShop'],			
+		'0815' => ['buy_bulk_closeShop'],
 		'0811' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
 		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'035F' => ['character_move', 'a3', [qw(coordString)]],
@@ -41,7 +41,7 @@ sub new {
 		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0365' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'023B' => ['storage_password'],
-		'0360' => ['sync', 'V', [qw(time)]],		
+		'0360' => ['sync', 'V', [qw(time)]],
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -71,7 +71,7 @@ sub new {
 		sync 0360
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

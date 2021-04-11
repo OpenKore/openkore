@@ -36,6 +36,7 @@ sub new {
 		'093B' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'0896' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'083C' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
+		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0878' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'08AA' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0438' => ['storage_password'],

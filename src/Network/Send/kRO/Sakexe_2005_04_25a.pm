@@ -31,13 +31,7 @@ sub new {
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
-	my %handlers = qw(
-		homunculus_command 022D
-	);
-
-	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-
-	return $self;
+	$self;
 }
 
 =pod
