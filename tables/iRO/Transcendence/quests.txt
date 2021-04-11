@@ -24374,3 +24374,317 @@ Accepting Eunwol's request#
 3388#Delivery of Thanksgiving Confectionery-Waiting#SG_FEEL#QUE_NOIMAGE#
 When Eunwol needs more sweets for the harvest festival, let's come back.#
 #
+
+
+// Snow Flower Festival - Dec
+
+17137#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You wanna a make snow flower bouquet? Then, collect 10 <ITEM>magical snow flowers<INFO>25425</INFO></ITEM> and come back <NAVI>[here]<INFO>aldebaran,174,164,0,101,0</INFO></NAVI>.#
+10 magical snow flower#
+
+17138#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+Find the <NAVI>[Snow flower illusionist]<INFO>aldebaran,172,162,0,101,0</INFO></NAVI>. If you are interested find the place.#
+To snow flower illusionist#
+
+17139#To get through hot winter#SG_FEEL#QUE_NOIMAGE#
+Snow for the region where it does not fall, Cotton clothes for cold region! If you wish to get through the winter find <NAVI>[Coti]<INFO>aldebaran,124,238,0,101,0</INFO></NAVI> and Ulsi.#
+To Coti#
+
+17140#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+Did you find a special card from your gift box? Then bring it to <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>. You will receive a special gift.#
+To Twinkle#
+
+17141#Festival organizers#SG_FEEL#QUE_NOIMAGE#
+why don't you meet the festival organizers and listen to the behind story of this event? Snow Boy Keeper, <NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI> is around here.#
+To [Eugene]#
+
+17142#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You need 10 <ITEM>magical snow flower<INFO>25425</INFO></ITEM> to make snow flower bouquet. Please do not forget 1 <ITEM>carrot<INFO>515</INFO></ITEM> for decorating snowman. - <NAVI>[Marine]<INFO>aldebaran,172,162,0,101,0</INFO></NAVI>#
+10 Snow flower, 1 carrot#
+
+
+17143#Waiting: Chilly feeling is remained#SG_FEEL#QUE_NOIMAGE#
+The effect of magical snow flower is still remained. Please comeback after the dawn. - <NAVI>[Marin]<INFO>aldebaran,172,162,0,101,0</INFO></NAVI>#
+Waiting time#
+
+17144#Getting through winter#SG_FEEL#QUE_NOIMAGE#
+Snow for children! Warm cotton clothes for children in cold region! <NAVI>[To us]<INFO>aldebaran,124,238,0,101,0</INFO></NAVI> donate 10 warm cotton!#
+10 Warm cotton#
+
+17145#Waiting: Cotton is being wrapped#SG_FEEL#QUE_NOIMAGE#
+Cotton is being wrapped. The wrapping seems be be finished by dawn so please come back after dawn! - <NAVI>[Coti]<INFO>aldebaran,124,238,0,101,0</INFO></NAVI>#
+Waiting time#
+
+17146#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is ALDEBARAN!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters A.L.D.E.B.A.R.A.N. Total of 9 letters.  - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect ALDEBARAN card#
+
+17147#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is SNOW!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters S. N. O. W. Total of 4 letters. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect SNOW card#
+
+17148#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FESTIVAL!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters F. E. S. T. I. V. A. L.. Total of 8 letters. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect FESTIVAL card#
+
+17149#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is SPARKLE!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters S.P.A.R.K.L.E. Total of 7 letters. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect SPARKLE card#
+
+17150#Waiting: Card exchange is once a day#SG_FEEL#QUE_NOIMAGE#
+Alphabet card exchange is once a day. Okay? So please comeback after dawn! - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Waiting time#
+
+17151#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI> and Rigel said they had plans and told you to gather closer.#
+Talk to Eugene#
+
+17152#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+Please bring 10 <ITEM>Flowers<INFO>712</INFO></ITEM>. There is a <NAVI>[Flower Merchant]<INFO>geffen,161,83,0,101,0</INFO></NAVI> in geffen.#
+Geffen Flower merchant#
+
+17153#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+Rigel has worked at <NAVI>[Toy Factory]<INFO>xmas_dun01,128,154,0,101,0</INFO></NAVI> in Lutie. You might find something there.#
+Lutie Toy Factory#
+
+17154#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+Eugene has come to Lutie by <NAVI>[Train]<INFO>xmas,204,223,0,101,0</INFO></NAVI>. you'll find something there.#
+Lutie Track#
+
+17155#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+Let's go back to <NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI> and Rigel at Snow Festival with 10 Flowers and persuade them again.#
+To Eugene#
+
+17156#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Rigel]<INFO>aldebaran,107,164,0,101,0</INFO></NAVI> seems to carry out the plan to the end. Is there any way to stop him?#
+Talk to Rigel#
+
+17157#Growing Snow Boy#SG_FEEL#QUE_NOIMAGE#
+If you'd like to grow snow Boy, you need holy water. Please bring 5 Holy water. - <NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI>#
+5 Holy Water#
+
+17158#Waiting: Growing Snow Boy#SG_FEEL#QUE_NOIMAGE#
+You can grow snow boy with the holy water you brought. Please come back after dawn. - <NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI>#
+Waiting Time#
+
+
+
+
+11539#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I heard Hyul humming alone in the Payon inn. Let's talk to Hyul.#
+Talk to Hyul#
+
+11540#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11541#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul said he would visit an elderly man at south of Alberta#
+Talk to Elderly in Alberta#
+
+11542#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I greeted Elderly in Alberta safely. Let's go back to Payon to talk to Hyul.#
+To Payon#
+
+11543#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11544#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul said he would visit an elderly man at North of Prontera#
+Talk to Elderly in Prontera#
+
+11545#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I greeted Elderly in Prontera safely.  Let's go back to Payon to talk to Hyul.#
+To Payon#
+
+11546#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11547#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul said he would visit an elderly man at north of Geffen#
+Talk to Elderly in Geffen#
+
+11548#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I greeted Elderly in Geffen safely.  Let's go back to Payon to talk to Hyul.#
+To Payon#
+
+11549#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11550#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul said he would visit an elderly man at west of Aldebaran#
+Talk to Elderly in Aldebaran#
+
+11551#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I greeted Elderly in Aldebaran safely.  Let's go back to Payon to talk to Hyul.#
+To Payon#
+
+11552#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11553#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul says he will go to his hometown at east of Payon.#
+Talk to Elderly in Payon#
+
+11554#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Freshly boiled octopus Tteokguk Material : 5 Picnic Octopus Leg, 2 Pecopeco Egg, 5 Fresh Octupus Leg, 2 Chewy bar rice cake(Picnic Octopus Leg, can be acquired defeating Picnic Octopus.)#
+put the ingredients in Cauldron#
+
+11555#Try to find the taste of hometown - Waiting#SG_FEEL#QUE_NOIMAGE#
+The pot is too hot to make  [Freshly boiled octopus Tteokguk]. Let's try tomorrow again.#
+Waiting Cauldron#
+
+11760#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+It is said that Roin visited the Malangdo Octopus Festival. Talk to Roin.#
+Talk to Roin#
+
+11761#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+I don't think Roin has any energy. Talk to Festival Staff to find the solution.#
+Talk to Festival Staff.#
+
+11762#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+Warnuts are moving to each region to defeat rats that have spread throughout the region. Let's talk to Warnut, who's getting ready to leave at the entrance to Malangdo.#
+Talk to Warnut in front of Malangdo#
+
+11763#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+Warnut is scheduled to depart for Prontera. Let's go to Prontera together and look into the situation.#
+Talk to Warnut at Prontera#
+
+11764#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+I can't see the rats right now, but the situation seems to be bad.#
+Talk to Warnut at Payon#
+
+11765#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+Warnut at Payon seems to be very tired of dealing with rats. Let's catch 10 What a cheap Rat on our way back and report it to Roin.#
+Talk to Roin at Malangdo#
+
+11766#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+It still seems that the rats have not disappeared. Let's catch 10 What a cheap Rat on our way back and report it to Roin.#
+Defeat Rats#
+
+11767#It's unfair, moo! -Waiting#SG_FEEL#QUE_NOIMAGE#
+I defeated What a cheap Rat. Let's visit again tomorrow.#
+Reset at 4:00#
+
+
+
+//--- Happy Egg Festival
+16261#Happy Egg Explore#SG_FEEL#QUE_NOIMAGE#
+The festival has begun. Break 3 Happy Eggs hidden in the dungeon and field and return to Member of the Happy Egg Festival.#
+Return to Yulata#
+
+16262#Happy Egg Explore-Cool down#SG_FEEL#QUE_NOIMAGE#
+These quests are daily quests and can be recieved at the expiration of the Cool down time. You can receive quests through the Member of the Happy Egg Festival.#
+#
+
+16263#Happy Egg Explore#SG_FEEL#QUE_NOIMAGE#
+The festival continues. Break 3 Happy Eggs hidden in the dungeon and field and return to Member of the Happy Egg Festival.#
+Return to Yulata#
+
+16264#Happy Clover Decoration#SG_FEEL#QUE_NOIMAGE#
+The festival has begun. Hunt 3 clovers each in dungeons and fields, then collect 3 Happy Three Leaf Clovers and return to the Festival Deco Expert.#
+Return to Luluphant#
+
+16265#Happy Clover Decoration-Cool down#SG_FEEL#QUE_NOIMAGE#
+These quests are daily quests and can be recieved at the expiration of the Cool down time. You can receive quests through Festival Deco Expert.#
+#
+
+16266#Happy Clover Decoration#SG_FEEL#QUE_NOIMAGE#
+The festival continues. Hunt 3 clovers each in dungeons and fields, then collect 3 Happy Three Leaf Clovers and return to the Festival Deco Expert.#
+Return to Luluphant#
+
+16267#Looking for Happy Hint#SG_FEEL#QUE_NOIMAGE#
+After helping Member of the Happy Egg Festival, Yulata, let's check if there's anything suspicious and report to Frowny.#
+Investigate Yulata#
+
+16268#Looking for Happy Hint#SG_FEEL#QUE_NOIMAGE#
+After helping Festival Deco Expert, Luluphant, let's check if there's anything suspicious and report to Frowny.#
+Investigate Luluphant#
+
+16269#Jump into the Enemy camp#SG_FEEL#QUE_NOIMAGE#
+Let's help Zilean make egg-shaped snacks at Schweitzerville Academy and see if there's anything suspicious.#
+Investigate Zilean#
+
+16270#Invest the Enemy camp#SG_FEEL#QUE_NOIMAGE#
+Let's help Salem care of pets at Schweitzervill Academy, and see if there's anything suspicious.#
+Investigate Salem#
+
+16271#Report Happy Result#SG_FEEL#QUE_NOIMAGE#
+I've completed investigating Academy. Let's report the this happy results to Frowny waiting at the new place.#
+Return to Frowny#
+
+16272#Track the truth#SG_FEEL#QUE_NOIMAGE#
+Let's comfort Frowny, who has become very depressed.#
+Talk to Frowny#
+
+16273#Sweet Cookie Egg Ingredients#SG_FEEL#QUE_NOIMAGE#
+Meet Farmer Sheran waiting in Izlude and get an Almond and go back to Zilean.#
+Talk to Sheran#
+
+16274#Chocolate Egg Ingredients#SG_FEEL#QUE_NOIMAGE#
+Meet Patissier Ian waiting in Prontera and get a solid chocolate and go back to Zilean.#
+Talk to Ian#
+
+16275#Sweet Ingredients#SG_FEEL#QUE_NOIMAGE#
+These quests are daily quests and can be recieved at the expiration of the Cool down time. You can receive quests through Zilean.#
+#
+
+16276#Sweet Cookie Egg Ingredients#SG_FEEL#QUE_NOIMAGE#
+Meet Farmer Sheran waiting in Izlude and get an Almond and go back to Zilean.#
+Talk to Sheran#
+
+16277#Chocolate Egg Ingredients#SG_FEEL#QUE_NOIMAGE#
+Meet Patissier Ian waiting in Prontera and get a solid chocolate and go back to Zilean.#
+Talk to Ian#
+
+16278#Take a walk with Pet Lunatic#SG_FEEL#QUE_NOIMAGE#
+You decided to take a walk with Pet Lunatic#
+Take a walk with Lunatic#
+
+16279#Take a walk with Pet Poring#SG_FEEL#QUE_NOIMAGE#
+You decided to take a walk with Pet Poring.#
+Take a walk with Poring#
+
+16280#Take a walk with Pet Desert Wolf Baby#SG_FEEL#QUE_NOIMAGE#
+You decided to take a walk with Pet Desert Wolf Baby.#
+Take a walk with Desert Wolf Baby#
+
+16281#Take a walk with Pet Deviruchi#SG_FEEL#QUE_NOIMAGE#
+You decided to take a walk with pet Deviruchi.#
+Take a walk with Deviruchi#
+
+16282#Happy Survey#SG_FEEL#QUE_NOIMAGE#
+Talk to Salem and fill out the questionnaire, and today's experiment is over.#
+Survey#
+
+16283#Happy Walking#SG_FEEL#QUE_NOIMAGE#
+These quests are daily quests and can be recieved at the expiration of the Cool down time. You can receive quests through Salem.#
+#
+
+16284#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's go to the first Walking Course on the map.#
+First Walking Course#
+
+16285#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's go to the second Walking Course on the map.#
+Second Walking Course#
+
+16286#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's go to the third Walking Course on the map.#
+Third Walking Course#
+
+16287#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's go to the fourth Walking Course on the map.#
+Fourth Walking Course#
+
+16288#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's get back to Schweitzervill Academy.#
+Return to Acedemy#
+
+16289#Happy Pet Vending Machine#SG_FEEL#QUE_NOIMAGE#
+Happy Pet Vending Machine#
+#

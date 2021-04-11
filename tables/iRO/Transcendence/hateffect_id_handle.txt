@@ -133,3 +133,4 @@
 133 HAT_EF_C_Sudden_Wealth_TW
 134 HAT_EF_C_Romance_Rose_TW
 135 HAT_EF_C_Disapear_Time_TW
+148 HAT_EF_GearWheel

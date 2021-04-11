@@ -133,3 +133,4 @@ HAT_EF_C_Magic_Heir_TW C_Magic_Heir_TW
 HAT_EF_C_Sudden_Wealth_TW C_Sudden_Wealth_TW
 HAT_EF_C_Romance_Rose_TW C_Romance_Rose_TW
 HAT_EF_C_Disapear_Time_TW C_Disapear_Time_TW
+HAT_EF_GearWheel GearWheel
