@@ -552,6 +552,7 @@ sub new {
 		'096F' => ['merge_item_result', 'a2 v C', [qw(itemIndex total result)]], #5
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'097A' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
+		'097B' => ['rates_info2', 's V3 a*', [qw(len exp death drop detail)]],
 		'097D' => ['top10', 'v a*', [qw(type message)]],
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
@@ -1586,15 +1587,6 @@ sub inventory_expansion_result {
 	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {
 		message TF("You can no longer expand the maximum possession limit."),"info";
 	}
-}
-
-sub received_login_token {
-	my ($self, $args) = @_;
-	# XKore mode 1 / 3.
-	return if ($self->{net}->version == 1);
-	my $master = $masterServers{$config{master}};
-	# rathena use 0064 not 0825
-	$messageSender->sendTokenToServer($config{'username'}, $config{'password'}, $master->{master_version}, $master->{version});
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;

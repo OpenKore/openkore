@@ -1371,9 +1371,10 @@ sub sendTokenToServer {
 	my $msg = $self->reconstruct({
 		switch => 'token_login',
 		len => $len, # size of packet
-		version => $version,
+		version => $version || $self->version,
 		master_version => $master_version,
 		username => $username,
+		password => $password,
 		password_rijndael => $password_rijndael,
 		mac => $mac_hyphen_separated,
 		ip => $ip,
