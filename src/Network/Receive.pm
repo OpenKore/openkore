@@ -3912,7 +3912,7 @@ sub login_pin_code_request {
 	# This is ten second-level password login for 2013/3/29 upgrading of twRO
 	my ($self, $args) = @_;
 
-	if($args->{flag} ne 0 && ($config{XKore} eq "1" || $config{XKore} eq "3")) {
+	if(($config{XKore} eq "1" || $config{XKore} eq "3") && !$config{XKore_autoReplyPinCode}) {
 		$timeout{master}{time} = time;
 		return;
 	}
