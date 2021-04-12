@@ -3926,6 +3926,7 @@ sub login_pin_code_request {
 	# 1 - requested (already defined)
 	# 2 - requested (not defined)
 	# 3 - expired
+	# 4 - requested (not defined) - private servers
 	# 5 - invalid (official servers?)
 	# 7 - disabled?
 	# 8 - incorrect
@@ -3940,7 +3941,7 @@ sub login_pin_code_request {
 		message T("Server requested PIN password in order to select your character.\n"), "connection";
 		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
-	} elsif ($args->{flag} == 2) {
+	} elsif ($args->{flag} == 2 or $args->{flag} == 4) {
 		# PIN code has never been set before, so set it.
 		warning T("PIN password is not set for this account.\n"), "connection";
 		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
@@ -3967,13 +3968,23 @@ sub login_pin_code_request {
 		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is invalid. Please re-enter your login PIN code."))));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} elsif ($args->{flag} == 7) {
-		# PIN code disabled.
-		$accountID = $args->{accountID};
-		debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
+		if ($self->{serverType} == 'RMS') { # removed check for seed 0, eA/rA/brA sends a normal seed.
+			message T("PIN code is correct.\n"), "success";
+			# call charSelectScreen
+			if (charSelectScreen(1) == 1) {
+				$firstLoginMap = 1;
+				$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+				$sentWelcomeMessage = 1;
+			}
+		} else {
+			# PIN code disabled.
+			$accountID = $args->{accountID};
+			debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
 
-		# call charSelectScreen
-		$self->{lockCharScreen} = 0;
-		$timeout{'char_login_pause'}{'time'} = time;
+			# call charSelectScreen
+			$self->{lockCharScreen} = 0;
+			$timeout{'char_login_pause'}{'time'} = time;
+		}
 	} elsif ($args->{flag} == 8) {
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
