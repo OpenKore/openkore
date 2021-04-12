@@ -1,3 +1,4 @@
+500#Warnut's Chocolate#
 501#Red Potion#
 502#Orange Potion#
 503#Yellow Potion#
@@ -236,6 +237,7 @@
 754#Smokie Doll#
 756#Rough Oridecon#
 757#Rough Elunium#
+766#A bundle of shiny hair.#
 901#Daenggie#
 902#Tree Root#
 903#Reptile Tongue#
@@ -635,6 +637,7 @@
 1319#WoE TE Axe#
 1322#Ru Blue Axe#
 1323#Ru Gold Axe#
+1326#Illusion War Axe#
 1338#Duggan Hacker#
 1351#Battle Axe#
 1352#Battle Axe#
@@ -3519,6 +3522,7 @@
 6002#Token of Apostle#
 6003#Pendant of Spirit#
 6004#Cursed Baphomet Doll#
+6007#Freshly Boiled Octopus Rice Cake Soup#
 6009#Big Fan Of Magic#
 6010#Hoe#
 6011#Blue B Card#
@@ -4017,7 +4021,7 @@
 6902#King Shrimp#
 6903#King Earthworm#
 6908#ASPD Stone (Garment)#
-6909#Kitcoin#
+6909#Nyangvine#
 6910#Limited Highly Enriched Oridecon#
 6911#Limited Highly Enriched Elunium#
 6913#Sacred Rosary#
@@ -5300,6 +5304,7 @@
 12374#Ice Fireworks#
 12376#Mysterious Can Mackerel Flavor#
 12377#Mysterious PET Bottle Ocean Flavor#
+12378#Boiled Octopus Rice Cake Soup#
 12379#Pope Cookie#
 12380#Job Change Flute#
 12381#Ancient Language Scroll#
@@ -5397,6 +5402,7 @@
 12512#[Event] Greed Scroll#
 12513#[Event] Glass of Illusion#
 12514#[Event] Abrasive#
+12515#Medium Life Potion#
 12516#[Event] Small Life Potion#
 12517#[Event] Regeneration Potion#
 12519#[Event] Small M. Defense Potion#
@@ -5523,6 +5529,7 @@
 12743#Valentine Gift Box#
 12744#Chocolate Box#
 12745#Vivid Notation#
+12754#New Year Bun#
 12775#Greater Agimat of Ancient Spirit#
 12778#Baphomet Jr Ally Scroll#
 12786#Character Position Change Coupon#
@@ -5872,6 +5879,7 @@
 13328#Vicious Mind Huuma Shuriken#
 13332#Huuma Shuriken of Dancing Petals#
 13337#Illusion Huuma Fluttering Snow#
+13338#Illusion Wing Shuriken#
 13400#Cutlus#
 13401#Excalibur#
 13402#Cutlas#
@@ -5906,6 +5914,7 @@
 13460#Sealed Magic Sword#
 13461#Sealed Evil Sword#
 13462#Sealed Maximum Sword#
+13469#Illusion Immaterial Sword#
 13493#Cannon Rapier-OS#
 13503#Baphomet Horns Box#
 13505#Executioner Box#
@@ -6400,6 +6409,11 @@
 15417#Armor of Purple Thread#
 15419#Armor of White Thread#
 15420#Icefall Dress#
+15838#Costume Vesper Headgear#
+15839#Costume Drooping Gunslinger#
+15840#Costume Bio Protector#
+15841#Costume Goggles Hat#
+15842#Costume Magic Time#
 16000#Erde#
 16001#Red Square Bag#
 16003#Carga Mace#
@@ -6435,6 +6449,7 @@
 16051#Valkyrie Hammer#
 16060#Liquor Bottle#
 16063#Illusion Long Mace#
+16065#Illusion Iron Driver#
 16088#Saphir Hall-OS#
 16089#Ultio-OS#
 16186#Baby Dragon Hat Box#
@@ -7333,6 +7348,7 @@
 19241#Magical Booster#
 19245#Crimson Booster#
 19246#Royal Guard Necklace#
+19247#Illusion Fancy Flower#
 19249#Spell Circuit#
 19263#General Helm#
 19264#Golden Fish Hat#
@@ -7352,6 +7368,10 @@
 19327#Seraphim Feather#
 19329#Devil's Hand#
 19337#Safety Glasses#
+19338#Clover Silk Hat#
+19339#Egg Crispinette#
+19340#Holy Egg Shell#
+19341#Evil Egg Shell#
 19342#Bull Hat#
 19343#Circlet of Phoenix#
 19377#Shiny Marinade Beef#
@@ -7488,7 +7508,7 @@
 19653#placeholder#
 19654#Costume Captain Carocc's Hat#
 19655#placeholder#
-19656#placeholder#
+19656#Creative Convention Hat#
 19657#placeholder#
 19658#placeholder#
 19659#Costume Brown Beanie#
@@ -8085,6 +8105,9 @@
 20952#Mysterious Muffler#
 20962#Skin of Typhon#
 20969#Rainbow Muffler#
+20988#Costume Mechanical Butterfly#
+20989#Costume Wind-up Screw#
+20990#Costume Rotating Gears#
 21001#Bellum Claymore#
 21002#Bellum Katzbalger#
 21003#Muramasa#
@@ -8099,6 +8122,9 @@
 21047#Beam Claymore-OS#
 21059#The Ultimate#
 21202#Costume Eat Coin#
+21205#Nut Cracker#
+21206#Costume Nut Cracker#
+21207#Costume Bull Head#
 22000#Temporal Str Boots#
 22001#Temporal Int Boots#
 22002#Temporal Agi Boots#
@@ -8274,6 +8300,7 @@
 22868#Costume Enchant Stone Box 5#
 22870#Christmas Package#
 22881#Hunting Rope#
+22882#Octo Chocolate Rice Soup#
 22899#City Map#
 22901#Mysterious Blue Box#
 22905#Costume Enchant Stone Box 6#
@@ -8416,6 +8443,7 @@
 23657#[Event] Life Insurance#
 23658#Lamor Bundle B#
 23660#Dogly Bottle Z#
+23683#Lucky Bag#
 23684#Phantom's Spirit#
 23685#Flower of Phantom#
 23706#Charleston Upgrade Part (Melee)#
@@ -8747,6 +8775,12 @@
 25299#Snowball#
 25300#Ktullanux Eye#
 25309#Dry Twig#
+25311#Dark Soul Fragment#
+25312#Old Doll#
+25313#Old Turtle Shells#
+25314#Logbooks#
+25315#Shell Fragment#
+25316#Old Metal Pieces#
 25358#Data Retrieval Card#
 25359#Slightly Aged Antique Box#
 25360#Receipt#
@@ -8764,8 +8798,11 @@
 25462#[Event] Costume Coupon#
 25464#World Moving Ticket#
 25479#Dogly Bottle#
+25502#Rice Cake#
 25503#Flower Left by Phantom#
 25504#Phantom's Seal#
+25511#Solid chocolate#
+25512#Almond#
 25627#Gold Card#
 25668#Damaged Weapon#
 25669#Mysterious Component#
@@ -8859,6 +8896,12 @@
 27111#Angry Snowier Card#
 27112#Angry Ice Titan Card#
 27113#Awakened Ktullanux Card#
+27114#Ominous Solider Card#
+27115#Ominous Permeter Card#
+27116#Ominous Heater Card#
+27117#Ominous Assaulter Card#
+27118#Ominous Freezer Card#
+27119#Ominous Turtle General Card#
 27120#Iara Card#
 27121#Piranha Card#
 27122#Curupira Card#
@@ -9402,6 +9445,7 @@
 31398#Costume Blinking Small Eyes#
 31399#Costume Darkness Veil#
 31408#Costume Ragnarok Rush Goat#
+31413#Costume Taurus Crown#
 31416#Costume Seraphim Coronet#
 31420#Costume Shining Santa Poring#
 31432#Costume Floating Ice#
@@ -9427,6 +9471,9 @@
 31461#Costume Marin Earrings#
 31462#Costume Cute Poring Earmuffs#
 31463#Costume Flying Drone#
+31465#Costume Robin Egg Mini Hat#
+31466#Costume holy Egg Shell#
+31467#Costume Evil Egg Shell#
 31470#Costume Tengu Scroll#
 31471#Costume Celestial Woman Flower#
 31472#Costume Fairy Feathers#
@@ -9551,6 +9598,7 @@
 31697#Costume Bird Nest#
 31698#Costume Red Riding Hood#
 31699#Costume Smiling Eyes#
+31703#Costume Valentine Hat#
 31710#Costume Lace Flower Crown#
 31711#Costume Jewel Crown#
 31712#Costume Oxygen Mask#
@@ -9601,6 +9649,7 @@
 31936#Costume Honey Donuts#
 31938#Costume Long Twin Braids#
 31940#Costume flag mask#
+32005#Illusion Pole Axe#
 32019#Boost Lance-OS#
 32032#The Berg Golden Spear#
 32114#Accolade Lute#
@@ -9630,6 +9679,7 @@
 100540#Class Shield Shadow Cube#
 100541#Class Pendant Shadow Cube#
 100542#Class Earring Shadow Cube#
+100756#Steam Punk Costume Box#
 200028#Frozen Costume Egg#
 200030#[30D] Mistress Wing Box#
 200052#Costume Thanksgiving Egg#
@@ -9641,9 +9691,14 @@
 400052#Duel Dragon Hat#
 400073#Costume Romantic Rose#
 400077#Splash Cat Hat#
+420026#Costume Piamette Ribbon#
+420033#Costume Airy Two Side Up (White)#
 450143#Samael Dress#
+460003#Feather Shield#
 470025#Cute Little Boar Shoes#
 470027#Juggernaut#
+470061#Cylinder Boots#
+480045#Guardian Soul#
 480052##
 490079#Soul Expansion Ring#
 1000391#Phantom's Invitation#
