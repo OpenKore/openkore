@@ -2041,7 +2041,7 @@ sub processAutoBuy {
 			getNPCInfo($config{"buyAuto_".$args->{lastIndex}."_npc"}, $realpos);
 
 			if ( $config{"buyAuto_".$args->{lastIndex}."_isMarket"} ) {
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, undef);
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || undef);
 			} else {
 				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
 			}
