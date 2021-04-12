@@ -3418,4 +3418,10 @@ sub sendInventoryExpansionRejected {
 	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
 }
 
+# 0B1C (PACKET_CZ_PING)
+sub sendPing {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'ping' }));
+}
+
 1;
