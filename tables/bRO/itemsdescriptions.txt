@@ -7503,16 +7503,22 @@ Classes: ^777777Espiritualistas, Noviços, Magos e evoluções^000000
 #
 1624#
 Um cajado feito com o crânio do poderoso Lich. Sabe-se que este cajado amaldiçoa todos que ameaçarem seu dono.
+--------------------------
 ^a400cdIndestrutível em batalha.^000000
-^0000ffATQM +170.^000000
-^0000ffINT +1. DES +1.^000000
-^0000ffAo receber ataques físicos, chance de autoconjurar [Espírito dos Amaldiçoados] nv. 5.^000000
-^0000ffChances aumentam a cada refino.^000000
+--------------------------
+^0000ffINT e DES +1.^000000
+--------------------------
+Ao receber danos físicos:
+^0000ff1% de chance de autoconjurar [Espírito dos Amaldiçoados] nv.5.^000000
+A cada refino:
+^0000ffChance de autoconjuração +0,1%.^000000
+--------------------------
 Refino +9 ou mais:
-^0000ffATQM +3%.^000000
 ^0000ffSP máx. +300.^000000
+^0000ffDano mágico +3%.^000000
+--------------------------
 Tipo: ^777777Cajado^000000
-Ataque: ^77777760^000000
+ATQ: ^77777760^000000 ATQM: ^777777170^000000
 Peso: ^77777780^000000
 Propriedade: ^777777Maldito^000000
 Nível da arma: ^7777773^000000
@@ -7747,19 +7753,22 @@ Classes: ^777777Espiritualistas, Magos, Noviços e evoluções^000000
 #
 1643#
 Um cajado feito de madeira mágica. Ele possui um grande poder mágico, mas faz você parecer um velho.
+--------------------------
 ^a400cdIndestrutível em batalha.^000000
-^0000ffATQM +155.^000000
+--------------------------
 ^0000ffINT +4.^000000
-A partir do refino +6:
-^0000ffINT +1 por refino.^000000
-^0000ffHP máx. -200 por refino.^000000
-^0000ffSP máx. -100 por refino.^000000
+--------------------------
+A cada refino a partir do +6:
+^0000ffINT +1.^000000
+^0000ffHP máx.^000000 ^ff0000-200.^000000
+^0000ffSP máx.^000000 ^ff0000-100.^000000
+--------------------------
 Tipo: ^777777Cajado^000000
-Ataque: ^777777100^000000
+ATQ: ^777777100^000000 ATQM: ^777777155^000000
 Peso: ^77777710^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
-Classes: ^777777Espiritualistas, Noviços, Magos e evoluções^000000
+Classes: ^777777Noviços, Magos, Espiritualistas e evoluções^000000
 #
 1646#
 Cajado de mago decorado com penas elegantes. É tratado especialmente com o feitiço elemental de gelo 'Nevasca'.
@@ -7850,20 +7859,26 @@ Classes: ^777777Magos, Noviços e evoluções^000000
 #
 1654#
 Um cajado que converte energia elemental em força psíquica.
+--------------------------
 ^a400cdIndestrutível em batalha.^000000
-^0000ffATQM +170.^000000
-^0000ffDrena 100 de HP ao desequipar.^000000
-^0000ffCusto de SP de [Onda Psíquica] +60.^000000
-^0000ffTempo de conjuração variável de [Onda Psíquica] -3 segundos.^000000
-A partir do refino +6:
-^0000ffHP máx. -2% por refino.^000000
-^0000ffDano de [Onda Psíquica] +2% por refino.^000000
+--------------------------
+Em [Onda Psíquica]:
+^0000ffCusto de SP^000000 ^ff0000+60.^000000
+^0000ffConjuração variável -3 segundos.^000000
+--------------------------
+A cada refino a partir do +6:
+^0000ffHP máx.^000000 ^ff0000-2%.^000000
+^0000ffDano de [Onda Psíquica] +2%.^000000
+--------------------------
+Ao desequipar:
+^0000ffDrena 100 de HP.^000000
+--------------------------
 Tipo: ^777777Cajado^000000
-Ataque: ^77777740^000000
+ATQ: ^77777740^000000 ATQM: ^777777170^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^777777102^000000
-Classes: ^777777Feiticeiros^000000
+Classes: ^777777Feiticeiros e evoluções^000000
 #
 1657#
 Cajado criado para simbolizar a preocupação com o próximo.
@@ -8119,13 +8134,14 @@ Um cajado vermelho infernal. Apenas verdadeiros demônios conseguem controlar o 
 --------------------------
 Refino +9 ou mais:
 ^0000ffCusto de SP das habilidades -10%.^000000
-^0000ffAo realizar ataques mágicos, 20% chance de infligir Cegueira nos oponentes.^000000
+^0000ffAo realizar ataques mágicos, 2% chance de infligir Cegueira nos oponentes.^000000
 --------------------------
 Nv. base 100 ou mais:
 ^0000ffATQM +30.^000000
 --------------------------
 Tipo: ^777777Cajado^000000
 ATQ: ^77777760^000000 ATQM: ^777777150^000000
+Propriedade: ^777777Sombrio^000000
 Peso: ^777777120^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777780^000000
@@ -10768,19 +10784,22 @@ Classes: ^777777Transcendentais de Magos e evoluções^000000
 #
 2005#
 A imagem da Deusa Sagrada da Luz está entalhada neste cajado longo.
+--------------------------
 ^a400cdIndestrutível em batalha.^000000
-^0000ffATQM +220.^000000
-^0000ffVIT +2. INT +6.^000000
-^0000ffAo usar [Curar], chance de recuperar 200 de SP.^000000
-A cada refino:
-^0000ffATQM +1%.^000000
+--------------------------
+Ao usar [Curar]:
+^0000ff20% de chance de recuperar 200 de SP.^000000
+--------------------------
+A cada 2 refinos:
+^0000ffDano mágico +1%.^000000
+--------------------------
 Tipo: ^777777Cajado de Duas Mãos^000000
-Propriedade: ^777777Sagrado^000000
-Ataque: ^77777730^000000
+ATQ: ^77777730^000000 ATQM: ^777777220^000000
 Peso: ^777777100^000000
+Propriedade: ^777777Sagrado^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^77777750^000000
-Classe: ^777777Transcendentais de Noviço^000000
+Classes: ^777777Transcendentais de Noviços e evoluções^000000
 #
 2007#
 Cajado feito em ouro com um açoite amarrado em seu bastão. Emana o poder do vento. 
@@ -11161,32 +11180,37 @@ Nível necessário: ^777777170^000000
 Classes: ^777777Arcanos^000000
 #
 2047#
-Um cajado raríssimo usado pela Bruxa Jiranto, uma criatura que utiliza os elementos de Fogo e Vento para envolver seus inimigos nos mais tenebrosos feitiços e maldições. Uma serpente mantém-se enrolada no corpo do cajado, ampliando os poderes dele. 
+Um cajado raríssimo usado pela Bruxa Jiranto, uma criatura que utiliza os elementos de Fogo e Vento para envolver seus inimigos nos mais tenebrosos feitiços e maldições. Uma serpente mantém-se enrolada no corpo do cajado, ampliando os poderes dele.
+--------------------------
 ^a400cdIndestrutível em batalha.^000000
-^0000ffATQM +350.^000000
+--------------------------
 ^0000ffINT +5. DES +10.^000000
 ^0000ffConjuração variável -30%.^000000
+--------------------------
 A cada nível de [Passos de Salamandra]:
 ^0000ffDano mágico de propriedade Fogo +10%.^000000
 A cada nível de [Passos de Sílfide]:
 ^0000ffDano mágico de propriedade Vento +10%.^000000
+--------------------------
 A cada 2 refinos:
 ^0000ffIgnora 5% da DEFM de monstros normais, chefes, personagens e guardiões.^000000
-^0000ffDano mágico de propriedade Fogo e Vento +5%.^000000
+^0000ffDano físico e mágico de propriedade Fogo e Vento +5%.^000000
 ^0000ffDano de [Passos de Salamandra] e [Passos de Sílfide] +30%.^000000
+--------------------------
 Refino +9 ou mais:
-^0000ffAo atacar com [Passos de Sílfide], chance de infligir Silêncio no alvo.^000000
-^0000ffAo atacar com [Passos de Salamandra], chance de infligir Maldição no alvo.^000000
+^0000ffAo atacar com [Passos de Sílfide], chance altíssima de infligir Silêncio no alvo.^000000
+^0000ffAo atacar com [Passos de Salamandra], chance altíssima de infligir Maldição no alvo.^000000
 Refino +11 ou mais:
 ^0000ffDano de [Passos de Salamandra] e [Passos de Sílfide] +100%.^000000
 Refino +12 ou mais:
 ^0000ffConjuração fixa -70%.^000000
+--------------------------
 Tipo: ^777777Cajado de Duas Mãos^000000
-Ataque: ^77777720^000000
+ATQ: ^77777720^000000 ATQM: ^777777350^000000
 Peso: ^777777270^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777130^000000
-Classes: ^777777Feiticeiros^000000
+Classes: ^777777Feiticeiros e evoluções^000000
 #
 2048#
 Guardado há séculos pelos feiticeiros mais prestigiados de Geffen, esse cetro guarda poderes inestimáveis para aqueles que sabem manipular a mana ao seu favor.
@@ -11435,10 +11459,13 @@ Classes: ^777777Transclasses, exceto Aprendizes^000000
 #
 2125#
 Um escudo maciço que suporta firmemente qualquer tipo de ataque. 
+--------------------------
 ^0000ffImpede o usuário de ser empurrado.^000000
-^0000ffResistência a todas as propriedades -20%.^000000
+--------------------------
+^0000ffResistência a todas as propriedades^000000 ^ff0000-20%.^000000
+--------------------------
 Tipo: ^777777Escudo^000000
-Defesa: ^77777790^000000
+DEF: ^77777790^000000 DEFM: ^7777770^000000
 Peso: ^777777250^000000
 Nível necessário: ^77777775^000000
 Classes: ^777777Transclasses de Espadachins, Mercadores, Gatunos e evoluções^000000
@@ -15218,16 +15245,20 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 2568#
-^ff0000Este item não pode ser trocado entre contas.^000000
+^ff0000Intransferível.^000000
 Um cachecol desgastado pelo uso.
-+ 1 de AGI.
-Aumenta em 5% a eficiência da habilidade 'Lâminas Retalhadoras'.
-Não pode ser refinado.
-Tipo: ^777777Capa^000000 
-Defesa: ^77777710^000000
+--------------------------
+^a400cdNão pode ser refinado.^000000
+--------------------------
+^0000ffAGI +1.^000000
+--------------------------
+^0000ffDano de [Lâminas Retalhadoras] e [Destruidor de Almas] +5%.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777710^000000 DEFM: ^7777770^000000
 Peso: ^77777740^000000
-Nível Necessário: ^777777100^000000
-Classe: ^777777Todas^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
 #
 2569#
 Manto criado para simbolizar a preocupação com o próximo.
@@ -15490,6 +15521,25 @@ Tipo: ^777777Capa^000000
 Defesa: ^7777778^000000
 Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+2595#
+Para resistir ao Sombrio, é preciso equipar-se com o que há de mais brilhante por aí!
+--------------------------
+^0000ffResistência a raça Morto-Vivo^000000  ^ff0000-5%.^000000
+^0000ffResistência a oponentes de propriedade Sombrio +5%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Escudo Brilhante]^000000
+A cada refino da capa:
+^0000ffResistência a raça Morto-Vivo +1%.^000000
+A cada refino do escudo:
+^0000ffDano físico e mágico contra oponentes de propriedade Sombrio +1%.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777720^000000 DEFM: ^7777770^000000
+Peso: ^77777770^000000
+Nível necessário: ^77777765^000000
 Classes: ^777777Todas^000000
 #
 2601#
@@ -17006,20 +17056,36 @@ Nível necessário: ^77777799^000000
 Classes que utilizam: ^777777Todas as Classes 3^000000
 #
 2796#
+^ff0000Intransferível.^000000
 Uma pedra que contém enorme poder mágico.
-Classe: ^777777Acessório^000000
-Defesa: ^7777770^000000
+--------------------------
+^0000ffDano mágico contra Naga (aura azul) +10%.^000000
+^0000ffResistência a Pinguicula Sombria^000000 ^ff0000-10%.^000000
+--------------------------
+Ao derrotar Naga (aura azul):
+^0000ff0,7% de chance de derrubar Cristal Brilhante.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777799^000000
-Classes que utilizam: ^777777Magos e evoluções^000000
+Classes: ^777777Magos e evoluções^000000
 #
 2797#
+^ff0000Intransferível.^000000
 Uma pedra que contém enorme poder mágico.
-Classe: ^777777Acessório^000000
-Defesa: ^7777770^000000
+--------------------------
+^0000ffDano mágico contra Golem de Bradium (aura azul) +10%.^000000
+^0000ffResistência a Elemental da Água^000000 ^ff0000-10%.^000000
+--------------------------
+Ao derrotar Golem de Bradium (aura azul):
+^0000ff0,7% de chance de derrubar Pedaço de Bradium.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777799^000000
-Classes que utilizam: ^777777Magos e evoluções^000000
+Classes: ^777777Magos e evoluções^000000
 #
 2798#
 Colar com energia sagrada em forma bruta.
@@ -17126,6 +17192,7 @@ Nível necessário: ^77777799^000000
 Classes que utilizam: ^777777Apenas Mecânicos^000000
 #
 2819#
+^ff0000Intransferível.^000000
 Um guia que tem habilidades básicas de Espadachins.
 --------------------------
 ^0000ffSP máx. +100.^000000
@@ -17140,13 +17207,12 @@ Nível máximo: ^77777712^000000
 Classes: ^777777Aprendizes^000000
 #
 2820#
+^ff0000Intransferível.^000000
 Um guia que tem habilidades básicas de Gatunos.
 --------------------------
 ^0000ffSP máx. +100.^000000
 --------------------------
-^0000ffHabilita [Furto] [Esconderijo] e [Envenenamento] nv.1.^000000
---------------------------
-^0000ffHabilita [Ataque Duplo] nv.3.^000000
+^0000ffHabilita [Furto] nv1, [Esconderijo] nv.1,  [Envenenar] nv.1 e [Ataque Duplo] nv.3.^000000
 --------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
@@ -17156,6 +17222,7 @@ Nível máximo: ^77777712^000000
 Classes: ^777777Aprendizes^000000
 #
 2821#
+^ff0000Intransferível.^000000
 Um guia que tem habilidades básicas de Noviços.
 --------------------------
 ^0000ffSP máx. +100.^000000
@@ -17170,6 +17237,7 @@ Nível máximo: ^77777712^000000
 Classes: ^777777Aprendizes^000000
 #
 2822#
+^ff0000Intransferível.^000000
 Um guia que tem habilidades básicas de Arqueiros.
 --------------------------
 ^0000ffSP máx. +100.^000000
@@ -17184,6 +17252,7 @@ Nível máximo: ^77777712^000000
 Classes: ^777777Aprendizes^000000
 #
 2823#
+^ff0000Intransferível.^000000
 Um guia que tem habilidades básicas de Mercadores.
 --------------------------
 ^0000ffSP máx. +100.^000000
@@ -17200,6 +17269,7 @@ Nível máximo: ^77777712^000000
 Classes: ^777777Aprendizes^000000
 #
 2824#
+^ff0000Intransferível.^000000
 Um guia que tem habilidades básicas de Magos.
 --------------------------
 ^0000ffSP máx. +100.^000000
@@ -17619,7 +17689,7 @@ Estas são algemas utilizadas apenas em ocasiões especiais para segurar os mais
 --------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
-Peso: ^777777240^000000
+Peso: ^777777140^000000
 Nível necessário: ^77777710^000000
 Classes: ^777777Todas ^000000
 #
@@ -21923,7 +21993,7 @@ Peso: ^7777771^000000
 #
 4438#
 Magos e evoluções:
-^0000ffHP máx.^000000 ^ff0000-100.^00000
+^0000ffHP máx.^000000 ^ff0000-100.^000000
 ^0000ffSP máx. +100.^000000
 ^0000ffDano de [Espíritos Anciões], [Ataque Espiritual] e [Vulcão Napalm] +20%.^000000
 Tipo: ^777777Carta^000000
@@ -22848,10 +22918,13 @@ Peso ^7777771^000000
 #
 4585#
 ^0000ffSP máx. +10%.^000000
-^0000ffAnula o efeito de recuperar HP (em até 666) por monstro morto.^000000
+--------------------------
+Ao derrotar monstros com ataques físicos de curto alcance:
+^0000ffDrena 666 de HP do usuário.^000000
+--------------------------
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
-Peso ^7777771^000000
+Peso: ^7777771^000000
 #
 4586#
 ^0000ffATQM +10.^000000
@@ -23074,14 +23147,14 @@ Equipa em: ^777777Escudo^000000
 Peso: ^7777771^000000
 #
 4610#
-^0000ffReduz o dano recebido se o usuário sofrer danos maiores que a porcentagem de HP máx. restante.
-Não funciona com habilidades que causam dano fixo.^000000
+^0000ffTodos os danos superiores a 40% do HP Máx. do usuário serão reduzidos para esse valor.^000000
 --------------------------
-^fa4e09Conjunto^000000
-^fa4e09[Carta Lorde Irine]^000000
-^0000ffATQ +100.^000000
-Ao realizar ataques físicos:
-^0000ff3% de chance de se transformar em Sara Irine por 60 segundos.^000000
+^a400cdExemplo:^000000
+Você tem 10.000 de HP.
+Se você receber um dano acima de 4.000 de HP, como por exemplo, 4.001 de dano.
+O dano que você receberá será 4.000 de HP.
+--------------------------
+Não funciona com habilidades que causam dano fixo.
 --------------------------
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Armadura^000000
@@ -24286,7 +24359,7 @@ ATQM +12. Tempo de conjuração variável -8%.
 ATQM +9. Tempo de conjuração variável -6%.
 #
 4815#
-ATQM +6. Tempo de conjuração variável -4%.
+ATQM +6. Tempo de conjuração variável -3%.
 #
 4816#
 Crítico +12, Precisão +4
@@ -27124,32 +27197,32 @@ Classes que utilizam: ^777777Todas^000000
 5227#
 Chapéu vermelho imitando a cabeça de um Deviruchi. Muito simpático para se usar no Dia das Bruxas.
 ^0000ffFOR +1 , INT +1.^000000
-Classe: ^777777Equipamento para a cabeça^000000    
+Tipo: ^777777Equipamento para Cabeça^000000
 Defesa: ^7777774^000000
-Equipa em: ^777777Topo^000000    
+Equipa em: ^777777Topo^000000
 Peso: ^77777780^000000
 Nível necessário: ^77777764^000000
-Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 5228#
 Chapéu branco imitando a cabeça de um Deviruchi. Muito simpático para se usar no Dia das Bruxas.
 ^0000ffFOR +1 , INT +1.^000000
-Classe: ^777777Equipamento para a cabeça^000000 
+Tipo: ^777777Equipamento para Cabeça^000000
 Defesa: ^7777774^000000
-Equipa em: ^777777Topo^000000 
+Equipa em: ^777777Topo^000000
 Peso: ^77777780^000000
 Nível necessário: ^77777764^000000
-Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 5229#
 Chapéu cinza imitando a cabeça de um Deviruchi. Muito simpático para se usar no Dia das Bruxas.
 ^0000ffFOR +1 , INT +1.^000000
-Classe: ^777777Equipamento para a cabeça^000000    
+Tipo: ^777777Equipamento para Cabeça^000000
 Defesa: ^7777774^000000
-Equipa em: ^777777Topo^000000    
+Equipa em: ^777777Topo^000000
 Peso: ^77777780^000000
 Nível necessário: ^77777764^000000
-Classes que utilizam: ^777777Todas as classes, exceto Aprendiz^000000
+Classes: ^777777Todas, exceto Aprendizes^000000
 #
 5230#
 Um boneco branco de gato bonitinho que pode ser usado no topo da cabeça.
@@ -27235,7 +27308,7 @@ Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
 Peso: ^77777730^000000
-Nível necessário: ^77777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Espiritualista, Mago e Evoluções^000000
 #
 5239#
@@ -27245,7 +27318,7 @@ Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
 Peso: ^77777730^000000
-Nível necessário: ^77777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Espiritualista, Mago e Evoluções^000000
 #
 5240#
@@ -27255,7 +27328,7 @@ Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
 Peso: ^77777730^000000
-Nível necessário: ^77777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Espiritualista, Mago e Evoluções^000000
 #
 5241#
@@ -27265,7 +27338,7 @@ Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
 Peso: ^77777730^000000
-Nível necessário: ^77777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Espiritualista, Mago e Evoluções^000000
 #
 5242#
@@ -27275,7 +27348,7 @@ Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
 Peso: ^77777730^000000
-Nível necessário: ^77777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Espiritualista, Mago e Evoluções^000000
 #
 5243#
@@ -27498,22 +27571,23 @@ Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777771^000000
 Equipa em: ^777777Topo e Meio^000000
 Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5275#
 Uma peruca colorida para pular o carnaval com muita alegria! Esta vem nas cores rosa, branco e violeta e chamar toda a atenção para você!
 Tipo: ^777777Equipamento para a cabeça^000000    
-Defesa: ^7777771^000000
 Equipa em: ^777777Topo, Meio e Baixo^000000    
 Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5276#
 Uma peruca colorida para pular o carnaval com muita alegria! Esta vem nas cores vermelho, branco e preto. Mas não tem nada a ver com times de futebol!
 Tipo: ^777777Equipamento para a cabeça^000000    
-Defesa: ^7777771^000000
 Equipa em: ^777777Topo, Meio e Baixo^000000    
 Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5277#
@@ -27564,15 +27638,19 @@ Nível necessário: ^77777730^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5286#
-Um chapéu criado para representar as asas de um Peco-Peco. Ele é inteiro confeccionado com as penas do bicho. Apesar de terem um cheirinho bem esquisito, dizem que elas farão você correr tão rápido quanto um Peco-Peco! Na verdade, isso acontece por você ter de correr das Peca-Pecas apaixonadas... 
-Aumenta a velocidade de movimento.
-Aumenta o tempo entre ataques em 5%. Aumenta o tempo de conjuração variável em 5%.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777776^000000
+Um chapéu criado para representar as asas de um Peco-Peco. Ele é inteiro confeccionado com as penas do bicho. Apesar de terem um cheirinho bem esquisito, dizem que elas farão você correr tão rápido quanto um Peco-Peco! Na verdade, isso acontece por você ter de correr das Peca-Pecas apaixonadas...
+--------------------------
+^0000ffAumenta a velocidade de movimento.^000000
+--------------------------
+^0000ffConjuração variável^000000 ^ff0000+25%.^000000
+^0000ffVelocidade de ataque^000000 ^ff0000-10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5287#
 Um chapéu meigo, feito especialmente para aqueles dias de piquenique com a família e os amigos. Protege seu rosto do sol, mas não pense em usá-lo para parecer misterioso e assustador...
@@ -28203,14 +28281,17 @@ Classes que utilizam: ^777777Todas^000000
 #
 5365#
 Parece ser um ovo frito em sua cabeça. Mas de fato, é uma furiosa Magnólia!
-Resistência a atordoamento +5. Permite o uso da habilidade "Armadilha Luminosa".
-Não pode ser aprimorado.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
-Equipa em:^777777Topo ^000000
+--------------------------
+^0000ffHabilita [Armadilha Luminosa] nv.1.^000000
+--------------------------
+^0000ffTolerância a Atordoamento +5%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo ^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^777777100^000000
-Nível necessário:^7777771^000000 
-Profissões que utilizam : ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 5367#
 Um chapéu de Yao Jun. Está bem surrado, mas ainda protege bem a cabeça.
@@ -28310,7 +28391,6 @@ Classes que utilizam: ^777777Todas^000000
 #
 5379#
 Uma linda boina produzida pela estilista e escritora Motoyo Doidage. Ela ficou famosa por ser marca registrada da heroína de seus livros, Shoyo Sakura. Conhecida por 'Colecionadora de Cartas e Molhos de Soja', a Espiritualista procura recuperar os poderes do Mago Wloc. 
-^0000ffDEFM +2.^000000
 ^0000ffDano mágico +2%.^000000
 A cada refino:
 ^0000ffConjuração variável -1%.^000000
@@ -28318,7 +28398,7 @@ Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777775^000000
 Peso: ^77777780^000000
-Nível necessário: ^77777750^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 5380#
@@ -29143,6 +29223,7 @@ Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777774^000000
 Equipa em: ^777777Topo^000000
 Peso: ^77777750^000000
+Nível necessário: ^7777771^000000
 Classes que utilizam: ^777777Todas^000000
 #
 5480#
@@ -29394,47 +29475,69 @@ Classes que utilizam: ^777777Todas^000000
 #
 5512#
 Um belíssimo diadema feito em homenagem ao 11º signo do Zodíaco, Aquário. Perfeito para pessoas idealistas e companheiras, que amam coisas diferentes. Como o elemento de Aquário é o ar, o diadema ajuda a proteger contra esse elemento.
-FOR + 2, Esquiva + 10. Aumenta em 5% a resistência a ataques da propriedade Vento.
-Se o nível de refinamento for maior do que 6, concede Defesa + 1 e ATQ + 15.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777776^000000
+--------------------------
+^0000ffFOR +2. Esquiva +10.^000000
+^0000ffResistência a propriedade Vento +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDEF +1. ATQ +15.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5513#
 Uma elegante coroa feita em homenagem ao 11º signo do Zodíaco, Aquário. Perfeita para pessoas independentes e intelectuais, que amam a liberdade. Seu bônus mágico compensa a aversão que os aquarianos sentem por atividades físicas.
-FOR + 2, Esquiva + 10. Aumenta em 5% a resistência a ataques da propriedade Vento.
-Se o nível de refinamento for maior do que 6, concede Defesa + 1 e ATQ + 15.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777776^000000
+--------------------------
+^0000ffFOR +2. Esquiva +10.^000000
+^0000ffResistência a propriedade Vento +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDEF +1. ATQ +15.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777770^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5514#
 Um maravilhoso diadema feito em homenagem ao 12º e último signo zodiacal, Peixes. Feito com escamas de Fen reforçadas com magia, ele explora as capacidades artísticas dos piscianos. Ao mesmo tempo em que protege o usuário, ele o estimula mentalmente de forma relaxante, aumentando suas capacidades intelectuais.
-INT +1, DEFM +3, +5% de resistência a ataques da propriedade Água.
-Se refinado em +7 ou mais concede DEFM +1 e ATQM +2%.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777776^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+^0000ffINT +1.^000000
+^0000ffResistência a propriedade Água +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDEFM +1.^000000
+^0000ffDano mágico +2%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777773^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5515#
 Uma belíssima coroa feita em homenagem ao 12º e último signo zodiacal, Peixes. Feita com escamas de Tritão, ela reflete a dualidade dos piscianos: apesar de levam em consideração a defesa do usuário, ela também transmite a força do irritadiço monstro, instigando-o ao ataque.
-FOR +1, +5% de resistência a ataques da propriedade Água.
-Se refinado em +7 ou mais, concede DEF +1 e ATQ +2%.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777776^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+^0000ffFOR +1.^000000
+^0000ffResistência a propriedade Água +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDEF +1.^000000
+^0000ffDano físico +2%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5516#
 Um globo ocular artificial que brilha com intensidade.
@@ -29475,7 +29578,8 @@ Tipo: ^777777Equipamento para a cabeça^000000
 Defesa: ^7777774^000000
 Equipa em: ^777777Topo^000000
 Peso: ^77777780^000000
-Classes que utilizam: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 5520#
 Protetor de orelhas com lindos coelhos que ficam em sua cabeça.
@@ -29648,25 +29752,37 @@ Classes que utilizam: ^777777Todas^000000
 #
 5545#
 Um belíssimo diadema decorado com chifres de carneiro, feito em homenagem ao 1º signo zodiacal, Áries. Incrustado nele há três resistentes diamantes, a gema que representa o signo. Por mais que elas pareçam queimar quando tocadas por alguém impaciente, na verdade são capazes de tornar seu usuário tão incansável quanto um ariano.
-VIT +2, aumenta em 5% a tolerância contra ataques da propriedade Fogo.
-Se refinado em +7 ou mais, DEF +2 e VIT +1.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777776^000000
+--------------------------
+^0000ffVIT +2.^000000
+^0000ffResistência a propriedade Fogo +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDEF +2.^000000
+^0000ffVIT +1 adicional.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777740^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5546#
 Uma imponente coroa com chifres de carneiro feita em homenagem ao 1º signo zodiacal, Áries. Incrustado nela há um grande diamante, em cujo interior há uma chama viva representando o elemento do fogo. A gema é encantada e, por mais que você pareça precipitado aos olhos dos outros ao tomar a iniciativa sem pensar duas vezes, você sempre se sentirá protegido pela sorte.
-SOR +2, aumenta em 5% a tolerância contra ataques da propriedade Fogo.
-Se refinado em +7 ou mais, Esquiva Perfeita +2, SOR +1.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777776^000000
+--------------------------
+^0000ffSOR +2.^000000
+^0000ffResistência a propriedade Fogo +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffSOR +1 adicional.^000000
+^0000ffEsquiva perfeita +2.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777740^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5547#
 Uma bela tiara com um pequeno ramo de flores que emana um perfume muito agradável. Sua fragrância é tão encantadora que você corre o risco de ser confundido com uma Lif ou atrair a atenção indesejada da Abelha Rainha. Sorte sua que a tiara também contém um pouco da força terrena da mãe-natureza!
@@ -29696,27 +29812,47 @@ Classes: ^777777Todas^000000
 #
 5549#
 Um resistente diadema feito em homenagem ao 2º signo do Zodíaco, Touro. Incrustada em sua frente há uma grande Esmeralda, a gema que representa o signo. Mas nem pense em tentar arrancá-la. Mesmo que você seja forte como um touro, a jóia está protegida por uma poderosa magia que não a deixará sair por seu apego às riquezas materiais!
-Pequena chance de atordoar o oponente ao receber ataque físico (exceto monstros do tipo Chefe).
-ATQM +2%, reduz em 2% o intervalo de tempo entre conjuração de habilidades.
-Se refinado em +7 ou mais, DES +1 e ATQM +1%.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777776^000000
+--------------------------
+^0000ffDano mágico +2%.^000000
+^0000ffPós-conjuração -2%.^000000
+--------------------------
+Ao receber danos físicos:
+^0000ff1% de chance de infligir Atordoamento.^000000
+A cada refino:
+^0000ffChance de inflição +1%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDES +1.^000000
+^0000ffDano mágico +1% adicional.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5550#
 Uma imponente coroa feita em homenagem ao 2º signo zodiacal, Touro. Construída por taurinos natos para ser valiosa sem perder a praticidade, a coroa é tão resistente quanto a teimosia inerente do signo. Prova disso é que, se você der uma cabeçada em seu inimigo, só ele sairá vendo estrelas.
-Pequena chance de atordoar o oponente ao realizar ataque físico (exceto monstros do tipo Chefe).
-ATQ +2%, reduz em 2% o intervalo de tempo entre conjuração de habilidades.
-Se refinado em +7 ou mais, FOR +1 e ATQ +1%.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777776^000000
+--------------------------
+^0000ffDano físico +2%.^000000
+^0000ffPós-conjuração -2%.^000000
+--------------------------
+Ao realizar ataques físicos:
+^0000ff1% de chance de infligir Atordoamento.^000000
+A cada refino:
+^0000ffChance de inflição +1%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffFOR +1.^000000
+^0000ffDano físico +1% adicional.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5554#
 Um chapéu de polvo muito engraçado, criado pela estilista Leira, conhecida como a Pequena Obeaune. Feito de um material maleável, parecido com gelatina, mas resistente como poucos, é capaz de suportar até um golpe de machado sem sofrer um arranhão. Quem não vai suportar é a sua cabeça.
@@ -29816,30 +29952,33 @@ Classes que utilizam: ^777777Todas^000000
 #
 5569#
 Um interessante diadema feito em homenagem ao 3º signo zodiacal, Gêmeos. Traz em sua fronte uma alexandrita, que às vezes é apelidada de pedra gêmea pela sua capacidade de mudar de cor, lembrando a inconstância do signo. O Diadema passa uma incrível sensação de liberdade, característica marcante dos independentes geminianos, ajudando seu usuário a se tornar mais ágil e rápido.
-^0000ffAGI +2.^000000
-^0000ffEsquiva +5.^000000
+--------------------------
+^0000ffAGI +2. Esquiva +5.^000000
 ^0000ffResistência a propriedade Vento +5%.^000000
+--------------------------
 Refino +7 ou mais:
-^0000ffATQ +10.^000000
-^0000ffPrecisão +10.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+^0000ffATQ e Precisão +10.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
-Defesa: ^7777776^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 5570#
 Uma coroa maciça, feita em homenagem ao 3º signo zodiacal, Gêmeos. Para representar uma de suas maiores características - a dualidade -, em cada lateral da coroa há um rosto esculpido em ouro. Apesar da aparência, esse item chega a ser bem leve, demonstrando que este é um dos signos do ar. Se a essência geminiana do artefato for ativada, quem a usar se sentirá livre e focado ao mesmo tempo.
-^0000ffAGI +2.^000000
-^0000ffCRIT +3.^000000
+--------------------------
+^0000ffAGI +2.  CRIT +3.^000000
 ^0000ffResistência a propriedade Vento +5%.^000000
+--------------------------
 Refino +7 ou mais:
 ^0000ffATQ +10.^000000
 ^0000ffCRIT +5 adicional.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
-Defesa: ^7777776^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -29907,25 +30046,37 @@ Classe: ^777777Todas as classes^000000
 #
 5581#
 Um diadema magnífico feito em homenagem ao 4º signo zodiacal, Câncer. Traz um belo rubi, a gema do signo, incrustada em sua fronte, como uma pequena semente aguardando para brotar de forma misteriosa. Da mesma forma que o signo representa a força que cria a vida, a jóia revitaliza seu usuário de maneira misteriosa.
-INT +2, +5% de resistência a ataques da propriedade Água.
-Se refinado em +7 ou mais concede ATQM + 2% e aumenta em 3% a eficiência da habilidade Curar e itens de recuperação.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777770^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+^0000ffINT +2.^000000
+^0000ffResistência a propriedade Água +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDano mágico +2%.^000000
+^0000ffEfetividade de cura +3%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5582#
 Uma coroa magnífica feita em homenagem ao 4º signo zodiacal, Câncer. Em sua frente carrega um enorme e resistente rubi, lapidado de forma misteriosa para gerar um belo efeito multifacetado. Além de resistente, a jóia guarda mistérios para aqueles dispostos a nutrir o seu desenvolvimento, como um canceriano faria.
-FOR + 2, +5% de resistência a ataques da propriedade Água.
-Se refinado em +7 ou mais concede DEF +1, ATQ + 15, Esquiva +7.
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777770^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+^0000ffFOR +2.^000000
+^0000ffResistência a propriedade Água +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffEsquiva +7.^000000
+^0000ffDEF +1. ATQ +15.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5583#
 Chapéu criado exclusivamente para membros do Time Paraíso. Uma bela proteção para a cabeça.
@@ -29989,25 +30140,36 @@ Classes que utilizam: ^777777Todas^000000
 #
 5588#
 Uma magnífica coroa feita em homenagem ao 5º signo zodiacal, Leão. Ricamente ornamentada para representar uma juba de ouro, ela ainda traz um enorme diamante, a pedra do signo, em sua fronte. Ao usá-la, você sentirá a força do leão, e toda a nobreza deste animal se refletirá na melhoria em sua capacidade de luta.
-^0000ffFOR +1, aumenta em 5% a resistência à propriedade Fogo, ATQ +5.^000000
-^0000ffSe refinado a +7 ou superior, concede Esquiva +10 e Crítico +2.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
+--------------------------
+^0000ffFOR +1. ATQ +5.^000000
+^0000ffResistência a propriedade Fogo +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffCRIT +2. Esquiva +10.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5589#
 Um magnífico diadema, criado em homenagem ao 5º signo do zodíaco, Leão.
-^0000ffDES +1, aumenta em 5% a resistência à propriedade Fogo, ATQ +5.^000000
-^0000ffSe refinado em +7 ou mais, concede Esquiva +10 e Velocidade de Ataque +3%.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
+--------------------------
+^0000ffDES +1. ATQ +5.^000000
+^0000ffResistência a propriedade Fogo +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffEsquiva +10.^000000
+^0000ffVelocidade de ataque +3%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5591#
 Um turbante ricamente trabalhado, usado por xeques e califas para exibirem seu status. Encantado com magia, refresca o usuário, tornando-o física e mentalmente mais capacitado no calor escaldante do deserto. Tome cuidado com vizires malignos quando usá-lo para impressionar princesas.
@@ -30022,16 +30184,26 @@ Classes que utilizam: ^777777Todas^000000
 #
 5592#
 Um belo par de asas homenageando a Valquíria Sigrún, cujo nome significa “vitória”. Ela se tornou famosa por seu romance com o valente Helgi, que derrotou um reino inteiro para ficar com sua amada.
-^0000ffConcede FOR +1 para Espadachim/Gatuno/Mercador e evoluções, Taekwon e Mestre Taekwon.
-Concede INT +1 para Mago/Noviço e evoluções, Espiritualista e Ninja.
-Concede DES +1 para Arqueiro e evoluções e Justiceiro.
-Concede HP +80 e SP +30 para Aprendizes e Super Aprendizes.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777772^000000
+--------------------------
+Espadachins, Gatunos, Mercadores, Mestres Taekwons e evoluções; Taekwon:
+^0000ffFOR +1.^000000
+--------------------------
+Magos, Noviços, Ninjas, Espiritualistas e evoluções:
+^0000ffINT +1.^000000
+--------------------------
+Arqueiros, Justiceiros e evoluções:
+^0000ffDES +1.^000000
+--------------------------
+Aprendizes e Superaprendizes:
+^0000ffHP máx. +80.^000000
+^0000ffSP máx. +30.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Meio^000000
+DEF: ^7777772^000000 DEFM: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777780^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5594#
 Uma Rosquinha confeitada, item imprescindível aos oficiais da Cavalaria de Prontera. Ela é uma verdadeira reserva de energia. Apenas tome cuidado para não mastigá-la demais, pois você pode acabar precisando de um Mecânico para cuidar dos seus pneuzinhos. 
@@ -30074,24 +30246,35 @@ Classes: ^777777Todas^000000
 #
 5598#
 Uma sólida coroa feita em homenagem ao 6º signo zodiacal, Virgem. Carrega em sua fronte a mais pura safira, pedra que representa o signo. Quando sua essência virginiana é libertada, a preocupação com o higiene inerente ao signo protege melhor o usuário das máculas da terra.
-^0000ffDES +2, Velocidade de Ataque +1%.^000000
-^0000ffSe refinado em +7 ou mais, concede 3% de resistência à propriedade Terra.^000000
-Tipo: ^777777Equipamento para a cabeça^000000 
-Defesa: ^7777773^000000
-Equipa em: ^777777Topo ^000000 Peso: ^77777730^000000
+--------------------------
+^0000ffDES +2.^000000
+^0000ffVelocidade de ataque +1%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffResistência a propriedade Terra +3%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
+Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5599#
 Um prático diadema feito em homenagem ao 6º signo zodiacal, Virgem. Carrega em sua fronte a mais pura safira, pedra que representa o signo. Quando sua essência virginiana é libertada, a abnegação natural do signo faz com que o usuário passe a soltar um golpe como se recebesse um tesouro do céu, mesmo ao custo da sua própria energia.
-^0000ffVelocidade de Ataque +1%, 5% de resistência à propriedade Terra.^000000
-^0000ffSe refinado em +7 ou mais, concede uma chance de 3% de usar a habilidade Punhos Intensos ao atacar.^000000
-Tipo: ^777777Equipamento para a cabeça^000000 
-Defesa: ^7777773^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+^0000ffVelocidade de ataque +1%.^000000
+^0000ffResistência a propriedade Terra +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffAo realizar ataques físicos, 3% de chance de autoconjurar [Punhos Intensos] nv.1.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5600#
 Um adorável par de laços de cabelo com as cores características do Brasil. A alegria brasileira emana com tanta energia do item, que você sente como se eles estivessem sambando em sua cabeça.
@@ -30241,27 +30424,40 @@ Classes que utilizam: ^777777Todas^000000
 #
 5662#
 Uma coroa que se equilibra perfeitamente na sua cabeça, feita em homenagem ao 7º signo zodiacal, Libra. Carrega em sua fronte uma grande safira, balanceada por duas menores, que melhoram sua proteção, graças à essência do ar, o elemento do signo. Quando sua essência libriana é despertada, a defesa da coroa é balanceada pela melhoria em seus ataques mágicos.
-^0000ffDES +3, aumenta em 7% a resistência à propriedade Vento.^000000
-^0000ffSe refinada em +7 ou mais, ATQM +3%.^000000
-^0000ffSe refinada em +9 ou mais, ATQM +5% e chance de auto conjurar a habilidade Congelar em nível 5 ao receber ataque físico.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+^0000ffDES +3.^000000
+^0000ffResistência a propriedade Vento +7%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffDano mágico +3%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico +2% adicional.^000000
+^0000ffAo realizar ataques físicos, 2% de chance de autoconjurar [Congelar] nv.5.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5663#
 Um diadema que se encaixa de forma harmoniosa em sua cabeça, feito em homenagem ao 7º signo zodiacal, Libra. Carrega três safiras encantadas, que melhoram seu ataque graças à essência do ar, o elemento do signo. Quando sua essência libriana é despertada, o diadema é capaz de invocar a própria força do ar para aumentar seus poderes.
-^0000ffDES +3, ATQ +7.^000000
-^0000ffSe refinado em +7 ou mais, chance de auto conjurar a habilidade Brisa Leve em nível 2 ao atacar.^000000
-^0000ffSe refinado em +9 ou mais, concede taxa de esquiva +5 e ATQ +3%.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+^0000ffDES +3. ATQ +7.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffAo realizar ataques físicos, 0,5% de chance de autoconjurar [Brisa Level] nv.2.^000000
+Refino +9 ou mais:
+^0000ffEsquiva +5.^000000
+^0000ffDano físico +3%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5664#
 Uma linda réplica das Asas de Filir que pode ser utilizada em sua cabeça.
@@ -30322,25 +30518,35 @@ Profissões que utilizam : ^777777Todas^000000
 #
 5676#
 Uma coroa de design audacioso, feita em homenagem ao 8º signo zodiacal, Escorpião. De aparência misteriosa, traz em sua fronte uma encantadora Granada, a pedra do signo. Ao usá-la, você é capaz de sentir a perspicácia de Escorpião aumentando suas capacidades psíquicas.
+--------------------------
 ^0000ffINT +2.^000000
-^0000ffSe refinado em +7 ou mais, concede INT +1, ATQM +5%.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffINT +1 adicional.^000000
+^0000ffDano mágico +5%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5677#
 Um diadema com um design direto, mas ao mesmo tempo atraente, feito em homenagem ao 8º signo zodiacal, Escorpião. Feito de forma a representar o animal símbolo do signo, ele é coberto por preciosas Granadas, a pedra do signo. Ao usá-lo, você é capaz de sentir a autoconfiança de Escorpião melhorando suas capacidades físicas.
+--------------------------
 ^0000ffDES +2.^000000
-^0000ffSe refinado em +7 ou mais, concede DES +1, ATQ +5.^000000
-Tipo: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffATQ +5.^000000
+^0000ffDES +1 adicional.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5678#
 Uma bela tiara com uma Nota Musical, representando seu apreço pela boa música e pela celebração da Semana da Música.
@@ -30463,27 +30669,44 @@ Classes: ^777777Todas^000000
 #
 5739#
 Uma bela coroa de ouro feita em homenagem ao 9º signo zodiacal, Sagitário. Com uma aparência jovial, seu design representa um arco e flecha, arma símbolo do signo. O arco e a ponta da flecha são ornados com topázios - a pedra do signo – encantados para lhe proporcionar maior confiança e destreza enquanto estiver defendendo a justiça.
-^0000ffDES +2, +7% de resistência à propriedade Fogo.
-Se refinado em +7 ou mais, aumenta a velocidade de ataque em +2% e aumenta o dano de longa distância em +3%.
-Se refinado em +9 ou mais, ao realizar ataque físico, pequena chance de conceder DES +3 e AGI +3 por 10 segundos.^000000
-Classe: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
+--------------------------
+^0000ffDES +2.^000000
+^0000ffResistência a propriedade Fogo +7%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffVelocidade de ataque +2%.^000000
+^0000ffDano físico a distância +3%.^000000
+Refino +9 ou mais:
+^0000ffAo realizar ataques físicos, 0,3% de chance de ativar um [efeito] por 10 segundos.^000000
+--------------------------
+^CD3278Efeito:^000000
+^0000ffDES e AGI +3.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5740#
-Um gracioso diadema de ouro, feito em homenagem ao 9º signo zodiacal, Sagitário. Com uma aparência que reflete a idéia de sinceridade, seu design representa as asas do centauro Quíron, após este subir aos céus transformando-se em constelação. Traz ainda um topázio em sua fronte contendo um espírito do fogo - elemento fundamental do signo – capaz de despertar seu senso de justiça e melhorar suas habilidades.
-^0000ffDES +2, DEFM +3, +7% de resistência à propriedade Fogo.
-Se refinado em +7 ou mais, diminui o tempo de conjuração variável em -3%. Ao usar ataques mágicos, pequena chance de auto conjurar a habilidade "Supernova" em nível 1.
-Se refinado em +9 ou mais, aumenta o ATQM em +3%.^000000
-Classe: ^777777Equipamento para a cabeça^000000
-Defesa: ^7777773^000000
+Uma bela coroa de ouro feita em homenagem ao 9º signo zodiacal, Sagitário. Com uma aparência jovial, seu design representa um arco e flecha, arma símbolo do signo. O arco e a ponta da flecha são ornados com topázios - a pedra do signo – encantados para lhe proporcionar maior confiança e destreza enquanto estiver defendendo a justiça.
+--------------------------
+^0000ffDES +2.^000000
+^0000ffResistência a propriedade Fogo +7%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffConjuração variável -3%.^000000
+^0000ffAo realizar ataques mágicos, 0,5% de chance de autoconjurar [Supernova] nv.1.^000000
+Refino +9 ou mais:
+^0000ffDano mágico +3%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777773^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Classes que utilizam: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5742#
 Não, este não é o chapéu do Capitão Alcemento, mas uma divertida opção para um gorro natalino!
@@ -30497,29 +30720,40 @@ Classes: ^777777Todas ^000000
 #
 5744#
 Uma coroa entalhada de forma paciente e ambiciosa para formar a imagem de chifres dourados, em homenagem ao 10º signo do Zodíaco, Capricórnio. Incrustadas nos chifres estão várias gemas, como ágatas, ônix e diamantes, todas representando o signo. São gemas da terra, imbuídas de magia para conceder o poder deste elemento para a coroa. Ela parece ser sido feita com toda a calma, para atingir a forma perfeita, e só de olhá-la você sabe que ela vai durar muito tempo.
-Des +2, Vit +2
-Se o nível de refinamento for igual ou maior do que 7, ao atacar fisicamente, há uma chance de usar a habilidade “Brisa Leve” em nível 1. (Encanta a arma com propriedade Terra)
-Tipo: ^777777Equipamento para cabeça^000000
-Defesa: ^7777773^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+^0000ffDES e VIT +2.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffAo realizar ataques físicos, 2% de chance de autoconjurar [Brisa Leve] nv.1.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Profissões que utilizam : ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5745#
 Um magnífico diadema, entalhado de forma segura e confiante para homenagear o 10º signo do Zodíaco, Capricórnio. O rosto da cabra, talhado no diadema, possui garletas, uma das gemas do signo, inscrustadas como olhos. Elas carregam a energia da terra, o elemento do signo, para proteger seu usuário. Além disso, a magia do diadema recompensa aqueles que, com a perseverança comum ao signo, se esforçam para refinar esse elmo zodiacal.
-Des +2, DefM +5.
-Aumenta a resistência contra propriedade Terra em 5%.
-Se o nível de refinamento for maior ou igual a 7, Int +2.
-Se o nível de refinamento for maior ou igual a 8, reduz tempo de conjuração variável em 3%.
-Se o nível de refinamento for maior ou igual a 9, aumenta a efetividade de Cura, Santúario e Poções em 4%.
-Se o nível de refinamento for maior ou igual a 10, quando atacado, há uma chance baixa de conjurar automaticamente Martelo de Thor em nível 5.
-Tipo: ^777777Equipamento para cabeça^000000
-Defesa: ^7777773^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+^0000ffDES +2.^000000
+^0000ffResistência a propriedade Terra +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffINT +2.^000000
+Refino +8 ou mais:
+^0000ffConjuração variável -3%.^000000
+Refino +9 ou mais:
+^0000ffEfetividade de cura +4%.^000000
+Refino +10 ou mais:
+^0000ffAo receber danos físicos ou mágicos, 0,3% de chance de autoconjurar [Martelo de Thor] nv.5.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777773^000000 DEFM: ^7777775^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
-Profissões que utilizam : ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 5746#
 ^ff0000Intransferível.^000000
@@ -30805,7 +31039,7 @@ DEFM +5.^000000
 Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777770^000000
-Peso: ^7777770^000000
+Peso: ^77777710^000000
 Nível necessário: ^77777710^000000
 Classes: ^777777Todas^000000
 #
@@ -30939,15 +31173,28 @@ Classes que utilizam: ^777777Todas^000000
 Um elmo utilizado pelos soldados de Esparta, guerreiros famosos por serem capazes de lutar em qualquer tipo de ambiente.
 Aqueles que usam as armas típicas de Esparta dizem que a aerodinâmica deste elmo ajuda a manusear estes armamentos.
 Ou talvez, haja um pouco de espírito espartano nele.
-HPM + 3%.
-Adiciona 3% de Dano Físico quando equipado com Pique.
-Adiciona 3% de Dano Físico quando equipado com Gladius.
-Adiciona DEF +2 e 5% de resistência a Ataques Físicos de todos os tipos quando equipado com Escudo Colossal.
-Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777774^000000
-Equipa em: ^777777Topo, Meio, Baixo^000000
+--------------------------
+^0000ffHP máx. +3%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Pique]^000000
+^0000ffDano físico +3%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Gladius]^000000
+^0000ffDano físico +3%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Escudo Colossal]^000000
+^0000ffDEF +2.^000000
+^0000ffResistência a todas as propriedades +5%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo, Meio e Baixo^000000
+DEF: ^7777774^000000 DEFM: ^7777770^000000
 Peso: ^77777770^000000
-Classe: ^777777Todas^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 5783#
 Orelhas de coelho que passam a ideia de liberdade e deixam seu usuário extremamente atraente.
@@ -31911,6 +32158,7 @@ Nível base 150 ou mais:
 ^0000ffVelocidade de ataque +1% adicional.^000000
 Tipo: ^777777Equipamento para cabeça^000000 
 Equipa em: ^777777Meio^000000 
+Defesa: ^7777770^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777730^000000
 Classes: ^777777Todas^000000
@@ -33186,6 +33434,13 @@ Nem todos os itens estão disponíveis para anúncio.
 Peso: ^7777771^000000
 Classe: ^777777Mercadores, Super-Aprendizes e Evoluções^000000
 #
+6379#
+Criada especialmente para substituir uma carta.
+--------------------------
+^ff0000Será deletada após o término do evento.^000000
+--------------------------
+Peso: ^7777771^000000
+#
 6380#
 ^ff0000Este item não pode ser trocado entre contas, mas pode ser vendido para um NPC.^000000
 Uma moeda pequena com uma superfície polida. Ela tem várias utilidades na Vila de Mora.
@@ -33729,6 +33984,13 @@ Peso: ^7777770^000000
 Um pesado cogumelo que cresce nas florestas de Alfheim. Pode ser usado para fabricar remédios.
 Peso: ^77777710^000000
 #
+6543#
+Peça fabricada de metal raríssimo: o Etherium.
+--------------------------
+^ff0000Será deletada após o término do evento.^000000
+--------------------------
+Peso: ^7777770^000000
+#
 6545#
 ^ff0000Não pode ser negociado^000000
 Cabelo de um membro da tribu Manuk. Parece um galho de árvore... Mas é cabelo.
@@ -34005,8 +34267,9 @@ O ingrediente da casa dos biscoitos para a equipe Fumacentos em Ação nesse Nat
 Peso: ^7777771^000000
 #
 6682#
-^ff0000Esse item não pode ser guardado no armazém ou negociado com outras contas.^000000
-A sacola contém muitos itens pegos sem permissão pela equipe Fumacentos em Ação. Seria melhor você devolvê-la aos donos.
+^ff0000Intransferível.^000000
+A sacola contém muitos itens pegos sem permissão por um grupo de Fumacentos. 
+Seria melhor você devolvê-la aos donos.
 Peso: ^7777771^000000
 #
 6683#
@@ -34648,6 +34911,16 @@ Um 'blueprint' que deve ser levado a MARS_01, em Verus, para transformá-lo em u
 ^0000ffVelocidade de ataque +1.^000000
 --------------------------
 Peso: ^7777771^000000
+#
+6993#
+Pergaminho usado para refinar armas sem risco de perda.
+^ffffff<NAVI>^4D4DFF[Mestre do Refino]^000000<INFO>prontera,184,177,0,100,0,0</INFO></NAVI>^000000
+Peso: ^7777770^000000
+#
+6994#
+Pergaminho usado para refinar equipamentos sem risco de perda.
+^ffffff<NAVI>^4D4DFF[Mestre do Refino]^000000<INFO>prontera,184,177,0,100,0,0</INFO></NAVI>^000000
+Peso: ^7777770^000000
 #
 7001#
 Um punhado de mofo.
@@ -35720,14 +35993,12 @@ Passe que deve ser usado sempre que desejar acessar um local.
 ^0000ffPermite entrar em um dos calabouços de Cheffênia.^000000
 --------------------------
 ^CD3278NPCs de acesso:^000000
-<NAVI>[Izlude]<INFO>izlude,128,153,0,000,0</INFO></NAVI> <NAVI>[Geffen]<INFO>geffen,124,169,0,000,0</INFO></NAVI>
-<NAVI>[Payon]<INFO>payon,165,150,0,000,0</INFO></NAVI>
-<NAVI>[Morroc]<INFO>morocc,142,100,0,000,0</INFO></NAVI>
-<NAVI>[Rachel]<INFO>rachel,132,144,0,000,0</INFO></NAVI>
-<NAVI>[Lighthalzen]<INFO>lighthalzen,203,140,0,000,0</INFO></NAVI>
-<NAVI>[Juno]<INFO>yuno,147,183,0,000,0</INFO></NAVI>
+<NAVI>[Dewata]<INFO>dewata,209,180,0,000,0</INFO></NAVI>
+<NAVI>[Rachel]<INFO>rachel,135,144,0,000,0</INFO></NAVI>
+<NAVI>[Lighthalzen]<INFO>lighthalzen,148,96,0,000,0</INFO></NAVI>
+<NAVI>[Juno]<INFO>yuno,157,180,0,000,0</INFO></NAVI>
 --------------------------
-Encerramento do evento: ^ff000005/10/20.^000000
+Encerramento do evento: ^ff000011/01/21.^000000
 O passe perderá validade após a data.
 --------------------------
 Negociação: ^777777Não pode ser negociado, derrubado no chão ou colocado no carrinho, mas pode ser transferido para o armazém.^000000
@@ -36968,7 +37239,7 @@ Ingresso especial que permite a entrada nos Mapas Especiais somente para persona
 ^CD3278Coord.:^000000 brasilis 196, 184
 <NAVI>[Navegar]<INFO>brasilis,196,184,0,000,0</INFO></NAVI>
 --------------------------
-Este ticket desaparecerá durante a manutenção de 01/12/2020. Aproveite e divirta-se!
+Este ticket desaparecerá durante a manutenção de 20/04/2021. Aproveite e divirta-se!
 --------------------------
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
 --------------------------
@@ -37167,8 +37438,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 morroc 131, 102
 <NAVI>[Navegar]<INFO>morocc,131,102,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000021.12.2020.^000000
-Este item será removido no dia ^ff000022.12.2020.^000000
+Promoção limitada até o dia ^ff000022.03.2021.^000000
+Este item será removido no dia ^ff000023.03.2021.^000000
 --------------------------
 ^ff0000Atenção! Antes de utilizar o ticket, certifique-se de que há espaço e limite de peso disponível no seu inventário para receber novos itens.^000000
 --------------------------
@@ -38458,6 +38729,292 @@ Um ovo contendo um Esqueleão de estimação. Deve ser chocado por uma [Incubado
 Tipo: ^777777Ovo de Mascote^000000
 Peso: ^7777770^000000
 #
+9550#
+Cristal dos heróis que tentaram salvar Glast Heim da maldição.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona até 2 bônus aleatórios nas Armaduras do Herói.^000000
+--------------------------
+[^ff0000Itens afetados^000000]
+Armadura do Herói Robusto
+Armadura do Herói Sábio
+Armadura do Herói Ágil
+Armadura do Herói Astuto
+Armadura do Herói Afortunado
+Armadura do Herói Vigoroso
+--------------------------
+Peso: ^7777770^000000
+#
+9551#
+Pergaminho antigo encontrado no castelo de Glast Heim.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 1 bônus aleatório nos Mantos Temporais.^000000
+--------------------------
+[^ff0000Itens afetados^000000]
+Manto Temporal FOR
+Manto Temporal AGI
+Manto Temporal VIT
+Manto Temporal INT
+Manto Temporal DES
+Manto Temporal SOR
+--------------------------
+Peso: ^7777770^000000
+#
+9969#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff600x Bala Amarga.^000000
+^0000ff600x Cogumelo Grelhado.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9970#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff5x Palitos de Laranja.^000000
+^0000ff5x Palitos de Chocolate.^000000
+^0000ff5x Palitos de Baunilha.^000000
+^0000ff5x Palitos de Cassis.^000000
+^0000ff5x Palitos de Limão.^000000
+^0000ff5x Palitos de Morango.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9971#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff20x Manual de Combate.^000000
+^0000ff20x Manual de Combate de Classe.^000000
+^0000ff20x Bênção de Tyr.^000000
+^0000ff60x Água Milagrosa.^000000
+^0000ff50x Pílula de Combate.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9972#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff2x Manual de Combate.^000000
+^0000ff2x Manual de Combate de Classe.^000000
+^0000ff2x Bênção de Tyr.^000000
+^0000ff6x Água Milagrosa.^000000
+^0000ff5x Pílula de Combate.^000000
+^0000ff1x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9973#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff200x Poção Menor de Vida.^000000
+^0000ff200x Poção Média de Vida.^000000
+^0000ff200x Água Milagrosa.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9974#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff20x Poção Menor de Vida.^000000
+^0000ff20x Poção Média de Vida.^000000
+^0000ff20x Água Milagrosa.^000000
+^0000ff1x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9975#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff100x Bolinho Divino.^000000
+^0000ff10x Pó Místico.^000000
+^0000ff10x [Kachua] Bênção de Tyr.^000000
+^0000ff10x [Kachua] Poção de Regeneração.^000000
+^0000ff1x [Kachua] Doce Hiper Açucarado.^000000
+^0000ff1x [Kachua] Doce Mágico.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9976#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff10x Bolinho Divino.^000000
+^0000ff1x Pó Místico.^000000
+^0000ff1x [Kachua] Bênção de Tyr.^000000
+^0000ff1x [Kachua] Poção de Regeneração.^000000
+^0000ff1x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+
+#
+9977#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff50x Oridecon Enriquecido.^000000
+^0000ff50x Elunium Enriquecido.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9978#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff5x Oridecon Enriquecido.^000000
+^0000ff5x Elunium Enriquecido.^000000
+^0000ff1x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9979#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff13x Oridecon Perfeito.^000000
+^0000ff13x Elunium Perfeito.^000000
+^0000ff6x Poção Mental.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9980#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff13x Bradium Perfeito.^000000
+^0000ff13x Carnium Perfeito.^000000
+^0000ff6x Poção Mental.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9981#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff50x Pergaminho Bênção em Grupo.^000000
+^0000ff50x Pergaminho Aumentar Agilidade em Grupo.^000000
+^0000ff50x Assumptio em Grupo.^000000
+^0000ff1x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9982#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff4x Manual de Mascar.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9983#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff5x Mega-Elunium.^000000
+^0000ff5x Omni-Oridecon.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9984#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff1x Mega-Elunium.^000000
+^0000ff1x Omni-Oridecon.^000000
+^0000ff1x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9985#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff5x Poção Menos FOR.^000000
+^0000ff5x Poção Menos AGI.^000000
+^0000ff5x Poção Menos VIT.^000000
+^0000ff5x Poção Menos INT.^000000
+^0000ff5x Poção Menos DES.^000000
+^0000ff5x Poção Menos SOR.^000000
+^0000ff1x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9986#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff1x Neuralizador.^000000
+^0000ff4x Pedras da Valquíria.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9987#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff100x Acarajé.^000000
+^0000ff100x Elixir Rubro.^000000
+^0000ff50x Poção de Ouro.^000000
+^0000ff11x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9988#
+^ff0000Intransferível.^000000
+Arca recheada de preciosidades!
+--------------------------
+Contém:
+^0000ff10x Acarajé.^000000
+^0000ff10x Elixir Rubro.^000000
+^0000ff5x Poção de Ouro.^000000
+^0000ff1x Chave da Kachua.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+9989#
+
+^ff0000Intransferível.^000000
+Peso: ^7777771^000000
+#
 10001#
 Elmo feito de um crânio de animal.
 Classe: ^777777Acessório para Bicho de Estimação^000000
@@ -39647,7 +40204,7 @@ Peso: ^777777100^000000
 #
 12094#
 Um suco de sabor divino, que faz quem bebe se sentir revigorado e relaxado.
-^0000fDES +9^000000
+^0000ffDES +9.^000000
 Peso: ^77777750^000000
 #
 12095#
@@ -40217,6 +40774,9 @@ Peso: ^7777771^000000
 #
 12211#
 A Corporação Kafra oferece a você o incrível Cartão Kafra! Ele vem com a primeira anuidade paga e um programa de milhagem. Quanto mais você usar, mais parecido com uma Kafra você ficará! Permite acessar seu armazém diretamente, em qualquer lugar do mundo. Mas atenção! No servidor Valhalla só é possível acessar o primeiro armazém com este item.
+--------------------------
+^ff0000Atenção: O item não não pode ser passado pelo Rodex^000000
+--------------------------
 Peso: ^7777771^000000
 #
 12212#
@@ -40247,7 +40807,7 @@ Pergaminho mágico criado com a essência de magia antiga.
 --------------------------
 ^0000ffAtiva [Bênção] nv.10.^000000
 --------------------------
-Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra e no Carrinho^000000
+Negociação: ^777777O item não pode ser derrubado e negociado, mas pode ser colocado na Kafra^000000
 Peso: ^7777771^000000
 #
 12216#
@@ -40919,19 +41479,35 @@ Um cartucho com 1000 Cápsulas Incandescentes. É portátil.
 Peso: ^77777750^000000
 #
 12384#
+^ff0000Intransferível.^000000
 Um rubi que contém todas as cores do arco-íris e contém forte energia mágica.
+--------------------------
+^0000ffConjura [Zero Absoluto] nv.5.^000000
+--------------------------
 Peso: ^7777775^000000
 #
 12385#
-Um rubi que contém todas as cores do arco-íris e contém forte energia mágica. 
+^ff0000Intransferível.^000000
+Um rubi que contém todas as cores do arco-íris e contém forte energia mágica.
+--------------------------
+^0000ffConjura [Meteoro Escarlate] nv.5.^000000
+--------------------------
 Peso: ^7777775^000000
 #
 12386#
+^ff0000Intransferível.^000000
 Um rubi que contém todas as cores do arco-íris e contém forte energia mágica.
+--------------------------
+^0000ffConjura [Corrente Elétrica] nv.5.^000000
+--------------------------
 Peso: ^7777775^000000
 #
 12387#
+^ff0000Intransferível.^000000
 Um rubi que contém todas as cores do arco-íris e contém forte energia mágica.
+--------------------------
+^0000ffConjura [Abalo Sísmico] nv.5.^000000
+--------------------------
 Peso: ^7777775^000000
 #
 12388#
@@ -41909,10 +42485,11 @@ Uma runa bruta do tipo mais raro.
 Peso: ^77777710^000000
 #
 12739#
-Uma preciosa flor que pode ser encontrada apenas nas regiões gélidas em época natalina. 
-Recupera HP e SP quando utilizada.
-^ffffff_^000000
-Peso: ^77777710^000000
+Envelope bem gelado ao toque... o que será que tem dentro?
+--------------------------
+^0000ffRegenera 10% de HP e SP.^000000
+--------------------------
+Peso: ^7777771^000000
 #
 12742#
 Uma caixa com um anel que pode ser usado como presente para trocar no Dia dos Namorados.
@@ -42169,9 +42746,11 @@ Peso: ^7777771^000000
 #
 12832#
 Uma mistura feita a partir de Poções da Vida, mas com um toque de limão.
-Recupera 4% do HP Máximo a cada 3 segundos por 10 minutos.
-Não é efetivo quando o personagem entra em Frenesi.
-^000088Se você foi nocauteado, o efeito desaparecerá.^000000Peso: ^7777771^000000
+^0000ffRegenera 4% de HP a cada 3 segundos.^000000
+^ff0000Não tem efeito em Frenesi.^000000
+^008080Perde o efeito ao morrer.^000000
+Duração: ^77777710 minutos^000000
+Peso: ^7777771^000000
 #
 12834#
 Um ovo com a aparência de um morto e com seu interior mais que vivo. Pode lhe render um prêmio muito especial ao ser aberto.
@@ -42483,7 +43062,6 @@ Pergaminho mágico criado com a essência de magia antiga.
 Peso: ^7777771^000000
 #
 12928#
-^FF0000Intransferível.^000000
 Pergaminho mágico criado com a essência de magia antiga.
 ^0000ffAtiva [Aspersio] nv. 5 sem precisar de Água Benta.^000000
 Peso: ^7777771^000000
@@ -46075,6 +46653,7 @@ Refino +9 ou mais:
 --------------------------
 Tipo: ^777777Espada^000000
 ATQ: ^777777130^000000 ATQM: ^7777770^000000
+Propriedade: ^777777Sombrio^000000
 Peso: ^777777120^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777780^000000
@@ -48284,6 +48863,22 @@ Um biscoito em forma de palito com uma deliciosa cobertura de morango. Perfeito 
 ^ff0000A SOR não acumula com consumíveis de bônus de SOR.^000000
 Peso: ^7777771^000000
 #
+14799#
+^ff0000Intransferível.^000000
+A mais nova incrível criação da Corporação Zonda mescla um Manual de Combate com uma Goma de Mascar!
+--------------------------
+^CD3278Afeta todos os personagens da sua conta nesse servidor.^000000
+--------------------------
+^0000ffEXP adquirida +20%.^000000
+^0000ffTaxa de DROP +20%.^000000
+^008080Acumulativo com efeitos semelhantes.^000000
+--------------------------
+^a400cdExclusivo para o Thor:^000000
+^0000ffArmazém aumentado para 600 espaços.^000000
+--------------------------
+Duração: ^7777777 dias^000000
+Peso: ^7777771^000000
+#
 15000#
 Armadura de placas, coberta com ossos afiados.
 --------------------------
@@ -49698,6 +50293,32 @@ Peso: ^77777760^000000
 Nível necessário: ^77777799^000000
 Classes: ^777777Todas^000000
 #
+15208#
+Vestido-armadura usado pela Guerreira Laura. Já viu muitas batalhas, mas nunca perdeu uma.
+--------------------------
+^0000ffReflete 5% dos danos físicos recebidos.^000000
+--------------------------
+A cada refino:
+^0000ffVIT +1.^000000
+^0000ffDEF +20.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffReflete +5% adicional.^000000
+^0000ffTorna a armadura indestrutível em batalha.^000000
+Refino +9 ou mais:
+^0000ffReflete +5% adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Bola de Ferro da Laura]^000000
+A cada refino da arma:
+^0000ffATQ +10.^000000
+--------------------------
+Tipo: ^777777Armadura^000000
+DEF: ^777777100^000000 DEFM: ^7777770^000000
+Peso: ^777777120^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Todas^000000
+#
 15219#
 À primeira vista, estes trapos lembram bastante as Vestes de Angeling depois de jogadas na máquina de lavar junto com meia dúzia de Chapéus de Esporo. De qualquer forma, esses trajes também são muito cobiçados por Super Aprendizes, que acreditam que o espírito da sacerdotisa do Templo Sagrado dos Ings ainda procura guarda-los do perigo.
 ^0000ffDEFM +20.^000000
@@ -50314,6 +50935,45 @@ Peso: ^77777740^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+15409#
+Um vestido sombrio e aterrorizante, que aumenta atributos do usuário.
+--------------------------
+^0000ffDES +3.^000000
+^0000ffATQM +10.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffPós-conjuração -10%.^000000
+^0000ffVelocidade de ataque +10%.^000000
+Refino +9 ou mais:
+^0000ffTorna a armadura indestrutível em batalha.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Luva dos Espíritos Malignos]^000000
+^0000ffATQ e ATQM +50.^000000
+^0000ffVelocidade de ataque +1.^000000
+Ao realizar ataques físicos:
+^0000ff2% de chance de autoconjurar [Impacto Espiritual] nv.1.^000000
+Ao realizar ataques mágicos:
+^0000ff1% de chance de autoconjurar [Telecinesia] nv.1.^000000
+Ao receber danos físicos ou mágicos:
+^0000ff5% de chance de autoconjurar [Curar] nv.5.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Laço da Celine]^000000
+A cada 2 refinos da armadura:
+^0000ffATQM +20.^000000
+^0000ffTodos os atributos +1.^000000
+Refino do laço +9 ou mais:
+^0000ffDano mágico contra monstros Chefes +15%.^000000
+Refino do laço +11 ou mais:
+^0000ffDano mágico contra monstros Chefes +15% adicional.^000000
+--------------------------
+Tipo: ^777777Armadura^000000
+DEF: ^77777740^000000 DEFM: ^7777775^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
 15417#
 Até o mais poderoso dos guerreiros samurai precisava de uma armadura que ajudasse a combater as ansiedades da batalha. O foco é quase instantâneo.
 --------------------------
@@ -50410,6 +51070,14 @@ Tipo: ^777777Armadura^000000
 Defesa: ^7777770^000000
 Peso: ^77777790^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+15838#
+Diretamente das Ruínas de Juperos, a Proteção de Vesper é peça essencial para sobreviver aos perigos de se aventurar em locais esquecidos. A extravagância é o toque de charme principal.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 16000#
@@ -50928,6 +51596,29 @@ Peso: ^77777710^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Aprendizes, Superaprendizes, Mercadores, Espadachins, Noviços e evoluções^000000
+#
+16053#
+Laura usa bola de ferro para intimidar os inimigos e afastar monstros malvados. A garota teve que treinar muito e se machucou diversas vezes no processo. O caminho para a perfeição tem espinhos... igual uma bola de ferro.
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09Bola de Ferro Ensanguentada [1]^000000
+Ao realizar ataques físicos:
+^0000ff5% de chance de ativar um [efeito] por 5 segundos.^000000
+A cada refino a partir do +5:
+^0000ffDuração do [efeito] +1 segundo.^000000
+--------------------------
+^CD3278Efeito:^000000
+^0000ffIgnora 100% da DEF dos monstros normais e chefes.^000000
+--------------------------
+Tipo: ^777777Maça^000000
+ATQ: ^777777170^000000 ATQM: ^7777770^000000
+Peso: ^777777150^000000
+Propriedade: ^777777Fogo^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777130^000000
+Classes: ^777777Mercadores, Espadachins e evoluções^000000
 #
 16055#
 Porrete robusto abençoado por Oxóssi, orixá da caça e das florestas.
@@ -51538,7 +52229,7 @@ Peso: ^7777771^000000
 16755#
 Uma caixa que contém um minério abençoado para armaduras.
 --------------------------
-^0000ffMega-Elunium que foi abençoado por pelos Deuses. Criado para refinamentos entre +6 e +12. Caso o refino falhe, o nível de aprimoramento não será alterado e não há chance do item ser perdido.^000000
+^0000ffMega-Elunium que foi abençoado pelos Deuses. Criado para refinamentos entre +6 e +12. Caso o refino falhe, o nível de aprimoramento não será alterado e não há chance do item ser perdido.^000000
 --------------------------
 Peso: ^7777771^000000
 #
@@ -53430,14 +54121,16 @@ Classes: ^777777Todas^000000
 #
 18536#
 Um item com o estilo errante.
+--------------------------
 ^0000ffATQM +10.^000000
-^0000ffTempo de conjuração fixa -0,1 segundo. ^000000
-Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777770^000000
-Equipe em: ^777777Baixo^000000
+^0000ffConjuração fixa -0,1 segundo.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
-Classe: ^777777Todas as Classes^000000
+Classes: ^777777Todas^000000
 #
 18537#
 Um chapéu de lembrança de Malangdo.
@@ -53694,14 +54387,18 @@ Classes: ^777777Todas^000000
 #
 18564#
 Um biscoito encantando por um feiticeiro apaixonado para nunca esquecer seu amor, que o presenteou com essa delícia. Esse biscoito nunca estraga e tende a deixar as pessoas mais focadas na hora de conjurar suas magias. Dizem que em troca do biscoito, o feiticeiro costurou para seu amor uma tiara com corações alados.
+--------------------------
 ^0000ffA conjuração não pode ser interrompida.^000000
-^0000ffCusto de SP das habilidades +15%.^000000
-^FF6347Conjunto^000000 
-^FF6347[Tiara dos Corações-Alados]^000000
-^0000ffTempo de conjuração fixo -10%.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+--------------------------
+^0000ffCusto de SP das habilidades^000000 ^ff0000+15%.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Tiara dos Corações-Alados]^000000
+^0000ffConjuração fixa -10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Baixo^000000
-Defesa: ^7777770^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777750^000000
 Classes: ^777777Todas^000000
@@ -53820,35 +54517,46 @@ Pode parecer ridículo, mas essa simples caixa de papelão é o disfarce supremo
 Você não tem certeza de como Sorrateiro fazia pra se esconder com isso. Pelo contrário, essa caixa na sua cabeça apenas chama ainda mais a atenção!
 Felizmente parece que você sempre consegue tirar alguma habilidade útil de dentro dela.
 Por algum motivo que não consegue explicar, sempre que passa ao lado de um Oficial do Éden você escuta um estranho sinal de alerta e fica com os pelos da nuca arrepiados.
-^0000ffDEFM +10.^000000
-^0000ffChance de autoconjurar habilidades aleatórias em ataques físicos.^000000
-Ao equipar junto com o Anel Elemental Menor: 
-^0000ffChance de autoconjurar [Manejo Perfeito] nv. 2 em ataques físicos.^000000
-Não pode ser refinado. 
-Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^77777710^000000
+--------------------------
+Ao realizar ataques físicos:
+^0000ffChance de autoconjurar [Escudo Sagrado] nv.1, [Lâminas Destruidoras] nv.1, [Punição Divina] nv.5, [Crux Magnum] nv.5, [Impacto Meteoro] nv.5, [Invocar Esfera Espiritual] nv.5, [Fúria Interior] nv.5, [Kyrie Eleison] nv.5, [Concentração] nv.5, [Pântano dos Mortos] nv.3.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Anel Elemental Menor]^000000
+Ao realizar ataques físicos:
+^0000ff1% de chance de autoconjurar [Manejo Perfeito] nv.2.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo, Meio e Baixo^000000
+DEF: ^77777710^000000 DEFM: ^77777710^000000
 Peso: ^77777750^000000
-Nível Necessário: ^77777720^000000
-Classes: ^777777Todas as Classes^000000
+Nível necessário: ^77777720^000000
+Classes: ^777777Todas^000000
 #
 18576#
 Estas grandes joias preciosas simbolizam o yin e o yang, as duas forças complementares que compões a essência da vida e representam o equilíbrio existente no universo.
 Eles emanam uma energia serena, que ajudam seu usuário a equilibrar corpo e mente, algo especialmente útil para os artistas marciais.
+--------------------------
 ^0000ffDano de [Combo Quádruplo] +10%.^000000
+--------------------------
 ^0000ffDano de [Combo Triplo] e [O Último Dragão] +5%.^000000
-^0000ffConsumo de SP de [Combo Quádruplo] e [O Último Dragão] +1.^000000
-Ao equipar junto com a Faixa de Caratê:
-^0000ffConsumo de SP por habilidades +10%.^000000
-^0000ffConsumo de SP -1% por refino da Faixa de Caratê.^000000
-^0000ffDano de [Combo Triplo] e [O Último Dragão] +5%.^000000
-^0000ffDano de [Punho do Tigre] e [Combo Esmagador] +3%.^000000
-Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777770^000000
+--------------------------
+^0000ffCusto de SP de [Combo Quádruplo] e [O Último Dragão]^000000 ^ff0000+1.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Faixa de Caratê]^000000
+^0000ffDano de [Combo Esmagador] e [Punho do Tigre]+3%.^000000
+^0000ffDano de [Combo Triplo] e [O Último Dragão] +5% adicional.^000000
+^0000ffCusto de SP das habilidades^000000 ^ff0000+10%.^000000
+A cada refino do Chapéu até o +10:
+^0000ffCusto de SP das habilidades -1%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Meio^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777710^000000
-Nível Necessário: ^77777750^000000
-Classes: ^777777Todas as Classes^000000
+Nível necessário: ^77777750^000000
+Classes: ^777777Todas^000000
 #
 18577#
 Para encobrir seu envolvimento com o vírus mágico de Ourobolos, a Corporação Sombrinha deu início ao Projeto Neme X e, com a ajuda do professor Ragenstein, criou estes medonhos parafusos.
@@ -53918,13 +54626,19 @@ Classes: ^777777Todas^000000
 #
 18589#
 Este chapéu tem o formato de um enorme, suculento e adocicado morango. É tão realista, que você praticamente pode sentir o perfume do morango e precisa se segurar para não dar uma dentada. Só tome cuidado quando o estiver usando, porque monstros como o Yeti podem não ter tanto autocontrole.
-Ao derrotar um monstro, há uma chance de derrubar o item Morango. A chance aumenta de acordo com o nível de aprimoramento.
-Tipo: ^777777Equipamento para Cabeça^000000
-Defesa: ^7777775^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+Ao derrotar monstros:
+^0000ff1% de chance de derrubar Morango.^000000
+--------------------------
+A cada refino até o +10:
+^0000ffChance +1%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777775^000000 DEFM: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
-Profissões que utilizam : ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 18590#
 Belíssima tiara adornada com runas mágicas e fios de ouro. Nela encontra-se as duas metades da Joia das Cinco Almas, uma poderosa gema que no passado era guardada pela sacerdotisa Quiquiow. Dizem que a joia chegou a ser partir, mas foi reunida pela valente arqueira Gokame, que ao lado do espadachim Inu Seacha a usaram para enfrentar diversas criaturas demoníacas, inclusive o chatíssimo Narawootan.
@@ -53968,7 +54682,12 @@ Classes: ^777777Todas^000000
 #
 18595#
 Um antigo chifre contendo a alma do Patriarca da Família Real de Midgard.
-Quando refinado em +7 e realizando ataques físicos de curto alcance, adiciona a chance de ativar ATQ +100 durante 10 segundos.
+Refino +7 ou mais:
+^0000ffAo realizar ataques físicos, 1% de chance de ativar um [efeito] por 10 segundos.^000000
+--------------------------
+^FF6347Efeito:^000000
+^0000ffATQ +100.^000000
+--------------------------
 Tipo: ^777777Equipamento para cabeça^000000 
 Defesa: ^7777778^000000
 Equipa em: ^777777Topo^000000
@@ -53978,7 +54697,7 @@ Classes: ^777777Todas^000000
 #
 18596#
 Enquanto ideias e pensamentos brotam na cabeça de outras pessoas, na sua nasceu um broto de verdade. Ou pelo menos essa é a impressão passada pelo Chapéu de Broto, capaz de intensificar sua ligação com a natureza e o elemento da terra.
-Quando equipado, permite o uso da habilidade Fúria da Terra nível 3.
+^0000ffHabilita [Fúria da Terra] nv.3.^000000
 Tipo: ^777777Equipamento para cabeça^000000
 Defesa: ^7777774^000000
 Equipa em: ^777777Topo^000000
@@ -55767,7 +56486,10 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 18865#
-Dizem que no passado, essa coroa foi usada pelo maior guerreiro da antiga capital de Rune-Midgard, Glastheim. Ele era um espadachim tão habilidoso que era capaz de usar qualquer tipo de arma, não importando de qual classe fosse. Teria este guerreiro se corrompido e levado a cidade à ruína? A coroa ainda emana uma forte energia misteriosa...
+Dizem que no passado, essa coroa foi usada pelo maior guerreiro da antiga capital de Rune-Midgard, Glast Heim. Ele era um espadachim tão habilidoso que era capaz de usar qualquer tipo de arma, não importando de qual classe fosse. Teria este guerreiro se corrompido e levado a cidade à ruína? A coroa ainda emana uma forte energia misteriosa...
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
 ^0000ffATQ +5.^000000
 Nv. base 100 ou mais:
 ^0000ffATQ +10 adicional.^000000
@@ -55784,9 +56506,9 @@ Ao aprender [Perícia com Katar] nv. 10:
 Ao aprender [Perícia com Maça] nv. 10:
 ^0000ffVelocidade de ataque +10%.^000000
 Ao aprender [Perícia com Machado e Espada] nv. 10:
-^0000ffTempo de conjuração variável -15%.^000000
+^0000ffConjuração variável -15%.^000000
 Ao aprender [Maestria com Machados] nv. 10:
-^0000ffTempo de conjuração variável -15%.^000000
+^0000ffConjuração variável -15%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Mysteltainn]^000000
 ^0000ffDano físico contra oponentes de tamanho Pequeno +5%.^000000
@@ -56078,15 +56800,19 @@ Classes: ^777777Todas^000000
 #
 18898#
 À primeira vista, ela se parece com a Coroa de Yggdrasil, mas este artefato em especial foi abençoado pela própria Árvore da Vida para carregar sua energia e com isso dar mais poderes a um herói escolhido para enfrentar o Ragnarök.
+--------------------------
+^0000ffTodos os atributos +5.^000000
+--------------------------
 ^0000ffHP máx. +100.^000000
 ^0000ffSP máx. +50.^000000
-^0000ffTodos os atributos +5.^000000
-A partir do refino +8::
-^0000ffHP máx. +1% por refino.^000000
-^0000ffTempo de conjuração variável -1% por refino.^000000
-Tipo: ^777777Equipamento para Cabeça^000000 
-Defesa: ^7777776^000000 
+--------------------------
+A cada refino a partir do +8:
+^0000ffHP máx. +1%.^000000
+^0000ffConjuração variável -1%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
+DEF: ^7777776^000000 DEFM: ^7777770^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777760^000000
 Classes: ^777777Todas^000000
@@ -56451,6 +57177,26 @@ Peso: ^777777120^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+18970#
+Touca felina que transmite uma energia mágica ao usuário.
+--------------------------
+^0000ffHabilita [Rugido da Fera] nv.1.^000000
+--------------------------
+^0000ffTodos os atributos +3.^000000
+--------------------------
+^0000ffPós-conjuração -5%.^000000
+^0000ffConjuração variável -5%.^000000
+A cada 2 refinos:
+^0000ffPós-conjuração -1%.^000000
+^0000ffConjuração variável -1%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777775^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 18971#
 Um diadema antigo, mas que parece ter sido guardado com muito carinho por alguém.
 --------------------------
@@ -56765,23 +57511,25 @@ Classes: ^777777Caçadores e evoluções^000000
 #
 18997#
 É como ser controlado por uma máquina desconhecida.
-^0000ffSP máx. -50%.^000000
-^0000ffPrecisão +50.^000000
-^0000ffEsquiva +50.^000000
-^FF6347Conjunto^000000
-^FF6347[Chip Quebrado 01]^000000
-^FF6347[Chip Quebrado 02]^000000
+--------------------------
+^0000ffSP máx.^000000 ^ff0000-50%.^000000
+^0000ffPrecisão e Esquiva +50.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Chip Quebrado 01]^000000
+^fa4e09[Chip Quebrado 02]^000000
 ^0000ffATQ e ATQM +50.^000000
 ^0000ffAumenta a velocidade de movimento.^000000
 Refino +9 ou mais:
 ^0000ffHP máx. +10%.^000000
 ^0000ffSP máx. +50%.^000000
-Tipo: ^777777Equipamento para Cabeça^000000
-Equipa em: ^777777Topo ^000000
-Defesa: ^7777770^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^777777100^000000
-Classe: ^777777Todas^000000
+Classes: ^777777Todas^000000
 #
 19019#
 Dizem que essa coroa foi usada por uma rainha fanática por rosas vermelhas que governou um país maravilhoso, cheio de lagartas azuis, antes de perder a cabeça. Encantada com forças elementais, seus poderes aumentam se usada em conjunto com outros itens queridos por fãs da literatura.
@@ -57019,6 +57767,29 @@ Peso: ^77777750^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Todas^000000
 #
+19051#
+Touca felina que transmite uma aura de batalha ao usuário.
+--------------------------
+^0000ffHabilita [Rugido da Fera] nv.1.^000000
+--------------------------
+^0000ffTodos os atributos +3.^000000
+--------------------------
+^0000ff4% de chance de converter 5% do dano físico causado em HP.^000000
+--------------------------
+^0000ff1% de chance de converter 2% do dano físico causado em SP.^000000
+--------------------------
+A cada 3 refinos:
+^0000ffConversão de HP +1%.^000000
+A cada 5 refinos:
+^0000ffConversão de SP +1%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777775^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19081#
 Ao utilizar este pedaço de casca de ovo dos Vermes com Rosto na cabeça, estes bichões serão pegos desprevenidos achando que você é apenas mais um de seus incontáveis ovos. Com este disfarce “infalível”, você vai causar mais dano contra os Vermes em seu Covil. Que sorte que a visão deles é tão ruim, né?
 ^0000ffPrecisão +20.^000000
@@ -57103,48 +57874,58 @@ Classes: ^777777Todas^000000
 #
 19097#
 Uma adorável gravata borboleta que faz parte do visual da MVP Piamette. Ela pode até não ser nada discreta, mas não se preocupe... Ei, espera, esse coelho de pelúcia sempre esteve com você?
+--------------------------
 ^0000ffVIT +1.^000000
-^0000ffDEFM +1.^000000
-^FF6347Conjunto^000000
-^FF6347[Coelho Macabro]^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Coelho Macabro]^000000
 Ao receber danos físicos ou mágicos:
 ^0000ff1,5% de chance de se transformar em Piamette por 3 segundos.^000000
+--------------------------
 ^CD3278No momento da transformação:^000000
 ^0000ffRegenera 2.000 de HP.^000000
 ^0000ffAutoconjura [Sussurro de Morfeu] nv. 2.^000000
-Tipo: ^777777Equipamento para Cabeça^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Baixo^000000
-Defesa: ^7777771^000000
-Peso: ^77777710^000000
+DEF: ^7777771^000000 DEFM: ^7777771^000000
+Peso: ^7777771^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 19098#
 O Chapéu Macabro de Cetim não é só mais um adorno qualquer – ele é tão fofo quanto é poderoso, e dá a ajuda necessária para aqueles que não são muito bons com magia. Pode confiar, a Piamette não usa isso à toa!
-^0000ffINT +2. DES +2.^000000
-^0000ffDano físico e mágico contra monstros da raça Humanoide +10%.^000000
+--------------------------
+^0000ffINT e DES +2.^000000
+^0000ffDano físico e mágico contra a raça Humanoide +10%.^000000
+--------------------------
 Refino +12 ou mais:
 ^0000ffAnula a penalidade de tamanho da arma.^000000
-^FF6347Conjunto^000000
-^FF6347[Coelho Macabro]^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Coelho Macabro]^000000
 Refino do chapéu no +1 ou maior:
-Ao realizar ataques físicos ou mágicos:
-^0000ff0,2% de chance de se transformar em Piamette por 3 segundos.^000000
+^0000ffAo realizar ataques físicos ou mágicos, 0,2% de chance de se transformar em Piamette por 3 segundos.^000000
 A cada refino do Chapéu:
 ^0000ffChance de transformação +0,2%.^000000
 A cada 3 refinos do Escudo:
 ^0000ffDuração da transformação +1 segundo.^000000
+--------------------------
 ^CD3278Durante a transformação:^000000
-^0000ffDrena 50 de HP do usuário a cada segundo.^000000
-Ao realizar ou receber danos físicos:
-^0000ff10% de chance de autoconjurar [Golpe Fulminante] nv. 10.^000000
+A cada segundo:
+^0000ffDrena 50 de HP do usuário.^000000
+Ao realizar ataques físicos:
+^0000ff10% de chance de autoconjurar [Golpe Fulminante] nv.10.^000000
 A cada refino do Chapéu:
 ^0000ffConjuração variável -5%.^000000
 ^0000ffVelocidade de ataque +3%.^000000
-^008080Se a transformação for por ataque mágico, autoconjura [Amplificação Mística] nv. 5 adicionalmente no momento da transformação.^000000
-Tipo: ^777777Equipamento para Cabeça^000000
+--------------------------
+^CD3278No momento da transformação:^000000
+^0000ffSe a transformação foi ativada por ataques mágicos, também ativa [Amplificação Mística] nv.5.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
-Defesa: ^7777773^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -57405,22 +58186,26 @@ Classes: ^777777Todas^000000
 #
 19138#
 Um diadema celestial feito em homenagem aos serafins mais inteligentes da deusa Freya. Dizem que ele abençoa usuários mais inteligentes, já que estes anjos prezam bastante as características intelectuais dos humanos.
+--------------------------
 ^0000ffFOR +2.^000000
+--------------------------
 A cada 8 de INT base:
 ^0000ffATQ +5.^000000
 ^0000ffEfetividade de cura +1%.^000000
-^0000ffTempo de conjuração variável +1%.^000000
+^0000ffConjuração variável^000000 ^ff0000+1%.^000000
+--------------------------
 INT base 108 ou mais:
-^0000ffATQ +50 adicional.^000000
-^0000ffEfetividade de cura +5% adicional.^000000
-^0000ffTempo de conjuração variável +4% adicional.^000000
+^0000ffATQ +50.^000000
+^0000ffEfetividade de cura +5%.^000000
+^0000ffConjuração variável^000000 ^ff0000+4%.^000000
 INT base 120 ou mais:
 ^0000ffATQ +125 adicional.^000000
 ^0000ffEfetividade de cura +10% adicional.^000000
-^0000ffTempo de conjuração variável +6% adicional.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+^0000ffConjuração variável^000000 ^ff0000+6%.^000000 ^0000ffadicional^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Meio^000000
-Defesa: ^7777770^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
@@ -57639,7 +58424,7 @@ A cada refino do +5 até o +10:
 ^fa4e09Conjunto^000000
 ^fa4e09[Carta Laurell Weinder]^000000
 Ao realizar ataques físicos:
-^0000ff4% de chance de autoconjurar [Lanças de Gelo] nv.5.^000000
+^0000ff4% de chance de autoconjurar [Lanças de Gelo] e [Congelar] nv.4.^000000
 A cada refino do +5 até o +10:
 ^0000ffNível autoconjurado +1.^000000
 ^0000ffChance de autoconjuração +1%.^000000
@@ -57649,6 +58434,28 @@ Equipa em: ^777777Topo^000000
 DEF: ^77777710^000000 DEFM: ^77777710^000000
 Peso: ^77777720^000000
 Nível necessário: ^77777780^000000
+Classes: ^777777Todas^000000
+#
+19157#
+Símbolo da revolução industrial de Einbroch, essa boneca representa os insurgentes que se revoltaram contra a perda de seus empregos com a chegada dos Guardiões automatizados.
+Dizem que ela sempre olha na direção de onde está a Mansão de Varmunt.
+--------------------------
+^0000ffTodos os atributos +1.^000000
+^0000ffCusto de SP das habilidades -10%.^000000
+--------------------------
+^0000ffTaxa de DROP +5%.^000000
+^0000ffEXP ao derrotar monstros +5%.^000000
+--------------------------
+Refino +9 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Refino +12 ou mais:
+^0000ffAumenta a velocidade de movimento.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 19159#
@@ -57698,19 +58505,25 @@ Classes: ^777777Todas^000000
 #
 19163#
 Uma adorável bonequinha da Succubus para deixar em cima da cabeça. Apesar de ser de grande ajuda, não deixe que esses olhinhos grandes te enganem.
+--------------------------
 ^a400cdNão pode ser refinado.^000000
-^0000ffRecupera 500 de HP e 50 de SP ao derrotar monstros com qualquer tipo de ataque.^000000
-Ao desequipar: 
+--------------------------
+Ao derrotar monstros com qualquer ataque:
+^0000ffRecupera 500 de HP e 50 de SP.^000000
+--------------------------
+Ao desequipar:
 ^0000ffDrena 5.000 de HP e 500 de SP.^000000
-^FF6347Conjunto^000000
+--------------------------
+^fa4e09Conjunto^000000
 ^CD3278Mascote [Succubus]^000000
 A cada 5 segundos:
 ^0000ffRegenera 500 de HP e 20 de SP.^000000
 Lealdade Alta:
-^0000ffRegenera +500 de HP e +20 de SP adicional.^000000
-Tipo: ^777777Equipamento para Cabeça^000000
+^0000ffRegenera +500 de HP e +20 de SP.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
-Defesa: ^7777770^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -57817,6 +58630,30 @@ Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777730^000000
+Classes: ^777777Todas^000000
+#
+19242#
+Um fã clube de gatos criou essa tiara para representar seus membros.
+Eles se reunem anualmente para compartilhar suas histórias felinas.
+--------------------------
+^0000ffTodos os atributos +1.^000000
+^0000ffVelocidade de ataque +5%.^000000
+--------------------------
+Refino +9 ou mais:
+^0000ffConjuração variável -10%.^000000
+Refino +12 ou mais:
+^0000ffA conjuração não pode ser interrompida.^000000
+--------------------------
+Nv. base até 99:
+^0000ffEXP ao derrotar monstros +10%.^000000
+Nv. base 100 ou mais:
+^0000ffEXP ao derrotar monstros +4%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^77777720^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 19243#
@@ -57930,6 +58767,19 @@ Peso: ^77777730^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
+19256#
+Não precisa ter vergonha de falar pro mundo que você é iniciante. Use a plaquinha e seja feliz!
+--------------------------
+^0000ffTaxa de DROP +10%.^000000
+^0000ffEXP ao derrotar monstros +10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^7777770^000000
+Nível mín.: ^7777771^000000 Nível máx.: ^77777799^000000
+Classes: ^777777Todas^000000
+#
 19257#
 Dizem que esse véu sagrado foi usado pela própria Papisa de Rachel antes dela assumir seu cargo. Mesmo nessa época, a jovem criança já estava repleta de poder divino, atuando como uma arcebispa. Esse poder ainda pode ser sentido no véu, que é capaz de aumentar os poderes curadores de quem o usar.
 ^0000ffEfetividade de cura +3%.^000000
@@ -57994,6 +58844,37 @@ DEF: ^77777712^000000 DEFM: ^7777770^000000
 Peso: ^77777780^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
+#
+19264#
+Um peixe dourado que foi capturado e virou chapéu de cor... dourada.
+--------------------------
+Ao realizar ataques físicos:
+^0000ff1,5% de chance de ativar o [Efeito 1] por 60 segundos.^000000
+--------------------------
+Ao realizar ataques mágicos:
+^0000ff1% de chance de ativar o [Efeito 2] por 60 segundos.^000000
+--------------------------
+A cada refino a partir do +7:
+^0000ffChance de ativação física +0,3%.^000000
+^0000ffChance de ativação mágica +0,2%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffChance de ativação física +1,8% adicional.^000000
+^0000ffChance de ativação mágica +1,2% adicional.^000000
+Refino +9 ou mais:
+^0000ffAo receber danos físicos, 1% de chance de autoconjurar [Pântano dos Mortos] nv.1.^000000
+--------------------------
+^CD3278Efeito 1:^000000
+^0000ffEncanta a arma com propriedade Sagrado.^000000
+--------------------------
+^CD3278Efeito 2:^000000
+^0000ffDano mágico de propriedade Sagrado +10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777772^000000 DEFM: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^7777771^000000
 #
 19265#
 Antigas lendas relatam que os Fumacentos usam folhas mágicas na cabeça para ficarem invisíveis ou mesmo se disfarçarem, assumindo até mesmo formas humanas. Agora que você está desfilando com esse chapéu, fica a dúvida: será que no fundo você é um desses Fumacentos disfarçado de aventureiro? Porque você está cheio de truques!
@@ -58590,6 +59471,40 @@ Peso: ^77777730^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Todas^000000
 #
+19329#
+Retirado diretamente de uma criatura das trevas, esse item auxilia o usuário na utilização de magias.
+--------------------------
+^0000ffA conjuração não pode ser interrompida.^000000
+--------------------------
+^0000ffConjuração fixa de [Rugido do Leão] -100%.^000000
+--------------------------
+Ao aprender [Tempestade Espiritual] nv.5:
+^0000ffConjuração variável de [Corpo Fechado] [Invocar Esfera Espiritual] e [Rugido do Leão] -50%.^000000
+--------------------------
+Ao aprender [Impacto Sísmico] nv.5:
+^0000ffRecarga de [Rugido do Leão] -9,5 segundos.^000000
+--------------------------
+Ao aprender [Explosão Espiritual] nv.5:
+^0000ffDano físico contra monstros Chefes +50%.^000000
+--------------------------
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffDano de [Rugido do Leão] +20%.^000000
+Refino +7 ou mais:
+^0000ffVelocidade de ataque +5% adicional.^000000
+^0000ffDano de [Rugido do Leão] +30% adicional.^000000
+Refino +9 ou mais:
+^0000ffVelocidade de ataque +5% adicional.^000000
+^0000ffDano de [Rugido do Leão] +50% adicional.^000000
+Refino +10 ou mais:
+^0000ffIgnora 100% da DEF de todas as raças.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^77777718^000000 DEFM: ^77777715^000000
+Peso: ^777777100^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 19349#
 Chapéu saindo quentinho do forno a lenha direto para o cocuruto dos guerreiros famintos por aventuras.
 --------------------------
@@ -58716,6 +59631,38 @@ Equipa em: ^777777Meio^000000
 Defesa: ^77777720^000000
 Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19409#
+A Pluma Negra garante ao usuário um fator recuperativo contra os inimigos. É só abater e regenerar!
+--------------------------
+Ao derrotar monstros com qualquer ataque:
+^0000ffRecupera 50 de SP.^000000
+--------------------------
+Ao aprender [Mimetismo] nv.10:
+^0000ffCusto de SP das habilidades -30%.^000000
+--------------------------
+Ao aprender [Redemoinho de Absorção] nv.3:
+^0000ffHabilita [Chute Aéreo] nv.7.^000000
+--------------------------
+Ao aprender [Forma Etérea] nv.5:
+^0000ffDano físico contra monstros Chefes +50%.^000000
+--------------------------
+^0000ffDano de [Cópia Explosiva] +10%.^000000
+Refino +7 ou mais:
+^0000ffPrecisão +30.^000000
+^0000ffDano de [Cópia Explosiva] +15% adicional.^000000
+Refino +9 ou mais:
+^0000ffPrecisão +20 adicional.^000000
+^0000ffDano de [Cópia Explosiva] +25% adicional.^000000
+Refino +10 ou mais:
+^0000ffIgnora 100% da DEF de todas as raças.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^77777718^000000 DEFM: ^77777715^000000
+Peso: ^777777100^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 19436#
@@ -59823,6 +60770,22 @@ Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+19659#
+Uma touca com um singelo pompom na ponta, perfeita para aquecer o cocuruto do usuário. Apertar o pompom com muita força pode fazê-lo se soltar... aí vai ser só uma touca normal...
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo ^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+19660#
+Acessório característico usado por todas as pessoas que são recrutadas para a divisão dos Boinas Magentas. Vibrante, elegante e inconfundível, dá pra ver a boina a quilômetros de distância.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo ^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 19661#
 Uma cartola feita de camadas de creme recheado com morango e com cobertura de chocolate. Espere um pouco... Isso é realmente um projeto visual de algum estilista, ou é um sorvete napolitano? De toda forma, é um visual perfeito para você viver deliciosas aventuras!
 Tipo: ^777777Visual^000000 
@@ -60079,8 +61042,15 @@ Classes: ^777777Todas ^000000
 19710#
 Um belo acessório feito com penas de Valquírias e joias preciosas, capaz de atrair boas vibrações e motivá-lo a vencer!
 Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
 Equipa em: ^777777Topo e Meio ^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classe: ^777777Todas^000000
+#
+19712#
+Companheira de todas as horas, a Bonequinha Angelical descansa suavemente no topo do cocuruto. Sua aura sagrada acalma os pensamentos e produz um aroma agradável, que faz o usuário pensar que está próximo do paraíso.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classe: ^777777Todas^000000
@@ -60218,6 +61188,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+19745#
+Um, dois, três, quatro... Um, dois, três, quatro... Pra manter o ritmo do desfile é preciso treinar muito a coreografia. Usar um chapéu bonito igual esse também é importante, pois a cidade toda estará te vendo!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19746#
 Este capuz sombrio é perfeito para esconder seu rosto, deixando apenas seus malignos olhos vermelhos à mostra. Só tome cuidado quando for fazer suas malvadezas, porque parece que um bando de Pés Grandes com desenhos pintados na barriga pode aparecer atrás de você gritando “4...3...2...1!”
 Tipo: ^777777Visual^000000
@@ -60226,6 +61204,14 @@ Equipa em: ^777777Topo, Meio e baixo^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas ^000000
+#
+19749#
+Só uma bonita e singela auréola consegue esconder as verdadeiras intenções de alguém. A auréola dourada existe para lembrar que ninguém deve mentir, pois o ouro e a consciência pesam!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes que utilizam: ^777777Todas^000000
 #
 19750#
 Algumas perguntas jamais terão respostas: de onde viemos? Pra onde vamos? Este visual é um laço com fita, ou uma fita com laço? Seja como for, aprecie todos os frufrus, babados e o estilo rococó que compõem esse laço (ou fita).
@@ -60294,6 +61280,14 @@ Um tule translúcido altamente colorido nas cores do arco-íris. Um olhar atento
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo e Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19761#
+Não há nada mais delicado que algumas flores no cabelo. O pólen atrai pássaros e belos insetos, completando a beleza das plantinhas e destacando o usuário pela conexão com a natureza.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -60445,6 +61439,14 @@ Classes: ^777777Todas^000000
 19789#
 Um chapéu refinado usado por boêmios. 
 São os pequenos detalhes que o tornam requintado.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+19790#
+Usado em cerimônias matrimoniais, esse véu é delicado e elegante, combinando com a ocasião especial. A tradição diz que quem se recusar a usar um desses pode sofrer com má sorte durante todo o casamento.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
@@ -60957,7 +61959,7 @@ Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 19911#
-Agora você não precisa se preocupar em procurar abrigo quando chover mas certifique-se que seu chapéu não tenha goteiras.
+Agora você não precisa se preocupar em procurar abrigo quando chover, mas certifique-se que seu chapéu não tenha goteiras.
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
@@ -61178,6 +62180,15 @@ Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas^000000
 #
+19955#
+Versão em miniatura da árvore de natal, com animação dos pisca-piscas e uma linda estrelinha no topo.
+Um charme!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19956#
 Um chapéu vermelho utilizado por membros de fanfarras militares de toda a Rune-Midgard. Os detalhes em dourado são delicados e bem produzidos. Agarre seu instrumento, entre em fila e prepare-se para marchar!
 Tipo: ^777777Visual^000000
@@ -61337,13 +62348,12 @@ Classes: ^777777Todas^000000
 #
 19976#
 Um chapéu que gatos de Malangdo usam na época de Natal.
-Velocidade de movimento e ataque aumentam durante o Evento de Natal de 2013.
+--------------------------
 Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
-Peso ^7777770^000000
-Nível Necessário: ^7777771^000000
-Classe: ^777777Todas^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 19977#
 Deixe o servidor todo saber que você está com pressa e não tem tempo pra responder pesquisa na rua ou ouvir a palavra de Odin, afinal, começou a chover e você esqueceu “as ropa no varal”.
@@ -61380,6 +62390,15 @@ Equipa em: ^777777Topo^000000
 Peso ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classe: ^777777Todas^000000
+#
+19982#
+O gorro originalmente usado pelo Papai Noel em Lutie.
+Símbolo máximo do Natal, esse gorro simples deixa qualquer pessoa no espírito festivo.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 19984#
 Este chapéu é a última moda em Moscóvia! Dizem que foi usado até mesmo pela princesa perdida, Anestésia.
@@ -61551,6 +62570,14 @@ Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+20018#
+Orelhinhas atentas aos perigos das redondezas. Use-as para mostrar que você tá sempre de olho nos monstros e em quem rouba seu loot.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20022#
 Uma guloseima com formato de coração e muito bem recheada. Dê um biscoito a quem você ama!
 Tipo: ^777777Visual^000000
@@ -61631,16 +62658,30 @@ Classes: ^777777Todas^000000
 20037#
 Adote o visual de elite com essa cartola extremamente elegante e despojada, mas viva sabendo que se você está usando esse chapelão, algum Duque Coruja está por aí com seu cocuruto à mostra.
 Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20038#
+Capacete da armadura usada por Alfonso, um grande lutador e alquimista de Rune-Midgard. Combatia o mal e buscava respostas sobre seu passado acompanhado de seu irmão baixinho e esquentadinho.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20041#
+Todas as flores tem seu lado mais... pontiagudo. E com a rosa não é diferente! Além de embelezar essa tiara, espeta os fios de cabelo e pinica um pouquinho. O que não fazemos pela beleza?
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 20044#
 Um colorido conjunto de frutas tropicais, perfeito pra você usar e descobrir o que é que a Baiana tem ou se o Tico-tico está comendo seu fubá.
 Tipo: ^777777Visual ^000000
-Defesa: ^7777770 ^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
@@ -61650,6 +62691,14 @@ Classes: ^777777Todas ^000000
 Pra usar essa peruca você tem que ser tudo, menos envergonhado. É praticamente impossível não perceber uma “floresta ambulante” caminhando por aí.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo e Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20046#
+A rosa azul representa a frieza nos pensamentos e a execução das melhores soluções nos momentos difíceis, sendo um símbolo de persistência e coragem. Nas tiaras, as rosas azuis ficam super fofas!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -61741,6 +62790,30 @@ Tipo: ^777777Visual ^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas^000000
+#
+20094#
+A Tiara de Laço Verde representa uma conexão muito forte com a natureza. Seu laço é feito com folhas de uma árvore centenária, e sua estrutura possui fios de seiva de plantas sagradas. É um símbolo de pacto com a vida selvagem.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20095#
+Vermelho como o mais intenso rubi, o laço dessa tiara foi banhado por minerais valiosos, tornando-a uma peça inestimável para colecionadores. Dizem que, ao receber o reflexo do Sol, o brilho da tiara forma um imenso arco-íris.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20096#
+O laço com a cor do céu mais límpido diferencia essa tiara das demais, como se tivesse sido confeccionado entre as nuvens e as estrelas. Quem usa essa tiara adquire um tom mais poético e alegre, lembrando o alvorecer.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 20098#
@@ -61841,6 +62914,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20122#
+Com cores refrescantes do verão, o Laço da Felicidade encanta até mesmo quem nunca costuma tirar férias das aventuras. É só colocar e deixar fluir o sentimento de paz e tranquilidade.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo ^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20129#
 Esse chapéu foi criado pra ser uma réplica de um Poporing que você possa usar na cabeça, mas não se preocupe: ele não é pegajoso e nenhum Poporing foi ferido durante sua confecção.
 Tipo: ^777777Visual^000000
@@ -61895,17 +62976,13 @@ Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 20135#
-^000088Item de Aluguel^000000
-^ff0000Não pode ser negociado.^000000
 Para comemorar os 11 anos do Ragnarök, uma trupe de heróis veio tirar essa coroa das mãos dos malfeitores. Eles seguiam apenas 3 regras: “Não ferir ninguém – exceto no PVP”, “Não roubar loot de monstro que não mereça” e “Continuar a jogar, aconteça o que acontecer.”
-Efeitos durante o evento:
-Se equipado em conjunto com as Orelhas dos 11 Anos e um Segredo, todos os atributos + 11.
+--------------------------
 Tipo: ^777777Visual^000000
-Defesa: ^7777770 ^000000
 Equipa em: ^777777Topo^000000
-Peso: ^7777770 ^000000
-Nível Necessário: ^7777771^000000
-Classes: ^777777Todas ^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 20136#
 ^000088Item de Aluguel^000000
@@ -61940,6 +63017,14 @@ Classes: ^777777Todas ^000000
 #
 20145#
 Coloque esse visor futurista no rosto, foque sua visão em alguém e descubra informações mais do que úteis! Basta um rápido olhar para saber o signo da pessoa, se ela prefere falar “biscoito” ou “bolacha” e até mesmo seu personagem favorito dos Farofeiros do Zodíaco.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20146#
+Máscara usada em um baile por uma deusa muito querida em Rune-Midgard. Ela teve que se disfarçar para aproveitar a festa em paz e acabou mantendo o visual até ter o rosto esquecido por seus antigos fiéis.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
@@ -61989,6 +63074,14 @@ Classes: ^777777Todas ^000000
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20160#
+Esqueça o bacon e as torradas! Parece um ovo frito, mas é uma Mini Magnólia cheia de energia para buscar confusão! E não, ela não aumenta o colesterol...
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -62586,6 +63679,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+20293#
+Um pequeno e singelo Rochoso que te acompanha em todas as aventuras. Pode ser um pouco pesado no começo, mas você se acostuma fácil, inclusive com as eventuais pedras no sapato que caem.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 20294#
 Um chapéu comemorativo da nomeação do 29o líder da família Maximilian. Um bebe selvagem como nunca se viu. Ele simboliza a coragem dos pequenos sobre os grandes.
 Tipo: ^777777Visual^000000
@@ -62597,8 +63698,23 @@ Classe: ^808080Todas^000000
 20295#
 Alguns jovens Super Aprendizes que não dominam suas habilidades encontram abrigo na Escola do Professor Chavier, perto de Hugel. Como o jovem Iscóte Samers, que só conseguiu controlar suas rajadas de Lanças de Fogo ao ir lá e ganhar este visor.
 Tipo: ^777777Visual ^000000
-Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+20296#
+Um Macaquinho Yoyo é símbolo de sorte e esperança, perfeito para encarar os desafios da rotina diária. Dá pra fazer carinho, brincar e até pedir alguns conselhos sobre que caminho seguir. Yoyo sempre escolhe o mais divertido!
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+20297#
+O Mini Cacto é do tipo quieto, que tá sempre na dele. Com exceção dos raros pedidos por água, esse companheiro passa quase o tempo todo dormindo, mesmo no meio das mais perigosas empreitadas. É um cacto tranquilo e compacto!
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
@@ -63518,6 +64634,20 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20501#
+Combinando um material leve e eficiência, as Asas Mecanizadas são a locomoção do futuro. Atinja velocidades inimagináveis, quebre todas as barreiras e sinta-se seguro com o paraquedas integrado! É o primeiro passo para se tornar um aventureiro moderno!
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode ser transferido para o armazém.^000000
+--------------------------
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20502#
 Só de olhar pra essas asas já dá medo do antigo proprietário. Usar uma dessas envolve coragem e muita vontade de voar.
 --------------------------
@@ -63755,6 +64885,32 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20537#
+Nada melhor do que estar rodeado de folhas que dançam no ritmo do vento e pintam as paisagens com suas cores estonteantes. Se uma cair, não se preocupe! Tem sempre mais folhas pra compor a bela canção do outono.
+--------------------------
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
+--------------------------
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode ser transferido para o armazém.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20538#
+Um círculo mágico e colorido que acompanha os aventureiros, iluminando o caminho por onde passam com luzes de diferentes intensidades. Quase um show particular, é preciso tomar cuidado pra não sair dançando junto.
+--------------------------
+^008080Exibe efeito gráfico que pode ser desligado com /effect.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20541#
 Desfrute de poderes inimagináveis e alcance o infinito impossível com as asas dos verdadeiros seres do paraíso.
 --------------------------
@@ -63839,7 +64995,7 @@ Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 20573#
-
+Não importa quanto tempo estiver usando a Essência Violeta, aventureiros por aí ainda vão insistir que é roxa...
 --------------------------
 ^008080Exibe o visual nas costas do personagem.^000000
 --------------------------
@@ -64040,6 +65196,19 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20602#
+Asas que são capazes de aguentar gigantes são raras entre os salões nórdicos. Ferramenta essencial para garantir o sucesso dos Jotun, essa peça surpreende deuses e criaturas com seu poder inigualável.
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode ser transferido para o armazém.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20603#
 A camuflagem eficiente das Asas Camaleônicas pode até causar estranheza, mas o acessório te esconde até no meio de um Arco-íris. Os efeitos adversos do uso envolvem mudança de cor constante e brilho involuntário. Use com moderação.
 --------------------------
@@ -64053,6 +65222,19 @@ Classes: ^777777Todas^000000
 #
 20605#
 Se começar a chover forte, não aceite imitações. A Folha-chuva não te deixa ficar molhado e ainda é super ecológica. Lembre-se de usá-la no Sol também, afinal as plantas precisam da luz do dia!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20607#
+Espalhando justiça e sabedoria por onde passa, Baldur é abençoado com um par de asas que acompanha a graciosidade de sua figura. Dizem que nada é capaz de derrubar o deus nórdico enquanto voa, a não ser flechas feitas de visco.
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode ser transferido para o armazém.^000000
+--------------------------
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777770^000000
@@ -64661,6 +65843,53 @@ Peso: ^77777740^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+20800#
+Capa usada por um carrasco que executava prisioneiros de forma cruel. Em um dia chuvoso, o carrasco decidiu abandonar sua função no reino e fugiu, deixando para trás apenas sua capa. Os prisioneiros morrem de medo ao ver esse item, imaginando um possível retorno do executor.
+--------------------------
+^0000ffPós-conjuração -5%.^000000
+--------------------------
+Ao aprender [Tocaia] nv. 5:
+^0000ffDano de [Tocaia] +50%.^000000
+Ao aprender [Destruidor de Almas] nv. 10:
+^0000ffDano de [Destruidor de Almas] +50%.^000000
+Ao aprender [Lâminas Retalhadoras] nv. 5:
+^0000ffDano de [Lâminas Retalhadoras] +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffSP máx. +5%.^000000
+^0000ffPós-conjuração -3% adicional.^000000
+--------------------------
+Refino +9 ou mais:
+-
+^0000ffPós-conjuração -3% adicional.^000000
+A cada nível de base:
+^0000ffDano de [Tocaia] +1%.^000000
+A cada 3 níveis de base:
+^0000ffDano de [Destruidor de Almas] +1%.^000000
+A cada 30 níveis de base:
+^0000ffDano de [Lâminas Retalhadoras] +1%.^000000
+--------------------------
+Sicários e evoluções:
+-
+^0000ffHP máx. +15%.^000000
+^0000ffResistência a danos fisicos a distância +20%.^000000
+Refino +9 ou mais:
+^0000ffHP máx. +5% adicional.^000000
+^0000ffResistência a danos fisicos a distância +15% adicional.^000000
+-
+^FA4E09Conjunto^000000
+^FA4E09[Carta Besouro-Chifre]^000000
+^0000ffAnula o efeito da carta.^000000
+^FA4E09Conjunto^000000
+^FA4E09[Escudo de Placas Samurai]^000000
+^0000ffResistência a danos físicos a distância^000000 ^ff0000-35%.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777718^000000 DEFM: ^77777710^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 20802#
 O estilo da Mochila de Amistr com a conveniência de uma habilidade que é útil pra qualquer um. Diga adeus às Asas de Mosca na hora de escapulir de um destino trágico!
 --------------------------
@@ -64687,18 +65916,72 @@ Classes: ^777777Todas^000000
 #
 20806#
 A versão aprimorada e superior da antiga Mochila de Amistr. Esta mochila super fofinha é feita de pelúcia e lã sintética à prova de explosões, para que você possa aproveitar seu potencial completo sem medo de perder sua querida mochilinha.
+--------------------------
 ^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
 ^0000ffTodos os atributos +1.^000000
-^0000ffHabilita [Impacto Explosivo] nv. 1.^000000
+--------------------------
+^0000ffHabilita [Impacto Explosivo] nv.1.^000000
+--------------------------
 A cada 2 refinos:
 ^0000ffTaxa de DROP +1%.^000000
 ^0000ffEXP adquirida por monstros +1%.^000000
+--------------------------
 Refino +9 ou mais:
-^0000ffRecupera 3 de SP ao derrotar monstros com ataques mágicos ou físicos de curto e longo alcance.^000000
+^0000ffAo derrotar monstros com qualquer ataque, recupera 3 de SP.^000000
 Refino +12 ou mais:
 ^0000ffA conjuração não pode ser interrompida.^000000
+--------------------------
 Tipo: ^777777Capa^000000
-Defesa: ^77777730^000000
+DEF: ^77777730^000000 DEFM: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20808#
+Enquanto os espíritos dos Amistr protegem o usuário, esta mochila libera a Chama Reveladora que habita dentro de cada aventureiro(a).
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+^0000ffTodos os atributos +1.^000000
+--------------------------
+^0000ffHabilita [Chama Reveladora] nv.1.^000000
+--------------------------
+A cada 2 refinos:
+^0000ffTaxa de DROP +1%.^000000
+^0000ffEXP adquirida por monstros +1%.^000000
+--------------------------
+Refino +9 ou mais:
+^0000ffAo derrotar monstros com qualquer ataque, recupera 3 de SP.^000000
+Refino +12 ou mais:
+^0000ffA conjuração não pode ser interrompida.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777730^000000 DEFM: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20811#
+Enquanto os espíritos dos Amistr protegem o usuário, esta mochila libera o Esconderijo. Ninguém vai achar você, aventureiro(a).
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+^0000ffTodos os atributos +1.^000000
+--------------------------
+^0000ffHabilita [Esconderijo] nv.1.^000000
+--------------------------
+A cada 2 refinos:
+^0000ffTaxa de DROP +1%.^000000
+^0000ffEXP adquirida por monstros +1%.^000000
+--------------------------
+Refino +9 ou mais:
+^0000ffAo derrotar monstros com qualquer ataque, recupera 3 de SP.^000000
+Refino +12 ou mais:
+^0000ffA conjuração não pode ser interrompida.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777730^000000 DEFM: ^7777770^000000
 Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -64889,6 +66172,38 @@ Peso: ^77777760^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Todas^000000
 #
+20854#
+Obcecado por consumíveis? Deseja mais regeneração? A Capa Médica faz isso e muito mais... e nem precisa chamar de “Doutor.”
+--------------------------
+Ao derrotar monstros com qualquer ataque:
+^0000ffRegenera 100 de HP e 10 de SP.^000000
+--------------------------
+Ao derrotar monstros das raças Planta ou Inseto:
+^0000ff0,5% de chance de derrubar Pílula de Combate.^000000
+--------------------------
+Ao derrotar monstros das raças Demônio ou Humanoide:
+^0000ff0,5% de chance de derrubar Poção do Vento.^000000
+--------------------------
+Ao derrotar monstros das raças Anjo ou Morto-vivo:
+^0000ff0,5% de chance de derrubar Garrafa de Veneno.^000000
+--------------------------
+Ao derrotar monstros das raças Bruto ou Peixe:
+^0000ff0,5% de chance de derrubar Psicotrópico.^000000
+--------------------------
+Ao derrotar monstros das raças Dragão ou Amorfo:
+^0000ff0,5% de chance de derrubar Serum.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffChance de derrubar os itens +0,5% adicional.^000000
+Refino +9 ou mais:
+^0000ffChance de derrubar os itens +1% adicional.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777712^000000 DEFM: ^7777770^000000
+Peso: ^77777760^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
+#
 20904#
 Uma bata que pertenceu a Etran, um antigo esplêndido, cuja pesquisa salvou Yggdrasil da desgraça. O encanto na bata é antigo, mas ainda se encontra forte e eficiente.
 ^0000ffHP máx. +2%.^000000
@@ -64916,8 +66231,10 @@ Classes: ^777777Todas^000000
 #
 20908#
 Um manto usado pela Bruxa Jiranto que não se trata só de estilo: junto do Cajado da Bruxa, sua resistência a fogo e vento se torna ainda maior. Mas não se engane, apesar da cor vermelha e do seu caráter mágico, ela não tem vontade própria.
-^0000ffA cada 2 refinos:^000000
+--------------------------
+A cada 2 refinos:
 ^0000ffResistência as propriedades Fogo e Vento +5%.^000000
+--------------------------
 Refino +5 ou mais:
 ^0000ffDano mágico +5%.^000000
 ^0000ffConjuração variável -5%.^000000
@@ -64926,12 +66243,14 @@ Refino +7 ou mais:
 ^0000ffConjuração variável -5% adicional.^000000
 Refino +15 ou mais:
 ^0000ffMantém [Vigor] ativo.^000000
-^FF6347Conjunto^000000
-^FF6347[Cajado da Bruxa]^000000
-^0000ffDano mágico +5% adicional.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Cajado da Bruxa]^000000
+^0000ffDano mágico +5%.^000000
 ^0000ffResistência as propriedades Fogo e Vento +10%.^000000
+--------------------------
 Tipo: ^777777Capa^000000
-Defesa: ^77777716^000000
+DEF: ^77777716^000000 DEFM: ^7777770^000000
 Peso: ^777777100^000000
 Nível necessário: ^777777130^000000
 Classes: ^777777Todas^000000
@@ -65060,6 +66379,37 @@ Tipo: ^777777Capa^000000
 Defesa: ^77777730^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+20940#
+Ninguém chegará perto das pontas e de seu poder de ataque ao usar os Espinhos Violeta.
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+^0000ffATQM +20.^000000
+^0000ffDano crítico +3%.^000000
+^0000ffDano físico a distância +3%.^000000
+--------------------------
+A cada 3 refinos:
+^0000ffATQM +20.^000000
+^0000ffDano crítico +3%.^000000
+^0000ffDano físico a distância +3%.^000000
+--------------------------
+Refino +11 ou mais:
+^0000ffPós-conjuração -4%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Venda Sombria]^000000
+^0000ffPós-conjuração -6%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Asas de Sigrún]^000000
+^0000ffDano crítico +14%.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 20941#
@@ -65841,6 +67191,24 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^77777799^000000
 Classes: ^777777Espadachins e evoluções^000000
 #
+21202#
+O porco é um animal conhecido por dar sorte no dinheiro em algumas cidades!
+Felizmente você não precisará se preocupar com o cheiro.
+--------------------------
+^CD3278Efeitos durante o evento:^000000
+^0000ffEfetividade de cura da Sacola de Grãos +2.019%.^000000
+A cada 20 níveis de base:
+^0000ffDEF +6.^000000
+A cada 19 níveis de classe:
+^0000ffATQ da arma +3%.^000000
+^0000ffDano mágico +3%.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio e Baixo^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 22000#
 Botas incríveis que devem ter sido criadas há muito tempo, mas nunca foram usadas.
 ^0000ffHP máx. +300.^000000
@@ -66236,6 +67604,32 @@ Peso: ^77777725^000000
 Nível necessário: ^777777125^000000
 Classes: ^777777Todas^000000
 #
+22048#
+Sapateando na cara das sombras, seu brilho só acaba quando a música termina!
+--------------------------
+^0000ffResistência a propriedade Sombrio +5%.^000000
+--------------------------
+A cada refino do calçado:
+^0000ffHP e SP máx. +1%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Escudo Brilhante]^000000
+^0000ffResistência a oponentes de propriedade Sombrio +5%.^000000
+A cada refino do escudo:
+^0000ffResistência a propriedade Sombrio +2% adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Manto Brilhante]^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Sombrio +5%.^000000
+A cada refino da capa:
+^0000ffHP e SP máx. +1%.^000000
+--------------------------
+Tipo: ^777777Calçado^000000
+DEF: ^77777712^000000 DEFM: ^7777773^000000
+Peso: ^77777725^000000
+Nível necessário: ^77777790^000000
+Classes: ^777777Todas^000000
+#
 22067#
 Um par de sapatos com um broche de Gatinho nele.
 Ao usar durante o Evento de Halloween 2015, habilita o usa da habilidade 'Rugido da Fera', que transforma o usuário em uma Loli Ruri por alguns segundos.
@@ -66311,7 +67705,6 @@ Um par de sandálias chiquérrimas com saltos tão altos quanto a finesse de que
 A cada refino:
 ^0000ffPós-conjuração -2%.^000000
 --------------------------
-^ff0000Desabilitado temporariamente:^000000
 ^FA4E09Conjunto^000000
 ^FA4E09Coroa[0]^000000
 ^0000ffConjuração variável -10%.^000000
@@ -66463,6 +67856,23 @@ Tipo: ^777777Calçado^000000
 Defesa: ^77777715^000000
 Peso: ^77777730^000000
 Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+22103#
+Calçado de excelência criado pela extinta tecnologia das ruínas de Verus. 
+--------------------------
+^0000ffHP e SP máx. +5%.^000000
+--------------------------
+A cada 3 refinos:
+^0000ffHP e SP máx. +3%.^000000
+--------------------------
+Nv. base 130 ou mais:
+^0000ffHP e SP máx. +4% adicional.^000000
+--------------------------
+Tipo: ^777777Calçado^000000
+DEF: ^77777713^000000 DEFM: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 22104#
@@ -67345,6 +68755,47 @@ Peso: ^77777740^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+22228#
+Unam-se à gloriosa evolução! Períodos passam, mas o poder sempre prevalece!
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
+^0000ffDano mágico contra monstros Chefes +15%.^000000
+--------------------------
+A cada refino:
+^0000ffATQM +5.^000000
+^0000ffVelocidade de ataque +1%.^000000
+^0000ffDano mágico de propriedade Sombrio +3%.^000000
+--------------------------
+Refino +10 ou mais:
+^0000ffDano mágico de propriedade Sombrio +50% adicional.^000000
+--------------------------
+^FA4E09Conjunto [Epifania]^000000
+^0000ffINT +40.^000000
+^0000ffVelocidade de ataque +10%.^000000
+--------------------------
+Tipo: ^777777Calçado^000000
+DEF: ^77777715^000000 DEFM: ^77777710^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+22229#
+Botas feitas com um couro grosso e resistente, digno das criaturas colossais que habitavam o mundo.
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
+^0000ffDano mágico contra monstros Chefes +5%.^000000
+--------------------------
+A cada refino:
+^0000ffDano mágico contra monstros Chefes +1% adicional.^000000
+--------------------------
+Tipo: ^777777Calçado^000000
+DEF: ^7777775^000000 DEFM: ^7777770^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 22235#
 As Botas Felpudas equilibram o que há de mais eficiente entre visual fashion e conforto aconchegante.
 --------------------------
@@ -67586,6 +69037,36 @@ Reagente para testes que ainda não foi aprovado pelos estudos clínicos. Leia a
 Duração: ^7777775 segundos^000000
 Peso: ^7777773^000000
 #
+22702#
+Reseta 1 ponto de FOR, devolvendo os pontos para redistribuir novamente.
+^ff0000Não pode ser usada se o atributo for 1.^000000
+Peso: ^7777770^000000
+#
+22703#
+Reseta 1 ponto de AGI, devolvendo os pontos para redistribuir novamente.
+^ff0000Não pode ser usada se o atributo for 1.^000000
+Peso: ^7777770^000000
+#
+22704#
+Reseta 1 ponto de VIT, devolvendo os pontos para redistribuir novamente.
+^ff0000Não pode ser usada se o atributo for 1.^000000
+Peso: ^7777770^000000
+#
+22705#
+Reseta 1 ponto de INT, devolvendo os pontos para redistribuir novamente.
+^ff0000Não pode ser usada se o atributo for 1.^000000
+Peso: ^7777770^000000
+#
+22706#
+Reseta 1 ponto de DES, devolvendo os pontos para redistribuir novamente.
+^ff0000Não pode ser usada se o atributo for 1.^000000
+Peso: ^7777770^000000
+#
+22707#
+Reseta 1 ponto de SOR, devolvendo os pontos para redistribuir novamente.
+^ff0000Não pode ser usada se o atributo for 1.^000000
+Peso: ^7777770^000000
+#
 22737#
 ^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
 ^ffffff_^000000
@@ -67811,6 +69292,59 @@ Sobremesa de mascarpone e creme de castanha preparado em forma de uma montanha.
 ^0000ffAtiva [Concentração] nv. 5.^000000
 Peso: ^7777775^000000
 #
+23046#
+^ff0000Intransferível.^000000
+Poção com conteúdo misterioso que brilha intensamente.
+^0000ffEsquiva +20. SOR +10.^000000
+^008080Perde o efeito ao morrer.^000000
+Duração: ^7777775 minutos^000000
+Peso: ^7777771^000000
+#
+23047#
+^ff0000Intransferível.^000000
+Uma poção com o poder de Tyr, o deus da batalha.
+^0000ffATQ e ATQM +20.
+Precisão e Esquiva +30.^000000
+^008080Perde o efeito ao morrer.^000000
+^ff0000Não cumulativo com consumíveis semelhantes.^000000
+Duração: ^7777775 minutos^000000
+Peso: ^7777771^000000
+#
+23048#
+^ff0000Intransferível.^000000
+Uma poção sagrada criada pelos alquimistas dos mosteiros no Sacro Império de Arunafeltz. Ela carrega um incrível poder regenerador, que torna qualquer um mais suscetível ao uso de poções ou mesmo aos poderes divinos. Os ingredientes são secretos, mas dizem que um deles é Água Benta.
+^0000ffEfetividade de cura recebida +20%.
+Recuperação de HP por itens +20%.^000000
+^008080Perde o efeito ao morrer.^000000
+Duração: ^77777730 minutos^000000
+Peso: ^7777771^000000
+#
+23049#
+^ff0000Intransferível.^000000
+Mais explosivo que uma bomba de chocolate, a concentração de açúcar deste doce vai deixá-lo superativo.
+^0000ffATQ +20.
+Ativa [Vigor].
+Velocidade de ataque +25%.^000000
+A cada 10 segundos:
+^0000ffDrena 100 de HP.^000000
+^008080Perde o efeito ao morrer.^000000
+Duração: ^77777760 segundos^000000
+Recarga: ^7777773 minutos^000000
+Peso: ^7777771^000000
+#
+23050#
+^ff0000Intransferível.^000000
+Esse doce mágico vai derreter na sua boca. Só não se esqueça de escovar os dentes depois de deliciá-lo. 
+^0000ffATQM +30.
+Conjuração fixa -70%.
+A conjuração não pode ser interrompida.^000000
+A cada 10 segundos:
+^0000ffDrena 90 de SP.^000000
+^008080Perde o efeito ao morrer.^000000
+Duração: ^77777760 segundos^000000
+Recarga: ^7777773 minutos^000000
+Peso: ^7777771^000000
+#
 23073#
 Uma caixa de sapato especialmente feita para se guardar Botas do Anjo Poring. Ao ser aberta, além das botas ela também revela possuir uma gema especial. Qual será?
 Uma caixa contendo 1 Botas do ArchAngeling e 1 encantamento especial aleatório.
@@ -67827,6 +69361,17 @@ Peso: ^7777771^000000
 Cristal maciço que pode ser quebrado em pequenos pedaços.
 ^0000ffFornece uma quantidade aleatória de Fragmentos Ominosos.^000000
 Peso: ^77777750^000000
+#
+23100#
+Pergaminho abençoado pelo Ghostring para encantos.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios na Boneca Insurgente.^000000
+--------------------------
+^ff0000Perde refino, carta e essência de morroc ao combinar.^000000
+--------------------------
+Peso: ^7777771^000000
 #
 23123#
 ^ff0000"Atenção! Se você possuir mais que 30.000 unidades deste item, a quantidade excedente será perdida."^000000
@@ -67873,12 +69418,33 @@ Itens que podem ser obtidos:
 ^0000ffBalão de Archangeling.^000000
 Peso: ^7777771^000000
 #
+23161#
+Caixa contendo 1 Pergaminho Insurgente e 1 Boneca Insurgente.
+Você poderá adicionar 2 Bônus Aleatórios.
+
+Peso: ^7777771^000000
+#
+23175#
+Carta de agradecimento aos clientes da Corporação Kafra.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios no Uniforme de Kafra.^000000
+--------------------------
+^ff0000Perde refino, carta e essência de morroc ao combinar.^000000
+--------------------------
+Peso: ^7777771^000000
+#
 23177#
 A Corporação Kafra oferece a você o incrível Cartão Kafra Especial! Ele vem com a primeira anuidade paga e um programa de milhagem. Quanto mais você usar, mais parecido com uma Kafra você ficará! Permite acessar seu armazém diretamente, em qualquer lugar do mundo.
 --------------------------
 ^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão e colocado no carrinho, mas pode ser colocado na Kafra. No servidor Valhalla só é possível acessar o primeiro armazém com este item.^000000
 --------------------------
 Peso: ^7777771^000000
+#
+23178#
+Cesta decorada contendo 1 Envelope das Kafras e 1 Uniforme de Kafra.
+Peso: ^77777751^000000
 #
 23202#
 ^ff0000Intransferível.^000000
@@ -67907,11 +69473,70 @@ Docinho arredondado crocante por fora e macio por dentro.
 ^0000ffAtiva [Angelus] nv. 5.^000000
 Peso: ^77777710^000000
 #
+23277#
+Caixa contendo um M.E.C.H.A. desmontado que surge totalmente reconstruído.
+--------------------------
+^0000ffAo aprender [Licença de Pilotagem] nv. 1, invoca o M.E.C.H.A. como montaria.^000000
+--------------------------
+^ff0000Será consumido mesmo se o usuário já estiver montado em um M.E.C.H.A. e se não for da classe Mecânico.^000000
+--------------------------
+Recarga: ^7777773 minutos^000000
+Nível necessário: ^777777100^000000
+Peso: ^77777730^000000
+#
+23289#
+Embrulho natalino com um poder misterioso dentro!
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios no Alforje Mágico do Antonio.^000000
+--------------------------
+^ff0000Perde refino, carta e essência de morroc ao combinar.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+23290#
+Embrulho natalino com um poder misterioso dentro!
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios na Bolsa Mágica do Antonio.^000000
+--------------------------
+^ff0000Perde refino, carta e essência de morroc ao combinar.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+23291#
+Embrulho natalino com um poder misterioso dentro!
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios na Sacola Mágica de Antonio.^000000
+--------------------------
+^ff0000Perde refino, carta e essência de morroc ao combinar.^000000
+--------------------------
+Peso: ^7777771^000000
+#
 23302#
 Baú Poring com um conteúdo misterioso. 
 Não dá pra saber se é uma boa tentar descobrir o que há dentro.
 Nível necessário: ^77777730^000000
 Peso: ^77777720^000000
+#
+23310#
+Cesta enfeitada contendo 1 Tiara Felina e 1 Pedra Felina.
+Peso: ^7777771^000000
+#
+23311#
+Pedra criada pelos gatos para a dominação da raça humana.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios na Tiara Felina.^000000
+--------------------------
+^ff0000Perde refino, carta e essência de morroc ao combinar.^000000
+--------------------------
+Peso: ^7777771^000000
 #
 23342#
 Um envelope selado que contém uma Licença de Venda. Abra-o para ter a autorização de criar sua loja.
@@ -68057,6 +69682,24 @@ Limite: ^777777Até 5 itens^000000
 Duração: ^7777773 dias^000000
 Peso: ^7777771^000000
 #
+23360#
+Alguns músicos recorrem ao psicotrópico quando estão com inflamações na garganta. O Ministério da Saúde de Rune-Midgard recomenda não fazer uso de automedicação.
+--------------------------
+^0000ffUsando chicotes ou instrumentos musicais, ativa [Ode a Hela] nv.5.^000000
+--------------------------
+^ff0000Será consumido mesmo se o usuário não estiver equipado com Chicote ou Instrumento Musical.^000000
+--------------------------
+Nível necessário: ^777777100^000000
+Peso: ^7777770^000000
+#
+23361#
+Medicina poderosa que desintoxica uma pessoa.
+--------------------------
+^0000ffRemove os efeitos de Curare, Pirexia, Squamata, Vípera, Beladona, Waraitake, Cicuta e Oblivium.^000000
+--------------------------
+Nível necessário: ^777777100^000000
+Peso: ^7777770^000000
+#
 23368#
 Um catálogo especial para as lojinhas disponíveis!
 Serve para procurar itens de seu interesse. Usos limitados!
@@ -68074,6 +69717,42 @@ Peso: ^7777771^000000
 Uma sacola confeccionada especialmente para capturar seres mágicos.
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão e nem colocado no armazém, mas pode ser vendido em NPC's.^000000
 Peso: ^7777775^000000
+#
+23538#
+Caixa contendo 1 Escudo usado pelo Cavaleiro Sanguinário e 1 Poção Maldita.
+Você pode adicionar 2 Bônus Aleatórios.
+
+Peso: ^7777771^000000
+#
+23545#
+Poção com um líquido estranho, capaz de reagir com metais cheios de sangue.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios no Escudo Sanguinário.^000000
+--------------------------
+^ff0000Perde refino, carta e essência de morroc ao combinar.^000000
+^ff0000Haverá uma chance de transformar o escudo em Sanguinário Maldito ou Sanguinário Purificado.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+23546#
+Bebida sangrenta, a favorita do Cavaleiro Sanguinário.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios no Sanguinário Maldito.^000000
+--------------------------
+Peso: ^7777771^000000
+#
+23547#
+Poção com um líquido denso, capaz de reagir com metais purificados.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona até 3 bônus aleatórios no Sanguinário Purificado.^000000
+--------------------------
+Peso: ^7777771^000000
 #
 23548#
 Um doce transparente que contém cristais de gelo. Vão te congelar por inteiro.
@@ -68121,6 +69800,14 @@ Uma caixa pode conter aperitivos, chapéus e uma variedade de itens. O que será
 ^0000ffConcede um item aleatório.^000000
 ^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, nem vendido nos NPC's, mas pode ser colocado no armazém.^000000
 Peso: ^77777710^000000
+#
+23919#
+^ff0000Intransferível.^000000
+Cansada dos Diamantes de 3 Quilates em Comodo, Kachua agora está procurando pelas suas chaves! 
+Concede 1 Premiação Aleatória
+^ff0000Prêmios alteram periodicamente.^000000 
+<URL>[Confira as chances.]<INFO>https://playragnarokonlinebr.com/novidades/kachua/o-sistema-kachua-chegou-com-muitos-premios-para-voce</INFO></URL>
+Peso: ^7777770^000000
 #
 24012#
 Essa peça de equipamento sombrio foi forjada durante a comemoração de aniversário de 13 anos do início das batalhas entre humanos e monstros. Pode parecer um motivo estranho, mas desde então milhares de aventureiros passaram a buscar esse item durante outras datas especiais. Dentro das luvas você pode ver escrito 'Parabéns '.
@@ -68211,6 +69898,46 @@ Posição: ^777777Colar^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+24154#
+Malha usada por baixo da armadura convencional.
+--------------------------
+^0000ffHP máx. +10 por refino.^000000
+--------------------------
+^0000ffDEF +5.^000000
+A cada 2 refinos:
+^0000ffDEF +1.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Colar Sombrio Indestrutível]^000000
+A cada refino da Malha:
+^0000ffDEF +1.^000000
+A cada refino do Colar:
+^0000ffDEF +1.^000000
+--------------------------
+Tipo: ^777777Equip. Sombrio^000000
+Posição: ^777777Malha^000000 Peso: ^7777770^000000
+Nível mín: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+24155#
+Colar usado como complemento para os acessórios convencionais.
+--------------------------
+^0000ffHP máx. +10 por refino.^000000
+--------------------------
+^0000ffDEFM +1.^000000
+A cada 2 refinos:
+^0000ffDEFM +1.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Malha Sombria Indestrutível]^000000
+Soma dos refinos do conjunto +15 ou mais:
+^0000ffTorna a armadura indestrutível em batalha.^000000
+--------------------------
+Tipo: ^777777Equip. Sombrio^000000
+Posição: ^777777Colar^000000 Peso: ^7777770^000000
+Nível mín: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 24208#
@@ -68691,6 +70418,11 @@ Pode ser utilizado como decoração de Halloween.
 ^ff0000Intransferível.^000000
 Peso: ^7777770^000000
 #
+25426#
+^ff0000Intransferível.^000000
+Algodão quentinho usado para produção têxtil.
+Peso: ^7777770^000000
+#
 25482#
 Um cartão que representa a Liga que você escolheu no Festival da Diversidade de Brasilis.
 ^ff0000Esse item será removido após o término do evento.^000000
@@ -68905,6 +70637,39 @@ Peso: ^77777750^000000
 Nível da arma: ^7777774^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Feiticeiros^000000
+#
+26152#
+Um cajado em formato de pata ou uma pata em formato de cajado? O importante é a fofura... o resto dá pra se preocupar depois.
+--------------------------
+^a400cdIndestrutível em batalha.^000000
+--------------------------
+^0000ffAlcance de 5 células.^000000
+--------------------------
+Ao aprender [Punho Arcano] nv.5:
+^0000ffA cada refino:^000000
+^0000ffDano de [Lanças de Fogo] [Lanças de Gelo] [Relâmpago] e [Coluna de Pedra] +3%.^000000
+--------------------------
+Refino +10 ou mais:
+^0000ffHabilita [Ataque Duplo] nv.3.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Imp]^000000
+^0000ffConjuração fixa de [Lanças de Fogo]^000000 ^ff0000+10 segundos.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Siroma]^000000
+^0000ffConjuração fixa de [Lanças de Gelo]^000000 ^ff0000+10 segundos.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Elvira]^000000
+^0000ffConjuração fixa de [Relâmpago]^000000 ^ff0000+10 segundos.^000000
+--------------------------
+Tipo: ^777777Cajado^000000
+ATQ: ^77777770^000000 ATQM: ^777777150^000000
+Peso: ^77777730^000000
+Nível da arma: ^7777774^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Arcebispos, Feiticeiros e evoluções^000000
 #
 26155#
 Uma folha empunhada por Miau, uma antiga lenda entre os Doram. Não dá para ter certeza de que ele realmente existiu, mas não há como negar que é uma arma muito poderosa. A marca de pata de gato realça o fator singular desse equipamento ancestral.
@@ -69236,6 +71001,13 @@ Peso: ^7777771^000000
 ^0000ffPrecisão +10.^000000
 A cada 3 refinos:
 ^0000ffPrecisão +5.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Carta Sara]^000000
+^0000ffATQ +100.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de se transformar em Sara Irine por 60 segundos.^000000
+--------------------------
 Tipo: ^777777Carta^000000
 Equipa em: ^777777Capa^000000
 Peso: ^7777771^000000
@@ -69819,9 +71591,10 @@ Uma cauda peluda que fará com que você pareça um demônio. Melhor tomar cuida
 ^FF6347Conjunto^000000
 ^FF6347[Chifre de Succubus]^000000
 ^0000ffSOR +2.^000000
-^0000ffAo realizar ataques físicos, chance de se transformar em Succubus por 5 segundos.^000000
+Ao realizar ataques físicos:
+^0000ff3% de chance de se transformar em Succubus por 5 segundos.^000000
 ^FF6347Durante a transformação:^000000
-^0000ffRegenera 5 de SP a cada ataque físico.^000000
+^0000ffRecupera 5 de SP a cada ataque.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777720^000000
@@ -70952,6 +72725,32 @@ Peso: ^77777750^000000
 Nível necessário: ^77777780^000000
 Classes: ^777777Todas^000000
 #
+28533#
+Cirúrgicas e firmes, as Luvas da Precisão dão conta de qualquer desafio que exija habilidades manuais.
+--------------------------
+^0000ffPrecisão +20.^000000
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffRecuperação de HP das Poções Vermelha, Laranja, Amarela e Branca +100%.^000000
+--------------------------
+A cada nível de [Aprimorar Carrinho]:
+^0000ffATQ +15.^000000
+^0000ffHP máx. +2%.^000000
+^0000ffVelocidade de ataque +1%.^000000
+^0000ffCusto de SP de [Tornado de Carrinho] -1.^000000
+--------------------------
+A cada nível de base:
+^0000ffDano de [Cavalo-de-Pau] +1%.^000000
+A cada 20 níveis de base:
+^0000ffDano de [Canhão de Prótons] +2%.^000000
+A cada 30 níveis de base:
+^0000ffDano de [Tornado de Carrinho] +2%.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777720^000000
+Classes: ^777777Todas^000000
+#
 28534#
 Um amuleto vermelho, que representa a coragem e o poder dos mais destemidos aventureiros. Só de usá-lo, você já sente seu espírito ser inundado por uma bravura inabalável.
 ^0000ffATQ da arma +3%.^000000
@@ -71767,12 +73566,16 @@ Classes: ^777777Todas^000000
 #
 28901#
 O macabro coelhinho de Piamette que serve como escudo de mentirinha até para os mais iniciantes. A aparência meio esquisita e remendada mostra que a própria Piamette o confeccionou; mas ela colocou tanto enchimento que ele ficou enorme, quase do tamanho dela. E se as manchas vermelhas são sangue ou não, é melhor nem saber.
+--------------------------
 ^0000ffDano mágico +5%.^000000
-^0000ffVelocidade de ataque +3.^000000
 ^0000ffDano físico contra todas as raças +5%.^000000
+--------------------------
+^0000ffVelocidade de ataque +3.^000000
 ^0000ffReflete 10% dos danos físicos recebidos.^000000
+--------------------------
 Ao receber danos mágicos:
-^0000ff10% de chance de autoconjurar [Reflexão Mágica] nv. 8.^000000
+^0000ff10% de chance de autoconjurar [Reflexão Mágica] nv.8.^000000
+--------------------------
 Refino +7 ou mais:
 ^0000ffATQ e ATQM +5.^000000
 Refino +9 ou mais:
@@ -71780,19 +73583,23 @@ Refino +9 ou mais:
 Refino +12 ou mais:
 ^0000ffCRIT +10.^000000
 ^0000ffA conjuração não pode ser interrompida.^000000
+--------------------------
 Tipo: ^777777Escudo^000000
-Defesa: ^7777770^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 28902#
 O macabro coelhinho de Piamette que serve como escudo de mentirinha até para os mais iniciantes. A aparência meio esquisita e remendada mostra que a própria Piamette o confeccionou; mas ela colocou tanto enchimento que ele ficou enorme, quase do tamanho dela. E se as manchas vermelhas são sangue ou não, é melhor nem saber.
+--------------------------
 ^0000ffDano mágico +5%.^000000
 ^0000ffDano físico contra todas as raças +5%.^000000
 ^0000ffReflete 10% dos danos físicos recebidos.^000000
+--------------------------
 Ao receber danos mágicos:
-^0000ff10% de chance de autoconjurar [Reflexão Mágica] nv. 8.^000000
+^0000ff10% de chance de autoconjurar [Reflexão Mágica] nv.8.^000000
+--------------------------
 Refino +7 ou mais:
 ^0000ffATQ e ATQM +5.^000000
 Refino +9 ou mais:
@@ -71800,8 +73607,9 @@ Refino +9 ou mais:
 Refino +12 ou mais:
 ^0000ffCRIT +10.^000000
 ^0000ffA conjuração não pode ser interrompida.^000000
+--------------------------
 Tipo: ^777777Escudo^000000
-Defesa: ^7777770^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -72029,19 +73837,72 @@ Classes: ^777777Todas^000000
 #
 28940#
 O toque divino encantou este escudo, e aquele que o utilizar será um indivíduo intocável por muitos males.
+--------------------------
 ^0000ffEfetividade de cura +10%.^000000
 A cada refino:
 ^0000ffEfetividade de cura +1%.^000000
+--------------------------
 Refino +8 ou mais:
-^0000ffHabilita [Curar] nv. 1.^000000
+^0000ffHabilita [Curar] nv.1.^000000
 Refino +10 ou mais:
 ^0000ffTolerância a Sangramento +100%.^000000
 Refino +13 ou mais:
 ^0000ffTolerância a Petrificação +100%.^000000
+--------------------------
 Tipo: ^777777Escudo^000000
-Defesa: ^777777150^000000
+DEF: ^777777150^000000 DEFM: ^7777770^000000
 Peso: ^777777120^000000
 Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+28941#
+Escudo de excelência criado pela extinta tecnologia das ruínas de Verus. 
+--------------------------
+^0000ffHP e SP máx. +1%.^000000
+--------------------------
+A cada 3 refinos:
+^0000ffHP e SP máx. +1%.^000000
+--------------------------
+Nv. base 130 ou mais:
+^0000ffHP e SP máx. +1% adicional.^000000
+--------------------------
+Tipo: ^777777Escudo^000000
+DEF: ^77777795^000000 DEFM: ^7777775^000000
+Peso: ^777777120^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+28942#
+Escudo gigante usado pelo Cavaleiro Sanguinário.
+É impossível limpar as manchas de sangue.
+--------------------------
+^0000ffATQ da arma +3%.^000000
+^0000ffDano mágico +3%.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffResistência a oponentes de todas as propriedades +7%.^000000
+--------------------------
+Ao receber danos físicos ou mágicos:
+^0000ff1% de chance de ativar o [efeito A] por 4 segundos.^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff1% de chance de ativar o [efeito B] por 4 segundos.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffATQ e ATQM +10.^000000
+Refino +9 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Refino +12 ou mais:
+^0000ffPós-conjuração -3%.^000000
+--------------------------
+^CD3278Efeito A:^000000
+^0000ffRecupera 25 de SP por segundo.^000000
+--------------------------
+^CD3278Efeito B:^000000
+^0000ffRecupera 150 de HP por segundo.^000000
+--------------------------
+Tipo: ^777777Escudo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777780^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 28944#
@@ -72056,6 +73917,72 @@ Tipo: ^777777Escudo^000000
 Defesa: ^7777771^000000
 Peso: ^77777750^000000
 Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
+#
+28945#
+Escudo gigante usado pelo Cavaleiro Sanguinário.
+Emana uma energia maligna.
+--------------------------
+^0000ffATQ da arma +3%.^000000
+^0000ffDano mágico +3%.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffResistência a oponentes de todas as propriedades +7%.^000000
+--------------------------
+Ao receber danos físicos ou mágicos:
+^0000ff1% de chance de ativar o [efeito A] por 4 segundos.^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff1% de chance de ativar o [efeito B] por 4 segundos.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffATQ e ATQM +10.^000000
+Refino +9 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+Refino +12 ou mais:
+^0000ffPós-conjuração -3%.^000000
+--------------------------
+^CD3278Efeito A:^000000
+^0000ffRecupera 25 de SP por segundo.^000000
+--------------------------
+^CD3278Efeito B:^000000
+^0000ffRecupera 150 de HP por segundo.^000000
+--------------------------
+Tipo: ^777777Escudo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777780^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+28946#
+Escudo gigante usado pelo Cavaleiro Sanguinário.
+Não é comum encontrá-lo limpo.
+--------------------------
+^0000ffATQ da arma +5%.^000000
+^0000ffDano mágico +5%.^000000
+^0000ffVelocidade de ataque +10%.^000000
+^0000ffResistência a oponentes de todas as propriedades +10%.^000000
+--------------------------
+Ao receber danos físicos ou mágicos:
+^0000ff3% de chance de ativar o [efeito A] por 6 segundos.^000000
+Ao realizar ataques físicos ou mágicos:
+^0000ff3% de chance de ativar o [efeito B] por 6 segundos.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffATQ e ATQM +20.^000000
+Refino +9 ou mais:
+^0000ffVelocidade de ataque +2.^000000
+Refino +12 ou mais:
+^0000ffPós-conjuração -5%.^000000
+--------------------------
+^CD3278Efeito A:^000000
+^0000ffRecupera 50 de SP por segundo.^000000
+--------------------------
+^CD3278Efeito B:^000000
+^0000ffRecupera 300 de HP por segundo.^000000
+--------------------------
+Tipo: ^777777Escudo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777780^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 28947#
@@ -73203,17 +75130,14 @@ Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31132#
-Uma guirlanda feita de ramo de azevinho. 
+Uma guirlanda feita de ramo de azevinho.
 Dá pra ouvir os sinos tocando em algum lugar.
-Durante o período do evento de Natal 2016, quando você realizar ataques físicos ou mágicos, possui a chance de ativar a habilidade [Feliz Natal] que recupera 1225 de HP e 25 de SP por segundo.
-A habilidade tem a duração de 7 segundos.
-^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão, colocado no carrinho, mas pode ser colocado na Kafra.^000000
-Tipo: ^777777Visual^000000 
-Defesa: ^7777770^000000
-Equipa em: ^777777Topo ^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
-Nível Necessário: ^7777771^000000
-Classes: ^777777Todas as Classes^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
 #
 31134#
 Em sua última viagem à Brasilis, você acabou sendo escolhido como companheiro por essa bela ave multicolorida. O que você não podia imaginar é que esse pássaro inteligente fosse capaz de falar. E falar e falar e falar sem parar, sempre pedindo bolachas, dando o pezinho e contando piadas de papagaio. Pelo menos as piadas dela são melhores que as dos bardos!
@@ -73237,6 +75161,14 @@ Classes: ^777777Todas ^000000
 Você está atrasado! Você está atrasado! Já passou da hora de você encontrar a Alice lá na Fábrica de Kiel Hyre e leva-la pra cair no buraco de Umbala. Ou seria encontrar o KeaNeo Rives e leva-lo pra encontrar o Morphadus? Não importa, você sempre parece um lunático quando usa essas orelhas de coelho branco.
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31143#
+Flor aromática que deve ser acesa e levada ao máximo de lugares possível. Todos que sentem o perfume adormecem e sonham com grandes aventuras. O último aventureiro que decidiu acender dormiu tanto que acordou com a cabeça quente... no sentido de queimada, sério.
+Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
@@ -73298,6 +75230,14 @@ Um elmo dourado adornado com asas, joias preciosas e inscrito em runas. Apesar d
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31162#
+A Espuma Mágica foi inventada para saciar o desejo das crianças que não paravam de comer doces. Com o tempo, deixou de ser uma opção saudável e todo mundo estava consumindo. Atualmente a espuma é um produto nostálgico e raro.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -73805,6 +75745,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31248#
+Orelhas em pé e cor vermelha? Só pode ser sinal de confusão! Quem veste essas orelhas com certeza não tem nenhum medo de atrair o perigo... ou de ser o próprio perigo.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31249#
 Um chapéu bastante quentinho e confortável, baseado no folclore de Louyang. Lá, acredita-se que um grande coelho mora na lua, batendo um pilão de arroz para fazer bolinhos para a deusa Chang’e. Será que é por isso que em Rune-Midgard a gente batizou os coelhinhos de “lunáticos”?!
 Tipo: ^777777Visual^000000
@@ -73971,6 +75919,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31305#
+Um companheiro angelical, que adora espalhar bondade por onde passa. A fofura de um Angeling dificilmente pode ser ignorada e até protege quem o acompanha dos terríveis monstros. Quem atacaria uma criaturinha dessa?
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777771^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31309#
 Esbanjando pomposidade, esse baita chapéuzão faz parte do uniforme das bandas que apresentam belas performances musicais em Juno. Marcha soldado, cabeça de papel!
 Tipo: ^777777Visual^000000
@@ -74043,6 +75999,14 @@ Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo e Baixo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31326#
+Cuidado com a mini foice! Cuidado com os chifrinhos pontiagudos! O Mini Bafomé é uma gracinha, mas tão perigoso quanto sua versão normal. Alimente, escove os pelos e deixe-o balançar a foice. Um bafomezinho feliz não traz problemas pra ninguém!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31327#
@@ -74203,13 +76167,9 @@ Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 31390#
+^ff0000Intransferível.^000000
 Um chapéu feito das esperanças das pessoas de lugares onde não neva durante o inverno. A neve cai como uma Nevasca.
-^008080Até o dia 16/01/2018:^000000
-A cada 20 níveis base:
-^0000ffHP máx. +250.^000000
-A cada 30 níveis base:
-^0000ffDano físico e mágico contra monstros +2%.^000000
-^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão, mas pode ser colocado no armazém e vendido nos NPC's.^000000
+--------------------------
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
@@ -74343,8 +76303,23 @@ Classes: ^777777Todas ^000000
 31439#
 Esses abafadores vão deixar suas orelhas aquecidas da mesma forma que o seu coração fica quando você pensa no seu amorzinho.
 Tipo: ^777777Visual ^000000
-Defesa: ^7777770 ^000000
 Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+31440#
+Fofa e aconchegante, a Touca de Urso Polar é indispensável para o conforto durante períodos frios. O algodão retém o calor e a seda dá um aspecto confortável ao item. Nenhum urso polar foi ferido durante a confecção.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+31441#
+Pinguins não podem voar e são um pouco desastrados, mas dão um ótimo tema de chapéu! Esse em específico foi oferecido por viajantes desconhecidos, que diziam vir de ilhas geladas e distantes. Só pra constar, é feito de plástico.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
@@ -74485,6 +76460,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31483#
+Pra se sentir um pouco mais felino, conte com o Adereço de Gatinho. Entre ronronar e brincar com novelos de lã, ficar estiloso é o mais importante!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31487#
 Perfeito para navegar os sete mares com uma fiel tripulação sob a sua capitania. Que o vento esteja a seu favor na busca por ouro!
 Tipo: ^777777Visual ^000000
@@ -74550,6 +76533,14 @@ Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+31503#
+Roxo, cara de malvado e com chifrinhos. O Deviling é a combinação perfeita (e fofa) do mal que há entre as criaturas de Rune-Midgard. Se você o afagar, ele fica dócil... é só uma dica.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31504#
 Vendo de fora pode parecer estranho, mas o Chapeixe possui inúmeras funcionalidades que contornam o mau odor. Além de descamar uma vez por ano e mudar de cor, o que é super na moda, hidrata os cabelos com um óleo de peixe natural. Só um cabeça de bagre não usaria um desses...
 Tipo: ^777777Visual ^000000
@@ -74569,6 +76560,14 @@ Classes: ^777777Todas ^000000
 #
 31506#
 Um acessório muito popular na moda de Malangdo. Tem até um espaço para cobrir as orelhas se você for um Doram. Se não for, fica só como um charminho mesmo.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+31508#
+Orelhas de cor azul sempre trazem um ar de calmaria e tranquilidade. Quem veste essas orelhas com certeza tá de boas e nem aí para os reinos. O importante é ficar bonito na foto!
 Tipo: ^777777Visual ^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770 ^000000
@@ -74998,6 +76997,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31618#
+Quem não quer ser rodeado por seres tão pacíficos e bonitos quanto as borboletas? O bater das asas e as cores formam uma poesia visual difícil de esquecer, trazendo um clima agradável ao ar em volta.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31620#
 Foi comprovado cientificamente pela opinião popular que raposas são o melhor tipo de companhia que um aventureiro pode querer. Imagina um animalzinho que fareja tudo, corre mais rápido que o vento e ainda é elegante. Agora adicione azul glacial e tenha a combinação perfeita.
 Tipo: ^777777Visual^000000
@@ -75341,6 +77348,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31728#
+Vestir-se de forma tranquila e amena não é tarefa fácil, mas fica mais de boa com o Chapéu da Noviça. A peça é tão paz e amor que é capaz de nenhum monstro te atacar. Só não vai testar isso, tá?
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31729#
 Por onde passar, rosas e lírios irão te guiar. Tulipas e narcisos perfumarão o ar de aventura que há de pairar. A beleza das flores está em seu caminhar.
 Tipo: ^777777Visual^000000
@@ -75369,6 +77384,14 @@ Classes: ^777777Todas^000000
 Carinho, fofura e cheirinho de algodão doce são as características mais marcantes desse balão que insiste em flutuar de maneira graciosa. É confortante saber que, mesmo em apuros, um amigo urso mantém-se fiel e te faz companhia. (Favor não lavar com qualquer sabão)
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31733#
+Não deixe essa cartola te fazer de bobo! As diversas formas adotadas são pura ilusão, enganando todos que a encaram por muito tempo. Virou um caminhão e parece que vai te esmagar? Segue o baile e continua lutando!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -75445,6 +77468,16 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31819#
+Depois do chapéu invisível, dos óculos invisíveis, da máscara invisível e do manto invisível... VEM AÍ: a Cabeça Invisível!
+Perfeita para esconder seu rosto feio!
+Use um óculos escuros e veja seus amigos se assustarem com o óculos voador bem em cima do seu pescoço!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31827#
 Capuz muito conhecido entre os habitantes de Payon pela sua relevância cultural. Essa peça é usada não apenas como proteção do frio, como também para caracterização ao conduzir rituais tradicionais da região.
 Tipo: ^777777Visual ^000000
@@ -75481,6 +77514,14 @@ Classes: ^777777Todas ^000000
 A única condição para você vestir esse penteado é gostar de laços. Com não apenas um, mas dois, esse estilo de cabeleira aproveita o contraste entre o loiro e o vermelho para enfeitar e destacar quem está usando.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31848#
+Carregue flores na cabeça com o Gorro de Rosas. Além de perfumar as madeixas, valoriza o formato do rosto e embeleza o olhar. Dá pra ficar bonito e evitar a cara de planta!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -75605,6 +77646,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31887#
+Confortável e quentinho, o Cachecol de Seda é o companheiro favorito de quem chega de grandes viagens. Uma sopinha, uma lareira e esse cachecol... Nem tem como pedir mais.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31902#
 Colocar esses óculos é um caminho sem volta... Dizem que as lentes mágicas decidem sozinhas pra onde devem olhar. A lenda fala que o primeiro que entrar em harmonia com o ser que aqui habita irá descobrir uma imensa fonte de poder.
 Tipo: ^777777Visual^000000
@@ -75681,6 +77730,38 @@ Classes: ^777777Todas^000000
 É impossível não se encantar pela Touquinha de Sapo. Quanto mais você usa, mais adquire os hábitos dos anfíbios por aí... Mas não vá começar a tentar comer moscas, hein?!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31947#
+Os Chifres Rochosos são perfeitos pra você se livrar de tudo que ficar no seu caminho. É só mirar bem e rachar no meio! Só não usa isso nos amiguinhos, tá? Nem dentro das cidades, POR FAVOR! 
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31950#
+Torne-se um verdadeiro devorador de nozes e espalhe a fofura das grandes bochechas por todos os reinos. Migalhas cairão, mas sua força de vontade será tão resistente quanto o fruto crocante dos esquilos.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31952#
+Ser sugado por um portal a cada minuto? Sem problemas pra esse chapéu! Os últimos a usarem o adereço acabaram conhecendo os Doram antes mesmo dos felinos aparecerem, quase estragando a surpresa.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31954#
+Usada por aqueles que juraram servir os nobres de Rune-Midgard, a Coleira do Vassalo é uma peça fundamental para a história dos reinos. Não só evidencia a desigualdade entre as esferas sociais, mas também expõe uma tradição há muito extinta.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -75909,6 +77990,35 @@ Peso: ^77777730^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+32237#
+Adereço confeccionado pelo artesão das bonecas. Ao vê-lo, Celine ficou obcecada e prometeu que nunca iria perdê-lo. Até agora...
+--------------------------
+^0000ffDano mágico +5%.^000000
+^0000ffConjuração variável -10%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Luva dos Espíritos Malignos]^000000
+^0000ffATQ e ATQM +50.^000000
+^0000ffVelocidade de ataque +1.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Laço da Celine]^000000
+^0000ffConjuração fixa -0,3 segundos.^000000
+A cada refino do laço:
+^0000ffATQM +10.^000000
+Refino +7 ou mais:
+^0000ffDano mágico contra as raças Humano, Humanoide e Demônio +10%.^000000
+Refino +9 ou mais:
+^0000ffDano mágico de propriedade Água, Vento, Terra, Fogo e Neutro +10%.^000000
+Refino +11 ou mais:
+^0000ffDano mágico contra monstros Chefes +20%.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 32243#
 Acessório adornado com uma joia cuja cor lembra a amplitude dos oceanos. Marinheiros acreditam que enquanto estiverem em posse desse artigo, serão agraciados por uma bênção inestimável.
 --------------------------
@@ -76069,6 +78179,74 @@ Nível da arma: ^7777774^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Insurgentes^000000
 #
+100023#
+Joia capaz de amplificar o poder físico de algumas armas.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios nas Armas Ancestrais.^000000
+--------------------------
+[^ff0000Itens afetados^000000]
+Arco Ancestral
+Balista Ancestral
+Cajado Ancestral
+Cauda de Gato Ancestral
+Cetro Ancestral
+Concertina Ancestral
+Cutelo Ancestral
+Escopeta Ancestral
+Espada Ancestral
+Garra Ancestral
+Gatling Ancestral
+Katar Ancestral
+Kodachi Ancestral
+Lâmina Ancestral
+Lança Ancestral
+Lança-Granadas Ancestral
+Punhal Ancestral
+Revólver Ancestral
+Rifle Ancestral
+Shuriken Huuma Ancestral
+Tomo Ancestral
+Violino Ancestral
+Wakizashi Ancestral
+--------------------------
+Peso: ^7777771^000000
+#
+100025#
+Joia capaz de amplificar o poder mágico de algumas armas.
+--------------------------
+^CD3278Use para abrir a janela de Combinação.^000000
+--------------------------
+^0000ffAdiciona 2 bônus aleatórios nas Armas Ancestrais.^000000
+--------------------------
+[^ff0000Itens afetados^000000]
+Arco Ancestral
+Balista Ancestral
+Cajado Ancestral
+Cauda de Gato Ancestral
+Cetro Ancestral
+Concertina Ancestral
+Cutelo Ancestral
+Escopeta Ancestral
+Espada Ancestral
+Garra Ancestral
+Gatling Ancestral
+Katar Ancestral
+Kodachi Ancestral
+Lâmina Ancestral
+Lança Ancestral
+Lança-Granadas Ancestral
+Punhal Ancestral
+Revólver Ancestral
+Rifle Ancestral
+Shuriken Huuma Ancestral
+Tomo Ancestral
+Violino Ancestral
+Wakizashi Ancestral
+--------------------------
+Peso: ^7777771^000000
+#
 200001#
 ^ff0000Intransferível.^000000
 --------------------------
@@ -76079,6 +78257,32 @@ Caixa contendo 10 Tickets de Expansão de Inventário.
 ^0000ffO efeito é permanente e não pode ser revertido.^000000
 --------------------------
 Peso: ^7777771^000000
+#
+400000#
+Assobiar é agradável e garante bônus poderosos durante as batalhas. Quem assobia os males... espanta?
+--------------------------
+^0000ffATQ da arma +1%.^000000
+^0000ffDano mágico +1%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Pingente da Harmonia]^000000
+^0000ffConjuração variável -10%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Pingente do Caos]^000000
+^0000ffDano crítico +10%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Pingente da Voragem]^000000
+^0000ffDano crítico +10%.^000000
+^0000ffConjuração variável -10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777120^000000
+Classes: ^777777Classes 3^000000
 #
 400006#
 Não existe maneira de ficar mais imponente do que usando o Cocar do Orc Herói. O brilho dourado emitido pelo equipamento pode ser visto de muito longe e serve como um sinal de alerta aos inimigos.
@@ -76170,6 +78374,35 @@ Peso: ^77777740^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+400012#
+^ff0000Intransferível.^000000
+Mais HP e SP pra você ficar forte igual carneiro! Só não vale sair chifrando gente por aí.
+--------------------------
+^0000ffHP máx. +1.000.^000000
+^0000ffSP máx. +200.^000000
+--------------------------
+^0000ffA conjuração não pode ser interrompida.^000000
+--------------------------
+Ao derrotar monstros com qualquer ataque:
+^0000ffRegenera 200 de HP e 20 de SP.^000000
+--------------------------
+A cada 5 segundos:
+^0000ffRegenera 250 de HP e 30 de SP.^000000
+--------------------------
+A cada 2 refinos:
+^0000ffPrecisão +2.^000000
+^0000ffATQ e ATQM +10.^000000
+^0000ffPós-conjuração -1%.^000000
+^0000ffConjuração variável -2%.^000000
+^0000ffVelocidade de ataque +1%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^77777710^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 400013#
 Sempre é hora pra um lanchinho! Nenhum petisco bate de frente com os Palitinhos de Chocolate.
 --------------------------
@@ -76180,6 +78413,32 @@ Equipa em: ^777777Baixo^000000
 DEF: ^777777100^000000 DEFM: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+400023#
+É só pedir um aumento de danos que essa marionete concede. Assustadoramente eficaz contra os inimigos.
+--------------------------
+^0000ffHP e SP máx. +5%.^000000
+--------------------------
+^0000ffDano físico e mágico contra as raças Dragão e Anjo +10%.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Sagrado e Sombrio +10%.^000000
+A cada 2 refinos:
+^0000ffDano físico e mágico contra as raças Dragão e Anjo +1%.^000000
+^0000ffDano físico e mágico contra oponentes de propriedade Sagrado e Sombrio +1%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffATQ da arma +5%.^000000
+^0000ffDano mágico +5%.^000000
+Refino +9 ou mais:
+^0000ffConjuração variável -10%.^000000
+Refino +11 ou mais:
+^0000ffPós-conjuração -15%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^77777730^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 400048#
@@ -76366,6 +78625,53 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+420014#
+Confeccionada por uma grande fã de animações japonesas, essa peruca carrega um encanto especial por novas culturas, ideias e sentimentos. A peça perfeita para uma nova aventura!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+436003#
+Máscara que representa um Selo Memorial. Vinda do ser que espalha o ódio pela Torre de Thanatos.
+--------------------------
+^0000ffHP máx. +5%.^000000
+^0000ffResistência as raças Humano e Doram +5%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Meio e Baixo^000000
+DEF: ^7777773^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+436004#
+Máscara que representa um Selo Memorial. Vinda do ser que espalha o desespero pela Torre de Thanatos.
+--------------------------
+^0000ffATQ da arma +3%.^000000
+^0000ffDano físico contra as raças Humano e Doram +10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Meio e Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+436005#
+Máscara que representa um Selo Memorial. Vinda do ser que espalha a desgraça pela Torre de Thanatos.
+--------------------------
+^0000ffDano mágico +3%.^000000
+^0000ffDano mágico contra as raças Humano e Doram +10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Meio e Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
 440002#
 Essa gatona vai ficar grudada na sua cabeça por quanto tempo ela quiser. Como o nome diz, sua cauda é longa demais e ela tem o costume de apoiá-la em algum lugar. Provavelmente a sua cara vai ser o lugar perfeito pra isso...
 Tipo: ^777777Visual ^000000
@@ -76475,6 +78781,26 @@ A cada refino:
 Tipo: ^777777Armadura^000000
 DEF: ^77777790^000000 DEFM: ^77777710^000000
 Peso: ^77777790^000000
+Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+460000#
+Absorva os males e converta-os em divindades. A égide é impenetrável e implacável!
+--------------------------
+^0000ffEfetividade de cura +15%.^000000
+A cada refino:
+^0000ffEfetividade de cura +2%.^000000
+--------------------------
+Refino +8 ou mais:
+^0000ffPós-conjuração -10%.^000000
+^0000ffHabilita [Curar] nv.10.^000000
+Refino +10 ou mais:
+^0000ffPós-conjuração -10% adicional.^000000
+^0000ffTolerância a Petrificação e Sangramento +100%.^000000
+--------------------------
+Tipo: ^777777Escudo^000000
+DEF: ^777777150^000000 DEFM: ^7777770^000000
+Peso: ^777777120^000000
 Nível necessário: ^77777799^000000
 Classes: ^777777Todas^000000
 #
@@ -76702,6 +79028,18 @@ Peso: ^77777710^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
+480052#
+Destaque entre os outros laçarotes, essa peça única fica posicionada nas costas do usuário. Um pouco incomum, sem dúvidas, mas combina perfeitamente bem com qualquer estilo visual. Não importa o que aconteça, esse laçarote protege a sua retaguarda!
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 480053#
 Este manto emana forças divinas e foi confeccionado com inspiração em uma criatura sagrada que habita climas áridos.
 --------------------------
@@ -76752,6 +79090,35 @@ Equipa em: ^777777Capa^000000
 Defesa: ^7777770^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+480077#
+Ardente como os vulcões, essa capa respinga pedaços de magma, trilhando um caminho sem volta para quem a veste.
+--------------------------
+^0000ffResistência a monstros Chefes +5%.^000000
+^0000ffDano físico contra oponentes de todos os Tamanhos +5%.^000000
+--------------------------
+^0000ffHP e SP máx +2%.^000000
+Refino +7 ou mais:
+^0000ffVelocidade de ataque +5%.^000000
+^0000ffHP e SP máx +1% adicional.^000000
+Refino +9 ou mais:
+^0000ffHP e SP máx +2% adicional.^000000
+--------------------------
+Ao aprender [Artilharia Arcana] nv.5:
+^0000ffPrecisão perfeita +50.^000000
+--------------------------
+Ao aprender [Erupção de Magma] nv.5:
+^0000ffResistência as propriedades Fogo e Terra +50%.^000000
+--------------------------
+A cada nível de [Arremesso de Machado]:
+^0000ffDano de [Fúria do Furacão] +20%.^000000
+^0000ffDano de [Brandir Machado] +20%.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777725^000000 DEFM: ^7777775^000000
+Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 490013#
@@ -76845,6 +79212,33 @@ Chapéu com refino +8 ou mais:
 --------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777773^000000
+Peso: ^77777710^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+490037#
+Um anel que transmite poderes por meio de sua aura sombria.
+--------------------------
+^0000ffFOR, AGI e DES +5.^000000
+--------------------------
+^0000ffDano físico +5%.^000000
+--------------------------
+Ao aprender [Lâminas Retalhadoras] nv.5:
+^0000ffPós-conjuração -30%.^000000
+--------------------------
+Ao aprender [Garra Sombria] nv.5:
+^0000ffRecarga de [Garra Sombria] -25 segundos.^000000
+--------------------------
+Ao aprender [Ocultação] nv.5:
+^0000ffSP máx. +15%.^000000
+^0000ffVelocidade de ataque +2.^000000
+--------------------------
+A cada nível aprendido de [Estilhaçar Arma]:
+^0000ffATQ +40.^000000
+^0000ffFOR, AGI e DES +1.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777710^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000

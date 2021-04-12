@@ -155,7 +155,7 @@ MC_CHANGECART#Personalizar Carrinho#
 MC_LOUD#Grito de Guerra#
 AL_HOLYLIGHT#Luz Divina#
 MG_ENERGYCOAT#Proteção Arcana#
-NPC_DEFENDER#µðÆæ´õ#
+NPC_DEFENDER#Aura Sagrada#
 RG_SNATCHER#Mãos Leves#
 RG_STEALCOIN#Afanar#
 RG_BACKSTAP#Apunhalar#
@@ -329,7 +329,7 @@ CH_SOULCOLLECT#Zen#
 PF_MINDBREAKER#Enlouquecedor#
 PF_MEMORIZE#Presciência#
 PF_FOGWALL#Bruma Ofuscante#
-PF_SPIDERWEB#Prisão da Teia#
+PF_SPIDERWEB#Prisão de Teia#
 ASC_METEORASSAULT#Impacto Meteoro#
 ASC_CDP#Criar Veneno Mortal#
 WE_BABY#Mãe, Pai, amo vocês!#
@@ -623,7 +623,7 @@ NPC_STORMGUST2#Nevasca#
 NPC_FIRESTORM#Tempestade de Fogo#
 NPC_REVERBERATION#Reverberação#
 NPC_LEX_AETERNA#Lex Regio#
-NPC_ARROWSTORM#¾Ö·Î¿ì ½ºÅè#
+NPC_ARROWSTORM#Tempestade de Flechas#
 NPC_SR_CURSEDCIRCLE#Campo Amaldiçoado#
 NPC_DRAGONBREATH#Sopro do Dragão#
 NPC_FATALMENACE#Acerto de Contas#
@@ -639,7 +639,7 @@ NPC_FIREWALK#Passos de Salamandra#
 NPC_LEASH#Puxar#
 NPC_WIDELEASH#Puxão#
 NPC_WIDECRITICALWOUND#Ferida Mortal#
-NPC_EARTHQUAKE_K#Maremoto#
+NPC_EARTHQUAKE_K#Terremoto#
 NPC_WIDEBLEEDING2#Sangria#
 NPC_WIDESILENCE2#Som do Silêncio#
 NPC_WIDESTUN2#Atordoamento Titânico#

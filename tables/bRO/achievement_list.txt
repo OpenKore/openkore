@@ -2566,7 +2566,7 @@ achievement_tbl = {
 		title = "Quase lá!",
 		content = { summary = "Obtenha o Nível Base 150!", details = "Alcance o Nível Base 150." },
 		resource = { [1] = { text = "Nv. Base 150" } },
-		reward = { title = 1001, buff = 10, item = 5364 },
+		reward = { title = 1001, buff = 10, item = 13709 },
 		score = 60
 	},
 	[200002] = {
@@ -2591,7 +2591,7 @@ achievement_tbl = {
 			details = "Alcance o Nível de Classe 50."
 		},
 		resource = { [1] = { text = "Nv. de Classe 50" } },
-		reward = { title = 1003, buff = 10, item = 617 },
+		reward = { title = 1003, buff = 10, item = 17176 },
 		score = 30
 	},
 	[200004] = {
