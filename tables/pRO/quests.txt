@@ -21257,13 +21257,13 @@ Defeat Heater 100 ea #
 //display Daily Quest from Comeback Stage
 
 ///Hunting
-295186#Comeback Stage Daily Quest#SG_FEEL#QUE_NOIMAGE#
-Hunting ^0000FFHillslion and Tatacho^000000#
-Defeat Hillslion and Tatacho 100 ea#
+295186#Comeback Stage Daily Quest - Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunting ^0000FFGrand Peco and Deviruchi^000000#
+Defeat Grand Peco and Deviruchi 100 ea#
 
 ///Collecting
-295404#Comeback Stage Quest - Collecting Item#SG_FEEL#QUE_NOIMAGE#
-^0000FFCollect below items^000000                                                          1. Fur 100 ea                                                      2. Peaked Hat  100 ea#
+295404#Comeback Stage Daily Quest - Collecting Item#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Anolian Skin 100 ea                                                       2. Burning Horseshoe 100 ea#
 Collecting items#
 
 //Training Ground Renovation Part3
@@ -21726,7 +21726,7 @@ Can do quest again after 10 am#
 //--------------  display Seasonal Headgear April 295454 - 295456
 
 295454#Create a Crazy Jr.Baphomet#SG_FEEL#QUE_NOIMAGE#
-^0000FFCollect below items^000000                                                          1. Munak Doll 2 ea                                                           2. Evil Horn 2 ea                                                            3. Puppet 20 ea                                                              4. Hallberd[1] 1 ea                                                          5. Magic Silk 100 ea                                                         ^0000FFDefeat Monster below^000000                                                         1. Defeat 20 Baphomet Jr.                                                    2. Defeat 20 Deviruchi                                                       ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+^0000FFCollect below items^000000                                                          1. Munak Doll 2 ea                                                           2. Evil Horn 20 ea                                                            3. Puppet 20 ea                                                              4. Hallberd[1] 1 ea                                                          5. Magic Silk 100 ea                                                         ^0000FFDefeat Monster below^000000                                                         1. Defeat 20 Baphomet Jr.                                                    2. Defeat 20 Deviruchi                                                       ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
 Collect items and Defeat monster#
 
 295455#Create a Sloth Hat#SG_FEEL#QUE_NOIMAGE#
@@ -21968,18 +21968,15 @@ Defeat 100 Clock #
 
 //--------------  display Seasonal Headgear 295513 - 295515
 295513#Create an Umbala Spirit#SG_FEEL#QUE_NOIMAGE#
-^0000FFCollect below items^000000                                                          1. Skel-Bone 100 ea                                                          2. Tentacle 100 ea                                                           3. Well-Dried Bone 2 ea                                                      4. Magic Silk 100 ea     
-^0000FFDefeat Monster below^000000                                                         1. Defeat 40 Archer Skeleton                                                 2. Defeat 40 Orc Skeleton                                                    3. Defeat 40 Skeleton Worker                                                 ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+^0000FFCollect below items^000000                                                          1. Skel-Bone 100 ea                                                          2. Tentacle 100 ea                                                           3. Well-Dried Bone 2 ea                                                      4. Magic Silk 100 ea                                                          ^0000FFDefeat Monster below^000000                                                         1. Defeat 40 Archer Skeleton                                                 2. Defeat 40 Orc Skeleton                                                    3. Defeat 40 Skeleton Worker                                                 ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
 Collect items and Defeat monster#
 
 295514#Create a Cleary Sunny#SG_FEEL#QUE_NOIMAGE#
-^0000FFCollect below items^000000                                                          1. Resist Fire 30 ea                                                         2. Red Flame Whip 1 ea                                                       3. Flame Heart 15 ea                                                         4.Magic Silk 100 ea    
-^0000FFDefeat Monster below^000000                                                         1. Defeat 30 HEATER                                                          2. Defeat 30 KAHO                                                            3. Defeat 30 BLAZZER                                                         ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+^0000FFCollect below items^000000                                                          1. Resist Fire 30 ea                                                         2. Red Flame Whip 1 ea                                                       3. Flame Heart 15 ea                                                         4.Magic Silk 100 ea                                                          ^0000FFDefeat Monster below^000000                                                         1. Defeat 30 HEATER                                                          2. Defeat 30 KAHO                                                            3. Defeat 30 BLAZZER                                                         ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
 Collect items and Defeat monster#
 
 295515#Create a Kid's Syringe#SG_FEEL#QUE_NOIMAGE#
-^0000FFCollect below items^000000                                                          1. Red Slim Potion 100 ea                                                    2. Broken Needle 100 ea                                                      3. Empty Test Tube 100 ea                                                    4.Magic Silk 100 ea    
-^0000FFDefeat Monster below^000000                                                         1. Defeat 50 Cookie (Red)                                                    2. Defeat 50 Cookie (Green)                                                  3. Defeat 100 Myst Case                                                      ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+^0000FFCollect below items^000000                                                          1. Red Slim Potion 100 ea                                                    2. Broken Needle 100 ea                                                      3. Empty Test Tube 100 ea                                                    4.Magic Silk 100 ea                                                          ^0000FFDefeat Monster below^000000                                                         1. Defeat 50 Cookie (Red)                                                    2. Defeat 50 Cookie (Green)                                                  3. Defeat 100 Myst Case                                                      ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
 Collect items and Defeat monster#
 
 295516#Metaling Billboard#SG_FEEL#QUE_NOIMAGE#
@@ -22715,3 +22712,278 @@ Defeat 100 Gazeti #
 295691#Ice Titan Billboard#SG_FEEL#QUE_NOIMAGE#
 Billboard Mission 70+ Defeat 100 Ice Titan #
 Defeat 100 Ice Titan #
+
+///Update 17 December 2020 ///
+295692#Gremlin Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Gremlin #
+Defeat 100 Gremlin #
+
+295693#Beholder Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Beholder #
+Defeat 100 Beholder #
+
+295694#Vanberk Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Vanberk #
+Defeat 100 Vanberk #
+
+295695#Isilla Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Isilla #
+Defeat 100 Isilla #
+
+295696#Hodremlin Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Hodremlin #
+Defeat 100 Hodremlin #
+
+295697#Seeker Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Seeker #
+Defeat 100 Seeker #
+
+295698#Agav Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Agav #
+Defeat 100 Agav #
+
+295699#Echio Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Echio #
+Defeat 100 Echio #
+
+295700#Zombie Slaughter Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Zombie Slaughter #
+Defeat 100 Zombie Slaughter #
+
+295701#Ragged Zombie Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Ragged Zombie#
+Defeat 100 Ragged Zombie #
+
+295702#Hellhound Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Hellhound #
+Defeat 100 Hellhound #
+
+295703#Banshee Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Banshee #
+Defeat 100 Banshee #
+
+295704#Flame Skull Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Flame Skull #
+Defeat 100 Flame Skull #
+
+295705#Necromancer Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Necromancer #
+Defeat 100 Necromancer #
+
+///Christmas Night Event December 2020 ///
+
+295706#Into the High School Life#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 1 Defeat Monster below^000000                                               1. Defeat 50 Myst Case                                                       2. Defeat 50 Cruiser                                                         3. Defeat 50 Sasquatch#
+Defeat monster#
+
+295707#Have some friend ?#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 2 Collect below items^000000                                                1. Sexy T-Shirt 10 ea                                                        2. Sexy Shoes 10 ea                                                          3. Sexy Phone 10 ea                                                          4. Sexy Perfume 10 ea#
+Obtain from Antonio and Santa Poring  #
+
+295708#Jingle Bell Rock - 1#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 3-1 Collect below items^000000                                              1. Scarlet Dyestuffs 1 ea                                                    2. Feather 20 ea                                                             3. Soft Feather 20 ea                                                        4. Yellow Gemstone 20 ea                                                        5. Sandals [0] 1 ea#
+Collect items #
+
+295709#Jingle Bell Rock - 2#SG_FEEL#QUE_NOIMAGE#
+Waiting Karen to make a dress for you, come back again later  #
+Waiting Karen for 5 minutes at Lutie(143,124)#
+
+295710#Jingle Bell Rock - 3#SG_FEEL#QUE_NOIMAGE#
+The show almost start. Karen is waiting for you#
+Help Karen singing#
+
+295711#Thank U, Next - Janis#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 4-1 Answer the Questions^000000  #
+Answer qeustion Janis with Lutie(83,143)#
+
+295712#Thank U, Next - Damian#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 4-2 Answer the Questions^000000  #
+Answer qeustion Damian with Lutie(257,120)#
+
+295713#Thank U, Next - Cady#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 4-3 Answer the Questions^000000  #
+Answer qeustion with Cady at Lutie(193,267)#
+
+295714#Thank U, Next - Aaron#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 4-4 Answer the Questions^000000  #
+Answer qeustion Aaron with Lutie(156,302)#
+
+295715#Daily Christmas High School#SG_FEEL#QUE_NOIMAGE#
+^0000FFDaily Christmas Event - Talking with Norbury again after 5 AM^000000  #
+Can start quest again after 5 AM#
+
+///Thank You Next Event ///
+
+295716#Daily Exp/J.Exp - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get 500,000 Exp/250,000 J.Exp for today#
+You able to accept again at 05:00 AM#
+
+295717#Limited Soul Candy - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get Soul Candy from Thank You Event#
+Soul Candy limit 1 time per event#
+
+295718#Limited Status - Thank You#SG_FEEL#QUE_NOIMAGE#
+Reset status from Thank You Event#
+Re status limit 1 time per event#
+
+295719#Limited Skill - Thank You#SG_FEEL#QUE_NOIMAGE#
+Reset skill from Thank You Event#
+Reset skill limit 1 time per event#
+
+295720#Daily Siege Potion - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get 10 Siege Blue Potion for today#
+You able to accept again at 05:00 AM#
+
+295721#Daily Bow Mercenary - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get 5 of each Bowman Scroll 6 for today#
+You able to accept again at 05:00 AM#
+
+295722#Daily Siege White Potion - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get 10 Siege White Potion for today#
+You able to accept again at 05:00 AM#
+
+///Billboard Hugel////
+
+295723#Novus (Red) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Novus (Red) 70 ea #
+Defeat Novus (Red) 70 ea #
+
+295724#Novus (Yellow) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Novus (Yellow) 70 ea #
+Defeat Novus (Yellow) 70 ea #
+
+295725#Dragon Egg Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Dragon Egg 70 ea #
+Defeat Dragon Egg 70 ea #
+
+295726#Plasma (Red) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Red) 70 ea #
+Defeat Plasma (Red) 70 ea #
+
+295727#Plasma (Blue) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Blue) 70 ea #
+Defeat Plasma (Blue) 70 ea #
+
+295728#Plasma (Green) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Green) 70 ea #
+Defeat Plasma (Green) 70 ea #
+
+295729#Plasma (Purple) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Purple) 70 ea #
+Defeat Plasma (Purple) 70 ea #
+
+295730#Grove Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Grove 70 ea #
+Defeat Grove 70 ea #
+
+295731#Plasma (Yellow) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Yellow) 70 ea #
+Defeat Plasma (Yellow) 70 ea #
+
+295732#Breeze Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Breeze 70 ea #
+Defeat Breeze 70 ea #
+
+295733#Ancient Mimic Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Ancient Mimic 100 ea #
+Defeat Ancient Mimic 100 ea #
+
+295734#Death Word Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Death Word 100 ea #
+Defeat Death Word 100 ea #
+
+295735#Frus Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Frus 100 ea #
+Defeat Frus 100 ea #
+
+295736#Ferus (Green) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Ferus (Green) 100 ea #
+Defeat Ferus (Green) 100 ea #
+
+295737#Skogul Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Skogul 100 ea #
+Defeat Skogul 100 ea #
+
+295738#Ferus (Red) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Ferus (Red) 100 ea #
+Defeat Ferus (Red) 100 ea #
+
+295739#Acidus (Blue) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Acidus (Blue) 100 ea #
+Defeat Acidus (Blue) 100 ea #
+
+295740#Lady Solace Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Lady Solace 100 ea #
+Defeat Lady Solace 100 ea #
+
+295741#Baroness of Retribution Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Baroness of Retribution 100 ea #
+Defeat Baroness of Retribution 100 ea #
+
+295742#Mistress of Shelter Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Mistress of Shelter 100 ea #
+Defeat Mistress of Shelter 100 ea #
+
+295743#Acidus (Gold) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Acidus (Gold) 100 ea #
+Defeat Acidus (Gold) 100 ea #
+
+295744#Skeggiold (Black) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Skeggiold (Black) 100 ea #
+Defeat Skeggiold (Black) 100 ea #
+
+295745#Dame of Sentinel Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Dame of Sentinel 100 ea #
+Defeat Dame of Sentinel 100 ea #
+
+295746#Skeggiold (Blue) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Skeggiold (Blue) 100 ea #
+Defeat Skeggiold (Blue) 100 ea #
+
+295747#Dolor of Thanatos Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Dolor of Thanatos 100 ea #
+Defeat Dolor of Thanatos 100 ea #
+
+295748#Maero of Thanatos Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Maero of Thanatos 100 ea #
+Defeat Maero of Thanatos 100 ea #
+
+295749#Despero of Thanatos Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Despero of Thanatos 100 ea #
+Defeat Despero of Thanatos 100 ea #
+
+295750#Odium of Thanatos Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Odium of Thanatos 100 ea #
+Defeat Odium of Thanatos 100 ea #
+
+295751#Help Cho-Ai (Nerd)#SG_FEEL#QUE_NOIMAGE#
+Cho-Ai (Nerd) need your help to give Sweet Chocolate to Jae-Hyun#
+give Sweet Chocolate to Jae-Hyun (Hot)#
+
+295752#Time To Change#SG_FEEL#QUE_NOIMAGE#
+Cho-Ai (Nerd) want to change herself, consult with Lady Santi#
+Go to find Lady Santi#
+
+295753#Trial Of Yourself#SG_FEEL#QUE_NOIMAGE#
+Pass all trial from 3 trainers (Teacher Omin/Stylist Natty/Chef Anya)#
+Pass all quest from 3 trainers#
+
+295754#Defeat Monster - New Yoga Style#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 1 Defeat Monster below^000000                                               1. Defeat 30 Thara Frog                                                      2. Defeat 30 Obeaune                                                         3. Defeat 30 Cornutus#
+Defeat monster#
+
+295755#Change Your Look - New Dress& Make-up#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Rouge 1 ea                                                                2. Eye Drops 2 ea                                                            3. Lemon Dyestuffs 1 ea                                                        4. Ribbon 1 ea#
+Collect Item #
+
+295756#Dessert Course - Making Chocolate#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Chocolate Recipe 10 ea                                                    2. Dark Chocolate 10 ea                                                      3. Cacao 10 ea                                                                 4. Chocolate Chip 10 ea                                                      5. True Love 10 ea#
+Collect Item #
+
+295757#The Last Trial#SG_FEEL#QUE_NOIMAGE#
+Help Cho-Ai (In Love) sing a song to Jae-Hyun (In Love)#
+Go to find Jae-Hyun at Jawaii(205,290)#
+
+295758#Be Brave Again#SG_FEEL#QUE_NOIMAGE#
+Cho-Ai need to tell Jae-Hyun again after 05:00 AM #
+You able to accept again at 05:00 AM#

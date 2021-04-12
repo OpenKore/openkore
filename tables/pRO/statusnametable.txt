@@ -308,6 +308,7 @@ EFST_ZANGETSU Distorted Crescent
 EFST_PHI_DEMON Ancient Spirit of Daebujeok
 EFST_GENSOU Illusion of Dim Moonlight
 EFST_AKAITSUKI Omnius Red Moon
+EFST_2011RWC_SCROLL Idol's Perfume
 EFST_ALMIGHTY Almighty
 EFST_GEFFEN_MAGIC1 Add P.damage
 EFST_GEFFEN_MAGIC2 Add M.damage
@@ -411,3 +412,4 @@ EFST_LHZ_DUN_N1 Bed of Honor
 EFST_LHZ_DUN_N2 Bed of Honor
 EFST_LHZ_DUN_N3 Bed of Honor
 EFST_LHZ_DUN_N4 Bed of Honor
+EFST_INFINITY_DRINK Infinity Drink
