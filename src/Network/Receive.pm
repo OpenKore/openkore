@@ -11549,4 +11549,11 @@ sub item_preview {
 
 	}
 }
+
+# 0B1D (PACKET_ZC_PING)
+sub ping {
+	return if ($config{XKore} eq 1 || $config{XKore} eq 3);
+	$messageSender->sendPing();
+}
+
 1;
