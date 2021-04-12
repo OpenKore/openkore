@@ -13752,7 +13752,7 @@ Recesso dos Brinquedos#
 
 12334#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
 Aventurar-se no tempo pode provocar náuseas se você não aguardar um tempo entre uma viagem e outra.#
-Retorne após 70 horas.#
+Retorne após 3 dias.#
 
 12335#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
 O tempo e espaço foi distorcido por Hugin! Agora você poderá conferir o que se passa no castelo de Glast Heim!#
@@ -15110,6 +15110,58 @@ Aguarde 1 hora#
 Você já recebeu a bênção do objeto não identificado.#
 Aguarde 1 hora#
 
+14849#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Encontre os Fumacentos espalhados pelos mapas e traga 10 Sacolas de Itens Negociáveis para a [Produtora do Festival].#
+Traga 10 Sacolas#
+
+14850#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você agora pode começar as missões do [Ilusionista] do Festival das Flores de Neve.#
+Fale com o Ilusionista#
+
+14851#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você agora pode começar as missões de [Coti] do Festival das Flores de Neve.#
+Fale com Coti#
+
+14852#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você agora pode começar as missões de [Twinkle] do Festival das Flores de Neve.#
+Fale com Twinkle#
+
+14853#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você ouviu os bonecos de neve... traga 10 Sacolas de Itens Negociáveis e uma Cenoura para o [Ilusionista]#
+Colete os itens#
+
+14854#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Missão completa! Aguarde o período de espera e retorne ao [Ilusionista]#
+Volte amanhã.#
+
+14855#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Sasquatch, Marin, Lunático, Raggler e Esqueleto derrubarão Algodão no seu inventário, traga 10 unidades para [Coti]#
+10 Algodões#
+
+14856#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você entregou os itens para [Coti]#
+Volte amanhã.#
+
+14857#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Traga 100 unidades de Coração de Pedra para [Twinkle]#
+100 Corações de Pedra#
+
+14858#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Traga 50 unidades de Cesto de Palha para [Twinkle]#
+50 Cestos de Palha#
+
+14859#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Traga 70 unidades de Elmo de Dullahan para [Twinkle]#
+70 Elmos de Dullahan#
+
+14860#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Traga 30 unidades de Prato Amarelado para [Twinkle]#
+30 Pratos Amarelados#
+
+14861#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você já completou as tarefas de hoje, retone amanhã para [Twinkle]#
+Volte amanhã.#
+
 15000#Efeitos Negativos#SG_FEEL#QUE_NOIMAGE#
 Aprenda mais sobre os efeitos negativos com Mainz.#
 Fale com Mainz#
@@ -15154,45 +15206,45 @@ Entre no Aeroplano#
 Você tem 5 minutos para entrar na instância, caso contrário, só pode voltar amanhã.#
 Volte amanhã!#
 
-15055#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15055#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Você faz parte da União dos Solteiros. Encontre mais 5 Dorams em Juno pra fazerem parte dessa União!#
+Encontre 5 Dorams solteiros.#
 
-15056#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15056#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Junte 5 pontos fazendo casais se separarem ou discutirem em Juno. Vale tudo!#
+Procure e separe casais em Juno.#
 
-15057#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15057#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Casais separados! Hora de procurar Hansolo.#
+Pegue sua recompensa com Hansolo! #
 
 15058#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
 Passando por Ajustes#
 #
 
-15059#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15059#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Missão Cumprida! Será possível separar os casais novamente a cada 23 horas. Mal posso esperar!#
+Retorne mais tarde.#
 
-15060#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15060#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
-15061#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15061#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
-15062#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15062#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
-15063#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15063#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
-15064#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15064#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
 15065#Ticket de Rune-Midgard#SG_FEEL#QUE_NOIMAGE#
 Você só pode comprar 1 Ticket a cada 20 horas. #
@@ -15253,6 +15305,42 @@ Retorne no dia seguinte#
 15129#Uma Rifa por Dia#SG_FEEL#QUE_NOIMAGE#
 Você já participou da Rifa Doce hoje.#
 Retorne no dia seguinte#
+
+16055#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Você faz parte da União dos Solteiros. Encontre mais 5 Dorams em Juno pra fazerem parte dessa União!#
+Encontre 5 Dorams solteiros.#
+
+16056#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Junte 5 pontos fazendo casais se separarem ou discutirem em Juno. Vale tudo!#
+Procure e separe casais em Juno.#
+
+16057#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Casais separados! Hora de procurar Hansolo.#
+Pegue sua recompensa com Hansolo!#
+
+16059#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Missão Cumprida! Será possível separar os casais novamente após a meia noite. Mal posso esperar!#
+Retorne mais tarde.#
+
+16060#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
+
+16061#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
+
+16062#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
+
+16063#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
+
+16064#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
 
 21001#Primeiros Passos#SG_FEEL#QUE_NOIMAGE#
 Saia do navio naufragado e converse com o Capitão Chobber.#
@@ -15838,9 +15926,9 @@ Aguarde o contador zerar antes de iniciar outra missão.#
 #
 #
 
-60501#Raydric Hunting#SG_FEEL#QUE_NOIMAGE#
-Hunt the Raydric monsters at Glast Heim Chivalry and return to Gramps at the Eden Group to get your reward.#
-Hunt 400 Raydric monsters.#
+60501#Caça Raydric#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Raydric. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
 
 60502#Wanderer Hunting#SG_FEEL#QUE_NOIMAGE#
 Hunt the Wanderer monsters at Glast Heim Floor 2 and return to Gramps at the Eden Group to get your reward.#
@@ -16178,8 +16266,8 @@ Passando por Ajustes#
 Passando por Ajustes#
 #
 
-60586#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60586#Caça o Plagiador#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Plagiador. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
 60587#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
@@ -16354,8 +16442,8 @@ Passando por Ajustes#
 Cace 400 Sombra da Vaidade. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
-60830#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60830#Caça o Druida Maligno#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Druida Maligno. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
 60831#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
@@ -16398,12 +16486,12 @@ Passando por Ajustes#
 Cace 400 Mulas Sem Cabeça. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
-60841#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60841#Caça o Sacerdote Maldito#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Sacerdote Maldito. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
-60842#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60842#Caça o Anubis#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Anubis. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
 60843#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
@@ -16993,6 +17081,46 @@ Obrigado por participar!#
 70250#Intervalo da Rifa#SG_FEEL#QUE_NOIMAGE#
 Espere pelo intervalo até comprar outro ticket da Rifa.#
 #
+
+80070#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna sul de Prontera vamos preprar o Molho Verde. Traga 10 Folhas de Aloe, 5 Folhas de Hinalle e 1 Pilão Yaga.#
+Junte os ingredientes!#
+
+80071#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna central de Prontera vamos preprar o Camarão Apimentado. Traga 10 Frigideiras Velhas, 5 Camarões, 5 Pimentas Vermelhas e 1 Prato Amarelado.#
+Junte os ingredientes!#
+
+80072#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna de Geffen vamos preprar o Suco Azedinho. Traga 10 Laranjas, 5 Mastelas, 5 Uvas e 1 Garrafa Vazia.#
+Junte os ingredientes!#
+
+80073#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna de Al de Baran vamos preprar o Ensopado de Peixe na Concha. Traga 15 Caudas de Peixes, 10 Nadadeiras, 5 Limões, 5 Peixes Frescos e 1 Concha.#
+Junte os ingredientes!#
+
+80074#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você resgatou a Surpresa do Festival dos Trevos! Bom trabalho!#
+Surpresa Obtida!#
+
+80075#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna Sul de Prontera hoje. Volte mais tarde.#
+Missão cumprida!#
+
+80076#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna Central de Prontera hoje. Volte mais tarde.#
+Missão cumprida!#
+
+80077#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna de Geffen hoje. Volte mais tarde.#
+Missão cumprida!#
+
+80078#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna de Al De Baran hoje. Volte mais tarde.#
+Missão cumprida!#
+
+80079#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Duffy trouxe o Festival dos Trevos pra Rune-Midgard. Participe montando o prato com os donos das tavernas locais.#
+Fale com os donos das tavernas#
 
 291000#Caçadoras de Fada#SG_FEEL#QUE_NOIMAGE#
 Você capturou algumas fadas na esperança de que uma delas seja a Garota Mimada, mas infelizmente não era... Será necessário retornar amanhã para pegar mais Bolsas Mágicas com o [Felino].#

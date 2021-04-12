@@ -55,6 +55,21 @@ EFST_DEFENDER Defending Aura
 EFST_WEAPONPROPERTY Aspersio
 EFST_AUTOSPELL Hindsight
 EFST_SPEARQUICKEN Spear Quicken
+EFST_WHISTLE Whistle
+EFST_ASSASSINCROSS Assassin Cross of Sunset
+EFST_POEMBRAGI Poem of Bragi
+EFST_APPLEIDUN Apple of Idun
+EFST_HUMMING Humming
+EFST_DONTFORGETME Don't Forget Me
+EFST_FORTUNEKISS Fortune's Kiss
+EFST_SERVICEFORYOU Service for You
+EFST_RICHMANKIM Mr. Kim a Rich Man
+EFST_ETERNALCHAOS Eternal Chaos
+EFST_DRUMBATTLEFIELD A Drum on the Battlefield
+EFST_RINGNIBELUNGEN The Ring of Nibelungen
+EFST_ROKISWEIL Loki's Veil
+EFST_INTOABYSS Into the Abyss
+EFST_SIEGFRIED Invulnerable Siegfried
 EFST_STEELBODY Undestructable 
 EFST_EXTREMITYFIST Guillotine Fist
 EFST_PROPERTYFIRE Flame Launcher
@@ -62,6 +77,7 @@ EFST_PROPERTYWATER Give Tsunami
 EFST_PROPERTYWIND Lightning Loader
 EFST_PROPERTYGROUND Give Quake
 EFST_PROPERTYUNDEAD Apply Undead Attributes
+EFST_AURABLADE Aura Blade
 EFST_PARRYING Parry
 EFST_TENSIONRELAX Relax
 EFST_ASSUMPTIO Assumptio
@@ -123,9 +139,9 @@ EFST_FOOD_LUK Increase LUK
 EFST_FOOD_BASICAVOIDANCE Increase Flee
 EFST_FOOD_BASICHIT Increase Accuracy
 EFST_FOOD_CRITICALSUCCESSVALUE Increase Critical rate
-EFST_CASH_PLUSEXP Increase amount of EXP acquired
+EFST_CASH_PLUSEXP Meningkatkan EXP yang didapat.
 EFST_CASH_DEATHPENALTY Don't lose EXP when the caster is dead
-EFST_CASH_RECEIVEITEM Increase item drop rate two times higher
+EFST_CASH_RECEIVEITEM Meningkatkan Drop Rate item
 EFST_FOOD_STR_CASH Increase STR
 EFST_FOOD_AGI_CASH Increase AGI
 EFST_FOOD_VIT_CASH Increase VIT
@@ -149,7 +165,7 @@ EFST_ATKER_BLOOD SP Consumption Decrease Potion
 EFST_TARGET_BLOOD Abnormal Status Resistance Potion
 EFST_ARMOR_PROPERTY Change Property Scroll
 EFST_HELLPOWER Hell Power
-EFST_CASH_PLUSONLYJOBEXP Get 1.5x Job EXP when hunting monsters
+EFST_CASH_PLUSONLYJOBEXP Meningkatkan Job EXP yang didapat
 EFST_PARTYFLEE Increase Flee
 EFST_ANGEL_PROTECT Thank You So Much
 EFST_ENCHANTBLADE Enchant Blade
@@ -308,11 +324,22 @@ EFST_ZANGETSU Distorted Crescent
 EFST_PHI_DEMON Ancient Spirit of Daebujeok
 EFST_GENSOU Illusion of Dim Moonlight
 EFST_AKAITSUKI Omnius Red Moon
-EFST_2011RWC_SCROLL Idol's Perfume
+EFST_2011RWC_SCROLL Red Booster
+EFST_MYSTICPOWDER Mystic Powder
+EFST_M_LIFEPOTION Mysterious Water
 EFST_ALMIGHTY Almighty
-EFST_GEFFEN_MAGIC1 Add P.damage
-EFST_GEFFEN_MAGIC2 Add M.damage
-EFST_GEFFEN_MAGIC3 Reduce the damage
+EFST_GVG_GIANT Frost Giant Blood
+EFST_GVG_GOLEM Golem Stone
+EFST_GVG_STUN Elf Tear Stun
+EFST_GVG_STONE Elf Tear Stone Curse
+EFST_GVG_FREEZ Elf Tear Freezing
+EFST_GVG_SLEEP Elf Tear Sleep
+EFST_GVG_CURSE Elf Tear Curse
+EFST_GVG_SILENCE Elf Tear Silence
+EFST_GVG_BLIND Elf Tear Blind
+EFST_GEFFEN_MAGIC1 Meningkatkan serangan fisik
+EFST_GEFFEN_MAGIC2 Meningkatkan serangan magic
+EFST_GEFFEN_MAGIC3 Mengurangi serangan dari
 EFST_QUEST_BUFF1 Accumulating Energy
 EFST_QUEST_BUFF2 Accumulating Energy
 EFST_QUEST_BUFF3 Accumulating Energy
@@ -349,7 +376,8 @@ EFST_PACKING_ENVELOPE8 Safer 30 seconds
 EFST_PACKING_ENVELOPE9 Lucky 30 seconds
 EFST_PACKING_ENVELOPE10 Accurate 30 seconds
 EFST_HEAT_BARREL_AFTER After Effect
-EFST_EP16_DEF Shining Holly Water
+EFST_LIMIT_POWER_BOOSTER Limit Power Booster
+EFST_EP16_DEF Shining Holy Water
 EFST_BODYSTATE_STONECURSE Petrification
 EFST_BODYSTATE_FREEZING Frost
 EFST_BODYSTATE_STUN Stun
@@ -391,6 +419,9 @@ EFST_ARCLOUSEDASH Arclouse Dash
 EFST_TUNAPARTY Tuna Party
 EFST_SHRIMP Bunch of Shrimp
 EFST_FRESHSHRIMP Fresh Shrimp
+EFST_PERIOD_RECEIVEITEM Increase Drop Rate
+EFST_PERIOD_PLUSEXP EXP up
+EFST_PERIOD_PLUSJOBEXP Job EXP up
 EFST_SUHIDE Hide
 EFST_DORAM_BUF_01 Kahluna Milk
 EFST_DORAM_BUF_02 Basil
@@ -400,6 +431,11 @@ EFST_AID_PERIOD_PLUSEXP EXP up
 EFST_AID_PERIOD_PLUSJOBEXP Job EXP up
 EFST_AID_PERIOD_DEADPENALTY Decrease Death Penalty
 EFST_AID_PERIOD_ADDSTOREITEMCOUNT Expand Storage
+EFST_HISS Hiss
+EFST_NYANGGRASS Nyang Grass
+EFST_CHATTERING Chattering
+EFST_GROOMING Grooming
+EFST_PROTECTIONOFSHRIMP Tasty Shrimp Party
 EFST_EP16_2_BUFF_SS Build Up Potion SS
 EFST_EP16_2_BUFF_SC Build Up Potion SC
 EFST_EP16_2_BUFF_AC Build Up Potion AC
@@ -408,8 +444,14 @@ EFST_AID_PERIOD_RECEIVEITEM_2ND Increase Drop Rate
 EFST_AID_PERIOD_PLUSEXP_2ND EXP Up
 EFST_AID_PERIOD_PLUSJOBEXP_2ND Job EXP up
 EFST_CHEERUP Go! Mom and Dad.
+EFST_S_MANAPOTION Small Mana Potion
+EFST_M_DEFSCROLL Shining Defense Scroll
 EFST_LHZ_DUN_N1 Bed of Honor
 EFST_LHZ_DUN_N2 Bed of Honor
 EFST_LHZ_DUN_N3 Bed of Honor
 EFST_LHZ_DUN_N4 Bed of Honor
 EFST_INFINITY_DRINK Infinity Drink
+EFST_ENSEMBLEFATIGUE Ensemble Fatigue
+EFST_ADAPTATION Adaptaion to Circumstances
+EFST_ASSUMPTIO_BUFF Assumptio
+EFST_BASILICA_BUFF Basilica
