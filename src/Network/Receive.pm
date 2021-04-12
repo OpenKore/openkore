@@ -3926,6 +3926,7 @@ sub login_pin_code_request {
 	# 1 - requested (already defined)
 	# 2 - requested (not defined)
 	# 3 - expired
+	# 4 - requested (not defined) - private servers
 	# 5 - invalid (official servers?)
 	# 7 - disabled?
 	# 8 - incorrect
@@ -3940,7 +3941,7 @@ sub login_pin_code_request {
 		message T("Server requested PIN password in order to select your character.\n"), "connection";
 		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
-	} elsif ($args->{flag} == 2) {
+	} elsif ($args->{flag} == 2 or $args->{flag} == 4) {
 		# PIN code has never been set before, so set it.
 		warning T("PIN password is not set for this account.\n"), "connection";
 		return if ($config{loginPinCode} eq '' && !($self->queryAndSaveLoginPinCode()));
@@ -3967,13 +3968,23 @@ sub login_pin_code_request {
 		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is invalid. Please re-enter your login PIN code."))));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} elsif ($args->{flag} == 7) {
-		# PIN code disabled.
-		$accountID = $args->{accountID};
-		debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
+		if ($self->{serverType} == 'RMS') { # removed check for seed 0, eA/rA/brA sends a normal seed.
+			message T("PIN code is correct.\n"), "success";
+			# call charSelectScreen
+			if (charSelectScreen(1) == 1) {
+				$firstLoginMap = 1;
+				$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+				$sentWelcomeMessage = 1;
+			}
+		} else {
+			# PIN code disabled.
+			$accountID = $args->{accountID};
+			debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
 
-		# call charSelectScreen
-		$self->{lockCharScreen} = 0;
-		$timeout{'char_login_pause'}{'time'} = time;
+			# call charSelectScreen
+			$self->{lockCharScreen} = 0;
+			$timeout{'char_login_pause'}{'time'} = time;
+		}
 	} elsif ($args->{flag} == 8) {
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
@@ -7710,9 +7721,10 @@ sub remain_time_info {
 
 sub received_login_token {
 	my ($self, $args) = @_;
-
+	# XKore mode 1 / 3.
+	return if ($self->{net}->version == 1);
 	my $master = $masterServers{$config{master}};
-
+	# rathena use 0064 not 0825
 	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTT_ip}, $master->{OTT_port});
 }
 
@@ -9803,6 +9815,52 @@ sub auction_add_item {
 sub premium_rates_info {
 	my ($self, $args) = @_;
 	message TF("Premium rates: exp %+i%%, death %+i%%, drop %+i%%.\n", $args->{exp}, $args->{death}, $args->{drop}), "info";
+}
+
+# Transmit personal information to player. (rates)
+# 08CB <packet len>.W <exp>.W <death>.W <drop>.W <DETAIL_EXP_INFO>7B (ZC_PERSONAL_INFOMATION)
+# <InfoType>.B <Exp>.W <Death>.W <Drop>.W (DETAIL_EXP_INFO 08CB)
+# 097B <packet len>.W <exp>.L <death>.L <drop>.L <DETAIL_EXP_INFO>13B (ZC_PERSONAL_INFOMATION2)
+# 0981 <packet len>.W <exp>.W <death>.W <drop>.W <activity rate>.W <DETAIL_EXP_INFO>13B (ZC_PERSONAL_INFOMATION_CHN)
+# <InfoType>.B <Exp>.L <Death>.L <Drop>.L (DETAIL_EXP_INFO 097B|0981)
+sub rates_info2 {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $header_pack = 'v V3';
+	my $header_len = ((length pack $header_pack) + 2);
+
+	my $detail_pack = 'C l3';
+	my $detail_len = length pack $detail_pack;
+
+	my %rates = (
+		exp => { total => $args->{exp}/1000 }, # Value to Percentage => /100
+		death => { total => $args->{death}/1000 }, # 1 d.p. => /10
+		drop => { total => $args->{drop}/1000 },
+	);
+
+	# get details
+	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i += $detail_len) {
+
+		my ($type, $exp, $death, $drop) = unpack($detail_pack, substr($msg, $i, $detail_len));
+
+		$rates{exp}{$type} = $exp/1000;
+		$rates{death}{$type} = $death/1000;
+		$rates{drop}{$type} = $drop/1000;
+	}
+
+	# we have 4 kinds of detail:
+	# $rates{exp or drop or death}{DETAIL_KIND}
+	# 0 = base server exp (?)
+	# 1 = premium acc additional exp
+	# 2 = server additional exp
+	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
+	message T("=========================== Server Infos ===========================\n"), "info";
+	message TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}+100, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
+	message TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}+100, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
+	message TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}+100, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
+	message "=====================================================================\n", "info";
 }
 
 sub auction_result {

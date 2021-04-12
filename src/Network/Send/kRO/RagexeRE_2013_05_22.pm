@@ -42,6 +42,7 @@ sub new {
 		'096A' => undef,
 		'08A6' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'0368' => undef,
+		'0369' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0943' => undef,
 		'08A9' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'0947' => undef,

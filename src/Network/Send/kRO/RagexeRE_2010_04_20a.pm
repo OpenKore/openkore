@@ -24,6 +24,11 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	my %packets = (
+		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
+	);
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
 	my %handlers = qw(
 		buy_bulk_request 0817
 	);

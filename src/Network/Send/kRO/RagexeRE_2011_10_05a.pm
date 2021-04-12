@@ -24,7 +24,7 @@ sub new {
 		'0202' => undef,
 		'022D' => undef,
 		'023B' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
-		'02C4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
+		'02C4' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10 
 		'0360' => undef,
 		'035F' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
 		'0361' => undef,
@@ -33,6 +33,7 @@ sub new {
 		'0366' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'0367' => ['sync', 'V', [qw(time)]],#6
 		'0369' => undef,
+		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19 
 		'07E4' => undef,
 		'07EC' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'0802' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8

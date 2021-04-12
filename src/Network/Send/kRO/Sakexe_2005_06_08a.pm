@@ -24,6 +24,12 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	my %packets = (
+		'023B' => ['storage_password', 'v a*', [qw(type data)]],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
 	my %handlers = qw(
 		storage_password 023B
 	);
