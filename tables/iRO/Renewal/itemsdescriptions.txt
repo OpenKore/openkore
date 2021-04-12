@@ -1,3 +1,11 @@
+500#
+A snack made by mixing pieces of walnut with chocolate.
+Type: ^808080Usable^000000
+Class: ^808080Recovery^000000
+Weight: ^8080801^000000
+Restored 10% HP/SP When consumed.
+Effect disappears at the end of the event.
+#
 501#
 A potion made from ground red herbs.
 Class: ^808080Recovery^000000
@@ -1316,6 +1324,11 @@ Weight: ^80808020^000000
 757#
 Raw ore that mostly consists of Elunium metal.
 Weight: ^80808020^000000
+#
+766#
+
+Type: ^808080Miscellaneous^000000
+Weight: ^8080800^000000
 #
 901#
 A braided pigtail that has been cut from the head of a young girl.
@@ -4688,6 +4701,26 @@ Attack: 0
 Property: N/A
 Weight: 0
 Weapon Level: 0
+#
+1326#
+a hideous axe that is said to be haunted by the fear of death when the day faces the enemy, with a life-threatening axe that has become frighteningly cruel because it is swung from the battlefield and filled with blood.
+Unbreakable.
+STR + 2, DEX + 2, LUK + 2.
+Increases the damage of Axe Tornado and Axe Boomerang by 100%.
+Increases the damage of Cart Tornado by 75%.
+If refine rate is 7 or higher, further increases the damage of Axe Tornado, Axe Boomerang and Cart Tornado by 20%.
+If refine rate is 9 or higher, further increases the damage of Axe Tornado, Axe Boomerang and Cart Tornado by another 20%.
+^ffffff_^000000
+If equipped with Illusion Shoes, ATK + 40.
+If refine rate of both is 7 or higher, increases the damage of Axe Boomerang by 15%.
+If the sum of their refine rates is 18 or higher, ATK + 10%.
+If the sum of their refine rates is 22 or higher, increases long ranged physical damage by 10%.
+^ffffff_^000000
+Type : ^777777Axe^000000 Attack : ^777777180^000000
+Weight : ^777777420^000000
+Weapon Level : ^7777774^000000
+Required Level : ^777777120^000000
+Jobs : ^777777Blacksmith Classes, Alchemist Classes^000000
 #
 1338#
 A mysterious ax given to adventurers who successfully execute missions.
@@ -37840,6 +37873,12 @@ A Doll imbued with Baphomet's curse. It seems to be compounded with something.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
+6007#
+This soup matches the flavor's Hyul remembers from his childhood.
+Type: ^808080Usable^000000
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+#
 6009#
 Magical Fan that can stir up a strong wind. Let's try it under the cherry blossom tree.
 ^ffffff_^000000
@@ -40717,7 +40756,7 @@ Weight: ^80808010^000000
 Aspd + 1
 #
 6909#
-Purr-ency coins that can be exchanged for costume headgears by talking to Designer Heidam at the Malangdo building located at 115 150.
+Purr-ency that can be exchanged for costume headgears by talking to Designer Heidam at the Malangdo building located at 115 150.
 Class: ^808080Generic^000000
 Weight: ^8080801^000000
 #
@@ -49829,6 +49868,13 @@ Required Job: All
 Restores 3% SP.
 Casts ^0000FFLevel 1 Magnificat^000000.
 #
+12378#
+This soup matches the flavor's Hyul remembers from his childhood.
+Type: ^808080Usable^000000
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+Recovers 50% HP/SP during the event period
+#
 12379#
 [Not for Sale] It's been made as a special production in Sessrumnir temple. It has been modeled after current pope.
 There's an issue with this as a blasphemy and likely been prohibited but, it's still popular within close associates.
@@ -50576,6 +50622,19 @@ If you are incapacitated, the item effect will disappear.
 An abrasive that\r\nadds sharpness to\r\na weapon. Increases\r\nCritical Rate by 30\r\nfor 5 minutes.\r\nIf you are incapacitated,\r\nthe item effect will disappear.\r\n^ffffff_^000000\r\nWeight : ^7777771^000000\r\n
 ^FF0000Account Bound^000000
 Weight: ^8080800^000000
+#
+12515#
+A sizeable bottle of
+Yggdrasil Tree Sap
+that is effective in
+healing wounds.
+Restores an amount of
+HP equal of 7% of your
+Max HP every 4 seconds^FFFFFF    ^000000 for a 10 minute duration.
+If you are incapacitated,
+the item effect will disappear.
+^ffffff_^000000
+Weight : ^7777771^000000
 #
 12516#
 A small bottle of Yggdrasil Tree Sap that is effective in healing wounds.
@@ -51405,6 +51464,11 @@ A notation that a Carol is memorized.
 But nobody knows which song was memorized.
 Weight : ^7777770^000000
 #
+12754#
+A type of dough that is filled with ground meat, usually served hot. People living in eastern countries have enjoyed eating this food for a long time.
+Class: ^808080Recovery^000000
+Recovers 30% HP/SP during the event period
+#
 12775#
 Totem with powerful abilities to aggressively fight against demons. Emits powerful, holy energy.
 10% increase of physical and magic damage to demon monsters for 20 min.
@@ -51851,7 +51915,6 @@ Concentrated Eluniums.
 Concentrated Elunium -
 Increases rate of
 refining an armor
-without breaking it.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -51863,7 +51926,6 @@ Oridecons.
 Concentrated Oridecon -
 Increases rate of
 refining a weapon
-without breaking it.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -55701,6 +55763,27 @@ Increases the damage by an additional 25%.
 If the combined upgrade levels are +22 or higher,
 Reduces the cooldown of ^0000FFSwirling Petal^000000 by 1 second.
 #
+13338#
+Its shape resembles a bird's wing,
+so it is named like this.
+It is famous for its weapons of the Fuuma tribe.
+Unbreakable, DEX + 2. 
+Increases the damage of Kunai Splash by 9% per refine rate.
+^ffffff_^000000
+If equipped with Illusion Apple of Archer,
+ATK + 50.
+If refine rate of both is 7 or higher, increases the damage of Kunai Splash by 30%.
+If the sum of their refine rates is 18 or higher,
+increases long ranged physical damage by 10%.
+If the sum of their refine rates is 22 or higher,
+further increases the damage of Kunai Splash by 20%.
+^ffffff_^000000
+Type : ^777777Fuuma Shuriken^000000 Attack : ^777777300^000000
+Weight : ^777777150^000000
+Weapon Level : ^7777774^000000
+Required Level : ^777777120^000000
+Jobs : ^777777Ninja Classes^000000
+#
 13400#
 A practical sword
 that is typically
@@ -56187,6 +56270,29 @@ If upgrade level is +10 or higher,
 Max HP + 500
 Atk + 45
 Aspd + 1
+#
+13469#
+A sword with an intangible blade that seems to have no form but has no shape.
+Attack the spirit of the subject and destroy it.
+Unbreakable.
+Drains 1 SP when dealing normal physical attacks.
+Has an 8% chance to drain 30% SP from an enemy when dealing physical attacks.
+The chance increases by 2% per refine rate.
+If the refine rate is 12 or higher, the drain effect is increased in 20%.
+^ffffff_^000000
+If Rogue Classes equip this item, player can get additional effect below.
+If equipped with Illusion Ancient Cape,
+MATK + 100.
+If the refine rate of both is 7 or higher, additional MATK + 50.
+If the sum of their refine rates is 18 or higher,
+has a chance of auto casting Bolt-type spells when dealing physical damage.
+If the sum of their refine rates is 22 or higher, has a chance to increase the damage of Storm Gust, Meteor Storm, Lord of Vermilion and Heaven's Drive by 30% for 10 seconds, when dealing physical damage.
+^ffffff_^000000
+Type : ^777777Sword^000000 Attack : ^777777180^000000
+Weight : ^77777790^000000 Property : ^777777Ghost^000000 
+Weapon Level : ^7777774^000000
+Required Level : ^777777120^000000
+Jobs : ^777777Swordman Classes, Thief classes, Merchant classes.^000000
 #
 13493#
 A sword with a detonator system embedded in its blade to cause powerful explosions.
@@ -59047,7 +59153,7 @@ Weight : ^7777771^000000
 14176#
 A box containing 50 Concentrated Eluniums.
 ^ffffff_^000000
-Concentrated Elunium - Increases rate of refining an armor without breaking it.
+Concentrated Elunium - Increases rate of refining an armor.
 ^ff0000This item is excluded from subscription withdrawal or refund.^000000
 ^ffffff_^000000
 Weight : ^7777771^000000
@@ -59060,7 +59166,6 @@ Oridecons.
 Concentrated Oridecon -
 Increases rate of
 refining a weapon
-without breaking it.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -62819,6 +62924,35 @@ Increases physical and magical damage on Doram Player and Human Player race targ
 Increases physical and magical damage on Fire and Water property targets by an additional 15%.
 ^800080Disabled during WoE TE^000000
 #
+15838#
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+15839#
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Weight: ^8080800^000000
+#
+15840#
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+15841#
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
+15842#
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Upper^000000
+Weight: ^8080800^000000
+#
 16000#
 This mace's shape is inspired by a Snake, which symbolizes the fountain of knowledge.
 MaxSP +50.
@@ -63331,6 +63465,24 @@ If the combined upgrade levels of ^008080Illusion Long Mace^000000 and ^008080Il
 Increases the recovery rate of recovery skills by an additional 15%.
 If the combined upgrade levels of ^008080Illusion Long Mace^000000 and ^008080Illusion Puente Robe^000000 are +22 or higher,
 Reduces the global delay of skills by 15%.
+#
+16065#
+A blunt instrument that is said to have been used in certain athletic competitions has rounded ends and high hardness carbon steel increases the killing force.
+Unbreakable.
+Increases the damage of Duple Light by 3% per refine rate.
+ASPD + 1 per 2 refine rate.
+^ffffff_^000000
+If equipped with Illusion Muffler,
+Increases attack speed by 10% (reduces after attack delay by 10%).
+If refine rate of both is 7 or higher, increases the damage of Duple Light by 25%.
+If the sum of their refine rates is 18 or higher, CRI + 15.
+If the sum of their refine rates is 22 or higher, increases critical damage by 20%.
+^ffffff_^000000
+Type : ^777777Mace^000000 Attack : ^777777210^000000
+Weight : ^777777200^000000
+Weapon Level : ^7777774^000000
+Required Level : ^777777120^000000
+Jobs : ^777777Arch Bishop Classes^000000
 #
 16088#
 A mace with an attached ball that gleams blue.
@@ -76170,6 +76322,15 @@ Reduces damage taken from Human Player and Doram race enemies by an additional 2
 Reduces damage taken from Human Player and Doram race enemies by an additional 4%, if the users base Agi is 120 or higher.
 Immune to ^800000Blind^000000 and ^800000Silence^000000.
 #
+19247#
+The beauty of the flowers in the hair makes the viewers happy, but they can't see themselves. 
+MATK + 1%. 
+Matk + 2 per refine rate.
+Type : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777710^000000
+Required Level : ^777777120^000000
+Jobs : ^777777All^000000
+#
 19249#
 This circle of magic outlines the properties, it feels like you can use powerful magic by wearing it.
 Class: ^808080Headgear^000000
@@ -76578,6 +76739,42 @@ Reduces damage taken from Poison property attacks by an additional 15%.
 If upgrade level is +9 or higher,
 Increases physical and magical damage on Heart Hunter Base monsters by an additional 20%.
 Reduces damage taken from Heart Hunter Base monsters by an additional 20%.
+#
+19338#
+A green hat with a clover.
+AGI + 2, HIT +  3.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777720^000000
+Required Level : ^77777715^000000
+Jobs : ^777777All^000000
+#
+19339#
+A hat with an antique design.
+Be careful not to break the eggshells on both sides of the head.
+MHP + 75, MSP + 25.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777720^000000
+Required Level : ^77777715^000000
+Jobs : ^777777All^000000
+#
+19340#
+Egg Shell with Angel's Wings exuding Holy Energy.
+It makes you think of good things only.
+Heal Amount +2%.
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777720^000000
+Required Level : ^77777715^000000
+Jobs : ^777777All^000000
+#
+19341#
+Egg Shell with Devil's Wings exuding Evil Energy.
+It makes you think of bad things only.
+
+Increase ASPD +2%(Attack Delay -2%).
+Class : ^777777Headgear^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^77777720^000000
+Required Level : ^77777715^000000
+Jobs : ^777777All^000000
 #
 19342#
 Hat made from cowhide.
@@ -84519,6 +84716,26 @@ Reduces damage taken from Wind property attacks by 75%.
 ^008080Stone Arrow^000000
 Reduces damage taken from Earth property attacks by 75%.
 #
+20988#
+Butterfly wings made with mechanical precision.
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
+20989#
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
+20990#
+Gears that rotate constantly seem to symbolize the passage of time.
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Garment^000000
+Weight: ^8080800^000000
+#
 21001#
 A two-handed sword that has been designed specifically for battles against players.
 Class: ^808080Two-Handed Sword^000000
@@ -84730,6 +84947,38 @@ Class: ^808080Costume^000000
 Position: ^808080Middle, Lower^000000
 Weight: ^80808010^000000
 Requires Level: ^8080801^000000
+#
+21205#
+A mask made of rodent fur. The cheeks feature expansive food storages.
+
+Type: ^808080Equipment^000000
+Position: ^808080Middle, Lower^000000
+Defense: ^8080800^000000
+Weight: ^8080800^000000
+Usable By: ^808080All Jobs^000000
+#
+21206#
+A mask made of animal fur. The cheeks contain expansive food storage.
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+#
+21207#
+A mask shaped bull head.
+It was made in white because there was no dye.
+
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Middle, Lower^000000
+Weight: ^8080800^000000
+Recovery amount of Milk +2021%.
+ATK, MATK + 1% per every Base Lv 15
+
+This item effect will be removed after the event.
+
+
+
 #
 22000#
 These boots are obviously old but they show no signs of wear and tear.
@@ -87339,6 +87588,15 @@ A hunting rope to capture something or someone.
 Useful for capturing 'Lost Lamb'.
 Weight : ^7777770^000000
 #
+22882#
+Fresh octopus broth is mixed with chocolate and boiled rice soup as a secret recipe.
+
+Type: ^808080Usable^000000
+Class: ^808080Recovery^000000
+Weight: ^8080800^000000
+Recovers 10%HP/SP
+Effect disappears after the event
+#
 22899#
 ^808080A map used to guide someone through the city of Prontera, making it quicker to navigate.^000000
 ^FFFFFF_^000000
@@ -88466,6 +88724,13 @@ Weight: ^80808018^000000
 Restores 18% HP.
 Restores 18% SP.
 #
+23683#
+Contains a random gift for the person who opens it.
+
+Type: ^808080Usable^000000
+Class: ^808080Item Giver^000000
+Weight: ^80808010^000000
+#
 23684#
 A mysterious seal card that is said to be in the pocket of the Phantom.
 
@@ -88832,44 +89097,10 @@ Costume Sinsuncho Hat
 #
 23919#
 The key to unlocking Kachua's Secret Box. It contains various treasures!
-^FF0000The contents of the secret box change every month, so please check and use it.^000000
+^FF0000The contents of the secret box change every month, so please check before using it.^000000
+^FF0000Latest contents can be found here: http://renewal.playragnarok.com/news/eventdetail.aspx?id=503&p=1 ^000000
 Type: ^808080Usable^000000
 Weight: ^8080800^000000
-Each Kachua Key you receive will also give you 1 HE Bubble Gum!
-Chance of one of the following
-SSS
-Status Shadow Item Combiner
-Armor +12 Refine Ticket
-Weapon +12 Refine Ticket
-SS
-Armor +11 Refine Ticket
-Weapon +11 Refine Ticket
-Essence of Powerful Soul
-S
-Duel Dragon Hat
-Splash Cat Hat
-Juggernaut
-Soul Expansion Ring
-A
-Class Weapon Shadow Cube
-Class Shield Shadow Cube
-Class Armor Shadow Cube
-Class Shoes Shadow Cube
-Class Earring Shadow Cube
-Class Pendant Shadow Cube
-B
-Blacksmith Blessing
-Yggdrasilberry Box
-C
-Butterfly Wing Box
-Poison Bottle 30 Box
-Alchemist Box
-[Not for Sale] Battle Manual and Bubble Gum
-Bloody Branch
-Spearman Scroll 10 (x2)
-Fencer Scroll 10 (x2)
-Bowman Scroll 10 (x2)
-Mystical Amplification Scroll (x5)
 #
 23921#
 Event Reward
@@ -92527,6 +92758,35 @@ A twig that was unearthed from the ground
 ^FF0000Account Bound^000000
 Weight: ^8080801^000000
 #
+25311#
+A suspicious piece of ominous energy.
+The broken cross section is sharp, so if you touch it incorrectly, you get stabbed and cut your hand. You can't tell where it came from.
+Sold to a collector's dealer.
+Weight : ^7777771^000000
+#
+25312#
+An old but well-sewn doll. It seems like the owner's cherished possession for a long time, but now it's gone. Is it because I feel like a doll looks like someone?
+Sold to a collector's dealer.
+Weight : ^7777771^000000
+#
+25313#
+A carved shell of a tortoise that lives only on Turtle Island. The size of the scale pattern suggests that it is a piece of turtle's shell that is much smaller than other turtles.
+Sold to a collector's dealer.
+Weight : ^7777771^000000
+#
+25314#
+The Turtle Island Navigation Diary that I've read before. The content subtly differs from the memory.
+Is it because I read it too long ago? The content is cut off in an awkward part..
+Weight : ^7777771^000000
+#
+25315#
+A piece of tortoise shell that lives only on Turtle Island. A leaf is poorly carved on the blue shell. Not the skill of an expert work.
+Weight : ^7777770^000000
+#
+25316#
+A piece of metal that is old but not corroded and glows in a strange color. But only that, it doesn't even know what it is and doesn't look very valuable.
+Weight : ^7777770^000000
+#
 25358#
 It looks like operating certain machinery somewhere will cause data to be printed on the card.
 Must be returned once the survey is complete.
@@ -92633,6 +92893,12 @@ A bottle containing a scent which is irresistible to doggo. It contains somethin
 Class: ^808080Pet Tame^000000
 Weight: ^8080800^000000
 #
+25502#
+A chewy rice cake destined to be used in soup.
+Type: ^808080Usable^000000
+Class: ^808080Recovery^000000
+Weight: ^8080805^000000
+#
 25503#
 Flowers left in the place where the mighty Phantom that haunts the Corridor of Phantom has disappeared.
 The Phantom's Spirits will love it if you collect and deliver these flowers to them.
@@ -92652,6 +92918,25 @@ Weight : ^7777770^000000
 Attack: ^8080800^000000
 Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
+#
+25511#
+^ff0000Cannot be traded with others.^000000
+Solid Chocolate used to create Chocolate Eggs.
+It's delicious just to eat, but you shouldn't be tempted.
+
+(This item will be removed after event.)
+
+Weight : ^7777770^000000
+
+#
+25512#
+^ff0000Cannot be traded with others.^000000
+Almond used to make Marzipan, the ingredient of Yummy Cookie Egg..
+It's delicious just to eat, but you shouldn't be tempted.
+
+(This item will be removed after event.)
+
+Weight : ^7777770^000000
 #
 25627#
 A standard card not in use.
@@ -93814,20 +94099,39 @@ Additional Max HP + 1000
 Additonal Max SP + 50
 #
 27106#
+Type: ^808080Miscellaneous^000000
 Class: ^808080Card^000000
+Compounds On: ^808080Armor^000000
 Weight: ^8080800^000000
+When worn by Bard/Dancer Group characters, MATK +15 per 1 refinement.
 #
 27107#
+Type: ^808080Miscellaneous^000000
 Class: ^808080Card^000000
+Position: ^808080Right Accessory^000000
+Compounds On: ^808080Accessory^000000
 Weight: ^8080800^000000
+When equipped with singing Ferre Card, Metallic Sound DMG +50%.
+Physical Damage dealt to Neutral Monsters +20%.
 #
 27108#
+Type: ^808080Miscellaneous^000000
 Class: ^808080Card^000000
+Position: ^808080Left Accessory^000000
+Compounds On: ^808080Accessory^000000
 Weight: ^8080800^000000
+When equipped with Playing Ferre Card, Reverberation DMG +50%.
+Magic damage dealt to Neutral Monsters +20%.
 #
 27109#
+Type: ^808080Miscellaneous^000000
 Class: ^808080Card^000000
+Compounds On: ^808080Headgear^000000
 Weight: ^8080800^000000
+All physical or magic damage taken from Neutral Monsters reduced by 10%.
+Max HP +500
+When equipped together with Singing Ferre or Performing Ferre card, chance to transform into an Awakened Ferre for 6 sec on physical and magic attacks.
+Upon transformation, restores 2,000 HP and increases physical and magic damage to Neutral Monsters by 200%.
 #
 27110#
 Class: ^808080Card^000000
@@ -93882,6 +94186,58 @@ Increases the damage of Water property magical attacks on targets by an addition
 ^008080Awakened Ktullanux Card^000000
 ^008080Saphien's Armor of Ocean [1]^000000
 Adds a 5% chance of casting ^0000FFLevel 5 Waterball^000000 on the attacker when receiving a short-ranged attack.
+#
+27114#
+MHP + 10% DEF + 50 
+MaxHP + 1% per 3 upgrade levels,
+If base level is 160 or higher, DEF + 50, VIT+3
+
+Type : ^777777Card^000000
+Jobs : ^777777Armor^000000
+Weight : ^7777771^000000
+#
+27115#
+INT + 1, MSP + 80.
+MaxSP + 10 per 2 refine rate.
+If refine rate is 7 or higher, increases SP recovery rate by 30%.
+If equipped with Ominous Solider Card,
+MaxHP + 1% per 3 refine rate of armor, and MaxSP + 5 per 2 refine rate of headgear.
+Type : ^777777Card^000000
+Jobs : ^777777Headgear^000000
+Weight : ^7777771^000000
+#
+27116#
+CRI+ 3, Increase critical damage by 5%
+If equipped with [Ominous Assaulter Card],
+CRI+ 2,  Increase critical damage by 2% 
+Type : ^777777Card^000000
+Jobs : ^777777Accessory^000000
+Weight : ^7777771^000000
+#
+27117#
+Increase critical damage by 10%.
+If compounded on Whip, Musical Instrument, Book, Two-Handed Sword or Two-Handed Spear weapons, CRI+5
+ATK + 3 per upgrade level, Increase critical damage by 1% per upgrade level.
+Type : ^777777Card^000000
+Jobs : ^777777Weapon^000000
+Weight : ^7777771^000000
+#
+27118#
+MHP + 10 % STR+ 2
+If base level is 160 or higher, increases the damage of Hundred Spear and Over Brand by 10%.
+If refine rate is 9 or higher, further increases the damage of Hundred Spear and Over Brand by 10%.
+Type : ^777777Card^000000
+Jobs : ^777777Shoes^000000
+Weight : ^7777771^000000
+#
+27119#
+DEF+ 30 MDEF+ 5
+Reduces the damage taken from all size monsters by 25%.
+If equipped with [Turtle General Card], further reduces damage from all size monsters by 5%.
+Accuracy + 25. Increases the damage against all size monsters by 20% additionally.
+Type : ^777777Card^000000
+Jobs : ^777777Shield^000000
+Weight : ^7777771^000000
 #
 27120#
 [Recovery] Lv. 1 available
@@ -99872,6 +100228,13 @@ Weight: ^8080801^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
 #
+31413#
+Costume Taurus Crown
+Type : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
 31416#
 A beautiful coronet decorated with seraphim feathers.
 Class: ^808080Costume^000000
@@ -100077,6 +100440,32 @@ Position: ^808080Middle^000000
 Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs^000000
+#
+31465#
+Blue Mini Hat seems like a Robin Egg.
+People who wear these hats somehow look happy.
+Add a low chance of ATK, MATK+50 for 10 seconds when performing physical/magical attacks during the event period.
+(This effect will be removed after event.)
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31466#
+Egg Shell with Angel's Wings exuding Holy Energy.
+It makes you think of good things only.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
+31467#
+Egg Shell with Devil's Wings exuding Evil Energy.
+It makes you think of bad things only.
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
 #
 31470#
 A magically radiated scroll that is dropped by a disciplined Tengu. It is said mysterious events may occur in various places when using this scroll.
@@ -101033,6 +101422,14 @@ Weight: ^8080800^000000
 Requires Level: ^8080801^000000
 Usable By: ^808080All Jobs except Doram^000000
 #
+31703#
+People find out that you are in love! You feel stronger than usual, and the source of this power is love.
+
+Type : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000 Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
+#
 31710#
 A lace crown decorated with flowers. Wearing this brings good luck. 
 Class: ^808080Costume^000000
@@ -101396,6 +101793,26 @@ Equipped: ^777777All jobs^000000
 Attack: ^8080800^000000
 Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
+#
+32005#
+Large one-handed Spear. 
+A spear with a long body and a weapon like a sickle, 
+so that it can have various attack patterns.
+STR +3, INT+ 2, DEX +2.
+If refine rate is 9 or higher, reduces the cooldown of Hundred Spear by 1 second.
+If refine rate is 13 or higher, further reduces the cooldown of Hundred Spear by 1 second.
+^ffffff_^000000
+If equipped with Illusion Shoes,
+ATK + 40.
+If refine rate of both is 7 or higher, increases the damage of Hundred Spear by 20%.
+If the sum of their refine rates is 18 or higher, ATK + 10%.
+If the sum of their refine rates is 22 or higher, further increases the damage of 2004.png Hundred Spear by 20%.
+^ffffff_^000000
+Type : ^777777Spear^000000 Attack : ^777777190^000000
+Weight : ^777777150^000000
+Weapon Level : ^7777774^000000
+Required Level : ^777777120^000000
+Jobs : ^777777Swordman Classes^000000
 #
 32019#
 A lance equipped with a small propulsion system.
@@ -101938,6 +102355,21 @@ Attack: ^8080800^000000
 Weight: ^8080800^000000
 Weapon Level: ^8080800^000000
 #
+100756#
+Type: ^808080Usable^000000
+Class: ^808080Item Giver^000000
+Weight: ^8080801^000000
+When Opened gives one of the following
+Costume Vesper Headgear
+Costume Droopy Gunslinger
+Costume Bio Protector
+Costume Goggles Hat
+Costume Magic Time
+Costume Mechanical Butterfly
+Costume Wind-up Screw
+Costume Ribbon Piamette
+Costume Airy Two Side Up (White)
+#
 200028#
 When opened gives one of the following at Random
 Costume Frozen Crystal Wings
@@ -102080,6 +102512,18 @@ If player learned [Grooming] 5Lv, Gain immunity to the Confusion, Silence status
 Heal Amount +20% per every [Purring] level.
 
 #
+420026#
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
+420033#
+Type: ^808080Equipment^000000
+Class: ^808080Costume^000000
+Position: ^808080Lower^000000
+Weight: ^8080800^000000
+#
 450143#
 Type: ^808080Equipment^000000
 Class: ^808080Armor^000000
@@ -102095,6 +102539,21 @@ If the refine level is 7 or above, increases physical and magical damage to Plan
 If the refine level is 9 or above, increases physical and magical damage to Plant monster and Insect monster by an additional 15% and damage to Holy and Poison property monsters by an additional 15%.
 
 If the refine level is 12 or above, increases physical and magical damage to Plant monster and Insect monster by an additional 15% and damage to Holy and Poison property monsters by an additional 15%.
+^800080Has no effect during WoE TE^000000
+#
+460003#
+Type: ^808080Equipment^000000
+Class: ^808080Shield^000000
+Defense: ^808080150^000000
+Weight: ^80808040^000000
+Requires Level: ^80808090^000000
+ASPD + 2%
+Reduced Skill Usage Delay by 2%
+Atk + 5 per Refine Level
+mAtk +5 per Refine Level
+If refined to +8 or higher
+ASPD + 1% for every 2 refine levels
+Reduced Skill Usage Delay by 1% for every 2 refine levels
 ^800080Has no effect during WoE TE^000000
 #
 470025#
@@ -102152,6 +102611,68 @@ If refine rate is 5 or higher, MaxHP/MaxSP + 7%.
 If refine rate is 7 or higher, MaxHP/MaxSP + 10%.
 
 
+#
+470061#
+Type: ^808080Equipment^000000
+Class: ^808080Shoes^000000
+Defense: ^80808012^000000
+Weight: ^80808040^000000
+Requires Level: ^808080100^000000
+MaxHp + 3%
+MaxSP + 3%
+Hit + 20 for every level of Cart Boost Known
+ASPD + 4% for every level of Cart Boost Known
+Increased Damage of Cart Tornado 10% for Everyone Level of Crazyweed Known
+wAtk + 4% every level of Fire Expansion Known
+If Pharmacy and Special Pharmacy are both known to level 10 Hard Defense Bypass + 100%
+
+If refined to +9 or higher
+Max HP an additional + 7%
+Max SP an additional + 7%
+Reduced Cast Time of Cart Cannon by 50%
+Increase Damage of Cart Canon by 1% for every two base levels
+
+If refined to +12 or higher
+Max HP an additional + 3%
+Max SP an additional + 3%
+#
+480045#
+Type: ^808080Equipment^000000
+Class: ^808080Garment^000000
+Defense: ^80808025^000000
+Weight: ^80808030^000000
+Requires Level: ^808080100^000000
+Usable By: ^808080All Jobs^000000
+Enables Heaven's Drive Lv1
+Increases resistance to Human Player and Doram player damage by 1%
+
+If refined to +7 or higher
+Atk +7 for every 18 points of Pure Luk and Str
+Reduced Skill Delay Usage by 1% for every 18 points of Pure Luk and Str
+3% Resistance to Shadow and Holy attribute attacks for every 18 points of Pure Luk and Str
+ASPD 1% for every 18 points of Pure Agi and Vit
+MaxHP 1% for every 18 points of Pure Agi and Vit
+3% Resistance to Fire and Water attribute attacks for every 18 points of Pure Agi and Vit
+mAtk +7 for every 18 points of Pure Int and Dex
+Reduce Spell Cast Time by 1% for 18 points of Pure Int and Dex
+3% Resistance to Wind and Earth attribute attacks for every 18 points of Pure Int and Dex
+
+If refined to +12 or higher
+Atk an additional +5 for every 18 points of Pure Luk and Str
+2% additional Resistance to Shadow and Holy attribute attacks for every 18 points of Pure Luk and Str
+ASPD an additional 1% for every 18 points of Pure Agi and Vit
+MaxHP an additional 1% for every 18 points of Pure Agi and Vit
+2% additional Resistance to Fire and Water attribute attacks for every 18 points of Pure Agi and Vit
+mAtk an additional +5 for every 18 points of Pure Int and Dex
+2% additional Resistance to Wind and Earth attribute attacks for every 18 points of Pure Int and Dex
+
+If refined to +15 or higher
+Atk an additional +2 for every 18 points of Pure Luk and Str
+2% additional Resistance to Shadow and Holy attribute attacks for every 18 points of Pure Luk and Str
+MaxHP an additional 1% for every 18 points of Pure Agi and Vit
+2% additional Resistance to Fire and Water attribute attacks for every 18 points of Pure Agi and Vit
+mAtk an additional +2 for every 18 points of Pure Int and Dex
+2% additional Resistance to Wind and Earth attribute attacks for every 18 points of Pure Int and Dex
 #
 480052#
 ^FF0000^000000
