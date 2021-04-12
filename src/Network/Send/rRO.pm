@@ -20,13 +20,6 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
-	my %packets = (
-		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
-		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-	);
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-
 	my %handlers = qw(
 		# master_login 0B01
 		sync 0360
@@ -40,7 +33,7 @@ sub new {
 		skill_use_location 0366
 		party_setting 07D7
 		buy_bulk_vender 0801
-		char_delete2_accept 098f
+		char_delete2_accept 098F
 		send_equip 0998
 		map_login 0436
 		actor_action 0437

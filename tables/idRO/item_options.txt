@@ -1,0 +1,217 @@
+VAR_MAXHPAMOUNT#Max HP + %d#
+VAR_MAXSPAMOUNT#Max SP + %d#
+VAR_STRAMOUNT#STR + %d#
+VAR_AGIAMOUNT#AGI + %d#
+VAR_VITAMOUNT#VIT + %d#
+VAR_INTAMOUNT#INT + %d#
+VAR_DEXAMOUNT#DEX + %d#
+VAR_LUKAMOUNT#LUK + %d#
+VAR_MAXHPPERCENT#Max HP + %d%%#
+VAR_MAXSPPERCENT#Max SP + %d%%#
+VAR_HPACCELERATION#HP Recovery + %d%%#
+VAR_SPACCELERATION#SP Recovery + %d%%#
+VAR_ATKPERCENT#ATK + %d%%#
+VAR_MAGICATKPERCENT#MATK + %d%%#
+VAR_PLUSASPD#ASPD + %d#
+VAR_PLUSASPDPERCENT#ASPD + %d%%#
+VAR_ATTPOWER#ATK + %d#
+VAR_HITSUCCESSVALUE#HIT + %d#
+VAR_ATTMPOWER#MATK + %d#
+VAR_ITEMDEFPOWER#DEF + %d#
+VAR_MDEFPOWER#MDEF + %d#
+VAR_AVOIDSUCCESSVALUE#FLEE + %d#
+VAR_PLUSAVOIDSUCCESSVALUE#Perfect Dodge + %d#
+VAR_CRITICALSUCCESSVALUE#Crit + %d#
+ATTR_TOLERACE_NOTHING#Pertahanan Properti Neutral +%d%%.#
+ATTR_TOLERACE_WATER#Pertahanan Properti Water +%d%%.#
+ATTR_TOLERACE_GROUND#Pertahanan Properti Earth +%d%%.#
+ATTR_TOLERACE_FIRE#Pertahanan Properti Fire +%d%%.#
+ATTR_TOLERACE_WIND#Pertahanan Properti Wind +%d%%.#
+ATTR_TOLERACE_POISON#Pertahanan Properti Poison +%d%%.#
+ATTR_TOLERACE_SAINT#Pertahanan Properti Holy +%d%%.#
+ATTR_TOLERACE_DARKNESS#Pertahanan Properti Shadow +%d%%.#
+ATTR_TOLERACE_TELEKINESIS#Pertahanan Properti +%d%%.#
+ATTR_TOLERACE_UNDEAD#Pertahanan Properti Undead +%d%%.#
+ATTR_TOLERACE_ALLBUTNOTHING#Pertahanan Semua Properti (Kecuali Neutral) +%d%%.#
+DAMAGE_PROPERTY_NOTHING_USER#Pertahanan dari Musuh Elemen Neutral +%d%%.#
+DAMAGE_PROPERTY_NOTHING_TARGET#Serangan kepada Musuh Elemen Neutral +%d%%.#
+DAMAGE_PROPERTY_WATER_USER#Pertahanan dari Musuh Elemen Water +%d%%.#
+DAMAGE_PROPERTY_WATER_TARGET#Serangan kepada Musuh Elemen Water +%d%%.#
+DAMAGE_PROPERTY_GROUND_USER#Pertahanan dari Musuh Elemen Earth +%d%%.#
+DAMAGE_PROPERTY_GROUND_TARGET#Serangan kepada Musuh Elemen Earth +%d%%.#
+DAMAGE_PROPERTY_FIRE_USER#Pertahanan dari Musuh Elemen Fire +%d%%.#
+DAMAGE_PROPERTY_FIRE_TARGET#Serangan kepada Musuh Elemen Fire +%d%%.#
+DAMAGE_PROPERTY_WIND_USER#Pertahanan dari Musuh Elemen Wind +%d%%.#
+DAMAGE_PROPERTY_WIND_TARGET#Serangan kepada Musuh Elemen Wind +%d%%.#
+DAMAGE_PROPERTY_POISON_USER#Pertahanan dari Musuh Elemen Poison +%d%%.#
+DAMAGE_PROPERTY_POISON_TARGET#Serangan kepada Musuh Elemen Poison +%d%%.#
+DAMAGE_PROPERTY_SAINT_USER#Pertahanan dari Musuh Elemen Holy +%d%%.#
+DAMAGE_PROPERTY_SAINT_TARGET#Serangan kepada Musuh Elemen Holy +%d%%.#
+DAMAGE_PROPERTY_DARKNESS_USER#Pertahanan dari Musuh Elemen Shadow +%d%%.#
+DAMAGE_PROPERTY_DARKNESS_TARGET#Serangan kepada Musuh Elemen Shadow +%d%%.#
+DAMAGE_PROPERTY_TELEKINESIS_USER#Pertahanan dari Musuh Elemen Ghost +%d%%.#
+DAMAGE_PROPERTY_TELEKINESIS_TARGET#Serangan kepada Musuh Elemen Ghost +%d%%.#
+DAMAGE_PROPERTY_UNDEAD_USER#Pertahanan dari Musuh Elemen Undead +%d%%.#
+DAMAGE_PROPERTY_UNDEAD_TARGET#Serangan kepada Musuh Elemen Undead +%d%%.#
+MDAMAGE_PROPERTY_NOTHING_USER#Pertahanan dari Magic Musuh Elemen Neutral +%d%%.#
+MDAMAGE_PROPERTY_NOTHING_TARGET#Serangan Magic kepada Musuh Elemen Neutral +%d%%.#
+MDAMAGE_PROPERTY_WATER_USER#Pertahanan dari Magic Musuh Elemen Water +%d%%.#
+MDAMAGE_PROPERTY_WATER_TARGET#Serangan Magic kepada Musuh Elemen Water +%d%%.#
+MDAMAGE_PROPERTY_GROUND_USER#Pertahanan dari Magic Musuh Elemen Earth +%d%%.#
+MDAMAGE_PROPERTY_GROUND_TARGET#Serangan Magic kepada Musuh Elemen Earth +%d%%.#
+MDAMAGE_PROPERTY_FIRE_USER#Pertahanan dari Magic Musuh Elemen Fire +%d%%.#
+MDAMAGE_PROPERTY_FIRE_TARGET#Serangan Magic kepada Musuh Elemen Fire +%d%%.#
+MDAMAGE_PROPERTY_WIND_USER#Pertahanan dari Magic Musuh Elemen Wind +%d%%.#
+MDAMAGE_PROPERTY_WIND_TARGET#Serangan Magic kepada Musuh Elemen Wind +%d%%.#
+MDAMAGE_PROPERTY_POISON_USER#Pertahanan dari Magic Musuh Elemen Poison +%d%%.#
+MDAMAGE_PROPERTY_POISON_TARGET#Serangan Magic kepada Musuh Elemen Poison +%d%%.#
+MDAMAGE_PROPERTY_SAINT_USER#Pertahanan dari Magic Musuh Elemen Holy +%d%%.#
+MDAMAGE_PROPERTY_SAINT_TARGET#Serangan Magic kepada Musuh Elemen Holy +%d%%.#
+MDAMAGE_PROPERTY_DARKNESS_USER#Pertahanan dari Magic Musuh Elemen Shadow +%d%%.#
+MDAMAGE_PROPERTY_DARKNESS_TARGET#Serangan Magic kepada Musuh Elemen Shadow +%d%%.#
+MDAMAGE_PROPERTY_TELEKINESIS_USER#Pertahanan dari Magic Musuh Elemen Ghost +%d%%.#
+MDAMAGE_PROPERTY_TELEKINESIS_TARGET#Serangan Magic kepada Musuh Elemen Ghost +%d%%.#
+MDAMAGE_PROPERTY_UNDEAD_USER#Pertahanan dari Magic Musuh Elemen Undead +%d%%.#
+MDAMAGE_PROPERTY_UNDEAD_TARGET#Serangan Magic kepada Musuh Elemen Undead +%d%%.#
+BODY_ATTR_NOTHING#Pengguna memiliki Properti Neutral.#
+BODY_ATTR_WATER#Pengguna memiliki Properti Water.#
+BODY_ATTR_GROUND#Pengguna memiliki Properti Earth.#
+BODY_ATTR_FIRE#Pengguna memiliki Properti Fire.#
+BODY_ATTR_WIND#Pengguna memiliki Properti Wind.#
+BODY_ATTR_POISON#Pengguna memiliki Properti Poison.#
+BODY_ATTR_SAINT#Pengguna memiliki Properti Saint.#
+BODY_ATTR_DARKNESS#Pengguna memiliki Properti Shadow.#
+BODY_ATTR_TELEKINESIS#Pengguna memiliki Properti Ghost.#
+BODY_ATTR_UNDEAD#Pengguna memiliki Properti Undead.#
+RACE_TOLERACE_NOTHING#Pertahanan terhadap Monster Formless +%d%%.#
+RACE_TOLERACE_UNDEAD#Pertahanan terhadap Monster Undead +%d%%.#
+RACE_TOLERACE_ANIMAL#Pertahanan terhadap Monster Brute +%d%% (Tidak termasuk Player Doram).#
+RACE_TOLERACE_PLANT#Pertahanan terhadap Monster Plant +%d%%.#
+RACE_TOLERACE_INSECT#Pertahanan terhadap Monster Insect +%d%%.#
+RACE_TOLERACE_FISHS#Pertahanan terhadap Monster Fish +%d%%.#
+RACE_TOLERACE_DEVIL#Pertahanan terhadap Monster Demon +%d%%.#
+RACE_TOLERACE_HUMAN#Pertahanan terhadap Monster Demi-Human +%d%% (Tidak termasuk Player Human).#
+RACE_TOLERACE_ANGEL#Pertahanan terhadap Monster Angel +%d%%.#
+RACE_TOLERACE_DRAGON#Pertahanan terhadap Monster Dragon +%d%%.#
+RACE_DAMAGE_NOTHING#Serangan terhadap Monster Formless +%d%% #
+RACE_DAMAGE_UNDEAD#Serangan terhadap Monster Undead +%d%%.#
+RACE_DAMAGE_ANIMAL#Serangan terhadap Monster Brute +%d%% (Tidak termasuk Player Doram).#
+RACE_DAMAGE_PLANT#Serangan terhadap Monster Plant +%d%%.#
+RACE_DAMAGE_INSECT#Serangan terhadap Monster Insect +%d%%.#
+RACE_DAMAGE_FISHS#Serangan terhadap Monster Fish +%d%%.#
+RACE_DAMAGE_DEVIL#Serangan terhadap Monster Demon +%d%%.#
+RACE_DAMAGE_HUMAN#Serangan terhadap Monster Demi-Human +%d%% (Tidak termasuk Player Human).#
+RACE_DAMAGE_ANGEL#Serangan terhadap Monster Angel +%d%%.#
+RACE_DAMAGE_DRAGON#Serangan terhadap Monster Dragon +%d%%.#
+RACE_MDAMAGE_NOTHING#Serangan Magic terhadap Monster Formless +%d%%.#
+RACE_MDAMAGE_UNDEAD#Serangan Magic terhadap Monster Undead +%d%%.#
+RACE_MDAMAGE_ANIMAL#Serangan Magic terhadap Monster Brute +%d%% (Tidak termasuk Player Doram).#
+RACE_MDAMAGE_PLANT#Serangan Magic terhadap Monster Plant +%d%%.#
+RACE_MDAMAGE_INSECT#Serangan Magic terhadap Monster Insect +%d%%.#
+RACE_MDAMAGE_FISHS#Serangan Magic terhadap Monster Fish +%d%%.#
+RACE_MDAMAGE_DEVIL#Serangan Magic terhadap Monster Demon +%d%%.#
+RACE_MDAMAGE_HUMAN#Serangan Magic terhadap Monster Demi-Human +%d%% (Tidak termasuk Player Human).#
+RACE_MDAMAGE_ANGEL#Serangan Magic terhadap Monster Angel %d%%.#
+RACE_MDAMAGE_DRAGON#Serangan Magic terhadap Monster Dragon %d%%.#
+RACE_CRI_PERCENT_NOTHING#Critical Rate kepada Monster Formless + %d#
+RACE_CRI_PERCENT_UNDEAD#Critical Rate kepada Monster Undead + %d#
+RACE_CRI_PERCENT_ANIMAL#Critical Rate kepada Monster Brute + %d (Tidak termasuk Player Doram)#
+RACE_CRI_PERCENT_PLANT#Critical Rate kepada Monster Plant + %d#
+RACE_CRI_PERCENT_INSECT#Critical Rate kepada Monster Insect + %d#
+RACE_CRI_PERCENT_FISHS#Critical Rate kepada Monster Fish + %d#
+RACE_CRI_PERCENT_DEVIL#Critical Rate kepada Monster Demon + %d#
+RACE_CRI_PERCENT_HUMAN#Critical Rate kepada Monster Demi-Human + %d (Tidak termasuk Player Human)#
+RACE_CRI_PERCENT_ANGEL#Critical Rate kepada Monster Angel + %d#
+RACE_CRI_PERCENT_DRAGON#Critical Rate kepada Monster Dragon + %d#
+RACE_IGNORE_DEF_PERCENT_NOTHING#Bypass %d%% Defense dari Monster Formless.#
+RACE_IGNORE_DEF_PERCENT_UNDEAD#Bypass %d%% Defense dari Monster Undead.#
+RACE_IGNORE_DEF_PERCENT_ANIMAL#Bypass %d%% Defense dari Monster Brute (Tidak termasuk Player Doram).#
+RACE_IGNORE_DEF_PERCENT_PLANT#Bypass %d%% Defense dari Monster Plant.#
+RACE_IGNORE_DEF_PERCENT_INSECT#Bypass %d%% Defense dari Monster Insect.#
+RACE_IGNORE_DEF_PERCENT_FISHS#Bypass %d%% Defense dari Monster Fish.#
+RACE_IGNORE_DEF_PERCENT_DEVIL#Bypass %d%% Defense dari Monster Demon.#
+RACE_IGNORE_DEF_PERCENT_HUMAN#Bypass %d%% Defense dari Monster Demi-Human (Tidak termasuk Player Human).#
+RACE_IGNORE_DEF_PERCENT_ANGEL#Bypass %d%% Defense dari Monster Angel.#
+RACE_IGNORE_DEF_PERCENT_DRAGON#Bypass %d%% Defense dari Monster Dragon.#
+RACE_IGNORE_MDEF_PERCENT_NOTHING#Bypass %d%% Mdef dari Monster Formless.#
+RACE_IGNORE_MDEF_PERCENT_UNDEAD#Bypass %d%% Mdef dari Monster Undead.#
+RACE_IGNORE_MDEF_PERCENT_ANIMAL#Bypass %d%% Mdef dari Monster Brute (Tidak termasuk Player Doram).#
+RACE_IGNORE_MDEF_PERCENT_PLANT#Bypass %d%% Mdef dari Monster Plant.#
+RACE_IGNORE_MDEF_PERCENT_INSECT#Bypass %d%% Mdef dari Monster Insect.#
+RACE_IGNORE_MDEF_PERCENT_FISHS#Bypass %d%% Mdef dari Monster Fish.#
+RACE_IGNORE_MDEF_PERCENT_DEVIL#Bypass %d%% Mdef dari Monster Demon.#
+RACE_IGNORE_MDEF_PERCENT_HUMAN#Bypass %d%% Mdef dari Monster Demi-Human (Tidak termasuk Player Human).#
+RACE_IGNORE_MDEF_PERCENT_ANGEL#Bypass %d%% Mdef dari Monster Angel.#
+RACE_IGNORE_MDEF_PERCENT_DRAGON#Bypass %d%% Mdef dari Monster Dragon.#
+CLASS_DAMAGE_NORMAL_TARGET#Serangan terhadap Monster Normal +%d%%.#
+CLASS_DAMAGE_BOSS_TARGET#Serangan terhadap Monster Boss +%d%%.#
+CLASS_DAMAGE_NORMAL_USER#Pertahanan terhadap Monster Normal +%d%%.#
+CLASS_DAMAGE_BOSS_USER#Pertahanan terhadap Monster Boss +%d%%.#
+CLASS_MDAMAGE_NORMAL#Serangan Magic terhadap Monster Normal +%d%%.#
+CLASS_MDAMAGE_BOSS#Serangan Magic terhadap Monster Boss +%d%%#
+CLASS_IGNORE_DEF_PERCENT_NORMAL#Bypass %d%% Defense dari Monster Normal (Termasuk Player).#
+CLASS_IGNORE_DEF_PERCENT_BOSS#Bypass %d%% Defense dari Monster Boss.#
+CLASS_IGNORE_MDEF_PERCENT_NORMAL#Bypass %d%% Mdef dari Monster Normal (Termasuk Player).#
+CLASS_IGNORE_MDEF_PERCENT_BOSS#Bypass %d%% Mdef dari Monster Boss.#
+DAMAGE_SIZE_SMALL_TARGET#Serangan terhadap Musuh Jenis Kecil +%d%%.#
+DAMAGE_SIZE_MIDIUM_TARGET#Serangan terhadap Musuh Jenis Sedang +%d%%.#
+DAMAGE_SIZE_LARGE_TARGET#Serangan terhadap Musuh Jenis Besar +%d%%.#
+DAMAGE_SIZE_SMALL_USER#Pertahanan terhadap Musuh Jenis Kecil +%d%%.#
+DAMAGE_SIZE_MIDIUM_USER#Pertahanan terhadap Musuh Jenis Sedang +%d%%#
+DAMAGE_SIZE_LARGE_USER#Pertahanan terhadap Musuh Jenis Besar +%d%%#
+DAMAGE_SIZE_PERFECT#Menghilangkan Penalty Size Monster#
+DAMAGE_CRI_TARGET#Serangan Critical +%d%%.#
+DAMAGE_CRI_USER#Pertahanan Critical +%d%%.#
+RANGE_ATTACK_DAMAGE_TARGET#Serangan Jarak Jauh +%d%%.#
+RANGE_ATTACK_DAMAGE_USER#Pertahanan terhadap Serangan Jarak Jauh +%d%%.#
+HEAL_VALUE#Skill Recovery Rate +%d%%#
+HEAL_MODIFY_PERCENT#Tingkat Recovery dari skill yang diterima +%d%%#
+DEC_SPELL_CAST_TIME#Variable Cast Time -%d%%#
+DEC_SPELL_DELAY_TIME#Cast Delay -%d%%#
+DEC_SP_CONSUMPTION#Penggunaan SP saat Menggunakan Skill -%d%%#
+WEAPON_ATTR_NOTHING#Elemen: Neutral#
+WEAPON_ATTR_WATER#Elemen: Water.#
+WEAPON_ATTR_GROUND#Elemen: Earth.#
+WEAPON_ATTR_FIRE#Elemen: Fire.#
+WEAPON_ATTR_WIND#Elemen: Wind.#
+WEAPON_ATTR_POISON#Elemen: Poison.#
+WEAPON_ATTR_SAINT#Elemen: Holy.#
+WEAPON_ATTR_DARKNESS#Elemen: Shadow.#
+WEAPON_ATTR_TELEKINESIS#Elemen: Ghost.#
+WEAPON_ATTR_UNDEAD#Elemen: Undead.#
+WEAPON_INDESTRUCTIBLE#Tidak dapat dihancurkan.#
+BODY_INDESTRUCTIBLE#Tidak dapat dihancurkan.#
+MDAMAGE_SIZE_SMALL_TARGET#Serangan Magic terhadap Musuh Jenis Kecil +%d%%.#
+MDAMAGE_SIZE_MIDIUM_TARGET#Serangan Magic terhadap Musuh Jenis Sedang +%d%%.#
+MDAMAGE_SIZE_LARGE_TARGET#Serangan Magic terhadap Musuh Jenis Besar +%d%%.#
+MDAMAGE_SIZE_SMALL_USER#Pertahanan dari Magic Musuh Jenis Kecil +%d%%.#
+MDAMAGE_SIZE_MIDIUM_USER#Pertahanan dari Magic Musuh Jenis Sedang +%d%%.#
+MDAMAGE_SIZE_LARGE_USER#Pertahanan dari Magic Musuh Jenis Besar +%d%%.#
+ATTR_TOLERACE_ALL#Pertahanan terhadap Seluruh Properti Serangan +%d%%.#
+RACE_WEAPON_TOLERACE_NOTHING#Pertahanan terhadap Monster Formless +%d%%.#
+RACE_WEAPON_TOLERACE_UNDEAD#Pertahanan terhadap Monster Undead +%d%%.#
+RACE_WEAPON_TOLERACE_ANIMAL#Pertahanan terhadap Monster Brute +%d%%.#
+RACE_WEAPON_TOLERACE_PLANT#Pertahanan terhadap Monster Plant +%d%%.#
+RACE_WEAPON_TOLERACE_INSECT#Pertahanan terhadap Monster Insect +%d%%.#
+RACE_WEAPON_TOLERACE_FISHS#Pertahanan terhadap Monster Fish +%d%%.#
+RACE_WEAPON_TOLERACE_DEVIL#Pertahanan terhadap Monster Demon +%d%%.#
+RACE_WEAPON_TOLERACE_HUMAN#Pertahanan terhadap Monster Demi-Human +%d%%.#
+RACE_WEAPON_TOLERACE_ANGEL#Pertahanan terhadap Monster Angel +%d%%.#
+RACE_WEAPON_TOLERACE_DRAGON#Pertahanan terhadap Monster Dragon +%d%%.#
+RANGE_WEAPON_ATTACK_DAMAGE_TARGET#Serangan Jarak Jauh +%d%%.#
+RANGE_WEAPON_ATTACK_DAMAGE_USER#Pertahanan terhadap Serangan Jarak Jauh +%d%%.#
+RACE_TOLERACE_PLAYER_HUMAN#Pertahanan terhadap Player (Human) +%d%%.#
+RACE_TOLERACE_PLAYER_DORAM#Pertahanan terhadap Player (Doram) +%d%%.#
+RACE_DAMAGE_PLAYER_HUMAN#Serangan terhadap Player (Human) +%d%%.#
+RACE_DAMAGE_PLAYER_DORAM#Serangan terhadap Player (Doram) +%d%%.#
+RACE_MDAMAGE_PLAYER_HUMAN#Serangan Magic terhadap Player (Human) +%d%%.#
+RACE_MDAMAGE_PLAYER_DORAM#Serangan Magic terhadap Player (Doram) +%d%%.#
+RACE_CRI_PERCENT_PLAYER_HUMAN#Critical Rate kepada Player (Human) +%d%#
+RACE_CRI_PERCENT_PLAYER_DORAM#Critical Rate kepada Player (Doram) +%d%#
+RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN#Bypass %d%% Defense dari Player (Human).#
+RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM#Bypass %d%% Defense dari Player (Doram).#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN#Bypass %d%% Mdef dari Player (Human).#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM#Bypass %d%% Mdef dari Player (Doram).#
+REFLECT_DAMAGE_PERCENT#Mengurangi Reflect Damage yang diterima sebesar %d%%.#
+MELEE_ATTACK_DAMAGE_TARGET#Meningkatkan serangan Melee fisik sebesar %d%%.#
+MELEE_ATTACK_DAMAGE_USER#Mengurangi serangan Melee fisik yang diterima sebesar %d%%.#

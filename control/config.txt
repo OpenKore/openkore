@@ -216,9 +216,10 @@ route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
 
 runFromTarget 0
+runFromTarget_inAdvance 0
 runFromTarget_dist 5
 runFromTarget_minStep 7
-runFromTarget_maxStep 9
+runFromTarget_maxStep 11
 runFromTarget_maxPathDistance 13
 
 saveMap
@@ -390,9 +391,10 @@ mercenary_route_randomWalk_stopDuringAttack 0
 mercenary_route_randomWalk_waitMinDistance 0
 
 mercenary_runFromTarget 0
+mercenary_runFromTarget_inAdvance 0
 mercenary_runFromTarget_dist 5
 mercenary_runFromTarget_minStep 7
-mercenary_runFromTarget_maxStep 9
+mercenary_runFromTarget_maxStep 11
 mercenary_runFromTarget_maxPathDistance 13
 
 mercenary_followDistanceMax 12
@@ -448,7 +450,7 @@ homunculus_route_randomWalk_waitMinDistance 0
 homunculus_runFromTarget 0
 homunculus_runFromTarget_dist 5
 homunculus_runFromTarget_minStep 7
-homunculus_runFromTarget_maxStep 9
+homunculus_runFromTarget_maxStep 11
 homunculus_runFromTarget_maxPathDistance 13
 
 homunculus_followDistanceMax 12

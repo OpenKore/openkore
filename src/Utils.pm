@@ -78,7 +78,7 @@ sub calcPosFromTime {
 	my $pos_toY = $$pos_to{y};
 	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
 	my $s = 0; # step
-	
+
 	my $time_needed_ortogonal = $speed;
     my $time_needed_diagonal = sqrt(2) * $speed;
 
@@ -140,7 +140,7 @@ sub calcTime {
 	my $pos_toY = $$pos_to{y};
 	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
 	my $time = 0;
-	
+
 	my $time_needed_ortogonal = $speed;
 	my $time_needed_diagonal = sqrt(2) * $speed;
 
@@ -217,31 +217,31 @@ sub calcPosition {
 
 sub fieldAreaCorrectEdges {
     my ($field, $x1, $y1, $x2, $y2) = @_;
-	
+
 	if ($x1 < 0) {
 		$x1 = 0;
 	}
-	
+
 	if ($y1 < 0) {
 		$y1 = 0;
 	}
-	
+
 	if ($x2 >= $field->width) {
 		$x2 = $field->width-1;
 	}
-	
+
 	if ($y2 >= $field->height) {
 		$y2 = $field->height-1;
 	}
-	
+
 	return ($x1, $y1, $x2, $y2);
 }
 
 sub getSquareEdgesFromCoord {
     my ($field, $start, $dist_from_center) = @_;
-	
+
 	my ($min_x, $min_y, $max_x, $max_y) = fieldAreaCorrectEdges($field, ($start->{x} - $dist_from_center), ($start->{y} - $dist_from_center), ($start->{x} + $dist_from_center), ($start->{y} + $dist_from_center));
-	
+
 	return ($min_x, $min_y, $max_x, $max_y);
 }
 
@@ -262,12 +262,12 @@ sub calcStepsWalkedFromTimeAndRoute {
 
     my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
     my $current_step = 0; # step
-	
+
 	my %current_pos = ( x => $solution->[0]{x}, y => $solution->[0]{y} );
     my %next_pos;
-	
+
 	my @steps = @{$solution}[1..$#{$solution}];
-	
+
     my $dist = @steps;
 
     my $time_needed_ortogonal = $speed;
@@ -316,12 +316,12 @@ sub calcTimeFromRoute {
 
     my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
     my $current_step = 0; # step
-	
+
 	my %current_pos = ( x => $solution->[0]{x}, y => $solution->[0]{y} );
     my %next_pos;
-	
+
 	my @steps = @{$solution}[1..$#{$solution}];
-	
+
     my $dist = @steps;
 
     my $time_needed_ortogonal = $speed;
@@ -348,7 +348,7 @@ sub calcTimeFromRoute {
         } elsif ($stepType == 1) {
             $time_needed = $time_needed_ortogonal;
         }
-		
+
 		$summed_time += $time_needed;
 		%current_pos = %next_pos;
         $current_step++;
@@ -430,7 +430,7 @@ sub distance {
     my $pos1 = shift;
     my $pos2 = shift;
     return 0 if (!$pos1 && !$pos2);
-    
+
     my %line;
     if (defined $pos2) {
         $line{x} = abs($pos1->{x} - $pos2->{x});
@@ -492,12 +492,12 @@ sub specifiedBlockDistance {
 
 	my $xDistance = abs($pos1->{x} - $pos2->{x});
 	my $yDistance = abs($pos1->{y} - $pos2->{y});
-	
+
 	my $max = max($xDistance, $yDistance);
 	my $min = min($xDistance, $yDistance);
-	
+
 	my $orto = $max - $min;
-	
+
 	return ($min, $orto);
 }
 
@@ -510,12 +510,12 @@ sub specifiedBlockDistance {
 # This is used for e.g. walking time calculation.
 sub adjustedBlockDistance {
 	my ($pos1, $pos2) = @_;
-	
+
 	my $xDistance = abs($pos1->{x} - $pos2->{x});
 	my $yDistance = abs($pos1->{y} - $pos2->{y});
-	
+
 	my $dist = $xDistance + $yDistance - ((2-sqrt(2)) * min($xDistance, $yDistance));
-	
+
 	return $dist;
 }
 
@@ -965,7 +965,7 @@ sub getCoordString {
 	shiftPack(\$coords, 0, 4);
 	$coords = substr($coords, 1)
 		if (($masterServer->{serverType} == 0) || $nopadding);
-	
+
 	return $coords;
 }
 
@@ -981,22 +981,22 @@ sub getCoordString2 {
 	shiftPack(\$coords, 0, 28);
 	$coords = substr($coords, 1)
 		if (($masterServer->{serverType} == 0) || ($masterServer->{serverType} == 3) || ($masterServer->{serverType} == 5) || $nopadding);
-	
+
 	return $coords;
 }
 
-# Month Day Hour:Minute:Second Year
+# Year.Month.Day Hour:Minute:Second
+# 2021.03.13 01:58:08.12
 sub getFormattedDate {
 	my $thetime = shift;
 	my $r_date = shift;
 	my @localtime = localtime $thetime;
-	my $themonth = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)[$localtime[4]];
-	
-	$$r_date = sprintf("%s %02d %02d:%02d:%02d %4d", $themonth, $localtime[3], $localtime[2], $localtime[1], $localtime[0], $localtime[5] + 1900);
+
+	$$r_date = sprintf("%4d.%02d.%02d %02d:%02d:%02d", $localtime[5] + 1900, $localtime[4] + 1, $localtime[3], $localtime[2], $localtime[1], $localtime[0]);
 	return $$r_date;
 }
 
-# Year-Month-Day (0)
+# Year.Month.Day (0)
 # Hour:Minute:Second (1)
 # \&getFormattedDate (2)
 # YYYYMMDD (3)
@@ -1004,19 +1004,19 @@ sub getFormattedDateShort {
 	my $thetime = shift;
 	my $mode = shift;
 	my $r_date = shift;
-	
+
 	return getFormattedDate($thetime, $r_date) if ($mode == 2);
-	
+
 	my @localtime = localtime $thetime;
-	
+
 	if ($mode == 0) {
-		$$r_date = sprintf("%4d-%02d-%02d", ($localtime[5] + 1900), $localtime[4] + 1, $localtime[3]);
+		$$r_date = sprintf("%4d.%02d.%02d", ($localtime[5] + 1900), $localtime[4] + 1, $localtime[3]);
 	} elsif ($mode == 1) {
 		$$r_date = sprintf("%02d:%02d:%02d", $localtime[2], $localtime[1], $localtime[0]);
 	} elsif($mode == 3) {
 		$$r_date = sprintf("%4d%02d%02d", ($localtime[5] + 1900), $localtime[4] + 1, $localtime[3]);
 	}
-	
+
 	return $$r_date;
 }
 
@@ -1166,7 +1166,7 @@ sub makeCoordsXY {
 	unShiftPack($r_hashRawCoords, \$r_hash->{y}, 10);
 	unShiftPack($r_hashRawCoords, \$r_hash->{x}, 10);
 }
- 
+
 ##
 # shiftPack(data, value, bits)
 # data: reference to existing data in which to pack onto
@@ -1177,13 +1177,13 @@ sub makeCoordsXY {
 sub shiftPack {
 	my ($data, $value, $bits) = @_;
  	my ($newdata, $dw1, $dw2, $i, $mask, $done);
- 
+
 	$mask = 2 ** (32 - $bits) - 1;
 	$i = length($$data);
- 
+
 	$newdata = "";
 	$done = 0;
- 
+
 	$dw1 = $value & (2 ** $bits - 1);
  	do {
 		$i -= 4;
@@ -1195,7 +1195,7 @@ sub shiftPack {
 		$newdata = pack('N', $dw1) . $newdata;
 		$dw1 = $dw2 >> (32 - $bits);
 	} while ($i + 4 > 0);
- 
+
 	$newdata = substr($newdata, 1) while (substr($newdata, 0, 1) eq pack('C', 0) && length($newdata));
 	$$data = $newdata;
 }
@@ -1231,19 +1231,19 @@ sub urlencode {
 sub unShiftPack {
 	my ($data, $reference, $bits) = @_;
 	my ($newdata, $dw1, $dw2, $i, $mask, $done);
-	
+
 	$mask = 2 ** $bits - 1;
 	$i = length($$data);
-	
+
 	$newdata = "";
 	$done = 0;
-	
+
 	do {
 		$i -= 4;
 		$dw2 = ($i > 0) ?
 			unpack('N', substr($$data, $i, 4)) :
 			unpack('N', pack('x' . abs($i)) . substr($$data, 0, 4 + $i));
- 
+
 		unless ($done) {
 			$$reference = $dw2 & (2 ** $bits - 1) if (defined $reference);
 			$done = 1;
@@ -1251,10 +1251,10 @@ sub unShiftPack {
 			$dw1 = $dw1 | (($dw2 & $mask) << (32 - $bits));
 			$newdata = pack('N', $dw1) . $newdata;
 		}
-		
+
 		$dw1 = $dw2 >> $bits;
 	} while ($i + 4 > 0);
-	
+
 	$newdata = substr($newdata, 1) while (substr($newdata, 0, 1) eq pack('C', 0) && length($newdata));
 	$$data = $newdata;
 }
@@ -1275,7 +1275,7 @@ sub unShiftPack {
 # 	my $data = shift;
 # 	my $width = shift;
 # 	my $height = shift;
-# 
+#
 # 	# Simplify the raw map data. Each byte in the raw map data
 # 	# represents a block on the field, but only some bytes are
 # 	# interesting to pathfinding.
@@ -1289,7 +1289,7 @@ sub unShiftPack {
 # 		}
 # 		substr($data, $i, 1, chr($v));
 # 	}
-# 
+#
 # 	my $done = 0;
 # 	until ($done) {
 # 		$done = 1;
@@ -1387,8 +1387,8 @@ sub makeIP {
 	return $ret;
 }
 
-sub encodeIP {	
-	return pack("C*", split(/\./, shift));	
+sub encodeIP {
+	return pack("C*", split(/\./, shift));
 }
 
 

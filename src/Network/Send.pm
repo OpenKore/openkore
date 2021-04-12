@@ -359,6 +359,8 @@ sub sendMasterLogin {
 			master_version => $master_version,
 			username => $username,
 			password => $password,
+			game_code => '0011', # kRO Ragnarok game code
+			flag => 'G000', # Maybe this say that we are connecting from client
 		});
 	} else {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version || $self->version) .
@@ -3399,6 +3401,20 @@ sub sendMarketClose {
 	}));
 
 	debug "Sent Market Close\n", "sendPacket";
+}
+
+# Request Inventory Expansion
+# 0B14
+sub sendInventoryExpansionRequest {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_request' }));
+}
+
+# Reject Inventory Expansion
+# 0B19
+sub sendInventoryExpansionRejected {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
 }
 
 1;

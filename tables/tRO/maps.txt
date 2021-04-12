@@ -1,4 +1,33 @@
-//-- LastDate 2020-12-09
+//-- LastDate 2021-04-01
+
+// ep15.2 판타스마고리카
+verus01.rsw#Lab-OPTATIO#
+verus02.rsw#R&D-WISH#
+un_bk_q.rsw#Under Bunker#
+un_bunker.rsw#Under Bunker#
+un_myst.rsw#Under Tunnel#
+1@uns.rsw#The Last Chamber#
+1@lab.rsw#Main Laboratory#
+
+// ep15.1 판타스마고리카
+ver_eju.rsw#Juperos Eastern Ruin#
+ver_tunn.rsw#Verus Outskirts Tunnel#
+verus04.rsw#Verus Excavation Site#
+verus03.rsw#Verus Central Square#
+
+1@mcd.rsw#Charleston's Factory#
+
+//태국채널링 복사맵 3차
+c_tw3_a.rsw#Clock Tower of Twisted TimeFloor 3 (A)#
+c_tw3_b.rsw#Clock Tower of Twisted TimeFloor 3 (B)#
+
+// 파라마켓
+paramk.rsw#Para Market#
+
+//고성 상급 메모리얼던전
+2@gl_kh.rsw#Nightmare Old Glast Heim 2F#
+1@gl_kh.rsw#Nightmare Old Glast Heim 1F#
+
 // 리벨리온 전직맵
 job_gun.rsw#Liberation shelter#
 

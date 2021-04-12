@@ -1,0 +1,47 @@
+1000 Titik balik Kehidupan
+1001 Specialist
+1002 Expert
+1003 Master
+1004 Grand Master
+1005 Petualang Junior
+1006 Petualang Veteran
+1007 Petualang Master
+1008 Dragon's
+1009 Madness
+1010 Batu Keabadian
+1011 Kilat Emas
+1012 Sharp
+1013 Lucky
+1014 Penjelmaan Cinta dan Kebencian
+1015 Maniak
+1016 Rebirth
+1017 Bloody Red
+1018 Teleporter Pemula
+1019 Choked
+1020 Penjudi
+1021 Master Battle Manual
+1022 Married
+1023 Tekun
+1024 Pekerja Keras
+1025 Poring Mania
+1026 Back Opener
+1027 Pecinta Binatang
+1028 Sekutu Iblis
+1029 Gadis Monster
+1030 Pria Monster
+1031 Visioner
+1032 Blossoming Children
+1033 Family Maker
+1034 VIP
+1035 Death Slayer
+1036 Undead Slayer
+1037 Turtle Slayer
+1038 Dryad Slayer
+1039 Time Slayer
+1040 Raydric Slayer
+1041 
+1042 
+1043 Straw Slayer
+1044 Sting Slayer
+1045 Illusion Conqueror
+1046 King Maker

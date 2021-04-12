@@ -19,7 +19,7 @@ sub version { 30 }
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'02C4' => undef,
 # TODO 0x0366,90,useskilltoposinfo,2:4:6:8:10
@@ -33,7 +33,7 @@ sub new {
 		'0871' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'0884' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0863' => undef,
-		'0885' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0885' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0886' => ['sync', 'V', [qw(time)]],#6
 		'0887' => undef,
 		'0889' => ['actor_info_request', 'a4', [qw(ID)]],#6
@@ -62,7 +62,7 @@ sub new {
 		'096A' => undef,
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0369
 		actor_info_request 0889
@@ -80,7 +80,7 @@ sub new {
 		party_join_request_by_name 091C
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self;
 }
 

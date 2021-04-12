@@ -27,17 +27,14 @@ sub version {
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'009B' => undef,
 		'0190' => undef,
-		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
 		'0439' => ['item_use', 'a2 v a4', [qw(ID targetID)]],#8
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0437
 		item_use 0439
@@ -45,7 +42,7 @@ sub new {
 		skill_use 0438
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self;
 }
 

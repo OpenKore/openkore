@@ -405,7 +405,7 @@ sub main {
 		}
 
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-		my $cell = get_kite_position($field, $char, $target, $config{'runFromTarget_dist'}, $config{'runFromTarget_minStep'}, $config{'runFromTarget_maxStep'}, $config{'attackCheckLOS'}, $config{'attackCanSnipe'}, $config{'runFromTarget_maxPathDistance'});
+		my $cell = get_kite_position($char, 1, $target);
 		if ($cell) {
 			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
@@ -425,7 +425,7 @@ sub main {
 
 		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 
-		my $pos = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
+		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 		my $result;
 		
 		if ($pos) {
@@ -460,7 +460,7 @@ sub main {
 		$config{attackCheckLOS} &&
 		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
 	) {
-		my $best_spot = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
+		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 
 		# Move to the closest spot
 		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
@@ -482,7 +482,7 @@ sub main {
 		blockDistance($realMyPos, $realMonsterPos) == 2 &&
 		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
 	) {
-		my $best_spot = meetingPosition($char, $target, $args->{attackMethod}{maxDistance});
+		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 
 		# Move to the closest spot
 		my $msg = TF("No LOS in melee from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
@@ -526,6 +526,17 @@ sub main {
 					($config{'tankMode'}) ? 0 : 7);
 				$timeout{ai_attack}{time} = time;
 				delete $args->{attackMethod};
+				
+				if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
+					my $cell = get_kite_position($char, 1, $target);
+					if ($cell) {
+						debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+						$args->{avoiding} = 1;
+						$char->move($cell->{x}, $cell->{y}, $ID);
+					} else {
+						debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+					}
+				}
 			}
 		} elsif ($args->{attackMethod}{type} eq "skill") {
 			my $slot = $args->{attackMethod}{skillSlot};

@@ -18,19 +18,19 @@ use base qw(Network::Send::kRO::RagexeRE_2015_09_16);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0951' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'08A5' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0870' => ['actor_look_at', 'v C', [qw(head body)]],
 		'085C' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0817' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
-		'086E' => ['buy_bulk_closeShop'],			
+		'086E' => ['buy_bulk_closeShop'],
 		'0892' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'088E' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0886' => ['character_move', 'a3', [qw(coordString)]],
 		'085D' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'0864' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0864' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'0930' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0961' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'092B' => ['item_take', 'a4', [qw(ID)]],
@@ -41,14 +41,14 @@ sub new {
 		'089F' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0879' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'07E4' => ['storage_password'],
-		'08A0' => ['sync', 'V', [qw(time)]],		
+		'08A0' => ['sync', 'V', [qw(time)]],
 		'0366' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'087F' => ['search_store_request_next_page'],
 		'08A6' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0951
 		actor_info_request 08A5
@@ -76,11 +76,11 @@ sub new {
 		search_store_request_next_page 087F
 		search_store_select 08A6
 	);
-	
-	
-	
+
+
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 #if PACKETVER == 20150923
 #	packetKeys(0x765742B9,0x22D61C2F,0x7DA94FB2);
 

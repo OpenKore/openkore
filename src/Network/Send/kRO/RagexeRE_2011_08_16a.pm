@@ -30,7 +30,7 @@ sub new {
 #		'0817' => undef,
 		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
 #		'022D' => undef,
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0361' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0363' => undef,
 		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'0365' => undef,
@@ -88,7 +88,7 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	$self;
-} 
+}
 
 1;
 
@@ -132,5 +132,5 @@ sub new {
 +0x0438,10,useskilltopos,2:4:6:8
 0x0366,90,useskilltoposinfo,2:4:6:8:10
 +0x08AD,6,getcharnamerequest,2
-+0x0368,6,solvecharname,2 
++0x0368,6,solvecharname,2
 =pod

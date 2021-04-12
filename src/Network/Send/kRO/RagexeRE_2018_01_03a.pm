@@ -18,19 +18,19 @@ use base qw(Network::Send::kRO::RagexeRE_2017_12_27a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'091D' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'08AB' => ['actor_info_request', 'a4', [qw(ID)]],
 		'08A9' => ['actor_look_at', 'v C', [qw(head body)]],
 		'089F' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0879' => ['buy_bulk_buyer', 'a4 a4 a*', [qw(buyerID buyingStoreID itemInfo)]], #Buying store
-		'088E' => ['buy_bulk_closeShop'],			
+		'088E' => ['buy_bulk_closeShop'],
 		'094E' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]], #Selling store
 		'0872' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0941' => ['character_move', 'a3', [qw(coordString)]],
 		'0899' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'0948' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0948' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'095F' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'08AC' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0935' => ['item_take', 'a4', [qw(ID)]],
@@ -41,11 +41,11 @@ sub new {
 		'02C4' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'092C' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0946' => ['storage_password'],
-		'0876' => ['sync', 'V', [qw(time)]],		
+		'0876' => ['sync', 'V', [qw(time)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 091D
 		actor_info_request 08AB
@@ -71,7 +71,7 @@ sub new {
 		sync 0876
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

@@ -162,6 +162,7 @@ jobs:
           PERL: ${{ matrix.perl }}
           ARCHITECTURE: ${{ matrix.architecture }}
       run: |
+        sudo apt update
         sudo apt install -y libreadline6-dev libcurl4-openssl-dev
         make all
         echo "======================================================"

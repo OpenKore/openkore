@@ -606,8 +606,7 @@ Skill Form: ^777777Recovery^000000
 Target: ^777777Player^000000
 Description: ^777777Cancel various abnormal statuses
 such as Mute, Chaos or Blind from targeted
-characters. Causes Chaos status when used
-against Undead monsters.^000000
+characters.
 #
 MC_INCCARRY#
 Enlarge Weight Limit

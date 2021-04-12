@@ -2549,7 +2549,7 @@ Lista do Armazém do Clã#
 Log dos últimos 100 itens#
 O Armazém do Clã é fechado após 2 minutos de uso.#
 Incorrect GameSamba ID. Please Try Again.#
-%s [%doption] : %d #
+%s [%d BA] : %d #
 Moedas são necessárias.#
 %d Moedas(s) necessárias.#
 Uma metralhadora deve estar equipada.#
@@ -2598,7 +2598,7 @@ Assunto deve conter entre 4 à 24 caracteres.#
 Falha no envio da Carta.#
 Envio falhou devido a item impróprio.#
 Personagem não existe#
-%s [%d options]#
+%s [%d BA]#
 Please fill out 1 to %d numerical value for level.#
 Inventory clearance needed#
 Sistema em Desenvolvimento --EM BREVE-- #
@@ -2629,7 +2629,7 @@ Summonee is short of SP#
 Length of mail should be less than 1K#
 Falha na anexação do item.#
 Limite de Peso para Itens foi excedido.#
-"Under service. Please try again in a moment.#
+Já existe uma Arca invocada neste mapa.#
 You cannot open Lucky Roulette window.#
 You cannot close Lucky Roulette window.#
 You cannot start Lucky Roulette.#
@@ -2894,10 +2894,10 @@ E X P : %.1f%% ( basic %.1f%% %s %.1f%%)#
 DROP  : %.1f%% ( basic %.1f%% %s %.1f%%)#
 DEATH : %.1f%% ( basic %.1f%% %s %.1f%%)#
 Destinatário da Carta teve o nome alterado. A carta foi enviada para : %s #
-Materiais necessários#
-Materiais insuficientes para combinar.#
-Precisa de %d desse material.#
-Refinamento insuficiente para combinar.#
+Itens necessários.#
+Faltam materiais.#
+Falta %d un. desse item.#
+Refino insuficiente.#
 Do you want to sign in Adventure Agency?#
 You can leave your comment.#
 Please enter the characters from the image.#
@@ -2918,7 +2918,7 @@ Você deseja abrir sua loja na célula escolhida?#
 O item será enviado pelo Rodex.#
 #
 #
-#
+Você não pode continuar com o peso superior a 80%.#
 #
 Visualizar#
 #
@@ -3542,7 +3542,7 @@ Conta não possui passe de acesso ao Valhalla#
 #
 Deletar#
 Responder#
-Enviar#
+Enviar.#
 Conferir#
 Notícias#
 Entrada#
@@ -3621,3 +3621,27 @@ Loading the mailbox.\n^c92114Delete^000000unnecessary emails!!#
 NOW LOADING..#
 Title#
 Sender#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Refino maior que o necessário.#
+Possui cartas ou encantos.#
