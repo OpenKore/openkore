@@ -1589,15 +1589,6 @@ sub inventory_expansion_result {
 	}
 }
 
-sub received_login_token {
-	my ($self, $args) = @_;
-	# XKore mode 1 / 3.
-	return if ($self->{net}->version == 1);
-	my $master = $masterServers{$config{master}};
-	# rathena use 0064 not 0825
-	$messageSender->sendTokenToServer($config{'username'}, $config{'password'}, $master->{master_version}, $master->{version});
-}
-
 *changeToInGameState = *Network::Receive::changeToInGameState;
 
 1;

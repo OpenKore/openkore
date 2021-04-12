@@ -24,7 +24,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'0064' => ['token_login', 'V Z24 Z24 C', [qw(version username password master_version)]],		
+		'0064' => ['token_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
