@@ -29,6 +29,7 @@ Plugins::register('profiles', 'Profiles Selector', \&on_unload);
 my $hooks = Plugins::addHooks(
       ['parse_command_line', \&onParseCommandLine],
       ['usage', \&onUsage],
+      ['mainLoop::setTitle', \&setTitle,     undef],
       ['start', \&onStart]
    );
 
@@ -45,6 +46,11 @@ sub on_unload {
 sub onUsage {
 	my ( undef, $params ) = @_;
 	push @{ $params->{options} }, { plugin => 'profiles', long => '--profile=PROFILE', description => 'profile to use (default: prompt)' };
+}
+
+sub setTitle {
+	my (undef, $args) = @_;
+	$args->{return} = ($profile) ? "[$profile] " . $args->{return} : $args->{return};
 }
 
 sub onParseCommandLine {
