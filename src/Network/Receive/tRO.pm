@@ -31,7 +31,6 @@ sub new {
 		'0A0B' => ['cart_item_added', 'a2 V V C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
 		'0A37' => ['inventory_item_added', 'a2 v V C3 a16 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]],
 		'01C8' => ['item_used', 'a2 V a4 v C', [qw(ID itemID actorID remaining success)]],
-		'0A7B' => ['eac_request', 'H*', [qw(eac_key)]],
 	);
 
 	foreach my $switch (keys %packets) {
@@ -55,7 +54,5 @@ sub new {
 
 	return $self;
 }
-
-sub eac_request {}
 
 1;
