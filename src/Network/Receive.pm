@@ -1737,7 +1737,9 @@ sub actor_display {
 	#### Initialize ####
 
 	my $nameID = unpack("V", $args->{ID});
-
+	my $name = bytesToString($args->{name});
+	$name =~ s/^\s+|\s+$//g;
+	
 	if ($args->{switch} eq "0086") {
 		# Message 0086 contains less information about the actor than other similar
 		# messages. So we use the existing actor information.
@@ -1845,11 +1847,7 @@ sub actor_display {
 			$actor = new Actor::Player();
 			$actor->{appear_time} = time;
 			# New actor_display packets include the player's name
-			if ($args->{switch} eq "0086") {
-				$actor->{name} = $args->{name};
-			} else {
-				$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
-			}
+			$actor->{name} = $name if defined $name;
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
@@ -1871,7 +1869,7 @@ sub actor_display {
 			}
 
 			$actor->{appear_time} = time;
-			$actor->{name_given} = bytesToString($args->{name}) if exists $args->{name};
+			$actor->{name_given} = $name if defined $name;
 			$actor->{jobID} = $args->{type} if exists $args->{type};
 			$mustAdd = 1;
 		}
@@ -1901,12 +1899,11 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Pet();
 			$actor->{appear_time} = time;
-			my $name = bytesToString($args->{name});
 			$actor->{name} = $name;
 #			if ($monsters_lut{$args->{type}}) {
 #				$actor->setName($monsters_lut{$args->{type}});
 #			}
-			$actor->{name_given} = exists $args->{name} ? $name : T("Unknown");
+			$actor->{name_given} = defined $name ? $name : T("Unknown");
 			$mustAdd = 1;
 
 			# Previously identified monsters could suddenly be identified as pets.
@@ -1927,11 +1924,7 @@ sub actor_display {
 				$actor->setName($monsters_lut{$args->{type}});
 			}
 			# New actor_display packets include the Monster name
-			if ($args->{switch} eq "0086") {
-				$actor->{name} = $args->{name};
-			} else {
-				$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
-			}
+			$actor->{name} = $name if defined $name;
 			$actor->{name_given} = "Unknown";
 			$actor->{binType} = $args->{type};
 			$mustAdd = 1;
@@ -1945,7 +1938,7 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::NPC();
 			$actor->{appear_time} = time;
-			$actor->{name} = bytesToString($args->{name}) if exists $args->{name};
+			$actor->{name} = $name if defined $name;
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
@@ -2560,6 +2553,7 @@ sub actor_info {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 	my $name = bytesToString($args->{name});
+	$name =~ s/^\s+|\s+$//g;
 	debug "Received object info: $name\n", "parseMsg_presence/name", 2;
 	my $player = $playersList->getByID($args->{ID});
 	if ($player) {
@@ -2582,7 +2576,6 @@ sub actor_info {
 
 	my $monster = $monstersList->getByID($args->{ID});
 	if ($monster) {
-		$name =~ s/^\s+|\s+$//g;
 		debug "Monster Info: $name ($monster->{binID})\n", "parseMsg", 2;
 		$monster->{name_given} = $name;
 		$monster->{info} = 1;
