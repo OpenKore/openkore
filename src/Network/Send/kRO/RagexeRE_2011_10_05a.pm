@@ -19,7 +19,7 @@ sub version { 27 }
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0202' => undef,
 		'022D' => undef,
@@ -41,15 +41,15 @@ sub new {
 		'0815' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'0835' => ['friend_request', 'a*', [qw(username)]],#26
 		'083C' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],#26
-		'0885' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0885' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0887' => ['actor_info_request', 'a4', [qw(ID)]],#6
 		'08A4' => ['storage_item_add', 'a2 V', [qw(ID amount)]],#8
 		'08AD' => undef,
 		'0365' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 07EC
 		actor_info_request 0887
@@ -68,9 +68,9 @@ sub new {
 		sync 0367
 		skill_use_location_text 0366
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

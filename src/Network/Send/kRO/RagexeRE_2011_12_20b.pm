@@ -21,11 +21,11 @@ sub version { 25 }
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'022D' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'035F' => ['sync', 'V', [qw(time)]],#6
-		'0362' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0362' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0364' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],#8
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],
@@ -55,7 +55,7 @@ sub new {
 		'0815' => ['buy_bulk_openShop', 'a4 c a*', [qw(limitZeny result itemInfo)]],#-1
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0369
 		actor_info_request 08AD
@@ -77,13 +77,13 @@ sub new {
 		sync 035F
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self;
 }
 
 sub sendMove {
 	my ($self, $x, $y) = @_;
-	
+
 	$self->sendToServer($self->reconstruct({
 		switch => 'character_move',
 		coordString => getCoordString(int $x, int $y, 1),

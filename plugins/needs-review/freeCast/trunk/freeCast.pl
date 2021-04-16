@@ -88,7 +88,7 @@ sub cast {
 
 		if ($config{'runFromTargetFree'} && ($realMonsterDist < $config{'runFromTargetFree_min'})) {
 			#my $begin = time;
-			my @blocks = calcRectArea($myPos->{x}, $myPos->{y},$config{'runFromTargetFree_mid'});
+			my @blocks = calcRectArea($myPos->{x}, $myPos->{y},$config{'runFromTargetFree_mid'}, $field);
 
 			my $highest;
 			foreach (@blocks) {
@@ -108,16 +108,17 @@ sub cast {
 				}
 
 				$pathfinding->reset(
-				field => $field,
-				start => $myPos,
-				dest => $blocks[$i]);
+					field => $field,
+					start => $myPos,
+					dest => $blocks[$i]
+				);
 				my $ret = $pathfinding->runcount;
-				if ($ret <= 0 || $ret > $config{'runFromTargetFree_min'} * 2) {
+				if ($ret < 0 || $ret > $config{'runFromTargetFree_min'} * 2) {
 					delete $blocks[$i];
 					next;
 				}
 
-				delete $blocks[$i] unless (checkLineSnipable($blocks[$i], $realMonsterPos) || checkLineWalkable($blocks[$i], $realMonsterPos));
+				delete $blocks[$i] unless ($field->checkLOS($blocks[$i], $realMonsterPos, 1));
 			}
 
 			my $largestDist;
@@ -143,8 +144,8 @@ sub cast {
 			my $best_dist;
 			for my $spot (@blocks) {
 				if (
-				(($config{attackCanSnipe} && checkLineSnipable($spot, $realMonsterPos)) || checkLineWalkable($spot, $realMonsterPos))
-				&& $field->isWalkable($spot->{x}, $spot->{y})
+					$field->isWalkable($spot->{x}, $spot->{y}) &&
+					$field->checkLOS($spot, $realMonsterPos, $config{attackCanSnipe})
 				) {
 					my $dist = distance($realMyPos, $spot);
 					if (!defined($best_dist) || $dist < $best_dist) {

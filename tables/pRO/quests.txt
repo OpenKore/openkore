@@ -3861,9 +3861,9 @@ Using the card pass, sneak into the lab.#
 Use the pass#
 
 //----------------EP13-----------------------------------------
-12058#Admission Restricted to the 102 Tower#SG_FEEL#QUE_NOIMAGE#
-It is restricted to generate the 102 Tower.#
-Admission Restricted#
+12058#Endless Tower Generate Condition#SG_FEEL#QUE_NOIMAGE#
+Unable to create Endless Tower Dungeon#
+Can create Endless Tower Dungeon again after 7 days#
 
 12059#Orc's Memory Time Limit#SG_FEEL#QUE_NOIMAGE#
 The time limit for access to the Orc's Memory is 2 hours. After the time expires, your instance dungeon will be destroyed.#
@@ -21142,89 +21142,89 @@ Fourth Transmutation quest complete. Complete remaining quests to get reward.#
 //questid2display billboard payon
 
 295217#Zombie Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 10 - 30 Defeat Zombie 100 ea #
-Defeat Zombie 100 ea #
+Billboard Mission 30 - 60 Defeat Zombie 50 ea #
+Defeat Zombie 50 ea #
 
 295218#Skeleton Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 10 - 30 Defeat Skeleton 100 ea #
-Defeat Skeleton 100 ea #
+Billboard Mission 30 - 60 Defeat Skeleton 50 ea #
+Defeat Skeleton 50 ea #
 
 295219#Spore Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 10 - 30 Defeat Spore 100 ea #
-Defeat Spore 100 ea #
+Billboard Mission 30 - 60 Defeat Spore 50 ea #
+Defeat Spore 50 ea #
 
 295220#Wormtail Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 10 - 30 Defeat Wormtail 100 ea #
-Defeat Wormtail 100 ea #
+Billboard Mission 30 - 60 Defeat Wormtail 50 ea #
+Defeat Wormtail 50 ea #
 
 295221#Bigfoot Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 20 - 40 Defeat Bigfoot 100 ea #
-Defeat Bigfoot 100 ea #
+Billboard Mission 30 - 60 Defeat Bigfoot 50 ea #
+Defeat Bigfoot 50 ea #
 
 295222#Elder Willow Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 20 - 40 Defeat Elder Willow 100 ea #
-Defeat Elder Willow 100 ea #
+Billboard Mission 30 - 60 Defeat Elder Willow 50 ea #
+Defeat Elder Willow 50 ea #
 
 295223#Wolf Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 20 - 40 Defeat Wolf 100 ea #
-Defeat Wolf 100 ea #
+Billboard Mission 30 - 60 Defeat Wolf 50 ea #
+Defeat Wolf 50 ea #
 
 295224#Eggyra Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 20 - 40 Defeat Eggyra 100 ea #
-Defeat Eggyra 100 ea #
+Billboard Mission 30 - 60 Defeat Eggyra 50 ea #
+Defeat Eggyra 50 ea #
 
 295225#Magnolia Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 20 - 40 Defeat Magnolia 100 ea #
-Defeat Magnolia 100 ea #
+Billboard Mission 30 - 60 Defeat Magnolia 50 ea #
+Defeat Magnolia 50 ea #
 
 295226#Archer Skeleton Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Archer Skeleton 100 ea #
-Defeat Archer Skeleton 100 ea #
+Billboard Mission 30 - 60 Defeat Archer Skeleton 50 ea #
+Defeat Archer Skeleton 50 ea #
 
 295227#Soldier Skeleton Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Soldier Skeleton 100 ea #
-Defeat Soldier Skeleton 100 ea #
+Billboard Mission 30 - 60 Defeat Soldier Skeleton 50 ea #
+Defeat Soldier Skeleton 50 ea #
 
 295228#Munak Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Munak 100 ea #
-Defeat Munak 100 ea #
+Billboard Mission 30 - 60 Defeat Munak 50 ea #
+Defeat Munak 50 ea #
 
 295229#Bongun Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Bongun 100 ea #
-Defeat Bongun 100 ea #
+Billboard Mission 30 - 60 Defeat Bongun 50 ea #
+Defeat Bongun 50 ea #
 
 295230#Dokebi Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Dokebi 100 ea #
-Defeat Dokebi 100 ea #
+Billboard Mission 30 - 60 Defeat Dokebi 50 ea #
+Defeat Dokebi 50 ea #
 
 295231#Horong Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Horong 100 ea #
-Defeat Horong 100 ea #
+Billboard Mission 30 - 60 Defeat Horong 50 ea #
+Defeat Horong 50 ea #
 
 295232#Greatest General Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 40 - 60 Defeat Greatest General 100 ea #
-Defeat Greatest General 100 ea #
+Billboard Mission 30 - 60 Defeat Greatest General 50 ea #
+Defeat Greatest General 50 ea #
 
 295233#Nine Tail Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Nine Tail 100 ea #
-Defeat Nine Tail 100 ea #
+Billboard Mission 60 - 90 Defeat Nine Tail 70 ea #
+Defeat Nine Tail 70 ea #
 
 295234#Sohee Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 60 - 80 Defeat Sohee 100 ea #
-Defeat Sohee 100 ea #
+Billboard Mission 60 - 90 Defeat Sohee 70 ea #
+Defeat Sohee 70 ea #
 
 //------- display billboard alberta
 295255#Hydra Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 10 - 30 Defeat Hydra 100 ea #
-Defeat Hydra 100 ea #
+Billboard Mission 30 - 60 Defeat Hydra 50 ea #
+Defeat Hydra 50 ea #
 
 295256#Pirate Skeleton Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 20 - 40 Defeat Pirate Skeleton 100 ea #
-Defeat Pirate Skeleton 100 ea #
+Billboard Mission 30 - 60 Defeat Pirate Skeleton 50 ea #
+Defeat Pirate Skeleton 50 ea #
 
 295257#Thara Frog Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 20 - 40 Defeat Thara Frog 100 ea #
-Defeat Thara Frog 100 ea #
+Billboard Mission 30 - 60 Defeat Thara Frog 50 ea #
+Defeat Thara Frog 50 ea #
 
 295258#Permeter Billboard#SG_FEEL#QUE_NOIMAGE#
 Billboard Mission 70+ Defeat Permeter 100 ea #
@@ -21256,13 +21256,15 @@ Defeat Heater 100 ea #
 
 //display Daily Quest from Comeback Stage
 
-295186#Comeback Stage Daily Quest#SG_FEEL#QUE_NOIMAGE#
-Hunting ^0000FF Antique Book ^000000 and ^0000FF Cenere ^000000 at Clock Tower B1F and Geffen Dungeon#
-Defeat Antique Book and Cenere 120 ea#
+///Hunting
+295186#Comeback Stage Daily Quest - Hunting#SG_FEEL#QUE_NOIMAGE#
+Hunting ^0000FFGrand Peco and Deviruchi^000000#
+Defeat Grand Peco and Deviruchi 100 ea#
 
-295187#Comeback Stage Daily Quest Timer#SG_FEEL#QUE_NOIMAGE#
-You have finished Comeback Stage Daily Quest for today#
-You able to accept again at 10:00 AM#
+///Collecting
+295404#Comeback Stage Daily Quest - Collecting Item#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Anolian Skin 100 ea                                                       2. Burning Horseshoe 100 ea#
+Collecting items#
 
 //Training Ground Renovation Part3
 
@@ -21295,23 +21297,23 @@ This is a trial for Extend Class, defeat 5 Drop#
 Defeat Drop 5 ea#
 
 295359#Beetle King Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Beetle King 100 ea #
-Defeat Beetle King 100 ea #
+Billboard Mission 30 - 60 Defeat Beetle King 50 ea #
+Defeat Beetle King 50 ea #
 
 295360#Wootan Fighter Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Wootan Fighter 100 ea #
-Defeat Wootan Fighter 100 ea #
+Billboard Mission 50 - 60 Defeat Wootan Fighter 50 ea #
+Defeat Wootan Fighter 50 ea #
 
 295361#Stone Shooter Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Stone Shooter 100 ea #
-Defeat Stone Shooter 100 ea #
+Billboard Mission 50 - 60 Defeat Stone Shooter 50 ea #
+Defeat Stone Shooter 50 ea #
 
 295362#Parasite Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Parasite 100 ea #
+Billboard Mission 70+ Defeat Parasite 100 ea #
 Defeat Parasite 100 ea #
 
 295363#Dryad Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Dryad 100 ea #
+Billboard Mission 70+ Defeat Dryad 100 ea #
 Defeat Dryad 100 ea #
 
 295364#Iron Fist Billboard#SG_FEEL#QUE_NOIMAGE#
@@ -21371,35 +21373,35 @@ Can do quest again after 9 am#
 
 //--------------  display billboard morocc 295265 - 295274
 295265#Muka Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 10 - 30 Defeat Muka 100 ea #
-Defeat Muka 100 ea#
+Billboard Mission 30 - 60 Defeat Muka 50 ea #
+Defeat Muka 50 ea#
 
 295266#Hode Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 20 - 40 Defeat Hode 100 ea #
-Defeat Hode 100 ea#
+Billboard Mission 30 - 60 Defeat Hode 50 ea #
+Defeat Hode 50 ea#
 
 295267#Desert Wolf Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 20 - 40 Defeat Desert Wolf 100 ea #
-Defeat Desert Wolf 100 ea#
+Billboard Mission 30 - 60 Defeat Desert Wolf 50 ea #
+Defeat Desert Wolf 50 ea#
 
 295268#Sandman Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Sandman 100 ea #
-Defeat Sandman 100 ea#
+Billboard Mission 30 - 60 Defeat Sandman 50 ea #
+Defeat Sandman 50 ea#
 
 295269#Mummy Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Mummy 100 ea #
-Defeat Mummy 100 ea#
+Billboard Mission 30 - 60 Defeat Mummy 50 ea #
+Defeat Mummy 50 ea#
 
 295270#Verit Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Verit 100 ea #
-Defeat Verit 100 ea#
+Billboard Mission 30 - 60 Defeat Verit 50 ea #
+Defeat Verit 50 ea#
 
 295271#Isis Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Isis 100 ea #
+Billboard Mission 70+ Defeat Isis 100 ea #
 Defeat Isis 100 ea#
 
 295272#Minorous Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Minorous 100 ea #
+Billboard Mission 70+ Defeat Minorous 100 ea #
 Defeat Minorous 100 ea#
 
 295273#Pasana Billboard#SG_FEEL#QUE_NOIMAGE#
@@ -21424,102 +21426,104 @@ Collect items and Defeat monster#
 ^0000FFCollect below items^000000                                                          1. Great Nature 20 ea                                                        2. Mystic Frozen 20 ea                                                       3. Rough Wind 20 ea                                                          4. Flame Heart 20 ea                                                         5. Magic Silk 150 ea                                                         ^0000FFDefeat Monster below^000000                                                         1. Defeat 20 Merman                                                          2. Defeat 20 Wind Ghost                                                      3. Defeat 20 Marduk                                                          ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
 Collect items and Defeat monster#
 
+/// Improve Billboard Comodo Town ///
+295382#Anacondaq Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat Anacondaq 50 ea #
+Defeat Anacondaq 50 ea #
+
 295383#Megalodon Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Megalodon 100 ea #
-Defeat Megalodon 100 ea #
+Billboard Mission 30 - 60 Defeat Megalodon 50 ea #
+Defeat Megalodon 50 ea #
 
 295384#Goblin Archer Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Goblin Archer 100 ea #
-Defeat Goblin Archer 100 ea #
+Billboard Mission 30 - 60 Defeat Goblin Archer 50 ea #
+Defeat Goblin Archer 50 ea #
 
 295385#Kobold Archer Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Kobold Archer 100 ea #
-Defeat Kobold Archer 100 ea #
+Billboard Mission 30 - 60 Defeat Kobold Archer 50 ea #
+Defeat Kobold Archer 50 ea #
 
 295386#Alligator Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Alligator 100 ea #
-Defeat Alligator 100 ea #
+Billboard Mission 60 - 90 Defeat Alligator 70 ea #
+Defeat Alligator 70 ea #
 
 295387#Megalith Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Megalith 100 ea #
-Defeat Megalith 100 ea #
+Billboard Mission 60 - 90 Defeat Megalith 70 ea #
+Defeat Megalith 70 ea #
 
 295388#Sea Otter Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 70 - 99 Defeat Sea Otter 100 ea #
+Billboard Mission 70+ Defeat Sea Otter 100 ea #
 Defeat Sea Otter 100 ea #
 
 295389#Stalactic Golem Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 70 - 99 Defeat Stalactic Golem 100 ea #
+Billboard Mission 70+ Defeat Stalactic Golem 100 ea #
 Defeat Stalactic Golem 100 ea #
 
 295390#Galapago Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 70 - 99 Defeat Galapago 100 ea #
+Billboard Mission 70+ Defeat Galapago 100 ea #
 Defeat Galapago 100 ea #
 
 295391#Anolian Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 70 - 99 Defeat Anolian 100 ea #
+Billboard Mission 70+ Defeat Anolian 100 ea #
 Defeat Anolian 100 ea #
 
 295392#Seal Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 70 - 99 Defeat Seal 100 ea #
+Billboard Mission 70+ Defeat Seal 100 ea #
 Defeat Seal 100 ea #
 
 295393#Medusa Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 70 - 99 Defeat Medusa 100 ea #
+Billboard Mission 70+ Defeat Medusa 100 ea #
 Defeat Medusa 100 ea #
 
 //------ for 0319
 
-295404#Daily Quest - Collecting Item#SG_FEEL#QUE_NOIMAGE#
-^0000FFCollect below items^000000                                                          1. Worn Out Page 100 ea                                                2. Dust Pollutant 100 ea#
-Collecting items#
-
-295405#Donation Daily Quest Timer#SG_FEEL#QUE_NOIMAGE#
-You have finished Donation Comeback Stage Daily Quest for today#
-You able to accept again at 10:00 AM#
+295405#Donation Tiffany's Quest Timer#SG_FEEL#QUE_NOIMAGE#
+You have finished Donation Comeback Stage Tiffany's Quest, please wait 3 hours for redo again.#
+You able to accept quest again 3 Hours after finish previously quest#
 
 //------ for 0326
 
 295394#Vadon Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Vadon 100 ea #
-Defeat Vadon 100 ea #
+Billboard Mission 30 - 60 Defeat Vadon 50 ea #
+Defeat Vadon 50 ea #
 
 295395#Marina Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Marina 100 ea #
-Defeat Marina 100 ea #
+Billboard Mission 30 - 60 Defeat Marina 50 ea #
+Defeat Marina 50 ea #
 
 295396#Thara Frog Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Thara Frog 100 ea #
-Defeat Thara Frog 100 ea #
+Billboard Mission 30 - 60 Defeat Thara Frog 50 ea #
+Defeat Thara Frog 50 ea #
 
 295397#Cornutus Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Cornutus 100 ea #
-Defeat Cornutus 100 ea #
+Billboard Mission 30 - 60 Defeat Cornutus 50 ea #
+Defeat Cornutus 50 ea #
 
 295398#Phen Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Phen 100 ea #
-Defeat Phen 100 ea #
+Billboard Mission 30 - 60 Defeat Phen 50 ea #
+Defeat Phen 50 ea #
 
 295399#Swordfish Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Swordfish 100 ea #
-Defeat Swordfish 100 ea #
+Billboard Mission 30 - 60 Defeat Swordfish 50 ea #
+Defeat Swordfish 50 ea #
 
 295400#Obeaune Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Obeaune 100 ea #
-Defeat Obeaune 100 ea #
+Billboard Mission 30 - 60 Defeat Obeaune 50 ea #
+Defeat Obeaune 50 ea #
 
 295401#Marse Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Marse 100 ea #
-Defeat Marse 100 ea #
+Billboard Mission 30 - 60 Defeat Marse 50 ea #
+Defeat Marse 50 ea #
 
 295402#Marc Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Marc 100 ea #
-Defeat Marc 100 ea #
+Billboard Mission 30 - 60 Defeat Marc 50 ea #
+Defeat Marc 50 ea #
 
 295403#Merman Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 70 - 99 Defeat Merman 100 ea #
+Billboard Mission 70+ Defeat Merman 100 ea #
 Defeat Merman 100 ea #
 
+//// Billboad Old Prontera ////
 
 295406#Female Thief Bug Billboard#SG_FEEL#QUE_NOIMAGE#
 Billboard Mission 10 - 30 Defeat Female Thief Bug 100 ea #
@@ -21545,41 +21549,44 @@ Defeat Creamy 100 ea #
 Billboard Mission 20 - 40 Defeat Yoyo 100 ea #
 Defeat Yoyo 100 ea #
 
+
+//// Billboard Prontera ////
 295412#Caramel Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Caramel 100 ea #
-Defeat Caramel 100 ea #
+Billboard Mission 30 - 60 Defeat Caramel 50 ea #
+Defeat Caramel 50 ea #
 
 295413#Argos Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Argos 100 ea #
-Defeat Argos 100 ea #
+Billboard Mission 30 - 60 Defeat Argos 50 ea #
+Defeat Argos 50 ea #
 
 295414#Savage Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Savage 100 ea #
-Defeat Savage 100 ea #
+Billboard Mission 30 - 60 Defeat Savage 50 ea #
+Defeat Savage 50 ea #
 
 295415#Flora Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Flora 100 ea #
-Defeat Flora 100 ea #
+Billboard Mission 30 - 60 Defeat Flora 50 ea #
+Defeat Flora 50 ea #
 
 295416#Mantis Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 30 - 50 Defeat Mantis 100 ea #
-Defeat Mantis 100 ea #
+Billboard Mission 30 - 60 Defeat Mantis 50 ea #
+Defeat Mantis 50 ea #
 
 295417#Skeleton Worker Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Skeleton Worker 100 ea #
-Defeat Skeleton Worker 100 ea #
+Billboard Mission 30 - 60 Defeat Skeleton Worker 50 ea #
+Defeat Skeleton Worker 50 ea #
 
 295418#Myst Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Myst 100 ea #
-Defeat Myst 100 ea #
+Billboard Mission 30 - 60 Defeat Myst 50 ea #
+Defeat Myst 50 ea #
 
 295419#Argiope Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Argiope 100 ea #
-Defeat Argiope 100 ea #
+Billboard Mission 30 - 60 Defeat Argiope 50 ea #
+Defeat Argiope 50 ea #
 
 295420#Hunter Fly Billboard#SG_FEEL#QUE_NOIMAGE#
-Billboard Mission 50 - 70 Defeat Hunter Fly 100 ea #
-Defeat Hunter Fly 100 ea #
+Billboard Mission 30 - 60 Defeat Hunter Fly 50 ea #
+Defeat Hunter Fly 50 ea #
+
 
 //----fishing
 
@@ -21719,7 +21726,7 @@ Can do quest again after 10 am#
 //--------------  display Seasonal Headgear April 295454 - 295456
 
 295454#Create a Crazy Jr.Baphomet#SG_FEEL#QUE_NOIMAGE#
-^0000FFCollect below items^000000                                                          1. Munak Doll 2 ea                                                           2. Evil Horn 2 ea                                                            3. Puppet 20 ea                                                              4. Hallberd[1] 1 ea                                                          5. Magic Silk 100 ea                                                         ^0000FFDefeat Monster below^000000                                                         1. Defeat 20 Baphomet Jr.                                                    2. Defeat 20 Deviruchi                                                       ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+^0000FFCollect below items^000000                                                          1. Munak Doll 2 ea                                                           2. Evil Horn 20 ea                                                            3. Puppet 20 ea                                                              4. Hallberd[1] 1 ea                                                          5. Magic Silk 100 ea                                                         ^0000FFDefeat Monster below^000000                                                         1. Defeat 20 Baphomet Jr.                                                    2. Defeat 20 Deviruchi                                                       ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
 Collect items and Defeat monster#
 
 295455#Create a Sloth Hat#SG_FEEL#QUE_NOIMAGE#
@@ -21860,3 +21867,1123 @@ Defeat 100 The Paper #
 295492#Shinobi Billboard#SG_FEEL#QUE_NOIMAGE#
 Billboard Mission 70 - 99 Defeat 100 Shinobi #
 Defeat 100 Shinobi #
+
+295493#Les Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat 70 Les #
+Defeat 70 Les #
+
+295463#Wood Goblin Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat 70 Wood Goblin #
+Defeat 70 Wood Goblin #
+
+295464#Baba Yaga Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Baba Yaga #
+Defeat 100 Baba Yaga #
+
+295465#Uzhas Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Uzhas #
+Defeat 100 Uzhas #
+
+295466#Mavka Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Mavka #
+Defeat 100 Mavka #
+
+//--------------  June 3 Sakray 
+
+295494#Sports Day Mummy#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Defeat 30 Mummy #
+Defeat 30 Mummy#
+
+295495#Sports Day Fur Seal#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Defeat 30 Fur Seal #
+Defeat 30 Fur Seal#
+
+295496#Sports Day Side Winder#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Defeat 30 Side Winder #
+Defeat 30 Side Winder#
+
+295497#Sports Day Spring Rabbit#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Defeat 30 Spring Rabbit #
+Defeat 30 Spring Rabbit#
+
+295498#Sports Day Verit#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Defeat 30 Verit #
+Defeat 30 Verit#
+
+295499#Sports Day Grit#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Collect Grit 30 ea #
+Collect Grit 30 ea#
+
+295500#Sports Day Sprout#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Collect Sprout 30 ea #
+Collect Sprout 30 ea#
+
+295501#Sports Day Black Hair#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Collect Black Hair 30 ea #
+Collect Black Hair 30 ea#
+
+295502#Sports Day Witched Starsand#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Collect Witched Starsand 30 ea #
+Collect Witched Starsand 30 ea#
+
+295503#Sports Day Black Bear Skin#SG_FEEL#QUE_NOIMAGE#
+Sports Day Mission Collect Black Bear Skin 30 ea #
+Collect Black Bear Skin 30 ea#
+
+295504#Daily Sports Day#SG_FEEL#QUE_NOIMAGE#
+You have finished Sports Day 10 Quest for today#
+You able to accept again at 05:00 AM#
+
+295505#Daily 3rd ROMSP#SG_FEEL#QUE_NOIMAGE#
+You get 500,000 Exp/250,000 J.Exp for today#
+You able to accept again at 05:00 AM#
+
+295506#Stem Worm Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat 70 Stem Worm #
+Defeat 70 Stem Worm #
+
+295507#Punk Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat 70 Punk #
+Defeat 70 Punk #
+
+295508#Baphomet Jr. Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70 - 99 Defeat 100 Baphomet Jr. #
+Defeat 100 Baphomet Jr. #
+
+295509#High Orc Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70 - 99 Defeat 100 High Orc #
+Defeat 100 High Orc #
+
+295510#Penomena Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70 - 99 Defeat 100 Penomena #
+Defeat 100 Penomena #
+
+295511#Alarm Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70 - 99 Defeat 100 Alarm #
+Defeat 100 Alarm #
+
+295512#Clock Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70 - 99 Defeat 100 Clock #
+Defeat 100 Clock #
+
+//--------------  display Seasonal Headgear 295513 - 295515
+295513#Create an Umbala Spirit#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Skel-Bone 100 ea                                                          2. Tentacle 100 ea                                                           3. Well-Dried Bone 2 ea                                                      4. Magic Silk 100 ea                                                          ^0000FFDefeat Monster below^000000                                                         1. Defeat 40 Archer Skeleton                                                 2. Defeat 40 Orc Skeleton                                                    3. Defeat 40 Skeleton Worker                                                 ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+Collect items and Defeat monster#
+
+295514#Create a Cleary Sunny#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Resist Fire 30 ea                                                         2. Red Flame Whip 1 ea                                                       3. Flame Heart 15 ea                                                         4.Magic Silk 100 ea                                                          ^0000FFDefeat Monster below^000000                                                         1. Defeat 30 HEATER                                                          2. Defeat 30 KAHO                                                            3. Defeat 30 BLAZZER                                                         ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+Collect items and Defeat monster#
+
+295515#Create a Kid's Syringe#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Red Slim Potion 100 ea                                                    2. Broken Needle 100 ea                                                      3. Empty Test Tube 100 ea                                                    4.Magic Silk 100 ea                                                          ^0000FFDefeat Monster below^000000                                                         1. Defeat 50 Cookie (Red)                                                    2. Defeat 50 Cookie (Green)                                                  3. Defeat 100 Myst Case                                                      ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+Collect items and Defeat monster#
+
+295516#Metaling Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Metaling #
+Defeat 100 Metaling #
+
+295517#Holden Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Holden #
+Defeat 100 Holden #
+
+295518#Mineral Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Mineral #
+Defeat 100 Mineral #
+
+295519#Obsidian Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Obsidian #
+Defeat 100 Obsidian #
+
+295520#Anopheles Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Anopheles #
+Defeat 100 Anopheles #
+
+295521#Porcellio Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Porcellio #
+Defeat 100 Porcellio #
+
+295522#Pitman Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Pitman #
+Defeat 100 Pitman #
+
+295523#Waste Stove Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Waste Stove #
+Defeat 100 Waste Stove #
+
+295524#Noxious Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Noxious #
+Defeat 100 Noxious #
+
+295525#Venomous Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Venomous #
+Defeat 100 Venomous #
+
+295526#Teddy Bear Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Teddy Bear #
+Defeat 100 Teddy Bear #
+
+295527#Ghoul Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Ghoul #
+Defeat 100 Ghoul #
+
+295528#Sageworm Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Sageworm #
+Defeat 100 Sageworm #
+
+295529#Brilight Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Brilight #
+Defeat 100 Brilight #
+
+295530#Injustice Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Injustice #
+Defeat 100 Injustice #
+
+295531#Carat Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Carat #
+Defeat 100 Carat #
+
+295532#Skel Prisoner Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Skel Prisoner #
+Defeat 100 Skel Prisoner #
+
+295533#Raydric Archer Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Raydric Archer #
+Defeat 100 Raydric Archer #
+
+295534#Raydric Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Raydric #
+Defeat 100 Raydric #
+
+295535#Zombie Prisoner Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Zombie Prisoner #
+Defeat 100 Zombie Prisoner #
+
+295536#Wraith Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Wraith #
+Defeat 100 Wraith #
+
+295537#Cramp Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Cramp #
+Defeat 100 Cramp #
+
+295538#Evil Druid Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Evil Druid #
+Defeat 100 Evil Druid #
+
+295539#Rideword Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Rideword #
+Defeat 100 Rideword #
+
+295540#Dark Frame Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Dark Frame #
+Defeat 100 Dark Frame #
+
+295541#Sting Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Sting #
+Defeat 100 Sting #
+
+295542#Wanderer Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Wanderer #
+Defeat 100 Wanderer #
+
+//7.16 update
+
+295552#Daily Refine Weapon+7#SG_FEEL#QUE_NOIMAGE#
+Today you already refine weapon+7 , please wait again after 5 AM tomorrow  #
+Refining limit 1 time per day  #
+
+295553#Daily Refine Armor+7#SG_FEEL#QUE_NOIMAGE#
+Today you already refine equipment+7 , please wait again after 5 AM tomorrow  #
+Refining limit 1 time per day  #
+
+295554#Daily Refine Weapon+8#SG_FEEL#QUE_NOIMAGE#
+Today you already refine weapon+8 , please wait again after 5 AM tomorrow  #
+Refining limit 1 time per day  #
+
+295555#Daily Refine Armor+8#SG_FEEL#QUE_NOIMAGE#
+Today you already refine equipment+8 , please wait again after 5 AM tomorrow  #
+Refining limit 1 time per day  #
+
+/// Billboard Dewata////
+295543#Am Mut Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Am Mut #
+Defeat 100 Am Mut #
+
+295544#Gullinbursti Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Gullinbursti #
+Defeat 100 Gullinbursti #
+
+295545#Gajomart Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Gajomart #
+Defeat 100 Gajomart #
+
+295546#Ancient Worm Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Ancient Worm #
+Defeat 100 Ancient Worm #
+
+295547#Alnoldi Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Alnoldi #
+Defeat 100 Alnoldi #
+
+295548#Comodo Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Comodo #
+Defeat 100 Comodo #
+
+295549#Cendrawasih Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Cendrawasih #
+Defeat 100 Cendrawasih #
+
+295550#Banaspaty Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Banaspaty #
+Defeat 100 Banaspaty #
+
+295551#Butoijo Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Butoijo #
+Defeat 100 Butoijo #
+
+295187#Comeback Stage Tiffany's Quest Timer#SG_FEEL#QUE_NOIMAGE#
+You have finished Tiffany's Quest, please wait 3 hours to redo again.#
+You able to accept quest again 3 Hours after finish previously quest#
+
+295556#Daily Free EXP#SG_FEEL#QUE_NOIMAGE#
+You get EXP/J.EXP for today #
+You able to accept again at 05:00 AM#
+
+295557#Daily Mercenary#SG_FEEL#QUE_NOIMAGE#
+You get 8th Grade Bowman Mercenary Scroll for today #
+You able to accept again at 05:00 AM#
+
+///Billboard Lutie x Niffheim ///
+295569#Cookie(Green) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Cookie(Green) #
+Defeat 50 Cookie(Green) #
+
+295570#Cookie(Red) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Cookie(Red) #
+Defeat 50 Cookie(Red) #
+
+295558#Sasquatch Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Sasquatch #
+Defeat 50 Sasquatch #
+
+295559#Cruiser Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Cruiser #
+Defeat 50 Cruiser #
+
+295560#Myst Case Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Myst Case #
+Defeat 50 Myst Case #
+
+295561#Lude Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Lude #
+Defeat 100 Lude #
+
+295562#Quve Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Quve #
+Defeat 100 Quve #
+
+295563#Heirozoist Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Heirozoist #
+Defeat 100 Heirozoist #
+
+295564#Disguise Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Disguise #
+Defeat 100 Disguise #
+
+295565#Gibbet Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Gibbet #
+Defeat 100 Gibbet #
+
+295566#Dullahan Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Dullahan #
+Defeat 100 Dullahan #
+
+295567#Loli Ruri Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Loli Ruri #
+Defeat 100 Loli Ruri #
+
+295568#Bloody Murderer Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Bloody Murderer #
+Defeat 100 Bloody Murderer #
+
+//--------------  display Seasonal Headgear 295577 - 295579
+295577#Create a Wunderkammer#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Gift Box 20 ea                                                            2. Gloomy Box 5 ea                                                           3. Giggling Box 5 ea                                                         4. Box of Thunder 5 ea                                                       5. Box of Sunlight 5 ea                                                      6. Box of Storm 5 ea                                                         7. Box of Grudge 5 ea                                                        8. Treasure Box 1 ea                                                         9. Magic Silk 100 ea                                                         ^0000FFDefeat Monster below^000000                                                         1. Defeat 50 Myst Case                                                       2. Defeat 50 Mimic                                                           3. Defeat 50 Sageworm                                                        ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+Collect items and Defeat monster#
+
+295578#Create a Fancy Phantom Mask#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Annoyed Mask 1 ea                                                         2. Goblin Mask 1 ea                                                          3. Surprised Mask 1 ea                                                       4. Soft Feather 100 ea                                                       5. Magic Silk 100 ea                                                         ^0000FFDefeat Monster below^000000                                                         1. Defeat 50 Goblin Archer                                                   2. Defeat 50 Alarm                                                           3. Defeat 50 Cendrawasih                                                     ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+Collect items and Defeat monster#
+
+295579#Create a Heavenly Dark Flame#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Little Evil Wing 100 ea                                                   2. Little Evil Horn 100 ea                                                   3. Dark Crystal Fragment 100 ea                                              4. Black Dyestuffs 10 ea                                                     5. Magic Silk 100 ea                                                         ^0000FFDefeat Monster below^000000                                                         1. Defeat 50 Dark Frame                                                      2. Defeat 50 Myst                                                            3. Defeat 50 Deviruchi                                                       ^FF0000Magic Silk^000000 can be found in ^FF0000Cash Shop^000000#
+Collect items and Defeat monster#
+
+/////----Billboard Juno Part 1///////
+295596#Apocalypse Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Apocalypse #
+Defeat 100 Apocalypse #
+
+295597#Venatu (Purple) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Venatu (Purple) #
+Defeat 100 Venatu (Purple) #
+
+295598#Venatu (Blue) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Venatu (Blue) #
+Defeat 100 Venatu (Blue) #
+
+295599#Venatu (Orange) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Venatu (Orange) #
+Defeat 100 Venatu (Orange) #
+
+295600#Venatu (Green) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Venatu (Green) #
+Defeat 100 Venatu (Green) #
+
+295601#Archdam Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Archdam #
+Defeat 100 Archdam #
+
+295602#Dimik (Orange) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Dimik (Orange) #
+Defeat 100 Dimik (Orange) #
+
+295603#Dimik (Green) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Dimik (Green) #
+Defeat 100 Dimik (Green) #
+
+295604#Dimik (Red) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Dimik (Red) #
+Defeat 100 Dimik (Red) #
+
+295605#Photon Cannon Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Photon Cannon #
+Defeat 100 Photon Cannon #
+
+295606#Dimik (Blue) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Dimik (Blue) #
+Defeat 100 Dimik (Blue) #
+
+295607#Constant Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Constant #
+Defeat 100 Constant #
+
+295608#Alice Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Alice #
+Defeat 100 Alice #
+
+295609#Aliza Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Aliza #
+Defeat 100 Aliza #
+
+295610#Alicel Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Alicel #
+Defeat 100 Alicel #
+
+295611#Aliot Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Aliot #
+Defeat 100 Aliot #
+
+295580#Geographer Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Geographer #
+Defeat 100 Geographer #
+
+295581#Demon Pungus Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Demon Pungus #
+Defeat 100 Demon Pungus #
+
+295582#Grand Peco Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Grand Peco #
+Defeat 100 Grand Peco #
+
+295583#Sleeper Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Sleeper #
+Defeat 100 Sleeper #
+
+295584#Goat Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Goat #
+Defeat 100 Goat #
+
+295585#Harpy Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Harpy #
+Defeat 100 Harpy #
+
+295586#Blazer Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Blazer #
+Defeat 100 Blazer #
+
+295587#Explosion Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Explosion #
+Defeat 100 Explosion #
+
+295588#Kaho Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Kaho #
+Defeat 100 Kaho #
+
+295589#Gig Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Gig #
+Defeat 100 Gig #
+
+295590#Deleter (Ground) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Deleter (Ground) #
+Defeat 100 Deleter (Ground) #
+
+295591#Deleter (Sky) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Deleter (Sky) #
+Defeat 100 Deleter (Sky) #
+
+295592#Diabolic Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Diabolic #
+Defeat 100 Diabolic #
+
+295593#Grizzly Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Grizzly #
+Defeat 100 Grizzly #
+
+295594#Lava Golem Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Lava Golem #
+Defeat 100 Lava Golem #
+
+295595#Nightmare Terror Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Nightmare Terror #
+Defeat 100 Nightmare Terror #
+
+///Billboard Biolab////
+295612#Remover Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Remover #
+Defeat 100 Remover #
+
+295613#Egnigem Cenia Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Egnigem Cenia #
+Defeat 100 Egnigem Cenia #
+
+295614#Wickebine Tres Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Wickebine Tres #
+Defeat 100 Wickebine Tres #
+
+295615#Armeyer Dinze Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Armeyer Dinze #
+Defeat 100 Armeyer Dinze #
+
+295616#Errende Ebecee Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Errende Ebecee #
+Defeat 100 Errende Ebecee #
+
+295617#Kavach Icarus Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Kavach Icarus #
+Defeat 100 Kavach Icarus #
+
+295618#Laurell Weinder Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Laurell Weinder #
+Defeat 100 Laurell Weinder #
+
+295619#Seyren Windsor Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Seyren Windsor #
+Defeat 100 Seyren Windsor #
+
+295620#Eremes Guile Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Eremes Guile #
+Defeat 100 Eremes Guile #
+
+295621#Howard Alt-Eisen Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Howard Alt-Eisen #
+Defeat 100 Howard Alt-Eisen #
+
+295622#Margaretha Sorin Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Margaretha Sorin #
+Defeat 100 Margaretha Sorin #
+
+295623#Cecil Damon Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Cecil Damon #
+Defeat 100 Cecil Damon #
+
+295624#Kathryne Keyron Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Kathryne Keyron #
+Defeat 100 Kathryne Keyron #
+
+295625#Daily GameConsole#SG_FEEL#QUE_NOIMAGE#
+Today you have bought ^006600MSP's Game Console^000000                                                   Please give all ^006600MSP's Game Console^000000                                           to ^0000FFSexy Streamer^000000 during 09.00 PM to 11.59 PM                                 ^FF0000[Caution]^000000                                                                     If you not give ^006600MSP's Game Console^000000 to ^0000FFSexy Streamer^000000 on that day      Items will be gone when you will start buying ^006600MSP's Game Console^000000 in another day#
+Daily Quest Gamesole#
+
+///Billbord Geffen ////
+
+295626#Orc Zombie Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Orc Zombie #
+Defeat 50 Orc Zombie #
+
+295627#Drainliar Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Drainliar #
+Defeat 50 Drainliar #
+
+295628#Orc Warrior Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Orc Warrior #
+Defeat 50 Orc Warrior #
+
+295629#Golem Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Golem #
+Defeat 50 Golem #
+
+295630#Orc Skeleton Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Orc Skeleton #
+Defeat 50 Orc Skeleton #
+
+295631#Zenorc Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Zenorc #
+Defeat 50 Zenorc #
+
+295632#Kobold (Hammer) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Kobold (Hammer) #
+Defeat 50 Kobold (Hammer) #
+
+295633#Kobold (Mace) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Kobold (Mace) #
+Defeat 50 Kobold (Mace) #
+
+295634#Orc Lady Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Orc Lady #
+Defeat 50 Orc Lady #
+
+295635#Whisper Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Whisper #
+Defeat 50 Whisper #
+
+295636#Kobold (Axe) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Kobold (Axe) #
+Defeat 50 Kobold (Axe) #
+
+295637#Jakk Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Jakk #
+Defeat 50 Jakk #
+
+295638#Wild Rose Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 30 - 60 Defeat 50 Wild Rose #
+Defeat 50 Wild Rose #
+
+295639#Marionette Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Marionette #
+Defeat 100 Marionette #
+
+295640#Bathory Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Bathory #
+Defeat 100 Bathory #
+
+295641#Petite (Ground) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Petite (Ground) #
+Defeat 100 Petite (Ground) #
+
+295642#Petite (Sky) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Petite (Sky) #
+Defeat 100 Petite (Sky) #
+
+295643#Deviruchi Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Deviruchi #
+Defeat 100 Deviruchi #
+
+295644#Nightmare Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Nightmare #
+Defeat 100 Nightmare #
+
+295645#Orc Archer Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Orc Archer #
+Defeat 100 Orc Archer #
+
+295646#False Angel Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 False Angel #
+Defeat 100 False Angel #
+
+295647#Mini Demon Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Mini Demon #
+Defeat 100 Mini Demon #
+
+295648#Violy Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Violy #
+Defeat 100 Violy #
+
+295649#Incubus Sorin Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Incubus Sorin #
+Defeat 100 Incubus Sorin #
+
+295650#Succubus Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Succubus #
+Defeat 100 Succubus #
+
+
+///MSP Quest Horror////
+295651#Horror Story#SG_FEEL#QUE_NOIMAGE#
+Find Cute But Cursed Doll from Cute Pandora                                  - Niflheim (230,276)                                                         - Niflheim (88,255)                                                          - Niflheim (300,80)                                                          - Niflheim (188,121)                                                          - Niflheim (130,34)#
+Collect 5 Cute But Cursed Doll#
+
+295652#Find Cursed Doll 1#SG_FEEL#QUE_NOIMAGE#
+niflheim (230,276) #
+niflheim (230,276) #
+
+295653#Find Cursed Doll 2#SG_FEEL#QUE_NOIMAGE#
+niflheim (88,255)#
+niflheim (88,255)#
+
+295654#Find Cursed Doll 3#SG_FEEL#QUE_NOIMAGE#
+niflheim (300,80)#
+niflheim (300,80)#
+
+295655#Find Cursed Doll 4#SG_FEEL#QUE_NOIMAGE#
+niflheim (300,121)#
+niflheim (300,121)#
+
+295659#Find Cursed Doll 5#SG_FEEL#QUE_NOIMAGE#
+Niflheim (130,34)#
+Niflheim (130,34)#
+
+295656#Horror Story Stage 2#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Candy 31 ea                                                               2. Candy Cane 31 ea                                                         3. Cursed Water 13 ea                                                        4. Bloody Razor Blade 31 ea                                                        5. Broken Needle 31 ea#
+Collecting items#
+
+295657#Horror Story Last Stage#SG_FEEL#QUE_NOIMAGE#
+Final Task! Katie ask you to defeat The Devil's follower #
+Defeat 1 The Devil's follower #
+
+295658#Daily Horror Story#SG_FEEL#QUE_NOIMAGE#
+Daily Quest - Horror Story can do again after 5 AM #
+Cool Time 5.00 AM #
+
+
+//Billboard Port Malaya 295660 - 295667
+
+295667#Jejeling Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Jejeling 100 ea #
+Defeat Jejeling 100 ea #
+
+295660#Tikbalang Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Tikbalang 100 ea #
+Defeat Tikbalang 100 ea #
+
+295661#Engkanto Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Engkanto 100 ea #
+Defeat Engkanto 100 ea #
+
+295662#Bungisngis Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Bungisngis 100 ea #
+Defeat Bungisngis 100 ea #
+
+295663#Mangkukulam Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Mangkukulam 70 ea #
+Defeat Mangkukulam 70 ea #
+
+295664#Tiyanak Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Tiyanak 70 ea #
+Defeat Tiyanak 70 ea #
+
+295665#Wakwak Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Wakwak 100 ea #
+Defeat Wakwak 100 ea #
+
+295666#Manananggal Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Manananggal 100 ea #
+Defeat Manananggal 100 ea #
+
+//Homunculus Event 295031
+
+295031#Homunculus Event#SG_FEEL#QUE_NOIMAGE#
+You got 1 Bioethics Device and 1 Embryo#
+For check Bioethics & Embryo #
+
+
+///God Item Adjustment////
+
+295571#Mjolnir God Item#SG_FEEL#QUE_NOIMAGE#
+^0000FFDefeat Monster below^000000                                                         1. Defeat 1000 Creamy Fear                                                    2. Defeat 1000 Caterpillar                                                    3. Defeat 1000 Leib Olmai                                                     ^0000FFCollect below items^000000                                                          1. Thor's Gauntlet 10 ea                                                      2. Iron Maiden 20 ea                                                          3. Wrath of Valkyrie 20 ea                                                    4. Billow 20 ea                                                               5. Omen of Tempest 20 ea                                                      6. Gold 40 ea                                                                7. Elunium 5 ea                                                              8. Oridecon 20 ea                                                            9. Stunner 1 ea                                                              10. God's Scripture 30 ea                                                    11. Human's Soul 100 ea                                                       12. Billboard's Pass 50 ea                                                   13. Guild Emblem 300 ea                                                      14. Magic Silk 500 ea                                                      15. 2,000,000,000 Zeny#
+Defeat/Collect/Zeny #
+
+295572#Brisingamen God Item#SG_FEEL#QUE_NOIMAGE#
+^0000FFDefeat Monster below^000000                                                         1. Defeat 1000 Zombie Master                                                  2. Defeat 1000 Mini Demon                                                     3. Defeat 1000 Wraith Dead                                                    ^0000FFCollect below items^000000                                                          1. Freyja's Jewel 20 ea                                                       2. Silver Ornament 20 ea                                                      3. Drifting Air 10 ea                                                         4. Ripple 10 ea                                                               5. Snow Crystal 10 ea                                                         6. Gold 20 ea                                                                7. Sapphire 2 ea                                                             8. Cursed Ruby 5 ea                                                          9. Opal 10 ea                                                                10. Pearl 3 ea                                                               11. Necklace 1 ea                                                            12. God's Scripture 30 ea                                                    13. Human's Soul 100 ea                                                       14. Billboard's Pass 50 ea                                                   15. Guild Emblem 300 ea                                                      16. Magic Silk 500 ea                                                      16. 2,000,000,000 Zeny#
+Defeat/Collect/Zeny #
+
+295573#Sleipnir God Item#SG_FEEL#QUE_NOIMAGE#
+^0000FFDefeat Monster below^000000                                                         1. Defeat 1000 Skeleton General                                               2. Defeat 1000 Am Mut                                                         3. Defeat 1000 Gajomart                                                       ^0000FFCollect below items^000000                                                          1. Feather of Angel Wing 20 ea                                                2. Amblem of the Sun God 20 ea                                                3. Wheel of the Unknown 10 ea                                                 4. Breath of Spirit 10 ea                                                     5. Spirit of Fish 10 ea                                                       6. Gold 20 ea                                                                7. Elunium 10 ea                                                             8. Boots [1] 1 ea                                                            9. God's Scripture 30 ea                                                     10. Human's Soul 100 ea                                                       11. Billboard's Pass 50 ea                                                   12. Guild Emblem 300 ea                                                      13. Magic Silk 500 ea                                                      14. 2,000,000,000 Zeny#
+Defeat/Collect/Zeny #
+
+295574#Megingjard God Item#SG_FEEL#QUE_NOIMAGE#
+^0000FFDefeat Monster below^000000                                                         1. Defeat 1000 Giant Hornet                                                   2. Defeat 1000 Giant Spider                                                   3. Defeat 500 Killer Mantis                                                  ^0000FFCollect below items^000000                                                          1. Gleipnir 10 ea                                                             2. Gold 20 ea                                                                3. Sapphire 10 ea                                                            4. Oridecon 10 ea                                                            5. Belt[1] 1 ea                                                              6. God's Scripture 30 ea                                                     7. Human's Soul 100 ea                                                        8. Billboard's Pass 50 ea                                                    9. Guild Emblem 300 ea                                                       10. Magic Silk 500 ea                                                       11. 2,000,000,000 Zeny#
+Defeat/Collect/Zeny #
+
+295575#Make Gleipnir#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Cat Tread 2 ea                                                            2. Woman's Moustache 2 ea                                                    3. Root of Stone 2 ea                                                        4. Sputum of Bird 1 ea                                                       5. Sinew of Bear 1 ea#
+Collect Item #
+
+295576#Make C God's Majestic#SG_FEEL#QUE_NOIMAGE#
+^0000FFDefeat Monster below^000000                                                         1. Defeat 1000 Egnigem (Guild Version)                                       ^0000FFCollect below items^000000                                                          1. Thor's Gauntlet 1 ea                                                      2. Iron Maiden 1 ea                                                          3. Wrath of Valkyrie 1 ea                                                    4. Billow 1 ea                                                               5. Omen of Tempest 1 ea                                                      6. Freyja's Jewel 1 ea                                                       7. Silver Ornament 1 ea                                                      8. Drifting Air 1 ea                                                         9. Ripple 1 ea                                                               10. Snow Crystal 1 ea                                                        11. Feather of Angel Wing 1 ea                                               12. Amblem of the Sun God 1 ea                                               13. Wheel of the Unknown 1 ea                                                14. Breath of Spirit 1 ea                                                    15. Spirit of Fish 1 ea                                                      16. Cat Tread 1 ea                                                           17. Woman's Moustache 1 ea                                                   18. Root of Stone 1 ea                                                       19. Sputum of Bird 1 ea                                                      20. Sinew of Bear 1 ea                                                       21. Gleipnir 1 ea                                                            22. Gold 10 ea                                                               23. Aigenta Receipt 100 ea                                                   24. God's Scripture 50 ea                                                    25. Human's Soul 200 ea                                                       26. Billboard's Pass 100 ea                                                  27. Guild Emblem 500 ea                                                      28. 500,000,000 Zeny#
+Defeat/Collect/Zeny #
+
+
+////Billboard Rachel x Veins ////
+
+295668#Stapo Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Stapo #
+Defeat 100 Stapo #
+
+295669#Roween Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Roween #
+Defeat 100 Roween #
+
+295670#Galion Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Galion #
+Defeat 100 Galion #
+
+295671#Magmaring Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Magmaring #
+Defeat 100 Magmaring #
+
+295672#Knocker Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Knocker #
+Defeat 100 Knocker #
+
+295673#Drosera Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Drosera #
+Defeat 100 Drosera #
+
+295674#Imp Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Imp #
+Defeat 100 Imp #
+
+295675#Sword Guardian Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Sword Guardian #
+Defeat 100 Sword Guardian #
+
+295676#Muscipular Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Muscipular #
+Defeat 100 Muscipular #
+
+295677#Bow Guardian Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Bow Guardian #
+Defeat 100 Bow Guardian #
+
+295678#Salamander Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Salamander #
+Defeat 100 Salamander #
+
+295679#Kasa Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Kasa #
+Defeat 100 Kasa #
+
+295680#Aunoe Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Aunoe #
+Defeat 100 Aunoe #
+
+295681#Fanat Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Fanat #
+Defeat 100 Fanat #
+
+295682#Banshee Master Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Banshee Master #
+Defeat 100 Banshee Master #
+
+295683#Beholder Master Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Beholder Master #
+Defeat 100 Beholder Master #
+
+295684#Driller Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Driller #
+Defeat 100 Driller #
+
+295685#Hill Wind (Spear) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Hill Wind (Spear) #
+Defeat 100 Hill Wind (Spear) #
+
+295686#Hill Wind Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Hill Wind #
+Defeat 100 Hill Wind #
+
+295687#Siroma Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Siroma #
+Defeat 100 Siroma #
+
+295688#Snowier Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Snowier #
+Defeat 100 Snowier #
+
+295689#Kobold Leader Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Kobold Leader #
+Defeat 100 Kobold Leader #
+
+295690#Gazeti Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Gazeti #
+Defeat 100 Gazeti #
+
+295691#Ice Titan Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat 100 Ice Titan #
+Defeat 100 Ice Titan #
+
+///Update 17 December 2020 ///
+295692#Gremlin Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Gremlin #
+Defeat 100 Gremlin #
+
+295693#Beholder Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Beholder #
+Defeat 100 Beholder #
+
+295694#Vanberk Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Vanberk #
+Defeat 100 Vanberk #
+
+295695#Isilla Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Isilla #
+Defeat 100 Isilla #
+
+295696#Hodremlin Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Hodremlin #
+Defeat 100 Hodremlin #
+
+295697#Seeker Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Seeker #
+Defeat 100 Seeker #
+
+295698#Agav Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Agav #
+Defeat 100 Agav #
+
+295699#Echio Billboard#SG_FEEL#QUE_NOIMAGE#
+Sanctuary Billboard Mission 70+ Defeat 100 Echio #
+Defeat 100 Echio #
+
+295700#Zombie Slaughter Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Zombie Slaughter #
+Defeat 100 Zombie Slaughter #
+
+295701#Ragged Zombie Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Ragged Zombie#
+Defeat 100 Ragged Zombie #
+
+295702#Hellhound Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Hellhound #
+Defeat 100 Hellhound #
+
+295703#Banshee Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Banshee #
+Defeat 100 Banshee #
+
+295704#Flame Skull Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Flame Skull #
+Defeat 100 Flame Skull #
+
+295705#Necromancer Billboard#SG_FEEL#QUE_NOIMAGE#
+Nameless Billboard Mission 70+ Defeat 100 Necromancer #
+Defeat 100 Necromancer #
+
+///Christmas Night Event December 2020 ///
+
+295706#Into the High School Life#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 1 Defeat Monster below^000000                                               1. Defeat 50 Myst Case                                                       2. Defeat 50 Cruiser                                                         3. Defeat 50 Sasquatch#
+Defeat monster#
+
+295707#Have some friend ?#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 2 Collect below items^000000                                                1. Sexy T-Shirt 10 ea                                                        2. Sexy Shoes 10 ea                                                          3. Sexy Phone 10 ea                                                          4. Sexy Perfume 10 ea#
+Obtain from Antonio and Santa Poring  #
+
+295708#Jingle Bell Rock - 1#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 3-1 Collect below items^000000                                              1. Scarlet Dyestuffs 1 ea                                                    2. Feather 20 ea                                                             3. Soft Feather 20 ea                                                        4. Yellow Gemstone 20 ea                                                        5. Sandals [0] 1 ea#
+Collect items #
+
+295709#Jingle Bell Rock - 2#SG_FEEL#QUE_NOIMAGE#
+Waiting Karen to make a dress for you, come back again later  #
+Waiting Karen for 5 minutes at Lutie(143,124)#
+
+295710#Jingle Bell Rock - 3#SG_FEEL#QUE_NOIMAGE#
+The show almost start. Karen is waiting for you#
+Help Karen singing#
+
+295711#Thank U, Next - Janis#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 4-1 Answer the Questions^000000  #
+Answer qeustion Janis with Lutie(83,143)#
+
+295712#Thank U, Next - Damian#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 4-2 Answer the Questions^000000  #
+Answer qeustion Damian with Lutie(257,120)#
+
+295713#Thank U, Next - Cady#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 4-3 Answer the Questions^000000  #
+Answer qeustion with Cady at Lutie(193,267)#
+
+295714#Thank U, Next - Aaron#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 4-4 Answer the Questions^000000  #
+Answer qeustion Aaron with Lutie(156,302)#
+
+295715#Daily Christmas High School#SG_FEEL#QUE_NOIMAGE#
+^0000FFDaily Christmas Event - Talking with Norbury again after 5 AM^000000  #
+Can start quest again after 5 AM#
+
+///Thank You Next Event ///
+
+295716#Daily Exp/J.Exp - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get 500,000 Exp/250,000 J.Exp for today#
+You able to accept again at 05:00 AM#
+
+295717#Limited Soul Candy - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get Soul Candy from Thank You Event#
+Soul Candy limit 1 time per event#
+
+295718#Limited Status - Thank You#SG_FEEL#QUE_NOIMAGE#
+Reset status from Thank You Event#
+Re status limit 1 time per event#
+
+295719#Limited Skill - Thank You#SG_FEEL#QUE_NOIMAGE#
+Reset skill from Thank You Event#
+Reset skill limit 1 time per event#
+
+295720#Daily Siege Potion - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get 10 Siege Blue Potion for today#
+You able to accept again at 05:00 AM#
+
+295721#Daily Bow Mercenary - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get 5 of each Bowman Scroll 6 for today#
+You able to accept again at 05:00 AM#
+
+295722#Daily Siege White Potion - Thank You#SG_FEEL#QUE_NOIMAGE#
+You get 10 Siege White Potion for today#
+You able to accept again at 05:00 AM#
+
+///Billboard Hugel////
+
+295723#Novus (Red) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Novus (Red) 70 ea #
+Defeat Novus (Red) 70 ea #
+
+295724#Novus (Yellow) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Novus (Yellow) 70 ea #
+Defeat Novus (Yellow) 70 ea #
+
+295725#Dragon Egg Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Dragon Egg 70 ea #
+Defeat Dragon Egg 70 ea #
+
+295726#Plasma (Red) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Red) 70 ea #
+Defeat Plasma (Red) 70 ea #
+
+295727#Plasma (Blue) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Blue) 70 ea #
+Defeat Plasma (Blue) 70 ea #
+
+295728#Plasma (Green) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Green) 70 ea #
+Defeat Plasma (Green) 70 ea #
+
+295729#Plasma (Purple) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Purple) 70 ea #
+Defeat Plasma (Purple) 70 ea #
+
+295730#Grove Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Grove 70 ea #
+Defeat Grove 70 ea #
+
+295731#Plasma (Yellow) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Plasma (Yellow) 70 ea #
+Defeat Plasma (Yellow) 70 ea #
+
+295732#Breeze Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 60 - 90 Defeat Breeze 70 ea #
+Defeat Breeze 70 ea #
+
+295733#Ancient Mimic Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Ancient Mimic 100 ea #
+Defeat Ancient Mimic 100 ea #
+
+295734#Death Word Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Death Word 100 ea #
+Defeat Death Word 100 ea #
+
+295735#Frus Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Frus 100 ea #
+Defeat Frus 100 ea #
+
+295736#Ferus (Green) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Ferus (Green) 100 ea #
+Defeat Ferus (Green) 100 ea #
+
+295737#Skogul Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Skogul 100 ea #
+Defeat Skogul 100 ea #
+
+295738#Ferus (Red) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Ferus (Red) 100 ea #
+Defeat Ferus (Red) 100 ea #
+
+295739#Acidus (Blue) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Acidus (Blue) 100 ea #
+Defeat Acidus (Blue) 100 ea #
+
+295740#Lady Solace Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Lady Solace 100 ea #
+Defeat Lady Solace 100 ea #
+
+295741#Baroness of Retribution Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Baroness of Retribution 100 ea #
+Defeat Baroness of Retribution 100 ea #
+
+295742#Mistress of Shelter Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Mistress of Shelter 100 ea #
+Defeat Mistress of Shelter 100 ea #
+
+295743#Acidus (Gold) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Acidus (Gold) 100 ea #
+Defeat Acidus (Gold) 100 ea #
+
+295744#Skeggiold (Black) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Skeggiold (Black) 100 ea #
+Defeat Skeggiold (Black) 100 ea #
+
+295745#Dame of Sentinel Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Dame of Sentinel 100 ea #
+Defeat Dame of Sentinel 100 ea #
+
+295746#Skeggiold (Blue) Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Skeggiold (Blue) 100 ea #
+Defeat Skeggiold (Blue) 100 ea #
+
+295747#Dolor of Thanatos Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Dolor of Thanatos 100 ea #
+Defeat Dolor of Thanatos 100 ea #
+
+295748#Maero of Thanatos Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Maero of Thanatos 100 ea #
+Defeat Maero of Thanatos 100 ea #
+
+295749#Despero of Thanatos Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Despero of Thanatos 100 ea #
+Defeat Despero of Thanatos 100 ea #
+
+295750#Odium of Thanatos Billboard#SG_FEEL#QUE_NOIMAGE#
+Billboard Mission 70+ Defeat Odium of Thanatos 100 ea #
+Defeat Odium of Thanatos 100 ea #
+
+295751#Help Cho-Ai (Nerd)#SG_FEEL#QUE_NOIMAGE#
+Cho-Ai (Nerd) need your help to give Sweet Chocolate to Jae-Hyun#
+give Sweet Chocolate to Jae-Hyun (Hot)#
+
+295752#Time To Change#SG_FEEL#QUE_NOIMAGE#
+Cho-Ai (Nerd) want to change herself, consult with Lady Santi#
+Go to find Lady Santi#
+
+295753#Trial Of Yourself#SG_FEEL#QUE_NOIMAGE#
+Pass all trial from 3 trainers (Teacher Omin/Stylist Natty/Chef Anya)#
+Pass all quest from 3 trainers#
+
+295754#Defeat Monster - New Yoga Style#SG_FEEL#QUE_NOIMAGE#
+^0000FFMission 1 Defeat Monster below^000000                                               1. Defeat 30 Thara Frog                                                      2. Defeat 30 Obeaune                                                         3. Defeat 30 Cornutus#
+Defeat monster#
+
+295755#Change Your Look - New Dress& Make-up#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Rouge 1 ea                                                                2. Eye Drops 2 ea                                                            3. Lemon Dyestuffs 1 ea                                                        4. Ribbon 1 ea#
+Collect Item #
+
+295756#Dessert Course - Making Chocolate#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Chocolate Recipe 10 ea                                                    2. Dark Chocolate 10 ea                                                      3. Cacao 10 ea                                                                 4. Chocolate Chip 10 ea                                                      5. True Love 10 ea#
+Collect Item #
+
+295757#The Last Trial#SG_FEEL#QUE_NOIMAGE#
+Help Cho-Ai (In Love) sing a song to Jae-Hyun (In Love)#
+Go to find Jae-Hyun at Jawaii(205,290)#
+
+295758#Be Brave Again#SG_FEEL#QUE_NOIMAGE#
+Cho-Ai need to tell Jae-Hyun again after 05:00 AM #
+You able to accept again at 05:00 AM#

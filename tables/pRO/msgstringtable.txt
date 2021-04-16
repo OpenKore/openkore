@@ -740,7 +740,7 @@ Item sharing type#
 Individual#
 Shared#
 nProtect KeyCrypt#
-nomsg#
+Keyboard Driver is detected. \n\n Will you install additional program to protect keyboard security? \n\n(after installation, it demands system reboot)#
 Set up has completed Reboot \n\n system #
 Set up failure!#
 Continue without adjusting keyboard secure#
@@ -1626,7 +1626,7 @@ To [%s] #
 use [%s] skill.#
 Function disabled#
 Function enabled#
-[%s] gave [%s] '%s'.#
+[%s] used [%s] and get '%s'.#
 Swordman#
 Mage#
 Archer#
@@ -2480,7 +2480,7 @@ It is more than ^0000ffZeny^000000.\n Is it correct?#
 Safe chcek for over 10,000,000Zeny#
 https://www.warpportal.com/account/login.aspx?ReturnUrl=%2faccount%2fpayment.aspx#
 https://kepler.warpportal.com/ro1/purchase/?step=1&steamid=%lld&accountname=#
-#
+2483#
 In their efforts to continue to trace the path of Satan Morroc, brave adventurers crossed the legendary Bifrost bridge and discovered a lost city, Eclage#
 There they found that the Laphines of Eclage were completely separated from their brothers in Splendide because of the Hazy Forest Labyrinth.#
 2486#
@@ -2974,7 +2974,7 @@ Refine Failed!#
 Back#
 Succeed#
 Returned#
-#
+ #
 Change homunculus' name to ^0000ff^0000ff %s^000000^000000 . Do you want to proceed?#
 Call message is opened. (Call function ON)#
 Call message is blocked. (Call function OFF)#
@@ -3035,46 +3035,46 @@ The item cannot be registered.#
 /100#
 /2000#
 no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
+No registed Emblem, please put the file in Emblem folder and try again#
+Ragnarok#
+When other character's name appear in chat window that is not yours, please recheck for making sure so it won't lead to misunderstanding#
+Unable to change equipment#
+Listing Character's user name#
 The message contains prohibited contents#
-no msg#
-no msg#
+Buying item failed#
+7 Numbers of ID Card is not correct#
 Close#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
+rule#
+Buy 1 time#
+Buy 10 time#
+Buy 100 time#
+1st Prize#
+2nd Prize#
+3rd Prize#
+Didn't use at the moment#
+Didn't use at the moment#
+You won the Zeny Lotto#
+Total valume of Lotto buying#
+Character Joined#
+1st Prize#
+2nd Prize#
+3rd Prize#
+Item Reward Buying#
+Want to buy^1a1a1a Lotto ^b%dea^/b\n with ^4435b2%dZeny^1a1a1a\n or not?#
+Buying Lotto Successful#
+Zeny is not enough to buy Lotto#
+Maximum amount of Lotto is not exceeding 1,000#
+Yes#
+No#
 HP#
 SP#
-no msg#
-no msg#
-no msg#
+Lv#
+Lv#
+Exp#
 All On#
-no msg#
-no msg#
-no msg#
+Play Replay Flie#
+P#
+Total#
 Basicinfo#
 Equip#
 Item#
@@ -3087,383 +3087,383 @@ Status#
 ALL#
 User Defined File Name#
 Repeated File Check#
-no msg#
+on#
 <Basic Skin>#
 Select Skin#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
+Unable to delete in this moment because you have joined Lotto#
+/achievement#
+Zeny Lotto#
+Zeny Lotto prize order %#
+Prize%d: %s#
+Prize from buying Zeny Lotto#
+Accumulated Prize %d time : %s#
+Returned Zeny from buying Lotto#
+Total Returned Zeny : Reason of Returned Zeny\n%d Zeny\r : Winning Prize Failed#
+Add window for mini party#
+Delete mini party#
+End of Lotto buying time! Congrat for the winner#
+Month%d Date%d#
+To the next level#
+all#
+Incomplete#
+(Success!)#
+(Not Success)#
+Change Equipment#
+CHANGE#
+STR Parameter\n ^cc0000Melee Physical Attack^ffffff, Weight#
+AGI Parameter\n^cc0000attack speed^ffffff, Dodge Rate, Physical Defense#
+HP Parameter\n^cc0000Max HP^ffffff, Physical Defense, Magic Defense#
+INT Parameter\n^cc0000Magic Attack^ffffff, Casting time, Magic Defense#
+Diligence Parameter\n^cc0000Ranged Physical Attack^ffffff, HIT, Casting time, Magic Attack#
+LUX Parameter\n^cc0000Critical Hit Rate^ffffff, Hit Rate, Physical Attack, Magic Attack, Dodge Rate#
+Physical Attack#
+Physical Defense#
+Hit Rate#
+Critical Hit Rate#
 Guild#
-no msg#
+Point for level up in each parameter#
+Magic Attack#
+Magic Defense#
+Dodge Rate#
+attack speed#
+Shortcut Guide#
+option#
+Skill shortcut(F1 ~F9)#
+Image capture#
+Maximize#
+Minimize#
+Guild#
+Bank#
 Rodex#
 Cash Shop#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
+Sit#
+move#
+turn#
+Guild Leader is unable to leave the guild, need to change guild leader to other character first#
+Do you want to stop Video Playing? #
+Equip equipment in equipment window#
+Remove Equipment in equipment window#
+Last Line at current#
+%.1f%% ( basic 100%% + premium %.1f%%+ %s server %.1f%% )#
+Chinese character#
+Shortcut setting#
+Your dedicated time will end at  %s #
+Not find Replay File#
+Cloth#
+Shoes#
+Armor#
+shoulder#
+Accessory#
+Head#
+Sort order#
+General equipment#
+Special equipment#
+Title#
+/quake : Screen shake effect On/Off#
+/aura2 : You can turn the aura completely off On Off#
+Basic settings#
+Advanced settings#
+Use Default Setting #
+Use Default Setting, do you agree to process? #
+Use this setting, do you agree to process? #
+You need to restart if you want to use this setting, will you process next? #
+Fog#
+Simplified Aura#
+Turn on the aura#
+Effect display#
+Shade display#
+No Shift#
+Choose Function to faster T&L hardware#
+Choose Game Resolution#
+Use full screen#
+Adjust Mouse#
+Effect settings#
+Control settings#
+Graphics device settings#
+Graphics resolution settings#
+Choose full screen setting#
+Adjust Mouse Setting#
+fee : #
+Total fee : #
+Adjust destination Setting#
+Adjust group destination Setting#
+Size change(F10)#
 Loading the mailbox.\n^c92114Delete^000000unnecessary emails!!#
 NOW LOADING..#
 Title#
 Sender#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
+Unable to working with Ragnarok Client, ending setup#
+Adjust advance setting#
+This account does not exist.#
+Passwords do not match.#
+Failed to pass IP authentication#
+No identification number, supplement your registration information#
+Account block#
+System error#
+unknown error found.#
+#
+UI Navigator#
+Open Navigator#
+Share your current location#
+Search Results[0]#
+Search & Guide#
+The location is not correct.#
+Search Results[%d]#
+Navigator Icon Setting#
+Use zeny for Navigator#
+Navigation undocking#
+This account is not open this function#
+Position on click will be show in chat window#
+4. When using Service, you will get suggestion for considered to Zeny & Inappropriate using#
+5.[< -] button : Navigator Mode <-> Change to searching#
+Sharing Mode -> Use when back to searching mode#
+Get EXP %lld#
+EXP '%lld'#
+ = 수수료율 : ^1567fe0%^000000\n10,000,001 z ~ 100,000,000 z\n = 수수료율 : ^1567fe5%^000000\n100,000,001 z 이상\n = 수수료율 : ^1567fe5%^000000\n#
+Selling Price : #
+※ When selling item, you will get zeny as showing#
+※ When buying item, you will loss zeny as showing#
+Open Chat Room#
+Chracte Level is unable to join party#
+JOB EXP '%lld' #
+Get JOB EXP %lld #
+Unable to open vending in the main street#
+Able to do again in second#
+Party member#
+Sending SNS fail(%d)#
+Connect to SNS server failed#
+Able to use after using SNS#
+No place accessable#
+Mini Party Window is duplicated and unable to use#
+My Vending Market#
+BOX#
+TIP BOX#
+Retweet successfully#
+Try Again#
+[Try Again] is unavailable. Please choose refine ingredient again.#
+Refinement Ores are not enough. [Try Again] is unavailable.#
+Zeny is not enough. [Try Again] is unavailable.#
+Blacksmith's Blessing is not enough. [Try Again] is unavailable.#
+Your item is destroyed..#
+All status decreased#
+Cancel all status decrease effect#
+OTP number has 8 digits#
+All-Account#
+Ragnarok#
+Checking Server Status#
+Put the keyword you need to search#
+MOTP#
+Certification Number#
+Using GNJOY MOTP downloaded on mobille, and input thre security number#
+No guild member fo giving Guild Leader Position, do you want to disband guild?#
+ - Required age 18 or more#
+ - Paid Server#
+ - Free Server#
+Less Players#
+Normal#
+Crowded#
+Full#
+map#
+World Warehouse able to keep items in storage only#
+Unable to keep monsters egg in World Warehouse#
+Unable to keep Crafted Item in World Warehouse#
+Unable to move this items from %s#
+Dungeon Destroyed#
+[%s] got [+%d %s] successfully!#
+[%s] failed to refine [+%d %s].#
+Able to leave guild after give other character guild leader position#
+Increase#
+Decrease#
+Ordinary#
 File abusing detected. Please restart the client with clean files.#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-File abusing detected. Please restart the client with clean files.#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-Check-In Reward#
-Check-In System#
-You have received the reward.#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-THE DAILY CHECK-IN REWARD#
+%s is item that limited moving in this map#
+Giving food \n by yourself#
+Unable to giving food to Homunculus while RODEX window is opened#
+Homunculus ate food \'%s\' amount left: %d#
+Auto-Giving Food Homunculus On#
+Auto-Giving Food Homunculus Off#
+Homunculus will receive 10% of EXP received from owner to be their own EXP#
+Probability : %d%%#
+This is not target of Homun, using \'Alt + Right Click\' to choose the target for Homunculus#
+No target for Homun\'Alt + Right Click\' to choose the target for Homunculus#
+Sale List#
+Purchase List#
+New#
+Best Seller#
+Armor#
+Rental & Service#
+Headgear#
+Buff & Recover#
+Misc #
+Retail & Etc#
+Coming Soon..#
+Top up#
+Purchase#
+https://roextreme.com/msp/topup#
+Search Item#
+Free KP#
+Use free KP#
+Balance#
+Refresh#
+Star Emperor(female)#
+Soul Reaper(female)#
+Star Emperor(male)#
+Soul Reaper(male)#
+When the weight is more than %d %, HP/SP will not automatically restore#
+You can purchase up to 8 different items at a time#
+http://gift.zhaouc.com/#
+UNKNOWN ERROR : %d#
+NOT USER#
+THIS ACCOUNT ID IS BLOCKED#
+COUNTRY REJECT(OR NOT AVALIABLE USER)#
+NOT MATCH PASSWORD#
+NOT EMAIL CERT#
+PAYPAL BLOCK#
+COUNTRY REJECT#
+PAYPAL BLOCK#
+WEB BLOCK#
+AGE LIMIT USER#
+PASSWORD HAS NOT BEEN CHANGED FOR MORE THAN 90DAYS#
+INPUT DATA ERROR#
+ERROR DATABASE#
+ERROR SYSTEM#
+Loss %s #
+Payment#
+This is not the map that able to go#
+This is the map that able to go#
+Not enough items#
+Please input the same line without skipping line#
+Unable to regist inappropriate name#
+Will taken to the official website for registering ID#
+Connect to TokenAgency fail#
+Payment Information#
+Delete registering#
+Cancel Registering#
+Start Game#
+Delete#
+Character List#
+Announcement#
+Create#
+Hair Style#
+Hair Color#
+Confirm Again#
+%d O'clock %d minutes %d second#
+MOTP Inputting Data Time Out, please re do again since the begining#
+Go back#
+Unable to use item#
+Unable to go to the same map#
+Unable to move when your character is dead#
+Create Character#
+Register Adventureres Team#
+Register Adventureres Team#
+Stop Register#
+memo#
+quest#
+field#
+Dungeon#
+MD#
+Paradise#
+Etc#
+Search#
+reset#
+Register Party#
+purpose#
+※If you use for violating the rule or service condition, for example, vague words, or real money trade, you will be punished according to the rule#
+Register#
+Has inappropriate word#
+Register Party#
+????? 1:1#
+Stop Register#
+Fix#
+All#
+[%s] request to join party #
+Login#
+account#
+End#
+Register#
+Connect#
+Confirm#
+Call GNJOY MOTP that downloaded on your mobile#
+and input security number#
+Move to the map that NPC is located#
+Taekwon#
+Cancel all chatting and whisper#
+Request to cancel all chat and whisper fail#
+Request to cancel all chat and whisper fail (Exceed)#
+Chat and all whisper#
+Request to open all chat and whisper fail#
+Request to open all chat and whisper fail (Exceed)#
+?No Block List#
+- Blocking List - #
+Processing#
+Introduction#
+Waiting For Process#
+QUEST#
+Contents#
+monster#
+reward#
+EXP#
+JEXP#
+Item#
+Processing / Stop#
+Down#
+Showing in Quick Quest window#
+Input time#
+save ID#
+password#
+ID#
+Sign Up#
+Party Leader#
+Your level is not able to joining party#
+Register Adventureres Team failed#
+Register Adventureres Team success#
+Input Searching Information#
+tanker#
+%.1f%% (+%sserver %.1f%%)#
+/ ex(Character name) or /block(Character name) : Block all chatting and Whisper Message#
+/ in(Character name) or /release(Character name) :  Allow all chatting and Whisper Message#
+/ ex or /block : All character list that blocking all chat and whisper#
+/ exall or /Block all : Block all chat and whisper from all characters#
+/ inall or /release all : Allow all chat and whisper from all characters#
+Refusing all message/whisper coming from all characters#
+Requesting to refuse all chat and whisper fail#
+Able to chat and whisper with all characters#
+Requresting to chat with whisper with all characters fail#
+opening#
+Do you want to back to log in screen or not? #
+ATK / STR increasesd#
+STR, INT, Diligence and HIT Rate increase#
+Defense and HP increase#
+Gel Star#
+Account buff#
+Indicated Service#
+Currently slow to connect due to connection order, please connect again later#
+Currently slow to connect, please connect again later#
+Unable to search with inappropriate word#
+party master unable to get request#
+Unable to find party# 
+dealer#
+http://ro.gnjoy.com#
+▲#
+▼#
+Already in friend list#
+Not find target#
+Other player request for adding friend#
+Display Sprite Marble ON#
+Display Sprite Marble OFF#
+Your account is prohibited to access game due to put wrong 2nd password \n % 02d시간 % 02d분 within  % 02d hours % 02d minutes, your prohibited will be removed. If you want to remove access prohibited, please go to Homepage -> Update Information -> 2nd Password and then user need to confirm identity#
+You put wrong password more than 3 times. Your account will be prohibited to access for 24 hours \n If you want to remove prohibited, please go to Homepage -> Update Information -> 2nd Password and then user need to confirm identity#
+Management#
+Receive Daily Check-In Reward %d#
+Some mistake happen while downloading account setting information (Restart to try again)#
+This skill can be used in party only#
+Party Request Close#
+EXP give to guild maximumly %d%%#
+Your guild level has reached maximum level. You are unable to give EXP anymore#
+For securtiy of users who didn't use MOTP, you can log in only in Homepage \n Please try loging in again at Homepage#
+Physical attack and Magic attack increase#
+Physical attack and Magic attack decrease#
+%s Daily Check-in Reward#
 Event Period : %02d. %02d. ~ %02d. %02d. 24:00#
 %d Day#
 Click to claim your %d Day for Check-In Reward!#
@@ -3473,31 +3473,403 @@ Days#
 Failed to sign in. Please try again.#
 Daily Sign In#
 The event is not active currently.#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
-no msg#
+Your EXP Guild has reached maximum level. You are unable to collect EXP anymore#
+Your EXP Guild has reached maximum level. You are unable to collect EXP anymore#
+message#
+Sending message to Twitter fail#
+Require English Alphabet atleast 4 characters, and Korean Alphabet atleast 2 charactets#
+Monster Taming is unable to do in this place#
+Downloading ranking information...#
+This skill can be useable only when you are party leader#
+SP required is not enough or skill is not available to use#
+Warning Announcemnet about cancel part-time vending#
+Hello, we are vending manangement team \r\n your part-time vending is cancel because you are against the rule and condition\r\n In case you want to learn more, please send us the inquiry 1:1 \r\n Thank You#
+You are unable to pet more than 50 % #
+Party is registered at Adventureres Team, unable to change Party Leader#
+You are unable to register your party at Adventurer Team#
+accept#
+reject#
+healer#
+Not found that character#
+Automatically Cancel Vending#
+Not found party leader#
+JOB EXP is too less, unable to join party#
+Character request to join party is in the place that unable to join party#
+Party member is exceed the maximum#
+Party Leader %s allow to join party#
+Party Leader %s cancel to join party#
+%s joining party#
+%s accept to join party#
+%s cancel to join party#
+Party request of %s is cancel because character is in state of unable to accept party#
+Adventurer Team List#
+Request to join party#
+If you are not party leader, you are unable to regist party at Adventurer Team#
+Unable to close party request#
+Help#
+Zoom Out#
+%s : able to open or close Zoom Out: On Off#
+Open Zoom Out (On)#
+Close Zoom Out (Off)#
+/ zoom#
+Adventurer Team#
+If you are party leader, you are unable to ask for request#
+Maximum level condition to join party must more than minimum level condition#
+Unable to choose Job#
+While playing, you are unable to get joining request (Effective until client close)#
+Open again later#
+You are unable to use this function until %d minutes before siege start #
+/viewclear#
+Transparent Building ON#
+Transparent Building OFF#
+Transparent Building#
+Unable to get back to scroll, please close the RODEX Window#
+Emblem Frame#
+Drawing Emblem #
+Not Drawing Emblem #
+No weapon equipped#
+Energy is not enough#
+Unlearnable Skill (%s) included#
+/frame#
+This skill will be useable again after open Weapon blocking #
+ID or password is not correct#
+E X P : %.1f%% (basic 100.0%% %s %.1f%%)#
+DROP : %.1f%% (basic 100.0%% %s %.1f%%)#
+DEATH : %.1f%% (basic 100.0%% %s %.1f%%)#
+Able to use only in English or Russian#
+you must have an AccessTicket to login#
+Recalling Storage#
+NOW LOADING..#
+delete#
+reply#
+send#
+Recheck Name#
+Notice#
+Normal#
+Return#
+Search#
+Feeding pet fail, unable to feed pet#
+Feeding Homun fail, unable to feed#
+money#
+%s % ea#
+Trading Fail#
+Trading Success#
+Items are not enough to trade#
+This items are sold and items in store is not enough#
+Dead#
+PvP#
+Expand Item Occupied#
+Use ^0000ff%s^000000 ti expand MAX Item? \n Expand from (^0000ff%d^000000) to (^0000ff%d^000000)\n^ff0000※ and will not be able to return amount used^000000#
+Unable to expand MAX Item#
+If you want to expand MAX Item, please finish other activities first#
+Don't have item request for expanding MAX Item#
+Unable to expand MAX Item#
+Expand MAX Item success#
+Unable to have items more than %d #
+Unable to buy because the item exceed the quota limit#
+This item is able to buy with 1 ea only#
+Star Emperor#
+Soul Reaper#
+Setting will be recored in Server when open game normally#
+Capture Monster#
+message#
+TITLE#
+Increase Mark damage#
+Record Map Name#
+System message : Function watching vending current is in state %s (/Watching vending)#
+Vertical Synchronization#
+Material#
+http://rodata.zhaouc.com/renwu.html#
+Ranking#
+Limit Frame#
+If it is more than %d ea, will not able to equip#
+destination#
+Please try again later#
+This file is unable to record#
+Select Delete#
+Delete all#
+Do you want to delete all mails in [%s] ?#
+Choose to accept#
+Accept all#
+Do you want to accept items in mail?#
+Do you want to accept items [%s] in mail?#
+Skill Tab 2#
+Change Skill Tab#
+←#
+↑#
+→#
+↓#
+▤#
+←#
+Unable to close window while loading# 
+No skill recorded in Reading Spellbook#
+Item after moving, will not be able to exchanged#
+Free Teleport Ticket buying success#
+While using Free Teleport Ticket, you will not lose any related items#
+Use#
+Stop using#
+Free Teleport Ticket#
+Use %d hours, %s %d ea#
+Using Free Teleport Ticket#
+characteristic status#
+Power parameter\n^cc0000Physical attack, Characteristic Physical Attack^ffffff Increase#
+Stamina parameter\n^cc0000Physical resistance^ffffff Increase#
+Wisdom parameter\n^cc0000Magic resistance^ffffff Increase#
+Spell parameter\n^cc0000Magic attack, Characteristic Magic Attack^ffffff Increase#
+Concentration parameter\n^cc0000HIT Rate, Dodge Rate, Characteristic Physical Attack / Magic Attack^ffffff Increase#
+Creative parameter\n^cc0000Characteristic Heal Recovery, Critical Damage Rate^ffffff Increase#
+Characteristic Physical Attack#
+Characteristic Magic Attack#
+Physical resistance#
+Magic resistance#
+Characteristic Heal Recovery#
+Critical Damage Rate#
+Points used to level up characteristic parameters#
+J.Lv#
+AP#
+Moving to camp#
+Check Economy Tech / Defense Tech#
+Do you want to move to camp \#%s\# that is related ? \n everytime you moving, you will lose %d zeny\n (During Siege, you will lose %d zeny)#
+\Related Camp \#%s\#\n\t\nDefense Tech: %d / %d\nEconomy Tech: %d / %d#
+This function is unable to use in Siege camping area#
+This character didn't learn basic skill#
+IP connected is unable to use Ragnarok Zero \n Please contact customer service on website#
+Onboard / Leaving#
+Take Off#
+Item information register on vending before it is taken from the store#
+Access server having problem due to server issue#
+message#
+Players with only 18  years old or above can play#
+We suggest not playing game more than 3 hours#
+AP is not enough#
+Unable to merge because refine level is too high#
+Refine level is higher than refine level request for mergining#
+Card is socketed or the item is during in Enchant#
+∞#
+Z#
+Total : %s Zeny#
+Window registed limited account selling#
+Item DB name#
+Item DB number#
+Total Sales#
+Starting Time Sales#
+Ending Time Sales#
+Account Limited#
+Sales Duration : Month %d Date %d %d O'clock %d Miniutes#
+Amount of buying per account#
+Limit %d ea#
+>> ItemName : %s /  Amount : %d / Sales Duration : Month %d:Date%d:%dO'Clock:%d Minutes ~ Month%d:Date%d:%dO'Clock:%dMinutes#
+Sold Out#
+[%s] can be called in this place#
+~ Month%d: %dDate:%dO'Clock:%dMinutes#
+Unable to add items sells#
+Equipped Item is unable to exchange, please try again after un-equip#
+You can't move to character choosing window while using Guild's Storage#
+Tag item is included and unable to use#
+Monster#
+Unknown#
+Undead#
+Animal#
+Plant#
+Insect#
+Marine#
+Devil#
+Human#
+Angel#
+Dragon#
+Balance: %s %c#
+ ^ff0000You can cancel your purchase within 7 days after buying this items, if 7 days has been passed or you already open this items, you are unable to cancel any purchase. Free Cash used will not be returned when cancel purchase^000000 Do you want to buy this item? If you buy, it will deduct %s cash#
+ ^ff0000You can cancel your purchase within 7 days after buying this items, if 7 days has been passed or you already open this items, you are unable to cancel any purchase. Free Cash used will not be returned when cancel purchase^000000 Do you want to buy this item? If you buy, it will deduct %s cash and Free Cash#
+Calling is cancel#
+?Total Sales shouldn't exceed current zeny#
+Can't open store, please close#
+Record item vending sells list#
+Finish record item vending sells list#
+Checking VTC right fail#
+Unable to equip equipment while trading#
+Trading List#
+Add Job skill ranking 1, 2, 3 for %d ea#
+You can own one item for maximum quantity %d ea#
+You can exchange one item not exceed than  %d ea#
+Able to open Rodex on server \#%s\
+[Notice]Do you want to delete all mails in mail box? \n(Can delete mail in server \#%s\# only)#
+[Notice]Do you want to accept all items in mail box? \n(Can accept items in server \#%s\# only)#
+This email can be deleted on server \#%s\# only#
+This email can be accept item on server \#%s\# only#
+This email can be read on server \#%s\# only#
+Total : %d z#
+message#
+You can't buy item from personal store while open your purchase shop#
+Refine Success#
+Refine Fail#
+Refine Level Reduced#
+Equipment is broken#
+Equipment has been protect#
+Didn't choose material#
+Material is not enough#
+Current balance is not enough#
+Item#
+Equipment is protect from breaking#
+Equipement is brakeable#
+When refining fail, the refine level will be decreased#
+During Refining process will not able to use Rodex, Rodex will be closed#
+During Refining process will not able to use Rodex#
+During Refining process will not be able to use bank system,  Bank is forced to closed#
+During Refining process will not be able to use bank system#
+[%s] refine success, receive item [%s level %s] #
+[%s] failed in refining process [%s level %s] #
+This equipment can't refine#
+Change material#
+Alphabetical sort#
+※Create [%s] % d~%d ea#
+Success %d%%#
+Tag item is able to do only the item that you are owned#
+ATK and Characteristic ATK Increase#
+Powerful Faith effect cancel#
+HP ??? Physical resistance Increase#
+Firm Faith effect cancel#
+attack speed and Guided Attack Rate Increase#
+Sincere Faith Effect cancel#
+POW, CRT ??? CON Increase#
+Benedictum effect cancel#
+SPL, WIS and CRT Increase#
+Religio effect cancel#
+Characteristic ATK and Characteristic MATK increase#
+Competentia effect cancel#
+Critical Damage Rate increase#
+Presens Acies effect cancel#
+Receive Physical Resistance Ignore Effect#
+Argutus Tellum effect cancel#
+Receive Magic Resistance Ignore Effect##
+Argutus Vita effect cancel#
+Num: %d / %d Weight : %d / %d#
+Servant Weapon effect cancel#
+Charging Pierce effect cancel#
+Vigor effect cancel#
+ATK increase DEF decrease#
+Attack Stance effect cancel#
+DEF increase ATK decrease#
+Guard Stance effect cancel#
+Barrier is used#
+Guardian Shield effect cancel#
+Damage income is reduced because Devotion effect#
+Rebound Shield effect cancel#
+Holy property damage and resistance to undead and darkness increase#
+Holy Shield effect cancel#
+Automatically resurrect#
+Ultimate Sacrifice effect cancel#
+Change effect of unique skill#
+Climax effect ?????????#
+Change effect of unique skill#
+Shadow Exceed effect cancel#
+Receive Physical Resistance Ignore Effect#
+Potent Venom effect cancel#
+Every time you attack, the opponent will receive more damage as condition#
+Enchanting Shadow effect cancel#
+Kill count On#
+Kill count Off#
+AP of target is maximum#
+ ^ff0000You can cancel purchase within 7 days after buying item, if 7 days has been passed or the item is opened, you are not able to cancel purchase. Also, Free Cash will not be returened in cancel buying of item (Event)
+ ^ff0000You can cancel purchase within 7 days after buying item, if 7 days has been passed or the item is opened, you are not able to cancel purchase. Also, Free Cash will not be returened in cancel buying of item (Event)
+Requiered Servant Weapon %d ea#
+https://member.gnjoy.com.tw/billing.aspx#
+Reverse sort#
+Input detail to search#
+Search#
+Become as Research Report#
+Cancel Research Report#
+Create success#
+Create fail#
+Shadow Gear has been protected from destroy and striff weapon#
+Full Shadow Protection cancel#
+Damage dealt to Formless and Plant increase#
+Hell Plant disappear#
+Activation Attack Machine is used#
+Activation Attack Machine cancel#
+Physical defense and Physical resistance increase#
+Activation Defense Machine cancel#
+Search#
+can play this alone#
+Kvasir Wisdom disappear#
+Mystic Symphony effect is used#
+Mystic Symphony effect disappear#
+Magic resistance decrease#
+Geffenia Nocturn effect cancel#
+Physical resistance decrease#
+Rhapsody Of Mineworker cancel#
+Physical resistance increase#
+????? Musical Interlude cancel#
+Characteristic Magic Attack and speed increase#
+Serenade Of Jawaii effect cancel#
+Characteristic Physical attack ??? speed increase#
+March Of Prontera effect cancel#
+Calamity Gale start the song#
+Calamitygale status cancel#
+Weakness and appearance showing by the wind#
+Wind Sign disappear#
+E X P : %.1f%% (basic 100.0%% %s %.1f%%)#
+DROP : %.1f%% (basic 100.0%% %s %.1f%%)#
+DEATH : %.1f%% (basic 100.0%% %s %.1f%%)#
+Characteristic Magic Attack increase#
+Spell Enchanting effect cancel#
+From the Abyss effect cancel#
+Characteristic Physical Attack, Characteristic Magic Attack and HIT Rate increase#
+Abyss Slayer effect is canceled#
+This might have some condition in creating characters#
+World is full, please go to other World#
+Cancel Block Chat (Receive all information)#
+Block Chat(Cancel all information)#
+This refine level is unable to refine#
+Equipment not broken#
+Not use any protect materials for refining process \n Do you want to continue? #
+Client file is changed#
+message#
+Total sales is higher than Zeny limited \n Please check prices and amount#
+Fame Status#
+%u / 1000 P#
+All#
+NOW LOADING..#
+Choosing additional material has been reset#
+Enchant#
+Ordinary#
+Agree#
+Grow Up#
+reset#
+Unable to use this Enchant with this item#
+Add one in list#
+upgrade#
+Confirmed enchantment#
+%I64u Zeny#
+During Enchant you are not able to use RODEX, force RODEX to close#
+During Enchant you are not able to use RODEX#
+During Enchant you are not able to use BANK, force BANK to close#
+During Enchant you are not able to use BANK#
+Do you want to Enchant? #
+Produce#
+Requied materials are not enough#
+Card and Enchant socketed will disappear#
+Card socketed may disappear#
+Enchant may disappear#
+Hide players in screen ON#
+Hide players in screen OFF#
+Checking detail#
+Please check detail#
+Don't have items that can be merged#
+Enchant success!#
+Enchant failure!#
+Not found Enchant information#
+Unable to Enchant because not pass the condition#
+Set to randomly receive message from players fail#
+Set to randomly receive message from players#
+Receive all messages from everyone#
+%s cancel all incoming message#
+RODEX sent#
+Sending RODEX fail#
+Player who send you RODEX is not your friend or guild member, please be careful#
+RODEX receive all messages#
+Cast time reach limit and unable to use#
+When success, refine level will be reset to 0!#
+Card, Random Option, Enchant still remain#
+When fail, refine level still remained#
+reset#
+Old version#

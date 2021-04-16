@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # tRO (Thai) for 2008-09-16Ragexe12_Th
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::iRO;
 
 use strict;
@@ -24,13 +24,6 @@ use Utils qw(getTickCount getHex getCoordString);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
-	my %packets = (
-		'098f' => ['char_delete2_accept', 'v a4 a*', [qw(length charID code)]],
-		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-	);
-	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
 		sync 0360
@@ -44,7 +37,7 @@ sub new {
 		skill_use_location 0366
 		party_setting 07D7
 		buy_bulk_vender 0801
-		char_delete2_accept 098f
+		char_delete2_accept 098F
 		send_equip 0998
 		map_login 0436
 		actor_action 0437
@@ -54,15 +47,8 @@ sub new {
 
 	$self->{char_create_version} = 0x0A39;
 	$self->{send_sell_buy_complete} = 1;
-	
-	return $self;
-}
 
-sub reconstruct_char_delete2_accept {
-	my ($self, $args) = @_;
-	# length = [packet:2] + [length:2] + [charid:4] + [code_length]
-	$args->{length} = 8 + length($args->{code});
-	debug "Sent sendCharDelete2Accept. CharID: $args->{charID}, Code: $args->{code}, Length: $args->{length}\n", "sendPacket", 2;
+	return $self;
 }
 
 sub sendCharCreate {
@@ -76,12 +62,5 @@ sub sendCharCreate {
 	my $msg = pack 'v a24 CvvvvC', 0x0A39, stringToBytes( $name ), $slot, $hair_color, $hair_style, $job_id, 0, $sex;
 	$self->sendToServer( $msg );
 }
-
-#sub sendCharDelete {
-#	my ($self, $charID, $email) = @_;
-#	my $msg = pack("C*", 0xFB, 0x01) .
-#			$charID . pack("a50", stringToBytes($email));
-#	$self->sendToServer($msg);
-#}
 
 1;

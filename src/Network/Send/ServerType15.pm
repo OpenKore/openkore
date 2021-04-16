@@ -15,7 +15,7 @@
 # syncID 0x009F
 # syncTickOffset 9
 # mapLoadedTickOffset 11
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType15;
 
 use strict;
@@ -37,13 +37,13 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		storage_close 008C
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -73,11 +73,11 @@ sub sendChat {
 	my ($data, $charName); # Type: Bytes
 	$message = stringToBytes($message); # Type: Bytes
 	$charName = stringToBytes($char->{name});
-	
+
 	$data = pack("C*", 0x93, 0x01) .
 		pack("v*", length($charName) + length($message) + 8) .
 		$charName . " : " . $message . chr(0);
-	
+
 	$self->sendToServer($data);
 }
 

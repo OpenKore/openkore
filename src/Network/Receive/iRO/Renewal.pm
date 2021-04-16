@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::iRO::Renewal;
 
 use strict;
@@ -18,7 +18,7 @@ use base qw(Network::Receive::iRO);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'082D' => ['received_characters_info', 'v C x2 C2 x20', [qw(len total_slot premium_start_slot premium_end_slot)]],
 		'009D' => ['item_exists', 'a4 V C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
@@ -34,8 +34,10 @@ sub new {
 		'0A0A' => ['storage_item_added', 'a2 V V C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
 		'0A0B' => ['cart_item_added', 'a2 V V C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
 		'0A37' => ['inventory_item_added', 'a2 v V C3 a16 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]],
-		'0A8D' => ['offline_vender_items_list', 'a*', [qw(info)]], # -1
-		'0A91' => ['offline_buying_store_items_list', 'a*', [qw(info)]], # -1
+		'0A8D' => ['offline_vender_items_list', 'a*', [qw(info)]],
+		'0A91' => ['offline_buying_store_items_list', 'a*', [qw(info)]],
+		'0814' => ['buying_store_found', 'a4 Z40 x40', [qw(ID title)]],
+		'0131' => ['vender_found', 'a4 Z40 x40', [qw(ID title)]],
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -51,6 +53,8 @@ sub new {
 
 	$self->{npc_store_info_pack} = "V V C V";
 	$self->{makable_item_list_pack} = "V4";
+	$self->{vender_items_list_item_pack} = 'V v2 C V C3 a16 a25 V v';
+	$self->{buying_store_items_list_pack} = "V v C V";
 
 	return $self;
 }

@@ -1,6 +1,6 @@
 # -*-python-*-
 # This is the main SCons script which defines compilation rules.
-# See http://www.scons.org/ for more information.
+# See https://www.scons.org/ for more information.
 #
 # If you wish to tweak the build system but aren't familiar with SCons,
 # then simply edit these variables:
@@ -86,7 +86,11 @@ def CheckPerl(context):
 	close F;
 	'''
 
-	f = file(".perltest.pl", "w")
+	if sys.version_info >= (3,0,0):
+		f = open(".perltest.pl", "w")
+	else:
+		f = file(".perltest.pl", "w")
+
 	f.write(source)
 	f.close()
 
@@ -103,7 +107,11 @@ def CheckPerl(context):
 
 	os.unlink(".perltest.pl")
 	if ret == 0:
-		f = file(".perlconfig.txt", "r")
+		if sys.version_info >= (3,0,0):
+			f = open(".perlconfig.txt", "r")
+		else:
+			f = file(".perlconfig.txt", "r")
+
 		while 1:
 			line = f.readline()
 			if line == "":
@@ -171,14 +179,14 @@ conf = Configure(env, custom_tests = {
 	'CheckLibCurl'  : CheckLibCurl
 })
 if not conf.CheckPerl():
-	print "You do not have Perl installed! Read:"
-	print "http://wiki.openkore.com/index.php/How_to_run_OpenKore#Perl_module:_Time::HiRes"
+	print ("You do not have Perl installed! Read:")
+	print ("https://openkore.com/wiki/How_to_run_OpenKore#Perl")
 	Exit(1)
 if not win32:
 	have_ncurses = conf.CheckLib('ncurses')
 	if not conf.CheckReadline(conf):
-		print "You don't have GNU readline installed, or your version of GNU readline is not recent enough! Read:"
-		print "http://wiki.openkore.com/index.php/How_to_run_OpenKore#GNU_readline"
+		print ("You don't have GNU readline installed, or your version of GNU readline is not recent enough! Read:")
+		print ("https://openkore.com/wiki/How_to_run_OpenKore#GNU_readline")
 		Exit(1)
 
 	if darwin:
@@ -192,8 +200,8 @@ if not win32:
 			sys.stdout.write(" no\n")
 
 	if not conf.CheckLibCurl():
-		print "You don't have libcurl installed. Please download it at:";
-		print "http://curl.haxx.se/libcurl/";
+		print ("You don't have libcurl installed. Please download it at:");
+		print ("https://curl.se/libcurl/");
 		Exit(1)
 conf.Finish()
 
@@ -202,14 +210,16 @@ conf.Finish()
 
 # Standard environment for programs
 env['CCFLAGS'] = [] + EXTRA_COMPILER_FLAGS
+env['LINKFLAGS'] = []
 
 if win32:
 	import platform
-	
+	# have to use -static-libgcc while compiling with mingw’s g++ to eliminate the dependency on LIBGCC_S_SJLJ-1.DLL
+	env['LINKFLAGS'] += ['-static-libgcc']
 	if "64" in platform.machine():
 		env['CCFLAGS'] += ['-fpermissive', '-DWINx86_64']
 
-env['LINKFLAGS'] = []
+
 env['LIBPATH'] = [] + EXTRA_LIBRARY_DIRECTORIES
 env['LIBS'] = []
 env['CPPDEFINES'] = []
@@ -248,7 +258,7 @@ if cygwin:
 			'-l', targetName + '.lib',
 			'--export-all-symbols',
 			'--add-stdcall-alias'] + sources
-		print ' '.join(command)
+		print (' '.join(command))
 		ret = subprocess.call(command)
 		if ret != 0:
 			return 0
@@ -257,14 +267,13 @@ if cygwin:
 			'--def', targetName + '.def', '-mno-cygwin'] + \
 			sources + ['-o', str(target[0])]
 		if env.has_key('LIBPATH'):
-			for dir in env['LIBPATH']:
-				command += ['-L' + dir]
+			for dir in env['LIBPATH']: command += ['-L' + dir]
 		if env.has_key('LIBS'):
-		 	for flag in env['LIBS']:
-				command += ['-l' + flag]
+		 	for flag in env['LIBS']: command += ['-l' + flag]
+
 		command += ['-lstdc++']
 
-		print ' '.join(command)
+		print (' '.join(command))
 		return subprocess.call(command)
 
 	NativeDLLBuilder = Builder(action = linkDLLAction,
@@ -282,13 +291,11 @@ elif darwin:
 			'-undefined', 'dynamic_lookup',
 			'-o', str(target[0])] + sources
 		if env.has_key('LIBPATH'):
-			for dir in env['LIBPATH']:
-				command += ['-L' + dir]
+			for dir in env['LIBPATH']: command += ['-L' + dir]
 		if env.has_key('LIBS'):
-		 	for flag in env['LIBS']:
-				command += ['-l' + flag]
+		 	for flag in env['LIBS']: command += ['-l' + flag]
 
-		print ' '.join(command)
+		print (' '.join(command))
 		return subprocess.call(command)
 
 	NativeDLLBuilder = Builder(action = linkBundleAction,
@@ -306,7 +313,7 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 perlenv = libenv.Clone()
 if win32:
 	rawversion = "perl" + ''.join(perlconfig['perlversion'][1:].split('.')[:2])
-	
+
 	# Windows
 	perlenv['CCFLAGS'] += Split('-s -Wno-comments -fwrapv -fno-strict-aliasing -mms-bitfields')
 	perlenv['CPPDEFINES'] += Split('__USE_MINGW_ANSI_STDIO PERL_TEXTMODE_SCRIPTS PERL_IMPLICIT_CONTEXT PERL_IMPLICIT_SYS USE_PERLIO')
@@ -350,7 +357,7 @@ def buildXS(target, source, env):
 	do $file;
 	'''
 
-	print "Creating", str(target[0]), "..."
+	print ("Creating", str(target[0]), "...")
 	command = [
 		perlconfig['perl'],
 		'-e',

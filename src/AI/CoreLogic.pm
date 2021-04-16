@@ -782,7 +782,7 @@ sub processTake {
 
 	} elsif (AI::action eq "take") {
 		my $myPos = $char->{pos};
-		my $dist = round(distance($item->{pos}, $myPos));
+		my $dist = blockDistance($item->{pos}, $myPos);
 		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
 
 		if ($char->{sitting}) {
@@ -1307,7 +1307,7 @@ sub processAutoStorage {
 			if ($field->baseName ne $args->{npc}{map}) {
 				$do_route = 1;
 			} else {
-				my $distance_from_char = distance($args->{npc}{pos}, $char->{pos_to});
+				my $distance_from_char = blockDistance($args->{npc}{pos}, $char->{pos_to});
 				if (($distance_from_char > AI::args->{distance}) && !defined($args->{sentStore}) && !$char->storage->isReady()) {
 					$do_route = 1;
 				}
@@ -1533,7 +1533,7 @@ sub processAutoStorage {
 				while (exists $config{"getAuto_$args->{index}"}) {
 					if (!$config{"getAuto_$args->{index}"}
 						|| $config{"getAuto_$args->{index}_disabled"}
-						|| !checkSelfCondition($config{"getAuto_$args->{index}"})) {
+						|| !checkSelfCondition("getAuto_$args->{index}")) {
 						$args->{index}++;
 						next;
 					}
@@ -1736,7 +1736,7 @@ sub processAutoSell {
 				}
 			}
 			unless ($found) {
-				$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
+				$ai_v{'temp'}{'distance'} = blockDistance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
 				if (($ai_v{'temp'}{'distance'} > $args->{distance}) && !defined($args->{sentSell})) {
 					$ai_v{'temp'}{'do_route'} = 1;
 				}
@@ -1988,7 +1988,7 @@ sub processAutoBuy {
 					}
 				}
 				unless ($found) {
-					$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
+					$ai_v{'temp'}{'distance'} = blockDistance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
 					if (($ai_v{'temp'}{'distance'} > $args->{distance}) && !exists $args->{'sentNpcTalk'}) {
 						$ai_v{'temp'}{'do_route'} = 1;
 					}
@@ -2041,7 +2041,7 @@ sub processAutoBuy {
 			getNPCInfo($config{"buyAuto_".$args->{lastIndex}."_npc"}, $realpos);
 
 			if ( $config{"buyAuto_".$args->{lastIndex}."_isMarket"} ) {
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, undef);
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || undef);
 			} else {
 				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{"buyAuto_".$args->{lastIndex}."_npc_steps"} || 'b');
 			}
@@ -2202,7 +2202,7 @@ sub processLockMap {
 			unless ($args{'return'}) {
 				my ($lockX, $lockY, $i);
 				eval {
-					my $lockField = new Field(name => $config{'lockMap'}, loadDistanceMap => 0);
+					my $lockField = new Field(name => $config{'lockMap'}, loadWeightMap => 0);
 					$i = 500;
 					if ($config{'lockMap_x'} || $config{'lockMap_y'}) {
 						do {
@@ -2379,35 +2379,18 @@ sub processFollow {
 			my $player = $players{$ID};
 
 			if ($args->{following} && $player->{pos_to}) {
-				my $dist = distance($char->{pos_to}, $player->{pos_to});
+				my $dist = blockDistance($char->{pos_to}, $player->{pos_to});
 				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
 					$args->{move_timeout} = time;
-					if ( $dist > 15 || ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
-						ai_route($field->baseName, $player->{pos_to}{x}, $player->{pos_to}{y},
-							attackOnRoute => 1,
-							distFromGoal => $config{followDistanceMin});
-					} else {
-						my (%vec, %pos);
-
-						stand() if ($char->{sitting});
-						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
-						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
-						$timeout{ai_sit_idle}{time} = time;
-
-						if($config{followRandom}) {
-							if(int(rand(2))) {
-								$pos{x} += int(rand($config{followRandomDistance})); }
-							else {
-								$pos{x} -= int(rand($config{followRandomDistance})); }
-
-							if(int(rand(2))) {
-								$pos{y} += int(rand($config{followRandomDistance})); }
-							else {
-								$pos{y} -= int(rand($config{followRandomDistance})); }
-						}
-
-						$char->sendMove(@pos{qw(x y)});
-					}
+					$args->{masterLastMoveTime} = $player->{time_move};
+					
+					ai_route(
+						$field->baseName,
+						$player->{pos_to}{x},
+						$player->{pos_to}{y},
+						attackOnRoute => 1,
+						distFromGoal => $config{followDistanceMin}
+					);
 				}
 			}
 
@@ -2424,6 +2407,32 @@ sub processFollow {
 					lookAtPosition($players{$args->{'ID'}}{'pos_to'}) if ($config{'followFaceDirection'});
 				}
 			}
+		}
+	} elsif (((AI::action eq "route" && AI::action(1) eq "follow") || (AI::action eq "move" && AI::action(2) eq "follow")) && !$args->{ai_follow_lost}) {
+		my $ID = $args->{ID};
+		my $player = $players{$ID};
+		if (
+			$args->{following} &&
+			$player &&
+			%{$player} &&
+			$player->{pos_to} &&
+			$args->{masterLastMoveTime} &&
+			$args->{masterLastMoveTime} != $player->{time_move}
+		) {
+			debug "Master $player has moved since we started routing to it - Adjusting route\n", "ai_attack";
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "route");
+
+			$args->{move_timeout} = time;
+			$args->{masterLastMoveTime} = $player->{time_move};
+			
+			ai_route(
+				$field->baseName,
+				$player->{pos_to}{x},
+				$player->{pos_to}{y},
+				attackOnRoute => 1,
+				distFromGoal => $config{followDistanceMin}
+			);
 		}
 	}
 
@@ -2501,7 +2510,7 @@ sub processFollow {
 			my $smallDist;
 			foreach (@portalsID) {
 				next if (!defined $_);
-				$ai_v{'temp'}{'dist'} = distance($players_old{$args->{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
+				$ai_v{'temp'}{'dist'} = blockDistance($players_old{$args->{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
 				if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
 					$smallDist = $ai_v{'temp'}{'dist'};
 					$foundID = $_;
@@ -2535,7 +2544,7 @@ sub processFollow {
 		} elsif ($args->{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
 			my $pos = $ai_v{'temp'}{'warp_pos'};
 
-			if ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $pos)) {
+			if ($config{followCheckLOS} && !$field->canMove($char->{pos_to}, $pos)) {
 				ai_route($field->baseName, $pos->{x}, $pos->{y},
 					attackOnRoute => 0); #distFromGoal => 0);
 			} else {
@@ -2545,7 +2554,6 @@ sub processFollow {
 				stand() if ($char->{sitting});
 				getVector(\%vec, $pos, $char->{pos_to});
 				moveAlongVector(\%pos_to, $char->{pos_to}, \%vec, $dist);
-				$timeout{ai_sit_idle}{time} = time;
 				$char->move(@pos_to{qw(x y)});
 				$pos->{x} = int $pos_to{x};
 				$pos->{y} = int $pos_to{y};
@@ -2592,7 +2600,7 @@ sub processFollow {
 ##### SITAUTO-IDLE #####
 sub processSitAutoIdle {
 	if ($config{sitAuto_idle}) {
-		if (!AI::isIdle && AI::action ne "follow") {
+		if (!AI::isIdle) {
 			$timeout{ai_sit_idle}{time} = time;
 		}
 
@@ -2803,11 +2811,12 @@ sub processPartySkillUse {
 					|| UNIVERSAL::isa($player, 'Actor::Player')
 					|| UNIVERSAL::isa($player, 'Actor::Slave')
 				);
-
+				my $dist = $config{"partySkill_$i"."_dist"} || $config{partySkillDistance} || "0..8";
+				if (defined($config{"partySkill_$i"."_dist"}) && defined($config{"partySkill_$i"."_maxDist"})) { $dist = $config{"partySkill_$i"."_dist"} . ".." . $config{"partySkill_$i"."_maxDist"};}
 				if (
 					( # range check
 						$party_skill{owner}{ID} eq $player->{ID}
-						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $config{"partySkill_$i"."_dist"} || $config{partySkillDistance} || "0..8")
+						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $dist)
 					)
 					&& ( # target check
 						!$config{"partySkill_$i"."_target"}
@@ -3034,13 +3043,6 @@ sub processAutoAttack {
 				$attackOnRoute = 2;
 			}
 
-			my $LOSSubRoute = 0;
-			if ($config{attackCheckLOS}
-			 && AI::args(0)->{LOSSubRoute}
-			) {
-				$LOSSubRoute = 1;
-			}
-
 			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 
 			my @aggressives;
@@ -3048,14 +3050,15 @@ sub processAutoAttack {
 			my @cleanMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && ($attackOnRoute || $LOSSubRoute));
+			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && $attackOnRoute);
 
 			# List party monsters
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
-				next if !$field->isWalkable($monster->{pos}{x}, $monster->{pos}{y}); # this should NEVER happen
-				next if !checkLineWalkable($char->{pos}, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
+				
+				# Never attack monsters that we failed to get LOS with
+				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
 				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
 
@@ -3083,9 +3086,9 @@ sub processAutoAttack {
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 				 && (!$config{'attackAuto_onlyWhenSafe'} || isSafe())
 				 && !$ai_v{sitAuto_forcedBySitCommand}
-				 && ($attackOnRoute >= 2 || $LOSSubRoute)
+				 && $attackOnRoute >= 2
 				 && !$monster->{dmgFromYou}
-				 && ($control->{dist} eq '' || distance($monster->{pos}, calcPosition($char)) <= $control->{dist})
+				 && ($control->{dist} eq '' || blockDistance($monster->{pos}, calcPosition($char)) <= $control->{dist})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					my %hookArgs;
 					$hookArgs{monster} = $monster;
@@ -3099,32 +3102,11 @@ sub processAutoAttack {
 			### Step 2: Pick out the "best" monster ###
 
 			# We define whether we should attack only monsters in LOS or not
-			my $nonLOSNotAllowed = !$config{attackCheckLOS} || $LOSSubRoute;
-			$attackTarget = getBestTarget(\@aggressives, $nonLOSNotAllowed)
-							|| getBestTarget(\@partyMonsters, $nonLOSNotAllowed)
-							|| getBestTarget(\@cleanMonsters, $nonLOSNotAllowed);
-
-			if ($LOSSubRoute && $attackTarget) {
-				Log::message("New target was choosen\n");
-				# Remove all unnecessary actions (attacks and movements but the main route)
-				my $i = scalar(@ai_seq);
-				my (@ai_seq_temp, @ai_seq_args_temp);
-				for(my $c=0;$c<$i;$c++) {
-					if (($ai_seq[$c] ne "route")
-					  && ($ai_seq[$c] ne "move")
-					  && ($ai_seq[$c] ne "attack")) {
-						push(@ai_seq_temp, $ai_seq[$c]);
-						push(@ai_seq_args_temp, $ai_seq_args[$c]);
-					}
-				}
-				# Add the main route and rewrite the sequence
-				push(@ai_seq_temp, $ai_seq[$i-1]);
-				push(@ai_seq_args_temp, $ai_seq_args[$i-1]);
-				@ai_seq = @ai_seq_temp;
-				@ai_seq_args = @ai_seq_args_temp;
-				# We need this timeout not to have attack started many times
-				$timeout{'ai_attack_auto'}{'time'} = time;
-			}
+			my $checkLOS = $config{attackCheckLOS};
+			my $canSnipe = $config{attackCanSnipe};
+			$attackTarget = getBestTarget(\@aggressives, $checkLOS, $canSnipe) ||
+			                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
+			                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
 		}
 
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
@@ -3237,7 +3219,7 @@ sub processItemsGather {
 			AI::suspend();
 			stand();
 
-		} elsif (( $dist = distance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
+		} elsif (( $dist = blockDistance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
 			if (!$config{itemsTakeAuto_new}) {
 				my (%vec, %pos);
 				getVector(\%vec, $items{$ID}{pos}, $myPos);
@@ -3342,9 +3324,9 @@ sub processAutoTeleport {
 			} elsif ($teleAuto < 0 && !$char->{dead}) {
 				my $pos = calcPosition($monsters{$_});
 				my $myPos = calcPosition($char);
-				my $dist = distance($pos, $myPos);
+				my $dist = blockDistance($pos, $myPos);
 				if ($dist <= abs($teleAuto)) {
-					if(checkLineWalkable($myPos, $pos) || checkLineSnipable($myPos, $pos)) {
+					if($field->canMove($myPos, $pos)) {
 						message TF("Teleporting due to monster being too close %s\n", $monsters{$_}{name}), "teleport";
 						$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 						$timeout{ai_teleport_away}{time} = time;

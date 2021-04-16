@@ -15,7 +15,7 @@
 # syncID 0x116
 # syncTickOffset 9
 # mapLoadedTickOffset 11
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType20;
 
 use strict;
@@ -42,7 +42,7 @@ sub new {
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_info_request 0072
 		storage_close 0085
@@ -58,9 +58,9 @@ sub new {
 		sync 0116
 		map_login 0193
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 
@@ -92,7 +92,7 @@ sub sendMove {
 		y => $y,
 		no_padding => 1,
 	}));
-	
+
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 

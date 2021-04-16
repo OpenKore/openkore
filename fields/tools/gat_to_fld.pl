@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# See http://www.openkore.com/wiki/index.php/Field_file_format
+# See https://openkore.com/wiki/Field_file_format
 # for information about the file formats.
 use strict;
 
@@ -107,4 +107,4 @@ sub gat2fld {
 
 	close $in;
 	close $out;
-} 
+}

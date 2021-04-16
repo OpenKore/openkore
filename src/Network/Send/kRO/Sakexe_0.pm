@@ -166,8 +166,10 @@ sub new {
 		'0218' => ['rank_alchemist'],
 		'0222' => ['refine_item', 'V', [qw(ID)]],
 		'0225' => ['rank_taekwon'],
+		'022D' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'0231' => ['homunculus_name', 'a24', [qw(name)]],
 		'0237' => ['rank_killer'],
+		'023B' => ['storage_password', 'v a*', [qw(type data)]],
 		'023F' => ['mailbox_open'],
 		'0241' => ['mail_read', 'V', [qw(mailID)]],
 		'0243' => ['mail_delete', 'V', [qw(mailID)]],
@@ -191,14 +193,30 @@ sub new {
 		'029F' => ['mercenary_command', 'C', [qw(flag)]],
 		'02B6' => ['send_quest_state', 'V C', [qw(questID state)]],
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
+		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
 		'02D8' => ['misc_config_set', 'V2', [qw(type flag)]],
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
+		'035F' => ['character_move', 'a3', [qw(coords)]],
+		'0360' => ['sync', 'V', [qw(time)]],
+		'0361' => ['actor_look_at', 'v C', [qw(head body)]],
+		'0362' => ['item_take', 'a4', [qw(ID)]],
+		'0363' => ['item_drop', 'a2 v', [qw(ID amount)]],
+		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'0365' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
+		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0367' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
+		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
+		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
+		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
+		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
+		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0447' => ['blocking_play_cancel'],
 		'044A' => ['client_version', 'V', [qw(clientVersion)]],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
+		'07E4' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'07E7' => ['captcha_answer', 'v a4 a24', [qw(len accountID answer)]],
 		'0802' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
 		'0804' => ['booking_search', 'v3 L s', [qw(level MapID job LastIndex ResultCount)]],
@@ -206,6 +224,8 @@ sub new {
 		'0808' => ['booking_update', 'v6', [qw(job0 job1 job2 job3 job4 job5)]],
 		'0811' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0815' => ['buy_bulk_closeShop'],
+		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
+		'0819' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
 		'0827' => ['char_delete2', 'a4', [qw(charID)]], # 6
 		'082B' => ['char_delete2_cancel', 'a4', [qw(charID)]], # 6
 		'0835' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
@@ -227,6 +247,7 @@ sub new {
 		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
+		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(len charID code)]],
 		'09A7' => ['banking_deposit_request', 'a4 V', [qw(accountID zeny)]],
 		'09A9' => ['banking_withdraw_request', 'a4 V', [qw(accountID zeny)]],
 		'09AB' => ['banking_check_request', 'a4', [qw(accountID)]],
@@ -253,7 +274,7 @@ sub new {
 		'0A1D' => ['roulette_close'],
 		'0A1F' => ['roulette_start'],
 		'0A21' => ['roulette_claim_prize'],
-		'0A25' => ['achievement_get_reward', 'V', [qw(ach_id)]],
+		'0A25' => ['achievement_get_reward', 'V', [qw(achievementID)]],
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
@@ -269,11 +290,13 @@ sub new {
 		'0AC0' => ['rodex_open_mailbox', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]],  # 26 -- RodexOpenMailbox
 		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
 		'0ACE' => ['equip_switch_single', 'a2', [qw(ID)]],
+		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AEF' => ['attendance_reward_request'],
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 		'0B14' => ['inventory_expansion_request'], #2
 		'0B19' => ['inventory_expansion_rejected'], #2
+		'0B1C' => ['ping'], #2
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -775,13 +798,4 @@ sub sendPartyOrganize {
 # 0x0206,11
 # 0x0207,34
 
-sub sendInventoryExpansionRequest {
-	my ($self, $args) = @_;
-	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_request' }));
-}
-
-sub sendInventoryExpansionRejected {
-	my ($self, $args) = @_;
-	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
-}
 1;

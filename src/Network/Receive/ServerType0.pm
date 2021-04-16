@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::ServerType0;
 
 use strict;
@@ -133,7 +133,7 @@ sub new {
 		'00C2' => ['users_online', 'V', [qw(users)]],
 		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]],
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]],
-		'00C6' => ['npc_store_info'],
+		'00C6' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
 		'00C7' => ['npc_sell_list', 'v a*', [qw(len itemsdata)]],
 		'00D1' => ['ignore_player_result', 'C2', [qw(type error)]],
 		'00D2' => ['ignore_all_result', 'C2', [qw(type error)]],
@@ -196,7 +196,7 @@ sub new {
 		'0132' => ['vender_lost', 'a4', [qw(ID)]],
 		'0133' => ['vender_items_list', 'v a4 a*', [qw(len venderID itemList)]],
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(ID amount fail)]],
-		'0136' => ['vending_start'],
+		'0136' => ['vending_start', 'v a4 a*', [qw(len accountID itemList)]], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]],
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]],
 		'013A' => ['attack_range', 'v', [qw(type)]],
@@ -391,7 +391,7 @@ sub new {
 		'0287' => ['cash_dealer', 'v V a*', [qw(len cash_points item_list)]], # -1
 		'0289' => ['cash_buy_fail', 'V2 v', [qw(cash_points kafra_points fail)]],
 		'028A' => ['character_status', 'a4 V3', [qw(ID option lv opt3)]],
-		'0291' => ['message_string', 'v', [qw(msg_id)]],
+		'0291' => ['message_string', 'v', [qw(index)]],
 		'0293' => ['boss_map_info', 'C V2 v2 x4 Z24', [qw(flag x y hours minutes name)]],
 		'0294' => ['book_read', 'a4 a4', [qw(bookID page)]],
 		'0295' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],
@@ -436,7 +436,7 @@ sub new {
 		'02D1' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],
 		'02D4' => ['inventory_item_added', 'a2 v2 C3 a8 v C2 a4 v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown)]],
-		'02D5' => ['ISVR_DISCONNECT'], #TODO: PACKET_ZC_ISVR_DISCONNECT
+		'02D5' => ['isvr_disconnect'], #TODO: PACKET_ZC_ISVR_DISCONNECT
 		'02D7' => ['show_eq', 'v Z24 v7 C a*', [qw(len name type hair_style tophead midhead lowhead hair_color clothes_color sex equips_info)]], #type is job
 		'02D9' => ['misc_config_reply', 'V2', [qw(type flag)]],
 		'02DA' => ['show_eq_msg_self', 'C', [qw(type)]],
@@ -490,7 +490,7 @@ sub new {
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
 		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]],
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],
-		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
+		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]], # record "c/Z" (holder) means: if the first byte ('c') = 24(dec), then Z24, if 'c' = 18(dec), then Z18, еtc.
 		'07FE' => ['sound_effect', 'Z24', [qw(name)]],
 		'07FF' => ['define_check', 'v V', [qw(len result)]], #TODO: PACKET_ZC_DEFINE_CHECK
 		'0800' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]], # -1
@@ -524,7 +524,7 @@ sub new {
 		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
 		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
-		'0845' => ['cash_shop_open_result', 'v2', [qw(cash_points kafra_points)]],
+		'0845' => ['cash_shop_open_result', 'V2', [qw(cash_points kafra_points)]], #10
 		'0849' => ['cash_shop_buy_result', 'V s V', [qw(item_id result updated_points)]],
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
 		'0856' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
@@ -639,8 +639,8 @@ sub new {
 		'0A20' => ['roulette_window_update', 'C v3 V3', [qw(result stage price additional_item gold silver bronze)]],
 		'0A22' => ['roulette_recv_item', 'C v', [qw(type item_id)]],
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
-		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
-		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
+		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points achievementID completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
+		'0A26' => ['achievement_reward_ack', 'C V', [qw(received achievementID)]], # 7
 		'0A27' => ['hp_sp_changed', 'v V', [qw(type amount)]],
 		'0A28' => ['open_store_status', 'C', [qw(flag)]],
 		'0A2D' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
@@ -661,6 +661,7 @@ sub new {
 		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
+		'0A6F' => ['message_string', 'v2 V Z*', [qw(len index color param)]], # -1
 		'0A7B' => ['EAC_key'],
 		'0A7D' => ['rodex_mail_list', 'v C3 a*', [qw(len type amount isEnd mailList)]],   # -1
 		'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id)]],
@@ -669,6 +670,7 @@ sub new {
 		'0A8D' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], # -1 [offline vending store]
 		'0A91' => ['buying_store_items_list', 'v a4 a4 C V V x4 a*', [qw(len buyerID buyingStoreID flag expireDate zeny itemList)]], # -1 [offline buying store]
 		'0A95' => ['misc_config', 'C2', [qw(show_eq_flag call_flag)]],
+		'0A96' => ['deal_add_other', 'V C V C3 a16 a25 V v', [qw(nameID type amount identified broken upgrade cards options type_equip viewID)]],#61
 		'0A98' => ($rpackets{'0A98'}{length} == 10) # or 12
 			? ['equip_item_switch', 'a2 V v', [qw(ID type success)]]
 			: ['equip_item_switch', 'a2 V2', [qw(ID type success)]] #kRO <= 20170502
@@ -683,6 +685,7 @@ sub new {
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0AB8' => ['move_interrupt'],
+		'0AB9' => ['item_preview', 'a2 v a8 a25', [qw(index upgrade cards options)]],
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
 		'0AC2' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]],   # -1
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
@@ -715,9 +718,14 @@ sub new {
 		'0B09' => ['item_list_stackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B0A' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B0B' => ['item_list_end', 'C2', [qw(type flag)]],
+		'0B13' => ['item_preview', 'a2 C v a16 a25', [qw(index broken upgrade cards options)]],
 		'0B1B' => ['load_confirm'],
+		'0B1D' => ['ping'], #2
 		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
+		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]],   # -1
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
+		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
+		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
@@ -1479,8 +1487,8 @@ sub mail_refreshinbox {
 	$msg .= center(" " . T("Inbox") . " ", 79, '-') . "\n";
 	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
 	# truncating the date with precision of minutes and leave year out
-	$msg .=	swrite(TF("\@> R \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x11)),
-			["#", "Title", "Sender", "Date"]);
+	$msg .=	swrite("\@> R \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x11),
+			["#", T("Title"), T("Sender"), T("Date")]);
 	$msg .= sprintf("%s\n", ('-'x79));
 
 	my $j = 0;
@@ -1491,7 +1499,7 @@ sub mail_refreshinbox {
 		$mailList->[$j]->{sender} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+45, 24)));
 		$mailList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+69, 4));
 		$msg .= swrite(
-		TF("\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x11)),
+		"\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x11),
 		[$j, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
 		$j++;
 	}
@@ -1557,46 +1565,6 @@ sub rates_info {
 	message "=====================================================================\n", "info";
 }
 
-sub rates_info2 {
-	my ($self, $args) = @_;
-
-	my $msg = $args->{RAW_MSG};
-	my $msg_size = $args->{RAW_MSG_SIZE};
-	my $header_pack = 'v V3';
-	my $header_len = ((length pack $header_pack) + 2);
-
-	my $detail_pack = 'C l3';
-	my $detail_len = length pack $detail_pack;
-
-	my %rates = (
-		exp => { total => $args->{exp}/1000 }, # Value to Percentage => /100
-		death => { total => $args->{death}/1000 }, # 1 d.p. => /10
-		drop => { total => $args->{drop}/1000 },
-	);
-
-	# get details
-	for (my $i = $header_len; $i < $args->{RAW_MSG_SIZE}; $i += $detail_len) {
-
-		my ($type, $exp, $death, $drop) = unpack($detail_pack, substr($msg, $i, $detail_len));
-
-		$rates{exp}{$type} = $exp/1000;
-		$rates{death}{$type} = $death/1000;
-		$rates{drop}{$type} = $drop/1000;
-	}
-
-	# we have 4 kinds of detail:
-	# $rates{exp or drop or death}{DETAIL_KIND}
-	# 0 = base server exp (?)
-	# 1 = premium acc additional exp
-	# 2 = server additional exp
-	# 3 = not sure, maybe it's for "extra exp" events? never seen this using the official client (bRO)
-	message T("=========================== Server Infos ===========================\n"), "info";
-	message TF("EXP Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{exp}{total}, $rates{exp}{0}+100, $rates{exp}{1}, $rates{exp}{2}, $rates{exp}{3}), "info";
-	message TF("Drop Rates: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{drop}{total}, $rates{drop}{0}+100, $rates{drop}{1}, $rates{drop}{2}, $rates{drop}{3}), "info";
-	message TF("Death Penalty: %s%% (Base %s%% + Premium %s%% + Server %s%% + Plus %s%%) \n", $rates{death}{total}, $rates{death}{0}+100, $rates{death}{1}, $rates{death}{2}, $rates{death}{3}), "info";
-	message "=====================================================================\n", "info";
-}
-
 sub auction_item_request_search {
 	my ($self, $args) = @_;
 
@@ -1612,8 +1580,8 @@ sub auction_item_request_search {
 	message TF("Found %s items in auction.\n", $count), "info";
 	my $msg;
 	$msg .= center(" " . T("Auction") . " ", 79, '-') . "\n";
-	$msg .=	swrite(TF("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x37), ('>'x10), ('>'x10), ('<'x11)),
-			["#", "Item", "High Bid", "Purchase", "End-Date"]);
+	$msg .=	swrite("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x37), ('>'x10), ('>'x10), ('<'x11),
+			["#", T("Item"), T("High Bid"), T("Purchase"), T("End-Date")]);
 	$msg .= sprintf("%s\n", ('-'x79));
 
 	my $j = 0;
@@ -1645,7 +1613,7 @@ sub auction_item_request_search {
 		$item->{broken} = $auctionList->[$j]->{broken};
 		$item->{name} = itemName($item);
 
-		$msg .= swrite(TF("\@%s \@%s \@%s \@%s \@%s", ('>'x2),, ('<'x37), ('>'x10), ('>'x10), ('<'x11)),
+		$msg .= swrite("\@%s \@%s \@%s \@%s \@%s", ('>'x2),, ('<'x37), ('>'x10), ('>'x10), ('<'x11),
 				[$j, $item->{name}, formatNumber($auctionList->[$j]->{price}),
 					formatNumber($auctionList->[$j]->{buynow}), getFormattedDate(int($auctionList->[$j]->{timestamp}))]);
 		$j++;

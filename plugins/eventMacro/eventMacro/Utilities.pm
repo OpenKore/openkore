@@ -8,7 +8,7 @@ our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(q4rx q4rx2 between cmpr match getArgs getnpcID getPlayerID
 	getMonsterID getVenderID getItemIDs getItemPrice getInventoryIDs getInventoryTypeIDs getStorageIDs getSoldOut getInventoryAmount
 	getCartAmount getShopAmount getStorageAmount getVendAmount getRandom getRandomRange getConfig
-	getWord call_macro getArgFromList getListLenght sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
+	getWord call_macro getArgFromList sameParty processCmd find_variable get_key_or_index getInventoryAmountbyID
 	getStorageAmountbyID getCartAmountbyID getQuestStatus get_pattern find_hash_and_get_keys find_hash_and_get_values);
 
 use Utils;
@@ -30,23 +30,23 @@ sub between {
 
 sub cmpr {
 	my ($first, $cond, $second) = @_;
-	
+
 	if (defined $first && !defined $cond & !defined $second) {
 		if ($first eq '' || $first == 0) {
 			return 0;
 		} else {
 			return 1;
 		}
-		
+
 	} elsif ($first =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($first1, $first2) = ($1, $2);
 		if ($second =~ /^-?[\d.]+$/) {
 			if ($cond eq "!=") {
 				return ((between($first1, $second, $first2)) ? 0 : 1);
-				
+
 			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
 				return between($first1, $second, $first2);
-				
+
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 				return;
@@ -54,16 +54,16 @@ sub cmpr {
 		}
 		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($second) <-- maybe should be numeric?\n", "eventMacro";
 		return;
-		
+
 	} elsif ($second =~ /^\s*(-?[\d.]+)\s*\.{2}\s*(-?[\d.]+)\s*$/) {
 		my ($second1, $second2) = ($1, $2);
 		if ($first =~ /^-?[\d.]+$/) {
 			if ($cond eq "!=") {
 				return ((between($second1, $first, $second2)) ? 0 : 1);
-				
+
 			} elsif ($cond eq "=" || $cond eq "==" || $cond eq "=~" || $cond eq "~") {
 				return between($second1, $first, $second2);
-				
+
 			} else {
 				error "cmpr: Range operations must be of equality or inequality\n", "eventMacro";
 				return;
@@ -71,7 +71,7 @@ sub cmpr {
 		}
 		error "cmpr: wrong # of arguments ($first) ($cond) ($second)\n--> ($first) <-- maybe should be numeric?\n", "eventMacro";
 		return;
-		
+
 	} elsif ($first =~ /^-?[\d.]+$/ && $second =~ /^-?[\d.]+$/) {
 		return ($first == $second ? 1 : 0) if (($cond eq "=" || $cond eq "=="));
 		return ($first >= $second ? 1 : 0) if ($cond eq ">=");
@@ -79,19 +79,19 @@ sub cmpr {
 		return ($first >  $second ? 1 : 0) if ($cond eq ">");
 		return ($first <  $second ? 1 : 0) if ($cond eq "<");
 		return ($first != $second ? 1 : 0) if ($cond eq "!=");
-		
+
 	} elsif (($cond eq "=" || $cond eq "==")) {
 		return ($first eq $second ? 1 : 0);
-		
+
 	} elsif ($cond eq "!=") {
 		return ($first ne $second ? 1 : 0);
-		
+
 	} elsif ($cond eq "~") {
 		$first = lc($first);
 		foreach my $member (split(/\s*,\s*/, $second)) {
 			return 1 if ($first eq lc($member));
 		}
-		
+
 	} elsif ($cond eq "=~" && $second =~ /^\/.*?\/\w?\s*$/) {
 		return match($first, $second);
 	}
@@ -106,7 +106,7 @@ sub q4rx {
 }
 
 sub q4rx2 {
-	# We let alone the original q4rx sub routine... 
+	# We let alone the original q4rx sub routine...
 	# instead, we use this for our new @nick ;p
 	my $s = $_[0];
 	$s =~ s/([\/*+(){}\[\]\\\$\^?"'\. ])/\\$1/g;
@@ -151,20 +151,23 @@ sub getArgs {
 sub getWord {
 	my ($message, $wordno) = $_[0] =~ /^"(.*?)"\s*,\s?(\d+|\$[a-zA-Z][a-zA-Z\d]*)$/s;
 	my @words = split(/[ ,.:;\"\'!?\r\n]/, $message);
+
+# this code is never used
+#	if ($wordno =~ /^\$/) {
+#		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
+#		return "" unless defined $val;
+#		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
+#		else {return ""}
+#	}
+
 	my $no = 1;
-	if ($wordno =~ /^\$/) {
-		my ($val) = $wordno =~ /^\$([a-zA-Z][a-zA-Z\d]*)\s*$/;
-		return "" unless defined $val;
-		if ($eventMacro->get_scalar_var($val) =~ /^[1-9][0-9]*$/) {$wordno = $eventMacro->get_scalar_var($val)}
-		else {return ""}
-	
-	}
 	foreach (@words) {
 		next if /^$/;
 		return $_ if $no == $wordno;
 		$no++
 	}
-	return ""
+	warning "[eventMacro] the '$wordno' number item does not exist in &arg\n", "eventMacro";
+	return "";
 }
 
 # gets openkore setting
@@ -206,9 +209,9 @@ sub getQuestStatus {
 			$result->{$quest_id} = 'inactive';
 		} elsif ( $quest->{time_expire} && $quest->{time_expire} > time ) {
 			$result->{$quest_id} = 'incomplete';
-        } elsif ( grep { $_->{mob_goal} && $_->{mob_count} < $_->{mob_goal} } values %{ $quest->{missions} } ) {
+		} elsif ( grep { $_->{mob_goal} && $_->{mob_count} < $_->{mob_goal} } values %{ $quest->{missions} } ) {
 			$result->{$quest_id} = 'incomplete';
-        } elsif ( grep { !$_->{mob_goal} && $_->{mob_count} == 0 } values %{ $quest->{missions} } ) {
+		} elsif ( grep { !$_->{mob_goal} && $_->{mob_count} == 0 } values %{ $quest->{missions} } ) {
 			$result->{$quest_id} = 'incomplete';
 		} else {
 			$result->{$quest_id} = 'complete';
@@ -226,8 +229,8 @@ sub getnpcID {
 	elsif (($a, $b) = $arg =~ /^\s*\/(.+?)\/(\w?)\s*$/) {$what = 2}
 	elsif (($a) = $arg =~ /^\s*"(.*?)"\s*$/) {$what = 3}
 	else {return -1}
-	
-	my @ids;	
+
+	my @ids;
 	foreach my $npc (@{$npcsList->getItems()}) {
 		if ($what == 1) {return $npc->{binID} if ($npc->{pos}{x} == $a && $npc->{pos}{y} == $b)}
 		elsif ($what == 2) {
@@ -285,11 +288,11 @@ sub getInventoryTypeIDs {
 	my $find = lc($_[0]);
 	my @ids;
 	foreach my $item (@{$char->inventory->getItems}) {
-        if ( $item->usable() eq 1 && $find eq "usable") { push @ids, $item->{binID} }
-        if ( $item->equippable() eq 1 && $item->{equipped} eq 0 && $find eq "equip") { push @ids, $item->{binID} }
-        if ( $item->usable() eq 0 && $item->equippable() eq 0 && $find eq "etc" ) { push @ids, $item->{binID} }
-        if ( $item->{type} eq 6 && $find eq "card" ) { push @ids, $item->{binID} }
-    }
+		if ( $item->usable() eq 1 && $find eq "usable") { push @ids, $item->{binID} }
+		if ( $item->equippable() eq 1 && $item->{equipped} eq 0 && $find eq "equip") { push @ids, $item->{binID} }
+		if ( $item->usable() eq 0 && $item->equippable() eq 0 && $find eq "etc" ) { push @ids, $item->{binID} }
+		if ( $item->{type} eq 6 && $find eq "card" ) { push @ids, $item->{binID} }
+	}
 	unless (@ids) {push @ids, -1}
 	return @ids
 }
@@ -321,7 +324,7 @@ sub getStorageIDs {
 	my @ids;
 	foreach my $item (@{$char->storage->getItems}) {
 		if (lc($item->name) eq $find|| $item->{nameID} == $find) {push @ids, $item->{binID}}
-  	}
+	}
 	unless (@ids) {push @ids, -1}
 	return @ids
 }
@@ -368,7 +371,7 @@ sub getCartAmount {
 	my $amount = 0;
 	foreach my $item (@{$char->cart->getItems}) {
 		if (lc($item->name) eq $arg || $item->{nameID} == $arg) {$amount += $item->{amount}}
-  	}
+	}
 	return $amount
 }
 
@@ -381,7 +384,7 @@ sub getCartAmountbyID {
 		if ($item->{nameID} == $ID) {
 			$amount += $item->{amount};
 		}
-  	}
+	}
 	return $amount
 }
 
@@ -404,7 +407,7 @@ sub getStorageAmount {
 	my $amount = 0;
 	foreach my $item (@{$char->storage->getItems}) {
 		if (lc($item->name) eq $arg || $item->{nameID} == $arg ) {$amount += $item->{amount}}
-  	}
+	}
 	return $amount
 }
 
@@ -418,16 +421,21 @@ sub getStorageAmountbyID {
 		if ($item->{nameID} == $ID) {
 			$amount += $item->{amount};
 		}
-  	}
+	}
 	return $amount
 }
 
 # get amount of items for the specifical index in another venders shop
 # returns -1 if no shop is being visited
 sub getVendAmount {
-	my ($itemIndex, $pool) = ($_[0], $_[1]);
+	my ($itemIndex, $pool);
 	my $amount = -1;
-	if ($$pool[$itemIndex]) {$amount = $$pool[$itemIndex]{amount}}
+	if ($#_ == 1 and $_[0] >= 0) {
+		($itemIndex, $pool) = ($_[0], $_[1]);
+		$amount = $$pool[$itemIndex]{amount} if ($$pool[$itemIndex]);
+	} elsif ($#_ > 1) {
+		$amount = $#_;
+	}
 	return $amount
 }
 
@@ -464,13 +472,6 @@ sub getArgFromList {
 	}
 }
 
-# returns the length of a comma separated list
-sub getListLenght {
-	my $list = $_[0];
-	my @items = split(/,\s*/, $list);
-	return scalar(@items)
-}
-
 # check if player is in party
 sub sameParty {
 	my $player = shift;
@@ -497,23 +498,23 @@ sub get_pattern {
 
 sub find_variable {
 	my ($text) = @_;
-	
+
 	if (my $scalar = find_scalar_variable($text)) {
 		return ({ display_name => $scalar->{display_name}, type => 'scalar', real_name => $scalar->{real_name} });
 	}
-	
+
 	if (my $array = find_array_variable($text)) {
 		return ({ display_name => $array->{display_name}, type => 'array', real_name => $array->{real_name} });
 	}
-	
+
 	if (my $hash = find_hash_variable($text)) {
 		return ({ display_name => $hash->{display_name}, type => 'hash', real_name => $hash->{real_name} });
 	}
-	
+
 	if (my $accessed_var = find_accessed_variable($text)) {
 		return ({ display_name => $accessed_var->{display_name}, type => $accessed_var->{type}, real_name => $accessed_var->{real_name}, complement => $accessed_var->{complement} });
 	}
-	
+
 	return undef;
 }
 
@@ -560,23 +561,23 @@ sub find_accessed_variable {
 		my $complement = $3;
 		return if (!defined $complement || $complement eq '');
 		my $close_bracket = $4;
-		
+
 		my $type = ($open_bracket eq '[' ? 'accessed_array' : 'accessed_hash');
 		my $close_bracket = (($type eq 'accessed_hash') ? '}' : ']');
-		
+
 		if ($open_to_close_bracket_pair{$open_bracket} ne $close_bracket) {
 			return;
 		}
-		
+
 		if ($type eq 'accessed_array') {
 			return if ($complement !~ /^\d+$/ && !find_variable($complement));
-			
+
 		} elsif ($type eq 'accessed_hash') {
 			return if ($complement !~ /^[a-zA-Z\d]+$/ && !find_variable($complement));
 		}
-		
+
 		my $original_name = ('$'.$name.$open_bracket.$complement.$close_bracket);
-		
+
 		return {real_name => $name, type => $type, display_name => $original_name, complement => $complement};
 	}
 }

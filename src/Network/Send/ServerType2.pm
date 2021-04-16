@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType2;
 
 use strict;
@@ -30,7 +30,7 @@ sub sendTake {
 	my $msg;
 	$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x68) . $itemID;
 	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;	
+	debug "Sent take\n", "sendPacket", 2;
 }
 
 # 0x0089,15,actionrequest,4:14
@@ -56,9 +56,9 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 sub sendSit {
 	my $self = shift;
 	my $msg;
-		
+
 	$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x02);
-	
+
 	$self->sendToServer($msg);
 	debug "Sitting\n", "sendPacket", 2;
 }
@@ -66,7 +66,7 @@ sub sendSit {
 sub sendStand {
 	my $self = shift;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
 				0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x03);
 	$self->sendToServer($msg);
@@ -77,13 +77,13 @@ sub sendStand {
 sub sendDrop {
 	my ($self, $index, $amount) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0xA2, 0x00) .
 			pack("C*", 0xFF, 0xFF, 0x08, 0x10) .
 			pack("v*", $index) .
 			pack("C*", 0xD2, 0x9B) .
 			pack("v*", $amount);
-			
+
 	$self->sendToServer($msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
 }
@@ -92,7 +92,7 @@ sub sendGetPlayerInfo {
 	my ($self, $ID) = @_;
 	my $msg;
 	$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
-	
+
 	$self->sendToServer($msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
@@ -100,7 +100,7 @@ sub sendGetPlayerInfo {
 sub sendItemUse {
 	my ($self, $ID, $targetID) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0xA7, 0x00, 0x9A, 0x12, 0x1C).pack("v*", $ID, 0).$targetID;
 	$self->sendToServer($msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
@@ -110,7 +110,7 @@ sub sendLook {
 	my ($self, $body, $head) = @_;
 	my $msg;
 		$msg = pack("C*", 0x9B, 0x00, 0xF2, 0x04, 0xC0, 0xBD, $head,
-					0x00, 0xA0, 0x71, 0x75, 0x12, 0x88, 0xC1, $body);	
+					0x00, 0xA0, 0x71, 0x75, 0x12, 0x88, 0xC1, $body);
 	$self->sendToServer($msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$char->{look}{head} = $head;
@@ -120,7 +120,7 @@ sub sendLook {
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	my $msg;
-	
+
 	$msg = pack("v*", 0x0113, 0x0000, $lv) .
 			pack("V", 0) .
 			pack("v*", $ID, 0) .
@@ -128,7 +128,7 @@ sub sendSkillUse {
 	$self->sendToServer($msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
-	
+
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
 	my $msg;
@@ -139,7 +139,7 @@ sub sendSkillUseLoc {
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
-	
+
 sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
 	my $msg;
@@ -147,20 +147,20 @@ sub sendStorageAdd {
 	$msg = pack("C*", 0xF3, 0x00) . pack("C*", 0x12, 0x00, 0x40, 0x73) .
 		pack("a2", $index) .
 		pack("C", 0xFF) .
-		pack("V", $amount);	
-		
+		pack("V", $amount);
+
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
-	
+
 sub sendStorageGet {
 	my ($self, $index, $amount) = @_;
 	my $msg;
 	$msg = pack("v*", 0x00F5, 0, 0, 0, 0, 0, $index, 0, 0) . pack("V*", $amount);
 	$self->sendToServer($msg);
-	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;	
+	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
-	
+
 sub sendSync {
 	my ($self, $initialSync) = @_;
 	my $msg;
@@ -171,7 +171,7 @@ sub sendSync {
 	$msg = pack("C*", 0x7E, 0x00);
 	$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 	$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
-	$msg .= $syncSync;	
+	$msg .= $syncSync;
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
 }
@@ -181,7 +181,7 @@ sub sendTake {
 	my $msg;
 	$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x68) . $itemID;
 	$self->sendToServer($msg);
-	debug "Sent take\n", "sendPacket", 2;	
+	debug "Sent take\n", "sendPacket", 2;
 }
 
 1;

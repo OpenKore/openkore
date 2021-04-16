@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # idRO (Indonesia)
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::idRO;
 
 use strict;
@@ -21,13 +21,13 @@ use base qw(Network::Receive::ServerType0);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		received_characters 099D
 		received_characters_info 082D
@@ -35,7 +35,7 @@ sub new {
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

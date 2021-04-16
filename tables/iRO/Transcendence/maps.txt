@@ -988,3 +988,16 @@ pay_d03_i.rsw#Nightmare_of_the_Moonlight_Flower#
 gef_d01_i.rsw#250 Page#
 
 1@jtb.rsw#The Shadowed Dream#
+
+//Episode 17.1 Quickening, Illusion 
+1@cor.rsw#Cor Memorial#
+1@os_a.rsw#Os Occupation#
+1@os_b.rsw#Blockaded Os#
+1@rgsr.rsw#Regenschirm#
+rgsr_in.rsw#Regenschirm Laboratory#
+pub_cat.rsw#Cat on a Bullet#
+sp_cor.rsw#Special Security Area, Cor#
+sp_os.rsw#Special Security Area, Os#
+sp_rudus.rsw#Laboratory Waste Disposal Plant Rudus Floor 1#
+sp_rudus2.rsw#Laboratory Waste Disposal Plant Rudus Floor 2#
+sp_rudus3.rsw#Laboratory Waste Disposal Plant Rudus Floor 3#

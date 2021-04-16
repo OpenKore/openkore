@@ -50,13 +50,13 @@ sub new {
 		'0962' => undef,
 		'0362' => ['friend_request', 'a*', [qw(username)]],#26
 		'0931' => undef,
-		'0926' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0926' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'095B' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'08AA' => ['search_store_request_next_page'],
 		'093E' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 08A2
 		actor_info_request 08A6

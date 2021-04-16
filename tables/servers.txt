@@ -102,7 +102,7 @@ secureLogin_account 0
 serverEncoding Western
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x007D8D6B, 0x08CB9ED9
 addTableFolders idRO
-charBlockSize 145
+charBlockSize 155
 charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
@@ -236,7 +236,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 0
 addTableFolders pRO
-charBlockSize 144
+charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
@@ -255,7 +255,7 @@ secureLogin_account 0
 serverEncoding Western
 gameGuard 0
 addTableFolders pRO
-charBlockSize 144
+charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
@@ -290,74 +290,21 @@ addTableFolders twRO
 captcha 0
 
 # http://ro.gnjoy.in.th/
-[Thailand - tRO: Ayothaya]
-ip 49.229.28.13
+[Thailand - tRO: Chaos, Thor, Iris, Odin]
+ip thro-acc1.gnjoy.in.th
 port 50001
 master_version 7
 version 24
 serverType tRO
 serverEncoding Thai
 addTableFolders tRO
-charBlockSize 147
+charBlockSize 175
 gameGuard 0
 charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
 pinCode 1
-
-# http://ro.gnjoy.in.th/
-[Thailand - tRO: Junon]
-ip 49.229.28.77
-port 50001
-master_version 7
-version 24
-serverType tRO
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 147
-gameGuard 0
-charDeleteDateType 1
-blockingPlayerCancel 1
-rankingSystemType 1
-itemListType 1
-pinCode 1
-
-# http://ro.gnjoy.in.th/
-[Thailand - tRO: Yuno]
-ip 49.229.28.74
-port 50001
-master_version 7
-version 24
-serverType tRO
-serverEncoding Thai
-addTableFolders tRO
-charBlockSize 147
-gameGuard 0
-charDeleteDateType 1
-blockingPlayerCancel 1
-rankingSystemType 1
-itemListType 1
-pinCode 1
-
-#####################
-# Bottable Private Server
-
-# https://ggamerz-ro.com/
-[GGamerzRO]
-ip 139.99.21.130
-port 6900
-private 1
-master_version 1
-version 55
-recvpackets recvpackets_20180620.txt
-serverType kRO_RagexeRE_2018_06_20e
-serverEncoding Western
-charBlockSize 155
-pinCode 1
-addTableFolders pserver/GGamerzRO
-clientHash 6BB2AFD0D3F780730809E3BD0407AF7C
-sendCryptKeys 0x00000000, 0x00000000, 0x00000000
 
 [Localhost]
 ip localhost
@@ -437,3 +384,8 @@ dead_message fRO was closed on 12 of August, 2019. Visit official website for mo
 [Malaysia - mRO]
 dead 1
 dead_message mRO was merged into phRO on July, 2019. Visit official website for more details.
+
+# https://ggamerz-ro.com/
+[GGamerzRO]
+dead 1
+dead_message Server is officially closed on 15/2/2021 due to no more Sponsor.

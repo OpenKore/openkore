@@ -12,7 +12,7 @@
 # MODULE DESCRIPTION: Pathfinding algorithm.
 #
 # This module implements the
-# <a href="http://en.wikipedia.org/wiki/A-star_search_algorithm">A*</a>
+# <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A*</a>
 # (A-Star) pathfinding algorithm, which you can use to calculate how to
 # walk to a certain spot on the map.
 #
@@ -63,11 +63,11 @@ sub new {
 #
 # Semi-required arguments:
 # `l
-# - field: a hash with the keys <tt>dstMap</tt>, <tt>width</tt>, and <tt>height</tt>
+# - field: a hash with the keys <tt>weightMap</tt>, <tt>width</tt>, and <tt>height</tt>
 # `l`
 # OR all of:
 # `l
-# - distance_map: a reference to a field map with precomuted distances from walls
+# - weight_map: a reference to a field map with precomuted weights for each cell
 # - width: the width of the field
 # - height: the height of the field
 # `l`
@@ -75,22 +75,24 @@ sub new {
 # Optional arguments:
 # `l
 # - timeout: the number of milliseconds to run each step for, defaults to 1500
-# - weights: a reference to a string of 256 characters, used as the weights to give
-#            squares from 0 to 255 squares away from the closest wall. The first
-#            character must be chr(255).
+# - avoidWalls: of walls should be avoided during pathing, defaults to 1
+# - min_x: limits the map in a certain minimum x coordinate, defaults to 0
+# - max_x: limits the map in a certain maximum x coordinate, defaults to width-1
+# - min_y: limits the map in a certain minimum y coordinate, defaults to 0
+# - max_y: limits the map in a certain maximum y coordinate, defaults to height-1
 # `l`
 sub reset {
 	my $class = shift;
 	my %args = @_;
 
 	# Check arguments
-	croak "Required arguments missing or wrong, specify correct 'field' or 'distance_map' and 'width' and 'height'\n"
-		unless ($args{field} && UNIVERSAL::isa($args{field}, 'Field')) || ($args{distance_map} && $args{width} && $args{height});
+	croak "Required arguments missing or wrong, specify correct 'field' or 'weight_map' and 'width' and 'height'\n"
+	unless ($args{field} && UNIVERSAL::isa($args{field}, 'Field')) || ($args{weight_map} && $args{width} && $args{height});
 	croak "Required argument 'start' missing\n" unless $args{start};
 	croak "Required argument 'dest' missing\n" unless $args{dest};
 
-	# Rebuild 'field' arg temporary here, to avoid that stupid bug, when dstMap not available
-	if ($args{field} && UNIVERSAL::isa($args{field}, 'Field') && !$args{field}->{dstMap}) {
+	# Rebuild 'field' arg temporary here, to avoid that stupid bug, when weightMap not available
+	if ($args{field} && UNIVERSAL::isa($args{field}, 'Field') && !$args{field}->{weightMap}) {
 		$args{field}->loadByName($args{field}->name, 1);
 	}
 
@@ -100,41 +102,50 @@ sub reset {
 	$hookArgs{return} = 1;
 	Plugins::callHook("PathFindingReset", \%hookArgs);
 	if ($hookArgs{return}) {
-		$args{distance_map} = \($args{field}->{dstMap}) unless $args{distance_map};
-		$args{width} = $args{field}{width} unless $args{width};
-		$args{height} = $args{field}{height} unless $args{height};
-		$args{timeout} = 1500 unless $args{timeout};
+		$args{weight_map} = \($args{field}->{weightMap}) unless (defined $args{weight_map});
+		$args{width} = $args{field}{width} unless (defined $args{width});
+		$args{height} = $args{field}{height} unless (defined $args{height});
+		$args{timeout} = 1500 unless (defined $args{timeout});
+		$args{avoidWalls} = 1 unless (defined $args{avoidWalls});
+		$args{min_x} = 0 unless (defined $args{min_x});
+		$args{max_x} = ($args{width}-1) unless (defined $args{max_x});
+		$args{min_y} = 0 unless (defined $args{min_y});
+		$args{max_y} = ($args{height}-1) unless (defined $args{max_y});
 	}
 
-	return $class->_reset($args{distance_map}, $args{weights}, $args{width}, $args{height},
-		$args{start}{x}, $args{start}{y},
-		$args{dest}{x}, $args{dest}{y},
-		$args{timeout});
+	return $class->_reset(
+		$args{weight_map}, 
+		$args{avoidWalls}, 
+		$args{width}, 
+		$args{height},
+		$args{start}{x}, 
+		$args{start}{y},
+		$args{dest}{x}, 
+		$args{dest}{y},
+		$args{timeout},
+		$args{min_x},
+		$args{max_x},
+		$args{min_y},
+		$args{max_y}
+	);
 }
 
 
 ##
-# $PathFinding->run(r_array)
-# r_array: Reference to an array in which the solution is stored. It will contain
-#     hashes of x and y coordinates from the start to the end of the path.
-# Returns: -1 on failure, 0 when pathfinding is not yet complete, or the number
-#     of steps required to walk from source to destination.
-
-##
-# $PathFinding->runref()
-# Returns: undef on failure, 0 when pathfinding is not yet complete, or an array
-#     reference when a path is found. The array reference contains hashes of x
-#     and y coordinates from the start to the end of the path.
-
-##
-# $PathFinding->runstr()
-# Returns: undef on failure, 0 when pathfinding is not yet complete, or a string
-#     of packed shorts. The shorts are pairs of X and Y coordinates running
-#     from the end to the start of the path. (note that the order is reversed)
+# $PathFinding->run(solution_array)
+# solution_array: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path.
+# Returns:
+#    -3 when pathfinding is not yet complete.
+#    -2 when Pathfinding->reset was not called.
+#    -1 on no path found.
+#    The number of steps required to walk from source to destination on success.
 
 ##
 # $PathFinding->runcount()
-# Returns: -1 on failure, 0 when pathfinding is not yet complete, or the
-#     number of steps required to walk from source to destination.
+# Returns:
+#    -3 when pathfinding is not yet complete.
+#    -2 when Pathfinding->reset was not called.
+#    -1 on no path found.
+#    The number of steps required to walk from source to destination on success.
 
 1;

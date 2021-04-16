@@ -1,0 +1,301 @@
+# workflow syntax           https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+# runs-on                   https://github.com/actions/virtual-environments
+# setup-python              https://github.com/actions/setup-python
+# actions-setup-perl        https://github.com/marketplace/actions/setup-perl-environment
+# strawberry Perl 5.12.3.0  https://strawberryperl.com/download/5.12.3.0/strawberry-perl-5.12.3.0-portable.zip
+# strawberry Perl 5.32.1.1  https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip
+# actions-upload-artifact   https://github.com/actions/upload-artifact
+# actions-download-artifact https://github.com/actions/download-artifact
+# actions-cache             https://github.com/actions/cache
+name: Build XSTools
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '*'
+  pull_request:
+
+jobs:
+  build_XSTools:
+
+    name: XSTools ${{ matrix.os }} (python ${{ matrix.python }}, perl ${{ matrix.perl }}) ${{ matrix.architecture }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - os: windows-2016
+          python: 2.7
+          architecture: x86
+          perl: 5.12
+          strawberry_distr: 'https://strawberryperl.com/download/5.12.3.0/strawberry-perl-5.12.3.0-portable.zip'
+
+        - os: windows-latest
+          python: 3
+          architecture: x86
+          perl: 5.32
+          strawberry_distr: 'https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip'
+
+        - os: ubuntu-18.04
+          python: 2.7
+          architecture: x64
+          perl: 5.12
+
+        - os: ubuntu-latest
+          python: 3
+          architecture: x64
+          perl: latest
+
+    steps:
+    - name: GIT checkout
+      uses: actions/checkout@v2
+
+    # setup matrix:
+    # - windows-2016 + python 2.7 x86 + strawberry perl 5.12 x86 + strawberry g++ x86
+    # - windows-2019 + python 3   x86 + strawberry perl 5.32 x86 + strawberry g++ x86
+    # - ubuntu-18.04 + python 2.7 x64 +            perl 5.12 x64
+    # - ubuntu-20.04 + python 3   x64 +            perl 5.32 x64
+    - name: Setup python ${{ matrix.python }} ${{ matrix.architecture }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+        architecture: ${{ matrix.architecture }}
+
+    ########################
+    # preparing windows OS #
+    ########################
+
+    - name: Remove default Strawberry perl and g++
+      if: runner.os == 'Windows'
+      shell: bash
+      run: |
+        echo -e "\e[34m# mv /c/Strawberry/* /c/Temp/"
+        mv /c/Strawberry/* /c/Temp/
+        echo -e "\e[34m== remove g++ x64"
+        echo -e "\e[34m# rm -f /c/ProgramData/Chocolatey/bin/g++.exe"
+        rm -f /c/ProgramData/Chocolatey/bin/g++.exe
+
+    - name: Check the Strawberry cache
+      if: runner.os == 'Windows'
+      id: cache-strawberry
+      uses: actions/cache@v2
+      with:
+        path: c:\Strawberry
+        key: ${{ runner.os }}-strawberry-${{ matrix.perl }}
+
+    - name: Replace perl to Strawberry ${{ matrix.perl }} ${{ matrix.architecture }}
+      if: runner.os == 'Windows' && steps.cache-strawberry.outputs.cache-hit != 'true'
+      run: |
+        echo "Cache NOT found, download the Strawberry pearl"
+        echo "================================================================="
+        echo "== previous version of Perl:"
+        perl --version
+        echo "================================================================="
+        echo "== remove the default perl"
+        rm -r C:/Strawberry/*
+        echo "================================================================="
+        echo "== download strawberry perl ${{ matrix.perl }} ${{ matrix.architecture }}"
+        Invoke-WebRequest ${{ matrix.strawberry_distr }} -OutFile strawberry.zip
+        echo "================================================================="
+        echo "== unpack strawberry-perl"
+        7z.exe x strawberry.zip -o"C:/Strawberry"
+        rm strawberry.zip
+        echo "================================================================="
+        echo "== a new version of Perl:"
+        perl --version
+
+    ######################
+    # preparing linux OS #
+    ######################
+
+    - name: Setup perl ${{ matrix.perl }}
+      if: runner.os == 'Linux'
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: ${{ matrix.perl }}
+
+    ###############################
+    # final check of all versions #
+    ###############################
+
+    - name: Environment check
+      run: |
+        echo "python version check:"
+        python -V
+        echo "======================"
+        echo "== perl version check:"
+        perl --version
+        echo "======================"
+        echo "== Time::HiRes module:"
+        perl -e "use Time::HiRes;"
+        echo "========================="
+        echo "== Compress::Zlib module:"
+        perl -e "use Compress::Zlib;"
+        echo "====================="
+        echo "== g++ version check:"
+        g++ --version
+
+    ####################
+    # building XSTools #
+    ####################
+
+    - name: make XSTools.dll and NetRedirect.dll
+      if: runner.os == 'Windows'
+      env:
+          OS: ${{ matrix.os }}
+          PYTHON: ${{ matrix.python }}
+          PERL: ${{ matrix.perl }}
+          ARCHITECTURE: ${{ matrix.architecture }}
+      run: |
+        gmake all
+        echo "================================================================="
+        echo "DONE:"
+        dir src\auto\XSTools\ | findstr "dll"
+        echo "These XSTools.dll and NetRedirect.dll are built using: $env:OS + python $env:PYTHON $env:ARCHITECTURE + strawberry perl $env:PERL $env:ARCHITECTURE + strawberry g++ x86" > src\auto\XSTools\XSTools_notes.txt
+
+    - name: make XSTools.so
+      if: runner.os == 'Linux'
+      env:
+          OS: ${{ matrix.os }}
+          PYTHON: ${{ matrix.python }}
+          PERL: ${{ matrix.perl }}
+          ARCHITECTURE: ${{ matrix.architecture }}
+      run: |
+        sudo apt update
+        sudo apt install -y libreadline6-dev libcurl4-openssl-dev
+        make all
+        echo "======================================================"
+        echo "DONE:"
+        ls -lh src/auto/XSTools/ | grep so
+        echo "These XSTools.dll and NetRedirect.dll are built using: $OS + python $PYTHON $ARCHITECTURE + strawberry perl $PERL $ARCHITECTURE + strawberry g++ x86" > src/auto/XSTools/XSTools_notes.txt
+
+    ####################
+    # making artifacts #
+    ####################
+
+    - name: Making artifacts on Windows
+      if: runner.os == 'Windows'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.os }}_perl${{ matrix.perl }}${{ matrix.architecture }}
+        path: |
+          src\auto\XSTools\XSTools_notes.txt
+          src\auto\XSTools\XSTools.dll
+          src\auto\XSTools\NetRedirect.dll
+
+    - name: Making artifacts on Linux
+      if: runner.os == 'Linux'
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ matrix.os }}_perl${{ matrix.perl }}${{ matrix.architecture }}
+        path: |
+          src/auto/XSTools/XSTools_notes.txt
+          src/auto/XSTools/XSTools.so
+
+
+  ########################
+  # start the second job #
+  ########################
+
+  make_test:
+
+    name: test ${{ matrix.os }} (perl ${{ matrix.perl }}) ${{ matrix.architecture }}
+    needs: build_XSTools
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - os: windows-2016
+          architecture: x86
+          perl: 5.12
+
+        - os: windows-latest
+          architecture: x86
+          perl: 5.32
+
+        - os: ubuntu-18.04
+          architecture: x64
+          perl: 5.12
+
+        - os: ubuntu-latest
+          architecture: x64
+          perl: latest
+
+    steps:
+    - name: GIT checkout
+      uses: actions/checkout@v2
+
+    ########################
+    # preparing windows OS #
+    ########################
+
+    - name:  Remove default Strawberry perl, XSTools.dll
+      if: runner.os == 'Windows'
+      shell: bash
+      run: |
+        echo -e "\e[34m# mv /c/Strawberry/* /c/Temp/"
+        mv /c/Strawberry/* /c/Temp/
+        echo -e "\e[34m# rm -f XSTools.dll"
+        rm -f XSTools.dll
+
+    - name: Check the Strawberry cache
+      id: cache-strawberry
+      if: runner.os == 'Windows'
+      uses: actions/cache@v2
+      with:
+        path: c:\Strawberry
+        key: ${{ runner.os }}-strawberry-${{ matrix.perl }}
+
+    - name: Display an error if the cache is found
+      if: runner.os == 'Windows' && steps.cache-strawberry.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        echo -e "\e[30;41m'cache-strawberry' NOT found!!! See the 'Post Check the Strawberry cache' step in the previous job"
+        exit 1
+
+    ######################
+    # preparing linux OS #
+    ######################
+
+    - name: Setup perl ${{ matrix.perl }}
+      if: runner.os == 'Linux'
+      uses: shogo82148/actions-setup-perl@v1
+      with:
+        perl-version: ${{ matrix.perl }}
+
+    ###############
+    # final check #
+    ###############
+
+    - name: Environment check
+      run: |
+        echo "== perl version check:"
+        perl --version
+
+    - name: Restoring XTools from artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: ${{ matrix.os }}_perl${{ matrix.perl }}${{ matrix.architecture }}
+
+    - name: Checking for XSTools
+      shell: bash
+      run: |
+        echo -e "\e[34m# ls -lh | grep XSTools"
+        ls -lh | grep XSTools
+
+    #############
+    # make test #
+    #############
+
+    - name: running tests on Windows
+      if: runner.os == 'Windows'
+      run: |
+        cd src\test
+        perl unittests.pl
+
+    - name: running tests on Linux
+      if: runner.os == 'Linux'
+      run: |
+        make test

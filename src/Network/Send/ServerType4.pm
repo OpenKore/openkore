@@ -9,7 +9,7 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType4;
 
 use strict;
@@ -57,11 +57,11 @@ sub sendAction { # flag: 0 attack (once), 7 attack (continuous), 2 sit, 3 stand
 sub sendAttack {
 	my ($self, $monID, $flag) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x85, 0x00, 0x60, 0x60) .
 		$monID .
 		pack("C*", 0x64, 0x64, 0x3E, 0x63, 0x67, 0x37, $flag);
-		
+
  	$self->sendToServer($msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
@@ -80,10 +80,10 @@ sub sendSit {
 sub sendStand {
 	my $self = shift;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x85, 0x00, 0x61, 0x32, 0x00, 0x00, 0x00, 0x00,
 		0x65, 0x36, 0x30, 0x63, 0x35, 0x3F, 0x03);
-	
+
 	$self->sendToServer($msg);
 	debug "Standing\n", "sendPacket", 2;
 }
@@ -96,11 +96,11 @@ sub sendChat {
 	my ($data, $charName); # Type: Bytes
 	$message = stringToBytes($message); # Type: Bytes
 	$charName = stringToBytes($char->{name});
-	
+
 	$data = pack("C*", 0x9F, 0x00) .
 		pack("v*", length($charName) + length($message) + 8) .
 		$charName . " : " . $message . chr(0);
-	
+
 	$self->sendToServer($data);
 }
 
@@ -137,10 +137,10 @@ sub sendItemUse {
 sub sendLook {
 	my ($self, $body, $head) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0xF3, 0x00, 0x62, 0x32, 0x31, 0x33, $head,
 		0x00, 0x60, 0x30, 0x33, 0x31, 0x31, 0x31, $body);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$char->{look}{head} = $head;
@@ -151,7 +151,7 @@ sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
 	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
-	
+
 	$msg = pack("C*", 0xF5, 0x00, 0xFF, 0xFF, 0xFF) .
 		$accountID .
 		pack("C*", 0xFF, 0xFF, 0xFF, 0xFF, 0xFF) .
@@ -199,9 +199,9 @@ sub sendMove {
 	my $x = int scalar shift;
 	my $y = int scalar shift;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x89, 0x00) . getCoordString($x, $y);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
@@ -209,14 +209,14 @@ sub sendMove {
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x90, 0x01, 0x64, 0x63) .
 		pack("v*", $lv) .
 		pack("C*", 0x62, 0x65, 0x66, 0x67) .
 		pack("v*", $ID) .
 		pack("C*", 0x6C, 0x6B, 0x68, 0x69, 0x3D, 0x6E, 0x3C, 0x0A, 0x95, 0xE3) .
 		$targetID;
-	
+
 	$self->sendToServer($msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
@@ -224,12 +224,12 @@ sub sendSkillUse {
 sub sendSkillUseLoc {
 	my ($self, $ID, $lv, $x, $y) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0xA7, 0x00, 0x37, 0x65, 0x66, 0x60) . pack("v*", $lv) .
 		pack("C*", 0x32) . pack("v*", $ID) .
 		pack("C*", 0x3F, 0x6D, 0x6E, 0x68, 0x3D, 0x68, 0x6F, 0x0C, 0x0C, 0x93, 0xE5, 0x5C) .
 		pack("v*", $x) . chr(0) . pack("v*", $y);
-	
+
 	$self->sendToServer($msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
@@ -237,12 +237,12 @@ sub sendSkillUseLoc {
 sub sendStorageAdd {
 	my ($self, $index, $amount) = @_;
 	my $msg;
-	
+
 	$msg = pack("C*", 0x7E, 0x00) . pack("C*", 0x35, 0x34, 0x3D, 0x65) .
 		pack("a2", $index) .
 		pack("C", 0x30) .
 		pack("V", $amount);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
@@ -255,7 +255,7 @@ sub sendStorageGet {
 		pack("a2", $index) .
 		pack("C*", 0x35, 0x34, 0x3D, 0x67) .
 		pack("V*", $amount);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
@@ -267,13 +267,13 @@ sub sendSync {
 	return if ($self->{net}->version == 1);
 
 	$syncSync = pack("V", getTickCount());
-	
+
 	$msg = pack("C*", 0x16, 0x01);
 	$msg .= pack("C*", 0x61, 0x3A) if ($initialSync);
 	$msg .= pack("C*", 0x61, 0x62) if (!$initialSync);
 	$msg .= $syncSync;
 	$msg .= pack("C*", 0x0B);
-	
+
 	$self->sendToServer($msg);
 	debug "Sent Sync\n", "sendPacket", 2;
 }

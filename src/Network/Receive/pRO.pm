@@ -10,7 +10,7 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # pRO (Philippines)
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::pRO;
 
 use strict;
@@ -21,7 +21,9 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
 		'0097' => ['private_message', 'v Z24 V Z*', [qw(len privMsgUser flag privMsg)]], # -1
-		'0A7B' => ['eac_request', 'H*', [qw(eac_key)]],
+		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v2 v2 v V v6 a4 a2 v V C2 a6 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss opt4 name)]],
+		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v2 v2 v7 a4 a2 v V C2 a3 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss opt4 name)]],
+		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v2 v2 v7 a4 a2 v V C2 a3 C3 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize state lv font maxHP HP isBoss opt4 name)]],
 	);
 
 	foreach my $switch (keys %packets) {
@@ -40,7 +42,5 @@ sub new {
 
 	return $self;
 }
-
-sub eac_request {}
 
 1;

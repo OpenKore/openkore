@@ -57,32 +57,46 @@ sub process {
 		undef $args->{avoiding};
 
 	} elsif (((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
-	   && $args->{attackID} && timeOut($AI::Temp::attack_route_adjust, 1)) {
+	   && $args->{attackID} && timeOut($timeout{ai_attack_route_adjust})) {
 		# We're on route to the monster; check whether the monster has moved
 		my $ID = $args->{attackID};
 		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
 		my $target = Actor::get($ID);
+		my $realMyPos = calcPosition($char);
+		my $realMonsterPos = calcPosition($target);
 
-		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && round(distance(calcPosition($target), $attackSeq->{monsterPos})) > $attackSeq->{attackMethod}{maxDistance}) {
+		if (
+			$target->{type} ne 'Unknown' &&
+			$attackSeq->{monsterPos} &&
+			%{$attackSeq->{monsterPos}} &&
+			$attackSeq->{monsterLastMoveTime} &&
+			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
+		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
+			debug "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
-		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && round(distance(calcPosition($target), calcPosition($char))) <= $attackSeq->{attackMethod}{maxDistance}) {
-			# Monster is within attack range; stop moving
+		} elsif (
+			$target->{type} ne 'Unknown' &&
+			$attackSeq->{monsterPos} &&
+			%{$attackSeq->{monsterPos}} &&
+			$attackSeq->{monsterLastMoveTime} &&
+			$attackSeq->{attackMethod}{maxDistance} == 1 &&
+			canReachMeleeAttack($realMyPos, $realMonsterPos) &&
+			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{attackCheckLOS} ||($config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})))
+		) {
+			debug "Target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "Target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
-				"$attackSeq->{attackMethod}{maxDistance} blocks; stop moving\n", "ai_attack";
+
 		}
-		$AI::Temp::attack_route_adjust = time;
+
+		$timeout{ai_attack_route_adjust}{time} = time;
 	}
 
 	if (AI::action eq "attack") {
@@ -249,16 +263,12 @@ sub main {
 	my $target = Actor::get($ID);
 	my $myPos = $char->{pos_to};
 	my $monsterPos = $target->{pos_to};
-	my $monsterDist = round(distance($myPos, $monsterPos));
+	my $monsterDist = blockDistance($myPos, $monsterPos);
 
 	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 	my $realMyPos = calcPosition($char);
 	my $realMonsterPos = calcPosition($target);
-	my $realMonsterDist = round(distance($realMyPos, $realMonsterPos));
-	if (!$config{'runFromTarget'}) {
-		$myPos = $realMyPos;
-		$monsterPos = $realMonsterPos;
-	}
+	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 
 	my $cleanMonster = checkMonsterCleanness($ID);
 
@@ -315,7 +325,7 @@ sub main {
 			$args->{attackMethod}{type} = "combo";
 			$args->{attackMethod}{comboSlot} = $i;
 			$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
-			$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_dist"};
+			$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_maxDist"} || $config{"attackComboSlot_${i}_dist"};
 			$args->{attackMethod}{isSelfSkill} = $config{"attackComboSlot_${i}_isSelfSkill"};
 			last;
 		}
@@ -329,8 +339,8 @@ sub main {
 			$args->{attackMethod}{maxDistance} = $config{'attackMaxDistance'};
 			$args->{attackMethod}{type} = "weapon";
 		} else {
-			$args->{attackMethod}{distance} = 30;
-			$args->{attackMethod}{maxDistance} = 30;
+			$args->{attackMethod}{distance} = 1;
+			$args->{attackMethod}{maxDistance} = 1;
 			undef $args->{attackMethod}{type};
 		}
 
@@ -356,7 +366,7 @@ sub main {
 			) {
 				$args->{attackSkillSlot_attempts}{$i}++;
 				$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
-				$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_dist"};
+				$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_maxDist"} || $config{"attackSkillSlot_$i"."_dist"};
 				$args->{attackMethod}{type} = "skill";
 				$args->{attackMethod}{skillSlot} = $i;
 				last;
@@ -394,73 +404,8 @@ sub main {
 			useTeleport(1);
 		}
 
-	} elsif (
-		$config{attackCheckLOS} && $args->{attackMethod}{distance} > 2
-		&& (($config{attackCanSnipe} && !checkLineSnipable($realMyPos, $realMonsterPos))
-		|| (!$config{attackCanSnipe} && $realMonsterDist <= $args->{attackMethod}{maxDistance} && !checkLineWalkable($realMyPos, $realMonsterPos, 1)))
-	) {
-		# We are a ranged attacker without LOS
-		# Calculate squares around monster within shooting range, but not
-		# closer than runFromTarget_dist
-		my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
-					  $args->{attackMethod}{distance},
-								  $config{runFromTarget} ? $config{runFromTarget_dist} : 0);
-
-		my ($master, $masterPos);
-		if ($config{follow}) {
-			foreach (keys %players) {
-				if ($players{$_}{name} eq $config{followTarget}) {
-					$master = $players{$_};
-					last;
-				}
-			}
-			$masterPos = calcPosition($master) if $master;
-		}
-
-		# Determine which of these spots are snipable
-		my $best_spot;
-		my $best_dist;
-		for my $spot (@stand) {
-			# Is this spot acceptable?
-			# 1. It must have LOS to the target ($realMonsterPos).
-			# 2. It must be within $config{followDistanceMax} of
-			#    $masterPos, if we have a master.
-			if (
-			    (($config{attackCanSnipe} && checkLineSnipable($spot, $realMonsterPos))
-				|| checkLineWalkable($spot, $realMonsterPos))
-				&& $field->isWalkable($spot->{x}, $spot->{y})
-				&& ($realMyPos->{x} != $spot->{x} && $realMyPos->{y} != $spot->{y})
-				&& (!$master || round(distance($spot, $masterPos)) <= $config{followDistanceMax})
-			) {
-				my $dist = distance($realMyPos, $spot);
-				if (!defined($best_dist) || $dist < $best_dist) {
-					$best_dist = $dist;
-					$best_spot = $spot;
-				}
-			}
-		}
-
-		# Move to the closest spot
-		my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
-		if ($best_spot) {
-			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			if ($config{attackChangeTarget} == 1) {
-				# Restart attack from processAutoAttack
-				AI::dequeue;
-				$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1);
-			} else {
-				$char->route(undef, @{$best_spot}{qw(x y)});
-			}
-		} else {
-			warning TF("%s; no acceptable place to stand\n", $msg);
-			$target->{attack_failedLOS} = time;
-			AI::dequeue;
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "attack");
-		}
-
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-		my $cell = get_kite_position($field, $char, $target, $config{'runFromTarget_dist'}, ($config{'runFromTarget_minStep'} || 7), ($config{'runFromTarget_maxStep'} || 9));
+		my $cell = get_kite_position($char, 1, $target);
 		if ($cell) {
 			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
@@ -468,24 +413,34 @@ sub main {
 		} else {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
-
-	} elsif ($realMonsterDist > $args->{attackMethod}{maxDistance}
-	  && !timeOut($args->{ai_attack_giveup})) {
-		# The target monster moved; move to target
+		
+	} elsif (
+		# We are out of range
+		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
+		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})
+	) {
 		$args->{move_start} = time;
 		$args->{monsterPos} = {%{$monsterPos}};
+		$args->{monsterLastMoveTime} = $target->{time_move};
 
-		my $pos = meetingPosition($target, $args->{attackMethod}{maxDistance});
+		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 
-		my $dist = sprintf("%.1f", $monsterDist);
-		debug "Target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
-			"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
+		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+		my $result;
+		
+		if ($pos) {
+			debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
 
-		my $result = $char->route(undef, @{$pos}{qw(x y)},
-			maxRouteTime => $config{'attackMaxRouteTime'},
-			attackID => $ID,
-			noMapRoute => 1,
-			noAvoidWalls => 1);
+			$result = $char->route(
+				undef,
+				@{$pos}{qw(x y)},
+				maxRouteTime => $config{'attackMaxRouteTime'},
+				attackID => $ID,
+				noMapRoute => 1,
+				avoidWalls => 0,
+				meetingSubRoute => 1
+			);
+		}
 		if (!$result) {
 			# Unable to calculate a route to target
 			$target->{attack_failed} = time;
@@ -495,6 +450,51 @@ sub main {
 				message T("Teleport due to dropping attack target\n");
 				useTeleport(1);
 			}
+		} else {
+			debug "Attack $char - successufully routing to $target\n", 'ai_attack';
+		}
+
+	} elsif (
+		# We are a ranged attacker in range without LOS
+		$args->{attackMethod}{maxDistance} > 1 &&
+		$config{attackCheckLOS} &&
+		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
+	) {
+		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+
+		# Move to the closest spot
+		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+		if ($best_spot) {
+			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
+			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+		} else {
+			warning TF("%s; no acceptable place to stand\n", $msg);
+			$target->{attack_failedLOS} = time;
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
+		}
+
+	} elsif (
+		# We are a melee attacker in range without LOS
+		$args->{attackMethod}{maxDistance} == 1 &&
+		$config{attackCheckLOS} &&
+		blockDistance($realMyPos, $realMonsterPos) == 2 &&
+		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
+	) {
+		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+
+		# Move to the closest spot
+		my $msg = TF("No LOS in melee from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+		if ($best_spot) {
+			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
+			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+		} else {
+			warning TF("%s; no acceptable place to stand\n", $msg);
+			$target->{attack_failedLOS} = time;
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
 		}
 
 	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
@@ -526,6 +526,17 @@ sub main {
 					($config{'tankMode'}) ? 0 : 7);
 				$timeout{ai_attack}{time} = time;
 				delete $args->{attackMethod};
+				
+				if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
+					my $cell = get_kite_position($char, 1, $target);
+					if ($cell) {
+						debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+						$args->{avoiding} = 1;
+						$char->move($cell->{x}, $cell->{y}, $ID);
+					} else {
+						debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+					}
+				}
 			}
 		} elsif ($args->{attackMethod}{type} eq "skill") {
 			my $slot = $args->{attackMethod}{skillSlot};

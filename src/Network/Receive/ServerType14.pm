@@ -1,5 +1,5 @@
 # pRO Thor as of December 1 2006
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Receive::ServerType14;
 
 use strict;

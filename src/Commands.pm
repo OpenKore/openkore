@@ -41,7 +41,6 @@ use Task;
 use Task::ErrorReport;
 use Match;
 use Translation;
-use I18N qw(stringToBytes);
 use Network::PacketParser qw(STATUS_STR STATUS_AGI STATUS_VIT STATUS_INT STATUS_DEX STATUS_LUK);
 
 our (%commands, %completions);
@@ -56,7 +55,12 @@ sub initHandlers {
 			T("Attack a monster."),
 			[ T("<monster #>"), T("attack the specified monster") ],
 			], \&cmdAttack],
-		['achieve', undef, \&cmdAchieve],
+		['achieve', [
+			T("Achievement management"),
+			[ "list", T("shows all current achievements") ],
+			[ "info <achievementID>", T("shows information about the achievement") ],
+			[ "reward <achievementID>", T("request reward for the achievement of achievementID") ],
+			], \&cmdAchieve],
 		['ai', [
 			T("Enable/disable AI."),
 			["", T("toggles AI on/manual/off")],
@@ -83,7 +87,11 @@ sub initHandlers {
 			["request", T("Request the Current Day Reward")],
 			], \&cmdAttendance],
 		['autobuy', T("Initiate auto-buy AI sequence."), \&cmdAutoBuy],
-		['autosell', T("Initiate auto-sell AI sequence."), \&cmdAutoSell],
+		['autosell', [
+			T("Auto-sell AI sequence."),
+			["", T("Initiate auto-sell AI sequence")],
+			["test", T("Simulate list of items to sell (synonym: 'simulate' or 'debug')")]
+			], \&cmdAutoSell],
 		['autostorage', T("Initiate auto-storage AI sequence."), \&cmdAutoStorage],
 		['auth', [
 			T("(Un)authorize a user for using Kore chat commands."),
@@ -131,8 +139,18 @@ sub initHandlers {
 			["get <cart item #> [<amount>]", T("get <amount> items from cart to inventory")],
 			["desc <cart item #> [<amount>]", T("displays cart item description")]
 			], \&cmdCart],
-		['cash', undef, \&cmdCash],
-		['cashbuy', undef, \&cmdCashShopBuy],
+		['cash', [
+			T("Cash shop management"),
+			["open", T("open Cash shop")],
+			["close", T("close Cash shop")],
+			[T("buy <item> [<amount>] [<kafra shop points>]"), T("buy items from Cash shop")],
+			["points", T("show the number of available Cash shop points")],
+			["list", T("lists the Cash shop items")],
+			], \&cmdCash],
+		['cashbuy', [
+			T("Buy Cash item"),
+			["<kafra_points> <item #> [<amount>][, <item #> [<amount>]]...", T("buy items from cash dealer")],
+			], \&cmdCashShopBuy],
 		['charselect', T("Ask server to exit to the character selection screen."), \&cmdCharSelect],
 		['chat', [
 			T("Chat room management."),
@@ -179,7 +197,7 @@ sub initHandlers {
 		['deal', [
 			T("Trade items with another player."),
 			["", T("accept an incoming deal/finalize the current deal/trade")],
-			[T("<player #>"), T("request a deal with player")],
+			[T("<player #> | <player_name>"), T("request a deal with player")],
 			[T("add <inventory item #> [<amount>]"), T("add items to current deal")],
 			[T("add z [<amount>]"), T("add zenny to current deal")],
 			["no", T("deny an incoming deal/cancel the current deal")]
@@ -221,7 +239,11 @@ sub initHandlers {
 		['exp', [
 			T("Experience report."),
 			["", T("displays the experience report")],
-			["reset", T("resets the experience report")]
+			["monster", T("display report on monsters killed")],
+			["item", T("display report on inventory changes")],
+			["report", T("display detailed report on experience gained, monsters killed and items gained")],
+			["reset", T("resets the experience report")],
+			["output", T("output the experience report in file 'exp.txt'")]
 			], \&cmdExp],
 		['falcon', [
 			T("Falcon status."),
@@ -475,7 +497,8 @@ sub initHandlers {
 		['relog', [
 			T("Log out then log in again."),
 			["", T("logout and login after 5 seconds")],
-			[T("<seconds>"), T("logout and login after <seconds>")]
+			[T("<seconds>"), T("logout and login after <seconds>")],
+			[T("<min>..<max>"), T("logout and login after random seconds")]
 			], \&cmdRelog],
 		['repair', [
 			T("Repair player's items."),
@@ -645,7 +668,7 @@ sub initHandlers {
 		['vender', [
 			T("Buy items from vending shops."),
 			[T("<vender #>"), T("enter vender shop")],
-			[T("<vender #> <vender item #> [<amount>]"), T("buy items from vender shop")],
+			[T("<vender #> <vender_item #> [<amount>]"), T("buy items from vender shop")],
 			["end", T("leave current vender shop")]
 			], \&cmdVender],
 		['verbose', T("Toggle verbose on/off."), \&cmdVerbose],
@@ -732,9 +755,10 @@ sub initHandlers {
 		['quest', [
 			T("Quest management."),
 			["", T("displays possible commands for quest")],
-			[T("set <questID> on"), T("enable quest")],
-			[T("set <questID> off"), T("disable quest")],
-			["list", T("displays a list of your quests")]
+			["set <questID> on", T("enable quest")],
+			["set <questID> off", T("disable quest")],
+			["list", T("displays a list of your quests")],
+			["info <questID>", T("displays quest description")]
 			], \&cmdQuest],
 		['showeq', [
 			T("Equipment showing."),
@@ -779,7 +803,8 @@ sub initHandlers {
 			], \&cmdSearchStore],
 		['pause', [
 			T("Delay the next console commands."),
-			[T("<seconds>"), T("delay the next console commands by a specified number of seconds (default: 1 sec.)")]
+			["", T("delay the next console commands for 1 second")],
+			[T("<seconds>"), T("delay the next console commands by a specified number of seconds")]
 			], undef],
 	);
 
@@ -801,7 +826,7 @@ sub initCompletions {
 # Commands::run(input)
 # input: a command.
 #
-# Processes $input. See also <a href="http://openkore.sourceforge.net/docs.php">the user documentation</a>
+# Processes $input. See also <a href="https://openkore.com/wiki/Category:Console_Command">the user documentation</a>
 # for a list of commands.
 #
 # Example:
@@ -828,7 +853,7 @@ sub run {
 		my $handler;
 		$handler = $commands{$switch}{callback} if (exists $commands{$switch} && $commands{$switch});
 
-		if (($switch eq 'pause') && (!$cmdQueue) && AI::state != AI::AUTO && ($net->getState() == Network::IN_GAME)) {
+		if (($switch eq 'pause') && (!$cmdQueue) && AI::state == AI::AUTO && ($net->getState() == Network::IN_GAME)) {
 			$cmdQueue = 1;
 			$cmdQueueStartTime = time;
 			if ($args > 0) {
@@ -856,7 +881,7 @@ sub run {
 			Plugins::callHook('Command_post', \%params);
 			if (!$params{return}) {
 				error TF("Unknown command '%s'. Please read the documentation for a list of commands.\n"
-						."http://openkore.com/index.php/Category:Console_Command\n", $switch);
+						."http://openkore.com/wiki/Category:Console_Command\n", $switch);
 			} else {
 				return $params{return}
 			}
@@ -1238,7 +1263,7 @@ sub cmdAutoSell {
 				$obj{index} = $item->{ID};
 				$obj{amount} = $item->{amount} - $control->{keep};
 				my $item_name = $item->{name};
-				$item_name .= ' (if unequipped)' if ($item->{equipped});
+				$item_name .= T(" (if unequipped)") if ($item->{equipped});
 				$msg .= swrite(
 						"@>>> x  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 						[$item->{amount}, $item_name]);
@@ -1659,6 +1684,38 @@ sub cmdCash {
 		return;
 	}
 
+	if ($args[0] eq 'list') {
+		if (not defined $cashShop{list}) {
+			error T("The list of items of Cash shop is not available\n");
+			return;
+		}
+		my %cashitem_tab = (
+			0 => T('New'),
+			1 => T('Popular'),
+			2 => T('Limited'),
+			3 => T('Rental'),
+			4 => T('Perpetuity'),
+			5 => T('Buff'),
+			6 => T('Recovery'),
+			7 => T('Etc'),
+		);
+
+		my $msg;
+		for (my $tabcode = 0; $tabcode < @{$cashShop{list}}; $tabcode++) {
+			$msg .= center(T(' Tab: ') . $cashitem_tab{$tabcode} . ' ', 50, '-') ."\n".
+			T ("ID      Item Name                            Price\n");
+			foreach my $itemloop (@{$cashShop{list}[$tabcode]}) {
+				$msg .= swrite(
+					"@<<<<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>C",
+					[$itemloop->{item_id}, itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price})]);
+			}
+		}
+		$msg .= ('-'x50) . "\n";
+		message $msg, "list";
+
+		return;
+	}
+
 	if (not defined $cashShop{points}) {
 		error T("Cash shop is not open\n");
 		error T("Please use 'cash open' first\n");
@@ -1675,9 +1732,9 @@ sub cmdCash {
 		my ($amount, $item, $kafra_points);
 
 		if ($args[1] !~ /^\d+$/) {
-			$item = itemNameToID($item);
+			$item = itemNameToID($args[1]);
 			if (!$item) {
-				error TF("Error in function 'cash buy': invalid item name or tables needs to be updated \n");
+				error TF("Error in function 'cash buy': invalid item name '%s' or tables needs to be updated\n", $args[1]);
 				return;
 			}
 		} else {
@@ -1729,36 +1786,8 @@ sub cmdCash {
 		return;
 	}
 
-	if ($args[0] eq 'list') {
-		my %cashitem_tab = (
-			0 => T('New'),
-			1 => T('Popular'),
-			2 => T('Limited'),
-			3 => T('Rental'),
-			4 => T('Perpetuity'),
-			5 => T('Buff'),
-			6 => T('Recovery'),
-			7 => T('Etc'),
-		);
-
-		my $msg;
-		for (my $tabcode = 0; $tabcode < @{$cashShop{list}}; $tabcode++) {
-			$msg .= center(T(' Tab: ') . $cashitem_tab{$tabcode} . ' ', 50, '-') ."\n".
-			T ("ID      Item Name                            Price\n");
-			foreach my $itemloop (@{$cashShop{list}[$tabcode]}) {
-				$msg .= swrite(
-					"@<<<<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>C",
-					[$itemloop->{item_id}, itemNameSimple($itemloop->{item_id}), formatNumber($itemloop->{price})]);
-			}
-		}
-		$msg .= ('-'x50) . "\n";
-		message $msg, "list";
-
-		return;
-	}
-
 	error T("Syntax Error in function 'cash' (Cash shop)\n" .
-			"Usage: cash <open|close|buy|points|list>\n");
+			"Usage: cash <open | close | buy | points | list>\n");
 }
 
 sub cmdCharSelect {
@@ -2286,13 +2315,8 @@ sub cmdDebug {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\w\d]+)/;
 
-	if ($arg1 eq "0") {
-		configModify("debug", 0);
-	} elsif ($arg1 eq "1") {
-		configModify("debug", 1);
-	} elsif ($arg1 eq "2") {
-		configModify("debug", 2);
-
+	if ($arg1 =~ /\d/) {
+		configModify("debug", $arg1);
 	} elsif ($arg1 eq "info") {
 		my $connected = $net && "server=".($net->serverAlive ? "yes" : "no").
 			",client=".($net->clientAlive ? "yes" : "no");
@@ -2310,6 +2334,8 @@ sub cmdDebug {
 			('-'x56) . "\n",
 		$conState, $connected, AI::state, "@ai_seq", $time, $ai_timeout,
 		$timeout{'ai'}{'timeout'}, $ai_time), "list";
+	} else {
+		error "Syntax Error in function 'debug' (Toggle debug on/off)\n";
 	}
 }
 
@@ -2661,7 +2687,7 @@ sub cmdExp {
 
 	if (!$knownArg) {
 		error T("Syntax error in function 'exp' (Exp Report)\n" .
-			"Usage: exp [<report | monster | item | reset>]\n");
+			"Usage: exp [<report | monster | item | reset | output>]\n");
 	}
 }
 
@@ -4048,7 +4074,7 @@ sub cmdMove {
 				# map
 				$map_or_portal =~ s/^(\w{3})?(\d@.*)/$2/; # remove instance. is it possible to move to an instance? if not, we could throw an error here
 				# TODO: implement Field::sourceName function here once they are implemented there - 2013.11.26
-				my $file = $map_or_portal.'.fld';
+				my $file = $map_or_portal.'.fld2';
 				$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
 				$file .= ".gz" if (! -f $file); # compressed file
 				if ($maps_lut{"${map_or_portal}.rsw"} || -f $file) {
@@ -4848,10 +4874,10 @@ sub cmdPortalList {
 		#Command: portals add y_airport 143 43 y_airport 148 51 0 c r0 c r0
 		debug "Input: $args\n";
 		my ($srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY, $seq) = $args =~ /^add ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3}) ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3})(.*)$/; #CHECKING
-		my $srcfile = $srcMap.'.fld';
+		my $srcfile = $srcMap.'.fld2';
 		$srcfile = File::Spec->catfile($Settings::fields_folder, $srcfile) if ($Settings::fields_folder);
 		$srcfile .= ".gz" if (! -f $srcfile); # compressed file
-		my $dstfile = $dstMap.'.fld';
+		my $dstfile = $dstMap.'.fld2';
 		$dstfile = File::Spec->catfile($Settings::fields_folder, $dstfile) if ($Settings::fields_folder);
 		$dstfile .= ".gz" if (! -f $dstfile); # compressed file
 		error TF("Files '%s' or '%s' does not exist.\n", $srcfile, $dstfile) if (! -f $srcfile || ! -f $dstfile);
@@ -5120,15 +5146,15 @@ sub cmdShopInfoSelf {
 	}
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	my $msg = center(" $shop{title} ", 79, '-') ."\n".
-		T("#  Name                               Type            Amount        Price  Sold\n");
+	my $msg = center(" $shop{title} ", 90, '-') ."\n".
+		T("#  Name                                       Type                     Price Amount   Sold\n");
 	my $priceAfterSale=0;
 	my $i = 1;
 	for my $item (@articles) {
 		next unless $item;
 		$msg .= swrite(
-		   "@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @<<<< @>>>>>>>>>>>z @>>>>",
-			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price}), $item->{sold}]);
+		   "@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @>>>>>>>>>>>>z @<<<<< @>>>>>",
+			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), $item->{quantity}, formatNumber($item->{sold})]);
 		$priceAfterSale += ($item->{quantity} * $item->{price});
 	}
 	$msg .= "\n" .
@@ -5138,7 +5164,7 @@ sub cmdShopInfoSelf {
 		"Maximum zeny:    %sz.\n",
 		formatNumber($shopEarned), formatNumber($char->{zeny}),
 		formatNumber($priceAfterSale), formatNumber($priceAfterSale + $char->{zeny})) .
-		('-'x79) . "\n";
+		('-'x90) . "\n";
 	message $msg, "list";
 }
 
@@ -5149,16 +5175,16 @@ sub cmdBuyShopInfoSelf {
 	}
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
-	my $msg = center(" Buyer Shop ", 72, '-') ."\n".
-		T("#   Name                               Type           Amount       Price\n");
+	my $msg = center(" Buyer Shop ", 83, '-') ."\n".
+		T("#  Name                                       Type                     Price Amount\n");
 	my $index = 0;
 	for my $item (@selfBuyerItemList) {
 		next unless $item;
 		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
-			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]);
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<< @>>>>>>>>>>>>z @<<<<<",
+			[$index, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), $item->{amount}]);
 	}
-	$msg .= ('-'x72) . "\n";
+	$msg .= ('-'x83) . "\n";
 	message $msg, "list";
 }
 
@@ -5580,15 +5606,15 @@ sub cmdStore {
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
 	if ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} ne 'buy_or_sell') {
-		my $msg = center(TF(" Store List (%s) ", $storeList->{npcName}), 54, '-') ."\n".
-			T("#  Name                    Type                  Price   Amnt\n");
+		my $msg = center(TF(" Store List (%s) ", $storeList->{npcName}), 68, '-') ."\n".
+			  T("#  Name                    Type                       Price   Amount\n");
 		foreach my $item (@$storeList) {
 			$msg .= swrite(
-				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<  @>>>>>>>>>z   @<<<<<",
-				[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{price}, $item->{amount}]);
+				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<  @>>>>>>>>>z   @<<<<<",
+				[$item->{binID}, $item->{name}, $itemTypes_lut{$item->{type}}, formatNumber($item->{price}), $item->{amount}]);
 		}
 		$msg .= "Store list is empty.\n" if !$storeList->size;
-		$msg .= ('-'x54) . "\n";
+		$msg .= ('-'x68) . "\n";
 		message $msg, "list";
 
 	} elsif ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
@@ -5876,10 +5902,10 @@ sub cmdTestShop {
 	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
 
 	my $msg = center(" $shop{title} ", 69, '-') ."\n".
-			T("Name                                           Amount           Price\n");
+			T("Name                                                    Price  Amount\n");
 	for my $item (@items) {
-		$msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @<<<<<  @>>>>>>>>>>>>z",
-			[$item->{name}, $item->{amount}, formatNumber($item->{price})]);
+		$msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<  @>>>>>>>>>>>>z  @<<<<<",
+			[$item->{name}, formatNumber($item->{price}), $item->{amount}]);
 	}
 	$msg .= "\n" . TF("Total of %d items to sell.\n", binSize(\@items)) .
 			('-'x69) . "\n";
@@ -6130,7 +6156,7 @@ sub cmdUseSkill {
 		}
 		# This was the code for choosing a random location when x and y are not given:
 		# my $pos = calcPosition($char);
-		# my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2);
+		# my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2, $field);
 		# $pos = $positions[rand(@positions)];
 		# ($x, $y) = ($pos->{x}, $pos->{y});
 
@@ -6235,19 +6261,23 @@ sub cmdVender {
 		return;
 	}
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^([\d\w]+)/;
-	my ($arg2) = $args =~ /^[\d\w]+ (\d+)/;
-	my ($arg3) = $args =~ /^[\d\w]+ \d+ (\d+)/;
-	if ($arg1 eq "") {
-		error T("Syntax error in function 'vender' (Vender Shop)\n" .
-			"Usage: vender <vender # | end> [<item #> <amount>]\n");
-	} elsif ($arg1 eq "end") {
+
+	if ($args eq "end") {
 		$venderItemList->clear;
 		undef $venderID;
 		undef $venderCID;
+		return;
+	}
+
+	my ($arg1) = $args =~ /^(\d+)/;
+	my ($arg2) = $args =~ /^\d+ (\d+)/;
+	my ($arg3) = $args =~ /^\d+ \d+ (\d+)/;
+	if ($arg1 eq "") {
+		error T("Syntax error in function 'vender' (Vender Shop)\n" .
+			"Usage: vender <vender # | end> [<vender_item #> <amount>]\n");
 	} elsif ($venderListsID[$arg1] eq "") {
 		error TF("Error in function 'vender' (Vender Shop)\n" .
-			"Vender %s does not exist.\n", $arg1);
+			"Vender %d does not exist.\n", $arg1);
 	} elsif ($arg2 eq "") {
 		$messageSender->sendEnteringVender($venderListsID[$arg1]);
 	} elsif ($venderListsID[$arg1] ne $venderID) {
@@ -6255,7 +6285,7 @@ sub cmdVender {
 			"Vender ID is wrong.\n");
 	} elsif (!$venderItemList->get( $arg2 )) {
 		error TF("Error in function 'vender' (Vender Shop)\n" .
-			"Item %s does not exist.\n", $arg2);
+			"Item %d does not exist.\n", $arg2);
 	} else {
 		$arg3 = 1 if $arg3 <= 0;
 		my $item = $venderItemList->get( $arg2 );
@@ -6779,7 +6809,7 @@ sub cmdQuest {
 		my $msg .= center(" " . T("Quest List") . " ", 79, '-') . "\n";
 		foreach my $questID (keys %{$questList}) {
 			my $quest = $questList->{$questID};
-			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x4), ('<'x30), ('<'x10), ('<'x24)),
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x5), ('<'x30), ('<'x10), ('<'x24)),
 				[$k, $questID, $quests_lut{$questID} ? $quests_lut{$questID}{title} : '', $quest->{active} ? T("active") : T("inactive"), $quest->{time_expire} ? scalar localtime $quest->{time_expire} : '']);
 			foreach my $mobID (keys %{$quest->{missions}}) {
 				my $mission = $quest->{missions}->{$mobID};
@@ -6983,45 +7013,75 @@ sub cmdDeadTime {
 }
 
 sub cmdAchieve {
-	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
-
-	if (($arg1 ne 'list' && $arg1 ne 'reward') || ($arg1 eq 'list' && defined $arg2) || ($arg1 eq 'reward' && !defined $arg2)) {
-		error T("Syntax Error in function 'achieve'\n".
-			"Usage: achieve [<list|reward>] [<achievemente_id>]\n".
-			"Usage: achieve list: Shows all current achievements\n".
-			"Usage: achieve reward achievemente_id: Request reward for the achievement of id achievemente_id\n"
-			);
-
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-
-	if ($arg1 eq 'reward') {
-		if (!exists $achievementList->{$arg2}) {
-			error TF("You don't have the achievement %s.\n", $arg2);
-
-		} elsif ($achievementList->{$arg2}{completed} != 1) {
-			error TF("You haven't completed the achievement %s.\n", $arg2);
-
-		} elsif ($achievementList->{$arg2}{reward} == 1) {
-			error TF("You have already claimed the achievement %s reward.\n", $arg2);
-
-		} else {
-			message TF("Sending request for reward of achievement %s.\n", $arg2);
-			$messageSender->sendAchievementGetReward($arg2);
+	my ($cmd, $args_string) = @_;
+	my @args = parseArgs($args_string, 3);
+	if ($args[0] eq 'list') {
+		if (!$achievementList) {
+			error T("'Achievement List' is empty.\n");
+			return;
 		}
 
-	} elsif ($arg1 eq 'list') {
-		my $msg = center(" " . "Achievement List" . " ", 79, '-') . "\n";
+		my $msg = center(" " . T("Achievement List") . " ", 79, '-') . "\n";
 		my $index = 0;
-		foreach my $achieve_id (keys %{$achievementList}) {
-			my $achieve = $achievementList->{$achieve_id};
-			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s", ('>'x2), ('<'x7), ('<'x15), ('<'x15)), [$index, $achieve_id, $achieve->{completed} ? "complete" : "incomplete", $achieve->{reward}  ? "rewarded" : "not rewarded"]);
+		foreach my $achievementID (keys %{$achievementList}) {
+			my $achieve = $achievementList->{$achievementID};
+			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x7), ('<'x15), ('<'x15), ('<'x32)), [$index, $achievementID, $achieve->{completed} ? T("complete") : T("incomplete"), $achieve->{reward}  ? T("rewarded") : T("not rewarded"), $achievements{$achievementID}->{title}]);
 			$index++;
 		}
 		$msg .= sprintf("%s\n", ('-'x79));
 		message $msg, "list";
+
+	} elsif ($args[0] eq 'reward') {
+		if ($args[1] !~ /^\d+$/) {
+			error T("Syntax Error in function 'achieve reward' (Receiving an award)\n" .
+				"Usage: achieve reward <achievementID>\n");
+
+		} elsif (!exists $achievementList->{$args[1]}) {
+			error TF("You don't have the achievement %s.\n", $args[1]);
+
+		} elsif ($achievementList->{$args[1]}{completed} != 1) {
+			error TF("You haven't completed the achievement %s.\n", $args[1]);
+
+		} elsif ($achievementList->{$args[1]}{reward} == 1) {
+			error TF("You have already claimed the achievement %s reward.\n", $args[1]);
+
+		} else {
+			message TF("Sending request for reward of achievement %s.\n", $args[1]);
+			$messageSender->sendAchievementGetReward($args[1]);
+		}
+
+	} elsif ($args[0] eq 'info' && $args[1] =~ /^\d+$/) {
+		if(defined($achievements{$args[1]})) {
+			# status
+			my $msg;
+			$msg .= center(" " . T("Achievement Info") . " ", 79, '-') . "\n";
+			$msg .= TF("ID: %s - Title: %s\n", $achievements{$args[1]}->{ID}, $achievements{$args[1]}->{title});
+			$msg .= TF("Group: %s\n", ($achievements{$args[1]}->{group}) ? $achievements{$args[1]}->{group} : T("N/A"));
+			$msg .= TF("Summary: %s\n", ($achievements{$args[1]}->{summary}) ? $achievements{$args[1]}->{summary} : T("N/A"));
+			$msg .= TF("Details: %s\n", ($achievements{$args[1]}->{details}) ? $achievements{$args[1]}->{details} : T("N/A"));
+			$msg .= T("Rewards:\n");
+			$msg .= TF("  Item: %s\n", ($achievements{$args[1]}->{rewards}->{item}) ? itemNameSimple($achievements{$args[1]}->{rewards}->{item}) : T("N/A"));
+			$msg .= TF("  Buff: %s\n", ($achievements{$args[1]}->{rewards}->{buff}) ? $statusName{$statusHandle{$achievements{$args[1]}->{rewards}->{buff}}} : T("N/A"));
+			$msg .= TF("  Title: %s\n", ($achievements{$args[1]}->{rewards}->{title}) ? $title_lut{$achievements{$args[1]}->{rewards}->{title}} : T("N/A"));
+			$msg .= T("Status: ");
+			if ( defined ( $achievementList->{$args[1]} ) ) {
+				my $achieve = $achievementList->{$args[1]};
+				$msg .= TF("%s %s\n", $achieve->{completed} ? T("complete") : T("incomplete"), $achieve->{reward}  ? T("rewarded") : T("not rewarded"));
+			} else {
+				$msg .= T("N/A\n");
+			}
+			$msg .= center("", 79, '-') . "\n";
+			message $msg;
+		} else {
+			warning T("The achievement was not found. Update the 'achievement_list.txt' file\n");
+		}
+	} else {
+		error T("Syntax Error in function 'achieve'\n" .
+				"see 'help achieve'\n");
 	}
 }
 

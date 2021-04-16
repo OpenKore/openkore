@@ -23,23 +23,16 @@ use base qw(Network::Send::kRO::Sakexe_2005_04_11a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0232' => ['actor_move', 'a4 a3', [qw(ID coords)]],
-		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
 		'0233' => ['slave_attack', 'a4 a4 C', [qw(slaveID targetID flag)]],
 		'0234' => ['slave_move_to_master', 'a4', [qw(slaveID)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	$self;
 }
-
-# 0x0232,9,hommoveto,6
-
-# 0x0233,11,homattack,0
-
-# 0x0234,6,hommovetomaster,0
 
 =pod
 //2005-04-25aSakexe

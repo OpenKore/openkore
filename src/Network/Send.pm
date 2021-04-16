@@ -19,7 +19,7 @@
 # This class contains convenience methods for sending messages to the RO
 # server.
 #
-# Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
+# Please also read <a href="https://openkore.com/wiki/Network_subsystem">the
 # network subsystem overview.</a>
 package Network::Send;
 
@@ -33,7 +33,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -359,6 +359,8 @@ sub sendMasterLogin {
 			master_version => $master_version,
 			username => $username,
 			password => $password,
+			game_code => '0011', # kRO Ragnarok game code
+			flag => 'G000', # Maybe this say that we are connecting from client
 		});
 	} else {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version || $self->version) .
@@ -1112,6 +1114,7 @@ sub sendCashShopOpen {
 sub sendCashShopClose {
 	my ($self) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'cash_shop_close'}));
+	undef $cashShop{points};
 	debug "Requesting sendCashShopClose\n", "sendPacket", 2;
 }
 
@@ -1374,9 +1377,10 @@ sub sendTokenToServer {
 	my $msg = $self->reconstruct({
 		switch => 'token_login',
 		len => $len, # size of packet
-		version => $version,
+		version => $version || $self->version,
 		master_version => $master_version,
 		username => $username,
+		password => $password,
 		password_rijndael => $password_rijndael,
 		mac => $mac_hyphen_separated,
 		ip => $ip,
@@ -2557,7 +2561,7 @@ sub sendSellBulk {
 		items => \@{$r_array},
 	}));
 
-	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk sell: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_sell_bulk {
@@ -2567,11 +2571,11 @@ sub reconstruct_sell_bulk {
 }
 
 sub sendAchievementGetReward {
-	my ($self, $ach_id) = @_;
+	my ($self, $achievementID) = @_;
 
 	$self->sendToServer($self->reconstruct({
 		switch => 'achievement_get_reward',
-		ach_id => $ach_id,
+		achievementID => $achievementID,
 	}));
 }
 
@@ -3384,7 +3388,7 @@ sub sendBuyBulkMarket {
 		items => \@{$r_array},
 	}));
 
-	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk buy market: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_buy_bulk_market {
@@ -3404,6 +3408,26 @@ sub sendMarketClose {
 	}));
 
 	debug "Sent Market Close\n", "sendPacket";
+}
+
+# Request Inventory Expansion
+# 0B14
+sub sendInventoryExpansionRequest {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_request' }));
+}
+
+# Reject Inventory Expansion
+# 0B19
+sub sendInventoryExpansionRejected {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
+}
+
+# 0B1C (PACKET_CZ_PING)
+sub sendPing {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'ping' }));
 }
 
 1;

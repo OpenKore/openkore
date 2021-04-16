@@ -17,7 +17,7 @@ use base qw(Network::Send::kRO::RagexeRE_2012_04_18a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0364' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'0369' => ['friend_request', 'a*', [qw(username)]],#26
@@ -46,7 +46,7 @@ sub new {
 		'0923' => ['actor_action', 'a4 C', [qw(targetID type)]],#7
 		'07E4' => undef,
 		'0947' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],#10
-		'094B' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'094B' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0957' => ['actor_name_request', 'a4', [qw(ID)]],#6
 		'0964' => ['item_take', 'a4', [qw(ID)]],#6
 		'0360' => undef,
@@ -58,9 +58,9 @@ sub new {
 		'08A2' => ['skill_use_location_text', 'v5 Z80', [qw(lvl ID x y info)]],
 		'089A' => ['storage_password', 'v a*', [qw(type data)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0923
 		actor_info_request 08A5
@@ -84,9 +84,9 @@ sub new {
 		skill_use_location_text 08A2
 		storage_password 089A
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

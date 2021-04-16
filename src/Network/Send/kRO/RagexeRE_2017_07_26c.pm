@@ -18,19 +18,19 @@ use base qw(Network::Send::kRO::RagexeRE_2017_06_14b);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0878' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'08AA' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0952' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0921' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0923' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
-		'0838' => ['buy_bulk_closeShop'],			
+		'0838' => ['buy_bulk_closeShop'],
 		'0363' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0873' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'088E' => ['character_move', 'a3', [qw(coordString)]],
 		'091D' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'091F' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'091F' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'0943' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0874' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'08AB' => ['item_take', 'a4', [qw(ID)]],
@@ -41,14 +41,14 @@ sub new {
 		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'094F' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'08A7' => ['storage_password'],
-		'08AC' => ['sync', 'V', [qw(time)]],		
+		'08AC' => ['sync', 'V', [qw(time)]],
 		'0963' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0888' => ['search_store_request_next_page'],
 		'091E' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0878
 		actor_info_request 08AA
@@ -76,15 +76,12 @@ sub new {
 		search_store_request_next_page 0888
 		search_store_select 091E
 	);
-	
-	
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #		#elif PACKETVER == 20170726 // 2017-07-26cRagexeRE
 #		packet_keys(0x102F23DB,0x7E767751,0x3BC172EF);
 #		use = $key1 $key3 $key2
 #	$self->cryptKeys(0x102F23DB,0x3BC172EF,0x7E767751);
-
 
 	return $self;
 }

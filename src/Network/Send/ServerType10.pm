@@ -12,7 +12,7 @@
 # vRO (Vietnam)
 # Note that as of February 2007, vRO uses server type 13 instead of 10,
 # so this server type is obsolete at the moment.
-# Servertype overview: http://wiki.openkore.com/index.php/ServerType
+# Servertype overview: https://openkore.com/wiki/ServerType
 package Network::Send::ServerType10;
 
 use strict;
@@ -80,9 +80,9 @@ sub sendSit {
 sub sendStand {
 	my $self = shift;
 	my $msg;
-	
+
 	$msg = pack("C2 x16 C1", 0x89, 0x00, 0x03);
-	
+
 	$self->sendToServer($msg);
 	debug "Standing\n", "sendPacket", 2;
 }
@@ -97,7 +97,7 @@ sub sendDrop {
 
 sub sendGetPlayerInfo {
 	my ($self, $ID) = @_;
-	my $msg = pack("C*", 0xF5, 0x00) . $ID . pack("C*", 0x00, 0x00, 0x00); 
+	my $msg = pack("C*", 0xF5, 0x00) . $ID . pack("C*", 0x00, 0x00, 0x00);
 	$self->sendToServer($msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
@@ -189,9 +189,9 @@ sub sendTake {
 sub sendSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
 	my $msg;
-	
+
 	$msg = pack("C2 x4 v1 x2 v1 x9", 0x13, 0x01, $lv, $ID) . $targetID;
-	
+
 	$self->sendToServer($msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
