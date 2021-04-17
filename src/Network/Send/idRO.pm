@@ -37,6 +37,19 @@ sub new {
 		party_setting 07D7
 		buy_bulk_vender 0801
 		char_delete2_accept 098F
+		actor_action 0437
+		skill_use 0438
+		actor_name_request 0369
+		buy_bulk_buyer 0819
+		buy_bulk_request 0817
+		buy_bulk_closeShop 0815
+		buy_bulk_openShop 0811
+		item_list_window_selected 07E4
+		map_login 0436
+		party_join_request_by_name 02C4
+		friend_request 0202
+		homunculus_command 022D
+		pet_capture 08B5
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
