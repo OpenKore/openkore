@@ -7637,6 +7637,13 @@ sub refineui_info {
 	}
 }
 
+sub refine_status {
+	my ($self, $args) = @_;
+	my $msgIndex = $args->{status} ? 3272 : 3273;
+	my $msg = sprintf($msgTable[$msgIndex],  bytesToString($args->{name}), $args->{refine_level}, itemNameSimple($args->{itemID}))."\n";
+	warning $msg, "info";
+}
+
 sub character_ban_list {
 	my ($self, $args) = @_;
 	# Header + Len + CharList[character_name(size:24)]
