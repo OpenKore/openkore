@@ -63,12 +63,9 @@ sub new {
 	#buyer shop
 	$self->{buy_bulk_openShop_size} = "(a10)*";
 	$self->{buy_bulk_openShop_size_unpack} = "V v V";
-	$self->{buy_bulk_openShop_size_unpack_args} = qw(nameID amount price);
-	
 
-	$self->{buy_bulk_buyer_size} = "(a10)*";
+	$self->{buy_bulk_buyer_size} = "(a8)*";
 	$self->{buy_bulk_buyer_size_unpack} = "a2 V v";
-	$self->{buy_bulk_buyer_size_unpack_args} = qw(ID itemID amount);
 
 	return $self;
 }

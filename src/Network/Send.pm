@@ -754,8 +754,7 @@ sub reconstruct_buy_bulk_buyer {
     my ($self, $args) = @_;
 	my $packet_size = $self->{buy_bulk_buyer_size} || '(a6)*';
 	my $packet_unpack = $self->{buy_bulk_buyer_size_unpack} || 'a2 v2';
-	my $packet_args = $self->{buy_bulk_buyer_size_unpack_args} || qw(ID itemID amount);
-    $args->{itemInfo} = pack($packet_size, map { pack $packet_unpack, @{$_}{$packet_args} } @{$args->{items}});
+	$args->{itemInfo} = pack($packet_size, map { pack $packet_unpack, @{$_}{qw(ID itemID amount)} } @{$args->{items}});
 }
 
 sub sendBuyBulkBuyer {
@@ -795,8 +794,7 @@ sub reconstruct_buy_bulk_openShop {
 	my ($self, $args) = @_;
 	my $packet_size = $self->{buy_bulk_openShop_size} || '(a8)*';
 	my $packet_unpack = $self->{buy_bulk_openShop_size_unpack} || 'v2 V';
-	my $packet_args = $self->{buy_bulk_openShop_size_unpack_args} || qw(nameID amount price);
-	$args->{itemInfo} = pack $packet_size, map { pack $packet_unpack, @{$_}{$packet_args} } @{$args->{items}};
+	$args->{itemInfo} = pack $packet_size, map { pack $packet_unpack, @{$_}{qw(nameID amount price)} } @{$args->{items}};
 }
 
 sub sendSkillUse {
