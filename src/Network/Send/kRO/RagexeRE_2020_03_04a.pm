@@ -9,15 +9,11 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 ########################################################################
-#bysctnightcore
+#  by sctnightcore
 package Network::Send::kRO::RagexeRE_2020_03_04a;
 
 use strict;
 use base qw(Network::Send::kRO::Ragexe_2018_11_14c);
-use Globals;
-use Data::Dumper;
-use Log qw(error debug message);
-use I18N qw(stringToBytes);
 
 sub new {
 	my ($class) = @_;
@@ -82,6 +78,14 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	$self->{send_buy_bulk_pack} = "v V";
 	$self->{send_sell_buy_complete} = 1;
+
+	#buyer shop
+	$self->{buy_bulk_openShop_size} = "(a10)*";
+	$self->{buy_bulk_openShop_size_unpack} = "V v V";
+
+	$self->{buy_bulk_buyer_size} = "(a8)*";
+	$self->{buy_bulk_buyer_size_unpack} = "a2 V v";
+
 	return $self;
 }
 
