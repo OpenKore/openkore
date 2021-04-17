@@ -14,7 +14,6 @@ package Network::Send::iRO::Transcendence;
 
 use strict;
 use base qw(Network::Send::iRO);
-use Log qw(debug);
 
 sub new {
 	my ($class) = @_;
@@ -55,6 +54,13 @@ sub new {
 	$self->{send_buy_bulk_pack} = "v V";
 	$self->{char_create_version} = 0x0A39;
 	$self->{send_sell_buy_complete} = 1;
+
+	#buyer shop
+	$self->{buy_bulk_openShop_size} = "(a10)*";
+	$self->{buy_bulk_openShop_size_unpack} = "V v V";
+
+	$self->{buy_bulk_buyer_size} = "(a8)*";
+	$self->{buy_bulk_buyer_size_unpack} = "a2 V v";
 
 	return $self;
 }

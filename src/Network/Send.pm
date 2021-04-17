@@ -752,7 +752,9 @@ sub parse_buy_bulk_buyer {
 
 sub reconstruct_buy_bulk_buyer {
     my ($self, $args) = @_;
-    $args->{itemInfo} = pack('(a6)*', map { pack 'a2 v2', @{$_}{qw(ID itemID amount)} } @{$args->{items}});
+	my $packet_size = $self->{buy_bulk_buyer_size} || '(a6)*';
+	my $packet_unpack = $self->{buy_bulk_buyer_size_unpack} || 'a2 v2';
+	$args->{itemInfo} = pack($packet_size, map { pack $packet_unpack, @{$_}{qw(ID itemID amount)} } @{$args->{items}});
 }
 
 sub sendBuyBulkBuyer {
@@ -790,7 +792,9 @@ sub sendBuyBulkOpenShop {
 
 sub reconstruct_buy_bulk_openShop {
 	my ($self, $args) = @_;
-	$args->{itemInfo} = pack '(a8)*', map { pack 'v2 V', @{$_}{qw(nameID amount price)} } @{$args->{items}};
+	my $packet_size = $self->{buy_bulk_openShop_size} || '(a8)*';
+	my $packet_unpack = $self->{buy_bulk_openShop_size_unpack} || 'v2 V';
+	$args->{itemInfo} = pack $packet_size, map { pack $packet_unpack, @{$_}{qw(nameID amount price)} } @{$args->{items}};
 }
 
 sub sendSkillUse {
