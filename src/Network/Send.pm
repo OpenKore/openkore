@@ -407,6 +407,17 @@ sub reconstruct_game_login {
 	my ($self, $args) = @_;
 	$args->{userLevel} = 0 unless exists $args->{userLevel};
 	($args->{iAccountSID}) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/ unless exists $args->{iAccountSID};
+
+	if (exists $args->{mac}) {
+		my $key = pack('C16', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
+		my $chain = pack('C16', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
+		my $mac = $config{mac} || "F2ADCC03771E";
+		my $in = pack('a16', $mac);
+
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 16, 16);
+		$args->{mac} = $rijndael->Encrypt($in, undef, 16, 0);
+	}
 }
 
 # TODO: $masterServer->{gameLogin_packet}?
