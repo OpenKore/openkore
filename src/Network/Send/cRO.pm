@@ -21,26 +21,26 @@ use Utils;
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %handlers = qw(
-		master_login 0AAC
-		character_move 035F
-		sync 0360
-		actor_look_at 0361
-		item_take 0362
-		item_drop 0363
-		storage_item_add 0364
-		storage_item_remove 0365
-		skill_use_location 0366
 		actor_info_request 0368
+		actor_look_at 0361
 		actor_name_request 0369
-		party_setting 07D7
 		buy_bulk_vender 0801
 		char_create 0A39
-		storage_password 023B
-		send_equip 0998
-		sell_buy_complete 09D4
 		char_delete2_accept 098F
+		character_move 035F
+		item_drop 0363
+		item_take 0362
+		master_login 0AAC
+		party_setting 07D7
+		sell_buy_complete 09D4
+		send_equip 0998
+		skill_use_location 0366
+		storage_item_add 0364
+		storage_item_remove 0365
+		storage_password 023B
+		sync 0360
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -48,6 +48,13 @@ sub new {
 	$self->{send_buy_bulk_pack} = "v V";
 	$self->{char_create_version} = 0x0A39;
 	$self->{send_sell_buy_complete} = 1;
+
+	#buyer shop
+	$self->{buy_bulk_openShop_size} = "(a10)*";
+	$self->{buy_bulk_openShop_size_unpack} = "V v V";
+
+	$self->{buy_bulk_buyer_size} = "(a8)*";
+	$self->{buy_bulk_buyer_size_unpack} = "a2 V v";
 
 	return $self;
 }
@@ -57,7 +64,7 @@ sub sendMasterLogin {
 	my $msg;
 	my $password_rijndael = $self->encrypt_password($password);
 
-	my $msg = $self->reconstruct({	
+	my $msg = $self->reconstruct({
 		switch => 'master_login',
 		version => $version,
 		username  => $username,
