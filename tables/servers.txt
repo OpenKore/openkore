@@ -240,6 +240,7 @@ charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
+itemListType 1
 
 # https://roextreme.com/msp/main
 [Philippines - pRO: Yggdrasil]
@@ -259,6 +260,7 @@ charBlockSize 147
 pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
+itemListType 1
 
 # https://ru.4game.com/ro/play/
 [Russia - rRO-Renewal]
