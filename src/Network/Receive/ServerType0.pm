@@ -708,6 +708,7 @@ sub new {
  		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AF0' => ['action_ui', 'C V', [qw(type data)]],
 		'0AF7' => ['character_name', 'v a4 Z24', [qw(flag ID name)]],
+		'0AFB' => ['sage_autospell', 'v a*', [qw(len autospell_list)]],
 		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
 		'0AFE' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'0AFF' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
