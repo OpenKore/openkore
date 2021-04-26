@@ -841,7 +841,7 @@ sub received_characters {
 	} elsif ($config{pauseCharLogin}) {
 		return if($config{XKore} eq 1 || $config{XKore} eq 3);
 		if (!defined $timeout{'char_login_pause'}{'timeout'}) {
-			$timeout{'char_login_pause'}{'timeout'} = 2;
+			$timeout{'char_login_pause'}{'timeout'} = $config{pauseCharLogin};
 		}
 		$timeout{'char_login_pause'}{'time'} = time;
 
@@ -1739,7 +1739,7 @@ sub actor_display {
 	my $nameID = unpack("V", $args->{ID});
 	my $name = bytesToString($args->{name});
 	$name =~ s/^\s+|\s+$//g;
-	
+
 	if ($args->{switch} eq "0086") {
 		# Message 0086 contains less information about the actor than other similar
 		# messages. So we use the existing actor information.
