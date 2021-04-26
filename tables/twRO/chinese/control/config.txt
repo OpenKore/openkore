@@ -1636,8 +1636,6 @@ followLostStep 50
 followSitAuto 0
 # 是否自動跟著主人坐下
 followBot 0
-# 主人是否也是 Bot
-followCheckLOS 0
 # 會否向向主人的方向進行checkLOS [有待更正]
 followRandom 0
 followRandomDistance 4
