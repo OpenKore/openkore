@@ -401,20 +401,16 @@ sub loadDataFiles {
 
 	Plugins::callHook('start3');
 
-	if ($config{'adminPassword'} eq 'x' x 10) {
-		Log::message(T("\nAuto-generating Admin Password due to default...\n"));
-		configModify("adminPassword", vocalString(8));
-	#} elsif ($config{'adminPassword'} eq '') {
-	#	# This is where we protect the stupid from having a blank admin password
-	#	Log::message(T("\nAuto-generating Admin Password due to blank...\n"));
-	#	configModify("adminPassword", vocalString(8));
-	} elsif ($config{'secureAdminPassword'} eq '1') {
+	if ($config{'secureAdminPassword'} eq '1') {
 		# This is where we induldge the paranoid and let them have session generated admin passwords
 		Log::message(T("\nGenerating session Admin Password...\n"));
 		configModify("adminPassword", vocalString(8));
 	}
-
-	Log::message("\n");
+	#} elsif ($config{'adminPassword'} eq '') {
+	#	# This is where we protect the stupid from having a blank admin password
+	#	Log::message(T("\nAuto-generating Admin Password due to blank...\n"));
+	#	configModify("adminPassword", vocalString(8));
+	#}
 }
 
 sub initNetworking {

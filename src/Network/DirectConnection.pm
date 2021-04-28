@@ -377,8 +377,6 @@ sub checkConnection {
 
 			if ($master->{secureLogin_requestCode} ne '') {
 				$code = $master->{secureLogin_requestCode};
-			} elsif ($config{secureLogin_requestCode} ne '') {
-				$code = $config{secureLogin_requestCode};
 			}
 
 			if ($code ne '') {
@@ -429,8 +427,6 @@ sub checkConnection {
 
 			if ($master->{secureLogin_requestCode} ne '') {
 				$code = $master->{secureLogin_requestCode};
-			} elsif ($config{secureLogin_requestCode} ne '') {
- 				$code = $config{secureLogin_requestCode};
 			}
 
 			if ($code ne '') {
