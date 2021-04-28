@@ -49,7 +49,8 @@ pauseCharLogin 2
 pauseCharServer 0
 pauseMapServer 0
 ignoreInvalidLogin 0
-ignoreAntiCheatWarning 0
+secureLogin_requestCode
+
 
 # Opening cash shop when connected to map server (recv/ST0)
 whenInGame_requestCashPoints 0
