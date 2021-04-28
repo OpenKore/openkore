@@ -6032,7 +6032,7 @@ sub slave_calcproperty_handler {
 }
 
 sub EAC_key {
-	return if($config{'ignoreAntiCheatWarning'});
+	return if($masterServer->{'ignoreAntiCheatWarning'});
 	chatLog("k", T("*** Easy Anti-Cheat Detected ***\n"));
 	error T("OpenKore don't have support to servers with Easy Anti-Cheat Shield, please read the FAQ (github).\n");
 	quit();

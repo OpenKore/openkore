@@ -30,6 +30,7 @@ charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
+ignoreAntiCheatWarning 0
 
 # http://ragnarok.uol.com.br
 [Brazil - bRO: Thor]
@@ -52,6 +53,7 @@ charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
+ignoreAntiCheatWarning 0
 
 # http://ro.zhaouc.com/
 [cRO - China: Taren]
@@ -106,6 +108,7 @@ charBlockSize 155
 charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
+ignoreAntiCheatWarning 0
 
 # Renewal
 # http://playragnarok.com
@@ -125,6 +128,7 @@ charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
+ignoreAntiCheatWarning 0
 
 # Transcendence
 # http://playragnarok.com
@@ -141,6 +145,7 @@ charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
+ignoreAntiCheatWarning 0
 
 # http://playragnarok.com
 [International - iRO: Sakray]
@@ -241,6 +246,7 @@ pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
 itemListType 1
+ignoreAntiCheatWarning 0
 
 # https://roextreme.com/msp/main
 [Philippines - pRO: Yggdrasil]
@@ -261,6 +267,7 @@ pinCode 1
 charDeleteDateType 1
 rankingSystemType 1
 itemListType 1
+ignoreAntiCheatWarning 0
 
 # https://ru.4game.com/ro/play/
 [Russia - rRO-Renewal]
@@ -307,6 +314,7 @@ blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
 pinCode 1
+ignoreAntiCheatWarning 0
 
 [Localhost]
 ip localhost
