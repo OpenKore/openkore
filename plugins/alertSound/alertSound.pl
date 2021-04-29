@@ -1,7 +1,7 @@
 # alertsound plugin by joseph
-# Modified by 4epT (06.03.2021)
+# Modified by 4epT (30.04.2021)
 #
-# Alert Plugin Version 10
+# Alert Plugin Version 11
 #
 # This software is open source, licensed under the GNU General Public
 # License, ver. (2 * (2 + cos(pi)))
@@ -38,7 +38,13 @@ use Plugins;
 use Globals qw($accountID %ai_v %avoid $char %cities_lut %config $field %items_lut $itemsList %players $playersList);
 use Log qw(message);
 use Misc qw(checkSelfCondition itemName);
-use Utils::Win32;
+require Utils::Win32 if ($^O eq 'MSWin32'); #this plugin only works on OS windows
+
+if ($^O ne 'MSWin32') {
+	# We are not on Windows, Plugin can't work.
+	print "alertSound plugin only works on windows OS. Let's skip it.\n\n";
+	return 1;
+}
 
 Plugins::register('alertsound', 'plays sounds on certain events', \&Unload, \&Reload);
 my $packetHook = Plugins::addHooks (
@@ -54,7 +60,8 @@ my $packetHook = Plugins::addHooks (
 	['disconnected', \&disconnected, undef],
 	['item_appeared', \&item_appeared, undef],
 	['avoidGM_near', \&avoidGM_near, undef],
-	['avoidList_near', \&avoidList_near, undef]
+	['avoidList_near', \&avoidList_near, undef],
+	['friend_request', \&friend, undef]
 );
 sub Reload {
 	message "alertsound plugin reloading, ", 'system';
@@ -200,6 +207,12 @@ sub avoidGM_near {
 sub avoidList_near {
 # eventList avoidList_near
 	alertSound("avoidList_near");
+}
+
+sub friend {
+# eventList friend
+	my (undef, $args) = @_;
+	alertSound("friend");
 }
 
 sub exist_eventList {
