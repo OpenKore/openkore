@@ -5946,6 +5946,11 @@ sub friend_request {
 	$incomingFriend{'name'} = bytesToString($args->{name});
 	message TF("%s wants to be your friend\n", $incomingFriend{'name'});
 	message TF("Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n", $incomingFriend{'name'});
+	Plugins::callHook("friend_request", {
+		accountID => $incomingFriend{'accountID'},
+		charID => $incomingFriend{'charID'},
+		name => $incomingFriend{'name'}
+	});
 }
 
 # Notification about a friend removed (PACKET_ZC_DELETE_FRIENDS).
