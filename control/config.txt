@@ -664,6 +664,8 @@ partySkill {
 	target_timeout 0
 	target_deltaHp
 	target_dead 0
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 	inInventory
 	isSelfSkill 0
 }
