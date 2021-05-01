@@ -23,19 +23,30 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %handlers = qw(
+		actor_action 0437
 		actor_info_request 0368
 		actor_look_at 0361
 		actor_name_request 0369
+		buy_bulk_buyer 0819
+		buy_bulk_closeShop 0815
+		buy_bulk_openShop 0811
+		buy_bulk_request 0817
 		buy_bulk_vender 0801
+		character_move 035F
 		char_create 0A39
 		char_delete2_accept 098F
-		character_move 035F
+		friend_request 0202
+		homunculus_command 022D
 		item_drop 0363
+		item_list_window_selected 07E4
 		item_take 0362
+		map_login 0436
 		master_login 0AAC
+		party_join_request_by_name 02C4
 		party_setting 07D7
 		sell_buy_complete 09D4
 		send_equip 0998
+		skill_use 0438
 		skill_use_location 0366
 		storage_item_add 0364
 		storage_item_remove 0365
