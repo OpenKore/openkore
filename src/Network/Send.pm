@@ -320,9 +320,11 @@ sub reconstruct_master_login {
 	my ($self, $args) = @_;
 
 	$args->{ip} = '192.168.0.2' unless exists $args->{ip}; # gibberish
-	$args->{mac} = $config{macAddress} || '111111111111' unless exists $args->{mac}; # gibberish
-	$args->{mac} = uc($args->{mac}) unless exists $args->{mac};
-	$args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
+	if (exists $args->{mac}) {
+	    $args->{mac} = $config{macAddress} || '111111111111'; # gibberish
+	    $args->{mac} = uc($args->{mac});
+	    $args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
+	}
 	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
 
 	if (exists $args->{password}) {
