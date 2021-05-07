@@ -564,6 +564,8 @@ attackComboSlot {
 	monsters
 	notMonsters
 	monstersCount
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 }
 
 doCommand {
