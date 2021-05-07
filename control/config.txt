@@ -535,6 +535,8 @@ attackSkillSlot {
 	target_whenStatusActive
 	target_whenStatusInactive
 	target_deltaHp
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 	inInventory
 	isSelfSkill 0
 	equip_topHead
@@ -562,6 +564,8 @@ attackComboSlot {
 	monsters
 	notMonsters
 	monstersCount
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 }
 
 doCommand {
@@ -586,6 +590,8 @@ doCommand {
 	notInTown 0
 	timeout
 	disabled 0
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 	inInventory
 	inCart
 	inMap
@@ -617,6 +623,8 @@ useSelf_skill {
 	notInTown 0
 	timeout 0
 	disabled 0
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 	inInventory
 	manualAI 0
 }
@@ -664,6 +672,8 @@ partySkill {
 	target_timeout 0
 	target_deltaHp
 	target_dead 0
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 	inInventory
 	isSelfSkill 0
 }
@@ -671,6 +681,8 @@ partySkill {
 monsterSkill {
 	target
 	maxUses
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 	# Skill Use Conditions, including isSelfSkill
 	# Self Conditions
 	# Target Monster Conditions
@@ -727,6 +739,8 @@ equipAuto {
 	notInTown 0
 	timeout 0
 	disabled 0
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 	inInventory
 	manualAI 0
 }
@@ -753,6 +767,8 @@ useSelf_item {
 	notInTown 0
 	timeout 0
 	disabled 0
+	whenPartyMembersNear
+	whenPartyMembersNearDist
 	inInventory
 	manualAI 0
 }
