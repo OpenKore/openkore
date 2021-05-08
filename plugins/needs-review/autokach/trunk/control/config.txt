@@ -134,7 +134,7 @@ cachePlayerNames 1
 cachePlayerNames_duration 900
 cachePlayerNames_maxSize 100
 
-clientSight 20
+clientSight 15
 
 dcOnDeath 0
 dcOnDualLogin 0
@@ -298,8 +298,6 @@ repairAuto_list
 
 status_mapProperty 0
 status_mapType 0
-
-removeActorWithDistance
 
 ######## Mercenary Support ########
 
@@ -705,7 +703,7 @@ macro_orphans reregister
 
 ###### Rofan Params #######http://www.rofan.ru/viewtopic.php?f=32&t=7370
 # Jobs list: Swordman(1), Acolite(2), Mage(3), Archer(4), Thief(5), Merchant(6), Taekwon (7), Ninja (8), Gunslinger (9)
-Job 
+Job
 charname
 QuestPart
 QuestVar1
