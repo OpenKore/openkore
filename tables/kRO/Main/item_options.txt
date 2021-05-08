@@ -1,0 +1,239 @@
+VAR_MAXHPAMOUNT#MHP + %d#
+VAR_MAXSPAMOUNT#MSP + %d#
+VAR_STRAMOUNT#STR + %d#
+VAR_AGIAMOUNT#AGI + %d#
+VAR_VITAMOUNT#VIT + %d#
+VAR_INTAMOUNT#INT + %d#
+VAR_DEXAMOUNT#DEX + %d#
+VAR_LUKAMOUNT#LUK + %d#
+VAR_MAXHPPERCENT#MHP + %d%%#
+VAR_MAXSPPERCENT#MSP + %d%%#
+VAR_HPACCELERATION#HP 자연회복 속도 %d%% 증가#
+VAR_SPACCELERATION#SP 자연회복 속도 %d%% 증가#
+VAR_ATKPERCENT#ATK + %d%%#
+VAR_MAGICATKPERCENT#MATK + %d%%#
+VAR_PLUSASPD#ASPD + %d#
+VAR_PLUSASPDPERCENT#공격속도 증가(공격 후딜레이 %d%% 감소)#
+VAR_ATTPOWER#ATK + %d#
+VAR_HITSUCCESSVALUE#HIT + %d#
+VAR_ATTMPOWER#MATK + %d#
+VAR_ITEMDEFPOWER#DEF + %d#
+VAR_MDEFPOWER#MDEF + %d#
+VAR_AVOIDSUCCESSVALUE#FLEE + %d#
+VAR_PLUSAVOIDSUCCESSVALUE#완전회피 + %d#
+VAR_CRITICALSUCCESSVALUE#CRI + %d#
+ATTR_TOLERACE_NOTHING#무속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_WATER#수속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_GROUND#지속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_FIRE#화속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_WIND#풍속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_POISON#독속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_SAINT#성속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_DARKNESS#암속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_TELEKINESIS#염속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_UNDEAD#불사속성 공격에 대한 내성 %d%% 증가#
+ATTR_TOLERACE_ALLBUTNOTHING#모든 속성(무속성 제외) 공격 내성 %d%% 증가#
+DAMAGE_PROPERTY_NOTHING_USER#무속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_NOTHING_TARGET#무속성 적에게 물리 데미지 %d%% 증가#
+DAMAGE_PROPERTY_WATER_USER#수속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_WATER_TARGET#수속성 적에게 물리 데미지 %d%% 증가#
+DAMAGE_PROPERTY_GROUND_USER#지속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_GROUND_TARGET#지속성 적에게 물리 데미지 %d%% 증가#
+DAMAGE_PROPERTY_FIRE_USER#화속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_FIRE_TARGET#화속성 적에게 물리 데미지 %d%% 증가#
+DAMAGE_PROPERTY_WIND_USER#풍속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_WIND_TARGET#풍속성 적에게 물리 데미지 %d%% 증가#
+DAMAGE_PROPERTY_POISON_USER#독속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_POISON_TARGET#독속성 적에게 물리 데미지 %d%% 증가#
+DAMAGE_PROPERTY_SAINT_USER#성속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_SAINT_TARGET#성속성 적에게 물리 데미지 %d%% 증가#
+DAMAGE_PROPERTY_DARKNESS_USER#암속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_DARKNESS_TARGET#암속성 적에게 물리 데미지 %d%% 증가#
+DAMAGE_PROPERTY_TELEKINESIS_USER#염속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_TELEKINESIS_TARGET#염속성 적에게 물리 데미지 %d%% 증가#
+DAMAGE_PROPERTY_UNDEAD_USER#불사속성 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_PROPERTY_UNDEAD_TARGET#불사속성 적에게 물리 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_NOTHING_USER#무속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_NOTHING_TARGET#무속성 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_WATER_USER#수속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_WATER_TARGET#수속성 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_GROUND_USER#지속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_GROUND_TARGET#지속성 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_FIRE_USER#화속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_FIRE_TARGET#화속성 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_WIND_USER#풍속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_WIND_TARGET#풍속성 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_POISON_USER#독속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_POISON_TARGET#독속성 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_SAINT_USER#성속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_SAINT_TARGET#성속성 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_DARKNESS_USER#암속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_DARKNESS_TARGET#암속성 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_TELEKINESIS_USER#염속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_TELEKINESIS_TARGET#염속성 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_PROPERTY_UNDEAD_USER#불사속성 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_PROPERTY_UNDEAD_TARGET#불사속성 적에게 마법 데미지 %d%% 증가#
+BODY_ATTR_NOTHING#갑옷에 무속성이 영구부여#
+BODY_ATTR_WATER#갑옷에 수속성이 영구부여#
+BODY_ATTR_GROUND#갑옷에 지속성이 영구부여#
+BODY_ATTR_FIRE#갑옷에 화속성이 영구부여#
+BODY_ATTR_WIND#갑옷에 풍속성이 영구부여#
+BODY_ATTR_POISON#갑옷에 독속성이 영구부여#
+BODY_ATTR_SAINT#갑옷에 성속성이 영구부여#
+BODY_ATTR_DARKNESS#갑옷에 암속성이 영구부여#
+BODY_ATTR_TELEKINESIS#갑옷에 염속성이 영구부여#
+BODY_ATTR_UNDEAD#갑옷에 불사속성이 영구부여#
+RACE_TOLERACE_NOTHING#무형 몬스터에 대한 내성 %d%% 증가#
+RACE_TOLERACE_UNDEAD#불사형 몬스터에 대한 내성 %d%% 증가#
+RACE_TOLERACE_ANIMAL#동물형 몬스터에 대한 내성 %d%% 증가#
+RACE_TOLERACE_PLANT#식물형 몬스터에 대한 내성 %d%% 증가#
+RACE_TOLERACE_INSECT#곤충형 몬스터에 대한 내성 %d%% 증가#
+RACE_TOLERACE_FISHS#어패형 몬스터에 대한 내성 %d%% 증가#
+RACE_TOLERACE_DEVIL#악마형 몬스터에 대한 내성 %d%% 증가#
+RACE_TOLERACE_HUMAN#인간형 몬스터에 대한 내성 %d%% 증가#
+RACE_TOLERACE_ANGEL#천사형 몬스터에 대한 내성 %d%% 증가#
+RACE_TOLERACE_DRAGON#용족 몬스터에 대한 내성 %d%% 증가#
+RACE_DAMAGE_NOTHING#무형 몬스터에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_UNDEAD#불사형 몬스터에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_ANIMAL#동물형 몬스터에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_PLANT#식물형 몬스터에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_INSECT#곤충형 몬스터에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_FISHS#어패형 몬스터에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_DEVIL#악마형 몬스터에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_HUMAN#인간형 몬스터에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_ANGEL#천사형 몬스터에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_DRAGON#용족 몬스터에게 물리 데미지 %d%% 증가#
+RACE_MDAMAGE_NOTHING#무형 몬스터에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_UNDEAD#불사형 몬스터에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_ANIMAL#동물형 몬스터에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_PLANT#식물형 몬스터에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_INSECT#곤충형 몬스터에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_FISHS#어패형 몬스터에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_DEVIL#악마형 몬스터에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_HUMAN#인간형 몬스터에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_ANGEL#천사형 몬스터에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_DRAGON#용족 몬스터에게 마법 데미지 %d%% 증가#
+RACE_CRI_PERCENT_NOTHING#무형 몬스터에게 CRI + %d#
+RACE_CRI_PERCENT_UNDEAD#불사형 몬스터에게 CRI + %d#
+RACE_CRI_PERCENT_ANIMAL#동물형 몬스터에게 CRI + %d#
+RACE_CRI_PERCENT_PLANT#식물형 몬스터에게 CRI + %d#
+RACE_CRI_PERCENT_INSECT#곤충형 몬스터에게 CRI + %d#
+RACE_CRI_PERCENT_FISHS#어패형 몬스터에게 CRI + %d#
+RACE_CRI_PERCENT_DEVIL#악마형 몬스터에게 CRI + %d#
+RACE_CRI_PERCENT_HUMAN#인간형 몬스터에게 CRI + %d#
+RACE_CRI_PERCENT_ANGEL#천사형 몬스터에게 CRI + %d#
+RACE_CRI_PERCENT_DRAGON#용족 몬스터에게 CRI + %d#
+RACE_IGNORE_DEF_PERCENT_NOTHING#무형 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_UNDEAD#불사형 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_ANIMAL#동물형 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_PLANT#식물형 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_INSECT#곤충형 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_FISHS#어패형 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_DEVIL#악마형 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_HUMAN#인간형 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_ANGEL#천사형 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_DRAGON#용족 몬스터의 물리 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_NOTHING#무형 몬스터의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_UNDEAD#불사형 몬스터의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_ANIMAL#동물형 몬스터의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_PLANT#식물형 몬스터의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_INSECT#곤충형 몬스터의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_FISHS#어패형 몬스터의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_DEVIL#악마형 몬스터의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_HUMAN#인간형 몬스터의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_ANGEL#천사형 몬스터의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_DRAGON#용족 몬스터의 마법 방어력 %d%% 무시#
+CLASS_DAMAGE_NORMAL_TARGET#일반 적에게 물리 데미지 %d%% 증가#
+CLASS_DAMAGE_BOSS_TARGET#보스형 몬스터에게 물리 데미지 %d%% 증가#
+CLASS_DAMAGE_NORMAL_USER#일반 적으로부터 받는 물리 데미지 %d%% 감소#
+CLASS_DAMAGE_BOSS_USER#보스형 몬스터로부터 받는 물리 데미지 %d%% 감소#
+CLASS_MDAMAGE_NORMAL#일반 적에게 마법 데미지 %d%% 증가#
+CLASS_MDAMAGE_BOSS#보스형 몬스터에게 마법 데미지 %d%% 증가#
+CLASS_IGNORE_DEF_PERCENT_NORMAL#일반 적의 물리 방어력을 %d%% 무시#
+CLASS_IGNORE_DEF_PERCENT_BOSS#보스형 몬스터의 물리 방어력을 %d%% 무시#
+CLASS_IGNORE_MDEF_PERCENT_NORMAL#일반 적의 마법 방어력을 %d%% 무시#
+CLASS_IGNORE_MDEF_PERCENT_BOSS#보스형 몬스터의 마법 방어력을 %d%% 무시#
+DAMAGE_SIZE_SMALL_TARGET#소형 적에게 물리 데미지 %d%% 증가#
+DAMAGE_SIZE_MIDIUM_TARGET#중형 적에게 물리 데미지 %d%% 증가#
+DAMAGE_SIZE_LARGE_TARGET#대형 적에게 물리 데미지 %d%% 증가#
+DAMAGE_SIZE_SMALL_USER#소형 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_SIZE_MIDIUM_USER#중형 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_SIZE_LARGE_USER#대형 적으로부터 받는 물리 데미지 %d%% 감소#
+DAMAGE_SIZE_PERFECT#무기에 대한 크기 페널티 삭제#
+DAMAGE_CRI_TARGET#크리티컬 데미지 %d%% 증가#
+DAMAGE_CRI_USER#크리티컬 피해량 %d%% 감소#
+RANGE_ATTACK_DAMAGE_TARGET#원거리 물리 데미지 %d%% 증가#
+RANGE_ATTACK_DAMAGE_USER#원거리 물리 피해량 %d%% 감소#
+HEAL_VALUE#힐량 %d%% 증가#
+HEAL_MODIFY_PERCENT#받는 힐량 %d%% 증가#
+DEC_SPELL_CAST_TIME#변동 캐스팅 시간 %d%% 감소#
+DEC_SPELL_DELAY_TIME#스킬 후 딜레이 %d%% 감소#
+DEC_SP_CONSUMPTION#스킬 사용 시 SP소모량 %d%% 감소#
+WEAPON_ATTR_NOTHING#무기에 무속성 부여#
+WEAPON_ATTR_WATER#무기에 수속성 부여#
+WEAPON_ATTR_GROUND#무기에 지속성 부여#
+WEAPON_ATTR_FIRE#무기에 화속성 부여#
+WEAPON_ATTR_WIND#무기에 풍속성 부여#
+WEAPON_ATTR_POISON#무기에 독속성 부여#
+WEAPON_ATTR_SAINT#무기에 성속성 부여#
+WEAPON_ATTR_DARKNESS#무기에 암속성 부여#
+WEAPON_ATTR_TELEKINESIS#무기에 염속성 부여#
+WEAPON_ATTR_UNDEAD#무기에 불사속성 부여#
+WEAPON_INDESTRUCTIBLE#파괴 불가#
+BODY_INDESTRUCTIBLE#파괴 불가#
+MDAMAGE_SIZE_SMALL_TARGET#소형 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_SIZE_MIDIUM_TARGET#중형 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_SIZE_LARGE_TARGET#대형 적에게 마법 데미지 %d%% 증가#
+MDAMAGE_SIZE_SMALL_USER#소형 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_SIZE_MIDIUM_USER#중형 적으로부터 받는 마법 데미지 %d%% 감소#
+MDAMAGE_SIZE_LARGE_USER#대형 적으로부터 받는 마법 데미지 %d%% 감소#
+ATTR_TOLERACE_ALL#모든 속성 공격 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_NOTHING#무형 몬스터에 대한 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_UNDEAD#불사형 몬스터에 대한 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_ANIMAL#동물형 몬스터에 대한 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_PLANT#식물형 몬스터에 대한 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_INSECT#곤충형 몬스터에 대한 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_FISHS#어패형 몬스터에 대한 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_DEVIL#악마형 몬스터에 대한 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_HUMAN#인간형 몬스터에 대한 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_ANGEL#천사형 몬스터에 대한 내성 %d%% 증가#
+RACE_WEAPON_TOLERACE_DRAGON#용족 몬스터에 대한 내성 %d%% 증가#
+RANGE_WEAPON_ATTACK_DAMAGE_TARGET#원거리 무기 물리 데미지 %d%% 증가#
+RANGE_WEAPON_ATTACK_DAMAGE_USER#원거리 무기 물리 피해량 %d%% 감소#
+RACE_TOLERACE_PLAYER_HUMAN#인간형 플레이어에 대한 내성 %d%% 증가#
+RACE_TOLERACE_PLAYER_DORAM#도람 플레이어에 대한 내성 %d%% 증가#
+RACE_DAMAGE_PLAYER_HUMAN#인간형 플레이어에게 물리 데미지 %d%% 증가#
+RACE_DAMAGE_PLAYER_DORAM#도람 플레이어에게 물리 데미지 %d%% 증가#
+RACE_MDAMAGE_PLAYER_HUMAN#인간형 플레이어에게 마법 데미지 %d%% 증가#
+RACE_MDAMAGE_PLAYER_DORAM#도람 플레이어에게 마법 데미지 %d%% 증가#
+RACE_CRI_PERCENT_PLAYER_HUMAN#인간형 플레이어에게 CRI + %d#
+RACE_CRI_PERCENT_PLAYER_DORAM#도람 플레이어에게 CRI + %d#
+RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN#인간형 플레이어의 물리 방어력 %d%% 무시#
+RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM#도람 플레이어의 물리 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN#인간형 플레이어의 마법 방어력 %d%% 무시#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM#도람 플레이어의 마법 방어력 %d%% 무시#
+REFLECT_DAMAGE_PERCENT#받는 반사 데미지 %d%% 감소#
+MELEE_ATTACK_DAMAGE_TARGET#근접 물리 데미지 %d%% 증가#
+MELEE_ATTACK_DAMAGE_USER#받는 근접 물리 데미지 %d%% 감소#
+ADDSKILLMDAMAGE_NOTHING#무속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_WATER#수속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_GROUND#지속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_FIRE#화속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_WIND#풍속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_POISON#독속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_SAINT#성속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_DARKNESS#암속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_TELEKINESIS#염속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_UNDEAD#불사속성 마법 데미지 %d%% 증가#
+ADDSKILLMDAMAGE_ALL#모든속성 마법 데미지 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_NOTHING#무형 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_UNDEAD#불사형 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_ANIMAL#동물형 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_PLANT#식물형 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_INSECT#곤충형 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_FISHS#어류형 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_DEVIL#악마형 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_HUMAN#인간형 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_ANGEL#천사형 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_DRAGON#용족 몬스터 획득 경험치 %d%% 증가#
+ADDEXPPERCENT_KILLRACE_ALL#몬스터 획득 경험치 %d%% 증가#
