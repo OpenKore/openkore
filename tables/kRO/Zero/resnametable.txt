@@ -1,4 +1,69 @@
-// 최종갱신 오전 10:24 2017-10-13 [제로서버]
+// 최종갱신 오전 11:10 2020-03-23[제로서버]
+
+// 영웅의 흔적 3차 야간 투기장
+1@ge_sn.gnd#1@ge_sn.gnd#
+1@ge_sn.gat#1@ge_sn.gat#
+1@ge_sn.rsw#1@ge_sn.rsw#
+유저인터페이스\map\1@ge_sn.bmp#유저인터페이스\map\1@ge_sn.bmp#
+
+//20191118 타나토스타워
+1@thts.gnd#1@thts.gnd#
+1@thts.gat#1@thts.gat#
+1@thts.rsw#1@thts.rsw#
+유저인터페이스\map\1@thts.bmp#유저인터페이스\map\1@thts.bmp#
+
+2@thts.gnd#2@thts.gnd#
+2@thts.gat#2@thts.gat#
+2@thts.rsw#2@thts.rsw#
+유저인터페이스\map\2@thts.bmp#유저인터페이스\map\2@thts.bmp#
+
+3@thts.gnd#3@thts.gnd#
+3@thts.gat#3@thts.gat#
+3@thts.rsw#3@thts.rsw#
+유저인터페이스\map\3@thts.bmp#유저인터페이스\map\3@thts.bmp#
+
+4@thts.gnd#4@thts.gnd#
+4@thts.gat#4@thts.gat#
+4@thts.rsw#4@thts.rsw#
+유저인터페이스\map\4@thts.bmp#유저인터페이스\map\4@thts.bmp#
+
+5@thts.gnd#5@thts.gnd#
+5@thts.gat#5@thts.gat#
+5@thts.rsw#5@thts.rsw#
+유저인터페이스\map\5@thts.bmp#유저인터페이스\map\5@thts.bmp#
+
+6@thts.gnd#6@thts.gnd#
+6@thts.gat#6@thts.gat#
+6@thts.rsw#6@thts.rsw#
+유저인터페이스\map\6@thts.bmp#유저인터페이스\map\6@thts.bmp#
+
+7@thts.gnd#7@thts.gnd#
+7@thts.gat#7@thts.gat#
+7@thts.rsw#7@thts.rsw#
+유저인터페이스\map\7@thts.bmp#유저인터페이스\map\7@thts.bmp#
+
+8@thts.gnd#8@thts.gnd#
+8@thts.gat#8@thts.gat#
+8@thts.rsw#8@thts.rsw#
+유저인터페이스\map\8@thts.bmp#유저인터페이스\map\8@thts.bmp#
+
+//201810124 오딘
+1@odin.gnd#1@odin.gnd#
+1@odin.gat#1@odin.gat#
+1@odin.rsw#1@odin.rsw#
+유저인터페이스\map\1@odin.bmp#유저인터페이스\map\1@odin.bmp#
+
+// 2018 할로윈
+1@halo.gnd#1@halo.gnd#
+1@halo.gat#1@halo.gat#
+1@halo.rsw#1@halo.rsw#
+유저인터페이스\map\1@halo.bmp#유저인터페이스\map\1@halo.bmp#
+
+// 모모타로 체험전
+1@momo.gnd#1@momo.gnd#
+1@momo.gat#1@momo.gat#
+1@momo.rsw#1@momo.rsw#
+유저인터페이스\map\1@momo.bmp#유저인터페이스\map\1@momo.bmp#
 
 //99랩침몰선
 1@tre02.gnd#1@tre02.gnd#
