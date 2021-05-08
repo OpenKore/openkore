@@ -16,8 +16,8 @@
 package Network::Receive::kRO::Sakexe_0;
 
 use strict;
-use Network::Receive::kRO;
-use base qw(Network::Receive::kRO);
+use Network::Receive;
+use base qw(Network::Receive);
 ############# TEMPORARY?
 use Time::HiRes qw(time usleep);
 

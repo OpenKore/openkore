@@ -13,11 +13,67 @@
 #  $Id: kRO.pm 6687 2009-04-19 19:04:25Z technologyguild $
 ########################################################################
 # Korea (kRO)
-# The majority of private servers use eAthena, this is a clone of kRO
+
 package Network::Send::kRO;
 
 use strict;
 
-use base 'Network::Send';
+use base qw(Network::Send::ServerType0);
+
+sub new {
+	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+
+	my %handlers = qw(
+		master_login 0ACF
+		token_login 0825
+		actor_action 0437
+		item_use 0439
+		skill_use 0438
+		character_move 035F
+		sync 0360
+		actor_look_at 0361
+		item_take 0362
+		item_drop 0363
+		storage_item_add 0364
+		storage_item_remove 0365
+		skill_use_location 0366
+		actor_info_request 0368
+		actor_name_request 0369
+		buy_bulk_buyer 0819
+		buy_bulk_request 0817
+		buy_bulk_closeShop 0815
+		buy_bulk_openShop 0811
+		item_list_window_selected 07E4
+		map_login 0436
+		party_join_request_by_name 02C4
+		friend_request 0202
+		homunculus_command 022D
+		storage_password 023B
+		buy_bulk_vender 0801
+		party_setting 07D7
+		send_equip 0998
+		pet_capture 08B5
+		char_delete2_accept 098F
+		rodex_open_mailbox 0AC0
+		rodex_refresh_maillist 0AC1
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	$self->{char_create_version} = 0x0A39;
+	$self->{send_sell_buy_complete} = 1;
+
+	$self->{send_buy_bulk_pack} = "v V";
+	$self->{send_buy_bulk_market_pack} = "V2";
+
+	$self->{buy_bulk_openShop_size} = "(a10)*";
+	$self->{buy_bulk_openShop_size_unpack} = "V v V";
+
+	$self->{buy_bulk_buyer_size} = "(a8)*";
+	$self->{buy_bulk_buyer_size_unpack} = "a2 V v";
+
+	return $self;
+}
 
 1;
