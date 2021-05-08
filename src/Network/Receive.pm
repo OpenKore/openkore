@@ -7731,7 +7731,7 @@ sub received_login_token {
 	return if ($self->{net}->version == 1);
 	my $master = $masterServers{$config{master}};
 	# rathena use 0064 not 0825
-	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTT_ip}, $master->{OTT_port});
+	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTP_ip}, $master->{OTP_port});
 }
 
 # this info will be sent to xkore 2 clients
