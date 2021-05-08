@@ -1775,7 +1775,7 @@ sub actor_display {
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
 	# beyond clientSight.
 	if ($config{clientSight}) {
-		if ((my $block_dist = blockDistance($char->{pos_to}, \%coordsTo)) > ($config{clientSight})) {
+		if ((my $block_dist = blockDistance($char->{pos_to}, \%coordsTo)) >= ($config{clientSight})) {
 			my $nameIdTmp = unpack("V", $args->{ID});
 			debug "Removed out of sight actor $nameIdTmp at ($coordsTo{x}, $coordsTo{y}) (distance: $block_dist)\n";
 			return;
