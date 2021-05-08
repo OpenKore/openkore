@@ -5059,7 +5059,7 @@ sub checkSelfCondition {
 			$dist = $config{$prefix."_whenPartyMembersNearDist"};
 		} else {
 			$dist = "< ";
-			$dist .= ($config{removeActorWithDistance} || $config{clientSight} || 15);
+			$dist .= ($config{clientSight} || 15);
 		}
 
 		foreach my $player (@{$playersList}) {
