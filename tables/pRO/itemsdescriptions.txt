@@ -26085,7 +26085,7 @@ Weight : ^7777771^000000
 #
 4302#
 Tao Gunka Card.
-Max HP +100%, DEF - 50% and MDEF - 50%.
+Max HP +100%, DEF - 50 and MDEF - 50
 Class : ^777777Card^000000
 Compound on: ^777777Armor^000000
 Weight : ^7777771^000000
@@ -29295,7 +29295,7 @@ Decreases cooldown time for Highness Heal by 3 seconds.
 Decreases SP cost of Coluseo Heal by 30.
 #
 4805#
-^0000FFHealing Skill Effect +3%^000000
+Healing Skill Effect +3%
 #
 4806#
 Matk +3%
@@ -29323,13 +29323,15 @@ Decrease Casting Time by 10%
 #
 4813#
 Matk +12
-Decrease Casting Time by 8%
+Reduce variable cast time by 8 %
 #
 4814#
-^0000FFMATK +9,Reduce Variable Cast Time by 6%^000000
+Matk +9
+Reduce variable cast time by 6 %
 #
 4815#
-^0000FFMATK+6, Reduce Variable Cast Time by 3%^000000
+Matk +6
+Reduce variable cast time by 3 %
 #
 4816#
 Critical Rate +12%
@@ -29395,13 +29397,13 @@ Matk +50
 Decrease Casting Time by 20%
 #
 4832#
-^0000FFRanged Attack +2%^000000
+Increase long-range damage by 2 %
 #
 4833#
-^0000FFRanged Attack +4%^000000
+Increase long-range damage by 4 %
 #
 4834#
-Ranged Attack +6%
+Increase long-range damage by 6 %
 #
 4835#
 Ranged Attack +8%
@@ -29451,11 +29453,12 @@ Increases tolerance to Neutral Property monsters by 5%
 Increases Tolerance to Demihuman and other Players by 5%
 #
 4850#
-^0000FFIncreases recovery rate of recovery skills by 6%, Increases the SP cost of skills by 5%^000000
+Healing Skill Effect + 6%
+Increase SP Cost of skill by 5%
 #
 4851#
-Increases heal efficiency by 12%
-Increases SP consumption by 10%
+Healing Skill Effect + 12%
+Increase SP Cost of skill by 10%
 #
 4852#
 Increases heal efficiency by 20%
@@ -29510,13 +29513,13 @@ FLEE +3
 MHP + 2%.
 #
 4863#
-^0000FFCRIT Damage +4%, CRIT+1^000000
+Critical + 1, Critical damage + 4 %
 #
 4864#
-^0000FFCRIT Damage +6%, CRIT+2^000000
+Critical + 2, Critical damage + 6 %
 #
 4865#
-Critical damage + 8%, CRI + 3.
+Critical + 3, Critical damage + 8 %
 #
 4866#
 Critical damage + 10%, CRI + 4.
@@ -29540,7 +29543,7 @@ SP + 75
 Aspd + 6 %
 #
 4873#
-Increase Attacking speed.(Decrease Delay after attacking by 8%)
+Aspd + 8 %
 #
 4875#
 When being attacked, has a chance of changing into a Bigfoot and increasing Str by 200 for 5 seconds while decreasing HP by 500 every second.
@@ -29889,6 +29892,21 @@ Reduce cast delay after use skill by 4%
 #
 4950#
 Reduce cast delay after use skill by 6%
+#
+4984#
+DEF + 100
+#
+4986#
+ATK + 20
+#
+4987#
+MATK + 20
+#
+4988#
+MHP + 5%
+#
+4989#
+MSP + 3%
 #
 4991#
 Adventurers can feel carefree exploring dangerous lands knowing that Kafra gal Blossom is supporting them back in town. 
@@ -34428,9 +34446,13 @@ Required Level : ^7777771^000000
 Jobs: ^777777All^000000
 #
 5414#
-A good 'ol summer campfire
-Increases resistance to Fire Property by 10%.
-Adds a chance autocast Level 5 Fire Ball on enemy when the user receives Physical Damage. 
+^808080A good 'ol summer campfire^000000
+^FFFFFF_^000000
+^FF6633[Item Effect]^000000
+1. Increases resistance to ^3366FF[Fire]^000000 Property by 10%.
+2. Adds a chance autocast ^0000FF[Fire Ball Lv 5]^000000
+when user dealing Physical Damage on target.
+^FFFFFF_^000000
 Class : ^777777Headgear^000000
 Defense: ^7777772^000000
 Location: ^777777Upper^000000
@@ -39244,6 +39266,8 @@ Weight : ^7777770^000000
 ^FF6633[Item Function] ^000000
 Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +9
 ^FFFFFF_^000000
+^006600Available for:^000000 Armor, Shields, Shoes, and Garment
+^FFFFFF_^000000
 Weight : ^7777770^000000
 #
 6233#
@@ -39251,6 +39275,8 @@ Weight : ^7777770^000000
 ^ffffff_^000000
 ^FF6633[Item Function] ^000000
 Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +8
+^FFFFFF_^000000
+^006600Available for:^000000 Armor, Shields, Shoes, and Garment
 ^FFFFFF_^000000
 Weight : ^7777770^000000
 #
@@ -39260,6 +39286,8 @@ Weight : ^7777770^000000
 ^FF6633[Item Function] ^000000
 Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +7
 ^FFFFFF_^000000
+^006600Available for:^000000 Armor, Shields, Shoes, and Garment
+^FFFFFF_^000000
 Weight : ^7777770^000000
 #
 6235#
@@ -39267,6 +39295,8 @@ Weight : ^7777770^000000
 ^ffffff_^000000
 ^FF6633[Item Function] ^000000
 Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +6
+^FFFFFF_^000000
+^006600Available for:^000000 Armor, Shields, Shoes, and Garment
 ^FFFFFF_^000000
 Weight : ^7777770^000000
 #
@@ -39287,6 +39317,8 @@ Weight : ^7777770^000000
 ^ffffff_^000000
 ^FF6633[Item Function] ^000000
 Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +11
+^FFFFFF_^000000
+^006600Available for:^000000 Armor, Shields, Shoes, and Garment
 ^FFFFFF_^000000
 Weight : ^7777770^000000
 #
@@ -39353,7 +39385,13 @@ A token that can be exchanged for cash items.
 Weight : ^7777770^000000
 #
 6244#
-Dangerous powder which has a dark color that is used to make a bomb. Have to handle with care!
+^808080A black gun powder that used as a material for firework.^000000
+^ffffff_^000000
+^009900[Item Function]^000000
+This item is item quest for ^006600Hanabi Festival^000000
+^ffffff_^000000
+^FF0000Item will be removed on 20th May 2021^000000
+^ffffff_^000000
 Weight : ^7777770.1^000000
 #
 6245#
@@ -39714,8 +39752,13 @@ An old piece of sheet music filled with notes inscribed in blue ink.
 Weight : ^7777771^000000
 #
 6345#
-Power of trust that showing its touchable aura. It will show-up in different colors.
-^FF0000[Thhis item will be delete after event end]^000000
+^808080A colorful lucid used as a material for firework.^000000
+^ffffff_^000000
+^009900[Item Function]^000000
+This item is item quest for ^006600Hanabi Festival^000000
+^ffffff_^000000
+^FF0000Item will be removed on 20th May 2021^000000
+^ffffff_^000000
 Weight : ^7777770^000000
 #
 6358#
@@ -40069,6 +40112,8 @@ Weight : ^7777770^000000
 ^ffffff_^000000
 ^FF6633[Item Function] ^000000
 Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +5
+^FFFFFF_^000000
+^006600Available for:^000000 Armor, Shields, Shoes, and Garment
 ^FFFFFF_^000000
 Weight : ^7777770^000000
 #
@@ -40579,6 +40624,8 @@ Weight : ^7777770^000000
 ^ffffff_^000000
 ^FF6633[Item Function] ^000000
 Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +12
+^FFFFFF_^000000
+^006600Available for:^000000 Armor, Shields, Shoes, and Garment
 ^FFFFFF_^000000
 Weight : ^7777770^000000
 #
@@ -41463,7 +41510,7 @@ Weight : ^7777770^000000
 ^808080The scroll that can be used for guarantee refine.^000000
 ^ffffff_^000000
 ^FF6633[Item Function] ^000000
-Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +6
+Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +10
 ^FFFFFF_^000000
 Weight : ^7777770^000000
 #
@@ -41787,6 +41834,8 @@ Weight : ^7777770^000000
 ^ffffff_^000000
 ^FF6633[Item Function] ^000000
 Bring this to NPC: Chungha's Blacksmith at Eden (40, 165) to get guarantee refine +10
+^FFFFFF_^000000
+^006600Available for:^000000 Armor, Shields, Shoes, and Garment
 ^FFFFFF_^000000
 Weight : ^7777770^000000
 #
@@ -44058,6 +44107,18 @@ Lotto Ball.
 ^ffffff ^000000	
 Weight : ^7777771^000000	
 	
+#
+7399#
+^808080A member card for praticing with Trainer's Kahi^000000
+^FFFFFF_^000000
+^FF6633[Item Function]^000000
+Give this card to NPC : Trainer's Kahi (Located on Eden Group 35,21) to get level up service
+^FFFFFF_^000000
+^FF0000[Remark]^000000
+If you give this card to NPC, you will not able to get this card back.
+Read for more detail on https://roextreme.com/msp
+^FFFFFF_^000000
+Weight : ^77777710^000000
 #
 7406#
 ^808080Rare Emblem that only able to found from Orc Hero^000000
@@ -47973,18 +48034,39 @@ When open this scroll, have a chance to receive below item :
 Weight : ^7777771^000000
 #
 9777#
-A Scroll that contains special things in there.
-When open this scroll, have a chance to receive below item :
-1. Love Token 1 ea
-2. Chocolate Drink 5 ea
-3. Lv 10 Blessing Scroll 5 ea
-4. Lv 10 Increase Agi Scroll 5 ea
-5. Job Manual 1 ea
-6. Battle Manual 1 ea
-7. I Love You Firecracker 10 ea
-8. Chewy Rice Powder 1 ea
-9. ^FF0066C Cute Bear Ear (B)^000000 1 ea
-10. ^FF0066C Cute Bear Ear (G)^000000 1 ea
+^808080A Scroll that contains special things in there.^000000
+^808080When open this scroll, have a chance to receive below item^000000
+^ffffff_^000000
+1. ^0000FFHawkeye Hood (N-OSM)^000000
+2. ^0000FFC Hanabi In Mouth^000000
+3. ^0000FFC Hanabi Fountain^000000
+4. Enrich Oridecon
+5. Enrich Elunium
+6. Battle Manual
+7. Job Manual
+8. Bubble Gum
+9. Gift Box
+10. STR Biscuit Stick
+11. VIT Biscuit Stick
+12. AGI Biscuit Stick
+13. INT Biscuit Stick
+14. DEX Biscuit Stick
+15. LUK Biscuit Stick
+16. LUK Biscuit Stick
+17. Takoyaki
+18. Honey Pastry
+19. Buche De Noel
+20. Mimic Summon Book
+21. Hanbok Bag
+22. Red Bag
+23. Siege White Potion
+24. Siege Blue Potion
+25. Greed Scroll
+26. Lv 10 Blessing Scroll
+27. Lv 10 Increase Agi Scroll
+^ffffff_^000000
+^FF0000Item will be removed on 20th May 2021^000000
+^ffffff_^000000
 Weight : ^7777771^000000
 #
 9778#
@@ -52471,16 +52553,28 @@ For 9mins, ^000088increase the movement speed^000000.
 Weight : ^7777771^000000
 #
 12263#
-A manual that explains the most efficient way to battle. It is a very detailed and well composed manual.
-^000088EXP rate increases to 200% for^0000000^ff0000 30 minutes.^000000
+^808080This well written detailed manual explains effective battle methods.^000000
 ^ffffff_^000000
-Weight : ^7777770^000000
+^009900[Item Effects]^000000
+^000088EXP rate increases to 150%^000000
+^ffffff_^000000
+Buff duration: 30 Minutes.
+^ffffff_^000000
+^006600This item is tradable^000000
+^ffffff_^000000
+Weight: ^7777771^000000
 #
 12264#
-A High Efficiency bubble gum that packs double the punch.
-^000088Item drop rate increases by 200% for^0000000^ff0000 30 minutes.^000000
+^808080A High Efficiency bubble gum that packs double the punch.^000000
 ^ffffff_^000000
-Weight : ^7777771^000000
+^009900[Item Effects]^000000
+^000088Item drop rate increases by 200%^000000
+^ffffff_^000000
+Buff duration: 30 Minutes.
+^ffffff_^000000
+^006600This item is tradable^000000
+^ffffff_^000000
+Weight: ^7777771^000000
 #
 12269#
 Foodstuffs prepared for urgent situations. Don't eat too fast, you might choke on it.
@@ -64994,9 +65088,12 @@ Job : ^777777All^000000
 15438#
 ^808080The Shawl that made for regend Hunter, made by the fur of night wolf. ^000000
 ^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Dex + 2
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item]^000000
 Aspd + 1
-Dex + 2
 Increase damage
 ^0000FF[Long Range Attack]^000000 2 %
 ----------
@@ -65299,10 +65396,13 @@ Required Jobs : ^777777 All ^000000
 ^808080 Dark Green Shawl that is made from magic silk. 
 The upper class witch always use it for decorated their dresses. ^000000
 ^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Int + 2
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
 Mdef + 5
 Aspd + 1
-Int + 2
 Increase damage ^996633 [Earth]^000000 magical property 2 %
 Increase damage ^66CCFF [Water]^000000 magical property 2 %
 Increase damage ^00CC33 [Wind]^000000 magical property 2 %
@@ -65391,11 +65491,13 @@ Required Jobs :^777777 All ^000000
 #
 15449#
 ^808080A red robe that Skarlet wore when she went to the world of Luna.^000000
-----------
-Mdef + 10
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+All Stat+1
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-All Stat + 1
+Mdef + 10
 ----------
 Gain HP + 20 when monster is killed by short-range physical or magical attack
 Increase + EXP 5 % when killing monster
@@ -66610,9 +66712,11 @@ Job : ^777777All^000000
 15832#
 ^808080Circlet of Cetrion, the Senior God who can control the elements^000000
 ^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Int +3, Dex +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Int + 3
-Dex + 3
 Matk + 10
 Mdef +10
 ----------
@@ -66671,8 +66775,12 @@ Required Jobs : ^777777 All ^000000
 15833#
 ^808080Bracelet of Cetrion, the Senior God who can control the elements^000000
 ^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Int +3, Agi +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Matk +3%, Int + 3, Agi +3
+Matk +3%
 ----------
 Matk +5 in every 2 level of ^0000FF[Study]^000000 learned
 ----------
@@ -66711,6 +66819,12 @@ Required Jobs : ^777777 All ^000000
 #
 15834#
 ^808080A Sakkat of Raiden, the mysterious wanderrer who command many supernatural abilities^000000
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Int +3, Dex +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
+^FF6633[Effect of Item] ^000000
 If player learned skill ^0000FF[Aspersio]^000000 at Lv.5
 Has a chance 10 % to cast ^0000FF[Gloria Domini]^000000 Lv. 5
 when do a physical damage on target.
@@ -66754,8 +66868,10 @@ Required Jobs : ^777777 All ^000000
 15835#
 ^808080A Speller of Kronika, the time controller of Clock Tower. ^000000
 ^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
 Str+3, Agi+3
-----------
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
 Atk +3%
 ----------
@@ -66864,9 +66980,13 @@ Job : ^777777All^000000
 #
 15848#
 ^808080A horn of Motaro. Centaur leader who live in Geffenia.^000000
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Str +3, Luk +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Str + 3, Luk + 3, Atk + 10, Mdef + 10
+Atk + 10, Mdef + 10
 ----------
 If player learned skill 
 ^FF0000[Spear Mastery]^000000 at Lv.10
@@ -66934,9 +67054,13 @@ Job : ^777777All^000000
 #
 15849#
 ^808080A bracelet of Kintaro. Legedary Warrior who lived in Rachel.^000000
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Str +3, Vit +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Str + 3, Vit + 3, ATK + 3%
+ATK + 3%
 ----------
 Atk + 5 in every 2 level of skill ^FF0000[Iron Fists]^000000 learned
 ----------
@@ -66995,9 +67119,13 @@ Required Jobs : ^777777 All ^000000
 #
 15850#
 ^808080A speller of Kronika. She used this item for expanding her magic limited.^000000
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Int +3, Agi +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Int + 3, Agi + 3,Matk + 3 %
+Matk + 3 %
 ----------
 Matk + 5 in every level of skill ^FF0000[Sightless Mind]^000000 learned
 ----------
@@ -67060,11 +67188,25 @@ Weight : ^77777710^000000
 Required Level : ^77777750^000000
 Job : ^777777All^000000
 #
+15854#
+^808080A scaft that represent ROMSP. Those colors are brought from each servers.^000000
+^FFFFFF_^000000
+Class : ^777777Costume^000000 
+Defense: ^7777770^000000
+Location : ^777777Garment^000000 
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
 15855#
 ^808080The veil of Ermac. Black magician who use Dark Magic.^000000
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Int +3, Dex +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Int + 3, Dex + 3, Matk + 10, Mdef + 10
+Matk + 10, Mdef + 10
 ----------
 If refine to +5,
 If character learned skill ^FF0000[Esma] at Lv.10^000000
@@ -67129,7 +67271,11 @@ Job : ^777777All^000000
 #
 15856#
 ^808080The orb of Kronika that can predict the future.^000000
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Int +3, Dex +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
 Int + 3, Dex + 3, Matk + 3 %
 Matk + 5 in every 2 level of ^FF0000[Jupitel Thunder]^000000 learned
@@ -67285,9 +67431,13 @@ Job : ^777777All^000000
 #
 15879#
 ^808080The headpiece of Kung Jin that look very gorgeous.^000000
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Luk +3, Dex +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Luk + 3, Dex + 3, Atk + 10, Mdef + 10
+Atk + 10, Mdef + 10
 ----------
 If refine to +5,
 Critical Rate + 10
@@ -67668,6 +67818,114 @@ Required Level : ^77777780^000000
 Job : ^777777All^000000
 #
 15895#
+^808080The bandana of Rambo. The strongest mercenary.^000000
+----------
+^FF6633[Base Effect]^000000
+Agi + 3
+Dex + 3
+Mdef + 10
+^006600(This effect working in WOE 1,2)^000000
+----------
+^FF6633[Item Effect]^000000
+Atk + 10
+^FFFFFF_^000000
+When refine to +5,
+and equip by
+^CC66FF[Rogue Classes]^000000,
+Aspd + 1
+Has a chance 7 % to cast skill ^0000FF[Double Strafe]^000000
+of the level currently learned when do a range attack on target
+^FFFFFF_^000000
+If refine to +7
+and equip by
+^CC66FF[Rogue Classes]^000000,
+Def + 15
+Enable to use skill ^0000FF[Double Attack]^000000 Lv. 10 with Bow, Sword, Axe weapon type.
+^FFFFFF_^000000
+If refine to +8
+and equip by
+^CC66FF[Rogue Classes]^000000,
+Flee + 15
+Increase long-range damage by 2%
+Increase damage skill ^0000FF[Double Strafe]^000000 by 5%
+^FFFFFF_^000000
+If refine to +9
+and equip by
+^CC66FF[Rogue Classes]^000000,
+Atk + 15
+Increase long-range damage by an additional 3%
+Increase damage skill ^0000FF[Double Strafe]^000000 by an additional 10%
+^FFFFFF_^000000
+If refine to +10
+and equip by
+^CC66FF[Rogue Classes]^000000,
+Atk + 5%
+Increase long-range damage by an additional 5%
+Increase damage skill [Double Strafe] by an additional 15%
+----------
+^800080[Set Bonus]^000000
+^FFFFFF_^000000
+^008080Rambo's Bandana(OSM)^000000
+^008080Kung Jin's Necklace(OSM)^000000
+^FFFFFF_^000000
+If character is ^CC66FF[Rogue Classes]^000000
+Aspd + 1
+Increase long-range damage by 5 %
+----------
+^FFFFFF_^000000
+^FF0000The Item and Set Effect of this item are disable in WOE1,2 Map^000000
+^FFFFFF_^000000
+Class : ^777777Headgear^000000
+Defense : ^77777730^000000
+Location : ^777777Upper^000000
+Weight : ^77777720^000000
+Required Level : ^77777750^000000
+Job : ^777777All^000000
+#
+15896#
+^808080The hood of Hawkeye's Hunter at Payon.^000000
+^FF0000This item is account bound.^000000
+----------
+^FF6633[Base Effect]^000000
+Agi + 1
+Dex + 1
+Mdef + 5
+^006600(This effect working in WOE 1,2)^000000
+----------
+^FF6633[Item Effect]^000000
+Atk + 10
+^FFFFFF_^000000
+When refine to +5,
+Increase damage skill ^0000FF[Blitz Beat]^000000 by 5%
+^FFFFFF_^000000
+When refine to +7,
+Increase damage skill ^0000FF[Blitz Beat]^000000
+by an additional 10%
+^FFFFFF_^000000
+When refine to +8,
+Increase damage skill ^0000FF[Blitz Beat]^000000
+by an additional 15%
+^FFFFFF_^000000
+When refine to +9,
+Increase damage skill ^0000FF[Blitz Beat]^000000
+by an additional 20%
+^FFFFFF_^000000
+When refine to +10
+All Stat + 1
+Max HP + 500
+Max SP + 250
+----------
+^FFFFFF_^000000
+^FF0000The Item and Set Effect of this item are disable in WOE1,2 Map^000000
+^FFFFFF_^000000
+Class : ^777777Headgear^000000
+Defense : ^77777710^000000
+Location : ^777777Upper^000000
+Weight : ^77777730^000000
+Required Level : ^77777750^000000
+Job : ^777777All^000000
+#
+15901#
 Description will be available when the scroll is on sales
 ^FFFFFF_^000000
 Class : ^777777Headgear ^000000 
@@ -67677,7 +67935,17 @@ Weight : ^77777720^000000
 Required Level :^777777 50 ^000000 
 Required Jobs : ^777777 All ^000000
 #
-15896#
+15902#
+Description will be available when the scroll is on sales
+^FFFFFF_^000000
+Class : ^777777Headgear ^000000 
+Location : ^777777Upper ^000000 
+Defense : ^77777730^000000 
+Weight : ^77777720^000000 
+Required Level :^777777 50 ^000000 
+Required Jobs : ^777777 All ^000000
+#
+15903#
 Description will be available when the scroll is on sales
 ^FFFFFF_^000000
 Class : ^777777Headgear ^000000 
@@ -78300,13 +78568,16 @@ Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
 19515#
-A simple yellow hat with a long feather in it. Fashionistas wear it to the side lest they be shunned.
+^808080A simple yellow hat with a long feather in it. Fashionistas wear it to the side lest they be shunned.^000000
+^ffffff_^000000
+obtain from ^CC66FFDaily Check-In May 2021^000000
+^FFFFFF_^000000
 Class : ^777777Costume^000000
-Location: ^777777Upper ^000000
 Defense : ^7777770^000000
+Location : ^777777Upper ^000000
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Job : ^777777All jobs^000000
 #
 19516#
 A newly hatched baby bird chirps it's tunes on a twig of dreams.
@@ -78496,13 +78767,6 @@ Weight : ^7777771^000000
 19538#
 ^808080Wearing this with care! It might turn the human into wearwolf!^000000
 ^ffffff_^000000
-obtain from ^CC66FFHwaa Pack^000000
-^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 1%, Drop +1%
-ATK+5, MATK+5
-^FF0000The Effect will be removed on 6th May 2021 ^000000
-^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
 ^FFFFFF_^000000
@@ -78663,7 +78927,7 @@ Job : ^777777All^000000
 19555#
 ^808080 Ancient warrior helmet that has been passed person to person over the time.^000000
 Class : ^777777Costume^000000
-Location : ^777777Upper ^000000
+Location : ^777777Upper-Middle ^000000
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
@@ -80144,11 +80408,6 @@ Job : ^777777all jobs^000000
 ^ffffff_^000000
 obtain from ^CC66FFHwaa Pack^000000
 ^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 1%, Drop +1%
-ATK+10, MATK+10
-^FF0000The Effect will be removed on 6th May 2021 ^000000
-^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
 ^FFFFFF_^000000
@@ -82073,11 +82332,6 @@ Job : ^777777All Jobs^000000
 ^ffffff_^000000
 obtain from ^CC66FFHwaa Pack^000000
 ^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 1%, Drop +1%
-ATK+5, MATK+5
-^FF0000The Effect will be removed on 6th May 2021 ^000000
-^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
 ^FFFFFF_^000000
@@ -82833,13 +83087,26 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 20283#
-^808080A hat having a story that a father left it to his son. You can feel how much he loved his son from its stout design.^000000
+^808080A special hat that is blessed by Tiffany.^000000
+^ffffff_^000000
+obtain from ^CC66FFTiffany's World : Royal Castle^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 1%
+Atk + 10, Matk + 10
+^ffffff_^000000
+^FF0000The Effect will be removed on 15th July 2021 ^000000
 ^FFFFFF_^000000
-Type: Costume
-Position: Headgear (Upper)
-Weight: 0
-Required Level: 1
-Required Job: All Jobs
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+Special! During event, you can bring this costume to get random enchant at NPC : King Shop
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
 #
 20284#
 ^808080A vernal hat taken after the petal of a cherry blossom. A swinging flower decoration looks very cute.^000000
@@ -83920,6 +84187,26 @@ Weapon Level: ^7777773^000000
 Required Level : ^7777771^000000
 Jobs : ^777777Gunslinger^000000
 #
+20380#
+^808080A Hairband of Ra, the God of the Sun. It is decorated with feather from birds in heaven.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Pack May 2021^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 1%, Drop +1%
+ATK+5, MATK+5
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
 20385#
 ^808080A prestigious hat of Orc Leader that be given to the one who can protect the village. ^000000
 ^FFFFFF_^000000
@@ -83992,11 +84279,6 @@ Job : ^777777All^000000
 ^808080A mask that Tengu wear to hiring his their true face.^000000
 ^ffffff_^000000
 obtain from ^CC66FFHwaa Pack^000000
-^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 1%, Drop +1%
-ATK+5, MATK+5
-^FF0000The Effect will be removed on 6th May 2021 ^000000
 ^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
@@ -84004,6 +84286,26 @@ This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located o
 Class : ^777777Costume^000000
 Defense : ^7777770^000000
 Location : ^777777Middle ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+20400#
+^808080A golden version of Rosary. It is believed that this item is powerful in expel the devil.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Pack May 2021^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 1%, Drop +1%
+ATK+5, MATK+5
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
@@ -84017,6 +84319,26 @@ Location : ^777777Upper^000000
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
+#
+20402#
+^808080A white vail that represents the puriy of the wearer.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Pack May 2021^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 2%, Drop +2%
+ATK+10, MATK+10
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper-Middle ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
 #
 20404#
 ^808080May the poring be with you.?=],
@@ -84481,14 +84803,24 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 20488#
-Yellow ribbon in silk. 
-It makes a mysterious atmosphere due to the lenth of the ribbon.
-Class : ^777777Costume^000000 
+^808080Yellow ribbon in silk that make the wearer feel like a high-class people. ^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Pack May 2021^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 1%, Drop +1%
+ATK+5, MATK+5
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
 Defense : ^7777770^000000
-Location : ^777777Middle ^000000
+Location : ^777777Middle^000000
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
-Jobs : ^777777All^000000
+Job : ^777777All jobs^000000
 #
 20489#
 ^808080A crown that is worn by a Pope.^000000
@@ -85245,6 +85577,28 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
+20607#
+^808080A golden wing which give the wearer elegant and gorgeous.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Combine System^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+All Stat + 3
+EXP + 3%, Drop + 3%
+HP + 300, SP + 30
+Reduce damage from ^0000FF[Demi-Human]^000000 and ^0000FF[Player]^000000 race by 2 %
+^FF0000The Effect will be removed on 1st July 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This item will be given with special enchant and Engrave the owner's name.
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Garment^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
 20700#
 Egir's Manteau. It looks defending your body
 can not be destroyed
@@ -85838,10 +86192,13 @@ Job : ^777777All^000000
 20982#
 ^808080Baby's Apron of the greatly wizard in Midgard. It contain many mysterious power.^000000
 ^FFFFFF_^000000
-Vit + 2, Int + 2, Mdef +5
-----------
+^FF6633[Base Effect] ^000000
+Vit + 2, Int + 2
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
 Map HP + 2%, Map SP + 1%
+Mdef +5
 When refine to +7
 Reduce damage taken from [Shadow, Ghost, Undead] property by 5 %
 ----------
@@ -86848,8 +87205,12 @@ Required Jobs : ^777777 All ^000000
 22249#
 ^808080The shoes of incidious that look terrify.^000000
 ^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+All Stat+1
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-All stat +1, Mdef + 5
+Mdef + 5
 ----------
 If refine to +5,
 Max HP + 200
@@ -88604,44 +88965,95 @@ Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24021#
-A sacred earring which is belived to protect its wearer. It also draws the wearer's potential abilities.
-Increases the wearer's Max Hp by 10 for every refine level on the Shadow Magical Earring
-Decreases Spell Cast Time by 1%
-If refined to +7 or greater
-Decreases Spell Cast Time by and additional 2%
-If the set consisting of the Shadow Magical Earring, Shadow Magical Weapon, and Shadow Magic Pendant is worn together
-Increases the wearer's magic attack by the combined refine levels of all three items in the set.
-If the total combined refine levels of all three items is greater than 22 then Magic Attack is increase by an extra 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Accessory^000000 
+^808080Earrings worn to enhance magical attack.^000000
+^FFFFFF_^000000
+^FF6633[Effect of Item] ^000000
+Reduce variable cast time by 1 %
+In each upgrade level, Increase Max HP + 10
+^FFFFFF_^000000
+If refine to +7 or higher,
+Reduce variable cast time by an additional 2 %
+----------
+^009900[Set Effect]^000000
+^0000FFMagical Shadow Earring^000000
+^0000FFMagical Shadow Pendant^000000
+^0000FFMagical Shadow Weapon^000000
+^FFFFFF_^000000
+Matk + 1 per upgrade level of
+Magical Shadow Earring
+Magical Shadow Pendant
+Magical Shadow Weapon
+^FFFFFF_^000000
+If the combined upgrade levels of
+Magical Shadow Earring
+Magical Shadow Pendant
+Magical Shadow Weapon
+are +23 or higher, Matk + 1%
+^FFFFFF_^000000
+Class : ^777777Shadow Earring^000000
+Defense : ^7777770^000000 
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24022#
-A glove equipped in wearer's hand to draw his/her potential ability.
-Increases Magic Attack power by 10 + the refine level of the Shadow Magical Weapon
-Increases Attack power by the refine level of the Shadow Magical Weapon
-If refined to +7 or higher then Magic Attack is increase by an extra 1%
-If the set consisting of the Shadow Magical Earring, Shadow Magical Weapon, and Shadow Magic Pendant is worn together
-Increases the wearer's magic attack by the combined refine levels of all three items in the set.
-If the total combined refine levels of all three items is greater than 22 then Magic Attack is increase by an extra 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Weapon^000000 
+^808080A glove worn to enhance magical attack.^000000
+^FFFFFF_^000000
+^FF6633[Effect of Item] ^000000
+Matk + 10
+Additional Atk and Matk + 1 per upgrade level of the item
+If refine to +7 or higher, additional Matk + 1%
+----------
+^009900[Set Effect]^000000
+^0000FFMagical Shadow Earring^000000
+^0000FFMagical Shadow Pendant^000000
+^0000FFMagical Shadow Weapon^000000
+^FFFFFF_^000000
+Matk + 1 per upgrade level of
+Magical Shadow Earring
+Magical Shadow Pendant
+Magical Shadow Weapon
+^FFFFFF_^000000
+If the combined upgrade levels of
+Magical Shadow Earring
+Magical Shadow Pendant
+Magical Shadow Weapon
+are +23 or higher, Matk + 1%
+^FFFFFF_^000000
+Class : ^777777Shadow Weapon^000000
+Defense : ^7777770^000000 
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
 24023#
-A sacred necklace which is belived to protect its wearer. It also draws the wearer's potential abilities.
-Increases the wearer's Max HP by (Refine Level of the Shadow Magical Pendant * 10)
-Increases the wearer's max SP by 50
-If refined to +7 or greater increases the Max SP of the wearer by 1%
-If the set consisting of the Shadow Magical Earring, Shadow Magical Weapon, and Shadow Magic Pendant is worn together
-Increases the wearer's magic attack by the combined refine levels of all three items in the set.
-If the total combined refine levels of all three items is greater than 22 then Magic Attack is increase by an extra 1%
-Class : ^777777Shadow Armor^000000
-Location : ^777777Pendant^000000 
+^808080A pendant worn to enhance magical attack.^000000
+^FFFFFF_^000000
+^FF6633[Effect of Item] ^000000
+Max SP + 50
+In each upgrade level, Increase Max HP + 10
+^FFFFFF_^000000
+If refine to +7 or higher,
+Max SP + 1 %
+----------
+^009900[Set Effect]^000000
+^0000FFMagical Shadow Earring^000000
+^0000FFMagical Shadow Pendant^000000
+^0000FFMagical Shadow Weapon^000000
+^FFFFFF_^000000
+Matk + 1 per upgrade level of
+Magical Shadow Earring
+Magical Shadow Pendant
+Magical Shadow Weapon
+^FFFFFF_^000000
+If the combined upgrade levels of
+Magical Shadow Earring
+Magical Shadow Pendant
+Magical Shadow Weapon
+are +23 or higher, Matk + 1%
+^FFFFFF_^000000
+Class : ^777777Shadow Weapon^000000
+Defense : ^7777770^000000 
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
@@ -88966,7 +89378,7 @@ Job : ^777777All^000000
 ^FFFFFF_^000000
 ^0000FFLUK + 1^000000
 Increase ^0000FFMax HP+10^000000 in each upgrade level
-Increase ^0000FFAtk+1^000000 in every 2 upgrade level
+Increase ^0000FFCrit+1^000000 in every 2 upgrade level
 ----------
 ^009900[Set Effect]^000000
 ^FFFFFF_^000000
@@ -88987,7 +89399,7 @@ If refine rate to + 10 both and wear together
 4. Increase ^FF0000 CRI+5 ^000000
 ^FFFFFF_^000000
 Class : ^777777Costume Shadow^000000
-Location : ^777777Weapon^000000 
+Location : ^777777Armor^000000 
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
@@ -89018,7 +89430,7 @@ If refine rate to + 10 both and wear together
 3. Increase ^FF0000 ATK +10 ^000000
 ^FFFFFF_^000000
 Class : ^777777Costume Shadow^000000
-Location : ^777777Shield^000000 
+Location : ^777777Accessory^000000 
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
@@ -90054,6 +90466,35 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+24255#
+^808080A costume that can increase ability of Archer Class.^000000
+^FFFFFF_^000000
+^FF6633[Effect of Item] ^000000
+Increase Max HP + 10 in each upgrade level
+^FFFFFF_^000000
+Increase damage on skill
+^0000FF[Arrow Shower]^000000 by 20%
+^FFFFFF_^000000
+Every refine rate will increase damage on skill
+^0000FF[Arrow Shower]^000000 by additional 5%
+----------
+^009900[Set Effect]^000000
+^0000FFArcher Shadow Earring^000000
+^0000FFArcher Shadow Pendant^000000
+^FFFFFF_^000000
+Max HP + 1 %
+Increase physical damage on ^0000FF[All Race]^000000 monster by 1 %
+^FFFFFF_^000000
+If refine rate on both items combine to +10 or higher
+Additional Max HP + 2 %
+Increase physical damage on ^0000FF[All Race]^000000 monster by additional 2 %
+^FFFFFF_^000000
+Class : ^777777Shadow Pendant^000000
+Defense : ^7777770^000000 
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
 24256#
 ^808080A costume that can increase ability of Knight Class.^000000
 ----------
@@ -90182,6 +90623,37 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
 #
+24266#
+^808080A costume that can increase ability of Hunter Class.^000000
+^FFFFFF_^000000
+^FF6633[Effect of Item] ^000000
+Increase Max HP + 10 in each upgrade level
+^FFFFFF_^000000
+Increase damage on skill
+^0000FF[Blitz Beat]^000000 and^000000 by 20%
+^FFFFFF_^000000
+Every refine rate will increase damage on skill
+^0000FF[Blitz Beat]^000000 by additional 5%
+^FFFFFF_^000000
+Every refine rate will increase damage on skill
+^0000FF[Falcon Assault]^000000 by 5%
+----------
+^009900[Set Effect]^000000
+^0000FFHunter Shadow Armor^000000
+^0000FFHunter Shadow Shoes^000000
+^FFFFFF_^000000
+^FF0000Effect below is working for Hunter Class Only^000000
+Increase physical damage on ^0000FF[All Size]^000000 monster by 3%
+Increase magical damage on ^0000FF[All Size]^000000 monster by 3%
+Reduces SP cost on skill ^0000FF[Claymore Trap]^000000 by 5 points
+Reduces SP cost on skill ^0000FF[Land Mine]^000000 by 2 points
+^FFFFFF_^000000
+Class : ^777777Shadow Shoes^000000
+Defense : ^7777770^000000 
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
 24269#
 ^808080A costume that can increase ability of Knight Class.^000000
 ----------
@@ -90304,6 +90776,33 @@ Matk + 3 % (Sage Classes Only)
 ^FFFFFF_^000000
 Class : ^777777Shadow Armor^000000
 Defense : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+24279#
+^808080A costume that can increase ability of Hunter Class.^000000
+^FFFFFF_^000000
+^FF6633[Effect of Item] ^000000
+Reduce SP cost on skill ^0000FF[Focused Arrow Strike]^000000 by 5 point.
+^FFFFFF_^000000
+Increase Max HP + 10 in each upgrade level
+^FFFFFF_^000000
+Every refine rate will increase damage on skill
+^0000FF[Focused Arrow Strike]^000000 by 5%.
+----------
+^009900[Set Effect]^000000
+^0000FFHunter Shadow Armor^000000
+^0000FFHunter Shadow Shoes^000000
+^FFFFFF_^000000
+^FF0000Effect below is working for Hunter Class Only^000000
+Increase physical damage on ^0000FF[All Size]^000000 monster by 3%
+Increase magical damage on ^0000FF[All Size]^000000 monster by 3%
+Reduces SP cost on skill ^0000FF[Claymore Trap]^000000 by 5 points
+Reduces SP cost on skill ^0000FF[Land Mine]^000000 by 2 points
+^FFFFFF_^000000
+Class : ^777777Shadow Armor^000000
+Defense : ^7777770^000000 
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
@@ -90726,6 +91225,38 @@ It shines like gold, but it is useless.
 Mybe someone would need it.
 ^ff0000This item is untradable^000000
 Weight : ^7777771^000000
+#
+25724#
+^808080A speical coins obtained from finishing quest Hanabi Festival.^000000
+^ffffff_^000000
+^009900[Item Function]^000000
+1. Collecting for 100 ea and ^006600Hanabi Pass^000000 1 ea to exchange ^0000FFRika's Jewel^000000 1 ea with ^0000FFNPC:Ms.Everything (Event)^000000
+^ffffff_^000000
+2. Can be sold to NPC Shop for 500 zeny
+^ffffff_^000000
+^FF0000Item will be removed on 20th May 2021^000000
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+25725#
+^808080A speical pass to joining Hanabi Festival.^000000
+^ffffff_^000000
+^009900[Item Function]^000000
+Collecting ^006600Festival Koin^000000 100 ea and ^006600Hanabi Pass^000000 1 ea to exchange ^0000FFRika's Jewel^000000 1 ea with ^0000FFNPC:Ms.Everything (Event)^000000
+^ffffff_^000000
+^FF0000Item will be removed on 20th May 2021^000000
+^ffffff_^000000
+Weight : ^7777770^000000
+#
+25744#
+^808080A special firework made by capitalism Suzuki. When sparkling, the light is very colorful.^000000
+^ffffff_^000000
+^009900[Item Function]^000000
+This item is item quest for ^006600Hanabi Festival^000000
+^ffffff_^000000
+^FF0000Item will be removed on 20th May 2021^000000
+^ffffff_^000000
+Weight : ^7777770^000000
 #
 25890#
 Mysteriously stone that use for reset something.
@@ -91443,14 +91974,14 @@ Job : ^777777All^000000
 Increase Max HP + 10 in each upgrade level
 ^FFFFFF_^000000
 When using skill ^FF0000[Stone Fling]^000000 on target,
-has a chance 20 % to active ^0000FF[Sexy Rogue State]^000000 for 5 seconds
+has a chance 20 % to active ^0000FF[Sexy Thief State]^000000 for 5 seconds
 ^FFFFFF_^000000
-^0000FF[Sexy Rogue State]^000000
+^0000FF[Sexy Thief State]^000000
 Atk + 30
 Flee + 30
 and every refine rate of this item
 will additional increase Atk + 10 and Flee + 10
-when ^0000FF[Sexy Rogue State]^000000 active.
+when ^0000FF[Sexy Thief State]^000000 active.
 ----------
 ^009900[Set Effect]^000000
 ^0000FFThief Shadow Earring^000000
@@ -91465,6 +91996,41 @@ Increase physical damage on ^CC66FF[All Race]^000000 monster by additional 2 %
 ^FFFFFF_^000000
 Class : ^777777Shadow Earring^000000
 Defense : ^7777770^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+28392#
+^808080A costume that can increase ability of Archer Class.^000000
+^FFFFFF_^000000
+^FF6633[Effect of Item] ^000000
+Increase Max HP + 10 in each upgrade level
+^FFFFFF_^000000
+When using skill
+^FF0000[Double Strafe]^000000 on target,
+has a chance 20 % to active
+^0000FF[Sexy Archer State]^000000 for 5 seconds
+^FFFFFF_^000000
+^CC66FF[Sexy Archer State]^000000
+Atk + 30
+Hit + 30
+and every refine rate of this item
+will additional increase Atk + 10 and Hit + 10
+when ^0000FF[Sexy Archer State]^000000  active.
+----------
+^009900[Set Effect]^000000
+^0000FFArcher Shadow Earring^000000
+^0000FFArcher Shadow Pendant^000000
+^FFFFFF_^000000
+Max HP + 1 %
+Increase physical damage on ^0000FF[All Race]^000000 monster by 1 %
+^FFFFFF_^000000
+If refine rate on both items combine to +10 or higher
+Additional Max HP + 2 %
+Increase physical damage on ^0000FF[All Race]^000000 monster by additional 2 %
+^FFFFFF_^000000
+Class : ^777777Shadow Earring^000000
+Defense : ^7777770^000000 
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All^000000
@@ -91935,9 +92501,12 @@ Required Jobs : ^777777 All ^000000
 #
 28963#
 ^808080A shield made by Poring God.^000000
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Vit+5
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Vit +5
 HP + 100 in every 1 refine rate of shield
 SP + 20 in every 1 refine rate of shield
 ----------
@@ -92041,10 +92610,13 @@ Required Jobs : ^777777 All ^000000
 #
 28964#
 ^808080A Shield decorated with Dark Cross, symbol of Darkness.^000000
-----------
-Mdef + 10
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Vit+5, Dex+5
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
+Mdef + 10
 Vit + 5, Dex + 5
 Atk + 5 in every 3 refine rate of shield
 ----------
@@ -92097,6 +92669,52 @@ Defense : ^77777720^000000
 Weight : ^77777750^000000 
 Required Level :^777777 70 ^000000 
 Required Jobs : ^777777 All ^000000
+#
+28968#
+^808080The shield melted from rare ore and Ice power of Sub-Zero, the mysterious Ninja in Amatsu.^000000
+----------
+^FF6633[Base Effect]^000000
+Vit + 5
+Mdef + 5
+^006600(This effect working in WOE 1,2)^000000
+----------
+^FF6633[Item Effect]^000000
+When refine to +5,
+Mdef + 5
+Def + 10
+^FFFFFF_^000000
+When refine to +7,
+Additional Mdef + 10
+Additional Def + 20
+^FFFFFF_^000000
+When refine to +8
+Increase physical and magical damage on ^0000FF[Water]^000000 property targets 5 %
+Reduce damage taken from ^0000FF[Water]^000000 property attacks 10 %
+^FFFFFF_^000000
+When refine to +9
+Increase physical and magical damage on ^0000FF[Water]^000000 property targets by an additonal 5 %
+Reduce damage taken from ^0000FF[Water]^000000 property attacks by an additional 10 %
+^FFFFFF_^000000
+When refine to +10
+Atk + 15 if character have base ^FF0000[Str]^000000 is 90 or higher.
+^FFFFFF_^000000
+Matk + 15 if character have base ^FF0000 [Int]^000000 is 90 or higher.
+^FFFFFF_^000000
+Aspd + 10 % if character have base ^FF0000[Agi]^000000 is 90 or higher.
+^FFFFFF_^000000
+Increase recovery rate of skill and items by 10 % if character have base ^FF0000[Vit]^000000 is 90 or higher.
+^FFFFFF_^000000
+Reduces variable cast time of skill by 5 % if character have base ^FF0000[Dex]^000000 is 90 or higher.
+^FFFFFF_^000000
+Increase critical damage on targets by 5 % if character have base ^FF0000[Luk]^000000 is 90 or higher.
+^FFFFFF_^000000
+^006600The effect working in WOE 1,2^000000
+^FFFFFF_^000000
+Class : ^777777Shield^000000
+Defense : ^77777750^000000
+Weight : ^77777750^000000
+Required Level : ^77777750^000000
+Job : ^777777All^000000
 #
 29013#
 Adds a 1% chance of restoring 3% of damage as HP when performing a physical attack.
@@ -92903,6 +93521,24 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
 #
+31181#
+^808080A big ribbon used as a decoration. It is popular to wear with Kimono.^000000
+^ffffff_^000000
+^FF6633[Permanent Effect]^000000
+^0000FF EXP + 1%^000000
+^FFFFFF_^000000
+obtain from ^CC66FFLucky Refine Event^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Lower ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
 31183#
 ^808080The wings dropped by a fallen angel who once ruled the celestial world.
 A strong hatred seethes from it when worn around other angels.^000000
@@ -92971,6 +93607,25 @@ Defense: ^7777770^000000
 Weight : ^7777770^000000
 Required Level: ^7777771^000000
 Jobs : ^777777All^000000
+#
+31201#
+^808080A crown of Rabbit King which conquer the rabbit world.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Combine System^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 2%, Drop + 2%
+^FF0000The Effect will be removed on 1st July 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This item will be given with special enchant and Engrave the owner's name.
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
 #
 31202#
 Life is ruff for a pawfficer of the law, but times never get bark for those with dogged determination.
@@ -93689,14 +94344,6 @@ Job : ^777777All^000000
 31314#
 ^808080A horn of forest goddress. It will give power of nature to the owner.^000000
 ^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-All stat +1
-HP + 100, SP + 10
-Reduce damage from [Demi Human] and [Player] race by 1%
-Reduce Fixed Cast Time [All Skill] 0.1 second
-^ffffff_^000000
-^FF0000The Effect will be removed on 6th May 2021 ^000000
-^ffffff_^000000
 obtain from ^CC66FFTop Spender : March 2021^000000
 ^ffffff_^000000
 ^FF6633[Item Function] ^000000
@@ -93795,12 +94442,22 @@ Job : ^777777All^000000
 #
 31381#
 ^808080 A lapel of Satan Morroc. You will feel the dark power from it. ^000000
+^ffffff_^000000
+obtain from ^CC66FFRO Streamer ^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+Atk +10, Matk + 10
+^FF0000The Effect will be removed on 1st July 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
 Class : ^777777Costume^000000
-Defense: ^7777770^000000
+Defense : ^7777770^000000
 Location : ^777777Lower^000000
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
-Job : ^777777All^000000
+Job : ^777777All jobs^000000
 #
 31382#
 ^808080 A stylish hat with two large cat paws drooping down. ^000000
@@ -93992,11 +94649,6 @@ Job : ^777777All jobs^000000
 ^808080The black sakkat that spread the power of darkness around.^000000
 ^ffffff_^000000
 obtain from ^CC66FFOld But Gold Season 5^000000
-^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 2%, Drop +2%
-ATK+20, MATK+20
-^FF0000The Effect will be removed on 6th May 2021 ^000000
 ^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
@@ -94023,11 +94675,6 @@ Job : ^777777All^000000
 ^ffffff_^000000
 ^CC66FFObtained from [Thank U Next Scroll] from Christmas Party 2020 Event^000000
 ^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-All Stat + 1
-^ffffff_^000000
-^009900Effect Remove : 25th February 2021^000000
-^ffffff_^000000
 Class : ^777777Costume^000000
 Defense : ^7777770^000000
 Location : ^777777Upper ^000000
@@ -94045,6 +94692,26 @@ Location : ^777777Lower ^000000
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Jobs : ^777777All^000000
+#
+31433#
+^808080A head's decoration that make you look like a light maiden.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Pack May 2021^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 1%, Drop +1%
+ATK+5, MATK+5
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
 #
 31438#
 ^808080A fluffy pink cape with angel wings attached.!^000000
@@ -94213,11 +94880,6 @@ Job : ^777777All Jobs^000000
 ^808080A scroll that Nezuko always bite it for holding her power.^000000
 ^ffffff_^000000
 obtain from ^CC66FFHwaa Pack^000000
-^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 1%, Drop +1%
-ATK+5, MATK+5
-^FF0000The Effect will be removed on 6th May 2021 ^000000
 ^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
@@ -94510,11 +95172,6 @@ Usable By: All Jobs
 ^808080The accessory of famous Empress that inherit within her family long time ago.^000000
 ^ffffff_^000000
 obtain from being winner of ^CC66FFWar of Nightfall : Eclipse ^000000
-^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-Max HP + 500, Max SP + 50
-Reduce damage from [Demi-Human] by 2 %
-^FF0000The Effect will be removed on 6th May 2021 ^000000
 ^FFFFFF_^000000
 Class : ^777777Costume^000000
 Defense : ^7777770^000000
@@ -94633,9 +95290,15 @@ Job : ^777777All jobs^000000
 #
 31568#
 ^808080The yin-yang beads that Qiqi forget when she travel to Midgard.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Combine System^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 2%, Drop + 2%
+^FF0000The Effect will be removed on 1st July 2021 ^000000
 ^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
-This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+This item will be given with special enchant and Engrave the owner's name.
 ^FFFFFF_^000000
 Class : ^777777Costume^000000
 Defense : ^7777770^000000
@@ -94825,11 +95488,6 @@ Jobs : ^777777All^000000
 31596#
 ^808080A hat decorated with colorful flower and spider
 Look elegant and scary at the same time!^000000
-^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-Atk +10, MATK +10
-^FF0000The Effect will be removed on 6th May 2021 ^000000
-^ffffff_^000000
 obtain from ^CC66FFRO Streamer ^000000
 ^ffffff_^000000
 ^FF6633[Item Function] ^000000
@@ -94905,11 +95563,6 @@ Jobs : ^777777All^000000
 ^ffffff_^000000
 obtain from ^CC66FFHwaa Pack^000000
 ^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 1%, Drop +1%
-ATK+10, MATK+10
-^FF0000The Effect will be removed on 6th May 2021 ^000000
-^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
 ^FFFFFF_^000000
@@ -95509,6 +96162,25 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
+31709#
+^808080A crown of the King that decorated by jewels.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Combine System^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 2%, Drop + 2%
+^FF0000The Effect will be removed on 1st July 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This item will be given with special enchant and Engrave the owner's name.
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Upper^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
 31716#
 ^808080Charm and seduced eyes that will makes everyone see fall in love.^000000
 ^FFFFFF_^000000
@@ -95587,9 +96259,15 @@ Job : ^777777All jobs^000000
 #
 31721#
 ^808080The ancient tool that believed it is the old weapon of the Thunder God.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Combine System^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 2%, Drop + 2%
+^FF0000The Effect will be removed on 1st July 2021 ^000000
 ^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
-This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+This item will be given with special enchant and Engrave the owner's name.
 ^FFFFFF_^000000
 Class : ^777777Costume^000000
 Defense : ^7777770^000000
@@ -96408,6 +97086,46 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
+31940#
+^808080A golden version of phantom mask that is popolarly used in broadway.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Pack May 2021^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 1%, Drop +1%
+ATK+5, MATK+5
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Middle^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+31944#
+^808080A Rose's hairstyle, the famous singer of .^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Pack May 2021^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 1%, Drop +1%
+ATK+5, MATK+5
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
 31946#
 ^808080A fiece eyes watching with fire anger.
 Just by staring, it make the wearer say "Waste the fire in my eyes".
@@ -96439,13 +97157,6 @@ Job : ^777777All jobs^000000
 #
 31950#
 ^808080A hat that made you look like Chipmunk!^000000
-^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-Atk +10, Matk +10
-Crit +10
-Aspd +1
-^ffffff_^000000
-^FF0000The Effect will be removed on 6th May 2021 ^000000
 ^ffffff_^000000
 obtain from ^CC66FFTiffany Treasure Season 4^000000
 ^ffffff_^000000
@@ -96850,8 +97561,10 @@ Required Jobs : ^777777 All ^000000
 32291#
 ^808080Amulet of Shange. The greatest fighter of Louyang.^000000
 ^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
 Str + 2, Int + 2, Luk +2
-----------
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
 Atk + 2%, Matk + 2%
 ----------
@@ -96896,8 +97609,12 @@ Required Jobs : ^777777 All ^000000
 32292#
 ^808080The ring of Ashrah. The well-known nun of Prontera.^000000
 ^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Int +3, Luk +3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Matk + 3%,  Int + 3, Luk +3
+Matk + 3%
 ----------
 Matk + 5 per 2 level of skill [Kyrie Eleison] learned
 ----------
@@ -96927,9 +97644,13 @@ Required Jobs : ^777777 All ^000000
 #
 32297#
 ^808080A Lantern's of Kollector that used for collecing soul.^000000
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Str + 3, Int 3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Str + 3, Int 3, Atk + 3 %
+Atk + 3 %
 ----------
 Atk + 5 in every 2 level of skill ^FF0000[Potion Research]^000000 learned
 ----------
@@ -96984,9 +97705,13 @@ Required Jobs : ^777777 All ^000000
 #
 32298#
 ^808080A Sindel's Charm that is full of dark spell.^000000
-----------
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+Agi + 3, Dex + 3
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
-Agi + 3, Dex + 3, Atk + 3 %
+Atk + 3 %
 ----------
 Atk + 5 in every 2 level of skill 
 ^FF0000[Dance Lessons]^000000 learned
@@ -97175,6 +97900,10 @@ Jobs :^777777 Alchemist Jobs^000000
 ^808080The Maneki Neko's Bell which look cute and beautiful with its color^000000
 ^FFFFFF_^000000
 ^FF0000This accessory can only be equipped in the right accessory slot.^000000
+^FFFFFF_^000000
+^FF6633[Base Effect] ^000000
+All Stat+2
+^006600(This effect working in WOE 1,2)^000000
 ^FFFFFF_^000000
 ^FF6633[Effect of Item] ^000000
 All Stat + 2
@@ -97453,16 +98182,69 @@ When open this scroll, have a chance to receive below item
 ^FFFFFF_^000000
 Weight : ^7777771^000000
 #
+410005#
+^808080The magical lantern that can boost magic ability of the user.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Combine System^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 2%, Drop + 2%
+^FF0000The Effect will be removed on 1st July 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This item will be given with special enchant and Engrave the owner's name.
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+410047#
+^808080A golden mask used in ancient ritual.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Pack May 2021^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 1%, Drop +1%
+ATK+5, MATK+5
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Middle^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+410049#
+^808080A golden eyes that is belived it is a wink of angel.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Combine System^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 2%, Drop + 2%
+^FF0000The Effect will be removed on 1st July 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This item will be given with special enchant and Engrave the owner's name.
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Middle^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
 420014#
 ^808080A Japanese Classic's hair style that look neat and beautiful.^000000
 ^ffffff_^000000
 obtain from ^CC66FFHwaa Pack^000000
 ^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 1%, Drop +1%
-ATK+10, MATK+10
-^FF0000The Effect will be removed on 6th May 2021 ^000000
-^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
 ^FFFFFF_^000000
@@ -97478,11 +98260,6 @@ Job : ^777777All jobs^000000
 ^ffffff_^000000
 obtain from ^CC66FFHwaa Pack^000000
 ^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 1%, Drop +1%
-ATK+5, MATK+5
-^FF0000The Effect will be removed on 6th May 2021 ^000000
-^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
 ^FFFFFF_^000000
@@ -97498,17 +98275,51 @@ Job : ^777777All jobs^000000
 ^ffffff_^000000
 obtain from ^CC66FFHwaa Pack^000000
 ^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 1%, Drop +1%
-ATK+10, MATK+10
-^FF0000The Effect will be removed on 6th May 2021 ^000000
-^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
 ^FFFFFF_^000000
 Class : ^777777Costume^000000
 Defense : ^7777770^000000
 Location : ^777777Middle ^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+420029#
+^808080A Pauldron of Lord Knight. The weight is very heavy and you will feel like a moutain is on your shoulder when you wear it.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Pack May 2021^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 1%, Drop +1%
+ATK+5, MATK+5
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All jobs^000000
+#
+420047#
+^808080A shawl that used to belong to the previous emperor.^000000
+^ffffff_^000000
+obtain from ^CC66FFCostume Combine System^000000
+^ffffff_^000000
+^FF6633[Temporally Effect]^000000
+EXP + 2%, Drop + 2%
+^FF0000The Effect will be removed on 1st July 2021 ^000000
+^FFFFFF_^000000
+^FF6633[Item Function] ^000000
+This item will be given with special enchant and Engrave the owner's name.
+^FFFFFF_^000000
+Class : ^777777Costume^000000
+Defense : ^7777770^000000
+Location : ^777777Lower^000000
 Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
@@ -97529,17 +98340,17 @@ Jobs : ^777777All^000000
 480052#
 ^808080A big ribbon used as a decoration. It is popular to wear with Kimono.^000000
 ^ffffff_^000000
-obtain from ^CC66FFOSM Scroll - April 2021^000000
+obtain from ^CC66FFCostume Combine System^000000
 ^ffffff_^000000
 ^FF6633[Temporally Effect]^000000
-HP + 200, SP + 20
-All Stat + 2
-Increase physical damage on ^0000FF[Demi Human]^000000 and ^0000FF[Player]^000000 targets by 1 %
-Increase magical damage on ^0000FF[Demi Human]^000000 and ^0000FF[Player]^000000 targets by 1 %
-^FF0000The Effect will be removed on 6th May 2021 ^000000
+All Stat + 3
+EXP + 3%, Drop + 3%
+HP + 300, SP + 30
+Reduce damage from ^0000FF[Demi-Human]^000000 and ^0000FF[Player]^000000 race by 2 %
+^FF0000The Effect will be removed on 1st July 2021 ^000000
 ^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
-This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
+This item will be given with special enchant and Engrave the owner's name.
 ^FFFFFF_^000000
 Class : ^777777Costume^000000
 Defense : ^7777770^000000
@@ -97552,13 +98363,6 @@ Job : ^777777All jobs^000000
 ^808080An ancient calabash that contain cursed sand. Only the chosen one can control the sand in this calabash.^000000
 ^ffffff_^000000
 obtain from ^CC66FFHappy Refill on April 2021^000000
-^ffffff_^000000
-^FF6633[Temporally Effect]^000000
-EXP + 2%, Drop +2%
-All Stat + 2
-HP + 200, SP + 20
-Reduce damage taken from ^0000FF[Demi Human]^000000 and ^0000FF[Player]^000000 by 1 %
-^FF0000The Effect will be removed on 6th May 2021 ^000000
 ^FFFFFF_^000000
 ^FF6633[Item Function] ^000000
 This costume can be enchanted at Eden 2nd floor with NPC Costama Girl (Located on 33, 185)
@@ -97570,23 +98374,146 @@ Weight : ^7777770^000000
 Required Level : ^7777771^000000
 Job : ^777777All jobs^000000
 #
-480112#
-Description will be available when the scroll is on sales
+480093#
+^808080A King's Staff which increase his charisma and prestigious.^000000
 ^FFFFFF_^000000
-Class : ^777777Garment ^000000 
-Defense : ^77777720^000000 
-Weight : ^77777720^000000 
-Required Level :^777777 50 ^000000 
-Required Jobs : ^777777 All ^000000
+obtain from ^CC66FFHappy Refill on May 2021^000000
+^FFFFFF_^000000
+^FF6633[Temporally Effect]^000000
+EXP+2%, Drop+2%
+All Stat + 2
+HP + 200, SP + 20
+Reduce damage taken from ^0000FF[Demi Human]^000000 and ^0000FF[Player]^000000 by 1 %
+^FF0000The Effect will be removed on 3rd June 2021 ^000000
+^FFFFFF_^000000
+Class : ^777777Costume^000000 
+Defense: ^7777770^000000
+Location : ^777777Garment^000000 
+Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Job : ^777777All^000000
+#
+480112#
+^808080Tasuki of Nightwolf. He is the King of the wild.^000000
+----------
+^FF6633[Base Effect]^000000
+Agi  + 3
+Dex + 3
+Mdef + 10
+^006600(This effect working in WOE 1,2)^000000
+----------
+^FF6633[Item Effect]^000000
+If refine to + 5
+Int + 1
+Aspd + 5%
+Increase damage skill
+^0000FF[Blitz Beat]^000000 by 10%
+When character learned 
+skill ^FF0000[Steel Crow]^000000 at Lv.10
+^FFFFFF_^000000
+If refine to + 7 or higher
+Additional Int + 2
+Additional Aspd + 2%
+Increase damage skill
+^0000FF[Blitz Beat]^000000 by an additional 15%
+When character learned 
+skill ^FF0000[Steel Crow]^000000 at Lv.10
+^FFFFFF_^000000
+If refine to +8 or higher
+Additional Int + 3
+Additional Aspd + 3%
+Increase damage skill
+^0000FF[Blitz Beat]^000000 by an additional 20%
+When character learned 
+skill ^FF0000[Steel Crow]^000000 at Lv.10
+^FFFFFF_^000000
+If refine to +9 or higher
+Additional Int + 4
+Additional Aspd + 5%
+Increase damage skill
+^0000FF[Blitz Beat]^000000 by an additional 25%
+When character learned 
+skill ^FF0000[Steel Crow]^000000 at Lv.10
+^FFFFFF_^000000
+If refine to +10 or higher
+Max HP + 5%
+Additional Int + 5
+Increase damage skill
+^0000FF[Blitz Beat]^000000 by an additional 30%
+When character learned 
+skill ^FF0000[Steel Crow]^000000 at Lv.10
+----------
+^800080[Set Bonus]^000000
+^FFFFFF_^000000
+^008080Realgar Shooter^000000
+^008080Nightwolf's Tasuki (OSM)^000000
+^FFFFFF_^000000
+If ^FF0000[Realgar Shooter]^000000 refine to +7 or higher
+Int + 10
+Luk + 10
+Atk + 3%
+Aspd + 5%
+----------
+^FFFFFF_^000000
+^FF0000The Item and Set Effect of this item are disable in WOE1,2 Map^000000
+^FFFFFF_^000000
+Class : ^777777Garment^000000
+Defense : ^77777720^000000
+Weight : ^77777720^000000
+Required Level : ^77777750^000000
+Job : ^777777All^000000
 #
 480113#
-Description will be available when the scroll is on sales
+^808080The wing of devel lady, the queen of lustful.^000000
+----------
+^FF6633[Base Effect]^000000
+Vit + 2
+Mdef + 15
+^006600(This effect working in WOE 1,2)^000000
+----------
+^FF6633[Item Effect]^000000
+If refine to +5
+For every 18 base ^CC66FF[Str]^000000
+Atk + 1
 ^FFFFFF_^000000
-Class : ^777777Garment ^000000 
-Defense : ^77777715^000000 
-Weight : ^77777720^000000 
-Required Level :^777777 50 ^000000 
-Required Jobs : ^777777 All ^000000
+For every 18 base ^CC66FF[Agi]^000000
+Aspd + 1 %
+^FFFFFF_^000000
+For every 18 base ^CC66FF[Vit]^000000
+Reduce damage received from ^0000FF[Neutral]^000000 element attack by 1 %
+^FFFFFF_^000000
+For every 18 base ^CC66FF[Int]^000000
+Matk + 1
+^FFFFFF_^000000
+For every 18 base ^CC66FF[Dex]^000000
+Increase long-range damage by 1%
+^FFFFFF_^000000
+For every 18 base ^CC66FF[Luk]^000000
+Increase critical damage by 1%
+^FFFFFF_^000000
+When refine to +7
+Hit + 5
+Max HP + 50, Max SP + 5 
+Unlocked to Enchant ^0000FF[4th]^000000 Slot.
+^FFFFFF_^000000
+When refine to +8
+Flee + 5
+Additional Max HP + 100, Max SP + 10
+Unlocked to Enchant ^0000FF[3rd]^000000 Slot.
+^FFFFFF_^000000
+When refine to +9
+Def + 5
+Additional Max HP + 100, Max SP + 10
+Unlocked to Enchant ^0000FF[2nd]^000000 Slot.
+^FFFFFF_^000000
+^006600(This effect working in WOE 1,2)^000000
+^FFFFFF_^000000
+Class : ^777777Garment^000000
+Defense : ^77777715^000000
+Location : ^777777Upper^000000
+Weight : ^77777720^000000
+Required Level : ^77777750^000000
+Job : ^777777All^000000
 #
 490138#
 ^808080The armband of Kenshi. The Greatest warrior.^000000
@@ -97636,4 +98563,12 @@ Defense : ^7777770^000000
 Weight : ^77777710^000000
 Required Level : ^77777750^000000
 Job : ^777777All^000000
+#
+490144#
+Description will be available when the scroll is on sales
+^FFFFFF_^000000
+Class : ^777777Accessory  ^000000 
+Defense : ^77777730^000000 
+Weight : ^77777720^000000 
+Required Level :^777777 50 ^000000 
 #
