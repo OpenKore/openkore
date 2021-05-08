@@ -364,7 +364,6 @@ repairAuto_list
 status_mapProperty 0
 status_mapType 0
 
-removeActorWithDistance
 monster_filter
 
 ######## Mercenary Support ########

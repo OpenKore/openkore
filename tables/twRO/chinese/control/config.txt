@@ -1,4 +1,4 @@
-﻿# 繁體中文化OpenKore config.txt 17092015
+# 繁體中文化OpenKore config.txt 17092015
 # 來源: Try71023, howie50417 drkn
 # 修改: Shun
 #
@@ -1845,10 +1845,8 @@ cachePlayerNames_maxSize 100
 # 快取玩家名字的最大數量
 # 當超過這個數量，會從最舊的資料開始刪，讓新的資料進入快取。
 
-clientSight 20
+clientSight 15
 # 偵測玩家 魔物 NPC 的視野範圍
-
-removeActorWithDistance
 # 設定讓 kore 忽略幾格外的動態資訊 ［玩家、怪物、寵物..最重要的是GM］
 # 在人多的地圖中，若忽略 5 格以外的動態資訊，
 # 可讓 kore 少送出很多 getPlayerInfo 封包，使移動較不 lag。

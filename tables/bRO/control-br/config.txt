@@ -1,4 +1,4 @@
-﻿#############################################################################################
+#############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
 # Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
@@ -155,7 +155,7 @@ cachePlayerNames 1
 cachePlayerNames_duration 900
 cachePlayerNames_maxSize 100
 
-clientSight 20
+clientSight 15
 
 dcPause 1
 dcOnDeath 0
@@ -359,7 +359,6 @@ repairAuto_list
 status_mapProperty 0
 status_mapType 0
 
-removeActorWithDistance
 monster_filter
 
 ######## Configurações para Assistente ########
