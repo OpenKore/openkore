@@ -1330,6 +1330,18 @@ Weight: ^80808020^000000
 Type: ^808080Miscellaneous^000000
 Weight: ^8080800^000000
 #
+790#
+Flowers left in the place where the mighty Phantom that haunts the Corridor of Phantom has disappeared.
+The Phantom's Spirits will love it if you collect and deliver these flowers to them.
+Weight : ^7777771^000000
+#
+791#
+^ff0000This item cannot be traded.^000000
+A seal engraved by the Phantom's Spirit.
+Indicates the qualification to enter the corridor of Phantom.
+
+Weight : ^7777770^000000
+#
 901#
 A braided pigtail that has been cut from the head of a young girl.
 ^A730FBUsed for Hair Styling.^000000
@@ -26650,11 +26662,7 @@ Weight: ^8080801^000000
 Increases magical damage on Demon race targets by 10%.
 #
 4480#
-^808080¸𵧠½ºųÀǠȄ µ𷹀̰¡ 15% °¨¼҇Ѵٮ
-15Á¦·àÀ̻󠽃 ½Àü Ȅ µ𷹀̠5% ß°¡ °¨¼Ү
-Class : ^777777Card^000000
-Compound on : ^777777Headgear^000000
-Weight : ^7777771^000000
+^808080
 After cast delay reduced by 15%
 If this card is slotted into a headgear refined to +15 or higher, reduces after-cast delay by 5% more.
 Class : ^777777Card^000000
@@ -26667,12 +26675,7 @@ Weight: 0
 Weapon Level: 0
 #
 4481#
-^808080ȭ¼Ӽº ¸󽺅Ϳ¡°Ԡ¹°¸® µ¥¹́ö 25% ß°¡.
-¹°¸®, ¸¶¹ý µ¥¹́ö¸¦ ÀԾúÀ» ¶§ Àρ¤ Ȯ·ü·Π¿ÀŤ½ºƧ ǁ·νºƮ ³빙 Lv10 ¹ߵ¿.
-15Á¦·àÀ̻󀏠°濬 ȭ¼Ӽº ¸󽺅Ϳ¡°Ԡ¹°¸® µ¥¹́ö 10% ß°¡Áõ°¡.
-Class : ^777777Card^000000
-Compound on : ^777777°©¿ʞ000000
-Weight : ^7777771^000000
+^808080
 Increases damage to Fire Property monsters by 25%.
 Has a low chance of auto-casting Frost Nova while being attacked.
 If this card is slotted into an armor refined to +15 or higher, increases damage to Fire Property monsters by 10% more.
@@ -26686,12 +26689,7 @@ Weight: 0
 Weapon Level: 0
 #
 4482#
-^80808015Ê¸¶´٠50ÀǠHP, 10ÀǠSp ȸº¹.
-MHP¿͠MSP°¡ 5% Áõ°¡Ǒ´ٮ
-15Á¦·àÀ̻󠀏 °濬 HP, SPȸº¹¼ӵµ 10Ê·Π´܃ଠMHP, MSP°¡ 2% ß°¡ Áõ°¡.
-Class : ^777777Card^000000
-Compound on : ^777777½Źߞ000000
-Weight : ^7777771^000000
+^808080
 MaxHP +7%
 MaxSP +7%
 Every 15 seconds, you recover 50 HP and 10 SP.
@@ -26706,40 +26704,28 @@ Weight: 0
 Weapon Level: 0
 #
 4483#
-^808080Àρ¤Ȯ·ü(5%)·ΠÀû¿¡°ԠÁؠ´빌ÁöÀǠ5% ¸¦ ÀڽŀǠSP·Πȭ¼ö Ǒ´ٮ 15Á¦·àÀ̻󀏠°濬 ȭ¼öǒ Ȯ·üÀ̠7%·ΠÁõ°¡.
+^808080With a certain probability (5%), absorb 5% of the damage dealt to the enemy as your SP. If refine rate is 15 or higher, the chance of absorption increases to 7%.
 Class : ^777777Card^000000
-Compound on : ^777777¹«±➰00000
+Compound on : ^777777Weapon^000000
 Weight : ^7777771^000000
 ^000000
-Attack: 0
-Property: N/A
-Weight: 0
-Weapon Level: 0
 #
 4484#
-^808080Áª½ºŦÀ» ¼Ҹퟜ􍂠¸¶¹ýµ逻 ¼Ҹ𾸀̠»翫°¡´ɇϰԠǑ´ٮ
-½ºų »翫½àSP¼Ҹ𷮀̠50% Áõ°¡Ǒ´ٮ
-15Á¦·àÀ̻󠀏 °濬 ½ºų »翫½àSP¼Ҹ𷮀̠35% Áõ°¡.
+^808080It makes it possible to use magic that consumes gemstones without consumption.
+When using a skill, SP consumption increases by 50%.
+If refine rate is 15 or higher, SP consumption increases by 35% when using skill.
 Class : ^777777Card^000000
 Compound on : ^777777Headgear^000000
 Weight : ^7777771^000000
 ^000000
-Attack: 0
-Property: N/A
-Weight: 0
-Weapon Level: 0
 #
 4485#
-^808080¼º¼Ӽº, ¾ϼӼº, õ»燼, ¾Ǹ¶Ǽ ¸󽺅Ϳ¡°Ԡ¹°¸® µ¥¹́ö 20% ß°¡.
-15Á¦·àÀ̻󀏠°濬, ¼º¼Ӽº, ¾ϼӼº, õ»燼, ¾Ǹ¶Ǽ ¸󽺅Ϳ¡°Ԡ¹°¸® µ¥¹́ö 10% ß°¡ Áõ°¡.
+^808080Adds 20% physical damage to holy, dark, holy, and demon-type monsters.
+If refine rate is 15 or higher, increases physical damage by additional 10% to holy, dark, holy, and demon-type monsters.
 Class : ^777777Card^000000
-Compound on : ^777777°©¿ʞ000000
+Compound on : ^777777Armor^000000
 Weight : ^7777771^000000
 ^000000
-Attack: 0
-Property: N/A
-Weight: 0
-Weapon Level: 0
 #
 4486#
 ^808080Reduce Floating Cast Time by 15%.
@@ -51586,6 +51572,13 @@ Weight : ^7777771^000000
 12853#
 Have chance to obtain various precious item, including Mistress Card, Sealed Berzebub Card, Sealed Eddga Card, Hankie In Mouth, Snowman Hat,  Cat Ears Beret, Immuned Shield and etc.
 Weight : ^7777771^000000
+#
+12854#
+^ff0000Cannot be traded with others.^000000
+Several spray of flowers were added with great care by the craftsman.
+Increases Flee +10, Perfect dodge +1 for 60 mins.
+^ffffff_^000000
+Weight : ^77777710^000000
 #
 12859#
 Available ^ff0000April 11 - April 24th 2012^000000. The Spring Lucky Pack also can be bought at a slight discount via the Spring Lucky Crate which also contains 1 Safe to 10 Certificate.
@@ -87717,6 +87710,13 @@ Take this ticket to Refining Researcher in prontera at (184, 177) for a guarante
 ^FF0000Weapons below level 4 can be refined.^000000
 Weight: ^8080801^000000
 #
+22945#
+A snack made of cherry blossom leaves perfect for spring picnics.
+Damge from all sized enemy -5% for 5 mins.
+(This item will be removed after event.)
+
+Weight : ^7777773^000000
+#
 22947#
 A small box of soul potions
 Weight: ^8080800^000000
@@ -99807,6 +99807,20 @@ Position: Middle
 Weight: 0
 Required Level: 1
 Required Jobs: All Jobs
+#
+31245#
+A hairpin made of spring flower.
+Added some lightness by adding bells!
+
+It has a certain chance of spring aura,
+when giving physical/magical attacks during the event period.
+When you feel the aura of spring, HP +400, SP +40 has been restored  per 1 second for 4 seconds.
+(This item will be removed after event.)
+
+Class : ^777777Costume^000000 Defense : ^7777770^000000
+Location : ^777777Upper ^000000Weight : ^7777770^000000
+Required Level : ^7777771^000000
+Jobs : ^777777All^000000
 #
 31246#
 ^808080A bird with the power to reflect magic spells. Sometimes the bird fails to cast the correct spells.^000000
