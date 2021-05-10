@@ -2605,7 +2605,7 @@ achievement_tbl = {
 			details = "Alcance o Nível de Classe 70."
 		},
 		resource = { [1] = { text = "Nv. de Classe 70" } },
-		reward = { title = 1004, buff = 10, item = 12817 },
+		reward = { title = 1004, buff = 10, item = 14232 },
 		score = 50
 	},
 	[200005] = {
