@@ -323,6 +323,7 @@ EFST_ZANGETSU Distorted Crescent
 EFST_PHI_DEMON Ancient Spirit of Daebujeok
 EFST_GENSOU Illusion of Dim Moonlight
 EFST_AKAITSUKI Omnius Red Moon
+EFST_FLOWER_LEAF Voluminous Spray of Flowers
 EFST_GLASTHEIM_STATE All abilities
 EFST_ALMIGHTY Almighty
 EFST_GEFFEN_MAGIC1 Add P.damage

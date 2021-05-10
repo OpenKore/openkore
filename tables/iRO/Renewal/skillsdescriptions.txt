@@ -3968,7 +3968,7 @@ Description: The target's HP and SP become unconditionally 1.
 Etc.	 : This skill is implemented only by Abracadada.
 #
 BD_ADAPTATION#
-Adaptation To Circumstances
+Amp
 MAX Lv : 1
 Skill Form : ^993300Active^000000
 Type : ^777777Supportive^000000
@@ -3980,7 +3980,7 @@ Can be used in duplicate with Encore.
 BD_ENCORE#
 Encore
 MAX Lv : 1
-^777777Skill Requirement : Adaptation To Circumstances 1^000000
+^777777Skill Requirement : Amp 1^000000
 Skill Form : ^993300Active^000000
 Type : ^777777Supportive^000000
 Target: ^777777Caster Only^000000
@@ -3991,7 +3991,7 @@ When the last dance, ensemble, or performance is not available, only skill is us
 BD_LULLABY#
 Lullaby
 MAX Lv : 1
-^777777Skill Requirement : A Whistle(Humming) 10^000000
+^777777Skill Requirement : Perfect Tablature(Focus Ballet) 10^000000
 Skill Form : ^993300Active^000000
 Type : ^777777ensemble skill^000000
 Target: ^777777 9*9 cells around the user^000000
@@ -4003,9 +4003,9 @@ Enters a ensemble aftermath(unavailable skill, reduced movement speed and attack
 Cannot be used on players and Boss monsters.^000000
 #
 BD_RICHMANKIM#
-Mr. Kim A Rich Man
+Mental Sensing
 MAX Lv : 5
-^777777Skill Requirement : Invulnerable Siegfried 3^000000
+^777777Skill Requirement : Acoustic Rhythm 3^000000
 Skill Form : ^993300Active^000000
 Type : ^777777 ensemble skill^000000
 Target: ^777777 31*31 cells around the user^000000
@@ -4021,9 +4021,9 @@ Enters a ensemble aftermath(unavailable skill, reduced movement speed and attack
 [Lv 5] : ^777777EXP increase : 60%^000000
 #
 BD_ETERNALCHAOS#
-Eternal Chaos
+Down Tempo
 MAX Lv : 1
-^777777Skill Requirement : Roki's Weil 1^000000
+^777777Skill Requirement : Classic Pluck 1^000000
 Skill Form : ^993300Active^000000
 Type : ^777777ensemble skill^000000
 Target: ^777777 9*9 cells around the user^000000
@@ -4034,9 +4034,9 @@ Enters a ensemble aftermath(unavailable skill, reduced movement speed and attack
 This skill can only be used in PVP / Sieze Mode.^000000
 #
 BD_DRUMBATTLEFIELD#
-A Drum on the Battlefield
+Battle Theme
 MAX Lv : 5
-^777777Skill Requirement : The Apple of Idun(Service For you) 10^000000
+^777777Skill Requirement : Song of Lutie(Gypsy's Kiss) 10^000000
 Skill Form : ^993300Active^000000
 Type : ^777777ensemble skill^000000
 Target: ^777777 31*31 cells around the user^000000
@@ -4052,9 +4052,9 @@ Enters a ensemble aftermath(unavailable skill, reduced movement speed and attack
 [Lv 5] : ^777777ATK + 40, DEF + 75.^000000
 #
 BD_RINGNIBELUNGEN#
-The Ring of Nibelungen
+Harmonic Lick
 MAX Lv : 5
-^777777Skill Requirement : The Sound Of a Drum On the Battlefield 3^000000
+^777777Skill Requirement : Battle Theme 3^000000
 Skill Form : ^993300Active^000000
 Type : ^777777ensemble skill^000000
 Target: ^777777 31*31 cells around the user^000000
@@ -4076,9 +4076,9 @@ Enters a ensemble aftermath(unavailable skill, reduced movement speed and attack
 ^777777SP recovery 100% increase.^000000
 #
 BD_ROKISWEIL#
-Roki's Weil
+Classical Pluck
 MAX Lv : 1
-^777777Skill Requirement : Assassin Cross of Sunset(Please Don't Forget Me) 10^000000
+^777777Skill Requirement : Impressive Riff(Slow Grace) 10^000000
 Skill Form : ^993300Active^000000
 Type : ^777777ensemble skill^000000
 Target: ^777777 9*9 cells around the user^000000
@@ -4090,7 +4090,7 @@ This skill can only be used in PVP / Sieze Mode.^000000
 ^ffffff_^000000
 #
 BD_INTOABYSS#
-Into The Abyss
+Power Cord
 MAX Lv : 1
 ^777777Skill Requirement : Lullaby 1^000000
 Skill Form : ^993300Active^000000
@@ -4102,9 +4102,9 @@ Ensemble skill is activated when the bard / dancer in the party is within 9 x 9 
 Enters a ensemble aftermath(unavailable skill, reduced movement speed and attack speed) for 10 seconds.^000000
 #
 BD_SIEGFRIED#
-Invulnerable Siegfried
+Acoustic Rhythm
 MAX Lv : 5
-^777777Skill Requirement : A Poem of Bragi(Fortune's Kiss) 10^000000
+^777777Skill Requirement : Magic Strings(Lady Luck) 10^000000
 Skill Form : ^993300Active^000000
 Type : ^777777ensemble skill^000000
 Target: ^777777 31*31 cells around the user^000000
@@ -4161,7 +4161,7 @@ Each cast uses one arrow, the property of which depends the property of this ski
 BA_DISSONANCE#
 Unchained Serenade (Dissonance)
 MAX Lv : 5
-^777777Skill Requirement : Adaptation To Circumstances 1, Music Lessons 1^000000
+^777777Skill Requirement : Amp 1, Music Lessons 1^000000
 Skill Form : ^993300Active^000000
 Type : ^777777Instrument^000000
 Target: ^777777 9*9 cells around the user^000000
@@ -4177,7 +4177,7 @@ This skill can only be used in PVP / Sieze Mode.^000000
 [Lv 5] : ^777777MATK 150%^000000
 #
 BA_FROSTJOKE#
-Frost Joker
+Unbarring Octave
 MAX Lv : 5
 ^777777Skill Requirement : Encore 1^000000
 Skill Form : ^993300Active^000000
@@ -4195,7 +4195,7 @@ The chance of frozen is reduced by the target's resistance to abnormal status.^0
 [Lv 5] : ^777777Chance of freezing: 40%^000000
 #
 BA_WHISTLE#
-A Whistle
+Perfect Tablature
 MAX Lv : 10
 ^777777Skill Requirement : Unchained Serenade 3^000000
 Skill Form : ^993300Active^000000
@@ -4216,7 +4216,7 @@ It does not overlap with other playing skills and can only be used when the inst
 [Lv10] : ^777777Flee + 40, Perfect Dodge +5^000000
 #
 BA_ASSASSINCROSS#
-Assassin Cross of Sunset
+Impressive Riff
 MAX Lv : 10
 ^777777Skill Requirement : Unchained Serenade 3^000000
 Skill Form : ^993300Active^000000
@@ -4237,7 +4237,7 @@ It does not overlap with other playing skills and can only be used when the inst
 [Lv10] : ^777777Increase ATK Speed(Reduction of delay after atk: 20%)^000000
 #
 BA_POEMBRAGI#
-A Poem of Bragi
+Magic Strings
 MAX Lv : 10
 ^777777Skill Requirement : Unchained Serenade 3^000000
 Skill Form : ^993300Active^000000
@@ -4258,7 +4258,7 @@ It does not overlap with other playing skills and can only be used when the inst
 [Lv10] : ^777777Variable Cast Time-20%, Cast Delay-30%^000000
 #
 BA_APPLEIDUN#
-The Apple of Idun
+Song of Lutie
 MAX Lv : 10
 ^777777Skill Requirement : Unchained Serenade 3^000000
 Skill Form : ^993300Active^000000
@@ -4316,7 +4316,7 @@ Each cast uses one arrow, the property of which depends the property of this ski
 DC_UGLYDANCE#
 Hip Shaker (Ugly Dance)
 MAX Lv : 5
-^777777Skill Requirement : Adaptation To Circumstances 1, Dancing Lesson 1^000000
+^777777Skill Requirement : Amp 1, Dancing Lesson 1^000000
 Skill Form : ^993300Active^000000
 Type : ^777777Dance skill^000000
 Target: ^7777779*9 cells around the user^000000
@@ -4331,7 +4331,7 @@ This skill can only be used in PVP / Sieze Mode. ^000000
 [Lv 5] : ^777777SP hit 20%, success rate 45%^000000
 #
 DC_SCREAM#
-Scream
+Dazzler
 MAX Lv : 5
 ^777777Skill Requirement : Encore 1^000000
 Skill Form : ^993300Active^000000
@@ -4349,7 +4349,7 @@ The chance of stun is reduced by the target's resistance to abnormal status.^000
 [Lv 5] : ^777777Stun chance: 50%^000000
 #
 DC_HUMMING#
-Humming
+Focus Ballet
 MAX Lv : 10
 ^777777Skill Requirement : Hip Shaker 3^000000
 Skill Form : ^993300Active^000000
@@ -4370,7 +4370,7 @@ It does not overlap with other playing skills and can only be used when the whip
 [Lv 10] : ^777777HIT + 40^000000
 #
 DC_DONTFORGETME#
-Please Don't Forget Me
+Slow Grace
 MAX Lv : 10
 ^777777Skill Requirement : Hip Shaker 3^000000
 Skill Form : ^993300Active^000000
@@ -4393,7 +4393,7 @@ This skill can only be used in PVP / Sieze Mode.^000000
 [Lv10] : ^777777ATK Speed 30%, Movement Speed 20% 감소^000000
 #
 DC_FORTUNEKISS#
-Fortune's kiss
+Lady Luck
 MAX Lv : 10
 ^777777Skill Requirement : Hip Shaker 3^000000
 Skill Form : ^993300Active^000000
@@ -4414,7 +4414,7 @@ It does not overlap with other playing skills and can only be used when the whip
 [Lv10] : ^777777CRI +10, Critical Damage + 20%^000000
 #
 DC_SERVICEFORYOU#
-Service For you
+Gypsy's Kiss
 MAX Lv : 10
 ^777777Skill Requirement : Hip Shaker 3^000000
 Skill Form : ^993300Active^000000
