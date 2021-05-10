@@ -8066,21 +8066,24 @@ Classes: ^777777Noviços, Magos e evoluções^000000
 #
 1670#
 Este incrível cajado possui parte de toda a magia usada no Ragnarök World Championship. Quando equipado em conjunto com o Colar RWC, Magias Ocultas podem despertar.
+--------------------------
 ^a400cdIndestrutível em batalha.^000000
-^0000ffATQM +30.^000000
+--------------------------
 A cada 3 refinos:
 ^0000ffATQM +30.^000000
 Refino +6 ou mais:
-^0000ffDano contra monstros +5%.^000000
+^0000ffDano mágico contra todas as raças +5%.^000000
 Refino +9 ou mais:
-^0000ffDano contra monstros +5% adicional.^000000
-^0000ffAo realizar ataques mágicos, chance de autoconjurar [Amplificação Mística] nv. 1.^000000
-^FF6347Conjunto^000000
-^FF6347[Colar Memorável RWC]^000000
+^0000ffDano mágico contra todas as raças +5% adicional.^000000
+^0000ffAo realizar ataques mágicos, 0,1% de chance de autoconjurar [Amplificação Mística] nv.1.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Colar Memorável RWC]^000000
 A cada refino da arma:
 ^0000ffATQM +5.^000000
+--------------------------
 Tipo: ^777777Cajado^000000
-Ataque: ^77777725^000000
+ATQ: ^77777725^000000 ATQM: ^77777730^000000
 Peso: ^77777750^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^7777771^000000
@@ -11194,7 +11197,7 @@ A cada nível de [Passos de Sílfide]:
 --------------------------
 A cada 2 refinos:
 ^0000ffIgnora 5% da DEFM de monstros normais, chefes, personagens e guardiões.^000000
-^0000ffDano físico e mágico de propriedade Fogo e Vento +5%.^000000
+^0000ffDano mágico de propriedade Fogo e Vento +5%.^000000
 ^0000ffDano de [Passos de Salamandra] e [Passos de Sílfide] +30%.^000000
 --------------------------
 Refino +9 ou mais:
@@ -16444,6 +16447,8 @@ Medalha concedida apenas ao mais valoroso guerreiro.
 Ao realizar ataques físicos corpo a corpo:
 ^0000ff1% de chance de infligr Atordoamento.^000000
 --------------------------
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão nem colocado no armazém, mas pode ser vendido em NPC.^000000
+--------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777771^000000
 Peso: ^7777770^000000
@@ -16461,6 +16466,8 @@ Medalha concedida apenas ao mais valoroso guerreiro.
 Ao realizar ataques físicos corpo a corpo:
 ^0000ff1% de chance de infligr Envenenamento.^000000
 --------------------------
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão nem colocado no armazém, mas pode ser vendido em NPC.^000000
+--------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777771^000000
 Peso: ^7777770^000000
@@ -16477,6 +16484,8 @@ Medalha concedida apenas ao mais valoroso guerreiro.
 Ao realizar ataques físicos corpo a corpo:
 ^0000ff1% de chance de infligr Silêncio.^000000
 --------------------------
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão nem colocado no armazém, mas pode ser vendido em NPC.^000000
+--------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777771^000000
 Peso: ^7777770^000000
@@ -16492,6 +16501,8 @@ Medalha concedida apenas ao mais valoroso guerreiro.
 --------------------------
 Ao receber danos físicos corpo a corpo:
 ^0000ff1% de chance de infligr Petrificação.^000000
+--------------------------
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão nem colocado no armazém, mas pode ser vendido em NPC.^000000
 --------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777771^000000
@@ -16510,6 +16521,8 @@ Medalha concedida apenas ao mais valoroso guerreiro.
 Ao realizar ataques físicos à distância:
 ^0000ff1% de chance de infligr Cegueira.^000000
 --------------------------
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão nem colocado no armazém, mas pode ser vendido em NPC.^000000
+--------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777771^000000
 Peso: ^7777770^000000
@@ -16526,6 +16539,8 @@ Medalha concedida apenas ao mais valoroso guerreiro.
 --------------------------
 Ao realizar ataques físicos corpo a corpo:
 ^0000ff1% de chance de infligr Maldição.^000000
+--------------------------
+^ff0000Atenção! Esse item não pode ser negociado, colocado no carrinho, derrubado no chão nem colocado no armazém, mas pode ser vendido em NPC.^000000
 --------------------------
 Tipo: ^777777Acessório^000000
 Defesa: ^7777771^000000
@@ -18100,20 +18115,24 @@ Nível necessário: ^77777785^000000
 Classes: ^777777Classes 2 T., Mestres Taekwon, Espiritualistas e evoluções, Kagerou e Oboro ^000000
 #
 2958#
-O par perdido do Anel do Vulcão. Equipa-los juntos trará novos efeitos para ambos.
-^0000ffAGI +3. VIT +1.^000000
-^0000ffDEFM +2. ATQM +10.^000000
+O par perdido do Anel do Vulcão. 
+Equipa-los juntos trará novos efeitos para ambos.
+--------------------------
+^0000ffAGI +3. VIT +1. ATQM +10.^000000
+--------------------------
+Ao receber danos físicos:
+^0000ffChances de autoconjurar [Pântano dos Mortos] nv.1, [Explosão Tóxica] nv.10, [Curar] nv.10, [Assumptio] nv.3 e [Destino nas Cartas] nv.5.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Anel do Vulcão]^000000
 Ao realizar ataques físicos:
-^0000ffChances de autoconjurar [Pântano dos Mortos] nv. 1, [Explosão Tóxica] nv. 10, [Curar] nv. 10, [Assumptio] nv. 3 e [Destino nas Cartas] nv. 5.^000000
-^FF6347Conjunto^000000
-^FF6347[Anel do Vulcão]^000000
-Ao realizar ataques físicos:
-^0000ffChances de autoconjurar [Lex Aeterna] nv. 1, [Impacto Psíquico] nv. 5 e [Impacto Meteoro] nv. 2.^000000
+^0000ffChances de autoconjurar [Lex Aeterna] nv.1, [Impacto Psíquico] nv.5 e [Impacto Meteoro] nv.2.^000000
+--------------------------
 Tipo: ^777777Acessório^000000
-Defesa: ^7777770^000000
+DEF: ^7777770^000000 DEFM: ^7777772^000000
 Peso: ^77777710^000000
 Nível necessário: ^77777785^000000
-Classes: ^777777Classes 2 T., Mestres Taekwon, Espiritualistas e evoluções, Kagerou e Oboro ^000000
+Classes: ^777777Classes 2 T., Mestres Taekwon, Espiritualistas e evoluções, Kagerou e Oboro^000000
 #
 2959#
 Você pode ler o nome Hachiko nesta coleira. De acordo com as lendas, essa coleira foi usada por um cão da raça Shiba Inu que pertenceu ao Atroce, antes dele se tornar um licantropo amaldiçoado, quando ainda era um guerreiro humano. Dizem que ainda existe um laço profundo ligando este item ao MVP. Será verdade? Você sente apenas uma forte sensação de lealdade ao segurar esta coleira. O que acontecerá se você usá-la?
@@ -18350,48 +18369,48 @@ Nível necessário: ^77777750^000000
 Classes: ^777777Todas^000000
 #
 2984#
-Um par de luvas de couro com um adereço felpudo ao punho. Com elas, qualquer um vai poder esbanjar elegância por toda a Rune-Midgard, e de quebra, ela ainda vai manter suas mãos e habilidades aquecidas.
+Um par de luvas de couro com um adereço felpudo no punho. Com elas, qualquer um vai poder esbanjar elegância por toda a Rune-Midgard, e de quebra, ela ainda vai manter suas mãos e habilidades aquecidas.
 ^0000ffEXP adquirida por monstros +5%.^000000
-^0000ffResistência a todas as raças -5%.^000000
+^0000ffResistência a todas as raças^000000 ^ff0000-5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Gajomart]^000000
-^0000ffResistência a monstros da raça Planta -10%.^000000
+^0000ffResistência a monstros da raça Planta^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Planta +5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Gullinbursti]^000000
-^0000ffResistência a monstros da raça Peixe -10%.^000000
+^0000ffResistência a monstros da raça Peixe^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Peixe +5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Diabinho]^000000
-^0000ffResistência a monstros da raça Bruto -10%.^000000
+^0000ffResistência a monstros da raça Bruto^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Bruto +5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Esqueleto General]^000000
-^0000ffResistência a monstros da raça Inseto -10%.^000000
+^0000ffResistência a monstros da raça Inseto^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Inseto +5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Mão de Ferro]^000000
-^0000ffResistência a monstros da raça Amorfo -10%.^000000
+^0000ffResistência a monstros da raça Amorfo^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Amorfo +5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Am Mut]^000000
-^0000ffResistência a monstros da raça Humanoide -10%.^000000
+^0000ffResistência a monstros da raça Humanoide^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Humanoide +5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Verme Ancião]^000000
-^0000ffResistência a monstros da raça Demônio -10%.^000000
+^0000ffResistência a monstros da raça Demônio^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Demônio +5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Estrondo]^000000
-^0000ffResistência a monstros da raça Dragão -10%.^000000
+^0000ffResistência a monstros da raça Dragão^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Dragão +5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Zumbi Prisioneiro]^000000
-^0000ffResistência a monstros da raça Morto-Vivo -10%.^000000
+^0000ffResistência a monstros da raça Morto-Vivo^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Morto-Vivo +5%.^000000
 ^FF6347Conjunto^000000
 ^FF6347[Carta Cookie Natalino]^000000
-^0000ffResistência a monstros da raça Anjo -10%.^000000
+^0000ffResistência a monstros da raça Anjo^000000 ^ff0000-10%.^000000
 ^0000ffEXP adquirida por monstros da raça Anjo +5%.^000000
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
@@ -32050,8 +32069,7 @@ Classes: ^777777Todas^000000
 5967#
 Cansado da vida na Praia Kokomo, esse Galapago decidiu viajar mundo afora em seu guarda-sol voador (?!). Agora, cabe a você impressioná-lo visitando os locais mais exóticos do mundo!
 ^0000ffAGI +1.^000000
-Ao aprender [Ataque Aéreo] nv. 1:
-^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Ataque Aéreo] no nível aprendido.^000000
+^0000ffAo realizar ataques físicos, 5% de chance de autoconjurar [Ataque Aéreo] nv. 1 ou no nível aprendido.^000000
 A cada 3 de SOR base até o 120:
 ^0000ffChance de autoconjuração +0,1%.^000000
 A cada nível aprendido de [Ataque Aéreo]: 
@@ -32085,6 +32103,19 @@ Equipa em: ^777777Baixo^000000
 Defesa: ^7777770^000000
 Peso: ^77777750^000000
 Nível necessário: ^777777110^000000
+Classes: ^777777Todas^000000
+#
+5973#
+Orelhas que representam um povo muito, muito antigo. As lendas dizem que habitaram Rune-Midgard nos tempos mais sombrios.
+--------------------------
+^0000ffSOR +10.^000000
+^0000ffEsquiva perfeita +2.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Meio^000000
+DEF: ^7777770^000000 DEFM: ^77777710^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
 5975#
@@ -37239,7 +37270,7 @@ Ingresso especial que permite a entrada nos Mapas Especiais somente para persona
 ^CD3278Coord.:^000000 brasilis 196, 184
 <NAVI>[Navegar]<INFO>brasilis,196,184,0,000,0</INFO></NAVI>
 --------------------------
-Este ticket desaparecerá durante a manutenção de 20/04/2021. Aproveite e divirta-se!
+Este ticket desaparecerá durante a manutenção de 27/04/2021. Aproveite e divirta-se!
 --------------------------
 ^ff0000Atenção! Este item não pode ser trocado, derrubado no chão, colocado no carrinho e nem no armazém.^000000
 --------------------------
@@ -37438,8 +37469,8 @@ Ticket temporário criado pela Corporação Kafra.
 ^CD3278Coord.:^000000 morroc 131, 102
 <NAVI>[Navegar]<INFO>morocc,131,102,0,000,0</INFO></NAVI>
 --------------------------
-Promoção limitada até o dia ^ff000022.03.2021.^000000
-Este item será removido no dia ^ff000023.03.2021.^000000
+Promoção limitada até o dia ^ff000017.05.2021.^000000
+Este item será removido no dia ^ff000018.05.2021.^000000
 --------------------------
 ^ff0000Atenção! Antes de utilizar o ticket, certifique-se de que há espaço e limite de peso disponível no seu inventário para receber novos itens.^000000
 --------------------------
@@ -42375,88 +42406,118 @@ Duração: ^77777715 segundos^000000
 Peso: ^7777772^000000
 #
 12725#
-^ff0000Este item não pode ser negociado.^000000
-Remove a maioria dos estados e efeitos negativos lançados no usuário e protege contra estes efeitos por 60 segundos após usar a habilidade.
-Quando usada, recupera 25% do HP Máx.
-[Aplicável nos seguintes efeitos negativos]
-Atordoamento / Sono / Maldição / Envenenamento / Silêncio / Sangramento / Confusão / Congelamento / Melodia de Morfeu
-- Venenos de Sicário
-- Pântano de Nifflheim 
-- Grito da Mandrágora
-Quantidade máxima que pode ser carregada: 20.
-^ffffff_^000000
+^ff0000Não negociável.^000000
+Runa com o poder da [Purificação].
+--------------------------
+^0000ffRemove efeitos negativos e regenera 25% do HP máximo.
+Por 1 minuto, garante imunidade a esses efeitos negativos.^000000
+--------------------------
+Efeitos removidos:
+^0000ffAtordoamento, Sono, Maldição, Petrificação, Envenenamento, Cegueira, Sangramento, Silêncio, Caos, Congelamento, Hipotermia, Cristalização, Incêndio, Grito da Mandrágora, Pântano de Nifflheim e algumas Toxinas de Sicário.^000000
+--------------------------
+Recarga: ^7777772 minutos^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 12726#
-^ff0000Este item não pode ser negociado.^000000
-Extrai a potência máxima da arma utilizada para desferir um poderoso ataque em uma curta distância.
-20% de chance de destriuir a arma equipada após utilizar a habilidade.
-Este efeito é automaticamente cancelado caso a arma seja removida, trocada ou se o jogador não realizar um ataque físico em até 30 segundos.
-Quantidade máxima que pode ser carregada: 20.
-^ffffff_^000000
+^ff0000Não negociável.^000000
+Runa com o poder do [Golpe Titânico].
+--------------------------
+^0000ffO próximo ataque normal causará um dano físico maior.
+Haverá 20% de chance de destruir a sua arma.
+O efeito termina se o usuário atacar, mudar de arma ou não atacar nos próximos 30 segundos.^000000
+--------------------------
+Duração: ^77777730 segundos^000000
+Recarga: ^77777730 segundos^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 12727#
-^ff0000Este item não pode ser negociado.^000000
-Invoca de 2 a 4 escudos mágicos em volta do usuário, que o protegerão. 
-Os escudos possuem a mesma DEF e DEFM do usuário, e 1000 de HP.
-Eles bloquearão ataques dependendo da quantidade restante de HP do escudo. 
-Quantidade máxima que pode ser carregada: 20.
-^ffffff_^000000
+^ff0000Não negociável.^000000
+Runa com o poder dos [Escudos Milenares].
+--------------------------
+^0000ffInvoca entre 2 a 4 escudos para proteger o usuário de ataques.
+Cada escudo possui 1.000 de HP e a mesma DEF e DEFM do usuário.^000000
+--------------------------
+Duração: ^7777773 minutos^000000
+Recarga: ^7777771 minuto^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 12728#
-^ff0000Este item não pode ser negociado.^000000
-Aumenta a efetividade da recuperação de HP por poções em 1.5 vezes durante 1 minuto.
-A recuperação natural de SP é interrompida neste período, e a efetividade da recuperação de SP por poções é reduzida pela metade. 
-Quantidade máxima que pode ser carregada: 20.
-^ffffff_^000000
+^ff0000Não negociável.^000000
+Runa com o poder da [Vitalidade Rúnica].
+--------------------------
+^0000ffEfetividade de cura recebida +50%.^000000
+^0000ffRecuperação de HP por itens +50%.^000000
+^0000ffRecuperação de SP por itens^000000 ^ff0000-50%.^000000
+^0000ffRegeneração natural de SP^000000 ^ff0000-100%.^000000
+--------------------------
+Duração: ^7777773 minutos^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 12729#
-^ff0000Este item não pode ser negociado.^000000
-Aumenta o ATQ do usuário e membros do grupo por 3 minutos.
-Quando usada, o usuário recebe o bônus de ATQ igual a quantidade de membros no grupo, e os membros do grupo recebem um quarto deste bônus de ATQ.
-Todos os membros recebem um pequeno aumento em sua Velocidade de Ataque.
-Quantidade máxima que pode ser carregada: 20.
-^ffffff_^000000
+^ff0000Não negociável.^000000
+Runa com o poder da [Aura de Combate].
+--------------------------
+^0000ffSe estiver em um grupo, aumenta o ATQ e a Velocidade de ataque do usuário de acordo com o número de membros do grupo.
+Membros receberão apenas 25% do bônus de ATQ.^000000
+--------------------------
+Duração: ^7777773 minutos^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 12730#
-^ff0000Este item não pode ser negociado.^000000
-Recupera 60 de SP a cada 10 segundos por 3 minutos. 
-Quantidade máxima que pode ser carregada: 20.
-^ffffff_^000000
+^ff0000Não negociável.^000000
+Runa com o poder da [Regeneração Espiritual].
+--------------------------
+A cada 10 segundos:
+^0000ffRegenera 60 de SP.^000000
+--------------------------
+Duração: ^7777773 minutos^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 12731#
-^ff0000Este item não pode ser negociado.^000000
-Runa usada com a habilidade 'Golpe Titânico' de Cavaleiros Rúnicos.
-Aumenta FOR +30 por 4 minutos. Limita o usuário a desferir apenas golpes físicos.
-Adiciona a chance de triplicar o dano de ataques normais em 15%.
-Pequena chance de quebrar a arma do usuário.
-Quantidade máxima que pode ser carregada: 20.
-^ffffff_^000000
+^ff0000Não negociável.^000000
+Runa com o poder da [Força Titânica].
+--------------------------
+^0000ffFOR +30.^000000
+Ao realizar ataques físicos normais:
+^0000ff15% de chance de causar 300% de dano no ataque básico.
+0,1% de chance de destruir a própria arma.^000000
+--------------------------
+Duração: ^7777773 minutos^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 12732#
-^ff0000Este item não pode ser negociado.^000000
-Runa usada com a habilidade 'Explosão Rúnica' de Cavaleiros Rúnicos.
-Cria uma onda de choque em área de 7x7 células que danifica e arremessa oponentes para trás.
-Este dano é decidido pela INT do usuário.
-Esta habilidade não pode ser cancelada ao receber ataques.
-Quantidade máxima que pode ser carregada: 20.
-^ffffff_^000000
+^ff0000Não negociável.^000000
+Runa com o poder da [Explosão Rúnica].
+--------------------------
+^0000ffCausa dano físico corpo a corpo na área de 7x7 células ao redor do usuário, empurrando oponentes 7 células para trás.
+O dano é afetado pelo nível de [Perícia em Runas] e INT do usuário.^000000
+--------------------------
+Recarga: ^7777771 segundo^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 12733#
-^ff0000Este item não pode ser negociado.^000000
-Adiciona a chance de quebrar as armas dos oponentes que atacarem o usuário por 3 minutos.
-Quando a habilidade for ativada, consome 25% do HP do usuário, aumentando a DEF e DEFM. O efeito desaparece quando a quantidade de HP for consumida.
-Quando a habilidade for usada contra monstros, adiciona a chance de diminuir seus ATQs por 10 segundos.
-Não pode ser usada contra monstros tipo Chefe.
-Quantidade máxima que pode ser carregada: 20.
-^ffffff_^000000
+^ff0000Não negociável.^000000
+Runa com o poder das [Escamas Rochosas].
+--------------------------
+^0000ffAumenta a DEF e DEFM do usuário.
+Os valores são afetados pelo nível de [Perícia em Runas] e pelo nível de classe do usuário.^000000
+Ao sofrer danos físicos:
+^0000ff30% de chance de destruir a arma do oponente.
+Em monstros, reduz 25% do ATQ deles por 10 segundos, mas não funciona contra Chefes.^000000
+--------------------------
+Ao consumir a runa:
+^0000ffDrena 25% do HP máx.^000000
+--------------------------
+Duração: ^7777773 minutos^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 12734#
@@ -50646,6 +50707,45 @@ Peso: ^777777200^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+15367#
+Personificação da justiça entre os reinos, Astrea ensina a todos os valores da vida pacífica e do respeito aos deuses. A armadura representa a resiliência da deusa.
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Druida Maligno]^000000
+A cada 2 refinos até o +14:
+^0000ffHP máx. +3%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Sumo Margaretha]^000000
+No refino +10:
+^0000ffHP máx. +25%.^000000
+No refino +11:
+^0000ffHP máx. +36%.^000000
+No refino +12:
+^0000ffHP máx. +49%.^000000
+No refino +13:
+^0000ffHP máx. +64%.^000000
+No refino +14 ou mais:
+^0000ffHP máx. +81%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Tiara de Astrea]^000000
+^0000ffEfetividade de cura +20%.^000000
+Ao receber danos físicos:
+^0000ff5% de chance de ativar um [efeito] por 5 segundos.^000000
+Ao desequipar o conjunto:
+^0000ffDrena 300 de SP do usuário.^000000
+--------------------------
+^CD3278Efeito:^000000
+^0000ffVIT +200.^000000
+^0000ffDano físico e mágico^000000  ^ff0000-50%.^000000
+--------------------------
+Tipo: ^777777Armadura^000000
+DEF: ^77777780^000000 DEFM: ^7777770^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777794^000000
+Classes: ^777777Todas^000000
+#
 15368#
 Sapatos de salto alto que toda Rainha Scaraba usa, afinal, é preciso reforçar sua superioridade e autoridade até na altura.
 ^0000ffHP e SP máx. +2%.^000000
@@ -50825,6 +50925,35 @@ Tipo: ^777777Armadura^000000
 Defesa: ^77777762^000000
 Peso: ^7777770^000000
 Nível necessário: ^77777799^000000
+Classes: ^777777Todas^000000
+#
+15384#
+Robe usado em cerimônias sagradas. É sinal de respeito e devoção às crenças.
+--------------------------
+^0000ffHP máx. +5%.^000000
+^0000ffPós-conjuração -10%.^000000
+^0000ffEfetividade de cura +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffHP máx. +5% adicional.^000000
+^0000ffEfetividade de cura +5% adicional.^000000
+Refino +8 ou mais:
+^0000ffHP máx. +5% adicional.^000000
+^0000ffTolerância a Sono +100%.^000000
+^0000ffCusto de SP das habilidades -10%.^000000
+^0000ffEfetividade de cura +10% adicional.^000000
+Refino +9 ou mais:
+^0000ffHP máx. +5% adicional.^000000
+^0000ffEfetividade de cura +10% adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Bathory]^000000
+^0000ffTolerância a Congelamento +100%.^000000
+--------------------------
+Tipo: ^777777Armadura^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 15385#
@@ -51335,20 +51464,24 @@ Classes: ^777777Aprendizes, Superaprendizes, Espadachins, Noviços, Mercadores e
 #
 16026#
 Uma maça dourada criada para saudar os Guerreiros do Ragnarök World Championship. Quando equipado em conjunto com o Anel RWC, Magias Ocultas podem despertar.
+--------------------------
 ^a400cdIndestrutível em batalha.^000000
+--------------------------
 A cada 3 refinos:
 ^0000ffATQ +30.^000000
 Refino +6 ou mais:
-^0000ffDano físico contra monstros +5%.^000000
+^0000ffDano físico contra todas as raças +5%.^000000
 Refino +9 ou mais:
-^0000ffDano físico contra montros +5% adicional.^000000
-^0000ffAo realizar ataques físicos, pequena chance de autoconjurar [Manejo Perfeito] nv. 1.^000000
-^FF6347Conjunto^000000
-^FF6347[Anel Memorável RWC]^000000
+^0000ffDano físico contra todas as raças +5% adicional.^000000
+^0000ffAo realizar ataques físicos, 0,1% de chance de autoconjurar [Manejo Perfeito] nv.1.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Anel Memorável RWC]^000000
 A cada refino da arma:
 ^0000ffATQ +5.^000000
+--------------------------
 Tipo: ^777777Maça^000000
-Ataque: ^777777100^000000
+ATQ: ^777777100^000000 ATQM: ^7777770^000000
 Peso: ^77777780^000000
 Nível da arma: ^7777773^000000
 Nível necessário: ^7777771^000000
@@ -54473,6 +54606,34 @@ Tipo: ^777777Equipamento para Cabeça^000000
 Equipa em: ^777777Topo ^000000
 Defesa: ^7777770^000000
 Peso: ^777777100^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+18572#
+Um chapéu que tudo vê e a todos julga. Seus poderes são transferidos ao usuário por uma temida aura.
+--------------------------
+^0000ffConjuração variável -6%.^000000
+^0000ffVelocidade de ataque +6%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffResistência as raças Humano e Humanoide +2%.^000000
+--------------------------
+^CD3278Espadachins, Mercadores, Gatunos, Mestres Taekwons, Monges e evoluções; Taekwon:^000000
+A cada 2 refinos:
+^0000ffDano físico +1%.^000000
+--------------------------
+^CD3278Magos, Noviços, Ninjas, Espiritualistas e evoluções:^000000
+A cada 2 refinos:
+^0000ffDano mágico +1%.^000000
+--------------------------
+^CD3278Arqueiros, Justiceiros e evoluções:^000000
+A cada refino:
+^0000ffDano físico a distância +1%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^7777772^000000 DEFM: ^7777772^000000
+Peso: ^77777730^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
@@ -57861,6 +58022,31 @@ Peso: ^77777710^000000
 Nível necessário: ^77777720^000000
 Classes: ^777777Invocadores^000000
 #
+19085#
+O par de asas mais valioso da Valquíria Sigrún. Seu poder excede qualquer mortal e a maciez das penas conforta o coração dos vitoriosos.
+--------------------------
+^CD3278Espadachins, Gatunos, Mercadores, Mestres Taekwons e evoluções; Taekwon:^000000
+^0000ffAGI^000000  ^ff0000-2.^000000
+^0000ffVelocidade de ataque +1.^000000
+--------------------------
+^CD3278Magos, Noviços, Ninjas, Espiritualistas e evoluções:^000000
+^0000ffATQM +5.^000000
+^0000ffEfetividade de cura +1%.^000000
+--------------------------
+^CD3278Arqueiros, Justiceiros e evoluções:^000000
+^0000ffDano físico a distância +1%.^000000
+--------------------------
+^CD3278Aprendizes, Superaprendizes e evoluções:^000000
+^0000ffHP máx. +60.^000000
+^0000ffSP máx. +30.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Meio^000000
+DEF: ^7777772^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19095#
 Um conjunto de balões de toda a família Poring. Talvez eles não sejam o suficiente pra te fazer voar por aí, mas os bônus que eles te concedem vão te levar às nuvens!
 ^0000ffTaxa de DROP +10%.^000000
@@ -57907,7 +58093,7 @@ Refino +12 ou mais:
 Refino do chapéu no +1 ou maior:
 ^0000ffAo realizar ataques físicos ou mágicos, 0,2% de chance de se transformar em Piamette por 3 segundos.^000000
 A cada refino do Chapéu:
-^0000ffChance de transformação +0,2%.^000000
+^0000ffChance de transformação +0,2% adicional.^000000
 A cada 3 refinos do Escudo:
 ^0000ffDuração da transformação +1 segundo.^000000
 --------------------------
@@ -58530,22 +58716,42 @@ Classes: ^777777Todas^000000
 #
 19168#
 Essa tiara foi feita especialmente pra combinar com o Uniforme de Kafra usado por cosplayers que querem aumentar seu bônus e adoram colecionar vales e papeizinhos das Kafras.
-^0000ffResistência a monstros +5%.^000000
+--------------------------
+^0000ffResistência a todas as propriedades +5%.^000000
+--------------------------
 Ao derrotar monstros:
-^0000ffChance de derrubar [Vale-Armazém] [Vale-Teletransporte] e [Cartão Kafra Especial].^000000
+^0000ff0,01% de chance de derrubar Vale-Armazém, Vale-Teletransporte e Cartão Kafra Especial.^000000
+--------------------------
 A cada refino:
-^0000ffAumenta as chances de derrubar [Vale-Armazém] [Vale-Teletransporte] e [Cartão Kafra Especial].^000000
-^FF6347Conjunto^000000
-^FF6347[Uniforme de Kafra]^000000
+^0000ffChance de derrubar Vale-Armazém +1%.^000000
+^0000ffChance de derrubar Vale-Teletransporte +0,1%.^000000
+^0000ffChance de derrubar Cartão Kafra Especial +0,01%.^000000
+--------------------------
+^fa4e09Conjunto^000000
+^fa4e09[Uniforme de Kafra]^000000
 ^0000ffTodos os atributos +4.^000000
 ^0000ffTaxa de DROP +5%.^000000
 ^0000ffEXP adquirida por monstros +5%.^000000
-Tipo: ^777777Equipamento para cabeça^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
 Equipa em: ^777777Topo^000000
-Defesa: ^7777770^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
 Peso: ^77777750^000000
 Nível necessário: ^7777771^000000
-Classe: ^777777Todas^000000
+Classes: ^777777Todas^000000
+#
+19176#
+Uma entidade abençoou este item durante sua queda inevitável. O poder contido talvez nunca seja totalmente libertado.
+--------------------------
+^0000ffResistência a raça Anjo +5%.^000000
+^0000ffDano físico contra a raça Anjo +5%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Meio^000000
+DEF: ^7777771^000000 DEFM: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^77777710^000000
+Classes: ^777777Todas^000000
 #
 19181#
 Acreditava-se que todos os óculos escuros no futuro seriam como este. Erraram feio, mas pelo menos a noção de estilo deles era certeira. Recomenda-se usá-los até à noite, pois o seu futuro vai ser tão brilhante que você vai precisar de óculos escuros o tempo todo!
@@ -58947,7 +59153,7 @@ Refino +9 ou mais:
 ^0000ffResistência a Distorcidos +20% adicional.^000000
 ^0000ffDano físico e mágico contra Distorcidos +20% adicional.^000000
 Distorcidos afetados:
-^0000ffMímico Distorcido, Rideword Distorcido, Desperador, Marca-Tempo, Diretor, Marquês Coruja, Visconde Coruja, Ancião Ancestral, Neo Punk, Punk, Pungus, Mímico, Rideword, Sussurro, Bathory, Drainiliar, Deviruchi, Coringa, Grand Orc, Orc Arqueiro, Filhote de Orc, Guerreiro Orc, Orc Herói, Senhor dos Orcs, Tirfing, Mystelltainn, Executora, Cavaleiro do Abismo, Ancião, Verme Sábio, Talo de Verme, Ursinho, Penomena, Esqueleto Arqueiro, Alice, Bafomé Jr., Cãibra, Relógio, Alarme, Gerente e Vigia do Tempo.^000000
+^0000ffMímico Distorcido, Rideword Distorcido, Despertador, Marca-Tempo, Diretor, Marquês Coruja, Visconde Coruja, Ancião Ancestral, Neo Punk, Punk, Pungus, Mímico, Rideword, Sussurro, Bathory, Drainliar, Deviruchi, Coringa, Grand Orc, Orc Arqueiro, Filhote de Orc, Guerreiro Orc, Orc Herói, Senhor dos Orcs, Tirfing, Mysteltainn, Executor, Cavaleiro do Abismo, Ancião, Verme Sábio, Talo de Verme, Ursinho, Penomena, Esqueleto Arqueiro, Alice, Bafomé Jr., Cãibra, Relógio, Alarme, Gerente e Vigia do Tempo.^000000
 Tipo: ^777777Equipamento para cabeça^000000
 Equipa em: ^777777Topo^000000
 Defesa: ^7777772^000000
@@ -59976,6 +60182,19 @@ Equipa em: ^777777Meio^000000
 DEF: ^7777772^000000 DEFM: ^7777770^000000
 Peso: ^77777730^000000
 Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+19498#
+Cor de laranja, gosto de laranja e muita vitamina C envolvida no Lacinho Cítrico. Use e os inimigos vão olhar azedos!
+--------------------------
+^0000ffPrecisão perfeita +20.^000000
+^0000ffDano físico contra monstros Chefes +7%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Meio^000000
+DEF: ^7777775^000000 DEFM: ^7777773^000000
+Peso: ^77777750^000000
+Nível necessário: ^77777790^000000
 Classes: ^777777Todas^000000
 #
 19499#
@@ -61462,6 +61681,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+19800#
+Para decorar o penteado, as Flores do Amanhecer desabrocham ao nascer do Sol, trazendo alegria e um sentimento de quentura no coração. Com todo esse conforto, é impossível ficar triste, mesmo acordando cedo!
+Tipo: ^777777Visual^000000 
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 19801#
 Uma máscara de raposa usada por um batalhão de ninjas de elite, especialistas em missões especiais de alto nível.
 Tipo: ^777777Visual^000000 
@@ -61582,6 +61809,14 @@ Esse Capuz é usado pelos maiores mestres das artes das trevas.  Algumas pessoas
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Topo e Meio ^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+19822#
+Bandana com algumas manchas de óleo, usada por uma mecânica que está sempre ajudando seus amigos em apuros. De lubrificar a armadura a consertar o braço de aço, a bandana é sua marca registrada na hora do trabalho.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
@@ -62578,6 +62813,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20020#
+Fantoche que representa toda a elegância da Lady Branca. Ao usá-lo, é possível sentir a presença da Lady e herdar parte de seus poderes. Relatos de teleportes não intencionais assombram o fantoche e seus usuários.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20022#
 Uma guloseima com formato de coração e muito bem recheada. Dê um biscoito a quem você ama!
 Tipo: ^777777Visual^000000
@@ -62679,6 +62922,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
 #
+20043#
+Mastigar um Galho de Cerejeiras não é a melhor maneira de mostrar toda a beleza das flores coloridas. Dizem ainda que o gosto é um pouco amargo e que nem rende um chá saboroso. Bom, pelo menos dá pra dizer que tá com as flores na ponta da língua.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
 20044#
 Um colorido conjunto de frutas tropicais, perfeito pra você usar e descobrir o que é que a Baiana tem ou se o Tico-tico está comendo seu fubá.
 Tipo: ^777777Visual ^000000
@@ -62771,6 +63022,14 @@ Dizem que quando o inverno estava chegando, os seis filhos da nobre família Ton
 Tipo: ^777777Visual ^000000
 Defesa: ^7777770 ^000000
 Equipa em: ^777777Baixo ^000000
+Peso: ^7777770 ^000000
+Nível Necessário: ^7777771 ^000000
+Classes: ^777777Todas ^000000
+#
+20077#
+Não é preciso usar óculos pra ver a beleza dessa peça única. Usá-la é como estar em uma passarela particular, um tapete vermelho feito especialmente pra sua exibição. Só toma cuidado, tá? Os monstros não perdoam o sonhar acordado do glamour.
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Meio ^000000
 Peso: ^7777770 ^000000
 Nível Necessário: ^7777771 ^000000
 Classes: ^777777Todas ^000000
@@ -63036,6 +63295,14 @@ Um chapéu com o visual do chapéu dos mosqueteiros, mas que era usado pelo jove
 Tipo: ^777777Visual^000000
 Defesa: ^7777770^000000
 Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+20150#
+Um leque milenar, confeccionado nos primórdios de Rune-Midgard. Sua força de abano é tão grande que os usuários devem medir a rapidez de manuseio do item. Ah, usá-lo na boca não faz o bafo ir embora com o vento, infelizmente...
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -65938,6 +66205,30 @@ Peso: ^77777720^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+20807#
+Uma Mochila de Amistr muito resistente. Não estraga na água, aguenta altas temperaturas e você pode lavar com qualquer sabão. É ou não é a mochila dos sonhos?
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+^0000ffTodos os atributos +1.^000000
+--------------------------
+^0000ffHabilita [Vigor] nv.1.^000000
+--------------------------
+A cada 2 refinos:
+^0000ffTaxa de DROP +1%.^000000
+^0000ffEXP adquirida por monstros +1%.^000000
+--------------------------
+Refino +9 ou mais:
+^0000ffAo derrotar monstros com qualquer ataque, recupera 3 de SP.^000000
+Refino +12 ou mais:
+^0000ffA conjuração não pode ser interrompida.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777730^000000 DEFM: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20808#
 Enquanto os espíritos dos Amistr protegem o usuário, esta mochila libera a Chama Reveladora que habita dentro de cada aventureiro(a).
 --------------------------
@@ -66229,6 +66520,41 @@ Peso: ^77777715^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000 
 #
+20905#
+Personificação da justiça entre os reinos, Astrea ensina a todos os valores da vida pacífica e do respeito aos deuses. A capa representa a influência da deusa.
+--------------------------
+^0000ffINT, VIT e DES +2.^000000
+^0000ffHP e SP máx. +5%.^000000
+--------------------------
+Refino +12 ou mais:
+^0000ffVelocidade de ataque +2.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas de Astrea]^000000
+^0000ffTodos os atributos +1.^000000
+^0000ffHP e SP máx. +5% adicional.^000000
+^0000ffResistência a todas as raças +10%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Tiara de Astrea]^000000
+^0000ffResistência a danos físicos a distância +15%.^000000
+^0000ffResistência a todas as propriedades +5%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas de Astrea]^000000
+^FA4E09[Armadura de Astrea]^000000
+^0000ffTodos os atributos +3.^000000
+^0000ffHP máx. +15% adicional.^000000
+^0000ffResistência física a oponentes de tamanho Médio +5%.^000000
+Soma dos refinos do Calçado, Capa e Armadura +45 ou mais:
+^0000ffTolerância a Congelamento +100%.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777715^000000 DEFM: ^7777770^000000
+Peso: ^77777740^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 20908#
 Um manto usado pela Bruxa Jiranto que não se trata só de estilo: junto do Cajado da Bruxa, sua resistência a fogo e vento se torna ainda maior. Mas não se engane, apesar da cor vermelha e do seu caráter mágico, ela não tem vontade própria.
 --------------------------
@@ -66402,8 +66728,10 @@ Refino +11 ou mais:
 ^FA4E09[Venda Sombria]^000000
 ^0000ffPós-conjuração -6%.^000000
 --------------------------
-^FA4E09Conjunto^000000
-^FA4E09[Asas de Sigrún]^000000
+^fa4e09Conjunto^000000
+^fa4e09[Asas de Sigrún]^000000
+ou
+^fa4e09[Penugens de Sigrún]^000000
 ^0000ffDano crítico +14%.^000000
 --------------------------
 Tipo: ^777777Capa^000000
@@ -66577,7 +66905,7 @@ A cada 4 refinos:
 ^0000ffDano físico contra todos os tamanhos +5%.^000000
 --------------------------
 Refino +7 ou mais:
-^0000ffATQ da arma +7%.^000000
+^0000ffATQ da arma +7% adicional.^000000
 Refino +9 ou mais:
 ^0000ffIgnora 20% da DEF e DEFM das raças Bruto e Demônio.^000000
 Refino +11 ou mais:
@@ -66664,7 +66992,7 @@ A cada 4 refinos:
 ^0000ffDano mágico de todas as propriedades +3%.^000000
 --------------------------
 Refino +7 ou mais:
-^0000ffDano mágico +7%.^000000
+^0000ffDano mágico +7% adicional.^000000
 Refino +9 ou mais:
 ^0000ffIgnora 20% da DEF e DEFM das raças Bruto e Demônio.^000000
 Refino +11 ou mais:
@@ -66826,6 +67154,17 @@ Tipo: ^777777Capa^000000
 Defesa: ^77777712^000000
 Peso: ^77777790^000000
 Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+20989#
+Tem dias que só dando corda pra ter forças e encarar as aventuras do mundo. O bom desse parafuso é que ele não só te dá um gás a mais, como também toca uma música clássica para espantar monstros que tentarem te cansar.
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Capa^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
 21000#
@@ -68374,6 +68713,50 @@ Peso: ^777777100^000000
 Nível necessário: ^77777770^000000
 Classes: ^777777Todas^000000
 #
+22167#
+Personificação da justiça entre os reinos, Astrea ensina a todos os valores da vida pacífica e do respeito aos deuses. As botas representam a vontade da deusa.
+--------------------------
+^0000ffTodos os atributos +1.^000000
+--------------------------
+Efeitos abaixo disponíveis somente no refino +10 ou mais.
+--------------------------
+FOR base 100 ou mais:
+^0000ffHP e SP máx. +5%.^000000
+FOR base 120 ou mais:
+^0000ffHP e SP máx. +2% adicional.^000000
+-
+AGI base 100 ou mais:
+^0000ffVelocidade de ataque +8%.^000000
+AGI base 120 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+-
+VIT base 100 ou mais:
+^0000ffResistência física a oponentes de tamanho Médio +10%.^000000
+VIT base 120 ou mais:
+^0000ffResistência física a oponentes de tamanho Médio +5% adicional.^000000
+-
+INT base 100 ou mais:
+^0000ffConjuração fixa -30%.^000000
+INT base 120 ou mais:
+^0000ffConjuração fixa -0,5 segundos.^000000
+-
+DES base 100 ou mais:
+^0000ffPós-conjuração -3%.^000000
+DES base 120 ou mais:
+^0000ffPós-conjuração -2% adicional.^000000
+-
+SOR base 100 ou mais:
+^0000ffCRIT +5.^000000
+SOR base 120 ou mais:
+^0000ffCRIT +2 adicional.^000000
+^0000ffEsquiva perfeita +1.^000000
+--------------------------
+Tipo: ^777777Calçado^000000
+DEF: ^77777725^000000 DEFM: ^7777770^000000
+Peso: ^77777725^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 22170#
 Um par de sapatos originado de Alfheim que possui um esquema de cores e ilustrações que remetem à natureza.
 --------------------------
@@ -68915,10 +69298,14 @@ Peso: ^7777771^000000
 Classes: ^777777Todas, exceto Invocadores ^000000
 #
 22540#
-^ff0000Este item não pode ser negociado.^000000
-Transfere o mais recente efeito rúnico para todos do grupo num raio de 7x7.
-Pode ser reusado para transferir mais efeitos rúnicos na ordem que foi recebido pelo Cavaleiro Rúnico.
-Duração: 1 minuto.
+^ff0000Não negociável.^000000
+Runa com o poder da [Luz da Alma].
+--------------------------
+^0000ffTransfere o efeito da última Runa usada para todos os membros do grupo ao redor de 7x7 células do usuário.
+O tempo dos efeitos nos membros será sempre fixo em 60 segundos.^000000
+--------------------------
+Duração: ^7777771 minuto^000000
+Limite: ^777777até 20 Runas^000000
 Peso: ^77777710^000000
 #
 22545#
@@ -75364,6 +75751,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31184#
+Certa vez um falcão decidiu usar um tapa-olho para dar alguma chance para as presas. O resultado foi dar de cara com uma árvore e não conseguir mais voar. Ele então começou a mandar réplicas do acessório para todo o reino, incentivando boas práticas na hora de bater as asas.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31185#
 Todos a bordo do Expresso Rune-Midgard! Escolha seu lugar e faça uma viagem das estações Bragi Alvim até o Jardim Prontera rumo a muitos drops e EXP. Choo choo!
 Tipo: ^777777Visual^000000
@@ -76235,6 +76630,14 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31402#
+Olha, é compreensível que a Coroa de Maçã Verde seja extremamente exótica e estilosa, mas o último aventureiro que usou isso foi confundido com um tiro ao alvo e levou uma flechada. Levanta a cabeça senão a coroa... quer dizer, abaixa a cabeça, por favor!
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31405#
 Por que usar uma peruca comum se você pode usar uma dourada? Sério, é bem mais legal e não cai na mesmice de sempre. Ah, as orelhinhas vêm de bônus!
 Tipo: ^777777Visual^000000
@@ -76394,8 +76797,15 @@ Classes: ^777777Todas^000000
 31463#
 Fabricado em Einbroch, esse robozinho está sempre agitado, ligado no 220 e nunca desiste de tentar trazer mais humor às suas aventuras. Às vezes, ao subir de nível, ele até diz algo como “Plift, ploft, still! Um novo nível você conseguiu!”.
 Tipo: ^777777Visual^000000
-Defesa: ^7777770^000000
 Equipa em: ^777777Meio^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31465#
+Certo dia, a mãe de um pequeno aventureiro pediu para que ele fosse até o mercadinho de Prontera e trouxesse uma cartela de ovos. O aventureirinho, um pouco desatento, confundiu as coisas. Pelo menos voltou com uma peça fashion...
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -76428,6 +76838,14 @@ Classes: ^777777Todas^000000
 #
 31475#
 Quando qualquer animalzinho fica de orelha em pé, dá pra saber que tem coisa vindo... Essas orelhas fofas indicam o perigo e dão um charme especial. É quase como um sexto sentido fashion.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31476#
+Além de proteger as lindas cabeleiras, o Chapéu do Desabrochar floresce mais e mais a cada raio de Sol que recebe. Sem nem perceber, você vai estar com um jardim inteiro na cabeça, sem exagero! Ok... talvez um pouquinho.
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Topo^000000
 Peso: ^7777770^000000
@@ -77436,6 +77854,14 @@ Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+31805#
+Tava na dúvida se usava um boné ou um óculos da moda? Se estiver de dia, você tem uma dupla proteção contra o Sol e ainda vai ser o centro das atenções. Se estiver de noite... bem, pelo menos a cor é bonita.
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Topo^000000
+Peso: ^7777770^000000
+Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
 31813#
 Leve um Lunático pra te acompanhar no seu ombro, beeeem de perto. Aliás, este aqui não precisa nem de uma Cenoura Arco-Íris pra domesticar!
 Tipo: ^777777Visual^000000
@@ -77474,6 +77900,14 @@ Perfeita para esconder seu rosto feio!
 Use um óculos escuros e veja seus amigos se assustarem com o óculos voador bem em cima do seu pescoço!
 Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+31823#
+Se misturar no meio da multidão tem muitas vantagens. Dá pra evitar autógrafos e fotos indesejadas, se aventurar numa boa sem ser interrompido e até coletar loot raro em segredo. Contudo, o anonimato tem seu preço... Pera, quem é você?
+Tipo: ^777777Visual^000000
+Equipa em: ^777777Meio^000000
 Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
@@ -77884,6 +78318,35 @@ A cada 10 níveis de base:
 Tipo: ^777777Acessório^000000
 Defesa: ^7777770^000000
 Peso: ^77777730^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+32219#
+Personificação da justiça entre os reinos, Astrea ensina a todos os valores da vida pacífica e do respeito aos deuses. O anel representa o compromisso da deusa.
+--------------------------
+^0000ffTodos os atributos +1.^000000
+^0000ffHabilita [Suffragium] nv.3.^000000
+^0000ffDano físico e mágico contra monstros Chefes +5%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Carta Sumo Margaretha]^000000
+^0000ffDesativa a autoconjuração de [Assumptio].^000000
+^0000ffAltera a propriedade da armadura para Fantasma.^000000
+^0000ffDano físico e mágico contra monstros Chefes +20% adicional.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas de Astrea]^000000
+^0000ffHP e SP máx. +8%.^000000
+^0000ffPós-conjuração -5%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Tiara de Astrea]^000000
+^0000ffPós-conjuração -7%.^000000
+^0000ffTodos os atributos +3 adicional.^000000
+--------------------------
+Tipo: ^777777Acessório^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^77777710^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
@@ -78507,6 +78970,43 @@ Peso: ^7777770^000000
 Nível necessário: ^7777771^000000
 Classes: ^777777Todas^000000
 #
+400075#
+Personificação da justiça entre os reinos, Astrea ensina a todos os valores da vida pacífica e do respeito aos deuses. A tiara representa o poder da deusa.
+--------------------------
+^0000ffHP máx. +5%.^000000
+--------------------------
+Refino +7 ou mais:
+^0000ffHP máx. +5% adicional.^000000
+Refino +9 ou mais:
+^0000ffResistência a todas as propriedades +5%.^000000
+Refino +10 ou mais:
+^0000ffResistência a todos os tamanhos +5%.^000000
+Refino +11 ou mais:
+^0000ffResistência a personagens, monstros normais e chefes +5%.^000000
+Refino +12 ou mais:
+^0000ffResistência a todas as raças +5%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas de Astrea]^000000
+^0000ffEsquiva perfeita +10.^000000
+^0000ffConjuração fixa -0,5 segundos.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Botas de Astrea]^000000
+^FA4E09[Capa de Astrea]^000000
+^FA4E09[Armadura de Astrea]^000000
+^FA4E09[Anel de Astrea]^000000
+^CD3278Arcebispos e evoluções:^000000
+Soma dos refinos do conjunto +48 ou mais:
+^0000ffHabilita [Proteção Arcana] nv.1.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Topo^000000
+DEF: ^77777720^000000 DEFM: ^7777770^000000
+Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
 400091#
 A incrível coloração desse elmo faz dele único e extremamente raro.
 Apesar do nome, ele não foi feito de safira, mas de fragmentos de cinzas.
@@ -78631,6 +79131,138 @@ Tipo: ^777777Visual^000000
 Equipa em: ^777777Baixo^000000
 Peso: ^7777770^000000
 Nível Necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+420017#
+Broto de uma das árvores plantadas por anciões que viveram em Rune-Midgard há muito tempo atrás. Dizem que guarda propriedades mágicas misteriosas e muito poderosas.
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Manto Temporal FOR]^000000
+^FA4E09[Armadura do Herói Robusto]^000000
+^0000ffATQ da arma +5%.^000000
+Soma dos refinos do conjunto +14 ou mais:
+^0000ffATQ +80.^000000
+Soma dos refinos do conjunto +18 ou mais:
+^0000ffATQ +30 adicional.^000000
+^0000ffPós-conjuração -7%.^000000
+Soma dos refinos do conjunto +22 ou mais:
+^0000ffDano físico corpo a corpo +10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^7777775^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+420018#
+Broto de uma das árvores plantadas por anciões que viveram em Rune-Midgard há muito tempo atrás. Dizem que guarda propriedades mágicas misteriosas e muito poderosas.
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Manto Temporal DES]^000000
+^FA4E09[Armadura do Herói Astuto]^000000
+^0000ffDano físico contra todos os tamanhos +7%.^000000
+Soma dos refinos do conjunto +14 ou mais:
+^0000ffATQ +80.^000000
+Soma dos refinos do conjunto +18 ou mais:
+^0000ffATQ da arma +5%.^000000
+^0000ffDano físico contra todos os tamanhos +7% adicional.^000000
+Soma dos refinos do conjunto +22 ou mais:
+^0000ffDano físico a distância +10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^7777775^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+420019#
+Broto de uma das árvores plantadas por anciões que viveram em Rune-Midgard há muito tempo atrás. Dizem que guarda propriedades mágicas misteriosas e muito poderosas.
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Manto Temporal AGI]^000000
+^FA4E09[Armadura do Herói Ágil]^000000
+^0000ffDano físico contra todas as raças de monstros +7%.^000000
+Soma dos refinos do conjunto +14 ou mais:
+^0000ffATQ +80.^000000
+Soma dos refinos do conjunto +18 ou mais:
+^0000ffVelocidade de ataque +1.^000000
+^0000ffDano físico contra todas as raças de monstros +7% adicional.^000000
+Soma dos refinos do conjunto +22 ou mais:
+^0000ffPós-conjuração -10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^7777775^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+420020#
+Broto de uma das árvores plantadas por anciões que viveram em Rune-Midgard há muito tempo atrás. Dizem que guarda propriedades mágicas misteriosas e muito poderosas.
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Manto Temporal SOR]^000000
+^FA4E09[Armadura do Herói Afortunado]^000000
+^0000ffDano físico contra todas as raças de monstros +10%.^000000
+Soma dos refinos do conjunto +14 ou mais:
+^0000ffATQ +80.^000000
+Soma dos refinos do conjunto +18 ou mais:
+^0000ffDano crítico +12%.^000000
+^0000ffDano físico contra todos os tamanhos +10%.^000000
+Soma dos refinos do conjunto +22 ou mais:
+^0000ffDano físico a distância e corpo a corpo +10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^7777775^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+420021#
+Broto de uma das árvores plantadas por anciões que viveram em Rune-Midgard há muito tempo atrás. Dizem que guarda propriedades mágicas misteriosas e muito poderosas.
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Manto Temporal VIT]^000000
+^FA4E09[Armadura do Herói Vigoroso]^000000
+^0000ffHP máx. +10%.^000000
+Soma dos refinos do conjunto +14 ou mais:
+^0000ffATQ +80.^000000
+Soma dos refinos do conjunto +18 ou mais:
+^0000ffSP máx. +7%.^000000
+^0000ffATQ da arma +10%.^000000
+Soma dos refinos do conjunto +22 ou mais:
+^0000ffPós-conjuração -10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^7777775^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+420022#
+Broto de uma das árvores plantadas por anciões que viveram em Rune-Midgard há muito tempo atrás. Dizem que guarda propriedades mágicas misteriosas e muito poderosas.
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Manto Temporal INT]^000000
+^FA4E09[Armadura do Herói Sábio]^000000
+^0000ffConjuração variável -10%.^000000
+Soma dos refinos do conjunto +14 ou mais:
+^0000ffATQM +80.^000000
+Soma dos refinos do conjunto +18 ou mais:
+^0000ffPós-conjuração -7%.^000000
+^0000ffDano mágico de todas as propriedades +10%.^000000
+Soma dos refinos do conjunto +22 ou mais:
+^0000ffDano mágico contra todos os tamanhos +10%.^000000
+--------------------------
+Tipo: ^777777Equip. para Cabeça^000000
+Equipa em: ^777777Baixo^000000
+DEF: ^7777770^000000 DEFM: ^7777770^000000
+Peso: ^7777775^000000
+Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
 436003#
@@ -79063,6 +79695,75 @@ Refino +10 ou mais:
 Tipo: ^777777Capa^000000
 DEF: ^77777718^000000 DEFM: ^7777775^000000
 Peso: ^77777720^000000
+Nível necessário: ^777777100^000000
+Classes: ^777777Todas^000000
+#
+480056#
+Asas de um Arcanjo que desobedeceu leis superiores e se rebelou contra seus líderes. As penas das asas caem lentamente, representando a dor do arcanjo de ter que ir contra tudo que acreditou. Quem usa as asas destaca a rebeldia de lutar pelo que acha certo.
+--------------------------
+^008080Exibe o visual nas costas do personagem.^000000
+--------------------------
+^ff0000Atenção! Esse item não pode ser negociado, derrubado no chão e nem colocado no carrinho, mas pode ser transferido para o armazém.^000000
+--------------------------
+Tipo: ^777777Visual ^000000
+Equipa em: ^777777Capa^000000
+Defesa: ^7777770^000000
+Peso: ^7777770^000000
+Nível necessário: ^7777771^000000
+Classes: ^777777Todas^000000
+#
+480064#
+Por mais turbulenta que seja a tempestade, sempre existe um jeito de superá-la. O segredo está na persistência e na confiança.
+--------------------------
+^0000ffHP e SP máx. +2%.^000000
+^0000ffDano físico a distância +2%.^000000
+^0000ffResistência as raças Humano e Doram +5%.^000000
+--------------------------
+Refino +5 ou mais:
+^0000ffHP e SP máx. +3% adicional.^000000
+^0000ffDano físico a distância +3% adicional.^000000
+Refino +7 ou mais:
+^0000ffHP e SP máx. +5% adicional.^000000
+^0000ffDano físico a distância +5% adicional.^000000
+--------------------------
+Ao aprender [Múrmurio Perene] nv.5:
+^0000ffPrecisão perfeita +20.^000000
+^0000ffRecupera 2 de SP a cada ataque.^000000
+--------------------------
+Ao aprender [Ode a Hela] nv.5:
+^0000ffPós-conjuração -10%.^000000
+^0000ffRecarga de [Temporal de Mil Flechas] -2 segundos.^000000
+--------------------------
+A cada nível aprendido de [Canção de Frigga]:
+^0000ffDano físico a distância +4% adicional.^000000
+^0000ffDano de [Temporal de Mil Flechas] +2%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Flecha de Fogo]^000000
+^0000ffResistência a propriedade Fogo +75%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Flecha de Cristal]^000000
+^0000ffResistência a propriedade Água +75%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Flecha de Vento]^000000
+^0000ffResistência a propriedade Vento +75%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Flecha de Pedra]^000000
+^0000ffResistência a propriedade Terra +75%.^000000
+--------------------------
+^FA4E09Conjunto^000000
+^FA4E09[Arco Élfico]^000000
+^FA4E09[Saltos da Rainha Scaraba]^000000
+Saltos com refino +7 ou mais,
+ao aprender [Ode a Hela] nv.5:
+^0000ffRecarga de [Temporal de Mil Flechas]^000000 ^ff0000+2 segundos.^000000
+--------------------------
+Tipo: ^777777Capa^000000
+DEF: ^77777712^000000 DEFM: ^7777770^000000
+Peso: ^77777730^000000
 Nível necessário: ^777777100^000000
 Classes: ^777777Todas^000000
 #
