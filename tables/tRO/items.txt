@@ -5905,6 +5905,8 @@
 15279#Robust Magical Armor#
 15343#Supplement Part Str#
 15344#Upgrade Part - Plate#
+15346#Unexpected Fortune Armor#
+15347#Strong Healthy Armor#
 15350#Elephangel#
 15351#Bubble Recovery#
 15355#Marin Balloon#
@@ -6332,6 +6334,7 @@
 18813#New Wave Sunglasses#
 18820#Gray Helmet#
 18821#Rainbow Feather Decoration#
+18823#Imperial Feather#
 18827#Valkyrie Circlet#
 18828#2013 RWC no.1#
 18829#2013 RWC no.2#
@@ -6509,6 +6512,9 @@
 19589#Fallen Angel's beloning#
 19599#Costume Imp Hat#
 19600#Costume Drooping Kiehl#
+19602#Costume Invisible Cap#
+19603#Costume Invisible Sunglasses#
+19604#Costume Invisible Mask#
 19605#Costume Gang Scarf#
 19607#Costume Love Chick Hat#
 19608#Costume Chick Hat#
@@ -6667,6 +6673,7 @@
 20122#Costume Happy Summer Ribbon#
 20129#Costume Poporing Hat#
 20130#Costume Whisper Tall Hat#
+20132#Costume Test Subject Aura#
 20133#Costume Poring Mascot#
 20166#Costume Hockey Mask#
 20167#Costume Devi Headphone#
@@ -6767,6 +6774,7 @@
 20489#Costume Pope Crown#
 20490#Costume Full Bloom Hp Blue#
 20499#Costume Cat Ear Hat#
+20506#Costume Invisible Manteau#
 20508#Costume Poster Girl Hat#
 20509#Costume Wings of Uriel#
 20510#Costume Sword Wing#
@@ -6832,6 +6840,7 @@
 20843#Candy Bag Backpack (Range)#
 20844#Candy Bag Backpack (Magical)#
 20862#EXE Backpack#
+20985#Costume Gourd Bottle#
 21000#Upgrade Twohand Sword#
 21001#Bellum Claymore#
 21002#Bellum Katzbalger#
@@ -6992,6 +7001,7 @@
 23011#Insurance Bond 24hrs.#
 23012#[Not For Sale] Small Mana Potion#
 23023#Unlimited Giant Fly Wing#
+23033#Invisible Box#
 23038#[Not For Sale] White Slim Potion Box#
 23040#[Not For Sale] White Potion Box#
 23042#[Not For Sale] Yggdrasil Seed#
@@ -7025,7 +7035,9 @@
 23157#Evil Druid Scroll#
 23158#Tengu Scroll#
 23165#Premium Service Staff#
+23168#Mini Fan Box#
 23169#Alchemist box#
+23170#Fan Modification Kit#
 23174#Costume Enchant Stone Box11#
 23175#Uniform Repair Kit#
 23177#[Not For Sale] Kafra Card#
@@ -7139,6 +7151,7 @@
 23647#Merchant Bell#
 23648#Kafra Bell#
 23660#Dog Poison Bottle-Z#
+23665#Physical Magical Mix Box#
 23668#Kingbird Ancient Box#
 23672#Evil Black Scroll#
 23673#White Black Scroll#
@@ -7295,6 +7308,7 @@
 24153#Solid Shadow Earring#
 24154#Immortal Shadow Armor#
 24155#Immortal Shadow Pendant#
+24156#Demi-Human Shadow Weapon#
 24157#Exorcist Shadow Weapon#
 24159#Insect Shadow Weapon#
 24160#Fishing Shadow Weapon#
@@ -7304,6 +7318,7 @@
 24167#Penetration Shadow Pendant#
 24168#Tempest Shadow Earring#
 24169#Tempest Shadow Pendant#
+24170#Magic Demi-Human Shadow Weapon#
 24171#Magic Exorcist Shadow Weapon#
 24173#Magic Insect Shadow Weapon#
 24174#Magic Fishing Shadow Weapon#
@@ -7346,28 +7361,37 @@
 24245#Reload Shadow Armor#
 24246#Swordsman Shadow Earring#
 24247#Merchant Shadow Earring#
+24248#Acolyte Shadow Earring#
 24249#Magician Shadow Earring#
 24250#Swordsman Shadow Pendant#
 24251#Merchant Shadow Pendant#
+24252#Acolyte Shadow Pendant#
 24253#Thief Shadow Pendant#
 24254#Magician Shadow Pendant#
+24255#Archer Shadow Pendant#
 24256#Knight Shadow Shoes#
+24257#Crusader Shadow Shoes#
 24258#Blacksmith Shadow Shoes#
 24262#Assassin Shadow Shoes#
 24264#Wizard Shadow Shoes#
 24265#Sage Shadow Shoes#
+24266#Hunter Shadow Shoes#
 24269#Knight Shadow Armor#
+24270#Crusader Shadow Armor#
 24271#Blacksmith Shadow Armor#
 24275#Assassin Shadow Armor#
 24277#Wizard Shadow Armor#
 24278#Sage Shadow Armor#
+24279#Hunter Shadow Armor#
 24288#Rune Knight Weapon Shadow#
+24289#Royal Guard Shadow Weapon#
 24290#Mechanic Weapon Shadow#
 24294#Guillotine Cross Shadow Weapon#
 24295#Shadow Chaser Weapon Shadow#
 24296#Warlock Shadow Weapon#
 24297#Sorcerer Shadow Weapon#
 24301#Rune Knight Shield Shadow#
+24302#Royal Guard Shadow Shield#
 24303#Mechanic Shield Shadow#
 24307#Guillotine Cross Shadow Shield#
 24308#Shadow Chaser Shield Shadow#
@@ -7375,6 +7399,12 @@
 24310#Sorcerer Shadow Shield#
 24343#Blitz Shadow Weapon#
 24344#Blitz Shadow Armor#
+24393#Physical Shadow Shoes#
+24394#Physical Shadow Shield#
+24395#Physical Shadow Armor#
+24396#Magical Shadow Shoes#
+24397#Magical Shadow Shield#
+24398#Magical Shadow Armor#
 24401#Kingbird Ancient Shadow Armor#
 24416#Temporal Transcendent Shadow Weapon#
 24417#Temporal Transcendent Shadow Armor#
@@ -7559,7 +7589,10 @@
 28332#Jewerly Ring#
 28377#Magical Ring#
 28391#Thief Shadow Earring#
+28392#Archer Shadow Earring#
 28395#1th Celebrate Badge#
+28439#Sea Otter Mini Fan#
+28440#Fur Seal Mini Fan#
 28443#ATK Eden Group Ring I#
 28444#ATK Eden Group Necklace I#
 28445#ATK Eden Group Ring II#
@@ -7795,6 +7828,7 @@
 31673#Costume Picnic Basket#
 31698#Costume Red Riding Hood#
 31719#Costume Cons of Fire#
+31721#Costume Resonate Taego#
 31728#Costume Nobility Hat#
 31731#Costume Snack Party#
 31766#Costume Peony Hair Ornament#
@@ -7806,6 +7840,7 @@
 31955#Costume 1st Angeling Hat#
 31956#Costume 2nd Angeling Hat#
 31958#Costume Santa Poring Balloon#
+31972#Costume Purificatory Mask#
 32004#Probation Royal Guard Lance#
 100000#IDTest Special#
 100061#[Not For Sale] Red Booster#
@@ -7881,6 +7916,8 @@
 100780#Songkran Egg#
 100781#Razer Gold Treasure#
 100782#Flower of Spring Scroll#
+100791#Invisible Scroll#
+100807#Oriental Scroll#
 200000#IDTest Cash#
 200049#Stone Coin Package I#
 200050#Stone Coin Package II#
@@ -7911,9 +7948,12 @@
 410012#EXP Advicer#
 410048#Costume Tiger#
 410050#Costume Puriku White Tea#
+420014#Costume Japanese Hair#
+420016#Costume Katashiro Flying#
 440000#Costume Shark Hat#
 450000#IDTest armor#
 450131#Fallen Angel Armor#
+480120#Guardian Soul#
 490033#Fallen Angel's Tear#
 500000#IDTest weapon#
 600000#IDTest bothhand#
