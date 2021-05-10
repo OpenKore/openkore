@@ -886,10 +886,10 @@
 1614#Wand of Occult#
 1615#Evil Bone Wand#
 1616#Wing Staff#
-1617#Survivor's Rod#
-1618#Survivor's Rod#
-1619#Survivor's Rod#
-1620#Survivor's Rod#
+1617#Survivor's Rod (Dex)#
+1618#Survivor's Rod (Dex)#
+1619#Survivor's Rod (Int)#
+1620#Survivor's Rod (Int)#
 1621#Hypnotist's Staff#
 1622#Hypnotist's Staff#
 1623#Rookie Mighty Staff#
@@ -2593,19 +2593,19 @@
 4805#Healing Power 1#
 4806#MATK+3%#
 4807#ASPD+1#
-4808#Fighting Spirit 4Lv#
-4809#Fighting Spirit 3Lv#
+4808#Fighting Spirit 4#
+4809#Fighting Spirit 3#
 4810#Fighting Spirit 2#
 4811#Fighting Spirit 1#
 4812#Spell 4Lv#
-4813#Spell 3Lv#
+4813#Spell Energy 3#
 4814#Spell Energy 2#
 4815#Spell Energy 1#
 4816#Sharp 3Lv#
 4817#Sharp Eyes 2#
 4818#Sharp Eyes 1#
 4819#ATK+1%#
-4820#Fighting Spirit 5Lv#
+4820#Fighting Spirit 5#
 4821#Fighting Spirit 6Lv#
 4822#Fighting Spirit 7Lv#
 4823#Fighting Spirit 8Lv#
@@ -2619,7 +2619,7 @@
 4831#Spell 10Lv#
 4832#Expert Archer 1#
 4833#Expert Archer 2#
-4834#Expert Archer 3Lv#
+4834#Expert Archer 3#
 4835#Expert Archer 4Lv#
 4836#Expert Archer 5Lv#
 4837#Expert Archer 6Lv#
@@ -2635,7 +2635,7 @@
 4848#Immuned 1Lv#
 4849#Cranial 1Lv#
 4850#Healing Power 2#
-4851#Archbishop3Lv#
+4851#Healing Power 3#
 4852#Archbishop4Lv#
 4853#Special STR#
 4854#Special AGI#
@@ -2649,7 +2649,7 @@
 4862#MHP+2%#
 4863#Fatality 1#
 4864#Fatality 2#
-4865#치명3Lv#
+4865#Fatality 3#
 4866#치명4Lv#
 4867#MHP+3%#
 4868#MHP+4%#
@@ -2657,7 +2657,7 @@
 4870#SP+25#
 4871#SP+75#
 4872#Attack Speed 2#
-4873#Attack Delay 3#
+4873#Attack Speed 3#
 4875#Bear's Power#
 4876#Runaway Magic#
 4877#Speed Of Light#
@@ -2734,6 +2734,11 @@
 4948#Skill Delay 1#
 4949#Skill Delay 2#
 4950#Skill Delay 3#
+4984#Def Crystal#
+4986#Attack Crystal#
+4987#Magic Crystal#
+4988#MHP Crystal#
+4989#MSP Crystral#
 4991#리액토 보조 ASPD#
 4992#HP Restore 1% (Phy.)#
 4993#SP Restore 1% (Phy.)#
@@ -3134,7 +3139,7 @@
 5411#백사 머리띠#
 5412#Sour Candy#
 5413#Popcorn Hat#
-5414#캠프파이어 모자#
+5414#Campfire Hat#
 5415#포링 케이크 모자#
 5416#맥주 모자#
 5418#병정모자#
@@ -3711,7 +3716,7 @@
 6341#Faded Music(Red)#
 6342#Faded Music(Purple)#
 6343#Faded Music(Blue)#
-6345#Trust Inner#
+6345#Lucid Power#
 6358#Gacha Koin#
 6359#Mileage Capsule#
 6360#Scarlet Point#
@@ -4439,6 +4444,7 @@
 7396#36번 공#
 7397#37번 공#
 7398#38번 공#
+7399#Step Up Pass#
 7406#Bloody Orc Emblem#
 7415#Boss Amulet#
 7416#Letter Of Recommendation#
@@ -4843,7 +4849,7 @@
 9757#Aurous Wing Scroll#
 9758#Magnetic Gold Scroll#
 9759#Divine Shine Scroll#
-9777#Ears Candy Scroll#
+9777#Hanabi Scroll#
 9778#Sappy Cat Scroll#
 9779#Love Whisper Scroll#
 9780#Love Spell Scroll#
@@ -5226,7 +5232,7 @@
 12215#LV10 Blessing Scroll#
 12216#LV10 Agi Scroll#
 12217#LV5 Aspersio Scroll#
-12218#Old LV5 Assumptio Scroll#
+12218#Assumptio Scroll Lv.5#
 12219#LV10 Windwalk Scroll#
 12220#LV5 Adrenaline Scroll#
 12221#Megaphone#
@@ -5245,8 +5251,8 @@
 12260#Cool Summer Outfit#
 12261#Bloody Mary#
 12262#마패#
-12263#Battle Manual#
-12264#Bubble Gum#
+12263#Battle Manual(Cash)#
+12264#Bubble Gum(Cash)#
 12269#Tasty Pink Ration#
 12270#Tasty White Ration#
 12271#Military Ration A#
@@ -6447,6 +6453,7 @@
 15848#Motaro's Horn(OSM)#
 15849#Kintaro's Bracelet(OSM)#
 15850#Kronika's Speller Mag(OSM)#
+15854#C Phigasia Scarf (ROMSP)#
 15855#Ermac's Veil(OSM)#
 15856#Kronika's Orb(OSM)#
 15857#Shang Tsung's Rainbow(OSM)#
@@ -6459,7 +6466,10 @@
 15886#Reptile's Head (OSM)#
 15887#Odious's Robe#
 15895#Rambo's Bandana(OSM)#
-15896#Hawkeye Hood(OSM)#
+15896#Hawkeye Hood (N-OSM)#
+15901#Liu Kang Circlet (OSM)#
+15902#Raiden's Sakkat(OSM)#
+15903#Ferra Headband(N-OSM)#
 16000#Erde#
 16001#Red Square Bag#
 16003#Carga Mace#
@@ -7293,7 +7303,7 @@
 19512#C Love Patch (Girl)#
 19513#Chicken Beak#
 19514#Charlie Beard#
-19515#Yellow Hat#
+19515#C Mago Noble#
 19516#Singing Bird#
 19517#C KFZ Hairband#
 19518#Rainbow#
@@ -7779,7 +7789,7 @@
 20280#의상 잘근잘근 씹어놓은 연필#
 20281#의상 유치원생의 모자#
 20282#C Royal Captian Hat#
-20283#의상 오버프로텍터#
+20283#C Commander of Knight#
 20284#의상 벚꽃모자#
 20285#의상 흩날리는 벚꽃#
 20286#의상 빨간 언더림 안경#
@@ -7863,13 +7873,16 @@
 20377#의상 비행모#
 20378#의상 스카이멧#
 20379#의상 회중시계 머리 장식#
+20380#SR - C Ra's God Hairband#
 20385#C Orc Hero Helmet#
 20386#C Emperor of Sun Crown#
 20396#C Woddie Woodie#
 20397#Jakk#
 20398#C NH Bunny Hat#
 20399#C Tengu's Mask#
+20400#C Holy Symbol#
 20401#C God's Ring#
+20402#C Ashrah's Veil#
 20404#C Poring Family#
 20405#C Eremes Scarf#
 20406#C Saint of Heaven#
@@ -7914,7 +7927,7 @@
 20485#C Maneater Flower HP#
 20486#C Twin Margaret#
 20487#Costume Floral Waltz#
-20488#C Pope Ribbon#
+20488#SR - C Elegante#
 20489#C Pope Crown#
 20490#C Full Bloom HP(Blue)#
 20499#C Gothic Cat Ear Hat (B)#
@@ -7979,6 +7992,7 @@
 20601#C 99LV Rune Red#
 20602#C Ace of Angel Wing (Sweet)#
 20603#C Ulysses Betterfly#
+20607#C Ace Of Angel Wing (Royal)#
 20700#Egir Manteau#
 20702#TE WoE Muffler#
 20703#TE WoE Cloak#
@@ -8261,9 +8275,9 @@
 24018#Physical Shadow Earring#
 24019#Physical Shadow Weapon#
 24020#Physical Shadow Pendant#
-24021#Magical Earring Shadow#
+24021#Magical Shadow Earring#
 24022#Magical Weapon Shadow#
-24023#Magical Pendant Shadow#
+24023#Magical Shadow Pendant#
 24024#Breezy Armor Shadow#
 24025#Champion Shoes Shadow#
 24026#Athena Shield Shadow#
@@ -8349,14 +8363,17 @@
 24251#Merchant Shadow Pendant#
 24253#Thief Shadow Pendant#
 24254#Mage Shadow Pendant#
+24255#Archer Shadow Pendant#
 24256#Knight Shadow Shoes#
 24259#Alchemist Shadow Shoes#
 24263#Rogue Shadow Shoes#
 24265#Sage Shadow Shoes#
+24266#Hunter Shadow Shoes#
 24269#Knight Shadow Armor#
 24272#Alchemist Shadow Armor#
 24276#Rogue Shadow Armor#
 24278#Sage Shadow Armor#
+24279#Hunter Shadow Armor#
 24422#C 99LV Sura Orange#
 25000#SP흡수스톤(상단)#
 25001#방어스톤(중단)#
@@ -8410,6 +8427,9 @@
 25425#Snow Flake#
 25426#Magic Silk#
 25627#Mysterious Kard#
+25724#Festival Koin#
+25725#Hanabi Pass#
+25744#Hanabi Firework#
 25890#Reset Stat Stone#
 26175#Chromium Staff#
 26176#Karlite Staff#
@@ -8455,6 +8475,7 @@
 28327#부러진 칩 02#
 28332#Jewerly Ring#
 28391#Thief Shadow Earring#
+28392#Archer Shadow Earring#
 28439#Sea Otter Cute Fan#
 28440#Fur Seal Cute Fan#
 28507#Kathryne's Gloves (OSM)#
@@ -8476,6 +8497,7 @@
 28963#Poring Power Shield (OSM)#
 28964#Dark Cross Shield (OSM)#
 28967#Mortality Luk Boots(MSP)#
+28968#Sub-Zero Shield(OSM)#
 29013#HP흡수3#
 29014#STR+3 INT-3#
 29015#STR+3 DEX-3#
@@ -8568,12 +8590,14 @@
 31178#Costume Fire Muffler#
 31179#C She Wolf#
 31180#C Shura King Pledge#
+31181#C Lucky Rosary#
 31183#C Dark Pupid Wing#
 31186#Costume Black Cat#
 31189#C Santy's Muffler#
 31191#C Golden Kitten Ears#
 31195#Costume Chocolate Mini Hat#
 31200#C Sailor Ribbon#
+31201#SSR - C Rabbit King Crown#
 31202#Costume Dog Officer#
 31207#C Yaksha Masuku#
 31209#C Hani Hair Style (Pearl)#
@@ -8656,6 +8680,7 @@
 31416#C Black Swan#
 31420#C Shiny Santa Poring#
 31432#C Luwmin Ice#
+31433#C Astro Circle#
 31438#C Fluffy Angel Cape#
 31439#C Fluffy Lovely Earmuffs#
 31440#C Snow Bear Hood#
@@ -8702,7 +8727,7 @@
 31561#C Devil Aura Ears#
 31563#C Idol Make Up#
 31565#C Nohime's Crown#
-31568#C Qiqi's Obu#
+31568#SSR - C Qiqi's Obu#
 31569#C DJ Cyber#
 31570#C Cyclops Visor#
 31572#C Visual System#
@@ -8786,12 +8811,13 @@
 31698#C Pigtail Red Hood#
 31699#C Smile of Siam Eyes#
 31700#C Hunter Scarf#
+31709#SSR - C Royal King Crown#
 31716#C Sexy Wink Eyes#
 31717#C IU's Hairstyle (Pearl)#
 31718#C Hwaa Rantan#
 31719#C Inferno Aura#
 31720#C Vesper Inspector#
-31721#C Enel's Shime Daiko#
+31721#SSR - C Enel's Shime Daiko#
 31729#C Flower Shower#
 31730#C Minty's Hairstyle (Peach)#
 31732#C Cute Bear Balloon#
@@ -8848,6 +8874,8 @@
 31923#C Tiny White Bear#
 31930#C Microphone#
 31937#C Sweet Unicorn#
+31940#C Phantom Mask (Gold)#
+31944#SR - C Rose Hairstyle#
 31946#C Jearous Eyes#
 31947#C Motaro Horn#
 31950#C Alvin's Chipmunk#
@@ -8875,12 +8903,19 @@
 100776#Aka Scroll#
 100777#Okami Scroll#
 100778#Akuma Scroll#
+410005#SSR - C Magic Liberation#
+410047#C Mask of Hero#
+410049#SSR - C Elegante Eyes#
 420014#SR - C Hime Cut#
 420015#C Camelia Onihime#
 420016#SR - C Shikigami Charm#
+420029#SR - C Lord Knight Pauldron#
+420047#SSR - C Royal Knight Shawl#
 440002#C Sappy Cat#
-480052#C Kimono Obi#
+480052#SSR - C Kimono Obi#
 480071#SR - C Gaara's Hyotan#
+480093#SR - C Royal Staff#
 480112#Nightwolf's Tasuki(OSM)#
 480113#Nitara's Wing(OSM)#
 490138#Kenshi's Amubando(OSM)#
+490144#Mortality Ring(OSM)#

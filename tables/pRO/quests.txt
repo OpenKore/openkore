@@ -21258,12 +21258,12 @@ Defeat Heater 100 ea #
 
 ///Hunting
 295186#Comeback Stage Daily Quest - Hunting#SG_FEEL#QUE_NOIMAGE#
-Hunting ^0000FFGrand Peco and Deviruchi^000000#
-Defeat Grand Peco and Deviruchi 100 ea#
+Hunting ^0000FFPitman and Teddy Bear^000000#
+Defeat Pitman and Teddy Bear 100 ea#
 
 ///Collecting
 295404#Comeback Stage Daily Quest - Collecting Item#SG_FEEL#QUE_NOIMAGE#
-^0000FFCollect below items^000000                                                          1. Anolian Skin 100 ea                                                       2. Burning Horseshoe 100 ea#
+^0000FFCollect below items^000000                                                          1. Old Pick 100 ea                                                           2. Used Iron Plate 100 ea#
 Collecting items#
 
 //Training Ground Renovation Part3
@@ -22987,3 +22987,40 @@ Go to find Jae-Hyun at Jawaii(205,290)#
 295758#Be Brave Again#SG_FEEL#QUE_NOIMAGE#
 Cho-Ai need to tell Jae-Hyun again after 05:00 AM #
 You able to accept again at 05:00 AM#
+
+295759#Part I : Hanabi Festival ?#SG_FEEL#QUE_NOIMAGE#
+Answer questions about Hanabi Festival with Hibara.#
+Answer questions with Hibara#
+
+295760#Part II : Fireworks Material#SG_FEEL#QUE_NOIMAGE#
+^0000FFCollect below items^000000                                                          1. Gun Powder 10 ea                                                          2. Piece of Bamboo 10 ea                                                     3. Lucid Power 10 ea                                                         4. Fine Sand 10 ea                                                           5. Glitter Shell 10 ea#   
+Collecting items#
+
+295761#Part III : Intruder of Amatsu#SG_FEEL#QUE_NOIMAGE#
+^0000FFDefeat Monster below^000000                                                         1. Defeat 5 Poporing                                                         2. Defeat 50 Karakasa                                                        3. Defeat 5 Kapha#
+Defeat monster#
+
+295762#Part IV : Find Fireworks#SG_FEEL#QUE_NOIMAGE#
+Sonoko ask you to get fireworks from Drawer inside Sonoko Vacation Home that locate on Amatsu Fild 1.#
+Go to Sonoko Vacation Home at Amatsu Fild 1 (331,133)#
+
+295763#Today Festival is over#SG_FEEL#QUE_NOIMAGE#
+Now the festival is over, you can rejoin again after 05.00 AM#
+You able to accept again at 05:00 AM#
+
+295764#Part II : Make Fireworks#SG_FEEL#QUE_NOIMAGE#
+Talkin with Conan about Hanabi Festival.#
+Conan will stay on Amatsu (218,234)#
+
+295765#Part III : Ran Request!#SG_FEEL#QUE_NOIMAGE#
+Emergency request! Ran need help!#
+Meet Ran at Amatsu (229,234)#
+
+295766#Part IV : Hanabi Festival Start!#SG_FEEL#QUE_NOIMAGE#
+Talking with Sonoko to start the festival.#
+Sonoko need some help, she waiting at Amatsu (223,234)#
+
+
+295767#Step Up Event#SG_FEEL#QUE_NOIMAGE#
+You participate Step Up Level with Trainer's Kahi#
+Step Up Level#
