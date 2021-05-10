@@ -25251,3 +25251,56 @@ Return to Acedemy#
 16289#Happy Pet Vending Machine#SG_FEEL#QUE_NOIMAGE#
 Happy Pet Vending Machine#
 #
+
+//-- Corridor of Phantom
+5846#Corridor of Phantom#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Phantom's Spirit]<INFO>comodo,214,186,0,101,0</INFO></NAVI> gives away <ITEM>[Phantom's Seal]<INFO>25504</INFO></ITEM> to play the corridor for an hour once every three days.#
+#
+
+63715#Corridor of Phantom#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Phantom's Spirit]<INFO>comodo,214,186,0,101,0</INFO></NAVI> gives away sells Phantom Ticket to play the corridor for two hours once a day.#
+#
+
+
+8280#I don't look good in bells.#SG_FEEL#QUE_NOIMAGE#
+Get advices from Tortell, Couscous, Coco, and Ravi Ravi and go back to Olive Olive.#
+Talking to Dorams#
+
+8281#Poor thing#SG_FEEL#QUE_NOIMAGE#
+Tortell comforted you greatly when the bells didn't match.#
+#
+
+8282#Let me help you#SG_FEEL#QUE_NOIMAGE#
+Couscous suggested putting flowers on the bell.#
+#
+
+8283#With all one's wits#SG_FEEL#QUE_NOIMAGE#
+Coco tried to trick you once again after being bewitched by Olive Olive, but she is not a bad cat.#
+#
+
+8284#I'm gonna put a bell on you.#SG_FEEL#QUE_NOIMAGE#
+If you have 10 Fluff, Ravi Ravi will find the way to match bell on you.#
+10 Fluff#
+
+
+8285#To those who face the new spring#SG_FEEL#QUE_NOIMAGE#
+Arles ask you to bring ^4d4dff15 Spray of Flower^000000 from ^4d4dffFlower Tree Aura^000000 near Flower Tree for students.#
+15 Spray of Flowers# 
+
+8286#To those who face a new beginning#SG_FEEL#QUE_NOIMAGE#
+At Arles' request, Arles' disciples Seminy, Lysony, and Lumaca must each be delivered 5 Spray of Flowers.#
+Spray of Flowers Delivery#
+
+
+8287#Spray of Flowers Delivery to Seminy#SG_FEEL#QUE_NOIMAGE#
+Delivery to Seminy#
+#
+
+8288#Spray of Flowers Delivery to Lysony#SG_FEEL#QUE_NOIMAGE#
+Delivery to Lysony#
+#
+
+8289#Spray of Flowers Delivery to Lumaca#SG_FEEL#QUE_NOIMAGE#
+Delivery to Lumaca#
+#
+
