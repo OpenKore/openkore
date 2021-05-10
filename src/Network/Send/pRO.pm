@@ -55,6 +55,12 @@ sub new {
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
+	$self->{buy_bulk_openShop_size} = "(a10)*";
+	$self->{buy_bulk_openShop_size_unpack} = "V v V";
+
+	$self->{buy_bulk_buyer_size} = "(a8)*";
+	$self->{buy_bulk_buyer_size_unpack} = "a2 V v";
+
 	return $self;
 }
 
