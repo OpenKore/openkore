@@ -8266,6 +8266,13 @@ sub rodex_mail_list {
 	}
 	$print_msg .= sprintf("%s\n", ('-'x119));
 	message $print_msg, "list";
+
+	Plugins::callHook('rodex_mail_list', {
+		'mails' => $rodexList->{mails},
+		'current_page' => $rodexList->{current_page},
+		'last_mailID' => $rodexList->{current_page_last_mailID},
+		'isEnd' => $args->{isEnd},
+	});
 }
 
 sub rodex_read_mail {
@@ -8278,7 +8285,7 @@ sub rodex_read_mail {
 
 	my $mail = {};
 
-	$mail->{body} = substr($msg, $header_len, $args->{text_len});
+	$mail->{body} = solveMSG(bytesToString(substr($msg, $header_len, $args->{text_len})));
 	$mail->{zeny1} = $args->{zeny1};
 	$mail->{zeny2} = $args->{zeny2};
 
@@ -8289,9 +8296,9 @@ sub rodex_read_mail {
 
 	$mail->{items} = [];
 
-	message center(" " . "Mail (" . $args->{mailID1} . ")" . $rodexList->{mails}{$args->{mailID1}}->{sender} . " ", 119, '-') . "\n";
+	message center(" " . "Mail (" . $args->{mailID1} . ") " . $rodexList->{mails}{$args->{mailID1}}->{sender} . " ", 119, '-') . "\n";
 	message sprintf("From: %s \n", $rodexList->{mails}{$args->{mailID1}}->{sender});
-	message "Message:\n" . solveMSG(bytesToString($mail->{body}));
+	message "Message:\n" . $mail->{body};
 	# FIXME for some reason message can't concatenate bytesToString + "\n"
 	message "\n";
 
@@ -8332,6 +8339,16 @@ sub rodex_read_mail {
 	$rodexList->{mails}{$args->{mailID1}}{isRead} = 1;
 
 	$rodexList->{current_read} = $args->{mailID1};
+
+	Plugins::callHook('rodex_mail', {
+		'mailID' => $args->{mailID1},
+		'from' => $rodexList->{mails}{$args->{mailID1}}->{sender},
+		'title' => $rodexList->{mails}{$args->{mailID1}}->{title},
+		'content' => $mail->{body},
+		'zeny' => $args->{zeny1},
+		'itemCount' => $args->{itemCount},
+		'items' => $mail->{items},
+	});
 }
 
 sub unread_rodex {
