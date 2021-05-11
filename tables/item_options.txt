@@ -1,3 +1,5 @@
+# see kRO client: data.grf\luafiles514\lua files\Datainfo\addrandomoptionnametable.lub
+# https://github.com/llchrisll/ROenglishRE/blob/master/Renewal/data/luafiles514/lua%20files/datainfo/addrandomoptionnametable.lub
 VAR_MAXHPAMOUNT#MaxHP +%d#
 VAR_MAXSPAMOUNT#MaxSP +%d#
 VAR_STRAMOUNT#STR +%d#
