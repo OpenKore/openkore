@@ -8496,6 +8496,10 @@ sub rodex_delete {
 
 	message TF("You have deleted the mail of ID %s.\n", $args->{mailID1});
 
+	Plugins::callHook('rodex_mail_deleted', {
+		'mailID' => $args->{mailID1},		
+	});
+
 	delete $rodexList->{mails}{$args->{mailID1}};
 }
 
