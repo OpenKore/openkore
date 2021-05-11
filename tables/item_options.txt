@@ -1,5 +1,5 @@
 # see kRO client: data.grf\luafiles514\lua files\Datainfo\addrandomoptionnametable.lub
-# example: https://github.com/zackdreaver/ROenglishRE/blob/master/data/luafiles514/lua%20files/datainfo/addrandomoptionnametable.lub
+# https://github.com/llchrisll/ROenglishRE/blob/master/Renewal/data/luafiles514/lua%20files/datainfo/addrandomoptionnametable.lub
 VAR_MAXHPAMOUNT#MaxHP +%d#
 VAR_MAXSPAMOUNT#MaxSP +%d#
 VAR_STRAMOUNT#STR +%d#
@@ -202,3 +202,39 @@ RACE_WEAPON_TOLERACE_ANGEL#Angel monster resistance +%d%%#
 RACE_WEAPON_TOLERACE_DRAGON#Dragon monster resistance +%d%%#
 RANGE_WEAPON_ATTACK_DAMAGE_TARGET#Long range physical attack +%d%%#
 RANGE_WEAPON_ATTACK_DAMAGE_USER#Long range physical damage -%d%%#
+RACE_TOLERACE_PLAYER_HUMAN#Demi-Human players resistance + %d%%#
+RACE_TOLERACE_PLAYER_DORAM#Doram players resistance +%d%%#
+RACE_DAMAGE_PLAYER_HUMAN#ATK against Demi-Human players +%d%%#
+RACE_DAMAGE_PLAYER_DORAM#ATK against Doram players +%d%%#
+RACE_MDAMAGE_PLAYER_HUMAN#MATK against Demi-Human players +%d%%#
+RACE_MDAMAGE_PLAYER_DORAM#MATK against Doram players +%d%%#
+RACE_CRI_PERCENT_PLAYER_HUMAN#Critical +%d for Demi-Human players#
+RACE_CRI_PERCENT_PLAYER_DORAM#Critical +%d for Doram players#
+RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN#Pierces %d%% DEF of Demi-Human players#
+RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM#Pierces %d%% DEF of Doram players#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN#Pierces %d%% MDEF of Demi-Human players#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM#Pierces %d%% MDEF of Doram players#
+REFLECT_DAMAGE_PERCENT#Recieved reflected damage -%d%%#
+MELEE_ATTACK_DAMAGE_TARGET#Melee physical damage +%d%%#
+MELEE_ATTACK_DAMAGE_USER#Melee physical damage -%d%%#
+ADDSKILLMDAMAGE_NOTHING#Neutral elemental magic skill damage +%d%%#
+ADDSKILLMDAMAGE_WATER#Water elemental magic skill damage +%d%%#
+ADDSKILLMDAMAGE_GROUND#Earth elemental magic skill damage +%d%%#
+ADDSKILLMDAMAGE_FIRE#Fire elemental magic skill damage +%d%%#
+ADDSKILLMDAMAGE_WIND#Wind elemental magic skill damage +%d%%#
+ADDSKILLMDAMAGE_POISON#Poison elemental magic skill damage +%d%%#
+ADDSKILLMDAMAGE_SAINT#Holy elemental magic skill damage +%d%%#
+ADDSKILLMDAMAGE_DARKNESS#Shadow elemental magic skill damage +%d%%#
+ADDSKILLMDAMAGE_TELEKINESIS#Ghost elemental magic skill damage +%d%%#
+ADDSKILLMDAMAGE_UNDEAD#Undead elemental magic skill damage +%d%%#
+ADDEXPPERCENT_KILLRACE_NOTHING#Experience gained from Formless race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_UNDEAD#Experience gained from Undead race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_ANIMAL#Experience gained from Brute race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_PLANT#Experience gained from Plant race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_INSECT#Experience gained from Insect race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_FISHS#Experience gained from Fish race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_DEVIL#Experience gained from Demon race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_HUMAN#Experience gained from Demi-Human race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_ANGEL#Experience gained from Angel race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_DRAGON#Experience gained from Dragon race monsters +%d%%#
+ADDEXPPERCENT_KILLRACE_ALL#Experience gained from all race monsters +%d%%#
