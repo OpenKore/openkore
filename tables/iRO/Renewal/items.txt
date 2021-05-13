@@ -238,6 +238,8 @@
 756#Rough Oridecon#
 757#Rough Elunium#
 766#A bundle of shiny hair.#
+790#[Event]Flower Left by Phantom#
+791#[Event]Phantom's Seal#
 901#Daenggie#
 902#Tree Root#
 903#Reptile Tongue#
@@ -5548,6 +5550,7 @@
 12848#Falcon Pipe#
 12849#Combination Kit#
 12853#Patron Scroll#
+12854#Voluminous Spray of Flowers#
 12859#Spring Lucky Pack#
 12860#Mommy Day Cake#
 12873#TE Potion Box#
@@ -8316,6 +8319,7 @@
 22931#Armor +12 Refine Ticket#
 22943#Armor +10 Refine Ticket#
 22944#Weapon +10 Refine Ticket#
+22945#Cherry Blossom Rice Cake#
 22947#Strength Soul Potion Box#
 22948#Agility Soul Potion Box#
 22949#Vitality Soul Potion Box#
@@ -9393,6 +9397,7 @@
 31232#Costume Long Twin (Brown)#
 31233#Costume Long Twin (Purple)#
 31234#Costume Persica#
+31245#Costume Bell Flower#
 31246#Costume Humming Bird#
 31247#Costume Hippo Hat#
 31248#Costume Isabella Red Ears#

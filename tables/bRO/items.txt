@@ -3322,6 +3322,7 @@
 5945#Lápis Mastigado#
 5963#Fones Alados#
 5967#Galapago Voador#
+5973#Orelhas Anciãs#
 5975#Boneca da Jirtas#
 5978#Vacina da Cura#
 5979#Penas Clampi ®#
@@ -6011,6 +6012,7 @@
 15347#Armadura do Herói Vigoroso#
 15353#Armadura do Herói Ágil#
 15354#Armadura do Herói Astuto #
+15367#Armadura de Astrea#
 15368#Saltos da Rainha Scaraba#
 15370#Gálea de Unicórnio#
 15371#Roupa de Natal do Antonio#
@@ -6018,6 +6020,7 @@
 15374#Armadura Eclipse#
 15375#Armadura Eclipse Desgastada#
 15383#Sobretudo do Senhor do Tempo#
+15384#Robe Ritualístico#
 15385#Robozinho Sabe-Tudo#
 15386#Armadura da Nobreza#
 15387#Vestido da Bruxa#
@@ -6310,6 +6313,7 @@
 18569#Chapéu de Ovelha Fofinha#
 18570#Decoração Dourada Antiga#
 18571#Chapéu das Flores Encantadas#
+18572#Chapéu do Julgamento#
 18573#Pena Branca#
 18574#Elmo do Senhor da Morte#
 18575#Disfarce de Solid Sorrateiro#
@@ -6538,6 +6542,7 @@
 19082#Óculos de Segurança#
 19083#Máscara Dourada#
 19084#Chapéu dos Farfelle#
+19085#Penugens de Sigrún#
 19095#Balões da Família Poring#
 19097#Gravata Macabra de Cetim#
 19098#Chapéu Macabro de Cetim#
@@ -6575,6 +6580,7 @@
 19162#Snorkel#
 19163#Boneca da Succubus#
 19168#Tiara Especial de Kafra#
+19176#Benção do Caído#
 19181#Óculos Retrofuturistas#
 19220#Elmo Gigante#
 19238#Cebolinha#
@@ -6631,6 +6637,7 @@
 19455#Diadema do Paraíso#
 19456#Máscara do Tengu Corvo#
 19495#Asinhas Discretas#
+19498#Lacinho Cítrico#
 19499#Echarpe Misteriosa#
 19507#Sol Risonho#
 19509#Asas de Borboleta#
@@ -6802,6 +6809,7 @@
 19789#Chapéu Elegante#
 19790#Véu de Matrimônio#
 19796#Elmo com Chifres#
+19800#Flores do Amanhecer#
 19801#Máscara da ANBU#
 19802#Nove Caudas Dorminhoca#
 19803#Cata-vento Vermelho#
@@ -6816,6 +6824,7 @@
 19816#Chapéu de Peco#
 19817#Sopro do Ifrit#
 19819#Capuz do Mestre Necromante#
+19822#Bandana da Mecânica#
 19823#Capuz de Gatinho Fofinho#
 19824#Chapéu de Druida Maligno#
 19826#Asinhas do Inverno#
@@ -6930,6 +6939,7 @@
 20015#Barba Charmosa#
 20016#Chapéu de Lagosta#
 20018#Orelhinhas Atentas#
+20020#Fantoche da Lady Branca#
 20022#Biscoito do Amor#
 20023#Boina Militar Vermelha#
 20027#Chapéu da Mimosa Rosa#
@@ -6942,6 +6952,7 @@
 20037#Chapelão do Duque Coruja#
 20038#Capacete do Alfonso#
 20041#Tiara Flor de Espinhos#
+20043#Galho de Cerejeiras#
 20044#Chapéu de Carmen Miranda#
 20045#Peruca de Samambaia#
 20046#Tiara da Rosa Azul#
@@ -6953,6 +6964,7 @@
 20069#Tiara de Grifo Real#
 20070#Capuz de Alpaca Fofinha#
 20071#Filhotinho de Worg#
+20077#Óculos Glamorosos#
 20080#Visual de Plumas e Paetês#
 20085#Cartola da Fortuna do Genka#
 20094#Tiara de Laço Verde#
@@ -6983,6 +6995,7 @@
 20145#Visor do Ciborgue#
 20146#Máscara da Deusa#
 20148#Chapéu do Dartanham#
+20150#Leque da Ventania#
 20153#Quepe Militar#
 20154#Folhas Outonais#
 20155#Chapéu de Lady Emplumado#
@@ -7248,6 +7261,7 @@
 20800#Capa do Carrasco#
 20802#Mochila de Amistr Teleportiva#
 20806#Mochila de Amistr Explosiva#
+20807#Mochila de Amistr Vigorosa#
 20808#Mochila de Amistr Reveladora#
 20811#Mochila de Amistr Furtiva#
 20815#Capa do Serafim Caído#
@@ -7259,6 +7273,7 @@
 20853#Asas de Rudo#
 20854#Capa Médica#
 20904#Bata de Etran#
+20905#Capa de Astrea#
 20908#Manto da Bruxa#
 20909#Haori de Batalha#
 20922#Manto Leviatã#
@@ -7278,6 +7293,7 @@
 20968#Manto Temporal SOR#
 20969#Jaqueta do Orgulho#
 20973#Manto dos Espíritos#
+20989#Parafuso de Corda#
 21000#Espada Aprimorada de Duas Mãos#
 21001#Claymore de Vellum#
 21002#Katzbalger de Vellum#
@@ -7352,6 +7368,7 @@
 22138#Botas do Ocultista#
 22145#Chinela de Pau#
 22149#Botas com Espigões#
+22167#Botas de Astrea#
 22170#Sapatos do Sobrevivente#
 22171#Botas Ancestrais#
 22172#Botas Aladas#
@@ -7935,6 +7952,7 @@
 31180#Faixa do Shurão da Preula#
 31182#Boina de Marinheiro Aposentado#
 31183#Asas Grafite#
+31184#Tapa-Olho do Falcão#
 31185#Chapéu do Maquinista#
 31186#Gatinho Preto#
 31187#Laço da Princesa Guerreira#
@@ -8030,6 +8048,7 @@
 31396#Capuz Trevoso#
 31397#Boneca da Papisa#
 31399#Véu da Madrugada#
+31402#Coroa de Maçã Verde#
 31405#Peruca Dourada de Eleanor#
 31406#Peruca Platinada da Nidhogg#
 31407#Peruca Rosa de Alice#
@@ -8050,10 +8069,12 @@
 31455#Cabeça de Doge#
 31460#Lanternas da Serenidade#
 31463#Super Drone A1000#
+31465#Cartola de Ovos#
 31472#Asinhas Floridas#
 31473#Marcas do Envergonhado#
 31474#Cabelo Longo Preto#
 31475#Orelhas da Raposa Astuta#
+31476#Chapéu do Desabrochar#
 31479#Projeção do Infinito#
 31480#Gioia Dorminhoco#
 31482#Cachecol de Lunático#
@@ -8177,11 +8198,13 @@
 31788#Peruca Prateada da Piamette#
 31800#Lacinhos da Esperança#
 31803#Dobra do Vento#
+31805#Boné no Estilo#
 31813#Lunático Simpático#
 31814#Balões Lunáticos#
 31815#Peruca-Lebre#
 31816#Coelhos Celestiais#
 31819#Cabeça Invisível#
+31823#Disfarce Irreconhecível#
 31827#Capuz Durumagi#
 31831#Manto do Disfarce#
 31833#Peruca Curta de Gatinha Má#
@@ -8223,6 +8246,7 @@
 32018#Lança Ancestral#
 32204#Pulseira Militar#
 32205#Anel de Esmeralda#
+32219#Anel de Astrea#
 32221#Anel do Senhor do Tempo#
 32222#Broche Heroico#
 32227#Grilhões de Hrodvitnir#
@@ -8246,6 +8270,7 @@
 400048#Dádiva das Divindades#
 400056#Longa Peruca Esverdeada#
 400057#Peruca da Lótus Vermelha#
+400075#Tiara de Astrea#
 400091#Elmo Safira#
 400092#Chifres Luxuosos#
 410000#Aura de Shen#
@@ -8255,6 +8280,12 @@
 410011#Venda Sombrosa#
 420010#Aura da Escuridão#
 420014#Peruca de Animação#
+420017#Broto dos Anciões FOR#
+420018#Broto dos Anciões DES#
+420019#Broto dos Anciões AGI#
+420020#Broto dos Anciões SOR#
+420021#Broto dos Anciões VIT#
+420022#Broto dos Anciões INT#
 436003#Odium de Thanatos#
 436004#Despero de Thanatos#
 436005#Maero de Thanatos#
@@ -8273,6 +8304,8 @@
 480025#Manto do Barão#
 480052#Laçarote da Retaguarda#
 480053#Manto Behemoth#
+480056#Asas Amaldiçoadas de Arcanjo#
+480064#Abafador de Tempestades#
 480069#Asas Encantadas de Arcanjo#
 480071#Recipiente das Areias#
 480077#Capa de Magma#

@@ -3086,7 +3086,7 @@ Cace 30 Petites nos arredores de Geffen e retorne ao segundo andar da Matriz do 
 Cace 30 Rafflesias nos arredores de Lighthalzen e retorne ao segundo andar da Matriz do Grupo Éden. #
 #
 
-4178#Caça às Nuves Venenosas#SG_FEEL#QUE_NOIMAGE#
+4178#Caça as Nuvens Venenosas#SG_FEEL#QUE_NOIMAGE#
 Cace 30 Nuvens Venenosas nos arredores de Einbroch e retorne ao segundo andar da Matriz do Grupo Éden. #
 #
 

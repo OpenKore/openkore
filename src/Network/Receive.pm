@@ -8266,6 +8266,13 @@ sub rodex_mail_list {
 	}
 	$print_msg .= sprintf("%s\n", ('-'x119));
 	message $print_msg, "list";
+
+	Plugins::callHook('rodex_mail_list', {
+		'mails' => $rodexList->{mails},
+		'current_page' => $rodexList->{current_page},
+		'last_mailID' => $rodexList->{current_page_last_mailID},
+		'isEnd' => $args->{isEnd},
+	});
 }
 
 sub rodex_read_mail {
@@ -8278,7 +8285,7 @@ sub rodex_read_mail {
 
 	my $mail = {};
 
-	$mail->{body} = substr($msg, $header_len, $args->{text_len});
+	$mail->{body} = solveMSG(bytesToString(substr($msg, $header_len, $args->{text_len})));
 	$mail->{zeny1} = $args->{zeny1};
 	$mail->{zeny2} = $args->{zeny2};
 
@@ -8289,9 +8296,9 @@ sub rodex_read_mail {
 
 	$mail->{items} = [];
 
-	message center(" " . "Mail (" . $args->{mailID1} . ")" . $rodexList->{mails}{$args->{mailID1}}->{sender} . " ", 119, '-') . "\n";
+	message center(" " . "Mail (" . $args->{mailID1} . ") " . $rodexList->{mails}{$args->{mailID1}}->{sender} . " ", 119, '-') . "\n";
 	message sprintf("From: %s \n", $rodexList->{mails}{$args->{mailID1}}->{sender});
-	message "Message:\n" . solveMSG(bytesToString($mail->{body}));
+	message "Message:\n" . $mail->{body};
 	# FIXME for some reason message can't concatenate bytesToString + "\n"
 	message "\n";
 
@@ -8332,6 +8339,16 @@ sub rodex_read_mail {
 	$rodexList->{mails}{$args->{mailID1}}{isRead} = 1;
 
 	$rodexList->{current_read} = $args->{mailID1};
+
+	Plugins::callHook('rodex_mail', {
+		'mailID' => $args->{mailID1},
+		'from' => $rodexList->{mails}{$args->{mailID1}}->{sender},
+		'title' => $rodexList->{mails}{$args->{mailID1}}->{title},
+		'content' => $mail->{body},
+		'zeny' => $args->{zeny1},
+		'itemCount' => $args->{itemCount},
+		'items' => $mail->{items},
+	});
 }
 
 sub unread_rodex {
@@ -8478,6 +8495,10 @@ sub rodex_delete {
 	return unless (exists $rodexList->{mails}{$args->{mailID1}});
 
 	message TF("You have deleted the mail of ID %s.\n", $args->{mailID1});
+
+	Plugins::callHook('rodex_mail_deleted', {
+		'mailID' => $args->{mailID1},		
+	});
 
 	delete $rodexList->{mails}{$args->{mailID1}};
 }
@@ -9278,6 +9299,8 @@ sub open_buying_store_item_list {
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
 	my $headerlen = 12;
+	my $unpack = $self->{open_buying_store_items_list_pack} || 'V v C v';
+	my $len = length pack $unpack;
 
 	undef @selfBuyerItemList;
 
@@ -9288,13 +9311,13 @@ sub open_buying_store_item_list {
 #	$articles = 0;
 	my $index = 0;
 
-	for (my $i = $headerlen; $i < $msg_size; $i += 9) {
+	for (my $i = $headerlen; $i < $msg_size; $i += $len) {
 		my $item = {};
 
 		($item->{price},
 		$item->{amount},
 		$item->{type},
-		$item->{nameID})	= unpack('V v C v', substr($msg, $i, 9));
+		$item->{nameID})	= unpack($unpack, substr($msg, $i, $len));
 
 		$item->{name} = itemName($item);
 		$selfBuyerItemList[$index] = $item;
@@ -9425,9 +9448,11 @@ sub buying_store_update {
 	my($self, $args) = @_;
 	if(@selfBuyerItemList) {
 		for(my $i = 0; $i < @selfBuyerItemList; $i++) {
-			print "$_->{amount}          $args->{count}\n";
-			$_->{amount} = $args->{count} if($_->{itemID} == $args->{itemID});
-			print "$_->{amount}          $args->{count}\n";
+			my $item = $selfBuyerItemList[$i];
+			if($item->{nameID} == $args->{itemID}) {
+				message TF("You bought %s %s\n", $args->{count}, $item->{name});
+				$selfBuyerItemList[$i]->{amount} = $item->{amount} - $args->{count};
+			}
 		}
 	}
 }
@@ -11203,6 +11228,7 @@ sub skill_use_failed {
 		10 => T('Requirement'),
 		13 => T('Need this within the water'),
 		19 => T('Full Amulet'),
+		24 => T('[Purchase Street Stall License] need 1'),
 		29 => TF('Must have at least %s of base XP', '1%'),
 		71 => T('Missing Required Item'), # (item name) required x amount
 		78 => T('Required Equiped Weapon Class'),
