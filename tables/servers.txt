@@ -349,6 +349,7 @@ charBlockSize 147
 addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
+field_morocc morocc-old
 
 # http://play.ratemyserver.net
 [RMS Pre-Re Test Server]
@@ -362,6 +363,7 @@ charBlockSize 147
 addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
+field_morocc morocc-old
 
 ####################
 # Dead
