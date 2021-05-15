@@ -51,7 +51,6 @@ pauseMapServer 0
 ignoreInvalidLogin 0
 secureLogin_requestCode
 
-
 # Opening cash shop when connected to map server (recv/ST0)
 whenInGame_requestCashPoints 0
 
@@ -793,12 +792,14 @@ sellAuto 0
 sellAuto_npc
 sellAuto_standpoint
 sellAuto_distance 3
+sellAuto_maxDistance
 sellAuto_npc_steps s
 
 storageAuto 0
 storageAuto_npc
 storageAuto_standpoint
 storageAuto_distance 3
+storageAuto_maxDistance
 storageAuto_npc_type 1
 storageAuto_npc_steps
 storageAuto_password
