@@ -1473,42 +1473,6 @@ sub skills_list {
 	}
 }
 
-sub mail_refreshinbox {
-	my ($self, $args) = @_;
-
-	undef $mailList;
-	my $count = $args->{count};
-
-	if (!$count) {
-		message T("There is no mail in your inbox.\n"), "info";
-		return;
-	}
-
-	message TF("You've got Mail! (%s)\n", $count), "info";
-	my $msg;
-	$msg .= center(" " . T("Inbox") . " ", 79, '-') . "\n";
-	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
-	# truncating the date with precision of minutes and leave year out
-	$msg .=	swrite("\@> R \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x11),
-			["#", T("Title"), T("Sender"), T("Date")]);
-	$msg .= sprintf("%s\n", ('-'x79));
-
-	my $j = 0;
-	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
-		$mailList->[$j]->{mailID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
-		$mailList->[$j]->{title} = bytesToString(unpack("Z40", substr($args->{RAW_MSG}, $i+4, 40)));
-		$mailList->[$j]->{read} = unpack("C1", substr($args->{RAW_MSG}, $i+44, 1));
-		$mailList->[$j]->{sender} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+45, 24)));
-		$mailList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+69, 4));
-		$msg .= swrite(
-		"\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x11),
-		[$j, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
-		$j++;
-	}
-
-	$msg .= ("%s\n", ('-'x79));
-	message($msg . "\n", "list");
-}
 sub mail_setattachment {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {

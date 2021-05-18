@@ -8497,7 +8497,7 @@ sub rodex_delete {
 	message TF("You have deleted the mail of ID %s.\n", $args->{mailID1});
 
 	Plugins::callHook('rodex_mail_deleted', {
-		'mailID' => $args->{mailID1},		
+		'mailID' => $args->{mailID1},
 	});
 
 	delete $rodexList->{mails}{$args->{mailID1}};
@@ -10329,6 +10329,47 @@ sub mail_read {
 	$msg .= sprintf("%s\n", ('-'x119));
 
 	message($msg, "info");
+}
+
+sub mail_refreshinbox {
+	my ($self, $args) = @_;
+
+	undef $mailList;
+	my $count = $args->{count};
+
+	if (!$count) {
+		message T("There is no mail in your inbox.\n"), "info";
+		return;
+	}
+
+	message TF("You've got Mail! (%s)\n", $count), "info";
+	my $msg;
+	$msg .= center(" " . T("Inbox") . " ", 86, '-') . "\n";
+	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
+	# truncating the date with precision of minutes and leave year out
+
+	$msg .= swrite(sprintf("\@> R \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+			["#", T("Title"), T("Sender"), T("Date")]);
+	$msg .= sprintf("%s\n", ('-'x86));
+
+	my $j = 0;
+	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
+		($mailList->[$j]->{mailID},
+		$mailList->[$j]->{title},
+		$mailList->[$j]->{read},
+		$mailList->[$j]->{sender},
+		$mailList->[$j]->{timestamp}) =	unpack('V Z40 C Z24 V', substr($args->{RAW_MSG}, $i, 73));
+
+		$mailList->[$j]->{title} = bytesToString($mailList->[$j]->{title});
+		$mailList->[$j]->{sender} = bytesToString($mailList->[$j]->{sender});
+
+		$msg .= swrite(sprintf("\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x19)),
+				[$j, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
+		$j++;
+	}
+
+	$msg .= ("%s\n", ('-'x86));
+	message($msg . "\n", "list");
 }
 
 sub mail_getattachment {
