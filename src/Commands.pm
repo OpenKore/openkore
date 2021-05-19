@@ -688,13 +688,16 @@ sub initHandlers {
 		['where', T("Shows your current location."), \&cmdWhere],
 		['who', T("Display the number of people on the current server."), \&cmdWho],
 		['whoami', T("Display your character and account ID."), \&cmdWhoAmI],
+		['mail', [
+			T("Mailbox use (not Rodex)"),
+			["open", T("open Mailbox")], # mi
+			["refresh", T("refresh Mailbox")], # new
+		], \&cmdMail],
 
-		['m', T("Displays Mail commands."), \&cmdMail],	# see commands
 		['ms', [
 			T("Sends Mail."),
 			[T("<receiver> <title> <message>"), T("sends mail to <receiver>")]
 			], \&cmdMail],	# send
-		['mi', T("Opens Mailbox."), \&cmdMail],	# inbox
 		['mo', [
 			T("Open a mail."),
 			[T("<mail #>"), T("open the mail with a corresponding number from the mail list when you open your mailbox")]
@@ -6564,8 +6567,21 @@ sub cmdMail {
 		return;
 	}
 
-	my ($cmd, $args_string) = @_;
-	my @args = parseArgs($args_string, 4);
+	my (undef, $args_string) = @_;
+	my @args = parseArgs($args_string, 5);
+	my $cmd = $args[0];
+
+	if ($args[0] eq 'open') {
+		if (defined $mailList) {
+			error T("Your Mailbox is already opened.\n");
+			return;
+		}
+		message T("Sending request to open Mailbox.\n");
+		$messageSender->sendMailboxOpen();
+
+	} elsif ($args[0] eq 'refresh') {
+		$messageSender->sendMailboxOpen();
+	}
 
 	# mail send
 	if ($cmd eq 'ms') {
@@ -6590,11 +6606,6 @@ sub cmdMail {
 		} else {
 			$messageSender->sendMailRead($mailList->[$args[0]]->{mailID});
 		}
-
-	# mail inbox => set on begin as standard?
-	} elsif ($cmd eq 'mi') {
-		# if mail not already opened needed?
-		$messageSender->sendMailboxOpen();
 
 	# mail window (almost useless?)
 	} elsif ($cmd eq 'mw') {
