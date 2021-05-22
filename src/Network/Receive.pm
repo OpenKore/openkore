@@ -10342,7 +10342,7 @@ sub mail_refreshinbox {
 		return;
 	}
 
-	message TF("You've got Mail! (%s)\n", $count), "info";
+	message TF("You've got %s mail in your Mailbox.\n", $count), "info";
 	my $msg;
 	$msg .= center(" " . T("Inbox") . " ", 86, '-') . "\n";
 	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail

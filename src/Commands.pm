@@ -692,16 +692,13 @@ sub initHandlers {
 			T("Mailbox use (not Rodex)"),
 			["open", T("open Mailbox")], # mi
 			["refresh", T("refresh Mailbox")], # new
+			[T("read <mail #>"), T("read the selected Mailbox")] # mo
 		], \&cmdMail],
 
 		['ms', [
 			T("Sends Mail."),
 			[T("<receiver> <title> <message>"), T("sends mail to <receiver>")]
 			], \&cmdMail],	# send
-		['mo', [
-			T("Open a mail."),
-			[T("<mail #>"), T("open the mail with a corresponding number from the mail list when you open your mailbox")]
-			], \&cmdMail],
 		['md', [
 			T("Deletes a Mail."),
 			[T("<mail #>"), T("delete a mail with a corresponding number from the mail list when you open your mailbox")]
@@ -6581,30 +6578,29 @@ sub cmdMail {
 
 	} elsif ($args[0] eq 'refresh') {
 		$messageSender->sendMailboxOpen();
+
+	} elsif ($args[0] eq 'read') {
+#		warning "[cmdMail] args1=".$args[1]." mailList=".$mailList[$args[1]]."\n";
+		unless ($args[1] =~ /^\d+$/) {
+			error T("Syntax Error in function 'mail read' (Mailbox)\n" .
+				"Usage: mail read <mail #>\n");
+			return;
+		} elsif (!defined $mailList) {
+			warning T("Your Mailbox is not open. Use the command 'mail open'.\n");
+		} elsif (!$mailList->[$args[1]]) {
+				warning TF("No mail found with index: %s\n", $args[1]), "info";
+		} else {
+			$messageSender->sendMailRead($mailList->[$args[1]]->{mailID});
+		}
 	}
 
 	# mail send
-	if ($cmd eq 'ms') {
+	elsif ($cmd eq 'ms') {
 		unless ($args[0] && $args[1] && $args[2]) {
 			message T("Usage: ms <receiver> <title> <message>\n"), "info";
 		} else {
 			my ($receiver, $title, $msg) = ($args[0], $args[1], $args[2]);
 			$messageSender->sendMailSend($receiver, $title, $msg);
-		}
-
-	# mail open
-	} elsif ($cmd eq 'mo') {
-
-		unless ($args[0] =~ /^\d+$/) {
-			message T("Usage: mo <mail #>\n"), "info";
-		} elsif (!$mailList->[$args[0]]) {
-			if (@{$mailList}) {
-				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
-			} else {
-				message T("Mailbox has not been opened or is empty.\n"), "info";
-			}
-		} else {
-			$messageSender->sendMailRead($mailList->[$args[0]]->{mailID});
 		}
 
 	# mail window (almost useless?)
