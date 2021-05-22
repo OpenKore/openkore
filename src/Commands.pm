@@ -692,7 +692,8 @@ sub initHandlers {
 			T("Mailbox use (not Rodex)"),
 			["open", T("open Mailbox")], # mi
 			["refresh", T("refresh Mailbox")], # new
-			[T("read <mail #>"), T("read the selected Mailbox")] # mo
+			[T("read <mail #>"), T("read the selected Mailbox")], # mo
+			[T("get <mail #>"), T("take attachments from mail in Mailbox")] # ma get
 		], \&cmdMail],
 
 		['ms', [
@@ -6588,9 +6589,22 @@ sub cmdMail {
 		} elsif (!defined $mailList) {
 			warning T("Your Mailbox is not open. Use the command 'mail open'.\n");
 		} elsif (!$mailList->[$args[1]]) {
-				warning TF("No mail found with index: %s\n", $args[1]), "info";
-		} else {
+				warning TF("No mail found with index: %s\n", $args[1]);
+		} elsif ($mailList->[$args[1]]->{mailID}) {
 			$messageSender->sendMailRead($mailList->[$args[1]]->{mailID});
+		}
+
+	} elsif ($args[0] eq 'get') {
+		unless ($args[1] =~ /^\d+$/) {
+			error T("Syntax Error in function 'mail get' (Mailbox)\n" .
+				"Usage: mail get <mail #>\n");
+			return;
+		} elsif (!defined $mailList) {
+			warning T("Your Mailbox is not open. Use the command 'mail open'.\n");
+		} elsif (!$mailList->[$args[1]]) {
+				warning TF("No mail found with index: %s\n", $args[1]);
+		} elsif ($mailList->[$args[1]]->{mailID}) {
+			$messageSender->sendMailGetAttach($mailList->[$args[1]]->{mailID});
 		}
 	}
 
@@ -6616,17 +6630,7 @@ sub cmdMail {
 
 	# mail attachment control
 	} elsif ($cmd eq 'ma') {
-		if ($args[0] eq "get" && $args[1] =~ /^\d+$/) {
-			unless ($mailList->[$args[1]]->{mailID}) {
-				if (@{$mailList}) {
-					message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
-				} else {
-					message T("Mailbox has not been opened or is empty.\n"), "info";
-				}
-			} else {
-				$messageSender->sendMailGetAttach($mailList->[$args[1]]->{mailID});
-			}
-		} elsif ($args[0] eq "add") {
+		if ($args[0] eq "add") {
 			unless ($args[2] =~ /^\d+$/) {
 				message T("Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"), "info";
 			} elsif ($args[1] eq "zeny") {
@@ -6635,6 +6639,7 @@ sub cmdMail {
 				my $item = Actor::Item::get($args[3]);
 				if ($item) {
 					my $serverIndex = $item->{ID};
+					warning "[ma] serverIndex=$serverIndex, name=".$item->{ID}."\n";
 					$messageSender->sendMailSetAttach($args[2], $serverIndex);
 				} else {
 					message TF("Item with index or name: %s does not exist in inventory.\n", $args[3]), "info";
