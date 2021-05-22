@@ -10395,15 +10395,13 @@ sub mail_setattachment {
 		}
 		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
 	} else {
-		if (($args->{ID})) {
+		my $item = $char->inventory->getByID($args->{ID});
+		if ($item) {
 			message TF("Succeeded to attach %s.\n", T("item: ").$char->inventory->getByID($args->{ID})), "info";
 			if (defined $AI::temp::mailAttachAmount) {
-				my $item = $char->inventory->getByID($args->{ID});
-				if ($item) {
-					my $change = min($item->{amount},$AI::temp::mailAttachAmount);
-					inventoryItemRemoved($item->{binID}, $change);
-					Plugins::callHook('packet_item_removed', {index => $item->{binID}});
-				}
+				my $change = min($item->{amount},$AI::temp::mailAttachAmount);
+				inventoryItemRemoved($item->{binID}, $change);
+				Plugins::callHook('packet_item_removed', {index => $item->{binID}});
 				undef $AI::temp::mailAttachAmount;
 			}
 		} else {
