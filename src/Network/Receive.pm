@@ -10334,6 +10334,7 @@ sub mail_read {
 sub mail_refreshinbox {
 	my ($self, $args) = @_;
 
+	my $old_count = defined $mailList ? scalar(@$mailList) : 0;
 	undef $mailList;
 	my $count = $args->{count};
 
@@ -10341,6 +10342,8 @@ sub mail_refreshinbox {
 		message T("There is no mail in your inbox.\n"), "info";
 		return;
 	}
+
+	return if ($old_count == $count);
 
 	message TF("You've got %s mail in your Mailbox.\n", $count), "info";
 	my $msg;
