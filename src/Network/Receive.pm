@@ -10322,7 +10322,7 @@ sub mail_read {
 	$msg .= swrite(TF("Title: \@%s Sender: \@%s", ('<'x39), ('<'x24)),
 			[bytesToString($args->{title}), bytesToString($args->{sender})]);
 	$msg .= TF("Message: %s\n", bytesToString($args->{message}));
-	$msg .= ("%s\n", ('-'x119));
+	$msg .= sprintf("%s\n", ('-'x119));
 	$msg .= TF( "Item: %s %s\n" .
 				"Zeny: %sz\n",
 				$item->{name}, ($args->{amount}) ? "x " . $args->{amount} : "", formatNumber($args->{zeny}));
@@ -10383,6 +10383,37 @@ sub mail_getattachment {
 		error T("Failed to get the attachment to inventory due to your weight.\n"), "info";
 	} else {
 		error T("Failed to get the attachment to inventory.\n"), "info";
+	}
+}
+
+sub mail_setattachment {
+	my ($self, $args) = @_;
+
+	if ($args->{fail}) {
+		if (defined $AI::temp::mailAttachAmount) {
+			undef $AI::temp::mailAttachAmount;
+		}
+		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
+	} else {
+		if (($args->{ID})) {
+			message TF("Succeeded to attach %s.\n", T("item: ").$char->inventory->getByID($args->{ID})), "info";
+			if (defined $AI::temp::mailAttachAmount) {
+				my $item = $char->inventory->getByID($args->{ID});
+				if ($item) {
+					my $change = min($item->{amount},$AI::temp::mailAttachAmount);
+					inventoryItemRemoved($item->{binID}, $change);
+					Plugins::callHook('packet_item_removed', {index => $item->{binID}});
+				}
+				undef $AI::temp::mailAttachAmount;
+			}
+		} else {
+			message TF("Succeeded to attach %s.\n", T("zeny")), "info";
+			if (defined $AI::temp::mailAttachAmount) {
+				my $change = min($char->{zeny},$AI::temp::mailAttachAmount);
+				$char->{zeny} = $char->{zeny} - $change;
+				message TF("You lost %s zeny.\n", formatNumber($change));
+			}
+		}
 	}
 }
 

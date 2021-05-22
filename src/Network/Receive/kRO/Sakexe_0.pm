@@ -1438,16 +1438,6 @@ sub skills_list {
 	}
 }
 
-sub mail_setattachment {
-	my ($self, $args) = @_;
-	# todo, maybe we need to store this index into a var which we delete the item from upon succesful mail sending
-	if ($args->{fail}) {
-		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
-	} else {
-		message TF("Succeeded to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
-	}
-}
-
 # TODO: test the latest code optimization
 sub auction_item_request_search {
 	my ($self, $args) = @_;
