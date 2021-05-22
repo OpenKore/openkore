@@ -692,8 +692,9 @@ sub initHandlers {
 			T("Mailbox use (not Rodex)"),
 			["open", T("open Mailbox")], # mi
 			["refresh", T("refresh Mailbox")], # new
-			[T("read <mail #>"), T("read the selected Mailbox")], # mo
-			[T("get <mail #>"), T("take attachments from mail in Mailbox")] # ma get
+			[T("read <mail #>"), T("read the selected mail")], # mo
+			[T("get <mail #>"), T("take attachments from mail")], # ma get
+			[T("setzeny <amount>"), T("attach zeny to mail")], # ma add zeny
 		], \&cmdMail],
 
 		['ms', [
@@ -716,8 +717,6 @@ sub initHandlers {
 			], \&cmdMail],	# return
 		['ma', [
 			T("Mail & Attachment."),
-			[T("get <mail #>"), T("takes items attached from mail")],
-			[T("add zeny <amount>"), T("attaches zenys in the mail")],
 			[T("add item <amount> <inventory item>"), T("attaches items in the mail")]
 			], \&cmdMail],	# attachement
 
@@ -6606,6 +6605,15 @@ sub cmdMail {
 		} elsif ($mailList->[$args[1]]->{mailID}) {
 			$messageSender->sendMailGetAttach($mailList->[$args[1]]->{mailID});
 		}
+
+	} elsif ($args[0] eq 'setzeny') {
+		unless ($args[1] =~ /^\d+$/) {
+			error T("Syntax Error in function 'mail setzeny' (Mailbox)\n" .
+				"Usage: mail setzeny <amount>\n");
+			return;
+		} else {
+			$messageSender->sendMailSetAttach($args[1], undef);
+		}
 	}
 
 	# mail send
@@ -6633,8 +6641,6 @@ sub cmdMail {
 		if ($args[0] eq "add") {
 			unless ($args[2] =~ /^\d+$/) {
 				message T("Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"), "info";
-			} elsif ($args[1] eq "zeny") {
-				$messageSender->sendMailSetAttach($args[2], undef);
 			} elsif ($args[1] eq "item" && defined $args[3]) {
 				my $item = Actor::Item::get($args[3]);
 				if ($item) {
