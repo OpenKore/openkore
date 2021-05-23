@@ -695,13 +695,10 @@ sub initHandlers {
 			[T("read <mail #>"), T("read the selected mail")], # mo
 			[T("get <mail #>"), T("take attachments from mail")], # ma get
 			[T("setzeny <amount>"), T("attach zeny to mail")], # ma add zeny
-			["add <item #> <amount>", T("attach item to mail")], # ma add item
+			[T("add <item #> <amount>"), T("attach item to mail")], # ma add item
+			[T("send <receiver> <title> <body>"), T("send mail to <receiver>")], # ms
 		], \&cmdMail],
 
-		['ms', [
-			T("Sends Mail."),
-			[T("<receiver> <title> <message>"), T("sends mail to <receiver>")]
-			], \&cmdMail],	# send
 		['md', [
 			T("Deletes a Mail."),
 			[T("<mail #>"), T("delete a mail with a corresponding number from the mail list when you open your mailbox")]
@@ -6626,15 +6623,12 @@ sub cmdMail {
 				warning TF("Inventory Item '%s' does not exist.\n", $args[2]);
 			}
 		}
-	}
-
-	# mail send
-	elsif ($cmd eq 'ms') {
-		unless ($args[0] && $args[1] && $args[2]) {
-			message T("Usage: ms <receiver> <title> <message>\n"), "info";
+	} elsif ($args[0] eq 'send') {
+		unless ($args[1] && $args[2]) {
+			error T("Syntax Error in function 'mail send' (Mailbox)\n" .
+				"Usage: mail send <receiver> <title> <body>\n");
 		} else {
-			my ($receiver, $title, $msg) = ($args[0], $args[1], $args[2]);
-			$messageSender->sendMailSend($receiver, $title, $msg);
+			$messageSender->sendMailSend($args[1], $args[2], $args[3]);
 		}
 
 	# mail window (almost useless?)
