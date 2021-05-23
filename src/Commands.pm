@@ -695,6 +695,7 @@ sub initHandlers {
 			[T("read <mail #>"), T("read the selected mail")], # mo
 			[T("get <mail #>"), T("take attachments from mail")], # ma get
 			[T("setzeny <amount>"), T("attach zeny to mail")], # ma add zeny
+			["add <item #> <amount>", T("attach item to mail")], # ma add item
 		], \&cmdMail],
 
 		['ms', [
@@ -715,10 +716,6 @@ sub initHandlers {
 			T("Returns the mail to the sender."),
 			[T("<mail #>"), T("a corresponding number from the mail list when you open your mailbox")]
 			], \&cmdMail],	# return
-		['ma', [
-			T("Mail & Attachment."),
-			[T("add item <amount> <inventory item>"), T("attaches items in the mail")]
-			], \&cmdMail],	# attachement
 
 		['au', T("Display possible commands for auction."), \&cmdAuction],	# see commands
 		['aua', [
@@ -6580,7 +6577,6 @@ sub cmdMail {
 		$messageSender->sendMailboxOpen();
 
 	} elsif ($args[0] eq 'read') {
-#		warning "[cmdMail] args1=".$args[1]." mailList=".$mailList[$args[1]]."\n";
 		unless ($args[1] =~ /^\d+$/) {
 			error T("Syntax Error in function 'mail read' (Mailbox)\n" .
 				"Usage: mail read <mail #>\n");
@@ -6614,6 +6610,22 @@ sub cmdMail {
 		} else {
 			$messageSender->sendMailSetAttach($args[1], undef);
 		}
+
+	} elsif ($args[0] eq 'add') {
+		unless (defined $args[1]) {
+			error T("Syntax Error in function 'mail add' (Mailbox)\n" .
+				"Usage: mail add <item #> <amount>\n");
+			return;
+		} else {
+			my $item = Actor::Item::get($args[1]);
+			if ($item) {
+				my $amount = $args[2] ? $args[2] : $item->{amount};
+				warning TF("Attention: Inventory Item '%s' is equipped.\n", $item->{name}) if ($item->{equipped});
+				$messageSender->sendMailSetAttach($amount, $item->{ID});
+			} else {
+				warning TF("Inventory Item '%s' does not exist.\n", $args[2]);
+			}
+		}
 	}
 
 	# mail send
@@ -6634,28 +6646,6 @@ sub cmdMail {
 		} else {
 			error T("Syntax error in function 'mw' (mailbox window)\n" .
 			"Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n");
-		}
-
-	# mail attachment control
-	} elsif ($cmd eq 'ma') {
-		if ($args[0] eq "add") {
-			unless ($args[2] =~ /^\d+$/) {
-				message T("Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"), "info";
-			} elsif ($args[1] eq "item" && defined $args[3]) {
-				my $item = Actor::Item::get($args[3]);
-				if ($item) {
-					my $serverIndex = $item->{ID};
-					warning "[ma] serverIndex=$serverIndex, name=".$item->{ID}."\n";
-					$messageSender->sendMailSetAttach($args[2], $serverIndex);
-				} else {
-					message TF("Item with index or name: %s does not exist in inventory.\n", $args[3]), "info";
-				}
-			} else {
-				error T("Syntax error in function 'ma' (mail attachment control)\n" .
-				"Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n");
-			}
-		} else {
-			message T("Usage: ma (get <mail #>)|(add [zeny <amount>]|[item <amount> (<item #>|<item name>)])\n"), "info";
 		}
 
 	# mail delete (can't delete mail without removing attachment/zeny first)
