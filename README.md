@@ -66,7 +66,7 @@ git clone https://github.com/OpenKore/openkore.git
 | [idRO](https://ro.gnjoy.id/) | Indonesia RO | EAC | Not Working | N/A |
 | [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | HShield | Need Verification | N/A |
 | [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Need Verification |  N/A |
-| [kRO-Zero](http://roz.gnjoy.com/) | Korea Zero RO | nProtect | Need Verification | N/A  |
+| [kRO-Zero](http://roz.gnjoy.com/) | Korea RO Zero | nProtect | Need Verification | N/A  |
 | [phRO](https://ragnarokonline.com.ph/main) | Philippines, Malaysia and Singapore RO | EAC | Not Working | N/A |
 | [ruRO](https://ru.4game.com/ro/) | Russia RO | Frost Security | Not Working | ya4ept |
 | [ruRO-Prime](https://ru.4game.com/roprime/) | Russia RO | Frost Security | Not Working | ya4ept |
