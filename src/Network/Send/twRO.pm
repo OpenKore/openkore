@@ -23,57 +23,33 @@ sub new {
 	my %packets = (
 		# twRO related packets
 		'0064' => ['master_login', 'V Z24 a24 C', [qw(version username password_rijndael master_version)]], 
-
-		# Shuffle Packets
-		'092A' => ['actor_action', 'a4 C', [qw(targetID type)]],
-		'093F' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'091C' => ['character_move', 'a3', [qw(coords)]],
-		'0927' => ['sync', 'V', [qw(time)]],
-		'094D' => ['actor_look_at', 'v C', [qw(head body)]],
-		'08A5' => ['item_take', 'a4', [qw(ID)]],
-		'0365' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'08AA' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
-		'0887' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
-		'0879' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
-		'088F' => ['actor_info_request', 'a4', [qw(ID)]],
-		'0966' => ['actor_name_request', 'a4', [qw(ID)]],
-		'0364' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]],
-		'0875' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
-		'0950' => ['buy_bulk_closeShop'],
-		'0936' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]],
-		'08A2' => ['booking_register', 'v8', [qw(level MapID job0 job1 job2 job3 job4 job5)]],
-		'0891' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
-		'0951' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
-		'0965' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'087A' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
-		'0811' => ['storage_password', 'v a*', [qw(type data)]],
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-		actor_action 092A
-		skill_use 093F
-		character_move 091C
-		sync 0927
-		actor_look_at 094D
-		item_take 08A5
-		item_drop 0365
-		storage_item_add 08AA
-		storage_item_remove 0887
-		skill_use_location 0879
-		actor_info_request 088F
-		actor_name_request 0966
-		buy_bulk_buyer 0364
-		buy_bulk_request 0875
-		buy_bulk_closeShop 0950
-		buy_bulk_openShop 0936
+		actor_action 0437
+		skill_use 0438
+		character_move 035F
+		sync 0360
+		actor_look_at 0361
+		item_take 0362
+		item_drop 0363
+		storage_item_add 0364
+		storage_item_remove 0365
+		skill_use_location 0366
+		actor_info_request 0368
+		actor_name_request 0369
+		buy_bulk_buyer 0819
+		buy_bulk_request 0817
+		buy_bulk_closeShop 0815
+		buy_bulk_openShop 0811
 		item_list_window_selected 07E4
-		map_login 0891
-		party_join_request_by_name 0951
-		friend_request 0965
-		homunculus_command 087A
-		storage_password 0811
+		map_login 0436
+		party_join_request_by_name 02C4
+		friend_request 0202
+		homunculus_command 022D
+		storage_password 023B
 
 		party_setting 07D7
 		send_equip 0998
