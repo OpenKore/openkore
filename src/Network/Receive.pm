@@ -5139,7 +5139,7 @@ sub login_error {
 		}
 	} elsif ($args->{type} == ACCEPT_ID_PASSWD) {
 		error T("The server has denied your connection.\n"), "connection";
-	} elsif ($args->{type} == REFUSE_NOT_CONFIRMED) {
+	} elsif ($args->{type} == REFUSE_BAN_BY_GM || $args->{type} == REFUSE_NOT_CONFIRMED) {
 		$interface->errorDialog(T("Critical Error: Your account has been blocked."));
 		$quit = 1 unless ($net->clientAlive());
 	} elsif ($args->{type} == REFUSE_INVALID_VERSION) {
@@ -5157,7 +5157,7 @@ sub login_error {
 		relog(10);
 	} elsif ($args->{type} == ACCEPT_LOGIN_USER_PHONE_BLOCK) {
 		error T("Mobile Authentication: Max number of simultaneous IP addresses reached.\n"), "connection";
-	} elsif ($args->{type} == REFUSE_EMAIL_NOT_CONFIRMED2) {
+	} elsif ($args->{type} == REFUSE_EMAIL_NOT_CONFIRMED || $args->{type} == REFUSE_EMAIL_NOT_CONFIRMED2) {
 		error T("Account email address not confirmed.\n"), "connection";
 		Misc::offlineMode() unless $config{ignoreInvalidLogin};
 	} elsif ($args->{type} == REFUSE_BLOCKED_ID) {
@@ -5188,6 +5188,10 @@ sub login_error {
 		error TF("Account [%s] doesn't have access to Premium Server\n", $config{'username'}), "connection";
 		quit();
 		return;
+	} elsif ($args->{type} == REFUSE_NOT_ALLOWED_IP_ON_TESTING) {
+		# this can also mens server under maintenance
+		error TF("Your connection is currently delayed. You can connect again later.\n"), "connection";
+		Misc::offlineMode();
 	} else {
 		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
 	}
