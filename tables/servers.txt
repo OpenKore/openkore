@@ -294,7 +294,6 @@ serverEncoding Big5
 addTableFolders twRO
 charBlockSize 155
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-sendCryptKeys 0x42943D78, 0x16F15B40, 0x23AB54E4
 gameGuard 1
 charDeleteDateType 1
 blockingPlayerCancel 1

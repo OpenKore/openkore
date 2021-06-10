@@ -3438,8 +3438,8 @@ EXP#
 3438#
 3439#
 3440#
-3441#
-3442#
+Your connection is currently delayed. You can connect again later.#
+Your connection is currently delayed, Please reconnect again later.#
 3443#
 3444#
 3445#
