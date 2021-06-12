@@ -697,12 +697,8 @@ sub initHandlers {
 			[T("setzeny <amount>"), T("attach zeny to mail")], # ma add zeny
 			[T("add <item #> <amount>"), T("attach item to mail")], # ma add item
 			[T("send <receiver> <title> <body>"), T("send mail to <receiver>")], # ms
+			[T("delete <mail #>"), T("delete a mail with a corresponding number from the mail list when you open your mailbox")] #md
 		], \&cmdMail],
-
-		['md', [
-			T("Deletes a Mail."),
-			[T("<mail #>"), T("delete a mail with a corresponding number from the mail list when you open your mailbox")]
-			], \&cmdMail],	# delete
 		['mw', [
 			T("Interacts with mail box window."),
 			["0", T("write mail")],
@@ -6623,12 +6619,29 @@ sub cmdMail {
 				warning TF("Inventory Item '%s' does not exist.\n", $args[2]);
 			}
 		}
+
 	} elsif ($args[0] eq 'send') {
 		unless ($args[1] && $args[2]) {
 			error T("Syntax Error in function 'mail send' (Mailbox)\n" .
 				"Usage: mail send <receiver> <title> <body>\n");
 		} else {
 			$messageSender->sendMailSend($args[1], $args[2], $args[3]);
+		}
+
+	# mail delete (can't delete mail without removing attachment/zeny first)
+	} elsif ($args[0] eq 'delete') {
+		unless ($args[1] =~ /^\d+$/) {
+			error T("Syntax Error in function 'mail delete' (Mailbox)\n" .
+				"Usage: mail delete <mail #>\n");
+		} elsif (!$mailList->[$args[1]]) {
+			if (@{$mailList}) {
+				warning TF("No mail found with index: %d. (might need to re-open mailbox)\n", $args[1]);
+			} else {
+				warning T("Mailbox has not been opened or is empty.\n");
+			}
+		} else {
+			$messageSender->sendMailDelete($mailList->[$args[1]]->{mailID});
+			delete $mailList->[$args[1]];
 		}
 
 	# mail window (almost useless?)
@@ -6640,20 +6653,6 @@ sub cmdMail {
 		} else {
 			error T("Syntax error in function 'mw' (mailbox window)\n" .
 			"Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n");
-		}
-
-	# mail delete (can't delete mail without removing attachment/zeny first)
-	} elsif ($cmd eq 'md') {
-		unless ($args[0] =~ /^\d+$/) {
-			message T("Usage: md <mail #>\n"), "info";
-		} elsif (!$mailList->[$args[0]]) {
-			if (@{$mailList}) {
-				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
-			} else {
-				message T("Mailbox has not been opened or is empty.\n"), "info";
-			}
-		} else {
-			$messageSender->sendMailDelete($mailList->[$args[0]]->{mailID});
 		}
 
 	# mail return
