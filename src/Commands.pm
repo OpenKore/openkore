@@ -698,7 +698,7 @@ sub initHandlers {
 			[T("setzeny <amount|none>"), T("attach zeny to mail or return it back")], # ma add zeny, mw 2
 			[T("add <item #|none> <amount>"), T("attach item to mail or return it back")], # ma add item, mw 1
 			[T("send <receiver> <title> <body>"), T("send mail to <receiver>")], # ms
-			[T("delete <mail #>"), T("delete a mail with a corresponding number from the mail list when you open your mailbox")], #md
+			[T("delete <mail #>"), T("delete selected mail")], #md
 			["write", T("start writing a mail")], #mw 0
 			["return <mail #>", T("returns the mail to the sender")] #mr
 		], \&cmdMail],
@@ -6552,10 +6552,10 @@ sub cmdMail {
 	if ($args[0] eq 'open') {
 		if (defined $mailList) {
 			error T("Your Mailbox is already opened.\n");
-			return;
+		} else {
+			message T("Sending request to open Mailbox.\n");
+			$messageSender->sendMailboxOpen();
 		}
-		message T("Sending request to open Mailbox.\n");
-		$messageSender->sendMailboxOpen();
 
 	} elsif ($args[0] eq 'refresh') {
 		$messageSender->sendMailboxOpen();
@@ -6564,7 +6564,6 @@ sub cmdMail {
 		unless ($args[1] =~ /^\d+$/) {
 			error T("Syntax Error in function 'mail read' (Mailbox)\n" .
 				"Usage: mail read <mail #>\n");
-			return;
 		} elsif (!defined $mailList) {
 			warning T("Your Mailbox is not open. Use the command 'mail open'.\n");
 		} elsif (!$mailList->[$args[1]]) {
@@ -6577,7 +6576,6 @@ sub cmdMail {
 		unless ($args[1] =~ /^\d+$/) {
 			error T("Syntax Error in function 'mail get' (Mailbox)\n" .
 				"Usage: mail get <mail #>\n");
-			return;
 		} elsif (!defined $mailList) {
 			warning T("Your Mailbox is not open. Use the command 'mail open'.\n");
 		} elsif (!$mailList->[$args[1]]) {
@@ -6600,7 +6598,6 @@ sub cmdMail {
 		unless (defined $args[1]) {
 			error T("Syntax Error in function 'mail add' (Mailbox)\n" .
 				"Usage: mail add <item #> <amount>\n");
-			return;
 		} elsif ($args[1] eq 'none') {
 			$messageSender->sendMailOperateWindow(1);
 		} else {
@@ -6671,8 +6668,12 @@ sub cmdMail {
 			$msg .= sprintf("%s\n", ('-'x86));
 			my $index = 0;
 			foreach my $mail (@{$mailList}) {
-				$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+				if ($mail) {
+					$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
 						[$index, $mail->{read}, $mail->{title}, $mail->{sender}, getFormattedDate(int($mail->{timestamp}))]);
+				} else {
+					$msg .= swrite(sprintf("\@> \@%s", ('<'x83)), [$index, T("the mail was deleted")]);
+				}
 				$index++;
 			}
 
