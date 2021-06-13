@@ -694,17 +694,12 @@ sub initHandlers {
 			["refresh", T("refresh Mailbox")], # new
 			[T("read <mail #>"), T("read the selected mail")], # mo
 			[T("get <mail #>"), T("take attachments from mail")], # ma get
-			[T("setzeny <amount>"), T("attach zeny to mail")], # ma add zeny
-			[T("add <item #> <amount>"), T("attach item to mail")], # ma add item
+			[T("setzeny <amount|none>"), T("attach zeny to mail or return it back")], # ma add zeny, mw 2
+			[T("add <item #|none> <amount>"), T("attach item to mail or return it back")], # ma add item, mw 1
 			[T("send <receiver> <title> <body>"), T("send mail to <receiver>")], # ms
-			[T("delete <mail #>"), T("delete a mail with a corresponding number from the mail list when you open your mailbox")] #md
+			[T("delete <mail #>"), T("delete a mail with a corresponding number from the mail list when you open your mailbox")], #md
+			["write", T("start writing a mail")], #mw 0
 		], \&cmdMail],
-		['mw', [
-			T("Interacts with mail box window."),
-			["0", T("write mail")],
-			["1", T("take attached items back")],
-			["2", T("inputs zenys")]
-			], \&cmdMail],	# window
 		['mr', [
 			T("Returns the mail to the sender."),
 			[T("<mail #>"), T("a corresponding number from the mail list when you open your mailbox")]
@@ -6596,12 +6591,13 @@ sub cmdMail {
 		}
 
 	} elsif ($args[0] eq 'setzeny') {
-		unless ($args[1] =~ /^\d+$/) {
-			error T("Syntax Error in function 'mail setzeny' (Mailbox)\n" .
-				"Usage: mail setzeny <amount>\n");
-			return;
-		} else {
+		if ($args[1] =~ /^\d+$/) {
 			$messageSender->sendMailSetAttach($args[1], undef);
+		} elsif ($args[1] eq 'none') {
+			$messageSender->sendMailOperateWindow(2);
+		} else {
+			error T("Syntax Error in function 'mail setzeny' (Mailbox)\n" .
+				"Usage: mail setzeny <amount|none>\n");
 		}
 
 	} elsif ($args[0] eq 'add') {
@@ -6609,6 +6605,8 @@ sub cmdMail {
 			error T("Syntax Error in function 'mail add' (Mailbox)\n" .
 				"Usage: mail add <item #> <amount>\n");
 			return;
+		} elsif ($args[1] eq 'none') {
+			$messageSender->sendMailOperateWindow(1);
 		} else {
 			my $item = Actor::Item::get($args[1]);
 			if ($item) {
@@ -6645,15 +6643,8 @@ sub cmdMail {
 		}
 
 	# mail window (almost useless?)
-	} elsif ($cmd eq 'mw') {
-		unless (defined $args[0]) {
-			message T("Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n"), "info";
-		} elsif ($args[0] =~ /^[0-2]$/) {
-			$messageSender->sendMailOperateWindow($args[0]);
-		} else {
-			error T("Syntax error in function 'mw' (mailbox window)\n" .
-			"Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n");
-		}
+	} elsif ($args[0] eq 'write') {
+		$messageSender->sendMailOperateWindow(0);
 
 	# mail return
 	} elsif ($cmd eq 'mr') {
