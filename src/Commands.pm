@@ -699,12 +699,8 @@ sub initHandlers {
 			[T("send <receiver> <title> <body>"), T("send mail to <receiver>")], # ms
 			[T("delete <mail #>"), T("delete a mail with a corresponding number from the mail list when you open your mailbox")], #md
 			["write", T("start writing a mail")], #mw 0
+			["return <mail #>", T("returns the mail to the sender")] #mr
 		], \&cmdMail],
-		['mr', [
-			T("Returns the mail to the sender."),
-			[T("<mail #>"), T("a corresponding number from the mail list when you open your mailbox")]
-			], \&cmdMail],	# return
-
 		['au', T("Display possible commands for auction."), \&cmdAuction],	# see commands
 		['aua', [
 			T("Adds an item to the auction."),
@@ -6550,8 +6546,7 @@ sub cmdMail {
 	}
 
 	my (undef, $args_string) = @_;
-	my @args = parseArgs($args_string, 5);
-	my $cmd = $args[0];
+	my @args = parseArgs($args_string, 3);
 
 	if ($args[0] eq 'open') {
 		if (defined $mailList) {
@@ -6647,22 +6642,22 @@ sub cmdMail {
 		$messageSender->sendMailOperateWindow(0);
 
 	# mail return
-	} elsif ($cmd eq 'mr') {
-		unless ($args[0] =~ /^\d+$/) {
-			message T("Usage: mr <mail #>\n"), "info";
-		} elsif (!$mailList->[$args[0]]) {
+	} elsif ($args[0] eq 'return') {
+		unless ($args[1] =~ /^\d+$/) {
+			error T("Syntax Error in function 'mail retutn' (Mailbox)\n" .
+				"Usage: mail return <mail #>\n");
+		} elsif (!$mailList->[$args[1]]) {
 			if (@{$mailList}) {
-				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
+				warning TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]);
 			} else {
-				message T("Mailbox has not been opened or is empty.\n"), "info";
+				warning T("Mailbox has not been opened or is empty.\n");
 			}
 		} else {
-			$messageSender->sendMailReturn($mailList->[$args[0]]->{mailID}, $mailList->[$args[0]]->{sender});
+			$messageSender->sendMailReturn($mailList->[$args[1]]->{mailID}, $mailList->[$args[1]]->{sender});
 		}
-
-	# with command mail, list of possebilities: $cmd eq 'm'
 	} else {
-		message T("Mail commands: ms, mi, mo, md, mw, mr, ma\n"), "info";
+		error T("Syntax Error in function 'mail' (Mailbox)\n" .
+			"Usage: help mail\n");
 	}
 }
 
