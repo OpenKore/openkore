@@ -10351,8 +10351,8 @@ sub mail_refreshinbox {
 	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
 	# truncating the date with precision of minutes and leave year out
 
-	$msg .= swrite(sprintf("\@> R \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
-			["#", T("Title"), T("Sender"), T("Date")]);
+	$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+			["#", T("R"), T("Title"), T("Sender"), T("Date")]);
 	$msg .= sprintf("%s\n", ('-'x86));
 
 	my $j = 0;
@@ -10366,8 +10366,8 @@ sub mail_refreshinbox {
 		$mailList->[$j]->{title} = bytesToString($mailList->[$j]->{title});
 		$mailList->[$j]->{sender} = bytesToString($mailList->[$j]->{sender});
 
-		$msg .= swrite(sprintf("\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x19)),
-				[$j, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
+		$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+				[$j, $mailList->[$j]->{read}, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
 		$j++;
 	}
 

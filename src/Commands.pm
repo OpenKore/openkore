@@ -691,6 +691,7 @@ sub initHandlers {
 		['mail', [
 			T("Mailbox use (not Rodex)"),
 			["open", T("open Mailbox")], # mi
+			["list", T("list your Mailbox")],
 			["refresh", T("refresh Mailbox")], # new
 			[T("read <mail #>"), T("read the selected mail")], # mo
 			[T("get <mail #>"), T("take attachments from mail")], # ma get
@@ -6655,6 +6656,30 @@ sub cmdMail {
 		} else {
 			$messageSender->sendMailReturn($mailList->[$args[1]]->{mailID}, $mailList->[$args[1]]->{sender});
 		}
+
+	} elsif ($args[0] eq 'list') {
+		if (!defined $mailList) {
+			error T("Your Mailbox is is closed.\n");
+		} elsif (!$mailList) {
+			message T("Your Mailbox is empty.\n");
+		} else {
+			my $msg = center(" " . T("Inbox") . " ", 86, '-') . "\n";
+			# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
+			# truncating the date with precision of minutes and leave year out
+			$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+					["#", T("R"), T("Title"), T("Sender"), T("Date")]);
+			$msg .= sprintf("%s\n", ('-'x86));
+			my $index = 0;
+			foreach my $mail (@{$mailList}) {
+				$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+						[$index, $mail->{read}, $mail->{title}, $mail->{sender}, getFormattedDate(int($mail->{timestamp}))]);
+				$index++;
+			}
+
+			$msg .= sprintf("%s\n", ('-'x86));
+			message $msg, "list";
+		}
+
 	} else {
 		error T("Syntax Error in function 'mail' (Mailbox)\n" .
 			"Usage: help mail\n");
