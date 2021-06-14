@@ -3169,6 +3169,7 @@ sub processItemsAutoGather {
 	if ( (AI::isIdle || AI::action eq "follow"
 		|| ( AI::is("route", "mapRoute", "checkMonsters") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2)  && !$config{itemsTakeAuto_new}))
 	  && $config{'itemsGatherAuto'}
+	  && (!$config{itemsGatherAuto_notInTown} || !$field->isCity)
 	  && !$ai_v{sitAuto_forcedBySitCommand}
 	  && ($config{'itemsGatherAuto'} >= 2 || !ai_getAggressives())
 	  && percent_weight($char) < $config{'itemsMaxWeight'}
