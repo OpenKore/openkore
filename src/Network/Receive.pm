@@ -8498,7 +8498,7 @@ sub rodex_delete {
 	message TF("You have deleted the mail of ID %s.\n", $args->{mailID1});
 
 	Plugins::callHook('rodex_mail_deleted', {
-		'mailID' => $args->{mailID1},		
+		'mailID' => $args->{mailID1},
 	});
 
 	delete $rodexList->{mails}{$args->{mailID1}};
@@ -10323,13 +10323,57 @@ sub mail_read {
 	$msg .= swrite(TF("Title: \@%s Sender: \@%s", ('<'x39), ('<'x24)),
 			[bytesToString($args->{title}), bytesToString($args->{sender})]);
 	$msg .= TF("Message: %s\n", bytesToString($args->{message}));
-	$msg .= ("%s\n", ('-'x119));
+	$msg .= sprintf("%s\n", ('-'x119));
 	$msg .= TF( "Item: %s %s\n" .
 				"Zeny: %sz\n",
 				$item->{name}, ($args->{amount}) ? "x " . $args->{amount} : "", formatNumber($args->{zeny}));
 	$msg .= sprintf("%s\n", ('-'x119));
 
 	message($msg, "info");
+}
+
+sub mail_refreshinbox {
+	my ($self, $args) = @_;
+
+	my $old_count = defined $mailList ? scalar(@$mailList) : 0;
+	undef $mailList;
+	my $count = $args->{count};
+
+	if (!$count) {
+		message T("There is no mail in your inbox.\n"), "info";
+		return;
+	}
+
+	return if ($old_count == $count);
+
+	message TF("You've got %s mail in your Mailbox.\n", $count), "info";
+	my $msg;
+	$msg .= center(" " . T("Inbox") . " ", 86, '-') . "\n";
+	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
+	# truncating the date with precision of minutes and leave year out
+
+	$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+			["#", T("R"), T("Title"), T("Sender"), T("Date")]);
+	$msg .= sprintf("%s\n", ('-'x86));
+
+	my $j = 0;
+	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
+		($mailList->[$j]->{mailID},
+		$mailList->[$j]->{title},
+		$mailList->[$j]->{read},
+		$mailList->[$j]->{sender},
+		$mailList->[$j]->{timestamp}) =	unpack('V Z40 C Z24 V', substr($args->{RAW_MSG}, $i, 73));
+
+		$mailList->[$j]->{title} = bytesToString($mailList->[$j]->{title});
+		$mailList->[$j]->{sender} = bytesToString($mailList->[$j]->{sender});
+
+		$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+				[$j, $mailList->[$j]->{read}, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
+		$j++;
+	}
+
+	$msg .= ("%s\n", ('-'x86));
+	message($msg . "\n", "list");
 }
 
 sub mail_getattachment {
@@ -10340,6 +10384,35 @@ sub mail_getattachment {
 		error T("Failed to get the attachment to inventory due to your weight.\n"), "info";
 	} else {
 		error T("Failed to get the attachment to inventory.\n"), "info";
+	}
+}
+
+sub mail_setattachment {
+	my ($self, $args) = @_;
+
+	if ($args->{fail}) {
+		if (defined $AI::temp::mailAttachAmount) {
+			undef $AI::temp::mailAttachAmount;
+		}
+		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
+	} else {
+		my $item = $char->inventory->getByID($args->{ID});
+		if ($item) {
+			message TF("Succeeded to attach %s.\n", T("item: ").$char->inventory->getByID($args->{ID})), "info";
+			if (defined $AI::temp::mailAttachAmount) {
+				my $change = min($item->{amount},$AI::temp::mailAttachAmount);
+				inventoryItemRemoved($item->{binID}, $change);
+				Plugins::callHook('packet_item_removed', {index => $item->{binID}});
+				undef $AI::temp::mailAttachAmount;
+			}
+		} else {
+			message TF("Succeeded to attach %s.\n", T("zeny")), "info";
+			if (defined $AI::temp::mailAttachAmount) {
+				my $change = min($char->{zeny},$AI::temp::mailAttachAmount);
+				$char->{zeny} = $char->{zeny} - $change;
+				message TF("You lost %s zeny.\n", formatNumber($change));
+			}
+		}
 	}
 }
 
