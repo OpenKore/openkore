@@ -1438,57 +1438,6 @@ sub skills_list {
 	}
 }
 
-sub mail_refreshinbox {
-	my ($self, $args) = @_;
-
-	undef $mailList;
-	my $count = $args->{count};
-
-	if (!$count) {
-		message T("There is no mail in your inbox.\n"), "info";
-		return;
-	}
-
-	message TF("You've got Mail! (%s)\n", $count), "info";
-	my $msg;
-	$msg .= center(" " . T("Inbox") . " ", 79, '-') . "\n";
-	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
-	# truncating the date with precision of minutes and leave year out
-	$msg .=	swrite("\@> R \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x11),
-			["#", T("Title"), T("Sender"), T("Date")]);
-	$msg .= sprintf("%s\n", ('-'x79));
-
-	my $j = 0;
-	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
-		($mailList->[$j]->{mailID},
-		$mailList->[$j]->{title},
-		$mailList->[$j]->{read},
-		$mailList->[$j]->{sender},
-		$mailList->[$j]->{timestamp}) =	unpack('V Z40 C Z24 V', substr($args->{RAW_MSG}, $i, 73));
-
-		$mailList->[$j]->{title} = bytesToString($mailList->[$j]->{title});
-		$mailList->[$j]->{sender} = bytesToString($mailList->[$j]->{sender});
-
-		$msg .= swrite(
-		"\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x11),
-		[$j, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
-		$j++;
-	}
-
-	$msg .= ("%s\n", ('-'x79));
-	message($msg . "\n", "list");
-}
-
-sub mail_setattachment {
-	my ($self, $args) = @_;
-	# todo, maybe we need to store this index into a var which we delete the item from upon succesful mail sending
-	if ($args->{fail}) {
-		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
-	} else {
-		message TF("Succeeded to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
-	}
-}
-
 # TODO: test the latest code optimization
 sub auction_item_request_search {
 	my ($self, $args) = @_;
