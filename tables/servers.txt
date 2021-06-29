@@ -365,6 +365,16 @@ clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
 field_morocc morocc-old
 
+# Hercules private servers
+ip localhost
+port 6900
+version 55
+master_version 0
+serverType kRO_RagexeRE_2018_06_21a
+serverEncoding Western
+charBlockSize 155
+addTableFolders kRO/RagexeRE_2018_04_04b;translated/kRO_english;kRO
+
 ####################
 # Dead
 
