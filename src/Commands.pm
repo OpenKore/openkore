@@ -688,38 +688,20 @@ sub initHandlers {
 		['where', T("Shows your current location."), \&cmdWhere],
 		['who', T("Display the number of people on the current server."), \&cmdWho],
 		['whoami', T("Display your character and account ID."), \&cmdWhoAmI],
-
-		['m', T("Displays Mail commands."), \&cmdMail],	# see commands
-		['ms', [
-			T("Sends Mail."),
-			[T("<receiver> <title> <message>"), T("sends mail to <receiver>")]
-			], \&cmdMail],	# send
-		['mi', T("Opens Mailbox."), \&cmdMail],	# inbox
-		['mo', [
-			T("Open a mail."),
-			[T("<mail #>"), T("open the mail with a corresponding number from the mail list when you open your mailbox")]
-			], \&cmdMail],
-		['md', [
-			T("Deletes a Mail."),
-			[T("<mail #>"), T("delete a mail with a corresponding number from the mail list when you open your mailbox")]
-			], \&cmdMail],	# delete
-		['mw', [
-			T("Interacts with mail box window."),
-			["0", T("write mail")],
-			["1", T("take attached items back")],
-			["2", T("inputs zenys")]
-			], \&cmdMail],	# window
-		['mr', [
-			T("Returns the mail to the sender."),
-			[T("<mail #>"), T("a corresponding number from the mail list when you open your mailbox")]
-			], \&cmdMail],	# return
-		['ma', [
-			T("Mail & Attachment."),
-			[T("get <mail #>"), T("takes items attached from mail")],
-			[T("add zeny <amount>"), T("attaches zenys in the mail")],
-			[T("add item <amount> <inventory item>"), T("attaches items in the mail")]
-			], \&cmdMail],	# attachement
-
+		['mail', [
+			T("Mailbox use (not Rodex)"),
+			["open", T("open Mailbox")], # mi
+			["list", T("list your Mailbox")],
+			["refresh", T("refresh Mailbox")], # new
+			[T("read <mail #>"), T("read the selected mail")], # mo
+			[T("get <mail #>"), T("take attachments from mail")], # ma get
+			[T("setzeny <amount|none>"), T("attach zeny to mail or return it back")], # ma add zeny, mw 2
+			[T("add <item #|none> <amount>"), T("attach item to mail or return it back")], # ma add item, mw 1
+			[T("send <receiver> <title> <body>"), T("send mail to <receiver>")], # ms
+			[T("delete <mail #>"), T("delete selected mail")], #md
+			["write", T("start writing a mail")], #mw 0
+			["return <mail #>", T("returns the mail to the sender")] #mr
+		], \&cmdMail],
 		['au', T("Display possible commands for auction."), \&cmdAuction],	# see commands
 		['aua', [
 			T("Adds an item to the auction."),
@@ -6564,113 +6546,144 @@ sub cmdMail {
 		return;
 	}
 
-	my ($cmd, $args_string) = @_;
-	my @args = parseArgs($args_string, 4);
+	my (undef, $args_string) = @_;
+	my @args = parseArgs($args_string, 3);
 
-	# mail send
-	if ($cmd eq 'ms') {
-		unless ($args[0] && $args[1] && $args[2]) {
-			message T("Usage: ms <receiver> <title> <message>\n"), "info";
+	if ($args[0] eq 'open') {
+		if (defined $mailList) {
+			error T("Your Mailbox is already opened.\n");
 		} else {
-			my ($receiver, $title, $msg) = ($args[0], $args[1], $args[2]);
-			$messageSender->sendMailSend($receiver, $title, $msg);
+			message T("Sending request to open Mailbox.\n");
+			$messageSender->sendMailboxOpen();
 		}
 
-	# mail open
-	} elsif ($cmd eq 'mo') {
-
-		unless ($args[0] =~ /^\d+$/) {
-			message T("Usage: mo <mail #>\n"), "info";
-		} elsif (!$mailList->[$args[0]]) {
-			if (@{$mailList}) {
-				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
-			} else {
-				message T("Mailbox has not been opened or is empty.\n"), "info";
-			}
-		} else {
-			$messageSender->sendMailRead($mailList->[$args[0]]->{mailID});
-		}
-
-	# mail inbox => set on begin as standard?
-	} elsif ($cmd eq 'mi') {
-		# if mail not already opened needed?
+	} elsif ($args[0] eq 'refresh') {
 		$messageSender->sendMailboxOpen();
 
-	# mail window (almost useless?)
-	} elsif ($cmd eq 'mw') {
-		unless (defined $args[0]) {
-			message T("Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n"), "info";
-		} elsif ($args[0] =~ /^[0-2]$/) {
-			$messageSender->sendMailOperateWindow($args[0]);
-		} else {
-			error T("Syntax error in function 'mw' (mailbox window)\n" .
-			"Usage: mw [0|1|2] (0:write, 1:take item back, 2:zeny input ok)\n");
+	} elsif ($args[0] eq 'read') {
+		unless ($args[1] =~ /^\d+$/) {
+			error T("Syntax Error in function 'mail read' (Mailbox)\n" .
+				"Usage: mail read <mail #>\n");
+		} elsif (!defined $mailList) {
+			warning T("Your Mailbox is not open. Use the command 'mail open'.\n");
+		} elsif (!$mailList->[$args[1]]) {
+				warning TF("No mail found with index: %s\n", $args[1]);
+		} elsif ($mailList->[$args[1]]->{mailID}) {
+			$messageSender->sendMailRead($mailList->[$args[1]]->{mailID});
 		}
 
-	# mail attachment control
-	} elsif ($cmd eq 'ma') {
-		if ($args[0] eq "get" && $args[1] =~ /^\d+$/) {
-			unless ($mailList->[$args[1]]->{mailID}) {
-				if (@{$mailList}) {
-					message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
-				} else {
-					message T("Mailbox has not been opened or is empty.\n"), "info";
-				}
-			} else {
-				$messageSender->sendMailGetAttach($mailList->[$args[1]]->{mailID});
-			}
-		} elsif ($args[0] eq "add") {
-			unless ($args[2] =~ /^\d+$/) {
-				message T("Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n"), "info";
-			} elsif ($args[1] eq "zeny") {
-				$messageSender->sendMailSetAttach($args[2], undef);
-			} elsif ($args[1] eq "item" && defined $args[3]) {
-				my $item = Actor::Item::get($args[3]);
-				if ($item) {
-					my $serverIndex = $item->{ID};
-					$messageSender->sendMailSetAttach($args[2], $serverIndex);
-				} else {
-					message TF("Item with index or name: %s does not exist in inventory.\n", $args[3]), "info";
-				}
-			} else {
-				error T("Syntax error in function 'ma' (mail attachment control)\n" .
-				"Usage: ma add [zeny <amount>]|[item <amount> (<item #>|<item name>)]\n");
-			}
+	} elsif ($args[0] eq 'get') {
+		unless ($args[1] =~ /^\d+$/) {
+			error T("Syntax Error in function 'mail get' (Mailbox)\n" .
+				"Usage: mail get <mail #>\n");
+		} elsif (!defined $mailList) {
+			warning T("Your Mailbox is not open. Use the command 'mail open'.\n");
+		} elsif (!$mailList->[$args[1]]) {
+				warning TF("No mail found with index: %s\n", $args[1]);
+		} elsif ($mailList->[$args[1]]->{mailID}) {
+			$messageSender->sendMailGetAttach($mailList->[$args[1]]->{mailID});
+		}
+
+	} elsif ($args[0] eq 'setzeny') {
+		if ($args[1] =~ /^\d+$/) {
+			$messageSender->sendMailSetAttach($args[1], undef);
+		} elsif ($args[1] eq 'none') {
+			$messageSender->sendMailOperateWindow(2);
 		} else {
-			message T("Usage: ma (get <mail #>)|(add [zeny <amount>]|[item <amount> (<item #>|<item name>)])\n"), "info";
+			error T("Syntax Error in function 'mail setzeny' (Mailbox)\n" .
+				"Usage: mail setzeny <amount|none>\n");
+		}
+
+	} elsif ($args[0] eq 'add') {
+		unless (defined $args[1]) {
+			error T("Syntax Error in function 'mail add' (Mailbox)\n" .
+				"Usage: mail add <item #> <amount>\n");
+		} elsif ($args[1] eq 'none') {
+			$messageSender->sendMailOperateWindow(1);
+		} else {
+			my $item = Actor::Item::get($args[1]);
+			if ($item) {
+				my $amount = $args[2] ? $args[2] : $item->{amount};
+				warning TF("Attention: Inventory Item '%s' is equipped.\n", $item->{name}) if ($item->{equipped});
+				$messageSender->sendMailSetAttach($amount, $item->{ID});
+			} else {
+				warning TF("Inventory Item '%s' does not exist.\n", $args[2]);
+			}
+		}
+
+	} elsif ($args[0] eq 'send') {
+		unless ($args[1] && $args[2]) {
+			error T("Syntax Error in function 'mail send' (Mailbox)\n" .
+				"Usage: mail send <receiver> <title> <body>\n");
+		} else {
+			$messageSender->sendMailSend($args[1], $args[2], $args[3]);
 		}
 
 	# mail delete (can't delete mail without removing attachment/zeny first)
-	} elsif ($cmd eq 'md') {
-		unless ($args[0] =~ /^\d+$/) {
-			message T("Usage: md <mail #>\n"), "info";
-		} elsif (!$mailList->[$args[0]]) {
+	} elsif ($args[0] eq 'delete') {
+		unless ($args[1] =~ /^\d+$/) {
+			error T("Syntax Error in function 'mail delete' (Mailbox)\n" .
+				"Usage: mail delete <mail #>\n");
+		} elsif (!$mailList->[$args[1]]) {
 			if (@{$mailList}) {
-				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[0]), "info";
+				warning TF("No mail found with index: %d. (might need to re-open mailbox)\n", $args[1]);
 			} else {
-				message T("Mailbox has not been opened or is empty.\n"), "info";
+				warning T("Mailbox has not been opened or is empty.\n");
 			}
 		} else {
-			$messageSender->sendMailDelete($mailList->[$args[0]]->{mailID});
+			$messageSender->sendMailDelete($mailList->[$args[1]]->{mailID});
+			delete $mailList->[$args[1]];
 		}
+
+	# mail window (almost useless?)
+	} elsif ($args[0] eq 'write') {
+		$messageSender->sendMailOperateWindow(0);
 
 	# mail return
-	} elsif ($cmd eq 'mr') {
-		unless ($args[0] =~ /^\d+$/) {
-			message T("Usage: mr <mail #>\n"), "info";
-		} elsif (!$mailList->[$args[0]]) {
+	} elsif ($args[0] eq 'return') {
+		unless ($args[1] =~ /^\d+$/) {
+			error T("Syntax Error in function 'mail retutn' (Mailbox)\n" .
+				"Usage: mail return <mail #>\n");
+		} elsif (!$mailList->[$args[1]]) {
 			if (@{$mailList}) {
-				message TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]), "info";
+				warning TF("No mail found with index: %s. (might need to re-open mailbox)\n", $args[1]);
 			} else {
-				message T("Mailbox has not been opened or is empty.\n"), "info";
+				warning T("Mailbox has not been opened or is empty.\n");
 			}
 		} else {
-			$messageSender->sendMailReturn($mailList->[$args[0]]->{mailID}, $mailList->[$args[0]]->{sender});
+			$messageSender->sendMailReturn($mailList->[$args[1]]->{mailID}, $mailList->[$args[1]]->{sender});
 		}
 
-	# with command mail, list of possebilities: $cmd eq 'm'
+	} elsif ($args[0] eq 'list') {
+		if (!defined $mailList) {
+			error T("Your Mailbox is is closed.\n");
+		} elsif (!$mailList) {
+			message T("Your Mailbox is empty.\n");
+		} else {
+			my $msg = center(" " . T("Inbox") . " ", 86, '-') . "\n";
+			# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
+			# truncating the date with precision of minutes and leave year out
+			$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+					["#", T("R"), T("Title"), T("Sender"), T("Date")]);
+			$msg .= sprintf("%s\n", ('-'x86));
+			my $index = 0;
+			foreach my $mail (@{$mailList}) {
+				if ($mail) {
+					$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+						[$index, $mail->{read}, $mail->{title}, $mail->{sender}, getFormattedDate(int($mail->{timestamp}))]);
+				} else {
+					$msg .= swrite(sprintf("\@> \@%s", ('<'x83)), [$index, T("the mail was deleted")]);
+				}
+				$index++;
+			}
+
+			$msg .= sprintf("%s\n", ('-'x86));
+			message $msg, "list";
+		}
+
 	} else {
-		message T("Mail commands: ms, mi, mo, md, mw, mr, ma\n"), "info";
+		error T("Syntax Error in function 'mail' (Mailbox)\n" .
+			"Usage: help mail\n");
 	}
 }
 
