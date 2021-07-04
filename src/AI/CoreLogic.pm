@@ -2794,17 +2794,16 @@ sub processPartySkillUse {
 					next if ((!$char->{slaves} || !$char->{slaves}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
 					next if (($char->{slaves}{$ID} ne $slavesList->getByID($ID)) && !$config{"partySkill_$i"."_notPartyOnly"});
 				} elsif ($playersList->getByID($ID)) {
-					my $partyUsersID = $char->{party}{users}{$ID};
 					unless ($config{"partySkill_$i"."_notPartyOnly"}) {
-						next unless $char->{party}{joined} && $partyUsersID;
+						next unless $char->{party}{joined} && $char->{party}{users}{$ID};
 
 						# party member should be online, otherwise it's another character on the same account (not in party)
-						next unless $partyUsersID->{online};
+						next unless $char->{party}{users}{$ID} && $char->{party}{users}{$ID}{online};
 					}
 
 					# if that intended to distinguish between party members and other characters on the same accounts, then it didn't work
 					my $player = $playersList->getByID($ID);
-					next if (($partyUsersID->{name} ne $player->{name}) && !$config{"partySkill_$i"."_notPartyOnly"});
+					next if (($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{name} ne $player->{name}) && !$config{"partySkill_$i"."_notPartyOnly"});
 				}
 
 				my $player = Actor::get($ID);
