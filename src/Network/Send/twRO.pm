@@ -15,6 +15,8 @@ package Network::Send::twRO;
 
 use strict;
 use base qw(Network::Send::ServerType0);
+use Log qw(debug);
+use Utils qw(getTickCount);
 
 sub new {
 	my ($class) = @_;
@@ -22,7 +24,8 @@ sub new {
 
 	my %packets = (
 		# twRO related packets
-		'0064' => ['master_login', 'V Z24 a24 C', [qw(version username password_rijndael master_version)]], 
+		'0064' => ['master_login', 'V Z24 a24 C', [qw(version username password_rijndael master_version)]],
+		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -58,7 +61,7 @@ sub new {
 		char_create 0A39
 		rodex_open_mailbox 0AC0
 		rodex_refresh_maillist 0AC1
-		buy_bulk_vender 0801		
+		buy_bulk_vender 0801
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -114,6 +117,28 @@ sub reconstruct_master_login {
 		$rijndael->MakeKey($key, $chain, 24, 24);
 		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 24, 0);
 	}
+}
+
+# 0x0436,23
+sub sendMapLogin {
+	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
+	my $msg;
+	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
+
+	#my $unknown = pack('C4', (0x29, 0xF0, 0x40, 0x01));
+
+	$msg = $self->reconstruct({
+		switch => 'map_login',
+		accountID => $accountID,
+		charID => $charID,
+		sessionID => $sessionID,
+		unknown => 21033001,# 29 F0 40 01
+		tick => getTickCount,
+		sex => $sex,
+	});
+
+	$self->sendToServer($msg);
+	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
 1;
