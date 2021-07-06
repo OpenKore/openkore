@@ -228,7 +228,10 @@ sub parse {
 	my $handler = $self->{packet_list}{$lastSwitch};
 
 	unless ($handler) {
-		warning "Packet Parser: Unknown switch: $lastSwitch\n";
+		unless (existsInList($config{debugPacket_exclude}, $lastSwitch)) {
+			warning TF("Packet Parser: Unknown switch: %s\n", $lastSwitch);
+			Misc::visualDump($msg, "<< Received unknown switch") if $config{debugPacket_unparsed};
+		}
 		return undef;
 	}
 
