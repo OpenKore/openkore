@@ -2800,10 +2800,6 @@ sub processPartySkillUse {
 						# party member should be online, otherwise it's another character on the same account (not in party)
 						next unless $char->{party}{users}{$ID} && $char->{party}{users}{$ID}{online};
 					}
-
-					# if that intended to distinguish between party members and other characters on the same accounts, then it didn't work
-					my $player = $playersList->getByID($ID);
-					next if (($char->{party}{users}{$ID} && $char->{party}{users}{$ID}{name} ne $player->{name}) && !$config{"partySkill_$i"."_notPartyOnly"});
 				}
 
 				my $player = Actor::get($ID);
