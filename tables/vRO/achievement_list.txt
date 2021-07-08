@@ -1,0 +1,4297 @@
+achievement_tbl = {
+	[110000] = {
+		UI_Type = 0,
+		group = "EAT",
+		major = 4,
+		minor = 0,
+		title = "Гn luмc naМy seЮ khфng beмo",
+		content = {
+			summary = "Cэм 1 giхМ saмng laМ tфi laтi theМm гn",
+			details = "Bigfoot seЮ mang рфМ гn ркмn luмc nэТa ркm"
+		},
+		resource = { [1] = { text = "Bigfoot seЮ mang рфМ гn ркмn luмc nэТa ркm" } },
+		reward = {},
+		score = 10
+	},
+	[110001] = {
+		UI_Type = 0,
+		group = "SEE",
+		major = 4,
+		minor = 0,
+		title = "Mфтt ngэхМi hвm mфт",
+		content = {
+			summary = "Ngoм qua cuфтc sфмng cuТa nhэЮng ngэхМi hвm mфт",
+			details = "HaЮy gгтp nhэЮng ngэхМi hвm mфт Wigner."
+		},
+		resource = {
+			[1] = { text = "Phuт nэЮ quaмn xuyкмn" },
+			[2] = { text = "Рэмa con xinh рeтp" },
+			[3] = { text = "TiМnh nhвn вm thвМm" },
+			[4] = { text = "Cф gaмi quyкмn ruЮ" },
+			[5] = { text = "Con trai laМng xoмm" },
+			[6] = { text = "Cф gaмi diкЮn xuвмt hay nhвмt" },
+			[7] = { text = "Nam diкЮn viкn xuвмt sгмc nhвмt" }
+		},
+		reward = {},
+		score = 10
+	},
+	[120001] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Bгмc Prontera (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120002] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Bгмc Prontera (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120003] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Bгмc Prontera (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120004] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Tвy Prontera (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120005] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Tвy Prontera (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120006] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Рфng Prontera",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120007] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Nam Prontera (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120008] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Nam Prontera (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120009] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Nam Prontera (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120010] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Nam Prontera (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam cuТa Prontera"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam cuТa Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120011] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Рфng Geffen",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Geffen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120012] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Рфng Nam Geffen",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Nam Geffen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Nam Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120013] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Tвy Bгмc Geffen (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Tвy Bгмc Geffen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Tвy Bгмc Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120014] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Tвy Bгмc Geffen (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Tвy Bгмc Geffen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Tвy Bгмc Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120015] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Tвy Bгмc Geffen (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Tвy Bгмc Geffen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Tвy Bгмc Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120016] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Nam Geffen (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Nam Geffen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Nam Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120017] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Nam Geffen (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Nam Geffen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Nam Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120018] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм sa maтc Sograt (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120019] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм sa maтc Sograt (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120020] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм sa maтc Sograt (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120021] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм sa maтc Sograt (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120022] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм sa maтc Sograt (5)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120023] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм sa maтc Sograt (6)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh sa maтc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120024] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Tвy Nam Payon (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy Nam Payon"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy Nam Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120025] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Tвy Nam Payon (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy Nam Payon"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy Nam Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120026] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Tвy Nam Payon (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy Nam Payon"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy Nam Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120027] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Tвy Nam Payon (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy Nam Payon"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Tвy Nam Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120028] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Рфng Payon (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Payon"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120029] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Рфng Payon (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Payon"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120030] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Рфng Payon (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Payon"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120031] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng phiмa Рфng Payon (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Payon"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Рфng Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120032] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120033] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120034] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120035] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120036] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (5)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Bгмc nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120037] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Nam nuмi Mjolnir (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120038] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Nam nuмi Mjolnir (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120039] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Nam nuмi Mjolnir (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120040] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Nam nuмi Mjolnir (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120041] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Nam nuмi Mjolnir (5)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120042] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Nam nuмi Mjolnir (6)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa Nam nuмi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120043] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Nam Aldebaran",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Nam Aldebaran"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc phiмa  Nam Aldebaran" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120044] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Comodo (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120045] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Comodo (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120046] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Comodo (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120047] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Comodo (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120048] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Comodo (5)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120049] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Comodo (6)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120050] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Comodo (7)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120051] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм vuМng Comodo (8)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh thiт trвмn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120052] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм vuМng Border Garrison (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh vuМng Border Garrison"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh vuМng Border Garrison" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120053] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм vuМng Border Garrison (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh vuМng Border Garrison"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh vuМng Border Garrison" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120054] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм Biктt thэт Kiel Hyre",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu xung quanh Biктt thэт Kiel Hyre"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu xung quanh Biктt thэт Kiel Hyre" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120055] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм vuМng Cao nguyкn El Mes (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng Cao nguyкn El Mes"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng Cao nguyкn El Mes" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120056] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм vuМng Cao nguyкn El Mes (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng Cao nguyкn El Mes"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng Cao nguyкn El Mes" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120057] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм vuМng Cao nguyкn El Mes (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng Cao nguyкn El Mes"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng Cao nguyкn El Mes" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120058] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм HeТm nuмi El Mes",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu xung quanh HeТm nuмi El Mes"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu xung quanh HeТm nuмi El Mes" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120059] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм Hoтc viктn Kiel Hyre",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu xung quanh khu vэтc Hoтc viктn Kiel Hyre"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu xung quanh khu vэтc Hoтc viктn Kiel Hyre" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120060] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм khu vэтc Traтi liмnh",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu xung quanh khu vэтc Traтi liмnh"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu xung quanh khu vэтc Traтi liмnh" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120061] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм vuМng рвмt Juno",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh Juno"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh Juno" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120062] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм phiмa trэхмc Thaмp Thanatos",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "Khaмm phaм kho baмu xung quanh khu vэтc phiмa trэхмc toМa Thaмp Thanatos"
+		},
+		resource = {
+			[1] = {
+				text = "Khaмm phaм kho baмu xung quanh khu vэтc phiмa trэхмc toМa Thaмp Thanatos"
+			}
+		},
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120063] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм khu vэтc quanh Hugel (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ thiт trвмn Hugel"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ thiт trвмn Hugel" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120064] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм khu vэтc quanh Hugel (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ thiт trвмn Hugel"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ thiт trвмn Hugel" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120065] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм khu vэтc quanh Hugel (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ thiт trвмn Hugel"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ thiт trвмn Hugel" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120066] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм HфМ Vэтc thгТm (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh HфМ Vэтc thгТm"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh HфМ Vэтc thгТm" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120067] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм quanh vuМng Einbroch (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120068] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм quanh vuМng Einbroch (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120069] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм quanh vuМng Einbroch (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120070] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм quanh vuМng Einbroch (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120071] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм quanh vuМng Einbroch (5)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120072] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм quanh vuМng Einbroch (6)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120073] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм quanh vuМng Einbroch (7)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120074] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм quanh vuМng Einbroch (8)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ caмc khu vэтc xung quanh vuМng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120075] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм vuМng Lighthalzen (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ xung quanh vuМng Lighthalzen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ xung quanh vuМng Lighthalzen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120076] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм vuМng Lighthalzen (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ xung quanh vuМng Lighthalzen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ xung quanh vuМng Lighthalzen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120077] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм vuМng Lighthalzen (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ xung quanh vuМng Lighthalzen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ xung quanh vuМng Lighthalzen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120078] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм РфМng bгМng Audhumbla (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh рфМng bгМng Audhumbla"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh рфМng bгМng Audhumbla" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120079] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм рфМng bгМng Ida (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "[TiМm thвмy kho baмu хТ khu vэтc quanh рфМng bгМng Ida"
+		},
+		resource = { [1] = { text = "[TiМm thвмy kho baмu хТ khu vэтc quanh рфМng bгМng Ida" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120080] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм рфМng bгМng Ida (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "[TiМm thвмy kho baмu хТ khu vэтc quanh рфМng bгМng Ida"
+		},
+		resource = { [1] = { text = "[TiМm thвмy kho baмu хТ khu vэтc quanh рфМng bгМng Ida" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120081] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм рфМng bгМng Ida (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "[TiМm thвмy kho baмu хТ khu vэтc quanh рфМng bгМng Ida"
+		},
+		resource = { [1] = { text = "[TiМm thвмy kho baмu хТ khu vэтc quanh рфМng bгМng Ida" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120082] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм рфМng coТ Audhumbla (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh рфМng coТ Audhumbla"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh рфМng coТ Audhumbla" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120083] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм рфМng coТ Audhumbla (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh рфМng coТ Audhumbla"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh рфМng coТ Audhumbla" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120084] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм vuМng рвмt Portus Luna",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng рвмt Portus Luna"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng рвмt Portus Luna" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120085] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм khu vэтc Veins (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu xung quanh khu vэтc Veins"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu xung quanh khu vэтc Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120086] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм khu vэтc Veins (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu xung quanh khu vэтc Veins"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu xung quanh khu vэтc Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120087] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм khu vэтc Veins (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu xung quanh khu vэтc Veins"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu xung quanh khu vэтc Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120088] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм khu vэтc Veins (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu xung quanh khu vэтc Veins"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu xung quanh khu vэтc Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120089] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм khu vэтc Veins (5)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu xung quanh khu vэтc Veins"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu xung quanh khu vэтc Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120090] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng Eclage",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng Eclage"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng Eclage" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120091] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng phiмa Bгмc Bifrost (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu quanh khu vэтc phiмa Bгмc cвМu Bifrost"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu quanh khu vэтc phiмa Bгмc cвМu Bifrost" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120092] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng phiмa Nam Bifrost (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu quanh khu vэтc phiмa Nam cвМu Bifrost"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu quanh khu vэтc phiмa Nam cвМu Bifrost" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120093] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng Traтm Splendide (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu quanh khu vэтc Traтm Splendide"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu quanh khu vэтc Traтm Splendide" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120094] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng Traтm Splendide (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu quanh khu vэтc Traтm Splendide"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu quanh khu vэтc Traтm Splendide" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120095] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng Traтm Splendide (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu quanh khu vэтc Traтm Splendide"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu quanh khu vэтc Traтm Splendide" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120096] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng рвмt Manuk (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng рвмt Manuk"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng рвмt Manuk" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120097] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng рвмt Manuk (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng рвмt Manuk"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng рвмt Manuk" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120098] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng рвмt Manuk (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng рвмt Manuk"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng рвмt Manuk" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120099] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng ven nuмi Kamidal (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu quanh vuМng ngoaМi cuТa daЮy nuмi Kamidal"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu quanh vuМng ngoaМi cuТa daЮy nuмi Kamidal" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120100] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм vuМng ven nuмi Kamidal (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu quanh vuМng ngoaМi cuТa daЮy nuмi Kamidal"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu quanh vuМng ngoaМi cuТa daЮy nuмi Kamidal" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120101] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм thiт trвмn Amatsu",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ khu vэтc quanh Amatsu"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ khu vэтc quanh Amatsu" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120102] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм vuМng рвмt Kunlun",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng рвмt Kunlun"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng рвмt Kunlun" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120103] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм vuМng рвмt Gonryun",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng рвмt Gonryun"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng рвмt Gonryun" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120104] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм vuМng рвмt Ayothaya",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng рвмt Ayothaya"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng рвмt Ayothaya" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120105] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм рaТo Moscovia",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng Moscovia"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng Moscovia" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120106] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм thaМnh phфм Brasilis",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng Brasilis"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng Brasilis" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120107] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм vuМng рвмt Dewata",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng рвмt Dewata"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng рвмt Dewata" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120108] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм caТng Malaya (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng caТng Malaya"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng caТng Malaya" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120109] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм caТng Malaya (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu хТ vuМng caТng Malaya"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu хТ vuМng caТng Malaya" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120110] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng ngвМm Tu viктn",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng ngвМm cuТa Tu viктn"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng ngвМm cuТa Tu viктn" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120111] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng HфМ vэтc thгТm",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng HфМ vэтc thгТm"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng HфМ vэтc thгТm" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120112] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм toМa Thaмp рфМng hфМ",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong toМa Thaмp рфМng hфМ"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong toМa Thaмp рфМng hфМ" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120113] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Amatsu",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Amatsu"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Amatsu" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120114] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang Рiтa nguтc kiкмn",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Рiтa nguтc kiкмn"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Рiтa nguтc kiкмn" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120115] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang Ayothaya",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Ayothaya"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Ayothaya" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120116] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Comodo",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng Comodo"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng Comodo" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120117] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Brasilis",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng Brasilis"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng Brasilis" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120118] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hвМm nguтc Thaмp рфМng hфМ",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc toМa Thaмp рфМng hфМ"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc toМa Thaмp рфМng hфМ" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120119] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Istana",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng Istana"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng Istana" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120120] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang Scaraba",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng Scaraba"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng Scaraba" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120121] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Bifrost",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng thaмp Bifrost"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng thaмp Bifrost" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120122] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng hвМm moТ Einbech",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm moТ Einbech"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm moТ Einbech" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120123] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng ngвМm Geffen",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng ngвМm Geffen"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng ngвМm Geffen" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120124] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hвМm nguтc Glastheim (1)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Glastheim"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Glastheim" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120125] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hвМm nguтc Glastheim (2)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Glastheim"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Glastheim" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120126] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hвМm nguтc Glastheim (3)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Glastheim"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Glastheim" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120127] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hвМm nguтc Glastheim (4)",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Glastheim"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Glastheim" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120128] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang Kunlun",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Kunlun"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Kunlun" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120129] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Rachel",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "Khaмm phaм kho baмu bкn trong hang рфтng Rachel"
+		},
+		resource = { [1] = { text = "Khaмm phaм kho baмu bкn trong hang рфтng Rachel" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120130] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм mк cung Nhвn sэ",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong mк cung Nhвn sэ"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong mк cung Nhвn sэ" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120131] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Izlude",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng Izlude"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng Izlude" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120132] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм NhaМ maмy chкм taтo Robot",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong NhaМ maмy chкм taтo Robot"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong NhaМ maмy chкм taтo Robot" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120133] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм PhoМng thiм nghiктm sinh hoтc",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong PhoМng thiм nghiктm sinh hoтc"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong PhoМng thiм nghiктm sinh hoтc" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120134] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Gonryun",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng Gonryun"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng Gonryun" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120135] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang Nogg Road",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Nogg Road"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Nogg Road" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120136] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм MoТ than boТ hoang",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong moТ than boТ hoang taтi vuМng nuмi Mjolnir"
+		},
+		resource = {
+			[1] = {
+				text = "TiМm thвмy kho baмu bкn trong moТ than boТ hoang taтi vuМng nuмi Mjolnir"
+			}
+		},
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120137] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hвМm nguтc Kim tэт thaмp",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Pyramid"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Pyramid" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120138] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang Orc",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Orc"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Orc" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120139] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Payon",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng Payon"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng Payon" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120140] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм mк cung Labyrinth",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong mк cung Labyrinth"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong mк cung Labyrinth" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120141] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang Undersea Tunnel",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng Undersea Tunnel"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng Undersea Tunnel" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120142] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hвМm nguтc Thaмp Thanatos",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc cuТa toМa Thaмp Thanatos"
+		},
+		resource = {
+			[1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc cuТa toМa Thaмp Thanatos" }
+		},
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120143] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng Nuмi lэТa Thor",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc Nuмi lэТa Thor"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc Nuмi lэТa Thor" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120144] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hвМm nguтc TaМu ргмm",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc TaМu ргмm"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc TaМu ргмm" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120145] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм hang рфтng РaТo RuМa",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hang рфтng РaТo RuМa"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hang рфтng РaТo RuМa" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120146] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khaмm phaм NhaМ maмy рфМ chхi",
+		content = {
+			summary = "TiМm thвмy Kho baмu вТn",
+			details = "TiМm thвмy kho baмu bкn trong hвМm nguтc NhaМ maмy рфМ chхi"
+		},
+		resource = { [1] = { text = "TiМm thвмy kho baмu bкn trong hвМm nguтc NhaМ maмy рфМ chхi" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[129001] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм Prontera",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм xung quanh vuМng Prontera"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм vuМng phiмa Bгмc Prontera (1)", shortcut = 120001 },
+			[2] = { text = "Khaмm phaм vuМng phiмa Bгмc Prontera (2)", shortcut = 120002 },
+			[3] = { text = "Khaмm phaм vuМng phiмa Bгмc Prontera (3)", shortcut = 120003 },
+			[4] = { text = "Khaмm phaм vuМng phiмa Tвy Prontera (1)", shortcut = 120004 },
+			[5] = { text = "Khaмm phaм vuМng phiмa Tвy Prontera (2)", shortcut = 120005 },
+			[6] = { text = "Khaмm phaм vuМng phiмa Рфng Prontera", shortcut = 120006 },
+			[7] = { text = "Khaмm phaм vuМng phiмa Nam Prontera (1)", shortcut = 120007 },
+			[8] = { text = "Khaмm phaм vuМng phiмa Nam Prontera (2)", shortcut = 120008 },
+			[9] = { text = "Khaмm phaм vuМng phiмa Nam Prontera (3)", shortcut = 120009 },
+			[10] = { text = "Khaмm phaм vuМng phiмa Nam Prontera (4)", shortcut = 120010 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129002] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм Geffen",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм xung quanh vuМng Geffen"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм vuМng phiмa Рфng Geffen", shortcut = 120011 },
+			[2] = { text = "Khaмm phaм vuМng Рфng Nam Geffen", shortcut = 120012 },
+			[3] = { text = "Khaмm phaм vuМng Tвy Bгмc Geffen (1)", shortcut = 120013 },
+			[4] = { text = "Khaмm phaм vuМng Tвy Bгмc Geffen (2)", shortcut = 120014 },
+			[5] = { text = "Khaмm phaм vuМng Tвy Bгмc Geffen (3)", shortcut = 120015 },
+			[6] = { text = "Khaмm phaм vuМng phiмa Nam Geffen (1)", shortcut = 120016 },
+			[7] = { text = "Khaмm phaм vuМng phiмa Nam Geffen (2)", shortcut = 120017 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129003] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм sa maтc Sograt",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм xung quanh vuМng sa maтc Sograt"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм sa maтc Sograt (1)", shortcut = 120018 },
+			[2] = { text = "Khaмm phaм sa maтc Sograt (2)", shortcut = 120019 },
+			[3] = { text = "Khaмm phaм sa maтc Sograt (3)", shortcut = 120020 },
+			[4] = { text = "Khaмm phaм sa maтc Sograt (4)", shortcut = 120021 },
+			[5] = { text = "Khaмm phaм sa maтc Sograt (5)", shortcut = 120022 },
+			[6] = { text = "Khaмm phaм sa maтc Sograt (6)", shortcut = 120023 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129004] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм Payon",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм xung quanh vuМng Payon"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм vuМng Tвy Nam Payon (1)", shortcut = 120024 },
+			[2] = { text = "Khaмm phaм vuМng Tвy Nam Payon (2)", shortcut = 120025 },
+			[3] = { text = "Khaмm phaм vuМng Tвy Nam Payon (3)", shortcut = 120026 },
+			[4] = { text = "Khaмm phaм vuМng Tвy Nam Payon (4)", shortcut = 120027 },
+			[5] = { text = "Khaмm phaм vuМng phiмa Рфng Payon (1)", shortcut = 120028 },
+			[6] = { text = "Khaмm phaм vuМng phiмa Рфng Payon (2)", shortcut = 120029 },
+			[7] = { text = "Khaмm phaм vuМng phiмa Рфng Payon (3)", shortcut = 120030 },
+			[8] = { text = "Khaмm phaм vuМng phiмa Рфng Payon (4)", shortcut = 120031 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129005] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Bгмc nuмi Mjolnir",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc phiмa Bгмc nuмi Mjolnir"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (1)", shortcut = 120032 },
+			[2] = { text = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (2)", shortcut = 120033 },
+			[3] = { text = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (3)", shortcut = 120034 },
+			[4] = { text = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (4)", shortcut = 120035 },
+			[5] = { text = "Khaмm phaм phiмa Bгмc nuмi Mjolnir (5)", shortcut = 120036 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129006] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм phiмa Nam nuмi Mjolnir",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc phiмa Nam nuмi Mjolnir"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм phiмa Nam nuмi Mjolnir (1)", shortcut = 120037 },
+			[2] = { text = "Khaмm phaм phiмa Nam nuмi Mjolnir (2)", shortcut = 120038 },
+			[3] = { text = "Khaмm phaм phiмa Nam nuмi Mjolnir (3)", shortcut = 120039 },
+			[4] = { text = "Khaмm phaм phiмa Nam nuмi Mjolnir (4)", shortcut = 120040 },
+			[5] = { text = "Khaмm phaм phiмa Nam nuмi Mjolnir (5)", shortcut = 120041 },
+			[6] = { text = "Khaмm phaм phiмa Nam nuмi Mjolnir (6)", shortcut = 120042 },
+			[7] = { text = "Khaмm phaм phiмa Nam Aldebaran (1)", shortcut = 120043 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129007] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм thiт trвмn Comodo",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм xung quanh thiт trвмn Comodo"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм vuМng Comodo (1)", shortcut = 120044 },
+			[2] = { text = "Khaмm phaм vuМng Comodo (2)", shortcut = 120045 },
+			[3] = { text = "Khaмm phaм vuМng Comodo (3)", shortcut = 120046 },
+			[4] = { text = "Khaмm phaм vuМng Comodo (4)", shortcut = 120047 },
+			[5] = { text = "Khaмm phaм vuМng Comodo (5)", shortcut = 120048 },
+			[6] = { text = "Khaмm phaм vuМng Comodo (6)", shortcut = 120049 },
+			[7] = { text = "Khaмm phaм vuМng Comodo (7)", shortcut = 120050 },
+			[8] = { text = "Khaмm phaм vuМng Comodo (8)", shortcut = 120051 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129008] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khaмm phaм Rune-Midgarts",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh vuМng Rune-Midgarts"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм Prontera", shortcut = 129001 },
+			[2] = { text = "Khaмm phaм Geffen", shortcut = 129002 },
+			[3] = { text = "Khaмm phaм sa maтc Sograt", shortcut = 129003 },
+			[4] = { text = "Khaмm phaм Payon", shortcut = 129004 },
+			[5] = { text = "Khaмm phaм phiмa Bгмc nuмi Mjolnir", shortcut = 129005 },
+			[6] = { text = "Khaмm phaм phiмa Nam nuмi Mjolnir", shortcut = 129006 },
+			[7] = { text = "Khaмm phaм thiт trвмn Comodo", shortcut = 129007 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[129009] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм Juno",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh Juno"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм vuМng Border Garrison (1)", shortcut = 120052 },
+			[2] = { text = "Khaмm phaм vuМng Border Garrison (2)", shortcut = 120053 },
+			[3] = { text = "Khaмm phaм Biктt thэт Kiel Hyre", shortcut = 120054 },
+			[4] = { text = "Khaмm phaм vuМng Cao nguyкn El Mes (1)", shortcut = 120055 },
+			[5] = { text = "Khaмm phaм vuМng Cao nguyкn El Mes (2)", shortcut = 120056 },
+			[6] = { text = "Khaмm phaм vuМng Cao nguyкn El Mes (3)", shortcut = 120057 },
+			[7] = { text = "Khaмm phaм HeТm nuмi El Mes", shortcut = 120058 },
+			[8] = { text = "Khaмm phaм Hoтc viктn Kiel Hyre", shortcut = 120059 },
+			[9] = { text = "Khaмm phaм khu vэтc Traтi liмnh", shortcut = 120060 },
+			[10] = { text = "Khaмm phaм vuМng рвмt Juno", shortcut = 120061 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129010] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм Hugel",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh Hugel"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм phiмa trэхмc Thaмp Thanatos", shortcut = 120062 },
+			[2] = { text = "Khaмm phaм khu vэтc quanh Hugel (1)", shortcut = 120063 },
+			[3] = { text = "Khaмm phaм khu vэтc quanh Hugel (2)", shortcut = 120064 },
+			[4] = { text = "Khaмm phaм khu vэтc quanh Hugel (3)", shortcut = 120065 },
+			[5] = { text = "Khaмm phaм HфМ Vэтc thгТm (1)", shortcut = 120066 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129011] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм Einbroch",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh Einbroch"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм quanh vuМng Einbroch (1)", shortcut = 120067 },
+			[2] = { text = "Khaмm phaм quanh vuМng Einbroch (2)", shortcut = 120068 },
+			[3] = { text = "Khaмm phaм quanh vuМng Einbroch (3)", shortcut = 120069 },
+			[4] = { text = "Khaмm phaм quanh vuМng Einbroch (4)", shortcut = 120070 },
+			[5] = { text = "Khaмm phaм quanh vuМng Einbroch (5)", shortcut = 120071 },
+			[6] = { text = "Khaмm phaм quanh vuМng Einbroch (6)", shortcut = 120072 },
+			[7] = { text = "Khaмm phaм quanh vuМng Einbroch (7)", shortcut = 120073 },
+			[8] = { text = "Khaмm phaм quanh vuМng Einbroch (8)", shortcut = 120074 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129012] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм Lighthalzen",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh Lighthalzen"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм vuМng Lighthalzen (1)", shortcut = 120075 },
+			[2] = { text = "Khaмm phaм vuМng Lighthalzen (2)", shortcut = 120076 },
+			[3] = { text = "Khaмm phaм vuМng Lighthalzen (3)", shortcut = 120077 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129013] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khaмm phaм Cфтng hoМa Schwarzwald",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh Cфтng hoМa Schwarzwald"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм Juno", shortcut = 129009 },
+			[2] = { text = "Khaмm phaм Hugel", shortcut = 129010 },
+			[3] = { text = "Khaмm phaм Einbroch", shortcut = 129011 },
+			[4] = { text = "Khaмm phaм Lighthalzen", shortcut = 129012 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[129014] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм Rachel",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh Rachel"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм РфМng bгМng Audhumbla (1)", shortcut = 120078 },
+			[2] = { text = "Khaмm phaм рфМng bгМng Ida (1)", shortcut = 120079 },
+			[3] = { text = "Khaмm phaм рфМng bгМng Ida (2)", shortcut = 120080 },
+			[4] = { text = "Khaмm phaм рфМng bгМng Ida (3)", shortcut = 120081 },
+			[5] = { text = "Khaмm phaм рфМng coТ Audhumbla (1)", shortcut = 120082 },
+			[6] = { text = "Khaмm phaм рфМng coТ Audhumbla (2)", shortcut = 120083 },
+			[7] = { text = "Khaмm phaм vuМng рвмt Portus Luna", shortcut = 120084 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129015] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм Veins",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh Veins"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм khu vэтc Veins (1)", shortcut = 120085 },
+			[2] = { text = "Khaмm phaм khu vэтc Veins (2)", shortcut = 120086 },
+			[3] = { text = "Khaмm phaм khu vэтc Veins (3)", shortcut = 120087 },
+			[4] = { text = "Khaмm phaм khu vэтc Veins (4)", shortcut = 120088 },
+			[5] = { text = "Khaмm phaм khu vэтc Veins (5)", shortcut = 120089 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129016] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khaмm phaм Arunafeltz",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh Arunafeltz"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм Rachel", shortcut = 129014 },
+			[2] = { text = "Khaмm phaм Veins", shortcut = 129015 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[129017] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм Laphine",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм xung quanh Laphine"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм vuМng Eclage", shortcut = 120090 },
+			[2] = { text = "Khaмm phaм vuМng phiмa Bгмc Bifrost (1)", shortcut = 120091 },
+			[3] = { text = "Khaмm phaм vuМng phiмa Nam Bifrost (1)", shortcut = 120092 },
+			[4] = { text = "Khaмm phaм vuМng Traтm Splendide (1)", shortcut = 120093 },
+			[5] = { text = "Khaмm phaм vuМng Traтm Splendide (2)", shortcut = 120094 },
+			[6] = { text = "Khaмm phaм vuМng Traтm Splendide (3)", shortcut = 120095 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129018] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм Manuk",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм khu vэтc xung quanh Manuk"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм vuМng рвмt Manuk (1)", shortcut = 120096 },
+			[2] = { text = "Khaмm phaм vuМng рвмt Manuk (2)", shortcut = 120097 },
+			[3] = { text = "Khaмm phaм vuМng рвмt Manuk (3)", shortcut = 120098 },
+			[4] = { text = "Khaмm phaм vuМng ven nuмi Kamidal (1)", shortcut = 120099 },
+			[5] = { text = "Khaмm phaм vuМng ven nuмi Kamidal (2)", shortcut = 120100 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129019] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khaмm phaм Eclage",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм caмc thкм giхмi khaмc xung quanh"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм Laphine", shortcut = 129017 },
+			[2] = { text = "Khaмm phaм Manuk", shortcut = 120918 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[129020] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khaмm phaм caмc khu vэтc BaТn рiтa",
+		content = {
+			summary = "HoaМn thaМnh muтc tiкu khaмm phaм khu vэтc",
+			details = "HoaМn thaМnh khaмm phaм caмc khu vэтc BaТn рiтa"
+		},
+		resource = {
+			[1] = { text = "Khaмm phaм thiт trвмn Amatsu", shortcut = 120101 },
+			[2] = { text = "Khaмm phaм vuМng рвмt Kunlun", shortcut = 120102 },
+			[3] = { text = "Khaмm phaм vuМng рвмt Gonryun", shortcut = 120103 },
+			[4] = { text = "Khaмm phaм vuМng рвмt Ayothaya", shortcut = 120104 },
+			[5] = { text = "Khaмm phaм рaТo Moscovia", shortcut = 120105 },
+			[6] = { text = "Khaмm phaм thaМnh phфм Brasilis", shortcut = 120106 },
+			[7] = { text = "Khaмm phaм vuМng рвмt Dewata", shortcut = 120107 },
+			[8] = { text = "Khaмm phaм caТng Malaya (1)", shortcut = 120108 },
+			[9] = { text = "Khaмm phaм caТng Malaya (2)", shortcut = 120109 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[130000] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 4,
+		minor = 0,
+		title = "Ra mгмt cфng chuмng",
+		content = {
+			summary = "Thгm 7 Gia рiМnh hoaМng gia",
+			details = "Viкмng thгm 7 Gia рiМnh hoaМng gia хТ caмnh phiмa Рфng vaМ Tвy cuТa Cung рiктn"
+		},
+		resource = {
+			[1] = { text = "Thгm gia рiМnh Heine vaМ troМ chuyктn vхмi hoт" },
+			[2] = { text = "Thгm gia рiМnh Nerius vaМ troМ chuyктn vхмi hoт" },
+			[3] = { text = "Thгm gia рiМnh Walter vaМ troМ chuyктn vхмi hoт" },
+			[4] = { text = "Thгm gia рiМnh Wigner vaМ troМ chuyктn vхмi hoт" },
+			[5] = { text = "Thгm gia рiМnh Richard vaМ troМ chuyктn vхмi hoт" },
+			[6] = { text = "Thгm gia рiМnh Gaebolg vaМ troМ chuyктn vхмi hoт" },
+			[7] = { text = "Thгm gia рiМnh Lugenburg vaМ troМ chuyктn vхмi hoт" }
+		},
+		reward = { title = 1034 },
+		score = 10
+	},
+	[170000] = {
+		UI_Type = 0,
+		group = "HEAR",
+		major = 4,
+		minor = 0,
+		title = "BaМi haмt рoм khфng phaТi tai naтn",
+		content = {
+			summary = "Nghe baМi haмt biм mвтt cuТa nghкт siЮ",
+			details = "Nghe baМi haмt biм mвтt cuТa 5 nghкт siЮ hoaМng cung"
+		},
+		resource = { [1] = { text = "Nghe baМi haмt biм mвтt cuТa 5 nghкт siЮ hoaМng cung" } },
+		reward = {},
+		score = 10
+	},
+	[200000] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Coм рэхтc haМo quang рвМu tiкn!",
+		content = { summary = "Рaтt cвмp рфт cх baТn 99!", details = "Рaтt cвмp рфт cх baТn 99." },
+		resource = { [1] = { text = "Cвмp рфт cх baТn 99" } },
+		reward = { title = 1000, buff = 10, item = 12549 },
+		score = 50
+	},
+	[200001] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Coм рэхтc haМo quang thэм hai!",
+		content = { summary = "Рaтt cвмp рфт cх baТn 150!", details = "Рaтt cвмp рфт cх baТn 150." },
+		resource = { [1] = { text = "Cвмp рфт cх baТn 150" } },
+		reward = { title = 1001, buff = 10, item = 5364 },
+		score = 60
+	},
+	[200002] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Coм рэхтc haМo quang thэм ba!",
+		content = { summary = "Рaтt cвмp рфт cх baТn 175!", details = "Рaтt cвмp рфт cх baТn 175." },
+		resource = { [1] = { text = "Cвмp рфт cх baТn 175" } },
+		reward = { title = 1002, buff = 10, item = 18880 },
+		score = 70
+	},
+	[200003] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "ThaМnh thaтo Cвмp рфт nghкМ",
+		content = { summary = "Рaтt cвмp рфт nghкМ 50!", details = "Рaтt cвмp рфт nghкМ 50." },
+		resource = { [1] = { text = "Cвмp рфт nghкМ 50" } },
+		reward = { title = 1003, buff = 10, item = 617 },
+		score = 30
+	},
+	[200004] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Chuyкn nghiктp Cвмp рфт nghкМ",
+		content = { summary = "Рaтt cвмp рфт nghкМ 70!", details = "Рaтt cвмp рфт nghкМ 70." },
+		resource = { [1] = { text = "Cвмp рфт nghкМ 70" } },
+		reward = { title = 1004, buff = 10, item = 12817 },
+		score = 50
+	},
+	[200005] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "NhaМ thaмm hiкТm chiмnh thэмc",
+		content = {
+			summary = "ChuyкТn sang NghкМ рвМu tiкn",
+			details = "TrхТ thaМnh Kiкмm siЮ, Thэхng gia, Рaтo chiмch, Phaмp sэ, Tu siЮ hoгтc Cung thuТ"
+		},
+		resource = { [1] = { text = "ChuyкТn sang NghкМ рвМu tiкn" } },
+		reward = { buff = 12 },
+		score = 10
+	},
+	[200006] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Bэхмc рвМu tiкn ркмn NghкМ taмi sinh!",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ taмi sinh рвМu tiкn!",
+			details = "TrхТ thaМnh Kiкмm siЮ cвмp cao, Thэхng gia cвмp cao, Рaтo chiмch cвмp cao, Phaмp sэ cвмp cao, Tu siЮ cвмp cao hoгтc Cung thuТ cвмp cao"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ taмi sinh рвМu tiкn" } },
+		reward = { buff = 12 },
+		score = 20
+	},
+	[200007] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "NhaМ thaмm hiкТm kyМ cэтu! (1)",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ thэм hai (2-1)",
+			details = "TrхТ thaМnh Hiктp siЮ, Thхт reМn, Saмt thuТ, Phaмp sэ, Linh muтc hoгтc Thхт sгn"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ thэм hai (2-1)" } },
+		reward = { buff = 12 },
+		score = 25
+	},
+	[200008] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "NhaМ thaмm hiкТm kyМ cэтu! (2)",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ thэм hai (2-2)",
+			details = "TrхТ thaМnh Chiкмn binh thвтp tэт, NhaМ giaТ kim, Рaтo tгтc, HiкМn triкмt, ThвМy tu hoгтc Nhaтc cфng hay VuЮ cфng"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ thэм hai (2-2)" } },
+		reward = { buff = 12 },
+		score = 25
+	},
+	[200009] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Anh huМng (1)",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ thэм hai taмi sinh (2-1)",
+			details = "TrхТ thaМnh Рaтi hiктp siЮ, Thхт thiкмc, Рaтi saмt thuТ, Рaтi phuМ thuТy, Рaтi linh muтc hoгтc Xaт thuТ"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ thэм hai taмi sinh (2-1)" } },
+		reward = { buff = 12 },
+		score = 30
+	},
+	[200010] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Anh huМng (2)",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ thэм hai taмi sinh (2-2)",
+			details = "TrхТ thaМnh Thaмnh kyт binh, NhaМ hoмa sinh hoтc, Truy tгтc, Hoтc giaТ, QuyкМn vэхng hoгтc Nhaтc siЮ hay VuЮ thвМn"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ thэм hai taмi sinh (2-2)" } },
+		reward = { buff = 12 },
+		score = 30
+	},
+	[200011] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "NhaМ thaмm hiкТm эu tuм! (1)",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ thэм ba (3-1)",
+			details = "TrхТ thaМnh Hiктp siЮ cфТ ngэЮ, Thхт maмy, Рao phuТ thвтp tэт, PhuМ thuТy diт giaмo, Giaмm muтc hoгтc Siкu xaт thuТ"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ thэм ba (3-1)" } },
+		reward = { buff = 12, item = 16483 },
+		score = 50
+	},
+	[200012] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "ThвМn dвn Taмi sinh (1)",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ thэм ba taмi sinh (3-1)",
+			details = "TrхТ thaМnh Hiктp siЮ cфТ ngэЮ, Thхт maмy, Рao phuТ thвтp tэт, PhuМ thuТy diт giaмo, Giaмm muтc hoгтc Siкu xaт thuТ khi рaЮ taмi sinh"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ thэм ba taмi sinh (3-1)" } },
+		reward = { buff = 12, item = 16483 },
+		score = 60
+	},
+	[200013] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "NhaМ thaмm hiкТm эu tuм! (2)",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ thэм ba (3-2)",
+			details = "TrхТ thaМnh Hфт vкт hoaМng gia, NhaМ di truyкМn hoтc, Hгмc tгтc, Miт thuвтt sэ, QuyкМn vэхng hoгтc Nhaтc trэхТng hay VuЮ thвМn lang thang"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ thэм ba (3-2)" } },
+		reward = { buff = 12, item = 16483 },
+		score = 50
+	},
+	[200014] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "ThвМn dвn Taмi sinh (2)",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ thэм ba taмi sinh (3-2)",
+			details = "TrхТ thaМnh Hфт vкт hoaМng gia, NhaМ di truyкМn hoтc, Hгмc tгтc, Miт thuвтt sэ, QuyкМn vэхng hoгтc Nhaтc trэхТng hay VuЮ thвМn lang thang khi рaЮ taмi sinh"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ thэм ba taмi sinh (3-2)" } },
+		reward = { buff = 12, item = 16483 },
+		score = 60
+	},
+	[200015] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "KeТ рi trкn con рэхМng ргтc biктt",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ mхТ rфтng",
+			details = "TrхТ thaМnh VoЮ siЮ, Thiктn xaт, NhвЮn giaТ hoгтc Siкu tвтp sэт"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ mхТ rфтng" } },
+		reward = { buff = 12 },
+		score = 10
+	},
+	[200016] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Рвy laМ con рэхМng tфi рi!",
+		content = {
+			summary = "ChuyкТn sang lхмp NghкМ mхТ rфтng thэм hai",
+			details = "TrхТ thaМnh Kкмt giхмi sэ, HuyкМn рai рвмu siЮ, Phiкмn quвn, hoгтc AТnh sэ hay U nэЮ"
+		},
+		resource = { [1] = { text = "ChuyкТn sang lхмp NghкМ mхТ rфтng thэм hai" } },
+		reward = { buff = 12, item = 16483 },
+		score = 20
+	},
+	[200017] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Sэмc maтnh nhэ gвмu!",
+		content = {
+			summary = "Рaтt 90 рiкТm STR gфмc",
+			details = "Tгng chiТ sфм STR gфмc lкn 90 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 90 рiкТm STR gфмc" } },
+		reward = {},
+		score = 10
+	},
+	[200018] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "TraМn рвМy ma thuвтt!",
+		content = {
+			summary = "Рaтt 90 рiкТm INT gфмc",
+			details = "Tгng chiТ sфм INT gфмc lкn 90 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 90 рiкТm INT gфмc" } },
+		reward = {},
+		score = 10
+	},
+	[200019] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Tinh thвМn vaМ cх thкТ khoТe maтnh!",
+		content = {
+			summary = "Рaтt 90 рiкТm VIT gфмc",
+			details = "Tгng chiТ sфм VIT gфмc lкn 90 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 90 рiкТm VIT gфмc" } },
+		reward = {},
+		score = 10
+	},
+	[200020] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Nghiктn tфмc рфт",
+		content = {
+			summary = "Рaтt 90 рiкТm AGI gфмc",
+			details = "Tгng chiТ sфм AGI gфмc lкn 90 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 90 рiкТm AGI gфмc" } },
+		reward = {},
+		score = 10
+	},
+	[200021] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Mгмt diкМu hвu",
+		content = {
+			summary = "Рaтt 90 рiкТm DEX gфмc",
+			details = "Tгng chiТ sфм DEX gфмc lкn 90 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 90 рiкТm DEX gфмc" } },
+		reward = {},
+		score = 10
+	},
+	[200022] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Cэтc kiМ may mгмn",
+		content = {
+			summary = "Рaтt 90 рiкТm LUK gфмc",
+			details = "Tгng chiТ sфм LUK gфмc lкn 90 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 90 рiкТm LUK gфмc" } },
+		reward = {},
+		score = 10
+	},
+	[200023] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Sэмc maтnh nhэ rфМng!",
+		content = {
+			summary = "Рaтt 125 рiкТm STR gфмc",
+			details = "Tгng chiТ sфм STR gфмc lкn 125 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 125 рiкТm STR gфмc" } },
+		reward = { buff = 319 },
+		score = 20
+	},
+	[200024] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Ma thuвтt рiкn rфМ",
+		content = {
+			summary = "Рaтt 125 рiкТm INT gфмc",
+			details = "Tгng chiТ sфм INT gфмc lкn 125 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 125 рiкТm INT gфмc" } },
+		reward = { buff = 611 },
+		score = 20
+	},
+	[200025] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Cвy tuМng cвy baмch",
+		content = {
+			summary = "Рaтt 125 рiкТm VIT gфмc",
+			details = "Tгng chiТ sфм VIT gфмc lкn 125 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 125 рiкТm VIT gфмc" } },
+		reward = { buff = 293 },
+		score = 20
+	},
+	[200026] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Tфмc рфт aмnh saмng",
+		content = {
+			summary = "Рaтt 125 рiкТm AGI gфмc",
+			details = "Tгng chiТ sфм AGI gфмc lкn 125 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 125 рiкТm AGI gфмc" } },
+		reward = { buff = 296 },
+		score = 20
+	},
+	[200027] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Mгмt эng",
+		content = {
+			summary = "Рaтt 125 рiкТm DEX gфмc",
+			details = "Tгng chiТ sфм DEX gфмc lкn 125 рiкТm"
+		},
+		resource = { [1] = { text = "Рaтt 125 рiкТm DEX gфмc" } },
+		reward = { buff = 295 },
+		score = 20
+	},
+	[200028] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Cхn sфмt may mгмn",
+		content = {
+			summary = "Рaтt 125 рiкТm LUK gфмc",
+			details = "Рaтt рэхтc рiкТm LUK iмt nhвмt 125"
+		},
+		resource = { [1] = { text = "Рaтt 125 рiкТm LUK gфмc" } },
+		reward = { buff = 21 },
+		score = 20
+	},
+	[200029] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "HiМnh aТnh cuТa TiМnh yкu vaМ ThuМ hвтn",
+		content = {
+			summary = "Рaтt cвмp рфт 99 khi laМ Tвтp sэт",
+			details = "Nhвn vвтt laМ Tвтp sэт vaМ рaтt cвмp рфт 99"
+		},
+		resource = { [1] = { text = "Рaтt cвмp рфт 99 khi laМ Tвтp sэт" } },
+		reward = { buff = 10, item = 16483 },
+		score = 30
+	},
+	[200030] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Tфi thэтc sэт thвмy thiмch!",
+		content = {
+			summary = "Рaтt cвмp рфт cх baТn 99 хТ NghкМ thэм nhвмt",
+			details = "Рaтt cвмp рфт cх baТn 99 хТ NghкМ thэм nhвмt"
+		},
+		resource = { [1] = { text = "Рaтt cвмp рфт cх baТn 99 хТ NghкМ thэм nhвмt" } },
+		reward = { buff = 10, item = 16504 },
+		score = 30
+	},
+	[200031] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Taмi sinh хТ Valhalla!",
+		content = {
+			summary = "TrхТ thaМnh Tвтp sэт рaЮ taмi sinh",
+			details = "ChiТ coм thкТ taмi sinh thфng qua nэЮ thвМn Valkyrie ркТ trхТ thaМnh Tвтp sэт taмi sinh."
+		},
+		resource = { [1] = { text = "TrхТ thaМnh Tвтp sэт рaЮ taмi sinh" } },
+		reward = { buff = 12, item = 13079 },
+		score = 10
+	},
+	[230100] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "Poring laМ TiМnh yкu",
+		content = {
+			summary = "HoaМn thaМnh tвмt caТ caмc muтc tiкu yкu cвМu",
+			details = "Baтn laМ ngэхМi coм рam mк thэтc sэт vхмi Poring, ngay caТ laМ trong giвмc mх!"
+		},
+		resource = {
+			[1] = { text = "HoaМn thaМnh 'ThuвМn hoмa Poring'", shortcut = 230101 },
+			[2] = { text = "HoaМn thaМnh 'ThuвМn hoмa Drops'", shortcut = 230102 },
+			[3] = { text = "HoaМn thaМnh 'ThuвМn hoмa Poporing'", shortcut = 230103 },
+			[4] = { text = "HoaМn thaМnh 'ThuвМn hoмa Little Poring'", shortcut = 230104 }
+		},
+		reward = { title = 1025, buff = 12 },
+		score = 50
+	},
+	[230110] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "NhaМ cфn truМng hoтc",
+		content = {
+			summary = "HoaМn thaМnh tвмt caТ caмc muтc tiкu yкu cвМu",
+			details = "Baтn laМ ngэхМi coм рam mк thэтc sэт vхмi viктc thu nhгтt caмc loaМi cфn truМng, ngay caТ laМ trong giвмc mх!"
+		},
+		resource = {
+			[1] = { text = "HoaМn thaМnh 'ThuвМn hoмa Chonchon'", shortcut = 230111 },
+			[2] = { text = "HoaМn thaМnh 'ThuвМn hoмa Steel Chonchon'", shortcut = 230112 },
+			[3] = { text = "HoaМn thaМnh 'ThuвМn hoмa Hunter Fly'", shortcut = 230113 },
+			[4] = { text = "HoaМn thaМnh 'ThuвМn hoмa Rocker'", shortcut = 230114 },
+			[5] = { text = "HoaМn thaМnh 'ThuвМn hoмa Spore'", shortcut = 230115 },
+			[6] = { text = "HoaМn thaМnh 'ThuвМn hoмa Poison Spore'", shortcut = 230116 }
+		},
+		reward = { title = 1026, buff = 12 },
+		score = 50
+	},
+	[230120] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "Рфтng vвтt laМ baтn tфмt cuТa chuмng ta",
+		content = {
+			summary = "HoaМn thaМnh tвмt caТ caмc muтc tiкu yкu cвМu",
+			details = "Baтn laМ ngэхМi yкu рфтng vвтt thэтc sэт, ngay caТ trong giвмc mх baтn cuЮng mх vкМ nhэЮng muфng thuм!"
+		},
+		resource = {
+			[1] = { text = "HoaМn thaМnh 'ThuвМn hoмa Lunatic'", shortcut = 230121 },
+			[2] = { text = "HoaМn thaМnh 'ThuвМn hoмa Picky'", shortcut = 230122 },
+			[3] = { text = "HoaМn thaМnh 'ThuвМn hoмa Savage Bebe'", shortcut = 230123 },
+			[4] = { text = "HoaМn thaМnh 'ThuвМn hoмa Baby Desert Wolf'", shortcut = 230124 },
+			[5] = { text = "HoaМn thaМnh 'ThuвМn hoмa Smokie'", shortcut = 230125 },
+			[6] = { text = "HoaМn thaМnh 'ThuвМn hoмa Yoyo'", shortcut = 230126 },
+			[7] = { text = "HoaМn thaМnh 'ThuвМn hoмa Peco Peco'", shortcut = 230127 },
+			[8] = { text = "HoaМn thaМnh 'ThuвМn hoмa Petite'", shortcut = 230128 }
+		},
+		reward = { title = 1027, buff = 12 },
+		score = 50
+	},
+	[230140] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "Chuмng tфi laМ caмc Ma nэЮ!",
+		content = {
+			summary = "HoaМn thaМnh tвмt caТ caмc muтc tiкu yкu cвМu",
+			details = "Baтn laМ ngэхМi yкu chкм taмc thэтc sэт, ngay caТ trong giвмc mх baтn cuЮng mх vкМ viктc taтo ra caмc Ma nэЮ!"
+		},
+		resource = {
+			[1] = { text = "HoaМn thaМnh 'ThuвМn hoмa Munak'", shortcut = 230141 },
+			[2] = { text = "HoaМn thaМnh 'ThuвМn hoмa Isis'", shortcut = 230142 },
+			[3] = { text = "HoaМn thaМnh 'ThuвМn hoмa Sohee'", shortcut = 230143 },
+			[4] = { text = "HoaМn thaМnh 'ThuвМn hoмa Zherlthsh'", shortcut = 230144 },
+			[5] = { text = "HoaМn thaМnh 'ThuвМn hoмa Alice'", shortcut = 230145 },
+			[6] = { text = "HoaМn thaМnh 'ThuвМn hoмa Succubus'", shortcut = 230146 },
+			[7] = { text = "HoaМn thaМnh 'ThuвМn hoмa Loli Ruri'", shortcut = 230147 }
+		},
+		reward = { title = 1029, buff = 12 },
+		score = 50
+	},
+	[230101] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Poring",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Poring",
+			details = "Chuмng ta haЮy рi bгмt Poring naМo! Baтn coм thкТ sэТ duтng 'Unripe Apple' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Poring" } },
+		reward = {},
+		score = 10
+	},
+	[230102] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Drops",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Drops",
+			details = "Chuмng ta haЮy рi bгмt Drop naМo! Baтn coм thкТ sэТ duтng 'Orange Juice' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Drops" } },
+		reward = {},
+		score = 10
+	},
+	[230103] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Poporing",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Poporing",
+			details = "Chuмng ta haЮy рi bгмt Poporing naМo! Baтn coм thкТ sэТ duтng 'Bitter Herb' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Poporing" } },
+		reward = {},
+		score = 10
+	},
+	[230104] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Little Poring",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Little Poring",
+			details = "Chuмng ta haЮy рi bгмt Little Poring naМo! Baтn coм thкТ sэТ duтng 'Little Unripe Apple' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Little Poring" } },
+		reward = {},
+		score = 10
+	},
+	[230111] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Chonchon",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Chonchon",
+			details = "Chuмng ta haЮy рi bгмt Chonchon naМo! Baтn coм thкТ sэТ duтng 'Rotten Fish' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Chonchon" } },
+		reward = {},
+		score = 10
+	},
+	[230112] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Steel Chonchon",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Steel Chonchon",
+			details = "Chuмng ta haЮy рi bгмt Steel Chonchon naМo! Baтn coм thкТ sэТ duтng 'Rusty Iron' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Steel Chonchon" } },
+		reward = {},
+		score = 10
+	},
+	[230113] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Hunter Fly",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Hunter Fly",
+			details = "Chuмng ta haЮy рi bгмt Hunter Fly naМo! Baтn coм thкТ sэТ duтng 'Monster Juice' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Hunter Fly" } },
+		reward = {},
+		score = 10
+	},
+	[230114] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Rocker",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Rocker",
+			details = "Chuмng ta haЮy рi bгмt Rocker naМo! Baтn coм thкТ sэТ duтng 'Singing Flower' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Rocker" } },
+		reward = {},
+		score = 10
+	},
+	[230115] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Spore",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Spore",
+			details = "Chuмng ta haЮy рi bгмt Spore naМo! Baтn coм thкТ sэТ duтng 'Dew Laden Moss' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Spore" } },
+		reward = {},
+		score = 10
+	},
+	[230116] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Poison Spore",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Poison Spore",
+			details = "Chuмng ta haЮy рi bгмt Poison Spore naМo! Baтn coм thкТ sэТ duтng 'Deadly Noxious Herb' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Poison Spore" } },
+		reward = {},
+		score = 10
+	},
+	[230121] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Lunatic",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Lunatic",
+			details = "Chuмng ta haЮy рi bгмt Lunatic naМo! Baтn coм thкТ sэТ duтng 'Rainbow Carrot' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Lunatic" } },
+		reward = {},
+		score = 10
+	},
+	[230122] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Picky",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Picky",
+			details = "Chuмng ta haЮy рi bгмt Picky naМo! Baтn coм thкТ sэТ duтng 'Earthworm the Dude' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Picky" } },
+		reward = {},
+		score = 10
+	},
+	[230123] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Savage Bebe",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Savage Bebe",
+			details = "Chuмng ta haЮy рi bгмt Savage Bebe naМo! Baтn coм thкТ sэТ duтng 'Sweet Milk' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Savage Bebe" } },
+		reward = {},
+		score = 10
+	},
+	[230124] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Baby Desert Wolf",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Baby Desert Wolf",
+			details = "Chuмng ta haЮy рi bгмt Baby Desert Wolf naМo! Baтn coм thкТ sэТ duтng 'Well-Dried Bone' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Baby Desert Wolf" } },
+		reward = {},
+		score = 10
+	},
+	[230125] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Smokie",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Smokie",
+			details = "Chuмng ta haЮy рi bгмt Smokie naМo! Baтn coм thкТ sэТ duтng 'Baked Yam' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Smokie" } },
+		reward = {},
+		score = 10
+	},
+	[230126] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Yoyo",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Yoyo",
+			details = "Chuмng ta haЮy рi bгмt Smokie naМo! Baтn coм thкТ sэТ duтng 'Tropical Banana' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Yoyo" } },
+		reward = {},
+		score = 10
+	},
+	[230127] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Peco Peco",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Peco Peco",
+			details = "Chuмng ta haЮy рi bгмt Peco Peco naМo! Baтn coм thкТ sэТ duтng 'Fatty Chubby Earthworm' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Peco Peco" } },
+		reward = {},
+		score = 10
+	},
+	[230128] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Petite",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Petite",
+			details = "Chuмng ta haЮy рi bгмt Petite naМo! Baтn coм thкТ sэТ duтng 'Shining Stone' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Petite" } },
+		reward = {},
+		score = 10
+	},
+	[230141] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Munak",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Munak",
+			details = "Chuмng ta haЮy рi bгмt Petite naМo! Baтn coм thкТ sэТ duтng 'No Recipient' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Munak" } },
+		reward = {},
+		score = 10
+	},
+	[230142] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Isis",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Isis",
+			details = "Chuмng ta haЮy рi bгмt Isis naМo! Baтn coм thкТ sэТ duтng 'Armlet of Obedience' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Isis" } },
+		reward = {},
+		score = 10
+	},
+	[230143] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Sohee",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Sohee",
+			details = "Chuмng ta haЮy рi bгмt Sohee naМo! Baтn coм thкТ sэТ duтng 'Silver Knife of Chastity' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Sohee" } },
+		reward = {},
+		score = 10
+	},
+	[230144] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Zherlthsh",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Zherlthsh",
+			details = "Chuмng ta haЮy рi bгмt Zherlthsh naМo! Baтn coм thкТ sэТ duтng 'Forbidden Red Candle' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Zherlthsh" } },
+		reward = {},
+		score = 10
+	},
+	[230145] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Alice",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Alice",
+			details = "Chuмng ta haЮy рi bгмt Alice naМo! Baтn coм thкТ sэТ duтng 'Soft Apron' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Alice" } },
+		reward = {},
+		score = 10
+	},
+	[230146] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Succubus",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Succubus",
+			details = "Chuмng ta haЮy рi bгмt Succubus naМo! Baтn coм thкТ sэТ duтng 'Boy's Pure Heart' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Succubus" } },
+		reward = {},
+		score = 10
+	},
+	[230147] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "ThuвМn hoмa Loli Ruri",
+		content = {
+			summary = "ThuвМn hoмa thaМnh cфng Loli Ruri",
+			details = "Chuмng ta haЮy рi bгмt Loli Ruri naМo! Baтn coм thкТ sэТ duтng 'Very Red Juice' ркТ thu huмt chuмng."
+		},
+		resource = { [1] = { text = "ThuвМn hoмa thaМnh cфng Loli Ruri" } },
+		reward = {},
+		score = 10
+	},
+	[220000] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Bгмt рвМu nhiкМu chuyктn",
+		content = {
+			summary = "Taтo cэТa sфТ troМ chuyктn",
+			details = "HaЮy taтo 1 phoМng chat. Phiмm tгмt laМ <Alt+C> (mгтc рiтnh)."
+		},
+		resource = { [1] = { text = "Taтo cэТa sфТ troМ chuyктn" } },
+		reward = {},
+		score = 10
+	},
+	[220001] = {
+		UI_Type = 0,
+		group = "CHATTING_DYING",
+		major = 1,
+		minor = 2,
+		title = "Treo biкТn giuмp рхЮ",
+		content = {
+			summary = "Taтo cэТa sфТ troМ chuyктn khi nhвn vвтt chкмt",
+			details = "Taтo cэТa sфТ troМ chuyктn khi nhвn vвтt chкмt. Phiмm tгмt laМ <Alt+C> (mгтc рiтnh)."
+		},
+		resource = { [1] = { text = "Taтo cэТa sфТ troМ chuyктn khi nhвn vвтt chкмt" } },
+		reward = {},
+		score = 10
+	},
+	[220002] = {
+		UI_Type = 0,
+		group = "CHATTING20",
+		major = 1,
+		minor = 2,
+		title = "NhiкМu chuyктn vф рфмi",
+		content = {
+			summary = "Taтo 1 phoМng troМ chuyктn coм 20 ngэхМi tham gia",
+			details = "Lфi keмo moтi ngэхМi vaМo phoМng chat sao cho рuТ 20 ngэхМi."
+		},
+		resource = { [1] = { text = "Taтo 1 phoМng troМ chuyктn coм 20 ngэхМi tham gia" } },
+		reward = {},
+		score = 10
+	},
+	[220003] = {
+		UI_Type = 0,
+		group = "ADD_FRIEND",
+		major = 1,
+		minor = 2,
+		title = "Baтn beМ~ Baтn beМ~",
+		content = {
+			summary = "Kкмt baтn vхмi 1 ngэхМi",
+			details = "HaЮy tiМm kiкмm 1 ngэхМi baтn ркТ рфМng haМnh. Kкмt baтn vхмi 1 ngэхМi."
+		},
+		resource = { [1] = { text = "Kкмt baтn vхмi 1 ngэхМi" } },
+		reward = {},
+		score = 10
+	},
+	[220004] = {
+		UI_Type = 0,
+		group = "ADD_FRIEND",
+		major = 1,
+		minor = 2,
+		title = "NgэхМi baтn quфмc dвn",
+		content = {
+			summary = "Kкмt baтn vхмi 10 ngэхМi",
+			details = "CaМng nhiкМu baтn caМng vui. HaЮy trхТ thaМnh baтn beМ vхмi 10 ngэхМi khaмc"
+		},
+		resource = { [1] = { text = "Kкмt baтn vхмi 10 ngэхМi" } },
+		reward = {},
+		score = 10
+	},
+	[220005] = {
+		UI_Type = 0,
+		group = "PARTY",
+		major = 1,
+		minor = 2,
+		title = "Рi chung mхмi vui!",
+		content = {
+			summary = "Taтo 1 tфТ рфтi",
+			details = "HaМnh triМnh khaмm phaм 1 miМnh laМ quaм khфмc liктt! HaЮy taтo 1 tфТ рфтi."
+		},
+		resource = { [1] = { text = "Taтo 1 tфТ рфтi" } },
+		reward = {},
+		score = 10
+	},
+	[220006] = {
+		UI_Type = 0,
+		group = "MARRY",
+		major = 1,
+		minor = 2,
+		title = "Baтn рaЮ kкмt hфn chэa?",
+		content = {
+			summary = "Kкмt hфn vхмi mфтt ai рoм",
+			details = "Sфмng mфтt miМnh rвмt laМ cф рхn, haЮy yкu ai рoм, cэхмi hoт, vaМ khoмa chгтt tiМnh caТm cuТa рфi uyкn эхng."
+		},
+		resource = { [1] = { text = "Kкмt hфn vхмi mфтt ai рoм" } },
+		reward = { title = 1022 },
+		score = 20
+	},
+	[220007] = {
+		UI_Type = 0,
+		group = "BABY",
+		major = 1,
+		minor = 2,
+		title = "Chiтu nuфi con khфng?",
+		content = {
+			summary = "Рэхтc nhвтn laМm con nuфi",
+			details = "Vэхтt qua thкм giхмi khгмc nghiктt vхмi sэт hфЮ trхт cuТa cha meт."
+		},
+		resource = { [1] = { text = "Рэхтc nhвтn laМm con nuфi" } },
+		reward = { title = 1032 },
+		score = 20
+	},
+	[220008] = {
+		UI_Type = 0,
+		group = "BABY",
+		major = 1,
+		minor = 2,
+		title = "TrхТ thaМnh cha meт",
+		content = {
+			summary = "Nhвтn con nuфi",
+			details = "Coм mфтt рэмa treТ vaМ coм mфтt gia рiМnh haтnh phuмc bгМng viктc nhвтn con nuфi."
+		},
+		resource = { [1] = { text = "Nhвтn con nuфi" } },
+		reward = { title = 1033 },
+		score = 20
+	},
+	[220009] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kiмch hoaтt kinh tкм thiт trэхМng (1)",
+		content = {
+			summary = "BoТ ra 10,000 zeny ркТ mua рфМ",
+			details = "TiкМn cэм xoay voМng vaМ xoay voМng. HaЮy sэТ duтng 10,000 zeny ркТ mua рфМ tэМ caмc cэТa haМng cuТa ngэхМi chхi khaмc"
+		},
+		resource = { [1] = { text = "BoТ ra 10,000 zeny ркТ mua рфМ", count = 10000 }, count = 500000000 },
+		reward = {},
+		score = 10
+	},
+	[220010] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kiмch hoaтt kinh tкм thiт trэхМng (2)",
+		content = {
+			summary = "BoТ ra 1 triктu zeny ркТ mua рфМ",
+			details = "TiкМn cэм xoay voМng vaМ xoay voМng. HaЮy sэТ duтng 1 triктu zeny ркТ mua рфМ tэМ caмc cэТa haМng cuТa ngэхМi chхi khaмc"
+		},
+		resource = { [1] = { text = "BoТ ra 1 triктu zeny ркТ mua рфМ", count = 1000000 }, count = 500000000 },
+		reward = {},
+		score = 15
+	},
+	[220011] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kiмch hoaтt kinh tкм thiт trэхМng (3)",
+		content = {
+			summary = "BoТ ra 5 triктu zeny ркТ mua рфМ",
+			details = "TiкМn cэм xoay voМng vaМ xoay voМng. HaЮy sэТ duтng 5 triктu zeny ркТ mua рфМ tэМ caмc cэТa haМng cuТa ngэхМi chхi khaмc"
+		},
+		resource = { [1] = { text = "BoТ ra 5 triктu zeny ркТ mua рфМ", count = 5000000 }, count = 500000000 },
+		reward = {},
+		score = 20
+	},
+	[220012] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kiмch hoaтt kinh tкм thiт trэхМng (4)",
+		content = {
+			summary = "BoТ ra 100 triктu zeny ркТ mua рфМ",
+			details = "TiкМn cэм xoay voМng vaМ xoay voМng. HaЮy sэТ duтng 100 triктu zeny ркТ mua рфМ tэМ caмc cэТa haМng cuТa ngэхМi chхi khaмc"
+		},
+		resource = {
+			[1] = { text = "BoТ ra 100 triктu zeny ркТ mua рфМ", count = 100000000 },
+			count = 500000000
+		},
+		reward = {},
+		score = 30
+	},
+	[220013] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kiмch hoaтt kinh tкм thiт trэхМng (5)",
+		content = {
+			summary = "BoТ ra 500 triктu zeny ркТ mua рфМ",
+			details = "TiкМn cэм xoay voМng vaМ xoay voМng. HaЮy sэТ duтng 500 triктu zeny ркТ mua рфМ tэМ caмc cэТa haМng cuТa ngэхМi chхi khaмc"
+		},
+		resource = { [1] = { text = "BoТ ra 500 triктu zeny ркТ mua рфМ", count = 500000000 } },
+		reward = {},
+		score = 50
+	},
+	[220014] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tфi khфng thкТ ngэМng tinh luyктn! (1)",
+		content = {
+			summary = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 1 lкn +7",
+			details = "Baтn may mгмn tхмi mэмc naМo nэЮa? Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 1 lкn +7."
+		},
+		resource = { [1] = { text = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 1 lкn +7" } },
+		reward = {},
+		score = 10
+	},
+	[220015] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tфi khфng thкТ ngэМng tinh luyктn! (2)",
+		content = {
+			summary = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 1 lкn +12",
+			details = "Baтn may mгмn tхмi mэмc naМo nэЮa? Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 1 lкn +12."
+		},
+		resource = { [1] = { text = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 1 lкn +12" } },
+		reward = {},
+		score = 15
+	},
+	[220016] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tфi khфng thкТ ngэМng tinh luyктn! (3)",
+		content = {
+			summary = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 2 lкn +7",
+			details = "Baтn may mгмn tхмi mэмc naМo nэЮa? Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 2 lкn +7."
+		},
+		resource = { [1] = { text = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 2 lкn +7" } },
+		reward = {},
+		score = 10
+	},
+	[220017] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tфi khфng thкТ ngэМng tinh luyктn! (4)",
+		content = {
+			summary = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 2 lкn +12",
+			details = "Baтn may mгмn tхмi mэмc naМo nэЮa? Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 2 lкn +12."
+		},
+		resource = { [1] = { text = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 2 lкn +12" } },
+		reward = {},
+		score = 15
+	},
+	[220018] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tфi khфng thкТ ngэМng tinh luyктn! (5)",
+		content = {
+			summary = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 3 lкn +7",
+			details = "Baтn may mгмn tхмi mэмc naМo nэЮa? Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 3 lкn +7."
+		},
+		resource = { [1] = { text = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 3 lкn +7" } },
+		reward = {},
+		score = 15
+	},
+	[220019] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tфi khфng thкТ ngэМng tinh luyктn! (6)",
+		content = {
+			summary = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 3 lкn +12",
+			details = "Baтn may mгмn tхмi mэмc naМo nэЮa? Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 3 lкn +12."
+		},
+		resource = { [1] = { text = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 3 lкn +12" } },
+		reward = {},
+		score = 20
+	},
+	[220020] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tфi khфng thкТ ngэМng tinh luyктn! (7)",
+		content = {
+			summary = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 4 lкn +7",
+			details = "Baтn may mгмn tхмi mэмc naМo nэЮa? Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 4 lкn +7."
+		},
+		resource = { [1] = { text = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 4 lкn +7" } },
+		reward = {},
+		score = 20
+	},
+	[220021] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tфi khфng thкТ ngэМng tinh luyктn! (8)",
+		content = {
+			summary = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 4 lкn +12",
+			details = "Baтn may mгмn tхмi mэмc naМo nэЮa? Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 4 lкn +12."
+		},
+		resource = { [1] = { text = "Tinh luyктn thaМnh cфng vuЮ khiм cвмp рфт 4 lкn +12" } },
+		reward = {},
+		score = 30
+	},
+	[220022] = {
+		UI_Type = 0,
+		group = "ENCHANT_FAIL",
+		major = 1,
+		minor = 1,
+		title = "LoМng tham cuТa con ngэхМi laМ khфng рaмy",
+		content = {
+			summary = "TraТi nghiктm tinh luyктn thвмt baтi",
+			details = "LoМng tham cuТa con ngэхМi khфng coм hфМi kкмt vaМ noм luфn lгтp laтi. TraТi nghiктm tinh luyктn thвмt baтi vaМ chuмng ta luфn hoтc hoТi qua caмc sai lвМm."
+		},
+		resource = { [1] = { text = "TraТi nghiктm tinh luyктn thвмt baтi" } },
+		reward = {},
+		score = 10
+	},
+	[220023] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "MiМnh рaЮ tiМm thвмy noм! (1)",
+		content = {
+			summary = "Thu thвтp vвтt phвТm coм giaм hхn 100 zeny",
+			details = "MiМnh thвтt may mгмn! Thu thвтp рэхтc vвтt phвТm coм triт giaм hхn 100 zeny."
+		},
+		resource = { [1] = { text = "Thu thвтp vвтt phвТm coм giaм hхn 100 zeny" } },
+		reward = {},
+		score = 10
+	},
+	[220024] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "MiМnh рaЮ tiМm thвмy noм! (2)",
+		content = {
+			summary = "Thu thвтp vвтt phвТm coм giaм hхn 1.000 zeny",
+			details = "MiМnh thвтt may mгмn! Thu thвтp рэхтc vвтt phвТm coм triт giaм hхn 1.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thвтp vвтt phвТm coм giaм hхn 1.000 zeny" } },
+		reward = {},
+		score = 10
+	},
+	[220025] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "MiМnh рaЮ tiМm thвмy noм! (3)",
+		content = {
+			summary = "Thu thвтp vвтt phвТm coм giaм hхn 5.000 zeny",
+			details = "MiМnh thвтt may mгмn! Thu thвтp рэхтc vвтt phвТm coм triт giaм hхn 1.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thвтp vвтt phвТm coм giaм hхn 5.000 zeny" } },
+		reward = {},
+		score = 15
+	},
+	[220026] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "MiМnh рaЮ tiМm thвмy noм! (4)",
+		content = {
+			summary = "Thu thвтp vвтt phвТm coм giaм hхn 10.000 zeny",
+			details = "MiМnh thвтt may mгмn! Thu thвтp рэхтc vвтt phвТm coм triт giaм hхn 10.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thвтp vвтt phвТm coм giaм hхn 10.000 zeny" } },
+		reward = {},
+		score = 15
+	},
+	[220027] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "MiМnh рaЮ tiМm thвмy noм! (5)",
+		content = {
+			summary = "Thu thвтp vвтt phвТm coм giaм hхn 50.000 zeny",
+			details = "MiМnh thвтt may mгмn! Thu thвтp рэхтc vвтt phвТm coм triт giaм hхn 50.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thвтp vвтt phвТm coм giaм hхn 50.000 zeny" } },
+		reward = {},
+		score = 20
+	},
+	[220028] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "MiМnh рaЮ tiМm thвмy noм! (6)",
+		content = {
+			summary = "Thu thвтp vвтt phвТm coм giaм hхn 100.000 zeny",
+			details = "MiМnh thвтt may mгмn! Thu thвтp рэхтc vвтt phвТm coм triт giaм hхn 100.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thвтp vвтt phвТm coм giaм hхn 100.000 zeny" } },
+		reward = {},
+		score = 20
+	},
+	[220029] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "MiМnh рaЮ tiМm thвмy noм! (7)",
+		content = {
+			summary = "Thu thвтp vвтt phвТm coм giaм hхn 150.000 zeny",
+			details = "MiМnh thвтt may mгмn! Thu thвтp рэхтc vвтt phвТm coм triт giaм hхn 150.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thвтp vвтt phвТm coм giaм hхn 150.000 zeny" } },
+		reward = {},
+		score = 30
+	},
+	[220030] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "GiaМu sang phuм quyм (1)",
+		content = {
+			summary = "GiэЮ hхn 10.000 zeny",
+			details = "TiкМn khфng phaТi laМ tвмt caТ, nhэng khфng thкТ sфмng maМ khфng coм tiкМn. GiэЮ hхn 10.000 zeny trong tuмi."
+		},
+		resource = { [1] = { text = "GiэЮ hхn 10.000 zeny" } },
+		reward = {},
+		score = 10
+	},
+	[220031] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "GiaМu sang phuм quyм (2)",
+		content = {
+			summary = "GiэЮ hхn 100.000 zeny",
+			details = "TiкМn khфng phaТi laМ tвмt caТ, nhэng khфng thкТ sфмng maМ khфng coм tiкМn. GiэЮ hхn 100.000 zeny trong tuмi."
+		},
+		resource = { [1] = { text = "GiэЮ hхn 100.000 zeny" } },
+		reward = {},
+		score = 15
+	},
+	[220032] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "GiaМu sang phuм quyм (3)",
+		content = {
+			summary = "GiэЮ hхn 1 triктu zeny",
+			details = "TiкМn khфng phaТi laМ tвмt caТ, nhэng khфng thкТ sфмng maМ khфng coм tiкМn. GiэЮ hхn 1 triктu zeny trong tuмi."
+		},
+		resource = { [1] = { text = "GiэЮ hхn 1 triктu zeny" } },
+		reward = {},
+		score = 20
+	},
+	[220033] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "GiaМu sang phuм quyм (4)",
+		content = {
+			summary = "GiэЮ hхn 10 triктu zeny",
+			details = "TiкМn khфng phaТi laМ tвмt caТ, nhэng khфng thкТ sфмng maМ khфng coм tiкМn. GiэЮ hхn 10 triктu zeny trong tuмi."
+		},
+		resource = { [1] = { text = "GiэЮ hхn 10 triктu zeny" } },
+		reward = {},
+		score = 25
+	},
+	[220034] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "GiaМu sang phuм quyм (5)",
+		content = {
+			summary = "GiэЮ hхn 100 triктu zeny",
+			details = "TiкМn khфng phaТi laМ tвмt caТ, nhэng khфng thкТ sфмng maМ khфng coм tiкМn. GiэЮ hхn 100 triктu zeny trong tuмi."
+		},
+		resource = { [1] = { text = "GiэЮ hхn 100 triктu zeny" } },
+		reward = {},
+		score = 30
+	},
+	[220035] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "GiaМu sang phuм quyм (6)",
+		content = {
+			summary = "GiэЮ hхn 1 tyТ zeny",
+			details = "TiкМn khфng phaТi laМ tвмt caТ, nhэng khфng thкТ sфмng maМ khфng coм tiкМn. GiэЮ hхn 1 tyТ zeny trong tuмi."
+		},
+		resource = { [1] = { text = "GiэЮ hхn 1 tyТ zeny" } },
+		reward = {},
+		score = 40
+	},
+	[230200] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "NgэхМi tiМm kiкмm Poring",
+		content = {
+			summary = "HoaМn thaМnh tвмt caТ caмc muтc tiкu yкu cвМu",
+			details = "Poring laМ mфтt sinh vвтt kyМ laт, chuмng khфng phaТi thэтc vвтt cuЮng khфng phaТi рфтng vвтt. РкТ tiМm hiкТu chuмng hхn, baтn phaТi рфмi mгтt vхмi chuмng."
+		},
+		resource = {
+			[1] = { text = "HoaМn thaМnh 'Khaмm phaм cuфтc sфмng cuТa Poring (1)'", shortcut = 230201 },
+			[2] = { text = "HoaМn thaМnh 'Khaмm phaм cuфтc sфмng cuТa Poring (2)'", shortcut = 230202 },
+			[3] = { text = "HoaМn thaМnh 'Khaмm phaм cuфтc sфмng cuТa Poring (3)'", shortcut = 230203 }
+		},
+		reward = {},
+		score = 10
+	},
+	[230201] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "Khaмm phaм cuфтc sфмng cuТa Poring (1)",
+		content = {
+			summary = "Sгn nhэЮng рфмi tэхтng рaЮ chiТ рiтnh",
+			details = "Caмc ргтc tiмnh thay рфТi rвмt nhiкМu tuМy theo khu vэтc sinh sфмng cuТa chuмng. Рaмm gioтt nэхмc naМy laМ nhэЮng muтc tiкu dкЮ, cэм thoaТi maмi sгn chuмng."
+		},
+		resource = {
+			[1] = { text = "Sгn 10 Poring", count = 10 },
+			[2] = { text = "Sгn 10 Little Poring", count = 10 },
+			[3] = { text = "Sгn 10 Drops", count = 10 },
+			[4] = { text = "Sгn 10 Poporing", count = 10 },
+			[5] = { text = "Sгn 10 Marin", count = 10 }
+		},
+		reward = {},
+		score = 10
+	},
+	[230202] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "Khaмm phaм cuфтc sфмng cuТa Poring (2)",
+		content = {
+			summary = "Sгn nhэЮng рфмi tэхтng рaЮ chiТ рiтnh",
+			details = "Рвy laМ nhэЮng con Poring cuЮng khaм maтnh trкn thкм giхмi naМy. HaЮy thэТ sэмc vхмi chuмng xem thкм naМo."
+		},
+		resource = {
+			[1] = { text = "Sгn 1 Mastering", count = 1 },
+			[2] = { text = "Sгn 1 Devilring", count = 1 },
+			[3] = { text = "Sгn 1 Angelring", count = 1 },
+			[4] = { text = "Sгn 1 Arch Angelring", count = 1 },
+			[5] = { text = "Sгn 1 Ghostring", count = 1 }
+		},
+		reward = {},
+		score = 15
+	},
+	[230203] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "Khaмm phaм cuфтc sфмng cuТa Poring (3)",
+		content = {
+			summary = "Sгn nhэЮng рфмi tэхтng рaЮ chiТ рiтnh",
+			details = "Mфтt sфм Poring coм nhэЮng ргтc tiмnh sai lктch rвмt lхмn vхмi nhэЮng loaМi biМnh thэхМng. CвМn nghiкn cэмu sвu vaМ rфтng hхn vкМ chuмng."
+		},
+		resource = {
+			[1] = { text = "Sгn 5 Metalring", count = 5 },
+			[2] = { text = "Sгn 5 Heavy Metalring", count = 5 },
+			[3] = { text = "Sгn 5 Magmaring", count = 5 }
+		},
+		reward = {},
+		score = 20
+	},
+	[240000] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 6,
+		minor = 0,
+		title = "Kкмt nфмi lвМn рвМu tiкn",
+		content = {
+			summary = "Kкмt nфмi lвМn рвМu vaМo hкт thфмng ThaМnh tэтu",
+			details = "HoaМn thaМnh kкмt nфмi lвМn рвМu vaМo hкт thфмng ThaМnh tэтu"
+		},
+		resource = { [1] = { text = "Kкмt nфмi lвМn рвМu vaМo hкт thфмng ThaМnh tэтu" } },
+		reward = {},
+		score = 10
+	},
+	[240001] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 1",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 1",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 1."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 1" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240002] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 2",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 2",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 2."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 2" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240003] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 3",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 3",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 3."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 3" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240004] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 4",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 4",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 4."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 4" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240005] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 5",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 5",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 5."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 5" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240006] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 6",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 6",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 6."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 6" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240007] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 7",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 7",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 7."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 7" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240008] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 8",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 8",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 8."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 8" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240009] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 9",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 9",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 9."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 9" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240010] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 10",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 10",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 10."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 10" } },
+		reward = { title = 1023, buff = 12, item = 644 },
+		score = 10
+	},
+	[240011] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 11",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 11",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 11."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 11" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240012] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 12",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 12",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 12"
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 12" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240013] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 13",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 13",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 13."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 13" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240014] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 14",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 14",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 14."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 14" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240015] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 15",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 15",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 15."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 15" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240016] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 16",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 16",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 16."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 16" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240017] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 17",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 17",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 17"
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 17" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240018] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 18",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 18",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 18."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 18" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240019] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 19",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 19",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 19."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 19" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240020] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Рaтt рэхтc ThaМnh tiмch cвмp 20",
+		content = {
+			summary = "Рaтt рэхтc ThaМnh tiмch cвмp 20",
+			details = "Рaтt рэхтc ThaМnh tiмch cвмp 20."
+		},
+		resource = { [1] = { text = "Рaтt рэхтc ThaМnh tiмch cвмp 20" } },
+		reward = { title = 1024, buff = 12, item = 644 },
+		score = 10
+	}
+}
