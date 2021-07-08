@@ -97,7 +97,7 @@ sub new {
 		actorType => $actorType,
 		onNameChange => new CallbackList('onNameChange'),
 		onUpdate => new CallbackList('onUpdate'),
-		
+
 		# define it so deltaHp check may work immediately
 		# TODO: set it only for actors with actual hp (players, monsters)?
 		deltaHp => 0,
@@ -261,7 +261,7 @@ sub get {
 ##
 # int $Actor->{dmgFromYou}
 #
-# Total damage done by $char to this actor. 
+# Total damage done by $char to this actor.
 
 ##
 # int $Actor->{missedFromYou}
@@ -546,10 +546,10 @@ sub setStatus {
 		# All these hacks are for task to get lost when re-gaining a status,
 		# so it won't expire from an old task
 		$self->{statuses}{$handle} = bless {}, 'OpenkoreFixup::EmptyObject';
-		
+
 		if ($tick) {
 			Scalar::Util::weaken($self->{statuses}{$handle}{_actor} = $self);
-			
+
 			$taskManager->add(Task::Timeout->new(
 				object => $self->{statuses}{$handle},
 				weak => 1,
@@ -560,8 +560,8 @@ sub setStatus {
 				seconds => $tick / 1000,
 			));
 		}
-		
-		if ($char->{party}{joined} && $char->{party}{users} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
+
+		if ($char->{party}{joined} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
 			$again = 'again' if $char->{party}{users}{$self->{ID}}{statuses}{$handle};
 			$char->{party}{users}{$self->{ID}}{statuses}{$handle} = {};
 		}
@@ -570,12 +570,12 @@ sub setStatus {
 		return unless ($self->{statuses} && $self->{statuses}{$handle}); # silent when "again no status"
 		$again = 'no longer';
 		delete $self->{statuses}{$handle};
-		delete $char->{party}{users}{$self->{ID}}{statuses}{$handle} if ($char->{party}{joined} && $char->{party}{users} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name});
+		delete $char->{party}{users}{$self->{ID}}{statuses}{$handle} if ($char->{party}{joined} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name});
 	}
-	message
+	debug
 		Misc::status_string($self, defined $statusName{$handle} ? $statusName{$handle} : $handle, $again, $flag ? $tick/1000 : 0),
 		"parseMsg_statuslook", ($self->{ID} eq $accountID or $char->{slaves} && $char->{slaves}{$self->{ID}}) ? 1 : 2;
-		
+
 	Plugins::callHook('Actor::setStatus::change', {
 		handle => $handle,
 		flag => $flag,
@@ -591,16 +591,16 @@ sub setStatus {
 # Returns false if all statuses from the list are inactive, true otherwise.
 sub statusActive {
 	my ($self, $commaSeparatedStatuses) = @_;
-	
+
 	# Incase this method was called with empty values, send TRUE back... since the user doesnt have any statusses they want to check
 	return 1 unless $commaSeparatedStatuses;
-	
+
 	return unless $self->{statuses};
-	
+
 	for my $status (split /\s*,\s*/, $commaSeparatedStatuses) {
 		return 1 if exists $self->{statuses}{$status} || List::MoreUtils::any { $statusName{$_} eq $status } keys %{$self->{statuses}};
 	}
-	
+
 	return;
 }
 
@@ -610,7 +610,7 @@ sub statusActive {
 # Returns whether the cart is present.
 sub cartActive {
 	my ($self) = @_;
-	
+
 	if ($self->cart->isReady ||
 		$self->statusActive('EFFECTSTATE_PUSHCART, EFFECTSTATE_PUSHCART2, EFFECTSTATE_PUSHCART3, EFFECTSTATE_PUSHCART4, EFFECTSTATE_PUSHCART5')) {
 		return 1;
@@ -623,7 +623,7 @@ sub cartActive {
 # Returns human-readable list of currently active statuses.
 sub statusesString {
 	my ($self) = @_;
-	
+
 	$self->{statuses} && %{$self->{statuses}}
 	? join ', ', map { $statusName{$_} || $_ } keys %{$self->{statuses}}
 	# Translation Comment: No status effect on actor
@@ -661,14 +661,14 @@ sub statusesString {
 # used internally and are ignored unless XKore mode is turned on.
 sub clientSuspend {
 	my ($self, $type, $duration, @args) = @_;
-	
+
 	my %args = (
 		type => $type,
 		time => time,
 		timeout => $duration,
 		args => [@args],
 	);
-	
+
 	debug "$self AI suspended by clientSuspend for $args{timeout} seconds\n";
 	$self->queue("clientSuspend", \%args);
 }
@@ -691,10 +691,10 @@ sub setSuspend {
 # TODO: replace "Bytes target_ID" with "Actor otherActor".
 sub attack {
 	my ($self, $targetID) = @_;
-	
+
 	my $target = Actor::get($targetID);
 	return unless $target->{pos} && $target->{pos_to};
-	
+
 	my %args = (
 		ai_attack_giveup => { time => time, timeout => $timeout{ai_attack_giveup}{timeout} },
 		ID => $targetID,
@@ -702,10 +702,10 @@ sub attack {
 		pos => { %{$target->{pos}} },
 		pos_to => { %{$target->{pos_to}} },
 	);
-	
+
 	$self->queue('checkMonsters') if !AI::inQueue("checkMonsters");
 	$self->queue('attack', \%args);
-	
+
 	message sprintf($self->verb(T("%s are now attacking %s\n"), T("%s is now attacking %s\n")), $self, $target);
 	1;
 }
@@ -719,15 +719,15 @@ sub attack {
 # See also: $Actor->route()
 sub move {
 	my ($self, $x, $y, $attackID) = @_;
-	
+
 	unless ($x and $y) {
 		# that happens when called from AI::CoreLogic::processFollow
 		error "BUG: Actor::move(undef, undef) called!\n";
 		return;
 	}
-	
+
 	require Task::Move;
-	
+
 	$self->queue('move', my $task = new Task::Move(
 		actor => $self,
 		x => $x,
@@ -745,14 +745,14 @@ sub move {
 sub route {
 	my ($self, $map, $x, $y, %args) = @_;
 	debug "$self on route to: $maps_lut{$map.'.rsw'}($map): $x, $y\n", "route";
-	
+
 	# I can't use 'use' because of circular dependencies.
 	require Task::Route;
 	require Task::MapRoute;
-	
+
 	# from Homunculus AI
 	($x, $y) = map { $_ ne '' ? int $_ : $_ } ($x, $y);
-	
+
 	my $task;
 	my @params = (
 		actor => $self,
@@ -762,14 +762,14 @@ sub route {
 		maxTime => $args{maxRouteTime},
 		map { $_ => $args{$_} } qw(distFromGoal pyDistFromGoal notifyUponArrival avoidWalls)
 	);
-	
+
 	if ($map && !$args{noMapRoute}) {
 		$task = new Task::MapRoute(map => $map, @params);
 	} else {
 		$task = new Task::Route(field => $field, @params);
 	}
 	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave);
-	
+
 	$self->queue('route', $task);
 }
 
@@ -832,7 +832,7 @@ sub processTask {
 # Send "stop attacking" to the server.
 sub sendAttackStop {
 	my ($self) = @_;
-	
+
 	$self->sendMove(@{calcPosition($self)}{qw(x y)});
 }
 
@@ -862,7 +862,7 @@ sub sendAttackStop {
 # Returns proper hair color
 sub hairColor {
 	my ($self) = @_;
-	
+
 	return $self->{hair_pallete} if exists $self->{hair_pallete} && $self->{hair_pallete};
 	return $self->{hair_color} if exists $self->{hair_color};
 	return undef;
