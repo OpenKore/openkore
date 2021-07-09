@@ -22,6 +22,9 @@ prt_castle.rsw#Prontera Castle#
 prt_church.rsw#the Santuary#
 izlude.rsw#Izlude Town#
 izlude_a.rsw#Satellite city Izlude#
+izlude_b.rsw#Satellite city Izlude#
+izlude_c.rsw#Satellite city Izlude#
+izlude_d.rsw#Satellite city Izlude#
 izlude_in.rsw#Inside Izlude#
 izlu2dun.rsw#Byalan Island#
 iz_int01.rsw#Intro#

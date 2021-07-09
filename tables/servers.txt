@@ -328,6 +328,7 @@ serverEncoding Western
 addTableFolders vRO
 charBlockSize 155
 pinCode 1
+blockingPlayerCancel 1
 
 [Localhost]
 ip localhost

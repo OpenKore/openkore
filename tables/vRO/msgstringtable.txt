@@ -304,8 +304,8 @@ Vui loМng nhвтp sфм CMT#
 Sai sфм, khфng thкТ xoмa nhвn vвтt#
 Baтn khфng thкТ baмn 15 vвтt phвТm trхТ lкn cuМng mфтt luмc#
 TroМ chхi naМy giхмi haтn рфт tuфТi. TaМi khoaТn naМy khфng thкТ kкмt nфмi vхмi maмy chuТ#
-Khi troтng lэхтng рaтt 50%trхТ lкn, HP vaМ SP khфng thкТ tэт рфтng phuтc hфМi#
-khфng thкТ Tвмn cфng vaМ sэТ duтng kyЮ nгng khi troтng lэхтng trкn 90%#
+Khi troтng lэхтng рaтt 50%%trхТ lкn, HP vaМ SP khфng thкТ tэт рфтng phuтc hфМi#
+khфng thкТ Tвмn cфng vaМ sэТ duтng kyЮ nгng khi troтng lэхтng trкn 90%%#
 HP vaМ SP рaЮ рэхтc phuтc hфМi#
 Baтn coм thкТ Tвмn cфng vaМ sэТ duтng caмc kyЮ nгng ngay bвy giхМ#
 Vui loМng cвтp nhвтt phiкn baТn troМ chхi mхмi nhвмt#
@@ -474,8 +474,8 @@ Aмo giaмp рaЮ рэхтc cэхМng hoмa thuфтc tiмnh Thaмnh.#
 Aмo giaмp рaЮ quay vкМ thuфтc tiмnh ban dвМu.#
 [Kiмch hoaтt] Laм chгмn.#
 [HuТy kiмch hoaтt] Laм chгмn.#
-[Kiмch hoaтt] hiктu эмng gвy 100% saмt thэхng lкn quaмi vвтt cхЮ nhoТ, vэМa vaМ lхмn.#
-[HuТy kiмch hoaтt] hiктu эмng gвy 100% saмt thэхng lкn quaмi vвтt cхЮ nhoТ, vэМa vaМ lхмn.#
+[Kiмch hoaтt] hiктu эмng gвy 100%% saмt thэхng lкn quaмi vвтt cхЮ nhoТ, vэМa vaМ lхмn.#
+[HuТy kiмch hoaтt] hiктu эмng gвy 100%% saмt thэхng lкn quaмi vвтt cхЮ nhoТ, vэМa vaМ lхмn.#
 [Kiмch hoaтt] hiктu эмng Tгng Sэмc Maтnh.#
 [HuТy kiмch hoaтt] hiктu эмng Tгng Sэмc Maтnh.#
 [Kiмch hoaтt] hiктu эмng Sэмc Maтnh Tфмi Рa.#
@@ -578,7 +578,7 @@ Do thay рфТi cх chкм saтc, troМ chхi taтm thхМi biт treo. Vui loМn
 IP baтn рaЮ nhвтp khфng khхмp vхмi IP рэхтc chэмng nhвтn bхТi maмy chuТ thu phiм. DэМng kкмt nфмi#
 РкТ traмnh viктc theТ tiмn duтng caм nhвn biт khвмu trэМ, IP trong cэТa haМng cafe Internet taтm thхМi biт treo. Nкмu baтn muфмn sэТ duтng theТ tiмn duтng ркТ trэМ рiкТm, vui loМng sэТ duтng IP рэхтc ргng kyм trong cэТa haМng khфng phaТi laМ caМ phк ркТ sэТ duтng#
 Baтn рaЮ рэхтc quaТn lyм bхТi mфтt nhвn viкn, buфтc troМ chхi kкмt thuмc#
-HaМnh trang cuТa baтn nгтng hхn 90% nкn khфng thкТ sэТ duтng caмc kyЮ nгng#
+HaМnh trang cuТa baтn nгтng hхn 90%% nкn khфng thкТ sэТ duтng caмc kyЮ nгng#
 Khфng tкn#
 Xin chuмc mэМng, %s hiктn рang хТ baТng xкмp haтng vaМ рэхтc thгng haтng lкn %d#
 Thвтt рaмng tiкмc khi %s hiктn рang хТ trкn baТng xкмp haтng vaМ giaТm xuфмng %d#
@@ -1313,8 +1313,8 @@ Cash#
 ^ff0000Khфng thкТ huТy hoгтc hoaМn Vcoin sau khi mua vвтt phвТm naМy. ^000000Baтn coм chгмc chгмn muфмn mua saТn phвТm khфng? TфТng %d рiкТm, %d рiкТm miкЮn phiм seЮ biт trэМ.#
 %d giхМ рaЮ trфi qua.#
 %d giхМ %d phuмt рaЮ trфi qua.#
-Vui loМng kкмt thuмc troМ chхi vaМ рiкМu chiТnh traТi nghiктm vaМ moтi thэм ркмn 50%#
-РaЮ ркмn luмc bэхмc vaМo thхМi рiкТm khфng laМnh maтnh. HaЮy kкмt thuмc troМ chхi. TraТi nghiктm vaМ moтi thэм рэхтc рiкМu chiТnh vкМ 0%#
+Vui loМng kкмt thuмc troМ chхi vaМ рiкМu chiТnh traТi nghiктm vaМ moтi thэм ркмn 50%%#
+РaЮ ркмn luмc bэхмc vaМo thхМi рiкТm khфng laМnh maтnh. HaЮy kкмt thuмc troМ chхi. TraТi nghiктm vaМ moтi thэм рэхтc рiкМu chiТnh vкМ 0%%#
 Nhiктm vuт#
 RO SHOP#
 Phoм baТn '%s' рaЮ рэхтc ргтt.#
@@ -1538,7 +1538,7 @@ CвМn coм [%s] vхмi sфм lэхтng %d.#
 Giaм triт tinh luyктn giaТm#
 Vui loМng trang biт [%s]#
 Chiкмn trэхМng#
-Эмng duтng рaЮ biт huТy viМ mфтt tiМnh huфмng khфng thкТ di chuyкТn ркмn chiкмn trэхМng%#
+Эмng duтng рaЮ biт huТy viМ mфтt tiМnh huфмng khфng thкТ di chuyкТn ркмn chiкмn trэхМng%%#
 No Msg_3#
 Nhвтp hoтc %Battlefield, chхМ рхтi ngэхМi chхi khaмc#
 No Msg_4#
@@ -1793,8 +1793,8 @@ Search Partial#
 30#
 31#
 32#
-РiкТm EXP Base, Job tгng 75% trong 30 phuмt, khi рaмnh quaмi vвтt.#
-РiкТm EXP Base, Job tгng 50% trong 30 phuмt, khi рaмnh quaмi vвтt.#
+РiкТm EXP Base, Job tгng 75%% trong 30 phuмt, khi рaмnh quaмi vвтt.#
+РiкТm EXP Base, Job tгng 50%% trong 30 phuмt, khi рaмnh quaмi vвтt.#
 Khiкu vuЮ baмn haМng (mua) thфng tin#
 Khфng thкТ tiМm kiкмm#
 Xin lфЮi, khфng coм kкмt quaТ рэхтc tiМm thвмy cho thuвтt ngэЮ naМy#
@@ -1920,7 +1920,7 @@ ThхМi gian tвмn cфng tiкмp theo:#
 Luмc chкмt#
 Khi рэхтc mхМi vaМo mфтt рфтi#
 Nhвтn caМi ргтt muтc#
-Troтng lэхтng vэхтt quaм 85%#
+Troтng lэхтng vэхтt quaм 85%%#
 Vui loМng thэтc hiктn sau khi hoaМn thaМnh nhiктm vuт (рфмi thoaтi NPC, chкм taтo ...)#
 Kinh nghiктm coм рэхтc khi рaмnh baтi quaмi vвтt bгМng caмch tгng gвмp рфi %d laМ %.2f phuмt#
 Kiтch baТn tвтp thкТ duтc tэт рфтng %d#
@@ -1930,7 +1930,7 @@ Khфng thкТ xoмa vai troМ trong khi tham gia nhoмm hoгтc bang hфтi.#
 ChiТ coм thкТ duМng khi рэмng gвМn tэхМng. #
 %s : Level %d %s party to obtain level.#
 Khфng thкТ sэТ duтng dвy roi trong traтng thaмi cэхЮi thuм#
-KyЮ nгng naМy рoМi hoТi 1% kinh nghiктm#
+KyЮ nгng naМy рoМi hoТi 1%% kinh nghiктm#
 TiТ lкт kinh nghiктm: #
 TyТ lкт rхмt рфМ: #
 Death penalty: #
@@ -2334,8 +2334,8 @@ Card Book#
 %d%%[Maмy chuТ 100%% +%s cх baТn%d%%]#
 Рвy laМ khu vэтc PK. Vui loМng rхМi ngay lвтp tэмc.#
 Mктt moТi#
-Doanh thu troМ chхi laМnh maтnh laМ 100%#
-Doanh thu troМ chхi hiктn taтi cuТa khaмch trong laМng mктt moТi seЮ giaТm 50%. ViМ sэмc khoТe, vui loМng nghiТ ngхi#
+Doanh thu troМ chхi laМnh maтnh laМ 100%%#
+Doanh thu troМ chхi hiктn taтi cuТa khaмch trong laМng mктt moТi seЮ giaТm 50%%. ViМ sэмc khoТe, vui loМng nghiТ ngхi#
 Bвy giхМ tфi muфмn рoмng troМ chхi viМ noм khфng laМnh maтnh. Traтng thaмi online laМ noм seЮ tфмt cho bфт y tкм. Noм seЮ рэхтc khфi phuтc sau 5 giхМ#
 Online tэМ %d phuмt#
 ThхМi gian online: %d#
@@ -2918,7 +2918,7 @@ NgэхМi Dulan khфng thкТ mгтc trang phuтc naМy#
 Caмc vвтt phвТm рэхтc baмn trong caмc cэТa haМng ngoaМi trхМi seЮ рэхтc gэТi dэхмi daтng RODEX#
 30,000 z#
 100 lon hэхng viт рaТo Mianmian#
-Khфng thкТ tiкмn haМnh do troтng lэхтng vэхтt quaм 80%#
+Khфng thкТ tiкмn haМnh do troтng lэхтng vэхтt quaм 80%%#
 Caмc vвтt phвТm chэa baмn рэхтc gэТi bхТi RODEX#
 Xem thэТ#
 BфТ nhiктm ChuТ tiтch Hiктp hфтi#
@@ -3020,7 +3020,7 @@ MeМo#
 Triктu hфМi sэ#
 Рaтi diктn luтc рiтa Midgart, tiкМm nгng vф haтn vaМ khaТ nгng thiмch эмng tuyктt vхМi#
 TэМ Far-Star, tфтc Meow khфng chiТ toМ moМ maМ coМn mang tiмnh caмch sфмng рфтng#
-Giхмi haтn troтng lэхтng vэхтt quaм 70%. Hoгтc vэхтt quaм khфng gian ba lф 10 khoaТng trфмng#
+Giхмi haтn troтng lэхтng vэхтt quaм 70%%. Hoгтc vэхтt quaм khфng gian ba lф 10 khoaТng trфмng#
 P#
 P#
 LaМm nhэЮng viктc khaмc#
@@ -3323,7 +3323,7 @@ KiкТm tra thвмt baтi, xin vui loМng thэТ laтi#
 Nhвтn phoМng#
 Noм khфng phaТi laМ trong sэт kiктn punch-in#
 Tin nhгмn tэТ thвМn#
-Khфng thкТ nhвтp hхn 50%#
+Khфng thкТ nhвтp hхn 50%%#
 Zoom Out#
 %s: Coм thкТ tгмt Zoom Out Bвтt/Tгмt#
 Bвтt chэмc nгng Thu nhoТ (Bвтt)#
@@ -3536,7 +3536,7 @@ No Msg#
 No Msg#
 No Msg#
 No Msg#
-No Msg#
+ChiТ coм thкТ sэТ duтng tiкмng Anh vaМ chэЮ sфм.#
 No Msg#
 No Msg#
 No Msg#
@@ -3641,3 +3641,302 @@ No Msg#
 No Msg#
 Baтn cвМn рuТ 18 tuфТi ркТ chхi troМ chхi naМy. #
 Chuмng tфi khфng khuyкмn khiмch ngэхМi chхi, chхi trкn 3 tiкмng рфМng hфМ. #
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Thфng tin thanh toaмn рaЮ hкмt haтn, vui loМng khхТi рфтng laтi client.#
+РвЮ xaТy ra lфЮi. Vui loМng thэТ laтi.#
