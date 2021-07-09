@@ -1,13 +1,13 @@
 #############################################################################
 # busParty plugin by Revok
 # revok@openkore.com.br
-# @2013
+# 2021-07-09
 #############################################################################
 package busParty;
 
 use strict;
 use Plugins;
-use Log qw( message error );
+use Log qw( message error debug );
 use Globals;
 use Utils;
 use AI;
@@ -56,15 +56,18 @@ sub sendInfo {
 		hp_current => $char->{hp},
 		hp_max => $char->{hp_max},
 		accountID => $accountID,
+		location_field => $field->baseName.".gat",
+		location_x => $char->{pos}{x},
+		location_y => $char->{pos}{y},
+		statuses => join(',', keys %{$char->{statuses}})
 	);
-	$my_info{location_field} = $field->baseName.".gat"; $my_info{location_x} = $char->{pos}{x}; $my_info{location_y} = $char->{pos}{y}; $my_info{statuses} = join(',', keys %{$char->{statuses}});
 	$bus->send('busParty', \%my_info);
 }
 
 sub bus_message_received {
 	my (undef, undef, $msg) = @_;
 	if (($msg->{messageID} eq 'busParty') && ($msg->{args}{server} eq $servers[$config{'server'}]{'name'}) && $char && $field) {
-		error "Received party data \n";
+		debug "Received party data \n", "busparty";
 		my $ID = $msg->{args}{accountID};
 		if (binFind(\@partyUsersID, $ID) eq "" || ref($char->{party}{users}{$ID}) ne "Actor::Party") {
 			binAdd(\@partyUsersID, $ID);
@@ -75,6 +78,8 @@ sub bus_message_received {
 		$char->{party}{users}{$ID}{admin} = 0;
 		$char->{party}{users}{$ID}{online} = $msg->{args}{online};
 		$char->{party}{users}{$ID}{map} = $msg->{args}{location_field};
+		$char->{party}{users}{$ID}{pos}{x} = $msg->{args}{location_x};
+		$char->{party}{users}{$ID}{pos}{y} = $msg->{args}{location_y};
 		$char->{party}{users}{$ID}{hp} = $msg->{args}{hp_current};
 		$char->{party}{users}{$ID}{hp_max} = $msg->{args}{hp_max};
 		$char->{party}{users}{$ID}->{ID} = $msg->{args}{accountID};
@@ -87,7 +92,7 @@ sub bus_message_received {
 
 # Plugin unload
 sub unload {
-	message "busParty plugin unloading, ", 'system';
+	message "busParty plugin unloading, ", "system";
 	Plugins::delHooks($networkHook);
 	$bus->onMessageReceived->remove($bus_message_received) if $bus_message_received;
 	undef $bus_message_received;
