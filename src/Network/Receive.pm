@@ -992,7 +992,7 @@ sub parse_account_server_info {
 			keys => [qw(ip port name state users property ip_port)],
 		};
 
-	} elsif ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
+	} elsif ($args->{switch} eq '0AC4' || $args->{switch} eq '0B07') { # kRO Zero 2017, kRO ST 201703+, vRO 2021
 		$server_info = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
@@ -1055,7 +1055,7 @@ sub reconstruct_account_server_info {
 			keys => [qw(ip port name state users property ip_port)],
 		};
 
-	} elsif ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4") {
+	} elsif ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4" || $args->{switch} eq '0B07') {
 		$serverInfo = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
@@ -1091,7 +1091,6 @@ sub reconstruct_account_server_info {
 
 sub account_server_info {
 	my ($self, $args) = @_;
-
 	$net->setState(2);
 	undef $conState_tries;
 	$sessionID = $args->{sessionID};
