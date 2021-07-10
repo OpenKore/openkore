@@ -4217,7 +4217,7 @@ sub cmdParty {
 		error T("Error in function 'party' (Party Functions)\n" .
 			"You're already in a party.\n");
 	} elsif ($arg1 eq "" || $arg1 eq "info") {
-		my $msg = center(T(" Party Information "), 79, '-') ."\n".
+		my $msg = center(T(" Party Information "), 84, '-') ."\n".
 			TF("Party name: %s\n" .
 			"EXP Take: %s       Item Take: %s       Item Division: %s\n\n".
 			"#    Name                   Map           Coord     Online  HP\n",
@@ -4254,10 +4254,10 @@ sub cmdParty {
 					."%)" if ($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $char->{'party'}{'users'}{$partyUsersID[$i]}{'online'});
 			}
 			$msg .= swrite(
-				"@< @ @<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<< @<<<<<<<  @<<     @<<<<<<<<<<<<<<<<<<",
+				"@< @ @<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<< @<<<<<<<  @<<     @<<<<<<<<<<<<<<<<<<<<<<<",
 				[$i, $admin_string, $name_string, $map_string, $coord_string, $online_string, $hp_string]);
 		}
-		$msg .= ('-'x79) . "\n";
+		$msg .= ('-'x84) . "\n";
 		message $msg, "list";
 
 	} elsif ($arg1 eq "leave") {

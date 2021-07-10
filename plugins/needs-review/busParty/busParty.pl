@@ -6,11 +6,12 @@
 package busParty;
 
 use strict;
-use Plugins;
-use Log qw( message error debug );
-use Globals;
-use Utils;
 use AI;
+use Globals;
+use Log qw( message error debug );
+use Misc qw(center);
+use Plugins;
+use Utils;
 
 # Plugin
 Plugins::register('busParty', "send and receive info of followTarget coordinates via BUS", \&unload);
@@ -18,6 +19,10 @@ Plugins::register('busParty', "send and receive info of followTarget coordinates
 my $networkHook = Plugins::addHooks(
 	['Network::stateChanged',\&init],
 	['AI_pre', \&send_my_info]
+);
+
+my $chooks = Commands::register(
+	['busParty', 'show busParty info', \&cmdParty],
 );
 
 my $bus_message_received;
@@ -90,10 +95,47 @@ sub bus_message_received {
 	}
 }
 
+sub cmdParty {
+	my $msg = center(" busParty Information ", 82, '-') ."\n".
+	"#  Name                   Map           Coord     Online  HP\n";
+	for (my $i = 0; $i < @partyUsersID; $i++) {
+		next if ($partyUsersID[$i] eq "");
+		my $coord_string = "";
+		my $hp_string = "";
+		my $name_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'name'};
+		my $online_string;
+		my $map_string;
+
+		if ($partyUsersID[$i] eq $accountID) {
+			$online_string = "Yes";
+			($map_string) = $field->name;
+			$coord_string = $char->{'pos'}{'x'}. ", ".$char->{'pos'}{'y'};
+			$hp_string = $char->{'hp'}."/".$char->{'hp_max'}
+					." (".int($char->{'hp'}/$char->{'hp_max'} * 100)
+					."%)";
+		} else {
+			$online_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'online'}) ? "Yes" : "No";
+			($map_string) = $char->{'party'}{'users'}{$partyUsersID[$i]}{'map'} =~ /([\s\S]*)\.gat/;
+			$coord_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'x'}
+				. ", ".$char->{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'y'}
+				if ($char->{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'x'} ne ""
+					&& $char->{'party'}{'users'}{$partyUsersID[$i]}{'online'});
+			$hp_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}."/".$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'}
+				." (".int($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}/$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} * 100)
+				."%)" if ($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $char->{'party'}{'users'}{$partyUsersID[$i]}{'online'});
+		}
+		$msg .= swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<< @<<<<<<<  @<<     @<<<<<<<<<<<<<<<<<<<<<<<",
+			[$i, $name_string, $map_string, $coord_string, $online_string, $hp_string]);
+	}
+	$msg .= ('-'x82) . "\n";
+	message $msg, "list";
+}
 # Plugin unload
 sub unload {
 	message "busParty plugin unloading, ", "system";
 	Plugins::delHooks($networkHook);
+	Commands::unregister($chooks);
 	$bus->onMessageReceived->remove($bus_message_received) if $bus_message_received;
 	undef $bus_message_received;
 	undef %bus_sendinfo_timeout;
