@@ -1,24 +1,26 @@
-USE:
+# busParty plugin
+
 busParty is to improves the information openkore has of the others players of the party (that are also using openkore)
 because it's using bus system, it cannot dectect players that are using normal ragnarok client.
 VERY RECOMMENDED in partys bigger than 2, it is also useful for master and slave party
 
-How to Install:
-Copy the plugin to the plugins folder on openkore
-open sys.txt (control folder ) and change:
+## How to Install:
+1. move the "busParty" folder to the "plugins" folder
+2. open *control\sys.txt* and change:
+   * enable the [bus](https://openkore.com/wiki/bus): `bus 1` (you can also configure other bus parameters)
+   * add the busParty plugin to the [loadPlugins_list](https://openkore.com/wiki/loadPlugins_list): `loadPlugins_list ..., busParty`
+3. run OpenKore
 
-###### Bus system settings ######
-# Whether to enable the bus system.
-bus 1   # MAKE SURE IT'S 1 
+## New console command
+**busParty** - shows all members of the fake party:
+```
+------------------------------ busParty Information ------------------------------
+#  Name                   Map           Coord     Online  HP
+0  ya4ept                 new_1-4       24, 173   Yes     150044/150044 (100%)
+1  alisonrag              prontera      66, 317   Yes     10000000/10000000 (100%)
+2  sctnightcore           morocc        28, 83    Yes     796286/796286 (100%)
+----------------------------------------------------------------------------------
+```
 
-
-also, in sys.txt file, change:
-loadPlugins 2
-
-# loadPlugins_list <list>
-#   if loadPlugins is set to 2, this comma-separated list of plugin names (filename without the extension)
-#   specifies which plugin files to load at startup or when the "plugin load all" command is used.
-loadPlugins_list macro,profiles,breakTime,raiseStat,raiseSkill,map,reconnect,eventMacro,busParty #add busParty here
-
-
-This plugin needs no more configurations, as soon you do the steps above, it will start work.
+## Limitations
+* If you close one instance of OpenKore, the character will still be displayed online
