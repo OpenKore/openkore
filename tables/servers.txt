@@ -316,6 +316,20 @@ itemListType 1
 pinCode 1
 ignoreAntiCheatWarning 0
 
+
+# https://vtcgame.vn/
+[Vietnam - vRO]
+ip roacc1.vtcgame.vn
+port 6900
+master_version 26
+version 1
+serverType vRO
+serverEncoding Western
+addTableFolders vRO
+charBlockSize 155
+pinCode 1
+blockingPlayerCancel 1
+
 [Localhost]
 ip localhost
 port 6900

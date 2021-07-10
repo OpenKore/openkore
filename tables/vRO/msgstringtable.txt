@@ -1,0 +1,3942 @@
+Baтn coм рфМng yм khфng?#
+Khфng thкТ kкмt nфмi vхмi maмy chuТ#
+Ngгмt kкмt nфмi vхмi maмy chuТ#
+Ngгмt kкмt nфмi vхмi maмy chuТ#
+Ngгмt maмy chuТ#
+Mвтt khвТu taМi khoaТn naМy hiктn рang рэхтc ргng nhвтp#
+TaМi khoaТn ngэхМi duМng chэa ргng nhвтp hoгтc sai mвтt khвТu. Vui loМng kiкТm tra laтi#
+Sai mвтt khвТu. Vui loМng kiкТm tra laтi#
+TaМi khoaТn naМy рaЮ hкмt haтn#
+Maмy chuТ tэМ chфмi kкмt nфмi#
+Tкn nhвn vвтt naМy рaЮ рэхтc sэТ duтng#
+Thвмt baтi trong viктc taтo nhвn vвтt#
+Xoмa nhвn vвтt khфng thaМnh cфng#
+Vui loМng nhвтp tкn phoМng chat#
+Nфтi dung chэмa caмc tэМ khфng рuмng ргмn#
+Vui loМng nhвтp mвтt khвТu#
+Vui loМng nhвтp mвтt khвТu nhiкМu hхn bфмn chэЮ sфм#
+Baтn рфМng yм chвмm dэмt?#
+Vui loМng nhвтp trкn bфмn kyм tэт#
+Baтn coм chгмc chгмn muфмn xoмa nhвn vвтt naМy?#
+Nфтi dung chэмa caмc tэМ khфng рuмng ргмn#
+Vui loМng nhвтp tкn nhвn vвтt trкn bфмn kyм tэт#
+/h: Trхт giuмp#
+Bвтt hiктu эмng#
+Tгмt hiктu эмng#
+Вm lэхтng#
+Вm lэхтng nhaтc nкМn#
+Bвтt вm thanh hiктu эмng#
+Tгмt вm thanh hiктu эмng#
+Bвтt chэмc nгng рфМng bфт hoмa maМn hiМnh#
+Tгмt chэмc nгng рфМng bфт hoмa maМn hiМnh#
+Bвтt nhaтc nкМn#
+Tгмt nhaтc nкМn#
+/h hoгтc /help: hэхмng dвЮn#
+/w hoгтc /who (tкn nhвn vвтt): hiкТn thiт sфм ngэхМi hiктn рang online#
+/music : bвтt hoгтc tгмt nhaтc nкМn#
+/sound : tгмt вm lэхтng#
+/effect : Bвтt/tгмt hiктu эмng#
+/where : kiкТm tra viт triм hiктn taтi#
+/skip : Bвтt vaМ tгмt cвтp nhвтt рфМng bфт hoмa maМn hiМnh#
+/v (0 ~ 127): РiкМu chiТnh вm lэхтng#
+/bv (0 ~ 127): РiкМu chiТnh вm lэхтng nhaтc nкМn#
+/ex (tкn nhвn vвтt): TэМ chфмi nhвтn tin nhгмn tэМ nhвn vвтt#
+/ex : Danh saмch nhэЮng nhвn vвтt рaЮ chгтn#
+/in (tкn nhвn vвтt): Chвмp nhвтn tэМ lхМi tin nhгмn nhвn vвтt#
+/inall: Chвмp nhвтn lхМi tin nhгмn tэМ tвмt caТ caмc nhвn vвтt#
+/exall : TэМ chфмi lхМi tin nhгмn cuТa tвмt caТ caмc nhвn vвтt#
+Nhвмp chuфтt phaТi vaМo nhвn vвтt vaМ nhвмn nuмt bкn traмi ркТ thкm nhвn vвтt vaМo danh saмch tin nhгмn riкng tэ#
+Nhвмn F12 ркТ caМi ргтt phiмm tгмt#
+Khфng thкТ nhвтp cвu/ tэМ tэхng tэт quaм ba lвМn liкn tiкмp#
+Nфтi dung chэмa nфтi dung khфng рэмng ргмn seЮ biт huТy boТ#
+Caмc vвтt phвТm tэхng tэт khфng thкТ рэхтc thэтc hiктn nhiкМu lвМn#
+Baтn khфng thкТ nhвтn thкm vвтt phвТm viМ рaЮ quaм nгтng.#
+Baтn khфng thкм lвмy рэхтc vвтt phвТm.#
+Giao diтch рaЮ hoaМn thaМnh.#
+Baтn khфng coм рuТ zeny.#
+Baтn рang рвМy haМnh trang.#
+Giao diтch рaЮ thвмt baтi.#
+TэМ chфмi nhвтn tin nhгмn tэМ nhвn vвтt khaмc#
+Khфng thкТ chгтn caмc tin nhгмn riкng tэ#
+Cho pheмp nhвтn tвмt caТ caмc tin nhгмn tэМ nhвn vвтt khaмc#
+Khфng thкТ chгтn caмc tin nhгмn riкng tэ#
+Baтn chэa coм danh saмch khoмa ngэхМi chхi.#
+[ Danh saмch khoмa ngэхМi chхi ]#
+MхТ phoМng chat thaМnh cфng#
+Giхмi haтn phoМng.#
+PhoМng cuМng tфМn taтi.#
+PhoМng рaЮ рвМy.#
+Baтn рaЮ biт kick khoТi phoМng.#
+Giao diтch рaЮ biт tэМ chфмi.#
+Baтn рaЮ рi quaм xa khoТi ngэхМi giao diтch.#
+Nhвn vвтt naМy hiктn taтi chэa online hoгтc khфng tфМn taтi.#
+NgэхМi naМy рang coм mфтt giao diтch khaмc.#
+Baтn khфng thкТ giao diтch viМ haМnh trang cuТa baтn khфng coМn sэмc chэмa.#
+Giao diтch рaЮ biт huТy.#
+Giao diтch рaЮ thaМnh cфng.#
+Giao diтch рaЮ thвмt baтi.#
+Nhoмm рaЮ рэхтc taтo thaМnh cфng.#
+Tкn cuТa nhoмm рaЮ biт truМng vхмi nhoмm khaмc.#
+Baтn рaЮ coм nhoмm rфМi.#
+Nhвn vвтt naМy рaЮ tham gia vaМo nhoмm khaмc.#
+LхМi mхМi vaМo nhoмm рaЮ biт tэМ chфмi.#
+LхМi mхМi vaМo nhoмm рaЮ рэхтc chвмp nhвтn.#
+Nhoмm рaЮ рвМy.#
+Baтn рaЮ rхМi khoТi nhoмm.#
+GэТi cho tвмt caТ#
+GэТi cho nhoмm#
+Yкu cвМu giao diтch vхмi %s#
+GэТi lхМi mхМi vaМo nhoмm#
+Pri:#
+Pub:#
+Nкмu baтn muфмn quay laтi viт triм ргng nhвтp lвМn cuфмi, nhвмn "KhхТi taтo". Nкмu baтn choтn nhвn viвтt khaмc, haЮy nhвмn "Kкмt thuмc"#
+Vui loМng choтn loaтi giao diтch.#
+ yкu cвМu mхТ giao diтch.#
+ Baтn nhвтn рэхтc lхМi mхМi vaМo nhoмm. Baтn coм muфмn tham gia khфng?#
+LфЮi lктnh#
+Thoaмt khoТi nhoмm#
+Ra khoТi nhoмm#
+GэТi thэ#
+Chat 1:1#
+Tin nhгмn#
+CaМi ргтt nhoмm#
+Baтn#
+Nhoмm#
+Trang biт#
+РiкТm chiТ sфм#
+HaМnh trang#
+/organize ''Tкn nhoмm'' ркТ taтo mфтt tфТ рхтi. GoЮ /leave ркТ rхМi khoТi nhoмm.#
+Nкмu baтn laМ trэхТng nhoмm, baтn coм thкТ mхМi ngэхМi chхi khaмc vaМo tфТ рфтi bгМng caмch chuфтt phaТi vaМo ngэхМi chхi рoм.#
+Che chхТ#
+Tвмn cфng#
+HфЮ trхт#
+ToaМn thкТ#
+VuЮ khiм#
+PhoМng thuТ#
+Nэхмc#
+Рвмt#
+LэТa#
+Gioм#
+Vui loМng traмnh mua 2 vвтt phвТm giфмng nhau cuМng 1 luмc.#
+Khi mхТ game хТ chкм рфт windowed, vui loМng chuyкТn рфт phвn giaТi maМn hiМnh sang chкм рфт maМu 16-bit#
+Vui loМng рхтi...#
+Vui loМng рхтi...#
+Vui loМng рхтi...#
+Vui loМng рхтi...#
+Taтo phoМng chat#
+CaМi ргтt phoМng#
+Kick ngэхМi chхi ra#
+NhэхМng chiМa khoмa phoМng chat#
+Xem thфng tin#
+PhoМng chat#
+Ng.#
+/sit : NgфМi xuфмng hoгтc рэмng lкn#
+/stand : Рэмng, hoгтc ngфМi xuфмng#
+/chat : Taтo phoМng chat#
+/q : Thoaмt phoМng chat#
+/deal "tкn nhвn vвтt" : MхМi nhвn vвтt рэхтc chiТ рiтnh giao diтch#
+/organize "Tкn nhoмm" : Sгмp xкмp nhoмm#
+/leave : RхМi nhoмm#
+/expel "tкn nhвn vвтt": loaтi nhвn vвтt рэхтc chiТ рiтnh ra khoТi nhoмm#
+[Alt]+[End] : MхТ hoгтc tгмt cэТa sфТ hiкТn thiт HP/SP#
+[Alt]+[Home] : MхТ hoгтc tгмt Ground Cursor#
+[Insert] : NgфМi hoгтc рэмng#
+Xin chuмc mэМng! Baтn vэМa MVP! PhвМn thэхТng cuТa baтn laМ #
+!!#
+Xin chuмc mэМng! Baтn vэМa MVP! РiкТm kinh nghiктm thэхТng cuТa baтn laМ #
+Nhвтn!#
+Baтn vэМa MVP! Nhэng haМnh trang cuТa baтn рaЮ рвМy nкn khфng thкТ nhвтn thэхТng.#
+Nhвn vвтt baтn chiТ рiтnh khфng coм hoгтc рang offline#
+Рфмi phэхng tэМ chфмi nhвтn tin nhгмn#
+Рфмi phэхng khфng muфмn noмi chuyктn vхмi ngэхМi khaмc#
+NgэхМi chхi рaЮ chкмt hoгтc mвмt kкмt nфмi.#
+TэМ chфмi liкn laтc vхмi nhвn vвтt, thвмt baтi#
+Nhвтn %s (%d)#
+[Alt]+[=]: sэТa caмc lфЮi vгn baТn#
+[F10]: РiкМu chiТnh kiмch thэхмc cэТa sфТ chat chung [Alt]+[F10]: Рoмng mхТ cэТa sфТ chat chung#
+Tin nhгмn riкng tэ: РiкМn tкn cuТa ngэхМi chхi vaМo [ф bкn traмi] vaМ nhвтp tin nhгмn хТ [ф bкn phaТi] tэМ cэТa sфТ chat chung. Nhвмn phiмm [tab] ркТ chuyкТn qua laтi giэЮa 2 ф.#
+Lктnh Emoji: Nhвмn Alt+(1 ~ 9) hoгтc Ctrl+(-=\) ркТ taтo biкТu tэхтng biкТu caТm cuт thкТ#
+Caмch gэТi tin nhгмn cho caмc thaМnh viкn trong nhoмm: Ргтt kyм hiктu % trэхмc nфтi dung tin nhгмn ркТ gэТi tin nhгмn cho caмc thaМnh viкn trong nhoмm. (Viм duт: \%Hello\)#
+Baтn chэa hoтc kyЮ nгng cх baТn ркТ giao diтch#
+Baтn chэa hoтc kyЮ nгng cх baТn ркТ sэТ duтng biкТu tэхтng biкТu caТm#
+Baтn chэa hoтc kyЮ nгng cх baТn ркТ ngфМi#
+Baтn chэa hoтc kyЮ nгng cх baТn ркТ taтo phoМng chat#
+Baтn chэa hoтc kyЮ nгng cх baТn ркТ thaМnh lвтp nhoмm#
+Baтn chэa hoтc kyЮ nгng cх baТn ркТ sэТ duтng kho#
+Baтn chэa hoтc kyЮ nгng cх baТn ркТ giao diтch vхмi caмc nhвn vвтt khaмc#
+Danh saмch mua#
+CэТa haМng vвтt phвТm#
+Danh saмch vвтt phвТm baмn#
+HaМnh trang#
+Mгтc xong#
+РaЮ gхЮ boТ vвтt phвТm#
+Nhвтp tкn vaМo danh saмch tin nhгмn riкng tэ#
+Chэмc nгng camera: Nhвмn [Print Screen] hoгтc [Scroll Lock]#
+Meтo hфm nay#
+^3850a0Baтn coм biкмt ...^000000//^709fed#
+Hiктn luмc vaМo game#
+/tip: MхТ Meтo hфm nay#
+Sфм ngэхМi hiктn рang online %d#
+(%s) Tham gia troМ chхi#
+(%s) Thoaмt khoТi troМ chхi#
+(%s) Buфтc phaТi rхМi khoТi troМ chхi#
+%d#
+%s: %d#
+%s%s: %d#
+Vвтt phвТm рэхтc baмn#
+CэТa haМng vвтt phвТm#
+Khu vэтc khфng xaмc рiтnh#
+Ngфn ngэЮ Client maмy chuТ vaМ ngфn ngэЮ server khфng nhвмt quaмn#
+HaЮy рэa caмc trang biт vaМo haМnh trang, sau рoм рoмng cэТa sфТ vвтt phвТm#
+Server naМy chiТ hфЮ trхт ngфn ngэЮ tiкмng anh#
+Chэa рэхтc aмp duтng#
+Khфng coм danh saмch tin nhгмn#
+Chгтn tin nhгмn#
+Chгтn tin nhгмn thвмt baтi#
+LхМi mхМi tin nhгмn caм nhвn thвмt baтi. Danh saмch chгтn vэхтt quaм giхмi haтn#
+Nhвтn tin nhгмn#
+LфЮi lктnh#
+LфЮi lктnh. Danh saмch chгтn vэхтt quaм giхмi haтn#
+Caмc tэМ рвМu tiкn vaМ cuфмi cuМng cuТa tкn khфng thкТ nhвтp khoaТng trфмng#
+Caм nhвn#
+Cфng khai#
+Khфng рuТ SP#
+Khфng рuТ HP#
+Khфng sэТ duтng рэхтc kyЮ nгng#
+Trфтm thвмt baтi#
+Trade#
+KyЮ nгng Envenom thвмt baтi#
+Khфng thкТ duМng ID naМy tэМ server#
+Tгng tфмc#
+GiaТm tфмc#
+/memo: Nhхм nхi diтch chuyкТn khфng gian (chiТ aмp duтng vхмi nghкМ Acolyte Class)#
+Viт triм bвмt kyМ#
+Choтn nхi di chuyкТn#
+TriМnh рфт kyЮ nгng khфng рuТ#
+Khфng coм dэЮ liктu nхi cвМn di chuyкТn (Memo Point)#
+Baтn chэa hoтc kyЮ nгng di chuyкТn рiтa рiкТm#
+Ghi nhхм рiтa рiкТm thaМnh Memo Point#
+HuТy#
+Sau khi sэТ duтng kyЮ nгng seЮ biт ngэng taтm thхМi#
+Baтn khфng thкТ nhвтn vвтt phвТm naМy viМ vэхтt quaм troтng lэхтng cho pheмp#
+Sфм lэхтng vвтt phвТm vэхтt quaм giхмi haтn#
+Vвтt phвТm cho xe рвТy#
+Thaмo boТ xe рвТy рэхтc thuк #
+MхТ cэТa haМng#
+Nhвтp tкn cэТa haМng#
+CэТa haМng cuТa tфi#
+CэТa haМng Merchant#
+Mua vвтt phвТm#
+Mua %s thвмt baтi %s#
+Hкмt haМng#
+Baмn %s %d#
+Caмc vвтt phвТm coм thкТ baмn#
+Khфng рuТ Zeny ркТ sэТ duтng kyЮ nгng naМy#
+Vui loМng choтn nhвn vвтt#
+/pk on : Bвтt PK. /pk off : Tгмt PK#
+CэТa haМng#
+Thuк xe рвТy [Alt+W]#
+Thфng tin cх baТn#
+KyЮ nгng khфng thкТ sэТ duтng vхмi vuЮ khiм naМy#
+Mua %s thвмt baтi do hкмt haМng. Sфм lэхтng tфМn kho laМ %d#
+Ngгмt kкмt nфмi vхмi maмy chuТ#
+Vui loМng рeo cung tкn trэхмc#
+Khфng thкТ tвмn cфng hoгтc sэТ duтng caмc kyЮ nгng do quaм troтng lэхтng#
+Khфng thкТ sэТ duтng caмc kyЮ nгng do quaм troтng lэхтng#
+Cung vaМ muЮi tкn рaЮ рэхтc trang biт#
+CвМn Red Gemstone#
+CвМn Blue Gemstone#
+Strength#
+Agility#
+Vitality#
+Intelligence#
+Dexterity#
+Luck#
+Attack Power#
+Defense#
+Acccuracy Rate#
+Critical Attack#
+Bang Hфтi#
+CaТi thiктn рiкТm chiТ sфм#
+Magical Attack#
+Magical Defense#
+Flee Rate#
+Attack Speed#
+Sфм lэхтng ngэхМi duМng trong khu vэтc naМy vэхтt quaм giхмi haтn vaМ baтn khфng thкТ ргng nhвтp#
+TuМy choтn#
+TaМi khoaТn E-MAIL chэa рэхтc xaмc thэтc hoгтc biт рoмng bгng#
+TaМi khoaТn hoгтc mвтt khвТu baтn рaЮ nhвтp khфng chiмnh xaмc#
+Choтn kiкТu toмc#
+ATK#
+DEF#
+Tэт рфтng troТ khi tвмn cфng#
+Tгмt tэт рфтng troТ khi tвмn cфng#
+Tэт рфтng mхТ con troТ khi caмc kyЮ nгng рэхтc sэТ duтng#
+Tэт рфтng tгмt con troТ khi caмc kyЮ nгng рэхтc sэТ duтng#
+/snap: Bвтt mхТ chэмc nгng Tэт рфтng con troТ. /skillsnap: Bвтt mхТ chэмc nгng Tэт рфтng con troТ khi sэТ duтng kyЮ nгng#
+Item Snap Bвтt#
+Item Snap Tгмt#
+Snap#
+Khфng thкТ mang рэхтc hхn 30.000 vвтt phвТm cuМng loaтi.#
+Khфng thкТ xoмa caмc nhвn vвтt trкn cвмp 30, vui loМng liкn hкт vхмi GM ркТ xoмa nhвn vвтt naМy.#
+Baтn khфng thкТ sэТ duтng cэТa haМng khi рang giao diтch.#
+Tкn#
+BaТng kyЮ nгng#
+РiкТm kyЮ nгng: %d#
+SэТ duтng kyЮ nгng рaЮ thвмt baтi.#
+Biт рфтng#
+Caм nhвn#
+Chia ркМu#
+Caм nhвn#
+Chia ркМu#
+CaМi ргтt nhoмm#
+Chia seТ kinh nghiктm#
+Chia seТ vвтt phвТm#
+ChiТ trэхТng nhoмm mхмi coм thкТ caМi ргтt.#
+Khфng hoТi sфм lэхтng.#
+Nhвn vвтt seЮ biт xoмa sau ^ff0000%d^000000 giвy. Вмn HuТy ркТ kкмt thuмc.#
+Baтn khфng thкТ giao diтch hхn 10 loaтi vвтt phвТm mфЮi lвМn giao diтch.#
+Baтn chэa рuТ tuфТi ркТ tham gia.#
+Vui loМng nhвтp E-MAIL#
+Nhвтp E-MAIL#
+LфЮi рiтa chiТ E-MAIL, khфng thкТ xoмa nhвn vвтt naМy#
+Vui loМng nhвтp sфм CMT#
+Sai sфм, khфng thкТ xoмa nhвn vвтt#
+Baтn khфng thкТ baмn 15 vвтt phвТm trхТ lкn cuМng mфтt luмc#
+TroМ chхi naМy giхмi haтn рфт tuфТi. TaМi khoaТn naМy khфng thкТ kкмt nфмi vхмi maмy chuТ#
+Khi troтng lэхтng рaтt 50%%trхТ lкn, HP vaМ SP khфng thкТ tэт рфтng phuтc hфМi#
+khфng thкТ Tвмn cфng vaМ sэТ duтng kyЮ nгng khi troтng lэхтng trкn 90%%#
+HP vaМ SP рaЮ рэхтc phuтc hфМi#
+Baтn coм thкТ Tвмn cфng vaМ sэТ duтng caмc kyЮ nгng ngay bвy giхМ#
+Vui loМng cвтp nhвтt phiкn baТn troМ chхi mхмi nhвмt#
+Tвмt caТ caмc vвтt phвТm рaЮ рэхтc baмn#
+Lэu nфтi dung chat thaМnh рiтnh daтng text#
+/savechat: Lэu nфтi dung chat#
+Ргng kyм taМi khoaТn caм nhвn#
+TэМ chфмi tin nhгмn#
+Nhвтn tin nhгмn#
+HiкТn thiт ''Miss''#
+HiкТn thiт ''Miss''#
+Bвтt zooming camera#
+Tгмt zooming camera#
+/camera On Off: РaЮ bвтt/tгмt zooming. /miss: ChuyкТn рфТi hiкТn thiт ''Miss''#
+Xem thфng tin kyЮ nгng#
+Thay рфТi kyЮ nгng#
+Рфт phвn giaТi nкМn#
+Рфт phвn giaТi kкмt cвмu#
+РiкМu chiТnh chi tiкмt#
+Nhвтn %s Zeny#
+Tкn bang hфтi#
+Cвмp рфт bang hфтi#
+TrэхТng bang hфтi#
+ThaМnh viкn#
+Cвмp рфт trung biМnh#
+LaЮnh thфТ#
+Khuynh hэхмng#
+EXP#
+Huy hiктu#
+РiкТm thuкм#
+Liкn minh#
+Рфмi thuТ#
+Thфng tin bang hфтi#
+Thфng tin thaМnh viкn#
+Chэмc danh#
+KyЮ nгng bang hфтi#
+Danh saмch truтc xuвмt#
+Thфng baмo#
+Danh saмch tвмt caТ caмc bang hфтi#
+Danh saмch tin nhгмn riкng#
+MхТ cэТa sфТ tin nhгмn#
+Nhвмn [Alt]+[H] ркТ mхТ cэТa sфТ tin nhгмn riкng#
+MхТ cэТa sфТ tin nhгмn riкng tэт рфтng#
+Xoмa#
+Рoмng tэМ khi# 
+Kкмt nфмi lвМn cuфмi#
+IP kкмt nфмi lвМn cuфмi#
+Kкмt baтn#
+Baтn coм chгмc chгмn muфмn xoмa?#
+Baтn coм chгмc chгмn muфмn thoaмt?#
+Kкмt baтn#
+Tэт рфтng mхТ cэТa sфТ hфтp thoaтi 1:1 khi coм ngэхМi PM#
+MхТ cэТa sфТ 1:1#
+Khi khфng phaТi laМ baтn, haЮy mхТ cэТa sфТ hфтp thoaтi 1:1#
+Khi cэТa sфТ hфтp thoaтi 1:1 рэхтc mхТ, baтn seЮ рэхтc thфng baмo bгМng вm thanh caТnh baмo#
+Baтn coм muфмn xoмa kyм tэт?#
+%s рaЮ rхМi bang hфтi#
+Lyм do: %s#
+GiaТi thкТ bang hфтi thвмt baтi#
+Lyм do giaТi thкТ bang hфтi: %s#
+TaМi khoaТn naМy рaЮ biт xoмa#
+Giaм:#
+%s рaЮ biт truтc xuвмt khoТi bang hфтi#
+Nguyкn nhвn: %s#
+Khфng thкТ trang biт vвтt phвТm#
+Khфng thкТ thay рфТi caМi ргтt nhoмm#
+РaЮ lвтp bang hфтi thaМnh cфng#
+Baтn рaЮ laМ thaМnh viкn cuТa bang hфтi#
+Tкn bang hфтi naМy рaЮ рэхтc sэТ duтng#
+Nhвтn tin nhгмn tham gia bang hфтi. Baтn coм рфМng yм tham gia khфng?#
+Gia nhвтp caмc bang hфтi khaмc#
+TэМ chфмi gia nhвтp bang hфтi#
+Tham gia bang hфтi thaМnh cфng#
+Sфм thaМnh viкn bang hфтi vэхтt quaм giхмi haтn#
+MхМi(%s) tham gia bang hфтi#
+Chэa hoтc рuТ kyЮ nгng ркТ gia nhвтp liкn minh#
+Gia nhвтp liкn minh thaМnh cфng#
+Baтn рaЮ sэТ duтng рiкТm ngaМy hфm nay#
+Chэa рuТ mфтt thaмng kкТ tэМ khi liкn minh vхмi nhвn vвтt naМy#
+Baтn рaЮ kiкмm рэхтc рiкТm liтch sэт tэМ %s#
+Baтn рaЮ nhвтn рэхтc рiкТm bвмt liтch sэт tэМ %s#
+GiaТm thхМi gian chat (MхТ)#
+Tгng thхМi gian chat (Treo)#
+Yкu cвМu giao diтch vхмi (%s)#
+MхМi (%s) tham gia nhoмm#
+Nhвтn рэхтc tin nhгмn tэМ bang hфтi mхМi tham gia liкn minh. Baтn coм muфмn tham gia liкn minh khфng?#
+РaЮ trхТ thaМnh mфтt liкn minh#
+TэМ chфмi liкn minh#
+Chвмp nhвтn liкn minh#
+Sфм lэхтng рфтi рфМng minh trong bang hфтi рфмi рiтch vэхтt quaм giхмi haтn#
+Sфм lэхтng liкn minh bang hфтi vэхтt quaм giхмi haтn#
+Liкn minh bang hфтi#
+Bang hфтi рaЮ giaТi thкТ thaМnh cфng#
+Sфм ID sai, khфng thкТ giaТi thкТ bang hфтi#
+VвЮn coМn nhэЮng thaМnh viкn bang hфтi khфng thкТ biт caмch chэмc#
+Ргтt guild naМy laМ Рфмi thuТ#
+Choтn maМu toмc#
+Thiкмu рaтo cuт cвМn thiкмt ркТ thaМnh lвтp bang hфтi#
+Thфng tin quaмi vвтt#
+Tкn#
+Haтng#
+HP#
+Kiмch thэхмc#
+Loaтi#
+MDEF#
+Thuфтc tiмnh#
+Trung tiмnh#
+Nэхмc#
+Рвмt#
+LэТa#
+Gioм#
+Рфтc#
+Thaмnh#
+Boмng tфмi#
+HфМn ma#
+Thвy ma#
+Baтn khфng thкТ chкм taтo vвтt phвТm#
+Danh muтc vвтt phвТm coм thкТ chкм taтo#
+Chкм taтo#
+Nguyкn liктu cвМn thiкмt#
+Chкм taтo thвмt baтi#
+Chкм taтo thaМnh cфng#
+Chкм taтo thвмt baтi#
+Chкм taтo thaМnh cфng#
+Baтn khфng рuТ level yкu cвМu#
+Level cuТa baтn quaм cao cho nghкМ naМy#
+NghкМ cuТa baтn khфng phuМ hхтp vхмi viктc naМy#
+Thфng baмo thгm doМ bвЮy#
+Vui loМng nhвтp thфng tin ркТ lэu#
+GэТi ркмn bang hфтi#
+Cash taМi khoaТn рaЮ рэхтc sэТ duтng hкмt, vui loМng thкm giaм triт trэхмc#
+Maмy chuТ рang bвтn, vui loМng thэТ kкмt nфмi laтi sau#
+Khi maмy chuТ biт ngгмt kкмt nфмi hoгтc khi ргng nhвтp liкn tuтc, baтn seЮ khфng thкТ ргng nhвтp trong 20 giвy#
+ThaТ chim эng#
+GхЮ#
+NhoТ#
+VэМa#
+Lхмn#
+Gвмp рфi#
+Gвмp ba#
+Gвмp bфмn#
+Baтn biт cвмm ргng nhвтp ркмn khi %s#
+Chкм taтo vвтt phвТm#
+Taтo vвтt phвТm thuфтc tiмnh LэТa#
+Taтo vвтt phвТm thuфтc tiмnh Bгng#
+Taтo vвтt phвТm thuфтc tiмnh Gioм#
+Taтo vвтt phвТm thuфтc tiмnh Рвмt#
+61.220.60.11#
+6900#
+https://ro.vtcgame.vn/#
+Kick %s#
+Maтnh#
+Rвмt maтnh#
+Cэтc kyМ maтnh#
+Lyм do truтc xuвмt#
+Tфмc рфт tвмn cфng tгng#
+Tфмc рфт tвмn cфng giaТm#
+Sэмc maтnh cuТa vuЮ khiм рaЮ рэхтc tгng.#
+Sэмc maтnh cuТa vuЮ khiм рaЮ giaТm.#
+ThхМi gian thi triкТn kyЮ nгng рaЮ giaТm.#
+ThхМi gian thi triкТn kyЮ nгng рaЮ quay vкМ biМnh thэхМng.#
+VuЮ khiм рaЮ taтm thхМi рэхтc tвТm Рфтc.#
+VuЮ khiм рaЮ taтm thхМi рэхтc chuyкТn thaМnh thuфтc tiмnh Thaмnh.#
+VuЮ khiм рaЮ quay vкМ thuфтc tiмnh ban рвМu.#
+Aмo giaмp рaЮ рэхтc cэхМng hoмa thuфтc tiмnh Thaмnh.#
+Aмo giaмp рaЮ quay vкМ thuфтc tiмnh ban dвМu.#
+[Kiмch hoaтt] Laм chгмn.#
+[HuТy kiмch hoaтt] Laм chгмn.#
+[Kiмch hoaтt] hiктu эмng gвy 100%% saмt thэхng lкn quaмi vвтt cхЮ nhoТ, vэМa vaМ lхмn.#
+[HuТy kiмch hoaтt] hiктu эмng gвy 100%% saмt thэхng lкn quaмi vвтt cхЮ nhoТ, vэМa vaМ lхмn.#
+[Kiмch hoaтt] hiктu эмng Tгng Sэмc Maтnh.#
+[HuТy kiмch hoaтt] hiктu эмng Tгng Sэмc Maтnh.#
+[Kiмch hoaтt] hiктu эмng Sэмc Maтnh Tфмi Рa.#
+[HuТy kiмch hoaтt] hiктu эмng Sэмc Maтnh Tфмi Рa.#
+[Maмy chuТ mхмi]#
+ (%d ngэхМi chхi)#
+ (Рang baТo triМ)#
+ThaМnh viкn bang hфтi %s рaЮ ргng nhвтp.#
+ThaМnh viкn bang hфтi %s рaЮ thoaмt game.#
+Nhвтn рэхтc %d рiкТm kinh nghiктm.#
+Nhвтn рэхтc %d рiкТm kinh nghiктm nghкМ.#
+Baтn рaЮ rхМi hфтi.#
+Biт truтc xuвмt khoТi bang hфтi#
+Nhвтn daтng vвтt phвТm thaМnh cфng#
+Nhвтn daтng vвтt phвТm thвмt baтi#
+Kкмt hхтp vвтt phвТm thaМnh cфng#
+Kкмt hхтp vвтt phвТm thвмt baтi#
+Ргтt Hфтi thuМ рiтch thaМnh cфng#
+CaМi ргтt Hфтi thuМ рiтch thвмt baтi viМ vэхтt quaм giхмi haтn#
+РaЮ laМ keТ thuМ#
+Tinh luyктn thaМnh cфng#
+Tinh luyктn thвмt baтi#
+Khфng coм рiтa рiкТm ркТ diтch chuyкТn tэмc thхМi#
+Khфng coм рiтa рiкТm ркТ diтch chuyкТn tэмc thхМi#
+Vui loМng рхтi thкm trэхмc khi log out.#
+Chэмc danh#
+NghкМ#
+Ghi chuм#
+Р.Goмp#
+РiкТm thuкм#
+RхМi Bang hфтi#
+Loaтi#
+Haтng#
+Chэмc danh#
+MхМi#
+Phaтt#
+Thuкм %#
+Danh hiктu#
+Nфтi dung#
+Tкn bang hфтi#
+Cвмp рфт bang hфтi#
+ThaМnh viкn#
+Thэм haтng#
+Giaмm рiтnh vвтt phвТm#
+Danh saмch vвтt phвТm#
+Vui loМng nhвтp lyм do rхМi khoТi bang hфтi#
+Vui loМng nhвтp lyм do truтc xuвмt.#
+Рoмng cэТa sфТ cэТa haМng#
+KyЮ nгng #
+Tкn vвтt phвТm#
+https://member.gnjoy.com.tw/billing.aspx #
+Sфм lэхтng IP coм thкТ рэхтc sэТ duтng trong caмc quaмn caМ phк Internet рaЮ рэхтc sэТ duтng. Baтn coм muфмn traТ bгМng taМi khoaТn caм nhвn cuТa miМnh khфng?#
+Caмc рiкТm giaм triт рэхтc lэu trэЮ рaЮ рэхтc sэТ duтng hкмt. Kкмt thuмc troМ chхi#
+Tкn quaм daМi, vui loМng nhвтp tкn trong voМng 11 kyм tэт bгМng tiкмng Trung vaМ 23 kyм tэт bгМng tiкмng Anh#
+Рхтi trong^ff0000%d^000000giвy, nhвn vвтt cuТa baтn seЮ biт xoмa. Nкмu baтn muфмn tэМ boТ haМnh рфтng naМy, nhвмn[HuТy]#
+Baтn laМ ngэхМi sэТ duтng theТ phiм haМng thaмng#
+Baтn laМ ngэхМi duМng theТ рiкТm. Baтn coм%d giхМ,%d phuмt,%d giвy coМn laтi trong thхМi gian cuТa baтn#
+Baтn laМ ngэхМi duМng miкЮn phiм#
+Baтn laМ ngэхМi duМng miкЮn phiм. Baтn coМn%d giхМ,%d phuмt vaМ%d giвy#
+Baтn рang sэТ duтng theТ phiм haМng thaмng cho caмc quaмn caМ phк Internet vaМ baтn coм%d giхМ,%d phuмt vaМ%d giвy thхМi gian coм sгЮn. #
+TheТ рiкТm cafe internet baтn sэТ duтng coм%d giхМ,%d phuмt vaМ%d giвy coМn laтi. Nкмu nhэЮng ngэхМi chхi khaмc sэТ duтng theТ tiмn duтng cuМng mфтt luмc, thхМi gian tiкu thuт coм thкТ nhanh hхn.#
+Baтn laМ ngэхМi duМng thхМi gian raТnh trong quaмn caМ phк Internet#
+Baтn laМ ngэхМi duМng miкЮn phiм trong quaмn caМ phк Internet#
+Baтn рang хТ trong khu vэтc theТ tiмn duтng#
+CэТa sфТ biкТu caТm#
+/emo#
+/!#
+/?#
+/ho#
+/lv#
+/lv2#
+/swt#
+/ic#
+/an#
+/ag#
+/$#
+/..#
+/thx#
+/wah#
+/sry#
+/heh#
+/swt2#
+/hmm#
+/no1#
+/??#
+/omg#
+/oh#
+/X#
+/hlp#
+/go#
+/sob#
+/gg#
+/kis#
+/kis2#
+/pif#
+/ok#
+Phiмm tгмt#
+TaМi khoaТn naМy vвЮn рэхтc sэТ duтng#
+Do thay рфТi cх chкм saтc, troМ chхi taтm thхМi biт treo. Vui loМng kкмt nфмi laтi#
+IP baтn рaЮ nhвтp khфng khхмp vхмi IP рэхтc chэмng nhвтn bхТi maмy chuТ thu phiм. DэМng kкмt nфмi#
+РкТ traмnh viктc theТ tiмn duтng caм nhвn biт khвмu trэМ, IP trong cэТa haМng cafe Internet taтm thхМi biт treo. Nкмu baтn muфмn sэТ duтng theТ tiмn duтng ркТ trэМ рiкТm, vui loМng sэТ duтng IP рэхтc ргng kyм trong cэТa haМng khфng phaТi laМ caМ phк ркТ sэТ duтng#
+Baтn рaЮ рэхтc quaТn lyм bхТi mфтt nhвn viкn, buфтc troМ chхi kкмt thuмc#
+HaМnh trang cuТa baтn nгтng hхn 90%% nкn khфng thкТ sэТ duтng caмc kyЮ nгng#
+Khфng tкn#
+Xin chuмc mэМng, %s hiктn рang хТ baТng xкмp haтng vaМ рэхтc thгng haтng lкn %d#
+Thвтt рaмng tiкмc khi %s hiктn рang хТ trкn baТng xкмp haтng vaМ giaТm xuфмng %d#
+Thфng tin thuм cэng#
+Рфт haМi loМng#
+Thвn mвтt#
+Khфng thкТ mхТ cэТa haМng vaМ cэТa sфТ chat cuМng mфтt luмc#
+caмi#
+%s рaЮ bвмt tiТnh do рoМn tвмn cфng cuТa baтn#
+%s рaЮ tвмn cфng baтn ркмn mэмc baтn khфng thкТ chiкмn рвмu#
+Cho гn - khфng coМn '%s' nэЮa#
+Cho thuм cэng гn#
+Hiктu suвмt#
+Khфi phuтc traтng thaмi trэмng#
+Loaтi boТ phuт kiктn#
+Xem traтng thaмi thuм cэng#
+Phuт kiктn#
+РaЮ Trang biт#
+Danh saмch thuм cэng#
+Thaмo trang biт#
+Baтn chгмc chгмn muфмn cho thuм cэng гn?#
+Vui loМng nhвтp sфм trong voМng (0 ~ 9)#
+Caмc vвтt phвТm khфng xaмc рiтnh khфng thкТ baмn#
+Coм vвтt phвТm рiтnh giaм giaм 0 Zeny, baтn coм muфмn tiкмp tuтc baмn khфng?#
+[BiкТu tэхтng biкТu caТm mхмi]#
+Thфng baмo cho ngэхМi duМng phiкn baТn beta РaМi Loan .->Vui loМng ргng kyм laтi trong troМ chхi Shinkansen#
+Tin nhгмn cho ngэхМi duМng рaЮ ngэМng saтc хТ РaМi Loan .->Vui loМng traТ phiм hai lвМn#
+Vai troМ taМi khoaТn tэхng tэт рaЮ рэхтc ргng nhвтp#
+(%d tкn) - baтn cвМn phaТi iмt nhвмt 18 tuфТi#
+Kiмch hoaтt khiкu khiмch#
+Traтng thaмi khiкu khiмch рaЮ huТy#
+Kiмch hoaтt рфтc рoaмn#
+Traтng thaмi рфтc рoaмn рaЮ huТy#
+Kiмch hoaтt tвтp trung#
+Traтng thaмi nвng tвтp trung рaЮ huТy#
+Kiмch hoaтt traтng thaмi вТn #
+Traтng thaмi вТn рaЮ рэхтc gхЮ boТ#
+Kiмch hoaтt Nguтy trang thaМnh cфng#
+Traтng thaмi Nguтy trang рэхтc gхЮ boТ#
+Kiмch hoaтt phaТn эмng vхмi chвмt рфтc#
+Traтng thaмi phaТn эмng vхмi chвмt рфт рaЮ huТy#
+Tфмc рфт di chuyкТn chвтm hхn#
+Traтng thaмi phoМng thuТ рaЮ huТy#
+Tгng phoМng thuТ#
+HaМng raМo thiкn thвМn рaЮ huТy#
+РaЮ nhвтn phэхмc laМnh cuТa caмc thiкn thвМn#
+Phэхмc laМnh thiкn thвМn рaЮ huТy#
+Angel Light рэхтc sэТ duтng#
+Traтng thaмi Angel Light рaЮ huТy#
+Tфмc рфт Slow Poison рaЮ biт chвтm laтi#
+Traтng thaмi Slow Poison рaЮ huТy#
+CaТi thiктn tфмc рфт phuтc hфМi SP/HP#
+Magnificat рaЮ huТy#
+May mгмn tгng lкn#
+May mгмn рaЮ huТy#
+Baтn seЮ nhвтn saмt thэхng gвмp рфi tэМ tвмt caТ caмc рфмi thuТ#
+Angel Wrath рaЮ huТy#
+Tфмc рфт tвмn cфng рaЮ рэхтc tгng lкn#
+Tфмc рфт tвмn cфng giaТm#
+Toucan gгмn kкмt#
+Xuфмng xe#
+РaЮ рэхтc trang biт Falcon#
+Chim эng рaЮ huТy#
+Kiмch hoaтt traтng thaмi giaТ chкмt#
+Traтng thaмi giaТ chкмt рaЮ huТy#
+Tгng sэмc maтnh#
+Sэмc maтnh trхТ laтi biМnh thэхМng#
+Kiмch hoaтt aмo chгмn nгng lэхтng#
+Traтng thaмi aмo chгмn nгng lэхтng рaЮ рэхтc gхЮ boТ#
+Giaмp biт hoТng#
+Traтng thaмi Giaмp vхЮ рaЮ huТy#
+VuЮ khiм biт hoТng#
+Traтng thaмi vхЮ cuТa vuЮ khiм рaЮ huТy#
+Kiмch hoaтt traтng thaмi вТn#
+Traтng thaмi вТn chaМo рaЮ huТy#
+XэТ lyм tin nhгмn saтc chвтm, do рoм, chвтm trкЮ kкмt nфмi, vui loМng kкмt nфмi vхмi maмy chuТ sau#
+HuТy boТ caмc muЮi tкn/рaтn/phi tiкu рэхтc trang biт#
+Danh muтc MuЮi tкn#
+Danh muтc Xe рвТy#
+Baтn cвМn phaТi coм xe рвТy#
+Khфng thкТ mхТ phoМng chat#
+NgэхМi chхi coм thкТ mхТ taМi khoaТn mхмi trкn maмy chuТ mхмi vaМ tвтn hэхТng 15 ngaМy chхi miкЮn phiм#
+Khфng thкТ рэхтc sэТ duтng vхмi traтng thaмi ngфМi#
+Chгтn caмc tiмnh nгng chat vaМ kyЮ nгng sau %d phuмt#
+Chэмc nгng chat vaМ kyЮ nгng miкЮn phiм#
+Khфng thкТ trang biт vвтt phвТm#
+Rвмt рoмi#
+Рoмi#
+BiМnh thэхМng#
+MaЮn nguyктn#
+РвМy рuТ#
+Laт lвЮm#
+Ngaтi nguМng#
+Thвn mвтt#
+Trung thaМnh#
+Chэa biкмt#
+ThхМi gian sэТ duтng coМn laтi cuТa baтn laМ %d ngaМy %d giхМ %d phuмt#
+TaМi khoaТn naМy рang ргng nhвтp trкn maмy khaмc#
+ThхМi gian sэТ duтng coМn laтi cuТa baтn laМ %d giхМ %d phuмt#
+Baтn laМ ngэхМi chхi miкЮn phiм#
+TaМi khoaТn naМy khфng thкТ ргng nhвтp vaМo maмy chuТ miкЮn phiм#
+Tкn thuм cэng cuТa baтn cвМn phaТi bгМng kyм tэт tiкмng Anh#
+Tкn chiТ coм thкТ рфТi tкn thuм cэng mфтt lвМn. Tкn thuм cэng seЮ рэхтc рфТi thaМnh ^0000ff^0000ff %s^000000^000000. Baтn coм chгмc khфng?#
+/font#
+Khфng coМn рuТ Zeny trong bang hфтi#
+Vэхтt quaм sфм Zeny tфмi рa maМ bang hфтi coм, khфng thкТ thэтc hiктn#
+Рхn giaТn hoмa hiктu эмng Bвтt#
+Рхn giaТn hoмa hiктu эмng Tгмt#
+QuyЮ#
+Nкмu baтn muфмn thaТ mфтt vвтt phвТm xuфмng рвмt, vui loМng mхТ haМnh trang trэхмc (alt+e)#
+РiкТm cafe Internet рaЮ рэхтc sэТ duтng hкмt vaМ seЮ рэхтc chuyкТn рфТi thaМnh рiкТm caм nhвn ркТ thanh toaмn. Baтn coм chгмc chгмn muфмn tiкмp tuтc khфng?#
+No Msg_1#
+No Msg_2#
+Sфм Zeny khфng рuТ hoгтc sфм Zeny tфмi рa baтn yкu cвМu vэхтt quaм sфм Zeny baтn coм#
+Nhвn vвтt cuТa baтn рaЮ ngвмt рi. Nhвмn phiмm ESC, choтn 'KhхТi рфтng'. Hoгтc vui loМng choтn 'Tiкмp tuтc troМ chхi'#
+ - Nhвтn %d#
+BaТng thфng tin#
+/minimize#
+Vвтt phвТm naМy рaЮ biт hэ#
+/noshift:Baтn coм thкТ sэТ duтng "hфМi maмu" ркТ tвмn cфng quaмi vвтt maМ khфng cвМn nhвмn phiмm shift. Bвтt | Tгмt#
+Thay viМ nhвмn phiмm shift, baтn coм thкТ sэТ duтng kyЮ thuвтt hфМi maмu ркТ tвмn cфng quaмi vвтt.[ON]#
+Thay viМ nhвмn phiмm shift, baтn coм thкТ sэТ duтng kyЮ thuвтt hфМi maмu ркТ tвмn cфng quaмi vвтt.[OFF]#
+MSI_REFUSE_BAN_BY_DBA#
+MSI_REFUSE_EMAIL_NOT_CONFIRMED#
+MSI_REFUSE_BAN_BY_GM#
+MSI_REFUSE_TEMP_BAN_FOR_DBWORK#
+MSI_REFUSE_SELF_LOCK#
+MSI_REFUSE_NOT_PERMITTED_GROUP#
+MSI_REFUSE_WAIT_FOR_SAKRAY_ACTIVE#
+/aura: Рхn giaТn hoмa haМo quang. Bвтt|tгмt#
+HaМo quang hiкТn thiт biМnh thэхМng.[ON]#
+Рхn giaТn hoмa haМo quang.[OFF]#
+Liтch sэТ chat biт chгтn %d lвМn#
+Danh muтc chat biт chгтn#
+/showsame: Thay рфТi caмch hiкТn thiт font chэЮ#
+/noctrl | /nc: Baтn coм thкТ tэт рфтng tвмn cфng quaмi vвтt maМ khфng cвМn nhвмn phiмm ctrl. Bвтt | Tгмt#
+Tэт рфтng tвмn cфng quaмi vвтt maМ khфng cвМn nhвмn phiмm ctrl. [Tэт рфтng tвмn cфng ON]#
+Tэт рфтng tвмn cфng quaмi vвтt maМ khфng cвМn nhвмn phiмm ctrl.[Tэт рфтng tвмn cфng OFF]#
+Chгтn chat#
+HoaМn toaМn khфng cho pheмp chat (vф hiктu hoмa Nhвтt kyм)#
+Ruмt ngгмn thхМi gian chat biт cвмm (khфng boТ qua nhвтt kyм)#
+DuМng font chэЮ biМnh thэхМng.[hiкТn thiт tкn loaтi 1]#
+Sau khi font chэЮ trхТ nкn moТng hхn, tкn nhoмm seЮ рэхтc hiкТn thiт [hiкТn thiт tкn loaтi 2]#
+/doridori: nкмu baтn nhвтp lктnh naМy liкn tuтc, nhвn vвтt ngэхМi chхi seЮ lгмc рвМu#
+DiкЮn рaМn web tiмnh phiм#
+ThхМi haтn phiм haМng thaмng coм %d ngaМy, %d giхМ vaМ %d phuмt coМn laтi. \n Haтn choмt thхМi haтn %d ngaМy %d giхМ %d phuмt coМn laтi#
+/bingbing: Nкмu baтn nhвтp lктnh naМy liкn tuтc, nhвn vвтt ngэхМi chхi seЮ quay ngэхтc chiкМu kim рфМng hфМ#
+/bangbang: Nкмu baтn nhвтp lктnh naМy liкn tuтc, nhвn vвтt ngэхМi chхi seЮ quay theo chiкМu kim рфМng hфМ#
+/skillfail: Khi kyЮ nгng рoТ thвмt baтi, khфng coм thфng baмo naМo рэхтc hiкТn thiт. Bвтt | Tгмt#
+Mфтt thфng baмo рэхтc hiкТn thiт khi kyЮ nгng thвмt baтi.[HiкТn thiт ON]#
+Khi kyЮ nгng thвмt baтi, khфng coм thфng baмo naМo рэхтc hiкТn thiт.[HiкТn thiт OFF]#
+/notalkmsg: Nфтi dung chat khфng рэхтc hiкТn thiт trong cэТa sфТ chat. Bвтt | Tгмt#
+Nфтi dung cuТa cuфтc chat рэхтc hiкТn thiт trкn cэТa sфТ chat.[ON]#
+Nфтi dung chat khфng рэхтc hiкТn thiт trкn cэТa sфТ chat.[OFF]#
+/set1 : /noctrl + /showname + /skillfail#
+/Fog: Bвтt/Tгмt hiктu эмng sэхng muМ. Bвтt | Tгмt#
+Baтn рaЮ nhвтn рэхтc lхМi cвМu hфn, baтn coм рфМng yм khфng?#
+Nhвтn vвтt phвТm#
+Caм nhвn#
+NgвЮu nhiкn#
+1#
+2#
+3#
+4#
+5#
+6#
+7#
+8#
+9#
+10#
+11#
+12#
+13#
+14#
+15#
+Yкu#
+/report : Sгмp xкмp caмc tктp ркТ baмo caмo#
+Tктp naМy рэхтc sэТ duтng trong troМ chхi Bфт phвтn diтch vuт khaмch haМng cuТa Shinkansen laМ haМnh vi khфng рэмng ргмn hoгтc khфng рuмng trong troМ chхi\n Thфng tin xaмc thэтc.\N Nкмu baтn lэu dэхмi daтng loaтi tктp khaмc hoгтc thay рфТi nфтi dung khфng phuМ hхтp vхмi baТn gфмc,\n tктp khфng coм bвмt kyМ aТnh hэхТng bгМng chэмng naМo#
+Tфi yкu baтn!! #
+Khi hiМnh aТnh hoгтc hiктu эмng quaм saмng, haЮy рiкМu chiТnh рфт saмng cuТa maМn hiМnh#
+Khi coм sэт cфм vхмi chкм рфт maМn hiМnh tфТng thкТ, vui loМng sэТ duтng phiмm ALT+TAB ркТ chuyкТn рфТi maМn hiМnh sau khi thэтc hiктn troМ chхi. Noм coм hiктu quaТ рфмi vхмi mфтt sфм kiкТu maмy tiмnh#
+(%d number) Maмy chuТ traТ phiм#
+(%d number) maмy chuТ miкЮn phiм#
+ThaМnh viкn miкЮn phiм khфng thкТ kкмt nфмi vхмi maмy chuТ traТ phiм#
+Sau khi nhвмp vaМo nuмt chuфтt phaТi, baтn coм thкТ sэТ duтng caмc kyЮ nгng lэu trэЮ trong phiмm F9[/q1 ON]#
+Sau khi nhвмp vaМo nuмt chuфтt phaТi, caмc kyЮ nгng khфng thкТ рэхтc sэТ duтng[/q1 OFF]#
+/quickspell:Sau khi nhвмp chuфтt phaТi, baтn coм thкТ sэТ duтng caмc kyЮ nгng рэхтc lэu trэЮ trong phiмm F9 Bвтt | Tгмt#
+Sau khi sэТ duтng baмnh xe chuфтt, baтn coм thкТ sэТ duтng caмc kyЮ nгng lэu trэЮ trong caмc phiмm F7 vaМ F8[/q2 ON]#
+Khфng thкТ sэТ duтng caмc kyЮ nгng sau khi sэТ duтng baмnh xe chuфтt[/q2 OFF]#
+/quickspell2:Sau khi cuфтn baмnh xe chuфтt lкn xuфмng, baтn coм thкТ sэТ duтng caмc kyЮ nгng рэхтc lэu trэЮ trong caмc phiмm F7 vaМ F8 Tгмt#
+/q3 : /quickspell (/q1) + /quickspell2 (/q2)#
+/e1)#
+/e2#
+/e3#
+/e4#
+/e5#
+/e6#
+/e7#
+/e8#
+/e9#
+/e10#
+/e11#
+/e12#
+/emotion: HiкТn thiт danh saмch caмc biкТu tэхтng biкТu caТm coм thкТ рэхтc sэТ duтng#
+Bвтt caмc kyЮ nгng рэхтc caМi ргтt trкn phiмm tгмt cэТa sфТ 1, 2 vaМ 3. [/bm ON]#
+Tгмt caмc kyЮ nгng рэхтc caМi ргтt trкn phiмm tгмt cэТa sфТ 1, 2 vaМ 3. [/bm OFF]#
+/battlemode: Nкмu baтn nhвмn Q ~ O, baтn coм thкТ sэТ duтng caмc phiмm tгмt kyЮ nгng, caмc kyЮ nгng cuТa cэТa sфТ 2#
+Nhвмn A ~ L, baтn coм thкТ sэТ duтng caмc phiмm tгмt kyЮ nгng, caмc kyЮ nгng cuТa cэТa sфТ 3#
+Nкмu baтn mхТ caмc phвМn mкМm khaмc trong khi chaтy RO, tфмc рфт troМ chхi coм thкТ chвтm hхn#
+HхЮi Thiкn thвМn ~ Baтn coм nghe thвмy gioтng noмi cuТa tфi khфng?^^;#
+Tфi laМ ngэхМi mхмi bгмt рвМu#
+Ai рoм?#
+Giuмp tфi vхмi#
+Ai рoм muфмn nhвтn nuфi baтn. Baтn coм рфМng yм khфng?#
+GiэЮ caмc phiмm Z ~> ркТ sэТ duтng caмc kyЮ nгng trong cфтt kyЮ nгng 1. Bвтt | Tгмt#
+Nhвмn phiмm Space ркТ chat trong chкм рфт chiкмn рвмu#
+Khфng tiМm thвмy phвМn mкМm baТo mвтt troМ chхi. Vui loМng caМi ргтt laтi phвМn mкМm baТo mвтt cho troМ chхi#
+Mфтt sфм tктp phвМn mкМm trong Windows biт hoТng. Vui loМng caМi ргтt laтi Internet Explorer (IE)#
+TriМnh baТo vкт troМ chхi thвмt baтi trong khi thэтc hiктn. Vui loМng caМi ргтt laтi vaМ phвМn mкМm baТo mвтt troМ chхi#
+Caмc phвМn mкМm bвмt hхтp phaмp рэхтc tiМm thвмy, vui loМng рoмng caмc phвМn mкМm khфng cвМn thiкмt vaМ chaтy laтi#
+HuТy boТ nвng cвмp phвМn mкМm baТo vкт troМ chхi. Nкмu baтn khфng thкТ kкмt nфмi, vui loМng kiкТm tra traтng thaмi cuТa maтng vaМ tэхМng lэТa#
+Nвng cвмp triМnh baТo vкт troМ chхi vaМ kкмt nфмi maмy chuТ thвмt baтi. Vui loМng kкмt nфмi laтi sau hoгтc kiкТm tra laтi traтng thaмi maтng vaМ tэхМng lэТa#
+Quaм triМnh nвng cвмp phвМn mкМm baТo vкт troМ chхi chэa hoaМn tвмt. Vui loМng queмt vi-ruмt vaМ sэТ duтng phвМn mкМm quaТn lyм maмy tiмnh ркТ рiкМu chiТnh caМi ргтt vaМ chaтy laтi troМ chхi#
+/notrade: Tэт рфтng tэМ chфмi giao diтch Bвтt | Tгмt#
+Bвтt Tэт рфтng tэМ chфмi giao diтch [/nt ON]#
+Tгмt Tэт рфтng tэМ chфмi giao diтch[/nt OFF]#
+Khфng thкТ mua cuМng mфтt luмc hхn 30.000 vвтt phвТm#
+Vвтt liктu khфng рuТ#
+Thфng tin taМi khoaТn %s рaЮ biт boТ laтi#
+TaМi khoaТn naМy hiктn khфng thкТ ргng nhвтp do vвмn ркМ hack. РкТ biкмt chi tiкмt, vui loМng sэТ duтng diтch vuт hacker E-mail#
+TaМi khoaТn biт chгтn do sэт cфм BUG#
+Vвтt phвТm coм thкТ sэТa#
+SэТa thaМnh cфng#
+SэТa vвтt phвТm thвмt baтi (vui loМng xaмc nhвтn vвтt phвТm hoгтc khoaТng caмch tэМ рфмi phэхng)#
+/sc ON #
+/sc OFF #
+/systemcheck: KiкТm tra traтng thaмi hкт thфмng [DaМnh cho GM] On | Off#
+(%s) yкu cвМu kкмt baтn, baтn coм рфМng yм khфng?#
+Danh saмch baтn beМ рвМy#
+Danh saмch baтn beМ cuТa (%s) рвМy#
+РaЮ kкмt baтn vхмi (%s)#
+(%s) TэМ chфмi laМm baтn cuТa baтn#
+Nhвn vвтt biт khoмa cho ркмn %s.#
+Vвтt phвТm coм giaм cфм рiтnh laМ 10 triктu Zeny, seЮ tэт рфтng mua vaМ baмn vхмi giaм 10 triктu Zeny#
+(Rвмt iмt)#
+(Iмt)#
+(VэМa)#
+(Рфng)#
+(Rвмt рфng)#
+GM рaЮ chгтn baтn tham gia phoМng chat viМ haМnh vi khфng phuМ hхтp trong %d phuмt#
+ThхМi gian biт khoмa coМn laтi %d phuмt.#
+ThхМi gian biт khoмa рaЮ kкмt thuмc.#
+Baтn рaЮ biт chгтn sэТ duтng chat vaМ kyЮ nгng cho %d nhэ mфтt hiМnh phaтt tэт рфтng#
+ThхМi gian biт khoмa coМn laтi %d phuмt.#
+Chкм рфт chгтn kкмt thuмc, vui loМng chuм yм khi chхi#
+%s vaМ %s рaЮ ly hфn#
+%s рэхтc chiТ рiтnh laМ %s Solar Space cuТa Gravity.#
+%s рэхтc chiТ рiтnh laМ %s Luna Space cuТa Gravity.#
+%s рэхтc chiТ рiтnh laМ %s Stellar Space cuТa Gravity.#
+%s Solar Space cuТa Gravity: %s#
+%s Luna Space cuТa Gravity: %s#
+%s Stellar Space cuТa Gravity: %s#
+%s рэхтc chiТ рiтnh laМ %s Solar Monster cuТa Gravity.#
+%s рэхтc chiТ рiтnh laМ %s Luna Monster cuТa Gravity.#
+%s рэхтc chiТ рiтnh laМ %s Stellar Monster cuТa Gravity.#
+%s Solar Monster cuТa Gravity: %s#
+%s Luna Monster cuТa Gravity: %s#
+%s Stellar Monster cuТa Gravity: %s#
+/window: Khi viт triм cuТa cэТa sфТ рэхтc di chuyкТn, caмc thuфтc tiмnh рэхтc gгмn vaМo caмc cэТa sфТ khaмc seЮ nhвтp vaМo bкn trong ON#
+Khi viт triм cэТa sфТ рэхтc di chuyкТn, noм seЮ рэхтc kкмt nфмi vхмi caмc cэТa sфТ khaмc[/wi ON]#
+Khi viт triм cuТa cэТa sфТ рэхтc di chuyкТn, caмc thuфтc tiмnh maМ baтn muфмn kкмt nфмi vхмi caмc cэТa sфТ khaмc seЮ khфng biт thay рфТi.[[Wi OFF]#
+/pvpinfo: HiкТn thiт thaМnh tiмch PVP vaМ рiкТm PVP cuТa miМnh#
+%d thгмng, %d thua, рiкТm PVP laМ %d рiкТm#
+Mфтt рiкТm caмch рaЮ рэхтc cгn chiТnh thaМnh cфng.#
+Рвy laМ khu vэтc PK, haЮy cвТn thвтn vхмi caмc cuфтc tвмn cфng bвмt ngхМ#
+Nвng cвмp phвМn mкМm baТo mвтt, xaТy ra lфЮi do vi-ruмt vaМ phвМn mкМm giaмn рiктp. Vui loМng sэТ duтng phвМn mкМm chфмng vi-ruмt/phвМn mкМm giaмn рiктp ркТ loaтi boТ vi-ruмt, vui loМng ргng nhвтp laтi#
+Chэхng triМnh biт chвмm dэмt do sэт cфм. Vui loМng chaтy laтi troМ chхi#
+Baтn рaЮ biт chгтn troМ chuyктn, kyЮ nгng, vвтt phвТm#
+Vai troМ hiктn рang biт xoмa, рiкМu naМy coм thкТ gвy ra lфЮi ргng nhвтp taтm thхМi#
+Nhвn vвтt kкмt hфn hiктn рang biт xoмa, рiкМu naМy coм thкТ gвy ra viктc khфng ргng nhвтp taтm thхМi#
+Tвтp sэт#
+Kiкмm siЮ#
+Phaмp sэ#
+Cung thuТ#
+Tu siЮ#
+Thэхng gia#
+Рaтo chiмch#
+Hiктp siЮ#
+Linh muтc#
+PhuМ thuТy#
+Thхт sгn#
+Saмt thuТ#
+Tвтp sэт#
+Kiкмm siЮ#
+Phaмp sэ#
+Cung thuТ#
+Tu siЮ#
+Thэхng gia#
+Рaтo chiмch#
+Рaтo chiмch#
+Hiктp siЮ#
+Linh muтc#
+PhuМ thuТy#
+Thхт reМn#
+Thхт sгn#
+Saмt thuТ#
+MхМi nhвтn (%s) laМm con nuфi cuТa baтn #
+Nкмu baтn trхТ thaМnh mфтt рэмa treТ, baтn khфng thкТ taмi sinh, рiкТm chiТ sфм khфng thкТ tгng lкn trкn 80, vaМ sфм HP vaМ SP seЮ biт giaТm. Baтn coм chвмp nhвтn рiкМu naМy khфng?#
+Tвмt caТ caмc chiТ sфм xвмu рaЮ biт xoмa#
+Caмc chiТ sфм xвмu seЮ biт xoмa trong voМng 1 phuмt#
+Trong voМng 1 phuмt, HP seЮ tгng lкn tфмi рa #
+Trong voМng 1 phuмt, SP seЮ tгng lкn tфмi рa #
+Trong voМng 1 phuмt, tвмt caТ caмc khaТ nгng seЮ рэхтc caТi thiктn рaмng kкТ#
+Trong voМng 1 phuмt, vuЮ khiм рэхтc sэТ duтng seЮ рэхтc thкm thuфтc tiмnh thaмnh#
+Trong voМng 1 phuмt, aмo giaмp рэхтc sэТ duтng seЮ рэхтc thкm thuфтc tiмnh Thaмnh#
+Trong voМng 10 giвy, phoМng thuТ seЮ рэхтc caТi thiктn рaмng kкТ#
+Trong voМng 1 phuмt, sэмc tвмn cфng seЮ tгng lкn рaмng kкТ#
+Trong voМng 1 phuмt, tyТ lкт truмng vaМ tyТ lкт traмnh seЮ рэхтc tгng lкn рaмng kкТ#
+ChiТ coм thкТ nhвтn nuфi mфтt рэмa treТ#
+CaТ hai cha meт phaТi рaтt mэмc level 70 hoгтc cao hхn ркТ nhвтn nuфi mфтt рэмa treТ#
+[РIКТM] РiкТm baТng xкмp haтng cuТa thхт reМn рaЮ tгng %d рiкТm, do рoм, рiкТm рaЮ trхТ thaМnh %d рiкТm#
+[РIКТM] РiкТm baТng xкмp haтng cuТa NhaМ giaТ kim рaЮ tгng %d рiкТm, viМ vвтy рiкТm рaЮ trхТ thaМnh %d рiкТm#
+X#
+X#
+X#
+X#
+/notalkmsg2: Nфтi dung chat seЮ khфng рэхтc hiкТn thiт trong cэТa sфТ chat (bao gфМm caТ chat bang hфтi) Bвтt Tгмt#
+Nфтi dung chat seЮ рэхтc hiкТn thiт trong cэТa sфТ chat. [/nm2 ON]#
+Nфтi dung chat seЮ khфng рэхтc hiкТn thiт trong cэТa sфТ chat. (bao gфМm chat bang hфтi)[/nm2 OFF]#
+Vвтt phвТm coм thкТ nвng cвмp#
+Nвng cвмp vuЮ khiм: %s#
+Nвng cвмp vuЮ khiм: %s#
+Baтn khфng thкТ nвng cвмp %s trэхмc khi baтn nвng cвмp kyЮ nгng nвng cвмp vuЮ khiм#
+Caмc vвтt phвТm khфng рuТ cвМn thiкмt ркТ рэхтc reМn (%s) ркТ khфng thкТ giaТ maтo#
+Bфт giaмp hoaМn chiТnh laМ vф duтng, vaМ viктc loaтi boТ tвмt caТ caмc kyЮ nгng vuЮ khiм laМ vф iмch#
+Nhвn vвтt рaЮ kкмt hфn khфng thкТ рэхтc nhвтn nuфi#
+Tкn naМy chэa рэхтc ргng kiм trong Danh saмch baтn beМ cuТa baтn. Vui loМng kiкТm tra laтi tкn.#
+Caмc baМi viкмt nhэ /hi hoгтc /hi: Рэхтc sэТ duтng ркТ laМm quen vхмi mфтt nhвn vвтt рaЮ ргng nhвтp#
+Nhвn vвтt naМy khфng phaТi thaМnh viкn bang hфтi cuТa baтn. Vui loМng kiкТm tra laтi tкn.#
+Nкмu sфм Zeny nhвтp vaМo laМ hхn 99 triктu, giaм vвЮn seЮ рэхтc baмn vхмi giaм 99 triктu#
+NhэЮng lхМi tin nhгмn cuТa baтn beМ рэхтc рaтi diктn bхТi[Baтn beМ]vaМ caмc thaМnh viкn cuТa cuМng bang hфтi рэхтc рaтi diктn bхТi[ThaМnh viкn]#
+(TэМ tкn nhвn vвтt:) Mфтt lхМi tin nhгмn coм nghiЮa laМ khфng phaТi baтn beМ hay thaМnh viкn bang hфтi#
+/blacksmith: HiкТn thiт top 10 Blacksmiths#
+/alchemist: HiкТn thiт top 10 Alchemists#
+ALT+Y: CэТa sфТ cэТa sфТ coм thкТ dкЮ daМng mхТ haМng taм lктnh#
+[РIКТM] Baтn рaЮ рэхтc thкm vaМo baТng xкмp haтng taмc vuт Taekwon, tгng %d, рiкТm hiктn taтi laМ %d#
+[Nhiктm vuт Taekwon] Quaмi vвтt muтc tiкu: %s (%d%%)#
+LфЮi хТ thiкмt lвтp Game Guard: %lu#
+Phaмt hiктn gia tфмc#
+Phaмt hiктn phвМn mкМm bвмt hхтp phaмp (%s)#
+TroМ chхi hoгтc troМ chхi tiкмt kiктm, giaТ maтo#
+TriМnh baТo vкт troМ chхi рang chaтy, vui loМng thэТ laтi sau CaТm хn baтn#
+TroМ chхi рэхтc thэтc hiктn nhiкМu lвМn hoгтc triМnh tiкмt kiктm troМ chхi рaЮ chaтy. Vui loМng chaтy laтi sau khi troМ chхi kкмt thuмc#
+Chэхng triМnh baТo vкт troМ chхi рaЮ biт xoмa khфng chiмnh xaмc. Vui loМng chaтy laтi sau khi tгмt hoгтc chaтy phвМn mкМm gвy ra xung рфтt khaмc. CaТm хn baтn#
+TaТi xuфмng рхn viт virus vaМ cфng cuт hack thвмt baтi, noм coм thкТ khфng рuТ bфт nhхм hoгтc biт nhiкЮm#
+Thфng tin Homunculus#
+Danh muтc kyЮ nгng Homunculus#
+Vui loМng nhвтp 23 tэМ cho tкn cuфтc sфмng bгМng tiкмng Anh, 11 tэМ tiкмng Trung#
+Tкn chiТ coм thкТ рэхтc thay рфТi mфтt lвМn. Thay рфТi tкn cuТa Homunculus thaМnh %s. Baтn coм muфмn tiкмp tuтc khфng?#
+Khфng хТ viт triм ngay bвy giхМ ~#
+[PhaТn hфМi tэт рфтng]#
+Tэт рфтng traТ lхМi nhэЮng lхМi tin nhгмn cuТa ngэхМi khaмc khi khфng хТ viт triм#
+Khi khфng хТ viт triм, lхМi tin nhгмn cuТa ngэхМi khaмc seЮ khфng tэт рфтng traТ lхМi#
+Vui loМng nhвтp tin nhгмn traТ lхМi tэт рфтng#
+/fsh#
+/spin#
+/sigh#
+/dum#
+/crwd#
+/desp#
+/dice#
+/pk: hiкТn thiт 10 keТ giкмt ngэхМi haМng рвМu#
+[РIКТM] You have been rewarded with %d Slayer rank points. Your point total is %d.#
+Coм thкТ tiкмn hoмa#
+Baтn рaЮ quyкмt рiтnh xoмa Homunculus. Khi рaЮ xoмa, tвмt caТ thфng tin cuТa Homunculus seЮ mвмt vaМ khфng thкТ phuтc hфМi laтi. Baтn coм muфмn tiкмp tuтc?#
+Lэu traтng thaмi cuТa Homunculus trong tвтp tin#
+Khфng lэu trэЮ traтng thaмi cuТa Homunculus trong tвтp tin#
+Chiкмn binh thвтp tэт#
+ThвМy tu#
+HiкМn triкмt#
+Рaтo tгтc#
+NhaМ giaТ kim#
+Nhaтc cфng#
+Chiкмn binh thвтp tэт#
+ThвМy tu#
+HiкМn triкмt#
+Рaтo tгтc#
+NhaМ giaТ kim#
+VuЮ cфng#
+Tвтp sэт T#
+Kiкмm siЮ T#
+Phaмp sэ T#
+Cung thuТ T#
+Tu siЮ T#
+Thэхng gia T#
+Рaтo chiмch T#
+Tвтp sэт T#
+Kiкмm siЮ T#
+Phaмp sэ T#
+Cung thuТ T#
+Tu siЮ T#
+Thэхng gia T#
+Рaтo chiмch T#
+Рaтi hiктp siЮ#
+Рaтi linh muтc#
+Рaтi phuМ thuТy#
+Thхт thiкмc#
+Xaт thuТ#
+Рaтi saмt thuТ#
+Рaтi hiктp siЮ#
+Рaтi linh muтc#
+Рaтi phuМ thuТy#
+Thхт thiкмc#
+Xaт thuТ#
+Рaтi saмt thuТ#
+Thaмnh kyт binh#
+QuyкМn vэхng#
+Hoтc giaТ#
+Truy tгтc#
+NhaМ hoмa sinh hoтc#
+Nhaтc siЮ#
+Thaмnh kyт binh#
+QuyкМn vэхng#
+Hoтc giaТ#
+Truy tгтc#
+NhaМ hoмa sinh hoтc#
+VuЮ thвМn#
+Baтn chэa taтo mвтt khвТu. Taтo mвтt khвТu mхмi?#
+Sai 3 lвМn liкn tiкмp. Nhвтp laтi sau 30 phuмt, xin caТm хn#
+Khфng thкТ thay mвтt khвТu#
+Khi nhвтp mвтt khвТu, chiТ cho pheмp 4 chэЮ sфм vaМ 8 chэЮ sфм#
+Mвтt khвТu#
+Nhвтp mвтt khвТu mхмi#
+Vui loМng xaмc nhвтn mвтt khвТu#
+Thay рфТi mвтt khвТu hoaМn tвмt#
+Khфng khхмp vхмi mвтt khвТu mхмi рaЮ nhвтp#
+Vui loМng nhвтp mвтt khвТu#
+Homunculus sгмp chкмt! Nкмu baтn khфng cho гn nhanh, noм seЮ chaтy рi mвмt.#
+EXP#
+[SЭт KIКтN]Baтn рaЮ giaМnh рэхтc mфтt giaТi thэхТng trong sэт kiктn naМy, vui loМng nhвтn mфтt vвтt phвТm trong troМ chхi#
+Khфng thiмch#
+Rвмt khфng thiмch#
+Homunculus рaЮ рэхтc tuМy chiТnh.#
+Homunculus рaЮ рэхтc kiмch hoaтt AI cх baТn.#
+Danh muтc Thэ#
+Viкмt thэ#
+Рoтc thэ#
+Sau khi рэхтc chiТ рiтnh, baтn khфng thкТ thay рфТi! Baтn coм muфмn chiТ рiтnh baТn рфМ naМy khфng?#
+Caмc vвтt phвТm рaЮ рэхтc thкm vaМo haМnh trang#
+Khфng coм muтc naМo рэхтc thкm vaМo kho#
+GэТi thэ рaЮ thaМnh cфng#
+Viктc gэТi thэ рaЮ thвмt baтi do ngэхМi nhвтn khфng coМn tфМn taтi#
+[Solar, Lunar vaМ Stellar Angel] NhэЮng nхi lэu trэЮ vaМ quaмi vвтt рaЮ рэхтc rэТa trгмng#
+Ргng kyм рвмu giaм thвмt baтi#
+Ргng kyм рвмu giaм thaМnh cфng#
+Phiкn рвмu giaм naМy рaЮ biт huТy#
+Рвмu giaм рaЮ coм nhaМ thвМu khфng thкТ biт huТy#
+Xoмa thэ thaМnh cфng.#
+Xoмa thэ thвмt baтi.#
+РaЮ trang biт dao neмm.#
+%s рang online.#
+%s рang offline.#
+/loginout: HiкТn thiт traтng thaмi online/ngoaтi tuyкмn cuТa caмc thaМnh viкn vaМ baтn beМ cфng khai.#
+HiкТn thiт thфng baмo traтng thaмi online/ngoaтi tuyкмn cuТa baтn beМ trong cэТa sфТ chat. [/li ON]#
+Thфng baмo cuТa baтn beМ traтng thaмi online/ngoaтi tuyкмn khфng рэхтc hiкТn thiт trong cэТa sфТ chat. [/li OFF]#
+Noм рang chaтy.#
+Phaмt hiктn sэТ duтng phвМn mкМm Marco.#
+Phaмt hiктn sэТ duтng Speed Hack.#
+Phaмt hiктn API Hooking.#
+Phaмt hiктn Tin nhгмn Hooking.#
+Mф-рun biт sэТa рфТi hoгтc biт hoТng hoгтc Ver khфng nhвмt quaмn#
+(Thaмi Lan) Baтn ргng nhвтp bгМng thanh toaмn cafe Internet#
+Trang trэхмc#
+Trang tiкмp theo#
+Рвмu giaм#
+Xem caмc muтc#
+Ргng nhвтp#
+Baмn haМng рang tiкмn haМnh#
+Traтng thaмi tiкмn рфт mua haМng#
+Vвтt phвТm#
+Tкn vвтt phвТm#
+Giaм/giaм mua trэтc tiкмp#
+NgэхМi baмn#
+NgэхМi mua#
+ThхМi gian coМn laтi#
+%m thaмng%d ngaМy%H#
+CaМi ргтt thхМi gian#
+Phiм xэТ lyм#
+Khфng tiМm thвмy muтc naМo#
+Khфng coм vвтt phвТm naМo рang рэхтc baмn#
+Khфng coм vвтt phвТm naМo рэхтc mua#
+Thфng tin рвмu giaм khфng chiмnh xaмc#
+Khфng coм thфng tin ргng kyм nhэ mфтt vвтt phвТm рвмu giaм#
+РaЮ ргng nhвтp nhэ mфтt cuфтc рвмu giaм#
+Giaм khхТi рiкТm#
+Giaм mong muфмn#
+Giaм mua trэтc tiкмp#
+Hiктn рang sхТ hэЮu Zeny#
+Giaм cao nhвмt hiктn nay#
+Giaм thвМu trэхмc рoм#
+Giaм thвМu sau naМy#
+Baтn coм muфмn mua khфng?#
+Tфi coм thкТ baмn noм vхмi giaм naМy khфng?#
+TraТ giaм#
+Mua trэтc tiкмp#
+Kкмt thuмc рвмu giaм#
+TraТ giaм laтi#
+Viктc рвмu giaм рaЮ thaМnh cфng#
+Рвмu giaм рвмu giaм рaЮ thвмt baтi#
+Zeny khфng рuТ#
+Giaмp#
+TheТ#
+Khaмc#
+Sфм рвмu giaм#
+TiМm kiкмm#
+BuфТi рвмu giaм рaЮ kкмt thuмc#
+Cuфтc рвмu giaм khфng thкТ kкмt thuмc#
+Sфм рвмu giaм khфng chiмnh xaмc#
+Ркмn#
+Tiкu ркМ#
+Baтn nhвтn рэхтc thэ mхмi.#
+Рang tiМm...#
+Khфng thкТ ргng nhвтp рвмu giaм nэЮa, tфмi рa 5 muтc coм thкТ рэхтc ргng kyм#
+Khфng thкТ ргng kiм thкm vвтt phвТm рвмu giaм, tфмi рa 5 vвтt phвТm coм thкТ рэхтc ргng kiм.#
+Coм mфтt muтc khфng рэхтc yкu cвМu trong thэ seЮ biт xoмa#
+Vui loМng nhвтp tiкu ркМ thэ#
+/shopping: cho pheмp baтn mхТ cэТa haМng chiТ bгМng mфтt nhвмp chuфтt traмi vaМ рoмng cэТa haМng bгМng mфтt nhвмp chuфтt phaТi. [Bвтt/Tгмt]#
+Nhвмp mфтt lвМn ркТ mхТ cэТa haМng, nhвмp vaМo bкn phaТi tкn cэТa haМng ркТ рoмng cэТa haМng. [/sh ON]#
+Baтn coм thкТ mхТ cэТa haМng bгМng caмch nhвмp рфi chuфтt. [/sh OFF]#
+Nкмu baтn muфмn gэТi thэ, vui loМng nhвтp Zeny#
+Phiм рвмu giaм khфng рuТ#
+Xem traтng thaмi#
+Cho гn#
+Chкм рфт nghiТ#
+Super Novice (Male)#
+Super Novice (Female)#
+Taekwon Boy#
+Taekwon Girl#
+Taekwon Master (Male)#
+Taekwon Master (Female)#
+Soul Linker (Male)#
+Soul Linker (Female)#
+Рвy laМ mфтt hкт thфмng phiм cafe cafe ркТ phaмt hiктn coм hхn 2 taМi khoaТn рэхтc kкмt nфмi, vui loМng xaмc nhвтn trэхмc khi sэТ duтng#
+Baтn laМ ngэхМi chхi tiмnh phiм haМng thaмng (thхМi gian coМn laтi: %d ngaМy)#
+Baтn laМ ngэхМi chхi рiкТm (ThхМi gian coМn laтi: %dgiхМ %phuмt %giвy)#
+Vвтt phвТm naМy khфng ркТ рiмnh keМm trong thэ.#
+Baтn khфng thкТ nhвтn thкm vвтt phвТm. Vui loМng thэТ laтi.#
+Nam#
+NэЮ#
+NgэхМi chхi mхмi.#
+E-mail laМ cвМn thiкмt ркТ xoмa nhвn vвтt.#
+Vui loМng nhвтp рuмng thфng tin.#
+16#
+17#
+18#
+19#
+20#
+21#
+1001#
+1002#
+1003#
+1004#
+1006#
+1007#
+1008#
+1009#
+1012#
+1013#
+1014#
+1015#
+1019#
+1020#
+1021#
+1023#
+1024#
+1025#
+1027#
+1028#
+10#
+20#
+40#
+50#
+60#
+70#
+80#
+90#
+100#
+110#
+Baтn coм muфмn naтp 30 рiкТm khфng?#
+РaЮ naтp 30 рiкТm (5 giхМ)#
+Caмc vвтt phвТm khфng xaмc рiтnh khфng thкТ рэхтc liктt kк trкn рвмu giaм#
+Caмc vвтt phвТm tiкu hao khфng thкТ рэхтc liктt kк trкn рвмu giaм#
+РкТ mхТ cэТa sфТ chэЮ caмi, trэхмc tiкn haЮy рoмng cэТa sфТ xe рвТy#
+РкТ mхТ cэТa sфТ xe рвТy, trэхмc tiкn haЮy рoмng cэТa sфТ chэЮ caмi#
+Рaтn рэхтc trang biт рвМy рuТ.#
+Bэмc thэ рaЮ рэхтc traТ laтi cho ngэхМi gэТi.#
+Khфng coм thэ#
+Trong voМng mфтt giхМ, coм hхn 30 ngэхМi chхi рang online vхмi cuМng mфтt IP, vui loМng xaмc nhвтn vaМ sэТ duтng#
+Trong voМng mфтt giхМ, coм hхn 10 ngэхМi chхi рaЮ online vхмi cuМng mфтt IP, vui loМng xaмc nhвтn vaМ sэТ duтng#
+Vui loМng khхТi рфтng laтi troМ chхi#
+Liмnh thuк: Cung thuТ#
+Liмnh thuк: Kiкмm siЮ#
+Liмnh thuк: Thэхng thuТ#
+Hкмt haтn#
+Trung thaМnh#
+Triктu hфМi#
+Giкмt#
+Thuм cэng cuТa baтn рang рoмi vaМ laМm cho baтn caТm thвмy nhэ noм рang рфТ lфЮi cho baтn#
+[РIКТM] Baтn рaЮ kiкмm рэхтc %d РiкТm xкмp haтng nhiктm vuт thuвМn hoмa, mang laтi cho baтn tфТng sфм %d рiкТm.#
+[Nhiктm vuт thuвМn hoмa] Muтc tiкu quaмi vвтt: %s#
+/hunting: xem danh saмch quaмi cвМn sгn#
+[Yкu cвМu cuТa thiкn thвМn] LaМm хn cho cф gaмi naМy biкмt, Baтn coм bao nhiкu kyЮ nгng %s?#
+[Yкu cвМu cuТa thiкn thвМn] LaМm хn cho cф gaмi naМy biкмt, sфм Zeny baтn mang theo chia cho 100.000 laМ bao nhiкu?#
+[Yкu cвМu cuТa thiкn thвМn] LaМm хn cho cф gaмi naМy biкмt, baтn coм biкмt hфm nay laМ ngaМy giМ khфng?#
+[Yкu cвМu cuТa thiкn thвМn] LaМm хn cho cф gaмi naМy biкмt, bвy giхМ laМ mвмy giхМ?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26. Рфмi vхмi фng SiYeon, ngэхМi phuт traмch Super Novice, Taekwondo vaМ Zombie, tфТng cuТa baТng chэЮ caмi vaМ sфм tiкмng Anh laМ bao nhiкu?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26. Рфмi vхмi Munak dкЮ thэхng vaМ xinh рeтp, cuЮng laМ anh huМng cuТa HuyкМn thoaтi thвМn tiкn, baТng chэЮ caмi tiкмng Anh seЮ cфтng laтi bao nhiкu?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26. Bongun yкu thiмch cuТa tфi, tфТng cuТa baТng chэЮ caмi vaМ sфм tiкмng Anh laМ bao nhiкu?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26. Baтn seЮ nhвтn рэхтc sфм giМ nкмu baтn thкm caмc chэЮ caмi trong tэМ, Ragnarok?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26. Caмc рфмi taмc thiкn thвМn luфn хТ traтng thaмi trэтc tuyкмn laМ truт cфтt lхмn nhвмt cuТa tфi. TфТng sфм chэЮ sфм tiкмng Anh cuТa Online laМ bao nhiкu?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26. Caмc hiктp siЮ khфng sхт chкмt tэхтng trэng cho tэМ cuТa hoт laМ Death. TфТng cuТa baТng chэЮ caмi bгМng tiкмng Anh laМ bao nhiкu?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26. Tфi nghiЮ caмc hiктp siЮ rвмt рeтp trai. ChэЮ sфм tiкмng Anh cuТa Kinght cфтng laтi laМ bao nhiкu?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26, Рaтi diктn cho lэтc hвмp dвЮn, coм nghiЮa laМ Gravity. TфТng sфм baТng chэЮ caмi bгМng tiкмng Anh laМ bao nhiкu?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26. РiкМu quan troтng laМ phaТi sфмng roЮ raМng hхn trong boмng tфмi. TфТng sфм chэЮ caмi tiкмng Anh cuТa Dark laМ bao nhiкu?#
+[Yкu cвМu cuТa thiкn thвМn] A laМ 1, Z laМ 26. NgэхМi sэu tвМm, Collector thu thвтp tвмt caТ moтi thэм, tфТng cuТa baТng chэЮ caмi bгМng tiкмng Anh laМ bao nhiкu?#
+[Cвu traТ lхМi cuТa thiкn thвМn] CaТm хn baтn рaЮ noмi cho tфi biкмt~#
+[Cвu traТ lхМi cuТa thiкn thвМn] Tфi rвмt haМi loМng vкМ cвu traТ lхМi cuТa baтn. Baтn laМ mфтt nhaМ thaмm hiкТm tuyктt vхМi.#
+[Cвu traТ lхМi cuТa thiкn thвМn] Baтn laМm tфi thвмt voтng...#
+[РIКТM] РiкТm baТng xкмp haтng %d, tфТng рiкТm bвy giхМ %d.#
+РiкТm cuТa [%s] : %d РiкТm#
+Caмc kyм tэт khфng рэхтc choтn seЮ biт xoмa. Baтn coм muфмn tiкмp tuтc khфng?#
+Khфng thкТ choтn nhiкМu hхn 9.#
+Baтn coм muфмn thay рфТi tкn nhвn vвтt thaМnh '%s' khфng?#
+Tкn рaЮ рэхтc thay рфТi thaМnh cфng.#
+Thay рфТi tкn nhвn vвтt рaЮ thвмt baтi.#
+MфЮi lвМn chiТ coм thкТ mua mфтt loaтi vвтt phвТm.#
+Khфng choтn bвмt kyМ nhвn vвтt naМo, haЮy chгмc chгмn choтn iмt nhвмt mфтt nhвn vвтt.#
+Tкn nhвn vвтt рaЮ рэхтc thay рфТi vaМ khфng thкТ thay рфТi nэЮa#
+Thфng tin ngэхМi duМng khфng chiмnh xaмc#
+NhэЮng ngэхМi duМng khaмc рaЮ sэТ duтng tкn nhвn vвтt naМy, vui loМng sэТ duтng tкn nhвn vвтt khaмc#
+Khфng thкТ triктu hфМi caмc thaМnh viкn trong nhoмm viМ hoт khфng coм thвТm quyкМn#
+Khфng coм thaМnh viкn nhoмm рэхтc triктu hфМi trong baТn рфМ hiктn taтi#
+Khфng coм dвмu vкмt cuТa quaмi vвтt cвмp Boss рaЮ рэхтc nhiМn thвмy trong khu vэтc naМy#
+Quaмi vвтt truМm, '%s' seЮ xuвмt hiктn trong %02d giхМ vaМ %02d phuмt.#
+Viт triм cuТa MvP '%s' seЮ рэхтc hiктn trкn mini-map.#
+Baтn coм muфмn mхТ '%s' khфng?^ff0000Khфng thкТ huТy hoгтc hoaМn Vcoin sau khi mхТ hфтp. ^000000Sau khi mхТ, khфng thкТ di chuyкТn ngoaтi trэМ kho lэu trэЮ, cuЮng khфng thкТ lэu trэЮ caмc vвтt phвТm cho thuк trong kho. Caмc vвтt phвТm giхмi haтn coм thкТ рэхтc giao diтch vaМ di chuyкТn, ngay caТ khi caмc vвтt phвТm tэхng tэт рэхтc sэТ duтng nhiкМu lвМn, hiктu эмng cuТa chuмng seЮ khфng chфМng cheмo#
+Mua haМng thвмt baтi viМ NPC khфng tфМn taтi#
+Viктc mua thвмt baтi viМ mфтt sфм hкт thфмng saтc khфng hoaтt рфтng рuмng#
+Caмc vвтt phвТm khфng thкТ рэхтc mua trong trao рфТi#
+Thфng tin mua haМng thвмt baтi do thфng tin vвтt phвТm khфng roЮ raМng#
+STR рaЮ рэхтc tгng.#
+STR рaЮ quay vкМ ban рвМu.#
+AGI рaЮ рэхтc tгng.#
+AGI рaЮ quay vкМ ban рвМu.#
+VIT рaЮ рэхтc tгng.#
+VIT рaЮ quay vкМ ban рвМu.#
+INT рaЮ рэхтc tгng.#
+INT рaЮ quay vкМ ban рвМu.#
+DEX рaЮ рэхтc tгng.#
+DEX рaЮ quay vкМ ban рвМu.#
+LUK рaЮ рэхтc tгng.#
+LUK рaЮ quay vкМ ban рвМu.#
+Рфт neм traмnh (Flee) рaЮ рэхтc tгng lкn.#
+Рфт neм traмnh (Flee) рaЮ trхТ vкМ ban рвМu.#
+Рфт chiмnh xaмc (Hit) рaЮ рэхтc tгng lкn.#
+Рфт chiмnh xaмc (Hit) рaЮ trхТ laтi ban рвМu.#
+РoМn рaмnh chiм maтng (Critical) рaЮ рэхтc tгng.#
+TyТ lкт Critical Attack (Critical) рaЮ trхТ laтi traтng thaмi ban рвМu#
+Kinh nghiктm thu рэхтc tэМ viктc sгn quaмi vвтt рaЮ рэхтc tгng lкn.#
+Baтn seЮ khфng biт mвмt kinh nghiктm nкмu chкмt trong 30 phuмt.#
+TiТ lкт rхмt рфМ рaЮ рэхтc nhвn рфi trong voМng 30 phuмt.#
+Thфng tin viт triм cuТa MVP seЮ рэхтc hiкТn thiт sau 10 phuмt nэЮa.#
+Baтn coм chгмc chгмn muфмn mua saТn phвТm khфng? РiкТm D seЮ biт trэМ#
+Khфng рuТ рiкТm#
+^ff0000NgaМy hкмt haтn: %s^000000#
+Vвтt phвТm '%s' seЮ biкмn mвмt vaМo %d phuмt nэЮa.#
+'%s' seЮ biт xoмa khoТi rэхng рфМ cuТa baтn trong voМng 1 phuмt nэЮa.#
+'%s' рaЮ biт xoмa khoТi rэхng рфМ cuТa baтn.#
+Nhвтp sфм#
+%m/%d %H:%M#
+Quaмi vвтt truМm '%s' seЮ xuвмt hiктn trong 1 phuмt nэЮa.#
+Danh saмch kyЮ nгng cuТa liмnh рaмnh thuк#
+Baтn coм muфмn рфМng yм thэтc hiктn pheмp thuвтt tiкu thuт bхТi 1 Black Gemstone vaМ 1 triктu Zeny khфng?#
+[РIКТM] Baтn рaЮ nhвтn рэхтc %d рiкТm, tфТng рiкТm bвy giхМ %d рiкТm.#
+[Xкмp haтng thu thвтp] Muтc tiкu: %s#
+Hхтp рфМng liмnh рaмnh thuк рaЮ kкмt thuмc.#
+Liмnh рaмnh thuк рaЮ ngвмt xiТu.#
+Baтn рaЮ thaТ liмnh рaмnh thuк.#
+Liмnh рaмnh thuк рaЮ chaтy mвмt deмp.#
+Vвтt phвТm '%s' seЮ biкмt mвмt trong %d giвy nэЮa.#
+[Status of Honor Service]PhвМn thэхТng traТi nghiктm traтng thaмi%d%%, hiМnh phaтt traТi nghiктm tэТ vong giaТm%d%%, phвМn thэхТng tyТ lкт rхi kho baмu%d%%#
+Xin lэu yм rгМng baтn coм thкТ taтo laтi nhвn vвтt sau 24 giхМ#
+Linh рaмnh thuк sэТ duтng AI tuМy chiТnh.#
+Linh рaмnh thuк sэТ duтng AI cх baТn.#
+ %s's #
+%s рaЮ thu рэхтc %s.#
+HiкТn thiт tin nhгмn chat cфng khai#
+HiкТn thiт tin nhгмn chat riкng tэ#
+HiкТn thiт tin nhгмn chat nhoмm#
+HiкТn thiт tin nhгмn chat bang hфтi#
+Lвмy vвтt phвТm/hiкТn thiт thфng baмo thaТ#
+Bвтt/tгмt tin nhгмn Trang biт Thiкмt biт #
+HiкТn thiт thфng tin traтng thaмi bвмt thэхМng#
+HiкТn thiт thфng tin nhгтt рфМ cuТa thaМnh viкn nhoмm#
+HiкТn thiт traтng thaмi thaМnh viкn nhoмm#
+HiкТn thiт lфЮi khi sэТ duтng kyЮ nгng#
+HiкТn thiт thфng baмo caМi ргтt nhoмm#
+HiкТn thiт thфng baмo hoТng vвтt phвТm#
+HiкТn thiт cэТa sфТ Thфng tin Chiкмn diтch#
+TiкМn HAN cuТa [%s]: %d TiкМn HAN#
+Tin nhгмn chung#
+Thфng tin chiкмn diтch#
+TaМi khoaТn naМy рaЮ biт khoмa bхТi рiктn thoaтi vaМ biт khoмa bхТi рiктn thoaтi#
+Рoтc#
+Tэт рфтng рoтc#
+Bookmark#
+Quay laтi#
+Kкм tiкмp#
+Рoмng#
+Vвтt phвТm cuТa %s biт hoТng.#
+Vвтt phвТm %s cuТa %s рaЮ biт hoТng.#
+VuЮ khiм#
+Giaмp#
+Cвмp рфт kyЮ nгng khфng рuТ ркТ tham gia nhoмm#
+Cash miкЮn phiм cuТa [%s]: %d Cash#
+XaМi Free Cash: #
+Cash#
+22#
+23#
+24#
+25#
+^ff0000Khфng thкТ huТy hoгтc hoaМn Vcoin sau khi mua vвтt phвТm naМy. ^000000Baтn coм chгмc chгмn muфмn mua saТn phвТm khфng? TфТng %d рiкТm, %d рiкТm miкЮn phiм seЮ biт trэМ.#
+%d giхМ рaЮ trфi qua.#
+%d giхМ %d phuмt рaЮ trфi qua.#
+Vui loМng kкмt thuмc troМ chхi vaМ рiкМu chiТnh traТi nghiктm vaМ moтi thэм ркмn 50%%#
+РaЮ ркмn luмc bэхмc vaМo thхМi рiкТm khфng laМnh maтnh. HaЮy kкмt thuмc troМ chхi. TraТi nghiктm vaМ moтi thэм рэхтc рiкМu chiТnh vкМ 0%%#
+Nhiктm vuт#
+RO SHOP#
+Phoм baТn '%s' рaЮ рэхтc ргтt.#
+Phoм baТn '%s' ргтt chфЮ thвмt baтi.#
+Phoм baТn '%s' рaЮ рaЮ рэхтc ргтt#
+Phoм baТn '%s' рaЮ рэхтc ргтt.\n Vui loМng vaМo trong 5p.#
+Thвмt baтi khi taтo Phoм baТn '%s'.\n Vui loМng thэТ laтi.#
+Nhвn vвтt рaЮ khoмa mхМi vaМo nhoмm.#
+Khoмa tвмt caТ lхМi mхМi tham gia vaМo nhoмm.#
+Cho pheмp nhвтn tвмt caТ lхМi mхМi tham gia vaМo nhoмm.#
+Muтc naМy coм thкТ рэхтc giэЮ maЮi maЮi sau khi рэхтc trang biт. Baтn coм muфмn trang biт noм khфng?#
+Muтc %s рэхтc giэЮ viЮnh viкЮn#
+Khфng рuТ рiкТm, vui loМng kiкТm tra vaМ nhвтp laтi#
+Yкu cвМu tham gia nhoмm#
+HiкТn thiт thфng tin WOE#
+Ргтt chфЮ cho phoм baТn '%s' рaЮ biт huТy.#
+Phoм baТn '%s' khфng thкТ taтo, vui loМng thэТ laтi#
+KyЮ nгng naМy khфng thкТ рэхтc sэТ duтng хТ рвy#
+Muтc naМy khфng thкТ рэхтc sэТ duтng хТ рвy#
+Phoм baТn#
+%s Vui loМng chхМ#
+%s Tham gia#
+%s Рang tiкмn haМnh#
+Khфng ai tham gia vaМo phoм baТn vхмi thхМi gian cho pheмp; hвМm nguтc рaЮ biкмn mвмt.#
+Vui loМng ргтt chфЮ laтi ркТ tham gia phoм baТn.#
+Thэм tэт chхМ рхтi: ^ff0000%d^000000#
+^ff0000%s^000000 seЮ biт xoмa nкмu baтn khфng tham gia trong thхМi gian yкu cвМu#
+SeЮ kкмt thuмc vaМo luмc:#
+Ргтt chфЮ cho phoм baТn рaЮ biт huТy.#
+Phoм baТn biт huТy do hкмt thхМi gian.#
+Phoм baТn рaЮ biт huТy do quaм thхМi gian cho pheмp.#
+Phoм baТn рaЮ biт xoмa.#
+Coм lфЮi xaТy ra trong luмc taтo phoм baТn. Vui loМng relog laтi.#
+Slot naМy khфng coм sгЮn.#
+Cвмp рфт cх baТn cuТa baтn cвМn trкn 15.#
+Cвмp рфт nghкМ cuТa baтn cвМn trкn 15.#
+Khфng thкТ tham gia viМ class nghкМ cuТa baтn laМ Merchant class#
+Chэa рэхтc aмp duтng#
+Baтn khфng coм thвТm quyкМn taтo nhвn vвтt#
+Khфng thкТ xoмa#
+Nhвn vвтt naМy khфng cho ngэхМi khaмc soi trang biт.#
+Khфng khoe trang biт nэЮa.#
+Cho pheмp moтi ngэхМi xem trang biт cuТa tфi.#
+Soi trang biт cuТa %s#
+Trang biт cuТa '%s'#
+Khoe trang biт#
+Diтch vuт naМy chiТ daМnh cho ngэхМi chхi VIP.#
+NgэхМi chхi diтch vuт miкЮn phiм coм thкТ nhвтn tхмi 50.000 Zeny#
+Traтng thaмi chat trкn chiкмn trэхМng рaЮ thiкмt lвтp#
+HuТy traтng thaмi chat trкn chiкмn trэхМng#
+Thфng tin Liмnh рaмnh thuк - Loaтi quaмi vвтt#
+World Map#
+Phoм baТn рaЮ рoмng#
+^ff0000Liмnh рaмnh thuк chuвТn biт xoмa^000000, tвмt caТ thфng tin vaМ cвмp рфт cuТa liмnh seЮ mвмt. Baтn coм chгмc chгмn muфмn xoмa?#
+Phoм baТn рang mхТ#
+TaМi khoaТn naМy chэa рэхтc mхТ khoмa thфng qua khoмa baТo mвтt liкn laтc. Vui loМng quay sфм doМng mхТ khoмa (0800-893-131) trэхмc khi chхi#
+Sфм lэхтng ngэхМi chхi coм thкТ ргng nhвтp bгМng nhiкМu IP#
+Baтn рaЮ nhвтn рэхтc mфтt nhiктm vuт mхмi#
+^CC3399Yкu cвМu:#
+Mф taТ kyЮ nгng#
+РiкТm caмc kyЮ nгng mфтt khi aмp duтng, khфng thкТ phuтc hфМi. Baтn coм chгмc chгмn khфng?#
+NghкМ 1#
+NghкМ 2#
+Рвy laМ taМi khoaТn рaЮ sэТ duтng phвМn mкМm gian lвтn hoгтc triМnh cгмm ngoaМi. ThхМi gian kкмt thuмc рoмng bгng ::%s#
+PhвМn mкМm gian lвтn, plugin hoгтc vi-ruмt coм thкТ biт phaмt hiктn. Khaмch haМng рэхтc khuyкмn nghiт chaтy biМnh thэхМng. Tфi hy voтng moтi ngэхМi coм thкТ duy triМ mфi trэхМng troМ chхi saтch#
+Bвy giхМ laМ thхМi gian troМ chхi biМnh thэхМng, xin vui loМng, caТm хn baтn!#
+Kinh nghiктm nghкМ nhвтn рэхтc khi haт guтc quaмi vвтt tгng 1,25 lвМn trong 30 phuмt.#
+РiкТm kinh nghiктm nhвтn рэхтc khi haт guтc quaмi vвтt tгng 1,2 lвМn trong 30 phuмt.#
+РiкТm kinh nghiктm nhвтn рэхтc khi haт guтc quaмi vвтt tгng 2 lвМn trong 30 phuмt.#
+РiкТm kinh nghiктm nhвтn рэхтc khi haт guтc quaмi vвтt tгng 1,5 lвМn trong 60 phuмt.#
+Khфng thкТ aмp duтng cho nhoмm trкn baТn рфМ naМy.#
+(%s) Baтn рang хТ trкn baТn рфМ khфng thкТ tham gia nhoмm#
+CэТa haМng tiктn lхтi#
+TфТng sфм рiкТm thэтc hiктn: %d рiкТm#
+РiкТm mang: %d рiкТm#
+Free Cash: %d Cash#
+NgэхМi chхi trкn maмy chuТ naМy khфng thкТ ргng nhвтp vaМo maмy chuТ miкЮn phiм#
+Mвтt khвТu рaЮ hкмt haтn. Vui loМng ргng nhвтp laтi#
+NghкМ 3#
+Рфмi tэхтng khфng thкТ sэТ duтng kyЮ nгng naМy.#
+KyЮ nгng naМy khфng thкТ рэхтc sэТ duтng viМ noм vэхтt quaм sфм lэхтng Ansila possession#
+CвМn coм [Holy Water].#
+CвМn coм [Ancilla].#
+Khфng thкТ lгтp laтi trong mфтt khoaТng caмch nhвмt рiтnh#
+РкТ sэТ duтng kyЮ nгng naМy, cвМn coм caмc kyЮ nгng khaмc#
+Khфng cho pheмp chat хТ baТn рфМ naМy.#
+Hхn 3 giхМ рaЮ trфi qua#
+Hхn 5 giхМ рaЮ trфi qua#
+Hкт thфмng baТo mвтt troМ chхi рэхтc khхТi taтo bвмt thэхМng hoгтc phiкn baТn cuЮ hхn cuТa hкт thфмng baТo mвтt troМ chхi. Vui loМng chхi troМ chхi sau khi taТi xuфмng tктp caМi ргтt mхмi#
+Khфng coм tвтp tin ini hoгтc tвтp tin tuyктt vхМi. Vui loМng taТi tвтp tin caМi ргтt tэМ caмi mхмi#
+TiМm mфтt phвМn mкМm xung рфтt vхмi hкт thфмng baТo mвтt troМ chхi#
+Khaмch haМng bвмt thэхМng, vui loМng sэТ duтng khaмch haМng chiмnh haЮng#
+Vui loМng goтi рэхМng dвy khoмa baТo mвтt liкn laтc#+
+Nhвтn daтng khoмa baТo mвтt liкn laтc thвмt baтi#
+Khфng thкТ sэТ duтng kyЮ nгng naМy рхn leТ#
+KyЮ nгng naМy chiТ coм sгЮn trong caмc hэхмng cuт thкТ#
+Khфng thкТ triктu hфМi рэхтc nэЮa#
+Khфng coм linh cвМu hoгтc baтn khфng coм рuТ linh cвМu.#
+Khфng coм kyЮ nгng bгмt chэхмc naМo.#
+Khфng thкТ sэТ duтng laтi kyЮ nгng naМy.#
+KyЮ nгng khфng thкТ sэТ duтng khi рang trong traтng thaмi naМy.#
+РaЮ vэхтt quaм sфм lэхтng vвтt phвТm tфмi рa khфng thкТ mang theo, khфng thкТ lвмy thкm vвтt phвТm#
+Khфng coм sэт cho pheмp cuТa GM, vui loМng chaтy phвМn mкМm vхмi sэт cho pheмp cuТa GM#
+Phiкn baТn triМnh рiкМu khiкТn nProtect KeyCrypt khфng khхмp, vui loМng khхТi рфтng laтi hкт thфмng vaМ khхТi рфтng laтi#
+WindowXP рang chaтy хТ chкм рфт tэхng thiмch. Chкм рфт tэхng thiмch рaЮ biт xoмa khoТi phвМn mкМm. Vui loМng khхТi рфтng laтi phвМn mкМm#
+Phaмt hiктn baМn phiмm PS/2#
+TriМnh рiкМu khiкТn baМn phiмm USB phaмt hiктn caмc cuфтc tвмn cфng bкn ngoaМi#
+Phaмt hiктn cфng cuт giaмm saмt HHD#
+CвМn coм [Paint Brush].#
+CвМn coм [Surface Paint].#
+KyЮ nгng khфng cho pheмp хТ viт triм chiТ рiтnh.#
+SP khфng рuТ.#
+Khфng thкТ ргng nhвтp vaМo troМ chхi khi cэТa sфТ truyкМn coм nhiкМu hхn %d kyм tэт#
+CвМn coм [Neck Protection Candy]#
+CвМn coм [Regrettable Tears]#
+CвМn coм [Neck Protection Candy]#
+ChiТ coм thкТ рэхтc sэТ duтng vхмi chгтn vuЮ khiм#
+CвМn mфтt vuЮ khiм рэхтc tвТm thuфмc рфтc bхТi Рao phuТ thвтp tэт.#
+Vвтt phвТm naМy chiТ duМng khi рaЮ trang biт Mado Gear.#
+CвМn coм [Vulcan Bullet].#
+CвМn coм [Mado Gear Fuel].#
+CвМn coм [Liquid Condensed Bullet].#
+CвМn trang biт [Cannon Ball].#
+CвМn trang biт [Accelerator].#
+CвМn trang biт [Hovering Booster].#
+[Toxin] рaЮ рэхтc tвТm lкn vuЮ khiм.#
+[Paralyze] рaЮ рэхтc tвТm lкn vuЮ khiм.#
+[Venom Bleed] hiктu эмng рфтc рaЮ рэхтc tвТm lкn vuЮ khiм.#
+[Magic Mushroom] hiктu эмng рфтc рaЮ рэхтc tвТm lкn vuЮ khiм.#
+[Dex Heart] hiктu эмng рфтc рaЮ рэхтc tвТm lкn vuЮ khiм.#
+[Pyrexia] Hiктu эмng рфтc рaЮ рэхтc tвТm lкn vuЮ khiм.#
+[Oblivion] Hiктu эмng рфтc рaЮ рэхтc tвТm lкn vuЮ khiм.#
+[Leechend] рaЮ рэхтc tвТm lкn vuЮ khiм.#
+ChiТ coм thкТ sэТ duтng trong traтng thaмi Hovering.#
+CвМn trang biт [Suicidal Device].#
+CвМn trang biт [Shape Shifter].#
+CвМn coм рфтc cuТa Рao phuТ thвтp tэт.#
+CвМn trang biт [Cooling Device].#
+CвМn trang biт [Magnetic Field Generator].#
+CвМn trang biт [Barrier Builder].#
+CвМn trang biт [Camouflage Generator].#
+CвМn trang biт [Repair Kit].#
+CвМn coм [Monkey Wrench].#
+Khфng thкТ thi triкТn kyЮ nгng [%s].#
+Khфng thкТ xoмa trкn mэмc %d#
+Khфng thкТ sэТ duтng khi рang хТ trкn Mado Gear.#
+Xuфмng RфМng#
+GхЮ boТ Mado Gear#
+Tiкu#
+Cash#
+Giaмp#
+VuЮ khiм#
+Tкn#
+TheТ#
+Khaмc#
+Vэхтt quaм thхМi gian phaТn hфМi cuТa khaмch haМng vaМ ngгмt kкмt nфмi vхмi maмy chuТ#
+Phiкn baТn tктp HackShield khфng khхмp, vui loМng caМi ргтt laтi эмng duтng khaмch#
+CвМn coм [Mэagic Book].#
+Khфng thкТ giaТi maЮ [Magic Book] viМ quaм khoм ркТ hiкТu.#
+Khфng thкТ ghi nhхм kyЮ nгng viМ khфng рuТ рiкТm.#
+Khфng thкТ рoтc [Magic Book].#
+CвМn coм [Face Paint].#
+CвМn coм [Makeover Brush].#
+Sau thхМi gian chхМ, vui loМng ргng nhвтp laтi#
+CвТn thвтn! CuМng mфтt taМi khoaТn рaЮ online. Vui loМng taтm dэМng nhвтn daтng khoмa рiктn thoaтi, thay рфТi mвтt khвТu vaМ ргng nhвтp laтi#
+CвТn thвтn! CuМng mфтt taМi khoaТn рaЮ рэхтc xaмc рiтnh cho khoмa рiктn thoaтi di рфтng. Vui loМng taтm dэМng nhвтn daтng khoмa рiктn thoaтi di рфтng, thay рфТi mвтt khвТu vaМ ргng nhвтp laтi#
+CaМi ргтt#
+HiМnh aТnh#
+Вm thanh#
+Nhвмn 1 phiмm ркТ thiкмt lвтp, bвмm 'ESC' ркТ huТy thiкмt lвтp.#
+Phiмm naМy khфng thкТ chiТ рiтnh thaМnh mфтt phiмm рхn.#
+Phiмm naМy khфng thкТ chiТ рiтnh.#
+['%s'] biт truМng. Baтn vвЮn muфмn thay рфТi?#
+Phiмm tгмt baтn рaЮ chiТ рiтnh seЮ рэхтc khхТi taтo. Baтn coм chгмc chгмn muфмn tiкмp tuтc khфng?#
+Thanh phiмm tгмt#
+Giao diктn#
+BiкТu caТm#
+CaМi ргтt phiмm tгмt#
+BGM#
+Hiктu эмng#
+Giao diктn#
+MхТ вm thanh baмo hiктu khi coм ai tham gia chat#
+Tгмt вm thanh baмo hiктu khi coм ai tham gia chat#
+/tingonly : Only chat room sound is audible#
+/rock#
+/scissors#
+/paper#
+/love#
+/mobile#
+/mail#
+/antenna0#
+/antenna1#
+/antenna2#
+/antenna3#
+/hum#
+/abs#
+/oops#
+/spit#
+/ene#
+/panic#
+/whisp#
+Chэa caМi#
+ChiТ coм sгЮn khi рэхтc trang biт mфтt gioТ haМng#
+CвМn coм [Thorn Plant Seed].#
+CвМn coм [Blood Sucker Plant Seed].#
+Khфng thкТ duМng thкm nэЮa.#
+CвМn coм [Bomb Mushroom Spore].#
+CвМn coм [Fire Bottle].#
+CвМn coм [Oil Bottle].#
+CвМn coм [Explosive Powder].#
+CвМn coм [Smokescreen Powder].#
+CвМn coм [Tear Gas].#
+CвМn coм [Acid Bottle].#
+CвМn coм [ManEater Plant Bottle].#
+CвМn coм [Mandragora Flowerpot].#
+BфТ nhiктm trэхТng nhoмm#
+Baтn coм chгмc chгмn muфмn bфТ nhiктm trэхТng nhoмm mхмi?#
+Khфng thкТ bфТ nhiктm trэхТng nhoмm#
+Khфng thкТ thay рфТi#
+CвМn coм [%s] vхмi sфм lэхтng %d.#
+Giaм triт tinh luyктn giaТm#
+Vui loМng trang biт [%s]#
+Chiкмn trэхМng#
+Эмng duтng рaЮ biт huТy viМ mфтt tiМnh huфмng khфng thкТ di chuyкТn ркмn chiкмn trэхМng%%#
+No Msg_3#
+Nhвтp hoтc %Battlefield, chхМ рхтi ngэхМi chхi khaмc#
+No Msg_4#
+Baтn coм chгмc chгмn muфмn huТy эмng duтng chiкмn trэхМng %s cuТa miМnh khфng?#
+РaЮ hoaМn thaМnh huТy boТ nhвтp hoтc chiкмn trэхМng %s#
+ChхМ рхтi ркТ di chuyкТn ркмn chiкмn trэхМng %s. Рфмi vхмi chuyкТn рфтng khфng gian, haЮy xaмc рiтnh traтng thaмi baТo mвтt (giao diтch vaМ taтm dэМng chuyкТn рфтng khфng gian khaмc)#
+Tкn chiкмn trэхМng#
+Baтn coм chгмc chгмn muфмn di chuyкТn?#
+TiМm tin nhгмn nhoмm#
+TiМm tin nhгмn nhoмm chэa рэхтc bвтt#
+HфЮ trхт nhoмm, trкЮ 10 giвy#
+TrэхТng nhoмm laМ '%s'.#
+XaТy ra lфЮi hкт thфмng, khфng thкТ vaМo рэхтc#
+ChхМ рхтi nhiкМu ngэхМi hхn laМ nhвтp hoтc#
+Yкu cвМu рaЮ рэхтc thэтc hiктn#
+Sau thхМi gian chхМ рхтi, ргng nhвтp рaЮ biт huТy#
+Khфng рuТ рiкМu kiктn ркТ nhвтp caТnh, huТy ргng nhвтp#
+РaЮ xaТy ra lфЮi vaМ ргng nhвтp рaЮ biт huТy.#
+Yкu cвМu kyЮ nгng liкn quan [%s].#
+Yкu cвМu kyЮ nгng cuт thкТ.#
+CвМn coм %d Linh cвМu#
+CвМn coм Linh cвМu#
+Khфng thкТ nhвтn thкm. Sфм Zeny mang рaЮ рaтt mэмc tфмi рa.#
+Khфng thкТ chвмp nhвтn danh muтc chiкмn trэхМng, vui loМng kiкТm tra laтi#
+Nhвтp hoтc khфng рэхтc pheмp do khфng рuТ triМnh рфт#
+1 lэхтt kyЮ nгng chuyкn nghiктp ркТ tгng thкm %d#
+1 hoгтc 2 kyЮ nгng nghкМ tгng thкm %d#
+Vвтt phвТm biкмn рфТi#
+Рэхтc biкмn рфТi#
+Kкмt hхтp khфng thкТ thay рфТi#
+HaМnh trang quaм nгтng#
+Thкm vвтt phвТm рoМi hoТi khфng gian#
+Vвтt phвТm khфng tфМn taтi#
+ThaМnh cфng#
+Thвмt baтi#
+Thвмt baтi, tвмt caТ caмc vвтt liктu biкмn mвмt cuМng nhau#
+РфТi tкn thвмt baтi viМ quaм daМi#
+khфng thкТ thкm nэЮa.#
+nhвтn daтng thвмt baтi#
+check bot#
+Vвтt liктu chэa рэхтc xaмc рiтnh, khфng thкТ sэТ duтng#
+IP naМy khфng thкТ ргng nhвтp vaМo troМ chхi, vui loМng liкn hкт vхмi diтch vuт khaмch haМng#
+Tфi taтm thхМi ргng nhвтp sau khi nhвтp sai mвтt khвТu 6 lвМn. Vui loМng xaмc nhвтn laтi mвтt khвТu#
+Baтn coм phiкМn nкмu caмc vвтt phвТm рэхтc sэТ duтng trong quaм triМnh tфТng hхтp рэхтc tiкu thuт?#
+Vui loМng nhвтp vгn baТn vaМ sфм хТ bкn traмi#
+Thфng tin chiкмn trэхМng#
+ChхМ tham gia#
+Hэхмng dвЮn ргng kyм tham gia chiкмn trэхМng#
+Xin lфЮi, vai troМ cuТa nghкМ naМy hiктn biт cвмm ргng nhвтp ркТ thэТ nghiктm#
+BoТ caмc trang biт#
+Mini Icon#
+Chiкмn trэхМng A: Chiкмn trэхМng B#
+Traтng thaмi chхМ рхтi#
+Nhгмc nhхТ ркТ huТy эмng duтng chiкмn trэхМng#
+Sфм ngэхМi tham gia Chiкмn trэхМng cвМn thiкмt#
+Chiкмn trэхМng A рang chхМ#
+Chiкмn trэхМng B рang chхМ#
+TiМnh huфмng chхМ рхтi cuТa tфi: %d (Chiкмn trэхМng A)#
+TiМnh huфмng chхМ рхтi cuТa tфi: %d (Chiкмn trэхМng B)#
+HiкТn thiт biкТu tэхтng chiкмn trэхМng#
+Khфng hiкТn thiт biкТu tэхтng chiкмn trэхМng#
+Nhгмc di chuyкТn хТ chiкмn trэхМng#
+Nhгмc nhхТ ркТ tiкмp tuтc vaМo chiкмn trэхМng#
+Ai рoм#
+ [%s] gвy '%d' saмt thэхng lкn baтn.#
+ [%s] nhвтn рoМn рaмnh tэМ [%s] vхмi '%d' saмt thэхng.#
+ [%s] nhвтn '%d' saмt thэхng.#
+ [%s] рaЮ tвмn cфng [%s] vхмi '%d' saмt thэхng.#
+Baтn рaЮ vэмt %s (%d).#
+Tiкu diктt quaмi vвтt [%s] tэМ nhiктm vuт [%s]. (%d/%d)#
+Nhiктm vuт [%s] рaЮ biт xoмa.#
+Liтch sэТ chiкмn рвмu cuТa [%s].#
+%d' EXP#
+%d' Job EXP#
+ nhвтn рэхтc.#
+ рaЮ mвмt.#
+Biт рaмnh cгмp '%d' Zeny tэМ [%s].#
+Tin nhгмn chiкмn рвмu#
+Thфng tin trвтn chiкмn trong nhoмm#
+Sфм EXP nhвтn рэхтc#
+NgэхМi chхi nhвтn рэхтc EXP#
+HiкТn thiт thфng tin nhiктm vuт#
+Thфng tin chiкмn trэхМng#
+Tхмi [%s] #
+Thi triкТn kyЮ nгng [%s].#
+Kiмch hoaтt khoмa caМi ргтt#
+HuТy kiмch hoaтt khoмa caМi ргтt#
+[%s]рaЮ nhвтn '%s' tэМ [%s]#
+Kiкмm siЮ#
+Phaмp sэ#
+Cung thuТ#
+Tu siЮ#
+Thэхng gia#
+Рaтo chiмch#
+Hiктp siЮ#
+Linh muтc#
+PhuМ thuТy#
+Thхт reМn#
+Thхт sгn#
+Saмt thuТ#
+Chiкмn binh thвтp tэт#
+ThвМy tu#
+HiкМn triкмt#
+Рaтo tгтc#
+NhaМ giaТ kim#
+Nhaтc cфng#
+VuЮ cфng#
+Hiктp siЮ cфТ ngэЮ#
+PhuМ thuТy diт giaмo#
+Siкu xaт thuТ#
+Giaмm muтc#
+Thхт maмy#
+Рao phuТ thвтp tэт#
+Hфт vкт hoaМng gia#
+Miт thuвтt sэ#
+Nhaтc trэхТng#
+VuЮ thвМn lang thang#
+QuyкМn sэ#
+NhaМ di truyкМn hoтc#
+Hгмc tгтc#
+Kiкмm siЮ T#
+Phaмp sэ T#
+Cung thuТ T#
+Tu siЮ T#
+Thэхng gia T#
+Рaтo chiмch T#
+Рaтi hiктp siЮ#
+Рaтi linh muтc#
+Рaтi phuМ thuТy#
+Thхт thiкмc#
+Xaт thuТ#
+Рaтi saмt thuТ#
+Thaмnh kyт binh#
+QuyкМn vэхng#
+Hoтc giaТ#
+Truy tгтc#
+NhaМ hoмa sinh hoтc#
+Nhaтc siЮ#
+VuЮ thвМn#
+Tвтp sэт#
+Tвтp sэт T#
+Siкu tвтp sэт#
+Thiктn xaт#
+NhвЮn giaТ#
+VoЮ siЮ#
+HuyкМn рai рвмu siЮ#
+Kкмt giхмi sэ#
+Chiкu mфт nhoмm#
+Danh saмch chiкu mфт nhoмm#
+Рang chiкu mфт#
+Yкu cвМu trang biт [Cung]#
+Yкu cвМu trang biт [Nhaтc cuт/roi]#
+ChiТ tiкмng anh vaМ sфм#
+Nhгмc nhхТ#
+Mua haМng thвмt baтi do thфng tin cэТa haМng mх hфМ#
+Caмc vвтt phвТm рэхтc giэЮ coм thкТ рэхтc loaтi boТ trong cэТa sфТ#
+ThхМi gian#
+BaТn рфМ#
+Khфng thкТ sэТ duтng vвтt phвТm/vвтt phвТm ркТ mгтc/mхТ khoмa trong traтng thaмi giao diтch#
+Giaм triт khфng xaмc рiтnh#
+/stateinfo: HiкТn thiт mф taТ biкТu tэхтng traтng thaмi. Bвтt | Tгмt#
+Thфng tin traтng thaмi ON: Mф taТ biкТu tэхтng traтng thaмi#
+Thфng tin traтng thaмi OFF: mф taТ biкТu tэхтng traтng thaмi tгмt#
+Khфng thкТ mua nhiкМu hхn %d caмc vвтt phвТm cuМng mфтt luмc#
+Khфng thкТ baмn nhiкМu hхn %d caмc vвтt phвТm cuМng mфтt luмc#
+TфТng sфм vвтt phвТm coм sгЮn ркТ mua laМ %d #
+Caмc caМi ргтt рэхтc lэu trэЮ хТ рэхМng dвЮn [%s\\%s]#
+[%s]hiктn khфng thкТ ргng kyм trao рфТi#
+RO_HELP#
+Khфng coм Anvil#
+Tвтp sэт viкn dэхмi cвмp 10 khфng thкТ gэТi tin nhгмn riкng tэ#
+Tвмn cфng#
+PhoМng thuТ#
+Phuтc hфМi#
+Phuт trхт#
+Hэхмng dвЮn chiкu mфт#
+Khфng thкТ ргng kyм liкn minh bang hфтi#
+Khфng thкТ aмp duтng cho thuМ рiтch bang hфтi#
+Khфng thкТ thкm baтn beМ trкn baТn рфМ cх sхТ#
+MхТ cэТa haМng#
+Giaм: #
+Zeny coм: #
+Giхмi haтn zeny mua#
+Vвтt phвТm baтn muфмn mua chэa рэхтc ргng kyм. Vui loМng ргng kyм vвтt phвТm baтn muфмn mua#
+Vui loМng nhвтp giaм cuТa vвтt phвТm %s #
+Vui loМng nhвтp giaм cuТa vвтt phвТm %s, giхмi haтn dэхмi 99,990,000 Zeny#
+Vui loМng nhвтp sфм lэхтng vвтt phвТm %s#
+TфТng %s sфм muтc рэхтc giэЮ vaМ mua рaЮ vэхтt quaм 9999. Vui loМng nhвтp sфм lэхтng dэхмi 9999.#
+РaЮ truМng lгтp#
+Vui loМng nhвтp giхмi haтn mua haМng#
+Sфм lэхтng giхмi haтn рaЮ nhвтp vэхтt quaм sфм lэхтng giэЮ, vui loМng ргтt laтi#
+%s  :  %s  Zeny => %s EA#
+Danh saмch nhэЮng thэм baтn coм thкТ mua#
+CэТa haМng cuТa tфi#
+Giхмi haтn: %s Zeny#
+%s %s Zeny%d#
+CэТa haМng#
+Danh saмch caмc vвтt phвТm ркТ baмn#
+TфТng sфм vвтt phвТm coм sгЮn ркТ baмn laМ %d#
+РaЮ vэхтt quaм sфм Zeny baмn haМng tфмi рa cuТa cэТa haМng#
+MхТ cэТa haМng thвмt baтi#
+TфТng troтng lэхтng cuТa vвтt phвТm vэхтt quaм giхмi haтn giэЮ laМ%d, vui loМng ргтt laтi#
+Caмc vвтt phвТm рaЮ mua ркмn giхмi haтn#
+Mua tвмt caТ moтi thэм#
+Sфм dэ cuТa ngэхМi mua khфng рuТ vaМ giao diтch thвмt baтi#
+РaЮ baмn %s %d cho %dz#
+%s coм nhiкМu vвтt phвТm hхn mэмc coм thкТ mua vaМ khфng thкТ baмn рэхтc#
+Khфng coм linh hфМn рэхтc triктu hфМi#
+Giхмi haтn cung cвмp maмy chuТ#
+Mвтt khвТu OTP coм 6 chэЮ sфм#
+Khфng tiМm thвмy thфng tin OTP, vui loМng liкn laтc quaТn triт viкn#
+Xaмc thэтc OTP thвмt baтi#
+РaЮ thкm quaТng caмo nhoмm#
+Chiкu mфт#
+Vai troМ#
+NghкМ 1#
+NghкМ 2#
+NghкМ 3-1#
+NghкМ 3-2#
+Taмi sinh nghкМ 2-1#
+Taмi sinh nghкМ 2-2#
+Caмc nghкМ khaмc#
+Chiкu mфт#
+TuyкТn thaМnh viкn#
+Рang tiМm kiкмm -#
+Choтn tвмt caТ#
+PhaТi tuyкТn iмt nhвмt mфтt nghкМ#
+PhaТi choтn iмt nhвмt 1 nghкМ#
+Caмc nghкМ nghiктp рэхтc choтn laМ %d vaМ coм thкТ choтn tфмi рa 6 nghкМ nghiктp#
+Khфng coм vгn baТn naМo ngoaМi sфм coм thкТ рэхтc nhвтp vaМo cфтt cвмp#
+vui loМng nhвтp sфм cвмp tэМ 1 ркмn 150#
+khфng thкТ nhiМn хТ baТn рфМ рaЮ choтn#
+baтn khфng рuТ рiкМu kiктn cвмp рфт ркТ sэТ duтng#
+baтn рaЮ vэхтt quaм mэмc maМ baтn coм thкТ sэТ duтng vвтt phвТm#
+Kiмch hoaтt chкм рфт chat#
+ChuyкТn рфТi cэТa sфТ chat#
+ > CaМi ргтt chat tab#
+Baмn#
+Mua#
+TiМm cэТa haМng#
+Tкn cэТa haМng#
+Sфм lэхтng#
+Рхn giaм#
+Quaм nhiкМu kкмt quaТ tiМm kiкмm, vui loМng nhвтp tкn chi tiкмt#
+Baтn coм muфмn mхТ cэТa haМng?#
+Xaмc thэтc SSO thвмt baтi#
+Khфng thкТ di chuyкТn ркмn khu vэтc vaМo thхМi рiкТm naМy#
+Search Partial#
+27#
+28#
+29#
+30#
+31#
+32#
+РiкТm EXP Base, Job tгng 75%% trong 30 phuмt, khi рaмnh quaмi vвтt.#
+РiкТm EXP Base, Job tгng 50%% trong 30 phuмt, khi рaмnh quaмi vвтt.#
+Khiкu vuЮ baмn haМng (mua) thфng tin#
+Khфng thкТ tiМm kiкмm#
+Xin lфЮi, khфng coм kкмt quaТ рэхтc tiМm thвмy cho thuвтt ngэЮ naМy#
+Khфng thкТ tiМm kiкмm#
+Vui loМng nhвтp tкn theТ hoгтc con рвМu tiкn (cuфмi cuМng) cuТa tкn#
+TiМm kiкмm coМn laтi:%d#
+Khфng tiМm kiкмm gian haМng thaМnh cфng#
+Phaтm vi рхn giaм cuТa vвтt phвТm laМ sai#
+Trang biт#
+Trang phuтc#
+Phuмt#
+Giвy#
+Vui loМng nhвтp tкn vвтt phвТm#
+Muтc naМy khфng tфМn taтi#
+Khфng coм baТn рфМ coм thкТ truy cвтp#
+Khфng coм tiкu ркМ (kкмt thuмc) cho theТ#
+Coм thкТ mua cuМng luмc 10 loaтi vвтt phвТm#
+Mua mфтt vвтt phвТm thвмt baтi#
+Vui loМng nhвтp ngaМy sinh gфМm 6 chэЮ sфм (viм duт:600422)#
+XaТy ra lфЮi khфng xaмc рiтnh#
+LфЮi cх sхТ dэЮ liктu#
+РкТ loaтi boТ mфтt nhвn vвтt, рвМu tiкn thoaмt khoТi bang hфтi#
+РкТ xoмa mфтt kyм tэт, trэхмc tiкn baтn phaТi thoaмt khoТi nhoмm#
+Khфng thкТ xoмa caМi ргтt hкт thфмng#
+Khфng thкТ xoмa thхМi gian#
+NgaМy sinh lфЮi#
+CвМn tгng sэт thвn mвтt#
+ChiТ sэТ duтng рэхтc trong caмc tiМnh huфмng chiкмn binh chuyкТn tiкмp#
+ChiТ рэхтc sэТ duтng trong trэхМng hхтp ChuyкТn рфТi - Gladiator#
+Ргng kyм рфтi thвмt baтi#
+Khфng coм nфтi dung liкn quan ркмn tiМm kiкмm#
+Thвмt baтi khi xoмa kкмt quaТ.#
+Khфng thкТ tiМm thвмy khфng coм quaТng caмo phuМ hхтp vхмi tiкu chiм cuТa baтn#
+Khфng tim thвмy thфng tin thanh toaмn.#
+Chuтp laтi giao diтch#
+[Giao diтch_%s]#
+Phiкмu giaТm giaм mхмi рэхтc tэт рфтng tiкu thuт do caмi chкмt#
+Рфмi thoaтi#
+Khфng thкТ taмi sэТ duтng#
+Haтn chкм sэТ duтng#
+Khфng haтn chкм sэТ duтng#
+Ргng nhвтp thвмt baтi khфng roЮ lyм do, vui loМng liкn hкт vхмi quaТn triт viкn#
+Xaмc thэтc thвмt baтi.#
+Baтn chэa ргng kyм.#
+Khфng thкТ ргng nhвтp do giхмi haтn рфт tuфТi.#
+Mua#
+HuТy boТ#
+Trang рвМu#
+Trang cuфмi#
+РфМ Mхмi#
+Hot#
+Giхмi haтn#
+РфМ thuк#
+Trang biт#
+Buff#
+Phuтc hфМi#
+Khaмc#
+Giaм#
+Sфм lэхтng#
+caмi#
+Free Cash: %s Р#
+Sфм dэ: %s Vcoin#
+Khфng thкТ triктu hфМi quaмi vвтt хТ khu vэтc naМy#
+SэТ duтng Free Cash vэхтt quaм cho pheмp#
+Caмc caМi ргтt seЮ рэхтc lэu trong [SaveData_ExMacro%d]#
+%d giвy coМn laтi ркТ baтn sэТ duтng#
+PhaТi рэхтc trang biт [Thэхng]#
+ChiТ sэТ duтng рэхтc khi cэхЮi rфМng#
+Sфм lэхтng maмy chuТ рaЮ vэхтt quaм sфм lэхтng tфмi рa ркТ ргng nhвтp#
+Chэмng nhвтn tкn thвтt chэa рэхтc hoaМn thaМnh, baтn seЮ vaМo trang chэмng nhвтn tкn thвтt#
+Vui loМng choтn mфтt trэхМng ркТ lэu#
+Xin chuмc mэМng %s, baтn nhвтn рэхтc '%s'!#
+Khфng thкТ sэТ duтng trong traтng thaмi U aмm#
+TфТng sфм lэхтng vвтt phвТm рaЮ mua vэхтt quaм sфм lэхтng tфмi рa#
+khфng thкТ gia nhвтp nhoмm хТ baТn рфМ naМy.#
+khфng thкТ rхМi nhoмm хТ baТn рфМ naМy.#
+Khфng thкТ truтc xuвмt/huТy nhoмm хТ baТn рфМ naМy.#
+Tкn thвтt#
+Sфм chэмng minh thэ#
+Email#
+Nhвтp sai#
+Thвмt baтi khi chuyкТn zeny #
+LфЮi nghкМ nghiктp#
+LфЮi giхмi tiмnh#
+Xaмc thэтc thфng tin ngэхМi chхi thaМnh cфng#
+Sai tкn, vui loМng nhвтp laтi#
+Sфм ID sai, vui loМng nhвтp laтi#
+XaТy ra lфЮi khфng xaмc рiтnh, vui loМng thэТ laтi sau#
+Khфng thкТ tвмn cфng trong khi gгмn kкмt#
+Khфng thкТ sэТ duтng kyЮ nгng trong khi gгмn kкмt#
+Mвтt khвТu phaТi tэМ 4 chэЮ trхТ lкn#
+Xaмc thэтc mвтt khвТu phuт thaМnh cфng#
+Taтo mвтt khвТu phuт thaМnh cфng#
+Xoмa mвтt khвТu phuт#
+Рuмng mвтt khвТu phuт#
+Baтn рaЮ nhвтp sai mвтt khвТu (%d lвМn coМn laтi)#
+Khфng thкТ taтo mвтt khвТu phuт#
+Khфng thкТ xoмa mвтt khвТu phuт#
+Khфng thкТ sэТa mвтt khвТu phuт#
+Mвтt khвТu baтn рaЮ nhвтp khфng khaТ duтng#
+Khфng thкТ sэТ duтng sфм ID#
+Mвтt khвТu hiктn coм#
+Mвтt khвТu phuт#
+РкТ baТo mвтt taМi khoaТn, nкn ргтt mвтt khвТu phuт#
+Khфng sэТ duтng mвтt khвТu phuт#
+CaМi ргтt mвтt khвТu phuт thвмt baтi#
+SэТ duтng mвтt khвТu phuт. Noм seЮ рэхтc aмp duтng vaМo lвМn tхмi#
+CaМi ргтt mвтt khвТu phuт thвмt baтi#
+РкТ baТo vкт taМi khoaТn cuТa baтn. Ргтt mвтt khвТu bфТ sung#
+Vui loМng sэТ duтng baМn phiмm sфм bкn dэхмi ркТ ргтt mвтt khвТu gфМm bфмn chэЮ sфм#
+Mвтt khвТu baтn рaЮ nhвтp khфng chiмnh xaмc 3 lвМn vaМ troМ chхi biт рoмng#
+Рaтo cuт#
+KyЮ nгng#
+Chiкмn lэхтc#
+Khaмc#
+Trong trвтn chiкмn#
+Khфng chiкмn рвмu#
+CaМi ргтt muтc phuт trхт#
+Tэт рфтng thay рфМ (mхТ sau lвМn tiкмp theo)#
+LaМn soмng kyЮ nгng tвмn cфng рвМu tiкn#
+KyЮ nгng tвмn cфng biМnh thэхМng#
+ThхМi gian tвмn cфng tiкмp theo:#
+Luмc chкмt#
+Khi рэхтc mхМi vaМo mфтt рфтi#
+Nhвтn caМi ргтt muтc#
+Troтng lэхтng vэхтt quaм 85%%#
+Vui loМng thэтc hiктn sau khi hoaМn thaМnh nhiктm vuт (рфмi thoaтi NPC, chкм taтo ...)#
+Kinh nghiктm coм рэхтc khi рaмnh baтi quaмi vвтt bгМng caмch tгng gвмp рфi %d laМ %.2f phuмt#
+Kiтch baТn tвтp thкТ duтc tэт рфтng %d#
+CaМi ргтt рэхтc lэu trong[%s]#
+Cвмp рфт baТo mвтt#
+Khфng thкТ xoмa vai troМ trong khi tham gia nhoмm hoгтc bang hфтi.#
+ChiТ coм thкТ duМng khi рэмng gвМn tэхМng. #
+%s : Level %d %s party to obtain level.#
+Khфng thкТ sэТ duтng dвy roi trong traтng thaмi cэхЮi thuм#
+KyЮ nгng naМy рoМi hoТi 1%% kinh nghiктm#
+TiТ lкт kinh nghiктm: #
+TyТ lкт rхмt рфМ: #
+Death penalty: #
+%d %% (Quaмn net %d%% + TPLUS %d%% + Premium %d%% + %s server %d%%)#
+Sфм lэхтng SP khфng рuТ ркТ thэтc hiктn caмc kyЮ nгng Chorus.#
+Giao diтch vэхтt quaм giхмi haтn sфм lэхтng/рфт nгтng.#
+Giao diтch vэхтt quaм giхмi haтn sфм lэхтng/рфт nгтng.#
+Sфм lэхтng vэхтt quaм sфм lэхтng coм sгЮn.#
+Рang chхМ quaТng caмo.#
+Vui loМng gэТi caмc tктp vaМ nфтi dung vгn baТn sau tхмi\r\n RO trang web chiмnh thэмc->diтch vuт khaмch haМng->yкu cвМu!\R\n#
+XaТy ra lфЮi trong hкт thфмng thanh toaмn (%d)#
+Khфng thкТ mua viМ sфм lэхтng vвтt phвТm do Rune nгмm giэЮ vэхтt quaм giхмi haтn#
+Sфм lэхтng caмc vвтt phвТm riкng leТ vэхтt quaм giхмi haтn vaМ mua haМng thвмt baтi#
+Mua haМng thвмt baтi do lфЮi khфng xaмc рiтnh#
+Vui loМng thэТ laтi sau!#
+ChiТ coм thкТ рэхтc sэТ duтng trong khi рэхтc trang biт caмc vвтt phвТm dao bay#
+Vui loМng nhвтp mэмc thвмp nhвмt#
+Khфng рэхтc pheмp yкu cвМu kho baмu aТo tэМ NPC cuТa miМnh. Vui loМng xaмc nhвтn xem coм рuТ chфЮ khфng#
+KyЮ nгng naМy рэхтc giхмi haтn trong WoE.#
+KyЮ nгng naМy рэхтc giхмi haтn cho ngэхМi chхi#
+Khфng thкТ рeo trang biт naМy bхТi viМ baтn khфng рaтt рuТ yкu cвМu.#
+Khфng thкТ taтo cэТa haМng vaМ phoМng chat taтi viт triм hiктn taтi#
+Elapsed time: %d:%d:%d / %d:%d:%d#
+Speed : X 1/4 #
+Speed : X 1/2 #
+Speed : X 1   #
+Speed : X 2   #
+Speed : X 4   #
+Speed : X 8   #
+Speed : X 16  #
+Tфмc рфт: Khфng#
+Service Info : %s#
+Character Name : %s#
+Map Name : %s#
+Record Time: %d-%01d-%01d %d: %02d: %02d#
+Play Time: %02d: %02d: %02d#
+No Replay File.#
+Server No Matching#
+Replay Option Setting#
+Vui loМng nhвтp tкn tктp#
+Set Replay Save Data#
+Set Rec Option#
+%.1f %% Pos->:%d:%d:%d#
+%.1f %% Pos->:bвмt рфтng#
+Start#
+Stop#
+Nhвтp tкn tктp -> Start#
+Open Option#
+Close Option#
+End#
+Time#
+Рфтi vaМ baтn beМ#
+Chat#
+Phiмm tгмt#
+Tкn tктp рэхтc taтo tэт рфтng#
+KiкТm tra caмc tвтp tin truМng lгтp#
+CuМng mфтt tктp рaЮ tфМn taтi#
+Record Start#
+ is Saved.#
+Nгтng : %3d / %3d#
+TфТng : %s Vcoin#
+CвМn trang biт [Shuriken]#
+Base Lv. %d#
+Job Lv. %d#
+Zeny : %s#
+Trilinear#
+attack#
+skill#
+item#
+NoCtrl#3
+Chiкмn trэхМng#
+(Character/Total Slot)#
+VIP#
+Premium #
+Service#
+Billing Service#
+Billing #
+Danh saмch lктnh#
+LEVEL#
+MAP#
+JOB#
+Not Available#
+[Guardian Angel of Protection] khфng coм #
+Baтn coм chгмc chгмn muфмn chuyкТn nhвn vвтt?#
+Khфng thкТ chuyкТn viт triм nhвn vвтt.#
+Tкn nhвn vвтt khфng hхтp lкт.#
+Hiктn nhiктm vuт#
+Theo quy рiтnh phoМng chфмng nghiктn, ngэхМi sэТ duтng dэхмi 16 tuфТi khфng рэхтc ргng nhвтp game tэМ 00:00 ркмn 6 giхМ saмng#
+Theo quy рiтnh phoМng chфмng nghiктn, tэМ 00:00 ркмn 6 giхМ saмng^ff0000NhэЮng ngэхМi dэхмi 16 tuфТi khфng рэхтc pheмp sэТ duтng^000000, vaМ troМ chхi seЮ biт рiМnh chiТ#
+Thoaмt khoТi bang hфтi trэхмc khi thay рфТi tкn nhвn vвтt#
+Baтn phaТi thoaмt khoТi nhoмm trэхмc khi thay рфТi tкn nhвn vвтt#
+Thay рфТi tкn nhвn vвтt thвмt baтi do lфЮi khфng xaмc рiтnh#
+SгЮn saМng ркТ рфТi viт triм nhвn vвтt (%d)#
+SгЮn saМng thay рфТi tкn nhвn vвтt (%d)#
+Thay рфТi thвмt baтi viМ tкn nhвn vвтt vэхтt quaм tфмi рa#
+Thay рфТi thвмt baтi do chэмa kyм tэт biт cвмm trong tкn nhвn vвтt#
+Thвмt baтi viМ tкn nhвn vвтt biт cвмm sэТ duтng#
+HoaМn thaМnh#
+РiкТm EXP kinh nghiктm tгng %d%% sau %d% phuмt#
+%02d giвy coМn laтi ркТ triктu hфМi#
+TrэхТng nhoмm triктu hфМi baтn ркмn %s (%s), tiкu thuт %d Zeny khi рэхтc triктu hфМi#
+Triктu hфМi рфмi tэхтng#
+Danh saмch chгтn#
+CвМn 1000 Zeny ркТ tham gia nhoмm#
+Khфng рuТ Zeny ркТ gia nhвтp vaМo nhoмm#
+) Tham gia рфтi thaМnh cфng#
+) Tham gia рфтi thвмt baтi#
+) Xem cэТa sфТ vвтt phвТm#
+Coм thкТ nhвтp lкn ркмn 36 chэЮ caмi tiкмng Anh#
+Enter#
+1:1 Chat#
+Block#
+Khфng рuТ Zeny ркТ goтi.#
+Vui loМng ргng kyм quaТng caмo nhoмm trкn cфтt nhвтn xeмt#
+ChiТ рфтi trэхТng mхмi coм thкТ ргng nhвтp vaМo quaТng caмo cuТa рфтi#
+QuaТng caмo ргng nhвтp рэхтc hфЮ trхт#
+Nфтi dung#
+Gear#
+Caм nhвn#
+ Khoмa vэмt рфМ: On/Off#
+Nhгмc nhхТ nhoмm#
+Lвтp nhoмm#
+Thoaмt khoТi nhoмm#
+MхМi vaМo nhoмm#
+Tкn nhoмm:#
+Tкn ngэхМi chхi:#
+ рaЮ nhвтn рэхтc lхМi mхМi vaМo nhoмm.#
+ рaЮ tэМ chфмi lхМi mхМi vaМo nhoмm.#
+ рaЮ рфМng yм lхМi mхМi vaМo nhoмm.#
+РaЮ хТ trong nhoмm chiкu mфт#
+Tiкu chiм tiМm kiкмm giфмng nhэ trэхмc рвy#
+ChiТ sэТ duтng sau khi thoaмt khoТi bang hфтi#
+Giхмi haтn sэТ duтng sau khi rхМi nhoмm#
+NgэхМi chхi triктu hфМi khфng coм trкn baТn рфМ coм thкТ triктu hфМi#
+ThuyкМn trэхТng khфng thкТ triктu hфМi trкn baТn рфМ#
+Triктu hфМi рaЮ biт tэМ chфмi.#
+Khфng thкТ triктu hфМi.#
+ChiТ рфтi trэхТng mхмi coм thкТ mхМi tham gia рфтi#
+TiМm kiкмm:#
+Baтn phaТi рiкМn tкn nhвn vвтt.#
+Baтn phaТi nhвтp tкn nhoмm.#
+NgэхМi trхт giuмp bang hфтi#
+Khфng tham gia bang hфтi#
+Taтo bang hфтi#
+Tкn bang hфтi#
+Trхт giuмp taтo bang hфтi#
+Hкт thфмng bang hфтi laМ giМ?#
+Vui loМng nhвтp tкn bang hфтi.#
+Lхмp hфЮ trхт cho nhoмm рaЮ biт tэМ chфмi.#
+TuМy choтn#
+Khu vэтc thoaмt hiкТm#
+Replay File List#
+File info#
+File List#
+Vвтt phвТm %s khфng thкТ giao diтch#
+GiaТi thкТ bang hфтi#
+Tкn hфтi tan raЮ#
+Vai troМ khфng рэхтc ргng nhвтp hoгтc khфng tфМn taтi#
+Goтi Эng thвмt baтi.#
+%d%% (mгтc рiтnh 100%%+ Premium%d%%+%s Server%d%%)#
+NgэхМi chхi рang tham gia WoE.#
+ThuyкМn trэхТng chiТ coм thкТ рэхтc thay рфТi trкn cuМng mфтt baТn рфМ#
+ThuyкМn trэхТng khфng thкТ thay рфТi taтi viт triм hiктn taтi#
+Loaтi boТ Gryphon#
+%d thaмng %d ngaМy %d giхМ %d phuмt %d giвy#
+Hiктn рang tham gia WoE vaМ khфng thкТ mхМi vaМo bang hфтi.#
+Baтn рaЮ aмp duтng ркТ chхМ vaМo chiкмn trэхМng.#
+РвМy рuТ#
+Khфng tiМm thвмy chкм рфт chхi naМy.#
+Рхn xin vaМo haМng chхМ khфng hхтp lкт.#
+Vэхтt quaм sфм ngэхМi.#
+Cвмp рфт cuТa baтn khфng phuМ hхтp vхмi chкм рфт naМy.#
+Рхn xin vaМo haМng chхМ biт truМng.#
+Sau khi kкмt nфмi laтi, vui loМng ргng kiм laтi.#
+NghкМ cuТa baтn khфng phuМ hхтp хТ chiкмn trэхМng.#
+ChiТ coм thкТ trэхТng nhoмm / trэхТng bang hфтi mхмi coм thкТ ргng kiм.#
+Mфтt sфм ngэхМi chхi hiктn рang sэТ duтng chiкмn trэхМng vaМ khфng thкТ aмp duтng#
+HuТy boТ chхМ рхтi ркТ vaМo chiкмn trэхМng.#
+Chкм рфт chхi khфng hхтp lкт.#
+Baтn khфng nгМm trong danh saмch рхтi ркТ tham gia chiкмn trэхМng.#
+Chiкмn trэхМng baтn choтn hiктn khфng coм sгЮn vaМ рaЮ biт huТy boТ#
+Baтn vэМa thoaмt khoТi haМng chхМ#
+Baтn coм muфмn vaМo chiкмn trэхМng khфng?#
+[Nфтi quy Battleground]#
+Yкu cвМu vaМo haМng chхМ seЮ khфng thкТ aмp duтng nhэЮng trэхМng hхтp dэхмi рвy#
+1. Baтn khфng thкТ ргng kiм 1 luмc nhiкМu chкм рфт chхi.#
+2. Baтn khфng thкТ ргng kiм 1 luмc caТ 3 kiкТu Caм nhвn / Рфтi / Bang.#
+3. Nкмu ргng kiм kiкТu Рфтi, cвМn phaТi laМ trэхМng nhoмm.#
+NgэхМi chхi offline trong Рфтi seЮ khфng рэхтc tiмnh vaМo haМng chхМ.#
+4. NhэЮng baТn рфМ cвмp diтch chuyкТn seЮ khфng thкТ ргng kiм vaМo haМng chхМ.#
+Khi trвтn рвмu kкмt thuмc baтn seЮ рэхтc diтch chuyкТn vкМ viт triм cuЮ hoгтc viт triм рaЮ lэu.#
+5. Baтn seЮ nhвтn рэхтc phвМn thэхТng sau khi trвтn рвмu kкмt thuмc.#
+гng kiм рэмng viт triм hфЮ trхт#
+%s рaЮ bгмt рвМu.#
+Baтn coм muфмn vaМo chiкмn trэхМng?#
+[Lэu yм]#
+Khi trвтn рвмu kкмt thuмc baтn seЮ рэхтc#
+diтch chuyкТn vкМ viт triм cuЮ#
+hoгтc viт triм рaЮ lэu.#
+Рang chхМ рхтi рфмi phэхng.#
+Yкu cвМu tham gia vaМo chiкмn trэхМng#
+ThхМi gian chхМ рфМng yм: %d giвy#
+Рang chхМ ркТ vaМo#
+Tкn chiкмn trэхМng: %s#
+Sфм ngэхМi tham gia bгмt buфтc: %d#
+Viт triм cuТa baтn: %d#
+Chкм рфт:#
+Muтc tiкu:#
+ThaМnh viкn yкu cвМu:#
+Cвмp рфт:#
+Thгмng:#
+HoМa:#
+Thua:#
+Baтn muфмn ргng kiм vaМo haМng chхМ?#
+Baтn muфмn ргng kiм caТ nhoмm vaМo haМng chхМ?#
+Baтn muфмn ргng kiм caТ hфтi vaМo haМng chхМ?#
+Danh saмch chiкмn trэхМng#
+%d VS %d#
+BaseLV %d trхТ xuфмng#
+BaseLV %d trхТ lкn#
+BaseLV %d ~%d#
+Khфng giхмi haтn#
+[Khфng thкТ aмp duтng trкn baТn рфМ naМy]#
+[1 phuмt chхМ рхтi ркТ aмp duтng laтi cho chiкмn trэхМng]#
+[Vui loМng tham gia nhoмm trэхмc]#
+[ChiТ рфтi trэхТng mхмi ргng kyм рэхтc]#
+[Sфм lэхтng ngэхМi chхi рaЮ ргng kyм vэхтt quaм]#
+[Vui loМng tham gia bang hфтi trэхмc]#
+[Giхмi haтn vхмi ChuТ tiтch bang hфтi]#
+[Sфм lэхтng thaМnh viкn bang hфтi ргng nhвтp рaЮ vэхтt quaм]#
+Di chuyкТn Slot#
+Di chuyкТn ркмn Slot naМy#
+РфТi tкn#
+Taтo nhвn vвтt#
+https://ro.vtcgame.vn/#
+(%s) Maмy chuТ#
+Saмp nhвтp Vвтt phвТm (choтn tвмt caТ Ctrl+nhвмp)#
+Vui loМng choтn 2 hoгтc nhiкМu vвтt phвТm cuМng loaтi#
+Caмc vвтt phвТm рэхтc saмp nhвтp thaМnh cфng#
+Giхмi haтn mфтt muтc taтi mфтt thхМi рiкТm#
+Sфм lэхтng vвтt phвТm рaЮ vэхтt quaм 30.000#
+Xoay traмi#
+Xoay phaТi#
+Xem (%s) thфng tin maмy chuТ trэхмc рвy cuТa ngэхМi chхi#
+Thфng tin maмy chuТ hiктn coм#
+^ff0000Maмy chuТ hiктn taтi: ^0000ff#
+^ff0000Tкn vai troМ hiктn coм: ^0000ff#
+HiкТn thiт HP cuТa quaмi vвтt biт tвмn cфng#
+Khфng hiкТn thiт HP cuТa quaмi vвтt biт tвмn cфng#
+Caмc vвтt phвТm coм thкТ hхтp nhвмt khфng tфМn taтi#
+Caмc vвтt phвТm coм thкТ hхтp nhвмt khфng tфМn taтi#
+Рang tiкмn haМnh#
+ChхМ#
+РкМ xuвмt#
+EP#
+Рiтa phэхng#
+Sэт kiктn#
+Mхмi#
+Sгn quaмi#
+PhвМn thэхТng#
+Caмc vвтt phвТm yкu cвМu#
+ThхМi gian giхмi haтn#
+ThхМi gian kкмt thuмc#
+TiМm kiкмm#
+TiМm рэхМng#
+Thфng tin lфт triМnh#
+TiМm kiкмm thфng tin#
+Thay рфТi chкм рфт xem#
+Thay рфТi maМu hэхмng dвЮn#
+Thoaмt#
+ChuyкТn sang kiкТu cх baТn#
+ChuyкТn sang kiкТu рхn giaТn#
+Thфng tin#
+ALL#
+Map#
+Npc#
+Mob#
+Ргтt tэМ tiМm kiкмm (Viм duт:Word Word ..#
+Scroll#
+SэТ duтng hang рфтng ркТ di chuyкТn cuфтn ngay lвтp tэмc#
+D.vuт#
+Cho pheмp рiтnh viт diтch vuт di рфтng#
+K.cвМu#
+DuМng khiм cвМu ркТ di chuyкТn#
+>> Khфng tiМm thвмy muтc tiкu#
+<< Nхi ркмn >>#
+<< TiМm kiкмm ... >>#
+-----------#
+TiМm рэхМng#
+== Kкмt quaТ (% d) ==#
+Npc)%s:%s#
+Mob)%s:%s#
+Map)%s#
+========= Thфng tin tiМm kiкмm ===========#
+KhoaТng caмch: %d ф %d CфТng Warp#
+BaТn рфМ muтc tiкu: %s (%s)#
+Muтc tiкu: %s(%d, %d)#
+BOSS#
+ThэхМng#
+Muтc tiкu: %s (%s)#
+Muтc tiкu: (%d, %d)#
+======= Thфng tin рэхМng dвЮn ========#
+%2d) Vвтt phвТm: %s =>%s sэТ duтng!#
+%2d)%s (%d,%d)=>(%d,%d)#
+E%2d)%s (%d,%d)=>(%d,%d)#
+E%2d) %s#
+Baтn coм muфмn huТy chiТ рэхМng?#
+Trхт giuмp dвЮn рэхМng#
+------------------- Hэхмng dвЮn --------------------#
+"1./navigation		/navi#"
+  ex)/navi prontera 100/100 -> tкn baТn рфМ, 100/100#
+"2./navigation2		/navi2#"
+  ex) /navi2 prontera 100090 111#
+-> Tкn baТn рфМ, viт triм (100 90), scrool / Zeny / plane (1: sэТ duтng 0: khфng sэТ duтng)#
+-> MAPNAME location (100 90), Scroll | Zeny | Plane (1: ChoPheмp hoгтc 0: VфHiктuHoмa)#
+"3. $$all	HiкТn thiт tвмt caТ caмc muтc (hiкТn thiт caмc muтc theo loaтi vaМ coм thкТ рэхтc phвn loaтi)#"
+"4. $$lv30 HiкТn thiт quaмi vвтt хТ cвмp рфт naМy#"
+"5. $$lv20~30 HiкТn thiт quaмi vвтt trong cвмp рфт naМy#"
+------------------- GiaТi thiмch --------------------#
+1.Caмc loaтi tiМm kiкмm laМ tвмt caТ, baТn рфМ, NPC, quaмi vвтt#
+2.Vui loМng sэТ duтng lктnh ркТ tiМm kiкмm. Quy tгмc laМ moтi thэм baтn muфмn tiМm kiкмm coм chэмa chuфЮi рэхтc hiкТn thiт#
+viм duт) Kкмt quaТ tiМm kiкмm cho Kafra#
+3.Thфng tin рэхтc hiкТn thiт khi choтn caмc muтc trong danh saмch#
+Nкмu coм muтc tiкu рэхтc hiкТn thiт, chiТ cвМn nhвмp vaМo nuмt hэхмng dвЮn ркТ hэхмng dвЮn tuyкмn рэхМng ркмn muтc tiкu#
+4.scrool/Zeny/mгтt phгТng xaмc nhвтn rгМng hфтp coм thкТ nhanh choмng dвЮn рэхМng#
+5. Khi baтn nhвмp vaМo phiмm hэхмng dвЮn, cэТa sфТ kкмt quaТ seЮ thay рфТi thaМnh cэТa sфТ рэхМng dвЮn hэхмng dвЮn#
+6. SэТ duтng caмc nuмt bкn dэхмi cэТa sфТ tiМm kiкмm,#
+[CэТa sфТ kкмt quaТ]<->[CэТa sфТ chiТ рэхМng], caТ hai coм thкТ рэхтc chuyкТn рфТi#
+Cвмp: %d (BOSS)#
+Cвмp: %d (biМnh thэхМng)#
+Nэхмc %d#
+Рвмt %d#
+LэТa %d#
+Gioм %d#
+Рфтc %d#
+Thaмnh %d#
+Boмng tфмi %d#
+HфМn ma %d#
+Xaмc sфмng %d#
+Trung tiмnh %d#
+VэМa#
+Lхмn#
+NhoТ#
+Thвy ma#
+Thuм#
+Cвy#
+Cфn truМng#
+Caм#
+QuyТ#
+Aм thвМn#
+Thiкn thвМn#
+RфМng#
+Vф daтng#
+%s nhвмp ркТ di chuyкТn#
+SэТ duтng diтch vuт di chuyкТn#
+Nhвмp vaМo NPC#
+Рi ркмn %s #
+Ркмn khiм cвМu#
+BгМng diтch chuyкТn#
+Рiмch ркмn: (%d %d)#
+DвЮn рэхМng khфng рэхтc hфЮ trхт trong trэхМng hхтp naМy#
+Muтc tiкu tiМm kiкмm khфng roЮ raМng#
+BaТn рфМ khфng khхмp#
+Khфng thкТ ргтt thфng tin cho рiкТm khхТi haМnh!#
+Ргтt thфng tin рiмch thвмt baтi!#
+TiМm kiкмm tuyкмn рэхМng thвмt baтi#
+TiМm kiкмm viт triм ngэхМi chхi thвмt baтi#
+Khфng thкТ tiМm kiкмm hэхмng рi cho baТn рфМ hiктn taтi#
+BaТn рфМ khфng hфЮ trхт dвЮn рэхМng#
+Vui loМng chiТ рiтnh muтc tiкu#
+РaЮ ркмn#
+Hэхмng dвЮn рэхМng рaЮ bгмt рвМu#
+TiМm kiкмm Quaмi vвтt trкn baТn рфМ#
+Рвy laМ baТn рфМ tiМm kiкмm#
+Vui loМng sэТ duтng рaтo cuт ркТ di chuyкТn#
+Рi ркмn viт triм рэхтc chiТ рiтnh#
+Рaтt baТn рфМ muтc tiкu#
+Baтn рaЮ ркмn viт triм baТn рфМ cuТa NPC maМ baтn рang tiМm kiкмm. Vui loМng tiМm NPC!#
+Ркмn baТn рфМ cuТa quaмi vвтt рang tiМm kiкмm#
+Tэхng tэт nhэ muтc tiкu trэхмc#
+HaЮy di chuyкТn theo hэхмng muЮi tкn#
+РaЮ choтn muтc tiкu#
+DвЮn рэхМng >: %s#
+DвЮn рэхМng >: Vui loМng рi theo muЮi tкn %s#
+DвЮn рэхМng >: Vui loМng truy cвтp baТn рфМ (%s)#
+DвЮn рэхМng >: Vui loМng choтn baТn рфМ (%s) vaМ рi theo#
+DвЮn рэхМng >: Рi bгМng khiм cвМu#
+DвЮn рэхМng >: SэТ duтng diтch chuyкТn tэмc thхМi ркмn caмc khu vэтc khaмc#
+Item: #
+$$#
+$$lv#
+~#
+$$all#
+Xaмc nhвтn giao diтch#
+TфТng giaм cuТa vвтt phвТm baтn muфмn mua laМ#
+ Zeny#
+Baтn muфмn mua chэм?#
+%.1f%% (Internet cafe% .1f%%+TPLUS%.1f %%+chiкмt khвмu%.1f %%+%s maмy chuТ%.1f%%)#
+Card Book#
+%d%%[(maмy chuТ 100%%+%s cх baТn%d%%) * hoaтt рфтng% .1f]#
+%d%%[Maмy chuТ 100%% +%s cх baТn%d%%]#
+Рвy laМ khu vэтc PK. Vui loМng rхМi ngay lвтp tэмc.#
+Mктt moТi#
+Doanh thu troМ chхi laМnh maтnh laМ 100%%#
+Doanh thu troМ chхi hiктn taтi cuТa khaмch trong laМng mктt moТi seЮ giaТm 50%%. ViМ sэмc khoТe, vui loМng nghiТ ngхi#
+Bвy giхМ tфi muфмn рoмng troМ chхi viМ noм khфng laМnh maтnh. Traтng thaмi online laМ noм seЮ tфмt cho bфт y tкм. Noм seЮ рэхтc khфi phuтc sau 5 giхМ#
+Online tэМ %d phuмt#
+ThхМi gian online: %d#
+Online tэМ %d giхМ vaМ %d phuмt#
+/monsterhp : Thфng tin HP ркТ tвмn cфng quaмi vвтt seЮ рэхтc hiкТn thiт#
+РiкТm kyЮ nгng: #
+Khфng coм cвu traТ lхМi tэМ maмy chuТ xaмc thэтc. Vui loМng kiкТm tra laтi#
+TaМi khoaТn naМy coм thкТ рэхтc phвn loaтi laМ nhoмm coм ruТi ro cao viМ chэa ргng nhвтp, mвтt khвТu рaЮ khфng рэхтc thay рфТi trong mфтt thхМi gian daМi hoгтc kкмt hхтp mвтt khвТu quaм рхn giaТn. РкТ рaТm baТo baТo mвтt taМi khoaТn, hкт thфмng seЮ tэт рфтng kiмch hoaтt cх chкм baТo vкт an ninh, trэхмc tiкn haЮy thэтc hiктn haМnh рфтng ргтt laтi mвтt khвТu#
+http://www.gameflier.com/FindID/RO/phone.htm#
+РaЮ ркмn luмc kкмt nфмi#
+Do mфмi quan hкт cuТa Shout xuфмng, seЮ coм giхмi haтn thхМi gian online%1.2d-%1.2d-%1.2d%1.2d:%1.2d:%1.2d#
+TaМi khoaТn cuТa ngэхМi chхi laМ taМi khoaТn Shout Down vaМ thхМi gian coМn laтi laМ%1.2d phuмt хТ%1.2d. Vui loМng tham khaТo troМ chхi#
+Quay Video#
+Macro#
+Webbrowser#
+TiМm рэхМng#
+UAEURL#
+Thфng tin gia tфтc#
+Cвмp рфт gia tфтc#
+Tкn gia tфтc#
+BiкТu tэхтng#
+Gia tфтc liкn minh#
+Gia tфтc thuМ рiтch#
+GэТi ркмn gia tфтc#
+TrэхТng gia tфтc#
+TфТng sфм thaМnh viкn#
+ThaМnh sхТ hэЮu#
+Tin nhгмn tэМ gia tфтc#
+ChuyкТn ркмn trang giaм triт рэхтc lэu trэЮ#
+https://member.gnjoy.com.tw/billing.aspx#
+Taтo nhвn vвтt#
+Tкn vai troМ laМ khaмc nhau#
+РiкМn tкn cuТa nhвn vвтt#
+CэТa sфТ choтn Giхмi tiмnh#
+Tвтp tin рaЮ thay рфТi#
+Muтc naМy seЮ рэхтc sхТ hэЮu bхТi nhвn vвтt (khфng thкТ рэхтc chuyкТn ркмn kho). Vui loМng xaмc nhвтn nкмu baтn sэТ duтng noм. MхТ hфтp?#
+CaМi ргтt troМ chхi#
+Hкт thфмng troМ chхi#
+Lктnh troМ chхi#
+Lктnh ON/OFF#
+Macro#
+Khфng trao рфТi vвтt phвТm trong khu vэтc naМy#
+Xe рвТy khфng coм sгЮn trong khu vэтc naМy#
+SeЮ khфng coм mгтt trхМi vaМ hiктu эмng tгng trong khu vэтc naМy#
+BaТng xкмp haтng#
+BaТng xкмp haтng#
+Tкn#
+РiкТm#
+ThхтReМn#
+NhaМGiaТKim#
+VoЮSiЮ#
+NgэхМi giкмt#
+7 vs 7#
+HiктpSiЮCфТNgэЮ#
+PhuМThuТyDiтGiaмo#
+SiкuXaтThuТ#
+ThхтMaмy#
+РaoPhuТThвтpTэт#
+GiaмmMuтc#
+HфтVктHoaМngGia#
+MiтThuвтtSэ#
+NhaтcTrэхТng#
+VuЮThвМnLangThang#
+NhaМDiTruyкМnHoтc#
+HгмcTгтc#
+QuyкМnSэ#
+AТnhSэ#
+UNэЮ#
+Select Ranking Type#
+Ranking Type#
+#
+#
+#
+-------------- Hэхмng dвЮn dвЮn рэхМng -------#
+/navigation/navi:/navi yuno 100/100 ->> Tкn vaМ viт triм baТn рфМ (100/100)#
+/navigation2/navi2:/navi2 yuno 100/100 1/1/1 ->>tкn baТn рфМ, viт triм (100/100), scrool/Zeny/mгтt phгТng (1:sэТ duтng 0:khфng sэТ duтng)#
+-------------- Hэхмng dвЮn tiМm kiкмm dвЮn рэхМng -------#
+$$all: hiкТn thiт tвмt caТ caмc muтc (baтn coм thкТ phвn biктt caмc loaтi hiкТn thiт theo Dвмu phвn caмch)#
+$$lv30: HiкТn thiт quaмi vвтt хТ cвмp рфт naМy (sфм lэхтng coм thкТ thay рфТi)#
+$$lv20 ~ 30: HiкТn thiт quaмi vвтt trong cвмp рфт naМy (sфм lэхтng coм thкТ thay рфТi)#
+1 vs 1#
+Giaмp#
+Thфng tin nghкМ nghiктp cuТa kyм tэт %d laМ bвмt thэхМng. Vui loМng liкn hкт vхмi quaТn triт viкn. CaТm хn baтn! ErrorCode (%d)#
+(%s) %d / %d#
+%s-%s(%d/%d)#
+Khфng thкТ ргng nhвтp do dвn sфм maмy chuТ quaм taТi#
+Ргng nhвтp maмy chuТ thвмt baтi (%d)#
+Quaм thхМi gian ргng nhвтp#
+Xaмc thэтc thвмt baтi trong khi ргng nhвтp#
+Tкn bang hфтi khфng рэхтc ркТ trфмng#
+Xin chaМo ngэхМi chхi!#
+ThхМi gian khaТ duтng cuТa baтn seЮ kкмt thuмc vaМo %d nгm %d thaмng%d ngaМy %d: %d#
+ThхМi gian cuТa baтn vвЮn coМn rвмt daМi, xin vui loМng lкn maтng#
+ThхМi gian coм sгЮn cuТa baтn seЮ kкмt thuмc trong tuвМn naМy, haЮy nhхм lэu trэЮ giaм triт trэхмc khi kкмt thuмc#
+ThхМi gian khaТ duтng cuТa baтn seЮ kкмt thuмc sau 24 giхМ, haЮy nhхм lэu trэЮ giaм triт trэхмc khi kкмt thuмc#
+Baтn coМn %d giхМ trong thхМi gian khaТ duтng cuТa miМnh. HaЮy nhхм lэu giaм triт trэхмc khi kкмt thuмc#
+Baтn coМn %d phuмt. Baтn seЮ biт ruмt Zeny khi hкмt thхМi gian. HaЮy nhхм lэu trэЮ giaм triт trэхмc khi kкмt thuмc#
+%d giхМ, %d phuмt coМn laтi trong thхМi gian coм sгЮn cuТa baтn#
+%d%% (101% cх baТn+Cafe Internet%d%%+Danh dэт%d%%+%s Maмy chuТ%d%%)#
+ThхМi gian khaТ duтng cuТa baтn seЮ kкмt thuмc sau% d giхМ vaМ%d phuмt#
+TaМi khoaТn cuТa baтn biт рoмng bгng viЮnh viкЮn#
+TaМi khoaТn cuТa baтn рaЮ biт рoмng bгng.\n ThхМi gian khфng mхТ:%04d-%02d-%02d% 02d:%02d#
+Q.Vвтt(Tab)#
+BaТn рфМ(Alt)#
+Thфng tin hэхмng dвЮn#
+TiМm kiкмm thфng tin#
+Khiм cвМu#
+Kafra#
+(Ркмn)#
+Mob)%s:%s(%s)#
+Phвn phфмi: %s#
+Siкu nhiкМu#
+NhiкМu#
+BiМnh thэхМng#
+Iмt hхn#
+Siкu iмt#
+Khфng thкТ sэТ duтng Ngвn haМng. Vui loМng рхтi trэхмc khi sэТ duтng#
+Khфng рuТ tiкМn gэТi ngвn haМng#
+Sфм dэ Zeny khфng рuТ ркТ gэТi#
+1 Zeny trхТ lкn coм thкТ kyм gэТi#
+Ruмt tэМ 1 Zeny trхТ lкn#
+Zeny khфng thкТ vэхтt quaм mэмc 2.147.483.647 Zeny#
+your account is lock by mobil otp#
+MOTP auth fail#
+Tгng %d рiкТm Job EXP %d%% tэМ viктc рaмnh quaмi vвтt#
+QuyкМn sхТ hэЮu Zeny: %s Zeny#
+Zeny#
+Coм thкТ kyм gэТi tхмi 2.147.483.647 Zeny#
+Zeny khфng рuТ#
+Khi nhвтp hхn 1 tyТ Zeny, giaм baмn seЮ рэхтc рiкМu chiТnh thaМnh 1 tyТ Zeny#
+AuthTicket is Not Vaild#
+ErrorCategory : %d, ErrorCode : %d (%d,%d,%d,%d)#
+%d%% ( Basic 100%% + Premium %d%% + PCCafe %d%% + %s Server %d%% )#
+TyТ lкт rхi kho baмu cх baТn coм thкТ рaтt рэхтc khi chхi quaмi vвтt giэЮa %d рiкТm seЮ tгng %d%%#
+%d Tфмc рфт rхi cх baТn coм thкТ рaтt рэхтc khi chхi quaмi vвтt trong %.2d seЮ tгng %d%%#
+Giaм cuТa ^0000FF%s^000000#
+100000000#
+ vэхтt qua ^FF0000%d00^0000FF triктu^000000 zeny vaМ#
+10000000#
+ lхмn hхn ^FF0000%d0^0000FF million^000000 zeny#
+. Baтn chгмc chэa?#
+Nhгмc nhхТ nкмu giaм hхn 10m Zeny#
+https://www.warpportal.com/account/login.aspx?ReturnUrl=%2faccount%2fpayment.aspx#
+https://kepler.warpportal.com/ro1/purchase/?step=1&steamid=%lld&accountname=#
+Sэт kкмt thuмc cuТa mгтt рвмt, cвy cвМu giэЮa Alf H. Prideid vaМ khu vэтc giaМu coм mхмi nфТi, nhэЮng vкмt nэмt lхмn vaМ nguфМn gфмc cuТa mк cung rэМng maМ baтn khфng biкмt#
+РiкМu naМy рaмnh dвмu kкмt thuмc cuТa doМng laМ mфтt thфng baмo, chiТ baмo ркТ mхТ mфтt thкм giхмi mхмi laМ! BaТo vкт giфмng nhэ sэт caмm dфЮ khiкмn lхМi baМi haмt dвМn mвмt рi linh hфМn cuТa hoт#
+Trong doМng chaТy haМng ngaМn nгm, tэт baТo vкт miМnh рaЮ viкмt rгМng nhэЮng giМ mфтt cuфтc tranh caЮi, рoмng dвмu vaМ thхМi gian biт mгмc keтt lвu laМ khaм khoм hiкТu, cho duМ anh ta caТm thвмy rгМng miМnh khфng coм#
+LхМi baМi haмt cuЮng quyкмn ruЮ рiТnh рiкТm ркмn khi mгтt рвмt Alf H. Spludge kкмt thuмc cвy cвМu giэЮa рaтi luтc vaМ ngэхМi giaМu coм, mфтt vкмt nэмt lхмn xuвмt hiктn, gвy ra sэт mвмt kкмt nфмi vaМ moтi ngэхМi ркмn giэЮa hai thкм giхмi ркТ рi mфтt sэт bвмt tiктn lхмn LaМ ngэхМi coм kinh nghiктm#
+RэМng bвy giхМ laМ mфтt mк cung trкn lфмi рi, vaМ tфi thвтm chiм khфng biкмt mua хТ рвu. Tфi рaЮ khфng vэхтt qua noм cho ркмn bвy giхМ#
+Рiтa nguтc hфЮn loaтn рaЮ nuфмt chэТng vф sфм nhaМ thaмm hiкТm, lang thang trong rэМng vaМ biт laтc laМ baтn khфng biкмt tкn, giфмng nhэ traмi tim cuТa mфтt ngэхМi phuт nэЮ рang biт mхТ rфтng thaМnh hфЮn loaтn sвu hхn#
+ChiТ coм thкТ nhвтp sфм#
+Ruмt Zeny vaМ gэТi Zeny khфng thкТ рэхтc thэтc hiктn trong khi cэТa sфТ giao diтch vaМ cэТa haМng рang mхТ#
+Рi ркмn#
+So saмnh#
+VuЮ khiм naМy khфng phuМ hхтp vхмi loaтi рaтn maМ baтn рaЮ trang biт.#
+Loaтi рaтn naМy khфng phuМ hхтp vхмi vuЮ khiм maМ baтn рaЮ trang biт.#
+Khфng coм vвтt phвТm ркТ baмn, xin vui loМng ргng kyм caмc vвтt phвТm ркТ baмn#
+Vвтt phвТm#
+Khфng thкТ sэТ duтng rэхng bang hфтi#
+Khфng tham gia bang hфтi, vui loМng tham gia bang hфтi ркТ sэТ duтng#
+Nhвn viкn bang hфтi khaмc рang рэхтc sэТ duтng, vui loМng рхтi trong giвy laмt#
+Rэхng#
+Rэхng bang hфтi#
+Khфng рэхтc pheмp sэТ duтng rэхng bang hфтi#
+QuaТn lyм giaТm giaм cash shop#
+Tкn vвтt phвТm#
+ID vвтt phвТm#
+Sфм lэхтng#
+Th.gian bгмt рвМu#
+Th.gian baмn#
+Vui loМng nhвтp sфм lэхтng muфмn baмn#
+Nhвтp thхМi gian bгмt рвМu#
+ThхМi gian bгмt рвМu khфng phuМ hхтp.#
+Vui loМng nhвтp thхМi gian#
+Vui loМng nhвтp Db Name#
+TiМm kiкмm Db Name thвмt baтi. HaЮy thэТ laтi.#
+>> Tкn: %s / Giaм: %dc / S.Lg: %d / ThхМi gian: Thaмng %d ngaМy %d luмc %d:%d cho ркмn thaмng %d ngaМy %d luмc %d: %d#
+Ргng kiм thaМnh cфng.#
+Ргng kiм thвмt baтi. HaЮy thэТ laтi.#
+Vвтt phвТm naМy рaЮ ргng kiм. HaЮy thэТ laтi.#
+Khфng thкТ xoмa ргng kiм vвтt phвТm. HaЮy thэТ laтi.#
+%s vвтt phвТm рaЮ рэхтc xoмa.#
+Special#
+Cвтp nhвтt sфм lэхтng vвтt phвТm giaТm giaм#
+Kкмt thuмc#
+item count should be renewed#
+Vвтt phвТm gвМn hкмt. Baтn chiТ coм thкТ mua %d moмn.#
+%s рang рэхтc giaТm giaм#
+Kкмt thuмc giaТm giaм %s viМ рaЮ hкмt haМng#
+/lsale#
+http://www.ragnarokeurope.com/news/home-r70.html#
+http://www.ragnarokeurope.com/index.php?rubrique=70&Steam#
+Mua vвтt phвТm thaМnh cфng#
+Caмc рхn haМng vэхтt quaм cфТ phiкмu#
+Khфng thкТ mхМi tкn nhвn vвтt#
+Vai troМ bang hфтi khфng thкТ рэхтc mхМi#
+Mфтt sфм vвтt phвТm рaЮ рэхтc baмn hкмt, viМ vвтy baтn nкn mua chuмng#
+TэМ viт triм hiктn taтi cuТa kinh, baтn khфng thкТ nhхм рiтa рiкТm#
+Khфng thкТ mua nhiкМu hхn troтng lэхтng cuТa vвтt phвТm#
+No.#
+Vвтt phвТm#
+Sфм lэхтng#
+Tкn#
+ThхМi gian#
+VaМo/Ra#
+Khфng coм hфМ sх#
+Tвмt caТ#
+Рэa vaМo#
+Loaтi boТ#
+Liтch sэТ rэхng bang hфтi#
+ChiТ hiкТn thiт 100 cuфмi cuМng#
+ThхМi gian sэТ duтng rэхng bang hфтi vэхтt quaм 2 phuмt, tэт рфтng kкмt thuмc.#
+Incorrect GameSamba ID. Please Try Again#
+%s [thuфтc tiмnh %d] : %d#
+CвМn Zeny#
+Yкu cвМu %d Zeny#
+CвМn phaТi trang biт vuЮ khiм loaтi [Suмng maмy].#
+CвМn phaТi trang biт vuЮ khiм loaтi [Suмng hoa caТi].#
+CвМn phaТi trang biт vuЮ khiм loaтi [Suмng trэхМng].#
+CвМn phaТi trang biт vuЮ khiм loaтi [Suмng luтc].#
+CвМn phaТi trang biт [Silver Bullet].#
+Liтch sэТ baмn vвтt phвТm#
+Liтch sэТ mua vвтt phвТm#
+CвМn phaТi trang biт vuЮ khiм loaтi [Suмng phoмng lэтu].#
+[Heat barrel],[Last Stand],[Platinum Alter] khфng thкТ sэТ duтng khi рang ngфМi.#
+Khфng thкТ sэТ duтng kyЮ nгng naМy хТ baТn рфМ hiктn taтi.#
+Tвмt caТ caмc vвтt phвТm seЮ biкмn mвмt nкмu baтn рang sэТ duтng kho cuТa bang hфтi#
+http://ragnarok.gamesamba.com/paytest.html#
+Khi ргng nhвтp, vui loМng nhвтp taМi khoaТn vaМ mвтt khвТu cuТa baтn#
+Tiкмn hoмa thuм cэng#
+Tiкмn hoмa - %s#
+РкТ tiкмn hoмa thuм cэng cвМn nhэЮng vвтt phвТm sau:#
+Baтn coм chгмc chгмn muфмn tiкмn hoмa thuм cэng?#
+LфЮi khфng xaмc рiтnh#
+Khфng coм thuм cэng рэхтc triктu hфМi#
+Yкu cвМu trэмng thuм cэng#
+Thiкмu vвтt phвТm ркТ tiкмn hoмa.#
+Thiкмu vвтt phвТm cвМn thiкмt ркТ tiкмn hoмa thuм cэng.#
+Thuм cэng chiТ tiкмn hoмa khi рaтt Trung thaМnh.#
+Tэт рфтng cho гn#
+РaЮ cho thuм cэng гn. '%s' CoМn laтi: %d#
+РaЮ [mхТ] tэт рфтng cho thuм cэng гn.#
+РaЮ [tгмt] tэт рфтng cho thuм cэng гn.#
+Cвтp nhвтt#
+%d phuмt trэхмc#
+%d giхМ trэхмc#
+%d ngaМy trэхмc#
+%d%% ( Premium %d%% + %s Server )#
+РaЮ gэТi thэ#
+Thэ cuТa baтn рaЮ рэхтc gэТi рi.#
+Vвтt phвТm рaЮ рэхтc di chuyкТn tхмi haМnh trang cuТa baтn.#
+Bфт sэu tвтp thвмt baтi#
+Vui loМng laМm trфмng haМnh trang cuТa baтn.#
+РaЮ nhвтn zeny.#
+Thвмt biт khi lвмy zeny.#
+Vэхтt quaм giхмi haтn zeny.#
+Рiмnh keМm vвтt phвТm thaМnh cфng#
+Vui loМng nhвтp tкn ngэхМi nhвтn ркТ kiкТm tra.#
+Рфт daМi tiкu ркМ phaТi tэМ 4 tэМ trхТ lкn vaМ 16 tэМ trхТ xuфмng#
+GэТi thэ thвмt baтi.#
+Caмc vвтt phвТm khфng рuмng caмch gвy ra lфЮi diтch chuyкТn tэмc thхМi#
+HфМ sх cuТa ngэхМi nhвтn khфng tфМn taтi#
+%s [%d Hiктu эмng]#
+Vui loМng nhвтp mфтt sфм tэМ 1 ркмn %d#
+Vui loМng xaмc nhвтn khфng gian cuТa cэТa sфТ muтc#
+Vэхтt quaм sфм lэхтng thэ рaЮ gэТi.#
+Khфng thкТ mхТ thэ.#
+Hiктn taтi baтn рaЮ хТ trong Clan.#
+Thфng tin tiмch luЮy vaМng Internet Cafe#
+Vui loМng loaтi boТ caмc phuт kiктn thuм cэng trэхмc khi tiкмn hoмa#
+trong %d phuмt#
+trong %d giхМ#
+trong %d ngaМy#
+HaЮy bвмm nuмt 'Xaмc nhвтn' ркТ kiкТm tra tкn ngэхМi nhвтn.#
+Vui loМng nhвтn hкмt tвмt caТ vвтt phвТm trэхмc khi xoмa thэ.#
+Baтn khфng thкТ gэТi thкm zeny.#
+Phiм: %s Zeny#
+Tкn ngэхМi nhвтn khфng tфМn taтi.#
+E X P : %.1f%% ( basic %.1f%% premium %.1f%% + %s %.1f%%)#
+DROP  : %.1f%% ( basic %.1f%% premium %.1f%% + %s %.1f%%)#
+DEATH : %.1f%% ( basic %.1f%% premium %.1f%% + %s %.1f%%)#
+РiкТm tiмch luЮy tфмi рa baтn coм thкТ coм: %d#
+Caмc tiмnh nгng khфng coм sгЮn trong maмy chuТ naМy#
+Khфng sэТ duтng maмy chuТ gioТ haМng#
+Khфng sэТ duтng maмy chuТ gэТi#
+Maмy chuТ khфng thкТ giao diтch#
+Maмy chuТ khфng duМng mфтt lвМn#
+Khфng thкТ sэТ duтng baмn haМng taтi cэТa haМng#
+Summoner khфng рuТ SP#
+Weight: %s/%s#
+Рфт daМi thэ phaТi dэхмi 1K#
+Рiмnh keМm muтc thвмt baтi#
+Caмc muтc рiмnh keМm trong thэ laМ thэМa cвn#
+РaЮ coм trong diтch vuт. Vui loМng рхтi vaМ sэТ duтng laтi#
+Khфng thкТ mхТ cэТa sфТ tэхТng tэхтng#
+Khфng thкТ рoмng cэТa sфТ tэхТng tэхтng#
+Khфng thкТ khхТi chaтy cэТa sфТ tэхТng tэхтng#
+РiкТm trong troМ chхi рэхтc yкu cвМu ркТ kiмch hoaтt caмc cэТa sфТ tэхТng tэхтng#
+Vвтt phвТm chiкмn thгмng#
+Coм quaм nhiкМu рфМ trong ba lф#
+ThэМa cвn, haЮy рoмng goмi ba lф cuТa baтn#
+Thвмt baтi trong viктc mхТ mфтt gian haМng#
+CэТa sфТ reЮ рang quay, baтn coм thкТ thвмy caмc vвтt phвТm chiкмn thгмng#
+CэТa sфТ quay aТo#
+Thфng baмo вm thanh khi caмc vвтt phвТm рэхтc baмn#
+Vui loМng xaмc nhвтn chi phiм cuТa hoaтt рфтng#
+Xaмc nhвтn tкn nhвn vвтt chхi#
+SeЮ рэхтc kiкТm tra#
+ThaМnh tiмch#
+TфТng sфм рiкТm рaтt рэхтc#
+Рaтt ркмn cвмp рфт#
+Hфтp phвМn thэхТng tiкмp theo [%5d] рiкТm#
+Tiкмn рфт#
+Kкмt quaТ рaтt рэхтc gвМn рвy#
+Dэт aмn Senbei#
+Senbei: %d/%d#
+Senbei khфng рuТ#
+%s #
+Toмm tгмt#
+Cх baТn#
+Nhвn vвтt#
+HaМnh рфтng#
+Khaмc#
+Phiкu lэu#
+Rune-Midgarts#
+Schwartzvald#
+Arunafeltz#
+New World#
+Localizing#
+HвМm nguтc#
+Chiкмn рвмu#
+PvP#
+Luyктn tвтp#
+Nhiктm vuт#
+Episode#
+Chung#
+Phoм baТn#
+Midgarts#
+New World#
+Khaмc#
+Nhiктm vuт#
+ThaМnh tэтu рaЮ рaтt рэхтc#
+Baтn khфng thкТ thкm рэхтc nэЮa.#
+РaЮ рaтt <%s>.#
+only otp user login allow#
+Khi baтn nhвмn nuмt naМy, baтn seЮ nhвтn рэхтc mфтt vвтt phвТm рэхтc chiТ рiтnh ркТ khхТi taтo roulette#
+Khi nhвмn nuмt, doМng bгмt рвМu cuТa muЮi tкn roulette seЮ nhвмp nhaмy#
+Danh hiктu#
+Khфng duМng danh hiктu#
+Khфng thкТ taтo bang hфтi хТ nхi naМy.#
+Khфng thкТ giaТi taмn bang hфтi хТ nхi naМy.#
+Khфng thкТ gia nhвтp bang hфтi хТ nхi naМy.#
+Khфng thкТ rхМi bang hфтi хТ nхi naМy.#
+Khu vэтc cuТa Hфтi khфng thкТ biт truтc xuвмt#
+Khu vэтc cuТa viт triм bang hфтi khфng thкТ thay рфТi#
+Khфng gian haМnh trang phaТi coм nhiкМu hхn 5 ф#
+E X P : %.1f%% ( basic 100.0%% pccafe %.1f%% + %s %.1f%%)#
+DROP  : %.1f%% ( basic 100.0%% pccafe %.1f%% + %s %.1f%%)#
+DEATH : %.1f%% ( basic 100.0%% pccafe %.1f%% + %s %.1f%%)#
+Vэхтt quaм sфм lэхтng caмc vвтt phвТm coм thкТ рэхтc thкm vaМo#
+Khi baтn mua mфтt cфng cuт, baтn coм thкТ caМi mфтt thфng baмo вm thanh#
+Khфng thкТ thкm рaтo cuт#
+BхТi viМ khфng coм chiкмn thгмng, baтn khфng thкТ рi ркмn cвмp рфт trэхмc#
+TraТ lхМi#
+Рoтc#
+Xoмa thэ#
+Senbei: %d#
+%s %s senbei#
+Senbei#
+TфТng cфтng: %d Senbei#
+%d -> %s senbei#
+%s senbei#
+Senbei hiктn taтi: %s#
+%s: %s senbei#
+%10s senbei#
+TфТng cфтng: %s Senbei#
+Phiм 3% / Iмt nhвмt 1 senbei seЮ biт xoмa#
+Senbei#
+^0000ffSenbei^000000хТ trкn.\n sфм Zeny рaЮ nhвтp coм рuмng khфng?#
+1 tyТ senbei рэхтc xaмc nhвтn an toaМn#
+РвМu vaМo cuТa hхn 1 tyТ senbei chiТ coм thкТ рэхтc baмn vхмi giaм 1 tyТ#
+Nкмu baтn nhвтp 9,999 senbei trхТ lкn, giaм baмn laМ 9,999 senbei#
+Coм nhэЮng рaтo cuт vхмi giaм 0 Senbei. Khфng thкТ mхТ cэТa haМng!#
+Nhвn vвтt cuТa рфмi thuТ coм nhiкМu nhвмt laМ Liang Senbei, viМ vвтy khфng thкТ рэхтc giao diтch#
+%s Vui loМng nhвтp caмc muтc dэхмi 1 tyТ senbei#
+%s:%s Senbei =>%s EA#
+TiкМn giхмi haтn: %s Senbei#
+%s% s senbei %d#
+%s%d%%d Senbei рэхтc baмn. Phiм hoaтt рфтng laМ 3%%.#
+RODEX#
+GЭТI#
+NHВтN#
+Vui loМng рoмng cэТa sфТ soaтn thэ.#
+Khфng coм quyкМn truy cвтp vaМo maмy chuТ(A)#
+Khфng coм quyкМn truy cвтp vaМo maмy chuТ(B)#
+Vui loМng thaмo tкn/рaтn рэхтc trang biт#
+CэТa sфТ soaтn thэ seЮ рэхтc рoмng laтi khi tiкu thuт caмc vвтt phвТm trong haМnh trang.#
+Khфng coм kiмnh luмp.#
+РкТ loaтi boТ caмc muтc, xin vui loМng рoмng cэТa sфТ soaтn thэ trэхмc.#
+Рфмi phэхng рaЮ yкu cвМu baтn laМm baтn.#
+SCRIPT ERROR AID#
+\nErrorfile : %s\nErrorLine : %d ?\nErrorContext: %s#
+^ff0000Baтn coм chгмc chгмn muфмn mua vвтt phвТm naМy khфng? %d рiкТm vaМ %d senbei seЮ рэхтc tiкu thuт sau khi xaмc nhвтn#
+Рoмng#
+Nhiктm vuт#
+Hiктn biкТu tэхтng nhiктm vuт#
+Tiктn iмch#
+Hiктn biкТu tэхтng tiктn iмch#
+ThaМnh viкn cфng cфтng/thaМnh viкn trong nhoмm#
+ThaМnh viкn cфтng рфМng/Nhвтn daтng nhoмm#
+Ghi laтi#
+Quaмi vвтt MVP#
+Tфi#
+Baтn coм chгмc chгмn muфмn xoмa?#
+NPC Nhiктm vuт#
+РiкМn vaМo caмc ghi chuм#
+Lэu#
+РкТ laтi ghi chuм#
+%s [%d caмi] %d caмi#
+%s [%d caмi] %s Zeny#
+%s [%d caмi] %d %s %d -> %s %s#
+%s [%d caмi] %d %s %s %s#
+%s [%d caмi] %d -> %s %s#
+%s [%d caмi] %s %s#
+Рхn viт giao diтch tфмi thiкТu phaТi рэхтc ргтt thaМnh 100 senbei trхТ lкn#
+MaМu toмc#
+KiкТu toмc#
+MaМu quвМn aмo#
+Phong caмch#
+BaТn рфМ khфng рэхтc hфЮ trхт#
+Vui loМng nhвтp dэхмi 2.147.483.647 Zeny#
+Vui loМng nhвтp 1 Zeny trхТ lкn.#
+Baтn khфng coм zeny.#
+Ngвn haМng#
+Sфм dэ#
+Zeny#
+GэТi Zeny#
+Ruмt Zeny#
+1 z UP#
+1 z Down#
+Max#
+Chэa nhвтp sфм Zeny#
+Zeny khфng рuТ#
+Vui loМng nhвтp sфм Zeny#
+Khфng thкТ nhвтp vгn baТn#
+Vэхтt quaм giхмi haтn sфм lэхтng#
+Dэхмi mэмc tфмi thiкТu#
+Thiкмu Zeny#
+Sфм dэ ngвn haМng khфng рuТ#
+Vэхтt quaм giхмi haтn Zeny#
+ThaТ X#
+HaМnh trang X#
+Xe рвТy X#
+Thэ X#
+Mua laтi Windows X#
+NhaМ рвмu giaм X#
+Bang hфтi X#
+Baмn cho NPC X#
+Caмc vвтt phвТm biт haтn chкм#
+HaЮy taтo mфтt goмc!#
+Vui loМng xoмa caмc muтc phoмng trэхмc#
+Vэхтt quaм sфм ngэхМi vaМo baТn sao bфт nhхм#
+TэМ chфмi truy cвтp vaМo baТn sao bфт nhхм sau khi vэхтt quaм giхмi haтn#
+%.1f%% ( %s Server: %.1f%% + Premium:%.1f%% )#
+%.1f%% ( %s Server: %.1f%% + Premium:%.1f%% )#
+Khфng coм sгЮn do caмc muтc truМng lгтp#
+Khфng thкТ sэТ duтng do hiктu эмng lгтp рi lгтp laтi#
+Hiктu эмng rung maМn hiМnh ON#
+Hiктu эмng rung maМn hiМnh OFF#
+Mфтt phвМn mкМm bвмt hхтp phaмp рaЮ рэхтc phaмt hiктn#
+GэТi thэ#
+E X P : %.1f%% ( basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+DROP  : %.1f%% ( basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+DEATH : %.1f%% ( basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+TheТ naМy khфng thкТ sэТ duтng tкn cuТa mфтt ngэхМi#
+CэТa haМng taтo kiкТu#
+Khфng coм sфм sк-ri, vui loМng ркмn trung tвm mua sгмm#
+Vui loМng mхТ hфтp sфм sк-ri cuТa ba lф#
+Baтn coм chгмc chгмn muфмn xoмa thфng tin phong caмch?#
+Caмc khe cгмm рaЮ рвМy, vui loМng xoмa goмc trэхмc khi sэТ duтng#
+Baтn coм chгмc chгмn muфмn mua kiкТu hiктn taтi khфng?\n (Khфng hoaМn laтi Zeny)#
+РaЮ lэu kiкТu hiктn taтi#
+Zeny khфng рuТ. Ngвn haМng coм rвмt nhiкМu Zeny#
+Рi ркмn#
+Khфng coм giaТi phoмng mгтt bгМng quфмc gia#
+Khiм cвМu khфng thкТ cвмt caмnh do doМng chaТy khфng фТn рiтnh do ma thuвтt#
+Khiм cвМu caм nhвn#
+Vui loМng thэТ laтi sau#
+Khфng рuТ Zeny ркТ lкn khinh khiм cвМu caм nhвn#
+Thэтc phвТm рoмng hфтp khфng рuТ cho khiм cвМu caм nhвn#
+Khфng рuТ cвмp рфт cвМn thiкмt ркТ bay mфтt khinh khiм cвМu caм nhвn#
+Khiм cвМu caм nhвn khфng thкТ рaтt рэхтc taтi viт triм рaЮ choтn#
+Khiм cвМu caм nhвn khфng coм sгЮn хТ рвy#
+РфМ trang triм#
+Trang phuтc thэм 2#
+Phong caмch#
+KiкТu toмc naМy khфng thкТ nhuфтm.#
+Vui loМng nhвмn muЮi tкn ркТ choтn phong caмch yкu thiмch cuТa baтn#
+HaЮy xem phong caмch mхмi cuТa baтn!\n (Sau khi mua seЮ рэхтc gэТi sang RODEX)#
+KiкТu cх baТn#
+РiкТm kyЮ nгng coм thкТ рвМu tэ cho kyЮ nгng naМy bгмt рвМu tэМ Base Lv %d#
+BiкТu tэхтng ргтc biктt naМy khфng thкТ рэхтc sэТ duтng trong tкn#
+MaxHP quaм thвмp nкn khфng thкТ sэТ duтng kyЮ nгng naМy#
+MaxSP quaм thвмp nкn khфng thкТ sэТ duтng kyЮ nгng naМy#
+So saмnh#
+Khoмa rхмt рфМ#
+AТnh chuтp maМn hiМnh khфng рэхтc рiмnh keМm#
+TWITTER#
+Trung biМnh#
+Thфng baмo#
+TrхТ vкМ#
+LaМm mхмi#
+%d phuмt#
+%d giхМ#
+%d ngaМy#
+РaЮ quay vкМ#
+Baтn coм muфмn xoмa tin nhгмn?#
+Hiктn biкТu tэхтng#
+Phoмng to#
+Thu nhoТ#
+HiкТn thiт baТn рфМ#
+BaТn рфМ#
+TфТng sфм vвтt phвТm khaмc nhau#
+/minimap#
+HiкТn thiт Minimap#
+Khфng hiкТn thiт baТn рфМ Mini#
+BaТng xкмp haтng ngэхМi chхi online cuТa Guild#
+Thвn mвтt: %s#
+Xaмc nhвтn#
+Tкn nhoмm#
+TrэхТng nhoмm#
+Hкмt thхМi gian. Client рaЮ рoмng.#
+LфЮi nhвтp. Рang рoмng client.#
+Nhвтp chiмnh xaмc. Mфтt lэхтng nhoТ phвМn thэхТng Buff рaЮ рэхтc ркМn buМ cho baтn#
+Baтn phaТi nhвтp 4 kyм tэт bгМng tiкмng Anh vaМ 2 kyм tэт bгМng tiкмng Trung#
+Cвu traТ lхМi baтn рaЮ nhвтp laМ[%s]phaТi khфng?#
+Khфng coм biкТu tэхтng рэхтc choтn#
+LфЮi рaмnh maмy. (Baтn coм %d cх hфтi coМn laтi)#
+Baтn coм muфмn khai baмo %d ngэхМi chхi khфng?#
+Tin nhгмn gэТi ркмn ngэхМi chхi#
+DэЮ liктu cвМn thiкмt ркТ truy vвмn phвМn mкМm bвмt hхтp phaмp khфng рэхтc ргng nhвтp#
+NgэхМi chхi naМy laМ ngэхМi chхi рang рэхтc theo doЮi#
+Ргng nhвтp vaМo hкт thфмng phaмt hiктn#
+Khфng thкТ lэu biкТu tэхтng#
+Khфng thкТ lэu cвu traТ lхМi#
+Xin chaМo, phвМn mкМm bвмt hхтp phaмp рang рэхтc theo doЮi#
+Vui loМng nhвтp vгn baТn dэхмi рвy trong thхМi gian quy рiтnh#
+Nкмu baтn mгмc lфЮi 3 lвМn, baтn coм thкТ biт рoмng bгng theo quy рiтnh quaТn lyм troМ chхi#
+Sфм coМn laтi: %d#
+Vai troМ#
+Phaтm vi#
+Baтn sэТ duтng nuмt chuфтt traмi ркТ gaмn kyм tэт#
+Baтn nhвмp chuфтt phaТi ркТ chiТ рiтnh phaтm vi#
+Khфng coм phaтm vi рэхтc chiТ рiтnh, vui loМng nhвмn Enter#
+E X P : %.1f%% ( basic %.1f%% %s %.1f%%)#
+DROP  : %.1f%% ( basic %.1f%% %s %.1f%%)#
+DEATH : %.1f%% ( basic %.1f%% %s %.1f%%)#
+Tкn vai troМ seЮ gэТi: %s#
+TфТ hхтp caмc nguyкn liктu cвМn thiкмt#
+Cфng thэмc tфТ hхтp khфng рuмng#
+Nguyкn liктu %d moмn.#
+Giaм triт tinh chкм quaм thвмp ркТ tфТng hхтp#
+Baтn muфмn ргng nhвтp taтi Adventure Agency?#
+Xin vui loМng ркТ laтi tin nhгмn#
+Vui loМng nhвтp vгn baТn trкn рфМ hoтa#
+%d giвy coМn laтi#
+Vui loМng nhвтp sфм chэмng nhвтn 6 chэЮ sфм cuТa baтn#
+Sфм chэмng nhвтn#
+Khфng phaТi maЮ xaмc thэтc gфМm 6 chэЮ sфм. Vui loМng xaмc nhвтn laтi#
+Tin nhгмn рaЮ biт xoмa#
+Vui loМng choтn khu vэтc nхi khiм cвМu caм nhвn seЮ di chuyкТn#
+E X P : %d%% ( basic 100.0%% %s %d%%)#
+DROP  : %d%% ( basic 100.0%% %s %d%%)#
+DEATH : %d%% ( basic 100.0%% %s %d%%)#
+Di chuyкТn ркмn рiмch#
+Baтn khфng tфМn taтi tктp[%s]vaМ cвтp nhвтt vхмi AI mгтc рiтnh#
+%.1f%% ( Basic 100.0%% + Premium %.1f%% + %s %.1f%%)#
+Baтn muфмn mхТ mфтt cэТa haМng ngoaМi trхМi хТ рвy?#
+NgэхМi Dulan khфng thкТ mгтc trang phuтc naМy#
+Caмc vвтt phвТm рэхтc baмn trong caмc cэТa haМng ngoaМi trхМi seЮ рэхтc gэТi dэхмi daтng RODEX#
+30,000 z#
+100 lon hэхng viт рaТo Mianmian#
+Khфng thкТ tiкмn haМnh do troтng lэхтng vэхтt quaм 80%%#
+Caмc vвтt phвТm chэa baмn рэхтc gэТi bхТi RODEX#
+Xem thэТ#
+BфТ nhiктm ChuТ tiтch Hiктp hфтi#
+Baтn coм chгмc chгмn muфмn bфТ nhiктm% s laМm chuТ tiтch Hiктp hфтi khфng? Viт triм cuТa baтn seЮ рэхтc trao рфТi vхмi% s sau cuфтc heтn#
+Sх taмn#
+Baтn coм muфмn loaтi boТ caмc cэТa haМng mхТ?#
+%02d ngaМy %02d giхМ %02d phuмt %02d giвy#
+Khфng thкТ ргng nhвтp#
+Khфng thкТ ргng nhвтp viМ sфм lвМn ргng nhвтp tфмi рa#
+Vui loМng choтn nхi baтn muфмn thiкмt lвтp mфтt cэТa haМng ngoaМi trхМi#
+Tкn thuм cэng seЮ рэхтc рфТi thaМnh ^0000ff^0000ff %s^000000^000000, baтn coм muфмn tiкмp tuтc khфng? #
+GiхМ giao diтch: #
+Рaтo cuт giao diтch #
+Sфм lэхтng giao diтch #
+Рхn giaм: #
+Sфм Zeny giao diтch: #
+MхТ cэТa haМng рaтo cuт baмn haМng#
+MхТ cэТa haМng#
+Baмn haМng ngoaМi trхМi baмn thхМi gian#
+Mua cфng viктc baмn thхМi gian ngoaМi trхМi#
+Sфм Zeny coМn laтi:#
+Danh saмch vвтt phвТm:#
+Sinh viкn cэТa haМng ngoaМi trхМi#
+TraТ laтi haМng:#
+TraТ vкМ:#
+ThхМi gian traТ laтi:#
+Sфм Zeny giao diтch trong cэТa haМng ngoaМi trхМi seЮ рэхтc RODEX gэТi#
+Tкn khфng thкТ sэТ duтng#
+Muтc рaЮ рэхтc giao#
+CaТm хn baтn рaЮ mua#
+Caмc vвтt phвТm khфng thкТ рэхтc giao diтch#
+Muтc giao diтch khoмa#
+Khфng tiМm thвмy viт triм triктu hфМi gвМn рoм#
+Nгмm bгмt tвмt caТ#
+Chuтp mфтt phвМn maМn hiМnh#
+GэТi#
+Gia рiМnh vaМ ngэхМi phuт traмch#
+GiaТi thiмch vкМ thay рфТi nфтi dung gia рiМnh#
+Xin chaМo!\r\n\r\n Today\"%s\" vaМ\"%s\" 's con\"%s\" laМ рфтc lвтp vaМ рaЮ thiкмt lвтp mфтt cфТng thфng tin mхмi.\r\n\r\nTфi thфng baмo cho baтn bгМng vгn baТn,\r\n\r\nNкмu baтn muфмn xaмc nhвтn mфмi quan hкт gia рiМnh, vui loМng liкn hкт vхмi nhвn viкn coм liкn quan cuТa Prondra Home Office,\r\n\r\nCaТm хn baтn!#
+Mгтc thэТ#
+Khфng coм hiМnh#
+[%s]hiктn рang хТ traтng thaмi tэМ chфмi cuфтc goтi#
+Cuфтc chiкмn bao vвy hiктn рang рэхтc tiкмn haМnh, viМ vвтy chuТ tiтch cuТa bang hфтi khфng thкТ рэхтc bфТ nhiктm#
+ChuТ tiтch cuТa bang hфтi рaЮ khфng рэхтc bфТ nhiктm dэхмi mфтt ngaМy, viМ vвтy chuТ tiтch cuТa bang hфтi khфng thкТ рэхтc bфТ nhiктm laтi#
+Khфng thкТ taмi sinh sau khi trхТ thaМnh mфтt рэмa treТ, chвмt lэхтng seЮ biт haтn chкм, HP vaМ SP seЮ biт giaТm, baтn coм chгмc chгмn muфмn tiкмp tuтc khфng?#
+Tinh luyктn#
+DuМng Blacksmith Blessing#
+Zeny khфng рuТ#
+Phэхмc laМnh cuТa thхт reМn laМ khфng рuТ#
+Thiкмt biт naМy khфng thкТ taмi chкм#
+Tinh luyктn thaМnh cфng!#
+Tinh luyктn thвмt baтi!#
+Quay vкМ#
+ThaМnh cфng# 
+Quay vкМ#
+Vхмi фng/baМ#
+Tкn cuТa Homunculus seЮ рэхтc рфТi thaМnh ^0000ff%s^000000, baтn chгмc chгмn chэa?#
+Chэмc nгng goтi рэхтc bвтt (chэмc nгng goтi рang ON)#
+Chэмc nгng goтi tгмt (chэмc nгng goтi рang OFF)#
+HiкТn thiт thфng tin ngэхМi goтi#
+Nhвn vвтt naМy hiктn рang sэТ duтng mфтt muтc cэТa haМng mхТ vaМ khфng thкТ xoмa#
+NPC cэТa haМng ngoaМi trхМi tэхng tэт рaЮ рэхтc thiкмt lвтp#
+Khфng coм cэТa haМng mхТ taтi viт triм naМy#
+CэТa haМng ngoaМi trхМi khфng рэхтc pheмp хТ nhэЮng nхi coм nhвn vвтt khaмc#
+Cho thuм cэng thвмt baтi, vui loМng рoмng cэТa sфТ RODEX#
+ChuyкТn trang biт#
+Mгтc thэТ#
+Thiкмt biт biкмn mвмt khi tinh chкм thвмt baтi#
+Рфт tinh luyктn coм thкТ biт giaТm рi nкмu tinh luyктn thвмt baтi#
+Рфт tinh luyктn coм thкТ biт giaТm рi hoгтc trang biт seЮ biкмn mвмt nкмu tinh luyктn thвмt baтi#
+Baтn khфng thкТ duМng hфтp thэ khi рang tinh luyктn. RODEX рaЮ рoмng.#
+Baтn khфng thкТ duМng hфтp thэ khi рang tinh luyктn.#
+Vui loМng рoмng caмc cэТa sфТ khaмc.#
+Bвтt Aura [Aura ON]#
+Tгмt Aura [Aura OFF]#
+Aura рaЮ tгмt. Vui loМng bвтt lкn laтi vaМ thэТ laтi#
+Yкu cвМu iмt nhвмt %d рaтn khi duМng kyЮ nгng#
+Baтn coм muфмn thay рфТi bфт baмnh rгng?#
+Khфng coм sгЮn khi chкмt#
+Khфng thкТ рэхтc sэТ duтng trong thi triкТn#
+Khфng coм sгЮn trong caмc giao diтch#
+Khфng coм sгЮn khi mхТ mфтt cэТa haМng ngoaМi trхМi#
+Khфng khaТ duтng khi рang noмi chuyктn vхмi NPC#
+Khфng khaТ duтng khi хТ trong phoМng chat#
+ThaМnh viкn nhoмm khфng ргng nhвтp#
+Yкu cвМu iмt nhвмt %d muЮi tкn khi duМng kyЮ nгng#
+Sгмp xкмp#
+Vui loМng рoмng cэТa sфТ caМi ргтt vвтt phвТm trэхмc khi loaтi boТ vвтt phвТm#
+Caмc vвтt phвТm thay thкм khфng tфМn taтi#
+Nhвn vвтt рaЮ xoмa#
+%Y.%m.%d#
+NgaМy ra mгмt:%s#
+Caмc ngвn haМng khфng coм sгЮn trong quaм triМnh tinh chкм vaМ caмc ngвn haМng рaЮ buфтc phaТi рoмng cэТa#
+Ngвn haМng khфng thкТ рэхтc sэТ duтng trong tinh chкм#
+Рвy laМ mфтt muтc trong bфт vвтt phвТm#
+NgэхМi#
+Kiкмm siЮ, Phaмp sэ, Thэхng gia, Tu siЮ, Рaтo chiмch, Cung thuТ#
+MeМo#
+Triктu hфМi sэ#
+Рaтi diктn luтc рiтa Midgart, tiкМm nгng vф haтn vaМ khaТ nгng thiмch эмng tuyктt vхМi#
+TэМ Far-Star, tфтc Meow khфng chiТ toМ moМ maМ coМn mang tiмnh caмch sфмng рфтng#
+Giхмi haтn troтng lэхтng vэхтt quaм 70%%. Hoгтc vэхтt quaм khфng gian ba lф 10 khoaТng trфмng#
+P#
+P#
+LaМm nhэЮng viктc khaмc#
+Giхмi haтn nhiктt: %d#
+Khфng thкТ mхМi hoгтc thoaмt khi phoм baТn рэхтc chaтy#
+Chэмa vгn baТn biт cвмm, vui loМng xaмc nhвтn laтi, caТm хn baтn!#
+ID phaТi рэхтc nhвтp dэхмi daтng %d trхТ lкn. Nкмu baтn khфng coм taМi khoaТn, vui loМng nhвмn nuмt[traмi]ркТ taтo taМi khoaТn#
+Vui loМng nhвтp mвтt khвТu trкn %d#
+Vui loМng hoaМn thaМnh cфng viктc trong tiкмn triМnh vaМ thэТ laтi#
+%.1f %% (Internet cafe%.1f %%+TPLUS%.1f%% +%s maмy chuТ%.1f%%)#
+Khфng thкТ ргng kyм рaтo cuт#
+/100#
+/2000#
+https://member.gnjoy.com.tw/mRO_SecPwd.aspx#
+BiкТu tэхтng baтn рang cфм ргng kyм khфng tфМn taтi. Vui loМng ргтt noм vaМo thэ muтc biкТu tэхтng vaМ thэТ laтi#
+TruyкМn thuyкмt thвМn tiкn mхмi#
+Khi hiкТn thiт tкn nhвn vвтt khфng phaТi laМ chiмnh baтn trкn aТnh chuтp maМn hiМnh hoгтc hiкТn thiт рoaтn hфтi thoaтi vхмi mфтt nhвn vвтt khфng phaТi laМ chiмnh baтn trкn phoМng chat, haЮy рaТm baТo coм рэхтc sэт hiкТu biкмt cuТa ngэхМi duМng trэхмc khi sэТ duтng#
+Hiктn taтi khфng thкТ thay thкм vвтt phвТm#
+Рang taТi tкn nhвn vвтt chхi#
+Thфng baмo do bao gфМm nфтi dung chэa рэхтc xaмc nhвтn#
+Mua thвмt baтi#
+ID card is incorrect#
+Рoмng#
+Nфтi quy#
+Mua 1 lвМn#
+Mua 10 lвМn#
+Mua 100 lвМn#
+GiaТi рфтc ргмc#
+GiaМnh рэхтc 2 giaТi thэхТng#
+GiaМnh рэхтc 3 giaТi thэхТng#
+Hiктn khфng рэхтc sэТ duтng#
+Hiктn khфng рэхтc sэТ duтng#
+NgэхМi truмng xфТ sфм vaМng#
+Sфм lэхтng xфТ sфм mua#
+Vai troМ tham gia#
+GiaТi рфтc ргмc#
+2 giaТi#
+3 giaТi#
+Mua vвтt phвТm thэхТng#
+^1a1a1aVeм xфТ sфм^b%d^/b seЮ coм giaм\n^4435b2%dZeny^1a1a1a\nPurchase#
+Mua xфТ sфм thaМnh cфng#
+Khфng coм рuТ Zeny ркТ mua xфТ sфм#
+Sфм lэхтng mua xфТ sфм tфмi рa laМ 1.000#
+Vвng#
+Khфng#
+HP#
+SP#
+Lv#
+Lv#
+Exp#
+MхТ tвмt caТ#
+Play Replay File#
+Vcoin#
+Total#
+Basicinfo#
+Equip#
+Item#
+Skill#
+Guild#
+Party#
+Chatting#
+Shortcut#
+Status#
+ALL#
+User Defined File Name#
+Repeated File Check#
+on#
+<Cх baТn>#
+Choтn#
+Khфng thкТ xoмa do рang tham gia xфТ sфм#
+/achievement#
+XфТ sфм vaМng#
+PhвМn thэхТng %d trong xфТ sфм Zeny#
+PhвМn thэхТng %d: %s#
+PhвМn thэхТng tiмch luЮy xфТ sфм vaМng Coin#
+PhвМn thэхТng tiмch luЮy %d: %s#
+HoaМn Zeny ркТ mua Zeny#
+Sфм Zeny hoaМn laтi:%d Zeny\r\n Lyм do hoaМn traТ: XфТ sфм thвмt baтi trong maмy chuТ#
+РaЮ thкm cэТa sфТ nhoмm nhoТ#
+Xoмa cэТa sфТ рфтi hiМnh#
+LкЮ bфмc thгm рaЮ kкмt thuмc. Vui loМng xaмc nhвтn ngэхМi chiкмn thгмng#
+%d thaмng %d ngaМy#
+Cвмp tiкмp theo#
+Tвмt caТ#
+Chэa hoaМn thaМnh#
+(HoaМn thaМnh!)#
+(Chэa xong)#
+Thay trang biт#
+ChuyкТn#
+Sэмc maтnh\n^cc0000 Saмt thэхng vвтt lyм^ffffff, khaТ nгng vaмc рфМ#
+Nhanh nheтn\n^cc0000 Tфмc рфт tвмn cфng^ffffff, Neм traмnh#
+Sinh lэтc\n^cc0000 Maмu tфмi рa^ffffff, PhoМng thuТ vвтt lyм#
+Triм tuкт\n^cc0000 Saмt thэхng pheмp thuвтt^ffffff, ThхМi gian thi triкТn chiкu, phoМng thuТ pheмp thuвтt#
+ChuвТn xaмc\n^cc0000 Tвмn cфng vвтt lyм tвМm xa^ffffff, Рфт chiмnh xaмc, ThхМi gian thi triкТn chiкu, Saмt thэхng pheмp thuвтt#
+May mгмn\n^cc0000 TiТ lкт chiм maтng^ffffff, TiТ lкт chiмnh xaмc, Sэмc maтnh vвтt lyм, Sэмc maтnh pheмp thuвтt, Neм traмnh hoaМn haТo#
+Saмt thэхng vвтt lyм#
+PhoМng thuТ vвтt lyм#
+Рфт chiмnh xaмc#
+Рфт chiм maтng#
+Bang hфтi рфМng minh#
+РiкТm chiТ sфм рang coм#
+Saмt thэхng pheмp thuвтt#
+PhoМng thuТ pheмp thuвтt#
+Рфт neм traмnh#
+Tфмc рфт рaмnh#
+Mф taТ phiмm tгмt#
+Hiктu эмng#
+Phiмm tгмt kyЮ nгng (F1 ~ F9)#
+Chuтp maМn hiМnh#
+Phoмng to#
+Thu nhoТ#
+Bang hфтi#
+Ngвn haМng#
+Hфтp thэ#
+Cash#
+NgфМi#
+Di chuyкТn#
+Xoay#
+Рфтi trэхТng cвМn bфТ nhiктm рфтi trэхТng cho nhэЮng ngэхМi chхi khaмc#
+Baтn coм muфмn ngэМng xem video?#
+Thiкмt biт рэхтc caМi ргтt trкn cэТa sфТ thay thкм vвтt phвТm#
+Thiкмt biт рaЮ рэхтc gхЮ boТ trкn cэТa sфТ thay thкм vвтt phвТm#
+LaМ doМng cuфмi cuМng#
+%.1f%% (cх baТn 100 %%+danh dэт%.1f %%+%s maмy chuТ%.1f%%)#
+Chinese#
+Ргтt phiмm tгмt#
+Phiм haМng thaмng cuТa baтn seЮ hкмt haтn vaМo %s#
+Khфng tiМm thвмy tвтp tin phaмt laтi#
+GiaМy#
+РвМu#
+Giaмp#
+Mгng tф#
+Trang sэмc#
+Trang phuтc#
+Thэм tэт#
+Trang biт#
+Trang biт ргтc biктt#
+Danh hiктu#
+/quake: hiктu эмng rung maМn hiМnh Bвтt/Tгмt#
+/aura2: Tгмt hoaМn toaМn#
+CaМi ргтt#
+Nвng cao#
+C.ргтt cх baТn#
+РфМng yм vхмi caмc caМi ргтt cх baТn?#
+РфМng yм aмp duтng caМi ргтt?#
+Baтn cвМn khхТi рфтng laтi ркТ aмp duтng caмc caМi ргтt. РфМng yм?#
+Fog#
+Aura рхn giaТn#
+DuМng aura#
+Effect#
+Shadow#
+NoShift#
+Choтn chэмc nгng tгng tфмc T&L phвМn cэмng#
+Рфт Phвn giaТi#
+Kiмch hoaтt#
+Kiмch hoaтt#
+CaТnh#
+РiкМu khiкТn#
+HiМnh aТnh#
+Рфт phвn giaТi#
+ToaМn maМn hiМnh#
+Cфм рiтnh chuфтt#
+Phiм: #
+TфТng phiм: #
+CaМi ргтt nhoмm#
+CaМi ргтt chia seТ vвтt phвТm#
+Thay рфТi cхЮ (F10)#
+Рang taТi hфтp thэ.\n Vui loМng khфng xoмa ^c92114thэ^000000~!!#
+РANG TAТI..#
+Tiкu ркМ#
+NgэхМi gэТi#
+Khфng thкТ mхТ troМ chхi hai lвМn, caМi ргтt seЮ biт giaмn рoaтn#
+CaМi ргтt tiмnh nгng mхмi#
+TaМi khoaТn khфng tфМn taтi#
+Sai mвтt khвТu#
+Failed to pass IP authentication#
+No identification number, supplement your registration information#
+Khoмa taМi khoaТn#
+Hкт thфмng lфЮi#
+unknown error found.#
+CaМi ргтt biкТu tэхтng hэхмng dвЮn рэхМng dвЮn#
+Giao diктn tiМm рэхМng#
+Thфng tin chiТ рэхМng#
+Chia seТ viт triм hiктn taтi#
+Coм [0] kкмt quaТ#
+Yкu cвМu vaМ thфng tin#
+Viт triм lфЮi#
+Coм [%d] kкмt quaТ#
+HiкТn thiт caМi ргтt biкТu tэхтng hэхмng dвЮn рэхМng dвЮn#
+DuМng diтch chuyкТn#
+TiМm рэхМng Undock#
+TaМi khoaТn khфng рэхтc kiмch hoaтt#
+Viт triм рэхтc nhвмp seЮ рэхтc chia seТ trong phoМng chat#
+4.Khi choтn muтc Diтch vuт, caмc hэхмng dвЮn bao gфМm sэТ duтng Zeny & airship#
+5.Phiмm[<-]:Chкм рфт hэхмng dвЮn рэхМng dвЮn<->trao рфТi chкм рфт truy vвмn#
+Chкм рфт chia seТ->sэТ duтng khi chuyкТn sang chкм рфт truy vвмn#
+EXP рaтt рэхтc %lld#
+EXP: '%lld'#
+^b- Mф taТ phiм rao baмn^/b\nseЮ рэхтc thiкмt lвтp theo giaм mгтt haМng, vхмi tiТ lкт phiм nhвмt рiтnh\n\n	^b> TiТ lкт phiм^/b\nTiТ lкт phiм рэхтc mф taТ nhэ sau:\n\n0 z ~ 10,000 z\n = TiТ lкт phiм : ^1567fe0%^000000\n10,001 z ~ 100,000 z\n = TiТ lкт phiм : ^1567fe2%^000000\n100,001 z ~ 1,000,000 z\n = TiТ lкт phiм : ^1567fe4%^000000\n1,000,001 z ~ 10,000,000 z\n	 = TiТ lкт phiм : ^1567fe6%^000000\n10,000,001 z ~ 100,000,000 z\n = TiТ lкт phiм : ^1567fe8%^000000\n100,000,001 z lхмn hхn\n = TiТ lкт phiм : ^1567fe10%^000000\n#
+TфТng cфтng : #
+~ Khi baмn vвтt phвТm, tфТng sфм zeny seЮ nhвтn рэхтc #
+~ Khi mua vвтt phвТm, tфТng sфм zeny giaТm #
+MхТ phoМng chat#
+Cвмp рфт hiктn taтi cuТa nhвn vвтt khфng cho pheмp vaМo nhoмm#
+Job EXP: '%lld'#
+Рaтt %lld Job EXP#
+Khфng thкТ mхТ cэТa haМng taтi рiтa рiкТm naМy#
+ giвy nэЮa mхмi coм thкТ chuyкТn trang biт рэхтc#
+S.Lg#
+TruyкМn SNS thвмt baтi (%d)#
+Kкмt nфмi SNS thвмt baтi#
+Coм sгЮn sau khi ргng nhвтp SNS#
+URL khфng tфМn taтi#
+Khфng coм sгЮn do caмc cэТa sфТ рфтi hiМnh chфМng cheмo#
+CэТa haМng baмn haМng ngoaМi trхМi cuТa tфi#
+BOX#
+Meтo#
+Tweet thaМnh cфng#
+ThэТ laтi#
+HaЮy quay vкМ vaМ choтn nguyкn liктu ркТ tinh luyктn.#
+Рoмng cэТa do рaм khфng рuТ tinh chкм, xin vui loМng xaмc nhвтn laтi#
+Рoмng cэТa do khфng рuТ Zeny. Vui loМng xaмc nhвтn laтi#
+Рoмng cэТa do khфng рuТ phэхмc laМnh tэМ thхт reМn, xin vui loМng xaмc nhвтn laтi#
+Vвтt phвТm naМy рaЮ biт phaм huТy.#
+Caмc chiТ sфТ chiмnh рaЮ biт giaТm.#
+Caмc chiТ sфТ chiмnh рaЮ quay vкМ biМnh thэхМng.#
+Vui loМng nhвтp mвтt khвТu OTP 8 chэЮ sфм#
+Hхтp nhвмt taМi khoaТn#
+Ragnarok#
+Рang baТo triМ#
+Vui loМng nhвтp tэМ khoмa#
+MOTP#
+MaЮ xaмc thэтc#
+Vui loМng thэтc thi GNJOY MOTP рэхтc taТi xuфмng trкn рiктn thoaтi di рфтng, sau рoм nhвтp maЮ xaмc thэтc#
+ThaМnh viкn cuТa nhoмm рэхтc bфТ nhiктm khфng tфМn taтi. Baтn coм chгмc chгмn muфмn giaТi taмn рфтi khфng?#
+- Trкn 18 tuфТi#
+- Maмy chuТ traТ phiм#
+- Maмy chuТ miкЮn phiм#
+Mэхтt#
+Trung biМnh#
+Hхi giвтt#
+Giвтt#
+Map#
+Maмy chuТ chiТ coм thкТ lэu trэЮ caмc vвтt phвТm trong ba lф#
+Trэмng thuм cэng khфng рэхтc pheмp trong kho maмy chuТ#
+Khфng coм muтc naМo coм thкТ рэхтc lэu trэЮ trong kho maмy chuТ#
+Muтc naМy khфng thкТ tгng tэМ %s#
+HuТy phoм baТn#
+[%s] tinh luyктn trang biт thaМnh cфng, рaЮ nhвтn [+%d %s].#
+[%s] tinh luyктn thвмt baтi [+%d %s].#
+HuТy boТ chiТ sau khi bфТ nhiктm рфтi trэхТng#
+Tinh luyктn#
+Haт cвмp#
+Cх baТn#
+TiМm thвмy caмc tвтp tin biт thay рфТi, xin vui loМng khхТi рфтng laтi troМ chхi#
+%s khфng thкТ duМng хТ baТn рфМ naМy.#
+Tэт рфтng#
+Baтn khфng thкТ cho Homunculus гn khi рang mхТ hoМm thэ.#
+Homunculus рaЮ гn thэмc гn, \'%s\' coМn laтi %d#
+РaЮ bвтt Tэт рфтng cho Homunculus гn (ON)#
+РaЮ tгмt Tэт рфтng cho Homunculus гn (OFF)#
+Giaм triт kinh nghiктm maМ Homunculus thu рэхтc laМ \n10% giaм triт kinh nghiктm maМ chuТ nhвn coм рэхтc#
+Xaмc suвмt: %d%%#
+Рфмi tэхтng naМy khфng phaТi laМ muтc tiкu cuТa Homunculus. Vui loМng nhвмn 'Alt+phiмm phaТi' ркТ khoмa muтc tiкu cuТa Homunculus#
+Muтc tiкu tвмn cфng cuТa Homunculus khфng tфМn taтi, vui loМng nhвмn 'Alt+phiмm phaТi' ркТ khoмa muтc tiкu tвмn cфng cuТa Homunculus#
+Danh saмch baмn#
+Danh saмch seЮ mua#
+Mхмi#
+MuЮ#
+Coм haтn#
+Trang biт thuк#
+Trang biт#
+Buff#
+Phuтc hфМi#
+Khaмc#
+Рang giaТm giaм#
+Naтp#
+Mua#
+https://payment.gnjoy.com/bill/login.grv#
+TiМm kiкмm#
+Cash miкЮn phiм#
+SэТ duтng tiмn duтng miкЮn phiм#
+GiэЮ рiкТm#
+Cвтp nhвтt sфм lэхтng#
+Star Emperor(Girl)#
+Soul Reaper(Girl)#
+Star Emperor(Boy)#
+Soul Ripper(Boy)#
+Khi troтng lэхтng vэхтt quaм %d, HP/SP seЮ khфng tэт рфтng phuтc hфМi#
+GM#
+PhвМn thэхТng рэхтc gэТi vaМo ngaМy %d#
+PhвМn thэхТng cuм рвмm %s#
+ThхМi gian diкЮn ra sэт kiктn:%02d thaмng%02d ngaМy ~%02d thaмng%02d ngaМy 24:00#
+NgaМy %d#
+Ргng kyм vaМo ngaМy%d\nVui loМng nhвмp ~!#
+Рвмm thaМnh cфng vaМo ngaМy %d!#
+ |D-day#
+NgaМy#
+KiкТm tra thвмt baтi, xin vui loМng thэТ laтi#
+Nhвтn phoМng#
+Noм khфng phaТi laМ trong sэт kiктn punch-in#
+Tin nhгмn tэТ thвМn#
+Khфng thкТ nhвтp hхn 50%%#
+Zoom Out#
+%s: Coм thкТ tгмt Zoom Out Bвтt/Tгмt#
+Bвтt chэмc nгng Thu nhoТ (Bвтt)#
+Tгмt chэмc nгng Thu nhoТ (Tгмt)#
+/zoom#
+Tiмnh nгng naМy khфng khaТ duтng cho% d phuмt trэхмc khi bгмt рвМu bao vвy#
+Emblem Frame#
+VeЮ khung huy hiктu#
+Khфng veЮ khung huy hiктu#
+KyЮ nгng nвng cao (%s) chэa coм рэхтc#
+NhaЮn saмt thэхng phoмng рaтi#
+CoМn laтi#
+Lкn#
+PhaТi#
+Xuфмng#
+Fn#
+Thфng baмo#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Xaмc nhвтn#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Game Master#
+QuaМ ргng nhвтp ngaМy %d#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+QuaМ ргng nhвтp hгМng ngaМy#
+Sэт kiктn tэМ : %02d. %02d. ~ %02d. %02d. 24:00#
+NgaМy %d#
+Nhвмp ркТ nhвтn quaМ \n ргng nhвтp \n ngaМy %d!#
+Baтn рaЮ nhвтn quaМ \n ргng nhвтp \n ngaМy %d.#
+Kкмt thuмc sau#
+ngaМy#
+KiкТm tra thвмt baтi. Vui loМng thэТ laтi sau.#
+QuaМ hгМng ngaМy#
+Sэт kiктn khфng coм khoaТng thхМi gian.#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Thфng baмo vкт Buфтc xoмa thэхng nhвn baмn thхМi gian#
+Xin chaМo, nhaМ thaмm hiкТm.\r\nChuмng tфi рaЮ рoмng cэТa haМng baмn thхМi gian tэт рфтng cuТa baтn viМ vi phaтm chiмnh saмch.\r\n Nкмu baтn cвМn thкm thфng tin, vui loМng gэТi cho chuмng tфi tin nhгмn 1:1.\r\nCaТm хn.#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Buфтc xoмa#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+ChiТ coм thкТ sэТ duтng tiкмng Anh vaМ chэЮ sфм.#
+No Msg#
+No Msg#
+No Msg#
+Xoмa#
+PhaТn hфМi#
+GэТi#
+Check#
+Thфng baмo#
+ThэхМng#
+Quay laтi#
+TiМm#
+Cho thuм cэng гn thвмt baтi. Baтn khфng thкТ cho noм гn vaМo luмc naМy.#
+Cho homun гn thвмt baтi. Baтn khфng thкТ cho noм гn vaМo luмc naМy.#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Ркмn##
+No Msg#
+No Msg#
+Xoмa#
+Xoмa tвмt caТ#
+Baтn coм chгмc chгмn muфмn xoмa tвмt caТ thэ?#
+Nhвтn#
+Nhвтn tвмt caТ#
+Baтn coм muфмn nhвтn vвтt phвТm рiмnh keМm tэМ thэ naМy?#
+Baтn coм muфмn nhвтn tвмt caТ tэМ hфтp thэ?#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Baтn cвМn рuТ 18 tuфТi ркТ chхi troМ chхi naМy. #
+Chuмng tфi khфng khuyкмn khiмch ngэхМi chхi, chхi trкn 3 tiкмng рфМng hфМ. #
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Thфng tin thanh toaмn рaЮ hкмt haтn, vui loМng khхТi рфтng laтi client.#
+РвЮ xaТy ra lфЮi. Vui loМng thэТ laтi.#
