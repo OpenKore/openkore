@@ -2865,6 +2865,8 @@ sub minimap_indicator {
 	} elsif (defined $args->{effect}) {
 		if ($args->{effect} == 1) {
 			$indicator = T("*Quest!*");
+		} elsif ($args->{effect} == 9999) {
+			return;
 		} elsif ($args->{effect}) { # 0 is no effect
 			$indicator = TF("unknown effect %d", $args->{effect});
 		}
@@ -5007,7 +5009,8 @@ sub inventory_items_stackable {
 
 sub item_list_start {
 	my ($self, $args) = @_;
-	debug TF("Starting Item List. ID: %s\n", $args->{type}), "info";
+	debug "Starting Item List. ID: $args->{type}".
+			($args->{name} ? " ($args->{name})\n" : "\n"), "info";
 	$current_item_list = $args->{type};
 }
 
