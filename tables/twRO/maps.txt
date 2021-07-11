@@ -1,4 +1,4 @@
-﻿//---2010.06.04 Renewal server
+//---2010.06.04 Renewal server
 dicastes01.rsw#邪派國都艾爾迪卡斯特#
 dicastes02.rsw#布魯姆德 姚樂希森林#
 dic_in01.rsw#迪卡斯特內部#
@@ -59,7 +59,7 @@ mosk_dun01.rsw#森林洞穴#
 mosk_dun02.rsw#深森林洞穴#
 mosk_dun03.rsw#深淵森林洞穴#
 
-bossnia_01.rsw#波士尼亞#
+//bossnia_01.rsw#波士尼亞#
 bossnia_02.rsw#波士尼亞#
 bossnia_03.rsw#波士尼亞#
 bossnia_04.rsw#波士尼亞#
@@ -148,11 +148,11 @@ ra_fild10.rsw#歐茲 峽谷#
 ra_fild11.rsw#伊達 平原#
 ra_fild12.rsw#伊達 平原#
 ra_fild13.rsw#眼淚之海岸#
-ra_san01.rsw#神殿 聖域#
-ra_san02.rsw#神殿 聖域#
-ra_san03.rsw#神殿 聖域#
-ra_san04.rsw#神殿 聖域#
-ra_san05.rsw#神殿 聖域#
+ra_san01.rsw#拉赫神殿聖域一樓北區#
+ra_san02.rsw#拉赫神殿聖域一樓西區#
+ra_san03.rsw#拉赫神殿聖域一樓東區#
+ra_san04.rsw#拉赫神殿聖域一樓南區#
+ra_san05.rsw#拉赫神殿聖域二樓中區#
 ice_dun01.rsw#冰洞穴#
 ice_dun02.rsw#冰洞穴#
 ice_dun03.rsw#冰洞穴#
@@ -196,9 +196,9 @@ tha_t06.rsw#達納托斯 塔台 上層部#
 tha_t07.rsw#達納托斯 塔台 上層部#
 tha_t08.rsw#達納托斯 塔台 上層部#
 tha_t09.rsw#達納托斯 塔台 上層部#
-tha_t10.rsw#達納托斯 塔台 上層部#
-tha_t11.rsw#達納托斯 塔台 上層部#
-tha_t12.rsw#達納托斯 塔台 上層部#
+tha_t10.rsw#達納托斯塔台上層部 悲傷之房#
+tha_t11.rsw#達納托斯塔台上層部 絕望之房#
+tha_t12.rsw#達納托斯塔台上層部 憎恨之房#
 thana_step.rsw#達納托斯 塔台 上層部#
 thana_boss.rsw#達納托斯 塔台 (不知名的地方)#
 thana_scene01.rsw#達納托斯 塔台 前面#
@@ -295,7 +295,7 @@ nif_in.rsw#尼芙菲姆內部#
 yggdrasil01.rsw#禾貝勒開米勒之島 (天地樹葉樹幹)#
 nif_fild02.rsw#鬼的峽谷#
 nif_fild01.rsw#斯凱領頓 (尼芙菲姆 偏遠村落)#
-niflheim.rsw#死者國家 尼芙菲姆#
+niflheim.rsw#亡者國都 尼芙菲姆#
 um_dun01.rsw#樹木裡的 木工所#
 um_dun02.rsw#樹木裡的 異界通路#
 um_in.rsw#汶巴拉內部#
@@ -331,8 +331,6 @@ job_cru.rsw#十字軍 轉職 考試場#
 job_monk.rsw#聖 卡畢利那 修道院#
 monk_test.rsw#聖 卡畢利那 修道院#
 in_rogue.rsw#流氓工會 內部#
-mag_dun02.rsw#諾可羅德#
-mag_dun01.rsw#諾可羅德#
 yuno_fild04.rsw#爾邁斯 瀑雷德#
 yuno_fild03.rsw#爾邁斯 瀑雷德#
 yuno_fild02.rsw#吉 海伊洛 別墅#
@@ -504,12 +502,6 @@ gef_dun00.rsw#吉芬 地下 密穴#
 gef_dun01.rsw#吉芬 地下 密穴#
 gef_dun02.rsw#葛帔尼亞 密穴#
 gef_dun03.rsw#葛帔尼亞 密穴#
-iz_dun00.rsw#海底 洞窟#
-iz_dun01.rsw#海底 洞窟#
-iz_dun02.rsw#海底 洞窟#
-iz_dun03.rsw#海底 洞窟#
-iz_dun04.rsw#海底 洞窟#
-iz_dun05.rsw#海底 洞窟#
 in_sphinx1.rsw#史芬克斯 密穴#
 in_sphinx2.rsw#史芬克斯 密穴#
 in_sphinx3.rsw#史芬克斯 密穴#
@@ -620,20 +612,18 @@ c_tower3.rsw#艾爾帕蘭 鐘塔地上樓層 3樓#
 c_tower4.rsw#艾爾帕蘭 鐘塔地上樓層 4樓#
 gl_cas01.rsw#克雷斯特漢姆古城 地上樓層 1樓#
 gl_cas02.rsw#克雷斯特漢姆古城 地上樓層 2樓#
-gl_church.rsw#克雷斯特漢姆古城 修道院#
-gl_chyard.rsw#克雷斯特漢姆古城 地下公墓#
-gl_dun01.rsw#克雷斯特漢姆 最下層 地下洞窟#
-gl_dun02.rsw#克雷斯特漢姆 最下層 地下洞窟#
+gl_dun01.rsw#克雷斯特漢姆古城 最下層 地下洞窟#
+gl_dun02.rsw#克雷斯特漢姆古城 最下層 地下洞窟#
 gl_in01.rsw#克雷斯特漢姆古城 室內#
-gl_knt01.rsw#克雷斯特漢姆 騎士團1樓#
-gl_knt02.rsw#克雷斯特漢姆 騎士團2樓#
-gl_prison.rsw#克雷斯特漢姆 地下監獄1樓#
-gl_prison1.rsw#克雷斯特漢姆 地下監獄2樓#
-gl_sew01.rsw#克雷斯特漢姆 地下水道#
-gl_sew02.rsw#克雷斯特漢姆 地下水道#
-gl_sew03.rsw#克雷斯特漢姆 地下水道#
-gl_sew04.rsw#克雷斯特漢姆 地下水道#
-gl_step.rsw#克雷斯特漢姆 樓梯密穴#
+gl_knt01.rsw#克雷斯特漢姆古城 騎士團1樓#
+gl_knt02.rsw#克雷斯特漢姆古城 騎士團2樓#
+gl_prison.rsw#克雷斯特漢姆古城 地下監獄1樓#
+gl_prison1.rsw#克雷斯特漢姆古城 地下監獄2樓#
+gl_sew01.rsw#克雷斯特漢姆古城 地下水道#
+gl_sew02.rsw#克雷斯特漢姆古城 地下水道#
+gl_sew03.rsw#克雷斯特漢姆古城 地下水道#
+gl_sew04.rsw#克雷斯特漢姆古城 地下水道#
+gl_step.rsw#克雷斯特漢姆古城 樓梯密穴#
 pvp_y_room.rsw#PvP : 等待室#
 pvp_n_room.rsw#PvP : 等待室#
 pvp_n_1-1.rsw#PvP : 三明治 房間#
@@ -718,7 +708,7 @@ pvp_y_7-5.rsw#PvP : 夢羅克#
 pvp_y_8-5.rsw#PvP : 夢羅克#
 pvp_2vs2.rsw#PvP : 活動 競技場#
 //----------------bein ep.11.3------------
-bossnia_01.rsw#波士尼亞#
+//bossnia_01.rsw#波士尼亞#
 bossnia_02.rsw#波士尼亞#
 bossnia_03.rsw#波士尼亞#
 bossnia_04.rsw#波士尼亞#
@@ -954,7 +944,7 @@ gld2_prt.rsw#深淵迴廊 : 戰士之路#
 lhz_dun04.rsw#活體實驗研究所 地下 4樓#
 que_lhz.rsw#活體實驗研究所 地下 4樓#
 1@lhz.rsw#保羅協夫的研究室#
-iz_dun05.rsw#依斯魯得島海盜地洞密穴 6樓#
+iz_dun05.rsw#依斯魯得島 海盜地洞密穴 6樓#
 malangdo.rsw#綿綿島#
 mal_in01.rsw#綿綿島內部#
 mal_in02.rsw#船內部#
@@ -1079,7 +1069,7 @@ cave.rsw#洞穴村#
 moc_fild20.rsw#蘇克拉特沙漠次元裂縫#
 moc_fild21.rsw#蘇克拉特沙漠次元裂縫#
 moc_fild22.rsw#蘇克拉特沙漠次元裂縫#
-bossnia_01.rsw#波士尼亞#
+//bossnia_01.rsw#波士尼亞#
 bossnia_02.rsw#波士尼亞#
 bossnia_03.rsw#波士尼亞#
 bossnia_04.rsw#波士尼亞#
@@ -1128,11 +1118,11 @@ ra_fild08.rsw#拉赫 伊達平原#
 //ra_fild11.rsw#拉赫 伊達平原#
 ra_fild12.rsw#拉赫 伊達平原#
 //ra_fild13.rsw#拉赫 眼淚海岸#
-ra_san01.rsw#拉赫神殿聖域 1樓北區#
-ra_san02.rsw#拉赫神殿聖域 1樓西區#
-ra_san03.rsw#拉赫神殿聖域 1樓東區#
-ra_san04.rsw#拉赫神殿聖域 1樓南區#
-ra_san05.rsw#拉赫神殿聖域 2樓中區#
+ra_san01.rsw#拉赫神殿聖域一樓北區#
+ra_san02.rsw#拉赫神殿聖域一樓西區#
+ra_san03.rsw#拉赫神殿聖域一樓東區#
+ra_san04.rsw#拉赫神殿聖域一樓南區#
+ra_san05.rsw#拉赫神殿聖域一樓中區#
 ice_dun01.rsw#拉赫冰穴 1樓#
 ice_dun02.rsw#拉赫冰穴 2樓#
 ice_dun03.rsw#拉赫冰穴 3樓#
@@ -1243,13 +1233,13 @@ yuno_fild09.rsw#秀發茲發德 警備隊營地#
 yuno_fild08.rsw#朱諾 啟 海伊洛學院#
 yuno_fild07.rsw#爾邁斯峽谷(深淵峽谷)#
 //yuno_fild05.rsw#爾邁斯 瀑雷德#
-ayo_in02.rsw#阿瑜陀耶內部#
-ayo_in01.rsw#阿瑜陀耶內部#
-ayo_dun02.rsw#阿瑜陀耶 古神殿內部#
-ayo_dun01.rsw#阿瑜陀耶 古神殿迷宮#
-ayo_fild02.rsw#阿瑜陀耶原野#
-ayo_fild01.rsw#阿瑜陀耶原野#
-ayothaya.rsw#阿瑜陀耶#
+ayo_in02.rsw#哎喲泰雅內部#
+ayo_in01.rsw#哎喲泰雅內部#
+ayo_dun02.rsw#哎喲泰雅 古神殿內部#
+ayo_dun01.rsw#哎喲泰雅 古神殿迷宮#
+ayo_fild02.rsw#哎喲泰雅原野#
+ayo_fild01.rsw#哎喲泰雅原野#
+ayothaya.rsw#哎喲泰雅#
 que_god02.rsw#任務地圖#
 que_god01.rsw#任務地圖#
 quiz_test.rsw#考場#
@@ -1399,7 +1389,7 @@ mjolnir_10.rsw#妙勒妙勒尼山脈南區#
 mjolnir_11.rsw#妙勒妙勒尼山脈南區#
 mjolnir_12.rsw#妙勒妙勒尼山脈 北邊山麓#
 prt_fild00.rsw#普隆德拉原野#
-prt_fild01.rsw#普隆德拉原野#
+//prt_fild01.rsw#普隆德拉原野#
 prt_fild02.rsw#普隆德拉原野#
 prt_fild03.rsw#普隆德拉原野#
 prt_fild04.rsw#普隆德拉原野#
@@ -1481,12 +1471,12 @@ gef_dun00.rsw#吉芬地下密穴 1樓#
 gef_dun01.rsw#吉芬地下密穴 2樓#
 gef_dun02.rsw#吉芬地下密穴 3樓#
 gef_dun03.rsw#葛帔尼亞密穴#
-iz_dun00.rsw#依斯魯得島海盜地洞密穴 1樓#
-iz_dun01.rsw#依斯魯得島海盜地洞密穴 2樓#
-iz_dun02.rsw#依斯魯得島海盜地洞密穴 3樓#
-iz_dun03.rsw#依斯魯得島海盜地洞密穴 4樓#
-iz_dun04.rsw#依斯魯得島海盜地洞密穴 5樓#
-//iz_dun05.rsw#依斯魯得島海盜地洞密穴 6樓#
+iz_dun00.rsw#依斯魯得島 海盜地洞密穴 1樓#
+iz_dun01.rsw#依斯魯得島 海盜地洞密穴 2樓#
+iz_dun02.rsw#依斯魯得島 海盜地洞密穴 3樓#
+iz_dun03.rsw#依斯魯得島 海盜地洞密穴 4樓#
+iz_dun04.rsw#依斯魯得島 海盜地洞密穴 5樓#
+//iz_dun05.rsw#依斯魯得島 海盜地洞密穴 6樓#
 in_sphinx1.rsw#夢羅克人面獅身像 地下1樓#
 in_sphinx2.rsw#夢羅克人面獅身像 地下 2樓#
 in_sphinx3.rsw#夢羅克人面獅身像 地下 3樓#
@@ -1598,19 +1588,19 @@ c_tower4.rsw#艾爾帕蘭鐘塔 地上4樓#
 gl_cas01.rsw#克雷斯特漢姆古城 1樓#
 gl_cas02.rsw#克雷斯特漢姆古城 2樓#
 gl_church.rsw#克雷斯特漢姆古城 修道院#
-gl_chyard.rsw#克雷斯特漢姆 地下公墓#
-gl_dun01.rsw#克雷斯特漢姆 地下洞穴 1樓#
-gl_dun02.rsw#克雷斯特漢姆 地下洞穴 2樓#
+gl_chyard.rsw#克雷斯特漢姆古城 地下公墓#
+gl_dun01.rsw#克雷斯特漢姆古城 地下洞穴 1樓#
+gl_dun02.rsw#克雷斯特漢姆古城 地下洞穴 2樓#
 gl_in01.rsw#克雷斯特漢姆古城 室內#
-gl_knt01.rsw#克雷斯特漢姆 騎士團 1樓#
-gl_knt02.rsw#克雷斯特漢姆 騎士團 2樓#
-gl_prison.rsw#克雷斯特漢姆 地下監獄 1樓#
-gl_prison1.rsw#克雷斯特漢姆 地下監獄 2樓#
-gl_sew01.rsw#克雷斯特漢姆 地下水道 1樓#
-gl_sew02.rsw#克雷斯特漢姆 地下水道 2樓#
-gl_sew03.rsw#克雷斯特漢姆 地下水道 3樓#
-gl_sew04.rsw#克雷斯特漢姆 地下水道 4樓#
-gl_step.rsw#克雷斯特漢姆 樓梯密穴#
+gl_knt01.rsw#克雷斯特漢姆古城 騎士團 1樓#
+gl_knt02.rsw#克雷斯特漢姆古城 騎士團 2樓#
+gl_prison.rsw#克雷斯特漢姆古城 地下監獄 1樓#
+gl_prison1.rsw#克雷斯特漢姆古城 地下監獄 2樓#
+gl_sew01.rsw#克雷斯特漢姆古城 地下水道 1樓#
+gl_sew02.rsw#克雷斯特漢姆古城 地下水道 2樓#
+gl_sew03.rsw#克雷斯特漢姆古城 地下水道 3樓#
+gl_sew04.rsw#克雷斯特漢姆古城 地下水道 4樓#
+gl_step.rsw#克雷斯特漢姆古城 樓梯密穴#
 pvp_y_room.rsw#PvP : 等候室#
 pvp_n_room.rsw#PvP : 等候室#
 pvp_c_room.rsw#PvP : 等候室#
@@ -1695,3 +1685,298 @@ pvp_y_6-5.rsw#PvP : 夢羅克#
 pvp_y_7-5.rsw#PvP : 夢羅克#
 pvp_y_8-5.rsw#PvP : 夢羅克#
 pvp_2vs2.rsw#PvP : 活動競賽場#
+
+//英雄事蹟
+dali02.rsw#次元裂縫#
+1@face.rsw#驚駭森靈巢穴#
+1@sara.rsw#莎拉的記憶#
+dali.rsw#次元裂縫#
+1@tnm1.rsw#魔神之塔上層#
+1@tnm2.rsw#魔神之塔最上層#
+1@tnm3.rsw#夢羅克城 地下#
+1@ge_st.rsw#吉芬魔法大賽#
+1@gef.rsw#吉芬魔法大賽#
+1@gef_in.rsw#吉芬魔法大賽#
+1@spa.rsw#幽靈皇宮#
+
+//EP.14.3
+moro_vol.rsw#火焰盆地#
+moro_cav.rsw#火焰洞穴#
+1@dth1.rsw#拜歐斯島#
+1@dth2.rsw#拜歐斯島#
+1@dth3.rsw#拜歐斯島#
+1@rev.rsw#摩洛斯洞穴#
+1@xm_d.rsw#恐怖玩具工廠#
+1@eom.rsw#魔神殿#
+1@jtb.rsw#噩夢吉特巴#
+
+// ep15.1 ???????
+ver_eju.rsw#優配擂斯東邊廢墟#
+ver_tunn.rsw#貝魯茲外圍隧道#
+verus04.rsw#貝魯茲考古地#
+verus03.rsw#貝魯茲 中央廣場#
+1@mcd.rsw#查理斯頓工廠#
+
+// ???????
+job_gun.rsw#解放的休憩區#
+
+// ep15.2 ???????
+verus01.rsw#實驗洞-OPTATIO#
+verus02.rsw#研究洞-WISH#
+un_bk_q.rsw#地下碉堡#
+un_bunker.rsw#地下碉堡#
+un_myst.rsw#地下隧道#
+1@uns.rsw#最後房間#
+1@lab.rsw#中央實驗室#
+
+// ??????? ?? 2013-12-18
+lhz_dun_n.rsw#戰死者之墓#
+
+// ??? ??3
+1@glast.rsw#過去的克雷斯特漢姆古城#
+1@air1.rsw#飛空艇#
+1@air2.rsw#飛空艇#
+
+
+//2015 chrismas
+niflxmas.rsw#尼芙菲姆#
+
+//201606無限副本
+1@infi.rsw#無限空間#
+
+//2016 Map Channel
+gl_ch_a.rsw#克雷斯特漢姆古城 修道院#
+gl_ch_b.rsw#克雷斯特漢姆古城 修道院#
+gl_chy_a.rsw#克雷斯特漢姆古城 地下公墓#
+gl_chy_b.rsw#克雷斯特漢姆古城 地下公墓#
+iz_du05_a.rsw#依斯魯得島 海盜地洞密穴 6樓#
+iz_du05_b.rsw#依斯魯得島 海盜地洞密穴 6樓#
+mag_d01_a.rsw#朱諾 諾可羅德 1樓#
+mag_d01_b.rsw#朱諾 諾可羅德 1樓#
+mag_d02_a.rsw#朱諾 諾可羅德 2樓#
+mag_d02_b.rsw#朱諾 諾可羅德 2樓#
+verus01_a.rsw#實驗洞-OPTATIO#
+verus01_b.rsw#實驗洞-OPTATIO#
+verus02_a.rsw#研究洞-WISH#
+verus02_b.rsw#研究洞-WISH#
+verus03_a.rsw#貝魯茲 中央廣場#
+verus03_b.rsw#貝魯茲 中央廣場#
+ecltd02_a.rsw#彩虹橋高塔 2樓#
+ecltd02_b.rsw#彩虹橋高塔 2樓#
+ecltd03_a.rsw#彩虹橋高塔 3樓#
+ecltd03_b.rsw#彩虹橋高塔 3樓#
+
+// 新種族都蘭羅札納村
+lasagna.rsw#港口都市 羅札納#
+lasa_fild01.rsw#羅比奧平原崗亭#
+lasa_fild02.rsw#羅比奧森林#
+lasa_dun01.rsw#龍巢穴#
+lasa_dun02.rsw#龍巢穴#
+lasa_dun03.rsw#龍巢穴#
+conch_in.rsw#康-奇麗娜號內部#
+lasa_in01.rsw#羅札納內部#
+lasa_dun_q.rsw#龍巢穴#
+
+
+//鐘塔夢魘副本
+c_tower2_.rsw#夢魘密穴鐘塔 2樓#
+c_tower3_.rsw#夢魘密穴鐘塔 3樓#
+
+//20161213 Contents Update
+
+//代表公會 MD
+1@ffp.rsw#餘孽的大本營#
+
+// 新種族都蘭羅札納村
+lasagna.rsw#港口都市 羅札納#
+lasa_fild01.rsw#羅比奧平原崗亭#
+lasa_fild02.rsw#羅比奧森林#
+lasa_dun01.rsw#龍巢穴#
+lasa_dun02.rsw#龍巢穴#
+lasa_dun03.rsw#龍巢穴#
+conch_in.rsw#康-奇麗娜號內部#
+lasa_in01.rsw#羅札納內部#
+lasa_dun_q.rsw#龍巢穴#
+
+//-- ???? ?? 3:58 2015-02-23 ???
+
+// ep16.1 ??? ?? ?? + ???? ???
+1@mir.rsw#儀式之屋# 
+2@mir.rsw#儀式之屋# 
+1@sthb.rsw#空中要塞內部# 
+1@sthc.rsw#空中要塞密室# 
+1@sthd.rsw#空中要塞頂樓# 
+
+prt_cas.rsw#普隆德拉中央宮#
+prt_cas_q.rsw#普隆德拉行宮#
+prt_prison.rsw#普隆德拉地下監獄#
+prt_lib.rsw#王室的記憶#
+prt_lib_q.rsw#過去王室的記憶#
+prt_q.rsw#被入侵的普隆德拉#
+prt_pri00.rsw#普隆德拉監獄#
+
+// ???? ??? ?? 2013-12-18
+lhz_dun_n.rsw#戰死者之墓#
+
+//20170817??? ???
+abyss_03_a.rsw#毀葛深淵湖水 地下洞穴 3樓#
+abyss_03_b.rsw#毀葛深淵湖水 地下洞穴 3樓#
+ra_san01_a.rsw#拉赫神殿聖域一樓北區#
+ra_san01_b.rsw#拉赫神殿聖域一樓北區#
+ve_fild03_a.rsw#菲音斯原野#
+ve_fild03_b.rsw#菲音斯原野#
+ve_fild07_a.rsw#菲音斯原野#
+ve_fild07_b.rsw#菲音斯原野#
+lasa_d02_a.rsw#龍巢穴#
+lasa_d02_b.rsw#龍巢穴#
+lasa_d03_a.rsw#龍巢穴#
+lasa_d03_b.rsw#龍巢穴#
+
+// IA ???
+d_mond01.rsw#羅雅和羅克的商店#
+d_mond02.rsw#羅雅和羅克的工坊#
+d_mond03.rsw#羅雅和羅克的工作室#
+
+//-- ???? ?? 10:26 2015-10-26 ???
+
+//171031Edda??????
+1@pop1.rsw#教皇執勤室# 
+1@pop2.rsw#返家之路#
+1@pop3.rsw#空中庭園#
+
+//171205EP16.2
+//-- 譆謙偵褐 螃瞪 10:45 2016-03-08 獄憮幗
+
+// ep16.2
+1@slw.rsw#維爾納研究所中樞室#
+1@swat.rsw#邪心獵人軍事基地#
+que_swat.rsw#邪心獵人軍事基地#
+slabw01.rsw#維爾納研究所#
+rebel_in.rsw#克萊納 奈米艾利#
+
+//illusion1
+pay_d03_i.rsw#月夜貓的惡夢#
+
+//illusion2
+gef_d01_i.rsw#第250頁#
+
+//18雙十節
+poring_tw.rsw#波利島#
+
+//181030 萬聖節活動
+1@halo.rsw#萬聖節慶典會場#
+
+//RockRidge
+har_in01.rsw#洛克理奇岩嶺#
+harboro1.rsw#洛克理奇岩嶺#
+harboro2.rsw#地下水道#
+rockmi1.rsw#洛克理奇岩嶺礦山#
+rockmi2.rsw#洛克理奇岩嶺礦山#
+rockrdg1.rsw#契瓦瓦沙漠#
+rockrdg2.rsw#契瓦瓦沙漠#
+
+// 11? ????
+hu_fild03.rsw#狩獵區#
+prt_evt_in.rsw#狩獵區小屋#
+
+// ??? ?? (???)
+ice_d03_i.rsw#極凍幻影#
+
+// ???
+prt_f05_tw.rsw#豬家重地# 
+
+//伊甸園
+1@begi.rsw#波利村#
+1@tre.rsw#神秘失事輪#
+
+//聖帝
+star_frst.rsw#流星林#
+star_in.rsw#流星林室內#
+1@soul.rsw#靈魂通道#
+
+//illu4
+tur_d03_i.rsw#死寂良龜村#
+tur_d04_i.rsw#淒涼舊良宮#
+
+//illu5
+ein_d02_i.rsw#羅斯里安帝國#
+
+//illu6
+com_d02_i.rsw#北邊洞穴盧安達#
+
+//17.1 
+1@cor.rsw#柯爾記憶迷宮#
+1@os_a.rsw#佔領歐斯大作戰#
+1@os_b.rsw#封鎖的歐斯#
+1@rgsr.rsw#雷根修蘆#
+rgsr_in.rsw#雷根修蘆附設研究所#
+pub_cat.rsw#喵星人子彈酒吧#
+sp_cor.rsw#特別警戒區柯爾#
+sp_os.rsw#特別警戒區歐斯#
+sp_rudus.rsw#實驗體廢棄場魯杜斯一樓#
+sp_rudus2.rsw#實驗體廢棄場魯杜斯二樓#
+sp_rudus3.rsw#實驗體廢棄場魯杜斯三樓#
+
+//200609 EDDA 史詩 克雷斯特漢姆的沒落
+1@gl_prq.rsw#克雷斯特漢姆的沒落#
+
+//200714 古城挑戰
+1@gl_he.rsw#污染的次元#
+
+// 2020 Map Channel
+orcsd01a.rsw#吉芬獸人地下洞穴 1樓#
+orcsd01b.rsw#吉芬獸人地下洞穴 1樓#
+tur_d03ia.rsw#死寂良龜村#
+tur_d03ib.rsw#死寂良龜村#
+tur_d04ia.rsw#淒涼舊良宮#
+tur_d04ib.rsw#淒涼舊良宮#
+
+//200922 9月內容
+prt_mz03_i.rsw#扭曲的迷宮森林#
+
+//201124 新增訓練場
+tra_fild.rsw#普隆德拉郊外訓練場#
+
+//201208 12月內容
+1@gol1.rsw#活體實驗洞#
+1@gol2.rsw#停屍間#
+
+1@gl_k2.rsw#舊古城初心者#
+1@xm_d2.rsw#恐怖玩具工廠初心者#
+
+//210204 2月內容
+payon_in03.rsw#斐揚內部#
+ein_dun03.rsw#艾音貝赫礦山3樓#
+odin_past.rsw#古代奧丁神殿#
+abyss_04.rsw#毀葛深淵湖水地下洞穴4樓#
+//210204 200地圖分流
+odin_p_a.rsw#古代奧丁神殿(A)#
+odin_p_b.rsw#古代奧丁神殿(B)#
+abyss_04a.rsw#毀葛深淵湖水地下洞穴4樓(A)#
+abyss_04b.rsw#毀葛深淵湖水地下洞穴4樓(B)#
+prt_m3_ia.rsw#扭曲的迷宮森林(A)#
+prt_m3_ib.rsw#扭曲的迷宮森林(B)#
+
+//210302 3月自製活動
+bossnia_01.rsw#陰森古堡領地#
+
+//210601 6月內容
+ba_maison.rsw#霸肋門德大宅庭院# 
+ba_in01.rsw#霸肋門德大宅內部# 
+ba_pw01.rsw#第一魔力發電廠# 
+ba_pw03.rsw#第二魔力發電廠#
+ba_pw02.rsw#污水處理廠#
+ba_bath.rsw#冥想大浴池#
+ba_2whs01.rsw#塔耳塔羅斯儲藏室上層#
+ba_2whs02.rsw#塔耳塔羅斯儲藏室下層#
+ba_lost.rsw#失落的山谷飼養場#
+ba_lib.rsw#圖書館記憶迴廊#
+ba_go.rsw#手相戰場#
+ba_chess.rsw#將死宮# 
+1@lost.rsw#被時間遺忘的飼養場#
+1@herbs.rsw#祕密花園#
+1@ghg.rsw#水上花園# 
+1@bamn.rsw#暮光庭院#
+1@bamq.rsw#飛空艇機坪#
+mag_dun03.rsw#朱諾 諾可羅德 3樓#
+gl_cas01_.rsw#克雷斯特漢姆古城深淵1樓#

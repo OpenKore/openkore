@@ -284,19 +284,22 @@ blockingPlayerCancel 1
 gameGuard 0
 
 # https://ro.gnjoy.com.tw/
-[Taiwan - twRO: OldFriend (ChaosFree, IrisFree, LokiFree)]
-ip 220.130.113.235
+[Taiwan - twRO: Sarah, Alice, Bakili, Charles, Poli]
+ip twro-acc.gnjoy.com.tw
 port 6900
 master_version 5
-version 211
+version 1
 serverType twRO
 serverEncoding Big5
-charBlockSize 144
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets.txt
 addTableFolders twRO
-captcha 0
+charBlockSize 155
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+gameGuard 1
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+pinCode 1
 
 # http://ro.gnjoy.in.th/
 [Thailand - tRO: Chaos, Thor, Iris, Odin]
