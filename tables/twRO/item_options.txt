@@ -1,0 +1,227 @@
+VAR_MAXHPAMOUNT#MHP + %d#
+VAR_MAXSPAMOUNT#MSP + %d#
+VAR_STRAMOUNT#STR + %d#
+VAR_AGIAMOUNT#AGI + %d#
+VAR_VITAMOUNT#VIT + %d#
+VAR_INTAMOUNT#INT + %d#
+VAR_DEXAMOUNT#DEX + %d#
+VAR_LUKAMOUNT#LUK + %d#
+VAR_MAXHPPERCENT#MHP + %d%%#
+VAR_MAXSPPERCENT#MSP + %d%%#
+VAR_HPACCELERATION#HP 恢復速度增加 %d%% #
+VAR_SPACCELERATION#SP 恢復速度增加 %d%% #
+VAR_ATKPERCENT#ATK + %d%%#
+VAR_MAGICATKPERCENT#MATK + %d%%#
+VAR_PLUSASPD#ASPD + %d#
+VAR_PLUSASPDPERCENT#攻擊速度增加(減少攻擊後延遲 %d%%)#
+VAR_ATTPOWER#ATK + %d#
+VAR_HITSUCCESSVALUE#HIT + %d#
+VAR_ATTMPOWER#MATK + %d#
+VAR_ITEMDEFPOWER#DEF + %d#
+VAR_MDEFPOWER#MDEF + %d#
+VAR_AVOIDSUCCESSVALUE#FLEE + %d#
+VAR_PLUSAVOIDSUCCESSVALUE#完全迴避 + %d#
+VAR_CRITICALSUCCESSVALUE#CRI + %d#
+ATTR_TOLERACE_NOTHING#對無屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_WATER#對水屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_GROUND#對地屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_FIRE#對火屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_WIND#對風屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_POISON#對毒屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_SAINT#對聖屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_DARKNESS#對暗屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_TELEKINESIS#對念屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_UNDEAD#對不死屬性攻擊的抗性增加 %d%% #
+ATTR_TOLERACE_ALLBUTNOTHING#對所有屬性(無屬性除外)攻擊的抗性增加 %d%%#
+DAMAGE_PROPERTY_NOTHING_USER#被無屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_NOTHING_TARGET#給予無屬性怪的物理傷害增加 %d%% #
+DAMAGE_PROPERTY_WATER_USER#被水屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_WATER_TARGET#給予水屬性怪的物理傷害增加 %d%% #
+DAMAGE_PROPERTY_GROUND_USER#被地屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_GROUND_TARGET#給予地屬性怪的物理傷害增加 %d%% #
+DAMAGE_PROPERTY_FIRE_USER#被火屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_FIRE_TARGET#給予火屬性怪的物理傷害增加 %d%% #
+DAMAGE_PROPERTY_WIND_USER#被風屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_WIND_TARGET#給予風屬性怪的物理傷害增加 %d%% #
+DAMAGE_PROPERTY_POISON_USER#被毒屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_POISON_TARGET#給予毒屬性怪的物理傷害增加 %d%% #
+DAMAGE_PROPERTY_SAINT_USER#被聖屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_SAINT_TARGET#給予聖屬性怪的物理傷害增加 %d%% #
+DAMAGE_PROPERTY_DARKNESS_USER#被暗屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_DARKNESS_TARGET#給予暗屬性怪的物理傷害增加 %d%% #
+DAMAGE_PROPERTY_TELEKINESIS_USER#被念屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_TELEKINESIS_TARGET#給予念屬性怪的物理傷害增加 %d%% #
+DAMAGE_PROPERTY_UNDEAD_USER#被不死屬性魔物受到的物理傷害力減少 %d%% #
+DAMAGE_PROPERTY_UNDEAD_TARGET#給予不死屬性怪的物理傷害增加 %d%% #
+MDAMAGE_PROPERTY_NOTHING_USER#被無屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_NOTHING_TARGET#給予無屬性怪的魔法傷害增加 %d%% #
+MDAMAGE_PROPERTY_WATER_USER#被水屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_WATER_TARGET#給予水屬性怪的魔法傷害增加 %d%% #
+MDAMAGE_PROPERTY_GROUND_USER#被地屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_GROUND_TARGET#給予地屬性怪的魔法傷害增加 %d%% #
+MDAMAGE_PROPERTY_FIRE_USER#被火屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_FIRE_TARGET#給予火屬性怪的魔法傷害增加 %d%% #
+MDAMAGE_PROPERTY_WIND_USER#被風屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_WIND_TARGET#給予風屬性怪的魔法傷害增加 %d%% #
+MDAMAGE_PROPERTY_POISON_USER#被毒屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_POISON_TARGET#給予毒屬性怪的魔法傷害增加 %d%% #
+MDAMAGE_PROPERTY_SAINT_USER#被聖屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_SAINT_TARGET#給予聖屬性怪的魔法傷害增加 %d%% #
+MDAMAGE_PROPERTY_DARKNESS_USER#被暗屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_DARKNESS_TARGET#給予暗屬性怪的魔法傷害增加 %d%% #
+MDAMAGE_PROPERTY_TELEKINESIS_USER#被念屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_TELEKINESIS_TARGET#給予念屬性怪的魔法傷害增加 %d%% #
+MDAMAGE_PROPERTY_UNDEAD_USER#被不死屬性魔物受到的魔法傷害力減少 %d%% #
+MDAMAGE_PROPERTY_UNDEAD_TARGET#給予不死屬性怪的魔法傷害增加 %d%% #
+BODY_ATTR_NOTHING#在鎧甲上永久賦予無屬性#
+BODY_ATTR_WATER#在鎧甲本身永遠賦予水屬性#
+BODY_ATTR_GROUND#在鎧甲本身永遠賦予地屬性#
+BODY_ATTR_FIRE#在鎧甲本身永遠賦予火屬性#
+BODY_ATTR_WIND#在鎧甲本身永遠賦予風屬性#
+BODY_ATTR_POISON#在鎧甲本身永遠賦予毒屬性#
+BODY_ATTR_SAINT#在鎧甲本身永遠賦予聖屬性#
+BODY_ATTR_DARKNESS#在鎧甲本身永遠賦予暗屬性#
+BODY_ATTR_TELEKINESIS#在鎧甲本身永遠賦予念屬性#
+BODY_ATTR_UNDEAD#在鎧甲本身永遠賦予不死屬性#
+RACE_TOLERACE_NOTHING#對無型系魔物的抗性增加 %d%% #
+RACE_TOLERACE_UNDEAD#對不死系魔物的抗性增加 %d%%#
+RACE_TOLERACE_ANIMAL#對動物系魔物的抗性增加 %d%%#
+RACE_TOLERACE_PLANT#對植物系魔物的抗性增加 %d%%#
+RACE_TOLERACE_INSECT#對昆蟲系魔物的抗性增加 %d%%#
+RACE_TOLERACE_FISHS#對魚貝系魔物的抗性增加 %d%%#
+RACE_TOLERACE_DEVIL#對惡魔系魔物的抗性增加 %d%%#
+RACE_TOLERACE_HUMAN#對人類系魔物(不包含玩家)的抗性增加 %d%%#
+RACE_TOLERACE_ANGEL#對天使系魔物的抗性增加 %d%%#
+RACE_TOLERACE_DRAGON#對龍族系魔物的抗性增加 %d%%#
+RACE_DAMAGE_NOTHING#對無型系魔物的物理傷害增加  %d%% #
+RACE_DAMAGE_UNDEAD#對不死系魔物的物理傷害增加  %d%%#
+RACE_DAMAGE_ANIMAL#對動物系魔物的物理傷害增加  %d%%#
+RACE_DAMAGE_PLANT#對植物系魔物的物理傷害增加  %d%%#
+RACE_DAMAGE_INSECT#對昆蟲系魔物的物理傷害增加  %d%%#
+RACE_DAMAGE_FISHS#對魚貝系魔物的物理傷害增加  %d%%#
+RACE_DAMAGE_DEVIL#對惡魔系魔物的物理傷害增加  %d%%#
+RACE_DAMAGE_HUMAN#對人類型魔物(不包含玩家)的物理傷害增加  %d%%#
+RACE_DAMAGE_ANGEL#對天使系魔物的物理傷害增加  %d%%#
+RACE_DAMAGE_DRAGON#對龍族系魔物的物理傷害增加  %d%%#
+RACE_MDAMAGE_NOTHING#對無型系魔物的魔法傷害增加 %d%% #
+RACE_MDAMAGE_UNDEAD#對不死系魔物的魔法傷害增加 %d%%#
+RACE_MDAMAGE_ANIMAL#對動物系魔物的魔法傷害增加 %d%%#
+RACE_MDAMAGE_PLANT#對植物系魔物的魔法傷害增加 %d%%#
+RACE_MDAMAGE_INSECT#對昆蟲系魔物的魔法傷害增加 %d%%#
+RACE_MDAMAGE_FISHS#對魚貝系魔物的魔法傷害增加 %d%%#
+RACE_MDAMAGE_DEVIL#對惡魔系魔物的魔法傷害增加 %d%%#
+RACE_MDAMAGE_HUMAN#對人類型魔物(不包含玩家)的的魔法傷害增加 %d%%#
+RACE_MDAMAGE_ANGEL#對天使系魔物的魔法傷害增加 %d%%#
+RACE_MDAMAGE_DRAGON#對龍族系魔物的魔法傷害增加 %d%%#
+RACE_CRI_PERCENT_NOTHING#對無型系魔物的 CRI + %d#
+RACE_CRI_PERCENT_UNDEAD#對不死系魔物的 CRI + %d#
+RACE_CRI_PERCENT_ANIMAL#對動物系魔物的 CRI + %d#
+RACE_CRI_PERCENT_PLANT#對植物系魔物的 CRI + %d#
+RACE_CRI_PERCENT_INSECT#對昆蟲系魔物的 CRI + %d#
+RACE_CRI_PERCENT_FISHS#對魚貝系魔物的 CRI + %d#
+RACE_CRI_PERCENT_DEVIL#對惡魔系魔物的 CRI + %d#
+RACE_CRI_PERCENT_HUMAN#對人類系魔物(不包含玩家系)的 CRI + %d#
+RACE_CRI_PERCENT_ANGEL#對天使系魔物的 CRI + %d#
+RACE_CRI_PERCENT_DRAGON#對龍族系魔物的 CRI + %d#
+RACE_IGNORE_DEF_PERCENT_NOTHING#無型系魔物的物理防禦率忽視 %d%%#
+RACE_IGNORE_DEF_PERCENT_UNDEAD#不死系魔物的物理防禦率忽視 %d%%#
+RACE_IGNORE_DEF_PERCENT_ANIMAL#動物系魔物的物理防禦率忽視 %d%%#
+RACE_IGNORE_DEF_PERCENT_PLANT#植物系魔物的物理防禦率忽視 %d%%#
+RACE_IGNORE_DEF_PERCENT_INSECT#昆蟲系魔物的物理防禦率忽視 %d%%#
+RACE_IGNORE_DEF_PERCENT_FISHS#魚貝系魔物的物理防禦率忽視 %d%%#
+RACE_IGNORE_DEF_PERCENT_DEVIL#惡魔系魔物的物理防禦率忽視 %d%%#
+RACE_IGNORE_DEF_PERCENT_HUMAN#人類系魔物(不包含玩家)的物理防禦率忽視 %d%%#
+RACE_IGNORE_DEF_PERCENT_ANGEL#天使系魔物的物理防禦率忽視 %d%%#
+RACE_IGNORE_DEF_PERCENT_DRAGON#龍族系魔物的物理防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_NOTHING#無型系魔物的魔法防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_UNDEAD#不死系魔物的魔法防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_ANIMAL#動物系魔物的魔法防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_PLANT#植物系魔物的魔法防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_INSECT#昆蟲系魔物的魔法防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_FISHS#魚貝系魔物的魔法防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_DEVIL#惡魔系魔物的魔法防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_HUMAN#人類系魔物(不包含玩家)的魔法防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_ANGEL#天使系魔物的魔法防禦率忽視 %d%%#
+RACE_IGNORE_MDEF_PERCENT_DRAGON#龍族系魔物的魔法防禦率忽視 %d%%#
+CLASS_DAMAGE_NORMAL_TARGET#對一般魔物的物理攻擊增加 %d%%#
+CLASS_DAMAGE_BOSS_TARGET#對首領類魔物的物理攻擊增加 %d%%#
+CLASS_DAMAGE_NORMAL_USER#對一般魔物受到的物理的攻擊減少 %d%%#
+CLASS_DAMAGE_BOSS_USER#對首領類魔物受到的物理的攻擊減少 %d%%#
+CLASS_MDAMAGE_NORMAL#對一般魔物的魔法攻擊增加 %d%% #
+CLASS_MDAMAGE_BOSS#對首領類魔物的魔法攻擊增加 %d%%#
+CLASS_IGNORE_DEF_PERCENT_NORMAL#一般怪的物理防禦率忽視 %d%%#
+CLASS_IGNORE_DEF_PERCENT_BOSS#首領類怪的物理防禦率忽視 %d%%#
+CLASS_IGNORE_MDEF_PERCENT_NORMAL#一般怪的魔法防禦率忽視 %d%%#
+CLASS_IGNORE_MDEF_PERCENT_BOSS#首領類怪的魔法防禦率忽視 %d%%#
+DAMAGE_SIZE_SMALL_TARGET#對小型魔物的物理攻擊增加 %d%%#
+DAMAGE_SIZE_MIDIUM_TARGET#對中型魔物的物理攻擊增加 %d%%#
+DAMAGE_SIZE_LARGE_TARGET#對大型魔物的物理攻擊增加 %d%%#
+DAMAGE_SIZE_SMALL_USER#對小型魔物受到的物理攻擊減少 %d%%#
+DAMAGE_SIZE_MIDIUM_USER#對中型魔物受到的物理攻擊減少 %d%%#
+DAMAGE_SIZE_LARGE_USER#對大型魔物受到的物理攻擊減少 %d%%#
+DAMAGE_SIZE_PERFECT#刪除對武器大小的懲罰#
+DAMAGE_CRI_TARGET#必殺技傷害增加 %d%%#
+DAMAGE_CRI_USER#必殺技傷害減少 %d%%#
+RANGE_ATTACK_DAMAGE_TARGET#遠距離攻擊增加 %d%%#
+RANGE_ATTACK_DAMAGE_USER#遠距離攻擊減少 %d%%#
+HEAL_VALUE#恢復量增加 %d%%#
+HEAL_MODIFY_PERCENT#承受的治癒量增加 %d%%#
+DEC_SPELL_CAST_TIME#變動施法時間減少 %d%%#
+DEC_SPELL_DELAY_TIME#技能的後延遲減少 %d%%#
+DEC_SP_CONSUMPTION#使用技能時SP消耗量減少 %d%%#
+WEAPON_ATTR_NOTHING#對武器賦予無屬性#
+WEAPON_ATTR_WATER#對武器賦予水屬性#
+WEAPON_ATTR_GROUND#對武器賦予地屬性#
+WEAPON_ATTR_FIRE#對武器賦予火屬性#
+WEAPON_ATTR_WIND#對武器賦予風性#
+WEAPON_ATTR_POISON#對武器賦予毒屬性#
+WEAPON_ATTR_SAINT#對武器賦予聖屬性#
+WEAPON_ATTR_DARKNESS#對武器賦予暗屬性#
+WEAPON_ATTR_TELEKINESIS#對武器賦予念屬性#
+WEAPON_ATTR_UNDEAD#對武器賦予不死屬性#
+WEAPON_INDESTRUCTIBLE#武器不可破壞#
+BODY_INDESTRUCTIBLE#鎧甲不可破壞#
+MDAMAGE_SIZE_SMALL_TARGET#對小型魔物的魔法攻擊增加%d%%#
+MDAMAGE_SIZE_MIDIUM_TARGET#對中型魔物的魔法攻擊增加%d%%#
+MDAMAGE_SIZE_LARGE_TARGET#對大型魔物的魔法攻擊增加%d%%#
+MDAMAGE_SIZE_SMALL_USER#遭受小型怪的魔法傷害 -%d%%#
+MDAMAGE_SIZE_MIDIUM_USER#遭受中型怪的魔法傷害 -%d%%#
+MDAMAGE_SIZE_LARGE_USER#遭受大型怪的魔法傷害 -%d%%#
+ATTR_TOLERACE_ALL#對所有屬性攻擊的抗性 +%d%%#
+RACE_WEAPON_TOLERACE_NOTHING#對無型怪的抗性+%d%%#
+RACE_WEAPON_TOLERACE_UNDEAD#對不死型怪的抗性+%d%%#
+RACE_WEAPON_TOLERACE_ANIMAL#對動物型怪的抗性+%d%%#
+RACE_WEAPON_TOLERACE_PLANT#對植物型怪的抗性+%d%%#
+RACE_WEAPON_TOLERACE_INSECT#對昆蟲型怪的抗性+%d%%#
+RACE_WEAPON_TOLERACE_FISHS#對魚貝型怪的抗性+%d%%#
+RACE_WEAPON_TOLERACE_DEVIL#對惡魔型怪的抗性+%d%%#
+RACE_WEAPON_TOLERACE_HUMAN#對人類型怪的抗性+%d%%#
+RACE_WEAPON_TOLERACE_ANGEL#對天使型怪的抗性+%d%%#
+RACE_WEAPON_TOLERACE_DRAGON#對龍族怪的抗性+%d%%#
+RANGE_WEAPON_ATTACK_DAMAGE_TARGET#遠距離武器物理傷害+%d%%#
+RANGE_WEAPON_ATTACK_DAMAGE_USER#遠距離武器物理傷害-%d%%#
+RACE_TOLERACE_PLAYER_HUMAN#對玩家人類型的抗性+%d%%#
+RACE_TOLERACE_PLAYER_DORAM#對喵族的抗性+%d%%#
+RACE_DAMAGE_PLAYER_HUMAN#對玩家人類型的物理傷害+%d%%#
+RACE_DAMAGE_PLAYER_DORAM#對喵族的物理傷害+%d%%#
+RACE_MDAMAGE_PLAYER_HUMAN#對玩家人類型的魔法傷害+%d%%#
+RACE_MDAMAGE_PLAYER_DORAM#對喵族的魔法傷害+%d%%#
+RACE_CRI_PERCENT_PLAYER_HUMAN#對玩家人類型的CRI+%d#
+RACE_CRI_PERCENT_PLAYER_DORAM#對喵族的CRI+%d#
+RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN#無視玩家人類型的物理防禦力%d%%#
+RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM#無視喵族的物理防禦力%d%%#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN#無視玩家人類型的魔法防禦力%d%%#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM#無視喵族的魔法防禦力%d%%#
+REFLECT_DAMAGE_PERCENT#受到反射傷害-%d%%#
+MELEE_ATTACK_DAMAGE_TARGET#近距離物理傷害+%d%%#
+MELEE_ATTACK_DAMAGE_USER#受到近距離物理傷害-%d%%#
+ADDSKILLMDAMAGE_NOTHING#無屬性魔法傷害增加%d%%#
+ADDSKILLMDAMAGE_WATER#水屬性魔法傷害增加%d%%#
+ADDSKILLMDAMAGE_GROUND#地屬性魔法傷害增加%d%%#
+ADDSKILLMDAMAGE_FIRE#火屬性魔法傷害增加%d%%#
+ADDSKILLMDAMAGE_WIND#風屬性魔法傷害增加%d%%#
+ADDSKILLMDAMAGE_POISON#毒屬性魔法傷害增加%d%%#
+ADDSKILLMDAMAGE_SAINT#聖屬性魔法傷害增加%d%%#
+ADDSKILLMDAMAGE_DARKNESS#暗屬性魔法傷害增加%d%%#
+ADDSKILLMDAMAGE_TELEKINESIS#念屬性魔法傷害增加%d%%#
+ADDSKILLMDAMAGE_UNDEAD#不死屬性魔法傷害增加%d%%#
