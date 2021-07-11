@@ -42,3 +42,8 @@ decrypt_mid_keys 0x07CB29CB 0x69CB69CB 0x69CB69CB
 charListPacket 0x99d
 maploginPacket 022D
 charBlockSize 155
+
+[twRO_2021-06-21]
+decrypt_mid 0
+charBlockSize 155
+charListPacket 0x82d

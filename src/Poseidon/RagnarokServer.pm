@@ -293,6 +293,25 @@ sub ParsePacket {
 					pack("l", "0") . # login_type
 					pack("Z20","S1000") . # flag
 					pack("Z*", "OpenkoreClientToken"); # login_token			
+		} elsif ($switch eq '0064') { # received twRO
+			$serverUsers = pack("v", @{$self->clients()} - 1);
+			$data = pack("v", 0x0B60) . # header
+				pack("v", 0xE4) . # length
+				$sessionID .  # sessionid
+				$accountID .  # accountid
+				$sessionID2 . # sessionid2
+				pack("x4") .  # lastloginip
+				pack("a26", time) . # lastLoginTime
+				pack("C", $sex) . # accountSex 
+				pack("x17") . # unknown				
+				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
+				$port .	
+				$serverName . 
+				pack("x2") . # state
+				$serverUsers. 
+				pack("v", 0x6985) . # property
+				pack("x128").# ip_port
+				pack("x4"); # unknown
 		} elsif ($switch eq '0825') { # received kRO Zero Token
 			$data = pack("C*", 0xC4, 0x0A) . # header
 				pack("C*", 0xE0, 0x00) . # length
