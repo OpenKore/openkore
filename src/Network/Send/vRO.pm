@@ -27,9 +27,8 @@ sub new {
 		'0B04' => ['master_login', 'V Z30 Z52 Z100 v', [qw(version username accessToken billingAccessToken master_version)]],# 190
 	);
 
-	foreach my $switch (keys %packets) {
-		$self->{packet_list}{$switch} = $packets{$switch};
-	}
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
 	my %handlers = qw(
 		actor_look_at 0361
 		actor_info_request 0368
@@ -39,10 +38,15 @@ sub new {
 		item_take 0362
 		master_login 0B04
 		send_equip 0998
+		storage_item_add 0364
+		storage_item_remove 0365
 		sync 0360
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
+	$self->{send_buy_bulk_pack} = "v V";
+	$self->{char_create_version} = 1;
+	$self->{send_sell_buy_complete} = 1;
 	return $self;
 }
 
