@@ -38,6 +38,8 @@ sub new {
 		item_take 0362
 		master_login 0B04
 		send_equip 0998
+		storage_item_add 0364
+		storage_item_remove 0365
 		sync 0360
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;

@@ -5009,7 +5009,8 @@ sub inventory_items_stackable {
 
 sub item_list_start {
 	my ($self, $args) = @_;
-	debug TF("Starting Item List. ID: %s\n", $args->{type}), "info";
+	debug "Starting Item List. ID: $args->{type}".
+			($args->{name} ? " ($args->{name})\n" : "\n"), "info";
 	$current_item_list = $args->{type};
 }
 
