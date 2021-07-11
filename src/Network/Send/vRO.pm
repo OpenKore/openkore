@@ -52,6 +52,9 @@ sub sendMasterLogin {
 	my $accessToken = $config{accessToken};
 	my $billingAccessToken = $config{billingAccessToken};
 
+	die "don't forget to add vRO_auth plugin to sys.txt\n".
+		"https://openkore.com/wiki/loadPlugins_list\n" unless ($accessToken and $billingAccessToken);
+
 	$msg = $self->reconstruct({
 		switch => 'master_login',
 		version => $version || $self->version,
