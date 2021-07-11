@@ -2865,6 +2865,8 @@ sub minimap_indicator {
 	} elsif (defined $args->{effect}) {
 		if ($args->{effect} == 1) {
 			$indicator = T("*Quest!*");
+		} elsif ($args->{effect} == 9999) {
+			return;
 		} elsif ($args->{effect}) { # 0 is no effect
 			$indicator = TF("unknown effect %d", $args->{effect});
 		}
