@@ -13,7 +13,7 @@ use lib $Plugins::current_plugin_folder."//..//!deps";
 use Digest::MD5 qw(md5_hex);
 use LWP::Simple;
 
-use Globals qw(%config %masterServers);
+use Globals qw(%config $masterServer);
 use Log qw(debug message warning error);
 use Misc qw(configModify);
 use Plugins;
@@ -21,7 +21,7 @@ use Plugins;
 Plugins::register('vRO_auth', 'Vietnam RO SSO Authenticator', \&unload);
 
 my $hooks = Plugins::addHooks(
-	['initialized',\&getToken]
+	['Network::serverConnect/master',\&getToken]
 );
 
 sub unload {
@@ -30,6 +30,7 @@ sub unload {
 }
 
 sub getToken {
+	unload if ($masterServer->{serverType} ne 'vRO');
 	my ($accessToken, $billingAccessToken, $msg);
 
 	my $USERNAME = $config{username};
