@@ -46,4 +46,4 @@ charBlockSize 155
 [twRO_2021-06-21]
 decrypt_mid 0
 charBlockSize 155
-charListPacket 0x82d
+charListPacket 0x99d

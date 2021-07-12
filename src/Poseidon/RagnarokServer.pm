@@ -257,6 +257,7 @@ sub ParsePacket {
 			$clientdata{$index}{secureLogin_requestCode} = getHex($code);
 		}
 
+# 	send account_server_info
 	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277') || ($switch eq '02B0') || ($switch eq '0AAC') || ($switch eq '0ACF') || ($switch eq '0825')) { # 0064 packet thanks to abt123
 
 #		my $data = pack("C*", 0xAD, 0x02, 0x00, 0x00, 0x1E, 0x0A, 0x00, 0x00);
@@ -362,7 +363,7 @@ sub ParsePacket {
 								# if other servers do use this packet too that will be a problem.
 			$clientdata{$index}{kRO} = 1;
 		}
-
+#	send characters_info
 	} elsif (($switch eq '0065') || ($switch eq '0275') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
 		if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {			
 			my $data;
@@ -918,7 +919,7 @@ sub SendCharacterList
 	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x82d') {
 		$data = $accountID . pack("v2 C5 a20", 0x82d, $len + 29,$totalchars,0,0,0,$totalchars,-0); # 29 = v2 C5 a20 size for bRO
 	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {		
-		$data = pack("C*", 0x9D, 0x09) .
+		$data = pack("v", 0x099D) .
 		pack("v", $len + 4);
 	} else {
 		$data = $accountID . pack("v v C3", 0x6b, $len + 7, $totalslots, -1, -1);
