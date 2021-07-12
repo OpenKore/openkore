@@ -25,19 +25,25 @@ sub new {
 
 	my %packets = (
 		'0B04' => ['master_login', 'V Z30 Z52 Z100 v', [qw(version username accessToken billingAccessToken master_version)]],# 190
+		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-		actor_look_at 0361
+		actor_action 0437
 		actor_info_request 0368
+		actor_look_at 0361
+		actor_name_request 0369
 		char_create 0A39
 		character_move 035F
 		item_drop 0363
 		item_take 0362
+		map_login 0436
 		master_login 0B04
 		send_equip 0998
+		skill_use 0438
+		skill_use_location 0366
 		storage_item_add 0364
 		storage_item_remove 0365
 		sync 0360
