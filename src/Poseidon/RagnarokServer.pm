@@ -367,10 +367,10 @@ sub ParsePacket {
 			$client->send($data);
 
 			$data = pack("v2 C5", 0x082D, 0x1D, 0x02, 0x00, 0x00, 0x02, 0x02) .
-			pack("x20");
+				pack("x20");
 			$client->send($data);
 
-			$data = pack("v V", 0x09A0, 0x01) .
+			$data = pack("v V", 0x09A0, 0x01);
 			$client->send($data);
 
 			return;
@@ -402,12 +402,21 @@ sub ParsePacket {
 
 		$clientdata{$index}{mode} = unpack('C1', substr($msg, 2, 1));
 
-		# '0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
-		my $mapName = pack("a16", "moc_prydb1.gat");
-		my $data = pack("v", 0x0071) . $charID . $mapName .
-			pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port;
+		if ($self->{type}->{$config{server_type}}->{character_ID_and_Map} eq '0x0AC5') {
+			# '0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
+			my $mapName = pack("a16", "moc_prydb1.gat");
+			my $data = pack("v", 0x0AC5) . $charID . $mapName .
+				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port .
+				pack("x128"); # mapUrl
+			$client->send($data);
 
-		$client->send($data);
+		} else {
+			# '0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
+			my $mapName = pack("a16", "moc_prydb1.gat");
+			my $data = pack("v", 0x0071) . $charID . $mapName .
+				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port;
+			$client->send($data);
+		}
 
 	} elsif ($switch eq  $self->{type}->{$config{server_type}}->{maploginPacket} &&
 		(length($msg) == 19) &&
