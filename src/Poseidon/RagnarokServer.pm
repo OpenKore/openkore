@@ -1,9 +1,9 @@
 ###########################################################
 # Poseidon server - Ragnarok Online server emulator
 #
-# This program is free software; you can redistribute it and/or 
-# modify it under the terms of the GNU General Public License 
-# as published by the Free Software Foundation; either version 2 
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
 # Copyright (c) 2005-2006 OpenKore Development Team
@@ -58,14 +58,14 @@ sub new {
 
 	# Invariant: state ne ''
 	$self->{state} = 'ready';
-	
+
 	# added servertypes support
 	if (-e 'servertypes.txt') {
 		parseSectionedFile('servertypes.txt', \%{$self->{type}});
 	} else {
 		parseSectionedFile('src/Poseidon/servertypes.txt', \%{$self->{type}});
 	}
-	
+
 	if (!$self->{type}->{$config{server_type}}) {
 		die "Invalid serverType specified. Please check your poseidon config file.\n";
 	} else {
@@ -82,7 +82,7 @@ sub new {
 # Ensure: $self->getState() eq 'requesting'
 #
 # Send a GameGuard query to the RO client.
-sub query 
+sub query
 {
 	my ($self, $packet) = @_;
 	my $clients = $self->clients();
@@ -96,7 +96,7 @@ sub query
 			}
 		}
 	}
-	
+
 	print "[RagnarokServer]-> Error: no Ragnarok Online client connected.\n";
 }
 
@@ -138,7 +138,7 @@ sub readResponse {
 
 #####################################################
 
-sub onClientNew 
+sub onClientNew
 {
 	my ($self, $client, $index) = @_;
 
@@ -149,18 +149,18 @@ sub onClientNew
 		$enc_val2 = 0;
 		$enc_val3 = 0;
 	} else { $state = 0; }
-	
+
 	$self->{challengeNum} = 0;
-	
-	print "[RagnarokServer]-> Ragnarok Online client ($index) connected.\n";	
+
+	print "[RagnarokServer]-> Ragnarok Online client ($index) connected.\n";
 }
 
-sub onClientExit 
+sub onClientExit
 {
 	my ($self, $client, $index) = @_;
-	
+
 	$self->{challengeNum} = 0;
-	
+
 	print "[RagnarokServer]-> Ragnarok Online client ($index) disconnected.\n";
 }
 
@@ -178,27 +178,27 @@ my $npcID0 = pack("a4", "npc2");
 my $monsterID = pack("a4", "mon1");
 my $itemID = pack("a4", "itm1");
 
-sub DecryptMessageID 
+sub DecryptMessageID
 {
 	my ($MID) = @_;
-	
+
 	# Checking if Decryption is Activated
-	if ($enc_val1 != 0 && $enc_val2 != 0 && $enc_val3 != 0) 
+	if ($enc_val1 != 0 && $enc_val2 != 0 && $enc_val3 != 0)
 	{
 		# Saving Last Informations for Debug Log
 		my $oldMID = $MID;
 		my $oldKey = ($enc_val1 >> 16) & 0x7FFF;
-		
+
 		# Calculating the Next Decryption Key
 		$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;
-	
+
 		# Xoring the Message ID [657BE2h] [0x6E0A]
 		$MID = ($MID ^ (($enc_val1 >> 16) & 0x7FFF));
 
 		# Debug Log
 		printf("Decrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $MID, $oldKey, ($enc_val1 >> 16) & 0x7FFF) if ($config{debug});
 	}
-	
+
 	return $MID;
 }
 
@@ -207,7 +207,7 @@ sub onClientData {
 
 	my $packet_id = DecryptMessageID(unpack("v",$msg));
 	my $switch = sprintf("%04X", $packet_id);
-	
+
 	# Parsing Packet
 	ParsePacket($self, $client, $msg, $index, $packet_id, $switch);
 }
@@ -217,15 +217,15 @@ sub ParsePacket {
 
 	#my $packed_switch = quotemeta substr($msg, 0, 2);
 	my $packed_switch = $packet_id;
-	
+
 	### These variables control the account information ###
 	my $host = $self->getHost();
 	my $port = pack("v", $self->getPort());
 	$host = '127.0.0.1' if ($host eq 'localhost');
 	my @ipElements = split /\./, $host;
-	
+
 	visualDump($msg, "$switch") if ($config{debug});
-	
+
 	# Note:
 	# The switch packets are pRO specific and assumes the use of secureLogin 1. It may or may not work with other
 	# countries' clients (except probably oRO). The best way to support other clients would be: use a barebones
@@ -234,7 +234,7 @@ sub ParsePacket {
 	if ($switch eq '01DB' || $switch eq '0204') { # client sends login packet 0204 packet thanks to elhazard
 
 		# '01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
-		my $data = pack("C*", 0xdc, 0x01, 0x14) . pack("x17");
+		my $data = pack("v2", 0x01DC, 0x14) . pack("x17");
 		$client->send($data);
 
 		# save servers.txt info
@@ -268,17 +268,16 @@ sub ParsePacket {
 
 		my $data;
 		if ($switch eq '01FA') {
-			$data = pack("C*", 0x69, 0x00, 0x53, 0x00) . 
-				$sessionID . $accountID . $sessionID2 . 
+			$data = pack("v", 0x0069) . # header
+				pack("v", 0x53) . # length
+				$sessionID . $accountID . $sessionID2 .
 				pack("x30") . pack("C1", $sex) . pack("x4") .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
 				$port .	$serverName . $serverUsers . pack("x2");
 		} elsif ($switch eq '0AAC') {
-		$data = pack("C*", 0xC9, 0x0A) . # header
-				pack("C*", 0xCF, 0x00) . # length
-				$sessionID . # sessionid
-				$accountID . # accountid
-				$sessionID2 . # sessionid2
+		$data = pack("v", 0x0AC9) . # header
+				pack("v", 0xCF) . # length
+				$sessionID . $accountID . $sessionID2 .
 				pack("x4") . # lastloginip
 				pack("a26", time) . # lastLoginTime
 				pack("C1", $sex) . # accountSex
@@ -289,48 +288,45 @@ sub ParsePacket {
 				pack("a*", $host.":".$self->getPort()) . # ip:port
 				pack("x114"); # fill with 00
 		} elsif ($switch eq '0ACF') { #kRO Zero Token
-			$data = pack("C*", 0xE3, 0x0A) . # header
-					pack("C*", 0x2F, 0x00) . # length
+			$data = pack("v", 0x0AE3) . # header
+					pack("v", 0x2F) . # length
 					pack("l", "0") . # login_type
 					pack("Z20","S1000") . # flag
-					pack("Z*", "OpenkoreClientToken"); # login_token			
+					pack("Z*", "OpenkoreClientToken"); # login_token
 		} elsif ($switch eq '0064') { # received twRO
 			$serverUsers = pack("v", @{$self->clients()} - 1);
 			$data = pack("v", 0x0B60) . # header
 				pack("v", 0xE4) . # length
-				$sessionID .  # sessionid
-				$accountID .  # accountid
-				$sessionID2 . # sessionid2
+				$sessionID . $accountID . $sessionID2 .
 				pack("x4") .  # lastloginip
 				pack("a26", time) . # lastLoginTime
-				pack("C", $sex) . # accountSex 
-				pack("x17") . # unknown				
+				pack("C", $sex) . # accountSex
+				pack("x17") . # unknown
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
-				$port .	
-				$serverName . 
+				$port .
+				$serverName .
 				pack("x2") . # state
-				$serverUsers. 
+				$serverUsers.
 				pack("v", 0x6985) . # property
 				pack("x128").# ip_port
 				pack("x4"); # unknown
 		} elsif ($switch eq '0825') { # received kRO Zero Token
-			$data = pack("C*", 0xC4, 0x0A) . # header
-				pack("C*", 0xE0, 0x00) . # length
-				$sessionID . # sessionid
-				$accountID . # accountid
-				$sessionID2 . # sessionid2
+			$data = pack("v", 0x0AC4) . # header
+				pack("v", 0xE0) . # length
+				$sessionID . $accountID . $sessionID2 .
 				pack("x4") . # lastloginip
 				pack("a26", time) . # lastLoginTime
-				pack("C1", $sex) . # accountSex 
-				pack("x17") . # unknown				
+				pack("C1", $sex) . # accountSex
+				pack("x17") . # unknown
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
-				$port .	
-				$serverName . 
-				$serverUsers . 
-				pack("x130");				
+				$port .
+				$serverName .
+				$serverUsers .
+				pack("x130");
 		} else {
-			$data = pack("C*", 0x69, 0x00, 0x4F, 0x00) . 
-				$sessionID . $accountID . $sessionID2 . 
+			$data = pack("v", 0x0069) . # header
+				pack("v", 0x4F) . # length
+				$sessionID . $accountID . $sessionID2 .
 				pack("x30") . pack("C1", $sex) .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
 				$port .	$serverName . $serverUsers . pack("x2");
@@ -365,17 +361,16 @@ sub ParsePacket {
 		}
 #	send characters_info
 	} elsif (($switch eq '0065') || ($switch eq '0275') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
-		if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {			
+		if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
 			my $data;
 			$data = $accountID;
 			$client->send($data);
-			
-			$data = pack("C*", 0x2D, 0x08, 0x1D, 0x00, 0x02, 0x00, 0x00, 0x02, 0x02) .
+
+			$data = pack("v2 C5", 0x082D, 0x1D, 0x02, 0x00, 0x00, 0x02, 0x02) .
 			pack("x20");
 			$client->send($data);
-			
-			$data = pack("C*", 0xA0, 0x09, 0x01) .
-			pack("x3");			
+
+			$data = pack("v V", 0x09A0, 0x01) .
 			$client->send($data);
 
 			return;
@@ -390,7 +385,7 @@ sub ParsePacket {
 			undef $clientdata{$index}{gameLogin_packet};
 		}
 
-	} elsif ($switch eq '09A1') {		
+	} elsif ($switch eq '09A1') {
 		SendCharacterList($self, $client, $msg, $index);
 	} elsif ($switch eq '0066') { # client sends character choice packet
 
@@ -401,7 +396,7 @@ sub ParsePacket {
 			my @enc_values = split(/\s+/, $self->{type}->{$config{server_type}}->{decrypt_mid_keys});
 			($enc_val1, $enc_val2, $enc_val3) = (Math::BigInt->new(@enc_values[0]), Math::BigInt->new(@enc_values[1]), Math::BigInt->new(@enc_values[2]));
 		}
-		
+
 		# State
 		$state = 1;
 
@@ -409,11 +404,11 @@ sub ParsePacket {
 
 		# '0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
 		my $mapName = pack("a16", "moc_prydb1.gat");
-		my $data = pack("C*", 0x71, 0x00) . $charID . $mapName . 
+		my $data = pack("v", 0x0071) . $charID . $mapName .
 			pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port;
-		
+
 		$client->send($data);
-		
+
 	} elsif ($switch eq  $self->{type}->{$config{server_type}}->{maploginPacket} &&
 		(length($msg) == 19) &&
 		(substr($msg, 2, 4) eq $accountID) &&
@@ -587,15 +582,15 @@ sub ParsePacket {
 		# Temporary Hack to Initialized Crypted Client
 		if ( $self->{type}->{$config{server_type}}->{decrypt_mid_keys} )
 		{
-			for ( my $i = 0 ; $i < 64 ; $i++ ) 
+			for ( my $i = 0 ; $i < 64 ; $i++ )
 			{
 				$client->send(pack("C C", 0x70, 0x08));
-				
+
 				# Forcedly Calculating the Next Decryption Key
-				$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;	
+				$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;
 			}
-		}		
-		
+		}
+
 		PerformMapLoadedTasks($self, $client, $msg, $index);
 	} elsif (
 		( ( ($switch eq '007E') || ($switch eq '035F') ) && (($clientdata{$index}{serverType} == 0) || ($clientdata{$index}{serverType} == 1) || ($clientdata{$index}{serverType} == 2) || ($clientdata{$index}{serverType} == 6) || ($clientdata{$index}{serverType} == 7) || ($clientdata{$index}{serverType} == 10) || ($clientdata{$index}{serverType} == 11))) ||
@@ -614,19 +609,19 @@ sub ParsePacket {
 		}
 
 	} elsif ($switch eq '00B2') { # quit to character select screen
-			
+
 		SendGoToCharSelection($self, $client, $msg, $index);
-			
+
 		# Disable Decryption
 		$enc_val1 = 0;
 		$enc_val2 = 0;
-		$enc_val3 = 0;			
-			
+		$enc_val3 = 0;
+
 	} elsif ($switch eq '0187') { # accountid sync (what does this do anyway?)
 		$client->send($msg);
 
 	} elsif ($switch eq '018A') { # client sends quit packet
-		
+
 		SendQuitGame($self, $client, $msg, $index);
 	} elsif ($switch eq '09D0' || $switch eq '0228') { # client sends game guard sync
 		# Queue the response
@@ -638,7 +633,7 @@ sub ParsePacket {
 			$self->{response} = pack("v", $packet_id);
 		};
 		$self->{state} = 'requested';
-	
+
 	} elsif ($switch eq '02A7') { # client sends hShield response
 		# Queue the response
 		$self->{response} = $msg;
@@ -704,7 +699,7 @@ sub ParsePacket {
 						SendNPCTalk($self, $client, $msg, $index, $npcID, "gameLogin_packet: $clientdata{$index}{gameLogin_packet}");
 					}
 					SendNPCTalkContinue($self, $client, $msg, $index, $npcID);
-					
+
 					if (defined $clientdata{$index}{serverType}) {
 						$clientdata{$index}{npc_talk_code} = 3;
 					} else {
@@ -769,7 +764,7 @@ sub ParsePacket {
 						}
 						SendNPCTalkContinue($self, $client, $msg, $index, $npcID);
 						$clientdata{$index}{npc_talk_code} = 2;
-				
+
 					} elsif ($clientdata{$index}{npc_talk_code} == 2.5) {
 						if (!defined $clientdata{$index}{serverType}) {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "As you can see, I can't find a matching serverType for your server.");
@@ -880,10 +875,10 @@ sub ParsePacket {
 sub SendCharacterList
 {
 	my ($self, $client, $msg, $index) = @_;
-	
+
 	# Log
 	print "Requested Char List (Standard)\n";
-	
+
 	# Wanted Block Size
 	my $blocksize = $self->{type}->{$config{server_type}}->{charBlockSize} || 116; #defaults to 116
 
@@ -891,7 +886,7 @@ sub SendCharacterList
 	my $totalchars = 2;
 	my $totalslots = 12;
 	my $len = $blocksize * $totalchars;
-	
+
 	# Character Block Pack String
 	my $packstring = '';
 	$packstring = 'a4 Z8 V Z8 V6 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $blocksize == 155;
@@ -907,24 +902,24 @@ sub SendCharacterList
 	$packstring = 'a4 V9 v V2 v14 Z24 C6 v2' if $blocksize == 112;
 	$packstring = 'a4 V9 v17 Z24 C6 v2' if $blocksize == 108;
 	$packstring = 'a4 V9 v17 Z24 C6 v' if $blocksize == 106;
-	
+
 	# Unknown CharBlockSize
 	if ( length($packstring) == 0 ) { print "Unknown CharBlockSize : $blocksize\n"; return; }
-	
+
 	# Character Block Format
 	my($cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename) = 0;
 
 	# Preparing Begin of Character List Packet
 	my $data;
 	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x82d') {
-		$data = $accountID . pack("v2 C5 a20", 0x82d, $len + 29,$totalchars,0,0,0,$totalchars,-0); # 29 = v2 C5 a20 size for bRO
-	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {		
+		$data = $accountID . pack("v2 C5 a20", 0x082d, $len + 29,$totalchars,0,0,0,$totalchars,-0); # 29 = v2 C5 a20 size for bRO
+	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
 		$data = pack("v", 0x099D) .
 		pack("v", $len + 4);
 	} else {
-		$data = $accountID . pack("v v C3", 0x6b, $len + 7, $totalslots, -1, -1);
+		$data = $accountID . pack("v v C3", 0x006b, $len + 7, $totalslots, -1, -1);
 	}
-	
+
 	# Character Block
 	my $block;
 
@@ -941,7 +936,7 @@ sub SendCharacterList
 	} else {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
 	}
-	
+
 	# Attaching Block
 	$data .= $block;
 
@@ -973,13 +968,13 @@ sub SendMapLogin {
 	if ( $config{server_type} =~ /^kRO/ ) { # kRO Zero
 		$data .= pack("C*", 0x83, 0x02) . $accountID; #accountID
 		$client->send($data);
-		
+
 		$data = pack("C*", 0xDE, 0x0A, 0x46, 0x00, 0x00, 0x00); # idk '-'
 		$client->send($data);
-		
+
 		$data = pack("C*", 0xEB, 0x02) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05, 0x00, 0x00); # map loaded
 		$client->send($data);
-		
+
 	} else {
 		if ( $config{server_type} !~ /^bRO/ ) { $data .= $accountID; } #<- This is Server Type Based !!
 		$data = pack("C*", 0x73, 0x00) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
@@ -997,42 +992,42 @@ sub SendMapLogin {
 			pack("v2 x2 v3 a24 C1", 28, 16, 10, 40, 9, "AL_HEAL", 0); # target skill test
 			$client->send($data);
 	}
-	
-	$client->{connectedToMap} = 1;	
+
+	$client->{connectedToMap} = 1;
 }
 
 sub SendGoToCharSelection
 {
 	my ($self, $client, $msg, $index) = @_;
-	
-	# Log	
-	print "Requested Char Selection Screen\n";	
-	
+
+	# Log
+	print "Requested Char Selection Screen\n";
+
 	$client->send(pack("v v", 0xB3, 1));
 }
 
 sub SendQuitGame
 {
 	my ($self, $client, $msg, $index) = @_;
-	
+
 	# Log
 	print "Requested Quit Game...\n";
-	
-	$client->send(pack("v v", 0x18B, 0));	
+
+	$client->send(pack("v v", 0x18B, 0));
 }
 
 sub SendLookTo
 {
 	my ($self, $client, $msg, $index, $ID, $to) = @_;
-	
+
 	# Make Poseidon look to front
 	$client->send(pack('v1 a4 C1 x1 C1', 0x9C, $ID, 0, $to));
 }
 
-sub SendUnitInfo		
+sub SendUnitInfo
 {
 	my ($self, $client, $msg, $index, $ID, $name) = @_;
-	
+
 	# Let's not wait for the client to ask for the unit info
 	# '0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
 	$client->send(pack("v1 a4 a24", 0x95, $ID, $name));
@@ -1041,7 +1036,7 @@ sub SendUnitInfo
 sub SendSystemChatMessage
 {
 	my ($self, $client, $msg, $index, $message) = @_;
-	
+
 	# '009A' => ['system_chat', 'v Z*', [qw(len message)]],
 	$client->send(pack("v2 a32", 0x9A, 36, $message));
 }
@@ -1049,7 +1044,7 @@ sub SendSystemChatMessage
 sub SendShowNPC
 {
 	my ($self, $client, $msg, $index, $obj_type, $GID, $SpriteID, $X, $Y, $MobName) = @_;
-	
+
 	# Packet Structure
 	my ($object_type,$NPCID,$walk_speed,$opt1,$opt2,$option,$type,$hair_style,$weapon,$lowhead,$shield,$tophead,$midhead,$hair_color,$clothes_color,$head_dir,$guildID,$emblemID,$manner,$opt3,$stance,$sex,$xSize,$ySize,$lv,$font,$name) = 0;
 
@@ -1060,7 +1055,7 @@ sub SendShowNPC
 	$type = $SpriteID;
 	$lv = 1;
 	$name = $MobName;
-	
+
 	# '0856' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning provided by try71023
 	my $dbuf;
 	if ( $config{server_type} !~ /^bRO/ ) { $dbuf .= pack("C", $object_type); } #<- This is Server Type Based !!
@@ -1076,15 +1071,15 @@ sub SendShowNPC
 sub SendShowItemOnGround
 {
 	my ($self, $client, $msg, $index, $ID, $SpriteID, $X, $Y) = @_;
-	
+
 	# '009D' => ['item_exists', 'a4 v1 x1 v3', [qw(ID type x y amount)]]
-	$client->send(pack("v1 a4 v1 x1 v3 x2", 0x9D, $ID, $SpriteID, $posX + 1, $posY - 1, 1));	
+	$client->send(pack("v1 a4 v1 x1 v3 x2", 0x9D, $ID, $SpriteID, $posX + 1, $posY - 1, 1));
 }
 
 sub SendNPCTalk
 {
 	my ($self, $client, $msg, $index, $npcID, $message) = @_;
-	
+
 	# '00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]]
 	my $dbuf = pack("a" . length($message), $message);
 	$client->send(pack("v2 a4", 0xB4, (length($dbuf) + 8), $npcID) . $dbuf);
@@ -1093,7 +1088,7 @@ sub SendNPCTalk
 sub SendNPCTalkContinue
 {
 	my ($self, $client, $msg, $index, $npcID) = @_;
-	
+
 	# '00B5' => ['npc_talk_continue', 'a4', [qw(ID)]]
 	$client->send(pack("v a4", 0xB5, $npcID));
 }
@@ -1101,18 +1096,18 @@ sub SendNPCTalkContinue
 sub SendNpcTalkClose
 {
 	my ($self, $client, $msg, $index, $npcID) = @_;
-	
+
 	# '00B6' => ['npc_talk_close', 'a4', [qw(ID)]]
-	$client->send(pack("v a4", 0xB6, $npcID));	
+	$client->send(pack("v a4", 0xB6, $npcID));
 }
 
 sub SendNpcTalkResponses
 {
 	my ($self, $client, $msg, $index, $npcID, $message) = @_;
-	
+
 	# '00B7' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]]
 	my $dbuf = pack("a" . length($message), $message);
-	$client->send(pack("v2 a4", 0xB7, (length($dbuf) + 8), $npcID) . $dbuf);	
+	$client->send(pack("v2 a4", 0xB7, (length($dbuf) + 8), $npcID) . $dbuf);
 }
 
 sub SendNpcImageShow
@@ -1130,13 +1125,13 @@ sub SendNpcImageShow
 sub PerformMapLoadedTasks
 {
 	my ($self, $client, $msg, $index) = @_;
-	
+
 	# Looking to Front
 	SendLookTo($self, $client, $msg, $index, $accountID, 4);
-	
+
 	# Let's not wait for the client to ask for the unit info
 	SendUnitInfo($self, $client, $msg, $index, $accountID, 'Poseidon' . (($clientdata{$index}{mode} ? ' Dev' : '')));
-	
+
 	# Global Announce
 	SendSystemChatMessage($self, $client, $msg, $index, "Welcome to the Poseidon Server !");
 
@@ -1146,18 +1141,18 @@ sub PerformMapLoadedTasks
 	SendUnitInfo($self, $client, $msg, $index, $npcID0, "Server Details Guide");
 
 	# Dev Mode (Char Slot 1)
-	if ($clientdata{$index}{mode}) 
+	if ($clientdata{$index}{mode})
 	{
 		# Show an NPC (Kafra)
 		SendShowNPC($self, $client, $msg, $index, 1, $npcID1, 114, $posX + 5, $posY + 3, "Kafra NPC");
 		SendLookTo($self, $client, $msg, $index, $npcID1, 4);
-		SendUnitInfo($self, $client, $msg, $index, $npcID1, "Kafra NPC");			
-		
+		SendUnitInfo($self, $client, $msg, $index, $npcID1, "Kafra NPC");
+
 		# Show a monster
 		SendShowNPC($self, $client, $msg, $index, 5, $monsterID, 1002, $posX - 2, $posY - 1, "Poring");
 		SendLookTo($self, $client, $msg, $index, $monsterID, 3);
 		SendUnitInfo($self, $client, $msg, $index, $monsterID, "Poring");
-		
+
 		# Show an item on ground
 		SendShowItemOnGround($self, $client, $msg, $index, $itemID, 512, $posX + 1, $posY - 1);
 	}
