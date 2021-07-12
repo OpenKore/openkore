@@ -424,6 +424,7 @@ sub ParsePacket {
 		(substr($msg, 6, 4) eq $charID) &&
 		(substr($msg, 10, 4) eq $sessionID)
 		) { # client sends the maplogin packet
+
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
 		$clientdata{$index}{serverType} = 0;
@@ -561,7 +562,7 @@ sub ParsePacket {
 		$clientdata{$index}{serverType} = "1 or 2";
 
 	} elsif (($switch eq '0436' || $switch eq '022D' || $switch eq $self->{type}->{$config{server_type}}->{maploginPacket}) &&
-		(length($msg) == 19) &&
+		(length($msg) == 19 || length($msg) == 23) &&
 		(substr($msg, 2, 4) eq $accountID) &&
 		(substr($msg, 6, 4) eq $charID) &&
 		(substr($msg, 10, 4) eq $sessionID)

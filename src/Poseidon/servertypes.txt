@@ -47,3 +47,5 @@ charBlockSize 155
 decrypt_mid 0
 charBlockSize 155
 charListPacket 0x99d
+character_ID_and_Map 0x0AC5
+maploginPacket 0x436
