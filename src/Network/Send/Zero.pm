@@ -16,6 +16,7 @@ package Network::Send::Zero;
 
 use strict;
 use base qw(Network::Send::ServerType0);
+use Globals qw(%config %masterServers);
 
 sub new {
 	my ($class) = @_;
@@ -71,6 +72,19 @@ sub new {
 	$self->{buy_bulk_buyer_size_unpack} = "a2 V v";
 
 	return $self;
+}
+
+sub sendMasterLogin {
+	my ($self, $username, $password, $master_version, $version) = @_;
+
+	my $accessToken = $config{accessToken};
+	my $len =  length($accessToken) + 92;
+	my $master = $masterServers{$config{master}};
+
+	die "don't forget to add kRO_auth plugin to sys.txt\n".
+		"https://openkore.com/wiki/loadPlugins_list\n" unless ($accessToken);
+
+	$self->sendTokenToServer($username, $password, $master_version, $version, $accessToken, $len, $master->{OTP_ip}, $master->{OTP_port});
 }
 
 1;
