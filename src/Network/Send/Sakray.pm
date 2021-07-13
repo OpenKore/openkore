@@ -17,10 +17,17 @@ package Network::Send::Sakray;
 use strict;
 use base qw(Network::Send::ServerType0);
 use Globals qw(%config %masterServers);
+use Utils qw(getTickCount);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+
+	my %packets = (
+		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
 		master_login 0ACF
@@ -85,6 +92,29 @@ sub sendMasterLogin {
 		"https://openkore.com/wiki/loadPlugins_list\n" unless ($accessToken);
 
 	$self->sendTokenToServer($username, $password, $master_version, $version, $accessToken, $len, $master->{OTP_ip}, $master->{OTP_port});
+}
+
+
+# 0x0436,23
+sub sendMapLogin {
+	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
+	my $msg;
+	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
+
+	#my $unknown = pack('C4', (0x90, 0x13, 0xE0, 0xE8));
+
+	$msg = $self->reconstruct({
+		switch => 'map_login',
+		accountID => $accountID,
+		charID => $charID,
+		sessionID => $sessionID,
+		unknown => 3906999184,# 90 13 E0 E8
+		tick => getTickCount,
+		sex => $sex,
+	});
+
+	$self->sendToServer($msg);
+	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
 1;

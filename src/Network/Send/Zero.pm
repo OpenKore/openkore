@@ -17,6 +17,7 @@ package Network::Send::Zero;
 use strict;
 use base qw(Network::Send::ServerType0);
 use Globals qw(%config %masterServers);
+use Utils qw(getTickCount);
 
 sub new {
 	my ($class) = @_;
@@ -85,6 +86,28 @@ sub sendMasterLogin {
 		"https://openkore.com/wiki/loadPlugins_list\n" unless ($accessToken);
 
 	$self->sendTokenToServer($username, $password, $master_version, $version, $accessToken, $len, $master->{OTP_ip}, $master->{OTP_port});
+}
+
+# 0x0436,23
+sub sendMapLogin {
+	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
+	my $msg;
+	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
+
+	#my $unknown = pack('C4', (0xCF, 0x00, 0x2A, 0x70));
+
+	$msg = $self->reconstruct({
+		switch => 'map_login',
+		accountID => $accountID,
+		charID => $charID,
+		sessionID => $sessionID,
+		unknown => 1881800911,# CF 00 2A 70 
+		tick => getTickCount,
+		sex => $sex,
+	});
+
+	$self->sendToServer($msg);
+	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
 1;
