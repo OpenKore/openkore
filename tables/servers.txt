@@ -286,19 +286,22 @@ blockingPlayerCancel 1
 gameGuard 0
 
 # https://ro.gnjoy.com.tw/
-[Taiwan - twRO: OldFriend (ChaosFree, IrisFree, LokiFree)]
-ip 220.130.113.235
+[Taiwan - twRO: Sarah, Alice, Bakili, Charles, Poli]
+ip twro-acc.gnjoy.com.tw
 port 6900
 master_version 5
-version 211
+version 1
 serverType twRO
 serverEncoding Big5
-charBlockSize 144
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-PINEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-recvpackets recvpackets.txt
 addTableFolders twRO
-captcha 0
+charBlockSize 155
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+gameGuard 1
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+pinCode 1
 
 # http://ro.gnjoy.in.th/
 [Thailand - tRO: Chaos, Thor, Iris, Odin]
@@ -317,6 +320,21 @@ rankingSystemType 1
 itemListType 1
 pinCode 1
 ignoreAntiCheatWarning 0
+
+
+# https://vtcgame.vn/
+[Vietnam - vRO]
+ip roacc1.vtcgame.vn
+port 6900
+master_version 26
+version 1
+serverType vRO
+serverEncoding Western
+addTableFolders vRO
+charBlockSize 155
+pinCode 1
+blockingPlayerCancel 1
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
 [Localhost]
 ip localhost
@@ -351,6 +369,7 @@ charBlockSize 147
 addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO/Main
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
+field_morocc morocc-old
 
 # http://play.ratemyserver.net
 [RMS Pre-Re Test Server]
@@ -364,6 +383,7 @@ charBlockSize 147
 addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO/Main
 clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
+field_morocc morocc-old
 
 ####################
 # Dead

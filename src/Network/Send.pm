@@ -2874,11 +2874,6 @@ sub sendMailOperateWindow {
 sub sendMailSetAttach {
 	my ($self, $amount, $ID) = @_;
 
-	# 0 for zeny
-	$ID ||= 0;
-
-	my $msg = pack("v a2 V", 0x0247, $ID, $amount);
-
 	# Before setting an attachment, we must remove any zeny/item that was attached but the mail wasn't sent
 	# Otherwise the attachment will be lost
 	if ($ID) {

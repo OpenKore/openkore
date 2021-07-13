@@ -716,7 +716,7 @@ sub new {
 		'0B20' => ['hotkeys', 'C v a*', [qw(rotate tab hotkeys)]],#herc PR 2468
 		'0B03' => ['show_eq', 'v Z24 v9 C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color clothes_color2 sex equips_info)]],
 		'0B05' => ['offline_clone_found', 'a4 v4 C v9 V Z24 v', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe unknown2 name unknown3)]],
-		'0B08' => ['item_list_start', 'v C', [qw(len type)]],
+		'0B08' => ['item_list_start', 'v C Z*', [qw(len type name)]],
 		'0B09' => ['item_list_stackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B0A' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B0B' => ['item_list_end', 'C2', [qw(type flag)]],
@@ -1470,72 +1470,6 @@ sub skills_list {
 			level => $lv,
 			upgradable => $up,
 		});
-	}
-}
-
-sub mail_refreshinbox {
-	my ($self, $args) = @_;
-
-	undef $mailList;
-	my $count = $args->{count};
-
-	if (!$count) {
-		message T("There is no mail in your inbox.\n"), "info";
-		return;
-	}
-
-	message TF("You've got Mail! (%s)\n", $count), "info";
-	my $msg;
-	$msg .= center(" " . T("Inbox") . " ", 79, '-') . "\n";
-	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
-	# truncating the date with precision of minutes and leave year out
-	$msg .=	swrite("\@> R \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x11),
-			["#", T("Title"), T("Sender"), T("Date")]);
-	$msg .= sprintf("%s\n", ('-'x79));
-
-	my $j = 0;
-	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
-		$mailList->[$j]->{mailID} = unpack("V1", substr($args->{RAW_MSG}, $i, 4));
-		$mailList->[$j]->{title} = bytesToString(unpack("Z40", substr($args->{RAW_MSG}, $i+4, 40)));
-		$mailList->[$j]->{read} = unpack("C1", substr($args->{RAW_MSG}, $i+44, 1));
-		$mailList->[$j]->{sender} = bytesToString(unpack("Z24", substr($args->{RAW_MSG}, $i+45, 24)));
-		$mailList->[$j]->{timestamp} = unpack("V1", substr($args->{RAW_MSG}, $i+69, 4));
-		$msg .= swrite(
-		"\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x11),
-		[$j, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
-		$j++;
-	}
-
-	$msg .= ("%s\n", ('-'x79));
-	message($msg . "\n", "list");
-}
-sub mail_setattachment {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		if (defined $AI::temp::mailAttachAmount) {
-			undef $AI::temp::mailAttachAmount;
-		}
-		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
-	} else {
-		if (($args->{ID})) {
-			message TF("Succeeded to attach %s.\n", T("item: ").$char->inventory->getByID($args->{ID})), "info";
-			if (defined $AI::temp::mailAttachAmount) {
-				my $item = $char->inventory->getByID($args->{ID});
-				if ($item) {
-					my $change = min($item->{amount},$AI::temp::mailAttachAmount);
-					inventoryItemRemoved($item->{binID}, $change);
-					Plugins::callHook('packet_item_removed', {index => $item->{binID}});
-				}
-				undef $AI::temp::mailAttachAmount;
-			}
-		} else {
-			message TF("Succeeded to attach %s.\n", T("zeny")), "info";
-			if (defined $AI::temp::mailAttachAmount) {
-				my $change = min($char->{zeny},$AI::temp::mailAttachAmount);
-				$char->{zeny} = $char->{zeny} - $change;
-				message TF("You lost %s zeny.\n", formatNumber($change));
-			}
-		}
 	}
 }
 

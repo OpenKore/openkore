@@ -1293,13 +1293,14 @@ sub processAutoStorage {
 				$args->{done} = 1;
 				return;
 			}
+
 			if (!AI::args->{distance}) {
 				if ($config{storageAuto_standpoint}) {
 					AI::args->{distance} = 1;
-				} elsif ($config{'storageAuto_minDistance'} && $config{'storageAuto_maxDistance'}) {	# Calculate variable or fixed (old) distance
-					AI::args->{distance} = $config{'storageAuto_minDistance'} + round(rand($config{'storageAuto_maxDistance'} - $config{'storageAuto_minDistance'}));
+				} elsif ($config{'storageAuto_maxDistance'} && $config{'storageAuto_distance'}) {	# Calculate variable or fixed (old) distance
+					AI::args->{distance} = $config{'storageAuto_distance'} + round(rand($config{'storageAuto_maxDistance'} - $config{'storageAuto_distance'}));
 				} else {
-					AI::args->{distance} = $config{'storageAuto_distance'};
+					AI::args->{distance} = $config{'storageAuto_distance'} || 3;
 				}
 			}
 
@@ -1713,10 +1714,10 @@ sub processAutoSell {
 		if (!$args->{distance}) {
 			if ($config{'sellAuto_standpoint'}) {
 				$args->{distance} = 1;
-			} elsif ($config{'sellAuto_minDistance'} && $config{'sellAuto_maxDistance'}) {
-				$args->{distance} = $config{'sellAuto_minDistance'} + round(rand($config{'sellAuto_maxDistance'} - $config{'sellAuto_minDistance'}));
+			} elsif ($config{'sellAuto_maxDistance'} && $config{'sellAuto_distance'}) {
+				$args->{distance} = $config{'sellAuto_distance'} + round(rand($config{'sellAuto_maxDistance'} - $config{'sellAuto_distance'}));
 			} else {
-				$args->{distance} = $config{'sellAuto_distance'};
+				$args->{distance} = $config{'sellAuto_distance'} || 3;
 			}
 		}
 
@@ -2383,7 +2384,7 @@ sub processFollow {
 				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
 					$args->{move_timeout} = time;
 					$args->{masterLastMoveTime} = $player->{time_move};
-					
+
 					ai_route(
 						$field->baseName,
 						$player->{pos_to}{x},
@@ -2425,7 +2426,7 @@ sub processFollow {
 
 			$args->{move_timeout} = time;
 			$args->{masterLastMoveTime} = $player->{time_move};
-			
+
 			ai_route(
 				$field->baseName,
 				$player->{pos_to}{x},
@@ -2797,12 +2798,8 @@ sub processPartySkillUse {
 						next unless $char->{party}{joined} && $char->{party}{users}{$ID};
 
 						# party member should be online, otherwise it's another character on the same account (not in party)
-						next unless $char->{party}{users}{$ID}{online};
+						next unless $char->{party}{users}{$ID} && $char->{party}{users}{$ID}{online};
 					}
-
-					# if that intended to distinguish between party members and other characters on the same accounts, then it didn't work
-					my $player = $playersList->getByID($ID);
-					next if (($char->{party}{users}{$ID}{name} ne $player->{name}) && !$config{"partySkill_$i"."_notPartyOnly"});
 				}
 
 				my $player = Actor::get($ID);
@@ -3056,7 +3053,7 @@ sub processAutoAttack {
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
-				
+
 				# Never attack monsters that we failed to get LOS with
 				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
@@ -3168,6 +3165,7 @@ sub processItemsAutoGather {
 	if ( (AI::isIdle || AI::action eq "follow"
 		|| ( AI::is("route", "mapRoute", "checkMonsters") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2)  && !$config{itemsTakeAuto_new}))
 	  && $config{'itemsGatherAuto'}
+	  && (!$config{itemsGatherAuto_notInTown} || !$field->isCity)
 	  && !$ai_v{sitAuto_forcedBySitCommand}
 	  && ($config{'itemsGatherAuto'} >= 2 || !ai_getAggressives())
 	  && percent_weight($char) < $config{'itemsMaxWeight'}

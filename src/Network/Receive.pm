@@ -992,7 +992,7 @@ sub parse_account_server_info {
 			keys => [qw(ip port name state users property ip_port)],
 		};
 
-	} elsif ($args->{switch} eq '0AC4') { # kRO Zero 2017, kRO ST 201703+
+	} elsif ($args->{switch} eq '0AC4' || $args->{switch} eq '0B07') { # kRO Zero 2017, kRO ST 201703+, vRO 2021
 		$server_info = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
@@ -1055,7 +1055,7 @@ sub reconstruct_account_server_info {
 			keys => [qw(ip port name state users property ip_port)],
 		};
 
-	} elsif ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4") {
+	} elsif ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4" || $args->{switch} eq '0B07') {
 		$serverInfo = {
 			len => 160,
 			types => 'a4 v Z20 v3 a128',
@@ -1091,7 +1091,6 @@ sub reconstruct_account_server_info {
 
 sub account_server_info {
 	my ($self, $args) = @_;
-
 	$net->setState(2);
 	undef $conState_tries;
 	$sessionID = $args->{sessionID};
@@ -2866,6 +2865,8 @@ sub minimap_indicator {
 	} elsif (defined $args->{effect}) {
 		if ($args->{effect} == 1) {
 			$indicator = T("*Quest!*");
+		} elsif ($args->{effect} == 9999) {
+			return;
 		} elsif ($args->{effect}) { # 0 is no effect
 			$indicator = TF("unknown effect %d", $args->{effect});
 		}
@@ -5008,7 +5009,8 @@ sub inventory_items_stackable {
 
 sub item_list_start {
 	my ($self, $args) = @_;
-	debug TF("Starting Item List. ID: %s\n", $args->{type}), "info";
+	debug "Starting Item List. ID: $args->{type}".
+			($args->{name} ? " ($args->{name})\n" : "\n"), "info";
 	$current_item_list = $args->{type};
 }
 
@@ -5139,7 +5141,7 @@ sub login_error {
 		}
 	} elsif ($args->{type} == ACCEPT_ID_PASSWD) {
 		error T("The server has denied your connection.\n"), "connection";
-	} elsif ($args->{type} == REFUSE_NOT_CONFIRMED) {
+	} elsif ($args->{type} == REFUSE_BAN_BY_GM || $args->{type} == REFUSE_NOT_CONFIRMED) {
 		$interface->errorDialog(T("Critical Error: Your account has been blocked."));
 		$quit = 1 unless ($net->clientAlive());
 	} elsif ($args->{type} == REFUSE_INVALID_VERSION) {
@@ -5157,7 +5159,7 @@ sub login_error {
 		relog(10);
 	} elsif ($args->{type} == ACCEPT_LOGIN_USER_PHONE_BLOCK) {
 		error T("Mobile Authentication: Max number of simultaneous IP addresses reached.\n"), "connection";
-	} elsif ($args->{type} == REFUSE_EMAIL_NOT_CONFIRMED2) {
+	} elsif ($args->{type} == REFUSE_EMAIL_NOT_CONFIRMED || $args->{type} == REFUSE_EMAIL_NOT_CONFIRMED2) {
 		error T("Account email address not confirmed.\n"), "connection";
 		Misc::offlineMode() unless $config{ignoreInvalidLogin};
 	} elsif ($args->{type} == REFUSE_BLOCKED_ID) {
@@ -5188,6 +5190,10 @@ sub login_error {
 		error TF("Account [%s] doesn't have access to Premium Server\n", $config{'username'}), "connection";
 		quit();
 		return;
+	} elsif ($args->{type} == REFUSE_NOT_ALLOWED_IP_ON_TESTING) {
+		# this can also mens server under maintenance
+		error TF("Your connection is currently delayed. You can connect again later.\n"), "connection";
+		Misc::offlineMode();
 	} else {
 		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
 	}
@@ -6711,6 +6717,7 @@ sub item_appeared {
 	# Take item as fast as possible
 	if (AI::state == AI::AUTO && pickupitems($item->{name}, $item->{nameID}) == 2
 	 && ($config{'itemsTakeAuto'} || $config{'itemsGatherAuto'})
+	 && (!$config{itemsGatherAuto_notInTown} || !$field->isCity)
 	 && (percent_weight($char) < $config{'itemsMaxWeight'})
 	 && distance($item->{pos}, $char->{pos_to}) <= 5) {
 		$messageSender->sendTake($args->{ID});
@@ -8497,7 +8504,7 @@ sub rodex_delete {
 	message TF("You have deleted the mail of ID %s.\n", $args->{mailID1});
 
 	Plugins::callHook('rodex_mail_deleted', {
-		'mailID' => $args->{mailID1},		
+		'mailID' => $args->{mailID1},
 	});
 
 	delete $rodexList->{mails}{$args->{mailID1}};
@@ -10322,13 +10329,57 @@ sub mail_read {
 	$msg .= swrite(TF("Title: \@%s Sender: \@%s", ('<'x39), ('<'x24)),
 			[bytesToString($args->{title}), bytesToString($args->{sender})]);
 	$msg .= TF("Message: %s\n", bytesToString($args->{message}));
-	$msg .= ("%s\n", ('-'x119));
+	$msg .= sprintf("%s\n", ('-'x119));
 	$msg .= TF( "Item: %s %s\n" .
 				"Zeny: %sz\n",
 				$item->{name}, ($args->{amount}) ? "x " . $args->{amount} : "", formatNumber($args->{zeny}));
 	$msg .= sprintf("%s\n", ('-'x119));
 
 	message($msg, "info");
+}
+
+sub mail_refreshinbox {
+	my ($self, $args) = @_;
+
+	my $old_count = defined $mailList ? scalar(@$mailList) : 0;
+	undef $mailList;
+	my $count = $args->{count};
+
+	if (!$count) {
+		message T("There is no mail in your inbox.\n"), "info";
+		return;
+	}
+
+	return if ($old_count == $count);
+
+	message TF("You've got %s mail in your Mailbox.\n", $count), "info";
+	my $msg;
+	$msg .= center(" " . T("Inbox") . " ", 86, '-') . "\n";
+	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
+	# truncating the date with precision of minutes and leave year out
+
+	$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+			["#", T("R"), T("Title"), T("Sender"), T("Date")]);
+	$msg .= sprintf("%s\n", ('-'x86));
+
+	my $j = 0;
+	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
+		($mailList->[$j]->{mailID},
+		$mailList->[$j]->{title},
+		$mailList->[$j]->{read},
+		$mailList->[$j]->{sender},
+		$mailList->[$j]->{timestamp}) =	unpack('V Z40 C Z24 V', substr($args->{RAW_MSG}, $i, 73));
+
+		$mailList->[$j]->{title} = bytesToString($mailList->[$j]->{title});
+		$mailList->[$j]->{sender} = bytesToString($mailList->[$j]->{sender});
+
+		$msg .= swrite(sprintf("\@> \@ \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x19)),
+				[$j, $mailList->[$j]->{read}, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
+		$j++;
+	}
+
+	$msg .= ("%s\n", ('-'x86));
+	message($msg . "\n", "list");
 }
 
 sub mail_getattachment {
@@ -10339,6 +10390,35 @@ sub mail_getattachment {
 		error T("Failed to get the attachment to inventory due to your weight.\n"), "info";
 	} else {
 		error T("Failed to get the attachment to inventory.\n"), "info";
+	}
+}
+
+sub mail_setattachment {
+	my ($self, $args) = @_;
+
+	if ($args->{fail}) {
+		if (defined $AI::temp::mailAttachAmount) {
+			undef $AI::temp::mailAttachAmount;
+		}
+		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
+	} else {
+		my $item = $char->inventory->getByID($args->{ID});
+		if ($item) {
+			message TF("Succeeded to attach %s.\n", T("item: ").$char->inventory->getByID($args->{ID})), "info";
+			if (defined $AI::temp::mailAttachAmount) {
+				my $change = min($item->{amount},$AI::temp::mailAttachAmount);
+				inventoryItemRemoved($item->{binID}, $change);
+				Plugins::callHook('packet_item_removed', {index => $item->{binID}});
+				undef $AI::temp::mailAttachAmount;
+			}
+		} else {
+			message TF("Succeeded to attach %s.\n", T("zeny")), "info";
+			if (defined $AI::temp::mailAttachAmount) {
+				my $change = min($char->{zeny},$AI::temp::mailAttachAmount);
+				$char->{zeny} = $char->{zeny} - $change;
+				message TF("You lost %s zeny.\n", formatNumber($change));
+			}
+		}
 	}
 }
 
