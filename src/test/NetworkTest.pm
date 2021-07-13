@@ -42,6 +42,7 @@ sub start {
 		cRO
 		idRO
 		iRO
+		kRO
 		pRO
 		rRO
 		Sakray
