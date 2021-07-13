@@ -21,6 +21,7 @@ use strict;
 use base qw(Network::Send::ServerType0);
 use Globals qw(%config %masterServers);
 use Utils qw(getTickCount);
+use Log qw(debug);
 
 sub new {
 	my ($class) = @_;
