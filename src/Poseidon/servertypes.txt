@@ -42,3 +42,9 @@ decrypt_mid_keys 0x07CB29CB 0x69CB69CB 0x69CB69CB
 charListPacket 0x99d
 maploginPacket 022D
 charBlockSize 155
+
+[vRO]
+decrypt_mid 1
+charListPacket 0x99d
+maploginPacket 0x436
+charBlockSize 155
