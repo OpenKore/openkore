@@ -257,8 +257,8 @@ sub ParsePacket {
 			$clientdata{$index}{secureLogin_requestCode} = getHex($code);
 		}
 
-	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277') || ($switch eq '02B0') || ($switch eq '0AAC') || ($switch eq '0ACF') || ($switch eq '0825')) { # 0064 packet thanks to abt123
-
+	} elsif (($switch eq '0B04') || ($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277') || ($switch eq '02B0') || ($switch eq '0AAC') || ($switch eq '0ACF') || ($switch eq '0825')) { # 0064 packet thanks to abt123
+#		0B04 - master login for vRO 2021
 #		my $data = pack("C*", 0xAD, 0x02, 0x00, 0x00, 0x1E, 0x0A, 0x00, 0x00);
 #		$client->send($data);
 		my $sex = 1;
@@ -293,7 +293,7 @@ sub ParsePacket {
 					pack("l", "0") . # login_type
 					pack("Z20","S1000") . # flag
 					pack("Z*", "OpenkoreClientToken"); # login_token			
-		} elsif ($switch eq '0825') { # received kRO Zero Token
+		} elsif ($switch eq '0825' || $switch eq '0B04') { # received kRO Zero Token
 			$data = pack("C*", 0xC4, 0x0A) . # header
 				pack("C*", 0xE0, 0x00) . # length
 				$sessionID . # sessionid
@@ -537,11 +537,11 @@ sub ParsePacket {
 		$clientdata{$index}{serverType} = "1 or 2";
 
 	} elsif (($switch eq '0436' || $switch eq '022D' || $switch eq $self->{type}->{$config{server_type}}->{maploginPacket}) &&
-		(length($msg) == 19) &&
+		((length($msg) == 19) || (length($msg) == 23)) &&
 		(substr($msg, 2, 4) eq $accountID) &&
 		(substr($msg, 6, 4) eq $charID) &&
 		(substr($msg, 10, 4) eq $sessionID)
-		) { # client sends the maplogin packet
+		) { # client sends the maplogin packet, and vRO 0436 is len = 23
 
 		$client->send(pack("v a4", 0x0283, $accountID));
 		# mapLogin packet

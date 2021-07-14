@@ -15,7 +15,7 @@ queryserver_port=24390
 # to the poseidon operate properly !
 # The available server types for now are : Default, bRO_.* (check servertypes.txt)
 # You should modify this if you're having problems with char list.
-server_type=bRO_2016-11-08a
+server_type=vRO_2021-07-13
 
 # Char Block Size
 # Here you can specify the desired CharBlockSize your client requires
