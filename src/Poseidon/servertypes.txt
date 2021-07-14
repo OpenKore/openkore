@@ -43,7 +43,7 @@ charListPacket 0x99d
 maploginPacket 022D
 charBlockSize 155
 
-[vRO_2021-07-13]
+[vRO_2021-07-07]
 charListPacket 0x99d
 maploginPacket 0x436
 charBlockSize 155
