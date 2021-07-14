@@ -43,8 +43,7 @@ charListPacket 0x99d
 maploginPacket 022D
 charBlockSize 155
 
-[vRO]
-decrypt_mid 1
+[vRO_2021-07-13]
 charListPacket 0x99d
 maploginPacket 0x436
 charBlockSize 155
