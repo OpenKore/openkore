@@ -448,7 +448,7 @@ sub modifyPacketIn {
 	}
 
 	# server list
-	if ($switch eq "0069" || $switch eq "0AC4" || $switch eq "0AC9") {
+	if ($switch eq "0069" || $switch eq "0AC4" || $switch eq "0AC9" || $switch eq "0B60" ) {
 		use bytes; no encoding 'utf8';
 
 		# queue the packet as requiring client's response in time
