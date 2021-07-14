@@ -18,7 +18,7 @@
 package Network::Send::kRO::Sakexe_0;
 
 use strict;
-use base qw(Network::Send::kRO);
+use base qw(Network::Send);
 use Network::Send::ServerType0();
 
 use Log qw(debug);
