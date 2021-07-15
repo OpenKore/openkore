@@ -325,9 +325,14 @@ sub ParsePacket {
 				$serverName .
 				$serverUsers .
 				pack("x130");
-		} elsif($self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0276') { # tRO
-			# TODO:
-			# '0276' => ['account_server_info', 'v a4 a4 a4 a4 Z26 C V a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex iAccountSID serverInfo)]],
+		} elsif($switch eq '0A76' || $self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0276') { # tRO
+			$data = pack("v", 0x0276) . # header
+				pack("v", 0x63) . # length
+				$sessionID . $accountID . $sessionID2 .
+				pack("x30") . pack("C1", $sex) .
+				pack("x4") .
+				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .				
+				$port .	$serverName . pack("x2") . $serverUsers . pack("x6");
 		} else {
 			$data = pack("v", 0x0069) . # header
 				pack("v", 0x4F) . # length
@@ -373,6 +378,8 @@ sub ParsePacket {
 			$clientdata{$index}{master_version} = 1;
 		}
 
+		$clientdata{$index}{masterLogin_packet} = $switch;
+
 		if ($switch eq '01DD') {
 			$clientdata{$index}{secureLogin} = 1;
 			undef $clientdata{$index}{secureLogin_account};
@@ -406,11 +413,7 @@ sub ParsePacket {
 		SendCharacterList($self, $client, $msg, $index);
 
 		# save servers.txt info
-		if ($switch ne '0065') {
-			$clientdata{$index}{gameLogin_packet} = $switch;
-		} else {
-			undef $clientdata{$index}{gameLogin_packet};
-		}
+		$clientdata{$index}{gameLogin_packet} = $switch;
 
 	} elsif ($switch eq '09A1') {
 		SendCharacterList($self, $client, $msg, $index);
