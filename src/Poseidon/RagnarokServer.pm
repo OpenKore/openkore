@@ -434,7 +434,7 @@ sub ParsePacket {
 
 		if ($self->{type}->{$config{server_type}}->{received_character_ID_and_Map} eq '0AC5') {
 			# '0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
-			my $mapName = pack("a16", "moc_prydb1.gat");
+			my $mapName = pack("a16", "new_1-1.gat");
 			my $data = pack("v", 0x0AC5) . $charID . $mapName .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port .
 				pack("x128"); # mapUrl
@@ -442,7 +442,7 @@ sub ParsePacket {
 
 		} else {
 			# '0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
-			my $mapName = pack("a16", "moc_prydb1.gat");
+			my $mapName = pack("a16", "new_1-1.gat");
 			my $data = pack("v", 0x0071) . $charID . $mapName .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port;
 			$client->send($data);
@@ -968,7 +968,7 @@ sub SendCharacterList
 	my $block;
 
 	my $sex = 1;
-	my $map = "moc_prydb1.gat";
+	my $map = "new_1-1.gat";
 
 	# Filling Character 1 Block
 	$cID = $charID;	$hp = 10000; $maxHp = 10000; $sp = 10000; $maxSp = 10000; $hairstyle = 1; $level = 99; $headTop = 0; $hairColor = 6; $hairPallete = 0;
