@@ -282,7 +282,7 @@ sub ParsePacket {
 				pack("x30") . pack("C1", $sex) . pack("x4") .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
 				$port .	$serverName . $serverUsers . pack("x2");
-		} elsif ($switch eq '0AAC' || $self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0AC9') {
+		} elsif ($switch eq '0AAC' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0AC9') {
 		$data = pack("v", 0x0AC9) . # header
 				pack("v", 0xCF) . # length
 				$sessionID . $accountID . $sessionID2 .
@@ -295,7 +295,7 @@ sub ParsePacket {
 				pack("C*", 0x80, 0x32) . # ??
 				pack("a*", $host.":".$self->getPort()) . # ip:port
 				pack("x114"); # fill with 00
-		} elsif ($self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0B60') { # received twRO
+		} elsif ($self->{type}->{$config{server_type}}->{account_server_info} eq '0B60') { # received twRO
 			$serverUsers = pack("v", @{$self->clients()} - 1);
 			$data = pack("v", 0x0B60) . # header
 				pack("v", 0xE4) . # length
@@ -312,7 +312,7 @@ sub ParsePacket {
 				pack("v", 0x6985) . # property
 				pack("x128").# ip_port
 				pack("x4"); # unknown
-		} elsif ($switch eq '0825' || $self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0AC4') { # received kRO Zero Token
+		} elsif ($switch eq '0825' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0AC4') { # received kRO Zero Token
 			$data = pack("v", 0x0AC4) . # header
 				pack("v", 0xE0) . # length
 				$sessionID . $accountID . $sessionID2 .
@@ -325,7 +325,7 @@ sub ParsePacket {
 				$serverName .
 				$serverUsers .
 				pack("x130");
-		} elsif($switch eq '0A76' || $self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0276') { # tRO
+		} elsif($switch eq '0A76' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0276') { # tRO
 			$data = pack("v", 0x0276) . # header
 				pack("v", 0x63) . # length
 				$sessionID . $accountID . $sessionID2 .
@@ -395,7 +395,7 @@ sub ParsePacket {
 
 	#	send characters_info
 	} elsif (($switch eq '0065') || ($switch eq '0275') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
-		if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
+		if ($self->{type}->{$config{server_type}}->{received_characters} eq '099D' || $self->{type}->{$config{server_type}}->{received_characters} eq '0B72') {
 			my $data;
 			$data = $accountID;
 			$client->send($data);
@@ -420,10 +420,10 @@ sub ParsePacket {
 	} elsif ($switch eq '0066') { # client sends character choice packet
 
 		# If Using Packet Encrypted Client
-		if ( $self->{type}->{$config{server_type}}->{decrypt_mid_keys} )
+		if ( $self->{type}->{$config{server_type}}->{sendCryptKeys} )
 		{
 			# Enable Decryption
-			my @enc_values = split(/\s+/, $self->{type}->{$config{server_type}}->{decrypt_mid_keys});
+			my @enc_values = split(/\s+/, $self->{type}->{$config{server_type}}->{sendCryptKeys});
 			($enc_val1, $enc_val2, $enc_val3) = (Math::BigInt->new(@enc_values[0]), Math::BigInt->new(@enc_values[1]), Math::BigInt->new(@enc_values[2]));
 		}
 
@@ -432,7 +432,7 @@ sub ParsePacket {
 
 		$clientdata{$index}{mode} = unpack('C1', substr($msg, 2, 1));
 
-		if ($self->{type}->{$config{server_type}}->{character_ID_and_Map} eq '0x0AC5') {
+		if ($self->{type}->{$config{server_type}}->{received_character_ID_and_Map} eq '0AC5') {
 			# '0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
 			my $mapName = pack("a16", "moc_prydb1.gat");
 			my $data = pack("v", 0x0AC5) . $charID . $mapName .
@@ -448,7 +448,7 @@ sub ParsePacket {
 			$client->send($data);
 		}
 
-	} elsif ($switch eq  $self->{type}->{$config{server_type}}->{maploginPacket} &&
+	} elsif ($switch eq  $self->{type}->{$config{server_type}}->{map_login} &&
 		(length($msg) == 19) &&
 		(substr($msg, 2, 4) eq $accountID) &&
 		(substr($msg, 6, 4) eq $charID) &&
@@ -591,16 +591,16 @@ sub ParsePacket {
 		# save servers.txt info
 		$clientdata{$index}{serverType} = "1 or 2";
 
-	} elsif (($switch eq '0436' || $switch eq '022D' || $switch eq $self->{type}->{$config{server_type}}->{maploginPacket}) &&
+	} elsif (($switch eq '0436' || $switch eq '022D' || $switch eq $self->{type}->{$config{server_type}}->{map_login}) &&
 		(length($msg) == 19 || length($msg) == 23) &&
 		(substr($msg, 2, 4) eq $accountID) &&
 		(substr($msg, 6, 4) eq $charID) &&
 		(substr($msg, 10, 4) eq $sessionID)
-		) { # client sends the maplogin packet, and vRO 0436 is len = 23
+		) { # client sends the maplogin packet
+		$clientdata{$index}{serverType} = 0;
 
-		$client->send(pack("v a4", 0x0283, $accountID));
-		# mapLogin packet
-		$client->send(pack("v", 0x2EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
+		SendMapLogin($self, $client, $msg, $index);
+
 		$client->{connectedToMap} = 1;
 
 	} elsif ($msg =~ /^$packed_switch/
@@ -620,7 +620,7 @@ sub ParsePacket {
 		my $data;
 
 		# Temporary Hack to Initialized Crypted Client
-		if ( $self->{type}->{$config{server_type}}->{decrypt_mid_keys} )
+		if ( $self->{type}->{$config{server_type}}->{sendCryptKeys} )
 		{
 			for ( my $i = 0 ; $i < 64 ; $i++ )
 			{
@@ -950,10 +950,13 @@ sub SendCharacterList
 
 	# Preparing Begin of Character List Packet
 	my $data;
-	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x82d') {
+	if ($self->{type}->{$config{server_type}}->{received_characters} eq '082D') {
 		$data = $accountID . pack("v2 C5 a20", 0x082d, $len + 29,$totalchars,0,0,0,$totalchars,-0); # 29 = v2 C5 a20 size for bRO
-	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
+	} elsif ($self->{type}->{$config{server_type}}->{received_characters} eq '099D') {
 		$data = pack("v", 0x099D) .
+		pack("v", $len + 4);
+	} elsif ($self->{type}->{$config{server_type}}->{received_characters} eq '0B72') {
+		$data = pack("v", 0x0B72) .
 		pack("v", $len + 4);
 	} else {
 		$data = $accountID . pack("v v C3", 0x006b, $len + 7, $totalslots, -1, -1);
@@ -970,7 +973,7 @@ sub SendCharacterList
 	$name = "Poseidon"; $str = 1; $agi = 1; $vit = 1; $int = 1; $dex = 1; $luk = 1;	$exp = 1; $zeny = 1; $jobExp = 1; $jobLevel = 50; $slot = 0; $rename = 0;
 
 	# Preparing Character 1 Block
-	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
+	if ($self->{type}->{$config{server_type}}->{received_characters} eq '099D') {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, "", $sex);
 	} else {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
@@ -984,7 +987,7 @@ sub SendCharacterList
 	$name = "Poseidon Dev"; $str = 1; $agi = 1; $vit = 1; $int = 1; $dex = 1; $luk = 1;	$exp = 1; $zeny = 1; $jobExp = 1; $jobLevel = 50; $slot = 1; $rename = 0;
 
 	# Preparing Character 2 Block
-	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
+	if ($self->{type}->{$config{server_type}}->{received_characters} eq '099D') {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, "", $sex);
 	} else {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
@@ -1002,23 +1005,23 @@ sub SendCharacterList
 sub SendMapLogin {
 	my ($self, $client, $msg, $index) = @_;
 
-	# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
-	my $data;
-	if ( $config{server_type} =~ /^kRO/ ) { # kRO Zero
-		$data .= pack("C*", 0x83, 0x02) . $accountID; #accountID
-		$client->send($data);
+	$client->send(pack("v a4", 0x0283, $accountID));
 
-		$data = pack("C*", 0xDE, 0x0A, 0x46, 0x00, 0x00, 0x00); # idk '-'
-		$client->send($data);
-
-		$data = pack("C*", 0xEB, 0x02) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05, 0x00, 0x00); # map loaded
-		$client->send($data);
-
+	# mapLogin packet
+	if ($self->{type}->{$config{server_type}}->{map_loaded} eq '0A18') {
+		# '0A18' => ['map_loaded', 'V a3 C2 v C', [qw(syncMapSync coords xSize ySize font sex)]], # 14
+		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
+	} elsif ($self->{type}->{$config{server_type}}->{map_loaded} eq '02EB') {
+		# '02EB' => ['map_loaded', 'V a3 a a v', [qw(syncMapSync coords xSize ySize font)]], # 13
+		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
 	} else {
-		if ( $config{server_type} !~ /^bRO/ ) { $data .= $accountID; } #<- This is Server Type Based !!
-		$data = pack("C*", 0x73, 0x00) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
-		$client->send($data);
+		# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
+		$client->send(pack("v", 0x0073) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
 	}
+
+	if ( $config{server_type} =~ /^kRO/ ) { # kRO
+		$client->send(pack("v", 0x0ADE) . pack("V", 0x00);
+	} 
 
 	if ($clientdata{$index}{mode}) {
 		$data = pack("C2 v1", 0x0F, 0x01, 226) .
