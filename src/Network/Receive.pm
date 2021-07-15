@@ -9031,6 +9031,7 @@ sub skill_update {
 #TODO !
 sub overweight_percent {
 	my ($self, $args) = @_;
+	debug "Received overweight percent: $args->{percent}\n";
 }
 
 sub partylv_info {
