@@ -59,7 +59,7 @@ expandedItemID 1
 sendCrypt 0
 account_server_info 0AC4
 received_characters 0B72
-charBlockSize 155
+charBlockSize 175
 received_character_ID_and_Map 0AC5
 map_login 0436
 map_loaded 02EB
