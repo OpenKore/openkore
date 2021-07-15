@@ -231,7 +231,8 @@ sub ParsePacket {
 	# countries' clients (except probably oRO). The best way to support other clients would be: use a barebones
 	# eAthena or Freya as the emulator, or figure out the correct packet switches and include them in the
 	# if..elsif..else blocks.
-	if ($switch eq '01DB' || $switch eq '0204') { # client sends login packet 0204 packet thanks to elhazard
+	# still used in idRO 2021-07-15
+	if ($switch eq '01DB' || $switch eq '0204') { # Secure Login
 
 		# '01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		my $data = pack("v2", 0x01DC, 0x14) . pack("x17");
@@ -257,24 +258,31 @@ sub ParsePacket {
 			$clientdata{$index}{secureLogin_requestCode} = getHex($code);
 		}
 
-# 	send account_server_info
-	} elsif (($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0064') || ($switch eq '0060') || ($switch eq '0277') || ($switch eq '02B0') || ($switch eq '0AAC') || ($switch eq '0ACF') || ($switch eq '0825')) { # 0064 packet thanks to abt123
-
-#		my $data = pack("C*", 0xAD, 0x02, 0x00, 0x00, 0x1E, 0x0A, 0x00, 0x00);
-#		$client->send($data);
+	} elsif ($switch eq '0ACF') { # Token Request
+			my $data;
+			# send Token
+			$data = pack("C*", 0xE3, 0x0A) . # header
+					pack("C*", 0x2F, 0x00) . # length
+					pack("l", "0") . # login_type
+					pack("Z20","S1000") . # flag
+					pack("Z*", "OpenkoreClientToken"); # login_token
+			$client->send($data);
+			
+	} elsif (($switch eq '0064') || ($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0277') || ($switch eq '02B0') || ($switch eq '0825') || ($switch eq '0987') || ($switch eq '0A76') || ($switch eq '0AAC') || ($switch eq '0B04')) { # master_login
+		# send account_server_info
 		my $sex = 1;
 		my $serverName = pack("a20", "Poseidon server"); # server name should be less than or equal to 20 characters
 		my $serverUsers = pack("V", @{$self->clients()} - 1);
 
 		my $data;
-		if ($switch eq '01FA') {
+		if ($switch eq '01FA') { # Secure Master Login
 			$data = pack("v", 0x0069) . # header
 				pack("v", 0x53) . # length
 				$sessionID . $accountID . $sessionID2 .
 				pack("x30") . pack("C1", $sex) . pack("x4") .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
 				$port .	$serverName . $serverUsers . pack("x2");
-		} elsif ($switch eq '0AAC') {
+		} elsif ($switch eq '0AAC' || $self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0AC9') {
 		$data = pack("v", 0x0AC9) . # header
 				pack("v", 0xCF) . # length
 				$sessionID . $accountID . $sessionID2 .
@@ -287,13 +295,7 @@ sub ParsePacket {
 				pack("C*", 0x80, 0x32) . # ??
 				pack("a*", $host.":".$self->getPort()) . # ip:port
 				pack("x114"); # fill with 00
-		} elsif ($switch eq '0ACF') { #kRO Zero Token
-			$data = pack("v", 0x0AE3) . # header
-					pack("v", 0x2F) . # length
-					pack("l", "0") . # login_type
-					pack("Z20","S1000") . # flag
-					pack("Z*", "OpenkoreClientToken"); # login_token
-		} elsif ($switch eq '0064') { # received twRO
+		} elsif ($self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0B60') { # received twRO
 			$serverUsers = pack("v", @{$self->clients()} - 1);
 			$data = pack("v", 0x0B60) . # header
 				pack("v", 0xE4) . # length
@@ -310,7 +312,7 @@ sub ParsePacket {
 				pack("v", 0x6985) . # property
 				pack("x128").# ip_port
 				pack("x4"); # unknown
-		} elsif ($switch eq '0825') { # received kRO Zero Token
+		} elsif ($switch eq '0825' || $self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0AC4') { # received kRO Zero Token
 			$data = pack("v", 0x0AC4) . # header
 				pack("v", 0xE0) . # length
 				$sessionID . $accountID . $sessionID2 .
@@ -323,6 +325,9 @@ sub ParsePacket {
 				$serverName .
 				$serverUsers .
 				pack("x130");
+		} elsif($self->{type}->{$config{server_type}}->{serverListPacket} eq '0x0276') { # tRO
+			# TODO:
+			# '0276' => ['account_server_info', 'v a4 a4 a4 a4 Z26 C V a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex iAccountSID serverInfo)]],
 		} else {
 			$data = pack("v", 0x0069) . # header
 				pack("v", 0x4F) . # length
@@ -335,8 +340,39 @@ sub ParsePacket {
 		$client->send($data);
 
 		# save servers.txt info
-		$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
-		$clientdata{$index}{master_version} = unpack("C", substr($msg, length($msg) - 1, 1));
+		$clientdata{$index}{masterLogin_packet} = $switch;
+		
+		if (($switch eq '0064') || ($switch eq '01DD') || ($switch eq '0987') || ($switch eq '0AAC')) {
+			# '0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]]
+			# '01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
+			# '0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]]
+			# '0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]]
+			$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
+			$clientdata{$index}{master_version} = unpack("C", substr($msg, length($msg) - 1, 1));
+		} elsif ($switch eq '01FA') {
+			# '01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
+			$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
+			$clientdata{$index}{master_version} = unpack("C", substr($msg, length($msg) - 2, 1));
+		} elsif ($switch eq '0825') {
+			# '0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]]
+			$clientdata{$index}{version} = unpack("v", substr($msg, 4, 2));
+			$clientdata{$index}{master_version} = unpack("v", substr($msg, 7, 2));
+		} elsif ( ($switch eq '0A76') || ($switch eq '0B04') ) {
+			# '0A76' => ['master_login', 'V Z40 a32 v', [qw(version username password_rijndael master_version)]]
+			# '0B04' => ['master_login', 'V Z30 Z52 Z100 v', [qw(version username accessToken billingAccessToken master_version)]]
+			$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
+			$clientdata{$index}{master_version} = unpack("v", substr($msg, length($msg) - 2, 2));
+		} elsif ($switch eq '02B0') {
+			# '02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
+			$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
+			$clientdata{$index}{master_version} = unpack("C", substr($msg, 53, 1));
+		} else {
+			# '0277' => ??
+			# unknown packet, cant get version/master version, should we use defaults?
+			$clientdata{$index}{version} = 55;
+			$clientdata{$index}{master_version} = 1;
+		}
+
 		if ($switch eq '01DD') {
 			$clientdata{$index}{secureLogin} = 1;
 			undef $clientdata{$index}{secureLogin_account};
@@ -349,19 +385,10 @@ sub ParsePacket {
 			undef $clientdata{$index}{secureLogin_account};
 			undef $clientdata{$index}{secureLogin_requestCode};
 		}
-		if (($switch ne '01DD') && ($switch ne '01FA') && ($switch ne '0064')) {
-			$clientdata{$index}{masterLogin_packet} = $switch;
-		} else {
-			undef $clientdata{$index}{masterLogin_packet};
-		}
 
-		if($switch eq '02B0') {	# kRO uses 02B2 as masterLogin packet when we have <langtype>0</langtype> in the clientinfo.xml
-								# if other servers do use this packet too that will be a problem.
-			$clientdata{$index}{kRO} = 1;
-		}
-#	send characters_info
+	#	send characters_info
 	} elsif (($switch eq '0065') || ($switch eq '0275') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
-		if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
+		if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
 			my $data;
 			$data = $accountID;
 			$client->send($data);
@@ -613,7 +640,6 @@ sub ParsePacket {
 
 		### Check if packet 0228 got tangled up with the sync packet
 		if (uc(unpack("H2", substr($msg, 7, 1))) . uc(unpack("H2", substr($msg, 6, 1))) eq '0228') {
-			# queue the response (thanks abt123)
 			$self->{response} = pack("v", $packet_id) . substr($msg, 8, length($msg)-2);
 			$self->{state} = 'requested';
 		}
@@ -923,7 +949,7 @@ sub SendCharacterList
 	my $data;
 	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x82d') {
 		$data = $accountID . pack("v2 C5 a20", 0x082d, $len + 29,$totalchars,0,0,0,$totalchars,-0); # 29 = v2 C5 a20 size for bRO
-	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
+	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
 		$data = pack("v", 0x099D) .
 		pack("v", $len + 4);
 	} else {
@@ -941,7 +967,7 @@ sub SendCharacterList
 	$name = "Poseidon"; $str = 1; $agi = 1; $vit = 1; $int = 1; $dex = 1; $luk = 1;	$exp = 1; $zeny = 1; $jobExp = 1; $jobLevel = 50; $slot = 0; $rename = 0;
 
 	# Preparing Character 1 Block
-	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
+	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, "", $sex);
 	} else {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
@@ -955,7 +981,7 @@ sub SendCharacterList
 	$name = "Poseidon Dev"; $str = 1; $agi = 1; $vit = 1; $int = 1; $dex = 1; $luk = 1;	$exp = 1; $zeny = 1; $jobExp = 1; $jobLevel = 50; $slot = 1; $rename = 0;
 
 	# Preparing Character 2 Block
-	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x99d') {
+	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, "", $sex);
 	} else {
 		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
@@ -1170,3 +1196,6 @@ sub PerformMapLoadedTasks
 
 1;
 
+# 0064 packet thanks to abt123
+# 0204 packet thanks to elhazard
+# queue the response (thanks abt123)
