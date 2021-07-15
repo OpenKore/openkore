@@ -1016,13 +1016,14 @@ sub SendMapLogin {
 		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
 	} else {
 		# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
-		$client->send(pack("v", 0x0073) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
+		$client->send(pack("v", 0x0073) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05));
 	}
 
 	if ( $config{server_type} =~ /^kRO/ ) { # kRO
-		$client->send(pack("v", 0x0ADE) . pack("V", 0x00);
-	} 
-
+		$client->send(pack("v", 0x0ADE) . pack("V", 0x00));
+	}
+	
+	my $data;
 	if ($clientdata{$index}{mode}) {
 		$data = pack("C2 v1", 0x0F, 0x01, 226) .
 			# skillID targetType level sp range skillName
