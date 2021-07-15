@@ -1,49 +1,84 @@
 [Default]
 decrypt_mid 0
-charBlockSize 116
-charListPacket 0x6b
-maploginPacket 0000
-
-[bRO_2016-11-01a]
-decrypt_mid 1
-decrypt_mid_keys 0x6D9253BB 0x7DB60BB3 0x3AD51C28
-charBlockSize 124
-charListPacket 0x82d
-maploginPacket 0870
-
-[bRO_2016-11-08a]
-decrypt_mid 1
-decrypt_mid_keys 0x17AC78C2 0x1ADE5C66 0x2A84793C
-charBlockSize 124
-charListPacket 0x82d
-maploginPacket 088E
-
-[tRO_2013-07-09a]
-decrypt_mid 1
-decrypt_mid_keys 0x6441767a 0x71020102 0x48c21f02
-charBlockSize 144
-
-[cRO_2017-12-13a]
-decrypt_mid 1
+decrypt_mid_keys
+serverListPacket
+charListPacket 0x099D
 charBlockSize 155
-charListPacket 0x99d
-maploginPacket 0x436
+charIDandMapPacket 0x0AC5
+maploginPacket 0x0436
+actorListPacket 0x09FF
+inventoryPacket 0x0B08
+skillsListPacket 0x010F
+itemExistsPacket 0x009D
 
-[kRO_2018-01-03a]
-decrypt_mid 1
-decrypt_mid_keys 0x2A3D4E64 0x69FF066F 0x7008690C
-charListPacket 0x99d
-maploginPacket 0958
+[cRO_2021-07-xx]
+decrypt_mid 0
+serverListPacket 0x0AC9
+charListPacket 0x099D
 charBlockSize 155
-
-[kRO_2018-02-07a]
-decrypt_mid 1
-decrypt_mid_keys 0x07CB29CB 0x69CB69CB 0x69CB69CB
-charListPacket 0x99d
-maploginPacket 022D
-charBlockSize 155
+charIDandMapPacket 0x0AC5
+maploginPacket 0x0436
+actorListPacket 0x09FF
+inventoryPacket 0x0B08
+skillsListPacket 0x010F
+itemExistsPacket 0x0ADD
 
 [vRO_2021-07-07]
-charListPacket 0x99d
-maploginPacket 0x436
+decrypt_mid 0
+serverListPacket 0x0AC9
+charListPacket 0x099D
 charBlockSize 155
+charIDandMapPacket 0x0AC5
+maploginPacket 0x0436
+actorListPacket 0x09FF
+inventoryPacket 0x0B08
+skillsListPacket
+itemExistsPacket
+
+[twRO_2021-06-21]
+decrypt_mid 0
+serverListPacket 0x0B60
+charListPacket 0x099D
+charBlockSize 155
+charIDandMapPacket 0x0AC5
+maploginPacket 0x0436
+actorListPacket 0x09FF
+inventoryPacket 0x0B08
+skillsListPacket
+itemExistsPacket
+
+[kRO_2021-06-30]
+decrypt_mid 0
+serverListPacket 0x0AC4
+charListPacket 0x0B72
+charBlockSize 155
+charIDandMapPacket 0x0AC5
+maploginPacket 0x0436
+actorListPacket 0x09FF
+inventoryPacket
+skillsListPacket 0x0B32
+itemExistsPacket
+
+[kRO_Zero_2021-06-30]
+decrypt_mid 0
+serverListPacket 0x0AC4
+charListPacket 0x099D
+charBlockSize 155
+charIDandMapPacket 0x0AC5
+maploginPacket 0x0436
+actorListPacket 0x09FF
+inventoryPacket 0x0B08
+skillsListPacket 0x0B32
+itemExistsPacket
+
+[jRO_2021-07-xx]
+decrypt_mid 0
+serverListPacket
+charListPacket 0x099D
+charBlockSize 155
+charIDandMapPacket 0x0AC5
+maploginPacket 0x0436
+actorListPacket
+inventoryPacket
+skillsListPacket
+itemExistsPacket
