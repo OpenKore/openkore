@@ -13,10 +13,18 @@
 package Network::Send::tRO;
 use strict;
 use base qw(Network::Send::ServerType0);
+use Utils qw(getTickCount);
+use Log qw(debug);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+
+	my %packets = (
+		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
 		master_login 0A76
@@ -93,5 +101,28 @@ sub reconstruct_master_login {
 		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 32, 0);
 	}
 }
+
+# 0x0436,23
+sub sendMapLogin {
+	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
+	my $msg;
+	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
+
+	#my $unknown = pack('C4', (0x90, 0x13, 0xE0, 0xE8));
+
+	$msg = $self->reconstruct({
+		switch => 'map_login',
+		accountID => $accountID,
+		charID => $charID,
+		sessionID => $sessionID,
+		unknown => 768,# 00 00 03 00
+		tick => getTickCount,
+		sex => $sex,
+	});
+
+	$self->sendToServer($msg);
+	debug "Sent sendMapLogin\n", "sendPacket", 2;
+}
+
 
 1;
