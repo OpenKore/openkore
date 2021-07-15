@@ -47,7 +47,7 @@ inventoryPacket 0x0B08
 skillsListPacket
 itemExistsPacket
 
-[kRO_2021-07]
+[kRO_2021-06-30]
 decrypt_mid 0
 serverListPacket 0x0AC4
 charListPacket 0x0B72
@@ -59,7 +59,7 @@ inventoryPacket
 skillsListPacket 0x0B32
 itemExistsPacket
 
-[kRO_Zero_2021-07]
+[kRO_Zero_2021-06-30]
 decrypt_mid 0
 serverListPacket 0x0AC4
 charListPacket 0x099D
