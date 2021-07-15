@@ -395,7 +395,7 @@ sub ParsePacket {
 
 	#	send characters_info
 	} elsif (($switch eq '0065') || ($switch eq '0275') || ($msg =~ /^$packed_switch$accountID$sessionID$sessionID2\x0\x0.$/)) { # client sends server choice packet
-		if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
+		if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D' || $self->{type}->{$config{server_type}}->{charListPacket} eq '0x0B72') {
 			my $data;
 			$data = $accountID;
 			$client->send($data);
@@ -597,10 +597,10 @@ sub ParsePacket {
 		(substr($msg, 6, 4) eq $charID) &&
 		(substr($msg, 10, 4) eq $sessionID)
 		) { # client sends the maplogin packet
+		$clientdata{$index}{serverType} = 0;
 
-		$client->send(pack("v a4", 0x0283, $accountID));
-		# mapLogin packet
-		$client->send(pack("v", 0x2EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
+		SendMapLogin($self, $client, $msg, $index);
+
 		$client->{connectedToMap} = 1;
 
 	} elsif ($msg =~ /^$packed_switch/
@@ -955,6 +955,9 @@ sub SendCharacterList
 	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x099D') {
 		$data = pack("v", 0x099D) .
 		pack("v", $len + 4);
+	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x0B72') {
+		$data = pack("v", 0x0B72) .
+		pack("v", $len + 4);
 	} else {
 		$data = $accountID . pack("v v C3", 0x006b, $len + 7, $totalslots, -1, -1);
 	}
@@ -1002,23 +1005,23 @@ sub SendCharacterList
 sub SendMapLogin {
 	my ($self, $client, $msg, $index) = @_;
 
-	# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
-	my $data;
-	if ( $config{server_type} =~ /^kRO/ ) { # kRO Zero
-		$data .= pack("C*", 0x83, 0x02) . $accountID; #accountID
-		$client->send($data);
+	$client->send(pack("v a4", 0x0283, $accountID));
 
-		$data = pack("C*", 0xDE, 0x0A, 0x46, 0x00, 0x00, 0x00); # idk '-'
-		$client->send($data);
-
-		$data = pack("C*", 0xEB, 0x02) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05, 0x00, 0x00); # map loaded
-		$client->send($data);
-
+	# mapLogin packet
+	if ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x0A18') {
+		# '0A18' => ['map_loaded', 'V a3 C2 v C', [qw(syncMapSync coords xSize ySize font sex)]], # 14
+		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
+	} elsif ($self->{type}->{$config{server_type}}->{charListPacket} eq '0x02EB') {
+		# '02EB' => ['map_loaded', 'V a3 a a v', [qw(syncMapSync coords xSize ySize font)]], # 13
+		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
 	} else {
-		if ( $config{server_type} !~ /^bRO/ ) { $data .= $accountID; } #<- This is Server Type Based !!
-		$data = pack("C*", 0x73, 0x00) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
-		$client->send($data);
+		# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
+		$client->send(pack("v", 0x0073) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05);
 	}
+
+	if ( $config{server_type} =~ /^kRO/ ) { # kRO
+		$client->send(pack("C*", 0xDE, 0x0A, 0x46, 0x00, 0x00, 0x00)); # Overweight percent
+	} 
 
 	if ($clientdata{$index}{mode}) {
 		$data = pack("C2 v1", 0x0F, 0x01, 226) .

@@ -10,6 +10,8 @@ actorListPacket 0x09FF
 inventoryPacket 0x0B08
 skillsListPacket 0x010F
 itemExistsPacket 0x009D
+expandedItemID 1
+mapLoadedPacket 0x02EB
 
 [cRO_2021-07-xx]
 decrypt_mid 0
@@ -22,6 +24,8 @@ actorListPacket 0x09FF
 inventoryPacket 0x0B08
 skillsListPacket 0x010F
 itemExistsPacket 0x0ADD
+expandedItemID 1
+mapLoadedPacket 0x02EB
 
 [vRO_2021-07-07]
 decrypt_mid 0
@@ -34,6 +38,8 @@ actorListPacket 0x09FF
 inventoryPacket 0x0B08
 skillsListPacket
 itemExistsPacket
+expandedItemID 1
+mapLoadedPacket 0x02EB
 
 [twRO_2021-06-21]
 decrypt_mid 0
@@ -46,6 +52,8 @@ actorListPacket 0x09FF
 inventoryPacket 0x0B08
 skillsListPacket
 itemExistsPacket
+expandedItemID 1
+mapLoadedPacket 0x02EB
 
 [kRO_2021-06-30]
 decrypt_mid 0
@@ -58,6 +66,8 @@ actorListPacket 0x09FF
 inventoryPacket
 skillsListPacket 0x0B32
 itemExistsPacket
+expandedItemID 1
+mapLoadedPacket 0x02EB
 
 [kRO_Zero_2021-06-30]
 decrypt_mid 0
@@ -70,6 +80,8 @@ actorListPacket 0x09FF
 inventoryPacket 0x0B08
 skillsListPacket 0x0B32
 itemExistsPacket
+expandedItemID 1
+mapLoadedPacket 0x02EB
 
 [jRO_2021-07-xx]
 decrypt_mid 0
@@ -82,3 +94,5 @@ actorListPacket
 inventoryPacket
 skillsListPacket
 itemExistsPacket
+expandedItemID
+mapLoadedPacket 
