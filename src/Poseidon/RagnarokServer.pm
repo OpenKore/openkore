@@ -434,7 +434,7 @@ sub ParsePacket {
 
 		if ($self->{type}->{$config{server_type}}->{received_character_ID_and_Map} eq '0AC5') {
 			# '0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
-			my $mapName = pack("a16", "moc_prydb1.gat");
+			my $mapName = pack("a16", "new_1-1.gat");
 			my $data = pack("v", 0x0AC5) . $charID . $mapName .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port .
 				pack("x128"); # mapUrl
@@ -442,7 +442,7 @@ sub ParsePacket {
 
 		} else {
 			# '0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
-			my $mapName = pack("a16", "moc_prydb1.gat");
+			my $mapName = pack("a16", "new_1-1.gat");
 			my $data = pack("v", 0x0071) . $charID . $mapName .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) . $port;
 			$client->send($data);
@@ -928,12 +928,14 @@ sub SendCharacterList
 
 	# Character Block Pack String
 	my $packstring = '';
-	$packstring = 'a4 Z8 V Z8 V6 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $blocksize == 155;
-	$packstring = 'a4 V9 v V2 v4 V v9 Z24 C8 v a16 Z16 C' if $blocksize == 147;
-	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4 C' if $blocksize == 145;
-	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4 x4' if $blocksize == 144;
-	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4 x4' if $blocksize == 140;
-	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V x4' if $blocksize == 136;
+	$packstring = 'a4 V2 V V2 V6 v V2 V2 V2 V2 v2 V v9 Z24 C8 v Z16 V4 C' if $blocksize == 175;
+	$packstring = 'a4 Z8 V Z8 V6 v V2 v4 V v9 Z24 C8 v Z16 V4 C' if $blocksize == 155;
+	$packstring = 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V4 C' if $blocksize == 147;
+	$packstring = 'a4 V9 v V2 v4 V v9 Z24 C8 v Z16 V4' if $blocksize == 146;
+	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V4 C' if $blocksize == 145;
+	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V4' if $blocksize == 144;
+	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V3' if $blocksize == 140;
+	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V2' if $blocksize == 136;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16 V' if $blocksize == 132;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z16' if $blocksize == 128;
 	$packstring = 'a4 V9 v V2 v14 Z24 C8 v Z12' if $blocksize == 124;
@@ -946,7 +948,7 @@ sub SendCharacterList
 	if ( length($packstring) == 0 ) { print "Unknown CharBlockSize : $blocksize\n"; return; }
 
 	# Character Block Format
-	my($cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename) = 0;
+	my($cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairPallete,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename,$robe,$slotAddon,$renameAddon) = 0;
 
 	# Preparing Begin of Character List Packet
 	my $data;
@@ -966,17 +968,19 @@ sub SendCharacterList
 	my $block;
 
 	my $sex = 1;
-	my $map = "moc_prydb1.gat";
+	my $map = "new_1-1.gat";
 
 	# Filling Character 1 Block
-	$cID = $charID;	$hp = 10000; $maxHp = 10000; $sp = 10000; $maxSp = 10000; $hairstyle = 1; $level = 99; $headTop = 0; $hairColor = 6;
+	$cID = $charID;	$hp = 10000; $maxHp = 10000; $sp = 10000; $maxSp = 10000; $hairstyle = 1; $level = 99; $headTop = 0; $hairColor = 6; $hairPallete = 0;
 	$name = "Poseidon"; $str = 1; $agi = 1; $vit = 1; $int = 1; $dex = 1; $luk = 1;	$exp = 1; $zeny = 1; $jobExp = 1; $jobLevel = 50; $slot = 0; $rename = 0;
 
 	# Preparing Character 1 Block
-	if ($self->{type}->{$config{server_type}}->{received_characters} eq '099D') {
-		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, "", $sex);
+	if ($self->{type}->{$config{server_type}}->{received_characters} eq '0B72') {
+		$block = pack($packstring,$cID,$exp,0,$zeny,$jobExp,0,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,0,$maxHp,0,$sp,0,$maxSp,0,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairPallete,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$hairColor,$rename,$map,"",$robe,$slotAddon,$renameAddon,$sex);
+	} elsif ($self->{type}->{$config{server_type}}->{received_characters} eq '099D') {
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairPallete,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$hairColor,$rename,$map,"",$robe,$slotAddon,$renameAddon,$sex);
 	} else {
-		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairPallete,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$hairColor,$rename);
 	}
 
 	# Attaching Block
@@ -987,10 +991,12 @@ sub SendCharacterList
 	$name = "Poseidon Dev"; $str = 1; $agi = 1; $vit = 1; $int = 1; $dex = 1; $luk = 1;	$exp = 1; $zeny = 1; $jobExp = 1; $jobLevel = 50; $slot = 1; $rename = 0;
 
 	# Preparing Character 2 Block
-	if ($self->{type}->{$config{server_type}}->{received_characters} eq '099D') {
-		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$rename, 0, $map, "", $sex);
+	if ($self->{type}->{$config{server_type}}->{received_characters} eq '0B72') {
+		$block = pack($packstring,$cID,$exp,0,$zeny,$jobExp,0,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,0,$maxHp,0,$sp,0,$maxSp,0,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairPallete,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$hairColor,$rename,$map,"",$robe,$slotAddon,$renameAddon,$sex);
+	} elsif ($self->{type}->{$config{server_type}}->{received_characters} eq '099D') {
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairPallete,$clothesColor,stringToBytes($name),$str,$agi,$vit,$int,$dex,$luk,$slot,$hairColor,$rename,$map,"",$robe,$slotAddon,$renameAddon,$sex);
 	} else {
-		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairColor,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$rename);
+		$block = pack($packstring,$cID,$exp,$zeny,$jobExp,$jobLevel,$opt1,$opt2,$option,$stance,$manner,$statpt,$hp,$maxHp,$sp,$maxSp,$walkspeed,$jobId,$hairstyle,$weapon,$level,$skillpt,$headLow,$shield,$headTop,$headMid,$hairPallete,$clothesColor,$name,$str,$agi,$vit,$int,$dex,$luk,$slot,$hairColor,$rename);
 	}
 
 	# Attaching Block
@@ -998,6 +1004,7 @@ sub SendCharacterList
 
 	# Measuring Size of Block
 	print "Wanted CharBlockSize : $blocksize\n";
+	print "Packstring size: ".length(pack($packstring))."\n";
 	print "Built CharBlockSize : " . length($block) . "\n";
 	$client->send($data);
 }
