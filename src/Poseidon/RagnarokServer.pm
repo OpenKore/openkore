@@ -261,13 +261,13 @@ sub ParsePacket {
 	} elsif ($switch eq '0ACF') { # Token Request
 			my $data;
 			# send Token
-			$data = pack("C*", 0xE3, 0x0A) . # header
-					pack("C*", 0x2F, 0x00) . # length
+			$data = pack("v", 0x0AE3) . # header
+					pack("v", 0x2F) . # length
 					pack("l", "0") . # login_type
 					pack("Z20","S1000") . # flag
 					pack("Z*", "OpenkoreClientToken"); # login_token
 			$client->send($data);
-			
+
 	} elsif (($switch eq '0064') || ($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0277') || ($switch eq '02B0') || ($switch eq '0825') || ($switch eq '0987') || ($switch eq '0A76') || ($switch eq '0AAC') || ($switch eq '0B04')) { # master_login
 		# send account_server_info
 		my $sex = 1;
@@ -331,7 +331,7 @@ sub ParsePacket {
 				$sessionID . $accountID . $sessionID2 .
 				pack("x30") . pack("C1", $sex) .
 				pack("x4") .
-				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .				
+				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
 				$port .	$serverName . pack("x2") . $serverUsers . pack("x6");
 		} else {
 			$data = pack("v", 0x0069) . # header
@@ -346,7 +346,7 @@ sub ParsePacket {
 
 		# save servers.txt info
 		$clientdata{$index}{masterLogin_packet} = $switch;
-		
+
 		if (($switch eq '0064') || ($switch eq '01DD') || ($switch eq '0987') || ($switch eq '0AAC')) {
 			# '0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]]
 			# '01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
