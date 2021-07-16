@@ -22,6 +22,12 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	my %packets = (
+		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
 	my %handlers = qw(
 		actor_action 0437
 		actor_info_request 0368
@@ -52,6 +58,8 @@ sub new {
 		storage_item_remove 0365
 		storage_password 023B
 		sync 0360
+		rodex_open_mailbox 0AC0
+		rodex_refresh_maillist 0AC1
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -113,6 +121,28 @@ sub sendCharCreate {
 
 	my $msg = pack 'v a24 CvvvvC', 0x0A39, stringToBytes( $name ), $slot, $hair_color, $hair_style, $job_id, 0, $sex;
 	$self->sendToServer( $msg );
+}
+
+# 0x0436,23
+sub sendMapLogin {
+	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
+	my $msg;
+	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
+
+	#my $unknown = pack('C4', (0x34, 0x0B, 0x01, 0x00));
+
+	$msg = $self->reconstruct({
+		switch => 'map_login',
+		accountID => $accountID,
+		charID => $charID,
+		sessionID => $sessionID,
+		unknown => 68404,# 34 0B 01 00
+		tick => getTickCount,
+		sex => $sex,
+	});
+
+	$self->sendToServer($msg);
+	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
 1;
