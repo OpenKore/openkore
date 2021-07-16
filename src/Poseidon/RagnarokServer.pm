@@ -165,18 +165,18 @@ sub onClientExit
 }
 
 ## constants
-my $accountID = pack("a4", "acct");
+my $accountID = pack("V", "2000001");
 my $posX = 53;
 my $posY = 113;
 
 ## Globals
-my $charID = pack("a4", "char");
-my $sessionID = pack("a4", "sess");
-my $sessionID2 = pack("C4", 0xff);
-my $npcID1 = pack("a4", "npc1");
-my $npcID0 = pack("a4", "npc2");
-my $monsterID = pack("a4", "mon1");
-my $itemID = pack("a4", "itm1");
+my $charID = pack("V", "100001");
+my $sessionID = pack("V", "3000000000");
+my $sessionID2 = pack("V", 0xFF);
+my $npcID1 = pack("V", "110000001");
+my $npcID0 = pack("V", "110000002");
+my $monsterID = pack("V", "110000003");
+my $itemID = pack("V", "50001");
 
 sub DecryptMessageID
 {
@@ -1026,13 +1026,13 @@ sub SendMapLogin {
 	# mapLogin packet
 	if ($self->{type}->{$config{server_type}}->{map_loaded} eq '0A18') {
 		# '0A18' => ['map_loaded', 'V a3 C2 v C', [qw(syncMapSync coords xSize ySize font sex)]], # 14
-		$client->send(pack("v", 0x0A18) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05, 0x01));
+		$client->send(pack("v", 0x0A18) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x00, 0x00) .  pack("C*", 0x00, 0x00, 0x01));
 	} elsif ($self->{type}->{$config{server_type}}->{map_loaded} eq '02EB') {
 		# '02EB' => ['map_loaded', 'V a3 a a v', [qw(syncMapSync coords xSize ySize font)]], # 13
-		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
+		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x00, 0x00) .  pack("C*", 0x00, 0x00));
 	} else {
 		# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
-		$client->send(pack("v", 0x0073) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05));
+		$client->send(pack("v", 0x0073) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x00, 0x00));
 	}
 
 	my $data;
