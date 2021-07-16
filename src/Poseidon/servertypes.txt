@@ -24,6 +24,8 @@ skills_list 010F
 actor_exists 09FF
 item_list_start 0B08
 expandedItemID 1
+actor_info 0A30
+actor_name 0095
 
 [vRO_2021-07-07]
 account_server_info 0AC9
@@ -32,10 +34,12 @@ charBlockSize 155
 received_character_ID_and_Map 0AC5
 map_login 0436
 map_loaded 02EB
-skills_list
+skills_list 0B32
 actor_exists 09FF
 item_list_start 0B08
 expandedItemID 1
+actor_info 0A30
+actor_name 0095
 
 [twRO_2021-06-21]
 account_server_info 0B60
@@ -44,10 +48,12 @@ charBlockSize 155
 received_character_ID_and_Map 0AC5
 map_login 0436
 map_loaded 02EB
-skills_list
+skills_list 010F
 actor_exists 09FF
 item_list_start 0B08
 expandedItemID 1
+actor_info 0A30
+actor_name 0095
 
 [kRO_2021-06-30]
 account_server_info 0AC4
@@ -83,8 +89,10 @@ received_characters 099D
 charBlockSize 155
 received_character_ID_and_Map 0AC5
 map_login 0436
-map_loaded
-actor_exists
-skills_list
-item_list_start
-expandedItemID
+map_loaded 02EB
+actor_exists 09FF
+skills_list 0B32
+item_list_start 0B08
+expandedItemID 1
+actor_info 0A30
+actor_name 0ADF
