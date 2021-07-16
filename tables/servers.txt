@@ -57,7 +57,7 @@ ignoreAntiCheatWarning 0
 
 # http://ro.zhaouc.com/
 [cRO - China: Taren]
-ip 118.89.42.108
+ip acc.ro.zhaouc.com
 port 6900
 master_version 4
 version 1
