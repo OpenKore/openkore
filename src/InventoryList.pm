@@ -81,7 +81,7 @@ sub new {
 
 sub DESTROY {
 	my ($self) = @_;
-	Plugins::delHook($self->{hooks}) if $self->{hooks};
+	Plugins::delHook($self->{hooks}) if exists $self->{hooks} && defined $self->{hooks};
 	$self->clear();
 	$self->SUPER::DESTROY();
 }

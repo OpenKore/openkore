@@ -215,7 +215,7 @@ env['LINKFLAGS'] = []
 if win32:
 	import platform
 	# have to use -static-libgcc while compiling with mingw’s g++ to eliminate the dependency on LIBGCC_S_SJLJ-1.DLL
-	env['LINKFLAGS'] += ['-static-libgcc']
+	env['LINKFLAGS'] += ['-static-libgcc', '-static']
 	if "64" in platform.machine():
 		env['CCFLAGS'] += ['-fpermissive', '-DWINx86_64']
 
@@ -235,7 +235,7 @@ libenv = env.Clone()
 if win32:
 	if cygwin:
 		libenv['CCFLAGS'] += ['-mdll']
-	libenv['CPPDEFINES'] += ['WIN32']
+	libenv['CPPDEFINES'] += ['WIN32', 'PERL_EUPXS_ALWAYS_EXPORT']
 elif not darwin:
 	libenv['CCFLAGS'] += ['-fPIC']
 	libenv['LINKFLAGS'] += ['-fPIC']

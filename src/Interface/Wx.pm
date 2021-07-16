@@ -73,6 +73,7 @@ sub OnInit {
 	my $self = shift;
 
 	$CVS = ($Settings::SVN =~ /SVN/);
+	Wx::DisableAssertHandler();
 	$self->createInterface;
 	$self->iterate;
 

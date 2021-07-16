@@ -26,8 +26,12 @@
 package StarterScript;
 
 BEGIN {
-	if ($ENV{BUILDING_WX} && $^O eq 'MSWin32') {
+	if ($ENV{BUILDING_WX} == 1 && $^O eq 'MSWin32') {
 		require Wx::Perl::Packager;
+	} elsif ($ENV{BUILDING_WX} == 2 && $^O eq 'MSWin32') {
+		require Tk;
+	} elsif ($ENV{BUILDING_WX} == 3 && $^O eq 'MSWin32') {
+		require Win32::GUI;
 	}
 }
 
@@ -85,12 +89,30 @@ if (0) {
 	require encoding;
 	require Storable;
 	require Compress::Zlib;
-	# new Perl 5.12 and more
+	require List::Util;
+	require File::Path;
+	require Text::Balanced;
+	require Digest::MD5;
+	require Math::BigInt;
+	require Math::BigInt::Calc;
+	require Math::BigInt::CalcEmu;
+	require Math::BigInt::FastCalc;
+	require Math::BigInt::Trace;
+	require Math::BigFloat;
+	require Math::BigFloat::Trace;
+	require Math::BigRat;
+	require Math::Complex;
+	require Math::Trig;
+	# new Perl 5.22 and more
 	require "unicore/lib/Perl/SpacePer.pl";
 	require "unicore/lib/Perl/Word.pl";
-	require "unicore/lib/Nt/De.pl";
-	require "unicore/lib/Gc/Cc.pl";
-	require "unicore/lib/Blk/ASCII.pl";
+	require "unicore/lib/Gc/Nd.pl";
+	# Old Perl 5.12 and more
+	# require "unicore/lib/Perl/SpacePer.pl";
+	# require "unicore/lib/Perl/Word.pl";
+	# require "unicore/lib/Nt/De.pl";
+	# require "unicore/lib/Gc/Cc.pl";
+	# require "unicore/lib/Blk/ASCII.pl";
 	# Old Perl 5.10 and less
 	# require "unicore/lib/gc_sc/SpacePer.pl";
 	# require "unicore/lib/gc_sc/Word.pl";
@@ -105,6 +127,18 @@ if ($PerlApp::TOOL eq "PerlApp") {
 	$ENV{INTERPRETER} = PerlApp::exe();
 	if (PerlApp::exe() =~ /wxstart\.exe$/i) {
 		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';
+	}
+
+	if (PerlApp::exe() =~ /vxstart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Vx';
+	}
+
+	if (PerlApp::exe() =~ /winguistart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Win32';
+	}
+
+	if (PerlApp::exe() =~ /tkstart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Tk';
 	}
 } else {
 	print "Do not run start.pl directly! If you're using Perl then run openkore.pl instead!\n";
