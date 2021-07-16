@@ -202,7 +202,14 @@ sub uri_unescape {
 }
 
 sub escape_char {
-    return join '', @URI::Escape::escapes{$_[0] =~ /(\C)/g};
+    # return join '', @URI::Escape::escapes{$_[0] =~ /(\C)/g};
+    my $dummy = substr($_[0], 0, 0);
+    if (utf8::is_utf8($_[0])) {
+        my $s = shift;
+        utf8::encode($s);
+        unshift(@_, $s);
+    }
+    return join '', @URI::Escape::escapes{split //, $_[0]};
 }
 
 1;
