@@ -1065,7 +1065,7 @@ sub SendMapLogin {
 	# '00BD' => ['stats_info', 'v C12 v14', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical stance manner)]], # (stance manner) actually are (ASPD plusASPD)
 	$client->send(pack("v2 C12 v14", 0x00BD, 100, 99, 11, 99, 11, 99, 11, 99, 11, 99, 11, 99, 11, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 100, 190, 3));
 
-	if ( $config{server_type} =~ /^kRO/ ) { # kRO
+	if ($self->{type}->{$config{server_type}}->{confirm_load} eq '0B1B') {
 		$client->send(pack("v", 0x0B1B)); # load_confirm (unlock keyboard)		
 	}
 
