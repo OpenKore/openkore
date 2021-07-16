@@ -13,7 +13,7 @@ expandedItemID 1
 actor_info 0A30
 actor_name 0095
 
-[cRO_2021-07-xx]
+[cRO_2021-06-25]
 account_server_info 0AC9
 received_characters 099D
 charBlockSize 155

@@ -630,8 +630,6 @@ sub ParsePacket {
 				$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;
 			}
 		}
-
-		PerformMapLoadedTasks($self, $client, $msg, $index);
 	} elsif (
 		( ( ($switch eq '007E') || ($switch eq '035F') ) && (($clientdata{$index}{serverType} == 0) || ($clientdata{$index}{serverType} == 1) || ($clientdata{$index}{serverType} == 2) || ($clientdata{$index}{serverType} == 6) || ($clientdata{$index}{serverType} == 7) || ($clientdata{$index}{serverType} == 10) || ($clientdata{$index}{serverType} == 11))) ||
 		(($switch eq '0089') && (($clientdata{$index}{serverType} == 3) || ($clientdata{$index}{serverType} == 5) || ($clientdata{$index}{serverType} == 8) || ($clientdata{$index}{serverType} == 9))) ||
@@ -1072,6 +1070,9 @@ sub SendMapLogin {
 	}
 
 	$client->{connectedToMap} = 1;
+
+	# TODO: fixme, this should be made only after 007D, but for some reason some clients are not sending this packet
+	PerformMapLoadedTasks($self, $client, $msg, $index);
 }
 
 sub SendGoToCharSelection
