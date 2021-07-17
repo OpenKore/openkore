@@ -282,7 +282,7 @@ sub ParsePacket {
 				pack("x30") . pack("C1", $sex) . pack("x4") .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
 				$port .	$serverName . $serverUsers . pack("x2");
-		} elsif ($switch eq '0AAC' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0AC9') {
+		} elsif ($switch eq '0AAC' || $switch eq '0B04' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0AC9') {
 		$data = pack("v", 0x0AC9) . # header
 				pack("v", 0xCF) . # length
 				$sessionID . $accountID . $sessionID2 .
