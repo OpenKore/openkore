@@ -796,12 +796,12 @@ sub ParsePacket {
 					SendNPCTalk($self, $client, $msg, $index, $npcID, "[Hakore]");
 					if (!$clientdata{$index}{npc_talk_code}) {
 						if (!defined $clientdata{$index}{serverType}) {
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "However, I regret that Openkore may not currently support your server.");
+							SendNPCTalk($self, $client, $msg, $index, $npcID, "However, I regret that OpenKore may not currently support your server.");
 						} elsif ($clientdata{$index}{serverType} == 7 || $clientdata{$index}{serverType} == 12) {
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "However, I regret that Openkore does not yet fully support your server this time.");
+							SendNPCTalk($self, $client, $msg, $index, $npcID, "However, I regret that OpenKore does not yet fully support your server this time.");
 						} else {
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "Based on my examination, I think Openkore supports your server.");
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "I can tell you the possible server details you can use to make Openkore to connect to your server.");
+							SendNPCTalk($self, $client, $msg, $index, $npcID, "Based on my examination, I think OpenKore supports your server.");
+							SendNPCTalk($self, $client, $msg, $index, $npcID, "I can tell you the possible server details you can use to make OpenKore to connect to your server.");
 						}
 						SendNPCTalkContinue($self, $client, $msg, $index, $npcID);
 						$clientdata{$index}{npc_talk_code} = 1;
@@ -820,7 +820,7 @@ sub ParsePacket {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "As you can see, I can't find a matching serverType for your server.");
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Please make a trial-and-error using all available serverTypes, one of them might be able to work.");
 						} elsif ($clientdata{$index}{serverType} == 7 || $clientdata{$index}{serverType} == 12) {
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "Like I said, your server is not yet fully supported by Openkore.");
+							SendNPCTalk($self, $client, $msg, $index, $npcID, "Like I said, your server is not yet fully supported by OpenKore.");
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "You can login to the server and do most basic tasks, but you cannot attack, sit or stand, or use skills.");
 						}
 						SendNPCTalkContinue($self, $client, $msg, $index, $npcID);
@@ -833,8 +833,8 @@ sub ParsePacket {
 
 					} elsif ($clientdata{$index}{npc_talk_code} == 4) {
 						if (!defined $clientdata{$index}{serverType}) {
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "If none of the serverTypes work, please inform the developers about this so we can support your server in future releases of Openkore.");
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "Please visit ^2222DDhttp://forums.openkore.com/^000000");
+							SendNPCTalk($self, $client, $msg, $index, $npcID, "If none of the serverTypes work, please inform the developers about this so we can support your server in future releases of OpenKore.");
+							SendNPCTalk($self, $client, $msg, $index, $npcID, "Please visit ^2222DDhttps://forums.openkore.com/^000000");
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Thank you.");
 						} else {
 							if (($clientdata{$index}{serverType} == 7)
@@ -846,11 +846,11 @@ sub ParsePacket {
 								|| ($clientdata{$index}{masterLogin_packet})
 								|| ($clientdata{$index}{gameLogin_packet})
 							) {
-								SendNPCTalk($self, $client, $msg, $index, $npcID, "Please note that you can only connect to your server using Openkore SVN.");
+								SendNPCTalk($self, $client, $msg, $index, $npcID, "Please note that you can only connect to your server using OpenKore GIT.");
 							} else {
-								SendNPCTalk($self, $client, $msg, $index, $npcID, "Openkore v.1.6.6 or later will work on your server.");
+								SendNPCTalk($self, $client, $msg, $index, $npcID, "OpenKore v.1.6.6 or later will work on your server.");
 							}
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "For more info, please visit ^2222DDhttp://www.openkore.com/^000000");
+							SendNPCTalk($self, $client, $msg, $index, $npcID, "For more info, please visit ^2222DDhttps://openkore.com/^000000");
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Good luck!");
 						}
 						SendNpcTalkClose($self, $client, $msg, $index, $npcID);
@@ -1030,7 +1030,7 @@ sub SendMapLogin {
 	$client->send(pack("v a4", 0x0283, $accountID));
 
 	if ( $config{server_type} =~ /^kRO/ ) { # kRO
-		$client->send(pack("v", 0x0ADE) . pack("V", 0x00));		
+		$client->send(pack("v", 0x0ADE) . pack("V", 0x00));
 	}
 
 	# mapLogin packet
@@ -1078,7 +1078,7 @@ sub SendMapLogin {
 	$client->send(pack("v2 C12 v14", 0x00BD, 100, 99, 11, 99, 11, 99, 11, 99, 11, 99, 11, 99, 11, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 100, 190, 3));
 
 	if ($self->{type}->{$config{server_type}}->{confirm_load} eq '0B1B') {
-		$client->send(pack("v", 0x0B1B)); # load_confirm (unlock keyboard)		
+		$client->send(pack("v", 0x0B1B)); # load_confirm (unlock keyboard)
 	}
 
 	$client->{connectedToMap} = 1;
@@ -1201,7 +1201,7 @@ sub SendShowItemOnGround
 		$client->send(pack("v a4 V C v3 C2", 0x009D, $ID, $SpriteID, 1, $posX + 1, $posY - 1, 1, 0, 0));
 	} else {
 		$client->send(pack("v a4 v C v3 C2", 0x009D, $ID, $SpriteID, 1, $posX + 1, $posY - 1, 1, 0, 0));
-	}	
+	}
 }
 
 sub SendNPCTalk
