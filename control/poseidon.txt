@@ -17,9 +17,4 @@ queryserver_port=24390
 # You should modify this if you're having problems with char list.
 server_type=vRO_2021-07-07
 
-# Char Block Size
-# Here you can specify the desired CharBlockSize your client requires
-# The available block sizes are : 106, 108, 112, 116, 128, 132, 136, 140, 144, 145, 147 and 155
-CharBlockSize=116
-
 debug=0

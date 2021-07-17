@@ -165,18 +165,18 @@ sub onClientExit
 }
 
 ## constants
-my $accountID = pack("a4", "acct");
+my $accountID = pack("V", "2000001");
 my $posX = 53;
 my $posY = 113;
 
 ## Globals
-my $charID = pack("a4", "char");
-my $sessionID = pack("a4", "sess");
-my $sessionID2 = pack("C4", 0xff);
-my $npcID1 = pack("a4", "npc1");
-my $npcID0 = pack("a4", "npc2");
-my $monsterID = pack("a4", "mon1");
-my $itemID = pack("a4", "itm1");
+my $charID = pack("V", "100001");
+my $sessionID = pack("V", "3000000000");
+my $sessionID2 = pack("V", 0xFF);
+my $npcID1 = pack("V", "110000001");
+my $npcID0 = pack("V", "110000002");
+my $monsterID = pack("V", "110000003");
+my $itemID = pack("V", "50001");
 
 sub DecryptMessageID
 {
@@ -282,7 +282,7 @@ sub ParsePacket {
 				pack("x30") . pack("C1", $sex) . pack("x4") .
 				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
 				$port .	$serverName . $serverUsers . pack("x2");
-		} elsif ($switch eq '0AAC' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0AC9') {
+		} elsif ($switch eq '0AAC' || $switch eq '0B04' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0AC9') {
 		$data = pack("v", 0x0AC9) . # header
 				pack("v", 0xCF) . # length
 				$sessionID . $accountID . $sessionID2 .
@@ -630,13 +630,12 @@ sub ParsePacket {
 				$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;
 			}
 		}
-
-		PerformMapLoadedTasks($self, $client, $msg, $index);
 	} elsif (
 		( ( ($switch eq '007E') || ($switch eq '035F') ) && (($clientdata{$index}{serverType} == 0) || ($clientdata{$index}{serverType} == 1) || ($clientdata{$index}{serverType} == 2) || ($clientdata{$index}{serverType} == 6) || ($clientdata{$index}{serverType} == 7) || ($clientdata{$index}{serverType} == 10) || ($clientdata{$index}{serverType} == 11))) ||
 		(($switch eq '0089') && (($clientdata{$index}{serverType} == 3) || ($clientdata{$index}{serverType} == 5) || ($clientdata{$index}{serverType} == 8) || ($clientdata{$index}{serverType} == 9))) ||
 		(($switch eq '0116') && ($clientdata{$index}{serverType} == 4)) ||
-		(($switch eq '00A7') && ($clientdata{$index}{serverType} == 12))
+		(($switch eq '00A7') && ($clientdata{$index}{serverType} == 12)) ||
+		($switch eq '0360')
 		) { # client sends sync packet
 		my $data = pack("C*", 0x7F, 0x00) . pack("V", getTickCount);
 		$client->send($data);
@@ -857,6 +856,10 @@ sub ParsePacket {
 				SendNpcImageShow($self, $client, $msg, $index, "kafra_04.bmp", 0xFF);
 			}
 
+		} elsif ($switch eq '0B1C') { # pong packet (keep-alive)
+			$client->send(pack("v", 0x0B1D));
+		} elsif ($switch eq '01C0') { # Remaining time??
+			# $client->send(pack("v V3", 0x01C0, 0xFF, 0xFF, 0xFF));
 		} elsif ($clientdata{$index}{mode}) {
 
 			if (($switch eq '00F7' || $switch eq '0193') && (length($msg) == 2)) { # storage close
@@ -1014,36 +1017,62 @@ sub SendMapLogin {
 
 	$client->send(pack("v a4", 0x0283, $accountID));
 
+	if ( $config{server_type} =~ /^kRO/ ) { # kRO
+		$client->send(pack("v", 0x0ADE) . pack("V", 0x00));		
+	}
+
 	# mapLogin packet
 	if ($self->{type}->{$config{server_type}}->{map_loaded} eq '0A18') {
 		# '0A18' => ['map_loaded', 'V a3 C2 v C', [qw(syncMapSync coords xSize ySize font sex)]], # 14
-		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
+		$client->send(pack("v", 0x0A18) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x00, 0x00) .  pack("C*", 0x00, 0x00, 0x01));
 	} elsif ($self->{type}->{$config{server_type}}->{map_loaded} eq '02EB') {
 		# '02EB' => ['map_loaded', 'V a3 a a v', [qw(syncMapSync coords xSize ySize font)]], # 13
-		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05) .  pack("C*", 0x05, 0x05));
+		$client->send(pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x00, 0x00) .  pack("C*", 0x00, 0x00));
 	} else {
 		# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
-		$client->send(pack("v", 0x0073) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x05, 0x05));
+		$client->send(pack("v", 0x0073) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x00, 0x00));
 	}
 
-	if ( $config{server_type} =~ /^kRO/ ) { # kRO
-		$client->send(pack("v", 0x0ADE) . pack("V", 0x00));
-	}
-	
 	my $data;
 	if ($clientdata{$index}{mode}) {
-		$data = pack("C2 v1", 0x0F, 0x01, 226) .
-			# skillID targetType level sp range skillName
-			pack("v2 x2 v3 a24 C1", 1, 0, 9, 0, 1, "NV_BASIC" . chr(0) . "GetMapInfo" . chr(0x0A), 0) .
-			pack("v2 x2 v3 a24 C1", 24, 4, 1, 10, 10, "AL_RUWACH", 0) . # self skill test
-			pack("v2 x2 v3 a24 C1", 25, 2, 1, 10, 9, "AL_PNEUMA", 0) . # location skill test
-			pack("v2 x2 v3 a24 C1", 26, 4, 2, 9, 1, "AL_TELEPORT", 0) . # self skill test
-			pack("v2 x2 v3 a24 C1", 27, 2, 4, 26, 9, "AL_WARP", 0) . # location skill test
-			pack("v2 x2 v3 a24 C1", 28, 16, 10, 40, 9, "AL_HEAL", 0); # target skill test
-			$client->send($data);
+		if ($self->{type}->{$config{server_type}}->{map_loaded} eq '0B32') {
+			$data = pack("v", 0x0B32).
+				pack("v", 94) .
+				# skillID targetType level sp range up lvl2
+				pack("v V v3 C v", 1, 0, 9, 0, 1, 0, 0) .
+				pack("v V v3 C v", 24, 4, 1, 10, 10, 0, 0) . # self skill test
+				pack("v V v3 C v", 25, 2, 1, 10, 9, 0, 0) . # location skill test
+				pack("v V v3 C v", 26, 4, 2, 9, 1, 0, 0) . # self skill test
+				pack("v V v3 C v", 27, 2, 4, 26, 9, 0, 0) . # location skill test
+				pack("v V v3 C v", 28, 16, 10, 40, 9, 0, 0); # target skill test
+				$client->send($data);
+		} else {
+			$data = pack("C2 v1", 0x0F, 0x01, 226) .
+				# skillID targetType level sp range skillName
+				pack("v2 x2 v3 a24 C1", 1, 0, 9, 0, 1, "NV_BASIC" . chr(0) . "GetMapInfo" . chr(0x0A), 0) .
+				pack("v2 x2 v3 a24 C1", 24, 4, 1, 10, 10, "AL_RUWACH", 0) . # self skill test
+				pack("v2 x2 v3 a24 C1", 25, 2, 1, 10, 9, "AL_PNEUMA", 0) . # location skill test
+				pack("v2 x2 v3 a24 C1", 26, 4, 2, 9, 1, "AL_TELEPORT", 0) . # self skill test
+				pack("v2 x2 v3 a24 C1", 27, 2, 4, 26, 9, "AL_WARP", 0) . # location skill test
+				pack("v2 x2 v3 a24 C1", 28, 16, 10, 40, 9, "AL_HEAL", 0); # target skill test
+				$client->send($data);
+		}
+	}
+
+	# '013A' => ['attack_range', 'v', [qw(type)]],
+	$client->send(pack("v2", , 0x013A, 1));
+
+	# '00BD' => ['stats_info', 'v C12 v14', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical stance manner)]], # (stance manner) actually are (ASPD plusASPD)
+	$client->send(pack("v2 C12 v14", 0x00BD, 100, 99, 11, 99, 11, 99, 11, 99, 11, 99, 11, 99, 11, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 999, 100, 190, 3));
+
+	if ($self->{type}->{$config{server_type}}->{confirm_load} eq '0B1B') {
+		$client->send(pack("v", 0x0B1B)); # load_confirm (unlock keyboard)		
 	}
 
 	$client->{connectedToMap} = 1;
+
+	# TODO: fixme, this should be made only after 007D, but for some reason some clients are not sending this packet
+	PerformMapLoadedTasks($self, $client, $msg, $index);
 }
 
 sub SendGoToCharSelection
@@ -1053,7 +1082,7 @@ sub SendGoToCharSelection
 	# Log
 	print "Requested Char Selection Screen\n";
 
-	$client->send(pack("v v", 0xB3, 1));
+	$client->send(pack("v v", 0x00B3, 1));
 }
 
 sub SendQuitGame
@@ -1063,7 +1092,7 @@ sub SendQuitGame
 	# Log
 	print "Requested Quit Game...\n";
 
-	$client->send(pack("v v", 0x18B, 0));
+	$client->send(pack("v v", 0x018B, 0));
 }
 
 sub SendLookTo
@@ -1071,16 +1100,34 @@ sub SendLookTo
 	my ($self, $client, $msg, $index, $ID, $to) = @_;
 
 	# Make Poseidon look to front
-	$client->send(pack('v1 a4 C1 x1 C1', 0x9C, $ID, 0, $to));
+	$client->send(pack('v1 a4 C1 x1 C1', 0x009C, $ID, 0, $to));
 }
 
 sub SendUnitInfo
 {
-	my ($self, $client, $msg, $index, $ID, $name) = @_;
+	my ($self, $client, $msg, $index, $ID, $name, $partyName, $guildName, $guildTitle, $titleID) = @_;
 
 	# Let's not wait for the client to ask for the unit info
-	# '0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
-	$client->send(pack("v1 a4 a24", 0x95, $ID, $name));
+	if ($self->{type}->{$config{server_type}}->{actor_info} eq '0B32') {
+		# '0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 V', [qw(ID name partyName guildName guildTitle titleID)]],
+		$client->send(pack("v a4 Z24 Z24 Z24 Z24 V", 0x0A30, $ID, $name, $partyName, $guildName, $guildTitle, $titleID));
+	} else {
+		# '0195' => ['actor_info', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
+		$client->send(pack("v1 a4 Z24 Z24 Z24 Z24", 0x0195, $ID, $name, $partyName, $guildName, $guildTitle));
+	}
+}
+
+sub SendUnitName
+{
+	my ($self, $client, $msg, $index, $ID, $name, $charID, $prefix_name) = @_;
+
+	if ($self->{type}->{$config{server_type}}->{actor_name} eq '0ADF') {
+		# '0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
+		$client->send(pack("v1 a4 a24", 0x0ADF, $ID, $charID, $name, $prefix_name));
+	} else {
+		# '0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
+		$client->send(pack("v1 a4 a24", 0x0095, $ID, $name));
+	}
 }
 
 sub SendSystemChatMessage
@@ -1088,7 +1135,7 @@ sub SendSystemChatMessage
 	my ($self, $client, $msg, $index, $message) = @_;
 
 	# '009A' => ['system_chat', 'v Z*', [qw(len message)]],
-	$client->send(pack("v2 a32", 0x9A, 36, $message));
+	$client->send(pack("v2 a32", 0x009A, 36, $message));
 }
 
 sub SendShowNPC
@@ -1096,34 +1143,53 @@ sub SendShowNPC
 	my ($self, $client, $msg, $index, $obj_type, $GID, $SpriteID, $X, $Y, $MobName) = @_;
 
 	# Packet Structure
-	my ($object_type,$NPCID,$walk_speed,$opt1,$opt2,$option,$type,$hair_style,$weapon,$lowhead,$shield,$tophead,$midhead,$hair_color,$clothes_color,$head_dir,$guildID,$emblemID,$manner,$opt3,$stance,$sex,$xSize,$ySize,$lv,$font,$name) = 0;
+	my ($object_type,$NPCID,$AID,$walk_speed,$opt1,$opt2,$option,$type,$hair_style,$weapon,$lowhead,$shield,$tophead,$midhead,$hair_color,$clothes_color,$head_dir,$guildID,$emblemID,$manner,$opt3,$stance,$sex,$xSize,$ySize,$lv,$font,$name,$costume,$opt4,$state) = 0;
 
 	# Building NPC Data
 	$object_type = $obj_type;
-	$NPCID = $GID;
+	$NPCID = $AID = $GID;
 	$walk_speed = 0x1BD;
 	$type = $SpriteID;
 	$lv = 1;
 	$name = $MobName;
+	my $data;
+	if ($self->{type}->{$config{server_type}}->{actor_exists} eq '0078') {
+		$data = pack("v a4 v14 a4 a2 v2 C2 a3 C3 v", 0x0078, $NPCID, $walk_speed, $opt1, $opt2, $option, $type, $hair_style, $weapon, $shield, $lowhead, $tophead, $midhead, $hair_color, $clothes_color, $head_dir, $guildID, $emblemID, $manner, $opt3, $stance, $sex, getCoordString($X, $Y, 1), $xSize, $ySize, $state, $lv);
+	} elsif ($self->{type}->{$config{server_type}}->{actor_exists} eq '01D8') {
+		$data = pack("v a4 v14 a4 a2 v2 C2 a3 C3 v", 0x01D8, $NPCID, $walk_speed, $opt1, $opt2, $option, $type, $hair_style, $weapon, $shield, $lowhead, $tophead, $midhead, $hair_color, $clothes_color, $head_dir, $guildID, $emblemID, $manner, $opt3, $stance, $sex, getCoordString($X, $Y, 1), $xSize, $ySize, $state, $lv);
+	} elsif ($self->{type}->{$config{server_type}}->{actor_exists} eq '022A') {
+		$data = pack("v a4 v3 V v10 a4 a2 v V C2 a3 C3 v", 0x022A, $NPCID, $walk_speed, $opt1, $opt2, $option, $type, $hair_style, $weapon, $shield, $lowhead, $tophead, $midhead, $hair_color, $clothes_color, $head_dir, $guildID, $emblemID, $manner, $opt3, $stance, $sex, getCoordString($X, $Y, 1), $xSize, $ySize, $state, $lv);
+	} elsif ($self->{type}->{$config{server_type}}->{actor_exists} eq '02EE') {
+		$data = pack("v a4 v3 V v10 a4 a2 v V C2 a3 C3 v2", 0x02EE, $NPCID, $walk_speed, $opt1, $opt2, $option, $type, $hair_style, $weapon, $shield, $lowhead, $tophead, $midhead, $hair_color, $clothes_color, $head_dir, $guildID, $emblemID, $manner, $opt3, $stance, $sex, getCoordString($X, $Y, 1), $xSize, $ySize, $state, $lv, $font);
+	} elsif ($self->{type}->{$config{server_type}}->{actor_exists} eq '07F9') {
+		my $len = length(pack("v2 C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2")) + length(stringToBytes($name));
+		$data = pack("v2 C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 a*", 0x07F9, $len, $object_type, $NPCID, $walk_speed, $opt1, $opt2, $option, $type, $hair_style, $weapon, $shield, $lowhead, $tophead, $midhead, $hair_color, $clothes_color, $head_dir, $guildID, $emblemID, $manner, $opt3, $stance, $sex, getCoordString($X, $Y, 1), $xSize, $ySize, $state, $lv, $font, stringToBytes($name));
+	} elsif ($self->{type}->{$config{server_type}}->{actor_exists} eq '0857') {
+		my $len = length(pack("v2 C a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C3 v2")) + length(stringToBytes($name));
+		$data = pack("v2 C a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C3 v2 a*", 0x0857, $len, $object_type, $NPCID, $walk_speed, $opt1, $opt2, $option, $type, $hair_style, $weapon, $shield, $lowhead, $tophead, $midhead, $hair_color, $clothes_color, $head_dir, $costume, $guildID, $emblemID, $manner, $opt3, $stance, $sex, getCoordString($X, $Y, 1), $xSize, $ySize, $state, $lv, $font, stringToBytes($name));
+	} elsif ($self->{type}->{$config{server_type}}->{actor_exists} eq '0915') {
+		my $len = length(pack("v2 C a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C3 v2 V2 C")) + length(stringToBytes($name));
+		$data = pack("v2 C a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C3 v2 V2 C a*", 0x0915, $len, $object_type, $NPCID, $walk_speed, $opt1, $opt2, $option, $type, $hair_style, $weapon, $shield, $lowhead, $tophead, $midhead, $hair_color, $clothes_color, $head_dir, $costume, $guildID, $emblemID, $manner, $opt3, $stance, $sex, getCoordString($X, $Y, 1), $xSize, $ySize, $state, $lv, $font, 0xFFFFFFFF, 0xFFFFFFFF, 0, stringToBytes($name));
+	} elsif ($self->{type}->{$config{server_type}}->{actor_exists} eq '09DD') {
+		my $len = length(pack("v2 C a4 a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C3 v2 V2 C")) + length(stringToBytes($name));
+		$data = pack("v2 C a4 a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C3 v2 V2 C a*", 0x09DD, $len, $object_type, $NPCID, $AID, $walk_speed, $opt1, $opt2, $option, $type, $hair_style, $weapon, $shield, $lowhead, $tophead, $midhead, $hair_color, $clothes_color, $head_dir, $costume, $guildID, $emblemID, $manner, $opt3, $stance, $sex, getCoordString($X, $Y, 1), $xSize, $ySize, $state, $lv, $font, 0xFFFFFFFF, 0xFFFFFFFF, 0, stringToBytes($name));
+	} else {
+		my $len = length(pack("v2 C a4 a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C3 v2 V2 C v")) + length(stringToBytes($name));
+		$data = pack("v2 C a4 a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C3 v2 V2 C v a*", 0x09FF, $len, $object_type, $NPCID, $AID, $walk_speed, $opt1, $opt2, $option, $type, $hair_style, $weapon, $shield, $lowhead, $tophead, $midhead, $hair_color, $clothes_color, $head_dir, $costume, $guildID, $emblemID, $manner, $opt3, $stance, $sex, getCoordString($X, $Y, 1), $xSize, $ySize, $state, $lv, $font, 0xFFFFFFFF, 0xFFFFFFFF, 0, $opt4, stringToBytes($name));
+	}
 
-	# '0856' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning provided by try71023
-	my $dbuf;
-	if ( $config{server_type} !~ /^bRO/ ) { $dbuf .= pack("C", $object_type); } #<- This is Server Type Based !!
-	$dbuf .= pack("a4 v3 V v11 a4 a2 v V C2",$NPCID,$walk_speed,$opt1,$opt2,$option,$type,$hair_style,$weapon,$lowhead,$shield,$tophead,$midhead,$hair_color,$clothes_color,$head_dir,$guildID,$emblemID,$manner,$opt3,$stance,$sex);
-	$dbuf .= getCoordString($X, $Y, 1);
-	$dbuf .= pack("C2 v2",$xSize,$ySize,$lv,$font);
-	$dbuf .= pack("Z" . length($name),$name);
-	my $opcode;
-	if ( $config{server_type} !~ /^bRO/ ) { $opcode = 0x858; } #<- This is Server Type Based !!
-	$client->send(pack("v v",$opcode,length($dbuf) + 4) . $dbuf);
+	$client->send($data);
 }
 
 sub SendShowItemOnGround
 {
 	my ($self, $client, $msg, $index, $ID, $SpriteID, $X, $Y) = @_;
 
-	# '009D' => ['item_exists', 'a4 v1 x1 v3', [qw(ID type x y amount)]]
-	$client->send(pack("v1 a4 v1 x1 v3 x2", 0x9D, $ID, $SpriteID, $posX + 1, $posY - 1, 1));
+	if ($self->{type}->{$config{server_type}}->{expandedItemID} eq '1') {
+		$client->send(pack("v a4 V C v3 C2", 0x009D, $ID, $SpriteID, 1, $posX + 1, $posY - 1, 1, 0, 0));
+	} else {
+		$client->send(pack("v a4 v C v3 C2", 0x009D, $ID, $SpriteID, 1, $posX + 1, $posY - 1, 1, 0, 0));
+	}	
 }
 
 sub SendNPCTalk
@@ -1132,7 +1198,7 @@ sub SendNPCTalk
 
 	# '00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]]
 	my $dbuf = pack("a" . length($message), $message);
-	$client->send(pack("v2 a4", 0xB4, (length($dbuf) + 8), $npcID) . $dbuf);
+	$client->send(pack("v2 a4", 0x00B4, (length($dbuf) + 8), $npcID) . $dbuf);
 }
 
 sub SendNPCTalkContinue
@@ -1140,7 +1206,7 @@ sub SendNPCTalkContinue
 	my ($self, $client, $msg, $index, $npcID) = @_;
 
 	# '00B5' => ['npc_talk_continue', 'a4', [qw(ID)]]
-	$client->send(pack("v a4", 0xB5, $npcID));
+	$client->send(pack("v a4", 0x00B5, $npcID));
 }
 
 sub SendNpcTalkClose
@@ -1148,7 +1214,7 @@ sub SendNpcTalkClose
 	my ($self, $client, $msg, $index, $npcID) = @_;
 
 	# '00B6' => ['npc_talk_close', 'a4', [qw(ID)]]
-	$client->send(pack("v a4", 0xB6, $npcID));
+	$client->send(pack("v a4", 0x00B6, $npcID));
 }
 
 sub SendNpcTalkResponses
@@ -1157,7 +1223,7 @@ sub SendNpcTalkResponses
 
 	# '00B7' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]]
 	my $dbuf = pack("a" . length($message), $message);
-	$client->send(pack("v2 a4", 0xB7, (length($dbuf) + 8), $npcID) . $dbuf);
+	$client->send(pack("v2 a4", 0x00B7, (length($dbuf) + 8), $npcID) . $dbuf);
 }
 
 sub SendNpcImageShow
@@ -1167,7 +1233,7 @@ sub SendNpcImageShow
 	# Type = 0xFF = Hide Image
 	# Type = 0x02 = Show Image
 	# '01B3' => ['npc_image', 'Z64 C', [qw(npc_image type)]]
-	$client->send(pack("v a64 C1", 0x1B3, $image, $type));
+	$client->send(pack("v a64 C1", 0x01B3, $image, $type));
 }
 
 # SERVER TASKS
