@@ -1477,7 +1477,7 @@ moc_fild02 378 272 pay_gld 16 276
 moc_fild03 17 37 moc_fild13 308 49
 moc_fild03 70 341 moc_fild02 332 19
 moc_fild03 179 16 pay_fild11 38 330
-moc_fild03 303 170 pay_fild01 13 152
+moc_fild03 303 170 pay_fild01 14 152
 moc_fild07 198 21 morocc 160 297
 moc_fild11 26 161 moc_fild12 289 168
 moc_fild11 212 29 moc_fild17 218 369
@@ -1617,7 +1617,7 @@ pay_dun03 127 62 pay_dun04 40 37
 pay_dun03 155 161 pay_dun02 137 128
 pay_dun04 40 37 pay_dun03 127 62
 pay_dun04 202 206 pay_dun03 127 62
-pay_fild01 13 152 moc_fild03 303 170
+pay_fild01 14 152 moc_fild03 303 170
 pay_fild01 278 14 pay_fild02 83 386
 pay_fild01 353 14 pay_fild02 167 390
 pay_fild01 379 201 pay_fild07 16 200
