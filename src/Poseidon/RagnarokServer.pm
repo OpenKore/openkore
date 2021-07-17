@@ -621,7 +621,7 @@ sub ParsePacket {
 		&& $msg =~ /$sessionID/) { # client sends the maplogin packet (unknown)
 
 		print "Received unsupported map login packet $switch.\n";
-		visualDump($msg, "$switch");
+		visualDump($msg, "$switch") unless $config{debug};
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
@@ -886,7 +886,7 @@ sub ParsePacket {
 
 			} else {
 				print "\nReceived packet $switch:\n";
-				visualDump($msg, "$switch");
+				visualDump($msg, "$switch") unless $config{debug};
 
 				# Just provide feedback in the RO Client about the unhandled packet
 				# '008E' => ['self_chat', 'x2 Z*', [qw(message)]],
