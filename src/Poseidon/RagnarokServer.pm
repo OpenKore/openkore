@@ -295,6 +295,18 @@ sub ParsePacket {
 				pack("C*", 0x80, 0x32) . # ??
 				pack("a*", $host.":".$self->getPort()) . # ip:port
 				pack("x114"); # fill with 00
+		} elsif($switch eq '0B04' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0B07') {
+			$data = pack("v", 0x0B07) . # header
+				pack("v", 0xCF) . # length
+				$sessionID . $accountID . $sessionID2 .
+				pack("x4") . # lastloginip
+				pack("a26", time) . # lastLoginTime
+				pack("C", $sex) . # accountSex
+				pack("C*", $ipElements[0], $ipElements[1], $ipElements[2], $ipElements[3]) .
+				$port .
+				$serverName .
+				$serverUsers .
+				pack("x130");
 		} elsif ($self->{type}->{$config{server_type}}->{account_server_info} eq '0B60') { # received twRO
 			$serverUsers = pack("v", @{$self->clients()} - 1);
 			$data = pack("v", 0x0B60) . # header
