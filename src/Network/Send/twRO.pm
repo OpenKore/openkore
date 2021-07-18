@@ -56,7 +56,7 @@ sub new {
 		rodex_refresh_maillist 0AC1
 		send_equip 0998
 		skill_use 0438
-		skill_use_location 0366
+		skill_use_location 0AF4
 		storage_item_add 0364
 		storage_item_remove 0365
 		storage_password 023B
