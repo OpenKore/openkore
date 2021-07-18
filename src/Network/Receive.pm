@@ -64,7 +64,7 @@ our %EXPORT_TAGS = (
 						REFUSE_ALREADY_CONNECT REFUSE_TEMP_BAN_HACKING_INVESTIGATION REFUSE_TEMP_BAN_BUG_INVESTIGATION
 						REFUSE_TEMP_BAN_DELETING_CHAR REFUSE_TEMP_BAN_DELETING_SPOUSE_CHAR REFUSE_USER_PHONE_BLOCK
 						ACCEPT_LOGIN_USER_PHONE_BLOCK ACCEPT_LOGIN_CHILD REFUSE_IS_NOT_FREEUSER REFUSE_INVALID_ONETIMELIMIT
-						REFUSE_CHANGE_PASSWD_FORCE REFUSE_OUTOFDATE_PASSWORD REFUSE_NOT_CHANGE_ACCOUNTID REFUSE_NOT_CHANGE_CHARACTERID
+						REFUSE_CHANGE_PASSWD_FORCE REFUSE_OUTOFDATE_PASSWORD REFUSE_NOT_CHANGE_ACCOUNTID REFUSE_NOT_CHANGE_CHARACTERID REFUSE_TOKEN_EXPIRED
 						REFUSE_SSO_AUTH_BLOCK_USER REFUSE_SSO_AUTH_GAME_APPLY REFUSE_SSO_AUTH_INVALID_GAMENUM REFUSE_SSO_AUTH_INVALID_USER
 						REFUSE_SSO_AUTH_OTHERS REFUSE_SSO_AUTH_INVALID_AGE REFUSE_SSO_AUTH_INVALID_MACADDRESS REFUSE_SSO_AUTH_BLOCK_ETERNAL
 						REFUSE_SSO_AUTH_BLOCK_ACCOUNT_STEAL REFUSE_SSO_AUTH_BLOCK_BUG_INVESTIGATION REFUSE_SSO_NOT_PAY_USER
@@ -177,6 +177,7 @@ use constant {
 	REFUSE_OUTOFDATE_PASSWORD => 0x6f,
 	REFUSE_NOT_CHANGE_ACCOUNTID => 0xf0,
 	REFUSE_NOT_CHANGE_CHARACTERID => 0xf1,
+	REFUSE_TOKEN_EXPIRED => 0xf3,
 	REFUSE_SSO_AUTH_BLOCK_USER => 0x1394,
 	REFUSE_SSO_AUTH_GAME_APPLY => 0x1395,
 	REFUSE_SSO_AUTH_INVALID_GAMENUM => 0x1396,
@@ -5194,6 +5195,8 @@ sub login_error {
 		# this can also mens server under maintenance
 		error TF("Your connection is currently delayed. You can connect again later.\n"), "connection";
 		Misc::offlineMode();
+	} elsif ($args->{type} == REFUSE_TOKEN_EXPIRED) {
+		error TF("Your connection was refused due to expired Token.\n"), "connection";
 	} else {
 		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
 	}
@@ -11307,11 +11310,24 @@ sub skill_use_failed {
 		8 => T('Blue Gem Needed'),
 		9 => TF('%s Overweight', '90%'),
 		10 => T('Requirement'),
-		13 => T('Need this within the water'),
+		11 => T('Failed to use in Target'),
+		12 => T('Maximum Ancilla exceed'),
+		13 => T('Need this within the Holy water'),
+		14 => T('Missing Ancilla'),
 		19 => T('Full Amulet'),
 		24 => T('[Purchase Street Stall License] need 1'),
 		29 => TF('Must have at least %s of base XP', '1%'),
+		30 => T('Insufficient SP'),
+		33 => T('Failed to use Madogear'),
+		34 => T('Kunai is Required'),
+		37 => T('Canon ball is Required'),
+		43 => T('Failed to use Guillotine Poison'),
+		50 => T('Failed to use Madogear'),
 		71 => T('Missing Required Item'), # (item name) required x amount
+		72 => T('Equipment is required'),
+		73 => T('Combo Skill Failed'),
+		76 => T('Too many HP'),
+		77 => T('Need Royal Guard Branding'),
 		78 => T('Required Equiped Weapon Class'),
 		83 => T('Location not allowed to create chatroom/market'),
 		84 => T('Need more bullet'),
