@@ -1120,7 +1120,7 @@ sub SendUnitInfo
 	my ($self, $client, $msg, $index, $ID, $name, $partyName, $guildName, $guildTitle, $titleID) = @_;
 
 	# Let's not wait for the client to ask for the unit info
-	if ($self->{type}->{$config{server_type}}->{actor_info} eq '0B32') {
+	if ($self->{type}->{$config{server_type}}->{actor_info} eq '0A30') {
 		# '0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 V', [qw(ID name partyName guildName guildTitle titleID)]],
 		$client->send(pack("v a4 Z24 Z24 Z24 Z24 V", 0x0A30, $ID, $name, $partyName, $guildName, $guildTitle, $titleID));
 	} else {
