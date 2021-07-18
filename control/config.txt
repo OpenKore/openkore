@@ -839,4 +839,4 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
-gameGuard 0
+gameGuard 1
