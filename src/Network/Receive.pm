@@ -3786,6 +3786,7 @@ sub vender_items_list {
 # 01D0 <id>.L <amount>.W (ZC_SPIRITS)
 # 01E1 <id>.L <amount>.W (ZC_SPIRITS2)
 # 08CF <id>.L <type>.W <amount>.W (ZC_SPIRITS3)
+# 0B73 <id>.L <amount>.W (ZC_SPIRITS3)
 sub revolving_entity {
 	my ($self, $args) = @_;
 
@@ -3805,6 +3806,9 @@ sub revolving_entity {
 	} elsif ($args->{switch} eq '08CF') {
 		# Translation Comment: Amulet of the warlock
 		$entityType = T('amulet');
+	} elsif ($args->{switch} eq '0B73') {
+		# Translation Comment: Soul Energy or Soul Reaper
+		$entityType = T('soul energy');
 	} else {
 		$entityType = T('entity unknown');
 	}

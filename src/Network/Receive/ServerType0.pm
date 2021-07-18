@@ -728,6 +728,7 @@ sub new {
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
+		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
