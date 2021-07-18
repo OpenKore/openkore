@@ -20,6 +20,7 @@ use Poseidon::Config;
 use base qw(Base::Server);
 use Plugins;
 use Misc;
+use Utils qw (getFormattedDateShort);
 
 my $CLASS = "Poseidon::QueryServer";
 
@@ -141,7 +142,7 @@ sub iterate {
 		shift @{$queue};
 
 	} elsif (@{$queue} > 0 && $server->getState() eq 'ready') {
-		print "[PoseidonServer]-> Querying Ragnarok Online client [" . time . "]...\n";
+		print "[PoseidonServer]-> Querying Ragnarok Online client [" . getFormattedDateShort(time, 1) . "]...\n";
 		$server->query($queue->[0]{packet});
 	}
 }
