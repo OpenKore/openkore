@@ -1,9 +1,9 @@
-0 North
-1 Northwest
-2 West
-3 Southwest
-4 South
-5 Southeast
-6 East
-7 Northeast
-8 North
+0 Bắc
+1 Tây Bắc
+2 Tây
+3 Tây Nam
+4 Nam
+5 Đông Nam
+6 Đông
+7 Đông Bắc
+8 Bắc

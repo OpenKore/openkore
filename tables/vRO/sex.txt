@@ -1,2 +1,2 @@
-0 Girl
-1 Boy
+0 Nữ
+1 Nam
