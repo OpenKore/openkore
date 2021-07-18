@@ -5197,7 +5197,6 @@ sub login_error {
 		Misc::offlineMode();
 	} elsif ($args->{type} == REFUSE_TOKEN_EXPIRED) {
 		error TF("Your connection was refused due to expired Token.\n"), "connection";
-		Misc::offlineMode();
 	} else {
 		error TF("The server has denied your connection for unknown reason (%d).\n", $args->{type}), 'connection';
 	}
