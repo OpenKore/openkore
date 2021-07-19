@@ -1,0 +1,21 @@
+0 Consumível Cura
+1 Consumível Status
+2 Consumível Especial
+3 Evento
+4 Armadura
+5 Arma
+6 Carta
+7 Quest
+8 Armadura de Mascote
+9 Arma de 2 Mãos
+10 Flecha
+11 Elmo
+12 Unknown_Type_12
+13 Máscara
+14 Capacete
+15 Arma de Fogo
+16 Munição
+17 Shuriken
+18 Item de Cash
+19 Bala de Canhão
+20 Visual
