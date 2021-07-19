@@ -31,7 +31,7 @@ sub new {
 		character_status 0229
 		actor_status_active 0984
 		hotkeys 0A00
-		item_exists 0ADD
+		item_appeared 0ADD
 		account_id 0283
 		map_loaded 02EB
 		actor_action 08C8
