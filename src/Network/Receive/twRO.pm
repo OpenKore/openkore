@@ -86,7 +86,7 @@ sub skills_list {
 	undef @{$actor->{slave_skillsID}};
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 15) {
 		my ($ID, $targetType, $lv, $sp, $range, $up, $lv2) = unpack 'v V v3 C v', substr $msg, $i, 15;
-		my $handle ||= Skill->new(idn => $ID)->getHandle;
+		my $handle = Skill->new(idn => $ID)->getHandle;
 
 		@{$char->{skills}{$handle}}{qw(ID targetType lv sp range up)} = ($ID, $targetType, $lv, $sp, $range, $up);
 		# $char->{skills}{$handle}{lv} = $lv unless $char->{skills}{$handle}{lv};

@@ -11271,6 +11271,7 @@ sub skill_add {
 		handle => $handle,
 		level => $args->{lv},
 		upgradable => $args->{upgradable},
+		level2 => $args->{lv2},
 	});
 }
 
