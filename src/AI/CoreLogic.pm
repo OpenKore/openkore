@@ -880,7 +880,6 @@ sub processPartyAuto {
 		} elsif ($config{partyAuto} == 2) {
 			message T("Auto-accepting party request\n");
 			# JOIN_ACCEPT
-			$messageSender->sendPartyJoin($incomingParty{'ID'}, 1);
 			if ($incomingParty{ACK} eq '02C7') {
 				$messageSender->sendPartyJoinRequestByNameReply($incomingParty{ID}, 1);
 			} else {
