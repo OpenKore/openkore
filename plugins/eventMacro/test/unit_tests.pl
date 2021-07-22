@@ -12,7 +12,6 @@ use lib "$RealBin/../../..";
 our $openkore_dir;
 BEGIN {
 	foreach ( $ENV{OPENKORE_DIR} || '', "$RealBin/../..", "$RealBin/../../.." ) {
-		next if !-d "$_/src/deps";
 		$openkore_dir = $_;
 		last;
 	}
@@ -20,7 +19,6 @@ BEGIN {
 };
 BEGIN {
 	use lib "$openkore_dir/src";
-	use lib "$openkore_dir/src/deps";
 };
 
 use List::MoreUtils;

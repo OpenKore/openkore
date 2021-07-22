@@ -385,9 +385,9 @@ sub delHook {
 	} elsif (UNIVERSAL::isa($handle, 'Plugins::HookHandle') && defined $handle->[HOOKNAME]) {
 		my $hookName = quarkToString($handle->[HOOKNAME]);
 		my $hookList = $hooks{$hookName};
-		if ($hookList) {
+		if (defined($hookList)) {
 			my $entry = $hookList->get($handle->[INDEX]);
-			$hookList->remove($entry);
+			$hookList->remove($entry) if defined($entry);
 		}
 		delete $handle->[HOOKNAME];
 		delete $handle->[INDEX];

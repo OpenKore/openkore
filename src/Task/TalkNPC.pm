@@ -161,7 +161,11 @@ sub handleNPCTalk {
 sub delHooks {
 	my ($self) = @_;
 
-	Plugins::delHooks($_) for @{$self->{hookHandles}};
+	foreach (@{$self->{hookHandles}}) {
+		if (defined($_)) {
+			Plugins::delHooks($_);
+		}
+	}
 	delete $self->{hookHandles};
 	
 	Plugins::delHook($self->{mapChangedHook}) if $self->{mapChangedHook};

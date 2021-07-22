@@ -19,19 +19,6 @@ DIRS=(.
 	src/scons-local-2.0.1/SCons/Tool/MSCommon
 	src/scons-local-2.0.1/SCons/Tool/packaging
 	src/scons-local-2.0.1/SCons/Variables
-	src/deps
-	src/deps/Carp
-	src/deps/Class
-	src/deps/Class/Accessor
-	src/deps/Class/Data
-	src/deps/Devel
-	src/deps/Exception
-	src/deps/File
-	src/deps/List
-	src/deps/Text
-	src/deps/Tie
-	src/deps/SVN
-	src/deps/Data/YAML
 	src/po
 	src/test
 	src/Actor

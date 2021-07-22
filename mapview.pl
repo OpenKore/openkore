@@ -11,7 +11,6 @@
 use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin/src";
-use lib "$RealBin/src/deps";
 use Getopt::Long;
 use Data::YAML::Reader;
 

@@ -159,7 +159,6 @@ sub checkSyntax {
 	my (undef, undef, $baseName) = File::Spec->splitpath($file);
 	system($Config{perlpath},
 		'-I', "$FindBin::RealBin/src",
-		'-I', "$FindBin::RealBin/src/deps",
 		'-c', $file);
 	if ($? == -1) {
 		error(TF("Failed to execute %s\n", $Config{perlpath}));

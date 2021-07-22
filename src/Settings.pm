@@ -42,7 +42,6 @@
 package Settings;
 
 use strict;
-use lib 'src/deps';
 use lib 'src';
 use Exporter;
 use base qw(Exporter);

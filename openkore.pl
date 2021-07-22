@@ -14,9 +14,9 @@ use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
-use lib "$RealBin/src/deps";
 
 use Time::HiRes qw(time usleep);
+use Carp::Always;
 use Carp::Assert;
 
 

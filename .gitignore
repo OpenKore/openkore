@@ -29,6 +29,11 @@ src/auto/XSTools/PathFinding/PathFinding.xs.cpp
 src/auto/XSTools/Translation/Translation.xs.cpp
 src/auto/XSTools/XSTools.so
 src/auto/XSTools/libXSTools.so
+src/auto/XSTools/libNetRedirect.a
+src/auto/XSTools/libXSTools.a
+src/auto/XSTools/NetRedirect.dll
+src/auto/XSTools/XSTools.dll
+src/auto/XSTools/win32/wrapper.c
 src/auto/XSTools/misc/fastutils.cpp
 src/auto/XSTools/misc/misc.c
 src/auto/XSTools/unix/unix.cpp
@@ -37,6 +42,7 @@ src/auto/XSTools/utils/perl/HttpReader.cpp
 src/auto/XSTools/utils/perl/Rijndael.xs.cpp
 src/auto/XSTools/utils/perl/Whirlpool.c
 src/test/http-reader-test
+src/test/http-reader-test.exe
 
 # Local modifications of official files.
 tables/iRO/items-custom.txt
