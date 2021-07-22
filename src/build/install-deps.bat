@@ -1,0 +1,1 @@
+cpanm -v --notest Alien::wxWidgets Wx Wx::Perl::Packager OpenGL Wx::GLCanvas Wx::Demo Wx::TreeListCtrl CPAN::DistnameInfo UNIVERSAL::require ExtUtils::XSpp IO::Scalar List::Util File::Path File::Slurp File::chdir Text::Balanced Digest::MD5 Encode::HanExtra Tk Win32::Console Win32::GUI LWP::Protocol::https Net::SSL
