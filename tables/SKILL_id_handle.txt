@@ -1,3 +1,4 @@
+# see kRO client: luafiles514\lua files\skillinfoz\SkillID.lub
 1 NV_BASIC
 2 SM_SWORD
 3 SM_TWOHAND
