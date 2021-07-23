@@ -1192,7 +1192,7 @@ sub map_loaded {
 		$messageSender->sendSync(1);
 
 		# Request for Guild Information
-		$messageSender->sendGuildRequestInfo(0);
+		$messageSender->sendGuildRequestInfo(0) if ($masterServer->{serverType} ne 'twRO'); # twRO does not send this packet
 
 		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
 		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
@@ -6166,6 +6166,7 @@ sub guild_create_result {
 # 0150 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <master name>.24B <manage land>.16B (ZC_GUILD_INFO)
 # 01B6 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <master name>.24B <manage land>.16B <zeny>.L (ZC_GUILD_INFO2)
 # 0A84 <guild id>.L <level>.L <member num>.L <member max>.L <exp>.L <max exp>.L <points>.L <honor>.L <virtue>.L <emblem id>.L <name>.24B <manage land>.16B <zeny>.L <master char id>.L (ZC_GUILD_INFO3)
+# 0B7B
 sub guild_info {
 	my ($self, $args) = @_;
 	# Guild Info
@@ -6180,6 +6181,7 @@ sub guild_info {
 # Guild member manager information
 # 0154 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <memo>.50B <name>.24B }* (ZC_MEMBERMGR_INFO)
 # 0AA5 <packet len>.W { <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <lastlogin>.L }*
+# 0B7D
 # state:
 #     0 = offline
 #     1 = online
@@ -6187,7 +6189,14 @@ sub guild_members_list {
 	my ($self, $args) = @_;
 
 	my $guild_member_info;
-	if ($args->{switch} eq "0AA5") { # 0AA5
+	if ($args->{switch} eq "0B7D") {
+		$guild_member_info = {
+			len => 58,
+			types => 'a4 a4 v5 V4 Z24',
+			keys => [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)],
+		};
+
+	} elsif ($args->{switch} eq "0AA5") {
 		$guild_member_info = {
 			len => 34,
 			types => 'a4 a4 v5 V4',
@@ -6359,6 +6368,7 @@ sub guild_name {
 	debug "guild name: $guildName\n";
 
 	# emulate client behavior
+	return if ($masterServer->{serverType} eq 'twRO'); # twRO does not send these packets:
 	$messageSender->sendGuildMasterMemberCheck();
 	$messageSender->sendGuildRequestInfo(4);			# Requests for Expulsion list
 	$messageSender->sendGuildRequestInfo(0);			# Requests for Basic Information Guild, Hostile Alliance Information

@@ -233,7 +233,7 @@ sub new {
 		'016F' => ['guild_notice', 'Z60 Z120', [qw(subject notice)]], # 182
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]],
 		'0173' => ['guild_alliance', 'C', [qw(flag)]],
-		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(unknown ID mode sameID exp position_name)]],
+		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1
 		'0177' => ['identify_list'],
 		'0179' => ['identify', 'a2 C', [qw(ID flag)]],
 		'017B' => ['card_merge_list'],
@@ -730,6 +730,8 @@ sub new {
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
+		'0B7B' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4 Z24', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id master)]], #118
+		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], #-1
 		'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
