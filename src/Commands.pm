@@ -3412,7 +3412,8 @@ sub cmdGuild {
 
 			$job   = $jobs_lut{$guild{member}[$i]{jobID}};
 			$lvl   = $guild{member}[$i]{lv};
-			$title = $guild{member}[$i]{title};
+			$title = $guild{positions}[ $guild{member}[$i]{position} ]{title};
+
  			# Translation Comment: Guild member online
 			$online = $guild{member}[$i]{online} ? T("Yes") : T("No");
 			$ID = unpack("V",$guild{member}[$i]{ID});
