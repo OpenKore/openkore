@@ -9037,6 +9037,7 @@ sub skill_update {
 		handle => $handle,
 		level => $lv,
 		upgradable => $up,
+		level2 => $args->{lv2},
 	});
 
 	debug "Skill $name: $lv\n", "parseMsg";
