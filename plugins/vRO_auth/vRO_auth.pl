@@ -30,7 +30,10 @@ sub unload {
 }
 
 sub getToken {
-	unload if ($masterServer->{serverType} ne 'vRO');
+	if ($masterServer->{serverType} ne 'vRO') {
+		unload ();
+		return;
+	}
 	my ($accessToken, $billingAccessToken, $msg);
 
 	my $USERNAME = $config{username};
