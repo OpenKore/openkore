@@ -9,7 +9,6 @@ use strict;
 #use lib 'C:/strawberry/perl/lib';
 #use lib 'C:/strawberry/perl/site/lib';
 #use lib 'C:/strawberry/perl/vendor/lib';
-use lib $Plugins::current_plugin_folder."//..//!deps";
 use Digest::MD5 qw(md5_hex);
 use LWP::Simple;
 
