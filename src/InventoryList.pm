@@ -323,7 +323,7 @@ sub doClear {
 	for my $item (@$self) {
 		assert(defined $item->{binID}, "binID must be defined") if DEBUG;
 		my $eventID = $self->{nameChangeEvents}{$item->{binID}};
-		delete $self->{nameChangeEvents}{$item->{binID}};
+		delete $self->{nameChangeEvents}{$item->{binID}} if defined $item->{binID};
 		$item->onNameChange->remove($eventID);
 	}
 	$self->SUPER::doClear();
