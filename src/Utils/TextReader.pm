@@ -109,7 +109,10 @@ sub currentFile {
 # Check whether end-of-file has been reached.
 sub eof {
 	my $self = shift;
-	pop @{ $self->{files} } while @{ $self->{files} } && eof $self->{files}->[-1]->{handle};
+	while (@{ $self->{files} } && eof $self->{files}->[-1]->{handle}) {
+		my $file = pop @{ $self->{files} }; 
+		close($file->{handle});
+	}
 	!@{ $self->{files} };
 }
 
