@@ -173,6 +173,8 @@ perlenv['LIBPATH'] += deps_path
 # We're linking C++ objects so force usage of g++
 XSTools = perlenv.NativeDLL('XSTools', sources, CC = 'g++')
 
+if win32:
+	perlenv.Command('Install XSTools.dll', XSTools, Copy('XSTools.dll', 'src/auto/XSTools/XSTools.dll'))
 if not win32 and not darwin:
 	# Perl expects XSTools.so, not libXSTools.so, so create symlink.
 	perlenv.Command('XSTools.so', XSTools,
@@ -187,6 +189,7 @@ if win32:
 		'win32/netredirect.cpp',
 		'win32/utils-netredirect.cpp'
 	]
-	libenv.NativeDLL('NetRedirect', sources,
+	NetRedirect = libenv.NativeDLL('NetRedirect', sources,
 		CC = 'g++',
 		LIBS = ['ws2_32'])
+	libenv.Command('Install NetRedirect.dll', NetRedirect, Copy('NetRedirect.dll', 'src/auto/XSTools/NetRedirect.dll'))

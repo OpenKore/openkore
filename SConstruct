@@ -19,7 +19,7 @@ EXTRA_LIBRARY_DIRECTORIES = []
 # EXTRA_COMPILER_FLAGS = ['-Wall', '-g', '-O2', '-pipe']
 
 # Optimized Flags. Use only on Release.
-EXTRA_COMPILER_FLAGS = ['-Wall', '-O3', '-pipe']
+EXTRA_COMPILER_FLAGS = ['-Wall', '-O3', '-pipe', '-msse3']
 
 # Brew's readline
 DARWIN_INCLUDE_DIRECTORIES = ['/usr/local/opt/readline/include']
@@ -230,7 +230,7 @@ env['CPPPATH'] = [] + EXTRA_INCLUDE_DIRECTORIES
 if cygwin:
 	env['CCFLAGS'] += ['-mno-cygwin']
 	env['LINKFLAGS'] += ['-mno-cygwin']
-env.Replace(CXXFLAGS = env['CCFLAGS'])
+env.Replace(CXXFLAGS = [])
 
 
 # Environment for libraries
@@ -247,7 +247,7 @@ elif not darwin:
 else:
 	env['LIBPATH'] += DARWIN_LIBRARY_DIRECTORIES
 	env['CPPPATH'] += DARWIN_INCLUDE_DIRECTORIES
-libenv.Replace(CXXFLAGS = libenv['CCFLAGS'])
+libenv.Replace(CXXFLAGS = [])
 
 if cygwin:
 	# We want to build native Win32 DLLs on Cygwin
@@ -342,7 +342,7 @@ else:
 
 perlenv['CPPPATH'] += [perlconfig['coredir']]
 perlenv['CCFLAGS'] += ['-DVERSION=\\"1.0\\"', '-DXS_VERSION=\\"1.0\\"']
-perlenv.Replace(CXXFLAGS = perlenv['CCFLAGS'])
+perlenv.Replace(CXXFLAGS = [])
 
 
 def buildXS(target, source, env):
