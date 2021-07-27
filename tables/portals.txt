@@ -119,12 +119,12 @@ alberta 245 82 brasilis 314 60 0 0 NPC_CONVERSATION_HERE # Crewman
 alberta 124 67 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 alberta 27 238 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 alberta 214 77 e_tower 70 114 0 0 NPC_CONVERSATION_HERE # Captain Janssen
-# alberta 119 70 xmas_dun02 130 123 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# alberta 119 70 alde_dun03 265 22 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# alberta 119 70 mag_dun02 47 40 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# alberta 114 70 iz_dun02 234 206 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# alberta 114 70 c_tower3 64 143 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# alberta 114 70 glast_01 368 303 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# alberta 119 70 xmas_dun02 130 123 4000 0 c r2 c r0 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# alberta 119 70 alde_dun03 265 22 4000 0 c r2 c r1 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# alberta 119 70 mag_dun02 47 40 4000 0 c r2 c r2 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# alberta 114 70 iz_dun02 234 206 4000 0 c r2 c r0 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# alberta 114 70 c_tower3 64 143 4000 0 c r2 c r1 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# alberta 114 70 glast_01 368 303 4000 0 c r2 c r2 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
 
 # alberta_in
 alberta_in 78 44 alberta 37 41
@@ -221,22 +221,19 @@ aldebaran 197 70 aldeba_in 94 41
 aldebaran 225 54 aldeba_in 149 120
 aldebaran 233 105 aldeba_in 157 190
 aldebaran 140 243 yuno_fild01 208 22
-aldebaran 145 102 xmas_dun02 130 123 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-aldebaran 145 102 alde_dun03 265 22 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-aldebaran 145 102 mag_dun02 47 40 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# aldebaran 138 102 iz_dun02 234 206 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# aldebaran 138 102 c_tower3 64 143 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# aldebaran 138 102 glast_01 368 303 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-aldebaran 143 119 geffen 120 39 2000 1 c r2 c r~/Geffen/i
-aldebaran 143 119 prontera 116 72 2000 1 c r2 c r~/Prontera/i
-aldebaran 143 119 payon 161 58 2000 1 c r2 c r~/Payon/i
-aldebaran 143 119 morocc 156 46 2000 1 c r2 c r~/Morocc/i
-aldebaran 143 119 yuno 158 125 2000 1 c r2 c r~/Yuno/i
-aldebaran 143 119 izlude 128 98 2000 1 c r2 c r~/Izlude/i
-aldebaran 143 119 mjolnir_02 99 351 2000 1 c r2 c r~/Mjolnir_02/i
+# aldebaran 145 102 xmas_dun02 130 123 4000 0 c r2 c r0 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# aldebaran 145 102 alde_dun03 265 22 4000 0 c r2 c r1 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# aldebaran 145 102 mag_dun02 47 40 4000 0 c r2 c r2 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# aldebaran 138 102 iz_dun02 234 206 4000 0 c r2 c r0 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# aldebaran 138 102 c_tower3 64 143 4000 0 c r2 c r1 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# aldebaran 138 102 glast_01 368 303 4000 0 c r2 c r2 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+aldebaran 143 119 geffen 120 39 2000 1 c r2 c r0
+aldebaran 143 119 yuno 158 125 2000 1 c r2 c r0
+aldebaran 143 119 izlude 128 98 2000 1 c r2 c r0
+aldebaran 143 119 mjolnir_02 99 351 2000 1 c r2 c r0
 aldebaran 35 140 alde_gld 280 160
 aldebaran 140 135 c_tower1 199 159
-aldebaran 223 222 xmas_fild01 78 68 0 0 NPC_CONVERSATION_HERE # Mr. Claus
+aldebaran 223 222 xmas_fild01 78 68 0 0 c r1 c c n # Mr. Claus
 aldebaran 65 53 alde_alche 20 175
 aldebaran 53 65 alde_alche 42 175
 aldebaran 133 119 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
@@ -246,6 +243,7 @@ aldebaran 146 109 bat_room 154 150 0 0 c c r0 c # Maroll Battle Recruiter
 ama_dun01 235 144 ama_dun02 33 40
 ama_dun01 221 143 ama_dun03 120 12 0 0 NPC_CONVERSATION_HERE # Zella Lambretta
 ama_dun01 221 143 amatsu 73 200 0 0 NPC_CONVERSATION_HERE # Zella Lambretta
+ama_dun01 229 7 ama_in02 119 181 0 c r0 n
 
 # ama_dun02
 ama_dun02 30 40 ama_dun01 232 144
@@ -282,7 +280,8 @@ ama_in02 59 160 ama_in02 215 152
 ama_in02 215 149 ama_in02 59 156
 ama_in02 222 161 ama_in02 129 164
 ama_in02 126 164 ama_in02 219 161
-ama_in02 170 31 ama_dun01 230 144 0 0 NPC_CONVERSATION_HERE # Einrich Lambretta
+ama_in02 170 31 ama_dun01 230 144 0 0 c r1 c r0 n # Einrich Lambretta
+# ama_in02 115 177 ama_dun01 229 10 0 c r1 c r0 n
 
 # ama_test
 ama_test 52 44 amatsu 223 230 0 0 NPC_CONVERSATION_HERE # Assistant
@@ -301,7 +300,7 @@ amatsu 85 235 ama_in02 223 45
 amatsu 248 292 ama_fild01 75 33
 amatsu 223 236 ama_test 52 35 0 0 NPC_CONVERSATION_HERE # Publisher
 amatsu 102 149 alberta 117 56 2000 1 c r2 c r~/Alberta/i
-amatsu 194 79 alberta 243 91 0 0 NPC_CONVERSATION_HERE # Sea Captain
+amatsu 194 79 alberta 243 91 0 0 c r0 n # Sea Captain
 amatsu 102 152 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 
 # anthell01
@@ -324,6 +323,7 @@ arena_room 115 71 arena_room 139 50
 arena_room 136 53 arena_room 113 74
 arena_room 123 88 arena_room 153 87
 arena_room 150 87 arena_room 120 87
+arena_room 105 93 prt_are_in 60 14 0 c r0
 
 # aru_gld
 aru_gld 195 363 ve_fild02 191 24
@@ -462,20 +462,48 @@ ayothaya 111 109 ayo_in01 180 129
 ayothaya 62 104 ayo_in01 191 183
 ayothaya 208 283 ayo_in02 100 152
 ayothaya 212 169 alberta 117 56 2000 1 c r2 c r~/Alberta/i
-ayothaya 152 68 alberta 235 45 0 0 NPC_CONVERSATION_HERE # Aibakthing
+ayothaya 152 68 alberta 235 45 0 0 c r0 n # Aibakthing
 ayothaya 209 169 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 
 # bat_room
+# Tierra 1 Blue
+bat_room 124 178 bat_room 57 223 0 c r0 c
 bat_room 57 220 bat_room 154 150
+# Tierra 1 Red
+bat_room 125 121 bat_room 57 207 0 c r0 c
 bat_room 57 211 bat_room 154 150
-bat_room 113 220 bat_room 154 150
-bat_room 113 211 bat_room 154 150
+# Flavius 1 Blue
+bat_room 133 178 bat_room 85 223 0 c r0 c
 bat_room 85 220 bat_room 154 150
+# Flavius 1 Red
+bat_room 133 121 bat_room 85 207 0 c r0 c
 bat_room 85 211 bat_room 154 150
+# Tierra 2 Blue
+bat_room 140 178 bat_room 114 223 0 c r0 c
+bat_room 113 220 bat_room 154 150
+# Tierra 2 Red
+bat_room 140 121 bat_room 114 207 0 c r0 c
+bat_room 113 211 bat_room 154 150
+# Flavius 2 Blue
+bat_room 148 178 bat_room 141 224 0 c r0 c
 bat_room 141 220 bat_room 154 150
-bat_room 141 211 bat_room 154 150
+bat_b02 10 293 bat_room 154 150 0 c
+# Flavius 2 Red
+bat_room 148 121 bat_room
+bat_room  bat_room 154 150
+bat_b02 189 14 bat_room 154 150 0 c
+# KVM Blue
+bat_room 164 178 bat_room 169 223 0 c r0 c
 bat_room 169 220 bat_room 154 150
+#(chatroom) bat_room 169 226 bat_c01 53 131
+bat_c01 51 130 bat_room 154 150 0 c
+# KVM Red
+bat_room 164 121 bat_room 169 207 0 c r0 c
 bat_room 169 211 bat_room 154 150
+#(chatroom) bat_room 169 205 bat_c01 147 56
+bat_c01 148 54 bat_room 154 150 0 c
+
+bat_room 141 211 bat_room 154 150
 bat_room 197 220 bat_room 154 150
 bat_room 197 211 bat_room 154 150
 bat_room 225 220 bat_room 154 150
@@ -1103,26 +1131,21 @@ geffen 61 180 geffen_in 162 97
 geffen 172 174 geffen_in 70 52
 geffen 182 59 geffen_in 106 177
 geffen 120 114 gef_tower 52 177
-geffen 122 37 xmas_dun02 130 123 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-geffen 122 37 alde_dun03 265 22 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-geffen 122 37 mag_dun02 47 40 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# geffen 117 37 iz_dun02 234 206 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# geffen 117 37 c_tower3 64 143 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# geffen 117 37 glast_01 368 303 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-geffen 120 62 prontera 116 72 2000 1 c r2 c r~/Prontera/i
-geffen 120 62 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
-geffen 120 62 payon 161 58 2000 1 c r2 c r~/Payon/i
-geffen 120 62 morocc 156 46 2000 1 c r2 c r~/Morocc/i
-geffen 120 62 gef_fild10 52 326 2000 1 c r2 c r~/Gef_Fild10/i
-geffen 120 62 mjolnir_02 99 351 2000 1 c r2 c r~/Mjolnir_02/i
-geffen 203 123 prontera 116 72 2000 1 c r2 c r~/Prontera/i
-geffen 203 123 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
-geffen 203 123 payon 161 58 2000 1 c r2 c r~/Payon/i
-geffen 203 123 morocc 156 46 2000 1 c r2 c r~/Morocc/i
-geffen 203 123 gef_fild10 52 326 2000 1 c r2 c r~/Gef_Fild10/i
-geffen 203 123 mjolnir_02 99 351 2000 1 c r2 c r~/Mjolnir_02/i
+# geffen 122 37 xmas_dun02 130 123 4000 0 c r2 c r0 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# geffen 122 37 alde_dun03 265 22 4000 0 c r2 c r1 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# geffen 122 37 mag_dun02 47 40 4000 0 c r2 c r2 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# geffen 117 37 iz_dun02 234 206 4000 0 c r2 c r0 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# geffen 117 37 c_tower3 64 143 4000 0 c r2 c r1 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# geffen 117 37 glast_01 368 303 4000 0 c r2 c r2 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+geffen 120 62 prontera 116 72 1200 1 c r2 c r0
+geffen 120 62 aldebaran 168 112 1200 1 c r2 c r1
+geffen 120 62 gef_fild10 52 326 1200 1 c r2 c r2
+geffen 120 62 mjolnir_02 99 351 1700 1 c r2 c r3
+geffen 203 123 prontera 116 72 1200 1 c r2 c r0
+geffen 203 123 aldebaran 168 112 1200 1 c r2 c r1
+geffen 203 123 gef_fild10 52 326 1200 1 c r2 c r2
+geffen 203 123 mjolnir_02 99 351 1700 1 c r2 c r3
 geffen 132 66 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
-geffen 196 147 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 geffen 140 99 geffen_in 166 50
 geffen 119 55 gefenia01 58 169
 geffen 109 66 bat_room 154 150 0 0 c c r0 c # Maroll Battle Recruiter
@@ -1255,7 +1278,7 @@ glast_01 200 275 geffen 120 39 2000 1 c r2 c r~/Geffen/i
 glast_01 200 275 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
 glast_01 200 275 payon 161 58 2000 1 c r2 c r~/Payon/i
 glast_01 200 275 morocc 156 46 2000 1 c r2 c r~/Morocc/i
-glast_01 200 275 gef_fild10 52 326 2000 1 c r2 c r~/Gef_Fild10/i
+glast_01 200 275 gef_fild10 52 326 2000 1 c r2 c r~/Orc/i
 glast_01 200 275 mjolnir_02 99 351 2000 1 c r2 c r~/Mjolnir_02/i
 glast_01 380 304 gef_fild06 22 304
 glast_01 51 108 gl_step 12 7
@@ -1349,7 +1372,7 @@ gon_dun03 68 6 gon_dun02 251 265
 
 # gon_fild01
 gon_fild01 192 265 gonryun 161 11
-gon_fild01 255 79 alberta 243 67 0 0 NPC_CONVERSATION_HERE # Kunlun Envoy
+gon_fild01 255 79 alberta 243 67 0 0 c r0 n # Kunlun Envoy
 
 # gon_in
 gon_in 109 98 gonryun 218 162
@@ -1635,7 +1658,7 @@ iz_int 96 73 izlude 195 209
 
 # izlu2dun
 izlu2dun 108 83 iz_dun00 168 168
-izlu2dun 108 27 izlude 176 182 0 0 NPC_CONVERSATION_HERE # Sailor
+izlu2dun 108 27 izlude 176 182 0 0 c r0 # Sailor
 
 # izlude
 izlude 195 213 lasagna 206 297 0 0 NPC_CONVERSATION_HERE # Con-Chliina Crewman
@@ -1645,7 +1668,7 @@ izlude 213 161 arena_room 100 30
 izlude 20 98 prt_fild08 367 212
 izlude 110 182 izlude_in 65 87
 izlude 52 172 izlude_in 74 161
-izlude 197 205 izlu2dun 107 50 0 0 NPC_CONVERSATION_HERE # Sailor
+izlude 197 205 izlu2dun 107 50 0 0 c r0 # Sailor
 izlude 197 205 alberta 188 169 0 0 NPC_CONVERSATION_HERE # Sailor
 izlude 179 219 alberta 195 164 0 0 NPC_CONVERSATION_HERE # Edgar
 izlude 180 224 jawaii 245 125 0 0 NPC_CONVERSATION_HERE # Honeymoon Helper
@@ -1978,12 +2001,12 @@ lhz_que01 97 33 lhz_in01 43 120
 lighthalzen 308 76 airplane 244 58
 lighthalzen 294 76 lhz_airport 143 53
 lighthalzen 322 320 lhz_in03 15 162
-lighthalzen 163 60 xmas_dun02 130 123 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-lighthalzen 163 60 alde_dun03 265 22 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-lighthalzen 163 60 mag_dun02 47 40 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# lighthalzen 154 60 iz_dun02 234 206 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# lighthalzen 154 60 c_tower3 64 143 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# lighthalzen 154 60 glast_01 368 303 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# lighthalzen 163 60 xmas_dun02 130 123 4000 0 c r2 c r0 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# lighthalzen 163 60 alde_dun03 265 22 4000 0 c r2 c r1 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# lighthalzen 163 60 mag_dun02 47 40 4000 0 c r2 c r2 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# lighthalzen 154 60 iz_dun02 234 206 4000 0 c r2 c r0 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# lighthalzen 154 60 c_tower3 64 143 4000 0 c r2 c r1 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# lighthalzen 154 60 glast_01 368 303 4000 0 c r2 c r2 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
 lighthalzen 101 248 lhz_in01 111 126
 lighthalzen 106 248 lhz_in01 116 126
 lighthalzen 198 257 lhz_in02 39 28
@@ -2020,7 +2043,7 @@ lou_dun03 165 35 lou_dun02 165 266
 
 # lou_fild01
 lou_fild01 233 356 louyang 218 22
-lou_fild01 190 100 alberta 235 45 0 0 NPC_CONVERSATION_HERE # Girl
+lou_fild01 190 100 alberta 235 45 0 0 c r0 # Girl
 
 # lou_in01
 lou_in01 14 18 louyang 90 254
@@ -2281,7 +2304,7 @@ manuk 321 182 dic_dun01 33 212 0 0 NPC_CONVERSATION_HERE # Entrance Manager
 mid_camp 336 171 man_fild01 36 235 0 0 NPC_CONVERSATION_HERE # Camp Guard
 mid_camp 13 143 spl_fild02 379 143 0 0 NPC_CONVERSATION_HERE # Camp Guard
 mid_camp 9 215 spl_fild02 380 217 0 0 NPC_CONVERSATION_HERE # Camp Guard
-mid_camp 213 286 moc_fild20 342 179 0 0 NPC_CONVERSATION_HERE # Expedition Guard
+mid_camp 213 286 moc_fild20 342 179 0 0 c c r0 # Expedition Guard
 mid_camp 264 263 mid_campin 291 128 0 0 NPC_CONVERSATION_HERE # Diego
 mid_camp 214 249 mid_campin 89 102
 mid_camp 205 211 mid_campin 229 123
@@ -2446,7 +2469,7 @@ moc_fild11 189 360 moc_fild20 208 207 0 0 NPC_CONVERSATION_HERE # Continental Gu
 moc_fild12 159 381 morocc 160 20
 moc_fild12 289 168 moc_fild11 29 161
 moc_fild12 118 30 moc_fild18 158 379
-moc_fild12 35 303 cmd_fild08 331 319 0 0 NPC_CONVERSATION_HERE # Serutero
+moc_fild12 35 303 cmd_fild08 331 319 0 0 c r0 n # Serutero
 
 # moc_fild13
 moc_fild13 146 368 moc_fild02 71 21
@@ -2484,6 +2507,7 @@ moc_fild19 169 107 morocc 27 164
 moc_fild19 98 99 in_sphinx1 288 9
 
 # moc_fild20
+# moc_fild20 -> moc_fild21 npcs are only available with the quest and a party with at least two members online
 moc_fild20 354 183 morocc 160 61 0 0 NPC_CONVERSATION_HERE # Continental Guard
 moc_fild20 354 183 moc_fild21 111 100 0 0 NPC_CONVERSATION_HERE # Continental Guard
 moc_fild20 354 183 moc_fild22 38 193 0 0 NPC_CONVERSATION_HERE # Continental Guard
@@ -2605,12 +2629,12 @@ moc_prydn2 198 11 moc_prydn1 213 10
 moc_ruins 71 16 moc_fild19 71 167
 moc_ruins 159 37 morocc 30 289
 moc_ruins 54 161 moc_pryd01 192 9
-moc_ruins 104 133 xmas_dun02 130 123 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-moc_ruins 104 133 alde_dun03 265 22 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-moc_ruins 104 133 mag_dun02 47 40 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# moc_ruins 97 133 iz_dun02 234 206 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# moc_ruins 97 133 c_tower3 64 143 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# moc_ruins 97 133 glast_01 368 303 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# moc_ruins 104 133 xmas_dun02 130 123 4000 0 c r2 c r0 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# moc_ruins 104 133 alde_dun03 265 22 4000 0 c r2 c r1 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# moc_ruins 104 133 mag_dun02 47 40 4000 0 c r2 c r2 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# moc_ruins 97 133 iz_dun02 234 206 4000 0 c r2 c r0 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# moc_ruins 97 133 c_tower3 64 143 4000 0 c r2 c r1 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# moc_ruins 97 133 glast_01 368 303 4000 0 c r2 c r2 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
 moc_ruins 68 164 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 moc_ruins 75 162 bat_room 154 150 0 0 c c r0 c # Maroll Battle Recruiter
 
@@ -2957,12 +2981,12 @@ payon 223 117 payon_in01 175 11
 payon 269 152 payon_in01 89 9
 payon 151 127 payon_in01 56 53
 payon 256 285 payon_in01 45 11
-payon 158 182 xmas_dun02 130 123 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-payon 158 182 alde_dun03 265 22 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-payon 158 182 mag_dun02 47 40 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# payon 153 182 iz_dun02 234 206 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# payon 153 182 c_tower3 64 143 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# payon 153 182 glast_01 368 303 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# payon 158 182 xmas_dun02 130 123 4000 0 c r2 c r0 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# payon 158 182 alde_dun03 265 22 4000 0 c r2 c r1 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# payon 158 182 mag_dun02 47 40 4000 0 c r2 c r2 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# payon 153 182 iz_dun02 234 206 4000 0 c r2 c r0 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# payon 153 182 c_tower3 64 143 4000 0 c r2 c r1 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# payon 153 182 glast_01 368 303 4000 0 c r2 c r2 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
 payon 181 104 prontera 116 72 2000 1 c r2 c r~/Prontera/i
 payon 181 104 geffen 120 39 2000 1 c r2 c r~/Geffen/i
 payon 181 104 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
@@ -3019,72 +3043,64 @@ payon_mem 16 151 payon 171 101
 # prontera
 prontera 156 358 prt_cas 216 146
 prontera 289 203 prt_fild06 27 193
-prontera 156 25 prt_fild08 170 375
-prontera 25 203 prt_fild05 367 205
-prontera 74 102 prt_in 208 176
-prontera 86 90 prt_in 282 176
-prontera 76 92 prt_in 248 170
-prontera 235 315 prt_church 100 60
-prontera 105 216 prt_in 240 139
-prontera 207 192 prt_in 68 134
-prontera 177 187 prt_in 60 73
-prontera 177 224 prt_in 168 128
-prontera 118 265 prt_in 180 97
-prontera 190 265 prt_in 178 55
-prontera 43 62 prt_in 44 29
-prontera 208 151 prt_in 172 29
+prontera 156 22 prt_fild08 170 375
+prontera 22 203 prt_fild05 367 205
+prontera 73 100 prt_in 208 176
+prontera 84 89 prt_in 282 176
+prontera 74 90 prt_in 248 170
+prontera 237 317 prt_church 100 60
+prontera 107 215 prt_in 240 139
+prontera 202 190 prt_in 68 134
+prontera 179 184 prt_in 60 73
+prontera 177 221 prt_in 168 128
+prontera 120 267 prt_in 180 97
+prontera 192 267 prt_in 178 55
+prontera 42 67 prt_in 44 29
+prontera 208 154 prt_in 172 29
 prontera 134 221 prt_in 131 71
-prontera 134 183 prt_in 50 105
+prontera 133 183 prt_in 50 105
 prontera 45 346 prt_in 80 110
-prontera 164 125 xmas_dun02 130 123 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-prontera 164 125 alde_dun03 265 22 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-prontera 164 125 mag_dun02 47 40 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# prontera 147 125 iz_dun02 234 206 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# prontera 147 125 c_tower3 64 143 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# prontera 147 125 glast_01 368 303 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-prontera 248 42 izlude 128 98 2000 1 c r2 c r~/Izlude/i
-prontera 146 89 izlude 128 98 2000 1 c r2 c r~/Izlude/i
-prontera 146 89 geffen 120 39 2000 1 c r2 c r~/Geffen/i
-prontera 146 89 payon 161 58 2000 1 c r2 c r~/Payon/i
-prontera 146 89 morocc 156 46 2000 1 c r2 c r~/Morocc/i
-prontera 146 89 alberta 117 56 2000 1 c r2 c r~/Alberta/i
-prontera 146 89 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
-prontera 146 89 comodo 209 143 2000 1 c r2 c r~/Comodo/i
-prontera 146 89 umbala 100 154 2000 1 c r2 c r~/Umbala/i
-prontera 146 89 gef_fild10 52 326 2000 1 c r2 c r~/Gef_Fild10/i
-prontera 151 34 izlude 128 98 2000 1 c r2 c r~/Izlude/i
-prontera 151 34 geffen 120 39 2000 1 c r2 c r~/Geffen/i
-prontera 151 34 payon 161 58 2000 1 c r2 c r~/Payon/i
-prontera 151 34 morocc 156 46 2000 1 c r2 c r~/Morocc/i
-prontera 151 34 alberta 117 56 2000 1 c r2 c r~/Alberta/i
-prontera 151 34 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
-prontera 151 34 comodo 209 143 2000 1 c r2 c r~/Comodo/i
-prontera 151 34 umbala 100 154 2000 1 c r2 c r~/Umbala/i
-prontera 151 34 gef_fild10 52 326 2000 1 c r2 c r~/Gef_Fild10/i
-prontera 277 200 izlude 128 98 2000 1 c r2 c r~/Izlude/i
-prontera 277 200 geffen 120 39 2000 1 c r2 c r~/Geffen/i
-prontera 277 200 payon 161 58 2000 1 c r2 c r~/Payon/i
-prontera 277 200 morocc 156 46 2000 1 c r2 c r~/Morocc/i
-prontera 277 200 alberta 117 56 2000 1 c r2 c r~/Alberta/i
-prontera 277 200 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
-prontera 277 200 comodo 209 143 2000 1 c r2 c r~/Comodo/i
-prontera 277 200 umbala 100 154 2000 1 c r2 c r~/Umbala/i
-prontera 277 200 gef_fild10 52 326 2000 1 c r2 c r~/Gef_Fild10/i
-prontera 35 208 izlude 128 98 2000 1 c r2 c r~/Izlude/i
-prontera 35 208 geffen 120 39 2000 1 c r2 c r~/Geffen/i
-prontera 35 208 payon 161 58 2000 1 c r2 c r~/Payon/i
-prontera 35 208 morocc 156 46 2000 1 c r2 c r~/Morocc/i
-prontera 35 208 alberta 117 56 2000 1 c r2 c r~/Alberta/i
-prontera 35 208 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
-prontera 35 208 comodo 209 143 2000 1 c r2 c r~/Comodo/i
-prontera 35 208 umbala 100 154 2000 1 c r2 c r~/Umbala/i
-prontera 35 208 gef_fild10 52 326 2000 1 c r2 c r~/Gef_Fild10/i
-prontera 124 76 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
-prontera 271 213 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
-prontera 38 212 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
-prontera 162 326 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 prontera 263 279 prt_in 227 18
-prontera 123 83 bat_room 154 150 0 0 c c r0 c # Maroll Battle Recruiter
+prontera 248 42 izlude 128 98 2000 1 c r0
+prontera 146 89 izlude 128 98 2000 1 c r2 c r0
+prontera 146 89 geffen 120 39 2000 1 c r2 c r1
+prontera 146 89 payon 161 58 2000 1 c r2 c r2
+prontera 146 89 morocc 156 46 2000 1 c r2 c r3
+prontera 146 89 gef_fild10 52 326 2000 1 c r2 c r4
+prontera 146 89 alberta 117 56 2000 1 c r2 c r5
+prontera 151 29 izlude 128 98 2000 1 c r2 c r0
+prontera 151 29 geffen 120 39 2000 1 c r2 c r1
+prontera 151 29 payon 161 58 2000 1 c r2 c r2
+prontera 151 29 morocc 156 46 2000 1 c r2 c r3
+prontera 151 29 gef_fild10 52 326 2000 1 c r2 c r4
+prontera 151 29 alberta 117 56 2000 1 c r2 c r5
+prontera 282 200 izlude 128 98 2000 1 c r2 c r0
+prontera 282 200 geffen 120 39 2000 1 c r2 c r1
+prontera 282 200 payon 161 58 2000 1 c r2 c r2
+prontera 282 200 morocc 156 46 2000 1 c r2 c r3
+prontera 282 200 gef_fild10 52 326 2000 1 c r2 c r4
+prontera 282 200 alberta 117 56 2000 1 c r2 c r5
+# Kafra Moved position choose between 29 207 and 35 208
+# prontera 35 208 izlude 128 98 2000 1 c r2 c r0
+# prontera 35 208 geffen 120 39 2000 1 c r2 c r1
+# prontera 35 208 payon 161 58 2000 1 c r2 c r2
+# prontera 35 208 morocc 156 46 2000 1 c r2 c r3
+# prontera 35 208 gef_fild10 52 326 2000 1 c r2 c r4
+# prontera 35 208 alberta 117 56 2000 1 c r2 c r5
+prontera 29 207 izlude 128 98 2000 1 c r2 c r0
+prontera 29 207 geffen 120 39 2000 1 c r2 c r1
+prontera 29 207 payon 161 58 2000 1 c r2 c r2
+prontera 29 207 morocc 156 46 2000 1 c r2 c r3
+prontera 29 207 gef_fild10 52 326 2000 1 c r2 c r4
+prontera 29 207 alberta 117 56 2000 1 c r2 c r5
+prontera 124 76 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
+prontera 123 83 bat_room 154 150 0 c c r0 c # Maroll Battle Recruiter
+# prontera 164 125 xmas_dun02 130 123 4000 0 c r2 c r0 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 164 125 alde_dun03 265 22 4000 0 c r2 c r1 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 164 125 mag_dun02 47 40 4000 0 c r2 c r2 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 147 125 iz_dun02 234 206 4000 0 c r2 c r0 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 147 125 c_tower3 64 143 4000 0 c r2 c r1 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 147 125 glast_01 368 303 4000 0 c r2 c r2 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
 
 # prt_are_in
 prt_are_in 54 13 arena_room 100 77
@@ -3211,7 +3227,7 @@ prt_fild05 134 14 prt_fild07 129 374
 prt_fild05 255 14 prt_fild07 248 369
 prt_fild05 105 381 mjolnir_09 106 34
 prt_fild05 292 385 mjolnir_09 305 33
-prt_fild05 270 212 prt_sewb1 131 247 0 0 NPC_CONVERSATION_HERE # Culvert Guardian
+prt_fild05 270 212 prt_sewb1 131 247 0 0 c r0 # Culvert Guardian
 
 # prt_fild06
 prt_fild06 23 193 prontera 276 203
@@ -3697,7 +3713,6 @@ ra_temsky 137 139 ra_temsky 109 143
 ra_temsky 62 139 ra_temsky 91 143
 
 # rachel
-rachel 119 131 prontera 156 327 0 0 NPC_CONVERSATION_HERE # Royal Errand Boy
 rachel 150 249 ra_temple 120 30
 rachel 81 33 ra_in01 237 198
 rachel 61 33 ra_in01 181 198
@@ -3715,8 +3730,7 @@ rachel 273 123 ra_fild12 40 226
 rachel 105 171 ra_in01 309 65
 rachel 116 158 ra_in01 375 114
 rachel 130 21 ve_fild02 195 377
-rachel 109 138 veins 205 101 2000 1 c r2 c r~/Veins/i
-rachel 109 138 yuno 158 125 2000 1 c r2 c r~/Yuno/i
+rachel 109 138 veins 205 101 2000 1 c r2 c r0
 rachel 125 144 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 rachel 149 138 bat_room 154 150 0 0 c c r0 c # Maroll Battle Recruiter
 
@@ -3977,7 +3991,7 @@ treasure02 102 118 treasure02 102 101
 
 # tur_dun01
 tur_dun01 154 241 tur_dun02 148 264
-tur_dun01 165 29 alberta 241 115 0 0 NPC_CONVERSATION_HERE # Sailor
+tur_dun01 165 29 alberta 241 115 0 0 c r0 c c # Sailor
 
 # tur_dun02
 tur_dun02 148 268 tur_dun01 154 237
@@ -4035,9 +4049,11 @@ umbala 125 157 um_in 155 114
 umbala 94 186 um_in 141 42
 umbala 100 203 um_in 163 69
 umbala 105 128 um_in 99 66
-umbala 87 160 comodo 209 143 2000 1 c r2 c r~/Comodo/i
+umbala 87 160 comodo 209 143 2000 1 c r2 c r0
 umbala 96 160 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 umbala 107 118 um_in 15 20
+# bungee jump
+# umbala 140 197 nif_in 68 14
 
 # un_bk_q
 un_bk_q 103 147 un_bunker 98 91 0 0 NPC_CONVERSATION_HERE # Bunker Sayhu
@@ -4406,7 +4422,6 @@ ve_in 309 114 ve_in 220 115
 ve_in02 13 19 veins 269 225
 
 # veins
-veins 200 108 prontera 156 327 0 0 NPC_CONVERSATION_HERE # Royal Errand Boy
 veins 143 25 ve_fild07 147 366
 veins 218 361 ve_fild06 148 225
 veins 230 166 ve_in 251 287
@@ -4419,8 +4434,7 @@ veins 88 173 ve_in 77 295
 veins 337 231 ve_in 194 374
 veins 128 270 ve_in 201 211
 veins 267 230 ve_in02 17 19
-veins 208 128 rachel 115 125 2000 1 c r2 c r~/Rachel/i
-veins 208 128 yuno 158 125 2000 1 c r2 c r~/Yuno/i
+veins 208 128 rachel 115 125 2000 1 c r2 c r0
 veins 257 256 job3_guil01 9 93
 veins 214 122 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
 
@@ -4530,12 +4544,12 @@ yuno 6 261 airplane_01 244 58
 yuno 47 240 y_airport 143 54
 yuno 59 240 y_airport 143 54
 yuno 157 322 yuno_pre 69 13
-yuno 162 191 xmas_dun02 130 123 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-yuno 162 191 alde_dun03 265 22 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-yuno 162 191 mag_dun02 47 40 0 0 NPC_CONVERSATION_HERE # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
-# yuno 153 191 iz_dun02 234 206 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# yuno 153 191 c_tower3 64 143 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
-# yuno 153 191 glast_01 368 303 0 0 NPC_CONVERSATION_HERE # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# yuno 162 191 xmas_dun02 130 123 4000 0 c r2 c r0 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# yuno 162 191 alde_dun03 265 22 4000 0 c r2 c r1 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# yuno 162 191 mag_dun02 47 40 4000 0 c r2 c r2 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# yuno 153 191 iz_dun02 234 206 4000 0 c r2 c r0 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# yuno 153 191 c_tower3 64 143 4000 0 c r2 c r1 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# yuno 153 191 glast_01 368 303 4000 0 c r2 c r2 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
 yuno 327 108 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
 yuno 277 221 aldebaran 168 112 2000 1 c r2 c r~/Aldebaran/i
 yuno 152 187 einbroch 67 195 2000 1 c r2 c r~/Einbroch/i
@@ -4837,7 +4851,37 @@ new_4-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 
 new_5-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 c r0 c r0 c r1 c c r0 c r1 c r1 c r1 c c r2 c r2 c r2 c r0 c r2 c r2 c r0 c r1 c c c c c c c c c c r0 c c c c c c c c
 
 # Old Alberta Warps
-# bRO
+# alberta 200 151 malangdo 217 85 2000 1 c r2 c r~/Malangdo/i
+# alberta 247 115 brasilis 314 60 0 0 NPC_CONVERSATION_HERE # Marinheiro
+# alberta 247 122 tur_dun01 157 39 0 0 NPC_CONVERSATION_HERE # Barqueiro
+# alberta 15 234 pay_fild03 388 63
+# alberta 33 42 alberta_in 74 44
+# alberta 65 233 alberta_in 18 141
+# alberta 99 221 alberta_in 122 161
+# alberta 93 205 alberta_in 114 134
+# alberta 117 38 alberta_in 180 30
+# alberta 99 152 alberta_in 185 89
+# alberta 170 170 alb_ship 26 168
+# alberta 178 165 alb_ship 39 163
+# alberta 209 173 alb_ship 162 171
+# alberta 45 145 alberta_in 69 141
+# alberta 189 151 alb2trea 43 53 2000 1 c r2 c r~/Alb2trea/i
+# alberta 189 151 izlude 176 182 0 0 NPC_CONVERSATION_HERE # Marinheiro
+# alberta 195 151 alb2trea 62 69 2000 1 c r2 c r~/Alb2trea/i
+# alberta 240 47 dewata 232 53 0 0 NPC_CONVERSATION_HERE # Marinheiro de Dewata
+# alberta 28 229 payon 161 58 2000 1 c r2 c r~/Payon/i
+# alberta 28 229 morocc 156 46 2000 1 c r2 c r~/Morocc/i
+# alberta 28 229 prontera 116 72 2000 1 c r2 c r~/Prontera/i
+# alberta 113 60 payon 161 58 2000 1 c r2 c r~/Payon/i
+# alberta 113 60 morocc 156 46 2000 1 c r2 c r~/Morocc/i
+# alberta 113 60 prontera 116 72 2000 1 c r2 c r~/Prontera/i
+# alberta 245 69 gon_fild01 258 82 0 0 NPC_CONVERSATION_HERE # Barqueiro de Kunlun
+# alberta 245 45 lou_fild01 190 101 0 0 NPC_CONVERSATION_HERE # Kunyang
+# alberta 247 42 ayothaya 149 71 0 0 NPC_CONVERSATION_HERE # Aibakthing
+# alberta 168 138 amatsu 113 127 0 0 NPC_CONVERSATION_HERE # 밀항선 선장
+# alberta 245 66 moscovia 163 55 0 0 NPC_CONVERSATION_HERE # R. P?licas de Mosc?ia
+# alberta 124 67 moc_para01 31 14 0 0 c c r0 # Oficial do  den
+# alberta 214 77 e_tower 70 114 0 0 NPC_CONVERSATION_HERE # Captain Janssen
 
 # Old Izlude Warps
 # MSP?
@@ -4848,16 +4892,127 @@ new_5-4 100 29 moc_ruins 155 44 0 c c c c c r0 c c c c r1 r0 r0 r0 r1 r1 c c r0 
 # Old Payon Warps
 # ??
 
+# Old Anthell
+# anthell01 35 267 moc_fild20 161 144
+# anthell02 171 170 moc_fild20 333 315
+# moc_fild20 156 143 anthell01 35 263
+# moc_fild20 337 315 anthell02 168 170
+
 # TODO: update and duplicate izlude_(a~h) and prt_fild08(a~h)
 # TODO: check BG (bat_room) portals
 # TODO: check iz_ac01 kafra
 
 # following is a single warp, depends of entrance npc used
 # currently unsupported, do not enable that
-#bat_room 148 150 aldebaran 168 112 0 c r0 c
-#bat_room 148 150 geffen 120 39 0 c r0 c
-#bat_room 148 150 lighthalzen 159 93 0 c r0 c
-#bat_room 148 150 moc_ruins 152 48 0 c r0 c
-#bat_room 148 150 payon 161 58 0 c r0 c
-#bat_room 148 150 prontera 116 72 0 c r0 c
-#bat_room 148 150 rachel 115 124 0 c r0 c
+# bat_room 148 150 aldebaran 168 112 0 c r0 c
+# bat_room 148 150 geffen 120 39 0 c r0 c
+# bat_room 148 150 lighthalzen 159 93 0 c r0 c
+# bat_room 148 150 moc_ruins 152 48 0 c r0 c
+# bat_room 148 150 payon 161 58 0 c r0 c
+# bat_room 148 150 prontera 116 72 0 c r0 c
+# bat_room 148 150 rachel 115 124 0 c r0 c
+
+# iRO New Prontera
+# prontera 156 358 prt_cas 216 146
+# prontera 289 203 prt_fild06 27 193
+# prontera 156 25 prt_fild08 170 375
+# prontera 25 203 prt_fild05 367 205
+# prontera 74 102 prt_in 208 176
+# prontera 86 90 prt_in 282 176
+# prontera 76 92 prt_in 248 170
+# prontera 235 315 prt_church 100 60
+# prontera 105 216 prt_in 240 139
+# prontera 207 192 prt_in 68 134
+# prontera 177 187 prt_in 60 73
+# prontera 177 224 prt_in 168 128
+# prontera 118 265 prt_in 180 97
+# prontera 190 265 prt_in 178 55
+# prontera 43 62 prt_in 44 29
+# prontera 208 151 prt_in 172 29
+# prontera 134 221 prt_in 131 71
+# prontera 134 183 prt_in 50 105
+# prontera 45 346 prt_in 80 110
+# prontera 164 125 xmas_dun02 130 123 4000 0 c r2 c r0 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 164 125 alde_dun03 265 22 4000 0 c r2 c r1 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 164 125 mag_dun02 47 40 4000 0 c r2 c r2 # Kafra Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 147 125 iz_dun02 234 206 4000 0 c r2 c r0 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 147 125 c_tower3 64 143 4000 0 c r2 c r1 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 147 125 glast_01 368 303 4000 0 c r2 c r2 # Cool Event Voting Staff # Portal just open after Dungeon Teleport Elections
+# prontera 248 42 izlude 128 98 2000 1 c r0
+# prontera 146 89 izlude 128 98 2000 1 c r2 c r0
+# prontera 146 89 geffen 120 39 2000 1 c r2 c r1
+# prontera 146 89 payon 161 58 2000 1 c r2 c r2
+# prontera 146 89 morocc 156 46 2000 1 c r2 c r3
+# prontera 146 89 alberta 117 56 2000 1 c r2 c r4
+# prontera 146 89 aldebaran 168 112 2000 1 c r2 c r5
+# prontera 146 89 comodo 209 143 2000 1 c r2 c r6
+# prontera 146 89 umbala 100 154 2000 1 c r2 c r7
+# prontera 146 89 gef_fild10 52 326 2000 1 c r2 c r8
+# prontera 151 34 izlude 128 98 2000 1 c r2 c r0
+# prontera 151 34 geffen 120 39 2000 1 c r2 c r1
+# prontera 151 34 payon 161 58 2000 1 c r2 c r2
+# prontera 151 34 morocc 156 46 2000 1 c r2 c r3
+# prontera 151 34 alberta 117 56 2000 1 c r2 c r4
+# prontera 151 34 aldebaran 168 112 2000 1 c r2 c r5
+# prontera 151 34 comodo 209 143 2000 1 c r2 c r6
+# prontera 151 34 umbala 100 154 2000 1 c r2 c r7
+# prontera 151 34 gef_fild10 52 326 2000 1 c r2 c r8
+# prontera 277 200 izlude 128 98 2000 1 c r2 c r0
+# prontera 277 200 geffen 120 39 2000 1 c r2 c r1
+# prontera 277 200 payon 161 58 2000 1 c r2 c r2
+# prontera 277 200 morocc 156 46 2000 1 c r2 c r3
+# prontera 277 200 alberta 117 56 2000 1 c r2 c r4
+# prontera 277 200 aldebaran 168 112 2000 1 c r2 c r5
+# prontera 277 200 comodo 209 143 2000 1 c r2 c r6
+# prontera 277 200 umbala 100 154 2000 1 c r2 c r7
+# prontera 277 200 gef_fild10 52 326 2000 1 c r2 c r8
+# prontera 35 208 izlude 128 98 2000 1 c r2 c r0
+# prontera 35 208 geffen 120 39 2000 1 c r2 c r1
+# prontera 35 208 payon 161 58 2000 1 c r2 c r2
+# prontera 35 208 morocc 156 46 2000 1 c r2 c r3
+# prontera 35 208 alberta 117 56 2000 1 c r2 c r4
+# prontera 35 208 aldebaran 168 112 2000 1 c r2 c r5
+# prontera 35 208 comodo 209 143 2000 1 c r2 c r6
+# prontera 35 208 umbala 100 154 2000 1 c r2 c r7
+# prontera 35 208 gef_fild10 52 326 2000 1 c r2 c r8
+# prontera 124 76 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
+# prontera 271 213 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
+# prontera 38 212 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
+# prontera 162 326 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
+# prontera 263 279 prt_in 227 18
+# prontera 123 83 bat_room 154 150 0 0 c c r0 c # Maroll Battle Recruiter
+
+# Geffen iRO Kafra
+# geffen 120 62 prontera 116 72 2000 1 c r2 c r0
+# geffen 120 62 aldebaran 168 112 2000 1 c r2 c r1
+# geffen 120 62 payon 161 58 2000 1 c r2 c r2
+# geffen 120 62 morocc 156 46 2000 1 c r2 c r3
+# geffen 120 62 gef_fild10 52 326 2000 1 c r4
+# geffen 120 62 mjolnir_02 99 351 2000 1 c r2 c r5
+# geffen 203 123 prontera 116 72 2000 1 c r2 c r0
+# geffen 203 123 aldebaran 168 112 2000 1 c r2 c r1
+# geffen 203 123 payon 161 58 2000 1 c r2 c r2
+# geffen 203 123 morocc 156 46 2000 1 c r2 c r3
+# geffen 203 123 gef_fild10 52 326 2000 1 c r2 c r4
+# geffen 203 123 mjolnir_02 99 351 2000 1 c r2 c r5
+# geffen 196 147 moc_para01 31 14 0 0 c c r0 # Eden Teleport Officer
+
+# Al de Baran iRO Kafra
+# aldebaran 143 119 geffen 120 39 2000 1 c r2 c r0
+# aldebaran 143 119 prontera 116 72 2000 1 c r2 c r1
+# aldebaran 143 119 payon 161 58 2000 1 c r2 c r2
+# aldebaran 143 119 morocc 156 46 2000 1 c r2 c r3
+# aldebaran 143 119 yuno 158 125 2000 1 c r2 c r4
+# aldebaran 143 119 izlude 128 98 2000 1 c r2 c r5
+# aldebaran 143 119 mjolnir_02 99 351 2000 1 c r2 c r6
+
+# Eden HQ iRO
+# moc_para01 14 32 prontera 116 72 1800 1 c c r0 c n
+
+# Rachel iRO
+# rachel 119 131 prontera 156 327 0 0 NPC_CONVERSATION_HERE # Royal Errand Boy
+# rachel 109 138 yuno 158 125 2000 1 c r2 c r1
+
+# Veins iRO
+# veins 200 108 prontera 156 327 0 0 NPC_CONVERSATION_HERE # Royal Errand Boy
+# veins 208 128 yuno 158 125 2000 1 c r2 c r1
