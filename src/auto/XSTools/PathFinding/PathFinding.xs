@@ -276,7 +276,5 @@ PathFinding_runcount(session)
 void
 PathFinding_DESTROY(session)
 		PathFinding session
-	PREINIT:
-		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
 		CalcPath_destroy (session);

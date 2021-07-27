@@ -25,6 +25,10 @@ extern "C" {
 	}
 #endif /* WIN32 */
 
+// All possible directions the character can move (in order: north, south, east, west, northeast, southeast, southwest, northwest)
+const short i_x[8] = {0, 0, 1, -1, 1, 1, -1, -1};
+const short i_y[8] = {1, -1, 0, 0, 1, -1, -1, 1};
+
 
 /*******************************************/
 
@@ -101,11 +105,7 @@ CalcPath_pathStep (CalcPath_session *session)
 	Node* neighborNode;
 	
 	short i;
-	
-	// All possible directions the character can move (in order: north, south, east, west, northeast, southeast, southwest, northwest)
-	short i_x[8] = {0, 0, 1, -1, 1, 1, -1, -1};
-	short i_y[8] = {1, -1, 0, 0, 1, -1, -1, 1};
-	
+		
 	int neighbor_x;
 	int neighbor_y;
 	unsigned long neighbor_adress;
