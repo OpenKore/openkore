@@ -206,7 +206,7 @@ sub shutdown {
 		close F;
 		print "Benchmark results saved to benchmark-results.txt\n";
 	}
-		$interface->errorDialog(T("Bye!\n")) if $config{dcPause};
+	$interface->errorDialog(T("Bye!\n")) if $config{dcPause};
 }
 
 if (!defined($ENV{INTERPRETER}) && !$ENV{NO_AUTOSTART}) {
