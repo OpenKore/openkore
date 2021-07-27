@@ -199,7 +199,7 @@ sub new {
 		'012B' => ['cart_off'], # 2
 		'012C' => ['cart_add_failed', 'C', [qw(fail)]], # 3
 		'012D' => ['shop_skill', 'v', [qw(number)]], # 4
-		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
+		'0131' => ['vender_found', 'a4 Z80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4 a*', [qw(len venderID itemList)]], # -1
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(ID amount fail)]], # 7
