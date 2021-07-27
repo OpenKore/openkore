@@ -61,7 +61,7 @@ public:
 		if (address == NULL) {
 			addr.sin_addr.s_addr = htonl(INADDR_ANY);
 		} else {
-			c_address = strdup(address);
+			c_address = _strdup(address);
 			addr.sin_addr.s_addr = inet_addr(c_address);
 		}
 		addr.sin_port = htons(port);
