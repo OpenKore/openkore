@@ -565,7 +565,7 @@ sub getRoute {
 	my %dest = %{$dest};
 	
 	my $closest_start = $field->closestWalkableSpot(\%start, 1);
-	my $closest_dest = $field->closestWalkableSpot(\%dest, 10);
+	my $closest_dest = $field->closestWalkableSpot(\%dest, 1);
 	
 	if (!defined $closest_start || !defined $closest_dest) {
 		return 0;
