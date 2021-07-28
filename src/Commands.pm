@@ -7131,7 +7131,7 @@ sub cmdRodex {
 		}
 		my $msg .= center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
 		my $index = 0;
-		foreach my $mail_id (keys %{$rodexList}) {
+		foreach my $mail_id (keys %{$rodexList->{mails}}) {
 			my $mail = $rodexList->{mails}{$mail_id};
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x9), ('<'x28), ('<'x28)), [$index, $mail_id, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
 			$index++;
