@@ -457,6 +457,10 @@ sub main {
 			$target->{attack_failed} = time;
 			AI::dequeue;
 			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
+			if ($config{'teleportAuto_dropTarget'}) {
+				message T("Teleport due to dropping attack target\n");
+				useTeleport(1);
+			}
 		}
 
 	} elsif (
