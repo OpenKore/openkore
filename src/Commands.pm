@@ -7309,6 +7309,9 @@ sub cmdRodex {
 			error T("Syntax Error in function 'rodex settitle' (Set title of rodex mail)\n" .
 				"Usage: rodex settitle <title>\n");
 			return;
+		} elsif (length($arg2) < 4) {
+			error $msgTable[2597] ? $msgTable[2597] . "\n" : T("The title must be 4 to 24 characters long\n");
+			return;
 		}
 
 		if (exists $rodexWrite->{title}) {
