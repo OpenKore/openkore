@@ -440,18 +440,23 @@ sub main {
 				avoidWalls => 0,
 				meetingSubRoute => 1
 			);
-		}
-		if (!$result) {
-			# Unable to calculate a route to target
-			$target->{attack_failed} = time;
-			AI::dequeue;
+
+			if (!$result) {
+				# Unable to calculate a route to target
+				$target->{attack_failed} = time;
+				AI::dequeue;
 				message T("Unable to calculate a route to target, dropping target\n"), "ai_attack";
-			if ($config{'teleportAuto_dropTarget'}) {
-				message T("Teleport due to dropping attack target\n");
-				useTeleport(1);
+				if ($config{'teleportAuto_dropTarget'}) {
+					message T("Teleport due to dropping attack target\n");
+					useTeleport(1);
+				}
+			} else {
+				debug "Attack $char - successufully routing to $target\n", 'ai_attack';
 			}
 		} else {
-			debug "Attack $char - successufully routing to $target\n", 'ai_attack';
+			$target->{attack_failed} = time;
+			AI::dequeue;
+			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
 		}
 
 	} elsif (

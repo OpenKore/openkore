@@ -412,7 +412,7 @@ sub iterate {
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 
-		} elsif (timeOut($self->{route_out_time}, 6)) {
+		} elsif (timeOut($self->{route_out_time}, 3)) {
 			# Because of attack monster, get item or something else we are out of our route for a long time
 			# recalculate again
 			debug "We are out of our route for a long time, recalculating...\n", "route";
