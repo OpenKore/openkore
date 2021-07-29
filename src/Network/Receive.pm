@@ -8203,9 +8203,9 @@ sub rodex_mail_list {
 
 	if ($args->{switch} eq '0B5F') {
 		$mail_info = {
-			len => 67,
-			type => 'C V2 C2 Z24 V v Z24 v',
-			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength sender2 Titlelength2)],
+			len => 45,
+			types => 'C V2 C2 Z24 V v x4',
+			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
 		};
 
 	} elsif ($args->{switch} eq '0AC2') {
