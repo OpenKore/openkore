@@ -31,7 +31,7 @@ sub new {
 		'0362' => ['item_take', 'a4', [qw(ID)]],
 		'0363' => ['item_drop', 'a4 v', [qw(ID amount)]],
 		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
-		'0365' => ['storage_item_remove', 'a4 V', [qw(ID amount)]],
+		'0365' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0368' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0369' => ['actor_name_request', 'a4', [qw(ID)]],
