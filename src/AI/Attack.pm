@@ -548,6 +548,24 @@ sub main {
 				}
 			}
 		} elsif ($args->{attackMethod}{type} eq "skill") {
+			# check if has LOS to use skill
+			if(!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) {
+				my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+
+				# Move to the closest spot
+				my $msg = TF("No LOS in from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+				if ($best_spot) {
+					message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
+					$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+				} else {
+					warning TF("%s; no acceptable place to stand\n", $msg);
+					$target->{attack_failedLOS} = time;
+					AI::dequeue;
+					AI::dequeue;
+					AI::dequeue if (AI::action eq "attack");
+				}
+			}
+
 			my $slot = $args->{attackMethod}{skillSlot};
 			delete $args->{attackMethod};
 
