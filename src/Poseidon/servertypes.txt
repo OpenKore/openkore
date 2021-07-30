@@ -86,11 +86,11 @@ actor_info 0A30
 actor_name 0ADF
 confirm_load 0B1B
 
-[jRO_2021-07-xx]
+[jRO_2021-04-21]
 account_server_info
 received_characters 099D
 charBlockSize 155
-received_character_ID_and_Map 0AC5
+received_character_ID_and_Map 0071
 map_login 0436
 map_loaded 02EB
 actor_exists 09FF
