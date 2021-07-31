@@ -404,6 +404,8 @@ sub main {
 			useTeleport(1);
 		}
 
+	} elsif(!defined $args->{attackMethod}{type}) {
+		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 		my $cell = get_kite_position($char, 1, $target);
 		if ($cell) {
