@@ -105,6 +105,16 @@ jobs:
         echo "== a new version of Perl:"
         perl --version
 
+    - name: Change the file "SConstruct" for build 5.22
+      if: runner.os == 'Windows' && matrix.perl == '5.32'
+      shell: bash
+      run: |
+        # remove: "env['LINKFLAGS'] += ['-static-libgcc']"
+        sed -i '218d' SConstruct
+        # replace: "libenv['CPPDEFINES'] += ['WIN32']"
+        #      to: "libenv['CPPDEFINES'] += ['WIN32', 'PERL_EUPXS_ALWAYS_EXPORT']"
+        sed -i '237 s/'WIN32'/'WIN32', 'PERL_EUPXS_ALWAYS_EXPORT'/' SConstruct
+
     ######################
     # preparing linux OS #
     ######################
