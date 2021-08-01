@@ -383,6 +383,19 @@ clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
 pinCode 1
 field_morocc morocc-old
 
+# http://freero.online
+[FreeRO]
+ip 103.195.238.109
+port 6900
+version 2147483648
+master_version 26
+OTP_ip 103.195.238.109
+OTP_port 6900
+serverType kRO_RagexeRE_2020_03_04a
+serverEncoding Western
+charBlockSize 155
+addTableFolders kRO/RagexeRE_2020_04_01b;translated/kRO_english;kRO
+
 ####################
 # Dead
 
