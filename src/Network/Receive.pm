@@ -11642,7 +11642,7 @@ sub roulette_window_update {
 # 0B01
 sub load_confirm {
 	my ($self, $args) = @_;
-	debug TF("You are allowed to use Keyboard"); # this only matter in ragexe client
+	debug TF("You are allowed to use Keyboard\n"); # this only matter in ragexe client
 }
 
 sub item_preview {
