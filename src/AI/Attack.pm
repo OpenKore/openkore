@@ -416,7 +416,12 @@ sub main {
 		
 	} elsif(!defined $args->{attackMethod}{type}) {
 		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
-		giveUp() if shouldGiveUp();		
+		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
+		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
+		if (timeOut($args->{ai_attack_failed_give_up})) {
+			delete $args->{ai_attack_failed_give_up}{time};
+			giveUp();
+		}
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
