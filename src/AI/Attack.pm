@@ -404,8 +404,6 @@ sub main {
 			useTeleport(1);
 		}
 
-	} elsif(!defined $args->{attackMethod}{type}) {
-		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 		my $cell = get_kite_position($char, 1, $target);
 		if ($cell) {
@@ -416,6 +414,9 @@ sub main {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
 		
+	} elsif(!defined $args->{attackMethod}{type}) {
+		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
+		giveUp() if shouldGiveUp();		
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
