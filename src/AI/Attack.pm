@@ -420,6 +420,7 @@ sub main {
 		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
 		if (timeOut($args->{ai_attack_failed_give_up})) {
 			delete $args->{ai_attack_failed_give_up}{time};
+			message T("Unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 			giveUp();
 		}
 	} elsif (
