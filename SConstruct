@@ -211,11 +211,14 @@ conf.Finish()
 # Standard environment for programs
 env['CCFLAGS'] = [] + EXTRA_COMPILER_FLAGS
 env['LINKFLAGS'] = []
+perlversion = int(''.join(perlconfig['perlversion'][1:].split('.')[:2]))
 
 if win32:
 	import platform
 	# have to use -static-libgcc while compiling with mingw’s g++ to eliminate the dependency on LIBGCC_S_SJLJ-1.DLL
-	env['LINKFLAGS'] += ['-static-libgcc']
+	if(perlversion == 512):
+		env['LINKFLAGS'] += ['-static-libgcc']
+
 	if "64" in platform.machine():
 		env['CCFLAGS'] += ['-fpermissive', '-DWINx86_64']
 
@@ -236,6 +239,8 @@ if win32:
 	if cygwin:
 		libenv['CCFLAGS'] += ['-mdll']
 	libenv['CPPDEFINES'] += ['WIN32']
+	if(perlversion > 512):
+		env['CPPDEFINES'] += ['PERL_EUPXS_ALWAYS_EXPORT']
 elif not darwin:
 	libenv['CCFLAGS'] += ['-fPIC']
 	libenv['LINKFLAGS'] += ['-fPIC']
