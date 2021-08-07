@@ -706,7 +706,7 @@ sub new {
 		'0B0B' => ['item_list_end', 'C2', [qw(type flag)]],
 		'0B0C' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'0B13' => ['item_preview', 'a2 C v a16 a25', [qw(index broken upgrade cards options)]],
-		'0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
+		# '0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
 		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
 		'0B1B' => ['load_confirm'],
 		'0B1D' => ['ping'], #2
