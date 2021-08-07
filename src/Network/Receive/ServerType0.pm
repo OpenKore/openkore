@@ -698,7 +698,7 @@ sub new {
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
 		'0ADA' => ['refine_status', 'Z24 V C C', [qw(name itemID refine_level status)]],
 		'0ADC' => ['misc_config', 'C4', [qw(show_eq_flag call_flag pet_autofeed_flag homunculus_autofeed_flag)]],
- 		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
+ 		'0ADE' => ['overweight_percent', 'V', [qw(percent)]],# 6 TODO
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
 		'0ADD' => ['item_appeared', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0AE0' => ['login_error', 'V V Z20', [qw(type error date)]],
