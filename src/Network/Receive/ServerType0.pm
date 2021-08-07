@@ -95,7 +95,7 @@ sub new {
 		'0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
 		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'008D' => ['public_chat', 'v a4 Z*', [qw(len ID message)]],
-		'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
+		'008E' => ['self_chat', 'v Z*', [qw(len message)]],
 		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]],
 		'0092' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
@@ -138,7 +138,7 @@ sub new {
 		'00D1' => ['ignore_player_result', 'C2', [qw(type error)]],
 		'00D2' => ['ignore_all_result', 'C2', [qw(type error)]],
 		'00D4' => ['whisper_list'],
-		'00D6' => ['chat_created'],
+		'00D6' => ['chat_created', 'C', [qw(result)]], # 3
 		'00D7' => ['chat_info', 'v a4 a4 v2 C a*', [qw(len ownerID ID limit num_users public title)]],
 		'00D8' => ['chat_removed', 'a4', [qw(ID)]],
 		'00DA' => ['chat_join_result', 'C', [qw(type)]],
@@ -421,7 +421,7 @@ sub new {
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]],
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]],
 		'02B9' => ['hotkeys', 'a*', [qw(hotkeys)]],
-		'02C1' => ['npc_chat', 'x2 a4 a4 Z*', [qw(ID color message)]],
+		'02C1' => ['npc_chat', 'v a4 a4 Z*', [qw(len ID color message)]],
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
 		'02C6' => ['party_invite', 'a4 Z24', [qw(ID name)]],
 		'02C9' => ['party_allow_invite', 'C', [qw(type)]],

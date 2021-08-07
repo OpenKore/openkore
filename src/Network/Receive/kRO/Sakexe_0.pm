@@ -429,7 +429,7 @@ sub new {
 		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]],
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
-		'02B9' => ['hotkeys'], # 191 # hotkeys:27
+		'02B9' => ['hotkeys', 'a*', [qw(hotkeys)]], # 191 # hotkeys:27
 		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
 		'02C1' => ['npc_chat', 'v a4 a4 Z*', [qw(len ID color message)]],
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
