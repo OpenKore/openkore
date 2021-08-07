@@ -985,11 +985,11 @@ sub parse_account_server_info {
 	my ($self, $args) = @_;
 	my $server_info;
 
-	if ($args->{switch} eq '0B60') { # tRO 2020
+	if ($args->{switch} eq '0B60') { # tRO 2020, twRO 2021
 		$server_info = {
 			len => 164,
-			types => 'a4 v Z20 v3 a132',
-			keys => [qw(ip port name state users property ip_port)],
+			types => 'a4 v Z20 v3 a128 V',
+			keys => [qw(ip port name state users property ip_port unknown)],
 		};
 
 	} elsif ($args->{switch} eq '0AC4' || $args->{switch} eq '0B07') { # kRO Zero 2017, kRO ST 201703+, vRO 2021
@@ -1051,8 +1051,8 @@ sub reconstruct_account_server_info {
 	if ($args->{switch} eq '0B60') { # tRO 2020
 		$serverInfo = {
 			len => 164,
-			types => 'a4 v Z20 v3 a132',
-			keys => [qw(ip port name state users property ip_port)],
+			types => 'a4 v Z20 v3 a128 V',
+			keys => [qw(ip port name state users property ip_port unknown)],
 		};
 
 	} elsif ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4" || $args->{switch} eq '0B07') {
@@ -8225,9 +8225,9 @@ sub rodex_mail_list {
 
 	if ($args->{switch} eq '0B5F') {
 		$mail_info = {
-			len => 67,
-			type => 'C V2 C2 Z24 V v Z24 v',
-			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength sender2 Titlelength2)],
+			len => 45,
+			types => 'C V2 C2 Z24 V v x4',
+			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
 		};
 
 	} elsif ($args->{switch} eq '0AC2') {
@@ -9049,6 +9049,7 @@ sub skill_update {
 #TODO !
 sub overweight_percent {
 	my ($self, $args) = @_;
+	debug "Received overweight percent: $args->{percent}\n";
 }
 
 sub partylv_info {
@@ -11664,7 +11665,7 @@ sub roulette_window_update {
 # 0B01
 sub load_confirm {
 	my ($self, $args) = @_;
-	debug TF("You are allowed to use Keyboard"); # this only matter in ragexe client
+	debug TF("You are allowed to use Keyboard\n"); # this only matter in ragexe client
 }
 
 sub item_preview {
