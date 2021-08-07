@@ -985,11 +985,11 @@ sub parse_account_server_info {
 	my ($self, $args) = @_;
 	my $server_info;
 
-	if ($args->{switch} eq '0B60') { # tRO 2020
+	if ($args->{switch} eq '0B60') { # tRO 2020, twRO 2021
 		$server_info = {
 			len => 164,
-			types => 'a4 v Z20 v3 a132',
-			keys => [qw(ip port name state users property ip_port)],
+			types => 'a4 v Z20 v3 a128 V',
+			keys => [qw(ip port name state users property ip_port unknown)],
 		};
 
 	} elsif ($args->{switch} eq '0AC4' || $args->{switch} eq '0B07') { # kRO Zero 2017, kRO ST 201703+, vRO 2021
@@ -1051,8 +1051,8 @@ sub reconstruct_account_server_info {
 	if ($args->{switch} eq '0B60') { # tRO 2020
 		$serverInfo = {
 			len => 164,
-			types => 'a4 v Z20 v3 a132',
-			keys => [qw(ip port name state users property ip_port)],
+			types => 'a4 v Z20 v3 a128 V',
+			keys => [qw(ip port name state users property ip_port unknown)],
 		};
 
 	} elsif ($args->{switch} eq "0AC4" || $self->{packet_lut}{$args->{switch}} eq "0AC4" || $args->{switch} eq '0B07') {
@@ -9027,6 +9027,7 @@ sub skill_update {
 #TODO !
 sub overweight_percent {
 	my ($self, $args) = @_;
+	debug "Received overweight percent: $args->{percent}\n";
 }
 
 sub partylv_info {
