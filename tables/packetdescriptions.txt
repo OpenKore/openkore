@@ -13,7 +13,8 @@
 0073 Enter Map
 0074 Error logging into Map Server...
 0075 Char Init
-0077 Char Update
+0076 Char Update
+0077 Char Init
 0078 actor_display (actor exists)
 0079 Actor Connected
 007A Char Entry
@@ -32,6 +33,7 @@
 008E Public message by yourself
 0091 Map Changed
 0092 Map Server Changed
+0093 NPC ack enable
 0095 Actor Get Info (Name)
 0097 Private Message
 0098 Private Response
@@ -87,6 +89,7 @@
 00EC Deal Confirm
 00EE Deal Cancelled
 00F0 Deal Completed
+00F1 Deal undo
 00F2 Storage Capacity
 00F4 Storage Item Added
 00F6 Storage Item Removed
@@ -148,7 +151,7 @@
 014A Alignment Failed
 014B Alignment
 014C Guild Allies / Enemy List
-014E Guild Master Flag  
+014E Guild Master Flag
 0150 Guild Info
 0152 Guild Emblem Image
 0154 Guild Members List
@@ -183,7 +186,7 @@
 0184 Guild Ally / Enemy Un-Set Status
 0185 Guild Ally / Enemy Set Status
 0187 Request Sync Packet
-0188 Upgrade 
+0188 Upgrade
 0189 No Teleporting
 018B Exit
 018C Sense
@@ -215,6 +218,7 @@
 01B6 Guild Info : 0150
 01B8 Guild Zeny
 01B9 Actor Skill Failed
+01BE Ask pngameroom
 01C1 Remain Time Info
 01C2 Remain Time
 01C3 Special Message (broadcast local)
@@ -269,12 +273,17 @@
 020A Friend Removed
 020D Char Ban List
 020E Taekwon Misson
+020F PVP point
+0210 PVP point result
 0215 Skill Message (Gospel)
 0216 Adoption Baby Reply
 0219 Blacksmith Top 10 Ranking
 021A Alchemist Top 10 Ranking
 021B Blacksmith Points
 021C Alchemist Points
+021E Less Effect
+021F PK info
+0220 Crazy killer
 0221 Refinable Item List
 0223 Refine Message
 0224 Taekwon Ranking
@@ -300,6 +309,7 @@
 024A Mail New
 0250 Auction Result
 0252 Auction Item Search Request
+0253 Taekwon feel save
 0255 Mail Set Attachment
 0256 Auction Item Added
 0257 Mail Delete
@@ -316,6 +326,8 @@
 0287 Cash Dealer
 0289 Cash Dealer Buy Failed
 028A Actor Status (Freeze, Poison, ...)
+028E Charname is valid
+0290 Charname change result
 0291 Message String (stringtable)
 0293 Boss Map Info
 0294 Book Read
@@ -326,8 +338,10 @@
 0299 Item Rental Time Expired
 029A Inventory Item Added
 029B Mercenary Init
+029C Mercenary property
 029D Skills List
 02A2 Mercenary Status Info
+02A3 GameGuard lingo key
 02A6 GameGuard Request
 02AA Cash Shop Password Request
 02AC Cash Shop Password Result
@@ -341,6 +355,7 @@
 02B7 Quest Active
 02B8 Party Pickup Settings Info
 02B9 Hotkey List
+02BB Equipitem damaged
 02C1 NPC Talk
 02C5 Party Invite Result
 02C6 Party Invite by Name
@@ -413,7 +428,6 @@
 080B Booking Delete
 080E Party User HP Info
 080F Deal Item Added (Other)
-081B Buying Store Item Update
 0810 Buying Store Open
 0812 Buying Store Result
 0813 Buying Store Item List (You)
@@ -454,7 +468,11 @@
 08CB Rates Info
 08CD Actor Position
 08CF Spirit or Coin Count (revolving entities)
+08D0 Inventory Equip
+08D1 Inventory Un-Equip
 08D2 High Jump
+08D6 NPC clear dialog
+08E2 Navigation
 08E3 Char Update Info
 08FE Quest Update Mission Hunt
 08FF Actor Effect (Skill, Weight, ...)
@@ -497,6 +515,9 @@
 099D Received characters Info from Game Login Server
 099F Skill AOE Multiple
 09A0 Received characters from Game Login Server
+09A6 Banking check
+09A8 Banking deposit
+09AA Banking withdraw
 09AD Bargain Sale Item Info
 09B2 Bargain Sale Selling
 09B3 Bargain Sale Close
@@ -506,6 +527,8 @@
 09CD Message String (stringtable)
 09CF GameGuard Request
 09D1 Progress Bar Unit
+09D5 NPC market info
+09D7 NPC market purchase result
 09DA Guild Storage Log
 09DB actor_display (actor moved)
 09DC Actor Connected
@@ -546,7 +569,7 @@
 0A14 Rodex Character Name Received
 0A17 NPC Dynamic Create Result
 0A18 Enter Map
-0A1A Roullete Open 
+0A1A Roullete Open
 0A1C Roullete Info
 0A1E Roullete Close
 0A20 Roullete Generate
@@ -568,32 +591,39 @@
 0A34 Cash Shop Senbei Amount
 0A36 Monster HP Info Tiny
 0A37 Inventory Item Added
+0A38 User Interface (open system)
 0A3B Hat Effect Info
 0A41 Skill AOE Effect
 0A43 Party Join
 0A44 Party Users List
 0A47 Stylist UI Result
-0A49 Private Airship Request                                                                 
+0A49 Private Airship Request
 0A4A Private Airship Type
-0A4B Map Changed                                                                                        
+0A4B Map Changed
 0A4C Map Server Changed
 0A51 Rodex Character Name Received
+0A6F Message String (stringtable)
+0A7B EAC key
 0A7D Rodex Mail List
 0A7E Offline Store Items Ready
 0A84 Guild Info
 0A89 Actor Clone Vender Found
 0A8A Actor Clone Vender Lost
 0A8D Offline Store Itens
+0A91 Buying Store Item List (Other)
+0A95 Allow Other See Equipment
+0A96 Deal Item Added (Other)
 0A98 Switch Equip System Item Add Result
 0A9A Switch Equip System Item Remove Result
 0A9B Switch Equip System Log
 0A9D Switch Equip System Result
 0AA0 Refine UI Open
 0AA2 Refine UI Info
-0AA3 Refine UI Info Refine
-0AA4 Refine UI Info close
 0AA5 Guild Members List
+0AA8 Allow Other See Equipment
+0AB2 Party dead
 0AB8 Move Interrupt
+0AB9 Item preview
 0ABD Party User Level Info
 0ABE Warp Portal List
 0AC2 Rodex Mail List
@@ -605,25 +635,44 @@
 0ACB Your Status Info
 0ACC Exp Gain
 0ACD Connection Failed With Error
+0ADA Refine status
 0ADC Allow Other See Equipment
 0ADD Item Exists
 0ADE Overweight Percent
 0ADF Actor Get Info (Name)
 0AE0 Connection Failed With Error
+0AE2 User Interface (open system)
 0AE3 OTP Token Received
 0AE4 Party Joined (Other Player)
 0AE5 Party Users List
 0AE8 Change Dress
+0AF0 Action User Interface
+0AF7 Character Name
+0AFB Sage AutoSpell
 0AFD Sage AutoSpell
 0AFE Quest Update Mission Hunt
 0AFF Quest List
 0B03 Equipment Window (Microscope Other)
+0B05 Actor Clone Vender Found
 0B08 Item List Start
 0B09 Item List Stackable
 0B0A Item List Non-Stackable (Equips)
 0B0B Item List End
 0B0C Quest Added
+0B13 Item preview
+0B1B Load confirm
+0B1D Received Ping
 0B20 Hotkey List
+0B2F Homunculus Property
+0B31 New Skill
+0B33 Skill Update
+0B5F Rodex Mail List
+0B60 Account Info With Server Info
+0B6F Char Creation Successful
+0B72 Received characters from Game Login Server
+0B73 Spirit or Coin Count (revolving entities)
+0B7B Guild Info
+0B7D Guild Members List
 
 [Send]
 0064 Account Server Login
@@ -776,7 +825,6 @@
 0203 Friend Remove
 0204 Client hash
 0208 Friend Request Accept/Reject
-020D Homunculus Feed
 0212 GM Manner by Player Name
 0213 GM Request Status
 0217 Rank Blacksmith Request
@@ -806,7 +854,7 @@
 024F Auction Buy
 0251 Auction Search
 0254 Star Place Agree
-025B Cooking Request 
+025B Cooking Request
 025C Auction Info Self
 025D Auction Sell Stop
 0273 Mail Return
@@ -833,10 +881,12 @@
 0364 Storage Item Add
 0365 Storage Item Remove
 0366 Skill Use Location
+0367 Skill Use Location With Talkbox
 0368 Actor Get Info
 0369 Actor Get Info (Name)
 0436 Map Login
 0437 Character Move
+0438 Skill Use
 0439 Item Use
 0443 Skill Select
 0445 Cash Shop Buy Item
@@ -860,7 +910,7 @@
 0827 Char Delete
 0829 Char Delete Accept
 082B Char Delete Cancel
-0835 Search Store Info 
+0835 Search Store Info
 0838 Search Store Request Next Page
 083B Search Store Close
 083C SSI Item List on Click
@@ -885,19 +935,26 @@
 098F Char Delete Accept
 0998 Send Equip
 09A1 Character Received Sync
+09A7 Banking deposit request
+09A9 Banking withdraw request
+09AB Banking check request
 09D0 GameGuard Reply
 09D4 Sell or Buy Complete
+09D6 Buy bulk market
+09D8 Market close
 09F1 Rodex Request Zeny
 09F3 Rodex Request Item
 09FB Pet Evolution
-0A01 Hotkey Rotate
 09E8 Rodex Open Mail Box
 09E9 Rodex Close Mail Box
 09EA Rodex Read Mail
 09EE Rodex Next Page
+09EF Rodex Refresh Mail Box
 09F1 Rodex Zeny Request
 09F3 Rodex Item Request
+09F5 Rodex delete mail
 09FB Pet Evolution
+0A01 Hotkey Rotate
 0A03 Rodex Cancel Write Mail
 0A04 Rodex Add Item
 0A06 Rodex Remove Item
@@ -916,6 +973,7 @@
 0A39 Char Create Request
 0A46 Stylist UI Style Change
 0A49 Private Airship Request
+0A68 Open User Interface Request User Interface (open system)
 0A6E Rodex Mail Send
 0A75 Account Server Login (encrypted)
 0A76 Account Server Login
@@ -924,12 +982,19 @@
 0A99 Switch Equip System Remove Item
 0A9C Switch Equip System Switch
 0AA1 Refine UI Select
+0AA3 Refine UI Info Refine
+0AA4 Refine UI Info close
 0AAC Account Server Login
 0AC0 Rodex Open Mail Box
 0AC1 Rodex Refresh Mail Box
 0ACE Switch Equip System
 0ACF Account Server Login With OTP
 0AE8 Stylist UI Change Dress
+0AEF Attendance reward request
+0AF4 Skill Use Location
 0B10 Skill Start Use
 0B11 Skill Stop Use
+0B14 Inventory expansion request
+0B19 Inventory expansion rejected
+0B1C Ping
 0B21 Hotkey Change
