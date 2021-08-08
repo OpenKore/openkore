@@ -607,6 +607,8 @@
 0A7B EAC key
 0A7D Rodex Mail List
 0A7E Offline Store Items Ready
+0A82 Guild Member Delete
+0A83 Guild Member Leave
 0A84 Guild Info
 0A89 Actor Clone Vender Found
 0A8A Actor Clone Vender Lost
@@ -671,6 +673,7 @@
 0B31 New Skill
 0B32 Skills List
 0B33 Skill Update
+0B47 Char emblem update
 0B5F Rodex Mail List
 0B60 Account Info With Server Info
 0B6F Char Creation Successful
@@ -678,6 +681,7 @@
 0B73 Spirit or Coin Count (revolving entities)
 0B7B Guild Info
 0B7D Guild Members List
+0B7E New Guild Member
 
 [Send]
 0064 Account Server Login
