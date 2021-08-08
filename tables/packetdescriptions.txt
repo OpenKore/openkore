@@ -651,7 +651,7 @@
 0AF0 Action User Interface
 0AF7 Character Name
 0AFB Sage AutoSpell
-0AFD Sage AutoSpell
+0AFD Guild Position
 0AFE Quest Update Mission Hunt
 0AFF Quest List
 0B02 Connection Failed With Error
