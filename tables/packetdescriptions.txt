@@ -368,6 +368,7 @@
 02D0 Inventory Equipments List
 02D1 Storage Equipments List
 02D2 Cart Equipments List
+02D3 Bind on equip
 02D4 Inventory Item Added
 02D5 Disconnected from Server (unknown)
 02D7 Equipment Window (Microscope Other)
@@ -646,12 +647,14 @@
 0AE4 Party Joined (Other Player)
 0AE5 Party Users List
 0AE8 Change Dress
+0AE9 PinCode Request
 0AF0 Action User Interface
 0AF7 Character Name
 0AFB Sage AutoSpell
 0AFD Sage AutoSpell
 0AFE Quest Update Mission Hunt
 0AFF Quest List
+0B02 Connection Failed With Error
 0B03 Equipment Window (Microscope Other)
 0B05 Actor Clone Vender Found
 0B08 Item List Start
@@ -660,11 +663,13 @@
 0B0B Item List End
 0B0C Quest Added
 0B13 Item preview
+0B18 Inventory expansion result
 0B1B Load confirm
 0B1D Received Ping
 0B20 Hotkey List
 0B2F Homunculus Property
 0B31 New Skill
+0B32 Skills List
 0B33 Skill Update
 0B5F Rodex Mail List
 0B60 Account Info With Server Info
