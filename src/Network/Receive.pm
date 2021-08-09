@@ -6217,8 +6217,6 @@ sub guild_members_list {
 	for (my $i = 0; $i < length($args->{member_list}); $i += $guild_member_info->{len}) {
 		@{$guild{member}[$index]}{@{$guild_member_info->{keys}}} = unpack($guild_member_info->{types}, substr($args->{member_list}, $i, $guild_member_info->{len}));
 
-		# TODO: we shouldn't store the guildtitle of a guildmember both in $guild{positions} and $guild{member}, instead we should just store the rank index of the guildmember and get the title from the $guild{positions}
-		$guild{member}[$index]{title} = $guild{positions}[$guild{member}[$index]{position}]{title};
 		$guild{member}[$index]{name} = bytesToString($guild{member}[$index]{name}) if ($guild{member}[$index]{name});
 		$messageSender->sendGetCharacterName($guild{member}[$index]{charID}) if ($args->{switch} eq "0AA5");
 		$index++;
@@ -6325,9 +6323,8 @@ sub guild_update_member_position {
 		@{$position_info}{@{$guild_position_info->{keys}}} = unpack($guild_position_info->{types}, substr($args->{member_list}, $i, $guild_position_info->{len}));
 		foreach my $guildmember (@{$guild{member}}) {
 			if ($guildmember->{charID} eq $position_info->{charID}) {
-				message TF("Guild Member (%s) has the title changed from %s to %s\n",$guildmember->{name},$guildmember->{title}, $guild{positions}[$position_info->{position}]{title});
+				message TF("Guild Member (%s) has the title changed from %s to %s\n",$guildmember->{name}, $guild{positions}[ $guildmember->{position} ]{title}, $guild{positions}[$position_info->{position}]{title});
 				$guildmember->{position} = $position_info->{position};
-				$guildmember->{title} = $guild{positions}[$position_info->{position}]{title};
 				last;
 			}
 		}
@@ -6525,7 +6522,6 @@ sub guild_member_add {
 		foreach (@{$args->{KEYS}}) {
 			$guild{member}[$index]{$_} = $_;
 		}
-		$guild{member}[$index]{title} = $guild{positions}[$guild{member}[$index]{position}]{title};
 		$guild{member}[$index]{name} = bytesToString($guild{member}[$index]{name}) if ($guild{member}[$index]{name});
 	}
 
@@ -8221,9 +8217,9 @@ sub rodex_mail_list {
 
 	if ($args->{switch} eq '0B5F') {
 		$mail_info = {
-			len => 67,
-			type => 'C V2 C2 Z24 V v Z24 v',
-			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength sender2 Titlelength2)],
+			len => 45,
+			types => 'C V2 C2 Z24 V v x4',
+			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
 		};
 
 	} elsif ($args->{switch} eq '0AC2') {
@@ -11663,7 +11659,7 @@ sub roulette_window_update {
 # 0B01
 sub load_confirm {
 	my ($self, $args) = @_;
-	debug TF("You are allowed to use Keyboard"); # this only matter in ragexe client
+	debug TF("You are allowed to use Keyboard\n"); # this only matter in ragexe client
 }
 
 sub item_preview {

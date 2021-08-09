@@ -30,7 +30,7 @@ sub new {
 		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'035F' => ['character_move', 'a3', [qw(coordString)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'022D' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'022D' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'0363' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'07E4' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0362' => ['item_take', 'a4', [qw(ID)]],
