@@ -347,9 +347,13 @@ sub initHandlers {
 			["", T("request guild info")],
 			["info", T("displays guild info")],
 			["members", T("displays guild member info")],
+			[T("create <guild name>"), T("create a guild")],
 			[T("request <player name|player #>"), T("request player to join your guild")],
 			[T("join <flag>"), T("accepts a guild join request if <flag> is 1, deny if 0")],
-			["leave", T("leave the guild")]
+			[T("ally <player name|player #>"), T("request alliance to another guild")],
+			["leave", T("leave the guild")],
+			[T("kick <guild member #> <reason>"), T("kick a guild member out of the guild")],
+			[T("break  <guild name>"), T("disband your guild")]
 			], \&cmdGuild],
 		['help', [
 			T("Help displays commands"),

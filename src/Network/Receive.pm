@@ -1194,7 +1194,7 @@ sub map_loaded {
 		# Request for Guild Information
 		$messageSender->sendGuildRequestInfo(0) if ($masterServer->{serverType} ne 'twRO'); # twRO does not send this packet
 
-		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal)); # tested at bRO 2013.11.30, request for cashitemslist
+		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal twRO)); # tested at bRO 2013.11.30, request for cashitemslist
 		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 
 		# request to unfreeze char - alisonrag
@@ -5289,9 +5289,9 @@ sub character_name {
 	$name = bytesToString($args->{name});
 
 	if ($guild{member}) {
-		foreach my $guildmember (@{$guild{member}}) {
-			if ($guildmember->{charID} eq $args->{ID}) {
-				$guildmember->{name} = $name;
+		foreach my $guildMember (@{$guild{member}}) {
+			if ($guildMember->{charID} eq $args->{ID}) {
+				$guildMember->{name} = $name;
 				last;
 			}
 		}
@@ -6253,15 +6253,15 @@ sub guild_invite_result {
 sub guild_location {
 	my ($self, $args) = @_;
 
-	foreach my $guildmember (@{$guild{member}}) {
+	foreach my $guildMember (@{$guild{member}}) {
 		# check if char is the online (we can have more then 1 char per account in our guild)
 		# why use accountID instead of charID?
-		if ($guildmember->{ID} eq $args->{ID} && $guildmember->{online}) {
+		if ($guildMember->{ID} eq $args->{ID} && $guildMember->{online}) {
 			last if($args->{x} == 0 || $args->{y} == 0);
-			$guildmember->{pos}{x} = $args->{x};
-			$guildmember->{pos}{y} = $args->{y};
-			$guildmember->{pos_to}{x} = $args->{x};
-			$guildmember->{pos_to}{y} = $args->{y};
+			$guildMember->{pos}{x} = $args->{x};
+			$guildMember->{pos}{y} = $args->{y};
+			$guildMember->{pos_to}{x} = $args->{x};
+			$guildMember->{pos_to}{y} = $args->{y};
 			last;
 		}
 	}
@@ -6269,21 +6269,49 @@ sub guild_location {
 
 # Notifies clients of a guild of a leaving member (ZC_ACK_LEAVE_GUILD).
 # 015A <char name>.24B <reason>.40B
+# 0A83
 sub guild_leave {
 	my ($self, $args) = @_;
+	my ($name,  $msg);
 
-	message TF("%s has left the guild.\n" .
-		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
+	if ($args->{name}) {
+		$name = bytesToString($args->{name});
+	} elsif ($args->{charID}) {
+		foreach my $guildMember (@{$guild{member}}) {
+			if ($guildMember->{charID} eq $args->{charID}) {
+				$name = $guildMember->{name};
+				binRemove(\@{$guild{member}}, $guildMember);
+				last;
+			}
+		}
+	}
+
+	message	TF("%s has left the guild.\n" .
+		"Reason: %s\n", $name, bytesToString($args->{message})), "guildchat";
 }
 
 # Notifies clients of a guild of an expelled member.
 # 015C <char name>.24B <reason>.40B <account name>.24B (ZC_ACK_BAN_GUILD)
 # 0839 <char name>.24B <reason>.40B (ZC_ACK_BAN_GUILD_SSO)
+# 0A82
 sub guild_expulsion {
 	my ($self, $args) = @_;
+	my $name;
+
+	if ($args->{name}) {
+		$name = bytesToString($args->{name});
+	} elsif ($args->{charID}) {
+		foreach my $guildMember (@{$guild{member}}) {
+			if ($guildMember->{charID} eq $args->{charID}) {
+				$name = $guildMember->{name};
+				binRemove(\@{$guild{member}}, $guildMember);
+				last;
+			}
+		}
+	}
 
 	message TF("%s has been removed from the guild.\n" .
-		"Reason: %s\n", bytesToString($args->{name}), bytesToString($args->{message})), "schat";
+		"Reason: %s\n", $name, bytesToString($args->{message})), "guildchat";
 }
 
 # Guild member login notice.
@@ -6292,15 +6320,16 @@ sub guild_expulsion {
 # status:
 #     0 = offline
 #     1 = online
+# TODO: we can update the following information from this package: sex, hair_style, hair_color
 sub guild_member_online_status {
 	my ($self, $args) = @_;
 
-	foreach my $guildmember (@{$guild{member}}) {
-		if ($guildmember->{charID} eq $args->{charID}) {
-			if ($guildmember->{online} = $args->{online}) {
-				message TF("Guild member %s logged in.\n", $guildmember->{name}), "guildchat";
+	foreach my $guildMember (@{$guild{member}}) {
+		if ($guildMember->{charID} eq $args->{charID}) {
+			if ($guildMember->{online} = $args->{online}) {
+				message TF("Guild member %s logged in.\n", $guildMember->{name}), "guildchat";
 			} else {
-				message TF("Guild member %s logged out.\n", $guildmember->{name}), "guildchat";
+				message TF("Guild member %s logged out.\n", $guildMember->{name}), "guildchat";
 			}
 			last;
 		}
@@ -6321,10 +6350,10 @@ sub guild_update_member_position {
 	my $position_info;
 	for (my $i = 0; $i < length($args->{member_list}); $i += $guild_position_info->{len}) {
 		@{$position_info}{@{$guild_position_info->{keys}}} = unpack($guild_position_info->{types}, substr($args->{member_list}, $i, $guild_position_info->{len}));
-		foreach my $guildmember (@{$guild{member}}) {
-			if ($guildmember->{charID} eq $position_info->{charID}) {
-				message TF("Guild Member (%s) has the title changed from %s to %s\n",$guildmember->{name}, $guild{positions}[ $guildmember->{position} ]{title}, $guild{positions}[$position_info->{position}]{title});
-				$guildmember->{position} = $position_info->{position};
+		foreach my $guildMember (@{$guild{member}}) {
+			if ($guildMember->{charID} eq $position_info->{charID}) {
+				message TF("Guild Member (%s) has the title changed from %s to %s\n",$guildMember->{name}, $guild{positions}[ $guildMember->{position} ]{title}, $guild{positions}[$position_info->{position}]{title});
+				$guildMember->{position} = $position_info->{position};
 				last;
 			}
 		}
@@ -6365,14 +6394,19 @@ sub guild_name {
 	debug "guild name: $guildName\n";
 
 	# emulate client behavior
-	return if ($masterServer->{serverType} eq 'twRO'); # twRO does not send these packets:
-	$messageSender->sendGuildMasterMemberCheck();
-	$messageSender->sendGuildRequestInfo(4);			# Requests for Expulsion list
-	$messageSender->sendGuildRequestInfo(0);			# Requests for Basic Information Guild, Hostile Alliance Information
-	$messageSender->sendGuildRequestInfo(1);			# Requests for Members list, list job title
-	$messageSender->sendGuildRequestEmblem($guildID);	# Requests for Guild Emblem
-	# TODO: check if is necessary use PAGE 2 (title information list)
-	# $messageSender->sendGuildRequestInfo(2);			# Requests for List job title, title information list [Guild Title System]
+	if ($masterServer->{serverType} eq 'twRO') {
+		$messageSender->sendGuildRequestInfo(0);		# Requests for Basic Information Guild, Hostile Alliance Information
+		$messageSender->sendGuildRequestInfo(3);
+		$messageSender->sendGuildRequestInfo(1);		# Requests for Members list, list job title
+	} else {
+		$messageSender->sendGuildMasterMemberCheck();
+		$messageSender->sendGuildRequestInfo(4);			# Requests for Expulsion list
+		$messageSender->sendGuildRequestInfo(0);			# Requests for Basic Information Guild, Hostile Alliance Information
+		$messageSender->sendGuildRequestInfo(1);			# Requests for Members list, list job title
+		$messageSender->sendGuildRequestEmblem($guildID);	# Requests for Guild Emblem
+		# TODO: check if is necessary use PAGE 2 (title information list)
+		# $messageSender->sendGuildRequestInfo(2);			# Requests for List job title, title information list [Guild Title System]
+	}
 }
 
 # Guild invite (ZC_REQ_JOIN_GUILD).
@@ -6486,14 +6520,33 @@ sub guild_skills_list {
 # 0163 <packet len>.W { <char name>.24B <account name>.24B <reason>.40B }*
 # 0163 <packet len>.W { <char name>.24B <reason>.40B }* (PACKETVER >= 20100803)
 # Change 64 to 88 if needed
-sub guild_expulsionlist {
+# 0B7C
+sub guild_expulsion_list {
 	my ($self, $args) = @_;
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 64) {
 
-		my ($name, $acc, $cause) = unpack('Z24 Z24 Z40', substr($args->{RAW_MSG}, $i, 64));
+	my $guild_expulsion_list;
+	if ($args->{switch} eq "0B7C") {
+		$guild_expulsion_list = {
+			len => 68,
+			types => 'a4 Z40 Z24',
+			keys => [qw(charID cause name)],
+		};
+	} else { # 0163
+		$guild_expulsion_list = {
+			len => 88,
+			types => 'Z24 Z24 Z40',
+			keys => [qw(name acc cause)],
+		};
+	}
 
-		$guild{expulsion}{$acc}{name} = bytesToString($name);
-		$guild{expulsion}{$acc}{cause} = bytesToString($cause);
+	delete $guild{expulsion};
+	my $index = 0;
+
+	for (my $i = 0; $i < length($args->{expulsion_list}); $i += $guild_expulsion_list->{len}) {
+		@{$guild{expulsion}[$index]}{@{$guild_expulsion_list->{keys}}} = unpack($guild_expulsion_list->{types}, substr($args->{expulsion_list}, $i, $guild_expulsion_list->{len}));
+		$guild{expulsion}[$index]{name} = bytesToString($guild{expulsion}[$index]{name}) if ($guild{expulsion}[$index]{name});
+		$guild{expulsion}[$index]{cause} = bytesToString($guild{expulsion}[$index]{cause}) if ($guild{expulsion}[$index]{cause});
+		$index++;
 	}
 }
 
@@ -6502,25 +6555,26 @@ sub guild_expulsionlist {
 sub guild_member_map_change {
 	my ($self, $args) = @_;
 
-	foreach my $guildmember (@{$guild{member}}) {
-		if ($guildmember->{charID} eq $args->{charID}) {
-			$guildmember->{pos} = {};
-			$guildmember->{pos_to} = {};
-			$guildmember->{map} = bytesToString($args->{mapName});
-			debug("Guild Member: %s changed map to %s\n",$guildmember->{name}, $guildmember->{map});
+	foreach my $guildMember (@{$guild{member}}) {
+		if ($guildMember->{charID} eq $args->{charID}) {
+			$guildMember->{pos} = {};
+			$guildMember->{pos_to} = {};
+			$guildMember->{map} = bytesToString($args->{mapName});
+			debug sprintf("Guild Member: %s changed map to %s\n",$guildMember->{name}, $guildMember->{map});
 			last;
 		}
 	}
 }
 # Notifies that a member was added in the guild
 # 0182 <account>.L <char id>.L <hair style>.W <hair color>.W <gender>.W <class>.W <level>.W <contrib exp>.L <state>.L <position>.L <memo>.50B <name>.24B
+# 0B7E
 sub guild_member_add {
 	my ($self, $args) = @_;
 
 	if($guild{member}) {
-		my $index = scalar $guild{member};
+		my $index = scalar @{$guild{member}};
 		foreach (@{$args->{KEYS}}) {
-			$guild{member}[$index]{$_} = $_;
+			@{$guild{member}[$index]}{$_} = $args->{$_};
 		}
 		$guild{member}[$index]{name} = bytesToString($guild{member}[$index]{name}) if ($guild{member}[$index]{name});
 	}
@@ -9954,7 +10008,9 @@ sub battleground_message {
 sub battleground_emblem {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
-}# 0152
+}
+
+# 0152
 # TODO
 sub guild_emblem {
 	my ($self, $args) = @_;
@@ -9968,9 +10024,23 @@ sub guild_emblem_update {
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }
 
+# 0B47
+# TODO
+sub char_emblem_update {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+}
+
 # 0174
 # TODO
 sub guild_position_changed {
+	my ($self, $args) = @_;
+	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+}
+
+# 0AFD
+# TODO
+sub guild_position {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
 }

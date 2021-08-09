@@ -223,7 +223,7 @@ sub new {
 		'015E' => ['guild_broken', 'V', [qw(flag)]], # clif_guild_broken
 		'0160' => ['guild_member_setting_list'],
 		'0162' => ['guild_skills_list'],
-		'0163' => ['guild_expulsionlist'],
+		'0163' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], #-1
 		'0166' => ['guild_members_title_list'],
 		'0167' => ['guild_create_result', 'C', [qw(type)]],
 		'0169' => ['guild_invite_result', 'C', [qw(type)]],
@@ -238,7 +238,7 @@ sub new {
 		'0179' => ['identify', 'a2 C', [qw(ID flag)]],
 		'017B' => ['card_merge_list'],
 		'017D' => ['card_merge_status', 'a2 a2 C', [qw(item_index card_index fail)]],
-		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
+		'017F' => ['guild_chat', 'v Z*', [qw(len message)]], # -1
 		'0181' => ['guild_opposition_result', 'C', [qw(flag)]], # clif_guild_oppositionack
 		'0182' => ['guild_member_add', 'a4 a4 v5 V3 Z50 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position memo name)]], # 106
 		'0184' => ['guild_unally', 'a4 V', [qw(guildID flag)]], # clif_guild_delalliance
@@ -659,6 +659,8 @@ sub new {
 		'0A6F' => ['message_string', 'v2 V Z*', [qw(len index color param)]], # -1
 		'0A7B' => ['EAC_key'],
 		'0A7D' => ['rodex_mail_list', 'v C3 a*', [qw(len type amount isEnd mailList)]],   # -1
+		'0A82' => ['guild_expulsion', 'Z40 a4', [qw(message charID)]], # 46
+		'0A83' => ['guild_leave', 'a4 Z40', [qw(charID message)]], # 46
 		'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id)]],
 		'0A89' => ['offline_clone_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['offline_clone_lost', 'a4', [qw(ID)]],
@@ -703,8 +705,8 @@ sub new {
  		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AF0' => ['action_ui', 'C V', [qw(type data)]],
 		'0AF7' => ['character_name', 'v a4 Z24', [qw(flag ID name)]],
-		'0AFB' => ['sage_autospell', 'v a*', [qw(len autospell_list)]],
-		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0AFB' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0AFD' => ['guild_position', 'v a4', [qw(len charID)]], #herc PR 2176
 		'0AFE' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'0AFF' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'0B03' => ['show_eq', 'v Z24 v9 C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color clothes_color2 sex equips_info)]],
@@ -721,13 +723,16 @@ sub new {
 		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B31' => ['skill_add', 'v V v3 C v', [qw(skillID target lv sp range upgradable lv2)]], #17
 		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
+		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
 		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
 		'0B7B' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4 Z24', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id master)]], #118
-		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], #-1
+		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
+		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], # -1
+		'0B7E' => ['guild_member_add', 'a4 a4 v5 V4 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)]], # 60 TODO
 		# 'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 
