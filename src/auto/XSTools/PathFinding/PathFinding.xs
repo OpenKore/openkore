@@ -36,6 +36,7 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		SV * max_y
 	
 	PREINIT:
+		session = NULL;
 		char *weight_map_data = NULL;
 	
 	CODE:
@@ -194,7 +195,8 @@ PathFinding_run(session, solution_array)
 		PathFinding session
 		SV *solution_array
 	PREINIT:
-		int status;
+		session = NULL;
+		int status = 0;
 	CODE:
 		
 		/* Check for any missing arguments */
@@ -260,7 +262,8 @@ int
 PathFinding_runcount(session)
 		PathFinding session
 	PREINIT:
-		int status;
+		session = NULL;
+		int status = 0;
 	CODE:
 
 		status = CalcPath_pathStep (session);
@@ -276,5 +279,7 @@ PathFinding_runcount(session)
 void
 PathFinding_DESTROY(session)
 		PathFinding session
+	PREINIT:
+		session = NULL; /* shut up compiler warning */
 	CODE:
 		CalcPath_destroy (session);

@@ -308,7 +308,7 @@ namespace PaddedPackets {
 	{
 		unsigned int slot = (packet * packet + map_sync + sync + account_id) & 0xF;
 		#ifdef ROPP_DEBUG
-			printf("Algorithm = %d\n", slot);
+			printf("Algorithm = %u\n", slot);
 		#endif
 		return funcs[slot](packet * account_id + map_sync * sync);
 	}
