@@ -403,16 +403,7 @@ sub main {
 			message T("Teleport due to dropping attack target\n"), "teleport";
 			useTeleport(1);
 		}
-		
-	} elsif(!defined $args->{attackMethod}{type}) {
-		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
-		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
-		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
-		if (timeOut($args->{ai_attack_failed_give_up})) {
-			delete $args->{ai_attack_failed_give_up}{time};
-			message T("Unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
-			giveUp();
-		}	
+
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 		my $cell = get_kite_position($char, 1, $target);
 		if ($cell) {
@@ -423,6 +414,14 @@ sub main {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
 		
+	} elsif(!defined $args->{attackMethod}{type}) {
+		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
+		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
+		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
+		if (timeOut($args->{ai_attack_failed_give_up})) {
+			delete $args->{ai_attack_failed_give_up}{time};
+			giveUp();
+		}
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
@@ -433,8 +432,9 @@ sub main {
 		$args->{monsterLastMoveTime} = $target->{time_move};
 
 		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
-		
+
 		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+		
 		my $result;
 		
 		if ($pos) {
@@ -449,19 +449,6 @@ sub main {
 				avoidWalls => 0,
 				meetingSubRoute => 1
 			);
-
-		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{distance});
-		my $msg;
-		# Move to the closest spot
-		if ($best_spot) {
-			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
-		} else {
-			warning TF("%s; no acceptable place to stand\n", $msg);
-			$target->{attack_failed} = time;
-			AI::dequeue;
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "attack");
-		}
 
 			if (!$result) {
 				# Unable to calculate a route to target
@@ -485,6 +472,26 @@ sub main {
 			}
 		}
 		
+		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{distance});
+
+		# Move to the closest spot
+		my $msg = TF("No LOS in melee from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+		
+		if ($best_spot) {
+			message TF("%s moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
+			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+		} else {
+			warning TF("%s; no acceptable place to stand\n", $msg);
+			$target->{attack_failedLOS} = time;
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
+			if ($config{'teleportAuto_dropTarget'}) {
+				message T("Teleport due to dropping attack target\n");
+				useTeleport(1);
+			}
+		}
+
 	} elsif (
 		# We are a ranged attacker in range without LOS
 		$args->{attackMethod}{maxDistance} > 1.5 &&
@@ -495,7 +502,6 @@ sub main {
 
 		# Move to the closest spot
 		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-		
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
 			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
@@ -506,7 +512,7 @@ sub main {
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "attack");
 		}
-		
+
 	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
 	 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
@@ -619,4 +625,5 @@ sub main {
 	
 	Plugins::callHook('AI::Attack::main', {target => $target})
 }
+
 1;
