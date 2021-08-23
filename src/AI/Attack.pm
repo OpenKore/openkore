@@ -474,6 +474,7 @@ sub main {
 		
 		# We are a ranged attacker in range without LOS
 		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{distance});
+		my $msg;
 		
 		if ($best_spot) {
 			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
