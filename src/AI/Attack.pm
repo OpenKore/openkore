@@ -420,6 +420,7 @@ sub main {
 		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
 		if (timeOut($args->{ai_attack_failed_give_up})) {
 			delete $args->{ai_attack_failed_give_up}{time};
+			message T("Unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 			giveUp();
 		}
 	} elsif (
@@ -434,7 +435,6 @@ sub main {
 		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 
 		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
-		
 		my $result;
 		
 		if ($pos) {
@@ -472,7 +472,7 @@ sub main {
 			}
 		}
 		
-		# We are a ranged attacker in range without LOS
+		# Move to the closest spot
 		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{distance});
 		my $msg;
 		
@@ -492,7 +492,7 @@ sub main {
 
 	} elsif (
 		# We are a ranged attacker in range without LOS
-		$args->{attackMethod}{maxDistance} > 1.5 &&
+		$args->{attackMethod}{maxDistance} > 1 &&
 		$config{attackCheckLOS} &&
 		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
 	) {
