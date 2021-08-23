@@ -425,7 +425,7 @@ sub main {
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
-		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})
+		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})||!$field->checkLOS($realMyPos, $realMonsterPos)
 	) {
 		$args->{move_start} = time;
 		$args->{monsterPos} = {%{$monsterPos}};
