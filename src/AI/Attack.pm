@@ -435,6 +435,8 @@ sub main {
 		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 
 		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+		
 		my $result;
 		
 		if ($pos) {
@@ -443,11 +445,13 @@ sub main {
 			$result = $char->route(
 				undef,
 				@{$pos}{qw(x y)},
+				@{$best_spot}{qw(x y)},
 				maxRouteTime => $config{'attackMaxRouteTime'},
 				attackID => $ID,
 				noMapRoute => 1,
 				avoidWalls => 0,
-				meetingSubRoute => 1
+				meetingSubRoute => 1,
+				LOSSubRoute => 1
 			);
 
 			if (!$result) {
@@ -465,25 +469,8 @@ sub main {
 		} else {
 			$target->{attack_failed} = time;
 			AI::dequeue;
-			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
-			if ($config{'teleportAuto_dropTarget'}) {
-				message T("Teleport due to dropping attack target\n");
-				useTeleport(1);
-			}
-		}
-		
-		# Move to the closest spot
-		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{distance});
-		my $msg;
-		
-		if ($best_spot) {
-			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
-		} else {
-			warning TF("%s; no acceptable place to stand\n", $msg);
-			$target->{attack_failedLOS} = time;
-			AI::dequeue;
-			AI::dequeue;
 			AI::dequeue if (AI::action eq "attack");
+			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
 			if ($config{'teleportAuto_dropTarget'}) {
 				message T("Teleport due to dropping attack target\n");
 				useTeleport(1);
