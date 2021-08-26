@@ -106,29 +106,4 @@ sub skills_list {
 	}
 }
 
-#expand_inventory_result
-use constant {
-	EXPAND_INVENTORY_RESULT_SUCCESS => 0x0,
-	EXPAND_INVENTORY_RESULT_FAILED => 0x1,
-	EXPAND_INVENTORY_RESULT_OTHER_WORK => 0x2,
-	EXPAND_INVENTORY_RESULT_MISSING_ITEM => 0x3,
-	EXPAND_INVENTORY_RESULT_MAX_SIZE => 0x4,
-};
-
-sub inventory_expansion_result {
-	my($self, $args) = @_;
-#msgstringtable
-	if ($args->{result} == EXPAND_INVENTORY_RESULT_SUCCESS) {
-		message TF("You have successfully expanded the possession limit"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_FAILED) {
-		message TF("Failed to expand the maximum possession limit."),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_OTHER_WORK) {
-		message TF("To expand the possession limit, please close other windows"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MISSING_ITEM) {
-		message TF("Failed to expand the maximum possession limit, insufficient required item"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {
-		message TF("You can no longer expand the maximum possession limit."),"info";
-	}
-}
-
 1;

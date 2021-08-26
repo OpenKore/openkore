@@ -501,6 +501,15 @@ use constant {
 	CONFIG_HOMUNCULUS_AUTOFEED => 3,
 };
 
+#expand_inventory_result
+use constant {
+	EXPAND_INVENTORY_RESULT_SUCCESS => 0x0,
+	EXPAND_INVENTORY_RESULT_FAILED => 0x1,
+	EXPAND_INVENTORY_RESULT_OTHER_WORK => 0x2,
+	EXPAND_INVENTORY_RESULT_MISSING_ITEM => 0x3,
+	EXPAND_INVENTORY_RESULT_MAX_SIZE => 0x4,
+};
+
 # Display gained exp.
 # 07F6 <account id>.L <amount>.L <var id>.W <exp type>.W (ZC_NOTIFY_EXP)
 # 0ACC <account id>.L <amount>.Q <var id>.W <exp type>.W (ZC_NOTIFY_EXP2)
@@ -11730,6 +11739,33 @@ sub roulette_window_update {
 sub load_confirm {
 	my ($self, $args) = @_;
 	debug TF("You are allowed to use Keyboard\n"); # this only matter in ragexe client
+}
+
+# Inventory Expansion Result
+# 0B18 <Result>W
+# result:
+#    EXPAND_INVENTORY_RESULT_SUCCESS    = 0x0
+#    EXPAND_INVENTORY_RESULT_FAILED     = 0x1
+#    EXPAND_INVENTORY_RESULT_OTHER_WORK = 0x2
+#    EXPAND_INVENTORY_RESULT_OTHER_WORK = 0x3
+#    EXPAND_INVENTORY_RESULT_OTHER_WORK = 0x4
+sub inventory_expansion_result {
+	my($self, $args) = @_;
+
+	#msgstringtable
+	if ($args->{result} == EXPAND_INVENTORY_RESULT_SUCCESS) {
+		message TF("You have successfully expanded the possession limit"),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_FAILED) {
+		message TF("Failed to expand the maximum possession limit."),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_OTHER_WORK) {
+		message TF("To expand the possession limit, please close other windows"),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MISSING_ITEM) {
+		message TF("Failed to expand the maximum possession limit, insufficient required item"),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {
+		message TF("You can no longer expand the maximum possession limit."),"info";
+	} else {
+		message TF("Unknown result in inventory expansion (%s).", $args->{result}),"info";
+	}
 }
 
 sub item_preview {
