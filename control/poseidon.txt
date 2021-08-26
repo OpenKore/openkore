@@ -15,6 +15,6 @@ queryserver_port=24390
 # to the poseidon operate properly !
 # The available server types for now are : Default, bRO_.* (check servertypes.txt)
 # You should modify this if you're having problems with char list.
-server_type=twRO_2021-06-21
+server_type=Default
 
 debug=0
