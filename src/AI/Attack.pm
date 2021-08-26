@@ -127,7 +127,7 @@ sub process {
 
 		# Mob-training, stop attacking the monster if it is already aggressive
 		if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
-			if ($control->{attack_auto} == 3
+			if ($control->{attack_auto} == 2
 				&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
 
 				message TF("Dropping target - %s (%s) has been provoked\n", $monster->{name}, $monster->{binID});
@@ -426,7 +426,8 @@ sub main {
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
-		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})||!$field->checkLOS($realMyPos, $realMonsterPos)
+		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance}) || 
+		(blockDistance($realMyPos, $realMonsterPos) && !$field->checkLOS($realMyPos, $realMonsterPos))
 	) {
 		$args->{move_start} = time;
 		$args->{monsterPos} = {%{$monsterPos}};
@@ -435,7 +436,6 @@ sub main {
 		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 
 		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
-		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 		my $result;
 		
 		if ($pos) {
@@ -444,8 +444,8 @@ sub main {
 			$result = $char->route(
 				undef,
 				@{$pos}{qw(x y)},
-				@{$best_spot}{qw(x y)},
 				maxRouteTime => $config{'attackMaxRouteTime'},
+				field => $field,
 				attackID => $ID,
 				noMapRoute => 1,
 				avoidWalls => 0,
@@ -458,8 +458,6 @@ sub main {
 				# Unable to calculate a route to target
 				$target->{attack_failed} = time;
 				AI::dequeue;
-				AI::dequeue;
-				AI::dequeue if (AI::action eq "attack");
 				message T("Unable to calculate a route to target, dropping target\n"), "ai_attack";
 				if ($config{'teleportAuto_dropTarget'}) {
 					message T("Teleport due to dropping attack target\n");
@@ -470,7 +468,7 @@ sub main {
 			}
 			
 		} else {
-				$target->{attack_failedLOS} = time;
+				$target->{attack_failed} = time;
 				AI::dequeue;
 				message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
 				if ($config{'teleportAuto_dropTarget'}) {
@@ -499,7 +497,32 @@ sub main {
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "attack");
 		}
+	
+	} elsif (
+		# We are a melee attacker in range without LOS
+		$args->{attackMethod}{maxDistance} == 1 &&
+		$config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) &&
+		!$field->checkLOS($realMyPos, $realMonsterPos)
+	 ) {
 
+		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+		
+		# Move to the closest spot
+		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+		
+		if ($best_spot) {
+			message TF("%s moving to (%s, %s)\n", $char, $best_spot->{x}, $best_spot->{y});
+			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+		} else {
+			$target->{attack_failedLOS} = time;
+				AI::dequeue;
+				message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
+				if ($config{'teleportAuto_dropTarget'}) {
+					message T("Teleport due to dropping attack target\n");
+					useTeleport(1);
+				}
+		}
+		
 	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
 	 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
