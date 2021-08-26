@@ -11816,17 +11816,17 @@ sub inventory_expansion_result {
 
 	#msgstringtable
 	if ($args->{result} == EXPAND_INVENTORY_RESULT_SUCCESS) {
-		message TF("You have successfully expanded the possession limit"),"info";
+		message TF("You have successfully expanded the possession limit.\n"),"info";
 	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_FAILED) {
-		message TF("Failed to expand the maximum possession limit."),"info";
+		message TF("Failed to expand the maximum possession limit.\n"),"info";
 	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_OTHER_WORK) {
-		message TF("To expand the possession limit, please close other windows"),"info";
+		message TF("To expand the possession limit, please close other windows.\n"),"info";
 	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MISSING_ITEM) {
-		message TF("Failed to expand the maximum possession limit, insufficient required item"),"info";
+		message TF("Failed to expand the maximum possession limit, insufficient required item.\n"),"info";
 	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {
-		message TF("You can no longer expand the maximum possession limit."),"info";
+		message TF("You can no longer expand the maximum possession limit.\n"),"info";
 	} else {
-		message TF("Unknown result in inventory expansion (%s).", $args->{result}),"info";
+		message TF("Unknown result in inventory expansion (%s).\n", $args->{result}),"info";
 	}
 }
 
