@@ -9075,6 +9075,68 @@ sub message_string {
 	});
 }
 
+# TODO: move @skillsID to Actor, per-actor {skills}, Skill::DynamicInfo
+sub skills_list {
+	my ($self, $args) = @_;
+
+	return unless changeToInGameState();
+
+	my $msg = $args->{RAW_MSG};
+
+	my $skill_info;
+
+	if ($args->{switch} eq '0B32') {
+		$skill_info = {
+			len => 15,
+			types => 'v V v3 C v',
+			keys => [qw(ID targetType lv sp range up lv2)],
+		};
+	} else {
+		$skill_info = {
+			len => 37,
+			types => 'v1 V1 v3 Z24 C1',
+			keys => [qw(ID targetType lv sp range handle up)],
+		};
+	}
+
+	# TODO: per-actor, if needed at all
+	# Skill::DynamicInfo::clear;
+	my ($ownerType, $hook, $actor) = @{{
+		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'0235' => [Skill::OWNER_HOMUN, 'packet_homunSkills', $char->{homunculus}],
+		'029D' => [Skill::OWNER_MERC, 'packet_mercSkills', $char->{mercenary}],
+		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+	}->{$args->{switch}}};
+
+	my $skillsIDref = $actor ? \@{$actor->{slave_skillsID}} : \@skillsID;
+	delete @{$char->{skills}}{@$skillsIDref};
+	@$skillsIDref = ();
+
+	# TODO: $actor can be undefined here
+	undef @{$actor->{slave_skillsID}};
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $skill_info->{len}) {
+		my $skill;
+		@{$skill}{@{$skill_info->{keys}}} = unpack($skill_info->{types}, substr($msg, $i, $skill_info->{len}));
+
+		my $handle = Skill->new(idn => $skill->{ID})->getHandle;
+
+		foreach(@{$skill_info->{keys}}) {
+			$char->{skills}{$handle}{$_} = $skill->{$_};
+		}
+
+		binAdd($skillsIDref, $handle) unless defined binFind($skillsIDref, $handle);
+		Skill::DynamicInfo::add($skill->{ID}, $handle, $skill->{lv}, $skill->{sp}, $skill->{range}, $skill->{targetType}, $ownerType);
+
+		Plugins::callHook($hook, {
+			ID => $skill->{ID},
+			handle => $handle,
+			level => $skill->{lv},
+			upgradable => $skill->{up},
+			level2 => $skill->{lv2},
+		});
+	}
+}
+
 # TODO: use $args->{type} if present
 sub skill_update {
 	my ($self, $args) = @_;

@@ -716,6 +716,7 @@ sub new {
 		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate tab hotkeys)]],#herc PR 2468
 		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B31' => ['skill_add', 'v V v3 C v', [qw(skillID target lv sp range upgradable lv2)]], #17
+		'0B32' => ['skills_list'],
 		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
 		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
 		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
@@ -1399,56 +1400,6 @@ sub skill_used_no_damage {
 		x => 0,
 		y => 0
 	});
-}
-
-sub skills_list {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-
-	my ($slave, $owner, $hook);
-
-	my $msg = $args->{RAW_MSG};
-
-	if ($args->{switch} eq '010F') {
-		$hook = 'packet_charSkills'; $owner = Skill::OWNER_CHAR;
-
-		undef @skillsID;
-		delete $char->{skills};
-		Skill::DynamicInfo::clear();
-
-	} elsif ($args->{switch} eq '0235') {
-		$slave = $char->{homunculus}; $hook = 'packet_homunSkills'; $owner = Skill::OWNER_HOMUN;
-
-	} elsif ($args->{switch} eq '029D') {
-		$slave = $char->{mercenary}; $hook = 'packet_mercSkills'; $owner = Skill::OWNER_MERC;
-	}
-
-	my $skillsIDref = $slave ? \@{$slave->{slave_skillsID}} : \@skillsID;
-
-	undef @{$slave->{slave_skillsID}};
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
-		my ($skillID, $targetType, $level, $sp, $range, $handle, $up)
-		= unpack 'v V v3 Z24 C', substr $msg, $i, 37;
-		$handle = Skill->new (idn => $skillID)->getHandle unless $handle;
-
-		$char->{skills}{$handle}{ID} = $skillID;
-		$char->{skills}{$handle}{sp} = $sp;
-		$char->{skills}{$handle}{range} = $range;
-		$char->{skills}{$handle}{up} = $up;
-		$char->{skills}{$handle}{targetType} = $targetType;
-		$char->{skills}{$handle}{lv} = $level unless $char->{skills}{$handle}{lv}; # TODO: why is this unless here? it seems useless
-
-		binAdd ($skillsIDref, $handle) unless defined binFind ($skillsIDref, $handle);
-		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, $owner);
-
-		Plugins::callHook($hook, {
-			ID => $skillID,
-			handle => $handle,
-			level => $level,
-			upgradable => $up,
-		});
-	}
 }
 
 # TODO: test the latest code optimization

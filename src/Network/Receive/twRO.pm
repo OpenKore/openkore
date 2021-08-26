@@ -38,8 +38,6 @@ sub new {
 		'0A0B' => ['cart_item_added', 'a2 V V C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
 		'0A37' => ['inventory_item_added', 'a2 v V C3 a16 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]],
 		'0ADD' => ['item_appeared', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
-		'0B32' => ['skills_list'],
-		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
 	);
 
 	foreach my $switch (keys %packets) {
@@ -65,45 +63,6 @@ sub new {
 	$self->{vender_items_list_item_pack} = 'V v2 C V C3 a16 a25';
 
 	return $self;
-}
-
-sub skills_list {
-	my ($self, $args) = @_;
-
-	return unless Network::Receive::changeToInGameState();
-
-	my $msg = $args->{RAW_MSG};
-
-	# TODO: per-actor, if needed at all
-	# Skill::DynamicInfo::clear;
-	my ($ownerType, $hook, $actor) = @{{
-		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills'],
-	}->{$args->{switch}}};
-
-	my $skillsIDref = $actor ? \@{$actor->{slave_skillsID}} : \@skillsID;
-	delete @{$char->{skills}}{@$skillsIDref};
-	@$skillsIDref = ();
-
-	# TODO: $actor can be undefined here
-	undef @{$actor->{slave_skillsID}};
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 15) {
-		my ($ID, $targetType, $lv, $sp, $range, $up, $lv2) = unpack 'v V v3 C v', substr $msg, $i, 15;
-		my $handle = Skill->new(idn => $ID)->getHandle;
-
-		@{$char->{skills}{$handle}}{qw(ID targetType lv sp range up)} = ($ID, $targetType, $lv, $sp, $range, $up);
-		# $char->{skills}{$handle}{lv} = $lv unless $char->{skills}{$handle}{lv};
-
-		binAdd($skillsIDref, $handle) unless defined binFind($skillsIDref, $handle);
-		Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $targetType, $ownerType);
-
-		Plugins::callHook($hook, {
-			ID => $ID,
-			handle => $handle,
-			level => $lv,
-			upgradable => $up,
-			level2 => $lv2,
-		});
-	}
 }
 
 1;

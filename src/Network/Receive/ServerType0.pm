@@ -723,6 +723,7 @@ sub new {
 		'0B20' => ['hotkeys', 'C v a*', [qw(rotate tab hotkeys)]],#herc PR 2468
 		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B31' => ['skill_add', 'v V v3 C v', [qw(skillID target lv sp range upgradable lv2)]], #17
+		'0B32' => ['skills_list'],
 		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
 		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
 		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
@@ -1435,48 +1436,6 @@ sub skill_used_no_damage {
 		x => 0,
 		y => 0
 	});
-}
-
-# TODO: move @skillsID to Actor, per-actor {skills}, Skill::DynamicInfo
-sub skills_list {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-
-	my $msg = $args->{RAW_MSG};
-
-	# TODO: per-actor, if needed at all
-	# Skill::DynamicInfo::clear;
-
-	my ($ownerType, $hook, $actor) = @{{
-		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills'],
-		'0235' => [Skill::OWNER_HOMUN, 'packet_homunSkills', $char->{homunculus}],
-		'029D' => [Skill::OWNER_MERC, 'packet_mercSkills', $char->{mercenary}],
-	}->{$args->{switch}}};
-
-	my $skillsIDref = $actor ? \@{$actor->{slave_skillsID}} : \@skillsID;
-	delete @{$char->{skills}}{@$skillsIDref};
-	@$skillsIDref = ();
-
-	# TODO: $actor can be undefined here
-	undef @{$actor->{slave_skillsID}};
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
-		my ($ID, $targetType, $lv, $sp, $range, $handle, $up) = unpack 'v1 V1 v3 Z24 C1', substr $msg, $i, 37;
-		$handle ||= Skill->new(idn => $ID)->getHandle;
-
-		@{$char->{skills}{$handle}}{qw(ID targetType lv sp range up)} = ($ID, $targetType, $lv, $sp, $range, $up);
-		# $char->{skills}{$handle}{lv} = $lv unless $char->{skills}{$handle}{lv};
-
-		binAdd($skillsIDref, $handle) unless defined binFind($skillsIDref, $handle);
-		Skill::DynamicInfo::add($ID, $handle, $lv, $sp, $range, $targetType, $ownerType);
-
-		Plugins::callHook($hook, {
-			ID => $ID,
-			handle => $handle,
-			level => $lv,
-			upgradable => $up,
-		});
-	}
 }
 
 # 08CB
