@@ -499,7 +499,7 @@ sub processAttack {
 			# We are out of range
 			($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
 			($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance}) ||
-			(blockDistance($realMyPos, $realMonsterPos) && !$field->checkLOS($realMyPos, $realMonsterPos))
+			(!$field->checkLOS($realMyPos, $realMonsterPos))
 		) {
 			# The target monster moved; move to target
 			$args->{move_start} = time;
