@@ -14,7 +14,7 @@ use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Globals qw($masterServer);
-use Log qw(debug);
+use Log qw(debug error);
 use Utils qw(getHex);
 use Utils::Exceptions;
 use Network::Receive::ServerType0; # constants only
@@ -94,22 +94,78 @@ sub master_login {
 		$self->{sessionStore}->add(\%session);
 		$session{state} = 'About to select character';
 
+		my $kRO_Client = 0;
+		my $clientDate = 0;
+
+		if ($masterServer->{serverType} =~ /kRO_/i) {
+			use Data::Dumper;
+			my @match = $masterServer->{serverType} =~ /(\d+)/g;			
+			$clientDate = int(sprintf("%s%s%s", $match[0], $match[1], $match[2]));
+			$kRO_Client = 1;
+		}
+		
 		# Show list of character servers.
 		my @servers;
 		foreach my $charServer (@{$self->{charServers}}) {
 			my $ip = $charServer->getHost;
 			$ip = $client->{BSC_sock}->sockhost if $ip =~ /^0\./;
 
-			push @servers, {
-				ip => $ip,
-				port => $charServer->getPort,
-				name => $charServer->getName,
-				users => $charServer->getPlayersCount,
-				display => 5, # don't show number of players
-				ip_port => $ip . ':' . $charServer->getPort,
-			};
+			if ($kRO_Client) {
+				if ($clientDate < 20170315) {
+					push @servers, {
+						ip => $ip,
+						port => $charServer->getPort,
+						name => $charServer->getName,
+						users => $charServer->getPlayersCount,
+						display => 5, # don't show number of players
+						ip_port => $ip . ':' . $charServer->getPort,
+					};
+				} else {
+					push @servers, {
+						ip => $ip,
+						port => $charServer->getPort,
+						name => $charServer->getName,
+						users => $charServer->getPlayersCount,
+						display => 5, # don't show number of players
+						state => 0,
+						property => 0,
+						unknown => 0,
+						ip_port => $ip . ':' . $charServer->getPort,
+					};
+				}
+				next;
+			} else {
+				push @servers, {
+					ip => $ip,
+					port => $charServer->getPort,
+					name => $charServer->getName,
+					users => $charServer->getPlayersCount,
+					display => 5, # don't show number of players
+					ip_port => $ip . ':' . $charServer->getPort,
+				};
+			}
 		}
 		
+
+		if ($kRO_Client) {
+			if ($clientDate > 20170315) {
+				$client->send($self->{recvPacketParser}->reconstruct({
+					len => 100,
+					switch => '0AC4',
+					sessionID => pack('V', $session{sessionID}),
+					accountID => $session{accountID},
+					sessionID2 => pack('V', $session{sessionID2}),
+					accountSex => $session{sex},
+					lastLoginIP => "",
+					lastLoginTime => "",
+					unknown => "",
+					servers => \@servers,
+				}));
+				$client->close();
+				return;
+			}
+		}
+
 		$client->send($self->{recvPacketParser}->reconstruct({
 			switch => 'account_server_info',
 			# maybe sessionstore should store sessionID as bytes?
@@ -119,6 +175,7 @@ sub master_login {
 			accountSex => $session{sex},
 			servers => \@servers,
 		}));
+
 		$client->close();
 
 	} elsif ($result == ACCOUNT_NOT_FOUND) {
