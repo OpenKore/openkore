@@ -319,6 +319,7 @@ sub new {
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0AE8' => ['change_dress'],
 		'0AEF' => ['attendance_reward_request'],
+		'0AF4' => ['skill_use_location', 'v4 C', [qw(lv skillID x y unknown)]], #11
 		'0B10' => ['start_skill_use', 'v2 a4', [qw(skillID lv targetID)]],
 		'0B11' => ['stop_skill_use', 'v', [qw(skillID)]],
 		'0B14' => ['inventory_expansion_request'], #2
