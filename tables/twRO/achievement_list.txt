@@ -1,4 +1,3 @@
-
 achievement_tbl = {
 	[110000] = {
 		UI_Type = 0,
@@ -1923,10 +1922,7 @@ achievement_tbl = {
 		minor = 2,
 		title = "阿盧納貝茲的探險家",
 		content = { summary = "目標原野探險完畢", details = "阿盧納貝茲附近探險完畢" },
-		resource = {
-			[1] = { text = "拉赫的探險家", shortcut = 129014 },
-			[2] = { text = "菲音斯的探險家", shortcut = 129015 }
-		},
+		resource = { [1] = { text = "拉赫的探險家", shortcut = 129014 }, [2] = { text = "菲音斯的探險家", shortcut = 129015 } },
 		reward = { item = 617 },
 		score = 50
 	},
@@ -1972,10 +1968,7 @@ achievement_tbl = {
 		minor = 3,
 		title = "異界的探險家",
 		content = { summary = "目標原野探險完畢", details = "異界附近探險完畢" },
-		resource = {
-			[1] = { text = "守護精靈的探險家", shortcut = 129017 },
-			[2] = { text = "魔怒克的探險家", shortcut = 120918 }
-		},
+		resource = { [1] = { text = "守護精靈的探險家", shortcut = 129017 }, [2] = { text = "魔怒克的探險家", shortcut = 120918 } },
 		reward = { item = 617 },
 		score = 50
 	},
@@ -2006,10 +1999,7 @@ achievement_tbl = {
 		major = 4,
 		minor = 0,
 		title = "初登社交圈",
-		content = {
-			summary = "訪問七大王室家族",
-			details = "去訪問居住在東邊和西邊別宮的七大王室家族後刷存在感"
-		},
+		content = { summary = "訪問七大王室家族", details = "去訪問居住在東邊和西邊別宮的七大王室家族後刷存在感" },
 		resource = {
 			[1] = { text = "訪問海涅家族後首次談話" },
 			[2] = { text = "訪問奈里烏思家族後首次談話" },
@@ -2028,10 +2018,7 @@ achievement_tbl = {
 		major = 4,
 		minor = 0,
 		title = "不是廣播事故",
-		content = {
-			summary = "欣賞宮廷樂師的秘密選曲",
-			details = "欣賞普隆德拉宮廷樂師 奧林特推薦的秘密選曲"
-		},
+		content = { summary = "欣賞宮廷樂師的秘密選曲", details = "欣賞普隆德拉宮廷樂師 奧林特推薦的秘密選曲" },
 		resource = { [1] = { text = "欣賞普隆德拉宮廷樂師 奧林特推薦的秘密選曲" } },
 		reward = {},
 		score = 10
@@ -2097,10 +2084,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "正式冒險家",
-		content = {
-			summary = "轉職為一轉職業",
-			details = "劍士, 商人, 盜賊, 魔法師, 服事, 弓箭手中擇一轉職"
-		},
+		content = { summary = "轉職為一轉職業", details = "劍士, 商人, 盜賊, 魔法師, 服事, 弓箭手中擇一轉職" },
 		resource = { [1] = { text = "轉職為一轉職業" } },
 		reward = { buff = 12 },
 		score = 10
@@ -2111,10 +2095,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "以轉生職業的第一步!",
-		content = {
-			summary = "轉職為轉生一轉職業",
-			details = "轉生劍士, 商人, 盜賊, 魔法師, 服事, 弓箭手中擇一轉職"
-		},
+		content = { summary = "轉職為轉生一轉職業", details = "轉生劍士, 商人, 盜賊, 魔法師, 服事, 弓箭手中擇一轉職" },
 		resource = { [1] = { text = "轉職為轉生一轉職業" } },
 		reward = { buff = 12 },
 		score = 20
@@ -2125,10 +2106,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "資深探險家! (1)",
-		content = {
-			summary = "轉職為2-1轉職業",
-			details = "騎士, 鐵匠, 刺客, 巫師, 祭司, 獵人中擇一轉職"
-		},
+		content = { summary = "轉職為2-1轉職業", details = "騎士, 鐵匠, 刺客, 巫師, 祭司, 獵人中擇一轉職" },
 		resource = { [1] = { text = "轉職為2-1轉職業" } },
 		reward = { buff = 12 },
 		score = 25
@@ -2139,10 +2117,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "資深探險家! (2)",
-		content = {
-			summary = "轉職為2-2轉職業",
-			details = "十字軍, 鍊金術師, 流氓, 賢者, 武道家, 吟遊詩人, 舞孃中擇一轉職"
-		},
+		content = { summary = "轉職為2-2轉職業", details = "十字軍, 鍊金術師, 流氓, 賢者, 武道家, 吟遊詩人, 舞孃中擇一轉職" },
 		resource = { [1] = { text = "轉職為2-2轉職業" } },
 		reward = { buff = 12 },
 		score = 25
@@ -2153,10 +2128,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "勇士 (1)",
-		content = {
-			summary = "轉職為轉生2-1轉職業",
-			details = "騎士領主, 神工匠, 十字刺客, 超魔導師, 神官, 神射手中擇一轉職"
-		},
+		content = { summary = "轉職為轉生2-1轉職業", details = "騎士領主, 神工匠, 十字刺客, 超魔導師, 神官, 神射手中擇一轉職" },
 		resource = { [1] = { text = "轉職為轉生2-1轉職業" } },
 		reward = { buff = 12 },
 		score = 30
@@ -2167,10 +2139,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "勇士 (2)",
-		content = {
-			summary = "轉職為轉生2-2轉職業",
-			details = "聖殿十字軍, 創造者, 神行太保, 智者, 武術宗師, 冷豔舞姬, 搞笑藝人中擇一轉職"
-		},
+		content = { summary = "轉職為轉生2-2轉職業", details = "聖殿十字軍, 創造者, 神行太保, 智者, 武術宗師, 冷豔舞姬, 搞笑藝人中擇一轉職" },
 		resource = { [1] = { text = "轉職為轉生2-2轉職業" } },
 		reward = { buff = 12 },
 		score = 30
@@ -2181,10 +2150,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "菁英冒險家! (1)",
-		content = {
-			summary = "轉職為3-1轉職業",
-			details = "盧恩騎士, 機械工匠, 十字斬首者, 咒術士, 大主教, 遊俠中擇一轉職"
-		},
+		content = { summary = "轉職為3-1轉職業", details = "盧恩騎士, 機械工匠, 十字斬首者, 咒術士, 大主教, 遊俠中擇一轉職" },
 		resource = { [1] = { text = "轉職為3-1轉職業" } },
 		reward = { buff = 12, item = 16483 },
 		score = 50
@@ -2195,10 +2161,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "超越者! (1)",
-		content = {
-			summary = "轉職為轉生3-1轉職業",
-			details = "轉生後，盧恩騎士, 機械工匠, 十字斬首者, 咒術士, 大主教, 遊俠中擇一轉職"
-		},
+		content = { summary = "轉職為轉生3-1轉職業", details = "轉生後，盧恩騎士, 機械工匠, 十字斬首者, 咒術士, 大主教, 遊俠中擇一轉職" },
 		resource = { [1] = { text = "轉職為轉生3-1轉職業" } },
 		reward = { buff = 12, item = 16483 },
 		score = 60
@@ -2209,10 +2172,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "菁英冒險家! (2)",
-		content = {
-			summary = "轉職為3-2轉職業",
-			details = "皇家禁衛隊, 基因學者, 魅影追蹤者, 妖術師, 修羅, 宮廷樂師, 浪姬舞者中擇一轉職"
-		},
+		content = { summary = "轉職為3-2轉職業", details = "皇家禁衛隊, 基因學者, 魅影追蹤者, 妖術師, 修羅, 宮廷樂師, 浪姬舞者中擇一轉職" },
 		resource = { [1] = { text = "轉職為3-2轉職業" } },
 		reward = { buff = 12, item = 16483 },
 		score = 50
@@ -2248,10 +2208,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "這就是我走的路!",
-		content = {
-			summary = "轉職為擴充2轉職業",
-			details = "悟靈士, 拳聖, 反叛者, 日影忍者, 月影忍者中擇一轉職"
-		},
+		content = { summary = "轉職為擴充2轉職業", details = "悟靈士, 拳聖, 反叛者, 日影忍者, 月影忍者中擇一轉職" },
 		resource = { [1] = { text = "轉職為擴充2轉職業" } },
 		reward = { buff = 12, item = 16483 },
 		score = 20
@@ -2416,10 +2373,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 0,
 		title = "在瓦爾哈拉重生!",
-		content = {
-			summary = "轉職為轉生初學者",
-			details = "轉職為轉生初學者，限與巴基力對話才可進行。"
-		},
+		content = { summary = "轉職為轉生初學者", details = "轉職為轉生初學者，限與巴基力對話才可進行。" },
 		resource = { [1] = { text = "轉職為轉生初學者" } },
 		reward = { buff = 12, item = 13079 },
 		score = 10
@@ -2464,10 +2418,7 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "動物是我們的好朋友",
-		content = {
-			summary = "完成所有成就任務",
-			details = "日夜為動物安危擔心的你才是真正愛護動物者!"
-		},
+		content = { summary = "完成所有成就任務", details = "日夜為動物安危擔心的你才是真正愛護動物者!" },
 		resource = {
 			[1] = { text = "成就'瘋兔 - 馴服'完成", shortcut = 230121 },
 			[2] = { text = "成就'小雞 - 馴服'完成", shortcut = 230122 },
@@ -2487,10 +2438,7 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "成立! Monster Girls女團!!",
-		content = {
-			summary = "完成所有成就任務",
-			details = "為了組怪物女團費盡心力的你才是真情的製作人!"
-		},
+		content = { summary = "完成所有成就任務", details = "為了組怪物女團費盡心力的你才是真情的製作人!" },
 		resource = {
 			[1] = { text = "成就'殭屍 - 馴服'完成", shortcut = 230141 },
 			[2] = { text = "成就'蛇女伊絲 - 馴服'完成", shortcut = 230142 },
@@ -2509,8 +2457,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "波利 - 馴服",
-		content = { summary = "波利認養成功\", details = "把波利變成寵物吧!可用'青澀蘋果'來引誘。" },
-		resource = { [1] = { text = "波利認養寵物成功\" } },
+		content = { summary = "波利認養成功", details = "把波利變成寵物吧!可用'青澀蘋果'來引誘。" },
+		resource = { [1] = { text = "波利認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2520,11 +2468,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "土波利 - 馴服",
-		content = {
-			summary = "土波利認養寵物成功\",
-			details = "把土波利變成寵物吧!可用'濃縮柳橙汁'來引誘。"
-		},
-		resource = { [1] = { text = "土波利認養寵物成功\" } },
+		content = { summary = "土波利認養寵物成功", details = "把土波利變成寵物吧!可用'濃縮柳橙汁'來引誘。" },
+		resource = { [1] = { text = "土波利認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2534,8 +2479,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "波波利 - 馴服",
-		content = { summary = "波波利認養成功\", details = "把波波利變成寵物吧!'苦味草'來引誘。" },
-		resource = { [1] = { text = "波波利認養寵物成功\" } },
+		content = { summary = "波波利認養成功", details = "把波波利變成寵物吧!'苦味草'來引誘。" },
+		resource = { [1] = { text = "波波利認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2545,8 +2490,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "寶貝波利 - 馴服",
-		content = { summary = "寶貝波利認養成功\", details = "把寶貝波利變成寵物吧!'青蘋果'來引誘。" },
-		resource = { [1] = { text = "寶貝波利認養寵物成功\" } },
+		content = { summary = "寶貝波利認養成功", details = "把寶貝波利變成寵物吧!'青蘋果'來引誘。" },
+		resource = { [1] = { text = "寶貝波利認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2556,8 +2501,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "蒼蠅 - 馴服",
-		content = { summary = "蒼蠅認養成功\", details = "把蒼蠅變成寵物吧!'腐臭之魚'來引誘。" },
-		resource = { [1] = { text = "蒼蠅認養寵物成功\" } },
+		content = { summary = "蒼蠅認養成功", details = "把蒼蠅變成寵物吧!'腐臭之魚'來引誘。" },
+		resource = { [1] = { text = "蒼蠅認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2567,8 +2512,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "綠蒼蠅 - 馴服",
-		content = { summary = "綠蒼蠅認養成功\", details = "把綠蒼蠅變成寵物吧!'鏽鐵'來引誘。" },
-		resource = { [1] = { text = "綠蒼蠅認養寵物成功\" } },
+		content = { summary = "綠蒼蠅認養成功", details = "把綠蒼蠅變成寵物吧!'鏽鐵'來引誘。" },
+		resource = { [1] = { text = "綠蒼蠅認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2578,11 +2523,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "赤蒼蠅 - 馴服",
-		content = {
-			summary = "赤蒼蠅認養寵物成功\",
-			details = "把赤蒼蠅變成寵物吧!可用'魔物飲料'來引誘。"
-		},
-		resource = { [1] = { text = "赤蒼蠅認養寵物成功\" } },
+		content = { summary = "赤蒼蠅認養寵物成功", details = "把赤蒼蠅變成寵物吧!可用'魔物飲料'來引誘。" },
+		resource = { [1] = { text = "赤蒼蠅認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2592,11 +2534,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "搖滾蝗蟲 - 馴服",
-		content = {
-			summary = "搖滾蝗蟲認養寵物成功\",
-			details = "把搖滾蝗蟲變成寵物吧!可用'呢喃花'來引誘。"
-		},
-		resource = { [1] = { text = "搖滾蝗蟲認養寵物成功\" } },
+		content = { summary = "搖滾蝗蟲認養寵物成功", details = "把搖滾蝗蟲變成寵物吧!可用'呢喃花'來引誘。" },
+		resource = { [1] = { text = "搖滾蝗蟲認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2606,8 +2545,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "魔菇 - 馴服",
-		content = { summary = "魔菇認養寵物成功\", details = "把魔菇變成寵物吧!可用'青苔'來引誘。" },
-		resource = { [1] = { text = "魔菇認養寵物成功\" } },
+		content = { summary = "魔菇認養寵物成功", details = "把魔菇變成寵物吧!可用'青苔'來引誘。" },
+		resource = { [1] = { text = "魔菇認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2617,11 +2556,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "毒魔菇 - 馴服",
-		content = {
-			summary = "毒魔菇認養寵物成功\",
-			details = "把毒魔菇變成寵物吧!可用'青嫩毒草'來引誘。"
-		},
-		resource = { [1] = { text = "毒魔菇認養寵物成功\" } },
+		content = { summary = "毒魔菇認養寵物成功", details = "把毒魔菇變成寵物吧!可用'青嫩毒草'來引誘。" },
+		resource = { [1] = { text = "毒魔菇認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2631,8 +2567,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "瘋兔 - 馴服",
-		content = { summary = "瘋兔認養成功\", details = "把瘋兔變成寵物吧!'彩色紅蘿蔔'來引誘。" },
-		resource = { [1] = { text = "瘋兔認養寵物成功\" } },
+		content = { summary = "瘋兔認養成功", details = "把瘋兔變成寵物吧!'彩色紅蘿蔔'來引誘。" },
+		resource = { [1] = { text = "瘋兔認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2642,11 +2578,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "小雞 - 馴服",
-		content = {
-			summary = "小雞認養寵物成功\",
-			details = "把小雞變成寵物吧!可用'變態蚯蚓'來引誘。"
-		},
-		resource = { [1] = { text = "小雞認養寵物成功\" } },
+		content = { summary = "小雞認養寵物成功", details = "把小雞變成寵物吧!可用'變態蚯蚓'來引誘。" },
+		resource = { [1] = { text = "小雞認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2656,8 +2589,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "小野豬 - 馴服",
-		content = { summary = "小野豬認養成功\", details = "把小野豬變成寵物吧!'魔物牛奶'來引誘。" },
-		resource = { [1] = { text = "小野豬認養寵物成功\" } },
+		content = { summary = "小野豬認養成功", details = "把小野豬變成寵物吧!'魔物牛奶'來引誘。" },
+		resource = { [1] = { text = "小野豬認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2667,11 +2600,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "沙漠幼狼 - 馴服",
-		content = {
-			summary = "沙漠幼狼認養寵物成功\",
-			details = "把沙漠幼狼變成寵物吧!可用'營養大骨'來引誘。"
-		},
-		resource = { [1] = { text = "沙漠幼狼認養寵物成功\" } },
+		content = { summary = "沙漠幼狼認養寵物成功", details = "把沙漠幼狼變成寵物吧!可用'營養大骨'來引誘。" },
+		resource = { [1] = { text = "沙漠幼狼認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2681,11 +2611,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "狸貓 - 馴服",
-		content = {
-			summary = "狸貓認養寵物成功\",
-			details = "把狸貓變成寵物吧!可用'魔物番薯'來引誘。"
-		},
-		resource = { [1] = { text = "狸貓認養寵物成功\" } },
+		content = { summary = "狸貓認養寵物成功", details = "把狸貓變成寵物吧!可用'魔物番薯'來引誘。" },
+		resource = { [1] = { text = "狸貓認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2695,11 +2622,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "溜溜猴 - 馴服",
-		content = {
-			summary = "溜溜猴認養寵物成功\",
-			details = "把溜溜猴變成寵物吧!可用'魔物香蕉'來引誘。"
-		},
-		resource = { [1] = { text = "溜溜猴認養寵物成功\" } },
+		content = { summary = "溜溜猴認養寵物成功", details = "把溜溜猴變成寵物吧!可用'魔物香蕉'來引誘。" },
+		resource = { [1] = { text = "溜溜猴認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2709,11 +2633,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "大嘴鳥 - 馴服",
-		content = {
-			summary = "大嘴鳥認養寵物成功\",
-			details = "把大嘴鳥變成寵物吧!可用'營養蚯蚓'來引誘。"
-		},
-		resource = { [1] = { text = "大嘴鳥認養寵物成功\" } },
+		content = { summary = "大嘴鳥認養寵物成功", details = "把大嘴鳥變成寵物吧!可用'營養蚯蚓'來引誘。" },
+		resource = { [1] = { text = "大嘴鳥認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2723,11 +2644,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "畢帝特地龍 - 馴服",
-		content = {
-			summary = "畢帝特地龍認養寵物成功\",
-			details = "把畢帝特地龍變成寵物吧!可用'閃爍之石'來引誘。"
-		},
-		resource = { [1] = { text = "畢帝特地龍認養寵物成功\" } },
+		content = { summary = "畢帝特地龍認養寵物成功", details = "把畢帝特地龍變成寵物吧!可用'閃爍之石'來引誘。" },
+		resource = { [1] = { text = "畢帝特地龍認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2737,8 +2655,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "殭屍 - 馴服",
-		content = { summary = "殭屍認養成功\", details = "把殭屍變成寵物吧!'魔物信件'來引誘。" },
-		resource = { [1] = { text = "殭屍認養寵物成功\" } },
+		content = { summary = "殭屍認養成功", details = "把殭屍變成寵物吧!'魔物信件'來引誘。" },
+		resource = { [1] = { text = "殭屍認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2748,11 +2666,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "蛇女伊絲 - 馴服",
-		content = {
-			summary = "蛇女伊絲認養寵物成功\",
-			details = "把蛇女伊絲變成寵物吧!可用'馴服手鐲'來引誘。"
-		},
-		resource = { [1] = { text = "蛇女伊絲認養寵物成功\" } },
+		content = { summary = "蛇女伊絲認養寵物成功", details = "把蛇女伊絲變成寵物吧!可用'馴服手鐲'來引誘。" },
+		resource = { [1] = { text = "蛇女伊絲認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2762,8 +2677,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "鬼女 - 馴服",
-		content = { summary = "鬼女認養成功\", details = "把鬼女變成寵物吧!'純潔銀刃'來引誘。" },
-		resource = { [1] = { text = "鬼女認養寵物成功\" } },
+		content = { summary = "鬼女認養成功", details = "把鬼女變成寵物吧!'純潔銀刃'來引誘。" },
+		resource = { [1] = { text = "鬼女認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2773,11 +2688,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "艾斯恩魔女 - 馴服",
-		content = {
-			summary = "艾斯恩魔女認養寵物成功\",
-			details = "把艾斯恩魔女變成寵物吧!可用'紅色蠟燭'來引誘。"
-		},
-		resource = { [1] = { text = "艾斯恩魔女認養寵物成功\" } },
+		content = { summary = "艾斯恩魔女認養寵物成功", details = "把艾斯恩魔女變成寵物吧!可用'紅色蠟燭'來引誘。" },
+		resource = { [1] = { text = "艾斯恩魔女認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2787,11 +2699,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "愛麗絲女僕 - 馴服",
-		content = {
-			summary = "愛麗絲女僕認養寵物成功\",
-			details = "把愛麗絲女僕變成寵物吧!可用'搖曳的圍裙'來引誘。"
-		},
-		resource = { [1] = { text = "愛麗絲女僕認養寵物成功\" } },
+		content = { summary = "愛麗絲女僕認養寵物成功", details = "把愛麗絲女僕變成寵物吧!可用'搖曳的圍裙'來引誘。" },
+		resource = { [1] = { text = "愛麗絲女僕認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2801,11 +2710,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "惡魔女僕 - 馴服",
-		content = {
-			summary = "惡魔女僕認養寵物成功\",
-			details = "把惡魔女僕變成寵物吧!可用'少年的情書'來引誘。"
-		},
-		resource = { [1] = { text = "惡魔女僕認養寵物成功\" } },
+		content = { summary = "惡魔女僕認養寵物成功", details = "把惡魔女僕變成寵物吧!可用'少年的情書'來引誘。" },
+		resource = { [1] = { text = "惡魔女僕認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2815,11 +2721,8 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "銀月魔女 - 馴服",
-		content = {
-			summary = "銀月魔女認養寵物成功\",
-			details = "把銀月魔女變成寵物吧!可用'紅色果汁'來引誘。"
-		},
-		resource = { [1] = { text = "銀月魔女認養寵物成功\" } },
+		content = { summary = "銀月魔女認養寵物成功", details = "把銀月魔女變成寵物吧!可用'紅色果汁'來引誘。" },
+		resource = { [1] = { text = "銀月魔女認養寵物成功" } },
 		reward = {},
 		score = 10
 	},
@@ -2840,10 +2743,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 2,
 		title = "只剩一張嘴",
-		content = {
-			summary = "死亡狀態下開啟聊天室",
-			details = "只剩一張嘴，死亡狀態下開啟聊天室，快捷鍵是ALT + C (基本)"
-		},
+		content = { summary = "死亡狀態下開啟聊天室", details = "只剩一張嘴，死亡狀態下開啟聊天室，快捷鍵是ALT + C (基本)" },
 		resource = { [1] = { text = "死亡狀態下開啟聊天室" } },
 		reward = {},
 		score = 10
@@ -2931,10 +2831,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "活絡市場經濟(1)",
-		content = {
-			summary = "在露天商店消費一萬金幣以上",
-			details = "錢滾錢的方法，到其他玩家的露天商店消費一萬金幣以上。"
-		},
+		content = { summary = "在露天商店消費一萬金幣以上", details = "錢滾錢的方法，到其他玩家的露天商店消費一萬金幣以上。" },
 		resource = { [1] = { text = "在露天商店消費一萬金幣以上", count = 10000 }, count = 500000000 },
 		reward = {},
 		score = 10
@@ -2945,10 +2842,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "活絡市場經濟(2)",
-		content = {
-			summary = "露天商店消費一百萬金幣以上",
-			details = "錢滾錢的方法，到其他玩家的露天商店消費一百萬金幣以上。"
-		},
+		content = { summary = "露天商店消費一百萬金幣以上", details = "錢滾錢的方法，到其他玩家的露天商店消費一百萬金幣以上。" },
 		resource = { [1] = { text = "露天商店消費一百萬金幣以上", count = 1000000 }, count = 500000000 },
 		reward = {},
 		score = 15
@@ -2959,10 +2853,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "活絡市場經濟(3)",
-		content = {
-			summary = "露天商店消費五百萬金幣以上",
-			details = "錢滾錢的方法，到其他玩家的露天商店消費五百萬金幣以上。"
-		},
+		content = { summary = "露天商店消費五百萬金幣以上", details = "錢滾錢的方法，到其他玩家的露天商店消費五百萬金幣以上。" },
 		resource = { [1] = { text = "露天商店消費五百萬金幣以上", count = 5000000 }, count = 500000000 },
 		reward = {},
 		score = 20
@@ -2973,10 +2864,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "活絡市場經濟(4)",
-		content = {
-			summary = "露天商店消費一億金幣以上",
-			details = "錢滾錢的方法，到其他玩家的露天商店消費一億金幣以上。"
-		},
+		content = { summary = "露天商店消費一億金幣以上", details = "錢滾錢的方法，到其他玩家的露天商店消費一億金幣以上。" },
 		resource = { [1] = { text = "露天商店消費一億金幣以上", count = 100000000 }, count = 500000000 },
 		reward = {},
 		score = 30
@@ -2987,10 +2875,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "活絡市場經濟(5)",
-		content = {
-			summary = "露天商店消費五億金幣以上",
-			details = "錢滾錢的方法，到其他玩家的露天商店消費五億金幣以上。"
-		},
+		content = { summary = "露天商店消費五億金幣以上", details = "錢滾錢的方法，到其他玩家的露天商店消費五億金幣以上。" },
 		resource = { [1] = { text = "露天商店消費五億金幣以上", count = 500000000 } },
 		reward = {},
 		score = 50
@@ -3001,11 +2886,8 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "永無止境的精煉! (1)",
-		content = {
-			summary = "1級武器成功\精煉到+7",
-			details = "我的好運到甚麼時候呢? 1級武器成功\精煉到+7。"
-		},
-		resource = { [1] = { text = "1級武器成功\精煉到+7" } },
+		content = { summary = "1級武器成功精煉到+7", details = "我的好運到甚麼時候呢? 1級武器成功精煉到+7。" },
+		resource = { [1] = { text = "1級武器成功精煉到+7" } },
 		reward = {},
 		score = 10
 	},
@@ -3015,11 +2897,8 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "永無止境的精煉! (2)",
-		content = {
-			summary = "1級武器成功\精煉到+12",
-			details = "我的好運到甚麼時候呢? 1級武器成功\精煉到+12。"
-		},
-		resource = { [1] = { text = "1級武器成功\精煉到+12" } },
+		content = { summary = "1級武器成功精煉到+12", details = "我的好運到甚麼時候呢? 1級武器成功精煉到+12。" },
+		resource = { [1] = { text = "1級武器成功精煉到+12" } },
 		reward = {},
 		score = 15
 	},
@@ -3029,11 +2908,8 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "永無止境的精煉! (3)",
-		content = {
-			summary = "2級武器成功\精煉到+7",
-			details = "我的好運到甚麼時候呢? 2級武器成功\精煉到+7。"
-		},
-		resource = { [1] = { text = "2級武器成功\精煉到+7" } },
+		content = { summary = "2級武器成功精煉到+7", details = "我的好運到甚麼時候呢? 2級武器成功精煉到+7。" },
+		resource = { [1] = { text = "2級武器成功精煉到+7" } },
 		reward = {},
 		score = 10
 	},
@@ -3043,11 +2919,8 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "永無止境的精煉! (4)",
-		content = {
-			summary = "2級武器成功\精煉到+12",
-			details = "我的好運到甚麼時候呢? 2級武器成功\精煉到+12。"
-		},
-		resource = { [1] = { text = "2級武器成功\精煉到+12" } },
+		content = { summary = "2級武器成功精煉到+12", details = "我的好運到甚麼時候呢? 2級武器成功精煉到+12。" },
+		resource = { [1] = { text = "2級武器成功精煉到+12" } },
 		reward = {},
 		score = 15
 	},
@@ -3057,11 +2930,8 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "永無止境的精煉! (5)",
-		content = {
-			summary = "3級武器成功\精煉到+7",
-			details = "我的好運到甚麼時候呢? 3級武器成功\精煉到+7。"
-		},
-		resource = { [1] = { text = "3級武器成功\精煉到+7" } },
+		content = { summary = "3級武器成功精煉到+7", details = "我的好運到甚麼時候呢? 3級武器成功精煉到+7。" },
+		resource = { [1] = { text = "3級武器成功精煉到+7" } },
 		reward = {},
 		score = 15
 	},
@@ -3071,11 +2941,8 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "永無止境的精煉! (6)",
-		content = {
-			summary = "3級武器成功\精煉到+12",
-			details = "我的好運到甚麼時候呢? 3級武器成功\精煉到+12。"
-		},
-		resource = { [1] = { text = "3級武器成功\精煉到+12" } },
+		content = { summary = "3級武器成功精煉到+12", details = "我的好運到甚麼時候呢? 3級武器成功精煉到+12。" },
+		resource = { [1] = { text = "3級武器成功精煉到+12" } },
 		reward = {},
 		score = 20
 	},
@@ -3085,11 +2952,8 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "永無止境的精煉! (7)",
-		content = {
-			summary = "4級武器成功\精煉到+7",
-			details = "我的好運到甚麼時候呢? 4級武器成功\精煉到+7。"
-		},
-		resource = { [1] = { text = "4級武器成功\精煉到+7" } },
+		content = { summary = "4級武器成功精煉到+7", details = "我的好運到甚麼時候呢? 4級武器成功精煉到+7。" },
+		resource = { [1] = { text = "4級武器成功精煉到+7" } },
 		reward = {},
 		score = 20
 	},
@@ -3099,11 +2963,8 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "永無止境的精煉! (8)",
-		content = {
-			summary = "4級武器成功\精煉到+12",
-			details = "我的好運到甚麼時候呢? 4級武器成功\精煉到+12。"
-		},
-		resource = { [1] = { text = "4級武器成功\精煉到+12" } },
+		content = { summary = "4級武器成功精煉到+12", details = "我的好運到甚麼時候呢? 4級武器成功精煉到+12。" },
+		resource = { [1] = { text = "4級武器成功精煉到+12" } },
 		reward = {},
 		score = 30
 	},
@@ -3113,10 +2974,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "人類的慾望無窮",
-		content = {
-			summary = "經歷精煉失敗",
-			details = "因人類的慾望無窮而造成不斷挫敗，但也會從失敗中得到教訓後成長，沒關係經歷精煉失敗也無妨。"
-		},
+		content = { summary = "經歷精煉失敗", details = "因人類的慾望無窮而造成不斷挫敗，但也會從失敗中得到教訓後成長，沒關係經歷精煉失敗也無妨。" },
 		resource = { [1] = { text = "經歷精煉失敗" } },
 		reward = {},
 		score = 10
@@ -3127,10 +2985,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "大發了! (1)",
-		content = {
-			summary = "獲得價值100金幣以上的道具",
-			details = "好運旺旺來! 賣給NPC時獲得價值100金幣以上的道具。"
-		},
+		content = { summary = "獲得價值100金幣以上的道具", details = "好運旺旺來! 賣給NPC時獲得價值100金幣以上的道具。" },
 		resource = { [1] = { text = "獲得價值100金幣以上的道具" } },
 		reward = {},
 		score = 10
@@ -3141,10 +2996,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "大發了! (2)",
-		content = {
-			summary = "獲得價值1000金幣以上的道具",
-			details = "好運旺旺來! 賣給NPC時獲得價值1000金幣以上的道具。"
-		},
+		content = { summary = "獲得價值1000金幣以上的道具", details = "好運旺旺來! 賣給NPC時獲得價值1000金幣以上的道具。" },
 		resource = { [1] = { text = "獲得價值1000金幣以上的道具" } },
 		reward = {},
 		score = 10
@@ -3155,10 +3007,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "大發了! (3)",
-		content = {
-			summary = "獲得價值5000金幣以上的道具",
-			details = "好運旺旺來! 賣給NPC時獲得價值5000金幣以上的道具。"
-		},
+		content = { summary = "獲得價值5000金幣以上的道具", details = "好運旺旺來! 賣給NPC時獲得價值5000金幣以上的道具。" },
 		resource = { [1] = { text = "獲得價值5000金幣以上的道具" } },
 		reward = {},
 		score = 15
@@ -3169,10 +3018,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "大發了! (4)",
-		content = {
-			summary = "獲得價值一萬金幣以上的道具",
-			details = "好運旺旺來! 賣給NPC時獲得價值一萬金幣以上的道具。"
-		},
+		content = { summary = "獲得價值一萬金幣以上的道具", details = "好運旺旺來! 賣給NPC時獲得價值一萬金幣以上的道具。" },
 		resource = { [1] = { text = "獲得價值一萬金幣以上的道具" } },
 		reward = {},
 		score = 15
@@ -3183,10 +3029,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "大發了! (5)",
-		content = {
-			summary = "獲得價值五萬金幣以上的道具",
-			details = "好運旺旺來! 賣給NPC時獲得價值五萬金幣以上的道具。"
-		},
+		content = { summary = "獲得價值五萬金幣以上的道具", details = "好運旺旺來! 賣給NPC時獲得價值五萬金幣以上的道具。" },
 		resource = { [1] = { text = "獲得價值五萬金幣以上的道具" } },
 		reward = {},
 		score = 20
@@ -3197,10 +3040,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "大發了! (6)",
-		content = {
-			summary = "獲得價值十萬金幣以上的道具",
-			details = "好運旺旺來! 賣給NPC時獲得價值十萬金幣以上的道具。"
-		},
+		content = { summary = "獲得價值十萬金幣以上的道具", details = "好運旺旺來! 賣給NPC時獲得價值十萬金幣以上的道具。" },
 		resource = { [1] = { text = "獲得價值十萬金幣以上的道具" } },
 		reward = {},
 		score = 20
@@ -3211,10 +3051,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "大發了! (7)",
-		content = {
-			summary = "獲得價值十五萬金幣以上的道具",
-			details = "好運旺旺來! 賣給NPC時獲得價值十五萬金幣以上的道具。"
-		},
+		content = { summary = "獲得價值十五萬金幣以上的道具", details = "好運旺旺來! 賣給NPC時獲得價值十五萬金幣以上的道具。" },
 		resource = { [1] = { text = "獲得價值十五萬金幣以上的道具" } },
 		reward = {},
 		score = 30
@@ -3225,10 +3062,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "富翁(1)",
-		content = {
-			summary = "持有金幣一萬以上",
-			details = "錢不是萬能，沒錢萬萬不能；持有金幣一萬以上。"
-		},
+		content = { summary = "持有金幣一萬以上", details = "錢不是萬能，沒錢萬萬不能；持有金幣一萬以上。" },
 		resource = { [1] = { text = "持有金幣一萬以上" } },
 		reward = {},
 		score = 10
@@ -3239,10 +3073,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "富翁(2)",
-		content = {
-			summary = "持有金幣十萬以上",
-			details = "錢不是萬能，沒錢萬萬不能；持有金幣十萬以上。"
-		},
+		content = { summary = "持有金幣十萬以上", details = "錢不是萬能，沒錢萬萬不能；持有金幣十萬以上。" },
 		resource = { [1] = { text = "持有金幣十萬以上" } },
 		reward = {},
 		score = 15
@@ -3253,10 +3084,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "富翁(3)",
-		content = {
-			summary = "持有金幣一百萬以上",
-			details = "錢不是萬能，沒錢萬萬不能；持有金幣一百萬以上。"
-		},
+		content = { summary = "持有金幣一百萬以上", details = "錢不是萬能，沒錢萬萬不能；持有金幣一百萬以上。" },
 		resource = { [1] = { text = "持有金幣一百萬以上" } },
 		reward = {},
 		score = 20
@@ -3267,10 +3095,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "富翁(4)",
-		content = {
-			summary = "持有金幣一千萬以上",
-			details = "錢不是萬能，沒錢萬萬不能；持有金幣一千萬以上。"
-		},
+		content = { summary = "持有金幣一千萬以上", details = "錢不是萬能，沒錢萬萬不能；持有金幣一千萬以上。" },
 		resource = { [1] = { text = "持有金幣一千萬以上" } },
 		reward = {},
 		score = 25
@@ -3281,10 +3106,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "富翁(5)",
-		content = {
-			summary = "持有金幣一億以上",
-			details = "錢不是萬能，沒錢萬萬不能；持有金幣一億以上。"
-		},
+		content = { summary = "持有金幣一億以上", details = "錢不是萬能，沒錢萬萬不能；持有金幣一億以上。" },
 		resource = { [1] = { text = "持有金幣一億以上" } },
 		reward = {},
 		score = 30
@@ -3295,10 +3117,7 @@ achievement_tbl = {
 		major = 1,
 		minor = 1,
 		title = "富翁(6)",
-		content = {
-			summary = "持有金幣十億以上",
-			details = "錢不是萬能，沒錢萬萬不能；持有金幣十億以上。"
-		},
+		content = { summary = "持有金幣十億以上", details = "錢不是萬能，沒錢萬萬不能；持有金幣十億以上。" },
 		resource = { [1] = { text = "持有金幣十億以上" } },
 		reward = {},
 		score = 40
@@ -3309,10 +3128,7 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "波利探索者",
-		content = {
-			summary = "完成所有成就任務",
-			details = "非植物也非動物的奇特生物波利，若想深入了解波利最好親自碰面後體驗吧!"
-		},
+		content = { summary = "完成所有成就任務", details = "非植物也非動物的奇特生物波利，若想深入了解波利最好親自碰面後體驗吧!" },
 		resource = {
 			[1] = { text = "成就'波利探索生活(1)'完成", shortcut = 230201 },
 			[2] = { text = "成就'波利探索生活(2)'完成", shortcut = 230202 },
@@ -3327,10 +3143,7 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "波利探索生活(1)",
-		content = {
-			summary = "消滅目標對象",
-			details = "特色是依棲息地環境而有不同的外型，容易對付輕鬆面對吧!"
-		},
+		content = { summary = "消滅目標對象", details = "特色是依棲息地環境而有不同的外型，容易對付輕鬆面對吧!" },
 		resource = {
 			[1] = { text = "消滅波利 10次", count = 10 },
 			[2] = { text = "消滅寶貝波利 10次", count = 10 },
@@ -3347,10 +3160,7 @@ achievement_tbl = {
 		major = 3,
 		minor = 1,
 		title = "波利探索生活(2)",
-		content = {
-			summary = "消滅目標對象",
-			details = "這世界還有厲害的波利，到底有多強親自去體驗吧!"
-		},
+		content = { summary = "消滅目標對象", details = "這世界還有厲害的波利，到底有多強親自去體驗吧!" },
 		resource = {
 			[1] = { text = "消滅波利之王 1次", count = 1 },
 			[2] = { text = "消滅惡魔波利 1次", count = 1 },
@@ -3382,8 +3192,8 @@ achievement_tbl = {
 		major = 6,
 		minor = 0,
 		title = "成就系統更新後首次登入",
-		content = { summary = "成就系統更新後首次登入成功\", details = "紀念成就系統更新後首次登入。" },
-		resource = { [1] = { text = "成就系統更新後首次登入成功\" } },
+		content = { summary = "成就系統更新後首次登入成功", details = "紀念成就系統更新後首次登入。" },
+		resource = { [1] = { text = "成就系統更新後首次登入成功" } },
 		reward = {},
 		score = 10
 	},
@@ -3614,7 +3424,7 @@ achievement_tbl = {
 		minor = 0,
 		title = "克雷斯特漢姆挑戰模式",
 		content = { summary = "克雷斯特漢姆挑戰模式攻略完畢", details = "記憶迷宮進行到底" },
-		resource = { [1] = { text = "挑戰成功\次數", count = 100 } },
+		resource = { [1] = { text = "挑戰成功次數", count = 100 } },
 		reward = { title = 1045 },
 		score = 10
 	},
@@ -3635,12 +3445,3 @@ achievement_tbl = {
 		major = 4,
 		minor = 0,
 		title = "造王者",
-		content = {
-			summary = "我親手擁立的國王",
-			details = "找回特拉 葛洛麗雅的榮耀後，幫那個光榮的主角戴上王冠吧!"
-		},
-		resource = { [1] = { text = "觀禮盧恩 米德加茲王國新國王的加冕儀式。" } },
-		reward = { title = 1046 },
-		score = 10
-	}
-}
