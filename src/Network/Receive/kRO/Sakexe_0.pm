@@ -231,7 +231,7 @@ sub new {
 		'015F' => ['guild_disband', 'Z40', [qw(reason)]], # 42
 		'0160' => ['guild_member_setting_list'], # -1
 		'0162' => ['guild_skills_list'], # -1
-		'0163' => ['guild_expulsionlist'], # -1
+		'0163' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
 		'0164' => ['guild_other_list'], # -1
 		'0166' => ['guild_members_title_list'], # -1
 		'0167' => ['guild_create_result', 'C', [qw(type)]], # 3
@@ -242,7 +242,7 @@ sub new {
 		'016F' => ['guild_notice', 'Z60 Z120', [qw(subject notice)]], # 182
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]], # 30
 		'0173' => ['guild_alliance', 'C', [qw(flag)]], # 3
-		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1 # FIXME: this is a var len message!!!
+		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1
 		'0176' => ['guild_member_info', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
 		'0177' => ['identify_list'], # -1
 		'0179' => ['identify', 'a2 C', [qw(ID flag)]], # 5
@@ -419,8 +419,8 @@ sub new {
 		'02A2' => ['stat_info', 'v V', [qw(type val)]], # 8 was "mercenary_param_change"
 		'02A3' => ['gameguard_lingo_key', 'a4 a4 a4 a4', [qw(dwAlgNum dwAlgKey1 dwAlgKey2 dwSeed)]], # 18
 		'02A6' => ['gameguard_request'], # 22
-		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
-		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
+		'02AA' => ['cash_password_request', 'v', [qw(info)]], # 4
+		'02AC' => ['cash_password_result', 'v2', [qw(result error_count)]], # 6
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
 		'02B1' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'02B2' => ['quest_all_mission', 'v V a*', [qw(len mission_amount message)]],
@@ -489,7 +489,7 @@ sub new {
 		'07F8' => ['actor_connected', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning
 		'07F9' => ['actor_moved', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # standing
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
-		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait unknown)]], # 25
+		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]], # 25
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],
 		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
 		'0800' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]], # -1
@@ -649,6 +649,8 @@ sub new {
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7B' => ['EAC_key'],
 		'0A7D' => ['rodex_mail_list', 'v C3 a*', [qw(len type amount isEnd mailList)]],   # -1
+		'0A82' => ['guild_expulsion', 'Z40 a4', [qw(message charID)]], # 46
+		'0A83' => ['guild_leave', 'a4 Z40', [qw(charID message)]], # 46
 		'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id)]],
 		'0A89' => ['offline_clone_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['offline_clone_lost', 'a4', [qw(ID)]],
@@ -694,7 +696,8 @@ sub new {
 		'0AE9' => ['login_pin_code_request', 'V a4 v2', [qw(seed accountID flag lock)]],
 		'0AF0' => ['action_ui', 'C V', [qw(type data)]],
 		'0AF7' => ['character_name', 'v a4 Z24', [qw(flag ID name)]],
-		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0AFB' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0AFD' => ['guild_position', 'v a4', [qw(len charID)]], #herc PR 2176
 		'0AFE' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'0AFF' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'0B02' => ['login_error', 'V Z20', [qw(type date)]],
@@ -712,9 +715,20 @@ sub new {
 		'0B1D' => ['ping'], #2
 		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate tab hotkeys)]],#herc PR 2468
 		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
+		'0B31' => ['skill_add', 'v V v3 C v', [qw(skillID target lv sp range upgradable lv2)]], #17
+		'0B32' => ['skills_list'],
+		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
+		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
+		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
+		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
-		};
+		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
+		'0B7B' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4 Z24', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id master)]], #118
+		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
+		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], # -1
+		'0B7E' => ['guild_member_add', 'a4 a4 v5 V4 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)]], # 60 TODO
+	};
 
 	# Item RECORD Struct's
 	$self->{nested} = {
@@ -1388,56 +1402,6 @@ sub skill_used_no_damage {
 	});
 }
 
-sub skills_list {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-
-	my ($slave, $owner, $hook);
-
-	my $msg = $args->{RAW_MSG};
-
-	if ($args->{switch} eq '010F') {
-		$hook = 'packet_charSkills'; $owner = Skill::OWNER_CHAR;
-
-		undef @skillsID;
-		delete $char->{skills};
-		Skill::DynamicInfo::clear();
-
-	} elsif ($args->{switch} eq '0235') {
-		$slave = $char->{homunculus}; $hook = 'packet_homunSkills'; $owner = Skill::OWNER_HOMUN;
-
-	} elsif ($args->{switch} eq '029D') {
-		$slave = $char->{mercenary}; $hook = 'packet_mercSkills'; $owner = Skill::OWNER_MERC;
-	}
-
-	my $skillsIDref = $slave ? \@{$slave->{slave_skillsID}} : \@skillsID;
-
-	undef @{$slave->{slave_skillsID}};
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
-		my ($skillID, $targetType, $level, $sp, $range, $handle, $up)
-		= unpack 'v V v3 Z24 C', substr $msg, $i, 37;
-		$handle = Skill->new (idn => $skillID)->getHandle unless $handle;
-
-		$char->{skills}{$handle}{ID} = $skillID;
-		$char->{skills}{$handle}{sp} = $sp;
-		$char->{skills}{$handle}{range} = $range;
-		$char->{skills}{$handle}{up} = $up;
-		$char->{skills}{$handle}{targetType} = $targetType;
-		$char->{skills}{$handle}{lv} = $level unless $char->{skills}{$handle}{lv}; # TODO: why is this unless here? it seems useless
-
-		binAdd ($skillsIDref, $handle) unless defined binFind ($skillsIDref, $handle);
-		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, $owner);
-
-		Plugins::callHook($hook, {
-			ID => $skillID,
-			handle => $handle,
-			level => $level,
-			upgradable => $up,
-		});
-	}
-}
-
 # TODO: test the latest code optimization
 sub auction_item_request_search {
 	my ($self, $args) = @_;
@@ -1513,31 +1477,6 @@ sub inventory_expansion_info {
 	my($self, $args) = @_;
 	#sd->inventorySize - FIXED_INVENTORY_SIZE;
 	#hardcode inventorysize ? [sctnightcore]
-}
-
-#expand_inventory_result
-use constant {
-	EXPAND_INVENTORY_RESULT_SUCCESS => 0x0,
-	EXPAND_INVENTORY_RESULT_FAILED => 0x1,
-	EXPAND_INVENTORY_RESULT_OTHER_WORK => 0x2,
-	EXPAND_INVENTORY_RESULT_MISSING_ITEM => 0x3,
-	EXPAND_INVENTORY_RESULT_MAX_SIZE => 0x4,
-};
-
-sub inventory_expansion_result {
-	my($self, $args) = @_;
-#msgstringtable
-	if ($args->{result} == EXPAND_INVENTORY_RESULT_SUCCESS) {
-		message TF("You have successfully expanded the possession limit"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_FAILED) {
-		message TF("Failed to expand the maximum possession limit."),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_OTHER_WORK) {
-		message TF("To expand the possession limit, please close other windows"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MISSING_ITEM) {
-		message TF("Failed to expand the maximum possession limit, insufficient required item"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {
-		message TF("You can no longer expand the maximum possession limit."),"info";
-	}
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;

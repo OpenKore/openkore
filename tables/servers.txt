@@ -300,6 +300,7 @@ blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
 pinCode 1
+field_morocc morocc-old
 
 # http://ro.gnjoy.in.th/
 [Thailand - tRO: Chaos, Thor, Iris, Odin]
