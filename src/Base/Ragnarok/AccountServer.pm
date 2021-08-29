@@ -14,7 +14,7 @@ use Modules 'register';
 use Base::RagnarokServer;
 use base qw(Base::RagnarokServer);
 use Globals qw($masterServer);
-use Log qw(debug error);
+use Log qw(debug);
 use Utils qw(getHex);
 use Utils::Exceptions;
 use Network::Receive::ServerType0; # constants only
@@ -65,7 +65,7 @@ sub login {
 
 sub secureKey {
 	my ($self, $client) = @_;
-	
+
 	# FIXME: randomize for every client? Mimic the original server?
 	'key'
 }
@@ -99,11 +99,11 @@ sub master_login {
 
 		if ($masterServer->{serverType} =~ /kRO_/i) {
 			use Data::Dumper;
-			my @match = $masterServer->{serverType} =~ /(\d+)/g;			
-			$clientDate = int(sprintf("%s%s%s", $match[0], $match[1], $match[2]));
+			my @match = $masterServer->{serverType} =~ /(\d+)/g;
+			$clientDate = int(sprintf("%d%d%d", $match[0], $match[1], $match[2]));
 			$kRO_Client = 1;
 		}
-		
+
 		# Show list of character servers.
 		my @servers;
 		foreach my $charServer (@{$self->{charServers}}) {
@@ -145,7 +145,7 @@ sub master_login {
 				};
 			}
 		}
-		
+
 
 		if ($kRO_Client) {
 			if ($clientDate > 20170315) {
@@ -175,7 +175,6 @@ sub master_login {
 			accountSex => $session{sex},
 			servers => \@servers,
 		}));
-
 		$client->close();
 
 	} elsif ($result == ACCOUNT_NOT_FOUND) {
@@ -209,7 +208,7 @@ sub master_login {
 
 sub token_login {
 	my ($self, $args, $client) = @_;
-	
+
 	my $sessionID = $self->{sessionStore}->generateSessionID();
 	my %session = (
 		sessionID => $sessionID,
@@ -231,7 +230,7 @@ sub token_login {
 	my $result = $self->login(\%session, $args->{username}, $password_check);
 	if ($result == LOGIN_SUCCESS) {
 		$self->{sessionStore}->add(\%session);
-	
+
 		$session{state} = 'About to select character';
 
 		# Show list of character servers.
@@ -297,20 +296,20 @@ sub token_login {
 
 sub client_hash {
 	my ($self, $args, $client) = @_;
-	
+
 	debug sprintf("Client hash: %s\n", getHex($args->{hash})), 'connection';
 }
 
 sub secure_login_key_request {
 	my ($self, $args, $client) = @_;
-	
+
 	my $key = $self->secureKey($client);
-	
+
 	$client->send($self->{recvPacketParser}->reconstruct({
 		switch => 'secure_login_key',
 		secure_key => $key,
 	}));
-	
+
 	debug sprintf("Client requests secure login. Secure login key: %s\n", getHex($key)), 'connection';
 }
 
