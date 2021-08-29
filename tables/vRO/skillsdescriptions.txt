@@ -6625,8 +6625,7 @@ Cấp độ tối đa: 1
 Yêu cầu: ^CC3399Bắt Chước 10^000000
 Kiểu kỹ năng: ^339900Hỗ trợ^000000
 Mô tả: ^777777Giữ lại kỹ năng vừa học được từ đối thủ
- bằng ^000099Bắt Chước^777777 trong 10 phút và không tự động
- học thêm chiêu thức nào.^000000
+ bằng ^000099Bắt Chước^777777 trong 10 phút.^000000
 #
 ST_FULLSTRIP#
 Lột Sạch
@@ -8355,7 +8354,7 @@ Kỹ năng có tỉ lệ thất bại.^000000
 RK_ENCHANTBLADE#
 Phù Ma Kiếm
 Tên khác: ^777777Enchant Blade^000000
-Cấp độ tối đa: 10
+Cấp độ tối đa: 5
 Yêu cầu: ^CC3399Cổ Ngữ Học Thuật 2^000000
 Kiểu kỹ năng: ^339900Hỗ trợ^000000
 Đối tượng: ^777777Bản thân^000000
@@ -8369,11 +8368,6 @@ Lượng sát thương cường hóa tăng theo cấp độ
 [Cấp 3]: ^777777MATK +160^000000
 [Cấp 4]: ^777777MATK +180^000000
 [Cấp 5]: ^777777MATK +200^000000
-[Cấp 6]: ^777777MATK +220^000000
-[Cấp 7]: ^777777MATK +240^000000
-[Cấp 8]: ^777777MATK +260^000000
-[Cấp 9]: ^777777MATK +280^000000
-[Cấp 10]: ^777777MATK +300^000000
 #
 RK_SONICWAVE#
 Sóng Âm
@@ -8649,7 +8643,7 @@ Kiểu kỹ năng: ^6666CCNội tại^000000
 Mô tả: ^777777Sát Nhân Thập Tự biết cách tạo ra nhiều
  loại độc dược mới. Ngoài ra, kỹ năng còn tăng tỉ lệ
  chế thuốc thành công và kéo dài thời gian hiệu lực của ^000099Tẩm
- Kịch Độc^777777 thêm 15 giây mỗi cấp độ.
+ Kịch Độc^777777 thêm 3 giây mỗi cấp độ.
 Để chế tạo độc dược, yêu cầu có sẵn ^008800Cối
  thuốc (Medicine Bowl)^777777 và ^008800Bộ bào chế độc (Poison Kit)^777777
  cùng với các dược liệu cần thiết cho mỗi loại thuốc.^000000
@@ -8900,11 +8894,11 @@ Mô tả: ^777777Tấn công một mục tiêu và các đối tượng
  đứng xung quanh 3x3 ô bằng sát thương thuộc
  tính Thánh.
 Sát thương tăng theo cấp độ nhân vật.^000000
-[Cấp 1]: ^777777320% MATK^000000
-[Cấp 2]: ^777777340% MATK^000000
-[Cấp 3]: ^777777360% MATK^000000
-[Cấp 4]: ^777777380% MATK^000000
-[Cấp 5]: ^777777400% MATK^000000
+[Cấp 1]: ^777777340% MATK^000000
+[Cấp 2]: ^777777380% MATK^000000
+[Cấp 3]: ^777777420% MATK^000000
+[Cấp 4]: ^777777460% MATK^000000
+[Cấp 5]: ^777777500% MATK^000000
 #
 AB_ANCILLA#
 Ngọc Lệ Vệ Nữ
@@ -8913,7 +8907,11 @@ Cấp độ tối đa: 1
 Yêu cầu: ^CC3399Ban Ơn 3^000000
 Kiểu kỹ năng: ^339900Làm phép^000000
 Mô tả: ^777777Tạo ra 1 mảnh ^008800Ngọc lệ vệ nữ (Ancilla)^777777
- với 30% SP và 1 ^008800Đá xanh (Blue Gemstone)^777777.^000000
+ với 10% SP và 1 ^008800Đá xanh (Blue Gemstone)^777777.
+Khi tiêu thụ ^008800Ngọc lệ vệ nữ (Ancilla)^777777 sẽ nhận
+ được hiệu ứng tăng 15% độ hiệu quả của các
+ kỹ năng hồi phục và tăng 60% tốc độ hồi SP
+ tự nhiên.
 Chỉ có thể tạo ra tối đa 3 mảnh.^000000
 #
 AB_ADORAMUS#
@@ -8924,23 +8922,24 @@ Yêu cầu: ^CC3399Diệt Yêu 1, Trừ Tà 5,
 Ngọc Lệ Vệ Nữ 1^000000
 Kiểu kỹ năng: ^FF0000Tấn công^000000
 Thuộc tính: ^777777Thánh^000000
-Mô tả: ^777777Tấn công 1 mục tiêu bằng ánh sáng của
- thánh thần, gây sát thương thuộc tính Thánh
- và có khả năng khiến mục tiêu giảm AGI hoặc ^663399Lóa^777777.
+Mô tả: ^777777Tấn công đối tượng và các mục tiêu
+ xung quanh bằng ánh sáng của thánh thần.
+ Gây sát thương thuộc tính Thánh và có tỉ lệ
+ giảm AGI hoặc gây trạng thái ^663399Lóa^777777.
 Tiêu hao 1 ^008800Đá xanh (Blue Gemstone)^777777.
 Không tiêu hao đá phép khi đứng cạnh một
  nhân vật thuộc nghề Tu Sĩ nhưng sẽ tiêu hao
  SP từ người đó.^000000
-[Cấp 1]: ^777777600% MATK^000000
-[Cấp 2]: ^777777700% MATK^000000
-[Cấp 3]: ^777777800% MATK^000000
-[Cấp 4]: ^777777900% MATK^000000
-[Cấp 5]: ^7777771000% MATK^000000
-[Cấp 6]: ^7777771100% MATK^000000
-[Cấp 7]: ^7777771200% MATK^000000
-[Cấp 8]: ^7777771300% MATK^000000
-[Cấp 9]: ^7777771400% MATK^000000
-[Cấp 10]: ^7777771500% MATK^000000
+[Cấp 1]: ^777777400% MATK, phạm vi 7x7 ô^000000
+[Cấp 2]: ^777777470% MATK, phạm vi 7x7 ô^000000
+[Cấp 3]: ^777777540% MATK, phạm vi 7x7 ô^000000
+[Cấp 4]: ^777777610% MATK, phạm vi 7x7 ô^000000
+[Cấp 5]: ^777777680% MATK, phạm vi 7x7 ô^000000
+[Cấp 6]: ^777777750% MATK, phạm vi 11x11 ô^000000
+[Cấp 7]: ^777777820% MATK, phạm vi 11x11 ô^000000
+[Cấp 8]: ^777777890% MATK, phạm vi 11x11 ô^000000
+[Cấp 9]: ^777777960% MATK, phạm vi 11x11 ô^000000
+[Cấp 10]: ^7777771030% MATK, phạm vi 11x11 ô^000000
 #
 AB_CLEMENTIA#
 Ban Ơn
@@ -9046,14 +9045,14 @@ Tên khác: ^777777Lauda Agnus^000000
 Cấp độ tối đa: 4
 Yêu cầu: ^CC3399Phục Hồi Trạng Thái 1^000000
 Kiểu kỹ năng: ^339900Trị thương^000000
-Mô tả: ^777777Tăng chỉ số VIT và chữa lành các hiệu ứng
+Mô tả: ^777777Tăng MaxHP và chữa lành các hiệu ứng
  xấu gồm ^663399Băng giá, Hóa đá, Đóng băng,
  Băng hàn, Lóa^777777 và ^663399Thiêu đốt^777777 cho tất cả thành viên
  tổ đội.^000000
-[Cấp 1]: ^77777750% chữa thành công, VIT +5.^000000
-[Cấp 2]: ^77777760% chữa thành công, VIT +6.^000000
-[Cấp 3]: ^77777770% chữa thành công, VIT +7.^000000
-[Cấp 4]: ^77777780% chữa thành công, VIT +8.^000000
+[Cấp 1]: ^77777770% chữa thành công, tăng 4% MaxHP.^000000
+[Cấp 2]: ^77777780% chữa thành công, tăng 6% MaxHP.^000000
+[Cấp 3]: ^77777790% chữa thành công, tăng 8% MaxHP.^000000
+[Cấp 4]: ^777777100% chữa thành công, tăng 10% MaxHP.^000000
 #
 AB_LAUDARAMUS#
 Linh Vệ
@@ -9061,14 +9060,14 @@ Tên khác: ^777777Lauda Ramus^000000
 Cấp độ tối đa: 4
 Yêu cầu: ^CC3399Tâm Vệ 2^000000
 Kiểu kỹ năng: ^339900Trị thương^000000
-Mô tả: ^777777Tăng chỉ số LUK và chữa lành các
- hiệu ứng xấu gồm ^663399Câm lặng, Ngủ mê,
+Mô tả: ^777777Tăng sát thương chí mạng và chữa
+ lành các hiệu ứng xấu gồm ^663399Câm lặng, Ngủ mê,
  Ngủ sâu, Choáng^777777 và ^663399Ù tai^777777 cho tất cả
  thành viên tổ đội.^000000
-[Cấp 1]: ^77777750% chữa thành công, LUK +5.^000000
-[Cấp 2]: ^77777760% chữa thành công, LUK +6.^000000
-[Cấp 3]: ^77777770% chữa thành công, LUK +7.^000000
-[Cấp 4]: ^77777780% chữa thành công, LUK +8.^000000
+[Cấp 1]: ^77777770% chữa thành công, tăng 5% sát thương chí mạng.^000000
+[Cấp 2]: ^77777780% chữa thành công, tăng 10% sát thương chí mạng.^000000
+[Cấp 3]: ^77777790% chữa thành công, tăng 15% sát thương chí mạng.^000000
+[Cấp 4]: ^777777100% chữa thành công, tăng 20% sát thương chí mạng.^000000
 #
 AB_EUCHARISTICA#
 Kiên Tâm
@@ -9096,12 +9095,9 @@ Tên khác: ^777777Renovatio^000000
 Cấp độ tối đa: 1
 Yêu cầu: ^CC3399Cứu Độ 3^000000
 Kiểu kỹ năng: ^339900Hồi phục^000000
-Mô tả: ^777777Ban phép cho 1 đối tượng,
+Mô tả: ^777777Ban phép cho toàn tổ đội,
  giúp họ phục hồi 3% MaxHP mỗi 5 giây
- trong 90 giây.
-Gây sát thương mỗi 5 giây khi thi
- triển lên quái vật có thuộc tính
- Xác sống.^000000
+ trong 90 giây.^000000
 #
 AB_HIGHNESSHEAL#
 Cứu Sinh
@@ -9143,11 +9139,11 @@ Mô tả: ^777777Cường hóa vũ khí một đối tượng bằng
 Các đòn đánh vật lý có thể bỏ
  qua 1 lượng DEF của đối thủ dựa theo
  cấp độ kỹ năng.^000000
-[Cấp 1]: ^777777Xuyên 5% DEF trong 150 giây^000000
-[Cấp 2]: ^777777Xuyên 10% DEF trong 180 giây^000000
-[Cấp 3]: ^777777Xuyên 15% DEF trong 210 giây^000000
-[Cấp 4]: ^777777Xuyên 20% DEF trong 240 giây^000000
-[Cấp 5]: ^777777Xuyên 25% DEF trong 270 giây^000000
+[Cấp 1]: ^777777Xuyên 5% DEF/MDEF trong 150 giây^000000
+[Cấp 2]: ^777777Xuyên 10% DEF/MDEF trong 180 giây^000000
+[Cấp 3]: ^777777Xuyên 15% DEF/MDEF trong 210 giây^000000
+[Cấp 4]: ^777777Xuyên 20% DEF/MDEF trong 240 giây^000000
+[Cấp 5]: ^777777Xuyên 25% DEF/MDEF trong 270 giây^000000
 #
 AB_DUPLELIGHT#
 Thánh Quang Vệ
@@ -9161,16 +9157,16 @@ Mô tả: ^777777Làm phép gọi ra 2 nguồn sáng linh
  một khoảng thời gian.
 Khi đánh thường, nhân vật có tỉ lệ gây thêm
  một lượng sát thương phép thuật và vật lý.^000000
-[Cấp 1]: ^777777ATK +110%, MATK +220%, 90 giây^000000
-[Cấp 2]: ^777777ATK +120%, MATK +240%, 120 giây^000000
-[Cấp 3]: ^777777ATK +130%, MATK +260%, 150 giây^000000
-[Cấp 4]: ^777777ATK +140%, MATK +280%, 180 giây^000000
-[Cấp 5]: ^777777ATK +150%, MATK +300%, 210 giây^000000
-[Cấp 6]: ^777777ATK +160%, MATK +320%, 240 giây^000000
-[Cấp 7]: ^777777ATK +170%, MATK +340%, 270 giây^000000
-[Cấp 8]: ^777777ATK +180%, MATK +360%, 300 giây^000000
-[Cấp 9]: ^777777ATK +190%, MATK +380%, 330 giây^000000
-[Cấp 10]: ^777777ATK +200%, MATK +400%, 360 giây^000000
+[Cấp 1]: ^777777ATK +165%, MATK +440%, 90 giây^000000
+[Cấp 2]: ^777777ATK +180%, MATK +480%, 120 giây^000000
+[Cấp 3]: ^777777ATK +195%, MATK +520%, 150 giây^000000
+[Cấp 4]: ^777777ATK +210%, MATK +560%, 180 giây^000000
+[Cấp 5]: ^777777ATK +225%, MATK +600%, 210 giây^000000
+[Cấp 6]: ^777777ATK +240%, MATK +640%, 240 giây^000000
+[Cấp 7]: ^777777ATK +255%, MATK +680%, 270 giây^000000
+[Cấp 8]: ^777777ATK +270%, MATK +720%, 300 giây^000000
+[Cấp 9]: ^777777ATK +285%, MATK +760%, 330 giây^000000
+[Cấp 10]: ^777777ATK +300%, MATK +800%, 360 giây^000000
 #
 AB_DUPLELIGHT_MELEE#
 #
@@ -9843,7 +9839,7 @@ Trạng thái sẽ mất khi bắt đầu tấn công hoặc khi
 RA_RESEARCHTRAP#
 Nghiên Cứu Bẫy
 Tên khác: ^777777Trap Research^000000
-Cấp độ tối đa: 10
+Cấp độ tối đa: 5
 Yêu cầu: ^CC3399Bẫy Cháy 1, Gỡ Bẫy 1^000000
 Kiểu kỹ năng: ^6666CCNội tại^000000
 Mô tả: ^777777Tăng sát thương của bẫy và tầm đặt bẫy
@@ -10454,10 +10450,10 @@ Mô tả: ^777777Học được kỹ năng sau cùng mà đối thủ
 Nếu thi triển lại ^000099Sao Chép^777777, Hắc Tặc sẽ ngưng
  sao chép để giữ lại kỹ năng mới nhất
  vừa học.
-Chỉ có thể học 1 kỹ năng với cấp độ bằng
- cấp độ ^000099Sao Chép^777777 cao nhất đã học,
- lượng SP tiêu hao của kỹ năng được sao chép
- nhiều gấp đôi so với kỹ năng gốc.
+Chỉ có thể học 1 kỹ năng với cấp độ
+ bằng cấp độ ^000099Sao Chép^777777 cao nhất đã học.
+ Lượng SP tiêu hao của kỹ năng được sao chép
+ sẽ nhiều hơn 30% so với kỹ năng gốc.
 Cần có đầy đủ các vật phẩm yêu cầu để
  thi triển một vài kỹ năng nhất định.^000000
 #
@@ -10469,26 +10465,26 @@ Yêu cầu: ^CC3399Sao Chép 5^000000
 Kiểu kỹ năng: ^339900Kích hoạt / Hỗ trợ^000000
 Mô tả: ^777777Tự động thi triển chiêu thức phép thuật
  vừa học bởi ^000099Sao Chép^777777 hoặc ^000099Bắt Chước^777777 khi
- tấn công thường trúng mục tiêu.^000000
-[Cấp 1]: ^77777728% tự động thi triển kỹ năng cấp 1,
+ tấn công thường.^000000
+[Cấp 1]: ^77777728% tự động thi triển kỹ năng cấp 3,
 60 giây hiệu lực^000000
-[Cấp 2]: ^77777726% tự động thi triển kỹ năng cấp 1,
+[Cấp 2]: ^77777726% tự động thi triển kỹ năng cấp 3,
 80 giây hiệu lực^000000
-[Cấp 3]: ^77777724% tự động thi triển kỹ năng cấp 2,
+[Cấp 3]: ^77777724% tự động thi triển kỹ năng cấp 4,
 100 giây hiệu lực^000000
-[Cấp 4]: ^77777722% tự động thi triển kỹ năng cấp 2,
+[Cấp 4]: ^77777722% tự động thi triển kỹ năng cấp 4,
 120 giây hiệu lực^000000
-[Cấp 5]: ^77777720% tự động thi triển kỹ năng cấp 3,
+[Cấp 5]: ^77777720% tự động thi triển kỹ năng cấp 5,
 140 giây hiệu lực^000000
-[Cấp 6]: ^77777718% tự động thi triển kỹ năng cấp 3,
+[Cấp 6]: ^77777718% tự động thi triển kỹ năng cấp 5,
 160 giây hiệu lực^000000
-[Cấp 7]: ^77777716% tự động thi triển kỹ năng cấp 4,
+[Cấp 7]: ^77777716% tự động thi triển kỹ năng cấp 6,
 180 giây hiệu lực^000000
-[Cấp 8]: ^77777714% tự động thi triển kỹ năng cấp 4,
+[Cấp 8]: ^77777714% tự động thi triển kỹ năng cấp 6,
 200 giây hiệu lực^000000
-[Cấp 9]: ^77777712% tự động thi triển kỹ năng cấp 5,
+[Cấp 9]: ^77777712% tự động thi triển kỹ năng cấp 7,
 220 giây hiệu lực^000000
-[Cấp 10]: ^77777715% tự động thi triển kỹ năng cấp 5,
+[Cấp 10]: ^77777715% tự động thi triển kỹ năng cấp 7,
 300 giây hiệu lực^000000
 #
 SC_SHADOWFORM#
@@ -10548,7 +10544,7 @@ Mô tả: ^777777Tạt sơn xung quanh nhân vật để phát
 Khi dính phải sơn, chúng sẽ có tỉ lệ bị ^663399Lóa^777777 và
  giảm tốc độ tấn công.
 Yêu cầu có 1 ^008800Cọ sơn tường (Paint Brush)^777777 và tiêu hao
- 1 ^008800Sơn tường (Surface Paint)^777777 mỗi lần tạt.^000000
+ 1 ^008800Sơn tường (Face Paint)^777777 mỗi lần tạt.^000000
 [Cấp 1]: ^77777755% bị lóa, 25% bị giảm ASPD
  trong 5 giây^000000
 [Cấp 2]: ^77777757% bị lóa, 35% bị giảm ASPD
@@ -11100,6 +11096,9 @@ Mô tả: ^777777Hy sinh một phần HP để kích hoạt cơn
  thuộc tính Thánh trong vùng 11x11 ô.
 Khi tấn công các quái vật thuộc chủng loài Quỷ
  và Thây ma, có 50% tỉ lệ làm chúng bị ^663399lóa^777777.
+Trong tổ đội phải có ít nhất 2 Hộ vệ hoàng gia
+ đã kích hoạt ^000099Vệ Quân Đoàn^777777 để có thể
+ thi triển kỹ năng này.
 Sát thương tăng theo cấp độ nhân vật và số
  lượng ^990000Vệ binh^777777 trong tổ đội.^000000
 [Cấp 1]: ^777777600% ATK / 300% MATK, tiêu hao 3% MaxHP.^000000
@@ -11289,19 +11288,20 @@ Cấp độ tối đa: 10
 Yêu cầu: ^CC3399Đọa Vương Quyền 3^000000
 Kiểu kỹ năng: ^FF0000Tấn công^000000
 Mô tả: ^777777Sử dụng năng lượng linh cầu để gây sát
- thương lớn cho các đối thủ đứng xung quanh, đồng thời
- hút 1 lượng SP tương đương 10% sát thương gây ra.
+ thương lớn cho các đối thủ đứng xung quanh,
+ đồng thời hút 1 lượng SP tương đương 10%
+ sát thương gây ra.
 MaxHP/MaxSP của nhân vật càng cao thì sát
- thương phát ra càng lớn.
+ thương gây ra càng lớn.
 Chỉ có thể ra đòn khi đang Giận dữ. ^000099Liên Hổ
- Quyền^777777 gây sát thương lớn hơn nếu dùng sau ^000099Đọa
- Vương Quyền777777.
+ Quyền^777777 gây sát thương lớn hơn nếu dùng sau
+ ^000099Đọa Vương Quyền^777777.
 Tiêu hao HP/SP của bản thân và 2 ^008800linh cầu^777777.^000000
 [Cấp 1]: ^777777Phạm vi 3x3 ô, tiêu hao 12% HP / 6% SP^000000
 [Cấp 2]: ^777777Phạm vi 3x3 ô, tiêu hao 14% HP / 7% SP^000000
 [Cấp 3]: ^777777Phạm vi 3x3 ô, tiêu hao 16% HP / 8% SP^000000
 [Cấp 4]: ^777777Phạm vi 3x3 ô, tiêu hao 18% HP / 9% SP^000000
-[Cấp 5]: ^777777Phạm vi 5x5 ô, tiêu hao 20% HP / 10% SP^000000
+[Cấp 5]: ^777777Phạm vi 3x3 ô, tiêu hao 20% HP / 10% SP^000000
 [Cấp 6]: ^777777Phạm vi 5x5 ô, tiêu hao 22% HP / 11% SP^000000
 [Cấp 7]: ^777777Phạm vi 5x5 ô, tiêu hao 24% HP / 12% SP^000000
 [Cấp 8]: ^777777Phạm vi 5x5 ô, tiêu hao 26% HP / 13% SP^000000
@@ -13863,7 +13863,7 @@ Cấp độ tối đa: 5
 Yêu cầu: ^CC3399Khiếp Phong 5^000000
 Kiểu kỹ năng: ^339900Kích hoạt / Hỗ trợ^000000
 Mô tả: ^777777Vượt qua giới hạn và đưa bản thân vào
- trạng thái xuất thần trong 150 giây.
+ trạng thái xuất thần trong 60 giây.
 Trong trạng thái này, các đòn tấn công tầm xa
  có sức sát thương hủy diệt.^000000
 [Cấp 1]: ^777777Sát thương tầm xa +50%^000000
@@ -13996,7 +13996,7 @@ Kiểu kỹ năng: ^339900Kích hoạt / Hỗ trợ^000000
 Mô tả: ^777777Ngay lập tức đặt 1 bẫy sập và giật lùi về
  phía sau. Không thể lùi về xuyên qua tường
  hoặc các vị trí không thể đứng.
-Tiêu hao 1 ^008800Bẫy hợp kim đặc biệt (Special Alloy Trap)^000000
+Tiêu hao 1 ^008800Bẫy (Trap)^000000
 [Cấp 1]: ^777777Lùi về sau 5 ô^000000
 [Cấp 2]: ^777777Lùi về sau 6 ô^000000
 [Cấp 3]: ^777777Lùi về sau 7 ô^000000

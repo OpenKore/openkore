@@ -2224,7 +2224,7 @@
 4359#Assassin Cross Card#
 4360#Eremes Guile Card#
 4361#Mastersmith Card#
-4362##
+4362#Howard Alt-Eisen Card#
 4363#High Priest Card#
 4364#Margaretha Sorin Card#
 4365#High Wizard Card#
@@ -2498,16 +2498,16 @@
 4639#Taffy Card#
 4640#Frozen Wolf Card#
 4641#Zombie Guard Card#
-4642#Thẻ Vua Vô hạn#
-4643#Thẻ sói lang thang vô hạn#
-4644#Thẻ vua Locust Infinity#
-4645#Thẻ thỏ xanh vô hạn#
-4646#Thẻ Camilla vô cực#
-4647#Thẻ Osiris vô hạn#
-4648#Thẻ Tiger King vô hạn#
-4649#Thẻ cướp biển vô hạn#
-4650#Thẻ anh hùng vô hạn#
-4651#Thẻ vô cực#
+4642#Infinite Toad Card#
+4643#Infinite Vagabond Wolf Card#
+4644#Infinite Vocal Card#
+4645#Infinite Eclipse Card#
+4646#Infinite Chimera Card#
+4647#Infinite Osiris Card#
+4648#Infinite Eddga Card#
+4649#Infinite Phreeoni Card#
+4650#Infinite Orc Hero Card#
+4651#Infinite Tao Gunka Card#
 4652#Nightmare Amon Ra Card#
 4653#Nightmare Arclouse Card#
 4654#Nightmare Mimic Card#
@@ -3079,12 +3079,12 @@
 5263#Pagdayaw#
 5264#Australian Flag Hat#
 5265#Refined Apple of Archer#
-5266#Rental Bunny Band#
+5266#Refined Bunny Band#
 5267#Refined Sakkat#
 5268#Refined Grand Circlet#
 5269#Flapping Angel Wing#
 5270#Autumn Leaves#
-5271#Chinese Crown#
+5271#Phoenix Crown#
 5272#Tongue Mask#
 5273#Happy Wig#
 5274#Shiny Wig#
@@ -3106,7 +3106,7 @@
 5294#Whisper Mask#
 5295#(null)#
 5296#(null)#
-5297#(null)#
+5297#Soul Wing#
 5298#(null)#
 5299#(null)#
 5300#Champion Helm#
@@ -3172,7 +3172,7 @@
 5376#Flying Evil Wings#
 5377#Gentleman's Pipe#
 5378#Bunny Top Hat#
-5379#Tam#
+5379#Balloon Hat#
 5380#Fish Head Hat#
 5381#Santa Poring Hat#
 5382#Bell Ribbon#
@@ -3228,6 +3228,7 @@
 5452#Silver Dragonhelm#
 5453#Copper Dragonhelm#
 5455#Moon Rabbit Hat#
+5456#Summer Hat#
 5457#Moon Rabbit Hat#
 5458#Pinwheel Hat#
 5460#Sọ rồng tiến hóa#
@@ -3246,6 +3247,7 @@
 5473#Crab Nipper Hat#
 5474#AFK Hat#
 5475#Gozarian Mask#
+5476#Grand Peco Headdress#
 5479#Shaman's Hair Decoration#
 5480#Bijofnil Wings#
 5481#Hermode Cap#
@@ -3255,6 +3257,7 @@
 5487#Poring Cake Hat#
 5490#Anubis Helm#
 5491#Outlaw's Hat#
+5494#Sphinx Hat#
 5495#Power Of Thor#
 5496#Dice Hat#
 5497#Edgga Doll#
@@ -3278,6 +3281,7 @@
 5518#Large Baphomet Horns#
 5519#Peacock Feather#
 5520#Rabbit Earmuffs#
+5521#Angry Mouth#
 5526#Lady Tanee Doll#
 5527#Lunatic Hat#
 5528#Frog King Hat#
@@ -3303,12 +3307,12 @@
 5561#Rabbit Magic Hat#
 5562#Love of Truth#
 5564#Crown of Deceit#
-5567#Sinulog Hat#
+5567#Bright Fury#
 5568#Rabbit Bonnet#
 5569#Gemini Diadem#
 5570#Gemini Crown#
 5571#Rasta's Wig#
-5572#Mũ heo nhỏ dễ thương[1]#
+5572#Savage Babe Hat#
 5573#Dokkaebi Horn#
 5574#Well-Chewed Pencil#
 5575#Rice Ball Hat#
@@ -3428,7 +3432,7 @@
 5815#Classic Hat#
 5816#New Cowboy Hat#
 5822#Love Chick Hat#
-5823#Mũi tên của tình yêu#
+5823#Love Arrow#
 5825#Hiệp sĩ vinh quang#
 5847#Cái mũ ngày cá tháng tư#
 5852#Easter Egg Shell#
@@ -3940,13 +3944,13 @@
 6696#Frilldora's Fiery Nape#
 6697#Costume Exchange Coupon#
 6698#Hatchet#
-6707#Jeremy's Beauty Coupon#
+6707#Cash Hair Coupon#
 6708#Mana crystal#
 6712#Love Wand#
 6713#Soul Of Ahat#
 6714#Soul Of Shnaim#
 6715#Darklord Soulpiece#
-6716#CRIT Stone (Upper)#
+6716#Critical Stone (Upper)#
 6717#Stamina Stone (Middle)#
 6718#Magic Stone (Lower)#
 6719#Tooth Of Jitterbug#
@@ -4097,24 +4101,24 @@
 6958#Lamb Horn#
 6959#Second Costume Ticket#
 6960#Sky Fortress Key#
-6961#Sắt vụn lớn#
-6962#Trống dầu cũ#
+6961#Huge Metal Scrap#
+6962#Old Fuel Tank#
 6963#HP Absorption Stone (Garment)#
 6964#SP Absorption Stone (Garment)#
-6965#Thuộc tính phù phép_Fire#
-6966#Thuộc tính phù phép_Water#
-6967#Thuộc tính phù phép_Earth#
-6968#phù phépment_Wind#
-6969#Kháng phù phép_Fire#
-6970#Kháng phù phép_Water#
-6971#Kháng phù phép_Earth#
-6972#Kháng phù phép_Wind#
-6973#Khôi phục phù phép_101#
-6974#Khôi phục phù phép_102#
-6975#Khôi phục phù phép_201#
-6976#Khôi phục phù phép_202#
-6977#Bùa phụ trợ_STR#
-6978#Phụ trợ phù phép_INT#
+6965#Fire Property Blueprint#
+6966#Water Property Blueprint#
+6967#Earth Property Blueprint#
+6968#Wind Property Blueprint#
+6969#Fire Resistance Blueprint#
+6970#Water Resistance Blueprint#
+6971#Earth Resistance Blueprint#
+6972#Wind Resistance Blueprint#
+6973#Recovery 101 Blueprint#
+6974#Recovery 102 Blueprint#
+6975#Recovery 201 Blueprint#
+6976#Recovery 202 Blueprint#
+6977#STR Supplement Blueprint#
+6978#INT Supplement Blueprint#
 6979#Phụ trợ phù phép_DEF#
 6980#phù phép phụ trợ_ Tránh hoàn toàn#
 6981#phù phép_Attack phụ trợ #
@@ -4122,7 +4126,7 @@
 6983#Phụ trợ bùa hộ mệnh#
 6984#Phụ trợ phù phép_MSP#
 6985#Phụ trợ phù phép#
-6986#Bùa phụ trợ_ASPD#
+6986#ASPD Supplement Blueprint#
 6992#Trứng Phục Sinh vỡ#
 6993#Guarantee Weapon 10Up#
 6994#Guarantee Armor 10Up#
@@ -4486,35 +4490,35 @@
 7358#Crest Piece (Orange)#
 7359#Crest Piece (Purple)#
 7360#RO Festival Invitation#
-7361#Tattered Map 1#
-7362#Tattered Map 2#
-7363#Tattered Map 3#
-7364#Tattered Map 4#
-7365#Tattered Map 5#
-7366#Tattered Map 6#
-7367#Tattered Map 7#
-7368#Tattered Map 8#
-7369#Tattered Map 9#
-7370#Tattered Map 10#
-7371#Tattered Map 11#
-7372#Tattered Map 12#
-7373#Tattered Map 13#
-7374#Tattered Map 14#
-7375#Tattered Map 15#
-7376#Tattered Map 16#
-7377#Tattered Map 17#
-7378#Tattered Map 18#
-7379#Tattered Map 19#
-7380#Tattered Map 20#
-7381#Tattered Map 21#
-7382#Tattered Map 22#
-7383#Tattered Map 23#
-7384#Tattered Map 24#
-7385#Tattered Map 25#
-7386#Tattered Map 26#
-7387#Tattered Map 27#
-7388#Tattered Map 28#
-7389#Tattered Map 29#
+7361#Lotto Ball 1#
+7362#Lotto Ball 2#
+7363#Lotto Ball 3#
+7364#Lotto Ball 4#
+7365#Lotto Ball 5#
+7366#Lotto Ball 6#
+7367#Lotto Ball 7#
+7368#Lotto Ball 8#
+7369#Lotte Ball 9#
+7370#Lotto Ball 10#
+7371#Lotto Ball 11#
+7372#Lotto Ball 12#
+7373#Lotto Ball 13#
+7374#Lotto Ball 14#
+7375#Lotto Ball 15#
+7376#Lotto Ball 16#
+7377#Lotto Ball 17#
+7378#Lotto Ball 18#
+7379#Lotto Ball 19#
+7380#Lotto Ball 20#
+7381#Lotto Ball 21#
+7382#Lotto Ball 22#
+7383#Lotto Ball 23#
+7384#Lotto Ball 24#
+7385#Lotto Ball 25#
+7386#Lotto Ball 26#
+7387#Lotto Ball 27#
+7388#Lotto Ball 28#
+7389#Lotto Ball 29#
 7390#Tattered Map 30#
 7391#Tattered Map 31#
 7392#Tattered Map 32#
@@ -4835,7 +4839,7 @@
 7764#High Strength Adhesive#
 7765#Baba Yaga's Secret Medicine#
 7766#Bok Choy#
-7767#Bánh nhỏ ngon#
+7767#Chung E Cake#
 7768#Squid#
 7769#Egg Yolk#
 7770#Sweet Rice#
@@ -4847,7 +4851,7 @@
 7776#Gym Pass#
 7777#Ngực vàng khép kín#
 7778#Hộp bạc kín#
-7779#Chìa khóa vàng#
+7779#Gold Key#
 7780#Chìa khóa bạc#
 7781#(null)#
 7782#Episode 13.1 Poporing Key#
@@ -5036,7 +5040,14 @@
 9090#Little Isis Egg#
 9091#Choco Egg#
 9092#Eggring Egg#
+9093#Yao Jun Egg#
+9094#Leaf Lunatic Egg#
+9095#Nine Tail Egg#
+9096#Cat o' Nine Tails Egg#
+9097#Evolved Diabolic Egg#
+9098#Earth Deleter Egg#
 9099#Teddy Bear Egg#
+9100#Gremlin Egg#
 9101#Scatleton's Portable Cage#
 9109#Sweets Drops Egg#
 9110#Duckling Egg#
@@ -5073,6 +5084,7 @@
 9866#Pre-Register Box 4#
 9867#Pre-Register Box 5#
 9868#Pre-Register Box#
+9896#[Gacha] Power Booster#
 9924#[Event] Shiny DEF Scroll#
 10001#Skull Helmet#
 10002#Monster Oxygen Mask#
@@ -5483,7 +5495,7 @@
 12261#Miracle Medicine#
 12262#Inspector Certificate#
 12263#HE Battle Manual Plus#
-12264#[Event] HE Bubble Gum#
+12264#[Event] Bubble Gum#
 12265#[Event] Life Insurance#
 12269#Tasty Pink Ration#
 12270#Tasty White Ration#
@@ -5760,7 +5772,7 @@
 12755#Pháo truyền thống#
 12756#New Gift Envelope#
 12764#Hộp thông thái tuyệt vời#
-12766#Reward Job BM25#
+12766#[Event] Job Battle Manual#
 12767#Worldcup Hat of Passion Box#
 12768#Worldcup Hat of Fight Box#
 12769#Worldcup Hat of Victory Box#
@@ -5777,7 +5789,7 @@
 12788#Pháo hoa kỹ thuật số #
 12789#Đĩa trái cây#
 12790#Name Change Coupon#
-12791#Thuốc chiến đấu#
+12791#Combat Pill#
 12792#Y học chiến đấu tiên tiến#
 12793#10 rương thuốc chiến đấu#
 12794#10 hộp chiến binh tiên tiến#
@@ -5810,14 +5822,14 @@
 12832#Mysterious Water#
 12834#Undead Egg#
 12835#Girl's Heart#
-12837#Rương kho báu bằng gỗ#
-12838#Rương sắt#
-12839#Rương kho báu đồng#
-12840#Rương kho báu bạc#
+12837#Wooden Treasure Box#
+12838#Iron Treasure Box#
+12839#Bronze Treasure Box#
+12840#Silver Treasure Box#
 12841#Rương kho báu vàng#
-12842#Kho báu bạch kim#
-12843#Ngực ngọc trai#
-12844#Rương kim cương#
+12842#Platinum Treasure Box#
+12843#Pearl Treasure Box#
+12844#Diamond Treasure Box#
 12845#Amatsu Butterfly Wing#
 12846#Little Unripe Apple#
 12847#Old Equipment Box#
@@ -5828,9 +5840,9 @@
 12853#Patron Scroll#
 12854#Voluminous Spray of Flowers#
 12855#Pope Egg Scroll#
-12858#Thuốc vàng RG#
+12858#RG Golden Potion#
 12860#Mommy Day Cake#
-12861#Cuốn sách gọi Tam giác lion Cub#
+12861#Hillsrion Scroll#
 12862#Cuộc gọi của bé Cullen#
 12873#TE Potion Box#
 12874#Frost Giant Blood#
@@ -5995,7 +6007,7 @@
 13068#Saurel#
 13069#Aztoe Nail#
 13070#Scarletto Nail#
-13071#Kiếm ngắn Dallas#
+13071#Upg Dagger#
 13072#Bellum Damascus#
 13074#Ninja Cutter#
 13075#Kurenai#
@@ -6034,7 +6046,7 @@
 13118#Fading Flame#
 13119#Freedom Flame#
 13120#Heaven's Feather & Hell's Fire#
-13121#Khẩu súng lục ổ quay#
+13121#Execution Gun#
 13122#Altair & Ares#
 13123#Mary Jane Revolver#
 13124#Altair & Ares#
@@ -6195,7 +6207,7 @@
 13332#Huuma Shuriken of Dancing Petals#
 13336#Thực tập sinh ninja gió quỷ phi tiêu#
 13337#Illusion Huuma Fluttering Snow#
-13345#Thanh Minh của Qingming#
+13345#Huuma Shuriken Clearness#
 13400#Cutlus#
 13401#Refined Excalibur#
 13404#Platinum Shotel#
@@ -6314,7 +6326,7 @@
 13644#Vigorgra Package Vol 11#
 13645#Vigorgra Package Vol 12#
 13689#Hộp lá bắp cải#
-13690#Hộp bánh nhỏ ngon#
+13690#Chung E Cake Box#
 13691#(null)#
 13692#(null)#
 13693#(null)#
@@ -6774,7 +6786,7 @@
 14882#RTC 2017#
 14885#Quyền bá chủ #
 14886#Ẩm thực tối thượng[Để chuyển đổi trứng]#
-14887#Ẩm thực tối thượng[Dành cho sự kiện]#
+14887#[Event] Ultimate Cook#
 14888#Hộp quà tặng túi tóc đẹp cổ điển#
 14889#Hộp quà tặng đẹp mắt Upright Hair Bun#
 14890#Sexy xoắn twist hộp quà tặng#
@@ -6794,7 +6806,7 @@
 14928#Muốn chiến đấu#
 14929#Chó may mắn#
 14934#Trứng chữa bệnh#
-14935#Trứng rụng#
+14935#Fallen Angel Scroll#
 14942#Trứng bảo vệ #
 14946#Quỷ nhỏ biến trứng#
 14951#Bóng đa năng#
@@ -6820,7 +6832,7 @@
 15014#Ebone Armor#
 15015#Upgrade Adventure Suit#
 15016#Upgrade Coat#
-15017#Upgrade SaINT Robe#
+15017#Upgrade Saint Robe#
 15018#Upgrade Tights#
 15019#Upgrade Thief Cloth#
 15020#Upgrade Mail#
@@ -6863,7 +6875,7 @@
 15062#TE WoE Coat#
 15063#TE WoE Mail#
 15064#TE WoE Magic Coat#
-15065#Mục thử nghiệm GM#
+15065#Amethyst Penta#
 15066#Engraved Armor#
 15067#Rune Suit#
 15068#Advanced Angelic Protection#
@@ -6896,8 +6908,8 @@
 15105#Kaftan#
 15110#Supplement Part Str#
 15111#Upgrade Part - Plate#
-15116#Airship¡®s Armor#
-15117#Felrock¡®s Armor#
+15116#Airship's Armor#
+15117#Ferlock's Armor#
 15121#Sarah's Battle Robe#
 15126#Doram Suit#
 15127#Bông tai cô gái Poring#
@@ -6914,9 +6926,9 @@
 15163#Agenda Robe#
 15164#Consultation Robe#
 15166#Rosary's Necklace#
-15167#Áo choàng bảo vệ tăng cường thời gian#
+15167#Toughen Time Keepr Robe#
 15169#Kardui Robe#
-15174#Áo tắm lướt#
+15174#Surfer Swimsuit#
 15176#Vigilante Suit#
 15177#Elemental Robe#
 15178#Golden Ninja Suit#
@@ -6930,7 +6942,7 @@
 15195#Illusion Puente Robe#
 15203#Bảng triệu tập#
 15207#Bảng RTC 2017#
-15210#Áo tắm lướt sóng ngày#
+15210#[Rental] Surfer Swimsuit#
 15211#Giáp kỷ niệm đầu tiên#
 15212#YSF01 Plate#
 15214#Váy IA#
@@ -7083,6 +7095,7 @@
 16640#Life Ribbon Box3#
 16652#Flame Scroll#
 16654#Bay Griffin#
+16660#Spiritual Auger Box#
 16664#Vương miện huyền thoại của Cung điện Sư tử #
 16665#Huyền thoại cung hoàng đạo#
 16673#Xử Nữ, Thiên Bình#
@@ -7097,14 +7110,14 @@
 16740#Seagod's Protection Box#
 16741#Hairtail Box(1hr)#
 16742#Hairtail Box(7day)#
-16743#Marlin Box(1hr)#
-16744#Marlin Box(7day)#
+16743#[1Hour] Marlin Box#
+16744#[7Day] Marlin Box#
 16745#Saurel Box(1hr)#
 16746#Saurel Box(7day)#
 16747#Tuna Box(1hr)#
 16748#Tuna Box(7day)#
-16749#Malangdo Crab Box(1hr)#
-16750#Malangdo Crab Box(7day)#
+16749#[1Hour] Malangdo Crab Box#
+16750#[7Day] Malangdo Crab Box#
 16751#Spotty Eel Box1#
 16752#Spotty Eel Box2#
 16753#Blessed Oridecon Box#
@@ -7286,7 +7299,7 @@
 17366#Safe to 7 Sale Box#
 17367#May Groove Pack 2016#
 17368#Resist Spell Power Pendant Shadow Box#
-17369#13th Anniversa-box#
+17369#S Rapit Pendant Box#
 17370#Costume: Man's Pride Box#
 17371#Costume Charleston's Antenna Box#
 17372#Costume Show Me The Zeny Box#
@@ -7753,12 +7766,12 @@
 19115#Republic Hat#
 19119#Mũ bảo vệ thời gian của người giám hộ #
 19126#Tăng cường bóng#
-19136#Con ma của Xiao Qing#
+19136#Spirit of Green Maiden#
 19138#Seraphim Coronet#
 19141#Maero Mask#
 19160#Bong bóng nam Poring#
 19161#Bóng nữ Poring#
-19162#Lặn ếch ếch[1]#
+19162#Scuba Mask#
 19164#Awaken Eden Group Hat I#
 19165#Awaken Eden Group Hat II#
 19181#Kính râm sóng mới#
@@ -7783,7 +7796,12 @@
 19260#Biểu tượng vị trí thứ ba RTC 2017#
 19261#Biểu tượng RTC 2017#
 19263#General Helm#
-19275#Lặn ếch ngày#
+19264#Golden Fish Hat#
+19265#Smokie Transformation Leaf#
+19266#Survivor's Circlet#
+19267#Survivor's Orb#
+19268#Giant Snake Breath#
+19275#[Rental] Scuba Mask#
 19276#Mũ kỷ niệm đầu tiên#
 19277#Soda mát trong miệng#
 19286#Vòng cổ IA#
@@ -7817,6 +7835,8 @@
 19382#Awfully Bitter Bracer#
 19393#Strawberry Flavored Rice Ball#
 19401#Classic Alice Doll Box#
+19405#Autumn Taste#
+19406#Harvest Festa Hat#
 19424#Costume Master Head#
 19425#Mũ Seafood tuyệt vời#
 19427#Bóng thỏ gia đình Crazy#
@@ -7830,7 +7850,8 @@
 19507#Costume Shining Sun#
 19509#Costume Butterfly Ears#
 19510#Costume Bolt Ears#
-19511#Heart Eyepatch#
+19511#Costume Heart Blue Eyebandge#
+19512#Costume Heart Pink Eyebandge#
 19513#Costume Chicken Beak#
 19514#Costume Old Timey Mustache#
 19515#Costume Yellow Hat#
@@ -8105,7 +8126,7 @@
 19955#Costume Christmas Tree Hat#
 19957#placeholder#
 19959#Costume Drooping Argiope#
-19960#placeholder#
+19960#Costume Chain Puppet#
 19961#Costume Rune Circlet#
 19962#Costume Mitra#
 19963#Costume Driver Band#
@@ -8238,7 +8259,7 @@
 20192#Costume Green Foxtail#
 20195#Costume Scratching Cat#
 20196#Costume Leopard Ear Hat#
-20197#Costume:Amistr Beret#
+20197#Costume Amistr Beret#
 20198#Costume Brown Cat Ear Headdress#
 20199#Costume Evil Marcher Hat#
 20200#Costume Rabbit Head Dress#
@@ -8325,7 +8346,7 @@
 20318#Costume Charleston's Antenna#
 20321#Classic Underneath Saber 2 Week Rental Box#
 20324#Classic Underneath Book 2 Week Rental Box#
-20325#Classic Underneath Hypnotist's Staff 2 Week Rental Box#
+20325#Costume Little Aquarium#
 20326#Classic Underneath Knuckle Duster 2 Week Rental Box#
 20327#Classic Underneath Lute 2 Week Rental Box#
 20328#Classic Underneath Wire 2 Week Rental Box#
@@ -8388,6 +8409,7 @@
 20467#Costume Elemental Crown#
 20468#Costume Harum Beret#
 20470#Costume Sweet Chocolate Hat#
+20472#Costume Helm of Angel#
 20481#Costume Ifrit Mask#
 20482#Costume Birdcage of Paradise#
 20483#Costume Butterfly Hairpin#
@@ -8408,7 +8430,7 @@
 20507#Costume Poring Backpack#
 20508#Costume Poster Girl Hat#
 20509#Costume Uriel Wings#
-20511#Costume Elf Blue Wings#
+20511#Costume Blue Fairy Wings#
 20514#Costume Sword of Thanatos#
 20515#Costume Magic Circle#
 20516#Costume Michael's Wings#
@@ -8420,7 +8442,7 @@
 20525#Costume Bloody Wings#
 20526#Costume Blue Angel Wings#
 20527#Costume Pink Butterfly Wing#
-20528#Costume Gold Butterfly Wing#
+20528#Costume Gold Butterfly Wings#
 20530#Costume Wings Of Gabriel#
 20531#Costume Invisible Shawl#
 20535#Costume Digital Space#
@@ -8455,7 +8477,7 @@
 20736#Áo choàng bất khả chiến bại#
 20737#Costume Wings of Kirin#
 20743#Airship's Cloak#
-20744#Felrock's Cloak#
+20744#Ferlock's Cloak#
 20745#Manteau Of Mistic Froz#
 20746#Costume Rudra's Grace#
 20747#Manteau Great Nature#
@@ -8477,7 +8499,7 @@
 20790#Elegant Doram Manteau#
 20798#Costume Reaper's Favor#
 20801#Áo choàng bảo vệ tăng cường thời gian#
-20819#Bình oxy lặn#
+20819#Oxygen Tank#
 20820#Elemental Cape#
 20821#Golden Scarf#
 20822#Mine Worker's Backpack#
@@ -8493,7 +8515,7 @@
 20844#Ba lô túi kẹo (Magic)#
 20847#Illusion Survivor's Manteau#
 20851#Triệu hồi mảng Fonther Cape#
-20855#Bình oxy ngày lặn#
+20855#[Rental] Oxygen Tank#
 20856#YSF01 Manteau#
 20866#Đôi cánh thiên thần vàng#
 20902#True Hunting Manteau#
@@ -8562,7 +8584,7 @@
 22043#Supplement Part Agi#
 22044#Upgrade Part - Booster#
 22046#Airship's Boots#
-22047#Felrock's Boots#
+22047#Ferlock's Boots#
 22048#Giày chức năng chống bóng tối#
 22049#Sol Shoes#
 22051#Lamor Shoes#
@@ -8641,10 +8663,11 @@
 22543#[Event] Berserk Potion#
 22544#[Event] Awakening Potion#
 22545#[Event] Speed Potion#
+22546#[Event] Slow Potion#
 22547#[Event] Anodyne#
 22548#[Event] Cursed Water#
-22549#Poison Bottle#
-22550#Cookie Bag#
+22549#[Event] Poison Bottle#
+22550#[Event] Cookie Bag#
 22551#[Event] Teacake#
 22552#[Event] Fried Pastry#
 22553#[Event] Rainbow Bread#
@@ -8762,17 +8785,17 @@
 22811#Gói quà tặng Hạnh phúc Hoàng gia#
 22812#Sealed Dracula Scroll#
 22814#Cat Hand Ticket#
-22816#Nước đời thật thiêng liêng.#
-22817#Nước cuộc sống rất nhỏ #
-22818#Nước trung bình thật#
-22819#Citizen Oda's Miracle Elixr#
-22820#thuốc ASPD thật#
-22821#Real Rage thuốc#
-22822#Túi bơi mùa hè #
+22816#True Mysterious Life Potion#
+22817#True Small Life Potion#
+22818#True Medium Life Potion#
+22819#True Almighty#
+22820#True Enhanced ASPD Potion#
+22821#True Red Booster#
+22822#Summer Vacation Outfit Pouch#
 22823#Sealed Sniper Cecil Scroll#
 22824#Dấu hiệu cầu nguyện Tanabata#
 22825#(No Name)#
-22826#Costume Enchant Stone Box#
+22826#Costume Enchant Stone Box 4#
 22828#Sealed Seal Scroll#
 22829#Con dấu thẻ King#
 22838#Something Candy Holder#
@@ -8893,6 +8916,7 @@
 23018#Bay bay#
 23019#Ngày lễ tình nhân#
 23020#???#
+23023#Infinity Giant Fly Wing#
 23025#Cuộn giáo hoàng Mercenary#
 23026#Plaincluits Pope Mercenary Summon Scroll#
 23027#Nhẫn bồ công anh#
@@ -8946,7 +8970,7 @@
 23112#Bunny Band#
 23113#Trứng hoa#
 23114#Hộp quà tặng#
-23115#Hộp đựng đồ chuyên nghiệp Shadow#
+23115#Class Shadow Cube#
 23121#Trứng Kim Ngưu 2#
 23122#Trứng khắc trái cây#
 23123#Flare Bullet Case#
@@ -8967,6 +8991,8 @@
 23169#Alchemist Box#
 23174#(Quần áo) Hộp đá cường lực 11#
 23177#[Event] Kafra Card#
+23187#Sap Jelly#
+23188#Airship Part#
 23189#Small Doll Needle#
 23190#Hộp quà đặc biệt tết trung thu#
 23191#Cuộn ám sát Paladin#
@@ -8978,6 +9004,7 @@
 23200#Premium Platinum Box#
 23201#Premium Normal Box#
 23202#Mulled Wine#
+23203#Small Mana Potion#
 23207#[30Day] VIP Subscription Box#
 23209#[1Day] VIP Subscription Box#
 23213#[7Day] VIP Subscription Box#
@@ -9027,9 +9054,12 @@
 23320#Melon Juice#
 23321#Sweet Melon Juice#
 23322#Melon Parfait#
+23323#[3Day] Unlimited Fly Wing Box#
 23324#Hộp chuyển đổi bóng kháng Elf#
 23327#Túi tiền RTC#
-23328#Đạo cụ kiểm tra GM II#
+23328#Asha Bahista#
+23330#[1Day] Infinity Giant Fly Wing Box#
+23333#New Hat Box 3#
 23337#Lễ hội thuyền rồng Buff17#
 23338#[Event] Fly Wing#
 23339#[Event] Fly Wing 100 Box#
@@ -9047,18 +9077,18 @@
 23351#Personal Shopper Voucher Lv1#
 23352#Personal Shopper Voucher#
 23353#Personal Shopper Voucher Lv3#
-23354#[3 Day] Consignment Merchant Envelope Lv1#
-23355#Consignment Merchant Envelope#
-23356#[3 Day] Consignment Merchant Envelope Lv3#
+23354#[3Day] Consignment Merchant Envelope Lv1#
+23355#[10Day] Consignment Merchant Envelope#
+23356#[3Day] Consignment Merchant Envelope Lv3#
 23357#[3Day] Personal Shopper Envelope Lv1#
 23358#Personal Shopper Envelope#
 23359#[3Day] Personal Shopper Envelope Lv3#
 23362#Pig Potato#
-23363#Bánh pudding dưa hấu#
+23363#Watermelon Pudding#
 23364#Bánh quy giáo hoàng Klitura#
-23365#Hộp quà lưu niệm Critola#
+23365#Criatura Souvenir Box#
 23366#Hộp linh hồn chiến đấu#
-23367#Phở cà chua#
+23367#Spaghetti and Sauce#
 23368#Special Shopper Catalog#
 23369#(No Name)#
 23370#(No Name)#
@@ -9141,7 +9171,7 @@
 23597#Ánh mắt#
 23624#Hộp bí ẩn III#
 23628#Hộp tinh luyện Elf chuyên nghiệp#
-23630#Thần tiên giả tưởng[cho các sự kiện]#
+23630#[Event] Miracle Medicine#
 23631#Fantasy Secret[Dành cho sự kiện]#
 23634#Hộp tổng hợp trang phục#
 23635#Trứng thánh#
@@ -9211,12 +9241,13 @@
 23943#Gói đăng ký người mới (60)#
 23944#Gói đăng ký người mới (70)#
 23945#Gói đăng ký người mới (80)#
-23946#Gói đăng ký người mới (90)#
+23946#New Register Box (90)#
 23950#Immune Athena Shadow Enchant Box#
 23951#Kingbird Ancient Armor Enchant Box#
 23958#Thỏ lừa hoặc điều trị #
 23959#[30Day] Edward Zonda Box#
 23960#[30Day] Elysee Zonda Box#
+23962#Upgraded Malangdo Cat Can#
 23963#Đôi cánh của các vị thần#
 23982#Golden Double Ten Revelry#
 23983#Hộp tổng hợp tóc Elf#
@@ -9224,13 +9255,13 @@
 23991#Biến Halloween#
 24000#Áo giáp Shadow Str#
 24001#Găng tay Shadow Dex#
-24002#Bóng tối#
+24002#TLuk1 Shadow Shield#
 24003#Giày bóng Agi#
 24004#Bông tai Shadow VIT (phải)#
 24005#Bông tai Shadow INT (trái)#
 24006#Áo giáp bóng Str2#
 24007#Găng tay Shadow Dex2#
-24008#Bóng tối Luk2 Aegis#
+24008#TLuk2 Shadow Shield#
 24009#Giày bóng Agi2#
 24010#Bông tai Shadow Vit2 (phải)#
 24011#Bông tai Shadow Int2 (trái)#
@@ -9300,15 +9331,15 @@
 24075#Large Shadow Weapon#
 24076#Medium Shadow Weapon#
 24077#Small Shadow Weapon#
-24078#Găng tay siêu nhiên#
-24079#Bông tai siêu nhiên#
-24080#Mặt dây chuyền siêu nhiên#
+24078#Spiritual Shadow Weapon#
+24079#Spiritual Shadow Earring#
+24080#Spiritual Shadow Pendant#
 24081#Malicious Shadow Armor#
 24082#Malicious Shadow Shoes#
 24083#Malicious Shadow Shield#
 24084#Áo giáp ma thuật bóng tối#
 24085#Giày ma thuật bóng tối#
-24086#Shadow Magic Ore Aegis#
+24086#Gemstone Shadow Shield#
 24087#Găng tay bóng ma thuật#
 24088#Bông tai bóng ma thuật#
 24089#Mặt dây chuyền bóng ma thuật#
@@ -9331,14 +9362,14 @@
 24106#Mặt dây chuyền bóng tối#
 24107#Bông tai lời nguyền#
 24108#Mặt dây chuyền lời nguyền#
-24109#Bông tai bóng Seiko#
-24110#Găng tay Shadow Seiko#
+24109#Caster Shadow Earring#
+24110#Caster Shadow Weapon#
 24111#Spellflow Shadow Shoes#
 24112#Spellflow Shadow Armor#
 24113#Spellflow Shadow Shield#
 24114#Áo giáp tham lam#
 24115#Chiến binh tham lam bóng tối#
-24116#Bóng tham lam Aegis#
+24116#Greed Shadow Shield#
 24117#Găng tay bóng tối#
 24118#Bông tai tham lam#
 24119#Mặt dây chuyền bóng tham lam#
@@ -9350,7 +9381,7 @@
 24125#Mặt dây chuyền chữa bệnh#
 24126#Shadow Hide Armor#
 24127#Giày bóng tối#
-24128#Khiên Bóng Aegis#
+24128#Hiding Shadow Shield#
 24129#Găng tay bóng tối#
 24130#Bông tai ẩn#
 24131#Mặt dây chuyền bóng#
@@ -9508,37 +9539,37 @@
 24283#Gunslinger Shadow Weapon#
 24284#Taekwondo Shadow Weapon#
 24285#Ninja Weapon Shadow#
-24286#Doram magical Weapon Shadow#
-24287#Doram physical Weapon Shadow#
-24288#Rune Knight Weapon Shadow#
-24289#Royal Guard Weapon Shadow#
-24290#Mechanic Weapon Shadow#
-24291#Geneticist Weapon Shadow#
-24292#Arch Bishop Weapon Shadow#
-24293#Sura Weapon Shadow#
-24294#Đao phủ thập tự Weapon Shadow#
-24295#Shadow Chaser Weapon Shadow#
-24296#Warlock Weapon Shadow#
-24297#Sorcerer Weapon Shadow#
-24298#Ranger Weapon Shadow#
-24299#Maestro Weapon Shadow#
-24300#Wanderer Weapon Shadow#
-24301#Rune Knight Shield Shadow#
-24302#Royal Guard Shield Shadow#
-24303#Mechanic Shield Shadow#
+24286#Doram Magical Shadow Weapon#
+24287#Doram Physical Shadow Weapon#
+24288#Rune Knight Shadow Weapon#
+24289#Royal Guard Shadow Weapon#
+24290#Mechanic Shadow Weapon#
+24291#Genetic Shadow Weapon#
+24292#Arch Bishop Shadow Weapon#
+24293#Sura Shadow Weapon#
+24294#Guillotine Cross Shadow Weapon#
+24295#Shadow Chaser Shadow Weapon#
+24296#Warlock Shadow Weapon#
+24297#Sorcerer Shadow Weapon#
+24298#Ranger Shadow Weapon#
+24299#Minstrel Shadow Weapon#
+24300#Wanderer Shadow Weapon#
+24301#Rune Knight Shadow Shield#
+24302#Royal Guard Shadow Shield#
+24303#Mechanic Shadow Shield#
 24304#Geneticist Shield Shadow#
-24305#Arch Bishop Shield Shadow#
-24306#Sura Shield Shadow#
-24307#Đao phủ thập tự Shield Shadow#
-24308#Shadow Chaser Shield Shadow#
-24309#Warlock Shield Shadow#
-24310#Sorcerer Shield Shadow#
-24311#Ranger Shield Shadow#
-24312#Maestro Shield Shadow#
-24313#Wanderer Shield Shadow#
-24314#Ninja Shield Shadow#
+24305#Archbishop Shadow Shield#
+24306#Sura Shadow Shield#
+24307#Guillotine Cross Shadow Shield#
+24308#Shadow Chaser Shadow Shield#
+24309#Warlock Shadow Shield#
+24310#Sorcerer Shadow Shield#
+24311#Ranger Shadow Shield#
+24312#Maestro Shadow Shield#
+24313#Wanderer Shadow Shield#
+24314#Ninja Shadow Shield#
 24315#Taekwon Shadow Shield#
-24316#Doram Physical Shield Shadow#
+24316#Doram Physical Shadow Shield#
 24317#Doram Magical Shadow Shield#
 24318#Super Novice Shadow Shield#
 24319#Gunslinger Shadow Shield#
@@ -9630,13 +9661,13 @@
 24423#Găng tay bóng tối#
 24424#Áo giáp bóng tối#
 25000#SP Absorption Stone (Upper)#
-25001#DEF Stone(Middle)#
-25002#LUK Exchange Stone(Middle)#
-25003#STR Exchange Stone(Middle)#
-25004#AGI Exchange Stone(Middle)#
-25005#INT Exchange Stone(Middle)#
-25006#VIT Exchange Stone(Middle)#
-25007#DEX Exchange Stone(Middle)#
+25001#DEF Stone (Middle)#
+25002#LUK Exchange Stone (Middle)#
+25003#STR Exchange Stone (Middle)#
+25004#AGI Exchange Stone (Middle)#
+25005#INT Exchange Stone (Middle)#
+25006#VIT Exchange Stone (Middle)#
+25007#DEX Exchange Stone (Middle)#
 25008#VIT Exchange Stone(Lower)#
 25009#AGI Exchange Stone(Lower)#
 25010#DEX Exchange Stone(Lower)#
@@ -9658,28 +9689,28 @@
 25055#Bom đông lạnh#
 25056#Trái tim của dưa hấu#
 25057#Không biết dưa đỏ #
-25058#Hiệu ứng tỏa sáng (trên đầu)#
-25059#Hiệu ứng ma (trong đầu)#
+25058#Twinkle Effect (Upper)#
+25059#Ghost Effect (Middle)#
 25060#Đá quan trọng (trong đầu)#
 25061#Đá diện rộng (trong đầu)#
 25062#Đá tham lam (Dưới đầu)#
 25063#Đá vật lý (dưới đầu)#
 25064#Magic Stone 2 (Dưới đầu)#
 25065#Đá khử độc (Dưới đầu)#
-25066#Đá Fuyuan (Dưới đầu)#
+25066#Recovery Stone (Lower)#
 25067#Đá hát (Shawl)#
-25068#Đá ASPD (Trên đầu)#
+25068#ASPD Stone (Upper)#
 25069#Đá cải tiến (Trên đầu)#
 25070#Đá cải tiến (trong đầu)#
-25071#Đá cải tiến (Dưới đầu)#
-25072#Đá khủng bố (Dưới đầu)#
+25071#Reload Stone (Lower)#
+25072#Kyrie Stone (Lower)#
 25073#Giấy cói bí ẩn#
 25074#Tiền cổ #
 25075#Trường soái kiếm#
 25076#Coursera Sera#
 25077#Hiệp sĩ vật tư#
 25078#Lotus Wine#
-25079#Một hơi thở cuối cùng#
+25079#Last Breath#
 25080#Fox Beads#
 25083#Moon Rabbit Fur#
 25084#Captured Moon Rabbit#
@@ -9697,10 +9728,11 @@
 25132#Pumpkin Decorations#
 25133#Dry White Stem#
 25134#Xổ số giải đấu vườn#
-25136#Hiệu ứng sét (trong đầu)#
-25137#Hiệu ứng năng lượng xanh (dưới đầu)#
-25138#Hiệu ứng co thắt (trong đầu)#
-25139#Vật phẩm định giá đá (Dưới đầu)#
+25135#[Event] Spiritual Auger#
+25136#Electric Effect (Middle)#
+25137#Green Floor Effect (Lower)#
+25138#Shrink Effect (Middle)#
+25139#Identify Stone (Lower)#
 25141#Kinh nghiệm đá (trong đầu)#
 25142#Doram token#
 25143#Quà tặng đồ chơi sang trọng#
@@ -9732,13 +9764,13 @@
 25169#Siêu chất nhầy#
 25170#Đá hát hạng hai (Shawl)#
 25171#Experience Stone (Trên đầu)#
-25172#Đá biến thể (Trên đầu)#
+25172#Variable Cast Stone (Upper)#
 25173#Đá biến thể (trong đầu)#
-25174#Đổi đá cánh (Dưới đầu)#
+25174#Variable Cast Stone (Lower)#
 25175#Angel's Wrath (trong đầu)#
-25176#Blue Aura Special Effect Stone (trong đầu)#
-25177#Đá hiệu ứng bóng (trong đầu)#
-25178#Đá hiệu ứng phát sáng màu hồng (trong đầu)#
+25176#Blue Aura Effect(Middle)#
+25177#Shadow Effect(Middle)#
+25178#Pink Glow Effect (Upper)#
 25179#Blessing Star#
 25180#Old Rings#
 25181#Wood Rosary#
@@ -9749,20 +9781,22 @@
 25186#Cỏ ba lá tổng hợp#
 25187#Slug Bullet#
 25188#Girl's Handkerchief#
-25205#Hiệu ứng co thắt (dưới đầu)#
+25205#Shrink Effect (Lower)#
 25223#Eden Coin#
-25224#Hiệu ứng cơ thể trắng (trong đầu)#
-25225#Hiệu ứng sóng đỏ thẫm (trong đầu)#
-25226#Hiệu ứng sương mù nước (dưới đầu)#
-25227#Đá chữa bệnh (Dưới đầu)#
-25228#Đá dịch chuyển (Dưới đầu)#
-25229#Ăn cắp đá (Dưới đầu)#
+25224#White Body Effect (Middle)#
+25225#Crimson Wave Effect (Middle)#
+25226#Water Field Effect (Lower)#
+25227#Heal Stone (Lower)#
+25228#Teleport Stone (Lower)#
+25229#Steal Stone (Lower)#
+25231#Suspicious Bottle#
+25232#Cheap Lubricant#
 25233#Cotton Tufts#
 25234#Ghim đầy màu sắc#
 25235#phù phép#
 25236#Mảnh vỡ bảy sao#
-25238#Dầu bôi trơn thông thường mới#
-25239#Dầu nhớt cao cấp mới#
+25238#New Normal Lubricant#
+25239#New Advanced Lubricant#
 25240#Independence Certificate#
 25245#Small pile of bones#
 25246#Juice Mix Package#
@@ -9815,12 +9849,13 @@
 25298#Spirit Jewel#
 25299#Snowball#
 25300#Ktullanux Eye#
-25302#Đá kết hợp hai lưỡi (Khăn choàng)#
+25302#Double Attack Stone (Garment)#
 25303#Đá quan trọng (Shawl)#
-25304#Đá quan trọng (Trên đầu)#
-25305#Đá quan trọng (Dưới đầu)#
+25304#Critical Stone (Upper)#
+25305#Critical Stone (Lower)#
 25306#Đá hát biến tấu (Shawl)#
 25309#Dry Twig#
+25310#[Gacha] Token Of Siegfried#
 25318#Harvey Polippi#
 25319#Hộp lạnh nhà phân phối#
 25320#Cantaloupe đáng ngờ #
@@ -9828,13 +9863,13 @@
 25340#Ngô mật ong vàng#
 25341#Đá cẩm thạch rực rỡ#
 25342#Thảo dược sức khỏe#
-25344#Obsidian#
+25344#Flat Round Stone#
 25358#Data Retrieval Card#
 25359#Slightly Aged Antique Box#
 25360#Receipt#
-25365#Bún làm tại nhà #
-25366#liên hoan mì #
-25367#Quạt quảng cáo#
+25365#Spaghetti#
+25366#Noodle Festival Coin#
+25367#Promotional Fan#
 25368#Quay lại đồng tiền hai tuần#
 25369#Nút sáng bóng#
 25370#Đoạn nhạc#
@@ -9884,16 +9919,17 @@
 25649#Ngực cổ #
 25650#Hộp tồi tàn#
 25651#Chìa khóa vàng#
-25652#Chìa khóa bạc#
+25652#Silver Key#
 25653#Lợn đặt lại cuộn nhiều#
 25654#Cuộn thiết lập lại Capra ma quái#
 25655#Đồng xu Harry Potter#
 25656#Chương hướng dẫn#
 25659#Bột hữu cơ#
 25732#Lông vũ bí ẩn Magpie#
-25736#Jeremy's Beauty Coupon II#
+25736#Cash Hair Coupon II#
 25750#Khối lượng đặt lại đảo Poring#
 25830#Trận chiến#
+25876#Lottery ticket for harvest#
 26007#Illusion Spectral Spear#
 26100#Eden Foxtail II#
 26101#Eden Foxtail III#
@@ -9909,12 +9945,12 @@
 27013#Kick and Kick Card#
 27014#Green Cenere Card#
 27015#Repair Robot Turbo Card#
-27016#Exploration Rover Turbo_Card#
+27016#Exploration Rover Turbo Card#
 27017#Scrap Robots Card#
 27018#GC109 Card#
 27019#DR815 Card#
 27020#T W O Card#
-27025#Thẻ quân chủ đã chết#
+27025#Lord of The Dead Card#
 27081#Angry Moonlight Flower Card#
 27082#Angry Nine Tail Card#
 27083#Resentful Bongun Card#
@@ -10234,20 +10270,20 @@
 29031#MATK +1%(Lower)#
 29032#SP Absorption 1#
 29033#MDEF +4#
-29040#Hiệu ứng ma.#
-29041#Hiệu ứng tỏa sáng.#
+29040#Ghost Effect#
+29041#Twinkle Effect#
 29046#Tham lam#
-29047#Gây tử vong#
-29048#Cung nổi tiếng#
+29047#Fatal (Middle)#
+29048#Expert Archer#
 29049#HP+100#
 29050#SP+50#
-29051#Giải độc#
-29052#Chữa bệnh#
-29053#thời gian hồi sau khi sử dụng kỹ năng 1 (qua đầu)#
-29054#thời gian hồi sau khi sử dụng kỹ năng 1 (trong đầu)#
-29055#thời gian hồi sau khi sử dụng kỹ năng 1 (dưới đầu)#
+29051#Detoxify#
+29052#Recovery#
+29053#Delay After Skill1 Upper#
+29054#Delay After Skill1 Middle#
+29055#Delay After Skill1 Lower#
 29056#Sinh hoạt phí #
-29057#Chia tay#
+29057#Kyrie Eleison#
 29061#Mettle Lv. 1#
 29062#Mettle Lv. 2#
 29063#Mettle Lv. 3#
@@ -10314,28 +10350,28 @@
 29124#Nữ thần S#
 29125#Nữ thần hiểu biết A#
 29126#Nữ thần Insight S#
-29142#Hiệu ứng sét#
-29143#Hiệu ứng năng lượng xanh#
+29142#Electric Effect#
+29143#Green Floor Effect#
 29144#Hiệu quả giảm#
-29145#Kinh nghiệm+2%#
-29146#Nhận dạng vật phẩm#
+29145#Experience +2% (Middle)#
+29146#Item Appraisal#
 29154#Giảm thi triển 0,3 giây#
-29155#Thiên thần phẫn nộ #
-29156#Giảm thi triển (trên đầu)#
-29157#Giảm thi triển (trong đầu)#
-29158#Giảm thi triển (dưới đầu)#
-29159#Kinh nghiệm+2%#
-29160#Hiệu ứng Blu-ray#
-29161#Hiệu ứng phát sáng màu hồng#
-29162#Hiệu ứng bóng#
+29155#Lex Aeterna#
+29156#Reduce Variable Cast (Upper)#
+29157#Reduce Variable Cast (Middle)#
+29158#Reduce Variable Cast (Lower)#
+29159#Experience +2% (Upper)#
+29160#Blue Aura Effect#
+29161#Pink Glow Effect#
+29162#Shadow Effect#
 29209#Hấp thụ SP 2#
 29213#HIT +6#
-29224#Hiệu ứng cơ thể trắng#
-29225#Hiệu ứng sương mù nước#
-29226#Hiệu ứng sóng đỏ thẫm#
-29227#Chữa bệnh#
-29228#Ăn cắp#
-29229#Dịch chuyển tức thời#
+29224#White Body Effect#
+29225#Water Field Effect#
+29226#Crimson Wave Effect#
+29227#Heal#
+29228#Steal#
+29229#Teleport#
 29235#Tránh hoàn toàn+1.#
 29236#Tránh hoàn toàn+2.#
 29238#FLEE+10#
@@ -10351,11 +10387,11 @@
 29307#Phần thưởng thuộc tính thần thánh (áo giáp)#
 29308#Phần thưởng chỉ số xác sống (áo giáp)#
 29309#Bổ sung độc (Giáp)#
-29358#Giảm thời gian thi triển#
-29359#Gây tử vong#
-29360#Gây tử vong (dưới đầu)#
-29361#Chết người (Khăn choàng)#
-29362#Combo hai lưỡi#
+29358#Reduce Variable Cast (Garment)#
+29359#Fatal (Upper)#
+29360#Fatal (Lower)#
+29361#Fatal (Garment)#
+29362#Double Attack#
 29364#GOOG Lv.1#
 29365#Gút Lv 2#
 29380#ATK +5.#
@@ -10444,7 +10480,7 @@
 31126#Costume Nestle Lemon Tea Hat#
 31127#Costume National Flag Hat#
 31132#Costume Christmas Wreath#
-31136#Costume Aldebaran Clock Hat#
+31136#Costume Clock Casket#
 31137#Costume Bluebird Ornament#
 31138#Costume Piamette's Red Hood#
 31139#Costume White Rabbit Ears#
@@ -10501,7 +10537,7 @@
 31251#Costume Cat's Mouth#
 31252#Costume White Cat Ears Hat#
 31254#Costume Red Horse#
-31255#Costume Cantaloupe Hat#
+31255#Costume Cantaloupe Helmet#
 31259#Costume Bubbly Arc Angeling Hairband#
 31260#Costume Observer#
 31261#Costume Cool Soda#
@@ -10516,13 +10552,13 @@
 31279#Costume Brown Cowlick#
 31280#Costume Purple Cowlick#
 31292#Costume Invisible Mask#
-31294#Costume Red Ancient Dragon Crown#
+31294#Costume Red Jirant Circlet#
 31296#Costume Strawberry in Mouth#
 31299#Costume White Rabbit#
 31300#Costume Warm Cat Muffler#
 31302#Costume Black Magenta Ribbon#
 31303#Costume Summer Noodle Hat#
-31304#Costume Anti-heat Cool Fan#
+31304#Costume Cool Fan#
 31305#Costume 1st Anniversary Balloon#
 31308#Costume Protective Feathers#
 31309#Costume White Marching Hat#
@@ -10532,8 +10568,8 @@
 31315#Costume Stall Of Angel#
 31316#Costume Dark Butterflies#
 31318#Costume Gerhard Von Deviruchi 83 Years#
-31319#Costume One Day Anti-heat Cool Fan#
-31320#Costume One Day Windmill Hat#
+31319#[Rental] Costume Cool Fan#
+31320#[Rental] Pinwheel Costume#
 31325#Costume Queen Scaraba Helm#
 31327#Costume Wood Goblin Nose#
 31329#Costume Alice Wig#
@@ -10567,7 +10603,7 @@
 31372#Costume Drooping Roxie#
 31374#Costume Explosion Gum#
 31375#Costume Devil's Eye#
-31376#Costume Purple Ancient Dragon Crown#
+31376#Costume Purple Jirant Circlet#
 31378#Costume Katarina von Blood 60#
 31379#Costume Clock Winding Key#
 31380#Costume Crow on Shoulder#
@@ -10662,16 +10698,16 @@
 31515#Costume Leopard Cat#
 31516#Costume Small Cantaloupe Hat#
 31518#Costume Popcorn Hat#
-31525#(Quần áo) Kẻ theo dõi quỷ #
+31525#Costume Little Devil Follower#
 31528#Costume Stardust Hairband#
 31529#Costume Happy Rabbit Ribbon#
 31530#Costume Great Dracula Horns#
 31531#Costume Lovely Heart Cap#
 31532#Costume Neve Barrette#
 31533#Costume Warm Black Cat Muffler#
-31534#(Quần áo) Ngôi sao cầu vồng#
+31534#Costume Rainbow Star#
 31535#Costume Pink Poo Poo Hat#
-31536#(Quần áo) Devil Deal#
+31536#Costume Beelzebub's Crown#
 31537#Costume Return 2th Hat#
 31539#Costume Roasted Pork Dumpling Hat#
 31540#Costume Red Gemini Eyes#
@@ -10679,7 +10715,7 @@
 31543#Costume Siorava Hat#
 31544#Costume Piamette's Curls#
 31546#Costume Clockwork Cap#
-31548#(Quần áo) Blush tình yêu (Phần 2)#
+31548#Costume Love Blush#
 31560#Costume Clergy Nurse Cap#
 31562#Costume Zealotus Doll#
 31563#Costume Blue Eye Shadow#
@@ -10694,8 +10730,8 @@
 31575#Costume Electric Two Sides Up Hair#
 31579#Costume Love Game Hat#
 31580#Costume Autumn Taste#
-31584#(Quần áo) Ice Poring Khăn#
-31585#(Quần áo) Khăn quàng cổ Tupoli#
+31584#Costume Ice Poring Scarf#
+31585#Costume Drops Scarf#
 31586#Costume Poporing Muffler#
 31587#Costume National Day Helmet#
 31588#Costume Snow Flower#
@@ -10703,21 +10739,21 @@
 31598#Costume Forest Guide#
 31600#Costume Kishu Dog#
 31601#Costume Under Rimmed Glasses (Blue)#
-31607#(Quần áo) Mũ phù thủy Eared lớn#
-31614#(Quần áo) Cáo#
+31607#Costume Big Ear Witch Hat#
+31614#Costume Fox#
 31615#Costume Geisha Make Up#
 31616#Costume Sleep Sheep#
 31617#Costume Lady Tanee#
 31618#Costume Dancing Butterfly#
-31619#(Quần áo) Người thừa kế phép thuật#
+31619#Costume Magic Successor#
 31620#Costume Snow Fox#
-31621#(Quần áo) Chúc mừng mèo đuôi dài#
+31621#Costume Happy Longtail Cat#
 31622#Costume Lost Time Hat#
 31623#Costume Romantic Rose#
-31624#(Quần áo) Ảo tưởng của mèo#
+31624#Costume Cat's Heart#
 31625#Costume Protective Scarf#
 31626#Costume Floating Feather #
-31627#(Quần áo) Mũ bảo vệ dê (màu tím)#
+31627#Costume Goat Helmet#
 31628#Costume Dokebi#
 31665#Costume Gold Ingot Poring Hat#
 31672#Costume Mermaid Wig#
@@ -10726,10 +10762,11 @@
 31688#Costume Poring on Shoulder#
 31698#Costume Red Riding Hood#
 31699#Costume Smiling Eyes#
-31700#(Quần áo) Khăn chiến binh#
-31701#(Quần áo) Khăn chiến binh (cho thuê)#
+31700#Costume Warrior Scarf#
+31701#Costume Warrior Scarf (Rental)#
 31731#Costume Sweets Party#
 31734#Costume Citrus Colored Ribbon#
+31789#Costume Turkey Hat#
 32004#Học viên bảo vệ hoàng gia giáo#
 32013#Hợp kim thương hiệu Lance#
 32018#Ngọn giáo nước Elf#
@@ -10749,14 +10786,19 @@
 100806#Sunny Rainy Box#
 100889#Basic Siege Supply Box#
 100899#Old Hat Box#
+100944#Designer Heidam#
+101050#Summer Vibe Hat Box#
 200000#IDTest Cash#
 200055#Acid Bomb 50 Box#
 200056#Acid Bomb 500 Box#
 200064#Giant Flywing 2500 Box#
+200143#You Can Do It Box#
 300000#IDTest Card#
 400006#Heritage Orc Symbol#
+400016#Turkey Hat#
 450000#IDTest armor#
 500000#IDTest weapon#
 600000#IDTest bothhand#
 700000#IDTest bow#
 800000#IDTest gun#
+1210000#IDTest canon#

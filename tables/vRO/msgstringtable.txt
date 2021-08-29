@@ -156,7 +156,7 @@ Nhận %s (%d)#
 [F10]: Điều chỉnh kích thước cửa sổ chat chung [Alt]+[F10]: Đóng mở cửa sổ chat chung#
 Tin nhắn riêng tư: Điền tên của người chơi vào [ô bên trái] và nhập tin nhắn ở [ô bên phải] từ cửa sổ chat chung. Nhấn phím [tab] để chuyển qua lại giữa 2 ô.#
 Lệnh Emoji: Nhấn Alt+(1 ~ 9) hoặc Ctrl+(-=\) để tạo biểu tượng biểu cảm cụ thể#
-Cách gửi tin nhắn cho các thành viên trong nhóm: Đặt ký hiệu % trước nội dung tin nhắn để gửi tin nhắn cho các thành viên trong nhóm. (Ví dụ: \%Hello\)#
+Cách gửi tin nhắn cho các thành viên trong nhóm: Đặt ký hiệu %% trước nội dung tin nhắn để gửi tin nhắn cho các thành viên trong nhóm. (Ví dụ: \%Hello\)#
 Bạn chưa học kỹ năng cơ bản để giao dịch#
 Bạn chưa học kỹ năng cơ bản để sử dụng biểu tượng biểu cảm#
 Bạn chưa học kỹ năng cơ bản để ngồi#
@@ -168,8 +168,8 @@ Danh sách mua#
 Cửa hàng vật phẩm#
 Danh sách vật phẩm bán#
 Hành trang#
-Mặc xong#
-Đã gỡ bỏ vật phẩm#
+ đã trang bị#
+ đã tháo#
 Nhập tên vào danh sách tin nhắn riêng tư#
 Chức năng camera: Nhấn [Print Screen] hoặc [Scroll Lock]#
 Mẹo hôm nay#
@@ -424,13 +424,13 @@ Hồn ma#
 Thây ma#
 Bạn không thể chế tạo vật phẩm#
 Danh mục vật phẩm có thể chế tạo#
-Chế tạo#
-Nguyên liệu cần thiết#
-Chế tạo thất bại#
-Chế tạo thành công#
-Chế tạo thất bại#
-Chế tạo thành công#
-Bạn không đủ level yêu cầu#
+- Chế tạo#
+- Nguyên liệu cần thiết#
+ - chế tạo thất bại#
+ - chế tạo thành công#
+ - chế tạo thất bại#
+ - chế tạo thành công#
+Bạn không đủ cấp độ yêu cầu#
 Level của bạn quá cao cho nghề này#
 Nghề của bạn không phù hợp với việc này#
 Thông báo thăm dò bẫy#
@@ -448,11 +448,11 @@ Gấp đôi#
 Gấp ba#
 Gấp bốn#
 Bạn bị cấm đăng nhập đến khi %s#
-Chế tạo vật phẩm#
-Tạo vật phẩm thuộc tính Lửa#
-Tạo vật phẩm thuộc tính Băng#
-Tạo vật phẩm thuộc tính Gió#
-Tạo vật phẩm thuộc tính Đất#
+'s #
+'s Lửa #
+'s Nước #
+'s Gió #
+'s Đất #
 61.220.60.11#
 6900#
 https://ro.vtcgame.vn/#
@@ -1064,7 +1064,7 @@ Giá/giá mua trực tiếp#
 Người bán#
 Người mua#
 Thời gian còn lại#
-%m tháng%d ngày%H#
+%m tháng %d ngày %H#
 Cài đặt thời gian#
 Phí xử lý#
 Không tìm thấy mục nào#
@@ -1615,7 +1615,7 @@ Lịch sử chiến đấu của [%s].#
 %d' Job EXP#
  nhận được.#
  đã mất.#
-Bị đánh cắp '%d' Zeny từ [%s].#
+[%s] đã bị trộm '%d' zeny từ bạn.#
 Tin nhắn chiến đấu#
 Thông tin trận chiến trong nhóm#
 Số EXP nhận được#
@@ -1626,7 +1626,7 @@ Tới [%s] #
 Thi triển kỹ năng [%s].#
 Kích hoạt khóa cài đặt#
 Hủy kích hoạt khóa cài đặt#
-[%s]đã nhận '%s' từ [%s]#
+[%s] mở '%s' và nhận được [%s]#
 Kiếm sĩ#
 Pháp sư#
 Cung thủ#
@@ -1695,7 +1695,7 @@ Chỉ tiếng anh và số#
 Nhắc nhở#
 Mua hàng thất bại do thông tin cửa hàng mơ hồ#
 Các vật phẩm được giữ có thể được loại bỏ trong cửa sổ#
-Thời gian#
+Giờ#
 Bản đồ#
 Không thể sử dụng vật phẩm/vật phẩm để mặc/mở khóa trong trạng thái giao dịch#
 Giá trị không xác định#
@@ -1800,7 +1800,7 @@ Không thể tìm kiếm#
 Xin lỗi, không có kết quả được tìm thấy cho thuật ngữ này#
 Không thể tìm kiếm#
 Vui lòng nhập tên thẻ hoặc con đầu tiên (cuối cùng) của tên#
-Tìm kiếm còn lại:%d#
+Tìm kiếm còn lại: %d#
 Không tìm kiếm gian hàng thành công#
 Phạm vi đơn giá của vật phẩm là sai#
 Trang bị#
@@ -2437,7 +2437,7 @@ Bạn còn %d phút. Bạn sẽ bị rút Zeny khi hết thời gian. Hãy nhớ
 %d%% (101% cơ bản+Cafe Internet%d%%+Danh dự%d%%+%s Máy chủ%d%%)#
 Thời gian khả dụng của bạn sẽ kết thúc sau% d giờ và%d phút#
 Tài khoản của bạn bị đóng băng vĩnh viễn#
-Tài khoản của bạn đã bị đóng băng.\n Thời gian không mở:%04d-%02d-%02d% 02d:%02d#
+Tài khoản của bạn đã bị đóng băng.\n Thời gian không mở: %04d-%02d-%02d% 02d:%02d#
 Q.Vật(Tab)#
 Bản đồ(Alt)#
 Thông tin hướng dẫn#
@@ -3313,7 +3313,7 @@ Khi trọng lượng vượt quá %d, HP/SP sẽ không tự động phục hồ
 GM#
 Phần thưởng được gửi vào ngày %d#
 Phần thưởng cú đấm %s#
-Thời gian diễn ra sự kiện:%02d tháng%02d ngày ~%02d tháng%02d ngày 24:00#
+Thời gian diễn ra sự kiện: %02d tháng %02d ngày ~%02d tháng %02d ngày 24:00#
 Ngày %d#
 Đăng ký vào ngày%d\nVui lòng nhấp ~!#
 Đấm thành công vào ngày %d!#
@@ -3822,7 +3822,7 @@ No Msg#
 No Msg#
 No Msg#
 No Msg#
-No Msg#
+File client đã bị thay đổi#
 No Msg#
 No Msg#
 No Msg#
