@@ -12,11 +12,10 @@
 package Network::Send::cRO;
 
 use strict;
-use Globals;
 use base qw(Network::Send::ServerType0);
-use Log qw(message debug error);
+use Log qw(debug error);
 use I18N qw(stringToBytes);
-use Utils;
+use Utils qw(getTickCount);
 
 sub new {
 	my ($class) = @_;
@@ -38,9 +37,9 @@ sub new {
 		buy_bulk_openShop 0811
 		buy_bulk_request 0817
 		buy_bulk_vender 0801
-		character_move 035F
 		char_create 0A39
 		char_delete2_accept 098F
+		character_move 035F
 		friend_request 0202
 		homunculus_command 022D
 		item_drop 0363
@@ -50,6 +49,8 @@ sub new {
 		master_login 0AAC
 		party_join_request_by_name 02C4
 		party_setting 07D7
+		rodex_open_mailbox 0AC0
+		rodex_refresh_maillist 0AC1
 		sell_buy_complete 09D4
 		send_equip 0998
 		skill_use 0438
@@ -58,8 +59,6 @@ sub new {
 		storage_item_remove 0365
 		storage_password 023B
 		sync 0360
-		rodex_open_mailbox 0AC0
-		rodex_refresh_maillist 0AC1
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
