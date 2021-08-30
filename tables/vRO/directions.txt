@@ -1,0 +1,9 @@
+0 Bắc
+1 Tây Bắc
+2 Tây
+3 Tây Nam
+4 Nam
+5 Đông Nam
+6 Đông
+7 Đông Bắc
+8 Bắc

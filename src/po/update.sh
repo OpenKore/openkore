@@ -3,7 +3,7 @@
 # updates openkore.pot and *.po, and compiles *.po to .mo.
 set -e
 
-LANGUAGES="tl id pt zh_CN zh th ko ru de"
+LANGUAGES="tl id pt zh_CN zh th ko ru de vi"
 
 
 echo "Extracting messages from source..."

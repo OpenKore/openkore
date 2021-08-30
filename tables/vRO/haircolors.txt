@@ -1,0 +1,9 @@
+0 Nâu đậm
+1 Nâu/vàng
+2 Tím
+3 Nâu nhạt
+4 Xanh lá
+5 Xanh lam
+6 Trắng
+7 Nâu đậm
+8 Đỏ

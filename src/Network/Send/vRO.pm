@@ -24,20 +24,30 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
+		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
 		'0B04' => ['master_login', 'V Z30 Z52 Z100 v', [qw(version username accessToken billingAccessToken master_version)]],# 190
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-		actor_look_at 0361
+		actor_action 0437
 		actor_info_request 0368
+		actor_look_at 0361
+		actor_name_request 0369
 		char_create 0A39
 		character_move 035F
 		item_drop 0363
 		item_take 0362
+		map_login 0436
 		master_login 0B04
+		party_setting 07D7
+		pet_capture 019F
+		rodex_open_mailbox 09E8
+		rodex_refresh_maillist 09EF
 		send_equip 0998
+		skill_use 0438
+		skill_use_location 0366
 		storage_item_add 0364
 		storage_item_remove 0365
 		sync 0360

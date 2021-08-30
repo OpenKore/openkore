@@ -1,0 +1,189 @@
+VAR_MAXHPAMOUNT#MaxHP +%d#
+VAR_MAXSPAMOUNT#MaxSP +%d#
+VAR_STRAMOUNT#STR +%d#
+VAR_AGIAMOUNT#AGI +%d#
+VAR_VITAMOUNT#VIT +%d#
+VAR_INTAMOUNT#INT +%d#
+VAR_DEXAMOUNT#DEX +%d#
+VAR_LUKAMOUNT#LUK +%d#
+VAR_MAXHPPERCENT#MaxHP +%d%%#
+VAR_MAXSPPERCENT#MaxSP +%d%%#
+VAR_HPACCELERATION#Hồi HP tự nhiên +%d%%#
+VAR_SPACCELERATION#Hồi SP tự nhiên +%d%%#
+VAR_ATKPERCENT#ATK +%d%%#
+VAR_MAGICATKPERCENT#MATK +%d%%#
+VAR_PLUSASPD#ASPD +%d#
+VAR_PLUSASPDPERCENT#ASPD +%d%%#
+VAR_ATTPOWER#ATK +%d#
+VAR_HITSUCCESSVALUE#HIT +%d#
+VAR_ATTMPOWER#MATK +%d#
+VAR_ITEMDEFPOWER#DEF +%d#
+VAR_MDEFPOWER#MDEF +%d#
+VAR_AVOIDSUCCESSVALUE#Độ né tránh (FLEE) +%d#
+VAR_PLUSAVOIDSUCCESSVALUE#Né tránh hoàn hảo (Perfect Dodge) +%d#
+VAR_CRITICALSUCCESSVALUE#Độ chí mạng (CRIT) +%d#
+ATTR_TOLERACE_NOTHING#Kháng %d%% thuộc tính Trung tính#
+ATTR_TOLERACE_WATER#Kháng %d%% thuộc tính Nước#
+ATTR_TOLERACE_GROUND#Kháng %d%% thuộc tính Đất#
+ATTR_TOLERACE_FIRE#Kháng %d%% thuộc tính Lửa#
+ATTR_TOLERACE_WIND#Kháng %d%% thuộc tính Gió#
+ATTR_TOLERACE_POISON#Kháng %d%% thuộc tính Độc#
+ATTR_TOLERACE_SAINT#Kháng %d%% thuộc tính Thánh#
+ATTR_TOLERACE_DARKNESS#Kháng %d%% thuộc tính Bóng tối (Shadow)#
+ATTR_TOLERACE_TELEKINESIS#Kháng %d%% thuộc tính Hồn ma (Ghost)#
+ATTR_TOLERACE_UNDEAD#Kháng %d%% thuộc tính Xác sống (Undead)#
+ATTR_TOLERACE_ALLBUTNOTHING#Kháng %d%% tất cả thuộc tính, trừ Trung tính#
+DAMAGE_PROPERTY_NOTHING_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Trung tính#
+DAMAGE_PROPERTY_NOTHING_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Trung tính#
+DAMAGE_PROPERTY_WATER_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Nước#
+DAMAGE_PROPERTY_WATER_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Nước#
+DAMAGE_PROPERTY_GROUND_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Đất#
+DAMAGE_PROPERTY_GROUND_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Đất#
+DAMAGE_PROPERTY_FIRE_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Lửa#
+DAMAGE_PROPERTY_FIRE_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Lửa#
+DAMAGE_PROPERTY_WIND_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Gió#
+DAMAGE_PROPERTY_WIND_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Gió#
+DAMAGE_PROPERTY_POISON_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Độc#
+DAMAGE_PROPERTY_POISON_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Độc#
+DAMAGE_PROPERTY_SAINT_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Thánh#
+DAMAGE_PROPERTY_SAINT_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Thánh#
+DAMAGE_PROPERTY_DARKNESS_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Bóng tối#
+DAMAGE_PROPERTY_DARKNESS_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Bóng tối#
+DAMAGE_PROPERTY_TELEKINESIS_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Hồn ma#
+DAMAGE_PROPERTY_TELEKINESIS_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Hồn ma#
+DAMAGE_PROPERTY_UNDEAD_USER#Giảm %d%% ATK nhận từ quái vậtthuộc tính Xác sống#
+DAMAGE_PROPERTY_UNDEAD_TARGET#Tăng %d%% ATK lên quái vậtthuộc tính Xác sống#
+MDAMAGE_PROPERTY_NOTHING_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Trung tính#
+MDAMAGE_PROPERTY_NOTHING_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Trung tính#
+MDAMAGE_PROPERTY_WATER_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Nước#
+MDAMAGE_PROPERTY_WATER_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Nước#
+MDAMAGE_PROPERTY_GROUND_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Đất#
+MDAMAGE_PROPERTY_GROUND_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Đất#
+MDAMAGE_PROPERTY_FIRE_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Lửa#
+MDAMAGE_PROPERTY_FIRE_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Lửa#
+MDAMAGE_PROPERTY_WIND_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Gió#
+MDAMAGE_PROPERTY_WIND_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Gió#
+MDAMAGE_PROPERTY_POISON_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Độc#
+MDAMAGE_PROPERTY_POISON_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Độc#
+MDAMAGE_PROPERTY_SAINT_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Thánh#
+MDAMAGE_PROPERTY_SAINT_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Thánh#
+MDAMAGE_PROPERTY_DARKNESS_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Bóng tối#
+MDAMAGE_PROPERTY_DARKNESS_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Bóng tối#
+MDAMAGE_PROPERTY_TELEKINESIS_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Hồn ma#
+MDAMAGE_PROPERTY_TELEKINESIS_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Hồn ma#
+MDAMAGE_PROPERTY_UNDEAD_USER#Giảm %d%% MATK nhận từ quái vậtthuộc tính Xác sống#
+MDAMAGE_PROPERTY_UNDEAD_TARGET#Tăng %d%% MATK lên quái vậtthuộc tính Xác sống#
+BODY_ATTR_WATER#Thuộc tính áo giáp: Nước (Water)#
+BODY_ATTR_GROUND#Thuộc tính áo giáp: Nước (Water)#
+BODY_ATTR_FIRE#Thuộc tính áo giáp: Lửa (Fire)#
+BODY_ATTR_WIND#Thuộc tính áo giáp: Gió (Wind)#
+BODY_ATTR_POISON#Thuộc tính áo giáp: Độc (Poison)#
+BODY_ATTR_SAINT#Thuộc tính áo giáp: Thánh (Holy)#
+BODY_ATTR_DARKNESS#Thuộc tính áo giáp: Bóng tối (Shadow)#
+BODY_ATTR_TELEKINESIS#Thuộc tính áo giáp: Hồn ma (Ghost)#
+BODY_ATTR_UNDEAD#Thuộc tính áo giáp: Xác sống (Undead)#
+RACE_TOLERACE_NOTHING#Giảm %d%% sát thương nhận từ chủng loàiVô dạng (Formless)#
+RACE_TOLERACE_UNDEAD#Giảm %d%% sát thương nhận từ chủng loàiThây ma (Undead)#
+RACE_TOLERACE_ANIMAL#Giảm %d%% sát thương nhận từ chủng loàiQuái thú (Brute, trừ Triệu hồi sư)#
+RACE_TOLERACE_PLANT#Giảm %d%% sát thương nhận từ chủng loàiCây (Plant)#
+RACE_TOLERACE_INSECT#Giảm %d%% sát thương nhận từ chủng loàiCôn trùng (Insect)#
+RACE_TOLERACE_FISHS#Giảm %d%% sát thương nhận từ chủng loàiCá (Fish)#
+RACE_TOLERACE_DEVIL#Giảm %d%% sát thương nhận từ chủng loàiQuỷ (Demon)#
+RACE_TOLERACE_HUMAN#Giảm %d%% sát thương nhận từ chủng loàiÁ thần (Demi-human, trừ Người chơi)#
+RACE_TOLERACE_ANGEL#Giảm %d%% sát thương nhận từ chủng loàiThiên thần (Angel)#
+RACE_TOLERACE_DRAGON#Giảm %d%% sát thương nhận từ chủng loàiRồng (Dragon)#
+RACE_DAMAGE_NOTHING#Tăng %d%% ATK lên chủng loàiVô dạng (Formless)#
+RACE_DAMAGE_UNDEAD#Tăng %d%% ATK lên chủng loàiThây ma (Undead)#
+RACE_DAMAGE_ANIMAL#Tăng %d%% ATK lên chủng loàiQuái thú (Brute, trừ Triệu hồi sư)#
+RACE_DAMAGE_PLANT#Tăng %d%% ATK lên chủng loàiCây (Plant)#
+RACE_DAMAGE_INSECT#Tăng %d%% ATK lên chủng loàiCôn trùng (Insect)#
+RACE_DAMAGE_FISHS#Tăng %d%% ATK lên chủng loàiCá (Fish)#
+RACE_DAMAGE_DEVIL#Tăng %d%% ATK lên chủng loàiQuỷ (Demon)#
+RACE_DAMAGE_HUMAN#Tăng %d%% ATK lên chủng loàiÁ thần (Demi-human, trừ Người chơi)#
+RACE_DAMAGE_ANGEL#Tăng %d%% ATK lên chủng loàiThiên thần (Angel)#
+RACE_DAMAGE_DRAGON#Tăng %d%% ATK lên chủng loàiRồng (Dragon)#
+RACE_MDAMAGE_NOTHING#Tăng %d%% MATK lên chủng loàiVô dạng (Formless)#
+RACE_MDAMAGE_UNDEAD#Tăng %d%% MATK lên chủng loàiThây ma (Undead)#
+RACE_MDAMAGE_ANIMAL#Tăng %d%% MATK lên chủng loàiQuái thú (Brute, trừ Triệu hồi sư)#
+RACE_MDAMAGE_PLANT#Tăng %d%% MATK lên chủng loàiCây (Plant)#
+RACE_MDAMAGE_INSECT#Tăng %d%% MATK lên chủng loàiCôn trùng (Insect)#
+RACE_MDAMAGE_FISHS#Tăng %d%% MATK lên chủng loàiCá (Fish)#
+RACE_MDAMAGE_DEVIL#Tăng %d%% MATK lên chủng loàiQuỷ (Demon)#
+RACE_MDAMAGE_HUMAN#Tăng %d%% MATK lên chủng loàiÁ thần (Demi-human, trừ Người chơi)#
+RACE_MDAMAGE_ANGEL#Tăng %d%% MATK lên chủng loàiThiên thần (Angel)#
+RACE_MDAMAGE_DRAGON#Tăng %d%% MATK lên chủng loàiRồng (Dragon)#
+RACE_CRI_PERCENT_NOTHING#Tăng %d%% CRIT lên chủng loàiVô dạng (Formless)#
+RACE_CRI_PERCENT_UNDEAD#Tăng %d%% CRIT lên chủng loàiThây ma (Undead)#
+RACE_CRI_PERCENT_ANIMAL#Tăng %d%% CRIT lên chủng loàiQuái thú (Brute, trừ Triệu hồi sư)#
+RACE_CRI_PERCENT_PLANT#Tăng %d%% CRIT lên chủng loàiCây (Plant)#
+RACE_CRI_PERCENT_INSECT#Tăng %d%% CRIT lên chủng loàiCôn trùng (Insect)#
+RACE_CRI_PERCENT_FISHS#Tăng %d%% CRIT lên chủng loàiCá (Fish)#
+RACE_CRI_PERCENT_DEVIL#Tăng %d%% CRIT lên chủng loàiQuỷ (Demon)#
+RACE_CRI_PERCENT_HUMAN#Tăng %d%% CRIT lên chủng loàiÁ thần (Demi-human, trừ Người chơi)#
+RACE_CRI_PERCENT_ANGEL#Tăng %d%% CRIT lên chủng loàiThiên thần (Angel)#
+RACE_CRI_PERCENT_DRAGON#Tăng %d%% CRIT lên chủng loàiRồng (Dragon)#
+RACE_IGNORE_DEF_PERCENT_NOTHING#Xuyên %d%% DEF của chủng loàiVô dạng (Formless)#
+RACE_IGNORE_DEF_PERCENT_UNDEAD#Xuyên %d%% DEF của chủng loàiThây ma (Undead)#
+RACE_IGNORE_DEF_PERCENT_ANIMAL#Xuyên %d%% DEF của chủng loàiQuái thú (Brute)#
+RACE_IGNORE_DEF_PERCENT_PLANT#Xuyên %d%% DEF của chủng loàiCây (Plant)#
+RACE_IGNORE_DEF_PERCENT_INSECT#Xuyên %d%% DEF của chủng loàiCôn trùng (Insect)#
+RACE_IGNORE_DEF_PERCENT_FISHS#Xuyên %d%% DEF của chủng loàiCá (Fish)#
+RACE_IGNORE_DEF_PERCENT_DEVIL#Xuyên %d%% DEF của chủng loàiQuỷ (Demon)#
+RACE_IGNORE_DEF_PERCENT_HUMAN#Xuyên %d%% DEF của chủng loàiÁ thần (Demi-human, trừ Người chơi)#
+RACE_IGNORE_DEF_PERCENT_ANGEL#Xuyên %d%% DEF của chủng loàiThiên thần (Angel)#
+RACE_IGNORE_DEF_PERCENT_DRAGON#Xuyên %d%% DEF của chủng loàiRồng (Dragon)#
+RACE_IGNORE_MDEF_PERCENT_NOTHING#Xuyên %d%% MDEF của chủng loàiVô dạng (Formless)#
+RACE_IGNORE_MDEF_PERCENT_UNDEAD#Xuyên %d%% MDEF của chủng loàiThây ma (Undead)#
+RACE_IGNORE_MDEF_PERCENT_ANIMAL#Xuyên %d%% MDEF của chủng loàiQuái thú (Brute)#
+RACE_IGNORE_MDEF_PERCENT_PLANT#Xuyên %d%% MDEF của chủng loàiCây (Plant)#
+RACE_IGNORE_MDEF_PERCENT_INSECT#Xuyên %d%% MDEF của chủng loàiCôn trùng (Insect)#
+RACE_IGNORE_MDEF_PERCENT_FISHS#Xuyên %d%% MDEF của chủng loàiCá (Fish)#
+RACE_IGNORE_MDEF_PERCENT_DEVIL#Xuyên %d%% MDEF của chủng loàiQuỷ (Demon)#
+RACE_IGNORE_MDEF_PERCENT_HUMAN#Xuyên %d%% MDEF của chủng loàiÁ thần (Demi-human, trừ Người chơi)#
+RACE_IGNORE_MDEF_PERCENT_ANGEL#Xuyên %d%% MDEF của chủng loàiThiên thần (Angel)#
+RACE_IGNORE_MDEF_PERCENT_DRAGON#Xuyên %d%% MDEF của chủng loàiRồng (Dragon)#
+CLASS_DAMAGE_NORMAL_TARGET#Tăng %d%% ATK lên quái vật thường#
+CLASS_DAMAGE_BOSS_TARGET#Tăng %d%% ATK lên quái vật trùm#
+CLASS_DAMAGE_NORMAL_USER#Giảm %d%% sát thương nhận từ quái vật thường#
+CLASS_DAMAGE_BOSS_USER#Giảm %d%% sát thương nhận từ quái vật trùm#
+CLASS_MDAMAGE_NORMAL#Tăng %d%% MATK lên quái vật thường#
+CLASS_MDAMAGE_BOSS#Tăng %d%% MATK lên quái vật trùm#
+CLASS_IGNORE_DEF_PERCENT_NORMAL#Xuyên %d%% DEF quái vật thường#
+CLASS_IGNORE_DEF_PERCENT_BOSS#Xuyên %d%% DEF quái vật trùm#
+CLASS_IGNORE_MDEF_PERCENT_NORMAL#Xuyên %d%% MDEF quái vật thường#
+CLASS_IGNORE_MDEF_PERCENT_BOSS#Xuyên %d%% MDEF quái vật trùm#
+DAMAGE_SIZE_SMALL_TARGET#Tăng %d%% ATK lên quái vật cỡ nhỏ#
+DAMAGE_SIZE_MIDIUM_TARGET#Tăng %d%% ATK lên quái vật cỡ vừa#
+DAMAGE_SIZE_LARGE_TARGET#Tăng %d%% ATK lên quái vật cỡ lớn#
+DAMAGE_SIZE_SMALL_USER#Giảm %d%% ATK nhận từ quái vật cỡ nhỏ#
+DAMAGE_SIZE_MIDIUM_USER#Giảm %d%% ATK nhận từ quái vật cỡ vừa#
+DAMAGE_SIZE_LARGE_USER#Giảm %d%% ATK nhận từ quái vật cỡ lớn#
+DAMAGE_SIZE_PERFECT#Kích cỡ của quái vậtkhông làm giảm sát thương từ vũ khí#
+DAMAGE_CRI_TARGET#Tăng %d%% sát thương chí mạng#
+DAMAGE_CRI_USER#Giảm %d%% sát thương chí mạng nhận vào người#
+RANGE_ATTACK_DAMAGE_TARGET#Tăng %d%% sát thương vật lý tầm xa#
+RANGE_ATTACK_DAMAGE_USER#Giảm %d%% sát thương vật lý tầm xa nhận vào người#
+HEAL_VALUE#Tăng %d%% hiệu quả các kỹ năng cứu chữa#
+HEAL_MODIFY_PERCENT#Tăng %d%% hiệu quả các kỹ năng cứu chữanhận từ người chơi khác#
+DEC_SPELL_CAST_TIME#Giảm %d%% thời gian thi triển kỹ năng#
+DEC_SPELL_DELAY_TIME#Giảm %d%% thời gian delay kỹ năng#
+DEC_SP_CONSUMPTION#Giảm %d%% độ tiêu hao SP#
+WEAPON_ATTR_NOTHING#Thuộc tính vũ khí: Trung tính (Neutral)#
+WEAPON_ATTR_WATER#Thuộc tính vũ khí: Nước (Water)#
+WEAPON_ATTR_GROUND#Thuộc tính vũ khí: Đất (Earth)#
+WEAPON_ATTR_FIRE#Thuộc tính vũ khí: Lửa (Fire)#
+WEAPON_ATTR_WIND#Thuộc tính vũ khí: Gió (Wind)#
+WEAPON_ATTR_POISON#Thuộc tính vũ khí: Độc (Poison)#
+WEAPON_ATTR_SAINT#Thuộc tính vũ khí: Thánh (Holy)#
+WEAPON_ATTR_DARKNESS#Thuộc tính vũ khí: Bóng tối (Shadow)#
+WEAPON_ATTR_TELEKINESIS#Thuộc tính vũ khí: Hồn ma (Ghost)#
+WEAPON_ATTR_UNDEAD#Thuộc tính vũ khí: Xác sống (Undead)#
+WEAPON_INDESTRUCTIBLE#Không bị hư trong giao tranh#
+BODY_INDESTRUCTIBLE#Không bị hư trong giao tranh#
+MDAMAGE_SIZE_SMALL_TARGET#Tăng %d%% MATK lên quái vật cỡ nhỏ#
+MDAMAGE_SIZE_MIDIUM_TARGET#Tăng %d%% MATK lên quái vật cỡ vừa#
+MDAMAGE_SIZE_LARGE_TARGET#Tăng %d%% MATK lên quái vật cỡ lớn#
+MDAMAGE_SIZE_SMALL_USER#Giảm %d%% MATK nhận từ quái vật cỡ nhỏ#
+MDAMAGE_SIZE_MIDIUM_USER#Giảm %d%% MATK nhận từ quái vật cỡ vừa#
+MDAMAGE_SIZE_LARGE_USER#Giảm %d%% MATK nhận từ quái vật cỡ lớn#
+ATTR_TOLERACE_ALL#Kháng +%d%% tất cả thuộc tính#
