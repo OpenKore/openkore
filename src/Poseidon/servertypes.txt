@@ -40,7 +40,7 @@ actor_exists 09FF
 item_list_start 0B08
 expandedItemID 1
 actor_info 0A30
-actor_name 0ADF
+actor_name 0095
 
 [twRO_2021-06-21]
 account_server_info 0B60

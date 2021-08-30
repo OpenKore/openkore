@@ -1,4 +1,4 @@
-//-- ÃÖÁ¾°»½Å ¿ÀÀü 11:13 2013-04-23 º»¼­¹ö
+//-- ìµœì¢…ê°±ì‹  ì˜¤ì „ 11:13 2013-04-23 ë³¸ì„œë²„
 
 
 // Izlude tutorial map
@@ -859,7 +859,7 @@ morocc_mem.rsw#Memory of Morroc#
 payon_mem.rsw#Memory of Payon#
 moc_paraup.rsw#Inside of Paradise Group Building in Morroc 2nd floor#
 
-//°ø¼ºÀü TE º¹»ç¸Ê 
+//ê³µì„±ì „ TE ë³µì‚¬ë§µ 
 te_prt_gld.rsw#Gloria#
 te_prtcas01.rsw#Gaebolg#
 te_prtcas02.rsw#Richard#
@@ -875,7 +875,7 @@ te_aldecas4.rsw#Roxie#
 te_aldecas5.rsw#Curly Sue#
 teg_dun02.rsw#Subterranean Guild Dungeon#
 
-//°í¼º¸Ş¸ğ¸®¾ó´øÀü
+//ê³ ì„±ë©”ëª¨ë¦¬ì–¼ë˜ì „
 gl_cas02_.rsw#2nd Hall#
 gl_chyard_.rsw#Churchyard#
 2@gl_k.rsw#1st floor of Old Glast Heim Chivalry#
@@ -886,7 +886,7 @@ gl_chyard_.rsw#Churchyard#
 1@sara.rsw#Sara's Memory#
 dali.rsw#Dimensional Gap#
 
-//¿µ¿õÀÇÈçÀû
+//ì˜ì›…ì˜í”ì 
 dali02.rsw#Dimensional Gap#
 1@tnm1.rsw#Masin Tower Top floor#
 1@tnm2.rsw#Masin Tower Top floor#
@@ -898,7 +898,7 @@ dali02.rsw#Dimensional Gap#
 
 1@def01.rsw#Wave Dungeon - forest#
 
-//½Ã°èÅ¾³ªÀÌÆ®¸Ş¾î´øÀü
+//ì‹œê³„íƒ‘ë‚˜ì´íŠ¸ë©”ì–´ë˜ì „
 c_tower2_.rsw#Clock Town of twisted time 2nd floor#
 c_tower3_.rsw#Clock Town of twisted time 3rd floor#
 
@@ -912,12 +912,12 @@ moro_cav.rsw#Flame cave#
 1@eom.rsw#Masin war#
 1@jtb.rsw#Jitterbug of Nightmare#
 
-// ¿µ¿õÀÇ ÈçÀû3
+// ì˜ì›…ì˜ í”ì 3
 1@glast.rsw#Old Glastheim#
 1@air1.rsw#Aircraft#
 1@air2.rsw#Aircraft#
 
-// ep15.1 ÆÇÅ¸½º¸¶°í¸®Ä«
+// ep15.1 íŒíƒ€ìŠ¤ë§ˆê³ ë¦¬ì¹´
 ver_eju.rsw#Yuperos Eastern Ruin#
 ver_tunn.rsw#Verus Outter tunnel#
 verus04.rsw#Verus Findspot#
@@ -925,7 +925,7 @@ verus03.rsw#Verus Center Square#
 
 1@mcd.rsw#Charlston Factory#
 
-// ep15.2 ÆÇÅ¸½º¸¶°í¸®Ä«
+// ep15.2 íŒíƒ€ìŠ¤ë§ˆê³ ë¦¬ì¹´
 verus01.rsw#Lab-OPTATIO#
 verus02.rsw#R&D-WISH#
 un_bk_q.rsw#Under Bunker#
@@ -945,9 +945,9 @@ conch_in.rsw#Inside the Kon-Kilina#
 lasa_in01.rsw#Inside Lasagna#
 lasa_dun_q.rsw#Dragon's Nest#
 
-//-- ÃÖÁ¾°»½Å ¿ÀÈÄ 3:58 2015-02-23 º»¼­¹ö
+//-- ìµœì¢…ê°±ì‹  ì˜¤í›„ 3:58 2015-02-23 ë³¸ì„œë²„
 
-// ep16.1 ¿µ¿õÀ» À§ÇÑ ¿¬È¸ + ÇÁ·ĞÅ×¶ó ¸®´º¾ó
+// ep16.1 ì˜ì›…ì„ ìœ„í•œ ì—°íšŒ + í”„ë¡ í…Œë¼ ë¦¬ë‰´ì–¼
 1@mir.rsw#Ritual Room#
 2@mir.rsw#Ritual Room#
 1@sthb.rsw#Inside Air Portress#
@@ -971,10 +971,10 @@ rockmi2.rsw#Rock Ridge Mine#
 rockrdg1.rsw#Kiwawa Desert#
 rockrdg2.rsw#Kiwawa Desert#
 
-// »ıÃ¼´øÀü ½Å±Ô¸Ê ¿ÀÀü 2013-12-18
+// ìƒì²´ë˜ì „ ì‹ ê·œë§µ ì˜¤ì „ 2013-12-18
 lhz_dun_n.rsw#The Bed of Honor#
 
-// 16.2 (ÃßÄ« ÄÁÅÙÃ÷ ¾øÀ½)
+// 16.2 (ì¶”ì¹´ ì»¨í…ì¸  ì—†ìŒ)
 1@slw.rsw#Werner_Laboratory central_room#
 1@swat.rsw#Heart_Hunter War_Base#
 que_swat.rsw#Heart_Hunter War_Base#
