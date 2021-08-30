@@ -232,7 +232,7 @@ sub iterate {
 		}
 
 		my $final_pos = $self->{solution}[-1];
-		if ( ($self->{pyDistFromGoal} || $self->{distFromGoal}) && $self->{dest}{pos}{x} != $final_pos->{x} || $self->{dest}{pos}{y} != $final_pos->{y} ) {
+		if ( ($self->{pyDistFromGoal} || $self->{distFromGoal}) && ($self->{dest}{pos}{x} != $final_pos->{x} || $self->{dest}{pos}{y} != $final_pos->{y}) ) {
 			debug "Route $self->{actor} - final destination is not the same of pathfind, adjusting the trimsteps\n", "route";
 			my $trim = blockDistance($self->{dest}{pos}, $final_pos);
 			$self->{pyDistFromGoal} -= $trim if $self->{pyDistFromGoal};
