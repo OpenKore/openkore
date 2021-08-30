@@ -127,7 +127,7 @@ sub process {
 
 		# Mob-training, stop attacking the monster if it is already aggressive
 		if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
-			if ($control->{attack_auto} == 2
+			if ($control->{attack_auto} == 3
 				&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
 
 				message TF("Dropping target - %s (%s) has been provoked\n", $monster->{name}, $monster->{binID});
@@ -414,20 +414,10 @@ sub main {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
 		
-	} elsif(!defined $args->{attackMethod}{type}) {
-		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
-		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
-		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
-		if (timeOut($args->{ai_attack_failed_give_up})) {
-			delete $args->{ai_attack_failed_give_up}{time};
-			message T("Unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
-			giveUp();
-		}
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
-		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance}) || 
-		(blockDistance($realMyPos, $realMonsterPos) && !$field->checkLOS($realMyPos, $realMonsterPos))
+		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})
 	) {
 		$args->{move_start} = time;
 		$args->{monsterPos} = {%{$monsterPos}};
@@ -445,38 +435,25 @@ sub main {
 				undef,
 				@{$pos}{qw(x y)},
 				maxRouteTime => $config{'attackMaxRouteTime'},
-				field => $field,
 				attackID => $ID,
 				noMapRoute => 1,
 				avoidWalls => 0,
-				meetingSubRoute => 1,
-				LOSSubRoute => 1
+				meetingSubRoute => 1
 			);
-			
-			
-			if (!$result) {
-				# Unable to calculate a route to target
-				$target->{attack_failed} = time;
-				AI::dequeue;
+		}
+		if (!$result) {
+			# Unable to calculate a route to target
+			$target->{attack_failed} = time;
+			AI::dequeue;
 				message T("Unable to calculate a route to target, dropping target\n"), "ai_attack";
-				if ($config{'teleportAuto_dropTarget'}) {
-					message T("Teleport due to dropping attack target\n");
-					useTeleport(1);
-				}
-			} else {
-				debug "Attack $char - successufully routing to $target\n", 'ai_attack';
+			if ($config{'teleportAuto_dropTarget'}) {
+				message T("Teleport due to dropping attack target\n");
+				useTeleport(1);
 			}
-			
 		} else {
-				$target->{attack_failed} = time;
-				AI::dequeue;
-				message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
-				if ($config{'teleportAuto_dropTarget'}) {
-					message T("Teleport due to dropping attack target\n");
-					useTeleport(1);
-				}
-		}	
-		
+			debug "Attack $char - successufully routing to $target\n", 'ai_attack';
+		}
+
 	} elsif (
 		# We are a ranged attacker in range without LOS
 		$args->{attackMethod}{maxDistance} > 1 &&
@@ -497,32 +474,29 @@ sub main {
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "attack");
 		}
-	
+
 	} elsif (
 		# We are a melee attacker in range without LOS
 		$args->{attackMethod}{maxDistance} == 1 &&
-		$config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) &&
-		!$field->checkLOS($realMyPos, $realMonsterPos)
-	 ) {
-
+		$config{attackCheckLOS} &&
+		blockDistance($realMyPos, $realMonsterPos) == 2 &&
+		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
+	) {
 		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
-		
+
 		# Move to the closest spot
-		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-		
+		my $msg = TF("No LOS in melee from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 		if ($best_spot) {
-			message TF("%s moving to (%s, %s)\n", $char, $best_spot->{x}, $best_spot->{y});
+			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
 			$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
 		} else {
+			warning TF("%s; no acceptable place to stand\n", $msg);
 			$target->{attack_failedLOS} = time;
-				AI::dequeue;
-				message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
-				if ($config{'teleportAuto_dropTarget'}) {
-					message T("Teleport due to dropping attack target\n");
-					useTeleport(1);
-				}
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
 		}
-		
+
 	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
 	 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
@@ -565,24 +539,6 @@ sub main {
 				}
 			}
 		} elsif ($args->{attackMethod}{type} eq "skill") {
-			# check if has LOS to use skill
-			if(!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) {
-				my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
-
-				# Move to the closest spot
-				my $msg = TF("No LOS in from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-				if ($best_spot) {
-					message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-					$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
-				} else {
-					warning TF("%s; no acceptable place to stand\n", $msg);
-					$target->{attack_failedLOS} = time;
-					AI::dequeue;
-					AI::dequeue;
-					AI::dequeue if (AI::action eq "attack");
-				}
-			}
-
 			my $slot = $args->{attackMethod}{skillSlot};
 			delete $args->{attackMethod};
 
