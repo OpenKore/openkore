@@ -13,7 +13,7 @@ package Network::Send::cRO;
 
 use strict;
 use base qw(Network::Send::ServerType0);
-use Log qw(debug error);
+use Log qw(debug);
 use I18N qw(stringToBytes);
 use Utils qw(getTickCount);
 
@@ -23,6 +23,7 @@ sub new {
 
 	my %packets = (
 		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
+		'0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_rijndael master_version)]],#69
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -77,36 +78,22 @@ sub new {
 	return $self;
 }
 
-sub sendMasterLogin {
-	my ($self, $username, $password, $master_version, $version) = @_;
-	my $msg;
-	my $password_rijndael = $self->encrypt_password($password);
+sub reconstruct_master_login {
+	my ($self, $args) = @_;
 
-	my $msg = $self->reconstruct({
-		switch => 'master_login',
-		version => $version,
-		username  => $username,
-		password_hex  => $password_rijndael,
-		master_version => $master_version,
-	});
+	if (exists $args->{password}) {
+		for (Digest::MD5->new) {
+		$_->add($args->{password});
+			$args->{password_md5} = $_->clone->digest;
+			$args->{password_md5_hex} = $_->hexdigest;
+		}
 
-	$self->sendToServer($msg);
-	debug "Sent sendMasterLogin\n", "sendPacket", 2;
-}
-
-sub encrypt_password {
-	my ($self, $password) = @_;
-	my $password_rijndael;
-	if (defined $password) {
 		my $key = pack('C32', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
 		my $chain = pack('C32', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
-		my $in = pack('a32', $password);
+		my $in = pack('a32', $args->{password});
 		my $rijndael = Utils::Rijndael->new;
 		$rijndael->MakeKey($key, $chain, 32, 32);
-		$password_rijndael = unpack("Z32", $rijndael->Encrypt($in, undef, 32, 0));
-		return $password_rijndael;
-	} else {
-		error("Password is not configured");
+		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 32, 0);
 	}
 }
 
