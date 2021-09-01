@@ -174,10 +174,10 @@ sub targetGone {
 sub finishAttacking {
 	my $args = AI::args;
 	$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
-	my $ID = $args->{ID};
+	my $ID = AI::args->{ID};
 	AI::dequeue;
 	if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
-		message T("Target died\n"), "ai_attack";
+		message TF("Target %s died\n", $monsters_old{$ID}), "ai_attack";
 		Plugins::callHook("target_died", {monster => $monsters_old{$ID}});
 		monKilled();
 
