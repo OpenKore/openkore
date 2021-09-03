@@ -516,16 +516,27 @@ sub processAttack {
 					@{$pos}{qw(x y)},
 					maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
 					attackID => $ID,
-					noMapRoute => 1,
 					avoidWalls => 0,
-					meetingSubRoute => 1
+					meetingSubRoute => 1,
+					LOSSubRoute => 1
 				);
-			}
-			if (!$result) {
-				# Unable to calculate a route to target
+				
+				if (!$result) {
+					# Unable to calculate a route to target
+					$target->{$slave->{ai_attack_failed_timeout}} = time;
+					$slave->dequeue;
+					message TF("Unable to calculate a route to %s target, dropping target\n", $slave), 'slave_attack';
+					if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
+						message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
+						useTeleport(1);
+					} else {
+						debug "Attack $slave - successufully routing to $target\n", 'attack';
+					}
+				}
+			} else {
 				$target->{$slave->{ai_attack_failed_timeout}} = time;
 				$slave->dequeue;
- 				message TF("Unable to calculate a route to %s target, dropping target\n", $slave), 'slave_attack';
+				message T("Unable to calculate a meetingPosition to target, dropping target\n"), 'slave_attack';
 				if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 					message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 					useTeleport(1);
