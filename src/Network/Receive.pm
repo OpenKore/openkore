@@ -10009,14 +10009,13 @@ sub attack_range {
 	return unless changeToInGameState();
 
 	$char->{attack_range} = $type;
-		if ($config{attackDistanceAuto}) {
+	if ($config{attackDistanceAuto}) {
 		configModify('attackDistance', $type, 1) if ($config{attackDistance} > $type);
 		configModify('attackMaxDistance', $type, 1) if ($config{attackMaxDistance} != $type);
 		message TF("Autodetected attackDistance = %s\n", $config{attackDistance}), "success";
 		message TF("Autodetected attackMaxDistance = %s\n", $config{attackMaxDistance}), "success";
 	}
 }
-
 
 sub auction_my_sell_stop {
 	my ($self, $args) = @_;
@@ -10895,11 +10894,12 @@ sub mercenary_init {
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
-	if ($config{mercenary_attackDistanceAuto} && exists $slave->{attack_range}) {
+		if ($config{mercenary_attackDistanceAuto} && exists $slave->{attack_range}) {
 		configModify('mercenary_attackDistance', $slave->{attack_range}, 1) if ($config{mercenary_attackDistance} > $slave->{attack_range});
 		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1) if ($config{mercenary_attackMaxDistance} != $slave->{attack_range});
 		message TF("Autodetected attackDistance for mercenary = %s\n", $config{mercenary_attackDistance}), "success";
 		message TF("Autodetected attackMaxDistance for mercenary = %s\n", $config{mercenary_attackMaxDistance}), "success";
+	}
 }
 
 # +message_string
