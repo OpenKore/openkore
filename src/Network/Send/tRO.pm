@@ -10,11 +10,13 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.				#
 #################################################################################################
 # tRO (Thai)
+
 package Network::Send::tRO;
+
 use strict;
 use base qw(Network::Send::ServerType0);
-use Utils qw(getTickCount);
 use Log qw(debug);
+use Utils qw(getTickCount);
 
 sub new {
 	my ($class) = @_;
@@ -123,6 +125,5 @@ sub sendMapLogin {
 	$self->sendToServer($msg);
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
-
 
 1;
