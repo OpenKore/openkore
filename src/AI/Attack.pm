@@ -174,10 +174,10 @@ sub targetGone {
 sub finishAttacking {
 	my $args = AI::args;
 	$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
-	my $ID = $args->{ID};
+	my $ID = AI::args->{ID};
 	AI::dequeue;
 	if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
-		message T("Target died\n"), "ai_attack";
+		message TF("Target %s died\n", $monsters_old{$ID}), "ai_attack";
 		Plugins::callHook("target_died", {monster => $monsters_old{$ID}});
 		monKilled();
 
@@ -445,9 +445,9 @@ sub main {
 				@{$pos}{qw(x y)},
 				maxRouteTime => $config{'attackMaxRouteTime'},
 				attackID => $ID,
-				noMapRoute => 1,
 				avoidWalls => 0,
-				meetingSubRoute => 1
+				meetingSubRoute => 1,
+				LOSSubRoute => 1
 			);
 
 			if (!$result) {
