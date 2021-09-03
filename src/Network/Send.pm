@@ -3438,4 +3438,23 @@ sub sendPing {
 	$self->sendToServer($self->reconstruct({ switch => 'ping' }));
 }
 
+# Captcha
+# TODO: what is 0x12?
+sub sendCaptchaInitiate {
+	my ($self, $args) = @_;
+	my $msg = pack('v2 a4', 0x07E5, 0x12, $accountID);
+	$self->sendToServer($msg);
+	debug "Sending Captcha Initiate\n";
+}
+
+#0x07e7,32
+# TODO: what is 0x20?
+sub sendCaptchaAnswer {
+	my ($self, $answer, $args) = @_;
+	my $msg = pack('v2 a4 a24', 0x07E7, 0x20, $accountID, $answer);
+	$self->sendToServer($msg);
+	debug "Sending Captcha Answer $msg \n";
+
+}
+
 1;
