@@ -96,7 +96,6 @@ sub new {
 		'008A' => ['actor_action', 'a4 a4 a4 V2 v2 C v', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'008D' => ['public_chat', 'v a4 Z*', [qw(len ID message)]],
 		'008E' => ['self_chat', 'v Z*', [qw(len message)]],
-		#'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v2', [qw(map x y)]],
 		'0092' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # 28
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
@@ -742,10 +741,6 @@ sub new {
 		'0B7E' => ['guild_member_add', 'a4 a4 v5 V4 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)]], # 60 TODO
 		#'C350' => ['senbei_vender_items_list'], #new senbei vender, need r
 		'09BB' => ['guild_storage_log', 'v3 a*', [qw(len result count log)]], # -1
-		#'09BB' => ['guild_storage_opened', 'v2', [qw(items items_max)]],
-		'07E6' => ['captcha_session_ID', 'v V', [qw(ID generation_time)]], # 8
-		'07E8' => ['captcha_image', 'v a*', [qw(len image)]], # -1
-		'07E9' => ['captcha_answer', 'v C', [qw(code flag)]], # 5
 	};
 
 	# Item RECORD Struct's
@@ -881,11 +876,13 @@ sub items_nonstackable {
 	} elsif ($args->{switch} eq '0992' # inventory
 		|| $args->{switch} eq '0994' # cart
 		|| $args->{switch} eq '0996' # storage
+		|| $args->{switch} eq '0997' # other player
 	) {
 		return $items->{type6};
 	} elsif ($args->{switch} eq '0A0D' # inventory
 		|| $args->{switch} eq '0A0F' # cart
 		|| $args->{switch} eq '0A10' # storage
+		|| $args->{switch} eq '0A2D' # other player
 	) {
 		return $items->{type7};
 	} elsif ($args->{switch} eq '0B0A') { # item_list
