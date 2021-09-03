@@ -446,7 +446,6 @@ sub main {
 				@{$pos}{qw(x y)},
 				maxRouteTime => $config{'attackMaxRouteTime'},
 				attackID => $ID,
-				noMapRoute => 0,
 				avoidWalls => 0,
 				meetingSubRoute => 1,
 				LOSSubRoute => 1 
