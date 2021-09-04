@@ -10,47 +10,57 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.				#
 #################################################################################################
 # tRO (Thai)
+
 package Network::Send::tRO;
+
 use strict;
 use base qw(Network::Send::ServerType0);
+use Log qw(debug);
+use Utils qw(getTickCount);
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	my %packets = (
+		'0436' => ['map_login', 'a4 a4 a4 V2 C', [qw(accountID charID sessionID unknown tick sex)]],#23
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
 	my %handlers = qw(
-		master_login 0A76
-		game_login 0275
-		buy_bulk_vender 0801
 		actor_action 0437
-		skill_use 0438
-		character_move 035F
-		sync 0360
-		actor_look_at 0361
-		item_take 0362
-		item_drop 0363
-		storage_item_add 0364
-		storage_item_remove 0365
-		skill_use_location 0366
 		actor_info_request 0368
+		actor_look_at 0361
 		actor_name_request 0369
 		buy_bulk_buyer 0819
-		buy_bulk_request 0817
 		buy_bulk_closeShop 0815
 		buy_bulk_openShop 0811
-		item_list_window_selected 07E4
-		map_login 0436
-		party_join_request_by_name 02C4
-		friend_request 0202
-		homunculus_command 022D
-		storage_password 023B
-		party_setting 07D7
-		send_equip 0998
-		pet_capture 08B5
-		char_delete2_accept 098F
+		buy_bulk_request 0817
+		buy_bulk_vender 0801
 		char_create 0A39
+		char_delete2_accept 098F
+		character_move 035F
+		friend_request 0202
+		game_login 0275
+		homunculus_command 022D
+		item_drop 0363
+		item_list_window_selected 07E4
+		item_take 0362
+		map_login 0436
+		master_login 0A76
+		party_join_request_by_name 02C4
+		party_setting 07D7
+		pet_capture 08B5
 		rodex_open_mailbox 0AC0
 		rodex_refresh_maillist 0AC1
+		send_equip 0998
+		skill_use 0438
+		skill_use_location 0366
+		storage_item_add 0364
+		storage_item_remove 0365
+		storage_password 023B
+		sync 0360
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -92,6 +102,28 @@ sub reconstruct_master_login {
 		$rijndael->MakeKey($key, $chain, 32, 32);
 		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 32, 0);
 	}
+}
+
+# 0x0436,23
+sub sendMapLogin {
+	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
+	my $msg;
+	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
+
+	#my $unknown = pack('C4', (0x90, 0x13, 0xE0, 0xE8));
+
+	$msg = $self->reconstruct({
+		switch => 'map_login',
+		accountID => $accountID,
+		charID => $charID,
+		sessionID => $sessionID,
+		unknown => 768,# 00 00 03 00
+		tick => getTickCount,
+		sex => $sex,
+	});
+
+	$self->sendToServer($msg);
+	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
 1;

@@ -1,6 +1,6 @@
 #########################################################################
 #  OpenKore - Network subsystem
-#  This module contains functions for sending messages to the server.
+#  Copyright (c) 2021 OpenKore Team
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -10,10 +10,10 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 # tRO (Thai)
+
 package Network::Receive::tRO;
 use strict;
 use base qw(Network::Receive::ServerType0);
-use Globals;
 
 sub new {
 	my ($class) = @_;
@@ -46,11 +46,11 @@ sub new {
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
-	$self->{vender_items_list_item_pack} = 'V v2 C V C3 a16 a25';
-	$self->{npc_store_info_pack} = "V V C V";
 	$self->{buying_store_items_list_pack} = "V v C V";
 	$self->{makable_item_list_pack} = "V4";
 	$self->{npc_market_info_pack} = "V C V2 v";
+	$self->{npc_store_info_pack} = "V V C V";
+	$self->{vender_items_list_item_pack} = 'V v2 C V C3 a16 a25';
 
 
 	return $self;
