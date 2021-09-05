@@ -24,32 +24,38 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'027C' => ['master_login', 'V Z24 Z52 a14', [qw(version username_salted password_salted mac)]],# 96
+		'027C' => ['master_login', 'V Z24 a40 x12 c x a12', [qw(version username_salted password_salted master_version mac)]],# 96
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
 		master_login 027C
+		char_create 0A39
+		char_delete2_accept 098F
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	$self->{char_create_version} = 0x0A39;
 
 	return $self;
 }
 
 sub sendMasterLogin {
-	my ($self, $username_salted, $password_salted, $mac, $version) = @_;
+	my ($self, $username_salted, $password_salted, $master_version, $version) = @_;
 	my $msg;
 
 	die "don't forget to add jRO_auth plugin to sys.txt\n".
 		"https://openkore.com/wiki/loadPlugins_list\n" unless ($username_salted and $password_salted);
-
+	my $mac = $config{macAddress} || '111111111111'; # gibberish
+	   $mac = uc($mac);
 	$msg = $self->reconstruct({
 		switch => 'master_login',
 		version => $version || $self->version,
 		mac => $mac,
 		username_salted => $username_salted,
 		password_salted => $password_salted,
+		master_version => $master_version,
 	});
 
 	$self->sendToServer($msg);
