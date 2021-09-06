@@ -404,7 +404,7 @@ sub main {
 			useTeleport(1);
 		}
 
-	} elsif ($config{'runFromTarget'} && ($realMonsterDist <= $config{'runFromTarget_dist'} || $hitYou)) {
+	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 		my $cell = get_kite_position($char, 1, $target);
 		if ($cell) {
 			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
