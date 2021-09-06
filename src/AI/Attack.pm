@@ -404,46 +404,16 @@ sub main {
 			useTeleport(1);
 		}
 
-	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
+	} elsif ($config{'runFromTarget'} && ($realMonsterDist <= $config{'runFromTarget_dist'} || $hitYou)) {
 		my $cell = get_kite_position($char, 1, $target);
 		if ($cell) {
 			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
 			$char->move($cell->{x}, $cell->{y}, $ID);
 		} else {
-			
-			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
-				if (Actor::Item::scanConfigAndCheck("attackEquip")) {
-					#check if item needs to be equipped
-					Actor::Item::scanConfigAndEquip("attackEquip");
-				} else {
-					$messageSender->sendAction($ID,
-					($config{'tankMode'}) ? 0 : 7);
-					$timeout{ai_attack}{time} = time;
-					delete $args->{attackMethod};
-				
-					if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
-						my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
-
-						# Move to the closest spot
-						my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-						if ($best_spot) {
-							message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-							$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
-						} else {
-							warning TF("%s; no acceptable place to stand\n", $msg);
-							$target->{attack_failedLOS} = time;
-							AI::dequeue;
-							AI::dequeue;
-							AI::dequeue if (AI::action eq "attack");
-						}
-					}
-				}
-			}
-			
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
-		
+
 	} elsif(!defined $args->{attackMethod}{type}) {
 		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
@@ -453,6 +423,7 @@ sub main {
 			message T("Unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 			giveUp();
 		}
+		
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
@@ -547,7 +518,7 @@ sub main {
 			AI::dequeue if (AI::action eq "attack");
 		}
 
-	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
+	} elsif ((!$config{'runFromTarget'} || $realMonsterDist => $config{'runFromTarget_dist'})
 	 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 		if (!$args->{firstAttack}) {
@@ -566,8 +537,18 @@ sub main {
 			$char->move(@{$myPos}{qw(x y)});
 			$args->{unstuck}{count}++;
 		}
-
-		if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
+		
+		my $cell = get_kite_position($char, 1, $target);
+		if ($cell) {
+			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			$args->{avoiding} = 0;
+			$char->move($cell->{x}, $cell->{y}, $ID);
+		} else {
+			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+		}
+	 }
+	 
+	if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
 			if (Actor::Item::scanConfigAndCheck("attackEquip")) {
 				#check if item needs to be equipped
 				Actor::Item::scanConfigAndEquip("attackEquip");
@@ -576,19 +557,7 @@ sub main {
 					($config{'tankMode'}) ? 0 : 7);
 				$timeout{ai_attack}{time} = time;
 				delete $args->{attackMethod};
-				
-				if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
-					my $cell = get_kite_position($char, 1, $target);
-					if ($cell) {
-						debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-						$args->{avoiding} = 1;
-						$char->move($cell->{x}, $cell->{y}, $ID);
-					} else {
-						debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-					}
-				}
 			}
-		}
 		
 	} elsif ($args->{attackMethod}{type} eq "skill") {
 		# check if has LOS to use skill
