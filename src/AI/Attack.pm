@@ -411,6 +411,36 @@ sub main {
 			$args->{avoiding} = 1;
 			$char->move($cell->{x}, $cell->{y}, $ID);
 		} else {
+			
+			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
+				if (Actor::Item::scanConfigAndCheck("attackEquip")) {
+					#check if item needs to be equipped
+					Actor::Item::scanConfigAndEquip("attackEquip");
+				} else {
+					$messageSender->sendAction($ID,
+					($config{'tankMode'}) ? 0 : 7);
+					$timeout{ai_attack}{time} = time;
+					delete $args->{attackMethod};
+				
+					if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
+						my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+
+						# Move to the closest spot
+						my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+						if ($best_spot) {
+							message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
+							$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+						} else {
+							warning TF("%s; no acceptable place to stand\n", $msg);
+							$target->{attack_failedLOS} = time;
+							AI::dequeue;
+							AI::dequeue;
+							AI::dequeue if (AI::action eq "attack");
+						}
+					}
+				}
+			}
+			
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
 		
@@ -427,14 +457,13 @@ sub main {
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
 		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})
-		
 	) {
 		$args->{move_start} = time;
 		$args->{monsterPos} = {%{$monsterPos}};
 		$args->{monsterLastMoveTime} = $target->{time_move};
 
 		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
-		
+
 		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 		my $result;
 		
@@ -448,10 +477,9 @@ sub main {
 				attackID => $ID,
 				avoidWalls => 0,
 				meetingSubRoute => 1,
-				LOSSubRoute => 1 
+				LOSSubRoute => 1
 			);
-			
-			
+
 			if (!$result) {
 				# Unable to calculate a route to target
 				$target->{attack_failed} = time;
@@ -464,17 +492,18 @@ sub main {
 			} else {
 				debug "Attack $char - successufully routing to $target\n", 'ai_attack';
 			}
-			
 		} else {
 			$target->{attack_failed} = time;
 			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
 			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
 			if ($config{'teleportAuto_dropTarget'}) {
-					message T("Teleport due to dropping attack target\n");
-					useTeleport(1);
-				}
-			}	
-		
+				message T("Teleport due to dropping attack target\n");
+				useTeleport(1);
+			}
+		}
+
 	} elsif (
 		# We are a ranged attacker in range without LOS
 		$args->{attackMethod}{maxDistance} > 1 &&
@@ -495,11 +524,12 @@ sub main {
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "attack");
 		}
+
 	} elsif (
 		# We are a melee attacker in range without LOS
-		#$args->{attackMethod}{maxDistance} == 1  work attackCanSnipe ?
 		$args->{attackMethod}{maxDistance} == 1 &&
-		$config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) == 2 &&
+		$config{attackCheckLOS} &&
+		blockDistance($realMyPos, $realMonsterPos) == 2 &&
 		!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})
 	) {
 		my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
@@ -558,67 +588,68 @@ sub main {
 					}
 				}
 			}
-		} elsif ($args->{attackMethod}{type} eq "skill") {
-			# check if has LOS to use skill
-			if(!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) {
-				my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
-
-				# Move to the closest spot
-				my $msg = TF("No LOS in from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-				if ($best_spot) {
-					message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-					$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
-				} else {
-					warning TF("%s; no acceptable place to stand\n", $msg);
-					$target->{attack_failedLOS} = time;
-					AI::dequeue;
-					AI::dequeue;
-					AI::dequeue if (AI::action eq "attack");
-				}
-			}
-
-			my $slot = $args->{attackMethod}{skillSlot};
-			delete $args->{attackMethod};
-
-			$ai_v{"attackSkillSlot_${slot}_time"} = time;
-			$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
-
-			ai_setSuspend(0);
-			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
-			ai_skillUse2(
-				$skill,
-				$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
-				$config{"attackSkillSlot_${slot}_maxCastTime"},
-				$config{"attackSkillSlot_${slot}_minCastTime"},
-				$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target,
-				"attackSkillSlot_${slot}",
-				undef,
-				"attackSkill",
-			);
-			$args->{monsterID} = $ID;
-			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
-			debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
-
-		} elsif ($args->{attackMethod}{type} eq "combo") {
-			my $slot = $args->{attackMethod}{comboSlot};
-			my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
-			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
-			delete $args->{attackMethod};
-
-			$ai_v{"attackComboSlot_${slot}_time"} = time;
-			$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
-
-			ai_skillUse2(
-				$skill,
-				$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
-				$config{"attackComboSlot_${slot}_maxCastTime"},
-				$config{"attackComboSlot_${slot}_minCastTime"},
-				$isSelfSkill ? $char : $target,
-				undef,
-				$config{"attackComboSlot_${slot}_waitBeforeUse"},
-			);
-			$args->{monsterID} = $ID;
 		}
+		
+	} elsif ($args->{attackMethod}{type} eq "skill") {
+		# check if has LOS to use skill
+		if(!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) {
+			my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+
+			# Move to the closest spot
+			my $msg = TF("No LOS in from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+			if ($best_spot) {
+				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
+				$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+			} else {
+				warning TF("%s; no acceptable place to stand\n", $msg);
+				$target->{attack_failedLOS} = time;
+				AI::dequeue;
+				AI::dequeue;
+				AI::dequeue if (AI::action eq "attack");
+			}
+		}
+
+		my $slot = $args->{attackMethod}{skillSlot};
+		delete $args->{attackMethod};
+
+		$ai_v{"attackSkillSlot_${slot}_time"} = time;
+		$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
+
+		ai_setSuspend(0);
+		my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
+		ai_skillUse2(
+			$skill,
+			$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+			$config{"attackSkillSlot_${slot}_maxCastTime"},
+			$config{"attackSkillSlot_${slot}_minCastTime"},
+			$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target,
+			"attackSkillSlot_${slot}",
+			undef,
+			"attackSkill",
+		);
+		$args->{monsterID} = $ID;
+		my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
+		debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
+
+	} elsif ($args->{attackMethod}{type} eq "combo") {
+		my $slot = $args->{attackMethod}{comboSlot};
+		my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
+		my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
+		delete $args->{attackMethod};
+
+		$ai_v{"attackComboSlot_${slot}_time"} = time;
+		$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
+
+		ai_skillUse2(
+			$skill,
+			$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+			$config{"attackComboSlot_${slot}_maxCastTime"},
+			$config{"attackComboSlot_${slot}_minCastTime"},
+			$isSelfSkill ? $char : $target,
+			undef,
+			$config{"attackComboSlot_${slot}_waitBeforeUse"},
+		);
+		$args->{monsterID} = $ID;
 
 	} elsif ($config{tankMode}) {
 		if ($args->{dmgTo_last} != $target->{dmgTo}) {
