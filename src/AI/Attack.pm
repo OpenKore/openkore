@@ -465,6 +465,8 @@ sub main {
 		} else {
 			$target->{attack_failed} = time;
 			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
 			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
 			if ($config{'teleportAuto_dropTarget'}) {
 				message T("Teleport due to dropping attack target\n");
@@ -534,8 +536,20 @@ sub main {
 			$char->move(@{$myPos}{qw(x y)});
 			$args->{unstuck}{count}++;
 		}
-
-		if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
+		
+		if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
+			my $cell = get_kite_position($char, 1, $target);
+			if ($cell) {
+				debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+				$args->{avoiding} = 1;
+				$char->move($cell->{x}, $cell->{y}, $ID);
+				} else {
+					debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+				}
+		}
+	 }
+	 
+	if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
 			if (Actor::Item::scanConfigAndCheck("attackEquip")) {
 				#check if item needs to be equipped
 				Actor::Item::scanConfigAndEquip("attackEquip");
@@ -543,80 +557,69 @@ sub main {
 				$messageSender->sendAction($ID,
 					($config{'tankMode'}) ? 0 : 7);
 				$timeout{ai_attack}{time} = time;
-				delete $args->{attackMethod};
-				
-				if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
-					my $cell = get_kite_position($char, 1, $target);
-					if ($cell) {
-						debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-						$args->{avoiding} = 1;
-						$char->move($cell->{x}, $cell->{y}, $ID);
-					} else {
-						debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-					}
-				}
+				delete $args->{attackMethod};	
 			}
-		} elsif ($args->{attackMethod}{type} eq "skill") {
-			# check if has LOS to use skill
-			if(!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) {
-				my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
+			
+	} elsif ($args->{attackMethod}{type} eq "skill") {
+		# check if has LOS to use skill
+		if(!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) {
+			my $best_spot = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 
-				# Move to the closest spot
-				my $msg = TF("No LOS in from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-				if ($best_spot) {
-					message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-					$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
-				} else {
-					warning TF("%s; no acceptable place to stand\n", $msg);
-					$target->{attack_failedLOS} = time;
-					AI::dequeue;
-					AI::dequeue;
-					AI::dequeue if (AI::action eq "attack");
-				}
+			# Move to the closest spot
+			my $msg = TF("No LOS in from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+			if ($best_spot) {
+				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
+				$char->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+			} else {
+				warning TF("%s; no acceptable place to stand\n", $msg);
+				$target->{attack_failedLOS} = time;
+				AI::dequeue;
+				AI::dequeue;
+				AI::dequeue if (AI::action eq "attack");
 			}
-
-			my $slot = $args->{attackMethod}{skillSlot};
-			delete $args->{attackMethod};
-
-			$ai_v{"attackSkillSlot_${slot}_time"} = time;
-			$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
-
-			ai_setSuspend(0);
-			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
-			ai_skillUse2(
-				$skill,
-				$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
-				$config{"attackSkillSlot_${slot}_maxCastTime"},
-				$config{"attackSkillSlot_${slot}_minCastTime"},
-				$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target,
-				"attackSkillSlot_${slot}",
-				undef,
-				"attackSkill",
-			);
-			$args->{monsterID} = $ID;
-			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
-			debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
-
-		} elsif ($args->{attackMethod}{type} eq "combo") {
-			my $slot = $args->{attackMethod}{comboSlot};
-			my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
-			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
-			delete $args->{attackMethod};
-
-			$ai_v{"attackComboSlot_${slot}_time"} = time;
-			$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
-
-			ai_skillUse2(
-				$skill,
-				$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
-				$config{"attackComboSlot_${slot}_maxCastTime"},
-				$config{"attackComboSlot_${slot}_minCastTime"},
-				$isSelfSkill ? $char : $target,
-				undef,
-				$config{"attackComboSlot_${slot}_waitBeforeUse"},
-			);
-			$args->{monsterID} = $ID;
 		}
+
+		my $slot = $args->{attackMethod}{skillSlot};
+		delete $args->{attackMethod};
+
+		$ai_v{"attackSkillSlot_${slot}_time"} = time;
+		$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
+
+		ai_setSuspend(0);
+		my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
+		ai_skillUse2(
+			$skill,
+			$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+			$config{"attackSkillSlot_${slot}_maxCastTime"},
+			$config{"attackSkillSlot_${slot}_minCastTime"},
+			$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target,
+			"attackSkillSlot_${slot}",
+			undef,
+			"attackSkill",
+		);
+		$args->{monsterID} = $ID;
+		my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
+		debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
+
+	} elsif ($args->{attackMethod}{type} eq "combo") {
+		my $slot = $args->{attackMethod}{comboSlot};
+		my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
+		my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
+		delete $args->{attackMethod};
+
+		$ai_v{"attackComboSlot_${slot}_time"} = time;
+		$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
+
+		ai_skillUse2(
+			$skill,
+			$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+			$config{"attackComboSlot_${slot}_maxCastTime"},
+			$config{"attackComboSlot_${slot}_minCastTime"},
+			$isSelfSkill ? $char : $target,
+			undef,
+			$config{"attackComboSlot_${slot}_waitBeforeUse"},
+		);
+		$args->{monsterID} = $ID;
 
 	} elsif ($config{tankMode}) {
 		if ($args->{dmgTo_last} != $target->{dmgTo}) {
@@ -627,5 +630,3 @@ sub main {
 	
 	Plugins::callHook('AI::Attack::main', {target => $target})
 }
-
-1;
