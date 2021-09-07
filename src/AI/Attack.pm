@@ -409,9 +409,17 @@ sub main {
 		if ($cell) {
 			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
-			$char->move($cell->{x}, $cell->{y}, $ID);
+			$char->route($cell->{x}, $cell->{y}, $target, , LOSSubRoute => 1, avoidWalls => 0);
 		} else {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
+			message T("Unable runFromTarget cell to calculate a meetingPosition to target\n"), "ai_attack";
+			if ($config{'teleportAuto_dropTarget'}) {
+				message T("Teleport due to dropping attack target\n");
+				useTeleport(1);
+			}
 		}
 		
 	} elsif(!defined $args->{attackMethod}{type}) {
@@ -423,6 +431,7 @@ sub main {
 			message T("Unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 			giveUp();
 		}
+		
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
@@ -444,6 +453,7 @@ sub main {
 				undef,
 				@{$pos}{qw(x y)},
 				maxRouteTime => $config{'attackMaxRouteTime'},
+				field => $field,
 				attackID => $ID,
 				avoidWalls => 0,
 				meetingSubRoute => 1,
@@ -465,8 +475,6 @@ sub main {
 		} else {
 			$target->{attack_failed} = time;
 			AI::dequeue;
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "attack");
 			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
 			if ($config{'teleportAuto_dropTarget'}) {
 				message T("Teleport due to dropping attack target\n");
@@ -493,6 +501,11 @@ sub main {
 			AI::dequeue;
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "attack");
+			message T("Unable ranged attacker without LOS to calculate a route to target, dropping target\n"), "ai_attack";
+			if ($config{'teleportAuto_dropTarget'}) {
+					message T("Teleport due to dropping attack target\n");
+					useTeleport(1);
+			}
 		}
 
 	} elsif (
@@ -515,15 +528,28 @@ sub main {
 			AI::dequeue;
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "attack");
+			message T("Unable melee attacker without LOS to calculate a meetingPosition to target\n"), "ai_attack";
+			if ($config{'teleportAuto_dropTarget'}) {
+				message T("Teleport due to dropping attack target\n");
+				useTeleport(1);
+			}
 		}
 
-	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
+	} elsif ((!$config{'runFromTarget'} || $realMonsterDist => $config{'runFromTarget_dist'})
 	 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 		if (!$args->{firstAttack}) {
 			$args->{firstAttack} = 1;
 			my $pos = "$myPos->{x},$myPos->{y}";
 			debug "Ready to attack target (which is $realMonsterDist blocks away); we're at ($pos)\n", "ai_attack";
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
+			message T("Unable realMonsterDist to calculate a meetingPosition to target\n"), "ai_attack";
+			if ($config{'teleportAuto_dropTarget'}) {
+				message T("Teleport due to dropping attack target\n");
+				useTeleport(1);
+			}
 		}
 
 		$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
@@ -533,33 +559,57 @@ sub main {
 			# Our recorded position might be out of sync, so try to unstuck
 			$args->{unstuck}{time} = time;
 			debug("Attack - trying to unstuck\n", "ai_attack");
-			$char->move(@{$myPos}{qw(x y)});
+			$char->move(@{$myPos}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
 			$args->{unstuck}{count}++;
 		}
 		
-		if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
 			my $cell = get_kite_position($char, 1, $target);
 			if ($cell) {
 				debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 				$args->{avoiding} = 1;
-				$char->move($cell->{x}, $cell->{y}, $ID);
-				} else {
-					debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-				}
-		}
-	 }
-	 
-	if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
-			if (Actor::Item::scanConfigAndCheck("attackEquip")) {
-				#check if item needs to be equipped
-				Actor::Item::scanConfigAndEquip("attackEquip");
+				$char->route($cell->{x}, $cell->{y}, $target, LOSSubRoute => 1, avoidWalls => 0);
 			} else {
-				$messageSender->sendAction($ID,
-					($config{'tankMode'}) ? 0 : 7);
-				$timeout{ai_attack}{time} = time;
-				delete $args->{attackMethod};	
+				debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+				AI::dequeue;
+				AI::dequeue;
+				AI::dequeue if (AI::action eq "attack");
+				message T("Unable Not runFromTarget cell to calculate a meetingPosition to target\n"), "ai_attack";
+				if ($config{'teleportAuto_dropTarget'}) {
+					message T("Teleport due to dropping attack target\n");
+					useTeleport(1);
+				}
 			}
-			
+		
+		
+	} elsif ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
+		if (Actor::Item::scanConfigAndCheck("attackEquip")) {
+			#check if item needs to be equipped
+			Actor::Item::scanConfigAndEquip("attackEquip");
+		} else {
+			$messageSender->sendAction($ID,
+			($config{'tankMode'}) ? 0 : 7);
+			$timeout{ai_attack}{time} = time;
+			delete $args->{attackMethod};
+	
+			my $cell = get_kite_position($char, 1, $target);
+			if ($cell) {
+				debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+					$args->{avoiding} = 1;
+					$char->move($cell->{x}, $cell->{y}, $ID);
+			} else {
+				debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+				AI::dequeue;
+				AI::dequeue;
+				AI::dequeue if (AI::action eq "attack");
+				message T("Unable weapon current_cell to calculate a meetingPosition to target\n"), "ai_attack";
+				if ($config{'teleportAuto_dropTarget'}) {
+					message T("Teleport due to dropping attack target\n");
+					useTeleport(1);
+				}
+			}
+				
+		}
+
 	} elsif ($args->{attackMethod}{type} eq "skill") {
 		# check if has LOS to use skill
 		if(!$field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) {
@@ -576,9 +626,14 @@ sub main {
 				AI::dequeue;
 				AI::dequeue;
 				AI::dequeue if (AI::action eq "attack");
+				message T("Unable skill to calculate a meetingPosition to target\n"), "ai_attack";
+					if ($config{'teleportAuto_dropTarget'}) {
+						message T("Teleport due to dropping attack target\n");
+						useTeleport(1);
+					}
 			}
 		}
-
+	
 		my $slot = $args->{attackMethod}{skillSlot};
 		delete $args->{attackMethod};
 
@@ -600,7 +655,7 @@ sub main {
 		$args->{monsterID} = $ID;
 		my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 		debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
-
+		
 	} elsif ($args->{attackMethod}{type} eq "combo") {
 		my $slot = $args->{attackMethod}{comboSlot};
 		my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
@@ -630,3 +685,5 @@ sub main {
 	
 	Plugins::callHook('AI::Attack::main', {target => $target})
 }
+
+1;
