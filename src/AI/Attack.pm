@@ -409,7 +409,7 @@ sub main {
 		if ($cell) {
 			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
-			$char->route($cell->{x}, $cell->{y}, $target, , LOSSubRoute => 1, avoidWalls => 0);
+			$char->move($cell->{x}, $cell->{y}, $ID, , LOSSubRoute => 1, avoidWalls => 0);
 		} else {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			AI::dequeue;
@@ -567,7 +567,7 @@ sub main {
 			if ($cell) {
 				debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 				$args->{avoiding} = 1;
-				$char->route($cell->{x}, $cell->{y}, $target, LOSSubRoute => 1, avoidWalls => 0);
+				$char->move($cell->{x}, $cell->{y}, $target, LOSSubRoute => 1, avoidWalls => 0);
 			} else {
 				debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 				AI::dequeue;
@@ -595,7 +595,7 @@ sub main {
 			if ($cell) {
 				debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 					$args->{avoiding} = 1;
-					$char->move($cell->{x}, $cell->{y}, $ID);
+					$char->move($cell->{x}, $cell->{y}, $ID, LOSSubRoute => 1, avoidWalls => 0 );
 			} else {
 				debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 				AI::dequeue;
