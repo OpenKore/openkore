@@ -84,13 +84,6 @@ sub new {
 	return $self;
 }
 
-sub sendCharCreate {
-	my ($self, $slot, $name, $hair_style, $hair_color) = @_;
-	my $msg = pack('v a24 C v2', 0x0970, stringToBytes($name), $slot, $hair_color, $hair_style);
-	$self->sendToServer($msg);
-	debug "Sent sendCharCreate\n", "sendPacket", 2;
-}
-
 1;
 
 =cut
