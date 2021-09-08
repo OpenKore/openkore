@@ -560,7 +560,7 @@ sub processServerSettings {
 		return;
 	}
 
-	foreach my $serverOption ('storageEncryptKey', 'gameGuard','paddedPackets','paddedPackets_attackID',
+	foreach my $serverOption ('gameGuard','paddedPackets','paddedPackets_attackID',
 				'paddedPackets_skillUseID') {
 		if ($master->{$serverOption} ne '' && !(defined $config{$serverOption})) {
 			# Delete Wite Space

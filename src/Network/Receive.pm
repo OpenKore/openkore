@@ -10701,11 +10701,11 @@ sub storage_password_request {
 			}
 		}
 
-		my @key = split /[, ]+/, $config{storageEncryptKey};
+		my @key = split /[, ]+/, $masterServer->{storageEncryptKey};
 		if (!@key) {
 			error (($args->{switch} eq '023E') ?
-				T("Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n") :
-				T("Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"));
+				T("Unable to send character password. You must set the 'storageEncryptKey' option in servers.txt.\n") :
+				T("Unable to send storage password. You must set the 'storageEncryptKey' option in servers.txt.\n"));
 			return;
 		}
 		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
@@ -10737,11 +10737,11 @@ sub storage_password_request {
 			}
 		}
 
-		my @key = split /[, ]+/, $config{storageEncryptKey};
+		my @key = split /[, ]+/, $masterServer->{storageEncryptKey};
 		if (!@key) {
 			error (($args->{switch} eq '023E') ?
-				T("Unable to send character password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n") :
-				T("Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"));
+				T("Unable to send character password. You must set the 'storageEncryptKey' option in servers.txt.\n") :
+				T("Unable to send storage password. You must set the 'storageEncryptKey' option in servers.txt.\n"));
 			return;
 		}
 		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
