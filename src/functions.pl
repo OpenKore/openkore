@@ -560,19 +560,6 @@ sub processServerSettings {
 		return;
 	}
 
-	foreach my $serverOption ('paddedPackets','paddedPackets_attackID',
-				'paddedPackets_skillUseID') {
-		if ($master->{$serverOption} ne '' && !(defined $config{$serverOption})) {
-			# Delete Wite Space
-			# why only one, if deleting any?
-			$master->{$serverOption} =~ s/^\s//;
-			# can't happen due to FileParsers::parseSectionedFile
-			$master->{$serverOption} =~ s/\s$//;
-			# Set config
-			configModify($serverOption, $master->{$serverOption});
-		}
-	}
-
 	# Process adding Custom Table folders
 	if($masterServer->{addTableFolders}) {
 		Settings::addTablesFolders($masterServer->{addTableFolders});
