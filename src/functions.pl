@@ -560,7 +560,7 @@ sub processServerSettings {
 		return;
 	}
 
-	foreach my $serverOption ('gameGuard','paddedPackets','paddedPackets_attackID',
+	foreach my $serverOption ('paddedPackets','paddedPackets_attackID',
 				'paddedPackets_skillUseID') {
 		if ($master->{$serverOption} ne '' && !(defined $config{$serverOption})) {
 			# Delete Wite Space
@@ -861,7 +861,7 @@ sub mainLoop_initialized {
 	}
 
 	# GameGuard support
-	if ($config{gameGuard} && ($net->version != 1 || ($net->version == 1 && $config{gameGuard} eq '2'))) {
+	if ($masterServer->{gameGuard} && ($net->version != 1 || ($net->version == 1 && $masterServer->{gameGuard} eq '2'))) {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";

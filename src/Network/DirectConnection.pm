@@ -357,8 +357,8 @@ sub checkConnection {
 		}
 
 		# GameGuard support
-		if ($self->serverAlive && $config{gameGuard} == 2) {
-			my $msg = pack("C*", 0x58, 0x02);
+		if ($self->serverAlive && $masterServer->{gameGuard} == 2) {
+			my $msg = pack("v", 0x0258);
 			$net->serverSend($msg);
 			message T("Requesting permission to logon on account server...\n");
 			$conState = 1.2;

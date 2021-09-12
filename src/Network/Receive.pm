@@ -6078,9 +6078,19 @@ sub gameguard_grant {
 	} else {
 		message T("Server granted login request to char/map server\n"), "poseidon";
 		# FIXME
-		change_to_constate25() if ($config{'gameGuard'} eq "2");
+		change_to_constate25() if ($masterServer->{'gameGuard'} eq "2");
 	}
 	$net->setState(1.3) if ($net->getState() == 1.2);
+}
+
+sub gameguard_request {
+	my ($self, $args) = @_;
+
+	return if (($net->version == 1 && $masterServer->{gameGuard} ne '2') || ($masterServer->{gameGuard} == 0));
+	Poseidon::Client::getInstance()->query(
+		substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE})
+	);
+	debug "Querying Poseidon\n", "poseidon";
 }
 
 # Guild alliance and opposition list (ZC_MYGUILD_BASIC_INFO).
