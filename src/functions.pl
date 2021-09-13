@@ -560,19 +560,6 @@ sub processServerSettings {
 		return;
 	}
 
-	foreach my $serverOption ('storageEncryptKey', 'gameGuard','paddedPackets','paddedPackets_attackID',
-				'paddedPackets_skillUseID') {
-		if ($master->{$serverOption} ne '' && !(defined $config{$serverOption})) {
-			# Delete Wite Space
-			# why only one, if deleting any?
-			$master->{$serverOption} =~ s/^\s//;
-			# can't happen due to FileParsers::parseSectionedFile
-			$master->{$serverOption} =~ s/\s$//;
-			# Set config
-			configModify($serverOption, $master->{$serverOption});
-		}
-	}
-
 	# Process adding Custom Table folders
 	if($masterServer->{addTableFolders}) {
 		Settings::addTablesFolders($masterServer->{addTableFolders});
@@ -861,7 +848,7 @@ sub mainLoop_initialized {
 	}
 
 	# GameGuard support
-	if ($config{gameGuard} && ($net->version != 1 || ($net->version == 1 && $config{gameGuard} eq '2'))) {
+	if ($masterServer->{gameGuard} && ($net->version != 1 || ($net->version == 1 && $masterServer->{gameGuard} eq '2'))) {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
