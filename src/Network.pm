@@ -26,7 +26,7 @@ use Modules 'register';
 # 5: Connected to map server; ready and functional.
 #
 # Special states:
-# 1.2 (set by $config{gameGuard} == 2): Wait for the server response allowing us
+# 1.2 (set by $masterServer->{gameGuard} == 2): Wait for the server response allowing us
 #      to continue login
 # 1.3 (set by parseMsg()): The server allowed us to continue logging in, continue
 #      where we left off
@@ -41,7 +41,7 @@ use constant {
 	CONNECTED_TO_LOGIN_SERVER  => 3,
 	CONNECTED_TO_CHAR_SERVER   => 4,
 	IN_GAME                    => 5,
-	
+
 	# This can only happen if we're in XKore or XKoreProxy mode.
 	# It means that the RO client is already logged in the game
 	# before OpenKore did. Because of this, OpenKore does not have

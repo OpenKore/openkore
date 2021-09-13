@@ -803,7 +803,6 @@ storageAuto_maxDistance
 storageAuto_npc_type 1
 storageAuto_npc_steps
 storageAuto_password
-storageEncryptKey
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
 storageAuto_useItem 0

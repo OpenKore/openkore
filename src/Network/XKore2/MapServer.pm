@@ -32,7 +32,7 @@ use Utils qw(shiftPack getTickCount getCoordString);
 use Log qw(debug warning error);
 
 my $RunOnce = 1;
-	
+
 sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new(@_);
@@ -41,7 +41,7 @@ sub new {
 	$self->{kore_disconnected} = Plugins::addHook('disconnected', \&kore_disconnected, $self);
 	return $self;
 }
-	
+
 # Overrided method.
 sub onClientNew {
 	my ($self, $client, $index) = @_;
@@ -50,7 +50,7 @@ sub onClientNew {
 		# enable MID encryption.
 		cryptKeys($client, $messageSender->{encryption}{crypt_key_1}, $messageSender->{encryption}{crypt_key_2}, $messageSender->{encryption}{crypt_key_3});
 	}
-	
+
 	# In here we store messages that the RO client wants to
 	# send to the server.
 	$client->{outbox} = new Network::MessageTokenizer($self->getRecvPackets());
@@ -67,7 +67,7 @@ sub kore_map_loaded {
 				x => $char->{pos_to}{x},
 				y => $char->{pos_to}{y},
 			}));
-			$client->{session}{dummy} = 0;			
+			$client->{session}{dummy} = 0;
 		}
 	}
 }
@@ -110,7 +110,7 @@ sub onClientData {
 
 sub gameguard_reply {
 	my ($self, $args, $client) = @_;
-	if ($config{gameGuard} == 0) {
+	if ($masterServer->{gameGuard} == 0) {
 		debug("Replying XKore 2's gameguard query");
 	} else {
 		# mangle, may be unsafe
@@ -143,7 +143,7 @@ sub encryptMessageID {
 	my ($self, $r_message) = @_;
 	if ($self->{encryption}) {
 		my $messageID = unpack("v", $$r_message);
-		# by Fr3DBr		
+		# by Fr3DBr
 		# Calculating the Encryption Key
 		$self->{encryption}->{crypt_key} = ($self->{encryption}->{crypt_key} * $self->{encryption}->{crypt_key_3} + $self->{encryption}->{crypt_key_2}) & 0xFFFFFFFF;
 		# Xoring the Message ID
@@ -195,7 +195,7 @@ sub map_loaded {
 	$self->send_party_list($client, $char);
 	$self->send_pet($client);
 	$self->send_welcome($client);
-	
+
 	$args->{mangle} = 2;
 	$RunOnce = 0;
 }
@@ -229,7 +229,7 @@ sub send_quest_info {
 		$client->send($data);
 	}
 }
-	
+
 sub send_guild_info {
 	my ($self, $client) = @_;
 	my $data = undef;
@@ -337,7 +337,7 @@ sub send_friends_list {
 	$client->send($friendOnlineMsg);
 	undef $friendMsg;
 	undef $friendOnlineMsg;
-}	
+}
 sub send_pets {
 	my ($self, $client) = @_;
 	my $data = undef;
@@ -453,7 +453,7 @@ sub send_welcome {
 sub send_player_info {
 	my ($self, $client, $char) = @_;
 	my $data = undef;
-	
+
 	# Player stats.
 	$data = pack('C2 v1 C12 v12 x4',
 		0xBD, 0x00,
@@ -506,7 +506,7 @@ sub send_player_info {
 	# Send status info
 	$data .= pack('v a4 v3 x', 0x119, $char->{ID}, $char->{opt1}, $char->{opt2}, $char->{option});
 	$client->send($data);
-	
+
 	if ($RunOnce) {
 		foreach my $ID (keys %{$char->{statuses}}) {
 			while (my ($statusID, $statusName) = each %statusHandle) {
@@ -526,16 +526,16 @@ sub send_player_info {
 			}
 		}
 	}
-	
+
 	$client->send($data) if (length($data) > 0);
-	
+
 	# Send spirit sphere information
 	$data  = pack('C2 a4 v', 0xD0, 0x01, $char->{ID}, $char->{spirits}) if ($char->{spirits});
 	# Send exp-required-to-level-up info
 	$data .= pack('C2 v V', 0xB1, 0x00, 22, $char->{exp_max});
 	$data .= pack('C2 v V', 0xB1, 0x00, 23, $char->{exp_job_max});
 	$client->send($data);
-	
+
 	# Send skill information
 	$data = undef;
 	foreach my $ID (@skillsID) {
@@ -546,7 +546,7 @@ sub send_player_info {
 	}
 	$data = pack('C2 v', 0x0F, 0x01, length($data) + 4) . $data;
 	$client->send($data);
-	
+
 	# Send Hotkeys
 	if ($hotkeyList) {
 		$data = undef;
@@ -560,7 +560,7 @@ sub send_player_info {
 		}
 		$client->send($data) if (@{$hotkeyList});
 	}
-	
+
 	# Send info about items on the ground
 	$data = undef;
 	foreach my $ID (@itemsID) {
@@ -570,8 +570,8 @@ sub send_player_info {
 			$items{$ID}{pos}{x}, $items{$ID}{pos}{y}, $items{$ID}{amount});
 	}
 	$client->send($data) if (length($data) > 0);
-	
-	
+
+
 	# # Send info about surrounding players
 	foreach my $player (@{$playersList->getItems()}) {
 		my $coords = '';
@@ -597,7 +597,7 @@ sub send_inventory {
 	if (!$client->{session}{dummy} && $char->cartActive && $RunOnce) {
 		$data = pack('C2 v2 V2', 0x21, 0x01, $char->cart->items, $char->cart->items_max, ($char->cart->{weight} * 10), ($char->cart->{weight_max} * 10));
 		$client->send($data);
-		
+
 		my @stackable;
 		my @nonstackable;
 		my $n = 0;
@@ -610,7 +610,7 @@ sub send_inventory {
 				push @nonstackable, $item;
 			}
 		}
-		
+
 		# Send stackable item information
 		$data = undef;
 		$n = 0;
@@ -629,7 +629,7 @@ sub send_inventory {
 		}
 		$data = pack('C2 v', 0xE9, 0x02, length($data) + 4) . $data;
 		$client->send($data) if ($n > 0);
-		
+
 		# Send non-stackable item information
 		$data = undef;
 		$n = 0;
@@ -691,7 +691,7 @@ sub send_inventory {
 		$data = pack('C2 v', 0xA4, 0x00, length($data) + 4) . $data;
 		$client->send($data);
 	}
-	
+
 	# Send equipped arrow information
 	$client->send(pack('C2 v', 0x3C, 0x01, $char->{arrow})) if ($char->{arrow});
 }
@@ -700,7 +700,7 @@ sub send_npc_info {
 	my ($self, $client) = @_;
 	my $data = undef;
 	my $switch = ($masterServer->{serverType} eq 'bRO')?'0857':'actor_exists';
-	
+
 	foreach my $npc (@{$npcsList->getItems()}) {
 		my $coords = '';
 		shiftPack(\$coords, $npc->{pos}{x}, 10);
@@ -778,7 +778,7 @@ sub map_login {
 			coords => $coords,
 		}));
 	}
-	
+
 	$args->{mangle} = 2;
 }
 
@@ -787,7 +787,7 @@ sub restart {
 	# If they want to character select/respawn, kick them to the login screen
 	# immediately (GM kick)
 	$client->send(pack('C3', 0x81, 0, 15));
-	
+
 	$args->{mangle} = 2;
 	$RunOnce = 1;
 }
@@ -825,7 +825,7 @@ sub send_cash_list {
 		my $item_block;
 		foreach my $item (@{$cashShop{list}[$tab]}) {
 			$item_block .= pack($pack_string, $item->{item_id}, $item->{price});
-			$self->send_cash_tab($client, $tab, \$item_block) if (length($item_block) >= (6*64));	
+			$self->send_cash_tab($client, $tab, \$item_block) if (length($item_block) >= (6*64));
 		}
 		# send current tab
 		# max tab size: 392 total and 384 item_block
