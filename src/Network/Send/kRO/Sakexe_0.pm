@@ -245,6 +245,7 @@ sub new {
 		'08C2' => ['macro_stop'],#2
 		'08C9' => ['request_cashitems'],#2
 		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]], #-1
+		'0970' => ['char_create', 'a24 C v2', [qw(name slot hair_style hair_color)]],
 		'097C' => ['rank_general', 'v', [qw(type)]],
 		'098D' => ['clan_chat', 'v Z*', [qw(len message)]],
 		'098F' => ['char_delete2_accept', 'v a4 a*', [qw(len charID code)]],
