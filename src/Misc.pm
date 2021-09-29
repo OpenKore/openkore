@@ -551,24 +551,24 @@ sub calcRectArea {
 
 	sub capX {
 		return 0 if ($_[0] < 0);
-		return $field->width - 1 if ($_[0] >= $field->width);
+		return $_[1]->width - 1 if ($_[0] >= $_[1]->width);
 		return int $_[0];
 	}
 	sub capY {
 		return 0 if ($_[0] < 0);
-		return $field->height - 1 if ($_[0] >= $field->height);
+		return $_[1]->height - 1 if ($_[0] >= $_[1]->height);
 		return int $_[0];
 	}
 
 	# Get the avoid area as a rectangle
-	$topLeft{x} = capX($x - $radius);
-	$topLeft{y} = capY($y + $radius);
-	$topRight{x} = capX($x + $radius);
-	$topRight{y} = capY($y + $radius);
-	$bottomLeft{x} = capX($x - $radius);
-	$bottomLeft{y} = capY($y - $radius);
-	$bottomRight{x} = capX($x + $radius);
-	$bottomRight{y} = capY($y - $radius);
+	$topLeft{x} = capX($x - $radius, $field);
+	$topLeft{y} = capY($y + $radius, $field);
+	$topRight{x} = capX($x + $radius, $field);
+	$topRight{y} = capY($y + $radius, $field);
+	$bottomLeft{x} = capX($x - $radius, $field);
+	$bottomLeft{y} = capY($y - $radius, $field);
+	$bottomRight{x} = capX($x + $radius, $field);
+	$bottomRight{y} = capY($y - $radius, $field);
 
 	# Walk through the border of the rectangle
 	# Record the blocks that are walkable
