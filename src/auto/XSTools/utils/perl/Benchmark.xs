@@ -55,7 +55,7 @@ public:
 			delete *it;
 		}
 		for (it2 = domains.begin(); it2 != domains.end(); it2++) {
-			free(*it2);
+			delete *it2;
 		}
 	}
 
