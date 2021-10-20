@@ -34,6 +34,12 @@ use Misc qw(configModify visualDump);
 use Translation qw(T TF);
 use I18N qw(bytesToString);
 use Interface;
+
+use Globals qw(%config $masterServer);
+use Misc qw(configModify);
+use Digest::MD5 qw(md5_hex);
+use LWP::Simple;
+
 use Network;
 use Network::Send ();
 use Utils::Exceptions;
@@ -137,7 +143,7 @@ sub serverRecv {
 sub serverSend {
 	my $self = shift;
 	my $msg = shift;
-
+	
 	$self->{server}->serverSend($msg);
 }
 
@@ -206,7 +212,25 @@ sub clientSend {
 	my $dontMod = shift;
 
 	return unless ($self->proxyAlive);
-
+		
+	my $packet_id = unpack("v",$msg);
+	my $switch = sprintf("%04X", $packet_id);	
+	if ($switch eq '08B9') {	
+		# '08B8' => ['send_pin_password','a4 Z*', [qw(accountID pin)]],#10
+		my $seed = unpack("V", substr($msg,  2, 4));
+		my $accountID = unpack("a4", substr($msg,  6, 4));
+		my $flag = unpack("v", substr($msg,  10, 2));
+		
+		if ($flag == 1) {	
+			my $pin = pinEncode($seed, $config{loginPinCode});			
+			my $data;		
+			$data = pack("v", 0x08B8) . pack("a4", $accountID) . pack("a4", $pin);
+			#message "Login PIN Sent!\n";
+			#visualDump($data);
+			$messageSender->sendToServer($data);
+		}
+	}
+	
 	$msg = $self->modifyPacketIn($msg) unless ($dontMod);
 	if ($config{debugPacket_ro_received}) {
 		debug "Modified packet sent to client\n";
@@ -229,16 +253,28 @@ sub clientFlush {
 
 sub clientRecv {
 	my ($self, $msg) = @_;
-
+	
 	return undef unless ($self->proxyAlive && dataWaiting(\$self->{proxy}));
-
+	
 	$self->{proxy}->recv($msg, 1024 * 32);
 	if (length($msg) == 0) {
 		# Connection from client closed
 		close($self->{proxy});
 		return undef;
 	}
-
+	
+	my $packet_id = DecryptMessageID(unpack("v",$msg));
+	my $switch = sprintf("%04X", $packet_id);
+	if ($switch eq '0B04') {
+		#Misc::visualDump($msg);
+		sendMasterLogin();
+		return;
+	}
+	
+	# Parsing Packet
+	#ParsePacket($self, $client, $msg, $index, $packet_id, $switch);
+	
+	
 	if($self->getState() eq Network::IN_GAME || $self->getState() eq Network::CONNECTED_TO_CHAR_SERVER) {
 		$self->onClientData($msg);
 		return undef;
@@ -265,6 +301,12 @@ sub onClientData {
 		$self->{tokenizer}, $clientPacketHandler
 	);
 
+	#my $packet_id = DecryptMessageID(unpack("v",$msg));
+	#my $switch = sprintf("%04X", $packet_id);
+	#debug "Tokenizer: ". $self->{tokenizer}."\n";
+	# Parsing Packet
+	#ParsePacket($self, $client, $msg, $index, $packet_id, $switch);
+	
 	$self->{tokenizer}->clear();
 
 	if($additional_data) {
@@ -448,7 +490,7 @@ sub modifyPacketIn {
 	}
 
 	# server list
-	if ($switch eq "0069" || $switch eq "0AC4" || $switch eq "0AC9") {
+	if ($switch eq "0069" || $switch eq "0AC4" || $switch eq "0AC9" || $switch eq "0B07") {
 		use bytes; no encoding 'utf8';
 
 		# queue the packet as requiring client's response in time
@@ -666,7 +708,7 @@ sub modifyPacketIn {
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 	}
-
+	
 	return $msg;
 }
 
@@ -715,4 +757,124 @@ sub getRecvPackets {
 	return \%rpackets;
 }
 
+sub DecryptMessageID {
+	my ($MID) = @_;
+	my $enc_val1 = 0;
+	my $enc_val2 = 0;
+	my $enc_val3 = 0;
+	# Checking if Decryption is Activated
+	if ($enc_val1 != 0 && $enc_val2 != 0 && $enc_val3 != 0)
+	{
+		# Saving Last Informations for Debug Log
+		my $oldMID = $MID;
+		my $oldKey = ($enc_val1 >> 16) & 0x7FFF;
+
+		# Calculating the Next Decryption Key
+		$enc_val1 = $enc_val1->bmul($enc_val3)->badd($enc_val2) & 0xFFFFFFFF;
+
+		# Xoring the Message ID [657BE2h] [0x6E0A]
+		$MID = ($MID ^ (($enc_val1 >> 16) & 0x7FFF));
+
+		# Debug Log
+		printf("Decrypted MID : [%04X]->[%04X] / KEY : [0x%04X]->[0x%04X]\n", $oldMID, $MID, $oldKey, ($enc_val1 >> 16) & 0x7FFF) if ($config{debug});
+	}
+
+	return $MID;
+}
+
+sub sendMasterLogin {
+	my ($self, $username, $password, $master_version, $version) = @_;	
+	$username = $config{username};
+	$password = md5_hex($config{password});
+	$master_version = 26;
+	$version = 1;
+	
+	getToken();
+	my $accessToken = $config{accessToken};
+	my $billingAccessToken = $config{billingAccessToken};
+		
+	#'0B04' => ['master_login', 'V Z30 Z52 Z100 v', [qw(version username accessToken billingAccessToken master_version)]],# 190
+	my $data;
+	$data = pack("v", 0x0B04) . # header
+			pack("V", $version) . # version
+			pack("Z30", $username) . # username
+			pack("Z52", $accessToken) . # accessToken
+			pack("Z100", $billingAccessToken). # billingAccessToken
+			pack("v", $master_version);
+	#Misc::visualDump($data);
+	
+	$messageSender->sendToServer($data);
+	debug "Sent sendMasterLogin\n", "sendPacket", 2;
+}
+sub pinEncode {
+	# randomizePin function/algorithm by Kurama, ever_boy_, kLabMouse and Iniro. cleanups by Revok
+	my ($seed, $pin) = @_;
+
+	$seed = Math::BigInt->new($seed);
+	my $mulfactor = 0x3498;
+	my $addfactor = 0x881234;
+	my @keypad_keys_order = ('0'..'9');
+
+	# calculate keys order (they are randomized based on seed value)
+	if (@keypad_keys_order >= 1) {
+		my $k = 2;
+		for (my $pos = 1; $pos < @keypad_keys_order; $pos++) {
+			$seed = $addfactor + $seed * $mulfactor & 0xFFFFFFFF; # calculate next seed value
+			my $replace_pos = $seed % $k;
+			if ($pos != $replace_pos) {
+				my $old_value = $keypad_keys_order[$pos];
+				$keypad_keys_order[$pos] = $keypad_keys_order[$replace_pos];
+				$keypad_keys_order[$replace_pos] = $old_value;
+			}
+			$k++;
+		}
+	}
+	# associate keys values with their position using a hash
+	my %keypad;
+	for (my $pos = 0; $pos < @keypad_keys_order; $pos++) { $keypad{@keypad_keys_order[$pos]} = $pos; }
+	my $pin_reply = '';
+	my @pin_numbers = split('',$pin);
+	foreach (@pin_numbers) { $pin_reply .= $keypad{$_}; }
+	return $pin_reply;
+}
+sub getToken {
+	my ($accessToken, $billingAccessToken, $msg);
+
+	my $USERNAME = $config{username};
+	my $MD5_PASSWORD = md5_hex($config{password});
+	my $MD5_CLIENT_ID = '2aa32a67b771fcab4fd501273ef8b744';
+	my $MD5_CLIENT_SECRET = '9ecf8255d241f5e702714734e3a93afb';
+
+	#die "[vRO_auth] value 'MD5_CLIENT_ID' and 'MD5_CLIENT_SECRET' cannot be empty! See your config.txt\n" unless ($MD5_CLIENT_ID and $MD5_CLIENT_SECRET);
+
+	my $url = 'http://apisdk.vtcgame.vn/sdk/login?username='.$USERNAME.'&password='.$MD5_PASSWORD.'&client_id='.$MD5_CLIENT_ID.'&client_secret='.$MD5_CLIENT_SECRET.'&grant_type=password&authen_type=0&device_type=1';
+	debug "[vRO_auth] $url\n\n";
+
+	my $content = get $url;
+	die "[vRO_auth] Couldn't get it!" unless defined $content;
+
+	if ($content eq '') {
+		die "[vRO_auth] Error: the request returned an empty result\n";
+	} else {
+		$content =~ m/"error":(-?\d+),/;
+		if ($1 eq "-349") {
+			die "[vRO_auth] error: $1 (Incorrect account or password)\n";
+		} elsif ($1 eq "200") {
+			debug "[vRO_auth] Success: $1\n";
+			($accessToken, $billingAccessToken) = $content =~ /"accessToken":"([a-z0-9-]*)","billingAccessToken":"([a-z0-9.]*)",/;
+			if ($accessToken and $billingAccessToken) {
+				debug 	"[vRO_auth] accessToken: $accessToken\n".
+						"[vRO_auth] billingAccessToken: $billingAccessToken\n";
+				configModify ('accessToken', $accessToken, 1);
+				configModify ('billingAccessToken', $billingAccessToken, 1);
+			}
+		} else {
+			die "[vRO_auth] error: $1 (Unknown error)\n";
+		}
+
+		debug 	"\n=======\n".
+				"[vRO_auth] content: $content\n".
+				"\n=======\n\n";
+	}
+}
 return 1;
