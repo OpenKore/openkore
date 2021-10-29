@@ -4,10 +4,10 @@
 ######## Login options and server-specific options ########
 
 master Thailand - tRO: Chaos, Thor, Iris, Odin
-server
-username
-password
-loginPinCode
+server 1
+username pinkkyoko06
+password aa123555
+loginPinCode 1551
 char
 
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
