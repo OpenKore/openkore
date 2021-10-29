@@ -3,8 +3,8 @@
 
 ######## Login options and server-specific options ########
 
-master Thailand - tRO: Chaos, Thor, Iris, Odin
-server 1
+master 
+server 
 username pinkkyoko06
 password aa123555
 loginPinCode 1551
