@@ -3,8 +3,8 @@
 
 ######## Login options and server-specific options ########
 
-master 
-server 
+master Localhost
+server
 username pinkkyoko06
 password aa123555
 loginPinCode 1551
@@ -37,7 +37,7 @@ XKore_ID
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
-adminPassword kemiemec
+adminPassword tronucee
 callSign
 commandPrefix ;
 callSignGM 0
