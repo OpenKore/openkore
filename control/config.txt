@@ -5,9 +5,9 @@
 
 master Localhost
 server
-username pinkkyoko06
-password aa123555
-loginPinCode 1551
+username 
+password 
+loginPinCode 
 char
 
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
