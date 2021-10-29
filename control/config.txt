@@ -3,7 +3,7 @@
 
 ######## Login options and server-specific options ########
 
-master
+master Thailand - tRO: Chaos, Thor, Iris, Odin
 server
 username
 password
@@ -37,7 +37,7 @@ XKore_ID
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
-adminPassword
+adminPassword ceshacra
 callSign
 commandPrefix ;
 callSignGM 0
@@ -840,3 +840,4 @@ logToFile_Messages
 logToFile_Warnings
 history_max 50
 gameGuard 0
+macro_orphans terminate
