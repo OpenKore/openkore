@@ -45,7 +45,7 @@ sub new {
 	my $self = $class->SUPER::new( @_ );
 
 	my $cryptKeys = $masterServer->{sendCryptKeys};
-	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})$/ ) {
+	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})$/ ) {
 		$self->cryptKeys( hex $1, hex $2, hex $3 );
 	}
 
