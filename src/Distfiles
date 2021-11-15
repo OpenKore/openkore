@@ -10,6 +10,7 @@ ErrorHandler.pm
 FastUtils.pm
 Field.pm
 FileParsers.pm
+Git.pm
 Globals.pm
 I18N.pm
 Interface.pm

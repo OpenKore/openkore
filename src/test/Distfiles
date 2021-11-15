@@ -3,7 +3,6 @@ bus-client-test.pl
 CallbackListTest.pm
 cities.txt
 consoleui-test.cpp
-eAthenaTest.pm
 FieldTest.pm
 FileParsersTest.pm
 http-reader-test.cpp
@@ -21,14 +20,17 @@ PluginsHookTest.pm
 portals.txt
 resnametable.txt
 RijndaelTest.pm
+SConscript
 server.pl
 SetTest.pm
+ShopTest.pm
 SKILL_id_handle.txt
 skillnametable.txt
 skillssp.txt
 SkillTest.pm
 TaskChainedTest.pm
 TaskManagerTest.pm
+TaskTalkNPCTest.pm
 TaskWithSubtaskTest.pm
 unittests.pl
 WhirlpoolTest.pm
