@@ -221,46 +221,6 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 pinCode 1
 gameGuard 0
 
-# https://roextreme.com/msp/main
-[Philippines - pRO: Valhalla]
-ip 139.99.113.156
-port 6900
-master_version 15
-version 24
-serverType pRO
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Western
-addTableFolders pRO
-charBlockSize 147
-pinCode 1
-charDeleteDateType 1
-rankingSystemType 1
-itemListType 1
-ignoreAntiCheatWarning 0
-
-# https://roextreme.com/msp/main
-[Philippines - pRO: Yggdrasil]
-ip 139.99.7.212
-port 6900
-master_version 15
-version 24
-serverType pRO
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverEncoding Western
-addTableFolders pRO
-charBlockSize 147
-pinCode 1
-charDeleteDateType 1
-rankingSystemType 1
-itemListType 1
-ignoreAntiCheatWarning 0
-
 # https://ru.4game.com/ro/play/
 [Russia - rRO: Renewal]
 ip 109.105.140.145
@@ -424,3 +384,13 @@ dead_message mRO was merged into phRO on July, 2019. Visit official website for 
 [GGamerzRO]
 dead 1
 dead_message Server is officially closed on 15/2/2021 due to no more Sponsor.
+
+# https://roextreme.com/msp/main
+[Philippines - pRO: Valhalla]
+dead 1
+dead_message pRO was closed on 07 of Octuber, 2021. Visit official website for more details.
+
+# https://roextreme.com/msp/main
+[Philippines - pRO: Yggdrasil]
+dead 1
+dead_message pRO was closed on 07 of Octuber, 2021. Visit official website for more details.
