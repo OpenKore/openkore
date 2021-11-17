@@ -71,8 +71,8 @@ git clone https://github.com/OpenKore/openkore.git
 | [ruRO](https://ru.4game.com/ro/) | Russia RO | Frost Security | Not Working | ya4ept |
 | [ruRO-Prime](https://ru.4game.com/roprime/) | Russia RO (Prime) | Frost Security | Not Working | ya4ept |
 | [tRO](https://ro.gnjoy.in.th/) | Thailand RO | EAC | Not Working | N/A |
-| [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | nProtect | Need Verification | N/A |
-| [vRO](https://ro.vtcgame.vn/) | Vietnam RO | nProtect | Botable | ya4ept |
+| [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | nProtect | Not Working | N/A |
+| [vRO](https://ro.vtcgame.vn/) | Vietnam RO | nProtect | Not Working | ya4ept |
 
 ## Contributing
 
