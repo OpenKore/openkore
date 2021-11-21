@@ -310,3 +310,44 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         make test
+
+  #######################
+  # start the third job #
+  #######################
+
+  make_distrib:
+
+    name: checking makedist.sh
+    needs: build_XSTools
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: GIT checkout
+      uses: actions/checkout@v2
+
+    - name: run "makedist.sh --help"
+      shell: bash
+      run: ./makedist.sh --help || echo -e "\e[34m# done"
+
+    - name: run "makedist.sh --bin"
+      shell: bash
+      run: |
+        echo "::group::script debug"
+          ./makedist.sh --bin
+        echo "::endgroup::"
+        echo -e "\e[34m# ls -lh | grep zip"
+        ls -lh | grep zip
+
+    - name: run "makedist.sh --semibin test_semibin"
+      shell: bash
+      run: |
+        mkdir test_semibin
+        echo "::group::script debug"
+          ./makedist.sh --semibin test_semibin
+        echo "::endgroup::"
+        echo -e "\e[34m# ls -lh | grep test_semibin"
+        ls -lh | grep test_semibin
+
+    - name: run "makedist.sh --unknown"
+      shell: bash
+      run: ./makedist.sh --unknown || echo -e "\e[34m# done"
