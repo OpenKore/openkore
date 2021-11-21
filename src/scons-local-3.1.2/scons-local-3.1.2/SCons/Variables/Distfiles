@@ -1,12 +1,6 @@
 __init__.py
-__init__.pyc
 BoolVariable.py
-BoolVariable.pyc
 EnumVariable.py
-EnumVariable.pyc
 ListVariable.py
-ListVariable.pyc
 PackageVariable.py
-PackageVariable.pyc
 PathVariable.py
-PathVariable.pyc

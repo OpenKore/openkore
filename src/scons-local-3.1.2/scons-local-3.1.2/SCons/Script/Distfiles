@@ -1,10 +1,5 @@
 __init__.py
-__init__.pyc
 Interactive.py
-Interactive.pyc
 Main.py
-Main.pyc
 SConscript.py
-SConscript.pyc
 SConsOptions.py
-SConsOptions.pyc
