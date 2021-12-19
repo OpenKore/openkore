@@ -61,18 +61,17 @@ git clone https://github.com/OpenKore/openkore.git
 | [iRO](http://renewal.playragnarok.com/) | International(US) RO | EAC | Not working | N/A |
 | [iRO-TR](http://www.playragnarok.com/) | International(US) RO Transcendence | EAC | Not working | N/A |
 | [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | N/A |
-| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable, Weekly Update | N/A |
+| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable | N/A |
 | [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | N/A |
 | [euRO-Prime](https://eu.4game.com/roprime/) | Europe RO (Prime) | Frost Security | Not working | N/A |
 | [idRO](https://ro.gnjoy.id/) | Indonesia RO | EAC | Not Working | N/A |
-| [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | HShield | Need Verification | N/A |
-| [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Need Verification |  N/A |
-| [kRO-Zero](http://roz.gnjoy.com/) | Korea RO Zero | nProtect | Need Verification | N/A  |
-| [ruRO](https://ru.4game.com/ro/) | Russia RO | Frost Security | Not Working | ya4ept |
+| [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | nProtect | Need Verification | N/A |
+| [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Botable |  N/A |
+| [kRO-Zero](http://roz.gnjoy.com/) | Korea RO Zero | nProtect | Botable | N/A  |
 | [ruRO-Prime](https://ru.4game.com/roprime/) | Russia RO (Prime) | Frost Security | Not Working | ya4ept |
 | [tRO](https://ro.gnjoy.in.th/) | Thailand RO | EAC | Not Working | N/A |
-| [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | nProtect | Not Working | N/A |
-| [vRO](https://ro.vtcgame.vn/) | Vietnam RO | nProtect | Not Working | ya4ept |
+| [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | CheatDefender | Not Working | N/A |
+| [vRO](https://ro.vtcgame.vn/) | Vietnam RO | nProtect | Not Working | N/A |
 
 ## Contributing
 
