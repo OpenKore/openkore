@@ -58,16 +58,16 @@ git clone https://github.com/OpenKore/openkore.git
 
 | Server | Description | Protection | Status | Supporter |
 | --- | --- | --- | --- | --- |
-| [iRO](http://renewal.playragnarok.com/) | International(US) RO | EAC | Not working | N/A |
-| [iRO-TR](http://www.playragnarok.com/) | International(US) RO Transcendence | EAC | Not working | N/A |
 | [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | N/A |
-| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable | N/A |
+| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable | alisonrag |
 | [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | N/A |
 | [euRO-Prime](https://eu.4game.com/roprime/) | Europe RO (Prime) | Frost Security | Not working | N/A |
+| [iRO Renewal](http://renewal.playragnarok.com/) | International(US) RO (Renewal) | EAC | Not working | N/A |
+| [iRO TR](http://www.playragnarok.com/) | International(US) RO Transcendence | EAC | Not working | N/A |
 | [idRO](https://ro.gnjoy.id/) | Indonesia RO | EAC | Not Working | N/A |
 | [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | nProtect | Need Verification | N/A |
-| [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Botable |  N/A |
-| [kRO-Zero](http://roz.gnjoy.com/) | Korea RO Zero | nProtect | Botable | N/A  |
+| [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Botable | alisonrag |
+| [kRO-Zero](http://roz.gnjoy.com/) | Korea RO Zero | nProtect | Botable | alisonrag |
 | [ruRO-Prime](https://ru.4game.com/roprime/) | Russia RO (Prime) | Frost Security | Not Working | ya4ept |
 | [tRO](https://ro.gnjoy.in.th/) | Thailand RO | EAC | Not Working | N/A |
 | [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | CheatDefender | Not Working | N/A |
