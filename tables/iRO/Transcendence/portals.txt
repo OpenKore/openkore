@@ -3148,16 +3148,16 @@ dew_fild01 48 65 dew_dun02 302 30
 dew_dun02 305 30 dew_fild01 50 65
 
 # Lasagna
-izlude 195 213 lasagna 206 297 2000 c c r0 n
-lasagna 205 325 lasagna 193 209 2000 c c r1 n
-lasagna 205 325 malangdo 193 209 2000 c c r2 n
+izlude 195 213 lasagna 206 297 200 c c r0 n
+lasagna 205 325 izlude 193 209 200 c c r1 n
+lasagna 205 325 malangdo 193 209 200 c c r2 n
 lasa_fild02 348 244 lasa_dun01 24 143
 lasa_dun01 18 143 lasa_fild02 344 243
 lasa_dun_q 190 14 lasa_dun01 152 98
 lasa_dun01 157 98 lasa_dun02 22 171
 lasa_dun02 18 171 lasa_dun01 153 98
 lasa_dun02 146 58 lasa_dun03 190 18
-lasa_dun03,190,15 lasa_dun02,146 54
+lasa_dun03 190 15 lasa_dun02 146 54
 lasa_fild01 134 381 lasagna 153 58
 lasagna 150 54 lasa_fild01 131 378
 lasa_fild01 341 375 lasagna 327 56
