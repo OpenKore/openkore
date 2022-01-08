@@ -1518,3 +1518,14 @@ achievement_tbl = {
 		major = 2,
 		minor = 1,
 		title = "期間限定「メロンハンティング」",
+		content = { summary = "「ミニメロリン」と「堕メロリン」を討伐する", details = "「ミニメロリン」「堕メロリン」を それぞれ500体討伐する" },
+		resource = { [1] = { text = "「ミニメロリン」討伐", count = 500 }, [2] = { text = "「堕メロリン」討伐", count = 500 } },
+		reward = { title = 2116 },
+		score = 1
+	},
+	[500127] = {
+		UI_Type = 1,
+		group = "GOAL_ACHIEVE",
+		major = 2,
+		minor = 1,
+		title = "期間限定「除夜の餅つき」",
