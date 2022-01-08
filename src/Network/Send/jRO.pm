@@ -24,15 +24,22 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'027C' => ['master_login', 'V Z24 a40 x12 c x a12', [qw(version username_salted password_salted master_version mac)]],# 96
+		'027C' => ['master_login', 'V A16 Z8 A40 Z12 H*', [qw(version username unknown password unknown2 unknown3)]],# 190
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-		master_login 027C
+		actor_look_at 0361
+		actor_info_request 0368
 		char_create 0A39
-		char_delete2_accept 098F
+		item_drop 0363
+		item_take 0362
+		master_login 027C
+		send_equip 0998
+		storage_item_add 0364
+		storage_item_remove 0365
+		character_move 035F
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
@@ -61,5 +68,4 @@ sub sendMasterLogin {
 	$self->sendToServer($msg);
 	debug "Sent sendMasterLogin\n", "sendPacket", 2;
 }
-
 1;
