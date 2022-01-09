@@ -20,6 +20,8 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 	my %packets = (
+		'009D' => ['item_exists', 'a4 V C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
+		'009E' => ['item_appeared', 'a4 V C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]],
 	);
 
 	foreach my $switch (keys %packets) {
@@ -27,10 +29,10 @@ sub new {
 	}
 
 	my %handlers = qw(
+		account_server_info 0B07
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	return $self;
 }
-
 1;
