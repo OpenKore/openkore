@@ -157,3 +157,8 @@ lasa_in01.rsw#Inside Lasagna#
 verus04.rsw#Verus, Excavation Site#
 harboro1.rsw#Rock Ridge#
 har_in01.rsw#Rock Ridge#
+ac_en_hall.rsw#エントランスホール#
+ac_cl_hall.rsw#教室棟ホール#
+ac_cl_room.rsw#教室棟A#
+ac_cl_area.rsw#教室棟B#
+ac_library.rsw#図書室#
