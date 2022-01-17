@@ -2941,7 +2941,7 @@ lasa_dun_q 190 14 lasa_dun01 152 98
 lasa_dun01 157 98 lasa_dun02 22 171
 lasa_dun02 18 171 lasa_dun01 153 98
 lasa_dun02 146 58 lasa_dun03 190 18
-lasa_dun03,190,15 lasa_dun02,146 54
+lasa_dun03 190 15 lasa_dun02 146 54
 lasa_fild01 134 381 lasagna 153 58
 lasagna 150 54 lasa_fild01 131 378
 lasa_fild01 341 375 lasagna 327 56
