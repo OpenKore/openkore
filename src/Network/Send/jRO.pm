@@ -30,9 +30,17 @@ sub new {
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-		master_login 027C
+		actor_look_at 0361
+		actor_info_request 0368
 		char_create 0A39
 		char_delete2_accept 098F
+		character_move 035F
+		item_drop 0363
+		item_take 0362
+		master_login 027C
+		send_equip 0998
+		storage_item_add 0364
+		storage_item_remove 0365
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
