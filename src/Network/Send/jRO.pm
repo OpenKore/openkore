@@ -24,7 +24,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 
 	my %packets = (
-		'027C' => ['master_login', 'V A16 Z8 A40 Z12 H*', [qw(version username unknown password unknown2 unknown3)]],# 190
+		'027C' => ['master_login', 'V Z24 a40 x12 c x a12', [qw(version username_salted password_salted master_version mac)]],# 96
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
