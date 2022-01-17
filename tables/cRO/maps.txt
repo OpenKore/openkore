@@ -9,7 +9,7 @@
 06guild_r.rsw#公会对抗竞技场 等候室#
 1@cash.rsw#章鱼洞穴#
 1@cata.rsw#地下墓穴#
-1@dth1.rsw#拜欧斯岛#
+1@dth1.rsw#拜欧斯岛# 
 1@dth2.rsw#拜欧斯岛#
 1@dth3.rsw#拜欧斯岛#
 1@ecl.rsw#埃克拉珠内部#
@@ -898,3 +898,74 @@ lasa_in01.rsw#罗札纳内部#
 lasa_dun_q.rsw#龙巢穴#
 hu_fild03.rsw#狩猎场#
 prt_evt_in.rsw#狩猎场的小木屋#
+//钟塔梦魇副本
+c_tower2_.rsw#扭曲的时间的钟塔2层#
+c_tower3_.rsw#扭曲的时间的钟塔3层#
+
+
+// ???? ??? ?? 2013-12-18
+lhz_dun_n.rsw#战死者坟墓#
+
+
+// 周五副本
+1@md_gef.rsw#周五副本#
+
+//-- 最终更新 上午 10:26 2015-10-26 正式服
+
+// 教皇副本白天出来的半月
+1@pop1.rsw#教皇办公室#
+1@pop2.rsw#回家的路上#
+1@pop3.rsw#天空庭院#
+
+// 191224 狩猎活动
+hu_fild03.rsw#狩猎场#
+prt_evt_in.rsw#狩猎场小木屋#
+
+// ep16.2
+1@slw.rsw#维尔纳研究所中枢室#
+1@swat.rsw#邪心猎人军事基地#
+que_swat.rsw#邪心猎人军事基地#
+slabw01.rsw#维尔纳研究所#
+rebel_in.rsw#克莱纳 奈米艾利#
+
+//200929 sep cont 
+pay_d03_i.rsw#月夜猫的噩梦#
+1@jtb.rsw#梦与影子#
+
+// 老风傈 霸奇 (轨颇捞绢)
+gef_d01_i.rsw#第250页#
+
+//201222 dec cont
+star_frst.rsw#流星林#
+star_in.rsw#流星林 室内#
+
+1@soul.rsw#灵魂的通道#
+
+ice_d03_i.rsw#冰冻记忆#
+
+// ????? ???
+har_in01.rsw#洛克里奇#
+harboro1.rsw#洛克里奇#
+harboro2.rsw#地下水道#
+rockmi1.rsw#洛克里奇矿山#
+rockmi2.rsw#洛克里奇矿山#
+rockrdg1.rsw#契瓦瓦沙漠#
+rockrdg2.rsw#契瓦瓦沙漠#
+
+// ??? ???? ???? ??
+ein_d02_i.rsw#罗斯里安帝国#
+
+// ep16.1 ??? ?? ?? + ???? ???
+1@mir.rsw#仪式的房间#
+2@mir.rsw#仪式的房间#
+1@sthb.rsw#空中要塞内部#
+1@sthc.rsw#空中要塞神秘的房间#
+1@sthd.rsw#空中要塞最顶层#
+
+prt_cas.rsw#普隆德拉中央宫#
+prt_cas_q.rsw#普隆德拉别宫#
+prt_prison.rsw#普隆德拉地下监狱#
+prt_lib.rsw#王室的记忆#
+prt_lib_q.rsw#过去王室的记忆#
+prt_q.rsw#被侵略的普隆德拉#
+prt_pri00.rsw#普隆德拉监狱#

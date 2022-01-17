@@ -1030,16 +1030,6 @@ sub parse_cash_dealer {
 	$args->{kafra_points} = 0;
 }
 
-sub gameguard_request {
-	my ($self, $args) = @_;
-
-	return if (($net->version == 1 && $config{gameGuard} ne '2') || ($config{gameGuard} == 0));
-	Poseidon::Client::getInstance()->query(
-		substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE})
-	);
-	debug "Querying Poseidon\n", "poseidon";
-}
-
 sub guild_chat {
 	my ($self, $args) = @_;
 	my ($chatMsgUser, $chatMsg, $parsed_msg); # Type: String
