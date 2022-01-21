@@ -45,7 +45,7 @@ sub new {
 	my $self = $class->SUPER::new( @_ );
 
 	my $cryptKeys = $masterServer->{sendCryptKeys};
-	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})$/ ) {
+	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})$/ ) {
 		$self->cryptKeys( hex $1, hex $2, hex $3 );
 	}
 
@@ -2272,7 +2272,18 @@ sub sendCardMerge {
 }
 
 sub sendCharCreate {
-	my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
+	my $self = shift;
+	my ($slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color, $job_id, $sex);
+
+	if ($self->{packet_lut}{char_create} eq '0067') {
+		($slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
+	} elsif ($self->{packet_lut}{char_create} eq '0970') {
+		($slot, $name, $hair_style, $hair_color) = @_;
+	} elsif ($self->{packet_lut}{char_create} eq '0A39') {
+		($slot, $name, $hair_style, $hair_color, $job_id, $sex) = @_;
+		$job_id     ||= 0;    # novice
+		$sex        ||= 0;    # female
+	}
 	$hair_color ||= 1;
 	$hair_style ||= 0;
 
@@ -2287,7 +2298,9 @@ sub sendCharCreate {
 		luk => $luk,
 		slot => $slot,
 		hair_color => $hair_color,
-		hair_style => $hair_style
+		hair_style => $hair_style,
+		job_id => $job_id,
+		sex => $sex
 	}));
 
 	debug "Sent Char Create\n", "sendPacket", 2;
