@@ -3166,6 +3166,39 @@ sub sendCaptchaAnswer {
 	}));
 }
 
+# 0A5A - PACKET_CZ_MACRO_DETECTOR_DOWNLOAD
+# Let Server know that we already downloaded Captcha Image
+sub sendMacroDetectorDownload {
+	my ($self, $answer) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'macro_detector_download',
+		answer => $answer,
+	}));
+}
+
+# 0A5C - PACKET_CZ_MACRO_DETECTOR_ANSWER
+# Send Captcha Answer
+sub sendMacroDetectorAnswer {
+	my ($self, $answer) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'macro_detector_answer',
+		answer => $answer,
+	}));
+}
+
+# 0A69 - PACKET_CZ_CAPTCHA_PREVIEW_REQUEST
+# Request to preview a captcha (privilege is required)
+sub sendCaptchaPreviewRequest {
+	my ($self, $captcha_key) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'captcha_preview_request',
+		captcha_key => $captcha_key,
+	}));
+}
+
 # kRO Client before 2010-08-03 only allow 1 item per transaction
 # idRO_Renewal and iRO Chaos use this packet
 #
