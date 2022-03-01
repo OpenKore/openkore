@@ -11975,6 +11975,7 @@ sub macro_detector_image {
 		$captcha_image = "";
 		$captcha_size = undef;
 		$captcha_key = undef;
+		$messageSender->sendMacroDetectorDownload() if (UNIVERSAL::isa($net, 'Network::DirectConnection'));
 	}
 }
 
@@ -11997,7 +11998,7 @@ sub macro_detector_status {
 	} elsif ($args->{status} == MCD_INCORRECT) {
 		$status = "Incorrect";
 	} elsif ($args->{status} == MCD_GOOD) {
-		$status = "Good";
+		$status = "Correct";
 	}
 
 	message TF("Macro Detector Status: %s \n", $status), "captcha";

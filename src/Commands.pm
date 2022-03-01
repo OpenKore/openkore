@@ -6929,7 +6929,11 @@ sub cmdWeaponRefine {
 }
 
 sub cmdAnswerCaptcha {
-	$messageSender->sendCaptchaAnswer($_[1]);
+	if($net->getState() == Network::IN_GAME()) {
+		$messageSender->sendMacroDetectorAnswer($_[1]);
+	} else {	
+		$messageSender->sendCaptchaAnswer($_[1]);
+	}
 }
 
 ### CATEGORY: Private functions
