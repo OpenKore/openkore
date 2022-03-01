@@ -303,7 +303,7 @@ sub new {
 		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
-		'0A52' => ['captcha_register', 'Z16 v', [qw(map_name nameID)]],
+		'0A52' => ['captcha_register', 'Z16 v', [qw(answer image_size)]],
 		'0A54' => ['captcha_upload_request_ack', 'v Z4 a*', [qw(len captcha_key captcha_image)]],
 		'0A56' => ['macro_reporter_ack', 'a4', [qw(ID)]],
 		'0A5A' => ['macro_detector_download'],
