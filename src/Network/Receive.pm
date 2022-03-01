@@ -51,6 +51,8 @@ use Actor::Slave::Homunculus;
 use Actor::Slave::Mercenary;
 use Actor::Slave::Unknown;
 
+use Compress::Zlib;
+
 our %EXPORT_TAGS = (
 	actor_type => [qw(PC_TYPE NPC_TYPE ITEM_TYPE SKILL_TYPE UNKNOWN_TYPE NPC_MOB_TYPE NPC_EVT_TYPE NPC_PET_TYPE NPC_HO_TYPE NPC_MERSOL_TYPE
 						NPC_ELEMENTAL_TYPE)],
@@ -509,6 +511,19 @@ use constant {
 	EXPAND_INVENTORY_RESULT_OTHER_WORK => 0x2,
 	EXPAND_INVENTORY_RESULT_MISSING_ITEM => 0x3,
 	EXPAND_INVENTORY_RESULT_MAX_SIZE => 0x4,
+};
+
+# macro detector ui
+use constant {
+	MCD_TIMEOUT => 0,
+	MCD_INCORRECT => 1,
+	MCD_GOOD => 2,
+};
+
+use constant {
+	MCR_MONITORING => 0,
+	MCR_NO_DATA => 1,
+	MCR_INPROGRESS => 2,
 };
 
 # Display gained exp.
@@ -11873,6 +11888,181 @@ sub item_preview {
 sub ping {
 	return if ($config{XKore} eq 1 || $config{XKore} eq 3);
 	$messageSender->sendPing();
+}
+
+
+###
+#
+# Captcha System ( macro detector )
+#
+###
+
+# 0A53 - PACKET_ZC_CAPTCHA_UPLOAD_REQUEST
+sub captcha_upload_request {
+	my ($self, $args) = @_;
+	if ($args->{status} == 0) {
+		message T("Captcha Register - Now you can upload the image\n");
+	} elsif($args->{status} == 1) {
+		message T("Captcha Register - Failed to upload the image\n");
+	} else {
+		message TF("Captcha Register - Unknown status: %s\n", $args->{status});
+	}
+	
+	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
+}
+
+# 0A55 - PACKET_ZC_CAPTCHA_UPLOAD_REQUEST_STATUS
+sub captcha_upload_request_status {
+	message T("Captcha Register - Image uploaded succesfully\n");
+}
+
+# 0A57 - PACKET_ZC_MACRO_REPORTER_STATUS
+sub macro_reporter_status {
+	my ($self, $args) = @_;
+	my $status = "Unknown";
+
+	if($args->{status} == MCR_MONITORING) {
+		$status = "Monitoring";
+	} elsif ($args->{status} == MCR_NO_DATA) {
+		$status = "No Data";
+	} elsif ($args->{status} == MCR_INPROGRESS) {
+		$status = "In Progress";
+	}
+
+	message TF("Macro Reporter - Status: %s \n", $status), "captcha";
+}
+
+# 0A58 - PACKET_ZC_MACRO_DETECTOR_REQUEST
+sub macro_detector {
+	my ($self, $args) = @_;
+	debug TF("Macro Detector - image_size: %s bytes - captcha_key: %s\n", $args->{image_size}, $args->{captcha_key}), "captcha";
+	$captcha_size = $args->{image_size};
+	$captcha_key = $args->{captcha_key};
+}
+
+# 0A59 - PACKET_ZC_MACRO_DETECTOR_REQUEST_DOWNLOAD
+# captcha_image is sended in chunks
+sub macro_detector_image {
+	my ($self, $args) = @_;
+
+	$captcha_image .= $args->{captcha_image};
+
+	if(length($captcha_image) >= $captcha_size) {
+		my $image = uncompress($captcha_image);
+		my $imageHex = unpack("H*", $image);
+        my $byte1; my $byte2; my $byte3;
+        for (my $i = 102; $i < 3564; $i += 6) {
+            $byte1 = hex(substr($imageHex, $i, 2));
+            $byte2 = substr($imageHex, $i + 2, 2);
+            $byte3 = hex(substr($imageHex, $i + 4, 2));
+ 
+            if ($byte1 > 250 && $byte2 eq '00' && $byte3 > 250) {
+                substr($imageHex, $i + 2, 2) = 'FF';
+            }
+        }
+
+        my $file = $Settings::logs_folder . "/captcha_$captcha_key.bmp";
+		my $final_image = pack("H*", $imageHex);
+        open my $DUMP, '>:raw', $file;
+        print $DUMP $final_image;
+        close $DUMP;
+
+		my $hookArgs = {captcha_image => $final_image};
+		Plugins::callHook ('captcha_image', $hookArgs);
+		return 1 if $hookArgs->{return};
+
+		warning TF("Macro Detector - captcha has been saved in: %s, open it, solve it and use the command: captcha <text>\n", $file), "captcha";
+		$captcha_image = "";
+		$captcha_size = undef;
+		$captcha_key = undef;
+	}
+}
+
+# 0A5B - PACKET_ZC_MACRO_DETECTOR_SHOW
+sub macro_detector_show {
+	my ($self, $args) = @_;
+	message T("Macro Detector\n"), "captcha";
+	message TF("Remaining Chances: %s - Remaining Time: %s seconds\n", $args->{remaining_chances}, $args->{remaining_time} / 1000), "captcha";
+	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
+	# TODO: check request image?
+}
+
+# 0A5D - PACKET_ZC_MACRO_DETECTOR_STATUS
+sub macro_detector_status {
+	my ($self, $args) = @_;
+	my $status = "Unknown";
+
+	if($args->{status} == MCD_TIMEOUT) {
+		$status = "Timeout";
+	} elsif ($args->{status} == MCD_INCORRECT) {
+		$status = "Incorrect";
+	} elsif ($args->{status} == MCD_GOOD) {
+		$status = "Good";
+	}
+
+	message TF("Macro Detector Status: %s \n", $status), "captcha";
+}
+
+# 0A6A - PACKET_ZC_CAPTCHA_PREVIEW_REQUEST
+sub captcha_preview {
+	my ($self, $args) = @_;
+
+	$captcha_size = $args->{image_size};
+	$captcha_key = $args->{captcha_key};
+
+	if ($args->{status} == 0) {
+		message T("Captcha Preview - Now you can download the image\n");
+	} elsif($args->{status} == 1) {
+		message T("Captcha Preview - Failed to Request Captcha (ID is out of range)\n");
+	} else {
+		message TF("Captcha Preview - Unknown status: %s\n", $args->{status});
+	}
+	debug TF("Captcha Preview - image_size: %s bytes - captcha_key: %s\n", $args->{image_size}, $args->{captcha_key}), "captcha";
+}
+
+# 0A6B - PACKET_ZC_CAPTCHA_PREVIEW_REQUEST_DOWNLOAD
+sub captcha_preview_image {
+	my ($self, $args) = @_;
+
+	$captcha_image .= $args->{captcha_image};
+
+	if(length($captcha_image) >= $captcha_size) {
+		my $image = uncompress($captcha_image);
+		my $imageHex = unpack("H*", $image);
+        my $byte1; my $byte2; my $byte3;
+        for (my $i = 102; $i < 3564; $i += 6) {
+            $byte1 = hex(substr($imageHex, $i, 2));
+            $byte2 = substr($imageHex, $i + 2, 2);
+            $byte3 = hex(substr($imageHex, $i + 4, 2));
+ 
+            if ($byte1 > 250 && $byte2 eq '00' && $byte3 > 250) {
+                substr($imageHex, $i + 2, 2) = 'FF';
+            }
+        }
+ 
+        my $file = $Settings::logs_folder . "/captcha_preview_$captcha_key.bmp";
+        open my $DUMP, '>:raw', $file;
+        print $DUMP pack("H*", $imageHex);
+        close $DUMP;
+
+		message TF("Captcha Preview - captcha has been saved in: %s\n", $file), "captcha";
+		$captcha_image = "";
+		$captcha_size = undef;
+		$captcha_key = undef;
+	}
+	# TODO : 0A5A
+}
+
+# 0A6D - PACKET_ZC_MACRO_REPORTER_SELECT
+sub macro_reporter_select {
+	my ($self, $args) = @_;
+
+	message T("Macro Reporter - Account List:\n");
+	for (my $i = 0; $i < length($args->{account_list}); $i += 4) {
+		my $accID = unpack("a4", substr($args->{account_list}, $i, 4));
+		my $player = $playersList->getByID($accID);
+		message TF("%s\n", $player->{name});
+	}
 }
 
 1;
