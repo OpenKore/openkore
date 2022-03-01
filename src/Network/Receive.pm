@@ -11894,10 +11894,12 @@ sub ping {
 ###
 #
 # Captcha System ( macro detector )
+# 4 parts: Macro Register UI ( /macro_register ), Macro Detector UI ( player ), Macro Reporter UI ( /macro_detector ) and Captcha Preview UI ( /macro_preview )
 #
 ###
 
 # 0A53 - PACKET_ZC_CAPTCHA_UPLOAD_REQUEST
+# Captcha Upload Image UI
 sub captcha_upload_request {
 	my ($self, $args) = @_;
 	if ($args->{status} == 0) {
@@ -11912,11 +11914,13 @@ sub captcha_upload_request {
 }
 
 # 0A55 - PACKET_ZC_CAPTCHA_UPLOAD_REQUEST_STATUS
+# Result of Captcha Upload
 sub captcha_upload_request_status {
 	message T("Captcha Register - Image uploaded succesfully\n");
 }
 
 # 0A57 - PACKET_ZC_MACRO_REPORTER_STATUS
+# Status of Macro Reporter
 sub macro_reporter_status {
 	my ($self, $args) = @_;
 	my $status = "Unknown";
@@ -11933,6 +11937,7 @@ sub macro_reporter_status {
 }
 
 # 0A58 - PACKET_ZC_MACRO_DETECTOR_REQUEST
+# Macro Detector Image info
 sub macro_detector {
 	my ($self, $args) = @_;
 	debug TF("Macro Detector - image_size: %s bytes - captcha_key: %s\n", $args->{image_size}, $args->{captcha_key}), "captcha";
@@ -11941,6 +11946,7 @@ sub macro_detector {
 }
 
 # 0A59 - PACKET_ZC_MACRO_DETECTOR_REQUEST_DOWNLOAD
+# Macro DDetector Captcha Image
 # captcha_image is sended in chunks
 sub macro_detector_image {
 	my ($self, $args) = @_;
@@ -11980,6 +11986,7 @@ sub macro_detector_image {
 }
 
 # 0A5B - PACKET_ZC_MACRO_DETECTOR_SHOW
+# Macro Detector UI
 sub macro_detector_show {
 	my ($self, $args) = @_;
 	message T("Macro Detector\n"), "captcha";
@@ -11989,6 +11996,7 @@ sub macro_detector_show {
 }
 
 # 0A5D - PACKET_ZC_MACRO_DETECTOR_STATUS
+# Status of Macro Detector
 sub macro_detector_status {
 	my ($self, $args) = @_;
 	my $status = "Unknown";
@@ -12005,6 +12013,7 @@ sub macro_detector_status {
 }
 
 # 0A6A - PACKET_ZC_CAPTCHA_PREVIEW_REQUEST
+# Status of Preview Captcha Image Request
 sub captcha_preview {
 	my ($self, $args) = @_;
 
@@ -12022,6 +12031,7 @@ sub captcha_preview {
 }
 
 # 0A6B - PACKET_ZC_CAPTCHA_PREVIEW_REQUEST_DOWNLOAD
+# Preview a captcha image
 sub captcha_preview_image {
 	my ($self, $args) = @_;
 
@@ -12051,10 +12061,10 @@ sub captcha_preview_image {
 		$captcha_size = undef;
 		$captcha_key = undef;
 	}
-	# TODO : 0A5A
 }
 
 # 0A6D - PACKET_ZC_MACRO_REPORTER_SELECT
+# Player List
 sub macro_reporter_select {
 	my ($self, $args) = @_;
 
