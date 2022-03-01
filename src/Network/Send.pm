@@ -3169,11 +3169,10 @@ sub sendCaptchaAnswer {
 # 0A5A - PACKET_CZ_MACRO_DETECTOR_DOWNLOAD
 # Let Server know that we already downloaded Captcha Image
 sub sendMacroDetectorDownload {
-	my ($self, $answer) = @_;
+	my ($self) = @_;
 
 	$self->sendToServer($self->reconstruct({
 		switch => 'macro_detector_download',
-		answer => $answer,
 	}));
 }
 
