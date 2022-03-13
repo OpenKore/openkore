@@ -9,6 +9,28 @@
 #####################
 # Official RO Servers
 
+
+# http://GG.h/
+[GGH - pRO: Baphomet]
+# GGh
+# https://ro.gnjoy.aia/
+[GGh - Baphomet]
+ip 18.136.20.146
+port 6900
+master_version 15
+version 24
+serverType tRO
+serverEncoding Thai
+addTableFolders tRO
+charBlockSize 175
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+pinCode 1
+ignoreAntiCheatWarning 0
+
+
 # http://ragnarok.uol.com.br
 [Brazil - bRO: Valhalla]
 ip 200.229.50.36
