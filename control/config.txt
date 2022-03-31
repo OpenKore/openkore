@@ -8,7 +8,7 @@ server
 username
 password
 loginPinCode
-char
+char 8
 
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
 # They must be the same as Query Server config in Poseidon.txt
@@ -37,7 +37,7 @@ XKore_ID
 
 # It is not advised to set secureAdminPassword if you're using Xkore 2
 secureAdminPassword 1
-adminPassword bagruclu
+adminPassword gruwauji
 callSign
 commandPrefix ;
 callSignGM 0
@@ -192,7 +192,7 @@ itemsTakeAuto_new 0
 itemsTakeGreed 0
 itemsCheckWeight 1
 
-lockMap
+lockMap prt_fild08
 lockMap_x
 lockMap_y
 lockMap_randX
