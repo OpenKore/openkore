@@ -1,9 +1,0 @@
-0 Coklat Gelap
-1 Coklat
-2 Ungu
-3 Coklat Muda
-4 Hijau
-5 Biru
-6 Putih
-7 Coklat Hitam
-8 Merah
