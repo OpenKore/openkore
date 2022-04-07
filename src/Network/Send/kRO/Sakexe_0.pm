@@ -459,20 +459,6 @@ sub sendPartyOrganize {
 # 0x00fe,30
 # 0x0101,6
 
-# 0x0102,6,partychangeoption,2:4
-# note: item share changing seems disabled in newest clients
-sub sendPartyOption {
-	my ($self, $exp, $itemPickup, $itemDivision) = @_;
-
-	$self->sendToServer($self->reconstruct({
-		switch => 'party_setting',
-		exp => $exp,
-		itemPickup => $itemPickup,
-		itemDivision => $itemDivision,
-	}));
-	debug "Sent Party Option\n", "sendPacket", 2;
-}
-
 # 0x0104,79
 # 0x0105,31
 # 0x0106,10
