@@ -90,6 +90,7 @@ sub new {
 		'00FC' => ['party_join_request', 'a4', [qw(ID)]],
 		'00FF' => ['party_join', 'a4 V', [qw(ID flag)]],
 		'0100' => ['party_leave'],
+		'0102' => ['party_setting', 'V', [qw(exp)]],
 		'0103' => ['party_kick', 'a4 Z24', [qw(ID name)]],
 		'0108' => ['party_chat', 'x2 Z*', [qw(message)]],
 		'0112' => ['send_add_skill_point', 'v', [qw(skillID)]],
@@ -215,6 +216,7 @@ sub new {
 		'0439' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0447' => ['blocking_play_cancel'],
 		'044A' => ['client_version', 'V', [qw(clientVersion)]],
+		'07D7' => ['party_setting', 'V C2', [qw(exp itemPickup itemDivision)]],
 		'07DA' => ['party_leader', 'a4', [qw(accountID)]],
 		'07E4' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'07E7' => ['captcha_answer', 'v a4 a24', [qw(len accountID answer)]],
@@ -460,10 +462,15 @@ sub sendPartyOrganize {
 # 0x0102,6,partychangeoption,2:4
 # note: item share changing seems disabled in newest clients
 sub sendPartyOption {
-	my ($self, $exp, $item) = @_;
-	my $msg = pack('v3', 0x0102, $exp, $item);
-	$self->sendToServer($msg);
-	debug "Sent Party 0ption\n", "sendPacket", 2;
+	my ($self, $exp, $itemPickup, $itemDivision) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_setting',
+		exp => $exp,
+		itemPickup => $itemPickup,
+		itemDivision => $itemDivision,
+	}));
+	debug "Sent Party Option\n", "sendPacket", 2;
 }
 
 # 0x0104,79
