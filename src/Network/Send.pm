@@ -874,6 +874,21 @@ sub sendCloseShop {
 	debug "Shop Closed\n", "sendPacket", 2;
 }
 
+# 0x0102,6,partychangeoption,2:4
+# 0x07D7
+# note: item share changing seems disabled in newest clients
+sub sendPartyOption {
+	my ($self, $exp, $itemPickup, $itemDivision) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_setting',
+		exp => $exp,
+		itemPickup => $itemPickup,
+		itemDivision => $itemDivision,
+	}));
+	debug "Sent Party Option\n", "sendPacket", 2;
+}
+
 # 0x7DA
 sub sendPartyLeader {
 	my ($self, $ID) = @_;

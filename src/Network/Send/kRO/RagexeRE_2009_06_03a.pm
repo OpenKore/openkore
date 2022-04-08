@@ -22,7 +22,15 @@ use base qw(Network::Send::kRO::RagexeRE_2009_05_20a);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+
+	my %handlers = qw(
+		party_setting 07D7
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	return $self;
 }
 
 =pod
