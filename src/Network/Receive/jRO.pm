@@ -22,6 +22,7 @@ sub new {
 	my %packets = (
 		'009D' => ['item_exists', 'a4 V C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
 		'009E' => ['item_appeared', 'a4 V C v2 C2 v', [qw(ID nameID identified x y subx suby amount)]],
+		'0A37' => ['inventory_item_added', 'a2 v V C3 a16 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]], # 69 bytes long and still a work in progress.
 	);
 
 	foreach my $switch (keys %packets) {
@@ -32,6 +33,8 @@ sub new {
 		account_server_info 0B07
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	$self->{npc_store_info_pack} = "V V C V";
 
 	return $self;
 }
