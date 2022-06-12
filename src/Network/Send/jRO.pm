@@ -47,6 +47,7 @@ sub new {
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	$self->{char_create_version} = 0x0A39;
+
 	$self->{send_sell_buy_complete} = 1;
 	$self->{send_buy_bulk_pack} = "v V";
 
