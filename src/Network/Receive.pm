@@ -10224,6 +10224,8 @@ sub instance_window_queue {
 sub instance_window_join {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+
+	Plugins::callHook('instance_ready');
 }
 
 # 02CE
