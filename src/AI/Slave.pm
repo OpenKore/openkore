@@ -221,7 +221,7 @@ sub processFollow {
 	) {
 		$slave->clear('move', 'route');
 		if (!$field->canMove($slave->{pos_to}, $char->{pos_to})) {
-			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, isFollow => 1);
+			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, isFollow => 1);
 			debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 
 		} elsif (timeOut($slave->{move_retry}, 0.5)) {
@@ -270,7 +270,7 @@ sub processIdleWalk {
 				splice(@cells, $index, 1);
 			}
 			return unless ($walk_pos);
-			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, noAvoidWalls => 1, isIdleWalk => 1);
+			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, avoidWalls => 0, isIdleWalk => 1);
 			debug TF("%s IdleWalk route\n", $slave), 'slave';
 		}
 	}
@@ -555,7 +555,7 @@ sub processAttack {
 			my $msg = TF("%s has no LOS from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 			if ($best_spot) {
 				message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
-				$slave->route(undef, @{$best_spot}{qw(x y)}, avoidWalls => 0);
+				$slave->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0);
 			} else {
 				$target->{attack_failedLOS} = time;
 				warning TF("%s; no acceptable place to stand\n", $msg);
@@ -575,7 +575,7 @@ sub processAttack {
 			my $msg = TF("%s has no LOS in melee from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 			if ($best_spot) {
 				message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
-				$slave->route(undef, @{$best_spot}{qw(x y)}, avoidWalls => 0);
+				$slave->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0);
 			} else {
 				$target->{attack_failedLOS} = time;
 				warning TF("%s; no acceptable place to stand\n", $msg);
