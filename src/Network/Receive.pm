@@ -7398,17 +7398,28 @@ sub npc_store_begin {
 # Presents list of items, that can be bought in an NPC shop (ZC_PC_PURCHASE_ITEMLIST).
 # 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.W }*
 # 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.L }*
+# 0B77 <packet len>.W { <name id>.L <price>.L <discount price>.L <item type>.B <viewSprite>.W <location>.L}*
 # 2 versions of same packet. $self->{npc_store_info_pack} (ZC_PC_PURCHASE_ITEMLIST_sub) should be changed in own serverType file if needed
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
-	my $pack = $self->{npc_store_info_pack} || 'V V C v';
+	my $pack;
+	my $keys;
+
+	if( $args->{switch} eq '0B77' ) {
+		$pack = "V3 C v V";
+		$keys = [qw( nameID price _ type sprite_id location )];
+	} else {
+		$pack = $self->{npc_store_info_pack} || 'V V C v';
+		$keys = [qw( price _ type nameID )];
+	}
+
 	my $len = length pack $pack;
 	$storeList->clear;
 	undef %talk;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $len) {
 		my $item = Actor::Item->new;
-		@$item{qw( price _ type nameID )} = unpack $pack, substr $msg, $i, $len;
+		@$item{@{$keys}} = unpack $pack, substr $msg, $i, $len;
 
 		# Workaround some npcs that have items appearing more than once in their store list,
 		# for example the Trader at moc_ruins 90 149 sells only bananas, but 6 times
