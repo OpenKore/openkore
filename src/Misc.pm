@@ -3936,22 +3936,21 @@ sub useTeleport {
 	# could lead to problems if the name is different on some servers
 	# 11 Mar 2010 - instead of name, use nameID, names can be different for different servers
 	my $item;
-	if ($use_lvl == 1) { #Fly Wing
-		if (!$config{teleportAuto_item1}) {
-			$item = $char->inventory->getByNameID(601);
-			unless ($item) { $item = $char->inventory->getByNameID(12323); } # only if we don't have any fly wing
-		} else {
+	if ($use_lvl == 1) { # Fly Wing
+		if ($config{teleportAuto_item1}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item1});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item1}) if (!($item) && $config{teleportAuto_item1} =~ /^\d{3,}$/);
-		}
-	} elsif ($use_lvl == 2) { #Butterfly Wing
-		if (!$config{teleportAuto_item2}) {
-			$item = $char->inventory->getByNameID(602);
-			unless ($item) { $item = $char->inventory->getByNameID(12324); } # only if we don't have any butterfly wing
-		} else {
+		} 
+		$item = $char->inventory->getByNameID(23280) unless $item; # Beginner's Fly Wing
+		$item = $char->inventory->getByNameID(12323) unless $item; # Novice Fly Wing
+		$item = $char->inventory->getByNameID(601) unless $item;     # Fly Wing
+	} elsif ($use_lvl == 2) { # Butterfly Wing
+		if ($config{teleportAuto_item2}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item2});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
 		}
+		$item = $char->inventory->getByNameID(12324) unless $item; # Novice Butterfly Wing
+		$item = $char->inventory->getByNameID(602) unless $item; # Butterfly Wing
 	}
 
 	if ($item) {

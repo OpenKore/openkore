@@ -347,9 +347,13 @@ sub initHandlers {
 			["", T("request guild info")],
 			["info", T("displays guild info")],
 			["members", T("displays guild member info")],
+			[T("create <guild name>"), T("create a guild")],
 			[T("request <player name|player #>"), T("request player to join your guild")],
 			[T("join <flag>"), T("accepts a guild join request if <flag> is 1, deny if 0")],
-			["leave", T("leave the guild")]
+			[T("ally <player name|player #>"), T("request alliance to another guild")],
+			["leave", T("leave the guild")],
+			[T("kick <guild member #> <reason>"), T("kick a guild member out of the guild")],
+			[T("break  <guild name>"), T("disband your guild")]
 			], \&cmdGuild],
 		['help', [
 			T("Help displays commands"),
@@ -425,7 +429,10 @@ sub initHandlers {
 			T("Party management."),
 			["", T("displays party member info")],
 			[T("create \"<party name>\""), T("organize a party")],
-			[T("share <flag>"), T("sets party exp sharing to even if flag is 1, individual take if 0")],
+			[T("share <flag>"), T("sets party EXP sharing to even if flag is 1, individual take if 0")],
+			[T("shareitem <flag>"), T("sets party ITEM sharing to even if flag is 1, individual take if 0")],
+			[T("sharediv  <flag>"), T("sets party ITEM  PICKUP sharing to even if flag is 1, individual take if 0")],
+			[T("shareauto"), T("set party EXP sharing auto by AI")],
 			[T("request <player #>"), T("request player to join your party")],
 			[T("join <flag>"), T("accept a party join request if <flag> is 1, deny if 0")],
 			[T("kick <party member #>"), T("kick party member from party")],
@@ -3412,7 +3419,8 @@ sub cmdGuild {
 
 			$job   = $jobs_lut{$guild{member}[$i]{jobID}};
 			$lvl   = $guild{member}[$i]{lv};
-			$title = $guild{member}[$i]{title};
+			$title = $guild{positions}[ $guild{member}[$i]{position} ]{title};
+
  			# Translation Comment: Guild member online
 			$online = $guild{member}[$i]{online} ? T("Yes") : T("No");
 			$ID = unpack("V",$guild{member}[$i]{ID});
@@ -7130,7 +7138,7 @@ sub cmdRodex {
 		}
 		my $msg .= center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
 		my $index = 0;
-		foreach my $mail_id (keys %{$rodexList}) {
+		foreach my $mail_id (keys %{$rodexList->{mails}}) {
 			my $mail = $rodexList->{mails}{$mail_id};
 			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x9), ('<'x28), ('<'x28)), [$index, $mail_id, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
 			$index++;
@@ -7307,6 +7315,9 @@ sub cmdRodex {
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex settitle' (Set title of rodex mail)\n" .
 				"Usage: rodex settitle <title>\n");
+			return;
+		} elsif (length($arg2) < 4) {
+			error $msgTable[2597] ? $msgTable[2597] . "\n" : T("The title must be 4 to 24 characters long\n");
 			return;
 		}
 

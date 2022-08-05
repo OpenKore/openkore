@@ -372,9 +372,9 @@ EFST_HEALTHSTATE_SILENCE Silence
 EFST_HEALTHSTATE_CONFUSION Confusion 
 EFST_HEALTHSTATE_HEAVYPOISON Heavy Poison 
 EFST_HEALTHSTATE_FEAR Fear 
-EFST_SU_STOOP Stoop
-EFST_CATNIPPOWDER CN Powdering
-EFST_SV_ROOTTWIST SV Root Twist
+EFST_SU_STOOP Stoop  
+EFST_CATNIPPOWDER Catnip Powdering  
+EFST_SV_ROOTTWIST Silvervine Root Twist  
 EFST_ATTACK_PROPERTY_NOTHING ทำให้คุณสมบัติอาวุธเป็น Neutral 
 EFST_ATTACK_PROPERTY_WATER ทำให้คุณสมบัติอาวุธเป็น Water 
 EFST_ATTACK_PROPERTY_GROUND ทำให้คุณสมบัติอาวุธเป็น Earth 
@@ -395,24 +395,33 @@ EFST_RESIST_PROPERTY_SAINT ต้านทานคุณสมบัติธ�
 EFST_RESIST_PROPERTY_DARKNESS ต้านทานคุณสมบัติธาตุ Dark 
 EFST_RESIST_PROPERTY_TELEKINESIS ต้านทานคุณสมบัติธาตุ Ghost 
 EFST_RESIST_PROPERTY_UNDEAD ต้านทานคุณสมบัติธาตุ Undead 
-EFST_BITESCAR Scar of Tarou
-EFST_ARCLOUSEDASH Arclouse Dash
-EFST_TUNAPARTY Tuna Party
-EFST_SHRIMP Bunch of Shrimp
-EFST_FRESHSHRIMP Fresh Shrimp
-EFST_SUHIDE Hide
-EFST_DORAM_BUF_01 Kahluna Milk
-EFST_DORAM_BUF_02 Basil
-EFST_SPRITEMABLE Sprite Mable
+EFST_BITESCAR Scar of Tarou  
+EFST_ARCLOUSEDASH Arclouse Dash  
+EFST_TUNAPARTY Tuna Party  
+EFST_SHRIMP Bunch of Shrimp  
+EFST_FRESHSHRIMP Fresh Shrimp  
+EFST_SUHIDE Hide  
+EFST_DORAM_BUF_01 Kahluna Milk  
+EFST_DORAM_BUF_02 Dr Life Potion 02  
+EFST_SPRITEMABLE Soul Orb  
 EFST_AID_PERIOD_RECEIVEITEM ปรับอัตราการดรอป 
 EFST_AID_PERIOD_PLUSEXP ปรับค่าประสบการณ์ 
 EFST_AID_PERIOD_PLUSJOBEXP ปรับค่าประสบการณ์ Job
 EFST_AID_PERIOD_DEADPENALTY ปรับลดบทลงโทษตอนตาย 
 EFST_AID_PERIOD_ADDSTOREITEMCOUNT เพิ่มคลังเก็บของ 
+EFST_HISS Hiss  
+EFST_NYANGGRASS Nyang Grass  
+EFST_CHATTERING Chattering  
+EFST_GROOMING Grooming  
+EFST_PROTECTIONOFSHRIMP Shrimp's Protection  
+EFST_EP16_2_BUFF_SS Build Up Potion SS
+EFST_EP16_2_BUFF_SC Build Up Potion SC
+EFST_EP16_2_BUFF_AC Build Up Potion AC
 EFST_GS_MAGICAL_BULLET Magical Bullet
 EFST_AID_PERIOD_RECEIVEITEM_2ND ปรับอัตราการดรอป
 EFST_AID_PERIOD_PLUSEXP_2ND ปรับค่าประสบการณ์
 EFST_AID_PERIOD_PLUSJOBEXP_2ND ปรับค่าประสบการณ์ Job
+EFST_CHEERUP Go! Parents Go!
 EFST_S_MANAPOTION Small Mana Potion
 EFST_M_DEFSCROLL DEF Scroll
 EFST_LHZ_DUN_N1 Bed of Honor
@@ -427,3 +436,29 @@ EFST_ULTIMATECOOK Ultimate Cook
 EFST_INFINITY_DRINK Unlimited Drink
 EFST_WEAPONBLOCK_ON สถานะถูกโจมตี 
 EFST_FLOWER_LEAF4 Cherry Blossom Cake
+
+# = custom tRO =
+EFST_BARRIER Barrier
+EFST_POSTDELAY Delay
+
+EFST_INVULNERABILITY Invulnerability
+EFST_STOP Stop
+
+EFFECTSTATE_BIRD Falcon
+EFFECTSTATE_BURROW Hiding
+EFFECTSTATE_CHICKEN Pecopeco
+EFFECTSTATE_SANTA Santa
+
+HEALTHSTATE_POISON Poisoned
+HEALTHSTATE_CURSE Cursed
+HEALTHSTATE_SILENCE Silenced
+HEALTHSTATE_CONFUSION Signum Crisis
+HEALTHSTATE_BLIND Blinded
+HEALTHSTATE_ANGELUS Angelus
+HEALTHSTATE_BLOODING Bleeding
+HEALTHSTATE_HEAVYPOISON Deadly Poison
+
+BODYSTATE_STONECURSE Petrified
+EFST_GOSPEL Gospel
+EFST_ON_PUSH_CART Cart
+EFST_SOULLINK Spirit

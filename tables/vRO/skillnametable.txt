@@ -1,241 +1,241 @@
-NV_BASIC#KyЮ Nгng Cх BaТn#
-SM_SWORD#Kiкмm Thuвтt Mфтt Tay#
-SM_TWOHAND#Kiкмm Thuвтt Hai Tay#
-SM_RECOVERY#HфМi Phuтc Maмu#
-SM_BASH#Cфng Kiмch#
-SM_PROVOKE#Khiкu Khiмch#
-SM_MAGNUM#HoТa Phaм#
-SM_ENDURE#Chiтu Рэтng#
-MG_SRECOVERY#HфМi Phuтc Ma Lэтc#
-MG_SIGHT#HoТa NhaЮn#
-MG_NAPALMBEAT#Ma Tвm Phaм#
-MG_SAFETYWALL#VoМng BaТo Vкт#
-MG_SOULSTRIKE#Linh Phaм#
-MG_COLDBOLT#Bгng TiкЮn#
-MG_FROSTDIVER#Рoмng Bгng#
-MG_STONECURSE#Hoмa Рaм#
-MG_FIREBALL#HoТa CвМu#
-MG_FIREWALL#TэхМng LэТa#
-MG_FIREBOLT#HoТa TiкЮn#
-MG_LIGHTNINGBOLT#Lфi TiкЮn#
-MG_THUNDERSTORM#BaЮo Seмt#
-AL_DP#Thaмnh Vкт#
-AL_DEMONBANE#Diктt QuyТ#
-AL_RUWACH#Thaмnh NhaЮn#
-AL_PNEUMA#Vкт TiкЮn#
-AL_TELEPORT#Diтch ChuyкТn#
-AL_WARP#CфТng Diтch ChuyкТn#
-AL_HEAL#Cэмu ChэЮa#
-AL_INCAGI#Tгng Tфмc#
-AL_DECAGI#GiaТm Tфмc#
-AL_HOLYWATER#Ban Pheмp Thaмnh ThuТy#
-AL_CRUCIS#Dвмu Hiктu Thaмnh Giaм#
-AL_ANGELUS#Thiкn Sэм#
-AL_BLESSING#Ban Phuмc#
-AL_CURE#ChэЮa Triт#
-MC_INCCARRY#Mang Vaмc#
-MC_DISCOUNT#TraТ Giaм#
-MC_OVERCHARGE#Nвng Giaм#
-MC_PUSHCART#Thuк Xe РвТy#
-MC_IDENTIFY#Giaмm Рiтnh#
-MC_VENDING#MхТ Saтp Baмn HaМng#
-MC_MAMMONITE#Vung TiкМn#
-AC_OWL#Mгмt Cuм#
-AC_VULTURE#Mгмt KкМn KкМn#
-AC_CONCENTRATION#Tвтp Trung#
-AC_DOUBLE#Song TiкЮn#
-AC_SHOWER#Mэa Tкn#
-TF_DOUBLE#Tвмn Cфng Keмp#
-TF_MISS#Tгng Neм Traмnh#
-TF_STEAL#Lвмy Trфтm#
-TF_HIDING#ВТn Nвмp#
-TF_POISON#Haт Рфтc#
-TF_DETOXIFY#GiaТi Рфтc#
-ALL_RESURRECTION#HфМi Sinh#
-KN_SPEARMASTERY#Thэхng Thuвтt#
-KN_PIERCE#Thэхng Phaм#
-KN_BRANDISHSPEAR#ToaМn Thэхng Phaм#
-KN_SPEARSTAB#Troтng Thэхng Kiмch#
-KN_SPEARBOOMERANG#Phoмng Thэхng#
-KN_TWOHANDQUICKEN#Song ThuТ Tфмc#
-KN_AUTOCOUNTER#Tэт Рфтng PhaТn Cфng#
-KN_BOWLINGBASH#ToaМn Phong TraТm#
-KN_RIDING#CэхЮi Peco#
-KN_CAVALIERMASTERY#Kyт Binh Thuвтt#
-PR_MACEMASTERY#ChuМy Thuвтt#
-PR_IMPOSITIO#Thaмnh Lэтc#
-PR_SUFFRAGIUM#Niктm Chuм#
-PR_ASPERSIO#RэТa Tфтi#
-PR_BENEDICTIO#Thiкn Giхмi Ban Phэхмc#
-PR_SANCTUARY#Thaмnh Рiтa Phuтc HфМi#
-PR_SLOWPOISON#GiaТm Рфтc#
-PR_STRECOVERY#Phuтc HфМi Traтng Thaмi#
-PR_KYRIE#RaМo Chгмn#
-PR_MAGNIFICAT#Hвмp Thuт Nгng Lэхтng#
-PR_GLORIA#CвМu Phuмc#
-PR_LEXDIVINA#Khoмa Pheмp#
-PR_TURNUNDEAD#TrэМ Ma#
-PR_LEXAETERNA#Suy Yкмu#
-PR_MAGNUS#VuМng Thanh TrэМng#
-WZ_FIREPILLAR#HoТa Truт#
-WZ_SIGHTRASHER#HoТa CвМu Cфng Phaм#
+NV_BASIC#Kỹ Năng Cơ Bản#
+SM_SWORD#Kiếm Thuật Một Tay#
+SM_TWOHAND#Kiếm Thuật Hai Tay#
+SM_RECOVERY#Hồi Phục Máu#
+SM_BASH#Công Kích#
+SM_PROVOKE#Khiêu Khích#
+SM_MAGNUM#Hỏa Phá#
+SM_ENDURE#Chịu Đựng#
+MG_SRECOVERY#Hồi Phục Ma Lực#
+MG_SIGHT#Hỏa Nhãn#
+MG_NAPALMBEAT#Ma Tâm Phá#
+MG_SAFETYWALL#Vòng Bảo Vệ#
+MG_SOULSTRIKE#Linh Phá#
+MG_COLDBOLT#Băng Tiễn#
+MG_FROSTDIVER#Đóng Băng#
+MG_STONECURSE#Hóa Đá#
+MG_FIREBALL#Hỏa Cầu#
+MG_FIREWALL#Tường Lửa#
+MG_FIREBOLT#Hỏa Tiễn#
+MG_LIGHTNINGBOLT#Lôi Tiễn#
+MG_THUNDERSTORM#Bão Sét#
+AL_DP#Thánh Vệ#
+AL_DEMONBANE#Diệt Quỷ#
+AL_RUWACH#Thánh Nhãn#
+AL_PNEUMA#Vệ Tiễn#
+AL_TELEPORT#Dịch Chuyển#
+AL_WARP#Cổng Dịch Chuyển#
+AL_HEAL#Cứu Chữa#
+AL_INCAGI#Tăng Tốc#
+AL_DECAGI#Giảm Tốc#
+AL_HOLYWATER#Ban Phép Thánh Thủy#
+AL_CRUCIS#Dấu Hiệu Thánh Giá#
+AL_ANGELUS#Thiên Sứ#
+AL_BLESSING#Ban Phúc#
+AL_CURE#Chữa Trị#
+MC_INCCARRY#Mang Vác#
+MC_DISCOUNT#Trả Giá#
+MC_OVERCHARGE#Nâng Giá#
+MC_PUSHCART#Thuê Xe Đẩy#
+MC_IDENTIFY#Giám Định#
+MC_VENDING#Mở Sạp Bán Hàng#
+MC_MAMMONITE#Vung Tiền#
+AC_OWL#Mắt Cú#
+AC_VULTURE#Mắt Kền Kền#
+AC_CONCENTRATION#Tập Trung#
+AC_DOUBLE#Song Tiễn#
+AC_SHOWER#Mưa Tên#
+TF_DOUBLE#Tấn Công Kép#
+TF_MISS#Tăng Né Tránh#
+TF_STEAL#Lấy Trộm#
+TF_HIDING#Ẩn Nấp#
+TF_POISON#Hạ Độc#
+TF_DETOXIFY#Giải Độc#
+ALL_RESURRECTION#Hồi Sinh#
+KN_SPEARMASTERY#Thương Thuật#
+KN_PIERCE#Thương Phá#
+KN_BRANDISHSPEAR#Toàn Thương Phá#
+KN_SPEARSTAB#Trọng Thương Kích#
+KN_SPEARBOOMERANG#Phóng Thương#
+KN_TWOHANDQUICKEN#Song Thủ Tốc#
+KN_AUTOCOUNTER#Tự Động Phản Công#
+KN_BOWLINGBASH#Toàn Phong Trảm#
+KN_RIDING#Cưỡi Peco#
+KN_CAVALIERMASTERY#Kỵ Binh Thuật#
+PR_MACEMASTERY#Chùy Thuật#
+PR_IMPOSITIO#Thánh Lực#
+PR_SUFFRAGIUM#Niệm Chú#
+PR_ASPERSIO#Rửa Tội#
+PR_BENEDICTIO#Thiên Giới Ban Phước#
+PR_SANCTUARY#Thánh Địa Phục Hồi#
+PR_SLOWPOISON#Giảm Độc#
+PR_STRECOVERY#Phục Hồi Trạng Thái#
+PR_KYRIE#Rào Chắn#
+PR_MAGNIFICAT#Hấp Thụ Năng Lượng#
+PR_GLORIA#Cầu Phúc#
+PR_LEXDIVINA#Khóa Phép#
+PR_TURNUNDEAD#Trừ Ma#
+PR_LEXAETERNA#Suy Yếu#
+PR_MAGNUS#Vùng Thanh Trừng#
+WZ_FIREPILLAR#Hỏa Trụ#
+WZ_SIGHTRASHER#Hỏa Cầu Công Phá#
 WZ_FIREIVY#Fire Ivy#
-WZ_METEOR#Mэa Thiкn Thaтch#
-WZ_JUPITEL#TэТ Lфi CвМu#
-WZ_VERMILION#Lфi ThвМn Trвтn#
-WZ_WATERBALL#ThuТy CвМu#
-WZ_ICEWALL#TэхМng Bгng#
-WZ_FROSTNOVA#HaМn Bгng Kкмt Giхмi#
-WZ_STORMGUST#BaЮo Tuyкмt#
-WZ_EARTHSPIKE#Рiтa Chфng#
-WZ_HEAVENDRIVE#Рiтa Chвмn#
-WZ_QUAGMIRE#РвМm LвМy#
-WZ_ESTIMATION#CaТm Quan#
-BS_IRON#Luyктn Sгмt#
-BS_STEEL#Luyктn Theмp#
-BS_ENCHANTEDSTONE#Tinh Chкм Quгтng Рaм#
-BS_ORIDEOCON#Nghiкn Cэмu Nguyктt Thaтch#
-BS_DAGGER#ReМn Dao Gгm#
-BS_SWORD#ReМn Kiкмm#
-BS_TWOHANDSWORD#ReМn Kiкмm Hai Tay#
-BS_AXE#ReМn RiМu#
-BS_MACE#ReМn ChuМy#
-BS_KNUCKLE#ReМn Vuфмt#
-BS_SPEAR#ReМn Thэхng#
-BS_HILTBINDING#Nгмm Chгтt Khiм Giхмi#
-BS_FINDINGORE#TiМm Khoaмng#
-BS_WEAPONRESEARCH#Nghiкn Cэмu VuЮ Khiм#
-BS_REPAIRWEAPON#SэТa VuЮ Khiм#
-BS_SKINTEMPER#Tфi LэТa#
-BS_HAMMERFALL#Quai Buмa#
-BS_ADRENALINE#Tгng Lэтc#
-BS_WEAPONPERFECT#VuЮ Khiм HoaМn HaТo#
-BS_OVERTHRUST#Tгng Sэмc Maтnh#
-BS_MAXIMIZE#Sэмc Maтnh Tфмi Рa#
-HT_SKIDTRAP#BвЮy Trэхтt#
-HT_LANDMINE#BвЮy MiМn#
-HT_ANKLESNARE#BвЮy Keтp#
-HT_SHOCKWAVE#BвЮy Рiктn#
-HT_SANDMAN#BвЮy NguТ#
-HT_FLASHER#BвЮy Loмa#
-HT_FREEZINGTRAP#BвЮy Bгng#
-HT_BLASTMINE#BвЮy NфТ#
-HT_CLAYMORETRAP#BвЮy Chaмy#
-HT_REMOVETRAP#GхЮ BвЮy#
-HT_TALKIEBOX#BвЮy Noмi#
-HT_BEASTBANE#Sгn Thuм#
-HT_FALCON#РiкМu KhiкТn Эng#
-HT_STEELCROW#Эng Thuвтt#
-HT_BLITZBEAT#Phi Эng#
-HT_DETECTING#Do Thaмm#
-HT_SPRINGTRAP#Phaм BвЮy#
-AS_RIGHT#KyЮ Thuвтt Tay PhaТi#
-AS_LEFT#KyЮ Thuвтt Tay Traмi#
-AS_KATAR#Saмt Рao Thuвтt#
-AS_CLOAKING#TaМng HiМnh#
-AS_SONICBLOW#Рфтt Kiмch#
-AS_GRIMTOOTH#Nanh QuyТ#
-AS_ENCHANTPOISON#TвТm Рфтc#
-AS_POISONREACT#PhaТn Эмng Рфтc#
-AS_VENOMDUST#RaТi Рфтc#
-AS_SPLASHER#Kiмch Рфтc#
-NV_FIRSTAID#Sх Cэмu#
-NV_TRICKDEAD#GiaТ Chкмt#
-SM_MOVINGRECOVERY#Phuтc HфМi Cх Рфтng#
-SM_FATALBLOW#Nguy Kiмch#
-SM_AUTOBERSERK#Maмu Рiкn#
-AC_MAKINGARROW#Taтo Tкn#
-AC_CHARGEARROW#Troтng TiкЮn#
-TF_SPRINKLESAND#Neмm Caмt#
-TF_BACKSLIDING#Giвтt LuМi#
-TF_PICKSTONE#Nhгтt Рaм#
-TF_THROWSTONE#Neмm Рaм#
-MC_CARTREVOLUTION#Huмc Xe РвТy#
-MC_CHANGECART#Thay РфТi Xe РвТy#
-MC_LOUD#Rфмng#
-AL_HOLYLIGHT#Thaмnh Quang#
-MG_ENERGYCOAT#Aмo Nгng Lэхтng#
-RG_SNATCHER#Chфm ChiТa#
-RG_STEALCOIN#Trфтm TiкМn#
-RG_BACKSTAP#Рвm Leмn#
-RG_TUNNELDRIVE#Baмm Рuфi#
-RG_RAID#Рaмnh Du Kiмch#
-RG_STRIPWEAPON#Tэхмc VuЮ Khiм#
-RG_STRIPSHIELD#Tэхмc Khiкn#
-RG_STRIPARMOR#Tэхмc Giaмp#
-RG_STRIPHELM#Tэхмc MuЮ#
-RG_INTIMIDATE#Bгмt Coмc#
-RG_GRAFFITI#VeЮ Bвтy#
+WZ_METEOR#Mưa Thiên Thạch#
+WZ_JUPITEL#Tử Lôi Cầu#
+WZ_VERMILION#Lôi Thần Trận#
+WZ_WATERBALL#Thủy Cầu#
+WZ_ICEWALL#Tường Băng#
+WZ_FROSTNOVA#Hàn Băng Kết Giới#
+WZ_STORMGUST#Bão Tuyết#
+WZ_EARTHSPIKE#Địa Chông#
+WZ_HEAVENDRIVE#Địa Chấn#
+WZ_QUAGMIRE#Đầm Lầy#
+WZ_ESTIMATION#Cảm Quan#
+BS_IRON#Luyện Sắt#
+BS_STEEL#Luyện Thép#
+BS_ENCHANTEDSTONE#Tinh Chế Quặng Đá#
+BS_ORIDEOCON#Nghiên Cứu Nguyệt Thạch#
+BS_DAGGER#Rèn Dao Găm#
+BS_SWORD#Rèn Kiếm#
+BS_TWOHANDSWORD#Rèn Kiếm Hai Tay#
+BS_AXE#Rèn Rìu#
+BS_MACE#Rèn Chùy#
+BS_KNUCKLE#Rèn Vuốt#
+BS_SPEAR#Rèn Thương#
+BS_HILTBINDING#Nắm Chặt Khí Giới#
+BS_FINDINGORE#Tìm Khoáng#
+BS_WEAPONRESEARCH#Nghiên Cứu Vũ Khí#
+BS_REPAIRWEAPON#Sửa Vũ Khí#
+BS_SKINTEMPER#Tôi Lửa#
+BS_HAMMERFALL#Quai Búa#
+BS_ADRENALINE#Tăng Lực#
+BS_WEAPONPERFECT#Vũ Khí Hoàn Hảo#
+BS_OVERTHRUST#Tăng Sức Mạnh#
+BS_MAXIMIZE#Sức Mạnh Tối Đa#
+HT_SKIDTRAP#Bẫy Trượt#
+HT_LANDMINE#Bẫy Mìn#
+HT_ANKLESNARE#Bẫy Kẹp#
+HT_SHOCKWAVE#Bẫy Điện#
+HT_SANDMAN#Bẫy Ngủ#
+HT_FLASHER#Bẫy Lóa#
+HT_FREEZINGTRAP#Bẫy Băng#
+HT_BLASTMINE#Bẫy Nổ#
+HT_CLAYMORETRAP#Bẫy Cháy#
+HT_REMOVETRAP#Gỡ Bẫy#
+HT_TALKIEBOX#Bẫy Nói#
+HT_BEASTBANE#Săn Thú#
+HT_FALCON#Điều Khiển Ưng#
+HT_STEELCROW#Ưng Thuật#
+HT_BLITZBEAT#Phi Ưng#
+HT_DETECTING#Do Thám#
+HT_SPRINGTRAP#Phá Bẫy#
+AS_RIGHT#Kỹ Thuật Tay Phải#
+AS_LEFT#Kỹ Thuật Tay Trái#
+AS_KATAR#Sát Đao Thuật#
+AS_CLOAKING#Tàng Hình#
+AS_SONICBLOW#Đột Kích#
+AS_GRIMTOOTH#Nanh Quỷ#
+AS_ENCHANTPOISON#Tẩm Độc#
+AS_POISONREACT#Phản Ứng Độc#
+AS_VENOMDUST#Rải Độc#
+AS_SPLASHER#Kích Độc#
+NV_FIRSTAID#Sơ Cứu#
+NV_TRICKDEAD#Giả Chết#
+SM_MOVINGRECOVERY#Phục Hồi Cơ Động#
+SM_FATALBLOW#Nguy Kích#
+SM_AUTOBERSERK#Máu Điên#
+AC_MAKINGARROW#Tạo Tên#
+AC_CHARGEARROW#Trọng Tiễn#
+TF_SPRINKLESAND#Ném Cát#
+TF_BACKSLIDING#Giật Lùi#
+TF_PICKSTONE#Nhặt Đá#
+TF_THROWSTONE#Ném Đá#
+MC_CARTREVOLUTION#Húc Xe Đẩy#
+MC_CHANGECART#Thay Đổi Xe Đẩy#
+MC_LOUD#Rống#
+AL_HOLYLIGHT#Thánh Quang#
+MG_ENERGYCOAT#Áo Năng Lượng#
+RG_SNATCHER#Chôm Chỉa#
+RG_STEALCOIN#Trộm Tiền#
+RG_BACKSTAP#Đâm Lén#
+RG_TUNNELDRIVE#Bám Đuôi#
+RG_RAID#Đánh Du Kích#
+RG_STRIPWEAPON#Tước Vũ Khí#
+RG_STRIPSHIELD#Tước Khiên#
+RG_STRIPARMOR#Tước Giáp#
+RG_STRIPHELM#Tước Mũ#
+RG_INTIMIDATE#Bắt Cóc#
+RG_GRAFFITI#Vẽ Bậy#
 RG_FLAGGRAFFITI#Flag Graffiti#
 RG_CLEANER#Cleaner#
-RG_GANGSTER#Ma MaЮnh#
-RG_COMPULSION#Eмp Giaм#
-RG_PLAGIARISM#Bгмt Chэхмc#
-AM_AXEMASTERY#RiМu Thuвтt#
-AM_LEARNINGPOTION#Nghiкn Cэмu Thuфмc#
-AM_PHARMACY#BaМo Chкм Thuфмc#
-AM_DEMONSTRATION#Neмm Bom Xгng#
-AM_ACIDTERROR#Taтt Axit#
-AM_POTIONPITCHER#Neмm BiМnh Thuфмc#
-AM_CANNIBALIZE#TrфМng Hoa Гn Thiтt#
-AM_SPHEREMINE#Triктu HфМi ThuТy CвМu#
-AM_CP_WEAPON#BaТo DэхЮng VuЮ Khiм#
-AM_CP_SHIELD#BaТo DэхЮng Khiкn#
-AM_CP_ARMOR#BaТo DэхЮng Giaмp#
-AM_CP_HELM#BaТo DэхЮng MuЮ#
-AM_BIOETHICS#Nghiкn Cэмu Homunculus#
+RG_GANGSTER#Ma Mãnh#
+RG_COMPULSION#Ép Giá#
+RG_PLAGIARISM#Bắt Chước#
+AM_AXEMASTERY#Rìu Thuật#
+AM_LEARNINGPOTION#Nghiên Cứu Thuốc#
+AM_PHARMACY#Bào Chế Thuốc#
+AM_DEMONSTRATION#Ném Bom Xăng#
+AM_ACIDTERROR#Tạt Axit#
+AM_POTIONPITCHER#Ném Bình Thuốc#
+AM_CANNIBALIZE#Trồng Hoa Ăn Thịt#
+AM_SPHEREMINE#Triệu Hồi Thủy Cầu#
+AM_CP_WEAPON#Bảo Dưỡng Vũ Khí#
+AM_CP_SHIELD#Bảo Dưỡng Khiên#
+AM_CP_ARMOR#Bảo Dưỡng Giáp#
+AM_CP_HELM#Bảo Dưỡng Mũ#
+AM_BIOETHICS#Nghiên Cứu Homunculus#
 AM_BIOTECHNOLOGY#Biotechnology#
 AM_CREATECREATURE#Creature Creation#
 AM_CULTIVATION#Cultivation#
 AM_FLAMECONTROL#Flame Control#
-AM_CALLHOMUN#Triктu HфМi Homunculus#
-AM_REST#Thu HфМi Homunculus#
+AM_CALLHOMUN#Triệu Hồi Homunculus#
+AM_REST#Thu Hồi Homunculus#
 AM_DRILLMASTER#Drillmaster#
 AM_HEALHOMUN#Heal Homunculus#
-AM_RESURRECTHOMUN#HфМi Sinh Homunculus#
-CR_TRUST#Рэмc Tin#
-CR_AUTOGUARD#Chгтn РoМn#
-CR_SHIELDCHARGE#Troтng Khiкn Giaмng#
-CR_SHIELDBOOMERANG#Phoмng Khiкn#
-CR_REFLECTSHIELD#РoМn Khiкn PhaТn#
-CR_HOLYCROSS#Nhaмt Cheмm Thвтp Tэт#
-CR_GRANDCROSS#Thвтp Tэт Trвтn#
+AM_RESURRECTHOMUN#Hồi Sinh Homunculus#
+CR_TRUST#Đức Tin#
+CR_AUTOGUARD#Chặn Đòn#
+CR_SHIELDCHARGE#Trọng Khiên Giáng#
+CR_SHIELDBOOMERANG#Phóng Khiên#
+CR_REFLECTSHIELD#Đòn Khiên Phản#
+CR_HOLYCROSS#Nhát Chém Thập Tự#
+CR_GRANDCROSS#Thập Tự Trận#
 CR_DEVOTION#Hy Sinh#
-CR_PROVIDENCE#Thiкn Sэм BaТo Hфт#
-CR_DEFENDER#HaМo Quang Hфт Vкт#
-CR_SPEARQUICKEN#Thэхng ThвМn Tфмc#
-MO_IRONHAND#Thiкмt QuyкМn#
-MO_SPIRITSRECOVERY#Phuтc Linh Cфng#
-MO_CALLSPIRITS#Goтi Linh CвМu#
-MO_ABSORBSPIRITS#Hвмp Thuт Linh CвМu#
-MO_TRIPLEATTACK#Tam Рoaтn QuyкМn#
-MO_BODYRELOCATION#Khinh Cфng#
-MO_DODGE#Thвn ThuТ#
-MO_INVESTIGATE#KiМnh Lэтc#
-MO_FINGEROFFENSIVE#Nhвмt Dэхng ChiТ#
-MO_STEELBODY#Kim Cэхng Bвмt Hoaтi#
-MO_BLADESTOP#Khoмa#
-MO_EXPLOSIONSPIRITS#Nфт QuyкМn#
-MO_EXTREMITYFIST#Nhвмt QuyкМn Рoaтt Maтng#
-MO_CHAINCOMBO#Liкn РaТ QuyкМn#
-MO_COMBOFINISH#Thiкn Giaмng QuyкМn#
-SA_ADVANCEDBOOK#Nghiкn Cэмu#
-SA_CASTCANCEL#HuТy Niктm Chuм#
-SA_MAGICROD#Hвмp Thuт Ma Lэтc#
-SA_SPELLBREAKER#Phaм Pheмp#
-SA_FREECAST#Tэт Do Niктm Pheмp#
-SA_AUTOSPELL#Tэт Рфтng Niктm Pheмp#
-SA_FLAMELAUNCHER#YкТm BuМa LэТa#
-SA_FROSTWEAPON#YкТm BuМa Nэхмc#
-SA_LIGHTNINGLOADER#YкТm BuМa Gioм#
-SA_SEISMICWEAPON#YкТm BuМa Рвмt#
-SA_DRAGONOLOGY#RфМng Hoтc#
-SA_VOLCANO#Miктng Nuмi LэТa#
-SA_DELUGE#VuМng Bгng Giaм#
-SA_VIOLENTGALE#VuМng Tвm BaЮo#
-SA_LANDPROTECTOR#VuМng Phi Pheмp Thuвтt#
-SA_DISPELL#Triктt Pheмp#
-SA_ABRACADABRA#Uмm Ba La XiМ BuМa#
+CR_PROVIDENCE#Thiên Sứ Bảo Hộ#
+CR_DEFENDER#Hào Quang Hộ Vệ#
+CR_SPEARQUICKEN#Thương Thần Tốc#
+MO_IRONHAND#Thiết Quyền#
+MO_SPIRITSRECOVERY#Phục Linh Công#
+MO_CALLSPIRITS#Gọi Linh Cầu#
+MO_ABSORBSPIRITS#Hấp Thụ Linh Cầu#
+MO_TRIPLEATTACK#Tam Đoạn Quyền#
+MO_BODYRELOCATION#Khinh Công#
+MO_DODGE#Thân Thủ#
+MO_INVESTIGATE#Kình Lực#
+MO_FINGEROFFENSIVE#Nhất Dương Chỉ#
+MO_STEELBODY#Kim Cương Bất Hoại#
+MO_BLADESTOP#Khóa#
+MO_EXPLOSIONSPIRITS#Nộ Quyền#
+MO_EXTREMITYFIST#Nhất Quyền Đoạt Mạng#
+MO_CHAINCOMBO#Liên Đả Quyền#
+MO_COMBOFINISH#Thiên Giáng Quyền#
+SA_ADVANCEDBOOK#Nghiên Cứu#
+SA_CASTCANCEL#Hủy Niệm Chú#
+SA_MAGICROD#Hấp Thụ Ma Lực#
+SA_SPELLBREAKER#Phá Phép#
+SA_FREECAST#Tự Do Niệm Phép#
+SA_AUTOSPELL#Tự Động Niệm Phép#
+SA_FLAMELAUNCHER#Yểm Bùa Lửa#
+SA_FROSTWEAPON#Yểm Bùa Nước#
+SA_LIGHTNINGLOADER#Yểm Bùa Gió#
+SA_SEISMICWEAPON#Yểm Bùa Đất#
+SA_DRAGONOLOGY#Rồng Học#
+SA_VOLCANO#Miệng Núi Lửa#
+SA_DELUGE#Vùng Băng Giá#
+SA_VIOLENTGALE#Vùng Tâm Bão#
+SA_LANDPROTECTOR#Vùng Phi Phép Thuật#
+SA_DISPELL#Triệt Phép#
+SA_ABRACADABRA#Úm Ba La Xì Bùa#
 SA_MONOCELL#Mono Cell#
 SA_CLASSCHANGE#Class Change#
 SA_SUMMONMONSTER#Summon Monster#
@@ -249,555 +249,555 @@ SA_LEVELUP#Level Up#
 SA_INSTANTDEATH#Instant Death#
 SA_FULLRECOVERY#Full Recovery#
 SA_COMA#Coma#
-BD_ADAPTATION#Thiмch Эмng#
-BD_ENCORE#Taмi DiкЮn#
-BD_LULLABY#Khuмc Haмt Ru#
-BD_RICHMANKIM#VuМng Kinh Nghiктm#
-BD_ETERNALCHAOS#VuМng HфЮn Loaтn#
-BD_DRUMBATTLEFIELD#VuМng Chiкмn TrэхМng#
-BD_RINGNIBELUNGEN#VuМng Ban Pheмp#
-BD_ROKISWEIL#VuМng Khoмa Pheмp#
-BD_INTOABYSS#VuМng Ma Thuвтt#
-BD_SIEGFRIED#VuМng Bгng HoТa#
+BD_ADAPTATION#Thích Ứng#
+BD_ENCORE#Tái Diễn#
+BD_LULLABY#Khúc Hát Ru#
+BD_RICHMANKIM#Vùng Kinh Nghiệm#
+BD_ETERNALCHAOS#Vùng Hỗn Loạn#
+BD_DRUMBATTLEFIELD#Vùng Chiến Trường#
+BD_RINGNIBELUNGEN#Vùng Ban Phép#
+BD_ROKISWEIL#Vùng Khóa Phép#
+BD_INTOABYSS#Vùng Ma Thuật#
+BD_SIEGFRIED#Vùng Băng Hỏa#
 BD_RAGNAROK#Ragnarok#
-BA_MUSICALLESSON#Thanh Nhaтc#
-BA_MUSICALSTRIKE#Вm Kiмch#
-BA_DISSONANCE#Taтp Вm#
-BA_FROSTJOKE#BaМi Haмt Bгng Giaм#
-BA_WHISTLE#VuМng Neм Traмnh#
-BA_ASSASSINCROSS#Giai Рiктu Saмt ThuТ#
-BA_POEMBRAGI#BaМi Thх Bragi#
-BA_APPLEIDUN#VuМng Sэт Sфмng#
-DC_DANCINGLESSON#Khiкu VuЮ#
-DC_THROWARROW#Phoмng Tкn#
-DC_UGLYDANCE#Laтc Nhiтp#
-DC_SCREAM#GaМo Theмt#
-DC_HUMMING#VuМng Chiмnh Xaмc#
-DC_DONTFORGETME#VuМng GiaТm Tфмc#
-DC_FORTUNEKISS#VuМng May Mгмn#
-DC_SERVICEFORYOU#VuМng Nгng Lэхтng#
-WE_MALE#CaТm Xuмc Yкu Thэхng#
-WE_FEMALE#TiМnh Yкu ViЮnh CэТu#
-WE_CALLPARTNER#РiкТm Heтn LaЮng Maтn#
+BA_MUSICALLESSON#Thanh Nhạc#
+BA_MUSICALSTRIKE#Âm Kích#
+BA_DISSONANCE#Tạp Âm#
+BA_FROSTJOKE#Bài Hát Băng Giá#
+BA_WHISTLE#Vùng Né Tránh#
+BA_ASSASSINCROSS#Giai Điệu Sát Thủ#
+BA_POEMBRAGI#Bài Thơ Bragi#
+BA_APPLEIDUN#Vùng Sự Sống#
+DC_DANCINGLESSON#Khiêu Vũ#
+DC_THROWARROW#Phóng Tên#
+DC_UGLYDANCE#Lạc Nhịp#
+DC_SCREAM#Gào Thét#
+DC_HUMMING#Vùng Chính Xác#
+DC_DONTFORGETME#Vùng Giảm Tốc#
+DC_FORTUNEKISS#Vùng May Mắn#
+DC_SERVICEFORYOU#Vùng Năng Lượng#
+WE_MALE#Cảm Xúc Yêu Thương#
+WE_FEMALE#Tình Yêu Vĩnh Cửu#
+WE_CALLPARTNER#Điểm Hẹn Lãng Mạn#
 ITM_TOMAHAWK#Tomahawk Throwing#
-LK_AURABLADE#Kiкмm Quang#
-LK_PARRYING#Chгмn РoМn#
-LK_CONCENTRATION#CэхМng Giaмo#
-LK_TENSIONRELAX#Thэ GiaЮn#
-LK_BERSERK#CuфМng Nфт#
-HP_ASSUMPTIO#Vвтn Khiм Hфт ThкТ#
-HP_BASILICA#Vэхng Cung Thaмnh РэхМng#
-HP_MEDITATIO#ThiкМn Рiтnh#
-HW_SOULDRAIN#Ruмt HфМn#
-HW_MAGICCRASHER#BaМn Tay Ma Thuвтt#
-HW_MAGICPOWER#Khuкмch Рaтi Pheмp Thuвтt#
-PA_PRESSURE#РкМn Tфтi#
-PA_SACRIFICE#CэхМng Baтo#
-PA_GOSPEL#Thaмnh Ca#
-CH_PALMSTRIKE#Nhэ Lai ThвМn ChэхТng#
-CH_TIGERFIST#Phuтc HфТ QuyкМn#
-CH_CHAINCRUSH#HiМnh Yм QuyкМn#
-PF_HPCONVERSION#Hoaмn РфТi Nгng Lэхтng#
-PF_SOULCHANGE#Hoaмn HфМn#
-PF_SOULBURN#Thiкu Рфмt Linh HфМn#
-ASC_KATAR#Saмt Рao Thuвтt Nвng Cao#
-ASC_EDP#TвТm Kiтch Рфтc#
-ASC_BREAKER#Tiкu HфМn ThuТ#
-SN_SIGHT#Mгмt Эng#
-SN_FALCONASSAULT#Эng Kiмch#
-SN_SHARPSHOOTING#MuЮi Tкn Xuyкn Phaм#
-SN_WINDWALK#Lэхмt Gioм#
-WS_MELTDOWN#Tan ChaТy#
+LK_AURABLADE#Kiếm Quang#
+LK_PARRYING#Chắn Đòn#
+LK_CONCENTRATION#Cường Giáo#
+LK_TENSIONRELAX#Thư Giãn#
+LK_BERSERK#Cuồng Nộ#
+HP_ASSUMPTIO#Vận Khí Hộ Thể#
+HP_BASILICA#Vương Cung Thánh Đường#
+HP_MEDITATIO#Thiền Định#
+HW_SOULDRAIN#Rút Hồn#
+HW_MAGICCRASHER#Bàn Tay Ma Thuật#
+HW_MAGICPOWER#Khuếch Đại Phép Thuật#
+PA_PRESSURE#Đền Tội#
+PA_SACRIFICE#Cường Bạo#
+PA_GOSPEL#Thánh Ca#
+CH_PALMSTRIKE#Như Lai Thần Chưởng#
+CH_TIGERFIST#Phục Hổ Quyền#
+CH_CHAINCRUSH#Hình Ý Quyền#
+PF_HPCONVERSION#Hoán Đổi Năng Lượng#
+PF_SOULCHANGE#Hoán Hồn#
+PF_SOULBURN#Thiêu Đốt Linh Hồn#
+ASC_KATAR#Sát Đao Thuật Nâng Cao#
+ASC_EDP#Tẩm Kịch Độc#
+ASC_BREAKER#Tiêu Hồn Thủ#
+SN_SIGHT#Mắt Ưng#
+SN_FALCONASSAULT#Ưng Kích#
+SN_SHARPSHOOTING#Mũi Tên Xuyên Phá#
+SN_WINDWALK#Lướt Gió#
+WS_MELTDOWN#Tan Chảy#
 WS_CREATECOIN#Coin Craft#
 WS_CREATENUGGET#Nugget Craft#
-WS_CARTBOOST#Tгng Tфмc Xe РвТy#
-WS_SYSTEMCREATE#Thaмp tвмn cфng#
-ST_CHASEWALK#Рфтn ThфТ#
-ST_REJECTSWORD#PhaТn Kiкмm#
-CG_ARROWVULCAN#Loaтn TiкЮn#
-CG_MOONLIT#VuМng Truм ВТn#
-CG_MARIONETTE#Khiкn Rфмi#
-LK_SPIRALPIERCE#РoМn Thэхng Lфмc#
-LK_HEADCRUSH#РoМn Chiм Maтng#
-LK_JOINTBEAT#РoМn Nguy Cвмp#
-HW_NAPALMVULCAN#HфЮn Ma Tвm Phaм#
-CH_SOULCOLLECT#Vвтn Cфng#
-PF_MINDBREAKER#Loaтn Triм#
-PF_MEMORIZE#Ghi Nhхм#
-PF_FOGWALL#Sэхng MuМ#
-PF_SPIDERWEB#BвЮy Maтng Nhктn#
-ASC_METEORASSAULT#QuвМng Thiкn Thaтch#
-ASC_CDP#Taтo Kiтch Рфтc#
-WE_BABY#Con Yкu Ba Meт#
-WE_CALLPARENT#Con Nhхм Ba Meт#
-WE_CALLBABY#Laтi Рвy Cuтc Cэng#
-TK_RUN#Chaтy Nэхмc Ruмt#
-TK_READYSTORM#Xoaмy Cэхмc Tвмn#
-TK_STORMKICK#Xoaмy Cэхмc#
-TK_READYDOWN#Lфi Cфng Tвмn#
-TK_DOWNKICK#Lфi Cфng Cэхмc#
-TK_READYTURN#VoМng CвМu Tвмn#
-TK_TURNKICK#VoМng CвМu Cэхмc#
-TK_READYCOUNTER#PhaТn Cэхмc Tвмn#
-TK_COUNTER#PhaТn Cэхмc#
-TK_DODGE#NhaМo Lфтn#
-TK_JUMPKICK#Phi Cэхмc#
-TK_HPTIME#An Yкn#
-TK_SPTIME#Tэт Taтi#
-TK_POWER#РфМng Minh#
-TK_SEVENWIND#LuфМng Gioм Вмm#
-TK_HIGHJUMP#Bвтt Cao#
-SG_FEEL#CaТm Quan VuЮ Truт#
-SG_SUN_WARM#Nhвтt Viкm#
-SG_MOON_WARM#Nguyктt Viкm#
-SG_STAR_WARM#Tinh Viкm#
-SG_SUN_COMFORT#Nhвтt Vкт#
-SG_MOON_COMFORT#Nguyктt Vкт#
-SG_STAR_COMFORT#Tinh Vкт#
-SG_HATE#Khгмc Tinh VuЮ Truт#
-SG_SUN_ANGER#Nhвтt Nфт#
-SG_MOON_ANGER#Nguyктt Nфт#
-SG_STAR_ANGER#Tinh Nфт#
-SG_SUN_BLESS#Nhвтt Phuмc#
-SG_MOON_BLESS#Nguyктt Phuмc#
-SG_STAR_BLESS#Tinh Phuмc#
-SG_DEVIL#VuМng Tфмi VuЮ Truт#
-SG_FRIEND#РфМng Minh VuЮ Truт#
-SG_KNOWLEDGE#Sэм GiaТ VuЮ Truт#
-SG_FUSION#VuЮ Truт Nhвмt Thфмng#
-SL_ALCHEMIST#Linh HфМn GiaТ Kim#
+WS_CARTBOOST#Tăng Tốc Xe Đẩy#
+WS_SYSTEMCREATE#Tháp tấn công#
+ST_CHASEWALK#Độn Thổ#
+ST_REJECTSWORD#Phản Kiếm#
+CG_ARROWVULCAN#Loạn Tiễn#
+CG_MOONLIT#Vùng Trú Ẩn#
+CG_MARIONETTE#Khiên Rối#
+LK_SPIRALPIERCE#Đòn Thương Lốc#
+LK_HEADCRUSH#Đòn Chí Mạng#
+LK_JOINTBEAT#Đòn Nguy Cấp#
+HW_NAPALMVULCAN#Hỗn Ma Tâm Phá#
+CH_SOULCOLLECT#Vận Công#
+PF_MINDBREAKER#Loạn Trí#
+PF_MEMORIZE#Ghi Nhớ#
+PF_FOGWALL#Sương Mù#
+PF_SPIDERWEB#Bẫy Mạng Nhện#
+ASC_METEORASSAULT#Quầng Thiên Thạch#
+ASC_CDP#Tạo Kịch Độc#
+WE_BABY#Con Yêu Ba Mẹ#
+WE_CALLPARENT#Con Nhớ Ba Mẹ#
+WE_CALLBABY#Lại Đây Cục Cưng#
+TK_RUN#Chạy Nước Rút#
+TK_READYSTORM#Xoáy Cước Tấn#
+TK_STORMKICK#Xoáy Cước#
+TK_READYDOWN#Lôi Công Tấn#
+TK_DOWNKICK#Lôi Công Cước#
+TK_READYTURN#Vòng Cầu Tấn#
+TK_TURNKICK#Vòng Cầu Cước#
+TK_READYCOUNTER#Phản Cước Tấn#
+TK_COUNTER#Phản Cước#
+TK_DODGE#Nhào Lộn#
+TK_JUMPKICK#Phi Cước#
+TK_HPTIME#An Yên#
+TK_SPTIME#Tự Tại#
+TK_POWER#Đồng Minh#
+TK_SEVENWIND#Luồng Gió Ấm#
+TK_HIGHJUMP#Bật Cao#
+SG_FEEL#Cảm Quan Vũ Trụ#
+SG_SUN_WARM#Nhật Viêm#
+SG_MOON_WARM#Nguyệt Viêm#
+SG_STAR_WARM#Tinh Viêm#
+SG_SUN_COMFORT#Nhật Vệ#
+SG_MOON_COMFORT#Nguyệt Vệ#
+SG_STAR_COMFORT#Tinh Vệ#
+SG_HATE#Khắc Tinh Vũ Trụ#
+SG_SUN_ANGER#Nhật Nộ#
+SG_MOON_ANGER#Nguyệt Nộ#
+SG_STAR_ANGER#Tinh Nộ#
+SG_SUN_BLESS#Nhật Phúc#
+SG_MOON_BLESS#Nguyệt Phúc#
+SG_STAR_BLESS#Tinh Phúc#
+SG_DEVIL#Vùng Tối Vũ Trụ#
+SG_FRIEND#Đồng Minh Vũ Trụ#
+SG_KNOWLEDGE#Sứ Giả Vũ Trụ#
+SG_FUSION#Vũ Trụ Nhất Thống#
+SL_ALCHEMIST#Linh Hồn Giả Kim#
 AM_BERSERKPITCHER#Berserk Pitcher#
-SL_MONK#Linh HфМn ThвМy Tu#
-SL_STAR#Linh HфМn VoЮ Sэ#
-SL_SAGE#Linh HфМn HiкМn Triкмt#
-SL_CRUSADER#Linh HфМn Chiкмn Binh#
-SL_SUPERNOVICE#Linh HфМn Siкu Tвтp Sэт#
-SL_KNIGHT#Linh HфМn Hiктp SiЮ#
-SL_WIZARD#Linh HфМn PhuМ ThuТy#
-SL_PRIEST#Linh HфМn Linh Muтc#
-SL_BARDDANCER#Linh HфМn Nghкт SiЮ#
-SL_ROGUE#Linh HфМn Рaтo Tгтc#
-SL_ASSASIN#Linh HфМn Saмt ThuТ#
-SL_BLACKSMITH#Linh HфМn Thхт ReМn#
+SL_MONK#Linh Hồn Thầy Tu#
+SL_STAR#Linh Hồn Võ Sư#
+SL_SAGE#Linh Hồn Hiền Triết#
+SL_CRUSADER#Linh Hồn Chiến Binh#
+SL_SUPERNOVICE#Linh Hồn Siêu Tập Sự#
+SL_KNIGHT#Linh Hồn Hiệp Sĩ#
+SL_WIZARD#Linh Hồn Phù Thủy#
+SL_PRIEST#Linh Hồn Linh Mục#
+SL_BARDDANCER#Linh Hồn Nghệ Sĩ#
+SL_ROGUE#Linh Hồn Đạo Tặc#
+SL_ASSASIN#Linh Hồn Sát Thủ#
+SL_BLACKSMITH#Linh Hồn Thợ Rèn#
 BS_ADRENALINE2#Full Adrenaline Rush#
-SL_HUNTER#Linh HфМn Thхт Sгn#
-SL_SOULLINKER#Linh HфМn Kкмt Giхмi Sэ#
-SL_KAIZEL#Linh Yм - HфМi Sinh#
-SL_KAAHI#Linh Yм - HфМi Phuтc#
-SL_KAUPE#Linh Yм - Thвn Phaмp#
-SL_KAITE#Linh Yм - PhaТn Pheмp#
-SL_KAINA#Linh Yм - Nгng Lэхтng#
-SL_STIN#Linh Phaмp - Kiмch#
-SL_STUN#Linh Phaмp - Trвмn#
-SL_SMA#Linh Phaмp - TэТ#
-SL_SWOO#Linh Phaмp - Maтn#
-SL_SKE#Linh Phaмp - CuфМng#
-SL_SKA#Linh Phaмp - Ngaтnh#
-ST_PRESERVE#BaТo ToaМn#
-ST_FULLSTRIP#Lфтt Saтch#
-WS_WEAPONREFINE#Nвng Cвмp VuЮ Khiм#
-CR_SLIMPITCHER#Neмm Фмng Thuфмc#
-CR_FULLPROTECTION#BaТo DэхЮng TфТng Hхтp#
-PA_SHIELDCHAIN#Neмm Khiкn Liкn HoaМn#
-HP_MANARECHARGE#TiЮnh Tвm#
-PF_DOUBLECASTING#LэхЮng TiкЮn#
-HW_GANBANTEIN#Xoмa Saтch#
-HW_GRAVITATION#VuМng Troтng Lэтc#
-WS_CARTTERMINATION#Tфng Xe РвТy#
-WS_OVERTHRUSTMAX#Tгng Lэтc Tфмi Рa#
-CG_LONGINGFREEDOM#Khao Khaмt Tэт Do#
-CG_HERMODE#VuМng Triктt Pheмp#
-CG_TAROTCARD#Laм BaМi Рiтnh Mктnh#
-CR_ACIDDEMONSTRATION#Bom NфТ Axit#
-CR_CULTIVATION#TrфМng Troтt#
-TK_MISSION#Nhiктm Vuт VoЮ SiЮ#
-SL_HIGH#Linh HфМn Phuтc Sinh#
-KN_ONEHAND#Рхn ThuТ Tфмc#
+SL_HUNTER#Linh Hồn Thợ Săn#
+SL_SOULLINKER#Linh Hồn Kết Giới Sư#
+SL_KAIZEL#Linh Ý - Hồi Sinh#
+SL_KAAHI#Linh Ý - Hồi Phục#
+SL_KAUPE#Linh Ý - Thân Pháp#
+SL_KAITE#Linh Ý - Phản Phép#
+SL_KAINA#Linh Ý - Năng Lượng#
+SL_STIN#Linh Pháp - Kích#
+SL_STUN#Linh Pháp - Trấn#
+SL_SMA#Linh Pháp - Tử#
+SL_SWOO#Linh Pháp - Mạn#
+SL_SKE#Linh Pháp - Cuồng#
+SL_SKA#Linh Pháp - Ngạnh#
+ST_PRESERVE#Bảo Toàn#
+ST_FULLSTRIP#Lột Sạch#
+WS_WEAPONREFINE#Nâng Cấp Vũ Khí#
+CR_SLIMPITCHER#Ném Ống Thuốc#
+CR_FULLPROTECTION#Bảo Dưỡng Tổng Hợp#
+PA_SHIELDCHAIN#Ném Khiên Liên Hoàn#
+HP_MANARECHARGE#Tĩnh Tâm#
+PF_DOUBLECASTING#Lưỡng Tiễn#
+HW_GANBANTEIN#Xóa Sạch#
+HW_GRAVITATION#Vùng Trọng Lực#
+WS_CARTTERMINATION#Tông Xe Đẩy#
+WS_OVERTHRUSTMAX#Tăng Lực Tối Đa#
+CG_LONGINGFREEDOM#Khao Khát Tự Do#
+CG_HERMODE#Vùng Triệt Phép#
+CG_TAROTCARD#Lá Bài Định Mệnh#
+CR_ACIDDEMONSTRATION#Bom Nổ Axit#
+CR_CULTIVATION#Trồng Trọt#
+TK_MISSION#Nhiệm Vụ Võ Sĩ#
+SL_HIGH#Linh Hồn Phục Sinh#
+KN_ONEHAND#Đơn Thủ Tốc#
 AM_TWILIGHT1#Twilight Pharmacy I#
 AM_TWILIGHT2#Twilight Pharmacy II#
 AM_TWILIGHT3#Twilight Pharmacy III#
-HT_POWER#Hung Thuм#
-GS_GLITTERING#Tung РфМng Xu#
-GS_FLING#Neмm Xu#
-GS_TRIPLEACTION#Bгмn Ba#
-GS_BULLSEYE#Nhгмm VaМo HфМng Tвm#
-GS_MADNESSCANCEL#Chфмt Chгтn Cuфмi CuМng#
-GS_ADJUSTMENT#РiкМu ChiТnh#
-GS_INCREASING#ChuвТn Xaмc#
-GS_MAGICALBULLET#Рaтn Ma Thuвтt#
-GS_CRACKER#Рaтn Kiмch#
-GS_SINGLEACTION#Bгмn Phaмt Mфтt#
-GS_SNAKEEYE#Mгмt Rгмn#
-GS_CHAINACTION#Bгмn Рфi#
-GS_TRACKING#Truy Vкмt#
-GS_DISARM#Tэхмc VuЮ Khiм#
-GS_PIERCINGSHOT#Phaмt Bгмn Xuyкn Thвмu#
-GS_RAPIDSHOWER#Bгмn Liкn Thanh#
-GS_DESPERADO#XaТ Рaтn#
-GS_GATLINGFEVER#Suмng Maмy CuфМng Loaтn#
-GS_DUST#Phaмt Рaтn Gheмm#
-GS_FULLBUSTER#Bгмn ToaМn Lэтc#
-GS_SPREADATTACK#Рaтn ChuМm#
-GS_GROUNDDRIFT#BвЮy Рaтn LэТa#
-NJ_TOBIDOUGU#KyЮ Thuвтt Neмm Dao#
-NJ_SYURIKEN#Neмm Phi Tiкu#
-NJ_KUNAI#Neмm Рinh Tiкu#
-NJ_HUUMA#Neмm Рaтi Tiкu#
-NJ_ZENYNAGE#Neмm Xu#
-NJ_TATAMIGAESHI#Lвтt Chiкмu Tatami#
-NJ_KASUMIKIRI#Nhaмt Cheмm Sэхng MuМ#
-NJ_SHADOWJUMP#Phi Thвn#
-NJ_KIRIKAGE#Vф AТnh TraТm#
-NJ_UTSUSEMI#Ve SвМu Thoaмt Xaмc#
-NJ_BUNSINJYUTSU#AТo Phвn Thвn#
-NJ_NINPOU#NhвЮn Thuвтt#
-NJ_KOUENKA#HoТa Biктn#
-NJ_KAENSIN#HoТa Khiкn Trвтn#
-NJ_BAKUENRYU#HoТa Long Trвтn#
-NJ_HYOUSENSOU#Bгng Thэхng#
-NJ_SUITON#ThuТy Phaмp Trвтn#
-NJ_HYOUSYOURAKU#Tuyкмt Thiкn Thaтch#
-NJ_HUUJIN#Phong LiкМm#
-NJ_RAIGEKISAI#Lфi Chвмn#
-NJ_KAMAITACHI#Nhвмt Bгмc Phong#
-NJ_NEN#HaМo Quang NhвЮn GiaТ#
-NJ_ISSEN#TэТ TraТm#
-ALL_INCCARRY#Mang Vaмc#
+HT_POWER#Hung Thú#
+GS_GLITTERING#Tung Đồng Xu#
+GS_FLING#Ném Xu#
+GS_TRIPLEACTION#Bắn Ba#
+GS_BULLSEYE#Nhắm Vào Hồng Tâm#
+GS_MADNESSCANCEL#Chốt Chặn Cuối Cùng#
+GS_ADJUSTMENT#Điều Chỉnh#
+GS_INCREASING#Chuẩn Xác#
+GS_MAGICALBULLET#Đạn Ma Thuật#
+GS_CRACKER#Đạn Kích#
+GS_SINGLEACTION#Bắn Phát Một#
+GS_SNAKEEYE#Mắt Rắn#
+GS_CHAINACTION#Bắn Đôi#
+GS_TRACKING#Truy Vết#
+GS_DISARM#Tước Vũ Khí#
+GS_PIERCINGSHOT#Phát Bắn Xuyên Thấu#
+GS_RAPIDSHOWER#Bắn Liên Thanh#
+GS_DESPERADO#Xả Đạn#
+GS_GATLINGFEVER#Súng Máy Cuồng Loạn#
+GS_DUST#Phát Đạn Ghém#
+GS_FULLBUSTER#Bắn Toàn Lực#
+GS_SPREADATTACK#Đạn Chùm#
+GS_GROUNDDRIFT#Bẫy Đạn Lửa#
+NJ_TOBIDOUGU#Kỹ Thuật Ném Dao#
+NJ_SYURIKEN#Ném Phi Tiêu#
+NJ_KUNAI#Ném Đinh Tiêu#
+NJ_HUUMA#Ném Đại Tiêu#
+NJ_ZENYNAGE#Ném Xu#
+NJ_TATAMIGAESHI#Lật Chiếu Tatami#
+NJ_KASUMIKIRI#Nhát Chém Sương Mù#
+NJ_SHADOWJUMP#Phi Thân#
+NJ_KIRIKAGE#Vô Ảnh Trảm#
+NJ_UTSUSEMI#Ve Sầu Thoát Xác#
+NJ_BUNSINJYUTSU#Ảo Phân Thân#
+NJ_NINPOU#Nhẫn Thuật#
+NJ_KOUENKA#Hỏa Biện#
+NJ_KAENSIN#Hỏa Khiên Trận#
+NJ_BAKUENRYU#Hỏa Long Trận#
+NJ_HYOUSENSOU#Băng Thương#
+NJ_SUITON#Thủy Pháp Trận#
+NJ_HYOUSYOURAKU#Tuyết Thiên Thạch#
+NJ_HUUJIN#Phong Liềm#
+NJ_RAIGEKISAI#Lôi Chấn#
+NJ_KAMAITACHI#Nhất Bắc Phong#
+NJ_NEN#Hào Quang Nhẫn Giả#
+NJ_ISSEN#Tử Trảm#
+ALL_INCCARRY#Mang Vác#
 GM_SANDMAN#Goodnight, Sweety#
-ALL_CATCRY#Quaмi vвтt gвМm#
-ALL_PARTYFLEE#ThфТi bay! Hoa gioм !!#
-ALL_ANGEL_PROTECT#CaТm хn baтn#
-ALL_DREAM_SUMMERNIGHT#Mфтt giвмc mх ркm heМ#
-KN_CHARGEATK#Troтng Kiмch#
-CR_SHRINK#Khiкn BaТo Hфт#
-AS_SONICACCEL#Gia Tфмc Рфтt Kiмch#
-AS_VENOMKNIFE#Neмm Dao Рфтc#
-RG_CLOSECONFINE#GiэЮ Chвn#
-WZ_SIGHTBLASTER#Tвm NhaЮn#
-SA_CREATECON#Chкм Taтo Giвмy Nguyкn Tфм#
-SA_ELEMENTWATER#Thay РфТi Nguyкn Tфм - Nэхмc#
-HT_PHANTASMIC#MuЮi Tкn Pheмp#
-BA_PANGVOICE#Tiкмng GaМo#
-DC_WINKCHARM#Nhaмy Mгмt#
-BS_UNFAIRLYTRICK#Tiкмt Kiктm#
-BS_GREED#Vх Veмt#
-PR_REDEMPTIO#Cэмu RфЮi#
-MO_KITRANSLATION#TruyкМn Khiм Lэтc#
-MO_BALKYOUNG#Nфт Khiм#
-SA_ELEMENTGROUND#Thay РфТi Nguyкn Tфм - Рвмt#
-SA_ELEMENTFIRE#Thay РфТi Nguyкn Tфм - LэТa#
-SA_ELEMENTWIND#Thay РфТi Nguyкn Tфм - Gioм#
-RK_ENCHANTBLADE#PhuМ Ma Kiкмm#
-RK_SONICWAVE#Soмng Вm#
-RK_DEATHBOUND#TэТ PhaТn Chuм#
-RK_HUNDREDSPEAR#Baмch Thэхng Phaм#
-RK_WINDCUTTER#Phong TraТm#
-RK_IGNITIONBREAK#Рaтi Khai HoТa Phaм#
-RK_DRAGONTRAINING#Luyктn RфМng#
-RK_DRAGONBREATH#Hхi ThхТ RфМng#
-RK_DRAGONHOWLING#Long Hфмng#
-RK_RUNEMASTERY#CфТ NgэЮ Hoтc Thuвтt#
-RK_PHANTOMTHRUST#Thэхng РaМ Kiмch#
-GC_VENOMIMPRESS#Tiкm Рфтc#
-GC_CROSSIMPACT#Thвтp Tэт Kiмch#
-GC_DARKILLUSION#Hгмc AТnh#
-GC_RESEARCHNEWPOISON#Nghiкn Cэмu Рфтc Dэхтc Mхмi#
-GC_CREATENEWPOISON#Taтo Рфтc Dэхтc Mхмi#
-GC_ANTIDOTE#Triт Рфтc#
-GC_POISONINGWEAPON#YкТm Рфтc#
-GC_WEAPONBLOCKING#РхЮ РoМn#
-GC_COUNTERSLASH#PhaТn Kiмch#
-GC_WEAPONCRUSH#Triктt VuЮ Khiм#
-GC_VENOMPRESSURE#Eмp Kiтch Рфтc#
-GC_POISONSMOKE#Khiм Рфтc#
-GC_CLOAKINGEXCEED#TaМng AТnh#
-GC_PHANTOMMENACE#Aмm Ma Kiмch#
-GC_HALLUCINATIONWALK#Thвn Phaмp AТo AТnh#
-GC_ROLLINGCUTTER#Maмy Cheмm Xoay VoМng#
-GC_CROSSRIPPERSLASHER#Thвтp Tэт Xuyкn Tвm#
-AB_JUDEX#TrэМ TaМ#
-AB_ANCILLA#Ngoтc Lкт Vкт NэЮ#
-AB_ADORAMUS#Hoмa Kiкмp#
-AB_CLEMENTIA#Ban Хn#
-AB_CANTO#Vвтn Tфмc#
-AB_CHEAL#Cэмu Рфт#
-AB_EPICLESIS#Cвy Sэт Sфмng#
-AB_PRAEFATIO#Linh Giaмp#
-AB_ORATIO#CaТm Hoмa#
-AB_LAUDAAGNUS#Tвm Vкт#
-AB_LAUDARAMUS#Linh Vкт#
-AB_EUCHARISTICA#Kiкn Tвm#
-AB_RENOVATIO#Aмnh Saмng Thiкn РэхМng#
-AB_HIGHNESSHEAL#Cэмu Sinh#
-AB_CLEARANCE#Hoмa GiaТi#
-AB_EXPIATIO#Xuyкn Tвm#
-AB_DUPLELIGHT#Thaмnh Quang Vкт#
-AB_SILENTIUM#VuМng Cвm Lгтng#
-WL_WHITEIMPRISON#Baтch Nguтc#
-WL_SOULEXPANSION#Khai Phaм Linh HфМn#
-WL_FROSTMISTY#Sэхng Giaм#
-WL_JACKFROST#Bгng HaМn#
-WL_MARSHOFABYSS#Рвмt Luмn#
-WL_RECOGNIZEDSPELL#Tinh Thфng Pheмp Thuвтt#
-WL_SIENNAEXECRATE#BuМn Nhх#
-WL_RADIUS#Baмn Kiмnh#
-WL_STASIS#Ngэng Рoтng#
-WL_DRAINLIFE#Hвмp Huyкмt#
-WL_CRIMSONROCK#HoТa Thaтch#
-WL_HELLINFERNO#HoТa Nguтc#
-WL_COMET#Thiкn Thaтch#
-WL_CHAINLIGHTNING#Liкn HoaМn Lфi Trвтn#
-WL_EARTHSTRAIN#Soмng Рiтa TвМng#
-WL_TETRAVORTEX#Lфмc Xoaмy Ma Thuвтt#
-WL_SUMMONFB#Triктu HфМi HoТa CвМu#
-WL_SUMMONBL#Triктu HфМi Lфi CвМu#
-WL_SUMMONWB#Triктu HфМi ThuТy CвМu#
-WL_SUMMONSTONE#Triктu HфМi Ma Thaтch#
-WL_RELEASE#GiaТi Phoмng Ma Thuвтt#
-WL_READING_SB#Рoтc Saмch Pheмp#
-WL_FREEZE_SP#Khai MхТ Tri Thэмc#
-RA_ARROWSTORM#BaЮo Tкn#
-RA_FEARBREEZE#Khiкмp Phong#
-RA_RANGERMAIN#KyЮ Thuвтt Sгn#
-RA_AIMEDBOLT#HфМng Tвm TiкЮn#
-RA_DETONATOR#Kiмch NфТ#
-RA_ELECTRICSHOCKER#Sфмc Рiктn#
-RA_CLUSTERBOMB#BвЮy ChuМm#
-RA_WUGMASTERY#РiкМu KhiкТn Soмi#
-RA_WUGRIDER#CэхЮi Soмi#
-RA_WUGDASH#Phi Soмi#
-RA_WUGSTRIKE#Soмi VфМ MфМi#
-RA_WUGBITE#Soмi Taмp#
-RA_TOOTHOFWUG#Nanh Soмi#
-RA_SENSITIVEKEEN#Nhaтy Beмn#
-RA_CAMOUFLAGE#Nguтy Trang#
-RA_RESEARCHTRAP#Nghiкn Cэмu BвЮy#
-RA_MAGENTATRAP#BвЮy LэТa#
-RA_COBALTTRAP#BвЮy Nэхмc#
-RA_MAIZETRAP#BвЮy Рвмt#
-RA_VERDURETRAP#BвЮy Gioм#
-RA_FIRINGTRAP#BвЮy Thiкu Рфмt#
-RA_ICEBOUNDTRAP#BвЮy Laтnh Coмng#
-NC_MADOLICENCE#BгМng Chкм Taтo Mado#
-NC_BOOSTKNUCKLE#Cuм Рвмm Cх Giхмi#
-NC_PILEBUNKER#MuЮi Khoan TэТ ThвМn#
-NC_VULCANARM#Рaтn Cфng Phaм#
-NC_FLAMELAUNCHER#Suмng Phoмng LэТa#
-NC_COLDSLOWER#Suмng Рфng Laтnh#
-NC_ARMSCANNON#Phaмo Cх Giхмi#
-NC_ACCELERATION#Tгng Gia Tфмc#
-NC_HOVERING#Troтng TrэхМng#
-NC_F_SIDESLIDE#Tiкмn Tхмi Cх Hoтc#
-NC_B_SIDESLIDE#Giвтt LuМi Cх Hoтc#
-NC_MAINFRAME#Tinh ChiТnh Maмy Moмc#
-NC_SELFDESTRUCTION#Tэт HuТy#
-NC_SHAPESHIFT#Thay РфТi Nguyкn Tфм#
-NC_EMERGENCYCOOL#Haт Nhiктt#
-NC_INFRAREDSCAN#Tia HфМng Ngoaтi#
-NC_ANALYZE#Phвn Tiмch#
-NC_MAGNETICFIELD#VuМng TэМ TrэхМng#
-NC_NEUTRALBARRIER#VuМng BaТo Vкт#
-NC_STEALTHFIELD#VuМng ВТn Thвn#
-NC_REPAIR#SэТa ChэЮa Рфтng Cх#
-NC_TRAININGAXE#РaМo Taтo RiМu Thuвтt#
-NC_RESEARCHFE#Nghiкn Cэмu Рвмt & LэТa#
-NC_AXEBOOMERANG#Phoмng RiМu#
-NC_POWERSWING#Vung RiМu#
-NC_AXETORNADO#Cхn Lфмc RiМu#
-NC_SILVERSNIPER#Maмy Bгмn Thiктn Xaт#
-NC_MAGICDECOY#Maмy Bгмn Ma Thuвтt#
-NC_DISJOINT#GхЮ Maмy Bгмn#
-SC_FATALMENACE#Aмn TэТ#
-SC_REPRODUCE#Sao Cheмp#
-SC_AUTOSHADOWSPELL#Ma Thuвтt Boмng Ркm#
-SC_SHADOWFORM#HiМnh Nhвn Thкм Maтng#
-SC_TRIANGLESHOT#Tam Xaт TiкЮn#
-SC_BODYPAINT#Taтt Sхn#
-SC_INVISIBILITY#Vф HiМnh#
-SC_DEADLYINFECT#TruyкМn NhiкЮm#
-SC_ENERVATION#Mгтt Naт Suy Nhэхтc#
-SC_GROOMY#Mгтt Naт U Aмm#
-SC_IGNORANCE#Mгтt Naт LaЮng Quкn#
-SC_LAZINESS#Mгтt Naт LэхМi Biкмng#
-SC_UNLUCKY#Mгтt Naт Xui XeТo#
-SC_WEAKNESS#Mгтt Naт Рoтa РaМy#
-SC_STRIPACCESSARY#Tэхмc Phuт Kiктn#
-SC_MANHOLE#Hфм TэТ ThвМn#
-SC_DIMENSIONDOOR#CфТng Khфng Gian#
-SC_CHAOSPANIC#HiМnh VeЮ Aмm AТnh#
-SC_MAELSTROM#Xoaмy Nэхмc#
-SC_BLOODYLUST#VoМng TroМn Maмu#
-SC_FEINTBOMB#Bom Thкм Thвn#
-LG_CANNONSPEAR#Liкn HoaМn Thэхng#
-LG_BANISHINGPOINT#Vф AТnh Kiмch#
-LG_TRAMPLE#GiвЮm Рaтp#
-LG_SHIELDPRESS#Khiкn Вмn#
-LG_REFLECTDAMAGE#PhaТn РoМn#
-LG_PINPOINTATTACK#РiкТm Troтng Yкмu#
-LG_FORCEOFVANGUARD#Vкт Binh Hфт ThкТ#
-LG_RAGEBURST#РoМn Tiкn Phong#
-LG_SHIELDSPELL#Khiкn Pheмp#
-LG_EXEEDBREAK#Loaтi BoТ Giхмi Haтn#
-LG_OVERBRAND#Liкn HoaМn Kiмch#
-LG_PRESTIGE#Uy Nghiкm#
-LG_BANDING#Vкт Quвn РoaМn#
-LG_MOONSLASHER#Nguyктt Thэхng Phaм#
-LG_RAYOFGENESIS#Tia KhхТi Nguyкn#
-LG_PIETY#Рэмc Рфт#
-LG_EARTHDRIVE#Рiтa Рфтng#
-LG_HESPERUSLIT#Kim Tinh Hфт Phaмp#
-LG_INSPIRATION#Tinh Hoa Tuфn TraМo#
-SR_DRAGONCOMBO#Giaмng Long QuyкМn#
-SR_SKYNETBLOW#Thiкn La Рiтa VoЮng#
-SR_EARTHSHAKER#Dвтm Рвмt#
-SR_FALLENEMPIRE#Рoтa Vэхng QuyкМn#
-SR_TIGERCANNON#MaЮnh HфТ ThвМn Cфng#
-SR_RAMPAGEBLASTER#Xung Baтo Kiмch#
-SR_CRESCENTELBOW#Nguyктt Loan РвТu#
-SR_CURSEDCIRCLE#Ngaтt Khiм Cфng#
-SR_LIGHTNINGWALK#Lфi AТnh Phaмp#
-SR_KNUCKLEARROW#Cuм Рвмm Tay Gвмu#
-SR_WINDMILL#Xoaмy Truт Cэхмc#
-SR_RAISINGDRAGON#Thiкn Long Hфт ThкТ#
-SR_ASSIMILATEPOWER#Hвмp Cфng#
-SR_POWERVELOCITY#TruyкМn Cфng#
-SR_GATEOFHELL#QuyТ Mфn Quan#
-SR_GENTLETOUCH_QUIET#РiкТm Huyктt - TiЮnh#
-SR_GENTLETOUCH_CURE#РiкТm Huyктt - GiaТi#
-SR_GENTLETOUCH_ENERGYGAIN#РiкТm Huyктt - Nгng#
-SR_GENTLETOUCH_CHANGE#РiкТm Huyктt - Hoaмn#
-SR_GENTLETOUCH_REVITALIZE#РiкТm Huyктt - Mктnh#
-WA_SWING_DANCE#Muмa Xoay VoМng#
-WA_SYMPHONY_OF_LOVER#BaТn Giao HэхТng TiМnh Aмi#
-WA_MOONLIT_SERENADE#BaТn Xф-naмt Aмnh Trгng#
-MI_RUSH_WINDMILL#DфМn Dвтp#
-MI_ECHOSONG#Voтng Вm#
-MI_HARMONIZE#HoМa Khuмc#
-WM_LESSON#Thanh Nhaтc Nвng Cao#
-WM_METALICSOUND#Nфмt Cao TraМo#
-WM_REVERBERATION#Nфмt Nhaтc Rung Рфтng#
-WM_DOMINION_IMPULSE#Xung Lэтc#
-WM_SEVERE_RAINSTORM#VuЮ TiкЮn#
-WM_POEMOFNETHERWORLD#BaМi Ca SвМu ThaТm#
-WM_VOICEOFSIREN#Miт Вm#
-WM_DEADHILLHERE#Thung LuЮng TэТ ThвМn#
-WM_LULLABY_DEEPSLEEP#Tiкмng Ru RэМng ThгТm#
-WM_SIRCLEOFNATURE#VoМng Lгтp Tэт Nhiкn#
-WM_RANDOMIZESPELL#Khuмc Haмt CaТi Biкn#
-WM_GLOOMYDAY#BaМi Ca U Uвмt#
-WM_GREAT_ECHO#Khuмc Vang Voтng#
-WM_SONG_OF_MANA#Khuмc Ca Ma Lэтc#
-WM_DANCE_WITH_WUG#Khiкu VuЮ CuМng BвМy Soмi#
-WM_SOUND_OF_DESTRUCTION#BaМi Haмt Diктt Vong#
-WM_SATURDAY_NIGHT_FEVER#Ркm Thэм BaТy CuфМng Loaтn#
-WM_LERADS_DEW#Gioтt Sэхng Taмi Sinh#
-WM_MELODYOFSINK#Giai Рiктu ChiМm Ргмm#
-WM_BEYOND_OF_WARCRY#Chiкмn TrэхМng NgoaМi Xa#
-WM_UNLIMITED_HUMMING_VOICE#Khuмc Ngвn Vф Tвтn#
-SO_FIREWALK#HoТa Рiтa HaМnh#
-SO_ELECTRICWALK#Lфi Рiтa HaМnh#
-SO_SPELLFIST#Thu Pheмp#
-SO_EARTHGRAVE#Mфт Рiтa Chфng#
-SO_DIAMONDDUST#Buтi Bгng Tuyкмt#
-SO_POISON_BUSTER#Рфтc Dэхтc BuМng NфТ#
-SO_PSYCHIC_WAVE#Soмng Siкu Linh#
-SO_CLOUD_KILL#Mвy Рфтc#
-SO_STRIKING#Trхт Cфng#
-SO_WARMER#SэхТi Вмm#
-SO_VACUUM_EXTREME#Cхn Lфмc Chвn Khфng#
-SO_VARETYR_SPEAR#Lфi Giaмo#
-SO_ARRULLO#Mк Hoгтc#
-SO_EL_CONTROL#РiкМu KhiкТn Tinh Linh#
-SO_SUMMON_AGNI#Triктu HфМi Agni#
-SO_SUMMON_AQUA#Triктu HфМi Aqua#
-SO_SUMMON_VENTUS#Triктu HфМi Ventus#
-SO_SUMMON_TERA#Triктu HфМi Tera#
-SO_EL_ACTION#Tinh Linh Thuвтt#
-SO_EL_ANALYSIS#Nghiкn Cэмu Nguyкn Tфм#
-SO_EL_SYMPATHY#CaТm Quan Tinh Linh#
-SO_EL_CURE#ChэЮa Triт Tinh Linh#
-SO_FIRE_INSIGNIA#VuМng HoТa PhuМ#
-SO_WATER_INSIGNIA#VuМng ThuТy PhuМ#
-SO_WIND_INSIGNIA#VuМng Lфi PhuМ#
-SO_EARTH_INSIGNIA#VuМng Рiтa PhuМ#
-GN_TRAINING_SWORD#Luyктn Kiкмm#
-GN_REMODELING_CART#CaТi Tiкмn Xe РвТy#
-GN_CART_TORNADO#Cхn Lфмc Xe РвТy#
-GN_CARTCANNON#Xe РвТy ThвМn Cфng#
-GN_CARTBOOST#Xe РвТy Siкu Tфмc#
-GN_THORNS_TRAP#BвЮy Gai#
-GN_BLOOD_SUCKER#Thэтc Vвтt Huмt Maмu#
-GN_SPORE_EXPLOSION#Nвмm NфТ#
-GN_WALLOFTHORN#TэхМng Gai#
-GN_CRAZYWEED#Dвy Leo Рiкn Loaтn#
-GN_DEMONIC_FIRE#LэТa Aмc ThвМn#
-GN_FIRE_EXPANSION#BфМi LэТa#
-GN_HELLS_PLANT#Triктu HфМi Cвy QuyТ#
-GN_MANDRAGORA#Nhвn Sвm Hфмng#
-GN_SLINGITEM#Neмm Hoмa Chвмt#
-GN_CHANGEMATERIAL#Taмi Taтo#
-GN_MIX_COOKING#Nвмu Гn#
-GN_MAKEBOMB#Chкм Bom#
-GN_S_PHARMACY#Pha Chкм Ргтc Biктt#
-AB_SECRAMENT#Thкт Эхмc#
-SR_HOWLINGOFLION#Sэ TэТ Hфмng#
-SR_RIDEINLIGHTNING#Lфi Phaм#
+ALL_CATCRY#Quái vật gầm#
+ALL_PARTYFLEE#Thổi bay! Hoa gió !!#
+ALL_ANGEL_PROTECT#Cảm ơn bạn#
+ALL_DREAM_SUMMERNIGHT#Một giấc mơ đêm hè#
+KN_CHARGEATK#Trọng Kích#
+CR_SHRINK#Khiên Bảo Hộ#
+AS_SONICACCEL#Gia Tốc Đột Kích#
+AS_VENOMKNIFE#Ném Dao Độc#
+RG_CLOSECONFINE#Giữ Chân#
+WZ_SIGHTBLASTER#Tâm Nhãn#
+SA_CREATECON#Chế Tạo Giấy Nguyên Tố#
+SA_ELEMENTWATER#Thay Đổi Nguyên Tố - Nước#
+HT_PHANTASMIC#Mũi Tên Phép#
+BA_PANGVOICE#Tiếng Gào#
+DC_WINKCHARM#Nháy Mắt#
+BS_UNFAIRLYTRICK#Tiết Kiệm#
+BS_GREED#Vơ Vét#
+PR_REDEMPTIO#Cứu Rỗi#
+MO_KITRANSLATION#Truyền Khí Lực#
+MO_BALKYOUNG#Nộ Khí#
+SA_ELEMENTGROUND#Thay Đổi Nguyên Tố - Đất#
+SA_ELEMENTFIRE#Thay Đổi Nguyên Tố - Lửa#
+SA_ELEMENTWIND#Thay Đổi Nguyên Tố - Gió#
+RK_ENCHANTBLADE#Phù Ma Kiếm#
+RK_SONICWAVE#Sóng Âm#
+RK_DEATHBOUND#Tử Phản Chú#
+RK_HUNDREDSPEAR#Bách Thương Phá#
+RK_WINDCUTTER#Phong Trảm#
+RK_IGNITIONBREAK#Đại Khai Hỏa Phá#
+RK_DRAGONTRAINING#Luyện Rồng#
+RK_DRAGONBREATH#Hơi Thở Rồng#
+RK_DRAGONHOWLING#Long Hống#
+RK_RUNEMASTERY#Cổ Ngữ Học Thuật#
+RK_PHANTOMTHRUST#Thương Đà Kích#
+GC_VENOMIMPRESS#Tiêm Độc#
+GC_CROSSIMPACT#Thập Tự Kích#
+GC_DARKILLUSION#Hắc Ảnh#
+GC_RESEARCHNEWPOISON#Nghiên Cứu Độc Dược Mới#
+GC_CREATENEWPOISON#Tạo Độc Dược Mới#
+GC_ANTIDOTE#Trị Độc#
+GC_POISONINGWEAPON#Yểm Độc#
+GC_WEAPONBLOCKING#Đỡ Đòn#
+GC_COUNTERSLASH#Phản Kích#
+GC_WEAPONCRUSH#Triệt Vũ Khí#
+GC_VENOMPRESSURE#Ép Kịch Độc#
+GC_POISONSMOKE#Khí Độc#
+GC_CLOAKINGEXCEED#Tàng Ảnh#
+GC_PHANTOMMENACE#Ám Ma Kích#
+GC_HALLUCINATIONWALK#Thân Pháp Ảo Ảnh#
+GC_ROLLINGCUTTER#Máy Chém Xoay Vòng#
+GC_CROSSRIPPERSLASHER#Thập Tự Xuyên Tâm#
+AB_JUDEX#Trừ Tà#
+AB_ANCILLA#Ngọc Lệ Vệ Nữ#
+AB_ADORAMUS#Hóa Kiếp#
+AB_CLEMENTIA#Ban Ơn#
+AB_CANTO#Vận Tốc#
+AB_CHEAL#Cứu Độ#
+AB_EPICLESIS#Cây Sự Sống#
+AB_PRAEFATIO#Linh Giáp#
+AB_ORATIO#Cảm Hóa#
+AB_LAUDAAGNUS#Tâm Vệ#
+AB_LAUDARAMUS#Linh Vệ#
+AB_EUCHARISTICA#Kiên Tâm#
+AB_RENOVATIO#Ánh Sáng Thiên Đường#
+AB_HIGHNESSHEAL#Cứu Sinh#
+AB_CLEARANCE#Hóa Giải#
+AB_EXPIATIO#Xuyên Tâm#
+AB_DUPLELIGHT#Thánh Quang Vệ#
+AB_SILENTIUM#Vùng Câm Lặng#
+WL_WHITEIMPRISON#Bạch Ngục#
+WL_SOULEXPANSION#Khai Phá Linh Hồn#
+WL_FROSTMISTY#Sương Giá#
+WL_JACKFROST#Băng Hàn#
+WL_MARSHOFABYSS#Đất Lún#
+WL_RECOGNIZEDSPELL#Tinh Thông Phép Thuật#
+WL_SIENNAEXECRATE#Bùn Nhơ#
+WL_RADIUS#Bán Kính#
+WL_STASIS#Ngưng Đọng#
+WL_DRAINLIFE#Hấp Huyết#
+WL_CRIMSONROCK#Hỏa Thạch#
+WL_HELLINFERNO#Hỏa Ngục#
+WL_COMET#Thiên Thạch#
+WL_CHAINLIGHTNING#Liên Hoàn Lôi Trận#
+WL_EARTHSTRAIN#Sóng Địa Tầng#
+WL_TETRAVORTEX#Lốc Xoáy Ma Thuật#
+WL_SUMMONFB#Triệu Hồi Hỏa Cầu#
+WL_SUMMONBL#Triệu Hồi Lôi Cầu#
+WL_SUMMONWB#Triệu Hồi Thủy Cầu#
+WL_SUMMONSTONE#Triệu Hồi Ma Thạch#
+WL_RELEASE#Giải Phóng Ma Thuật#
+WL_READING_SB#Đọc Sách Phép#
+WL_FREEZE_SP#Khai Mở Tri Thức#
+RA_ARROWSTORM#Bão Tên#
+RA_FEARBREEZE#Khiếp Phong#
+RA_RANGERMAIN#Kỹ Thuật Săn#
+RA_AIMEDBOLT#Hồng Tâm Tiễn#
+RA_DETONATOR#Kích Nổ#
+RA_ELECTRICSHOCKER#Sốc Điện#
+RA_CLUSTERBOMB#Bẫy Chùm#
+RA_WUGMASTERY#Điều Khiển Sói#
+RA_WUGRIDER#Cưỡi Sói#
+RA_WUGDASH#Phi Sói#
+RA_WUGSTRIKE#Sói Vồ Mồi#
+RA_WUGBITE#Sói Táp#
+RA_TOOTHOFWUG#Nanh Sói#
+RA_SENSITIVEKEEN#Nhạy Bén#
+RA_CAMOUFLAGE#Ngụy Trang#
+RA_RESEARCHTRAP#Nghiên Cứu Bẫy#
+RA_MAGENTATRAP#Bẫy Lửa#
+RA_COBALTTRAP#Bẫy Nước#
+RA_MAIZETRAP#Bẫy Đất#
+RA_VERDURETRAP#Bẫy Gió#
+RA_FIRINGTRAP#Bẫy Thiêu Đốt#
+RA_ICEBOUNDTRAP#Bẫy Lạnh Cóng#
+NC_MADOLICENCE#Bằng Chế Tạo Mado#
+NC_BOOSTKNUCKLE#Cú Đấm Cơ Giới#
+NC_PILEBUNKER#Mũi Khoan Tử Thần#
+NC_VULCANARM#Đạn Công Phá#
+NC_FLAMELAUNCHER#Súng Phóng Lửa#
+NC_COLDSLOWER#Súng Đông Lạnh#
+NC_ARMSCANNON#Pháo Cơ Giới#
+NC_ACCELERATION#Tăng Gia Tốc#
+NC_HOVERING#Trọng Trường#
+NC_F_SIDESLIDE#Tiến Tới Cơ Học#
+NC_B_SIDESLIDE#Giật Lùi Cơ Học#
+NC_MAINFRAME#Tinh Chỉnh Máy Móc#
+NC_SELFDESTRUCTION#Tự Hủy#
+NC_SHAPESHIFT#Thay Đổi Nguyên Tố#
+NC_EMERGENCYCOOL#Hạ Nhiệt#
+NC_INFRAREDSCAN#Tia Hồng Ngoại#
+NC_ANALYZE#Phân Tích#
+NC_MAGNETICFIELD#Vùng Từ Trường#
+NC_NEUTRALBARRIER#Vùng Bảo Vệ#
+NC_STEALTHFIELD#Vùng Ẩn Thân#
+NC_REPAIR#Sửa Chữa Động Cơ#
+NC_TRAININGAXE#Đào Tạo Rìu Thuật#
+NC_RESEARCHFE#Nghiên Cứu Đất & Lửa#
+NC_AXEBOOMERANG#Phóng Rìu#
+NC_POWERSWING#Vung Rìu#
+NC_AXETORNADO#Cơn Lốc Rìu#
+NC_SILVERSNIPER#Máy Bắn Thiện Xạ#
+NC_MAGICDECOY#Máy Bắn Ma Thuật#
+NC_DISJOINT#Gỡ Máy Bắn#
+SC_FATALMENACE#Án Tử#
+SC_REPRODUCE#Sao Chép#
+SC_AUTOSHADOWSPELL#Ma Thuật Bóng Đêm#
+SC_SHADOWFORM#Hình Nhân Thế Mạng#
+SC_TRIANGLESHOT#Tam Xạ Tiễn#
+SC_BODYPAINT#Tạt Sơn#
+SC_INVISIBILITY#Vô Hình#
+SC_DEADLYINFECT#Truyền Nhiễm#
+SC_ENERVATION#Mặt Nạ Suy Nhược#
+SC_GROOMY#Mặt Nạ U Ám#
+SC_IGNORANCE#Mặt Nạ Lãng Quên#
+SC_LAZINESS#Mặt Nạ Lười Biếng#
+SC_UNLUCKY#Mặt Nạ Xui Xẻo#
+SC_WEAKNESS#Mặt Nạ Đọa Đày#
+SC_STRIPACCESSARY#Tước Phụ Kiện#
+SC_MANHOLE#Hố Tử Thần#
+SC_DIMENSIONDOOR#Cổng Không Gian#
+SC_CHAOSPANIC#Hình Vẽ Ám Ảnh#
+SC_MAELSTROM#Xoáy Nước#
+SC_BLOODYLUST#Vòng Tròn Máu#
+SC_FEINTBOMB#Bom Thế Thân#
+LG_CANNONSPEAR#Liên Hoàn Thương#
+LG_BANISHINGPOINT#Vô Ảnh Kích#
+LG_TRAMPLE#Giẫm Đạp#
+LG_SHIELDPRESS#Khiên Ấn#
+LG_REFLECTDAMAGE#Phản Đòn#
+LG_PINPOINTATTACK#Điểm Trọng Yếu#
+LG_FORCEOFVANGUARD#Vệ Binh Hộ Thể#
+LG_RAGEBURST#Đòn Tiên Phong#
+LG_SHIELDSPELL#Khiên Phép#
+LG_EXEEDBREAK#Loại Bỏ Giới Hạn#
+LG_OVERBRAND#Liên Hoàn Kích#
+LG_PRESTIGE#Uy Nghiêm#
+LG_BANDING#Vệ Quân Đoàn#
+LG_MOONSLASHER#Nguyệt Thương Phá#
+LG_RAYOFGENESIS#Tia Khởi Nguyên#
+LG_PIETY#Đức Độ#
+LG_EARTHDRIVE#Địa Động#
+LG_HESPERUSLIT#Kim Tinh Hộ Pháp#
+LG_INSPIRATION#Tinh Hoa Tuôn Trào#
+SR_DRAGONCOMBO#Giáng Long Quyền#
+SR_SKYNETBLOW#Thiên La Địa Võng#
+SR_EARTHSHAKER#Dậm Đất#
+SR_FALLENEMPIRE#Đọa Vương Quyền#
+SR_TIGERCANNON#Mãnh Hổ Thần Công#
+SR_RAMPAGEBLASTER#Xung Bạo Kích#
+SR_CRESCENTELBOW#Nguyệt Loan Đẩu#
+SR_CURSEDCIRCLE#Ngạt Khí Công#
+SR_LIGHTNINGWALK#Lôi Ảnh Pháp#
+SR_KNUCKLEARROW#Cú Đấm Tay Gấu#
+SR_WINDMILL#Xoáy Trụ Cước#
+SR_RAISINGDRAGON#Thiên Long Hộ Thể#
+SR_ASSIMILATEPOWER#Hấp Công#
+SR_POWERVELOCITY#Truyền Công#
+SR_GATEOFHELL#Quỷ Môn Quan#
+SR_GENTLETOUCH_QUIET#Điểm Huyệt - Tĩnh#
+SR_GENTLETOUCH_CURE#Điểm Huyệt - Giải#
+SR_GENTLETOUCH_ENERGYGAIN#Điểm Huyệt - Năng#
+SR_GENTLETOUCH_CHANGE#Điểm Huyệt - Hoán#
+SR_GENTLETOUCH_REVITALIZE#Điểm Huyệt - Mệnh#
+WA_SWING_DANCE#Múa Xoay Vòng#
+WA_SYMPHONY_OF_LOVER#Bản Giao Hưởng Tình Ái#
+WA_MOONLIT_SERENADE#Bản Xô-nát Ánh Trăng#
+MI_RUSH_WINDMILL#Dồn Dập#
+MI_ECHOSONG#Vọng Âm#
+MI_HARMONIZE#Hòa Khúc#
+WM_LESSON#Thanh Nhạc Nâng Cao#
+WM_METALICSOUND#Nốt Cao Trào#
+WM_REVERBERATION#Nốt Nhạc Rung Động#
+WM_DOMINION_IMPULSE#Xung Lực#
+WM_SEVERE_RAINSTORM#Vũ Tiễn#
+WM_POEMOFNETHERWORLD#Bài Ca Sầu Thảm#
+WM_VOICEOFSIREN#Mị Âm#
+WM_DEADHILLHERE#Thung Lũng Tử Thần#
+WM_LULLABY_DEEPSLEEP#Tiếng Ru Rừng Thẳm#
+WM_SIRCLEOFNATURE#Vòng Lặp Tự Nhiên#
+WM_RANDOMIZESPELL#Khúc Hát Cải Biên#
+WM_GLOOMYDAY#Bài Ca U Uất#
+WM_GREAT_ECHO#Khúc Vang Vọng#
+WM_SONG_OF_MANA#Khúc Ca Ma Lực#
+WM_DANCE_WITH_WUG#Khiêu Vũ Cùng Bầy Sói#
+WM_SOUND_OF_DESTRUCTION#Bài Hát Diệt Vong#
+WM_SATURDAY_NIGHT_FEVER#Đêm Thứ Bảy Cuồng Loạn#
+WM_LERADS_DEW#Giọt Sương Tái Sinh#
+WM_MELODYOFSINK#Giai Điệu Chìm Đắm#
+WM_BEYOND_OF_WARCRY#Chiến Trường Ngoài Xa#
+WM_UNLIMITED_HUMMING_VOICE#Khúc Ngân Vô Tận#
+SO_FIREWALK#Hỏa Địa Hành#
+SO_ELECTRICWALK#Lôi Địa Hành#
+SO_SPELLFIST#Thu Phép#
+SO_EARTHGRAVE#Mộ Địa Chông#
+SO_DIAMONDDUST#Bụi Băng Tuyết#
+SO_POISON_BUSTER#Độc Dược Bùng Nổ#
+SO_PSYCHIC_WAVE#Sóng Siêu Linh#
+SO_CLOUD_KILL#Mây Độc#
+SO_STRIKING#Trợ Công#
+SO_WARMER#Sưởi Ấm#
+SO_VACUUM_EXTREME#Cơn Lốc Chân Không#
+SO_VARETYR_SPEAR#Lôi Giáo#
+SO_ARRULLO#Mê Hoặc#
+SO_EL_CONTROL#Điều Khiển Tinh Linh#
+SO_SUMMON_AGNI#Triệu Hồi Agni#
+SO_SUMMON_AQUA#Triệu Hồi Aqua#
+SO_SUMMON_VENTUS#Triệu Hồi Ventus#
+SO_SUMMON_TERA#Triệu Hồi Tera#
+SO_EL_ACTION#Tinh Linh Thuật#
+SO_EL_ANALYSIS#Nghiên Cứu Nguyên Tố#
+SO_EL_SYMPATHY#Cảm Quan Tinh Linh#
+SO_EL_CURE#Chữa Trị Tinh Linh#
+SO_FIRE_INSIGNIA#Vùng Hỏa Phù#
+SO_WATER_INSIGNIA#Vùng Thủy Phù#
+SO_WIND_INSIGNIA#Vùng Lôi Phù#
+SO_EARTH_INSIGNIA#Vùng Địa Phù#
+GN_TRAINING_SWORD#Luyện Kiếm#
+GN_REMODELING_CART#Cải Tiến Xe Đẩy#
+GN_CART_TORNADO#Cơn Lốc Xe Đẩy#
+GN_CARTCANNON#Xe Đẩy Thần Công#
+GN_CARTBOOST#Xe Đẩy Siêu Tốc#
+GN_THORNS_TRAP#Bẫy Gai#
+GN_BLOOD_SUCKER#Thực Vật Hút Máu#
+GN_SPORE_EXPLOSION#Nấm Nổ#
+GN_WALLOFTHORN#Tường Gai#
+GN_CRAZYWEED#Dây Leo Điên Loạn#
+GN_DEMONIC_FIRE#Lửa Ác Thần#
+GN_FIRE_EXPANSION#Bồi Lửa#
+GN_HELLS_PLANT#Triệu Hồi Cây Quỷ#
+GN_MANDRAGORA#Nhân Sâm Hống#
+GN_SLINGITEM#Ném Hóa Chất#
+GN_CHANGEMATERIAL#Tái Tạo#
+GN_MIX_COOKING#Nấu Ăn#
+GN_MAKEBOMB#Chế Bom#
+GN_S_PHARMACY#Pha Chế Đặc Biệt#
+AB_SECRAMENT#Thệ Ước#
+SR_HOWLINGOFLION#Sư Tử Hống#
+SR_RIDEINLIGHTNING#Lôi Phá#
 RETURN_TO_ELDICASTES#Return to Eldicastes#
-ALL_BUYING_STORE#MхТ Saтp Mua HaМng#
+ALL_BUYING_STORE#Mở Sạp Mua Hàng#
 ALL_GUARDIAN_RECALL#Call of Guardian#
 ALL_ODINS_POWER#Odins Power#
 GM_ITEM_ATKMAX#Max Physical item attack rate#
 GM_ITEM_ATKMIN#Minimize Physical item attack rate#
 GM_ITEM_MATKMAX#Max Magic item attack rate#
 GM_ITEM_MATKMIN#Minimize Magic item attack rate#
-RL_RICHS_COIN#Uy Lэтc РфМng TiкМn#
-RL_MASS_SPIRAL#Рaтn Xuyкn Phaм#
-RL_BANISHING_BUSTER#Phaмt Bгмn Hэ Vф#
-RL_B_TRAP#BвЮy Hфм Рen#
-RL_FLICKER#Chвm NgoМi#
-RL_S_STORM#Phaмt Bгмn Tan VхЮ#
-RL_E_CHAIN#HoТa Lэтc Liкn Thanh#
-RL_QD_SHOT#Phaмt Bгмn ThвМn Tфмc#
-RL_C_MARKER#Рaмnh Dвмu Рiтnh Viт#
-RL_FIREDANCE#VuЮ Рiктu HoТa ThвМn#
-RL_H_MINE#CaМi Lэтu Рaтn#
-RL_P_ALTER#Viкn Рaтn Baтc#
-RL_FALLEN_ANGEL#Thiкn ThвМn Sa NgaЮ#
-RL_R_TRIP#Bгмn Рiкn Loaтn#
-RL_D_TAIL#HoТa TiкЮn Рuфi RфМng#
-RL_FIRE_RAIN#HoТa VuЮ ThвМn Cфng#
-RL_HEAT_BARREL#Рaтn Gia Tфмc#
-RL_AM_BLAST#Vuт NфТ Phi Vвтt Chвмt#
-RL_SLUGSHOT#Рaтn Troтng TrэхМng#
-RL_HAMMER_OF_GOD#Рaтn ThвМn Cфng#
-KO_YAMIKUMO#ВТn Thвn#
-KO_RIGHT#NhвЮn Thuвтt Tay PhaТi#
-KO_LEFT#NhвЮn Thuвтt Tay Traмi#
-KO_JYUMONJIKIRI#Thвтp Tэт TraТm#
-KO_SETSUDAN#TraТm HфМn QuyкМn#
-KO_BAKURETSU#Phi Tiкu NфТ#
-KO_HAPPOKUNAI#Neмm BэМa#
-KO_MUCHANAGE#Рфтn Рaтi Kim#
-KO_HUUMARANKA#Xoaмy Hoa Baтo Kiмch#
-KO_MAKIBISHI#RaТi Chфng Sгмt#
-KO_MEIKYOUSISUI#Tвm HфМn Thanh Khiкмt#
-KO_ZANZOU#AТo AТnh - HiМnh Nhвn#
-KO_KYOUGAKU#AТo AТnh - Tк Liктt#
-KO_JYUSATSU#AТo AТnh - TэТ ThвМn#
-KO_KAHU_ENTEN#BuМa LэТa#
-KO_HYOUHU_HUBUKI#BuМa Bгng#
-KO_KAZEHU_SEIRAN#BuМa Gioм#
-KO_DOHU_KOUKAI#BuМa Рвмt#
-KO_KAIHOU#GiaТi Phoмng NhвЮn Phaмp#
-KO_ZENKAI#NhвЮn Thuвтt Trвтn РфМ#
-KO_GENWAKU#AТo AТnh - Hoaмn РфТi#
-KO_IZAYOI#Ркm RгМm#
-KG_KAGEHUMI#Рфтt Kiмch Boмng Ркm#
-KG_KYOMU#MaМn Ркm Vф Рiтnh#
-KG_KAGEMUSYA#Hгмc Binh Thuвтt#
-OB_ZANGETSU#VвМng Trгng Ai Oaмn#
-OB_OBOROGENSOU#Aмnh Trгng AТo Mфтng#
-OB_AKAITSUKI#РiкМm Baмo Aмnh Trгng#
+RL_RICHS_COIN#Uy Lực Đồng Tiền#
+RL_MASS_SPIRAL#Đạn Xuyên Phá#
+RL_BANISHING_BUSTER#Phát Bắn Hư Vô#
+RL_B_TRAP#Bẫy Hố Đen#
+RL_FLICKER#Châm Ngòi#
+RL_S_STORM#Phát Bắn Tan Vỡ#
+RL_E_CHAIN#Hỏa Lực Liên Thanh#
+RL_QD_SHOT#Phát Bắn Thần Tốc#
+RL_C_MARKER#Đánh Dấu Định Vị#
+RL_FIREDANCE#Vũ Điệu Hỏa Thần#
+RL_H_MINE#Cài Lựu Đạn#
+RL_P_ALTER#Viên Đạn Bạc#
+RL_FALLEN_ANGEL#Thiên Thần Sa Ngã#
+RL_R_TRIP#Bắn Điên Loạn#
+RL_D_TAIL#Hỏa Tiễn Đuôi Rồng#
+RL_FIRE_RAIN#Hỏa Vũ Thần Công#
+RL_HEAT_BARREL#Đạn Gia Tốc#
+RL_AM_BLAST#Vụ Nổ Phi Vật Chất#
+RL_SLUGSHOT#Đạn Trọng Trường#
+RL_HAMMER_OF_GOD#Đạn Thần Công#
+KO_YAMIKUMO#Ẩn Thân#
+KO_RIGHT#Nhẫn Thuật Tay Phải#
+KO_LEFT#Nhẫn Thuật Tay Trái#
+KO_JYUMONJIKIRI#Thập Tự Trảm#
+KO_SETSUDAN#Trảm Hồn Quyền#
+KO_BAKURETSU#Phi Tiêu Nổ#
+KO_HAPPOKUNAI#Ném Bừa#
+KO_MUCHANAGE#Độn Đại Kim#
+KO_HUUMARANKA#Xoáy Hoa Bạo Kích#
+KO_MAKIBISHI#Rải Chông Sắt#
+KO_MEIKYOUSISUI#Tâm Hồn Thanh Khiết#
+KO_ZANZOU#Ảo Ảnh - Hình Nhân#
+KO_KYOUGAKU#Ảo Ảnh - Tê Liệt#
+KO_JYUSATSU#Ảo Ảnh - Tử Thần#
+KO_KAHU_ENTEN#Bùa Lửa#
+KO_HYOUHU_HUBUKI#Bùa Băng#
+KO_KAZEHU_SEIRAN#Bùa Gió#
+KO_DOHU_KOUKAI#Bùa Đất#
+KO_KAIHOU#Giải Phóng Nhẫn Pháp#
+KO_ZENKAI#Nhẫn Thuật Trận Đồ#
+KO_GENWAKU#Ảo Ảnh - Hoán Đổi#
+KO_IZAYOI#Đêm Rằm#
+KG_KAGEHUMI#Đột Kích Bóng Đêm#
+KG_KYOMU#Màn Đêm Vô Định#
+KG_KAGEMUSYA#Hắc Binh Thuật#
+OB_ZANGETSU#Vầng Trăng Ai Oán#
+OB_OBOROGENSOU#Ánh Trăng Ảo Mộng#
+OB_AKAITSUKI#Điềm Báo Ánh Trăng#
 ECL_SNOWFLIP#Snow Flip#
 ECL_PEONYMAMY#Peony Mommy#
 ECL_SADAGUI#Slapping Herb#
@@ -805,18 +805,18 @@ ECL_SEQUOIADUST#Yggdrasil Dust#
 ECLAGE_RECALL#Return to Eclage#
 ALL_NIFLHEIM_RECALL#Return to Niflheim#
 ALL_PRONTERA_RECALL#Return to Prontera#
-GC_DARKCROW#Hгмc TraТo#
-RA_UNLIMIT#Khфng Giхмi Haтn#
-GN_ILLUSIONDOPING#Thuфмc AТo Giaмc#
-RK_DRAGONBREATH_WATER#Hхi ThхТ RфМng (Nэхмc)#
-NC_MAGMA_ERUPTION#Dung Nham Tuфn TraМo#
-WM_FRIGG_SONG#Khuмc Ca NэЮ ThвМn#
-SO_ELEMENTAL_SHIELD#Khiкn Nguyкn Tфм#
-SR_FLASHCOMBO#Liкn HoaМn Tфмc QuyкМn#
-SC_ESCAPE#Ruмt Lui KhвТn Cвмp#
-AB_OFFERTORIUM#PhфТ Рфт Chuмng Sinh#
-WL_TELEKINESIS_INTENSE#Ngoaтi CaТm#
-LG_KINGS_GRACE#Вn SuТng CuТa Vua#
+GC_DARKCROW#Hắc Trảo#
+RA_UNLIMIT#Không Giới Hạn#
+GN_ILLUSIONDOPING#Thuốc Ảo Giác#
+RK_DRAGONBREATH_WATER#Hơi Thở Rồng (Nước)#
+NC_MAGMA_ERUPTION#Dung Nham Tuôn Trào#
+WM_FRIGG_SONG#Khúc Ca Nữ Thần#
+SO_ELEMENTAL_SHIELD#Khiên Nguyên Tố#
+SR_FLASHCOMBO#Liên Hoàn Tốc Quyền#
+SC_ESCAPE#Rút Lui Khẩn Cấp#
+AB_OFFERTORIUM#Phổ Độ Chúng Sinh#
+WL_TELEKINESIS_INTENSE#Ngoại Cảm#
+LG_KINGS_GRACE#Ân Sủng Của Vua#
 ALL_FULL_THROTTLE#Full Throttle#
 SU_BASIC_SKILL#New Basic Skill#
 SU_BITE#Bite#
@@ -853,11 +853,11 @@ SU_MEOWMEOW#Meow Meow#
 SU_SPIRITOFLAND#Spirit of Earth#
 SU_CHATTERING#Chattering#
 SU_SPIRITOFSEA#Spirit of Sea#
-WE_CALLALLFAMILY#CaТ NhaМ Bкn Nhau#
-WE_ONEFOREVER#Haтnh Phuмc Bвмt Diктt#
-WE_CHEERUP#Gia РiМnh LaМ Nhвмt#
-AB_VITUPERATUM#VuМng Suy Yкмu#
-AB_CONVENIO#Tвтp Hхтp#
+WE_CALLALLFAMILY#Cả Nhà Bên Nhau#
+WE_ONEFOREVER#Hạnh Phúc Bất Diệt#
+WE_CHEERUP#Gia Đình Là Nhất#
+AB_VITUPERATUM#Vùng Suy Yếu#
+AB_CONVENIO#Tập Hợp#
 HLIF_HEAL#Touch of Heal#
 HLIF_AVOID#Emergency Avoid#
 HLIF_BRAIN#Brain Surgery#
@@ -900,30 +900,30 @@ MH_GRANITIC_ARMOR#Granitic Armor#
 MH_LAVA_SLIDE#Lava Slide#
 MH_PYROCLASTIC#Pyroclastic#
 MH_VOLCANIC_ASH#Volcanic Ash#
-MS_BASH#Cфng kiмch#
-MS_MAGNUM#HoТa Phaм#
-MS_BOWLINGBASH#ToaМn Phong TraТm#
-MS_PARRYING#Chгмn РoМn#
-MS_REFLECTSHIELD#PhaТn РoМn#
-MS_BERSERK#CuфМng Nфт#
-MA_DOUBLE#Song TiкЮn#
-MA_SHOWER#Mэa Tкn#
-MA_SKIDTRAP#BвЮy Trэхтt#
-MA_LANDMINE#BвЮy MiМn#
-MA_SANDMAN#BвЮy NguТ#
-MA_FREEZINGTRAP#BвЮy Bгng#
-MA_REMOVETRAP#GхЮ BвЮy#
-MA_CHARGEARROW#Troтng TiкЮn#
-MA_SHARPSHOOTING#MuЮi Tкn Xuyкn Phaм#
-ML_PIERCE#Thэхng Phaм#
-ML_BRANDISH#ToaМn Thэхng Phaм#
-ML_SPIRALPIERCE#РoМn Thэхng Lфмc#
-ML_DEFENDER#HaМo Quang Hфт Vкт#
-ML_AUTOGUARD#Chгтn РoМn#
+MS_BASH#Công kích#
+MS_MAGNUM#Hỏa Phá#
+MS_BOWLINGBASH#Toàn Phong Trảm#
+MS_PARRYING#Chắn Đòn#
+MS_REFLECTSHIELD#Phản Đòn#
+MS_BERSERK#Cuồng Nộ#
+MA_DOUBLE#Song Tiễn#
+MA_SHOWER#Mưa Tên#
+MA_SKIDTRAP#Bẫy Trượt#
+MA_LANDMINE#Bẫy Mìn#
+MA_SANDMAN#Bẫy Ngủ#
+MA_FREEZINGTRAP#Bẫy Băng#
+MA_REMOVETRAP#Gỡ Bẫy#
+MA_CHARGEARROW#Trọng Tiễn#
+MA_SHARPSHOOTING#Mũi Tên Xuyên Phá#
+ML_PIERCE#Thương Phá#
+ML_BRANDISH#Toàn Thương Phá#
+ML_SPIRALPIERCE#Đòn Thương Lốc#
+ML_DEFENDER#Hào Quang Hộ Vệ#
+ML_AUTOGUARD#Chặn Đòn#
 ML_DEVOTION#Hy Sinh#
-MER_MAGNIFICAT#Hвмp Thuт Nгng Lэхтng#
-MER_QUICKEN#Song ThuТ Tфмc#
-MER_SIGHT#HoТa NhaЮn#
+MER_MAGNIFICAT#Hấp Thụ Năng Lượng#
+MER_QUICKEN#Song Thủ Tốc#
+MER_SIGHT#Hỏa Nhãn#
 MER_CRASH#Crash#
 MER_REGAIN#Regain#
 MER_TENDER#Tender#
@@ -931,15 +931,15 @@ MER_BENEDICTION#Benediction#
 MER_RECUPERATE#Recuperate#
 MER_MENTALCURE#Mental Cure#
 MER_COMPRESS#Compress#
-MER_PROVOKE#Khiкu Khiмch#
-MER_AUTOBERSERK#NфТi Рiкn#
-MER_DECAGI#GiaТm Tфмc#
+MER_PROVOKE#Khiêu Khích#
+MER_AUTOBERSERK#Nổi Điên#
+MER_DECAGI#Giảm Tốc#
 MER_SCAPEGOAT#Scapegoat#
-MER_LEXDIVINA#Khoмa Pheмp#
-MER_ESTIMATION#CaТm Quan#
-MER_KYRIE#RaМo Chгмn#
-MER_BLESSING#Ban Phuмc#
-MER_INCAGI#Tгng Tфмc#
+MER_LEXDIVINA#Khóa Phép#
+MER_ESTIMATION#Cảm Quan#
+MER_KYRIE#Rào Chắn#
+MER_BLESSING#Ban Phúc#
+MER_INCAGI#Tăng Tốc#
 MER_INVINCIBLEOFF2#Mind Blaster#
 GD_APPROVAL#Official Guild Approval#
 GD_KAFRACONTRACT#Contract with Kafra#

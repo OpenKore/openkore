@@ -42,10 +42,12 @@ sub start {
 		cRO
 		idRO
 		iRO
-		pRO
+		kRO
 		rRO
+		Sakray
 		tRO
 		twRO
+		vRO
 		Zero
 		kRO_RagexeRE_0
 	)) {
@@ -53,11 +55,11 @@ sub start {
 			for my $module (keys %tests) {
 				SKIP: {
 					# kRO has too many base classes (more than 100), and perl dies trying to load it
-					skip 'known to be broken', 1 if $serverType =~ /^(rRO|twRO)$/;
+					skip 'known to be broken', 1 if $serverType =~ /^(rRO)$/;
 					my $instance = eval { $module->create(undef, $serverType) };
 					ok($instance, "create $module") or skip 'failed', 1;
 
-					skip 'broken packet_list', 1 if $serverType =~ /^(rRO|twRO)$/;
+					skip 'broken packet_list', 1 if $serverType =~ /^(rRO)$/;
 
 					for (keys %{$instance->{packet_lut}}) {
 						subtest sprintf('$_{packet_list}{$_{packet_lut}{%s}}', $_) => sub { SKIP: {
@@ -81,7 +83,7 @@ sub start {
 								done_testing();
 							} or skip 'failed', 1;
 							
-							if ( $serverType =~ /^(bRO|idRO|pRO|tRO)$/) { # different login packet. Parser is not implemented 2021-02-15
+							if ( $serverType =~ /^(bRO|idRO|tRO)$/) { # different login packet. Parser is not implemented 2021-02-15
 								done_testing();
 								next;
 							}

@@ -3,6 +3,7 @@ config.log
 errors.txt
 benchmark-results.txt
 logs
+DUMP.txt
 
 # Plugin files
 /profiles
