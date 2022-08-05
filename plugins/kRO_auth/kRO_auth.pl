@@ -84,7 +84,7 @@ sub getToken {
 	debug "[kRO_auth] Setting Up the Login Request...\n";
 	$cookie_jar->extract_cookies($response);
 	@forms = HTML::Form->parse($response, $response->base);
-	$input = $forms[2]->find_input('__GnjoyRequestVerificationToken');
+	$input = $forms[1]->find_input('__GnjoyRequestVerificationToken');
 
 	# set LWP User Agent and Header to login
 	$ua->cookie_jar($cookie_jar);
