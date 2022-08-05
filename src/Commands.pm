@@ -573,6 +573,12 @@ sub initHandlers {
 			], \&cmdSkills],
 		['sll', T("Display a list of slaves in your immediate area."), \&cmdSlaveList],
 		['spells', T("List area effect spells on screen."), \&cmdSpells],
+		['starplace', [
+			T("Starplace Agree"),
+			["sun", T("select sun as starplace")],
+			["moon", T("select mon as starplace")],
+			["star", T("select star as starplace")],
+			], \&cmdStarplace],
 		['storage', [
 			T("Handle items in Kafra storage."),
 			["", T("lists items in storage")],
@@ -5295,6 +5301,31 @@ sub cmdSpells {
 	}
 	$msg .= ('-'x66) . "\n";
 	message $msg, "list";
+}
+
+sub cmdStarplace {
+	my (undef, $args) = @_;
+	my ($type) = parseArgs( $args );
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my $flag;
+	if($type eq "sun") {
+		$flag = 0;
+	} elsif($type eq "moon") {
+		$flag = 1;
+	} elsif($type eq "star") {
+		$flag = 2;
+	} else {
+		error T("Syntax Error in function 'starplace' (starplace agree)\n" .
+			"Usage: starplace [<sun | moon | star>]\n");
+		return;
+	}
+
+	$messageSender->sendFeelSaveOk( $flag );
 }
 
 sub cmdStand {
