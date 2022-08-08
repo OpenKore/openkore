@@ -711,6 +711,7 @@ sub new {
 		'0B13' => ['item_preview', 'a2 C v a16 a25', [qw(index broken upgrade cards options)]],
 		# '0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
 		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
+		'0B1A' => ['skill_cast', 'a4 a4 v5 V C V', [qw(sourceID targetID x y skillID unknown type wait dispose unknow)]], # 29
 		'0B1B' => ['load_confirm'],
 		'0B1D' => ['ping'], #2
 		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate tab hotkeys)]],#herc PR 2468
