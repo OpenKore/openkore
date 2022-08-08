@@ -5313,11 +5313,11 @@ sub cmdStarplace {
 	}
 
 	my $flag;
-	if($type eq "sun") {
+	if ($type eq "sun") {
 		$flag = 0;
-	} elsif($type eq "moon") {
+	} elsif ($type eq "moon") {
 		$flag = 1;
-	} elsif($type eq "star") {
+	} elsif ($type eq "star") {
 		$flag = 2;
 	} else {
 		error T("Syntax Error in function 'starplace' (starplace agree)\n" .
@@ -5325,7 +5325,7 @@ sub cmdStarplace {
 		return;
 	}
 
-	$messageSender->sendFeelSaveOk( $flag );
+	$messageSender->sendFeelSaveOk($flag);
 }
 
 sub cmdStand {
