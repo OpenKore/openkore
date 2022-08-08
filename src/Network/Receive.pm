@@ -11875,4 +11875,11 @@ sub ping {
 	$messageSender->sendPing();
 }
 
+# 0253 - ZC_STARPLACE
+# Star Gladiator's Feeling map confirmation prompt
+sub starplace {
+	my ($self, $args) = @_;
+	message TF("Wich: %s\n", $args->{which});
+}
+
 1;
