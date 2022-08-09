@@ -127,7 +127,7 @@ use constant {
 	NPC_HO_TYPE => 0x8,
 	NPC_MERSOL_TYPE => 0x9,
 	NPC_ELEMENTAL_TYPE => 0xa,
-	NPC_TYPE2 => 0xС
+	NPC_TYPE2 => 0xc,
 };
 
 # connection
