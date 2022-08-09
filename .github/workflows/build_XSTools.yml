@@ -37,7 +37,7 @@ jobs:
           perl: 5.32
           strawberry_distr: 'https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip'
 
-        - os: ubuntu-18.04
+        - os: ubuntu-20.04
           python: 2.7
           architecture: x64
           perl: 5.12
@@ -54,8 +54,8 @@ jobs:
     # setup matrix:
     # - windows-2019 + python 2.7 x86 + strawberry perl 5.12 x86 + strawberry g++ x86
     # - windows-2022 + python 3   x86 + strawberry perl 5.32 x86 + strawberry g++ x86
-    # - ubuntu-18.04 + python 2.7 x64 +            perl 5.12 x64
-    # - ubuntu-20.04 + python 3   x64 +            perl last (5.34) x64
+    # - ubuntu-20.04 + python 2.7 x64 +            perl 5.12 x64
+    # - ubuntu-22.04 + python 3   x64 +            perl last (5.34) x64
     - name: Setup python ${{ matrix.python }} ${{ matrix.architecture }}
       uses: actions/setup-python@v2
       with:
@@ -219,11 +219,11 @@ jobs:
           architecture: x86
           perl: 5.32
 
-        - os: ubuntu-18.04
+        - os: ubuntu-20.04
           architecture: x64
           perl: 5.12
 
-        - os: ubuntu-latest
+        - os: ubuntu-22.04
           architecture: x64
           perl: latest
 
