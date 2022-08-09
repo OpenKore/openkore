@@ -1,0 +1,995 @@
+NV_BASIC#基本スキル (Basic Skill)#
+SM_SWORD#剣修練 (Sword Mastery)#
+SM_TWOHAND#両手剣修練 (Two handed sword Mastery)#
+SM_RECOVERY#HP回復力向上 (Increase recuperative power)#
+SM_BASH#バッシュ (Bash)#
+SM_PROVOKE#プロボック (Provoke)#
+SM_MAGNUM#マグナムブレイク (Magnum Break)#
+SM_ENDURE#インデュア (Endure)#
+MG_SRECOVERY#SP回復力向上 (Increase spiritual power)#
+MG_SIGHT#サイト (Sight)#
+MG_NAPALMBEAT#ナパームビート (Napalm beat)#
+MG_SAFETYWALL#セイフティウォール (Safety wall)#
+MG_SOULSTRIKE#ソウルストライク (Soul Strike)#
+MG_COLDBOLT#コールドボルト (Coldbolt)#
+MG_FROSTDIVER#フロストダイバー (Frost diver)#
+MG_STONECURSE#ストーンカース (Stone curse)#
+MG_FIREBALL#ファイアーボール (Fireball)#
+MG_FIREWALL#ファイアーウォール (Firewall)#
+MG_FIREBOLT#ファイアーボルト (Firebolt)#
+MG_LIGHTNINGBOLT#ライトニングボルト (Lightning bolt)#
+MG_THUNDERSTORM#サンダーストーム (Thunder storm)#
+AL_DP#ディバインプロテクション (Divine Protection)#
+AL_DEMONBANE#デーモンベイン (Demonbane)#
+AL_RUWACH#ルアフ (Ruwach)#
+AL_PNEUMA#ニューマ (Pneuma)#
+AL_TELEPORT#テレポート (Teleportation)#
+AL_WARP#ワープポータル (Warp portal)#
+AL_HEAL#ヒール (Heal)#
+AL_INCAGI#速度増加 (Increase agility)#
+AL_DECAGI#速度減少 (Decrease agility)#
+AL_HOLYWATER#アクアベネディクタ (Aqua Benedicta)#
+AL_CRUCIS#シグナムクルシス (Signum Crucis)#
+AL_ANGELUS#エンジェラス (Angelus)#
+AL_BLESSING#ブレッシング (Blessing)#
+AL_CURE#キュアー (Cure)#
+MC_INCCARRY#所持限界量増加 (Enlarge Weight limit)#
+MC_DISCOUNT#ディスカウント (Discount)#
+MC_OVERCHARGE#オーバーチャージ (Overcharge)#
+MC_PUSHCART#プッシュカート (Pushcart)#
+MC_IDENTIFY#アイテム鑑定 (Identify)#
+MC_VENDING#露店開設 (Vending)#
+MC_MAMMONITE#メマーナイト (Mammonite)#
+AC_OWL#ふくろうの目 (Owl's Eye)#
+AC_VULTURE#ワシの目 (Vulture's Eye)#
+AC_CONCENTRATION#集中力向上 (Attention concentrate)#
+AC_DOUBLE#ダブルストレイフィング (Double strafing)#
+AC_SHOWER#アローシャワー (Arrow shower)#
+TF_DOUBLE#ダブルアタック (Double attack)#
+TF_MISS#回避率増加 (Increase dodge)#
+TF_STEAL#スティール (Steal)#
+TF_HIDING#ハイディング (Hiding)#
+TF_POISON#インベナム (Envenom)#
+TF_DETOXIFY#解毒 (Detoxify)#
+ALL_RESURRECTION#リザレクション (Resurrection)#
+KN_SPEARMASTERY#槍修練 (Spear Mastery)#
+KN_PIERCE#ピアース (Pierce)#
+KN_BRANDISHSPEAR#ブランディッシュスピア (Brandish Spear)#
+KN_SPEARSTAB#スピアスタブ (Spear Stab)#
+KN_SPEARBOOMERANG#スピアブーメラン (Spear Boomerang)#
+KN_TWOHANDQUICKEN#ツーハンドクイッケン (Two Hand Quicken)#
+KN_AUTOCOUNTER#オートカウンター (Auto Counter)#
+KN_BOWLINGBASH#ボウリングバッシュ (Bowling Bash)#
+KN_RIDING#ライディング (Riding)#
+KN_CAVALIERMASTERY#騎兵修練 (Cavalier Mastery)#
+PR_MACEMASTERY#メイス修練 (Mace Mastery)#
+PR_IMPOSITIO#イムポシティオマヌス (Impositio Manus)#
+PR_SUFFRAGIUM#サフラギウム (Suffragium)#
+PR_ASPERSIO#アスペルシオ (Aspersio)#
+PR_BENEDICTIO#聖体降福 (Benedictio Sanctissimi Sacramenti)#
+PR_SANCTUARY#サンクチュアリ (Sanctuary)#
+PR_SLOWPOISON#スローポイズン (Slow Poison)#
+PR_STRECOVERY#リカバリー (Recovery)#
+PR_KYRIE#キリエエレイソン (Kyrie Eleison)#
+PR_MAGNIFICAT#マグニフィカート (Magnificat)#
+PR_GLORIA#グロリア (Gloria)#
+PR_LEXDIVINA#レックスディビーナ (Lex Divina)#
+PR_TURNUNDEAD#ターンアンデッド (Turn Undead)#
+PR_LEXAETERNA#レックスエーテルナ (Lex Aeterna)#
+PR_MAGNUS#マグヌスエクソシズム (Magnus Exorcismus)#
+WZ_FIREPILLAR#ファイアーピラー (Fire Pillar)#
+WZ_SIGHTRASHER#サイトラッシャー (Sightrasher)#
+WZ_FIREIVY#ファイアーアイビー (Fire Ivy)#
+WZ_METEOR#メテオストーム (Meteor Storm)#
+WZ_JUPITEL#ユピテルサンダー (Jupitel Thunder)#
+WZ_VERMILION#ロードオブヴァーミリオン (Lord of Vermilion)#
+WZ_WATERBALL#ウォーターボール (Waterball)#
+WZ_ICEWALL#アイスウォール (Icewall)#
+WZ_FROSTNOVA#フロストノヴァ (Frost Nova)#
+WZ_STORMGUST#ストームガスト (Storm Gust)#
+WZ_EARTHSPIKE#アーススパイク (Earth Spike)#
+WZ_HEAVENDRIVE#ヘヴンズドライブ (Heaven's Drive)#
+WZ_QUAGMIRE#クァグマイア (Quagmire)#
+WZ_ESTIMATION#モンスター情報 (Monster Property)#
+BS_IRON#鉄製造 (Iron Tempering)#
+BS_STEEL#鋼鉄製造 (Steel Tempering)#
+BS_ENCHANTEDSTONE#属性石製造 (Enchanted Stone Craft)#
+BS_ORIDEOCON#オリデオコン研究 (Research Orideocon)#
+BS_DAGGER#短剣製作 (Smith Dagger)#
+BS_SWORD#剣製作 (Smith Sword)#
+BS_TWOHANDSWORD#両手剣製作 (Smith Two-handed Sword)#
+BS_AXE#斧製作 (Smith Axe)#
+BS_MACE#メイス製作 (Smith Mace)#
+BS_KNUCKLE#ナックル製作 (Smith Brass Knuckle)#
+BS_SPEAR#槍製作 (Smith Spear)#
+BS_HILTBINDING#ヒルトバインディング (Hilt Biding)#
+BS_FINDINGORE#鉱石発見 (Finding Ore)#
+BS_WEAPONRESEARCH#武器研究 (Weaponry Research)#
+BS_REPAIRWEAPON#武器修理 (Repair Weapon)#
+BS_SKINTEMPER#スキンテンパリング (Skin Tempering)#
+BS_HAMMERFALL#ハンマーフォール (Hammerfall)#
+BS_ADRENALINE#アドレナリンラッシュ (Adrenaline Rush)#
+BS_WEAPONPERFECT#ウェポンパーフェクション (Weapon Perfection)#
+BS_OVERTHRUST#オーバートラスト (Over Thrust)#
+BS_MAXIMIZE#マキシマイズパワー (Maximize Power)#
+HT_SKIDTRAP#スキッドトラップ (Skid Trap)#
+HT_LANDMINE#ランドマイン (Land Mine)#
+HT_ANKLESNARE#アンクルスネア (Anklesnare)#
+HT_SHOCKWAVE#ショックウェーブトラップ (Shockwave Trap)#
+HT_SANDMAN#サンドマン (Sandman)#
+HT_FLASHER#フラッシャー (Flasher)#
+HT_FREEZINGTRAP#フリージングトラップ (Freezing Trap)#
+HT_BLASTMINE#ブラストマイン (Blast Mine)#
+HT_CLAYMORETRAP#クレイモアトラップ (Claymore Trap)#
+HT_REMOVETRAP#リムーブトラップ (Remove Trap)#
+HT_TALKIEBOX#トーキーボックス (Talkie Box)#
+HT_BEASTBANE#ビーストベイン (Beastbane)#
+HT_FALCON#ファルコンマスタリー (Falconry Mastery)#
+HT_STEELCROW#スチールクロウ (Steel Crow)#
+HT_BLITZBEAT#ブリッツビート (Blitz Beat)#
+HT_DETECTING#ディテクティング (Detecting)#
+HT_SPRINGTRAP#スプリングトラップ (Spring Trap)#
+AS_RIGHT#右手修練 (Right hand Mastery)#
+AS_LEFT#左手修練 (Left hand Mastery)#
+AS_KATAR#カタール修練 (Katar Mastery)#
+AS_CLOAKING#クローキング (Cloaking)#
+AS_SONICBLOW#ソニックブロー (Sonic Blow)#
+AS_GRIMTOOTH#グリムトゥース (Grimtooth)#
+AS_ENCHANTPOISON#エンチャントポイズン (Enchant Poison)#
+AS_POISONREACT#ポイズンリアクト (Poison React)#
+AS_VENOMDUST#ベナムダスト (Venom Dust)#
+AS_SPLASHER#ベナムスプラッシャー (Venom Splasher)#
+NV_FIRSTAID#応急手当 (First Aid)#
+NV_TRICKDEAD#死んだふり#
+SM_MOVINGRECOVERY#移動時HP回復#
+SM_FATALBLOW#急所攻撃#
+SM_AUTOBERSERK#オートバーサーク (Auto Berserk)#
+AC_MAKINGARROW#矢作成 (Making Arrow)#
+AC_CHARGEARROW#チャージアロー (Charge Arrow)#
+TF_SPRINKLESAND#砂まき#
+TF_BACKSLIDING#バックステップ (Back Step)#
+TF_PICKSTONE#石拾い#
+TF_THROWSTONE#石投げ#
+MC_CARTREVOLUTION#カートレボリューション (Cart Revolution)#
+MC_CHANGECART#チェンジカート (Change Cart)#
+MC_LOUD#ラウドボイス#
+AL_HOLYLIGHT#ホーリーライト (Holy Light)#
+MG_ENERGYCOAT#エナジーコート (Energy Coat)#
+RG_SNATCHER#スナッチャー (Snatcher)#
+RG_STEALCOIN#スティールコイン (Steal Coin)#
+RG_BACKSTAP#バックスタブ (Back Stab)#
+RG_TUNNELDRIVE#トンネルドライブ (Tunnel Drive)#
+RG_RAID#サプライズアタック (Surprise Attack)#
+RG_STRIPWEAPON#ストリップウェポン (Strip Weapon)#
+RG_STRIPSHIELD#ストリップシールド (Strip Shield)#
+RG_STRIPARMOR#ストリップアーマー (Strip Armor)#
+RG_STRIPHELM#ストリップヘルム (Strip Helm)#
+RG_INTIMIDATE#インティミデイト (Intimidate)#
+RG_GRAFFITI#グラフィティ (Graffiti)#
+RG_FLAGGRAFFITI#フラッググラフィティ (Flag Graffiti)#
+RG_CLEANER#クリーナー (Cleaner)#
+RG_GANGSTER#ギャングスターパラダイス (GangStar Paradise)#
+RG_COMPULSION#コンパルションディスカウント (Compulsion Discount)#
+RG_PLAGIARISM#クローンスキル (Clone Skill)#
+AM_AXEMASTERY#斧修練 (Axe Mastery)#
+AM_LEARNINGPOTION#ラーニングポーション (Learning Potion)#
+AM_PHARMACY#ファーマシー (Pharmacy)#
+AM_DEMONSTRATION#デモンストレーション (Demonstration)#
+AM_ACIDTERROR#アシッドテラー (Acid Terror)#
+AM_POTIONPITCHER#ポーションピッチャー (Potion Pitcher)#
+AM_CANNIBALIZE#バイオプラント (Bio-Plant)#
+AM_SPHEREMINE#スフィアーマイン (Sphere Mine)#
+AM_CP_WEAPON#ケミカルウェポンチャージ (Chemical Protection Weapon)#
+AM_CP_SHIELD#ケミカルシールドチャージ (Chemical Protection Shield)#
+AM_CP_ARMOR#ケミカルアーマーチャージ (Chemical Protection Armor)#
+AM_CP_HELM#ケミカルヘルムチャージ (Chemical Protection Helm)#
+AM_BIOETHICS#生命倫理 (Bioethics)#
+AM_BIOTECHNOLOGY#生命工学研究 (Biotechnology)#
+AM_CREATECREATURE#被造物創造 (Create Creature)#
+AM_CULTIVATION#カルティベイション (Cultivation)#
+AM_FLAMECONTROL#フレイムコントロール (Flame Control)#
+AM_CALLHOMUN#コールホムンクルス (Call Homunculus)#
+AM_REST#安息 (Rest)#
+AM_DRILLMASTER#ドリルマスター (Drillmaster)#
+AM_HEALHOMUN#ヒールホムンクルス (Heal Homunculus)#
+AM_RESURRECTHOMUN#リザレクションホムンクルス (Resurrection Homunculus)#
+CR_TRUST#フェイス (Faith)#
+CR_AUTOGUARD#オートガード (Auto Guard)#
+CR_SHIELDCHARGE#シールドチャージ (Shield Charge)#
+CR_SHIELDBOOMERANG#シールドブーメラン (Shield Boomerang)#
+CR_REFLECTSHIELD#リフレクトシールド (Reflect Shield)#
+CR_HOLYCROSS#ホーリークロス (Holy Cross)#
+CR_GRANDCROSS#グランドクロス (Grand Cross)#
+CR_DEVOTION#ディボーション (Devotion)#
+CR_PROVIDENCE#プロヴィデンス (Providence)#
+CR_DEFENDER#ディフェンダー (Defender)#
+CR_SPEARQUICKEN#スピアクイッケン (Spear Quicken)#
+MO_IRONHAND#鉄拳#
+MO_SPIRITSRECOVERY#息吹#
+MO_CALLSPIRITS#気功#
+MO_ABSORBSPIRITS#気奪#
+MO_TRIPLEATTACK#三段掌#
+MO_BODYRELOCATION#残影#
+MO_DODGE#見切り#
+MO_INVESTIGATE#発勁#
+MO_FINGEROFFENSIVE#指弾#
+MO_STEELBODY#金剛#
+MO_BLADESTOP#白刃取り#
+MO_EXPLOSIONSPIRITS#爆裂波動#
+MO_EXTREMITYFIST#阿修羅覇凰拳#
+MO_CHAINCOMBO#連打掌#
+MO_COMBOFINISH#猛龍拳#
+SA_ADVANCEDBOOK#アドバンスドブック (Advanced Book)#
+SA_CASTCANCEL#キャストキャンセル (Cast Cancel)#
+SA_MAGICROD#マジックロッド (Magic Rod)#
+SA_SPELLBREAKER#スペルブレイカー (Spell Breaker)#
+SA_FREECAST#フリーキャスト (Free Cast)#
+SA_AUTOSPELL#オートスペル (Auto Spell)#
+SA_FLAMELAUNCHER#フレイムランチャー (Flame Launcher)#
+SA_FROSTWEAPON#フロストウェポン (Frost Weapon)#
+SA_LIGHTNINGLOADER#ライトニングローダー (Lightning Loader)#
+SA_SEISMICWEAPON#サイズミックウェポン (Seismic Weapon)#
+SA_DRAGONOLOGY#ドラゴノロジー (Dragonology)#
+SA_VOLCANO#ボルケーノ (Volcano)#
+SA_DELUGE#デリュージ (Deluge)#
+SA_VIOLENTGALE#バイオレントゲイル (Violent Gale)#
+SA_LANDPROTECTOR#ランドプロテクター (Land Protector)#
+SA_DISPELL#ディスペル (Dispell)#
+SA_ABRACADABRA#アブラカタブラ (Abracadabra)#
+SA_MONOCELL#チェンジポリン#
+SA_CLASSCHANGE#クラスチェンジ#
+SA_SUMMONMONSTER#サモンモンスター#
+SA_REVERSEORCISH#リバースオーキッシュ#
+SA_DEATH#デス#
+SA_FORTUNE#フォーチュン#
+SA_TAMINGMONSTER#テイミングモンスター#
+SA_QUESTION#？#
+SA_GRAVITY#グラビティ#
+SA_LEVELUP#レベルアップ#
+SA_INSTANTDEATH#インスタントデス#
+SA_FULLRECOVERY#フルリカバリー#
+SA_COMA#コーマ#
+BD_ADAPTATION#アドリブ (Ad libitum)#
+BD_ENCORE#アンコール (Encore)#
+BD_LULLABY#子守歌 (Lullaby)#
+BD_RICHMANKIM#ニヨルドの宴 (Njord's Banquet)#
+BD_ETERNALCHAOS#永遠の混沌 (Eternal Chaos)#
+BD_DRUMBATTLEFIELD#戦太鼓の響き(The Sound of a Drum On the Battlefield)#
+BD_RINGNIBELUNGEN#ニーベルングの指輪(The Ring of Nibelungen)#
+BD_ROKISWEIL#ロキの叫び (Roki's Weil)#
+BD_INTOABYSS#深淵の中に (Into The Abyss)#
+BD_SIEGFRIED#不死身のジークフリード (Invulnerable Siegfried)#
+BD_RAGNAROK#神々の黄昏 (Ragnarok)#
+BA_MUSICALLESSON#楽器の練習 (Musical Lesson)#
+BA_MUSICALSTRIKE#ミュージカルストライク (Musical Strike)#
+BA_DISSONANCE#不協和音 (Dissonance)#
+BA_FROSTJOKE#寒いジョーク (Frost Joker)#
+BA_WHISTLE#口笛 (A Whistle)#
+BA_ASSASSINCROSS#夕陽のアサシンクロス (Assassin Cross of Sunset)#
+BA_POEMBRAGI#ブラギの詩 (A Poem of Bragi)#
+BA_APPLEIDUN#イドゥンの林檎 (The Apple of Idun)#
+DC_DANCINGLESSON#ダンスの練習 (Danging Lesson)#
+DC_THROWARROW#矢撃ち (Throw Arrow)#
+DC_UGLYDANCE#自分勝手なダンス (Selfish Dance)#
+DC_SCREAM#スクリーム (Scream)#
+DC_HUMMING#ハミング (Humming)#
+DC_DONTFORGETME#私を忘れないで… (Please Don't Forget Me)#
+DC_FORTUNEKISS#幸運のキス (Fortune's kiss)#
+DC_SERVICEFORYOU#サービスフォーユー (Service for you)#
+WE_MALE#君だけは護るよ (I'll save you, if you are in danger..)#
+WE_FEMALE#あなたに尽くします (I'll sacrifice myself for you)#
+WE_CALLPARTNER#あなたに逢いたい (I'm missing you)#
+ITM_TOMAHAWK#トマホーク投げ#
+LK_AURABLADE#オーラブレイド (Aura Blade)#
+LK_PARRYING#パリイング (Parrying)#
+LK_CONCENTRATION#コンセントレイション (Concentration)#
+LK_TENSIONRELAX#テンションリラックス(Tension Relax)#
+LK_BERSERK#バーサーク (Berserk)#
+HP_ASSUMPTIO#アスムプティオ (Assumptio)#
+HP_BASILICA#バジリカ (Basilica)#
+HP_MEDITATIO#メディタティオ#
+HW_SOULDRAIN#ソウルドレイン (Soul Drain)#
+HW_MAGICCRASHER#マジッククラッシャー(Magic Crasher)#
+HW_MAGICPOWER#魔法力増幅(Magic Power)#
+PA_PRESSURE#プレッシャー (Pressure)#
+PA_SACRIFICE#サクリファイス (Sacrifice)#
+PA_GOSPEL#ゴスペル (Gospel)#
+CH_PALMSTRIKE#猛虎硬爬山#
+CH_TIGERFIST#伏虎拳#
+CH_CHAINCRUSH#連柱崩撃#
+PF_HPCONVERSION#生命力変換 (Health Conversion)#
+PF_SOULCHANGE#ソウルチェンジ (Soul Change)#
+PF_SOULBURN#ソウルバーン (Soul Burn)#
+ASC_KATAR#カタール研究 (Advanced Katar Reserch)#
+ASC_EDP#エンチャントデッドリーポイズン (Enchant Deadly Poison)#
+ASC_BREAKER#ソウルブレイカー#
+SN_SIGHT#トゥルーサイト (True Sight)#
+SN_FALCONASSAULT#ファルコンアサルト (Falcon Assault)#
+SN_SHARPSHOOTING#シャープシューティング (Sharpshooting)#
+SN_WINDWALK#ウィンドウォーク (Wind Walk)#
+WS_MELTDOWN#メルトダウン (Meltdown)#
+WS_CARTBOOST#カートブースト (Cart Boost)#
+ST_CHASEWALK#チェイスウォーク (Chase Walk)#
+ST_REJECTSWORD#リジェクトソード (Reject Sword)#
+CG_ARROWVULCAN#アローバルカン (Arrow Vulcan)#
+CG_MOONLIT#月明かりの下で (Moonlit)#
+CG_MARIONETTE#マリオネットコントロール (Marionette Control)#
+LK_SPIRALPIERCE#スパイラルピアース (Spiral Pierce)#
+LK_HEADCRUSH#ヘッドクラッシュ (Head Crush)#
+LK_JOINTBEAT#ジョイントビート(Joint Beat)#
+HW_NAPALMVULCAN#ナパームバルカン(Napalm Vulcan)#
+CH_SOULCOLLECT#練気功#
+PF_MINDBREAKER#マインドブレイカー (Mind Breaker)#
+PF_MEMORIZE#メモライズ (Memorize)#
+PF_FOGWALL#ウォールオブフォグ (Wall of Fog)#
+PF_SPIDERWEB#スパイダーウェブ (Spider Web)#
+ASC_METEORASSAULT#メテオアサルト (Meteor Assult)#
+ASC_CDP#クリエイトデッドリーポイズン (Create Deadly Poison)#
+WE_BABY#ママ、パパ、大好き (Mom Dad I love you)#
+WE_CALLPARENT#ママ、パパ、来て (Mom Dad I want to see you)#
+WE_CALLBABY#坊や、いらっしゃい (Baby come here)#
+TK_RUN#タイリギ#
+TK_READYSTORM#フェオリチャギの構え#
+TK_STORMKICK#フェオリチャギ#
+TK_READYDOWN#ネリョチャギの構え#
+TK_DOWNKICK#ネリョチャギ#
+TK_READYTURN#トルリョチャギの構え#
+TK_TURNKICK#トルリョチャギ#
+TK_READYCOUNTER#アプチャオルリギの構え#
+TK_COUNTER#アプチャオルリギ#
+TK_DODGE#落法#
+TK_JUMPKICK#ティオアプチャギ#
+TK_HPTIME#穏やかな休息#
+TK_SPTIME#楽しい休息#
+TK_POWER#ファイト#
+TK_SEVENWIND#暖かい風#
+TK_HIGHJUMP#ノピティギ#
+SG_FEEL#太陽と月と星の感情#
+SG_SUN_WARM#太陽の温もり#
+SG_MOON_WARM#月の温もり#
+SG_STAR_WARM#星の温もり#
+SG_SUN_COMFORT#太陽の安楽#
+SG_MOON_COMFORT#月の安楽#
+SG_STAR_COMFORT#星の安楽#
+SG_HATE#太陽と月と星の憎しみ#
+SG_SUN_ANGER#太陽の怒り#
+SG_MOON_ANGER#月の怒り#
+SG_STAR_ANGER#星の怒り#
+SG_SUN_BLESS#太陽の祝福#
+SG_MOON_BLESS#月の祝福#
+SG_STAR_BLESS#星の祝福#
+SG_DEVIL#太陽と月と星の悪魔#
+SG_FRIEND#太陽と月と星の友#
+SG_KNOWLEDGE#太陽と月と星の知識#
+SG_FUSION#太陽と月と星の融合#
+SL_ALCHEMIST#アルケミストの魂#
+AM_BERSERKPITCHER#バーサークピッチャー#
+SL_MONK#モンクの魂#
+SL_STAR#拳聖の魂#
+SL_SAGE#セージの魂#
+SL_CRUSADER#クルセイダーの魂#
+SL_SUPERNOVICE#スーパーノービスの魂#
+SL_KNIGHT#ナイトの魂#
+SL_WIZARD#ウィザードの魂#
+SL_PRIEST#プリーストの魂#
+SL_BARDDANCER#バードとダンサーの魂#
+SL_ROGUE#ローグの魂#
+SL_ASSASIN#アサシンの魂#
+SL_BLACKSMITH#ブラックスミスの魂#
+BS_ADRENALINE2#フルアドレナリンラッシュ#
+SL_HUNTER#ハンターの魂#
+SL_SOULLINKER#ソウルリンカーの魂#
+SL_KAIZEL#カイゼル#
+SL_KAAHI#カアヒ#
+SL_KAUPE#カウプ#
+SL_KAITE#カイト#
+SL_KAINA#カイナ#
+SL_STIN#エスティン#
+SL_STUN#エストン#
+SL_SMA#エスマ#
+SL_SWOO#エスウ#
+SL_SKE#エスク#
+SL_SKA#エスカ#
+ST_PRESERVE#プリザーブ (Preserve)#
+ST_FULLSTRIP#フルストリップ (Full Strip)#
+WS_WEAPONREFINE#武器精錬 (Weapon Refine)#
+CR_SLIMPITCHER#スリムポーションピッチャー (Slim Pitcher)#
+CR_FULLPROTECTION#フルケミカルチャージ (Full Chemical Protection)#
+PA_SHIELDCHAIN#シールドチェーン (Shield Chain)#
+HP_MANARECHARGE#マナリチャージ (Mana Recharge)#
+PF_DOUBLECASTING#ダブルキャスティング (Double Casting)#
+HW_GANBANTEIN#ガンバンテイン (Ganbantein)#
+HW_GRAVITATION#グラビテーションフィールド (Gravitation Field)#
+WS_CARTTERMINATION#カートターミネーション (Cart Termination)#
+WS_OVERTHRUSTMAX#オーバートラストマックス (Overthrust Max)#
+CG_LONGINGFREEDOM#私を縛らないで (Longing for Freedom)#
+CG_HERMODE#ヘルモードの杖#
+CG_TAROTCARD#運命のタロットカード (Tarot Card of Fate)#
+CR_ACIDDEMONSTRATION#アシッドデモンストレーション (Acid Demonstration)#
+CR_CULTIVATION#植物栽培 (Plant Cultivation)#
+TK_MISSION#テコンミッション#
+SL_HIGH#転生一次職の魂#
+KN_ONEHAND#ワンハンドクイッケン#
+AM_TWILIGHT1#トワイライトファーマシー#
+AM_TWILIGHT2#トワイライトファーマシー#
+AM_TWILIGHT3#トワイライトファーマシー#
+HT_POWER#ビーストストレイフィング(Beast Strafing)#
+GS_GLITTERING#フリップザコイン(Filp the Coin)#
+GS_FLING#フライング(Fling)#
+GS_TRIPLEACTION#トリプルアクション(Triple Action)#
+GS_BULLSEYE#ブルズアイ(Bulls Eye)#
+GS_MADNESSCANCEL#マッドネスキャンセラー(Madness Canceler)#
+GS_ADJUSTMENT#アジャストメント(Adjustment)#
+GS_INCREASING#インクリージングアキュラシー(Increasing Accuracy)#
+GS_MAGICALBULLET#マジカルバレット(Magicial Bullet)#
+GS_CRACKER#クラッカー(Cracker)#
+GS_SINGLEACTION#シングルアクション(Single Action)#
+GS_SNAKEEYE#スネークアイ(Snake Eye)#
+GS_CHAINACTION#チェーンアクション(Chain Action)#
+GS_TRACKING#トラッキング(Tracking)#
+GS_DISARM#ディスアーム(Disarm)#
+GS_PIERCINGSHOT#ピアーシングショット(Piercing Shot)#
+GS_RAPIDSHOWER#ラピッドシャワー(Rapid Shower)#
+GS_DESPERADO#デスペラード(Desperado)#
+GS_GATLINGFEVER#ガトリングフィーバー(Gatling Fever)#
+GS_DUST#ダスト(Dust)#
+GS_FULLBUSTER#フルバスター(Full Buster)#
+GS_SPREADATTACK#スプレッドアタック(Spread Attack)#
+GS_GROUNDDRIFT#グラウンドドリフト(Ground Drift)#
+NJ_TOBIDOUGU#投擲修練#
+NJ_SYURIKEN#手裏剣投げ#
+NJ_KUNAI#苦無投げ#
+NJ_HUUMA#風魔手裏剣投げ#
+NJ_ZENYNAGE#銭投げ#
+NJ_TATAMIGAESHI#畳返し#
+NJ_KASUMIKIRI#霞斬り#
+NJ_SHADOWJUMP#影跳び#
+NJ_KIRIKAGE#影斬り#
+NJ_UTSUSEMI#空蝉#
+NJ_BUNSINJYUTSU#影分身#
+NJ_NINPOU#忍法修練#
+NJ_KOUENKA#紅炎華#
+NJ_KAENSIN#火炎陣#
+NJ_BAKUENRYU#龍炎陣#
+NJ_HYOUSENSOU#氷閃槍#
+NJ_SUITON#水遁#
+NJ_HYOUSYOURAKU#氷柱落し#
+NJ_HUUJIN#風刃#
+NJ_RAIGEKISAI#雷撃砕#
+NJ_KAMAITACHI#朔風#
+NJ_NEN#念#
+NJ_ISSEN#一閃#
+ALL_INCCARRY#所持限界量増加R (Enlarge Weight limit R)#
+ALL_WEWISH#ホーリーナイト(Holy Night)#
+KN_CHARGEATK#チャージアタック(Charge Attack)#
+CR_SHRINK#シュリンク(Shrink)#
+AS_SONICACCEL#ソニックアクセラレーション(Sonic Acceleration)#
+AS_VENOMKNIFE#ベナムナイフ(Venom Knife)#
+RG_CLOSECONFINE#クローズコンファイン(Close Confine)#
+WZ_SIGHTBLASTER#サイトブラスター(Sight Blaster)#
+SA_CREATECON#クリエイトコンバーター(Create Converter)#
+SA_ELEMENTWATER#ウォーターエレメンタルチェンジ(Elemental Change Water)#
+HT_PHANTASMIC#ファンタズミックアロー(Phantasmic Arrow)#
+BA_PANGVOICE#パンボイス(Pang Voice)#
+DC_WINKCHARM#魅惑のウィンク(Wink of Charm)#
+BS_UNFAIRLYTRICK#フェイクゼニー(Unfairly Trick)#
+BS_GREED#グリード(Greed)#
+PR_REDEMPTIO#レディムプティオ(Redemptio)#
+MO_KITRANSLATION#気功転移#
+MO_BALKYOUNG#寸勁#
+SA_ELEMENTGROUND#アースエレメンタルチェンジ(Elemental Change Ground)#
+SA_ELEMENTFIRE#ファイアーエレメンタルチェンジ(Elemental Change Fire)#
+SA_ELEMENTWIND#ウィンドエレメンタルチェンジ(Elemental Change Wind)#
+RK_ENCHANTBLADE#エンチャントブレイド (Enchant Blade)#
+RK_SONICWAVE#ソニックウェーブ (Sonic Wave)#
+RK_DEATHBOUND#デスバウンド (Death Bound)#
+RK_HUNDREDSPEAR#ハンドレッドスピア (Hundred Spear)#
+RK_WINDCUTTER#ウィンドカッター (Wind Cutter)#
+RK_IGNITIONBREAK#イグニッションブレイク (Ignition Break)#
+RK_DRAGONTRAINING#ドラゴントレーニング (Dragon Traning)#
+RK_DRAGONBREATH#ファイアードラゴンブレス (Dragon Breath)#
+RK_DRAGONHOWLING#ドラゴンハウリング (Dragon Howling)#
+RK_RUNEMASTERY#ルーンマスタリー (Rune Mastery)#
+RK_PHANTOMTHRUST#ファントムスラスト (Phantom Thrust)#
+GC_VENOMIMPRESS#ベナムインプレス (Venom Impress)#
+GC_CROSSIMPACT#クロスインパクト (Cross Impact)#
+GC_DARKILLUSION#ダークイリュージョン (Dark Illusion)#
+GC_RESEARCHNEWPOISON#新毒研究 (Research New Poison)#
+GC_CREATENEWPOISON#新毒製造 (Create New Poison)#
+GC_ANTIDOTE#アンチドート (AntiDote)#
+GC_POISONINGWEAPON#ポイズニングウェポン (Poisoning Weapon)#
+GC_WEAPONBLOCKING#ウェポンブロッキング (Weapon Blocking)#
+GC_COUNTERSLASH#カウンタースラッシュ (Counter Slash)#
+GC_WEAPONCRUSH#ウェポンクラッシュ (Weapon Crush)#
+GC_VENOMPRESSURE#ベナムプレッシャー (Venom Pressure)#
+GC_POISONSMOKE#ポイズンスモーク (Poison Smoke)#
+GC_CLOAKINGEXCEED#クローキングエクシード (Cloaking Exceed)#
+GC_PHANTOMMENACE#ファントムメナス (Phantom Menace)#
+GC_HALLUCINATIONWALK#ハルシネーションウォーク (Hallucination Walk)#
+GC_ROLLINGCUTTER#ローリングカッター (Rolling Cutter)#
+GC_CROSSRIPPERSLASHER#クロスリッパースラッシャー (Cross Ripper Slasher)#
+AB_JUDEX#ジュデックス (Judex)#
+AB_ANCILLA#アンシラ (Ancilla)#
+AB_ADORAMUS#アドラムス (Adoramus)#
+AB_CLEMENTIA#クレメンティア (Clementia)#
+AB_CANTO#カントキャンディダス (Cantocandidus)#
+AB_CHEAL#コルセオヒール (Coluceo Heal)#
+AB_EPICLESIS#エピクレシス (Epiclesis)#
+AB_PRAEFATIO#プラエファティオ (Praefatio)#
+AB_ORATIO#オラティオ (Oratio)#
+AB_LAUDAAGNUS#ラウダアグヌス (Laudaagnus)#
+AB_LAUDARAMUS#ラウダラムス (Laudaramus)#
+AB_EUCHARISTICA#エウカリスティカ (Eucharistica)#
+AB_RENOVATIO#レノヴァティオ (Renovatio)#
+AB_HIGHNESSHEAL#ハイネスヒール (Highness Heal)#
+AB_CLEARANCE#クリアランス (Clearance)#
+AB_EXPIATIO#エクスピアティオ (Expiatio)#
+AB_DUPLELIGHT#デュプレライト (Duplelight)#
+AB_SILENTIUM#シレンティウム (Silentium)#
+WL_WHITEIMPRISON#ホワイトインプリズン (White Imprison)#
+WL_SOULEXPANSION#ソウルエクスパンション (Soule Expansion)#
+WL_FROSTMISTY#フロストミスティ (Frost Misty)#
+WL_JACKFROST#ジャックフロスト (Jack Frost)#
+WL_MARSHOFABYSS#マーシュオブアビス (Marsh of Abyss)#
+WL_RECOGNIZEDSPELL#リコグナイズドスペル (Recognized Spell)#
+WL_SIENNAEXECRATE#シエナエクセクレイト (Sienna Execrate)#
+WL_RADIUS#ラディウス (Radius)#
+WL_STASIS#ステイシス (Stasis)#
+WL_DRAINLIFE#ドレインライフ (Drain Life)#
+WL_CRIMSONROCK#クリムゾンロック (Crimson Rock)#
+WL_HELLINFERNO#ヘルインフェルノ (Hell Inferno)#
+WL_COMET#コメット (Comet)#
+WL_CHAINLIGHTNING#チェーンライトニング (Chain Lightning)#
+WL_EARTHSTRAIN#アースストレイン (Earth Strain)#
+WL_TETRAVORTEX#テトラボルテックス (Tetra Vortex)#
+WL_SUMMONFB#サモンファイアーボール (Summon Fire Ball)#
+WL_SUMMONBL#サモンボールライトニング (Summon Ball Lightning)#
+WL_SUMMONWB#サモンウォーターボール (Summon Water Ball)#
+WL_SUMMONSTONE#サモンストーン (Summon Stone)#
+WL_RELEASE#リリース (Release)#
+WL_READING_SB#リーディングスペルブック (Reading Spell Book)#
+WL_FREEZE_SP#フリージングスペル (Freezing Spell)#
+RA_ARROWSTORM#アローストーム (Arrow Storm)#
+RA_FEARBREEZE#フィアーブリーズ (Fear Breeze)#
+RA_RANGERMAIN#レンジャーメイン (Ranger Main)#
+RA_AIMEDBOLT#エイムドボルト (Aimed Bolt)#
+RA_DETONATOR#デトネイター (Detonator)#
+RA_ELECTRICSHOCKER#エレクトリックショッカー (Electric Shocker)#
+RA_CLUSTERBOMB#クラスターボム (Cluster Bomb)#
+RA_WUGMASTERY#ウォーグマスタリー (Wug Mastery)#
+RA_WUGRIDER#ウォーグライダー (Wug Rider)#
+RA_WUGDASH#ウォーグダッシュ (Wug Dash)#
+RA_WUGSTRIKE#ウォーグストライク (Wug Strike)#
+RA_WUGBITE#ウォーグバイト (Wug Bite)#
+RA_TOOTHOFWUG#トゥースオブウォーグ (Tooth of Wug)#
+RA_SENSITIVEKEEN#鋭敏な嗅覚 (Sensitive Keen)#
+RA_CAMOUFLAGE#カモフラージュ (Camouflage)#
+RA_RESEARCHTRAP#トラップ研究 (Research Trap)#
+RA_MAGENTATRAP#マゼンタトラップ (Magenta Trap)#
+RA_COBALTTRAP#コバルトトラップ (Cobalt Trap)#
+RA_MAIZETRAP#メイズトラップ (Maize Trap)#
+RA_VERDURETRAP#ヴェルデュールトラップ (Verdure Trap)#
+RA_FIRINGTRAP#ファイアリングトラップ (Firing Trap)#
+RA_ICEBOUNDTRAP#アイスバウンドトラップ (Ice Bound Trap)#
+NC_MADOLICENCE#魔導ギアライセンス (Mado Licence)#
+NC_BOOSTKNUCKLE#ブーストナックル (Boost Knuckle)#
+NC_PILEBUNKER#パイルバンカー (Pile Bunker)#
+NC_VULCANARM#バルカンアーム (Vulcan Arm)#
+NC_FLAMELAUNCHER#フレイムスローワー (Flame Slower)#
+NC_COLDSLOWER#コールドスローワー (Cold Slower)#
+NC_ARMSCANNON#アームズキャノン (Arms Cannon)#
+NC_ACCELERATION#アクセラレーション (Acceleration)#
+NC_HOVERING#ホバーリング (Hovering)#
+NC_F_SIDESLIDE#フロントサイドスライド (Front Side Slide)#
+NC_B_SIDESLIDE#リアサイドスライド (Rear Side Slide)#
+NC_MAINFRAME#メインフレーム改造 (MainFrame)#
+NC_SELFDESTRUCTION#セルフディストラクション (Self Destruction)#
+NC_SHAPESHIFT#シェイプシフト (Shapeshift)#
+NC_EMERGENCYCOOL#エマージェンシークール (Emergency Cool)#
+NC_INFRAREDSCAN#インフラレッドスキャン (Infrared Scan)#
+NC_ANALYZE#アナライズ (Analyze)#
+NC_MAGNETICFIELD#マグネティックフィールド (Magnetic Field)#
+NC_NEUTRALBARRIER#ニュートラルバリアー (Neutral Barrier)#
+NC_STEALTHFIELD#ステルスフィールド (Stealth Field)#
+NC_REPAIR#リペア (Repair)#
+NC_TRAININGAXE#斧修練 (Training Axe)#
+NC_RESEARCHFE#火と大地の研究 (Research Fire Earth)#
+NC_AXEBOOMERANG#アックスブーメラン (Axe Boomerang)#
+NC_POWERSWING#パワースイング (Power Swing)#
+NC_AXETORNADO#アックストルネード (Axe Tornado)#
+NC_SILVERSNIPER#FAW シルバースナイパー (FAW Silver Sniper)#
+NC_MAGICDECOY#FAW マジックデコイ (FAW Magic Decoy)#
+NC_DISJOINT#FAW 解体 (FAW Disjoint)#
+SC_FATALMENACE#フェイタルメナス (Fatal Menace)#
+SC_REPRODUCE#リプロデュース (Reproduce)#
+SC_AUTOSHADOWSPELL#オートシャドウスペル (Auto Shadow Spell)#
+SC_SHADOWFORM#シャドウフォーム (Shadow Form)#
+SC_TRIANGLESHOT#トライアングルショット (Triangle Shot)#
+SC_BODYPAINT#ボディペインティング (Body Paint)#
+SC_INVISIBILITY#インビジビリティ (Invisibility)#
+SC_DEADLYINFECT#デッドリーインフェクト (Deadly Infect)#
+SC_ENERVATION#マスカレード ： エナベーション (Enervation)#
+SC_GROOMY#マスカレード ： グルーミー (Groomy)#
+SC_IGNORANCE#マスカレード ： イグノアランス (Ignorance)#
+SC_LAZINESS#マスカレード ： レイジネス (Laziness)#
+SC_UNLUCKY#マスカレード ： アンラッキー (Unlucky)#
+SC_WEAKNESS#マスカレード ： ウィークネス (Weakness)#
+SC_STRIPACCESSARY#ストリップアクセサリー (Strip Accessary)#
+SC_MANHOLE#マンホール (Manhole)#
+SC_DIMENSIONDOOR#ディメンションドア (Dimension Door)#
+SC_CHAOSPANIC#カオスパニック (Chaos Panic)#
+SC_MAELSTROM#メイルストーム (Mael Strom)#
+SC_BLOODYLUST#ブラッディラスト (Bloody Lust)#
+SC_FEINTBOMB#フェイントボム (Feint Bomb)#
+LG_CANNONSPEAR#キャノンスピア (Cannon Spear)#
+LG_BANISHINGPOINT#バニシングポイント (Banishing Point)#
+LG_TRAMPLE#トランプル (Trample)#
+LG_SHIELDPRESS#シールドプレス (Shield Press)#
+LG_REFLECTDAMAGE#リフレクトダメージ (Reflect Damege)#
+LG_PINPOINTATTACK#ピンポイントアタック (Pinpoint Attack)#
+LG_FORCEOFVANGUARD#フォースオブバンガード (Force of Vanguard)#
+LG_RAGEBURST#レイジバーストアタック (Rage Burst)#
+LG_SHIELDSPELL#シールドスペル (Shield Spell)#
+LG_EXEEDBREAK#イクシードブレイク (Exeed Break)#
+LG_OVERBRAND#オーバーブランド (Over Brand)#
+LG_PRESTIGE#プレスティージ (Prestige)#
+LG_BANDING#バンディング (Banding)#
+LG_MOONSLASHER#ムーンスラッシャー (Moon Slasher)#
+LG_RAYOFGENESIS#レイオブジェネシス (Ray of Genesis)#
+LG_PIETY#パイエティ (Piety)#
+LG_EARTHDRIVE#アースドライブ (Earth Drive)#
+LG_HESPERUSLIT#ヘスペルスリット (Hesperus Slit)#
+LG_INSPIRATION#インスピレーション (Inspiration)#
+SR_DRAGONCOMBO#双龍脚 (Dragon Combo)#
+SR_SKYNETBLOW#天羅地網 (Skynet Blow)#
+SR_EARTHSHAKER#地雷震 (Earth Shaker)#
+SR_FALLENEMPIRE#大纏崩捶 (Fallen Empire)#
+SR_TIGERCANNON#號砲 (Tiger Cannon)#
+SR_RAMPAGEBLASTER#爆気散弾 (Rampage Blaster)#
+SR_CRESCENTELBOW#破碎柱 (Crescent Bow)#
+SR_CURSEDCIRCLE#呪縛陣 (Cursed Circle)#
+SR_LIGHTNINGWALK#閃電歩 (Lightning Walk)#
+SR_KNUCKLEARROW#修羅身弾 (Knuckle Arrow)#
+SR_WINDMILL#旋風腿 (Windmill)#
+SR_RAISINGDRAGON#潜龍昇天 (Raising Dragon)#
+SR_ASSIMILATEPOWER#吸気功 (Assimilate Power)#
+SR_POWERVELOCITY#全気注入 (Power Velocity)#
+SR_GATEOFHELL#羅刹破凰撃 (Gate of Hell)#
+SR_GENTLETOUCH_QUIET#点穴 -默- (Genteletouch Quiet)#
+SR_GENTLETOUCH_CURE#点穴 -快- (Gentletouch Cure)#
+SR_GENTLETOUCH_ENERGYGAIN#点穴 -球- (Gentletouch Energy Gain)#
+SR_GENTLETOUCH_CHANGE#点穴 -反- (Gentletouch Change)#
+SR_GENTLETOUCH_REVITALIZE#点穴 -活- (Gentletouch Revitalize)#
+WA_SWING_DANCE#スイングダンス (Swing Dance)#
+WA_SYMPHONY_OF_LOVER#恋人たちの為のシンフォニー (Symphony of Lover)#
+WA_MOONLIT_SERENADE#月明かりのセレナーデ (Moonlight Serenade)#
+MI_RUSH_WINDMILL#風車に向かって突撃 (Rush Windmill)#
+MI_ECHOSONG#エコーの歌 (Echo Song)#
+MI_HARMONIZE#ハーモナイズ (Harmonize)#
+WM_LESSON#レッスン (Lesson)#
+WM_METALICSOUND#メタリックサウンド (Metalic Sound)#
+WM_REVERBERATION#振動残響 (Reverberation)#
+WM_DOMINION_IMPULSE#ドミニオンインパルス (Dominion Impulse)#
+WM_SEVERE_RAINSTORM#シビアレインストーム (Severe Rainstorm)#
+WM_POEMOFNETHERWORLD#地獄の歌 (Poem of Nether world)#
+WM_VOICEOFSIREN#セイレーンの声 (Voice of Siren)#
+WM_DEADHILLHERE#生死の境で (Dead Hill Here)#
+WM_LULLABY_DEEPSLEEP#安らぎの子守唄 (Lullaby Deep Sleep)#
+WM_SIRCLEOFNATURE#循環する自然の音 (Sircle of Nature)#
+WM_RANDOMIZESPELL#不確定要素の言語 (Randomize Spell)#
+WM_GLOOMYDAY#メランコリー (Gloomy Day)#
+WM_GREAT_ECHO#グレートエコー (Great Echo)#
+WM_SONG_OF_MANA#マナの歌 (Song of Mana)#
+WM_DANCE_WITH_WUG#ダンスウィズウォーグ (Dance With Wug)#
+WM_SOUND_OF_DESTRUCTION#サウンドオブディストラクション (Sound of Destruction)#
+WM_SATURDAY_NIGHT_FEVER#フライデーナイトフィーバー (Friday Night Fever)#
+WM_LERADS_DEW#レーラズの霧 (Lerads Dew)#
+WM_MELODYOFSINK#メロディーオブシンク (Melody of Sink)#
+WM_BEYOND_OF_WARCRY#ビヨンドオブウォークライ (Beyond of Warcry)#
+WM_UNLIMITED_HUMMING_VOICE#エンドレスハミングボイス (Endress Humming Voice)#
+SO_FIREWALK#ファイアーウォーク (Fire Walk)#
+SO_ELECTRICWALK#エレクトリックウォーク (Ellectric Walk)#
+SO_SPELLFIST#スペルフィスト (Spell Fist)#
+SO_EARTHGRAVE#アースグレイヴ (Earth Grave)#
+SO_DIAMONDDUST#ダイヤモンドダスト (Diamond Dust)#
+SO_POISON_BUSTER#ポイズンバスター (Poison Buster)#
+SO_PSYCHIC_WAVE#サイキックウェーブ (Psychic Wave)#
+SO_CLOUD_KILL#クラウドキル (Cloud Kill)#
+SO_STRIKING#ストライキング (Striking)#
+SO_WARMER#ウォーマー (Warmer)#
+SO_VACUUM_EXTREME#バキュームエクストリーム (Vacuum Extreme)#
+SO_VARETYR_SPEAR#ヴェラチュールスピアー (Varetyr Spear)#
+SO_ARRULLO#アルージョ (Arrullo)#
+SO_EL_CONTROL#エレメンタルコントロール (Elemental Control)#
+SO_SUMMON_AGNI#サモンアグニ (Summon Agni)#
+SO_SUMMON_AQUA#サモンアクア (Summon Aqua)#
+SO_SUMMON_VENTUS#サモンベントス (Summon Ventus)#
+SO_SUMMON_TERA#サモンテラ (Summon Tera)#
+SO_EL_ACTION#エレメンタルアクション (Elemental Action)#
+SO_EL_ANALYSIS#エレメンタルアナライシス (Elemental Analysis)#
+SO_EL_SYMPATHY#エレメンタルシンパシー (Elemental Sympathy)#
+SO_EL_CURE#エレメンタルキュアー (Elemental Cure)#
+SO_FIRE_INSIGNIA#ファイアーインシグニア（未実装）#
+SO_WATER_INSIGNIA#ウォーターインシグニア（未実装）#
+SO_WIND_INSIGNIA#ウィンドインシグニア（未実装）#
+SO_EARTH_INSIGNIA#アースインシグニア（未実装）#
+GN_TRAINING_SWORD#剣修練 (Training Sword)#
+GN_REMODELING_CART#カート改造 (Remodeling Cart)#
+GN_CART_TORNADO#カートトルネード (Cart Tornado)#
+GN_CARTCANNON#カートキャノン (Cart Cannon)#
+GN_CARTBOOST#カートブースト (Cart Boost)#
+GN_THORNS_TRAP#ソーントラップ (Thorns Trap)#
+GN_BLOOD_SUCKER#ブラッドサッカー (Blood Sucker)#
+GN_SPORE_EXPLOSION#スポアエクスプロージョン (Spore Explosion)#
+GN_WALLOFTHORN#ソーンウォール (Wall of Thorn)#
+GN_CRAZYWEED#クレイジーウィード (Crazy Weed)#
+GN_DEMONIC_FIRE#デモニックファイアー (Demonic Fire)#
+GN_FIRE_EXPANSION#ファイアーエクスパンション (Fire Expansion)#
+GN_HELLS_PLANT#ヘルズプラント (Hells Plant)#
+GN_MANDRAGORA#ハウリングオブマンドラゴラ (Howling of Mandragora)#
+GN_SLINGITEM#スリングアイテム (Sling Item)#
+GN_CHANGEMATERIAL#チェンジマテリアル (Change Material)#
+GN_MIX_COOKING#ミックスクッキング (Mix Cooking)#
+GN_MAKEBOMB#爆弾製造 (Make Bomb)#
+GN_S_PHARMACY#スペシャルファーマシー (Special Pharmacy)#
+AB_SECRAMENT#サクラメント (Secrament)#
+SR_HOWLINGOFLION#獅子吼 (Howling of Lion)#
+SR_RIDEINLIGHTNING#雷光弾 (Ridein Lightning)#
+RETURN_TO_ELDICASTES#エルディカスティスへの帰還 (Return to Eldicastes)#
+ALL_BUYING_STORE#買取露店開設 (Buying Store)#
+ALL_GUARDIAN_RECALL#守護者の呼びかけ (Guardian Recall)#
+ALL_ODINS_POWER#オーディンの力 (Odins Power)#
+MC_CARTDECORATE#カートデコレーション (Cart Decorate)#
+GM_ITEM_ATKMAX#物理アイテム攻撃力最大化#
+GM_ITEM_ATKMIN#物理アイテム攻撃力最小化#
+GM_ITEM_MATKMAX#魔法アイテム攻撃力最大化#
+GM_ITEM_MATKMIN#魔法アイテム攻撃力最小化#
+RL_RICHS_COIN#リッチズコイン(Rich's Coin)#
+RL_MASS_SPIRAL#マススパイラル(Mass Spiral)#
+RL_BANISHING_BUSTER#バニシングバスター(Banishing Buster)#
+RL_B_TRAP#バインドトラップ(Bind Trap)#
+RL_FLICKER#フリッカー(Flicker)#
+RL_S_STORM#シャッターストーム(Shatter Strom)#
+RL_E_CHAIN#エターナルチェーン(Etanal Chain)#
+RL_QD_SHOT#クイックドローショット(Quick Drow Shot)#
+RL_C_MARKER#クリムゾンマーカー(Crimson Marker)#
+RL_FIREDANCE#ファイアーダンス(Fire Dance)#
+RL_H_MINE#ハウリングマイン(Howling Mine)#
+RL_P_ALTER#プラチナムアルター(Platinum Alter)#
+RL_FALLEN_ANGEL#フォーリンエンジェル(Fallen Angel)#
+RL_R_TRIP#ラウンドトリップ(Round Trip)#
+RL_D_TAIL#ドラゴンテイル(Dragon Tail)#
+RL_FIRE_RAIN#ファイアーレイン(Fire Rain)#
+RL_HEAT_BARREL#ヒートバレル(Heat Barrel)#
+RL_AM_BLAST#アンチマテリアルブラスト(Anti Material Blast)#
+RL_SLUGSHOT#スラッグショット(Slug Shot)#
+RL_HAMMER_OF_GOD#ハンマーオブゴッド(Hammer of God)#
+SJ_LIGHTOFMOON#月の光#
+SJ_LUNARSTANCE#月の構え#
+SJ_FULLMOONKICK#満月脚#
+SJ_LIGHTOFSTAR#星の光#
+SJ_STARSTANCE#星の構え#
+SJ_NEWMOONKICK#朔月脚#
+SJ_FLASHKICK#閃光脚#
+SJ_STAREMPEROR#星帝降臨#
+SJ_NOVAEXPLOSING#新星爆発#
+SJ_UNIVERSESTANCE#宇宙の構え#
+SJ_FALLINGSTAR#流星落下#
+SJ_GRAVITYCONTROL#重力調節#
+SJ_BOOKOFDIMENSION#次元の書#
+SJ_BOOKOFCREATINGSTAR#創星の書#
+SJ_DOCUMENT#太陽と月と星の記録#
+SJ_PURIFY#太陽と月と星の浄化#
+SJ_LIGHTOFSUN#太陽の光#
+SJ_SUNSTANCE#太陽の構え#
+SJ_SOLARBURST#太陽爆発#
+SJ_PROMINENCEKICK#紅焔脚#
+SP_SOULGOLEM#ゴーレムの魂#
+SP_SOULSHADOW#影の魂#
+SP_SOULFALCON#鷹の魂#
+SP_SOULFAIRY#妖精の魂#
+SP_CURSEEXPLOSION#死霊爆発#
+SP_SOULCURSE#死霊憑依#
+SP_SPA#エスパ#
+SP_SHA#エスハ#
+SP_SWHOO#エスフ#
+SP_SOULUNITY#魂の連結#
+SP_SOULDIVISION#魂の分裂#
+SP_SOULREAPER#魂の収穫#
+SP_SOULREVOLVE#魂の循環#
+SP_SOULCOLLECT#魂の蓄積#
+SP_SOULEXPLOSION#魂の崩壊#
+SP_SOULENERGY#ソウルエナジー研究#
+SP_KAUTE#カウト#
+KO_YAMIKUMO#闇雲#
+KO_RIGHT#右手鍛錬#
+KO_LEFT#左手鍛錬#
+KO_JYUMONJIKIRI#十文字斬り#
+KO_SETSUDAN#黄泉返し#
+KO_BAKURETSU#爆裂苦無#
+KO_HAPPOKUNAI#八方苦無#
+KO_MUCHANAGE#無茶投げ#
+KO_HUUMARANKA#風魔手裏剣 -乱華-#
+KO_MAKIBISHI#撒菱#
+KO_MEIKYOUSISUI#明鏡止水#
+KO_ZANZOU#幻術 -影武者-#
+KO_KYOUGAKU#幻術 -驚愕-#
+KO_JYUSATSU#幻術 -呪殺-#
+KO_KAHU_ENTEN#火符：炎天#
+KO_HYOUHU_HUBUKI#氷符：吹雪#
+KO_KAZEHU_SEIRAN#風符：青嵐#
+KO_DOHU_KOUKAI#土符：剛塊#
+KO_KAIHOU#術式 -解放-#
+KO_ZENKAI#術式 -展開-（未実装）#
+KO_GENWAKU#幻術 -幻惑-#
+KO_IZAYOI#十六夜#
+KG_KAGEHUMI#幻術 -影踏み-#
+KG_KYOMU#幻術 -虚無の影-#
+KG_KAGEMUSYA#幻術 -分身-#
+OB_ZANGETSU#幻術 -残月-#
+OB_OBOROGENSOU#幻術 -朧幻想-#
+OB_AKAITSUKI#幻術 -紅月-#
+ECL_SNOWFLIP#スノーフリップ (Snow Flip)#
+ECL_PEONYMAMY#ピオニーマミー (Peony Mommy)#
+ECL_SADAGUI#ぴしゃりハーブ (Slapping Herb)#
+ECL_SEQUOIADUST#世界樹のほこり (Yggdrasil Dust)#
+ECLAGE_RECALL#エクラージュへの帰還 (Eclage Recall)#
+ALL_NIFLHEIM_RECALL#ニブルヘイムへの帰還 (Return to Niflheim)#
+ALL_PRONTERA_RECALL#プロンテラへの帰還 (Return to Prontera)#
+ALL_GLASTHEIM_RECALL#グラストヘイムへの帰還 (Return to Glastheim)#
+ALL_THANATOS_RECALL#タナトスタワーへの帰還 (Return to Thanatos)#
+ALL_LIGHTHALZEN_RECALL#リヒタルゼンへの帰還 (Return to Lighthalzen)#
+GC_DARKCROW#ダーククロー (Dark Claw)#
+RA_UNLIMIT#アンリミット (Unlimit)#
+GN_ILLUSIONDOPING#イリュージョンドーピング (Illusion Doping)#
+RK_DRAGONBREATH_WATER#ウォータードラゴンブレス (Dragon Breath Water)#
+NC_MAGMA_ERUPTION#マグマイラプション (Magma Eruption)#
+WM_FRIGG_SONG#フリッグの歌 (Frigg's Song)#
+SO_ELEMENTAL_SHIELD#エレメンタルシールド (Elemental Shield)#
+SR_FLASHCOMBO#閃光連撃 (Flash Combo)#
+SC_ESCAPE#エスケープ (Escape)#
+AB_OFFERTORIUM#オフェルトリウム (Offertorium)#
+WL_TELEKINESIS_INTENSE#テレキネシスインテンス (Telekinesis Intense)#
+LG_KINGS_GRACE#キングスグレイス (Kings Grace)#
+ALL_FULL_THROTTLE#フルスロットル (Full Throttle)#
+SU_BASIC_SKILL#ドラム基本スキル (New Basic Skill)#
+SU_BITE#かみつく (Bite)#
+SU_HIDE#かくれる (Hide)#
+SU_SCRATCH#ひっかく (Scratch)#
+SU_STOOP#うずくまる (Stoop)#
+SU_LOPE#ニャンジャンプ (Lope)#
+SU_SPRITEMABLE#にゃん魂 (Sprite Mable)#
+SU_POWEROFLAND#大地の力 (Power of Land)#
+SU_SV_STEMSPEAR#マタタビランス (Silvervine Stem Spear)#
+SU_CN_POWDERING#イヌハッカシャワー (Catnip Powdering)#
+SU_CN_METEOR#イヌハッカメテオ (Catnip Meteor)#
+SU_SV_ROOTTWIST#マタタビの根っこ (Silvervine Root Twist)#
+SU_POWEROFLIFE#生命の力 (Power of Life)#
+SU_SCAROFTAROU#タロウの傷 (Scar of Tarou)#
+SU_PICKYPECK#ピッキ突き (Picky Peck)#
+SU_ARCLOUSEDASH#アクラウスダッシュ (Arclouse Dash)#
+SU_LUNATICCARROTBEAT#キャロットビート (Lunatic Carrot Beat)#
+SU_POWEROFSEA#海の力 (Power of Sea)#
+SU_TUNABELLY#大トロ (Tuna Belly)#
+SU_TUNAPARTY#マグロシールド (Tuna Party)#
+SU_BUNCHOFSHRIMP#エビ三昧 (Bunch of Shrimp)#
+SU_FRESHSHRIMP#新鮮なエビ (Fresh Shrimp)#
+SU_CN_METEOR2#イヌハッカメテオ (Catnip Meteor)#
+SU_SOULATTACK#ソウルアタック (Soul Attack)#
+SU_POWEROFFLOCK#群れの力 (Power Of Flock)#
+SU_SVG_SPIRIT#サベージの魂 (Spirit Of Savage)#
+SU_HISS#警戒 (Hiss)#
+SU_NYANGGRASS#ニャングラス (Nyang Grass)#
+SU_GROOMING#グルーミング (Grooming)#
+SU_PURRING#のどを鳴らす (Purring)#
+SU_SHRIMPARTY#エビパーティー (Tasty Shrimp Party)#
+SU_SPIRITOFLIFE#生命の魂 (Spirit Of Life)#
+SU_MEOWMEOW#ミャウミャウ (Meow Meow)#
+SU_SPIRITOFLAND#大地の魂 (Spirit Of Land)#
+SU_CHATTERING#チャタリング (Chattering)#
+SU_SPIRITOFSEA#海の魂 (Spirit Of Sea)#
+WE_CALLALLFAMILY#私達が一緒なら (Call All Family)#
+WE_ONEFOREVER#永遠に続く私達の愛 (One Forever)#
+WE_CHEERUP#ママ、パパ、頑張って (Cheer Up)#
+EVT_FULL_THROTTLE#フルスロットル (Full Throttle)#
+NV_BREAKTHROUGH#ブレイクスルー (Break Through)#
+NV_HELPANGEL#天使さま助けて (Help Angel)#
+NV_TRANSCENDENCE#トランセンデンス (Transcendence)#
+HLIF_HEAL#治癒の手(ヒール) (Touch of Heal)#
+HLIF_AVOID#緊急回避 (Emergency Avoid)#
+HLIF_BRAIN#脳手術 (Brain Surgery)#
+HLIF_CHANGE#メンタルチェンジ(Mental Change)#
+HAMI_CASTLE#キャッスリング (Castling)#
+HAMI_DEFENCE#ディフェンス (Deffence)#
+HAMI_SKIN#アダマンティウムスキン (Adamantium Skin)#
+HAMI_BLOODLUST#ブラッドラスト (Blood Lust)#
+HFLI_MOON#ムーンライト (Moonlight)#
+HFLI_FLEET#フリットムーブ(Fleet Move)#
+HFLI_SPEED#オーバードスピード(Overed Speed)#
+HFLI_SBR44#S.B.R.44#
+HVAN_CAPRICE#カプリス (Caprice)#
+HVAN_CHAOTIC#カオティックベネディクション (Chaotic Venediction)#
+HVAN_INSTRUCT#チェンジインストラクション (Change Instruction)#
+HVAN_EXPLOSION#バイオエクスプロージョン (Bio Explosion)#
+MH_SUMMON_LEGION#サモンレギオン (Summon Legion)#
+MH_NEEDLE_OF_PARALYZE#ニードルオブパラライズ (Needle of Paralyze)#
+MH_POISON_MIST#ポイズンミスト (Poison Mist)#
+MH_PAIN_KILLER#ペインキラー (Pain Killer)#
+MH_LIGHT_OF_REGENE#再生の光 (Light of Regene)#
+MH_OVERED_BOOST#オーバードブースト (Overed Boost)#
+MH_ERASER_CUTTER#イレイサーカッター (Eraser Cutter)#
+MH_XENO_SLASHER#ゼノスラッシャー (Xeno Slasher)#
+MH_SILENT_BREEZE#サイレントブリーズ (Silent Breeze)#
+MH_STYLE_CHANGE#スタイルチェンジ (Style Change)#
+MH_SONIC_CRAW#ソニッククロー (Sonic Claw)#
+MH_SILVERVEIN_RUSH#シルバーベインラッシュ (Silvervein Rush)#
+MH_MIDNIGHT_FRENZY#ミッドナイトフレンジ (Midnight Frenzy)#
+MH_STAHL_HORN#シュタールホーン (Stahl Horn)#
+MH_GOLDENE_FERSE#ゴールデンペルジェ (Goldene Ferse)#
+MH_STEINWAND#シュタインワンド (Stein Wand)#
+MH_HEILIGE_STANGE#ハイリエージュスタンジェ (Heilige Stange)#
+MH_ANGRIFFS_MODUS#アングリフスモドス (Angriffs Modus)#
+MH_TINDER_BREAKER#ティンダーブレイカー (Tinder Breaker)#
+MH_CBC#C.B.C (Continual Break Combo)#
+MH_EQC#E.Q.C (Eternal Quick Combo)#
+MH_MAGMA_FLOW#マグマフロー (Magma Flow)#
+MH_GRANITIC_ARMOR#グラニティックアーマー (Granitic Armor)#
+MH_LAVA_SLIDE#ラーヴァスライド (Lava Slide)#
+MH_PYROCLASTIC#パイロクラスティック (Pyroclastic)#
+MH_VOLCANIC_ASH#ボルカニックアッシュ (Volcanic Ash)#
+MS_BASH#バッシュ#
+MS_MAGNUM#マグナムブレイク#
+MS_BOWLINGBASH#ボウリングバッシュ#
+MS_PARRYING#パリイング（？）#
+MS_REFLECTSHIELD#リフレクトシールド（？）#
+MS_BERSERK#バーサーク#
+MA_DOUBLE#ダブルストレイフィング（？）#
+MA_SHOWER#アローシャワー#
+MA_SKIDTRAP#スキッドトラップ#
+MA_LANDMINE#ランドマイン#
+MA_SANDMAN#サンドマン#
+MA_FREEZINGTRAP#フリージングトラップ#
+MA_REMOVETRAP#リムーブトラップ（？）#
+MA_CHARGEARROW#チャージアロー（？）#
+MA_SHARPSHOOTING#シャープシューティング（？）#
+ML_PIERCE#ピアース（？）#
+ML_BRANDISH#ブランディッシュスピア（？）#
+ML_SPIRALPIERCE#スパイラルピアース#
+ML_DEFENDER#ディフェンダー（？）#
+ML_AUTOGUARD#オートガード#
+ML_DEVOTION#ディボーション#
+MER_MAGNIFICAT#マグニフィカート（？）#
+MER_QUICKEN#ウェポンクイッケン（？）#
+MER_SIGHT#サイト（？）#
+MER_CRASH#クラッシュ#
+MER_REGAIN#リゲイン#
+MER_TENDER#テンダー#
+MER_BENEDICTION#ベネディクション#
+MER_RECUPERATE#リキュペレート#
+MER_MENTALCURE#メンタルキュア#
+MER_COMPRESS#コンプレス#
+MER_PROVOKE#プロボック#
+MER_AUTOBERSERK#オートバーサーク#
+MER_DECAGI#速度減少#
+MER_SCAPEGOAT#身代わり#
+MER_LEXDIVINA#レックスディビーナ#
+MER_ESTIMATION#モンスター情報#
+MER_KYRIE#キリエエレイソン#
+MER_BLESSING#ブレッシング（？）#
+MER_INCAGI#速度増加（？）#
+MER_INVINCIBLEOFF2#マインドブラスター#
+GD_APPROVAL#正規ギルド承認#
+GD_KAFRACONTRACT#カプラ雇用#
+GD_GUARDRESEARCH#ガーディアン研究#
+GD_GUARDUP#ガーディアン強化 (Build up the Guardian)#
+GD_EXTENSION#ギルド拡張#
+GD_LEADERSHIP#偉大なる指導力 (Great Leadership)#
+GD_GLORYWOUNDS#栄光の傷 (Wounds of Glory)#
+GD_SOULCOLD#冷静な心 (Soul of Cold)#
+GD_HAWKEYES#鋭い視線 (Sharp Hawk Eyes)#
+GD_BATTLEORDER#臨戦態勢 (Battle Orders)#
+GD_REGENERATION#激励 (Regeneration)#
+GD_RESTORE#治療 (Restore)#
+GD_EMERGENCYCALL#緊急招集 (Emergency Call)#
+GD_DEVELOPMENT#永久的な発展 (Emsolute Develop)#
+GD_GUILD_STORAGE#ギルド倉庫拡張#
