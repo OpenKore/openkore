@@ -42,7 +42,7 @@ jobs:
           architecture: x64
           perl: 5.12
 
-        - os: ubuntu-latest
+        - os: ubuntu-22.04
           python: 3
           architecture: x64
           perl: latest
@@ -192,7 +192,7 @@ jobs:
       if: runner.os == 'Linux'
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.os }}_perl${{ matrix.perl }}${{ matrix.architecture }}
+        name: ${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
         path: |
           src/auto/XSTools/XSTools_notes.txt
           src/auto/XSTools/XSTools.so
@@ -288,7 +288,7 @@ jobs:
     - name: Restoring XTools from artifacts
       uses: actions/download-artifact@v2
       with:
-        name: ${{ matrix.os }}_perl${{ matrix.perl }}${{ matrix.architecture }}
+        name: ${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
 
     - name: Checking for XSTools
       shell: bash
