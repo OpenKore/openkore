@@ -6422,7 +6422,11 @@ sub guild_name {
 		$messageSender->sendGuildRequestInfo(0);		# Requests for Basic Information Guild, Hostile Alliance Information
 		$messageSender->sendGuildRequestInfo(3);
 		$messageSender->sendGuildRequestInfo(1);		# Requests for Members list, list job title
-	} else {
+	}
+	elsif ($masterServer->{serverType} eq 'jRO') {
+		$messageSender->sendGuildRequestInfo(1);		# Requests for Members list, list job title
+	}
+	else {
 		$messageSender->sendGuildMasterMemberCheck();
 		$messageSender->sendGuildRequestInfo(4);			# Requests for Expulsion list
 		$messageSender->sendGuildRequestInfo(0);			# Requests for Basic Information Guild, Hostile Alliance Information
@@ -10222,6 +10226,8 @@ sub instance_window_queue {
 sub instance_window_join {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+
+	Plugins::callHook('instance_ready');
 }
 
 # 02CE
