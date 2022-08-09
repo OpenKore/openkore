@@ -41,11 +41,15 @@ sub new {
 		send_equip 0998
 		storage_item_add 0364
 		storage_item_remove 0365
+		skill_use_location 0366
+		sync 0360
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	$self->{char_create_version} = 0x0A39;
-    $self->{send_sell_buy_complete} = 1;
+
+	$self->{send_sell_buy_complete} = 1;
+	$self->{send_buy_bulk_pack} = "v V";
 
 	return $self;
 }
