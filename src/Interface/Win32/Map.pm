@@ -75,14 +75,16 @@ sub paintMap {
 	for (my $j = 0; $j < $mvw_x; $j++) {
 		for (my $k = 0; $k < $mvw_y; $k++) {
 			my $block = $field->getBlock($j, $mvw_y-$k);
-			if ($block == Field::TILE_WALK) {
-				$DC2->SetPixel($j, $k, [202,255,228],);
-			} elsif ($block == Field::TILE_NOWALK) {
-				$DC2->SetPixel($j, $k, [181,182,181],);
-			} elsif ($block == Field::TILE_WALK|Field::TILE_WATER) {
-				$DC2->SetPixel($j, $k, [255,0,0],);
-			} elsif ($block == Field::TILE_CLIFF|Field::TILE_SNIPE) {
-				$DC2->SetPixel($j, $k, [194,135,135],);
+			if ($block == Field::WALKABLE) {
+				$DC2->SetPixel($j, $k, [244,244,244],);
+			} elsif ($block == Field::NON_WALKABLE) {
+				$DC2->SetPixel($j, $k, [49,49,49],);
+			} elsif ($block == Field::NON_WALKABLE_NON_SNIPABLE_WATER) {
+				$DC2->SetPixel($j, $k, [0,100,210],);
+			} elsif ($block == Field::WALKABLE_WATER) {
+				$DC2->SetPixel($j, $k, [57,155,204],);
+			} elsif ($block == Field::SNIPABLE_CLIFF) {
+				$DC2->SetPixel($j, $k, [154,118,58],);
 			}
 		}
 	}
@@ -99,6 +101,10 @@ sub onexit {
 
 sub mapIsShown {
 	return $mapOpened;
+}
+
+sub currentMap {
+	return $map_name;
 }
 
 # Repaint Map by BitBlt from stored DC2 to DC
@@ -125,8 +131,8 @@ sub paintPos {
 		$self->{mw}->Caption("Map View: " . $field->baseName . " ($x,$y)");
 		#$DC = $self->{mw}->GetDC;
 		$C = new Win32::GUI::Pen(
-            -color => [0,0,255], 
-            -width => 2,
+            -color => [0,200,0], 
+            -width => 5,
         );
         
         $DC->SelectObject($C);
@@ -149,18 +155,18 @@ sub paintMiscPos {
 	if ($self->mapIsShown()) {
 		#$DC = $self->{mw}->GetDC;
 		$C = new Win32::GUI::Pen( #monster color
-            -color => [255,0,0], 
-            -width => 2,
+            -color => [214,40,58], 
+            -width => 4,
         );
 
 		$D = new Win32::GUI::Pen( #player color
-            -color => [128,128,64], 
-            -width => 2,
+            -color => [0,150,0], 
+            -width => 4,
         );
         
 		$E = new Win32::GUI::Pen( #npc color
-            -color => [128,128,255], 
-            -width => 2,
+            -color => [180,0,255], 
+            -width => 4,
         );
                 
         $DC->SelectObject($C);
