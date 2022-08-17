@@ -44,6 +44,7 @@ sub start {
 				parseROLUT($_, \%itemSlotCount_lut);
 				is_deeply(\%itemSlotCount_lut, $itemSlotCount, $_);
 			}
+			done_testing();
 		} or skip 'failed to load tables', 1;
 
 		# 502 - unknown item
@@ -56,6 +57,7 @@ sub start {
 			is(items_control(NOT_CONFIGURED_ITEM)->{keep}, 9, 'all');
 			is(items_control($_,$_)->{keep}, 2, $_) for @{$item_names_part[0]};
 			is(items_control($_,$_)->{keep}, 22, $_) for @{$item_names_part[1]};
+			done_testing();
 		};
 
 		subtest 'pickupitems.txt' => sub {
@@ -64,6 +66,7 @@ sub start {
 			is(pickupitems(NOT_CONFIGURED_ITEM), 1, 'all');
 			is(pickupitems($_), 2, $_) for grep {!/Bowman Scroll 1/} @{$item_names_part[0]};
 			is(pickupitems($_), -1, $_) for @{$item_names_part[1]};
+			done_testing();
 		};
 
 		subtest 'writeDataFileIntact' => sub {
@@ -122,8 +125,12 @@ sub start {
 			is( $reader->eof, 1 );
 
 			unlink 'data/write_config.out.txt';
+			done_testing();
 		};
-	}}
+	}
+	done_testing();
+	}
+	
 }
 
 1;

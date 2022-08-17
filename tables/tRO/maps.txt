@@ -1,17 +1,160 @@
-//-- LastDate true 2020-05-02
+//-- 2021 3Q
+
+// ep16.2
+1@slw.rsw#Central Room of Werner Laboratory#
+1@swat.rsw#Heart Hunter War Base#
+que_swat.rsw#Heart Hunter War Base#
+slabw01.rsw#Werner Laboratory#
+rebel_in.rsw#Klana Nemierie#
+
+
+// 2021 태국 팝콘 페스티벌 (KRO 2017 버전)
+1@crd.rsw#화산섬 코로도#
+// ep16.1 영웅을 위한 연회 + 프론테라 리뉴얼
+1@mir.rsw#Ceremonial Room#
+2@mir.rsw#Ceremonial Room#
+1@sthb.rsw#Inside Aerial Fortress#
+1@sthc.rsw#Secret Room of Aerial Fortress#
+1@sthd.rsw#Top of Aerial Fortress#
+
+prt_cas.rsw#Central Palace#
+prt_cas_q.rsw#Detached Palace#
+prt_prison.rsw#Prontera Dungeon#
+prt_lib.rsw#Memories of the royal family#
+prt_lib_q.rsw#Memories of the past royal family#
+prt_q.rsw#Invaded Prontera#
+prt_pri00.rsw#Prontera Jail#
+
+// 신종족 도람 라자냐 마을
+lasagna.rsw#Port Lasagna#
+lasa_fild01.rsw#Raviole Plains Guard Post#
+lasa_fild02.rsw#Forest Raviole#
+lasa_dun01.rsw#Dragon's nest#
+lasa_dun02.rsw#Dragon's nest#
+lasa_dun03.rsw#Dragon's nest#
+conch_in.rsw#Inside Corn-Kilina#
+lasa_in01.rsw#Inside Lasagna#
+lasa_dun_q.rsw#Dragon's nest#
+
+// 영웅의 흔적3
+1@glast.rsw#Old Glast Heim#
+1@air1.rsw#Airship#
+1@air2.rsw#Airship#
+
+//무한MD
+1@infi.rsw#Infinite Space#
+
+// ep15.2 판타스마고리카
+verus01.rsw#Lab-OPTATIO#
+verus02.rsw#R&D-WISH#
+un_bk_q.rsw#Under Bunker#
+un_bunker.rsw#Under Bunker#
+un_myst.rsw#Under Tunnel#
+1@uns.rsw#The Last Chamber#
+1@lab.rsw#Main Laboratory#
+
+// ep15.1 판타스마고리카
+ver_eju.rsw#Juperos Eastern Ruin#
+ver_tunn.rsw#Verus Outskirts Tunnel#
+verus04.rsw#Verus Excavation Site#
+verus03.rsw#Verus Central Square#
+
+1@mcd.rsw#Charleston's Factory#
+
+//태국채널링 복사맵 3차
+c_tw3_a.rsw#Clock Tower of Twisted TimeFloor 3 (A)#
+c_tw3_b.rsw#Clock Tower of Twisted TimeFloor 3 (B)#
+
+// 파라마켓
+paramk.rsw#Para Market#
+
+//고성 상급 메모리얼던전
+2@gl_kh.rsw#Nightmare Old Glast Heim 2F#
+1@gl_kh.rsw#Nightmare Old Glast Heim 1F#
+
+// 리벨리온 전직맵
+job_gun.rsw#Liberation shelter#
+
+//EP.14.3
+moro_vol.rsw#Flame Basin#
+moro_cav.rsw#Flame Cave#
+1@dth1.rsw#Bios Island#
+1@dth2.rsw#Bios Island#
+1@dth3.rsw#Bios Island#
+1@rev.rsw#Morse Cave#
+1@eom.rsw#Temple of Demon God#
+1@jtb.rsw#Jitterbug Knightmare#
+
+//시계탑나이트메어던전
+c_tower2_.rsw#Clock Tower of Twisted TimeFloor 2#
+c_tower3_.rsw#Clock Tower of Twisted TimeFloor 3#
+
+//영웅의흔적
+dali02.rsw#Crack of Dimension#
+1@tnm1.rsw#Top Floor of Devil Tower#
+1@tnm2.rsw#Very Top Floor of Devil Tower#
+1@tnm3.rsw#Morroc Castle Basement#
+1@ge_st.rsw#Geffen Magic Tournament#
+1@gef.rsw#Geffen Magic Tournament#
+1@gef_in.rsw#Geffen Magic Tournament#
+1@spa.rsw#Ghost Palace#
+
+//태국공성 복사맵
+payg_c05.rsw#Bamboo Forest Hermitage_#
+payg_c04.rsw#Red Palace_#
+payg_c03.rsw#Shadow of Buddha_#
+payg_c02.rsw#Garden of Heaven_#
+payg_c01.rsw#Arbor of Light_#
+aldeg_c05.rsw#Rothenburg_#
+aldeg_c04.rsw#Wurzburg_#
+aldeg_c03.rsw#Nuernberg_#
+aldeg_c02.rsw#Hohenschwangau_#
+aldeg_c01.rsw#Neuschwanstein_#
+gefg_c05.rsw#Melcedez_#
+gefg_c04.rsw#Bergel_#
+gefg_c03.rsw#Yssnelf_#
+gefg_c02.rsw#Jyolbriger_#
+gefg_c01.rsw#Leprion_#
+prtg_c05.rsw#Kendul_#
+prtg_c04.rsw#Skoegul_#
+prtg_c03.rsw#Lazreagues_#
+prtg_c02.rsw#Swanhild_#
+prtg_c01.rsw#Kriemhild_#
+
+//닌자 건슬 전직소
+que_ng.rsw#Unknown Area#
+
+// 수상한 난파선
+1@tre.rsw#Sunken Ship#
+
+prt_pri00.rsw#Prontera Prison#
+
+//클랜 MD
+1@ffp.rsw#Remnant Hideout#
+
+//태국채널링 복사맵 2차
+ecltd03_a.rsw#Bifrost Tower 3F (A)#
+ecltd03_b.rsw#Bifrost Tower 3F (B)#
+ve_fild07_a.rsw#Veins Field (A)#
+ve_fild07_b.rsw#Veins Field (B)#
+ve_fild03_a.rsw#Veins Field (A)#
+ve_fild03_b.rsw#Veins Field (B)#
+abyss_03_a.rsw#Abyss Lake Underground Cave 3F (A)#
+abyss_03_b.rsw#Abyss Lake Underground Cave 3F (B)#
+
 //태국채널링 복사맵
-gl_ch_a.rsw#Glast Heim St. Abbey#
-gl_ch_b.rsw#Glast Heim St. Abbey#
-gl_chy_a.rsw#Glast Heim Churchyard#
-gl_chy_b.rsw#Glast Heim Churchyard#
-mag_d02_a.rsw#Nogg Road 2F#
-mag_d02_b.rsw#Nogg Road 2F#
-msk_d03_a.rsw#Dremuci Forest#
-msk_d03_b.rsw#Dremuci Forest#
-jup_01_a.rsw#Ruins of Juperos Outside#
-jup_01_b.rsw#Ruins of Juperos Outside#
-dic_d02_a.rsw#Scaraba Hall#
-dic_d02_b.rsw#Scaraba Hall#
+gl_ch_a.rsw#Glast Heim St. Abbey (A)#
+gl_ch_b.rsw#Glast Heim St. Abbey (B)#
+gl_chy_a.rsw#Glast Heim Churchyard (A)#
+gl_chy_b.rsw#Glast Heim Churchyard (B)#
+mag_d02_a.rsw#Nogg Road 2F (A)#
+mag_d02_b.rsw#Nogg Road 2F (B)#
+msk_d03_a.rsw#Dremuci Forest (A)#
+msk_d03_b.rsw#Dremuci Forest (B)#
+jup_01_a.rsw#Ruins of Juperos Outside (A)#
+jup_01_b.rsw#Ruins of Juperos Outside (B)#
+dic_d02_a.rsw#Scaraba Hall (A)#
+dic_d02_b.rsw#Scaraba Hall (B)#
 
 //인트로 개편
 iz_int.rsw#Stranded Ship#
@@ -110,23 +253,23 @@ te_aldecas5.rsw#W#
 teg_dun02.rsw#Subterranean Dungeon of Guild#
 
 // Izlude tutorial map
-prt_fild08d.rsw#Prontera Field#
-prt_fild08c.rsw#Prontera Field#
-prt_fild08b.rsw#Prontera Field#
 prt_fild08a.rsw#Prontera Field#
+prt_fild08b.rsw#Prontera Field#
+prt_fild08c.rsw#Prontera Field#
+prt_fild08d.rsw#Prontera Field#
 prt_fild08e.rsw#Prontera Field#
 prt_fild08f.rsw#Prontera Field#
 prt_fild08g.rsw#Prontera Field#
 prt_fild08h.rsw#Prontera Field#
 
-iz_ac01_d.rsw#Academy 1F#
-iz_ac02_d.rsw#Academy 2F#
-iz_ac01_c.rsw#Academy 1F#
-iz_ac02_c.rsw#Academy 2F#
-iz_ac01_b.rsw#Academy 1F#
-iz_ac02_b.rsw#Academy 2F#
 iz_ac01_a.rsw#Academy 1F#
 iz_ac02_a.rsw#Academy 2F#
+iz_ac01_b.rsw#Academy 1F#
+iz_ac02_b.rsw#Academy 2F#
+iz_ac01_c.rsw#Academy 1F#
+iz_ac02_c.rsw#Academy 2F#
+iz_ac01_d.rsw#Academy 1F#
+iz_ac02_d.rsw#Academy 2F#
 iz_ac01_e.rsw#Academy 1F#
 iz_ac02_e.rsw#Academy 2F#
 iz_ac01_f.rsw#Academy 1F#
@@ -136,10 +279,10 @@ iz_ac02_g.rsw#Academy 2F#
 iz_ac01_h.rsw#Academy 1F#
 iz_ac02_h.rsw#Academy 2F#
 
-izlude_d.rsw#Satellite City Izlude#
-izlude_c.rsw#Satellite City Izlude#
-izlude_b.rsw#Satellite City Izlude#
 izlude_a.rsw#Satellite City Izlude#
+izlude_b.rsw#Satellite City Izlude#
+izlude_c.rsw#Satellite City Izlude#
+izlude_d.rsw#Satellite City Izlude#
 izlude_e.rsw#Satellite City Izlude#
 izlude_f.rsw#Satellite City Izlude#
 izlude_g.rsw#Satellite City Izlude#

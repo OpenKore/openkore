@@ -578,6 +578,46 @@ Fale com o Sapo Diário No. 30. #
 Leve todas as informações ao Professor Fabre. #
 Fale com o Professor Fabre. #
 
+1229#Aprendiz de Espadachim#SG_FEEL#QUE_NOIMAGE#
+Após receber o Manual do Espadachim, volte a falar com Sam, dos Espadachins.#
+Fale com Sam#
+
+1230#Aprendiz de Espadachim#SG_FEEL#QUE_NOIMAGE#
+Siga com seu treinamento teórico com o Assistente Niels.#
+Fale com Niels#
+
+1233#Treinamento de Espadachim#SG_FEEL#QUE_NOIMAGE#
+Siga com seu treinamento com a Instrutora Luna.#
+Fale com Luna#
+
+1234#Treinamento de Espadachim#SG_FEEL#QUE_NOIMAGE#
+Agora você precisa alcançar o nível de base 18 para continuar a missão da instrutora Luna, da Guilda dos Espadachins.#
+Pegue o nível 18 de base#
+
+1235#Treinamento de Espadachim#SG_FEEL#QUE_NOIMAGE#
+O habitat mais próximo do Tarou é o Esgoto de Prontera. Elimine 10 Tarou e retorne para Luna, na Guilda dos Espadachins.#
+Elimine Tarous#
+
+1236#Treinamento de Espadachim#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Familiares no Esgoto de Prontera e retorne a Luna.#
+Elimine Familiares#
+
+1237#Guia das Lojas#SG_FEEL#QUE_NOIMAGE#
+O objetivo é aprender o funcionamento da compra e venda com NPCs.#
+Fale com Leoni#
+
+1238#Guia das Lojas#SG_FEEL#QUE_NOIMAGE#
+Seu objetivo é comprar 1 Poção Vermelha, para isto, você precisará ter zenys.#
+Traga 1 Poção Vermelha#
+
+1239#Guia das Lojas#SG_FEEL#QUE_NOIMAGE#
+Converse com o vendedor para a próxima etapa do seu treinamento.#
+Fale com Leoni#
+
+1240#Guia das Lojas#SG_FEEL#QUE_NOIMAGE#
+Você recebeu 1 Lata Vencida! Procure um NPC Vendedor e venda o item. Após isso, retorne com a Assistente Leoni.#
+Venda a Lata Vencida#
+
 1260#Palácio das Mágoas#SG_FEEL#QUE_NOIMAGE#
 Um membro da Guarda Real com aparência sinistra solicitou sua ajuda para enfrentar os monstros que estão invadindo o castelo! Viaje ao passado para descobrir o que está acontecendo.#
 Entre no Palácio das Mágoas.#
@@ -1950,45 +1990,45 @@ Você pode pegar este pedido mais tarde #
 Você recebeu um pedido do Gato Suspeito para derrotar 20 Múmias Anciãs no próximo andar #
 #
 
-2293#Adventure partner#SG_FEEL#QUE_NOIMAGE#
-Conversation with Advanced Adventurer of Kritura Academy #
+2293#Guia de Mascotes#SG_FEEL#QUE_NOIMAGE#
+Converse com o <NAVI>Palerma Scott<INFO>iz_ac01.gat,45,80,0,101,0</INFO></NAVI> no Instituto do Aprendiz#
 #
 
-2294#Adventure partner#SG_FEEL#QUE_NOIMAGE#
-Listen to the conversation of Poring in the Kritura Academy garden #
+2294#Guia de Mascotes#SG_FEEL#QUE_NOIMAGE#
+Converse com o <NAVI>[Poring]<INFO>prt_fild08.gat,362,272,0,101,0</INFO></NAVI>.#
 #
 
-2295#Adventure partner#SG_FEEL#QUE_NOIMAGE#
-Listen to the conversation of Poring in the Kritura Academy garden #
+2295#Guia de Mascotes#SG_FEEL#QUE_NOIMAGE#
+Converse com o <NAVI>[Poring]<INFO>prt_fild08.gat,362,272,0,101,0</INFO></NAVI>.#
 #
 
-2296#Adventure partner#SG_FEEL#QUE_NOIMAGE#
-Tame the Novice Poring with Green Apple #
-Novice Poring Egg #
+2296#Guia de Mascotes#SG_FEEL#QUE_NOIMAGE#
+Domestique o Poring Bebê com a Maçã Dura.#
+Consiga seu primeiro Ovo de Poring#
 
-2297#Adventure partner#SG_FEEL#QUE_NOIMAGE#
-Conversation with Advanced Adventurer #
+2297#Guia de Mascotes#SG_FEEL#QUE_NOIMAGE#
+Converse com o <NAVI>Aventureiro<INFO>prt_fild08.gat,358,272,0,101,0</INFO></NAVI>.#
 #
 
-2298#Adventure partner#SG_FEEL#QUE_NOIMAGE#
-Conversation with Poring #
+2298#Guia de Mascotes#SG_FEEL#QUE_NOIMAGE#
+Converse com o <NAVI>[Poring]<INFO>prt_fild08.gat,362,272,0,101,0</INFO></NAVI>.#
 #
 
-2299#Property experience#SG_FEEL#QUE_NOIMAGE#
-Put damage onto Fire type egg #
-Attack Lv10 (Fire)#
+2299#Guia das Propriedades#SG_FEEL#QUE_NOIMAGE#
+Após entender o conceito de Propriedades Elementais, experimente atacar um Ovo de Fogo e anote o dano que causou. Depois, retorne ao Mago das Propriedades.#
+Ataque um Ovo de Fogo#
 
 2412#Limpando a cidade#SG_FEEL#QUE_NOIMAGE#
-Tereza Limpeza precisa de ajuda para limpar a cidade, será necessário clicar nos montinhos de areia até conseguir peças de carrinho suficientes.#
-Colete 5 Peças de Carrinho para a Tereza Limpeza.#
+Tereza Limpeza precisa de ajuda para limpar a cidade, será necessário clicar nos montinhos de areia até conseguir restos de lixo suficientes.#
+Colete 5 Restos de Lixo para a Tereza Limpeza.#
 
 2413#Limpando a praia (Completo)#SG_FEEL#QUE_NOIMAGE#
 Tereza Limpeza precisa descansar um pouco.#
 Volte após 3 horas.#
 
 2414#Estoque de comida#SG_FEEL#QUE_NOIMAGE#
-O Chef precisa de alguns pratos e culinária para fornecer comida aos participantes do festival.#
-Traga um prato de culinária de nível 5 ou 6 para o Chef.#
+O Chef precisa de alguns pratos de culinária de nível 3, 4, 5 ou 6 para fornecer comida aos participantes do festival.#
+Entregue 1 comida.#
 
 2415#Estoque de comida (Completo)#SG_FEEL#QUE_NOIMAGE#
 O Chef precisa descansar um pouco.#
@@ -2015,6 +2055,10 @@ Turistas seguros! Vamos voltar mais tarde para ver se está tudo bem.#
 Volte após 3 horas.#
 
 2421#Votação#SG_FEEL#QUE_NOIMAGE#
+Em um ato de cidadania, você votou! Aguarde os resultados e boa sorte!#
+Voto comfirmado.#
+
+2422#Votação#SG_FEEL#QUE_NOIMAGE#
 Em um ato de cidadania, você votou! Aguarde os resultados e boa sorte!#
 Voto comfirmado.#
 
@@ -3042,7 +3086,7 @@ Cace 30 Petites nos arredores de Geffen e retorne ao segundo andar da Matriz do 
 Cace 30 Rafflesias nos arredores de Lighthalzen e retorne ao segundo andar da Matriz do Grupo Éden. #
 #
 
-4178#Caça às Nuves Venenosas#SG_FEEL#QUE_NOIMAGE#
+4178#Caça as Nuvens Venenosas#SG_FEEL#QUE_NOIMAGE#
 Cace 30 Nuvens Venenosas nos arredores de Einbroch e retorne ao segundo andar da Matriz do Grupo Éden. #
 #
 
@@ -3402,6 +3446,86 @@ Passando por Ajustes#
 Passando por Ajustes#
 #
 
+4268#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Se apresente ao instrutor dos Ninjas.#
+#
+
+4269#Calouro#SG_FEEL#QUE_NOIMAGE#
+Concluiu sua matrícula no Instituto do Aprendiz.#
+#
+
+4270#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Entenda mais sobre os atributos de um Ninja.#
+#
+
+4271#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Entenda mais sobre as habilidades de um Ninja.#
+#
+
+4272#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Faça a prova oral dos Ninjas.#
+#
+
+4273#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Entenda mais sobre as armas de um Ninja.#
+#
+
+4274#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Entenda mais sobre as evoluções de um Ninja.#
+#
+
+4275#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Drops#
+#
+
+4276#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Porings#
+#
+
+4277#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Rockers#
+#
+
+4278#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Rabos de Verme#
+#
+
+4279#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote o Poporing#
+#
+
+4280#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote o Poporing#
+#
+
+4281#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote 3 Lunáticos#
+#
+
+4282#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Drops#
+#
+
+4283#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Porings#
+#
+
+4284#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Rockers#
+#
+
+4285#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Rabos de Verme#
+#
+
+4286#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote o Poporing#
+#
+
+4287#Meu jeito Ninja#SG_FEEL#QUE_NOIMAGE#
+Derrote o Poporing#
+#
+
 4295#Contador de Histórias#SG_FEEL#QUE_NOIMAGE#
 Você conheceu um bardo andarilho nas escavações de Verus.#
 Termine de falar com o Bardo.#
@@ -3686,17 +3810,17 @@ Leve 100 Couros de Comodo para o mestre-ferreiro, Gatti. #
 Se você me trouxer o Punho de Espada Afago que fiz, 100 Couros de Comodo, 20 unidades de Aço e 10 Oridecon, eu farei a arma descrita no manual de fabricação. #
 O mestre-ferreiro Gatti fará a arma, se você lhe trouxer 10 Oridecons, 20 peças de Aço e 100 Couros de Comodo. #
 
-5055#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+5055#Caça na Ilha-Nação 4#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Mula Sem Cabeça#
 
-5056#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+5056#Caça na Ilha-Nação 5#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Tamruan#
 
-5057#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+5057#Coleta na Ilha-Nação 1#SG_FEEL#QUE_NOIMAGE#
+Pegue 30 Máscaras do Festival do monstro Pirralho em Kunlun. #
+Colete 30 Máscaras do Festival#
 
 5058#O humor dos jogadores-(1)#SG_FEEL#QUE_NOIMAGE#
 O Diretor dos Cat Gamers está preocupado depois de uma sequência de 10 derrotas!!! #
@@ -4034,6 +4158,58 @@ Leve o item refinado ao Red Leopard Joe. #
 Agora, você vai enfrentar o Teste de Batalha. #
 Mate o alvo 'Segredo de Família'! #
 
+5147#Rápido no Gatilho#SG_FEEL#QUE_NOIMAGE#
+Converse com o Barista Louis para iniciar seu treinamento de Justiceiro.#
+Fale com o Barista#
+
+5148#Rápido no Gatilho#SG_FEEL#QUE_NOIMAGE#
+Dirija-se ao Aeroplano até Izlude. Lá, fale com a Luísa dentro do Instituto do Aprendiz.#
+Encontre Luísa#
+
+5149#Rápido no Gatilho#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Zangões.#
+Elimine Zangões#
+
+5150#Rápido no Gatilho#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Sapos de Rodda.#
+Elimine Sapos de Rodda#
+
+5151#Rápido no Gatilho#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Bebês Selvagens.#
+Elimine Bebês Selvagens#
+
+5152#Rápido no Gatilho#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Rockers.#
+Elimine Rockers#
+
+5153#Guia de Refino#SG_FEEL#QUE_NOIMAGE#
+Experimente o processo de refinamento na Geringonça. Será totalmente gratuito!#
+Refine sua Faca#
+
+5154#Guia de Refino#SG_FEEL#QUE_NOIMAGE#
+Converse com Tadde para aprender os básicos sobre o refinamento. Em seguida, retorne ao Ferreiro Rosher.#
+Fale com Tadde#
+
+5155#Guia de Refino#SG_FEEL#QUE_NOIMAGE#
+Converse com o Lucas para entender mais detalhes sobre o refinamento. Em seguida, retorne ao Ferreiro Rosher.#
+Fale com Lucas#
+
+5156#Guia de Refino#SG_FEEL#QUE_NOIMAGE#
+Conclua seu treinamento de refinamento.#
+#
+
+5157#Guia de Slot e Encanto#SG_FEEL#QUE_NOIMAGE#
+Converse com Dan, na Associação dos Encantamentos.#
+Fale com Dan, o encantador#
+
+5158#Guia de Slot#SG_FEEL#QUE_NOIMAGE#
+Com uma Camisa de Algodão no seu inventário, fale com Dan para seguir com o processo de adição de slot.#
+Traga 1 Camisa de Algodão#
+
+5159#Guia de Encanto#SG_FEEL#QUE_NOIMAGE#
+Equipe a Camisa de Algodão com slot e siga para o treino de encantamento.#
+Fale com Pon#
+
 5161#Coleta Nível Fácil [Espera]#SG_FEEL#QUE_NOIMAGE#
 Pedido de Cristal de Energia - Fácil - Só é possível fazer uma vez por dia. #
 Tempo de espera de 23 horas #
@@ -4162,11 +4338,11 @@ Entregue 100 Madeiras.#
 Não recebemos nenhum pedido novo requisitando Madeira por enquanto. Volte mais tarde.#
 Tempo de Cooldown: 3 Horas#
 
-5255#Remessa de Corda#SG_FEEL#QUE_NOIMAGE#
-Materiais para Corda: 10 Escamas Afiadas, 10 Teias de Aranha, 10 Tendões, 10 Cipós e 10 Pedaços de Escama Dura. Colete somente dois tipos de materiais.#
-Colete 2 tipos de Material para Corda.#
+5255#Fantasias#SG_FEEL#QUE_NOIMAGE#
+Materiais para confecção de Fantasias: 10 Garras de Lobo do Deserto, 10 Ombreiras, 10 Meias Listradas, 10 Máscaras Brancas ou 10 Tangas de Tigre. Colete somente 2 tipos de materiais.#
+Traga 2 tipos de material.#
 
-5256#[Finalizado] Remessa de Corda#SG_FEEL#QUE_NOIMAGE#
+5256#[Finalizado] Fantasias#SG_FEEL#QUE_NOIMAGE#
 Já temos o bastante. Volte mais tarde.#
 Tempo de Cooldown: 3 Horas#
 
@@ -4734,8 +4910,8 @@ Encontre Wildcat Joe em Einbroch e fale com ele. #
 Passe pelo Portão Sul de Einbroch e encontre o Selo perto da árvore vermelha, vista do lado oeste sobre a ponte. #
 #
 
-6017#Resposta de Red Leopard Joe#SG_FEEL#QUE_NOIMAGE#
-Volte até Cougar com o recado de Red Leopard Joe. #
+6017#Resposta de Red Wildcat Joe#SG_FEEL#QUE_NOIMAGE#
+Volte até Cougar com o recado de Red Wildcat Joe. #
 #
 
 6018#Loucura de Cougar#SG_FEEL#QUE_NOIMAGE#
@@ -6626,6 +6802,102 @@ Passando por Ajustes#
 Passando por Ajustes#
 #
 
+7471#Primeiros Amigos#SG_FEEL#QUE_NOIMAGE#
+Converse com o Capitão Chobber.#
+#
+
+7472#Primeiros Amigos#SG_FEEL#QUE_NOIMAGE#
+O Mordomo Bartolomeu encontra-se perto do Instituto do Aprendiz.#
+Fale com Bartolomeu#
+
+7473#Primeiros Amigos#SG_FEEL#QUE_NOIMAGE#
+Dê um clique duplo no Suco de Maçã e depois, volte a falar com Bartolomeu!#
+Beba o Suco de Maçã.#
+
+7474#Conhecendo Izlude#SG_FEEL#QUE_NOIMAGE#
+Encontre as placas marcadas em seu mini-mapa.#
+Procure 3 Placas#
+
+7475#Conhecendo Izlude#SG_FEEL#QUE_NOIMAGE#
+Você encontrou a placa do aeroplano! Quando encontrar todas as placas, retorne ao Guia da Cidade.#
+Achou a 2a Placa#
+
+7476#Conhecendo Izlude#SG_FEEL#QUE_NOIMAGE#
+Você encontrou a placa da arena! Quando encontrar todas as placas, retorne ao Guia da Cidade.#
+Achou a 1a Placa#
+
+7477#Conhecendo Izlude#SG_FEEL#QUE_NOIMAGE#
+Você encontrou o quadro de avisos! Quando encontrar todas as placas, retorne ao Guia da Cidade.#
+Achou a 3a Placa#
+
+7478#Brincando de Alquimista#SG_FEEL#QUE_NOIMAGE#
+Vá coletar a erva na entrada da academia, será que alguém próximo a elas sabe alguma coisa?#
+Corte uma Planta Vermelha e obtenha uma Erva Vermelha.#
+
+7479#Brincando de Alquimista#SG_FEEL#QUE_NOIMAGE#
+Lumin te deu uma Erva Vermelha.#
+#
+
+7480#Treino dos Gatunos#SG_FEEL#QUE_NOIMAGE#
+Comece o treinamento de Gatuno com o Bercassell e Vicente.#
+Fale com os Instrutores#
+
+7481#Treino dos Gatunos#SG_FEEL#QUE_NOIMAGE#
+Você conversou e aprendeu sobre atributos com o Vicente.#
+Fale com Mayshell#
+
+7482#Treino dos Gatunos#SG_FEEL#QUE_NOIMAGE#
+Você conversou e aprendeu sobre atributos com o Bercassell.#
+Fale com Mayshell#
+
+7483#Treino dos Gatunos#SG_FEEL#QUE_NOIMAGE#
+Equipe o Manual do Gatuno.#
+Fale com os Instrutores#
+
+7484#Treino dos Gatunos#SG_FEEL#QUE_NOIMAGE#
+Use a habilidade Furto em um Poring para conseguir uma Pedra.#
+Furte o Poring#
+
+7485#Treino dos Gatunos#SG_FEEL#QUE_NOIMAGE#
+Use a habilidade Envenenar em um Poring.#
+Elimine o Poring#
+
+7486#Planos para o futuro#SG_FEEL#QUE_NOIMAGE#
+Converse com Lumin.#
+Fale com Lumin#
+
+7487#Treino dos Gatunos#SG_FEEL#QUE_NOIMAGE#
+Derrote 4 Porings com a habilidade Envenenar dentro de 30 segundos.#
+Elimine 4 Porings#
+
+7488#Monstros de Fogo#SG_FEEL#QUE_NOIMAGE#
+Derrote 5 monstros de cada espécie. Elimine Drops, Filhote de Lobo e Picky. Cuidado! Picky com Casca não vale!#
+Elimine monstros#
+
+7489#Missões Fáceis#SG_FEEL#QUE_NOIMAGE#
+Derrote os Familiares na Esfinge.#
+Elimine Familiar#
+
+7490#Missões Fáceis#SG_FEEL#QUE_NOIMAGE#
+Para acessar a Fazenda e obter 3 Cogumelos Borrachentos, vá até as Ruínas de Morroc e procure por Ted Ado. Ele se encontra um pouco acima da Loja de Ferramentas, perto do Vendedor de Bananas.#
+Colete 3 Cogumelos#
+
+7491#Missões Fáceis#SG_FEEL#QUE_NOIMAGE#
+Vá ao Grupo Éden. Algo de bom deverá lhe esperar lá.#
+Entre no Grupo do Éden#
+
+7492#Missões Fáceis#SG_FEEL#QUE_NOIMAGE#
+Derrote o Ambernite.#
+Elimine Ambernites#
+
+7493#Missões Fáceis#SG_FEEL#QUE_NOIMAGE#
+Derrote 17 Escorpiões.#
+Elimine Escorpiões#
+
+7494#Missões Fáceis#SG_FEEL#QUE_NOIMAGE#
+Para acessar a Fazenda e eliminar 10 Fabres e 10 Chonchons, vá até as Ruínas de Morroc e procure por Ted Ado. Ele se encontra um pouco acima da Loja de Ferramentas, perto do Vendedor de Bananas.#
+Elimine os monstros#
+
 7501# Bebê Suspeito (1)#SG_FEEL#QUE_NOIMAGE#
 Um pedido para eliminar um Bebê Suspeito que se esconde nos castelos dos Feudos de Gloria e Kafragarten durante a Guerra do Emperium. Alvo: 1 Bebê.#
 Bebês Suspeitos eliminados#
@@ -8155,8 +8427,8 @@ Volte a Hansenne com os documentos que achar #
  #
 
 8203#Rivalidade na Aliança#SG_FEEL#QUE_NOIMAGE#
-"Está ensopado... Por favor, me traga ^0000ff1 Leque Fantasma, 10 Frigideiras Velhas, 1 Pedra do Fogo, 1 Tinta de Polvo^000000."#
-Traga 1 Leque Fantasma, 10 Frigideiras Velhas, 1 Pedra do Fogo, 1 Tinta de Polvo #
+"Está ensopado... Por favor, me traga ^0000ff1 Leque Fantasma, 1 Frigideira Velha, 1 Pedra do Fogo, 1 Tinta de Polvo^000000."#
+Traga 1 Leque Fantasma, 1 Frigideira Velha, 1 Pedra do Fogo, 1 Tinta de Polvo #
 
 8204#Rivalidade na Aliança#SG_FEEL#QUE_NOIMAGE#
 "Entregue este arquivo antes que seja tarde."#
@@ -8423,7 +8695,7 @@ Entregue o item para o biólogo ao nordeste de Payon. #
 Faça a entrega #
 
 8272#Missões de Coleta#SG_FEEL#QUE_NOIMAGE#
-Entregue o item para o biólogo a nordeste do campo de Prontera. #
+Entregue o item para o biólogo a oeste de Prontera. #
 Faça a entrega #
 
 8273#Missões de Coleta#SG_FEEL#QUE_NOIMAGE#
@@ -8453,6 +8725,126 @@ Colete 5 Biscoitos de Gengibre e 1 Pedaço de Bolo #
 8279#Missões de Coleta#SG_FEEL#QUE_NOIMAGE#
 Colete os itens do Martir na Mina de Carvão. #
 Colete 5 Bigodes de Toupeira e 3 Garras de Toupeira #
+
+8323#[Em Espera] Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+O Centro de Gestão das Lojinhas de Rua aceita missões 1 vez por semana. É melhor esperar.#
+Aguarde 7 dias#
+
+8324#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Entregue uma ^4d4dffCaixa Desgastada^000000 para a Ovelhinha localizada na Refinaria de Prontera.#
+Refinaria de Prontera#
+
+8325#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8326#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Entregue uma ^4d4dffCaixa Desgastada^000000 para a Ovelhinha localizada na Refinaria de Payon.#
+Refinaria de Payon#
+
+8327#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8328#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Entregue uma ^4d4dffCaixa Desgastada^000000 para a Ovelhinha dentro da Loja de Armas em Comodo.#
+Loja de Armas em Comodo#
+
+8329#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8330#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Entregue uma ^4d4dffCaixa Desgastada^000000 para a Ovelhinha dentro da Loja de Ferramentas de Al De Baran. Dentro da loja também funciona uma estalagem.#
+Estalagem em Al De Baran#
+
+8331#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8332#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Entregue uma ^4d4dffCaixa Desgastada^000000 para a Ovelhinha localizada ao lado da Kafra Norte de Morroc.#
+Kafra Norte de Morroc#
+
+8333#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8334#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Pegue uma ^4d4dffCaixa Desgastada^000000 com o monge Mariano, no 3o piso dos Esgotos de Prontera.#
+Esgotos de Prontera#
+
+8335#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com a Caixa Desgastada em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Retorne para Masha#
+
+8336#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Bongun, no 3o piso da Caverna de Payon, e retorne para a Ovelhinha na Guilda dos Mercadores em Alberta.#
+Elimine Bongun#
+
+8337#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8338#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Megalith, em Ruande, a caverna ao norte de Comodo, e retorne para a Ovelhinha na Guilda dos Mercadores em Alberta.#
+Elimine Megalith#
+
+8339#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8340#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Rideword, no térreo da Torre do Relógio, e retorne para a Ovelhinha na Guilda dos Mercadores em Alberta.#
+Elimine Rideword#
+
+8341#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8342#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com a Caixa Desgastada em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha#
+Retorne para Masha#
+
+8344#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o procedimento realizado, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Retorne a Masha#
+
+8346#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Derrote 3 Eremes Guile, no 3o piso do Laboratório de Somatologia, e retorne para a Ovelhinha na Guilda dos Mercadores em Alberta.#
+Elimine Eremes Guile#
+
+8347#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8348#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Derrote 3 Cecil Damon, no 3o piso do Laboratório de Somatologia, e retorne para a Ovelhinha na Guilda dos Mercadores em Alberta.#
+Elimine Cecil Damon#
+
+8349#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8350#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Derrote 3 Margaretha Sorin, no 3o piso do Laboratório de Somatologia, e retorne para a Ovelhinha na Guilda dos Mercadores em Alberta.#
+Elimine Margaretha Sorin#
+
+8351#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8352#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Derrote 3 Kathryne Keyron, no 3o piso do Laboratório de Somatologia, e retorne para a Ovelhinha na Guilda dos Mercadores em Alberta.#
+Elimine Kathryne Keyron#
+
+8353#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Com o Recibo em mãos, é hora de retornar para a Guilda dos Mercadores e falar com Masha.#
+Entregue o Recibo#
+
+8354#Gestão de Lojas#SG_FEEL#QUE_NOIMAGE#
+Se você deseja abrir uma Lojinha de Rua, será necessário completar a missão dada por Masha. Verifique sua janela de quests e, assim que completá-la, retorne para a Guilda dos Mercadores em Alberta para receber sua recompensa.#
+Complete a missão#
 
 9000#Mudança de Classe: Cavaleiro#SG_FEEL#QUE_NOIMAGE#
 Herman, Capitão da Cavalaria, diz que você precisa obter aprovações de outros Cavaleiros para se tornar um. #
@@ -9330,6 +9722,34 @@ Não é possível obter o item Poção da Concentração dos monstros do campo f
 Caso resolvido. Fale com Balumin. #
 #
 
+9264#Aprendiz da Magia#SG_FEEL#QUE_NOIMAGE#
+Vá para o mapa a oeste de Geffen e converse com o Guia da Guilda dos Magos.#
+Encontre a Maga Descolada#
+
+9265#Aprendiz da Magia#SG_FEEL#QUE_NOIMAGE#
+Vá para oeste da cidade de Geffen e converse com o Guia a Guilda dos Magos.#
+Encontre a Maga Descolada#
+
+9266#Aprendiz da Magia#SG_FEEL#QUE_NOIMAGE#
+Vá para a Guilda dos Magos de Geffen e converse com a Instrutora.#
+Encontre a Maga Descolada#
+
+9267#Aprendiz da Magia#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Chonchons e 30 Fabres.#
+Elimine monstros#
+
+9268#Aprendiz da Magia#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Sapos de Rodda e 30 Bebês Selvagens.#
+Elimine monstros#
+
+9269#Aprendiz da Magia#SG_FEEL#QUE_NOIMAGE#
+Converse com o Instrutor dos Magos.#
+Encontre a Maga#
+
+9270#Aprendiz da Magia#SG_FEEL#QUE_NOIMAGE#
+Cace 30 Besouros Ladrões e 30 Ovos de Besouro Ladrão.#
+Elimine monstros#
+
 9284#Bandidos em Geffen!#SG_FEEL#QUE_NOIMAGE#
 Um grupo de ^0000FFBandidos de Geffen^000000 está impoturnando uma jovem ^8B4513Kafra^000000!#
 Vamos salvar a Kafra!#
@@ -9469,6 +9889,18 @@ Derrote o ^8B4513Morroc escondido e seus lacaios^000000.#
 9319#Perseguindo Morroc em seu Covil[Finalizado]#SG_FEEL#QUE_NOIMAGE#
 Mensagem do ^8B4513Senior Tracker^000000: Volte amanhã e nos ajude a combater o Morroc.#
 Voltei daqui ^8B451323 Horas^000000.#
+
+9335#Pesquisa de Gigantes#SG_FEEL#QUE_NOIMAGE#
+Para ajudar o ^8B4513Pesquisador Bernard^000000 na pesquisa, basta coletar alguns ^0000FFFragmentos de Gigantes^000000 e trazer pra ele.#
+Traga Fragmentos de Gigantes.#
+
+9336#Batalha Épica#SG_FEEL#QUE_NOIMAGE#
+Eita! Parece que a batalha entre ^8B4513Sara e Fenrir^000000 lhe deixou com algumas cicatrizes, melhor recuperar esses ferimentos mais tarde.#
+Retorne após 7 dias.#
+
+9337#Finalizando#SG_FEEL#QUE_NOIMAGE#
+Fale com ^8B4513Fenrir^000000 e retorne ao Pesquisador Bernard no Espaço Dimensional.#
+Fale com o Pesquisador Bernard.#
 
 9418#Sussurro Sombrio#SG_FEEL#QUE_NOIMAGE#
 Você precisa entrar na fortaleza e enfrentar o causador de todo esse caos.#
@@ -9922,73 +10354,73 @@ Encontre Lisingshetter na Torre do Relógio. #
 Pedido recebido do Grupo Éden Lv 71~85. #
 Encontre Funfie em Alberta. #
 
-10107#Esfinge - Requiem#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Requiems. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 10 Requiems. #
+10107#Caça na Esfinge 1#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden#
+Elimine Requiém#
 
-10108#Esfinge - Marduks#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Marduks. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 10 Marduks. #
+10108#Caça na Esfinge 2#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Marduk#
 
-10109#Esfinge - Pasana#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Pasanas. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 10 Pasanas. #
+10109#Caça na Esfinge 3#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Pasana#
 
-10110#GlastHeim - Moldura Maldita#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Moldura Maldita. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 10 Molduras Malditas. #
+10110#Caça em Glast Heim 1#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Moldura Maldita#
 
-10111#GlastHeim - Druida Maligno#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Druida Maligno. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 10 Druidas Maligno. #
+10111#Caça em Glast Heim 2#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Druida Maligno#
 
-10112#GlastHeim - Almas Penadas#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Almas Penadas. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 10 Almas Penadas. #
+10112#Caça em Glast Heim 3#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Alma Penada#
 
-10113#GlastHeim - Raydric Arqueiro#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Raydric Arqueiro. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 10 Raydrics Arqueiros. #
+10113#Caça em Glast Heim 4#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Raydric Arqueiro#
 
-10114#Juno - Grand Peco#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Grand Pecos. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 20 Grand Pecos. #
+10114#Caça em Juno 1#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Grand Peco#
 
-10115#Juno - Rochoso#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Rochosos. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 20 Rochosos. #
+10115#Caça em Juno 2#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Rochoso#
 
-10116#Juno - Bode#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Bode. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 20 Bode. #
+10116#Caça em Juno 3#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Bode#
 
-10117#Juno - Harpia#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Harpias. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 20 Harpias. #
+10117#Caça em Juno 4#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Harpia#
 
-10118#Clock Tower - Relógio#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Relógios. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 15 Relógios. #
+10118#Caça na Torre 1#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Relógio#
 
-10119#Clock Tower - Punk#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Punks. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 15 Punks. #
+10119#Caça na Torre 2#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Punk#
 
-10120#Clock Tower - Rideword#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Ridewords. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 15 Ridewords. #
+10120#Caça na Torre 3#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Rideword#
 
-10121#Localize - Kikimora#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Kikimoras. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 15 Kikimoras. #
+10121#Caça na Ilha-Nação 1#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Kikimora#
 
-10122#Localize - Boneca de Miyabi#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Bonecas de Miyabi. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 15 Bonecas de Miyabi. #
+10122#Caça na Ilha-Nação 2#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Miyabi Ningyo#
 
-10123#Localize - Mi Gao#SG_FEEL#QUE_NOIMAGE#
-Pedido recebido do Grupo Éden Lv 71~85. Você deve exterminar Mi Gaos. #
-Reporte para o ^0000FFConselheiro do Grupo Éden Lv 71~85^000000 depois de derrotar 15 Mi Gaos. #
+10123#Caça na Ilha-Nação 3#SG_FEEL#QUE_NOIMAGE#
+Elimine o monstro e retorne para a Placa 71~85 no Grupo do Éden.#
+Elimine Mi Gao#
 
 11000#Inspeção do Templo de Odin#SG_FEEL#QUE_NOIMAGE#
 Enfim, se quiser nos ajudar, dê uma olhada nos arredores do templo e veja se quer trabalhar conosco. Fale com o Barqueiro para viajar até o templo, OK? #
@@ -11010,6 +11442,10 @@ Passando por Ajustes#
 Passando por Ajustes#
 #
 
+11255#Cabeleireiro#SG_FEEL#QUE_NOIMAGE#
+O Cupom de Mudança de Penteado pode ser usado só uma vez...#
+#
+
 11264#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
 Passando por Ajustes#
 #
@@ -11305,6 +11741,50 @@ Volte para dentro da casa. #
 11337#Garoto Sonhador#SG_FEEL#QUE_NOIMAGE#
 Oliver não foi encontrado em lugar algum. O que aconteceu? #
 Fale com o grupo de Du. #
+
+11338#Treino do Spino#SG_FEEL#QUE_NOIMAGE#
+Converse com Spino, o instrutor de combate do Instituto do Aprendiz.#
+Fale com Spino#
+
+11339#Treino do Spino#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Porings e traga 5 Jellopies.#
+Colete 5 Jellopy#
+
+11340#Treino do Spino#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Lunáticos e traga 1 Cenoura.#
+Colete 1 Cenoura#
+
+11341#Treino do Spino#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Fabres e traga 3 Felpas.#
+Colete 3 Felpas#
+
+11342#Treino do Spino#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Zangões e traga 3 Ferrões de Abelha.#
+Colete 3 Ferrões de Abelha#
+
+11343#Batendo um papo com Alice#SG_FEEL#QUE_NOIMAGE#
+Converse com Alice, a instrutora dos Noviços.#
+Fale com Alice#
+
+11344#Treino do Spino#SG_FEEL#QUE_NOIMAGE#
+Derrote 5 Pupas e traga 2 Crisálidas.#
+Colete 2 Crisálidas#
+
+11345#Fiel a Odin#SG_FEEL#QUE_NOIMAGE#
+Converse com Alice, na Catedral de Prontera.#
+Fale com Alice#
+
+11346#Fiel a Odin#SG_FEEL#QUE_NOIMAGE#
+Derrote os Sapos de Rodda e os Plânctons Mortos no Navio Naufragado.#
+Elimine monstros#
+
+11347#Fiel a Odin#SG_FEEL#QUE_NOIMAGE#
+Derrote 30 Esqueletos Frágeis no Navio Naufragado.#
+Elimine Esqueletos Frágeis#
+
+11348#Fiel a Odin#SG_FEEL#QUE_NOIMAGE#
+Derrote 30 Esqueletos Soldados Frágeis no Navio Naufragado.#
+Elimine Esqueletos Soldados#
 
 11349#Viagem Dimensional#SG_FEEL#QUE_NOIMAGE#
 Ele perdeu a consciência novamente de tanto conversar. Você deveria ter dado Ração para Monstros para ele comer.#
@@ -11879,6 +12359,130 @@ Jakk deve estar cansado. Volte a falar com ele após as 4 da manhã.#
 Até amanhã, Jakk!#
 
 11528#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Permite pegar Pelugens Negras dos monstros do Vale de Gyoll.#
+Coletor de Pelugens Negras#
+
+11598#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você foi acordado pelas vozes sussurrantes de fantasmas. Você se encontra em Niflheim, a cidade dos mortos. Vamos ouvir o que os fantasmas tem a dizer.#
+Fale com Hororong#
+
+11599#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Eles disseram que o Jakk da praça pode saber de algo. Vamos perguntar para o Jakk da praça.#
+Fale com Jakk#
+
+11600#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você ouviu sobre o lugar onde Jakk costumava ficar. Vamos voltar para Hooroorong.#
+Fale com Hooroorong#
+
+11601#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Em algum lugar dos campos e das masmorras, capture 10 Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Brancos Finos para Hororong. Eles são pegos ao capturar os Jakks.#
+Leve Jakks para Niflheim#
+
+11602#Jakk e os Jakks#SG_FEEL#QUE_NOIMAGE#
+Você trouxe Jakks para Niflheim. De acordo com os fantasmas, ramos de Jakk nascem se ele ficar no mundo dos vivos por um longo período. Deixe-o descansar.#
+Descanso de Jakk#
+
+11603#Jack e Jack's days like Jack#SG_FEEL#QUE_NOIMAGE#
+Em algum lugar dos campos e das masmorras, capture 10 Jakks fugitivos. Traga 10 Decorações de Abóbora e 20 Ramos Brancos Finos para Hororing. Eles são pegos ao caprturar os Jakks.#
+Leve Jakks para Niflheim#
+
+11604#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+É difícil de entender, mas parece que você precisa pegar Ramo Branco Fino e voltar até Jakk.#
+Colete um Ramo Branco Fino#
+
+11605#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Parece que o gatinho assustado fugiu quando Jakk foi capturado. Pergunte a  Harorong, quem estava com Jakk.#
+Fale com Harorong#
+
+11606#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Nibble na entrada pode ter visto o bichano. Fale com Nibble na entrada oeste de Niflheim.#
+Nibble no oeste de Niflheim#
+
+11607#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Um pequeno, e branco objeto foi avistado na entrada pouco tempo atrás. Eles não tem certeza se era um gato. Vamos perguntar para alguém fora da entrada.#
+Fale com Jakk Aterrorizado#
+
+11608#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que o gato de Jakk foi ali. Vamos falar com o Jakk que está tentando encontrar o gato.#
+Fale com Jakk#
+
+11609#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Parece que o gato de Jakk foi para Midgard através de uma raiz da Yggdrasil. Ele provavelmente foi por Umbala. Vamos investigar.#
+Investigação na entrada Norte de Umbala#
+
+11610#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+O pesquisador disse que ele explicou para o gatinho como chegar até Morroc. Vamos investigar perto da entrada Norte de Morroc.#
+Investigação na entrada Norte de Morroc#
+
+11611#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+O mercador disse que ele contou a alguém como chegar até Alberta. Vamos investigar perto da entrada Norte de Alberta.#
+Investigação na entrada de Alberta#
+
+11612#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Se você for até o porto, você encontrará muitos gatos que querem roubar seus peixes. Vamos investigar perto do porto.#
+Invesgitação no porto de Alberta#
+
+11613#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+Você achou um gato branco, mas não parece ser o gato de Jakk. O monte de areia é suspeito. Vamos investigar.#
+Investigação no Monte de Areia#
+
+11614#Jakk e o Gato de Jakk#SG_FEEL#QUE_NOIMAGE#
+No monte de areia, você encontrou ossos que parecem vir de um animal pequeno. Você também encontrou uma coleira vermelha com um sino. Vamos voltar até Jakk.#
+Fale com Jakk em Niflheim#
+
+11615#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que o Gatinho não está bem. Encontre o Gatinho ao Sul de Jakk.#
+Converse com o Gatinho#
+
+11616#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+O Gatinho mudou para o Zumbichano de Juba devido à aventura. Conte ao Jakk que ele não pode voltar a ser quem era, pois muito foi mudado.#
+Converse com Jakk#
+
+11617#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Existem diversos gatos no meio do Vale de Gyoll. Tente encontrar o gatinho ali.#
+Procure pelo Gato#
+
+11618#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Você encontrou diversos zumbichanos no meio do Vale de Gyoll, mas eles não parecem bem. Colete ^ff00005 Pelugens Negras^000000 para esquentar o Zumbichano.#
+5 Pelugens Negras#
+
+11619#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+O Zumbichano ficou muito triste para continuar conversando. Volte até Jakk.#
+Converse com Jakk#
+
+11620#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk ama seu gato demais para ter outro gato em seu lugar. Converse com Zumbichano de Juba novamente.#
+Converse com o Zumbichano de Juba#
+
+11621#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+O Zumbichano de Juba não quer mais conversar. Volte até Jakk.#
+Converse com Jakk#
+
+11622#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk disse que esperaria pelo Gatinho e pediu que você cuidasse dos outros gatos. Ajude zumbichanos no Vale de Gyoll ao coletar ^ff000010 Ramos Brancos Finos^000000.#
+Para o Vale de Gyoll#
+
+11623#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Ao se recuperar, Zumbichano ficou com fome. Colete ^ff000010 Peixes Frescos^000000.#
+10 Peixes Frescos#
+
+11624#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Zumbichano pediu por mais ^ff000020 Ramos Brancos Finos^000000. Colete-os.#
+20 Ramos Brancos Finos#
+
+11625#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Zumbichano parece estar com o mesmo vigor que o Zumbichano de Juba. Pergunte ao Zumbichano de Juba sobre isso.#
+Converse com Zumbichano de Juba#
+
+11626#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Zumbichano de Juba também estará partindo em uma nova jornada. Converse com Jakk sobre isso.#
+Conte ao Jakk#
+
+11627#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
+Jakk deve estar cansado. Volte a falar com ele após as 4 da manhã.#
+Até amanhã, Jakk!#
+
+11628#O Vento Uivante de Memórias#SG_FEEL#QUE_NOIMAGE#
 Permite pegar Pelugens Negras dos monstros do Vale de Gyoll.#
 Coletor de Pelugens Negras#
 
@@ -13030,6 +13634,58 @@ Mostre a Folha Dourada para encorajar Etran, mesmo com Robert se recusando a rec
 Fale com e Esperto, que fizeram o tornaram possível. #
 #
 
+12302#Salim Hamid#SG_FEEL#QUE_NOIMAGE#
+Conheça Salim Hamid, o instrutor dos Mercadores.#
+Fale com Salim#
+
+12303#Quero ser mercador também#SG_FEEL#QUE_NOIMAGE#
+Junte 100 Zeny.#
+Consiga 100 zenys#
+
+12304#Beabá do Mercador#SG_FEEL#QUE_NOIMAGE#
+Aprenda mais com o Mordomo de Salim.#
+#
+
+12305#Beabá do Mercador#SG_FEEL#QUE_NOIMAGE#
+Aprenda mais sobre os atributos de um Mercador.#
+#
+
+12306#Beabá do Mercador#SG_FEEL#QUE_NOIMAGE#
+Aprenda mais sobre as habilidades de Desconto e Superfaturar do Mercador.#
+#
+
+12307#Beabá do Mercador#SG_FEEL#QUE_NOIMAGE#
+Salim te encaminhou para ir até a Refinaria de Alberta.#
+#
+
+12308#Exterminador de Pragas#SG_FEEL#QUE_NOIMAGE#
+Elimine 20 Rabos de Verme.#
+Elimine Rabos de Verme#
+
+12309#Exterminador de Pragas#SG_FEEL#QUE_NOIMAGE#
+Elimine 20 Jiboias.#
+Elimine Jiboias#
+
+12310#Exterminador de Pragas#SG_FEEL#QUE_NOIMAGE#
+Elimine 20 Esporos.#
+Elimine Esporos#
+
+12311#Exterminador de Pragas#SG_FEEL#QUE_NOIMAGE#
+Elimine 10 Esqueletos Marinheiros#
+#
+
+12312#Aula Teórica#SG_FEEL#QUE_NOIMAGE#
+Assista à aula teórica de Salim Hamid.#
+#
+
+12313#Aula Teórica#SG_FEEL#QUE_NOIMAGE#
+Assista as aulas de Salim e depois faça sua prova.#
+#
+
+12314#Aula Teórica#SG_FEEL#QUE_NOIMAGE#
+Assista as aulas de Salim e depois faça sua prova.#
+#
+
 12316#A Maldição de Glast Heim#SG_FEEL#QUE_NOIMAGE#
 Finalmente encontrei Hugin. Ele provavelmente se lembra de mim, mas não sei se posso dizer o mesmo.#
 Continue a conversa com Hugin.#
@@ -13096,7 +13752,7 @@ Recesso dos Brinquedos#
 
 12334#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
 Aventurar-se no tempo pode provocar náuseas se você não aguardar um tempo entre uma viagem e outra.#
-Retorne após 70 horas.#
+Retorne após 3 dias.#
 
 12335#Glast Heim Sombria#SG_FEEL#QUE_NOIMAGE#
 O tempo e espaço foi distorcido por Hugin! Agora você poderá conferir o que se passa no castelo de Glast Heim!#
@@ -13157,6 +13813,26 @@ Traga 1 Tanque Velho.#
 12369#Relação Secreta#SG_FEEL#QUE_NOIMAGE#
 Tenha uma relação secreta com o prisioneiro#
 Complete a conversa#
+
+12416#Contrato com Emily#SG_FEEL#QUE_NOIMAGE#
+Converse com Emily sobre a verdadeira recompensa.#
+#
+
+12417#Superando a fadiga#SG_FEEL#QUE_NOIMAGE#
+Parece que teremos que esperar até o dia seguinte para visitar a Vila dos Porings novamente.#
+Retorne após a meia noite#
+
+12418#Primeira visita a Vila dos Porings#SG_FEEL#QUE_NOIMAGE#
+Vamos construir um relacionamento com essa vizinhança.#
+#
+
+12419#Batalha dos Orcs#SG_FEEL#QUE_NOIMAGE#
+Veja o que acontece na Batalha dos Orcs#
+#
+
+12420#Se recuperando#SG_FEEL#QUE_NOIMAGE#
+Será complicado entrar na Batalha dos Orcs sem descansar.#
+Retorne após a meia noite#
 
 13000#RWC2011Card Gathering#SG_FEEL#QUE_NOIMAGE#
 Pegue todas as cartas para completar a palavra 'RWC2011' #
@@ -13562,6 +14238,30 @@ Passando por Ajustes#
 Passando por Ajustes#
 #
 
+13101#Caminho dos Taekwons#SG_FEEL#QUE_NOIMAGE#
+Procure pelo instrutor Taekwon, em Payon.#
+Fale com Ari#
+
+13102#Caminho dos Taekwons#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+13103#Treinamento de Taekwon#SG_FEEL#QUE_NOIMAGE#
+Derrote 10 Salgueiros.#
+Elimine Salgueiros#
+
+13104#Treinamento de Taekwon#SG_FEEL#QUE_NOIMAGE#
+Na floresta à direita de Payon, derrote 10 Esporos.#
+Elimine Esporos#
+
+13105#Treinamento de Taekwon#SG_FEEL#QUE_NOIMAGE#
+Na Vila dos Arqueiros existe uma caverna cheia de Zumbis. Elimine 10 deles.#
+Elimine Zumbis#
+
+13106#Treinamento de Taekwon#SG_FEEL#QUE_NOIMAGE#
+Na Vila dos Arqueiros existe uma caverna cheia de Esqueletos. Elimine 10 deles.#
+Elimine Esqueletos#
+
 13181#Pesadelo de Requiém#SG_FEEL#QUE_NOIMAGE#
 Registre seu nome na Runane.#
 #
@@ -13733,6 +14433,102 @@ Para Wuhari. #
 14141#Ingredientes para a pesquisa#SG_FEEL#QUE_NOIMAGE#
 Wuhari pediu alguns ingredientes para que ele possa pesquisar sozinho. Traga os seguintes ingredientes: 1 Pedaço de Asa dos Esplêndidos, 1 Cabelo Seco, 1 Bradium Purificado, 1 Runa da Escuridão, 1 Runa Sangrenta. #
 Obtenha os itens! #
+
+14142#Na mosca#SG_FEEL#QUE_NOIMAGE#
+Encontre a Guilda dos Arqueiros, em Payon.#
+#
+
+14143#Na mosca#SG_FEEL#QUE_NOIMAGE#
+Vá à Guilda dos Arqueiros e torne-se, finalmente, um deles!#
+#
+
+14144#Recuperação#SG_FEEL#QUE_NOIMAGE#
+Faça a prova de recuperação sobre os atributos.#
+#
+
+14145#Explicação sobre habilidades#SG_FEEL#QUE_NOIMAGE#
+Aprenda sobre como as habilidades de um arqueiro funcionam.#
+#
+
+14146#Treino de Combate#SG_FEEL#QUE_NOIMAGE#
+Converse com o instrutor para começar seu treinamento.#
+#
+
+14147#Recuperação#SG_FEEL#QUE_NOIMAGE#
+Faça a prova de recuperação sobre as habilidades.#
+#
+
+14148#Evolução#SG_FEEL#QUE_NOIMAGE#
+Hora de aprender mais sobre as evoluções do Arqueiro.#
+#
+
+14149#Evolução#SG_FEEL#QUE_NOIMAGE#
+Hora de aprender mais sobre as evoluções do Arqueiro.#
+#
+
+14150#Evolução#SG_FEEL#QUE_NOIMAGE#
+Fale com Malberon novamente.#
+#
+
+14151#Treinamento de Caça#SG_FEEL#QUE_NOIMAGE#
+No mapa à direita de Payon, existem Esporos perfeitos para a caça. Elimine 10 Esporos.#
+Elimine Esporos#
+
+14152#Treinamento de Caça#SG_FEEL#QUE_NOIMAGE#
+Creamy é um monstro que teleporta. O sul de Payon está repleto deles. Elimine 10 Creamys.#
+Elimine Creamys#
+
+14153#Treinamento de Caça#SG_FEEL#QUE_NOIMAGE#
+Na Vila dos Arqueiros existe uma caverna cheia de Esqueletos. Elimine 10 deles.#
+Elimine Esqueleto#
+
+14154#Guia de Culinária#SG_FEEL#QUE_NOIMAGE#
+Traga 1 Trevo, 1 Erva Verde e 1 Erva Vermelha para a Banana Maria.#
+Colete os itens#
+
+14155#Guia de Culinária#SG_FEEL#QUE_NOIMAGE#
+Traga 1 Maçã e 2 Cenouras para a Banana Maria.#
+Colete os itens#
+
+14156#Guia de Culinária#SG_FEEL#QUE_NOIMAGE#
+Traga 1 Jellopy, 1 Felpa e 1 Pluma para a Banana Maria.#
+Colete os itens#
+
+14157#Guia de Culinária#SG_FEEL#QUE_NOIMAGE#
+Traga 1 Maçã e 1 Trevo para a Banana Maria.#
+Colete os itens#
+
+14158#Manual do Arqueiro#SG_FEEL#QUE_NOIMAGE#
+Consiga o seu Manual do Arqueiro.#
+#
+
+14159#Conhecendo o Instrutor#SG_FEEL#QUE_NOIMAGE#
+Converse com o Instrutor dos Caçadores.#
+#
+
+14160#Conhecendo o Instrutor#SG_FEEL#QUE_NOIMAGE#
+Converse com o Instrutor dos Bardos e Odaliscas.#
+#
+
+14161#Prova Oral#SG_FEEL#QUE_NOIMAGE#
+Hora de fazer a prova oral sobre os atributos!#
+#
+
+14162#Prova Oral#SG_FEEL#QUE_NOIMAGE#
+Hora de fazer a prova oral sobre as habilidades!#
+#
+
+14163#Treinamento de Combate#SG_FEEL#QUE_NOIMAGE#
+Elimine 10 Esporos.#
+#
+
+14164#Treinamento de Combate#SG_FEEL#QUE_NOIMAGE#
+Elimine 10 Creamys.#
+#
+
+14165#Treinamento de Combate#SG_FEEL#QUE_NOIMAGE#
+Elimine 10 Esqueletos.#
+#
 
 14166#Maçã!!!#SG_FEEL#QUE_NOIMAGE#
 Pegue uma maçã fresca do mundo dos vivos e entregue-a ao Mercador do Inferno. Ele diz que gostaria de ajudar você, então escute-o. #
@@ -14290,6 +15086,90 @@ Cace 10 Esporos de Água Doce e reúna 5 Esporos de Cogumelo#
 Não vale a pena trabalhar tanto. Vá curtir a vida e volte amanhã!#
 Aguarde até o dia seguinte#
 
+14651#Divórcio#SG_FEEL#QUE_NOIMAGE#
+Por ser uma decisão muito delicada, é importante que você tire um tempo para pensar se não vai se arrepender depois.#
+Volte em 4 dias.#
+
+14683#Tumba da Honra#SG_FEEL#QUE_NOIMAGE#
+Lunar ajudou você a acessar a Tumba da Honra com segurança.#
+#
+
+14684#Objeto Estranho I#SG_FEEL#QUE_NOIMAGE#
+Você já recebeu a bênção do objeto não identificado.#
+Aguarde 1 hora#
+
+14685#Objeto Estranho II#SG_FEEL#QUE_NOIMAGE#
+Você já recebeu a bênção do objeto não identificado.#
+Aguarde 1 hora#
+
+14686#Objeto Estranho III#SG_FEEL#QUE_NOIMAGE#
+Você já recebeu a bênção do objeto não identificado.#
+Aguarde 1 hora#
+
+14687#Objeto Estranho IV#SG_FEEL#QUE_NOIMAGE#
+Você já recebeu a bênção do objeto não identificado.#
+Aguarde 1 hora#
+
+14849#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Encontre os Fumacentos espalhados pelos mapas e traga 10 Sacolas de Itens Negociáveis para a [Produtora do Festival].#
+Traga 10 Sacolas#
+
+14850#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você agora pode começar as missões do [Ilusionista] do Festival das Flores de Neve.#
+Fale com o Ilusionista#
+
+14851#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você agora pode começar as missões de [Coti] do Festival das Flores de Neve.#
+Fale com Coti#
+
+14852#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você agora pode começar as missões de [Twinkle] do Festival das Flores de Neve.#
+Fale com Twinkle#
+
+14853#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você ouviu os bonecos de neve... traga 10 Sacolas de Itens Negociáveis e uma Cenoura para o [Ilusionista]#
+Colete os itens#
+
+14854#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Missão completa! Aguarde o período de espera e retorne ao [Ilusionista]#
+Volte amanhã.#
+
+14855#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Sasquatch, Marin, Lunático, Raggler e Esqueleto derrubarão Algodão no seu inventário, traga 10 unidades para [Coti]#
+10 Algodões#
+
+14856#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você entregou os itens para [Coti]#
+Volte amanhã.#
+
+14857#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Traga 100 unidades de Coração de Pedra para [Twinkle]#
+100 Corações de Pedra#
+
+14858#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Traga 50 unidades de Cesto de Palha para [Twinkle]#
+50 Cestos de Palha#
+
+14859#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Traga 70 unidades de Elmo de Dullahan para [Twinkle]#
+70 Elmos de Dullahan#
+
+14860#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Traga 30 unidades de Prato Amarelado para [Twinkle]#
+30 Pratos Amarelados#
+
+14861#Festival das Flores de Neve#SG_FEEL#QUE_NOIMAGE#
+Você já completou as tarefas de hoje, retone amanhã para [Twinkle]#
+Volte amanhã.#
+
+15000#Efeitos Negativos#SG_FEEL#QUE_NOIMAGE#
+Aprenda mais sobre os efeitos negativos com Mainz.#
+Fale com Mainz#
+
+15001#Teste de fôlego#SG_FEEL#QUE_NOIMAGE#
+Aguarde 20 segundos e volte a falar com o Instrutor Argus novamente.#
+Espere 20 segundos#
+
 15002#Memórias de Sara#SG_FEEL#QUE_NOIMAGE#
 Aventurar-se no tempo e espaço pelas fissuras dimensionais pode provocar náuseas se você não souber aguardar um tempo entre uma viagem e outra.#
 Aguarde o tempo de espera para retornar.#
@@ -14314,45 +15194,57 @@ Entrada termina em 5 minutos.#
 Você conseguiu terminar a instância. Agora a Ilha Bios estará inacessível pelas próximas 23 horas.#
 Tempo de retorno: 23 horas.#
 
-15055#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15050#Invadiu foi pouco#SG_FEEL#QUE_NOIMAGE#
+É melhor voltar outro dia para se recuperar do ataque ao aeroplano.#
+Volte amanhã!#
 
-15056#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15051#Invasão ao Aeroplano#SG_FEEL#QUE_NOIMAGE#
+Todos a bordo! O aeroplano vai decolar! Você tem 5 minutos para entrar na cabine.#
+Entre no Aeroplano#
 
-15057#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15052#Invasão ao Aeroplano#SG_FEEL#QUE_NOIMAGE#
+Você tem 5 minutos para entrar na instância, caso contrário, só pode voltar amanhã.#
+Volte amanhã!#
+
+15055#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Você faz parte da União dos Solteiros. Encontre mais 5 Dorams em Juno pra fazerem parte dessa União!#
+Encontre 5 Dorams solteiros.#
+
+15056#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Junte 5 pontos fazendo casais se separarem ou discutirem em Juno. Vale tudo!#
+Procure e separe casais em Juno.#
+
+15057#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Casais separados! Hora de procurar Hansolo.#
+Pegue sua recompensa com Hansolo! #
 
 15058#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
 Passando por Ajustes#
 #
 
-15059#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15059#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Missão Cumprida! Será possível separar os casais novamente a cada 23 horas. Mal posso esperar!#
+Retorne mais tarde.#
 
-15060#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15060#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
-15061#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15061#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
-15062#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15062#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
-15063#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15063#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
-15064#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
-#
+15064#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado! #
 
 15065#Ticket de Rune-Midgard#SG_FEEL#QUE_NOIMAGE#
 Você só pode comprar 1 Ticket a cada 20 horas. #
@@ -14413,6 +15305,74 @@ Retorne no dia seguinte#
 15129#Uma Rifa por Dia#SG_FEEL#QUE_NOIMAGE#
 Você já participou da Rifa Doce hoje.#
 Retorne no dia seguinte#
+
+16055#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Você faz parte da União dos Solteiros. Encontre mais 5 Dorams em Juno pra fazerem parte dessa União!#
+Encontre 5 Dorams solteiros.#
+
+16056#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Junte 5 pontos fazendo casais se separarem ou discutirem em Juno. Vale tudo!#
+Procure e separe casais em Juno.#
+
+16057#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Casais separados! Hora de procurar Hansolo.#
+Pegue sua recompensa com Hansolo!#
+
+16059#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Missão Cumprida! Será possível separar os casais novamente após a meia noite. Mal posso esperar!#
+Retorne mais tarde.#
+
+16060#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
+
+16061#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
+
+16062#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
+
+16063#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
+
+16064#União dos Solteiros#SG_FEEL#QUE_NOIMAGE#
+Recrutando membros por aí...#
+Novo membro recrutado!#
+
+21001#Primeiros Passos#SG_FEEL#QUE_NOIMAGE#
+Saia do navio naufragado e converse com o Capitão Chobber.#
+Fale com o Capitão Chobber#
+
+21002#Primeira Batalha#SG_FEEL#QUE_NOIMAGE#
+Elimine 2 Porings e entregue 2 Madeiras de Reparo para Marino.#
+Colete 2 Madeiras de Reparo#
+
+21003#Primeira Amizade#SG_FEEL#QUE_NOIMAGE#
+Na enfermaria do Institudo do Aprendiz, encontre o Terapeuta Flávio e aprenda mais sobre Ervas e Receitas.#
+Fale com o Terapeuta#
+
+21004#Primeira Amizade#SG_FEEL#QUE_NOIMAGE#
+Existe uma Planta Vermelha na entrada do Instituto do Aprendiz.#
+Fale com Lumin#
+
+21005#Salvar ponto de retorno#SG_FEEL#QUE_NOIMAGE#
+Salve o seu ponto de retorno.#
+#
+
+21006#Primeira Amizade#SG_FEEL#QUE_NOIMAGE#
+Agora que você entende sobre itens de regeneração, vamos voltar para o porto de Izlude e dar a Adolfo as boas notícias!#
+Fale com Adolfo#
+
+21007#Primeira Amizade#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+21008#Primeira Batalha#SG_FEEL#QUE_NOIMAGE#
+Elimine 2 Porings e entregue 2 Madeiras de Reparo para Marino.#
+Colete 2 Madeiras de Reparo#
 
 60101#Caçando PecoPecos#SG_FEEL#QUE_NOIMAGE#
 Gregor pediu ajuda para caçar 50 Peco Pecos em troca de uma pequena recompensa. #
@@ -14966,9 +15926,9 @@ Aguarde o contador zerar antes de iniciar outra missão.#
 #
 #
 
-60501#Raydric Hunting#SG_FEEL#QUE_NOIMAGE#
-Hunt the Raydric monsters at Glast Heim Chivalry and return to Gramps at the Eden Group to get your reward.#
-Hunt 400 Raydric monsters.#
+60501#Caça Raydric#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Raydric. Após isso, converse com Mateus Além para resgatar sua recompensa.#
+#
 
 60502#Wanderer Hunting#SG_FEEL#QUE_NOIMAGE#
 Hunt the Wanderer monsters at Glast Heim Floor 2 and return to Gramps at the Eden Group to get your reward.#
@@ -15306,8 +16266,8 @@ Passando por Ajustes#
 Passando por Ajustes#
 #
 
-60586#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60586#Caça o Plagiador#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Plagiador. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
 60587#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
@@ -15346,8 +16306,8 @@ Passando por Ajustes#
 Passando por Ajustes#
 #
 
-60596#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60596#Caça o Massacre#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Massacre. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
 60597#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
@@ -15422,8 +16382,8 @@ Passando por Ajustes#
 Passando por Ajustes#
 #
 
-60815#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60815#Caça o Remover#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Remover. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
 60816#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
@@ -15478,12 +16438,12 @@ Passando por Ajustes#
 Passando por Ajustes#
 #
 
-60829#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60829#Caça a Sombra da Vaidade#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Sombra da Vaidade. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
-60830#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60830#Caça o Druida Maligno#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Druida Maligno. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
 60831#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
@@ -15526,12 +16486,12 @@ Passando por Ajustes#
 Cace 400 Mulas Sem Cabeça. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
-60841#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60841#Caça o Sacerdote Maldito#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Sacerdote Maldito. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
-60842#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
-Passando por Ajustes#
+60842#Caça o Anubis#SG_FEEL#QUE_NOIMAGE#
+Cace 400 Anubis. Após isso, converse com Mateus Além para resgatar sua recompensa.#
 #
 
 60843#Passando por Ajustes#SG_FEEL#QUE_NOIMAGE#
@@ -16067,7 +17027,7 @@ Leve os 3 Ovos Sagrados e esconda na Caverna de Payon.#
 Esconda os ovos!#
 
 70085#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
-Leve os 3 Ovos Sagrados e esconda no Túnel Submarino.#
+Leve os 3 Ovos Sagrados e esconda no Túnel Subterrâneo.#
 Esconda os ovos!#
 
 70086#Ovos pros Órfãos#SG_FEEL#QUE_NOIMAGE#
@@ -16086,9 +17046,81 @@ Retorne ao Cuidador#
 Você fez uma boa ação para as crianças do Orfanato de Geffen!#
 Obrigado pela ajuda!#
 
+70150#Disputa parceiros#SG_FEEL#QUE_NOIMAGE#
+Você já realizou seu voto essa semana!#
+Obrigado por participar!#
+
+70151#Disputa parceiros#SG_FEEL#QUE_NOIMAGE#
+Você já realizou seu voto essa semana!#
+Obrigado por participar!#
+
+70152#Disputa parceiros#SG_FEEL#QUE_NOIMAGE#
+Você já realizou seu voto essa semana!#
+Obrigado por participar!#
+
+70153#Disputa parceiros#SG_FEEL#QUE_NOIMAGE#
+Você já realizou seu voto essa semana!#
+Obrigado por participar!#
+
+70154#Disputa parceiros#SG_FEEL#QUE_NOIMAGE#
+Você já realizou seu voto essa semana!#
+Obrigado por participar!#
+
+70155#Disputa parceiros#SG_FEEL#QUE_NOIMAGE#
+Você já realizou seu voto essa semana!#
+Obrigado por participar!#
+
+70156#Disputa parceiros#SG_FEEL#QUE_NOIMAGE#
+Você já realizou seu voto essa semana!#
+Obrigado por participar!#
+
+70157#Disputa parceiros#SG_FEEL#QUE_NOIMAGE#
+Você já realizou seu voto essa semana!#
+Obrigado por participar!#
+
 70250#Intervalo da Rifa#SG_FEEL#QUE_NOIMAGE#
 Espere pelo intervalo até comprar outro ticket da Rifa.#
 #
+
+80070#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna sul de Prontera vamos preprar o Molho Verde. Traga 10 Folhas de Aloe, 5 Folhas de Hinalle e 1 Pilão Yaga.#
+Junte os ingredientes!#
+
+80071#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna central de Prontera vamos preprar o Camarão Apimentado. Traga 10 Frigideiras Velhas, 5 Camarões, 5 Pimentas Vermelhas e 1 Prato Amarelado.#
+Junte os ingredientes!#
+
+80072#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna de Geffen vamos preprar o Suco Azedinho. Traga 10 Laranjas, 5 Mastelas, 5 Uvas e 1 Garrafa Vazia.#
+Junte os ingredientes!#
+
+80073#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Na taverna de Al de Baran vamos preprar o Ensopado de Peixe na Concha. Traga 15 Caudas de Peixes, 10 Nadadeiras, 5 Limões, 5 Peixes Frescos e 1 Concha.#
+Junte os ingredientes!#
+
+80074#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você resgatou a Surpresa do Festival dos Trevos! Bom trabalho!#
+Surpresa Obtida!#
+
+80075#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna Sul de Prontera hoje. Volte mais tarde.#
+Missão cumprida!#
+
+80076#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna Central de Prontera hoje. Volte mais tarde.#
+Missão cumprida!#
+
+80077#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna de Geffen hoje. Volte mais tarde.#
+Missão cumprida!#
+
+80078#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Você já cumpriu a missão da Taverna de Al De Baran hoje. Volte mais tarde.#
+Missão cumprida!#
+
+80079#Festival dos Trevos#SG_FEEL#QUE_NOIMAGE#
+Duffy trouxe o Festival dos Trevos pra Rune-Midgard. Participe montando o prato com os donos das tavernas locais.#
+Fale com os donos das tavernas#
 
 291000#Caçadoras de Fada#SG_FEEL#QUE_NOIMAGE#
 Você capturou algumas fadas na esperança de que uma delas seja a Garota Mimada, mas infelizmente não era... Será necessário retornar amanhã para pegar mais Bolsas Mágicas com o [Felino].#

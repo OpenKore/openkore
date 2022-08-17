@@ -115,7 +115,7 @@ sub processFollow {
 	my $actor = $self->{actor};
 
 	# Check whether the target is within acceptable distance limits.
-	my $distance = distance($char->{pos_to}, $actor->{pos_to});
+	my $distance = blockDistance($char->{pos_to}, $actor->{pos_to});
 	if ($distance > $self->{maxDistance}) {
 		$self->{withinLimits} = 0;
 
@@ -125,7 +125,7 @@ sub processFollow {
 		if ($self->{task}) {
 			# If we're already walking, check whether we need to adjust the path.
 			my $currentDestination = $self->{task}->destCoords();
-			if (distance($interceptPoint, $currentDestination) > 1.42) {
+			if (blockDistance($interceptPoint, $currentDestination) > 1) {
 				debug "FollowActor - readjusting existing route\n", "followActor";
 				$self->{task}->stop();
 				delete $self->{task};
@@ -138,6 +138,7 @@ sub processFollow {
 				actor => $char,
 				x => $interceptPoint->{x},
 				y => $interceptPoint->{y},
+				field => $field,
 				maxTime => 5);
 			$task->activate();
 			$self->setMutexes('movement');

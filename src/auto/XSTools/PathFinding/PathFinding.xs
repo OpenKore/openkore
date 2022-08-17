@@ -6,173 +6,252 @@
 #include "algorithm.h"
 typedef CalcPath_session * PathFinding;
 
-
-/* Convenience function for checking whether pv is a reference, and dereference it if necessary */
-static inline SV *
-derefPV (SV *pv)
-{
-	if (SvTYPE (pv) == SVt_RV) {
-		return SvRV (pv);
-	} else
-		return pv;
-}
-
-
 MODULE = PathFinding		PACKAGE = PathFinding		PREFIX = PathFinding_
 PROTOTYPES: ENABLE
-
-
 
 PathFinding
 PathFinding_create()
 	CODE:
 		RETVAL = CalcPath_new ();
+
 	OUTPUT:
 		RETVAL
+
 
 void
-PathFinding__reset(session, map, weights, width, height, startx, starty, destx, desty, time_max)
+PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, starty, destx, desty, time_max, min_x, max_x, min_y, max_y)
 		PathFinding session
-		SV *map
-		SV *weights
-		unsigned long width
-		unsigned long height
-		unsigned short startx
-		unsigned short starty
-		unsigned short destx
-		unsigned short desty
-		unsigned int time_max
+		SV *weight_map
+		SV * avoidWalls
+		SV * width
+		SV * height
+		SV * startx
+		SV * starty
+		SV * destx
+		SV * desty
+		SV * time_max
+		SV * min_x
+		SV * max_x
+		SV * min_y
+		SV * max_y
+	
 	PREINIT:
-		unsigned char *real_weights = NULL;
-		char *real_map = NULL;
-		pos *start, *dest;
-		session = (PathFinding) 0; /* shut up compiler warning */
+		char *weight_map_data = NULL;
+	
 	CODE:
-		if (session->map_sv)
-			SvREFCNT_dec (session->map_sv);
-		if (session->weight_sv) {
-			SvREFCNT_dec (session->weight_sv);
-			session->weight_sv = NULL;
+		
+		/* If the object was already initiated, clean map memory */
+		if (session->initialized) {
+			free_currentMap(session);
+			session->initialized = 0;
 		}
-
-		/* Sanity check the map parameter and get the map data */
-		if (map && SvOK (map))
-			real_map = (char *) SvPV_nolen (derefPV (map));
-		if (!real_map)
-			croak("The 'map' parameter must be a valid scalar.\n");
-
-		if (weights && SvOK (weights)) {
-			/* Don't use default weights if weights are explictly given */
-			STRLEN len;
-
-			real_weights = (unsigned char *) SvPV (derefPV (weights), len);
-			if (real_weights && len < 256)
-				croak("The 'weight' parameter must be a scalar of 256 bytes, or undef.\n");
+		
+		/* If the path has already been calculated on this object, clean openlist memory */
+		if (session->run) {
+			free_openList(session);
+			session->run = 0;
 		}
-
-		start = (pos *) malloc (sizeof (pos));
-		dest = (pos *) malloc (sizeof (pos));
-		start->x = startx;
-		start->y = starty;
-		dest->x = destx;
-		dest->y = desty;
-
-		CalcPath_init (session, real_map, real_weights, width, height, start, dest, time_max);
-
-		/* Increase SV reference counts so the data
-		   won't be destroyed while we're calculating. */
-		session->map_sv = derefPV (map);
-		SvREFCNT_inc (session->map_sv);
-		if (real_weights != NULL) {
-			session->weight_sv = weights;
-			SvREFCNT_inc (weights);
-		}
-
-int
-PathFinding_run(session, r_array)
-		PathFinding session
-		SV *r_array
-	PREINIT:
-		int status;
-	CODE:
-		if (!r_array || !SvOK (r_array) || SvTYPE (r_array) != SVt_RV || SvTYPE (SvRV (r_array)) != SVt_PVAV) {
-			croak ("PathFinding::run(session, r_array): r_array must be a reference to an array\n");
-			XSRETURN_IV (-1);
-		}
-
-		status = CalcPath_pathStep (session);
-		if (status < 0) {
-			RETVAL = -1;
-
-		} else if (status > 0) {
-			AV *array;
-			int i, size;
-
-			size = session->solution.size;
-			array = (AV *) SvRV (r_array);
-			if (av_len (array) > size)
-				av_clear (array);
-			av_extend (array, session->solution.size);
-
-			for (i = 0; i < size; i++) {
-				HV *pos = (HV *) sv_2mortal ((SV *) newHV ());
-				hv_store (pos, "x", 1, newSViv (session->solution.array[i].x), 0);
-				hv_store (pos, "y", 1, newSViv (session->solution.array[i].y), 0);
-				av_store (array, size - 1 - i, newRV ((SV *) pos));
-			}
-			RETVAL = size;
-
-		} else {
-			RETVAL = 0;
-		}
-	OUTPUT:
-		RETVAL
-
-SV *
-PathFinding_runref(session)
-		PathFinding session
-	PREINIT:
-		int status;
-	CODE:
-		status = CalcPath_pathStep (session);
-		if (status < 0) {
-			XSRETURN_UNDEF;
-
-		} else if (status > 0) {
-			AV * results;
-			int i;
-
-			results = (AV *)sv_2mortal((SV *)newAV());
-			av_extend(results, session->solution.size);
-			for (i = session->solution.size - 1; i >= 0; i--) {
-				HV * rh = (HV *)sv_2mortal((SV *)newHV());
-
-				hv_store(rh, "x", 1, newSViv(session->solution.array[i].x), 0);
-				hv_store(rh, "y", 1, newSViv(session->solution.array[i].y), 0);
-
-				av_push(results, newRV((SV *)rh));
-			}
-			RETVAL = newRV((SV *)results);
-
-		} else {
+		
+		/* Check for any missing arguments */
+		if (!session || !weight_map || !avoidWalls || !width || !height || !startx || !starty || !destx || !desty || !time_max || !min_x || !max_x || !min_y || !max_y) {
+			printf("[pathfinding reset error] missing argument\n");
 			XSRETURN_NO;
 		}
-	OUTPUT:
-		RETVAL
+		
+		/* Check for any bad arguments */
+		if (SvROK(avoidWalls) || SvTYPE(avoidWalls) >= SVt_PVAV || !SvOK(avoidWalls)) {
+			printf("[pathfinding reset error] bad avoidWalls argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(width) || SvTYPE(width) >= SVt_PVAV || !SvOK(width)) {
+			printf("[pathfinding reset error] bad width argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(height) || SvTYPE(height) >= SVt_PVAV || !SvOK(height)) {
+			printf("[pathfinding reset error] bad height argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(startx) || SvTYPE(startx) >= SVt_PVAV || !SvOK(startx)) {
+			printf("[pathfinding reset error] bad startx argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(starty) || SvTYPE(starty) >= SVt_PVAV || !SvOK(starty)) {
+			printf("[pathfinding reset error] bad starty argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(destx) || SvTYPE(destx) >= SVt_PVAV || !SvOK(destx)) {
+			printf("[pathfinding reset error] bad destx argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(desty) || SvTYPE(desty) >= SVt_PVAV || !SvOK(desty)) {
+			printf("[pathfinding reset error] bad desty argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(time_max) || SvTYPE(time_max) >= SVt_PVAV || !SvOK(time_max)) {
+			printf("[pathfinding reset error] bad time_max argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (!SvROK(weight_map) || !SvOK(weight_map)) {
+			printf("[pathfinding reset error] bad weight_map argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(min_x) || SvTYPE(min_x) >= SVt_PVAV || !SvOK(min_x)) {
+			printf("[pathfinding reset error] bad min_x argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(max_x) || SvTYPE(max_x) >= SVt_PVAV || !SvOK(max_x)) {
+			printf("[pathfinding reset error] bad max_x argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(min_y) || SvTYPE(min_y) >= SVt_PVAV || !SvOK(min_y)) {
+			printf("[pathfinding reset error] bad min_y argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(max_y) || SvTYPE(max_y) >= SVt_PVAV || !SvOK(max_y)) {
+			printf("[pathfinding reset error] bad max_y argument\n");
+			XSRETURN_NO;
+		}
+		
+		/* Get the weight_map data */
+		weight_map_data = (char *) SvPV_nolen (SvRV (weight_map));
+		session->map_base_weight = weight_map_data;
+		
+		session->width = (int) SvUV (width);
+		session->height = (int) SvUV (height);
+		
+		session->startX = (int) SvUV (startx);
+		session->startY = (int) SvUV (starty);
+		session->endX = (int) SvUV (destx);
+		session->endY = (int) SvUV (desty);
+		
+		session->min_x = (int) SvUV (min_x);
+		session->max_x = (int) SvUV (max_x);
+		session->min_y = (int) SvUV (min_y);
+		session->max_y = (int) SvUV (max_y);
+	
+		// Min and max check
+		if (session->min_x >= session->width || session->min_y >= session->height || session->min_x < 0 || session->min_y < 0) {
+			printf("[pathfinding reset error] Minimum coordinates %d %d are out of the map (size: %d x %d).\n", session->min_x, session->min_y, session->width, session->height);
+			XSRETURN_NO;
+		}
+	
+		if (session->max_x >= session->width || session->max_y >= session->height || session->max_x < 0 || session->max_y < 0) {
+			printf("[pathfinding reset error] Maximum coordinates %d %d are out of the map (size: %d x %d).\n", session->max_x, session->max_y, session->width, session->height);
+			XSRETURN_NO;
+		}
+	
+		// Start check
+		if (session->startX >= session->width || session->startY >= session->height || session->startX < 0 || session->startY < 0) {
+			printf("[pathfinding reset error] Start coordinate %d %d is out of the map (size: %d x %d).\n", session->startX, session->startY, session->width, session->height);
+			XSRETURN_NO;
+		}
+		
+		if (session->map_base_weight[((session->startY * session->width) + session->startX)] == -1) {
+			printf("[pathfinding reset error] Start coordinate %d %d is not a walkable cell.\n", session->startX, session->startY);
+			XSRETURN_NO;
+		}
+	
+		if (session->startX > session->max_x || session->startY > session->max_y || session->startX < session->min_x || session->startY < session->min_y) {
+			printf("[pathfinding reset error] Start coordinate %d %d is out of the minimum and maximum coordinates (size: %d .. %d x %d .. %d).\n", session->startX, session->startY, session->min_x, session->max_x, session->min_y, session->max_y);
+			XSRETURN_NO;
+		}
+	
+		// End check
+		if (session->endX >= session->width   || session->endY >= session->height   || session->endX < 0   || session->endY < 0) {
+			printf("[pathfinding reset error] End coordinate %d %d is out of the map (size: %d x %d).\n", session->endX, session->endY, session->width, session->height);
+			XSRETURN_NO;
+		}
+		
+		if (session->map_base_weight[((session->endY * session->width) + session->endX)] == -1) {
+			printf("[pathfinding reset error] End coordinate %d %d is not a walkable cell.\n", session->endX, session->endY);
+			XSRETURN_NO;
+		}
+	
+		if (session->endX > session->max_x || session->endY > session->max_y || session->endX < session->min_x || session->endY < session->min_y) {
+			printf("[pathfinding reset error] End coordinate %d %d is out of the minimum and maximum coordinates (size: %d .. %d x %d .. %d).\n", session->endX, session->endY, session->min_x, session->max_x, session->min_y, session->max_y);
+			XSRETURN_NO;
+		}
+		
+		session->avoidWalls = (unsigned short) SvUV (avoidWalls);
+		session->time_max = (unsigned int) SvUV (time_max);
+		
+		CalcPath_init(session);
 
-SV *
-PathFinding_runstr(session)
+int
+PathFinding_run(session, solution_array)
 		PathFinding session
+		SV *solution_array
 	PREINIT:
 		int status;
 	CODE:
+		
+		/* Check for any missing arguments */
+		if (!session || !solution_array) {
+			printf("[pathfinding run error] missing argument\n");
+			XSRETURN_NO;
+		}
+		
+		/* solution_array should be a reference to an array */
+		if (!SvROK(solution_array)) {
+			printf("[pathfinding run error] solution_array is not a reference\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvTYPE(SvRV(solution_array)) != SVt_PVAV) {
+			printf("[pathfinding run error] solution_array is not an array reference\n");
+			XSRETURN_NO;
+		}
+		
+		if (!SvOK(solution_array)) {
+			printf("[pathfinding run error] solution_array is not defined\n");
+			XSRETURN_NO;
+		}
+
 		status = CalcPath_pathStep (session);
+		
 		if (status < 0) {
-			XSRETURN_UNDEF;
-		} else if (status > 0) {
-			RETVAL = newSVpvn((char *)&session->solution.array, session->solution.size * sizeof(pos));
+			RETVAL = status;
 		} else {
-			XSRETURN_IV (0);
+			AV *array;
+			int size;
+
+			size = session->solution_size;
+ 			array = (AV *) SvRV (solution_array);
+			if (av_len (array) > size)
+				av_clear (array);
+			
+			av_extend (array, session->solution_size);
+			
+			Node currentNode = session->currentMap[(session->endY * session->width) + session->endX];
+
+			while (currentNode.x != session->startX || currentNode.y != session->startY)
+			{
+				HV * rh = (HV *)sv_2mortal((SV *)newHV());
+
+				hv_store(rh, "x", 1, newSViv(currentNode.x), 0);
+
+				hv_store(rh, "y", 1, newSViv(currentNode.y), 0);
+				
+				av_unshift(array, 1);
+
+				av_store(array, 0, newRV((SV *)rh));
+				
+				currentNode = session->currentMap[currentNode.predecessor];
+			}
+			
+			RETVAL = size;
 		}
 	OUTPUT:
 		RETVAL
@@ -183,13 +262,14 @@ PathFinding_runcount(session)
 	PREINIT:
 		int status;
 	CODE:
+
 		status = CalcPath_pathStep (session);
-		if (status < 0)
-			RETVAL = -1;
-		else if (status > 0)
-			RETVAL = (int) session->solution.size;
-		else
-			RETVAL = 0;
+		
+		if (status < 0) {
+			RETVAL = status;
+		} else {
+			RETVAL = (int) session->solution_size;
+		}
 	OUTPUT:
 		RETVAL
 
@@ -199,8 +279,4 @@ PathFinding_DESTROY(session)
 	PREINIT:
 		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
-		if (session->map_sv)
-			SvREFCNT_dec (session->map_sv);
-		if (session->weight_sv)
-			SvREFCNT_dec (session->weight_sv);
 		CalcPath_destroy (session);

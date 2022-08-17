@@ -1,44 +1,101 @@
 [Default]
-decrypt_mid 0
-charBlockSize 116
-charListPacket 0x6b
-maploginPacket 0000
-
-[bRO_2016-11-01a]
-decrypt_mid 1
-decrypt_mid_keys 0x6D9253BB 0x7DB60BB3 0x3AD51C28
-charBlockSize 124
-charListPacket 0x82d
-maploginPacket 0870
-
-[bRO_2016-11-08a]
-decrypt_mid 1
-decrypt_mid_keys 0x17AC78C2 0x1ADE5C66 0x2A84793C
-charBlockSize 124
-charListPacket 0x82d
-maploginPacket 088E
-
-[tRO_2013-07-09a]
-decrypt_mid 1
-decrypt_mid_keys 0x6441767a 0x71020102 0x48c21f02
-charBlockSize 144
-
-[cRO_2017-12-13a]
-decrypt_mid 0
-charBlockSize 147
-charListPacket 0x99d
-maploginPacket 0x436
-
-[kRO_2018-01-03a]
-decrypt_mid 1
-decrypt_mid_keys 0x2A3D4E64 0x69FF066F 0x7008690C
-charListPacket 0x99d
-maploginPacket 0958
+sendCryptKeys
+account_server_info
+received_characters 099D
 charBlockSize 155
+received_character_ID_and_Map 0AC5
+map_login 0436
+map_loaded 02EB
+skills_list 010F
+actor_exists 09FF
+item_list_start 0B08
+expandedItemID 1
+actor_info 0A30
+actor_name 0095
 
-[kRO_2018-02-07a]
-decrypt_mid 1
-decrypt_mid_keys 0x07CB29CB 0x69CB69CB 0x69CB69CB
-charListPacket 0x99d
-maploginPacket 022D
+[cRO_2021-06-25]
+account_server_info 0AC9
+received_characters 099D
 charBlockSize 155
+received_character_ID_and_Map 0AC5
+map_login 0436
+map_loaded 02EB
+skills_list 010F
+actor_exists 09FF
+item_list_start 0B08
+expandedItemID 1
+actor_info 0A30
+actor_name 0095
+confirm_load 0B1B
+
+[vRO_2021-07-07]
+account_server_info 0B07
+received_characters 099D
+charBlockSize 155
+received_character_ID_and_Map 0AC5
+map_login 0436
+map_loaded 02EB
+skills_list 0B32
+actor_exists 09FF
+item_list_start 0B08
+expandedItemID 1
+actor_info 0A30
+actor_name 0095
+
+[twRO_2021-06-21]
+account_server_info 0B60
+received_characters 099D
+charBlockSize 155
+received_character_ID_and_Map 0AC5
+map_login 0436
+map_loaded 02EB
+skills_list 010F
+actor_exists 09FF
+item_list_start 0B08
+expandedItemID 1
+actor_info 0A30
+actor_name 0095
+
+[kRO_2021-06-30]
+account_server_info 0AC4
+received_characters 0B72
+charBlockSize 175
+received_character_ID_and_Map 0AC5
+map_login 0436
+map_loaded 02EB
+skills_list 0B32
+actor_exists 09FF
+item_list_start
+expandedItemID 1
+actor_info 0A30
+actor_name 0ADF
+confirm_load 0B1B
+
+[kRO_Zero_2021-06-30]
+account_server_info 0AC4
+received_characters 099D
+charBlockSize 155
+received_character_ID_and_Map 0AC5
+map_login 0436
+map_loaded 02EB
+skills_list 0B32
+actor_exists 09FF
+item_list_start 0B08
+expandedItemID 1
+actor_info 0A30
+actor_name 0ADF
+confirm_load 0B1B
+
+[jRO_2021-04-21]
+account_server_info
+received_characters 099D
+charBlockSize 155
+received_character_ID_and_Map 0071
+map_login 0436
+map_loaded 02EB
+actor_exists 09FF
+skills_list 0B32
+item_list_start 0B08
+expandedItemID 1
+actor_info 0A30
+actor_name 0ADF

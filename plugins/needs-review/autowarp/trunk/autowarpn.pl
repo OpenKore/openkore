@@ -116,7 +116,7 @@ sub getEmptyPos {
          for (my $k = 0; $k < ($i*2); $k++) {
             if ($field->isWalkable($posx, $posy) && !$pos{$posx}{$posy}) {
                my $pos = {x=>$posx, y=>$posy};
-               return $pos if checkLineWalkable($obj->{pos_to}, $pos);
+               return $pos if ($field->canMove($pos, $obj->{pos_to}));
             }
 
             $posx += $vectors[$vecx];

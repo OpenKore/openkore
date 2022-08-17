@@ -1,0 +1,3942 @@
+Bạn có đồng ý không?#
+Không thể kết nối với máy chủ#
+Ngắt kết nối với máy chủ#
+Ngắt kết nối với máy chủ#
+Ngắt máy chủ#
+Mật khẩu tài khoản này hiện đang được đăng nhập#
+Tài khoản người dùng chưa đăng nhập hoặc sai mật khẩu. Vui lòng kiểm tra lại#
+Sai mật khẩu. Vui lòng kiểm tra lại#
+Tài khoản này đã hết hạn#
+Máy chủ từ chối kết nối#
+Tên nhân vật này đã được sử dụng#
+Thất bại trong việc tạo nhân vật#
+Xóa nhân vật không thành công#
+Vui lòng nhập tên phòng chat#
+Nội dung chứa các từ không đúng đắn#
+Vui lòng nhập mật khẩu#
+Vui lòng nhập mật khẩu nhiều hơn bốn chữ số#
+Bạn đồng ý chấm dứt?#
+Vui lòng nhập trên bốn ký tự#
+Bạn có chắc chắn muốn xóa nhân vật này?#
+Nội dung chứa các từ không đúng đắn#
+Vui lòng nhập tên nhân vật trên bốn ký tự#
+/h: Trợ giúp#
+Bật hiệu ứng#
+Tắt hiệu ứng#
+Âm lượng#
+Âm lượng nhạc nền#
+Bật âm thanh hiệu ứng#
+Tắt âm thanh hiệu ứng#
+Bật chức năng đồng bộ hóa màn hình#
+Tắt chức năng đồng bộ hóa màn hình#
+Bật nhạc nền#
+Tắt nhạc nền#
+/h hoặc /help: hướng dẫn#
+/w hoặc /who (tên nhân vật): hiển thị số người hiện đang online#
+/music : bật hoặc tắt nhạc nền#
+/sound : tắt âm lượng#
+/effect : Bật/tắt hiệu ứng#
+/where : kiểm tra vị trí hiện tại#
+/skip : Bật và tắt cập nhật đồng bộ hóa màn hình#
+/v (0 ~ 127): Điều chỉnh âm lượng#
+/bv (0 ~ 127): Điều chỉnh âm lượng nhạc nền#
+/ex (tên nhân vật): Từ chối nhận tin nhắn từ nhân vật#
+/ex : Danh sách những nhân vật đã chặn#
+/in (tên nhân vật): Chấp nhận từ lời tin nhắn nhân vật#
+/inall: Chấp nhận lời tin nhắn từ tất cả các nhân vật#
+/exall : Từ chối lời tin nhắn của tất cả các nhân vật#
+Nhấp chuột phải vào nhân vật và nhấn nút bên trái để thêm nhân vật vào danh sách tin nhắn riêng tư#
+Nhấn F12 để cài đặt phím tắt#
+Không thể nhập câu/ từ tương tự quá ba lần liên tiếp#
+Nội dung chứa nội dung không đứng đắn sẽ bị hủy bỏ#
+Các vật phẩm tương tự không thể được thực hiện nhiều lần#
+Bạn không thể nhận thêm vật phẩm vì đã quá nặng.#
+Bạn không thế lấy được vật phẩm.#
+Giao dịch đã hoàn thành.#
+Bạn không có đủ zeny.#
+Bạn đang đầy hành trang.#
+Giao dịch đã thất bại.#
+Từ chối nhận tin nhắn từ nhân vật khác#
+Không thể chặn các tin nhắn riêng tư#
+Cho phép nhận tất cả các tin nhắn từ nhân vật khác#
+Không thể chặn các tin nhắn riêng tư#
+Bạn chưa có danh sách khóa người chơi.#
+[ Danh sách khóa người chơi ]#
+Mở phòng chat thành công#
+Giới hạn phòng.#
+Phòng cùng tồn tại.#
+Phòng đã đầy.#
+Bạn đã bị kick khỏi phòng.#
+Giao dịch đã bị từ chối.#
+Bạn đã đi quá xa khỏi người giao dịch.#
+Nhân vật này hiện tại chưa online hoặc không tồn tại.#
+Người này đang có một giao dịch khác.#
+Bạn không thể giao dịch vì hành trang của bạn không còn sức chứa.#
+Giao dịch đã bị hủy.#
+Giao dịch đã thành công.#
+Giao dịch đã thất bại.#
+Nhóm đã được tạo thành công.#
+Tên của nhóm đã bị trùng với nhóm khác.#
+Bạn đã có nhóm rồi.#
+Nhân vật này đã tham gia vào nhóm khác.#
+Lời mời vào nhóm đã bị từ chối.#
+Lời mời vào nhóm đã được chấp nhận.#
+Nhóm đã đầy.#
+Bạn đã rời khỏi nhóm.#
+Gửi cho tất cả#
+Gửi cho nhóm#
+Yêu cầu giao dịch với %s#
+Gửi lời mời vào nhóm#
+Pri:#
+Pub:#
+Nếu bạn muốn quay lại vị trí đăng nhập lần cuối, nhấn "Khởi tạo". Nếu bạn chọn nhân viật khác, hãy nhấn "Kết thúc"#
+Vui lòng chọn loại giao dịch.#
+ yêu cầu mở giao dịch.#
+ Bạn nhận được lời mời vào nhóm. Bạn có muốn tham gia không?#
+Lỗi lệnh#
+Thoát khỏi nhóm#
+Ra khỏi nhóm#
+Gửi thư#
+Chat 1:1#
+Tin nhắn#
+Cài đặt nhóm#
+Bạn#
+Nhóm#
+Trang bị#
+Điểm chỉ số#
+Hành trang#
+/organize ''Tên nhóm'' để tạo một tổ đợi. Gõ /leave để rời khỏi nhóm.#
+Nếu bạn là trưởng nhóm, bạn có thể mời người chơi khác vào tổ đội bằng cách chuột phải vào người chơi đó.#
+Che chở#
+Tấn công#
+Hỗ trợ#
+Toàn thể#
+Vũ khí#
+Phòng thủ#
+Nước#
+Đất#
+Lửa#
+Gió#
+Vui lòng tránh mua 2 vật phẩm giống nhau cùng 1 lúc.#
+Khi mở game ở chế độ windowed, vui lòng chuyển độ phân giải màn hình sang chế độ màu 16-bit#
+Vui lòng đợi...#
+Vui lòng đợi...#
+Vui lòng đợi...#
+Vui lòng đợi...#
+Tạo phòng chat#
+Cài đặt phòng#
+Kick người chơi ra#
+Nhường chìa khóa phòng chat#
+Xem thông tin#
+Phòng chat#
+Ng.#
+/sit : Ngồi xuống hoặc đứng lên#
+/stand : Đứng, hoặc ngồi xuống#
+/chat : Tạo phòng chat#
+/q : Thoát phòng chat#
+/deal "tên nhân vật" : Mời nhân vật được chỉ định giao dịch#
+/organize "Tên nhóm" : Sắp xếp nhóm#
+/leave : Rời nhóm#
+/expel "tên nhân vật": loại nhân vật được chỉ định ra khỏi nhóm#
+[Alt]+[End] : Mở hoặc tắt cửa sổ hiển thị HP/SP#
+[Alt]+[Home] : Mở hoặc tắt Ground Cursor#
+[Insert] : Ngồi hoặc đứng#
+Xin chúc mừng! Bạn vừa MVP! Phần thưởng của bạn là #
+!!#
+Xin chúc mừng! Bạn vừa MVP! Điểm kinh nghiệm thưởng của bạn là #
+Nhận!#
+Bạn vừa MVP! Nhưng hành trang của bạn đã đầy nên không thể nhận thưởng.#
+Nhân vật bạn chỉ định không có hoặc đang offline#
+Đối phương từ chối nhận tin nhắn#
+Đối phương không muốn nói chuyện với người khác#
+Người chơi đã chết hoặc mất kết nối.#
+Từ chối liên lạc với nhân vật, thất bại#
+Nhận %s (%d)#
+[Alt]+[=]: sửa các lỗi văn bản#
+[F10]: Điều chỉnh kích thước cửa sổ chat chung [Alt]+[F10]: Đóng mở cửa sổ chat chung#
+Tin nhắn riêng tư: Điền tên của người chơi vào [ô bên trái] và nhập tin nhắn ở [ô bên phải] từ cửa sổ chat chung. Nhấn phím [tab] để chuyển qua lại giữa 2 ô.#
+Lệnh Emoji: Nhấn Alt+(1 ~ 9) hoặc Ctrl+(-=\) để tạo biểu tượng biểu cảm cụ thể#
+Cách gửi tin nhắn cho các thành viên trong nhóm: Đặt ký hiệu %% trước nội dung tin nhắn để gửi tin nhắn cho các thành viên trong nhóm. (Ví dụ: \%Hello\)#
+Bạn chưa học kỹ năng cơ bản để giao dịch#
+Bạn chưa học kỹ năng cơ bản để sử dụng biểu tượng biểu cảm#
+Bạn chưa học kỹ năng cơ bản để ngồi#
+Bạn chưa học kỹ năng cơ bản để tạo phòng chat#
+Bạn chưa học kỹ năng cơ bản để thành lập nhóm#
+Bạn chưa học kỹ năng cơ bản để sử dụng kho#
+Bạn chưa học kỹ năng cơ bản để giao dịch với các nhân vật khác#
+Danh sách mua#
+Cửa hàng vật phẩm#
+Danh sách vật phẩm bán#
+Hành trang#
+ đã trang bị#
+ đã tháo#
+Nhập tên vào danh sách tin nhắn riêng tư#
+Chức năng camera: Nhấn [Print Screen] hoặc [Scroll Lock]#
+Mẹo hôm nay#
+^3850a0Bạn có biết ...^000000//^709fed#
+Hiện lúc vào game#
+/tip: Mở Mẹo hôm nay#
+Số người hiện đang online %d#
+(%s) Tham gia trò chơi#
+(%s) Thoát khỏi trò chơi#
+(%s) Buộc phải rời khỏi trò chơi#
+%d#
+%s: %d#
+%s%s: %d#
+Vật phẩm được bán#
+Cửa hàng vật phẩm#
+Khu vực không xác định#
+Ngôn ngữ Client máy chủ và ngôn ngữ server không nhất quán#
+Hãy đưa các trang bị vào hành trang, sau đó đóng cửa sổ vật phẩm#
+Server này chỉ hỗ trợ ngôn ngữ tiếng anh#
+Chưa được áp dụng#
+Không có danh sách tin nhắn#
+Chặn tin nhắn#
+Chặn tin nhắn thất bại#
+Lời mời tin nhắn cá nhân thất bại. Danh sách chặn vượt quá giới hạn#
+Nhận tin nhắn#
+Lỗi lệnh#
+Lỗi lệnh. Danh sách chặn vượt quá giới hạn#
+Các từ đầu tiên và cuối cùng của tên không thể nhập khoảng trống#
+Cá nhân#
+Công khai#
+Không đủ SP#
+Không đủ HP#
+Không sử dụng được kỹ năng#
+Trộm thất bại#
+Trade#
+Kỹ năng Envenom thất bại#
+Không thể dùng ID này từ server#
+Tăng tốc#
+Giảm tốc#
+/memo: Nhớ nơi dịch chuyển không gian (chỉ áp dụng với nghề Acolyte Class)#
+Vị trí bất kỳ#
+Chọn nơi di chuyển#
+Trình độ kỹ năng không đủ#
+Không có dữ liệu nơi cần di chuyển (Memo Point)#
+Bạn chưa học kỹ năng di chuyển địa điểm#
+Ghi nhớ địa điểm thành Memo Point#
+Hủy#
+Sau khi sử dụng kỹ năng sẽ bị ngưng tạm thời#
+Bạn không thể nhận vật phẩm này vì vượt quá trọng lượng cho phép#
+Số lượng vật phẩm vượt quá giới hạn#
+Vật phẩm cho xe đẩy#
+Tháo bỏ xe đẩy được thuê #
+Mở cửa hàng#
+Nhập tên cửa hàng#
+Cửa hàng của tôi#
+Cửa hàng Merchant#
+Mua vật phẩm#
+Mua %s thất bại %s#
+Hết hàng#
+Bán %s %d#
+Các vật phẩm có thể bán#
+Không đủ Zeny để sử dụng kỹ năng này#
+Vui lòng chọn nhân vật#
+/pk on : Bật PK. /pk off : Tắt PK#
+Cửa hàng#
+Thuê xe đẩy [Alt+W]#
+Thông tin cơ bản#
+Kỹ năng không thể sử dụng với vũ khí này#
+Mua %s thất bại do hết hàng. Số lượng tồn kho là %d#
+Ngắt kết nối với máy chủ#
+Vui lòng đeo cung tên trước#
+Không thể tấn công hoặc sử dụng các kỹ năng do quá trọng lượng#
+Không thể sử dụng các kỹ năng do quá trọng lượng#
+Cung và mũi tên đã được trang bị#
+Cần Red Gemstone#
+Cần Blue Gemstone#
+Strength#
+Agility#
+Vitality#
+Intelligence#
+Dexterity#
+Luck#
+Attack Power#
+Defense#
+Acccuracy Rate#
+Critical Attack#
+Bang Hội#
+Cải thiện điểm chỉ số#
+Magical Attack#
+Magical Defense#
+Flee Rate#
+Attack Speed#
+Số lượng người dùng trong khu vực này vượt quá giới hạn và bạn không thể đăng nhập#
+Tùy chọn#
+Tài khoản E-MAIL chưa được xác thực hoặc bị đóng băng#
+Tài khoản hoặc mật khẩu bạn đã nhập không chính xác#
+Chọn kiểu tóc#
+ATK#
+DEF#
+Tự động trỏ khi tấn công#
+Tắt tự động trỏ khi tấn công#
+Tự động mở con trỏ khi các kỹ năng được sử dụng#
+Tự động tắt con trỏ khi các kỹ năng được sử dụng#
+/snap: Bật mở chức năng Tự động con trỏ. /skillsnap: Bật mở chức năng Tự động con trỏ khi sử dụng kỹ năng#
+Item Snap Bật#
+Item Snap Tắt#
+Snap#
+Không thể mang được hơn 30.000 vật phẩm cùng loại.#
+Không thể xóa các nhân vật trên cấp 30, vui lòng liên hệ với GM để xóa nhân vật này.#
+Bạn không thể sử dụng cửa hàng khi đang giao dịch.#
+Tên#
+Bảng kỹ năng#
+Điểm kỹ năng: %d#
+Sử dụng kỹ năng đã thất bại.#
+Bị động#
+Cá nhân#
+Chia đều#
+Cá nhân#
+Chia đều#
+Cài đặt nhóm#
+Chia sẻ kinh nghiệm#
+Chia sẻ vật phẩm#
+Chỉ trưởng nhóm mới có thể cài đặt.#
+Không hỏi số lượng.#
+Nhân vật sẽ bị xóa sau ^ff0000%d^000000 giây. Ấn Hủy để kết thúc.#
+Bạn không thể giao dịch hơn 10 loại vật phẩm mỗi lần giao dịch.#
+Bạn chưa đủ tuổi để tham gia.#
+Vui lòng nhập E-MAIL#
+Nhập E-MAIL#
+Lỗi địa chỉ E-MAIL, không thể xóa nhân vật này#
+Vui lòng nhập số CMT#
+Sai số, không thể xóa nhân vật#
+Bạn không thể bán 15 vật phẩm trở lên cùng một lúc#
+Trò chơi này giới hạn độ tuổi. Tài khoản này không thể kết nối với máy chủ#
+Khi trọng lượng đạt 50%%trở lên, HP và SP không thể tự động phục hồi#
+không thể Tấn công và sử dụng kỹ năng khi trọng lượng trên 90%%#
+HP và SP đã được phục hồi#
+Bạn có thể Tấn công và sử dụng các kỹ năng ngay bây giờ#
+Vui lòng cập nhật phiên bản trò chơi mới nhất#
+Tất cả các vật phẩm đã được bán#
+Lưu nội dung chat thành định dạng text#
+/savechat: Lưu nội dung chat#
+Đăng ký tài khoản cá nhân#
+Từ chối tin nhắn#
+Nhận tin nhắn#
+Hiển thị ''Miss''#
+Hiển thị ''Miss''#
+Bật zooming camera#
+Tắt zooming camera#
+/camera On Off: Đã bật/tắt zooming. /miss: Chuyển đổi hiển thị ''Miss''#
+Xem thông tin kỹ năng#
+Thay đổi kỹ năng#
+Độ phân giải nền#
+Độ phân giải kết cấu#
+Điều chỉnh chi tiết#
+Nhận %s Zeny#
+Tên bang hội#
+Cấp độ bang hội#
+Trưởng bang hội#
+Thành viên#
+Cấp độ trung bình#
+Lãnh thổ#
+Khuynh hướng#
+EXP#
+Huy hiệu#
+Điểm thuế#
+Liên minh#
+Đối thủ#
+Thông tin bang hội#
+Thông tin thành viên#
+Chức danh#
+Kỹ năng bang hội#
+Danh sách trục xuất#
+Thông báo#
+Danh sách tất cả các bang hội#
+Danh sách tin nhắn riêng#
+Mở cửa sổ tin nhắn#
+Nhấn [Alt]+[H] để mở cửa sổ tin nhắn riêng#
+Mở cửa sổ tin nhắn riêng tự động#
+Xóa#
+Đóng từ khi# 
+Kết nối lần cuối#
+IP kết nối lần cuối#
+Kết bạn#
+Bạn có chắc chắn muốn xóa?#
+Bạn có chắc chắn muốn thoát?#
+Kết bạn#
+Tự động mở cửa sổ hộp thoại 1:1 khi có người PM#
+Mở cửa sổ 1:1#
+Khi không phải là bạn, hãy mở cửa sổ hộp thoại 1:1#
+Khi cửa sổ hộp thoại 1:1 được mở, bạn sẽ được thông báo bằng âm thanh cảnh báo#
+Bạn có muốn xóa ký tự?#
+%s đã rời bang hội#
+Lý do: %s#
+Giải thể bang hội thất bại#
+Lý do giải thể bang hội: %s#
+Tài khoản này đã bị xóa#
+Giá:#
+%s đã bị trục xuất khỏi bang hội#
+Nguyên nhân: %s#
+Không thể trang bị vật phẩm#
+Không thể thay đổi cài đặt nhóm#
+Đã lập bang hội thành công#
+Bạn đã là thành viên của bang hội#
+Tên bang hội này đã được sử dụng#
+Nhận tin nhắn tham gia bang hội. Bạn có đồng ý tham gia không?#
+Gia nhập các bang hội khác#
+Từ chối gia nhập bang hội#
+Tham gia bang hội thành công#
+Số thành viên bang hội vượt quá giới hạn#
+Mời(%s) tham gia bang hội#
+Chưa học đủ kỹ năng để gia nhập liên minh#
+Gia nhập liên minh thành công#
+Bạn đã sử dụng điểm ngày hôm nay#
+Chưa đủ một tháng kể từ khi liên minh với nhân vật này#
+Bạn đã kiếm được điểm lịch sự từ %s#
+Bạn đã nhận được điểm bất lịch sự từ %s#
+Giảm thời gian chat (Mở)#
+Tăng thời gian chat (Treo)#
+Yêu cầu giao dịch với (%s)#
+Mời (%s) tham gia nhóm#
+Nhận được tin nhắn từ bang hội mời tham gia liên minh. Bạn có muốn tham gia liên minh không?#
+Đã trở thành một liên minh#
+Từ chối liên minh#
+Chấp nhận liên minh#
+Số lượng đội đồng minh trong bang hội đối địch vượt quá giới hạn#
+Số lượng liên minh bang hội vượt quá giới hạn#
+Liên minh bang hội#
+Bang hội đã giải thể thành công#
+Số ID sai, không thể giải thể bang hội#
+Vẫn còn những thành viên bang hội không thể bị cách chức#
+Đặt guild này là Đối thủ#
+Chọn màu tóc#
+Thiếu đạo cụ cần thiết để thành lập bang hội#
+Thông tin quái vật#
+Tên#
+Hạng#
+HP#
+Kích thước#
+Loại#
+MDEF#
+Thuộc tính#
+Trung tính#
+Nước#
+Đất#
+Lửa#
+Gió#
+Độc#
+Thánh#
+Bóng tối#
+Hồn ma#
+Thây ma#
+Bạn không thể chế tạo vật phẩm#
+Danh mục vật phẩm có thể chế tạo#
+- Chế tạo#
+- Nguyên liệu cần thiết#
+ - chế tạo thất bại#
+ - chế tạo thành công#
+ - chế tạo thất bại#
+ - chế tạo thành công#
+Bạn không đủ cấp độ yêu cầu#
+Level của bạn quá cao cho nghề này#
+Nghề của bạn không phù hợp với việc này#
+Thông báo thăm dò bẫy#
+Vui lòng nhập thông tin để lưu#
+Gửi đến bang hội#
+Cash tài khoản đã được sử dụng hết, vui lòng thêm giá trị trước#
+Máy chủ đang bận, vui lòng thử kết nối lại sau#
+Khi máy chủ bị ngắt kết nối hoặc khi đăng nhập liên tục, bạn sẽ không thể đăng nhập trong 20 giây#
+Thả chim ưng#
+Gỡ#
+Nhỏ#
+Vừa#
+Lớn#
+Gấp đôi#
+Gấp ba#
+Gấp bốn#
+Bạn bị cấm đăng nhập đến khi %s#
+'s #
+'s Lửa #
+'s Nước #
+'s Gió #
+'s Đất #
+61.220.60.11#
+6900#
+https://ro.vtcgame.vn/#
+Kick %s#
+Mạnh#
+Rất mạnh#
+Cực kỳ mạnh#
+Lý do trục xuất#
+Tốc độ tấn công tăng#
+Tốc độ tấn công giảm#
+Sức mạnh của vũ khí đã được tăng.#
+Sức mạnh của vũ khí đã giảm.#
+Thời gian thi triển kỹ năng đã giảm.#
+Thời gian thi triển kỹ năng đã quay về bình thường.#
+Vũ khí đã tạm thời được tẩm Độc.#
+Vũ khí đã tạm thời được chuyển thành thuộc tính Thánh.#
+Vũ khí đã quay về thuộc tính ban đầu.#
+Áo giáp đã được cường hóa thuộc tính Thánh.#
+Áo giáp đã quay về thuộc tính ban dầu.#
+[Kích hoạt] Lá chắn.#
+[Hủy kích hoạt] Lá chắn.#
+[Kích hoạt] hiệu ứng gây 100%% sát thương lên quái vật cỡ nhỏ, vừa và lớn.#
+[Hủy kích hoạt] hiệu ứng gây 100%% sát thương lên quái vật cỡ nhỏ, vừa và lớn.#
+[Kích hoạt] hiệu ứng Tăng Sức Mạnh.#
+[Hủy kích hoạt] hiệu ứng Tăng Sức Mạnh.#
+[Kích hoạt] hiệu ứng Sức Mạnh Tối Đa.#
+[Hủy kích hoạt] hiệu ứng Sức Mạnh Tối Đa.#
+[Máy chủ mới]#
+ (%d người chơi)#
+ (Đang bảo trì)#
+Thành viên bang hội %s đã đăng nhập.#
+Thành viên bang hội %s đã thoát game.#
+Nhận được %d điểm kinh nghiệm.#
+Nhận được %d điểm kinh nghiệm nghề.#
+Bạn đã rời hội.#
+Bị trục xuất khỏi bang hội#
+Nhận dạng vật phẩm thành công#
+Nhận dạng vật phẩm thất bại#
+Kết hợp vật phẩm thành công#
+Kết hợp vật phẩm thất bại#
+Đặt Hội thù địch thành công#
+Cài đặt Hội thù địch thất bại vì vượt quá giới hạn#
+Đã là kẻ thù#
+Tinh luyện thành công#
+Tinh luyện thất bại#
+Không có địa điểm để dịch chuyển tức thời#
+Không có địa điểm để dịch chuyển tức thời#
+Vui lòng đợi thêm trước khi log out.#
+Chức danh#
+Nghề#
+Ghi chú#
+Đ.Góp#
+Điểm thuế#
+Rời Bang hội#
+Loại#
+Hạng#
+Chức danh#
+Mời#
+Phạt#
+Thuế %#
+Danh hiệu#
+Nội dung#
+Tên bang hội#
+Cấp độ bang hội#
+Thành viên#
+Thứ hạng#
+Giám định vật phẩm#
+Danh sách vật phẩm#
+Vui lòng nhập lý do rời khỏi bang hội#
+Vui lòng nhập lý do trục xuất.#
+Đóng cửa sổ cửa hàng#
+Kỹ năng #
+Tên vật phẩm#
+https://member.gnjoy.com.tw/billing.aspx #
+Số lượng IP có thể được sử dụng trong các quán cà phê Internet đã được sử dụng. Bạn có muốn trả bằng tài khoản cá nhân của mình không?#
+Các điểm giá trị được lưu trữ đã được sử dụng hết. Kết thúc trò chơi#
+Tên quá dài, vui lòng nhập tên trong vòng 11 ký tự bằng tiếng Trung và 23 ký tự bằng tiếng Anh#
+Đợi trong^ff0000%d^000000giây, nhân vật của bạn sẽ bị xóa. Nếu bạn muốn từ bỏ hành động này, nhấn[Hủy]#
+Bạn là người sử dụng thẻ phí hàng tháng#
+Bạn là người dùng thẻ điểm. Bạn có%d giờ,%d phút,%d giây còn lại trong thời gian của bạn#
+Bạn là người dùng miễn phí#
+Bạn là người dùng miễn phí. Bạn còn%d giờ,%d phút và%d giây#
+Bạn đang sử dụng thẻ phí hàng tháng cho các quán cà phê Internet và bạn có%d giờ,%d phút và%d giây thời gian có sẵn. #
+Thẻ điểm cafe internet bạn sử dụng có%d giờ,%d phút và%d giây còn lại. Nếu những người chơi khác sử dụng thẻ tín dụng cùng một lúc, thời gian tiêu thụ có thể nhanh hơn.#
+Bạn là người dùng thời gian rảnh trong quán cà phê Internet#
+Bạn là người dùng miễn phí trong quán cà phê Internet#
+Bạn đang ở trong khu vực thẻ tín dụng#
+Cửa sổ biểu cảm#
+/emo#
+/!#
+/?#
+/ho#
+/lv#
+/lv2#
+/swt#
+/ic#
+/an#
+/ag#
+/$#
+/..#
+/thx#
+/wah#
+/sry#
+/heh#
+/swt2#
+/hmm#
+/no1#
+/??#
+/omg#
+/oh#
+/X#
+/hlp#
+/go#
+/sob#
+/gg#
+/kis#
+/kis2#
+/pif#
+/ok#
+Phím tắt#
+Tài khoản này vẫn được sử dụng#
+Do thay đổi cơ chế sạc, trò chơi tạm thời bị treo. Vui lòng kết nối lại#
+IP bạn đã nhập không khớp với IP được chứng nhận bởi máy chủ thu phí. Dừng kết nối#
+Để tránh việc thẻ tín dụng cá nhân bị khấu trừ, IP trong cửa hàng cafe Internet tạm thời bị treo. Nếu bạn muốn sử dụng thẻ tín dụng để trừ điểm, vui lòng sử dụng IP được đăng ký trong cửa hàng không phải là cà phê để sử dụng#
+Bạn đã được quản lý bởi một nhân viên, buộc trò chơi kết thúc#
+Hành trang của bạn nặng hơn 90%% nên không thể sử dụng các kỹ năng#
+Không tên#
+Xin chúc mừng, %s hiện đang ở bảng xếp hạng và được thăng hạng lên %d#
+Thật đáng tiếc khi %s hiện đang ở trên bảng xếp hạng và giảm xuống %d#
+Thông tin thú cưng#
+Độ hài lòng#
+Thân mật#
+Không thể mở cửa hàng và cửa sổ chat cùng một lúc#
+cái#
+%s đã bất tỉnh do đòn tấn công của bạn#
+%s đã tấn công bạn đến mức bạn không thể chiến đấu#
+Cho ăn - không còn '%s' nữa#
+Cho thú cưng ăn#
+Hiệu suất#
+Khôi phục trạng thái trứng#
+Loại bỏ phụ kiện#
+Xem trạng thái thú cưng#
+Phụ kiện#
+Đã Trang bị#
+Danh sách thú cưng#
+Tháo trang bị#
+Bạn chắc chắn muốn cho thú cưng ăn?#
+Vui lòng nhập số trong vòng (0 ~ 9)#
+Các vật phẩm không xác định không thể bán#
+Có vật phẩm định giá giá 0 Zeny, bạn có muốn tiếp tục bán không?#
+[Biểu tượng biểu cảm mới]#
+Thông báo cho người dùng phiên bản beta Đài Loan .->Vui lòng đăng ký lại trong trò chơi Shinkansen#
+Tin nhắn cho người dùng đã ngừng sạc ở Đài Loan .->Vui lòng trả phí hai lần#
+Vai trò tài khoản tương tự đã được đăng nhập#
+(%d tên) - bạn cần phải ít nhất 18 tuổi#
+Kích hoạt khiêu khích#
+Trạng thái khiêu khích đã hủy#
+Kích hoạt độc đoán#
+Trạng thái độc đoán đã hủy#
+Kích hoạt tập trung#
+Trạng thái nâng tập trung đã hủy#
+Kích hoạt trạng thái ẩn #
+Trạng thái ẩn đã được gỡ bỏ#
+Kích hoạt Ngụy trang thành công#
+Trạng thái Ngụy trang được gỡ bỏ#
+Kích hoạt phản ứng với chất độc#
+Trạng thái phản ứng với chất độ đã hủy#
+Tốc độ di chuyển chậm hơn#
+Trạng thái phòng thủ đã hủy#
+Tăng phòng thủ#
+Hàng rào thiên thần đã hủy#
+Đã nhận phước lành của các thiên thần#
+Phước lành thiên thần đã hủy#
+Angel Light được sử dụng#
+Trạng thái Angel Light đã hủy#
+Tốc độ Slow Poison đã bị chậm lại#
+Trạng thái Slow Poison đã hủy#
+Cải thiện tốc độ phục hồi SP/HP#
+Magnificat đã hủy#
+May mắn tăng lên#
+May mắn đã hủy#
+Bạn sẽ nhận sát thương gấp đôi từ tất cả các đối thủ#
+Angel Wrath đã hủy#
+Tốc độ tấn công đã được tăng lên#
+Tốc độ tấn công giảm#
+Toucan gắn kết#
+Xuống xe#
+Đã được trang bị Falcon#
+Chim ưng đã hủy#
+Kích hoạt trạng thái giả chết#
+Trạng thái giả chết đã hủy#
+Tăng sức mạnh#
+Sức mạnh trở lại bình thường#
+Kích hoạt áo chắn năng lượng#
+Trạng thái áo chắn năng lượng đã được gỡ bỏ#
+Giáp bị hỏng#
+Trạng thái Giáp vỡ đã hủy#
+Vũ khí bị hỏng#
+Trạng thái vỡ của vũ khí đã hủy#
+Kích hoạt trạng thái ẩn#
+Trạng thái ẩn chào đã hủy#
+Xử lý tin nhắn sạc chậm, do đó, chậm trễ kết nối, vui lòng kết nối với máy chủ sau#
+Hủy bỏ các mũi tên/đạn/phi tiêu được trang bị#
+Danh mục Mũi tên#
+Danh mục Xe đẩy#
+Bạn cần phải có xe đẩy#
+Không thể mở phòng chat#
+Người chơi có thể mở tài khoản mới trên máy chủ mới và tận hưởng 15 ngày chơi miễn phí#
+Không thể được sử dụng với trạng thái ngồi#
+Chặn các tính năng chat và kỹ năng sau %d phút#
+Chức năng chat và kỹ năng miễn phí#
+Không thể trang bị vật phẩm#
+Rất đói#
+Đói#
+Bình thường#
+Mãn nguyện#
+Đầy đủ#
+Lạ lẫm#
+Ngại ngùng#
+Thân mật#
+Trung thành#
+Chưa biết#
+Thời gian sử dụng còn lại của bạn là %d ngày %d giờ %d phút#
+Tài khoản này đang đăng nhập trên máy khác#
+Thời gian sử dụng còn lại của bạn là %d giờ %d phút#
+Bạn là người chơi miễn phí#
+Tài khoản này không thể đăng nhập vào máy chủ miễn phí#
+Tên thú cưng của bạn cần phải bằng ký tự tiếng Anh#
+Tên chỉ có thể đổi tên thú cưng một lần. Tên thú cưng sẽ được đổi thành ^0000ff^0000ff %s^000000^000000. Bạn có chắc không?#
+/font#
+Không còn đủ Zeny trong bang hội#
+Vượt quá số Zeny tối đa mà bang hội có, không thể thực hiện#
+Đơn giản hóa hiệu ứng Bật#
+Đơn giản hóa hiệu ứng Tắt#
+Quỹ#
+Nếu bạn muốn thả một vật phẩm xuống đất, vui lòng mở hành trang trước (alt+e)#
+Điểm cafe Internet đã được sử dụng hết và sẽ được chuyển đổi thành điểm cá nhân để thanh toán. Bạn có chắc chắn muốn tiếp tục không?#
+No Msg_1#
+No Msg_2#
+Số Zeny không đủ hoặc số Zeny tối đa bạn yêu cầu vượt quá số Zeny bạn có#
+Nhân vật của bạn đã ngất đi. Nhấn phím ESC, chọn 'Khởi động'. Hoặc vui lòng chọn 'Tiếp tục trò chơi'#
+ - Nhận %d#
+Bảng thông tin#
+/minimize#
+Vật phẩm này đã bị hư#
+/noshift:Bạn có thể sử dụng "hồi máu" để tấn công quái vật mà không cần nhấn phím shift. Bật | Tắt#
+Thay vì nhấn phím shift, bạn có thể sử dụng kỹ thuật hồi máu để tấn công quái vật.[ON]#
+Thay vì nhấn phím shift, bạn có thể sử dụng kỹ thuật hồi máu để tấn công quái vật.[OFF]#
+MSI_REFUSE_BAN_BY_DBA#
+MSI_REFUSE_EMAIL_NOT_CONFIRMED#
+MSI_REFUSE_BAN_BY_GM#
+MSI_REFUSE_TEMP_BAN_FOR_DBWORK#
+MSI_REFUSE_SELF_LOCK#
+MSI_REFUSE_NOT_PERMITTED_GROUP#
+MSI_REFUSE_WAIT_FOR_SAKRAY_ACTIVE#
+/aura: Đơn giản hóa hào quang. Bật|tắt#
+Hào quang hiển thị bình thường.[ON]#
+Đơn giản hóa hào quang.[OFF]#
+Lịch sử chat bị chặn %d lần#
+Danh mục chat bị chặn#
+/showsame: Thay đổi cách hiển thị font chữ#
+/noctrl | /nc: Bạn có thể tự động tấn công quái vật mà không cần nhấn phím ctrl. Bật | Tắt#
+Tự động tấn công quái vật mà không cần nhấn phím ctrl. [Tự động tấn công ON]#
+Tự động tấn công quái vật mà không cần nhấn phím ctrl.[Tự động tấn công OFF]#
+Chặn chat#
+Hoàn toàn không cho phép chat (vô hiệu hóa Nhật ký)#
+Rút ngắn thời gian chat bị cấm (không bỏ qua nhật ký)#
+Dùng font chữ bình thường.[hiển thị tên loại 1]#
+Sau khi font chữ trở nên mỏng hơn, tên nhóm sẽ được hiển thị [hiển thị tên loại 2]#
+/doridori: nếu bạn nhập lệnh này liên tục, nhân vật người chơi sẽ lắc đầu#
+Diễn đàn web tính phí#
+Thời hạn phí hàng tháng có %d ngày, %d giờ và %d phút còn lại. \n Hạn chót thời hạn %d ngày %d giờ %d phút còn lại#
+/bingbing: Nếu bạn nhập lệnh này liên tục, nhân vật người chơi sẽ quay ngược chiều kim đồng hồ#
+/bangbang: Nếu bạn nhập lệnh này liên tục, nhân vật người chơi sẽ quay theo chiều kim đồng hồ#
+/skillfail: Khi kỹ năng đỏ thất bại, không có thông báo nào được hiển thị. Bật | Tắt#
+Một thông báo được hiển thị khi kỹ năng thất bại.[Hiển thị ON]#
+Khi kỹ năng thất bại, không có thông báo nào được hiển thị.[Hiển thị OFF]#
+/notalkmsg: Nội dung chat không được hiển thị trong cửa sổ chat. Bật | Tắt#
+Nội dung của cuộc chat được hiển thị trên cửa sổ chat.[ON]#
+Nội dung chat không được hiển thị trên cửa sổ chat.[OFF]#
+/set1 : /noctrl + /showname + /skillfail#
+/Fog: Bật/Tắt hiệu ứng sương mù. Bật | Tắt#
+Bạn đã nhận được lời cầu hôn, bạn có đồng ý không?#
+Nhận vật phẩm#
+Cá nhân#
+Ngẫu nhiên#
+1#
+2#
+3#
+4#
+5#
+6#
+7#
+8#
+9#
+10#
+11#
+12#
+13#
+14#
+15#
+Yêu#
+/report : Sắp xếp các tệp để báo cáo#
+Tệp này được sử dụng trong trò chơi Bộ phận dịch vụ khách hàng của Shinkansen là hành vi không đứng đắn hoặc không đúng trong trò chơi\n Thông tin xác thực.\N Nếu bạn lưu dưới dạng loại tệp khác hoặc thay đổi nội dung không phù hợp với bản gốc,\n tệp không có bất kỳ ảnh hưởng bằng chứng nào#
+Tôi yêu bạn!! #
+Khi hình ảnh hoặc hiệu ứng quá sáng, hãy điều chỉnh độ sáng của màn hình#
+Khi có sự cố với chế độ màn hình tổng thể, vui lòng sử dụng phím ALT+TAB để chuyển đổi màn hình sau khi thực hiện trò chơi. Nó có hiệu quả đối với một số kiểu máy tính#
+(%d number) Máy chủ trả phí#
+(%d number) máy chủ miễn phí#
+Thành viên miễn phí không thể kết nối với máy chủ trả phí#
+Sau khi nhấp vào nút chuột phải, bạn có thể sử dụng các kỹ năng lưu trữ trong phím F9[/q1 ON]#
+Sau khi nhấp vào nút chuột phải, các kỹ năng không thể được sử dụng[/q1 OFF]#
+/quickspell:Sau khi nhấp chuột phải, bạn có thể sử dụng các kỹ năng được lưu trữ trong phím F9 Bật | Tắt#
+Sau khi sử dụng bánh xe chuột, bạn có thể sử dụng các kỹ năng lưu trữ trong các phím F7 và F8[/q2 ON]#
+Không thể sử dụng các kỹ năng sau khi sử dụng bánh xe chuột[/q2 OFF]#
+/quickspell2:Sau khi cuộn bánh xe chuột lên xuống, bạn có thể sử dụng các kỹ năng được lưu trữ trong các phím F7 và F8 Tắt#
+/q3 : /quickspell (/q1) + /quickspell2 (/q2)#
+/e1)#
+/e2#
+/e3#
+/e4#
+/e5#
+/e6#
+/e7#
+/e8#
+/e9#
+/e10#
+/e11#
+/e12#
+/emotion: Hiển thị danh sách các biểu tượng biểu cảm có thể được sử dụng#
+Bật các kỹ năng được cài đặt trên phím tắt cửa sổ 1, 2 và 3. [/bm ON]#
+Tắt các kỹ năng được cài đặt trên phím tắt cửa sổ 1, 2 và 3. [/bm OFF]#
+/battlemode: Nếu bạn nhấn Q ~ O, bạn có thể sử dụng các phím tắt kỹ năng, các kỹ năng của cửa sổ 2#
+Nhấn A ~ L, bạn có thể sử dụng các phím tắt kỹ năng, các kỹ năng của cửa sổ 3#
+Nếu bạn mở các phần mềm khác trong khi chạy RO, tốc độ trò chơi có thể chậm hơn#
+Hỡi Thiên thần ~ Bạn có nghe thấy giọng nói của tôi không?^^;#
+Tôi là người mới bắt đầu#
+Ai đó?#
+Giúp tôi với#
+Ai đó muốn nhận nuôi bạn. Bạn có đồng ý không?#
+Giữ các phím Z ~> để sử dụng các kỹ năng trong cột kỹ năng 1. Bật | Tắt#
+Nhấn phím Space để chat trong chế độ chiến đấu#
+Không tìm thấy phần mềm bảo mật trò chơi. Vui lòng cài đặt lại phần mềm bảo mật cho trò chơi#
+Một số tệp phần mềm trong Windows bị hỏng. Vui lòng cài đặt lại Internet Explorer (IE)#
+Trình bảo vệ trò chơi thất bại trong khi thực hiện. Vui lòng cài đặt lại và phần mềm bảo mật trò chơi#
+Các phần mềm bất hợp pháp được tìm thấy, vui lòng đóng các phần mềm không cần thiết và chạy lại#
+Hủy bỏ nâng cấp phần mềm bảo vệ trò chơi. Nếu bạn không thể kết nối, vui lòng kiểm tra trạng thái của mạng và tường lửa#
+Nâng cấp trình bảo vệ trò chơi và kết nối máy chủ thất bại. Vui lòng kết nối lại sau hoặc kiểm tra lại trạng thái mạng và tường lửa#
+Quá trình nâng cấp phần mềm bảo vệ trò chơi chưa hoàn tất. Vui lòng quét vi-rút và sử dụng phần mềm quản lý máy tính để điều chỉnh cài đặt và chạy lại trò chơi#
+/notrade: Tự động từ chối giao dịch Bật | Tắt#
+Bật Tự động từ chối giao dịch [/nt ON]#
+Tắt Tự động từ chối giao dịch[/nt OFF]#
+Không thể mua cùng một lúc hơn 30.000 vật phẩm#
+Vật liệu không đủ#
+Thông tin tài khoản %s đã bị bỏ lại#
+Tài khoản này hiện không thể đăng nhập do vấn đề hack. Để biết chi tiết, vui lòng sử dụng dịch vụ hacker E-mail#
+Tài khoản bị chặn do sự cố BUG#
+Vật phẩm có thể sửa#
+Sửa thành công#
+Sửa vật phẩm thất bại (vui lòng xác nhận vật phẩm hoặc khoảng cách từ đối phương)#
+/sc ON #
+/sc OFF #
+/systemcheck: Kiểm tra trạng thái hệ thống [Dành cho GM] On | Off#
+(%s) yêu cầu kết bạn, bạn có đồng ý không?#
+Danh sách bạn bè đầy#
+Danh sách bạn bè của (%s) đầy#
+Đã kết bạn với (%s)#
+(%s) Từ chối làm bạn của bạn#
+Nhân vật bị khóa cho đến %s.#
+Vật phẩm có giá cố định là 10 triệu Zeny, sẽ tự động mua và bán với giá 10 triệu Zeny#
+(Rất ít)#
+(Ít)#
+(Vừa)#
+(Đông)#
+(Rất đông)#
+GM đã chặn bạn tham gia phòng chat vì hành vi không phù hợp trong %d phút#
+Thời gian bị khóa còn lại %d phút.#
+Thời gian bị khóa đã kết thúc.#
+Bạn đã bị chặn sử dụng chat và kỹ năng cho %d như một hình phạt tự động#
+Thời gian bị khóa còn lại %d phút.#
+Chế độ chặn kết thúc, vui lòng chú ý khi chơi#
+%s và %s đã ly hôn#
+%s được chỉ định là %s Solar Space của Gravity.#
+%s được chỉ định là %s Luna Space của Gravity.#
+%s được chỉ định là %s Stellar Space của Gravity.#
+%s Solar Space của Gravity: %s#
+%s Luna Space của Gravity: %s#
+%s Stellar Space của Gravity: %s#
+%s được chỉ định là %s Solar Monster của Gravity.#
+%s được chỉ định là %s Luna Monster của Gravity.#
+%s được chỉ định là %s Stellar Monster của Gravity.#
+%s Solar Monster của Gravity: %s#
+%s Luna Monster của Gravity: %s#
+%s Stellar Monster của Gravity: %s#
+/window: Khi vị trí của cửa sổ được di chuyển, các thuộc tính được gắn vào các cửa sổ khác sẽ nhập vào bên trong ON#
+Khi vị trí cửa sổ được di chuyển, nó sẽ được kết nối với các cửa sổ khác[/wi ON]#
+Khi vị trí của cửa sổ được di chuyển, các thuộc tính mà bạn muốn kết nối với các cửa sổ khác sẽ không bị thay đổi.[[Wi OFF]#
+/pvpinfo: Hiển thị thành tích PVP và điểm PVP của mình#
+%d thắng, %d thua, điểm PVP là %d điểm#
+Một điểm cách đã được căn chỉnh thành công.#
+Đây là khu vực PK, hãy cẩn thận với các cuộc tấn công bất ngờ#
+Nâng cấp phần mềm bảo mật, xảy ra lỗi do vi-rút và phần mềm gián điệp. Vui lòng sử dụng phần mềm chống vi-rút/phần mềm gián điệp để loại bỏ vi-rút, vui lòng đăng nhập lại#
+Chương trình bị chấm dứt do sự cố. Vui lòng chạy lại trò chơi#
+Bạn đã bị chặn trò chuyện, kỹ năng, vật phẩm#
+Vai trò hiện đang bị xóa, điều này có thể gây ra lỗi đăng nhập tạm thời#
+Nhân vật kết hôn hiện đang bị xóa, điều này có thể gây ra việc không đăng nhập tạm thời#
+Tập sự#
+Kiếm sĩ#
+Pháp sư#
+Cung thủ#
+Tu sĩ#
+Thương gia#
+Đạo chích#
+Hiệp sĩ#
+Linh mục#
+Phù thủy#
+Thợ săn#
+Sát thủ#
+Tập sự#
+Kiếm sĩ#
+Pháp sư#
+Cung thủ#
+Tu sĩ#
+Thương gia#
+Đạo chích#
+Đạo chích#
+Hiệp sĩ#
+Linh mục#
+Phù thủy#
+Thợ rèn#
+Thợ săn#
+Sát thủ#
+Mời nhận (%s) làm con nuôi của bạn #
+Nếu bạn trở thành một đứa trẻ, bạn không thể tái sinh, điểm chỉ số không thể tăng lên trên 80, và số HP và SP sẽ bị giảm. Bạn có chấp nhận điều này không?#
+Tất cả các chỉ số xấu đã bị xóa#
+Các chỉ số xấu sẽ bị xóa trong vòng 1 phút#
+Trong vòng 1 phút, HP sẽ tăng lên tối đa #
+Trong vòng 1 phút, SP sẽ tăng lên tối đa #
+Trong vòng 1 phút, tất cả các khả năng sẽ được cải thiện đáng kể#
+Trong vòng 1 phút, vũ khí được sử dụng sẽ được thêm thuộc tính thánh#
+Trong vòng 1 phút, áo giáp được sử dụng sẽ được thêm thuộc tính Thánh#
+Trong vòng 10 giây, phòng thủ sẽ được cải thiện đáng kể#
+Trong vòng 1 phút, sức tấn công sẽ tăng lên đáng kể#
+Trong vòng 1 phút, tỷ lệ trúng và tỷ lệ tránh sẽ được tăng lên đáng kể#
+Chỉ có thể nhận nuôi một đứa trẻ#
+Cả hai cha mẹ phải đạt mức level 70 hoặc cao hơn để nhận nuôi một đứa trẻ#
+[ĐIỂM] Điểm bảng xếp hạng của thợ rèn đã tăng %d điểm, do đó, điểm đã trở thành %d điểm#
+[ĐIỂM] Điểm bảng xếp hạng của Nhà giả kim đã tăng %d điểm, vì vậy điểm đã trở thành %d điểm#
+X#
+X#
+X#
+X#
+/notalkmsg2: Nội dung chat sẽ không được hiển thị trong cửa sổ chat (bao gồm cả chat bang hội) Bật Tắt#
+Nội dung chat sẽ được hiển thị trong cửa sổ chat. [/nm2 ON]#
+Nội dung chat sẽ không được hiển thị trong cửa sổ chat. (bao gồm chat bang hội)[/nm2 OFF]#
+Vật phẩm có thể nâng cấp#
+Nâng cấp vũ khí: %s#
+Nâng cấp vũ khí: %s#
+Bạn không thể nâng cấp %s trước khi bạn nâng cấp kỹ năng nâng cấp vũ khí#
+Các vật phẩm không đủ cần thiết để được rèn (%s) để không thể giả mạo#
+Bộ giáp hoàn chỉnh là vô dụng, và việc loại bỏ tất cả các kỹ năng vũ khí là vô ích#
+Nhân vật đã kết hôn không thể được nhận nuôi#
+Tên này chưa được đăng kí trong Danh sách bạn bè của bạn. Vui lòng kiểm tra lại tên.#
+Các bài viết như /hi hoặc /hi: Được sử dụng để làm quen với một nhân vật đã đăng nhập#
+Nhân vật này không phải thành viên bang hội của bạn. Vui lòng kiểm tra lại tên.#
+Nếu số Zeny nhập vào là hơn 99 triệu, giá vẫn sẽ được bán với giá 99 triệu#
+Những lời tin nhắn của bạn bè được đại diện bởi[Bạn bè]và các thành viên của cùng bang hội được đại diện bởi[Thành viên]#
+(Từ tên nhân vật:) Một lời tin nhắn có nghĩa là không phải bạn bè hay thành viên bang hội#
+/blacksmith: Hiển thị top 10 Blacksmiths#
+/alchemist: Hiển thị top 10 Alchemists#
+ALT+Y: Cửa sổ cửa sổ có thể dễ dàng mở hàng tá lệnh#
+[ĐIỂM] Bạn đã được thêm vào bảng xếp hạng tác vụ Taekwon, tăng %d, điểm hiện tại là %d#
+[Nhiệm vụ Taekwon] Quái vật mục tiêu: %s (%d%%)#
+Lỗi ở thiết lập Game Guard: %lu#
+Phát hiện gia tốc#
+Phát hiện phần mềm bất hợp pháp (%s)#
+Trò chơi hoặc trò chơi tiết kiệm, giả mạo#
+Trình bảo vệ trò chơi đang chạy, vui lòng thử lại sau Cảm ơn bạn#
+Trò chơi được thực hiện nhiều lần hoặc trình tiết kiệm trò chơi đã chạy. Vui lòng chạy lại sau khi trò chơi kết thúc#
+Chương trình bảo vệ trò chơi đã bị xóa không chính xác. Vui lòng chạy lại sau khi tắt hoặc chạy phần mềm gây ra xung đột khác. Cảm ơn bạn#
+Tải xuống đơn vị virus và công cụ hack thất bại, nó có thể không đủ bộ nhớ hoặc bị nhiễm#
+Thông tin Homunculus#
+Danh mục kỹ năng Homunculus#
+Vui lòng nhập 23 từ cho tên cuộc sống bằng tiếng Anh, 11 từ tiếng Trung#
+Tên chỉ có thể được thay đổi một lần. Thay đổi tên của Homunculus thành %s. Bạn có muốn tiếp tục không?#
+Không ở vị trí ngay bây giờ ~#
+[Phản hồi tự động]#
+Tự động trả lời những lời tin nhắn của người khác khi không ở vị trí#
+Khi không ở vị trí, lời tin nhắn của người khác sẽ không tự động trả lời#
+Vui lòng nhập tin nhắn trả lời tự động#
+/fsh#
+/spin#
+/sigh#
+/dum#
+/crwd#
+/desp#
+/dice#
+/pk: hiển thị 10 kẻ giết người hàng đầu#
+[ĐIỂM] You have been rewarded with %d Slayer rank points. Your point total is %d.#
+Có thể tiến hóa#
+Bạn đã quyết định xóa Homunculus. Khi đã xóa, tất cả thông tin của Homunculus sẽ mất và không thể phục hồi lại. Bạn có muốn tiếp tục?#
+Lưu trạng thái của Homunculus trong tập tin#
+Không lưu trữ trạng thái của Homunculus trong tập tin#
+Chiến binh thập tự#
+Thầy tu#
+Hiền triết#
+Đạo tặc#
+Nhà giả kim#
+Nhạc công#
+Chiến binh thập tự#
+Thầy tu#
+Hiền triết#
+Đạo tặc#
+Nhà giả kim#
+Vũ công#
+Tập sự T#
+Kiếm sĩ T#
+Pháp sư T#
+Cung thủ T#
+Tu sĩ T#
+Thương gia T#
+Đạo chích T#
+Tập sự T#
+Kiếm sĩ T#
+Pháp sư T#
+Cung thủ T#
+Tu sĩ T#
+Thương gia T#
+Đạo chích T#
+Đại hiệp sĩ#
+Đại linh mục#
+Đại phù thủy#
+Thợ thiếc#
+Xạ thủ#
+Đại sát thủ#
+Đại hiệp sĩ#
+Đại linh mục#
+Đại phù thủy#
+Thợ thiếc#
+Xạ thủ#
+Đại sát thủ#
+Thánh kỵ binh#
+Quyền vương#
+Học giả#
+Truy tặc#
+Nhà hóa sinh học#
+Nhạc sĩ#
+Thánh kỵ binh#
+Quyền vương#
+Học giả#
+Truy tặc#
+Nhà hóa sinh học#
+Vũ thần#
+Bạn chưa tạo mật khẩu. Tạo mật khẩu mới?#
+Sai 3 lần liên tiếp. Nhập lại sau 30 phút, xin cảm ơn#
+Không thể thay mật khẩu#
+Khi nhập mật khẩu, chỉ cho phép 4 chữ số và 8 chữ số#
+Mật khẩu#
+Nhập mật khẩu mới#
+Vui lòng xác nhận mật khẩu#
+Thay đổi mật khẩu hoàn tất#
+Không khớp với mật khẩu mới đã nhập#
+Vui lòng nhập mật khẩu#
+Homunculus sắp chết! Nếu bạn không cho ăn nhanh, nó sẽ chạy đi mất.#
+EXP#
+[SỰ KIỆN]Bạn đã giành được một giải thưởng trong sự kiện này, vui lòng nhận một vật phẩm trong trò chơi#
+Không thích#
+Rất không thích#
+Homunculus đã được tùy chỉnh.#
+Homunculus đã được kích hoạt AI cơ bản.#
+Danh mục Thư#
+Viết thư#
+Đọc thư#
+Sau khi được chỉ định, bạn không thể thay đổi! Bạn có muốn chỉ định bản đồ này không?#
+Các vật phẩm đã được thêm vào hành trang#
+Không có mục nào được thêm vào kho#
+Gửi thư đã thành công#
+Việc gửi thư đã thất bại do người nhận không còn tồn tại#
+[Solar, Lunar và Stellar Angel] Những nơi lưu trữ và quái vật đã được rửa trắng#
+Đăng ký đấu giá thất bại#
+Đăng ký đấu giá thành công#
+Phiên đấu giá này đã bị hủy#
+Đấu giá đã có nhà thầu không thể bị hủy#
+Xóa thư thành công.#
+Xóa thư thất bại.#
+Đã trang bị dao ném.#
+%s đang online.#
+%s đang offline.#
+/loginout: Hiển thị trạng thái online/ngoại tuyến của các thành viên và bạn bè công khai.#
+Hiển thị thông báo trạng thái online/ngoại tuyến của bạn bè trong cửa sổ chat. [/li ON]#
+Thông báo của bạn bè trạng thái online/ngoại tuyến không được hiển thị trong cửa sổ chat. [/li OFF]#
+Nó đang chạy.#
+Phát hiện sử dụng phần mềm Marco.#
+Phát hiện sử dụng Speed Hack.#
+Phát hiện API Hooking.#
+Phát hiện Tin nhắn Hooking.#
+Mô-đun bị sửa đổi hoặc bị hỏng hoặc Ver không nhất quán#
+(Thái Lan) Bạn đăng nhập bằng thanh toán cafe Internet#
+Trang trước#
+Trang tiếp theo#
+Đấu giá#
+Xem các mục#
+Đăng nhập#
+Bán hàng đang tiến hành#
+Trạng thái tiến độ mua hàng#
+Vật phẩm#
+Tên vật phẩm#
+Giá/giá mua trực tiếp#
+Người bán#
+Người mua#
+Thời gian còn lại#
+%m tháng %d ngày %H#
+Cài đặt thời gian#
+Phí xử lý#
+Không tìm thấy mục nào#
+Không có vật phẩm nào đang được bán#
+Không có vật phẩm nào được mua#
+Thông tin đấu giá không chính xác#
+Không có thông tin đăng ký như một vật phẩm đấu giá#
+Đã đăng nhập như một cuộc đấu giá#
+Giá khởi điểm#
+Giá mong muốn#
+Giá mua trực tiếp#
+Hiện đang sở hữu Zeny#
+Giá cao nhất hiện nay#
+Giá thầu trước đó#
+Giá thầu sau này#
+Bạn có muốn mua không?#
+Tôi có thể bán nó với giá này không?#
+Trả giá#
+Mua trực tiếp#
+Kết thúc đấu giá#
+Trả giá lại#
+Việc đấu giá đã thành công#
+Đấu giá đấu giá đã thất bại#
+Zeny không đủ#
+Giáp#
+Thẻ#
+Khác#
+Số đấu giá#
+Tìm kiếm#
+Buổi đấu giá đã kết thúc#
+Cuộc đấu giá không thể kết thúc#
+Số đấu giá không chính xác#
+Đến#
+Tiêu đề#
+Bạn nhận được thư mới.#
+Đang tìm...#
+Không thể đăng nhập đấu giá nữa, tối đa 5 mục có thể được đăng ký#
+Không thể đăng kí thêm vật phẩm đấu giá, tối đa 5 vật phẩm có thể được đăng kí.#
+Có một mục không được yêu cầu trong thư sẽ bị xóa#
+Vui lòng nhập tiêu đề thư#
+/shopping: cho phép bạn mở cửa hàng chỉ bằng một nhấp chuột trái và đóng cửa hàng bằng một nhấp chuột phải. [Bật/Tắt]#
+Nhấp một lần để mở cửa hàng, nhấp vào bên phải tên cửa hàng để đóng cửa hàng. [/sh ON]#
+Bạn có thể mở cửa hàng bằng cách nhấp đôi chuột. [/sh OFF]#
+Nếu bạn muốn gửi thư, vui lòng nhập Zeny#
+Phí đấu giá không đủ#
+Xem trạng thái#
+Cho ăn#
+Chế độ nghỉ#
+Super Novice (Male)#
+Super Novice (Female)#
+Taekwon Boy#
+Taekwon Girl#
+Taekwon Master (Male)#
+Taekwon Master (Female)#
+Soul Linker (Male)#
+Soul Linker (Female)#
+Đây là một hệ thống phí cafe cafe để phát hiện có hơn 2 tài khoản được kết nối, vui lòng xác nhận trước khi sử dụng#
+Bạn là người chơi tính phí hàng tháng (thời gian còn lại: %d ngày)#
+Bạn là người chơi điểm (Thời gian còn lại: %dgiờ %phút %giây)#
+Vật phẩm này không để đính kèm trong thư.#
+Bạn không thể nhận thêm vật phẩm. Vui lòng thử lại.#
+Nam#
+Nữ#
+Người chơi mới.#
+E-mail là cần thiết để xóa nhân vật.#
+Vui lòng nhập đúng thông tin.#
+16#
+17#
+18#
+19#
+20#
+21#
+1001#
+1002#
+1003#
+1004#
+1006#
+1007#
+1008#
+1009#
+1012#
+1013#
+1014#
+1015#
+1019#
+1020#
+1021#
+1023#
+1024#
+1025#
+1027#
+1028#
+10#
+20#
+40#
+50#
+60#
+70#
+80#
+90#
+100#
+110#
+Bạn có muốn nạp 30 điểm không?#
+Đã nạp 30 điểm (5 giờ)#
+Các vật phẩm không xác định không thể được liệt kê trên đấu giá#
+Các vật phẩm tiêu hao không thể được liệt kê trên đấu giá#
+Để mở cửa sổ chữ cái, trước tiên hãy đóng cửa sổ xe đẩy#
+Để mở cửa sổ xe đẩy, trước tiên hãy đóng cửa sổ chữ cái#
+Đạn được trang bị đầy đủ.#
+Bức thư đã được trả lại cho người gửi.#
+Không có thư#
+Trong vòng một giờ, có hơn 30 người chơi đang online với cùng một IP, vui lòng xác nhận và sử dụng#
+Trong vòng một giờ, có hơn 10 người chơi đã online với cùng một IP, vui lòng xác nhận và sử dụng#
+Vui lòng khởi động lại trò chơi#
+Lính thuê: Cung thủ#
+Lính thuê: Kiếm sĩ#
+Lính thuê: Thương thủ#
+Hết hạn#
+Trung thành#
+Triệu hồi#
+Giết#
+Thú cưng của bạn đang đói và làm cho bạn cảm thấy như nó đang đổ lỗi cho bạn#
+[ĐIỂM] Bạn đã kiếm được %d Điểm xếp hạng nhiệm vụ thuần hóa, mang lại cho bạn tổng số %d điểm.#
+[Nhiệm vụ thuần hóa] Mục tiêu quái vật: %s#
+/hunting: xem danh sách quái cần săn#
+[Yêu cầu của thiên thần] Làm ơn cho cô gái này biết, Bạn có bao nhiêu kỹ năng %s?#
+[Yêu cầu của thiên thần] Làm ơn cho cô gái này biết, số Zeny bạn mang theo chia cho 100.000 là bao nhiêu?#
+[Yêu cầu của thiên thần] Làm ơn cho cô gái này biết, bạn có biết hôm nay là ngày gì không?#
+[Yêu cầu của thiên thần] Làm ơn cho cô gái này biết, bây giờ là mấy giờ?#
+[Yêu cầu của thiên thần] A là 1, Z là 26. Đối với ông SiYeon, người phụ trách Super Novice, Taekwondo và Zombie, tổng của bảng chữ cái và số tiếng Anh là bao nhiêu?#
+[Yêu cầu của thiên thần] A là 1, Z là 26. Đối với Munak dễ thương và xinh đẹp, cũng là anh hùng của Huyền thoại thần tiên, bảng chữ cái tiếng Anh sẽ cộng lại bao nhiêu?#
+[Yêu cầu của thiên thần] A là 1, Z là 26. Bongun yêu thích của tôi, tổng của bảng chữ cái và số tiếng Anh là bao nhiêu?#
+[Yêu cầu của thiên thần] A là 1, Z là 26. Bạn sẽ nhận được số gì nếu bạn thêm các chữ cái trong từ, Ragnarok?#
+[Yêu cầu của thiên thần] A là 1, Z là 26. Các đối tác thiên thần luôn ở trạng thái trực tuyến là trụ cột lớn nhất của tôi. Tổng số chữ số tiếng Anh của Online là bao nhiêu?#
+[Yêu cầu của thiên thần] A là 1, Z là 26. Các hiệp sĩ không sợ chết tượng trưng cho từ của họ là Death. Tổng của bảng chữ cái bằng tiếng Anh là bao nhiêu?#
+[Yêu cầu của thiên thần] A là 1, Z là 26. Tôi nghĩ các hiệp sĩ rất đẹp trai. Chữ số tiếng Anh của Kinght cộng lại là bao nhiêu?#
+[Yêu cầu của thiên thần] A là 1, Z là 26, Đại diện cho lực hấp dẫn, có nghĩa là Gravity. Tổng số bảng chữ cái bằng tiếng Anh là bao nhiêu?#
+[Yêu cầu của thiên thần] A là 1, Z là 26. Điều quan trọng là phải sống rõ ràng hơn trong bóng tối. Tổng số chữ cái tiếng Anh của Dark là bao nhiêu?#
+[Yêu cầu của thiên thần] A là 1, Z là 26. Người sưu tầm, Collector thu thập tất cả mọi thứ, tổng của bảng chữ cái bằng tiếng Anh là bao nhiêu?#
+[Câu trả lời của thiên thần] Cảm ơn bạn đã nói cho tôi biết~#
+[Câu trả lời của thiên thần] Tôi rất hài lòng về câu trả lời của bạn. Bạn là một nhà thám hiểm tuyệt vời.#
+[Câu trả lời của thiên thần] Bạn làm tôi thất vọng...#
+[ĐIỂM] Điểm bảng xếp hạng %d, tổng điểm bây giờ %d.#
+Điểm của [%s] : %d Điểm#
+Các ký tự không được chọn sẽ bị xóa. Bạn có muốn tiếp tục không?#
+Không thể chọn nhiều hơn 9.#
+Bạn có muốn thay đổi tên nhân vật thành '%s' không?#
+Tên đã được thay đổi thành công.#
+Thay đổi tên nhân vật đã thất bại.#
+Mỗi lần chỉ có thể mua một loại vật phẩm.#
+Không chọn bất kỳ nhân vật nào, hãy chắc chắn chọn ít nhất một nhân vật.#
+Tên nhân vật đã được thay đổi và không thể thay đổi nữa#
+Thông tin người dùng không chính xác#
+Những người dùng khác đã sử dụng tên nhân vật này, vui lòng sử dụng tên nhân vật khác#
+Không thể triệu hồi các thành viên trong nhóm vì họ không có thẩm quyền#
+Không có thành viên nhóm được triệu hồi trong bản đồ hiện tại#
+Không có dấu vết của quái vật cấp Boss đã được nhìn thấy trong khu vực này#
+Quái vật trùm, '%s' sẽ xuất hiện trong %02d giờ và %02d phút.#
+Vị trí của MvP '%s' sẽ được hiện trên mini-map.#
+Bạn có muốn mở '%s' không?^ff0000Không thể hủy hoặc hoàn Vcoin sau khi mở hộp. ^000000Sau khi mở, không thể di chuyển ngoại trừ kho lưu trữ, cũng không thể lưu trữ các vật phẩm cho thuê trong kho. Các vật phẩm giới hạn có thể được giao dịch và di chuyển, ngay cả khi các vật phẩm tương tự được sử dụng nhiều lần, hiệu ứng của chúng sẽ không chồng chéo#
+Mua hàng thất bại vì NPC không tồn tại#
+Việc mua thất bại vì một số hệ thống sạc không hoạt động đúng#
+Các vật phẩm không thể được mua trong trao đổi#
+Thông tin mua hàng thất bại do thông tin vật phẩm không rõ ràng#
+STR đã được tăng.#
+STR đã quay về ban đầu.#
+AGI đã được tăng.#
+AGI đã quay về ban đầu.#
+VIT đã được tăng.#
+VIT đã quay về ban đầu.#
+INT đã được tăng.#
+INT đã quay về ban đầu.#
+DEX đã được tăng.#
+DEX đã quay về ban đầu.#
+LUK đã được tăng.#
+LUK đã quay về ban đầu.#
+Độ né tránh (Flee) đã được tăng lên.#
+Độ né tránh (Flee) đã trở về ban đầu.#
+Độ chính xác (Hit) đã được tăng lên.#
+Độ chính xác (Hit) đã trở lại ban đầu.#
+Đòn đánh chí mạng (Critical) đã được tăng.#
+Tỷ lệ Critical Attack (Critical) đã trở lại trạng thái ban đầu#
+Kinh nghiệm thu được từ việc săn quái vật đã được tăng lên.#
+Bạn sẽ không bị mất kinh nghiệm nếu chết trong 30 phút.#
+Tỉ lệ rớt đồ đã được nhân đôi trong vòng 30 phút.#
+Thông tin vị trí của MVP sẽ được hiển thị sau 10 phút nữa.#
+Bạn có chắc chắn muốn mua sản phẩm không? Điểm D sẽ bị trừ#
+Không đủ điểm#
+^ff0000Ngày hết hạn: %s^000000#
+Vật phẩm '%s' sẽ biến mất vào %d phút nữa.#
+'%s' sẽ bị xóa khỏi rương đồ của bạn trong vòng 1 phút nữa.#
+'%s' đã bị xóa khỏi rương đồ của bạn.#
+Nhập số#
+%m/%d %H:%M#
+Quái vật trùm '%s' sẽ xuất hiện trong 1 phút nữa.#
+Danh sách kỹ năng của lính đánh thuê#
+Bạn có muốn đồng ý thực hiện phép thuật tiêu thụ bởi 1 Black Gemstone và 1 triệu Zeny không?#
+[ĐIỂM] Bạn đã nhận được %d điểm, tổng điểm bây giờ %d điểm.#
+[Xếp hạng thu thập] Mục tiêu: %s#
+Hợp đồng lính đánh thuê đã kết thúc.#
+Lính đánh thuê đã ngất xỉu.#
+Bạn đã thả lính đánh thuê.#
+Lính đánh thuê đã chạy mất dép.#
+Vật phẩm '%s' sẽ biết mất trong %d giây nữa.#
+[Status of Honor Service]Phần thưởng trải nghiệm trạng thái%d%%, hình phạt trải nghiệm tử vong giảm%d%%, phần thưởng tỷ lệ rơi kho báu%d%%#
+Xin lưu ý rằng bạn có thể tạo lại nhân vật sau 24 giờ#
+Linh đánh thuê sử dụng AI tùy chỉnh.#
+Linh đánh thuê sử dụng AI cơ bản.#
+ %s's #
+%s đã thu được %s.#
+Hiển thị tin nhắn chat công khai#
+Hiển thị tin nhắn chat riêng tư#
+Hiển thị tin nhắn chat nhóm#
+Hiển thị tin nhắn chat bang hội#
+Lấy vật phẩm/hiển thị thông báo thả#
+Bật/tắt tin nhắn Trang bị Thiết bị #
+Hiển thị thông tin trạng thái bất thường#
+Hiển thị thông tin nhặt đồ của thành viên nhóm#
+Hiển thị trạng thái thành viên nhóm#
+Hiển thị lỗi khi sử dụng kỹ năng#
+Hiển thị thông báo cài đặt nhóm#
+Hiển thị thông báo hỏng vật phẩm#
+Hiển thị cửa sổ Thông tin Chiến dịch#
+Tiền HAN của [%s]: %d Tiền HAN#
+Tin nhắn chung#
+Thông tin chiến dịch#
+Tài khoản này đã bị khóa bởi điện thoại và bị khóa bởi điện thoại#
+Đọc#
+Tự động đọc#
+Bookmark#
+Quay lại#
+Kế tiếp#
+Đóng#
+Vật phẩm của %s bị hỏng.#
+Vật phẩm %s của %s đã bị hỏng.#
+Vũ khí#
+Giáp#
+Cấp độ kỹ năng không đủ để tham gia nhóm#
+Cash miễn phí của [%s]: %d Cash#
+Xài Free Cash: #
+Cash#
+22#
+23#
+24#
+25#
+^ff0000Không thể hủy hoặc hoàn Vcoin sau khi mua vật phẩm này. ^000000Bạn có chắc chắn muốn mua sản phẩm không? Tổng %d điểm, %d điểm miễn phí sẽ bị trừ.#
+%d giờ đã trôi qua.#
+%d giờ %d phút đã trôi qua.#
+Vui lòng kết thúc trò chơi và điều chỉnh trải nghiệm và mọi thứ đến 50%%#
+Đã đến lúc bước vào thời điểm không lành mạnh. Hãy kết thúc trò chơi. Trải nghiệm và mọi thứ được điều chỉnh về 0%%#
+Nhiệm vụ#
+RO SHOP#
+Phó bản '%s' đã được đặt.#
+Phó bản '%s' đặt chỗ thất bại.#
+Phó bản '%s' đã đã được đặt#
+Phó bản '%s' đã được đặt.\n Vui lòng vào trong 5p.#
+Thất bại khi tạo Phó bản '%s'.\n Vui lòng thử lại.#
+Nhân vật đã khóa mời vào nhóm.#
+Khóa tất cả lời mời tham gia vào nhóm.#
+Cho phép nhận tất cả lời mời tham gia vào nhóm.#
+Mục này có thể được giữ mãi mãi sau khi được trang bị. Bạn có muốn trang bị nó không?#
+Mục %s được giữ vĩnh viễn#
+Không đủ điểm, vui lòng kiểm tra và nhập lại#
+Yêu cầu tham gia nhóm#
+Hiển thị thông tin WOE#
+Đặt chỗ cho phó bản '%s' đã bị hủy.#
+Phó bản '%s' không thể tạo, vui lòng thử lại#
+Kỹ năng này không thể được sử dụng ở đây#
+Mục này không thể được sử dụng ở đây#
+Phó bản#
+%s Vui lòng chờ#
+%s Tham gia#
+%s Đang tiến hành#
+Không ai tham gia vào phó bản với thời gian cho phép; hầm ngục đã biến mất.#
+Vui lòng đặt chỗ lại để tham gia phó bản.#
+Thứ tự chờ đợi: ^ff0000%d^000000#
+^ff0000%s^000000 sẽ bị xóa nếu bạn không tham gia trong thời gian yêu cầu#
+Sẽ kết thúc vào lúc:#
+Đặt chỗ cho phó bản đã bị hủy.#
+Phó bản bị hủy do hết thời gian.#
+Phó bản đã bị hủy do quá thời gian cho phép.#
+Phó bản đã bị xóa.#
+Có lỗi xảy ra trong lúc tạo phó bản. Vui lòng relog lại.#
+Slot này không có sẵn.#
+Cấp độ cơ bản của bạn cần trên 15.#
+Cấp độ nghề của bạn cần trên 15.#
+Không thể tham gia vì class nghề của bạn là Merchant class#
+Chưa được áp dụng#
+Bạn không có thẩm quyền tạo nhân vật#
+Không thể xóa#
+Nhân vật này không cho người khác soi trang bị.#
+Không khoe trang bị nữa.#
+Cho phép mọi người xem trang bị của tôi.#
+Soi trang bị của %s#
+Trang bị của '%s'#
+Khoe trang bị#
+Dịch vụ này chỉ dành cho người chơi VIP.#
+Người chơi dịch vụ miễn phí có thể nhận tới 50.000 Zeny#
+Trạng thái chat trên chiến trường đã thiết lập#
+Hủy trạng thái chat trên chiến trường#
+Thông tin Lính đánh thuê - Loại quái vật#
+World Map#
+Phó bản đã đóng#
+^ff0000Lính đánh thuê chuẩn bị xóa^000000, tất cả thông tin và cấp độ của lính sẽ mất. Bạn có chắc chắn muốn xóa?#
+Phó bản đang mở#
+Tài khoản này chưa được mở khóa thông qua khóa bảo mật liên lạc. Vui lòng quay số dòng mở khóa (0800-893-131) trước khi chơi#
+Số lượng người chơi có thể đăng nhập bằng nhiều IP#
+Bạn đã nhận được một nhiệm vụ mới#
+^CC3399Yêu cầu:#
+Mô tả kỹ năng#
+Điểm các kỹ năng một khi áp dụng, không thể phục hồi. Bạn có chắc chắn không?#
+Nghề 1#
+Nghề 2#
+Đây là tài khoản đã sử dụng phần mềm gian lận hoặc trình cắm ngoài. Thời gian kết thúc đóng băng ::%s#
+Phần mềm gian lận, plugin hoặc vi-rút có thể bị phát hiện. Khách hàng được khuyến nghị chạy bình thường. Tôi hy vọng mọi người có thể duy trì môi trường trò chơi sạch#
+Bây giờ là thời gian trò chơi bình thường, xin vui lòng, cảm ơn bạn!#
+Kinh nghiệm nghề nhận được khi hạ gục quái vật tăng 1,25 lần trong 30 phút.#
+Điểm kinh nghiệm nhận được khi hạ gục quái vật tăng 1,2 lần trong 30 phút.#
+Điểm kinh nghiệm nhận được khi hạ gục quái vật tăng 2 lần trong 30 phút.#
+Điểm kinh nghiệm nhận được khi hạ gục quái vật tăng 1,5 lần trong 60 phút.#
+Không thể áp dụng cho nhóm trên bản đồ này.#
+(%s) Bạn đang ở trên bản đồ không thể tham gia nhóm#
+Cửa hàng tiện lợi#
+Tổng số điểm thực hiện: %d điểm#
+Điểm mang: %d điểm#
+Free Cash: %d Cash#
+Người chơi trên máy chủ này không thể đăng nhập vào máy chủ miễn phí#
+Mật khẩu đã hết hạn. Vui lòng đăng nhập lại#
+Nghề 3#
+Đối tượng không thể sử dụng kỹ năng này.#
+Kỹ năng này không thể được sử dụng vì nó vượt quá số lượng Ansila possession#
+Cần có [Holy Water].#
+Cần có [Ancilla].#
+Không thể lặp lại trong một khoảng cách nhất định#
+Để sử dụng kỹ năng này, cần có các kỹ năng khác#
+Không cho phép chat ở bản đồ này.#
+Hơn 3 giờ đã trôi qua#
+Hơn 5 giờ đã trôi qua#
+Hệ thống bảo mật trò chơi được khởi tạo bất thường hoặc phiên bản cũ hơn của hệ thống bảo mật trò chơi. Vui lòng chơi trò chơi sau khi tải xuống tệp cài đặt mới#
+Không có tập tin ini hoặc tập tin tuyệt vời. Vui lòng tải tập tin cài đặt từ cái mới#
+Tìm một phần mềm xung đột với hệ thống bảo mật trò chơi#
+Khách hàng bất thường, vui lòng sử dụng khách hàng chính hãng#
+Vui lòng gọi đường dây khóa bảo mật liên lạc#+
+Nhận dạng khóa bảo mật liên lạc thất bại#
+Không thể sử dụng kỹ năng này đơn lẻ#
+Kỹ năng này chỉ có sẵn trong các hướng cụ thể#
+Không thể triệu hồi được nữa#
+Không có linh cầu hoặc bạn không có đủ linh cầu.#
+Không có kỹ năng bắt chước nào.#
+Không thể sử dụng lại kỹ năng này.#
+Kỹ năng không thể sử dụng khi đang trong trạng thái này.#
+Đã vượt quá số lượng vật phẩm tối đa không thể mang theo, không thể lấy thêm vật phẩm#
+Không có sự cho phép của GM, vui lòng chạy phần mềm với sự cho phép của GM#
+Phiên bản trình điều khiển nProtect KeyCrypt không khớp, vui lòng khởi động lại hệ thống và khởi động lại#
+WindowXP đang chạy ở chế độ tương thích. Chế độ tương thích đã bị xóa khỏi phần mềm. Vui lòng khởi động lại phần mềm#
+Phát hiện bàn phím PS/2#
+Trình điều khiển bàn phím USB phát hiện các cuộc tấn công bên ngoài#
+Phát hiện công cụ giám sát HHD#
+Cần có [Paint Brush].#
+Cần có [Surface Paint].#
+Kỹ năng không cho phép ở vị trí chỉ định.#
+SP không đủ.#
+Không thể đăng nhập vào trò chơi khi cửa sổ truyền có nhiều hơn %d ký tự#
+Cần có [Neck Protection Candy]#
+Cần có [Regrettable Tears]#
+Cần có [Neck Protection Candy]#
+Chỉ có thể được sử dụng với chặn vũ khí#
+Cần một vũ khí được tẩm thuốc độc bởi Đao phủ thập tự.#
+Vật phẩm này chỉ dùng khi đã trang bị Mado Gear.#
+Cần có [Vulcan Bullet].#
+Cần có [Mado Gear Fuel].#
+Cần có [Liquid Condensed Bullet].#
+Cần trang bị [Cannon Ball].#
+Cần trang bị [Accelerator].#
+Cần trang bị [Hovering Booster].#
+[Toxin] đã được tẩm lên vũ khí.#
+[Paralyze] đã được tẩm lên vũ khí.#
+[Venom Bleed] hiệu ứng độc đã được tẩm lên vũ khí.#
+[Magic Mushroom] hiệu ứng độc đã được tẩm lên vũ khí.#
+[Dex Heart] hiệu ứng độc đã được tẩm lên vũ khí.#
+[Pyrexia] Hiệu ứng độc đã được tẩm lên vũ khí.#
+[Oblivion] Hiệu ứng độc đã được tẩm lên vũ khí.#
+[Leechend] đã được tẩm lên vũ khí.#
+Chỉ có thể sử dụng trong trạng thái Hovering.#
+Cần trang bị [Suicidal Device].#
+Cần trang bị [Shape Shifter].#
+Cần có độc của Đao phủ thập tự.#
+Cần trang bị [Cooling Device].#
+Cần trang bị [Magnetic Field Generator].#
+Cần trang bị [Barrier Builder].#
+Cần trang bị [Camouflage Generator].#
+Cần trang bị [Repair Kit].#
+Cần có [Monkey Wrench].#
+Không thể thi triển kỹ năng [%s].#
+Không thể xóa trên mức %d#
+Không thể sử dụng khi đang ở trên Mado Gear.#
+Xuống Rồng#
+Gỡ bỏ Mado Gear#
+Tiêu#
+Cash#
+Giáp#
+Vũ khí#
+Tên#
+Thẻ#
+Khác#
+Vượt quá thời gian phản hồi của khách hàng và ngắt kết nối với máy chủ#
+Phiên bản tệp HackShield không khớp, vui lòng cài đặt lại ứng dụng khách#
+Cần có [Mưagic Book].#
+Không thể giải mã [Magic Book] vì quá khó để hiểu.#
+Không thể ghi nhớ kỹ năng vì không đủ điểm.#
+Không thể đọc [Magic Book].#
+Cần có [Face Paint].#
+Cần có [Makeover Brush].#
+Sau thời gian chờ, vui lòng đăng nhập lại#
+Cẩn thận! Cùng một tài khoản đã online. Vui lòng tạm dừng nhận dạng khóa điện thoại, thay đổi mật khẩu và đăng nhập lại#
+Cẩn thận! Cùng một tài khoản đã được xác định cho khóa điện thoại di động. Vui lòng tạm dừng nhận dạng khóa điện thoại di động, thay đổi mật khẩu và đăng nhập lại#
+Cài đặt#
+Hình ảnh#
+Âm thanh#
+Nhấn 1 phím để thiết lập, bấm 'ESC' để hủy thiết lập.#
+Phím này không thể chỉ định thành một phím đơn.#
+Phím này không thể chỉ định.#
+['%s'] bị trùng. Bạn vẫn muốn thay đổi?#
+Phím tắt bạn đã chỉ định sẽ được khởi tạo. Bạn có chắc chắn muốn tiếp tục không?#
+Thanh phím tắt#
+Giao diện#
+Biểu cảm#
+Cài đặt phím tắt#
+BGM#
+Hiệu ứng#
+Giao diện#
+Mở âm thanh báo hiệu khi có ai tham gia chat#
+Tắt âm thanh báo hiệu khi có ai tham gia chat#
+/tingonly : Only chat room sound is audible#
+/rock#
+/scissors#
+/paper#
+/love#
+/mobile#
+/mail#
+/antenna0#
+/antenna1#
+/antenna2#
+/antenna3#
+/hum#
+/abs#
+/oops#
+/spit#
+/ene#
+/panic#
+/whisp#
+Chưa cài#
+Chỉ có sẵn khi được trang bị một giỏ hàng#
+Cần có [Thorn Plant Seed].#
+Cần có [Blood Sucker Plant Seed].#
+Không thể dùng thêm nữa.#
+Cần có [Bomb Mushroom Spore].#
+Cần có [Fire Bottle].#
+Cần có [Oil Bottle].#
+Cần có [Explosive Powder].#
+Cần có [Smokescreen Powder].#
+Cần có [Tear Gas].#
+Cần có [Acid Bottle].#
+Cần có [ManEater Plant Bottle].#
+Cần có [Mandragora Flowerpot].#
+Bổ nhiệm trưởng nhóm#
+Bạn có chắc chắn muốn bổ nhiệm trưởng nhóm mới?#
+Không thể bổ nhiệm trưởng nhóm#
+Không thể thay đổi#
+Cần có [%s] với số lượng %d.#
+Giá trị tinh luyện giảm#
+Vui lòng trang bị [%s]#
+Chiến trường#
+Ứng dụng đã bị hủy vì một tình huống không thể di chuyển đến chiến trường%%#
+No Msg_3#
+Nhập học %Battlefield, chờ đợi người chơi khác#
+No Msg_4#
+Bạn có chắc chắn muốn hủy ứng dụng chiến trường %s của mình không?#
+Đã hoàn thành hủy bỏ nhập học chiến trường %s#
+Chờ đợi để di chuyển đến chiến trường %s. Đối với chuyển động không gian, hãy xác định trạng thái bảo mật (giao dịch và tạm dừng chuyển động không gian khác)#
+Tên chiến trường#
+Bạn có chắc chắn muốn di chuyển?#
+Tìm tin nhắn nhóm#
+Tìm tin nhắn nhóm chưa được bật#
+Hỗ trợ nhóm, trễ 10 giây#
+Trưởng nhóm là '%s'.#
+Xảy ra lỗi hệ thống, không thể vào được#
+Chờ đợi nhiều người hơn là nhập học#
+Yêu cầu đã được thực hiện#
+Sau thời gian chờ đợi, đăng nhập đã bị hủy#
+Không đủ điều kiện để nhập cảnh, hủy đăng nhập#
+Đã xảy ra lỗi và đăng nhập đã bị hủy.#
+Yêu cầu kỹ năng liên quan [%s].#
+Yêu cầu kỹ năng cụ thể.#
+Cần có %d Linh cầu#
+Cần có Linh cầu#
+Không thể nhận thêm. Số Zeny mang đã đạt mức tối đa.#
+Không thể chấp nhận danh mục chiến trường, vui lòng kiểm tra lại#
+Nhập học không được phép do không đủ trình độ#
+1 lượt kỹ năng chuyên nghiệp để tăng thêm %d#
+1 hoặc 2 kỹ năng nghề tăng thêm %d#
+Vật phẩm biến đổi#
+Được biến đổi#
+Kết hợp không thể thay đổi#
+Hành trang quá nặng#
+Thêm vật phẩm đòi hỏi không gian#
+Vật phẩm không tồn tại#
+Thành công#
+Thất bại#
+Thất bại, tất cả các vật liệu biến mất cùng nhau#
+Đổi tên thất bại vì quá dài#
+không thể thêm nữa.#
+nhận dạng thất bại#
+check bot#
+Vật liệu chưa được xác định, không thể sử dụng#
+IP này không thể đăng nhập vào trò chơi, vui lòng liên hệ với dịch vụ khách hàng#
+Tôi tạm thời đăng nhập sau khi nhập sai mật khẩu 6 lần. Vui lòng xác nhận lại mật khẩu#
+Bạn có phiền nếu các vật phẩm được sử dụng trong quá trình tổng hợp được tiêu thụ?#
+Vui lòng nhập văn bản và số ở bên trái#
+Thông tin chiến trường#
+Chờ tham gia#
+Hướng dẫn đăng ký tham gia chiến trường#
+Xin lỗi, vai trò của nghề này hiện bị cấm đăng nhập để thử nghiệm#
+Bỏ các trang bị#
+Mini Icon#
+Chiến trường A: Chiến trường B#
+Trạng thái chờ đợi#
+Nhắc nhở để hủy ứng dụng chiến trường#
+Số người tham gia Chiến trường cần thiết#
+Chiến trường A đang chờ#
+Chiến trường B đang chờ#
+Tình huống chờ đợi của tôi: %d (Chiến trường A)#
+Tình huống chờ đợi của tôi: %d (Chiến trường B)#
+Hiển thị biểu tượng chiến trường#
+Không hiển thị biểu tượng chiến trường#
+Nhắc di chuyển ở chiến trường#
+Nhắc nhở để tiếp tục vào chiến trường#
+Ai đó#
+ [%s] gây '%d' sát thương lên bạn.#
+ [%s] nhận đòn đánh từ [%s] với '%d' sát thương.#
+ [%s] nhận '%d' sát thương.#
+ [%s] đã tấn công [%s] với '%d' sát thương.#
+Bạn đã vứt %s (%d).#
+Tiêu diệt quái vật [%s] từ nhiệm vụ [%s]. (%d/%d)#
+Nhiệm vụ [%s] đã bị xóa.#
+Lịch sử chiến đấu của [%s].#
+%d' EXP#
+%d' Job EXP#
+ nhận được.#
+ đã mất.#
+[%s] đã bị trộm '%d' zeny từ bạn.#
+Tin nhắn chiến đấu#
+Thông tin trận chiến trong nhóm#
+Số EXP nhận được#
+Người chơi nhận được EXP#
+Hiển thị thông tin nhiệm vụ#
+Thông tin chiến trường#
+Tới [%s] #
+Thi triển kỹ năng [%s].#
+Kích hoạt khóa cài đặt#
+Hủy kích hoạt khóa cài đặt#
+[%s] mở '%s' và nhận được [%s]#
+Kiếm sĩ#
+Pháp sư#
+Cung thủ#
+Tu sĩ#
+Thương gia#
+Đạo chích#
+Hiệp sĩ#
+Linh mục#
+Phù thủy#
+Thợ rèn#
+Thợ săn#
+Sát thủ#
+Chiến binh thập tự#
+Thầy tu#
+Hiền triết#
+Đạo tặc#
+Nhà giả kim#
+Nhạc công#
+Vũ công#
+Hiệp sĩ cổ ngữ#
+Phù thủy dị giáo#
+Siêu xạ thủ#
+Giám mục#
+Thợ máy#
+Đao phủ thập tự#
+Hộ vệ hoàng gia#
+Mị thuật sư#
+Nhạc trưởng#
+Vũ thần lang thang#
+Quyền sư#
+Nhà di truyền học#
+Hắc tặc#
+Kiếm sĩ T#
+Pháp sư T#
+Cung thủ T#
+Tu sĩ T#
+Thương gia T#
+Đạo chích T#
+Đại hiệp sĩ#
+Đại linh mục#
+Đại phù thủy#
+Thợ thiếc#
+Xạ thủ#
+Đại sát thủ#
+Thánh kỵ binh#
+Quyền vương#
+Học giả#
+Truy tặc#
+Nhà hóa sinh học#
+Nhạc sĩ#
+Vũ thần#
+Tập sự#
+Tập sự T#
+Siêu tập sự#
+Thiện xạ#
+Nhẫn giả#
+Võ sĩ#
+Huyền đai đấu sĩ#
+Kết giới sư#
+Chiêu mộ nhóm#
+Danh sách chiêu mộ nhóm#
+Đang chiêu mộ#
+Yêu cầu trang bị [Cung]#
+Yêu cầu trang bị [Nhạc cụ/roi]#
+Chỉ tiếng anh và số#
+Nhắc nhở#
+Mua hàng thất bại do thông tin cửa hàng mơ hồ#
+Các vật phẩm được giữ có thể được loại bỏ trong cửa sổ#
+Giờ#
+Bản đồ#
+Không thể sử dụng vật phẩm/vật phẩm để mặc/mở khóa trong trạng thái giao dịch#
+Giá trị không xác định#
+/stateinfo: Hiển thị mô tả biểu tượng trạng thái. Bật | Tắt#
+Thông tin trạng thái ON: Mô tả biểu tượng trạng thái#
+Thông tin trạng thái OFF: mô tả biểu tượng trạng thái tắt#
+Không thể mua nhiều hơn %d các vật phẩm cùng một lúc#
+Không thể bán nhiều hơn %d các vật phẩm cùng một lúc#
+Tổng số vật phẩm có sẵn để mua là %d #
+Các cài đặt được lưu trữ ở đường dẫn [%s\\%s]#
+[%s]hiện không thể đăng ký trao đổi#
+RO_HELP#
+Không có Anvil#
+Tập sự viên dưới cấp 10 không thể gửi tin nhắn riêng tư#
+Tấn công#
+Phòng thủ#
+Phục hồi#
+Phụ trợ#
+Hướng dẫn chiêu mộ#
+Không thể đăng ký liên minh bang hội#
+Không thể áp dụng cho thù địch bang hội#
+Không thể thêm bạn bè trên bản đồ cơ sở#
+Mở cửa hàng#
+Giá: #
+Zeny có: #
+Giới hạn zeny mua#
+Vật phẩm bạn muốn mua chưa được đăng ký. Vui lòng đăng ký vật phẩm bạn muốn mua#
+Vui lòng nhập giá của vật phẩm %s #
+Vui lòng nhập giá của vật phẩm %s, giới hạn dưới 99,990,000 Zeny#
+Vui lòng nhập số lượng vật phẩm %s#
+Tổng %s số mục được giữ và mua đã vượt quá 9999. Vui lòng nhập số lượng dưới 9999.#
+Đã trùng lặp#
+Vui lòng nhập giới hạn mua hàng#
+Số lượng giới hạn đã nhập vượt quá số lượng giữ, vui lòng đặt lại#
+%s  :  %s  Zeny => %s EA#
+Danh sách những thứ bạn có thể mua#
+Cửa hàng của tôi#
+Giới hạn: %s Zeny#
+%s %s Zeny%d#
+Cửa hàng#
+Danh sách các vật phẩm để bán#
+Tổng số vật phẩm có sẵn để bán là %d#
+Đã vượt quá số Zeny bán hàng tối đa của cửa hàng#
+Mở cửa hàng thất bại#
+Tổng trọng lượng của vật phẩm vượt quá giới hạn giữ là%d, vui lòng đặt lại#
+Các vật phẩm đã mua đến giới hạn#
+Mua tất cả mọi thứ#
+Số dư của người mua không đủ và giao dịch thất bại#
+Đã bán %s %d cho %dz#
+%s có nhiều vật phẩm hơn mức có thể mua và không thể bán được#
+Không có linh hồn được triệu hồi#
+Giới hạn cung cấp máy chủ#
+Mật khẩu OTP có 6 chữ số#
+Không tìm thấy thông tin OTP, vui lòng liên lạc quản trị viên#
+Xác thực OTP thất bại#
+Đã thêm quảng cáo nhóm#
+Chiêu mộ#
+Vai trò#
+Nghề 1#
+Nghề 2#
+Nghề 3-1#
+Nghề 3-2#
+Tái sinh nghề 2-1#
+Tái sinh nghề 2-2#
+Các nghề khác#
+Chiêu mộ#
+Tuyển thành viên#
+Đang tìm kiếm -#
+Chọn tất cả#
+Phải tuyển ít nhất một nghề#
+Phải chọn ít nhất 1 nghề#
+Các nghề nghiệp được chọn là %d và có thể chọn tối đa 6 nghề nghiệp#
+Không có văn bản nào ngoài số có thể được nhập vào cột cấp#
+vui lòng nhập số cấp từ 1 đến 150#
+không thể nhìn ở bản đồ đã chọn#
+bạn không đủ điều kiện cấp độ để sử dụng#
+bạn đã vượt quá mức mà bạn có thể sử dụng vật phẩm#
+Kích hoạt chế độ chat#
+Chuyển đổi cửa sổ chat#
+ > Cài đặt chat tab#
+Bán#
+Mua#
+Tìm cửa hàng#
+Tên cửa hàng#
+Số lượng#
+Đơn giá#
+Quá nhiều kết quả tìm kiếm, vui lòng nhập tên chi tiết#
+Bạn có muốn mở cửa hàng?#
+Xác thực SSO thất bại#
+Không thể di chuyển đến khu vực vào thời điểm này#
+Search Partial#
+27#
+28#
+29#
+30#
+31#
+32#
+Điểm EXP Base, Job tăng 75%% trong 30 phút, khi đánh quái vật.#
+Điểm EXP Base, Job tăng 50%% trong 30 phút, khi đánh quái vật.#
+Khiêu vũ bán hàng (mua) thông tin#
+Không thể tìm kiếm#
+Xin lỗi, không có kết quả được tìm thấy cho thuật ngữ này#
+Không thể tìm kiếm#
+Vui lòng nhập tên thẻ hoặc con đầu tiên (cuối cùng) của tên#
+Tìm kiếm còn lại: %d#
+Không tìm kiếm gian hàng thành công#
+Phạm vi đơn giá của vật phẩm là sai#
+Trang bị#
+Trang phục#
+Phút#
+Giây#
+Vui lòng nhập tên vật phẩm#
+Mục này không tồn tại#
+Không có bản đồ có thể truy cập#
+Không có tiêu đề (kết thúc) cho thẻ#
+Có thể mua cùng lúc 10 loại vật phẩm#
+Mua một vật phẩm thất bại#
+Vui lòng nhập ngày sinh gồm 6 chữ số (ví dụ:600422)#
+Xảy ra lỗi không xác định#
+Lỗi cơ sở dữ liệu#
+Để loại bỏ một nhân vật, đầu tiên thoát khỏi bang hội#
+Để xóa một ký tự, trước tiên bạn phải thoát khỏi nhóm#
+Không thể xóa cài đặt hệ thống#
+Không thể xóa thời gian#
+Ngày sinh lỗi#
+Cần tăng sự thân mật#
+Chỉ sử dụng được trong các tình huống chiến binh chuyển tiếp#
+Chỉ được sử dụng trong trường hợp Chuyển đổi - Gladiator#
+Đăng ký đội thất bại#
+Không có nội dung liên quan đến tìm kiếm#
+Thất bại khi xóa kết quả.#
+Không thể tìm thấy không có quảng cáo phù hợp với tiêu chí của bạn#
+Không tim thấy thông tin thanh toán.#
+Chụp lại giao dịch#
+[Giao dịch_%s]#
+Phiếu giảm giá mới được tự động tiêu thụ do cái chết#
+Đối thoại#
+Không thể tái sử dụng#
+Hạn chế sử dụng#
+Không hạn chế sử dụng#
+Đăng nhập thất bại không rõ lý do, vui lòng liên hệ với quản trị viên#
+Xác thực thất bại.#
+Bạn chưa đăng ký.#
+Không thể đăng nhập do giới hạn độ tuổi.#
+Mua#
+Hủy bỏ#
+Trang đầu#
+Trang cuối#
+Đồ Mới#
+Hot#
+Giới hạn#
+Đồ thuê#
+Trang bị#
+Buff#
+Phục hồi#
+Khác#
+Giá#
+Số lượng#
+cái#
+Free Cash: %s Đ#
+Số dư: %s Vcoin#
+Không thể triệu hồi quái vật ở khu vực này#
+Sử dụng Free Cash vượt quá cho phép#
+Các cài đặt sẽ được lưu trong [SaveData_ExMacro%d]#
+%d giây còn lại để bạn sử dụng#
+Phải được trang bị [Thương]#
+Chỉ sử dụng được khi cưỡi rồng#
+Số lượng máy chủ đã vượt quá số lượng tối đa để đăng nhập#
+Chứng nhận tên thật chưa được hoàn thành, bạn sẽ vào trang chứng nhận tên thật#
+Vui lòng chọn một trường để lưu#
+Xin chúc mừng %s, bạn nhận được '%s'!#
+Không thể sử dụng trong trạng thái U ám#
+Tổng số lượng vật phẩm đã mua vượt quá số lượng tối đa#
+không thể gia nhập nhóm ở bản đồ này.#
+không thể rời nhóm ở bản đồ này.#
+Không thể trục xuất/hủy nhóm ở bản đồ này.#
+Tên thật#
+Số chứng minh thư#
+Email#
+Nhập sai#
+Thất bại khi chuyển zeny #
+Lỗi nghề nghiệp#
+Lỗi giới tính#
+Xác thực thông tin người chơi thành công#
+Sai tên, vui lòng nhập lại#
+Số ID sai, vui lòng nhập lại#
+Xảy ra lỗi không xác định, vui lòng thử lại sau#
+Không thể tấn công trong khi gắn kết#
+Không thể sử dụng kỹ năng trong khi gắn kết#
+Mật khẩu phải từ 4 chữ trở lên#
+Xác thực mật khẩu phụ thành công#
+Tạo mật khẩu phụ thành công#
+Xóa mật khẩu phụ#
+Đúng mật khẩu phụ#
+Bạn đã nhập sai mật khẩu (%d lần còn lại)#
+Không thể tạo mật khẩu phụ#
+Không thể xóa mật khẩu phụ#
+Không thể sửa mật khẩu phụ#
+Mật khẩu bạn đã nhập không khả dụng#
+Không thể sử dụng số ID#
+Mật khẩu hiện có#
+Mật khẩu phụ#
+Để bảo mật tài khoản, nên đặt mật khẩu phụ#
+Không sử dụng mật khẩu phụ#
+Cài đặt mật khẩu phụ thất bại#
+Sử dụng mật khẩu phụ. Nó sẽ được áp dụng vào lần tới#
+Cài đặt mật khẩu phụ thất bại#
+Để bảo vệ tài khoản của bạn. Đặt mật khẩu bổ sung#
+Vui lòng sử dụng bàn phím số bên dưới để đặt mật khẩu gồm bốn chữ số#
+Mật khẩu bạn đã nhập không chính xác 3 lần và trò chơi bị đóng#
+Đạo cụ#
+Kỹ năng#
+Chiến lược#
+Khác#
+Trong trận chiến#
+Không chiến đấu#
+Cài đặt mục phụ trợ#
+Tự động thay đồ (mở sau lần tiếp theo)#
+Làn sóng kỹ năng tấn công đầu tiên#
+Kỹ năng tấn công bình thường#
+Thời gian tấn công tiếp theo:#
+Lúc chết#
+Khi được mời vào một đội#
+Nhận cài đặt mục#
+Trọng lượng vượt quá 85%%#
+Vui lòng thực hiện sau khi hoàn thành nhiệm vụ (đối thoại NPC, chế tạo ...)#
+Kinh nghiệm có được khi đánh bại quái vật bằng cách tăng gấp đôi %d là %.2f phút#
+Kịch bản tập thể dục tự động %d#
+Cài đặt được lưu trong[%s]#
+Cấp độ bảo mật#
+Không thể xóa vai trò trong khi tham gia nhóm hoặc bang hội.#
+Chỉ có thể dùng khi đứng gần tường. #
+%s : Level %d %s party to obtain level.#
+Không thể sử dụng dây roi trong trạng thái cưỡi thú#
+Kỹ năng này đòi hỏi 1%% kinh nghiệm#
+Tỉ lệ kinh nghiệm: #
+Tỷ lệ rớt đồ: #
+Death penalty: #
+%d %% (Quán net %d%% + TPLUS %d%% + Premium %d%% + %s server %d%%)#
+Số lượng SP không đủ để thực hiện các kỹ năng Chorus.#
+Giao dịch vượt quá giới hạn số lượng/độ nặng.#
+Giao dịch vượt quá giới hạn số lượng/độ nặng.#
+Số lượng vượt quá số lượng có sẵn.#
+Đang chờ quảng cáo.#
+Vui lòng gửi các tệp và nội dung văn bản sau tới\r\n RO trang web chính thức->dịch vụ khách hàng->yêu cầu!\R\n#
+Xảy ra lỗi trong hệ thống thanh toán (%d)#
+Không thể mua vì số lượng vật phẩm do Rune nắm giữ vượt quá giới hạn#
+Số lượng các vật phẩm riêng lẻ vượt quá giới hạn và mua hàng thất bại#
+Mua hàng thất bại do lỗi không xác định#
+Vui lòng thử lại sau!#
+Chỉ có thể được sử dụng trong khi được trang bị các vật phẩm dao bay#
+Vui lòng nhập mức thấp nhất#
+Không được phép yêu cầu kho báu ảo từ NPC của mình. Vui lòng xác nhận xem có đủ chỗ không#
+Kỹ năng này được giới hạn trong WoE.#
+Kỹ năng này được giới hạn cho người chơi#
+Không thể đeo trang bị này bởi vì bạn không đạt đủ yêu cầu.#
+Không thể tạo cửa hàng và phòng chat tại vị trí hiện tại#
+Elapsed time: %d:%d:%d / %d:%d:%d#
+Speed : X 1/4 #
+Speed : X 1/2 #
+Speed : X 1   #
+Speed : X 2   #
+Speed : X 4   #
+Speed : X 8   #
+Speed : X 16  #
+Tốc độ: Không#
+Service Info : %s#
+Character Name : %s#
+Map Name : %s#
+Record Time: %d-%01d-%01d %d: %02d: %02d#
+Play Time: %02d: %02d: %02d#
+No Replay File.#
+Server No Matching#
+Replay Option Setting#
+Vui lòng nhập tên tệp#
+Set Replay Save Data#
+Set Rec Option#
+%.1f %% Pos->:%d:%d:%d#
+%.1f %% Pos->:bất động#
+Start#
+Stop#
+Nhập tên tệp -> Start#
+Open Option#
+Close Option#
+End#
+Time#
+Đội và bạn bè#
+Chat#
+Phím tắt#
+Tên tệp được tạo tự động#
+Kiểm tra các tập tin trùng lặp#
+Cùng một tệp đã tồn tại#
+Record Start#
+ is Saved.#
+Nặng : %3d / %3d#
+Tổng : %s Vcoin#
+Cần trang bị [Shuriken]#
+Base Lv. %d#
+Job Lv. %d#
+Zeny : %s#
+Trilinear#
+attack#
+skill#
+item#
+NoCtrl#3
+Chiến trường#
+(Character/Total Slot)#
+VIP#
+Premium #
+Service#
+Billing Service#
+Billing #
+Danh sách lệnh#
+LEVEL#
+MAP#
+JOB#
+Not Available#
+[Guardian Angel of Protection] không có #
+Bạn có chắc chắn muốn chuyển nhân vật?#
+Không thể chuyển vị trí nhân vật.#
+Tên nhân vật không hợp lệ.#
+Hiện nhiệm vụ#
+Theo quy định phòng chống nghiện, người sử dụng dưới 16 tuổi không được đăng nhập game từ 00:00 đến 6 giờ sáng#
+Theo quy định phòng chống nghiện, từ 00:00 đến 6 giờ sáng^ff0000Những người dưới 16 tuổi không được phép sử dụng^000000, và trò chơi sẽ bị đình chỉ#
+Thoát khỏi bang hội trước khi thay đổi tên nhân vật#
+Bạn phải thoát khỏi nhóm trước khi thay đổi tên nhân vật#
+Thay đổi tên nhân vật thất bại do lỗi không xác định#
+Sẵn sàng để đổi vị trí nhân vật (%d)#
+Sẵn sàng thay đổi tên nhân vật (%d)#
+Thay đổi thất bại vì tên nhân vật vượt quá tối đa#
+Thay đổi thất bại do chứa ký tự bị cấm trong tên nhân vật#
+Thất bại vì tên nhân vật bị cấm sử dụng#
+Hoàn thành#
+Điểm EXP kinh nghiệm tăng %d%% sau %d% phút#
+%02d giây còn lại để triệu hồi#
+Trưởng nhóm triệu hồi bạn đến %s (%s), tiêu thụ %d Zeny khi được triệu hồi#
+Triệu hồi đối tượng#
+Danh sách chặn#
+Cần 1000 Zeny để tham gia nhóm#
+Không đủ Zeny để gia nhập vào nhóm#
+) Tham gia đội thành công#
+) Tham gia đội thất bại#
+) Xem cửa sổ vật phẩm#
+Có thể nhập lên đến 36 chữ cái tiếng Anh#
+Enter#
+1:1 Chat#
+Block#
+Không đủ Zeny để gọi.#
+Vui lòng đăng ký quảng cáo nhóm trên cột nhận xét#
+Chỉ đội trưởng mới có thể đăng nhập vào quảng cáo của đội#
+Quảng cáo đăng nhập được hỗ trợ#
+Nội dung#
+Gear#
+Cá nhân#
+ Khóa vứt đồ: On/Off#
+Nhắc nhở nhóm#
+Lập nhóm#
+Thoát khỏi nhóm#
+Mời vào nhóm#
+Tên nhóm:#
+Tên người chơi:#
+ đã nhận được lời mời vào nhóm.#
+ đã từ chối lời mời vào nhóm.#
+ đã đồng ý lời mời vào nhóm.#
+Đã ở trong nhóm chiêu mộ#
+Tiêu chí tìm kiếm giống như trước đây#
+Chỉ sử dụng sau khi thoát khỏi bang hội#
+Giới hạn sử dụng sau khi rời nhóm#
+Người chơi triệu hồi không có trên bản đồ có thể triệu hồi#
+Thuyền trưởng không thể triệu hồi trên bản đồ#
+Triệu hồi đã bị từ chối.#
+Không thể triệu hồi.#
+Chỉ đội trưởng mới có thể mời tham gia đội#
+Tìm kiếm:#
+Bạn phải điền tên nhân vật.#
+Bạn phải nhập tên nhóm.#
+Người trợ giúp bang hội#
+Không tham gia bang hội#
+Tạo bang hội#
+Tên bang hội#
+Trợ giúp tạo bang hội#
+Hệ thống bang hội là gì?#
+Vui lòng nhập tên bang hội.#
+Lớp hỗ trợ cho nhóm đã bị từ chối.#
+Tùy chọn#
+Khu vực thoát hiểm#
+Replay File List#
+File info#
+File List#
+Vật phẩm %s không thể giao dịch#
+Giải thể bang hội#
+Tên hội tan rã#
+Vai trò không được đăng nhập hoặc không tồn tại#
+Gọi Ưng thất bại.#
+%d%% (mặc định 100%%+ Premium%d%%+%s Server%d%%)#
+Người chơi đang tham gia WoE.#
+Thuyền trưởng chỉ có thể được thay đổi trên cùng một bản đồ#
+Thuyền trưởng không thể thay đổi tại vị trí hiện tại#
+Loại bỏ Gryphon#
+%d tháng %d ngày %d giờ %d phút %d giây#
+Hiện đang tham gia WoE và không thể mời vào bang hội.#
+Bạn đã áp dụng để chờ vào chiến trường.#
+Đầy đủ#
+Không tìm thấy chế độ chơi này.#
+Đơn xin vào hàng chờ không hợp lệ.#
+Vượt quá số người.#
+Cấp độ của bạn không phù hợp với chế độ này.#
+Đơn xin vào hàng chờ bị trùng.#
+Sau khi kết nối lại, vui lòng đăng kí lại.#
+Nghề của bạn không phù hợp ở chiến trường.#
+Chỉ có thể trưởng nhóm / trưởng bang hội mới có thể đăng kí.#
+Một số người chơi hiện đang sử dụng chiến trường và không thể áp dụng#
+Hủy bỏ chờ đợi để vào chiến trường.#
+Chế độ chơi không hợp lệ.#
+Bạn không nằm trong danh sách đợi để tham gia chiến trường.#
+Chiến trường bạn chọn hiện không có sẵn và đã bị hủy bỏ#
+Bạn vừa thoát khỏi hàng chờ#
+Bạn có muốn vào chiến trường không?#
+[Nội quy Battleground]#
+Yêu cầu vào hàng chờ sẽ không thể áp dụng những trường hợp dưới đây#
+1. Bạn không thể đăng kí 1 lúc nhiều chế độ chơi.#
+2. Bạn không thể đăng kí 1 lúc cả 3 kiểu Cá nhân / Đội / Bang.#
+3. Nếu đăng kí kiểu Đội, cần phải là trường nhóm.#
+Người chơi offline trong Đội sẽ không được tính vào hàng chờ.#
+4. Những bản đồ cấp dịch chuyển sẽ không thể đăng kí vào hàng chờ.#
+Khi trận đấu kết thúc bạn sẽ được dịch chuyển về vị trí cũ hoặc vị trí đã lưu.#
+5. Bạn sẽ nhận được phần thưởng sau khi trận đấu kết thúc.#
+ăng kí đứng vị trí hỗ trợ#
+%s đã bắt đầu.#
+Bạn có muốn vào chiến trường?#
+[Lưu ý]#
+Khi trận đấu kết thúc bạn sẽ được#
+dịch chuyển về vị trí cũ#
+hoặc vị trí đã lưu.#
+Đang chờ đợi đối phương.#
+Yêu cầu tham gia vào chiến trường#
+Thời gian chờ đồng ý: %d giây#
+Đang chờ để vào#
+Tên chiến trường: %s#
+Số người tham gia bắt buộc: %d#
+Vị trí của bạn: %d#
+Chế độ:#
+Mục tiêu:#
+Thành viên yêu cầu:#
+Cấp độ:#
+Thắng:#
+Hòa:#
+Thua:#
+Bạn muốn đăng kí vào hàng chờ?#
+Bạn muốn đăng kí cả nhóm vào hàng chờ?#
+Bạn muốn đăng kí cả hội vào hàng chờ?#
+Danh sách chiến trường#
+%d VS %d#
+BaseLV %d trở xuống#
+BaseLV %d trở lên#
+BaseLV %d ~%d#
+Không giới hạn#
+[Không thể áp dụng trên bản đồ này]#
+[1 phút chờ đợi để áp dụng lại cho chiến trường]#
+[Vui lòng tham gia nhóm trước]#
+[Chỉ đội trưởng mới đăng ký được]#
+[Số lượng người chơi đã đăng ký vượt quá]#
+[Vui lòng tham gia bang hội trước]#
+[Giới hạn với Chủ tịch bang hội]#
+[Số lượng thành viên bang hội đăng nhập đã vượt quá]#
+Di chuyển Slot#
+Di chuyển đến Slot này#
+Đổi tên#
+Tạo nhân vật#
+https://ro.vtcgame.vn/#
+(%s) Máy chủ#
+Sáp nhập Vật phẩm (chọn tất cả Ctrl+nhấp)#
+Vui lòng chọn 2 hoặc nhiều vật phẩm cùng loại#
+Các vật phẩm được sáp nhập thành công#
+Giới hạn một mục tại một thời điểm#
+Số lượng vật phẩm đã vượt quá 30.000#
+Xoay trái#
+Xoay phải#
+Xem (%s) thông tin máy chủ trước đây của người chơi#
+Thông tin máy chủ hiện có#
+^ff0000Máy chủ hiện tại: ^0000ff#
+^ff0000Tên vai trò hiện có: ^0000ff#
+Hiển thị HP của quái vật bị tấn công#
+Không hiển thị HP của quái vật bị tấn công#
+Các vật phẩm có thể hợp nhất không tồn tại#
+Các vật phẩm có thể hợp nhất không tồn tại#
+Đang tiến hành#
+Chờ#
+Đề xuất#
+EP#
+Địa phương#
+Sự kiện#
+Mới#
+Săn quái#
+Phần thưởng#
+Các vật phẩm yêu cầu#
+Thời gian giới hạn#
+Thời gian kết thúc#
+Tìm kiếm#
+Tìm đường#
+Thông tin lộ trình#
+Tìm kiếm thông tin#
+Thay đổi chế độ xem#
+Thay đổi màu hướng dẫn#
+Thoát#
+Chuyển sang kiểu cơ bản#
+Chuyển sang kiểu đơn giản#
+Thông tin#
+ALL#
+Map#
+Npc#
+Mob#
+Đặt từ tìm kiếm (Ví dụ:Word Word ..#
+Scroll#
+Sử dụng hang động để di chuyển cuộn ngay lập tức#
+D.vụ#
+Cho phép định vị dịch vụ di động#
+K.cầu#
+Dùng khí cầu để di chuyển#
+>> Không tìm thấy mục tiêu#
+<< Nơi đến >>#
+<< Tìm kiếm ... >>#
+-----------#
+Tìm đường#
+== Kết quả (% d) ==#
+Npc)%s:%s#
+Mob)%s:%s#
+Map)%s#
+========= Thông tin tìm kiếm ===========#
+Khoảng cách: %d ô %d Cổng Warp#
+Bản đồ mục tiêu: %s (%s)#
+Mục tiêu: %s(%d, %d)#
+BOSS#
+Thường#
+Mục tiêu: %s (%s)#
+Mục tiêu: (%d, %d)#
+======= Thông tin đường dẫn ========#
+%2d) Vật phẩm: %s =>%s sử dụng!#
+%2d)%s (%d,%d)=>(%d,%d)#
+E%2d)%s (%d,%d)=>(%d,%d)#
+E%2d) %s#
+Bạn có muốn hủy chỉ đường?#
+Trợ giúp dẫn đường#
+------------------- Hướng dẫn --------------------#
+"1./navigation		/navi#"
+  ex)/navi prontera 100/100 -> tên bản đồ, 100/100#
+"2./navigation2		/navi2#"
+  ex) /navi2 prontera 100090 111#
+-> Tên bản đồ, vị trí (100 90), scrool / Zeny / plane (1: sử dụng 0: không sử dụng)#
+-> MAPNAME location (100 90), Scroll | Zeny | Plane (1: ChoPhép hoặc 0: VôHiệuHóa)#
+"3. $$all	Hiển thị tất cả các mục (hiển thị các mục theo loại và có thể được phân loại)#"
+"4. $$lv30 Hiển thị quái vật ở cấp độ này#"
+"5. $$lv20~30 Hiển thị quái vật trong cấp độ này#"
+------------------- Giải thích --------------------#
+1.Các loại tìm kiếm là tất cả, bản đồ, NPC, quái vật#
+2.Vui lòng sử dụng lệnh để tìm kiếm. Quy tắc là mọi thứ bạn muốn tìm kiếm có chứa chuỗi được hiển thị#
+ví dụ) Kết quả tìm kiếm cho Kafra#
+3.Thông tin được hiển thị khi chọn các mục trong danh sách#
+Nếu có mục tiêu được hiển thị, chỉ cần nhấp vào nút hướng dẫn để hướng dẫn tuyến đường đến mục tiêu#
+4.scrool/Zeny/mặt phẳng xác nhận rằng hộp có thể nhanh chóng dẫn đường#
+5. Khi bạn nhấp vào phím hướng dẫn, cửa sổ kết quả sẽ thay đổi thành cửa sổ đường dẫn hướng dẫn#
+6. Sử dụng các nút bên dưới cửa sổ tìm kiếm,#
+[Cửa sổ kết quả]<->[Cửa sổ chỉ đường], cả hai có thể được chuyển đổi#
+Cấp: %d (BOSS)#
+Cấp: %d (bình thường)#
+Nước %d#
+Đất %d#
+Lửa %d#
+Gió %d#
+Độc %d#
+Thánh %d#
+Bóng tối %d#
+Hồn ma %d#
+Xác sống %d#
+Trung tính %d#
+Vừa#
+Lớn#
+Nhỏ#
+Thây ma#
+Thú#
+Cây#
+Côn trùng#
+Cá#
+Quỷ#
+Á thần#
+Thiên thần#
+Rồng#
+Vô dạng#
+%s nhấp để di chuyển#
+Sử dụng dịch vụ di chuyển#
+Nhấp vào NPC#
+Đi đến %s #
+Đến khí cầu#
+Bằng dịch chuyển#
+Đích đến: (%d %d)#
+Dẫn đường không được hỗ trợ trong trường hợp này#
+Mục tiêu tìm kiếm không rõ ràng#
+Bản đồ không khớp#
+Không thể đặt thông tin cho điểm khởi hành!#
+Đặt thông tin đích thất bại!#
+Tìm kiếm tuyến đường thất bại#
+Tìm kiếm vị trí người chơi thất bại#
+Không thể tìm kiếm hướng đi cho bản đồ hiện tại#
+Bản đồ không hỗ trợ dẫn đường#
+Vui lòng chỉ định mục tiêu#
+Đã đến#
+Hướng dẫn đường đã bắt đầu#
+Tìm kiếm Quái vật trên bản đồ#
+Đây là bản đồ tìm kiếm#
+Vui lòng sử dụng đạo cụ để di chuyển#
+Đi đến vị trí được chỉ định#
+Đạt bản đồ mục tiêu#
+Bạn đã đến vị trí bản đồ của NPC mà bạn đang tìm kiếm. Vui lòng tìm NPC!#
+Đến bản đồ của quái vật đang tìm kiếm#
+Tương tự như mục tiêu trước#
+Hãy di chuyển theo hướng mũi tên#
+Đã chọn mục tiêu#
+Dẫn đường >: %s#
+Dẫn đường >: Vui lòng đi theo mũi tên %s#
+Dẫn đường >: Vui lòng truy cập bản đồ (%s)#
+Dẫn đường >: Vui lòng chọn bản đồ (%s) và đi theo#
+Dẫn đường >: Đi bằng khí cầu#
+Dẫn đường >: Sử dụng dịch chuyển tức thời đến các khu vực khác#
+Item: #
+$$#
+$$lv#
+~#
+$$all#
+Xác nhận giao dịch#
+Tổng giá của vật phẩm bạn muốn mua là#
+ Zeny#
+Bạn muốn mua chứ?#
+%.1f%% (Internet cafe% .1f%%+TPLUS%.1f %%+chiết khấu%.1f %%+%s máy chủ%.1f%%)#
+Card Book#
+%d%%[(máy chủ 100%%+%s cơ bản%d%%) * hoạt động% .1f]#
+%d%%[Máy chủ 100%% +%s cơ bản%d%%]#
+Đây là khu vực PK. Vui lòng rời ngay lập tức.#
+Mệt mỏi#
+Doanh thu trò chơi lành mạnh là 100%%#
+Doanh thu trò chơi hiện tại của khách trong làng mệt mỏi sẽ giảm 50%%. Vì sức khỏe, vui lòng nghỉ ngơi#
+Bây giờ tôi muốn đóng trò chơi vì nó không lành mạnh. Trạng thái online là nó sẽ tốt cho bộ y tế. Nó sẽ được khôi phục sau 5 giờ#
+Online từ %d phút#
+Thời gian online: %d#
+Online từ %d giờ và %d phút#
+/monsterhp : Thông tin HP để tấn công quái vật sẽ được hiển thị#
+Điểm kỹ năng: #
+Không có câu trả lời từ máy chủ xác thực. Vui lòng kiểm tra lại#
+Tài khoản này có thể được phân loại là nhóm có rủi ro cao vì chưa đăng nhập, mật khẩu đã không được thay đổi trong một thời gian dài hoặc kết hợp mật khẩu quá đơn giản. Để đảm bảo bảo mật tài khoản, hệ thống sẽ tự động kích hoạt cơ chế bảo vệ an ninh, trước tiên hãy thực hiện hành động đặt lại mật khẩu#
+http://www.gameflier.com/FindID/RO/phone.htm#
+Đã đến lúc kết nối#
+Do mối quan hệ của Shout xuống, sẽ có giới hạn thời gian online%1.2d-%1.2d-%1.2d%1.2d:%1.2d:%1.2d#
+Tài khoản của người chơi là tài khoản Shout Down và thời gian còn lại là%1.2d phút ở%1.2d. Vui lòng tham khảo trò chơi#
+Quay Video#
+Macro#
+Webbrowser#
+Tìm đường#
+UAEURL#
+Thông tin gia tộc#
+Cấp độ gia tộc#
+Tên gia tộc#
+Biểu tượng#
+Gia tộc liên minh#
+Gia tộc thù địch#
+Gửi đến gia tộc#
+Trưởng gia tộc#
+Tổng số thành viên#
+Thành sở hữu#
+Tin nhắn từ gia tộc#
+Chuyển đến trang giá trị được lưu trữ#
+https://member.gnjoy.com.tw/billing.aspx#
+Tạo nhân vật#
+Tên vai trò là khác nhau#
+Điền tên của nhân vật#
+Cửa sổ chọn Giới tính#
+Tập tin đã thay đổi#
+Mục này sẽ được sở hữu bởi nhân vật (không thể được chuyển đến kho). Vui lòng xác nhận nếu bạn sử dụng nó. Mở hộp?#
+Cài đặt trò chơi#
+Hệ thống trò chơi#
+Lệnh trò chơi#
+Lệnh ON/OFF#
+Macro#
+Không trao đổi vật phẩm trong khu vực này#
+Xe đẩy không có sẵn trong khu vực này#
+Sẽ không có mặt trời và hiệu ứng tăng trong khu vực này#
+Bảng xếp hạng#
+Bảng xếp hạng#
+Tên#
+Điểm#
+ThợRèn#
+NhàGiảKim#
+VõSĩ#
+Người giết#
+7 vs 7#
+HiệpSĩCổNgữ#
+PhùThủyDịGiáo#
+SiêuXạThủ#
+ThợMáy#
+ĐaoPhủThậpTự#
+GiámMục#
+HộVệHoàngGia#
+MịThuậtSư#
+NhạcTrưởng#
+VũThầnLangThang#
+NhàDiTruyềnHọc#
+HắcTặc#
+QuyềnSư#
+ẢnhSư#
+UNữ#
+Select Ranking Type#
+Ranking Type#
+#
+#
+#
+-------------- Hướng dẫn dẫn đường -------#
+/navigation/navi:/navi yuno 100/100 ->> Tên và vị trí bản đồ (100/100)#
+/navigation2/navi2:/navi2 yuno 100/100 1/1/1 ->>tên bản đồ, vị trí (100/100), scrool/Zeny/mặt phẳng (1:sử dụng 0:không sử dụng)#
+-------------- Hướng dẫn tìm kiếm dẫn đường -------#
+$$all: hiển thị tất cả các mục (bạn có thể phân biệt các loại hiển thị theo Dấu phân cách)#
+$$lv30: Hiển thị quái vật ở cấp độ này (số lượng có thể thay đổi)#
+$$lv20 ~ 30: Hiển thị quái vật trong cấp độ này (số lượng có thể thay đổi)#
+1 vs 1#
+Giáp#
+Thông tin nghề nghiệp của ký tự %d là bất thường. Vui lòng liên hệ với quản trị viên. Cảm ơn bạn! ErrorCode (%d)#
+(%s) %d / %d#
+%s-%s(%d/%d)#
+Không thể đăng nhập do dân số máy chủ quá tải#
+Đăng nhập máy chủ thất bại (%d)#
+Quá thời gian đăng nhập#
+Xác thực thất bại trong khi đăng nhập#
+Tên bang hội không được để trống#
+Xin chào người chơi!#
+Thời gian khả dụng của bạn sẽ kết thúc vào %d năm %d tháng%d ngày %d: %d#
+Thời gian của bạn vẫn còn rất dài, xin vui lòng lên mạng#
+Thời gian có sẵn của bạn sẽ kết thúc trong tuần này, hãy nhớ lưu trữ giá trị trước khi kết thúc#
+Thời gian khả dụng của bạn sẽ kết thúc sau 24 giờ, hãy nhớ lưu trữ giá trị trước khi kết thúc#
+Bạn còn %d giờ trong thời gian khả dụng của mình. Hãy nhớ lưu giá trị trước khi kết thúc#
+Bạn còn %d phút. Bạn sẽ bị rút Zeny khi hết thời gian. Hãy nhớ lưu trữ giá trị trước khi kết thúc#
+%d giờ, %d phút còn lại trong thời gian có sẵn của bạn#
+%d%% (101% cơ bản+Cafe Internet%d%%+Danh dự%d%%+%s Máy chủ%d%%)#
+Thời gian khả dụng của bạn sẽ kết thúc sau% d giờ và%d phút#
+Tài khoản của bạn bị đóng băng vĩnh viễn#
+Tài khoản của bạn đã bị đóng băng.\n Thời gian không mở: %04d-%02d-%02d% 02d:%02d#
+Q.Vật(Tab)#
+Bản đồ(Alt)#
+Thông tin hướng dẫn#
+Tìm kiếm thông tin#
+Khí cầu#
+Kafra#
+(Đến)#
+Mob)%s:%s(%s)#
+Phân phối: %s#
+Siêu nhiều#
+Nhiều#
+Bình thường#
+Ít hơn#
+Siêu ít#
+Không thể sử dụng Ngân hàng. Vui lòng đợi trước khi sử dụng#
+Không đủ tiền gửi ngân hàng#
+Số dư Zeny không đủ để gửi#
+1 Zeny trở lên có thể ký gửi#
+Rút từ 1 Zeny trở lên#
+Zeny không thể vượt quá mức 2.147.483.647 Zeny#
+your account is lock by mobil otp#
+MOTP auth fail#
+Tăng %d điểm Job EXP %d%% từ việc đánh quái vật#
+Quyền sở hữu Zeny: %s Zeny#
+Zeny#
+Có thể ký gửi tới 2.147.483.647 Zeny#
+Zeny không đủ#
+Khi nhập hơn 1 tỷ Zeny, giá bán sẽ được điều chỉnh thành 1 tỷ Zeny#
+AuthTicket is Not Vaild#
+ErrorCategory : %d, ErrorCode : %d (%d,%d,%d,%d)#
+%d%% ( Basic 100%% + Premium %d%% + PCCafe %d%% + %s Server %d%% )#
+Tỷ lệ rơi kho báu cơ bản có thể đạt được khi chơi quái vật giữa %d điểm sẽ tăng %d%%#
+%d Tốc độ rơi cơ bản có thể đạt được khi chơi quái vật trong %.2d sẽ tăng %d%%#
+Giá của ^0000FF%s^000000#
+100000000#
+ vượt qua ^FF0000%d00^0000FF triệu^000000 zeny và#
+10000000#
+ lớn hơn ^FF0000%d0^0000FF million^000000 zeny#
+. Bạn chắc chưa?#
+Nhắc nhở nếu giá hơn 10m Zeny#
+https://www.warpportal.com/account/login.aspx?ReturnUrl=%2faccount%2fpayment.aspx#
+https://kepler.warpportal.com/ro1/purchase/?step=1&steamid=%lld&accountname=#
+Sự kết thúc của mặt đất, cây cầu giữa Alf H. Prideid và khu vực giàu có mới nổi, những vết nứt lớn và nguồn gốc của mê cung rừng mà bạn không biết#
+Điều này đánh dấu kết thúc của dòng là một thông báo, chỉ báo để mở một thế giới mới là! Bảo vệ giống như sự cám dỗ khiến lời bài hát dần mất đi linh hồn của họ#
+Trong dòng chảy hàng ngàn năm, tự bảo vệ mình đã viết rằng những gì một cuộc tranh cãi, đóng dấu và thời gian bị mắc kẹt lâu là khá khó hiểu, cho dù anh ta cảm thấy rằng mình không có#
+Lời bài hát cũng quyến rũ đỉnh điểm đến khi mặt đất Alf H. Spludge kết thúc cây cầu giữa đại lục và người giàu có, một vết nứt lớn xuất hiện, gây ra sự mất kết nối và mọi người đến giữa hai thế giới để đi một sự bất tiện lớn Là người có kinh nghiệm#
+Rừng bây giờ là một mê cung trên lối đi, và tôi thậm chí không biết mua ở đâu. Tôi đã không vượt qua nó cho đến bây giờ#
+Địa ngục hỗn loạn đã nuốt chửng vô số nhà thám hiểm, lang thang trong rừng và bị lạc là bạn không biết tên, giống như trái tim của một người phụ nữ đang bị mở rộng thành hỗn loạn sâu hơn#
+Chỉ có thể nhập số#
+Rút Zeny và gửi Zeny không thể được thực hiện trong khi cửa sổ giao dịch và cửa hàng đang mở#
+Đi đến#
+So sánh#
+Vũ khí này không phù hợp với loại đạn mà bạn đã trang bị.#
+Loại đạn này không phù hợp với vũ khí mà bạn đã trang bị.#
+Không có vật phẩm để bán, xin vui lòng đăng ký các vật phẩm để bán#
+Vật phẩm#
+Không thể sử dụng rương bang hội#
+Không tham gia bang hội, vui lòng tham gia bang hội để sử dụng#
+Nhân viên bang hội khác đang được sử dụng, vui lòng đợi trong giây lát#
+Rương#
+Rương bang hội#
+Không được phép sử dụng rương bang hội#
+Quản lý giảm giá cash shop#
+Tên vật phẩm#
+ID vật phẩm#
+Số lượng#
+Th.gian bắt đầu#
+Th.gian bán#
+Vui lòng nhập số lượng muốn bán#
+Nhập thời gian bắt đầu#
+Thời gian bắt đầu không phù hợp.#
+Vui lòng nhập thời gian#
+Vui lòng nhập Db Name#
+Tìm kiếm Db Name thất bại. Hãy thử lại.#
+>> Tên: %s / Giá: %dc / S.Lg: %d / Thời gian: Tháng %d ngày %d lúc %d:%d cho đến tháng %d ngày %d lúc %d: %d#
+Đăng kí thành công.#
+Đăng kí thất bại. Hãy thử lại.#
+Vật phẩm này đã đăng kí. Hãy thử lại.#
+Không thể xóa đăng kí vật phẩm. Hãy thử lại.#
+%s vật phẩm đã được xóa.#
+Special#
+Cập nhật số lượng vật phẩm giảm giá#
+Kết thúc#
+item count should be renewed#
+Vật phẩm gần hết. Bạn chỉ có thể mua %d món.#
+%s đang được giảm giá#
+Kết thúc giảm giá %s vì đã hết hàng#
+/lsale#
+http://www.ragnarokeurope.com/news/home-r70.html#
+http://www.ragnarokeurope.com/index.php?rubrique=70&Steam#
+Mua vật phẩm thành công#
+Các đơn hàng vượt quá cổ phiếu#
+Không thể mời tên nhân vật#
+Vai trò bang hội không thể được mời#
+Một số vật phẩm đã được bán hết, vì vậy bạn nên mua chúng#
+Từ vị trí hiện tại của kinh, bạn không thể nhớ địa điểm#
+Không thể mua nhiều hơn trọng lượng của vật phẩm#
+No.#
+Vật phẩm#
+Số lượng#
+Tên#
+Thời gian#
+Vào/Ra#
+Không có hồ sơ#
+Tất cả#
+Đưa vào#
+Loại bỏ#
+Lịch sử rương bang hội#
+Chỉ hiển thị 100 cuối cùng#
+Thời gian sử dụng rương bang hội vượt quá 2 phút, tự động kết thúc.#
+Incorrect GameSamba ID. Please Try Again#
+%s [thuộc tính %d] : %d#
+Cần Zeny#
+Yêu cầu %d Zeny#
+Cần phải trang bị vũ khí loại [Súng máy].#
+Cần phải trang bị vũ khí loại [Súng hoa cải].#
+Cần phải trang bị vũ khí loại [Súng trường].#
+Cần phải trang bị vũ khí loại [Súng lục].#
+Cần phải trang bị [Silver Bullet].#
+Lịch sử bán vật phẩm#
+Lịch sử mua vật phẩm#
+Cần phải trang bị vũ khí loại [Súng phóng lựu].#
+[Heat barrel],[Last Stand],[Platinum Alter] không thể sử dụng khi đang ngồi.#
+Không thể sử dụng kỹ năng này ở bản đồ hiện tại.#
+Tất cả các vật phẩm sẽ biến mất nếu bạn đang sử dụng kho của bang hội#
+http://ragnarok.gamesamba.com/paytest.html#
+Khi đăng nhập, vui lòng nhập tài khoản và mật khẩu của bạn#
+Tiến hóa thú cưng#
+Tiến hóa - %s#
+Để tiến hóa thú cưng cần những vật phẩm sau:#
+Bạn có chắc chắn muốn tiến hóa thú cưng?#
+Lỗi không xác định#
+Không có thú cưng được triệu hồi#
+Yêu cầu trứng thú cưng#
+Thiếu vật phẩm để tiến hóa.#
+Thiếu vật phẩm cần thiết để tiến hóa thú cưng.#
+Thú cưng chỉ tiến hóa khi đạt Trung thành.#
+Tự động cho ăn#
+Đã cho thú cưng ăn. '%s' Còn lại: %d#
+Đã [mở] tự động cho thú cưng ăn.#
+Đã [tắt] tự động cho thú cưng ăn.#
+Cập nhật#
+%d phút trước#
+%d giờ trước#
+%d ngày trước#
+%d%% ( Premium %d%% + %s Server )#
+Đã gửi thư#
+Thư của bạn đã được gửi đi.#
+Vật phẩm đã được di chuyển tới hành trang của bạn.#
+Bộ sưu tập thất bại#
+Vui lòng làm trống hành trang của bạn.#
+Đã nhận zeny.#
+Thất bị khi lấy zeny.#
+Vượt quá giới hạn zeny.#
+Đính kèm vật phẩm thành công#
+Vui lòng nhập tên người nhận để kiểm tra.#
+Độ dài tiêu đề phải từ 4 từ trở lên và 16 từ trở xuống#
+Gửi thư thất bại.#
+Các vật phẩm không đúng cách gây ra lỗi dịch chuyển tức thời#
+Hồ sơ của người nhận không tồn tại#
+%s [%d Hiệu ứng]#
+Vui lòng nhập một số từ 1 đến %d#
+Vui lòng xác nhận không gian của cửa sổ mục#
+Vượt quá số lượng thư đã gửi.#
+Không thể mở thư.#
+Hiện tại bạn đã ở trong Clan.#
+Thông tin tích lũy vàng Internet Cafe#
+Vui lòng loại bỏ các phụ kiện thú cưng trước khi tiến hóa#
+trong %d phút#
+trong %d giờ#
+trong %d ngày#
+Hãy bấm nút 'Xác nhận' để kiểm tra tên người nhận.#
+Vui lòng nhận hết tất cả vật phẩm trước khi xóa thư.#
+Bạn không thể gửi thêm zeny.#
+Phí: %s Zeny#
+Tên người nhận không tồn tại.#
+E X P : %.1f%% ( basic %.1f%% premium %.1f%% + %s %.1f%%)#
+DROP  : %.1f%% ( basic %.1f%% premium %.1f%% + %s %.1f%%)#
+DEATH : %.1f%% ( basic %.1f%% premium %.1f%% + %s %.1f%%)#
+Điểm tích lũy tối đa bạn có thể có: %d#
+Các tính năng không có sẵn trong máy chủ này#
+Không sử dụng máy chủ giỏ hàng#
+Không sử dụng máy chủ gửi#
+Máy chủ không thể giao dịch#
+Máy chủ không dùng một lần#
+Không thể sử dụng bán hàng tại cửa hàng#
+Summoner không đủ SP#
+Weight: %s/%s#
+Độ dài thư phải dưới 1K#
+Đính kèm mục thất bại#
+Các mục đính kèm trong thư là thừa cân#
+Đã có trong dịch vụ. Vui lòng đợi và sử dụng lại#
+Không thể mở cửa sổ tưởng tượng#
+Không thể đóng cửa sổ tưởng tượng#
+Không thể khởi chạy cửa sổ tưởng tượng#
+Điểm trong trò chơi được yêu cầu để kích hoạt các cửa sổ tưởng tượng#
+Vật phẩm chiến thắng#
+Có quá nhiều đồ trong ba lô#
+Thừa cân, hãy đóng gói ba lô của bạn#
+Thất bại trong việc mở một gian hàng#
+Cửa sổ rẽ đang quay, bạn có thể thấy các vật phẩm chiến thắng#
+Cửa sổ quay ảo#
+Thông báo âm thanh khi các vật phẩm được bán#
+Vui lòng xác nhận chi phí của hoạt động#
+Xác nhận tên nhân vật chơi#
+Sẽ được kiểm tra#
+Thành tích#
+Tổng số điểm đạt được#
+Đạt đến cấp độ#
+Hộp phần thưởng tiếp theo [%5d] điểm#
+Tiến độ#
+Kết quả đạt được gần đây#
+Dự án Senbei#
+Senbei: %d/%d#
+Senbei không đủ#
+%s #
+Tóm tắt#
+Cơ bản#
+Nhân vật#
+Hành động#
+Khác#
+Phiêu lưu#
+Rune-Midgarts#
+Schwartzvald#
+Arunafeltz#
+New World#
+Localizing#
+Hầm ngục#
+Chiến đấu#
+PvP#
+Luyện tập#
+Nhiệm vụ#
+Episode#
+Chung#
+Phó bản#
+Midgarts#
+New World#
+Khác#
+Nhiệm vụ#
+Thành tựu đã đạt được#
+Bạn không thể thêm được nữa.#
+Đã đạt <%s>.#
+only otp user login allow#
+Khi bạn nhấn nút này, bạn sẽ nhận được một vật phẩm được chỉ định để khởi tạo roulette#
+Khi nhấn nút, dòng bắt đầu của mũi tên roulette sẽ nhấp nháy#
+Danh hiệu#
+Không dùng danh hiệu#
+Không thể tạo bang hội ở nơi này.#
+Không thể giải tán bang hội ở nơi này.#
+Không thể gia nhập bang hội ở nơi này.#
+Không thể rời bang hội ở nơi này.#
+Khu vực của Hội không thể bị trục xuất#
+Khu vực của vị trí bang hội không thể thay đổi#
+Không gian hành trang phải có nhiều hơn 5 ô#
+E X P : %.1f%% ( basic 100.0%% pccafe %.1f%% + %s %.1f%%)#
+DROP  : %.1f%% ( basic 100.0%% pccafe %.1f%% + %s %.1f%%)#
+DEATH : %.1f%% ( basic 100.0%% pccafe %.1f%% + %s %.1f%%)#
+Vượt quá số lượng các vật phẩm có thể được thêm vào#
+Khi bạn mua một công cụ, bạn có thể cài một thông báo âm thanh#
+Không thể thêm đạo cụ#
+Bởi vì không có chiến thắng, bạn không thể đi đến cấp độ trước#
+Trả lời#
+Đọc#
+Xóa thư#
+Senbei: %d#
+%s %s senbei#
+Senbei#
+Tổng cộng: %d Senbei#
+%d -> %s senbei#
+%s senbei#
+Senbei hiện tại: %s#
+%s: %s senbei#
+%10s senbei#
+Tổng cộng: %s Senbei#
+Phí 3% / Ít nhất 1 senbei sẽ bị xóa#
+Senbei#
+^0000ffSenbei^000000ở trên.\n số Zeny đã nhập có đúng không?#
+1 tỷ senbei được xác nhận an toàn#
+Đầu vào của hơn 1 tỷ senbei chỉ có thể được bán với giá 1 tỷ#
+Nếu bạn nhập 9,999 senbei trở lên, giá bán là 9,999 senbei#
+Có những đạo cụ với giá 0 Senbei. Không thể mở cửa hàng!#
+Nhân vật của đối thủ có nhiều nhất là Liang Senbei, vì vậy không thể được giao dịch#
+%s Vui lòng nhập các mục dưới 1 tỷ senbei#
+%s:%s Senbei =>%s EA#
+Tiền giới hạn: %s Senbei#
+%s% s senbei %d#
+%s%d%%d Senbei được bán. Phí hoạt động là 3%%.#
+RODEX#
+GỬI#
+NHẬN#
+Vui lòng đóng cửa sổ soạn thư.#
+Không có quyền truy cập vào máy chủ(A)#
+Không có quyền truy cập vào máy chủ(B)#
+Vui lòng tháo tên/đạn được trang bị#
+Cửa sổ soạn thư sẽ được đóng lại khi tiêu thụ các vật phẩm trong hành trang.#
+Không có kính lúp.#
+Để loại bỏ các mục, xin vui lòng đóng cửa sổ soạn thư trước.#
+Đối phương đã yêu cầu bạn làm bạn.#
+SCRIPT ERROR AID#
+\nErrorfile : %s\nErrorLine : %d ?\nErrorContext: %s#
+^ff0000Bạn có chắc chắn muốn mua vật phẩm này không? %d điểm và %d senbei sẽ được tiêu thụ sau khi xác nhận#
+Đóng#
+Nhiệm vụ#
+Hiện biểu tượng nhiệm vụ#
+Tiện ích#
+Hiện biểu tượng tiện ích#
+Thành viên công cộng/thành viên trong nhóm#
+Thành viên cộng đồng/Nhận dạng nhóm#
+Ghi lại#
+Quái vật MVP#
+Tôi#
+Bạn có chắc chắn muốn xóa?#
+NPC Nhiệm vụ#
+Điền vào các ghi chú#
+Lưu#
+Để lại ghi chú#
+%s [%d cái] %d cái#
+%s [%d cái] %s Zeny#
+%s [%d cái] %d %s %d -> %s %s#
+%s [%d cái] %d %s %s %s#
+%s [%d cái] %d -> %s %s#
+%s [%d cái] %s %s#
+Đơn vị giao dịch tối thiểu phải được đặt thành 100 senbei trở lên#
+Màu tóc#
+Kiểu tóc#
+Màu quần áo#
+Phong cách#
+Bản đồ không được hỗ trợ#
+Vui lòng nhập dưới 2.147.483.647 Zeny#
+Vui lòng nhập 1 Zeny trở lên.#
+Bạn không có zeny.#
+Ngân hàng#
+Số dư#
+Zeny#
+Gửi Zeny#
+Rút Zeny#
+1 z UP#
+1 z Down#
+Max#
+Chưa nhập số Zeny#
+Zeny không đủ#
+Vui lòng nhập số Zeny#
+Không thể nhập văn bản#
+Vượt quá giới hạn số lượng#
+Dưới mức tối thiểu#
+Thiếu Zeny#
+Số dư ngân hàng không đủ#
+Vượt quá giới hạn Zeny#
+Thả X#
+Hành trang X#
+Xe đẩy X#
+Thư X#
+Mua lại Windows X#
+Nhà đấu giá X#
+Bang hội X#
+Bán cho NPC X#
+Các vật phẩm bị hạn chế#
+Hãy tạo một góc!#
+Vui lòng xóa các mục phóng trước#
+Vượt quá số người vào bản sao bộ nhớ#
+Từ chối truy cập vào bản sao bộ nhớ sau khi vượt quá giới hạn#
+%.1f%% ( %s Server: %.1f%% + Premium:%.1f%% )#
+%.1f%% ( %s Server: %.1f%% + Premium:%.1f%% )#
+Không có sẵn do các mục trùng lặp#
+Không thể sử dụng do hiệu ứng lặp đi lặp lại#
+Hiệu ứng rung màn hình ON#
+Hiệu ứng rung màn hình OFF#
+Một phần mềm bất hợp pháp đã được phát hiện#
+Gửi thư#
+E X P : %.1f%% ( basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+DROP  : %.1f%% ( basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+DEATH : %.1f%% ( basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+Thẻ này không thể sử dụng tên của một người#
+Cửa hàng tạo kiểu#
+Không có số sê-ri, vui lòng đến trung tâm mua sắm#
+Vui lòng mở hộp số sê-ri của ba lô#
+Bạn có chắc chắn muốn xóa thông tin phong cách?#
+Các khe cắm đã đầy, vui lòng xóa góc trước khi sử dụng#
+Bạn có chắc chắn muốn mua kiểu hiện tại không?\n (Không hoàn lại Zeny)#
+Đã lưu kiểu hiện tại#
+Zeny không đủ. Ngân hàng có rất nhiều Zeny#
+Đi đến#
+Không có giải phóng mặt bằng quốc gia#
+Khí cầu không thể cất cánh do dòng chảy không ổn định do ma thuật#
+Khí cầu cá nhân#
+Vui lòng thử lại sau#
+Không đủ Zeny để lên khinh khí cầu cá nhân#
+Thực phẩm đóng hộp không đủ cho khí cầu cá nhân#
+Không đủ cấp độ cần thiết để bay một khinh khí cầu cá nhân#
+Khí cầu cá nhân không thể đạt được tại vị trí đã chọn#
+Khí cầu cá nhân không có sẵn ở đây#
+Đồ trang trí#
+Trang phục thứ 2#
+Phong cách#
+Kiểu tóc này không thể nhuộm.#
+Vui lòng nhấn mũi tên để chọn phong cách yêu thích của bạn#
+Hãy xem phong cách mới của bạn!\n (Sau khi mua sẽ được gửi sang RODEX)#
+Kiểu cơ bản#
+Điểm kỹ năng có thể đầu tư cho kỹ năng này bắt đầu từ Base Lv %d#
+Biểu tượng đặc biệt này không thể được sử dụng trong tên#
+MaxHP quá thấp nên không thể sử dụng kỹ năng này#
+MaxSP quá thấp nên không thể sử dụng kỹ năng này#
+So sánh#
+Khóa rớt đồ#
+Ảnh chụp màn hình không được đính kèm#
+TWITTER#
+Trung bình#
+Thông báo#
+Trở về#
+Làm mới#
+%d phút#
+%d giờ#
+%d ngày#
+Đã quay về#
+Bạn có muốn xóa tin nhắn?#
+Hiện biểu tượng#
+Phóng to#
+Thu nhỏ#
+Hiển thị bản đồ#
+Bản đồ#
+Tổng số vật phẩm khác nhau#
+/minimap#
+Hiển thị Minimap#
+Không hiển thị bản đồ Mini#
+Bảng xếp hạng người chơi online của Guild#
+Thân mật: %s#
+Xác nhận#
+Tên nhóm#
+Trưởng nhóm#
+Hết thời gian. Client đã đóng.#
+Lỗi nhập. Đang đóng client.#
+Nhập chính xác. Một lượng nhỏ phần thưởng Buff đã được đền bù cho bạn#
+Bạn phải nhập 4 ký tự bằng tiếng Anh và 2 ký tự bằng tiếng Trung#
+Câu trả lời bạn đã nhập là[%s]phải không?#
+Không có biểu tượng được chọn#
+Lỗi đánh máy. (Bạn có %d cơ hội còn lại)#
+Bạn có muốn khai báo %d người chơi không?#
+Tin nhắn gửi đến người chơi#
+Dữ liệu cần thiết để truy vấn phần mềm bất hợp pháp không được đăng nhập#
+Người chơi này là người chơi đang được theo dõi#
+Đăng nhập vào hệ thống phát hiện#
+Không thể lưu biểu tượng#
+Không thể lưu câu trả lời#
+Xin chào, phần mềm bất hợp pháp đang được theo dõi#
+Vui lòng nhập văn bản dưới đây trong thời gian quy định#
+Nếu bạn mắc lỗi 3 lần, bạn có thể bị đóng băng theo quy định quản lý trò chơi#
+Số còn lại: %d#
+Vai trò#
+Phạm vi#
+Bạn sử dụng nút chuột trái để gán ký tự#
+Bạn nhấp chuột phải để chỉ định phạm vi#
+Không có phạm vi được chỉ định, vui lòng nhấn Enter#
+E X P : %.1f%% ( basic %.1f%% %s %.1f%%)#
+DROP  : %.1f%% ( basic %.1f%% %s %.1f%%)#
+DEATH : %.1f%% ( basic %.1f%% %s %.1f%%)#
+Tên vai trò sẽ gửi: %s#
+Tổ hợp các nguyên liệu cần thiết#
+Công thức tổ hợp không đúng#
+Nguyên liệu %d món.#
+Giá trị tinh chế quá thấp để tổng hợp#
+Bạn muốn đăng nhập tại Adventure Agency?#
+Xin vui lòng để lại tin nhắn#
+Vui lòng nhập văn bản trên đồ họa#
+%d giây còn lại#
+Vui lòng nhập số chứng nhận 6 chữ số của bạn#
+Số chứng nhận#
+Không phải mã xác thực gồm 6 chữ số. Vui lòng xác nhận lại#
+Tin nhắn đã bị xóa#
+Vui lòng chọn khu vực nơi khí cầu cá nhân sẽ di chuyển#
+E X P : %d%% ( basic 100.0%% %s %d%%)#
+DROP  : %d%% ( basic 100.0%% %s %d%%)#
+DEATH : %d%% ( basic 100.0%% %s %d%%)#
+Di chuyển đến đích#
+Bạn không tồn tại tệp[%s]và cập nhật với AI mặc định#
+%.1f%% ( Basic 100.0%% + Premium %.1f%% + %s %.1f%%)#
+Bạn muốn mở một cửa hàng ngoài trời ở đây?#
+Người Dulan không thể mặc trang phục này#
+Các vật phẩm được bán trong các cửa hàng ngoài trời sẽ được gửi dưới dạng RODEX#
+30,000 z#
+100 lon hương vị đảo Mianmian#
+Không thể tiến hành do trọng lượng vượt quá 80%%#
+Các vật phẩm chưa bán được gửi bởi RODEX#
+Xem thử#
+Bổ nhiệm Chủ tịch Hiệp hội#
+Bạn có chắc chắn muốn bổ nhiệm% s làm chủ tịch Hiệp hội không? Vị trí của bạn sẽ được trao đổi với% s sau cuộc hẹn#
+Sơ tán#
+Bạn có muốn loại bỏ các cửa hàng mở?#
+%02d ngày %02d giờ %02d phút %02d giây#
+Không thể đăng nhập#
+Không thể đăng nhập vì số lần đăng nhập tối đa#
+Vui lòng chọn nơi bạn muốn thiết lập một cửa hàng ngoài trời#
+Tên thú cưng sẽ được đổi thành ^0000ff^0000ff %s^000000^000000, bạn có muốn tiếp tục không? #
+Giờ giao dịch: #
+Đạo cụ giao dịch #
+Số lượng giao dịch #
+Đơn giá: #
+Số Zeny giao dịch: #
+Mở cửa hàng đạo cụ bán hàng#
+Mở cửa hàng#
+Bán hàng ngoài trời bán thời gian#
+Mua công việc bán thời gian ngoài trời#
+Số Zeny còn lại:#
+Danh sách vật phẩm:#
+Sinh viên cửa hàng ngoài trời#
+Trả lại hàng:#
+Trả về:#
+Thời gian trả lại:#
+Số Zeny giao dịch trong cửa hàng ngoài trời sẽ được RODEX gửi#
+Tên không thể sử dụng#
+Mục đã được giao#
+Cảm ơn bạn đã mua#
+Các vật phẩm không thể được giao dịch#
+Mục giao dịch khóa#
+Không tìm thấy vị trí triệu hồi gần đó#
+Nắm bắt tất cả#
+Chụp một phần màn hình#
+Gửi#
+Gia đình và người phụ trách#
+Giải thích về thay đổi nội dung gia đình#
+Xin chào!\r\n\r\n Today\"%s\" và\"%s\" 's con\"%s\" là độc lập và đã thiết lập một cổng thông tin mới.\r\n\r\nTôi thông báo cho bạn bằng văn bản,\r\n\r\nNếu bạn muốn xác nhận mối quan hệ gia đình, vui lòng liên hệ với nhân viên có liên quan của Prondra Home Office,\r\n\r\nCảm ơn bạn!#
+Mặc thử#
+Không có hình#
+[%s]hiện đang ở trạng thái từ chối cuộc gọi#
+Cuộc chiến bao vây hiện đang được tiến hành, vì vậy chủ tịch của bang hội không thể được bổ nhiệm#
+Chủ tịch của bang hội đã không được bổ nhiệm dưới một ngày, vì vậy chủ tịch của bang hội không thể được bổ nhiệm lại#
+Không thể tái sinh sau khi trở thành một đứa trẻ, chất lượng sẽ bị hạn chế, HP và SP sẽ bị giảm, bạn có chắc chắn muốn tiếp tục không?#
+Tinh luyện#
+Dùng Blacksmith Blessing#
+Zeny không đủ#
+Phước lành của thợ rèn là không đủ#
+Thiết bị này không thể tái chế#
+Tinh luyện thành công!#
+Tinh luyện thất bại!#
+Quay về#
+Thành công# 
+Quay về#
+Với ông/bà#
+Tên của Homunculus sẽ được đổi thành ^0000ff%s^000000, bạn chắc chắn chưa?#
+Chức năng gọi được bật (chức năng gọi đang ON)#
+Chức năng gọi tắt (chức năng gọi đang OFF)#
+Hiển thị thông tin người gọi#
+Nhân vật này hiện đang sử dụng một mục cửa hàng mở và không thể xóa#
+NPC cửa hàng ngoài trời tương tự đã được thiết lập#
+Không có cửa hàng mở tại vị trí này#
+Cửa hàng ngoài trời không được phép ở những nơi có nhân vật khác#
+Cho thú cưng thất bại, vui lòng đóng cửa sổ RODEX#
+Chuyển trang bị#
+Mặc thử#
+Thiết bị biến mất khi tinh chế thất bại#
+Độ tinh luyện có thể bị giảm đi nếu tinh luyện thất bại#
+Độ tinh luyện có thể bị giảm đi hoặc trang bị sẽ biến mất nếu tinh luyện thất bại#
+Bạn không thể dùng hộp thư khi đang tinh luyện. RODEX đã đóng.#
+Bạn không thể dùng hộp thư khi đang tinh luyện.#
+Vui lòng đóng các cửa sổ khác.#
+Bật Aura [Aura ON]#
+Tắt Aura [Aura OFF]#
+Aura đã tắt. Vui lòng bật lên lại và thử lại#
+Yêu cầu ít nhất %d đạn khi dùng kỹ năng#
+Bạn có muốn thay đổi bộ bánh răng?#
+Không có sẵn khi chết#
+Không thể được sử dụng trong thi triển#
+Không có sẵn trong các giao dịch#
+Không có sẵn khi mở một cửa hàng ngoài trời#
+Không khả dụng khi đang nói chuyện với NPC#
+Không khả dụng khi ở trong phòng chat#
+Thành viên nhóm không đăng nhập#
+Yêu cầu ít nhất %d mũi tên khi dùng kỹ năng#
+Sắp xếp#
+Vui lòng đóng cửa sổ cài đặt vật phẩm trước khi loại bỏ vật phẩm#
+Các vật phẩm thay thế không tồn tại#
+Nhân vật đã xóa#
+%Y.%m.%d#
+Ngày ra mắt:%s#
+Các ngân hàng không có sẵn trong quá trình tinh chế và các ngân hàng đã buộc phải đóng cửa#
+Ngân hàng không thể được sử dụng trong tinh chế#
+Đây là một mục trong bộ vật phẩm#
+Người#
+Kiếm sĩ, Pháp sư, Thương gia, Tu sĩ, Đạo chích, Cung thủ#
+Mèo#
+Triệu hồi sư#
+Đại diện lục địa Midgart, tiềm năng vô hạn và khả năng thích ứng tuyệt vời#
+Từ Far-Star, tộc Meow không chỉ tò mò mà còn mang tính cách sống động#
+Giới hạn trọng lượng vượt quá 70%%. Hoặc vượt quá không gian ba lô 10 khoảng trống#
+P#
+P#
+Làm những việc khác#
+Giới hạn nhiệt: %d#
+Không thể mời hoặc thoát khi phó bản được chạy#
+Chứa văn bản bị cấm, vui lòng xác nhận lại, cảm ơn bạn!#
+ID phải được nhập dưới dạng %d trở lên. Nếu bạn không có tài khoản, vui lòng nhấn nút[trái]để tạo tài khoản#
+Vui lòng nhập mật khẩu trên %d#
+Vui lòng hoàn thành công việc trong tiến trình và thử lại#
+%.1f %% (Internet cafe%.1f %%+TPLUS%.1f%% +%s máy chủ%.1f%%)#
+Không thể đăng ký đạo cụ#
+/100#
+/2000#
+https://member.gnjoy.com.tw/mRO_SecPwd.aspx#
+Biểu tượng bạn đang cố đăng ký không tồn tại. Vui lòng đặt nó vào thư mục biểu tượng và thử lại#
+Truyền thuyết thần tiên mới#
+Khi hiển thị tên nhân vật không phải là chính bạn trên ảnh chụp màn hình hoặc hiển thị đoạn hội thoại với một nhân vật không phải là chính bạn trên phòng chat, hãy đảm bảo có được sự hiểu biết của người dùng trước khi sử dụng#
+Hiện tại không thể thay thế vật phẩm#
+Đang tải tên nhân vật chơi#
+Thông báo do bao gồm nội dung chưa được xác nhận#
+Mua thất bại#
+ID card is incorrect#
+Đóng#
+Nội quy#
+Mua 1 lần#
+Mua 10 lần#
+Mua 100 lần#
+Giải độc đắc#
+Giành được 2 giải thưởng#
+Giành được 3 giải thưởng#
+Hiện không được sử dụng#
+Hiện không được sử dụng#
+Người trúng xổ số vàng#
+Số lượng xổ số mua#
+Vai trò tham gia#
+Giải độc đắc#
+2 giải#
+3 giải#
+Mua vật phẩm thưởng#
+^1a1a1aVé xổ số^b%d^/b sẽ có giá\n^4435b2%dZeny^1a1a1a\nPurchase#
+Mua xổ số thành công#
+Không có đủ Zeny để mua xổ số#
+Số lượng mua xổ số tối đa là 1.000#
+Vâng#
+Không#
+HP#
+SP#
+Lv#
+Lv#
+Exp#
+Mở tất cả#
+Play Replay File#
+Vcoin#
+Total#
+Basicinfo#
+Equip#
+Item#
+Skill#
+Guild#
+Party#
+Chatting#
+Shortcut#
+Status#
+ALL#
+User Defined File Name#
+Repeated File Check#
+on#
+<Cơ bản>#
+Chọn#
+Không thể xóa do đang tham gia xổ số#
+/achievement#
+Xổ số vàng#
+Phần thưởng %d trong xổ số Zeny#
+Phần thưởng %d: %s#
+Phần thưởng tích lũy xổ số vàng Coin#
+Phần thưởng tích lũy %d: %s#
+Hoàn Zeny để mua Zeny#
+Số Zeny hoàn lại:%d Zeny\r\n Lý do hoàn trả: Xổ số thất bại trong máy chủ#
+Đã thêm cửa sổ nhóm nhỏ#
+Xóa cửa sổ đội hình#
+Lễ bốc thăm đã kết thúc. Vui lòng xác nhận người chiến thắng#
+%d tháng %d ngày#
+Cấp tiếp theo#
+Tất cả#
+Chưa hoàn thành#
+(Hoàn thành!)#
+(Chưa xong)#
+Thay trang bị#
+Chuyển#
+Sức mạnh\n^cc0000 Sát thương vật lý^ffffff, khả năng vác đồ#
+Nhanh nhẹn\n^cc0000 Tốc độ tấn công^ffffff, Né tránh#
+Sinh lực\n^cc0000 Máu tối đa^ffffff, Phòng thủ vật lý#
+Trí tuệ\n^cc0000 Sát thương phép thuật^ffffff, Thời gian thi triển chiêu, phòng thủ phép thuật#
+Chuẩn xác\n^cc0000 Tấn công vật lý tầm xa^ffffff, Độ chính xác, Thời gian thi triển chiêu, Sát thương phép thuật#
+May mắn\n^cc0000 Tỉ lệ chí mạng^ffffff, Tỉ lệ chính xác, Sức mạnh vật lý, Sức mạnh phép thuật, Né tránh hoàn hảo#
+Sát thương vật lý#
+Phòng thủ vật lý#
+Độ chính xác#
+Độ chí mạng#
+Bang hội đồng minh#
+Điểm chỉ số đang có#
+Sát thương phép thuật#
+Phòng thủ phép thuật#
+Độ né tránh#
+Tốc độ đánh#
+Mô tả phím tắt#
+Hiệu ứng#
+Phím tắt kỹ năng (F1 ~ F9)#
+Chụp màn hình#
+Phóng to#
+Thu nhỏ#
+Bang hội#
+Ngân hàng#
+Hộp thư#
+Cash#
+Ngồi#
+Di chuyển#
+Xoay#
+Đội trưởng cần bổ nhiệm đội trưởng cho những người chơi khác#
+Bạn có muốn ngừng xem video?#
+Thiết bị được cài đặt trên cửa sổ thay thế vật phẩm#
+Thiết bị đã được gỡ bỏ trên cửa sổ thay thế vật phẩm#
+Là dòng cuối cùng#
+%.1f%% (cơ bản 100 %%+danh dự%.1f %%+%s máy chủ%.1f%%)#
+Chinese#
+Đặt phím tắt#
+Phí hàng tháng của bạn sẽ hết hạn vào %s#
+Không tìm thấy tập tin phát lại#
+Giày#
+Đầu#
+Giáp#
+Măng tô#
+Trang sức#
+Trang phục#
+Thứ tự#
+Trang bị#
+Trang bị đặc biệt#
+Danh hiệu#
+/quake: hiệu ứng rung màn hình Bật/Tắt#
+/aura2: Tắt hoàn toàn#
+Cài đặt#
+Nâng cao#
+C.đặt cơ bản#
+Đồng ý với các cài đặt cơ bản?#
+Đồng ý áp dụng cài đặt?#
+Bạn cần khởi động lại để áp dụng các cài đặt. Đồng ý?#
+Fog#
+Aura đơn giản#
+Dùng aura#
+Effect#
+Shadow#
+NoShift#
+Chọn chức năng tăng tốc T&L phần cứng#
+Độ Phân giải#
+Kích hoạt#
+Kích hoạt#
+Cảnh#
+Điều khiển#
+Hình ảnh#
+Độ phân giải#
+Toàn màn hình#
+Cố định chuột#
+Phí: #
+Tổng phí: #
+Cài đặt nhóm#
+Cài đặt chia sẻ vật phẩm#
+Thay đổi cỡ (F10)#
+Đang tải hộp thư.\n Vui lòng không xóa ^c92114thư^000000~!!#
+ĐANG TẢI..#
+Tiêu đề#
+Người gửi#
+Không thể mở trò chơi hai lần, cài đặt sẽ bị gián đoạn#
+Cài đặt tính năng mới#
+Tài khoản không tồn tại#
+Sai mật khẩu#
+Failed to pass IP authentication#
+No identification number, supplement your registration information#
+Khóa tài khoản#
+Hệ thống lỗi#
+unknown error found.#
+Cài đặt biểu tượng hướng dẫn đường dẫn#
+Giao diện tìm đường#
+Thông tin chỉ đường#
+Chia sẻ vị trí hiện tại#
+Có [0] kết quả#
+Yêu cầu và thông tin#
+Vị trí lỗi#
+Có [%d] kết quả#
+Hiển thị cài đặt biểu tượng hướng dẫn đường dẫn#
+Dùng dịch chuyển#
+Tìm đường Undock#
+Tài khoản không được kích hoạt#
+Vị trí được nhấp sẽ được chia sẻ trong phòng chat#
+4.Khi chọn mục Dịch vụ, các hướng dẫn bao gồm sử dụng Zeny & airship#
+5.Phím[<-]:Chế độ hướng dẫn đường dẫn<->trao đổi chế độ truy vấn#
+Chế độ chia sẻ->sử dụng khi chuyển sang chế độ truy vấn#
+EXP đạt được %lld#
+EXP: '%lld'#
+^b- Mô tả phí rao bán^/b\nsẽ được thiết lập theo giá mặt hàng, với tỉ lệ phí nhất định\n\n	^b> Tỉ lệ phí^/b\nTỉ lệ phí được mô tả như sau:\n\n0 z ~ 10,000 z\n = Tỉ lệ phí : ^1567fe0%^000000\n10,001 z ~ 100,000 z\n = Tỉ lệ phí : ^1567fe2%^000000\n100,001 z ~ 1,000,000 z\n = Tỉ lệ phí : ^1567fe4%^000000\n1,000,001 z ~ 10,000,000 z\n	 = Tỉ lệ phí : ^1567fe6%^000000\n10,000,001 z ~ 100,000,000 z\n = Tỉ lệ phí : ^1567fe8%^000000\n100,000,001 z lớn hơn\n = Tỉ lệ phí : ^1567fe10%^000000\n#
+Tổng cộng : #
+~ Khi bán vật phẩm, tổng số zeny sẽ nhận được #
+~ Khi mua vật phẩm, tổng số zeny giảm #
+Mở phòng chat#
+Cấp độ hiện tại của nhân vật không cho phép vào nhóm#
+Job EXP: '%lld'#
+Đạt %lld Job EXP#
+Không thể mở cửa hàng tại địa điểm này#
+ giây nữa mới có thể chuyển trang bị được#
+S.Lg#
+Truyền SNS thất bại (%d)#
+Kết nối SNS thất bại#
+Có sẵn sau khi đăng nhập SNS#
+URL không tồn tại#
+Không có sẵn do các cửa sổ đội hình chồng chéo#
+Cửa hàng bán hàng ngoài trời của tôi#
+BOX#
+Mẹo#
+Tweet thành công#
+Thử lại#
+Hãy quay về và chọn nguyên liệu để tinh luyện.#
+Đóng cửa do đá không đủ tinh chế, xin vui lòng xác nhận lại#
+Đóng cửa do không đủ Zeny. Vui lòng xác nhận lại#
+Đóng cửa do không đủ phước lành từ thợ rèn, xin vui lòng xác nhận lại#
+Vật phẩm này đã bị phá hủy.#
+Các chỉ sổ chính đã bị giảm.#
+Các chỉ sổ chính đã quay về bình thường.#
+Vui lòng nhập mật khẩu OTP 8 chữ số#
+Hợp nhất tài khoản#
+Ragnarok#
+Đang bảo trì#
+Vui lòng nhập từ khóa#
+MOTP#
+Mã xác thực#
+Vui lòng thực thi GNJOY MOTP được tải xuống trên điện thoại di động, sau đó nhập mã xác thực#
+Thành viên của nhóm được bổ nhiệm không tồn tại. Bạn có chắc chắn muốn giải tán đội không?#
+- Trên 18 tuổi#
+- Máy chủ trả phí#
+- Máy chủ miễn phí#
+Mượt#
+Trung bình#
+Hơi giật#
+Giật#
+Map#
+Máy chủ chỉ có thể lưu trữ các vật phẩm trong ba lô#
+Trứng thú cưng không được phép trong kho máy chủ#
+Không có mục nào có thể được lưu trữ trong kho máy chủ#
+Mục này không thể tăng từ %s#
+Hủy phó bản#
+[%s] tinh luyện trang bị thành công, đã nhận [+%d %s].#
+[%s] tinh luyện thất bại [+%d %s].#
+Hủy bỏ chỉ sau khi bổ nhiệm đội trưởng#
+Tinh luyện#
+Hạ cấp#
+Cơ bản#
+Tìm thấy các tập tin bị thay đổi, xin vui lòng khởi động lại trò chơi#
+%s không thể dùng ở bản đồ này.#
+Tự động#
+Bạn không thể cho Homunculus ăn khi đang mở hòm thư.#
+Homunculus đã ăn thức ăn, \'%s\' còn lại %d#
+Đã bật Tự động cho Homunculus ăn (ON)#
+Đã tắt Tự động cho Homunculus ăn (OFF)#
+Giá trị kinh nghiệm mà Homunculus thu được là \n10% giá trị kinh nghiệm mà chủ nhân có được#
+Xác suất: %d%%#
+Đối tượng này không phải là mục tiêu của Homunculus. Vui lòng nhấn 'Alt+phím phải' để khóa mục tiêu của Homunculus#
+Mục tiêu tấn công của Homunculus không tồn tại, vui lòng nhấn 'Alt+phím phải' để khóa mục tiêu tấn công của Homunculus#
+Danh sách bán#
+Danh sách sẽ mua#
+Mới#
+Mũ#
+Có hạn#
+Trang bị thuê#
+Trang bị#
+Buff#
+Phục hồi#
+Khác#
+Đang giảm giá#
+Nạp#
+Mua#
+https://payment.gnjoy.com/bill/login.grv#
+Tìm kiếm#
+Cash miễn phí#
+Sử dụng tín dụng miễn phí#
+Giữ điểm#
+Cập nhật số lượng#
+Star Emperor(Girl)#
+Soul Reaper(Girl)#
+Star Emperor(Boy)#
+Soul Ripper(Boy)#
+Khi trọng lượng vượt quá %d, HP/SP sẽ không tự động phục hồi#
+GM#
+Phần thưởng được gửi vào ngày %d#
+Phần thưởng cú đấm %s#
+Thời gian diễn ra sự kiện: %02d tháng %02d ngày ~%02d tháng %02d ngày 24:00#
+Ngày %d#
+Đăng ký vào ngày%d\nVui lòng nhấp ~!#
+Đấm thành công vào ngày %d!#
+ |D-day#
+Ngày#
+Kiểm tra thất bại, xin vui lòng thử lại#
+Nhận phòng#
+Nó không phải là trong sự kiện punch-in#
+Tin nhắn tử thần#
+Không thể nhập hơn 50%%#
+Zoom Out#
+%s: Có thể tắt Zoom Out Bật/Tắt#
+Bật chức năng Thu nhỏ (Bật)#
+Tắt chức năng Thu nhỏ (Tắt)#
+/zoom#
+Tính năng này không khả dụng cho% d phút trước khi bắt đầu bao vây#
+Emblem Frame#
+Vẽ khung huy hiệu#
+Không vẽ khung huy hiệu#
+Kỹ năng nâng cao (%s) chưa có được#
+Nhãn sát thương phóng đại#
+Còn lại#
+Lên#
+Phải#
+Xuống#
+Fn#
+Thông báo#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Xác nhận#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Game Master#
+Quà đăng nhập ngày %d#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Quà đăng nhập hằng ngày#
+Sự kiện từ : %02d. %02d. ~ %02d. %02d. 24:00#
+Ngày %d#
+Nhấp để nhận quà \n đăng nhập \n ngày %d!#
+Bạn đã nhận quà \n đăng nhập \n ngày %d.#
+Kết thúc sau#
+ngày#
+Kiểm tra thất bại. Vui lòng thử lại sau.#
+Quà hằng ngày#
+Sự kiện không có khoảng thời gian.#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Thông báo vệ Buộc xóa thương nhân bán thời gian#
+Xin chào, nhà thám hiểm.\r\nChúng tôi đã đóng cửa hàng bán thời gian tự động của bạn vì vi phạm chính sách.\r\n Nếu bạn cần thêm thông tin, vui lòng gửi cho chúng tôi tin nhắn 1:1.\r\nCảm ơn.#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Buộc xóa#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Chỉ có thể sử dụng tiếng Anh và chữ số.#
+No Msg#
+No Msg#
+No Msg#
+Xóa#
+Phản hồi#
+Gửi#
+Check#
+Thông báo#
+Thường#
+Quay lại#
+Tìm#
+Cho thú cưng ăn thất bại. Bạn không thể cho nó ăn vào lúc này.#
+Cho homun ăn thất bại. Bạn không thể cho nó ăn vào lúc này.#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Đến##
+No Msg#
+No Msg#
+Xóa#
+Xóa tất cả#
+Bạn có chắc chắn muốn xóa tất cả thư?#
+Nhận#
+Nhận tất cả#
+Bạn có muốn nhận vật phẩm đính kèm từ thư này?#
+Bạn có muốn nhận tất cả từ hộp thư?#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Bạn cần đủ 18 tuổi để chơi trò chơi này. #
+Chúng tôi không khuyến khích người chơi, chơi trên 3 tiếng đồng hồ. #
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+File client đã bị thay đổi#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+No Msg#
+Thông tin thanh toán đã hết hạn, vui lòng khởi động lại client.#
+Đẫ xảy ra lỗi. Vui lòng thử lại.#

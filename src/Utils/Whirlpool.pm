@@ -12,7 +12,7 @@
 # MODULE DESCRIPTION: Whirlpool hashing algorithm
 #
 # This is an implementation of
-# <a href="http://en.wikipedia.org/wiki/Whirlpool_%28hash%29">Whirlpool</a>.
+# <a href="https://en.wikipedia.org/wiki/Whirlpool_(hash_function)">Whirlpool</a>.
 # Whirlpool is a secure, 512-bit one-way hashing algorithm.
 #
 # <h3>Example:</h3>

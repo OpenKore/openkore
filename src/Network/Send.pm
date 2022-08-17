@@ -19,7 +19,7 @@
 # This class contains convenience methods for sending messages to the RO
 # server.
 #
-# Please also read <a href="http://wiki.openkore.com/index.php/Network_subsystem">the
+# Please also read <a href="https://openkore.com/wiki/Network_subsystem">the
 # network subsystem overview.</a>
 package Network::Send;
 
@@ -33,7 +33,7 @@ use Digest::MD5;
 use Math::BigInt;
 
 # TODO: remove 'use Globals' from here, instead pass vars on
-use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList);
+use Globals qw(%config $bytesSent %packetDescriptions $enc_val1 $enc_val2 $char $masterServer $syncSync $accountID %timeout %talk $skillExchangeItem $net $rodexList $rodexWrite %universalCatalog %rpackets $mergeItemList $repairList %cashShop);
 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
@@ -45,7 +45,7 @@ sub new {
 	my $self = $class->SUPER::new( @_ );
 
 	my $cryptKeys = $masterServer->{sendCryptKeys};
-	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})\s*,\s*(0x[0-9A-F]{8})$/ ) {
+	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})$/ ) {
 		$self->cryptKeys( hex $1, hex $2, hex $3 );
 	}
 
@@ -320,8 +320,11 @@ sub reconstruct_master_login {
 	my ($self, $args) = @_;
 
 	$args->{ip} = '192.168.0.2' unless exists $args->{ip}; # gibberish
-	$args->{mac} = '111111111111' unless exists $args->{mac}; # gibberish
-	$args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
+	unless (exists $args->{mac}) {
+	    $args->{mac} = $config{macAddress} || '111111111111'; # gibberish
+	    $args->{mac} = uc($args->{mac});
+	    $args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
+	}
 	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
 
 	if (exists $args->{password}) {
@@ -359,6 +362,8 @@ sub sendMasterLogin {
 			master_version => $master_version,
 			username => $username,
 			password => $password,
+			game_code => '0011', # kRO Ragnarok game code
+			flag => 'G000', # Maybe this say that we are connecting from client
 		});
 	} else {
 		$msg = pack("v1 V", hex($masterServer->{masterLogin_packet}) || 0x64, $version || $self->version) .
@@ -405,6 +410,18 @@ sub reconstruct_game_login {
 	my ($self, $args) = @_;
 	$args->{userLevel} = 0 unless exists $args->{userLevel};
 	($args->{iAccountSID}) = $masterServer->{ip} =~ /\d+\.\d+\.\d+\.(\d+)/ unless exists $args->{iAccountSID};
+
+	if (exists $args->{mac}) {
+		my $key = pack('C16', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
+		my $chain = pack('C16', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
+		my $mac = $config{macAddress} || "F2ADCC03771E";
+		$mac = uc($mac);
+		my $in = pack('a16', $mac);
+
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 16, 16);
+		$args->{mac} = $rijndael->Encrypt($in, undef, 16, 0);
+	}
 }
 
 # TODO: $masterServer->{gameLogin_packet}?
@@ -750,7 +767,9 @@ sub parse_buy_bulk_buyer {
 
 sub reconstruct_buy_bulk_buyer {
     my ($self, $args) = @_;
-    $args->{itemInfo} = pack('(a6)*', map { pack 'a2 v2', @{$_}{qw(ID itemID amount)} } @{$args->{items}});
+	my $packet_size = $self->{buy_bulk_buyer_size} || '(a6)*';
+	my $packet_unpack = $self->{buy_bulk_buyer_size_unpack} || 'a2 v2';
+	$args->{itemInfo} = pack($packet_size, map { pack $packet_unpack, @{$_}{qw(ID itemID amount)} } @{$args->{items}});
 }
 
 sub sendBuyBulkBuyer {
@@ -788,7 +807,9 @@ sub sendBuyBulkOpenShop {
 
 sub reconstruct_buy_bulk_openShop {
 	my ($self, $args) = @_;
-	$args->{itemInfo} = pack '(a8)*', map { pack 'v2 V', @{$_}{qw(nameID amount price)} } @{$args->{items}};
+	my $packet_size = $self->{buy_bulk_openShop_size} || '(a8)*';
+	my $packet_unpack = $self->{buy_bulk_openShop_size_unpack} || 'v2 V';
+	$args->{itemInfo} = pack $packet_size, map { pack $packet_unpack, @{$_}{qw(nameID amount price)} } @{$args->{items}};
 }
 
 sub sendSkillUse {
@@ -851,6 +872,21 @@ sub sendCloseShop {
 	my $self = shift;
 	$self->sendToServer($self->reconstruct({switch => 'shop_close'}));
 	debug "Shop Closed\n", "sendPacket", 2;
+}
+
+# 0x0102,6,partychangeoption,2:4
+# 0x07D7
+# note: item share changing seems disabled in newest clients
+sub sendPartyOption {
+	my ($self, $exp, $itemPickup, $itemDivision) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'party_setting',
+		exp => $exp,
+		itemPickup => $itemPickup,
+		itemDivision => $itemDivision,
+	}));
+	debug "Sent Party Option\n", "sendPacket", 2;
 }
 
 # 0x7DA
@@ -1106,6 +1142,7 @@ sub sendCashShopOpen {
 sub sendCashShopClose {
 	my ($self) = @_;
 	$self->sendToServer($self->reconstruct({switch => 'cash_shop_close'}));
+	undef $cashShop{points};
 	debug "Requesting sendCashShopClose\n", "sendPacket", 2;
 }
 
@@ -1354,7 +1391,7 @@ sub sendRefineUIClose {
 }
 
 sub sendTokenToServer {
-	my ($self, $username, $password, $master_version, $version, $token, $length, $ott_ip, $ott_port) = @_;
+	my ($self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port) = @_;
 	my $len =  $length + 92;
 
 	my $password_rijndael = $self->encrypt_password($password);
@@ -1363,14 +1400,15 @@ sub sendTokenToServer {
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
 
 	$net->serverDisconnect();
-	$net->serverConnect($ott_ip, $ott_port);
+	$net->serverConnect($otp_ip, $otp_port);# OTP - One Time Password
 
 	my $msg = $self->reconstruct({
 		switch => 'token_login',
 		len => $len, # size of packet
-		version => $version,
+		version => $version || $self->version,
 		master_version => $master_version,
 		username => $username,
+		password => $password,
 		password_rijndael => $password_rijndael,
 		mac => $mac_hyphen_separated,
 		ip => $ip,
@@ -2249,7 +2287,18 @@ sub sendCardMerge {
 }
 
 sub sendCharCreate {
-	my ($self, $slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
+	my $self = shift;
+	my ($slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color, $job_id, $sex);
+
+	if ($self->{packet_lut}{char_create} eq '0067') {
+		($slot, $name, $str, $agi, $vit, $int, $dex, $luk, $hair_style, $hair_color) = @_;
+	} elsif ($self->{packet_lut}{char_create} eq '0970') {
+		($slot, $name, $hair_style, $hair_color) = @_;
+	} elsif ($self->{packet_lut}{char_create} eq '0A39') {
+		($slot, $name, $hair_style, $hair_color, $job_id, $sex) = @_;
+		$job_id     ||= 0;    # novice
+		$sex        ||= 0;    # female
+	}
 	$hair_color ||= 1;
 	$hair_style ||= 0;
 
@@ -2264,7 +2313,9 @@ sub sendCharCreate {
 		luk => $luk,
 		slot => $slot,
 		hair_color => $hair_color,
-		hair_style => $hair_style
+		hair_style => $hair_style,
+		job_id => $job_id,
+		sex => $sex
 	}));
 
 	debug "Sent Char Create\n", "sendPacket", 2;
@@ -2551,7 +2602,7 @@ sub sendSellBulk {
 		items => \@{$r_array},
 	}));
 
-	debug("Sent bulk buy: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk sell: " . getHex($_->{ID}) . " x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_sell_bulk {
@@ -2561,11 +2612,11 @@ sub reconstruct_sell_bulk {
 }
 
 sub sendAchievementGetReward {
-	my ($self, $ach_id) = @_;
+	my ($self, $achievementID) = @_;
 
 	$self->sendToServer($self->reconstruct({
 		switch => 'achievement_get_reward',
-		ach_id => $ach_id,
+		achievementID => $achievementID,
 	}));
 }
 
@@ -2850,11 +2901,6 @@ sub sendMailOperateWindow {
 
 sub sendMailSetAttach {
 	my ($self, $amount, $ID) = @_;
-
-	# 0 for zeny
-	$ID ||= 0;
-
-	my $msg = pack("v a2 V", 0x0247, $ID, $amount);
 
 	# Before setting an attachment, we must remove any zeny/item that was attached but the mail wasn't sent
 	# Otherwise the attachment will be lost
@@ -3378,7 +3424,7 @@ sub sendBuyBulkMarket {
 		items => \@{$r_array},
 	}));
 
-	debug("Sent bulk buy: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
+	debug("Sent bulk buy market: $_->{itemID} x $_->{amount}\n", "sendPacket", 2) foreach (@{$r_array});
 }
 
 sub reconstruct_buy_bulk_market {
@@ -3398,6 +3444,26 @@ sub sendMarketClose {
 	}));
 
 	debug "Sent Market Close\n", "sendPacket";
+}
+
+# Request Inventory Expansion
+# 0B14
+sub sendInventoryExpansionRequest {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_request' }));
+}
+
+# Reject Inventory Expansion
+# 0B19
+sub sendInventoryExpansionRejected {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'inventory_expansion_rejected' }));
+}
+
+# 0B1C (PACKET_CZ_PING)
+sub sendPing {
+	my ($self, $args) = @_;
+	$self->sendToServer($self->reconstruct({ switch => 'ping' }));
 }
 
 1;

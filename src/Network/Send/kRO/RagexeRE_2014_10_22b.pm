@@ -24,12 +24,12 @@ sub new {
 		'08AD' => ['actor_look_at', 'v C', [qw(head body)]],
 		'0368' => ['actor_name_request', 'a4', [qw(ID)]],
 		'0811' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
-		'0817' => ['buy_bulk_closeShop'],			
+		'0817' => ['buy_bulk_closeShop'],
 		'0815' => ['buy_bulk_openShop', 'v V C Z80 a*', [qw(len limitZeny result storeName itemInfo)]], # Buying store
 		'0360' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'0437' => ['character_move', 'a3', [qw(coordString)]],
 		'091A' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'0899' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0899' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'087D' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0281' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'094E' => ['item_take', 'a4', [qw(ID)]],
@@ -40,14 +40,14 @@ sub new {
 		'0878' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'08AA' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0438' => ['storage_password'],
-		'035F' => ['sync', 'V', [qw(time)]],	
+		'035F' => ['sync', 'V', [qw(time)]],
 		'0819' => ['search_store_info', 'v C V2 C2 a*', [qw(len type max_price min_price item_count card_count item_card_list)]],
 		'0940' => ['search_store_request_next_page'],
 		'0835' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0369
 		actor_info_request 096A
@@ -75,14 +75,11 @@ sub new {
 		search_store_request_next_page 0940
 		search_store_select 0835
 	);
-	
-	
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #	elif PACKETVER == 20141022 // 2014-10-22bRagexe
-#	packet_keys(0x290551EA,0x2B952C75,0x2D67669B);	
+#	packet_keys(0x290551EA,0x2B952C75,0x2D67669B);
 #	$self->cryptKeys(0x290551EA, 0x2D67669B, 0x2B952C75);
-
 
 	return $self;
 }

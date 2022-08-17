@@ -2293,14 +2293,83 @@ prt_f1319in.gat#prt_in.gat#
 prt_f1319in.rsw#prt_in.rsw#
 유저인터페이스\map\prt_f1319in.bmp#유저인터페이스\map\prt_in.bmp#
 
+//2017 초보자 던전
+1@begi.gnd#1@begi.gnd#
+1@begi.gat#1@begi.gat#
+1@begi.rsw#1@begi.rsw#
+유저인터페이스\map\1@begi.bmp#유저인터페이스\map\1@begi.bmp#
 
-//옛글래스트헤임 메모리얼 맵복사
-1@gl_kh.gnd#1@gl_k.gnd#
-1@gl_kh.gat#1@gl_k.gat#
-1@gl_kh.rsw#1@gl_k.rsw#
-유저인터페이스\map\1@gl_kh.bmp#유저인터페이스\map\1@gl_k.bmp#
+//2017 태국 RWC 복사맵
+rwc_arena09.gnd#rwc_arena01.gnd#
+rwc_arena09.gat#rwc_arena01.gat#
+rwc_arena09.rsw#rwc_arena01.rsw#
 
-2@gl_kh.gnd#2@gl_k.gnd#
-2@gl_kh.gat#2@gl_k.gat#
-2@gl_kh.rsw#2@gl_k.rsw#
-유저인터페이스\map\2@gl_kh.bmp#유저인터페이스\map\2@gl_k.bmp#
+rwc_arena10.gnd#rwc_arena02.gnd#
+rwc_arena10.gat#rwc_arena02.gat#
+rwc_arena10.rsw#rwc_arena02.rsw#
+
+rwc_arena11.gnd#rwc_arena03.gnd#
+rwc_arena11.gat#rwc_arena03.gat#
+rwc_arena11.rsw#rwc_arena03.rsw#
+
+rwc_arena12.gnd#rwc_arena04.gnd#
+rwc_arena12.gat#rwc_arena04.gat#
+rwc_arena12.rsw#rwc_arena04.rsw#
+
+//20161214 초심자 호러장던
+1@xm_d2.gnd#1@xm_d.gnd#
+1@xm_d2.gat#1@xm_d.gat#
+1@xm_d2.rsw#1@xm_d.rsw#
+유저인터페이스\map\1@xm_d2.bmp#유저인터페이스\map\1@xm_d.bmp#
+
+//20161207_초심자 고성
+1@gl_k2.gnd#1@gl_k.gnd#
+1@gl_k2.gat#1@gl_k.gat#
+1@gl_k2.rsw#1@gl_k.rsw#
+유저인터페이스\map\1@gl_k2.bmp#유저인터페이스\map\1@gl_k.bmp#
+
+2@gl_k2.gnd#2@gl_k.gnd#
+2@gl_k2.gat#2@gl_k.gat#
+2@gl_k2.rsw#2@gl_k.rsw#
+유저인터페이스\map\2@gl_k2.bmp#유저인터페이스\map\2@gl_k.bmp#
+
+//20160701요일던전
+1@md_gef.gnd#1@md_gef.gnd#
+1@md_gef.gat#1@md_gef.gat#
+1@md_gef.rsw#1@md_gef.rsw#
+유저인터페이스\map\1@md_gef.bmp#유저인터페이스\map\1@md_gef.bmp#
+
+//20160615요일던전
+1@md_pay.gnd#1@md_pay.gnd#
+1@md_pay.gat#1@md_pay.gat#
+1@md_pay.rsw#1@md_pay.rsw#
+유저인터페이스\map\1@md_pay.bmp#유저인터페이스\map\1@md_pay.bmp#
+
+//2017 FGT 복사맵
+1@tre.gnd#treasure01.gnd#
+1@tre.gat#treasure01.gat#
+1@tre.rsw#treasure01.rsw#
+유저인터페이스\map\1@tre.bmp#유저인터페이스\map\1@tre.bmp#
+
+//201805 17.1 추가맵
+1@cor.gnd#1@cor.gnd#
+1@cor.gat#1@cor.gat#
+1@cor.rsw#1@cor.rsw#
+
+1@os_a.gnd#1@os_a.gnd#
+1@os_a.gat#1@os_a.gat#
+1@os_a.rsw#1@os_a.rsw#
+
+1@os_b.gnd#1@os_b.gnd#
+1@os_b.gat#1@os_b.gat#
+1@os_b.rsw#1@os_b.rsw#
+
+1@rgsr.gnd#1@rgsr.gnd#
+1@rgsr.gat#1@rgsr.gat#
+1@rgsr.rsw#1@rgsr.rsw#
+
+
+1@jtb2.gnd#1@jtb.gnd#
+1@jtb2.gat#1@jtb.gat#
+1@jtb2.rsw#1@jtb.rsw#
+유저인터페이스\map\1@jtb2.bmp#유저인터페이스\map\1@jtb.bmp#

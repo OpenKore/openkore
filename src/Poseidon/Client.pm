@@ -1,9 +1,9 @@
 ############################################################
 # Poseidon query interface for OpenKore
 #
-# This program is free software; you can redistribute it and/or 
-# modify it under the terms of the GNU General Public License 
-# as published by the Free Software Foundation; either version 2 
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
 # Copyright (c) 2005-2006 OpenKore Development Team
@@ -25,7 +25,7 @@ use Plugins;
 use Misc;
 
 use constant DEFAULT_POSEIDON_SERVER_PORT => 24390;
-use constant POSEIDON_SUPPORT_URL => 'http://wiki.openkore.com/index.php?title=Poseidon';
+use constant POSEIDON_SUPPORT_URL => 'https://openkore.com/wiki/Poseidon';
 
 our $instance;
 
@@ -108,7 +108,7 @@ sub getResult {
 	$self->{socket}->recv($buf, 1024 * 32);
 	if (!$buf) {
 		# This shouldn't have happened.
-		error "The Poseidon server closed the connection unexpectedly or could not respond " . 
+		error "The Poseidon server closed the connection unexpectedly or could not respond " .
 			"to your request due to a server bandwidth issue. Please report this bug.\n";
 		$self->{socket} = undef;
 		offlineMode();

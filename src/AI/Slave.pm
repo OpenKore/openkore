@@ -220,7 +220,7 @@ sub processFollow {
 		&& (!defined $slave->findAction('route') || !$slave->args($slave->findAction('route'))->{isFollow})
 	) {
 		$slave->clear('move', 'route');
-		if (!checkLineWalkable($slave->{pos_to}, $char->{pos_to})) {
+		if (!$field->canMove($slave->{pos_to}, $char->{pos_to})) {
 			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, isFollow => 1);
 			debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 
@@ -281,6 +281,8 @@ sub processAttack {
 	my $slave = shift;
 	#Benchmark::begin("ai_homunculus_attack") if DEBUG;
 
+	$slave->dequeue if $slave->action eq "checkMonsters";
+	
 	if ($slave->action eq "attack" && $slave->args->{suspended}) {
 		$slave->args->{ai_attack_giveup}{time} += time - $slave->args->{suspended};
 		delete $slave->args->{suspended};
@@ -299,32 +301,45 @@ sub processAttack {
 		undef $slave->args->{avoiding};
 
 	} elsif ((($slave->action eq "route" && $slave->action (1) eq "attack") || ($slave->action eq "move" && $slave->action (2) eq "attack"))
-	   && $slave->args->{attackID} && timeOut($slave->{slave_attack_route_adjust}, 1)) {
+	   && $slave->args->{attackID} && timeOut($timeout{$slave->{ai_route_adjust_timeout}})) {
 		# We're on route to the monster; check whether the monster has moved
 		my $ID = $slave->args->{attackID};
 		my $attackSeq = ($slave->action eq "route") ? $slave->args (1) : $slave->args (2);
 		my $target = Actor::get($ID);
+		my $realMyPos = calcPosition($slave);
+		my $realMonsterPos = calcPosition($target);
 
-		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
+		if (
+			$target->{type} ne 'Unknown' &&
+			$attackSeq->{monsterPos} &&
+			%{$attackSeq->{monsterPos}} &&
+			$attackSeq->{monsterLastMoveTime} &&
+			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
+		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
+			debug "$slave target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
 			$slave->dequeue;
 			$slave->dequeue if $slave->action eq "route";
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "Slave target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
-		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($target), calcPosition($slave)) <= $attackSeq->{attackMethod}{maxDistance}) {
-			# Monster is within attack range; stop moving
+		} elsif (
+			$target->{type} ne 'Unknown' &&
+			$attackSeq->{monsterPos} &&
+			%{$attackSeq->{monsterPos}} &&
+			$attackSeq->{monsterLastMoveTime} &&
+			$attackSeq->{attackMethod}{maxDistance} == 1 &&
+			canReachMeleeAttack($realMyPos, $realMonsterPos) &&
+			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{$slave->{configPrefix}.'attackCheckLOS'} ||($config{$slave->{configPrefix}.'attackCheckLOS'} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})))
+		) {
+			debug "$slave target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
 			$slave->dequeue;
 			$slave->dequeue if $slave->action eq "route";
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "$slave target $target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
-				"$attackSeq->{attackMethod}{maxDistance} blocks; stop moving\n", "ai_attack";
 		}
-		$slave->{slave_attack_route_adjust} = time;
+
+		$timeout{$slave->{ai_route_adjust_timeout}}{time} = time;
 	}
 
 	if ($slave->action eq "attack" &&
@@ -396,12 +411,12 @@ sub processAttack {
 		my $target = Actor::get($ID);
 		my $myPos = $slave->{pos_to};
 		my $monsterPos = $target->{pos_to};
-		my $monsterDist = distance($myPos, $monsterPos);
+		my $monsterDist = blockDistance($myPos, $monsterPos);
 
 		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 		my $realMyPos = calcPosition($slave);
 		my $realMonsterPos = calcPosition($target);
-		my $realMonsterDist = distance($realMyPos, $realMonsterPos);
+		my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 		if (!$config{$slave->{configPrefix}.'runFromTarget'}) {
 			$myPos = $realMyPos;
 			$monsterPos = $realMonsterPos;
@@ -468,48 +483,8 @@ sub processAttack {
 				useTeleport(1);
 			}
 
-		} elsif ($config{$slave->{configPrefix}.'attackCheckLOS'} &&
-			 $args->{attackMethod}{distance} > 2 &&
-			 !checkLineSnipable($realMyPos, $realMonsterPos)) {
-			# We are a ranged attacker without LOS
-
-			# Calculate squares around monster within shooting range, but not
-			# closer than runFromTarget_dist
-			my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
-						  $args->{attackMethod}{distance},
-									  $config{$slave->{configPrefix}.'runFromTarget'} ? $config{$slave->{configPrefix}.'runFromTarget_dist'} : 0);
-
-			# Determine which of these spots are snipable
-			my $best_spot;
-			my $best_dist;
-			for my $spot (@stand) {
-				# Is this spot acceptable?
-				# 1. It must have LOS to the target ($realMonsterPos).
-				# 2. It must be within $config{followDistanceMax} of
-				#    $masterPos, if we have a master.
-				if (checkLineSnipable($spot, $realMonsterPos) &&
-				    (distance($spot, $char->{pos_to}) <= 15)) {
-					# FIXME: use route distance, not pythagorean distance
-					my $dist = distance($realMyPos, $spot);
-					if (!defined($best_dist) || $dist < $best_dist) {
-						$best_dist = $dist;
-						$best_spot = $spot;
-					}
-				}
-			}
-
-			# Move to the closest spot
-			my $msg = TF("%s has no LOS from (%d, %d) to target (%d, %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y});
-			if ($best_spot) {
-				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
-				$slave->route(undef, @{$best_spot}{qw(x y)});
-			} else {
-				warning TF("%s; no acceptable place to stand\n", $msg);
-				$slave->dequeue;
-			}
-
 		} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
-			my $cell = get_kite_position($field, $slave, $target, $config{$slave->{configPrefix}.'runFromTarget_dist'}, ($config{$slave->{configPrefix}.'runFromTarget_minStep'} || 7), ($config{$slave->{configPrefix}.'runFromTarget_maxStep'} || 9), $char, $config{$slave->{configPrefix}.'followDistanceMax'});
+			my $cell = get_kite_position($slave, 2, $target);
 			if ($cell) {
 				debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave';
 				$slave->args->{avoiding} = 1;
@@ -518,33 +493,34 @@ sub processAttack {
 				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave';
 			}
 
-		} elsif ($realMonsterDist > $args->{attackMethod}{maxDistance} && !timeOut($args->{ai_attack_giveup})) {
+		} elsif (
+			# We are out of range
+			($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
+			($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})
+		) {
 			# The target monster moved; move to target
 			$args->{move_start} = time;
 			$args->{monsterPos} = {%{$monsterPos}};
-
-			# Calculate how long it would take to reach the monster.
-			# Calculate where the monster would be when you've reached its
-			# previous position.
-			my $time_needed;
-			if (objectIsMovingTowards($target, $slave, 45)) {
-				$time_needed = $realMonsterDist * $slave->{walk_speed};
-			} else {
-				# If monster is not moving towards you, then you need more time to walk
-				$time_needed = $realMonsterDist * $slave->{walk_speed} + 2;
+			$args->{monsterLastMoveTime} = $target->{time_move};
+			
+			debug "$slave target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from slave ($realMyPos->{x} $realMyPos->{y}) to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
+			
+			my $pos = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
+			my $result;
+			
+			if ($pos) {
+				debug "Attack $slave ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
+				
+				$result = $slave->route(
+					undef,
+					@{$pos}{qw(x y)},
+					maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
+					attackID => $ID,
+					noMapRoute => 1,
+					avoidWalls => 0,
+					meetingSubRoute => 1
+				);
 			}
-			my $pos = calcPosition($target, $time_needed);
-
-			my $dist = sprintf("%.1f", $realMonsterDist);
-			debug "Slave target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
-				"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
-
-			my $result = $slave->route(undef, @{$pos}{qw(x y)},
-				distFromGoal => $args->{attackMethod}{distance},
-				maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
-				attackID => $ID,
-				noMapRoute => 1,
-				noAvoidWalls => 1);
 			if (!$result) {
 				# Unable to calculate a route to target
 				$target->{$slave->{ai_attack_failed_timeout}} = time;
@@ -556,13 +532,52 @@ sub processAttack {
 				}
 			}
 
+		} elsif (
+			# We are a ranged attacker in range without LOS
+			$args->{attackMethod}{maxDistance} > 1 &&
+			$config{$slave->{configPrefix}.'attackCheckLOS'} &&
+			!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
+		) {
+			my $best_spot = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
+
+			# Move to the closest spot
+			my $msg = TF("%s has no LOS from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+			if ($best_spot) {
+				message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
+				$slave->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+			} else {
+				$target->{attack_failedLOS} = time;
+				warning TF("%s; no acceptable place to stand\n", $msg);
+				$slave->dequeue;
+			}
+
+		} elsif (
+			# We are a melee attacker in range without LOS
+			$args->{attackMethod}{maxDistance} == 1 &&
+			$config{$slave->{configPrefix}.'attackCheckLOS'} &&
+			blockDistance($realMyPos, $realMonsterPos) == 2 &&
+			!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
+		) {
+			my $best_spot = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
+
+			# Move to the closest spot
+			my $msg = TF("%s has no LOS in melee from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
+			if ($best_spot) {
+				message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
+				$slave->route(undef, @{$best_spot}{qw(x y)}, LOSSubRoute => 1, avoidWalls => 0);
+			} else {
+				$target->{attack_failedLOS} = time;
+				warning TF("%s; no acceptable place to stand\n", $msg);
+				$slave->dequeue;
+			}
+
 		} elsif ((!$config{$slave->{configPrefix}.'runFromTarget'} || $realMonsterDist >= $config{$slave->{configPrefix}.'runFromTarget_dist'})
 		 && (!$config{$slave->{configPrefix}.'tankMode'} || !$target->{dmgFromPlayer}{$slave->{ID}})) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 			if (!$slave->args->{firstAttack}) {
 				$slave->args->{firstAttack} = 1;
 				my $pos = "$myPos->{x},$myPos->{y}";
-				debug "Slave is ready to attack target $target (which is $realMonsterDist blocks away); we're at ($pos)\n", "ai_attack";
+				debug "$slave is ready to attack target $target (which is $realMonsterDist blocks away); we're at ($pos)\n", "ai_attack";
 			}
 
 			$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
@@ -571,32 +586,55 @@ sub processAttack {
 				# but some time has passed and we still haven't dealed any damage.
 				# Our recorded position might be out of sync, so try to unstuck
 				$args->{unstuck}{time} = time;
-				debug("Slave attack - trying to unstuck\n", "ai_attack");
+				debug("$slave attack - trying to unstuck\n", "ai_attack");
 				$slave->move($myPos->{x}, $myPos->{y});
 				$args->{unstuck}{count}++;
 			}
 
 			if ($args->{attackMethod}{type} eq "weapon") {
-				if ($config{$slave->{configPrefix}.'attack_dance_melee'}) {
+				if ($config{$slave->{configPrefix}.'attack_dance_melee'} && $args->{attackMethod}{distance} == 1) {
 					if (timeOut($timeout{$slave->{ai_dance_attack_melee_timeout}})) {
 						my $cell = get_dance_position($slave, $target);
+						debug TF("Slave %s will dance type %d from (%d, %d) to (%d, %d), target %s at (%d, %d).\n", $slave, $config{$slave->{configPrefix}.'attack_dance_melee'}, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y});
 						$slave->sendMove ($cell->{x}, $cell->{y});
-						$slave->sendAttack ($ID);
 						$slave->sendMove ($realMyPos->{x},$realMyPos->{y});
+						$slave->sendAttack ($ID);
 						$timeout{$slave->{ai_dance_attack_melee_timeout}}{time} = time;
 					}
 					
 				} elsif ($config{$slave->{configPrefix}.'attack_dance_ranged'} && $args->{attackMethod}{distance} > 2) {
 					if (timeOut($timeout{$slave->{ai_dance_attack_ranged_timeout}})) {
-						my $cell = get_kite_position($field, $slave, $target, $realMonsterDist+1, $realMonsterDist+2, $realMonsterDist+2, $char, $config{$slave->{configPrefix}.'followDistanceMax'});
-						$slave->sendAttack ($ID);
+						my $cell = get_dance_position($slave, $target);
+						debug TF("Slave %s will range dance type %d from (%d, %d) to (%d, %d), target %s at (%d, %d).\n", $slave, $config{$slave->{configPrefix}.'attack_dance_ranged'}, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y});
 						$slave->sendMove ($cell->{x}, $cell->{y});
+						$slave->sendMove ($realMyPos->{x},$realMyPos->{y});
+						$slave->sendAttack ($ID);
+						if ($config{$slave->{configPrefix}.'runFromTarget'} && $config{$slave->{configPrefix}.'runFromTarget_inAdvance'} && $realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_minStep'}) {
+							my $cell = get_kite_position($slave, 1, $target);
+							if ($cell) {
+								debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+								$args->{avoiding} = 1;
+								$slave->sendMove($cell->{x}, $cell->{y});
+							} else {
+								debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+							}
+						}
 						$timeout{$slave->{ai_dance_attack_ranged_timeout}}{time} = time;
 					}
 				
 				} else {
 					if (timeOut($timeout{$slave->{ai_attack_timeout}})) {
 						$slave->sendAttack ($ID);
+						if ($config{$slave->{configPrefix}.'runFromTarget'} && $config{$slave->{configPrefix}.'runFromTarget_inAdvance'} && $realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_minStep'}) {
+							my $cell = get_kite_position($slave, 1, $target);
+							if ($cell) {
+								debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+								$args->{avoiding} = 1;
+								$slave->sendMove($cell->{x}, $cell->{y});
+							} else {
+								debug TF("%s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+							}
+						}
 						$timeout{$slave->{ai_attack_timeout}}{time} = time;
 					}
 				}
@@ -771,8 +809,9 @@ sub processAutoAttack {
 			foreach (@monstersID) {
 				next if (!$_ || !slave_checkMonsterCleanness($slave, $_));
 				my $monster = $monsters{$_};
-				next if !$field->isWalkable($monster->{pos}{x}, $monster->{pos}{y}); # this should NEVER happen
-				next if !checkLineWalkable($myPos, $monster->{pos}); # ignore unrecheable monster. there's a bug in bRO's gef_fild06 where a lot of petites are bugged in some unrecheable cells
+
+				# Never attack monsters that we failed to get LOS with
+				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
 				my $pos = calcPosition($monster);
 				my $master_pos = $char->position;
@@ -800,20 +839,9 @@ sub processAutoAttack {
 				### List normal, non-aggressive monsters. ###
 
 				# Ignore monsters that
-				# - Have a status (such as poisoned), because there's a high chance (WHY?)
-				#   they're being attacked by other players
 				# - Are inside others' area spells (this includes being trapped).
 				# - Are moving towards other players.
-				# - Are behind a wall
-				next if (#( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) ) || 
-					objectInsideSpell($monster)
-					|| objectIsMovingTowardsPlayer($monster));
-					
-				if ($config{$slave->{configPrefix}.'attackCanSnipe'}) {
-					next if (!checkLineSnipable($slave->{pos_to}, $pos));
-				} else {
-					next if (!checkLineWalkable($slave->{pos_to}, $pos));
-				}
+				next if (objectInsideSpell($monster) || objectIsMovingTowardsPlayer($monster));
 
 				my $safe = 1;
 				if ($config{$slave->{configPrefix}.'attackAuto_onlyWhenSafe'}) {
@@ -840,8 +868,11 @@ sub processAutoAttack {
 			### Step 2: Pick out the "best" monster ###
 
 			# We define whether we should attack only monsters in LOS or not
-			my $nonLOSNotAllowed = !$config{$slave->{configPrefix}.'attackCheckLOS'};
-			$attackTarget = getBestTarget(\@aggressives, $nonLOSNotAllowed) || getBestTarget(\@partyMonsters, $nonLOSNotAllowed) || getBestTarget(\@cleanMonsters, $nonLOSNotAllowed);
+			my $checkLOS = $config{$slave->{configPrefix}.'attackCheckLOS'};
+			my $canSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
+			$attackTarget = getBestTarget(\@aggressives,   $checkLOS, $canSnipe) ||
+			                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
+			                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
 		}
 
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.

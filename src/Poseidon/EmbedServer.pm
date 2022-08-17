@@ -2,9 +2,9 @@
 ###########################################################
 # Poseidon server - XKore Integrated version
 #
-# This program is free software; you can redistribute it and/or 
-# modify it under the terms of the GNU General Public License 
-# as published by the Free Software Foundation; either version 2 
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
 # Copyright (c) 2005-2006 OpenKore Development Team
@@ -25,7 +25,7 @@ my $CLASS = "Poseidon::EmbedServer";
 
 use constant QUERY_SERVER_HOST => '127.0.0.1';
 use constant QUERY_SERVER_PORT => 24390;
-use constant POSEIDON_SUPPORT_URL => 'http://wiki.openkore.com/index.php?title=Poseidon';
+use constant POSEIDON_SUPPORT_URL => 'https://openkore.com/wiki/Poseidon';
 
 
 ##
@@ -46,7 +46,7 @@ sub new {
 	$self->{"$CLASS queue"} = [];
 	$self->{"$CLASS responseQueue"} = [];
 	$self->{sentQuery} = 0;
-	message TF("Embed Poseidon Server initialized\n" . 
+	message TF("Embed Poseidon Server initialized\n" .
 		"Please read %s for more information.\n\n", POSEIDON_SUPPORT_URL), "startup";
 
 	return $self;
@@ -69,7 +69,7 @@ sub process {
 		packet => $args->{packet},
 		client => $client
 	);
-	
+
 	Scalar::Util::weaken($request{client});
 	push @{$self->{"$CLASS queue"}}, \%request;
 }
@@ -130,13 +130,13 @@ sub iterate {
 sub setResponse {
 	my $self = shift;
 	my $packet = shift;
-	
-	push @{$self->{"$CLASS responseQueue"}}, $packet;	
+
+	push @{$self->{"$CLASS responseQueue"}}, $packet;
 }
 
 sub awaitingResponse {
 	my $self = shift;
-	
+
 	return ($self->{sentQuery} && @{$self->{"$CLASS responseQueue"}} == 0);
 }
 

@@ -25,7 +25,7 @@ sub new {
 		'0202' => ['actor_look_at', 'v C', [qw(head body)]],#5
 		'022D' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],#19
 		'023B' => ['friend_request', 'a*', [qw(username)]],#26
-		'0361' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],#5
+		'0361' => ['homunculus_command', 'v C', [qw(commandType commandID)]],#5
 		'0362' => ['item_drop', 'a2 v', [qw(ID amount)]],#6
 		'0891' => undef,
 		'0892' => undef,
@@ -38,7 +38,7 @@ sub new {
 
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_info_request 096A
 		actor_look_at 0202
@@ -50,7 +50,7 @@ sub new {
 		map_login 022D
 	);
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self;
 }
 

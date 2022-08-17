@@ -1,7 +1,7 @@
 # alertsound plugin by joseph
-# Modified by 4epT (18.04.2020)
+# Modified by 4epT (27.06.2021)
 #
-# Alert Plugin Version 9
+# Alert Plugin Version 12
 #
 # This software is open source, licensed under the GNU General Public
 # License, ver. (2 * (2 + cos(pi)))
@@ -16,7 +16,7 @@
 # Supported events:
 #	death, emotion, teleport, map change, monster <monster name>, player <player name>, player *, GM near, avoidGM_near,
 #	avoidList_near, private GM chat, private avoidList chat (not working for ID), private chat, public GM chat, public avoidList chat,
-#	public npc chat, public chat, system message, disconnected, item <item name>, item <item ID>, item cards, item *<part item name>*
+#	public npc chat, public chat, system message, disconnected, item <item name>, item <item ID>, item cards, item *<part item name>*, friend
 #
 # example:
 #	alertSound {
@@ -38,14 +38,22 @@ use Plugins;
 use Globals qw($accountID %ai_v %avoid $char %cities_lut %config $field %items_lut $itemsList %players $playersList);
 use Log qw(message);
 use Misc qw(checkSelfCondition itemName);
-use Utils::Win32;
+require Utils::Win32 if ($^O eq 'MSWin32'); #this plugin only works on OS windows
+
+if ($^O ne 'MSWin32') {
+	# We are not on Windows, Plugin can't work.
+	print "alertSound plugin only works on windows OS. Let's skip it.\n\n";
+	return 1;
+}
 
 Plugins::register('alertsound', 'plays sounds on certain events', \&Unload, \&Reload);
 my $packetHook = Plugins::addHooks (
 	['self_died', \&death, undef],
 	['packet_pre/actor_display', \&monster, undef],
 	['charNameUpdate', \&player, undef],
-	['player', \&player, undef],
+	['player_exist', \&player, undef],
+	['player_connected', \&player, undef],
+	['player_moved', \&player, undef],
 	['packet_privMsg', \&private, undef],
 	['packet_pubMsg', \&public, undef],
 	['packet_sysMsg', \&system_message, undef],
@@ -54,7 +62,8 @@ my $packetHook = Plugins::addHooks (
 	['disconnected', \&disconnected, undef],
 	['item_appeared', \&item_appeared, undef],
 	['avoidGM_near', \&avoidGM_near, undef],
-	['avoidList_near', \&avoidList_near, undef]
+	['avoidList_near', \&avoidList_near, undef],
+	['friend_request', \&friend, undef]
 );
 sub Reload {
 	message "alertsound plugin reloading, ", 'system';
@@ -101,7 +110,7 @@ sub item_appeared {
 		my $eventList = $config{"alertSound_".$i."_eventList"};
 		next if (!$eventList or $eventList !~ /item /i);
 		foreach (split /\,/, $eventList) {
-			my ($part_itemName) = $eventList =~ /item (\*\w+\*)$/;
+			my ($part_itemName) = $_ =~ /item (\*\w+\*)$/;
 			next if (!$part_itemName);
 			if ($item->{name} =~ /^$part_itemName/i) {
 				alertSound("item $part_itemName");
@@ -137,9 +146,9 @@ sub player {
 # eventList player <player name>
 # eventlist player *
 # eventList GM near
-	my (undef, $args) = @_;
-	my $name = $args->{player}{name};
-	my $ID = $args->{player}{ID};
+	my ($hook, $args) = @_;
+	my $name = ($hook eq "player_moved") ? $args->{name} : $args->{player}{name};
+	my $ID   = ($hook eq "player_moved") ? $args->{ID} : $args->{player}{ID};
 	if (exist_eventList("player *", $name, $ID)) {
 		alertSound("player *");
 	} elsif (exist_eventList("GM near", $name, $ID) and $name =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
@@ -202,14 +211,17 @@ sub avoidList_near {
 	alertSound("avoidList_near");
 }
 
+sub friend {
+# eventList friend
+	my (undef, $args) = @_;
+	alertSound("friend");
+}
+
 sub exist_eventList {
-	my $event = shift;
-	my $name = shift;
-	my $ID = shift;
-	my $player = $playersList->getByID($ID) if $ID;
+	my ($event, $name, $ID) = @_;
 	for (my $i = 0; exists $config{"alertSound_".$i."_eventList"}; $i++) {
 		next if (!$config{"alertSound_".$i."_eventList"});
-		next if ( $config{"alertSound_".$i."_notParty"} == 1 && $char->{party}{joined} && $char->{party}{users}{$ID}{name} && $char->{party}{users}{$ID}{name} eq $player->{name} );
+		next if ( $config{"alertSound_".$i."_notParty"} == 1 && $char->{party}{joined} && $char->{party}{users}{$ID} );
 		next if ( $name && Utils::existsInList($config{"alertSound_".$i."_notPlayers"}, $name) );
 		if (Utils::existsInList($config{"alertSound_".$i."_eventList"}, $event)
 		    && checkSelfCondition("alertSound_$i")) {

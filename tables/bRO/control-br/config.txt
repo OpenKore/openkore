@@ -1,4 +1,4 @@
-﻿#############################################################################################
+#############################################################################################
 # A Codificação do texto está correta?
 # Codificação:  ANSI -> UTF8 Without boom
 # Se você não está vendo a acentuação corretamente, seu arquivo está no formato incorreto.
@@ -9,7 +9,7 @@
 #     http://openkore.com
 ###############################################################################
 # * Fórum internacional do OpenKore:
-#     http://forums.openkore.com
+#     https://forums.openkore.com/
 # * Fórum em português do OpenKore:
 #     http://forums.openkore-brasil.com/
 ###############################################################################
@@ -23,7 +23,7 @@ password
 loginPinCode
 char
 
-# Opções do Poseidon (http://wiki.openkore.com/index.php/PoseidonServer)
+# Opções do Poseidon (https://openkore.com/wiki/Poseidon)
 # Essas configurações devem ser as mesmas do Poseidon.txt
 poseidonServer 127.0.0.1
 poseidonPort 24390
@@ -32,7 +32,7 @@ bindIp
 forceMapIP
 
 # 1 = rodar dentro do cliente do RO, 2 = usar proxy autônomo, proxy = atua como proxy verdadeiro
-# http://wiki.openkore.com/index.php/XKore
+# https://openkore.com/wiki/XKore
 XKore 0
 XKore_port 2350
 XKore_dll NetRedirect.dll
@@ -110,7 +110,7 @@ attackEquip_armor
 attackEquip_shoes
 attackEquip_arrow
 
-#Requer o plugin breakTime: http://wiki.openkore.com/index.php?title=BreakTime
+#Requer o plugin breakTime: https://openkore.com/wiki/BreakTime
 autoBreakTime {
 	startTime
 	stopTime
@@ -155,7 +155,7 @@ cachePlayerNames 1
 cachePlayerNames_duration 900
 cachePlayerNames_maxSize 100
 
-clientSight 20
+clientSight 15
 
 dcPause 1
 dcOnDeath 0
@@ -174,7 +174,6 @@ dcOnJobLevel
 dcOnLevel
 
 follow 0
-followCheckLOS 0
 followTarget
 followEmotion 1
 followEmotion_distance 4
@@ -323,8 +322,8 @@ wx_map_route
 wx_npcTalk
 wx_captcha
 showAllDamage 0
-manualURL http://wiki.openkore.com/index.php?title=Manual
-forumURL http://forums.openkore.com
+manualURL https://openkore.com/wiki/Manual
+forumURL https://forums.openkore.com/
 
 logChat 0
 logPrivateChat 1
@@ -360,7 +359,6 @@ repairAuto_list
 status_mapProperty 0
 status_mapType 0
 
-removeActorWithDistance
 monster_filter
 
 ######## Configurações para Assistente ########
@@ -731,7 +729,6 @@ storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
 storageAuto_password
-storageEncryptKey
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
 storageAuto_useItem 0

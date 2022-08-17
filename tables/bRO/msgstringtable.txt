@@ -2092,8 +2092,8 @@ It is not logged in or unexist character.#
 Falcon summoning has failed.#
 %d%% ( Premium %d%% + %s server %d%% )#
 The user is currently joining in the Siege.#
-It is not possible to change the party leader in the same map.#
-It is not possible to change the party leader in current area.#
+Não é possível alterar a liderança do grupo caso esteja em um mapa diferente do outro personagem.#
+Não é possível alterar a liderança do grupo nessa área atual.#
 dpwn the Gryphon#
 %d Mês %d Dia %d Hora %d Min %d Sec#
 You canot invite to the guild as you are in the siege.#
@@ -2549,7 +2549,7 @@ Lista do Armazém do Clã#
 Log dos últimos 100 itens#
 O Armazém do Clã é fechado após 2 minutos de uso.#
 Incorrect GameSamba ID. Please Try Again.#
-%s [%doption] : %d #
+%s [%d BA] : %d #
 Moedas são necessárias.#
 %d Moedas(s) necessárias.#
 Uma metralhadora deve estar equipada.#
@@ -2598,7 +2598,7 @@ Assunto deve conter entre 4 à 24 caracteres.#
 Falha no envio da Carta.#
 Envio falhou devido a item impróprio.#
 Personagem não existe#
-%s [%d options]#
+%s [%d BA]#
 Please fill out 1 to %d numerical value for level.#
 Inventory clearance needed#
 Sistema em Desenvolvimento --EM BREVE-- #
@@ -2629,7 +2629,7 @@ Summonee is short of SP#
 Length of mail should be less than 1K#
 Falha na anexação do item.#
 Limite de Peso para Itens foi excedido.#
-"Under service. Please try again in a moment.#
+Já existe uma Arca invocada neste mapa.#
 You cannot open Lucky Roulette window.#
 You cannot close Lucky Roulette window.#
 You cannot start Lucky Roulette.#
@@ -2696,7 +2696,7 @@ E X P: %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 DROP : %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 DEATH: %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
 Limite de Itens anexados foi excedido.#
-Alarms when purchasing items#
+Notificar ao comprar um item#
 Esse item não pode ser anexado no Rodex.#
 Drawing the blank in the previous roulette, you cannot play the higher roulette.#
 Escrever Resposta#
@@ -2894,10 +2894,10 @@ E X P : %.1f%% ( basic %.1f%% %s %.1f%%)#
 DROP  : %.1f%% ( basic %.1f%% %s %.1f%%)#
 DEATH : %.1f%% ( basic %.1f%% %s %.1f%%)#
 Destinatário da Carta teve o nome alterado. A carta foi enviada para : %s #
-Necessary materials to combine#
-Not enough materials to combine.#
-%d number of materials required.#
-Not enough refine grade to combine.#
+Itens necessários.#
+Faltam materiais.#
+Falta %d un. desse item.#
+Refino insuficiente.#
 Do you want to sign in Adventure Agency?#
 You can leave your comment.#
 Please enter the characters from the image.#
@@ -2913,6 +2913,39 @@ DEATH : %d%% ( basic 100.0%% %s %d%%)#
 Moving to destination.#
 [%s] file is not existing. Activating default AI#
 %.1f%% ( Basic 100.0%% + Premium %.1f%% + %s %.1f%%)#
+Você deseja abrir sua loja na célula escolhida?#
+#
+O item será enviado pelo Rodex.#
+#
+#
+Você não pode continuar com o peso superior a 80%.#
+#
+Visualizar#
+#
+#
+Encerrar#
+Deseja encerrar a sua loja?#
+%02dd %02dhr %02dmin %02ds#
+#
+#
+Escolha o local para abrir a loja#
+Nome do mascote alterado para ^0000ff^0000ff %s^000000^000000.#
+Hora da compra#
+Item#
+Quantidade#
+Preço Unitário#
+Preço#
+Item de venda#
+Item de compra#
+Fechar Loja de Venda#
+Fechar Loja de Compra#
+Zeny restante#
+Item da lista#
+Vitrine da Loja#
+Item reembolsado#
+Qtd. reembolsada#
+Hora do reembolso#
+Quantidade de zeny envolvido nessa transação será enviado para o Rodex#
 #
 #
 #
@@ -2922,6 +2955,15 @@ Moving to destination.#
 #
 #
 #
+Tabeliã de Prontera#
+Mudança Familiar#
+Prezado (a).\r\n\r\nA partir de hoje, \"%s\" e \"%s\" não serão mais responsáveis legais de \"%s\".\r\n\r\nEsta mensagem tem intuito informativo.\r\n\r\nSe deseja mais informações sobre relações familiares, por favor, dirija-se ao Escritório de Prontera.\r\n\r\nO referido é verdade e dou fé.#
+Janela de Visualização#
+#
+#
+#
+Quando você se torna mini, você não pode transcender, tem uma limitação nos status e o HP e SP são reduzidos. \nVocê gostaria de prosseguir mesmo com essas restrições?#
+Quando você se torna mini, você não pode transcender, tem uma limitação nos status e o HP e SP são reduzidos. \nVocê gostaria de prosseguir mesmo com essas restrições?#
 #
 #
 #
@@ -2931,58 +2973,16 @@ Moving to destination.#
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Remover#
 #
 #
 Função de chamado (ligada)#
 Função de chamado (desligada)#
 Exibir mensagem de chamado#
-#
-#
-#
-#
+O personagem não pode ser excluído porque ainda possui uma loja aberta.#
+Você já tem uma loja ativa em outro lugar..#
+Não é possível criar uma loja aqui.#
+Não é possível criar uma loja aqui.#
 #
 #
 #
@@ -3020,7 +3020,7 @@ Doram#
 Invocador#
 A raça com maior presença em Rune-Midgard. São muito talentosos e adaptáveis.#
 Os Doram são seres curiosos por natureza e possuem uma personalidade radiante.#
-#
+Você está acima do limite de peso ou você não tem mais de 10 espaços livres no inventário.#
 #
 #
 #
@@ -3040,10 +3040,10 @@ Palavrões não são permitidos.\nTente novamente.#
 #
 #
 #
+A mensagem contém itens que não podem ser usados#
 #
 #
-#
-#
+Fechar#
 #
 #
 #
@@ -3219,6 +3219,10 @@ Remetente#
 #
 #
 #
+^bTaxa de Vendas^/b\n\nConfira as taxas cobradas sobre cada faixa de preço:\n\n0z a 10.000 z\n: Taxa de ^1567fe0%^000000\n10.001z a 100.000z\n: Taxa de ^1567fe0%^000000\n100.001z a 1.000.000z\n: Taxa de ^1567fe0%^000000\n1.000.001z a 10.000.000 z\n: Taxa de ^1567fe0%^000000\n10.000.001z a 100,000,000 z\n: Taxa de ^1567fe5%^000000\nAcima de 100.000.001 z\n: taxa de ^1567fe5%^000000\n#
+Valor: #
+Você receberá por Rodex o zeny referente aos itens vendidos.#
+O zeny será debitado do seu personagem no ato da compra.#
 #
 #
 #
@@ -3231,11 +3235,7 @@ Remetente#
 #
 #
 #
-#
-#
-#
-#
-#
+Minha Loja#
 #
 #
 #
@@ -3482,6 +3482,8 @@ Senha#
 #
 #
 #
+Aviso sobre a remoção da sua loja#
+Olá!\r\nSua loja foi fechada antes da hora porque percebemos que ela violava a política de conduta do jogo.\r\n Se precisar se mais informações, envie um ticket.\r\nAgradecemos a compreensão.#
 #
 #
 #
@@ -3489,9 +3491,7 @@ Senha#
 #
 #
 #
-#
-#
-#
+Remoção de loja#
 #
 #
 #
@@ -3542,7 +3542,7 @@ Conta não possui passe de acesso ao Valhalla#
 #
 Deletar#
 Responder#
-Enviar#
+Enviar.#
 Conferir#
 Notícias#
 Entrada#
@@ -3558,13 +3558,13 @@ Buscar#
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
+Expandir inventário#
+Deseja usar 1 ^0000ff%s^000000 para aumentar o inventário de \n(^0000ff%d^000000) para (^0000ff%d^000000) itens?.\n^ff0000 A expansão não pode ser revertida.^000000#
+A expansão do inventário falhou.#
+Feche as janelas de diálogo antes de expandir o inventário.#
+Você não tem o item necessário para expandir o inventário.#
+O inventário foi expandido ao máximo.#
+O inventário foi expandido com sucesso.#
 #
 #
 #
@@ -3612,7 +3612,7 @@ Graphic Device Settings#
 Graphic Resolution Settings#
 Full Screen Settings#
 Fix mouse Settings#
-Commission : #
+Taxa : #
 Total commission amount : #
 Select receiver#
 Select receiving group#
@@ -3621,3 +3621,27 @@ Loading the mailbox.\n^c92114Delete^000000unnecessary emails!!#
 NOW LOADING..#
 Title#
 Sender#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Refino maior que o necessário.#
+Possui cartas ou encantos.#

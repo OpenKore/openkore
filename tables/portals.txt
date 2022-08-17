@@ -1252,28 +1252,30 @@ glast_01 220 360 gl_in01 106 125
 glast_01 237 330 gl_in01 118 59
 glast_01 380 304 gef_fild06 18 304
 gon_dun01 153 45 gonryun 159 201
-gon_dun01 162 273 gon_dun02 14 113
-gon_dun02 14 113 gon_dun01 162 273
-gon_dun02 44 166 gon_dun02 94 118
-gon_dun02 44 213 gon_dun02 56 119
-gon_dun02 56 119 gon_dun02 44 213
-gon_dun02 63 66 gon_dun02 199 94
-gon_dun02 76 100 gon_dun02 145 66
-gon_dun02 92 190 gon_dun02 196 20
-gon_dun02 94 118 gon_dun02 180 189
-gon_dun02 145 66 gon_dun02 196 20
-gon_dun02 148 236 gon_dun02 234 191
-gon_dun02 165 189 gon_dun02 235 138
-gon_dun02 168 92 gon_dun02 276 76
-gon_dun02 171 258 gon_dun02 76 100
-gon_dun02 180 189 gon_dun02 94 118
-gon_dun02 196 20 gon_dun02 92 190
-gon_dun02 199 94 gon_dun02 63 66
-gon_dun02 234 191 gon_dun02 148 236
-gon_dun02 235 138 gon_dun02 165 189
-gon_dun02 251 268 gon_dun03 68 6
-gon_dun02 276 76 gon_dun02 168 92
-gon_dun03 68 6 gon_dun02 251 268
+gon_dun01 162 273 gon_dun02 17 113
+gon_dun02 14 113 gon_dun01 162 270
+gon_dun02 44 166 gon_dun02 97 121
+gon_dun02 44 213 gon_dun02 51 119
+gon_dun02 56 119 gon_dun02 47 210
+gon_dun02 63 66 gon_dun02 203 94
+gon_dun02 76 100 gon_dun02 145 62
+gon_dun02 92 190 gon_dun02 199 20
+gon_dun02 94 118 gon_dun02 177 189
+gon_dun02 145 66 gon_dun02 199 20
+gon_dun02 148 236 gon_dun02 234 194
+gon_dun02 165 189 gon_dun02 235 135
+gon_dun02 168 92 gon_dun02 273 76
+gon_dun02 171 258 gon_dun02 76 96
+gon_dun02 180 189 gon_dun02 170 164
+gon_dun02 170 161 gon_dun02 89 41
+gon_dun02 86 44 gon_dun02 145 233
+gon_dun02 196 20 gon_dun02 95 190
+gon_dun02 199 94 gon_dun02 60 70
+gon_dun02 234 191 gon_dun02 145 233
+gon_dun02 235 138 gon_dun02 168 189
+gon_dun02 251 268 gon_dun03 68 9
+gon_dun02 276 76 gon_dun02 163 87
+gon_dun03 68 6 gon_dun02 251 265
 gon_in 31 97 gon_in 42 35
 gon_in 42 35 gon_in 31 97
 gon_in 47 24 gonryun 109 131
@@ -1802,6 +1804,8 @@ prontera 204 192 prt_in 68 130
 prontera 208 154 prt_in 172 33
 prontera 237 317 prt_church 100 56
 prontera 289 203 prt_fild06 23 193
+prontera 121 72 prt_cas 18 29 c r0
+prt_cas 27 27 dali 109 86 c r3 c c r0
 prt_castle 28 121 prt_castle 40 138
 prt_castle 31 113 prt_castle 54 113
 prt_castle 40 138 prt_castle 28 121
@@ -3397,16 +3401,16 @@ dew_fild01 48 65 dew_dun02 302 30
 dew_dun02 305 30 dew_fild01 50 65
 
 # Lasagna
-izlude 195 213 lasagna 206 297 2000 c c r0 n
-lasagna 205 325 lasagna 193 209 2000 c c r1 n
-lasagna 205 325 malangdo 193 209 2000 c c r2 n
+izlude 195 213 lasagna 206 297 200 c c r0 n
+lasagna 205 325 izlude 193 209 200 c c r1 n
+lasagna 205 325 malangdo 193 209 200 c c r2 n
 lasa_fild02 348 244 lasa_dun01 24 143
 lasa_dun01 18 143 lasa_fild02 344 243
 lasa_dun_q 190 14 lasa_dun01 152 98
 lasa_dun01 157 98 lasa_dun02 22 171
 lasa_dun02 18 171 lasa_dun01 153 98
 lasa_dun02 146 58 lasa_dun03 190 18
-lasa_dun03,190,15 lasa_dun02,146 54
+lasa_dun03 190 15 lasa_dun02 146 54
 lasa_fild01 134 381 lasagna 153 58
 lasagna 150 54 lasa_fild01 131 378
 lasa_fild01 341 375 lasagna 327 56

@@ -19,7 +19,7 @@ sub version { 26 }
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0085' => undef,
 		'0089' => undef,
@@ -46,9 +46,9 @@ sub new {
 		'0815' => ['buy_bulk_closeShop'],#2
 		'0817' => ['buy_bulk_request', 'a4', [qw(ID)]],#6
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_info_request 0368
 		actor_look_at 0361
@@ -65,9 +65,9 @@ sub new {
 		sync 0360
 		skill_use_location_text 0367
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	return $self;
 }
 

@@ -119,7 +119,7 @@ sub drawcolormap {
             foreach my $x ( $x1 .. $x2 ) {
                 if ( $field->isWalkable( $x, $y ) ) {
                     push @$row, ' ';
-                    add_pos( 'bg_blue', { x => $x, y => $y } ) if $config{map_showWater} && $field->getBlock( $x, $y ) == Field::WALKABLE_WATER;
+                    add_pos( 'bg_blue', { x => $x, y => $y } ) if $config{map_showWater} && $field->getBlock( $x, $y ) == Field::TILE_WALK|Field::TILE_WATER;
                 } else {
                     push @$row, '#';
                 }

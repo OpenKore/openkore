@@ -17,7 +17,7 @@ use base qw(Network::Send::kRO::RagexeRE_2015_11_04a);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		#'08A2' => undef,
 		#'0369' => ['actor_action', 'a4 C', [qw(targetID type)]],#7

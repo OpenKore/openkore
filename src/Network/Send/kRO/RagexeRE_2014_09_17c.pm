@@ -18,7 +18,7 @@ use base qw(Network::Send::kRO::RagexeRE_2014_03_05);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0889' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0898' => ['actor_info_request', 'a4', [qw(ID)]],
@@ -30,7 +30,7 @@ sub new {
 		'089C' => ['buy_bulk_request', 'a4', [qw(ID)]], #6
 		'095C' => ['character_move', 'a3', [qw(coordString)]],
 		'0955' => ['friend_request', 'a*', [qw(username)]],# len 26
-		'0895' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0895' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'095A' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0956' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'0864' => ['item_take', 'a4', [qw(ID)]],
@@ -46,9 +46,9 @@ sub new {
 		'0364' => ['search_store_request_next_page'],
 		'092A' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		actor_action 0889
 		actor_info_request 0898
@@ -76,9 +76,7 @@ sub new {
 		search_store_request_next_page 0364
 		search_store_select 092A
 	);
-	
-	
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 #// 2014-09-17aRagexe, 2014-09-17cRagexeRE
 #if PACKETVER == 20140917

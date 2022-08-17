@@ -155,6 +155,7 @@ MC_CHANGECART#Personalizar Carrinho#
 MC_LOUD#Grito de Guerra#
 AL_HOLYLIGHT#Luz Divina#
 MG_ENERGYCOAT#Proteção Arcana#
+NPC_DEFENDER#Aura Sagrada#
 RG_SNATCHER#Mãos Leves#
 RG_STEALCOIN#Afanar#
 RG_BACKSTAP#Apunhalar#
@@ -328,7 +329,7 @@ CH_SOULCOLLECT#Zen#
 PF_MINDBREAKER#Enlouquecedor#
 PF_MEMORIZE#Presciência#
 PF_FOGWALL#Bruma Ofuscante#
-PF_SPIDERWEB#Prisão da Teia#
+PF_SPIDERWEB#Prisão de Teia#
 ASC_METEORASSAULT#Impacto Meteoro#
 ASC_CDP#Criar Veneno Mortal#
 WE_BABY#Mãe, Pai, amo vocês!#
@@ -581,6 +582,7 @@ NPC_WIDEBLEEDING#Sangria#
 NPC_WIDESTONE#Olhar da Medusa#
 NPC_WIDECONFUSE#Toque de Insanidade#
 NPC_WIDESLEEP#Sussurro de Morfeu#
+NPC_WIDESIGHT#Visão#
 NPC_EVILLAND#Terra Amaldiçoada#
 NPC_MAGICMIRROR#Reflexão Mágica#
 NPC_SLOWCAST#Conjuração Lenta#
@@ -601,7 +603,53 @@ ALL_ANGEL_PROTECT#Muito obrigado!#
 ALL_DREAM_SUMMERNIGHT#Sonho de Verão#
 ALL_REVERSEORCISH#Transformação Orc#
 ALL_WEWISH#Noite Feliz!#
+NPC_WIDEHEALTHFEAR#Grito Ameaçador#
+NPC_WIDEBODYBURNNING#Combustão#
+NPC_WIDEFROSTMISTY#Avalanche#
+NPC_WIDECOLD#Grande Geada#
+NPC_WIDE_DEEP_SLEEP#Magia Malévola#
+NPC_WIDESIREN#Flecha do Cupido#
+NPC_VENOMFOG#Neblina de Veneno#
+NPC_MILLENNIUMSHIELD#Escudos Milenares#
+NPC_COMET#Cometa#
+NPC_ICEMINE#Mina de Gelo#
+NPC_FLAMECROSS#Cruz de Chamas#
+NPC_PULSESTRIKE2#Golpe Avassalador#
+NPC_MAXPAIN#Dor Máxima#
+NPC_JACKFROST#Esquife de Gelo#
+NPC_WIDEWEB#Campo de Teia#
+NPC_WIDESUCK#Usurpar Almas#
+NPC_STORMGUST2#Nevasca#
+NPC_FIRESTORM#Tempestade de Fogo#
+NPC_REVERBERATION#Reverberação#
+NPC_LEX_AETERNA#Lex Regio#
+NPC_ARROWSTORM#Tempestade de Flechas#
+NPC_SR_CURSEDCIRCLE#Campo Amaldiçoado#
+NPC_DRAGONBREATH#Sopro do Dragão#
+NPC_FATALMENACE#Acerto de Contas#
+NPC_MAGMA_ERUPTION#Erupção de Magma#
+NPC_MANDRAGORA#Grito da Mandrágora#
+NPC_PSYCHIC_WAVE#Onda Psíquica#
+NPC_RAYOFGENESIS#Luz da Criação#
+NPC_CLOUD_KILL#Maldição de Jormungand#
+NPC_IGNITIONBREAK#Impacto Flamejante#
+NPC_HALLUCINATIONWALK#Passos da Ilusão#
+NPC_ELECTRICWALK#Passos de Sílfide#
+NPC_FIREWALK#Passos de Salamandra#
+NPC_LEASH#Puxar#
+NPC_WIDELEASH#Puxão#
 NPC_WIDECRITICALWOUND#Ferida Mortal#
+NPC_EARTHQUAKE_K#Terremoto#
+NPC_WIDEBLEEDING2#Sangria#
+NPC_WIDESILENCE2#Som do Silêncio#
+NPC_WIDESTUN2#Atordoamento Titânico#
+NPC_WIDESTONE2#Olhar da Medusa#
+NPC_WIDESLEEP2#Sussurro de Morfeu#
+NPC_WIDECURSE2#Espírito dos Amaldiçoados#
+NPC_WIDECONFUSE2#Toque de Insanidade#
+NPC_WIDEFREEZE2#Beijo do Inverno#
+NPC_EVILLAND2#Terra Amaldiçoada#
+NPC_HELLJUDGEMENT2#Julgamento Infernal#
 KN_CHARGEATK#Avanço Ofensivo#
 CR_SHRINK#Submissão#
 AS_SONICACCEL#Lâminas Aceleradas#
@@ -892,6 +940,9 @@ RETURN_TO_ELDICASTES#Para El Dicastes#
 ALL_BUYING_STORE#Loja de Compras!#
 ALL_GUARDIAN_RECALL#Chamado do Guardião#
 ALL_ODINS_POWER#Poder de Odin#
+NPC_ASSASSINCROSS#Crepúsculo Sangrento#
+NPC_DISSONANCE#Dissonância#
+NPC_UGLYDANCE#Dança do Ventre#
 ALL_RAY_OF_PROTECTION#Luz Protetora#
 MC_CARTDECORATE#Decorar Carrinho#
 GM_ITEM_ATKMAX#Physical item attack Max#
@@ -953,6 +1004,7 @@ ECL_SEQUOIADUST#Pó de Yggdrasil#
 ECLAGE_RECALL#Para Eclage#
 ALL_NIFLHEIM_RECALL#Para Nifflheim#
 ALL_PRONTERA_RECALL#Para Prontera#
+ALL_LIGHTHALZEN_RECALL#Para Lighthalzen#
 GC_DARKCROW#Garra Sombria#
 RA_UNLIMIT#Ilimitar#
 GN_ILLUSIONDOPING#Alucinógeno#
@@ -1002,6 +1054,9 @@ SU_MEOWMEOW#Balaio de Gato#
 SU_SPIRITOFLAND#Invocação da Selva#
 SU_CHATTERING#Despertar#
 SU_SPIRITOFSEA#Invocação das Marés#
+WE_CALLALLFAMILY#Em Família#
+WE_ONEFOREVER#Felizes Para Sempre#
+WE_CHEERUP#Animar#
 HLIF_HEAL#Cura pelas Mãos#
 HLIF_AVOID#Bater em Retirada#
 HLIF_BRAIN#Cirurgia Cerebral#

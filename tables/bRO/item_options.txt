@@ -8,8 +8,8 @@ VAR_DEXAMOUNT#DES +%d.#
 VAR_LUKAMOUNT#SOR +%d.#
 VAR_MAXHPPERCENT#HP máx. +%d%%.#
 VAR_MAXSPPERCENT#SP máx. +%d%%.#
-VAR_HPACCELERATION#Regeneração de HP +%d%%.#
-VAR_SPACCELERATION#Regeneneração de SP +%d%%.#
+VAR_HPACCELERATION#Regen. natural de HP +%d%%.#
+VAR_SPACCELERATION#Regen. natural de SP +%d%%.#
 VAR_ATKPERCENT#ATQ da arma +%d%%.#
 VAR_MAGICATKPERCENT#Dano mágico +%d%%.#
 VAR_PLUSASPD#Velocidade de ataque +%d.#
@@ -73,6 +73,7 @@ MDAMAGE_PROPERTY_TELEKINESIS_USER#Resist. mágica a alvo Fantasma +%d%%.#
 MDAMAGE_PROPERTY_TELEKINESIS_TARGET#Dano mágico contra Fantasma +%d%%.#
 MDAMAGE_PROPERTY_UNDEAD_USER#Resist. mágica a alvo Maldito +%d%%.#
 MDAMAGE_PROPERTY_UNDEAD_TARGET#Dano mágico contra Maldito +%d%%.#
+BODY_ATTR_NOTHING#Propriedade Neutro.#
 BODY_ATTR_WATER#Propriedade Água.#
 BODY_ATTR_GROUND#Propriedade Terra.#
 BODY_ATTR_FIRE#Propriedade Fogo.#
@@ -142,7 +143,7 @@ RACE_IGNORE_MDEF_PERCENT_DEVIL#Ignora %d%% da DEFM de Demônio.#
 RACE_IGNORE_MDEF_PERCENT_HUMAN#Ignora %d%% da DEFM de Humanoide.#
 RACE_IGNORE_MDEF_PERCENT_ANGEL#Ignora %d%% da DEFM de Anjo.#
 RACE_IGNORE_MDEF_PERCENT_DRAGON#Ignora %d%% da DEFM de Dragão.#
-CLASS_DAMAGE_NORMAL_TARGET#ATQ contra monstros normais +%d%%.#
+CLASS_DAMAGE_NORMAL_TARGET#Dano físico contra monst. normais +%d%%.#
 CLASS_DAMAGE_BOSS_TARGET#Dano físico contra Chefes +%d%%.#
 CLASS_DAMAGE_NORMAL_USER#Resist. a monstros normais +%d%%.#
 CLASS_DAMAGE_BOSS_USER#Resistência a Chefes +%d%%.#
@@ -162,11 +163,11 @@ DAMAGE_SIZE_PERFECT#Anula a penalidade de tamanho da arma.#
 DAMAGE_CRI_TARGET#Dano crítico +%d%%.#
 DAMAGE_CRI_USER#Resistência a danos críticos +%d%%.#
 RANGE_ATTACK_DAMAGE_TARGET#Dano físico a distância +%d%%.#
-RANGE_ATTACK_DAMAGE_USER#Resist. a ATQ a distância +%d%%.#
+RANGE_ATTACK_DAMAGE_USER#Resist. a dano a distância +%d%%.#
 HEAL_VALUE#Efetividade de cura +%d%%.#
-HEAL_MODIFY_PERCENT#Regen. de HP dos itens +%d%%.#
+HEAL_MODIFY_PERCENT#Cura Receb. e Recup. de HP por itens +%d%%.#
 DEC_SPELL_CAST_TIME#Conjuração variável -%d%%.#
-DEC_SPELL_DELAY_TIME#Pos-conjuração -%d%%.#
+DEC_SPELL_DELAY_TIME#Pós-conjuração -%d%%.#
 DEC_SP_CONSUMPTION#Custo de SP das habilidades -%d%%.#
 WEAPON_ATTR_NOTHING#Propriedade Neutro.#
 WEAPON_ATTR_WATER#Propriedade Água.#

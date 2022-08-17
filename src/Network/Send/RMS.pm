@@ -17,7 +17,7 @@ use base qw(Network::Send::kRO::RagexeRE_2014_10_22b);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'023B' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0281' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
@@ -30,7 +30,7 @@ sub new {
 		'0878' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'087D' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0896' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
-		'0899' => ['homunculus_command', 'v C', [qw(commandType, commandID)]],
+		'0899' => ['homunculus_command', 'v C', [qw(commandType commandID)]],
 		'08AA' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'08AD' => ['actor_look_at', 'v C', [qw(head body)]],
 		'093B' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
@@ -40,9 +40,9 @@ sub new {
 		'0940' => ['search_store_request_next_page'],
 		'0835' => ['search_store_select', 'a4 a4 v', [qw(accountID storeID nameID)]],
 	);
-	
+
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
-	
+
 	my %handlers = qw(
 		skill_use_location 023B
 		item_list_window_selected 0281
@@ -65,9 +65,9 @@ sub new {
 		search_store_request_next_page 0940
 		search_store_select 0835
 	);
-	
+
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
-	
+
 	$self->cryptKeys(688214506, 761751195, 731196533);
 
 	return $self;

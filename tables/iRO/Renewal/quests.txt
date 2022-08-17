@@ -4458,6 +4458,7 @@ You have taken the plunge down the empty lava tube and it led you down to the Th
 #
 
 //----------Nameless Island Entrance-----------
+/*
 17000#Meet with Father Bamph#SG_FEEL#QUE_NOIMAGE#
 An agent on the International Airship tells you that Father Bamph is expecting your arrival at Prontera Church. You should probably go and meet him there.#
 Father Bamph#
@@ -4529,6 +4530,7 @@ Larjes#
 17017#Reporting the King's Death#SG_FEEL#QUE_NOIMAGE#
 The shocking news of Tristam III's death should not be taken lightly. You should report this and bring the Research Note to High Priestess Niren.#
 High Priestess Niren#
+*/
 
 //-----------Spy Quest-------------
 18001#Delivery for Rooney#SG_FEEL#QUE_NOIMAGE#
@@ -22504,8 +22506,8 @@ The Aldebaran Brewmaster can't accept more supplies until the timer is finished.
 63049#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
 Explore Duffy's Pub Crawl#
 #
-63039#Token of Siegfried Cooldown#SG_FEEL#QUE_NOIMAGE#
-You have recently received Token of Siegfried from Gen.R.Rick in Eden Group.#
+63039#Pub Crawler#SG_FEEL#QUE_NOIMAGE#
+Explore Duffy's Pub Crawl.#
 #
 
 
@@ -23613,6 +23615,591 @@ Hunt 150 Lichtern (Red) monsters and return to the Bounty Board at Eclage#
 63581#Bounty Board Lichtern (Yellow)#SG_FEEL#QUE_NOIMAGE#
 Hunt 150 Lichtern (Yellow) monsters and return to the Bounty Board at Eclage#
 #
+63582#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Father Huntington of the Prontera Church is looking for adventurers for an expedition. Speak to him to join.#
+Join the Expedition team.#
+
+63583#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Father Huntington wants me to introduce myself to Paladin Liefa, I can see her standing behind Father Huntington inside of the Sanctuary.#
+Speak with Liefa.#
+
+63584#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I should get my things ready, then speak with Liefa again inside of the Sanctuary to embark on our expedition.#
+Tell Liefa you're ready.#
+
+63585#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Liefa wants to introduce me to Captain Muwuse and his brother Mowose, they'll be flying us to the frontier in their airship.#
+Find Muwuse at Izlude Airport.#
+
+63586#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Join the crew and board the Airship called 'The Rudolph's Quest'.#
+Enter the Muwuse's Airship.#
+
+63587#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I should get to know Muwuse and speak to him while on board his Airship. He seems like he's known both Liefa and Lief for a long time. I should ask him about everyone on board.#
+Speak to Muwuse.#
+
+63588#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Liefa, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63589#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Lief, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63590#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about himself, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63591#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about Mowose, I should ask him about the others as well.#
+Ask Muwuse about everyone.#
+
+63592#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse about everyone, I should personally get to know the rest of the expedition team.#
+Speak to everyone.#
+
+63593#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Mowose, Muwuse's brother. If I need refreshments I should come to him later.#
+Speak to everyone.#
+
+63594#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Liefa, she's the Expedition leader, she seems nice.#
+Speak to everyone.#
+
+63595#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Lief, Liefa's brother. It seems like everyone on this airhsip has been working together for a long time.#
+Speak to everyone.#
+
+63596#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Speak with Muwuse after landing in The Frozen Lands.#
+Speak to Muwuse.#
+
+63597#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Speak with Mowose after landing in The Frozen Lands. He might have something for me before I set off with Lief and Liefa.#
+Speak to Mowose.#
+
+63598#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+It's time to embark on our expedition through the section of the frontier known as The Frozen Lands. Speak with Liefa when ready to begin.#
+Speak to Liefa.#
+
+63599#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+It appears that we are to split up and travel to Tapte Stjerner separately. It was the main settlement village, north of the landing zone. There's a meeting point near the center of town that we are to meet at.#
+Go north to Tapte Stjerner.#
+
+63600#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We need to investigate what happened here. I'll probably learn the most from studying the remains of the villagers. I need to find 4 of the villagers remains in town then meet back with the others at the meeting point.#
+Find the remains of 4 villagers.#
+
+63601#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63602#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63603#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63604#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I found one of the villagers remains, once I find a total of four I'll have enough to put together what may have happened.#
+Found 1 of the remains.#
+
+63605#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The village is a total loss, we are moving on to investigating the next location. Trading Post Kapstefna is right on the outskirts of Outpost Hilfalind, its a small trading post east / south east of Tapte Stjerner.#
+Meet at Trading Post Kapstefna.#
+
+63606#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The trading post is abandoned, there's not much left here. We need to move east towards Outpost Hilfalind.#
+Meet at Outpost Hilfalind.#
+
+63607#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Search Outpost Hilfalind, there has to be something to explain where the attack came from, regretfully due to the time passed and the snow, finding tracks is out of the question.#
+Search the Outpost.#
+
+63608#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Aslaug and Magnus former comrades have been turned into Draugr and are unable to dispose of them. Dispatch their former comrades to release them from undeath.#
+Hunt 40 Draugr.#
+
+63609#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Aslaug and Magnus are survivors of the attack that devastated the settlement, according to them the attack came from the north, from a place called The Frozen Caverns. We are going to travel north and meet inside of the cavern, there's a meeting point there.#
+Go to The Frozen Caverns.#
+
+63610#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+This is where the wolves who sacked the settlement came from, we might find something in the deepest part of the cavern, we should go there and investigate.#
+Search the caverns.#
+
+63611#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The rest of the team got sucked into another dimension by the two bigger wolves, I need to survive this ordeal and look for them, I should wait for them at the meeting point near the entrance after I take care of my opponent.#
+Survive, then find the others.#
+
+63612#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We need to search for the lair of The Moon Slayer, we can't allow that wolf to continue it's rampage. Lief says The Moon Slayer is going east, I remember an eastward path from Outpost Hilfalind, that might be a good place to start. We're all splitting up to find it, whoever finds it should send up a signal flare to alert the rest of the team.#
+Find the The Moon Slayer.#
+
+63613#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Enter The Moon Slayer's lair and find where The Moon Slayer went.#
+Enter the lair.#
+
+63614#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+There is a power well in the center of the cavern, something might happen if I interact with it.#
+Check with the power well.#
+
+63615#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Defeat The Moon Slayer in combat.#
+Defeat The Moon Slayer.#
+
+63616#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We just defeated The Moon Slayer, seems we've taken care of the threat in The Frozen Lands, we should head back to the landing zone and speak with Muwuse to prepare our flight back to the Kingdom.#
+Go to Muwuse at landing zone.#
+
+63617#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I should speak with Liefa during the flight back to the kingdom while aboard the Airship, we just defeated an Ancient One together.#
+Speak to Leifa during flight.#
+
+63618#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Muwuse, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63619#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Mowose, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63620#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Liefa, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63621#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Lief, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63622#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Halvar, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63623#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Aslaug, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63624#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I spoke with Magnus, I should make sure to speak with everyone else before I head below deck to get some rest.#
+Speak with everyone.#
+
+63625#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Our expedition just returned to the Kingdom, we should meet with Father Huntington at the Prontera Church.#
+Talk to Father Huntington.#
+
+63626#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We've been deployed to a new target, an Ancient One has been detected by Lief and Father Huntington closing in on Umbala, we're being sent to investigate. I should speak with Muwuse at the Izlude Airship Docks for further instructions.#
+Speak with Muwuse in Izlude.#
+
+63627#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Something's happening down in Umbala, I should get to the Gang Plank on the deck of the Airship and Carl the 4th will teleport us down to the ground floor.#
+Use the Gang Plank teleporter.#
+
+63628#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The Umbala Guide just informed us that a Giant Wolf just went straight for Yggdrasil, seems to have done some damage to the Umbala village as well. We should head to the base of Yggdrasil to see what we can do.#
+Go to Yggdrasil.#
+
+63629#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The All Father himself came to combat The World Eater, it seems they've gone back to The Frozen Lands. We need to get back to our Airship.#
+Find Carl in the Hoomga Jungle.#
+
+63630#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+We're going back to Outpost Hilfalind, they'll be teleporting us down from the deck of the Airship. We need to find the Storage Bunker, Lief says there's a rift there.#
+Find the Storage Bunker.#
+
+63631#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Defeat The World Eater.#
+Defeat The World Eater.#
+
+63632#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Lief has turned against us, he murdered Halvar and his own Sister before they even knew what was going on. He must be stopped.#
+Defeat Lief the Betrayer.#
+
+63633#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+The Lingering Spirit in Tapte Stjerner is asking for help to avenge it's death. Defeat 30 Frost Wolves and return to the spirit.#
+Defeat 30 Frost Wolves.#
+
+63634#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I was part of the Cycle of Ragnarok... I shall dream until it is time to awaken again.#
+Dream until awakened.#
+
+63635#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+Atroce the Awakened, a henchment of the Ancient Ones has appeared, he took part in the attack against the settlement and should be defeated.#
+Defeat Atroce the Awakened.#
+
+63636#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with Atroce the Awakened in The Frozen Caverns, should I choose to. If I want to challenge him again, I should return to where we fought.#
+Fight Atroce the Awakened again.#
+
+63637#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with The Moon Slayer in it's lair, should I choose to. If I want to challenge it again, I should return to where we fought.#
+Fight The Moon Slayer again.#
+
+63638#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with The World Eater in it's realm, should I choose to. If I want to challenge it again, I should return to where we fought.#
+Fight The World Eater again.#
+
+63639#Episode Ragnarok#SG_FEEL#QUE_NOIMAGE#
+I can relive the battle with Lief the Betrayer, should I choose to. If I want to challenge him again, I should return to where we fought.#
+Fight Lief again.#
+
+
+//RT 2020 Valentines Day
+63650#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+There's a Cupid in town who goes by Derpy, seems like he's in need of some help.#
+Help Derpy in Prontera.#
+
+63651#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy asked me to check on Martha Gunnarsdottir and to see how she's doing, he accidentally paired her with the wrong target using his cupid arrows.#
+Check on Martha in Prontera.#
+
+63652#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy asked me to check on Shades and to see how he's doing, he accidentally paired him with the wrong target using his cupid arrows.#
+Check on Shades in Prontera.#
+
+63653#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Martha is in a panick, Derpy really caused quite a mess here.#
+Report back to Derpy regarding Martha.#
+
+63654#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Shades seems like he's struggling with thoughts of Martha, Derpy really caused quite a mess here.#
+Report back to Derpy regarding Shades.#
+
+63655#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy asked me to check on Aaron Smith, the intended target to pair with Martha Gunnarsdottir, he suggested helping him out.#
+Talk to Aaron Smith in Prontera.#
+
+63656#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I'm helping Aaron acquire fireworks from the local traveling Pyrotechnician named Katie Kaboom, she's here in Prontera now.#
+Talk to Katie Kaboom.#
+
+63657#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've agreed to help Katie acquire the items for trade on Aarons behalf, she wants 15 Green Plants.#
+Obtain 15 Green Plants for Katie.#
+
+63658#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've completed the trade with Katie on Aaron's behalf, I should go check on Aaron, Katie sent him the package.#
+Follow up with Aaron in Prontera.#
+
+63659#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I'm going to head to the fields outside of the West exit of Prontera, there should be a lake out there, I need to ignite the fireworks that are set up on the southern shore for Aaron.#
+Light Aaron's Fireworks.#
+
+63660#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I lit the fireworks for Aaron, he should be out by the entrance to the Culverts somewhere near the north shore of here, I should go follow up with him.#
+Find Aaron, west of Prontera.#
+
+63661#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I should speak with Aaron back in Prontera again, he'll be paying me for my services.#
+Follow up with Aaron in Prontera.#
+
+63662#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I finished helping Aaron, per Derpy's request. I should follow up with Derpy in Prontera.#
+Talk to Derpy Cupid in Prontera.#
+
+63663#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy believes Shades is part of a criminal smuggling ring, he's hired me to obtain a ledger from their criminal hideout in South West Prontera and to bring it back to him so he can turn Shades into the Authorities.#
+Obtain the Criminal Ledger.#
+
+63664#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy wants me to get Lt. Don Tyler of the 1337th Elite Guard. He'll be in the new bar in East Prontera owned by one of their own members.#
+Talk to Lt. Don Tyler.#
+
+63665#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Lt. Don said he'll find us after he gets his report ready, I should go back to Derpy and speak with him.#
+Talk to Derpy Cupid in Prontera.#
+
+63666#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy wants me to follow up with Aaron and see how things are going.#
+Talk to Aaron Smith in Prontera.#
+
+63667#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've been hired to gather Blue Bellflowers for Aaron Smith, these flowers can be found in Mt. Mjolnir Field 3.#
+Gather Blue Bellflowers.#
+
+63668#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've been hired to gather Red Amaryllis for Aaron Smith, these flowers can be found in Mt. Mjolnir Field 3.#
+Gather Red Amaryllis.#
+
+63669#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've been hired to gather Yellow Marigolds for Aaron Smith, these flowers can be found in Mt. Mjolnir Field 3.#
+Gather Yellow Marigolds.#
+
+63670#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've obtained the Blue Bellflowers for Aaron, when I'm ready I should get these back to him.#
+Give Aaron Smith the Blue Bellflowers.#
+
+63671#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've obtained the Red Amaryllis for Aaron, when I'm ready I should get these back to him.#
+Give Aaron Smith the Red Amaryllis.#
+
+63672#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I've obtained the Yellow Marigolds for Aaron, when I'm ready I should get these back to him.#
+Give Aaron Smith the Yellow Marigolds.#
+
+63673#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Aaron stated Derpy got in trouble with the Prontera Guard, I should go check on what happened to him.#
+Go see Derpy Cupid in Prontera.#
+
+63674#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+I need to rescue Shades from the Culverts lowest portions. Looks like Derpy tried to set him up, I should let him know his name is clear and Lt. Don isn't going to arrest him.#
+Talk to Shades in the Culverts.#
+
+63675#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy has some explaining to do, I just rescued Shades, I need to talk to Derpy about this.#
+Talk to Derpy Cupid in Prontera.#
+
+63677#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy requested me to get a Fairy Lawyer for him, she goes by the name Laurie Aech Parka and is on Mt. Mjolnir Field 1.#
+Talk to Derpy Cupid in Prontera.#
+
+63678#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Laurie Aech Parka wants me to hunt down Caramels and Bigfoots for soiling her shoes. I don't think I wan't to be on her bad side.#
+#
+
+63679#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Laurie has taken us to the Jail to see Derpy, time to see what fate befalls poor Derpy... he really did bring this upon himself.#
+Talk to Derpy Cupid in Jail.#
+
+63680#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy's going to Helheim after this, he's a free Cupid for now, but he's definitely going to learn some hard lessons. I should go check on him in town one last time.#
+Talk to Derpy Cupid in Prontera.#
+
+63681#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Derpy's going to Jail after this, he's a free Cupid for now, but he's definitely going to learn some hard lessons. I should go check on him in town one last time.#
+Talk to Derpy Cupid in Prontera.#
+
+63682#The Unfortunate Cupid#SG_FEEL#QUE_NOIMAGE#
+Time for some under the table Vigilante Justice. Once 35 Mobsters get beat up, I should inform Lt. Don Tyler of the event and he'll let me know about an anonymous reward someone left.#
+#
+
+63704#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Campitor(Prontera) has asked you to hunt 10 Hornets to help with the Unity Project.#
+Hunt 10 Hornet and return to Campitor#
+
+63705#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Campitor(Prontera) in 20 hours to see if there is more volunteer work.#
+#
+
+63706#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Astra(Morroc) has asked you to hunt 10 Drops to help with the Unity Project.#
+Hunt 10 Drops and return to Astra#
+
+63707#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Astra(Morroc) in 20 hours to see if there is more volunteer work.#
+#
+
+63708#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Magus(Geffen) has asked you to hunt 10 Chonchons to help with the Unity Project.#
+Hunt 10 Chonchons and return to Magus#
+
+63709#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Magus(Geffen) in 20 hours to see if there is more volunteer work.#
+#
+
+63710#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Poring Man(Al De Baran) has asked you to hunt 10 Marins to help with the Unity Project.#
+Hunt 10 Marins and return to Poring Man#
+
+63711#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Poring Man(Al De Baran) in 20 hours to see if there is more volunteer work.#
+#
+
+63712#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Xealot(Alberta) has asked you to hunt 10 Willows to help with the Unity Project.#
+Hunt 10 Willows and return to Xealot#
+
+63713#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Xealot(Alberta) in 20 hours to see if there is more volunteer work.#
+#
+
+63714#Unity Project: Hunt#SG_FEEL#QUE_NOIMAGE#
+Jelloshaker(Payon) has asked you to hunt 10 Spores to help with the Unity Project.#
+Hunt 10 Spores and return to Jelloshaker#
+
+63715#Unity Project: Cooldown#SG_FEEL#QUE_NOIMAGE#
+Come back to Jelloshaker(Payon) in 20 hours to see if there is more volunteer work.#
+#
+
+
+
+//꿈과 그림자 MD
+16215#The Shadowed Dream#SG_FEEL#QUE_NOIMAGE#
+You’ve agreed to accompany Loreche’s investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
+Dimensional Gap Investigation#
+
+16216#The Bubbly Illusion#SG_FEEL#QUE_NOIMAGE#
+You’ve agreed to accompany Loreche’s investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
+Dimensional Gap Investigation#
+
+16217#Rest and Relaxation#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest, and you can re-take it when the cooldown resets. Speak to <NAVI>[Loreche]<INFO>dali02.gat,108,94,0,101,0</INFO></NAVI>in the Dimensional Gap to accept the quest.#
+Resets at 4 am#
+
+16218#Modification and Calculation#SG_FEEL#QUE_NOIMAGE#
+Let’s go seek out <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> so we can enter the Dimensional Gap.#
+Speak with Eugenie#
+
+16219#Kindness and Gratitude#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+
+8323#Hiring a Street Stall Staffer - Standby#SG_FEEL#QUE_NOIMAGE#
+The Merchant Union Human Resources Department commissions only one quest per week to protect client privacy. Wait until the next quest.#
+#
+
+8324#Delivery to Prontera#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Prontera Forge Sheep.#
+Box Delivery#
+
+8325#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8326#Delivery to Payon#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Payon Forge Sheep.#
+Box Delivery#
+
+8327#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8328#Delivery to Comodo#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Comodo Weapon Shop Sheep.#
+Box Delivery#
+
+8329#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8330#Delivery to Al De Baran#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Sheep at the Al De Baran Inn.#
+Box Delivery#
+
+8331#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8332#Delivery to Morroc#SG_FEEL#QUE_NOIMAGE#
+Masha of the Alberta Merchant Union Human Resources Department wants you to deliver a ^4d4dffSlightly Aged Antique Box^000000 to the Sheep at the Northern Morroc Kafra Center.#
+Box Delivery#
+
+8333#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8334#Collection from the Prontera Culvert#SG_FEEL#QUE_NOIMAGE#
+An Adventurer by the name “Murian” is currently on a quest for the Merchant Union on Prontera Culvert 3F. You need to retrieve the ^4d4dffSlightly Aged Antique Box^000000 from him.#
+Box Retrieved#
+
+8335#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Let’s deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Box Submitted#
+
+8336#Defeat 10 Bongun#SG_FEEL#QUE_NOIMAGE#
+Easy quest: slay 10 Bonguns in Payon Cave 3F, return to Merchant Union of Alberta and receive an examination from the sheep.#
+Bongun Defeated#
+
+8337#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8338#Defeat 10 Megaliths#SG_FEEL#QUE_NOIMAGE#
+Easy quest: slay 10 Megalith in Ruande, the Northern Cave, return to Merchant Union of Alberta and receive an examination from the sheep.#
+#
+
+8339#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8340#Defeat 10 Rideword#SG_FEEL#QUE_NOIMAGE#
+Easy quest: slay 10 Rideword in Clock Tower 1F, return to Merchant Union of Alberta and receive an examination from the sheep.#
+#
+
+8341#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8342#Collection from Morroc Sphinx#SG_FEEL#QUE_NOIMAGE#
+An Adventurer named Elbury is currently at the Sphinx B3F fulfilling a quest for the Merchant Union. You need to retrieve the ^4d4dffSlightly Aged Antique Box^000000 from him.#
+Box Retrieved#
+
+8343#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
+Let’s deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Box Submitted#
+
+8344#Collection of Biolabs Data#SG_FEEL#QUE_NOIMAGE#
+Check the small sign somewhere in the Biolabs 3F for a slot to insert a card. Take the Data Retrieval Card received by the Alberta Merchant Union and examine the sign to retrieve the data.#
+Data Retrieved#
+
+8345#Deliver Card to Masha#SG_FEEL#QUE_NOIMAGE#
+Let’s deliver the data retrieval card to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Card submitted#
+
+8346#Defeat 3 Eremes Guile#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Eremes Guiles in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8347#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8348#Defeat 3 Cecil Damon#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Cecil Damons in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8349#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8350#Defeat 3 Margaretha Sorin#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Margaretha Sorin in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8351#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8352#Defeat 3 Kathryne Keyron#SG_FEEL#QUE_NOIMAGE#
+Slightly demanding quest: defeat 3 Kathryne Keyron in Biolabs 3F, return to Alberta Merchant Union and receive an examination from the sheep.#
+#
+
+8353#Deliver Receipt to Masha#SG_FEEL#QUE_NOIMAGE#
+Deliver the receipt to Masha, who works in the human resources department at the Alberta Merchant Union.#
+Receipt Delivered#
+
+8354#Hiring a Street Stall Staffer#SG_FEEL#QUE_NOIMAGE#
+To hire a street stall staffer, you must have an employment certificate given by the Merchant Union. Once a day, complete a quest from Masha of the Merchant Union, then you can get a different grade of employment certificate depending on the difficulty of the quest. Solve the quest to hire your staffer.#
+#
+
+
+//신찰스턴===MD 왕의 구두굽에서
+
+8401#Into the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+#
+Enter Dungeon#
+
+8538#Tomorrow at the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+I never want to see another card again... But maybe I’ll feel differently tomorrow! Let’s go talk to Dr. Magnatum again tomorrow.#
+Resets at 4 am#
+
+8527#Delay Insurance: EXP Card and step#SG_FEEL#QUE_NOIMAGE#
+If you defeat 50 wild Steps and EXP Cards within the Summoning Room, you can receive your reward from the board over by Summoning Room exit.#
+#
+
+8528#Delay Insurance - Standby#SG_FEEL#QUE_NOIMAGE#
+Delay Insurance re-registration cannot be instantly processed. Please wait and try again.#
+Resets at 4 am#
+
+8529#Master of the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
 
 //Advanced Glast Heim
 12334#Traces of time shifting#SG_FEEL#QUE_NOIMAGE#
@@ -23639,3 +24226,1081 @@ Time travel to old glast heim#
 12339#Time Conqueror#SG_FEEL#QUE_NOIMAGE#
 All of the time travel to old glast heim was finished.#
 Time travel to old glast heim#
+
+//Poring Village
+12416#Contract with Emily#SG_FEEL#QUE_NOIMAGE#
+Talked to Emily about proper reward.#
+Contract with Emily#
+
+12417#Overcoming fatigue#SG_FEEL#QUE_NOIMAGE#
+It seems you need to wait until next 4 am to visit Poring Village.#
+04:00 Reset#
+
+12418#First Visit to Poring Village#SG_FEEL#QUE_NOIMAGE#
+Let's develop a sincere relationship with neighbor!#
+Wipe out.#
+
+//----- Orc's Memory MD
+12419#Orc's Memory 1F adventure#SG_FEEL#QUE_NOIMAGE#
+Look what happened on Orc's Memory Dungeon 1F#
+Orc's Memory 1F#
+
+12420#Recovery#SG_FEEL#QUE_NOIMAGE#
+It seems hard to see Orc's memory again unless you get relieved.#
+4am reset#
+
+//Episode 17.2 Morning's Story
+5856#My Name Is Morning#SG_FEEL#QUE_NOIMAGE#
+Hello to whoever's reading this! I have to go somewhere in a hurry, and I had to leave behind this kid you're seeing, a test subject abandoned here in Rudus. You can call him <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI>. I'm not completely abandoning him. I'll come to see him whenever I can. In the meantime, would you mind feeding him regularly? Please just give him what he wants since I can't take him with me for now. Thank you for your help! - Olg#
+#
+
+5857#Befriending Morning#SG_FEEL#QUE_NOIMAGE#
+Hello to whoever's reading this! Thank you for feeding Morning. Maybe it's because I told him about Porings the other day, but now he's obsessed with them. He wouldn't be so lonely if he had a pet Poring. Could you get him a <ITEM>[Poring Egg]<INFO>9001</INFO></ITEM>? Thank you, my friend! - Olg#
+Poring Egg#
+
+5858#Befriending Morning#SG_FEEL#QUE_NOIMAGE#
+Hello, my friend! It seems Morning now recognizes you as the hand that feeds him. Ah, I'm just joking. A while ago, I told him about the singing grasshopper, Rocker. Now, he wants to see it. Could you get him a <ITEM>[Rocker Egg]<INFO>9011</INFO></ITEM> this time? Thank you, my friend! - Olg#
+Rocker Egg#
+
+5859#Befriending Morning#SG_FEEL#QUE_NOIMAGE#
+Hello, my friend! Maybe it's because I told him this story, Adventures of the Chick, but now he's curious about Pickys. Could you get him a <ITEM>[Picky Egg]<INFO>9005</INFO></ITEM> this time? Since I can't be there for him all the time, I at least want him to have as many friends around him as I can get. Thank you, my friend! - Olg#
+Picky Egg#
+
+5860#Befriending Morning#SG_FEEL#QUE_NOIMAGE#
+Hello, my friend! I'm sorry I keep asking you for favors. I told him about the rabbit that lives on the moon, and now he's curious about Lunatics. Could you get him a <ITEM>[Lunatic Egg]<INFO>9004</INFO></ITEM>? Thank you, my friend! - Olg#
+Lunatic Egg#
+
+5861#[Pending] Taking Care of Morning#SG_FEEL#QUE_NOIMAGE#
+I fed <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI>. If I can, I should feed him tomorrow as well.#
+Reset at 4:00 a.m.#
+
+5862#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat jellopies today. I should bring 10 <ITEM>[Jellopies]<INFO>909</INFO></ITEM>.#
+Jellopy 10#
+
+5863#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat tree roots today. I should bring 10 <ITEM>[Tree Roots]<INFO>902</INFO></ITEM>.#
+Tree Root 10#
+
+5864#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat grasshopper legs today. I should bring 10 <ITEM>[Grasshopper's Legs]<INFO>940</INFO></ITEM>.#
+Grasshopper's Leg 10#
+
+5865#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat clover today. I should bring 10 <ITEM>[Clovers]<INFO>705</INFO></ITEM>.#
+Clover 10#
+
+5866#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat bird feathers today. I should bring 10 <ITEM>[Feathers Of Birds]<INFO>916</INFO></ITEM>.#
+Feather Of Birds 10#
+
+5867#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat rat tails today. I should bring 10 <ITEM>[Rat Tails]<INFO>1016</INFO></ITEM>.#
+Rat Tail 10#
+
+5868#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat poisonous fangs today. I should bring 10 <ITEM>[Venom Canines]<INFO>937</INFO></ITEM>.#
+Venom Canine 10#
+
+5869#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat monkey tails today. I should bring 10 <ITEM>[Yoyo Tails]<INFO>942</INFO></ITEM>.#
+Yoyo Tail 10#
+
+5870#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat bat teeth today. I should bring 10 <ITEM>[Teeth of Bat]<INFO>913</INFO></ITEM>.#
+Tooth of Bat 10#
+
+5871#Morning's Menu Selection#SG_FEEL#QUE_NOIMAGE#
+It seems <NAVI>[Morning]<INFO>sp_rudus,130,200,0,101,0</INFO></NAVI> wants to eat bear paws today. I should bring 10 <ITEM>[Bear's Footskins]<INFO>948</INFO></ITEM>.#
+Bear's Footskin 10#
+
+//Episode 17.1 A New Area of Operations
+
+7850#Cat on a Bullet#SG_FEEL#QUE_NOIMAGE#
+The member of the Rebellion I met in Einbech said that his group is using an Einbroch store as a base to cover its area of operations that's gotten bigger as of late. I should find the <NAVI>[Cat on a Bullet]<INFO>einbroch,302,329,0,101,0</INFO></NAVI> in Einbroch.#
+Talk to Tes at the Cat#
+
+7851#New Area of Operations#SG_FEEL#QUE_NOIMAGE#
+Tes told me about the new area of operations, <NAVI>[Rudus]<INFO>ein_fild05,158,284,0,101,0</INFO></NAVI>. I should go there and join the members of the Rebellion there.#
+Talk to Elena Volkova#
+7852#Behind the Wall#SG_FEEL#QUE_NOIMAGE#
+Elena Volkova in the new area of operations, <NAVI>[Rudus]<INFO>ein_fild05,158,284,0,101,0</INFO></NAVI>, asked me to talk to Rookie who's investigating the wall, and then find out what's behind the wall.#
+Talk to Rookie#
+
+7853#Investigating around the Wall#SG_FEEL#QUE_NOIMAGE#
+Rookie inside <NAVI>[Rudus]<INFO>ein_fild05,158,284,0,101,0</INFO></NAVI> asked me to investigate around the wall. I should collect everything that looks suspicious and let him know.#
+Investigate around the wall#
+
+7854#Wall on the Railroad#SG_FEEL#QUE_NOIMAGE#
+There's a wall standing on the railroad. It must have been built after the mine was closed.#
+#
+
+7855#Watchtower#SG_FEEL#QUE_NOIMAGE#
+This watchtower is tall enough to look beyond the wall. I don't think the ore-refining process would need watchtowers like this.#
+#
+
+7856#Small Hole#SG_FEEL#QUE_NOIMAGE#
+Where the edge of the wall meets the rock, there's a hole barely big enough to let a small child to crawl through.#
+#
+
+7857#Report to Rookie#SG_FEEL#QUE_NOIMAGE#
+I've looked around the wall. I should give the information I've collected to Rookie.#
+Talk to Rookie#
+
+7858#Investigate Ominous Noise#SG_FEEL#QUE_NOIMAGE#
+Some of the Rebellion members are already on the move to identify the noise coming from the other side of the wall. Rookie asked me to take care of its source if it's monsters.#
+Monster hunt#
+
+7859#Report to Tes#SG_FEEL#QUE_NOIMAGE#
+Elena Volkova asked me to go back to the Cat on a Bullet and let <NAVI>[Tess]<INFO>pub_cat,93,105,0,101,0</INFO></NAVI> know the situation beyond the wall is not normal. From what she says, it's a dump.#
+Report to Tes#
+
+7860#Unexpected Guest#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Tes]<INFO>pub_cat,93,105,0,101,0</INFO></NAVI> at the Cat on a Bullet took me to a secret room in the back to discuss some urgent matter.#
+Talk to Tes in the Secret Room#
+
+7861#The Corporation in Crisis#SG_FEEL#QUE_NOIMAGE#
+I've decided to join forces with Est and others to reclaim the Regenschirm Laboratory from those traitors. I should go to Lighthalzen and meet the <NAVI>[Republic Guard]<INFO>lighthalzen,56,270,0,101,0</INFO></NAVI> waiting for me there.#
+Talk to Republic Guard#
+
+7862#Regenschirm Reclamation#SG_FEEL#QUE_NOIMAGE#
+We've decided to infiltrate the Lab and clear what's inside. I can enter the Lab through <NAVI>[Oscar]<INFO>lighthalzen,55,278,0,101,0</INFO></NAVI>.#
+Reclaim the Lab#
+
+7863#Data Obtained from the Lab#SG_FEEL#QUE_NOIMAGE#
+Data related to the Lab's Security Team 1.#
+Report to Tes#
+
+7864#A Change of Air#SG_FEEL#QUE_NOIMAGE#
+While Tes analyzes the data, I've decided to help Rage. I should look for him in the pub.#
+Talk to Rage#
+
+7865#Second Operation#SG_FEEL#QUE_NOIMAGE#
+A new operation will take place in the closed mine in the northwestern Einbroch field. I should meet with the <NAVI>[Rebellion Member]<INFO>ein_fild03,278,269,0,101,0</INFO></NAVI> waiting there and join the operation.#
+Talk to Rebellion Member#
+
+7866#To the Cat on a Bullet#SG_FEEL#QUE_NOIMAGE#
+I should go back to the Cat on a Bullet and report to <NAVI>[Tes]<INFO>pub_cat,93,105,0,101,0</INFO></NAVI> about what happened at the Lab.#
+Talk to Tes#
+
+7867#Merc vs. Merc#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Juslan]<INFO>sp_cor,155,94,0,101,0</INFO></NAVI> in the special security area, Cor, asked me to take care of Heart Hunters Bellare and Sanare in Os.#
+Defeat Heart Hunters#
+
+7868#Merc vs. Merc - Pending#SG_FEEL#QUE_NOIMAGE#
+A Daily quest. It can be repeated after its cooldown through <NAVI>[Juslan]<INFO>sp_cor,155,94,0,101,0</INFO></NAVI> in the special security area, Cor.#
+Reset at 04:00 a.m.#
+
+
+
+//Episode 17.1 Old Memories
+11596#Old Memories#SG_FEEL#QUE_NOIMAGE#
+I've found an enemy base near Einbroch that's disguised as a closed mine. I'd better check the perimeter for more enemies.#
+Search around#
+
+11597#Old Memories#SG_FEEL#QUE_NOIMAGE#
+Nothing looks out of place. I'd better check elsewhere.#
+Search around#
+
+11598#Old Memories#SG_FEEL#QUE_NOIMAGE#
+Nothing looks out of place. I'd better check elsewhere.#
+Search around#
+
+11599#Old Memories#SG_FEEL#QUE_NOIMAGE#
+Nothing looks out of place. I should go back to that Rebellion Member.#
+Talk to Rebellion Member#
+
+11600#Old Memories#SG_FEEL#QUE_NOIMAGE#
+I should check the inside of the closed mine that's blocked.#
+Enter#
+
+
+11601#Old Memories#SG_FEEL#QUE_NOIMAGE#
+A path to the next area has been opened. I should report back to the Cat on a Bullet, and pick up the thing that Dien wants from his room.#
+To the Cat on a Bullet#
+
+11602#Old Memories#SG_FEEL#QUE_NOIMAGE#
+Pick up what Dien wants from his room.#
+Dien's Charm#
+
+11603#Old Memories#SG_FEEL#QUE_NOIMAGE#
+I've found Dien's Charm. I should go back to Dien.#
+Back to Dien#
+
+
+//------- 17.1 Os Occupation ----------
+
+12452#Os Occupation#SG_FEEL#QUE_NOIMAGE#
+A train transport route has been secured. Now, I'd better clear Os of the enemy remnants.#
+Os Occupation#
+
+
+12453#Operation Pending#SG_FEEL#QUE_NOIMAGE#
+The gateway to Os is temporarily blocked. I should wait until it's released.#
+Operation pending#
+
+
+12454#Additional Search Mission#SG_FEEL#QUE_NOIMAGE#
+I should also check the northeastern side of Os and eliminate any possible threats.#
+Additional Search Mission#
+
+
+12455#Operation Pending#SG_FEEL#QUE_NOIMAGE#
+The gateway to Os is temporarily blocked. I should wait until it's released.#
+Operation pending#
+
+//----- EP17.1 Innocent Menace
+16352#Elena Volkova's Call#SG_FEEL#QUE_NOIMAGE#
+Talk to Elena Volkova.#
+#
+
+16353#Golden Troublemaker#SG_FEEL#QUE_NOIMAGE#
+An explosion has occurred near an important facility. Follow Elena and check the <NAVI>[situation]<INFO>sp_cor,180,169,0,101,0</INFO></NAVI>.#
+Talk to Elena#
+
+16354#Eliumina Acquisition Operation#SG_FEEL#QUE_NOIMAGE#
+Get to know the <NAVI>[area]<INFO>sp_cor,180,169,0,101,0</INFO></NAVI> and carry out a special operation to secure Eliumina. Report to Elena after the operation.#
+Secure Eliumina#
+
+16355#Suspicious Box#SG_FEEL#QUE_NOIMAGE#
+The box has been turned on. Step on the Bio Batteries to get rid of them and the monsters, and then talk to the Rebellion.#
+Remove Batteries and monsters#
+
+16356#Suspicious Box#SG_FEEL#QUE_NOIMAGE#
+The box has been turned on. Hunt monsters without touching the Chemical Poison, and then talk to the Rebellion.#
+Hunt monsters without touching Chemical Poison#
+
+16357#Secure Eliumina#SG_FEEL#QUE_NOIMAGE#
+I've successfully secured the scientist of Illusion. I should take a break, and then go back to <NAVI>[Elena]<INFO>sp_cor,180,169,0,101,0</INFO></NAVI>.#
+Talk to Elena#
+
+16358#Innocent Villain#SG_FEEL#QUE_NOIMAGE#
+The captured scientist of Illusion will be interrogated. I should go to the <NAVI>[Tent]<INFO>sp_cor,136,210,0,101,0</INFO></NAVI> and observe his interrogation.#
+Talk to Goni#
+
+16359#Innocent Menace#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Rookie]<INFO>sp_cor,135,216,0,101,0</INFO></NAVI> will lead the interrogation. I should stand next to him and just glare as best I can.#
+Talk to Rookie#
+
+16360#Innocent Truth#SG_FEEL#QUE_NOIMAGE#
+Eliumina told us how to enter the Barmund Mansion. I'd better go check the <NAVI>[entrance]<INFO>sp_cor,255,285,0,101,0</INFO></NAVI>.#
+Talk to Rookie#
+
+16361#Innocent Cleanup#SG_FEEL#QUE_NOIMAGE#
+Ask Elena's <NAVI>[Subordinate]<INFO>sp_cor,113,130,0,101,0</INFO></NAVI> why they haven't collected all Eliumina's monsters and traps after capturing him.#
+Talk to the Rebellion#
+
+16362#Innocent Cleanup - Pending#SG_FEEL#QUE_NOIMAGE#
+A Daily quest. It can be repeated after its cooldown through <NAVI>[Rebellion]<INFO>sp_cor,113,130,0,101,0</INFO></NAVI> in Cor.#
+Reset at 04:00 a.m.#
+
+16363#Take Care of EL1_A17T#SG_FEEL#QUE_NOIMAGE#
+I've successfully taken care of EL1_A17T.#
+#
+
+16364#Help the Farm#SG_FEEL#QUE_NOIMAGE#
+Because of this incident, the <NAVI>[Farm]<INFO>sp_cor,246,97,0,101,0</INFO></NAVI> is in need of help. I should tend to the young vegetables in the patch.#
+Help the Farm#
+
+16365#Help the Farm - Pending#SG_FEEL#QUE_NOIMAGE#
+A Daily quest. It can be repeated after its cooldown through <NAVI>[Farmhand]<INFO>sp_cor,246,97,0,101,0</INFO></NAVI> in Cor.#
+Reset at 04:00 a.m.#
+
+16366#Help the Farm#SG_FEEL#QUE_NOIMAGE#
+Because of this incident, the <NAVI>[Farm]<INFO>sp_cor,246,97,0,101,0</INFO></NAVI> is in need of help. I should tend to the young vegetables in the patch.#
+#
+
+16367#Unripe Grapes#SG_FEEL#QUE_NOIMAGE#
+Small, unripe <NAVI>[grapes]<INFO>sp_cor,247,86,0,101,0</INFO></NAVI> are hanging from the vines. Catch aphids.#
+#
+
+16368#Unripe Grapes#SG_FEEL#QUE_NOIMAGE#
+Small, unripe <NAVI>[grapes]<INFO>sp_cor,247,86,0,101,0</INFO></NAVI> are hanging from the vines. Spread fertilizer.#
+#
+
+16369#Unripe Grapes#SG_FEEL#QUE_NOIMAGE#
+Small, unripe <NAVI>[grapes]<INFO>sp_cor,247,86,0,101,0</INFO></NAVI> are hanging from the vines. Pull weeds.#
+#
+
+16370#Fuzzy Green Beans#SG_FEEL#QUE_NOIMAGE#
+These fuzzy <NAVI>[green beans]<INFO>sp_cor,163,135,0,101,0</INFO></NAVI> aren't even as big as a pinky nail. Catch aphids.#
+#
+
+16371#Fuzzy Green Beans#SG_FEEL#QUE_NOIMAGE#
+These fuzzy <NAVI>[green beans]<INFO>sp_cor,163,135,0,101,0</INFO></NAVI> aren't even as big as a pinky nail. Spread fertilizer.#
+#
+
+16372#Fuzzy Green Beans#SG_FEEL#QUE_NOIMAGE#
+These fuzzy <NAVI>[green beans]<INFO>sp_cor,163,135,0,101,0</INFO></NAVI> aren't even as big as a pinky nail. Pull weeds.#
+#
+
+16373#Tiny Pumpkins#SG_FEEL#QUE_NOIMAGE#
+Small green <NAVI>[pumpkins]<INFO>sp_cor,240,87,0,101,0</INFO></NAVI> are hanging on the vines. Catch aphids.#
+#
+
+16374#Tiny Pumpkins#SG_FEEL#QUE_NOIMAGE#
+Small green <NAVI>[pumpkins]<INFO>sp_cor,240,87,0,101,0</INFO></NAVI> are hanging on the vines. Spread fertilizer.#
+#
+
+16375#Tiny Pumpkins#SG_FEEL#QUE_NOIMAGE#
+Small green <NAVI>[pumpkins]<INFO>sp_cor,240,87,0,101,0</INFO></NAVI> are hanging on the vines. Pull weeds.#
+#
+
+16376#Subdue EL1_A17T#SG_FEEL#QUE_NOIMAGE#
+I've successfully subdued EL1_A17T.#
+#
+
+
+// Ep. 17.1 Patsy's Career Map 1
+17000#Refusal to Talk#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Rage]<INFO>pub_cat,105,58,0,101,0</INFO></NAVI> refuses to talk to Vice President Kaya Tos any longer. Find out why.#
+Talk to Rage#
+
+17001#I'll Go with You#SG_FEEL#QUE_NOIMAGE#
+Rage and Vice President Kaya Tos don't believe each other. I should offer to go with <NAVI>[Kaya Tos]<INFO>pub_cat,109,71,0,101,0</INFO></NAVI>.#
+Talk to Kaya Tos#
+
+17002#Time to Think#SG_FEEL#QUE_NOIMAGE#
+Kaya Tos needs time to think. I should go back to <NAVI>[Rage]<INFO>pub_cat,105,58,0,101,0</INFO></NAVI> and talk to him about him.#
+Talk to Rage#
+
+17003#Going with Him#SG_FEEL#QUE_NOIMAGE#
+Adventurer, hurry. We've got a long way to go. Let's go to the Einbroch <NAVI>[Airport]<INFO>einbroch,42,208,0,101,0</INFO></NAVI>.#
+To the Einbroch Airport#
+
+17004#Beginning of His Career Map#SG_FEEL#QUE_NOIMAGE#
+From now on, we'll follow Patsy from the beginning of his career to the current point of time. I'll see you in <NAVI>[Lighthalzen]<INFO>lighthalzen,259,215,0,101,0</INFO></NAVI>.#
+To Lighthalzen#
+
+17005#Lighthalzen Slum#SG_FEEL#QUE_NOIMAGE#
+Our journey begins at the Slum, where <NAVI>[Patsy's House]<INFO>lighthalzen,336,266,0,101,0</INFO></NAVI> is.#
+To Patsy's House#
+
+17006#Investigate in Ernest#SG_FEEL#QUE_NOIMAGE#
+How did you like your tour around the Slum? Now, we'll move on to the Rekenber <NAVI>[Headquarters]<INFO>lighthalzen,107,165,0,101,0</INFO></NAVI>. Let's go!#
+To Rekenber#
+
+17007#Investigate Rekenber#SG_FEEL#QUE_NOIMAGE#
+Where do newcomers go when they come here for the first time? Let's go to the <NAVI>[Lobby]<INFO>lhz_in01,107,137,0,101,0</INFO></NAVI>.#
+Enter the Headquarters#
+
+17008#Investigate Rekenber#SG_FEEL#QUE_NOIMAGE#
+Everyone, let's move to the <NAVI>[Meeting Room]<INFO>lhz_in01,162,257,0,101,0</INFO></NAVI> on the second floor, where Patsy begun his life at Rekenber.#
+To Floor 2#
+
+17009#Investigate Rekenber#SG_FEEL#QUE_NOIMAGE#
+Why did the Lab only take physically healthy people? I'm curious. There must be a reason! Come on, let's go to the <NAVI>[Annex Lab]<INFO>rgsr_in,157,84,0,101,0</INFO></NAVI>.#
+Annex Lab#
+
+17010#Investigate Rekenber#SG_FEEL#QUE_NOIMAGE#
+Patrick Kaufman? Who's that? I'm sorry, but I really don't know. Maybe <NAVI>[someone else]<INFO>rgsr_in,12,46,0,101,0</INFO></NAVI> in the back over there knows.#
+To the back#
+
+17011#Investigate Rekenber#SG_FEEL#QUE_NOIMAGE#
+Hm... Patsy was transferred to the Lab... Someone in his department has to know the details. Let's go to the <NAVI>[Office]<INFO>lhz_in01,80,210,0,101,0</INFO></NAVI> for now.#
+Back to the Headquarters building#
+
+17012#Investigate Rekenber#SG_FEEL#QUE_NOIMAGE#
+If you want to do this discreetly, then you shouldn't go through the Human Resources Department. Instead, you should go to the <NAVI>[Document Archive]<INFO>lhz_in01,32,264,0,101,0</INFO></NAVI> and look for the corresponding documents yourself.#
+To the Document Archive#
+
+17013#New Lab Location#SG_FEEL#QUE_NOIMAGE#
+Patrick was sent to the <NAVI>[new lab]<INFO>ein_fild01,95,146,0,101,0</INFO></NAVI> in... 95-146 Sector 1 in the Einbroch Mountains.#
+To the outskirts of Einbroch#
+
+17014#There Was No Lab#SG_FEEL#QUE_NOIMAGE#
+Adventurer, what else can you think of that we can do here? I just can't come up with anything. I'm hungry, and my legs are killing me. Let's just go back to the <NAVI>[Cat]<INFO>pub_cat,93,105,0,101,0</INFO></NAVI>, shall we?#
+Return to the Cat on a Bullet#
+
+// Ep. 17.1 Well Sky
+17015#Vice President's Persuasion#SG_FEEL#QUE_NOIMAGE#
+They worked at the Lab. Let <NAVI>[me]<INFO>sp_cor,165,79,0,101,0</INFO></NAVI> talk to these people.#
+Kaya Tos's persuasion#
+
+17016#I Can't Talk to Them#SG_FEEL#QUE_NOIMAGE#
+They wouldn't listen to me, no matter what. We'll never reach an agreement. Come talk with <NAVI>[me]<INFO>sp_cor,166,81,0,101,0</INFO></NAVI>. We need a plan.#
+Discuss with Tes#
+
+17017#Prepare for Attack#SG_FEEL#QUE_NOIMAGE#
+Let's move the wounded to a <NAVI>[safe place]<INFO>sp_cor,122,141,0,101,0</INFO></NAVI>. Hurry!#
+Move to a safe place#
+
+17018#Patients' Conditions#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Aas]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI> said she had something urgent to report to Kaya Tos.#
+To Aas#
+
+17019#Urgent Situation#SG_FEEL#QUE_NOIMAGE#
+We need help searching for the researcher who ran away. Please join the search party on the <NAVI>[left side]<INFO>sp_cor,108,130,0,101,0</INFO></NAVI>.#
+Join the search#
+
+// Ep. 17.1 Patsy's Career Map 2
+17020#Relaunch Investigation#SG_FEEL#QUE_NOIMAGE#
+Please keep investigating Patrick Kaufman's whereabouts. The <NAVI>[people who used to work]<INFO>sp_cor,133,144,0,101,0</INFO></NAVI> here might be able to tell you something.#
+To workers#
+
+17021#Searching for Patsy#SG_FEEL#QUE_NOIMAGE#
+If you're looking for someone, you should talk to the researchers. Most of them ran away, but a few of their <NAVI>[assistants]<INFO>sp_cor,224,77,0,101,0</INFO></NAVI> are still here. Go to them.#
+To researchers#
+
+17022#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+If you're looking for someone, talk to the laundry <NAVI>[person]<INFO>sp_cor,151,180,0,101,0</INFO></NAVI>. He's been here for a long time and knows a lot of people.#
+To the laundry manager#
+
+17023#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+If you're looking for something, you should check the <NAVI>[Incineration Plant]<INFO>sp_cor,70,263,0,101,0</INFO></NAVI>. Any documents that were scattered are usually gathered up and sorted there.#
+To the Incineration Plant#
+
+17024#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+There's a separate <NAVI>[dump]<INFO>sp_rudus,227,351,0,101,0</INFO></NAVI> for things that are too contaminated to be burned or can't be burned. The people here have another name for it, though.#
+To Rudus#
+
+17025#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+Voices can be heard from <NAVI>[somewhere]<INFO>sp_rudus,15,280,0,101,0</INFO></NAVI>. Follow them.#
+Follow the voices#
+
+17026#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+Maybe you should check garbage for his identification bracelet. It might be dropped on the ground somewhere, too.#
+Test Subject Identification Bracelet#
+
+17027#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+I rummaged through the garbage and found a few identification bracelets, but none of them was Kaufrman's. I should look elsewhere.#
+Look elsewhere#
+
+17028#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+I rummaged through the garbage and found a few identification bracelets, but none of them are helpful. I should look elsewhere.#
+Search Garbage Mounds#
+
+17029#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+I rummaged through all the garbage mounds, but there was nothing but garbage. I should look elsewhere.#
+Look elsewhere#
+
+17030#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+I searched and searched, but there was nothing that looked useful to me. I should look elsewhere.#
+Check another Garbage Mound#
+
+17031#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+There's nothing here. Can I really find clues to Kaufman's whereabouts? I should look elsewhere.#
+Check another Garbage Mound#
+
+17032#Searching for Kaufman#SG_FEEL#QUE_NOIMAGE#
+I dug up a bracelet from the mound of garbage. I should take it to <NAVI>[Kaya]<INFO>sp_cor,136,146,0,101,0</INFO></NAVI>.#
+To Kaya Tos#
+
+// Ep. 17.1 Bracelet Collection
+17033#Everything Hereafter#SG_FEEL#QUE_NOIMAGE#
+From now on, Miss. <NAVI>[Aas]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI> here will take care of you. You can also give her that bracelet you've collected.#
+To Aas#
+
+17034#To Rudus#SG_FEEL#QUE_NOIMAGE#
+Now, please put 20 of those test subjects called Dolors to rest and collect 10 Test Subject Identification Bracelets. - <NAVI>[Aas]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI>#
+Test Subject Identification Bracelet 10#
+
+17035#Pending: To Rudus#SG_FEEL#QUE_NOIMAGE#
+I'll see you again after dawn. You did a great job. - <NAVI>[Aas]<INFO>sp_cor,135,147,0,101,0</INFO></NAVI>#
+Quest resets at 4:00 a.m.#
+
+3364#Fire Event#SG_FEEL#QUE_NOIMAGE#
+To participate in setting a fire, you need a few items that can burn well. Please come <NAVI>[to me]<INFO>alberta,138,169,0,101,0</INFO></NAVI> with 5 fine branches, 10 old tree roots and 1 fire arrow.#
+Great Fire Material#
+
+3365#Mage Luna#SG_FEEL#QUE_NOIMAGE#
+Would you like to meet <NAVI>[Mage Luna]<INFO>alberta,134,162,0,101,0</INFO></NAVI>, who was dispatched from Gefen Tower for this lighting event?#
+To Luna#
+
+3366#Capture wild boar#SG_FEEL#QUE_NOIMAGE#
+It takes a lot of work to capture wild boars that ruin crops. Please go to <NAVI>[Serena]<INFO>alberta,152,198,0,101,0</INFO></NAVI>.#
+To Serena#
+
+3367#Preparation for the harvesting agent#SG_FEEL#QUE_NOIMAGE#
+Food is indispensable for the festival. Please go to <NAVI>[Songhwa]<INFO>alberta,119,193,0,101,0</INFO></NAVI>, who prepares food for the harvest festival. There are a lot of delicious food.#
+To Songhwa#
+
+3369#Resurrected Twig#SG_FEEL#QUE_NOIMAGE#
+I hope you will get rid of 10 resurrected branches and get about 10 good quality branches. My Reputation depends on it! <NAVI>[Mage Luna]<INFO>alberta,134,162,0,101,0</INFO></NAVI>#
+10 quality branches#
+
+3370#Atmosphere: Resurrected Branch#SG_FEEL#QUE_NOIMAGE#
+Now, Lana is watching. Will you come back after dawn <NAVI>[Mage Luna]<INFO>alberta,134,162,0,101,0</INFO></NAVI>#
+Initialization time 04:00#
+
+3371#Hungry Boar#SG_FEEL#QUE_NOIMAGE#
+The boars that have already come down to the village must be safely captured and returned home. <NAVI>[My]<INFO>alberta,152,198,0,101,0</INFO></NAVI> Give me a wild boar trap to capture 10 hungry boars.#
+10 captured wild boars#
+
+3372#Waiting: Hungry Boar#SG_FEEL#QUE_NOIMAGE#
+Now I need to trim the boar trap. Would you come back to <NAVI>[I]<INFO>alberta,152,198,0,101,0</INFO></NAVI> after dawn time?#
+Initialization time 04:00#
+
+3373#Songpyeon preparation#SG_FEEL#QUE_NOIMAGE#
+Songpyeon's ingredients are running out. Go get Songpyeon some ingredients? 1 grain, 3 honey, 10 green herbs. <NAVI>[Songhwa]<INFO>alberta,119,193,0,101,0</INFO></NAVI>#
+Songpyeon ingredients#
+
+3374#Prepare Mooncake#SG_FEEL#QUE_NOIMAGE#
+The moon cake's ingredients have run out. Can you get some moon cake ingredients? 1 yellow spice and 3 pieces of wood. <NAVI>[Songhwa]<INFO>alberta,119,193,0,101,0</INFO></NAVI>#
+Mooncake material#
+
+3375#Preparing roast turkey#SG_FEEL#QUE_NOIMAGE#
+The ingredients for roast turkey are running out. Can you get some ingredients for the roast turkey? 1 plain sauce, 3 lemons and 10 carrots. <NAVI>[Songhwa]<INFO>alberta,119,193,0,101,0</INFO></NAVI>#
+Ingredients for roast turkey#
+
+3376#Waiting: Preparing food for the harvest festival#SG_FEEL#QUE_NOIMAGE#
+The food preparation is in full swing, so I can't give you anything. If you come to <NAVI>[I]<INFO>alberta,119,193,0,101,0</INFO></NAVI> after some time, I will give it to you.#
+#
+
+3377#Louise's business#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Lewis]<INFO>alberta,115,198,0,101,0</INFO></NAVI> seems to need help. Let's talk.#
+Talking to Lewis#
+
+3378#Food of turkeys#SG_FEEL#QUE_NOIMAGE#
+The turkeys need food. <ITEM>[Locust hind leg]<INFO>940</INFO></ITEM> 30ea, <ITEM>[Green Herb]<INFO>511</INFO></ITEM> 20ea, <ITEM>[Additive Commemorative snack]<INFO>11613</INFO></ITEM> Let's bring 20 pieces to Lewis.#
+Feeding Turkey#
+
+3379#Turkey's Food-Repeat#SG_FEEL#QUE_NOIMAGE#
+Turkeys continue to need food. <ITEM>[Locust hind leg]<INFO>940</INFO></ITEM> 30ea, <ITEM>[Green Herb]<INFO>511</INFO></ITEM> 20ea, <ITEM>[Additive Commemorative snack]<INFO>11613</INFO></ITEM> Let's bring 20 pieces to Lewis.#
+Feeding Turkey#
+
+3380#Turkey's Food-Repeat#SG_FEEL#QUE_NOIMAGE#
+Turkeys continue to need food. <ITEM>[Locust hind leg]<INFO>940</INFO></ITEM> 30ea, <ITEM>[Green Herb]<INFO>511</INFO></ITEM> 20ea, <ITEM>[Additive Commemorative snack]<INFO>11613</INFO></ITEM> Let's bring 20 pieces to Lewis.#
+Feeding Turkey#
+
+3381#Food of Turkeys-Repeat#SG_FEEL#QUE_NOIMAGE#
+Turkeys continue to need food. <ITEM>[Locust hind leg]<INFO>940</INFO></ITEM> 30ea, <ITEM>[Green Herb]<INFO>511</INFO></ITEM> 20ea, <ITEM>[Additive Commemorative snack]<INFO>11613</INFO></ITEM> Let's bring 20 pieces to Lewis.#
+Feeding Turkey#
+
+3382#Reason for moving to Kunlun#SG_FEEL#QUE_NOIMAGE#
+Seobang Kim asks for two <ITEM>[anywhere ticket]<INFO>25392</INFO></ITEM> to meet her daughter Kejin.#
+Accepting Seobang Kim's request#
+
+3383#Why move to Kunlun-Repeat#SG_FEEL#QUE_NOIMAGE#
+Seobang Kim asks you to bring two <ITEM>[anywhere ticket]<INFO>25392</INFO></ITEM> to meet her daughter Kejin today.#
+Accepting Seobang Kim's request#
+
+3384#Reason for moving to Kunlun- Waiting#SG_FEEL#QUE_NOIMAGE#
+When dawn is over and it's time to launch the boat again, let's visit Kim Seobang again.#
+#
+
+3385#Eunwol's Dragon #SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Eunwol]<INFO>alberta,117,198,0,101,0</INFO></NAVI> seems to need help. Let's talk.#
+Talking to Eunwol#
+
+3386#Delivery of Thanksgiving Confectionery#SG_FEEL#QUE_NOIMAGE#
+For the study of harvest sweets, ask for 10 <ITEM>[Thanksgiving Sweets]<INFO>25392</INFO></ITEM>.#
+Accepting Eunwol's request#
+
+3387#Delivery of Thanksgiving Confectionery-Repeat#SG_FEEL#QUE_NOIMAGE#
+I think I need more <ITEM>[Thanksgiving Confectionery]<INFO>25392</INFO></ITEM>. Collect 10 and bring it to Eunwol.#
+Accepting Eunwol's request#
+
+3388#Delivery of Thanksgiving Confectionery-Waiting#SG_FEEL#QUE_NOIMAGE#
+When Eunwol needs more sweets for the harvest festival, let's come back.#
+#
+
+63735#Bounty Board Angry Nine Tail#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Angry Nine Tail monsters and return to the Bounty Board in Illusion of Moonlight Dungeon#
+#
+
+63736#Bounty Board Resentful Munak#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Resentful Munak monsters and return to the Bounty Board in Illusion of Moonlight Dungeon#
+#
+
+63737#Bounty Board Resentful Bongun#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Resentful Bongun monsters and return to the Bounty Board in Illusion of Moonlight Dungeon#
+#
+
+63738#Bounty Board Resentful Sohee#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Resentful Sohee monsters and return to the Bounty Board in Illusion of Moonlight Dungeon#
+#
+
+63739#Bounty Board Resentful Soldier#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Resentful Soldier monsters and return to the Bounty Board in Illusion of Moonlight Dungeon#
+#
+
+63740#Bounty Board Deranged Adventurer#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Deranged Adventurer monsters and return to the Bounty Board in Illusion of Moonlight Dungeon#
+#
+
+63741#Bounty Board Angry Gazeti#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Angry Gazeti monsters and return to the Bounty Board in Illusion of Frozen Dungeon#
+#
+
+63742#Bounty Board Angry Snowier#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Angry Snowier monsters and return to the Bounty Board in Illusion of Frozen Dungeon#
+#
+
+63743#Bounty Board Angry Ice Titan#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Angry Ice Titan monsters and return to the Bounty Board in Illusion of Frozen Dungeon#
+#
+
+63744#Bounty Board Sweet Nightmare#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Sweet Nightmare monsters and return to the Bounty Board in Illusion of Vampire Dungeon#
+#
+
+63745#Bounty Board Matte Drainliar#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Matte Drainliar monsters and return to the Bounty Board in Illusion of Vampire Dungeon#
+#
+
+63746#Bounty Board Restless Dead#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Restless Dead monsters and return to the Bounty Board in Illusion of Vampire Dungeon#
+#
+
+63747#Bounty Board Restless Dead#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Restless Dead monsters and return to the Bounty Board in Illusion of Vampire Dungeon#
+#
+
+63748#Bounty Board Restless Dead#SG_FEEL#QUE_NOIMAGE#
+Hunt 150 Restless Dead monsters and return to the Bounty Board in Illusion of Vampire Dungeon#
+#
+
+//----- Illusion of Turtle Island
+63749#To the unknown tortoise island#SG_FEEL#QUE_NOIMAGE#
+In the middle of talking to E, I came to a strange place. Talk to the girl in front of me.#
+Talk to the girl#
+
+63750#Stranger on Turtle Island 1#SG_FEEL#QUE_NOIMAGE#
+The girl let me know several places. Let's find Ph.D. Lanai at the turtles village.#
+Looking for Ph.D. Lanai at the turtles village#
+
+63751#Stranger on Turtle Island 2#SG_FEEL#QUE_NOIMAGE#
+The girl told me some point. Let's find Ph.D. Lanai at the turtles village.#
+Looking for Ph.D. Lanai at the turtles village#
+
+63752#Stranger on Turtle Island 3#SG_FEEL#QUE_NOIMAGE#
+The girl show me some places. Let's find Ph.D. Lanai at the turtle palace.#
+Looking for Ph.D. Lanai at the turtle palace#
+
+63753#Stranger on Turtle Island 4#SG_FEEL#QUE_NOIMAGE#
+There is one more point, Let's find Ph.D. Lanai at the turtle palace.#
+Looking for Ph.D. Lanai at the turtle palace#
+
+63754#Emergency food procurement 1#SG_FEEL#QUE_NOIMAGE#
+Let's hunt ILL_PERMETER, ILL_SOLIDER, ILL_FREEZER, ILL_HEATER for 10 monsters and get 10 pieces of rotten meat to Lanai.#
+Hand over the 10 pieces of rotten meat#
+
+63755#Emergency food procurement 2#SG_FEEL#QUE_NOIMAGE#
+Let's hunt ILL_PERMETER, ILL_SOLIDER, ILL_FREEZER, ILL_HEATER for 10 monsters and get 10 pieces of rotten meat to Lanai.#
+Hand over to Lanai#
+
+63756#The Secret of Strangers#SG_FEEL#QUE_NOIMAGE#
+As Lanai's requst, Let's go to the local residents. The nearest is the middle of Turtle Palace.#
+Talk to the woman without energy#
+
+63757#A long-forgotten story#SG_FEEL#QUE_NOIMAGE#
+Let's run away to the middle of turtles village.#
+Talk to the girl#
+
+63758#A short break, and a promise#SG_FEEL#QUE_NOIMAGE#
+This quest is a daily quest, you can take it when the waiting time is over. After the time, you can ask the girl again at the Turtles vilage.#
+#
+
+63759#A memory that should not be forgotten 1#SG_FEEL#QUE_NOIMAGE#
+Let's find Ph.D. Lanai at the Turtles Palace, to remind her.#
+Talk to Ph.D Lanai at the Turtles Palace#
+
+63760#A memory that should not be forgotten 2#SG_FEEL#QUE_NOIMAGE#
+Let's go back to the girl with Ph.D. Lanai at the Turtles vilage.#
+Talk to the girl#
+
+63761#A memory that should not be forgotten - Cooldown#SG_FEEL#QUE_NOIMAGE#
+This quest is a daily quest, you can take it when the waiting time is over. After the time, you can ask the girl again at the Turtles vilage.#
+#
+
+63762#Vain Desire#SG_FEEL#QUE_NOIMAGE#
+As the request of an susceptible soldier, kill ILL_ASSULTER 10 monster, and give him 5 pieces of Shabby_Metal_Chip.#
+Give him 5 pieces of Shabby_Metal_Chip#
+
+63763#Vain Desire - Cooldown#SG_FEEL#QUE_NOIMAGE#
+This quest is a daily quest, you can take it when the waiting time is over. After the time, you can ask the soldier again at the Turtles vilage.#
+#
+
+63764#Endless Hunger 1#SG_FEEL#QUE_NOIMAGE#
+Let's hunt ILL_PERMETER, ILL_SOLIDER, ILL_FREEZER, ILL_HEATER for 10 monsters and get 10 pieces of rotten meat to A woman without energy.#
+Hand over 10 pieces of rotten meat#
+
+63765#Endless Hunger 2#SG_FEEL#QUE_NOIMAGE#
+Let's hunt ILL_PERMETER, ILL_SOLIDER, ILL_FREEZER, ILL_HEATER for 10 monsters and get 10 pieces of rotten meat to A woman without energy.#
+Hand over to A woman without energy#
+
+63766#Endless Hunger - Cooldown#SG_FEEL#QUE_NOIMAGE#
+This quest is a daily quest, you can take it when the waiting time is over. After the time, you can ask the woman again at Turtles Palace.#
+#
+
+63767#Talk with Eilbar#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+63768#Talk with girl#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+63769#Continuous story#SG_FEEL#QUE_NOIMAGE#
+Let's talk to the girl in middle of the Turtles vilage.#
+Talk to the girl again#
+
+63770#Continuous story 2#SG_FEEL#QUE_NOIMAGE#
+Let's talk to the girl in middle of the Turtles vilage.#
+Talk to the girl again#
+
+
+// Snow Flower Festival - Dec
+
+17137#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You wanna a make snow flower bouquet? Then, collect 10 <ITEM>magical snow flowers<INFO>25425</INFO></ITEM> and come back <NAVI>[here]<INFO>aldebaran,174,164,0,101,0</INFO></NAVI>.#
+10 magical snow flower#
+
+17138#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+Find the <NAVI>[Snow flower illusionist]<INFO>aldebaran,172,162,0,101,0</INFO></NAVI>. If you are interested find the place.#
+To snow flower illusionist#
+
+17139#To get through hot winter#SG_FEEL#QUE_NOIMAGE#
+Snow for the region where it does not fall, Cotton clothes for cold region! If you wish to get through the winter find <NAVI>[Coti]<INFO>aldebaran,124,238,0,101,0</INFO></NAVI> and Ulsi.#
+To Coti#
+
+17140#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+Did you find a special card from your gift box? Then bring it to <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>. You will receive a special gift.#
+To Twinkle#
+
+17141#Festival organizers#SG_FEEL#QUE_NOIMAGE#
+why don't you meet the festival organizers and listen to the behind story of this event? Snow Boy Keeper, <NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI> is around here.#
+To [Eugene]#
+
+17142#Make snow flower bouquet#SG_FEEL#QUE_NOIMAGE#
+You need 10 <ITEM>magical snow flower<INFO>25425</INFO></ITEM> to make snow flower bouquet. Please do not forget 1 <ITEM>carrot<INFO>515</INFO></ITEM> for decorating snowman. - <NAVI>[Marine]<INFO>aldebaran,172,162,0,101,0</INFO></NAVI>#
+10 Snow flower, 1 carrot#
+
+
+17143#Waiting: Chilly feeling is remained#SG_FEEL#QUE_NOIMAGE#
+The effect of magical snow flower is still remained. Please comeback after the dawn. - <NAVI>[Marin]<INFO>aldebaran,172,162,0,101,0</INFO></NAVI>#
+Waiting time#
+
+17144#Getting through winter#SG_FEEL#QUE_NOIMAGE#
+Snow for children! Warm cotton clothes for children in cold region! <NAVI>[To us]<INFO>aldebaran,124,238,0,101,0</INFO></NAVI> donate 10 warm cotton!#
+10 Warm cotton#
+
+17145#Waiting: Cotton is being wrapped#SG_FEEL#QUE_NOIMAGE#
+Cotton is being wrapped. The wrapping seems be be finished by dawn so please come back after dawn! - <NAVI>[Coti]<INFO>aldebaran,124,238,0,101,0</INFO></NAVI>#
+Waiting time#
+
+17146#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is ALDEBARAN!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters A.L.D.E.B.A.R.A.N. Total of 9 letters.  - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect ALDEBARAN card#
+
+17147#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is SNOW!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters S. N. O. W. Total of 4 letters. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect SNOW card#
+
+17148#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is FESTIVAL!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters F. E. S. T. I. V. A. L.. Total of 8 letters. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect FESTIVAL card#
+
+17149#Exchange festival card#SG_FEEL#QUE_NOIMAGE#
+The lucky word for you is SPARKLE!! Please open snow flower envelope from your gift box. In the envelope, you can find these letters S.P.A.R.K.L.E. Total of 7 letters. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect SPARKLE card#
+
+17150#Waiting: Card exchange is once a day#SG_FEEL#QUE_NOIMAGE#
+Alphabet card exchange is once a day. Okay? So please comeback after dawn! - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Waiting time#
+
+17151#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI> and Rigel said they had plans and told you to gather closer.#
+Talk to Eugene#
+
+17152#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+Please bring 10 <ITEM>Flowers<INFO>712</INFO></ITEM>. There is a <NAVI>[Flower Merchant]<INFO>geffen,161,83,0,101,0</INFO></NAVI> in geffen.#
+Geffen Flower merchant#
+
+17153#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+Rigel has worked at <NAVI>[Toy Factory]<INFO>xmas_dun01,128,154,0,101,0</INFO></NAVI> in Lutie. You might find something there.#
+Lutie Toy Factory#
+
+17154#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+Eugene has come to Lutie by <NAVI>[Train]<INFO>xmas,204,223,0,101,0</INFO></NAVI>. you'll find something there.#
+Lutie Track#
+
+17155#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+Let's go back to <NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI> and Rigel at Snow Festival with 10 Flowers and persuade them again.#
+To Eugene#
+
+17156#Not everyone likes it#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Rigel]<INFO>aldebaran,107,164,0,101,0</INFO></NAVI> seems to carry out the plan to the end. Is there any way to stop him?#
+Talk to Rigel#
+
+17157#Growing Snow Boy#SG_FEEL#QUE_NOIMAGE#
+If you'd like to grow snow Boy, you need holy water. Please bring 5 Holy water. - <NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI>#
+5 Holy Water#
+
+17158#Waiting: Growing Snow Boy#SG_FEEL#QUE_NOIMAGE#
+You can grow snow boy with the holy water you brought. Please come back after dawn. - <NAVI>[Eugene]<INFO>aldebaran,108,166,0,101,0</INFO></NAVI>#
+Waiting Time#
+
+
+
+11539#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I heard Hyul humming alone in the Payon inn. Let's talk to Hyul.#
+Talk to Hyul#
+
+11540#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11541#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul said he would visit an elderly man at south of Alberta#
+Talk to Elderly in Alberta#
+
+11542#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I greeted Elderly in Alberta safely. Let's go back to Payon to talk to Hyul.#
+To Payon#
+
+11543#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11544#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul said he would visit an elderly man at North of Prontera#
+Talk to Elderly in Prontera#
+
+11545#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I greeted Elderly in Prontera safely.  Let's go back to Payon to talk to Hyul.#
+To Payon#
+
+11546#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11547#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul said he would visit an elderly man at north of Geffen#
+Talk to Elderly in Geffen#
+
+11548#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I greeted Elderly in Geffen safely.  Let's go back to Payon to talk to Hyul.#
+To Payon#
+
+11549#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11550#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul said he would visit an elderly man at west of Aldebaran#
+Talk to Elderly in Aldebaran#
+
+11551#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+I greeted Elderly in Aldebaran safely.  Let's go back to Payon to talk to Hyul.#
+To Payon#
+
+11552#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul wants to find ingredients to make Freshly boiled octopus Tteoguk. Let's check Cauldron in Payon's Inn and make a Freshly boiled octopus Tteoguk and bring it to Hyul.#
+Freshly boiled octopus Tteokguk#
+
+11553#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Hyul says he will go to his hometown at east of Payon.#
+Talk to Elderly in Payon#
+
+11554#Try to find the taste of hometown#SG_FEEL#QUE_NOIMAGE#
+Freshly boiled octopus Tteokguk Material : 5 Picnic Octopus Leg, 2 Pecopeco Egg, 5 Fresh Octupus Leg, 2 Chewy bar rice cake(Picnic Octopus Leg, can be acquired defeating Picnic Octopus.)#
+put the ingredients in Cauldron#
+
+11555#Try to find the taste of hometown - Waiting#SG_FEEL#QUE_NOIMAGE#
+The pot is too hot to make  [Freshly boiled octopus Tteokguk]. Let's try tomorrow again.#
+Waiting Cauldron#
+
+11760#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+It is said that Roin visited the Malangdo Octopus Festival. Talk to Roin.#
+Talk to Roin#
+
+11761#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+I don't think Roin has any energy. Talk to Festival Staff to find the solution.#
+Talk to Festival Staff.#
+
+11762#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+Warnuts are moving to each region to defeat rats that have spread throughout the region. Let's talk to Warnut, who's getting ready to leave at the entrance to Malangdo.#
+Talk to Warnut in front of Malangdo#
+
+11763#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+Warnut is scheduled to depart for Prontera. Let's go to Prontera together and look into the situation.#
+Talk to Warnut at Prontera#
+
+11764#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+I can't see the rats right now, but the situation seems to be bad.#
+Talk to Warnut at Payon#
+
+11765#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+Warnut at Payon seems to be very tired of dealing with rats. Let's catch 10 What a cheap Rat on our way back and report it to Roin.#
+Talk to Roin at Malangdo#
+
+11766#It's unfair, moo!#SG_FEEL#QUE_NOIMAGE#
+It still seems that the rats have not disappeared. Let's catch 10 What a cheap Rat on our way back and report it to Roin.#
+Defeat Rats#
+
+11767#It's unfair, moo! -Waiting#SG_FEEL#QUE_NOIMAGE#
+I defeated What a cheap Rat. Let's visit again tomorrow.#
+Reset at 4:00#
+
+
+//--- Happy Egg Festival
+16261#Happy Egg Explore#SG_FEEL#QUE_NOIMAGE#
+The festival has begun. Break 3 Happy Eggs hidden in the dungeon and field and return to Member of the Happy Egg Festival.#
+Return to Yulata#
+
+16262#Happy Egg Explore-Cool down#SG_FEEL#QUE_NOIMAGE#
+These quests are daily quests and can be recieved at the expiration of the Cool down time. You can receive quests through the Member of the Happy Egg Festival.#
+#
+
+16263#Happy Egg Explore#SG_FEEL#QUE_NOIMAGE#
+The festival continues. Break 3 Happy Eggs hidden in the dungeon and field and return to Member of the Happy Egg Festival.#
+Return to Yulata#
+
+16264#Happy Clover Decoration#SG_FEEL#QUE_NOIMAGE#
+The festival has begun. Hunt 3 clovers each in dungeons and fields, then collect 3 Happy Three Leaf Clovers and return to the Festival Deco Expert.#
+Return to Luluphant#
+
+16265#Happy Clover Decoration-Cool down#SG_FEEL#QUE_NOIMAGE#
+These quests are daily quests and can be recieved at the expiration of the Cool down time. You can receive quests through Festival Deco Expert.#
+#
+
+16266#Happy Clover Decoration#SG_FEEL#QUE_NOIMAGE#
+The festival continues. Hunt 3 clovers each in dungeons and fields, then collect 3 Happy Three Leaf Clovers and return to the Festival Deco Expert.#
+Return to Luluphant#
+
+16267#Looking for Happy Hint#SG_FEEL#QUE_NOIMAGE#
+After helping Member of the Happy Egg Festival, Yulata, let's check if there's anything suspicious and report to Frowny.#
+Investigate Yulata#
+
+16268#Looking for Happy Hint#SG_FEEL#QUE_NOIMAGE#
+After helping Festival Deco Expert, Luluphant, let's check if there's anything suspicious and report to Frowny.#
+Investigate Luluphant#
+
+16269#Jump into the Enemy camp#SG_FEEL#QUE_NOIMAGE#
+Let's help Zilean make egg-shaped snacks at Schweitzerville Academy and see if there's anything suspicious.#
+Investigate Zilean#
+
+16270#Invest the Enemy camp#SG_FEEL#QUE_NOIMAGE#
+Let's help Salem care of pets at Schweitzervill Academy, and see if there's anything suspicious.#
+Investigate Salem#
+
+16271#Report Happy Result#SG_FEEL#QUE_NOIMAGE#
+I've completed investigating Academy. Let's report the this happy results to Frowny waiting at the new place.#
+Return to Frowny#
+
+16272#Track the truth#SG_FEEL#QUE_NOIMAGE#
+Let's comfort Frowny, who has become very depressed.#
+Talk to Frowny#
+
+16273#Sweet Cookie Egg Ingredients#SG_FEEL#QUE_NOIMAGE#
+Meet Farmer Sheran waiting in Izlude and get an Almond and go back to Zilean.#
+Talk to Sheran#
+
+16274#Chocolate Egg Ingredients#SG_FEEL#QUE_NOIMAGE#
+Meet Patissier Ian waiting in Prontera and get a solid chocolate and go back to Zilean.#
+Talk to Ian#
+
+16275#Sweet Ingredients#SG_FEEL#QUE_NOIMAGE#
+These quests are daily quests and can be recieved at the expiration of the Cool down time. You can receive quests through Zilean.#
+#
+
+16276#Sweet Cookie Egg Ingredients#SG_FEEL#QUE_NOIMAGE#
+Meet Farmer Sheran waiting in Izlude and get an Almond and go back to Zilean.#
+Talk to Sheran#
+
+16277#Chocolate Egg Ingredients#SG_FEEL#QUE_NOIMAGE#
+Meet Patissier Ian waiting in Prontera and get a solid chocolate and go back to Zilean.#
+Talk to Ian#
+
+16278#Take a walk with Pet Lunatic#SG_FEEL#QUE_NOIMAGE#
+You decided to take a walk with Pet Lunatic#
+Take a walk with Lunatic#
+
+16279#Take a walk with Pet Poring#SG_FEEL#QUE_NOIMAGE#
+You decided to take a walk with Pet Poring.#
+Take a walk with Poring#
+
+16280#Take a walk with Pet Desert Wolf Baby#SG_FEEL#QUE_NOIMAGE#
+You decided to take a walk with Pet Desert Wolf Baby.#
+Take a walk with Desert Wolf Baby#
+
+16281#Take a walk with Pet Deviruchi#SG_FEEL#QUE_NOIMAGE#
+You decided to take a walk with pet Deviruchi.#
+Take a walk with Deviruchi#
+
+16282#Happy Survey#SG_FEEL#QUE_NOIMAGE#
+Talk to Salem and fill out the questionnaire, and today's experiment is over.#
+Survey#
+
+16283#Happy Walking#SG_FEEL#QUE_NOIMAGE#
+These quests are daily quests and can be recieved at the expiration of the Cool down time. You can receive quests through Salem.#
+#
+
+16284#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's go to the first Walking Course on the map.#
+First Walking Course#
+
+16285#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's go to the second Walking Course on the map.#
+Second Walking Course#
+
+16286#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's go to the third Walking Course on the map.#
+Third Walking Course#
+
+16287#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's go to the fourth Walking Course on the map.#
+Fourth Walking Course#
+
+16288#Happy Walking Course#SG_FEEL#QUE_NOIMAGE#
+Let's get back to Schweitzervill Academy.#
+Return to Acedemy#
+
+16289#Happy Pet Vending Machine#SG_FEEL#QUE_NOIMAGE#
+Happy Pet Vending Machine#
+#
+
+//-- Corridor of Phantom
+5846#Corridor of Phantom#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Phantom's Spirit]<INFO>comodo,214,186,0,101,0</INFO></NAVI> gives away <ITEM>[Phantom's Seal]<INFO>25504</INFO></ITEM> to play the corridor for an hour once every three days.#
+#
+
+63715#Corridor of Phantom#SG_FEEL#QUE_NOIMAGE#
+<NAVI>[Phantom's Spirit]<INFO>comodo,214,186,0,101,0</INFO></NAVI> gives away sells Phantom Ticket to play the corridor for two hours once a day.#
+#
+
+
+8280#I don't look good in bells.#SG_FEEL#QUE_NOIMAGE#
+Get advices from Tortell, Couscous, Coco, and Ravi Ravi and go back to Olive Olive.#
+Talking to Dorams#
+
+8281#Poor thing#SG_FEEL#QUE_NOIMAGE#
+Tortell comforted you greatly when the bells didn't match.#
+#
+
+8282#Let me help you#SG_FEEL#QUE_NOIMAGE#
+Couscous suggested putting flowers on the bell.#
+#
+
+8283#With all one's wits#SG_FEEL#QUE_NOIMAGE#
+Coco tried to trick you once again after being bewitched by Olive Olive, but she is not a bad cat.#
+#
+
+8284#I'm gonna put a bell on you.#SG_FEEL#QUE_NOIMAGE#
+If you have 10 Fluff, Ravi Ravi will find the way to match bell on you.#
+10 Fluff#
+
+
+8285#To those who face the new spring#SG_FEEL#QUE_NOIMAGE#
+Arles ask you to bring ^4d4dff15 Spray of Flower^000000 from ^4d4dffFlower Tree Aura^000000 near Flower Tree for students.#
+15 Spray of Flowers# 
+
+8286#To those who face a new beginning#SG_FEEL#QUE_NOIMAGE#
+At Arles' request, Arles' disciples Seminy, Lysony, and Lumaca must each be delivered 5 Spray of Flowers.#
+Spray of Flowers Delivery#
+
+
+8287#Spray of Flowers Delivery to Seminy#SG_FEEL#QUE_NOIMAGE#
+Delivery to Seminy#
+#
+
+8288#Spray of Flowers Delivery to Lysony#SG_FEEL#QUE_NOIMAGE#
+Delivery to Lysony#
+#
+
+8289#Spray of Flowers Delivery to Lumaca#SG_FEEL#QUE_NOIMAGE#
+Delivery to Lumaca#
+#
+

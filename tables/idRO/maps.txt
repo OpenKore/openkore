@@ -324,6 +324,7 @@ pay_arche.rsw#Desa Archer#
 payon.rsw#Kota Payon#
 payon_in01.rsw#Dalam Payon#
 payon_in02.rsw#Dalam Payon#
+payon_in03.rsw#Dalam Payon#
 prontera.rsw#Kota Prontera#
 prt_in.rsw#Dalam Prontera#
 prt_in_1.rsw#Dalam Prontera#
@@ -886,3 +887,88 @@ gl_chyard_.rsw#Churchyard#
 1@face.rsw#Faceworm's Nest#
 1@sara.rsw#Sara's Memory#
 dali.rsw#Dimensional Gap#
+dali02.rsw#Dimensional Gap#
+//-- 최종갱신 오전 10:26 2015-10-26 본서버
+
+// 신종족 도람 라자냐 마을
+lasagna.rsw#Port City of Lasagna#
+lasa_fild01.rsw#Ravioli Plain Watch#
+lasa_fild02.rsw#Ravioli Forest#
+lasa_dun01.rsw#Dragon's Nest#
+lasa_dun02.rsw#Dragon's Nest#
+lasa_dun03.rsw#Dragon's Nest#
+conch_in.rsw#Inside the Kon-Kilina#
+lasa_in01.rsw#Inside Lasagna#
+lasa_dun_q.rsw#Dragon's Nest#
+
+//EP.14.3
+moro_vol.rsw#Flame Basin#
+moro_cav.rsw#Flame Cave#
+1@dth1.rsw#Isle of Bios#
+1@dth2.rsw#Isle of Bios#
+1@dth3.rsw#Isle of Bios#
+1@rev.rsw#Morse's Cave#
+1@eom.rsw#Temple of Evil God#
+// 꿈과 그림자 (지터벅 개편)
+1@jtb.rsw#Dreams and Shadows#
+
+// horror toy factory
+1@xm_d.rsw#Horror Toy Factory#
+
+//Heroes Trail
+dali02.rsw#Dimensional Crack#
+1@tnm1.rsw#Devil's Tower High Floor#
+1@tnm2.rsw#Devil's Tower Top Floor#
+1@tnm3.rsw#Morroc Castle Underground#
+1@ge_st.rsw#Geffen Magic Tournament#
+1@gef.rsw#Geffen Magic Tournament#
+1@gef_in.rsw#Geffen Magic Tournament#
+1@spa.rsw#Ghost Palace#
+
+// ep15.1 판타스마고리카
+ver_eju.rsw#Juperos Eastern Ruin#
+ver_tunn.rsw#Verus Outer Tunnel#
+verus04.rsw#Verus Findspot#
+verus03.rsw#Verus Center Square#
+
+1@mcd.rsw#Charleston Factory#
+
+// ep15.2 판타스마고리카
+verus01.rsw#Laboratorium-OPTATIO#
+verus02.rsw#Research Building-WISH#
+un_bk_q.rsw#Under Bunker#
+un_bunker.rsw#Under Bunker#
+un_myst.rsw#Under Tunnel#
+1@uns.rsw#Last Room#
+1@lab.rsw#Central Lab#
+
+// 영웅의 흔적3
+1@glast.rsw#Old Glastheim#
+1@air1.rsw#Aircraft#
+1@air2.rsw#Aircraft#
+
+//-- 최종갱신 오후 3:58 2015-02-23 본서버
+
+// ep16.1 영웅을 위한 연회 + 프론테라 리뉴얼
+1@mir.rsw#Ritual Room#
+2@mir.rsw#Ritual Room#
+1@sthb.rsw#Inside Air Fortress#
+1@sthc.rsw#Secret Room Air Fortress#
+1@sthd.rsw#Top Floor Air Fortress#
+
+prt_cas.rsw#Prontera Center Palace#
+prt_cas_q.rsw#Prontera Royal Villa#
+prt_prison.rsw#Prontera Underground Prison#
+prt_lib.rsw#Royal Memory#
+prt_lib_q.rsw#Old Memoir of Royal Family#
+prt_q.rsw#Prontera Invasion#
+prt_pri00.rsw#Prontera Prison#
+
+//-- 최종갱신 오전 10:45 2016-03-08 본서버
+
+// ep16.2
+1@slw.rsw#Kantor Pusat Institut Werner#
+1@swat.rsw#Pangkalan Militer Heart Hunter#
+que_swat.rsw#Pangkalan Militer Heart Hunter#
+slabw01.rsw#Institut Werner#
+rebel_in.rsw#Klana Nemieri#

@@ -1,0 +1,4291 @@
+achievement_tbl = {
+	[110000] = {
+		UI_Type = 0,
+		group = "EAT",
+		major = 4,
+		minor = 0,
+		title = "Ăn lúc này sẽ không béo",
+		content = {
+			summary = "Cứ 1 giờ sáng là tôi lại thèm ăn",
+			details = "Bigfoot sẽ mang đồ ăn đến lúc nửa đêm"
+		},
+		resource = { [1] = { text = "Bigfoot sẽ mang đồ ăn đến lúc nửa đêm" } },
+		reward = {},
+		score = 10
+	},
+	[110001] = {
+		UI_Type = 0,
+		group = "SEE",
+		major = 4,
+		minor = 0,
+		title = "Một người hâm mộ",
+		content = {
+			summary = "Ngó qua cuộc sống của những người hâm mộ",
+			details = "Hãy gặp những người hâm mộ Wigner."
+		},
+		resource = {
+			[1] = { text = "Phụ nữ quán xuyến" },
+			[2] = { text = "Đứa con xinh đẹp" },
+			[3] = { text = "Tình nhân âm thầm" },
+			[4] = { text = "Cô gái quyến rũ" },
+			[5] = { text = "Con trai làng xóm" },
+			[6] = { text = "Cô gái diễn xuất hay nhất" },
+			[7] = { text = "Nam diễn viên xuất sắc nhất" }
+		},
+		reward = {},
+		score = 10
+	},
+	[120001] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Bắc Prontera (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Bắc của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Bắc của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120002] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Bắc Prontera (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Bắc của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Bắc của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120003] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Bắc Prontera (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Bắc của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Bắc của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120004] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Tây Prontera (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Tây của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Tây của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120005] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Tây Prontera (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Tây của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Tây của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120006] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Đông Prontera",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Đông của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Đông của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120007] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Nam Prontera (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120008] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Nam Prontera (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120009] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Nam Prontera (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120010] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Nam Prontera (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam của Prontera"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam của Prontera" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120011] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Đông Geffen",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Đông Geffen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Đông Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120012] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Đông Nam Geffen",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Đông Nam Geffen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Đông Nam Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120013] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Tây Bắc Geffen (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía  Tây Bắc Geffen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía  Tây Bắc Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120014] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Tây Bắc Geffen (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía  Tây Bắc Geffen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía  Tây Bắc Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120015] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Tây Bắc Geffen (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía  Tây Bắc Geffen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía  Tây Bắc Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120016] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Nam Geffen (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía  Nam Geffen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía  Nam Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120017] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Nam Geffen (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía  Nam Geffen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía  Nam Geffen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120018] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá sa mạc Sograt (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120019] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá sa mạc Sograt (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120020] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá sa mạc Sograt (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120021] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá sa mạc Sograt (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120022] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá sa mạc Sograt (5)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120023] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá sa mạc Sograt (6)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh sa mạc Sograt" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120024] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Tây Nam Payon (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Tây Nam Payon"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Tây Nam Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120025] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Tây Nam Payon (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Tây Nam Payon"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Tây Nam Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120026] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Tây Nam Payon (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Tây Nam Payon"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Tây Nam Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120027] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Tây Nam Payon (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Tây Nam Payon"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Tây Nam Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120028] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Đông Payon (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Đông Payon"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Đông Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120029] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Đông Payon (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Đông Payon"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Đông Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120030] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Đông Payon (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Đông Payon"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Đông Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120031] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng phía Đông Payon (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Đông Payon"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Đông Payon" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120032] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Bắc núi Mjolnir (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120033] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Bắc núi Mjolnir (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120034] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Bắc núi Mjolnir (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120035] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Bắc núi Mjolnir (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120036] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Bắc núi Mjolnir (5)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Bắc núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120037] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Nam núi Mjolnir (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120038] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Nam núi Mjolnir (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120039] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Nam núi Mjolnir (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120040] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Nam núi Mjolnir (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120041] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Nam núi Mjolnir (5)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120042] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Nam núi Mjolnir (6)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía Nam núi Mjolnir" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120043] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Nam Aldebaran",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực phía  Nam Aldebaran"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực phía  Nam Aldebaran" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120044] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Comodo (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120045] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Comodo (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120046] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Comodo (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120047] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Comodo (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120048] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Comodo (5)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120049] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Comodo (6)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120050] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Comodo (7)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120051] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá vùng Comodo (8)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh thị trấn Comodo" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120052] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá vùng Border Garrison (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh vùng Border Garrison"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh vùng Border Garrison" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120053] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá vùng Border Garrison (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh vùng Border Garrison"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh vùng Border Garrison" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120054] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá Biệt thự Kiel Hyre",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu xung quanh Biệt thự Kiel Hyre"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu xung quanh Biệt thự Kiel Hyre" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120055] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá vùng Cao nguyên El Mes (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng Cao nguyên El Mes"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng Cao nguyên El Mes" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120056] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá vùng Cao nguyên El Mes (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng Cao nguyên El Mes"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng Cao nguyên El Mes" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120057] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá vùng Cao nguyên El Mes (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng Cao nguyên El Mes"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng Cao nguyên El Mes" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120058] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá Hẻm núi El Mes",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu xung quanh Hẻm núi El Mes"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu xung quanh Hẻm núi El Mes" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120059] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá Học viện Kiel Hyre",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu xung quanh khu vực Học viện Kiel Hyre"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu xung quanh khu vực Học viện Kiel Hyre" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120060] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá khu vực Trại lính",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu xung quanh khu vực Trại lính"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu xung quanh khu vực Trại lính" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120061] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá vùng đất Juno",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh Juno"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh Juno" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120062] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá phía trước Tháp Thanatos",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Khám phá kho báu xung quanh khu vực phía trước tòa Tháp Thanatos"
+		},
+		resource = {
+			[1] = {
+				text = "Khám phá kho báu xung quanh khu vực phía trước tòa Tháp Thanatos"
+			}
+		},
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120063] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá khu vực quanh Hugel (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở thị trấn Hugel"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở thị trấn Hugel" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120064] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá khu vực quanh Hugel (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở thị trấn Hugel"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở thị trấn Hugel" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120065] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá khu vực quanh Hugel (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở thị trấn Hugel"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở thị trấn Hugel" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120066] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá Hồ Vực thẳm (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh Hồ Vực thẳm"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh Hồ Vực thẳm" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120067] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá quanh vùng Einbroch (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120068] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá quanh vùng Einbroch (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120069] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá quanh vùng Einbroch (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120070] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá quanh vùng Einbroch (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120071] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá quanh vùng Einbroch (5)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120072] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá quanh vùng Einbroch (6)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120073] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá quanh vùng Einbroch (7)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120074] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá quanh vùng Einbroch (8)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở các khu vực xung quanh vùng Einbroch" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120075] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá vùng Lighthalzen (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở xung quanh vùng Lighthalzen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở xung quanh vùng Lighthalzen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120076] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá vùng Lighthalzen (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở xung quanh vùng Lighthalzen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở xung quanh vùng Lighthalzen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120077] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá vùng Lighthalzen (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở xung quanh vùng Lighthalzen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở xung quanh vùng Lighthalzen" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120078] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá Đồng bằng Audhumbla (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh đồng bằng Audhumbla"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh đồng bằng Audhumbla" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120079] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá đồng bằng Ida (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "[Tìm thấy kho báu ở khu vực quanh đồng bằng Ida"
+		},
+		resource = { [1] = { text = "[Tìm thấy kho báu ở khu vực quanh đồng bằng Ida" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120080] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá đồng bằng Ida (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "[Tìm thấy kho báu ở khu vực quanh đồng bằng Ida"
+		},
+		resource = { [1] = { text = "[Tìm thấy kho báu ở khu vực quanh đồng bằng Ida" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120081] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá đồng bằng Ida (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "[Tìm thấy kho báu ở khu vực quanh đồng bằng Ida"
+		},
+		resource = { [1] = { text = "[Tìm thấy kho báu ở khu vực quanh đồng bằng Ida" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120082] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá đồng cỏ Audhumbla (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh đồng cỏ Audhumbla"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh đồng cỏ Audhumbla" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120083] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá đồng cỏ Audhumbla (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh đồng cỏ Audhumbla"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh đồng cỏ Audhumbla" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120084] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá vùng đất Portus Luna",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng đất Portus Luna"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng đất Portus Luna" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120085] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá khu vực Veins (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu xung quanh khu vực Veins"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu xung quanh khu vực Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120086] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá khu vực Veins (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu xung quanh khu vực Veins"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu xung quanh khu vực Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120087] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá khu vực Veins (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu xung quanh khu vực Veins"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu xung quanh khu vực Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120088] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá khu vực Veins (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu xung quanh khu vực Veins"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu xung quanh khu vực Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120089] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá khu vực Veins (5)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu xung quanh khu vực Veins"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu xung quanh khu vực Veins" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120090] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng Eclage",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng Eclage"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng Eclage" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120091] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng phía Bắc Bifrost (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu quanh khu vực phía Bắc cầu Bifrost"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu quanh khu vực phía Bắc cầu Bifrost" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120092] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng phía Nam Bifrost (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu quanh khu vực phía Nam cầu Bifrost"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu quanh khu vực phía Nam cầu Bifrost" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120093] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng Trạm Splendide (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu quanh khu vực Trạm Splendide"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu quanh khu vực Trạm Splendide" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120094] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng Trạm Splendide (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu quanh khu vực Trạm Splendide"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu quanh khu vực Trạm Splendide" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120095] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng Trạm Splendide (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu quanh khu vực Trạm Splendide"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu quanh khu vực Trạm Splendide" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120096] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng đất Manuk (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng đất Manuk"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng đất Manuk" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120097] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng đất Manuk (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng đất Manuk"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng đất Manuk" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120098] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng đất Manuk (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng đất Manuk"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng đất Manuk" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120099] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng ven núi Kamidal (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu quanh vùng ngoài của dãy núi Kamidal"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu quanh vùng ngoài của dãy núi Kamidal" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120100] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá vùng ven núi Kamidal (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu quanh vùng ngoài của dãy núi Kamidal"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu quanh vùng ngoài của dãy núi Kamidal" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120101] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá thị trấn Amatsu",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở khu vực quanh Amatsu"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở khu vực quanh Amatsu" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120102] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá vùng đất Kunlun",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng đất Kunlun"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng đất Kunlun" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120103] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá vùng đất Gonryun",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng đất Gonryun"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng đất Gonryun" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120104] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá vùng đất Ayothaya",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng đất Ayothaya"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng đất Ayothaya" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120105] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá đảo Moscovia",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng Moscovia"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng Moscovia" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120106] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá thành phố Brasilis",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng Brasilis"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng Brasilis" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120107] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá vùng đất Dewata",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng đất Dewata"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng đất Dewata" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120108] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá cảng Malaya (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng cảng Malaya"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng cảng Malaya" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120109] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá cảng Malaya (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu ở vùng cảng Malaya"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu ở vùng cảng Malaya" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120110] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động ngầm Tu viện",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động ngầm của Tu viện"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động ngầm của Tu viện" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120111] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Hồ vực thẳm",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Hồ vực thẳm"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Hồ vực thẳm" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120112] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá tòa Tháp đồng hồ",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong tòa Tháp đồng hồ"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong tòa Tháp đồng hồ" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120113] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Amatsu",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Amatsu"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Amatsu" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120114] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang Địa ngục kiến",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Địa ngục kiến"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Địa ngục kiến" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120115] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang Ayothaya",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Ayothaya"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Ayothaya" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120116] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Comodo",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Comodo"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Comodo" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120117] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Brasilis",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Brasilis"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Brasilis" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120118] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hầm ngục Tháp đồng hồ",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục tòa Tháp đồng hồ"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục tòa Tháp đồng hồ" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120119] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Istana",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Istana"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Istana" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120120] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang Scaraba",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Scaraba"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Scaraba" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120121] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Bifrost",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động tháp Bifrost"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động tháp Bifrost" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120122] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động hầm mỏ Einbech",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm mỏ Einbech"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm mỏ Einbech" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120123] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động ngầm Geffen",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động ngầm Geffen"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động ngầm Geffen" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120124] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hầm ngục Glastheim (1)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Glastheim"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Glastheim" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120125] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hầm ngục Glastheim (2)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Glastheim"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Glastheim" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120126] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hầm ngục Glastheim (3)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Glastheim"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Glastheim" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120127] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hầm ngục Glastheim (4)",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Glastheim"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Glastheim" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120128] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang Kunlun",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Kunlun"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Kunlun" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120129] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Rachel",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Khám phá kho báu bên trong hang động Rachel"
+		},
+		resource = { [1] = { text = "Khám phá kho báu bên trong hang động Rachel" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120130] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá mê cung Nhân sư",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong mê cung Nhân sư"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong mê cung Nhân sư" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120131] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Izlude",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Izlude"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Izlude" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120132] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá Nhà máy chế tạo Robot",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong Nhà máy chế tạo Robot"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong Nhà máy chế tạo Robot" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120133] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá Phòng thí nghiệm sinh học",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong Phòng thí nghiệm sinh học"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong Phòng thí nghiệm sinh học" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120134] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Gonryun",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Gonryun"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Gonryun" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120135] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang Nogg Road",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Nogg Road"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Nogg Road" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120136] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá Mỏ than bỏ hoang",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong mỏ than bỏ hoang tại vùng núi Mjolnir"
+		},
+		resource = {
+			[1] = {
+				text = "Tìm thấy kho báu bên trong mỏ than bỏ hoang tại vùng núi Mjolnir"
+			}
+		},
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120137] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hầm ngục Kim tự tháp",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Pyramid"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Pyramid" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120138] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang Orc",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Orc"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Orc" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120139] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Payon",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Payon"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Payon" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120140] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá mê cung Labyrinth",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong mê cung Labyrinth"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong mê cung Labyrinth" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120141] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang Undersea Tunnel",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Undersea Tunnel"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Undersea Tunnel" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120142] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hầm ngục Tháp Thanatos",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục của tòa Tháp Thanatos"
+		},
+		resource = {
+			[1] = { text = "Tìm thấy kho báu bên trong hầm ngục của tòa Tháp Thanatos" }
+		},
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120143] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Núi lửa Thor",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Núi lửa Thor"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Núi lửa Thor" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120144] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hầm ngục Tàu đắm",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Tàu đắm"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Tàu đắm" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120145] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá hang động Đảo Rùa",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hang động Đảo Rùa"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hang động Đảo Rùa" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120146] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "Khám phá Nhà máy đồ chơi",
+		content = {
+			summary = "Tìm thấy Kho báu ẩn",
+			details = "Tìm thấy kho báu bên trong hầm ngục Nhà máy đồ chơi"
+		},
+		resource = { [1] = { text = "Tìm thấy kho báu bên trong hầm ngục Nhà máy đồ chơi" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[129001] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá Prontera",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá xung quanh vùng Prontera"
+		},
+		resource = {
+			[1] = { text = "Khám phá vùng phía Bắc Prontera (1)", shortcut = 120001 },
+			[2] = { text = "Khám phá vùng phía Bắc Prontera (2)", shortcut = 120002 },
+			[3] = { text = "Khám phá vùng phía Bắc Prontera (3)", shortcut = 120003 },
+			[4] = { text = "Khám phá vùng phía Tây Prontera (1)", shortcut = 120004 },
+			[5] = { text = "Khám phá vùng phía Tây Prontera (2)", shortcut = 120005 },
+			[6] = { text = "Khám phá vùng phía Đông Prontera", shortcut = 120006 },
+			[7] = { text = "Khám phá vùng phía Nam Prontera (1)", shortcut = 120007 },
+			[8] = { text = "Khám phá vùng phía Nam Prontera (2)", shortcut = 120008 },
+			[9] = { text = "Khám phá vùng phía Nam Prontera (3)", shortcut = 120009 },
+			[10] = { text = "Khám phá vùng phía Nam Prontera (4)", shortcut = 120010 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129002] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá Geffen",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá xung quanh vùng Geffen"
+		},
+		resource = {
+			[1] = { text = "Khám phá vùng phía Đông Geffen", shortcut = 120011 },
+			[2] = { text = "Khám phá vùng Đông Nam Geffen", shortcut = 120012 },
+			[3] = { text = "Khám phá vùng Tây Bắc Geffen (1)", shortcut = 120013 },
+			[4] = { text = "Khám phá vùng Tây Bắc Geffen (2)", shortcut = 120014 },
+			[5] = { text = "Khám phá vùng Tây Bắc Geffen (3)", shortcut = 120015 },
+			[6] = { text = "Khám phá vùng phía Nam Geffen (1)", shortcut = 120016 },
+			[7] = { text = "Khám phá vùng phía Nam Geffen (2)", shortcut = 120017 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129003] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá sa mạc Sograt",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá xung quanh vùng sa mạc Sograt"
+		},
+		resource = {
+			[1] = { text = "Khám phá sa mạc Sograt (1)", shortcut = 120018 },
+			[2] = { text = "Khám phá sa mạc Sograt (2)", shortcut = 120019 },
+			[3] = { text = "Khám phá sa mạc Sograt (3)", shortcut = 120020 },
+			[4] = { text = "Khám phá sa mạc Sograt (4)", shortcut = 120021 },
+			[5] = { text = "Khám phá sa mạc Sograt (5)", shortcut = 120022 },
+			[6] = { text = "Khám phá sa mạc Sograt (6)", shortcut = 120023 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129004] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá Payon",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá xung quanh vùng Payon"
+		},
+		resource = {
+			[1] = { text = "Khám phá vùng Tây Nam Payon (1)", shortcut = 120024 },
+			[2] = { text = "Khám phá vùng Tây Nam Payon (2)", shortcut = 120025 },
+			[3] = { text = "Khám phá vùng Tây Nam Payon (3)", shortcut = 120026 },
+			[4] = { text = "Khám phá vùng Tây Nam Payon (4)", shortcut = 120027 },
+			[5] = { text = "Khám phá vùng phía Đông Payon (1)", shortcut = 120028 },
+			[6] = { text = "Khám phá vùng phía Đông Payon (2)", shortcut = 120029 },
+			[7] = { text = "Khám phá vùng phía Đông Payon (3)", shortcut = 120030 },
+			[8] = { text = "Khám phá vùng phía Đông Payon (4)", shortcut = 120031 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129005] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Bắc núi Mjolnir",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực phía Bắc núi Mjolnir"
+		},
+		resource = {
+			[1] = { text = "Khám phá phía Bắc núi Mjolnir (1)", shortcut = 120032 },
+			[2] = { text = "Khám phá phía Bắc núi Mjolnir (2)", shortcut = 120033 },
+			[3] = { text = "Khám phá phía Bắc núi Mjolnir (3)", shortcut = 120034 },
+			[4] = { text = "Khám phá phía Bắc núi Mjolnir (4)", shortcut = 120035 },
+			[5] = { text = "Khám phá phía Bắc núi Mjolnir (5)", shortcut = 120036 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129006] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá phía Nam núi Mjolnir",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực phía Nam núi Mjolnir"
+		},
+		resource = {
+			[1] = { text = "Khám phá phía Nam núi Mjolnir (1)", shortcut = 120037 },
+			[2] = { text = "Khám phá phía Nam núi Mjolnir (2)", shortcut = 120038 },
+			[3] = { text = "Khám phá phía Nam núi Mjolnir (3)", shortcut = 120039 },
+			[4] = { text = "Khám phá phía Nam núi Mjolnir (4)", shortcut = 120040 },
+			[5] = { text = "Khám phá phía Nam núi Mjolnir (5)", shortcut = 120041 },
+			[6] = { text = "Khám phá phía Nam núi Mjolnir (6)", shortcut = 120042 },
+			[7] = { text = "Khám phá phía Nam Aldebaran (1)", shortcut = 120043 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129007] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá thị trấn Comodo",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá xung quanh thị trấn Comodo"
+		},
+		resource = {
+			[1] = { text = "Khám phá vùng Comodo (1)", shortcut = 120044 },
+			[2] = { text = "Khám phá vùng Comodo (2)", shortcut = 120045 },
+			[3] = { text = "Khám phá vùng Comodo (3)", shortcut = 120046 },
+			[4] = { text = "Khám phá vùng Comodo (4)", shortcut = 120047 },
+			[5] = { text = "Khám phá vùng Comodo (5)", shortcut = 120048 },
+			[6] = { text = "Khám phá vùng Comodo (6)", shortcut = 120049 },
+			[7] = { text = "Khám phá vùng Comodo (7)", shortcut = 120050 },
+			[8] = { text = "Khám phá vùng Comodo (8)", shortcut = 120051 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129008] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "Khám phá Rune-Midgarts",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh vùng Rune-Midgarts"
+		},
+		resource = {
+			[1] = { text = "Khám phá Prontera", shortcut = 129001 },
+			[2] = { text = "Khám phá Geffen", shortcut = 129002 },
+			[3] = { text = "Khám phá sa mạc Sograt", shortcut = 129003 },
+			[4] = { text = "Khám phá Payon", shortcut = 129004 },
+			[5] = { text = "Khám phá phía Bắc núi Mjolnir", shortcut = 129005 },
+			[6] = { text = "Khám phá phía Nam núi Mjolnir", shortcut = 129006 },
+			[7] = { text = "Khám phá thị trấn Comodo", shortcut = 129007 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[129009] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá Juno",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh Juno"
+		},
+		resource = {
+			[1] = { text = "Khám phá vùng Border Garrison (1)", shortcut = 120052 },
+			[2] = { text = "Khám phá vùng Border Garrison (2)", shortcut = 120053 },
+			[3] = { text = "Khám phá Biệt thự Kiel Hyre", shortcut = 120054 },
+			[4] = { text = "Khám phá vùng Cao nguyên El Mes (1)", shortcut = 120055 },
+			[5] = { text = "Khám phá vùng Cao nguyên El Mes (2)", shortcut = 120056 },
+			[6] = { text = "Khám phá vùng Cao nguyên El Mes (3)", shortcut = 120057 },
+			[7] = { text = "Khám phá Hẻm núi El Mes", shortcut = 120058 },
+			[8] = { text = "Khám phá Học viện Kiel Hyre", shortcut = 120059 },
+			[9] = { text = "Khám phá khu vực Trại lính", shortcut = 120060 },
+			[10] = { text = "Khám phá vùng đất Juno", shortcut = 120061 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129010] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá Hugel",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh Hugel"
+		},
+		resource = {
+			[1] = { text = "Khám phá phía trước Tháp Thanatos", shortcut = 120062 },
+			[2] = { text = "Khám phá khu vực quanh Hugel (1)", shortcut = 120063 },
+			[3] = { text = "Khám phá khu vực quanh Hugel (2)", shortcut = 120064 },
+			[4] = { text = "Khám phá khu vực quanh Hugel (3)", shortcut = 120065 },
+			[5] = { text = "Khám phá Hồ Vực thẳm (1)", shortcut = 120066 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129011] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá Einbroch",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh Einbroch"
+		},
+		resource = {
+			[1] = { text = "Khám phá quanh vùng Einbroch (1)", shortcut = 120067 },
+			[2] = { text = "Khám phá quanh vùng Einbroch (2)", shortcut = 120068 },
+			[3] = { text = "Khám phá quanh vùng Einbroch (3)", shortcut = 120069 },
+			[4] = { text = "Khám phá quanh vùng Einbroch (4)", shortcut = 120070 },
+			[5] = { text = "Khám phá quanh vùng Einbroch (5)", shortcut = 120071 },
+			[6] = { text = "Khám phá quanh vùng Einbroch (6)", shortcut = 120072 },
+			[7] = { text = "Khám phá quanh vùng Einbroch (7)", shortcut = 120073 },
+			[8] = { text = "Khám phá quanh vùng Einbroch (8)", shortcut = 120074 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129012] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá Lighthalzen",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh Lighthalzen"
+		},
+		resource = {
+			[1] = { text = "Khám phá vùng Lighthalzen (1)", shortcut = 120075 },
+			[2] = { text = "Khám phá vùng Lighthalzen (2)", shortcut = 120076 },
+			[3] = { text = "Khám phá vùng Lighthalzen (3)", shortcut = 120077 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129013] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "Khám phá Cộng hòa Schwarzwald",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh Cộng hòa Schwarzwald"
+		},
+		resource = {
+			[1] = { text = "Khám phá Juno", shortcut = 129009 },
+			[2] = { text = "Khám phá Hugel", shortcut = 129010 },
+			[3] = { text = "Khám phá Einbroch", shortcut = 129011 },
+			[4] = { text = "Khám phá Lighthalzen", shortcut = 129012 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[129014] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá Rachel",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh Rachel"
+		},
+		resource = {
+			[1] = { text = "Khám phá Đồng bằng Audhumbla (1)", shortcut = 120078 },
+			[2] = { text = "Khám phá đồng bằng Ida (1)", shortcut = 120079 },
+			[3] = { text = "Khám phá đồng bằng Ida (2)", shortcut = 120080 },
+			[4] = { text = "Khám phá đồng bằng Ida (3)", shortcut = 120081 },
+			[5] = { text = "Khám phá đồng cỏ Audhumbla (1)", shortcut = 120082 },
+			[6] = { text = "Khám phá đồng cỏ Audhumbla (2)", shortcut = 120083 },
+			[7] = { text = "Khám phá vùng đất Portus Luna", shortcut = 120084 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129015] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá Veins",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh Veins"
+		},
+		resource = {
+			[1] = { text = "Khám phá khu vực Veins (1)", shortcut = 120085 },
+			[2] = { text = "Khám phá khu vực Veins (2)", shortcut = 120086 },
+			[3] = { text = "Khám phá khu vực Veins (3)", shortcut = 120087 },
+			[4] = { text = "Khám phá khu vực Veins (4)", shortcut = 120088 },
+			[5] = { text = "Khám phá khu vực Veins (5)", shortcut = 120089 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129016] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 2,
+		title = "Khám phá Arunafeltz",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh Arunafeltz"
+		},
+		resource = {
+			[1] = { text = "Khám phá Rachel", shortcut = 129014 },
+			[2] = { text = "Khám phá Veins", shortcut = 129015 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[129017] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá Laphine",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá xung quanh Laphine"
+		},
+		resource = {
+			[1] = { text = "Khám phá vùng Eclage", shortcut = 120090 },
+			[2] = { text = "Khám phá vùng phía Bắc Bifrost (1)", shortcut = 120091 },
+			[3] = { text = "Khám phá vùng phía Nam Bifrost (1)", shortcut = 120092 },
+			[4] = { text = "Khám phá vùng Trạm Splendide (1)", shortcut = 120093 },
+			[5] = { text = "Khám phá vùng Trạm Splendide (2)", shortcut = 120094 },
+			[6] = { text = "Khám phá vùng Trạm Splendide (3)", shortcut = 120095 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129018] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá Manuk",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá khu vực xung quanh Manuk"
+		},
+		resource = {
+			[1] = { text = "Khám phá vùng đất Manuk (1)", shortcut = 120096 },
+			[2] = { text = "Khám phá vùng đất Manuk (2)", shortcut = 120097 },
+			[3] = { text = "Khám phá vùng đất Manuk (3)", shortcut = 120098 },
+			[4] = { text = "Khám phá vùng ven núi Kamidal (1)", shortcut = 120099 },
+			[5] = { text = "Khám phá vùng ven núi Kamidal (2)", shortcut = 120100 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129019] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 3,
+		title = "Khám phá Eclage",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá các thế giới khác xung quanh"
+		},
+		resource = {
+			[1] = { text = "Khám phá Laphine", shortcut = 129017 },
+			[2] = { text = "Khám phá Manuk", shortcut = 120918 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[129020] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 4,
+		title = "Khám phá các khu vực Bản địa",
+		content = {
+			summary = "Hoàn thành mục tiêu khám phá khu vực",
+			details = "Hoàn thành khám phá các khu vực Bản địa"
+		},
+		resource = {
+			[1] = { text = "Khám phá thị trấn Amatsu", shortcut = 120101 },
+			[2] = { text = "Khám phá vùng đất Kunlun", shortcut = 120102 },
+			[3] = { text = "Khám phá vùng đất Gonryun", shortcut = 120103 },
+			[4] = { text = "Khám phá vùng đất Ayothaya", shortcut = 120104 },
+			[5] = { text = "Khám phá đảo Moscovia", shortcut = 120105 },
+			[6] = { text = "Khám phá thành phố Brasilis", shortcut = 120106 },
+			[7] = { text = "Khám phá vùng đất Dewata", shortcut = 120107 },
+			[8] = { text = "Khám phá cảng Malaya (1)", shortcut = 120108 },
+			[9] = { text = "Khám phá cảng Malaya (2)", shortcut = 120109 }
+		},
+		reward = { item = 617 },
+		score = 50
+	},
+	[130000] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 4,
+		minor = 0,
+		title = "Ra mắt công chúng",
+		content = {
+			summary = "Thăm 7 Gia đình hoàng gia",
+			details = "Viếng thăm 7 Gia đình hoàng gia ở cánh phía Đông và Tây của Cung điện"
+		},
+		resource = {
+			[1] = { text = "Thăm gia đình Heine và trò chuyện với họ" },
+			[2] = { text = "Thăm gia đình Nerius và trò chuyện với họ" },
+			[3] = { text = "Thăm gia đình Walter và trò chuyện với họ" },
+			[4] = { text = "Thăm gia đình Wigner và trò chuyện với họ" },
+			[5] = { text = "Thăm gia đình Richard và trò chuyện với họ" },
+			[6] = { text = "Thăm gia đình Gaebolg và trò chuyện với họ" },
+			[7] = { text = "Thăm gia đình Lugenburg và trò chuyện với họ" }
+		},
+		reward = { title = 1034 },
+		score = 10
+	},
+	[170000] = {
+		UI_Type = 0,
+		group = "HEAR",
+		major = 4,
+		minor = 0,
+		title = "Bài hát đó không phải tai nạn",
+		content = {
+			summary = "Nghe bài hát bí mật của nghệ sĩ",
+			details = "Nghe bài hát bí mật của 5 nghệ sĩ hoàng cung"
+		},
+		resource = { [1] = { text = "Nghe bài hát bí mật của 5 nghệ sĩ hoàng cung" } },
+		reward = {},
+		score = 10
+	},
+	[200000] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Có được hào quang đầu tiên!",
+		content = { summary = "Đạt cấp độ cơ bản 99!", details = "Đạt cấp độ cơ bản 99." },
+		resource = { [1] = { text = "Cấp độ cơ bản 99" } },
+		reward = { title = 1000, buff = 10, item = 12549 },
+		score = 50
+	},
+	[200001] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Có được hào quang thứ hai!",
+		content = { summary = "Đạt cấp độ cơ bản 150!", details = "Đạt cấp độ cơ bản 150." },
+		resource = { [1] = { text = "Cấp độ cơ bản 150" } },
+		reward = { title = 1001, buff = 10, item = 5364 },
+		score = 60
+	},
+	[200002] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Có được hào quang thứ ba!",
+		content = { summary = "Đạt cấp độ cơ bản 175!", details = "Đạt cấp độ cơ bản 175." },
+		resource = { [1] = { text = "Cấp độ cơ bản 175" } },
+		reward = { title = 1002, buff = 10, item = 18880 },
+		score = 70
+	},
+	[200003] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Thành thạo Cấp độ nghề",
+		content = { summary = "Đạt cấp độ nghề 50!", details = "Đạt cấp độ nghề 50." },
+		resource = { [1] = { text = "Cấp độ nghề 50" } },
+		reward = { title = 1003, buff = 10, item = 617 },
+		score = 30
+	},
+	[200004] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Chuyên nghiệp Cấp độ nghề",
+		content = { summary = "Đạt cấp độ nghề 70!", details = "Đạt cấp độ nghề 70." },
+		resource = { [1] = { text = "Cấp độ nghề 70" } },
+		reward = { title = 1004, buff = 10, item = 12817 },
+		score = 50
+	},
+	[200005] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Nhà thám hiểm chính thức",
+		content = {
+			summary = "Chuyển sang Nghề đầu tiên",
+			details = "Trở thành Kiếm sĩ, Thương gia, Đạo chích, Pháp sư, Tu sĩ hoặc Cung thủ"
+		},
+		resource = { [1] = { text = "Chuyển sang Nghề đầu tiên" } },
+		reward = { buff = 12 },
+		score = 10
+	},
+	[200006] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Bước đầu tiên đến Nghề tái sinh!",
+		content = {
+			summary = "Chuyển sang lớp Nghề tái sinh đầu tiên!",
+			details = "Trở thành Kiếm sĩ cấp cao, Thương gia cấp cao, Đạo chích cấp cao, Pháp sư cấp cao, Tu sĩ cấp cao hoặc Cung thủ cấp cao"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề tái sinh đầu tiên" } },
+		reward = { buff = 12 },
+		score = 20
+	},
+	[200007] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Nhà thám hiểm kỳ cựu! (1)",
+		content = {
+			summary = "Chuyển sang lớp Nghề thứ hai (2-1)",
+			details = "Trở thành Hiệp sĩ, Thợ rèn, Sát thủ, Pháp sư, Linh mục hoặc Thợ săn"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề thứ hai (2-1)" } },
+		reward = { buff = 12 },
+		score = 25
+	},
+	[200008] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Nhà thám hiểm kỳ cựu! (2)",
+		content = {
+			summary = "Chuyển sang lớp Nghề thứ hai (2-2)",
+			details = "Trở thành Chiến binh thập tự, Nhà giả kim, Đạo tặc, Hiền triết, Thầy tu hoặc Nhạc công hay Vũ công"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề thứ hai (2-2)" } },
+		reward = { buff = 12 },
+		score = 25
+	},
+	[200009] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Anh hùng (1)",
+		content = {
+			summary = "Chuyển sang lớp Nghề thứ hai tái sinh (2-1)",
+			details = "Trở thành Đại hiệp sĩ, Thợ thiếc, Đại sát thủ, Đại phù thủy, Đại linh mục hoặc Xạ thủ"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề thứ hai tái sinh (2-1)" } },
+		reward = { buff = 12 },
+		score = 30
+	},
+	[200010] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Anh hùng (2)",
+		content = {
+			summary = "Chuyển sang lớp Nghề thứ hai tái sinh (2-2)",
+			details = "Trở thành Thánh kỵ binh, Nhà hóa sinh học, Truy tặc, Học giả, Quyền vương hoặc Nhạc sĩ hay Vũ thần"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề thứ hai tái sinh (2-2)" } },
+		reward = { buff = 12 },
+		score = 30
+	},
+	[200011] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Nhà thám hiểm ưu tú! (1)",
+		content = {
+			summary = "Chuyển sang lớp Nghề thứ ba (3-1)",
+			details = "Trở thành Hiệp sĩ cổ ngữ, Thợ máy, Đao phủ thập tự, Phù thủy dị giáo, Giám mục hoặc Siêu xạ thủ"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề thứ ba (3-1)" } },
+		reward = { buff = 12, item = 16483 },
+		score = 50
+	},
+	[200012] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Thần dân Tái sinh (1)",
+		content = {
+			summary = "Chuyển sang lớp Nghề thứ ba tái sinh (3-1)",
+			details = "Trở thành Hiệp sĩ cổ ngữ, Thợ máy, Đao phủ thập tự, Phù thủy dị giáo, Giám mục hoặc Siêu xạ thủ khi đã tái sinh"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề thứ ba tái sinh (3-1)" } },
+		reward = { buff = 12, item = 16483 },
+		score = 60
+	},
+	[200013] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Nhà thám hiểm ưu tú! (2)",
+		content = {
+			summary = "Chuyển sang lớp Nghề thứ ba (3-2)",
+			details = "Trở thành Hộ vệ hoàng gia, Nhà di truyền học, Hắc tặc, Mị thuật sư, Quyền vương hoặc Nhạc trưởng hay Vũ thần lang thang"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề thứ ba (3-2)" } },
+		reward = { buff = 12, item = 16483 },
+		score = 50
+	},
+	[200014] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Thần dân Tái sinh (2)",
+		content = {
+			summary = "Chuyển sang lớp Nghề thứ ba tái sinh (3-2)",
+			details = "Trở thành Hộ vệ hoàng gia, Nhà di truyền học, Hắc tặc, Mị thuật sư, Quyền vương hoặc Nhạc trưởng hay Vũ thần lang thang khi đã tái sinh"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề thứ ba tái sinh (3-2)" } },
+		reward = { buff = 12, item = 16483 },
+		score = 60
+	},
+	[200015] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Kẻ đi trên con đường đặc biệt",
+		content = {
+			summary = "Chuyển sang lớp Nghề mở rộng",
+			details = "Trở thành Võ sĩ, Thiện xạ, Nhẫn giả hoặc Siêu tập sự"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề mở rộng" } },
+		reward = { buff = 12 },
+		score = 10
+	},
+	[200016] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Đây là con đường tôi đi!",
+		content = {
+			summary = "Chuyển sang lớp Nghề mở rộng thứ hai",
+			details = "Trở thành Kết giới sư, Huyền đai đấu sĩ, Phiến quân, hoặc Ảnh sư hay U nữ"
+		},
+		resource = { [1] = { text = "Chuyển sang lớp Nghề mở rộng thứ hai" } },
+		reward = { buff = 12, item = 16483 },
+		score = 20
+	},
+	[200017] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Sức mạnh như gấu!",
+		content = {
+			summary = "Đạt 90 điểm STR gốc",
+			details = "Tăng chỉ số STR gốc lên 90 điểm"
+		},
+		resource = { [1] = { text = "Đạt 90 điểm STR gốc" } },
+		reward = {},
+		score = 10
+	},
+	[200018] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Tràn đầy ma thuật!",
+		content = {
+			summary = "Đạt 90 điểm INT gốc",
+			details = "Tăng chỉ số INT gốc lên 90 điểm"
+		},
+		resource = { [1] = { text = "Đạt 90 điểm INT gốc" } },
+		reward = {},
+		score = 10
+	},
+	[200019] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Tinh thần và cơ thể khỏe mạnh!",
+		content = {
+			summary = "Đạt 90 điểm VIT gốc",
+			details = "Tăng chỉ số VIT gốc lên 90 điểm"
+		},
+		resource = { [1] = { text = "Đạt 90 điểm VIT gốc" } },
+		reward = {},
+		score = 10
+	},
+	[200020] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Nghiện tốc độ",
+		content = {
+			summary = "Đạt 90 điểm AGI gốc",
+			details = "Tăng chỉ số AGI gốc lên 90 điểm"
+		},
+		resource = { [1] = { text = "Đạt 90 điểm AGI gốc" } },
+		reward = {},
+		score = 10
+	},
+	[200021] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Mắt diều hâu",
+		content = {
+			summary = "Đạt 90 điểm DEX gốc",
+			details = "Tăng chỉ số DEX gốc lên 90 điểm"
+		},
+		resource = { [1] = { text = "Đạt 90 điểm DEX gốc" } },
+		reward = {},
+		score = 10
+	},
+	[200022] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Cực kì may mắn",
+		content = {
+			summary = "Đạt 90 điểm LUK gốc",
+			details = "Tăng chỉ số LUK gốc lên 90 điểm"
+		},
+		resource = { [1] = { text = "Đạt 90 điểm LUK gốc" } },
+		reward = {},
+		score = 10
+	},
+	[200023] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Sức mạnh như rồng!",
+		content = {
+			summary = "Đạt 125 điểm STR gốc",
+			details = "Tăng chỉ số STR gốc lên 125 điểm"
+		},
+		resource = { [1] = { text = "Đạt 125 điểm STR gốc" } },
+		reward = { buff = 319 },
+		score = 20
+	},
+	[200024] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Ma thuật điên rồ",
+		content = {
+			summary = "Đạt 125 điểm INT gốc",
+			details = "Tăng chỉ số INT gốc lên 125 điểm"
+		},
+		resource = { [1] = { text = "Đạt 125 điểm INT gốc" } },
+		reward = { buff = 611 },
+		score = 20
+	},
+	[200025] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Cây tùng cây bách",
+		content = {
+			summary = "Đạt 125 điểm VIT gốc",
+			details = "Tăng chỉ số VIT gốc lên 125 điểm"
+		},
+		resource = { [1] = { text = "Đạt 125 điểm VIT gốc" } },
+		reward = { buff = 293 },
+		score = 20
+	},
+	[200026] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Tốc độ ánh sáng",
+		content = {
+			summary = "Đạt 125 điểm AGI gốc",
+			details = "Tăng chỉ số AGI gốc lên 125 điểm"
+		},
+		resource = { [1] = { text = "Đạt 125 điểm AGI gốc" } },
+		reward = { buff = 296 },
+		score = 20
+	},
+	[200027] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Mắt ưng",
+		content = {
+			summary = "Đạt 125 điểm DEX gốc",
+			details = "Tăng chỉ số DEX gốc lên 125 điểm"
+		},
+		resource = { [1] = { text = "Đạt 125 điểm DEX gốc" } },
+		reward = { buff = 295 },
+		score = 20
+	},
+	[200028] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Cơn sốt may mắn",
+		content = {
+			summary = "Đạt 125 điểm LUK gốc",
+			details = "Đạt được điểm LUK ít nhất 125"
+		},
+		resource = { [1] = { text = "Đạt 125 điểm LUK gốc" } },
+		reward = { buff = 21 },
+		score = 20
+	},
+	[200029] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Hình ảnh của Tình yêu và Thù hận",
+		content = {
+			summary = "Đạt cấp độ 99 khi là Tập sự",
+			details = "Nhân vật là Tập sự và đạt cấp độ 99"
+		},
+		resource = { [1] = { text = "Đạt cấp độ 99 khi là Tập sự" } },
+		reward = { buff = 10, item = 16483 },
+		score = 30
+	},
+	[200030] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Tôi thực sự thấy thích!",
+		content = {
+			summary = "Đạt cấp độ cơ bản 99 ở Nghề thứ nhất",
+			details = "Đạt cấp độ cơ bản 99 ở Nghề thứ nhất"
+		},
+		resource = { [1] = { text = "Đạt cấp độ cơ bản 99 ở Nghề thứ nhất" } },
+		reward = { buff = 10, item = 16504 },
+		score = 30
+	},
+	[200031] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Tái sinh ở Valhalla!",
+		content = {
+			summary = "Trở thành Tập sự đã tái sinh",
+			details = "Chỉ có thể tái sinh thông qua nữ thần Valkyrie để trở thành Tập sự tái sinh."
+		},
+		resource = { [1] = { text = "Trở thành Tập sự đã tái sinh" } },
+		reward = { buff = 12, item = 13079 },
+		score = 10
+	},
+	[230100] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "Poring là Tình yêu",
+		content = {
+			summary = "Hoàn thành tất cả các mục tiêu yêu cầu",
+			details = "Bạn là người có đam mê thực sự với Poring, ngay cả là trong giấc mơ!"
+		},
+		resource = {
+			[1] = { text = "Hoàn thành 'Thuần hóa Poring'", shortcut = 230101 },
+			[2] = { text = "Hoàn thành 'Thuần hóa Drops'", shortcut = 230102 },
+			[3] = { text = "Hoàn thành 'Thuần hóa Poporing'", shortcut = 230103 },
+			[4] = { text = "Hoàn thành 'Thuần hóa Little Poring'", shortcut = 230104 }
+		},
+		reward = { title = 1025, buff = 12 },
+		score = 50
+	},
+	[230110] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "Nhà côn trùng học",
+		content = {
+			summary = "Hoàn thành tất cả các mục tiêu yêu cầu",
+			details = "Bạn là người có đam mê thực sự với việc thu nhặt các loài côn trùng, ngay cả là trong giấc mơ!"
+		},
+		resource = {
+			[1] = { text = "Hoàn thành 'Thuần hóa Chonchon'", shortcut = 230111 },
+			[2] = { text = "Hoàn thành 'Thuần hóa Steel Chonchon'", shortcut = 230112 },
+			[3] = { text = "Hoàn thành 'Thuần hóa Hunter Fly'", shortcut = 230113 },
+			[4] = { text = "Hoàn thành 'Thuần hóa Rocker'", shortcut = 230114 },
+			[5] = { text = "Hoàn thành 'Thuần hóa Spore'", shortcut = 230115 },
+			[6] = { text = "Hoàn thành 'Thuần hóa Poison Spore'", shortcut = 230116 }
+		},
+		reward = { title = 1026, buff = 12 },
+		score = 50
+	},
+	[230120] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "Động vật là bạn tốt của chúng ta",
+		content = {
+			summary = "Hoàn thành tất cả các mục tiêu yêu cầu",
+			details = "Bạn là người yêu động vật thực sự, ngay cả trong giấc mơ bạn cũng mơ về những muông thú!"
+		},
+		resource = {
+			[1] = { text = "Hoàn thành 'Thuần hóa Lunatic'", shortcut = 230121 },
+			[2] = { text = "Hoàn thành 'Thuần hóa Picky'", shortcut = 230122 },
+			[3] = { text = "Hoàn thành 'Thuần hóa Savage Bebe'", shortcut = 230123 },
+			[4] = { text = "Hoàn thành 'Thuần hóa Baby Desert Wolf'", shortcut = 230124 },
+			[5] = { text = "Hoàn thành 'Thuần hóa Smokie'", shortcut = 230125 },
+			[6] = { text = "Hoàn thành 'Thuần hóa Yoyo'", shortcut = 230126 },
+			[7] = { text = "Hoàn thành 'Thuần hóa Peco Peco'", shortcut = 230127 },
+			[8] = { text = "Hoàn thành 'Thuần hóa Petite'", shortcut = 230128 }
+		},
+		reward = { title = 1027, buff = 12 },
+		score = 50
+	},
+	[230140] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "Chúng tôi là các Ma nữ!",
+		content = {
+			summary = "Hoàn thành tất cả các mục tiêu yêu cầu",
+			details = "Bạn là người yêu chế tác thực sự, ngay cả trong giấc mơ bạn cũng mơ về việc tạo ra các Ma nữ!"
+		},
+		resource = {
+			[1] = { text = "Hoàn thành 'Thuần hóa Munak'", shortcut = 230141 },
+			[2] = { text = "Hoàn thành 'Thuần hóa Isis'", shortcut = 230142 },
+			[3] = { text = "Hoàn thành 'Thuần hóa Sohee'", shortcut = 230143 },
+			[4] = { text = "Hoàn thành 'Thuần hóa Zherlthsh'", shortcut = 230144 },
+			[5] = { text = "Hoàn thành 'Thuần hóa Alice'", shortcut = 230145 },
+			[6] = { text = "Hoàn thành 'Thuần hóa Succubus'", shortcut = 230146 },
+			[7] = { text = "Hoàn thành 'Thuần hóa Loli Ruri'", shortcut = 230147 }
+		},
+		reward = { title = 1029, buff = 12 },
+		score = 50
+	},
+	[230101] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Poring",
+		content = {
+			summary = "Thuần hóa thành công Poring",
+			details = "Chúng ta hãy đi bắt Poring nào! Bạn có thể sử dụng 'Unripe Apple' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Poring" } },
+		reward = {},
+		score = 10
+	},
+	[230102] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Drops",
+		content = {
+			summary = "Thuần hóa thành công Drops",
+			details = "Chúng ta hãy đi bắt Drop nào! Bạn có thể sử dụng 'Orange Juice' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Drops" } },
+		reward = {},
+		score = 10
+	},
+	[230103] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Poporing",
+		content = {
+			summary = "Thuần hóa thành công Poporing",
+			details = "Chúng ta hãy đi bắt Poporing nào! Bạn có thể sử dụng 'Bitter Herb' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Poporing" } },
+		reward = {},
+		score = 10
+	},
+	[230104] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Little Poring",
+		content = {
+			summary = "Thuần hóa thành công Little Poring",
+			details = "Chúng ta hãy đi bắt Little Poring nào! Bạn có thể sử dụng 'Little Unripe Apple' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Little Poring" } },
+		reward = {},
+		score = 10
+	},
+	[230111] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Chonchon",
+		content = {
+			summary = "Thuần hóa thành công Chonchon",
+			details = "Chúng ta hãy đi bắt Chonchon nào! Bạn có thể sử dụng 'Rotten Fish' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Chonchon" } },
+		reward = {},
+		score = 10
+	},
+	[230112] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Steel Chonchon",
+		content = {
+			summary = "Thuần hóa thành công Steel Chonchon",
+			details = "Chúng ta hãy đi bắt Steel Chonchon nào! Bạn có thể sử dụng 'Rusty Iron' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Steel Chonchon" } },
+		reward = {},
+		score = 10
+	},
+	[230113] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Hunter Fly",
+		content = {
+			summary = "Thuần hóa thành công Hunter Fly",
+			details = "Chúng ta hãy đi bắt Hunter Fly nào! Bạn có thể sử dụng 'Monster Juice' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Hunter Fly" } },
+		reward = {},
+		score = 10
+	},
+	[230114] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Rocker",
+		content = {
+			summary = "Thuần hóa thành công Rocker",
+			details = "Chúng ta hãy đi bắt Rocker nào! Bạn có thể sử dụng 'Singing Flower' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Rocker" } },
+		reward = {},
+		score = 10
+	},
+	[230115] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Spore",
+		content = {
+			summary = "Thuần hóa thành công Spore",
+			details = "Chúng ta hãy đi bắt Spore nào! Bạn có thể sử dụng 'Dew Laden Moss' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Spore" } },
+		reward = {},
+		score = 10
+	},
+	[230116] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Poison Spore",
+		content = {
+			summary = "Thuần hóa thành công Poison Spore",
+			details = "Chúng ta hãy đi bắt Poison Spore nào! Bạn có thể sử dụng 'Deadly Noxious Herb' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Poison Spore" } },
+		reward = {},
+		score = 10
+	},
+	[230121] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Lunatic",
+		content = {
+			summary = "Thuần hóa thành công Lunatic",
+			details = "Chúng ta hãy đi bắt Lunatic nào! Bạn có thể sử dụng 'Rainbow Carrot' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Lunatic" } },
+		reward = {},
+		score = 10
+	},
+	[230122] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Picky",
+		content = {
+			summary = "Thuần hóa thành công Picky",
+			details = "Chúng ta hãy đi bắt Picky nào! Bạn có thể sử dụng 'Earthworm the Dude' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Picky" } },
+		reward = {},
+		score = 10
+	},
+	[230123] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Savage Bebe",
+		content = {
+			summary = "Thuần hóa thành công Savage Bebe",
+			details = "Chúng ta hãy đi bắt Savage Bebe nào! Bạn có thể sử dụng 'Sweet Milk' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Savage Bebe" } },
+		reward = {},
+		score = 10
+	},
+	[230124] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Baby Desert Wolf",
+		content = {
+			summary = "Thuần hóa thành công Baby Desert Wolf",
+			details = "Chúng ta hãy đi bắt Baby Desert Wolf nào! Bạn có thể sử dụng 'Well-Dried Bone' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Baby Desert Wolf" } },
+		reward = {},
+		score = 10
+	},
+	[230125] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Smokie",
+		content = {
+			summary = "Thuần hóa thành công Smokie",
+			details = "Chúng ta hãy đi bắt Smokie nào! Bạn có thể sử dụng 'Baked Yam' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Smokie" } },
+		reward = {},
+		score = 10
+	},
+	[230126] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Yoyo",
+		content = {
+			summary = "Thuần hóa thành công Yoyo",
+			details = "Chúng ta hãy đi bắt Smokie nào! Bạn có thể sử dụng 'Tropical Banana' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Yoyo" } },
+		reward = {},
+		score = 10
+	},
+	[230127] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Peco Peco",
+		content = {
+			summary = "Thuần hóa thành công Peco Peco",
+			details = "Chúng ta hãy đi bắt Peco Peco nào! Bạn có thể sử dụng 'Fatty Chubby Earthworm' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Peco Peco" } },
+		reward = {},
+		score = 10
+	},
+	[230128] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Petite",
+		content = {
+			summary = "Thuần hóa thành công Petite",
+			details = "Chúng ta hãy đi bắt Petite nào! Bạn có thể sử dụng 'Shining Stone' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Petite" } },
+		reward = {},
+		score = 10
+	},
+	[230141] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Munak",
+		content = {
+			summary = "Thuần hóa thành công Munak",
+			details = "Chúng ta hãy đi bắt Petite nào! Bạn có thể sử dụng 'No Recipient' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Munak" } },
+		reward = {},
+		score = 10
+	},
+	[230142] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Isis",
+		content = {
+			summary = "Thuần hóa thành công Isis",
+			details = "Chúng ta hãy đi bắt Isis nào! Bạn có thể sử dụng 'Armlet of Obedience' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Isis" } },
+		reward = {},
+		score = 10
+	},
+	[230143] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Sohee",
+		content = {
+			summary = "Thuần hóa thành công Sohee",
+			details = "Chúng ta hãy đi bắt Sohee nào! Bạn có thể sử dụng 'Silver Knife of Chastity' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Sohee" } },
+		reward = {},
+		score = 10
+	},
+	[230144] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Zherlthsh",
+		content = {
+			summary = "Thuần hóa thành công Zherlthsh",
+			details = "Chúng ta hãy đi bắt Zherlthsh nào! Bạn có thể sử dụng 'Forbidden Red Candle' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Zherlthsh" } },
+		reward = {},
+		score = 10
+	},
+	[230145] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Alice",
+		content = {
+			summary = "Thuần hóa thành công Alice",
+			details = "Chúng ta hãy đi bắt Alice nào! Bạn có thể sử dụng 'Soft Apron' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Alice" } },
+		reward = {},
+		score = 10
+	},
+	[230146] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Succubus",
+		content = {
+			summary = "Thuần hóa thành công Succubus",
+			details = "Chúng ta hãy đi bắt Succubus nào! Bạn có thể sử dụng 'Boy's Pure Heart' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Succubus" } },
+		reward = {},
+		score = 10
+	},
+	[230147] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "Thuần hóa Loli Ruri",
+		content = {
+			summary = "Thuần hóa thành công Loli Ruri",
+			details = "Chúng ta hãy đi bắt Loli Ruri nào! Bạn có thể sử dụng 'Very Red Juice' để thu hút chúng."
+		},
+		resource = { [1] = { text = "Thuần hóa thành công Loli Ruri" } },
+		reward = {},
+		score = 10
+	},
+	[220000] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "Bắt đầu nhiều chuyện",
+		content = {
+			summary = "Tạo cửa sổ trò chuyện",
+			details = "Hãy tạo 1 phòng chat. Phím tắt là <Alt+C> (mặc định)."
+		},
+		resource = { [1] = { text = "Tạo cửa sổ trò chuyện" } },
+		reward = {},
+		score = 10
+	},
+	[220001] = {
+		UI_Type = 0,
+		group = "CHATTING_DYING",
+		major = 1,
+		minor = 2,
+		title = "Treo biển giúp đỡ",
+		content = {
+			summary = "Tạo cửa sổ trò chuyện khi nhân vật chết",
+			details = "Tạo cửa sổ trò chuyện khi nhân vật chết. Phím tắt là <Alt+C> (mặc định)."
+		},
+		resource = { [1] = { text = "Tạo cửa sổ trò chuyện khi nhân vật chết" } },
+		reward = {},
+		score = 10
+	},
+	[220002] = {
+		UI_Type = 0,
+		group = "CHATTING20",
+		major = 1,
+		minor = 2,
+		title = "Nhiều chuyện vô đối",
+		content = {
+			summary = "Tạo 1 phòng trò chuyện có 20 người tham gia",
+			details = "Lôi kéo mọi người vào phòng chat sao cho đủ 20 người."
+		},
+		resource = { [1] = { text = "Tạo 1 phòng trò chuyện có 20 người tham gia" } },
+		reward = {},
+		score = 10
+	},
+	[220003] = {
+		UI_Type = 0,
+		group = "ADD_FRIEND",
+		major = 1,
+		minor = 2,
+		title = "Bạn bè~ Bạn bè~",
+		content = {
+			summary = "Kết bạn với 1 người",
+			details = "Hãy tìm kiếm 1 người bạn để đồng hành. Kết bạn với 1 người."
+		},
+		resource = { [1] = { text = "Kết bạn với 1 người" } },
+		reward = {},
+		score = 10
+	},
+	[220004] = {
+		UI_Type = 0,
+		group = "ADD_FRIEND",
+		major = 1,
+		minor = 2,
+		title = "Người bạn quốc dân",
+		content = {
+			summary = "Kết bạn với 10 người",
+			details = "Càng nhiều bạn càng vui. Hãy trở thành bạn bè với 10 người khác"
+		},
+		resource = { [1] = { text = "Kết bạn với 10 người" } },
+		reward = {},
+		score = 10
+	},
+	[220005] = {
+		UI_Type = 0,
+		group = "PARTY",
+		major = 1,
+		minor = 2,
+		title = "Đi chung mới vui!",
+		content = {
+			summary = "Tạo 1 tổ đội",
+			details = "Hành trình khám phá 1 mình là quá khốc liệt! Hãy tạo 1 tổ đội."
+		},
+		resource = { [1] = { text = "Tạo 1 tổ đội" } },
+		reward = {},
+		score = 10
+	},
+	[220006] = {
+		UI_Type = 0,
+		group = "MARRY",
+		major = 1,
+		minor = 2,
+		title = "Bạn đã kết hôn chưa?",
+		content = {
+			summary = "Kết hôn với một ai đó",
+			details = "Sống một mình rất là cô đơn, hãy yêu ai đó, cưới họ, và khóa chặt tình cảm của đôi uyên ương."
+		},
+		resource = { [1] = { text = "Kết hôn với một ai đó" } },
+		reward = { title = 1022 },
+		score = 20
+	},
+	[220007] = {
+		UI_Type = 0,
+		group = "BABY",
+		major = 1,
+		minor = 2,
+		title = "Chịu nuôi con không?",
+		content = {
+			summary = "Được nhận làm con nuôi",
+			details = "Vượt qua thế giới khắc nghiệt với sự hỗ trợ của cha mẹ."
+		},
+		resource = { [1] = { text = "Được nhận làm con nuôi" } },
+		reward = { title = 1032 },
+		score = 20
+	},
+	[220008] = {
+		UI_Type = 0,
+		group = "BABY",
+		major = 1,
+		minor = 2,
+		title = "Trở thành cha mẹ",
+		content = {
+			summary = "Nhận con nuôi",
+			details = "Có một đứa trẻ và có một gia đình hạnh phúc bằng việc nhận con nuôi."
+		},
+		resource = { [1] = { text = "Nhận con nuôi" } },
+		reward = { title = 1033 },
+		score = 20
+	},
+	[220009] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kích hoạt kinh tế thị trường (1)",
+		content = {
+			summary = "Bỏ ra 10,000 zeny để mua đồ",
+			details = "Tiền cứ xoay vòng và xoay vòng. Hãy sử dụng 10,000 zeny để mua đồ từ các cửa hàng của người chơi khác"
+		},
+		resource = { [1] = { text = "Bỏ ra 10,000 zeny để mua đồ", count = 10000 }, count = 500000000 },
+		reward = {},
+		score = 10
+	},
+	[220010] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kích hoạt kinh tế thị trường (2)",
+		content = {
+			summary = "Bỏ ra 1 triệu zeny để mua đồ",
+			details = "Tiền cứ xoay vòng và xoay vòng. Hãy sử dụng 1 triệu zeny để mua đồ từ các cửa hàng của người chơi khác"
+		},
+		resource = { [1] = { text = "Bỏ ra 1 triệu zeny để mua đồ", count = 1000000 }, count = 500000000 },
+		reward = {},
+		score = 15
+	},
+	[220011] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kích hoạt kinh tế thị trường (3)",
+		content = {
+			summary = "Bỏ ra 5 triệu zeny để mua đồ",
+			details = "Tiền cứ xoay vòng và xoay vòng. Hãy sử dụng 5 triệu zeny để mua đồ từ các cửa hàng của người chơi khác"
+		},
+		resource = { [1] = { text = "Bỏ ra 5 triệu zeny để mua đồ", count = 5000000 }, count = 500000000 },
+		reward = {},
+		score = 20
+	},
+	[220012] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kích hoạt kinh tế thị trường (4)",
+		content = {
+			summary = "Bỏ ra 100 triệu zeny để mua đồ",
+			details = "Tiền cứ xoay vòng và xoay vòng. Hãy sử dụng 100 triệu zeny để mua đồ từ các cửa hàng của người chơi khác"
+		},
+		resource = {
+			[1] = { text = "Bỏ ra 100 triệu zeny để mua đồ", count = 100000000 },
+			count = 500000000
+		},
+		reward = {},
+		score = 30
+	},
+	[220013] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Kích hoạt kinh tế thị trường (5)",
+		content = {
+			summary = "Bỏ ra 500 triệu zeny để mua đồ",
+			details = "Tiền cứ xoay vòng và xoay vòng. Hãy sử dụng 500 triệu zeny để mua đồ từ các cửa hàng của người chơi khác"
+		},
+		resource = { [1] = { text = "Bỏ ra 500 triệu zeny để mua đồ", count = 500000000 } },
+		reward = {},
+		score = 50
+	},
+	[220014] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tôi không thể ngừng tinh luyện! (1)",
+		content = {
+			summary = "Tinh luyện thành công vũ khí cấp độ 1 lên +7",
+			details = "Bạn may mắn tới mức nào nữa? Tinh luyện thành công vũ khí cấp độ 1 lên +7."
+		},
+		resource = { [1] = { text = "Tinh luyện thành công vũ khí cấp độ 1 lên +7" } },
+		reward = {},
+		score = 10
+	},
+	[220015] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tôi không thể ngừng tinh luyện! (2)",
+		content = {
+			summary = "Tinh luyện thành công vũ khí cấp độ 1 lên +12",
+			details = "Bạn may mắn tới mức nào nữa? Tinh luyện thành công vũ khí cấp độ 1 lên +12."
+		},
+		resource = { [1] = { text = "Tinh luyện thành công vũ khí cấp độ 1 lên +12" } },
+		reward = {},
+		score = 15
+	},
+	[220016] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tôi không thể ngừng tinh luyện! (3)",
+		content = {
+			summary = "Tinh luyện thành công vũ khí cấp độ 2 lên +7",
+			details = "Bạn may mắn tới mức nào nữa? Tinh luyện thành công vũ khí cấp độ 2 lên +7."
+		},
+		resource = { [1] = { text = "Tinh luyện thành công vũ khí cấp độ 2 lên +7" } },
+		reward = {},
+		score = 10
+	},
+	[220017] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tôi không thể ngừng tinh luyện! (4)",
+		content = {
+			summary = "Tinh luyện thành công vũ khí cấp độ 2 lên +12",
+			details = "Bạn may mắn tới mức nào nữa? Tinh luyện thành công vũ khí cấp độ 2 lên +12."
+		},
+		resource = { [1] = { text = "Tinh luyện thành công vũ khí cấp độ 2 lên +12" } },
+		reward = {},
+		score = 15
+	},
+	[220018] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tôi không thể ngừng tinh luyện! (5)",
+		content = {
+			summary = "Tinh luyện thành công vũ khí cấp độ 3 lên +7",
+			details = "Bạn may mắn tới mức nào nữa? Tinh luyện thành công vũ khí cấp độ 3 lên +7."
+		},
+		resource = { [1] = { text = "Tinh luyện thành công vũ khí cấp độ 3 lên +7" } },
+		reward = {},
+		score = 15
+	},
+	[220019] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tôi không thể ngừng tinh luyện! (6)",
+		content = {
+			summary = "Tinh luyện thành công vũ khí cấp độ 3 lên +12",
+			details = "Bạn may mắn tới mức nào nữa? Tinh luyện thành công vũ khí cấp độ 3 lên +12."
+		},
+		resource = { [1] = { text = "Tinh luyện thành công vũ khí cấp độ 3 lên +12" } },
+		reward = {},
+		score = 20
+	},
+	[220020] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tôi không thể ngừng tinh luyện! (7)",
+		content = {
+			summary = "Tinh luyện thành công vũ khí cấp độ 4 lên +7",
+			details = "Bạn may mắn tới mức nào nữa? Tinh luyện thành công vũ khí cấp độ 4 lên +7."
+		},
+		resource = { [1] = { text = "Tinh luyện thành công vũ khí cấp độ 4 lên +7" } },
+		reward = {},
+		score = 20
+	},
+	[220021] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tôi không thể ngừng tinh luyện! (8)",
+		content = {
+			summary = "Tinh luyện thành công vũ khí cấp độ 4 lên +12",
+			details = "Bạn may mắn tới mức nào nữa? Tinh luyện thành công vũ khí cấp độ 4 lên +12."
+		},
+		resource = { [1] = { text = "Tinh luyện thành công vũ khí cấp độ 4 lên +12" } },
+		reward = {},
+		score = 30
+	},
+	[220022] = {
+		UI_Type = 0,
+		group = "ENCHANT_FAIL",
+		major = 1,
+		minor = 1,
+		title = "Lòng tham của con người là không đáy",
+		content = {
+			summary = "Trải nghiệm tinh luyện thất bại",
+			details = "Lòng tham của con người không có hồi kết và nó luôn lặp lại. Trải nghiệm tinh luyện thất bại và chúng ta luôn học hỏi qua các sai lầm."
+		},
+		resource = { [1] = { text = "Trải nghiệm tinh luyện thất bại" } },
+		reward = {},
+		score = 10
+	},
+	[220023] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "Mình đã tìm thấy nó! (1)",
+		content = {
+			summary = "Thu thập vật phẩm có giá hơn 100 zeny",
+			details = "Mình thật may mắn! Thu thập được vật phẩm có trị giá hơn 100 zeny."
+		},
+		resource = { [1] = { text = "Thu thập vật phẩm có giá hơn 100 zeny" } },
+		reward = {},
+		score = 10
+	},
+	[220024] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "Mình đã tìm thấy nó! (2)",
+		content = {
+			summary = "Thu thập vật phẩm có giá hơn 1.000 zeny",
+			details = "Mình thật may mắn! Thu thập được vật phẩm có trị giá hơn 1.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thập vật phẩm có giá hơn 1.000 zeny" } },
+		reward = {},
+		score = 10
+	},
+	[220025] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "Mình đã tìm thấy nó! (3)",
+		content = {
+			summary = "Thu thập vật phẩm có giá hơn 5.000 zeny",
+			details = "Mình thật may mắn! Thu thập được vật phẩm có trị giá hơn 1.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thập vật phẩm có giá hơn 5.000 zeny" } },
+		reward = {},
+		score = 15
+	},
+	[220026] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "Mình đã tìm thấy nó! (4)",
+		content = {
+			summary = "Thu thập vật phẩm có giá hơn 10.000 zeny",
+			details = "Mình thật may mắn! Thu thập được vật phẩm có trị giá hơn 10.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thập vật phẩm có giá hơn 10.000 zeny" } },
+		reward = {},
+		score = 15
+	},
+	[220027] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "Mình đã tìm thấy nó! (5)",
+		content = {
+			summary = "Thu thập vật phẩm có giá hơn 50.000 zeny",
+			details = "Mình thật may mắn! Thu thập được vật phẩm có trị giá hơn 50.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thập vật phẩm có giá hơn 50.000 zeny" } },
+		reward = {},
+		score = 20
+	},
+	[220028] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "Mình đã tìm thấy nó! (6)",
+		content = {
+			summary = "Thu thập vật phẩm có giá hơn 100.000 zeny",
+			details = "Mình thật may mắn! Thu thập được vật phẩm có trị giá hơn 100.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thập vật phẩm có giá hơn 100.000 zeny" } },
+		reward = {},
+		score = 20
+	},
+	[220029] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "Mình đã tìm thấy nó! (7)",
+		content = {
+			summary = "Thu thập vật phẩm có giá hơn 150.000 zeny",
+			details = "Mình thật may mắn! Thu thập được vật phẩm có trị giá hơn 150.000 zeny."
+		},
+		resource = { [1] = { text = "Thu thập vật phẩm có giá hơn 150.000 zeny" } },
+		reward = {},
+		score = 30
+	},
+	[220030] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Giàu sang phú quý (1)",
+		content = {
+			summary = "Giữ hơn 10.000 zeny",
+			details = "Tiền không phải là tất cả, nhưng không thể sống mà không có tiền. Giữ hơn 10.000 zeny trong túi."
+		},
+		resource = { [1] = { text = "Giữ hơn 10.000 zeny" } },
+		reward = {},
+		score = 10
+	},
+	[220031] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Giàu sang phú quý (2)",
+		content = {
+			summary = "Giữ hơn 100.000 zeny",
+			details = "Tiền không phải là tất cả, nhưng không thể sống mà không có tiền. Giữ hơn 100.000 zeny trong túi."
+		},
+		resource = { [1] = { text = "Giữ hơn 100.000 zeny" } },
+		reward = {},
+		score = 15
+	},
+	[220032] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Giàu sang phú quý (3)",
+		content = {
+			summary = "Giữ hơn 1 triệu zeny",
+			details = "Tiền không phải là tất cả, nhưng không thể sống mà không có tiền. Giữ hơn 1 triệu zeny trong túi."
+		},
+		resource = { [1] = { text = "Giữ hơn 1 triệu zeny" } },
+		reward = {},
+		score = 20
+	},
+	[220033] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Giàu sang phú quý (4)",
+		content = {
+			summary = "Giữ hơn 10 triệu zeny",
+			details = "Tiền không phải là tất cả, nhưng không thể sống mà không có tiền. Giữ hơn 10 triệu zeny trong túi."
+		},
+		resource = { [1] = { text = "Giữ hơn 10 triệu zeny" } },
+		reward = {},
+		score = 25
+	},
+	[220034] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Giàu sang phú quý (5)",
+		content = {
+			summary = "Giữ hơn 100 triệu zeny",
+			details = "Tiền không phải là tất cả, nhưng không thể sống mà không có tiền. Giữ hơn 100 triệu zeny trong túi."
+		},
+		resource = { [1] = { text = "Giữ hơn 100 triệu zeny" } },
+		reward = {},
+		score = 30
+	},
+	[220035] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Giàu sang phú quý (6)",
+		content = {
+			summary = "Giữ hơn 1 tỷ zeny",
+			details = "Tiền không phải là tất cả, nhưng không thể sống mà không có tiền. Giữ hơn 1 tỷ zeny trong túi."
+		},
+		resource = { [1] = { text = "Giữ hơn 1 tỷ zeny" } },
+		reward = {},
+		score = 40
+	},
+	[230200] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "Người tìm kiếm Poring",
+		content = {
+			summary = "Hoàn thành tất cả các mục tiêu yêu cầu",
+			details = "Poring là một sinh vật kỳ lạ, chúng không phải thực vật cũng không phải động vật. Để tìm hiểu chúng hơn, bạn phải đối mặt với chúng."
+		},
+		resource = {
+			[1] = { text = "Hoàn thành 'Khám phá cuộc sống của Poring (1)'", shortcut = 230201 },
+			[2] = { text = "Hoàn thành 'Khám phá cuộc sống của Poring (2)'", shortcut = 230202 },
+			[3] = { text = "Hoàn thành 'Khám phá cuộc sống của Poring (3)'", shortcut = 230203 }
+		},
+		reward = {},
+		score = 10
+	},
+	[230201] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "Khám phá cuộc sống của Poring (1)",
+		content = {
+			summary = "Săn những đối tượng đã chỉ định",
+			details = "Các đặc tính thay đổi rất nhiều tùy theo khu vực sinh sống của chúng. Đám giọt nước này là những mục tiêu dễ, cứ thoải mái săn chúng."
+		},
+		resource = {
+			[1] = { text = "Săn 10 Poring", count = 10 },
+			[2] = { text = "Săn 10 Little Poring", count = 10 },
+			[3] = { text = "Săn 10 Drops", count = 10 },
+			[4] = { text = "Săn 10 Poporing", count = 10 },
+			[5] = { text = "Săn 10 Marin", count = 10 }
+		},
+		reward = {},
+		score = 10
+	},
+	[230202] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "Khám phá cuộc sống của Poring (2)",
+		content = {
+			summary = "Săn những đối tượng đã chỉ định",
+			details = "Đây là những con Poring cũng khá mạnh trên thế giới này. Hãy thử sức với chúng xem thế nào."
+		},
+		resource = {
+			[1] = { text = "Săn 1 Mastering", count = 1 },
+			[2] = { text = "Săn 1 Devilring", count = 1 },
+			[3] = { text = "Săn 1 Angelring", count = 1 },
+			[4] = { text = "Săn 1 Arch Angelring", count = 1 },
+			[5] = { text = "Săn 1 Ghostring", count = 1 }
+		},
+		reward = {},
+		score = 15
+	},
+	[230203] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "Khám phá cuộc sống của Poring (3)",
+		content = {
+			summary = "Săn những đối tượng đã chỉ định",
+			details = "Một số Poring có những đặc tính sai lệch rất lớn với những loài bình thường. Cần nghiên cứu sâu và rộng hơn về chúng."
+		},
+		resource = {
+			[1] = { text = "Săn 5 Metalring", count = 5 },
+			[2] = { text = "Săn 5 Heavy Metalring", count = 5 },
+			[3] = { text = "Săn 5 Magmaring", count = 5 }
+		},
+		reward = {},
+		score = 20
+	},
+	[240000] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 6,
+		minor = 0,
+		title = "Kết nối lần đầu tiên",
+		content = {
+			summary = "Kết nối lần đầu vào hệ thống Thành tựu",
+			details = "Hoàn thành kết nối lần đầu vào hệ thống Thành tựu"
+		},
+		resource = { [1] = { text = "Kết nối lần đầu vào hệ thống Thành tựu" } },
+		reward = {},
+		score = 10
+	},
+	[240001] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 1",
+		content = {
+			summary = "Đạt được Thành tích cấp 1",
+			details = "Đạt được Thành tích cấp 1."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 1" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240002] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 2",
+		content = {
+			summary = "Đạt được Thành tích cấp 2",
+			details = "Đạt được Thành tích cấp 2."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 2" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240003] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 3",
+		content = {
+			summary = "Đạt được Thành tích cấp 3",
+			details = "Đạt được Thành tích cấp 3."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 3" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240004] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 4",
+		content = {
+			summary = "Đạt được Thành tích cấp 4",
+			details = "Đạt được Thành tích cấp 4."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 4" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240005] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 5",
+		content = {
+			summary = "Đạt được Thành tích cấp 5",
+			details = "Đạt được Thành tích cấp 5."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 5" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240006] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 6",
+		content = {
+			summary = "Đạt được Thành tích cấp 6",
+			details = "Đạt được Thành tích cấp 6."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 6" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240007] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 7",
+		content = {
+			summary = "Đạt được Thành tích cấp 7",
+			details = "Đạt được Thành tích cấp 7."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 7" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240008] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 8",
+		content = {
+			summary = "Đạt được Thành tích cấp 8",
+			details = "Đạt được Thành tích cấp 8."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 8" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240009] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 9",
+		content = {
+			summary = "Đạt được Thành tích cấp 9",
+			details = "Đạt được Thành tích cấp 9."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 9" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240010] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 10",
+		content = {
+			summary = "Đạt được Thành tích cấp 10",
+			details = "Đạt được Thành tích cấp 10."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 10" } },
+		reward = { title = 1023, buff = 12, item = 644 },
+		score = 10
+	},
+	[240011] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 11",
+		content = {
+			summary = "Đạt được Thành tích cấp 11",
+			details = "Đạt được Thành tích cấp 11."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 11" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240012] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 12",
+		content = {
+			summary = "Đạt được Thành tích cấp 12",
+			details = "Đạt được Thành tích cấp 12"
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 12" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240013] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 13",
+		content = {
+			summary = "Đạt được Thành tích cấp 13",
+			details = "Đạt được Thành tích cấp 13."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 13" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240014] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 14",
+		content = {
+			summary = "Đạt được Thành tích cấp 14",
+			details = "Đạt được Thành tích cấp 14."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 14" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240015] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 15",
+		content = {
+			summary = "Đạt được Thành tích cấp 15",
+			details = "Đạt được Thành tích cấp 15."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 15" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240016] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 16",
+		content = {
+			summary = "Đạt được Thành tích cấp 16",
+			details = "Đạt được Thành tích cấp 16."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 16" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240017] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 17",
+		content = {
+			summary = "Đạt được Thành tích cấp 17",
+			details = "Đạt được Thành tích cấp 17"
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 17" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240018] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 18",
+		content = {
+			summary = "Đạt được Thành tích cấp 18",
+			details = "Đạt được Thành tích cấp 18."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 18" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240019] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 19",
+		content = {
+			summary = "Đạt được Thành tích cấp 19",
+			details = "Đạt được Thành tích cấp 19."
+		},
+		resource = { [1] = { text = "Đạt được Thành tích cấp 19" } },
+		reward = { buff = 12, item = 644 },
+		score = 10
+	},
+	[240020] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Đạt được Thành tích cấp 20",
+		content = {
+			summary = "Đạt được Thành tích cấp 20",
+			details = "Đạt được Thành tích cấp 20."

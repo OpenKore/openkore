@@ -39,28 +39,33 @@ sub start {
 	for my $serverType (qw(
 		0
 		bRO
+		cRO
 		idRO
 		iRO
-		pRO
+		kRO
 		rRO
+		Sakray
 		tRO
 		twRO
+		vRO
+		Zero
 		kRO_RagexeRE_0
 	)) {
 		subtest "serverType $serverType" => sub {
 			for my $module (keys %tests) {
 				SKIP: {
 					# kRO has too many base classes (more than 100), and perl dies trying to load it
-					skip 'known to be broken', 1 if $serverType =~ /^(kRO_RagexeRE_0|twRO)$/;
+					skip 'known to be broken', 1 if $serverType =~ /^(rRO)$/;
 					my $instance = eval { $module->create(undef, $serverType) };
 					ok($instance, "create $module") or skip 'failed', 1;
 
-					skip 'broken packet_list', 1 if $serverType =~ /^(idRO|rRO)$/;
+					skip 'broken packet_list', 1 if $serverType =~ /^(rRO)$/;
 
 					for (keys %{$instance->{packet_lut}}) {
 						subtest sprintf('$_{packet_list}{$_{packet_lut}{%s}}', $_) => sub { SKIP: {
 							ok(my $handler = $instance->{packet_list}{$instance->{packet_lut}{$_}}, 'exists') or skip 'failed', 1;
 							is($_, $handler->[0], 'matches');
+							done_testing();
 						}}
 					}
 
@@ -75,23 +80,27 @@ sub start {
 								for my $switch (@{$expected->{switches}}) {
 									ok(push @callbacks, $instance->can($switch), $switch);
 								}
+								done_testing();
 							} or skip 'failed', 1;
-
-							skip 'broken callback', 1 if $serverType =~ /^(pRO|tRO)$/;
-
+							
+							if ( $serverType =~ /^(bRO|idRO|tRO)$/) { # different login packet. Parser is not implemented 2021-02-15
+								done_testing();
+								next;
+							}
 							my $got = Storable::dclone($expected);
 							for my $callback (@callbacks) {
 								$instance->$callback($got);
 							}
 
 							# there may be additional keys after reconstruct_callback
-							$got = reduce_struct($got, $expected);
-
+							$got = reduce_struct($got, $expected);					
 							is_deeply($got, $expected, 'test data');
+							done_testing();
 						}}
 					}
 				}
 			}
+			done_testing();
 		}
 	}
 }

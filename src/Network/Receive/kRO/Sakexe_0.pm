@@ -69,8 +69,8 @@ sub new {
 		'006E' => ['character_creation_failed', 'C' ,[qw(type)]], # 3
 		'006F' => ['character_deletion_successful'], # 2
 		'0070' => ['character_deletion_failed', 'C',[qw(error_code)]], # 6
-		'0072' => ['received_characters', 'v a*', [qw(len charInfo)]], # last known struct
 		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v', [qw(charID mapName mapIP mapPort)]], # 28
+		'0072' => ['received_characters', 'v a*', [qw(len charInfo)]], # last known struct
 		'0073' => ['map_loaded', 'V a3 C2', [qw(syncMapSync coords xSize ySize)]], # 11
 		'0074' => ['map_load_error', 'C', [qw(error)]], # 3
 		'0075' => ['changeToInGameState'], # -1
@@ -134,7 +134,7 @@ sub new {
 		'00C2' => ['users_online', 'V', [qw(users)]], # 6
 		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]], # 8
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]], # 6
-		'00C6' => ['npc_store_info'], # -1
+		'00C6' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
 		'00C7' => ['npc_sell_list', 'v a*', [qw(len itemsdata)]], # -1
 		'00CA' => ['buy_result', 'C', [qw(fail)]], # 3
 		'00CB' => ['sell_result', 'C', [qw(fail)]], # 3
@@ -174,13 +174,13 @@ sub new {
 		'0107' => ['party_location', 'a4 v2', [qw(ID x y)]],
 		# 0x0108 is sent packet TODO: ST0 has-> '0108' => ['item_upgrade', 'v a2 v', [qw(type ID upgrade)]],
 		'0109' => ['party_chat', 'v a4 Z*', [qw(len ID message)]],
-		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
 		'010A' => ['mvp_item', 'v', [qw(itemID)]], # 4
 		'010B' => ['mvp_you', 'V', [qw(expAmount)]], # 6
 		'010C' => ['mvp_other', 'a4', [qw(ID)]], # 6
 		'010D' => ['mvp_item_trow'], # 2
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'], # -1
+		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
 		'0111' => ['skill_add', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]], # 39
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 31
 		'0115' => ['skill_use_position', 'v a4 a4 V3 v5 C', [qw(skillID sourceID targetID tick src_speed dst_speed x y damage level option type)]], # 35
@@ -199,13 +199,12 @@ sub new {
 		'012B' => ['cart_off'], # 2
 		'012C' => ['cart_add_failed', 'C', [qw(fail)]], # 3
 		'012D' => ['shop_skill', 'v', [qw(number)]], # 4
-		'0131' => ['vender_found', 'a4 A80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
+		'0131' => ['vender_found', 'a4 Z80', [qw(ID title)]], # TODO: # 0x0131,86 # wtf A30? this message is 80 long -> test this
 		'0132' => ['vender_lost', 'a4', [qw(ID)]], # 6
 		'0133' => ['vender_items_list', 'v a4 a*', [qw(len venderID itemList)]], # -1
 		'0135' => ['vender_buy_fail', 'v2 C', [qw(ID amount fail)]], # 7
-		'0136' => ['vending_start'], # -1
+		'0136' => ['vending_start', 'v a4 a*', [qw(len accountID itemList)]], # -1
 		'0137' => ['shop_sold', 'v2', [qw(number amount)]], # 6
-		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 		'0139' => ['monster_ranged_attack', 'a4 v5', [qw(ID sourceX sourceY targetX targetY range)]], # 16
 		'013A' => ['attack_range', 'v', [qw(type)]], # 4
 		'013B' => ['arrow_none', 'v', [qw(type)]], # 4
@@ -232,7 +231,7 @@ sub new {
 		'015F' => ['guild_disband', 'Z40', [qw(reason)]], # 42
 		'0160' => ['guild_member_setting_list'], # -1
 		'0162' => ['guild_skills_list'], # -1
-		'0163' => ['guild_expulsionlist'], # -1
+		'0163' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
 		'0164' => ['guild_other_list'], # -1
 		'0166' => ['guild_members_title_list'], # -1
 		'0167' => ['guild_create_result', 'C', [qw(type)]], # 3
@@ -243,7 +242,7 @@ sub new {
 		'016F' => ['guild_notice', 'Z60 Z120', [qw(subject notice)]], # 182
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID guildName)]], # 30
 		'0173' => ['guild_alliance', 'C', [qw(flag)]], # 3
-		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1 # FIXME: this is a var len message!!!
+		'0174' => ['guild_position_changed', 'v a4 a4 a4 V Z20', [qw(len ID mode sameID exp position_name)]], # -1
 		'0176' => ['guild_member_info', 'a4 a4 v5 V3 Z50 Z24', [qw(AID GID head_type head_color sex job lv contribution_exp current_state positionID intro name)]], # 106 # TODO: rename the vars and add sub
 		'0177' => ['identify_list'], # -1
 		'0179' => ['identify', 'a2 C', [qw(ID flag)]], # 5
@@ -386,7 +385,7 @@ sub new {
 		'024A' => ['mail_new', 'V Z40 Z24', [qw(mailID title sender)]], # 70
 		'0250' => ['auction_result', 'C', [qw(flag)]], # 3
 		'0252' => ['auction_item_request_search', 'v V2', [qw(size pages count)]], # -1
-		'0253' => ['taekwon_feel_save', 'C', [qw(which)]], # 3
+		'0253' => ['starplace', 'C', [qw(which)]], # 3
 		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5
 		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]], # 5
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8
@@ -420,8 +419,8 @@ sub new {
 		'02A2' => ['stat_info', 'v V', [qw(type val)]], # 8 was "mercenary_param_change"
 		'02A3' => ['gameguard_lingo_key', 'a4 a4 a4 a4', [qw(dwAlgNum dwAlgKey1 dwAlgKey2 dwSeed)]], # 18
 		'02A6' => ['gameguard_request'], # 22
-		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
-		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
+		'02AA' => ['cash_password_request', 'v', [qw(info)]], # 4
+		'02AC' => ['cash_password_result', 'v2', [qw(result error_count)]], # 6
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
 		'02B1' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'02B2' => ['quest_all_mission', 'v V a*', [qw(len mission_amount message)]],
@@ -430,7 +429,7 @@ sub new {
 		'02B5' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'02B7' => ['quest_active', 'V C', [qw(questID active)]],
 		'02B8' => ['party_show_picker', 'a4 v C3 a8 v C', [qw(sourceID nameID identified broken upgrade cards location type)]], # 22
-		'02B9' => ['hotkeys'], # 191 # hotkeys:27
+		'02B9' => ['hotkeys', 'a*', [qw(hotkeys)]], # 191 # hotkeys:27
 		'02BB' => ['equipitem_damaged', 'v a4', [qw(slot ID)]], # 8
 		'02C1' => ['npc_chat', 'v a4 a4 Z*', [qw(len ID color message)]],
 		'02C5' => ['party_invite_result', 'Z24 V', [qw(name type)]],
@@ -441,8 +440,6 @@ sub new {
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]], # 4
 		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]], # 71
 		'02CE' => ['instance_window_leave', 'V a4', [qw(flag enter_limit_date)]], # 10
-		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
-		'02F2' => ['progress_bar_stop'],
 		'02D0' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'02D1' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
@@ -467,6 +464,8 @@ sub new {
 		'02ED' => ['actor_connected', 'a4 v3 V v10 a4 a4 V C2 a3 C2 v2', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize lv font)]], # 59 # Spawning
 		'02EE' => ['actor_moved', 'a4 v3 V v10 a4 a4 V C2 a3 C3 v2', [qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID opt3 stance sex coords xSize ySize act lv font)]], # 60 # Standing
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]], # 8
+		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
+		'02F2' => ['progress_bar_stop'],
 		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], # -1
 		'043D' => ['skill_post_delay', 'v V', [qw(ID time)]],
 		'043E' => ['skill_post_delaylist', 'v a*', [qw(len skill_list)]],
@@ -490,7 +489,7 @@ sub new {
 		'07F8' => ['actor_connected', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # spawning
 		'07F9' => ['actor_moved', 'v C a4 v3 V v10 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # standing
 		'07FA' => ['inventory_item_removed', 'v a2 v', [qw(reason ID amount)]], #//0x07fa,8
-		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait unknown)]], # 25
+		'07FB' => ['skill_cast', 'a4 a4 v5 V C', [qw(sourceID targetID x y skillID unknown type wait dispose)]], # 25
 		'07FC' => ['party_leader', 'V2', [qw(old new)]],
 		'07FD' => ['special_item_obtain', 'v C v c/Z a*', [qw(len type nameID holder etc)]],
 		'0800' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]], # -1
@@ -498,6 +497,10 @@ sub new {
 		'0805' => ['booking_search_request', 'x2 a a*', [qw(IsExistMoreResult innerData)]],
 		'0807' => ['booking_delete_request', 'v', [qw(result)]],
 		'0809' => ['booking_insert', 'V Z24 V v8', [qw(index name expire lvl map_id job1 job2 job3 job4 job5 job6)]],
+		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
+		'080B' => ['booking_delete', 'V', [qw(index)]],
+		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
+		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20
 		'0810' => ['open_buying_store', 'c', [qw(amount)]], #3
 		'0812' => ['open_buying_store_fail', 'v', [qw(result)]],
 		'0813' => ['open_buying_store_item_list', 'v a4 V', [qw(len AID zeny)]],
@@ -507,10 +510,6 @@ sub new {
 		'081A' => ['buying_buy_fail', 'v', [qw(result)]], #4
 		'081B' => ['buying_store_update', 'v2 V', [qw(itemID count zeny)]],
 		'081C' => ['buying_store_item_delete', 'a2 v V', [qw(ID amount zeny)]],
-		'080A' => ['booking_update', 'V v6', [qw(index job1 job2 job3 job4 job5 job6)]],
-		'080B' => ['booking_delete', 'V', [qw(index)]],
-		'080E' => ['party_hp_info', 'a4 V2', [qw(ID hp hp_max)]],
-		'080F' => ['deal_add_other', 'v C V C3 a8', [qw(nameID type amount identified broken upgrade cards)]], # 0x080F,20
 		'081D' => ['elemental_info', 'a4 V4', [qw(ID hp hp_max sp sp_max)]],
 		'081E' => ['stat_info', 'v V', [qw(type val)]], # 8, Sorcerer's Spirit
 		'0824' => ['buying_store_fail', 'v2', [qw(result itemID)]], #6
@@ -523,14 +522,17 @@ sub new {
 		'083A' => ['search_store_open', 'v C', [qw(type amount)]],
 		'083D' => ['search_store_pos', 'v v', [qw(x y)]],
 		'083E' => ['login_error', 'V Z20', [qw(type date)]],
-		'0845' => ['cash_shop_open_result', 'v2', [qw(cash_points kafra_points)]],#10
+		'0845' => ['cash_shop_open_result', 'V2', [qw(cash_points kafra_points)]],#10
 		'0849' => ['cash_shop_buy_result', 'V s V', [qw(item_id result updated_points)]],#16
 		'084B' => ['item_appeared', 'a4 v2 C v2 C2 v', [qw(ID nameID type identified x y subx suby amount)]],
 		'0856' => ['actor_moved', 'v C a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # walking provided by try71023 TODO: costume
 		'0857' => ['actor_exists', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font name)]], # -1 # spawning provided by try71023
 		'0858' => ['actor_connected', 'v C a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 Z*', [qw(len object_type ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font name)]], # -1 # standing provided by try71023
 		'0859' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
+		'08B3' => ['show_script', 'v a4 Z*', [qw(len ID message)]], #-1
+		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
 		'08C7' => ['area_spell', 'x2 a4 a4 v2 C3', [qw(ID sourceID x y type range isVisible)]], # -1
+		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08CA' => ['cash_shop_list', 'v3 a*', [qw(len amount tabcode itemInfo)]],#-1
 		'08CD' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
 		'08CF' => ['revolving_entity', 'a4 v v', [qw(sourceID type entity)]],
@@ -539,9 +541,6 @@ sub new {
 		'08D2' => ['high_jump', 'a4 v2', [qw(ID x y)]], # 10
 		'08D6' => ['npc_clear_dialog', 'a4', [qw(ID)]], #6
 		'08E2' => ['navigate_to', 'C3 Z16 v3', [qw(type flag hide_window map x y mob_id)]],
-		'08B3' => ['show_script', 'v a4 Z*', [qw(len ID message)]], #-1
-		'08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
-		'08C8' => ['actor_action', 'a4 a4 a4 V3 x v C V', [qw(sourceID targetID tick src_speed dst_speed damage div type dual_wield_damage)]],
 		'08FE' => ['quest_update_mission_hunt', 'v a*', [qw(len message)]],
 		'0906' => ['show_eq', 'v Z24 x17 a*', [qw(len name equips_info)]],
 		'0908' => ['inventory_item_favorite', 'a2 C', [qw(ID flag)]],#5
@@ -552,6 +551,7 @@ sub new {
 		'096F' => ['merge_item_result', 'a2 v C', [qw(itemIndex total result)]], #5
 		'0977' => ['monster_hp_info', 'a4 V V', [qw(ID hp hp_max)]],
 		'097A' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
+		'097B' => ['rates_info2', 's V3 a*', [qw(len exp death drop detail)]],
 		'097D' => ['top10', 'v a*', [qw(type message)]],
 		'097E' => ['rank_points', 'vV2', [qw(type points total)]],
 		'0983' => ['actor_status_active', 'v a4 C V5', [qw(type ID flag total tick unknown1 unknown2 unknown3)]],
@@ -578,21 +578,21 @@ sub new {
 		'09A6' => ['banking_check', 'V2 v',[qw(zeny zeny2 reason)]],
 		'09A8' => ['banking_deposit', 'v V2 V',[qw(reason zeny zeny2 balance)]],
 		'09AA' => ['banking_withdraw', 'v V2 V',[qw(reason zeny zeny2 balance)]],
-		'09D5' => ['npc_market_info', 'v a*', [qw(len itemList)]],
-		'09D7' => ['npc_market_purchase_result', 'v C a*', [qw(len result itemList)]],
-		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
-		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09CD' => ['message_string', 'v V', [qw(index param)]],
 		'09D1' => ['progress_bar_unit', 'V3', [qw(GID color time)]],
+		'09D5' => ['npc_market_info', 'v a*', [qw(len itemList)]],
+		'09D7' => ['npc_market_purchase_result', 'v C a*', [qw(len result itemList)]],
 		'09DA' => ['guild_storage_log', 'v3 a*', [qw(len result count log)]], # -1
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss name)]],
 		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss name)]],
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font maxHP HP isBoss name)]],
+		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
+		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
-		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
 		'09EB' => ['rodex_read_mail', 'v C V2 v V2 C', [qw(len type mailID1 mailID2 text_len zeny1 zeny2 itemCount)]],   # -1
+		'09ED' => ['rodex_write_result', 'C', [qw(fail)]],   # 3
 		'09F0' => ['rodex_mail_list', 'v C3 a*', [qw(len type amount isEnd mailList)]],   # -1
 		'09F2' => ['rodex_get_zeny', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
 		'09F4' => ['rodex_get_item', 'V2 C2', [qw(mailID1 mailID2 type fail)]],   # 12
@@ -604,6 +604,7 @@ sub new {
 		'09F8' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'09F9' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'09FA' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
+		'09FC' => ['pet_evolution_result', 'v V',[qw(len result)]],
 		'09FD' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss body_style name)]],
 		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss body_style name)]],
 		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font maxHP HP isBoss body_style name)]],
@@ -625,19 +626,19 @@ sub new {
 		'0A20' => ['roulette_window_update', 'C v3 V3', [qw(result stage price additional_item gold silver bronze)]],
 		'0A22' => ['roulette_recv_item', 'C v', [qw(type item_id)]],
 		'0A23' => ['achievement_list', 'v V V v V V', [qw(len ach_count total_points rank current_rank_points next_rank_points)]], # -1
-		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points ach_id completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
-		'0A26' => ['achievement_reward_ack', 'C V', [qw(received ach_id)]], # 7
+		'0A24' => ['achievement_update', 'V v VVV C V10 V C', [qw(total_points rank current_rank_points next_rank_points achievementID completed objective1 objective2 objective3 objective4 objective5 objective6 objective7 objective8 objective9 objective10 completed_at reward)]], # 66
+		'0A26' => ['achievement_reward_ack', 'C V', [qw(received achievementID)]], # 7
 		'0A27' => ['hp_sp_changed', 'v V', [qw(type amount)]],
 		'0A28' => ['open_store_status', 'C', [qw(flag)]],
 		'0A2D' => ['show_eq', 'v Z24 v7 v C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color sex equips_info)]],
 		'0A2F' => ['change_title', 'C V', [qw(result title_id)]],
+		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 V', [qw(ID name partyName guildName guildTitle titleID)]],
 		'0A36' => ['monster_hp_info_tiny', 'a4 C', [qw(ID hp)]],
 		'0A37' => ($rpackets{'0A37'}{length} == 57) # or 59
 			? ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite)]]
 			: ['inventory_item_added', 'a2 v2 C3 a8 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]]
 		,
 		'0A38' => ['open_ui', 'C', [qw(type)]],
-		'0A30' => ['actor_info', 'a4 Z24 Z24 Z24 Z24 V', [qw(ID name partyName guildName guildTitle titleID)]],
 		'0A3B' => ['hat_effect', 'v a4 C a*', [qw(len ID flag effect)]], # -1
 		'0A43' => ['party_join', 'a4 V v4 C Z24 Z24 Z16 C2', [qw(ID role jobID lv x y type name user map item_pickup item_share)]],
 		'0A44' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
@@ -648,12 +649,15 @@ sub new {
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
 		'0A7B' => ['EAC_key'],
 		'0A7D' => ['rodex_mail_list', 'v C3 a*', [qw(len type amount isEnd mailList)]],   # -1
+		'0A82' => ['guild_expulsion', 'Z40 a4', [qw(message charID)]], # 46
+		'0A83' => ['guild_leave', 'a4 Z40', [qw(charID message)]], # 46
 		'0A84' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id)]],
 		'0A89' => ['offline_clone_found', 'a4 v4 C v9 Z24', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe title)]],
 		'0A8A' => ['offline_clone_lost', 'a4', [qw(ID)]],
 		'0A8D' => ['vender_items_list', 'v a4 a4 C V a*', [qw(len venderID venderCID flag expireDate itemList)]], # -1 [offline vending store]
 		'0A91' => ['buying_store_items_list', 'v a4 a4 C V V x4 a*', [qw(len buyerID buyingStoreID flag expireDate zeny itemList)]], # -1 [offline buying store]
 		'0A95' => ['misc_config', 'C2', [qw(show_eq_flag call_flag)]],
+		'0A96' => ['deal_add_other', 'V C V C3 a16 a25 V v', [qw(nameID type amount identified broken upgrade cards options type_equip viewID)]],#61
 		'0A98' => ($rpackets{'0A98'}{length} == 10) # or 12
 			? ['equip_item_switch', 'a2 V v', [qw(ID type success)]]
 			: ['equip_item_switch', 'a2 V2', [qw(ID type success)]] #kRO <= 20170502
@@ -667,8 +671,9 @@ sub new {
 		'0AA8' => ['misc_config', 'C3', [qw(show_eq_flag call_flag pet_autofeed_flag)]],
 		'0AB2' => ['party_dead', 'a4 C', [qw(ID isDead)]],
 		'0AB8' => ['move_interrupt'],
-		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
+		'0AB9' => ['item_preview', 'a2 v a8 a25', [qw(index upgrade cards options)]],
 		'0ABD' => ['partylv_info', 'a4 v2', [qw(ID job lv)]],
+		'0ABE' => ['warp_portal_list', 'v2 Z16 Z16 Z16 Z16', [qw(len type memo1 memo2 memo3 memo4)]], #TODO : MapsCount || size is -1
 		'0AC2' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]],   # -1
 		'0AC4' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]], #TODO
 		'0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
@@ -678,21 +683,23 @@ sub new {
 		'0ACB' => ['stat_info', 'v V2', [qw(type val val2)]],
 		'0ACC' => ['exp', 'a4 V2 v2', [qw(ID val val2 type flag)]],
 		'0ACD' => ['login_error', 'C Z20', [qw(type date)]],
+		'0ADA' => ['refine_status', 'Z24 V C C', [qw(name itemID refine_level status)]],
 		'0ADC' => ['misc_config', 'C4', [qw(show_eq_flag call_flag pet_autofeed_flag homunculus_autofeed_flag)]],
  		'0ADD' => ['item_appeared', 'a4 v2 C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
-		'0ADE' => ['overweight_percent', 'v V', [qw(len percent)]],#TODO
+		'0ADE' => ['overweight_percent', 'V', [qw(percent)]],# 6 TODO
 		'0ADF' => ['actor_info', 'a4 a4 Z24 Z24', [qw(ID charID name prefix_name)]],
 		'0AE0' => ['login_error', 'V V Z20', [qw(type error date)]],
 		'0AE2' => ['open_ui', 'C V', [qw(type data)]],
+		'0AE3' => ['received_login_token', 'v l Z20 Z*', [qw(len login_type flag login_token)]],
 		'0AE4' => ['party_join', 'a4 a4 V v4 C Z24 Z24 Z16 C2', [qw(ID charID role jobID lv x y type name user map item_pickup item_share)]],
 		'0AE5' => ['party_users_info', 'v Z24 a*', [qw(len party_name playerInfo)]],
 		'0AE9' => ['login_pin_code_request', 'V a4 v2', [qw(seed accountID flag lock)]],
 		'0AF0' => ['action_ui', 'C V', [qw(type data)]],
 		'0AF7' => ['character_name', 'v a4 Z24', [qw(flag ID name)]],
-		'0AFD' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0AFB' => ['sage_autospell', 'v a*', [qw(len autospell_list)]], #herc PR 2310
+		'0AFD' => ['guild_position', 'v a4', [qw(len charID)]], #herc PR 2176
 		'0AFE' => ['quest_update_mission_hunt', 'v2 a*', [qw(len mission_amount message)]],
 		'0AFF' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
-		'0B0C' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
 		'0B02' => ['login_error', 'V Z20', [qw(type date)]],
 		'0B03' => ['show_eq', 'v Z24 v9 C a*', [qw(len name jobID hair_style tophead midhead lowhead robe hair_color clothes_color clothes_color2 sex equips_info)]],
 		'0B05' => ['offline_clone_found', 'a4 v4 C v9 V Z24 v', [qw(ID jobID unknown coord_x coord_y sex head_dir weapon shield lowhead tophead midhead hair_color clothes_color robe unknown2 name unknown3)]],
@@ -700,12 +707,33 @@ sub new {
 		'0B09' => ['item_list_stackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B0A' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
 		'0B0B' => ['item_list_end', 'C2', [qw(type flag)]],
-		'0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
+		'0B0C' => ['quest_add', 'V C V2 v a*', [qw(questID active time_start time_expire mission_amount message)]],
+		'0B13' => ['item_preview', 'a2 C v a16 a25', [qw(index broken upgrade cards options)]],
+		# '0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
 		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
+		'0B1A' => ['skill_cast', 'a4 a4 v5 V C V', [qw(sourceID targetID x y skillID unknown type wait dispose unknow)]], # 29
 		'0B1B' => ['load_confirm'],
+		'0B1D' => ['ping'], #2
 		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate tab hotkeys)]],#herc PR 2468
 		'0B2F' => ['homunculus_property', 'Z24 C v11 V2 v2 V2 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
-		};
+		'0B31' => ['skill_add', 'v V v3 C v', [qw(skillID target lv sp range upgradable lv2)]], #17
+		'0B32' => ['skills_list'],
+		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
+		'0B39' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B41' => ['inventory_item_added', 'a2 v V C2 a16 V C2 a4 v a25 C v C2', [qw(ID amount nameID identified broken cards type_equip type fail expire unknown options favorite viewID upgrade grade)]],
+		'0B44' => ['storage_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken cards options upgrade grade)]],
+		'0B45' => ['cart_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken upgrade cards options upgrade grade)]],
+		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
+		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
+		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
+		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
+		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
+		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
+		'0B7B' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4 Z24', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id master)]], #118
+		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
+		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], # -1
+		'0B7E' => ['guild_member_add', 'a4 a4 v5 V4 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)]], # 60 TODO
+	};
 
 	# Item RECORD Struct's
 	$self->{nested} = {
@@ -749,6 +777,11 @@ sub new {
 				len => 67,
 				types => 'a2 V C V2 C a16 l v2 C a25 C',
 				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+			},
+			type9 => {
+				len => 68,
+				types => 'a2 V C V2 a16 l v2 C a25 C3',
+				keys => [qw(ID nameID type type_equip equipped cards expire bindOnEquipType sprite_id num_options options upgrade grade identified)],
 			},
 		},
 		items_stackable => {
@@ -835,6 +868,8 @@ sub items_nonstackable {
 		return $items->{type7};
 	} elsif ($args->{switch} eq '0B0A') { # item_list
 		return $items->{type8};
+	} elsif ($args->{switch} eq '0B39') { # item_list
+		return $items->{type9};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
@@ -971,16 +1006,6 @@ sub _items_list {
 # kRO client from 2007-07-11 sends cash_points and kafra_points
 sub parse_cash_dealer {
 
-}
-
-sub gameguard_request {
-	my ($self, $args) = @_;
-
-	return if ($net->version == 1 && $config{gameGuard} ne '2');
-	Poseidon::Client::getInstance()->query(
-		substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE})
-	);
-	debug "Querying Poseidon\n", "poseidon";
 }
 
 sub guild_chat {
@@ -1379,107 +1404,6 @@ sub skill_used_no_damage {
 	});
 }
 
-sub skills_list {
-	my ($self, $args) = @_;
-
-	return unless changeToInGameState();
-
-	my ($slave, $owner, $hook);
-
-	my $msg = $args->{RAW_MSG};
-
-	if ($args->{switch} eq '010F') {
-		$hook = 'packet_charSkills'; $owner = Skill::OWNER_CHAR;
-
-		undef @skillsID;
-		delete $char->{skills};
-		Skill::DynamicInfo::clear();
-
-	} elsif ($args->{switch} eq '0235') {
-		$slave = $char->{homunculus}; $hook = 'packet_homunSkills'; $owner = Skill::OWNER_HOMUN;
-
-	} elsif ($args->{switch} eq '029D') {
-		$slave = $char->{mercenary}; $hook = 'packet_mercSkills'; $owner = Skill::OWNER_MERC;
-	}
-
-	my $skillsIDref = $slave ? \@{$slave->{slave_skillsID}} : \@skillsID;
-
-	undef @{$slave->{slave_skillsID}};
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
-		my ($skillID, $targetType, $level, $sp, $range, $handle, $up)
-		= unpack 'v V v3 Z24 C', substr $msg, $i, 37;
-		$handle = Skill->new (idn => $skillID)->getHandle unless $handle;
-
-		$char->{skills}{$handle}{ID} = $skillID;
-		$char->{skills}{$handle}{sp} = $sp;
-		$char->{skills}{$handle}{range} = $range;
-		$char->{skills}{$handle}{up} = $up;
-		$char->{skills}{$handle}{targetType} = $targetType;
-		$char->{skills}{$handle}{lv} = $level unless $char->{skills}{$handle}{lv}; # TODO: why is this unless here? it seems useless
-
-		binAdd ($skillsIDref, $handle) unless defined binFind ($skillsIDref, $handle);
-		Skill::DynamicInfo::add($skillID, $handle, $level, $sp, $range, $targetType, $owner);
-
-		Plugins::callHook($hook, {
-			ID => $skillID,
-			handle => $handle,
-			level => $level,
-			upgradable => $up,
-		});
-	}
-}
-
-sub mail_refreshinbox {
-	my ($self, $args) = @_;
-
-	undef $mailList;
-	my $count = $args->{count};
-
-	if (!$count) {
-		message T("There is no mail in your inbox.\n"), "info";
-		return;
-	}
-
-	message TF("You've got Mail! (%s)\n", $count), "info";
-	my $msg;
-	$msg .= center(" " . T("Inbox") . " ", 79, '-') . "\n";
-	# truncating the title from 39 to 34, the user will be able to read the full title when reading the mail
-	# truncating the date with precision of minutes and leave year out
-	$msg .=	swrite(TF("\@> R \@%s \@%s \@%s", ('<'x34), ('<'x24), ('<'x11)),
-			["#", "Title", "Sender", "Date"]);
-	$msg .= sprintf("%s\n", ('-'x79));
-
-	my $j = 0;
-	for (my $i = 8; $i < 8 + $count * 73; $i+=73) {
-		($mailList->[$j]->{mailID},
-		$mailList->[$j]->{title},
-		$mailList->[$j]->{read},
-		$mailList->[$j]->{sender},
-		$mailList->[$j]->{timestamp}) =	unpack('V Z40 C Z24 V', substr($args->{RAW_MSG}, $i, 73));
-
-		$mailList->[$j]->{title} = bytesToString($mailList->[$j]->{title});
-		$mailList->[$j]->{sender} = bytesToString($mailList->[$j]->{sender});
-
-		$msg .= swrite(
-		TF("\@> %s \@%s \@%s \@%s", $mailList->[$j]->{read}, ('<'x34), ('<'x24), ('<'x11)),
-		[$j, $mailList->[$j]->{title}, $mailList->[$j]->{sender}, getFormattedDate(int($mailList->[$j]->{timestamp}))]);
-		$j++;
-	}
-
-	$msg .= ("%s\n", ('-'x79));
-	message($msg . "\n", "list");
-}
-
-sub mail_setattachment {
-	my ($self, $args) = @_;
-	# todo, maybe we need to store this index into a var which we delete the item from upon succesful mail sending
-	if ($args->{fail}) {
-		message TF("Failed to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
-	} else {
-		message TF("Succeeded to attach %s.\n", ($args->{ID}) ? T("item: ").$char->inventory->getByID($args->{ID}) : T("zeny")), "info";
-	}
-}
-
 # TODO: test the latest code optimization
 sub auction_item_request_search {
 	my ($self, $args) = @_;
@@ -1496,8 +1420,8 @@ sub auction_item_request_search {
 	message TF("Found %s items in auction.\n", $count), "info";
 	my $msg;
 	$msg .= center(" " . T("Auction") . " ", 79, '-') . "\n";
-	$msg .=	swrite(TF("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x37), ('>'x10), ('>'x10), ('<'x11)),
-			["#", "Item", "High Bid", "Purchase", "End-Date"]);
+	$msg .=	swrite("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x37), ('>'x10), ('>'x10), ('<'x11),
+			["#", T("Item"), T("High Bid"), T("Purchase"), T("End-Date")]);
 	$msg .= sprintf("%s\n", ('-'x79));
 
 	my $j = 0;
@@ -1527,7 +1451,7 @@ sub auction_item_request_search {
 		$item->{broken} = $auctionList->[$j]->{broken};
 		$item->{name} = itemName($item);
 
-		$msg .= swrite(TF("\@%s \@%s \@%s \@%s \@%s", ('>'x2),, ('<'x37), ('>'x10), ('>'x10), ('<'x11)),
+		$msg .= swrite("\@%s \@%s \@%s \@%s \@%s", ('>'x2),, ('<'x37), ('>'x10), ('>'x10), ('<'x11),
 				[$j, $item->{name}, formatNumber($auctionList->[$j]->{price}),
 					formatNumber($auctionList->[$j]->{buynow}), getFormattedDate(int($auctionList->[$j]->{timestamp}))]);
 		$j++;
@@ -1555,31 +1479,6 @@ sub inventory_expansion_info {
 	my($self, $args) = @_;
 	#sd->inventorySize - FIXED_INVENTORY_SIZE;
 	#hardcode inventorysize ? [sctnightcore]
-}
-
-#expand_inventory_result
-use constant {
-	EXPAND_INVENTORY_RESULT_SUCCESS => 0x0,
-	EXPAND_INVENTORY_RESULT_FAILED => 0x1,
-	EXPAND_INVENTORY_RESULT_OTHER_WORK => 0x2,
-	EXPAND_INVENTORY_RESULT_MISSING_ITEM => 0x3,
-	EXPAND_INVENTORY_RESULT_MAX_SIZE => 0x4,
-};
-
-sub inventory_expansion_result {
-	my($self, $args) = @_;
-#msgstringtable
-	if ($args->{result} == EXPAND_INVENTORY_RESULT_SUCCESS) {
-		message TF("You have successfully expanded the possession limit"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_FAILED) {
-		message TF("Failed to expand the maximum possession limit."),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_OTHER_WORK) {
-		message TF("To expand the possession limit, please close other windows"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MISSING_ITEM) {
-		message TF("Failed to expand the maximum possession limit, insufficient required item"),"info";
-	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {
-		message TF("You can no longer expand the maximum possession limit."),"info";
-	}
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;

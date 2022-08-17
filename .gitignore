@@ -3,6 +3,7 @@ config.log
 errors.txt
 benchmark-results.txt
 logs
+DUMP.txt
 
 # Plugin files
 /profiles
@@ -57,3 +58,4 @@ tables/pserver/**/portalsLOS.txt
 tables/**/npcs.txt
 tables/**/monsters.txt
 *.xpm
+*.weight
