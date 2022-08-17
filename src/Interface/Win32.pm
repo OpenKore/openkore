@@ -35,6 +35,7 @@ our %bgcolors;
 
 our $line_limit_chat = 500; #chat window line limit
 our $line_limit_console = 500; #console window line limit
+our ($updateUITime);
 
 sub new {
 	my $class = shift;
@@ -161,13 +162,18 @@ sub updateHook {
 
 sub update {
 	my $self = shift;
-    $self->UpdateCharacter();
-	$self->updateStatusBar();
-	if ($map->mapIsShown()) {
-		$map->paintMap() unless ($field->baseName eq $map->currentMap());
-		$map->Repaint();
-		$map->paintMiscPos();		
-		$map->paintPos();
+	if (Utils::timeOut($updateUITime, 0.5)) {
+		$self->UpdateCharacter();
+		$self->updateStatusBar();
+		if ($map->mapIsShown()) {
+			$map->paintMap() unless ($field->baseName eq $map->currentMap());
+			$map->Repaint();
+			$map->paintPlayers();
+			$map->paintMonsters();
+			$map->paintNPCs();
+			$map->paintPos();
+		}
+		$updateUITime = time;
 	}
     Win32::GUI::DoEvents();	
 }
@@ -772,7 +778,9 @@ sub openMap {
 	return unless defined $field && defined $field->baseName;
 	$map->initMapGUI();
 	$map->paintMap();
-	$map->paintMiscPos();		
+	$map->paintPlayers();
+	$map->paintMonsters();
+	$map->paintNPCs();
 	$map->paintPos();
 }
 
