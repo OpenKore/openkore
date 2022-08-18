@@ -8,7 +8,7 @@ use Globals qw( $char );
 
 
 sub _hooks {
-	['cart_ready','packet/cart_item_added','cart_item_removed','packet/cart_off','item_list_end'];
+	['cart_ready','packet/cart_item_added','cart_item_removed','packet/cart_off','packet/item_list_end'];
 }
 
 sub validate_condition {

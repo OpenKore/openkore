@@ -5,7 +5,7 @@ use strict;
 use base 'eventMacro::Condition::Base::Inventory';
 
 sub _hooks {
-	['inventory_ready','item_gathered','inventory_item_removed','item_list_end'];
+	['inventory_ready','item_gathered','inventory_item_removed','packet/item_list_end'];
 }
 
 sub validate_condition {

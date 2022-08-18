@@ -7,7 +7,7 @@ use base 'eventMacro::Condition::Base::Inventory';
 use Globals qw( $char );
 
 sub _hooks {
-	['storage_first_session_openning','packet/storage_item_added','storage_item_removed','item_list_end'];
+	['storage_first_session_openning','packet/storage_item_added','storage_item_removed','packet/item_list_end'];
 }
 
 sub validate_condition {
