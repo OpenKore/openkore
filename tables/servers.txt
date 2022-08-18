@@ -307,34 +307,6 @@ addTableFolders translated/kRO_english;kRO
 charBlockSize
 clientHash 0123456789abcdef0123456789abcdef
 
-# http://play.ratemyserver.net
-[RMS Renewal Test Server]
-ip 69.197.167.236
-port 6900
-version 51
-master_version 2
-serverType RMS
-serverEncoding Western
-charBlockSize 147
-addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
-clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-pinCode 1
-field_morocc morocc-old
-
-# http://play.ratemyserver.net
-[RMS Pre-Re Test Server]
-ip 69.197.167.236
-port 6901
-version 51
-master_version 2
-serverType RMS
-serverEncoding Western
-charBlockSize 147
-addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
-clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-pinCode 1
-field_morocc morocc-old
-
 ####################
 # Dead
 
@@ -386,3 +358,13 @@ dead_message pRO was closed on 07 of Octuber, 2021. Visit official website for m
 [FreeRO]
 dead 1
 dead_message FreeRO was closed on 2022.
+
+# http://play.ratemyserver.net
+[RMS Renewal Test Server]
+dead 1
+dead_message RMS Test Server was closed on 2022.
+
+# http://play.ratemyserver.net
+[RMS Pre-Re Test Server]
+dead 1
+dead_message RMS Test Server was closed on 2022.
