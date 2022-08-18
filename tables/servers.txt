@@ -124,23 +124,6 @@ rankingSystemType 1
 itemListType 1
 ignoreAntiCheatWarning 0
 
-# Transcendence
-# http://playragnarok.com
-[International - iRO: Poring]
-ip 128.241.92.162
-port 6800
-master_version 1
-version 18
-serverType iRO_Transcendence
-serverEncoding Western
-addTableFolders iRO/Transcendence;iRO
-charBlockSize 155
-charDeleteDateType 1
-blockingPlayerCancel 1
-rankingSystemType 1
-itemListType 1
-ignoreAntiCheatWarning 0
-
 # http://playragnarok.com
 [International - iRO: Sakray]
 ip 128.241.92.36
@@ -296,45 +279,6 @@ serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
 addTableFolders translated/kRO_english;kRO
 
-# this is for XKore 2 client only, it won't affect XKore 2 server
-# configure serverType, serverEncoding, charBlockSize according to your server
-[XKore 2]
-ip localhost
-port 6901
-serverType
-serverEncoding Western
-addTableFolders translated/kRO_english;kRO
-charBlockSize
-clientHash 0123456789abcdef0123456789abcdef
-
-# http://play.ratemyserver.net
-[RMS Renewal Test Server]
-ip 69.197.167.236
-port 6900
-version 51
-master_version 2
-serverType RMS
-serverEncoding Western
-charBlockSize 147
-addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
-clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-pinCode 1
-field_morocc morocc-old
-
-# http://play.ratemyserver.net
-[RMS Pre-Re Test Server]
-ip 69.197.167.236
-port 6901
-version 51
-master_version 2
-serverType RMS
-serverEncoding Western
-charBlockSize 147
-addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
-clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-pinCode 1
-field_morocc morocc-old
-
 ####################
 # Dead
 
@@ -386,3 +330,18 @@ dead_message pRO was closed on 07 of Octuber, 2021. Visit official website for m
 [FreeRO]
 dead 1
 dead_message FreeRO was closed on 2022.
+
+# http://play.ratemyserver.net
+[RMS Renewal Test Server]
+dead 1
+dead_message RMS Test Server was closed on 2022.
+
+# http://play.ratemyserver.net
+[RMS Pre-Re Test Server]
+dead 1
+dead_message RMS Test Server was closed on 2022.
+
+# http://playragnarok.com
+[International - iRO: Poring]
+dead 1
+dead_message iRO Transcendence was closed on 31 of March, 2022. Visit official website for more details.
