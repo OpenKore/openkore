@@ -385,7 +385,7 @@ sub new {
 		'024A' => ['mail_new', 'V Z40 Z24', [qw(mailID title sender)]], # 70
 		'0250' => ['auction_result', 'C', [qw(flag)]], # 3
 		'0252' => ['auction_item_request_search', 'v V2', [qw(size pages count)]], # -1
-		'0253' => ['taekwon_feel_save', 'C', [qw(which)]], # 3
+		'0253' => ['starplace', 'C', [qw(which)]], # 3
 		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5
 		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]], # 5
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8
@@ -711,6 +711,7 @@ sub new {
 		'0B13' => ['item_preview', 'a2 C v a16 a25', [qw(index broken upgrade cards options)]],
 		# '0B18' => ['inventory_expansion_info', 'v', [qw(expansionSize)]], # expansionSize = inventorySize [sctnightcore]
 		'0B18' => ['inventory_expansion_result', 'v', [qw(result)]], #
+		'0B1A' => ['skill_cast', 'a4 a4 v5 V C V', [qw(sourceID targetID x y skillID unknown type wait dispose unknow)]], # 29
 		'0B1B' => ['load_confirm'],
 		'0B1D' => ['ping'], #2
 		'0B20' => ['hotkeys', 'C a2 a*', [qw(rotate tab hotkeys)]],#herc PR 2468
@@ -718,6 +719,10 @@ sub new {
 		'0B31' => ['skill_add', 'v V v3 C v', [qw(skillID target lv sp range upgradable lv2)]], #17
 		'0B32' => ['skills_list'],
 		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
+		'0B39' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B41' => ['inventory_item_added', 'a2 v V C2 a16 V C2 a4 v a25 C v C2', [qw(ID amount nameID identified broken cards type_equip type fail expire unknown options favorite viewID upgrade grade)]],
+		'0B44' => ['storage_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken cards options upgrade grade)]],
+		'0B45' => ['cart_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken upgrade cards options upgrade grade)]],
 		'0B47' => ['char_emblem_update', 'a4 a4', [qw(guildID emblemID accountID)]], # 14 TODO
 		'0B5F' => ['rodex_mail_list', 'v C a*', [qw(len isEnd mailList)]], #-1
 		'0B60' => ['account_server_info', 'v a4 a4 a4 a4 a26 C x17 a*', [qw(len sessionID accountID sessionID2 lastLoginIP lastLoginTime accountSex serverInfo)]],
@@ -773,6 +778,11 @@ sub new {
 				len => 67,
 				types => 'a2 V C V2 C a16 l v2 C a25 C',
 				keys => [qw(ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified)],
+			},
+			type9 => {
+				len => 68,
+				types => 'a2 V C V2 a16 l v2 C a25 C3',
+				keys => [qw(ID nameID type type_equip equipped cards expire bindOnEquipType sprite_id num_options options upgrade grade identified)],
 			},
 		},
 		items_stackable => {
@@ -859,6 +869,8 @@ sub items_nonstackable {
 		return $items->{type7};
 	} elsif ($args->{switch} eq '0B0A') { # item_list
 		return $items->{type8};
+	} elsif ($args->{switch} eq '0B39') { # item_list
+		return $items->{type9};
 	} else {
 		warning "items_nonstackable: unsupported packet ($args->{switch})!\n";
 	}
