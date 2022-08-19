@@ -124,23 +124,6 @@ rankingSystemType 1
 itemListType 1
 ignoreAntiCheatWarning 0
 
-# Transcendence
-# http://playragnarok.com
-[International - iRO: Poring]
-ip 128.241.92.162
-port 6800
-master_version 1
-version 18
-serverType iRO_Transcendence
-serverEncoding Western
-addTableFolders iRO/Transcendence;iRO
-charBlockSize 155
-charDeleteDateType 1
-blockingPlayerCancel 1
-rankingSystemType 1
-itemListType 1
-ignoreAntiCheatWarning 0
-
 # http://playragnarok.com
 [International - iRO: Sakray]
 ip 128.241.92.36
@@ -156,17 +139,18 @@ rankingSystemType 1
 blockingPlayerCancel 1
 charDeleteDateType 1
 
-# TODO: needs a servertype & table folder
 # https://ragnarokonline.gungho.jp/
-[Japan - jRO: Verdandi]
-ip 61.215.212.13
+# TODO: Breidablik, World group 1, World group 2, World group 3, World for stalls, Yggdrasill
+[Japan - jRO: Urdr]
+ip 18.182.57.240
 port 6900
 master_version 3
 version 10
-serverType 7
-secureLogin 1
+serverType jRO
 serverEncoding Japanese
-addTableFolders Old
+addTableFolders jRO
+charBlockSize 155
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
 # http://roz.gnjoy.com/
 [Korea - kRO: Zero]
@@ -295,45 +279,6 @@ serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
 addTableFolders translated/kRO_english;kRO
 
-# this is for XKore 2 client only, it won't affect XKore 2 server
-# configure serverType, serverEncoding, charBlockSize according to your server
-[XKore 2]
-ip localhost
-port 6901
-serverType
-serverEncoding Western
-addTableFolders translated/kRO_english;kRO
-charBlockSize
-clientHash 0123456789abcdef0123456789abcdef
-
-# http://play.ratemyserver.net
-[RMS Renewal Test Server]
-ip 69.197.167.236
-port 6900
-version 51
-master_version 2
-serverType RMS
-serverEncoding Western
-charBlockSize 147
-addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
-clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-pinCode 1
-field_morocc morocc-old
-
-# http://play.ratemyserver.net
-[RMS Pre-Re Test Server]
-ip 69.197.167.236
-port 6901
-version 51
-master_version 2
-serverType RMS
-serverEncoding Western
-charBlockSize 147
-addTableFolders pserver/RMS;kRO/RagexeRE_2014_10_22b;translated/kRO_english;kRO
-clientHash 82d12c914f5ad48fd96fcf7ef4cc492d
-pinCode 1
-field_morocc morocc-old
-
 ####################
 # Dead
 
@@ -385,3 +330,18 @@ dead_message pRO was closed on 07 of Octuber, 2021. Visit official website for m
 [FreeRO]
 dead 1
 dead_message FreeRO was closed on 2022.
+
+# http://play.ratemyserver.net
+[RMS Renewal Test Server]
+dead 1
+dead_message RMS Test Server was closed on 2022.
+
+# http://play.ratemyserver.net
+[RMS Pre-Re Test Server]
+dead 1
+dead_message RMS Test Server was closed on 2022.
+
+# http://playragnarok.com
+[International - iRO: Poring]
+dead 1
+dead_message iRO Transcendence was closed on 31 of March, 2022. Visit official website for more details.

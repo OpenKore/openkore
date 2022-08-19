@@ -53,7 +53,7 @@ use Actor::Slave::Unknown;
 
 our %EXPORT_TAGS = (
 	actor_type => [qw(PC_TYPE NPC_TYPE ITEM_TYPE SKILL_TYPE UNKNOWN_TYPE NPC_MOB_TYPE NPC_EVT_TYPE NPC_PET_TYPE NPC_HO_TYPE NPC_MERSOL_TYPE
-						NPC_ELEMENTAL_TYPE)],
+						NPC_ELEMENTAL_TYPE NPC_TYPE2)],
 	connection => [qw(REFUSE_INVALID_ID REFUSE_INVALID_PASSWD REFUSE_ID_EXPIRED ACCEPT_ID_PASSWD REFUSE_NOT_CONFIRMED REFUSE_INVALID_VERSION
 						REFUSE_BLOCK_TEMPORARY REFUSE_BILLING_NOT_READY REFUSE_NONSAKRAY_ID_BLOCKED REFUSE_BAN_BY_DBA
 						REFUSE_EMAIL_NOT_CONFIRMED REFUSE_BAN_BY_GM REFUSE_TEMP_BAN_FOR_DBWORK REFUSE_SELF_LOCK REFUSE_NOT_PERMITTED_GROUP
@@ -126,7 +126,8 @@ use constant {
 	NPC_PET_TYPE => 0x7,
 	NPC_HO_TYPE => 0x8,
 	NPC_MERSOL_TYPE => 0x9,
-	NPC_ELEMENTAL_TYPE => 0xa
+	NPC_ELEMENTAL_TYPE => 0xa,
+	NPC_TYPE2 => 0xc,
 };
 
 # connection
@@ -1817,6 +1818,7 @@ sub actor_display {
 				NPC_HO_TYPE, 'Actor::Slave::Homunculus',
 				NPC_MERSOL_TYPE, 'Actor::Slave::Mercenary',
 				# NPC_ELEMENTAL_TYPE, 'Actor::Elemental', # Sorcerer's Spirit
+				NPC_TYPE2, 'Actor::NPC',
 			}->{$args->{object_type}};
 		}
 
@@ -6421,7 +6423,11 @@ sub guild_name {
 		$messageSender->sendGuildRequestInfo(0);		# Requests for Basic Information Guild, Hostile Alliance Information
 		$messageSender->sendGuildRequestInfo(3);
 		$messageSender->sendGuildRequestInfo(1);		# Requests for Members list, list job title
-	} else {
+	}
+	elsif ($masterServer->{serverType} eq 'jRO') {
+		$messageSender->sendGuildRequestInfo(1);		# Requests for Members list, list job title
+	}
+	else {
 		$messageSender->sendGuildMasterMemberCheck();
 		$messageSender->sendGuildRequestInfo(4);			# Requests for Expulsion list
 		$messageSender->sendGuildRequestInfo(0);			# Requests for Basic Information Guild, Hostile Alliance Information
@@ -10222,6 +10228,8 @@ sub instance_window_queue {
 sub instance_window_join {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+
+	Plugins::callHook('instance_ready');
 }
 
 # 02CE
@@ -11876,6 +11884,13 @@ sub item_preview {
 sub ping {
 	return if ($config{XKore} eq 1 || $config{XKore} eq 3);
 	$messageSender->sendPing();
+}
+
+# 0253 - ZC_STARPLACE
+# Star Gladiator's Feeling map confirmation prompt
+sub starplace {
+	my ($self, $args) = @_;
+	message TF("Wich: %s\n", $args->{which});
 }
 
 1;
