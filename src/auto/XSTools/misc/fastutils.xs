@@ -161,31 +161,23 @@ CODE:
 	line = (char *) malloc (width);
 	for (y = height - 1; y >= 0; y--) {
 		for (x = 0; x < width; x++) {
-			switch (field_data[y * width + x]) {
-			case '\0': // TILE_NOWALK
+			int tile = field_data[y * width + x];
+			if(tile&0) { // TILE_NOWALK
 				line[x] = 'A';
-				break;
-			case '\1': // TILE_WALK
-				line[x] = 'B';
-				break;
-			case '\2': // TILE_SNIPE
-				line[x] = 'C';
-				break;
-			case '\4': // TILE_WATER
-				line[x] = 'D';
-				break;
-			case '\5': // TILE_WATER and TILE_WALK
+			} else if(tile&1 && tile&4) {// TILE_WALK and TILE_WATER
 				line[x] = 'E';
-				break;
-			case '\8': // TILE_CLIFF
-				line[x] = 'F';
-				break;
-			case '\10': // TILE_CLIFF and TILE_SNIPE
+			} else if(tile&1) { // TILE_WALK
+				line[x] = 'B';
+			} else if(tile&4) { // TILE_WATER
+				line[x] = 'D';
+			} else if(tile&2 && tile&8) { // TILE_SNIPE and TILE_CLIFF
 				line[x] = 'G';
-				break;
-			default:
+			} else if(tile&2) { // TILE_SNIPE
+				line[x] = 'C';
+			} else if(tile&8) { // TILE_CLIFF
+				line[x] = 'F';
+			} else{ 
 				line[x] = 'H';
-				break;
 			}
 		}
 		data.append ("\"");
