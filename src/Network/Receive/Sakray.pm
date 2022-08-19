@@ -20,6 +20,12 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	my %packets = (
+		'0ADD' => ['item_appeared', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
+
 	my %handlers = qw(
 		received_characters 099D
 		received_characters_info 082D
