@@ -1548,13 +1548,14 @@ sub mapAddNpcs {
 
 sub mapAddPortals {
 	my $self = shift;
+	my $id = 0;
 	if ($self->{portals} && $self->{portals}->{$field->baseName} && @{$self->{portals}->{$field->baseName}}) {
 		foreach my $pos (@{$self->{portals}->{$field->baseName}}) {
 			if ($pos->{npcType}) {
 				# TODO: check if the npc is already in sight
 			} else {
-				my $id = $field->baseName.$pos->{x}.$pos->{y};
 				$self->addObj($id, "portal", $pos->{x}, $pos->{y});
+				$id++;
 			}			
 		}
 	}
