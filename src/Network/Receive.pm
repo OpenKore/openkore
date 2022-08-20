@@ -3979,23 +3979,13 @@ sub login_pin_code_request {
 		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is invalid. Please re-enter your login PIN code."))));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} elsif ($args->{flag} == 7) {
-		if ($self->{serverType} == 'RMS') { # removed check for seed 0, eA/rA/brA sends a normal seed.
-			message T("PIN code is correct.\n"), "success";
-			# call charSelectScreen
-			if (charSelectScreen(1) == 1) {
-				$firstLoginMap = 1;
-				$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-				$sentWelcomeMessage = 1;
-			}
-		} else {
-			# PIN code disabled.
-			$accountID = $args->{accountID};
-			debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
+		# PIN code disabled.
+		$accountID = $args->{accountID};
+		debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
 
-			# call charSelectScreen
-			$self->{lockCharScreen} = 0;
-			$timeout{'char_login_pause'}{'time'} = time;
-		}
+		# call charSelectScreen
+		$self->{lockCharScreen} = 0;
+		$timeout{'char_login_pause'}{'time'} = time;
 	} elsif ($args->{flag} == 8) {
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
