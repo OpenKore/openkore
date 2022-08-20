@@ -74,15 +74,22 @@ sub paintMap {
     
 	for (my $j = 0; $j < $mvw_x; $j++) {
 		for (my $k = 0; $k < $mvw_y; $k++) {
-			my $block = $field->getBlock($j, $mvw_y-$k);
-			if ($block == Field::TILE_WALK) {
-				$DC2->SetPixel($j, $k, [202,255,228],);
-			} elsif ($block == Field::TILE_NOWALK) {
-				$DC2->SetPixel($j, $k, [181,182,181],);
-			} elsif ($block == Field::TILE_WALK|Field::TILE_WATER) {
-				$DC2->SetPixel($j, $k, [255,0,0],);
-			} elsif ($block == Field::TILE_CLIFF|Field::TILE_SNIPE) {
-				$DC2->SetPixel($j, $k, [194,135,135],);
+			my $offset = $field->getOffset($j, $mvw_y-$k);
+			my $block = $field->getBlock($offset);
+			if ($block&Field::TILE_WALK) {
+				$DC2->SetPixel($j, $k, [250,250,250],);
+			} elsif ($block&Field::TILE_NOWALK) {
+				$DC2->SetPixel($j, $k, [49,49,49],);
+			} elsif ($block&Field::TILE_WALK && $block&Field::TILE_WATER) {
+				$DC2->SetPixel($j, $k, [57,155,204],);
+			} elsif ($block&Field::TILE_WATER) {
+				$DC2->SetPixel($j, $k, [0,136,204],);
+			} elsif ($block&Field::TILE_CLIFF && $block&Field::TILE_SNIPE) {
+				$DC2->SetPixel($j, $k, [204,168,108],);
+			} elsif ($block&Field::TILE_CLIFF) {
+				$DC2->SetPixel($j, $k, [105, 98, 98],);
+			} else {
+				$DC2->SetPixel($j, $k, [49,49,49],);
 			}
 		}
 	}
@@ -99,6 +106,10 @@ sub onexit {
 
 sub mapIsShown {
 	return $mapOpened;
+}
+
+sub currentMap {
+	return $map_name;
 }
 
 # Repaint Map by BitBlt from stored DC2 to DC
@@ -125,8 +136,8 @@ sub paintPos {
 		$self->{mw}->Caption("Map View: " . $field->baseName . " ($x,$y)");
 		#$DC = $self->{mw}->GetDC;
 		$C = new Win32::GUI::Pen(
-            -color => [0,0,255], 
-            -width => 2,
+            -color => [0,200,0], 
+            -width => 5,
         );
         
         $DC->SelectObject($C);
@@ -149,18 +160,18 @@ sub paintMiscPos {
 	if ($self->mapIsShown()) {
 		#$DC = $self->{mw}->GetDC;
 		$C = new Win32::GUI::Pen( #monster color
-            -color => [255,0,0], 
-            -width => 2,
+            -color => [214,40,58], 
+            -width => 4,
         );
 
 		$D = new Win32::GUI::Pen( #player color
-            -color => [128,128,64], 
-            -width => 2,
+            -color => [0,150,0], 
+            -width => 4,
         );
         
 		$E = new Win32::GUI::Pen( #npc color
-            -color => [128,128,255], 
-            -width => 2,
+            -color => [180,0,255], 
+            -width => 4,
         );
                 
         $DC->SelectObject($C);
@@ -185,6 +196,88 @@ sub paintMiscPos {
 	        $DC->Ellipse($left, $top, $right, $bottom);
 		}
 				
+		$DC->SelectObject($E);
+
+		for (my $i = 0; $i < @npcsID; $i++) {
+			next if ($npcsID[$i] eq "");
+	        $left   = $npcs{$npcsID[$i]}{'pos'}{'x'};
+	        $top    = $r_field->height()-$npcs{$npcsID[$i]}{'pos'}{'y'};
+	        $right  = $left+3;
+	        $bottom = $top+3;
+	        $DC->Ellipse($left, $top, $right, $bottom);
+		}
+	}
+}
+
+# Paint Position of monsters
+#
+sub paintMonsters {
+	my $self = shift;
+	
+	my ($C,$left,$top,$right,$bottom);
+	
+	if ($self->mapIsShown()) {
+		#$DC = $self->{mw}->GetDC;
+		$C = new Win32::GUI::Pen( #monster color
+            -color => [214,40,58], 
+            -width => 4,
+        );
+                
+        $DC->SelectObject($C);
+		
+		for (my $i = 0; $i < @monstersID; $i++) {
+			next if ($monstersID[$i] eq "");
+	        $left   = $monsters{$monstersID[$i]}{'pos'}{'x'};
+	        $top    = $r_field->height()-$monsters{$monstersID[$i]}{'pos'}{'y'};
+	        $right  = $left+3;
+	        $bottom = $top+3;
+	        $DC->Ellipse($left, $top, $right, $bottom);
+		}
+	}
+}
+
+# Paint Position of players
+#
+sub paintPlayers {
+	my $self = shift;
+	
+	my ($D,$left,$top,$right,$bottom);
+	
+	if ($self->mapIsShown()) {
+
+		$D = new Win32::GUI::Pen( #player color
+            -color => [0,150,0], 
+            -width => 4,
+        );
+
+		$DC->SelectObject($D);
+
+		for (my $i = 0; $i < @playersID; $i++) {
+			next if ($playersID[$i] eq "");
+	        $left   = $players{$playersID[$i]}{'pos'}{'x'};
+	        $top    = $r_field->height()-$players{$playersID[$i]}{'pos'}{'y'};
+	        $right  = $left+3;
+	        $bottom = $top+3;
+	        $DC->Ellipse($left, $top, $right, $bottom);
+		}
+	}
+}
+
+
+# Paint Position of players
+#
+sub paintNPCs {
+	my $self = shift;
+	
+	my ($E,$left,$top,$right,$bottom);
+	
+	if ($self->mapIsShown()) {
+		$E = new Win32::GUI::Pen( #npc color
+            -color => [180,0,255], 
+            -width => 4,
+        );
+                
+
 		$DC->SelectObject($E);
 
 		for (my $i = 0; $i < @npcsID; $i++) {
