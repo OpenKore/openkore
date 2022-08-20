@@ -1687,7 +1687,27 @@ sub addActorListBox {
 	my $x = $actor->{pos_to}{x} || $actor->{pos}{x};
 	my $y = $actor->{pos_to}{y} || $actor->{pos}{y};
 
-	$actorIDList{$actor->{ID}} = {'ID' => $actor->{ID}, 'listBoxName' => $actor->{name}. " (" . $actor->{binID} . ") " . "(" . $x . "," . $y . ")"};
+	my $type = "unknown";
+	my $fg = "#000000";
+
+	if ($actor->isa('Actor::Player')) {
+		$type = "player";
+		$fg = "#1FD655";
+	} elsif ($actor->isa('Actor::NPC')) {
+		$type = "npc";
+		$fg = "#b400ff";
+	} elsif ($actor->isa('Actor::Portal')) {
+		$type = "portal";
+		$fg = "#ff6b26";
+	} elsif ($actor->isa('Actor::Monster')) {
+		$type = "monster";
+		$fg = "#ff6242";
+	} elsif ($actor->isa('Actor::Item')) {
+		$type = "item";
+		$fg = "#4169e1";
+	}
+
+	$actorIDList{$actor->{ID}} = {'ID' => $actor->{ID}, 'listBoxName' => $actor->{name}. " (" . $actor->{binID} . ") " . "(" . $x . "," . $y . ")", 'type' => $type, 'fg' => $fg };
 
 	$self->updateListBox;
 }
@@ -1701,10 +1721,12 @@ sub removeActorListBoxByID {
 }
 
 sub updateListBox {
+	my $self = shift;
 	@actorNameList = ();
 	foreach my $id (keys %actorIDList) {
 		$actorIDList{$id}{'listBoxIndex'} = @actorNameList;
 		push(@actorNameList, $actorIDList{$id}{'listBoxName'});
+		$self->{actor_list_box}->itemconfigure($self->{actor_list_box}->size()-1, -foreground=> $actorIDList{$id}{'fg'});
 	}
 }
 
