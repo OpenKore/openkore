@@ -1586,6 +1586,7 @@ sub addHooks {
 	Plugins::addHook('packet/actor_died_or_disappeared',	\&mapRemoveActor, $self);
 	Plugins::addHook('packet/map_change', 					\&mapChangeUpdateInferface, $self);
 	Plugins::addHook('packet/map_changed', 					\&mapChangeUpdateInferface, $self);
+	Plugins::addHook('packet/map_loaded', 					\&mapChangeUpdateInferface, $self);
 	Plugins::addHook('packet/item_exists', 					\&mapAddActor, $self);
 	Plugins::addHook('packet/item_appeared', 				\&mapAddActor, $self);
 	Plugins::addHook('packet/item_disappeared', 			\&mapRemoveActor, $self);
