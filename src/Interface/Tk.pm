@@ -1084,26 +1084,26 @@ sub onActorListBoxClick {
 	if(defined($index) && $index >= 0) {
 		foreach my $id (keys %actorIDList) {
 			if($actorIDList{$id}{'listBoxIndex'} == $index) {
-				my $actor = Actor::get($actorIDList{$id}{'ID'});
+				my $actor = Actor::get($id);
 				if ($actor->isa('Actor::Player')) {
-					Log::warning("Getting player info requested by click in listbox\n");
+					Log::warning("Requesting ".$actor->{name}." information\n");
 					Commands::run("lookp " . $actor->{binID});
 					Commands::run("pl " . $actor->{binID});
 
 				} elsif ($actor->isa('Actor::Monster')) {
-					Log::warning("Atacking monster requested by click in listbox\n");
+					Log::warning("Attacking ".$actor->{name}."\n");
 					main::attack($actor->{ID});
 
 				} elsif ($actor->isa('Actor::Item')) {
-					Log::warning("Getting item requested by click in listbox\n");
+					Log::warning("Getting ".$actor->{name}."\n");
 					main::take($actor->{ID});
 
 				} elsif ($actor->isa('Actor::NPC')) {
-					Log::warning("Talking with NPC requested by click in listbox\n");
+					Log::warning("Talking with ".$actor->{name}."\n");
 					Commands::run("talk " . $actor->{binID});
 
 				} elsif ($actor->isa('Actor::Portal')) {
-					Log::warning("Moving to the portal requested by click in listbox\n");
+					Log::warning("Moving to the portal ".$actor->{name}."\n");
 					Commands::run("move " . $actor->{binID});
 				}
 
@@ -1622,7 +1622,7 @@ sub mapAddActor {
 		$self->addObj($args->{ID}, $type_name, $actor->{pos}{x}, $actor->{pos}{y}) if ($self->mapIsShown());
 	}
 
-	$self->addActorListBox($actor);
+	$self->updateListBox($actor);
 }
 
 sub mapMoveActor {
@@ -1636,7 +1636,7 @@ sub mapMoveActor {
 
 	my $type_name = $self->defineType($object_type, $type, $actor->{hair_style});
 
-	$self->addActorListBox($actor);
+	$self->updateListBox($actor);
 
 	my (%coordsFrom, %coordsTo);
 	makeCoordsFromTo(\%coordsFrom, \%coordsTo, $args->{coords});
@@ -1681,38 +1681,6 @@ sub mapChangeUpdateInferface {
 	}
 }
 
-sub addActorListBox {
-	my $self = shift;
-	my $actor = shift;
-
-	my $x = $actor->{pos_to}{x} || $actor->{pos}{x};
-	my $y = $actor->{pos_to}{y} || $actor->{pos}{y};
-
-	my $type = "unknown";
-	my $fg = "#000000";
-
-	if ($actor->isa('Actor::Player')) {
-		$type = "player";
-		$fg = "#000000";
-	} elsif ($actor->isa('Actor::NPC')) {
-		$type = "npc";
-		$fg = "#b400ff";
-	} elsif ($actor->isa('Actor::Portal')) {
-		$type = "portal";
-		$fg = "#ff6b26";
-	} elsif ($actor->isa('Actor::Monster')) {
-		$type = "monster";
-		$fg = "#ff6242";
-	} elsif ($actor->isa('Actor::Item')) {
-		$type = "item";
-		$fg = "#4169e1";
-	}
-
-	$actorIDList{$actor->{ID}} = {'ID' => $actor->{ID}, 'listBoxName' => $actor->{name}. " (" . $actor->{binID} . ") " . "(" . $x . "," . $y . ")", 'type' => $type, 'fg' => $fg };
-
-	$self->updateListBox;
-}
-
 sub removeActorListBoxByID {
 	my $self = shift;
 	my $id = shift;
@@ -1723,11 +1691,29 @@ sub removeActorListBoxByID {
 
 sub updateListBox {
 	my $self = shift;
+	%actorIDList = ();
 	@actorNameList = ();
-	foreach my $id (keys %actorIDList) {
-		$actorIDList{$id}{'listBoxIndex'} = @actorNameList;
-		push(@actorNameList, $actorIDList{$id}{'listBoxName'});
-		$self->{actor_list_box}->itemconfigure($self->{actor_list_box}->size()-1, -foreground=> $actorIDList{$id}{'fg'});
+	foreach my $list ($npcsList, $playersList, $monstersList, $itemsList, $portalsList) {
+		foreach my $actor (@{$list->getItems()}) {
+			$actorIDList{$actor->{ID}}{'listBoxIndex'} = @actorNameList;
+
+			my $x = $actor->{pos_to}{x} || $actor->{pos}{x};
+			my $y = $actor->{pos_to}{y} || $actor->{pos}{y};
+			my $name =  $actor->{name}. " (" . $actor->{binID} . ") " . "(" . $x . "," . $y . ")";
+
+			push(@actorNameList, $name);
+			my $fg = "#000000";
+			if ($actor->isa('Actor::NPC')) {
+				$fg = "#b400ff";
+			} elsif ($actor->isa('Actor::Portal')) {
+				$fg = "#ff6b26";
+			} elsif ($actor->isa('Actor::Monster')) {
+				$fg = "#ff6242";
+			} elsif ($actor->isa('Actor::Item')) {
+				$fg = "#4169e1";
+			}
+			$self->{actor_list_box}->itemconfigure($self->{actor_list_box}->size()-1, -foreground=> $fg);
+		}
 	}
 }
 
