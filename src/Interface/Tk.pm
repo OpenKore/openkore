@@ -80,8 +80,8 @@ our $interface_timeout = {timeout => 0.5, time => time};
 	'darkcyan'	=> '#00aaaa', #[0, 170, 170],
 	'cyan'		=> '#55ffff', #[85, 255, 255],
 
-	'gray'		=> '#aaaaaa', #[170, 170, 170],
-	'grey'		=> '#aaaaaa', #[170, 170, 170],
+	'gray'		=> '#222222', #[170, 170, 170],
+	'grey'		=> '#222222', #[170, 170, 170],
 	'white'		=> '#ffffff', #[255, 255, 255]
 );
 
@@ -1129,7 +1129,7 @@ sub OpenMap {
 		undef $self->{obj};
 		$self->{map} = $self->{mw}->Toplevel();
 		$self->{map}->transient($self->{mw});
-		$self->{map}->title("Map View : ".$field->baseName);
+		$self->{map}->title($field->baseName);
 		$self->{map}->protocol('WM_DELETE_WINDOW', 
 			sub {
 				undef $self->{obj};
@@ -1316,7 +1316,7 @@ sub pointchk {
 	my $self = shift;
 	my $mvcpx = $_[0];
 	my $mvcpy = $self->{map}{'map'}{'y'} - $_[1];
-	$self->{map}->title("Map View : ".$field->name." \[$mvcpx , $mvcpy\]");
+	$self->{map}->title($field->name." \[$mvcpx , $mvcpy\]");
 	$self->{map}->update;
 }
 
@@ -1366,32 +1366,32 @@ sub addObj {
 	return if (!$self->mapIsShown());
 	
 	if ($type eq "self") {
-		$fg = "#00c800";
-		$bg = "#ccccff";
+		$fg = "#97F9F9";
+		$bg = "#222222";
 	} elsif ($type eq "npc") {
-		$fg = "#cffffe";
-		$bg = "#ccccff";
+		$fg = "#b400ff";
+		$bg = "#222222";
 	} elsif ($type eq "monster") {
-		$fg = "#d6283a";
-		$bg = "#ccccff";
+		$fg = "#ff1500";
+		$bg = "#222222";
 	} elsif ($type eq "player") {
-		$fg = "#009600";
-		$bg = "#ccccff";
+		$fg = "#5EFC8D";
+		$bg = "#222222";
 	} elsif ($type eq "slave") {
 		$fg = "#FFFFCC";
-		$bg = "#ccccff";
+		$bg = "#222222";
 	} elsif ($type eq "party") {
 		$fg = "#bbd196";
-		$bg = "#ccccff";
+		$bg = "#222222";
 	} elsif ($type eq "guild") {
 		$fg = "#ffc1f3";
-		$bg = "#ccccff";
+		$bg = "#222222";
 	} elsif ($type eq "portal") {
-		$fg = "#ff0000";
-		$bg = "#ccccff";
+		$fg = "#ff6b26";
+		$bg = "#222222";
 	} else {
-		$fg = "#ba7967";
-		$bg = "#ccccff";
+		$fg = "#ffff00";
+		$bg = "#222222";
 	}
 	$self->{obj}{$type}{$id} = $self->{map}{'canvas'}->createOval(
 			$x-4,$self->{map}{'map'}{'y'} - $y-4,
@@ -1669,7 +1669,7 @@ sub mapChangeUpdateInferface {
 	if ($self->mapIsShown()) {
 		$self->removeAllObj;
 		$self->loadMap;
-		$self->{map}->title("Map View : ".$field->baseName);
+		$self->{map}->title($field->baseName);
 		$self->mapAddPortals;
 	}
 	
@@ -1812,7 +1812,7 @@ sub updatePos {
 		$self->{obj}{'self'}{$accountID} = $self->{map}{'canvas'}->createOval(
 			$x-4,$self->{map}{'map'}{'y'} - $y-4,
 			$x+4,$self->{map}{'map'}{'y'} - $y+4,
-			,-fill => '#00c800', -outline=>'#00c800');
+			,-fill => '#97F9F9', -outline=>'#222222');
 		$self->{map}{'canvas'}->delete($self->{map}{'dest'}) if ($self->{map}{'dest'});
 
 		# show route destination
@@ -1824,7 +1824,7 @@ sub updatePos {
 				$self->{map}{'dest'} = $self->{map}{'canvas'}->createOval(
 					$x-4,$self->{map}{'map'}{'y'} - $y-4,
 					$x+4,$self->{map}{'map'}{'y'} - $y+4,
-					,-fill => '#ccccff', -outline=>'#ccccff');
+					,-fill => '#FD95EA', -outline=>'#222222');
 			}
 		}
 		my ($i, $args, $routeTask, $solution);
@@ -1846,7 +1846,7 @@ sub updatePos {
 				$self->{obj}{'route'}{$index} = $self->{map}{'canvas'}->createOval(
 						$x-2,$self->{map}{'map'}{'y'} - $y-2,
 						$x+2,$self->{map}{'map'}{'y'} - $y+2,
-						,-fill => '#FFB6C1', -outline=>'#FFB6C1');
+						,-fill => '#FFA1EE', -outline=>'#FFA1EE');
 					$index++;
 			}
 			undef $self->{route};
