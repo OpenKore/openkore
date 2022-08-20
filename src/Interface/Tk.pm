@@ -1693,7 +1693,7 @@ sub addActorListBox {
 
 	if ($actor->isa('Actor::Player')) {
 		$type = "player";
-		$fg = "#1FD655";
+		$fg = "#000000";
 	} elsif ($actor->isa('Actor::NPC')) {
 		$type = "npc";
 		$fg = "#b400ff";
