@@ -126,7 +126,7 @@ sub new {
 	}
 
 	if ($^O eq 'MSWin32') {
-		$self->{default_font} = 'Courier New';
+		$self->{default_font} = 'Segoe UI';
 	} elsif ($^O eq 'freebsd') {
 		$self->{default_font} = 'Monospace';
 	} else {
@@ -1065,7 +1065,7 @@ sub menuGithubIssueURL {
 # FIXME, this sub is not changing the font to bold
 sub change_fontWeight {
 	my $self = shift;
-	my $panelFont = $self->{default_font} || 'Verdana';
+	my $panelFont = $self->{default_font} || 'Segoe UI' || 'Verdana';
 	if ($self->{is_bold}) {
 		$self->{console}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'bold']);
 		$self->{chatLog}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'bold']);
