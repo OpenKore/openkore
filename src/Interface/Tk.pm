@@ -1298,12 +1298,6 @@ sub inventoryChanged {
 	$self->loadInventory;
 }
 
-sub clearInventoryListBox {
-	my $self = shift;
-	@inventoryNameList = ();
-	%inventoryIDList = ();
-}
-
 sub inventoryIsShown {
 	my $self = shift;
 	return defined $self->{inventory};
@@ -1636,6 +1630,7 @@ sub addHooks {
 	Plugins::addHook('packet/unequip_item',                 \&inventoryChanged, $self);
 	Plugins::addHook('packet/use_item',                     \&inventoryChanged, $self);
 	Plugins::addHook('packet/mail_send',                    \&inventoryChanged, $self);
+	Plugins::addHook('packet/item_list_end',                \&inventoryChanged, $self);
 }
 
 sub mapAddActor {
@@ -1707,7 +1702,6 @@ sub mapChangeUpdateInferface {
 	}
 	
 	if ($self->inventoryIsShown()) {
-		$self->clearInventoryListBox;
 		$self->loadInventory;
 	}
 }
