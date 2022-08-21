@@ -1251,9 +1251,40 @@ sub loadInventory {
 	@inventoryNameList = ();
 	%inventoryIDList = ();
 
-	foreach my $item (@{$char->inventory->getItems()}) {
+	my @useable;
+	my @equipment;
+	my @uequipment;
+	my @non_useable;
+
+	for my $item (@{$char->inventory}) {
+		if ($item->usable) {
+			push @useable, $item->{binID};
+		} elsif ($item->equippable && $item->{type_equip} != 0) {
+			if ($item->{equipped}) {
+				push @equipment,  $item->{binID};
+			} else {
+				push @uequipment,  $item->{binID};
+			}
+		} else {
+			push @non_useable, $item->{binID};
+		}
+	}
+
+	foreach my $index (@useable, @equipment, @uequipment, @non_useable) {
+		my $item = $char->inventory->get($index);
 		$inventoryIDList{$item->{ID}}{'listBoxIndex'} = @inventoryNameList;
-		my $item_name = $item->{name} . " (".$item->{binID}.") x " . $item->{amount};
+		my $item_name =  " (" . $item->{binID} . ") " . $item->{name};
+		if ($item->equippable && $item->{type_equip} != 0) {
+			if ($item->{equipped}) {
+				$item_name .= " - Equipped";
+			} elsif (!$item->{identified}) {
+				$item_name .= " - Not Identified";
+			} else {
+				$item_name .= " - Not Equipped";
+			}
+		} else {
+			$item_name .= " x " .$item->{amount};
+		}
 		push(@inventoryNameList, $item_name);
 	}
 }
