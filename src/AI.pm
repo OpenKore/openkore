@@ -316,6 +316,7 @@ sub ai_getAggressives {
 		my $ID = $monster->{ID};
 		# Never attack monsters that we failed to get LOS with
 		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+		next if (!timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout}));
 
 		if (($type && ($control->{attack_auto} == 2)) ||
 			(($monster->{dmgToYou} || $monster->{missedYou}) && Misc::checkMonsterCleanness($ID)) ||

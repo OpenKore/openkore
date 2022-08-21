@@ -3075,7 +3075,8 @@ sub processAutoAttack {
 				 && $attackOnRoute >= 2
 				 && !$monster->{dmgFromYou}
 				 && ($control->{dist} eq '' || blockDistance($monster->{pos}, calcPosition($char)) <= $control->{dist})
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
+				 && timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout})) {
 					my %hookArgs;
 					$hookArgs{monster} = $monster;
 					$hookArgs{return} = 1;

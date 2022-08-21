@@ -52,10 +52,10 @@ ai_homunculus_route_adjust 0.3
 ai_mercenary_route_adjust 0.3
 
 # Ignore monster for x seconds if there is no route to it
-ai_attack_failedLOS 6
+ai_attack_failedLOS 12
 
 # Give up attacking a monster if it can't be reached within x seconds
-ai_attack_giveup 12
+ai_attack_giveup 6
 ai_check_monster_auto 0.4
 
 # If you've just killed a monster, and there are no aggressives,
@@ -66,7 +66,7 @@ ai_homunculus_attack_waitAfterKill 0.3
 ai_mercenary_attack_waitAfterKill 0.3
 
 ai_attack_unstuck 2.75
-ai_attack_unfail 5
+ai_attack_unfail 12
 
 ai_route_unstuck 2
 
