@@ -4751,8 +4751,6 @@ sub cmdPlugin {
 		}
 
 	} elsif ($args[0] eq 'unload') {
-		my $name;
-
 		if ($args[1] =~ /^\d+$/) {
 			Plugins::unloadPlugins([$Plugins::plugins[$args[1]]]);
 
@@ -4768,14 +4766,6 @@ sub cmdPlugin {
 
 		} else {
 			Plugins::unloadByRegexp($args[1]);
-		}
-
-		if ($name) {
-			Plugins::unload($name);
-			message TF("Plugin %s unloaded.\n", $name), "system";
-		} else {
-			warning T("Error in function 'plugin unload' (Unload Plugin)\n" .
-				"The specified plugin do not exist.\n");
 		}
 
 	} else {

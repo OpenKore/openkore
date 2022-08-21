@@ -143,10 +143,14 @@ sub unloadAll {
 # Use this method to unload a specific list of plugins.
 sub unloadPlugins {
 	my $plugins = shift;
+	my $found;
 	foreach my $plugin (@$plugins) {
 		next if (!$plugin);
 		unload($plugin->{name});
+		$found = 1;
 	}
+	warning T("Error in function 'plugin unload' (Unload Plugin)\n" .
+			"The specified plugin do not exist.\n") unless $found;
 }
 
 ##
@@ -163,6 +167,7 @@ sub unload {
 		if ($plugin && $plugin->{name} && $plugin->{name} eq $name) {
 			$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
 			delete $plugins[$i];
+			message TF("Plugin %s unloaded.\n", $name), "system";
 			return 1;
 		}
 		$i++;
