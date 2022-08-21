@@ -16,8 +16,7 @@
 # MODULE DESCRIPTION: Plugin system
 #
 # This module provides an interface for handling plugins.
-# See the <a href="https://openkore.com/wiki/How_to_write_plugins_for_OpenKore">Plugin
-# Writing Tutorial</a> for more information about plugins.
+# See the <a href="https://openkore.com/wiki/How_to_write_plugins_for_OpenKore">Plugin Writing Tutorial</a> for more information about plugins.
 #
 # NOTE: Do not confuse plugins with modules! See Modules.pm for more information.
 
@@ -93,7 +92,7 @@ sub getFilesFromDirs {
 
 sub getPluginsFiles {
 	my @folders = Settings::getPluginsFolders();
-	my @files = getFilesFromDirs(\@folders, 'pl|lp', 'cvs', 1);
+	my @files = getFilesFromDirs(\@folders, 'pl', 'cvs', 1);
 	return @files;
 }
 
@@ -123,7 +122,7 @@ sub getCondition {
 #
 # Unloads all registered plugins that match the regex.
 sub unloadByRegexp {
-    my ($regexp) = @_;
+	my ($regexp) = @_;
 	my @unloadPlugins;
 	foreach my $plugin (@plugins) {
 		next if (!$plugin);
@@ -186,21 +185,16 @@ sub unload {
 # Loads all plugins that match the regex from the plugins folder, and all plugins that
 # match the regex and are one subfolder below the plugins folder.
 # Plugins must have the .pl extension.
+# This function ignores "loadPlugins" from sys.txt file.
 sub loadByRegexp {
-    my ($regexp) = @_;
-	
-	my $condition = getCondition();
+	my ($regexp) = @_;
 	my @files = getPluginsFiles();
-	
 	@files = grep {$_->{name} =~ /$regexp/} @files;
-	
 	my @load_files;
-	
 	foreach my $file (@files) {
-		push(@load_files, "$file->{dir}/$file->{name}$file->{ext}") if (&$condition($file->{name}));
+		push(@load_files, "$file->{dir}/$file->{name}$file->{ext}");
 		return if $quit;
 	}
-	
 	loadPlugins(\@load_files);
 }
 
@@ -209,17 +203,17 @@ sub loadByRegexp {
 #
 # Loads all plugins from the plugins folder, and all plugins that are one subfolder below
 # the plugins folder. Plugins must have the .pl extension.
+# This function respects "loadPlugins" from sys.txt file.
 sub loadAll {
 	my $condition = getCondition();
+	return if (!$condition);
+
 	my @files = getPluginsFiles();
-	
 	my @load_files;
-	
 	foreach my $file (@files) {
 		push(@load_files, "$file->{dir}/$file->{name}$file->{ext}") if (&$condition($file->{name}));
 		return if $quit;
 	}
-	
 	loadPlugins(\@load_files);
 }
 
@@ -278,7 +272,7 @@ sub load {
 #
 # Reloads all registered plugins that match the regex.
 sub reloadByRegexp {
-    my ($regexp) = @_;
+	my ($regexp) = @_;
 	my @reloadPlugins;
 	foreach my $plugin (@plugins) {
 		next if (!$plugin);
