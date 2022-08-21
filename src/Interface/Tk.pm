@@ -39,7 +39,7 @@ use Globals;
 use Field;
 use Settings;
 use Misc;
-use Utils qw /makeCoordsDir makeCoordsFromTo timeOut distance/;
+use Utils qw /distance makeCoordsDir makeCoordsFromTo swrite timeOut/;
 
 # global vars
 our $line_limit = 1000;
@@ -126,7 +126,7 @@ sub new {
 	}
 
 	if ($^O eq 'MSWin32') {
-		$self->{default_font} = 'Segoe UI';
+		$self->{default_font} = 'Lucida Console';
 	} elsif ($^O eq 'freebsd') {
 		$self->{default_font} = 'Monospace';
 	} else {
@@ -1734,8 +1734,7 @@ sub updateListBox {
 			
 			my $x = $actor->{pos_to}{x} || $actor->{pos}{x};
 			my $y = $actor->{pos_to}{y} || $actor->{pos}{y};
-			my $name =  $actor->{binID} . " - " . $actor_name . " (" . $x . "," . $y . ")";
-
+			my $name = swrite("@<< @* (@<<, @<<)", [$actor->{binID}, $actor_name, $x, $y]);
 			push(@actorNameList, $name);
 			my $fg = "#000000";
 			if ($actor->isa('Actor::NPC')) {
