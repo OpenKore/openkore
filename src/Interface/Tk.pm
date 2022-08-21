@@ -1728,9 +1728,13 @@ sub updateListBox {
 		foreach my $actor (@{$list->getItems()}) {
 			$actorIDList{$actor->{ID}}{'listBoxIndex'} = @actorNameList;
 
+			# Item with amount ("10 x Blue Herb")
+			my $actor_name = $actor->{name};
+			$actor_name = $actor->{amount}. " x ". $actor_name if ($actor->{amount} > 1);
+			
 			my $x = $actor->{pos_to}{x} || $actor->{pos}{x};
 			my $y = $actor->{pos_to}{y} || $actor->{pos}{y};
-			my $name =  $actor->{binID} . " - " . $actor->{name} . " (" . $x . "," . $y . ")";
+			my $name =  $actor->{binID} . " - " . $actor_name . " (" . $x . "," . $y . ")";
 
 			push(@actorNameList, $name);
 			my $fg = "#000000";
