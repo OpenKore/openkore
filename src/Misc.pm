@@ -551,24 +551,24 @@ sub calcRectArea {
 
 	sub capX {
 		return 0 if ($_[0] < 0);
-		return $field->width - 1 if ($_[0] >= $field->width);
+		return $_[1]->width - 1 if ($_[0] >= $_[1]->width);
 		return int $_[0];
 	}
 	sub capY {
 		return 0 if ($_[0] < 0);
-		return $field->height - 1 if ($_[0] >= $field->height);
+		return $_[1]->height - 1 if ($_[0] >= $_[1]->height);
 		return int $_[0];
 	}
 
 	# Get the avoid area as a rectangle
-	$topLeft{x} = capX($x - $radius);
-	$topLeft{y} = capY($y + $radius);
-	$topRight{x} = capX($x + $radius);
-	$topRight{y} = capY($y + $radius);
-	$bottomLeft{x} = capX($x - $radius);
-	$bottomLeft{y} = capY($y - $radius);
-	$bottomRight{x} = capX($x + $radius);
-	$bottomRight{y} = capY($y - $radius);
+	$topLeft{x} = capX($x - $radius, $field);
+	$topLeft{y} = capY($y + $radius, $field);
+	$topRight{x} = capX($x + $radius, $field);
+	$topRight{y} = capY($y + $radius, $field);
+	$bottomLeft{x} = capX($x - $radius, $field);
+	$bottomLeft{y} = capY($y - $radius, $field);
+	$bottomRight{x} = capX($x + $radius, $field);
+	$bottomRight{y} = capY($y - $radius, $field);
 
 	# Walk through the border of the rectangle
 	# Record the blocks that are walkable
@@ -2766,7 +2766,6 @@ sub meetingPosition {
 
 	my $attackRouteMaxPathDistance;
 	my $attackCanSnipe;
-	my $attackCheckLOS;
 	my $followDistanceMax;
 	my $master;
 	my $masterPos;
@@ -2780,7 +2779,6 @@ sub meetingPosition {
 		$runFromTarget_dist = $config{runFromTarget_dist};
 		$followDistanceMax = $config{followDistanceMax};
 		$attackCanSnipe = $config{attackCanSnipe};
-		$attackCheckLOS = $config{attackCheckLOS};
 		if ($config{follow}) {
 			foreach (keys %players) {
 				if ($players{$_}{name} eq $config{followTarget}) {
@@ -2800,7 +2798,6 @@ sub meetingPosition {
 		$runFromTarget_dist = $config{$actor->{configPrefix}.'runFromTarget_dist'};
 		$followDistanceMax = $config{$actor->{configPrefix}.'followDistanceMax'};
 		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
-		$attackCheckLOS = $config{$actor->{configPrefix}.'attackCheckLOS'};
 		$master = $char;
 		$masterPos = calcPosition($char);
 	}
@@ -2870,11 +2867,11 @@ sub meetingPosition {
 				}
 
 				# 3. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
-				if ($ranged && $attackCheckLOS) {
+				if ($ranged) {
 					next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 				} elsif ($melee) {
 					next unless (canReachMeleeAttack($spot, $possible_target_pos->{targetPosInStep}));
-					if ($attackCheckLOS && blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
+					if (blockDistance($spot, $possible_target_pos->{targetPosInStep}) == 2) {
 						next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 					}
 				}
