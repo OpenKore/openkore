@@ -279,7 +279,12 @@ sub load {
 # Reloads all registered plugins that match the regex.
 sub reloadByRegexp {
     my ($regexp) = @_;
-    reloadPlugins([grep { $_->{name} =~ /$regexp/ } @plugins]);
+	my @reloadPlugins;
+	foreach my $plugin (@plugins) {
+		next if (!$plugin);
+		push(@reloadPlugins, $plugin) if ($plugin->{name} =~ /$regexp/);
+}
+	reloadPlugins(\@reloadPlugins);
 }
 
 ##
@@ -296,9 +301,9 @@ sub reloadAll {
 # Reloads all registered plugins given in 'plugins'.
 # Use this method to reload a specific list of plugins.
 sub reloadPlugins {
-	my $plugins = shift;
+	my $reloadPlugins = shift;
 	my $found;
-	foreach my $plugin (@$plugins) {
+	foreach my $plugin (@$reloadPlugins) {
 		next if (!$plugin);
 		reload($plugin->{name});
 		$found = 1;
@@ -317,7 +322,7 @@ sub reloadPlugins {
 # Throws Plugin::LoadException if it failed to load.
 sub reload {
 	my $name = shift;
-	return 0 if(!defined $name);
+	return 0 if (!defined $name);
 	my $i = 0;
 	foreach my $plugin (@plugins) {
 		if ($plugin && $plugin->{name} && $plugin->{name} eq $name) {
