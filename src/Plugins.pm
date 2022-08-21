@@ -16,8 +16,7 @@
 # MODULE DESCRIPTION: Plugin system
 #
 # This module provides an interface for handling plugins.
-# See the <a href="https://openkore.com/wiki/How_to_write_plugins_for_OpenKore">Plugin
-# Writing Tutorial</a> for more information about plugins.
+# See the <a href="https://openkore.com/wiki/How_to_write_plugins_for_OpenKore">Plugin Writing Tutorial</a> for more information about plugins.
 #
 # NOTE: Do not confuse plugins with modules! See Modules.pm for more information.
 
@@ -68,41 +67,6 @@ use enum qw(CALLBACK USER_DATA);
 ### CATEGORY: Functions
 #############################
 
-##
-# void Plugins::loadAll()
-#
-# Loads all plugins from the plugins folder, and all plugins that are one subfolder below
-# the plugins folder. Plugins must have the .pl extension.
-#
-# Throws Plugin::LoadException if a plugin failed to load.
-# Throws Plugin::DeniedException if the plugin system refused to load a plugin. This can
-# happen, for example, if it detects that a plugin is incompatible.
-sub loadAll {
-	my $condition;
-	if (!exists $sys{'loadPlugins'}) {
-		message T("Loading all plugins (by default)...\n", 'plugins');
-		$condition = \&c_loadAll;
-	} elsif (!$sys{'loadPlugins'}) {
-		message T("Automatic loading of plugins disabled\n", 'plugins');
-		return;
-	} elsif ($sys{'loadPlugins'} eq '1') {
-		message T("Loading all plugins...\n", 'plugins');
-		$condition = \&c_loadAll;
-	} elsif ($sys{'loadPlugins'} eq '2') {
-		message T("Selectively loading plugins...\n", 'plugins');
-		$condition = \&c_loadSelected;
-	} elsif ($sys{'loadPlugins'} eq '3') {
-		message T("Selectively skipping plugins...\n", 'plugins');
-		$condition = \&c_loadNotSelected;
-	}
-
-	my @folders = Settings::getPluginsFolders();
-	foreach my $file (getFilesFromDirs(\@folders, 'pl|lp', 'cvs', 1)) {
-		load("$file->{dir}/$file->{name}$file->{ext}") if (&$condition($file->{name}));
-		return if $quit;
-	}
-}
-
 sub c_loadAll { return 1 };
 sub c_loadSelected { return existsInList($sys{'loadPlugins_list'}, shift)};
 sub c_loadNotSelected { return !existsInList($sys{'skipPlugins_list'}, shift)};
@@ -124,6 +88,145 @@ sub getFilesFromDirs {
 		}
 	}
 	return @files;
+}
+
+sub getPluginsFiles {
+	my @folders = Settings::getPluginsFolders();
+	my @files = getFilesFromDirs(\@folders, 'pl', 'cvs', 1);
+	return @files;
+}
+
+sub getCondition {
+	my $condition;
+	if (!exists $sys{'loadPlugins'}) {
+		message T("Loading all plugins (by default)...\n", 'plugins');
+		$condition = \&c_loadAll;
+	} elsif (!$sys{'loadPlugins'}) {
+		message T("Automatic loading of plugins disabled\n", 'plugins');
+		return;
+	} elsif ($sys{'loadPlugins'} eq '1') {
+		message T("Loading all plugins...\n", 'plugins');
+		$condition = \&c_loadAll;
+	} elsif ($sys{'loadPlugins'} eq '2') {
+		message T("Selectively loading plugins...\n", 'plugins');
+		$condition = \&c_loadSelected;
+	} elsif ($sys{'loadPlugins'} eq '3') {
+		message T("Selectively skipping plugins...\n", 'plugins');
+		$condition = \&c_loadNotSelected;
+	}
+	return $condition;
+}
+
+##
+# void Plugins::unloadByRegexp(regex)
+#
+# Unloads all registered plugins that match the regex.
+sub unloadByRegexp {
+	my ($regexp) = @_;
+	my @unloadPlugins;
+	foreach my $plugin (@plugins) {
+		next if (!$plugin);
+		push(@unloadPlugins, $plugin) if ($plugin->{name} =~ /$regexp/);
+	}
+	unloadPlugins(\@unloadPlugins);
+}
+
+##
+# void Plugins::unloadAll()
+#
+# Unloads all registered plugins.
+sub unloadAll {
+	unloadPlugins(\@plugins);
+	@plugins = ();
+}
+
+##
+# void Plugins::unloadPlugins(plugins)
+#
+# Unloads all registered plugins given in 'plugins'.
+# Use this method to unload a specific list of plugins.
+sub unloadPlugins {
+	my $unloadPlugins = shift;
+	my $found;
+	foreach my $plugin (@$unloadPlugins) {
+		next if (!$plugin);
+		unload($plugin->{name});
+		$found = 1;
+	}
+	warning T("Error in function 'plugin unload' (Unload Plugin)\n" .
+			"The specified plugin do not exist.\n") unless $found;
+}
+
+##
+# boolean Plugins::unload(name)
+# name: The name of the plugin to unload.
+# Returns: 1 if the plugin has been successfully unloaded, 0 if the plugin isn't registered.
+#
+# Unloads a registered plugin.
+sub unload {
+	my $name = shift;
+	return 0 if (!defined $name);
+	my $i = 0;
+	foreach my $plugin (@plugins) {
+		if ($plugin && $plugin->{name} && $plugin->{name} eq $name) {
+			$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
+			delete $plugins[$i];
+			message TF("Plugin %s unloaded.\n", $name), "system";
+			return 1;
+		}
+		$i++;
+	}
+	return 0;
+}
+
+##
+# void Plugins::loadByRegexp(regex)
+#
+# Loads all plugins that match the regex from the plugins folder, and all plugins that
+# match the regex and are one subfolder below the plugins folder.
+# Plugins must have the .pl extension.
+# This function ignores "loadPlugins" from sys.txt file.
+sub loadByRegexp {
+	my ($regexp) = @_;
+	my @files = getPluginsFiles();
+	@files = grep {$_->{name} =~ /$regexp/} @files;
+	my @load_files;
+	foreach my $file (@files) {
+		push(@load_files, "$file->{dir}/$file->{name}$file->{ext}");
+		return if $quit;
+	}
+	loadPlugins(\@load_files);
+}
+
+##
+# void Plugins::loadAll()
+#
+# Loads all plugins from the plugins folder, and all plugins that are one subfolder below
+# the plugins folder. Plugins must have the .pl extension.
+# This function respects "loadPlugins" from sys.txt file.
+sub loadAll {
+	my $condition = getCondition();
+	return if (!$condition);
+
+	my @files = getPluginsFiles();
+	my @load_files;
+	foreach my $file (@files) {
+		push(@load_files, "$file->{dir}/$file->{name}$file->{ext}") if (&$condition($file->{name}));
+		return if $quit;
+	}
+	loadPlugins(\@load_files);
+}
+
+##
+# void Plugins::loadPlugins(filenames)
+#
+# Loads all plugins given in 'filenames'.
+# Use this method to unload a specific list of plugins.
+sub loadPlugins {
+	my $filenames = shift;
+	foreach my $filename (@$filenames) {
+		load($filename);
+	}
 }
 
 ##
@@ -164,41 +267,44 @@ sub load {
 	}
 }
 
-
 ##
-# boolean Plugins::unload(name)
-# name: The name of the plugin to unload.
-# Returns: 1 if the plugin has been successfully unloaded, 0 if the plugin isn't registered.
+# void Plugins::reloadByRegexp(regex)
 #
-# Unloads a registered plugin.
-sub unload {
-	my $name = shift;
-	return 0 if (!defined $name);
-	my $i = 0;
-	foreach my $plugin (@plugins) {
-		if ($plugin && $plugin->{name} && $plugin->{name} eq $name) {
-			$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
-			delete $plugins[$i];
-			return 1;
-		}
-		$i++;
-	}
-	return 0;
-}
-
-
-##
-# void Plugins::unloadAll()
-#
-# Unloads all registered plugins.
-sub unloadAll {
+# Reloads all registered plugins that match the regex.
+sub reloadByRegexp {
+	my ($regexp) = @_;
+	my @reloadPlugins;
 	foreach my $plugin (@plugins) {
 		next if (!$plugin);
-		$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
-	}
-	@plugins = ();
+		push(@reloadPlugins, $plugin) if ($plugin->{name} =~ /$regexp/);
+}
+	reloadPlugins(\@reloadPlugins);
 }
 
+##
+# void Plugins::reloadAll()
+#
+# Reloads all registered plugins.
+sub reloadAll {
+	reloadPlugins(\@plugins);
+}
+
+##
+# void Plugins::reloadPlugins(plugins)
+#
+# Reloads all registered plugins given in 'plugins'.
+# Use this method to reload a specific list of plugins.
+sub reloadPlugins {
+	my $reloadPlugins = shift;
+	my $found;
+	foreach my $plugin (@$reloadPlugins) {
+		next if (!$plugin);
+		reload($plugin->{name});
+		$found = 1;
+	}
+	warning T("Error in function 'plugin reload' (Reload Plugin)\n" .
+			"The specified plugin do not exist.\n") unless $found;
+}
 
 ##
 # boolean Plugins::reload(String name)
@@ -210,7 +316,7 @@ sub unloadAll {
 # Throws Plugin::LoadException if it failed to load.
 sub reload {
 	my $name = shift;
-	return 0 if(!defined $name);
+	return 0 if (!defined $name);
 	my $i = 0;
 	foreach my $plugin (@plugins) {
 		if ($plugin && $plugin->{name} && $plugin->{name} eq $name) {
