@@ -1730,7 +1730,7 @@ sub updateListBox {
 
 			my $x = $actor->{pos_to}{x} || $actor->{pos}{x};
 			my $y = $actor->{pos_to}{y} || $actor->{pos}{y};
-			my $name =  $actor->{name}. " (" . $actor->{binID} . ") " . "(" . $x . "," . $y . ")";
+			my $name =  $actor->{binID} . " - " . $actor->{name} . " (" . $x . "," . $y . ")";
 
 			push(@actorNameList, $name);
 			my $fg = "#000000";
