@@ -124,7 +124,12 @@ sub getCondition {
 # Unloads all registered plugins that match the regex.
 sub unloadByRegexp {
     my ($regexp) = @_;
-    unloadPlugins([grep { $_->{name} =~ /$regexp/ } @plugins]);
+	my @unloadPlugins;
+	foreach my $plugin (@plugins) {
+		next if (!$plugin);
+		push(@unloadPlugins, $plugin) if ($plugin->{name} =~ /$regexp/);
+	}
+	unloadPlugins(\@unloadPlugins);
 }
 
 ##
@@ -142,9 +147,9 @@ sub unloadAll {
 # Unloads all registered plugins given in 'plugins'.
 # Use this method to unload a specific list of plugins.
 sub unloadPlugins {
-	my $plugins = shift;
+	my $unloadPlugins = shift;
 	my $found;
-	foreach my $plugin (@$plugins) {
+	foreach my $plugin (@$unloadPlugins) {
 		next if (!$plugin);
 		unload($plugin->{name});
 		$found = 1;
