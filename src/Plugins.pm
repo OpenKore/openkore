@@ -292,10 +292,14 @@ sub reloadAll {
 # Use this method to reload a specific list of plugins.
 sub reloadPlugins {
 	my $plugins = shift;
+	my $found;
 	foreach my $plugin (@$plugins) {
 		next if (!$plugin);
 		reload($plugin->{name});
+		$found = 1;
 	}
+	warning T("Error in function 'plugin reload' (Reload Plugin)\n" .
+			"The specified plugin do not exist.\n") unless $found;
 }
 
 ##
