@@ -4725,9 +4725,7 @@ sub cmdPlugin {
 		my @names;
 
 		if ($args[1] =~ /^\d+$/) {
-			if ($Plugins::plugins[$args[1]]) {
-				push @names, $Plugins::plugins[$args[1]]{name};
-			}
+			Plugins::reloadPlugins([$Plugins::plugins[$args[1]]]);
 
 		} elsif ($args[1] eq '') {
 			error T("Syntax Error in function 'plugin reload' (Reload Plugin)\n" .
@@ -4735,29 +4733,10 @@ sub cmdPlugin {
 			return;
 
 		} elsif ($args[1] eq 'all') {
-			foreach my $plugin (@Plugins::plugins) {
-				next unless $plugin;
-				next unless $plugin->{name};
-				push @names, $plugin->{name};
-			}
+			Plugins::reloadAll();
 
 		} else {
-			foreach my $plugin (@Plugins::plugins) {
-				next unless $plugin;
-				if ($plugin->{name} =~ /$args[1]/i) {
-					push @names, $plugin->{name};
-				}
-			}
-		}
-
-		if (!@names) {
-				warning T("Error in function 'plugin reload' (Reload Plugin)\n" .
-					"The specified plugin do not exist.\n");
-			return;
-		}
-
-		foreach (my $i = 0; $i < @names; $i++) {
-			Plugins::reload($names[$i]);
+			Plugins::reloadByRegexp($args[1]);
 		}
 
 	} elsif ($args[0] eq 'load') {
@@ -4768,28 +4747,12 @@ sub cmdPlugin {
 		} elsif ($args[1] eq 'all') {
 			Plugins::loadAll();
 		} else {
-			my @folders = Settings::getPluginsFolders();
-			my $name = $args[1];
-			$name =~ s/.pl$//g;
-			if (-f $folders[0]."\\".$name.".pl") {
-				# plugins\$name.pl
-				Plugins::load($folders[0]."\\".$name.".pl");
-			} elsif (-f $folders[0]."\\".$name."\\".$name.".pl") {
-				# plugins\$name\$name.pl
-				Plugins::load($folders[0]."\\".$name."\\".$name.".pl");
-			} else {
-				error TF("Plugin '%s' does not exist\n", $name);
-				return;
-			}
+			Plugins::loadByRegexp($args[1]);
 		}
 
 	} elsif ($args[0] eq 'unload') {
-		my $name;
-
 		if ($args[1] =~ /^\d+$/) {
-			if ($Plugins::plugins[$args[1]]) {
-				$name = $Plugins::plugins[$args[1]]{name};
-			}
+			Plugins::unloadPlugins([$Plugins::plugins[$args[1]]]);
 
 		} elsif ($args[1] eq '') {
 			error T("Syntax Error in function 'plugin unload' (Unload Plugin)\n" .
@@ -4802,20 +4765,7 @@ sub cmdPlugin {
 			return;
 
 		} else {
-			foreach my $plugin (@Plugins::plugins) {
-				next unless $plugin;
-				if ($plugin->{name} =~ /$args[1]/i) {
-					$name = $plugin->{name};
-				}
-			}
-		}
-
-		if ($name) {
-			Plugins::unload($name);
-			message TF("Plugin %s unloaded.\n", $name), "system";
-		} else {
-			warning T("Error in function 'plugin unload' (Unload Plugin)\n" .
-				"The specified plugin do not exist.\n");
+			Plugins::unloadByRegexp($args[1]);
 		}
 
 	} else {
