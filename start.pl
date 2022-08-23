@@ -40,7 +40,7 @@ use Config;
 
 if ($^O ne 'MSWin32') {
 	# We are not on Windows, so tell the user about it
-	print "\nThis file is meant to be compiled by PerlApp.\n";
+	print "\nThis file is meant to be compiled by PerlApp or PAR.\n";
 	print "To run kore, execute openkore.pl instead.\n\n";
 	exit 1;
 }
@@ -71,6 +71,7 @@ if (0) {
 	require Math::Trig;
 	require Text::Wrap;
 	require Text::ParseWords;
+	require Text::Balanced;
 	require Time::HiRes;
 	require IO::Socket::INET;
 	require Getopt::Long;
@@ -89,6 +90,18 @@ if (0) {
 	require encoding;
 	require Storable;
 	require Compress::Zlib;
+	require List::Util;
+	require File::Path;
+	require Math::BigInt;
+	require Math::BigInt::Calc;
+	require Math::BigInt::CalcEmu;
+	require Math::BigInt::FastCalc;
+	require Math::BigInt::Trace;
+	require Math::BigFloat;
+	require Math::BigFloat::Trace;
+	require Math::BigRat;
+	require Math::Complex;
+	require Math::Trig;
 	# new Perl 5.12 and more
 	require "unicore/lib/Perl/SpacePer.pl";
 	require "unicore/lib/Perl/Word.pl";
@@ -122,8 +135,22 @@ if ($PerlApp::TOOL eq "PerlApp") {
 	if (PerlApp::exe() =~ /tkstart\.exe$/i) {
 		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Tk';
 	}
+} elsif($ENV{PAR_PROGNAME}) {
+	if ($ENV{PAR_PROGNAME} =~ /wxstart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';
+	}
 
+	if ($ENV{PAR_PROGNAME} =~ /vxstart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Vx';
+	}
 
+	if ($ENV{PAR_PROGNAME} =~ /winguistart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Win32';
+	}
+
+	if ($ENV{PAR_PROGNAME} =~ /tkstart\.exe$/i) {
+		$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Tk';
+	}
 } else {
 	print "Do not run start.pl directly! If you're using Perl then run openkore.pl instead!\n";
 	<STDIN>;
