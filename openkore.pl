@@ -41,7 +41,8 @@ sub __start {
 
 	use Globals;
 	use Interface;
-	$interface = Interface->loadInterface($Settings::interface);
+	my $interface_name = $sys{interface} ? $sys{interface} : $Settings::interface;
+	$interface = Interface->loadInterface($interface_name);
 	$interface->title($Settings::NAME);
 	selfCheck();
 
