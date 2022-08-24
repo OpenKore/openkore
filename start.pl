@@ -102,6 +102,12 @@ if (0) {
 	require Math::BigRat;
 	require Math::Complex;
 	require Math::Trig;
+	# include http request libs - https://github.com/rathena/rathena/pull/5731
+	require LWP::UserAgent;
+	require HTTP::Request;
+	require HTTP::Request::Common;
+	require HTTP::Cookies;
+	require HTTP::Headers;
 	# new Perl 5.12 and more
 	require "unicore/lib/Perl/SpacePer.pl";
 	require "unicore/lib/Perl/Word.pl";
