@@ -135,7 +135,7 @@ else
 fi
 
 if [[ "$BINDIST" == "1" ]]; then
-	for F in start.exe wxstart.exe NetRedirect.dll XSTools.dll start-poseidon.exe; do
+	for F in openkore.exe NetRedirect.dll XSTools.dll start-poseidon.exe; do
 		if [[ ! -f "$F" ]]; then
 			echo "Please put $F in the current folder."
 			exit 1
