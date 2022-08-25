@@ -788,30 +788,20 @@ sub processTake {
 		if ($char->{sitting}) {
 			stand();
 
+		} elsif($dist <= 2 && $config{'itemsTakeGreed'} && $char->{skills}{BS_GREED}{lv} >= 1) {
+			my $skill = new Skill(handle => 'BS_GREED');
+			ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "BS_GREED");
 		} elsif ($dist > 1) {
-			if (!$config{itemsTakeAuto_new}) {
-				my (%vec, %pos);
-				getVector(\%vec, $item->{pos}, $myPos);
-				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
-				$char->move(@pos{qw(x y)});
-			} else {
-				my $pos = $item->{pos};
-				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
-			}
-
-		} elsif (timeOut($timeout{ai_take})) {
-			if ($config{'itemsTakeGreed'} && $char->{skills}{BS_GREED}{lv} >= 1) {
-					my $skill = new Skill(handle => 'BS_GREED');
-					ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "BS_GREED");
-			} else {
-				my %vec;
-				my $direction;
-				getVector(\%vec, $item->{pos}, $myPos);
-				$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
-				$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
-				$messageSender->sendTake($item->{ID});
-			}
+			my $pos = $item->{pos};
+			message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
+			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
+		} elsif (timeOut($timeout{ai_take})) {			
+			my %vec;
+			my $direction;
+			getVector(\%vec, $item->{pos}, $myPos);
+			$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+			$messageSender->sendLook($direction, 0) if ($direction != $char->{look}{body});
+			$messageSender->sendTake($item->{ID});
 			$timeout{ai_take}{time} = time;
 		}
 	}
@@ -3208,18 +3198,10 @@ sub processItemsGather {
 			stand();
 
 		} elsif (( $dist = blockDistance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
-			if (!$config{itemsTakeAuto_new}) {
-				my (%vec, %pos);
-				getVector(\%vec, $items{$ID}{pos}, $myPos);
-				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
-				$char->move(@pos{qw(x y)});
-			} else {
-				my $item = $items{$ID};
-				my $pos = $item->{pos};
-				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
-				ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
-			}
-
+			my $item = $items{$ID};
+			my $pos = $item->{pos};
+			message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
+			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
 		} else {
 			AI::dequeue;
 			take($ID);
