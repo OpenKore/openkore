@@ -149,43 +149,35 @@ CODE:
 	snprintf (tmp, sizeof (tmp), "%d %d", width, height);
 	data.append (tmp);
 	data.append (" 8 1\",\n"
-		"\"A\tc #F4F4F4\",\n"
-		"\"B\tc #505050\",\n"
-		"\"C\tc #6060B0\",\n"
-		"\"D\tc #8080B0\",\n"
-		"\"E\tc #7070B0\",\n"
-		"\"F\tc #B0B0B0\",\n"
-		"\"G\tc #808080\",\n"
-		"\"H\tc #600000\",\n");
+		"\"A\tc #313131\",\n"
+		"\"B\tc #FAFAFA\",\n"
+		"\"C\tc #CCA86C\",\n"
+		"\"D\tc #0088CC\",\n"
+		"\"E\tc #399BCC\",\n"
+		"\"F\tc #696262\",\n"
+		"\"G\tc #CCA86C\",\n"
+		"\"H\tc #313131\",\n");
 
 	line = (char *) malloc (width);
 	for (y = height - 1; y >= 0; y--) {
 		for (x = 0; x < width; x++) {
-			switch (field_data[y * width + x]) {
-			case '\0':
+			int tile = field_data[y * width + x];
+			if(tile&0) { // TILE_NOWALK
 				line[x] = 'A';
-				break;
-			case '\1':
-				line[x] = 'B';
-				break;
-			case '\2':
-				line[x] = 'C';
-				break;
-			case '\3':
-				line[x] = 'D';
-				break;
-			case '\4':
+			} else if(tile&1 && tile&4) {// TILE_WALK and TILE_WATER
 				line[x] = 'E';
-				break;
-			case '\5':
-				line[x] = 'F';
-				break;
-			case '\6':
+			} else if(tile&1) { // TILE_WALK
+				line[x] = 'B';
+			} else if(tile&4) { // TILE_WATER
+				line[x] = 'D';
+			} else if(tile&2 && tile&8) { // TILE_SNIPE and TILE_CLIFF
 				line[x] = 'G';
-				break;
-			default:
+			} else if(tile&2) { // TILE_SNIPE
+				line[x] = 'C';
+			} else if(tile&8) { // TILE_CLIFF
+				line[x] = 'F';
+			} else{ 
 				line[x] = 'H';
-				break;
 			}
 		}
 		data.append ("\"");

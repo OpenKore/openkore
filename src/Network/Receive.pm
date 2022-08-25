@@ -55,7 +55,7 @@ use Compress::Zlib;
 
 our %EXPORT_TAGS = (
 	actor_type => [qw(PC_TYPE NPC_TYPE ITEM_TYPE SKILL_TYPE UNKNOWN_TYPE NPC_MOB_TYPE NPC_EVT_TYPE NPC_PET_TYPE NPC_HO_TYPE NPC_MERSOL_TYPE
-						NPC_ELEMENTAL_TYPE)],
+						NPC_ELEMENTAL_TYPE NPC_TYPE2)],
 	connection => [qw(REFUSE_INVALID_ID REFUSE_INVALID_PASSWD REFUSE_ID_EXPIRED ACCEPT_ID_PASSWD REFUSE_NOT_CONFIRMED REFUSE_INVALID_VERSION
 						REFUSE_BLOCK_TEMPORARY REFUSE_BILLING_NOT_READY REFUSE_NONSAKRAY_ID_BLOCKED REFUSE_BAN_BY_DBA
 						REFUSE_EMAIL_NOT_CONFIRMED REFUSE_BAN_BY_GM REFUSE_TEMP_BAN_FOR_DBWORK REFUSE_SELF_LOCK REFUSE_NOT_PERMITTED_GROUP
@@ -128,7 +128,8 @@ use constant {
 	NPC_PET_TYPE => 0x7,
 	NPC_HO_TYPE => 0x8,
 	NPC_MERSOL_TYPE => 0x9,
-	NPC_ELEMENTAL_TYPE => 0xa
+	NPC_ELEMENTAL_TYPE => 0xa,
+	NPC_TYPE2 => 0xc,
 };
 
 # connection
@@ -1832,6 +1833,7 @@ sub actor_display {
 				NPC_HO_TYPE, 'Actor::Slave::Homunculus',
 				NPC_MERSOL_TYPE, 'Actor::Slave::Mercenary',
 				# NPC_ELEMENTAL_TYPE, 'Actor::Elemental', # Sorcerer's Spirit
+				NPC_TYPE2, 'Actor::NPC',
 			}->{$args->{object_type}};
 		}
 
@@ -2770,10 +2772,11 @@ sub homunculus_property {
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
 	# or make function in Actor class
-	if ($config{homunculus_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
-		message TF("Autodetected attackDistance for homunculus = %s\n", $slave->{attack_range}), "success";
-		configModify('homunculus_attackDistance', $slave->{attack_range}, 1);
-		configModify('homunculus_attackMaxDistance', $slave->{attack_range}, 1);
+	if ($config{homunculus_attackDistanceAuto} && exists $slave->{attack_range}) {
+		configModify('homunculus_attackDistance', $slave->{attack_range}, 1) if ($config{homunculus_attackDistanceAuto} > $slave->{attack_range});
+		configModify('homunculus_attackMaxDistance', $slave->{attack_range}, 1) if ($config{homunculus_attackMaxDistance} != $slave->{attack_range});
+		message TF("Autodetected attackDistance for homunculus = %s\n", $config{homunculus_attackDistanceAuto}), "success";
+		message TF("Autodetected homunculus_attackMaxDistance for homunculus = %s\n", $config{homunculus_attackMaxDistance}), "success";
 	}
 }
 
@@ -3991,23 +3994,13 @@ sub login_pin_code_request {
 		return if (!($self->queryAndSaveLoginPinCode(T("The login PIN code that you entered is invalid. Please re-enter your login PIN code."))));
 		$messageSender->sendLoginPinCode($args->{seed}, 0);
 	} elsif ($args->{flag} == 7) {
-		if ($self->{serverType} == 'RMS') { # removed check for seed 0, eA/rA/brA sends a normal seed.
-			message T("PIN code is correct.\n"), "success";
-			# call charSelectScreen
-			if (charSelectScreen(1) == 1) {
-				$firstLoginMap = 1;
-				$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
-				$sentWelcomeMessage = 1;
-			}
-		} else {
-			# PIN code disabled.
-			$accountID = $args->{accountID};
-			debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
+		# PIN code disabled.
+		$accountID = $args->{accountID};
+		debug sprintf("Account ID: %s (%s)\n", unpack('V',$accountID), getHex($accountID));
 
-			# call charSelectScreen
-			$self->{lockCharScreen} = 0;
-			$timeout{'char_login_pause'}{'time'} = time;
-		}
+		# call charSelectScreen
+		$self->{lockCharScreen} = 0;
+		$timeout{'char_login_pause'}{'time'} = time;
 	} elsif ($args->{flag} == 8) {
 		# PIN code incorrect.
 		error T("PIN code is incorrect.\n");
@@ -6435,7 +6428,11 @@ sub guild_name {
 		$messageSender->sendGuildRequestInfo(0);		# Requests for Basic Information Guild, Hostile Alliance Information
 		$messageSender->sendGuildRequestInfo(3);
 		$messageSender->sendGuildRequestInfo(1);		# Requests for Members list, list job title
-	} else {
+	}
+	elsif ($masterServer->{serverType} eq 'jRO') {
+		$messageSender->sendGuildRequestInfo(1);		# Requests for Members list, list job title
+	}
+	else {
 		$messageSender->sendGuildMasterMemberCheck();
 		$messageSender->sendGuildRequestInfo(4);			# Requests for Expulsion list
 		$messageSender->sendGuildRequestInfo(0);			# Requests for Basic Information Guild, Hostile Alliance Information
@@ -7413,17 +7410,28 @@ sub npc_store_begin {
 # Presents list of items, that can be bought in an NPC shop (ZC_PC_PURCHASE_ITEMLIST).
 # 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.W }*
 # 00C6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.L }*
+# 0B77 <packet len>.W { <name id>.L <price>.L <discount price>.L <item type>.B <viewSprite>.W <location>.L}*
 # 2 versions of same packet. $self->{npc_store_info_pack} (ZC_PC_PURCHASE_ITEMLIST_sub) should be changed in own serverType file if needed
 sub npc_store_info {
 	my ($self, $args) = @_;
 	my $msg = $args->{RAW_MSG};
-	my $pack = $self->{npc_store_info_pack} || 'V V C v';
+	my $pack;
+	my $keys;
+
+	if( $args->{switch} eq '0B77' ) {
+		$pack = "V3 C v V";
+		$keys = [qw( nameID price _ type sprite_id location )];
+	} else {
+		$pack = $self->{npc_store_info_pack} || 'V V C v';
+		$keys = [qw( price _ type nameID )];
+	}
+
 	my $len = length pack $pack;
 	$storeList->clear;
 	undef %talk;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $len) {
 		my $item = Actor::Item->new;
-		@$item{qw( price _ type nameID )} = unpack $pack, substr $msg, $i, $len;
+		@$item{@{$keys}} = unpack $pack, substr $msg, $i, $len;
 
 		# Workaround some npcs that have items appearing more than once in their store list,
 		# for example the Trader at moc_ruins 90 149 sells only bananas, but 6 times
@@ -9973,10 +9981,11 @@ sub attack_range {
 	return unless changeToInGameState();
 
 	$char->{attack_range} = $type;
-	if ($config{attackDistanceAuto} && $config{attackDistance} != $type) {
-		message TF("Autodetected attackDistance = %s\n", $type), "success";
-		configModify('attackDistance', $type, 1);
-		configModify('attackMaxDistance', $type, 1);
+	if ($config{attackDistanceAuto}) {
+		configModify('attackDistance', $type, 1) if ($config{attackDistance} > $type);
+		configModify('attackMaxDistance', $type, 1) if ($config{attackMaxDistance} != $type);
+		message TF("Autodetected attackDistance = %s\n", $config{attackDistance}), "success";
+		message TF("Autodetected attackMaxDistance = %s\n", $config{attackMaxDistance}), "success";
 	}
 }
 
@@ -10235,6 +10244,8 @@ sub instance_window_queue {
 sub instance_window_join {
 	my ($self, $args) = @_;
 	debug $self->{packet_list}{$args->{switch}}->[0] . " " . join(', ', @{$args}{@{$self->{packet_list}{$args->{switch}}->[2]}}) . "\n";
+
+	Plugins::callHook('instance_ready');
 }
 
 # 02CE
@@ -10857,10 +10868,11 @@ sub mercenary_init {
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
-	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range} && exists $slave->{attack_range}) {
-		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
-		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
-		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
+	if ($config{mercenary_attackDistanceAuto} && exists $slave->{attack_range}) {
+		configModify('mercenary_attackDistance', $slave->{attack_range}, 1) if ($config{mercenary_attackDistance} > $slave->{attack_range});
+		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1) if ($config{mercenary_attackMaxDistance} != $slave->{attack_range});
+		message TF("Autodetected attackDistance for mercenary = %s\n", $config{mercenary_attackDistance}), "success";
+		message TF("Autodetected attackMaxDistance for mercenary = %s\n", $config{mercenary_attackMaxDistance}), "success";
 	}
 }
 
@@ -11890,6 +11902,12 @@ sub ping {
 	$messageSender->sendPing();
 }
 
+# 0253 - ZC_STARPLACE
+# Star Gladiator's Feeling map confirmation prompt
+sub starplace {
+	my ($self, $args) = @_;
+	message TF("Wich: %s\n", $args->{which});
+}
 
 ###
 #

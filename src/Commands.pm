@@ -429,7 +429,10 @@ sub initHandlers {
 			T("Party management."),
 			["", T("displays party member info")],
 			[T("create \"<party name>\""), T("organize a party")],
-			[T("share <flag>"), T("sets party exp sharing to even if flag is 1, individual take if 0")],
+			[T("share <flag>"), T("sets party EXP sharing to even if flag is 1, individual take if 0")],
+			[T("shareitem <flag>"), T("sets party ITEM sharing to even if flag is 1, individual take if 0")],
+			[T("sharediv  <flag>"), T("sets party ITEM  PICKUP sharing to even if flag is 1, individual take if 0")],
+			[T("shareauto"), T("set party EXP sharing auto by AI")],
 			[T("request <player #>"), T("request player to join your party")],
 			[T("join <flag>"), T("accept a party join request if <flag> is 1, deny if 0")],
 			[T("kick <party member #>"), T("kick party member from party")],
@@ -570,6 +573,12 @@ sub initHandlers {
 			], \&cmdSkills],
 		['sll', T("Display a list of slaves in your immediate area."), \&cmdSlaveList],
 		['spells', T("List area effect spells on screen."), \&cmdSpells],
+		['starplace', [
+			T("Starplace Agree"),
+			["sun", T("select sun as starplace")],
+			["moon", T("select mon as starplace")],
+			["star", T("select star as starplace")],
+			], \&cmdStarplace],
 		['storage', [
 			T("Handle items in Kafra storage."),
 			["", T("lists items in storage")],
@@ -4716,9 +4725,7 @@ sub cmdPlugin {
 		my @names;
 
 		if ($args[1] =~ /^\d+$/) {
-			if ($Plugins::plugins[$args[1]]) {
-				push @names, $Plugins::plugins[$args[1]]{name};
-			}
+			Plugins::reloadPlugins([$Plugins::plugins[$args[1]]]);
 
 		} elsif ($args[1] eq '') {
 			error T("Syntax Error in function 'plugin reload' (Reload Plugin)\n" .
@@ -4726,29 +4733,10 @@ sub cmdPlugin {
 			return;
 
 		} elsif ($args[1] eq 'all') {
-			foreach my $plugin (@Plugins::plugins) {
-				next unless $plugin;
-				next unless $plugin->{name};
-				push @names, $plugin->{name};
-			}
+			Plugins::reloadAll();
 
 		} else {
-			foreach my $plugin (@Plugins::plugins) {
-				next unless $plugin;
-				if ($plugin->{name} =~ /$args[1]/i) {
-					push @names, $plugin->{name};
-				}
-			}
-		}
-
-		if (!@names) {
-				warning T("Error in function 'plugin reload' (Reload Plugin)\n" .
-					"The specified plugin do not exist.\n");
-			return;
-		}
-
-		foreach (my $i = 0; $i < @names; $i++) {
-			Plugins::reload($names[$i]);
+			Plugins::reloadByRegexp($args[1]);
 		}
 
 	} elsif ($args[0] eq 'load') {
@@ -4759,28 +4747,12 @@ sub cmdPlugin {
 		} elsif ($args[1] eq 'all') {
 			Plugins::loadAll();
 		} else {
-			my @folders = Settings::getPluginsFolders();
-			my $name = $args[1];
-			$name =~ s/.pl$//g;
-			if (-f $folders[0]."\\".$name.".pl") {
-				# plugins\$name.pl
-				Plugins::load($folders[0]."\\".$name.".pl");
-			} elsif (-f $folders[0]."\\".$name."\\".$name.".pl") {
-				# plugins\$name\$name.pl
-				Plugins::load($folders[0]."\\".$name."\\".$name.".pl");
-			} else {
-				error TF("Plugin '%s' does not exist\n", $name);
-				return;
-			}
+			Plugins::loadByRegexp($args[1]);
 		}
 
 	} elsif ($args[0] eq 'unload') {
-		my $name;
-
 		if ($args[1] =~ /^\d+$/) {
-			if ($Plugins::plugins[$args[1]]) {
-				$name = $Plugins::plugins[$args[1]]{name};
-			}
+			Plugins::unloadPlugins([$Plugins::plugins[$args[1]]]);
 
 		} elsif ($args[1] eq '') {
 			error T("Syntax Error in function 'plugin unload' (Unload Plugin)\n" .
@@ -4793,20 +4765,7 @@ sub cmdPlugin {
 			return;
 
 		} else {
-			foreach my $plugin (@Plugins::plugins) {
-				next unless $plugin;
-				if ($plugin->{name} =~ /$args[1]/i) {
-					$name = $plugin->{name};
-				}
-			}
-		}
-
-		if ($name) {
-			Plugins::unload($name);
-			message TF("Plugin %s unloaded.\n", $name), "system";
-		} else {
-			warning T("Error in function 'plugin unload' (Unload Plugin)\n" .
-				"The specified plugin do not exist.\n");
+			Plugins::unloadByRegexp($args[1]);
 		}
 
 	} else {
@@ -5292,6 +5251,31 @@ sub cmdSpells {
 	}
 	$msg .= ('-'x66) . "\n";
 	message $msg, "list";
+}
+
+sub cmdStarplace {
+	my (undef, $args) = @_;
+	my ($type) = parseArgs( $args );
+
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my $flag;
+	if ($type eq "sun") {
+		$flag = 0;
+	} elsif ($type eq "moon") {
+		$flag = 1;
+	} elsif ($type eq "star") {
+		$flag = 2;
+	} else {
+		error T("Syntax Error in function 'starplace' (starplace agree)\n" .
+			"Usage: starplace [<sun | moon | star>]\n");
+		return;
+	}
+
+	$messageSender->sendFeelSaveOk($flag);
 }
 
 sub cmdStand {

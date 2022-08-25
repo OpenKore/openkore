@@ -1,0 +1,201 @@
+VAR_MAXHPAMOUNT#MaxHP + %d#
+VAR_MAXSPAMOUNT#MaxSP + %d#
+VAR_STRAMOUNT#Str + %d#
+VAR_AGIAMOUNT#Agi + %d#
+VAR_VITAMOUNT#Vit + %d#
+VAR_INTAMOUNT#Int + %d#
+VAR_DEXAMOUNT#Dex + %d#
+VAR_LUKAMOUNT#Luk + %d#
+VAR_MAXHPPERCENT#MaxHP + %d%%#
+VAR_MAXSPPERCENT#MaxSP + %d%%#
+VAR_HPACCELERATION#HP自然回復量 + %d%%#
+VAR_SPACCELERATION#SP自然回復量 + %d%%#
+VAR_ATKPERCENT#物理攻撃で与えるダメージ + %d%%#
+VAR_MAGICATKPERCENT#魔法攻撃で与えるダメージ + %d%%#
+VAR_PLUSASPD#Aspd + %d#
+VAR_PLUSASPDPERCENT#攻撃速度 + %d%%#
+VAR_ATTPOWER#Atk + %d#
+VAR_HITSUCCESSVALUE#Hit + %d#
+VAR_ATTMPOWER#Matk + %d#
+VAR_ITEMDEFPOWER#Def + %d#
+VAR_MDEFPOWER#Mdef + %d#
+VAR_AVOIDSUCCESSVALUE#Flee + %d#
+VAR_PLUSAVOIDSUCCESSVALUE#完全回避 + %d#
+VAR_CRITICALSUCCESSVALUE#Cri + %d#
+ATTR_TOLERACE_NOTHING#無属性攻撃で受けるダメージ - %d%%#
+ATTR_TOLERACE_WATER#水属性攻撃で受けるダメージ - %d%%#
+ATTR_TOLERACE_GROUND#地属性攻撃で受けるダメージ - %d%%#
+ATTR_TOLERACE_FIRE#火属性攻撃で受けるダメージ - %d%%#
+ATTR_TOLERACE_WIND#風属性攻撃で受けるダメージ - %d%%#
+ATTR_TOLERACE_POISON#毒属性攻撃で受けるダメージ - %d%%#
+ATTR_TOLERACE_SAINT#聖属性攻撃で受けるダメージ - %d%%#
+ATTR_TOLERACE_DARKNESS#闇属性攻撃で受けるダメージ - %d%%#
+ATTR_TOLERACE_TELEKINESIS#念属性攻撃で受けるダメージ - %d%%#
+ATTR_TOLERACE_UNDEAD#不死属性攻撃で受けるダメージ - %d%%#
+DAMAGE_PROPERTY_NOTHING_USER#無属性モンスターから受ける　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_PROPERTY_NOTHING_TARGET#物理攻撃時、無属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+DAMAGE_PROPERTY_WATER_USER#水属性モンスターから受ける　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_PROPERTY_WATER_TARGET#物理攻撃時、水属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+DAMAGE_PROPERTY_GROUND_USER#地属性モンスターから受ける　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_PROPERTY_GROUND_TARGET#物理攻撃時、地属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+DAMAGE_PROPERTY_FIRE_USER#火属性モンスターから受ける　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_PROPERTY_FIRE_TARGET#物理攻撃時、火属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+DAMAGE_PROPERTY_WIND_USER#風属性モンスターから　　　　　　　　　　　　　　　　　受ける物理ダメージ - %d%%#
+DAMAGE_PROPERTY_WIND_TARGET#物理攻撃時、風属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+DAMAGE_PROPERTY_POISON_USER#毒属性モンスターから受ける　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_PROPERTY_POISON_TARGET#物理攻撃時、毒属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+DAMAGE_PROPERTY_SAINT_USER#聖属性モンスターから受ける　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_PROPERTY_SAINT_TARGET#物理攻撃時、聖属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+DAMAGE_PROPERTY_DARKNESS_USER#闇属性モンスターから受ける　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_PROPERTY_DARKNESS_TARGET#物理攻撃時、闇属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+DAMAGE_PROPERTY_TELEKINESIS_USER#念属性モンスターから受ける　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_PROPERTY_TELEKINESIS_TARGET#物理攻撃時、念属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+DAMAGE_PROPERTY_UNDEAD_USER#不死属性モンスターから受ける　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_PROPERTY_UNDEAD_TARGET#物理攻撃時、不死属性モンスターに　　　　　　　　  与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_NOTHING_USER#無属性モンスターから受ける　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_NOTHING_TARGET#魔法攻撃時、無属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_WATER_USER#水属性モンスターから受ける　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_WATER_TARGET#魔法攻撃時、水属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_GROUND_USER#地属性モンスターから受ける　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_GROUND_TARGET#魔法攻撃時、地属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_FIRE_USER#火属性モンスターから受ける　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_FIRE_TARGET#魔法攻撃時、火属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_WIND_USER#風属性モンスターから受ける　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_WIND_TARGET#魔法攻撃時、風属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_POISON_USER#毒属性モンスターから受ける　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_POISON_TARGET#魔法攻撃時、毒属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_SAINT_USER#聖属性モンスターから受ける　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_SAINT_TARGET#魔法攻撃時、聖属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_DARKNESS_USER#闇属性モンスターから受ける　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_DARKNESS_TARGET#魔法攻撃時、闇属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_TELEKINESIS_USER#念属性モンスターから受ける　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_TELEKINESIS_TARGET#魔法攻撃時、念属性モンスターに　　　　　　　　　   与えるダメージ + %d%%#
+MDAMAGE_PROPERTY_UNDEAD_USER#不死属性モンスターから受ける　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_PROPERTY_UNDEAD_TARGET#魔法攻撃時、不死属性モンスターに　　　　　　　　　与えるダメージ + %d%%#
+BODY_ATTR_NOTHING#鎧に無属性を付与する#
+BODY_ATTR_WATER#鎧に水属性を付与する#
+BODY_ATTR_GROUND#鎧に地属性を付与する#
+BODY_ATTR_FIRE#鎧に火属性を付与する#
+BODY_ATTR_WIND#鎧に風属性を付与する#
+BODY_ATTR_POISON#鎧に毒属性を付与する#
+BODY_ATTR_SAINT#鎧に聖属性を付与する#
+BODY_ATTR_DARKNESS#鎧に闇属性を付与する#
+BODY_ATTR_TELEKINESIS#鎧に念属性を付与する#
+BODY_ATTR_UNDEAD#鎧に不死属性を付与する#
+RACE_TOLERACE_NOTHING#無形モンスターから受けるダメージ - %d%%#
+RACE_TOLERACE_UNDEAD#不死形モンスターから受けるダメージ - %d%%#
+RACE_TOLERACE_ANIMAL#動物形モンスターから受けるダメージ - %d%%#
+RACE_TOLERACE_PLANT#植物形モンスターから受けるダメージ - %d%%#
+RACE_TOLERACE_INSECT#昆虫形モンスターから受けるダメージ - %d%%#
+RACE_TOLERACE_FISHS#魚貝形モンスターから受けるダメージ - %d%%#
+RACE_TOLERACE_DEVIL#悪魔形モンスターから受けるダメージ - %d%%#
+RACE_TOLERACE_HUMAN#人間形モンスターから受けるダメージ　　　　　　　　- %d%%（プレイヤーには発動しない）#
+RACE_TOLERACE_ANGEL#天使形モンスターから受けるダメージ - %d%%#
+RACE_TOLERACE_DRAGON#竜形モンスターから受けるダメージ - %d%%#
+RACE_DAMAGE_NOTHING#物理攻撃時、無形モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+RACE_DAMAGE_UNDEAD#物理攻撃時、不死形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_DAMAGE_ANIMAL#物理攻撃時、動物形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_DAMAGE_PLANT#物理攻撃時、植物形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_DAMAGE_INSECT#物理攻撃時、昆虫形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_DAMAGE_FISHS#物理攻撃時、魚貝形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_DAMAGE_DEVIL#物理攻撃時、悪魔形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_DAMAGE_HUMAN#物理攻撃時、人間形モンスターに　　　　　　　　　　 与えるダメージ　　　　　　　　　　　　　　　　　　　　　　+ %d%%（プレイヤーには発動しない）#
+RACE_DAMAGE_ANGEL#物理攻撃時、天使形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_DAMAGE_DRAGON#物理攻撃時、竜形モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+RACE_MDAMAGE_NOTHING#魔法攻撃時、無形モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+RACE_MDAMAGE_UNDEAD#魔法攻撃時、不死形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_MDAMAGE_ANIMAL#魔法攻撃時、動物形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_MDAMAGE_PLANT#魔法攻撃時、植物形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_MDAMAGE_INSECT#魔法攻撃時、昆虫形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_MDAMAGE_FISHS#魔法攻撃時、魚貝形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_MDAMAGE_DEVIL#魔法攻撃時、悪魔形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_MDAMAGE_HUMAN#魔法攻撃時、人間形モンスターに　　　　　　　　　　 与えるダメージ　　　　　　　　　　　　　　　　　　　　　　+ %d%%（プレイヤーには発動しない）#
+RACE_MDAMAGE_ANGEL#魔法攻撃時、天使形モンスターに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_MDAMAGE_DRAGON#魔法攻撃時、竜形モンスターに　　　　　　　　　　　  与えるダメージ + %d%%#
+RACE_CRI_PERCENT_NOTHING#物理攻撃時、無形モンスターにCri + %d#
+RACE_CRI_PERCENT_UNDEAD#物理攻撃時、不死形モンスターにCri + %d#
+RACE_CRI_PERCENT_ANIMAL#物理攻撃時、動物形モンスターにCri + %d#
+RACE_CRI_PERCENT_PLANT#物理攻撃時、植物形モンスターにCri + %d#
+RACE_CRI_PERCENT_INSECT#物理攻撃時、昆虫形モンスターにCri + %d#
+RACE_CRI_PERCENT_FISHS#物理攻撃時、魚貝形モンスターにCri + %d#
+RACE_CRI_PERCENT_DEVIL#物理攻撃時、悪魔形モンスターにCri + %d#
+RACE_CRI_PERCENT_HUMAN#物理攻撃時、人間形モンスターにCri　　　　　　　　 + %d（プレイヤーには発動しない）#
+RACE_CRI_PERCENT_ANGEL#物理攻撃時、天使形モンスターにCri + %d#
+RACE_CRI_PERCENT_DRAGON#物理攻撃時、竜形モンスターにCri + %d#
+RACE_IGNORE_DEF_PERCENT_NOTHING#無形モンスターのDef %d%%無視#
+RACE_IGNORE_DEF_PERCENT_UNDEAD#不死形モンスターのDef %d%%無視#
+RACE_IGNORE_DEF_PERCENT_ANIMAL#動物形モンスターのDef %d%%無視#
+RACE_IGNORE_DEF_PERCENT_PLANT#植物形モンスターのDef %d%%無視#
+RACE_IGNORE_DEF_PERCENT_INSECT#昆虫形モンスターのDef %d%%無視#
+RACE_IGNORE_DEF_PERCENT_FISHS#魚貝形モンスターのDef %d%%無視#
+RACE_IGNORE_DEF_PERCENT_DEVIL#悪魔形モンスターのDef %d%%無視#
+RACE_IGNORE_DEF_PERCENT_HUMAN#人間形モンスターの　　　　　　　　　　　　　　　　　　　Def %d%%無視（プレイヤーには発動しない）#
+RACE_IGNORE_DEF_PERCENT_ANGEL#天使形モンスターのDef %d%%無視#
+RACE_IGNORE_DEF_PERCENT_DRAGON#竜形モンスターのDef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_NOTHING#無形モンスターのMdef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_UNDEAD#不死形モンスターのMdef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_ANIMAL#動物形モンスターのMdef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_PLANT#植物形モンスターのMdef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_INSECT#昆虫形モンスターのMdef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_FISHS#魚貝形モンスターのMdef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_DEVIL#悪魔形モンスターのMdef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_HUMAN#人間形モンスターの　　　　　　　　　　　　　　　　　　　Mdef %d%%無視（プレイヤーには発動しない）#
+RACE_IGNORE_MDEF_PERCENT_ANGEL#天使形モンスターのMdef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_DRAGON#竜形モンスターのMdef %d%%無視#
+CLASS_DAMAGE_NORMAL_TARGET#物理攻撃時、一般モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+CLASS_DAMAGE_BOSS_TARGET#物理攻撃時、ボスモンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+CLASS_DAMAGE_NORMAL_USER#一般モンスターから受けるダメージ - %d%%#
+CLASS_DAMAGE_BOSS_USER#ボスモンスターから受けるダメージ - %d%%#
+CLASS_MDAMAGE_NORMAL#魔法攻撃時、一般モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+CLASS_MDAMAGE_BOSS#魔法攻撃時、ボスモンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+CLASS_IGNORE_DEF_PERCENT_NORMAL#一般モンスターのDef %d%%無視#
+CLASS_IGNORE_DEF_PERCENT_BOSS#ボスモンスターのDef %d%%無視#
+CLASS_IGNORE_MDEF_PERCENT_NORMAL#一般モンスターのMdef %d%%無視#
+CLASS_IGNORE_MDEF_PERCENT_BOSS#ボスモンスターのMdef %d%%無視#
+DAMAGE_SIZE_SMALL_TARGET#物理攻撃時、小型モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+DAMAGE_SIZE_MIDIUM_TARGET#物理攻撃時、中型モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+DAMAGE_SIZE_LARGE_TARGET#物理攻撃時、大型モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+DAMAGE_SIZE_SMALL_USER#小型モンスターから受ける　　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_SIZE_MIDIUM_USER#中型モンスターから受ける　　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_SIZE_LARGE_USER#大型モンスターから受ける　　　　　　　　　　　　　　物理ダメージ - %d%%#
+DAMAGE_SIZE_PERFECT#全てのモンスターに対し、　　　　　　　　　　　　　　　 サイズによる武器ダメージの　　　　　　　　　　　　　 ペナルティが発生しない#
+DAMAGE_CRI_TARGET#クリティカル攻撃で与えるダメージ + %d%%#
+DAMAGE_CRI_USER#クリティカル攻撃で受けるダメージ - %d%%#
+RANGE_ATTACK_DAMAGE_TARGET#遠距離物理攻撃で与えるダメージ + %d%%#
+RANGE_ATTACK_DAMAGE_USER#遠距離物理攻撃で受けるダメージ - %d%%#
+HEAL_VALUE#ヒール系スキル使用時、HP回復量 + %d%%#
+HEAL_MODIFY_PERCENT#ヒール系スキルを受けた時のHP回復量、　　　　　一部の回復アイテムによるHP回復量 + %d%%#
+DEC_SPELL_CAST_TIME#詠唱時間 - %d%%#
+DEC_SPELL_DELAY_TIME#スキルディレイ - %d%%#
+DEC_SP_CONSUMPTION#スキル使用時の消費SP - %d%%#
+WEAPON_ATTR_NOTHING#武器に無属性を付与する#
+WEAPON_ATTR_WATER#武器に水属性を付与する#
+WEAPON_ATTR_GROUND#武器に地属性を付与する#
+WEAPON_ATTR_FIRE#武器に火属性を付与する#
+WEAPON_ATTR_WIND#武器に風属性を付与する#
+WEAPON_ATTR_POISON#武器に毒属性を付与する#
+WEAPON_ATTR_SAINT#武器に聖属性を付与する#
+WEAPON_ATTR_DARKNESS#武器に闇属性を付与する#
+WEAPON_ATTR_TELEKINESIS#武器に念属性を付与する#
+WEAPON_ATTR_UNDEAD#武器に不死属性を付与する#
+WEAPON_INDESTRUCTIBLE#絶対に壊れない#
+BODY_INDESTRUCTIBLE#絶対に壊れない#
+MDAMAGE_SIZE_SMALL_TARGET#魔法攻撃時、小型モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+MDAMAGE_SIZE_MIDIUM_TARGET#魔法攻撃時、中型モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+MDAMAGE_SIZE_LARGE_TARGET#魔法攻撃時、大型モンスターに　　　　　　　　　　　　与えるダメージ + %d%%#
+MDAMAGE_SIZE_SMALL_USER#小型モンスターから受ける　　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_SIZE_MIDIUM_USER#中型モンスターから受ける　　　　　　　　　　　　　　魔法ダメージ - %d%%#
+MDAMAGE_SIZE_LARGE_USER#大型モンスターから受ける　　　　　　　　　　　　　　魔法ダメージ - %d%%#
+ATTR_TOLERACE_ALL#全ての属性攻撃で受けるダメージ - %d%%#
+RACE_TOLERACE_PLAYER_HUMAN#人間形プレイヤーから受けるダメージ - %d%%#
+RACE_TOLERACE_PLAYER_DORAM#ドラム形プレイヤーから受けるダメージ - %d%%#
+RACE_DAMAGE_PLAYER_HUMAN#物理攻撃時、人間形プレイヤーに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_DAMAGE_PLAYER_DORAM#物理攻撃時、ドラム形プレイヤーに　　　　　　　　　 与えるダメージ + %d%%#
+RACE_MDAMAGE_PLAYER_HUMAN#魔法攻撃時、人間形プレイヤーに　　　　　　　　　　 与えるダメージ + %d%%#
+RACE_MDAMAGE_PLAYER_DORAM#魔法攻撃時、ドラム形プレイヤーに　　　　　　　　　 与えるダメージ + %d%%#
+RACE_CRI_PERCENT_PLAYER_HUMAN#物理攻撃時、人間形プレイヤーにCri + %d#
+RACE_CRI_PERCENT_PLAYER_DORAM#物理攻撃時、ドラム形プレイヤーにCri + %d#
+RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN#人間形プレイヤーのDef %d%%無視#
+RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM#ドラム形プレイヤーのDef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN#人間形プレイヤーのMdef %d%%無視#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM#ドラム形プレイヤーのMdef %d%%無視#
