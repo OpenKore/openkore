@@ -303,6 +303,13 @@ sub new {
 		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
+		'0A52' => ['captcha_register', 'Z16 v', [qw(answer image_size)]],
+		'0A54' => ['captcha_upload_request_ack', 'v Z4 a*', [qw(len captcha_key captcha_image)]],
+		'0A56' => ['macro_reporter_ack', 'a4', [qw(ID)]],
+		'0A5A' => ['macro_detector_download'],
+		'0A5C' => ['macro_detector_answer', 'Z16', [qw(answer)]],
+		'0A69' => ['captcha_preview_request', 'V', [qw(captcha_key)]],
+		'0A6C' => ['macro_reporter_select', 'v2 C', [qw(x y range)]],
 		'0A68' => ['open_ui_request', 'C', [qw(UIType)]],
 		'0A6E' => ['rodex_send_mail', 'v Z24 Z24 V2 v v V a* a*', [qw(len receiver sender zeny1 zeny2 title_len body_len char_id title body)]],   # -1 -- RodexSendMail
 		'0A76' => ['master_login', 'V Z40 a32 v', [qw(version username password_rijndael master_version)]],
