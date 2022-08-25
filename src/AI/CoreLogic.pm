@@ -791,9 +791,9 @@ sub processTake {
 		} elsif($dist <= 2 && $config{'itemsTakeGreed'} && $char->{skills}{BS_GREED}{lv} >= 1) {
 			my $skill = new Skill(handle => 'BS_GREED');
 			ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "BS_GREED");
-		} elsif ($dist > 1) {
+		} elsif ($dist > 1 && timeOut(AI::args->{time_route}, $timeout{ai_take_giveup}{timeout})) {
 			my $pos = $item->{pos};
-			message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
+			AI::args->{time_route} = time;
 			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
 		} elsif (timeOut($timeout{ai_take})) {			
 			my %vec;
@@ -3197,10 +3197,10 @@ sub processItemsGather {
 			AI::suspend();
 			stand();
 
-		} elsif (( $dist = blockDistance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
+		} elsif (blockDistance($items{$ID}{pos}, $char->{pos}) > 2 && timeOut(AI::args->{time_route} = time, $timeout{ai_take_giveup}{timeout})) {
 			my $item = $items{$ID};
 			my $pos = $item->{pos};
-			message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
+			AI::args->{time_route} = time;
 			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
 		} else {
 			AI::dequeue;
