@@ -235,13 +235,7 @@ sub parseArguments {
 	$base_dead_log_file = File::Spec->catfile($logs_folder, "dead_log.txt");
 	update_log_filenames();
 
-	if (!defined $interface) {
-		if ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
-			$interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
-		} else {
-			$interface = "Console"
-		}
-	}
+	
 	if ($starting_ai) {
 		$AI::AI = AI::AUTO()   if $starting_ai =~ /^(on|auto)$/;
 		$AI::AI = AI::MANUAL() if $starting_ai =~ /^manual$/;
@@ -257,6 +251,18 @@ sub parseArguments {
 		}
 	}
 	return 1;
+}
+
+sub parseInterfaceName {
+	if (!defined $interface) {
+		if($sys{interface} && $sys{interface} ne "") {
+			$interface = $sys{interface};
+		} elsif ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
+			$interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
+		} else {
+			$interface = "Console";
+		}
+	}
 }
 
 sub update_log_filenames {
