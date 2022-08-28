@@ -788,7 +788,7 @@ sub processTake {
 		if ($char->{sitting}) {
 			stand();
 
-		} elsif($dist <= 2 && $config{'itemsTakeGreed'} && $char->{skills}{BS_GREED}{lv} >= 1) {
+		} elsif ($dist <= 2 && $config{'itemsTakeGreed'} && $char->{skills}{BS_GREED}{lv} >= 1) {
 			my $skill = new Skill(handle => 'BS_GREED');
 			ai_skillUse2($skill, $char->{skills}{BS_GREED}{lv}, 1, 0, $char, "BS_GREED");
 		} elsif ($dist > 1 && timeOut(AI::args->{time_route}, $timeout{ai_take_giveup}{timeout})) {
