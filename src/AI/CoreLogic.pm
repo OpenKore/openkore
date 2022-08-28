@@ -794,7 +794,7 @@ sub processTake {
 		} elsif ($dist > 1 && timeOut(AI::args->{time_route}, $timeout{ai_take_giveup}{timeout})) {
 			my $pos = $item->{pos};
 			AI::args->{time_route} = time;
-			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
+			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1, distFromGoal => 1);
 		} elsif (timeOut($timeout{ai_take})) {
 			my %vec;
 			my $direction;
@@ -3201,7 +3201,7 @@ sub processItemsGather {
 			my $item = $items{$ID};
 			my $pos = $item->{pos};
 			AI::args->{time_route} = time;
-			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
+			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1, distFromGoal => 1);
 		} else {
 			AI::dequeue;
 			take($ID);
