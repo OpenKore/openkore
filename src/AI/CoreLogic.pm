@@ -795,7 +795,7 @@ sub processTake {
 			my $pos = $item->{pos};
 			AI::args->{time_route} = time;
 			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1);
-		} elsif (timeOut($timeout{ai_take})) {			
+		} elsif (timeOut($timeout{ai_take})) {
 			my %vec;
 			my $direction;
 			getVector(\%vec, $item->{pos}, $myPos);
@@ -3143,7 +3143,7 @@ sub processItemsTake {
 ##### ITEMS AUTO-GATHER #####
 sub processItemsAutoGather {
 	if ( (AI::isIdle || AI::action eq "follow"
-		|| ( AI::is("route", "mapRoute", "checkMonsters") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2)  && !$config{itemsTakeAuto_new}))
+		|| ( AI::is("route", "mapRoute", "checkMonsters") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2) ))
 	  && $config{'itemsGatherAuto'}
 	  && (!$config{itemsGatherAuto_notInTown} || !$field->isCity)
 	  && !$ai_v{sitAuto_forcedBySitCommand}
