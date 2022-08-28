@@ -78,7 +78,7 @@ attackMinPortalDistance 4
 attackUseWeapon 1
 attackNoGiveup 0
 attackCanSnipe 0
-attackCheckLOS 1
+attackCheckLOS 0
 attackRouteMaxPathDistance 13
 attackLooters 0
 attackChangeTarget 1
@@ -803,7 +803,6 @@ storageAuto_maxDistance
 storageAuto_npc_type 1
 storageAuto_npc_steps
 storageAuto_password
-storageEncryptKey
 storageAuto_keepOpen 0
 storageAuto_useChatCommand
 storageAuto_useItem 0
@@ -839,4 +838,3 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
-gameGuard 0

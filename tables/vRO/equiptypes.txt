@@ -1,0 +1,28 @@
+0 Item
+1 Lower Mask
+2 One-Handed Weapon
+4 Cape
+8 Right Accessory
+10 Arrow
+16 Armor
+32 Shield
+34 Two-Handed Weapon
+64 Foot Wear
+128 Left Accessory
+136 Accessory
+256 Helmet
+512 Eye Mask
+513 Mid-Lower Mask
+768 Up-Mid Helmet
+769 Up-Mid-Lower Helmet
+1024 Visual Helmet
+2048 Visual Eye Mask
+4096 Visual Lower Mask
+8192 Visual Cape
+32768 Ammunition
+65536 Shadow Armor
+131072 Shadow Weapon
+262144 Shadow Shield
+524288 Shadow Shoes
+1048576 Shadow Right Accessory
+2097152 Shadow Left Accessory

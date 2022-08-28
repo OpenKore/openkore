@@ -3,7 +3,6 @@ cRO.pm
 idRO.pm
 iRO.pm
 kRO.pm
-pRO.pm
 rRO.pm
 Sakray.pm
 ServerType0.pm
@@ -36,3 +35,5 @@ ServerType8_5.pm
 ServerType9.pm
 tRO.pm
 twRO.pm
+vRO.pm
+Zero.pm

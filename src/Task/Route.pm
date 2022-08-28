@@ -231,6 +231,14 @@ sub iterate {
 			splice(@{$solution}, 1 + $self->{maxDistance});
 		}
 
+		my $final_pos = $self->{solution}[-1];
+		if ( ($self->{pyDistFromGoal} || $self->{distFromGoal}) && ($self->{dest}{pos}{x} != $final_pos->{x} || $self->{dest}{pos}{y} != $final_pos->{y}) ) {
+			debug "Route $self->{actor} - final destination is not the same of pathfind, adjusting the trimsteps\n", "route";
+			my $trim = blockDistance($self->{dest}{pos}, $final_pos);
+			$self->{pyDistFromGoal} -= $trim if $self->{pyDistFromGoal};
+			$self->{distFromGoal} -= $trim if $self->{distFromGoal};
+		}
+
 		# Trim down solution tree for pyDistFromGoal or distFromGoal
 		if ($self->{pyDistFromGoal}) {
 			my $trimsteps = 0;
@@ -412,7 +420,7 @@ sub iterate {
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 
-		} elsif (timeOut($self->{route_out_time}, 6)) {
+		} elsif (timeOut($self->{route_out_time}, 3)) {
 			# Because of attack monster, get item or something else we are out of our route for a long time
 			# recalculate again
 			debug "We are out of our route for a long time, recalculating...\n", "route";
@@ -566,7 +574,8 @@ sub getRoute {
 	
 	my $closest_start = $field->closestWalkableSpot(\%start, 1);
 	my $closest_dest = $field->closestWalkableSpot(\%dest, 1);
-	
+	$closest_dest = $field->closestWalkableSpot(\%dest, 10) if(!$closest_dest); # can't find a closest walkable spot
+
 	if (!defined $closest_start || !defined $closest_dest) {
 		return 0;
 	}

@@ -43,7 +43,6 @@ sub start {
 		idRO
 		iRO
 		kRO
-		pRO
 		rRO
 		Sakray
 		tRO
@@ -84,7 +83,7 @@ sub start {
 								done_testing();
 							} or skip 'failed', 1;
 							
-							if ( $serverType =~ /^(bRO|idRO|pRO|tRO)$/) { # different login packet. Parser is not implemented 2021-02-15
+							if ( $serverType =~ /^(bRO|idRO|tRO)$/) { # different login packet. Parser is not implemented 2021-02-15
 								done_testing();
 								next;
 							}
