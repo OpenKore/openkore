@@ -190,8 +190,8 @@ sub bulkEquip {
 			$char->{equipment}{$_}->unequip();
 		} else {
 			$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
-
-			next unless ($item && $char->{equipment} && (!$char->{equipment}{$_} || $char->{equipment}{$_}{name} ne $item->{name}));
+			
+			next unless ($item && $item->{identified} && $char->{equipment} && (!$char->{equipment}{$_} || $char->{equipment}{$_}{name} ne $item->{name}));
 
 			$item->equipInSlot($_);
 			
