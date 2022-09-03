@@ -5067,7 +5067,9 @@ sub item_list_stackable {
 		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
 		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 	} elsif ( $args->{type} == INVTYPE_GUILD_STORAGE ) {
-		return; # guild storage not implemented yet =/ (2019-06-21)
+		$arguments->{hook} = 'packet_storage';
+		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 	} else {
 		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
 	}
@@ -5114,7 +5116,9 @@ sub item_list_nonstackable {
 		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 
 	} elsif ( $args->{type} == INVTYPE_GUILD_STORAGE ) {
-		return; # guild storage not implemented yet =/ (2019-06-21)
+		$arguments->{hook} = 'packet_storage';
+		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 
 	} else {
 		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
