@@ -1096,7 +1096,28 @@ sub onClose {
 
 sub onFontChange {
 	my $self = shift;
-	$self->{console}->selectFont($self->{frame});
+
+	my $font;
+	if (Wx::wxMSW()) {
+		$font = Wx::Font->new(9, wxMODERN, wxNORMAL, wxNORMAL, 0, 'Courier New');
+	} elsif ($^O eq 'freebsd') {
+		$font = Wx::Font->new(9, wxMODERN, wxNORMAL, wxNORMAL, 0, 'Monospace');
+	} else {
+		$font = Wx::Font->new(10, wxMODERN, wxNORMAL, wxNORMAL, 0, 'MiscFixed');
+	}
+
+	my $fontData = Wx::FontData->new();
+	$fontData->SetInitialFont($font);
+	$fontData->SetColour(wxWHITE);
+
+	my $fontDialog = Wx::FontDialog->new($self->{console}, $fontData);
+
+	my $fontDialogStatus = $fontDialog->ShowModal();
+
+	$fontData = $fontDialog->GetFontData();
+	my $selectedfont = $fontData->GetChosenFont();
+	my $selectedcolour = $fontData->GetColour();
+	$self->{console}->SetFont($selectedfont);
 }
 
 sub onBooleanSetting {

@@ -7,6 +7,7 @@ locale_compat 0
 
 ###### Wx interface settings ######
 wxHideConsole 1
+wxFont
 
 
 ###### Bus system settings ######

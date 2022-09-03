@@ -2,7 +2,7 @@
 #  OpenKore - WxWidgets Interface
 #  Console control
 #
-#  Copyright (c) 2004 OpenKore development team 
+#  Copyright (c) 2004 OpenKore development team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ use base qw(Wx::RichTextCtrl);
 use utf8;
 
 use Globals qw(%consoleColors $interface);
+use Settings qw(%sys);
 use Utils::StringScanner;
 
 use constant STYLE_SLOT => 4;
@@ -95,14 +96,17 @@ sub new {
 	$self->{defaultStyle}->SetBackgroundColour($self->GetBackgroundColour());
 
 	my $font;
-	if (Wx::wxMSW()) {
+	if ($sys{wxFont}) {
+		$font = new Wx::Font(9, wxMODERN, wxNORMAL, wxNORMAL, 0, $sys{wxFont});
+	} elsif (Wx::wxMSW()) {
 		$font = new Wx::Font(9, wxMODERN, wxNORMAL, wxNORMAL, 0, 'Courier New');
 	} elsif ($^O eq 'freebsd') {
 		$font = new Wx::Font(9, wxMODERN, wxNORMAL, wxNORMAL, 0, 'Monospace');
 	} else {
 		$font = new Wx::Font(10, wxMODERN, wxNORMAL, wxNORMAL, 0, 'MiscFixed');
 	}
-	$self->setFont($font);
+
+	$self->SetFont($font);
 
 =pod
 	$self->{inputStyle} = {
@@ -209,7 +213,7 @@ sub determineFontStyle {
 	my ($self, $type, $domain) = @_;
 
 	return { color => $self->{defaultStyle}->GetTextColour(), bold => 0 } unless $consoleColors{$type};
-	
+
 	my $fg = $fgcolors{$consoleColors{$type}{$domain} || $consoleColors{$type}{default}} || $fgcolors{default};
 	return $fg->[STYLE_SLOT] ||= {
 		color => Wx::Colour->newRGB ($fg->[0], $fg->[1], $fg->[2]),
@@ -232,7 +236,7 @@ sub finalizePrinting {
 		my $linesToDelete = $self->GetNumberOfLines() - MAX_LINES;
 		my $pos = $self->XYToPosition(0, $linesToDelete + MAX_LINES / 10);
 		$self->Remove(0, $pos);
-		
+
 		$self->_CaretAdjustXY(0, 0 - ($linesToDelete + MAX_LINES / 10)); # Adjust Caret and Selection
 		$self->_CaretRestore(); # Restore Caret and Selection position
 	}
@@ -325,7 +329,7 @@ sub _CaretSave {
 	my $has_selection = $self->HasSelection();
 	my ($sel_st_x,$sel_st_y) = $has_selection ? $self->PositionToXY($self->GetSelectionRange()->GetStart()) : (0, 0);
 	my ($sel_end_x,$sel_end_y) = $has_selection ? $self->PositionToXY($self->GetSelectionRange()->GetEnd()) : (0, 0);
-	
+
 	$self->{caret} = {
 		caret_x => $caret_x,
 		caret_y => $caret_y,
