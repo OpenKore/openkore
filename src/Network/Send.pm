@@ -682,7 +682,7 @@ sub sendRestart {
 
 sub sendStorageAdd {
 	my ($self, $ID, $amount) = @_;
-	if($config{storageAuto_storage_type} == 1) {
+	if ($config{storageAuto_storage_type} == 1) {
 		$self->sendToServer($self->reconstruct({switch => 'guild_storage_item_add', ID => $ID, amount => $amount}));
 	} else {
 		$self->sendToServer($self->reconstruct({switch => 'storage_item_add', ID => $ID, amount => $amount}));
@@ -692,7 +692,7 @@ sub sendStorageAdd {
 
 sub sendStorageGet {
 	my ($self, $ID, $amount) = @_;
-	if($config{storageAuto_storage_type} == 1) {
+	if ($config{storageAuto_storage_type} == 1) {
 		$self->sendToServer($self->reconstruct({switch => 'guild_storage_item_remove', ID => $ID, amount => $amount}));
 	} else {
 		$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', ID => $ID, amount => $amount}));
@@ -2392,7 +2392,7 @@ sub sendWarpTele {
 
 sub sendStorageGetToCart {
 	my ($self, $ID, $amount) = @_;
-	if($config{storageAuto_storage_type} == 1) {
+	if ($config{storageAuto_storage_type} == 1) {
 			$self->sendToServer($self->reconstruct({
 			switch => 'guild_storage_to_cart',
 			ID => $ID,
@@ -2411,7 +2411,7 @@ sub sendStorageGetToCart {
 
 sub sendStorageAddFromCart {
 	my ($self, $ID, $amount) = @_;
-	if($config{storageAuto_storage_type} == 1) {
+	if ($config{storageAuto_storage_type} == 1) {
 		$self->sendToServer($self->reconstruct({
 			switch => 'cart_to_guild_storage',
 			ID => $ID,

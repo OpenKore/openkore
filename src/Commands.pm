@@ -6913,9 +6913,9 @@ sub cmdWeaponRefine {
 }
 
 sub cmdAnswerCaptcha {
-	if($net->getState() == Network::IN_GAME()) {
+	if ($net->getState() == Network::IN_GAME()) {
 		$messageSender->sendMacroDetectorAnswer($_[1]);
-	} else {	
+	} else {
 		$messageSender->sendCaptchaAnswer($_[1]);
 	}
 }
