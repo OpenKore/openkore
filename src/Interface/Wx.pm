@@ -1109,7 +1109,7 @@ sub onFontChange {
 	my $fontData = Wx::FontData->new();
 	$fontData->SetInitialFont($font);
 	$fontData->SetColour(wxWHITE);
-	
+
 	my $fontDialog = Wx::FontDialog->new($self->{console}, $fontData);
 
 	my $fontDialogStatus = $fontDialog->ShowModal();
