@@ -2993,7 +2993,7 @@ sub processAutoAttack {
 	  # If !teleportAuto_search, then searchMonsters >= teleportAuto_search will be true - no need for first condition?
 	  && (!$config{teleportAuto_search} || $ai_v{temp}{searchMonsters} >= $config{teleportAuto_search})
 	  && (!$config{attackAuto_notInTown} || !$field->isCity)
-	  && (!$config{attackAuto_inLockOnly} || $field->baseName eq $config{'lockMap'})
+	  && ($config{attackAuto_inLockOnly} <= 1 || $field->baseName eq $config{'lockMap'})
 	  && (!$config{attackAuto_notWhile_storageAuto} || !AI::inQueue("storageAuto"))
 	  && (!$config{attackAuto_notWhile_buyAuto} || !AI::inQueue("buyAuto"))
 	  && (!$config{attackAuto_notWhile_sellAuto} || !AI::inQueue("sellAuto"))
