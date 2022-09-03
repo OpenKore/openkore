@@ -682,13 +682,21 @@ sub sendRestart {
 
 sub sendStorageAdd {
 	my ($self, $ID, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'storage_item_add', ID => $ID, amount => $amount}));
+	if ($config{storageAuto_type} == 1) {
+		$self->sendToServer($self->reconstruct({switch => 'guild_storage_item_add', ID => $ID, amount => $amount}));
+	} else {
+		$self->sendToServer($self->reconstruct({switch => 'storage_item_add', ID => $ID, amount => $amount}));
+	}
 	debug sprintf("Sent Storage Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendStorageGet {
 	my ($self, $ID, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', ID => $ID, amount => $amount}));
+	if ($config{storageAuto_type} == 1) {
+		$self->sendToServer($self->reconstruct({switch => 'guild_storage_item_remove', ID => $ID, amount => $amount}));
+	} else {
+		$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', ID => $ID, amount => $amount}));
+	}
 	debug sprintf("Sent Storage Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
@@ -2384,24 +2392,38 @@ sub sendWarpTele {
 
 sub sendStorageGetToCart {
 	my ($self, $ID, $amount) = @_;
-
-	$self->sendToServer($self->reconstruct({
-		switch => 'storage_to_cart',
-		ID => $ID,
-		amount => $amount,
-	}));
+	if ($config{storageAuto_type} == 1) {
+			$self->sendToServer($self->reconstruct({
+			switch => 'guild_storage_to_cart',
+			ID => $ID,
+			amount => $amount,
+		}));
+	} else {
+		$self->sendToServer($self->reconstruct({
+			switch => 'storage_to_cart',
+			ID => $ID,
+			amount => $amount,
+		}));
+	}
 
 	debug "Sent Storage Get From Cart: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
 }
 
 sub sendStorageAddFromCart {
 	my ($self, $ID, $amount) = @_;
-
-	$self->sendToServer($self->reconstruct({
-		switch => 'cart_to_storage',
-		ID => $ID,
-		amount => $amount,
-	}));
+	if ($config{storageAuto_type} == 1) {
+		$self->sendToServer($self->reconstruct({
+			switch => 'cart_to_guild_storage',
+			ID => $ID,
+			amount => $amount,
+		}));
+	} else {
+		$self->sendToServer($self->reconstruct({
+			switch => 'cart_to_storage',
+			ID => $ID,
+			amount => $amount,
+		}));
+	}
 
 	debug "Sent Storage Add From Cart: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
 }

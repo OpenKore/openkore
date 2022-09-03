@@ -257,6 +257,10 @@ sub new {
 		'09D4' => ['sell_buy_complete'],
 		'09D6' => ['buy_bulk_market', 'v a*', [qw(len buyInfo)]],
 		'09D8' => ['market_close'],
+		'09E1' => ['guild_storage_item_add', 'a2 V', [qw(ID amount)]],
+		'09E2' => ['guild_storage_item_remove', 'a2 V', [qw(ID amount)]],
+		'09E3' => ['cart_to_guild_storage', 'a2 V', [qw(ID amount)]],
+		'09E4' => ['guild_storage_to_cart', 'a2 V', [qw(ID amount)]],
 		'09E8' => ['rodex_open_mailbox', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexOpenMailbox
 		'09E9' => ['rodex_close_mailbox'],   # 2 -- RodexCloseMailbox
 		'09EA' => ['rodex_read_mail', 'C V2', [qw(type mailID1 mailID2)]],   # 11 -- RodexReadMail

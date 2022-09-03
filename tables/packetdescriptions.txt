@@ -519,6 +519,8 @@
 09A6 Banking check
 09A8 Banking deposit
 09AA Banking withdraw
+09BB Guild Storage Opened
+09BF Guild Storage Closed
 09AD Bargain Sale Item Info
 09B2 Bargain Sale Selling
 09B3 Bargain Sale Close
@@ -961,6 +963,10 @@
 09D4 Sell or Buy Complete
 09D6 Buy bulk market
 09D8 Market close
+09E1 Guild Storage Item Add
+09E2 Guild Storage Item Remove
+09E3 Cart to Guild Storage Item Add
+09E4 Guild Storage Item Remove to Cart
 09F1 Rodex Request Zeny
 09F3 Rodex Request Item
 09FB Pet Evolution
