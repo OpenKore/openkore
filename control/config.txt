@@ -800,7 +800,7 @@ storageAuto_standpoint
 storageAuto_distance 3
 storageAuto_maxDistance
 storageAuto_npc_type 1
-storageAuto_storage_type 0
+storageAuto_type 0
 storageAuto_npc_steps
 storageAuto_password
 storageAuto_keepOpen 0
