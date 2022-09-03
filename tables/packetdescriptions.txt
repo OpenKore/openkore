@@ -603,6 +603,16 @@
 0A4B Map Changed
 0A4C Map Server Changed
 0A51 Rodex Character Name Received
+0A53 Captcha Upload Window
+0A55 Captcha Upload Status
+0A57 Macro Reporter Status
+0A58 Macro Detector Image Info
+0A59 Macro Detector Image (captcha)
+0A5B Macro Detector Image UI
+0A5D Macro Detector Status
+0A6A Captcha Preview Image Info
+0A6B Captcha Preview Image Info
+0A6D Macro Reporter Player List
 0A6F Message String (stringtable)
 0A7B EAC key
 0A7D Rodex Mail List
@@ -982,6 +992,13 @@
 0A39 Char Create Request
 0A46 Stylist UI Style Change
 0A49 Private Airship Request
+0A52 Captcha Register Image
+0A54 Captcha Register Image
+0A56 Macro Reporter Info
+0A5A Macro Detector Download Done
+0A5C Macro Detector captcha answer
+0A69 Preview Captcha Image
+0A6C Macro Reporter Select Area
 0A68 Open User Interface Request User Interface (open system)
 0A6E Rodex Mail Send
 0A75 Account Server Login (encrypted)
