@@ -1030,7 +1030,7 @@ sub parse_account_server_info {
 			types => 'a20 V v a126',
 			keys => [qw(name users unknown ip_port)],
 		};
-	} elsif ($args->{switch} eq '0276' && $masterServer->{serverType} eq "tRO") { # tRO 2020 # keep this here to future uses
+	} elsif ($args->{switch} eq '0276' && ($masterServer->{serverType} eq "tRO" or $masterServer->{serverType} eq "aRO")) { # tRO 2020 and aRO 2022. Keep this here to future uses
 		$server_info = {
 			len => 36,
 			types => 'a4 v Z20 v5',
@@ -1145,14 +1145,14 @@ sub account_server_info {
 	@servers = @{$args->{servers}};
 	my @state = ("Idle", "Normal", "Busy", "Full");
 
-	my $msg = center(T(" Servers "), 53, '-') ."\n" .
-			T("#   Name                  Users  IP              Port  SID   State\n");
+	my $msg = center(T(" Servers "), 70, '-') ."\n" .
+			T("#   Name                  Users  IP              Port   SID    State\n");
 	for (my $num = 0; $num < @servers; $num++) {
 		$msg .= swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<< @<<<<< @<<<<<<",
 			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}, ($servers[$num]{sid}) ? $servers[$num]{sid} : 0, defined($servers[$num]{state}) ? $state[$servers[$num]{state}] : 0]);
 	}
-	$msg .= ('-'x53) . "\n";
+	$msg .= ('-'x70) . "\n";
 	message $msg, "connection";
 
 	if ($net->version != 1) {
@@ -2741,10 +2741,11 @@ sub account_payment_info {
 	my $H_h = int(($H_minute % 1440) / 60);
 	my $H_m = int(($H_minute % 1440) % 60);
 
-	message  T("============= Account payment information =============\n"), "info";
-	message TF("Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n", $D_d, $D_h, $D_m), "info";
-	message TF("Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n", $H_d, $H_h, $H_m), "info";
-	message  "-------------------------------------------------------\n", "info";
+	my $msg = center(T(" Account payment information "), 56, '-') ."\n" .
+			TF("Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n", $D_d, $D_h, $D_m).
+			TF("Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n", $H_d, $H_h, $H_m);
+	$msg .= ('-'x56) . "\n";
+	message $msg, "info";
 }
 
 # TODO
