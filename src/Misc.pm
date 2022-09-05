@@ -2774,7 +2774,7 @@ sub meetingPosition {
 
 	# actor is char
 	if ($actorType == 1) {
-		$attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance};
+		$attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance} || 13;
 		$runFromTarget = $config{runFromTarget};
 		$runFromTarget_dist = $config{runFromTarget_dist};
 		$followDistanceMax = $config{followDistanceMax};
@@ -2793,7 +2793,7 @@ sub meetingPosition {
 
 	# actor is a slave
 	} elsif ($actorType == 2) {
-		$attackRouteMaxPathDistance = $config{$actor->{configPrefix}.'attackRouteMaxPathDistance'};
+		$attackRouteMaxPathDistance = $config{$actor->{configPrefix}.'attackRouteMaxPathDistance'} || 13;
 		$runFromTarget = $config{$actor->{configPrefix}.'runFromTarget'};
 		$runFromTarget_dist = $config{$actor->{configPrefix}.'runFromTarget_dist'};
 		$followDistanceMax = $config{$actor->{configPrefix}.'followDistanceMax'};
@@ -3937,7 +3937,7 @@ sub useTeleport {
 		if ($config{teleportAuto_item1}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item1});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item1}) if (!($item) && $config{teleportAuto_item1} =~ /^\d{3,}$/);
-		} 
+		}
 		$item = $char->inventory->getByNameID(23280) unless $item; # Beginner's Fly Wing
 		$item = $char->inventory->getByNameID(12323) unless $item; # Novice Fly Wing
 		$item = $char->inventory->getByNameID(601) unless $item;     # Fly Wing
