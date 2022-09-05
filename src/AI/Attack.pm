@@ -387,8 +387,10 @@ sub main {
 
 	Benchmark::end("ai_attack (part 1.2)") if DEBUG;
 	Benchmark::end("ai_attack (part 1)") if DEBUG;
-
-
+	
+	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
+		delete $args->{ai_attack_failed_give_up}{time};
+	}
 
 	if ($char->{sitting}) {
 		ai_setSuspend(0);
