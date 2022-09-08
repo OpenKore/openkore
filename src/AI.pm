@@ -321,7 +321,7 @@ sub ai_getAggressives {
 		if (
 			($type && ($control->{attack_auto} == 2)) ||
 			(($monster->{dmgToYou} || $monster->{missedYou}) && Misc::checkMonsterCleanness($ID)) ||
-			($config{"attackAuto_considerDamagedAggresive"} && $monster->{dmgFromYou} > 0 && Misc::checkMonsterCleanness($ID)) ||
+			($config{"attackAuto_considerDamagedAggressive"} && $monster->{dmgFromYou} > 0 && Misc::checkMonsterCleanness($ID)) ||
 			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty}))
 		) {
 			# Continuing, check whether the forced Agro is really a clean monster;
