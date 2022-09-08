@@ -71,6 +71,7 @@ attackAuto_notInTown 1
 attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
+attackAuto_considerDamagedAggressive 0
 attackDistance 1
 attackDistanceAuto 0
 attackMaxDistance 1
