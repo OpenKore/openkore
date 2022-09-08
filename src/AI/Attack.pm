@@ -51,10 +51,12 @@ sub process {
 		undef $args->{unstuck}{time};
 		undef $args->{move_start};
 
-	} elsif (AI::action eq "attack" && $args->{avoiding} && $args->{attackID}) {
-		my $target = Actor::get($args->{attackID});
-		$args->{ai_attack_giveup}{time} = time + $target->{time_move_calc} + 3;
+	} elsif (AI::action eq "attack" && $args->{avoiding} && $args->{ID}) {
+		my $ID = $args->{ID};
+		my $target = Actor::get($ID);
+		$args->{ai_attack_giveup}{time} = time;
 		undef $args->{avoiding};
+		debug "Finished avoiding movement from target $target, updating ai_attack_giveup\n", "ai_attack";
 
 	} elsif (((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
 	   && $args->{attackID} && timeOut($timeout{ai_attack_route_adjust})) {
@@ -407,14 +409,30 @@ sub main {
 		}
 
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-		my $cell = get_kite_position($char, 1, $target);
+		my $cell = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance}, 1);
 		if ($cell) {
-			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			debug TF("[runFromTarget] %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
-			$char->move($cell->{x}, $cell->{y}, $ID);
+			$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0);
 		} else {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
+		
+		if (!$cell) {
+			my $max = $args->{attackMethod}{maxDistance} + 4;
+			if ($max > 14) {
+				$max = 14;
+			}
+			$cell = meetingPosition($char, 1, $target, $max, 1);
+			if ($cell) {
+				debug TF("[runFromTarget] %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+				$args->{avoiding} = 1;
+				$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0);
+			} else {
+				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			}
+		}
+		
 		
 	} elsif(!defined $args->{attackMethod}{type}) {
 		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
@@ -425,6 +443,18 @@ sub main {
 			message T("Unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 			giveUp();
 		}
+		
+	
+	} elsif (
+		# We are out of range, but already hit enemy, should wait for him in a safe place instead of going after him
+		# Example at https://youtu.be/kTRk5Na1aCQ?t=25 in which this check did not exist, we tried getting closer intead of waiting and got hit
+		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance}) &&
+		#(!$config{attackCheckLOS} || $field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) && # Is this check needed?
+		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
+		$target->{dmgFromYou} > 0
+	) {
+		warning TF("[Out of Range - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
@@ -548,7 +578,7 @@ sub main {
 				delete $args->{attackMethod};
 				
 				if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
-					my $cell = get_kite_position($char, 1, $target);
+					my $cell = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance}, 1);
 					if ($cell) {
 						debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 						$args->{avoiding} = 1;
