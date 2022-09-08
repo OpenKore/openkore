@@ -1348,6 +1348,8 @@ sub skill_use_location {
 	my $source = Actor::get($sourceID);
 	my $skillName = Skill->new(idn => $skillID)->getName();
 	my $disp = skillUseLocation_string($source, $skillName, $args);
+	
+	delete $source->{casting};
 
 	# Print skill use message
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";

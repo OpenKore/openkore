@@ -11534,6 +11534,8 @@ sub skill_use_failed {
 	} else {
 		$errorMessage = T('Unknown error');
 	}
+	
+	delete $char->{casting};
 
 	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
 	Plugins::callHook('packet_skillfail', {
