@@ -484,7 +484,7 @@ sub processAttack {
 			}
 
 		} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
-			my $cell = get_kite_position($slave, 2, $target);
+			my $cell = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance}, 1);
 			if ($cell) {
 				debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave';
 				$slave->args->{avoiding} = 1;
@@ -621,7 +621,7 @@ sub processAttack {
 						$slave->sendMove ($realMyPos->{x},$realMyPos->{y});
 						$slave->sendAttack ($ID);
 						if ($config{$slave->{configPrefix}.'runFromTarget'} && $config{$slave->{configPrefix}.'runFromTarget_inAdvance'} && $realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_minStep'}) {
-							my $cell = get_kite_position($slave, 1, $target);
+							my $cell = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance}, 1);
 							if ($cell) {
 								debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 								$args->{avoiding} = 1;
@@ -637,7 +637,7 @@ sub processAttack {
 					if (timeOut($timeout{$slave->{ai_attack_timeout}})) {
 						$slave->sendAttack ($ID);
 						if ($config{$slave->{configPrefix}.'runFromTarget'} && $config{$slave->{configPrefix}.'runFromTarget_inAdvance'} && $realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_minStep'}) {
-							my $cell = get_kite_position($slave, 1, $target);
+							my $cell = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance}, 1);
 							if ($cell) {
 								debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 								$args->{avoiding} = 1;
