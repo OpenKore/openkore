@@ -118,6 +118,7 @@ our @EXPORT = (
 	checkAllowedMap
 	checkFollowMode
 	isMySlaveID
+	is_aggressive
 	checkMonsterCleanness
 	slave_checkMonsterCleanness
 	createCharacter
@@ -1742,6 +1743,29 @@ sub isMySlaveID {
 	return 0 if (defined $exclude && $ID eq $exclude);
 	return 0 unless (exists $char->{slaves}{$ID});
 	return 1;
+}
+
+sub is_aggressive {
+	my ($monster, $control, $type, $party) = @_;
+
+	my %plugin_args;
+	$plugin_args{monster} = $monster;
+	$plugin_args{control} = $control;
+	$plugin_args{type} = $type;
+	$plugin_args{party} = $party;
+	$plugin_args{return} = 0;
+	Plugins::callHook( ai_check_Aggressiveness => \%plugin_args );
+
+	if (
+		($plugin_args{return}) ||
+		($type && $control->{attack_auto} == 2) ||
+		(($monster->{dmgToYou} || $monster->{missedYou})) ||
+		($config{"attackAuto_considerDamagedAggressive"} && $monster->{dmgFromYou} > 0) ||
+		($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty}))
+	) {
+		return 1;
+	}
+	return 0;
 }
 
 ##
