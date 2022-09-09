@@ -63,7 +63,6 @@ allowedMaps
 allowedMaps_reaction 1
 
 attackAuto 2
-attackBeyondMaxDistance_waitForAgressive 1
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
@@ -72,6 +71,7 @@ attackAuto_notInTown 1
 attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
+attackBeyondMaxDistance_waitForAgressive 1
 attackDistance 1
 attackDistanceAuto 0
 attackMaxDistance 1
@@ -224,7 +224,6 @@ runFromTarget 0
 runFromTarget_inAdvance 0
 runFromTarget_dist 5
 runFromTarget_minStep 7
-runFromTarget_maxStep 11
 runFromTarget_maxPathDistance 13
 
 saveMap
@@ -398,8 +397,7 @@ mercenary_runFromTarget 0
 mercenary_runFromTarget_inAdvance 0
 mercenary_runFromTarget_dist 5
 mercenary_runFromTarget_minStep 7
-mercenary_runFromTarget_maxStep 11
-mercenary_runFromTarget_maxPathDistance 13
+mercenary_runFromTarget_maxPathDistance 20
 
 mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
@@ -454,8 +452,7 @@ homunculus_route_randomWalk_waitMinDistance 0
 homunculus_runFromTarget 0
 homunculus_runFromTarget_dist 5
 homunculus_runFromTarget_minStep 7
-homunculus_runFromTarget_maxStep 11
-homunculus_runFromTarget_maxPathDistance 13
+homunculus_runFromTarget_maxPathDistance 20
 
 homunculus_followDistanceMax 12
 homunculus_followDistanceMin 3
