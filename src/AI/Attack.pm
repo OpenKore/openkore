@@ -44,6 +44,22 @@ sub process {
 		delete $args->{suspended};
 	}
 
+	if ($args->{ID}) {
+		my $target = Actor::get($args->{ID});
+		my $target_is_aggressive = is_aggressive($target);
+		my @aggressives = ai_getAggressives();
+		if ($config{attackChangeTarget} && !$target_is_aggressive && @aggressives) {
+			$char->sendAttackStop;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "route");
+			AI::dequeue if (AI::action eq "attack");
+			my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
+			ai_setSuspend(0);
+			warning TF("[attackChangeTarget] %s, target %s is not aggressive, changing target to aggressive %s.\n", $char, $target, $attackTarget), 'ai_attack';
+			$char->attack($attackTarget);
+		}
+	}
+
 	if (AI::action eq "attack" && $args->{move_start}) {
 		# We've just finished moving to the monster.
 		# Don't count the time we spent on moving
