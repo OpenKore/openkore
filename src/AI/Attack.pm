@@ -51,7 +51,7 @@ sub process {
 					AI::dequeue while (AI::inQueue("attack"));
 					ai_setSuspend(0);
 					my $new_target = Actor::get($attackTarget);
-					warning TF("[attackChangeTarget] %s, target %s is not aggressive, changing target to aggressive %s.\n", $char, $target, $new_target), 'ai_attack';
+					warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
 					$char->attack($attackTarget);
 					AI::Attack::process();
 					return;
@@ -332,7 +332,7 @@ sub main {
 		 && checkSelfCondition("attackComboSlot_$i")
 		 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}) ||
 				existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{nameID}))
-		 && (!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) || 
+		 && (!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) ||
 				existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{nameID})))
 		 && checkMonsterCondition("attackComboSlot_${i}_target", $target)) {
 
@@ -410,7 +410,7 @@ sub main {
 
 	Benchmark::end("ai_attack (part 1.2)") if DEBUG;
 	Benchmark::end("ai_attack (part 1)") if DEBUG;
-	
+
 	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
 		delete $args->{ai_attack_failed_give_up}{time};
 	}
@@ -438,7 +438,7 @@ sub main {
 		} else {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
-		
+
 		if (!$cell) {
 			my $max = $args->{attackMethod}{maxDistance} + 4;
 			if ($max > 14) {
@@ -453,8 +453,8 @@ sub main {
 				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			}
 		}
-		
-		
+
+
 	} elsif(!defined $args->{attackMethod}{type}) {
 		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
@@ -464,8 +464,8 @@ sub main {
 			message T("Unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 			giveUp();
 		}
-		
-	
+
+
 	} elsif (
 		# We are out of range, but already hit enemy, should wait for him in a safe place instead of going after him
 		# Example at https://youtu.be/kTRk5Na1aCQ?t=25 in which this check did not exist, we tried getting closer intead of waiting and got hit
@@ -476,7 +476,7 @@ sub main {
 	) {
 		$args->{ai_attack_failed_waitForAgressive_give_up}{timeout} = 6 if !$args->{ai_attack_failed_waitForAgressive_give_up}{timeout};
 		$args->{ai_attack_failed_waitForAgressive_give_up}{time} = time if !$args->{ai_attack_failed_waitForAgressive_give_up}{time};
-		
+
 		if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
 			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
 			message T("[Out of Range] Waited too long for target to get closer, dropping target\n"), "ai_attack";
@@ -484,7 +484,7 @@ sub main {
 		} else {
 			warning TF("[Out of Range - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 		}
-		
+
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
@@ -498,7 +498,7 @@ sub main {
 
 		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 		my $result;
-		
+
 		if ($pos) {
 			debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
 
@@ -606,7 +606,7 @@ sub main {
 					($config{'tankMode'}) ? 0 : 7);
 				$timeout{ai_attack}{time} = time;
 				delete $args->{attackMethod};
-				
+
 				if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
 					my $cell = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance}, 1);
 					if ($cell) {
@@ -686,7 +686,7 @@ sub main {
 		}
 		$args->{dmgTo_last} = $target->{dmgTo};
 	}
-	
+
 	Plugins::callHook('AI::Attack::main', {target => $target})
 }
 
