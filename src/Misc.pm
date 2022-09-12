@@ -2573,9 +2573,9 @@ sub meetingPosition {
 	
 	my $max_path_dist;
 	if ($runFromTargetActive) {
-		$max_path_dist = $attackRouteMaxPathDistance;
-	} else {
 		$max_path_dist = $runFromTarget_maxPathDistance;
+	} else {
+		$max_path_dist = $attackRouteMaxPathDistance;
 	}
 
 	# We should not stray further than $attackMaxDistance
