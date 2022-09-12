@@ -18,6 +18,27 @@ use AI::Slave::Mercenary;
 sub process {
 	my $slave = shift;
 	
+	if ($slave->args->{ID}) {
+		my $target = Actor::get($slave->args->{ID});
+		if ($target) {
+			my $target_is_aggressive = is_aggressive_slave($slave, $target);
+			my @aggressives = ai_slave_getAggressives($slave);
+			if ($config{$slave->{configPrefix}.'attackChangeTarget'} && !$target_is_aggressive && @aggressives) {
+				my $attackTarget = getBestTarget(\@aggressives, $config{$slave->{configPrefix}.'attackCheckLOS'}, $config{$slave->{configPrefix}.'attackCanSnipe'});
+				if ($attackTarget) {
+					$slave->sendAttackStop;
+					$slave->dequeue while ($slave->inQueue("attack"));
+					$slave->setSuspend(0);
+					my $new_target = Actor::get($attackTarget);
+					warning TF("%s target is not aggressive: %s, changing target to aggressive: %s.\n", $slave, $target, $new_target), 'slave_attack';
+					$slave->attack($attackTarget);
+					AI::SlaveAttack::process($slave);
+					return;
+				}
+			}
+		}
+	}
+	
 	if ($slave->action eq "attack" && $slave->args->{suspended}) {
 		$slave->args->{ai_attack_giveup}{time} += time - $slave->args->{suspended};
 		delete $slave->args->{suspended};
@@ -35,7 +56,7 @@ sub process {
 		my $target = Actor::get($ID);
 		$slave->args->{ai_attack_giveup}{time} = time;
 		undef $slave->args->{avoiding};
-		debug "$slave finished avoiding movement from target $target, updating ai_attack_giveup\n", "ai_attack";
+		debug "$slave finished avoiding movement from target $target, updating ai_attack_giveup\n", 'slave_attack';
 
 	} elsif ((($slave->action eq "route" && $slave->action (1) eq "attack") || ($slave->action eq "move" && $slave->action (2) eq "attack"))
 	   && $slave->args->{attackID} && timeOut($timeout{$slave->{ai_route_adjust_timeout}})) {
@@ -54,7 +75,7 @@ sub process {
 			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
 		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
-			debug "$slave target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
+			debug "$slave target $target has moved since we started routing to it - Adjusting route\n", 'slave_attack';
 			$slave->dequeue;
 			$slave->dequeue if $slave->action eq "route";
 
@@ -69,7 +90,7 @@ sub process {
 			canReachMeleeAttack($realMyPos, $realMonsterPos) &&
 			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{$slave->{configPrefix}.'attackCheckLOS'} ||($config{$slave->{configPrefix}.'attackCheckLOS'} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})))
 		) {
-			debug "$slave target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
+			debug "$slave target $target is now reachable by melee attacks during routing to it.\n", 'slave_attack';
 			$slave->dequeue;
 			$slave->dequeue if $slave->action eq "route";
 
@@ -230,7 +251,7 @@ sub main {
 		 || $args->{missedYou_last}  != $target->{missedToPlayer}{$slave->{ID}}
 		 || $args->{dmgFromYou_last} != $target->{dmgFromPlayer}{$slave->{ID}}) {
 			$args->{ai_attack_giveup}{time} = time;
-			debug "Update slave attack giveup time\n", "ai_attack", 2;
+			debug "Update slave attack giveup time\n", 'slave_attack', 2;
 		}
 		$hitYou = ($args->{dmgToYou_last} != $target->{dmgToPlayer}{$slave->{ID}}
 			|| $args->{missedYou_last} != $target->{missedToPlayer}{$slave->{ID}});
@@ -314,7 +335,7 @@ sub main {
 		
 		
 		} elsif(!defined $args->{attackMethod}{type}) {
-			debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
+			debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), 'slave_attack';
 			$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
 			$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
 			if (timeOut($args->{ai_attack_failed_give_up})) {
@@ -438,7 +459,7 @@ sub main {
 			if (!$slave->args->{firstAttack}) {
 				$slave->args->{firstAttack} = 1;
 				my $pos = "$myPos->{x},$myPos->{y}";
-				debug "$slave is ready to attack target $target (which is $realMonsterDist blocks away); we're at ($pos)\n", "ai_attack";
+				debug "$slave is ready to attack target $target (which is $realMonsterDist blocks away); we're at ($pos)\n", 'slave_attack';
 			}
 
 			$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
@@ -447,7 +468,7 @@ sub main {
 				# but some time has passed and we still haven't dealed any damage.
 				# Our recorded position might be out of sync, so try to unstuck
 				$args->{unstuck}{time} = time;
-				debug("$slave attack - trying to unstuck\n", "ai_attack");
+				debug("$slave attack - trying to unstuck\n", 'slave_attack');
 				$slave->move($myPos->{x}, $myPos->{y});
 				$args->{unstuck}{count}++;
 			}
