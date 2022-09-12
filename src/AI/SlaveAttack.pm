@@ -1,13 +1,20 @@
 package AI::SlaveAttack;
 
 use strict;
+
 use Time::HiRes qw(time);
 use base qw/Actor::Slave/;
+
 use Globals;
+use AI;
+use Actor;
+use Field;
 use Log qw/message warning error debug/;
-use Utils;
+use Translation qw(T TF);
 use Misc;
-use Translation;
+use Skill;
+use Utils;
+use Utils::PathFinding;
 
 use AI::Slave;
 use AI::Slave::Homunculus;

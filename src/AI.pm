@@ -39,6 +39,7 @@ our @EXPORT = (
 	ai_follow
 	ai_partyfollow
 	ai_getAggressives
+	ai_slave_getAggressives
 	ai_getPlayerAggressives
 	ai_getMonstersAttacking
 	ai_mapRoute_searchStep
