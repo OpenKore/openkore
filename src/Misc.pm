@@ -1489,6 +1489,7 @@ sub is_aggressive_slave {
 	my ($slave, $monster, $control, $type) = @_;
 
 	my %plugin_args;
+	$plugin_args{slave} = $slave;
 	$plugin_args{monster} = $monster;
 	$plugin_args{control} = $control;
 	$plugin_args{type} = $type;
