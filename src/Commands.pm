@@ -2850,7 +2850,7 @@ sub cmdSlave {
 			my $skill = new Skill(handle => 'AM_CALLHOMUN');
 			error TF("Homunculus is in rest, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 
-	} elsif ($slave->{state} & 4 && $slave->isa("AI::Slave::Homunculus")) {
+	} elsif (!($slave->{state} & 4) && $slave->isa("AI::Slave::Homunculus")) {
 			my $skill = new Skill(handle => 'AM_RESURRECTHOMUN');
 			error TF("Homunculus is dead, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 

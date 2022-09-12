@@ -18,7 +18,7 @@ sub iterate {
 	if ($slave->{state} & 2) {
 
 	# homunculus is dead / not present
-	} elsif ($slave->{state} & 4) {
+	} elsif (!($slave->{state} & 4)) {
 
 	# homunculus is alive
 	} elsif ($slave->{appear_time} && $field->baseName eq $slave->{map}) {

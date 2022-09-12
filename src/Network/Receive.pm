@@ -2760,14 +2760,15 @@ sub homunculus_property {
 
 	my $slave = $char->{homunculus} or return;
 
-	foreach (@{$args->{KEYS}}) {
-		$slave->{$_} = $args->{$_};
-	}
 	$slave->{name} = bytesToString($args->{name});
 
 	slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
 
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
+	}
+	
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
 	# or make function in Actor class
@@ -2788,31 +2789,55 @@ sub homunculus_state_handler {
 
 	return unless $char->{homunculus};
 
-	if ($args->{state} == 0) {
-		$char->{homunculus}{renameflag} = 1;
-	} else {
-		$char->{homunculus}{renameflag} = 0;
+	if (!defined $slave->{state}) {
+		if ($args->{state} & 1) {
+			$char->{homunculus}{renameflag} = 1;
+			message T("Your Homunculus has already been renamed\n"), 'homunculus';
+		} else {
+			$char->{homunculus}{renameflag} = 0;
+			message T("Your Homunculus has not been renamed\n"), 'homunculus';
+		}
+		
+		if ($args->{state} & 2) {
+			$char->{homunculus}{vaporized} = 1;
+			message T("Your Homunculus is vaporized\n"), 'homunculus';
+		} else {
+			$char->{homunculus}{vaporized} = 0;
+			message T("Your Homunculus is not vaporized\n"), 'homunculus';
+		}
+		
+		if ($args->{state} & 4) {
+			$char->{homunculus}{dead} = 0;
+			message T("Your Homunculus is not dead\n"), 'homunculus';
+		} else {
+			$char->{homunculus}{dead} = 1;
+			message T("Your Homunculus is dead\n"), 'homunculus';
+		}
 	}
 
-	if (($args->{state} & ~8) > 1) {
-		#Disabled these code as homun skills are not resent to client, so we shouldnt do deleting skill sets in this place.
-		#foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
-		#	delete $char->{skills}{$handle};
-		#}
-		$char->{homunculus}->clear(); #TODO: Check for memory leak?
-		#undef @{$char->{homunculus}{slave_skillsID}};
-		if (defined $slave->{state} && $slave->{state} != $args->{state}) {
-			if ($args->{state} & 2) {
-				message T("Your Homunculus was vaporized!\n"), 'homunculus';
-			} elsif ($args->{state} & 4) {
-				message T("Your Homunculus died!\n"), 'homunculus';
-			}
+	if (defined $slave->{state} && $slave->{state} != $args->{state}) {
+		if (($args->{state} & 1) && !($slave->{state} & 1)) {
+			message T("Your Homunculus was renamed\n"), 'homunculus';
 		}
-	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
-		if ($slave->{state} & 2) {
-			message T("Your Homunculus was recalled!\n"), 'homunculus';
-		} elsif ($slave->{state} & 4) {
+		
+		if (($args->{state} & 2) && !($slave->{state} & 2)) {
+			message T("Your Homunculus was vaporized!\n"), 'homunculus';
+		}
+		
+		if (($args->{state} & 4) && !($slave->{state} & 4)) {
 			message T("Your Homunculus was resurrected!\n"), 'homunculus';
+		}
+		
+		if (!($args->{state} & 1) && ($slave->{state} & 1)) {
+			message T("Your Homunculus was un-renamed? lol\n"), 'homunculus';
+		}
+		
+		if (!($args->{state} & 2) && ($slave->{state} & 2)) {
+			message T("Your Homunculus was recalled!\n"), 'homunculus';
+		}
+		
+		if (!($args->{state} & 4) && ($slave->{state} & 4)) {
+			message T("Your Homunculus died!\n"), 'homunculus';
 		}
 	}
 }
@@ -2863,6 +2888,13 @@ sub homunculus_info {
 		$char->{homunculus}{accessory} = $args->{val} if $char->{homunculus};
 	} elsif ($args->{state} == HO_HEADTYPE_CHANGED) {
 		#
+	}
+	
+	my $state;
+	if ($char->{homunculus} && exists $char->{homunculus}{state}) {
+		$state = $char->{homunculus}{state};
+	} else {
+		$state = 'None';
 	}
 }
 
