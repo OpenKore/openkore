@@ -320,8 +320,6 @@ sub ai_getAggressives {
 		next if (!Misc::checkMonsterCleanness($ID));
 
 		if (Misc::is_aggressive($monster, $control, $type, $party)) {
-			# Continuing, check whether the forced Agro is really a clean monster;
-
 			if ($wantArray) {
 				# Function is called in array context
 				push @agMonsters, $ID;
@@ -365,17 +363,12 @@ sub ai_slave_getAggressives {
 		my $ID = $monster->{ID};
 		# Never attack monsters that we failed to get LOS with
 		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+		next if (!timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}));
+		next if (!Misc::slave_checkMonsterCleanness($slave, $ID));
+		my $pos = calcPosition($monster);
+		next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
-		if ((($type && ($control->{attack_auto} == 2)) ||
-			(($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) && Misc::checkMonsterCleanness($ID))) &&
-			timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}))
-		{
-			my $pos = calcPosition($monster);
-			next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
-
-			# Continuing, check whether the forced Agro is really a clean monster;
-			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
-
+		if (Misc::is_aggressive_slave($slave, $monster, $control, $type)) {
 			if ($wantArray) {
 				# Function is called in array context
 				push @agMonsters, $ID;

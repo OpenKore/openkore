@@ -118,6 +118,7 @@ our @EXPORT = (
 	checkFollowMode
 	isMySlaveID
 	is_aggressive
+	is_aggressive_slave
 	checkMonsterCleanness
 	slave_checkMonsterCleanness
 	createCharacter
@@ -1484,6 +1485,27 @@ sub is_aggressive {
 	return 0;
 }
 
+sub is_aggressive_slave {
+	my ($slave, $monster, $control, $type) = @_;
+
+	my %plugin_args;
+	$plugin_args{monster} = $monster;
+	$plugin_args{control} = $control;
+	$plugin_args{type} = $type;
+	$plugin_args{return} = 0;
+	Plugins::callHook( ai_slave_check_Aggressiveness => \%plugin_args );
+
+	if (
+		($plugin_args{return}) ||
+		($type && ($control->{attack_auto} == 2)) ||
+		($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}}) ||
+		($config{$slave->{configPrefix}."attackAuto_considerDamagedAggressive"} && $monster->{dmgFromPlayer}{$slave->{ID}} > 0)
+	) {
+		return 1;
+	}
+	return 0;
+}
+
 ##
 # boolean checkMonsterCleanness(Bytes ID)
 # ID: the monster's ID.
@@ -1491,8 +1513,8 @@ sub is_aggressive {
 #
 # Checks whether a monster is "clean" (not being attacked by anyone).
 sub checkMonsterCleanness {
+	my ($ID) = @_;
 	return 1 if (!$config{attackAuto});
-	my $ID = $_[0];
 	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
 	my $monster = $monstersList->getByID($ID);
 
@@ -2512,10 +2534,12 @@ sub meetingPosition {
 	my $runFromTarget;
 	my $runFromTarget_dist;
 	my $runFromTarget_minStep;
+	my $runFromTarget_maxPathDistance;
 
 	# actor is char
 	if ($actorType == 1) {
 		$attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance} || 13;
+		$runFromTarget_maxPathDistance = $config{runFromTarget_maxPathDistance} || 13;
 		$runFromTarget = $config{runFromTarget};
 		$runFromTarget_dist = $config{runFromTarget_dist};
 		$runFromTarget_minStep = $config{runFromTarget_minStep};
@@ -2535,7 +2559,8 @@ sub meetingPosition {
 
 	# actor is a slave
 	} elsif ($actorType == 2) {
-		$attackRouteMaxPathDistance = $config{$actor->{configPrefix}.'attackRouteMaxPathDistance'} || 13;
+		$attackRouteMaxPathDistance = $config{$actor->{configPrefix}.'attackRouteMaxPathDistance'} || 20;
+		$runFromTarget_maxPathDistance = $config{$actor->{configPrefix}.'runFromTarget_maxPathDistance'} || 20;
 		$runFromTarget = $config{$actor->{configPrefix}.'runFromTarget'};
 		$runFromTarget_dist = $config{$actor->{configPrefix}.'runFromTarget_dist'};
 		$runFromTarget_minStep = $config{$actor->{configPrefix}.'runFromTarget_minStep'};
@@ -2565,6 +2590,13 @@ sub meetingPosition {
 		if ($runActive) {
 			$min_destination_dist = $runFromTarget_minStep;
 		}
+	}
+	
+	my $max_path_dist;
+	if ($runActive) {
+		$max_path_dist = $attackRouteMaxPathDistance;
+	} else {
+		$max_path_dist = $runFromTarget_maxPathDistance;
 	}
 
 	# We should not stray further than $attackMaxDistance
@@ -2639,8 +2671,8 @@ sub meetingPosition {
 					max_y => $max_pathfinding_y
 				)->run($solution);
 
-				# 5. It must be reachable and have at max $attackRouteMaxPathDistance of route distance to it from our current position.
-				next unless ($dist >= 0 && $dist <= $attackRouteMaxPathDistance);
+				# 5. It must be reachable and have at max $max_path_dist of route distance to it from our current position.
+				next unless ($dist >= 0 && $dist <= $max_path_dist);
 
 				my $time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
 				my $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
