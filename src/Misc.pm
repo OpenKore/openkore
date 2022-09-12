@@ -2419,15 +2419,16 @@ sub canReachMeleeAttack {
 }
 
 ##
-# meetingPosition(actor, actorType, target_actor, attackMaxDistance)
+# meetingPosition(actor, actorType, target_actor, attackMaxDistance, runFromTargetActive)
 # actor: current object.
 # actorType: 1 - char | 2 - slave
 # target_actor: actor to meet.
 # attackMaxDistance: attack distance based on attack method.
+# runFromTargetActive: Wheter meetingPosition was called by a runFromTarget check
 #
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
-	my ($actor, $actorType, $target, $attackMaxDistance, $runActive) = @_;
+	my ($actor, $actorType, $target, $attackMaxDistance, $runFromTargetActive) = @_;
 
 	# Actor was going from 'pos' to 'pos_to' in the last movement
 	my %myPos;
@@ -2588,16 +2589,16 @@ sub meetingPosition {
 	my $max_destination_dist;
 	if ($ranged && $runFromTarget) {
 		$min_destination_dist = $runFromTarget_dist;
-		if ($runActive) {
+		if ($runFromTargetActive) {
 			$min_destination_dist = $runFromTarget_minStep;
 		}
 	}
 	
 	my $max_path_dist;
-	if ($runActive) {
-		$max_path_dist = $attackRouteMaxPathDistance;
-	} else {
+	if ($runFromTargetActive) {
 		$max_path_dist = $runFromTarget_maxPathDistance;
+	} else {
+		$max_path_dist = $attackRouteMaxPathDistance;
 	}
 
 	# We should not stray further than $attackMaxDistance
@@ -2685,7 +2686,7 @@ sub meetingPosition {
 				}
 				
 				my $time_target_to_get_to_spot = calcTime($realTargetPos, $spot, $targetSpeed);
-				next if ($runActive && $time_actor_to_get_to_spot > $time_target_to_get_to_spot);
+				next if ($runFromTargetActive && $time_actor_to_get_to_spot > $time_target_to_get_to_spot);
 
 				my $sum_time = $time_actor_to_get_to_spot + $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
 
