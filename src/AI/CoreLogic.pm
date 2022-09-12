@@ -2239,6 +2239,7 @@ sub processRandomWalk_stopDuringSlaveAttack {
 		my $slave = AI::SlaveManager::mustStopForAttack();
 		if (defined $slave) {
 			message TF("%s started attacking during randomWalk - Stoping movement for it.\n", $slave), 'slave';
+			$char->sendAttackStop;
 			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 		}
 	}
