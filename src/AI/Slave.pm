@@ -361,6 +361,8 @@ sub processAutoAttack {
 	 &&   (
 	       AI::isIdle
 	    || AI::is(qw(follow sitAuto attack skill_use))
+		|| (AI::action eq "route" && AI::action(1) eq "attack")
+		|| (AI::action eq "move" && AI::action(2) eq "attack")
 		|| ($config{$slave->{configPrefix}.'attackAuto_duringItemsTake'} && AI::is(qw(take items_gather items_take)))
 		|| ($config{$slave->{configPrefix}.'attackAuto_duringRandomWalk'} && AI::is('route') && AI::args()->{isRandomWalk}))
 	 && timeOut($timeout{$slave->{ai_attack_auto_timeout}})
