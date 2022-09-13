@@ -1523,6 +1523,15 @@ sub checkMonsterCleanness {
 	if ($config{attackAuto_party} && ($monster->{dmgFromParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0)) {
 		return 1;
 	}
+	
+	if (
+		scalar(grep { isMySlaveID($_) } keys %{$monster->{missedFromPlayer}}) > 0 ||
+		scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgFromPlayer}}) > 0 ||
+		scalar(grep { isMySlaveID($_) } keys %{$monster->{missedToPlayer}}) > 0 ||
+		scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgToPlayer}}) > 0
+	) {
+		return 1;
+	}
 
 	if ($config{aggressiveAntiKS}) {
 		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
@@ -2571,6 +2580,36 @@ sub meetingPosition {
 		$master = $char;
 		$masterPos = calcPosition($char);
 	}
+	
+	my $master_moving;
+	my $timeSinceMasterMoved;
+	my $realMasterPos;
+	my %masterPos;
+	my %masterPosTo;
+	my $masterSpeed;
+	if ($masterPos) {
+		$masterPos{x} = $master->{pos}{x};
+		$masterPos{y} = $master->{pos}{y};
+		$masterPosTo{x} = $master->{pos_to}{x};
+		$masterPosTo{y} = $master->{pos_to}{y};
+
+		$masterSpeed = ($master->{walk_speed} || 0.12);
+		$timeSinceMasterMoved = time - $master->{time_move};
+
+		# Calculate the time master will need to finish moving from pos to pos_to
+		my $timeMasterFinishMove = calcTime(\%masterPos, \%masterPosTo, $masterSpeed);
+
+		# master has finished moving
+		if ($timeSinceMasterMoved >= $timeMasterFinishMove) {
+			$master_moving = 0;
+			$realMasterPos->{x} = $masterPosTo{x};
+			$realMasterPos->{y} = $masterPosTo{y};
+		# master is currently moving
+		} else {
+			$master_moving = 1;
+			($realMasterPos, undef) = calcPosFromTime(\%masterPos, \%masterPosTo, $masterSpeed, $timeSinceMasterMoved);
+		}
+	}
 
 	my $melee;
 	my $ranged;
@@ -2645,9 +2684,16 @@ sub meetingPosition {
 
 				next if (positionNearPortal($spot, $config{'attackMinPortalDistance'}));
 
-				# 2. It must be within $followDistanceMax of $masterPos, if we have a master.
-				if ($masterPos) {
-					next unless (blockDistance($spot, $masterPos) <= $followDistanceMax);
+				# 2. It must be within $followDistanceMax of MasterPos, if we have a master.
+				if ($realMasterPos) {
+					if ($master_moving) {
+						my $masterPos_inTime;
+						my $totalTime = $timeSinceMasterMoved + $possible_target_pos->{timeForTargetToGetToStep};
+						($masterPos_inTime, undef) = calcPosFromTime(\%masterPos, \%masterPosTo, $masterSpeed, $totalTime);
+						next unless (blockDistance($spot, $masterPos_inTime) <= $followDistanceMax);
+					} else {
+						next unless (blockDistance($spot, $realMasterPos) <= $followDistanceMax);
+					}
 				}
 
 				# 3. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
@@ -4578,7 +4624,7 @@ sub checkSelfCondition {
 		}
 
 		if ($config{$prefix."_homunculus_dead"}) {
-			return 0 unless ($char->{homunculus}{state} & 4); # 4 = dead
+			return 0 unless (!($char->{homunculus}{state} & 4)); # 4 = dead
 		}
 
 		if ($config{$prefix."_homunculus_resting"}) {
