@@ -3044,6 +3044,25 @@ sub processAutoAttack {
 
 				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
 
+				# List monsters that our slaves are attacking
+				if (
+					   $config{attackAuto_party}
+					&& $attackOnRoute && !AI::is("take", "items_take")
+					&& !$ai_v{sitAuto_forcedBySitCommand}
+					&& timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
+					&& (
+						   (scalar(grep { isMySlaveID($_) } keys %{$monster->{missedFromPlayer}}) && $config{attackAuto_party} != 2)
+						|| (scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgFromPlayer}}) && $config{attackAuto_party} != 2)
+						|| (scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnByPlayer}}) && $config{attackAuto_party} != 2)
+						|| scalar(grep { isMySlaveID($_) } keys %{$monster->{missedToPlayer}})
+						|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
+						|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
+					   )
+				 ) {
+					push @partyMonsters, $_;
+					next;
+				}
+
 				# List monsters that party members are attacking
 				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
 				 && !$ai_v{sitAuto_forcedBySitCommand}
