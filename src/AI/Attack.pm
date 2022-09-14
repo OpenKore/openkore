@@ -248,9 +248,10 @@ sub finishAttacking {
 
 sub dropTargetWhileMoving {
 	my $ID = AI::args->{attackID};
-	message T("Dropping target - you will not kill steal others\n");
+	my $target = Actor::get($ID);
+	message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
 	$char->sendAttackStop;
-	$monsters{$ID}{ignore} = 1;
+	$target->{ignore} = 1;
 
 	# Right now, the queue is either
 	#   move, route, attack
@@ -421,7 +422,7 @@ sub main {
 
 	} elsif (!$cleanMonster) {
 		# Drop target if it's already attacked by someone else
-		message T("Dropping target - you will not kill steal others\n"), "ai_attack";
+		message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
 		$char->sendMove(@{$realMyPos}{qw(x y)});
 		AI::dequeue;
 		if ($config{teleportAuto_dropTargetKS}) {

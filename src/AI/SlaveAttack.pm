@@ -214,10 +214,11 @@ sub finishAttacking {
 
 sub dropTargetWhileMoving {
 	my $slave = shift;
-	my $ID = AI::args->{attackID};
-	message TF("Dropping target - %s will not kill steal others\n", $slave), 'slave_attack';
+	my $ID = $slave->args->{attackID};
+	my $target = Actor::get($ID);
+	message TF("%s dropping target %s - will not kill steal others\n", $slave, $target), 'slave_attack';
 	$slave->sendAttackStop;
-	$monsters{$ID}{slave_ignore} = 1;
+	$target->{slave_ignore} = 1;
 
 	# Right now, the queue is either
 	#   move, route, attack
@@ -307,7 +308,7 @@ sub main {
 		if (!$cleanMonster) {
 			# Drop target if it's already attacked by someone else
 			$target->{$slave->{ai_attack_failed_timeout}} = time if $monsters{$ID};
-			message TF("Dropping target - %s will not kill steal others\n", $slave), 'slave_attack';
+			message TF("%s dropping target %s - will not kill steal others\n", $slave, $target), 'slave_attack';
 			$slave->sendMove ($realMyPos->{x}, $realMyPos->{y});
 			$slave->dequeue;
 			if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
