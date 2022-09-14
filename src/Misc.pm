@@ -669,7 +669,7 @@ sub objectInsideCasting {
 		my $distFromCenter = blockDistance($monsterPos, \%coords);
 		
 		if ($distFromCenter <= $range) {
-			warning TF("Target %s is inside skill %s (range %d | dist %d) from caster %s.\n", $monster, $skill, $range, $distFromCenter, $caster), 'slave_attack';
+			#warning TF("Target %s is inside skill %s (range %d | dist %d) from caster %s.\n", $monster, $skill, $range, $distFromCenter, $caster), 'slave_attack';
 			return 1;
 		}
 	}
