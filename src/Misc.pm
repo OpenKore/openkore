@@ -1517,9 +1517,21 @@ sub is_aggressive {
 	if (
 		($plugin_args{return}) ||
 		($type && $control->{attack_auto} == 2) ||
-		(($monster->{dmgToYou} || $monster->{missedYou})) ||
+		(($monster->{dmgToYou} || $monster->{missedYou} || $monster->{castOnToYou})) ||
 		($config{"attackAuto_considerDamagedAggressive"} && $monster->{dmgFromYou} > 0) ||
-		($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty}))
+		($party &&
+		 (
+			   $monster->{dmgToParty}
+			|| $monster->{missedToParty}
+			|| $monster->{dmgFromParty}
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{missedToPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
+		 )
+		)
 	) {
 		return 1;
 	}
