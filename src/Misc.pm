@@ -4534,7 +4534,7 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_homunculus"} =~ /\S/) {
-		return 0 if (!!$config{$prefix."_homunculus"}) ^ ($char->{homunculus});
+		return 0 if (($config{$prefix."_homunculus"} && !$char->{homunculus}) || (!$config{$prefix."_homunculus"} && $char->{homunculus}));
 	}
 
 	if ($char->{homunculus}) {
