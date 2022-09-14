@@ -3225,12 +3225,14 @@ sub sendCashShopBuy {
 
 sub sendStartSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
+	$char->{last_skill_used_is_continuous} = 1;
 	$self->sendToServer($self->reconstruct({switch => 'start_skill_use', lv => $lv, skillID => $ID, targetID => $targetID}));
 	debug "Start Skill Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendStopSkillUse {
 	my ($self, $ID) = @_;
+	$char->{last_skill_used_is_continuous} = 0;
 	$self->sendToServer($self->reconstruct({switch => 'stop_skill_use',skillID => $ID}));
 	debug "Stop Skill Use: $ID\n", "sendPacket", 2;
 }

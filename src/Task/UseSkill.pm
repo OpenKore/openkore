@@ -82,6 +82,7 @@ use constant {
 #       This is used to check whether the target actor is still on screen.
 # - stopWhenHit - Specifies whether you want to stop using this skill if casting has
 #       been cancelled because you've been hit. The default is true.
+# - isStartUseSkill - Specifies that the skill will use 0B10 (start_skill_use) packet
 # `l`
 sub new {
 	my $class = shift;
@@ -94,6 +95,7 @@ sub new {
 
 	@{$self}{qw(actor skill)} = @args{qw(actor skill)};
 	$self->{stopWhenHit} = defined($args{stopWhenHit}) ? $args{stopWhenHit} : 1;
+	$self->{isStartUseSkill} = defined($args{isStartUseSkill}) ? $args{isStartUseSkill} : 0;
 	if ($args{target}) {
 		if (UNIVERSAL::isa($args{target}, 'Actor') && !$args{target}->isa('Actor::You') && !$args{actorList}) {
 			ArgumentException->throw("No actorList argument given.");
@@ -274,7 +276,11 @@ sub castSkill {
 
 	if ($skill->getTargetType() == Skill::TARGET_SELF) {
 		# A skill which is used on the character self.
-		$messageSender->sendSkillUse($skillID, $level, $self->{actor}{ID});
+		if($self->{isStartUseSkill}) {
+			$messageSender->sendStartSkillUse($skillID, $level, $self->{actor}{ID});
+		} else {
+			$messageSender->sendSkillUse($skillID, $level, $self->{actor}{ID});
+		}
 
 	} elsif (UNIVERSAL::isa($self->{target}, 'Actor')) {
 		# The skill must be used on an actor.

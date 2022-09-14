@@ -99,7 +99,10 @@ our %EXPORT_TAGS = (
 						VAR_BODYSTATENORMAL VAR_HEALTHSTATENORMAL VAR_STUN VAR_SLEEP VAR_UNDEAD VAR_BLIND VAR_BLOODING VAR_BSPOINT VAR_ACPOINT VAR_BSRANK
 						VAR_ACRANK VAR_CHANGESPEED VAR_CHANGESPEEDTIME VAR_MAGICATKPOWER VAR_MER_KILLCOUNT VAR_MER_FAITH VAR_MDEFPERCENT VAR_CRITICAL_DEF
 						VAR_ITEMPOWER VAR_MAGICDAMAGEREDUCE VAR_STATUSMAGICPOWER VAR_PLUSMAGICPOWEROFITEM VAR_ITEMMAGICPOWER VAR_NAME VAR_FSMSTATE
-						VAR_ATTMPOWER VAR_CARTWEIGHT VAR_HP_SELF VAR_SP_SELF VAR_COSTUME_BODY VAR_RESET_COSTUMES)],
+						VAR_ATTMPOWER VAR_CARTWEIGHT VAR_HP_SELF VAR_SP_SELF VAR_COSTUME_BODY VAR_RESET_COSTUMES
+						VAR_SP_POW VAR_SP_STA VAR_SP_WIS VAR_SP_SPL VAR_SP_CON VAR_SP_CRT
+						VAR_SP_PATK VAR_SP_SMATK VAR_SP_RES VAR_SP_MRES VAR_SP_HPLUS VAR_SP_CRATE VAR_SP_TRAITPOINT VAR_SP_AP VAR_SP_MAXAP
+						VAR_SP_UPOW VAR_SP_USTA VAR_SP_UWIS VAR_SP_USPL VAR_SP_UCON VAR_SP_UCRT)],
 	party_invite => [qw(ANSWER_ALREADY_OTHERGROUPM ANSWER_JOIN_REFUSE ANSWER_JOIN_ACCEPT ANSWER_MEMBER_OVERSIZE ANSWER_DUPLICATE
 						ANSWER_JOINMSG_REFUSE ANSWER_UNKNOWN_ERROR ANSWER_UNKNOWN_CHARACTER ANSWER_INVALID_MAPPROPERTY)],
 	party_leave => [qw(GROUPMEMBER_DELETE_LEAVE GROUPMEMBER_DELETE_EXPEL)],
@@ -426,6 +429,27 @@ use constant {
 	VAR_SP_SELF => 0xcb,
 	VAR_COSTUME_BODY => 0xcc,
 	VAR_RESET_COSTUMES => 0xcd,
+	VAR_SP_POW => 0xdb,
+	VAR_SP_STA => 0xdc,
+	VAR_SP_WIS => 0xdd,
+	VAR_SP_SPL => 0xde,
+	VAR_SP_CON => 0xdf,
+	VAR_SP_CRT => 0xe0,
+	VAR_SP_PATK => 0xe1,
+	VAR_SP_SMATK => 0xe2,
+	VAR_SP_RES => 0xe3,
+	VAR_SP_MRES => 0xe4,
+	VAR_SP_HPLUS => 0xe5,
+	VAR_SP_CRATE => 0xe6,
+	VAR_SP_TRAITPOINT => 0xe7,
+	VAR_SP_AP => 0xe8,
+	VAR_SP_MAXAP => 0xe9,
+	VAR_SP_UPOW => 0xf7,
+	VAR_SP_USTA => 0xf8,
+	VAR_SP_UWIS => 0xf9,
+	VAR_SP_USPL => 0xfa,
+	VAR_SP_UCON => 0xfb,
+	VAR_SP_UCRT => 0xfc,
 };
 
 # party invite result
@@ -1543,6 +1567,27 @@ our %stat_info_handlers = (
 	VAR_MER_KILLCOUNT, sub { $_[0]{kills} = $_[1] },
 	VAR_MER_FAITH, sub { $_[0]{faith} = $_[1] },
 	#...
+	VAR_SP_POW, sub { $_[0]{pow} = $_[1] },
+	VAR_SP_STA, sub { $_[0]{sta} = $_[1] },
+	VAR_SP_WIS, sub { $_[0]{wis} = $_[1] },
+	VAR_SP_SPL, sub { $_[0]{spl} = $_[1] },
+	VAR_SP_CON, sub { $_[0]{con} = $_[1] },
+	VAR_SP_CRT, sub { $_[0]{crt} = $_[1] },
+	VAR_SP_PATK, sub { $_[0]{patk} = $_[1] },
+	VAR_SP_SMATK, sub { $_[0]{smatk} = $_[1] },
+	VAR_SP_RES, sub { $_[0]{res} = $_[1] },
+	VAR_SP_MRES, sub { $_[0]{mres} = $_[1] },
+	VAR_SP_HPLUS, sub { $_[0]{hplus} = $_[1] },
+	VAR_SP_CRATE, sub { $_[0]{crate} = $_[1] },
+	VAR_SP_TRAITPOINT, sub { $_[0]{traitpoint} = $_[1] },
+	VAR_SP_AP, sub { $_[0]{ap} = $_[1] },
+	VAR_SP_MAXAP, sub { $_[0]{ap_max} = $_[1] },
+	VAR_SP_UPOW, sub { $_[0]{need_pow} = $_[1] },
+	VAR_SP_USTA, sub { $_[0]{need_sta} = $_[1] },
+	VAR_SP_UWIS, sub { $_[0]{need_wis} = $_[1] },
+	VAR_SP_USPL, sub { $_[0]{need_spl} = $_[1] },
+	VAR_SP_UCON, sub { $_[0]{need_con} = $_[1] },
+	VAR_SP_UCRT, sub { $_[0]{need_crt} = $_[1] },
 );
 
 # Notifies client of a character parameter change.
@@ -1643,8 +1688,32 @@ sub stats_added {
 			$char->{luk} = $args->{val};
 			debug "Luck: $args->{val}\n", "parseMsg";
 
+		} elsif ($args->{type} == VAR_SP_POW) {
+			$char->{pow} = $args->{val};
+			debug "Power: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_STA) {
+			$char->{sta} = $args->{val};
+			debug "Stamina: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_WIS) {
+			$char->{wis} = $args->{val};
+			debug "Wisdom: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_SPL) {
+			$char->{spl} = $args->{val};
+			debug "Spell: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_CON) {
+			$char->{con} = $args->{val};
+			debug "Concentration: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_CRT) {
+			$char->{crt} = $args->{val};
+			debug "Creative: $args->{val}\n", "parseMsg";
+
 		} else {
-			debug "Something: $args->{val}\n", "parseMsg";
+			error "$args->{type}: $args->{val}\n", "parseMsg";
 		}
 	}
 	Plugins::callHook('packet_charStats', {
@@ -7075,6 +7144,8 @@ sub map_change {
 		$timeout{ai}{time} = time;
 	}
 
+	$messageSender->sendStopSkillUse($char->{last_skill_used}) if $char->{last_skill_used_is_continuous};
+
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
 	});
@@ -9968,10 +10039,25 @@ sub arrowcraft_list {
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $ID = unpack("v", substr($msg, $i, 2));
 		my $item = $char->inventory->getByNameID($ID);
+		$char->{last_skill_used} = 2027 if($config{autoPoison} && $item->{name} eq $config{autoPoison});
 		binAdd(\@arrowCraftID, $item->{binID});
 	}
 
-	message T("Received Possible Arrow Craft List - type 'arrowcraft'\n");
+	if ($char->{last_skill_used} == 2027) { # GC_POISONINGWEAPON
+		message T("Received Possible Poison List - type 'poison'\n");
+		if ($config{autoPoison}) {
+			my $item = $char->inventory->getByName($config{autoPoison});
+			if($item) {
+				$messageSender->sendArrowCraft($item->{nameID});
+			} else {
+				error TF("Configured autoPoison (%s) not available.\n", $config{autoSpell});
+			}
+		} else {
+			message T("Configure autoPoison to automatically select skill for Auto Spell.\n"), 'hint';
+		}
+	} else {
+		message T("Received Possible Item List - type 'arrowcraft' or 'poison'\n");
+	}
 }
 
 # Notifies client of a character parameter change.
@@ -12096,6 +12182,26 @@ sub macro_reporter_select {
 		my $accID = unpack("a4", substr($args->{account_list}, $i, 4));
 		my $player = $playersList->getByID($accID);
 		message TF("%s\n", $player->{name});
+	}
+}
+
+# 0B8D - PACKET_ZC_REPUTE_INFO
+sub repute_info {
+	my ($self, $args) = @_;
+
+	@reputation_list = ();
+
+	my $unpack = {
+		len => 16,
+		types => 'V4',
+		keys => [qw(type type2 points points2)],
+	};
+	my $length = length $args->{reputeInfo};
+	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
+		my $repute;
+		@{$repute}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{reputeInfo}, $i, $unpack->{len}));
+
+		push @reputation_list, $repute;
 	}
 }
 

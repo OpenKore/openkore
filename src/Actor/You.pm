@@ -421,5 +421,9 @@ sub sendSit {
 }
 sub sendStand { $messageSender->sendAction(0, ACTION_STAND) }
 sub sendMove { $messageSender->sendMove(@_[1, 2]) }
+sub sendStopSkillUse {
+	my ($self) = @_;
+	$messageSender->sendStopSkillUse($self->{last_skill_used});
+}
 
 1;

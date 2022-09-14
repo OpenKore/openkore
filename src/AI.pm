@@ -567,7 +567,8 @@ sub ai_skillUse {
 		tag => shift,
 		ret => shift,
 		waitBeforeUse => { time => time, timeout => shift },
-		prefix => shift
+		prefix => shift,
+		isStartSkill => shift
 	);
 	$args{giveup}{time} = time;
 	$args{giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
@@ -594,7 +595,7 @@ sub ai_skillUse {
 #
 # FIXME: Finish and use Task::UseSkill instead.
 sub ai_skillUse2 {
-	my ($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix, $waitBeforeUse, $tag) = @_;
+	my ($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix, $waitBeforeUse, $tag, $isStartSkill) = @_;
 
 	ai_skillUse(
 		$skill->getHandle(),
@@ -604,7 +605,7 @@ sub ai_skillUse2 {
 		$skill->getTargetType == Skill::TARGET_LOCATION ? (@{$target->{pos_to}}{qw(x y)})
 			: $skill->getTargetType == Skill::TARGET_SELF ? ($skill->getOwner->{ID}, undef)
 			: ($target->{ID}, undef),
-		$tag, undef, $waitBeforeUse, $prefix
+		$tag, undef, $waitBeforeUse, $prefix, $isStartSkill
 	)
 }
 

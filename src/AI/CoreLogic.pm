@@ -735,6 +735,8 @@ sub processSkillUse {
 					$messageSender->sendSkillUse($skillID, $args->{lv}, $accountID);
 				} elsif ($args->{x} ne "") {
 					$messageSender->sendSkillUseLoc($skillID, $args->{lv}, $args->{x}, $args->{y});
+				} elsif ($args->{isStartSkill}) {
+					$messageSender->sendStartSkillUse($skillID, $args->{lv}, $args->{target});
 				} else {
 					$messageSender->sendSkillUse($skillID, $args->{lv}, $args->{target});
 				}
