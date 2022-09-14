@@ -2897,13 +2897,6 @@ sub homunculus_info {
 	} elsif ($args->{state} == HO_HEADTYPE_CHANGED) {
 		#
 	}
-	
-	my $state;
-	if ($char->{homunculus} && exists $char->{homunculus}{state}) {
-		$state = $char->{homunculus}{state};
-	} else {
-		$state = 'None';
-	}
 }
 
 # Marks a position on client's minimap (ZC_COMPASS).
