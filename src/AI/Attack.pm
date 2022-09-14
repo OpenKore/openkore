@@ -39,7 +39,7 @@ sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
 
-	if ($args->{ID}) {
+	if ($args->{ID} && !AI::is("NPC")) {
 		my $target = Actor::get($args->{ID});
 		if ($target) {
 			my $target_is_aggressive = is_aggressive($target);
