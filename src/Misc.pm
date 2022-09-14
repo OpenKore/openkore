@@ -1596,10 +1596,10 @@ sub checkMonsterCleanness {
 	if (
 		   scalar(grep { isMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
 		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
+		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
 		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{missedToPlayer}})
 		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
 		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
-		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
 	) {
 		return 1;
 	}
@@ -1614,10 +1614,10 @@ sub checkMonsterCleanness {
 		if (
 			   scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
 			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
 			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedToPlayer}})
 			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
 			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
-			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
 		) {
 			return 0;
 		}
@@ -1717,16 +1717,16 @@ sub slave_checkMonsterCleanness {
 		(
 			   $monster->{dmgFromYou}
 			|| $monster->{missedFromYou}
+			|| $monster->{castOnByYou}
 			|| $monster->{dmgToYou}
 			|| $monster->{missedYou}
-			|| $monster->{castOnByYou}
 			|| $monster->{castOnToYou}
 			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedFromPlayer}})
 			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnByPlayer}})
 			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}})
 			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}})
 			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnToPlayer}})
-			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnByPlayer}})
 		)
 	) {
 		return 1;
@@ -1742,10 +1742,10 @@ sub slave_checkMonsterCleanness {
 		if (
 			   scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
 			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
 			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedToPlayer}})
 			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
 			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
-			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
 		) {
 			return 0;
 		}
