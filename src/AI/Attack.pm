@@ -38,12 +38,23 @@ use Utils::PathFinding;
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
-
-	if ($args->{ID}) {
-		my $target = Actor::get($args->{ID});
+	
+	if (
+		   (AI::action eq "attack" && $args->{ID})
+		|| (AI::action eq "route" && AI::action (1) eq "attack" && $args->{attackID})
+		|| (AI::action eq "move" && AI::action (2) eq "attack" && $args->{attackID})
+	) {
+		my $ID;
+		if (AI::action eq "attack") {
+			$ID = $args->{ID};
+		} else {
+			$ID = $args->{attackID};
+		}
+		my $target = Actor::get($ID);
 		if ($target) {
-			my $target_is_aggressive = is_aggressive($target);
-			my @aggressives = ai_getAggressives();
+			my $party = $config{'attackAuto_party'} ? 1 : 0;
+			my $target_is_aggressive = is_aggressive($target, undef, 0, $party);
+			my @aggressives = ai_getAggressives(0, $party);
 			if ($config{attackChangeTarget} && !$target_is_aggressive && @aggressives) {
 				my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
 				if ($attackTarget) {

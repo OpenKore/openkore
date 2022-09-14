@@ -25,11 +25,22 @@ use AI::Slave::Mercenary;
 sub process {
 	my $slave = shift;
 	
-	if ($slave->args->{ID}) {
-		my $target = Actor::get($slave->args->{ID});
+	if (
+		   ($slave->action eq "attack" && $slave->args->{ID})
+		|| ($slave->action eq "route" && $slave->action (1) eq "attack" && $slave->args->{attackID})
+		|| ($slave->action eq "move" && $slave->action (2) eq "attack" && $slave->args->{attackID})
+	) {
+		my $ID;
+		if ($slave->action eq "attack") {
+			$ID = $slave->args->{ID};
+		} else {
+			$ID = $slave->args->{attackID};
+		}
+		my $target = Actor::get($ID);
 		if ($target) {
-			my $target_is_aggressive = is_aggressive_slave($slave, $target);
-			my @aggressives = ai_slave_getAggressives($slave);
+			my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
+			my $target_is_aggressive = is_aggressive_slave($slave, $target, undef, 0, $party);
+			my @aggressives = ai_slave_getAggressives($slave, 0, $party);
 			if ($config{$slave->{configPrefix}.'attackChangeTarget'} && !$target_is_aggressive && @aggressives) {
 				my $attackTarget = getBestTarget(\@aggressives, $config{$slave->{configPrefix}.'attackCheckLOS'}, $config{$slave->{configPrefix}.'attackCanSnipe'});
 				if ($attackTarget) {
