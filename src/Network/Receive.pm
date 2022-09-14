@@ -2410,7 +2410,10 @@ sub actor_died_or_disappeared {
 		my $slave = $slavesList->getByID($ID);
 		if ($args->{type} == 1) {
 			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{actorType});
-			$slave->{state} = 4;
+			$slave->{state} = 0;
+			if (isMySlaveID($ID)) {
+				$slave->{dead} = 1;
+			}
 		} else {
 			if ($args->{type} == 0) {
 				debug "Slave Disappeared: " . $slave->name . " ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
@@ -11139,6 +11142,15 @@ sub resurrection {
 		if ($player) {
 			undef $player->{'dead'};
 			$player->{deltaHp} = 0;
+		}
+		
+		if (isMySlaveID($targetID)) {
+			my $slave = $slavesList->getByID($targetID);
+			if (defined $slave) {
+				message TF("Slave Resurrected: %s\n", $slave);
+				$slave->{state} = 4;
+				$slave->{dead} = 0;
+			}
 		}
 		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
 	}
