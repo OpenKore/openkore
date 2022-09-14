@@ -1527,7 +1527,7 @@ sub is_aggressive {
 }
 
 sub is_aggressive_slave {
-	my ($slave, $monster, $control, $type) = @_;
+	my ($slave, $monster, $control, $type, $party) = @_;
 
 	my %plugin_args;
 	$plugin_args{slave} = $slave;
@@ -1540,8 +1540,24 @@ sub is_aggressive_slave {
 	if (
 		($plugin_args{return}) ||
 		($type && ($control->{attack_auto} == 2)) ||
-		($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}}) ||
-		($config{$slave->{configPrefix}."attackAuto_considerDamagedAggressive"} && $monster->{dmgFromPlayer}{$slave->{ID}} > 0)
+		($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{castOnToPlayer}{$slave->{ID}}) ||
+		($config{$slave->{configPrefix}."attackAuto_considerDamagedAggressive"} && $monster->{dmgFromPlayer}{$slave->{ID}} > 0) ||
+		($party &&
+		 (
+			   $monster->{missedFromYou}
+			|| $monster->{dmgFromYou}
+			|| $monster->{castOnByYou}
+			|| $monster->{dmgToYou}
+			|| $monster->{missedYou}
+			|| $monster->{castOnToYou}
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedFromPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnByPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnToPlayer}})
+		 )
+		)
 	) {
 		return 1;
 	}

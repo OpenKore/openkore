@@ -354,7 +354,7 @@ sub ai_getAggressives {
 # with the 'attack_auto' flag set to 2, will be considered as aggressive.
 # See also the manual for more information about this.
 sub ai_slave_getAggressives {
-	my ($slave, $type) = @_;
+	my ($slave, $type, $party) = @_;
 	my $wantArray = wantarray;
 	my $num = 0;
 	my @agMonsters;
@@ -369,7 +369,7 @@ sub ai_slave_getAggressives {
 		my $pos = calcPosition($monster);
 		next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
-		if (Misc::is_aggressive_slave($slave, $monster, $control, $type)) {
+		if (Misc::is_aggressive_slave($slave, $monster, $control, $type, $party)) {
 			if ($wantArray) {
 				# Function is called in array context
 				push @agMonsters, $ID;
