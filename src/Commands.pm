@@ -2846,11 +2846,11 @@ sub cmdSlave {
 	if (!$slave || !$slave->{appear_time}) {
 		error T("Error: No slave detected.\n");
 
-	} elsif ($slave->{state} & 2 && $slave->isa("AI::Slave::Homunculus")) {
+	} elsif ($slave->isa("AI::Slave::Homunculus") && $slave->{vaporized}) {
 			my $skill = new Skill(handle => 'AM_CALLHOMUN');
 			error TF("Homunculus is in rest, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 
-	} elsif (!($slave->{state} & 4) && $slave->isa("AI::Slave::Homunculus")) {
+	} elsif ($slave->isa("AI::Slave::Homunculus") && $slave->{dead}) {
 			my $skill = new Skill(handle => 'AM_RESURRECTHOMUN');
 			error TF("Homunculus is dead, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 
