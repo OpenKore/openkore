@@ -412,7 +412,8 @@ sub processAutoAttack {
 			my $myPos = calcPosition($slave);
 
 			# List aggressive monsters
-			@aggressives = AI::ai_slave_getAggressives($slave, 1) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
+			my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
+			@aggressives = AI::ai_slave_getAggressives($slave, 1, $party) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
 
 			# There are two types of non-aggressive monsters. We generate two lists:
 			foreach (@monstersID) {
@@ -429,18 +430,24 @@ sub processAutoAttack {
 
 				# List monsters that master and other slaves are attacking
 				if (
-					$config{$slave->{configPrefix}.'attackAuto_party'} &&
-					$attackOnRoute &&
-					(
-						$monster->{dmgFromYou} ||
-						$monster->{dmgToYou} ||
-						$monster->{missedYou} ||
-						scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}}) > 0 ||
-						scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}}) > 0 ||
-						scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}}) > 0
-					) &&
-					timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
-				) {
+					   $config{$slave->{configPrefix}.'attackAuto_party'}
+					&& $attackOnRoute
+					&& timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
+					&& (
+						   ($monster->{missedFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+						|| ($monster->{dmgFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+						|| ($monster->{castOnByYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+						|| $monster->{dmgToYou}
+						|| $monster->{missedYou}
+						|| $monster->{castOnToYou}
+						|| (scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedFromPlayer}}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+						|| (scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+						|| (scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnByPlayer}}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+						|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}})
+						|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}})
+						|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnToPlayer}})
+					   )
+				 ) {
 					push @partyMonsters, $_;
 					next;
 				}
