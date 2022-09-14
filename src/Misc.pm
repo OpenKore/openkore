@@ -3294,7 +3294,7 @@ sub countCastOn {
 
 	if ($targetID eq $accountID) {
 		$source->{castOnToYou}++;
-	} elsif ($target->isa('Actor::Player')) {
+	} elsif ($target->isa('Actor::Player') || $target->isa('Actor::Slave')) {
 		$source->{castOnToPlayer}{$targetID}++;
 	} elsif ($target->isa('Actor::Monster')) {
 		$source->{castOnToMonster}{$targetID}++;
@@ -3302,7 +3302,7 @@ sub countCastOn {
 
 	if ($sourceID eq $accountID) {
 		$target->{castOnByYou}++;
-	} elsif ($source->isa('Actor::Player')) {
+	} elsif ($source->isa('Actor::Player') || $source->isa('Actor::Slave')) {
 		$target->{castOnByPlayer}{$sourceID}++;
 	} elsif ($source->isa('Actor::Monster')) {
 		$target->{castOnByMonster}{$sourceID}++;
