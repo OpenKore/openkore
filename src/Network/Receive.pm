@@ -2816,30 +2816,35 @@ sub homunculus_state_handler {
 			$char->{homunculus}{dead} = 1;
 			message T("Your Homunculus is dead\n"), 'homunculus';
 		}
-	}
-
-	if (defined $slave->{state} && $slave->{state} != $args->{state}) {
+	
+	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
 		if (($args->{state} & 1) && !($slave->{state} & 1)) {
+			$char->{homunculus}{renameflag} = 1;
 			message T("Your Homunculus was renamed\n"), 'homunculus';
 		}
 		
 		if (($args->{state} & 2) && !($slave->{state} & 2)) {
+			$char->{homunculus}{vaporized} = 1;
 			message T("Your Homunculus was vaporized!\n"), 'homunculus';
 		}
 		
 		if (($args->{state} & 4) && !($slave->{state} & 4)) {
+			$char->{homunculus}{dead} = 0;
 			message T("Your Homunculus was resurrected!\n"), 'homunculus';
 		}
 		
 		if (!($args->{state} & 1) && ($slave->{state} & 1)) {
+			$char->{homunculus}{renameflag} = 0;
 			message T("Your Homunculus was un-renamed? lol\n"), 'homunculus';
 		}
 		
 		if (!($args->{state} & 2) && ($slave->{state} & 2)) {
+			$char->{homunculus}{vaporized} = 0;
 			message T("Your Homunculus was recalled!\n"), 'homunculus';
 		}
 		
 		if (!($args->{state} & 4) && ($slave->{state} & 4)) {
+			$char->{homunculus}{dead} = 1;
 			message T("Your Homunculus died!\n"), 'homunculus';
 		}
 	}
