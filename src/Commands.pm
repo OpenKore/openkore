@@ -3083,7 +3083,7 @@ sub cmdSlave {
 		}
 
 	} elsif ($args[0] eq "rename") {
-		if ($char->{homunculus}{renameflag}) {
+		if ($char->{homunculus}{renameflag} == 0) {
 			if ($args[1] ne '') {
 				if (length($args[1]) < 25) {
 					$messageSender->sendHomunculusName($args[1]);

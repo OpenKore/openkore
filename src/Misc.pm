@@ -4532,96 +4532,114 @@ sub checkSelfCondition {
 			return 0 if !inRange($char->{weight}, $config{$prefix."_weight"});
 		}
 	}
+	
+	my $has_homunculus = $char->has_homunculus;
 
 	if ($config{$prefix."_homunculus"} =~ /\S/) {
-		return 0 if (($config{$prefix."_homunculus"} && !$char->{homunculus}) || (!$config{$prefix."_homunculus"} && $char->{homunculus}));
+		return 0 if (($config{$prefix."_homunculus"} && !$has_homunculus) || (!$config{$prefix."_homunculus"} && $has_homunculus));
 	}
 
-	if ($char->{homunculus}) {
-		if ($config{$prefix . "_homunculus_hp"}) {
-			if ($config{$prefix."_homunculus_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}->hp_percent, $1));
-			} else {
-				return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix."_homunculus_hp"}));
-			}
-		}
-
-		if ($config{$prefix."_homunculus_sp"}) {
-			if ($config{$prefix."_homunculus_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}->sp_percent, $1));
-			} else {
-				return 0 if (!inRange($char->{homunculus}{sp}, $config{$prefix."_homunculus_sp"}));
-			}
-		}
-
-		if ($config{$prefix."_homunculus_dead"}) {
-			return 0 unless ($char->{homunculus}{dead});
-		}
-
-		if ($config{$prefix."_homunculus_resting"}) {
-			return 0 unless ($char->{homunculus}{vaporized});
-		}
-
-		if ($config{$prefix."_homunculus_onAction"}) {
-			return 0 unless (existsInList($config{$prefix . "_homunculus_onAction"}, $char->{homunculus}->action()));
-		}
-
-		if ($config{$prefix."_homunculus_notOnAction"}) {
-			return 0 if (existsInList($config{$prefix . "_homunculus_notOnAction"}, $char->{homunculus}->action()));
-		}
-
-		if ($config{$prefix."_homunculus_whenIdle"}) {
-			return 0 unless ($char->{homunculus}->isIdle);
-		}
-
-		if ($config{$prefix."_homunculus_whenNotIdle"}) {
-			return 0 if ($char->{homunculus}->isIdle);
+	if ($config{$prefix . "_homunculus_hp"}) {
+		return 0 unless ($has_homunculus);
+		if ($config{$prefix."_homunculus_hp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{homunculus}->hp_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix."_homunculus_hp"}));
 		}
 	}
+
+	if ($config{$prefix."_homunculus_sp"}) {
+		return 0 unless ($has_homunculus);
+		if ($config{$prefix."_homunculus_sp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{homunculus}->sp_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{homunculus}{sp}, $config{$prefix."_homunculus_sp"}));
+		}
+	}
+
+	if ($config{$prefix."_homunculus_onAction"}) {
+		return 0 unless ($has_homunculus);
+		return 0 unless (existsInList($config{$prefix . "_homunculus_onAction"}, $char->{homunculus}->action()));
+	}
+
+	if ($config{$prefix."_homunculus_notOnAction"}) {
+		return 0 unless ($has_homunculus);
+		return 0 if (existsInList($config{$prefix . "_homunculus_notOnAction"}, $char->{homunculus}->action()));
+	}
+
+	if ($config{$prefix."_homunculus_whenIdle"}) {
+		return 0 unless ($has_homunculus);
+		return 0 unless ($char->{homunculus}->isIdle);
+	}
+
+	if ($config{$prefix."_homunculus_whenNotIdle"}) {
+		return 0 unless ($has_homunculus);
+		return 0 if ($char->{homunculus}->isIdle);
+	}
+
+	if ($config{$prefix."_homunculus_dead"}) {
+		return 0 if ($has_homunculus);
+		return 0 unless ($char->{homunculus});
+		return 0 unless ($char->{homunculus}{dead});
+	}
+
+	if ($config{$prefix."_homunculus_resting"}) {
+		return 0 if ($has_homunculus);
+		return 0 unless ($char->{homunculus});
+		return 0 unless ($char->{homunculus}{vaporized});
+	}
+	
+	my $has_mercenary = $char->has_mercenary;
 
 	if ($config{$prefix."_mercenary"} =~ /\S/) {
-		return 0 if (!!$config{$prefix."_mercenary"}) ^ (!!$char->{mercenary});
+		return 0 if (($config{$prefix."_mercenary"} && !$has_mercenary) || (!$config{$prefix."_mercenary"} && $has_mercenary));
 	}
 
-	if ($char->{mercenary}) {
-		if ($config{$prefix . "_mercenary_hp"}) {
-			if ($config{$prefix."_mercenary_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}->hp_percent, $1));
-			} else {
-				return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix."_mercenary_hp"}));
-			}
+	if ($config{$prefix . "_mercenary_hp"}) {
+		return 0 unless ($has_mercenary);
+		if ($config{$prefix."_mercenary_hp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{mercenary}->hp_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix."_mercenary_hp"}));
 		}
+	}
 
-		if ($config{$prefix."_mercenary_sp"}) {
-			if ($config{$prefix."_mercenary_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}->sp_percent, $1));
-			} else {
-				return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
-			}
+	if ($config{$prefix."_mercenary_sp"}) {
+		return 0 unless ($has_mercenary);
+		if ($config{$prefix."_mercenary_sp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{mercenary}->sp_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
 		}
+	}
 
-		if ($config{$prefix . "_mercenary_whenStatusActive"}) {
-			return 0 unless $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusActive"});
-		}
-		if ($config{$prefix . "_mercenary_whenStatusInactive"}) {
-			return 0 if $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusInactive"});
-		}
+	if ($config{$prefix . "_mercenary_whenStatusActive"}) {
+		return 0 unless ($has_mercenary);
+		return 0 unless $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusActive"});
+	}
+	if ($config{$prefix . "_mercenary_whenStatusInactive"}) {
+		return 0 unless ($has_mercenary);
+		return 0 if $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusInactive"});
+	}
 
-		if ($config{$prefix."_mercenary_onAction"}) {
-			return 0 unless (existsInList($config{$prefix . "_mercenary_onAction"}, $char->{mercenary}->action()));
-		}
+	if ($config{$prefix."_mercenary_onAction"}) {
+		return 0 unless ($has_mercenary);
+		return 0 unless (existsInList($config{$prefix . "_mercenary_onAction"}, $char->{mercenary}->action()));
+	}
 
-		if ($config{$prefix."_mercenary_notOnAction"}) {
-			return 0 if (existsInList($config{$prefix . "_mercenary_notOnAction"}, $char->{mercenary}->action()));
-		}
+	if ($config{$prefix."_mercenary_notOnAction"}) {
+		return 0 unless ($has_mercenary);
+		return 0 if (existsInList($config{$prefix . "_mercenary_notOnAction"}, $char->{mercenary}->action()));
+	}
 
-		if ($config{$prefix."_mercenary_whenIdle"}) {
-			return 0 unless ($char->{mercenary}->isIdle);
-		}
+	if ($config{$prefix."_mercenary_whenIdle"}) {
+		return 0 unless ($has_mercenary);
+		return 0 unless ($char->{mercenary}->isIdle);
+	}
 
-		if ($config{$prefix."_mercenary_whenNotIdle"}) {
-			return 0 if ($char->{mercenary}->isIdle);
-		}
+	if ($config{$prefix."_mercenary_whenNotIdle"}) {
+		return 0 unless ($has_mercenary);
+		return 0 if ($char->{mercenary}->isIdle);
 	}
 
 	# check skill use SP if this is a 'use skill' condition

@@ -1757,7 +1757,7 @@ sub actor_display {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 	my ($actor, $mustAdd);
-
+	
 	#### Initialize ####
 
 	my $nameID = unpack("V", $args->{ID});
@@ -2232,7 +2232,7 @@ typedef enum <unnamed-tag> {
 		        Plugins::callHook('pet_moved', $actor);
 		} elsif ($actor->isa('Actor::Slave')) {
 			debug "Slave Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-		        Plugins::callHook('slave_moved', $actor);
+			   Plugins::callHook('slave_moved', $actor);
 		} elsif ($actor->isa('Actor::Portal')) {
 			# This can never happen of course.
 			debug "Portal Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
@@ -2413,6 +2413,12 @@ sub actor_died_or_disappeared {
 			$slave->{state} = 0;
 			if (isMySlaveID($ID)) {
 				$slave->{dead} = 1;
+				if ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus")) {
+					AI::SlaveManager::removeSlave($slave) if ($char->has_homunculus);
+					
+				} elsif ($slave->isa("AI::Slave::Mercenary") || $slave->isa("Actor::Slave::Mercenary")) {
+					AI::SlaveManager::removeSlave($slave) if ($char->has_mercenary);
+				}
 			}
 		} else {
 			if ($args->{type} == 0) {
@@ -2791,6 +2797,7 @@ sub homunculus_state_handler {
 	# 4 - dead
 
 	return unless $char->{homunculus};
+	$char->{homunculus}->clear();
 
 	if (!defined $slave->{state}) {
 		if ($args->{state} & 1) {
@@ -2803,17 +2810,21 @@ sub homunculus_state_handler {
 		
 		if ($args->{state} & 2) {
 			$char->{homunculus}{vaporized} = 1;
+			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
 			message T("Your Homunculus is vaporized\n"), 'homunculus';
 		} else {
 			$char->{homunculus}{vaporized} = 0;
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
 			message T("Your Homunculus is not vaporized\n"), 'homunculus';
 		}
 		
 		if ($args->{state} & 4) {
 			$char->{homunculus}{dead} = 0;
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
 			message T("Your Homunculus is not dead\n"), 'homunculus';
 		} else {
 			$char->{homunculus}{dead} = 1;
+			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
 			message T("Your Homunculus is dead\n"), 'homunculus';
 		}
 	
@@ -2825,11 +2836,13 @@ sub homunculus_state_handler {
 		
 		if (($args->{state} & 2) && !($slave->{state} & 2)) {
 			$char->{homunculus}{vaporized} = 1;
+			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
 			message T("Your Homunculus was vaporized!\n"), 'homunculus';
 		}
 		
 		if (($args->{state} & 4) && !($slave->{state} & 4)) {
 			$char->{homunculus}{dead} = 0;
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
 			message T("Your Homunculus was resurrected!\n"), 'homunculus';
 		}
 		
@@ -2840,11 +2853,13 @@ sub homunculus_state_handler {
 		
 		if (!($args->{state} & 2) && ($slave->{state} & 2)) {
 			$char->{homunculus}{vaporized} = 0;
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
 			message T("Your Homunculus was recalled!\n"), 'homunculus';
 		}
 		
 		if (!($args->{state} & 4) && ($slave->{state} & 4)) {
 			$char->{homunculus}{dead} = 1;
+			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
 			message T("Your Homunculus died!\n"), 'homunculus';
 		}
 	}
@@ -2885,7 +2900,7 @@ sub homunculus_info {
 				# After a teleport the homunculus object is still AI::Slave::Homunculus, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Homunculus, so we change it back
 				bless $char->{homunculus}, 'Actor::Slave::Homunculus';
 			}
-			AI::SlaveManager::addSlave ($char->{homunculus});
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
 			$char->{homunculus}{appear_time} = time;
 		}
 	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
@@ -10899,7 +10914,7 @@ sub mercenary_init {
 			# After a teleport the mercenary object is still AI::Slave::Mercenary, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Mercenary, so we change it back
 			bless $char->{mercenary}, 'Actor::Slave::Mercenary';
 		}
-		AI::SlaveManager::addSlave ($char->{mercenary});
+		AI::SlaveManager::addSlave($char->{mercenary}) if (!$char->has_mercenary);
 	}
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
@@ -10914,8 +10929,10 @@ sub mercenary_init {
 
 # +message_string
 sub mercenary_off {
+	#delete $char->{slaves}{$char->{mercenary}{ID}};
+	AI::SlaveManager::removeSlave($char->{mercenary}) if ($char->has_mercenary);
+	
 	$slavesList->removeByID($char->{mercenary}{ID});
-	delete $char->{slaves}{$char->{mercenary}{ID}};
 	delete $char->{mercenary};
 }
 # -message_string
@@ -11144,10 +11161,11 @@ sub resurrection {
 		
 		if (isMySlaveID($targetID)) {
 			my $slave = $slavesList->getByID($targetID);
-			if (defined $slave) {
+			if (defined $slave && ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus"))) {
 				message TF("Slave Resurrected: %s\n", $slave);
 				$slave->{state} = 4;
 				$slave->{dead} = 0;
+				AI::SlaveManager::addSlave($slave) if (!$char->has_homunculus);
 			}
 		}
 		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
