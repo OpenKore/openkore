@@ -38,7 +38,7 @@ use Utils::PathFinding;
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
-	
+  
 	if (
 		   (AI::action eq "attack" && $args->{ID})
 		|| (AI::action eq "route" && AI::action (1) eq "attack" && $args->{attackID})
