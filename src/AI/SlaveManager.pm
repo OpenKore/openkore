@@ -53,6 +53,11 @@ sub addSlave {
 	$char->{slaves}{$actor->{ID}} = $actor;
 }
 
+sub removeSlave {
+	my $actor = shift;
+	delete $char->{slaves}{$actor->{ID}};
+}
+
 sub clear {
 	return unless defined $char;
 	
