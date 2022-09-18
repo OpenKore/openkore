@@ -86,6 +86,26 @@ sub new {
 	return $self;
 }
 
+sub has_homunculus {
+	my ($self) = @_;
+	
+	if ($self && $self->{homunculus} && $self->{slaves} && scalar(keys(%{$self->{slaves}})) && $self->{homunculus}{ID} && exists $self->{slaves}{$self->{homunculus}{ID}}) {
+		return 1;
+	}
+	
+	return 0;
+}
+
+sub has_mercenary {
+	my ($self) = @_;
+	
+	if ($self && $self->{mercenary} && $self->{slaves} && scalar(keys(%{$self->{slaves}})) && $self->{mercenary}{ID} && exists $self->{slaves}{$self->{mercenary}{ID}}) {
+		return 1;
+	}
+	
+	return 0;
+} 
+
 sub nameString {
 	my ($self, $otherActor) = @_;
 

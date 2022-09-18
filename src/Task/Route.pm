@@ -114,6 +114,12 @@ sub new {
 	}
 
 	$self->{actor} = $args{actor};
+	
+	# Pass a weak reference of mercenary/homunculus to ourselves in order to avoid circular references (memory leaks).
+	if ($self->{actor}->isa("AI::Slave::Homunculus") || $self->{actor}->isa("Actor::Slave::Homunculus") || $self->{actor}->isa("AI::Slave::Mercenary") || $self->{actor}->isa("Actor::Slave::Mercenary")) {
+		Scalar::Util::weaken($self->{actor});
+	}
+	
 	$self->{dest}{map} = $args{field};
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
