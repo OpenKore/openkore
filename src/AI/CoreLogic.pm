@@ -579,6 +579,11 @@ sub processPortalRecording {
 			dsty => $char->{pos}{y}
 		});
 	}
+	
+	if ($config{portalRecord_recompileAfter}) {
+		Settings::loadByRegexp(qr/portals/);
+		Misc::compilePortals() if Misc::compilePortals_check();
+	}
 }
 
 ##### ESCAPE UNKNOWN MAPS #####
