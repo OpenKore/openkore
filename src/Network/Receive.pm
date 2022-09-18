@@ -8070,7 +8070,7 @@ sub party_join {
 			$char->{party}{joined} = 1;
 			Plugins::callHook('packet_partyJoin', { partyName => bytesToString($info->{name}) });
 		} else {
-			message TF("%s joined your party '%s'\n", $info->{user}, bytesToString($info->{name})), undef, 1;
+			message TF("%s joined your party '%s'\n", bytesToString($info->{user}), bytesToString($info->{name})), undef, 1;
 		}
 	}
 
