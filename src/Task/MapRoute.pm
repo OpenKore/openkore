@@ -325,11 +325,42 @@ sub iterate {
 			} else {
 				my $closest_portal_binID;
 				my $closest_portal_dist;
-				for my $portal (@$portalsList) {
+				
+				my $current_portal = portalExists($field->baseName, $self->{mapSolution}[0]{pos});
+				my ($current_from,$current_to) = split /=/, $self->{mapSolution}[0]{portal};
+				my ($current_to_map,$current_to_x,$current_to_y) = split / /, $current_to;
+				my $current_pos = { x=>$current_to_x, y=>$current_to_y };
+				debug TF("Bugged current portal at %s (%s,%s) to %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $current_to_map, $current_to_x, $current_to_y), "route";
+				PORTAL: for my $portal (@$portalsList) {
+					my $exist_portal = portalExists($field->baseName, $portal->{pos});
+					if ($current_portal && $exist_portal) {
+						my $entry = $portals_lut{$exist_portal};
+						DEST: for my $dest (grep { $entry->{dest}{$_}{enabled} } keys %{$entry->{dest}}) {
+						debug TF("Possible exist portal at %s (%s,%s) to %s (%s,%s).\n", $field->baseName, $portal->{pos}{x}, $portal->{pos}{y}, $entry->{dest}{$dest}{map}, $entry->{dest}{$dest}{x}, $entry->{dest}{$dest}{y}), "route";
+							next DEST unless ($entry->{dest}{$dest}{map} eq $current_to_map);
+							next DEST unless ( ($entry->{dest}{$dest}{x} == $current_to_x && $entry->{dest}{$dest}{y} == $current_to_y) || (Task::Route->getRoute( \@solution, $field, $entry->{dest}{$dest}, $current_pos )) );
+							#next DEST unless (blockDistance($entry->{dest}{$dest}, $current_pos) < 20);
+							
+							my $missed = {};
+							$missed->{time} = time;
+							$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+							$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+							push(@portals_lut_missed, $missed);
+							delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+							warning TF("Unable to use portal at %s (%s,%s) but there is another similar close portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $field->baseName, $entry->{dest}{$dest}{x}, $entry->{dest}{$dest}{y}), "route";
+							delete $self->{missing_portal};
+							delete $self->{guess_portal};
+							$self->initMapCalculator();	# redo MAP router
+							return;
+						}
+						next PORTAL; # Only guess unknown portals
+					}
+					
+					next PORTAL unless ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos_to}, $portal->{pos} ) );
+					
 					my $dist = blockDistance($self->{mapSolution}[0]{pos}, $portal->{pos});
-					next if (defined $closest_portal_dist && $closest_portal_dist < $dist);
-					next if (portalExists($field->baseName, $portal->{pos})); # Only guess unknown portals
-					next unless ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos_to}, $self->{guess_portal}{pos} ) );
+					next PORTAL if (defined $closest_portal_dist && $closest_portal_dist < $dist);
+					
 					$closest_portal_binID = $portal->{binID};
 					$closest_portal_dist = $dist;
 				}
