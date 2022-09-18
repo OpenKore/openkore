@@ -39,6 +39,7 @@ our @EXPORT = (
 	ai_follow
 	ai_partyfollow
 	ai_getAggressives
+	ai_slave_getAggressives
 	ai_getPlayerAggressives
 	ai_getMonstersAttacking
 	ai_mapRoute_searchStep
@@ -320,8 +321,6 @@ sub ai_getAggressives {
 		next if (!Misc::checkMonsterCleanness($ID));
 
 		if (Misc::is_aggressive($monster, $control, $type, $party)) {
-			# Continuing, check whether the forced Agro is really a clean monster;
-
 			if ($wantArray) {
 				# Function is called in array context
 				push @agMonsters, $ID;
@@ -355,7 +354,7 @@ sub ai_getAggressives {
 # with the 'attack_auto' flag set to 2, will be considered as aggressive.
 # See also the manual for more information about this.
 sub ai_slave_getAggressives {
-	my ($slave, $type) = @_;
+	my ($slave, $type, $party) = @_;
 	my $wantArray = wantarray;
 	my $num = 0;
 	my @agMonsters;
@@ -365,17 +364,12 @@ sub ai_slave_getAggressives {
 		my $ID = $monster->{ID};
 		# Never attack monsters that we failed to get LOS with
 		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+		next if (!timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}));
+		next if (!Misc::slave_checkMonsterCleanness($slave, $ID));
+		my $pos = calcPosition($monster);
+		next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
-		if ((($type && ($control->{attack_auto} == 2)) ||
-			(($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) && Misc::checkMonsterCleanness($ID))) &&
-			timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}))
-		{
-			my $pos = calcPosition($monster);
-			next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
-
-			# Continuing, check whether the forced Agro is really a clean monster;
-			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
-
+		if (Misc::is_aggressive_slave($slave, $monster, $control, $type, $party)) {
 			if ($wantArray) {
 				# Function is called in array context
 				push @agMonsters, $ID;
