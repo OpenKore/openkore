@@ -56,7 +56,10 @@ ai_attack_failedLOS 12
 
 # Give up attacking a monster if it can't be reached within x seconds
 ai_attack_giveup 6
+
 ai_check_monster_auto 0.4
+ai_homunculus_check_monster_auto 0.2
+ai_mercenary_check_monster_auto 0.2
 
 # If you've just killed a monster, and there are no aggressives,
 # and you're not picking up any items, wait x seconds before doing

@@ -38,12 +38,23 @@ use Utils::PathFinding;
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
-
-	if ($args->{ID} && !AI::is("NPC")) {
-		my $target = Actor::get($args->{ID});
+  
+	if (
+		   (AI::action eq "attack" && $args->{ID})
+		|| (AI::action eq "route" && AI::action (1) eq "attack" && $args->{attackID})
+		|| (AI::action eq "move" && AI::action (2) eq "attack" && $args->{attackID})
+	) {
+		my $ID;
+		if (AI::action eq "attack") {
+			$ID = $args->{ID};
+		} else {
+			$ID = $args->{attackID};
+		}
+		my $target = Actor::get($ID);
 		if ($target) {
-			my $target_is_aggressive = is_aggressive($target);
-			my @aggressives = ai_getAggressives();
+			my $party = $config{'attackAuto_party'} ? 1 : 0;
+			my $target_is_aggressive = is_aggressive($target, undef, 0, $party);
+			my @aggressives = ai_getAggressives(0, $party);
 			if ($config{attackChangeTarget} && !$target_is_aggressive && @aggressives) {
 				my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
 				if ($attackTarget) {
@@ -248,9 +259,10 @@ sub finishAttacking {
 
 sub dropTargetWhileMoving {
 	my $ID = AI::args->{attackID};
-	message T("Dropping target - you will not kill steal others\n");
+	my $target = Actor::get($ID);
+	message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
 	$char->sendAttackStop;
-	$monsters{$ID}{ignore} = 1;
+	$target->{ignore} = 1;
 
 	# Right now, the queue is either
 	#   move, route, attack
@@ -421,7 +433,7 @@ sub main {
 
 	} elsif (!$cleanMonster) {
 		# Drop target if it's already attacked by someone else
-		message T("Dropping target - you will not kill steal others\n"), "ai_attack";
+		message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
 		$char->sendMove(@{$realMyPos}{qw(x y)});
 		AI::dequeue;
 		if ($config{teleportAuto_dropTargetKS}) {
