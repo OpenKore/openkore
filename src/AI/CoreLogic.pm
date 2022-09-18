@@ -528,6 +528,7 @@ sub processPortalRecording {
 
 
 	my ($ID, $destName);
+	my $recorded = 0;
 
 	# Record information about destination portal
 	if ($config{portalRecord} > 1 &&
@@ -553,6 +554,7 @@ sub processPortalRecording {
 			dstx => $sourcePos{x},
 			dsty => $sourcePos{y}
 		});
+		$recorded = 1;
 	}
 
 	# Record information about the source portal
@@ -578,9 +580,10 @@ sub processPortalRecording {
 			dstx => $char->{pos}{x},
 			dsty => $char->{pos}{y}
 		});
+		$recorded = 1;
 	}
 	
-	if ($config{portalRecord_recompileAfter}) {
+	if ($recorded && $config{portalRecord_recompileAfter}) {
 		Settings::loadByRegexp(qr/portals/);
 		Misc::compilePortals() if Misc::compilePortals_check();
 	}
