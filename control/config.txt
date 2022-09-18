@@ -356,6 +356,7 @@ autoTalkCont 1
 noAutoSkill 0
 portalCompile 1
 portalRecord 2
+portalRecord_recompileAfter 1
 missDamage 0
 
 tankersList
