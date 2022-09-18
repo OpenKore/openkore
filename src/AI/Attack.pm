@@ -286,13 +286,6 @@ sub main {
 
 	# Update information about the monster and the current situation
 	my $args = AI::args;
-	my $followIndex = AI::findAction("follow");
-	my $following;
-	my $followID;
-	if (defined $followIndex) {
-		$following = AI::args($followIndex)->{following};
-		$followID = AI::args($followIndex)->{ID};
-	}
 
 	my $ID = $args->{ID};
 	my $target = Actor::get($ID);
