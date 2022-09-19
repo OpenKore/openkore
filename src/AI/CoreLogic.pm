@@ -3166,6 +3166,7 @@ sub processItemsTake {
 			AI::args->{started} = 1;
 			AI::args->{ai_items_take_delay}{time} = time;
 			take($foundID);
+			Plugins::callHook('ai_items_take');
 		} elsif (AI::args->{started} || timeOut(AI::args->{ai_items_take_end})) {
 			$timeout{'ai_attack_auto'}{'time'} = 0;
 			AI::dequeue;
