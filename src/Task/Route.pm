@@ -549,12 +549,13 @@ sub resetRoute {
 }
 
 ##
-# boolean Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true])
+# boolean Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true], [boolean self_call = false])
 # $solution: The route solution will be stored in here.
 # field: the field on which a route must be calculated.
 # start: The is the start coordinate.
 # dest: The destination coordinate.
 # avoidWalls: 0 if you don't want to avoid walls on route.
+# self_call: 1 if it was called from inside this module.
 # Returns: 1 if the calculation succeeded, 0 if not.
 #
 # Calculate how to walk from $start to $dest on field $field, or check whether there
