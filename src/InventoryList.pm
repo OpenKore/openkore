@@ -144,14 +144,33 @@ if (DEBUG) {
 #
 # See also: $Actor->{ID}
 sub getByName {
-	my ($self, $name) = @_;
+	my ($self, $name, $onlyIdentified) = @_;
 	assert(defined $name, "This method requires a defined item name") if DEBUG;
-	my $indexSlot = $self->{nameIndex}{lc($name)};
-	if ($indexSlot) {
-		return $self->get($indexSlot->[0]);
-	} else {
-		return undef;
+	for my $item (@$self) {
+		next unless (!$onlyIdentified || $item->{identified});
+		if (lc($item->{name}) eq lc($name)) {
+			return $item;
+		}
 	}
+}
+
+##
+# Actor::Item $InventoryList->sumByName(String name)
+#
+# Returns the amount of items with a given name.
+# If nothing is found, 0 is returned.
+sub sumByName {
+	my ($self, $name, $onlyIdentified) = @_;
+	assert(defined $name, "This method requires a defined item name") if DEBUG;
+	my $sum = 0;
+	for my $item (@$self) {
+		next unless (!$onlyIdentified || $item->{identified});
+		if (lc($item->{name}) eq lc($name)) {
+			$sum = $sum + $item->{amount};
+		}
+	}
+
+	return $sum;
 }
 
 ##
@@ -160,8 +179,9 @@ sub getByName {
 # Return the first Actor::Item object, whose 'nameID' field is equal to $nameID.
 # If nothing is found, undef is returned.
 sub getByNameID {
-	my ($self, $nameID) = @_;
+	my ($self, $nameID, $onlyIdentified) = @_;
 	for my $item (@$self) {
+		next unless (!$onlyIdentified || $item->{identified});
 		if ($item->{nameID} eq $nameID) {
 			return $item;
 		}
@@ -175,9 +195,10 @@ sub getByNameID {
 # Returns the amount of items with a given nameID.
 # If nothing is found, 0 is returned.
 sub sumByNameID {
-	my ($self, $id) = @_;
+	my ($self, $id, $onlyIdentified) = @_;
 	my $sum = 0;
 	for my $item (@$self) {
+		next unless (!$onlyIdentified || $item->{identified});
 		if ($item->{nameID} == $id) {
 			$sum = $sum + $item->{amount};
 		}
@@ -388,20 +409,6 @@ sub onNameChange {
 		}
 	}
 	assert(0, 'This should never be reached.') if DEBUG;
-}
-
-# total amount of the same name items
-sub sumByName {
-	my ($self, $name) = @_;
-	assert(defined $name, "This method requires a defined item name") if DEBUG;
-	my $sum = 0;
-	for my $item (@$self) {
-		if (lc($item->{name}) eq lc($name)) {
-			$sum = $sum + $item->{amount};
-		}
-	}
-
-	return $sum;
 }
 
 # isReady is true if this InventoryList has actionable data. Eg, storage is open, or we have a cart, etc.
