@@ -152,6 +152,7 @@ sub getByName {
 			return $item;
 		}
 	}
+	return undef;
 }
 
 ##
@@ -169,7 +170,6 @@ sub sumByName {
 			$sum = $sum + $item->{amount};
 		}
 	}
-
 	return $sum;
 }
 
@@ -203,7 +203,6 @@ sub sumByNameID {
 			$sum = $sum + $item->{amount};
 		}
 	}
-
 	return $sum;
 }
 
