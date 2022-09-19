@@ -106,7 +106,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid Coordinates argument.");
 	}
 
-	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal', 'avoidWalls', 'notifyUponArrival', 'isRandomWalk', 'isSlaveRescue', 'LOSSubRoute', 'meetingSubRoute');
+	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal', 'avoidWalls', 'notifyUponArrival', 'isRandomWalk', 'isSlaveRescue', 'isMoveNearSlave', 'LOSSubRoute', 'meetingSubRoute');
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
@@ -204,7 +204,7 @@ sub iterate {
 			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
 			$self->setDone();
 		
-		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls})) {
+		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls}, 1)) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
 			
 			@{$self->{last_pos}}{qw(x y)} = @{$pos}{qw(x y)};
@@ -549,12 +549,13 @@ sub resetRoute {
 }
 
 ##
-# boolean Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true])
+# boolean Task::Route->getRoute(Array* solution, Field field, Hash* start, Hash* dest, [boolean avoidWalls = true], [boolean self_call = false])
 # $solution: The route solution will be stored in here.
 # field: the field on which a route must be calculated.
 # start: The is the start coordinate.
 # dest: The destination coordinate.
 # avoidWalls: 0 if you don't want to avoid walls on route.
+# self_call: 1 if it was called from inside this module.
 # Returns: 1 if the calculation succeeded, 0 if not.
 #
 # Calculate how to walk from $start to $dest on field $field, or check whether there
@@ -566,7 +567,7 @@ sub resetRoute {
 # This function is a convenience wrapper function for the stuff
 # in Utils/PathFinding.pm
 sub getRoute {
-	my ($class, $solution, $field, $start, $dest, $avoidWalls) = @_;
+	my ($class, $solution, $field, $start, $dest, $avoidWalls, $self_call) = @_;
 	assertClass($field, 'Field') if DEBUG;
 	if (!defined $dest->{x} || $dest->{y} eq '') {
 		@{$solution} = () if ($solution);
@@ -586,8 +587,26 @@ sub getRoute {
 		return 0;
 	}
 
+	my %plugin_args;
+	$plugin_args{self} = $class;
+	$plugin_args{self_call} = $self_call;
+	$plugin_args{start} = $closest_start;
+	$plugin_args{dest} = $closest_dest;
+	$plugin_args{field} = $field;
+	$plugin_args{avoidWalls} = $avoidWalls;
+	$plugin_args{return} = 0;
+	
+	Plugins::callHook( getRoute => \%plugin_args );
+	
+	my $pathfinding;
+	if ($plugin_args{return}) {
+		$pathfinding = $plugin_args{pathfinding};
+	} else {
+		$pathfinding = new PathFinding();
+	}
+
 	# Calculate path
-	my $pathfinding = new PathFinding(
+	$pathfinding->reset(
 		start => $closest_start,
 		dest  => $closest_dest,
 		field => $field,
