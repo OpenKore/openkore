@@ -722,10 +722,16 @@ sub _onPaint {
 	}
 	
 	if ($self->{route} && @{$self->{route}}) {
-		$dc->SetPen(wxWHITE_PEN);
 		$dc->SetBrush($self->{brush}{dest});
 		
-		if ($config{wx_map_route}) {
+		if ($config{wx_map_route} == 2) {
+			$dc->SetPen(wxRED_PEN);
+			foreach my $pos (@{$self->{route}}) {
+				($x, $y) = $self->_posXYToView ($pos->{x}, $pos->{y});
+				$dc->DrawEllipse($x - 1, $y - 1, 1, 1);
+			}
+		} elsif ($config{wx_map_route} == 1) {
+			$dc->SetPen(wxWHITE_PEN);
 			my $i = 0;
 			for (grep {not $i++ % ($portal_d * 2)} reverse @{$self->{route}}) {
 				($x, $y) = $self->_posXYToView ($_->{x}, $_->{y});
