@@ -881,6 +881,7 @@ buyAuto {
 	minAmount 2
 	maxAmount 3
 	batchSize
+	onlyIdentified
 	disabled 0
 	maxBase
 	minBase
