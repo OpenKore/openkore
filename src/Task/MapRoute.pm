@@ -323,55 +323,70 @@ sub iterate {
 				$self->initMapCalculator();	# redo MAP router
 				
 			} else {
-				if (!exists $self->{guess_portal}) {
-					my $closest_portal_binID;
-					my $closest_portal_dist;
-					for my $portal (@$portalsList) {
-						my $dist = blockDistance($self->{actor}{pos_to}, $portal->{pos});
-						next if (exists $self->{guess_skip} && exists $self->{guess_skip}{$portal->{binID}});
-						next if (defined $closest_portal_dist && $closest_portal_dist < $dist);
-						next if (portalExists($field->baseName, $portal->{pos})); # Only guess unknown portals
-						$closest_portal_binID = $portal->{binID};
-						$closest_portal_dist = $dist;
-					}
-					if (defined $closest_portal_binID) {
-						$self->{guess_portal} = $portalsList->get($closest_portal_binID);
-						warning TF("Guessing our desired portal to be  %s (%s,%s).\n", $field->baseName, $self->{guess_portal}{pos}{x}, $self->{guess_portal}{pos}{y}), "route";
-					} else {
-						my $missed = {};
-						$missed->{time} = time;
-						$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
-						$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-						push(@portals_lut_missed, $missed);
-						delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
-						warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
-						delete $self->{missing_portal};
-						$self->initMapCalculator();	# redo MAP router
+				my $closest_portal_binID;
+				my $closest_portal_dist;
+				
+				my $current_portal = portalExists($field->baseName, $self->{mapSolution}[0]{pos});
+				my ($current_from,$current_to) = split /=/, $self->{mapSolution}[0]{portal};
+				my ($current_to_map,$current_to_x,$current_to_y) = split / /, $current_to;
+				my $current_pos = { x=>$current_to_x, y=>$current_to_y };
+				debug TF("Bugged current portal at %s (%s,%s) to %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $current_to_map, $current_to_x, $current_to_y), "route";
+				PORTAL: for my $portal (@$portalsList) {
+					my $exist_portal = portalExists($field->baseName, $portal->{pos});
+					if ($current_portal && $exist_portal) {
+						my $entry = $portals_lut{$exist_portal};
+						DEST: for my $dest (grep { $entry->{dest}{$_}{enabled} } keys %{$entry->{dest}}) {
+						debug TF("Possible exist portal at %s (%s,%s) to %s (%s,%s).\n", $field->baseName, $portal->{pos}{x}, $portal->{pos}{y}, $entry->{dest}{$dest}{map}, $entry->{dest}{$dest}{x}, $entry->{dest}{$dest}{y}), "route";
+							next DEST unless ($entry->{dest}{$dest}{map} eq $current_to_map);
+							next DEST unless ( ($entry->{dest}{$dest}{x} == $current_to_x && $entry->{dest}{$dest}{y} == $current_to_y) || (Task::Route->getRoute( \@solution, $field, $entry->{dest}{$dest}, $current_pos )) );
+							#next DEST unless (blockDistance($entry->{dest}{$dest}, $current_pos) < 20);
+							
+							my $missed = {};
+							$missed->{time} = time;
+							$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+							$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+							push(@portals_lut_missed, $missed);
+							delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+							warning TF("Unable to use portal at %s (%s,%s) but there is another similar close portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $field->baseName, $entry->{dest}{$dest}{x}, $entry->{dest}{$dest}{y}), "route";
+							delete $self->{missing_portal};
+							delete $self->{guess_portal};
+							$self->initMapCalculator();	# redo MAP router
+							return;
+						}
+						next PORTAL; # Only guess unknown portals
 					}
 					
+					next PORTAL unless ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos_to}, $portal->{pos} ) );
+					
+					my $dist = blockDistance($self->{mapSolution}[0]{pos}, $portal->{pos});
+					next PORTAL if (defined $closest_portal_dist && $closest_portal_dist < $dist);
+					
+					$closest_portal_binID = $portal->{binID};
+					$closest_portal_dist = $dist;
+				}
+				
+				if (!defined $closest_portal_binID) {
+					my $missed = {};
+					$missed->{time} = time;
+					$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+					$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+					push(@portals_lut_missed, $missed);
+					delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+					warning TF("Unable to use portal at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+					delete $self->{missing_portal};
+					$self->initMapCalculator();	# redo MAP router
+					
 				} else {
-					# Portal is reachable
-					if ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos_to}, $self->{guess_portal}{pos} ) ) {
-						my $task = new Task::Route(
-							actor => $self->{actor},
-							x => $self->{guess_portal}{pos}{x},
-							y => $self->{guess_portal}{pos}{y},
-							field => $field,
-							maxTime => $self->{maxTime},
-							avoidWalls => $self->{avoidWalls},
-							solution => \@solution,
-							isRandomWalk => $self->{isRandomWalk},
-							isSlaveRescue => $self->{isSlaveRescue},
-							LOSSubRoute => $self->{LOSSubRoute},
-							meetingSubRoute => $self->{meetingSubRoute}
-						);
-						$self->setSubtask($task);
-						
-						return;
-					} else {
-						$self->{guess_skip}{$self->{guess_portal}->{binID}} = 1;
-						delete $self->{guess_portal};
-					}
+					$self->{guess_portal} = $portalsList->get($closest_portal_binID);
+					warning TF("Guessing our desired portal to be  %s (%s,%s).\n", $field->baseName, $self->{guess_portal}{pos}{x}, $self->{guess_portal}{pos}{y}), "route";
+					my %params = (
+						field => $field,
+						solution => \@solution
+					);
+					$params{$_} = $self->{guess_portal}{pos}{$_} for qw(x y);
+					$params{$_} = $self->{$_} for qw(actor maxTime avoidWalls isRandomWalk isSlaveRescue LOSSubRoute meetingSubRoute);
+					my $task = new Task::Route(%params);
+					$self->setSubtask($task);
 				}
 			}
 			
