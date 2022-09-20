@@ -79,6 +79,12 @@ sub new {
 	}
 
 	$self->{$_} = $args{$_} for qw(actor x y);
+	
+	# Pass a weak reference of mercenary/homunculus to ourselves in order to avoid circular references (memory leaks).
+	if ($self->{actor}->isa("AI::Slave::Homunculus") || $self->{actor}->isa("Actor::Slave::Homunculus") || $self->{actor}->isa("AI::Slave::Mercenary") || $self->{actor}->isa("Actor::Slave::Mercenary")) {
+		Scalar::Util::weaken($self->{actor});
+	}
+	
 	$self->{retry}{timeout} = $args{retryTime} || $timeout{ai_move_retry}{timeout} || 0.5;
 	$self->{retry}{count} = 0;
 	$self->{giveup}{timeout} = $args{giveupTime} || $timeout{ai_move_giveup}{timeout} || 3;

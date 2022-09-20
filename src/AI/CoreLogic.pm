@@ -528,6 +528,7 @@ sub processPortalRecording {
 
 
 	my ($ID, $destName);
+	my $recorded = 0;
 
 	# Record information about destination portal
 	if ($config{portalRecord} > 1 &&
@@ -553,6 +554,7 @@ sub processPortalRecording {
 			dstx => $sourcePos{x},
 			dsty => $sourcePos{y}
 		});
+		$recorded = 1;
 	}
 
 	# Record information about the source portal
@@ -578,6 +580,12 @@ sub processPortalRecording {
 			dstx => $char->{pos}{x},
 			dsty => $char->{pos}{y}
 		});
+		$recorded = 1;
+	}
+	
+	if ($recorded && $config{portalRecord_recompileAfter}) {
+		Settings::loadByRegexp(qr/portals/);
+		Misc::compilePortals() if Misc::compilePortals_check();
 	}
 }
 
@@ -1303,11 +1311,17 @@ sub processAutoStorage {
 				# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
 				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
 				    && !$field->isCity && $config{'saveMap'} ne $field->baseName) {
-					$args->{warpedToSave} = 1;
-					# If we still haven't warped after a certain amount of time, fallback to walking
-					$args->{warpStart} = time unless $args->{warpStart};
-					message T("Teleporting to auto-storage\n"), "teleport";
-					useTeleport(2);
+					if ($char->{sitting}) {
+						message T("Standing up to auto-storage\n"), "teleport";
+						ai_setSuspend(0);
+						stand();
+					} else {
+						$args->{warpedToSave} = 1;
+						# If we still haven't warped after a certain amount of time, fallback to walking
+						$args->{warpStart} = time unless $args->{warpStart};
+						message T("Teleporting to auto-storage\n"), "teleport";
+						useTeleport(2);
+					}
 					$timeout{'ai_storageAuto'}{'time'} = time;
 				} else {
 					# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
@@ -1731,11 +1745,17 @@ sub processAutoSell {
 
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{'warpedToSave'}
 			&& !$field->isCity && $config{'saveMap'} ne $field->baseName) {
-				$args->{'warpedToSave'} = 1;
-				# If we still haven't warped after a certain amount of time, fallback to walking
-				$args->{warpStart} = time unless $args->{warpStart};
-				message T("Teleporting to auto-sell\n"), "teleport";
-				useTeleport(2);
+				if ($char->{sitting}) {
+					message T("Standing up to auto-sell\n"), "teleport";
+					ai_setSuspend(0);
+					stand();
+				} else {
+					$args->{'warpedToSave'} = 1;
+					# If we still haven't warped after a certain amount of time, fallback to walking
+					$args->{warpStart} = time unless $args->{warpStart};
+					message T("Teleporting to auto-sell\n"), "teleport";
+					useTeleport(2);
+				}
 				$timeout{'ai_sellAuto'}{'time'} = time;
 			} else {
 	 			message TF("Calculating auto-sell route to: %s(%s): %s, %s\n", $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}, $ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}), "route";
@@ -1989,14 +2009,20 @@ sub processAutoBuy {
 					!$args->{warpedToSave} &&
 					!$field->isCity && $config{'saveMap'} ne $field->baseName
 				) {
-					$args->{warpedToSave} = 1;
-					if ($needitem ne "") {
-						$msgneeditem = "Auto-buy: $needitem\n";
+					if ($char->{sitting}) {
+						message T($msgneeditem."Standing up to auto-buy\n"), "teleport";
+						ai_setSuspend(0);
+						stand();
+					} else {
+						$args->{warpedToSave} = 1;
+						if ($needitem ne "") {
+							$msgneeditem = "Auto-buy: $needitem\n";
+						}
+						# If we still haven't warped after a certain amount of time, fallback to walking
+						$args->{warpStart} = time unless $args->{warpStart};
+						message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
+						useTeleport(2);
 					}
-					# If we still haven't warped after a certain amount of time, fallback to walking
-					$args->{warpStart} = time unless $args->{warpStart};
-					message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
-					useTeleport(2);
 					$timeout{ai_buyAuto_wait}{time} = time;
 
 				} else {
@@ -2241,6 +2267,7 @@ sub processRandomWalk_stopDuringSlaveAttack {
 		my $slave = AI::SlaveManager::mustStopForAttack();
 		if (defined $slave) {
 			message TF("%s started attacking during randomWalk - Stoping movement for it.\n", $slave), 'slave';
+			$char->sendAttackStop;
 			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 		}
 	}
@@ -3045,6 +3072,25 @@ sub processAutoAttack {
 
 				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
 
+				# List monsters that our slaves are attacking
+				if (
+					   $config{attackAuto_party}
+					&& $attackOnRoute && !AI::is("take", "items_take")
+					&& !$ai_v{sitAuto_forcedBySitCommand}
+					&& timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
+					&& (
+						   (scalar(grep { isMySlaveID($_) } keys %{$monster->{missedFromPlayer}}) && $config{attackAuto_party} != 2)
+						|| (scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgFromPlayer}}) && $config{attackAuto_party} != 2)
+						|| (scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnByPlayer}}) && $config{attackAuto_party} != 2)
+						|| scalar(grep { isMySlaveID($_) } keys %{$monster->{missedToPlayer}})
+						|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
+						|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
+					   )
+				 ) {
+					push @partyMonsters, $_;
+					next;
+				}
+
 				# List monsters that party members are attacking
 				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
 				 && !$ai_v{sitAuto_forcedBySitCommand}
@@ -3140,6 +3186,7 @@ sub processItemsTake {
 			AI::args->{started} = 1;
 			AI::args->{ai_items_take_delay}{time} = time;
 			take($foundID);
+			Plugins::callHook('ai_items_take');
 		} elsif (AI::args->{started} || timeOut(AI::args->{ai_items_take_end})) {
 			$timeout{'ai_attack_auto'}{'time'} = 0;
 			AI::dequeue;

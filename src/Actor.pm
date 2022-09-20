@@ -472,6 +472,7 @@ sub deepCopy {
 	# them in a temporary place.
 	my %deepCopyFields;
 	my %hashCopies;
+	my %excludehashCopies;
 	foreach my $param ('onNameChange', 'onUpdate') {
 		$deepCopyFields{$param} = $self->{$param};
 		delete $self->{$param};
@@ -481,6 +482,12 @@ sub deepCopy {
 	foreach my $param ('casting') {
 		if ($self->{$param}) {
 			$hashCopies{$param} = $self->{$param};
+			delete $self->{$param};
+		}
+	}
+	foreach my $param ('slave_ai_seq', 'slave_ai_seq_args') {
+		if (exists $self->{$param} && defined $self->{$param}) {
+			$excludehashCopies{$param} = $self->{$param};
 			delete $self->{$param};
 		}
 	}
@@ -505,6 +512,9 @@ sub deepCopy {
 	foreach my $param (keys %hashCopies) {
 		$self->{$param} = $hashCopies{$param};
 		$copy->{$param} = {%{$hashCopies{$param}}};
+	}
+	foreach my $param (keys %excludehashCopies) {
+		$self->{$param} = $excludehashCopies{$param};
 	}
 
 	return $copy;
