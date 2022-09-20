@@ -1309,11 +1309,17 @@ sub processAutoStorage {
 				# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
 				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
 				    && !$field->isCity && $config{'saveMap'} ne $field->baseName) {
-					$args->{warpedToSave} = 1;
-					# If we still haven't warped after a certain amount of time, fallback to walking
-					$args->{warpStart} = time unless $args->{warpStart};
-					message T("Teleporting to auto-storage\n"), "teleport";
-					useTeleport(2);
+					if ($char->{sitting}) {
+						message T("Standing up to auto-storage\n"), "teleport";
+						ai_setSuspend(0);
+						stand();
+					} else {
+						$args->{warpedToSave} = 1;
+						# If we still haven't warped after a certain amount of time, fallback to walking
+						$args->{warpStart} = time unless $args->{warpStart};
+						message T("Teleporting to auto-storage\n"), "teleport";
+						useTeleport(2);
+					}
 					$timeout{'ai_storageAuto'}{'time'} = time;
 				} else {
 					# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
@@ -1737,11 +1743,17 @@ sub processAutoSell {
 
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{'warpedToSave'}
 			&& !$field->isCity && $config{'saveMap'} ne $field->baseName) {
-				$args->{'warpedToSave'} = 1;
-				# If we still haven't warped after a certain amount of time, fallback to walking
-				$args->{warpStart} = time unless $args->{warpStart};
-				message T("Teleporting to auto-sell\n"), "teleport";
-				useTeleport(2);
+				if ($char->{sitting}) {
+					message T("Standing up to auto-sell\n"), "teleport";
+					ai_setSuspend(0);
+					stand();
+				} else {
+					$args->{'warpedToSave'} = 1;
+					# If we still haven't warped after a certain amount of time, fallback to walking
+					$args->{warpStart} = time unless $args->{warpStart};
+					message T("Teleporting to auto-sell\n"), "teleport";
+					useTeleport(2);
+				}
 				$timeout{'ai_sellAuto'}{'time'} = time;
 			} else {
 	 			message TF("Calculating auto-sell route to: %s(%s): %s, %s\n", $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}, $ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}), "route";
@@ -1995,14 +2007,20 @@ sub processAutoBuy {
 					!$args->{warpedToSave} &&
 					!$field->isCity && $config{'saveMap'} ne $field->baseName
 				) {
-					$args->{warpedToSave} = 1;
-					if ($needitem ne "") {
-						$msgneeditem = "Auto-buy: $needitem\n";
+					if ($char->{sitting}) {
+						message T($msgneeditem."Standing up to auto-buy\n"), "teleport";
+						ai_setSuspend(0);
+						stand();
+					} else {
+						$args->{warpedToSave} = 1;
+						if ($needitem ne "") {
+							$msgneeditem = "Auto-buy: $needitem\n";
+						}
+						# If we still haven't warped after a certain amount of time, fallback to walking
+						$args->{warpStart} = time unless $args->{warpStart};
+						message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
+						useTeleport(2);
 					}
-					# If we still haven't warped after a certain amount of time, fallback to walking
-					$args->{warpStart} = time unless $args->{warpStart};
-					message T($msgneeditem."Teleporting to auto-buy\n"), "teleport";
-					useTeleport(2);
 					$timeout{ai_buyAuto_wait}{time} = time;
 
 				} else {
