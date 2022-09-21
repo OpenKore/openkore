@@ -2297,6 +2297,12 @@ sub processRandomWalk {
 			$config{'route_randomWalk'} = 0;
 			return;
 		}
+		
+		my %plugin_args;
+		$plugin_args{return} = 0;
+		Plugins::callHook( ai_processRandomWalk => \%plugin_args );
+		return if ($plugin_args{return});
+		
 		my ($randX, $randY);
 		my $i = 500;
 		do {
