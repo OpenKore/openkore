@@ -1839,10 +1839,10 @@ sub processAutoBuy {
 			next if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"} || $config{"buyAuto_${i}_disabled"});
 			my $amount;
 			if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
-				$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"});
+				$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
 			}
 			else {
-				$amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+				$amount = $char->inventory->sumByName($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
 			}
 			if (
 				$config{"buyAuto_$i"."_minAmount"} ne "" &&
@@ -1934,10 +1934,10 @@ sub processAutoBuy {
 
 				my $amount;
 				if ($config{"buyAuto_$i"} =~ /^\d{3,}$/) {
-					$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"});
+					$amount = $char->inventory->sumByNameID($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
 				}
 				else {
-					$amount = $char->inventory->sumByName($config{"buyAuto_$i"});
+					$amount = $char->inventory->sumByName($config{"buyAuto_$i"}, $config{"buyAuto_${i}_onlyIdentified"});
 				}
 
 				if ($config{"buyAuto_$i"."_maxAmount"} ne "" && $amount < $config{"buyAuto_$i"."_maxAmount"}) {
@@ -2094,7 +2094,7 @@ sub processAutoBuy {
 			my $maxbuy = ($config{"buyAuto_".$args->{lastIndex}."_price"}) ? int($char->{zeny}/$config{"buyAuto_$args->{index}"."_price"}) : 30000; # we assume we can buy 30000, when price of the item is set to 0 or undef
 			my $needbuy = $config{"buyAuto_".$args->{lastIndex}."_maxAmount"};
 
-			my $inv_amount = $char->inventory->sumByNameID($args->{'nameID'});
+			my $inv_amount = $char->inventory->sumByNameID($args->{'nameID'}, $config{"buyAuto_".$args->{lastIndex}."_onlyIdentified"});
 
 			$needbuy -= $inv_amount;
 
@@ -2299,6 +2299,12 @@ sub processRandomWalk {
 			$config{'route_randomWalk'} = 0;
 			return;
 		}
+		
+		my %plugin_args;
+		$plugin_args{return} = 0;
+		Plugins::callHook( ai_processRandomWalk => \%plugin_args );
+		return if ($plugin_args{return});
+		
 		my ($randX, $randY);
 		my $i = 500;
 		do {
@@ -2974,7 +2980,7 @@ sub processAutoEquip {
 			) {
 				foreach my $slot (values %equipSlot_lut) {
 					next if (defined binFind(\@skip_slots, $slot));
-					if (exists $config{"equipAuto_$i"."_$slot"}) {
+					if (exists $config{"equipAuto_$i"."_$slot"} && defined $config{"equipAuto_$i"."_$slot"}) {
 						debug "Equip $slot with ".$config{"equipAuto_$i"."_$slot"}."\n";
 						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"} if (!$eq_list{$slot});
 					}
