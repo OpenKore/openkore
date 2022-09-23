@@ -6382,6 +6382,9 @@ sub cmdBuyer {
 		undef $buyerID;
 		undef $buyingStoreID;
 		$messageSender->sendEnteringBuyer($buyerListsID[$arg1]);
+	} elsif ($arg2 > $#buyerItemList) {
+		error TF("Error in function 'buyer' (Buyer Shop)\n" .
+			"item %s does not exist.\n", $arg2);
 	} elsif ($buyerListsID[$arg1] ne $buyerID) {
 		error T("Error in function 'buyer' (Buyer Shop)\n" .
 			"Buyer ID is wrong.\n");
@@ -6389,8 +6392,22 @@ sub cmdBuyer {
 		if ($arg3 <= 0) {
 			$arg3 = 1;
 		}
-		my $item = $char->inventory->get($arg2);
-		$messageSender->sendBuyBulkBuyer($buyerID, [{ID => $item->{ID}, itemID => $item->{nameID}, amount => $arg3}], $buyingStoreID);
+		
+		my $l_item = $buyerItemList[$arg2];
+		
+		if (!defined $l_item) {
+			error T("Error in function 'buyer', shop item not defined.\n");
+			return;
+		}
+		
+		my $c_item = $char->inventory->getByNameID($l_item->{nameID});
+		
+		if (!defined $c_item) {
+			error T("Error in function 'buyer', char item not defined.\n");
+			return;
+		}
+		
+		$messageSender->sendBuyBulkBuyer($buyerID, [{ID => $c_item->{ID}, itemID => $c_item->{nameID}, amount => $arg3}], $buyingStoreID);
 	}
 }
 

@@ -21,6 +21,7 @@ sub new {
 
 	my %packets = (
 		'0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]],
+		'0819' => ['buy_bulk_buyer', 'v a4 a4 a*', [qw(len buyerID buyingStoreID itemInfo)]], #Buying store
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
