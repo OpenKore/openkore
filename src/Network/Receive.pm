@@ -4838,7 +4838,11 @@ sub npc_chat {
 	chatLog("npc", "$position $message\n") if ($config{logChat});
 	message TF("%s%s\n", $dist, $message), "npcchat";
 
-	# TODO hook
+	Plugins::callHook('npc_chat', {
+		actor => $actor,
+		ID => $args->{ID},
+		message => $message,
+	});
 }
 
 # 018d <packet len>.W { <name id>.W { <material id>.W }*3 }*
@@ -7578,6 +7582,7 @@ sub buy_result {
 	if (AI::is("buyAuto")) {
 		AI::args->{recv_buy_packet} = 1;
 	}
+	Plugins::callHook('buy_result', {fail => $args->{fail}});
 }
 
 # Presents list of items, that can be bought in an NPC MARKET shop (PACKET_ZC_NPC_MARKET_OPEN).

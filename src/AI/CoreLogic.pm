@@ -943,6 +943,7 @@ sub processDead {
 			if ($config{storageAuto} && !$config{storageAuto_notAfterDeath} && ai_storageAutoCheck()) {
 				message T("Auto-storaging due to death\n");
 				AI::queue("storageAuto");
+				Plugins::callHook('AI_storage_auto_queued');
 			}
 
 			if ($config{autoMoveOnDeath} && $config{autoMoveOnDeath_map}) {
@@ -1163,6 +1164,9 @@ sub processAutoStorage {
 		      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
 			  || ($config{itemsMaxNum_sellOrStore} && $char->inventory->size() >= $config{itemsMaxNum_sellOrStore}))
 		  && !AI::inQueue("storageAuto") && $char->inventory->isReady()) {
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook( AI_storage_auto_weight_start => \%plugin_args );
+		return if ($plugin_args{return});
 
 		# Initiate autostorage when the weight limit has been reached
 		my $routeIndex = AI::findAction("route");
@@ -1172,6 +1176,7 @@ sub processAutoStorage {
 		if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
 			message T("Auto-storaging due to excess weight\n");
 			AI::queue("storageAuto");
+			Plugins::callHook('AI_storage_auto_queued');
 		}
 
 	} elsif (AI::is("", "route", "attack")
@@ -1181,6 +1186,10 @@ sub processAutoStorage {
 		  && !AI::inQueue("storageAuto")
 		  && $char->inventory->isReady()) {
 
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook( AI_storage_auto_get_auto_start => \%plugin_args );
+		return if ($plugin_args{return});
+		
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $needitem = "";
 		my $i;
@@ -1247,6 +1256,7 @@ sub processAutoStorage {
 			$char->inventory->isReady() && ai_canOpenStorage()){
 	 		message TF("Auto-storaging due to insufficient %s\n", $needitem);
 			AI::queue("storageAuto");
+			Plugins::callHook('AI_storage_auto_queued');
 		}
 		$timeout{'ai_storageAuto'}{'time'} = time;
 	}
@@ -1653,12 +1663,16 @@ sub processAutoSell {
 		&& $config{'sellAuto_npc'} ne ""
 		&& !$ai_v{sitAuto_forcedBySitCommand}
 	  ) {
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook( AI_sell_auto_start => \%plugin_args );
+		return if ($plugin_args{return});
 		$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
 			$ai_v{'temp'}{'ai_route_attackOnRoute'} = AI::args($ai_v{'temp'}{'ai_route_index'})->{'attackOnRoute'};
 		}
 		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && ai_sellAutoCheck()) {
 			AI::queue("sellAuto");
+			Plugins::callHook('AI_sell_auto_queued');
 		}
 	}
 
@@ -1831,6 +1845,10 @@ sub processAutoBuy {
 	return if( $shopstarted || $buyershopstarted );
 	my $needitem;
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && $char->inventory->isReady()) {
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook( AI_buy_auto_start => \%plugin_args );
+		return if ($plugin_args{return});
+		
 		undef $ai_v{'temp'}{'found'};
 
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
@@ -1864,6 +1882,7 @@ sub processAutoBuy {
 		}
 		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && AI::findAction("buyAuto")) && $ai_v{'temp'}{'found'}) {
 			AI::queue("buyAuto");
+			Plugins::callHook('AI_buy_auto_queued');
 		}
 		$timeout{'ai_buyAuto'}{'time'} = time;
 	}
