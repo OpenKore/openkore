@@ -1241,6 +1241,7 @@ sub cmdAttendance {
 sub cmdAutoBuy {
 	message T("Initiating auto-buy.\n");
 	AI::queue("buyAuto");
+	Plugins::callHook('AI_buy_auto_queued');
 }
 
 sub cmdAutoSell {
@@ -1269,6 +1270,7 @@ sub cmdAutoSell {
 	} elsif (!$arg) {
 		message T("Initiating auto-sell.\n");
 		AI::queue("sellAuto");
+		Plugins::callHook('AI_sell_auto_queued');
 	}
 }
 
@@ -1276,6 +1278,7 @@ sub cmdAutoStorage {
 	message T("Initiating auto-storage.\n");
 	if (ai_canOpenStorage()) {
 		AI::queue("storageAuto");
+		Plugins::callHook('AI_storage_auto_queued');
 	} else {
 		error T("Error in function 'autostorage' (Automatic storage of items)\n" .
 		"You cannot use the Storage Service. Very low level of basic skills or not enough zeny.\n");
