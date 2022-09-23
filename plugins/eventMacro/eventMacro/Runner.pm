@@ -411,16 +411,22 @@ sub DESTROY {
 # TODO: Check this
 # sets or gets macro block flag
 sub macro_block {
-	my $script = $_[0];
-	do {
-		if (defined $_[1]) {
-			$script->{macro_block} = $_[1];
+	my ($self, $macro_block) = @_;
+	
+	my $value;
+	if (defined $macro_block) {
+		$self->{macro_block} = $macro_block;
+		$value = $self->{macro_block};
+		
+	} else {
+		if (defined $self->{subcall}) {
+			$value = $self->{subcall}->macro_block;
 		} else {
-			return $script->{macro_block} if $script->{macro_block};
+			$value = $self->{macro_block};
 		}
-	} while $script = $script->{subcall};
+	}
 
-	return $_[1];
+	return $value;
 }
 
 # TODO: Check this
@@ -1158,6 +1164,7 @@ sub next {
 	} elsif ($self->{current_line} =~ /^call\s+/) {
 		my ($call_command) = $self->{current_line} =~ /^call\s+(.*)/;
 		$self->parse_call($call_command);
+		$self->timeout(0);
 
 	##########################################
 	# set command
