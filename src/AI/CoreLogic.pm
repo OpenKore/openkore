@@ -1288,13 +1288,18 @@ sub processAutoStorage {
 		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
 		my $forcedBySell = AI::args->{forcedBySell};
 		my $forcedByBuy = AI::args->{forcedByBuy};
+
 		undef $timeout{ai_storageAuto_wait_before_action}{time};
 		AI::dequeue;
+
 		if ($config{sellAuto} && ai_sellAutoCheck()) {
 			if ($forcedByBuy) {
 				AI::queue("sellAuto", {forcedByBuy => 1});
+				Plugins::callHook('AI_sell_auto_queued');
+	
 			} elsif (!$forcedBySell) {
 				AI::queue("sellAuto", {forcedByStorage => 1});
+				Plugins::callHook('AI_sell_auto_queued');
 			}
 		}
 
@@ -1653,6 +1658,11 @@ sub processAutoStorage {
 				Misc::checkValidity("AutoStorage part 4");
 			}
 
+			# plugins can hook here and decide to keep storage open longer after getAuto
+			my %hookArgs;
+			Plugins::callHook("AI_storage_done_after_getAuto", \%hookArgs);
+			return if ($hookArgs{return});
+
 			$messageSender->sendStorageClose() unless $config{storageAuto_keepOpen};
 			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
 				error T("Character is still overweight after storageAuto (storage is full?)\n");
@@ -1703,15 +1713,19 @@ sub processAutoSell {
 		if (exists AI::args->{'error'}) {
 			error AI::args->{'error'}.".\n";
 		}
-
-		my $var = AI::args->{'forcedByBuy'};
-		my $var2 = AI::args->{'forcedByStorage'};
 		message T("Auto-sell sequence completed.\n"), "success";
+
+		my $forcedByBuy = AI::args->{'forcedByBuy'};
+		my $forcedByStorage = AI::args->{'forcedByStorage'};
 		AI::dequeue;
-		if ($var2) {
+
+		if ($forcedByStorage) {
 			AI::queue("buyAuto", {forcedByStorage => 1});
-		} elsif (!$var) {
+			Plugins::callHook('AI_buy_auto_queued');
+
+		} elsif (!$forcedByBuy) {
 			AI::queue("buyAuto", {forcedBySell => 1});
+			Plugins::callHook('AI_buy_auto_queued');
 		}
 	} elsif (AI::action eq "sellAuto" && timeOut($timeout{'ai_sellAuto'})) {
 		my $args = AI::args;
@@ -1916,15 +1930,19 @@ sub processAutoBuy {
 		}
 
 		# buyAuto finished
-		$ai_v{'temp'}{'var'} = AI::args->{'forcedBySell'};
-		$ai_v{'temp'}{'var2'} = AI::args->{'forcedByStorage'};
+		my $forcedBySell = AI::args->{'forcedBySell'};
+		my $forcedByStorage = AI::args->{'forcedByStorage'};
+
 		AI::dequeue;
 		Plugins::callHook('AI_buy_auto_done');
 
-		if ($ai_v{'temp'}{'var'} && $config{storageAuto}) {
+		if ($forcedBySell && $config{storageAuto}) {
 			AI::queue("storageAuto", {forcedBySell => 1});
-		} elsif (!$ai_v{'temp'}{'var2'} && $config{storageAuto}) {
+			Plugins::callHook('AI_storage_auto_queued');
+
+		} elsif (!$forcedByStorage && $config{storageAuto}) {
 			AI::queue("storageAuto", {forcedByBuy => 1});
+			Plugins::callHook('AI_storage_auto_queued');
 		}
 
 	} elsif (AI::action eq "buyAuto" && timeOut($timeout{ai_buyAuto_wait})) {
