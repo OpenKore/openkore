@@ -601,16 +601,27 @@ sub processEscapeUnknownMaps {
 			AI::dequeue;
 			if ($portalsID[0]) {
 				message T("Escaping to into nearest portal.\n");
-				main::ai_route($field->baseName, $portals{$portalsID[0]}{'pos'}{'x'},
-					$portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+				main::ai_route(
+					$field->baseName, $portals{$portalsID[0]}{'pos'}{'x'},
+					$portals{$portalsID[0]}{'pos'}{'y'},
+					attackOnRoute => 1,
+					noSitAuto => 1,
+					isEscape => 1
+				);
 				$skip = 1;
 
 			} elsif ($spellsID[0]){   #get into the first portal you see
 			     my $spell = $spells{$spellsID[0]};
 				if (getSpellName($spell->{type}) eq "Warp Portal" ){
 					message T("Found warp portal escaping into warp portal.\n");
-					main::ai_route($field->baseName, $spell->{pos}{x},
-						$spell->{pos}{y}, attackOnRoute => 1, noSitAuto => 1);
+					main::ai_route(
+						$field->baseName,
+						$spell->{pos}{x},
+						$spell->{pos}{y},
+						attackOnRoute => 1,
+						noSitAuto => 1,
+						isEscape => 1
+					);
 					$skip = 1;
 				}else{
 					error T("Escape failed no portal found.\n");;
@@ -640,11 +651,14 @@ sub processEscapeUnknownMaps {
 				error T("Invalid coordinates specified for randomWalk\n Retrying...");
 			} else {
 				message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $randX, $randY), "route";
-				ai_route($field->baseName, $randX, $randY,
-					 maxRouteTime => $config{route_randomWalk_maxRouteTime},
-					 attackOnRoute => 2,
-					 noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),
-					 isRandomWalk => 1);
+				ai_route(
+					$field->baseName, $randX, $randY,
+					maxRouteTime => $config{route_randomWalk_maxRouteTime},
+					attackOnRoute => 2,
+					noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),
+					isRandomWalk => 1,
+					isEscape => 1
+				);
 			}
 		}
 	}
@@ -802,7 +816,15 @@ sub processTake {
 		} elsif ($dist > 1 && timeOut(AI::args->{time_route}, $timeout{ai_take_giveup}{timeout})) {
 			my $pos = $item->{pos};
 			AI::args->{time_route} = time;
-			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1, distFromGoal => 1);
+			ai_route(
+				$field->baseName,
+				$pos->{x},
+				$pos->{y},
+				maxRouteDistance => $config{'attackMaxRouteDistance'},
+				noSitAuto => 1,
+				distFromGoal => 1,
+				isItemTake => 1
+			);
 		} elsif (timeOut($timeout{ai_take})) {
 			my %vec;
 			my $direction;
@@ -953,7 +975,7 @@ sub processDead {
 					message TF("Moving to %s\n", $config{autoMoveOnDeath_map});
 				}
 				AI::queue("sitAuto");
-				ai_route($config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
+				ai_route($config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y}, isDeath => 1);
 			}
 		}
 
@@ -2253,7 +2275,13 @@ sub processLockMap {
 					} else {
 						message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{'lockMap'}.'.rsw'}, $config{'lockMap'}), "route";
 					}
-					ai_route($config{'lockMap'}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
+					ai_route(
+						$config{'lockMap'},
+						$lockX,
+						$lockY,
+						attackOnRoute => $attackOnRoute,
+						isToLockMap => 1
+					);
 				}
 			}
 		}
@@ -2268,7 +2296,15 @@ sub processRescueSlave {
 		my $slave = AI::SlaveManager::mustRescue();
 		if (defined $slave) {
 			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
-			ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3), attackOnRoute => 1, noSitAuto => 1, isSlaveRescue => 1);
+			ai_route(
+				$field->baseName,
+				$slave->{pos_to}{x},
+				$slave->{pos_to}{y},
+				distFromGoal => ($config{$slave->{configPrefix}.'followDistanceMin'} || 3),
+				attackOnRoute => 1,
+				noSitAuto => 1,
+				isSlaveRescue => 1
+			);
 			warning TF("%s got lost during randomWalk (distance: %d) - Rescuing it.\n", $slave, $slave->blockDistance_master), 'slave';
 			return;
 		}
@@ -2299,7 +2335,15 @@ sub processMoveNearSlave {
 
 		my $slave = AI::SlaveManager::mustMoveNear();
 		if (defined $slave) {
-			ai_route($field->baseName, $slave->{pos_to}{x}, $slave->{pos_to}{y}, distFromGoal => ($config{$slave->{configPrefix}.'moveNearWhenIdle_minDistance'} || 4), attackOnRoute => 1, noSitAuto => 1, isMoveNearSlave => 1);
+			ai_route(
+				$field->baseName,
+				$slave->{pos_to}{x},
+				$slave->{pos_to}{y},
+				distFromGoal => ($config{$slave->{configPrefix}.'moveNearWhenIdle_minDistance'} || 4),
+				attackOnRoute => 1,
+				noSitAuto => 1,
+				isMoveNearSlave => 1
+			);
 			message TF("%s moved too far - Moving near it.\n", $slave), 'slave';
 		}
 	}
@@ -2337,11 +2381,15 @@ sub processRandomWalk {
 			$config{'route_randomWalk'} = 0;
 		} else {
 			message TF("Calculating random route to: %s: %s, %s\n", $field->descString(), $randX, $randY), "route";
-			ai_route($field->baseName, $randX, $randY,
+			ai_route(
+				$field->baseName,
+				$randX,
+				$randY,
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
 				attackOnRoute => 2,
 				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),
-				isRandomWalk => 1);
+				isRandomWalk => 1
+			);
 		}
 	}
 }
@@ -2421,6 +2469,7 @@ sub processFollow {
 						$player->{pos_to}{x},
 						$player->{pos_to}{y},
 						attackOnRoute => 1,
+						isFollow => 1,
 						distFromGoal => $config{followDistanceMin}
 					);
 				}
@@ -2463,6 +2512,7 @@ sub processFollow {
 				$player->{pos_to}{x},
 				$player->{pos_to}{y},
 				attackOnRoute => 1,
+				isFollow => 1,
 				distFromGoal => $config{followDistanceMin}
 			);
 		}
@@ -2577,8 +2627,11 @@ sub processFollow {
 			my $pos = $ai_v{'temp'}{'warp_pos'};
 
 			if (!$field->canMove($char->{pos_to}, $pos)) {
-				ai_route($field->baseName, $pos->{x}, $pos->{y},
-					attackOnRoute => 0); #distFromGoal => 0);
+				ai_route(
+					$field->baseName, $pos->{x}, $pos->{y},
+					attackOnRoute => 0,
+					isFollow => 1
+				); #distFromGoal => 0);
 			} else {
 				my (%vec, %pos_to);
 				my $dist = distance($char->{pos_to}, $pos);
@@ -2611,8 +2664,11 @@ sub processFollow {
 				if ($portals{$portalID} && !$args->{'follow_lost_portal_tried'}) {
 					$args->{'follow_lost_portal_tried'} = 1;
 					%{$ai_v{'temp'}{'pos'}} = %{$portals{$args->{'follow_lost_portalID'}}{'pos'}};
-					ai_route($field->baseName, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
-						attackOnRoute => 1);
+					ai_route(
+						$field->baseName, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
+						attackOnRoute => 1,
+						isFollow => 1
+					);
 				}
 			} else {
 				moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $args->{'ai_follow_lost_vec'}, $config{'followLostStep'});
@@ -3278,7 +3334,15 @@ sub processItemsGather {
 			my $item = $items{$ID};
 			my $pos = $item->{pos};
 			AI::args->{time_route} = time;
-			ai_route($field->baseName, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'}, noSitAuto => 1, distFromGoal => 1);
+			ai_route(
+				$field->baseName,
+				$pos->{x},
+				$pos->{y},
+				maxRouteDistance => $config{'attackMaxRouteDistance'},
+				noSitAuto => 1,
+				distFromGoal => 1,
+				isItemGather => 1
+			);
 		} else {
 			AI::dequeue;
 			take($ID);

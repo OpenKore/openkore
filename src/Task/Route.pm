@@ -106,7 +106,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid Coordinates argument.");
 	}
 
-	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal', 'avoidWalls', 'notifyUponArrival', 'isRandomWalk', 'isSlaveRescue', 'isMoveNearSlave', 'LOSSubRoute', 'meetingSubRoute');
+	my $allowed = new Set(qw(maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
