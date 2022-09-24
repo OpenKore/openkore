@@ -283,7 +283,13 @@ sub ai_partyfollow {
 			}
 
 			AI::clear("move", "route", "mapRoute");
-			ai_route($ai_v{master}{map_name}, $ai_v{master}{x}, $ai_v{master}{y}, distFromGoal => $config{followDistanceMin});
+			ai_route(
+				$ai_v{master}{map_name},
+				$ai_v{master}{x},
+				$ai_v{master}{y},
+				distFromGoal => $config{followDistanceMin},
+				isFollow => 1
+			);
 
 			my $followIndex = AI::findAction("follow");
 			if (defined $followIndex) {
