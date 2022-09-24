@@ -9593,14 +9593,17 @@ sub buying_store_lost {
 sub buying_store_items_list {
 	my($self, $args) = @_;
 
-	undef @buyerItemList;
+	undef $buyerPriceLimit;
 	undef $buyerID;
 	undef $buyingStoreID;
+	
+	$buyerItemList->clear;
 
-	my $zeny = $args->{zeny};
-	my $expireDate = 0;
+	$buyerPriceLimit = $args->{zeny};
 	$buyerID = $args->{buyerID};
 	$buyingStoreID = $args->{buyingStoreID};
+	
+	my $expireDate = 0;
 	my $player = Actor::get($buyerID);
 	my $index = 0;
 	my $pack = $self->{buying_store_items_list_pack} || 'V v C v';
@@ -9611,15 +9614,17 @@ sub buying_store_items_list {
 		T("#  Name                                       Type                     Price Amount\n");
 
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
-		my $item = {};
+		my $item = Actor::Item->new;
 
-		($item->{price},
+ 		($item->{price},
 		$item->{amount},
 		$item->{type},
 		$item->{nameID})	= unpack($pack, substr($args->{itemList}, $i, $item_len));
 
 		$item->{name} = itemName($item);
-		$buyerItemList[$index] = $item;
+		$item->{ID} = $i;
+		
+		$buyerItemList->add($item);
 
 		debug "Item added to Buying Store: $item->{name} - $item->{price} z\n", "buying_store", 2;
 
@@ -9639,7 +9644,7 @@ sub buying_store_items_list {
 		$index++;
 	}
 
-	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($zeny)) . ('-'x83) . "\n";
+	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($buyerPriceLimit)) . ('-'x83) . "\n";
 	message $msg, "list";
 
 	if($args->{expireDate}) {
@@ -9651,7 +9656,7 @@ sub buying_store_items_list {
 	Plugins::callHook('packet_buying_store2', {
 		buyerID => $buyerID,
 		buyingStoreID => $buyingStoreID,
-		itemList => \@buyerItemList,
+		itemList => $buyerItemList,
 		expireDate => $expireDate,
 	});
 }

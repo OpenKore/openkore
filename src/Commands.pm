@@ -6366,6 +6366,7 @@ sub cmdBuyer {
 		return;
 	}
 	my (undef, $args) = @_;
+	
 	my ($arg1) = $args =~ /^([\d\w]+)/;
 	my ($arg2) = $args =~ /^[\d\w]+ (\d+)/;
 	my ($arg3) = $args =~ /^[\d\w]+ \d+ (\d+)/;
@@ -6373,30 +6374,36 @@ sub cmdBuyer {
 		error T("Syntax error in function 'buyer' (Buyer Shop)\n" .
 			"Usage: buyer <buyer # | end> [<item #> <amount>]\n");
 	} elsif ($arg1 eq "end") {
-		undef @buyerItemList;
+		undef $buyerPriceLimit;
 		undef $buyerID;
 		undef $buyingStoreID;
+		$buyerItemList->clear;
+		
 	} elsif ($buyerListsID[$arg1] eq "") {
 		error TF("Error in function 'buyer' (Buyer Shop)\n" .
 			"buyer %s does not exist.\n", $arg1);
+			
 	} elsif ($arg2 eq "") {
-		# FIXME not implemented
-		undef @buyerItemList;
+		undef $buyerPriceLimit;
 		undef $buyerID;
 		undef $buyingStoreID;
+		$buyerItemList->clear;
 		$messageSender->sendEnteringBuyer($buyerListsID[$arg1]);
-	} elsif ($arg2 > $#buyerItemList) {
+		
+	} elsif (!$buyerItemList->get( $arg2 )) {
 		error TF("Error in function 'buyer' (Buyer Shop)\n" .
 			"item %s does not exist.\n", $arg2);
+			
 	} elsif ($buyerListsID[$arg1] ne $buyerID) {
 		error T("Error in function 'buyer' (Buyer Shop)\n" .
 			"Buyer ID is wrong.\n");
+			
 	} else {
 		if ($arg3 <= 0) {
 			$arg3 = 1;
 		}
 		
-		my $l_item = $buyerItemList[$arg2];
+		my $l_item = $buyerItemList->get( $arg2 );
 		
 		if (!defined $l_item) {
 			error T("Error in function 'buyer', shop item not defined.\n");
@@ -6410,7 +6417,15 @@ sub cmdBuyer {
 			return;
 		}
 		
-		$messageSender->sendBuyBulkBuyer($buyerID, [{ID => $c_item->{ID}, itemID => $c_item->{nameID}, amount => $arg3}], $buyingStoreID);
+		my $amount = $arg3;
+		my $total_zeny = $amount * $l_item->{price};
+		
+		if ($total_zeny > $buyerPriceLimit) {
+			error T("Error in function 'buyer', trying to sell aboce max price limit.\n");
+			return;
+		}
+		
+		$messageSender->sendBuyBulkBuyer($buyerID, [{ID => $c_item->{ID}, itemID => $c_item->{nameID}, amount => $amount}], $buyingStoreID);
 	}
 }
 
