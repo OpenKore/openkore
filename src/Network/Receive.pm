@@ -1235,6 +1235,8 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+	$char->{time_move} = 0;
+	$char->{time_move_calc} = 0;
 
 	# set initial status from data received from the char server (seems needed on eA, dunno about kRO)}
 	if($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
@@ -1988,7 +1990,7 @@ sub actor_display {
 	$actor->{pos_to} = {%coordsTo};
 	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed} && $args->{switch} ne "0086");
 	$actor->{time_move} = time;
-	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
+	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
 	$actor->{len} = $args->{len} if $args->{len};
 	# 0086 would need that?
 	$actor->{object_type} = $args->{object_type} if (defined $args->{object_type});
@@ -7114,6 +7116,8 @@ sub map_change {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
+	$char->{time_move} = 0;
+	$char->{time_move_calc} = 0;
 	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $char->{pos}{x}, $char->{pos}{y}), "connection";
 	if ($net->version == 1) {
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
@@ -7164,6 +7168,8 @@ sub map_changed {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
+	$char->{time_move} = 0;
+	$char->{time_move_calc} = 0;
 
 	undef $conState_tries;
 	main::initMapChangeVars();
@@ -7849,6 +7855,7 @@ sub offline_clone_found {
 		$actor->{pos_to}{x} = $args->{coord_x};
 		$actor->{pos_to}{y} = $args->{coord_y};
 		$actor->{time_move} = time;
+		$actor->{time_move_calc} = 0;
 		$actor->{walk_speed} = 1; #hack
 		$actor->{lv} = 1;
 		$actor->{robe} = $args->{robe};
