@@ -3781,6 +3781,12 @@ sub useTeleport {
 
 	# only if we want to use skill ?
 	return if ($char->{muted});
+	if($char->{last_skill_used_is_continuous}) {
+		$messageSender->sendStopSkillUse($char->{last_continuous_skill_used});
+	} elsif(($char->{last_skill_used} == 2027 || $char->{last_skill_used} == 147) && !$char->{selected_craft}) {
+		error T("Cant use Teleport Skill due to open craft list!\n"), "useTeleport";
+		return;
+	}
 
 	if ($sk_lvl > 0 && $internal > 0 && ($use_lvl == 1 || !$config{'teleportAuto_useItemForRespawn'})) {
 		# We have the teleport skill, and should use it

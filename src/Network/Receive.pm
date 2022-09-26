@@ -7147,6 +7147,8 @@ sub map_change {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 
+	$messageSender->sendStopSkillUse($char->{last_continuous_skill_used}) if $char->{last_skill_used_is_continuous};
+
 	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
 	my $map_noinstance;
@@ -7199,8 +7201,6 @@ sub map_change {
 
 		$timeout{ai}{time} = time;
 	}
-
-	$messageSender->sendStopSkillUse($char->{last_skill_used}) if $char->{last_skill_used_is_continuous};
 
 	Plugins::callHook('Network::Receive::map_changed', {
 		oldMap => $oldMap,
@@ -10099,6 +10099,7 @@ sub arrowcraft_list {
 
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
+	$char->{selected_craft} = 0;
 
 	undef @arrowCraftID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
@@ -10114,6 +10115,7 @@ sub arrowcraft_list {
 			my $item = $char->inventory->getByName($config{autoPoison});
 			if($item) {
 				$messageSender->sendArrowCraft($item->{nameID});
+				$char->{selected_craft} = 1;
 			} else {
 				error TF("Configured autoPoison (%s) not available.\n", $config{autoSpell});
 			}

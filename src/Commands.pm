@@ -1170,6 +1170,7 @@ sub cmdArrowCraft {
 		my $item = $char->inventory->get($arg2);
 		if ($item) {
 			$messageSender->sendArrowCraft($item->{nameID});
+			$char->{selected_craft} = 1;
 		} else {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
 				"You don't have item %s in your inventory.\n", $arg2);
@@ -1177,6 +1178,7 @@ sub cmdArrowCraft {
 	} else {
 		if ($arrowCraftID[$arg1] ne "") {
 			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$arg1])->{nameID});
+			$char->{selected_craft} = 1;
 		} else {
 			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
 				"Usage: arrowcraft [<identify #>]\n" .
@@ -1213,6 +1215,7 @@ sub cmdPoison {
 	} else {
 		if ($arrowCraftID[$arg1] ne "") {
 			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$arg1])->{nameID});
+			$char->{selected_craft} = 1;
 		} else {
 			error T("Error in function 'poison' (Apply Poison)\n" .
 				"Usage: poison [<identify #>]\n" .
@@ -6334,7 +6337,7 @@ sub cmdSkillStop {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 		return;
 	}
-	$messageSender->sendStopSkillUse($char->{last_skill_used}) if $char->{last_skill_used_is_continuous};
+	$messageSender->sendStopSkillUse($char->{last_continuous_skill_used}) if $char->{last_skill_used_is_continuous};
 }
 
 sub cmdVender {
