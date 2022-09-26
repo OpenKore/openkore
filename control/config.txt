@@ -137,6 +137,7 @@ autoResponseOnHeal 0
 
 autoSpell
 autoSpell_safe
+autoPoison
 
 avoidGM_namePattern
 avoidGM_near 0
@@ -560,6 +561,7 @@ attackSkillSlot {
 	whenPartyMembersNearDist
 	inInventory
 	isSelfSkill 0
+	isStartSkill 0
 	equip_topHead
 	equip_midHead
 	equip_lowHead
