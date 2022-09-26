@@ -768,11 +768,6 @@ sub sendBuyBulkVender {
 	debug "Sent bulk buy vender: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
 }
 
-sub parse_buy_bulk_buyer {
-	my ($self, $args) = @_;
-	@{$args->{items}} = map {{ amount => unpack('v', $_), itemIndex => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};
-}
-
 sub reconstruct_buy_bulk_buyer {
     my ($self, $args) = @_;
 	my $packet_size = $self->{buy_bulk_buyer_size} || '(a6)*';
@@ -782,8 +777,12 @@ sub reconstruct_buy_bulk_buyer {
 
 sub sendBuyBulkBuyer {
     my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
+	
+	my $len = 12 + (scalar @{$r_array} * 8);
+	
     $self->sendToServer($self->reconstruct({
         switch => 'buy_bulk_buyer',
+		len => $len,
         buyerID => $buyerID,
         buyingStoreID => $buyingStoreID,
         items => $r_array,

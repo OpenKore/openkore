@@ -1259,6 +1259,8 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+	$char->{time_move} = 0;
+	$char->{time_move_calc} = 0;
 
 	# set initial status from data received from the char server (seems needed on eA, dunno about kRO)}
 	if($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
@@ -2057,7 +2059,7 @@ sub actor_display {
 	$actor->{pos_to} = {%coordsTo};
 	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed} && $args->{switch} ne "0086");
 	$actor->{time_move} = time;
-	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
+	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
 	$actor->{len} = $args->{len} if $args->{len};
 	# 0086 would need that?
 	$actor->{object_type} = $args->{object_type} if (defined $args->{object_type});
@@ -4907,7 +4909,11 @@ sub npc_chat {
 	chatLog("npc", "$position $message\n") if ($config{logChat});
 	message TF("%s%s\n", $dist, $message), "npcchat";
 
-	# TODO hook
+	Plugins::callHook('npc_chat', {
+		actor => $actor,
+		ID => $args->{ID},
+		message => $message,
+	});
 }
 
 # 018d <packet len>.W { <name id>.W { <material id>.W }*3 }*
@@ -7179,6 +7185,8 @@ sub map_change {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
+	$char->{time_move} = 0;
+	$char->{time_move_calc} = 0;
 	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $char->{pos}{x}, $char->{pos}{y}), "connection";
 	if ($net->version == 1) {
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
@@ -7231,6 +7239,8 @@ sub map_changed {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
+	$char->{time_move} = 0;
+	$char->{time_move_calc} = 0;
 
 	undef $conState_tries;
 	main::initMapChangeVars();
@@ -7649,6 +7659,7 @@ sub buy_result {
 	if (AI::is("buyAuto")) {
 		AI::args->{recv_buy_packet} = 1;
 	}
+	Plugins::callHook('buy_result', {fail => $args->{fail}});
 }
 
 # Presents list of items, that can be bought in an NPC MARKET shop (PACKET_ZC_NPC_MARKET_OPEN).
@@ -7915,6 +7926,7 @@ sub offline_clone_found {
 		$actor->{pos_to}{x} = $args->{coord_x};
 		$actor->{pos_to}{y} = $args->{coord_y};
 		$actor->{time_move} = time;
+		$actor->{time_move_calc} = 0;
 		$actor->{walk_speed} = 1; #hack
 		$actor->{lv} = 1;
 		$actor->{robe} = $args->{robe};
@@ -9659,14 +9671,17 @@ sub buying_store_lost {
 sub buying_store_items_list {
 	my($self, $args) = @_;
 
-	undef @buyerItemList;
+	undef $buyerPriceLimit;
 	undef $buyerID;
 	undef $buyingStoreID;
+	
+	$buyerItemList->clear;
 
-	my $zeny = $args->{zeny};
-	my $expireDate = 0;
+	$buyerPriceLimit = $args->{zeny};
 	$buyerID = $args->{buyerID};
 	$buyingStoreID = $args->{buyingStoreID};
+	
+	my $expireDate = 0;
 	my $player = Actor::get($buyerID);
 	my $index = 0;
 	my $pack = $self->{buying_store_items_list_pack} || 'V v C v';
@@ -9677,15 +9692,17 @@ sub buying_store_items_list {
 		T("#  Name                                       Type                     Price Amount\n");
 
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
-		my $item = {};
+		my $item = Actor::Item->new;
 
-		($item->{price},
+ 		($item->{price},
 		$item->{amount},
 		$item->{type},
 		$item->{nameID})	= unpack($pack, substr($args->{itemList}, $i, $item_len));
 
 		$item->{name} = itemName($item);
-		$buyerItemList[$index] = $item;
+		$item->{ID} = $i;
+		
+		$buyerItemList->add($item);
 
 		debug "Item added to Buying Store: $item->{name} - $item->{price} z\n", "buying_store", 2;
 
@@ -9705,7 +9722,7 @@ sub buying_store_items_list {
 		$index++;
 	}
 
-	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($zeny)) . ('-'x83) . "\n";
+	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($buyerPriceLimit)) . ('-'x83) . "\n";
 	message $msg, "list";
 
 	if($args->{expireDate}) {
@@ -9717,7 +9734,7 @@ sub buying_store_items_list {
 	Plugins::callHook('packet_buying_store2', {
 		buyerID => $buyerID,
 		buyingStoreID => $buyingStoreID,
-		itemList => \@buyerItemList,
+		itemList => $buyerItemList,
 		expireDate => $expireDate,
 	});
 }

@@ -88,8 +88,7 @@ sub new {
 		ArgumentException->throw(error => "Task::MapRoute: Invalid arguments.");
 	}
 
-	my $allowed = new Set('maxDistance', 'maxTime', 'distFromGoal', 'pyDistFromGoal',
-		'avoidWalls', 'notifyUponArrival');
+	my $allowed = new Set(qw(maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined $args{$key}) {
 			$self->{$key} = $args{$key};
@@ -160,7 +159,9 @@ sub iterate {
 		shift @{$self->{mapSolution}};
 
 	} elsif ( $self->{mapSolution}[0]{steps} ) {
-		my $dist = $self->{mapSolution}[0]{dist} || 10;
+		my $min_npc_dist = 8;
+		my $max_npc_dist = 10;
+		my $dist_to_npc = blockDistance($self->{actor}{pos}, $self->{mapSolution}[0]{pos});
 
 		# If current solution has conversation steps specified
 		if ( $self->{substage} eq 'Waiting for Warp' ) {
@@ -215,7 +216,7 @@ sub iterate {
 				}
 			}
 
-		} elsif (blockDistance($self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) <= $dist) {
+		} elsif ($dist_to_npc <= $max_npc_dist) {
 			my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
 			if (($self->{actor}{zeny} >= $portals_lut{$from}{dest}{$to}{cost}) || ($char->inventory->getByNameID(7060) && $portals_lut{$from}{dest}{$to}{allow_ticket})) {
 				# We have enough money for this service.
@@ -236,17 +237,18 @@ sub iterate {
 			debug "MapRoute - We spent too much time; bailing out.\n", "route";
 			$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
 
-		} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) ) {
+		} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos}) ) {
 			# NPC is reachable from current position
 			# >> Then "route" to it
-			debug "Walking towards the NPC, dist $dist\n", "route";
+			
+			debug "Walking towards the NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "route";
 			my $task = new Task::Route(
 				actor => $self->{actor},
 				x => $self->{mapSolution}[0]{pos}{x},
 				y => $self->{mapSolution}[0]{pos}{y},
 				field => $field,
 				maxTime => $self->{maxTime},
-				distFromGoal => $dist,
+				distFromGoal => $min_npc_dist,
 				avoidWalls => $self->{avoidWalls},
 				solution => \@solution
 			);
@@ -255,7 +257,7 @@ sub iterate {
 		} else {
 			# Error, NPC is not reachable from current pos
 			debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "route";
-			error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field->baseName, @{$self->{actor}{pos_to}}{qw(x y)}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
+			error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field->baseName, @{$self->{actor}{pos}}{qw(x y)}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "route";
 			shift @{$self->{mapSolution}};
 		}
 
@@ -273,7 +275,7 @@ sub iterate {
 			debug "We spent too much time; bailing out.\n", "route";
 			$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
 
-		} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos_to}, $self->{mapSolution}[0]{pos}) ) {
+		} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos}) ) {
 			# X,Y is reachable from current position
 			# >> Then "route" to it
 			my $task = new Task::Route(
@@ -285,18 +287,15 @@ sub iterate {
 				avoidWalls => $self->{avoidWalls},
 				distFromGoal => $self->{distFromGoal},
 				pyDistFromGoal => $self->{pyDistFromGoal},
-				solution => \@solution,
-				isRandomWalk => $self->{isRandomWalk},
-				isSlaveRescue => $self->{isSlaveRescue},
-				LOSSubRoute => $self->{LOSSubRoute},
-				meetingSubRoute => $self->{meetingSubRoute}
+				solution => \@solution
 			);
+			$task->{$_} = $self->{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 			$self->setSubtask($task);
 			$self->{mapSolution}[0]{routed} = 1;
 
 		} else {
 			warning TF("No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n",
-				$field->baseName, @{$self->{actor}{pos_to}}{qw(x y)},
+				$field->baseName, @{$self->{actor}{pos}}{qw(x y)},
 				$self->{mapSolution}[0]{pos}{x},
 				$self->{mapSolution}[0]{pos}{y}), "route";
 			error TF("Cannot reach (%s,%s) from current position.\n",
@@ -356,7 +355,7 @@ sub iterate {
 						next PORTAL; # Only guess unknown portals
 					}
 					
-					next PORTAL unless ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos_to}, $portal->{pos} ) );
+					next PORTAL unless ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos}, $portal->{pos} ) );
 					
 					my $dist = blockDistance($self->{mapSolution}[0]{pos}, $portal->{pos});
 					next PORTAL if (defined $closest_portal_dist && $closest_portal_dist < $dist);
@@ -384,8 +383,9 @@ sub iterate {
 						solution => \@solution
 					);
 					$params{$_} = $self->{guess_portal}{pos}{$_} for qw(x y);
-					$params{$_} = $self->{$_} for qw(actor maxTime avoidWalls isRandomWalk isSlaveRescue LOSSubRoute meetingSubRoute);
+					$params{$_} = $self->{$_} for qw(actor maxTime avoidWalls);
 					my $task = new Task::Route(%params);
+					$task->{$_} = $self->{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 					$self->setSubtask($task);
 				}
 			}
@@ -473,7 +473,7 @@ sub iterate {
 			}
 
 			if ($walk) {
-				if ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos_to}, $self->{mapSolution}[0]{pos} ) ) {
+				if ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos} ) ) {
 					# Portal is reachable from current position
 					# >> Then "route" to it
 					debug "Portal route within same map.\n", "route";
@@ -490,17 +490,14 @@ sub iterate {
 						field => $field,
 						maxTime => $self->{maxTime},
 						avoidWalls => $self->{avoidWalls},
-						solution => \@solution,
-						isRandomWalk => $self->{isRandomWalk},
-						isSlaveRescue => $self->{isSlaveRescue},
-						LOSSubRoute => $self->{LOSSubRoute},
-						meetingSubRoute => $self->{meetingSubRoute}
+						solution => \@solution
 					);
+					$task->{$_} = $self->{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 					$self->setSubtask($task);
 
 				} else {
 					warning TF("No LOS from %s (%s,%s) to Portal at (%s,%s).\n",
-						$field->baseName, @{$self->{actor}{pos_to}}{qw(x y)},
+						$field->baseName, @{$self->{actor}{pos}}{qw(x y)},
 						$self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}),
 						"route";
 					error T("Cannot reach portal from current position\n"), "route";
@@ -514,7 +511,7 @@ sub iterate {
 sub setNpcTalk {
 	my ($self) = @_;
 	$self->{substage} = 'Waiting for Warp';
-	@{$self}{qw(old_x old_y)} = @{$self->{actor}{pos_to}}{qw(x y)};
+	@{$self}{qw(old_x old_y)} = @{$self->{actor}{pos}}{qw(x y)};
 	$self->{old_map} = $field->baseName;
 	my $task = new Task::TalkNPC(
 		type => 'talknpc',
@@ -528,8 +525,8 @@ sub initMapCalculator {
 	my ($self) = @_;
 	my $task = new Task::CalcMapRoute(
 		sourceMap => $field->baseName,
-		sourceX => $self->{actor}{pos_to}{x},
-		sourceY => $self->{actor}{pos_to}{y},
+		sourceX => $self->{actor}{pos}{x},
+		sourceY => $self->{actor}{pos}{y},
 		map => $self->{dest}{map},
 		x => $self->{dest}{pos}{x},
 		y => $self->{dest}{pos}{y}
@@ -565,12 +562,9 @@ sub subtaskDone {
 					maxTime => $self->{maxTime},
 					avoidWalls => $self->{avoidWalls},
 					distFromGoal => $self->{distFromGoal},
-					pyDistFromGoal => $self->{pyDistFromGoal},
-					isRandomWalk => $self->{isRandomWalk},
-					isSlaveRescue => $self->{isSlaveRescue},
-					LOSSubRoute => $self->{LOSSubRoute},
-					meetingSubRoute => $self->{meetingSubRoute}
+					pyDistFromGoal => $self->{pyDistFromGoal}
 				);
+				$task->{$_} = $self->{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 				$self->setSubtask($task);
 			}
 		}
