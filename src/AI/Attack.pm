@@ -125,7 +125,7 @@ sub process {
 		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			debug "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
-			AI::dequeue while (AI::action("route") || AI::action("move"));
+			AI::dequeue while (AI::is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
 
@@ -139,7 +139,7 @@ sub process {
 			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{attackCheckLOS} ||($config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})))
 		) {
 			debug "Target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
-			AI::dequeue while (AI::action("route") || AI::action("move"));
+			AI::dequeue while (AI::is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
 
