@@ -126,25 +126,30 @@ sub queue {
 sub clear {
 	my $total = scalar @_;
 	
+	# If no arg was given clear all AI queue
 	if ($total == 0) {
 		undef @ai_seq;
 		undef @ai_seq_args;
 		undef %ai_v;
-		
+	
+	# If 1 arg was given find it in the queue
 	} elsif ($total == 1) {
-		my $wanted = shift;
-		my $found_i;
-		foreach my $seq_i (0..$#ai_seq) {
-			if ($wanted eq $ai_seq[$seq_i]) {
-				$found_i = $seq_i;
-				last;
-			}
+		my $wanted_action = shift;
+		my $seq_index;
+		foreach my $i (0..$#ai_seq) {
+			next unless ($ai_seq[$i] eq $wanted_action);
+			$seq_index = $i;
+			last;
 		}
-		if (defined $found_i) {
-			splice(@ai_seq, $found_i , 1);
-			splice(@ai_seq_args, $found_i , 1);
-		}
+		return unless (defined $seq_index); # return unless we found the action in the queue
 		
+		splice(@ai_seq, $seq_index , 1); # Splice it out of @ai_seq
+		splice(@ai_seq_args, $seq_index , 1);  # Splice it out of @ai_seq_args
+		# When there are multiple of the same action (route, attack, route) the splices of remove the first one
+		# So recursively call AI::clear again with the same action until none is found
+		AI::clear($wanted_action);
+	
+	# If more than 1 arg was given recursively call AI::clear for each one
 	} else {
 		foreach (@_) {
 			AI::clear($_);
