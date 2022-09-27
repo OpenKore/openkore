@@ -117,38 +117,38 @@ sub dequeue {
 }
 
 sub queue {
-	unshift @ai_seq, shift;
+	my $action = shift;
 	my $args = shift;
+	unshift(@ai_seq, $action);
 	unshift @ai_seq_args, ((defined $args) ? $args : {});
 }
 
 sub clear {
-	if (@_) {
-		my $changed;
-		for (my $i = 0; $i < @ai_seq; $i++) {
-			if (defined binFind(\@_, $ai_seq[$i])) {
-				delete $ai_seq[$i];
-				delete $ai_seq_args[$i];
-				$changed = 1;
-			}
-		}
-
-		if ($changed) {
-			my (@new_seq, @new_args);
-			for (my $i = 0; $i < @ai_seq; $i++) {
-				if (defined $ai_seq[$i]) {
-					push @new_seq, $ai_seq[$i];
-					push @new_args, $ai_seq_args[$i];
-				}
-			}
-			@ai_seq = @new_seq;
-			@ai_seq_args = @new_args;
-		}
-
-	} else {
+	my $total = scalar @_;
+	
+	if ($total == 0) {
 		undef @ai_seq;
 		undef @ai_seq_args;
 		undef %ai_v;
+		
+	} elsif ($total == 1) {
+		my $wanted = shift;
+		my $found_i;
+		foreach my $seq_i (0..$#ai_seq) {
+			if ($wanted eq $ai_seq[$seq_i]) {
+				$found_i = $seq_i;
+				last;
+			}
+		}
+		if (defined $found_i) {
+			splice(@ai_seq, $found_i , 1);
+			splice(@ai_seq_args, $found_i , 1);
+		}
+		
+	} else {
+		foreach (@_) {
+			AI::clear($_);
+		}
 	}
 }
 
