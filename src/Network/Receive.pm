@@ -1865,17 +1865,6 @@ sub actor_display {
 		warning TF("Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
 		return;
 	}
-
-	# Remove actors with a distance greater than clientSight. Useful for vending (so you don't spam
-	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
-	# beyond clientSight.
-	if ($config{clientSight}) {
-		if ((my $block_dist = blockDistance($char->{pos_to}, \%coordsTo)) >= ($config{clientSight})) {
-			my $nameIdTmp = unpack("V", $args->{ID});
-			debug "Removed out of sight actor $nameIdTmp at ($coordsTo{x}, $coordsTo{y}) (distance: $block_dist)\n";
-			return;
-		}
-	}
 =pod
 	# Zealotus bug
 	if ($args->{type} == 1200) {
@@ -2063,6 +2052,25 @@ sub actor_display {
 	$actor->{len} = $args->{len} if $args->{len};
 	# 0086 would need that?
 	$actor->{object_type} = $args->{object_type} if (defined $args->{object_type});
+
+	# Remove actors with a distance greater than clientSight. Useful for vending (so you don't spam
+	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
+	# beyond clientSight.
+	if ($config{clientSight}) {
+		my $realMyPos = calcPosition($char);
+		my $realActorPos = calcPosition($actor);
+		my $realActorDist = blockDistance($realMyPos, $realActorPos);
+		
+		my $max_sight_base = $config{clientSight} + 2;
+		my $max_sight_extra = $config{clientSight_removeBeyond};
+		
+		my $max_sight = $max_sight_base + $max_sight_extra;
+		
+		if ($realActorDist >= $max_sight) {
+			Log::warning "Removed out of sight actor $actor->{name} at ($actor->{pos_to}{x}, $actor->{pos_to}{y}) (distance: $realActorDist > max $max_sight)\n";
+			return;
+		}
+	}
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
 		# None of this stuff should matter if the actor isn't a player... => does matter for a guildflag npc!
