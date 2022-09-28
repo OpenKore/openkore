@@ -117,38 +117,43 @@ sub dequeue {
 }
 
 sub queue {
-	unshift @ai_seq, shift;
+	my $action = shift;
 	my $args = shift;
+	unshift(@ai_seq, $action);
 	unshift @ai_seq_args, ((defined $args) ? $args : {});
 }
 
 sub clear {
-	if (@_) {
-		my $changed;
-		for (my $i = 0; $i < @ai_seq; $i++) {
-			if (defined binFind(\@_, $ai_seq[$i])) {
-				delete $ai_seq[$i];
-				delete $ai_seq_args[$i];
-				$changed = 1;
-			}
-		}
-
-		if ($changed) {
-			my (@new_seq, @new_args);
-			for (my $i = 0; $i < @ai_seq; $i++) {
-				if (defined $ai_seq[$i]) {
-					push @new_seq, $ai_seq[$i];
-					push @new_args, $ai_seq_args[$i];
-				}
-			}
-			@ai_seq = @new_seq;
-			@ai_seq_args = @new_args;
-		}
-
-	} else {
+	my $total = scalar @_;
+	
+	# If no arg was given clear all AI queue
+	if ($total == 0) {
 		undef @ai_seq;
 		undef @ai_seq_args;
 		undef %ai_v;
+	
+	# If 1 arg was given find it in the queue
+	} elsif ($total == 1) {
+		my $wanted_action = shift;
+		my $seq_index;
+		foreach my $i (0..$#ai_seq) {
+			next unless ($ai_seq[$i] eq $wanted_action);
+			$seq_index = $i;
+			last;
+		}
+		return unless (defined $seq_index); # return unless we found the action in the queue
+		
+		splice(@ai_seq, $seq_index , 1); # Splice it out of @ai_seq
+		splice(@ai_seq_args, $seq_index , 1);  # Splice it out of @ai_seq_args
+		# When there are multiple of the same action (route, attack, route) the splices of remove the first one
+		# So recursively call AI::clear again with the same action until none is found
+		AI::clear($wanted_action);
+	
+	# If more than 1 arg was given recursively call AI::clear for each one
+	} else {
+		foreach (@_) {
+			AI::clear($_);
+		}
 	}
 }
 
