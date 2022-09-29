@@ -182,7 +182,7 @@ sub getByNameID {
 	my ($self, $nameID, $onlyIdentified) = @_;
 	for my $item (@$self) {
 		next unless (!$onlyIdentified || $item->{identified});
-		if ($item->{nameID} eq $nameID) {
+		if ($item->{nameID} == $nameID) {
 			return $item;
 		}
 	}
@@ -195,11 +195,11 @@ sub getByNameID {
 # Returns the amount of items with a given nameID.
 # If nothing is found, 0 is returned.
 sub sumByNameID {
-	my ($self, $id, $onlyIdentified) = @_;
+	my ($self, $nameID, $onlyIdentified) = @_;
 	my $sum = 0;
 	for my $item (@$self) {
 		next unless (!$onlyIdentified || $item->{identified});
-		if ($item->{nameID} == $id) {
+		if ($item->{nameID} == $nameID) {
 			$sum = $sum + $item->{amount};
 		}
 	}
