@@ -111,7 +111,7 @@ sub process {
 		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			debug "$slave target $target has moved since we started routing to it - Adjusting route\n", 'slave_attack';
-			$slave->dequeue while ($slave->action("route") || $slave->action("move"));
+			$slave->dequeue while ($slave->is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
 
@@ -125,7 +125,7 @@ sub process {
 			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{$slave->{configPrefix}.'attackCheckLOS'} ||($config{$slave->{configPrefix}.'attackCheckLOS'} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})))
 		) {
 			debug "$slave target $target is now reachable by melee attacks during routing to it.\n", 'slave_attack';
-			$slave->dequeue while ($slave->action("route") || $slave->action("move"));
+			$slave->dequeue while ($slave->is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
 		}
