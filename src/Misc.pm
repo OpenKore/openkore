@@ -2787,13 +2787,13 @@ sub meetingPosition {
 		$max_destination_dist = $attackMaxDistance;
 	}
 
-	my $max_pathfinding_dist = $max_destination_dist;
-
 	unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
 		my $new_pos = $field->closestWalkableSpot($realMyPos, 1);
 		$realMyPos->{x} = $new_pos->{x};
 		$realMyPos->{y} = $new_pos->{y};
 	}
+
+	my $max_pathfinding_dist = $max_destination_dist+5;
 
 	my $best_spot;
 	my $best_targetPosInStep;
@@ -2828,28 +2828,26 @@ sub meetingPosition {
 			$spot->{y} = $y_spot;
 			my $spot_info = $allspots{$x_spot}{$y_spot};
 			
-				next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
-				#warning "[meetingPosition] Test $spot->{x} $spot->{y}\n";
+			next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
 
-				# Is this spot acceptable?
+			# Is this spot acceptable?
 
-				# 1. It must be walkable
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] isWalkable\n";
-				next unless ($field->isWalkable($spot->{x}, $spot->{y}));
-				
-
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] positionNearPortal\n";
-				next if (positionNearPortal($spot, $config{'attackMinPortalDistance'}));
-				
-				
-				#my $dist_to_me = blockDistance($spot, $realMyPos);
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] dist from us $dist_to_me\n";
-				
-				# TODO: This is not actually checked
-				# 4. The route should not exceed at any point $max_pathfinding_dist distance from the target.
-
+			# 1. It must be walkable
+			next unless ($field->isWalkable($spot->{x}, $spot->{y}));
+			
+			next if (positionNearPortal($spot, $config{'attackMinPortalDistance'}));
+			
+			
+			# 5. It must be reachable and have at max $max_path_dist of route distance to it from our current position.
+			my $time_actor_to_get_to_spot;
+			my $dist;
+			if ($field->checkLOS($realMyPos, $spot, 0)) {
+				$dist = blockDistance($realMyPos, $spot);
+				next unless ($dist <= $max_path_dist);
+				$time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
+			} else {
 				my $solution = [];
-				my $dist = new PathFinding(
+				$dist = new PathFinding(
 					field => $field,
 					start => $realMyPos,
 					dest => $spot,
@@ -2861,84 +2859,67 @@ sub meetingPosition {
 					min_y => $spot_info->{min_pathfinding_y},
 					max_y => $spot_info->{max_pathfinding_y}
 				)->run($solution);
-
-				# 5. It must be reachable and have at max $max_path_dist of route distance to it from our current position.
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] dist max_path_dist ($dist <= $max_path_dist)\n";
 				next unless ($dist >= 0 && $dist <= $max_path_dist);
+				$time_actor_to_get_to_spot = Utils::calcTimeFromSolution($solution, $mySpeed);
+			}
+			
+			my $total_time = ($timeSinceTargetMoved+$time_actor_to_get_to_spot);
+			my $targetPosInStep;
+			my $temp_targetCurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);
+			$targetPosInStep->{x} = $target_solution->[$temp_targetCurrentStep]{x};
+			$targetPosInStep->{y} = $target_solution->[$temp_targetCurrentStep]{y};
 
-				my $time_actor_to_get_to_spot = Utils::calcTimeFromSolution($solution, $mySpeed);
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] It will take us $time_actor_to_get_to_spot sec to get there\n";
-				
-				my $total_time = ($timeSinceTargetMoved+$time_actor_to_get_to_spot);
-				my $targetPosInStep;
-				my $temp_targetCurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);
-				$targetPosInStep->{x} = $target_solution->[$temp_targetCurrentStep]{x};
-				$targetPosInStep->{y} = $target_solution->[$temp_targetCurrentStep]{y};
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] Target will be at $targetPosInStep->{x} $targetPosInStep->{y}\n";
-
-				my $dist_to_target = blockDistance($spot, $targetPosInStep);
-				
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] attackMaxDistance $dist_to_target <= $attackMaxDistance\n";
-				next unless ($dist_to_target <= $attackMaxDistance);
-				
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] min_destination_dist $dist_to_target >= $min_destination_dist\n";
-				next unless ($dist_to_target >= $min_destination_dist);
-				
-				# 3. It must have LOS to the target ($targetPosInStep) if that is active and we are ranged or must be reacheable from melee
-				if ($ranged) {
-					#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] ranged checkLOS\n";
+			my $dist_to_target = blockDistance($spot, $targetPosInStep);
+			
+			next unless ($dist_to_target <= $attackMaxDistance || $runFromTargetActive);
+			
+			next unless ($dist_to_target >= $min_destination_dist || $runFromTargetActive);
+			
+			# 3. It must have LOS to the target ($targetPosInStep) if that is active and we are ranged or must be reacheable from melee
+			if ($ranged) {
+				next unless ($field->checkLOS($spot, $targetPosInStep, $attackCanSnipe));
+			} elsif ($melee) {
+				next unless (canReachMeleeAttack($spot, $targetPosInStep));
+				if (blockDistance($spot, $targetPosInStep) == 2) {
 					next unless ($field->checkLOS($spot, $targetPosInStep, $attackCanSnipe));
-				} elsif ($melee) {
-					#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] melee canReachMeleeAttack\n";
-					next unless (canReachMeleeAttack($spot, $targetPosInStep));
-					if (blockDistance($spot, $targetPosInStep) == 2) {
-						#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] melee checkLOS\n";
-						next unless ($field->checkLOS($spot, $targetPosInStep, $attackCanSnipe));
-					}
 				}
+			}
 
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] realMasterPos\n";
-				# 2. It must be within $followDistanceMax of MasterPos, if we have a master.
-				if ($realMasterPos) {
-					if ($master_moving) {
-						my $masterPos_inTime;
-						my $totalTime = $timeSinceMasterMoved + $time_actor_to_get_to_spot;
-						my $master_CurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $totalTime);
-						$masterPos_inTime->{x} = $master_solution->[$master_CurrentStep]{x};
-						$masterPos_inTime->{y} = $master_solution->[$master_CurrentStep]{y};
-						
-						next unless (blockDistance($spot, $masterPos_inTime) <= $followDistanceMax);
-					} else {
-						next unless (blockDistance($spot, $realMasterPos) <= $followDistanceMax);
-					}
+			# 2. It must be within $followDistanceMax of MasterPos, if we have a master.
+			if ($realMasterPos) {
+				if ($master_moving) {
+					my $masterPos_inTime;
+					my $totalTime = $timeSinceMasterMoved + $time_actor_to_get_to_spot;
+					my $master_CurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $totalTime);
+					$masterPos_inTime->{x} = $master_solution->[$master_CurrentStep]{x};
+					$masterPos_inTime->{y} = $master_solution->[$master_CurrentStep]{y};
+					
+					next unless (blockDistance($spot, $masterPos_inTime) <= $followDistanceMax);
+				} else {
+					next unless (blockDistance($spot, $realMasterPos) <= $followDistanceMax);
 				}
-				
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] runFromTargetActive\n";
-				if ($runFromTargetActive) {
-					my $target_attack_cell = Utils::getClosestAdjacentCell($field, $spot, $realTargetPos);
-					#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] It will attack us at $target_attack_cell->{x} $target_attack_cell->{y}\n";
-					my $time_target_to_get_to_spot = Utils::calcTimeFromPathfinding($field, $realTargetPos, $target_attack_cell, $targetSpeed);
-					#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] Target will take $time_target_to_get_to_spot sec to get from $realTargetPos->{x} $realTargetPos->{y} to $target_attack_cell->{x} $target_attack_cell->{y}\n";
-					if ($time_actor_to_get_to_spot > $time_target_to_get_to_spot) {
-						next;
-					}
+			}
+			
+			if ($runFromTargetActive) {
+				my $time_target_to_get_to_spot = Utils::calcTimeFromPathfinding($field, $realTargetPos, $spot, $targetSpeed);
+				if ($time_actor_to_get_to_spot > $time_target_to_get_to_spot) {
+					next;
 				}
+			}
 
-				my $sum_time = $time_actor_to_get_to_spot;
-				#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] after all sum time $sum_time (current best $best_time)\n";
+			my $sum_time = $time_actor_to_get_to_spot;
 
-				if (!defined($best_time) || $sum_time < $best_time) {
-					#warning "[($realMyPos->{x} $realMyPos->{y}) -> ($spot->{x} $spot->{y})] ---- New best\n";
-					$best_time = $sum_time;
-					$best_spot = $spot;
-					$best_targetPosInStep = $targetPosInStep;
-					$best_dist_to_target = $dist_to_target;
-				}
+			if (!defined($best_time) || $sum_time < $best_time) {
+				$best_time = $sum_time;
+				$best_spot = $spot;
+				$best_targetPosInStep = $targetPosInStep;
+				$best_dist_to_target = $dist_to_target;
+			}
 		}
 	}
 
 	if (defined $best_spot) {
-		warning "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosInStep->{x} $best_targetPosInStep->{y}, dist $best_dist_to_target, it will take $best_time seconds.\n";
+		debug "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosInStep->{x} $best_targetPosInStep->{y}, dist $best_dist_to_target, it will take $best_time seconds.\n";
 		return $best_spot;
 	}
 }

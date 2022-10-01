@@ -130,7 +130,7 @@ sub calcPosFromTime {
 sub get_client_solution {
 	my ($field, $pos, $pos_to) = @_;
 	my $solution = [];
-	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $pos, 20);
+	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $pos, 35);
 	my $dist_path = new PathFinding(
 		field => $field,
 		start => $pos,
@@ -149,26 +149,44 @@ sub get_client_solution {
 sub calcPosFromPathfinding {
 	my ($field, $actor, $extra_time) = @_;
 	
-	my $pos = $actor->{pos};
-	my $pos_to = $actor->{pos_to};
-	my $speed = ($actor->{walk_speed} || 0.12);
-	my $time = time - $actor->{time_move} + $extra_time;
-	
-	my $solution = Utils::get_client_solution($field, $pos, $pos_to);
-	my $steps_walked = Utils::calcStepsWalkedFromTimeAndSolution($solution, $speed, $time);
-	my $pos = $solution->[$steps_walked];
-	
-	return $pos;
+	if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y}) {
+		return $actor->{pos};
+		
+	} elsif ($field->checkLOS($actor->{pos}, $actor->{pos_to}, 0)) {
+		return calcPosition($actor);
+		
+	} else {
+		my $pos = $actor->{pos};
+		my $pos_to = $actor->{pos_to};
+		my $speed = ($actor->{walk_speed} || 0.12);
+		my $time = time - $actor->{time_move} + $extra_time;
+		
+		my $solution = Utils::get_client_solution($field, $pos, $pos_to);
+		
+		my $steps_walked = Utils::calcStepsWalkedFromTimeAndSolution($solution, $speed, $time);
+		
+		my $pos = $solution->[$steps_walked];
+		
+		return $pos;
+	}
 }
 
 sub calcTimeFromPathfinding {
     my ($field, $pos, $pos_to, $speed) = @_;
-
-	my $solution = Utils::get_client_solution($field, $pos, $pos_to);
 	
-	my $summed_time = Utils::calcTimeFromSolution($solution, $speed);
+	if ($pos->{x} == $pos_to->{x} && $pos->{y} == $pos_to->{y}) {
+		return 0;
+		
+	} elsif ($field->checkLOS($pos, $pos_to, 0)) {
+		return calcTime($pos, $pos_to, $speed);
+		
+	} else {
+		my $solution = Utils::get_client_solution($field, $pos, $pos_to);
+		
+		my $summed_time = Utils::calcTimeFromSolution($solution, $speed);
 
-    return $summed_time;
+		return $summed_time;
+	}
 }
 
 sub getClosestAdjacentCell {
