@@ -912,6 +912,17 @@ sub updateStatusBar {
 	$setStatus->('aiText', $aiText);
 }
 
+sub get_task {
+	my ($args) = @_;
+	if (UNIVERSAL::isa($args, 'Task::Route')) {
+		return $args;
+	} elsif (UNIVERSAL::isa($args, 'Task::MapRoute') && $args->getSubtask && UNIVERSAL::isa($args->getSubtask, 'Task::Route')) {
+		return $args->getSubtask;
+	} else {
+		return undef;
+	}
+}
+
 sub updateMapViewer {
 	my $self = shift;
 	my $map = $self->{mapViewer};
@@ -922,17 +933,44 @@ sub updateMapViewer {
 
 	$map->set($field->baseName, $myPos->{x}, $myPos->{y}, $field, $char->{look});
 
-	my ($i, $args, $routeTask, $solution);
-	if (
-		defined ($i = AI::findAction ('route')) && ($args = AI::args ($i)) && (
-			($routeTask = $args->getSubtask) && %{$routeTask} && ($solution = $routeTask->{solution}) && @$solution
-			||
-			$args->{dest} && $args->{dest}{pos} && ($solution = [{x => $args->{dest}{pos}{x}, y => $args->{dest}{pos}{y}}])
-		)
-	) {
-		$map->setRoute ([@$solution]);
-	} else {
+	my ($i, $args, $routeTask, $solution, $set_route, $task);
+	$i = AI::findAction ('route');
+	if (defined $i) {
+		$args = AI::args($i);
+		$task = get_task($args);
+		if (defined $task) {
+			if (scalar @{$task->{solution}} > 0) {
+				my $attack = $task->{attackID} ? 1 : 0;
+				$map->setRoute ([@{$task->{solution}}], $attack);
+				$set_route = 1;
+			}
+		}
+	}
+	if (!$set_route) {
 		$map->setRoute;
+	}
+	
+	undef $i;
+	undef $args;
+	undef $routeTask;
+	undef $solution;
+	undef $set_route;
+	undef $task;
+	
+	$i = AI::findAction ('route', 1);
+	if (defined $i) {
+		$args = AI::args($i);
+		$task = get_task($args);
+		if (defined $task) {
+			if (scalar @{$task->{solution}} > 0) {
+				my $attack = $task->{attackID} ? 1 : 0;
+				$map->setRoute2 ([@{$task->{solution}}], $attack);
+				$set_route = 1;
+			}
+		}
+	}
+	if (!$set_route) {
+		$map->setRoute2;
 	}
 
 	$map->setPlayers ([values %players]);
@@ -1520,6 +1558,11 @@ sub onMapClick {
 
 		unless ($noMove) {
 			$self->writeOutput("message", TF("Moving to %s, %s\n", $x, $y), "info") unless $checkPortal;
+			
+			#open SLOTS, ">>", "mapsave.txt";
+			#print SLOTS '			{ "x":'.$x.', "y":'.$y.' },'."\n";
+			#close(SLOTS);
+			
 			AI::clear("mapRoute", "route", "move");
 			main::ai_route($field->baseName, $x, $y, attackOnRoute => 1);
 		}

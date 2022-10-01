@@ -38,7 +38,7 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(calcPosFromTime calcPosition fieldAreaCorrectEdges getSquareEdgesFromCoord calcStepsWalkedFromTimeAndRoute calcTimeFromRoute calcTime checkMovementDirection countSteps distance
+	qw(calcPosFromTime calcPosFromPathfinding calcPosition fieldAreaCorrectEdges getSquareEdgesFromCoord calcStepsWalkedFromTimeAndSolution calcTimeFromSolution calcTime checkMovementDirection countSteps distance
 	intToSignedInt intToSignedShort
 	blockDistance specifiedBlockDistance adjustedBlockDistance getVector moveAlong moveAlongVector
 	normalize vectorToDegree max min round ceil),
@@ -125,6 +125,68 @@ sub calcPosFromTime {
 
 	%result = moveAlong($pos, $pos_to, $s);
 	return (\%result, $s);
+}
+
+sub get_client_solution {
+	my ($field, $pos, $pos_to) = @_;
+	my $solution = [];
+	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $pos, 20);
+	my $dist_path = new PathFinding(
+		field => $field,
+		start => $pos,
+		dest => $pos_to,
+		avoidWalls => 0,
+		randomFactor => 0,
+		useManhattan => 1,
+		min_x => $min_pathfinding_x,
+		max_x => $max_pathfinding_x,
+		min_y => $min_pathfinding_y,
+		max_y => $max_pathfinding_y
+	)->run($solution);
+	return $solution;
+}
+
+sub calcPosFromPathfinding {
+	my ($field, $actor, $extra_time) = @_;
+	
+	my $pos = $actor->{pos};
+	my $pos_to = $actor->{pos_to};
+	my $speed = ($actor->{walk_speed} || 0.12);
+	my $time = time - $actor->{time_move} + $extra_time;
+	
+	my $solution = Utils::get_client_solution($field, $pos, $pos_to);
+	my $steps_walked = Utils::calcStepsWalkedFromTimeAndSolution($solution, $speed, $time);
+	my $pos = $solution->[$steps_walked];
+	
+	return $pos;
+}
+
+sub calcTimeFromPathfinding {
+    my ($field, $pos, $pos_to, $speed) = @_;
+
+	my $solution = Utils::get_client_solution($field, $pos, $pos_to);
+	
+	my $summed_time = Utils::calcTimeFromSolution($solution, $speed);
+
+    return $summed_time;
+}
+
+sub getClosestAdjacentCell {
+	my ($field, $me, $mob) = @_;
+	my @blocks = Misc::calcRectArea($me->{x}, $me->{y}, 1, $field);
+
+	my $best_block;
+	my $shortest_dist;
+
+	foreach my $block (@blocks) {
+		next if (!$field->isWalkable($block->{x}, $block->{y}));
+		my $dist = Utils::adjustedBlockDistance($mob, $block);
+		if (!defined $shortest_dist || $shortest_dist > $dist) {
+			$shortest_dist = $dist;
+			$best_block = $block;
+		}
+	}
+	return $best_block;
 }
 
 ##
@@ -246,7 +308,7 @@ sub getSquareEdgesFromCoord {
 }
 
 ##
-# calcStepsWalkedFromTimeAndRoute(solution, speed, time_elapsed)
+# calcStepsWalkedFromTimeAndSolution(solution, speed, time_elapsed)
 # solution: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path, the first array element should be the current position.
 # speed: The actor speed in blocks / second.
 # time_elapsed: The amount of time that has passed since movement started.
@@ -255,9 +317,9 @@ sub getSquareEdgesFromCoord {
 #
 # Example:
 # my $steps_walked;
-# $steps_walked = calcStepsWalkedFromTimeAndRoute($solution, $speed, $time_elapsed)
+# $steps_walked = calcStepsWalkedFromTimeAndSolution($solution, $speed, $time_elapsed)
 # print "You are currently at: $solution->[$steps_walked]{x} $solution->[$steps_walked]{y}\n";
-sub calcStepsWalkedFromTimeAndRoute {
+sub calcStepsWalkedFromTimeAndSolution {
     my ($solution, $speed, $time_elapsed) = @_;
 
     my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
@@ -306,12 +368,12 @@ sub calcStepsWalkedFromTimeAndRoute {
 }
 
 ##
-# calcTimeFromRoute(solution, speed)
+# calcTimeFromSolution(solution, speed)
 # solution: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path, the first array element should be the current position.
 # speed: The actor speed in blocks / second.
 #
-# Returns the amount of seconds to walk the given route with the given speed.
-sub calcTimeFromRoute {
+# Returns the amount of seconds to walk the given Solution with the given speed.
+sub calcTimeFromSolution {
     my ($solution, $speed) = @_;
 
     my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal

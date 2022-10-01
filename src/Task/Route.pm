@@ -34,7 +34,7 @@ use Network;
 use Field;
 use Translation qw(T TF);
 use Misc;
-use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosition);
+use Utils qw(timeOut adjustedBlockDistance distance blockDistance calcPosFromPathfinding);
 use Utils::Exceptions;
 use Utils::Set;
 use Utils::PathFinding;
@@ -106,7 +106,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid Coordinates argument.");
 	}
 
-	my $allowed = new Set(qw(maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
+	my $allowed = new Set(qw(maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
@@ -130,6 +130,18 @@ sub new {
 	} else {
 		$self->{avoidWalls} = 0;
 	}
+	
+	if ($config{$self->{actor}{configPrefix}.'route_randomFactor'}) {
+		if (!defined $self->{randomFactor}) {
+			$self->{randomFactor} = $config{$self->{actor}{configPrefix}.'route_randomFactor'};
+		}
+	} else {
+		$self->{randomFactor} = 0;
+	}
+	if (!defined $self->{useManhattan}) {
+		$self->{useManhattan} = 0;
+	}
+	
 	$self->{solution} = [];
 	$self->{stage} = NOT_INITIALIZED;
 
@@ -204,7 +216,7 @@ sub iterate {
 			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
 			$self->setDone();
 		
-		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls}, 1)) {
+		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls}, $self->{randomFactor}, $self->{useManhattan}, 1)) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
 			
 			@{$self->{last_pos}}{qw(x y)} = @{$pos}{qw(x y)};
@@ -214,7 +226,8 @@ sub iterate {
 			
 			debug "Route $self->{actor} Solution Ready! Found path on ".$self->{dest}{map}->baseName." from ".$pos->{x}." ".$pos->{y}." to ".$self->{dest}{pos}{x}." ".$self->{dest}{pos}{y}.". Size: ".@{$self->{solution}}." steps.\n", "route";
 			
-			unshift(@{$self->{solution}}, { x => $pos->{x}, y => $pos->{y}});
+			# Changed in pathfinding.xs
+			#unshift(@{$self->{solution}}, { x => $pos->{x}, y => $pos->{y}});
 
 			if (time - $begin < 0.01) {
 				# Optimization: immediately go to the next stage if we spent neglible time in this step.
@@ -300,7 +313,7 @@ sub iterate {
 		# $actor->{pos_to} is the position the character moved TO in the last move packet received
 		@{$current_pos_to}{qw(x y)} = @{$self->{actor}{pos_to}}{qw(x y)};
 		
-		my $current_calc_pos = calcPosition($self->{actor});
+		my $current_calc_pos = calcPosFromPathfinding($field, $self->{actor});
 		
 		if ($current_calc_pos->{x} == $solution->[$#{$solution}]{x} && $current_calc_pos->{y} == $solution->[$#{$solution}]{y}) {
 			# Actor position is the destination; we've arrived at the destination
@@ -567,7 +580,7 @@ sub resetRoute {
 # This function is a convenience wrapper function for the stuff
 # in Utils/PathFinding.pm
 sub getRoute {
-	my ($class, $solution, $field, $start, $dest, $avoidWalls, $self_call) = @_;
+	my ($class, $solution, $field, $start, $dest, $avoidWalls, $randomFactor, $useManhattan, $self_call) = @_;
 	assertClass($field, 'Field') if DEBUG;
 	if (!defined $dest->{x} || $dest->{y} eq '') {
 		@{$solution} = () if ($solution);
@@ -594,6 +607,8 @@ sub getRoute {
 	$plugin_args{dest} = $closest_dest;
 	$plugin_args{field} = $field;
 	$plugin_args{avoidWalls} = $avoidWalls;
+	$plugin_args{randomFactor} = $randomFactor;
+	$plugin_args{useManhattan} = $useManhattan;
 	$plugin_args{return} = 0;
 	
 	Plugins::callHook( getRoute => \%plugin_args );
@@ -610,7 +625,10 @@ sub getRoute {
 		start => $closest_start,
 		dest  => $closest_dest,
 		field => $field,
-		avoidWalls => $avoidWalls
+		avoidWalls => $avoidWalls,
+		randomFactor => $randomFactor,
+		useManhattan => $useManhattan,
+		getRoute => 1
 	);
 	return undef if (!$pathfinding);
 

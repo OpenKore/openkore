@@ -168,7 +168,22 @@ sub mapChanged {
 }
 
 sub findAction {
-	return binFind(\@ai_seq, $_[0]);
+	my $wanted_action = shift;
+	my $skip = shift;
+	if (!defined $skip) {
+		$skip = 0;
+	}
+	
+	foreach my $i (0..$#ai_seq) {
+		next unless ($ai_seq[$i] eq $wanted_action);
+		if ($skip) {
+			$skip--;
+		} else {
+			return $i;
+		}
+	}
+	
+	return undef;
 }
 
 sub inQueue {

@@ -421,7 +421,7 @@ sub canMove {
 	
 	my $dist = blockDistance($from, $to);
 	if ($dist > 17) {
-		return -1;
+		return 0;
 	}
 	
 	my $LOS = $self->checkLOS($from, $to, 0);
@@ -436,13 +436,17 @@ sub canMove {
 		start => $from,
 		dest => $to,
 		avoidWalls => 0,
+		randomFactor => 0,
+		useManhattan => 1,
 		min_x => $min_pathfinding_x,
 		max_x => $max_pathfinding_x,
 		min_y => $min_pathfinding_y,
 		max_y => $max_pathfinding_y
 	)->run($solution);
-	if ($dist_path > 14) {
-		return -2;
+	
+	
+	if ($dist_path <= 0 || $dist_path > 13) {
+		return 0;
 	}
 	
 	return 1;

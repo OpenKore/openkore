@@ -432,7 +432,7 @@ sub verb {
 sub position {
 	my ($self) = @_;
 
-	return calcPosition($self);
+	return calcPosFromPathfinding($field, $self);
 }
 
 ##
@@ -770,7 +770,7 @@ sub route {
 		y => $y,
 		maxDistance => $args{maxRouteDistance},
 		maxTime => $args{maxRouteTime},
-		map { $_ => $args{$_} } qw(distFromGoal pyDistFromGoal notifyUponArrival avoidWalls)
+		map { $_ => $args{$_} } qw(distFromGoal pyDistFromGoal notifyUponArrival avoidWalls randomFactor useManhattan)
 	);
 
 	if ($map && !$args{noMapRoute}) {
@@ -843,7 +843,7 @@ sub processTask {
 sub sendAttackStop {
 	my ($self) = @_;
 
-	$self->sendMove(@{calcPosition($self)}{qw(x y)});
+	$self->sendMove(@{calcPosFromPathfinding($field, $self)}{qw(x y)});
 }
 
 ##

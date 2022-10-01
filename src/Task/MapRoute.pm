@@ -88,7 +88,7 @@ sub new {
 		ArgumentException->throw(error => "Task::MapRoute: Invalid arguments.");
 	}
 
-	my $allowed = new Set(qw(maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
+	my $allowed = new Set(qw(maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined $args{$key}) {
 			$self->{$key} = $args{$key};
@@ -102,7 +102,15 @@ sub new {
 	$self->{dest}{pos}{y} = $args{y};
 	if ($config{'route_avoidWalls'}) {
 		$self->{avoidWalls} = 1 if (!defined $self->{avoidWalls});
-	} else {$self->{avoidWalls} = 0;}
+	} else {
+		$self->{avoidWalls} = 0;
+	}
+	if ($config{'route_randomFactor'}) {
+		$self->{randomFactor} = $config{'route_randomFactor'} if (!defined $self->{randomFactor});
+	} else {
+		$self->{randomFactor} = 0;
+	}
+	$self->{useManhattan} = 0 if (!defined $self->{useManhattan});
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
 	# to avoid circular references (memory leaks).
@@ -250,6 +258,8 @@ sub iterate {
 				maxTime => $self->{maxTime},
 				distFromGoal => $min_npc_dist,
 				avoidWalls => $self->{avoidWalls},
+				randomFactor => $self->{randomFactor},
+				useManhattan => $self->{useManhattan},
 				solution => \@solution
 			);
 			$self->setSubtask($task);
@@ -285,6 +295,8 @@ sub iterate {
 				field => $field,
 				maxTime => $self->{maxTime},
 				avoidWalls => $self->{avoidWalls},
+				randomFactor => $self->{randomFactor},
+				useManhattan => $self->{useManhattan},
 				distFromGoal => $self->{distFromGoal},
 				pyDistFromGoal => $self->{pyDistFromGoal},
 				solution => \@solution
@@ -383,7 +395,7 @@ sub iterate {
 						solution => \@solution
 					);
 					$params{$_} = $self->{guess_portal}{pos}{$_} for qw(x y);
-					$params{$_} = $self->{$_} for qw(actor maxTime avoidWalls);
+					$params{$_} = $self->{$_} for qw(actor maxTime avoidWalls randomFactor useManhattan);
 					my $task = new Task::Route(%params);
 					$task->{$_} = $self->{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 					$self->setSubtask($task);
@@ -490,6 +502,8 @@ sub iterate {
 						field => $field,
 						maxTime => $self->{maxTime},
 						avoidWalls => $self->{avoidWalls},
+						randomFactor => $self->{randomFactor},
+						useManhattan => $self->{useManhattan},
 						solution => \@solution
 					);
 					$task->{$_} = $self->{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
@@ -561,6 +575,8 @@ sub subtaskDone {
 					field => $field,
 					maxTime => $self->{maxTime},
 					avoidWalls => $self->{avoidWalls},
+					randomFactor => $self->{randomFactor},
+					useManhattan => $self->{useManhattan},
 					distFromGoal => $self->{distFromGoal},
 					pyDistFromGoal => $self->{pyDistFromGoal}
 				);

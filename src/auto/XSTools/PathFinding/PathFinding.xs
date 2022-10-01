@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <time.h>
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
@@ -19,10 +20,14 @@ PathFinding_create()
 
 
 void
-PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, starty, destx, desty, time_max, min_x, max_x, min_y, max_y)
+PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightMap, randomFactor, useManhattan, width, height, startx, starty, destx, desty, time_max, min_x, max_x, min_y, max_y)
 		PathFinding session
-		SV *weight_map
+		SV * weight_map
 		SV * avoidWalls
+		SV * customWeights
+		SV * secondWeightMap
+		SV * randomFactor
+		SV * useManhattan
 		SV * width
 		SV * height
 		SV * startx
@@ -53,7 +58,7 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		}
 		
 		/* Check for any missing arguments */
-		if (!session || !weight_map || !avoidWalls || !width || !height || !startx || !starty || !destx || !desty || !time_max || !min_x || !max_x || !min_y || !max_y) {
+		if (!session || !weight_map || !avoidWalls  || !customWeights || !secondWeightMap || !randomFactor || !useManhattan || !width || !height || !startx || !starty || !destx || !desty || !time_max || !min_x || !max_x || !min_y || !max_y) {
 			printf("[pathfinding reset error] missing argument\n");
 			XSRETURN_NO;
 		}
@@ -61,6 +66,21 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		/* Check for any bad arguments */
 		if (SvROK(avoidWalls) || SvTYPE(avoidWalls) >= SVt_PVAV || !SvOK(avoidWalls)) {
 			printf("[pathfinding reset error] bad avoidWalls argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(customWeights) || SvTYPE(customWeights) >= SVt_PVAV || !SvOK(customWeights)) {
+			printf("[pathfinding reset error] bad customWeights argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(randomFactor) || SvTYPE(randomFactor) >= SVt_PVAV || !SvOK(randomFactor)) {
+			printf("[pathfinding reset error] bad randomFactor argument\n");
+			XSRETURN_NO;
+		}
+		
+		if (SvROK(useManhattan) || SvTYPE(useManhattan) >= SVt_PVAV || !SvOK(useManhattan)) {
+			printf("[pathfinding reset error] bad useManhattan argument\n");
 			XSRETURN_NO;
 		}
 		
@@ -140,6 +160,10 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		session->max_x = (int) SvUV (max_x);
 		session->min_y = (int) SvUV (min_y);
 		session->max_y = (int) SvUV (max_y);
+		
+		srand(time(0));
+		session->randomFactor = (int) SvUV (randomFactor);
+		session->useManhattan = (int) SvUV (useManhattan);
 	
 		// Min and max check
 		if (session->min_x >= session->width || session->min_y >= session->height || session->min_x < 0 || session->min_y < 0) {
@@ -185,9 +209,60 @@ PathFinding__reset(session, weight_map, avoidWalls, width, height, startx, start
 		}
 		
 		session->avoidWalls = (unsigned short) SvUV (avoidWalls);
+		session->customWeights = (unsigned short) SvUV (customWeights);
 		session->time_max = (unsigned int) SvUV (time_max);
 		
 		CalcPath_init(session);
+		
+		if (session->customWeights) {
+			/* secondWeightMap should be a reference to an array */
+			if (!SvROK(secondWeightMap)) {
+				printf("[pathfinding reset error] secondWeightMap is not a reference\n");
+				XSRETURN_NO;
+			}
+			
+			if (SvTYPE(SvRV(secondWeightMap)) != SVt_PVAV) {
+				printf("[pathfinding reset error] secondWeightMap is not an array reference\n");
+				XSRETURN_NO;
+			}
+			
+			if (!SvOK(secondWeightMap)) {
+				printf("[pathfinding reset error] secondWeightMap is not defined\n");
+				XSRETURN_NO;
+			}
+			
+			AV *deref_secondWeightMap;
+			I32 array_last_index;
+			
+			deref_secondWeightMap = (AV *) SvRV (secondWeightMap);
+			array_last_index = av_top_index (deref_secondWeightMap);
+			
+			if (array_last_index == -1) {
+				printf("[pathfinding reset error] secondWeightMap has no members\n");
+				XSRETURN_NO;
+			}
+			
+			SV **fetched;
+			I32 index;
+			
+			for (index = 0; index <= array_last_index; index++) {
+				fetched = av_fetch (deref_secondWeightMap, index, 0);
+				
+				if (!SvOK(*fetched)) {
+					printf("[pathfinding reset error] member of array secondWeightMap is not defined\n");
+					XSRETURN_NO;
+				}
+				
+				unsigned int weight = SvIV(*fetched);
+				
+				session->second_weight_map[index] = weight;
+			}
+		} else {
+			if (SvOK(secondWeightMap)) {
+				printf("[pathfinding reset error] secondWeightMap is defined while customWeights is 0\n");
+				XSRETURN_NO;
+			}
+		}
 
 int
 PathFinding_run(session, solution_array)
@@ -227,16 +302,15 @@ PathFinding_run(session, solution_array)
 			AV *array;
 			int size;
 
-			size = session->solution_size;
+			size = (session->solution_size + 1);
  			array = (AV *) SvRV (solution_array);
-			if (av_len (array) > size)
-				av_clear (array);
-			
-			av_extend (array, session->solution_size);
+			av_clear (array);
+			av_extend (array, size);
 			
 			Node currentNode = session->currentMap[(session->endY * session->width) + session->endX];
+			int cont = 1;
 
-			while (currentNode.x != session->startX || currentNode.y != session->startY)
+			while (cont == 1)
 			{
 				HV * rh = (HV *)sv_2mortal((SV *)newHV());
 
@@ -248,7 +322,11 @@ PathFinding_run(session, solution_array)
 
 				av_store(array, 0, newRV((SV *)rh));
 				
-				currentNode = session->currentMap[currentNode.predecessor];
+				if (currentNode.x == session->startX && currentNode.y == session->startY) {
+					cont = 0;
+				} else {
+					currentNode = session->currentMap[currentNode.predecessor];
+				}
 			}
 			
 			RETVAL = size;

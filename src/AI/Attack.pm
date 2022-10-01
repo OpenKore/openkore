@@ -113,32 +113,16 @@ sub process {
 		my $ID = $args->{attackID};
 		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
 		my $target = Actor::get($ID);
-		my $realMyPos = calcPosition($char);
-		my $realMonsterPos = calcPosition($target);
+		my $realMyPos = calcPosFromPathfinding($field, $char);
+		my $realMonsterPos = calcPosFromPathfinding($field, $target);
 
 		if (
 			$target->{type} ne 'Unknown' &&
-			$attackSeq->{monsterPos} &&
-			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
 			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
 		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			debug "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
-			AI::dequeue while (AI::is("move", "route"));
-
-			$attackSeq->{ai_attack_giveup}{time} = time;
-
-		} elsif (
-			$target->{type} ne 'Unknown' &&
-			$attackSeq->{monsterPos} &&
-			%{$attackSeq->{monsterPos}} &&
-			$attackSeq->{monsterLastMoveTime} &&
-			$attackSeq->{attackMethod}{maxDistance} == 1 &&
-			canReachMeleeAttack($realMyPos, $realMonsterPos) &&
-			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{attackCheckLOS} ||($config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})))
-		) {
-			debug "Target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
 			AI::dequeue while (AI::is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
@@ -295,8 +279,8 @@ sub main {
 	my $monsterDist = blockDistance($myPos, $monsterPos);
 
 	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
-	my $realMyPos = calcPosition($char);
-	my $realMonsterPos = calcPosition($target);
+	my $realMyPos = calcPosFromPathfinding($field, $char);
+	my $realMonsterPos = calcPosFromPathfinding($field, $target);
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 
 	my $cleanMonster = checkMonsterCleanness($ID);
@@ -440,7 +424,7 @@ sub main {
 		if ($cell) {
 			debug TF("[runFromTarget] %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
-			$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, runFromTarget => 1);
+			$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, runFromTarget => 1);
 		} else {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
@@ -454,7 +438,7 @@ sub main {
 			if ($cell) {
 				debug TF("[runFromTarget] %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 				$args->{avoiding} = 1;
-				$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, runFromTarget => 1);
+				$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, runFromTarget => 1);
 			} else {
 				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			}
@@ -497,7 +481,6 @@ sub main {
 		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})
 	) {
 		$args->{move_start} = time;
-		$args->{monsterPos} = {%{$monsterPos}};
 		$args->{monsterLastMoveTime} = $target->{time_move};
 
 		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
@@ -514,6 +497,8 @@ sub main {
 				maxRouteTime => $config{'attackMaxRouteTime'},
 				attackID => $ID,
 				avoidWalls => 0,
+				randomFactor => 0,
+				useManhattan => 1,
 				meetingSubRoute => 1,
 				noMapRoute => 1
 			);
@@ -552,7 +537,8 @@ sub main {
 		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			$char->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, LOSSubRoute => 1);
+			$args->{monsterLastMoveTime} = $target->{time_move};
+			$char->route(undef, @{$best_spot}{qw(x y)}, attackID => $ID, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, LOSSubRoute => 1);
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			$target->{attack_failedLOS} = time;
@@ -572,7 +558,8 @@ sub main {
 		my $msg = TF("No LOS in melee from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			$char->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, LOSSubRoute => 1);
+			$args->{monsterLastMoveTime} = $target->{time_move};
+			$char->route(undef, @{$best_spot}{qw(x y)}, attackID => $ID, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, LOSSubRoute => 1);
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			$target->{attack_failedLOS} = time;
@@ -629,7 +616,8 @@ sub main {
 				my $msg = TF("No LOS in from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 				if ($best_spot) {
 					message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-					$char->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, LOSSubRoute => 1);
+					$args->{monsterLastMoveTime} = $target->{time_move};
+					$char->route(undef, @{$best_spot}{qw(x y)}, attackID => $ID, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, LOSSubRoute => 1);
 				} else {
 					warning TF("%s; no acceptable place to stand\n", $msg);
 					$target->{attack_failedLOS} = time;
