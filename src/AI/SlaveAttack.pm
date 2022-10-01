@@ -360,7 +360,7 @@ sub main {
 		if (timeOut($args->{ai_attack_failed_give_up})) {
 			delete $args->{ai_attack_failed_give_up}{time};
 			message T("$slave unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), 'slave_attack';
-			giveUp($slave);
+			giveUp($slave, $args, $ID);
 		}
 	
 	
@@ -378,7 +378,7 @@ sub main {
 		if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
 			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
 			message T("[Out of Range] $slave waited too long for target to get closer, dropping target\n"), 'slave_attack';
-			giveUp();
+			giveUp($slave, $args, $ID);
 		} else {
 			warning TF("[Out of Range - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromPlayer}{$slave->{ID}}), 'slave_attack';
 		}
