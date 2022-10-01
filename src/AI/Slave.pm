@@ -43,40 +43,45 @@ sub dequeue {
 
 sub queue {
 	my $slave = shift;
-	
-	unshift @{$slave->{slave_ai_seq}}, shift;
+	my $action = shift;
 	my $args = shift;
+	
+	unshift @{$slave->{slave_ai_seq}}, $action;
 	unshift @{$slave->{slave_ai_seq_args}}, ((defined $args) ? $args : {});
 }
 
 sub clear {
 	my $slave = shift;
 	
-	if (@_) {
-		my $changed;
-		for (my $i = 0; $i < @{$slave->{slave_ai_seq}}; $i++) {
-			if (defined binFind(\@_, $slave->{slave_ai_seq}[$i])) {
-				delete $slave->{slave_ai_seq}[$i];
-				delete $slave->{slave_ai_seq_args}[$i];
-				$changed = 1;
-			}
-		}
-
-		if ($changed) {
-			my (@new_seq, @new_args);
-			for (my $i = 0; $i < @{$slave->{slave_ai_seq}}; $i++) {
-				if (defined $slave->{slave_ai_seq}[$i]) {
-					push @new_seq, $slave->{slave_ai_seq}[$i];
-					push @new_args, $slave->{slave_ai_seq_args}[$i];
-				}
-			}
-			@{$slave->{slave_ai_seq}} = @new_seq;
-			@{$slave->{slave_ai_seq_args}} = @new_args;
-		}
-
-	} else {
+	my $total = scalar @_;
+	
+	# If no arg was given clear all Slave AI queue
+	if ($total == 0) {
 		undef @{$slave->{slave_ai_seq}};
 		undef @{$slave->{slave_ai_seq_args}};
+	
+	# If 1 arg was given find it in the queue
+	} elsif ($total == 1) {
+		my $wanted_action = shift;
+		my $seq_index;
+		foreach my $i (0..$#{$slave->{slave_ai_seq}}) {
+			next unless ($slave->{slave_ai_seq}[$i] eq $wanted_action);
+			$seq_index = $i;
+			last;
+		}
+		return unless (defined $seq_index); # return unless we found the action in the queue
+		
+		splice(@{$slave->{slave_ai_seq}}, $seq_index , 1); # Splice it out of  @{$slave->{slave_ai_seq}}
+		splice(@{$slave->{slave_ai_seq_args}}, $seq_index , 1);  # Splice it out of @{$slave->{slave_ai_seq_args}}
+		# When there are multiple of the same action (route, attack, route) the splices of remove the first one
+		# So recursively call $slave->clear again with the same action until none is found
+		$slave->clear($wanted_action);
+	
+	# If more than 1 arg was given recursively call $slave->clear for each one
+	} else {
+		foreach (@_) {
+			$slave->clear($_);
+		}
 	}
 }
 
