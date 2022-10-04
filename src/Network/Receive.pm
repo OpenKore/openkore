@@ -1796,6 +1796,14 @@ sub actor_display {
 		warning TF("Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
 		return;
 	}
+	
+	if (defined $field && !$field->isOffMap($coordsFrom{x}, $coordsFrom{y}) && $coordsTo{x} == 0 && $coordsTo{y} == 0) {
+		debug TF("Ignoring bugged actor moved packet to (0,0)\n");
+		$coordsTo{x} = $coordsFrom{x};
+		$coordsTo{y} = $coordsFrom{y};
+		return;
+	}
+	
 =pod
 	# Zealotus bug
 	if ($args->{type} == 1200) {
