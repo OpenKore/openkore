@@ -415,6 +415,8 @@ sub iterate {
 		}
 
 		my $stepsleft = @{$solution};
+		
+		$self->{lastStep} = 0;
 
 		if ($stepsleft == 0) {
 			# No more points to cover; we've arrived at the destination
@@ -457,15 +459,11 @@ sub iterate {
 					# If we still have more points to cover, walk to next point
 					if ($self->{step_index} >= $stepsleft) {
 						$self->{step_index} = $stepsleft - 1;
+						$self->{lastStep} = 1;
 					}
 					@{$self->{next_pos}}{qw(x y)} = @{$solution->[$self->{step_index}]}{qw(x y)};
 					$self->{time_step} = time;
-					my $task = new Task::Move(
-						actor => $self->{actor},
-						x => $self->{next_pos}{x},
-						y => $self->{next_pos}{y}
-					);
-					$self->setSubtask($task);
+					$self->setMove();
 				}
 
 			} else {
@@ -500,6 +498,7 @@ sub iterate {
 			# If there are less steps to cover than the step size move to the last step (the destination).
 			if ($self->{step_index} >= $stepsleft) {
 				$self->{step_index} = $stepsleft - 1;
+				$self->{lastStep} = 1;
 			}
 			
 			# Here maybe we should also use pos_to (in the form of best_pos_to_step) to decide the next step index, as it can make the routing way more responsive
@@ -534,17 +533,7 @@ sub iterate {
 				
 				debug "Route $self->{actor} - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
 				
-				my $task = new Task::Move(
-					actor => $self->{actor},
-					x => $self->{next_pos}{x},
-					y => $self->{next_pos}{y}
-				);
-				$self->setSubtask($task);
-
-				if (time - $begin < 0.01) {
-					# Optimization: immediately begin moving, if we spent neglible time in this step.
-					$self->iterate();
-				}
+				$self->setMove();
 			}
 		}
 		$self->{route_out_time} = time;
@@ -553,6 +542,30 @@ sub iterate {
 		debug "Unexpected route stage [".$self->{stage}."] occured.\n", "route";
 		$self->setError(UNEXPECTED_STATE, "Unexpected route stage [".$self->{stage}."] occured.\n");
 	}
+}
+
+sub setMove {
+	my ($self) = @_;
+	
+	my $task = new Task::Move(
+		actor => $self->{actor},
+		x => $self->{next_pos}{x},
+		y => $self->{next_pos}{y}
+	);
+	
+	my $sendAttack = 0;
+	if ($self->{actor}->isa('Actor::You') && $config{"attackSendAttackWithMove"}) {
+		$sendAttack = 1;
+	}
+	if ($sendAttack && $self->{lastStep} == 1 && $self->{attackID}) {
+		$task->{sendAttack} = 1;
+		$task->{attackID} = $self->{attackID};
+	} else {
+		$task->{sendAttack} = 0;
+	}
+	
+	$self->setSubtask($task);
+	$self->iterate();
 }
 
 sub resetRoute {

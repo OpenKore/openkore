@@ -442,4 +442,9 @@ sub sendSit {
 sub sendStand { $messageSender->sendAction(0, ACTION_STAND) }
 sub sendMove { $messageSender->sendMove(@_[1, 2]) }
 
+sub sendAttack {
+	my ($self, $attackID) = @_;
+	$messageSender->sendAction($attackID, ($config{'tankMode'}) ? 0 : 7);
+}
+
 1;

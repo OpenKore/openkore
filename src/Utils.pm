@@ -129,7 +129,14 @@ sub calcPosFromTime {
 
 sub get_client_solution {
 	my ($field, $pos, $pos_to) = @_;
+	
 	my $solution = [];
+	
+	if ($pos->{x} == $pos_to->{x} && $pos->{y} == $pos_to->{y}) {
+		push(@{$solution}, { x => $pos_to->{x}, y => $pos_to->{y} });
+		return $solution;
+	}
+	
 	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $pos, 35);
 	my $dist_path = new PathFinding(
 		field => $field,
@@ -156,12 +163,21 @@ sub calcPosFromPathfinding {
 		return calcPosition($actor);
 		
 	} else {
-		my $pos = $actor->{pos};
-		my $pos_to = $actor->{pos_to};
 		my $speed = ($actor->{walk_speed} || 0.12);
 		my $time = time - $actor->{time_move} + $extra_time;
+		my $solution;
 		
-		my $solution = Utils::get_client_solution($field, $pos, $pos_to);
+		if (UNIVERSAL::isa($actor, "Actor::You")) {
+			if ($time >= $actor->{time_move_calc}) {
+				return $actor->{pos_to};
+			}
+			$solution = $actor->{solution};
+			
+		} else {
+			my $pos = $actor->{pos};
+			my $pos_to = $actor->{pos_to};
+			$solution = Utils::get_client_solution($field, $pos, $pos_to);
+		}
 		
 		my $steps_walked = Utils::calcStepsWalkedFromTimeAndSolution($solution, $speed, $time);
 		

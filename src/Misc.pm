@@ -2547,11 +2547,18 @@ sub meetingPosition {
 	my $mySpeed = ($actor->{walk_speed} || 0.12);
 	my $timeSinceActorMoved = time - $actor->{time_move};
 	
-	my $my_solution = Utils::get_client_solution($field, \%myPos, \%myPosTo);
+	my $my_solution;
+	my $timeActorFinishMove;
+	if ($actorType == 1) {
+		$my_solution = $char->{solution};
+		$timeActorFinishMove = $char->{time_move_calc};
+	} else {
+		$my_solution = Utils::get_client_solution($field, \%myPos, \%myPosTo);
 
-	# Calculate the time actor will need to finish moving from pos to pos_to
-	my $timeActorFinishMove = Utils::calcTimeFromSolution($my_solution, $mySpeed);
-
+		# Calculate the time actor will need to finish moving from pos to pos_to
+		$timeActorFinishMove = Utils::calcTimeFromSolution($my_solution, $mySpeed);
+	}
+	
 	my $realMyPos;
 	# Actor has finished moving
 	if ($timeSinceActorMoved >= $timeActorFinishMove) {

@@ -86,15 +86,10 @@ sub reset {
 	my %args = @_;
 
 	# Check arguments
-	confess "Required arguments missing or wrong, specify correct 'field' or 'weight_map' and 'width' and 'height'\n"
-	unless ((exists $args{field} && UNIVERSAL::isa($args{field}, 'Field')) || (exists $args{weight_map} && exists $args{width} && exists $args{height}));
-	confess "Required argument 'start' missing\n" unless (exists $args{start});
-	confess "Required argument 'start x/y' missing\n" unless (exists $args{start}{x} && exists $args{start}{y});
-	confess "Required argument 'start x/y' undefined\n" unless (defined $args{start}{x} && defined $args{start}{y});
-	
-	confess "Required argument 'dest' missing\n" unless (exists $args{dest});
-	confess "Required argument 'dest x/y' missing\n" unless (exists $args{dest}{x} && exists $args{dest}{y});
-	confess "Required argument 'dest x/y' undefined\n" unless (defined $args{dest}{x} && defined $args{dest}{y});
+	croak "Required arguments missing or wrong, specify correct 'field' or 'weight_map' and 'width' and 'height'\n"
+	unless ($args{field} && UNIVERSAL::isa($args{field}, 'Field')) || ($args{weight_map} && $args{width} && $args{height});
+	croak "Required argument 'start' missing\n" unless $args{start};
+	croak "Required argument 'dest' missing\n" unless $args{dest};
 
 	# Rebuild 'field' arg temporary here, to avoid that stupid bug, when weightMap not available
 	if ($args{field} && UNIVERSAL::isa($args{field}, 'Field') && !$args{field}->{weightMap}) {
@@ -119,9 +114,7 @@ sub reset {
 		
 		$args{width} = $args{field}{width} unless (defined $args{width});
 		$args{height} = $args{field}{height} unless (defined $args{height});
-		
 		$args{timeout} = 1500 unless (defined $args{timeout});
-		
 		$args{min_x} = 0 unless (defined $args{min_x});
 		$args{max_x} = ($args{width}-1) unless (defined $args{max_x});
 		$args{min_y} = 0 unless (defined $args{min_y});
@@ -129,17 +122,17 @@ sub reset {
 	}
 
 	return $class->_reset(
-		$args{weight_map},
-		$args{avoidWalls},
+		$args{weight_map}, 
+		$args{avoidWalls}, 
 		$args{customWeights},
 		$args{secondWeightMap},
 		$args{randomFactor},
 		$args{useManhattan},
-		$args{width},
+		$args{width}, 
 		$args{height},
-		$args{start}{x},
+		$args{start}{x}, 
 		$args{start}{y},
-		$args{dest}{x},
+		$args{dest}{x}, 
 		$args{dest}{y},
 		$args{timeout},
 		$args{min_x},

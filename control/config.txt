@@ -89,6 +89,7 @@ attackLooters 0
 attackChangeTarget 1
 aggressiveAntiKS 0
 
+attackSendAttackWithMove 1 
 attackUpdateMonsterPos 1
 
 autoMoveOnDeath 0

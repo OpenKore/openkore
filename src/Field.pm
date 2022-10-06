@@ -420,7 +420,7 @@ sub canMove {
 	my ($self, $from, $to) = @_;
 	
 	my $dist = blockDistance($from, $to);
-	if ($dist > 17) {
+	unless ($dist <= 17) {
 		return 0;
 	}
 	
@@ -444,8 +444,12 @@ sub canMove {
 		max_y => $max_pathfinding_y
 	)->run($solution);
 	
+	if ($dist_path <= 0) {
+		return 0;
+	}
 	
-	if ($dist_path <= 0 || $dist_path > 13) {
+	
+	unless ($dist_path <= 13) {
 		return 0;
 	}
 	
