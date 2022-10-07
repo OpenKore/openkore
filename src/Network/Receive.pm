@@ -1802,7 +1802,7 @@ sub actor_display {
 		return;
 	}
 	
-	if (blockDistance(\%coordsFrom, \%coordsTo) > 15) {
+	if (blockDistance(\%coordsFrom, \%coordsTo) > 17) {
 		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
 		return;
 	}
