@@ -1802,7 +1802,7 @@ sub actor_display {
 		return;
 	}
 	
-	if (blockDistance(\%coordsFrom, \%coordsTo) > 17) {
+	if (blockDistance(\%coordsFrom, \%coordsTo) > ($config{clientSight} + $config{clientSight_removeBeyond})) {
 		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
 		return;
 	}
@@ -2003,7 +2003,7 @@ sub actor_display {
 		my $realActorPos = calcPosition($actor);
 		my $realActorDist = blockDistance($realMyPos, $realActorPos);
 		
-		my $max_sight_base = $config{clientSight} + 2;
+		my $max_sight_base = $config{clientSight};
 		my $max_sight_extra = $config{clientSight_removeBeyond};
 		
 		my $max_sight = $max_sight_base + $max_sight_extra;
