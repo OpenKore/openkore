@@ -1793,14 +1793,17 @@ sub actor_display {
 	#  - server sending us false actors
 	#  - actor packets not being parsed correctly
 	if (defined $field && ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y}))) {
-		warning TF("Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
+		warning TF("Ignoring actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
 		return;
 	}
 	
-	if (defined $field && !$field->isOffMap($coordsFrom{x}, $coordsFrom{y}) && $coordsTo{x} == 0 && $coordsTo{y} == 0) {
-		debug TF("Ignoring bugged actor moved packet to (0,0)\n");
-		$coordsTo{x} = $coordsFrom{x};
-		$coordsTo{y} = $coordsFrom{y};
+	if (($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0)) {
+		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
+		return;
+	}
+	
+	if (blockDistance(\%coordsFrom, \%coordsTo) > 15) {
+		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
 		return;
 	}
 	
