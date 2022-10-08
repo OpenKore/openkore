@@ -1560,11 +1560,6 @@ sub onMapClick {
 
 		unless ($noMove) {
 			$self->writeOutput("message", TF("Moving to %s, %s\n", $x, $y), "info") unless $checkPortal;
-			
-			#open SLOTS, ">>", "mapsave.txt";
-			#print SLOTS '			{ "x":'.$x.', "y":'.$y.' },'."\n";
-			#close(SLOTS);
-			
 			AI::clear("mapRoute", "route", "move");
 			main::ai_route($field->baseName, $x, $y, attackOnRoute => 1);
 		}
