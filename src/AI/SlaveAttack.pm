@@ -113,21 +113,32 @@ sub process {
 		my $ID = $slave->args->{attackID};
 		my $attackSeq = ($slave->action eq "route") ? $slave->args (1) : $slave->args (2);
 		my $target = Actor::get($ID);
+		
+		if ($target->{type} ne 'Unknown') {
+			if (
+				$attackSeq->{monsterLastMoveTime} &&
+				$attackSeq->{monsterLastMoveTime} != $target->{time_move}
+			) {
+				# Monster has moved; stop moving and let the attack AI readjust route
+				warning "$slave target $target has moved since we started routing to it - Adjusting route\n", 'slave_attack';
+				$slave->dequeue while ($slave->is("move", "route"));
 
-		if (
-			$target->{type} ne 'Unknown' &&
-			$attackSeq->{monsterLastMoveTime} &&
-			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
-		) {
-			# Monster has moved; stop moving and let the attack AI readjust route
-			warning "$slave target $target has moved since we started routing to it - Adjusting route\n", 'slave_attack';
-			$slave->dequeue while ($slave->is("move", "route"));
+				$attackSeq->{ai_attack_giveup}{time} = time;
+				$attackSeq->{needReajust} = 1;
 
-			$attackSeq->{ai_attack_giveup}{time} = time;
-			$attackSeq->{needReajust} = 1;
+			} elsif (
+				$attackSeq->{masterLastMoveTime} &&
+				$attackSeq->{masterLastMoveTime} != $char->{time_move}
+			) {
+				# Master has moved; stop moving and let the attack AI readjust route
+				warning "$slave master $char has moved since we started routing to target $target - Adjusting route\n", 'slave_attack';
+				$slave->dequeue while ($slave->is("move", "route"));
 
+				$attackSeq->{ai_attack_giveup}{time} = time;
+				$attackSeq->{needReajust} = 1;
+			}
 		}
-
+		
 		$timeout{$slave->{ai_route_adjust_timeout}}{time} = time;
 	}
 
@@ -307,11 +318,11 @@ sub main {
 	}
 	
 	if (
-		$config{$slave->{configPrefix}."attackBeyondMaxDistance_waitForAgressive"} &&
-		$target->{dmgFromPlayer}{$slave->{ID}} > 0 &&
-		$canAttack == 1 &&
-		exists $args->{ai_attack_failed_waitForAgressive_give_up} &&
-		defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
+		   $config{$slave->{configPrefix}."attackBeyondMaxDistance_waitForAgressive"}
+		&& $target->{dmgFromPlayer}{$slave->{ID}} > 0
+		&& $canAttack == 1
+		&& exists $args->{ai_attack_failed_waitForAgressive_give_up}
+		&& defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
 	) {
 		debug "Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
 		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};;
@@ -378,7 +389,7 @@ sub main {
 				message T("[Out of Range - Ranged] $slave waited too long for target to get closer, dropping target\n"), 'slave_attack';
 				giveUp($slave, $args, $ID, 0);
 			} else {
-				$slave->sendAttack ($ID);
+				$slave->sendAttack($ID) if ($config{$slave->{configPrefix}."attackBeyondMaxDistance_sendAttackWhileWaiting"});
 				warning TF("[Out of Range - Ranged - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromPlayer}{$slave->{ID}}), 'slave_attack';
 			}
 			
@@ -388,7 +399,7 @@ sub main {
 				warning T("[Out of Range - Melee] $slave waited too long for target to get closer, dropping target\n"), "ai_attack";
 				giveUp($slave, $args, $ID, 0);
 			} else {
-				$slave->sendAttack ($ID);
+				$slave->sendAttack($ID) if ($config{$slave->{configPrefix}."attackBeyondMaxDistance_sendAttackWhileWaiting"});
 				warning TF("[Out of Range - Melee - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromPlayer}{$slave->{ID}}), 'ai_attack';
 			}
 		}
@@ -412,6 +423,7 @@ sub main {
 
 		$args->{move_start} = time;
 		$args->{monsterLastMoveTime} = $target->{time_move};
+		$args->{masterLastMoveTime} = $char->{time_move};
 		my $pos = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
 		if ($pos) {
 			debug "Attack $slave ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
@@ -421,7 +433,7 @@ sub main {
 			$slave->route(
 				undef,
 				@{$pos}{qw(x y)},
-				maxRouteTime => $config{'attackMaxRouteTime'},
+				maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
 				attackID => $ID,
 				avoidWalls => 0,
 				randomFactor => 0,

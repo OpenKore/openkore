@@ -556,7 +556,14 @@ sub setMove {
 	my $sendAttack = 0;
 	if ($self->{actor}->isa('Actor::You') && $config{"attackSendAttackWithMove"}) {
 		$sendAttack = 1;
+		
+	} elsif (
+		($self->{actor}->isa("AI::Slave::Homunculus") || $self->{actor}->isa("Actor::Slave::Homunculus") || $self->{actor}->isa("AI::Slave::Mercenary") || $self->{actor}->isa("Actor::Slave::Mercenary")) &&
+		$config{$self->{actor}{configPrefix}.'attackSendAttackWithMove'}
+	) {
+		$sendAttack = 1;
 	}
+	
 	if ($sendAttack && $self->{lastStep} == 1 && $self->{attackID}) {
 		$task->{sendAttack} = 1;
 		$task->{attackID} = $self->{attackID};

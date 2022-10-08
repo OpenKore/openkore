@@ -72,7 +72,6 @@ attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
 attackAuto_considerDamagedAggressive 0
-attackBeyondMaxDistance_waitForAgressive 1
 attackDistance 1
 attackDistanceAuto 0
 attackMaxDistance 1
@@ -89,8 +88,12 @@ attackLooters 0
 attackChangeTarget 1
 aggressiveAntiKS 0
 
+attackBeyondMaxDistance_waitForAgressive 1
+attackBeyondMaxDistance_sendAttackWhileWaiting 1
 attackSendAttackWithMove 1 
-attackUpdateMonsterPos 1
+attackWaitApproachFinish 1
+ 
+attackUpdateMonsterPos 0
 
 autoMoveOnDeath 0
 autoMoveOnDeath_x
@@ -379,7 +382,6 @@ mercenary_attackAuto_party 1
 mercenary_attackAuto_notInTown 1
 mercenary_attackAuto_inLockOnly 1
 mercenary_attackAuto_considerDamagedAggressive 0
-mercenary_attackBeyondMaxDistance_waitForAgressive 1
 mercenary_attackAuto_onlyWhenSafe 0
 mercenary_attackAuto_duringRandomWalk 0
 mercenary_attackAuto_duringItemsTake 0
@@ -394,6 +396,10 @@ mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
 mercenary_attack_dance_melee 0
 mercenary_attack_dance_ranged 0
+
+mercenary_attackBeyondMaxDistance_waitForAgressive 1
+mercenary_attackBeyondMaxDistance_sendAttackWhileWaiting 1
+mercenary_attackSendAttackWithMove 1
 
 mercenary_lost_teleportToMaster_maxTries 6
 
@@ -439,7 +445,6 @@ homunculus_attackAuto_party 1
 homunculus_attackAuto_notInTown 1
 homunculus_attackAuto_inLockOnly 1
 homunculus_attackAuto_considerDamagedAggressive 0
-homunculus_attackBeyondMaxDistance_waitForAgressive 1
 homunculus_attackAuto_onlyWhenSafe 0
 homunculus_attackAuto_duringRandomWalk 0
 homunculus_attackAuto_duringItemsTake 0
@@ -453,6 +458,10 @@ homunculus_attackRouteMaxPathDistance 20
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 homunculus_attack_dance_melee 0
+
+homunculus_attackBeyondMaxDistance_waitForAgressive 1
+homunculus_attackBeyondMaxDistance_sendAttackWhileWaiting 1
+homunculus_attackSendAttackWithMove 1
 
 homunculus_lost_teleportToMaster_maxTries 6
 

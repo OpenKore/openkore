@@ -2875,10 +2875,10 @@ sub meetingPosition {
 			my $temp_targetCurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);
 			$targetPosInStep->{x} = $target_solution->[$temp_targetCurrentStep]{x};
 			$targetPosInStep->{y} = $target_solution->[$temp_targetCurrentStep]{y};
+			
+			next unless ($spot->{x} != $targetPosInStep->{x} || $spot->{y} != $targetPosInStep->{y});
 
 			my $dist_to_target = blockDistance($spot, $targetPosInStep);
-			
-			next unless ($dist_to_target <= $attackMaxDistance || $runFromTargetActive);
 			
 			next unless ($dist_to_target >= $min_destination_dist || $runFromTargetActive);
 			
@@ -2887,17 +2887,17 @@ sub meetingPosition {
 
 			# 2. It must be within $followDistanceMax of MasterPos, if we have a master.
 			if ($realMasterPos) {
+				my $masterPosNow;
 				if ($master_moving) {
-					my $masterPos_inTime;
 					my $totalTime = $timeSinceMasterMoved + $time_actor_to_get_to_spot;
 					my $master_CurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $totalTime);
-					$masterPos_inTime->{x} = $master_solution->[$master_CurrentStep]{x};
-					$masterPos_inTime->{y} = $master_solution->[$master_CurrentStep]{y};
-					
-					next unless (blockDistance($spot, $masterPos_inTime) <= $followDistanceMax);
+					$masterPosNow->{x} = $master_solution->[$master_CurrentStep]{x};
+					$masterPosNow->{y} = $master_solution->[$master_CurrentStep]{y};
 				} else {
-					next unless (blockDistance($spot, $realMasterPos) <= $followDistanceMax);
+					$masterPosNow = $realMasterPos;
 				}
+				next unless (blockDistance($spot, $masterPosNow) <= $followDistanceMax);
+				next unless ($spot->{x} != $masterPosNow->{x} || $spot->{y} != $masterPosNow->{y});
 			}
 			
 			if ($runFromTargetActive) {

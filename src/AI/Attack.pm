@@ -413,18 +413,19 @@ sub main {
 	}
 	
 	if (
-		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
-		$target->{dmgFromYou} > 0 &&
-		$canAttack == 1 &&
-		exists $args->{ai_attack_failed_waitForAgressive_give_up} &&
-		defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
+		   $config{"attackBeyondMaxDistance_waitForAgressive"}
+		&& $target->{dmgFromYou} > 0
+		&& $canAttack == 1
+		&& exists $args->{ai_attack_failed_waitForAgressive_give_up}
+		&& defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
 	) {
 		debug "Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
 		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};;
 	}
 	
 	if (
-		($canAttack == 0 || $canAttack == -1)
+		   $config{"attackWaitApproachFinish"}
+		&& ($canAttack == 0 || $canAttack == -1)
 		&& $args->{sentApproach}
 		&& !$args->{needReajust}
 	) {
@@ -497,7 +498,7 @@ sub main {
 				warning T("[Out of Range - Ranged] Waited too long for target to get closer, dropping target\n"), "ai_attack";
 				giveUp($args, $ID, 0);
 			} else {
-				$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7);
+				$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7) if ($config{"attackBeyondMaxDistance_sendAttackWhileWaiting"});
 				warning TF("[Out of Range - Ranged - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 			}
 			
@@ -507,7 +508,7 @@ sub main {
 				warning T("[Out of Range - Melee] Waited too long for target to get closer, dropping target\n"), "ai_attack";
 				giveUp($args, $ID, 0);
 			} else {
-				$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7);
+				$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7) if ($config{"attackBeyondMaxDistance_sendAttackWhileWaiting"});
 				warning TF("[Out of Range - Melee - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 			}
 		}
