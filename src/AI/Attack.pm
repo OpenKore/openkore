@@ -97,6 +97,7 @@ sub process {
 					message T("Teleport due to dropping attack target\n"), "teleport";
 					useTeleport(1);
 				}
+				return;
 			}
 			
 			if ((my $control = mon_control($target->{name},$target->{nameID}))) {
@@ -105,6 +106,7 @@ sub process {
 					$char->sendAttackStop;
 					$target->{ignore} = 1;
 					AI::dequeue while (AI::inQueue("attack"));
+					return;
 				}
 			}
 		}
@@ -436,9 +438,7 @@ sub main {
 	}
 
 	if ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-		
 		my $max_sight = $config{clientSight} - 1;
-		
 		my $current_beyond = 0;
 		my $increase = 3;
 		
@@ -472,7 +472,6 @@ sub main {
 				$current_beyond += $increase;
 			}
 		}
-
 
 	} elsif($canAttack  == -2) {
 		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";

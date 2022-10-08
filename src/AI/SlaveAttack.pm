@@ -49,7 +49,7 @@ sub process {
 			finishAttacking($slave, $ataqArgs, $ID);
 			return;
 		} elsif (shouldGiveUp($slave, $ataqArgs, $ID)) {
-			giveUp($slave, $ataqArgs, $ID);
+			giveUp($slave, $ataqArgs, $ID, 0);
 			return;
 		}
 		
@@ -70,6 +70,20 @@ sub process {
 					AI::SlaveAttack::process($slave);
 					return;
 				}
+			}
+
+			my $cleanMonster = slave_checkMonsterCleanness($slave, $ID);
+			if (!$cleanMonster) {
+				message TF("%s dropping target %s - will not kill steal others\n", $slave, $target), 'slave_attack';
+				$slave->sendAttackStop;
+				$target->{slave_ignore} = 1;
+				$slave->dequeue while ($slave->inQueue("attack"));
+				
+				if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
+					message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
+					useTeleport(1);
+				}
+				return;
 			}
 		}
 	}
@@ -99,35 +113,19 @@ sub process {
 		my $ID = $slave->args->{attackID};
 		my $attackSeq = ($slave->action eq "route") ? $slave->args (1) : $slave->args (2);
 		my $target = Actor::get($ID);
-		my $realMyPos = calcPosFromPathfinding($field, $slave);
-		my $realMonsterPos = calcPosFromPathfinding($field, $target);
 
 		if (
 			$target->{type} ne 'Unknown' &&
-			$attackSeq->{monsterPos} &&
-			%{$attackSeq->{monsterPos}} &&
 			$attackSeq->{monsterLastMoveTime} &&
 			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
 		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
-			debug "$slave target $target has moved since we started routing to it - Adjusting route\n", 'slave_attack';
+			warning "$slave target $target has moved since we started routing to it - Adjusting route\n", 'slave_attack';
 			$slave->dequeue while ($slave->is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
+			$attackSeq->{needReajust} = 1;
 
-		} elsif (
-			$target->{type} ne 'Unknown' &&
-			$attackSeq->{monsterPos} &&
-			%{$attackSeq->{monsterPos}} &&
-			$attackSeq->{monsterLastMoveTime} &&
-			$attackSeq->{attackMethod}{maxDistance} == 1 &&
-			canReachMeleeAttack($realMyPos, $realMonsterPos) &&
-			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{$slave->{configPrefix}.'attackCheckLOS'} ||($config{$slave->{configPrefix}.'attackCheckLOS'} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})))
-		) {
-			debug "$slave target $target is now reachable by melee attacks during routing to it.\n", 'slave_attack';
-			$slave->dequeue while ($slave->is("move", "route"));
-
-			$attackSeq->{ai_attack_giveup}{time} = time;
 		}
 
 		$timeout{$slave->{ai_route_adjust_timeout}}{time} = time;
@@ -137,21 +135,6 @@ sub process {
 		$slave->args->{attackMainTimeout} = time;
 		main($slave);
 	}
-
-	# Check for kill steal while moving
-	if (($slave->is("move", "route") && $slave->args->{attackID} && $slave->inQueue("attack")
-		&& timeOut($slave->args->{movingWhileAttackingTimeout}, 0.2))) {
-
-		my $ID = $slave->args->{attackID};
-		my $monster = $monsters{$ID};
-
-		# Check for kill steal while moving
-		if ($monster && !Misc::slave_checkMonsterCleanness($slave, $ID)) {
-			dropTargetWhileMoving($slave);
-		}
-
-		$slave->args->{movingWhileAttackingTimeout} = time;
-	}
 }
 
 sub shouldGiveUp {
@@ -160,9 +143,16 @@ sub shouldGiveUp {
 }
 
 sub giveUp {
-	my ($slave, $args, $ID) = @_;
+	my ($slave, $args, $ID, $LOS) = @_;
 	my $target = Actor::get($ID);
-	$target->{$slave->{ai_attack_failed_timeout}} = time if $monsters{$ID};
+	if ($monsters{$ID}) {
+		if ($LOS) {
+			$target->{attack_failedLOS} = time;
+		} else {
+			$target->{$slave->{ai_attack_failed_timeout}} = time;
+		}
+	}
+	$target->{dmgFromPlayer}{$slave->{ID}} = 0; # Hack | TODO: Fix me
 	$slave->dequeue while ($slave->inQueue("attack"));
 	message TF("%s can't reach or damage target, dropping target\n", $slave), 'slave_attack';
 	if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
@@ -225,25 +215,6 @@ sub finishAttacking {
 
 }
 
-sub dropTargetWhileMoving {
-	my $slave = shift;
-	my $ID = $slave->args->{attackID};
-	my $target = Actor::get($ID);
-	message TF("%s dropping target %s - will not kill steal others\n", $slave, $target), 'slave_attack';
-	$slave->sendAttackStop;
-	$target->{slave_ignore} = 1;
-
-	# Right now, the queue is either
-	#   move, route, attack
-	# -or-
-	#   route, attack
-	$slave->dequeue while ($slave->inQueue("attack"));
-	if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
-		message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-		useTeleport(1);
-	}
-}
-
 sub main {
 	my $slave = shift;
 	# The attack sequence hasn't timed out and the monster is on screen
@@ -257,12 +228,12 @@ sub main {
 	my $monsterPos = $target->{pos_to};
 	my $monsterDist = blockDistance($myPos, $monsterPos);
 
-	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
+	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou, $youHitTarget);
 	my $realMyPos = calcPosFromPathfinding($field, $slave);
 	my $realMonsterPos = calcPosFromPathfinding($field, $target);
+	
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
-
-	my $cleanMonster = slave_checkMonsterCleanness($slave, $ID);
+	my $clientDist = Utils::getClientDist($realMyPos, $realMonsterPos);
 
 
 	# If the damage numbers have changed, update the giveup time so we don't timeout
@@ -272,8 +243,10 @@ sub main {
 		$args->{ai_attack_giveup}{time} = time;
 		debug "Update slave attack giveup time\n", 'slave_attack', 2;
 	}
-	$hitYou = ($args->{dmgToYou_last} != $target->{dmgToPlayer}{$slave->{ID}}
-		|| $args->{missedYou_last} != $target->{missedToPlayer}{$slave->{ID}});
+	
+	$hitYou = ($args->{dmgToYou_last} != $target->{dmgToPlayer}{$slave->{ID}} || $args->{missedYou_last} != $target->{missedToPlayer}{$slave->{ID}});
+	$youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromPlayer}{$slave->{ID}});
+	
 	$args->{dmgToYou_last} = $target->{dmgToPlayer}{$slave->{ID}};
 	$args->{missedYou_last} = $target->{missedToPlayer}{$slave->{ID}};
 	$args->{dmgFromYou_last} = $target->{dmgFromPlayer}{$slave->{ID}};
@@ -312,99 +285,143 @@ sub main {
 		$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
 	}
 
+	my $melee;
+	my $ranged;
 	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
 		delete $args->{ai_attack_failed_give_up}{time};
-	}
-
-	if (!$cleanMonster) {
-		# Drop target if it's already attacked by someone else
-		$target->{$slave->{ai_attack_failed_timeout}} = time if $monsters{$ID};
-		message TF("%s dropping target %s - will not kill steal others\n", $slave, $target), 'slave_attack';
-		$slave->sendMove ($realMyPos->{x}, $realMyPos->{y});
-		$slave->dequeue while ($slave->inQueue("attack"));
-		if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
-			message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-			useTeleport(1);
-		}
-
-	} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
-		my $cell = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance}, 1);
-		if ($cell) {
-			debug TF("[runFromTarget] %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave_attack';
-			$slave->args->{avoiding} = 1;
-			$slave->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, runFromTarget => 1);
-		} else {
-			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave_attack';
-		}
 		
-		if (!$cell) {
-			my $max = $args->{attackMethod}{maxDistance} + 4;
-			if ($max > 14) {
-				$max = 14;
+	} elsif ($args->{attackMethod}{maxDistance} == 1) {
+		$melee = 1;
+
+	} elsif ($args->{attackMethod}{maxDistance} > 1) {
+		$ranged = 1;
+	}
+	
+	# -2: undefined attackMethod
+	# -1: No LOS
+	#  0: out of range
+	#  1: sucess
+	my $canAttack = -2;
+	if ($melee || $ranged) {
+		$canAttack = Utils::canAttack($field, $realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'}, $args->{attackMethod}{maxDistance});
+	}
+	
+	if (
+		$config{$slave->{configPrefix}."attackBeyondMaxDistance_waitForAgressive"} &&
+		$target->{dmgFromPlayer}{$slave->{ID}} > 0 &&
+		$canAttack == 1 &&
+		exists $args->{ai_attack_failed_waitForAgressive_give_up} &&
+		defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
+	) {
+		debug "Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
+		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};;
+	}
+	
+	if ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
+		my $max_sight = $config{clientSight} - 1;
+		my $current_beyond = 0;
+		my $increase = 3;
+		
+		while (1) {
+			my $current_dist = $args->{attackMethod}{maxDistance} + $current_beyond;
+			if ($current_dist > $max_sight) {
+				$current_dist = $max_sight;
 			}
-			$cell = meetingPosition($slave, 2, $target, $max, 1);
-			if ($cell) {
-				debug TF("[runFromTarget] %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave_attack';
+			
+			my $pos = meetingPosition($slave, 2, $target, $current_dist, 1);
+			if ($pos) {
+				debug TF("[runFromTarget] (+$current_beyond | $current_dist/$max_sight) %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 				$args->{avoiding} = 1;
-				$slave->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, runFromTarget => 1);
+				$args->{needReajust} = 0;
+				$slave->route(
+					undef,
+					@{$pos}{qw(x y)},
+					noMapRoute => 1,
+					avoidWalls => 0,
+					randomFactor => 0,
+					useManhattan => 1,
+					runFromTarget => 1
+				);
+				last;
+				
+			} elsif ($current_dist == $max_sight) {
+				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+				last;
+				
 			} else {
-				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'slave_attack';
+				$current_beyond += $increase;
 			}
 		}
 	
-	
-	} elsif(!defined $args->{attackMethod}{type}) {
-		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), 'slave_attack';
+	} elsif($canAttack  == -2) {
+		debug T("Slave $slave can't determine a attackMethod\n"), 'slave_attack';
 		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
 		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
 		if (timeOut($args->{ai_attack_failed_give_up})) {
 			delete $args->{ai_attack_failed_give_up}{time};
 			message T("$slave unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), 'slave_attack';
-			giveUp($slave, $args, $ID);
+			giveUp($slave, $args, $ID, 0);
 		}
 	
 	
 	} elsif (
-		# We are out of range, but already hit enemy, should wait for him in a safe place instead of going after him
-		# Example at https://youtu.be/kTRk5Na1aCQ?t=25 in which this check did not exist, we tried getting closer intead of waiting and got hit
-		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance}) &&
-		#(!$config{$slave->{configPrefix}.'attackCheckLOS'} || $field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})) && # Is this check needed?
 		$config{$slave->{configPrefix}."attackBeyondMaxDistance_waitForAgressive"} &&
-		$target->{dmgFromPlayer}{$slave->{ID}} > 0
+		$target->{dmgFromPlayer}{$slave->{ID}} > 0 &&
+		($canAttack == 0 || $canAttack == -1)
 	) {
 		$args->{ai_attack_failed_waitForAgressive_give_up}{timeout} = 6 if !$args->{ai_attack_failed_waitForAgressive_give_up}{timeout};
 		$args->{ai_attack_failed_waitForAgressive_give_up}{time} = time if !$args->{ai_attack_failed_waitForAgressive_give_up}{time};
 		
-		if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
-			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
-			message T("[Out of Range] $slave waited too long for target to get closer, dropping target\n"), 'slave_attack';
-			giveUp($slave, $args, $ID);
-		} else {
-			warning TF("[Out of Range - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromPlayer}{$slave->{ID}}), 'slave_attack';
+		if ($ranged) {
+			if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
+				delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
+				message T("[Out of Range - Ranged] $slave waited too long for target to get closer, dropping target\n"), 'slave_attack';
+				giveUp($slave, $args, $ID, 0);
+			} else {
+				$slave->sendAttack ($ID);
+				warning TF("[Out of Range - Ranged - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromPlayer}{$slave->{ID}}), 'slave_attack';
+			}
+			
+		} elsif ($melee) {
+			if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
+				delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
+				warning T("[Out of Range - Melee] $slave waited too long for target to get closer, dropping target\n"), "ai_attack";
+				giveUp($slave, $args, $ID, 0);
+			} else {
+				$slave->sendAttack ($ID);
+				warning TF("[Out of Range - Melee - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromPlayer}{$slave->{ID}}), 'ai_attack';
+			}
 		}
 
 	} elsif (
-		# We are out of range
-		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
-		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance})
+		$canAttack < 1
 	) {
-		# The target monster moved; move to target
-		$args->{move_start} = time;
-		$args->{monsterPos} = {%{$monsterPos}};
-		$args->{monsterLastMoveTime} = $target->{time_move};
+		debug "Attack $slave ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y})\n";
+		if ($ranged && $canAttack == 0) {
+			debug "[Slave Attack] [Ranged] [No range] $slave Too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
+		} elsif ($melee && $canAttack == 0) {
+			debug "[Slave Attack] [Melee] [No range] $slave Too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 		
-		debug "$slave target $target ($realMonsterPos->{x} $realMonsterPos->{y}) is too far from slave ($realMyPos->{x} $realMyPos->{y}) to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'slave_attack';
-		
-		my $pos = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
-		my $result;
-		
-		if ($pos) {
-			debug "Attack $slave ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'slave_attack';
+		} elsif ($ranged && $canAttack == -1) {
+			debug "[Slave Attack] [Ranged] [No LOS] $slave No LOS\n", 'ai_attack';
 			
-			$result = $slave->route(
+		} elsif ($melee && $canAttack == -1) {
+			debug "[Slave Attack] [Melee] [No LOS] $slave No LOS\n", 'ai_attack';
+			
+		}
+
+		$args->{move_start} = time;
+		$args->{monsterLastMoveTime} = $target->{time_move};
+		my $pos = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
+		if ($pos) {
+			debug "Attack $slave ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
+
+			$args->{needReajust} = 0;
+			$args->{sentApproach} = 1;
+			$slave->route(
 				undef,
 				@{$pos}{qw(x y)},
-				maxRouteTime => $config{$slave->{configPrefix}.'attackMaxRouteTime'},
+				maxRouteTime => $config{'attackMaxRouteTime'},
 				attackID => $ID,
 				avoidWalls => 0,
 				randomFactor => 0,
@@ -412,66 +429,9 @@ sub main {
 				meetingSubRoute => 1,
 				noMapRoute => 1
 			);
-			
-			if (!$result) {
-				# Unable to calculate a route to target
-				$target->{$slave->{ai_attack_failed_timeout}} = time;
-				$slave->dequeue while ($slave->inQueue("attack"));
-				message TF("Unable to calculate a route to %s target, dropping target\n", $slave), 'slave_attack';
-				if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
-					message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-					useTeleport(1);
-				} else {
-					debug "Attack $slave - successufully routing to $target\n", 'attack';
-				}
-			}
 		} else {
-			$target->{$slave->{ai_attack_failed_timeout}} = time;
-			$slave->dequeue while ($slave->inQueue("attack"));
-			message T("Unable to calculate a meetingPosition to target, dropping target\n"), 'slave_attack';
-			if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
-				message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-				useTeleport(1);
-			}
-		}
-
-	} elsif (
-		# We are a ranged attacker in range without LOS
-		$args->{attackMethod}{maxDistance} > 1 &&
-		$config{$slave->{configPrefix}.'attackCheckLOS'} &&
-		!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
-	) {
-		my $best_spot = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
-
-		# Move to the closest spot
-		my $msg = TF("%s has no LOS from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-		if ($best_spot) {
-			message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
-			$slave->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, LOSSubRoute => 1);
-		} else {
-			$target->{attack_failedLOS} = time;
-			warning TF("%s; no acceptable place to stand\n", $msg);
-			$slave->dequeue while ($slave->inQueue("attack"));
-		}
-
-	} elsif (
-		# We are a melee attacker in range without LOS
-		$args->{attackMethod}{maxDistance} == 1 &&
-		$config{$slave->{configPrefix}.'attackCheckLOS'} &&
-		blockDistance($realMyPos, $realMonsterPos) == 2 &&
-		!$field->checkLOS($realMyPos, $realMonsterPos, $config{$slave->{configPrefix}.'attackCanSnipe'})
-	) {
-		my $best_spot = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
-
-		# Move to the closest spot
-		my $msg = TF("%s has no LOS in melee from (%d, %d) to target %s (%d, %d) (distance: %d)", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
-		if ($best_spot) {
-			message TF("%s; moving to (%d, %d)\n", $msg, $best_spot->{x}, $best_spot->{y}), 'slave_attack';
-			$slave->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, LOSSubRoute => 1);
-		} else {
-			$target->{attack_failedLOS} = time;
-			warning TF("%s; no acceptable place to stand\n", $msg);
-			$slave->dequeue while ($slave->inQueue("attack"));
+			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
+			giveUp($slave, $args, $ID, 1);
 		}
 
 	} elsif ((!$config{$slave->{configPrefix}.'runFromTarget'} || $realMonsterDist >= $config{$slave->{configPrefix}.'runFromTarget_dist'})
@@ -495,7 +455,7 @@ sub main {
 		}
 
 		if ($args->{attackMethod}{type} eq "weapon") {
-			if ($config{$slave->{configPrefix}.'attack_dance_melee'} && $args->{attackMethod}{distance} == 1) {
+			if ($config{$slave->{configPrefix}.'attack_dance_melee'} && $melee) {
 				if (timeOut($timeout{$slave->{ai_dance_attack_melee_timeout}})) {
 					my $cell = get_dance_position($slave, $target);
 					debug TF("Slave %s will dance type %d from (%d, %d) to (%d, %d), target %s at (%d, %d).\n", $slave, $config{$slave->{configPrefix}.'attack_dance_melee'}, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y});
@@ -505,7 +465,7 @@ sub main {
 					$timeout{$slave->{ai_dance_attack_melee_timeout}}{time} = time;
 				}
 				
-			} elsif ($config{$slave->{configPrefix}.'attack_dance_ranged'} && $args->{attackMethod}{distance} > 2) {
+			} elsif ($config{$slave->{configPrefix}.'attack_dance_ranged'} && $ranged) {
 				if (timeOut($timeout{$slave->{ai_dance_attack_ranged_timeout}})) {
 					my $cell = get_dance_position($slave, $target);
 					debug TF("Slave %s will range dance type %d from (%d, %d) to (%d, %d), target %s at (%d, %d).\n", $slave, $config{$slave->{configPrefix}.'attack_dance_ranged'}, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y});
