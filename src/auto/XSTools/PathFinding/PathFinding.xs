@@ -232,30 +232,123 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 			}
 			
 			AV *deref_secondWeightMap;
-			I32 array_last_index;
+			I32 array_len;
 			
 			deref_secondWeightMap = (AV *) SvRV (secondWeightMap);
-			array_last_index = av_top_index (deref_secondWeightMap);
+			array_len = av_len (deref_secondWeightMap);
 			
-			if (array_last_index == -1) {
+			if (array_len == -1) {
 				printf("[pathfinding reset error] secondWeightMap has no members\n");
 				XSRETURN_NO;
 			}
 			
 			SV **fetched;
+			HV *hash;
+		
+			SV **ref_x;
+			SV **ref_y;
+			SV **ref_weight;
+			
+			IV x;
+			IV y;
+			
 			I32 index;
 			
-			for (index = 0; index <= array_last_index; index++) {
+			for (index = 0; index <= array_len; index++) {
 				fetched = av_fetch (deref_secondWeightMap, index, 0);
-				
-				if (!SvOK(*fetched)) {
-					printf("[pathfinding reset error] member of array secondWeightMap is not defined\n");
+			
+				if (!SvROK(*fetched)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array is not a reference\n");
 					XSRETURN_NO;
 				}
 				
-				unsigned int weight = SvIV(*fetched);
+				if (SvTYPE(SvRV(*fetched)) != SVt_PVHV) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array is not a reference to a hash\n");
+					XSRETURN_NO;
+				}
 				
-				session->second_weight_map[index] = weight;
+				if (!SvOK(*fetched)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array is not defined\n");
+					XSRETURN_NO;
+				}
+				
+				hash = (HV*) SvRV(*fetched);
+				
+				if (!hv_exists(hash, "x", 1)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array does not contain the key 'x'\n");
+					XSRETURN_NO;
+				}
+				
+				ref_x = hv_fetch(hash, "x", 1, 0);
+				
+				if (SvROK(*ref_x)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array 'x' key is a reference\n");
+					XSRETURN_NO;
+				}
+				
+				if (SvTYPE(*ref_x) >= SVt_PVAV) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array 'x' key is not a scalar\n");
+					XSRETURN_NO;
+				}
+				
+				if (!SvOK(*ref_x)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array 'x' key is not defined\n");
+					XSRETURN_NO;
+				}
+				
+				x = SvIV(*ref_x);
+				
+				if (!hv_exists(hash, "y", 1)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array does not contain the key 'y'\n");
+					XSRETURN_NO;
+				}
+				
+				ref_y = hv_fetch(hash, "y", 1, 0);
+				
+				if (SvROK(*ref_y)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array 'y' key is a reference\n");
+					XSRETURN_NO;
+				}
+				
+				if (SvTYPE(*ref_y) >= SVt_PVAV) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array 'y' key is not a scalar\n");
+					XSRETURN_NO;
+				}
+				
+				if (!SvOK(*ref_y)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array 'y' key is not defined\n");
+					XSRETURN_NO;
+				}
+				
+				y = SvIV(*ref_y);
+				
+				if (!hv_exists(hash, "weight", 6)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array does not contain the key 'weight'\n");
+					XSRETURN_NO;
+				}
+				
+				ref_weight = hv_fetch(hash, "weight", 6, 0);
+				
+				if (SvROK(*ref_weight)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array 'weight' key is a reference\n");
+					XSRETURN_NO;
+				}
+				
+				if (SvTYPE(*ref_weight) >= SVt_PVAV) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array 'weight' key is not a scalar\n");
+					XSRETURN_NO;
+				}
+				
+				if (!SvOK(*ref_weight)) {
+					printf("[pathfinding reset error] [secondWeightMap] member of array 'weight' key is not defined\n");
+					XSRETURN_NO;
+				}
+				
+				unsigned int weight = SvIV(*ref_weight);
+				
+				unsigned long current = (y * session->width) + x;
+				
+				session->second_weight_map[current] = weight;
 			}
 		} else {
 			if (SvOK(secondWeightMap)) {

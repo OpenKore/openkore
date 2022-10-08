@@ -75,11 +75,13 @@ sub new {
 # Optional arguments:
 # `l
 # - timeout: the number of milliseconds to run each step for, defaults to 1500
-# - avoidWalls: of walls should be avoided during pathing, defaults to 1
+# - avoidWalls: if walls should be avoided during pathing, defaults to 1
 # - min_x: limits the map in a certain minimum x coordinate, defaults to 0
 # - max_x: limits the map in a certain maximum x coordinate, defaults to width-1
 # - min_y: limits the map in a certain minimum y coordinate, defaults to 0
 # - max_y: limits the map in a certain maximum y coordinate, defaults to height-1
+# - customWeights: if secondWeightMap should be used during pathing, defaults to 0
+# - secondWeightMap: An array of hashes containing 3 keys, 'x', 'y' and 'weight', for all the cells which had their weight changed, 'weight' is the weight of the cell, defaults to undef
 # `l`
 sub reset {
 	my $class = shift;
