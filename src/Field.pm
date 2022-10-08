@@ -441,23 +441,10 @@ sub canMove {
 	}
 	
 	# If there are obstacles and OFFICIAL_WALKPATH is defined (which is by default) then calculate a client pathfinding
-	my $solution = [];
-	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($self, $from, 20);
-	my $dist_path = new PathFinding(
-		field => $self,
-		start => $from,
-		dest => $to,
-		avoidWalls => 0,
-		randomFactor => 0,
-		useManhattan => 1,
-		min_x => $min_pathfinding_x,
-		max_x => $max_pathfinding_x,
-		min_y => $min_pathfinding_y,
-		max_y => $max_pathfinding_y
-	)->run($solution);
+	my $solution = get_client_solution($self, $from, $to);
+	my $dist_path = scalar @{$solution};
 	
-	# If pathfinding returns < 0 then it is a fail
-	if ($dist_path <= 0) {
+	if ($dist_path == 0) {
 		return 0;
 	}
 	

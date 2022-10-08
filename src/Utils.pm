@@ -80,7 +80,7 @@ sub get_client_solution {
 	# Game client uses the same A* Pathfinding as openkore but uses and inadmissible heuristic (Manhattan distance)
 	# To better simulate the client pathfinding we tell openkore's pathfinding to use the same Manhattan heuristic
 	# We also deactivate any custom pathfinding weights (randomFactor, avoidWalls, customWeights)
-	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $pos, 35);
+	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = getSquareEdgesFromCoord($field, $pos, 35);
 	my $dist_path = new PathFinding(
 		field => $field,
 		start => $pos,
@@ -127,10 +127,10 @@ sub calcPosFromPathfinding {
 		} else {
 			my $pos = $actor->{pos};
 			my $pos_to = $actor->{pos_to};
-			$solution = Utils::get_client_solution($field, $pos, $pos_to);
+			$solution = get_client_solution($field, $pos, $pos_to);
 		}
 		
-		my $steps_walked = Utils::calcStepsWalkedFromTimeAndSolution($solution, $speed, $time);
+		my $steps_walked = calcStepsWalkedFromTimeAndSolution($solution, $speed, $time);
 		
 		my $pos = $solution->[$steps_walked];
 		
@@ -150,9 +150,9 @@ sub calcTimeFromPathfinding {
 		return calcTime($pos, $pos_to, $speed);
 		
 	} else {
-		my $solution = Utils::get_client_solution($field, $pos, $pos_to);
+		my $solution = get_client_solution($field, $pos, $pos_to);
 		
-		my $summed_time = Utils::calcTimeFromSolution($solution, $speed);
+		my $summed_time = calcTimeFromSolution($solution, $speed);
 
 		return $summed_time;
 	}
