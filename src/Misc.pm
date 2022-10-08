@@ -2525,148 +2525,16 @@ sub manualMove {
 sub meetingPosition {
 	my ($actor, $actorType, $target, $attackMaxDistance, $runFromTargetActive) = @_;
 
-	# Actor was going from 'pos' to 'pos_to' in the last movement
-	my %myPos;
-	$myPos{x} = $actor->{pos}{x};
-	$myPos{y} = $actor->{pos}{y};
-	my %myPosTo;
-	$myPosTo{x} = $actor->{pos_to}{x};
-	$myPosTo{y} = $actor->{pos_to}{y};
+	if ($attackMaxDistance < 1) {
+		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
+		return;
+	}
 
 	my $mySpeed = ($actor->{walk_speed} || 0.12);
 	my $timeSinceActorMoved = time - $actor->{time_move};
-	
+
 	my $my_solution;
 	my $timeActorFinishMove;
-	if ($actorType == 1) {
-		$my_solution = $char->{solution};
-		$timeActorFinishMove = $char->{time_move_calc};
-	} else {
-		$my_solution = get_client_solution($field, \%myPos, \%myPosTo);
-
-		# Calculate the time actor will need to finish moving from pos to pos_to
-		$timeActorFinishMove = calcTimeFromSolution($my_solution, $mySpeed);
-	}
-	
-	my $realMyPos;
-	# Actor has finished moving
-	if ($timeSinceActorMoved >= $timeActorFinishMove) {
-		$realMyPos->{x} = $myPosTo{x};
-		$realMyPos->{y} = $myPosTo{y};
-	# Actor is currently moving
-	} else {
-		my $steps_walked = calcStepsWalkedFromTimeAndSolution($my_solution, $mySpeed, $timeSinceActorMoved);
-		$realMyPos->{x} = $my_solution->[$steps_walked]{x};
-		$realMyPos->{y} = $my_solution->[$steps_walked]{y};
-	}
-	#warning "[meeting] My pos Real $realMyPos->{x} $realMyPos->{y} ($myPos{x} $myPos{y}) -> ($myPosTo{x} $myPosTo{y}).\n";
-
-	# Target was going from 'pos' to 'pos_to' in the last movement
-	my %targetPos;
-	$targetPos{x} = $target->{pos}{x};
-	$targetPos{y} = $target->{pos}{y};
-	my %targetPosTo;
-	$targetPosTo{x} = $target->{pos_to}{x};
-	$targetPosTo{y} = $target->{pos_to}{y};
-
-	my $targetSpeed = ($target->{walk_speed} || 0.12);
-	my $timeSinceTargetMoved = time - $target->{time_move};
-	
-	my $target_solution = get_client_solution($field, \%targetPos, \%targetPosTo);
-
-	# Calculate the time target will need to finish moving from pos to pos_to
-	my $timeTargetFinishMove = calcTimeFromSolution($target_solution, $targetSpeed);
-
-	my $target_moving;
-	my $realTargetPos;
-	my $targetTotalSteps;
-	my $targetCurrentStep;
-	# Target has finished moving
-	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
-		$target_moving = 0;
-		$realTargetPos->{x} = $targetPosTo{x};
-		$realTargetPos->{y} = $targetPosTo{y};
-
-	# Target is currently moving
-	} else {
-		$target_moving = 1;
-		$targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $timeSinceTargetMoved);
-		$realTargetPos->{x} = $target_solution->[$targetCurrentStep]{x};
-		$realTargetPos->{y} = $target_solution->[$targetCurrentStep]{y};
-		
-		$targetTotalSteps = $#{$target_solution};
-	}
-	#warning "[meeting] Target pos Real $realTargetPos->{x} $realTargetPos->{y} ($targetPos{x} $targetPos{y}) -> ($targetPosTo{x} $targetPosTo{y}).\n";
-
-	my @target_pos_to_check;
-	my $timeForTargetToGetToStep;
-	my %targetPosInStep;
-	my $myDistToTargetPosInStep;
-
-	# Target started moving from %targetPos to %targetPosTo and has not finished moving yet, it is currently at $realTargetPos, here we calculate every block still in its path and the time to reach them
-	if ($target_moving) {
-		my $target_time_to_temp;
-		if ($targetPos{x} == $realTargetPos->{x} && $targetPos{y} == $realTargetPos->{y}) {
-			$target_time_to_temp = 0;
-		} else {
-			my $target_temp_solution = get_client_solution($field, \%targetPos, $realTargetPos);
-			$target_time_to_temp = calcTimeFromSolution($target_temp_solution, $targetSpeed);
-		}
-		my $time_since_completed_last_cell = ($timeSinceTargetMoved - $target_time_to_temp);
-		
-		my $steps_count = 0;
-		my %last_pos;
-		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
-			# Calculate the steps
-			$targetPosInStep{x} = $target_solution->[$currentStep]{x};
-			$targetPosInStep{y} = $target_solution->[$currentStep]{y};
-			
-			# Calculate time to walk for target
-			if ($steps_count == 0) {
-				$timeForTargetToGetToStep = 0;
-				
-			} else {
-				my $temp_time_since_completed_last_cell = 0;
-				if ($steps_count == 1) {
-					$temp_time_since_completed_last_cell = $time_since_completed_last_cell;
-				}
-				my $time_to_get_here_from_last_cell = calcTime(\%last_pos, \%targetPosInStep, $targetSpeed);
-				
-				my $time_I_stayed_in_last_step = ($time_to_get_here_from_last_cell - $temp_time_since_completed_last_cell);
-				
-				$timeForTargetToGetToStep = ($timeForTargetToGetToStep + $time_I_stayed_in_last_step);
-				$target_pos_to_check[($steps_count-1)]{timeLeaveStep} = $timeForTargetToGetToStep;
-			}
-
-			$myDistToTargetPosInStep = blockDistance($realMyPos, \%targetPosInStep);
-
-			$target_pos_to_check[$steps_count] = {
-				targetPosInStep => {
-					x => $targetPosInStep{x},
-					y => $targetPosInStep{y}
-				},
-				timeForTargetToGetToStep => $timeForTargetToGetToStep,
-				myDistToTargetPosInStep => $myDistToTargetPosInStep,
-				isLastStep => ($currentStep == $targetTotalSteps ? 1 : 0)
-			};
-			$last_pos{x} = $targetPosInStep{x};
-			$last_pos{y} = $targetPosInStep{y};
-		} continue {
-			$steps_count++;
-		}
-
-	# Target has finished moving and is at %targetPosTo
-	} else {
-		$myDistToTargetPosInStep = blockDistance($realMyPos, $realTargetPos);
-		$target_pos_to_check[0] = {
-			targetPosInStep => $realTargetPos,
-			timeForTargetToGetToStep => 0,
-			myDistToTargetPosInStep => $myDistToTargetPosInStep,
-			isLastStep => 1
-		};
-	}
-	use Data::Dumper;
-	#warning Dumper(\@target_pos_to_check);
 
 	my $attackRouteMaxPathDistance;
 	my $attackCanSnipe;
@@ -2699,6 +2567,10 @@ sub meetingPosition {
 			}
 		}
 
+		# If the actor is the character then we should have already saved the time calc and solution at Receive.pm::character_moves
+		$my_solution = $char->{solution};
+		$timeActorFinishMove = $char->{time_move_calc};
+
 	# actor is a slave
 	} elsif ($actorType == 2) {
 		$attackRouteMaxPathDistance = $config{$actor->{configPrefix}.'attackRouteMaxPathDistance'} || 20;
@@ -2710,25 +2582,79 @@ sub meetingPosition {
 		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
 		$master = $char;
 		$masterPos = 1;
+
+		$my_solution = get_client_solution($field, $actor->{pos}, $actor->{pos_to});
+		$timeActorFinishMove = calcTimeFromSolution($my_solution, $mySpeed);
 	}
-	
+
+	my $realMyPos;
+	# Actor has finished moving and is at PosTo
+	if ($timeSinceActorMoved >= $timeActorFinishMove) {
+		$realMyPos = $actor->{pos_to};
+
+	# Actor is currently moving
+	} else {
+		my $steps_walked = calcStepsWalkedFromTimeAndSolution($my_solution, $mySpeed, $timeSinceActorMoved);
+		$realMyPos = $my_solution->[$steps_walked];
+	}
+
+	# Should never happen
+	unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
+		$realMyPos = $field->closestWalkableSpot($realMyPos, 1);
+	}
+
+	my $targetSpeed = ($target->{walk_speed} || 0.12);
+	my $timeSinceTargetMoved = time - $target->{time_move};
+
+	my $target_solution = get_client_solution($field, $target->{pos}, $target->{pos_to});
+
+	# Calculate the time target will need to finish moving from pos to pos_to
+	my $timeTargetFinishMove = calcTimeFromSolution($target_solution, $targetSpeed);
+
+	my $realTargetPos;
+	my $targetTotalSteps;
+	my $targetCurrentStep;
+
+	my @target_pos_to_check;
+	my $myDistToTargetPosInStep;
+
+	# Target has finished moving
+	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
+		$realTargetPos = $target->{pos_to};
+		$myDistToTargetPosInStep = blockDistance($realMyPos, $realTargetPos);
+		$target_pos_to_check[0] = {
+			targetPosInStep => $realTargetPos,
+			myDistToTargetPosInStep => $myDistToTargetPosInStep
+		};
+
+	# Target is currently moving
+	} else {
+		$targetTotalSteps = $#{$target_solution};
+		$targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $timeSinceTargetMoved);
+		$realTargetPos = $target_solution->[$targetCurrentStep];
+
+		my $steps_count = 0;
+		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
+			$myDistToTargetPosInStep = blockDistance($realMyPos, $target_solution->[$currentStep]);
+			$target_pos_to_check[$steps_count] = {
+				targetPosInStep => $target_solution->[$currentStep],
+				myDistToTargetPosInStep => $myDistToTargetPosInStep
+			};
+		} continue {
+			$steps_count++;
+		}
+	}
+
 	my $master_moving;
 	my $master_solution;
 	my $timeSinceMasterMoved;
 	my $realMasterPos;
-	my %masterPos;
-	my %masterPosTo;
 	my $masterSpeed;
 	if ($masterPos) {
-		$masterPos{x} = $master->{pos}{x};
-		$masterPos{y} = $master->{pos}{y};
-		$masterPosTo{x} = $master->{pos_to}{x};
-		$masterPosTo{y} = $master->{pos_to}{y};
-
 		$masterSpeed = ($master->{walk_speed} || 0.12);
 		$timeSinceMasterMoved = time - $master->{time_move};
-	
-		$master_solution = get_client_solution($field, \%masterPos, \%masterPosTo);
+
+		$master_solution = get_client_solution($field, $master->{pos}, $master->{pos_to});
 
 		# Calculate the time master will need to finish moving from pos to pos_to
 		my $timeMasterFinishMove = calcTimeFromSolution($master_solution, $masterSpeed);
@@ -2736,57 +2662,33 @@ sub meetingPosition {
 		# master has finished moving
 		if ($timeSinceMasterMoved >= $timeMasterFinishMove) {
 			$master_moving = 0;
-			$realMasterPos->{x} = $masterPosTo{x};
-			$realMasterPos->{y} = $masterPosTo{y};
+			$realMasterPos = $master->{pos_to};
+			
 		# master is currently moving
 		} else {
 			$master_moving = 1;
-			my $master_CurrentStep = calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $timeSinceMasterMoved);
-			$realMasterPos->{x} = $master_solution->[$master_CurrentStep]{x};
-			$realMasterPos->{y} = $master_solution->[$master_CurrentStep]{y};
 		}
 	}
 
-	my $melee;
-	my $ranged;
-	if ($attackMaxDistance == 1) {
-		$melee = 1;
-
-	} elsif ($attackMaxDistance > 1) {
-		$ranged = 1;
-
-	} else {
-		error "attackMaxDistance must be positive ($attackMaxDistance).\n";
-		return;
-	}
-
 	my $min_destination_dist = 1;
-	my $max_destination_dist;
-	if ($ranged && $runFromTarget) {
+	if ($runFromTarget) {
 		$min_destination_dist = $runFromTarget_dist;
 		if ($runFromTargetActive) {
 			$min_destination_dist = $runFromTarget_minStep;
 		}
 	}
 	
+	# we can atack from 1 range further than expected on ortogonal only cells
+	my $max_destination_dist = ($attackMaxDistance+1);
+	if ($max_destination_dist >= $config{clientSight}) {
+		$max_destination_dist = ($config{clientSight}-1)
+	}
+
 	my $max_path_dist;
 	if ($runFromTargetActive) {
 		$max_path_dist = $runFromTarget_maxPathDistance;
 	} else {
 		$max_path_dist = $attackRouteMaxPathDistance;
-	}
-
-	# We should not stray further than $attackMaxDistance
-	if ($melee) {
-		$max_destination_dist = 2; # we can atack from a distance of 2 on ortogonal only cells
-	} else {
-		$max_destination_dist = $attackMaxDistance;
-	}
-
-	unless ($field->isWalkable($realMyPos->{x}, $realMyPos->{y})) {
-		my $new_pos = $field->closestWalkableSpot($realMyPos, 1);
-		$realMyPos->{x} = $new_pos->{x};
-		$realMyPos->{y} = $new_pos->{y};
 	}
 
 	my $max_pathfinding_dist = $max_destination_dist+5;
@@ -2795,7 +2697,7 @@ sub meetingPosition {
 	my $best_targetPosInStep;
 	my $best_dist_to_target;
 	my $best_time;
-	
+
 	my %allspots;
 	foreach my $possible_target_pos (@target_pos_to_check) {
 		if ($possible_target_pos->{myDistToTargetPosInStep} >= $max_pathfinding_dist) {
@@ -2816,31 +2718,31 @@ sub meetingPosition {
 			}
 		}
 	}
-	
+
 	foreach my $x_spot (sort keys %allspots) {
 		foreach my $y_spot (sort keys %{$allspots{$x_spot}}) {
 			my $spot;
 			$spot->{x} = $x_spot;
 			$spot->{y} = $y_spot;
 			my $spot_info = $allspots{$x_spot}{$y_spot};
-			
+
 			next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
 
 			# Is this spot acceptable?
 
 			# 1. It must be walkable
 			next unless ($field->isWalkable($spot->{x}, $spot->{y}));
-			
+
 			next if (positionNearPortal($spot, $config{'attackMinPortalDistance'}));
-			
-			
+
+
 			# 5. It must be reachable and have at max $max_path_dist of route distance to it from our current position.
 			my $time_actor_to_get_to_spot;
 			my $dist;
 			if ($field->checkLOS($realMyPos, $spot, 0)) {
 				$dist = blockDistance($realMyPos, $spot);
 				$time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
-				
+
 			} else {
 				my $solution = [];
 				my $run = new PathFinding(
@@ -2860,20 +2762,18 @@ sub meetingPosition {
 				$time_actor_to_get_to_spot = calcTimeFromSolution($solution, $mySpeed);
 			}
 			next unless ($dist <= $max_path_dist);
-			
+
 			my $total_time = ($timeSinceTargetMoved+$time_actor_to_get_to_spot);
-			my $targetPosInStep;
 			my $temp_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);
-			$targetPosInStep->{x} = $target_solution->[$temp_targetCurrentStep]{x};
-			$targetPosInStep->{y} = $target_solution->[$temp_targetCurrentStep]{y};
-			
+			my $targetPosInStep = $target_solution->[$temp_targetCurrentStep];
+
 			next unless ($spot->{x} != $targetPosInStep->{x} || $spot->{y} != $targetPosInStep->{y});
 
 			my $dist_to_target = blockDistance($spot, $targetPosInStep);
-			
+
 			next unless ($dist_to_target >= $min_destination_dist || $runFromTargetActive);
-			
-			# 3. It must have LOS to the target ($targetPosInStep) if that is active and we are ranged or must be reacheable from melee
+
+			# 3. It must be able to attack the target (canAttack)
 			next unless (canAttack($field, $spot, $targetPosInStep, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) == 1);
 
 			# 2. It must be within $followDistanceMax of MasterPos, if we have a master.
@@ -2882,15 +2782,14 @@ sub meetingPosition {
 				if ($master_moving) {
 					my $totalTime = $timeSinceMasterMoved + $time_actor_to_get_to_spot;
 					my $master_CurrentStep = calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $totalTime);
-					$masterPosNow->{x} = $master_solution->[$master_CurrentStep]{x};
-					$masterPosNow->{y} = $master_solution->[$master_CurrentStep]{y};
+					$masterPosNow = $master_solution->[$master_CurrentStep];
 				} else {
 					$masterPosNow = $realMasterPos;
 				}
 				next unless (blockDistance($spot, $masterPosNow) <= $followDistanceMax);
 				next unless ($spot->{x} != $masterPosNow->{x} || $spot->{y} != $masterPosNow->{y});
 			}
-			
+
 			if ($runFromTargetActive) {
 				my $time_target_to_get_to_spot = calcTimeFromPathfinding($field, $realTargetPos, $spot, $targetSpeed);
 				if ($time_actor_to_get_to_spot > $time_target_to_get_to_spot) {
@@ -2898,10 +2797,8 @@ sub meetingPosition {
 				}
 			}
 
-			my $sum_time = $time_actor_to_get_to_spot;
-
-			if (!defined($best_time) || $sum_time < $best_time) {
-				$best_time = $sum_time;
+			if (!defined($best_time) || $time_actor_to_get_to_spot < $best_time) {
+				$best_time = $time_actor_to_get_to_spot;
 				$best_spot = $spot;
 				$best_targetPosInStep = $targetPosInStep;
 				$best_dist_to_target = $dist_to_target;
@@ -2910,7 +2807,7 @@ sub meetingPosition {
 	}
 
 	if (defined $best_spot) {
-		debug "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosInStep->{x} $best_targetPosInStep->{y}, dist $best_dist_to_target, it will take $best_time seconds.\n";
+		debug "[meetingPosition] Best spot is $best_spot->{x} $best_spot->{y}, mob will be at $best_targetPosInStep->{x} $best_targetPosInStep->{y}, dist $best_dist_to_target, it will take $best_time seconds to get there.\n";
 		return $best_spot;
 	}
 }
@@ -3073,7 +2970,10 @@ sub processNameRequestQueue {
 		# Remove actors with a distance greater than clientSight. Some private servers (notably Freya) use
 		# a technique where they send actor_exists packets with ridiculous distances in order to automatically
 		# ban bots. By removingthose actors, we eliminate that possibility and emulate the client more closely.
-		if (defined $actor->{pos_to} && (my $block_dist = blockDistance($char->{pos_to}, $actor->{pos_to})) >= ($config{clientSight} || 16)) {
+		my $max_sight_base = ($config{clientSight} || 15);
+		my $max_sight_extra = ($config{clientSight_removeBeyond} || 2);
+		my $max_sight = $max_sight_base + $max_sight_extra;
+		if (defined $actor->{pos_to} && (my $block_dist = blockDistance($char->{pos_to}, $actor->{pos_to})) >= $max_sight) {
 			debug "Removed actor at $actor->{pos_to}{x} $actor->{pos_to}{y} (distance: $block_dist)\n";
 			shift @{$queue};
 			next;
