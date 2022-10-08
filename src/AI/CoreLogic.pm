@@ -634,6 +634,7 @@ sub processEscapeUnknownMaps {
 		if ($config{route_escape_randomWalk} && !$skip) { #randomly search for portals...
 			my ($randX, $randY);
 			my $i = 500;
+			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 			my $pos = calcPosition($char);
 			do {
 				if ((rand(2)+1)%2) {
@@ -3214,6 +3215,7 @@ sub processAutoAttack {
 				 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && $attackOnRoute >= 2
 				 && !$monster->{dmgFromYou}
+				 # TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				 && ($control->{dist} eq '' || blockDistance($monster->{pos}, calcPosition($char)) <= $control->{dist})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
 				 && timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout})) {
@@ -3451,6 +3453,7 @@ sub processAutoTeleport {
 				$timeout{ai_teleport_away}{time} = time;
 				return;
 			} elsif ($teleAuto < 0 && !$char->{dead}) {
+				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				my $pos = calcPosition($monsters{$_});
 				my $myPos = calcPosition($char);
 				my $dist = blockDistance($pos, $myPos);

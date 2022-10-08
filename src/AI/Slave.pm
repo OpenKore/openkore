@@ -414,6 +414,7 @@ sub processAutoAttack {
 			my @aggressives;
 			my @partyMonsters;
 			my @cleanMonsters;
+			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 			my $myPos = calcPosition($slave);
 
 			# List aggressive monsters
@@ -428,6 +429,7 @@ sub processAutoAttack {
 				# Never attack monsters that we failed to get LOS with
 				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
+				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				my $pos = calcPosition($monster);
 				my $master_pos = $char->position;
 				

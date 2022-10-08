@@ -38,9 +38,12 @@ our @EXPORT = (
 	@{$Utils::DataStructures::EXPORT_TAGS{all}},
 
 	# Math
-	qw(calcPosFromTime calcPosFromPathfinding calcPosition fieldAreaCorrectEdges getSquareEdgesFromCoord calcStepsWalkedFromTimeAndSolution calcTimeFromSolution calcTime checkMovementDirection countSteps distance
+	qw(get_client_solution calcPosFromPathfinding calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
+	calcPosFromTime calcTime calcPosition fieldAreaCorrectEdges getSquareEdgesFromCoord
+	checkMovementDirection countSteps
+	distance blockDistance specifiedBlockDistance adjustedBlockDistance getClientDist canAttack
 	intToSignedInt intToSignedShort
-	blockDistance specifiedBlockDistance adjustedBlockDistance getVector moveAlong moveAlongVector
+	getVector moveAlong moveAlongVector
 	normalize vectorToDegree max min round ceil),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
@@ -63,80 +66,20 @@ our %quarks;
 ################################
 ################################
 
-
-##
-# calcPosFromTime(pos, pos_to, speed, time)
-#
-# Returns: the position where an actor moving from $pos to $pos_to with
-# the speed $speed will be in $time amount of time.
-# Walls are not considered.
-sub calcPosFromTime {
-	my ($pos, $pos_to, $speed, $time) = @_;
-	my $posX = $$pos{x};
-	my $posY = $$pos{y};
-	my $pos_toX = $$pos_to{x};
-	my $pos_toY = $$pos_to{y};
-	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
-	my $s = 0; # step
-
-	my $time_needed_ortogonal = $speed;
-    my $time_needed_diagonal = sqrt(2) * $speed;
-
-	my %result;
-	$result{x} = $pos_toX;
-	$result{y} = $pos_toY;
-
-	if (!$speed) {
-		return %result;
-	}
-	while (1) {
-		$s++;
-		$stepType = 0;
-		if ($posX < $pos_toX) {
-			$posX++;
-			$stepType++;
-		}
-		if ($posX > $pos_toX) {
-			$posX--;
-			$stepType++;
-		}
-		if ($posY < $pos_toY) {
-			$posY++;
-			$stepType++;
-		}
-		if ($posY > $pos_toY) {
-			$posY--;
-			$stepType++;
-		}
-
-		if ($stepType == 2) {
-			$time -= $time_needed_diagonal;
-		} elsif ($stepType == 1) {
-			$time -= $time_needed_ortogonal;
-		} else {
-			$s--;
-			last;
-		}
-		if ($time < 0) {
-			$s--;
-			last;
-		}
-	}
-
-	%result = moveAlong($pos, $pos_to, $s);
-	return (\%result, $s);
-}
-
 sub get_client_solution {
 	my ($field, $pos, $pos_to) = @_;
 	
 	my $solution = [];
 	
+	# Optimization so we don't need to call the Pathfinding just to get this cell
 	if ($pos->{x} == $pos_to->{x} && $pos->{y} == $pos_to->{y}) {
 		push(@{$solution}, { x => $pos_to->{x}, y => $pos_to->{y} });
 		return $solution;
 	}
 	
+	# Game client uses the same A* Pathfinding as openkore but uses and inadmissible heuristic (Manhattan distance)
+	# To better simulate the client pathfinding we tell openkore's pathfinding to use the same Manhattan heuristic
+	# We also deactivate any custom pathfinding weights (randomFactor, avoidWalls, customWeights)
 	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $pos, 35);
 	my $dist_path = new PathFinding(
 		field => $field,
@@ -153,26 +96,34 @@ sub get_client_solution {
 	return $solution;
 }
 
+# Currently the go-to function to get the position of a given actor on critical ocasions (eg. Attack logic)
 sub calcPosFromPathfinding {
 	my ($field, $actor, $extra_time) = @_;
+	my $speed = ($actor->{walk_speed} || 0.12);
+	my $time = time - $actor->{time_move} + $extra_time;
 	
+	# If Pos and PosTo are the same return Pos
 	if ($actor->{pos}{x} == $actor->{pos_to}{x} && $actor->{pos}{y} == $actor->{pos_to}{y}) {
 		return $actor->{pos};
-		
+	
+	# If there are no obstacles between Pos and PosTo use calcPosFromTime to save time.
+	# TODO: Check if calcPosFromTime actually always returns the same result as calcPosFromPathfinding when there are no obstacles
 	} elsif ($field->checkLOS($actor->{pos}, $actor->{pos_to}, 0)) {
-		return calcPosition($actor);
-		
+		return calcPosFromTime($actor->{pos}, $actor->{pos_to}, $speed, $time);
+	
+	# If there are obstacles then use the client pathfinding to solve it
 	} else {
-		my $speed = ($actor->{walk_speed} || 0.12);
-		my $time = time - $actor->{time_move} + $extra_time;
 		my $solution;
 		
+		# If the actor is the character then we should have already saved the time calc and solution at Receive.pm::character_moves
 		if (UNIVERSAL::isa($actor, "Actor::You")) {
 			if ($time >= $actor->{time_move_calc}) {
 				return $actor->{pos_to};
 			}
 			$solution = $actor->{solution};
-			
+		
+		# Otherwise calculute it now
+		# Todo: Also add the same as above for slaves and targets
 		} else {
 			my $pos = $actor->{pos};
 			my $pos_to = $actor->{pos_to};
@@ -187,6 +138,8 @@ sub calcPosFromPathfinding {
 	}
 }
 
+# Wrapper for calcTimeFromSolution so you don't need to call get_client_solution and calcTimeFromSolution when you only need the time
+# Used in Misc::meetingPosition to calculate if the target would have time to catch-up with the character when tunning away from it
 sub calcTimeFromPathfinding {
     my ($field, $pos, $pos_to, $speed) = @_;
 	
@@ -205,39 +158,33 @@ sub calcTimeFromPathfinding {
 	}
 }
 
-sub getClosestAdjacentCell {
-	my ($field, $me, $mob) = @_;
-	my @blocks = Misc::calcRectArea($me->{x}, $me->{y}, 1, $field);
-
-	my $best_block;
-	my $shortest_dist;
-
-	foreach my $block (@blocks) {
-		next if (!$field->isWalkable($block->{x}, $block->{y}));
-		my $dist = Utils::adjustedBlockDistance($mob, $block);
-		if (!defined $shortest_dist || $shortest_dist > $dist) {
-			$shortest_dist = $dist;
-			$best_block = $block;
-		}
-	}
-	return $best_block;
-}
-
 # Returns:
 # -1: No LOS
 #  0: out of range
 #  1: sucess
+#
+# Reference: hercules src\map\battle.c battle_check_range
 sub canAttack {
-	my ($field, $pos1, $pos2, $attackCanSnipe, $range) = @_;
+	my ($field, $pos1, $pos2, $attackCanSnipe, $range, $clientSight) = @_;
+	
+	my $distance = blockDistance($pos1, $pos2);
+	return 1 if ($distance < 2);
+	
+	# hercules conf\map\battle\client.conf area_size
+	# Here the check is done against area_size (which is by default 14, can be higher, eg. 22 in OathRO)
+	# Openkore clientSight should be area_size+1 (by default 15)
+	return 0 if ($distance >= $clientSight);
+	
+	my $client_distance = getClientDist($pos1, $pos2);
+	return 0 unless ($client_distance <= $range);
 	
 	return -1 unless ($field->checkLOS($pos1, $pos2, $attackCanSnipe));
-	
-	my $cDist = getClientDist($pos1, $pos2);
-	return 0 unless ($cDist <= $range);
 	
 	return 1;
 }
 
+# Only God and gravity developers know why this is done this way, but I tested in the client and it works 100% of the time
+# Reference: hercules src\map\path.c distance_client
 sub getClientDist {
 	my ($pos1, $pos2) = @_;
 	my $xD = abs($pos1->{x} - $pos2->{x});
@@ -250,121 +197,19 @@ sub getClientDist {
 }
 
 ##
-# calcTime(pos, pos_to, speed)
+# blockDistance(pos1, pos2)
+# pos1, pos2: references to position hash tables.
+# Returns: the distance in number of blocks (integer).
 #
-# Returns: time to move from $pos to $pos_to with $speed speed.
-# Walls are not considered.
-sub calcTime {
-	my ($pos, $pos_to, $speed) = @_;
-	my $posX = $$pos{x};
-	my $posY = $$pos{y};
-	my $pos_toX = $$pos_to{x};
-	my $pos_toY = $$pos_to{y};
-	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
-	my $time = 0;
-
-	my $time_needed_ortogonal = $speed;
-	my $time_needed_diagonal = sqrt(2) * $speed;
-
-	return if (!$speed); # Make sure $speed actually has a non-zero value...
-
-	while ($posX ne $pos_toX || $posY ne $pos_toY) {
-		$stepType = 0;
-		if ($posX < $pos_toX) {
-			$posX++;
-			$stepType++;
-		}
-		if ($posX > $pos_toX) {
-			$posX--;
-			$stepType++;
-		}
-		if ($posY < $pos_toY) {
-			$posY++;
-			$stepType++;
-		}
-		if ($posY > $pos_toY) {
-			$posY--;
-			$stepType++;
-		}
-		if ($stepType == 2) {
-			$time += $time_needed_diagonal;
-		} elsif ($stepType == 1) {
-			$time += $time_needed_ortogonal;
-		}
-	}
-	return $time;
-}
-
-##
-# calcPosition(object, [extra_time, float])
-# object: $char (yourself), or a value in %monsters or %players.
-# float: If set to 1, return coordinates as floating point.
-# Returns: reference to a position hash.
+# Calculates the distance in number of blocks between pos1 and pos2.
+# This is used for e.g. weapon range calculation.
 #
-# The position information server that the server sends indicates a motion:
-# it says that an object is walking from A to B, and that it will arrive at B shortly.
-# This function calculates the current position of $object based on the motion information.
-#
-# If $extra_time is given, this function will calculate where $object will be
-# after $extra_time seconds.
-#
-# Example:
-# my $pos;
-# $pos = calcPosition($char);
-# print "You are currently at: $pos->{x}, $pos->{y}\n";
-#
-# $pos = calcPosition($monsters{$ID});
-# # Calculate where the player will be after 2 seconds
-# $pos = calcPosition($players{$ID}, 2);
-sub calcPosition {
-	my ($object, $extra_time, $float) = @_;
-	my $time_needed = $object->{time_move_calc};
-	my $elasped = time - $object->{time_move} + $extra_time;
+# Reference: hercules src\map\path.c distance
+sub blockDistance {
+	my ($pos1, $pos2) = @_;
 
-	if ($elasped >= $time_needed || !$time_needed) {
-		return $object->{pos_to};
-	} else {
-		my (%vec, %result, $dist);
-		my $pos = $object->{pos};
-		my $pos_to = $object->{pos_to};
-
-		getVector(\%vec, $pos_to, $pos);
-		$dist = (distance($pos, $pos_to) - 1) * ($elasped / $time_needed);
-		moveAlongVector(\%result, $pos, \%vec, $dist);
-		$result{x} = int sprintf("%.0f", $result{x}) if (!$float);
-		$result{y} = int sprintf("%.0f", $result{y}) if (!$float);
-		return \%result;
-	}
-}
-
-sub fieldAreaCorrectEdges {
-    my ($field, $x1, $y1, $x2, $y2) = @_;
-
-	if ($x1 < 0) {
-		$x1 = 0;
-	}
-
-	if ($y1 < 0) {
-		$y1 = 0;
-	}
-
-	if ($x2 >= $field->width) {
-		$x2 = $field->width-1;
-	}
-
-	if ($y2 >= $field->height) {
-		$y2 = $field->height-1;
-	}
-
-	return ($x1, $y1, $x2, $y2);
-}
-
-sub getSquareEdgesFromCoord {
-    my ($field, $start, $dist_from_center) = @_;
-
-	my ($min_x, $min_y, $max_x, $max_y) = fieldAreaCorrectEdges($field, ($start->{x} - $dist_from_center), ($start->{y} - $dist_from_center), ($start->{x} + $dist_from_center), ($start->{y} + $dist_from_center));
-
-	return ($min_x, $min_y, $max_x, $max_y);
+	return max(abs($pos1->{x} - $pos2->{x}),
+	           abs($pos1->{y} - $pos2->{y}));
 }
 
 ##
@@ -480,6 +325,189 @@ sub calcTimeFromSolution {
 }
 
 ##
+# calcPosFromTime(pos, pos_to, speed, time)
+#
+# Returns: the position where an actor moving from $pos to $pos_to with
+# the speed $speed will be in $time amount of time.
+# Walls and pathfinding are not considered.
+sub calcPosFromTime {
+	my ($pos, $pos_to, $speed, $time) = @_;
+	my $posX = $$pos{x};
+	my $posY = $$pos{y};
+	my $pos_toX = $$pos_to{x};
+	my $pos_toY = $$pos_to{y};
+	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
+	my $s = 0; # step
+
+	my $time_needed_ortogonal = $speed;
+    my $time_needed_diagonal = sqrt(2) * $speed;
+
+	my %result;
+	$result{x} = $pos_toX;
+	$result{y} = $pos_toY;
+
+	if (!$speed) {
+		return %result;
+	}
+	while (1) {
+		$s++;
+		$stepType = 0;
+		if ($posX < $pos_toX) {
+			$posX++;
+			$stepType++;
+		}
+		if ($posX > $pos_toX) {
+			$posX--;
+			$stepType++;
+		}
+		if ($posY < $pos_toY) {
+			$posY++;
+			$stepType++;
+		}
+		if ($posY > $pos_toY) {
+			$posY--;
+			$stepType++;
+		}
+
+		if ($stepType == 2) {
+			$time -= $time_needed_diagonal;
+		} elsif ($stepType == 1) {
+			$time -= $time_needed_ortogonal;
+		} else {
+			$s--;
+			last;
+		}
+		if ($time < 0) {
+			$s--;
+			last;
+		}
+	}
+
+	%result = moveAlong($pos, $pos_to, $s);
+	return \%result;
+}
+
+##
+# calcTime(pos, pos_to, speed)
+#
+# Returns: time to move from $pos to $pos_to with $speed speed.
+# Walls and pathfinding are not considered.
+sub calcTime {
+	my ($pos, $pos_to, $speed) = @_;
+	my $posX = $$pos{x};
+	my $posY = $$pos{y};
+	my $pos_toX = $$pos_to{x};
+	my $pos_toY = $$pos_to{y};
+	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
+	my $time = 0;
+
+	my $time_needed_ortogonal = $speed;
+	my $time_needed_diagonal = sqrt(2) * $speed;
+
+	return if (!$speed); # Make sure $speed actually has a non-zero value...
+
+	while ($posX ne $pos_toX || $posY ne $pos_toY) {
+		$stepType = 0;
+		if ($posX < $pos_toX) {
+			$posX++;
+			$stepType++;
+		}
+		if ($posX > $pos_toX) {
+			$posX--;
+			$stepType++;
+		}
+		if ($posY < $pos_toY) {
+			$posY++;
+			$stepType++;
+		}
+		if ($posY > $pos_toY) {
+			$posY--;
+			$stepType++;
+		}
+		if ($stepType == 2) {
+			$time += $time_needed_diagonal;
+		} elsif ($stepType == 1) {
+			$time += $time_needed_ortogonal;
+		}
+	}
+	return $time;
+}
+
+##
+# calcPosition(object, [extra_time, float])
+# object: $char (yourself), or a value in %monsters or %players.
+# float: If set to 1, return coordinates as floating point.
+# Returns: reference to a position hash.
+#
+# Walls and pathfinding are not considered.
+#
+# The position information server that the server sends indicates a motion:
+# it says that an object is walking from A to B, and that it will arrive at B shortly.
+# This function calculates the current position of $object based on the motion information.
+#
+# If $extra_time is given, this function will calculate where $object will be
+# after $extra_time seconds.
+#
+# Example:
+# my $pos;
+# $pos = calcPosition($char);
+# print "You are currently at: $pos->{x}, $pos->{y}\n";
+#
+# $pos = calcPosition($monsters{$ID});
+# # Calculate where the player will be after 2 seconds
+# $pos = calcPosition($players{$ID}, 2);
+sub calcPosition {
+	my ($object, $extra_time, $float) = @_;
+	my $time_needed = $object->{time_move_calc};
+	my $elasped = time - $object->{time_move} + $extra_time;
+
+	if ($elasped >= $time_needed || !$time_needed) {
+		return $object->{pos_to};
+	} else {
+		my (%vec, %result, $dist);
+		my $pos = $object->{pos};
+		my $pos_to = $object->{pos_to};
+
+		getVector(\%vec, $pos_to, $pos);
+		$dist = (distance($pos, $pos_to) - 1) * ($elasped / $time_needed);
+		moveAlongVector(\%result, $pos, \%vec, $dist);
+		$result{x} = int sprintf("%.0f", $result{x}) if (!$float);
+		$result{y} = int sprintf("%.0f", $result{y}) if (!$float);
+		return \%result;
+	}
+}
+
+sub fieldAreaCorrectEdges {
+    my ($field, $x1, $y1, $x2, $y2) = @_;
+
+	if ($x1 < 0) {
+		$x1 = 0;
+	}
+
+	if ($y1 < 0) {
+		$y1 = 0;
+	}
+
+	if ($x2 >= $field->width) {
+		$x2 = $field->width-1;
+	}
+
+	if ($y2 >= $field->height) {
+		$y2 = $field->height-1;
+	}
+
+	return ($x1, $y1, $x2, $y2);
+}
+
+sub getSquareEdgesFromCoord {
+    my ($field, $start, $dist_from_center) = @_;
+
+	my ($min_x, $min_y, $max_x, $max_y) = fieldAreaCorrectEdges($field, ($start->{x} - $dist_from_center), ($start->{y} - $dist_from_center), ($start->{x} + $dist_from_center), ($start->{y} + $dist_from_center));
+
+	return ($min_x, $min_y, $max_x, $max_y);
+}
+
+##
 # checkMovementDirection(pos1, vec, pos2, fuzziness)
 #
 # Check whether an object - which is moving into the direction of vector $vec,
@@ -589,20 +617,6 @@ sub intToSignedShort {
 	} else {
 		return $result;
 	}
-}
-
-##
-# blockDistance(pos1, pos2)
-# pos1, pos2: references to position hash tables.
-# Returns: the distance in number of blocks (integer).
-#
-# Calculates the distance in number of blocks between pos1 and pos2.
-# This is used for e.g. weapon range calculation.
-sub blockDistance {
-	my ($pos1, $pos2) = @_;
-
-	return max(abs($pos1->{x} - $pos2->{x}),
-	           abs($pos1->{y} - $pos2->{y}));
 }
 
 ##
@@ -1267,8 +1281,11 @@ sub makeCoordsDir {
 # Another 1 byte or 2*4 bits are reserved for a clientside feature:
 # x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
 # Note: if sx0/sy0 is 8, this will respectively add 0 to x0/y0
+# Reference: hercules src\map\clif.c // client-side: x0+=sx0*0.0625-0.5 and y0+=sy0*0.0625-0.5
 #
 # ex. walk packet (4 + 4 + 10 + 10 + 10 + 10 = 48 bits = 6 bytes = a6)
+#
+# TODO: Maybe aegis, athena, cronus, brathena or other emulators actually use this sx0/sy0 argument and we don't know
 sub makeCoordsFromTo {
 	my ($r_hashFrom, $r_hashTo, $rawCoords) = @_;
 	unShiftPack(\$rawCoords, undef, 4); # seems to be returning 8 (always?)

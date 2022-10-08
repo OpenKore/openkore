@@ -270,7 +270,7 @@ sub main {
 	my $realMonsterPos = calcPosFromPathfinding($field, $target);
 	
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
-	my $clientDist = Utils::getClientDist($realMyPos, $realMonsterPos);
+	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
 
 	# If the damage numbers have changed, update the giveup time so we don't timeout
 	if ($args->{dmgToYou_last}   != $target->{dmgToYou}
@@ -409,7 +409,7 @@ sub main {
 	#  1: sucess
 	my $canAttack = -2;
 	if ($melee || $ranged) {
-		$canAttack = Utils::canAttack($field, $realMyPos, $realMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance});
+		$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
 	}
 	
 	if (

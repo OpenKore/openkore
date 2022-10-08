@@ -336,10 +336,12 @@ sub closestWalkableSpot {
 	return undef;
 }
 
+# Bresenham's algorithm
+#
+# Reference: hercules src\map\path.c path_search_long
 sub checkLOS {
 	my ($self, $from, $to, $can_snipe) = @_;
 
-	# Simulate tracing a line to the location (modified Bresenham's algorithm)
 	my ($X0, $Y0, $X1, $Y1) = ($from->{x}, $from->{y}, $to->{x}, $to->{y});
 
 	my $steep;

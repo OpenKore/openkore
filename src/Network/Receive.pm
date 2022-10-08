@@ -2001,6 +2001,7 @@ sub actor_display {
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
 	# beyond clientSight.
 	if ($config{clientSight}) {
+		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 		my $realMyPos = calcPosition($char);
 		my $realActorPos = calcPosition($actor);
 		my $realActorDist = blockDistance($realMyPos, $realActorPos);

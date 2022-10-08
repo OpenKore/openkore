@@ -929,6 +929,8 @@ sub updateMapViewer {
 	return unless ($map && $field && $char);
 
 	my $myPos;
+	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
+	# Maybe a new Wx mode?
 	$myPos = calcPosition($char);
 
 	$map->set($field->baseName, $myPos->{x}, $myPos->{y}, $field, $char->{look});

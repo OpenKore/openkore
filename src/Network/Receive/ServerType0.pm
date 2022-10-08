@@ -1389,7 +1389,7 @@ sub skill_used_no_damage {
 			$args->{sourceID} eq $accountID or $args->{sourceID} eq $args->{targetID};
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 	if ($args->{sourceID} eq $accountID) {
-		my $pos = calcPosition($char);
+		my $pos = calcPosFromPathfinding($field, $char);
 		$char->{pos} = $pos;
 		$char->{pos_to} = $pos;
 		$char->{time_move} = 0;

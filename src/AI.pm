@@ -392,6 +392,7 @@ sub ai_slave_getAggressives {
 		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 		next if (!timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}));
 		next if (!Misc::slave_checkMonsterCleanness($slave, $ID));
+		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 		my $pos = calcPosition($monster);
 		next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 

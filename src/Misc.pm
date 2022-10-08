@@ -140,7 +140,6 @@ our @EXPORT = (
 	look
 	lookAtPosition
 	manualMove
-	canReachMeleeAttack
 	meetingPosition
 	objectAdded
 	objectRemoved
@@ -647,6 +646,7 @@ sub objectInsideSpell {
 sub objectInsideCasting {
 	my ($monster) = @_;
 	
+	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 	my $monsterPos = calcPosition($monster);
 	
 	foreach my $caster (@$playersList, @$slavesList) {
@@ -737,6 +737,7 @@ sub get_dance_position {
 	my ($slave, $target) = @_;
 	my ($dy, $dx);
 
+	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 	my $my_pos = calcPosition($slave);
 	my $target_pos = calcPosition($target);
 
@@ -2512,18 +2513,6 @@ sub manualMove {
 	main::ai_route($field->baseName, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
-sub canReachMeleeAttack {
-	my ($actor_pos, $target_pos) = @_;
-
-	my ($diag, $orto) = Utils::specifiedBlockDistance($actor_pos, $target_pos);
-
-	if (($diag == 0 && $orto <= 2) || ($diag <= 1 && $orto == 0)) {
-		return 1;
-	} else {
-		return 0;
-	}
-}
-
 ##
 # meetingPosition(actor, actorType, target_actor, attackMaxDistance, runFromTargetActive)
 # actor: current object.
@@ -2553,10 +2542,10 @@ sub meetingPosition {
 		$my_solution = $char->{solution};
 		$timeActorFinishMove = $char->{time_move_calc};
 	} else {
-		$my_solution = Utils::get_client_solution($field, \%myPos, \%myPosTo);
+		$my_solution = get_client_solution($field, \%myPos, \%myPosTo);
 
 		# Calculate the time actor will need to finish moving from pos to pos_to
-		$timeActorFinishMove = Utils::calcTimeFromSolution($my_solution, $mySpeed);
+		$timeActorFinishMove = calcTimeFromSolution($my_solution, $mySpeed);
 	}
 	
 	my $realMyPos;
@@ -2566,7 +2555,7 @@ sub meetingPosition {
 		$realMyPos->{y} = $myPosTo{y};
 	# Actor is currently moving
 	} else {
-		my $steps_walked = Utils::calcStepsWalkedFromTimeAndSolution($my_solution, $mySpeed, $timeSinceActorMoved);
+		my $steps_walked = calcStepsWalkedFromTimeAndSolution($my_solution, $mySpeed, $timeSinceActorMoved);
 		$realMyPos->{x} = $my_solution->[$steps_walked]{x};
 		$realMyPos->{y} = $my_solution->[$steps_walked]{y};
 	}
@@ -2583,10 +2572,10 @@ sub meetingPosition {
 	my $targetSpeed = ($target->{walk_speed} || 0.12);
 	my $timeSinceTargetMoved = time - $target->{time_move};
 	
-	my $target_solution = Utils::get_client_solution($field, \%targetPos, \%targetPosTo);
+	my $target_solution = get_client_solution($field, \%targetPos, \%targetPosTo);
 
 	# Calculate the time target will need to finish moving from pos to pos_to
-	my $timeTargetFinishMove = Utils::calcTimeFromSolution($target_solution, $targetSpeed);
+	my $timeTargetFinishMove = calcTimeFromSolution($target_solution, $targetSpeed);
 
 	my $target_moving;
 	my $realTargetPos;
@@ -2601,7 +2590,7 @@ sub meetingPosition {
 	# Target is currently moving
 	} else {
 		$target_moving = 1;
-		$targetCurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $timeSinceTargetMoved);
+		$targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $timeSinceTargetMoved);
 		$realTargetPos->{x} = $target_solution->[$targetCurrentStep]{x};
 		$realTargetPos->{y} = $target_solution->[$targetCurrentStep]{y};
 		
@@ -2620,8 +2609,8 @@ sub meetingPosition {
 		if ($targetPos{x} == $realTargetPos->{x} && $targetPos{y} == $realTargetPos->{y}) {
 			$target_time_to_temp = 0;
 		} else {
-			my $target_temp_solution = Utils::get_client_solution($field, \%targetPos, $realTargetPos);
-			$target_time_to_temp = Utils::calcTimeFromSolution($target_temp_solution, $targetSpeed);
+			my $target_temp_solution = get_client_solution($field, \%targetPos, $realTargetPos);
+			$target_time_to_temp = calcTimeFromSolution($target_temp_solution, $targetSpeed);
 		}
 		my $time_since_completed_last_cell = ($timeSinceTargetMoved - $target_time_to_temp);
 		
@@ -2641,7 +2630,7 @@ sub meetingPosition {
 				if ($steps_count == 1) {
 					$temp_time_since_completed_last_cell = $time_since_completed_last_cell;
 				}
-				my $time_to_get_here_from_last_cell = Utils::calcTime(\%last_pos, \%targetPosInStep, $targetSpeed);
+				my $time_to_get_here_from_last_cell = calcTime(\%last_pos, \%targetPosInStep, $targetSpeed);
 				
 				my $time_I_stayed_in_last_step = ($time_to_get_here_from_last_cell - $temp_time_since_completed_last_cell);
 				
@@ -2739,10 +2728,10 @@ sub meetingPosition {
 		$masterSpeed = ($master->{walk_speed} || 0.12);
 		$timeSinceMasterMoved = time - $master->{time_move};
 	
-		$master_solution = Utils::get_client_solution($field, \%masterPos, \%masterPosTo);
+		$master_solution = get_client_solution($field, \%masterPos, \%masterPosTo);
 
 		# Calculate the time master will need to finish moving from pos to pos_to
-		my $timeMasterFinishMove = Utils::calcTimeFromSolution($master_solution, $masterSpeed);
+		my $timeMasterFinishMove = calcTimeFromSolution($master_solution, $masterSpeed);
 
 		# master has finished moving
 		if ($timeSinceMasterMoved >= $timeMasterFinishMove) {
@@ -2752,7 +2741,7 @@ sub meetingPosition {
 		# master is currently moving
 		} else {
 			$master_moving = 1;
-			my $master_CurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $timeSinceMasterMoved);
+			my $master_CurrentStep = calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $timeSinceMasterMoved);
 			$realMasterPos->{x} = $master_solution->[$master_CurrentStep]{x};
 			$realMasterPos->{y} = $master_solution->[$master_CurrentStep]{y};
 		}
@@ -2813,7 +2802,7 @@ sub meetingPosition {
 			$max_pathfinding_dist = $possible_target_pos->{myDistToTargetPosInStep} + 1;
 		}
 
-		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = Utils::getSquareEdgesFromCoord($field, $possible_target_pos->{targetPosInStep}, $max_pathfinding_dist);
+		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = getSquareEdgesFromCoord($field, $possible_target_pos->{targetPosInStep}, $max_pathfinding_dist);
 
 		foreach my $distance ($min_destination_dist..$max_destination_dist) {
 
@@ -2850,11 +2839,11 @@ sub meetingPosition {
 			my $dist;
 			if ($field->checkLOS($realMyPos, $spot, 0)) {
 				$dist = blockDistance($realMyPos, $spot);
-				next unless ($dist <= $max_path_dist);
 				$time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
+				
 			} else {
 				my $solution = [];
-				$dist = new PathFinding(
+				my $run = new PathFinding(
 					field => $field,
 					start => $realMyPos,
 					dest => $spot,
@@ -2866,13 +2855,15 @@ sub meetingPosition {
 					min_y => $spot_info->{min_pathfinding_y},
 					max_y => $spot_info->{max_pathfinding_y}
 				)->run($solution);
-				next unless ($dist >= 0 && $dist <= $max_path_dist);
-				$time_actor_to_get_to_spot = Utils::calcTimeFromSolution($solution, $mySpeed);
+				next unless ($run >= 0);
+				my $dist = $run-1;
+				$time_actor_to_get_to_spot = calcTimeFromSolution($solution, $mySpeed);
 			}
+			next unless ($dist <= $max_path_dist);
 			
 			my $total_time = ($timeSinceTargetMoved+$time_actor_to_get_to_spot);
 			my $targetPosInStep;
-			my $temp_targetCurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);
+			my $temp_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);
 			$targetPosInStep->{x} = $target_solution->[$temp_targetCurrentStep]{x};
 			$targetPosInStep->{y} = $target_solution->[$temp_targetCurrentStep]{y};
 			
@@ -2883,14 +2874,14 @@ sub meetingPosition {
 			next unless ($dist_to_target >= $min_destination_dist || $runFromTargetActive);
 			
 			# 3. It must have LOS to the target ($targetPosInStep) if that is active and we are ranged or must be reacheable from melee
-			next unless (Utils::canAttack($field, $spot, $targetPosInStep, $attackCanSnipe, $attackMaxDistance) == 1);
+			next unless (canAttack($field, $spot, $targetPosInStep, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) == 1);
 
 			# 2. It must be within $followDistanceMax of MasterPos, if we have a master.
 			if ($realMasterPos) {
 				my $masterPosNow;
 				if ($master_moving) {
 					my $totalTime = $timeSinceMasterMoved + $time_actor_to_get_to_spot;
-					my $master_CurrentStep = Utils::calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $totalTime);
+					my $master_CurrentStep = calcStepsWalkedFromTimeAndSolution($master_solution, $masterSpeed, $totalTime);
 					$masterPosNow->{x} = $master_solution->[$master_CurrentStep]{x};
 					$masterPosNow->{y} = $master_solution->[$master_CurrentStep]{y};
 				} else {
@@ -2901,7 +2892,7 @@ sub meetingPosition {
 			}
 			
 			if ($runFromTargetActive) {
-				my $time_target_to_get_to_spot = Utils::calcTimeFromPathfinding($field, $realTargetPos, $spot, $targetSpeed);
+				my $time_target_to_get_to_spot = calcTimeFromPathfinding($field, $realTargetPos, $spot, $targetSpeed);
 				if ($time_actor_to_get_to_spot > $time_target_to_get_to_spot) {
 					next;
 				}
@@ -3484,7 +3475,7 @@ sub updateDamageTables {
 				$monster->{atkMiss}++;
 			} else {
 				if ($config{attackUpdateMonsterPos} && ($monster->{pos}{x} != $monster->{pos_to}{x} || $monster->{pos}{y} != $monster->{pos_to}{y})) {
-					my $new_monster_pos = calcPosition($monster);
+					my $new_monster_pos = calcPosFromPathfinding($field, $monster);
 					$monster->{pos} = $new_monster_pos;
 					$monster->{pos_to} = $new_monster_pos;
 					$monster->{time_move} = time;
@@ -3511,117 +3502,6 @@ sub updateDamageTables {
 
 
 		}
-
-=pod
-	} elsif ($targetID eq $accountID) {
-		if ((my $monster = $monstersList->getByID($sourceID))) {
-			# Monster attacks you
-			$monster->{dmgFrom} += $damage;
-			$monster->{dmgToYou} += $damage;
-			if ($damage == 0) {
-				$monster->{missedYou}++;
-			}
-			$monster->{attackedYou}++ unless (
-					scalar(keys %{$monster->{dmgFromPlayer}}) ||
-					scalar(keys %{$monster->{dmgToPlayer}}) ||
-					$monster->{missedFromPlayer} ||
-					$monster->{missedToPlayer}
-				);
-			$monster->{target} = $targetID;
-
-			if (AI::state == 2) {
-				my $teleport = 0;
-				if (mon_control($monster->{name},$monster->{nameID})->{teleport_auto} == 2 && $damage){
-					message TF("Teleporting due to attack from %s\n",
-						$monster->{name}), "teleport";
-					$teleport = 1;
-
-				} elsif ($config{teleportAuto_deadly} && $damage >= $char->{hp}
-				      && !$char->statusActive('EFST_ILLUSION')) {
-					message TF("Next %d dmg could kill you. Teleporting...\n",
-						$damage), "teleport";
-					$teleport = 1;
-
-				} elsif ($config{teleportAuto_maxDmg} && $damage >= $config{teleportAuto_maxDmg}
-				      && !$char->statusActive('EFST_ILLUSION')
-				      && !($config{teleportAuto_maxDmgInLock} && $field->baseName eq $config{lockMap})) {
-					message TF("%s hit you for more than %d dmg. Teleporting...\n",
-						$monster->{name}, $config{teleportAuto_maxDmg}), "teleport";
-					$teleport = 1;
-
-				} elsif ($config{teleportAuto_maxDmgInLock} && $field->baseName eq $config{lockMap}
-				      && $damage >= $config{teleportAuto_maxDmgInLock}
-				      && !$char->statusActive('EFST_ILLUSION')) {
-					message TF("%s hit you for more than %d dmg in lockMap. Teleporting...\n",
-						$monster->{name}, $config{teleportAuto_maxDmgInLock}), "teleport";
-					$teleport = 1;
-
-				} elsif (AI::inQueue("sitAuto") && $config{teleportAuto_attackedWhenSitting}
-				      && $damage > 0) {
-					message TF("%s attacks you while you are sitting. Teleporting...\n",
-						$monster->{name}), "teleport";
-					$teleport = 1;
-
-				} elsif ($config{teleportAuto_totalDmg}
-				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmg}
-				      && !$char->statusActive('EFST_ILLUSION')
-				      && !($config{teleportAuto_totalDmgInLock} && $field->baseName eq $config{lockMap})) {
-					message TF("%s hit you for a total of more than %d dmg. Teleporting...\n",
-						$monster->{name}, $config{teleportAuto_totalDmg}), "teleport";
-					$teleport = 1;
-
-				} elsif ($config{teleportAuto_totalDmgInLock} && $field->baseName eq $config{lockMap}
-				      && $monster->{dmgToYou} >= $config{teleportAuto_totalDmgInLock}
-				      && !$char->statusActive('EFST_ILLUSION')) {
-					message TF("%s hit you for a total of more than %d dmg in lockMap. Teleporting...\n",
-						$monster->{name}, $config{teleportAuto_totalDmgInLock}), "teleport";
-					$teleport = 1;
-
-				} elsif ($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) {
-					message TF("%s hit you when your HP is too low. Teleporting...\n",
-						$monster->{name}), "teleport";
-					$teleport = 1;
-
-				} elsif ($config{attackChangeTarget} && ((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
-				   && AI::args->{attackID} && AI::args()->{attackID} ne $sourceID) {
-					my $attackTarget = Actor::get(AI::args->{attackID});
-					my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
-					if (!$attackTarget->{dmgToYou} && !$attackTarget->{dmgFromYou} && distance($monster->{pos_to}, calcPosition($char)) <= $attackSeq->{attackMethod}{distance}) {
-						my $ignore = 0;
-						# Don't attack ignored monsters
-						if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
-							$ignore = 1 if ( ($control->{attack_auto} == -1)
-								|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-								|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-								|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-								|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-								|| ($control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
-								);
-						}
-						if (!$ignore) {
-							# Change target to closer aggressive monster
-							message TF("Change target to aggressive : %s (%s)\n", $monster->name, $monster->{binID});
-							stopAttack();
-							AI::dequeue;
-							AI::dequeue if (AI::action eq "route");
-							AI::dequeue;
-							attack($sourceID);
-						}
-					}
-
-				} elsif (AI::action eq "attack" && mon_control($monster->{name},$monster->{nameID})->{attack_auto} == 3
-					&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
-
-					# Mob-training, stop attacking the monster if it has been attacking you
-					message TF("%s (%s) has been provoked, searching another monster\n", $monster->{name}, $monster->{binID});
-					stopAttack();
-					AI::dequeue();
-				}
-
-				useTeleport(1, undef, 1) if ($teleport);
-			}
-		}
-=cut
 
 	} elsif ((my $monster = $monstersList->getByID($sourceID))) {
 		if (my $player = ($accountID eq $targetID && $char) || $playersList->getByID($targetID) || $slavesList->getByID($targetID)) {
@@ -4078,6 +3958,7 @@ sub getBestTarget {
 	my $playerDist = $config{'attackMinPlayerDistance'} || 1;
 
 	my @noLOSMonsters;
+	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 	my $myPos = calcPosition($char);
 	my ($highestPri, $smallestDist, $bestTarget);
 
@@ -4085,6 +3966,7 @@ sub getBestTarget {
 
 	foreach (@{$possibleTargets}) {
 		my $monster = $monsters{$_};
+		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 		my $pos = calcPosition($monster);
 		next if (positionNearPlayer($pos, $playerDist)
 			|| positionNearPortal($pos, $portalDist)
@@ -4126,6 +4008,7 @@ sub getBestTarget {
 			# more time and CPU resources, so, we use rough solution with priority and distance comparison
 
 			my $monster = $monsters{$_};
+			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 			my $pos = calcPosition($monster);
 			my $name = lc $monster->{name};
 			my $dist = adjustedBlockDistance($myPos, $pos);
@@ -4741,6 +4624,8 @@ sub checkSelfCondition {
 	return 0 if ($config{$prefix."_whenIdle"} && !AI::isIdle);
 
 	return 0 if ($config{$prefix."_whenNotIdle"} && AI::isIdle);
+	
+	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here in these checks?
 
 	# *_manualAI 0 = auto only
 	# *_manualAI 1 = manual only
@@ -5268,6 +5153,8 @@ sub checkPlayerCondition {
 
 sub checkMonsterCondition {
 	my ($prefix, $monster) = @_;
+	
+	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime in these checks?
 
 	if ($config{$prefix . "_hp"}) {
 		if($config{$prefix . "_hp"} =~ /(\d+)%$/) {
