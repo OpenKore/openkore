@@ -2883,14 +2883,7 @@ sub meetingPosition {
 			next unless ($dist_to_target >= $min_destination_dist || $runFromTargetActive);
 			
 			# 3. It must have LOS to the target ($targetPosInStep) if that is active and we are ranged or must be reacheable from melee
-			if ($ranged) {
-				next unless ($field->checkLOS($spot, $targetPosInStep, $attackCanSnipe));
-			} elsif ($melee) {
-				next unless (canReachMeleeAttack($spot, $targetPosInStep));
-				if (blockDistance($spot, $targetPosInStep) == 2) {
-					next unless ($field->checkLOS($spot, $targetPosInStep, $attackCanSnipe));
-				}
-			}
+			next unless (Utils::canAttack($field, $spot, $targetPosInStep, $attackCanSnipe, $attackMaxDistance) == 1);
 
 			# 2. It must be within $followDistanceMax of MasterPos, if we have a master.
 			if ($realMasterPos) {

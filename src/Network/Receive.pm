@@ -1795,9 +1795,20 @@ sub actor_display {
 	#  - server sending us false actors
 	#  - actor packets not being parsed correctly
 	if (defined $field && ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y}))) {
-		warning TF("Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
+		warning TF("Ignoring actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
 		return;
 	}
+	
+	if (($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0)) {
+		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
+		return;
+	}
+	
+	if (blockDistance(\%coordsFrom, \%coordsTo) > ($config{clientSight} + $config{clientSight_removeBeyond})) {
+		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
+		return;
+	}
+	
 =pod
 	# Zealotus bug
 	if ($args->{type} == 1200) {
@@ -1994,7 +2005,7 @@ sub actor_display {
 		my $realActorPos = calcPosition($actor);
 		my $realActorDist = blockDistance($realMyPos, $realActorPos);
 		
-		my $max_sight_base = $config{clientSight} + 2;
+		my $max_sight_base = $config{clientSight};
 		my $max_sight_extra = $config{clientSight_removeBeyond};
 		
 		my $max_sight = $max_sight_base + $max_sight_extra;

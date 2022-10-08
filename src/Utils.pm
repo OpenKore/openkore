@@ -223,6 +223,32 @@ sub getClosestAdjacentCell {
 	return $best_block;
 }
 
+# Returns:
+# -1: No LOS
+#  0: out of range
+#  1: sucess
+sub canAttack {
+	my ($field, $pos1, $pos2, $attackCanSnipe, $range) = @_;
+	
+	return -1 unless ($field->checkLOS($pos1, $pos2, $attackCanSnipe));
+	
+	my $cDist = getClientDist($pos1, $pos2);
+	return 0 unless ($cDist <= $range);
+	
+	return 1;
+}
+
+sub getClientDist {
+	my ($pos1, $pos2) = @_;
+	my $xD = abs($pos1->{x} - $pos2->{x});
+	my $yD = abs($pos1->{y} - $pos2->{y});
+	my $temp_dist = sqrt(($xD*$xD) + ($yD*$yD));
+	$temp_dist -= 0.0625;
+	$temp_dist = 0 if($temp_dist < 0);
+	$temp_dist = int($temp_dist);
+	return $temp_dist
+}
+
 ##
 # calcTime(pos, pos_to, speed)
 #
