@@ -5359,7 +5359,7 @@ sub character_moves {
 	$char->{time_move} = time;
 	
 	my $speed = ($char->{walk_speed} || 0.12);
-	my $my_solution = get_client_solution($field, $char->{pos}, $char->{pos_to});
+	my $my_solution = get_solution($field, $char->{pos}, $char->{pos_to});
 	my $time = calcTimeFromSolution($my_solution, $speed);
 	$char->{solution} = $my_solution;
 	$char->{time_move_calc} = $time;

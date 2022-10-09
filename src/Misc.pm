@@ -29,7 +29,6 @@ use Compress::Zlib;
 use base qw(Exporter);
 use utf8;
 use Math::Trig;
-use Math::Trig qw/pi pi2 pip2 pip4/;
 
 use Globals;
 use Log qw(message warning error debug);
@@ -2583,7 +2582,7 @@ sub meetingPosition {
 		$master = $char;
 		$masterPos = 1;
 
-		$my_solution = get_client_solution($field, $actor->{pos}, $actor->{pos_to});
+		$my_solution = get_solution($field, $actor->{pos}, $actor->{pos_to});
 		$timeActorFinishMove = calcTimeFromSolution($my_solution, $mySpeed);
 	}
 
@@ -2606,7 +2605,7 @@ sub meetingPosition {
 	my $targetSpeed = ($target->{walk_speed} || 0.12);
 	my $timeSinceTargetMoved = time - $target->{time_move};
 
-	my $target_solution = get_client_solution($field, $target->{pos}, $target->{pos_to});
+	my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
 
 	# Calculate the time target will need to finish moving from pos to pos_to
 	my $timeTargetFinishMove = calcTimeFromSolution($target_solution, $targetSpeed);
@@ -2654,7 +2653,7 @@ sub meetingPosition {
 		$masterSpeed = ($master->{walk_speed} || 0.12);
 		$timeSinceMasterMoved = time - $master->{time_move};
 
-		$master_solution = get_client_solution($field, $master->{pos}, $master->{pos_to});
+		$master_solution = get_solution($field, $master->{pos}, $master->{pos_to});
 
 		# Calculate the time master will need to finish moving from pos to pos_to
 		my $timeMasterFinishMove = calcTimeFromSolution($master_solution, $masterSpeed);
@@ -2663,7 +2662,7 @@ sub meetingPosition {
 		if ($timeSinceMasterMoved >= $timeMasterFinishMove) {
 			$master_moving = 0;
 			$realMasterPos = $master->{pos_to};
-			
+
 		# master is currently moving
 		} else {
 			$master_moving = 1;
@@ -2677,7 +2676,7 @@ sub meetingPosition {
 			$min_destination_dist = $runFromTarget_minStep;
 		}
 	}
-	
+
 	# we can atack from 1 range further than expected on ortogonal only cells
 	my $max_destination_dist = ($attackMaxDistance+1);
 	if ($max_destination_dist >= $config{clientSight}) {
@@ -2690,6 +2689,8 @@ sub meetingPosition {
 	} else {
 		$max_path_dist = $attackRouteMaxPathDistance;
 	}
+	# Add 1 here to account for pos from solution so we don't have to do it multiple times later
+	$max_path_dist += 1;
 
 	my $max_pathfinding_dist = $max_destination_dist+5;
 
@@ -2735,33 +2736,15 @@ sub meetingPosition {
 
 			next if (positionNearPortal($spot, $config{'attackMinPortalDistance'}));
 
-
 			# 5. It must be reachable and have at max $max_path_dist of route distance to it from our current position.
 			my $time_actor_to_get_to_spot;
-			my $dist;
-			if ($field->checkLOS($realMyPos, $spot, 0)) {
-				$dist = blockDistance($realMyPos, $spot);
-				$time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
 
-			} else {
-				my $solution = [];
-				my $run = new PathFinding(
-					field => $field,
-					start => $realMyPos,
-					dest => $spot,
-					avoidWalls => 0,
-					randomFactor => 0,
-					useManhattan => 1,
-					min_x => $spot_info->{min_pathfinding_x},
-					max_x => $spot_info->{max_pathfinding_x},
-					min_y => $spot_info->{min_pathfinding_y},
-					max_y => $spot_info->{max_pathfinding_y}
-				)->run($solution);
-				next unless ($run >= 0);
-				my $dist = $run-1;
-				$time_actor_to_get_to_spot = calcTimeFromSolution($solution, $mySpeed);
-			}
-			next unless ($dist <= $max_path_dist);
+			my $solution = get_solution($field, $realMyPos, $spot);
+			next if (scalar @{$solution} == 0);
+			next if (scalar @{$solution} > $max_path_dist);
+
+			$time_actor_to_get_to_spot = calcTimeFromSolution($solution, $mySpeed);
+
 
 			my $total_time = ($timeSinceTargetMoved+$time_actor_to_get_to_spot);
 			my $temp_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);

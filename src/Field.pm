@@ -338,6 +338,9 @@ sub closestWalkableSpot {
 
 # Bresenham's algorithm
 #
+# Used for checking if there are no obstacles in the direct line of sight of 2 actors
+# Do not use for checking if you can walk between 2 cells, use checkPathFree for that
+#
 # Reference: hercules src\map\path.c path_search_long
 sub checkLOS {
 	my ($self, $from, $to, $can_snipe) = @_;
@@ -418,6 +421,50 @@ sub checkLOS {
 	return 1;
 }
 
+# Used for checking if there are no obstacles in a given walking solution
+#
+# get_client_solution already does this in the A* algorithm itself, so there is no need to check solutions made by it
+# get_client_easy_solution does not check for obstacles, so all solutions made by it *should* be checked when certainty is necessary
+#
+# Do not use for checking if you can attack between 2 cells, use checkLOS for that
+#
+# Reference: hercules src\map\path.c path_search - flag&1
+sub checkPathFree {
+	my ($self, $solution) = @_;
+
+	return 0 unless ($self->isWalkable($solution->[0]{x}, $solution->[0]{y}));
+
+	my %current_pos;
+	my %next_pos;
+
+	my $stepType = 0; # 1 - vertical or horizontal; 2 - diagonal
+
+	my $last = $#{$solution};
+
+	foreach my $current_step (0..$last) {
+		%current_pos = ( x => $solution->[$current_step]{x}, y => $solution->[$current_step]{y} );
+
+		my $next_step = $current_step+1;
+		%next_pos = ( x => $solution->[$next_step]{x}, y => $solution->[$next_step]{y} );
+		return 0 unless ($self->isWalkable($next_pos{x}, $next_pos{y}));
+
+		$stepType = 0;
+		if ($current_pos{x} != $next_pos{x}) {
+			$stepType++;
+		}
+		if ($current_pos{y} != $next_pos{y}) {
+			$stepType++;
+		}
+
+		if ($stepType == 2) {
+			return 0 unless ($self->isWalkable($current_pos{x}, $next_pos{y}));
+			return 0 unless ($self->isWalkable($next_pos{x}, $current_pos{y}));
+		}
+
+		return 1 if ($next_step == $last);
+	}
+}
+
 # Checks wheter you can send a move command from $from to $to
 #
 # Reference: hercules src\map\unit.c unit_walk_toxy
@@ -425,37 +472,37 @@ sub checkLOS {
 # Todo this should be used in a lot more places like Task::Route and Follow
 sub canMove {
 	my ($self, $from, $to) = @_;
-	
+
 	my $dist = blockDistance($from, $to);
-	
+
 	# This 17 is actually set at
 	# hercules conf\map\battle\client.conf max_walk_path (which is by default 17, can be higher)
 	if ($dist > 17) {
 		return 0;
 	}
-	
+
 	# If there are no obstacles return success
-	my $LOS = $self->checkLOS($from, $to, 0);
-	if ($LOS) {
+	my $easy_solution = get_client_easy_solution($from, $to);
+	if ($self->checkPathFree($easy_solution)) {
 		return 1;
 	}
-	
+
 	# If there are obstacles and OFFICIAL_WALKPATH is defined (which is by default) then calculate a client pathfinding
 	my $solution = get_client_solution($self, $from, $to);
 	my $dist_path = scalar @{$solution};
-	
+
 	if ($dist_path == 0) {
 		return 0;
 	}
-	
+
 	# Pathfinding always returns the original cell in the solution, so remove 1 from it
 	$dist_path -= 1;
-	
+
 	# If there are obstacles and the path is walkable the max solution dist acceptable is 14
 	if ($dist_path > 14) {
 		return 0;
 	}
-	
+
 	return 1;
 }
 
