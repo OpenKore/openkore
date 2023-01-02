@@ -189,9 +189,15 @@ sub bulkEquip {
 			next unless ($char->{equipment} && $char->{equipment}{$_});
 			$char->{equipment}{$_}->unequip();
 		} else {
-			$item = Actor::Item::get($list->{$_}, $skipIndex, 1);
-
-			next unless ($item && $char->{equipment} && (!$char->{equipment}{$_} || $char->{equipment}{$_}{name} ne $item->{name}));
+			my $eqName = $list->{$_};
+			
+			if ($eqName =~ /^\d{3,}$/) {
+				$item = $char->inventory->getByNameID($eqName, 1);
+			} else {
+				$item = $char->inventory->getByName($eqName, 1);
+			}
+			
+			next unless ($item && $item->{identified} && $char->{equipment} && (!$char->{equipment}{$_} || $char->{equipment}{$_}{name} ne $item->{name}));
 
 			$item->equipInSlot($_);
 			

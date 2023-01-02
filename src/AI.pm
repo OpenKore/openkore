@@ -39,6 +39,7 @@ our @EXPORT = (
 	ai_follow
 	ai_partyfollow
 	ai_getAggressives
+	ai_slave_getAggressives
 	ai_getPlayerAggressives
 	ai_getMonstersAttacking
 	ai_mapRoute_searchStep
@@ -116,38 +117,43 @@ sub dequeue {
 }
 
 sub queue {
-	unshift @ai_seq, shift;
+	my $action = shift;
 	my $args = shift;
+	unshift(@ai_seq, $action);
 	unshift @ai_seq_args, ((defined $args) ? $args : {});
 }
 
 sub clear {
-	if (@_) {
-		my $changed;
-		for (my $i = 0; $i < @ai_seq; $i++) {
-			if (defined binFind(\@_, $ai_seq[$i])) {
-				delete $ai_seq[$i];
-				delete $ai_seq_args[$i];
-				$changed = 1;
-			}
-		}
-
-		if ($changed) {
-			my (@new_seq, @new_args);
-			for (my $i = 0; $i < @ai_seq; $i++) {
-				if (defined $ai_seq[$i]) {
-					push @new_seq, $ai_seq[$i];
-					push @new_args, $ai_seq_args[$i];
-				}
-			}
-			@ai_seq = @new_seq;
-			@ai_seq_args = @new_args;
-		}
-
-	} else {
+	my $total = scalar @_;
+	
+	# If no arg was given clear all AI queue
+	if ($total == 0) {
 		undef @ai_seq;
 		undef @ai_seq_args;
 		undef %ai_v;
+	
+	# If 1 arg was given find it in the queue
+	} elsif ($total == 1) {
+		my $wanted_action = shift;
+		my $seq_index;
+		foreach my $i (0..$#ai_seq) {
+			next unless ($ai_seq[$i] eq $wanted_action);
+			$seq_index = $i;
+			last;
+		}
+		return unless (defined $seq_index); # return unless we found the action in the queue
+		
+		splice(@ai_seq, $seq_index , 1); # Splice it out of @ai_seq
+		splice(@ai_seq_args, $seq_index , 1);  # Splice it out of @ai_seq_args
+		# When there are multiple of the same action (route, attack, route) the splices of remove the first one
+		# So recursively call AI::clear again with the same action until none is found
+		AI::clear($wanted_action);
+	
+	# If more than 1 arg was given recursively call AI::clear for each one
+	} else {
+		foreach (@_) {
+			AI::clear($_);
+		}
 	}
 }
 
@@ -282,7 +288,13 @@ sub ai_partyfollow {
 			}
 
 			AI::clear("move", "route", "mapRoute");
-			ai_route($ai_v{master}{map_name}, $ai_v{master}{x}, $ai_v{master}{y}, distFromGoal => $config{followDistanceMin});
+			ai_route(
+				$ai_v{master}{map_name},
+				$ai_v{master}{x},
+				$ai_v{master}{y},
+				distFromGoal => $config{followDistanceMin},
+				isFollow => 1
+			);
 
 			my $followIndex = AI::findAction("follow");
 			if (defined $followIndex) {
@@ -317,15 +329,9 @@ sub ai_getAggressives {
 		# Never attack monsters that we failed to get LOS with
 		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 		next if (!timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout}));
+		next if (!Misc::checkMonsterCleanness($ID));
 
-		if (($type && ($control->{attack_auto} == 2)) ||
-			(($monster->{dmgToYou} || $monster->{missedYou}) && Misc::checkMonsterCleanness($ID)) ||
-			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty})) &&
-			timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout}))
-		{
-			# Continuing, check whether the forced Agro is really a clean monster;
-			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
-
+		if (Misc::is_aggressive($monster, $control, $type, $party)) {
 			if ($wantArray) {
 				# Function is called in array context
 				push @agMonsters, $ID;
@@ -359,7 +365,7 @@ sub ai_getAggressives {
 # with the 'attack_auto' flag set to 2, will be considered as aggressive.
 # See also the manual for more information about this.
 sub ai_slave_getAggressives {
-	my ($slave, $type) = @_;
+	my ($slave, $type, $party) = @_;
 	my $wantArray = wantarray;
 	my $num = 0;
 	my @agMonsters;
@@ -369,17 +375,12 @@ sub ai_slave_getAggressives {
 		my $ID = $monster->{ID};
 		# Never attack monsters that we failed to get LOS with
 		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+		next if (!timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}));
+		next if (!Misc::slave_checkMonsterCleanness($slave, $ID));
+		my $pos = calcPosition($monster);
+		next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
-		if ((($type && ($control->{attack_auto} == 2)) ||
-			(($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) && Misc::checkMonsterCleanness($ID))) &&
-			timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}))
-		{
-			my $pos = calcPosition($monster);
-			next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
-
-			# Continuing, check whether the forced Agro is really a clean monster;
-			next if (($type && $control->{attack_auto} == 2) && !Misc::checkMonsterCleanness($ID));
-
+		if (Misc::is_aggressive_slave($slave, $monster, $control, $type, $party)) {
 			if ($wantArray) {
 				# Function is called in array context
 				push @agMonsters, $ID;

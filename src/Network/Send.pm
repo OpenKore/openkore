@@ -682,13 +682,21 @@ sub sendRestart {
 
 sub sendStorageAdd {
 	my ($self, $ID, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'storage_item_add', ID => $ID, amount => $amount}));
+	if ($config{storageAuto_type} == 1) {
+		$self->sendToServer($self->reconstruct({switch => 'guild_storage_item_add', ID => $ID, amount => $amount}));
+	} else {
+		$self->sendToServer($self->reconstruct({switch => 'storage_item_add', ID => $ID, amount => $amount}));
+	}
 	debug sprintf("Sent Storage Add: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
 sub sendStorageGet {
 	my ($self, $ID, $amount) = @_;
-	$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', ID => $ID, amount => $amount}));
+	if ($config{storageAuto_type} == 1) {
+		$self->sendToServer($self->reconstruct({switch => 'guild_storage_item_remove', ID => $ID, amount => $amount}));
+	} else {
+		$self->sendToServer($self->reconstruct({switch => 'storage_item_remove', ID => $ID, amount => $amount}));
+	}
 	debug sprintf("Sent Storage Get: %s x $amount\n", unpack('v', $ID)), "sendPacket", 2;
 }
 
@@ -760,11 +768,6 @@ sub sendBuyBulkVender {
 	debug "Sent bulk buy vender: ".(join ', ', map {"$_->{itemIndex} x $_->{amount}"} @$r_array)."\n", "sendPacket";
 }
 
-sub parse_buy_bulk_buyer {
-	my ($self, $args) = @_;
-	@{$args->{items}} = map {{ amount => unpack('v', $_), itemIndex => unpack('x2 v', $_) }} unpack '(a4)*', $args->{itemInfo};
-}
-
 sub reconstruct_buy_bulk_buyer {
     my ($self, $args) = @_;
 	my $packet_size = $self->{buy_bulk_buyer_size} || '(a6)*';
@@ -774,8 +777,12 @@ sub reconstruct_buy_bulk_buyer {
 
 sub sendBuyBulkBuyer {
     my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
+	
+	my $len = 12 + (scalar @{$r_array} * 8);
+	
     $self->sendToServer($self->reconstruct({
         switch => 'buy_bulk_buyer',
+		len => $len,
         buyerID => $buyerID,
         buyingStoreID => $buyingStoreID,
         items => $r_array,
@@ -2384,24 +2391,38 @@ sub sendWarpTele {
 
 sub sendStorageGetToCart {
 	my ($self, $ID, $amount) = @_;
-
-	$self->sendToServer($self->reconstruct({
-		switch => 'storage_to_cart',
-		ID => $ID,
-		amount => $amount,
-	}));
+	if ($config{storageAuto_type} == 1) {
+			$self->sendToServer($self->reconstruct({
+			switch => 'guild_storage_to_cart',
+			ID => $ID,
+			amount => $amount,
+		}));
+	} else {
+		$self->sendToServer($self->reconstruct({
+			switch => 'storage_to_cart',
+			ID => $ID,
+			amount => $amount,
+		}));
+	}
 
 	debug "Sent Storage Get From Cart: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
 }
 
 sub sendStorageAddFromCart {
 	my ($self, $ID, $amount) = @_;
-
-	$self->sendToServer($self->reconstruct({
-		switch => 'cart_to_storage',
-		ID => $ID,
-		amount => $amount,
-	}));
+	if ($config{storageAuto_type} == 1) {
+		$self->sendToServer($self->reconstruct({
+			switch => 'cart_to_guild_storage',
+			ID => $ID,
+			amount => $amount,
+		}));
+	} else {
+		$self->sendToServer($self->reconstruct({
+			switch => 'cart_to_storage',
+			ID => $ID,
+			amount => $amount,
+		}));
+	}
 
 	debug "Sent Storage Add From Cart: " . getHex($ID) . " x $amount\n", "sendPacket", 2;
 }
@@ -3464,6 +3485,38 @@ sub sendInventoryExpansionRejected {
 sub sendPing {
 	my ($self, $args) = @_;
 	$self->sendToServer($self->reconstruct({ switch => 'ping' }));
+}
+
+# 0A5A - PACKET_CZ_MACRO_DETECTOR_DOWNLOAD
+# Let Server know that we already downloaded Captcha Image
+sub sendMacroDetectorDownload {
+	my ($self) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'macro_detector_download',
+	}));
+}
+
+# 0A5C - PACKET_CZ_MACRO_DETECTOR_ANSWER
+# Send Captcha Answer
+sub sendMacroDetectorAnswer {
+	my ($self, $answer) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'macro_detector_answer',
+		answer => $answer,
+	}));
+}
+
+# 0A69 - PACKET_CZ_CAPTCHA_PREVIEW_REQUEST
+# Request to preview a captcha (privilege is required)
+sub sendCaptchaPreviewRequest {
+	my ($self, $captcha_key) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'captcha_preview_request',
+		captcha_key => $captcha_key,
+	}));
 }
 
 1;

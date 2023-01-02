@@ -519,6 +519,8 @@
 09A6 Banking check
 09A8 Banking deposit
 09AA Banking withdraw
+09BB Guild Storage Opened
+09BF Guild Storage Closed
 09AD Bargain Sale Item Info
 09B2 Bargain Sale Selling
 09B3 Bargain Sale Close
@@ -603,6 +605,16 @@
 0A4B Map Changed
 0A4C Map Server Changed
 0A51 Rodex Character Name Received
+0A53 Captcha Upload Window
+0A55 Captcha Upload Status
+0A57 Macro Reporter Status
+0A58 Macro Detector Image Info
+0A59 Macro Detector Image (captcha)
+0A5B Macro Detector Image UI
+0A5D Macro Detector Status
+0A6A Captcha Preview Image Info
+0A6B Captcha Preview Image Info
+0A6D Macro Reporter Player List
 0A6F Message String (stringtable)
 0A7B EAC key
 0A7D Rodex Mail List
@@ -951,6 +963,10 @@
 09D4 Sell or Buy Complete
 09D6 Buy bulk market
 09D8 Market close
+09E1 Guild Storage Item Add
+09E2 Guild Storage Item Remove
+09E3 Cart to Guild Storage Item Add
+09E4 Guild Storage Item Remove to Cart
 09F1 Rodex Request Zeny
 09F3 Rodex Request Item
 09FB Pet Evolution
@@ -982,6 +998,13 @@
 0A39 Char Create Request
 0A46 Stylist UI Style Change
 0A49 Private Airship Request
+0A52 Captcha Register Image
+0A54 Captcha Register Image
+0A56 Macro Reporter Info
+0A5A Macro Detector Download Done
+0A5C Macro Detector captcha answer
+0A69 Preview Captcha Image
+0A6C Macro Reporter Select Area
 0A68 Open User Interface Request User Interface (open system)
 0A6E Rodex Mail Send
 0A75 Account Server Login (encrypted)

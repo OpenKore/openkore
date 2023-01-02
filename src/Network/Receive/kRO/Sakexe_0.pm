@@ -578,6 +578,8 @@ sub new {
 		'09A6' => ['banking_check', 'V2 v',[qw(zeny zeny2 reason)]],
 		'09A8' => ['banking_deposit', 'v V2 V',[qw(reason zeny zeny2 balance)]],
 		'09AA' => ['banking_withdraw', 'v V2 V',[qw(reason zeny zeny2 balance)]],
+		'09BB' => ['storage_opened'],
+		'09BF' => ['storage_closed'],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
 		'09CD' => ['message_string', 'v V', [qw(index param)]],
@@ -647,6 +649,16 @@ sub new {
 		'0A4B' => ['map_change', 'Z16 v2', [qw(map x y)]], # ZC_AIRSHIP_MAPMOVE
 		'0A4C' => ['map_changed', 'Z16 v2 a4 v', [qw(map x y IP port)]], # ZC_AIRSHIP_SERVERMOVE
 		'0A51' => ['rodex_check_player', 'V v2 Z24', [qw(char_id class base_level name)]],   # 34
+		'0A53' => ['captcha_upload_request', 'Z4 V', [qw(captcha_key flag)]],
+		'0A55' => ['captcha_upload_request_status'],
+		'0A57' => ['macro_reporter_status', 'V', [qw(status)]],
+		'0A58' => ['macro_detector', 'v Z4', [qw(image_size captcha_key)]],
+		'0A59' => ['macro_detector_image', 'v Z4 a*', [qw(len captcha_key captcha_image)]],
+		'0A5B' => ['macro_detector_show', 'c V', [qw(remaining_chances remaining_time)]],
+		'0A5D' => ['macro_detector_status', 'V', [qw(status)]],
+		'0A6A' => ['captcha_preview', 'V v Z4', [qw(flag image_size captcha_key)]],
+		'0A6B' => ['captcha_preview_image', 'v Z4 a*', [qw(len captcha_key captcha_image)]],
+		'0A6D' => ['macro_reporter_select', 'v a*', [qw(len account_list)]],
 		'0A7B' => ['EAC_key'],
 		'0A7D' => ['rodex_mail_list', 'v C3 a*', [qw(len type amount isEnd mailList)]],   # -1
 		'0A82' => ['guild_expulsion', 'Z40 a4', [qw(message charID)]], # 46
@@ -1311,6 +1323,8 @@ sub skill_use_location {
 	my $source = Actor::get($sourceID);
 	my $skillName = Skill->new(idn => $skillID)->getName();
 	my $disp = skillUseLocation_string($source, $skillName, $args);
+	
+	delete $source->{casting};
 
 	# Print skill use message
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
@@ -1345,6 +1359,7 @@ sub skill_used_no_damage {
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 	if ($args->{sourceID} eq $accountID) {
 		my $pos = calcPosition($char);
+		$char->{pos} = $pos;
 		$char->{pos_to} = $pos;
 		$char->{time_move} = 0;
 		$char->{time_move_calc} = 0;

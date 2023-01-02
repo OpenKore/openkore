@@ -38,6 +38,55 @@ use Utils::PathFinding;
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
+  
+	if (
+		   (AI::action eq "attack" && $args->{ID})
+		|| (AI::action eq "route" && AI::action (1) eq "attack" && $args->{attackID})
+		|| (AI::action eq "move" && AI::action (2) eq "attack" && $args->{attackID})
+	) {
+		my $ID;
+		my $ataqArgs;
+		if (AI::action eq "attack") {
+			$ID = $args->{ID};
+			$ataqArgs = AI::args(0);
+		} else {
+			if (AI::action(1) eq "attack") {
+				$ataqArgs = AI::args(1);
+				
+			} elsif (AI::action(2) eq "attack") {
+				$ataqArgs = AI::args(2);
+			}
+			$ID = $args->{attackID};
+		}
+		
+		if (targetGone($ataqArgs, $ID)) {
+			finishAttacking($ataqArgs, $ID);
+			return;
+		} elsif (shouldGiveUp($ataqArgs, $ID)) {
+			giveUp($ataqArgs, $ID);
+			return;
+		}
+		
+		my $target = Actor::get($ID);
+		if ($target) {
+			my $party = $config{'attackAuto_party'} ? 1 : 0;
+			my $target_is_aggressive = is_aggressive($target, undef, 0, $party);
+			my @aggressives = ai_getAggressives(0, $party);
+			if ($config{attackChangeTarget} && !$target_is_aggressive && @aggressives) {
+				my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
+				if ($attackTarget) {
+					$char->sendAttackStop;
+					AI::dequeue while (AI::inQueue("attack"));
+					ai_setSuspend(0);
+					my $new_target = Actor::get($attackTarget);
+					warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
+					$char->attack($attackTarget);
+					AI::Attack::process();
+					return;
+				}
+			}
+		}
+	}
 
 	if (AI::action eq "attack" && AI::args->{suspended}) {
 		$args->{ai_attack_giveup}{time} += time - $args->{suspended};
@@ -51,10 +100,12 @@ sub process {
 		undef $args->{unstuck}{time};
 		undef $args->{move_start};
 
-	} elsif (AI::action eq "attack" && $args->{avoiding} && $args->{attackID}) {
-		my $target = Actor::get($args->{attackID});
-		$args->{ai_attack_giveup}{time} = time + $target->{time_move_calc} + 3;
+	} elsif (AI::action eq "attack" && $args->{avoiding} && $args->{ID}) {
+		my $ID = $args->{ID};
+		my $target = Actor::get($ID);
+		$args->{ai_attack_giveup}{time} = time;
 		undef $args->{avoiding};
+		debug "Finished avoiding movement from target $target, updating ai_attack_giveup\n", "ai_attack";
 
 	} elsif (((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
 	   && $args->{attackID} && timeOut($timeout{ai_attack_route_adjust})) {
@@ -74,8 +125,7 @@ sub process {
 		) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			debug "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "route");
+			AI::dequeue while (AI::is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
 
@@ -89,8 +139,7 @@ sub process {
 			(blockDistance($realMyPos, $realMonsterPos) < 2 || !$config{attackCheckLOS} ||($config{attackCheckLOS} && blockDistance($realMyPos, $realMonsterPos) == 2 && $field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})))
 		) {
 			debug "Target $target is now reachable by melee attacks during routing to it.\n", "ai_attack";
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "route");
+			AI::dequeue while (AI::is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
 
@@ -99,18 +148,9 @@ sub process {
 		$timeout{ai_attack_route_adjust}{time} = time;
 	}
 
-	if (AI::action eq "attack") {
-		my $ID = $args->{ID};
-		if (targetGone()) {
-			finishAttacking();
-		} elsif (shouldGiveUp()) {
-			giveUp();
-		} else {
-			if (timeOut($args->{attackMainTimeout}, 0.1)) {
-				$args->{attackMainTimeout} = time;
-				main();
-			}
-		}
+	if (AI::action eq "attack" && timeOut($args->{attackMainTimeout}, 0.1)) {
+		$args->{attackMainTimeout} = time;
+		main();
 	}
 
 	# Check for kill steal and mob-training while moving
@@ -137,9 +177,7 @@ sub process {
 				#   move, route, attack
 				# -or-
 				#   route, attack
-				AI::dequeue;
-				AI::dequeue;
-				AI::dequeue if (AI::action eq "attack");
+				AI::dequeue while (AI::inQueue("attack"));
 			}
 		}
 
@@ -150,15 +188,15 @@ sub process {
 }
 
 sub shouldGiveUp {
-	my $args = AI::args;
+	my ($args, $ID) = @_;
 	return !$config{attackNoGiveup} && (timeOut($args->{ai_attack_giveup}) || $args->{unstuck}{count} > 5);
 }
 
 sub giveUp {
-	my $ID = AI::args->{ID};
+	my ($args, $ID) = @_;
 	my $target = Actor::get($ID);
 	$target->{attack_failed} = time if ($monsters{$ID});
-	AI::dequeue;
+	AI::dequeue while (AI::inQueue("attack"));
 	message T("Can't reach or damage target, dropping target\n"), "ai_attack";
 	if ($config{'teleportAuto_dropTarget'}) {
 		message T("Teleport due to dropping attack target\n");
@@ -167,15 +205,14 @@ sub giveUp {
 }
 
 sub targetGone {
-	my $args = AI::args;
+	my ($args, $ID) = @_;
 	return !$monsters{$args->{ID}} && (!$players{$args->{ID}} || $players{$args->{ID}}{dead});
 }
 
 sub finishAttacking {
-	my $args = AI::args;
+	my ($args, $ID) = @_;
 	$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
-	my $ID = AI::args->{ID};
-	AI::dequeue;
+	AI::dequeue while (AI::inQueue("attack"));
 	if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
 		message TF("Target %s died\n", $monsters_old{$ID}), "ai_attack";
 		Plugins::callHook("target_died", {monster => $monsters_old{$ID}});
@@ -225,17 +262,16 @@ sub finishAttacking {
 
 sub dropTargetWhileMoving {
 	my $ID = AI::args->{attackID};
-	message T("Dropping target - you will not kill steal others\n");
+	my $target = Actor::get($ID);
+	message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
 	$char->sendAttackStop;
-	$monsters{$ID}{ignore} = 1;
+	$target->{ignore} = 1;
 
 	# Right now, the queue is either
 	#   move, route, attack
 	# -or-
 	#   route, attack
-	AI::dequeue;
-	AI::dequeue;
-	AI::dequeue if (AI::action eq "attack");
+	AI::dequeue while (AI::inQueue("attack"));
 	if ($config{teleportAuto_dropTargetKS}) {
 		message T("Teleport due to dropping attack target\n");
 		useTeleport(1);
@@ -251,13 +287,6 @@ sub main {
 
 	# Update information about the monster and the current situation
 	my $args = AI::args;
-	my $followIndex = AI::findAction("follow");
-	my $following;
-	my $followID;
-	if (defined $followIndex) {
-		$following = AI::args($followIndex)->{following};
-		$followID = AI::args($followIndex)->{ID};
-	}
 
 	my $ID = $args->{ID};
 	my $target = Actor::get($ID);
@@ -309,7 +338,7 @@ sub main {
 		 && checkSelfCondition("attackComboSlot_$i")
 		 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}) ||
 				existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{nameID}))
-		 && (!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) || 
+		 && (!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) ||
 				existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{nameID})))
 		 && checkMonsterCondition("attackComboSlot_${i}_target", $target)) {
 
@@ -388,7 +417,9 @@ sub main {
 	Benchmark::end("ai_attack (part 1.2)") if DEBUG;
 	Benchmark::end("ai_attack (part 1)") if DEBUG;
 
-
+	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
+		delete $args->{ai_attack_failed_give_up}{time};
+	}
 
 	if ($char->{sitting}) {
 		ai_setSuspend(0);
@@ -396,24 +427,40 @@ sub main {
 
 	} elsif (!$cleanMonster) {
 		# Drop target if it's already attacked by someone else
-		message T("Dropping target - you will not kill steal others\n"), "ai_attack";
+		message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
 		$char->sendMove(@{$realMyPos}{qw(x y)});
-		AI::dequeue;
+		AI::dequeue while (AI::inQueue("attack"));
 		if ($config{teleportAuto_dropTargetKS}) {
 			message T("Teleport due to dropping attack target\n"), "teleport";
 			useTeleport(1);
 		}
 
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-		my $cell = get_kite_position($char, 1, $target);
+		my $cell = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance}, 1);
 		if ($cell) {
-			debug TF("%s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			debug TF("[runFromTarget] %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 			$args->{avoiding} = 1;
-			$char->move($cell->{x}, $cell->{y}, $ID);
+			$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, runFromTarget => 1);
 		} else {
 			debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
-		
+
+		if (!$cell) {
+			my $max = $args->{attackMethod}{maxDistance} + 4;
+			if ($max > 14) {
+				$max = 14;
+			}
+			$cell = meetingPosition($char, 1, $target, $max, 1);
+			if ($cell) {
+				debug TF("[runFromTarget] %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+				$args->{avoiding} = 1;
+				$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, runFromTarget => 1);
+			} else {
+				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			}
+		}
+
+
 	} elsif(!defined $args->{attackMethod}{type}) {
 		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
@@ -421,8 +468,29 @@ sub main {
 		if (timeOut($args->{ai_attack_failed_give_up})) {
 			delete $args->{ai_attack_failed_give_up}{time};
 			message T("Unable to determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
-			giveUp();
+			giveUp($args, $ID);
 		}
+
+
+	} elsif (
+		# We are out of range, but already hit enemy, should wait for him in a safe place instead of going after him
+		# Example at https://youtu.be/kTRk5Na1aCQ?t=25 in which this check did not exist, we tried getting closer intead of waiting and got hit
+		($args->{attackMethod}{maxDistance} > 1 && $realMonsterDist > $args->{attackMethod}{maxDistance}) &&
+		#(!$config{attackCheckLOS} || $field->checkLOS($realMyPos, $realMonsterPos, $config{attackCanSnipe})) && # Is this check needed?
+		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
+		$target->{dmgFromYou} > 0
+	) {
+		$args->{ai_attack_failed_waitForAgressive_give_up}{timeout} = 6 if !$args->{ai_attack_failed_waitForAgressive_give_up}{timeout};
+		$args->{ai_attack_failed_waitForAgressive_give_up}{time} = time if !$args->{ai_attack_failed_waitForAgressive_give_up}{time};
+
+		if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
+			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
+			message T("[Out of Range] Waited too long for target to get closer, dropping target\n"), "ai_attack";
+			giveUp($args, $ID);
+		} else {
+			warning TF("[Out of Range - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+		}
+
 	} elsif (
 		# We are out of range
 		($args->{attackMethod}{maxDistance} == 1 && !canReachMeleeAttack($realMyPos, $realMonsterPos)) ||
@@ -436,7 +504,7 @@ sub main {
 
 		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 		my $result;
-		
+
 		if ($pos) {
 			debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
 
@@ -453,7 +521,7 @@ sub main {
 			if (!$result) {
 				# Unable to calculate a route to target
 				$target->{attack_failed} = time;
-				AI::dequeue;
+				AI::dequeue while (AI::inQueue("attack"));
 				message T("Unable to calculate a route to target, dropping target\n"), "ai_attack";
 				if ($config{'teleportAuto_dropTarget'}) {
 					message T("Teleport due to dropping attack target\n");
@@ -464,7 +532,7 @@ sub main {
 			}
 		} else {
 			$target->{attack_failed} = time;
-			AI::dequeue;
+			AI::dequeue while (AI::inQueue("attack"));
 			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
 			if ($config{'teleportAuto_dropTarget'}) {
 				message T("Teleport due to dropping attack target\n");
@@ -484,13 +552,11 @@ sub main {
 		my $msg = TF("No LOS from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			$char->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0);
+			$char->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, LOSSubRoute => 1);
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			$target->{attack_failedLOS} = time;
-			AI::dequeue;
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "attack");
+			AI::dequeue while (AI::inQueue("attack"));
 		}
 
 	} elsif (
@@ -506,13 +572,11 @@ sub main {
 		my $msg = TF("No LOS in melee from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 		if ($best_spot) {
 			message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-			$char->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0);
+			$char->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, LOSSubRoute => 1);
 		} else {
 			warning TF("%s; no acceptable place to stand\n", $msg);
 			$target->{attack_failedLOS} = time;
-			AI::dequeue;
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "attack");
+			AI::dequeue while (AI::inQueue("attack"));
 		}
 
 	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
@@ -544,9 +608,9 @@ sub main {
 					($config{'tankMode'}) ? 0 : 7);
 				$timeout{ai_attack}{time} = time;
 				delete $args->{attackMethod};
-				
+
 				if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
-					my $cell = get_kite_position($char, 1, $target);
+					my $cell = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance}, 1);
 					if ($cell) {
 						debug TF("%s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 						$args->{avoiding} = 1;
@@ -565,13 +629,11 @@ sub main {
 				my $msg = TF("No LOS in from %s (%d, %d) to target %s (%d, %d) (distance: %d)", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist);
 				if ($best_spot) {
 					message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
-					$char->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0);
+					$char->route(undef, @{$best_spot}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, LOSSubRoute => 1);
 				} else {
 					warning TF("%s; no acceptable place to stand\n", $msg);
 					$target->{attack_failedLOS} = time;
-					AI::dequeue;
-					AI::dequeue;
-					AI::dequeue if (AI::action eq "attack");
+					AI::dequeue while (AI::inQueue("attack"));
 				}
 			}
 
@@ -624,7 +686,7 @@ sub main {
 		}
 		$args->{dmgTo_last} = $target->{dmgTo};
 	}
-	
+
 	Plugins::callHook('AI::Attack::main', {target => $target})
 }
 

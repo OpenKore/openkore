@@ -15,10 +15,12 @@ sub iterate {
 	my $slave = shift;
 
 	# homunculus is in rest
-	if ($slave->{state} & 2) {
+	if ($slave->{vaporized}) {
+		#message TF("Slave %s vaporized\n", $slave), 'slave';
 
 	# homunculus is dead / not present
-	} elsif ($slave->{state} & 4) {
+	} elsif ($slave->{dead}) {
+		#message TF("Slave %s dead\n", $slave), 'slave';
 
 	# homunculus is alive
 	} elsif ($slave->{appear_time} && $field->baseName eq $slave->{map}) {

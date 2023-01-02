@@ -29,6 +29,7 @@ use Carp::Assert;
 use Utils::Assert;
 use Scalar::Util;
 use Socket qw(inet_aton inet_ntoa);
+use Compress::Zlib;
 
 use AI;
 use Globals;
@@ -510,6 +511,19 @@ use constant {
 	EXPAND_INVENTORY_RESULT_OTHER_WORK => 0x2,
 	EXPAND_INVENTORY_RESULT_MISSING_ITEM => 0x3,
 	EXPAND_INVENTORY_RESULT_MAX_SIZE => 0x4,
+};
+
+# macro detector ui
+use constant {
+	MCD_TIMEOUT => 0,
+	MCD_INCORRECT => 1,
+	MCD_GOOD => 2,
+};
+
+use constant {
+	MCR_MONITORING => 0,
+	MCR_NO_DATA => 1,
+	MCR_INPROGRESS => 2,
 };
 
 # Display gained exp.
@@ -1221,6 +1235,8 @@ sub map_loaded {
 	makeCoordsDir($char->{pos}, $args->{coords}, \$char->{look}{body});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+	$char->{time_move} = 0;
+	$char->{time_move_calc} = 0;
 
 	# set initial status from data received from the char server (seems needed on eA, dunno about kRO)}
 	if($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
@@ -1743,7 +1759,7 @@ sub actor_display {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 	my ($actor, $mustAdd);
-
+	
 	#### Initialize ####
 
 	my $nameID = unpack("V", $args->{ID});
@@ -1777,20 +1793,20 @@ sub actor_display {
 	#  - server sending us false actors
 	#  - actor packets not being parsed correctly
 	if (defined $field && ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y}))) {
-		warning TF("Removed actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
+		warning TF("Ignoring actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
 		return;
 	}
-
-	# Remove actors with a distance greater than clientSight. Useful for vending (so you don't spam
-	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
-	# beyond clientSight.
-	if ($config{clientSight}) {
-		if ((my $block_dist = blockDistance($char->{pos_to}, \%coordsTo)) >= ($config{clientSight})) {
-			my $nameIdTmp = unpack("V", $args->{ID});
-			debug "Removed out of sight actor $nameIdTmp at ($coordsTo{x}, $coordsTo{y}) (distance: $block_dist)\n";
-			return;
-		}
+	
+	if (($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0)) {
+		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
+		return;
 	}
+	
+	if (blockDistance(\%coordsFrom, \%coordsTo) > ($config{clientSight} + $config{clientSight_removeBeyond})) {
+		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
+		return;
+	}
+	
 =pod
 	# Zealotus bug
 	if ($args->{type} == 1200) {
@@ -1974,10 +1990,29 @@ sub actor_display {
 	$actor->{pos_to} = {%coordsTo};
 	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed} && $args->{switch} ne "0086");
 	$actor->{time_move} = time;
-	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
+	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
 	$actor->{len} = $args->{len} if $args->{len};
 	# 0086 would need that?
 	$actor->{object_type} = $args->{object_type} if (defined $args->{object_type});
+
+	# Remove actors with a distance greater than clientSight. Useful for vending (so you don't spam
+	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
+	# beyond clientSight.
+	if ($config{clientSight}) {
+		my $realMyPos = calcPosition($char);
+		my $realActorPos = calcPosition($actor);
+		my $realActorDist = blockDistance($realMyPos, $realActorPos);
+		
+		my $max_sight_base = $config{clientSight};
+		my $max_sight_extra = $config{clientSight_removeBeyond};
+		
+		my $max_sight = $max_sight_base + $max_sight_extra;
+		
+		if ($realActorDist >= $max_sight) {
+			Log::warning "Removed out of sight actor $actor->{name} at ($actor->{pos_to}{x}, $actor->{pos_to}{y}) (distance: $realActorDist > max $max_sight)\n";
+			return;
+		}
+	}
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
 		# None of this stuff should matter if the actor isn't a player... => does matter for a guildflag npc!
@@ -2218,7 +2253,7 @@ typedef enum <unnamed-tag> {
 		        Plugins::callHook('pet_moved', $actor);
 		} elsif ($actor->isa('Actor::Slave')) {
 			debug "Slave Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
-		        Plugins::callHook('slave_moved', $actor);
+			   Plugins::callHook('slave_moved', $actor);
 		} elsif ($actor->isa('Actor::Portal')) {
 			# This can never happen of course.
 			debug "Portal Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
@@ -2396,7 +2431,16 @@ sub actor_died_or_disappeared {
 		my $slave = $slavesList->getByID($ID);
 		if ($args->{type} == 1) {
 			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{actorType});
-			$slave->{state} = 4;
+			$slave->{state} = 0;
+			if (isMySlaveID($ID)) {
+				$slave->{dead} = 1;
+				if ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus")) {
+					AI::SlaveManager::removeSlave($slave) if ($char->has_homunculus);
+					
+				} elsif ($slave->isa("AI::Slave::Mercenary") || $slave->isa("Actor::Slave::Mercenary")) {
+					AI::SlaveManager::removeSlave($slave) if ($char->has_mercenary);
+				}
+			}
 		} else {
 			if ($args->{type} == 0) {
 				debug "Slave Disappeared: " . $slave->name . " ($slave->{binID}) $slave->{actorType} ($slave->{pos_to}{x}, $slave->{pos_to}{y})\n", "parseMsg_presence";
@@ -2746,14 +2790,15 @@ sub homunculus_property {
 
 	my $slave = $char->{homunculus} or return;
 
-	foreach (@{$args->{KEYS}}) {
-		$slave->{$_} = $args->{$_};
-	}
 	$slave->{name} = bytesToString($args->{name});
 
 	slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
 
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
+	}
+	
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
 	# or make function in Actor class
@@ -2773,32 +2818,70 @@ sub homunculus_state_handler {
 	# 4 - dead
 
 	return unless $char->{homunculus};
+	$char->{homunculus}->clear();
 
-	if ($args->{state} == 0) {
-		$char->{homunculus}{renameflag} = 1;
-	} else {
-		$char->{homunculus}{renameflag} = 0;
-	}
-
-	if (($args->{state} & ~8) > 1) {
-		#Disabled these code as homun skills are not resent to client, so we shouldnt do deleting skill sets in this place.
-		#foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
-		#	delete $char->{skills}{$handle};
-		#}
-		$char->{homunculus}->clear(); #TODO: Check for memory leak?
-		#undef @{$char->{homunculus}{slave_skillsID}};
-		if (defined $slave->{state} && $slave->{state} != $args->{state}) {
-			if ($args->{state} & 2) {
-				message T("Your Homunculus was vaporized!\n"), 'homunculus';
-			} elsif ($args->{state} & 4) {
-				message T("Your Homunculus died!\n"), 'homunculus';
-			}
+	if (!defined $slave->{state}) {
+		if ($args->{state} & 1) {
+			$char->{homunculus}{renameflag} = 1;
+			message T("Your Homunculus has already been renamed\n"), 'homunculus';
+		} else {
+			$char->{homunculus}{renameflag} = 0;
+			message T("Your Homunculus has not been renamed\n"), 'homunculus';
 		}
+		
+		if ($args->{state} & 2) {
+			$char->{homunculus}{vaporized} = 1;
+			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			message T("Your Homunculus is vaporized\n"), 'homunculus';
+		} else {
+			$char->{homunculus}{vaporized} = 0;
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			message T("Your Homunculus is not vaporized\n"), 'homunculus';
+		}
+		
+		if ($args->{state} & 4) {
+			$char->{homunculus}{dead} = 0;
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			message T("Your Homunculus is not dead\n"), 'homunculus';
+		} else {
+			$char->{homunculus}{dead} = 1;
+			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			message T("Your Homunculus is dead\n"), 'homunculus';
+		}
+	
 	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
-		if ($slave->{state} & 2) {
-			message T("Your Homunculus was recalled!\n"), 'homunculus';
-		} elsif ($slave->{state} & 4) {
+		if (($args->{state} & 1) && !($slave->{state} & 1)) {
+			$char->{homunculus}{renameflag} = 1;
+			message T("Your Homunculus was renamed\n"), 'homunculus';
+		}
+		
+		if (($args->{state} & 2) && !($slave->{state} & 2)) {
+			$char->{homunculus}{vaporized} = 1;
+			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			message T("Your Homunculus was vaporized!\n"), 'homunculus';
+		}
+		
+		if (($args->{state} & 4) && !($slave->{state} & 4)) {
+			$char->{homunculus}{dead} = 0;
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
 			message T("Your Homunculus was resurrected!\n"), 'homunculus';
+		}
+		
+		if (!($args->{state} & 1) && ($slave->{state} & 1)) {
+			$char->{homunculus}{renameflag} = 0;
+			message T("Your Homunculus was un-renamed? lol\n"), 'homunculus';
+		}
+		
+		if (!($args->{state} & 2) && ($slave->{state} & 2)) {
+			$char->{homunculus}{vaporized} = 0;
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			message T("Your Homunculus was recalled!\n"), 'homunculus';
+		}
+		
+		if (!($args->{state} & 4) && ($slave->{state} & 4)) {
+			$char->{homunculus}{dead} = 1;
+			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			message T("Your Homunculus died!\n"), 'homunculus';
 		}
 	}
 }
@@ -2838,7 +2921,7 @@ sub homunculus_info {
 				# After a teleport the homunculus object is still AI::Slave::Homunculus, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Homunculus, so we change it back
 				bless $char->{homunculus}, 'Actor::Slave::Homunculus';
 			}
-			AI::SlaveManager::addSlave ($char->{homunculus});
+			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
 			$char->{homunculus}{appear_time} = time;
 		}
 	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
@@ -4776,7 +4859,11 @@ sub npc_chat {
 	chatLog("npc", "$position $message\n") if ($config{logChat});
 	message TF("%s%s\n", $dist, $message), "npcchat";
 
-	# TODO hook
+	Plugins::callHook('npc_chat', {
+		actor => $actor,
+		ID => $args->{ID},
+		message => $message,
+	});
 }
 
 # 018d <packet len>.W { <name id>.W { <material id>.W }*3 }*
@@ -5053,7 +5140,9 @@ sub item_list_stackable {
 		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
 		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 	} elsif ( $args->{type} == INVTYPE_GUILD_STORAGE ) {
-		return; # guild storage not implemented yet =/ (2019-06-21)
+		$arguments->{hook} = 'packet_storage';
+		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 	} else {
 		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
 	}
@@ -5100,7 +5189,9 @@ sub item_list_nonstackable {
 		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 
 	} elsif ( $args->{type} == INVTYPE_GUILD_STORAGE ) {
-		return; # guild storage not implemented yet =/ (2019-06-21)
+		$arguments->{hook} = 'packet_storage';
+		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
+		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 
 	} else {
 		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
@@ -7044,6 +7135,8 @@ sub map_change {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
+	$char->{time_move} = 0;
+	$char->{time_move_calc} = 0;
 	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $char->{pos}{x}, $char->{pos}{y}), "connection";
 	if ($net->version == 1) {
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
@@ -7094,6 +7187,8 @@ sub map_changed {
 	);
 	$char->{pos} = {%coords};
 	$char->{pos_to} = {%coords};
+	$char->{time_move} = 0;
+	$char->{time_move_calc} = 0;
 
 	undef $conState_tries;
 	main::initMapChangeVars();
@@ -7512,6 +7607,7 @@ sub buy_result {
 	if (AI::is("buyAuto")) {
 		AI::args->{recv_buy_packet} = 1;
 	}
+	Plugins::callHook('buy_result', {fail => $args->{fail}});
 }
 
 # Presents list of items, that can be bought in an NPC MARKET shop (PACKET_ZC_NPC_MARKET_OPEN).
@@ -7778,6 +7874,7 @@ sub offline_clone_found {
 		$actor->{pos_to}{x} = $args->{coord_x};
 		$actor->{pos_to}{y} = $args->{coord_y};
 		$actor->{time_move} = time;
+		$actor->{time_move_calc} = 0;
 		$actor->{walk_speed} = 1; #hack
 		$actor->{lv} = 1;
 		$actor->{robe} = $args->{robe};
@@ -8004,7 +8101,7 @@ sub party_join {
 			$char->{party}{joined} = 1;
 			Plugins::callHook('packet_partyJoin', { partyName => bytesToString($info->{name}) });
 		} else {
-			message TF("%s joined your party '%s'\n", $info->{user}, bytesToString($info->{name})), undef, 1;
+			message TF("%s joined your party '%s'\n", bytesToString($info->{user}), bytesToString($info->{name})), undef, 1;
 		}
 	}
 
@@ -9522,14 +9619,17 @@ sub buying_store_lost {
 sub buying_store_items_list {
 	my($self, $args) = @_;
 
-	undef @buyerItemList;
+	undef $buyerPriceLimit;
 	undef $buyerID;
 	undef $buyingStoreID;
+	
+	$buyerItemList->clear;
 
-	my $zeny = $args->{zeny};
-	my $expireDate = 0;
+	$buyerPriceLimit = $args->{zeny};
 	$buyerID = $args->{buyerID};
 	$buyingStoreID = $args->{buyingStoreID};
+	
+	my $expireDate = 0;
 	my $player = Actor::get($buyerID);
 	my $index = 0;
 	my $pack = $self->{buying_store_items_list_pack} || 'V v C v';
@@ -9540,15 +9640,17 @@ sub buying_store_items_list {
 		T("#  Name                                       Type                     Price Amount\n");
 
 	for (my $i = 0; $i < $item_list_len; $i+=$item_len) {
-		my $item = {};
+		my $item = Actor::Item->new;
 
-		($item->{price},
+ 		($item->{price},
 		$item->{amount},
 		$item->{type},
 		$item->{nameID})	= unpack($pack, substr($args->{itemList}, $i, $item_len));
 
 		$item->{name} = itemName($item);
-		$buyerItemList[$index] = $item;
+		$item->{ID} = $i;
+		
+		$buyerItemList->add($item);
 
 		debug "Item added to Buying Store: $item->{name} - $item->{price} z\n", "buying_store", 2;
 
@@ -9568,7 +9670,7 @@ sub buying_store_items_list {
 		$index++;
 	}
 
-	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($zeny)) . ('-'x83) . "\n";
+	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($buyerPriceLimit)) . ('-'x83) . "\n";
 	message $msg, "list";
 
 	if($args->{expireDate}) {
@@ -9580,7 +9682,7 @@ sub buying_store_items_list {
 	Plugins::callHook('packet_buying_store2', {
 		buyerID => $buyerID,
 		buyingStoreID => $buyingStoreID,
-		itemList => \@buyerItemList,
+		itemList => $buyerItemList,
 		expireDate => $expireDate,
 	});
 }
@@ -10848,7 +10950,7 @@ sub mercenary_init {
 			# After a teleport the mercenary object is still AI::Slave::Mercenary, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Mercenary, so we change it back
 			bless $char->{mercenary}, 'Actor::Slave::Mercenary';
 		}
-		AI::SlaveManager::addSlave ($char->{mercenary});
+		AI::SlaveManager::addSlave($char->{mercenary}) if (!$char->has_mercenary);
 	}
 
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
@@ -10863,8 +10965,10 @@ sub mercenary_init {
 
 # +message_string
 sub mercenary_off {
+	#delete $char->{slaves}{$char->{mercenary}{ID}};
+	AI::SlaveManager::removeSlave($char->{mercenary}) if ($char->has_mercenary);
+	
 	$slavesList->removeByID($char->{mercenary}{ID});
-	delete $char->{slaves}{$char->{mercenary}{ID}};
 	delete $char->{mercenary};
 }
 # -message_string
@@ -11089,6 +11193,16 @@ sub resurrection {
 		if ($player) {
 			undef $player->{'dead'};
 			$player->{deltaHp} = 0;
+		}
+		
+		if (isMySlaveID($targetID)) {
+			my $slave = $slavesList->getByID($targetID);
+			if (defined $slave && ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus"))) {
+				message TF("Slave Resurrected: %s\n", $slave);
+				$slave->{state} = 4;
+				$slave->{dead} = 0;
+				AI::SlaveManager::addSlave($slave) if (!$char->has_homunculus);
+			}
 		}
 		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
 	}
@@ -11516,6 +11630,8 @@ sub skill_use_failed {
 	} else {
 		$errorMessage = T('Unknown error');
 	}
+	
+	delete $char->{casting};
 
 	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
 	Plugins::callHook('packet_skillfail', {
@@ -11892,6 +12008,191 @@ sub ping {
 sub starplace {
 	my ($self, $args) = @_;
 	message TF("Wich: %s\n", $args->{which});
+}
+
+###
+#
+# Captcha System ( macro detector )
+# 4 parts: Macro Register UI ( /macro_register ), Macro Detector UI ( player ), Macro Reporter UI ( /macro_detector ) and Captcha Preview UI ( /macro_preview )
+#
+###
+
+# 0A53 - PACKET_ZC_CAPTCHA_UPLOAD_REQUEST
+# Captcha Upload Image UI
+sub captcha_upload_request {
+	my ($self, $args) = @_;
+	if ($args->{status} == 0) {
+		message T("Captcha Register - Now you can upload the image\n");
+	} elsif($args->{status} == 1) {
+		message T("Captcha Register - Failed to upload the image\n");
+	} else {
+		message TF("Captcha Register - Unknown status: %s\n", $args->{status});
+	}
+
+	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
+}
+
+# 0A55 - PACKET_ZC_CAPTCHA_UPLOAD_REQUEST_STATUS
+# Result of Captcha Upload
+sub captcha_upload_request_status {
+	message T("Captcha Register - Image uploaded succesfully\n");
+}
+
+# 0A57 - PACKET_ZC_MACRO_REPORTER_STATUS
+# Status of Macro Reporter
+sub macro_reporter_status {
+	my ($self, $args) = @_;
+	my $status = "Unknown";
+
+	if($args->{status} == MCR_MONITORING) {
+		$status = "Monitoring";
+	} elsif ($args->{status} == MCR_NO_DATA) {
+		$status = "No Data";
+	} elsif ($args->{status} == MCR_INPROGRESS) {
+		$status = "In Progress";
+	}
+
+	message TF("Macro Reporter - Status: %s \n", $status), "captcha";
+}
+
+# 0A58 - PACKET_ZC_MACRO_DETECTOR_REQUEST
+# Macro Detector Image info
+sub macro_detector {
+	my ($self, $args) = @_;
+	debug TF("Macro Detector - image_size: %s bytes - captcha_key: %s\n", $args->{image_size}, $args->{captcha_key}), "captcha";
+	$captcha_size = $args->{image_size};
+	$captcha_key = $args->{captcha_key};
+}
+
+# 0A59 - PACKET_ZC_MACRO_DETECTOR_REQUEST_DOWNLOAD
+# Macro DDetector Captcha Image
+# captcha_image is sended in chunks
+sub macro_detector_image {
+	my ($self, $args) = @_;
+
+	$captcha_image .= $args->{captcha_image};
+
+	if(length($captcha_image) >= $captcha_size) {
+		my $image = uncompress($captcha_image);
+		my $imageHex = unpack("H*", $image);
+        my $byte1; my $byte2; my $byte3;
+        for (my $i = 102; $i < 3564; $i += 6) {
+            $byte1 = hex(substr($imageHex, $i, 2));
+            $byte2 = substr($imageHex, $i + 2, 2);
+            $byte3 = hex(substr($imageHex, $i + 4, 2));
+
+            if ($byte1 > 250 && $byte2 eq '00' && $byte3 > 250) {
+                substr($imageHex, $i + 2, 2) = 'FF';
+            }
+        }
+
+        my $file = $Settings::logs_folder . "/captcha_$captcha_key.bmp";
+		my $final_image = pack("H*", $imageHex);
+        open my $DUMP, '>:raw', $file;
+        print $DUMP $final_image;
+        close $DUMP;
+
+		my $hookArgs = {captcha_image => $final_image};
+		Plugins::callHook ('captcha_image', $hookArgs);
+		return 1 if $hookArgs->{return};
+
+		warning TF("Macro Detector - captcha has been saved in: %s, open it, solve it and use the command: captcha <text>\n", $file), "captcha";
+		$captcha_image = "";
+		$captcha_size = undef;
+		$captcha_key = undef;
+		$messageSender->sendMacroDetectorDownload() if (UNIVERSAL::isa($net, 'Network::DirectConnection'));
+	}
+}
+
+# 0A5B - PACKET_ZC_MACRO_DETECTOR_SHOW
+# Macro Detector UI
+sub macro_detector_show {
+	my ($self, $args) = @_;
+	message T("Macro Detector\n"), "captcha";
+	message TF("Remaining Chances: %s - Remaining Time: %s seconds\n", $args->{remaining_chances}, $args->{remaining_time} / 1000), "captcha";
+	return unless (UNIVERSAL::isa($net, 'Network::DirectConnection'));
+	# TODO: check request image?
+}
+
+# 0A5D - PACKET_ZC_MACRO_DETECTOR_STATUS
+# Status of Macro Detector
+sub macro_detector_status {
+	my ($self, $args) = @_;
+	my $status = "Unknown";
+
+	if($args->{status} == MCD_TIMEOUT) {
+		$status = "Timeout";
+	} elsif ($args->{status} == MCD_INCORRECT) {
+		$status = "Incorrect";
+	} elsif ($args->{status} == MCD_GOOD) {
+		$status = "Correct";
+	}
+
+	message TF("Macro Detector Status: %s \n", $status), "captcha";
+}
+
+# 0A6A - PACKET_ZC_CAPTCHA_PREVIEW_REQUEST
+# Status of Preview Captcha Image Request
+sub captcha_preview {
+	my ($self, $args) = @_;
+
+	$captcha_size = $args->{image_size};
+	$captcha_key = $args->{captcha_key};
+
+	if ($args->{status} == 0) {
+		message T("Captcha Preview - Now you can download the image\n");
+	} elsif($args->{status} == 1) {
+		message T("Captcha Preview - Failed to Request Captcha (ID is out of range)\n");
+	} else {
+		message TF("Captcha Preview - Unknown status: %s\n", $args->{status});
+	}
+	debug TF("Captcha Preview - image_size: %s bytes - captcha_key: %s\n", $args->{image_size}, $args->{captcha_key}), "captcha";
+}
+
+# 0A6B - PACKET_ZC_CAPTCHA_PREVIEW_REQUEST_DOWNLOAD
+# Preview a captcha image
+sub captcha_preview_image {
+	my ($self, $args) = @_;
+
+	$captcha_image .= $args->{captcha_image};
+
+	if(length($captcha_image) >= $captcha_size) {
+		my $image = uncompress($captcha_image);
+		my $imageHex = unpack("H*", $image);
+        my $byte1; my $byte2; my $byte3;
+        for (my $i = 102; $i < 3564; $i += 6) {
+            $byte1 = hex(substr($imageHex, $i, 2));
+            $byte2 = substr($imageHex, $i + 2, 2);
+            $byte3 = hex(substr($imageHex, $i + 4, 2));
+
+            if ($byte1 > 250 && $byte2 eq '00' && $byte3 > 250) {
+                substr($imageHex, $i + 2, 2) = 'FF';
+            }
+        }
+
+        my $file = $Settings::logs_folder . "/captcha_preview_$captcha_key.bmp";
+        open my $DUMP, '>:raw', $file;
+        print $DUMP pack("H*", $imageHex);
+        close $DUMP;
+
+		message TF("Captcha Preview - captcha has been saved in: %s\n", $file), "captcha";
+		$captcha_image = "";
+		$captcha_size = undef;
+		$captcha_key = undef;
+	}
+}
+
+# 0A6D - PACKET_ZC_MACRO_REPORTER_SELECT
+# Player List
+sub macro_reporter_select {
+	my ($self, $args) = @_;
+
+	message T("Macro Reporter - Account List:\n");
+	for (my $i = 0; $i < length($args->{account_list}); $i += 4) {
+		my $accID = unpack("a4", substr($args->{account_list}, $i, 4));
+		my $player = $playersList->getByID($accID);
+		message TF("%s\n", $player->{name});
+	}
 }
 
 1;
