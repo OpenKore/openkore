@@ -582,7 +582,7 @@ sub processPortalRecording {
 		});
 		$recorded = 1;
 	}
-	
+
 	if ($recorded && $config{portalRecord_recompileAfter}) {
 		Settings::loadByRegexp(qr/portals/);
 		Misc::compilePortals() if Misc::compilePortals_check();
@@ -1211,7 +1211,7 @@ sub processAutoStorage {
 		my %plugin_args = ( return => 0 );
 		Plugins::callHook( AI_storage_auto_get_auto_start => \%plugin_args );
 		return if ($plugin_args{return});
-		
+
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $needitem = "";
 		my $i;
@@ -1296,7 +1296,7 @@ sub processAutoStorage {
 			if ($forcedByBuy) {
 				AI::queue("sellAuto", {forcedByBuy => 1});
 				Plugins::callHook('AI_sell_auto_queued');
-	
+
 			} elsif (!$forcedBySell) {
 				AI::queue("sellAuto", {forcedByStorage => 1});
 				Plugins::callHook('AI_sell_auto_queued');
@@ -1884,7 +1884,7 @@ sub processAutoBuy {
 		my %plugin_args = ( return => 0 );
 		Plugins::callHook( AI_buy_auto_start => \%plugin_args );
 		return if ($plugin_args{return});
-		
+
 		undef $ai_v{'temp'}{'found'};
 
 		for(my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
@@ -2378,12 +2378,12 @@ sub processRandomWalk {
 			$config{'route_randomWalk'} = 0;
 			return;
 		}
-		
+
 		my %plugin_args;
 		$plugin_args{return} = 0;
 		Plugins::callHook( ai_processRandomWalk => \%plugin_args );
 		return if ($plugin_args{return});
-		
+
 		my ($randX, $randY);
 		my $i = 500;
 		do {
@@ -3107,7 +3107,7 @@ sub processAutoAttack {
 	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
 	  && timeOut($timeout{ai_attack_auto})
 	  # If !teleportAuto_search, then searchMonsters >= teleportAuto_search will be true - no need for first condition?
-	  && (!$config{teleportAuto_search} || $ai_v{temp}{searchMonsters} >= $config{teleportAuto_search})
+	  && $ai_v{temp}{searchMonsters} >= $config{teleportAuto_search}
 	  && (!$config{attackAuto_notInTown} || !$field->isCity)
 	  && ($config{attackAuto_inLockOnly} <= 1 || $field->baseName eq $config{'lockMap'})
 	  && (!$config{attackAuto_notWhile_storageAuto} || !AI::inQueue("storageAuto"))
@@ -3157,7 +3157,7 @@ sub processAutoAttack {
 			my @cleanMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && $attackOnRoute);
+			@aggressives = ai_getAggressives(1) if $attackOnRoute;
 
 			# List party monsters
 			foreach (@monstersID) {
