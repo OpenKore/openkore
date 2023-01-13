@@ -4065,7 +4065,7 @@ sub cmdMove {
 				if ($portalsID[$map_or_portal]) {
 					message TF("Move into portal number %s (%s,%s)\n",
 						$map_or_portal, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'});
-					main::ai_route($field->baseName, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+					main::ai_route($field->baseName, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'}, attackOnRoute => 2, noSitAuto => 1);
 				} else {
 					error T("No portals exist.\n");
 				}
@@ -4100,7 +4100,7 @@ sub cmdMove {
 							$map_name, $map_or_portal), "route";
 					}
 					main::ai_route($map_or_portal, $x, $y,
-					attackOnRoute => 1,
+					attackOnRoute => 2,
 					noSitAuto => 1,
 					notifyUponArrival => 1,
 					distFromGoal => $dist);
@@ -6366,7 +6366,7 @@ sub cmdBuyer {
 		return;
 	}
 	my (undef, $args) = @_;
-	
+
 	my ($arg1) = $args =~ /^([\d\w]+)/;
 	my ($arg2) = $args =~ /^[\d\w]+ (\d+)/;
 	my ($arg3) = $args =~ /^[\d\w]+ \d+ (\d+)/;
@@ -6378,53 +6378,53 @@ sub cmdBuyer {
 		undef $buyerID;
 		undef $buyingStoreID;
 		$buyerItemList->clear;
-		
+
 	} elsif ($buyerListsID[$arg1] eq "") {
 		error TF("Error in function 'buyer' (Buyer Shop)\n" .
 			"buyer %s does not exist.\n", $arg1);
-			
+
 	} elsif ($arg2 eq "") {
 		undef $buyerPriceLimit;
 		undef $buyerID;
 		undef $buyingStoreID;
 		$buyerItemList->clear;
 		$messageSender->sendEnteringBuyer($buyerListsID[$arg1]);
-		
+
 	} elsif (!$buyerItemList->get( $arg2 )) {
 		error TF("Error in function 'buyer' (Buyer Shop)\n" .
 			"item %s does not exist.\n", $arg2);
-			
+
 	} elsif ($buyerListsID[$arg1] ne $buyerID) {
 		error T("Error in function 'buyer' (Buyer Shop)\n" .
 			"Buyer ID is wrong.\n");
-			
+
 	} else {
 		if ($arg3 <= 0) {
 			$arg3 = 1;
 		}
-		
+
 		my $l_item = $buyerItemList->get( $arg2 );
-		
+
 		if (!defined $l_item) {
 			error T("Error in function 'buyer', shop item not defined.\n");
 			return;
 		}
-		
+
 		my $c_item = $char->inventory->getByNameID($l_item->{nameID});
-		
+
 		if (!defined $c_item) {
 			error T("Error in function 'buyer', char item not defined.\n");
 			return;
 		}
-		
+
 		my $amount = $arg3;
 		my $total_zeny = $amount * $l_item->{price};
-		
+
 		if ($total_zeny > $buyerPriceLimit) {
 			error T("Error in function 'buyer', trying to sell aboce max price limit.\n");
 			return;
 		}
-		
+
 		$messageSender->sendBuyBulkBuyer($buyerID, [{ID => $c_item->{ID}, itemID => $c_item->{nameID}, amount => $amount}], $buyingStoreID);
 	}
 }
