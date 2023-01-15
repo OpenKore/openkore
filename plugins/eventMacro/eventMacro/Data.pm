@@ -9,7 +9,7 @@ our @EXPORT = qw($eventMacro @perl_name $valid_var_characters $general_variable_
 our $eventMacro;
 our @perl_name;
 
-our $valid_var_characters = qr/\.?[a-zA-Z][a-zA-Z\d]*/;
+our $valid_var_characters = qr/\.?[a-zA-Z][a-zA-Z\d_]*/;
 
 our $general_variable_qr = qr/(?:\$$valid_var_characters(?:\[\d+\]|\{[a-zA-Z\d]+\})?|\@$valid_var_characters|\%$valid_var_characters)/;
 
