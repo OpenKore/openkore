@@ -100,7 +100,7 @@ sub reset {
 	my %hookArgs;
 	$hookArgs{args} = \%args;
 	$hookArgs{return} = 1;
-	Plugins::callHook("PathFindingReset", \%hookArgs);
+	Plugins::callHook('PathFindingReset', \%hookArgs);
 	if ($hookArgs{return}) {
 		$args{weight_map} = \($args{field}->{weightMap}) unless (defined $args{weight_map});
 		$args{width} = $args{field}{width} unless (defined $args{width});
@@ -114,13 +114,13 @@ sub reset {
 	}
 
 	return $class->_reset(
-		$args{weight_map}, 
-		$args{avoidWalls}, 
-		$args{width}, 
+		$args{weight_map},
+		$args{avoidWalls},
+		$args{width},
 		$args{height},
-		$args{start}{x}, 
+		$args{start}{x},
 		$args{start}{y},
-		$args{dest}{x}, 
+		$args{dest}{x},
 		$args{dest}{y},
 		$args{timeout},
 		$args{min_x},

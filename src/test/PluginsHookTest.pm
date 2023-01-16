@@ -42,7 +42,7 @@ sub testAddHook {
 	is($value, 2);
 	Plugins::callHook('hook3');
 	is($value, 2);
-	
+
 	my $handle3 = Plugins::addHook('hook1', sub { $value = 3; });
 	ok(Plugins::hasHook('hook1'));
 	ok(Plugins::hasHook('hook2'));
@@ -82,7 +82,7 @@ sub testAddHook {
 
 sub testAddHooks {
 	my $value;
-	
+
 	my $handle = Plugins::addHooks(
 		['hook1', sub { $value = 1; }],
 		['hook2', sub { $value = 2; }]
@@ -121,22 +121,22 @@ sub testAddDuringCall {
 
 	# The first time through, only the original hook should be called.
 	@called = ();
-	Plugins::callHook( 'add_during_call' );
+	Plugins::callHook('add_during_call');
 	is( "@called", '0' );
 
 	# After the first call, there should be two handlers.
 	@called = ();
-	Plugins::callHook( 'add_during_call' );
+	Plugins::callHook('add_during_call');
 	is( "@called", '0 1.1' );
 
 	# Then three.
 	@called = ();
-	Plugins::callHook( 'add_during_call' );
+	Plugins::callHook('add_during_call');
 	is( "@called", '0 1.1 1.2' );
 
 	# And stop adding them.
 	@called = ();
-	Plugins::callHook( 'add_during_call' );
+	Plugins::callHook('add_during_call');
 	is( "@called", '0 1.1 1.2' );
 }
 
@@ -153,27 +153,27 @@ sub testDelDuringCall {
 
 	# The first time through, they should all trigger.
 	@called = ();
-	Plugins::callHook( 'del_during_call' );
+	Plugins::callHook('del_during_call');
 	is( "@called", '1 2 3 4' );
 
 	# The first handle should be deleted.
 	@called = ();
-	Plugins::callHook( 'del_during_call' );
+	Plugins::callHook('del_during_call');
 	is( "@called", '2 3 4' );
 
 	# Then the second.
 	@called = ();
-	Plugins::callHook( 'del_during_call' );
+	Plugins::callHook('del_during_call');
 	is( "@called", '3 4' );
 
 	# Then the third.
 	@called = ();
-	Plugins::callHook( 'del_during_call' );
+	Plugins::callHook('del_during_call');
 	is( "@called", '4' );
 
 	# No more changes since the one which was removing callbacks is gone.
 	@called = ();
-	Plugins::callHook( 'del_during_call' );
+	Plugins::callHook('del_during_call');
 	is( "@called", '4' );
 }
 

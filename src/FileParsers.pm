@@ -781,7 +781,7 @@ sub parseROLUT {
 		file => $file,
 		hash => $r_hash
 	    );
-	Plugins::callHook("FileParsers::ROLUT", \%ret);
+	Plugins::callHook('FileParsers::ROLUT', \%ret);
 	return if ($ret{return});
 
 	undef %{$r_hash};
@@ -808,7 +808,7 @@ sub parseRODescLUT {
 		file => $file,
 		hash => $r_hash
 	    );
-	Plugins::callHook("FileParsers::RODescLUT", \%ret);
+	Plugins::callHook('FileParsers::RODescLUT', \%ret);
 	return if ($ret{return});
 
 	undef %{$r_hash};
