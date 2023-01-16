@@ -180,17 +180,18 @@ sub iterate {
 
 				} else {
 
-					my %plugin_args;
-					$plugin_args{x} = $self->{mapSolution}[0]{pos}{x};
-					$plugin_args{y} = $self->{mapSolution}[0]{pos}{y};
-					$plugin_args{steps} = $self->{mapSolution}[0]{steps};
-					$plugin_args{portal} = $self->{mapSolution}[0]{portal};
-					$plugin_args{plugin_retry} = $self->{mapSolution}[0]{plugin_retry};
-					$plugin_args{plugin_retry} = 0 if (!defined $plugin_args{plugin_retry});
 
+					my %plugin_args = (
+						x            => $self->{mapSolution}[0]{pos}{x},
+						y            => $self->{mapSolution}[0]{pos}{y},
+						steps        => $self->{mapSolution}[0]{steps},
+						portal       => $self->{mapSolution}[0]{portal},
+						plugin_retry => $self->{mapSolution}[0]{plugin_retry}
+					);
+					$plugin_args{plugin_retry} = 0 if (!defined $plugin_args{plugin_retry});
 					$plugin_args{return} = 0;
 
-					Plugins::callHook('npc_teleport_missing' => \%plugin_args );
+					Plugins::callHook('npc_teleport_missing' => \%plugin_args);
 
 					if ($plugin_args{return}) {
 						$self->{mapSolution}[0]{retry} = 0;

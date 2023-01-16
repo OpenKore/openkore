@@ -1696,7 +1696,7 @@ sub processAutoSell {
 		&& !$ai_v{sitAuto_forcedBySitCommand}
 	  ) {
 		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_sell_auto_start' => \%plugin_args );
+		Plugins::callHook('AI_sell_auto_start' => \%plugin_args);
 		return if ($plugin_args{return});
 		$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
