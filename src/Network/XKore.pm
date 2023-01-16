@@ -51,7 +51,7 @@ sub new {
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self->{server}) {
-		Network::XKore::CannotStart->throw(error => TF("Unable to start the X-Kore server.\n" . 
+		Network::XKore::CannotStart->throw(error => TF("Unable to start the X-Kore server.\n" .
 			"Make sure no other servers are running on port %s.\n", $port));
 	}
 
@@ -78,7 +78,7 @@ sub version {
 
 sub DESTROY {
 	my $self = shift;
-	
+
 	close($self->{client});
 }
 
@@ -105,19 +105,19 @@ sub serverPeerPort {
 sub serverRecv {
 	my $self = shift;
 	$self->recv();
-	
+
 	return undef unless length($self->{serverPackets});
 
 	my $packets = $self->{serverPackets};
 	$self->{serverPackets} = "";
-	
+
 	return $packets;
 }
 
 sub serverSend {
 	my $self = shift;
 	my $msg = shift;
-	Plugins::callHook("Network::serverSend/pre", { msg => \$msg });
+	Plugins::callHook('Network::serverSend/pre', {msg => \$msg});
 	$self->{client}->send("S".pack("v", length($msg)).$msg) if ($self->serverAlive);
 }
 
@@ -185,12 +185,12 @@ sub clientPeerPort {
 sub clientRecv {
 	my $self = shift;
 	$self->recv();
-	
+
 	return undef unless length($self->{clientPackets});
-	
+
 	my $packets = $self->{clientPackets};
 	$self->{clientPackets} = "";
-	
+
 	return $packets;
 }
 
@@ -201,12 +201,12 @@ sub clientRecv {
 sub clientSend {
 	my $self = shift;
 	my $msg = shift;
-	
+
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($switch eq "02AE") { #initialize_message_id_encryption
 		$msg = "";
 	}
-	
+
 	$self->{client}->send("R".pack("v", length($msg)).$msg) if ($self->clientAlive);
 }
 
@@ -251,7 +251,7 @@ sub checkConnection {
 	}
 
 	return if ($self->serverAlive);
-	
+
 	# (Re-)initialize X-Kore if necessary
 	$self->setState(Network::NOT_CONNECTED);
 	my $pid;
@@ -405,17 +405,17 @@ sub recv {
 		delete $self->{client};
 		return undef;
 	}
-	
+
 	$self->{incomingPackets} .= $msg;
-	
+
 	while ($self->{incomingPackets} ne "") {
 		last if (!length($self->{incomingPackets}));
-		
+
 		my $type = substr($self->{incomingPackets}, 0, 1);
 		my $len = unpack("v",substr($self->{incomingPackets}, 1, 2));
-		
+
 		last if ($len > length($self->{incomingPackets}));
-		
+
 		$msg = substr($self->{incomingPackets}, 3, $len);
 		$self->{incomingPackets} = (length($self->{incomingPackets}) - $len - 3)?
 			substr($self->{incomingPackets}, $len + 3, length($self->{incomingPackets}) - $len - 3)
@@ -439,13 +439,13 @@ sub recv {
 			# Keep-alive... useless.
 		}
 	}
-	
+
 	# Check if we need to send our sync
 	if (timeOut($timeout{'injectSync'})) {
 		$self->injectSync;
 		$timeout{'injectSync'}{'time'} = time;
 	}
-	
+
 	return 1;
 }
 
@@ -480,8 +480,8 @@ sub hackClient {
 	my $patchFind2 = pack('C*', 0xA1) . '....'	# mov eax, dword ptr [xxxx]
 		. pack('C*', 0x8D, 0x4D, 0xF4,		# lea ecx, dword ptr [ebp+var_0C]
 			0x51);				# push ecx
-	
-	
+
+
 	$original = $patchFind . $original . $patchFind2;
 
 	message T("Patching client to remove bot detection:\n"), "startup";
@@ -511,11 +511,11 @@ sub hackClient {
 
 		# Ensure we can read/write the memory
 		my $oldprot = Utils::Win32::VirtualProtectEx($hnd, $i, $pageSize, 0x40);
-		
+
 		if ($oldprot) {
 			# Read the page
 			my $data = Utils::Win32::ReadProcessMemory($hnd, $i, $pageSize);
-			
+
 			# Is the patched code in there?
 			if ($data =~ m/($original)/) {
 				# It is!
@@ -524,10 +524,10 @@ sub hackClient {
 				# Generate the new code, based on the old.
 				$patched = substr($matched, 0, length($patchFind)) . $patched;
 				$patched = $patched . substr($matched, length($patchFind) + 2, length($patchFind2));
-				
+
 				# Patch the data
 				$data =~ s/$original/$patched/;
-				
+
 				# Write the new code
 				if (Utils::Win32::WriteProcessMemory($hnd, $i, $data)) {
 					$updateChar = '*';
@@ -536,7 +536,7 @@ sub hackClient {
 					$updateChar = '!';
 				}
 			}
-			
+
 		# Undo the protection change
 		Utils::Win32::VirtualProtectEx($hnd, $i, $pageSize, $oldprot);
 		}

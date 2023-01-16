@@ -133,7 +133,7 @@ sub loadPlugins {
 	}
 
 	# Allow plugins to use command line arguments.
-	Plugins::callHook( 'parse_command_line' );
+	Plugins::callHook('parse_command_line');
 	main::checkEmptyArguments();
 }
 

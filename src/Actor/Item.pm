@@ -180,27 +180,27 @@ sub bulkEquip {
 	my ($item, $rightHand, $rightAccessory);
 	foreach (keys %{$list}) {
 		error "Wrong Itemslot specified: $_\n",'Actor::Item' if (!exists $equipSlot_rlut{$_});
-		
+
 		my $skipIndex;
 		$skipIndex = $rightHand if ($_ eq 'leftHand');
 		$skipIndex = $rightAccessory if ($_ eq 'leftAccessory');
-		
+
 		if ($list->{$_} eq "[NONE]") {
 			next unless ($char->{equipment} && $char->{equipment}{$_});
 			$char->{equipment}{$_}->unequip();
 		} else {
 			my $eqName = $list->{$_};
-			
+
 			if ($eqName =~ /^\d{3,}$/) {
 				$item = $char->inventory->getByNameID($eqName, 1);
 			} else {
 				$item = $char->inventory->getByName($eqName, 1);
 			}
-			
+
 			next unless ($item && $item->{identified} && $char->{equipment} && (!$char->{equipment}{$_} || $char->{equipment}{$_}{name} ne $item->{name}));
 
 			$item->equipInSlot($_);
-			
+
 			$rightHand = $item->{binID} if ($_ eq 'rightHand');
 			$rightAccessory = $item->{binID} if ($_ eq 'rightAccessory');
 		}
@@ -523,7 +523,7 @@ sub unequipFromSlot {
 # Depends on a plugin to implement the 'get_item_weight' hook.
 sub weight {
 	my ( $self ) = @_;
-	Plugins::callHook( 'get_item_weight', $self ) if !defined $self->{weight};
+	Plugins::callHook('get_item_weight', $self) if !defined $self->{weight};
 	$self->{weight};
 };
 
