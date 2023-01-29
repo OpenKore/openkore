@@ -3506,9 +3506,11 @@ sub sendMacroDetectorDownload {
 sub sendMacroDetectorAnswer {
 	my ($self, $answer) = @_;
 
+	my $answer_bytes = stringToBytes($answer);
+
 	$self->sendToServer($self->reconstruct({
 		switch => 'macro_detector_answer',
-		answer => $answer,
+		answer => $answer_bytes,
 	}));
 }
 

@@ -12176,15 +12176,18 @@ sub macro_detector_image {
 
         my $file = $Settings::logs_folder . "/captcha_$captcha_key.bmp";
 		my $final_image = pack("H*", $imageHex);
+		$captcha_image_content = $final_image;
         open my $DUMP, '>:raw', $file;
         print $DUMP $final_image;
         close $DUMP;
 
 		my $hookArgs = {captcha_image => $final_image};
 		Plugins::callHook ('captcha_image', $hookArgs);
+		Plugins::callHook ('captcha_file', {file => $file});
 		return 1 if $hookArgs->{return};
 
 		warning TF("Macro Detector - captcha has been saved in: %s, open it, solve it and use the command: captcha <text>\n", $file), "captcha";
+
 		$captcha_image = "";
 		$captcha_size = undef;
 		$captcha_key = undef;
@@ -12247,18 +12250,8 @@ sub captcha_preview_image {
 	if(length($captcha_image) >= $captcha_size) {
 		my $image = uncompress($captcha_image);
 		my $imageHex = unpack("H*", $image);
-        my $byte1; my $byte2; my $byte3;
-        for (my $i = 102; $i < 3564; $i += 6) {
-            $byte1 = hex(substr($imageHex, $i, 2));
-            $byte2 = substr($imageHex, $i + 2, 2);
-            $byte3 = hex(substr($imageHex, $i + 4, 2));
 
-            if ($byte1 > 250 && $byte2 eq '00' && $byte3 > 250) {
-                substr($imageHex, $i + 2, 2) = 'FF';
-            }
-        }
-
-        my $file = $Settings::logs_folder . "/captcha_preview_$captcha_key.bmp";
+        my $file = $Settings::logs_folder . "/captcha_preview_".$char->{name}."_".$captcha_key.".bmp";
         open my $DUMP, '>:raw', $file;
         print $DUMP pack("H*", $imageHex);
         close $DUMP;
