@@ -1734,6 +1734,8 @@ sub stat_info2 {
 		$char->{luk_bonus} = $val2;
 		debug "Luck: $val + $val2\n", "parseMsg";
 	}
+	$char->inventory->onStatInfo2() if(!$masterServer->{itemListType});
+
 }
 # Notifies clients in an area, that an other visible object is walking (ZC_NOTIFY_PLAYERMOVE).
 # 0086 <id>.L <walk data>.6B <walk start time>.L
@@ -5093,9 +5095,19 @@ sub inventory_items_stackable {
 
 sub item_list_start {
 	my ($self, $args) = @_;
-	debug "Starting Item List. ID: $args->{type}".
-			($args->{name} ? " ($args->{name})\n" : "\n"), "info";
 	$current_item_list = $args->{type};
+
+	debug "Starting Item List. ID: $args->{type}". ($args->{name} ? " ($args->{name})\n" : "\n"), "info";
+
+	if ( $args->{type} == INVTYPE_INVENTORY ) {
+		$char->inventory->onitemListStart();
+	} elsif ( $args->{type} == INVTYPE_CART ) {
+		$char->cart->onitemListStart();
+	} elsif ( $args->{type} == INVTYPE_STORAGE || $args->{type} == INVTYPE_GUILD_STORAGE ) {
+		$char->storage->onitemListStart();
+	} else {
+		warning TF("Unsupported item_list_start type (%s)", $args->{type}), "info";
+	}
 }
 
 sub item_list_stackable {
@@ -5134,7 +5146,7 @@ sub item_list_stackable {
 		$arguments->{getter} = sub { $char->storage->getByID($_[0]{ID}) };
 		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 	} else {
-		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
+		warning TF("Unsupported item_list_stackable type (%s)", $args->{type}), "info";
 	}
 
 	$self->_items_list($arguments);
@@ -5184,7 +5196,7 @@ sub item_list_nonstackable {
 		$arguments->{adder} = sub { $char->storage->add($_[0]) };
 
 	} else {
-		warning TF("Unsupported item_list type (%s)", $args->{type}), "info";
+		warning TF("Unsupported item_list_nonstackable type (%s)", $args->{type}), "info";
 	}
 
 	$self->_items_list($arguments);
@@ -5193,6 +5205,15 @@ sub item_list_nonstackable {
 sub item_list_end {
 	my ($self, $args) = @_;
 	debug TF("Ending Item List. ID: %s\n", $args->{type}), "info";
+	if ( $args->{type} == INVTYPE_INVENTORY ) {
+		$char->inventory->onitemListEnd();
+	} elsif ( $args->{type} == INVTYPE_CART ) {
+		$char->cart->onitemListEnd();
+	} elsif ( $args->{type} == INVTYPE_STORAGE || $args->{type} == INVTYPE_GUILD_STORAGE ) {
+		$char->storage->onitemListEnd();
+	} else {
+		warning TF("Unsupported item_list_end type (%s)", $args->{type}), "info";
+	}
 	undef $current_item_list;
 }
 
