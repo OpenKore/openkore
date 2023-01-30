@@ -37,11 +37,11 @@ sub new {
 		'0436' => ['map_login', 'a4 a4 a4 V C', [qw(accountID charID sessionID tick sex)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'0366' => ['skill_use_location', 'v4', [qw(lv skillID x y)]],
 		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
 		'0365' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'023B' => ['storage_password'],
 		'0360' => ['sync', 'V', [qw(time)]],
+		'0AF4' => ['skill_use_location', 'v4 C', [qw(lv skillID x y unknown)]], #11
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -64,7 +64,7 @@ sub new {
 		map_login 0436
 		party_join_request_by_name 02C4
 		skill_use 0438
-		skill_use_location 0366
+		skill_use_location 0AF4
 		storage_item_add 0364
 		storage_item_remove 0365
 		storage_password 023B
