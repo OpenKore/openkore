@@ -1043,7 +1043,10 @@ sub _items_list {
 
 		my $index = ($local_item->{binID} >= 0) ? $local_item->{binID} : $local_item->{ID};
 		debug "$args->{debug_str}: $local_item->{name} ($index) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}}\n", 'parseMsg';
-		Plugins::callHook($args->{hook}, {index => $index, item => $local_item});
+		Plugins::callHook($args->{hook}, {
+			index => $index,
+			item => $local_item
+		});
 	}
 }
 
@@ -1350,7 +1353,7 @@ sub skill_use_location {
 	my $source = Actor::get($sourceID);
 	my $skillName = Skill->new(idn => $skillID)->getName();
 	my $disp = skillUseLocation_string($source, $skillName, $args);
-	
+
 	delete $source->{casting};
 
 	# Print skill use message
