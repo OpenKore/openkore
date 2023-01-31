@@ -95,7 +95,10 @@ sub state {
 			error "Invalid AI state value given to AI::state (".($_[0])."). Ignoring state change.\n";
 			return;
 		}
-		Plugins::callHook('AI_state_change', {old => $AI, new => $_[0]});
+		Plugins::callHook('AI_state_change', {
+			old => $AI,
+			new => $_[0]
+		});
 		$AI = $_[0];
 	}
 	return $AI;
@@ -125,13 +128,13 @@ sub queue {
 
 sub clear {
 	my $total = scalar @_;
-	
+
 	# If no arg was given clear all AI queue
 	if ($total == 0) {
 		undef @ai_seq;
 		undef @ai_seq_args;
 		undef %ai_v;
-	
+
 	# If 1 arg was given find it in the queue
 	} elsif ($total == 1) {
 		my $wanted_action = shift;
@@ -142,13 +145,13 @@ sub clear {
 			last;
 		}
 		return unless (defined $seq_index); # return unless we found the action in the queue
-		
+
 		splice(@ai_seq, $seq_index , 1); # Splice it out of @ai_seq
 		splice(@ai_seq_args, $seq_index , 1);  # Splice it out of @ai_seq_args
 		# When there are multiple of the same action (route, attack, route) the splices of remove the first one
 		# So recursively call AI::clear again with the same action until none is found
 		AI::clear($wanted_action);
-	
+
 	# If more than 1 arg was given recursively call AI::clear for each one
 	} else {
 		foreach (@_) {
