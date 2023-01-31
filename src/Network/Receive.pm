@@ -1794,7 +1794,7 @@ sub actor_display {
 	}
 
 	if ( ($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0) ||
-		 (blockDistance(\%coordsFrom, \%coordsTo) > ($config{clientSight} + $config{clientSight_removeBeyond}))	) {
+		 (blockDistance(\%coordsFrom, \%coordsTo) > $config{clientSight}) ) {
 			warning TF("Ignoring bugged actor moved packet (%s) (%d, %d)->(%d, %d)\n", $args->{switch}, $coordsFrom{x}, $coordsFrom{y}, $coordsTo{x}, $coordsTo{y});
 		return;
 	}
@@ -1995,14 +1995,9 @@ sub actor_display {
 		my $realActorPos = calcPosition($actor);
 		my $realActorDist = blockDistance($realMyPos, $realActorPos);
 
-		my $max_sight_base = $config{clientSight};
-		my $max_sight_extra = $config{clientSight_removeBeyond};
-
-		my $max_sight = $max_sight_base + $max_sight_extra;
-
-		if ($realActorDist >= $max_sight) {
+		if ($realActorDist >= $config{clientSight}) {
 			my ($actor_type) = $object_class =~ /\:\:(\w+)$/;
-			warning TF("Removed out of sight %s: '%s' at (%d, %d) (distance: %d >= max %d)\n", $actor_type, $actor->{name}, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $max_sight);
+			warning TF("Removed out of sight %s: '%s' at (%d, %d) (distance: %d >= max %d)\n", $actor_type, $actor->{name}, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $config{clientSight});
 			return;
 		}
 	}
