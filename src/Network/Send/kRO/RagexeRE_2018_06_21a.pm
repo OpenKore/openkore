@@ -37,7 +37,6 @@ sub new {
 		map_login 0436
 		party_join_request_by_name 02C4
 		skill_use 0438
-		skill_use_location 0366
 		storage_item_add 0364
 		storage_item_remove 0365
 		storage_password 023B
