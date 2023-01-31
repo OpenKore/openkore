@@ -169,13 +169,13 @@ sub serverSend {
 	my $self = shift;
 	my $msg = shift;
 	if ($self->serverAlive) {
-		if (Plugins::hasHook('Network::serverSend/pre')) {
-			Plugins::callHook('Network::serverSend/pre', {msg => \$msg});
+		if (Plugins::hasHook("Network::serverSend/pre")) {
+			Plugins::callHook("Network::serverSend/pre", { msg => \$msg });
 		}
 		if (defined $msg) {
 			$self->{remote_socket}->send($msg);
-			if (Plugins::hasHook('Network::serverSend')) {
-				Plugins::callHook('Network::serverSend', {msg => $msg});
+			if (Plugins::hasHook("Network::serverSend")) {
+				Plugins::callHook("Network::serverSend", { msg => $msg });
 			}
 		}
 	}
@@ -192,8 +192,8 @@ sub serverRecv {
 	return undef unless (dataWaiting(\$self->{remote_socket}));
 
 	$self->{remote_socket}->recv($msg, 1024 * 32);
-	if (Plugins::hasHook('Network::serverRecv')) {
-		Plugins::callHook('Network::serverRecv', {msg => \$msg});
+	if (Plugins::hasHook("Network::serverRecv")) {
+		Plugins::callHook("Network::serverRecv", { msg => \$msg });
 	}
 	if (!defined($msg) || length($msg) == 0) {
 		# Connection from server closed.
@@ -242,10 +242,10 @@ sub serverDisconnect {
 
 		if ($self->serverAlive()) {
 			error T("couldn't disconnect\n"), "connection";
-			Plugins::callHook('serverDisconnect/fail');
+			Plugins::callHook("serverDisconnect/fail");
 		} else {
 			message T("disconnected\n"), "connection";
-			Plugins::callHook('serverDisconnect/success');
+			Plugins::callHook("serverDisconnect/success");
 		}
 	}
 }
@@ -352,7 +352,7 @@ sub checkConnection {
 
 		# call plugin's hook to determine if we can continue the work
 		if ($self->serverAlive) {
-			Plugins::callHook('Network::serverConnect/master');
+			Plugins::callHook("Network::serverConnect/master");
 			return if ($conState == 1.5);
 		}
 
@@ -483,7 +483,7 @@ sub checkConnection {
 		}
 
 		# on this special stage, the plugin will know what to do next.
-		Plugins::callHook('Network::serverConnect/special');
+		Plugins::callHook("Network::serverConnect/special");
 
 	} elsif ($self->getState() == Network::CONNECTED_TO_MASTER_SERVER) {
 		if(!$self->serverAlive() && ($config{'server'} ne "" || $masterServer->{charServer_ip}) && !$conState_tries) {
@@ -523,7 +523,7 @@ sub checkConnection {
 
 			# call plugin's hook to determine if we can continue the connection
 			if ($self->serverAlive) {
-				Plugins::callHook('Network::serverConnect/char');
+				Plugins::callHook("Network::serverConnect/char");
 				$reconnectCount = 0;
 				return if ($conState == 1.5);
 			}
@@ -559,7 +559,7 @@ sub checkConnection {
 
 			# call plugin's hook to determine if we can continue the connection
 			if ($self->serverAlive) {
-				Plugins::callHook('Network::serverConnect/charselect');
+				Plugins::callHook("Network::serverConnect/charselect");
 				return if ($conState == 1.5);
 			}
 
@@ -597,7 +597,7 @@ sub checkConnection {
 
 			# call plugin's hook to determine if we can continue the connection
 			if ($self->serverAlive) {
-				Plugins::callHook('Network::serverConnect/mapserver');
+				Plugins::callHook("Network::serverConnect/mapserver");
 				return if ($conState == 1.5);
 			}
 

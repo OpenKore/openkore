@@ -867,9 +867,9 @@ sub run {
 			my %params;
 			$params{switch} = $switch;
 			$params{args} = $args;
-			Plugins::callHook('Commands::run/pre', \%params);
+			Plugins::callHook("Commands::run/pre", \%params);
 			$handler->($switch, $args);
-			Plugins::callHook('Commands::run/post', \%params);
+			Plugins::callHook("Commands::run/post", \%params);
 
 		} else {
 			my %params = ( switch => $switch, input => $command );

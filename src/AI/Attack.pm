@@ -38,7 +38,7 @@ use Utils::PathFinding;
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
-
+  
 	if (
 		   (AI::action eq "attack" && $args->{ID})
 		|| (AI::action eq "route" && AI::action (1) eq "attack" && $args->{attackID})
@@ -52,13 +52,13 @@ sub process {
 		} else {
 			if (AI::action(1) eq "attack") {
 				$ataqArgs = AI::args(1);
-
+				
 			} elsif (AI::action(2) eq "attack") {
 				$ataqArgs = AI::args(2);
 			}
 			$ID = $args->{attackID};
 		}
-
+		
 		if (targetGone($ataqArgs, $ID)) {
 			finishAttacking($ataqArgs, $ID);
 			return;
@@ -66,7 +66,7 @@ sub process {
 			giveUp($ataqArgs, $ID);
 			return;
 		}
-
+		
 		my $target = Actor::get($ID);
 		if ($target) {
 			my $party = $config{'attackAuto_party'} ? 1 : 0;
@@ -215,7 +215,7 @@ sub finishAttacking {
 	AI::dequeue while (AI::inQueue("attack"));
 	if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
 		message TF("Target %s died\n", $monsters_old{$ID}), "ai_attack";
-		Plugins::callHook('target_died', {monster => $monsters_old{$ID}});
+		Plugins::callHook("target_died", {monster => $monsters_old{$ID}});
 		monKilled();
 
 		# Pickup loot when monster's dead

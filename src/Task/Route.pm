@@ -114,12 +114,12 @@ sub new {
 	}
 
 	$self->{actor} = $args{actor};
-
+	
 	# Pass a weak reference of mercenary/homunculus to ourselves in order to avoid circular references (memory leaks).
 	if ($self->{actor}->isa("AI::Slave::Homunculus") || $self->{actor}->isa("Actor::Slave::Homunculus") || $self->{actor}->isa("AI::Slave::Mercenary") || $self->{actor}->isa("Actor::Slave::Mercenary")) {
 		Scalar::Util::weaken($self->{actor});
 	}
-
+	
 	$self->{dest}{map} = $args{field};
 	$self->{dest}{pos}{x} = $args{x};
 	$self->{dest}{pos}{y} = $args{y};
@@ -197,23 +197,23 @@ sub iterate {
 	} elsif ($self->{stage} == CALCULATE_ROUTE) {
 		my $pos = $self->{actor}{pos};
 		my $pos_to = $self->{actor}{pos_to};
-
+		
 		my $begin = time;
-
+		
 		if (!$self->{meetingSubRoute} && !$self->{LOSSubRoute} && $pos_to->{x} == $self->{dest}{pos}{x} && $pos_to->{y} == $self->{dest}{pos}{y}) {
 			debug "Route $self->{actor}: Current position and destination are the same.\n", "route";
 			$self->setDone();
-
+		
 		} elsif ($self->getRoute($self->{solution}, $self->{dest}{map}, $pos, $self->{dest}{pos}, $self->{avoidWalls}, 1)) {
 			$self->{stage} = ROUTE_SOLUTION_READY;
-
+			
 			@{$self->{last_pos}}{qw(x y)} = @{$pos}{qw(x y)};
 			@{$self->{last_pos_to}}{qw(x y)} = @{$pos_to}{qw(x y)};
 			$self->{start} = 1;
 			$self->{confirmed_correct_vector} = 0;
-
+			
 			debug "Route $self->{actor} Solution Ready! Found path on ".$self->{dest}{map}->baseName." from ".$pos->{x}." ".$pos->{y}." to ".$self->{dest}{pos}{x}." ".$self->{dest}{pos}{y}.". Size: ".@{$self->{solution}}." steps.\n", "route";
-
+			
 			unshift(@{$self->{solution}}, { x => $pos->{x}, y => $pos->{y}});
 
 			if (time - $begin < 0.01) {
@@ -272,7 +272,7 @@ sub iterate {
 		undef $self->{last_best_pos_to_step};
 		undef $self->{next_pos};
 		undef $self->{time_step};
-
+		
 		$self->{stage} = WALK_ROUTE_SOLUTION;
 
 		if (@{$self->{solution}} == 0) {
@@ -287,21 +287,21 @@ sub iterate {
 	} elsif ($self->{stage} == WALK_ROUTE_SOLUTION) {
 		my $solution = $self->{solution};
 		$self->{route_out_time} = time if !exists $self->{route_out_time};
-
+		
 		if (!defined $self->{step_index}) {
 			$self->{step_index} = $config{$self->{actor}{configPrefix}.'route_step'};
 		}
-
+		
 		my ($current_pos, $current_pos_to);
-
+		
 		# $actor->{pos} is the position the character moved FROM in the last move packet received
 		@{$current_pos}{qw(x y)} = @{$self->{actor}{pos}}{qw(x y)};
-
+		
 		# $actor->{pos_to} is the position the character moved TO in the last move packet received
 		@{$current_pos_to}{qw(x y)} = @{$self->{actor}{pos_to}}{qw(x y)};
-
+		
 		my $current_calc_pos = calcPosition($self->{actor});
-
+		
 		if ($current_calc_pos->{x} == $solution->[$#{$solution}]{x} && $current_calc_pos->{y} == $solution->[$#{$solution}]{y}) {
 			# Actor position is the destination; we've arrived at the destination
 			if ($self->{notifyUponArrival}) {
@@ -313,16 +313,16 @@ sub iterate {
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
 			return;
-
+			
 		} else {
 			# Failsafe
 			my $lookahead_failsafe_max = $self->{step_index} + 1;
 			my $lookahead_failsafe_count = 0;
-
+			
 			# This looks ahead in the solution array and finds the closest position in it to our current {pos}, then it looks $lookahead_failsafe_max further, just to be sure
 			my $best_pos_step = 0;
 			my $next_best_pos_step_try = 1;
-
+			
 			while (1) {
 				if (adjustedBlockDistance($current_pos, $solution->[$best_pos_step]) > adjustedBlockDistance($current_pos, $solution->[$next_best_pos_step_try])) {
 					$best_pos_step = $next_best_pos_step_try;
@@ -335,12 +335,12 @@ sub iterate {
 					}
 				}
 				$next_best_pos_step_try++;
-
+				
 				if ($next_best_pos_step_try > $#{$solution}) {
 					last;
 				}
 			}
-
+			
 			# This does the same, but with {pos_to}
 			my $best_pos_to_step = 0;
 			my $next_best_pos_to_step_try = 1;
@@ -356,14 +356,14 @@ sub iterate {
 					}
 				}
 				$next_best_pos_to_step_try++;
-
+				
 				if ($next_best_pos_to_step_try > $#{$solution}) {
 					last;
 				}
 			}
-
+			
 			# Here there may be the need to check if 'pos' has changed yet best_pos_step is still the same, creating a lag in the movement
-
+			
 			# Last change in pos and pos_to put us in a walk path oposite to the desired one
 			if ($best_pos_step > $best_pos_to_step) {
 				if ($self->{confirmed_correct_vector}) {
@@ -376,24 +376,24 @@ sub iterate {
 				debug "Route $self->{actor} - movement vector confirmed.\n", "route";
 				$self->{confirmed_correct_vector} = 1;
 			}
-
+			
 			# Last move was to the cell we are already at, lag?, buggy code?
 			if ($self->{start} || $best_pos_step == 0) {
 				debug "Route $self->{actor} - not trimming down solution (" . @{$solution} . ") because best_pos_step is 0.\n", "route";
-
+				
 			} else {
 				# Should we trimm only the known walk ones ($best_pos_step) or the known + the guessed (calcStepsWalkedFromTimeAndRoute)? Default was both.
-
+				
 				# Currently testing delete up to known ($best_pos_step)(exclusive)
 				debug "Route $self->{actor} - trimming down solution (" . @{$solution} . ") by ".($best_pos_step)." steps\n", "route";
-
+				
 				splice(@{$solution}, 0, $best_pos_step);
 			}
-
+			
 			$self->{last_best_pos_step} = $best_pos_step;
 			$self->{last_best_pos_to_step} = $best_pos_to_step;
 		}
-
+		
 		my $pos_changed;
 		if ($self->{last_pos}{x} == $current_pos->{x} && $self->{last_pos}{y} == $current_pos->{y}) {
 			$pos_changed = 0;
@@ -473,7 +473,7 @@ sub iterate {
 			# We're either starting to move or already moving, so send out more
 			# move commands periodically to keep moving and updating our position
 			my $begin = time;
-
+			
 			if ($self->{decreasing_step_index}) {
 				if ($pos_changed) {
 					debug "Route $self->{actor} - started moving again, increasing step size by $self->{decreasing_step_index} (from ".($self->{step_index})." to ".($self->{step_index}+$self->{decreasing_step_index}).")\n", "route";
@@ -488,9 +488,9 @@ sub iterate {
 			if ($self->{step_index} >= $stepsleft) {
 				$self->{step_index} = $stepsleft - 1;
 			}
-
+			
 			# Here maybe we should also use pos_to (in the form of best_pos_to_step) to decide the next step index, as it can make the routing way more responsive
-
+			
 			@{$self->{next_pos}}{qw(x y)} = @{$solution->[$self->{step_index}]}{qw(x y)};
 
 			# But first, check whether the distance of the next point isn't abnormally large.
@@ -509,18 +509,18 @@ sub iterate {
 						return;
 					}
 				}
-
+				
 				if ($self->{start} || ($self->{last_pos}{x} != $current_pos->{x} || $self->{last_pos}{y} != $current_pos->{y})) {
 					$self->{time_step} = time;
 				}
-
+				
 				$self->{start} = 0;
-
+				
 				@{$self->{last_pos}}{qw(x y)} = @{$current_pos}{qw(x y)};
 				@{$self->{last_pos_to}}{qw(x y)} = @{$current_pos_to}{qw(x y)};
-
+				
 				debug "Route $self->{actor} - next step moving to ($self->{next_pos}{x}, $self->{next_pos}{y}), index $self->{step_index}, $stepsleft steps left\n", "route";
-
+				
 				my $task = new Task::Move(
 					actor => $self->{actor},
 					x => $self->{next_pos}{x},
@@ -578,7 +578,7 @@ sub getRoute {
 	# So we find a nearby spot that is walkable.
 	my %start = %{$start};
 	my %dest = %{$dest};
-
+	
 	my $closest_start = $field->closestWalkableSpot(\%start, 1);
 	my $closest_dest = $field->closestWalkableSpot(\%dest, 1);
 	$closest_dest = $field->closestWalkableSpot(\%dest, 10) if(!$closest_dest); # can't find a closest walkable spot
@@ -595,9 +595,9 @@ sub getRoute {
 	$plugin_args{field} = $field;
 	$plugin_args{avoidWalls} = $avoidWalls;
 	$plugin_args{return} = 0;
-
-	Plugins::callHook('getRoute' => \%plugin_args);
-
+	
+	Plugins::callHook( getRoute => \%plugin_args );
+	
 	my $pathfinding;
 	if ($plugin_args{return}) {
 		$pathfinding = $plugin_args{pathfinding};
@@ -620,7 +620,7 @@ sub getRoute {
 	} else {
 		$ret = $pathfinding->runcount();
 	}
-
+	
 	return ($ret >= 0 ? 1 : 0);
 }
 

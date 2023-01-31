@@ -3,7 +3,7 @@
 #  OpenKore - Interface::Console::Curses
 #  You need Curses (the Perl bindings for (n)curses)
 #
-#  Copyright (c) 2004 OpenKore development team
+#  Copyright (c) 2004 OpenKore development team 
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -569,9 +569,9 @@ sub updateStatus {
 			$self->{loading}{current} ? $self->{loading}{current} / $self->{loading}{total} * 100 : 0);
 		$self->printw($self->{winStatus}, 2, 0, "{green}          @*",
 			$self->{loading}{text});
-
+		
 		$self->{loading}{finish} = 2 if $self->{loading}{finish};
-
+		
 		noutrefresh $self->{winStatus};
 		return;
 	}
@@ -680,7 +680,7 @@ sub updateStatus {
 	$self->{heartBeat} = !$self->{heartBeat};
 	addstr $self->{winStatus}, 0, 0, $self->{heartBeat} ? ":" : ".";
 
-	Plugins::callHook('curses/updateStatus');
+	Plugins::callHook( 'curses/updateStatus' );
 
 	noutrefresh $self->{winStatus};
 }
@@ -696,7 +696,7 @@ sub updateObjects {
 	erase $self->{winObjects};
 
 	my $display = $self->{objectsMode} ? $self->{objectsMode} : $sys{curses_objects} || 'players, monsters, slaves, items, npcs';
-
+	
 	for (split /\s*,\s*/, $display) {
 		my ($objectsID, $objects, $style) = ([], {}, 'normal');
 		if ($_ eq 'players') {
@@ -724,7 +724,7 @@ sub updateObjects {
 			my $id = $objectsID->[$i];
 			next if ($id eq "");
 			next if $config{monster_filter} && $objectsID == \@monstersID && $objects->{$id}->{name_given} !~ /$config{monster_filter}/igs;
-
+			
 			my $lineStyle = $style;
 			my $idx = $i;
 			my $name;
@@ -805,7 +805,7 @@ sub updateObjects {
 	}
 =cut
 
-	Plugins::callHook('curses/updateObjects');
+	Plugins::callHook( 'curses/updateObjects' );
 
 	noutrefresh $self->{winObjects};
 }
@@ -850,7 +850,7 @@ sub setCursor {
 
 sub loadfiles {
 	my ($self, $hook, $param) = @_;
-
+	
 	if ($hook eq 'loadfiles') {
 		$self->{loading} = {
 			current => $param->{current},
@@ -869,7 +869,7 @@ sub loadfiles {
 			finish => 1,
 		};
 	}
-
+	
 	$self->updateStatus;
 }
 

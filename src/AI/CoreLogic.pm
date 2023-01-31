@@ -1187,7 +1187,7 @@ sub processAutoStorage {
 			  || ($config{itemsMaxNum_sellOrStore} && $char->inventory->size() >= $config{itemsMaxNum_sellOrStore}))
 		  && !AI::inQueue("storageAuto") && $char->inventory->isReady()) {
 		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_storage_auto_weight_start' => \%plugin_args);
+		Plugins::callHook( AI_storage_auto_weight_start => \%plugin_args );
 		return if ($plugin_args{return});
 
 		# Initiate autostorage when the weight limit has been reached
@@ -1209,7 +1209,7 @@ sub processAutoStorage {
 		  && $char->inventory->isReady()) {
 
 		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_storage_auto_get_auto_start' => \%plugin_args);
+		Plugins::callHook( AI_storage_auto_get_auto_start => \%plugin_args );
 		return if ($plugin_args{return});
 
 		# Initiate autostorage when we're low on some item, and getAuto is set
@@ -1253,7 +1253,7 @@ sub processAutoStorage {
 					if ($char->storage->wasOpenedThisSession() &&
 						!($char->storage->getByName($config{"getAuto_$i"}) || $char->storage->getByNameID($config{"getAuto_$i"}))) {
 						debug TF("storage: %s out of stock\n\n", $config{"getAuto_$i"});
-						Plugins::callHook('AI_storage_item_out_of_stock', {
+						Plugins::callHook("AI_storage_item_out_of_stock",  {
 								name => $config{"getAuto_$i"},
 								getAutoIndex => $i,
 							}
@@ -1442,7 +1442,7 @@ sub processAutoStorage {
 			}
 
 			my %pluginArgs;
-			Plugins::callHook('AI_storage_open', \%pluginArgs); # we can hook here to perform actions BEFORE any storage function
+			Plugins::callHook("AI_storage_open", \%pluginArgs); # we can hook here to perform actions BEFORE any storage function
 			return if ($pluginArgs{return});
 
 			if(!$timeout{ai_storageAuto_wait_before_action}{time}) {
@@ -1457,7 +1457,7 @@ sub processAutoStorage {
 
 				# if storage is full disconnect if it says so in conf
 				if($char->storage->wasOpenedThisSession() && $char->storage->isFull()) {
-					Plugins::callHook('AI_storage_full', \%pluginArgs);
+					Plugins::callHook("AI_storage_full", \%pluginArgs);
 					if($config{'dcOnStorageFull'}) {
 						$messageSender->sendQuit();
 						error T("Auto disconnecting on StorageFull!\n");
@@ -1481,7 +1481,7 @@ sub processAutoStorage {
 						error TF("Unable to store %s.\n", $item->{name});
 
 						if($char->storage->getByName($item->{name})) {
-							Plugins::callHook('AI_storage_item_full', {
+							Plugins::callHook("AI_storage_item_full", {
 									item => $item,
 								}
 							);
@@ -1542,7 +1542,7 @@ sub processAutoStorage {
 				if ($args->{done}) {
 					# plugins can hook here and decide to keep storage open longer
 					my %hookArgs;
-					Plugins::callHook('AI_storage_done', \%hookArgs);
+					Plugins::callHook("AI_storage_done", \%hookArgs);
 					undef $args->{done} if ($hookArgs{return});
 				}
 			}
@@ -1626,7 +1626,7 @@ sub processAutoStorage {
 
 					if ($item{storage}{amount} < $item{amount_needed}) {
 						warning TF("storage: %s out of stock\n", $item{name});
-						Plugins::callHook('AI_storage_item_out_of_stock', {
+						Plugins::callHook("AI_storage_item_out_of_stock",  {
 								name => $config{"getAuto_$args->{index}"},
 								getAutoIndex => $args->{index},
 							}
@@ -1660,7 +1660,7 @@ sub processAutoStorage {
 
 			# plugins can hook here and decide to keep storage open longer after getAuto
 			my %hookArgs;
-			Plugins::callHook('AI_storage_done_after_getAuto', \%hookArgs);
+			Plugins::callHook("AI_storage_done_after_getAuto", \%hookArgs);
 			return if ($hookArgs{return});
 
 			$messageSender->sendStorageClose() unless $config{storageAuto_keepOpen};
@@ -1696,7 +1696,7 @@ sub processAutoSell {
 		&& !$ai_v{sitAuto_forcedBySitCommand}
 	  ) {
 		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_sell_auto_start' => \%plugin_args);
+		Plugins::callHook( AI_sell_auto_start => \%plugin_args );
 		return if ($plugin_args{return});
 		$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
@@ -1842,7 +1842,7 @@ sub processAutoSell {
 				return unless (timeOut($args->{'recv_sellList_time'}, $timeout{ai_sellAuto_wait_before_sell}{timeout}));
 			}
 
-			Plugins::callHook('AI_sell_auto');
+			Plugins::callHook("AI_sell_auto");
 
 			# Form list of items to sell
 			my @sellItems;
@@ -1882,7 +1882,7 @@ sub processAutoBuy {
 	my $needitem;
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && $char->inventory->isReady()) {
 		my %plugin_args = ( return => 0 );
-		Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
+		Plugins::callHook( AI_buy_auto_start => \%plugin_args );
 		return if ($plugin_args{return});
 
 		undef $ai_v{'temp'}{'found'};
@@ -2263,7 +2263,7 @@ sub processLockMap {
 			$config{'lockMap'} = '';
 		} else {
 			my %args;
-			Plugins::callHook('AI/lockMap', \%args);
+			Plugins::callHook("AI/lockMap", \%args);
 			unless ($args{'return'}) {
 				my ($lockX, $lockY, $i);
 				eval {
@@ -2381,7 +2381,7 @@ sub processRandomWalk {
 
 		my %plugin_args;
 		$plugin_args{return} = 0;
-		Plugins::callHook('ai_processRandomWalk' => \%plugin_args);
+		Plugins::callHook( ai_processRandomWalk => \%plugin_args );
 		return if ($plugin_args{return});
 
 		my ($randX, $randY);
@@ -2700,7 +2700,7 @@ sub processFollow {
 		ai_partyfollow();
 	}
 
-	Plugins::callHook('ai_follow', $args);
+	Plugins::callHook("ai_follow", $args);
 }
 
 ##### SITAUTO-IDLE #####
@@ -3220,7 +3220,7 @@ sub processAutoAttack {
 					my %hookArgs;
 					$hookArgs{monster} = $monster;
 					$hookArgs{return} = 1;
-					Plugins::callHook('checkMonsterAutoAttack', \%hookArgs);
+					Plugins::callHook("checkMonsterAutoAttack", \%hookArgs);
 					next if (!$hookArgs{return});
 					push @cleanMonsters, $_;
 				}
