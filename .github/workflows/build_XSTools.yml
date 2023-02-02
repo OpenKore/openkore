@@ -1,12 +1,13 @@
 # workflow syntax           https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 # runs-on                   https://github.com/actions/virtual-environments
-# setup-python              https://github.com/actions/setup-python
-# actions-setup-perl        https://github.com/marketplace/actions/setup-perl-environment
+# actions checkout          https://github.com/actions/checkout
+# actions setup-python      https://github.com/actions/setup-python
+# actions setup-perl        https://github.com/marketplace/actions/setup-perl-environment
 # strawberry Perl 5.12.3.0  https://strawberryperl.com/download/5.12.3.0/strawberry-perl-5.12.3.0-portable.zip
 # strawberry Perl 5.32.1.1  https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-32bit-portable.zip
-# actions-upload-artifact   https://github.com/actions/upload-artifact
-# actions-download-artifact https://github.com/actions/download-artifact
-# actions-cache             https://github.com/actions/cache
+# actions upload-artifact   https://github.com/actions/upload-artifact
+# actions download-artifact https://github.com/actions/download-artifact
+# actions cache             https://github.com/actions/cache
 name: Build XSTools
 on:
   push:
@@ -49,7 +50,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     # setup matrix:
     # - windows-2019 + python 2.7 x86 + strawberry perl 5.12 x86 + strawberry g++ x86
@@ -57,7 +58,7 @@ jobs:
     # - ubuntu-20.04 + python 2.7 x64 +            perl 5.12 x64
     # - ubuntu-22.04 + python 3   x64 +            perl last (5.34) x64
     - name: Setup python ${{ matrix.python }} ${{ matrix.architecture }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python }}
         architecture: ${{ matrix.architecture }}
@@ -86,7 +87,7 @@ jobs:
     - name: (Windows) Check the Strawberry cache
       if: runner.os == 'Windows'
       id: cache-strawberry
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: c:\Strawberry
         key: ${{ runner.os }}-strawberry-${{ matrix.perl }}
@@ -180,7 +181,7 @@ jobs:
 
     - name: (Windows) Making artifacts on Windows
       if: runner.os == 'Windows'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
         path: |
@@ -190,7 +191,7 @@ jobs:
 
     - name: (Linux) Making artifacts on Linux
       if: runner.os == 'Linux'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: ${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
         path: |
@@ -229,7 +230,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     ########################
     # preparing windows OS #
@@ -255,7 +256,7 @@ jobs:
     - name: (Windows) Check the Strawberry cache
       id: cache-strawberry
       if: runner.os == 'Windows'
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: c:\Strawberry
         key: ${{ runner.os }}-strawberry-${{ matrix.perl }}
@@ -286,7 +287,7 @@ jobs:
         perl --version
 
     - name: Restoring XTools from artifacts
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: ${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
 
@@ -323,7 +324,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: run "makedist.sh --help"
       shell: bash
