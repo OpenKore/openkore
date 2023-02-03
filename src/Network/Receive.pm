@@ -9363,9 +9363,11 @@ sub sell_result {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
 		error T("Sell failed.\n");
-	} else {
+	} else {		
+		message TF("Sold %s items.\n", @sellList.""), "success";
 		message T("Sell completed.\n"), "success";
 	}
+	@sellList = ();
 	if (AI::is("sellAuto")) {
 		AI::args->{recv_sell_packet} = 1;
 	}
