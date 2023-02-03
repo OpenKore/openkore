@@ -1789,17 +1789,13 @@ sub actor_display {
 	#  - server sending us false actors
 	#  - actor packets not being parsed correctly
 	if (defined $field && ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y}))) {
-		warning TF("Ignoring actor with off map coordinates: (%d,%d)->(%d,%d), field max: (%d,%d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
+		warning TF("Ignoring actor with off map coordinates: (%d, %d)->(%d, %d), field max: (%d, %d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
 		return;
 	}
 
-	if (($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0)) {
-		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
-		return;
-	}
-
-	if (blockDistance(\%coordsFrom, \%coordsTo) > ($config{clientSight} + $config{clientSight_removeBeyond})) {
-		warning TF("Ignoring bugged actor moved packet ($args->{switch}) ($coordsFrom{x} $coordsFrom{y})->($coordsTo{x} $coordsTo{y})\n");
+	if ( ($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0) ||
+		 (blockDistance(\%coordsFrom, \%coordsTo) > $config{clientSight}) ) {
+			warning TF("Ignoring bugged actor moved packet (%s) (%d, %d)->(%d, %d)\n", $args->{switch}, $coordsFrom{x}, $coordsFrom{y}, $coordsTo{x}, $coordsTo{y});
 		return;
 	}
 
@@ -1999,13 +1995,9 @@ sub actor_display {
 		my $realActorPos = calcPosition($actor);
 		my $realActorDist = blockDistance($realMyPos, $realActorPos);
 
-		my $max_sight_base = $config{clientSight};
-		my $max_sight_extra = $config{clientSight_removeBeyond};
-
-		my $max_sight = $max_sight_base + $max_sight_extra;
-
-		if ($realActorDist >= $max_sight) {
-			Log::warning "Removed out of sight actor $actor->{name} at ($actor->{pos_to}{x}, $actor->{pos_to}{y}) (distance: $realActorDist > max $max_sight)\n";
+		if ($realActorDist >= $config{clientSight}) {
+			my ($actor_type) = $object_class =~ /\:\:(\w+)$/;
+			warning TF("Removed out of sight %s: '%s' at (%d, %d) (distance: %d >= max %d)\n", $actor_type, $actor->{name}, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $config{clientSight});
 			return;
 		}
 	}
@@ -3995,7 +3987,7 @@ sub account_id {
 sub marriage_partner_name {
 	my ($self, $args) = @_;
 
-	message TF("Marriage partner name: %s\n", $args->{name});
+	message TF("Marriage partner name: %s\n", bytesToString($args->{name}));
 }
 
 sub login_pin_code_request {
@@ -9161,22 +9153,23 @@ sub message_string {
 	my ($self, $args) = @_;
 
 	my $index = ++$args->{index};
+	my $param = bytesToString($args->{param}) if $args->{param};
 
 	if ($msgTable[$index]) { # show message from msgstringtable.txt
-		if($args->{param} && ($args->{switch} eq '07E2' || $args->{switch} eq '0A6F') ) {
-			warning sprintf($msgTable[$index], $args->{param})."\n";
+		if ($param && ($args->{switch} eq '07E2' || $args->{switch} eq '0A6F') ) {
+			warning sprintf($msgTable[$index], $param)."\n";
 		} else {
 			warning "$msgTable[$index]\n";
 		}
 	} else {
-		warning TF("Unknown message_string: %s param: %s. Need to update the file msgstringtable.txt (from data.grf)\n", $index, $args->{param});
+		warning TF("Unknown message_string: %s param: %s. Need to update the file msgstringtable.txt (from data.grf)\n", $index, $param);
 	}
 
 	$self->mercenary_off() if ($index >= 1267 && $index <= 1270);
 
 	Plugins::callHook('packet_message_string', {
 		index => $index,
-		val => $args->{param}
+		val => $param
 	});
 }
 
