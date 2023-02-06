@@ -523,7 +523,7 @@ sub initHandlers {
 			], \&cmdRevive],
 		['rodex', [
 			T("rodex use (Ragnarok Online Delivery Express)"),
-			["open", T("open rodex mailbox")],
+			["open <type_id|none>", T("open rodex mailbox")],
 			["close", T("close rodex mailbox")],
 			["list", T("list your first page of rodex mail")],
 			["nextpage", T("request and get the next page of rodex mail")],
@@ -7133,8 +7133,22 @@ sub cmdRodex {
 			error T("Your rodex mail box is already opened.\n");
 			return;
 		}
-		message T("Sending request to open rodex mailbox.\n");
-		$messageSender->rodex_open_mailbox(0,0,0);
+		my $type = 0;
+		if($arg2 && $arg2=~/\d+/) {
+			$type = $arg2;
+			if($arg2 == 1) {
+				message T("Sending request to open rodex account mailbox.\n");
+			} elsif($arg2 == 2) {
+				message T("Sending request to open rodex returned mailbox.\n");
+			} else {
+				message T("Sending request to open rodex normal mailbox.\n");
+				$type = 0;
+			}
+		} else {
+			message T("Sending request to open rodex normal mailbox.\n");
+		}
+		$rodexCurrentType = $type;
+		$messageSender->rodex_open_mailbox($rodexCurrentType,0,0);
 
 	} elsif ($arg1 eq 'close') {
 		if (!defined $rodexList) {
@@ -7169,7 +7183,7 @@ sub cmdRodex {
 			return;
 		}
 
-		$messageSender->rodex_refresh_maillist(0,0,0);
+		$messageSender->rodex_refresh_maillist($rodexCurrentType,0,0);
 
 	} elsif ($arg1 eq 'read') {
 		if (!defined $rodexList) {
@@ -7186,7 +7200,7 @@ sub cmdRodex {
 			return;
 		}
 
-		$messageSender->rodex_read_mail(0,$arg2,0);
+		$messageSender->rodex_read_mail($rodexCurrentType,$arg2,0);
 
 	} elsif ($arg1 eq 'write') {
 		if (!defined $rodexList) {
@@ -7523,7 +7537,7 @@ sub cmdRodex {
 		}
 
 		message T("Requesting items of current rodex mail.\n");
-		$messageSender->rodex_request_items($rodexList->{current_read}, 0, 0);
+		$messageSender->rodex_request_items($rodexList->{current_read}, 0, $rodexCurrentType);
 
 	} elsif ($arg1 eq 'getzeny') {
 		if (!defined $rodexList) {
@@ -7544,7 +7558,7 @@ sub cmdRodex {
 		}
 
 		message T("Requesting zeny of current rodex mail.\n");
-		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, 0);
+		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, $rodexCurrentType);
 
 	} elsif ($arg1 eq 'nextpage') {
 		if (!defined $rodexList) {
@@ -7561,7 +7575,7 @@ sub cmdRodex {
 		}
 
 		message T("Requesting the next page of rodex mail.\n");
-		$messageSender->rodex_next_maillist(0, $rodexList->{current_page_last_mailID}, 0);
+		$messageSender->rodex_next_maillist($rodexCurrentType, $rodexList->{current_page_last_mailID}, 0);
 
 	} elsif ($arg1 eq 'maillist') {
 		if (!defined $rodexList) {
@@ -7607,7 +7621,7 @@ sub cmdRodex {
 			return;
 		}
 
-		$messageSender->rodex_delete_mail(0,$arg2,0);
+		$messageSender->rodex_delete_mail($rodexCurrentType,$arg2,0);
 
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .

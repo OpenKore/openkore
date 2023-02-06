@@ -8397,6 +8397,10 @@ sub rodex_mail_list {
 		};
 	}
 
+	if($args->{switch} eq '09F0' || $args->{switch} eq '0A7D') {
+		$rodexCurrentType = $args->{type};
+	}
+
 	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2'  || $args->{switch} eq '0B5F') {
 		$rodexList->{current_page} = 0;
 		$rodexList = {};
@@ -8419,6 +8423,7 @@ sub rodex_mail_list {
 
 		@{$mail}{@{$mail_info->{keys}}} = unpack($mail_info->{types}, substr($args->{mailList}, $i, $mail_info->{len}));
 
+		$rodexCurrentType = $mail->{openType} if defined $mail->{openType};
 		$mail->{title} = solveMSG(bytesToString(substr($args->{mailList}, ($i+$mail_info->{len}), $mail->{Titlelength})));
 		$mail->{sender} = solveMSG(bytesToString($mail->{sender}));
 		$mail->{page} = $rodexList->{current_page};
