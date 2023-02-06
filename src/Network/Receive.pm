@@ -8397,7 +8397,7 @@ sub rodex_mail_list {
 		};
 	}
 
-	if($args->{switch} eq '09F0' || $args->{switch} eq '0A7D') {
+	if ($args->{switch} eq '09F0' || $args->{switch} eq '0A7D') {
 		$rodexCurrentType = $args->{type};
 	}
 
@@ -8562,10 +8562,18 @@ sub rodex_remove_item {
 sub rodex_add_item {
 	my ( $self, $args ) = @_;
 
-	if ($args->{fail}) {
-		error T("You failed to add an item to rodex mail.\n");
-		return;
+	if ($args->{fail} == 1) {
+		error T("Item attachment has been failed.\n");#RODEX_ADD_ITEM_WEIGHT_ERROR
+	} elsif ($args->{fail} == 2) {
+		error T("Item attachment has been failed.\n");#MsgStringTable[2630]
+	} elsif ($args->{fail} == 3) {
+		error T("Maximum number of item attachments has been exceeded.\n");#MsgStringTable[2698]
+	} elsif ($args->{fail} == 4) {
+		error T("This item is banned to attach.\n");#MsgStringTable[2700]
+	} elsif ($args->{fail} != 0) {
+		error TF("Unknown error %s\n", $args->{fail});
 	}
+	return if ($args->{fail});
 
 	my $rodex_item = $rodexWrite->{items}->getByID($args->{ID});
 

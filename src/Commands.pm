@@ -7124,6 +7124,11 @@ sub cmdAchieve {
 }
 
 sub cmdRodex {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
@@ -7154,6 +7159,8 @@ sub cmdRodex {
 		if (!defined $rodexList) {
 			error T("Your rodex mail box is closed.\n");
 			return;
+		} elsif (defined $rodexWrite) {
+			$messageSender->rodex_cancel_write_mail();#we must first close the letter if it is open
 		}
 		message T("Your rodex mail box has been closed.\n");
 		$messageSender->rodex_close_mailbox();
@@ -7420,7 +7427,7 @@ sub cmdRodex {
 
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex add' (Add item to rodex mail)\n" .
-				"Usage: rodex add <item #>\n");
+				"Usage: rodex add <item #> [<amount>]\n");
 			return;
 		}
 
@@ -7470,7 +7477,7 @@ sub cmdRodex {
 
 		} elsif ($arg2 eq "") {
 			error T("Syntax Error in function 'rodex remove' (Remove item from rodex mail)\n" .
-				"Usage: rodex remove <item #>\n");
+				"Usage: rodex remove <item #> [<amount>]\n");
 			return;
 		}
 
