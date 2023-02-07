@@ -7425,7 +7425,7 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
+		} elsif ($arg2 !~ /^\s*(\d+)\s*(\d*)\s*$/) {
 			error T("Syntax Error in function 'rodex add' (Add item to rodex mail)\n" .
 				"Usage: rodex add <item #> [<amount>]\n");
 			return;
@@ -7436,34 +7436,30 @@ sub cmdRodex {
 			error T("You can't add any more items to the rodex mail.\n");
 			return;
 		}
-
-		my ($name, $amount) = $args =~ /(\d+)\s*(\d*)\s*$/;
-
-		my $rodex_item = $rodexWrite->{items}->get($name);
-		my $item = $char->inventory->get($name);
+				
+		my ($index, $amount) = parseArgs($arg2);
+		$amount = defined $amount ? $amount : 1;
+		my $rodex_item = $rodexWrite->{items}->get($index);
+		my $item = $char->inventory->get($index);
 
 		if (!$item) {
 			error TF("Error in function 'rodex add' (Add item to rodex mail)\n" .
-				"Inventory Item %s does not exist.\n", $name);
+				"Inventory Item '%s' does not exist.\n", $index);
 			return;
 		} elsif ($item->{equipped}) {
-			error TF("Inventory Item '%s' is equipped.\n", $name);
+			error TF("Inventory Item '%s' is equipped.\n", $item);
 			return;
 		} elsif ($rodex_item && $rodex_item->{amount} == $item->{amount}) {
-			error TF("You can't add more of Item '%s' to rodex mail because you have already added all you have of it.\n", $name);
+			error TF("You can't add more of Item '%s' to rodex mail because you have already added all you have of it.\n", $item);
 			return;
 		} elsif ($rodex_item) {
 			my $max_add = ($item->{amount} - $rodex_item->{amount});
-			if (!defined($amount) || $amount > $max_add) {
-				$amount = $max_add;
-			}
-		} else {
-			if (!defined($amount) || $amount > $item->{amount}) {
-				$amount = $item->{amount};
-			}
+			$amount = $max_add if ($amount > $max_add);
+		} elsif ($amount > $item->{amount}) {
+			$amount = $item->{amount};
 		}
 
-		message TF("Adding amount %d of item %s to rodex mail.\n", $amount, $item);
+		message TF("Adding amount %d of item '%s' to rodex mail.\n", $amount, $item);
 		$messageSender->rodex_add_item($item->{ID}, $amount);
 
 	} elsif ($arg1 eq 'remove') {
