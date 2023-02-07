@@ -7471,26 +7471,25 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
+		} elsif ($arg2 !~ /^\s*(\d+)\s*(\d*)\s*$/) {
 			error T("Syntax Error in function 'rodex remove' (Remove item from rodex mail)\n" .
 				"Usage: rodex remove <item #> [<amount>]\n");
 			return;
 		}
 
-		my ($name, $amount) = $args =~ /(\d+)\s*(\d*)\s*$/;
+		my ($index, $amount) = parseArgs($arg2);
 
-		my $item = $rodexWrite->{items}->get($name);
+		my $item = $rodexWrite->{items}->get($index);
 		if (!$item) {
 			error TF("Error in function 'rodex remove' (Remove item from rodex mail)\n" .
-				"Rodex mail Item %s does not exist.\n", $name);
+				"Rodex mail Item '%s' does not exist.\n", $index);
 			return;
 		}
-
-		if (!defined($amount) || $amount > $item->{amount}) {
+		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
 
-		message TF("Removing amount %d of item %s from rodex mail.\n", $amount, $item);
+		message TF("Removing amount %d of item '%s' from rodex mail.\n", $amount, $item);
 		$messageSender->rodex_remove_item($item->{ID}, $amount);
 
 	} elsif ($arg1 eq 'send') {
