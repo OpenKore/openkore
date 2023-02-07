@@ -464,7 +464,7 @@ sub iterate {
 				$msg .= T(" Teleporting to unstuck.") if ($config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'});
 				$msg .= "\n";
 				warning $msg, "route";
-				Misc::useTeleport(1) if $config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'};
+				ai_useTeleport(1) if $config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'};
 				$self->setError(STUCK, T("Stuck during route."));
 				Plugins::callHook('route', {status => 'stuck'});
 			}

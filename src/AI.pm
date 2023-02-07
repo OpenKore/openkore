@@ -52,6 +52,7 @@ our @EXPORT = (
 	ai_skillUse
 	ai_skillUse2
 	ai_storageAutoCheck
+	ai_useTeleport
 	ai_canOpenStorage
 	cartGet
 	cartAdd
@@ -709,6 +710,17 @@ sub cartAdd {
 sub ai_talkNPC {
 	require Task::TalkNPC;
 	AI::queue("NPC", new Task::TalkNPC(type => 'talknpc', x => $_[0], y => $_[1], sequence => $_[2]));
+}
+
+##
+# useTeleport(level)
+# level: 1 to teleport to a random spot, 2 to respawn.
+sub ai_useTeleport {
+	my ($use_lvl, undef, $emergency) = @_;
+	my %tasks = qw(1 Task::Teleport::Random 2 Task::Teleport::Respawn);
+	use Task::Teleport::Random;
+	use Task::Teleport::Respawn;
+	AI::queue("teleport", $tasks{$use_lvl}->new(emergency => $emergency));
 }
 
 sub attack { $char->attack(@_) }

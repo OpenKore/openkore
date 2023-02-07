@@ -87,7 +87,7 @@ sub exchange {
 		((defined $binID) && ($source eq 'poll') && ($item->{'amount'} >= $config{$prefix.$i."_triggerAmount"}) && (checkSelfCondition($prefix.$i))) ||
 		((defined $binID) && ($source eq 'command') && ($item->{'amount'} >= $config{$prefix.$i."_requiredAmount"}))
 		) {
-			main::useTeleport(2) if ($config{$prefix.$i."_respawnFirst"});
+			ai_useTeleport(2) if ($config{$prefix.$i."_respawnFirst"});
 			my %args;
 			$args{'npc'} = {};
 			main::getNPCInfo($config{$prefix.$i."_npc"}, $args{'npc'});
