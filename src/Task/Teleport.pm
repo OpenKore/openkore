@@ -36,7 +36,7 @@ sub new {
 	Scalar::Util::weaken(my $weak = $self);
 	$self->{hooks} = Plugins::addHooks(
 		['packet/map_changed' => sub { $weak->{mapChanged} = 1 }],
-        ['packet/map_change' => sub { $weak->{mapChanged} = 1 }],
+		['packet/map_change' => sub { $weak->{mapChanged} = 1 }],
 	);
 
 	$self
@@ -76,46 +76,46 @@ sub iterate {
 		$self->setDone;
 
 	} elsif (timeOut($self->{retry}) && !$char->inventory->isReady()) {
-        # Inventory is not ready, can't search for items to teleport
-        debug "Teleport - Inventory is not ready \n", "task_teleport";
-        $self->{retry}{time} = time;
+		# Inventory is not ready, can't search for items to teleport
+		debug "Teleport - Inventory is not ready \n", "task_teleport";
+		$self->{retry}{time} = time;
 
-    } elsif (timeOut($self->{giveup})) {
+	} elsif (timeOut($self->{giveup})) {
 		debug "Teleport - timeout\n", "task_teleport";
 		$self->setError(undef, TF("%s tried too long to teleport", $char));
 
 	} elsif (timeOut($self->{retry})) {
-        debug "Teleport - (re)trying\n", "task_teleport";
-        if (my $chat_command = $self->chatCommand) { # 1 - try to use chat command
+		debug "Teleport - (re)trying\n", "task_teleport";
+		if (my $chat_command = $self->chatCommand) { # 1 - try to use chat command
 			debug "Teleport - Using chat command to teleport : $chat_command\n", "task_teleport";
 
 			Misc::sendMessage($messageSender, "c", $chat_command);
 			Plugins::callHook('teleport_sent' => $self->hookArgs);
 
 		} elsif($self->isEquipNeededToTeleport) { # 2 - check if equip is needed to use teleport
-            # No skill try to equip a Tele clip or something,
-            # if teleportAuto_equip_* is set
-            debug "Teleport - Equipping item to teleport\n", "task_teleport";
-            $self->useEquip;
+			# No skill try to equip a Tele clip or something,
+			# if teleportAuto_equip_* is set
+			debug "Teleport - Equipping item to teleport\n", "task_teleport";
+			$self->useEquip;
 			Plugins::callHook('teleport_sent' => $self->hookArgs);
 
-        } elsif($self->canUseSkill) { # 3 - try to use teleport skill
-            debug "Teleport - Using skill to teleport\n", "task_teleport";
-            $self->useSkill;
+		} elsif($self->canUseSkill) { # 3 - try to use teleport skill
+			debug "Teleport - Using skill to teleport\n", "task_teleport";
+			$self->useSkill;
 			Plugins::callHook('teleport_sent' => $self->hookArgs);
 
-        } elsif(my $item = $self->getInventoryItem) { # 4 - try to use item
-            debug "Using item to teleport : $item->{name}\n", "task_teleport";
-            # We have Fly Wing/Butterfly Wing.
-            # Don't spam the "use fly wing" packet, or we'll end up using too many wings.
-            if (timeOut($timeout{ai_teleport})) {
-                $messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
-                Plugins::callHook('teleport_sent' => $self->hookArgs);
-                $timeout{ai_teleport}{time} = time;
+		} elsif(my $item = $self->getInventoryItem) { # 4 - try to use item
+			debug "Using item to teleport : $item->{name}\n", "task_teleport";
+			# We have Fly Wing/Butterfly Wing.
+			# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
+			if (timeOut($timeout{ai_teleport})) {
+				$messageSender->sendItemUse($item->{ID}, $self->{actor}->{ID});
+				Plugins::callHook('teleport_sent' => $self->hookArgs);
+				$timeout{ai_teleport}{time} = time;
 
-            }
-	    } else { # task failed no method
-            debug "Teleport - can't find method to teleport\n", "task_teleport";
+			}
+		} else { # task failed no method
+			debug "Teleport - can't find method to teleport\n", "task_teleport";
 			$self->error();
 
 		}
