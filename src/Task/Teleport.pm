@@ -9,13 +9,17 @@ use Carp::Assert;
 use Time::HiRes qw(time);
 
 use Modules 'register';
-use base 'Task::WithSubtask'; # TODO equipping
-use Globals qw($messageSender $net %timeout $char);
+use Task::SitStand;
+use base 'Task::WithSubtask';
+use Globals qw($messageSender $net %timeout);
 use Log qw(debug);
 use Translation qw(T TF);
 use Utils qw(timeOut);
 
 use constant MUTEXES => ['teleport']; # allow only one active teleport task
+
+# Error codes
+use enum qw(NO_ITEM_OR_SKILL);
 
 ##
 # Task::Teleport->new(options...)
@@ -25,11 +29,15 @@ use constant MUTEXES => ['teleport']; # allow only one active teleport task
 sub new {
 	my ($class, %args) = @_;
 
-	debug "Initializing $class\n", "task_teleport";
+	debug "Initializing $class\n", "teleport";
 
 	my $self = $class->SUPER::new(%args, autostop => 1, autofail => 1, mutexes => MUTEXES);
 
-	$self->{emergency} = $args{emergency};
+	unless ($args{actor}->isa('Actor')) {
+		ArgumentException->throw(error => "Invalid arguments.");
+	}
+
+	$self->{actor} = $args{actor};
 	$self->{retry}{timeout} = $args{retryTime} || $timeout{ai_teleport_retry}{timeout} || 0.5;
 	$self->{giveup}{timeout} = $args{giveupTime} || 3;
 
@@ -42,26 +50,31 @@ sub new {
 	$self
 }
 
-# TODO srsly refactor time adjustment out of all tasks
+# Overrided method.
 sub activate {
 	my ($self) = @_;
 	$self->SUPER::activate;
-
 	$self->{giveup}{time} = time;
 }
 
+# Overrided method.
 sub interrupt {
 	my ($self) = @_;
 	$self->SUPER::interrupt;
-
 	$self->{interruptionTime} = time;
 }
 
+# Overrided method.
 sub resume {
 	my ($self) = @_;
 	$self->SUPER::resume;
-
 	$self->{giveup}{time} += time - $self->{interruptionTime};
+	$self->{retry}{time} += time - $self->{interruptionTime};
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	Plugins::delHook($self->{hooks}) if $self->{hooks};
 }
 
 sub iterate {
@@ -72,22 +85,22 @@ sub iterate {
 
 	if ($self->{mapChanged}) {
 		# TODO respawn task may be not done, if a regular mapchange was occurred
-		debug "Teleport - Map change occurred, marking teleport as done\n", "task_teleport";
+		debug "Teleport $self->{actor} - Map change occurred, marking teleport as done\n", "teleport";
 		$self->setDone;
 
-	} elsif (timeOut($self->{retry}) && !$char->inventory->isReady()) {
+	} elsif (timeOut($self->{retry}) && !$self->{actor}->inventory->isReady()) {
 		# Inventory is not ready, can't search for items to teleport
-		debug "Teleport - Inventory is not ready \n", "task_teleport";
+		debug "Teleport $self->{actor} - Inventory is not ready \n", "teleport";
 		$self->{retry}{time} = time;
 
 	} elsif (timeOut($self->{giveup})) {
-		debug "Teleport - timeout\n", "task_teleport";
-		$self->setError(undef, TF("%s tried too long to teleport", $char));
+		debug "Teleport $self->{actor} - timeout\n", "teleport";
+		$self->setError(undef, TF("%s tried too long to teleport", $self->{actor}));
 
 	} elsif (timeOut($self->{retry})) {
-		debug "Teleport - (re)trying\n", "task_teleport";
+		debug "Teleport $self->{actor} - (re)trying\n", "teleport";
 		if (my $chat_command = $self->chatCommand) { # 1 - try to use chat command
-			debug "Teleport - Using chat command to teleport : $chat_command\n", "task_teleport";
+			debug "Teleport $self->{actor} - Using chat command to teleport : $chat_command\n", "teleport";
 
 			Misc::sendMessage($messageSender, "c", $chat_command);
 			Plugins::callHook('teleport_sent' => $self->hookArgs);
@@ -95,17 +108,19 @@ sub iterate {
 		} elsif($self->isEquipNeededToTeleport) { # 2 - check if equip is needed to use teleport
 			# No skill try to equip a Tele clip or something,
 			# if teleportAuto_equip_* is set
-			debug "Teleport - Equipping item to teleport\n", "task_teleport";
+			debug "Teleport $self->{actor} - Equipping item to teleport\n", "teleport";
 			$self->useEquip;
-			Plugins::callHook('teleport_sent' => $self->hookArgs);
 
-		} elsif($self->canUseSkill) { # 3 - try to use teleport skill
-			debug "Teleport - Using skill to teleport\n", "task_teleport";
+		} elsif($self->{actor}->{sitting}) { # 3 check if actor is sitting
+			my $task = new Task::SitStand(actor => $self->{actor}, mode => 'stand', wait => $timeout{ai_stand_wait}{timeout});
+			$self->setSubtask($task);
+		} elsif($self->canUseSkill) { # 4 - try to use teleport skill
+			debug "Teleport $self->{actor} - Using skill to teleport\n", "teleport";
 			$self->useSkill;
 			Plugins::callHook('teleport_sent' => $self->hookArgs);
 
-		} elsif(my $item = $self->getInventoryItem) { # 4 - try to use item
-			debug "Using item to teleport : $item->{name}\n", "task_teleport";
+		} elsif(my $item = $self->getInventoryItem) { # 5 - try to use item
+			debug "Using item to teleport : $item->{name}\n", "teleport";
 			# We have Fly Wing/Butterfly Wing.
 			# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 			if (timeOut($timeout{ai_teleport})) {
@@ -115,12 +130,20 @@ sub iterate {
 
 			}
 		} else { # task failed no method
-			debug "Teleport - can't find method to teleport\n", "task_teleport";
+			debug "Teleport $self->{actor} - can't find method to teleport\n", "teleport";
 			$self->error();
 
 		}
 
 		$self->{retry}{time} = time;
+	}
+}
+
+sub subtaskDone {
+	my ($self, $task) = @_;
+	my $error = $task->getError();
+	if ($error) {
+		$self->setError($error->{code}, $error->{message});
 	}
 }
 

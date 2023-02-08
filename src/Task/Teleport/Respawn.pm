@@ -6,35 +6,38 @@ use strict;
 
 use Modules 'register';
 use base 'Task::Teleport';
-use Globals qw($char %config $accountID %timeout);
+use Globals qw(%config %timeout);
 use Log qw(debug);
 
 sub hookArgs {
-	{level => 2, emergency => $_[0]{emergency}}
+	{level => 2}
 }
 
 sub chatCommand {
-	return undef if ($char->{muted});
+	my ($self) =  @_;
+	return undef if ($self->{actor}->{muted});
 	return $config{saveMap_warpChatCommand};
 }
 
 # use nameID, names can be different for different servers
 sub getInventoryItem {
+	my ($self) =  @_;
 	my $item;
 	if ($config{teleportAuto_item2}) {
-		$item = $char->inventory->getByName($config{teleportAuto_item2});
-		$item = $char->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
+		$item = $self->{actor}->inventory->getByName($config{teleportAuto_item2});
+		$item = $self->{actor}->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
 	}
-	$item = $char->inventory->getByNameID(12324) unless $item; # Novice Butterfly Wing
-	$item = $char->inventory->getByNameID(602) unless $item; # Butterfly Wing
+	$item = $self->{actor}->inventory->getByNameID(12324) unless $item; # Novice Butterfly Wing
+	$item = $self->{actor}->inventory->getByNameID(602) unless $item; # Butterfly Wing
 	return $item;
  }
 
 # return 0 if char is muted or dont have skill teleport at lv 2
 # return 1 if char have skill teleport at lv 2
 sub canUseSkill {
-	return 0 if ($char->{muted});
-	return ($char->{skills}{AL_TELEPORT}{lv} == 2) ? 1 : 0;
+	my ($self) =  @_;
+	return 0 if ($self->{actor}->{muted});
+	return ($self->{actor}->getSkillLevel(new Skill(handle => 'AL_TELEPORT')) == 2) ? 1 : 0;
 }
 
 sub isEquipNeededToTeleport {
@@ -43,19 +46,13 @@ sub isEquipNeededToTeleport {
 }
 
 sub useSkill {
+	my ($self) =  @_;
 	# We have the teleport skill, and should use it
 	my $skill = new Skill(handle => 'AL_TELEPORT');
-	if (defined AI::findAction('attack')) {
-		AI::clear("attack");
-		$char->sendAttackStop;
-	}
 
-	debug "Teleport - Sending Teleport using Level 2\n", "task_teleport";
-	main::ai_skillUse($skill->getHandle(), 2, 0, 0, $accountID);
+	debug "Teleport $self->{actor} - Sending Teleport using Level 2\n", "task_teleport";
+	main::ai_skillUse($skill->getHandle(), 2, 0, 0, $self->{actor}->{ID});
 	$timeout{ai_teleport}{time} = time;
-
-	# add hook when receive list?
-	# $messageSender->sendWarpTele(26, "Respawn");
 }
 
 sub useEquip {
@@ -66,7 +63,7 @@ sub useEquip {
 
 sub error {
 	my ($self) = @_;
-	$self->setError("You don't have the Teleport skill or a Butterfly Wing");
+	$self->setError(Task::Teleport::NO_ITEM_OR_SKILL, TF("%s don't have the Teleport skill or a Butterfly Wing", $self->{actor}));
 }
 
 1;

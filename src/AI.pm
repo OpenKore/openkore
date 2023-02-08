@@ -713,14 +713,10 @@ sub ai_talkNPC {
 }
 
 ##
-# useTeleport(level)
-# level: 1 to teleport to a random spot, 2 to respawn.
+# void ai_useTeleport(int level)
+# level: 1 - Random, 2 - Respawn
 sub ai_useTeleport {
-	my ($use_lvl, undef, $emergency) = @_;
-	my %tasks = qw(1 Task::Teleport::Random 2 Task::Teleport::Respawn);
-	use Task::Teleport::Random;
-	use Task::Teleport::Respawn;
-	AI::queue("teleport", $tasks{$use_lvl}->new(emergency => $emergency));
+	$char->useTeleport(@_);
 }
 
 sub attack { $char->attack(@_) }

@@ -6,36 +6,39 @@ use strict;
 
 use Modules 'register';
 use base 'Task::Teleport';
-use Globals qw($char %config $field $accountID %timeout);
+use Globals qw(%config $field %timeout);
 use Log qw(debug);
 
 sub hookArgs {
-	{level => 1, emergency => $_[0]{emergency}}
+	{level => 1}
 }
 
 sub chatCommand {
-	return undef if ($char->{muted});
+	my ($self) =  @_;
+	return undef if ($self->{actor}->{muted});
 	return ($config{teleportAuto_useChatCommand}) ? $config{teleportAuto_useChatCommand} . " " . $field->baseName : undef;
 }
 
 # use nameID, names can be different for different servers
 sub getInventoryItem {
+	my ($self) =  @_;
 	my $item;
 	if ($config{teleportAuto_item1}) {
-		$item = $char->inventory->getByName($config{teleportAuto_item1});
-		$item = $char->inventory->getByNameID($config{teleportAuto_item1}) if (!($item) && $config{teleportAuto_item1} =~ /^\d{3,}$/);
+		$item = $self->{actor}->inventory->getByName($config{teleportAuto_item1});
+		$item = $self->{actor}->inventory->getByNameID($config{teleportAuto_item1}) if (!($item) && $config{teleportAuto_item1} =~ /^\d{3,}$/);
 	}
-	$item = $char->inventory->getByNameID(23280) unless $item; # Beginner's Fly Wing
-	$item = $char->inventory->getByNameID(12323) unless $item; # Novice Fly Wing
-	$item = $char->inventory->getByNameID(601) unless $item; # Fly Wing
+	$item = $self->{actor}->inventory->getByNameID(23280) unless $item; # Beginner's Fly Wing
+	$item = $self->{actor}->inventory->getByNameID(12323) unless $item; # Novice Fly Wing
+	$item = $self->{actor}->inventory->getByNameID(601) unless $item; # Fly Wing
 	return $item;
 }
 
-# return 0 if char is muted
-# return 1 if char has teleport skill lvl
+# return 0 if actor is muted or dont have skill teleport at lv
+# return 1 if actor has teleport skill lvl
 sub canUseSkill {
-	return 0 if ($char->{muted});
-	return ($char->{skills}{AL_TELEPORT}{lv}) ? 1 : 0;
+	my ($self) =  @_;
+	return 0 if ($self->{actor}->{muted});
+	return $self->{actor}->getSkillLevel(new Skill(handle => 'AL_TELEPORT')) ? 1 : 0;
 }
 
 sub isEquipNeededToTeleport {
@@ -43,19 +46,13 @@ sub isEquipNeededToTeleport {
 }
 
 sub useSkill {
+	my ($self) =  @_;
 	# We have the teleport skill, and should use it
 	my $skill = new Skill(handle => 'AL_TELEPORT');
-	if (defined AI::findAction('attack')) {
-		AI::clear("attack");
-		$char->sendAttackStop;
-	}
 
-	debug "Teleport - Sending Teleport using Level 1\n", "task_teleport";
-	main::ai_skillUse($skill->getHandle(), 1, 0, 0, $accountID);
+	debug "Teleport $self->{actor} - Sending Teleport using Level 1\n", "task_teleport";
+	main::ai_skillUse($skill->getHandle(), 1, 0, 0, $self->{actor}->{ID});
 	$timeout{ai_teleport}{time} = time;
-
-	# add hook when receive list?
-	# $messageSender->sendWarpTele(26, "Random");
 
 	# if ($use_lvl == 2) {
 	#	 # check for possible skill level abuse
@@ -80,7 +77,7 @@ sub useEquip {
 
 sub error {
 	my ($self) = @_;
-	$self->setError("You don't have the Teleport skill or a Fly Wing");
+	$self->setError(Task::Teleport::NO_ITEM_OR_SKILL, TF("%s don't have the Teleport skill or a Fly Wing", $self->{actor}));
 }
 
 1;
