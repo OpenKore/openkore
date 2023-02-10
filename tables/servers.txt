@@ -82,6 +82,24 @@ serverEncoding Western
 charBlockSize 155
 addTableFolders euRO
 
+# https://ro.gnjoy.asia/
+[Asia - Malaysia, Singapore, Philippines: Baphomet]
+ip 18.136.20.146
+port 6900
+master_version 15
+version 24
+serverType Asia
+serverEncoding Western
+addTableFolders Asia
+charBlockSize 175
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+pinCode 1
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+ignoreAntiCheatWarning 0
+
 # https://ro.gnjoy.id/
 [Indonesia - idRO: Yggdrasil]
 ip 202.93.26.198
