@@ -532,7 +532,8 @@ sub initHandlers {
 			["read <mail_id>", T("open the selected Rodex mail")],
 			["getitems", T("request ang get items of current rodex mail")],
 			["getzeny", T("request ang get zeny of current rodex mail")],
-			["write <player_name|self|none>", T("open a box to start write a rodex mail")],
+			["write", T("open a box to start write a rodex mail")],
+			["write <player_name|self>", T("open a box to start write a rodex mail to the specified player")],
 			["settarget <player_name|self>", T("set target of rodex mail")],
 			["itemslist", T("show current list of items in mail box that you are writting")],
 			["settitle <title>", T("show current list of items in mail box that you are writting")],
@@ -7218,21 +7219,12 @@ sub cmdRodex {
 			error T("You are already writing a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
-			error T("Syntax Error in function 'rodex write' (Start writting a rodex mail)\n" .
-				"Usage: rodex write <player_name|self|none>\n");
-			return;
 		} elsif ($arg2 eq "self") {
 			debug "Send rodex mail to yourself\n";
 			$arg2 = $char->{'name'};
-		}
-		if ($arg2 eq "none") {
-			undef $arg2;
-			message T("Opening rodex mail write box. No recipient specified.\n");
 		} else {
 			message TF("Opening rodex mail write box. Recipient: %s\n", $arg2);
 		}
-
 		$messageSender->rodex_open_write_mail($arg2);
 
 	} elsif ($arg1 eq 'cancel') {
