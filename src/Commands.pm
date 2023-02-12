@@ -7428,7 +7428,7 @@ sub cmdRodex {
 			error T("You can't add any more items to the rodex mail.\n");
 			return;
 		}
-				
+
 		my ($index, $amount) = parseArgs($arg2);
 		$amount = defined $amount ? $amount : 1;
 		my $rodex_item = $rodexWrite->{items}->get($index);
@@ -7495,7 +7495,7 @@ sub cmdRodex {
 
 		} elsif (!exists $rodexWrite->{target}) {
 			error T("Error in function 'rodex send' (Send finished rodex mail)\n" .
-					"You mast set target of rodex mail. Usage: rodex settarget <player_name|self>\n");
+					"You must set target of rodex mail. Usage: rodex settarget <player_name|self>\n");
 			return;
 		}
 
@@ -7587,18 +7587,19 @@ sub cmdRodex {
 			} else {
 				$index = (($mail->{page} * $rodexList->{mails_per_page}) + $mail->{page_index});
 			}
-			$pages[$mail->{page}][$mail->{page_index}] = swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
+			$pages[$mail->{page}][$mail->{page_index}] = swrite("@<< @<<<< @<<<<<<<< @<<<< @<< @<< @<<<<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
+
 		}
 
-		my $print_msg;
+		my $msg;
 		foreach my $page_index (0..$#pages) {
-			$print_msg .= center(" " . "Rodex Mail Page ". $page_index . " ", 79, '-') . "\n";
+			$msg .= center(" " . "Rodex Mail Page ". $page_index . " ", 79, '-') . "\n";
 			foreach my $mail_msg (@{$pages[$page_index]}) {
-				$print_msg .= $mail_msg;
+				$msg .= $mail_msg;
 			}
 		}
-		$print_msg .= sprintf("%s\n", ('-'x79));
-		message $print_msg, "list";
+		$msg .= sprintf("%s\n", ('-'x79));
+		message $msg, "list";
 
 	} elsif ($arg1 eq 'delete') {
 		if (!defined $rodexList) {
