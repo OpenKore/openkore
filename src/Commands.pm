@@ -7493,9 +7493,9 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif (!exists $rodexWrite->{zeny} || !exists $rodexWrite->{body} || !exists $rodexWrite->{title} || !exists $rodexWrite->{target}) {
+		} elsif (!exists $rodexWrite->{target}) {
 			error T("Error in function 'rodex send' (Send finished rodex mail)\n" .
-				"You still have to set something to send the mail (title, body, zeny or target)\n");
+					"You mast set target of rodex mail. Usage: rodex settarget <player_name|self>\n");
 			return;
 		}
 
