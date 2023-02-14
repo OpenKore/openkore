@@ -8379,26 +8379,26 @@ sub rodex_mail_list {
 		$mail_info = {
 			len => 45,
 			types => 'C V2 C2 Z24 V v x4',
-			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
+			keys => [qw(openType mailID1 mailID2 isRead attach sender expireSecconds Titlelength)],
 		};
 
 	} elsif ($args->{switch} eq '0AC2') {
 		$mail_info = {
 			len => 41,
 			types => 'C V2 C2 Z24 V v',
-			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
+			keys => [qw(openType mailID1 mailID2 isRead attach sender expireSecconds Titlelength)],
 		};
 
 	} else { # 09F0, 0A7D
 		$mail_info = {
 			len => 44,
 			types => 'V2 C2 Z24 V2 v',
-			keys => [qw(mailID1 mailID2 isRead type sender regDateTime expireDateTime Titlelength)],
+			keys => [qw(mailID1 mailID2 isRead attach sender regDateTime expireSecconds Titlelength)],
 		};
 	}
 
 	if ($args->{switch} eq '09F0' || $args->{switch} eq '0A7D') {
-		$rodexCurrentType = $args->{type};
+		$rodexCurrentType = $args->{attach};
 	}
 
 	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2'  || $args->{switch} eq '0B5F') {
@@ -8415,7 +8415,9 @@ sub rodex_mail_list {
 		$rodexList->{mails_per_page} = $args->{amount};
 	}
 
-	my $print_msg = center(" " . "Rodex Mail Page ". $rodexList->{current_page} . " ", 119, '-') . "\n";
+	my $mail_len;
+	my $msg = center(" ". TF("Rodex Mail Page %d", $rodexList->{current_page}) ." ", 119, '-') . "\n" .
+							T(" #  ID       From                    Att  New  Expire    Title\n");
 
 	my $index = 0;
 	for (my $i = 0; $i < length($args->{mailList}); $i+=$mail_info->{len}) {
@@ -8428,26 +8430,28 @@ sub rodex_mail_list {
 		$mail->{sender} = solveMSG(bytesToString($mail->{sender}));
 		$mail->{page} = $rodexList->{current_page};
 		$mail->{page_index} = $index;
+		$mail->{expireDay} = int ($mail->{expireSecconds} / 60 / 60 / 24);
 
 		$i+= $mail->{Titlelength};
 
 		$rodexList->{mails}{$mail->{mailID1}} = $mail;
-
 		$rodexList->{current_page_last_mailID} = $mail->{mailID1};
 
-		my @content;
-		push(@content, "Text");
-		push(@content, "Zeny") if( $mail->{type} & (1 << 1) );
-		push(@content, "Item") if( $mail->{type} & (1 << 2) );
-
-		my $content = join(', ', @content);
-
-		$print_msg .= swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<< @<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}, "Content:", $content]);
+		my %attach = (
+			#0 => '-',		# no attach
+			2 => T('z'),	# only zeny
+			4 => T('i'),	# only item
+			6 => T('z+i'),	# zeny + item
+			12 => T('gift'),# a gift from the admin
+        );
+		$mail->{attach} = $attach{$mail->{attach}};
+		
+		$msg .= swrite("@>  @<<<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<< @<<  @>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $mail->{mailID1}, $mail->{sender}, $mail->{attach} ? $mail->{attach} : "-", $mail->{isRead} ? T("No") : T("Yes"), $mail->{expireDay} ." ".T("Days"), $mail->{title}]);
 
 		$index++;
 	}
-	$print_msg .= sprintf("%s\n", ('-'x119));
-	message $print_msg, "list";
+	$msg .= ('-'x119) . "\n";
+	message $msg, "list";
 
 	Plugins::callHook('rodex_mail_list', {
 		'mails' => $rodexList->{mails},

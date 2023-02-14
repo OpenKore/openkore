@@ -7175,14 +7175,49 @@ sub cmdRodex {
 			message T("Your rodex mail box is empty.\n");
 			return;
 		}
-		my $msg .= center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
+		my $msg = center(" ". T("Rodex Mail List") ." ", 119, '-') . "\n" .
+						T(" #  ID       From                    Att  New  Expire    Title\n");
+
 		my $index = 0;
 		foreach my $mail_id (keys %{$rodexList->{mails}}) {
 			my $mail = $rodexList->{mails}{$mail_id};
-			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x9), ('<'x28), ('<'x28)), [$index, $mail_id, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
+			$msg .= swrite("@>  @<<<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<< @<<  @>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $mail->{mailID1}, $mail->{sender}, $mail->{attach} ? $mail->{attach} : "-", $mail->{isRead} ? T("No") : T("Yes"), $mail->{expireDay} ." ".T("Days"), $mail->{title}]);
+
 			$index++;
 		}
-		$msg .= sprintf("%s\n", ('-'x79));
+		$msg .= ('-'x119) . "\n";
+		message $msg, "list";
+
+	} elsif ($arg1 eq 'maillist') {
+		if (!defined $rodexList) {
+			error T("Your rodex mail box is closed.\n");
+			return;
+		}
+
+		my @pages;
+		foreach my $mail_id (keys %{$rodexList->{mails}}) {
+			my $mail = $rodexList->{mails}{$mail_id};
+
+			my $index;
+			if ($mail->{page} == 0) {
+				$index = $mail->{page_index};
+			} else {
+				$index = (($mail->{page} * $rodexList->{mails_per_page}) + $mail->{page_index});
+			}
+			$pages[$mail->{page}][$mail->{page_index}] = swrite("@>  @<<<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<< @<<  @>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $mail->{mailID1}, $mail->{sender}, $mail->{attach} ? $mail->{attach} : "-", $mail->{isRead} ? T("No") : T("Yes"), $mail->{expireDay} ." ".T("Days"), $mail->{title}]);
+
+		}
+
+		my $msg;
+		foreach my $page_index (0..$#pages) {
+			$msg .= center(" ". TF("Rodex Mail Page %d", $page_index) ." ", 119, '-') . "\n" .
+							T(" #  ID       From                    Att  New  Expire    Title\n");
+
+			foreach my $mail_msg (@{$pages[$page_index]}) {
+				$msg .= $mail_msg;
+			}
+		}
+		$msg .= ('-'x119) . "\n";
 		message $msg, "list";
 
 	} elsif ($arg1 eq 'refresh') {
@@ -7499,7 +7534,6 @@ sub cmdRodex {
 			return;
 		}
 
-
 		my $zeny_tax = int($rodexWrite->{zeny} / 50);
 		my $items_tax = ($rodexWrite->{items}->size * 2500);
 		my $tax = ($zeny_tax + $items_tax);
@@ -7570,36 +7604,6 @@ sub cmdRodex {
 
 		message T("Requesting the next page of rodex mail.\n");
 		$messageSender->rodex_next_maillist($rodexCurrentType, $rodexList->{current_page_last_mailID}, 0);
-
-	} elsif ($arg1 eq 'maillist') {
-		if (!defined $rodexList) {
-			error T("Your rodex mail box is closed.\n");
-			return;
-		}
-
-		my @pages;
-		foreach my $mail_id (keys %{$rodexList->{mails}}) {
-			my $mail = $rodexList->{mails}{$mail_id};
-
-			my $index;
-			if ($mail->{page} == 0) {
-				$index = $mail->{page_index};
-			} else {
-				$index = (($mail->{page} * $rodexList->{mails_per_page}) + $mail->{page_index});
-			}
-			$pages[$mail->{page}][$mail->{page_index}] = swrite("@<< @<<<< @<<<<<<<< @<<<< @<< @<< @<<<<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
-
-		}
-
-		my $msg;
-		foreach my $page_index (0..$#pages) {
-			$msg .= center(" " . "Rodex Mail Page ". $page_index . " ", 79, '-') . "\n";
-			foreach my $mail_msg (@{$pages[$page_index]}) {
-				$msg .= $mail_msg;
-			}
-		}
-		$msg .= sprintf("%s\n", ('-'x79));
-		message $msg, "list";
 
 	} elsif ($arg1 eq 'delete') {
 		if (!defined $rodexList) {
