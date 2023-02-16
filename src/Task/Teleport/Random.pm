@@ -22,6 +22,8 @@ sub chatCommand {
 # use nameID, names can be different for different servers
 sub getInventoryItem {
 	my ($self) =  @_;
+	return undef unless ($self->{actor}->inventory->isReady());
+
 	my $item;
 	if ($config{teleportAuto_item1}) {
 		$item = $self->{actor}->inventory->getByName($config{teleportAuto_item1});
@@ -41,7 +43,10 @@ sub canUseSkill {
 	return $self->{actor}->getSkillLevel(new Skill(handle => 'AL_TELEPORT')) ? 1 : 0;
 }
 
+# return the number of items necessary to teleport
 sub isEquipNeededToTeleport {
+	my ($self) =  @_;
+	return 0 unless ($self->{actor}->inventory->isReady());
 	return Actor::Item::scanConfigAndCheck('teleportAuto_equip');
 }
 

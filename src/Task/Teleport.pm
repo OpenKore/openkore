@@ -88,11 +88,6 @@ sub iterate {
 		debug "Teleport $self->{actor} - Map change occurred, marking teleport as done\n", "teleport";
 		$self->setDone;
 
-	} elsif (timeOut($self->{retry}) && !$self->{actor}->inventory->isReady()) {
-		# Inventory is not ready, can't search for items to teleport
-		debug "Teleport $self->{actor} - Inventory is not ready \n", "teleport";
-		$self->{retry}{time} = time;
-
 	} elsif (timeOut($self->{giveup})) {
 		debug "Teleport $self->{actor} - timeout\n", "teleport";
 		$self->setError(undef, TF("%s tried too long to teleport", $self->{actor}));
@@ -101,7 +96,6 @@ sub iterate {
 		debug "Teleport $self->{actor} - (re)trying\n", "teleport";
 		if (my $chat_command = $self->chatCommand) { # 1 - try to use chat command
 			debug "Teleport $self->{actor} - Using chat command to teleport : $chat_command\n", "teleport";
-
 			Misc::sendMessage($messageSender, "c", $chat_command);
 			Plugins::callHook('teleport_sent' => $self->hookArgs);
 
@@ -114,6 +108,7 @@ sub iterate {
 		} elsif($self->{actor}->{sitting}) { # 3 check if actor is sitting
 			my $task = new Task::SitStand(actor => $self->{actor}, mode => 'stand', wait => $timeout{ai_stand_wait}{timeout});
 			$self->setSubtask($task);
+
 		} elsif($self->canUseSkill) { # 4 - try to use teleport skill
 			debug "Teleport $self->{actor} - Using skill to teleport\n", "teleport";
 			$self->useSkill;
