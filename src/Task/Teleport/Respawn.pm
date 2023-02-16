@@ -7,6 +7,7 @@ use strict;
 use Modules 'register';
 use base 'Task::Teleport';
 use Globals qw(%config %timeout);
+use Translation qw(T TF);
 use Log qw(debug);
 
 sub hookArgs {
