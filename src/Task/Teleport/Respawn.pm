@@ -40,6 +40,7 @@ sub getInventoryItem {
 sub canUseSkill {
 	my ($self) =  @_;
 	return 0 if ($self->{actor}->{muted});
+	return 0 if $config{'teleportAuto_useItemForRespawn'};
 	return ($self->{actor}->getSkillLevel(new Skill(handle => 'AL_TELEPORT')) == 2) ? 1 : 0;
 }
 
