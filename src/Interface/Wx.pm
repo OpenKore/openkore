@@ -460,7 +460,7 @@ sub createMenuBar {
 	$infoMenu->AppendSeparator;
 	$self->addMenu($infoMenu, T('&Experience Report'),	sub { Commands::run("exp"); });
 	$self->addMenu($infoMenu, T('&Item Change Report'),	sub { Commands::run("exp item"); });
-	$self->addMenu($infoMenu, T('&Monsiter Kill Report'),	sub { Commands::run("exp monster"); });
+	$self->addMenu($infoMenu, T('&Monster Kill Report'),	sub { Commands::run("exp monster"); });
 	$menu->Append($infoMenu, T('I&nfo'));
 
 	# View menu
