@@ -7154,7 +7154,7 @@ sub cmdRodex {
 			message T("Sending request to open rodex normal mailbox.\n");
 		}
 		$rodexCurrentType = $type;
-		$messageSender->rodex_open_mailbox($rodexCurrentType,0,0);
+		$messageSender->rodex_open_mailbox($type,0,0);
 
 	} elsif ($arg1 eq 'close') {
 		if (!defined $rodexList) {
@@ -7243,7 +7243,8 @@ sub cmdRodex {
 			return;
 		}
 
-		$messageSender->rodex_read_mail($rodexCurrentType,$arg2,0);
+		my $openType = $rodexList->{mails}{$arg2}{openType};
+		$messageSender->rodex_read_mail($openType,$arg2,0);
 
 	} elsif ($arg1 eq 'write') {
 		if (!defined $rodexList) {
@@ -7564,8 +7565,9 @@ sub cmdRodex {
 			return;
 		}
 
+		my $openType = $rodexList->{mails}{$rodexList->{current_read}}{openType};
 		message T("Requesting items of current rodex mail.\n");
-		$messageSender->rodex_request_items($rodexList->{current_read}, 0, $rodexCurrentType);
+		$messageSender->rodex_request_items($rodexList->{current_read}, 0, $openType);
 
 	} elsif ($arg1 eq 'getzeny') {
 		if (!defined $rodexList) {
@@ -7585,8 +7587,9 @@ sub cmdRodex {
 			return;
 		}
 
+		my $openType = $rodexList->{mails}{$rodexList->{current_read}}{openType};
 		message T("Requesting zeny of current rodex mail.\n");
-		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, $rodexCurrentType);
+		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, $openType);
 
 	} elsif ($arg1 eq 'nextpage') {
 		if (!defined $rodexList) {
@@ -7620,7 +7623,8 @@ sub cmdRodex {
 			return;
 		}
 
-		$messageSender->rodex_delete_mail($rodexCurrentType,$arg2,0);
+		my $openType = $rodexList->{mails}{$rodexList->{current_read}}{openType};
+		$messageSender->rodex_delete_mail($openType,$arg2,0);
 
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
