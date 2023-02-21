@@ -529,7 +529,7 @@ sub initHandlers {
 			["nextpage", T("request and get the next page of rodex mail")],
 			["maillist", T("show ALL messages from ALL pages of rodex mail")],
 			["refresh", T("send request to refresh and update rodex mailbox")],
-			["read <mail_id>", T("open the selected Rodex mail")],
+			["read <mail_# | mail_id>", T("open the selected Rodex mail")],
 			["getitems", T("request ang get items of current rodex mail")],
 			["getzeny", T("request ang get zeny of current rodex mail")],
 			["write", T("open a box to start write a rodex mail")],
@@ -7178,12 +7178,13 @@ sub cmdRodex {
 		my $msg = center(" ". T("Rodex Mail List") ." ", 119, '-') . "\n" .
 						T(" #  ID       From                    Att  New  Expire    Title\n");
 
-		my $index = 0;
+		my @list;
 		foreach my $mail_id (keys %{$rodexList->{mails}}) {
 			my $mail = $rodexList->{mails}{$mail_id};
-			$msg .= swrite("@>  @<<<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<< @<<  @>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $mail->{mailID1}, $mail->{sender}, $mail->{attach} ? $mail->{attach} : "-", $mail->{isRead} ? T("No") : T("Yes"), $mail->{expireDay} ." ".T("Days"), $mail->{title}]);
-
-			$index++;
+			$list[$mail->{page_index}] = swrite("@>  @<<<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<< @<<  @>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$mail->{page_index}, $mail->{mailID1}, $mail->{sender}, $mail->{attach} ? $mail->{attach} : "-", $mail->{isRead} ? T("No") : T("Yes"), $mail->{expireDay} ." ".T("Days"), $mail->{title}]);
+		}
+		foreach my $list (@list) {
+			$msg .= $list;
 		}
 		$msg .= ('-'x119) . "\n";
 		message $msg, "list";
@@ -7233,12 +7234,24 @@ sub cmdRodex {
 			error T("Your rodex mail box is closed.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
+		} elsif ($arg2 eq "" || $arg2 !~ /\d+/) {
 			error T("Syntax Error in function 'rodex read' (Read rodex mail)\n" .
-				"Usage: rodex read <mail_id>\n");
+				"Usage: rodex read <mail_# | mail_id>\n");
 			return;
 
-		} elsif (!exists $rodexList->{mails}{$arg2}) {
+		} elsif ($arg2 =~/^\d{1,3}$/) {
+			foreach my $mail_id (keys %{$rodexList->{mails}}) {
+				my $page_index = $rodexList->{mails}{$mail_id}{page_index};
+				if ($page_index == $arg2) {
+					$arg2 = $mail_id;
+					last;
+				} else {
+					next;
+				}
+			}
+		}
+
+		if (!exists $rodexList->{mails}{$arg2}) {
 			error TF("Mail of id %d doesn't exist.\n", $arg2);
 			return;
 		}
