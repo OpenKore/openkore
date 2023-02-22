@@ -647,26 +647,26 @@ sub objectInsideCasting {
 	
 	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 	my $monsterPos = calcPosition($monster);
-	
+
 	foreach my $caster (@$playersList, @$slavesList) {
 		next if (isMySlaveID($caster->{ID}));
 		next if ($char->{party} && $char->{party}{joined} && exists $char->{party}{users}{$caster->{ID}});
-		
+
 		next unless (exists $caster->{casting} && defined $caster->{casting} && $caster->{casting});
-		
+
 		my $cast = $caster->{casting};
 		next unless ($cast->{x} != 0 || $cast->{y} != 0);
-		
+
 		my $skill = $cast->{skill};
 		my $skillID = $skill->getIDN();
 		my $range = judgeSkillArea($skillID);
-		
+
 		my %coords;
 		$coords{x} = $cast->{x};
 		$coords{y} = $cast->{y};
-		
+
 		my $distFromCenter = blockDistance($monsterPos, \%coords);
-		
+
 		if ($distFromCenter <= $range) {
 			#warning TF("Target %s is inside skill %s (range %d | dist %d) from caster %s.\n", $monster, $skill, $range, $distFromCenter, $caster), 'slave_attack';
 			return 1;
@@ -1512,7 +1512,7 @@ sub is_aggressive {
 	$plugin_args{type} = $type;
 	$plugin_args{party} = $party;
 	$plugin_args{return} = 0;
-	Plugins::callHook( ai_check_Aggressiveness => \%plugin_args );
+	Plugins::callHook('ai_check_Aggressiveness' => \%plugin_args);
 
 	if (
 		($plugin_args{return}) ||
@@ -1547,7 +1547,7 @@ sub is_aggressive_slave {
 	$plugin_args{control} = $control;
 	$plugin_args{type} = $type;
 	$plugin_args{return} = 0;
-	Plugins::callHook( ai_slave_check_Aggressiveness => \%plugin_args );
+	Plugins::callHook('ai_slave_check_Aggressiveness' => \%plugin_args);
 
 	if (
 		($plugin_args{return}) ||
@@ -1592,7 +1592,7 @@ sub checkMonsterCleanness {
 	if ($config{attackAuto_party} && ($monster->{dmgFromParty} > 0 || $monster->{missedFromParty} > 0 || $monster->{dmgToParty} > 0 || $monster->{missedToParty} > 0)) {
 		return 1;
 	}
-	
+
 	if (
 		   scalar(grep { isMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
 		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
@@ -2140,7 +2140,12 @@ sub inventoryItemRemoved {
 		}
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('inventory_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('inventory_item_removed', {
+		item => $item,
+		index => $binID,
+		amount => $amount,
+		remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})
+	});
 }
 
 ##
@@ -2159,7 +2164,12 @@ sub storageItemRemoved {
 		$char->storage->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('storage_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('storage_item_removed', {
+		item => $item,
+		index => $binID,
+		amount => $amount,
+		remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})
+	});
 }
 
 ##
@@ -2178,7 +2188,12 @@ sub cartItemRemoved {
 		$char->cart->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('cart_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('cart_item_removed', {
+		item => $item,
+		index => $binID,
+		amount => $amount,
+		remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})
+	});
 }
 
 # Resolve the name of a card
@@ -3226,7 +3241,10 @@ sub setStatus {
 		}
 	}
 =cut
-	Plugins::callHook('changed_status',{actor => $actor, changed => $changed});
+	Plugins::callHook('changed_status',{
+		actor => $actor,
+		changed => $changed
+	});
 
 	# Remove perfectly hidden objects
 	if ($actor->statusActive('EFFECTSTATE_SPECIALHIDING')) {
@@ -3236,7 +3254,10 @@ sub setStatus {
 			# $playersList->remove($actor);
 			# Call the hook when a perfectly hidden player is detected
 			# Plugins::callHook('perfect_hidden_player',undef);
-			Plugins::callHook('perfect_hidden_player',{actor => $actor, changed => $changed});
+			Plugins::callHook('perfect_hidden_player', {
+				actor => $actor,
+				changed => $changed
+			});
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Monster")) {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());
@@ -3248,7 +3269,10 @@ sub setStatus {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());
 			# message TF("Remove perfectly hidden %s\n", $actor->nameString());
 			# $npcsList->remove($actor);
-			Plugins::callHook('perfect_hidden_npc',{actor => $actor, changed => $changed});
+			Plugins::callHook('perfect_hidden_npc', {
+				actor => $actor,
+				changed => $changed
+			});
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Pet")) {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());
@@ -4544,7 +4568,7 @@ sub checkSelfCondition {
 			return 0 if !inRange($char->{weight}, $config{$prefix."_weight"});
 		}
 	}
-	
+
 	my $has_homunculus = $char->has_homunculus;
 
 	if ($config{$prefix."_homunculus"} =~ /\S/) {
@@ -4600,7 +4624,7 @@ sub checkSelfCondition {
 		return 0 unless ($char->{homunculus});
 		return 0 unless ($char->{homunculus}{vaporized});
 	}
-	
+
 	my $has_mercenary = $char->has_mercenary;
 
 	if ($config{$prefix."_mercenary"} =~ /\S/) {
@@ -4877,7 +4901,7 @@ sub checkSelfCondition {
 	my %hookArgs;
 	$hookArgs{prefix} = $prefix;
 	$hookArgs{return} = 1;
-	Plugins::callHook("checkSelfCondition", \%hookArgs);
+	Plugins::callHook('checkSelfCondition', \%hookArgs);
 	return 0 if (!$hookArgs{return});
 
 	return 1;
@@ -5196,7 +5220,10 @@ sub openShop {
 	message T("Trying to set up shop...\n"), "vending";
 	$messageSender->sendOpenShop($shop{title}, \@items);
 	$shopstarted = 1;
-	Plugins::callHook ('open_shop', {title => $shop{title}, items => \@items});
+	Plugins::callHook('open_shop', {
+		title => $shop{title},
+		items => \@items
+	});
 }
 
 sub closeShop {
@@ -5210,7 +5237,7 @@ sub closeShop {
 	$shopstarted = 0;
 	$articles = 0;
 	$timeout{'ai_shop'}{'time'} = time;
-	Plugins::callHook("shop_closed");
+	Plugins::callHook('shop_closed');
 	message T("Shop closed.\n");
 }
 
@@ -5305,7 +5332,11 @@ sub openBuyerShop {
 		$limitZeny = $char->{zeny};
 	}
 
-	Plugins::callHook ('buyer_open_shop', {title => $buyer_shop{title}, limitZeny=> $limitZeny, items => \@items});
+	Plugins::callHook ('buyer_open_shop', {
+		title => $buyer_shop{title},
+		limitZeny=> $limitZeny,
+		items => \@items
+	});
 	$messageSender->sendBuyBulkOpenShop($limitZeny, 1, $buyer_shop{title}, \@items);
 
 	message T("Trying to set up buyer shop...\n"), "vending";
@@ -5322,7 +5353,7 @@ sub closeBuyerShop {
 
 	$buyershopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
-	Plugins::callHook("buyer_shop_closed");
+	Plugins::callHook('buyer_shop_closed');
 	message T("Buyer Shop closed.\n");
 }
 

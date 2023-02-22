@@ -160,8 +160,7 @@ cachePlayerNames 1
 cachePlayerNames_duration 900
 cachePlayerNames_maxSize 100
 
-clientSight 15
-clientSight_removeBeyond 2
+clientSight 17
 
 dcPause 1
 dcOnDeath 0

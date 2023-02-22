@@ -102,8 +102,7 @@ sub reset {
 	my %hookArgs;
 	$hookArgs{args} = \%args;
 	$hookArgs{return} = 1;
-	Plugins::callHook("PathFindingReset", \%hookArgs);
-
+	Plugins::callHook('PathFindingReset', \%hookArgs);
 	if ($hookArgs{return}) {
 		$args{avoidWalls} = 1 unless (defined $args{avoidWalls});
 		$args{weight_map} = \($args{field}->{weightMap}) unless (defined $args{weight_map});
@@ -132,9 +131,9 @@ sub reset {
 		$args{useManhattan},
 		$args{width}, 
 		$args{height},
-		$args{start}{x}, 
+		$args{start}{x},
 		$args{start}{y},
-		$args{dest}{x}, 
+		$args{dest}{x},
 		$args{dest}{y},
 		$args{timeout},
 		$args{min_x},

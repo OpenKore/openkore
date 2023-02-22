@@ -491,7 +491,12 @@ sub parse_pre {
 		}
 	}
 
-	Plugins::callHook($hook, {switch => $switch, msg => $msg, msg_size => length($msg), realMsg => \$msg});
+	Plugins::callHook($hook, {
+		switch => $switch,
+		msg => $msg,
+		msg_size => length($msg),
+		realMsg => \$msg
+	});
 }
 
 sub unknownMessage {
