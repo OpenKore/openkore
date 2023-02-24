@@ -83,7 +83,7 @@ attackUseWeapon 1
 attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 0
-attackRouteMaxPathDistance 13
+attackRouteMaxPathDistance 20
 attackLooters 0
 attackChangeTarget 1
 aggressiveAntiKS 0
