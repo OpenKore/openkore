@@ -482,9 +482,13 @@ sub canMove {
 	}
 
 	# If there are no obstacles return success
-	my $easy_solution = get_client_easy_solution($from, $to);
-	if ($self->checkPathFree($easy_solution)) {
-		return 1;
+	if ($dist < 2) {
+		return $self->checkLOS($from, $to, 0);
+	} else {
+		my $easy_solution = get_client_easy_solution($from, $to);
+		if ($self->checkPathFree($easy_solution)) {
+			return 1;
+		}
 	}
 
 	# If there are obstacles and OFFICIAL_WALKPATH is defined (which is by default) then calculate a client pathfinding

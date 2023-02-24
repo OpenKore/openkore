@@ -173,6 +173,12 @@ sub get_solution {
 
 	# If there are no obstacles between Pos and PosTo use calcPosFromTime to save time.
 	my $easy_solution = get_client_easy_solution($pos, $pos_to);
+
+	my $dist = blockDistance($pos, $pos_to);
+	if ($dist < 2) {
+		return $easy_solution if $field->checkLOS($pos, $pos_to, 0);
+	}
+
 	if ($field->checkPathFree($easy_solution)) {
 		return $easy_solution;
 
