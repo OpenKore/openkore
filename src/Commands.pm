@@ -5104,9 +5104,6 @@ sub cmdSell {
 
 	} elsif ($args[0] eq "done") {
 		completeNpcSell(\@sellList);
-		@sellList = ();
-		message TF("Sold %s items.\n", @sellList.""), "success";
-
 	} elsif ($args[0] eq "cancel") {
 		@sellList = ();
 		completeNpcSell(\@sellList);

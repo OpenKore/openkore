@@ -269,9 +269,9 @@ sub parse {
 		# but the ones for Receive must be kept for compatibility anyway.
 		# TODO: restrict to $Globals::packetParser and $Globals::messageSender?
 		if ($self->{hook_prefix} eq 'Network::Receive') {
-			Plugins::callHook('packet_pre/$handler->[0]', \%args);
+			Plugins::callHook("packet_pre/$handler->[0]", \%args);
 		} else {
-			Plugins::callHook('$self->{hook_prefix}/packet_pre/$handler->[0]', \%args);
+			Plugins::callHook("$self->{hook_prefix}/packet_pre/$handler->[0]", \%args);
 		}
 		Misc::checkValidity("Packet: " . $handler->[0] . " (pre)");
 
@@ -286,9 +286,9 @@ sub parse {
 	}
 
 	if ($self->{hook_prefix} eq 'Network::Receive') {
-		Plugins::callHook('packet/$handler->[0]', \%args);
+		Plugins::callHook("packet/$handler->[0]", \%args);
 	} else {
-		Plugins::callHook('$self->{hook_prefix}/packet/$handler->[0]', \%args);
+		Plugins::callHook("$self->{hook_prefix}/packet/$handler->[0]", \%args);
 	}
 	return \%args;
 }
@@ -365,7 +365,7 @@ sub willMangle {
 			messageID => $messageID,
 			name => $name
 		);
-		Plugins::callHook('$self->{hook_prefix}/willMangle', \%args);
+		Plugins::callHook("$self->{hook_prefix}/willMangle", \%args);
 		return $args{return};
 	} else {
 		return undef;
@@ -387,7 +387,7 @@ sub mangle {
 		$hook_args{messageName} = $entry->[0];
 	}
 
-	Plugins::callHook('$self->{hook_prefix}/mangle', \%hook_args);
+	Plugins::callHook("$self->{hook_prefix}/mangle", \%hook_args);
 	return $hook_args{return};
 }
 

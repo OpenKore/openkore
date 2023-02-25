@@ -3119,7 +3119,6 @@ sub processAutoAttack {
 	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
 	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
 	  && timeOut($timeout{ai_attack_auto})
-	  # If !teleportAuto_search, then searchMonsters >= teleportAuto_search will be true - no need for first condition?
 	  && $ai_v{temp}{searchMonsters} >= $config{teleportAuto_search}
 	  && (!$config{attackAuto_notInTown} || !$field->isCity)
 	  && ($config{attackAuto_inLockOnly} <= 1 || $field->baseName eq $config{'lockMap'})
