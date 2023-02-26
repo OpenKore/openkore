@@ -8444,7 +8444,7 @@ sub rodex_mail_list {
 			12 => T('gift'),# a gift from the admin
         );
 		$mail->{attach} = $attach{$mail->{attach}};
-		
+
 		$msg .= swrite("@>  @<<<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<< @<<  @>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $mail->{mailID1}, $mail->{sender}, $mail->{attach} ? $mail->{attach} : "-", $mail->{isRead} ? T("No") : T("Yes"), $mail->{expireDay} ." ".T("Days"), $mail->{title}]);
 
 		$index++;
@@ -8470,9 +8470,20 @@ sub rodex_read_mail {
 
 	my $mail = {};
 
-	$mail->{body} = solveMSG(bytesToString(substr($msg, $header_len, $args->{text_len})));
+	$mail->{body} = bytesToString( substr($msg, $header_len, $args->{text_len}) );
+	chomp ($mail->{body});
+	$mail->{body} = solveMSG($mail->{body});
+
 	$mail->{zeny1} = $args->{zeny1};
 	$mail->{zeny2} = $args->{zeny2};
+
+	$mail->{type} = $args->{type};
+	my %opentype = (
+		0 => T('Mail from players'),
+		1 => T('Account mail'),
+		2 => T('Return'),
+		3 => T('Unset'),
+	);
 
 	my $item_pack = $self->{rodex_read_mail_item_pack} || 'v2 C3 a8 a4 C a4 a25';
 	my $item_len = length pack $item_pack;
@@ -8481,15 +8492,14 @@ sub rodex_read_mail {
 
 	$mail->{items} = [];
 
-	message center(" " . "Mail (" . $args->{mailID1} . ") " . $rodexList->{mails}{$args->{mailID1}}->{sender} . " ", 119, '-') . "\n";
-	message sprintf("From: %s \n", $rodexList->{mails}{$args->{mailID1}}->{sender});
-	message "Message:\n" . $mail->{body};
-	# FIXME for some reason message can't concatenate bytesToString + "\n"
-	message "\n";
+	my $print_msg = center(" " .TF("Mail %d from %s", $args->{mailID1}, $rodexList->{mails}{$args->{mailID1}}{sender}) ." ", 119, '-') . "\n";
+	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Mail type:"), $opentype{$mail->{type}}]);
+	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Title:"), $rodexList->{mails}{$args->{mailID1}}{title}]);
+	$print_msg .= T("Message:") ."     " .$mail->{body} ."\n";
+	message $print_msg, "list";
 
-	my $print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
-
-	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Zeny:", $args->{zeny1}]);
+	$print_msg = swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Item count:"), $args->{itemCount}]);
+	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Zeny:"), $args->{zeny1}]);
 
 	my $index = 0;
 	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
@@ -8516,7 +8526,7 @@ sub rodex_read_mail {
 		$index++;
 	}
 
-	$print_msg .= sprintf("%s\n", ('-'x119));
+	$print_msg .= ('-'x119) . "\n";
 	message $print_msg, "list";
 
 	@{$rodexList->{mails}{$args->{mailID1}}}{qw(body items zeny1 zeny2)} = @{$mail}{qw(body items zeny1 zeny2)};
