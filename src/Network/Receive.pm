@@ -8562,9 +8562,9 @@ sub rodex_remove_item {
 
 	my $rodex_item = $rodexWrite->{items}->getByID($args->{ID});
 
-	my $disp = TF("Item removed from rodex mail message: %s (%d) x %d - %s",
+	my $msg = TF("Item removed from rodex mail message: %s (%d) x %d - %s",
 			$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
-	message "$disp\n", "drop";
+	message "$msg\n", "drop";
 
 	$rodex_item->{amount} -= $args->{amount};
 	if ($rodex_item->{amount} <= 0) {
@@ -8603,14 +8603,15 @@ sub rodex_add_item {
 		$rodex_item->{upgrade} = $args->{upgrade};
 		$rodex_item->{cards} = $args->{cards};
 		$rodex_item->{options} = $args->{options};
+		$rodex_item->{weight} = $args->{weight};
 		$rodex_item->{name} = itemName($rodex_item);
 
 		$rodexWrite->{items}->add($rodex_item);
 	}
 
-	my $disp = TF("Item added to rodex mail message: %s (%d) x %d - %s",
+	my $msg = TF("Item added to rodex mail message: %s (%d) x %d - %s",
 			$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
-	message "$disp\n", "drop";
+	message "$msg\n", "drop";
 }
 
 sub rodex_open_write {
@@ -8619,8 +8620,12 @@ sub rodex_open_write {
 	$rodexWrite = {};
 
 	$rodexWrite->{items} = new InventoryList;
-	$rodexWrite->{name} = $args->{name};
-
+	if ($args->{name}) {
+		$rodexWrite->{name} = bytesToString($args->{name});
+		$messageSender->rodex_checkname($rodexWrite->{name});
+	}
+	$rodexWrite->{title} = T("TITLE");
+	debug "Rodex Mail Target: '$rodexWrite->{name}', Title: '$rodexWrite->{title}'\n";
 }
 
 sub rodex_check_player {
@@ -8644,11 +8649,11 @@ sub rodex_check_player {
 		};
 	}
 
-	my $print_msg = center(" " . "Rodex Mail Target" . " ", 119, '-') . "\n";
+	my $print_msg = center( " " .T("Rodex Mail Target") ." ", 59, '-') . "\n";
 
-	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $rodexWrite->{name}, "Base Level:", $args->{base_level}, "Class:", $jobs_lut{$args->{class}}, "Char ID:", $args->{char_id}]);
-
-	$print_msg .= sprintf("%s\n", ('-'x119));
+	$print_msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<", [T("Name: ").$rodexWrite->{name}, T("Base Level: ").$args->{base_level}]);
+	$print_msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<", [T("Char ID: ").$args->{char_id}, T("Class: ").$jobs_lut{$args->{class}}]);
+	$print_msg .= ('-'x59) . "\n";
 	message $print_msg, "list";
 
 	@{$rodexWrite->{target}}{@{$rodex_check_player_unpack->{target}}} = @{$args}{@{$rodex_check_player_unpack->{target}}};
