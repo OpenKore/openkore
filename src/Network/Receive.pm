@@ -8493,13 +8493,13 @@ sub rodex_read_mail {
 	$mail->{items} = [];
 
 	my $print_msg = center(" " .TF("Mail %d from %s", $args->{mailID1}, $rodexList->{mails}{$args->{mailID1}}{sender}) ." ", 119, '-') . "\n";
-	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Mail type:"), $opentype{$mail->{type}}]);
+	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<", [T("Mail type:"), $opentype{$mail->{type}}]);
 	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Title:"), $rodexList->{mails}{$args->{mailID1}}{title}]);
 	$print_msg .= T("Message:") ."     " .$mail->{body} ."\n";
 	message $print_msg, "list";
 
-	$print_msg = swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Item count:"), $args->{itemCount}]);
-	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Zeny:"), $args->{zeny1}]);
+	$print_msg = swrite("@<<<<<<<<<<< @<<<<<<", [T("Item count:"), $args->{itemCount}]);
+	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<", [T("Zeny:"), $args->{zeny1}]);
 
 	my $index = 0;
 	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
@@ -8649,11 +8649,10 @@ sub rodex_check_player {
 		};
 	}
 
-	my $print_msg = center( " " .T("Rodex Mail Target") ." ", 59, '-') . "\n";
-
-	$print_msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<", [T("Name: ").$rodexWrite->{name}, T("Base Level: ").$args->{base_level}]);
-	$print_msg .= swrite("@<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<", [T("Char ID: ").$args->{char_id}, T("Class: ").$jobs_lut{$args->{class}}]);
-	$print_msg .= ('-'x59) . "\n";
+	my $print_msg = center( " " .T("Rodex Mail Target") ." ", 62, '-') . "\n";
+	$print_msg .= swrite("   @>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<", [T("Name:"), $rodexWrite->{name}, T("Base Level:"), $args->{base_level}]);
+	$print_msg .= swrite("@>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<", [T("Char ID:"), $args->{char_id}, T("Class:"), $jobs_lut{$args->{class}}]);
+	$print_msg .= ('-'x62) . "\n";
 	message $print_msg, "list";
 
 	@{$rodexWrite->{target}}{@{$rodex_check_player_unpack->{target}}} = @{$args}{@{$rodex_check_player_unpack->{target}}};

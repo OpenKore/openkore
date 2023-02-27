@@ -541,6 +541,7 @@ sub initHandlers {
 			["setzeny <zeny_amount>", T("set zeny amount in rodex mail")],
 			["add <item #> <amount>", T("add a item from inventory in rodex mail box")],
 			["remove <item #> <amount>", T("remove a item or amount of item from rodex mail")],
+			["draft", T("show draft rodex mail before sending")],
 			["send", T("send finished rodex mail")],
 			["cancel", T("close rodex mail write box")],
 			["delete <mail_id>", T("delete selected rodex mail")]
@@ -7347,7 +7348,7 @@ sub cmdRodex {
 			}
 		}
 
-		my $msg = center(T(" Rodex mail item list "), 50, '-') ."\n";
+		my $msg = center( " " .T("Rodex mail item list") ." ", 50, '-') ."\n";
 
 		$msg .= T("-- Usable --\n");
 		for (my $i = 0; $i < @useable; $i++) {
@@ -7503,6 +7504,28 @@ sub cmdRodex {
 		message TF("Adding amount %d of item '%s' to rodex mail.\n", $amount, $item);
 		$messageSender->rodex_add_item($item->{ID}, $amount);
 
+	} elsif ($arg1 eq 'draft') {
+		if (!defined $rodexList) {
+			error T("Your rodex mail box is closed.\n");
+			return;
+
+		} elsif (!defined $rodexWrite) {
+			error T("You are not writing a rodex mail.\n");
+			return;
+		}
+
+		my $msg = center( " " .TF("Draft mail for %s", $rodexWrite->{name}) ." ", 119, '-') ."\n";
+		$msg .= swrite("@>>>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<", [T("Recepient:"), $rodexWrite->{name}, T("Base Level:"), $rodexWrite->{target}{base_level}]);
+		$msg .= swrite("@>>>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<", [T("Char ID:"), $rodexWrite->{target}{char_id}, T("Class:"), $jobs_lut{$rodexWrite->{target}{class}}]);
+		$msg .= "------\n";
+		$msg .= swrite("@<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Title:"), $rodexWrite->{title}]);
+		$msg .= T("Message:") ."    " .$rodexWrite->{body} ."\n";
+		$msg .= swrite("@<<<<<<<<<< @<<<<<<<<<", [T("Zeny:"), $rodexWrite->{zeny}]) if ($rodexWrite->{zeny});
+		$msg .= ('-'x119) . "\n";
+
+		message $msg, "list";
+		cmdRodex(undef, 'itemslist');
+
 	} elsif ($arg1 eq 'remove') {
 		if (!defined $rodexList) {
 			error T("Your rodex mail box is closed.\n");
@@ -7641,7 +7664,7 @@ sub cmdRodex {
 
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
-			"Usage: rodex [<open|close|list|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
+			"Usage: rodex [<open|close|list|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|draft|send>]\n");
 	}
 }
 
