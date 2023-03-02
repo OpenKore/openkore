@@ -581,6 +581,8 @@ sub setStatus {
 		$self->{statuses}{$handle} = bless {}, 'OpenkoreFixup::EmptyObject';
 
 		if ($tick) {
+			$self->{statuses}{$handle}{time} = time;
+			$self->{statuses}{$handle}{tick} = $tick;
 			Scalar::Util::weaken($self->{statuses}{$handle}{_actor} = $self);
 
 			$taskManager->add(Task::Timeout->new(
@@ -661,6 +663,26 @@ sub statusesString {
 	? join ', ', map { $statusName{$_} || $_ } keys %{$self->{statuses}}
 	# Translation Comment: No status effect on actor
 	: '';
+}
+
+##
+# String $Actor->statusesString()
+#
+# Returns human-readable list and times of currently active statuses.
+sub statusesStringAndTime {
+	my ($self) = @_;
+	my $msg = '';
+	if($self->{statuses} && %{$self->{statuses}}) {
+		my @keys = keys %{$self->{statuses}};
+		foreach my $key (@keys) {
+			eval {
+				my $time_end = $self->{'statuses'}{$key}{'time'} + ($self->{'statuses'}{$key}{'tick'}/1000);
+				my $status_remaining_time = int($time_end - time);
+				$msg .= "$statusName{$key} - $status_remaining_time seconds left\n";
+			}
+		}
+	}
+	return $msg;
 }
 
 ##

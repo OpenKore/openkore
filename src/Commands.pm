@@ -591,6 +591,7 @@ sub initHandlers {
 			["moon", T("select mon as starplace")],
 			["star", T("select star as starplace")],
 			], \&cmdStarplace],
+		['statuses', T("Display character statuses and times."), \&cmdStatuses],
 		['storage', [
 			T("Handle items in Kafra storage."),
 			["", T("lists items in storage")],
@@ -5536,6 +5537,10 @@ sub cmdStatus {
 		('-'x56) . "\n";
 
 	message $msg, "info";
+}
+
+sub cmdStatuses {
+	message "Statuses:\n".$char->statusesStringAndTime;
 }
 
 sub cmdStorage {
