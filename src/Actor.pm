@@ -671,14 +671,14 @@ sub statusesString {
 # Returns human-readable list and times of currently active statuses.
 sub statusesStringAndTime {
 	my ($self) = @_;
-	my $msg = '';
+	my $msg;
 	if($self->{statuses} && %{$self->{statuses}}) {
 		my @keys = keys %{$self->{statuses}};
 		foreach my $key (@keys) {
 			eval {
 				my $time_end = $self->{'statuses'}{$key}{'time'} + ($self->{'statuses'}{$key}{'tick'}/1000);
 				my $status_remaining_time = int($time_end - time);
-				$msg .= "$statusName{$key} - $status_remaining_time seconds left\n";
+				$msg .= TF("%s - %d seconds left\n", $statusName{$key}, $status_remaining_time);
 			}
 		}
 	}
