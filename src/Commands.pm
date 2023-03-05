@@ -523,20 +523,23 @@ sub initHandlers {
 			], \&cmdRevive],
 		['rodex', [
 			T("rodex use (Ragnarok Online Delivery Express)"),
-			["open <type_id|none>", T("open rodex mailbox")],
+			["open", T("open rodex mailbox")],
+			["open <0 | 1 | 2>", T("open rodex mailbox with a specific type")],
 			["close", T("close rodex mailbox")],
 			["list", T("list your first page of rodex mail")],
 			["nextpage", T("request and get the next page of rodex mail")],
 			["maillist", T("show ALL messages from ALL pages of rodex mail")],
 			["refresh", T("send request to refresh and update rodex mailbox")],
 			["read <mail_# | mail_id>", T("open the selected Rodex mail")],
-			["getitems", T("request ang get items of current rodex mail")],
-			["getzeny", T("request ang get zeny of current rodex mail")],
+			["getitems", T("get items of current rodex mail")],
+			["getitems <mail_# | mail_id>", T("get items of rodex mail")],
+			["getzeny", T("get zeny of current rodex mail")],
+			["getzeny <mail_# | mail_id>", T("get zeny of rodex mail")],
 			["write", T("open a box to start write a rodex mail")],
-			["write <player_name|self>", T("open a box to start write a rodex mail to the specified player")],
+			["write <player_name | self>", T("open a box to start write a rodex mail to the specified player")],
 			["settarget <player_name|self>", T("set target of rodex mail")],
 			["itemslist", T("show current list of items in mail box that you are writting")],
-			["settitle <title>", T("show current list of items in mail box that you are writting")],
+			["settitle <title>", T("set rodex mail title")],
 			["setbody <body>", T("set rodex mail body")],
 			["setzeny <zeny_amount>", T("set zeny amount in rodex mail")],
 			["add <item #> <amount>", T("add a item from inventory in rodex mail box")],
@@ -544,7 +547,7 @@ sub initHandlers {
 			["draft", T("show draft rodex mail before sending")],
 			["send", T("send finished rodex mail")],
 			["cancel", T("close rodex mail write box")],
-			["delete <mail_id>", T("delete selected rodex mail")]
+			["delete <mail_# | mail_id>", T("delete selected rodex mail")]
 			], \&cmdRodex],
 		['roulette', [
 			T("Roulette System."),
@@ -7235,7 +7238,7 @@ sub cmdRodex {
 			error T("Your rodex mail box is closed.\n");
 			return;
 
-		} elsif ($arg2 eq "" || $arg2 !~ /\d+/) {
+		} elsif ($arg2 eq "" || $arg2 !~ /^\d+$/) {
 			error T("Syntax Error in function 'rodex read' (Read rodex mail)\n" .
 				"Usage: rodex read <mail_# | mail_id>\n");
 			return;
@@ -7253,7 +7256,7 @@ sub cmdRodex {
 		}
 
 		if (!exists $rodexList->{mails}{$arg2}) {
-			error TF("Mail of id %d doesn't exist.\n", $arg2);
+			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
 			return;
 		}
 
@@ -7441,7 +7444,7 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 eq "" || $arg2 !~ /\d+/) {
+		} elsif ($arg2 eq "" || $arg2 !~ /^\d+$/) {
 			error T("Syntax Error in function 'rodex setzeny' (Set zeny of rodex mail)\n" .
 				"Usage: rodex setzeny <zeny_amount>\n");
 			return;
@@ -7592,18 +7595,41 @@ sub cmdRodex {
 			error T("You are writing a rodex mail.\n");
 			return;
 
-		} elsif (!exists $rodexList->{current_read}) {
+		} elsif ($arg2 eq "" and !exists $rodexList->{current_read}) {
 			error T("You are not reading a rodex mail.\n");
 			return;
 
-		} elsif (scalar @{$rodexList->{mails}{$rodexList->{current_read}}{items}} == 0) {
-			error T("The current rodex mail has no items.\n");
+		} elsif ($arg2 ne "" and $arg2 !~ /^\d+$/) {
+			error T("Syntax Error in function 'rodex getitems' (Get items of rodex mail)\n" .
+				"Usage: rodex getitems [<mail_# | mail_id>]\n");
+			return;
+
+		} elsif ($arg2 =~/^\d{1,3}$/) {
+			foreach my $mail_id (keys %{$rodexList->{mails}}) {
+				my $page_index = $rodexList->{mails}{$mail_id}{page_index};
+				if ($page_index == $arg2) {
+					$arg2 = $mail_id;
+					last;
+				} else {
+					next;
+				}
+			}
+
+		} else {
+			$arg2 = $rodexList->{current_read} if ($rodexList->{current_read});
+		}
+
+		if (!exists $rodexList->{mails}{$arg2}) {
+			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
+			return;
+		} elsif ($rodexList->{mails}{$arg2}{attach} ne 'i' and $rodexList->{mails}{$arg2}{attach} ne 'z+i') {
+			error TF("The rodex mail '%d' has no items.\n", $arg2);
 			return;
 		}
 
-		my $openType = $rodexList->{mails}{$rodexList->{current_read}}{openType};
-		message T("Requesting items of current rodex mail.\n");
-		$messageSender->rodex_request_items($rodexList->{current_read}, 0, $openType);
+		my $openType = $rodexList->{mails}{$arg2}{openType};
+		message TF("Requesting items of rodex mail '%d'.\n", $arg2);
+		$messageSender->rodex_request_items($arg2, 0, $openType);
 
 	} elsif ($arg1 eq 'getzeny') {
 		if (!defined $rodexList) {
@@ -7614,18 +7640,41 @@ sub cmdRodex {
 			error T("You are writing a rodex mail.\n");
 			return;
 
-		} elsif (!exists $rodexList->{current_read}) {
+		} elsif ($arg2 eq "" and !exists $rodexList->{current_read}) {
 			error T("You are not reading a rodex mail.\n");
 			return;
 
-		} elsif ($rodexList->{mails}{$rodexList->{current_read}}{zeny1} == 0) {
-			error T("The current rodex mail has no zeny.\n");
+		} elsif ($arg2 ne "" and $arg2 !~ /^\d+$/) {
+			error T("Syntax Error in function 'rodex getzeny' (Get zeny of rodex mail)\n" .
+				"Usage: rodex getzeny [<mail_# | mail_id>]\n");
+			return;
+
+		} elsif ($arg2 =~/^\d{1,3}$/) {
+			foreach my $mail_id (keys %{$rodexList->{mails}}) {
+				my $page_index = $rodexList->{mails}{$mail_id}{page_index};
+				if ($page_index == $arg2) {
+					$arg2 = $mail_id;
+					last;
+				} else {
+					next;
+				}
+			}
+
+		} else {
+			$arg2 = $rodexList->{current_read} if ($rodexList->{current_read});
+		}
+
+		if (!exists $rodexList->{mails}{$arg2}) {
+			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
+			return;
+		} elsif ($rodexList->{mails}{$arg2}{attach} ne 'z' and $rodexList->{mails}{$arg2}{attach} ne 'z+i') {
+			error TF("The rodex mail '%d' has no zeny.\n", $arg2);
 			return;
 		}
 
-		my $openType = $rodexList->{mails}{$rodexList->{current_read}}{openType};
-		message T("Requesting zeny of current rodex mail.\n");
-		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, $openType);
+		my $openType = $rodexList->{mails}{$arg2}{openType};
+		message TF("Requesting zeny of rodex mail '%d'.\n", $arg2);
+		$messageSender->rodex_request_zeny($arg2, 0, $openType);
 
 	} elsif ($arg1 eq 'nextpage') {
 		if (!defined $rodexList) {
@@ -7649,17 +7698,29 @@ sub cmdRodex {
 			error T("Your rodex mail box is closed.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
+		} elsif ($arg2 eq "" || $arg2 !~ /^\d+$/) {
 			error T("Syntax Error in function 'rodex delete' (Delete rodex mail)\n" .
-				"Usage: rodex delete <mail_id>\n");
+				"Usage: rodex delete <mail_# | mail_id>\n");
 			return;
 
-		} elsif (!exists $rodexList->{mails}{$arg2}) {
-			error TF("Mail of id %d doesn't exist.\n", $arg2);
+		} elsif ($arg2 =~/^\d{1,3}$/) {
+			foreach my $mail_id (keys %{$rodexList->{mails}}) {
+				my $page_index = $rodexList->{mails}{$mail_id}{page_index};
+				if ($page_index == $arg2) {
+					$arg2 = $mail_id;
+					last;
+				} else {
+					next;
+				}
+			}
+		}
+
+		if (!exists $rodexList->{mails}{$arg2}) {
+			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
 			return;
 		}
 
-		my $openType = $rodexList->{mails}{$rodexList->{current_read}}{openType};
+		my $openType = $rodexList->{mails}{$arg2}{openType};
 		$messageSender->rodex_delete_mail($openType,$arg2,0);
 
 	} else {

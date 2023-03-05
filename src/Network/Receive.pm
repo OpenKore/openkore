@@ -8681,6 +8681,7 @@ sub rodex_get_zeny {
 	message T("The zeny of the rodex mail was requested with success.\n");
 
 	$rodexList->{mails}{$args->{mailID1}}{zeny1} = 0;
+	$rodexList->{mails}{$args->{mailID1}}{zeny1} = $rodexList->{mails}{$args->{mailID1}}{attach} eq 'z' ? 0 : 'i';
 }
 
 sub rodex_get_item {
@@ -8694,6 +8695,7 @@ sub rodex_get_item {
 	message T("The items of the rodex mail were requested with success.\n");
 
 	$rodexList->{mails}{$args->{mailID1}}{items} = [];
+	$rodexList->{mails}{$args->{mailID1}}{attach} = $rodexList->{mails}{$args->{mailID1}}{attach} eq 'i' ? undef : 'z';
 }
 
 sub rodex_delete {
