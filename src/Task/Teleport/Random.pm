@@ -56,7 +56,7 @@ sub useSkill {
 	# We have the teleport skill, and should use it
 	my $skill = new Skill(handle => 'AL_TELEPORT');
 
-	debug "Teleport $self->{actor} - Sending Teleport using Level 1\n", "task_teleport";
+	debug "Teleport $self->{actor} - Sending Teleport using Level 1\n", "teleport";
 	main::ai_skillUse($skill->getHandle(), 1, 0, 0, $self->{actor}->{ID});
 	$timeout{ai_teleport}{time} = time;
 
