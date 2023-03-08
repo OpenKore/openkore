@@ -1798,7 +1798,7 @@ sub actor_display {
 	if ( ($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0) ||
 		 (blockDistance(\%coordsFrom, \%coordsTo) > $config{clientSight}) ) {
 			warning TF("Ignoring bugged actor moved packet (%s) (%d, %d)->(%d, %d)\n", $args->{switch}, $coordsFrom{x}, $coordsFrom{y}, $coordsTo{x}, $coordsTo{y});
-		return;
+			return;
 	}
 
 =pod
@@ -8400,22 +8400,26 @@ sub rodex_mail_list {
 		$mail_info = {
 			len => 45,
 			types => 'C V2 C2 Z24 V v x4',
-			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
+			keys => [qw(openType mailID1 mailID2 isRead attach sender expireSecconds Titlelength)],
 		};
 
 	} elsif ($args->{switch} eq '0AC2') {
 		$mail_info = {
 			len => 41,
 			types => 'C V2 C2 Z24 V v',
-			keys => [qw(openType mailID1 mailID2 isRead type sender expireDateTime Titlelength)],
+			keys => [qw(openType mailID1 mailID2 isRead attach sender expireSecconds Titlelength)],
 		};
 
 	} else { # 09F0, 0A7D
 		$mail_info = {
 			len => 44,
 			types => 'V2 C2 Z24 V2 v',
-			keys => [qw(mailID1 mailID2 isRead type sender regDateTime expireDateTime Titlelength)],
+			keys => [qw(mailID1 mailID2 isRead attach sender regDateTime expireSecconds Titlelength)],
 		};
+	}
+
+	if ($args->{switch} eq '09F0' || $args->{switch} eq '0A7D') {
+		$rodexCurrentType = $args->{attach};
 	}
 
 	if ($args->{switch} eq '0A7D' || $args->{switch} eq '0AC2'  || $args->{switch} eq '0B5F') {
@@ -8432,7 +8436,9 @@ sub rodex_mail_list {
 		$rodexList->{mails_per_page} = $args->{amount};
 	}
 
-	my $print_msg = center(" " . "Rodex Mail Page ". $rodexList->{current_page} . " ", 119, '-') . "\n";
+	my $mail_len;
+	my $msg = center(" ". TF("Rodex Mail Page %d", $rodexList->{current_page}) ." ", 119, '-') . "\n" .
+							T(" #  ID       From                    Att  New  Expire    Title\n");
 
 	my $index = 0;
 	for (my $i = 0; $i < length($args->{mailList}); $i+=$mail_info->{len}) {
@@ -8444,26 +8450,28 @@ sub rodex_mail_list {
 		$mail->{sender} = solveMSG(bytesToString($mail->{sender}));
 		$mail->{page} = $rodexList->{current_page};
 		$mail->{page_index} = $index;
+		$mail->{expireDay} = int ($mail->{expireSecconds} / 60 / 60 / 24);
 
 		$i+= $mail->{Titlelength};
 
 		$rodexList->{mails}{$mail->{mailID1}} = $mail;
-
 		$rodexList->{current_page_last_mailID} = $mail->{mailID1};
 
-		my @content;
-		push(@content, "Text");
-		push(@content, "Zeny") if( $mail->{type} & (1 << 1) );
-		push(@content, "Item") if( $mail->{type} & (1 << 2) );
+		my %attach = (
+			#0 => '-',		# no attach
+			2 => T('z'),	# only zeny
+			4 => T('i'),	# only item
+			6 => T('z+i'),	# zeny + item
+			12 => T('gift'),# a gift from the admin
+        );
+		$mail->{attach} = $attach{$mail->{attach}};
 
-		my $content = join(', ', @content);
-
-		$print_msg .= swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<< @<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}, "Content:", $content]);
+		$msg .= swrite("@>  @<<<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<< @<<  @>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $mail->{mailID1}, $mail->{sender}, $mail->{attach} ? $mail->{attach} : "-", $mail->{isRead} ? T("No") : T("Yes"), $mail->{expireDay} ." ".T("Days"), $mail->{title}]);
 
 		$index++;
 	}
-	$print_msg .= sprintf("%s\n", ('-'x119));
-	message $print_msg, "list";
+	$msg .= ('-'x119) . "\n";
+	message $msg, "list";
 
 	Plugins::callHook('rodex_mail_list', {
 		'mails' => $rodexList->{mails},
@@ -8483,9 +8491,20 @@ sub rodex_read_mail {
 
 	my $mail = {};
 
-	$mail->{body} = solveMSG(bytesToString(substr($msg, $header_len, $args->{text_len})));
+	$mail->{body} = bytesToString( substr($msg, $header_len, $args->{text_len}) );
+	chomp ($mail->{body});
+	$mail->{body} = solveMSG($mail->{body});
+
 	$mail->{zeny1} = $args->{zeny1};
 	$mail->{zeny2} = $args->{zeny2};
+
+	$mail->{type} = $args->{type};
+	my %opentype = (
+		0 => T('Mail from players'),
+		1 => T('Account mail'),
+		2 => T('Return'),
+		3 => T('Unset'),
+	);
 
 	my $item_pack = $self->{rodex_read_mail_item_pack} || 'v2 C3 a8 a4 C a4 a25';
 	my $item_len = length pack $item_pack;
@@ -8494,15 +8513,14 @@ sub rodex_read_mail {
 
 	$mail->{items} = [];
 
-	message center(" " . "Mail (" . $args->{mailID1} . ") " . $rodexList->{mails}{$args->{mailID1}}->{sender} . " ", 119, '-') . "\n";
-	message sprintf("From: %s \n", $rodexList->{mails}{$args->{mailID1}}->{sender});
-	message "Message:\n" . $mail->{body};
-	# FIXME for some reason message can't concatenate bytesToString + "\n"
-	message "\n";
+	my $print_msg = center(" " .TF("Mail %d from %s", $args->{mailID1}, $rodexList->{mails}{$args->{mailID1}}{sender}) ." ", 119, '-') . "\n";
+	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<", [T("Mail type:"), $opentype{$mail->{type}}]);
+	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Title:"), $rodexList->{mails}{$args->{mailID1}}{title}]);
+	$print_msg .= T("Message:") ."     " .$mail->{body} ."\n";
+	message $print_msg, "list";
 
-	my $print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Item count:", $args->{itemCount}]);
-
-	$print_msg .= swrite("@<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", ["Zeny:", $args->{zeny1}]);
+	$print_msg = swrite("@<<<<<<<<<<< @<<<<<<", [T("Item count:"), $args->{itemCount}]);
+	$print_msg .= swrite("@<<<<<<<<<<< @<<<<<<<<<", [T("Zeny:"), $args->{zeny1}]);
 
 	my $index = 0;
 	for (my $i = ($header_len + $args->{text_len}); $i < $args->{RAW_MSG_SIZE}; $i += $item_len) {
@@ -8529,7 +8547,7 @@ sub rodex_read_mail {
 		$index++;
 	}
 
-	$print_msg .= sprintf("%s\n", ('-'x119));
+	$print_msg .= ('-'x119) . "\n";
 	message $print_msg, "list";
 
 	@{$rodexList->{mails}{$args->{mailID1}}}{qw(body items zeny1 zeny2)} = @{$mail}{qw(body items zeny1 zeny2)};
@@ -8565,9 +8583,9 @@ sub rodex_remove_item {
 
 	my $rodex_item = $rodexWrite->{items}->getByID($args->{ID});
 
-	my $disp = TF("Item removed from rodex mail message: %s (%d) x %d - %s",
+	my $msg = TF("Item removed from rodex mail message: %s (%d) x %d - %s",
 			$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
-	message "$disp\n", "drop";
+	message "$msg\n", "drop";
 
 	$rodex_item->{amount} -= $args->{amount};
 	if ($rodex_item->{amount} <= 0) {
@@ -8578,10 +8596,18 @@ sub rodex_remove_item {
 sub rodex_add_item {
 	my ( $self, $args ) = @_;
 
-	if ($args->{fail}) {
-		error T("You failed to add an item to rodex mail.\n");
-		return;
+	if ($args->{fail} == 1) {
+		error T("Item attachment has been failed.\n");#RODEX_ADD_ITEM_WEIGHT_ERROR
+	} elsif ($args->{fail} == 2) {
+		error T("Item attachment has been failed.\n");#MsgStringTable[2630]
+	} elsif ($args->{fail} == 3) {
+		error T("Maximum number of item attachments has been exceeded.\n");#MsgStringTable[2698]
+	} elsif ($args->{fail} == 4) {
+		error T("This item is banned to attach.\n");#MsgStringTable[2700]
+	} elsif ($args->{fail} != 0) {
+		error TF("Unknown error %s\n", $args->{fail});
 	}
+	return if ($args->{fail});
 
 	my $rodex_item = $rodexWrite->{items}->getByID($args->{ID});
 
@@ -8598,14 +8624,15 @@ sub rodex_add_item {
 		$rodex_item->{upgrade} = $args->{upgrade};
 		$rodex_item->{cards} = $args->{cards};
 		$rodex_item->{options} = $args->{options};
+		$rodex_item->{weight} = $args->{weight};
 		$rodex_item->{name} = itemName($rodex_item);
 
 		$rodexWrite->{items}->add($rodex_item);
 	}
 
-	my $disp = TF("Item added to rodex mail message: %s (%d) x %d - %s",
+	my $msg = TF("Item added to rodex mail message: %s (%d) x %d - %s",
 			$rodex_item->{name}, $rodex_item->{binID}, $args->{amount}, $itemTypes_lut{$rodex_item->{type}});
-	message "$disp\n", "drop";
+	message "$msg\n", "drop";
 }
 
 sub rodex_open_write {
@@ -8614,8 +8641,12 @@ sub rodex_open_write {
 	$rodexWrite = {};
 
 	$rodexWrite->{items} = new InventoryList;
-	$rodexWrite->{name} = $args->{name};
-
+	if ($args->{name}) {
+		$rodexWrite->{name} = bytesToString($args->{name});
+		$messageSender->rodex_checkname($rodexWrite->{name});
+	}
+	$rodexWrite->{title} = T("TITLE");
+	debug "Rodex Mail Target: '$rodexWrite->{name}', Title: '$rodexWrite->{title}'\n";
 }
 
 sub rodex_check_player {
@@ -8639,11 +8670,10 @@ sub rodex_check_player {
 		};
 	}
 
-	my $print_msg = center(" " . "Rodex Mail Target" . " ", 119, '-') . "\n";
-
-	$print_msg .= swrite("@<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<< @<<< @<<<<<< @<<<<<<<<<<<<<<<< @<<<<<<<< @<<<<<<<<<", ["Name:", $rodexWrite->{name}, "Base Level:", $args->{base_level}, "Class:", $jobs_lut{$args->{class}}, "Char ID:", $args->{char_id}]);
-
-	$print_msg .= sprintf("%s\n", ('-'x119));
+	my $print_msg = center( " " .T("Rodex Mail Target") ." ", 62, '-') . "\n";
+	$print_msg .= swrite("   @>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<", [T("Name:"), $rodexWrite->{name}, T("Base Level:"), $args->{base_level}]);
+	$print_msg .= swrite("@>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<", [T("Char ID:"), $args->{char_id}, T("Class:"), $jobs_lut{$args->{class}}]);
+	$print_msg .= ('-'x62) . "\n";
 	message $print_msg, "list";
 
 	@{$rodexWrite->{target}}{@{$rodex_check_player_unpack->{target}}} = @{$args}{@{$rodex_check_player_unpack->{target}}};
@@ -8672,6 +8702,7 @@ sub rodex_get_zeny {
 	message T("The zeny of the rodex mail was requested with success.\n");
 
 	$rodexList->{mails}{$args->{mailID1}}{zeny1} = 0;
+	$rodexList->{mails}{$args->{mailID1}}{zeny1} = $rodexList->{mails}{$args->{mailID1}}{attach} eq 'z' ? 0 : 'i';
 }
 
 sub rodex_get_item {
@@ -8685,6 +8716,7 @@ sub rodex_get_item {
 	message T("The items of the rodex mail were requested with success.\n");
 
 	$rodexList->{mails}{$args->{mailID1}}{items} = [];
+	$rodexList->{mails}{$args->{mailID1}}{attach} = $rodexList->{mails}{$args->{mailID1}}{attach} eq 'i' ? undef : 'z';
 }
 
 sub rodex_delete {
