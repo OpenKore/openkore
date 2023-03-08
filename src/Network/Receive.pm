@@ -8642,11 +8642,11 @@ sub rodex_open_write {
 
 	$rodexWrite->{items} = new InventoryList;
 	if ($args->{name}) {
-		$rodexWrite->{name} = bytesToString($args->{name});
-		$messageSender->rodex_checkname($rodexWrite->{name});
+		$rodexWrite->{target}{name} = bytesToString($args->{name});
+		$messageSender->rodex_checkname($rodexWrite->{target}{name});
 	}
 	$rodexWrite->{title} = T("TITLE");
-	debug "Rodex Mail Target: '$rodexWrite->{name}', Title: '$rodexWrite->{title}'\n";
+	debug "Rodex Mail Target: '$rodexWrite->{target}{name}', Title: '$rodexWrite->{title}'\n";
 }
 
 sub rodex_check_player {
@@ -8656,6 +8656,7 @@ sub rodex_check_player {
 
 	if (!$args->{char_id}) {
 		error TF("Could not find player with name '%s'.\n", $name);
+		delete $rodexWrite->{target};
 		return;
 	}
 
@@ -8664,14 +8665,14 @@ sub rodex_check_player {
 			target => [qw(char_id class base_level)],
 		};
 	} elsif ($args->{switch} eq '0A51') {
-		$rodexWrite->{name} = $name;
+		$rodexWrite->{target}{name} = $name;
 		$rodex_check_player_unpack = {
 			target => [qw(char_id class base_level name)],
 		};
 	}
 
 	my $print_msg = center( " " .T("Rodex Mail Target") ." ", 62, '-') . "\n";
-	$print_msg .= swrite("   @>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<", [T("Name:"), $rodexWrite->{name}, T("Base Level:"), $args->{base_level}]);
+	$print_msg .= swrite("   @>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<", [T("Name:"), $rodexWrite->{target}{name}, T("Base Level:"), $args->{base_level}]);
 	$print_msg .= swrite("@>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<", [T("Char ID:"), $args->{char_id}, T("Class:"), $jobs_lut{$args->{class}}]);
 	$print_msg .= ('-'x62) . "\n";
 	message $print_msg, "list";
