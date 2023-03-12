@@ -880,7 +880,7 @@ sub items_nonstackable {
 	) {
 		return $items->{type7};
 	} elsif ($args->{switch} eq '0B0A') { # item_list
-		return $items->{type7} if($masterServer->{itemListUseOldType});
+		return $items->{type7} if ($masterServer->{itemListUseOldType});
 		return $items->{type8};
 	} elsif ($args->{switch} eq '0B39') { # item_list
 		return $items->{type9};
@@ -925,7 +925,7 @@ sub items_stackable {
 	) {
 		return $items->{type6};
 	} elsif ($args->{switch} eq '0B09') { # item_list
-		return $items->{type6} if($masterServer->{itemListUseOldType});
+		return $items->{type6} if ($masterServer->{itemListUseOldType});
 		return $items->{type7};
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
