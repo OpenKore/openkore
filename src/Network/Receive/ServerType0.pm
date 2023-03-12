@@ -620,7 +620,7 @@ sub new {
 		'09FE' => ['actor_connected', 'v C a4 a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss opt4 name)]],
 		'09FF' => ['actor_exists', 'v C a4 a4 v3 V v2 V2 v7 a4 a2 v V C2 a3 C3 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize state lv font maxHP HP isBoss opt4 name)]],
 		'0A00' => ['hotkeys', 'C a*', [qw(rotate hotkeys)]], # 269 # hotkeys:38
-		'0A05' => ['rodex_add_item', 'C a2 v2 C4 a8 a25 v a5', [qw(fail ID amount nameID type identified broken upgrade cards options weight unknow)]],   # 53
+		'0A05' => ['rodex_add_item', 'C a2 v2 C4 a8 a25 v C V', [qw(fail ID amount nameID type identified broken upgrade cards options weight favorite type_equip)]],   # 53
 		'0A07' => ['rodex_remove_item', 'C a2 v2', [qw(result ID amount weight)]],   # 9
 		'0A09' => ['deal_add_other', 'v C V C3 a8 a25', [qw(nameID type amount identified broken upgrade cards options)]],
 		'0A0A' => ['storage_item_added', 'a2 V v C4 a8 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
@@ -907,11 +907,8 @@ sub items_nonstackable {
 	) {
 		return $items->{type7};
 	} elsif ($args->{switch} eq '0B0A') { # item_list
-		if (grep { $masterServer->{serverType} eq $_ } qw(iRO_Renewal)) {
-			return $items->{type7};
-		} else {
-			return $items->{type8};
-		}
+		return $items->{type7} if ($masterServer->{itemListUseOldType});
+		return $items->{type8};
 	} elsif ($args->{switch} eq '0B39') { # item_list
 		return $items->{type9};
 	} else {
@@ -955,11 +952,8 @@ sub items_stackable {
 	) {
 		return $items->{type6};
 	} elsif ($args->{switch} eq '0B09') { # item_list
-		if (grep { $masterServer->{serverType} eq $_ } qw(iRO_Renewal)) {
-			return $items->{type6};
-		} else {
-			return $items->{type7};
-		}
+		return $items->{type6} if ($masterServer->{itemListUseOldType});
+		return $items->{type7};
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
 	}

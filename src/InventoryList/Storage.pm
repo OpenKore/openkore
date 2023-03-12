@@ -13,13 +13,6 @@ sub new {
 	$self->{items} = 0;
 	$self->{items_max} = 0;
 
-	if($masterServer->{itemListType}) {
-		$self->{hooks} = Plugins::addHooks (
-			['packet/item_list_start',      \&onitemListStart, $self],
-			['packet/item_list_end',       sub { $self->onitemListEnd; }],
-		);
-	}
-
 	return $self;
 }
 
@@ -77,17 +70,21 @@ sub item_max_stack {
 }
 
 sub onitemListStart {
-	my ($hook_name, $args, $self) = @_;
-	if($args->{type} == 0x2) {
-		$self->clear();
+	my ($self) = @_;
+	$self->clear();
+	if (!$self->{opened}) {
+		$self->{opened} = 1;
+		if (!$self->{openedThisSession}) {
+			$self->{openedThisSession} = 1;
+			Plugins::callHook('storage_first_session_openning');
+		}
+		Plugins::callHook('packet_storage_open');
 	}
 }
 
 sub onitemListEnd {
 	my ($self) = @_;
-	if($current_item_list == 0x2) {
-		Plugins::callHook('storage_ready');
-	}
+	Plugins::callHook('storage_ready');
 }
 
 1;

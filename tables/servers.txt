@@ -122,6 +122,7 @@ charDeleteDateType 1
 blockingPlayerCancel 1
 rankingSystemType 1
 itemListType 1
+itemListUseOldType 1
 ignoreAntiCheatWarning 0
 
 # http://playragnarok.com
