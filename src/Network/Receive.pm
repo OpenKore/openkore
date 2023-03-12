@@ -823,16 +823,22 @@ sub received_characters {
 	return unless exists $args->{charInfo};
 
 	for (my $i = 0; $i < length($args->{charInfo}); $i += $masterServer->{charBlockSize}) {
-		my $character = new Actor::You;
+		my $temporary_character;
+		@{$temporary_character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
+
+		my $character;
 
 		# Re-use existing $char object instead of re-creating it.
 		# Required because existing AI sequences (eg, route) keep a reference to $char.
-		if ($char && $char->{ID} eq $accountID && $char->{charID} eq $character->{charID}) {
+		if ($char && $char->{ID} eq $accountID && $char->{charID} eq $temporary_character->{charID}) {
 			$character = $char;
+		} elsif(exists $chars[$temporary_character->{slot}] && $chars[$temporary_character->{slot}]->{charID} eq $temporary_character->{charID}) { # Re-use existing $char object from $chars if available.
+			$character = $chars[$temporary_character->{slot}];
+		} else { # create new one
+			$character = new Actor::You;
 		}
 
 		@{$character}{@{$char_info->{keys}}} = unpack($char_info->{types}, substr($args->{charInfo}, $i, $masterServer->{charBlockSize}));
-
 		$character->{ID} = $accountID;
 
 		$character->{name} = bytesToString($character->{name});
