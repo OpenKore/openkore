@@ -7302,7 +7302,7 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif (exists $rodexWrite->{target}) {
+		} elsif (exists $rodexWrite->{target}{name}) {
 			error T("You have already set the mail target.\n");
 			return;
 
@@ -7517,8 +7517,8 @@ sub cmdRodex {
 			return;
 		}
 
-		my $msg = center( " " .TF("Draft mail for %s", $rodexWrite->{name}) ." ", 119, '-') ."\n";
-		$msg .= swrite("@>>>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<", [T("Recepient:"), $rodexWrite->{name}, T("Base Level:"), $rodexWrite->{target}{base_level}]);
+		my $msg = center( " " .TF("Draft mail for %s", $rodexWrite->{target}{name}) ." ", 119, '-') ."\n";
+		$msg .= swrite("@>>>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<", [T("Recepient:"), $rodexWrite->{target}{name}, T("Base Level:"), $rodexWrite->{target}{base_level}]);
 		$msg .= swrite("@>>>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<", [T("Char ID:"), $rodexWrite->{target}{char_id}, T("Class:"), $jobs_lut{$rodexWrite->{target}{class}}]);
 		$msg .= "------\n";
 		$msg .= swrite("@<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Title:"), $rodexWrite->{title}]);
