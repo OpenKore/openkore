@@ -667,7 +667,7 @@ sub processEscapeUnknownMaps {
 ##### DELAYED-TELEPORT #####
 sub processDelayedTeleport {
 	if (AI::action eq 'teleport') {
-		if($char->{last_skill_used_is_continuous}) {
+		if ($char->{last_skill_used_is_continuous}) {
 			$messageSender->sendStopSkillUse($char->{last_continuous_skill_used});
 		}
 		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
@@ -723,11 +723,11 @@ sub processSkillUse {
 
 			# Use skill if we haven't done so yet
 			} elsif (!$args->{skill_used}) {
-				if($char->{last_skill_used_is_continuous}) {
-					message "stoping rolling \n";
+				if ($char->{last_skill_used_is_continuous}) {
+					message T("Stoping rolling\n");
 					$messageSender->sendStopSkillUse($char->{last_continuous_skill_used});
 				} elsif(($char->{last_skill_used} == 2027 || $char->{last_skill_used} == 147) && !$char->{selected_craft}) {
-					message "No use skill due to not select the craft / poison";
+					message T("No use skill due to not select the craft / poison\n");
 					last SKILL_USE;
 				}
 				my $handle = $args->{skillHandle};

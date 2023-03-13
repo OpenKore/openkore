@@ -1194,10 +1194,9 @@ sub cmdPoison {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
-	#print "-$arg1-\n";
 	if ($arg1 eq "") {
 		if (@arrowCraftID) {
-			my $msg = center(T(" Poison List "), 50, '-') ."\n";
+			my $msg = center(" ". T("Poison List") ." ", 50, '-') ."\n";
 			for (my $i = 0; $i < @arrowCraftID; $i++) {
 				next if ($arrowCraftID[$i] eq "");
 				$msg .= swrite(
@@ -5048,7 +5047,7 @@ sub cmdReputation {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
 	} else {
-		my $msg = center(T(" Reputation Status "), 80, '-') ."\n";
+		my $msg = center(" ". T("Reputation Status") ." ", 80, '-') ."\n";
 		$msg .= swrite(
 			"@<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<< @<<<<<<<<<",
 			[T("Type"), T("Name"), T("Lvl"), T("Points")]
@@ -5062,7 +5061,6 @@ sub cmdReputation {
 		$msg .= center("", 80, '-') ."\n";
 		message $msg;
 	}
-
 }
 
 sub cmdRespawn {
@@ -5435,9 +5433,9 @@ sub cmdStats {
 			$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
 			$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $guildName,
 			$haircolors{$char->hairColor()} . " (" . $char->hairColor() . ")"]);
-			if(exists $char->{need_pow}) {
+			if (exists $char->{need_pow}) {
 				$msg .= center("", 44, '-') ."\n";
-				$msg .= center(T(" Trait Stats "), 44, '-') ."\n".
+				$msg .= center(" ". T("Trait Stats") ." ", 44, '-') ."\n".
 				swrite(TF(
 				"Pow: \@<<<   #\@<< P.Atk:    \@<<<   Res:    \@<<<\n" .
 				"Sta: \@<<<   #\@<< S.Matk:   \@<<<   Mres:   \@<<<\n" .
@@ -6222,7 +6220,7 @@ sub cmdUseSkill {
 
 	} elsif ($cmd eq 'ss') {
 		if (defined $args[0] && $args[0] eq 'start') {
-			if(@args != 3) {
+			if (@args != 3) {
 				error T("Syntax error in function 'ss start' (Start Use Skill on Self)\n" .
 				"Usage: ss start <skill #> [level]\n");
 				return;
@@ -6231,7 +6229,7 @@ sub cmdUseSkill {
 			$target = $char;
 			$level = $args[2];
 		} elsif (defined $args[0] && $args[0] eq 'stop') {
-			if(!$char->{last_skill_used_is_continuous}) {
+			if (!$char->{last_skill_used_is_continuous}) {
 				error T("Skill Stop failed (continuous skills not detected)\n");
 				return;
 			}
@@ -6246,6 +6244,7 @@ sub cmdUseSkill {
 			$target = $char;
 			$level = $args[1];
 		}
+
 	} elsif ($cmd eq 'sp') {
 		if (@args < 2 || @args > 3) {
 			error T("Syntax error in function 'sp' (Use Skill on Player)\n" .

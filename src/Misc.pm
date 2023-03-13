@@ -3814,9 +3814,9 @@ sub useTeleport {
 
 	# only if we want to use skill ?
 	return if ($char->{muted});
-	if($char->{last_skill_used_is_continuous}) {
+	if ($char->{last_skill_used_is_continuous}) {
 		$messageSender->sendStopSkillUse($char->{last_continuous_skill_used});
-	} elsif(($char->{last_skill_used} == 2027 || $char->{last_skill_used} == 147) && !$char->{selected_craft}) {
+	} elsif (($char->{last_skill_used} == 2027 || $char->{last_skill_used} == 147) && !$char->{selected_craft}) {
 		error T("Cant use Teleport Skill due to open craft list!\n"), "useTeleport";
 		return;
 	}

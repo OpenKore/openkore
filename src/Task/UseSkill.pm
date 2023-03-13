@@ -139,7 +139,7 @@ sub new {
 
 	my @holder = ($self);
 	Scalar::Util::weaken($holder[0]);
-	
+
 	my $workaround_skill_use = sub {
 		my ($handle) = @_;
 		sub {
@@ -149,19 +149,19 @@ sub new {
 			}, \@holder)
 		}
 	};
-	
+
 	$self->{hooks} = Plugins::addHooks(
 		['is_casting',       \&onSkillCast, \@holder],
 		['packet_skilluse',  \&onSkillUse,  \@holder],
-		
+
 		# server doesn't confirm skill use for MC_IDENTIFY
 		# FIXME: server doesn't send anything if there're no items to identify
 		['packet/identify_list' => $workaround_skill_use->('MC_IDENTIFY')],
-		
+
 		# server doesn't confirm skill use for MC_VENDING
 		# official servers send lone skill_cast packet
 		['packet/shop_skill' => $workaround_skill_use->('MC_VENDING')],
-		
+
 		['packet_skillfail', \&onSkillFail, \@holder],
 		['packet_castCancelled', \&onSkillCancelled, \@holder],
 		['Network::Receive::map_changed', \&onMapChanged, \@holder],
@@ -276,7 +276,7 @@ sub castSkill {
 
 	if ($skill->getTargetType() == Skill::TARGET_SELF) {
 		# A skill which is used on the character self.
-		if($self->{isStartUseSkill}) {
+		if ($self->{isStartUseSkill}) {
 			$messageSender->sendStartSkillUse($skillID, $level, $self->{actor}{ID});
 		} else {
 			$messageSender->sendSkillUse($skillID, $level, $self->{actor}{ID});
