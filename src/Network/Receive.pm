@@ -7371,7 +7371,7 @@ sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
 	# "Close" icon appreared on the NPC message dialog
-	if(!defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
+	if (!defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
 		debug "We received an strange 'npc_talk_done', just ignoring it\n", "npc";
 		return;
 	}
@@ -9428,7 +9428,7 @@ sub sell_result {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
 		error T("Sell failed.\n");
-	} else {		
+	} else {
 		message TF("Sold %s items.\n", @sellList.""), "success";
 		message T("Sell completed.\n"), "success";
 	}
