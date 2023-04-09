@@ -64,7 +64,6 @@ git clone https://github.com/OpenKore/openkore.git
 | [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | N/A |
 | [euRO-Prime](https://eu.4game.com/roprime/) | Europe RO (Prime) | Frost Security | Not working | N/A |
 | [iRO Renewal](http://renewal.playragnarok.com/) | International RO | EAC | Not working | N/A |
-| [iRO TR](http://www.playragnarok.com/) | International RO (Transcendence) | EAC | Not working | N/A |
 | [idRO](https://ro.gnjoy.id/) | Indonesia RO | EAC | Not Working | N/A |
 | [idRO-Retro](https://roretro.gnjoy.id/) | Indonesia RO (Retro) | Delphine | Not Working | N/A |
 | [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | nProtect | Need Verification | N/A |
