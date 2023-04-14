@@ -85,19 +85,32 @@ sub new {
 	return $self;
 }
 
-sub sendMasterLogin {
-	my ($self, $username, $password, $master_version, $version) = @_;
+sub reconstruct_master_login {
+	my ($self, $args) = @_;
 
-	my $accessToken = $config{accessToken};
-	my $len =  length($accessToken) + 92;
-	my $master = $masterServers{$config{master}};
+	$args->{ip} = '192.168.0.2' unless exists $args->{ip}; # gibberish
+	unless (exists $args->{mac}) {
+	    $args->{mac} = $config{macAddress} || '111111111111'; # gibberish
+	    $args->{mac} = uc($args->{mac});
+	    $args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
+	}
+	$args->{isGravityID} = 0 unless exists $args->{isGravityID};
 
-	die "don't forget to add kRO_auth plugin to sys.txt\n".
-		"https://openkore.com/wiki/loadPlugins_list\n" unless ($accessToken);
+	if (exists $args->{password}) {
+		for (Digest::MD5->new) {
+			$_->add($args->{password});
+			$args->{password_md5} = $_->clone->digest;
+			$args->{password_md5_hex} = $_->hexdigest;
+		}
 
-	$self->sendTokenToServer($username, $password, $master_version, $version, $accessToken, $len, $master->{OTP_ip}, $master->{OTP_port});
+		my $key = pack('C32', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06, 0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
+		my $chain = pack('C32', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41, 0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
+		my $in = pack('a32', $args->{password});
+		my $rijndael = Utils::Rijndael->new;
+		$rijndael->MakeKey($key, $chain, 32, 32);
+		$args->{password_rijndael} = $rijndael->Encrypt($in, undef, 32, 0);
+	}
 }
-
 
 # 0x0436,23
 sub sendMapLogin {

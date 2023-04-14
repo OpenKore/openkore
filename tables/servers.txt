@@ -174,8 +174,8 @@ rankingSystemType 1
 
 # http://ro.gnjoy.com/
 [Korea - kRO: Baphomet, Yggdrasil, Dark Lord]
-ip kro-acc1.ragnarok.co.kr
-port 6900
+ip kro-agency.ragnarok.co.kr
+port 6951
 OTP_ip kro-acc1.ragnarok.co.kr
 OTP_port 6900
 master_version 0
