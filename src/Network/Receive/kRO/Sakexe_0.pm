@@ -590,6 +590,7 @@ sub new {
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss name)]],
 		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss name)]],
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font maxHP HP isBoss name)]],
+		'09DE' => ['private_message', 'v V Z24 C Z*', [qw(len charID privMsgUser isAdmin privMsg)]],
 		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
 		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
@@ -880,6 +881,7 @@ sub items_nonstackable {
 	) {
 		return $items->{type7};
 	} elsif ($args->{switch} eq '0B0A') { # item_list
+		return $items->{type7} if ($masterServer->{itemListUseOldType});
 		return $items->{type8};
 	} elsif ($args->{switch} eq '0B39') { # item_list
 		return $items->{type9};
@@ -924,6 +926,7 @@ sub items_stackable {
 	) {
 		return $items->{type6};
 	} elsif ($args->{switch} eq '0B09') { # item_list
+		return $items->{type6} if ($masterServer->{itemListUseOldType});
 		return $items->{type7};
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";
@@ -1008,7 +1011,10 @@ sub _items_list {
 
 		my $index = ($local_item->{binID} >= 0) ? $local_item->{binID} : $local_item->{ID};
 		debug "$args->{debug_str}: $local_item->{name} ($index) x $local_item->{amount} - $itemTypes_lut{$local_item->{type}}\n", 'parseMsg';
-		Plugins::callHook($args->{hook}, {index => $index, item => $local_item});
+		Plugins::callHook($args->{hook}, {
+			index => $index,
+			item => $local_item
+		});
 	}
 }
 
@@ -1324,6 +1330,8 @@ sub skill_use_location {
 	my $skillName = Skill->new(idn => $skillID)->getName();
 	my $disp = skillUseLocation_string($source, $skillName, $args);
 
+	delete $source->{casting};
+
 	# Print skill use message
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 	message $disp, $domain;
@@ -1357,6 +1365,7 @@ sub skill_used_no_damage {
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 	if ($args->{sourceID} eq $accountID) {
 		my $pos = calcPosition($char);
+		$char->{pos} = $pos;
 		$char->{pos_to} = $pos;
 		$char->{time_move} = 0;
 		$char->{time_move_calc} = 0;

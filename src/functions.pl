@@ -133,7 +133,7 @@ sub loadPlugins {
 	}
 
 	# Allow plugins to use command line arguments.
-	Plugins::callHook( 'parse_command_line' );
+	Plugins::callHook('parse_command_line');
 	main::checkEmptyArguments();
 }
 
@@ -609,6 +609,7 @@ sub finalInitialization {
 	$slavesList = new ActorList('Actor::Slave');
 	$elementalsList = new ActorList('Actor::Elemental');
 	$venderItemList = InventoryList->new;
+	$buyerItemList = InventoryList->new;
 	$storeList = InventoryList->new;
 	$cashList = InventoryList->new;
 	foreach my $list ($itemsList, $monstersList, $playersList, $petsList, $npcsList, $portalsList, $slavesList, $elementalsList) {
@@ -768,6 +769,7 @@ sub initMapChangeVars {
 	$slavesList->clear();
 	$elementalsList->clear();
 	$venderItemList->clear;
+	$buyerItemList->clear;
 	$storeList->clear;
 	$cashList->clear;
 

@@ -79,7 +79,7 @@ our $NAME = 'OpenKore';
 our $VERSION = 'what-will-become-2.1';
 # Translation Comment: Version String
 #our $SVN = T(" (SVN Version) ");
-our $WEBSITE = 'http://www.openkore.com/';
+our $WEBSITE = 'https://openkore.com/';
 # Translation Comment: Version String
 our $versionText = "*** $NAME ${VERSION} ( version " . getRevisionString() . ' ) - ' . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
 our $welcomeText = TF("Welcome to %s.", $NAME);
@@ -112,6 +112,7 @@ our $base_console_log_file;
 our $base_storage_log_file;
 our $base_shop_log_file;
 our $base_monster_log_file;
+our $base_player_log_file;
 our $base_item_log_file;
 our $base_dead_log_file;
 
@@ -121,6 +122,7 @@ our $console_log_file;
 our $storage_log_file;
 our $shop_log_file;
 our $monster_log_file;
+our $player_log_file;
 our $item_log_file;
 our $dead_log_file;
 
@@ -180,31 +182,31 @@ sub parseArguments {
 	Getopt::Long::Configure( 'pass_through' );
 
 	GetOptions(
-		'control=s',          \$options{control},
-		'tables=s',           \$options{tables},
-		'plugins=s',          \$options{plugins},
-		'fields=s',           \$fields_folder,
-		'logs=s',             \$logs_folder,
-		'maps=s',             \$maps_folder,
+		'control=s',		\$options{control},
+		'tables=s',			\$options{tables},
+		'plugins=s',		\$options{plugins},
+		'fields=s',			\$fields_folder,
+		'logs=s',			\$logs_folder,
+		'maps=s',			\$maps_folder,
 
-		'config=s',           \$config_file,
-		'mon_control=s',      \$mon_control_file,
-		'items_control=s',    \$items_control_file,
-		'shop=s',             \$shop_file,
-		'buyer_shop=s',		  \$buyer_shop_file,
-		'chat-log=s',         \$base_chat_log_file,
-		'console-log=s',      \$base_console_log_file,
-		'storage-log=s',      \$base_storage_log_file,
-		'sys=s',              \$sys_file,
+		'config=s',			\$config_file,
+		'mon_control=s',	\$mon_control_file,
+		'items_control=s',	\$items_control_file,
+		'shop=s',			\$shop_file,
+		'buyer_shop=s',		\$buyer_shop_file,
+		'chat-log=s',		\$base_chat_log_file,
+		'console-log=s',	\$base_console_log_file,
+		'storage-log=s',	\$base_storage_log_file,
+		'sys=s',			\$sys_file,
 
-		'interface=s',        \$interface,
-		'lockdown',           \$lockdown,
-		'ai=s',               \$starting_ai,
-		'command=s',          \$command,
-		'help',	              \$options{help},
-		'version|v',          \$options{version},
+		'interface=s',		\$interface,
+		'lockdown',			\$lockdown,
+		'ai=s',				\$starting_ai,
+		'command=s',		\$command,
+		'help',				\$options{help},
+		'version|v',		\$options{version},
 
-		'no-connect',         \$no_connect
+		'no-connect',		\$no_connect
 	);
 
 	if ($options{control}) {
@@ -231,6 +233,7 @@ sub parseArguments {
 	$base_storage_log_file ||= File::Spec->catfile($logs_folder, "storage.txt");
 	$base_shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
 	$base_monster_log_file = File::Spec->catfile($logs_folder, "monster_log.txt");
+	$base_player_log_file = File::Spec->catfile($logs_folder, "player_log.txt");
 	$base_item_log_file = File::Spec->catfile($logs_folder, "item_log.txt");
 	$base_dead_log_file = File::Spec->catfile($logs_folder, "dead_log.txt");
 	update_log_filenames();
@@ -246,7 +249,7 @@ sub parseArguments {
 		$AI::AI = AI::AUTO()   if $starting_ai =~ /^(on|auto)$/;
 		$AI::AI = AI::MANUAL() if $starting_ai =~ /^manual$/;
 		$AI::AI = AI::OFF()    if $starting_ai =~ /^off$/;
-    }
+	}
 
 	return 0 if ($options{help});
 	return 0 if ($options{version});
@@ -270,6 +273,7 @@ sub update_log_filenames {
 	$storage_log_file = substr( $base_storage_log_file, 0, length( $base_storage_log_file ) - 4 ) . "$logAppend.txt";
 	$shop_log_file    = substr( $base_shop_log_file,    0, length( $base_shop_log_file ) - 4 ) . "$logAppend.txt";
 	$monster_log_file = substr( $base_monster_log_file, 0, length( $base_monster_log_file ) - 4 ) . "$logAppend.txt";
+	$player_log_file = substr( $base_player_log_file,   0, length( $base_player_log_file ) - 4 ) . "$logAppend.txt";
 	$item_log_file    = substr( $base_item_log_file,    0, length( $base_item_log_file ) - 4 ) . "$logAppend.txt";
 	$dead_log_file    = substr( $base_dead_log_file,    0, length( $base_dead_log_file ) - 4 ) . "$logAppend.txt";
 }
@@ -277,7 +281,7 @@ sub update_log_filenames {
 ##
 sub parseServerType {
 	my $type = shift;
-	
+
 	my $mode = 0; # Mode is Old by Default
 	my $class = "ServerType0";
 	my $param;
@@ -298,7 +302,7 @@ sub parseServerType {
 		($class, $param) = $type =~ /^([a-zA-Z0-9]+)(?:_([a-zA-Z0-9_]+))?/;
 		$mode = 1;
 	}
-	
+
 	return ($mode, $class, $param);
 }
 
@@ -520,7 +524,7 @@ sub loadByHandle {
 
 	if (!defined($filename) || ! -f $filename) {
 		return unless $object->{mustExist};
-		
+
 		$filename = $object->{name} || $object->{internalName} if (!defined $filename);
 		if ($object->{type} == CONTROL_FILE_TYPE) {
 			FileNotFoundException->throw(
@@ -572,8 +576,8 @@ sub loadByHandle {
 #
 # Calls 'loadFiles' with the list of registered data files whose name matches the given regular expression.
 sub loadByRegexp {
-    my ($regexp, $progressHandler) = @_;
-    loadFiles([grep { $_->{path} =~ /$regexp/ } @{$files->getItems}], $progressHandler);
+	my ($regexp, $progressHandler) = @_;
+	loadFiles([grep { $_->{path} =~ /$regexp/ } @{$files->getItems}], $progressHandler);
 }
 
 ##
@@ -581,8 +585,8 @@ sub loadByRegexp {
 #
 # Calls 'loadFiles' with the list of all registered data files.
 sub loadAll {
-    my ($progressHandler) = @_;
-    loadFiles($files->getItems, $progressHandler);
+	my ($progressHandler) = @_;
+	loadFiles($files->getItems, $progressHandler);
 }
 
 ##
@@ -594,18 +598,21 @@ sub loadAll {
 # Settings::loadByHandle(), so see that method for parameter descriptions
 # and exceptions.
 sub loadFiles {
-    my ($files, $progressHandler) = @_;
+	my ($files, $progressHandler) = @_;
 
-    Plugins::callHook('preloadfiles', {files => $files});
+	Plugins::callHook('preloadfiles', {files => $files});
 
-    my $i = 1;
-    foreach my $object (@$files) {
-        Plugins::callHook('loadfiles', {files => $files, current => $i});
-        loadByHandle($object->{index}, $progressHandler);
-        $i++;
-    }
+	my $i = 1;
+	foreach my $object (@$files) {
+		Plugins::callHook('loadfiles', {
+			files => $files,
+			current => $i
+		});
+		loadByHandle($object->{index}, $progressHandler);
+		$i++;
+	}
 
-    Plugins::callHook('postloadfiles', {files => $files});
+	Plugins::callHook('postloadfiles', {files => $files});
 }
 
 ##
@@ -615,15 +622,15 @@ sub loadFiles {
 sub getRevisionString {
 	my @revisions;
 
-    # The best and most accurate version is the git commit sha, if available.
+	# The best and most accurate version is the git commit sha, if available.
 	my $git = getGitRevision();
 	if ( $git ) {
 		push @revisions, "git:$git";
 	}
 
-    # "Download ZIP" on github sets the file creation times to (around) the
-    # last time a commit was uploaded to github. This can help make a good
-    # guess about what version is in use.
+	# "Download ZIP" on github sets the file creation times to (around) the
+	# last time a commit was uploaded to github. This can help make a good
+	# guess about what version is in use.
 	my $time = ( stat( __FILE__ ) )[10] || ( stat( _ ) )[9];
 	if ( $time ) {
 		my ( $sec, $min, $hour, $day, $month, $year ) = gmtime( $time );
@@ -640,11 +647,11 @@ sub getRevisionString {
 #
 # Return OpenKore's Git revision number, or undef if that information cannot be retrieved.
 sub getGitRevision {
-    use Git;
-    my $git = Git::detect_git( $RealBin );
-    return if !$git;
-    my ( $sec, $min, $hour, $day, $month, $year ) = gmtime( $git->{timestamp} );
-    sprintf '%7.7s_%04d-%02d-%02d', $git->{sha}, $year + 1900, $month + 1, $day;
+	use Git;
+	my $git = Git::detect_git( $RealBin );
+	return if !$git;
+	my ( $sec, $min, $hour, $day, $month, $year ) = gmtime( $git->{timestamp} );
+	sprintf '%7.7s_%04d-%02d-%02d', $git->{sha}, $year + 1900, $month + 1, $day;
 }
 
 sub loadSysConfig {
@@ -864,7 +871,7 @@ sub _processSysConfig {
 	my ($f, @lines, %keysNotWritten);
 	my $sysFile = getSysFilename();
 	return if (!$sysFile || !open($f, "<:utf8", $sysFile));
-	
+
 	if ($writeMode) {
 		foreach my $key (keys %sys) {
 			$keysNotWritten{$key} = 1;

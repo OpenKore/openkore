@@ -68,6 +68,11 @@ attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
 attackAuto_inLockOnly 1
 attackAuto_notInTown 1
+attackAuto_notWhile_storageAuto 1
+attackAuto_notWhile_buyAuto 1
+attackAuto_notWhile_sellAuto 1
+attackAuto_considerDamagedAggressive 0
+attackBeyondMaxDistance_waitForAgressive 1
 attackDistance 1
 attackDistanceAuto 0
 attackMaxDistance 1
@@ -151,7 +156,7 @@ cachePlayerNames 1
 cachePlayerNames_duration 900
 cachePlayerNames_maxSize 100
 
-clientSight 15
+clientSight 17
 
 dcPause 1
 dcOnDeath 0
@@ -220,7 +225,6 @@ runFromTarget 0
 runFromTarget_inAdvance 0
 runFromTarget_dist 5
 runFromTarget_minStep 7
-runFromTarget_maxStep 11
 runFromTarget_maxPathDistance 13
 
 saveMap
@@ -336,6 +340,7 @@ logConsole 1
 logAppendUsername 1
 logAppendServer 0
 monsterLog 0
+playerLog 0
 logDead 1
 
 questDisplayStyle 2
@@ -352,6 +357,7 @@ autoTalkCont 1
 noAutoSkill 0
 portalCompile 1
 portalRecord 2
+portalRecord_recompileAfter 1
 missDamage 0
 
 tankersList
@@ -369,6 +375,9 @@ monster_filter
 mercenary_attackAuto 2
 mercenary_attackAuto_party 1
 mercenary_attackAuto_notInTown 1
+mercenary_attackAuto_inLockOnly 1
+mercenary_attackAuto_considerDamagedAggressive 0
+mercenary_attackBeyondMaxDistance_waitForAgressive 1
 mercenary_attackAuto_onlyWhenSafe 0
 mercenary_attackAuto_duringRandomWalk 0
 mercenary_attackAuto_duringItemsTake 0
@@ -378,7 +387,7 @@ mercenary_attackDistanceAuto 0
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 1
-mercenary_attackRouteMaxPathDistance 13
+mercenary_attackRouteMaxPathDistance 20
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
 mercenary_attack_dance_melee 0
@@ -394,8 +403,7 @@ mercenary_runFromTarget 0
 mercenary_runFromTarget_inAdvance 0
 mercenary_runFromTarget_dist 5
 mercenary_runFromTarget_minStep 7
-mercenary_runFromTarget_maxStep 11
-mercenary_runFromTarget_maxPathDistance 13
+mercenary_runFromTarget_maxPathDistance 20
 
 mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
@@ -427,6 +435,9 @@ mercenary_teleportAuto_attackedWhenSitting 0
 homunculus_attackAuto 2
 homunculus_attackAuto_party 1
 homunculus_attackAuto_notInTown 1
+homunculus_attackAuto_inLockOnly 1
+homunculus_attackAuto_considerDamagedAggressive 0
+homunculus_attackBeyondMaxDistance_waitForAgressive 1
 homunculus_attackAuto_onlyWhenSafe 0
 homunculus_attackAuto_duringRandomWalk 0
 homunculus_attackAuto_duringItemsTake 0
@@ -436,7 +447,7 @@ homunculus_attackDistanceAuto 0
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 1
-homunculus_attackRouteMaxPathDistance 13
+homunculus_attackRouteMaxPathDistance 20
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 homunculus_attack_dance_melee 0
@@ -450,8 +461,7 @@ homunculus_route_randomWalk_waitMinDistance 0
 homunculus_runFromTarget 0
 homunculus_runFromTarget_dist 5
 homunculus_runFromTarget_minStep 7
-homunculus_runFromTarget_maxStep 11
-homunculus_runFromTarget_maxPathDistance 13
+homunculus_runFromTarget_maxPathDistance 20
 
 homunculus_followDistanceMax 12
 homunculus_followDistanceMin 3
@@ -507,9 +517,24 @@ attackSkillSlot {
 	minCastTime 0
 	hp
 	sp > 10
+	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
+	homunculus_onAction
+	homunculus_notOnAction
+	homunculus_whenIdle
+	homunculus_whenNotIdle
+	mercenary
+	mercenary_hp
+	mercenary_sp
+	mercenary_whenStatusActive
+	mercenary_whenStatusInactive
+	mercenary_onAction
+	mercenary_notOnAction
+	mercenary_whenIdle
+	mercenary_whenNotIdle
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -568,9 +593,24 @@ attackComboSlot {
 doCommand {
 	hp
 	sp
+	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
+	homunculus_onAction
+	homunculus_notOnAction
+	homunculus_whenIdle
+	homunculus_whenNotIdle
+	mercenary
+	mercenary_hp
+	mercenary_sp
+	mercenary_whenStatusActive
+	mercenary_whenStatusInactive
+	mercenary_onAction
+	mercenary_notOnAction
+	mercenary_whenIdle
+	mercenary_whenNotIdle
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -601,9 +641,24 @@ useSelf_skill {
 	minCastTime 0
 	hp
 	sp
+	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
+	homunculus_onAction
+	homunculus_notOnAction
+	homunculus_whenIdle
+	homunculus_whenNotIdle
+	mercenary
+	mercenary_hp
+	mercenary_sp
+	mercenary_whenStatusActive
+	mercenary_whenStatusInactive
+	mercenary_onAction
+	mercenary_notOnAction
+	mercenary_whenIdle
+	mercenary_whenNotIdle
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -638,9 +693,24 @@ partySkill {
 	minCastTime 0
 	hp
 	sp
+	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
+	homunculus_onAction
+	homunculus_notOnAction
+	homunculus_whenIdle
+	homunculus_whenNotIdle
+	mercenary
+	mercenary_hp
+	mercenary_sp
+	mercenary_whenStatusActive
+	mercenary_whenStatusInactive
+	mercenary_onAction
+	mercenary_notOnAction
+	mercenary_whenIdle
+	mercenary_whenNotIdle
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -720,9 +790,24 @@ equipAuto {
 	whileSitting 0
 	hp
 	sp
+	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
+	homunculus_onAction
+	homunculus_notOnAction
+	homunculus_whenIdle
+	homunculus_whenNotIdle
+	mercenary
+	mercenary_hp
+	mercenary_sp
+	mercenary_whenStatusActive
+	mercenary_whenStatusInactive
+	mercenary_onAction
+	mercenary_notOnAction
+	mercenary_whenIdle
+	mercenary_whenNotIdle
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -745,9 +830,24 @@ equipAuto {
 useSelf_item {
 	hp
 	sp
+	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
+	homunculus_resting
+	homunculus_onAction
+	homunculus_notOnAction
+	homunculus_whenIdle
+	homunculus_whenNotIdle
+	mercenary
+	mercenary_hp
+	mercenary_sp
+	mercenary_whenStatusActive
+	mercenary_whenStatusInactive
+	mercenary_onAction
+	mercenary_notOnAction
+	mercenary_whenIdle
+	mercenary_whenNotIdle
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -782,6 +882,7 @@ buyAuto {
 	minAmount 2
 	maxAmount 3
 	batchSize
+	onlyIdentified
 	disabled 0
 	maxBase
 	minBase

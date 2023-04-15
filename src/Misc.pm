@@ -73,9 +73,9 @@ our @EXPORT = (
 	qw/calcRectArea
 	calcRectArea2
 	objectInsideSpell
+	objectInsideCasting
 	objectIsMovingTowards
 	objectIsMovingTowardsPlayer
-	get_kite_position
 	get_dance_position/,
 
 	# Inventory management
@@ -94,6 +94,7 @@ our @EXPORT = (
 	qw/chatLog
 	shopLog
 	monsterLog
+	playerLog
 	deadLog
 	searchStoreInfo/,
 
@@ -118,6 +119,9 @@ our @EXPORT = (
 	checkAllowedMap
 	checkFollowMode
 	isMySlaveID
+	isNotMySlaveID
+	is_aggressive
+	is_aggressive_slave
 	checkMonsterCleanness
 	slave_checkMonsterCleanness
 	createCharacter
@@ -633,7 +637,40 @@ sub objectInsideSpell {
 		my $spell = $spells{$_};
 		if ((!$ignore_party_members || !$char->{party}{joined} || !$char->{party}{users}{$spell->{sourceID}})
 		  && $spell->{sourceID} ne $accountID
+		  && isNotMySlaveID($spell->{sourceID})
 		  && $spell->{pos}{x} == $x && $spell->{pos}{y} == $y) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+sub objectInsideCasting {
+	my ($monster) = @_;
+
+	my $monsterPos = calcPosition($monster);
+
+	foreach my $caster (@$playersList, @$slavesList) {
+		next if (isMySlaveID($caster->{ID}));
+		next if ($char->{party} && $char->{party}{joined} && exists $char->{party}{users}{$caster->{ID}});
+
+		next unless (exists $caster->{casting} && defined $caster->{casting} && $caster->{casting});
+
+		my $cast = $caster->{casting};
+		next unless ($cast->{x} != 0 || $cast->{y} != 0);
+
+		my $skill = $cast->{skill};
+		my $skillID = $skill->getIDN();
+		my $range = judgeSkillArea($skillID);
+
+		my %coords;
+		$coords{x} = $cast->{x};
+		$coords{y} = $cast->{y};
+
+		my $distFromCenter = blockDistance($monsterPos, \%coords);
+
+		if ($distFromCenter <= $range) {
+			#warning TF("Target %s is inside skill %s (range %d | dist %d) from caster %s.\n", $monster, $skill, $range, $distFromCenter, $caster), 'slave_attack';
 			return 1;
 		}
 	}
@@ -684,289 +721,6 @@ sub objectIsMovingTowardsPlayer {
 		}
 	}
 	return 0;
-}
-
-use constant AVOID_MASTER_BOUND => 2;
-
-##
-# get_kite_position(actor, actorType, target_actor)
-# actor: current object.
-# actorType: 1 - char | 2 - slave
-# target_actor: actor to run from.
-#
-# Returns: reference to a hash containing both x and y coordinates of the best kite position found on success, and undef on failure
-#
-# Kite algorithm used in runFromTarget
-sub get_kite_position {
-	my ($actor, $actorType, $target) = @_;
-
-	my %myPos;
-	$myPos{x} = $actor->{pos}{x};
-	$myPos{y} = $actor->{pos}{y};
-	my %myPosTo;
-	$myPosTo{x} = $actor->{pos_to}{x};
-	$myPosTo{y} = $actor->{pos_to}{y};
-
-	my $mySpeed = ($actor->{walk_speed} || 0.12);
-	my $timeSinceActorMoved = time - $actor->{time_move};
-
-	# Calculate the time actor will need to finish moving from pos to pos_to
-	my $timeActorFinishMove = calcTime(\%myPos, \%myPosTo, $mySpeed);
-
-	my $realMyPos;
-	# Actor has finished moving
-	if ($timeSinceActorMoved >= $timeActorFinishMove) {
-		$realMyPos->{x} = $myPosTo{x};
-		$realMyPos->{y} = $myPosTo{y};
-	# Actor is currently moving
-	} else {
-		($realMyPos, undef) = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeSinceActorMoved);
-	}
-
-	# Target was going from 'pos' to 'pos_to' in the last movement
-	my %targetPos;
-	$targetPos{x} = $target->{pos}{x};
-	$targetPos{y} = $target->{pos}{y};
-	my %targetPosTo;
-	$targetPosTo{x} = $target->{pos_to}{x};
-	$targetPosTo{y} = $target->{pos_to}{y};
-
-	my $targetSpeed = ($target->{walk_speed} || 0.12);
-	my $timeSinceTargetMoved = time - $target->{time_move};
-
-	# Calculate the time target will need to finish moving from pos to pos_to
-	my $timeTargetFinishMove = calcTime(\%targetPos, \%targetPosTo, $targetSpeed);
-
-	my $target_moving;
-	my $realTargetPos;
-	my $targetTotalSteps;
-	my $targetCurrentStep;
-	# Target has finished moving
-	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
-		$target_moving = 0;
-		$realTargetPos->{x} = $targetPosTo{x};
-		$realTargetPos->{y} = $targetPosTo{y};
-
-	# Target is currently moving
-	} else {
-		$target_moving = 1;
-		($realTargetPos, $targetCurrentStep) = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, $timeSinceTargetMoved);
-		$targetTotalSteps = countSteps(\%targetPos, \%targetPosTo);
-	}
-
-	my $attackCanSnipe;
-	my $attackCheckLOS;
-	my $followDistanceMax;
-	my $master;
-	my $masterPos;
-	my $runFromTarget;
-	my $runFromTarget_dist;
-	my $runFromTarget_minStep;
-	my $runFromTarget_maxStep;
-	my $runFromTarget_maxPathDistance;
-
-	# actor is char
-	if ($actorType == 1) {
-		$attackCanSnipe = $config{attackCanSnipe};
-		$attackCheckLOS = $config{attackCheckLOS};
-		$followDistanceMax = $config{followDistanceMax};
-		if ($config{follow}) {
-			foreach (keys %players) {
-				if ($players{$_}{name} eq $config{followTarget}) {
-					$master = $players{$_};
-					last;
-				}
-			}
-			if ($master) {
-				$masterPos = calcPosition($master);
-			}
-		}
-		$runFromTarget = $config{runFromTarget};
-		$runFromTarget_dist = $config{runFromTarget_dist};
-		$runFromTarget_minStep = $config{runFromTarget_minStep};
-		$runFromTarget_maxStep = $config{runFromTarget_maxStep};
-		$runFromTarget_maxPathDistance = $config{runFromTarget_maxPathDistance};
-
-	# actor is a slave
-	} elsif ($actorType == 2) {
-		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
-		$attackCheckLOS = $config{$actor->{configPrefix}.'attackCheckLOS'};
-		$followDistanceMax = $config{$actor->{configPrefix}.'followDistanceMax'};
-		$master = $char;
-		$masterPos = calcPosition($char);
-		$runFromTarget = $config{$actor->{configPrefix}.'runFromTarget'};
-		$runFromTarget_dist = $config{$actor->{configPrefix}.'runFromTarget_dist'};
-		$runFromTarget_minStep = $config{$actor->{configPrefix}.'runFromTarget_minStep'};
-		$runFromTarget_maxStep = $config{$actor->{configPrefix}.'runFromTarget_maxStep'};
-		$runFromTarget_maxPathDistance = $config{$actor->{configPrefix}.'runFromTarget_maxPathDistance'};
-	}
-
-	# Get the angle (using a vector) in radians from target to actor
-	my $initial_rad = atan2(($realMyPos->{y} - $realTargetPos->{y}), ($realMyPos->{x} - $realTargetPos->{x}));
-
-	# atan2 returns radians between -pi and pi, adust it to between 0 and 2*pi
-	if ($initial_rad < 0) {
-		$initial_rad += pi2;
-	}
-
-	my @best_not_distant_cells;
-	my @best_distant_cells;
-
-	# If there are any valid cells at least AVOID_WALLS blocks away from a wall ignore all blocks closer than AVOID_WALLS
-	my $skip_near_wall_cells = 0;
-
-	# If there are any valid cells at least AVOID_MASTER_BOUND blocks away from the master follow max distance ignore all blocks closer to the max distance than AVOID_MASTER_BOUND
-	my $skip_near_master_bound = 0;
-
-	# If there are any valid cells that qualify both criteria, ignore all blocks that are closer to a wall than AVOID_WALLS and closer to the max distance than AVOID_MASTER_BOUND
-	my $skip_both = 0;
-
-	# Biggest possible angle between 2 adjacent cells in dist $move_distance
-	my $angle_a = atan2(($runFromTarget_minStep-1), $runFromTarget_minStep);
-	my $angle_b = atan2(($runFromTarget_minStep-1), ($runFromTarget_minStep+1));
-	my $added_rad_per_loop = pip4 - max($angle_a, $angle_b);
-
-	my $current_mod = 1;
-	my $total_added_rad = 0;
-
-	my $current_rad = $initial_rad;
-	# We count the total amount of radians checked on each side, adding pi to each side means doing half a turn clockwise and counterclockwise, so we check the whole perimeter
-	my $max_rad = pi;
-
-	my %tested_pos;
-
-	while ($total_added_rad < $max_rad) {
-		my $cos_cur = cos($current_rad);
-		my $sin_cur = sin($current_rad);
-		foreach my $move_distance ($runFromTarget_minStep..$runFromTarget_maxStep) {
-
-			my %current_cell;
-			$current_cell{x} = $realTargetPos->{x} + int($move_distance * $cos_cur);
-			$current_cell{y} = $realTargetPos->{y} + int($move_distance * $sin_cur);
-
-			next if ($current_cell{x} == $realMyPos->{x} && $current_cell{y} == $realMyPos->{y});
-
-			# Skip if the last iteration resulted in the same cell as this one
-			next if (exists $tested_pos{$current_cell{x}} && exists $tested_pos{$current_cell{x}}{$current_cell{y}});
-
-			$tested_pos{$current_cell{x}}{$current_cell{y}} = 1;
-
-			my $time_actor_to_get_to_spot = calcTime($realMyPos, \%current_cell, $mySpeed);
-
-			my $pos_target_will_be_when_we_get_to_spot;
-
-			if ($target_moving == 1) {
-				my $new_pos;
-				($new_pos, undef) = calcPosFromTime(\%targetPos, \%targetPosTo, $targetSpeed, ($timeSinceTargetMoved + $time_actor_to_get_to_spot));
-				$pos_target_will_be_when_we_get_to_spot = $new_pos;
-			} else {
-				$pos_target_will_be_when_we_get_to_spot = $realTargetPos;
-			}
-
-			my $dist_spot_my_pos = adjustedBlockDistance(\%current_cell, $realMyPos);
-			my $dist_spot_target_pos = adjustedBlockDistance(\%current_cell, $pos_target_will_be_when_we_get_to_spot);
-
-			# Skip if the cell is not walkable or if it is too close to target
-			next if (!$field->isWalkable($current_cell{x}, $current_cell{y}));
-
-			next if (blockDistance(\%current_cell, $pos_target_will_be_when_we_get_to_spot) < $runFromTarget_minStep);
-
-			next if (positionNearPortal(\%current_cell, $config{'attackMinPortalDistance'}));
-
-			my $time_target_to_get_to_spot = calcTime($realTargetPos, \%current_cell, $targetSpeed);
-			next if ($time_target_to_get_to_spot < $time_actor_to_get_to_spot);
-
-			# 3. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
-			if ($attackCheckLOS) {
-				next unless ($field->checkLOS(\%current_cell, $pos_target_will_be_when_we_get_to_spot, $attackCanSnipe));
-			}
-
-			# The route should not exceed at any point $max_pathfinding_dist distance from the target.
-			my $solution = [];
-			my $dist = new PathFinding(
-				field => $field,
-				start => $realMyPos,
-				dest => \%current_cell,
-				avoidWalls => 0
-			)->run($solution);
-
-			# It must be reachable and have at max $runFromTarget_maxPathDistance of route distance to it from our current position.
-			next unless ($dist >= 0 && $dist <= $runFromTarget_maxPathDistance);
-
-			$current_cell{weight} = $field->getBlockWeight($current_cell{x}, $current_cell{y});
-			if ($current_cell{weight} > 0) {
-				$skip_near_wall_cells = 1;
-			}
-			if ($master) {
-				$current_cell{master_bound_dist} = $followDistanceMax - blockDistance(\%current_cell, $masterPos);
-				next if ($current_cell{master_bound_dist} < 0);
-
-				if ($current_cell{master_bound_dist} >= AVOID_MASTER_BOUND) {
-					$skip_near_master_bound = 1;
-
-					if ($current_cell{weight} > 0) {
-						$skip_both = 1;
-					}
-				}
-			}
-
-			$current_cell{dist_dif} = $dist_spot_my_pos - $dist_spot_target_pos;
-			# If this is a valid cell but it is closer to target than to actor we could run into target while pathing to it
-			# So add it to a lower priority list
-			if ($current_cell{dist_dif} > 0) {
-				push(@best_not_distant_cells, \%current_cell);
-
-			# Otherwise add it to the normal priority list
-			} else {
-				push(@best_distant_cells, \%current_cell);
-			}
-
-		}
-	} continue {
-		# We start at $initial_rad and move $added_rad_per_loop radians both clockwise and counterclockwise each loop checking for cells
-		if ($current_mod == 1 && $total_added_rad > 0) {
-			$current_mod = -1;
-		} else {
-			$current_mod = 1;
-			$total_added_rad += $added_rad_per_loop;
-		}
-
-		$current_rad = $initial_rad + ($total_added_rad * $current_mod);
-
-		# Again, adjust $current_rad to be between 0 and 2*pi
-		if ($current_rad >= pi2) {
-			$current_rad -= pi2;
-		} elsif ($current_rad < 0) {
-			$current_rad += pi2;
-		}
-	}
-
-	# If you can't avoid both walls and master follow max distance at the same time, choose one or the other
-	# Here we choose to avoid walls
-	if (!$skip_both && $skip_near_wall_cells && $skip_near_master_bound) {
-		$skip_near_master_bound = 0;
-	}
-
-	# Sort all the cells that were closer to target than to actor by distance difference
-	@best_not_distant_cells = sort { $a->{dist_dif} <=> $b->{dist_dif} } @best_not_distant_cells;
-
-	# And than add the lower priority list (now sorted) at the end of the normal priority list
-	my @cells = (@best_distant_cells, @best_not_distant_cells);
-
-	# Loop all valid cells that were found in priority order
-	foreach my $cell (@cells) {
-		if ($skip_both) {
-			next if ($cell->{weight} > 0 || $cell->{master_bound_dist} < AVOID_MASTER_BOUND);
-		} elsif ($skip_near_wall_cells) {
-			next if ($cell->{weight} > 0);
-		} elsif ($skip_near_master_bound) {
-			next if ($cell->{master_bound_dist} < AVOID_MASTER_BOUND);
-		}
-		return { x => $cell->{x}, y => $cell->{y} };
-	}
-
-	# Return undef if no valid cell was found
-	return undef;
 }
 
 use constant USE_DIAGONAL => 0;
@@ -1183,6 +937,14 @@ sub monsterLog {
 	open MONLOG, ">>:utf8", $Settings::monster_log_file;
 	print MONLOG "[".getFormattedDate(int(time))."] $crud\n";
 	close MONLOG;
+}
+
+sub playerLog {
+	my $crud = shift;
+	return if (!$config{'playerLog'});
+	open PLAYERLOG, ">>:utf8", $Settings::player_log_file;
+	print PLAYERLOG "[".getFormattedDate(int(time))."] $crud\n";
+	close PLAYERLOG;
 }
 
 sub deadLog {
@@ -1744,6 +1506,85 @@ sub isMySlaveID {
 	return 1;
 }
 
+sub isNotMySlaveID {
+	my ($ID) = @_;
+	return 0 if ($char && $char->{slaves} && exists $char->{slaves}{$ID});
+	return 1;
+}
+
+sub is_aggressive {
+	my ($monster, $control, $type, $party) = @_;
+
+	my %plugin_args;
+	$plugin_args{monster} = $monster;
+	$plugin_args{control} = $control;
+	$plugin_args{type} = $type;
+	$plugin_args{party} = $party;
+	$plugin_args{return} = 0;
+	Plugins::callHook('ai_check_Aggressiveness' => \%plugin_args);
+
+	if (
+		($plugin_args{return}) ||
+		($type && $control->{attack_auto} == 2) ||
+		(($monster->{dmgToYou} || $monster->{missedYou} || $monster->{castOnToYou})) ||
+		($config{"attackAuto_considerDamagedAggressive"} && $monster->{dmgFromYou} > 0) ||
+		($party &&
+		 (
+			   $monster->{dmgToParty}
+			|| $monster->{missedToParty}
+			|| $monster->{dmgFromParty}
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{missedToPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
+			|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
+		 )
+		)
+	) {
+		return 1;
+	}
+	return 0;
+}
+
+sub is_aggressive_slave {
+	my ($slave, $monster, $control, $type, $party) = @_;
+
+	my %plugin_args;
+	$plugin_args{slave} = $slave;
+	$plugin_args{monster} = $monster;
+	$plugin_args{control} = $control;
+	$plugin_args{type} = $type;
+	$plugin_args{return} = 0;
+	Plugins::callHook('ai_slave_check_Aggressiveness' => \%plugin_args);
+
+	if (
+		($plugin_args{return}) ||
+		($type && ($control->{attack_auto} == 2)) ||
+		($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{castOnToPlayer}{$slave->{ID}}) ||
+		($config{$slave->{configPrefix}."attackAuto_considerDamagedAggressive"} && $monster->{dmgFromPlayer}{$slave->{ID}} > 0) ||
+		($party &&
+		 (
+			   $monster->{missedFromYou}
+			|| $monster->{dmgFromYou}
+			|| $monster->{castOnByYou}
+			|| $monster->{dmgToYou}
+			|| $monster->{missedYou}
+			|| $monster->{castOnToYou}
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedFromPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnByPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnToPlayer}})
+		 )
+		)
+	) {
+		return 1;
+	}
+	return 0;
+}
+
 ##
 # boolean checkMonsterCleanness(Bytes ID)
 # ID: the monster's ID.
@@ -1751,8 +1592,8 @@ sub isMySlaveID {
 #
 # Checks whether a monster is "clean" (not being attacked by anyone).
 sub checkMonsterCleanness {
+	my ($ID) = @_;
 	return 1 if (!$config{attackAuto});
-	my $ID = $_[0];
 	return 1 if $playersList->getByID($ID) || $slavesList->getByID($ID);
 	my $monster = $monstersList->getByID($ID);
 
@@ -1761,21 +1602,38 @@ sub checkMonsterCleanness {
 		return 1;
 	}
 
+	if (
+		   scalar(grep { isMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
+		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
+		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
+		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{missedToPlayer}})
+		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
+		|| scalar(grep { isMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
+	) {
+		return 1;
+	}
+
 	if ($config{aggressiveAntiKS}) {
 		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
 
 		# If we attacked the monster first, do not drop it, we are being KSed
-		return 1 if ($monster->{dmgFromYou} || $monster->{missedFromYou});
+		return 1 if ($monster->{dmgFromYou} || $monster->{missedFromYou} || $monster->{castOnByYou});
 
 		# If others attacked the monster then always drop it, wether it attacked us or not!
-		return 0 if (($monster->{dmgFromPlayer} && %{$monster->{dmgFromPlayer}})
-			  || ($monster->{missedFromPlayer} && %{$monster->{missedFromPlayer}})
-			  || (($monster->{castOnByPlayer}) && %{$monster->{castOnByPlayer}})
-			  || (($monster->{castOnToPlayer}) && %{$monster->{castOnToPlayer}}));
+		if (
+			   scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedToPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
+		) {
+			return 0;
+		}
 	}
 
 	# If monster attacked/missed you
-	return 1 if ($monster->{'dmgToYou'} || $monster->{'missedYou'});
+	return 1 if ($monster->{'dmgToYou'} || $monster->{'missedYou'} || $monster->{'castOnToYou'});
 
 	# If we're in follow mode
 	if (defined(my $followIndex = AI::findAction("follow"))) {
@@ -1784,15 +1642,26 @@ sub checkMonsterCleanness {
 
 		if ($following) {
 			# And master attacked monster, or the monster attacked/missed master
-			if ($monster->{dmgToPlayer}{$followID} > 0
-			 || $monster->{missedToPlayer}{$followID} > 0
-			 || $monster->{dmgFromPlayer}{$followID} > 0) {
+			if (
+				   $monster->{dmgToPlayer}{$followID} > 0
+				|| $monster->{missedToPlayer}{$followID} > 0
+				|| $monster->{dmgFromPlayer}{$followID} > 0
+				|| $monster->{missedFromPlayer}{$followID} > 0
+				|| $monster->{castOnToPlayer}{$followID} > 0
+				|| $monster->{castOnByPlayer}{$followID} > 0
+			) {
 				return 1;
 			}
 		}
 	}
 
 	if (objectInsideSpell($monster)) {
+		# Prohibit attacking this monster in the future
+		$monster->{dmgFromPlayer}{$char->{ID}} = 1;
+		return 0;
+	}
+
+	if (objectInsideCasting($monster)) {
 		# Prohibit attacking this monster in the future
 		$monster->{dmgFromPlayer}{$char->{ID}} = 1;
 		return 0;
@@ -1816,21 +1685,18 @@ sub checkMonsterCleanness {
 		}
 	}
 
-	# If monster hasn't been attacked by other players
-	if (scalar(keys %{$monster->{missedFromPlayer}}) == 0
-	 && scalar(keys %{$monster->{dmgFromPlayer}})    == 0
-	 #&& scalar(keys %{$monster->{castOnByPlayer}})   == 0	#change to $allowed
-	&& $allowed
-
-	 # and it hasn't attacked any other player
-	 && scalar(keys %{$monster->{missedToPlayer}}) == 0
-	 && scalar(keys %{$monster->{dmgToPlayer}})    == 0
-	 && scalar(keys %{$monster->{castOnToPlayer}}) == 0
+	if (
+		   $allowed
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedFromPlayer}}) == 0
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgFromPlayer}}) == 0
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedToPlayer}}) == 0
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgToPlayer}}) == 0
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnToPlayer}}) == 0
 	) {
 		# The monster might be getting lured by another player.
 		# So we check whether it's walking towards any other player, but only
 		# if we haven't already attacked the monster.
-		if ($monster->{dmgFromYou} || $monster->{missedFromYou}) {
+		if ($monster->{dmgFromYou} || $monster->{missedFromYou} || $monster->{castOnByYou}) {
 			return 1;
 		} else {
 			return !objectIsMovingTowardsPlayer($monster);
@@ -1839,7 +1705,7 @@ sub checkMonsterCleanness {
 
 	# The monster didn't attack you.
 	# Other players attacked it, or it attacked other players.
-	if ($monster->{dmgFromYou} || $monster->{missedFromYou}) {
+	if ($monster->{dmgFromYou} || $monster->{missedFromYou} || $monster->{castOnByYou}) {
 		# If you have already attacked the monster before, then consider it clean
 		return 1;
 	}
@@ -1858,14 +1724,18 @@ sub slave_checkMonsterCleanness {
 	if (
 		$config{$slave->{configPrefix}.'attackAuto_party'} &&
 		(
-			$monster->{dmgFromYou} ||
-			$monster->{missedFromYou} ||
-			$monster->{dmgToYou} ||
-			$monster->{missedYou} ||
-			scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedFromPlayer}}) > 0 ||
-			scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}}) > 0 ||
-			scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}}) > 0 ||
-			scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}}) > 0
+			   $monster->{dmgFromYou}
+			|| $monster->{missedFromYou}
+			|| $monster->{castOnByYou}
+			|| $monster->{dmgToYou}
+			|| $monster->{missedYou}
+			|| $monster->{castOnToYou}
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedFromPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnByPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}})
+			|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnToPlayer}})
 		)
 	) {
 		return 1;
@@ -1875,21 +1745,31 @@ sub slave_checkMonsterCleanness {
 		# Aggressive anti-KS mode, for people who are paranoid about not kill stealing.
 
 		# If we attacked the monster first, do not drop it, we are being KSed
-		return 1 if ($monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}});
+		return 1 if ($monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}} || $monster->{castOnByPlayer}{$slave->{ID}});
 
 		# If others attacked the monster then always drop it, wether it attacked us or not!
-		return 0 if (
-			     (grep { $_ ne $slave->{ID} } keys %{$monster->{dmgFromPlayer}})
-			  || (grep { $_ ne $slave->{ID} } keys %{$monster->{missedFromPlayer}})
-			  || (grep { $_ ne $slave->{ID} } keys %{$monster->{castOnByPlayer}})
-			  || (grep { $_ ne $slave->{ID} } keys %{$monster->{castOnToPlayer}})
-		);
+		if (
+			   scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedFromPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgFromPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnByPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedToPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgToPlayer}})
+			|| scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnToPlayer}})
+		) {
+			return 0;
+		}
 	}
 
 	# If monster attacked/missed you
-	return 1 if ($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}});
+	return 1 if ($monster->{dmgToPlayer}{$slave->{ID}} || $monster->{missedToPlayer}{$slave->{ID}} || $monster->{castOnToPlayer}{$slave->{ID}});
 
 	if (objectInsideSpell($monster)) {
+		# Prohibit attacking this monster in the future
+		$monster->{dmgFromPlayer}{$char->{ID}} = 1;
+		return 0;
+	}
+
+	if (objectInsideCasting($monster)) {
 		# Prohibit attacking this monster in the future
 		$monster->{dmgFromPlayer}{$char->{ID}} = 1;
 		return 0;
@@ -1915,19 +1795,17 @@ sub slave_checkMonsterCleanness {
 
 	# If monster hasn't been attacked by other players
 	if (
-		   scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{missedFromPlayer}}) == 0
-		&& scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{dmgFromPlayer}}) == 0
-		&& $allowed
-
-	 # and it hasn't attacked any other player
-		&& scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{missedToPlayer}}) == 0
-		&& scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{dmgToPlayer}})    == 0
-		&& scalar(grep { $_ ne $slave->{ID} } keys %{$monster->{castOnToPlayer}}) == 0
+		   $allowed
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedFromPlayer}}) == 0
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgFromPlayer}}) == 0
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{missedToPlayer}}) == 0
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{dmgToPlayer}}) == 0
+		&& scalar(grep { isNotMySlaveID($_) } keys %{$monster->{castOnToPlayer}}) == 0
 	) {
 		# The monster might be getting lured by another player.
 		# So we check whether it's walking towards any other player, but only
 		# if we haven't already attacked the monster.
-		if ($monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) {
+		if ($monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}} || $monster->{castOnByPlayer}{$slave->{ID}}) {
 			return 1;
 		} else {
 			return !objectIsMovingTowardsPlayer($monster);
@@ -1936,7 +1814,7 @@ sub slave_checkMonsterCleanness {
 
 	# The monster didn't attack you.
 	# Other players attacked it, or it attacked other players.
-	if ($monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}}) {
+	if ($monster->{dmgFromPlayer}{$slave->{ID}} || $monster->{missedFromPlayer}{$slave->{ID}} || $monster->{castOnByPlayer}{$slave->{ID}}) {
 		# If you have already attacked the monster before, then consider it clean
 		return 1;
 	}
@@ -2271,7 +2149,12 @@ sub inventoryItemRemoved {
 		}
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('inventory_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('inventory_item_removed', {
+		item => $item,
+		index => $binID,
+		amount => $amount,
+		remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})
+	});
 }
 
 ##
@@ -2290,7 +2173,12 @@ sub storageItemRemoved {
 		$char->storage->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('storage_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('storage_item_removed', {
+		item => $item,
+		index => $binID,
+		amount => $amount,
+		remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})
+	});
 }
 
 ##
@@ -2309,7 +2197,12 @@ sub cartItemRemoved {
 		$char->cart->remove($item);
 	}
 	$itemChange{$item->{name}} -= $amount;
-	Plugins::callHook('cart_item_removed', {item => $item, index => $binID, amount => $amount, remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})});
+	Plugins::callHook('cart_item_removed', {
+		item => $item,
+		index => $binID,
+		amount => $amount,
+		remaining => ($item->{amount} <= 0 ? 0 : $item->{amount})
+	});
 }
 
 # Resolve the name of a card
@@ -2656,15 +2549,16 @@ sub canReachMeleeAttack {
 }
 
 ##
-# meetingPosition(actor, actorType, target_actor, attackMaxDistance)
+# meetingPosition(actor, actorType, target_actor, attackMaxDistance, runFromTargetActive)
 # actor: current object.
 # actorType: 1 - char | 2 - slave
 # target_actor: actor to meet.
 # attackMaxDistance: attack distance based on attack method.
+# runFromTargetActive: Wheter meetingPosition was called by a runFromTarget check
 #
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
-	my ($actor, $actorType, $target, $attackMaxDistance) = @_;
+	my ($actor, $actorType, $target, $attackMaxDistance, $runFromTargetActive) = @_;
 
 	# Actor was going from 'pos' to 'pos_to' in the last movement
 	my %myPos;
@@ -2771,12 +2665,16 @@ sub meetingPosition {
 	my $masterPos;
 	my $runFromTarget;
 	my $runFromTarget_dist;
+	my $runFromTarget_minStep;
+	my $runFromTarget_maxPathDistance;
 
 	# actor is char
 	if ($actorType == 1) {
-		$attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance};
+		$attackRouteMaxPathDistance = $config{attackRouteMaxPathDistance} || 13;
+		$runFromTarget_maxPathDistance = $config{runFromTarget_maxPathDistance} || 13;
 		$runFromTarget = $config{runFromTarget};
 		$runFromTarget_dist = $config{runFromTarget_dist};
+		$runFromTarget_minStep = $config{runFromTarget_minStep};
 		$followDistanceMax = $config{followDistanceMax};
 		$attackCanSnipe = $config{attackCanSnipe};
 		if ($config{follow}) {
@@ -2793,13 +2691,45 @@ sub meetingPosition {
 
 	# actor is a slave
 	} elsif ($actorType == 2) {
-		$attackRouteMaxPathDistance = $config{$actor->{configPrefix}.'attackRouteMaxPathDistance'};
+		$attackRouteMaxPathDistance = $config{$actor->{configPrefix}.'attackRouteMaxPathDistance'} || 20;
+		$runFromTarget_maxPathDistance = $config{$actor->{configPrefix}.'runFromTarget_maxPathDistance'} || 20;
 		$runFromTarget = $config{$actor->{configPrefix}.'runFromTarget'};
 		$runFromTarget_dist = $config{$actor->{configPrefix}.'runFromTarget_dist'};
+		$runFromTarget_minStep = $config{$actor->{configPrefix}.'runFromTarget_minStep'};
 		$followDistanceMax = $config{$actor->{configPrefix}.'followDistanceMax'};
 		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
 		$master = $char;
 		$masterPos = calcPosition($char);
+	}
+
+	my $master_moving;
+	my $timeSinceMasterMoved;
+	my $realMasterPos;
+	my %masterPos;
+	my %masterPosTo;
+	my $masterSpeed;
+	if ($masterPos) {
+		$masterPos{x} = $master->{pos}{x};
+		$masterPos{y} = $master->{pos}{y};
+		$masterPosTo{x} = $master->{pos_to}{x};
+		$masterPosTo{y} = $master->{pos_to}{y};
+
+		$masterSpeed = ($master->{walk_speed} || 0.12);
+		$timeSinceMasterMoved = time - $master->{time_move};
+
+		# Calculate the time master will need to finish moving from pos to pos_to
+		my $timeMasterFinishMove = calcTime(\%masterPos, \%masterPosTo, $masterSpeed);
+
+		# master has finished moving
+		if ($timeSinceMasterMoved >= $timeMasterFinishMove) {
+			$master_moving = 0;
+			$realMasterPos->{x} = $masterPosTo{x};
+			$realMasterPos->{y} = $masterPosTo{y};
+		# master is currently moving
+		} else {
+			$master_moving = 1;
+			($realMasterPos, undef) = calcPosFromTime(\%masterPos, \%masterPosTo, $masterSpeed, $timeSinceMasterMoved);
+		}
 	}
 
 	my $melee;
@@ -2819,6 +2749,16 @@ sub meetingPosition {
 	my $max_destination_dist;
 	if ($ranged && $runFromTarget) {
 		$min_destination_dist = $runFromTarget_dist;
+		if ($runFromTargetActive) {
+			$min_destination_dist = $runFromTarget_minStep;
+		}
+	}
+
+	my $max_path_dist;
+	if ($runFromTargetActive) {
+		$max_path_dist = $runFromTarget_maxPathDistance;
+	} else {
+		$max_path_dist = $attackRouteMaxPathDistance;
 	}
 
 	# We should not stray further than $attackMaxDistance
@@ -2851,7 +2791,7 @@ sub meetingPosition {
 
 			my @blocks = calcRectArea($possible_target_pos->{targetPosInStep}{x}, $possible_target_pos->{targetPosInStep}{y}, $distance, $field);
 
-			foreach my $spot (@blocks) {
+			SPOT: foreach my $spot (@blocks) {
 				next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
 
 				# Is this spot acceptable?
@@ -2859,11 +2799,22 @@ sub meetingPosition {
 				# 1. It must be walkable
 				next unless ($field->isWalkable($spot->{x}, $spot->{y}));
 
+				my $dist_to_target = blockDistance($spot, $possible_target_pos->{targetPosInStep});
+				next unless ($dist_to_target <= $attackMaxDistance);
+				next unless ($dist_to_target >= $min_destination_dist);
+
 				next if (positionNearPortal($spot, $config{'attackMinPortalDistance'}));
 
-				# 2. It must be within $followDistanceMax of $masterPos, if we have a master.
-				if ($masterPos) {
-					next unless (blockDistance($spot, $masterPos) <= $followDistanceMax);
+				# 2. It must be within $followDistanceMax of MasterPos, if we have a master.
+				if ($realMasterPos) {
+					if ($master_moving) {
+						my $masterPos_inTime;
+						my $totalTime = $timeSinceMasterMoved + $possible_target_pos->{timeForTargetToGetToStep};
+						($masterPos_inTime, undef) = calcPosFromTime(\%masterPos, \%masterPosTo, $masterSpeed, $totalTime);
+						next unless (blockDistance($spot, $masterPos_inTime) <= $followDistanceMax);
+					} else {
+						next unless (blockDistance($spot, $realMasterPos) <= $followDistanceMax);
+					}
 				}
 
 				# 3. It must have LOS to the target ($possible_target_pos->{targetPosInStep}) if that is active and we are ranged or must be reacheable from melee
@@ -2889,8 +2840,8 @@ sub meetingPosition {
 					max_y => $max_pathfinding_y
 				)->run($solution);
 
-				# 5. It must be reachable and have at max $attackRouteMaxPathDistance of route distance to it from our current position.
-				next unless ($dist >= 0 && $dist <= $attackRouteMaxPathDistance);
+				# 5. It must be reachable and have at max $max_path_dist of route distance to it from our current position.
+				next unless ($dist >= 0 && $dist <= $max_path_dist);
 
 				my $time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
 				my $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
@@ -2900,6 +2851,9 @@ sub meetingPosition {
 				} else {
 					$time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep = $possible_target_pos->{timeForTargetToGetToStep} - $time_actor_to_get_to_spot;
 				}
+
+				my $time_target_to_get_to_spot = calcTime($realTargetPos, $spot, $targetSpeed);
+				next if ($runFromTargetActive && $time_actor_to_get_to_spot > $time_target_to_get_to_spot);
 
 				my $sum_time = $time_actor_to_get_to_spot + $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
 
@@ -3344,7 +3298,10 @@ sub setStatus {
 		}
 	}
 =cut
-	Plugins::callHook('changed_status',{actor => $actor, changed => $changed});
+	Plugins::callHook('changed_status',{
+		actor => $actor,
+		changed => $changed
+	});
 
 	# Remove perfectly hidden objects
 	if ($actor->statusActive('EFFECTSTATE_SPECIALHIDING')) {
@@ -3354,7 +3311,10 @@ sub setStatus {
 			# $playersList->remove($actor);
 			# Call the hook when a perfectly hidden player is detected
 			# Plugins::callHook('perfect_hidden_player',undef);
-			Plugins::callHook('perfect_hidden_player',{actor => $actor, changed => $changed});
+			Plugins::callHook('perfect_hidden_player', {
+				actor => $actor,
+				changed => $changed
+			});
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Monster")) {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());
@@ -3366,7 +3326,10 @@ sub setStatus {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());
 			# message TF("Remove perfectly hidden %s\n", $actor->nameString());
 			# $npcsList->remove($actor);
-			Plugins::callHook('perfect_hidden_npc',{actor => $actor, changed => $changed});
+			Plugins::callHook('perfect_hidden_npc', {
+				actor => $actor,
+				changed => $changed
+			});
 
 		} elsif (UNIVERSAL::isa($actor, "Actor::Pet")) {
 			message TF("Found perfectly hidden %s\n", $actor->nameString());
@@ -3392,7 +3355,7 @@ sub countCastOn {
 
 	if ($targetID eq $accountID) {
 		$source->{castOnToYou}++;
-	} elsif ($target->isa('Actor::Player')) {
+	} elsif ($target->isa('Actor::Player') || $target->isa('Actor::Slave')) {
 		$source->{castOnToPlayer}{$targetID}++;
 	} elsif ($target->isa('Actor::Monster')) {
 		$source->{castOnToMonster}{$targetID}++;
@@ -3400,7 +3363,7 @@ sub countCastOn {
 
 	if ($sourceID eq $accountID) {
 		$target->{castOnByYou}++;
-	} elsif ($source->isa('Actor::Player')) {
+	} elsif ($source->isa('Actor::Player') || $source->isa('Actor::Slave')) {
 		$target->{castOnByPlayer}{$sourceID}++;
 	} elsif ($source->isa('Actor::Monster')) {
 		$target->{castOnByMonster}{$sourceID}++;
@@ -3937,7 +3900,7 @@ sub useTeleport {
 		if ($config{teleportAuto_item1}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item1});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item1}) if (!($item) && $config{teleportAuto_item1} =~ /^\d{3,}$/);
-		} 
+		}
 		$item = $char->inventory->getByNameID(23280) unless $item; # Beginner's Fly Wing
 		$item = $char->inventory->getByNameID(12323) unless $item; # Novice Fly Wing
 		$item = $char->inventory->getByNameID(601) unless $item;     # Fly Wing
@@ -4769,95 +4732,113 @@ sub checkSelfCondition {
 		}
 	}
 
+	my $has_homunculus = $char->has_homunculus;
+
 	if ($config{$prefix."_homunculus"} =~ /\S/) {
-		return 0 if (!!$config{$prefix."_homunculus"}) ^ ($char->{homunculus} && !$char->{homunculus}{state});
+		return 0 if (($config{$prefix."_homunculus"} && !$has_homunculus) || (!$config{$prefix."_homunculus"} && $has_homunculus));
 	}
 
-	if ($char->{homunculus}) {
-		if ($config{$prefix . "_homunculus_hp"}) {
-			if ($config{$prefix."_homunculus_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}->hp_percent, $1));
-			} else {
-				return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix."_homunculus_hp"}));
-			}
-		}
-
-		if ($config{$prefix."_homunculus_sp"}) {
-			if ($config{$prefix."_homunculus_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{homunculus}->sp_percent, $1));
-			} else {
-				return 0 if (!inRange($char->{homunculus}{sp}, $config{$prefix."_homunculus_sp"}));
-			}
-		}
-
-		if ($config{$prefix."_homunculus_dead"}) {
-			return 0 unless ($char->{homunculus}{state} & 4); # 4 = dead
-		}
-
-		if ($config{$prefix."_homunculus_resting"}) {
-			return 0 unless ($char->{homunculus}{state} & 2); # 2 = rest
-		}
-
-		if ($config{$prefix."_homunculus_onAction"}) {
-			return 0 unless (existsInList($config{$prefix . "_homunculus_onAction"}, $char->{homunculus}->action()));
-		}
-
-		if ($config{$prefix."_homunculus_notOnAction"}) {
-			return 0 if (existsInList($config{$prefix . "_homunculus_notOnAction"}, $char->{homunculus}->action()));
-		}
-
-		if ($config{$prefix."_homunculus_whenIdle"}) {
-			return 0 unless ($char->{homunculus}->isIdle);
-		}
-
-		if ($config{$prefix."_homunculus_whenNotIdle"}) {
-			return 0 if ($char->{homunculus}->isIdle);
+	if ($config{$prefix . "_homunculus_hp"}) {
+		return 0 unless ($has_homunculus);
+		if ($config{$prefix."_homunculus_hp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{homunculus}->hp_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{homunculus}{hp}, $config{$prefix."_homunculus_hp"}));
 		}
 	}
+
+	if ($config{$prefix."_homunculus_sp"}) {
+		return 0 unless ($has_homunculus);
+		if ($config{$prefix."_homunculus_sp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{homunculus}->sp_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{homunculus}{sp}, $config{$prefix."_homunculus_sp"}));
+		}
+	}
+
+	if ($config{$prefix."_homunculus_onAction"}) {
+		return 0 unless ($has_homunculus);
+		return 0 unless (existsInList($config{$prefix . "_homunculus_onAction"}, $char->{homunculus}->action()));
+	}
+
+	if ($config{$prefix."_homunculus_notOnAction"}) {
+		return 0 unless ($has_homunculus);
+		return 0 if (existsInList($config{$prefix . "_homunculus_notOnAction"}, $char->{homunculus}->action()));
+	}
+
+	if ($config{$prefix."_homunculus_whenIdle"}) {
+		return 0 unless ($has_homunculus);
+		return 0 unless ($char->{homunculus}->isIdle);
+	}
+
+	if ($config{$prefix."_homunculus_whenNotIdle"}) {
+		return 0 unless ($has_homunculus);
+		return 0 if ($char->{homunculus}->isIdle);
+	}
+
+	if ($config{$prefix."_homunculus_dead"}) {
+		return 0 if ($has_homunculus);
+		return 0 unless ($char->{homunculus});
+		return 0 unless ($char->{homunculus}{dead});
+	}
+
+	if ($config{$prefix."_homunculus_resting"}) {
+		return 0 if ($has_homunculus);
+		return 0 unless ($char->{homunculus});
+		return 0 unless ($char->{homunculus}{vaporized});
+	}
+
+	my $has_mercenary = $char->has_mercenary;
 
 	if ($config{$prefix."_mercenary"} =~ /\S/) {
-		return 0 if (!!$config{$prefix."_mercenary"}) ^ (!!$char->{mercenary});
+		return 0 if (($config{$prefix."_mercenary"} && !$has_mercenary) || (!$config{$prefix."_mercenary"} && $has_mercenary));
 	}
 
-	if ($char->{mercenary}) {
-		if ($config{$prefix . "_mercenary_hp"}) {
-			if ($config{$prefix."_mercenary_hp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}->hp_percent, $1));
-			} else {
-				return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix."_mercenary_hp"}));
-			}
+	if ($config{$prefix . "_mercenary_hp"}) {
+		return 0 unless ($has_mercenary);
+		if ($config{$prefix."_mercenary_hp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{mercenary}->hp_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{mercenary}{hp}, $config{$prefix."_mercenary_hp"}));
 		}
+	}
 
-		if ($config{$prefix."_mercenary_sp"}) {
-			if ($config{$prefix."_mercenary_sp"} =~ /^(.*)\%$/) {
-				return 0 if (!inRange($char->{mercenary}->sp_percent, $1));
-			} else {
-				return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
-			}
+	if ($config{$prefix."_mercenary_sp"}) {
+		return 0 unless ($has_mercenary);
+		if ($config{$prefix."_mercenary_sp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{mercenary}->sp_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{mercenary}{sp}, $config{$prefix."_mercenary_sp"}));
 		}
+	}
 
-		if ($config{$prefix . "_mercenary_whenStatusActive"}) {
-			return 0 unless $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusActive"});
-		}
-		if ($config{$prefix . "_mercenary_whenStatusInactive"}) {
-			return 0 if $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusInactive"});
-		}
+	if ($config{$prefix . "_mercenary_whenStatusActive"}) {
+		return 0 unless ($has_mercenary);
+		return 0 unless $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusActive"});
+	}
+	if ($config{$prefix . "_mercenary_whenStatusInactive"}) {
+		return 0 unless ($has_mercenary);
+		return 0 if $char->{mercenary}->statusActive($config{$prefix . "_mercenary_whenStatusInactive"});
+	}
 
-		if ($config{$prefix."_mercenary_onAction"}) {
-			return 0 unless (existsInList($config{$prefix . "_mercenary_onAction"}, $char->{mercenary}->action()));
-		}
+	if ($config{$prefix."_mercenary_onAction"}) {
+		return 0 unless ($has_mercenary);
+		return 0 unless (existsInList($config{$prefix . "_mercenary_onAction"}, $char->{mercenary}->action()));
+	}
 
-		if ($config{$prefix."_mercenary_notOnAction"}) {
-			return 0 if (existsInList($config{$prefix . "_mercenary_notOnAction"}, $char->{mercenary}->action()));
-		}
+	if ($config{$prefix."_mercenary_notOnAction"}) {
+		return 0 unless ($has_mercenary);
+		return 0 if (existsInList($config{$prefix . "_mercenary_notOnAction"}, $char->{mercenary}->action()));
+	}
 
-		if ($config{$prefix."_mercenary_whenIdle"}) {
-			return 0 unless ($char->{mercenary}->isIdle);
-		}
+	if ($config{$prefix."_mercenary_whenIdle"}) {
+		return 0 unless ($has_mercenary);
+		return 0 unless ($char->{mercenary}->isIdle);
+	}
 
-		if ($config{$prefix."_mercenary_whenNotIdle"}) {
-			return 0 if ($char->{mercenary}->isIdle);
-		}
+	if ($config{$prefix."_mercenary_whenNotIdle"}) {
+		return 0 unless ($has_mercenary);
+		return 0 if ($char->{mercenary}->isIdle);
 	}
 
 	# check skill use SP if this is a 'use skill' condition
@@ -4913,6 +4894,8 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field->baseName eq $config{lockMap}); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($char->{sitting}); }
+	if ($config{$prefix . "_notWhileCasting"} > 0) { return 0 if (exists $char->{casting}); }
+	if ($config{$prefix . "_whileCasting"} > 0) { return 0 unless (exists $char->{casting}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($field->isCity); }
 	if ($config{$prefix . "_inTown"} > 0) { return 0 unless ($field->isCity); }
     if (defined $config{$prefix . "_monstersCount"}) {
@@ -5081,7 +5064,7 @@ sub checkSelfCondition {
 	my %hookArgs;
 	$hookArgs{prefix} = $prefix;
 	$hookArgs{return} = 1;
-	Plugins::callHook("checkSelfCondition", \%hookArgs);
+	Plugins::callHook('checkSelfCondition', \%hookArgs);
 	return 0 if (!$hookArgs{return});
 
 	return 1;
@@ -5398,7 +5381,10 @@ sub openShop {
 	message T("Trying to set up shop...\n"), "vending";
 	$messageSender->sendOpenShop($shop{title}, \@items);
 	$shopstarted = 1;
-	Plugins::callHook ('open_shop', {title => $shop{title}, items => \@items});
+	Plugins::callHook('open_shop', {
+		title => $shop{title},
+		items => \@items
+	});
 }
 
 sub closeShop {
@@ -5412,7 +5398,7 @@ sub closeShop {
 	$shopstarted = 0;
 	$articles = 0;
 	$timeout{'ai_shop'}{'time'} = time;
-	Plugins::callHook("shop_closed");
+	Plugins::callHook('shop_closed');
 	message T("Shop closed.\n");
 }
 
@@ -5507,7 +5493,11 @@ sub openBuyerShop {
 		$limitZeny = $char->{zeny};
 	}
 
-	Plugins::callHook ('buyer_open_shop', {title => $buyer_shop{title}, limitZeny=> $limitZeny, items => \@items});
+	Plugins::callHook ('buyer_open_shop', {
+		title => $buyer_shop{title},
+		limitZeny=> $limitZeny,
+		items => \@items
+	});
 	$messageSender->sendBuyBulkOpenShop($limitZeny, 1, $buyer_shop{title}, \@items);
 
 	message T("Trying to set up buyer shop...\n"), "vending";
@@ -5524,7 +5514,7 @@ sub closeBuyerShop {
 
 	$buyershopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
-	Plugins::callHook("buyer_shop_closed");
+	Plugins::callHook('buyer_shop_closed');
 	message T("Buyer Shop closed.\n");
 }
 
