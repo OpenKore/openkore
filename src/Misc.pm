@@ -94,6 +94,7 @@ our @EXPORT = (
 	qw/chatLog
 	shopLog
 	monsterLog
+	playerLog
 	deadLog
 	searchStoreInfo/,
 
@@ -936,6 +937,14 @@ sub monsterLog {
 	open MONLOG, ">>:utf8", $Settings::monster_log_file;
 	print MONLOG "[".getFormattedDate(int(time))."] $crud\n";
 	close MONLOG;
+}
+
+sub playerLog {
+	my $crud = shift;
+	return if (!$config{'playerLog'});
+	open PLAYERLOG, ">>:utf8", $Settings::player_log_file;
+	print PLAYERLOG "[".getFormattedDate(int(time))."] $crud\n";
+	close PLAYERLOG;
 }
 
 sub deadLog {

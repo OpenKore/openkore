@@ -112,6 +112,7 @@ our $base_console_log_file;
 our $base_storage_log_file;
 our $base_shop_log_file;
 our $base_monster_log_file;
+our $base_player_log_file;
 our $base_item_log_file;
 our $base_dead_log_file;
 
@@ -121,6 +122,7 @@ our $console_log_file;
 our $storage_log_file;
 our $shop_log_file;
 our $monster_log_file;
+our $player_log_file;
 our $item_log_file;
 our $dead_log_file;
 
@@ -231,6 +233,7 @@ sub parseArguments {
 	$base_storage_log_file ||= File::Spec->catfile($logs_folder, "storage.txt");
 	$base_shop_log_file = File::Spec->catfile($logs_folder, "shop_log.txt");
 	$base_monster_log_file = File::Spec->catfile($logs_folder, "monster_log.txt");
+	$base_player_log_file = File::Spec->catfile($logs_folder, "player_log.txt");
 	$base_item_log_file = File::Spec->catfile($logs_folder, "item_log.txt");
 	$base_dead_log_file = File::Spec->catfile($logs_folder, "dead_log.txt");
 	update_log_filenames();
@@ -270,6 +273,7 @@ sub update_log_filenames {
 	$storage_log_file = substr( $base_storage_log_file, 0, length( $base_storage_log_file ) - 4 ) . "$logAppend.txt";
 	$shop_log_file    = substr( $base_shop_log_file,    0, length( $base_shop_log_file ) - 4 ) . "$logAppend.txt";
 	$monster_log_file = substr( $base_monster_log_file, 0, length( $base_monster_log_file ) - 4 ) . "$logAppend.txt";
+	$player_log_file = substr( $base_player_log_file,   0, length( $base_player_log_file ) - 4 ) . "$logAppend.txt";
 	$item_log_file    = substr( $base_item_log_file,    0, length( $base_item_log_file ) - 4 ) . "$logAppend.txt";
 	$dead_log_file    = substr( $base_dead_log_file,    0, length( $base_dead_log_file ) - 4 ) . "$logAppend.txt";
 }

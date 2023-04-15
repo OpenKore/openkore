@@ -340,6 +340,7 @@ logConsole 1
 logAppendUsername 1
 logAppendServer 0
 monsterLog 0
+playerLog 0
 logDead 1
 
 questDisplayStyle 2
