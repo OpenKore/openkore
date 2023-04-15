@@ -105,7 +105,7 @@ rankingSystemType 1
 ignoreAntiCheatWarning 0
 
 # Renewal
-# http://playragnarok.com
+# http://renewal.playragnarok.com/
 [International - iRO: Ymir/Yggdrasil/Valkyrie]
 title International - iRO: Thor|Chaos (Renewal-compatible)
 ip 128.241.92.36
