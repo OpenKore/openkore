@@ -141,10 +141,10 @@ Ppl#
 [Alt] + [End]: Turns HP/SP Bar On or Off#
 [Alt] + [Home]: Turns Ground Cursor On or Off#
 [Insert]: Makes you sit or stand. (Hotkey to toggle between /sit and /stand)#
-Congratulations! You are the MVP! Your reward item is#
+Congratulations! You are the MVP! Your reward item is #
 !#
-Congratulations! You are the MVP! Your reward EXP points are#
-acquired!#
+Congratulations! You are the MVP! You are rewarded #
+ EXP points!#
 You are the MVP, but you can't take the reward because you are over your weight limit.#
 There is no such character name, or the user is offline.#
  doesn't want to receive your messages.#
@@ -589,7 +589,7 @@ Please avoid opening a chat room while vending.#
 ea#
 You have knocked down %s.#
 You have been knocked down by %s.#
-Feed - `%s' is not available.#
+Feed - '%s' is not available.#
 Feed Pet#
 Performance#
 Return to Egg Shell#
@@ -1067,7 +1067,7 @@ Auction End Time#
 %m/%d, %H00 PST#
 Time (Hr)#
 Fee#
-No items found in the auction search.#
+Items are not found.#
 Your Sale List is empty.#
 Your Purchase List is empty.#
 The auction information is incorrect or incomplete.#
@@ -1251,8 +1251,8 @@ You will receive 1.5 times more EXP from hunting monsters for the next 30 minute
 This character will not receive any EXP penalty if killed within the next 30 minutes.#
 Regular item drops from monsters will be doubled for the next 30 minutes.#
 Boss Monster Map Information for the next 10 minutes.#
-Do you really want to purchase this item? %d points will be deducted from your total Kafra Credit Points.#
-You do not have enough Kafra Credit Points.#
+Are you sure you want to purchase this item? %d KP will be consumed.#
+Not enough KP.#
 ^ff0000Expiration Date: %s^000000#
 The '%s' item will disappear in %d minutes.#
 '%s' item will be deleted from the inventory in 1 minute.#
@@ -1841,22 +1841,22 @@ Failed to confirm the connection info#
 Unregistered account.#
 Unable to connect due to age limit#
 Purchase#
-Empty shopping cart#
-First page#
-Last page#
+Clear Cart#
+First Page#
+Last Page#
 New#
 Hot#
 Limited#
-Rental#
-Gear#
+Item Rental#
+Item Permanent#
 Buff#
-Heal#
-Other#
+Recover#
+Etc.#
 Price#
-Amount#
-Total#
-Free cash: %s KP#
-Kafra Points: %s KP#
+Quantity#
+EA#
+Free KP : %s C#
+Balance : %s C#
 Unable to summon monsters in this area#
 You have exceeded total free cash#
 Will save set info at [SaveData_ExMacro%d]#
@@ -2069,7 +2069,7 @@ Do not recall the party with the current maps.#
 Summon has been denied.#
 Cannot be summoned.#
 Will be invited to a party.#
-Enter search item:#
+Item to search : #
 You must enter a character name.#
 You must enter the name of the party.#
 Guild Companion#
@@ -2471,12 +2471,12 @@ ErrorCode: %d, ErrorValue: %d#
 %d%% (Basic 100%% + Premium %d%% + Internet Caf?%d%% + %s Server %d%%)#
 Basic item drop rate increased for %dmins by %d%%.#
 Basic item drop rate from monster hunting is increased for %dhours %.2dmins by %dtimes.#
-%s's price#
-100,000,000#
-^ff0000%d^0000ffmilion#
-10,000,000#
-^ff0000%d^0000ff0,000,000#
-It is more than ^0000ffzeny^000000.\n Is it correct?#
+%s is registered, #
+100000000#
+^ff0000%d00^0000ff #
+10000000#
+and ^ff0000%d0^0000ff #
+million above ^0000ffzeny^000000 is set.\nPlease check.#
 Safe check for over 10,000,000 zeny#
 ro.gnjoy.asia/#
 ro.gnjoy.asia/#
@@ -2500,32 +2500,32 @@ Other guild members are using it. Please try again later.#
 Storage authority#
 Guild storage#
 You have no right to use guild storage.#
-Limited item sales registration window#
-Item DB name#
-Item DB no.#
-Sales count#
-Sales start time#
-Sales time#
-Please indicate the amount you want to sell.#
-Please indicate the sales start time.#
-The sales start time range is not suitable.#
-Please indicate the sales time.#
-Please indicate the Item DB name.#
-Item ID check has failed. Please try again.#
->> ItemName: %s / Price: %dc / Count: %d / Sales period: %d:%d:%d:%d ~ %d:%d:%d:%d#
-It has been successfully registered.#
-It has failed to register. Please try again later.#
-There is an item already registered. Please try again.#
-The item has not been removed. Please try again.#
-%s item has been removed.#
-Special#
-Flash sale item count renew#
-Sales closed#
-The item count should be renewed#
-There are not enough items, so %d items have been purchased.#
-%s item's flash sale has started.#
-%s item is out of stock, or the sale period has finished.#
-/limited sales#
+Limited Purchase Registration#
+Item DB#
+Item DB Number#
+Item Quantity#
+Sale Start Time#
+Sale Period#
+Set the item quantity#
+Set the sale start time#
+Invalid sale start time#
+Set the sale period#
+Input the Item DB Name#
+Fail to search Item DB Name. Please double check and try again#
+>> Item DB Name: %s / Amount: %d / Sales Duration: %02d Month: %02d Day: %02d Hr: %02d Min ~ %02d Month: %02d Day: %02d Hr: %02d Min End: Date: %02d/%02d Time: %02d:%02d#
+Successfully registered#
+Faild to register. Please try again.#
+Item is already registered. Please try again.#
+Failed to delete the item. Please try again.#
+%s has been deleted.#
+Special Sale#
+Modify Limited Purchase Item Quantity#
+End Sale#
+Requires quantity modification#
+Due to not enough stock you can ONLY purchase %d#
+%s is available in cash shop for special sale#
+Limited sale has been ended as %s is sold out or sale period has ended#
+/Limited#
 http://www.ragnarokeurope.com/news/home-r70.html#
 http://www.ragnarokeurope.com/index.php?rubrique=70&Steam#
 Successfully purchased list#
@@ -2566,7 +2566,7 @@ When you are using guild storage, all the items in storage will disappear.#
 ro.gnjoy.asia/#
 Enter your password to log in#
 Pet evolution#
-Evolution ?%s#
+Evolution - %s#
 You need the following materials to evolve.#
 Would you like to evolve it?#
 Unknown error#
@@ -2576,7 +2576,7 @@ There are not enough evolution materials.#
 You are short of evolution materials.#
 The pet can be evolved only under Loyal status.#
 Auto-feeding#
-The pet has been fed. \'%s\' Remaining: %d#
+The pet has been fed. '%s' Remaining: %d#
 Auto-feeding activated.#
 Auto-feeding inactivated.#
 Renewed#
@@ -2778,7 +2778,7 @@ Withdraw#
 1 z Down#
 Max#
 No input#
-Short of zeny#
+Not enough Zeny#
 Needs input#
 Cannot input characters#
 Over the maximum input#
@@ -2812,12 +2812,12 @@ DROP: %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
 DEATH: %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
 You cannot use that as a name.#
 Styling shop#
-No coupons. Purchase items in the cash shop#
-Please open the item coupon box in the inventory.#
-Do you want to delete it?#
-No more slots. Please remove some items in Bookmarks.#
-Do you want to buy the current style?\n(?? You cannot receive a refund.)#
-The current style saved.#
+No Coupon. Please purchase the item from the Cash Shop.#
+Please open the item from the box.#
+Are you sure you want to delete current pre-set?#
+Slot is full. Please delete the pre-set in Wardrobe.#
+Are you sure you want to purchase the current style?\n(The price will not be refunded.)#
+Current style has been saved.#
 Not enough zeny on hand. There are enough zeny in the zeny stash.#
 moving ...#
 You are not allowed to fly over the sovereign airspace of the country.#
@@ -2833,8 +2833,8 @@ Accessory#
 Second costume#
 Wardrobe#
 This hairstyle cannot be dyed.#
-Press an arrow to choose the style you want.#
-Come and see the new styles.\n(?? Purchased accessories will be sent via RODEX.)#
+Select the style by pressing the arrow icons.#
+Successfully purchased!\n(Accessory will be sent to RODEX.)#
 Basic style#
 You can level up the skill from the base Lv. %d.#
 You cannot use that special character as a name.#
@@ -2924,12 +2924,12 @@ Preview#
 Entrust guild master#
 Do you really want to entrust the guild master to %s? To proceed, your guild position will be exchanged with %s.#
 Cancel#
-Do you want to close the shop??#
+Do you want to close the shop?#
 %02dDay(s) %02dHour(s) %02dMinutes(s) %02dSecond(s)#
 No connection#
 The connection is full.#
 Please select the place where you want to vend a shop.#
-Changing your Pet name to ^0000ff^0000ff %s^000000^000000. Do you want to proceed?#
+Changing your Pet name to ^0000ff^0000ff%s^000000^000000. Do you want to proceed?#
 Trade date: #
 Trade item: #
 Trade quantity: #
@@ -2941,12 +2941,12 @@ Close vending sales agent#
 Close vending purchase agent#
 Balance:#
 Item list:#
-Vending agent#
+Vending Agent#
 Returned item:#
 Returned quantity:#
 Returned date:#
 Trading amount has been sent to RODEX.#
-Not available name.#
+This name is not available.#
 Item has arrived.#
 Thanks for purchasing.#
 Cannot sell to NPC.#
@@ -3141,8 +3141,8 @@ Move#
 Turn#
 The Guild Leader cannot leave the guild; it is necessary to find a replacement first#
 Do you want to stop video playing? #
-Equip equipment in the equipment window#
-Remove equipment in the equipment window#
+ has been equipped on equipment switch window#
+ has been removed from equipment switch window#
 Last line at current#
 %.1f%% (basic 100%% + premium %.1f%%+ %s server %.1f%%)#
 Chinese character#
@@ -3219,16 +3219,16 @@ Position on click will be shown in the chat window#
 Sharing Mode -> Use when returning to search mode#
 Get EXP %lld#
 EXP '%lld'#
- = Fee rate : ^1567fe0%^000000\n10,000,001 z ~ 100,000,000 z\n = Fee rate : ^1567fe5%^000000\nmore than 100,000,001 z\n = Fee rate : ^1567fe5%^000000\n#
+^b- Vending Fee^/b\nA fee is imposed depending on the price of the item.\n\n^b> Fee Rate^/b\nBelow is the list of the Fee rate.\n\n10,000,000 zeny or less\n= Fee Rate : ^1567fe0%^000000\n10,000,001 zeny or more\n= Fee Rate : ^1567fe5%^000000\n#
 Selling Price: #
-?? When selling items, you will get zeny as shown#
-?? When buying items, you will lose zeny as shown#
+When selling items, you will get zeny as shown#
+When buying items, you will lose zeny as shown#
 Open the Chat Room#
 Your character level is insufficient to join the party#
 JOB EXP '%lld' #
 Get JOB EXP %lld #
 Unable to open vending on the main street#
-Try again in a few moments#
+ seconds later. Please try again#
 Party member#
 Sending SNS fail(%d)#
 Connection to the SNS server failed#
@@ -3282,7 +3282,7 @@ Unable to giving food to the Homunculus while the RODEX window is open#
 The Homunculus has eaten food \'%s\' amount left: %d#
 Auto-Giving Food to Homunculus On#
 Auto-Giving Food to Homunculus Off#
-The Homunculus gets 10% of EXP gained by the player.#
+ #
 Probability: %d%%#
 This is not a target for a Homunculus; use \'Alt + Right Click\' to choose a target for a Homunculus#
 Not a target for a Homunculus; \'Alt + Right Click\' to choose a target for a Homunculus#
@@ -3551,7 +3551,7 @@ Search#
 Feeding pet failed, unable to feed pet#
 Feeding Homunculus failed, unable to feed#
 Money#
-%s % ea#
+%s %d ea#
 Trading Failed#
 Trading Succeeded#
 Items are not enough to trade#
@@ -3655,13 +3655,13 @@ Total Sales#
 Starting Time Sales#
 Ending Time Sales#
 Account Limited#
-Sales Duration: Month %d Date %d %d o'clock %d Minutes#
-Amount of buying per account#
+Start: Date: %02d/%02d Time: %02d:%02d#
+Amount#
 Limit %d ea#
->> ItemName: %s /  Amount: %d / Sales Duration: Month %d:Date%d:%do'Clock:%d Minutes ~ Month%d:Date%d:%do'Clock:%dMinutes#
+>> Item DB Name: %s / Amount: %d / Sales Duration: %02d Month: %02d Day: %02d Hr: %02d Min ~ %02d Month: %02d Day: %02d Hr: %02d Min#
 Sold Out#
 [%s] can be called in this place#
-~ Month%d: %dDate:%do'Clock:%dMinutes#
+End: Date: %02d/%02d Time: %02d:%02d#
 Unable to add items for selling#
 An equipped item cannot be exchanged; please try again after un-equipping#
 You can't move to a character selection window while using Guild Storage#
@@ -3681,7 +3681,7 @@ Balance: %s %c#
  ^ff0000You can cancel your purchase within 7 days after purchase; if 7 days have passed or you have already open the item, you cannot cancel the purchase. Free cash used will not be returned when canceling a purchase^000000 Do you want to buy this item? If you buy, the transaction will deduct %s cash#
  ^ff0000You can cancel your purchase within 7 days after purchase; if 7 days have passed or you have already open the item, you cannot cancel the purchase. Free cash used will not be returned when canceling a purchase^000000 Do you want to buy this item? If you buy, the transaction will deduct %s cash and free cash#
 Calling is canceled#
-?The total sales shouldn't exceed your current amount of zeny#
+The total sales shouldn't exceed your current amount of zeny#
 Can't open store; please close#
 Record item vending sales list#
 Finish record item vending sales list#

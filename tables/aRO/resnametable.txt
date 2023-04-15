@@ -1502,3 +1502,20 @@ dali02.rsw#dali.rsw#
 유저인터페이스\map\1@air1.bmp#유저인터페이스\map\1@air1.bmp#
 
 //영웅의흔적 파트2,3 8월 끝
+
+//11월 EP.15.1
+1@mcd.gnd#1@mcd.gnd#
+1@mcd.gat#1@mcd.gat#
+1@mcd.rsw#1@mcd.rsw#
+유저인터페이스\map\1@mcd.bmp#유저인터페이스\map\1@mcd.bmp#
+
+//12월 EP.15.2
+1@uns.gnd#1@uns.gnd#
+1@uns.gat#1@uns.gat#
+1@uns.rsw#1@uns.rsw#
+유저인터페이스\map\1@uns.bmp#유저인터페이스\map\1@uns.bmp#
+
+1@lab.gnd#1@lab.gnd#
+1@lab.gat#1@lab.gat#
+1@lab.rsw#1@lab.rsw#
+유저인터페이스\map\1@lab.bmp#유저인터페이스\map\1@lab.bmp#

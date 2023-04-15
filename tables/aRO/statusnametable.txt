@@ -62,8 +62,11 @@ EFST_PROPERTYWATER Give Tsunami
 EFST_PROPERTYWIND Lightning Loader
 EFST_PROPERTYGROUND Give Quake
 EFST_PROPERTYUNDEAD Apply Undead Attributes
+EFST_AURABLADE Aura Blade
 EFST_PARRYING Parry
+EFST_LKCONCENTRATION Concentration
 EFST_TENSIONRELAX Relax
+EFST_SACRIFICE Martyr's Reckoning
 EFST_ASSUMPTIO Assumptio
 EFST_GROUNDMAGIC Apply the ground magic effects
 EFST_EDP Enchant Deadly Poison
@@ -135,7 +138,7 @@ EFST_FOOD_INT_CASH Increase INT
 EFST_FOOD_LUK_CASH Increase LUK
 EFST_SLOWCAST Slow Cast
 EFST_CRITICALWOUND Critical Wound
-EFST_MOVHASTE_HORSE Increase ASPD
+EFST_MOVHASTE_HORSE Increase Movement Speed
 EFST_PROTECT_DEF Physical Defense Potion
 EFST_PROTECT_MDEF MDEF Potion
 EFST_HEALPLUS Regeneration Potion
@@ -222,12 +225,13 @@ EFST_RAISINGDRAGON Rising Dragon
 EFST_IGNORANCE Masquerade: Ignorance (Mask : Ignorance)
 EFST_LAZINESS Masquerade: Laziness (Mask: Laziness)
 EFST_LIGHTNINGWALK Lightning Walk
+EFST_ACARAJE Strengthen your Will
 EFST_UNLUCKY Masquerade : Unlucky (Mask : Unlucky)
 EFST_CURSEDCIRCLE_TARGET CURSED CIRCLE
 EFST_WEAKNESS Masquerade : Weakness (Mask : Weakness)
 EFST_CRESCENTELBOW Crescent Elbow
 EFST_STRIPACCESSARY Divest Accessory
-EFST_POPECOOKIE Pope Cookie
+EFST_POPECOOKIE A Fresh Start
 EFST_GENTLETOUCH_ENERGYGAIN Gentle Touch - Silence
 EFST_GENTLETOUCH_CHANGE Gentle Touch - Opposite
 EFST_GENTLETOUCH_REVITALIZE Gentle Touch - Alive
@@ -286,7 +290,7 @@ EFST_VOLCANIC_ASH Ash
 EFST_MAGIC_CANDY Magic Candy
 EFST_ALL_RIDING Board/Embark Status
 EFST_MACRO_POSTDELAY After Macro Delay
-EFST_OVERLAPEXPUP Malang Island Cat Can
+EFST_OVERLAPEXPUP New Year Blessing
 EFST_CRUSHSTRIKE Crush Strike
 EFST_MONSTER_TRANSFORM Monster Transformation
 EFST_SIT Sitting
@@ -302,7 +306,7 @@ EFST_SET_PER_DEF DEF amount is fixed at certain percentage
 EFST_SET_PER_MDEF MDEF amount is fixed at certain percentage
 EFST_MEIKYOUSISUI Sealed Mirror
 EFST_ATTHASTE_CASH ASPD Reinforce Potion
-EFST_2011RWC Firecracker
+EFST_2011RWC Luck in the Air
 EFST_IZAYOI The 16th Night
 EFST_KG_KAGEHUMI Step on Shadow
 EFST_KYOMU Futile Shadows
@@ -314,6 +318,7 @@ EFST_AKAITSUKI Omnius Red Moon
 EFST_GM_BATTLE2 Booster Wine
 EFST_2011RWC_SCROLL Red Booster
 EFST_MYSTICPOWDER Mystic Powder
+EFST_FLOWER_LEAF Voluminous Spray of Flower
 EFST_ALMIGHTY Almighty
 EFST_GEFFEN_MAGIC1 Add P.damage
 EFST_GEFFEN_MAGIC2 Add M.damage
@@ -373,6 +378,7 @@ EFST_HEALTHSTATE_SILENCE Silence
 EFST_HEALTHSTATE_CONFUSION Confusion
 EFST_HEALTHSTATE_HEAVYPOISON Fatal Poison
 EFST_HEALTHSTATE_FEAR Fear
+EFST_CHERRY_BLOSSOM_CAKE Cherry Blossom Rice Cake
 EFST_SU_STOOP Stoop
 EFST_CATNIPPOWDER CN Powdering
 EFST_SV_ROOTTWIST SV Root Twist
@@ -433,7 +439,7 @@ EFST_MATK_POPCORN Boost Magic Attack
 EFST_ASPD_POPCORN Boost Attack Speed
 EFST_ULTIMATECOOK Ultimate Cook
 EFST_INFINITY_DRINK Infinity Drink
-EFST_EXPDROPUP GGH Event
+EFST_EXPDROPUP New Year Blessing
 EFST_DEFSCROLL Shiny Physical DEF Scroll
 
 # = custom aRO =

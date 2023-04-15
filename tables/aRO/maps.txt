@@ -909,3 +909,34 @@ lasa_sea.rsw#Nyail Cave#
 1@glast.rsw#Glast Heim#
 1@air1.rsw#Airship#
 1@air2.rsw#Airship#
+
+//9월15일 포링섬이벤트
+poring_tw.rsw#Poring Island#
+
+//10월 컨텐츠 시계탑나이트메어던전
+c_tower2_.rsw#Clock Tower 2f#
+c_tower3_.rsw#Clock Tower 3f#
+
+//11월 ep15.1 판타스마고리카
+ver_eju.rsw#Juperos Eastern Ruin#
+ver_tunn.rsw#Verus Outter tunnel#
+verus04.rsw#Verus Findspot#
+verus03.rsw#Verus Center Square#
+
+
+//12월 ep15.2 판타스마고리카
+verus01.rsw#Lab-OPTATIO#
+verus02.rsw#R&D-WISH#
+un_bk_q.rsw#Under Bunker#
+un_bunker.rsw#Under Bunker#
+un_myst.rsw#Under Tunnel#
+1@uns.rsw#Last Room#
+1@lab.rsw#Center Lab#
+
+1@mcd.rsw#Charlston Factory#
+
+//3월 고성메모리얼던전
+gl_cas02_.rsw#2nd Hall#
+gl_chyard_.rsw#Churchyard#
+2@gl_k.rsw#Old Glast Heim Chivalry 2F#
+1@gl_k.rsw#Old Glast Heim Chivalry 1F#

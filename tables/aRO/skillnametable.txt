@@ -465,6 +465,7 @@ NJ_ISSEN#Killing Strike#
 ALL_INCCARRY#			#
 GM_SANDMAN#Goodnight, Sweety#
 ALL_CATCRY#Monster's Cry#
+ALL_PARTYFLEE#Here comes the Flower Wind!!#
 ALL_ANGEL_PROTECT#Thank You So Much!!#
 ALL_DREAM_SUMMERNIGHT#Summer Dream#
 ALL_WEWISH#Sing along with the Singing Crystal's tune:#
@@ -944,4 +945,5 @@ GD_HAWKEYES#Sharp Gaze#
 GD_BATTLEORDER#Battle Command#
 GD_REGENERATION#Regeneration#
 GD_RESTORE#Restoration#
+GD_EMERGENCYCALL#Emergency Call#
 GD_DEVELOPMENT#Permanent Development#

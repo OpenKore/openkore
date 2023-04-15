@@ -4494,18 +4494,18 @@ Gloria Domini cannot be cancelled by any method.^000000
 #
 PA_SACRIFICE#
 Martyr's Reckoning
-MAX Lv: 5
+MAX Lv : 5
 ^777777Skill Requirement: Endure 1, Sacrifice 3^000000
 Skill Form: ^777777Active^000000
-Description: ^777777Enhance the damage of 5 physical
-attacks after activating this skill. Each attack
-enhanced by Martyr's Reckoning will drain an
-amount of HP equal to 9% of character's Max HP.^000000
-[Lv 1]:^777777Damage times 1^000000
-[Lv 2]:^777777Damage x 1.1^000000
-[Lv 3]:^777777Damage x 1.2^000000
-[Lv 4]:^777777Damage x 1.3^000000
-[Lv 5]:^777777Damage x 1.4^000000
+Description: ^777777Enhance the normal melee physical damage to 5 ^bb00bbSpecial Attacks^000000 after activating this skill.
+Each attack enhanced by Martyr's Reckoning will drain an amount of HP equal to 9% of character's Max HP.
+Due to this damage the character can be incapacitated.^000000
+^ffffff_^000000
+[Lv 1] : ^777777Damage x 1^000000
+[Lv 2] : ^777777Damage x 1.1^000000
+[Lv 3] : ^777777Damage x 1.2^000000
+[Lv 4] : ^777777Damage x 1.3^000000
+[Lv 5] : ^777777Damage x 1.4^000000
 #
 PA_GOSPEL#
 Battle Chant
@@ -7614,6 +7614,8 @@ Monster's Cry
 Description : ^777777Can hear a cat's crying for kicking the mice out.^000000
 #
 ALL_PARTYFLEE#
+Here comes the Flower Wind!!
+Description: ^777777Flower^000000
 #
 ALL_ANGEL_PROTECT#
 Thank You So Much!!
@@ -13579,6 +13581,13 @@ WoE (Guild War). The Guildmaster can restore
 90% Max HP/SP for all Guildsmen within the
 screen. Once used, this skill cannot be cast
 again for 5 minutes.^000000
+#
+GD_EMERGENCYCALL#
+Emergency Call
+Skill Form : ^777777Support^000000
+Target : ^777777All Guild Members^000000
+Description : ^777777A skill that can be used in WOE.
+Only Guild Master can use this skill. Upon casting all guild members will be teleport to next to guild master.^000000
 #
 GD_DEVELOPMENT#
 Permanent Development
