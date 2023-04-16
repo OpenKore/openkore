@@ -551,6 +551,7 @@ attackSkillSlot {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	maxAttempts 0
 	maxUses 0
 	target_hp
@@ -586,6 +587,7 @@ attackComboSlot {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	whenPartyMembersNear
 	whenPartyMembersNearDist
 }
@@ -621,6 +623,7 @@ doCommand {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -669,6 +672,7 @@ useSelf_skill {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -721,6 +725,7 @@ partySkill {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -786,6 +791,7 @@ equipAuto {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	weight 0
 	whileSitting 0
 	hp
@@ -858,6 +864,7 @@ useSelf_item {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0

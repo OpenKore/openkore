@@ -4903,7 +4903,9 @@ sub checkSelfCondition {
 			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
 				for my $monster (@$monstersList) {
 					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}) ||
-										existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}));
+										existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}) ||
+										($config{$prefix."_monstersCountDist"} && !inRange(blockDistance(calcPosition($char), calcPosition($monster)), $config{$prefix."_monstersCountDist"}))
+									);
                 }
             }
 		return 0 unless (inRange($nowMonsters, $config{$prefix . "_monstersCount"}));
