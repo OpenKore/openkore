@@ -1060,7 +1060,7 @@ sub parse_account_server_info {
 			types => 'a20 V v a126',
 			keys => [qw(name users unknown ip_port)],
 		};
-	} elsif ($args->{switch} eq '0276' && $masterServer->{serverType} eq "tRO") { # tRO 2020 # keep this here to future uses
+	} elsif ($args->{switch} eq '0276' && ($masterServer->{serverType} eq "tRO" or $masterServer->{serverType} eq "aRO")) { # tRO 2020 and aRO 2022. Keep this here to future uses
 		$server_info = {
 			len => 36,
 			types => 'a4 v Z20 v5',
@@ -1175,14 +1175,14 @@ sub account_server_info {
 	@servers = @{$args->{servers}};
 	my @state = ("Idle", "Normal", "Busy", "Full");
 
-	my $msg = center(T(" Servers "), 53, '-') ."\n" .
-			T("#   Name                  Users  IP              Port  SID   State\n");
+	my $msg = center(T(" Servers "), 70, '-') ."\n" .
+			T("#   Name                  Users  IP              Port   SID    State\n");
 	for (my $num = 0; $num < @servers; $num++) {
 		$msg .= swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<< @<<<<< @<<<<<<",
 			[$num, $servers[$num]{name}, $servers[$num]{users}, $servers[$num]{ip}, $servers[$num]{port}, ($servers[$num]{sid}) ? $servers[$num]{sid} : 0, defined($servers[$num]{state}) ? $state[$servers[$num]{state}] : 0]);
 	}
-	$msg .= ('-'x53) . "\n";
+	$msg .= ('-'x70) . "\n";
 	message $msg, "connection";
 
 	if ($net->version != 1) {
@@ -2234,6 +2234,7 @@ typedef enum <unnamed-tag> {
 			my $domain = existsInList($config{friendlyAID}, unpack("V", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 
+			playerLog("player " .$actor->{name} ." is near (" .$field->{baseName} .", lvl=" .$actor->{lv} .", job=" .$jobs_lut{$actor->{jobID}} .")") if (!$field->isCity);
 			Plugins::callHook('player', {player => $actor}); #backwards compatibility
 
 			Plugins::callHook('player_exist', {player => $actor});
@@ -2279,6 +2280,7 @@ typedef enum <unnamed-tag> {
 			my $domain = existsInList($config{friendlyAID}, unpack("V", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
 
+			playerLog("player " .$actor->{name} ." is near (" .$field->{baseName} .", lvl=" .$actor->{lv} .", job=" .$jobs_lut{$actor->{jobID}} .")") if (!$field->isCity);
 			Plugins::callHook('player', {player => $actor}); #backwards compatibailty
 
 			Plugins::callHook('player_connected', {player => $actor});
@@ -2697,6 +2699,7 @@ sub actor_info {
 		$player->{title}{ID} = $args->{titleID} if defined $args->{titleID};
 		message "Player Info: " . $player->nameIdx . "\n", "parseMsg_presence", 2;
 		updatePlayerNameCache($player);
+		playerLog("player " .$player->{name} ." is near (" .$field->{baseName} .", lvl=" .$player->{lv} .", job=" .$jobs_lut{$player->{jobID}} .")") if (!$field->isCity);
 		Plugins::callHook('charNameUpdate', {player => $player});
 	}
 
@@ -2842,10 +2845,11 @@ sub account_payment_info {
 	my $H_h = int(($H_minute % 1440) / 60);
 	my $H_m = int(($H_minute % 1440) % 60);
 
-	message  T("============= Account payment information =============\n"), "info";
-	message TF("Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n", $D_d, $D_h, $D_m), "info";
-	message TF("Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n", $H_d, $H_h, $H_m), "info";
-	message  "-------------------------------------------------------\n", "info";
+	my $msg = center(T(" Account payment information "), 56, '-') ."\n" .
+			TF("Pay per day  : %s day(s) %s hour(s) and %s minute(s)\n", $D_d, $D_h, $D_m).
+			TF("Pay per hour : %s day(s) %s hour(s) and %s minute(s)\n", $H_d, $H_h, $H_m);
+	$msg .= ('-'x56) . "\n";
+	message $msg, "info";
 }
 
 # TODO
@@ -7442,6 +7446,11 @@ sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
 	# "Close" icon appreared on the NPC message dialog
+	if (!defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
+		debug "We received an strange 'npc_talk_done', just ignoring it\n", "npc";
+		return;
+	}
+
 	return if($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
 
 	my $ID = $args->{ID};
@@ -9494,7 +9503,7 @@ sub sell_result {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
 		error T("Sell failed.\n");
-	} else {		
+	} else {
 		message TF("Sold %s items.\n", @sellList.""), "success";
 		message T("Sell completed.\n"), "success";
 	}

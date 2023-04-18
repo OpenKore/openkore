@@ -60,7 +60,7 @@ git clone https://github.com/OpenKore/openkore.git
 | --- | --- | --- | --- | --- |
 | [aRO](https://www.gnjoy.asia/) | Asia RO | CheatDefender | Not working | N/A |
 | [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | N/A |
-| [cRO](http://ro.zhaouc.com/) | China RO | nProtect | Botable | N/A |
+| [cRO](http://ro.qiquanwl.com) | China RO | nProtect | Botable | N/A |
 | [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | N/A |
 | [euRO-Prime](https://eu.4game.com/roprime/) | Europe RO (Prime) | Frost Security | Not working | N/A |
 | [iRO Renewal](http://renewal.playragnarok.com/) | International RO | EAC | Not working | N/A |
