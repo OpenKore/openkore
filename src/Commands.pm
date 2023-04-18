@@ -6223,8 +6223,8 @@ sub cmdUseSkill {
 	} elsif ($cmd eq 'ss') {
 		if (defined $args[0] && $args[0] eq 'start') {
 			if(@args != 3) {
-				error T("Syntax error in function 'ss' (Use Skill on Self)\n" .
-				"Usage: ss <skill #> [level]\n");
+				error T("Syntax error in function 'ss start' (Start Use Skill on Self)\n" .
+				"Usage: ss start <skill #> [level]\n");
 				return;
 			}
 			$isStartUseSkill = 1;
