@@ -622,7 +622,7 @@ sub initHandlers {
 			], \&cmdUseSkill],
 		['ss', [
 			T("Use skill on self."),
-			[T("<skill #> [<level>]"), T("use skill on self")]
+			[T("<start|stop|none> <skill #> [<level>]"), T("use skill on self")]
 			], \&cmdUseSkill],
 		['ssl', [
 			T("Use skill on slave."),
@@ -632,13 +632,6 @@ sub initHandlers {
 			T("Use skill on ground spell."),
 			[T("<skill #> <target #> [<skill level>]"), T("use skill on ground spell")]
 			], \&cmdUseSkill],
-		['sss', [
-			T("Start Use skill on self."),
-			[T("<skill #> [<level>]"), T("start use skill on self")]
-			], \&cmdUseSkill],
-		['ssst', [
-			T("Stop Use skill on self.")
-			], \&cmdSkillStop],
 		['st', T("Display stats."), \&cmdStats],
 		['stand', T("Stand up."), \&cmdStand],
 		['stat_add', [
@@ -6228,7 +6221,24 @@ sub cmdUseSkill {
 		# ($x, $y) = ($pos->{x}, $pos->{y});
 
 	} elsif ($cmd eq 'ss') {
-		if (@args < 1 || @args > 2) {
+		if (defined $args[0] && $args[0] eq 'start') {
+			if(@args != 3) {
+				error T("Syntax error in function 'ss' (Use Skill on Self)\n" .
+				"Usage: ss <skill #> [level]\n");
+				return;
+			}
+			$isStartUseSkill = 1;
+			$target = $char;
+			$level = $args[2];
+		} elsif (defined $args[0] && $args[0] eq 'stop') {
+			if(!$char->{last_skill_used_is_continuous}) {
+				error T("Skill Stop failed (continuous skills not detected)\n");
+				return;
+			}
+			message T("Sending Skill Stop\n"), "skill";
+			$messageSender->sendStopSkillUse($char->{last_continuous_skill_used});
+			return;
+		} elsif (@args < 1 || @args > 2) {
 			error T("Syntax error in function 'ss' (Use Skill on Self)\n" .
 				"Usage: ss <skill #> [level]\n");
 			return;
@@ -6236,18 +6246,6 @@ sub cmdUseSkill {
 			$target = $char;
 			$level = $args[1];
 		}
-
-	} elsif ($cmd eq 'sss') {
-		if (@args < 1 || @args > 2) {
-			error T("Syntax error in function 'ss' (Start Use Skill on Self)\n" .
-				"Usage: sss <skill #> [level]\n");
-			return;
-		} else {
-			$isStartUseSkill = 1;
-			$target = $char;
-			$level = $args[1];
-		}
-
 	} elsif ($cmd eq 'sp') {
 		if (@args < 2 || @args > 3) {
 			error T("Syntax error in function 'sp' (Use Skill on Player)\n" .
@@ -6311,7 +6309,8 @@ sub cmdUseSkill {
 		$target = { %{$pos} };
 	}
 
-	$skill = new Skill(auto => $args[0], level => $level);
+	my $skill_arg = $isStartUseSkill ? $args[1] : $args[0];
+	$skill = new Skill(auto => $skill_arg, level => $level);
 
 	if ($char->{skills}{$skill->getHandle()}{lv} == 0) {
 		error TF("Skill '%s' cannot be used because you have no such skill.\n", $skill->getName());
@@ -6332,14 +6331,6 @@ sub cmdUseSkill {
 	);
 	my $task = new Task::ErrorReport(task => $skillTask);
 	$taskManager->add($task);
-}
-
-sub cmdSkillStop {
-	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command '%s'\n", shift);
-		return;
-	}
-	$messageSender->sendStopSkillUse($char->{last_continuous_skill_used}) if $char->{last_skill_used_is_continuous};
 }
 
 sub cmdVender {

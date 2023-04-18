@@ -668,7 +668,6 @@ sub processEscapeUnknownMaps {
 sub processDelayedTeleport {
 	if (AI::action eq 'teleport') {
 		if($char->{last_skill_used_is_continuous}) {
-			message "stoping rolling \n";
 			$messageSender->sendStopSkillUse($char->{last_continuous_skill_used});
 		}
 		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
