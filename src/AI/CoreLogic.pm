@@ -3292,6 +3292,7 @@ sub processItemsTake {
 
 ##### ITEMS AUTO-GATHER #####
 sub processItemsAutoGather {
+	return if(AI::inQueue("gather", "take", "items_gather"));
 	if ( (AI::isIdle || AI::action eq "follow"
 		|| ( AI::is("route", "mapRoute", "checkMonsters") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2) ))
 	  && $config{'itemsGatherAuto'}
@@ -3301,6 +3302,12 @@ sub processItemsAutoGather {
 	  && percent_weight($char) < $config{'itemsMaxWeight'}
 	  && timeOut($timeout{ai_items_gather_auto}) ) {
 
+		my $bestItem;
+		my $smallestDist;
+		my $myPos = calcPosition($char);
+		my $minPlayerDist = $config{itemsGatherAutoMinPlayerDistance} || 6;
+		my $minPortalDist = $config{itemsGatherAutoMinPortalDistance} || 5;
+
 		foreach (@itemsID) {
 			next unless $_;
 			my $item = $items{$_};
@@ -3308,14 +3315,25 @@ sub processItemsAutoGather {
 				|| $item->{take_failed} >= 1
 				|| pickupitems($item->{name}, $item->{nameID}) eq "0"
 				|| pickupitems($item->{name}, $item->{nameID}) == -1 );
-			if (!positionNearPlayer($item->{pos}, 12) &&
-			    !positionNearPortal($item->{pos}, 10)) {
-				message TF("Gathering: %s (%s)\n", $item->{name}, $item->{binID});
-				gather($_);
-				last;
+			if (!positionNearPlayer($item->{pos}, $minPlayerDist) &&
+			    !positionNearPortal($item->{pos}, $minPortalDist)) {
+				my $pos = calcPosition($item);
+				my $dist = adjustedBlockDistance($myPos, $pos);
+				if (!defined($bestItem)) {
+					$smallestDist = $dist;
+					$bestItem = $item;
+				} elsif ( $dist < $smallestDist ) {
+					$smallestDist = $dist;
+					$bestItem = $item;
+				}
 			}
 		}
-		$timeout{ai_items_gather_auto}{time} = time;
+
+		if(defined($bestItem)) {
+			message TF("Gathering: %s (%s)\n", $bestItem->{name}, $bestItem->{binID});
+			gather($bestItem->{ID});
+			$timeout{ai_items_gather_auto}{time} = time;
+		}
 	}
 }
 
@@ -3332,10 +3350,10 @@ sub processItemsGather {
 
 	} elsif (AI::action eq "items_gather") {
 		my $ID = AI::args->{ID};
-		my ($dist, $myPos);
+		my $minPlayerDist = $config{itemsGatherAutoMinPlayerDistance} || 6;
 
-		if (positionNearPlayer($items{$ID}{pos}, 12)) {
-			message TF("Failed to gather %s (%s) : No looting!\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
+		if (positionNearPlayer($items{$ID}{pos}, $minPlayerDist)) {
+			message TF("Failed to gather %s (%s) : No looting! (player near)\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
 			AI::dequeue;
 
 		} elsif (timeOut(AI::args->{ai_items_gather_giveup})) {
