@@ -622,7 +622,9 @@ sub initHandlers {
 			], \&cmdUseSkill],
 		['ss', [
 			T("Use skill on self."),
-			[T("<start|stop|none> <skill #> [<level>]"), T("use skill on self")]
+			[T("<skill #> [<level>]"), T("use skill on self")],
+			[T("start <skill #> [<level>]"), T("start use skill on self")],
+			[T("stop"), T("stop use skill on self")]
 			], \&cmdUseSkill],
 		['ssl', [
 			T("Use skill on slave."),
@@ -6220,7 +6222,7 @@ sub cmdUseSkill {
 
 	} elsif ($cmd eq 'ss') {
 		if (defined $args[0] && $args[0] eq 'start') {
-			if (@args != 3) {
+			if (@args < 2 || @args > 3) {
 				error T("Syntax error in function 'ss start' (Start Use Skill on Self)\n" .
 				"Usage: ss start <skill #> [level]\n");
 				return;

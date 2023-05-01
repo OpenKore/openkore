@@ -377,6 +377,7 @@ sub iterate {
 			} else {
 				$self->setError(ERROR_MAX_TRIES, TF("Unable to cast skill %s in %d tries.",
 					$self->{skill}->getName(), $self->{maxCastTries}));
+				$char->{last_skill_used_is_continuous} = 0 if ($char->{last_skill_used_is_continuous});
 				debug "UseSkill - Timeout, maximum tries reached.\n", "Task::UseSkill" if DEBUG;
 			}
 
