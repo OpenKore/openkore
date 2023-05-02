@@ -481,6 +481,7 @@ sub initHandlers {
 		['poison', [
 			T("Apply Poison in Weapon."),
 			["", T("lists available Poisons")],
+			["use", T("use the Guillotine Cross Poisonous Weapon Skill")],
 			[T("<poison #>"), T("Apply poison using an item from the 'poison' list")],
 			], \&cmdPoison],
 		['portals', [
@@ -1211,13 +1212,21 @@ sub cmdPoison {
 			error T("Error in function 'poison' (Apply Poison)\n" .
 			 	"Type 'poison' to get list.\n");
 		}
+		
+	} elsif ($arg1 eq "use") {
+		if (defined binFind(\@skillsID, 'GC_POISONINGWEAPON')) {
+			main::ai_skillUse('GC_POISONINGWEAPON', 5, 0, 0, $accountID);
+		} else {
+			error T("Error in function 'poison' (Use Poison)\n" .
+				"You don't have Poisonous Weapon Skill.\n");
+		}
 	} else {
 		if ($arrowCraftID[$arg1] ne "") {
 			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$arg1])->{nameID});
 			$char->{selected_craft} = 1;
 		} else {
 			error T("Error in function 'poison' (Apply Poison)\n" .
-				"Usage: poison [<identify #>]\n" .
+				"Usage: poison [<poison #>]\n" .
 				"Type 'poison' to get list.\n");
 		}
 	}
