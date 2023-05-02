@@ -1177,7 +1177,7 @@ sub processAutoMakeArrow {
 
 ##### AUTO STORAGE #####
 sub processAutoStorage {
-	return if( $shopstarted || $buyershopstarted );
+	return if ($shopstarted || $buyershopstarted);
 	# storageAuto - chobit aska 20030128
 	if (AI::is("", "route", "sitAuto", "follow")
 		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
@@ -1445,10 +1445,10 @@ sub processAutoStorage {
 			Plugins::callHook('AI_storage_open', \%pluginArgs); # we can hook here to perform actions BEFORE any storage function
 			return if ($pluginArgs{return});
 
-			if(!$timeout{ai_storageAuto_wait_before_action}{time}) {
+			if (!$timeout{ai_storageAuto_wait_before_action}{time}) {
 				$timeout{ai_storageAuto_wait_before_action}{time} = time;
 				return;
-			} elsif(!timeOut($timeout{ai_storageAuto_wait_before_action})) {
+			} elsif (!timeOut($timeout{ai_storageAuto_wait_before_action})) {
 				return;
 			}
 
@@ -1456,9 +1456,9 @@ sub processAutoStorage {
 				$args->{done} = 1;
 
 				# if storage is full disconnect if it says so in conf
-				if($char->storage->wasOpenedThisSession() && $char->storage->isFull()) {
+				if ($char->storage->wasOpenedThisSession() && $char->storage->isFull()) {
 					Plugins::callHook('AI_storage_full', \%pluginArgs);
-					if($config{'dcOnStorageFull'}) {
+					if ($config{'dcOnStorageFull'}) {
 						$messageSender->sendQuit();
 						error T("Auto disconnecting on StorageFull!\n");
 						chatLog("k", T("*** Your storage is full , disconnect! ***\n"));
@@ -1480,7 +1480,7 @@ sub processAutoStorage {
 					) {
 						error TF("Unable to store %s.\n", $item->{name});
 
-						if($char->storage->getByName($item->{name})) {
+						if ($char->storage->getByName($item->{name})) {
 							Plugins::callHook('AI_storage_item_full', {
 									item => $item,
 								}
@@ -1685,7 +1685,7 @@ sub processAutoStorage {
 
 #####AUTO SELL#####
 sub processAutoSell {
-	return if( $shopstarted || $buyershopstarted );
+	return if ($shopstarted || $buyershopstarted);
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "sitAuto" || AI::action eq "follow")
 		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
 			|| ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'})
@@ -1878,7 +1878,7 @@ sub processAutoSell {
 
 #####AUTO BUY#####
 sub processAutoBuy {
-	return if( $shopstarted || $buyershopstarted );
+	return if ($shopstarted || $buyershopstarted);
 	my $needitem;
 	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && $char->inventory->isReady()) {
 		my %plugin_args = ( return => 0 );
@@ -2373,7 +2373,7 @@ sub processRandomWalk {
 		&& (!$field->isCity || $config{route_randomWalk_inTown})
 		&& length($field->{rawMap})
 		){
-		if($char->{pos}{x} == $config{'lockMap_x'} && !($config{'lockMap_randX'} > 0) && ($char->{pos}{y} == $config{'lockMap_y'} && !($config{'lockMap_randY'} >0))) {
+		if ($char->{pos}{x} == $config{'lockMap_x'} && !($config{'lockMap_randX'} > 0) && ($char->{pos}{y} == $config{'lockMap_y'} && !($config{'lockMap_randY'} >0))) {
 			error T("Coordinate lockmap is used; randomWalk disabled\n");
 			$config{'route_randomWalk'} = 0;
 			return;
@@ -2427,9 +2427,9 @@ sub processFollow {
 		my $rrr = AI::args(0)->getSubtask();
 		return if ($rrr->getName() eq 'TalkNPC');
 	}
-	if($config{'sitAuto_follow'} && (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'}) && $field->isCity) {
+	if ($config{'sitAuto_follow'} && (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'}) && $field->isCity) {
 	my $action = AI::action;
-		if($action eq "sitting" && !$char->{sitting} && ($char->{skills}{NV_BASIC}{lv} >= 3 || $char->{skills}{SU_BASIC_SKILL}{lv} == 1)){
+		if ($action eq "sitting" && !$char->{sitting} && ($char->{skills}{NV_BASIC}{lv} >= 3 || $char->{skills}{SU_BASIC_SKILL}{lv} == 1)){
 			sit();
 		}
 		return;
@@ -2958,7 +2958,7 @@ sub processPartySkillUse {
 
 			if ($char->{party}{joined} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
 				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
-			} elsif($char->{mercenary} && $char->{mercenary}{hp} && $char->{mercenary}{hp_max}) {
+			} elsif ($char->{mercenary} && $char->{mercenary}{hp} && $char->{mercenary}{hp_max}) {
 				$hp_diff = $char->{mercenary}{hp_max} - $char->{mercenary}{hp};
 				$modifier /= 2;
 			} else {
@@ -3292,6 +3292,7 @@ sub processItemsTake {
 
 ##### ITEMS AUTO-GATHER #####
 sub processItemsAutoGather {
+	return if (AI::inQueue("gather", "take", "items_gather"));
 	if ( (AI::isIdle || AI::action eq "follow"
 		|| ( AI::is("route", "mapRoute", "checkMonsters") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2) ))
 	  && $config{'itemsGatherAuto'}
@@ -3301,6 +3302,12 @@ sub processItemsAutoGather {
 	  && percent_weight($char) < $config{'itemsMaxWeight'}
 	  && timeOut($timeout{ai_items_gather_auto}) ) {
 
+		my $bestItem;
+		my $smallestDist;
+		my $myPos = calcPosition($char);
+		my $minPlayerDist = $config{itemsGatherAutoMinPlayerDistance} || 6;
+		my $minPortalDist = $config{itemsGatherAutoMinPortalDistance} || 5;
+
 		foreach (@itemsID) {
 			next unless $_;
 			my $item = $items{$_};
@@ -3308,14 +3315,25 @@ sub processItemsAutoGather {
 				|| $item->{take_failed} >= 1
 				|| pickupitems($item->{name}, $item->{nameID}) eq "0"
 				|| pickupitems($item->{name}, $item->{nameID}) == -1 );
-			if (!positionNearPlayer($item->{pos}, 12) &&
-			    !positionNearPortal($item->{pos}, 10)) {
-				message TF("Gathering: %s (%s)\n", $item->{name}, $item->{binID});
-				gather($_);
-				last;
+			if (!positionNearPlayer($item->{pos}, $minPlayerDist) &&
+			    !positionNearPortal($item->{pos}, $minPortalDist)) {
+				my $pos = calcPosition($item);
+				my $dist = adjustedBlockDistance($myPos, $pos);
+				if (!defined($bestItem)) {
+					$smallestDist = $dist;
+					$bestItem = $item;
+				} elsif ( $dist < $smallestDist ) {
+					$smallestDist = $dist;
+					$bestItem = $item;
+				}
 			}
 		}
-		$timeout{ai_items_gather_auto}{time} = time;
+
+		if (defined($bestItem)) {
+			message TF("Gathering: %s (%s)\n", $bestItem->{name}, $bestItem->{binID});
+			gather($bestItem->{ID});
+			$timeout{ai_items_gather_auto}{time} = time;
+		}
 	}
 }
 
@@ -3332,10 +3350,10 @@ sub processItemsGather {
 
 	} elsif (AI::action eq "items_gather") {
 		my $ID = AI::args->{ID};
-		my ($dist, $myPos);
+		my $minPlayerDist = $config{itemsGatherAutoMinPlayerDistance} || 6;
 
-		if (positionNearPlayer($items{$ID}{pos}, 12)) {
-			message TF("Failed to gather %s (%s) : No looting!\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
+		if (positionNearPlayer($items{$ID}{pos}, $minPlayerDist)) {
+			message TF("Failed to gather %s (%s) : No looting! (player near)\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
 			AI::dequeue;
 
 		} elsif (timeOut(AI::args->{ai_items_gather_giveup})) {
@@ -3369,7 +3387,7 @@ sub processItemsGather {
 
 ##### AUTO-TELEPORT #####
 sub processAutoTeleport {
-	return if(AI::inQueue("teleport", "NPC"));
+	return if (AI::inQueue("teleport", "NPC"));
 
 	my $safe = 0;
 
@@ -3454,7 +3472,7 @@ sub processAutoTeleport {
 				my $myPos = calcPosition($char);
 				my $dist = blockDistance($pos, $myPos);
 				if ($dist <= abs($teleAuto)) {
-					if($field->canMove($myPos, $pos)) {
+					if ($field->canMove($myPos, $pos)) {
 						message TF("Teleporting due to monster being too close %s\n", $monsters{$_}{name}), "teleport";
 						$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 						$timeout{ai_teleport_away}{time} = time;
@@ -3608,11 +3626,11 @@ sub processAutoBuyerShopOpen {
 		&& $field->baseName eq $config{'lockMap'} && !$taskManager->countTasksByName('openShop')) {
 		if (!$char->{skills}{ALL_BUYING_STORE}{lv}) {
 			my $item = $char->inventory->getByNameID(12548);
-			if(!$item) {
+			if (!$item) {
 				error T("You don't have the Buying Store skill or Black Market Bulk Buyer Shop License.\n");
 				return;
 			}
-		} elsif(!$char->inventory->getByNameID(6377)) {
+		} elsif (!$char->inventory->getByNameID(6377)) {
 			error T("You don't have Bulk Buyer Shop License.\n");
 			return;
 		}
@@ -3650,12 +3668,12 @@ sub processRepairAuto {
 }
 
 sub processSendIgnoreAll {
-	return if($net->getState() != Network::IN_GAME || !$config{ignoreAll} || $ignored_all);
+	return if ($net->getState() != Network::IN_GAME || !$config{ignoreAll} || $ignored_all);
 
-	if(!$timeout{'ai_ignoreAll'}{'time'}) {
+	if (!$timeout{'ai_ignoreAll'}{'time'}) {
 		$timeout{'ai_ignoreAll'}{'time'} = time;
 		return;
-	} elsif(timeOut($timeout{ai_ignoreAll})) {
+	} elsif (timeOut($timeout{ai_ignoreAll})) {
 		warning "Sending ignoreAll... \n";
 		$messageSender->sendIgnoreAll(0);
 		$timeout{'ai_ignoreAll'}{'time'} = time;
@@ -3700,7 +3718,7 @@ sub processCheckMonster {
 
 	$timeout{'ai_check_monster_auto'}{'time'} = time if !$timeout{'ai_check_monster_auto'}{'time'};
 
-	if(timeOut($timeout{'ai_check_monster_auto'})) {
+	if (timeOut($timeout{'ai_check_monster_auto'})) {
 		AI::dequeue;
 		undef $timeout{'ai_check_monster_auto'}{'time'};
 	}
