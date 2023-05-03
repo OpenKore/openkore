@@ -256,6 +256,7 @@ sub finishAttacking {
 		message T("Target lost\n"), "ai_attack";
 	}
 
+	$messageSender->sendStopSkillUse($char->{last_continuous_skill_used}) if $char->{last_skill_used_is_continuous};
 	Plugins::callHook('attack_end', {ID => $ID})
 
 }
@@ -654,6 +655,7 @@ sub main {
 				"attackSkillSlot_${slot}",
 				undef,
 				"attackSkill",
+				$config{"attackSkillSlot_${slot}_isStartSkill"} ? 1 : 0,
 			);
 			$args->{monsterID} = $ID;
 			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
