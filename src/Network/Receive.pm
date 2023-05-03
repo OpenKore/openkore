@@ -99,7 +99,10 @@ our %EXPORT_TAGS = (
 						VAR_BODYSTATENORMAL VAR_HEALTHSTATENORMAL VAR_STUN VAR_SLEEP VAR_UNDEAD VAR_BLIND VAR_BLOODING VAR_BSPOINT VAR_ACPOINT VAR_BSRANK
 						VAR_ACRANK VAR_CHANGESPEED VAR_CHANGESPEEDTIME VAR_MAGICATKPOWER VAR_MER_KILLCOUNT VAR_MER_FAITH VAR_MDEFPERCENT VAR_CRITICAL_DEF
 						VAR_ITEMPOWER VAR_MAGICDAMAGEREDUCE VAR_STATUSMAGICPOWER VAR_PLUSMAGICPOWEROFITEM VAR_ITEMMAGICPOWER VAR_NAME VAR_FSMSTATE
-						VAR_ATTMPOWER VAR_CARTWEIGHT VAR_HP_SELF VAR_SP_SELF VAR_COSTUME_BODY VAR_RESET_COSTUMES)],
+						VAR_ATTMPOWER VAR_CARTWEIGHT VAR_HP_SELF VAR_SP_SELF VAR_COSTUME_BODY VAR_RESET_COSTUMES
+						VAR_SP_POW VAR_SP_STA VAR_SP_WIS VAR_SP_SPL VAR_SP_CON VAR_SP_CRT
+						VAR_SP_PATK VAR_SP_SMATK VAR_SP_RES VAR_SP_MRES VAR_SP_HPLUS VAR_SP_CRATE VAR_SP_TRAITPOINT VAR_SP_AP VAR_SP_MAXAP
+						VAR_SP_UPOW VAR_SP_USTA VAR_SP_UWIS VAR_SP_USPL VAR_SP_UCON VAR_SP_UCRT)],
 	party_invite => [qw(ANSWER_ALREADY_OTHERGROUPM ANSWER_JOIN_REFUSE ANSWER_JOIN_ACCEPT ANSWER_MEMBER_OVERSIZE ANSWER_DUPLICATE
 						ANSWER_JOINMSG_REFUSE ANSWER_UNKNOWN_ERROR ANSWER_UNKNOWN_CHARACTER ANSWER_INVALID_MAPPROPERTY)],
 	party_leave => [qw(GROUPMEMBER_DELETE_LEAVE GROUPMEMBER_DELETE_EXPEL)],
@@ -426,6 +429,27 @@ use constant {
 	VAR_SP_SELF => 0xcb,
 	VAR_COSTUME_BODY => 0xcc,
 	VAR_RESET_COSTUMES => 0xcd,
+	VAR_SP_POW => 0xdb,
+	VAR_SP_STA => 0xdc,
+	VAR_SP_WIS => 0xdd,
+	VAR_SP_SPL => 0xde,
+	VAR_SP_CON => 0xdf,
+	VAR_SP_CRT => 0xe0,
+	VAR_SP_PATK => 0xe1,
+	VAR_SP_SMATK => 0xe2,
+	VAR_SP_RES => 0xe3,
+	VAR_SP_MRES => 0xe4,
+	VAR_SP_HPLUS => 0xe5,
+	VAR_SP_CRATE => 0xe6,
+	VAR_SP_TRAITPOINT => 0xe7,
+	VAR_SP_AP => 0xe8,
+	VAR_SP_MAXAP => 0xe9,
+	VAR_SP_UPOW => 0xf7,
+	VAR_SP_USTA => 0xf8,
+	VAR_SP_UWIS => 0xf9,
+	VAR_SP_USPL => 0xfa,
+	VAR_SP_UCON => 0xfb,
+	VAR_SP_UCRT => 0xfc,
 };
 
 # party invite result
@@ -799,7 +823,7 @@ sub received_characters_slots_info {
 		$charServer = $net->serverPeerHost . ":" . $net->serverPeerPort;
 	}
 
-	$self->received_characters($args) if($args->{charInfo});
+	$self->received_characters($args) if ($args->{charInfo});
 }
 
 # Send to client Characters pages in Char Select Screen
@@ -812,8 +836,8 @@ sub received_characters {
 
 	# rAthena and Hercules send all pages
 	# Official Server send only pages with characters + 1 empty (tested bRO, iRO) Jul-2020
-	if(length($args->{charInfo} == 0)) {
-		$charSvrSet{sync_received_characters} = $charSvrSet{sync_Count} if(exists $charSvrSet{sync_received_characters});
+	if (length($args->{charInfo} == 0)) {
+		$charSvrSet{sync_received_characters} = $charSvrSet{sync_Count} if (exists $charSvrSet{sync_received_characters});
 	} else {
 		$charSvrSet{sync_received_characters}++ if (exists $charSvrSet{sync_received_characters});
 	}
@@ -832,7 +856,7 @@ sub received_characters {
 		# Required because existing AI sequences (eg, route) keep a reference to $char.
 		if ($char && $char->{ID} eq $accountID && $char->{charID} eq $temporary_character->{charID}) {
 			$character = $char;
-		} elsif(exists $chars[$temporary_character->{slot}] && $chars[$temporary_character->{slot}]->{charID} eq $temporary_character->{charID}) { # Re-use existing $char object from $chars if available.
+		} elsif (exists $chars[$temporary_character->{slot}] && $chars[$temporary_character->{slot}]->{charID} eq $temporary_character->{charID}) { # Re-use existing $char object from $chars if available.
 			$character = $chars[$temporary_character->{slot}];
 		} else { # create new one
 			$character = new Actor::You;
@@ -870,7 +894,7 @@ sub received_characters {
 		$timeout{'charlogin'}{'time'} = time;
 
 	} elsif ($config{pauseCharLogin}) {
-		return if($config{XKore} eq 1 || $config{XKore} eq 3);
+		return if ($config{XKore} eq 1 || $config{XKore} eq 3);
 		if (!defined $timeout{'char_login_pause'}{'timeout'}) {
 			$timeout{'char_login_pause'}{'timeout'} = $config{pauseCharLogin};
 		}
@@ -1245,7 +1269,7 @@ sub map_loaded {
 	$char->{time_move_calc} = 0;
 
 	# set initial status from data received from the char server (seems needed on eA, dunno about kRO)}
-	if($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
+	if ($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
 
 	# ignoreAll
 	$ignored_all = 0;
@@ -1263,15 +1287,15 @@ sub map_load_error {
 	my ($self, $args) = @_;
 
 	error T("Error while try to login in map-server: ");
-	if($args->{error} == 0) {
+	if ($args->{error} == 0) {
 		error TF("Wrong Client Type (%s). \n", $args->{error});
-	} elsif($args->{error} == 1) {
+	} elsif ($args->{error} == 1) {
 		error TF("Wrong ID (%s). \n", $args->{error});
-	} elsif($args->{error} == 2) {
+	} elsif ($args->{error} == 2) {
 		error TF("Timeout (%s). \n", $args->{error});
-	} elsif($args->{error} == 3) {
+	} elsif ($args->{error} == 3) {
 		error TF("Already Logged In (%s). \n", $args->{error});
-	} elsif($args->{error} == 4) {
+	} elsif ($args->{error} == 4) {
 		error TF("Waiting State (%s). \n", $args->{error}); # ??
 	} else {
 		error TF("Unknown Error (%s). \n", $args->{error});
@@ -1547,6 +1571,27 @@ our %stat_info_handlers = (
 	VAR_MER_KILLCOUNT, sub { $_[0]{kills} = $_[1] },
 	VAR_MER_FAITH, sub { $_[0]{faith} = $_[1] },
 	#...
+	VAR_SP_POW, sub { $_[0]{pow} = $_[1] },
+	VAR_SP_STA, sub { $_[0]{sta} = $_[1] },
+	VAR_SP_WIS, sub { $_[0]{wis} = $_[1] },
+	VAR_SP_SPL, sub { $_[0]{spl} = $_[1] },
+	VAR_SP_CON, sub { $_[0]{con} = $_[1] },
+	VAR_SP_CRT, sub { $_[0]{crt} = $_[1] },
+	VAR_SP_PATK, sub { $_[0]{patk} = $_[1] },
+	VAR_SP_SMATK, sub { $_[0]{smatk} = $_[1] },
+	VAR_SP_RES, sub { $_[0]{res} = $_[1] },
+	VAR_SP_MRES, sub { $_[0]{mres} = $_[1] },
+	VAR_SP_HPLUS, sub { $_[0]{hplus} = $_[1] },
+	VAR_SP_CRATE, sub { $_[0]{crate} = $_[1] },
+	VAR_SP_TRAITPOINT, sub { $_[0]{traitpoint} = $_[1] },
+	VAR_SP_AP, sub { $_[0]{ap} = $_[1] },
+	VAR_SP_MAXAP, sub { $_[0]{ap_max} = $_[1] },
+	VAR_SP_UPOW, sub { $_[0]{need_pow} = $_[1] },
+	VAR_SP_USTA, sub { $_[0]{need_sta} = $_[1] },
+	VAR_SP_UWIS, sub { $_[0]{need_wis} = $_[1] },
+	VAR_SP_USPL, sub { $_[0]{need_spl} = $_[1] },
+	VAR_SP_UCON, sub { $_[0]{need_con} = $_[1] },
+	VAR_SP_UCRT, sub { $_[0]{need_crt} = $_[1] },
 );
 
 # Notifies client of a character parameter change.
@@ -1579,15 +1624,15 @@ sub stat_info {
 		'0ACB' => $char,
 	}->{$args->{switch}};
 
-	if($args->{switch} eq "081E") {
-		if(!$char->{elemental}) {
+	if ($args->{switch} eq "081E") {
+		if (!$char->{elemental}) {
 			$char->{elemental} = new Actor::Elemental;
 		}
 		$actor = $char->{elemental}; # Sorcerer's Spirit
 	}
 
-	if($args->{switch} eq "02A2") {
-		if(!$char->{mercenary}) {
+	if ($args->{switch} eq "02A2") {
+		if (!$char->{mercenary}) {
 			$char->{mercenary} = new Actor::Slave::Mercenary;
 		}
 		$actor = $char->{mercenary};
@@ -1647,8 +1692,32 @@ sub stats_added {
 			$char->{luk} = $args->{val};
 			debug "Luck: $args->{val}\n", "parseMsg";
 
+		} elsif ($args->{type} == VAR_SP_POW) {
+			$char->{pow} = $args->{val};
+			debug "Power: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_STA) {
+			$char->{sta} = $args->{val};
+			debug "Stamina: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_WIS) {
+			$char->{wis} = $args->{val};
+			debug "Wisdom: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_SPL) {
+			$char->{spl} = $args->{val};
+			debug "Spell: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_CON) {
+			$char->{con} = $args->{val};
+			debug "Concentration: $args->{val}\n", "parseMsg";
+
+		} elsif ($args->{type} == VAR_SP_CRT) {
+			$char->{crt} = $args->{val};
+			debug "Creative: $args->{val}\n", "parseMsg";
+
 		} else {
-			debug "Something: $args->{val}\n", "parseMsg";
+			error "$args->{type}: $args->{val}\n", "parseMsg";
 		}
 	}
 	Plugins::callHook('packet_charStats', {
@@ -1740,7 +1809,7 @@ sub stat_info2 {
 		$char->{luk_bonus} = $val2;
 		debug "Luck: $val + $val2\n", "parseMsg";
 	}
-	$char->inventory->onStatInfo2() if(!$masterServer->{itemListType});
+	$char->inventory->onStatInfo2() if (!$masterServer->{itemListType});
 
 }
 # Notifies clients in an area, that an other visible object is walking (ZC_NOTIFY_PLAYERMOVE).
@@ -2289,7 +2358,7 @@ typedef enum <unnamed-tag> {
 		}
 	}
 
-	if($char->{elemental}{ID} eq $actor->{ID}) {
+	if ($char->{elemental}{ID} eq $actor->{ID}) {
 		$char->{elemental} = $actor;
 	}
 }
@@ -2473,7 +2542,7 @@ sub actor_died_or_disappeared {
 		$elemental->{gone_time} = time;
 		Plugins::callHook('elemental_disappeared', {elemental => $elemental});
 
-		if($char->{elemental}{ID} eq $ID) {
+		if ($char->{elemental}{ID} eq $ID) {
 			$char->{elemental} = undef;
 		}
 
@@ -3175,7 +3244,7 @@ sub misc_config {
 	my ($self, $args) = @_;
 
 	if (defined ($args->{show_eq_flag})) {
-		if($args->{show_eq_flag} == 1) {
+		if ($args->{show_eq_flag} == 1) {
 			message T("Your Equipment information is now open to the public.\n");
 		} else {
 			message T("Your Equipment information is now not open to the public.\n");
@@ -3183,7 +3252,7 @@ sub misc_config {
 	}
 
 	if (defined ($args->{call_flag})) {
-		if($args->{call_flag} == 1) {
+		if ($args->{call_flag} == 1) {
 			message T("Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
 		} else {
 			message T("Not Allowed being summoned by skills: Urgent Call, Marriage Skills, etc.\n");
@@ -3191,7 +3260,7 @@ sub misc_config {
 	}
 
 	if (defined ($args->{pet_autofeed_flag})) {
-		if($args->{pet_autofeed_flag} == 1) {
+		if ($args->{pet_autofeed_flag} == 1) {
 			message T("Pet automatic feeding is ON. (Ragexe Client Feature)\n");
 		} else {
 			message T("Pet automatic feeding is OFF. (Ragexe Client Feature)\n");
@@ -3199,7 +3268,7 @@ sub misc_config {
 	}
 
 	if (defined ($args->{homunculus_autofeed_flag})) {
-		if($args->{homunculus_autofeed_flag} == 1) {
+		if ($args->{homunculus_autofeed_flag} == 1) {
 			message T("Homunculus automatic feeding is ON. (Ragexe Client Feature)\n");
 		} else {
 			message T("Homunculus automatic feeding is OFF. (Ragexe Client Feature)\n");
@@ -3612,7 +3681,7 @@ sub inventory_item_added {
 		$args->{item} = $item;
 
 		# TODO: move this stuff to AI()
-		if(defined($ai_v{npc_talk})) { # avoid autovivification
+		if (defined($ai_v{npc_talk})) { # avoid autovivification
 			if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}, $ai_v{npc_talk}{itemID}) {
 
 				$ai_v{'npc_talk'}{'talk'} = 'buy';
@@ -3863,7 +3932,7 @@ sub vender_items_list {
 	$msg .= ('-'x88) . "\n";
 	message $msg, $config{showDomain_Shop} || 'list';
 
-	if($args->{expireDate}) {
+	if ($args->{expireDate}) {
 		$expireDate = $args->{expireDate};
 		my $date = int(time) + int($args->{expireDate}/1000);
 		message "Expire Date: ".getFormattedDate($date)."\n";
@@ -4006,14 +4075,14 @@ sub login_pin_code_request {
 	# This is ten second-level password login for 2013/3/29 upgrading of twRO
 	my ($self, $args) = @_;
 
-	if($args->{flag} ne 0 && ($config{XKore} eq "1" || $config{XKore} eq "3")) {
+	if ($args->{flag} ne 0 && ($config{XKore} eq "1" || $config{XKore} eq "3")) {
 		$timeout{master}{time} = time;
 		return;
 	}
 
 	# tRO "workaround"
 	# receive pincode means that we already received all character pages
-	$charSvrSet{sync_received_characters} = $charSvrSet{sync_Count} if(exists $charSvrSet{sync_received_characters} && !$masterServer->{private});
+	$charSvrSet{sync_received_characters} = $charSvrSet{sync_Count} if (exists $charSvrSet{sync_received_characters} && !$masterServer->{private});
 
 	# flags:
 	# 0 - correct
@@ -4129,7 +4198,7 @@ sub actor_status_active {
 sub map_property3 {
 	my ($self, $args) = @_;
 
-	if($config{'status_mapType'}){
+	if ($config{'status_mapType'}){
 		$char->setStatus(@$_) for map {[$_->[1], $args->{type} == $_->[0]]}
 		grep { $args->{type} == $_->[0] || $char->{statuses}{$_->[1]} }
 		map {[$_, defined $mapTypeHandle{$_} ? $mapTypeHandle{$_} : "UNKNOWN_MAPTYPE_$_"]}
@@ -4300,7 +4369,7 @@ sub area_spell_multiple3 {
 sub sync_request_ex {
 	my ($self, $args) = @_;
 
-	return if($config{XKore} eq 1 || $config{XKore} eq 3); # let the clien hanle this
+	return if ($config{XKore} eq 1 || $config{XKore} eq 3); # let the clien hanle this
 
 	# Debug Log
 	# message "Received Sync Ex : 0x" . $args->{switch} . "\n";
@@ -4600,7 +4669,7 @@ sub quest_all_mission {
 
 		for ( my $j = 0 ; $j < 3; $j++ ) {
 
-			if($j >= $char_quest->{mission_amount}) {
+			if ($j >= $char_quest->{mission_amount}) {
 				$offset += $quest_info->{mission_len};
 				next;
 			}
@@ -4669,7 +4738,7 @@ sub quest_add {
 	}
 
 	for ( my $j = 0 ; $j < 3; $j++ ) {
-		if($j >= $quest->{mission_amount}) {
+		if ($j >= $quest->{mission_amount}) {
 			$offset += $quest_info->{mission_len};
 			next;
 		}
@@ -4710,7 +4779,7 @@ sub quest_update_mission_hunt {
 			mission_len => 12,
 		};
 
-	} elsif($args->{switch} eq '0AFE') {
+	} elsif ($args->{switch} eq '0AFE') {
 		$quest_info = {
 			mission_pack => 'V3 v2',
 			mission_keys => [qw(questID hunt_id hunt_id_cont mob_goal mob_count)],
@@ -4775,7 +4844,7 @@ sub quest_update_mission_hunt {
 		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
 
 		if ($config{questDisplayStyle}) {
-			if($config{questDisplayStyle} >= 2) {
+			if ($config{questDisplayStyle} >= 2) {
 				warning TF("[%s] Quest - defeated [%s] progress (%s/%s)\n", $quests_lut{$mission->{questID}} ? "$quests_lut{$mission->{questID}}{title} ($mission->{questID})" : $mission->{questID}, $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
 			} else {
 				warning TF("%s [%s/%s]\n", $quest_mission->{mob_name}, $quest_mission->{mob_count}, $quest_mission->{mob_goal}), "info";
@@ -5540,7 +5609,7 @@ sub chat_users {
 sub chat_join_result {
 	my ($self, $args) = @_;
 
-	if($args->{type} == 0) {
+	if ($args->{type} == 0) {
 		message T("Can't join Chat Room - Room is Full\n");
 	} elsif ($args->{type} == 1) {
 		message T("Can't join Chat Room - Incorrect Password\n");
@@ -5900,7 +5969,7 @@ sub emoticon {
 #     12 = BAN_PAY_CHANGE
 #     13 = BAN_PAY_WRONGIP
 #     14 = BAN_PAY_PNGAMEROOM
-#     15 = disconnected by a GM -> if( servicetype == taiwan ) MsgStringTable[579]
+#     15 = disconnected by a GM -> if (servicetype == taiwan) MsgStringTable[579]
 #     16 = BAN_JAPAN_REFUSE1
 #     17 = BAN_JAPAN_REFUSE2
 #     18 = BAN_INFORMATION_REMAINED_ANOTHER_ACCOUNT
@@ -5950,7 +6019,7 @@ sub errors {
 			error T("Server shutting down\n"), "connection";
 		}
 	} elsif ($args->{type} == 1) {
-		if($config{'dcOnServerClose'} == 1) {
+		if ($config{'dcOnServerClose'} == 1) {
 			error T("Auto disconnecting on ServerClose!\n");
 			chatLog("k", T("*** Server is closed , auto disconnect! ***\n"));
 			$quit = 1;
@@ -6152,7 +6221,7 @@ sub slave_calcproperty_handler {
 }
 
 sub EAC_key {
-	return if($masterServer->{'ignoreAntiCheatWarning'});
+	return if ($masterServer->{'ignoreAntiCheatWarning'});
 	chatLog("k", T("*** Easy Anti-Cheat Detected ***\n"));
 	error T("OpenKore don't have support to servers with Easy Anti-Cheat Shield, please read the FAQ (github).\n");
 	quit();
@@ -6289,7 +6358,7 @@ sub guild_info {
 		$guild{$_} = $args->{$_};
 	}
 	$guild{name} = bytesToString($args->{name});
-	$guild{master} = bytesToString($args->{master}) if($args->{master});
+	$guild{master} = bytesToString($args->{master}) if ($args->{master});
 	$guild{members}++; # count ourselves in the guild members count
 }
 
@@ -6372,7 +6441,7 @@ sub guild_location {
 		# check if char is the online (we can have more then 1 char per account in our guild)
 		# why use accountID instead of charID?
 		if ($guildMember->{ID} eq $args->{ID} && $guildMember->{online}) {
-			last if($args->{x} == 0 || $args->{y} == 0);
+			last if ($args->{x} == 0 || $args->{y} == 0);
 			$guildMember->{pos}{x} = $args->{x};
 			$guildMember->{pos}{y} = $args->{y};
 			$guildMember->{pos_to}{x} = $args->{x};
@@ -6688,7 +6757,7 @@ sub guild_member_map_change {
 sub guild_member_add {
 	my ($self, $args) = @_;
 
-	if($guild{member}) {
+	if ($guild{member}) {
 		my $index = scalar @{$guild{member}};
 		foreach (@{$args->{KEYS}}) {
 			@{$guild{member}[$index]}{$_} = $args->{$_};
@@ -7104,6 +7173,8 @@ sub map_change {
 	my ($self, $args) = @_;
 	return unless changeToInGameState();
 
+	$messageSender->sendStopSkillUse($char->{last_continuous_skill_used}) if $char->{last_skill_used_is_continuous};
+
 	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
 	my ($map) = $args->{map} =~ /([\s\S]*)\./;
 	my $map_noinstance;
@@ -7205,7 +7276,7 @@ sub map_changed {
 	AI::SlaveManager::setMapChanged ();
 	$ai_v{portalTrace_mapChanged} = time;
 
-	if($args->{'url'} =~ /.*\:\d+/) {
+	if ($args->{'url'} =~ /.*\:\d+/) {
 		$map_ip = $args->{url};
 		$map_ip =~ s/:[0-9\0]+//;
 		$map_port = $args->{port};
@@ -7380,7 +7451,7 @@ sub npc_talk_close {
 		return;
 	}
 
-	return if($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
+	return if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
 
 	my $ID = $args->{ID};
 	my $name = getNPCName($ID);
@@ -7510,7 +7581,7 @@ sub npc_store_info {
 	my $pack;
 	my $keys;
 
-	if( $args->{switch} eq '0B77' ) {
+	if ($args->{switch} eq '0B77') {
 		$pack = "V3 C v V";
 		$keys = [qw( nameID price _ type sprite_id location )];
 	} else {
@@ -7637,7 +7708,7 @@ sub npc_market_info {
 	for (my $i = 0; $i < length($args->{itemList}); $i += $len) {
 		my $item = Actor::Item->new;
 		@$item{qw( nameID type price amount weight )} = unpack $pack, substr $args->{itemList}, $i, $len;
-		next if(!$item->{amount}); # Client behavior (dont show the item in market window)
+		next if (!$item->{amount}); # Client behavior (dont show the item in market window)
 		# Workaround some npcs that have items appearing more than once in their store list,
 		# for example the Trader at moc_ruins 90 149 sells only bananas, but 6 times
 		#
@@ -7712,7 +7783,7 @@ sub npc_market_purchase_result {
 	for (my $i = 0; $i < length($args->{itemList}); $i += $len) {
 		my $item = Actor::Item->new;
 		@$item{qw( nameID type price amount weight )} = unpack $pack, substr $args->{itemList}, $i, $len;
-		next if(!$item->{amount}); # Client behavior (dont show the item in market window)
+		next if (!$item->{amount}); # Client behavior (dont show the item in market window)
 		# Workaround some npcs that have items appearing more than once in their store list,
 		# for example the Trader at moc_ruins 90 149 sells only bananas, but 6 times
 		#
@@ -7998,7 +8069,7 @@ sub received_character_ID_and_Map {
 		}
 	}
 
-	if(exists $args->{mapUrl} && $args->{'mapUrl'} =~ /.*\:\d+/) {
+	if (exists $args->{mapUrl} && $args->{'mapUrl'} =~ /.*\:\d+/) {
 		$map_ip = $args->{mapUrl};
 		$map_ip =~ s/:[0-9\0]+//;
 		$map_port = $args->{mapPort};
@@ -8009,7 +8080,7 @@ sub received_character_ID_and_Map {
 	}
 
 	# Workaround. Current xKore 1 is not able to define the $char
-	if($config{XKore} == 1) {
+	if ($config{XKore} == 1) {
 		foreach my $character (@chars) {
 			if (getHex($charID) eq getHex($character->{charID})) {
 				configModify("char", $character->{slot});
@@ -8184,7 +8255,7 @@ sub party_exp {
 	} else {
 		error T("Error setting party option\n");
 	}
-	if(exists($args->{itemPickup}) || exists($args->{itemDivision})) {
+	if (exists($args->{itemPickup}) || exists($args->{itemDivision})) {
 		$char->{party}{itemPickup} = $args->{itemPickup};
 		$char->{party}{itemDivision} = $args->{itemDivision};
 		if ($args->{itemPickup} == 0) {
@@ -8363,7 +8434,7 @@ sub party_users_info {
 
 	for (my $i = 0; $i < length($args->{playerInfo}); $i += $player_info->{len}) {
 		# in 0a43 lasts bytes: { <item pickup rule>.B <item share rule>.B <unknown>.L }
-		next if(length($args->{playerInfo}) - $i == 6);
+		next if (length($args->{playerInfo}) - $i == 6);
 
 		my $ID = substr($args->{playerInfo}, $i, 4);
 
@@ -8844,7 +8915,7 @@ sub clan_info {
 	$clan{ally_names} = "";
 	$clan{antagonist_names} = "";
 
-	if($args->{alliance_count} > 0) {
+	if ($args->{alliance_count} > 0) {
 		for ($count; $count < $args->{alliance_count}; $count++) {
 			$clan{ally_names} .= bytesToString(unpack("Z24", substr($args->{ally_antagonist_names}, $i, 24))).", ";
 			$i += 24;
@@ -8852,7 +8923,7 @@ sub clan_info {
 	}
 
 	$count = 0;
-	if($args->{antagonist_count} > 0) {
+	if ($args->{antagonist_count} > 0) {
 		for ($count; $count < $args->{antagonist_count}; $count++) {
 			$clan{antagonist_names} .= bytesToString(unpack("Z24", substr($args->{ally_antagonist_names}, $i, 24))).", ";
 			$i += 24;
@@ -8886,7 +8957,7 @@ sub clan_chat {
 sub clan_leave {
 	my ($self, $args) = @_;
 
-	if($clan{clan_name}) {
+	if ($clan{clan_name}) {
 		message TF("[Clan] You left %s\n", $clan{clan_name});
 		undef %clan;
 	}
@@ -9098,14 +9169,14 @@ sub refine_result {
 sub upgrade_message {
 	my ($self, $args) = @_;
 	my $item = itemNameSimple($args->{itemID});
-	if($args->{type} == 0) { # Success
+	if ($args->{type} == 0) { # Success
 		message TF("Weapon upgraded: %s\n", $item), "info";
-	} elsif($args->{type} == 1) { # Fail
+	} elsif ($args->{type} == 1) { # Fail
 		message TF("Weapon not upgraded: %s\n", $item), "info";
 		# message TF("Weapon upgraded: %s\n", $item), "info";
-	} elsif($args->{type} == 2) { # Fail Lvl
+	} elsif ($args->{type} == 2) { # Fail Lvl
 		error TF("Cannot upgrade %s until you level up the upgrade weapon skill.\n", $item), "info";
-	} elsif($args->{type} == 3) { # Fail Item
+	} elsif ($args->{type} == 3) { # Fail Item
 		message TF("You lack item %s to upgrade the weapon.\n", $item), "info";
 	}
 }
@@ -9113,7 +9184,7 @@ sub upgrade_message {
 sub open_buying_store_fail { #0x812
 	my ($self, $args) = @_;
 	my $result = $args->{result};
-	if($result == 1){
+	if ($result == 1){
 		error T("Failed to open Purchasing Store.\n"),"info";
 	} elsif ($result == 2){
 		error T("The total weight of the item exceeds your weight limit. Please reconfigure.\n"), "info";
@@ -9468,11 +9539,11 @@ sub boss_map_info {
 
 sub adopt_reply {
 	my ($self, $args) = @_;
-	if($args->{type} == 0) {
+	if ($args->{type} == 0) {
 		message T("You cannot adopt more than 1 child.\n"), "info";
-	} elsif($args->{type} == 1) {
+	} elsif ($args->{type} == 1) {
 		message T("You must be at least character level 70 in order to adopt someone.\n"), "info";
-	} elsif($args->{type} == 2) {
+	} elsif ($args->{type} == 2) {
 		message T("You cannot adopt a married person.\n"), "info";
 	}
 }
@@ -9724,7 +9795,7 @@ sub buying_store_items_list {
 	$msg .= "\n" . TF("Price limit: %s Zeny\n", formatNumber($buyerPriceLimit)) . ('-'x83) . "\n";
 	message $msg, "list";
 
-	if($args->{expireDate}) {
+	if ($args->{expireDate}) {
 		$expireDate = $args->{expireDate};
 		my $date = int(time) + int($args->{expireDate}/1000);
 		message "Expire Date: ".getFormattedDate($date)."\n";
@@ -9764,10 +9835,10 @@ sub buying_store_fail {
 
 sub buying_store_update {
 	my($self, $args) = @_;
-	if(@selfBuyerItemList) {
+	if (@selfBuyerItemList) {
 		for(my $i = 0; $i < @selfBuyerItemList; $i++) {
 			my $item = $selfBuyerItemList[$i];
-			if($item->{nameID} == $args->{itemID}) {
+			if ($item->{nameID} == $args->{itemID}) {
 				message TF("You bought %s %s\n", $args->{count}, $item->{name});
 				$selfBuyerItemList[$i]->{amount} = $item->{amount} - $args->{count};
 			}
@@ -10098,15 +10169,32 @@ sub arrowcraft_list {
 
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
+	$char->{selected_craft} = 0;
 
 	undef @arrowCraftID;
 	for (my $i = 4; $i < $msg_size; $i += 2) {
 		my $ID = unpack("v", substr($msg, $i, 2));
 		my $item = $char->inventory->getByNameID($ID);
+		$char->{last_skill_used} = 2027 if ($config{autoPoison} && $item->{name} eq $config{autoPoison});
 		binAdd(\@arrowCraftID, $item->{binID});
 	}
 
-	message T("Received Possible Arrow Craft List - type 'arrowcraft'\n");
+	if ($char->{last_skill_used} == 2027) { # GC_POISONINGWEAPON
+		message T("Received Possible Poison List - type 'poison'\n");
+		if ($config{autoPoison}) {
+			my $item = $char->inventory->getByName($config{autoPoison});
+			if ($item) {
+				$messageSender->sendArrowCraft($item->{nameID});
+				$char->{selected_craft} = 1;
+			} else {
+				error TF("Configured autoPoison (%s) not available.\n", $config{autoSpell});
+			}
+		} else {
+			warning T("Configure autoPoison to automatically select skill for Auto Spell.\n"), 'hint';
+		}
+	} else {
+		message T("Received Possible Item List - type 'arrowcraft' or 'poison'\n");
+	}
 }
 
 # Notifies client of a character parameter change.
@@ -10323,9 +10411,9 @@ sub map_change_cell {
 # TODO: the actual status is sent to us in opt3
 sub blade_stop {
 	my ($self, $args) = @_;
-	if($args->{active} == 0) {
+	if ($args->{active} == 0) {
 		message TF("Blade Stop by %s on %s is deactivated.\n", Actor::get($args->{sourceID})->nameString(), Actor::get($args->{targetID})->nameString()), "info";
-	} elsif($args->{active} == 1) {
+	} elsif ($args->{active} == 1) {
 		message TF("Blade Stop by %s on %s is active.\n", Actor::get($args->{sourceID})->nameString(), Actor::get($args->{targetID})->nameString()), "info";
 	}
 }
@@ -10402,9 +10490,9 @@ sub instance_window_leave {
 		debug T("Received Memory Dungeon reservation update\n");
 	} elsif ($args->{flag} == 1) { # TYPE_DESTROY_LIVE_TIMEOUT =  0x1
 		message T("The Memorial Dungeon expired it has been destroyed.\n"), "info";
-	} elsif($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
+	} elsif ($args->{flag} == 2) { # TYPE_DESTROY_ENTER_TIMEOUT =  0x2
 		message T("The Memorial Dungeon's entry time limit expired it has been destroyed.\n"), "info";
-	} elsif($args->{flag} == 3) { # TYPE_DESTROY_USER_REQUEST =  0x3
+	} elsif ($args->{flag} == 3) { # TYPE_DESTROY_USER_REQUEST =  0x3
 		message T("The Memorial Dungeon has been removed.\n"), "info";
 	} elsif ($args->{flag} == 4) { # TYPE_CREATE_FAIL =  0x4
 		message T("The instance windows has been removed, possibly due to party/guild leave.\n"), "info";
@@ -11745,21 +11833,21 @@ sub open_ui {
 
 	debug TF("Received request from server to open UI: %s\n", $args->{type});
 
-	if($args->{type} == BANK_UI) { # TODO: implement bank system and add Bank open Request
+	if ($args->{type} == BANK_UI) { # TODO: implement bank system and add Bank open Request
 		message T("Server requested to open Bank UI.\n");
-	} elsif($args->{type} == STYLIST_UI) { # TODO: implement Stylist system and add Stylist open Request
+	} elsif ($args->{type} == STYLIST_UI) { # TODO: implement Stylist system and add Stylist open Request
 		message T("Server requested to open Stylist UI.\n");
-	} elsif($args->{type} == CAPTCHA_UI) {
+	} elsif ($args->{type} == CAPTCHA_UI) {
 		message T("Server requested to open Captcha UI.\n");
-	} elsif($args->{type} == MACRO_UI) {
+	} elsif ($args->{type} == MACRO_UI) {
 		message T("Server requested to open Macro Recorder UI.\n");
-	} elsif($args->{type} == UI_UNUSED) {
+	} elsif ($args->{type} == UI_UNUSED) {
 		message T("Server requested to open Unused UI.\n"); # why?
-	} elsif($args->{type} == TIPBOX_UI) {
+	} elsif ($args->{type} == TIPBOX_UI) {
 		message T("Server requested to open Tip Box UI.\n");
-	} elsif($args->{type} == RENEWQUEST_UI) {
+	} elsif ($args->{type} == RENEWQUEST_UI) {
 		message T("Server requested to open Quest UI.\n");
-	} elsif($args->{type} == ATTENDANCE_UI) {
+	} elsif ($args->{type} == ATTENDANCE_UI) {
 		message T("Server requested to open Attendance UI.\n");
 		$self->attendance_ui($args);
 	} else {
@@ -11787,7 +11875,7 @@ sub action_ui {
 sub attendance_ui {
 	my ($self, $args) = @_;
 
-	if(defined $attendance_rewards{period}) {
+	if (defined $attendance_rewards{period}) {
 		my $date = getFormattedDateShort(time, 3);
 
 		if ($date >= $attendance_rewards{period}{start} && $date <= $attendance_rewards{period}{end}) {
@@ -11909,7 +11997,7 @@ sub banking_withdraw {
 sub navigate_to {
 	my ($self, $args) = @_;
 
-	if( $args->{mob_id} ) {
+	if ($args->{mob_id}) {
 		message TF("Server asked us to navigate to %s map and look for monster with ID %s\n", $args->{map}, $args->{mob_id}), "info";
 	} else {
 		message TF("Server asked us to navigate to %s (%s,%s)\n", $args->{map}, $args->{x}, $args->{y}), "info";
@@ -11931,10 +12019,10 @@ sub roulette_window {
 		$roulette{$_} = $args->{$_};
 	}
 
-	if($args->{result} == 1) {
+	if ($args->{result} == 1) {
 		warning T("Roulette: Something went wrong\n");
 		return;
-	} elsif($args->{result} == 2) {
+	} elsif ($args->{result} == 2) {
 		warning T("Roulette: No enough Point (coin) to roll\n");
 		return;
 	}
@@ -11989,10 +12077,10 @@ sub roulette_window_update {
 		$roulette{$_} = $args->{$_};
 	}
 
-	if($args->{result} == 1) {
+	if ($args->{result} == 1) {
 		warning T("Roulette: Something went wrong\n");
 		return;
-	} elsif($args->{result} == 2) {
+	} elsif ($args->{result} == 2) {
 		warning T("Roulette: No enough Point (coin) to roll\n");
 		return;
 	}
@@ -12083,7 +12171,7 @@ sub captcha_upload_request {
 	my ($self, $args) = @_;
 	if ($args->{status} == 0) {
 		message T("Captcha Register - Now you can upload the image\n");
-	} elsif($args->{status} == 1) {
+	} elsif ($args->{status} == 1) {
 		message T("Captcha Register - Failed to upload the image\n");
 	} else {
 		message TF("Captcha Register - Unknown status: %s\n", $args->{status});
@@ -12104,7 +12192,7 @@ sub macro_reporter_status {
 	my ($self, $args) = @_;
 	my $status = "Unknown";
 
-	if($args->{status} == MCR_MONITORING) {
+	if ($args->{status} == MCR_MONITORING) {
 		$status = "Monitoring";
 	} elsif ($args->{status} == MCR_NO_DATA) {
 		$status = "No Data";
@@ -12132,7 +12220,7 @@ sub macro_detector_image {
 
 	$captcha_image .= $args->{captcha_image};
 
-	if(length($captcha_image) >= $captcha_size) {
+	if (length($captcha_image) >= $captcha_size) {
 		my $image = uncompress($captcha_image);
 		my $imageHex = unpack("H*", $image);
 		my $byte1; my $byte2; my $byte3;
@@ -12148,15 +12236,19 @@ sub macro_detector_image {
 
 		my $file = $Settings::logs_folder . "/captcha_$captcha_key.bmp";
 		my $final_image = pack("H*", $imageHex);
+		$captcha_image_content = $final_image;
 		open my $DUMP, '>:raw', $file;
 		print $DUMP $final_image;
 		close $DUMP;
 
+
 		my $hookArgs = {captcha_image => $final_image};
 		Plugins::callHook ('captcha_image', $hookArgs);
+		Plugins::callHook ('captcha_file', {file => $file});
 		return 1 if $hookArgs->{return};
 
 		warning TF("Macro Detector - captcha has been saved in: %s, open it, solve it and use the command: captcha <text>\n", $file), "captcha";
+
 		$captcha_image = "";
 		$captcha_size = undef;
 		$captcha_key = undef;
@@ -12180,7 +12272,7 @@ sub macro_detector_status {
 	my ($self, $args) = @_;
 	my $status = "Unknown";
 
-	if($args->{status} == MCD_TIMEOUT) {
+	if ($args->{status} == MCD_TIMEOUT) {
 		$status = "Timeout";
 	} elsif ($args->{status} == MCD_INCORRECT) {
 		$status = "Incorrect";
@@ -12201,7 +12293,7 @@ sub captcha_preview {
 
 	if ($args->{status} == 0) {
 		message T("Captcha Preview - Now you can download the image\n");
-	} elsif($args->{status} == 1) {
+	} elsif ($args->{status} == 1) {
 		message T("Captcha Preview - Failed to Request Captcha (ID is out of range)\n");
 	} else {
 		message TF("Captcha Preview - Unknown status: %s\n", $args->{status});
@@ -12216,24 +12308,14 @@ sub captcha_preview_image {
 
 	$captcha_image .= $args->{captcha_image};
 
-	if(length($captcha_image) >= $captcha_size) {
+	if (length($captcha_image) >= $captcha_size) {
 		my $image = uncompress($captcha_image);
 		my $imageHex = unpack("H*", $image);
-		my $byte1; my $byte2; my $byte3;
-		for (my $i = 102; $i < 3564; $i += 6) {
-			$byte1 = hex(substr($imageHex, $i, 2));
-			$byte2 = substr($imageHex, $i + 2, 2);
-			$byte3 = hex(substr($imageHex, $i + 4, 2));
 
-			if ($byte1 > 250 && $byte2 eq '00' && $byte3 > 250) {
-				substr($imageHex, $i + 2, 2) = 'FF';
-			}
-		}
-
-		my $file = $Settings::logs_folder . "/captcha_preview_$captcha_key.bmp";
-		open my $DUMP, '>:raw', $file;
-		print $DUMP pack("H*", $imageHex);
-		close $DUMP;
+    my $file = $Settings::logs_folder . "/captcha_preview_".$char->{name}."_".$captcha_key.".bmp";
+    open my $DUMP, '>:raw', $file;
+    print $DUMP pack("H*", $imageHex);
+    close $DUMP;
 
 		message TF("Captcha Preview - captcha has been saved in: %s\n", $file), "captcha";
 		$captcha_image = "";
@@ -12252,6 +12334,26 @@ sub macro_reporter_select {
 		my $accID = unpack("a4", substr($args->{account_list}, $i, 4));
 		my $player = $playersList->getByID($accID);
 		message TF("%s\n", $player->{name});
+	}
+}
+
+# 0B8D - PACKET_ZC_REPUTE_INFO
+sub repute_info {
+	my ($self, $args) = @_;
+
+	@reputation_list = ();
+
+	my $unpack = {
+		len => 16,
+		types => 'V4',
+		keys => [qw(type type2 points points2)],
+	};
+	my $length = length $args->{reputeInfo};
+	for (my $i = 0; $i < $length; $i += $unpack->{len}) {
+		my $repute;
+		@{$repute}{@{$unpack->{keys}}} = unpack($unpack->{types}, substr($args->{reputeInfo}, $i, $unpack->{len}));
+
+		push @reputation_list, $repute;
 	}
 }
 

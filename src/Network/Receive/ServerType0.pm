@@ -585,7 +585,7 @@ sub new {
 		'09A6' => ['banking_check', 'V2 v',[qw(zeny zeny2 reason)]],
 		'09A8' => ['banking_deposit', 'v V2 V',[qw(reason zeny zeny2 balance)]],
 		'09AA' => ['banking_withdraw', 'v V2 V',[qw(reason zeny zeny2 balance)]],
-		'09BB' => ['storage_opened'],
+		'09BB' => ['storage_opened', 'v2', [qw(items items_max)]],
 		'09BF' => ['storage_closed'],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
@@ -740,6 +740,7 @@ sub new {
 		'0B32' => ['skills_list'],
 		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
 		'0B39' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B3D' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]], # -1
 		'0B41' => ['inventory_item_added', 'a2 v V C2 a16 V C2 a4 v a25 C v C2', [qw(ID amount nameID identified broken cards type_equip type fail expire unknown options favorite viewID upgrade grade)]],
 		'0B44' => ['storage_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken cards options upgrade grade)]],
 		'0B45' => ['cart_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken upgrade cards options upgrade grade)]],
@@ -754,6 +755,7 @@ sub new {
 		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
 		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], # -1
 		'0B7E' => ['guild_member_add', 'a4 a4 v5 V4 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)]], # 60 TODO
+		'0B8D' => ['repute_info', 'v C a*', [qw(len sucess reputeInfo)]], # -1
 		# 'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 	};
 

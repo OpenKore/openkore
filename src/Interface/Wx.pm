@@ -1551,7 +1551,11 @@ sub onCaptcha {
 	$dialog->Destroy;
 	return unless defined $result && $result ne '';
 
-	$messageSender->sendCaptchaAnswer ($result);
+	if ($conState == Network::IN_GAME) {
+		$messageSender->sendMacroDetectorAnswer($result);
+	} else {
+		$messageSender->sendCaptchaAnswer($result);
+	}
 
 	$args->{return} = 1;
 }
