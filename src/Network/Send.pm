@@ -1427,6 +1427,19 @@ sub sendTokenToServer {
 	debug "Sent sendTokenLogin\n", "sendPacket", 2;
 }
 
+sub sendMotpToServer {
+	my ($self, $code) = @_;
+
+	my $msg = $self->reconstruct({
+		switch => 'otp_code',
+		code => $code
+	});
+
+	$self->sendToServer($msg);
+
+	debug "Sent sendMotpToServer\n", "sendPacket", 2;
+}
+
 # encrypt password kRO/cRO version 2017-2018
 sub encrypt_password {
 	my ($self, $password) = @_;
