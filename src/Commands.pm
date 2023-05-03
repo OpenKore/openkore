@@ -1141,13 +1141,11 @@ sub cmdArrowCraft {
 		return;
 	}
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	my ($command, $arg1) = parseArgs( $args );
 
-	#print "-$arg1-\n";
-	if ($arg1 eq "") {
+	if ($command eq "") {
 		if (@arrowCraftID) {
-			my $msg = center(T(" Item To Craft "), 50, '-') ."\n";
+			my $msg = center(" ". T("Item To Craft") ." ", 50, '-') ."\n";
 			for (my $i = 0; $i < @arrowCraftID; $i++) {
 				next if ($arrowCraftID[$i] eq "");
 				$msg .= swrite(
@@ -1158,27 +1156,27 @@ sub cmdArrowCraft {
 			message $msg, "list";
 		} else {
 			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
-			 	"Type 'arrowcraft use' to get list.\n");
+			 	"Type 'arrowcraft' to get list.\n");
 		}
-	} elsif ($arg1 eq "use") {
+	} elsif ($command eq "use") {
 		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
 			main::ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
 		} else {
-			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
+			error T("Error in function 'arrowcraft use' (Create Arrows)\n" .
 				"You don't have Arrow Making Skill.\n");
 		}
-	} elsif ($arg1 eq "forceuse") {
-		my $item = $char->inventory->get($arg2);
+	} elsif ($command eq "forceuse") {
+		my $item = $char->inventory->get($arg1);
 		if ($item) {
 			$messageSender->sendArrowCraft($item->{nameID});
 			$char->{selected_craft} = 1;
 		} else {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
-				"You don't have item %s in your inventory.\n", $arg2);
+				"You don't have item %s in your inventory.\n", $arg1);
 		}
 	} else {
-		if ($arrowCraftID[$arg1] ne "") {
-			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$arg1])->{nameID});
+		if ($arrowCraftID[$command] ne "") {
+			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$command])->{nameID});
 			$char->{selected_craft} = 1;
 		} else {
 			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
@@ -1194,10 +1192,9 @@ sub cmdPoison {
 		return;
 	}
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	my ($command) = parseArgs( $args );
 
-	if ($arg1 eq "") {
+	if ($command eq "") {
 		if (@arrowCraftID) {
 			my $msg = center(" ". T("Poison List") ." ", 50, '-') ."\n";
 			for (my $i = 0; $i < @arrowCraftID; $i++) {
@@ -1213,16 +1210,16 @@ sub cmdPoison {
 			 	"Type 'poison' to get list.\n");
 		}
 		
-	} elsif ($arg1 eq "use") {
+	} elsif ($command eq "use") {
 		if (defined binFind(\@skillsID, 'GC_POISONINGWEAPON')) {
 			main::ai_skillUse('GC_POISONINGWEAPON', 5, 0, 0, $accountID);
 		} else {
-			error T("Error in function 'poison' (Use Poison)\n" .
+			error T("Error in function 'poison use' (Use Poison)\n" .
 				"You don't have Poisonous Weapon Skill.\n");
 		}
 	} else {
-		if ($arrowCraftID[$arg1] ne "") {
-			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$arg1])->{nameID});
+		if ($arrowCraftID[$command] ne "") {
+			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$command])->{nameID});
 			$char->{selected_craft} = 1;
 		} else {
 			error T("Error in function 'poison' (Apply Poison)\n" .
