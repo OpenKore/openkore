@@ -40,17 +40,7 @@ src/auto/XSTools/utils/perl/Whirlpool.c
 src/test/http-reader-test
 
 # Local modifications of official files.
-tables/iRO/items-custom.txt
-tables/iRO/itemsdescriptions-custom.txt
-tables/iRO/itemslotcounttable-custom.txt
-tables/iRO/maps-custom.txt
-tables/iRO/quests-custom.txt
-tables/iRO/resnametable-custom.txt
-tables/iRO/skillnametable-custom.txt
-tables/iRO/Restart/maps-custom.txt
-tables/iRO/Restart/quests-custom.txt
-tables/iRO/Restart/resnametable-custom.txt
-tables/iRO/Restart/skillnametable-custom.txt
+tables/iRO/*-custom.txt
 
 # Auto-generated files.
 tables/**/portalsLOS.txt
