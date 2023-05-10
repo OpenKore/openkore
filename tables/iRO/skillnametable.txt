@@ -8,45 +8,45 @@ SM_MAGNUM#Magnum Break#
 SM_ENDURE#Endure#
 MG_SRECOVERY#Increase SP Recovery#
 MG_SIGHT#Sight#
-MG_NAPALMBEAT#Napalm Beat#
-MG_SAFETYWALL#Safety Wall#
+MG_NAPALMBEAT#Napalm beat#
+MG_SAFETYWALL#Safety wall#
 MG_SOULSTRIKE#Soul Strike#
 MG_COLDBOLT#Cold Bolt#
-MG_FROSTDIVER#Frost Driver#
+MG_FROSTDIVER#Frost diver#
 MG_STONECURSE#Stone Curse#
-MG_FIREBALL#Fire Ball#
-MG_FIREWALL#Fire Wall#
-MG_FIREBOLT#Fire Bolt#
-MG_LIGHTNINGBOLT#Lightning Bolt#
-MG_THUNDERSTORM#Thunder Storm#
+MG_FIREBALL#Fireball#
+MG_FIREWALL#Firewall#
+MG_FIREBOLT#Firebolt#
+MG_LIGHTNINGBOLT#Lightening Bolt#
+MG_THUNDERSTORM#Thunder storm#
 AL_DP#Divine Protection#
-AL_DEMONBANE#Demon Bane#
+AL_DEMONBANE#Demonbane#
 AL_RUWACH#Ruwach#
 AL_PNEUMA#Pneuma#
 AL_TELEPORT#Teleport#
-AL_WARP#Warp Portal#
+AL_WARP#Warp portal#
 AL_HEAL#Heal#
-AL_INCAGI#Increase Agility#
-AL_DECAGI#Decrease Agility#
+AL_INCAGI#Increase agility#
+AL_DECAGI#Decrease agility#
 AL_HOLYWATER#Aqua Benedicta#
 AL_CRUCIS#Signum Crucis#
 AL_ANGELUS#Angelus#
 AL_BLESSING#Blessing#
 AL_CURE#Cure#
-MC_INCCARRY#Enlarge Weight Limit#
+MC_INCCARRY#Enlarge Weight limit#
 MC_DISCOUNT#Discount#
 MC_OVERCHARGE#Overcharge#
-MC_PUSHCART#Pushcart#
+MC_PUSHCART#Push Cart(Pushcart)#
 MC_IDENTIFY#Item Appraisal#
 MC_VENDING#Vending#
 MC_MAMMONITE#Mammonite#
 AC_OWL#Owl's Eye#
 AC_VULTURE#Vulture's Eye#
-AC_CONCENTRATION#Improve Concentration#
-AC_DOUBLE#Double Strafe#
+AC_CONCENTRATION#Improve Concentration(Attention concentrate)#
+AC_DOUBLE#Double Strafe(Double strafing)#
 AC_SHOWER#Arrow Shower#
 TF_DOUBLE#Double Attack#
-TF_MISS#Improve Dodge#
+TF_MISS# Improve Dodge#
 TF_STEAL#Steal#
 TF_HIDING#Hiding#
 TF_POISON#Envenom#
@@ -57,8 +57,8 @@ KN_PIERCE#Pierce#
 KN_BRANDISHSPEAR#Brandish Spear#
 KN_SPEARSTAB#Spear Stab#
 KN_SPEARBOOMERANG#Spear Boomerang#
-KN_TWOHANDQUICKEN#Two Hand Quicken#
-KN_AUTOCOUNTER#Counter Attack#
+KN_TWOHANDQUICKEN#TwoHand Quicken#
+KN_AUTOCOUNTER#Auto Counter#
 KN_BOWLINGBASH#Bowling Bash#
 KN_RIDING#Peco Peco Ride#
 KN_CAVALIERMASTERY#Cavalier Mastery#
@@ -66,10 +66,10 @@ PR_MACEMASTERY#Mace Mastery#
 PR_IMPOSITIO#Impositio Manus#
 PR_SUFFRAGIUM#Suffragium#
 PR_ASPERSIO#Aspersio#
-PR_BENEDICTIO#B.S Sacramenti #
+PR_BENEDICTIO#Benedictio Sanctissimi Sacramenti#
 PR_SANCTUARY#Sanctuary#
 PR_SLOWPOISON#Slow Poison#
-PR_STRECOVERY#Status Recovery#
+PR_STRECOVERY#Recovery#
 PR_KYRIE#Kyrie Eleison#
 PR_MAGNIFICAT#Magnificat#
 PR_GLORIA#Gloria#
@@ -84,17 +84,17 @@ WZ_METEOR#Meteor Storm#
 WZ_JUPITEL#Jupitel Thunder#
 WZ_VERMILION#Lord of Vermilion#
 WZ_WATERBALL#Waterball#
-WZ_ICEWALL#Ice Wall#
+WZ_ICEWALL#Icewall#
 WZ_FROSTNOVA#Frost Nova#
 WZ_STORMGUST#Storm Gust#
 WZ_EARTHSPIKE#Earth Spike#
 WZ_HEAVENDRIVE#Heaven's Drive#
 WZ_QUAGMIRE#Quagmire#
-WZ_ESTIMATION#Sense#
+WZ_ESTIMATION#Monster Property#
 BS_IRON#Iron Tempering#
 BS_STEEL#Steel Tempering#
 BS_ENCHANTEDSTONE#Enchanted Stone Craft#
-BS_ORIDEOCON#Research Oridecon#
+BS_ORIDEOCON#Oridecon Research#
 BS_DAGGER#Smith Dagger#
 BS_SWORD#Smith Sword#
 BS_TWOHANDSWORD#Smith Two-handed Sword#
@@ -103,14 +103,14 @@ BS_MACE#Smith Mace#
 BS_KNUCKLE#Smith Brass Knuckle#
 BS_SPEAR#Smith Spear#
 BS_HILTBINDING#Hilt Binding#
-BS_FINDINGORE#Ore Discovery#
+BS_FINDINGORE#Finding Ore#
 BS_WEAPONRESEARCH#Weaponry Research#
 BS_REPAIRWEAPON#Repair Weapon#
 BS_SKINTEMPER#Skin Tempering#
 BS_HAMMERFALL#Hammerfall#
 BS_ADRENALINE#Adrenaline Rush#
 BS_WEAPONPERFECT#Weapon Perfection#
-BS_OVERTHRUST#Power Thrust#
+BS_OVERTHRUST#Power Thrust(Over Thrust)#
 BS_MAXIMIZE#Maximize Power#
 HT_SKIDTRAP#Skid Trap#
 HT_LANDMINE#Land Mine#
@@ -127,11 +127,11 @@ HT_BEASTBANE#Beastbane#
 HT_FALCON#Falconry Mastery#
 HT_STEELCROW#Steel Crow#
 HT_BLITZBEAT#Blitz Beat#
-HT_DETECTING#Detect#
+HT_DETECTING#Detecting#
 HT_SPRINGTRAP#Spring Trap#
-AS_RIGHT#Righthand Mastery#
-AS_LEFT#Lefthand Mastery#
-AS_KATAR#Katar Mastery#
+AS_RIGHT#Right hand Mastery#
+AS_LEFT#Left hand Mastery#
+AS_KATAR#Katar Matery#
 AS_CLOAKING#Cloaking#
 AS_SONICBLOW#Sonic Blow#
 AS_GRIMTOOTH#Grimtooth#
@@ -155,54 +155,54 @@ MC_CHANGECART#Change Cart#
 MC_LOUD#Crazy Uproar#
 AL_HOLYLIGHT#Holy Light#
 MG_ENERGYCOAT#Energy Coat#
-RG_SNATCHER#Gank#
-RG_STEALCOIN#Mug#
+RG_SNATCHER#Snatcher#
+RG_STEALCOIN#Steal Coin#
 RG_BACKSTAP#Back Stab#
-RG_TUNNELDRIVE#Stalk#
-RG_RAID#Sightless Mind#
-RG_STRIPWEAPON#Divest Weapon#
-RG_STRIPSHIELD#Divest Shield#
-RG_STRIPARMOR#Divest Armor#
-RG_STRIPHELM#Divest Helm#
-RG_INTIMIDATE#Snatch#
-RG_GRAFFITI#Scribble#
-RG_FLAGGRAFFITI#Piece#
+RG_TUNNELDRIVE#Stalk (Tunnel Drive)#
+RG_RAID#Raid#
+RG_STRIPWEAPON#Divest Weapon (Strip Weapon)#
+RG_STRIPSHIELD#Strip Shield#
+RG_STRIPARMOR#Strip Armor#
+RG_STRIPHELM#Strip Helm#
+RG_INTIMIDATE#Intimidate#
+RG_GRAFFITI#Graffiti#
+RG_FLAGGRAFFITI#Flag Graffiti#
 RG_CLEANER#Remover#
-RG_GANGSTER#Slyness#
-RG_COMPULSION#Haggle#
-RG_PLAGIARISM#Intimidate#
+RG_GANGSTER#GangSter's Paradise#
+RG_COMPULSION#Compulsion Discount#
+RG_PLAGIARISM#Intimidate (Plagiarism)#
 AM_AXEMASTERY#Axe Mastery#
-AM_LEARNINGPOTION#Potion Research#
-AM_PHARMACY#Prepare Potion#
-AM_DEMONSTRATION#Bomb#
+AM_LEARNINGPOTION#Learning Potion#
+AM_PHARMACY#Pharmacy#
+AM_DEMONSTRATION#Demonstration#
 AM_ACIDTERROR#Acid Terror#
-AM_POTIONPITCHER#Aid Potion#
-AM_CANNIBALIZE#Summon Flora#
-AM_SPHEREMINE#Summon Marine Sphere#
-AM_CP_WEAPON#Alchemical Weapon#
-AM_CP_SHIELD#Synthesized Shield#
-AM_CP_ARMOR#Synthetic Armor#
-AM_CP_HELM#Biochemical Helm#
+AM_POTIONPITCHER#Potion Pitcher#
+AM_CANNIBALIZE#Bio Cannibalize#
+AM_SPHEREMINE#Marine Sphere#
+AM_CP_WEAPON#Chemical Protection(Weapon) (Chemical Protection Weapon)#
+AM_CP_SHIELD#Chemical Protection(Shield) (Chemical Protection Shield)#
+AM_CP_ARMOR#Chemical Protection(Armor) (Chemical Protection Armor)#
+AM_CP_HELM#Chemical Protection(Helm) (Chemical Protection Helm)#
 AM_BIOETHICS#Bioethics#
 AM_BIOTECHNOLOGY#Biotechnology#
-AM_CREATECREATURE#Creature Creation#
+AM_CREATECREATURE#Create Creature#
 AM_CULTIVATION#Cultivation#
 AM_FLAMECONTROL#Flame Control#
 AM_CALLHOMUN#Call Homunculus#
-AM_REST#Vaporize#
+AM_REST#Rest#
 AM_DRILLMASTER#Drillmaster#
 AM_HEALHOMUN#Heal Homunculus#
-AM_RESURRECTHOMUN#Homunculus Resurrection#
-CR_TRUST#Faith#
-CR_AUTOGUARD#Guard#
-CR_SHIELDCHARGE#Smite#
+AM_RESURRECTHOMUN#Resurrect Homunculus#
+CR_TRUST#Faith (Faith)#
+CR_AUTOGUARD#Auto Guard#
+CR_SHIELDCHARGE#Smite (Shield Charge)#
 CR_SHIELDBOOMERANG#Shield Boomerang#
-CR_REFLECTSHIELD#Shield Reflect#
+CR_REFLECTSHIELD#Reflect Shield#
 CR_HOLYCROSS#Holy Cross#
 CR_GRANDCROSS#Grand Cross#
-CR_DEVOTION#Sacrifice#
-CR_PROVIDENCE#Resistant Souls#
-CR_DEFENDER#Defending Aura#
+CR_DEVOTION#Sacrifice (Devotion)#
+CR_PROVIDENCE#Providence#
+CR_DEFENDER#Defender#
 CR_SPEARQUICKEN#Spear Quicken#
 MO_IRONHAND#Iron Fists#
 MO_SPIRITSRECOVERY#Spiritual Cadence#
@@ -210,7 +210,7 @@ MO_CALLSPIRITS#Summon Spirit Sphere#
 MO_ABSORBSPIRITS#Spiritual Sphere Absorption#
 MO_TRIPLEATTACK#Raging Trifecta Blow#
 MO_BODYRELOCATION#Snap#
-MO_DODGE#Flee#
+MO_DODGE#Flee (Skill)#
 MO_INVESTIGATE#Occult Impaction#
 MO_FINGEROFFENSIVE#Throw Spirit Sphere#
 MO_STEELBODY#Mental Strength#
@@ -219,35 +219,35 @@ MO_EXPLOSIONSPIRITS#Fury#
 MO_EXTREMITYFIST#Guillotine Fist#
 MO_CHAINCOMBO#Raging Quadruple Blow#
 MO_COMBOFINISH#Raging Thrust#
-SA_ADVANCEDBOOK#Study#
-SA_CASTCANCEL#Cast Cancel#
-SA_MAGICROD#Magic Rod#
-SA_SPELLBREAKER#Spell Breaker#
+SA_ADVANCEDBOOK#Study (Advanced Book)#
+SA_CASTCANCEL#Cast Cancel (Cast Cancel)#
+SA_MAGICROD#Magic Rod (Magic Rod)#
+SA_SPELLBREAKER#Spell Breaker (Spell Breaker)#
 SA_FREECAST#Free Cast#
-SA_AUTOSPELL#Hindsight#
-SA_FLAMELAUNCHER#Endow Blaze#
-SA_FROSTWEAPON#Endow Tsunami#
-SA_LIGHTNINGLOADER#Endow Tornado#
-SA_SEISMICWEAPON#Endow Quake#
+SA_AUTOSPELL#Hindsight (Auto Spell)#
+SA_FLAMELAUNCHER#Flame Launcher#
+SA_FROSTWEAPON#Frost Weapon#
+SA_LIGHTNINGLOADER#Lightning Loader#
+SA_SEISMICWEAPON#Seismic Weapon#
 SA_DRAGONOLOGY#Dragonology#
 SA_VOLCANO#Volcano#
 SA_DELUGE#Deluge#
-SA_VIOLENTGALE#Whirlwind#
-SA_LANDPROTECTOR#Magnetic Earth#
+SA_VIOLENTGALE#Whirlwind (Violent Gale)#
+SA_LANDPROTECTOR#Land Protector#
 SA_DISPELL#Dispell#
-SA_ABRACADABRA#Hocus-pocus#
+SA_ABRACADABRA#Hocus Pocus#
 SA_MONOCELL#Mono Cell#
 SA_CLASSCHANGE#Class Change#
-SA_SUMMONMONSTER#Monster Chant#
-SA_REVERSEORCISH#Grampus Morph#
-SA_DEATH#Grim Reaper#
-SA_FORTUNE#Gold Digger#
-SA_TAMINGMONSTER#Beastly Hypnosis#
-SA_QUESTION#Questioning#
+SA_SUMMONMONSTER#Summon Monster#
+SA_REVERSEORCISH#Reverse Orcish#
+SA_DEATH#Death#
+SA_FORTUNE#Fortune#
+SA_TAMINGMONSTER#Taming Monster#
+SA_QUESTION#?#
 SA_GRAVITY#Gravity#
-SA_LEVELUP#Leveling#
-SA_INSTANTDEATH#Suicide#
-SA_FULLRECOVERY#Rejuvenation#
+SA_LEVELUP#Level Up#
+SA_INSTANTDEATH#Instant Death#
+SA_FULLRECOVERY#Full Recovery#
 SA_COMA#Coma#
 BD_ADAPTATION#Amp#
 BD_ENCORE#Encore#
@@ -260,36 +260,36 @@ BD_ROKISWEIL#Classical Pluck#
 BD_INTOABYSS#Power Cord#
 BD_SIEGFRIED#Acoustic Rhythm#
 BD_RAGNAROK#Ragnarok#
-BA_MUSICALLESSON#Music Lessons#
-BA_MUSICALSTRIKE#Melody Strike#
-BA_DISSONANCE#Unchained Serenade#
+BA_MUSICALLESSON#Musical Lesson#
+BA_MUSICALSTRIKE#Melody Strike (Musical Strike)#
+BA_DISSONANCE#Unchained Serenade (Dissonance)#
 BA_FROSTJOKE#Unbarring Octave#
 BA_WHISTLE#Perfect Tablature#
 BA_ASSASSINCROSS#Impressive Riff#
 BA_POEMBRAGI#Magic Strings#
 BA_APPLEIDUN#Song of Lutie#
-DC_DANCINGLESSON#Dance Lessons#
-DC_THROWARROW#Slinging Arrow#
-DC_UGLYDANCE#Hip Shaker#
+DC_DANCINGLESSON#Dancing Lesson#
+DC_THROWARROW#Slinging Arrow (Throw Arrow)#
+DC_UGLYDANCE#Hip Shaker (Ugly Dance)#
 DC_SCREAM#Dazzler#
 DC_HUMMING#Focus Ballet#
 DC_DONTFORGETME#Slow Grace#
 DC_FORTUNEKISS#Lady Luck#
 DC_SERVICEFORYOU#Gypsy's Kiss#
-WE_MALE#Loving Touch#
-WE_FEMALE#Undying Love#
-WE_CALLPARTNER#Romantic Rendeavous!!#
+WE_MALE#I'll save you#
+WE_FEMALE#I'll sacrifice myself for you#
+WE_CALLPARTNER#I'm missing you#
 ITM_TOMAHAWK#Tomahawk Throwing#
 LK_AURABLADE#Aura Blade#
-LK_PARRYING#Parry#
+LK_PARRYING#Parrying#
 LK_CONCENTRATION#Spear Dynamo#
-LK_TENSIONRELAX#Relax#
-LK_BERSERK#Frenzy#
+LK_TENSIONRELAX#Tension Relax#
+LK_BERSERK#Berserk#
 HP_ASSUMPTIO#Assumptio#
 HP_BASILICA#Basilica#
-HP_MEDITATIO#Meditation#
+HP_MEDITATIO#Meditatio#
 HW_SOULDRAIN#Soul Drain#
-HW_MAGICCRASHER#Stave Crasher#
+HW_MAGICCRASHER#Stave Crasher (Magic Crasher)#
 HW_MAGICPOWER#Mystical Amplification#
 PA_PRESSURE#Gloria Domini#
 PA_SACRIFICE#Martyr's Reckoning#
@@ -308,15 +308,9 @@ SN_FALCONASSAULT#Falcon Assault#
 SN_SHARPSHOOTING#Focused Arrow Strike#
 SN_WINDWALK#Wind Walker#
 WS_MELTDOWN#Shattering Strike#
-WS_CREATECOIN#Coin Craft#
-WS_CREATENUGGET#Nugget Craft#
 WS_CARTBOOST#Cart Boost#
-WS_SYSTEMCREATE#Battle Machine Craft#
 ST_CHASEWALK#Stealth#
 ST_REJECTSWORD#Counter Instinct#
-ST_STEALBACKPACK#Steal Lunch Money#
-CR_ALCHEMY#Alchemy#
-CR_SYNTHESISPOTION#Potion Synthesis#
 CG_ARROWVULCAN#Arrow Vulcan#
 CG_MOONLIT#Sheltering Bliss#
 CG_MARIONETTE#Marionette Control#
@@ -408,17 +402,16 @@ HW_GANBANTEIN#Ganbantein#
 HW_GRAVITATION#Gravitational Field#
 WS_CARTTERMINATION#High Speed Cart Ram#
 WS_OVERTHRUSTMAX#Maximum Power-Thrust#
-CG_LONGINGFREEDOM#Longing for Freedom#
 CG_HERMODE#Hermode's Rod#
 CG_TAROTCARD#Tarot Card of Fate#
 CR_ACIDDEMONSTRATION#Acid Bomb#
 CR_CULTIVATION#Cultivate Plant#
 TK_MISSION#Taekwon Mission#
 SL_HIGH#1st Transcendent Spirit#
-KN_ONEHAND#One Handed Quicken#
-AM_TWILIGHT1#Spiritual Potion Creation 1#
-AM_TWILIGHT2#Spiritual Potion Creation 2#
-AM_TWILIGHT3#Spiritual Potion Creation 3#
+KN_ONEHAND#One Hand Quicken#
+AM_TWILIGHT1#Spiritual Potion Creation#
+AM_TWILIGHT2#Spiritual Potion Creation#
+AM_TWILIGHT3#Spiritual Potion Creation#
 HT_POWER#Beast Charge#
 GS_GLITTERING#Coin Flip#
 GS_FLING#Coin Fling#
@@ -427,7 +420,7 @@ GS_BULLSEYE#Bull's Eye#
 GS_MADNESSCANCEL#Last Stand#
 GS_ADJUSTMENT#Gunslinger's Panic#
 GS_INCREASING#Increase Accuracy#
-GS_MAGICALBULLET#Magical Bullet#
+GS_MAGICALBULLET#Magicial Bullet#
 GS_CRACKER#Cracker#
 GS_SINGLEACTION#Single Action#
 GS_SNAKEEYE#Snake Eyes#
@@ -437,10 +430,10 @@ GS_DISARM#Disarm#
 GS_PIERCINGSHOT#Wounding Shot#
 GS_RAPIDSHOWER#Trigger Happy Shot#
 GS_DESPERADO#Desperado#
-GS_GATLINGFEVER#Gatling Feaver#
+GS_GATLINGFEVER#Gatling Fever#
 GS_DUST#Crowd Control Shot#
 GS_FULLBUSTER#Full Blast#
-GS_SPREADATTACK#Spread Attack#
+GS_SPREADATTACK#Spread Shot#
 GS_GROUNDDRIFT#Gunslinger Mine#
 NJ_TOBIDOUGU#Dagger Throwing Practice#
 NJ_SYURIKEN#Throw Shuriken#
@@ -465,171 +458,12 @@ NJ_RAIGEKISAI#Lightning Jolt#
 NJ_KAMAITACHI#First Wind#
 NJ_NEN#Ninja Aura#
 NJ_ISSEN#Killing Strike#
-MB_FIGHTING#Munak Fighting#
-MB_NEUTRAL#Bongun Neutral#
-MB_TAIMING_PUTI#Puti Taming#
-MB_WHITEPOTION#White Potion#
-MB_MENTAL#Mental Errands#
-MB_CARDPITCHER#Card Pitcher#
-MB_PETPITCHER#Kick the Baby#
-MB_BODYSTUDY#Body Study#
-MB_BODYALTER#Alter Body#
-MB_PETMEMORY#Pet Memory#
-MB_M_TELEPORT#Pet Teleport#
-MB_B_GAIN#Bongun Gain#
-MB_M_GAIN#Munak Gain#
-MB_MISSION#Mission Timing#
-MB_MUNAKKNOWLEDGE#테이밍 마스터#
-MB_MUNAKBALL#Munak Ball#
-MB_SCROLL#Pet Scroll#
-MB_B_GATHERING#Bongun Gathering#
-MB_M_GATHERING#Munak Gathering#
-MB_B_EXCLUDE#Bongun Exclude#
-MB_B_DRIFT#Bongun Drift#
-MB_B_WALLRUSH#Bongun Wall Rush#
-MB_M_WALLRUSH#Munak Wall Rush#
-MB_B_WALLSHIFT#Bongun Wallshift#
-MB_M_WALLCRASH#Munak Wall Crash#
-MB_M_REINCARNATION#Munak Reincarnation#
-MB_B_EQUIP#Bongun Equip#
-SL_DEATHKNIGHT#Deathknight Spirit#
-SL_COLLECTOR#Soul Collector's Spirit#
-SL_NINJA#Ninja Spirit#
-SL_GUNNER#Gunslinger Spirit#
-AM_TWILIGHT4#Spiritual Potion Creation 4#
-DE_BERSERKAIZER#Berserk Kaizer#
-DA_DARKPOWER#Dark Power#
-DE_PASSIVE#Death Passive#
-DE_PATTACK#Death Attack#
-DE_PSPEED#Death Speed#
-DE_PDEFENSE#Death Defense#
-DE_PCRITICAL#Death Critical#
-DE_PHP#Death HP#
-DE_PSP#Death SP#
-DE_RESET#Death Reset#
-DE_RANKING#Ranking#
-DE_PTRIPLE#Death Triple#
-DE_ENERGY#Energy#
-DE_NIGHTMARE#Nightmare#
-DE_SLASH#Slash#
-DE_COIL#Coil#
-DE_WAVE#Wave#
-DE_REBIRTH#Rebirth#
-DE_AURA#Aura#
-DE_FREEZER#Freezer#
-DE_CHANGEATTACK#Change Attack#
-DE_PUNISH#Death Punish#
-DE_POISON#Death Poison#
-DE_INSTANT#Instant#
-DE_WARNING#Warning#
-DE_RANKEDKNIFE#Ranked Knife#
-DE_RANKEDGRADIUS#Death Gradisu#
-DE_GAUGE#Gauge#
-DE_GTIME#G Time#
-DE_GPAIN#G Pain#
-DE_GSKILL#G Skill#
-DE_GKILL#G Kill#
-DE_ACCEL#Acceleration#
-DE_BLOCKDOUBLE#Double Block#
-DE_BLOCKMELEE#Melee Block#
-DE_BLOCKFAR#Far Black#
-DE_FRONTATTACK#Front Attack#
-DE_DANGERATTACK#Dangerous Attack#
-DE_TWINATTACK#Twin Attack#
-DE_WINDATTACK#Wind Attack#
-DE_WATERATTACK#Water Attack#
-DA_ENERGY#Energy#
-DA_CLOUD#Cloud#
-DA_FIRSTSLOT#First Slot#
-DA_HEADDEF#Head Defense#
-DA_SPACE#Space#
-DA_TRANSFORM#Transform#
-DA_EXPLOSION#Explosion#
-DA_REWARD#Reward#
-DA_CRUSH#Crush#
-DA_ITEMREBUILD#Item Rebuild#
-DA_ILLUSION#Illusion#
-DA_NUETRALIZE#Neutralize#
-DA_RUNNER#Runner#
-DA_TRANSFER#Transfer#
-DA_WALL#Wall#
-DA_REVENGE#Revenge#
-DA_EARPLUG#Earplug#
-DA_CONTRACT#Contract#
-DA_BLACK#Black#
-DA_DREAM#Dream#
-DA_MAGICCART#Magic Cart#
-DA_COPY#Copy#
-DA_CRYSTAL#Crystal#
-DA_EXP#Experience#
-DA_CARTSWING#Cart Swing#
-DA_REBUILD#Rebuild#
-DA_JOBCHANGE#Job Change#
-DA_EDARKNESS#Eternal Darkness#
-DA_EGUARDIAN#Guardian#
-DA_TIMEOUT#Time Out#
-ALL_TIMEIN#Time#
-DA_ZENYRANK#Zeny Rank#
-DA_ACCESSORYMIX#Accessory mix#
-NPC_EARTHQUAKE#Earthquake#
-NPC_DRAGONFEAR#Dragon Fear#
-NPC_PULSESTRIKE#Pulse Strike#
-NPC_HELLJUDGEMENT#Hell's Judgement#
-NPC_WIDESILENCE#Bedlam#
-NPC_WIDEFREEZE#Frozen Heart#
-NPC_WIDEBLEEDING#Bloody Party#
-NPC_WIDESTONE#Medusa's Stare#
-NPC_WIDECONFUSE#Confusion Rule#
-NPC_WIDESLEEP#Morpheus Slumber#
-NPC_WIDESIGHT#Wide sight#
-NPC_EVILLAND#Evil Land#
-NPC_MAGICMIRROR#Magic Mirror#
-NPC_SLOWCAST#Slow Cast#
-NPC_CRITICALWOUND#Critical Wounds#
-NPC_STONESKIN#Stone Skin#
-NPC_ANTIMAGIC#Deadzone#
-NPC_WIDECURSE#Cursed Fate#
-NPC_WIDESTUN#Stunning Gaze#
-NPC_VAMPIRE_GIFT#Vampire's Gift#
-NPC_WIDESOULDRAIN#Souless Defeat#
-ALL_INCCARRY#Increase Capacity#
-NPC_HELLPOWER#Hell's Power#
-NPC_ALLHEAL#Full Heal#
+ALL_INCCARRY#Enlarge Weight LimitR#
 GM_SANDMAN#Goodnight, Sweety#
 ALL_CATCRY#Monster's Cry#
-ALL_PARTYFLEE#Blowing Wind !!#
 ALL_ANGEL_PROTECT#Thank You So Much!!#
 ALL_DREAM_SUMMERNIGHT#Summer Dream#
-ALL_REVERSEORCISH#Reverse Orcish#
 ALL_WEWISH#Sing along with the Singing Crystal's tune:#
-NPC_WIDEHEALTHFEAR#Wide area fear#
-NPC_WIDEBODYBURNNING#Wide area burnning#
-NPC_WIDEFROSTMISTY#Wide area frost misty#
-NPC_WIDECOLD#Wide area freeze#
-NPC_WIDE_DEEP_SLEEP#Wide area deep sleep#
-NPC_WIDESIREN#Wide area fascination#
-NPC_VENOMFOG#Venom fog#
-NPC_COMET#Comet#
-NPC_ICEMINE#Ice mine#
-NPC_FLAMECROSS#Flame cross#
-NPC_PULSESTRIKE2#Pulse Strike#
-NPC_JACKFROST#Jack Frost#
-NPC_WIDEWEB#Wide web#
-NPC_WIDESUCK#Wide bloodsucking#
-NPC_STORMGUST2#Storm Gust#
-NPC_FIRESTORM#Fire storm#
-NPC_REVERBERATION#Reverberation#
-NPC_LEX_AETERNA#Wide area Lex Aeterna#
-NPC_SR_CURSEDCIRCLE#Cursed Circle#
-NPC_DRAGONBREATH#Dragon's Breath#
-NPC_FATALMENACE#Fatal Menace#
-NPC_MAGMA_ERUPTION#Lava Flow#
-NPC_MANDRAGORA#Mandragora Howl#
-NPC_PSYCHIC_WAVE#Psychic Wave#
-NPC_RAYOFGENESIS#Genesis Ray#
-NPC_CLOUD_KILL#Killing Cloud#
-NPC_IGNITIONBREAK#Ignition Break#
-NPC_EARTHQUAKE_K#Earthquake#
 KN_CHARGEATK#Charge Attack#
 CR_SHRINK#Shrink#
 AS_SONICACCEL#Sonic Acceleration#
@@ -659,15 +493,6 @@ RK_DRAGONTRAINING#Dragon Training#
 RK_DRAGONBREATH#Dragon's Breath#
 RK_DRAGONHOWLING#Dragon Howling#
 RK_RUNEMASTERY#Rune Mastery#
-RK_MILLENNIUMSHIELD#Millenium Shield#
-RK_CRUSHSTRIKE#Crushing Strike#
-RK_REFRESH#Refresh#
-RK_GIANTGROWTH#Giant Growth#
-RK_STONEHARDSKIN#Skin of Stone#
-RK_VITALITYACTIVATION#Vitality#
-RK_STORMBLAST#Storm Blast#
-RK_FIGHTINGSPIRIT#Determination#
-RK_ABUNDANCE#Abundance#
 RK_PHANTOMTHRUST#Phantom Thrust#
 GC_VENOMIMPRESS#Venom Impression#
 GC_CROSSIMPACT#Cross Impact#
@@ -678,7 +503,7 @@ GC_ANTIDOTE#Antidote#
 GC_POISONINGWEAPON#Poisonous Weapon#
 GC_WEAPONBLOCKING#Weapon Blocking#
 GC_COUNTERSLASH#Counter Slash#
-GC_WEAPONCRUSH#Weapon Crush#
+GC_WEAPONCRUSH#Weapon Crush #
 GC_VENOMPRESSURE#Venom Pressure#
 GC_POISONSMOKE#Poisonous Smoke#
 GC_CLOAKINGEXCEED#Cloaking Exceed#
@@ -699,12 +524,10 @@ AB_LAUDAAGNUS#Lauda Agnus#
 AB_LAUDARAMUS#Lauda Ramus#
 AB_EUCHARISTICA#Eucharistica#
 AB_RENOVATIO#Renovatio#
-AB_HIGHNESSHEAL#High Heal#
-AB_CLEARANCE#Clearance#
-AB_EXPIATIO#Expiatio#
-AB_DUPLELIGHT#Duple Light#
-AB_DUPLELIGHT_MELEE#Duple Strike#
-AB_DUPLELIGHT_MAGIC#Duple Magic#
+AB_HIGHNESSHEAL#HIGHNESSHEAL / High Priest's Healing#
+AB_CLEARANCE#CLEARANCE / Removal#
+AB_EXPIATIO#EXPIATIO / Expiation#
+AB_DUPLELIGHT#Duple Light / Two Lights#
 AB_SILENTIUM#Silentium#
 WL_WHITEIMPRISON#White Imprison#
 WL_SOULEXPANSION#Soul Expansion#
@@ -727,12 +550,12 @@ WL_SUMMONBL#Summon Lightning Ball#
 WL_SUMMONWB#Summon Water Ball#
 WL_SUMMONSTONE#Summon Stone#
 WL_RELEASE#Release#
-WL_READING_SB#Reading Spell Book#
+WL_READING_SB#Reading Spellbook#
 WL_FREEZE_SP#Freezing Spell#
 RA_ARROWSTORM#Arrow Storm#
 RA_FEARBREEZE#Fear Breeze#
 RA_RANGERMAIN#Main Ranger#
-RA_AIMEDBOLT#Aimed Bolt #
+RA_AIMEDBOLT#Aimed Bolt#
 RA_DETONATOR#Detonator#
 RA_ELECTRICSHOCKER#Electric Shock#
 RA_CLUSTERBOMB#Bomb Cluster#
@@ -744,7 +567,7 @@ RA_WUGBITE#Warg Bite#
 RA_TOOTHOFWUG#Warg Teeth#
 RA_SENSITIVEKEEN#Keen Nose#
 RA_CAMOUFLAGE#Camouflage#
-RA_RESEARCHTRAP#Trap Research#
+RA_RESEARCHTRAP#Trap Research (RESEARCH TRAP / Trap Research)#
 RA_MAGENTATRAP#Magenta Trap#
 RA_COBALTTRAP#Cobalt Trap#
 RA_MAIZETRAP#Maze Trap#
@@ -780,7 +603,7 @@ NC_AXETORNADO#Axe Tornado #
 NC_SILVERSNIPER#FAW Silver Sniper#
 NC_MAGICDECOY#FAW Magic Decoy#
 NC_DISJOINT#Divest FAW #
-SC_FATALMENACE#Fatal Menace#
+SC_FATALMENACE#Fatal Manace#
 SC_REPRODUCE#Reproduce#
 SC_AUTOSHADOWSPELL#Shadow Spell#
 SC_SHADOWFORM#Shadow Formation#
@@ -847,9 +670,8 @@ MI_RUSH_WINDMILL#Windmill Rush#
 MI_ECHOSONG#Echo Song#
 MI_HARMONIZE#Harmonize#
 WM_LESSON#Voice Lessons#
-WM_METALICSOUND#Metallic Sound#
+WM_METALICSOUND#Metalic Sound#
 WM_REVERBERATION#Reverberation#
-WM_DOMINION_IMPULSE#Dominion Impulse#
 WM_SEVERE_RAINSTORM#Severe Rainstorm#
 WM_POEMOFNETHERWORLD#Song of Despair#
 WM_VOICEOFSIREN#Siren's Voice#
@@ -915,40 +737,72 @@ GN_S_PHARMACY#Special Pharmacy #
 AB_SECRAMENT#Sacrament#
 SR_HOWLINGOFLION#Lion's Howl#
 SR_RIDEINLIGHTNING#Lightning Ride#
-ALL_ODINS_RECALL#Call of Odin#
 RETURN_TO_ELDICASTES#To El Dicastes#
 ALL_BUYING_STORE#Open Buying Store#
 ALL_GUARDIAN_RECALL#Call of Guardian#
-ALL_ODINS_POWER#Power of Odin#
-NPC_ASSASSINCROSS#Impressive Riff#
-NPC_DISSONANCE#Unchained Serenade#
-NPC_UGLYDANCE#Hip Shaker#
-ALL_RAY_OF_PROTECTION#수호의 빛 #
+ALL_ODINS_POWER#Odin's Power#
 MC_CARTDECORATE#Cart Decoration#
-GM_ITEM_ATKMAX#물리 아이템 공격력 최대#
-GM_ITEM_ATKMIN#Max Physical item attack rate#
-GM_ITEM_MATKMAX#Minimize Physical item attack rate#
+GM_ITEM_ATKMAX#Max Physical item attack rate#
+GM_ITEM_ATKMIN#Minimize Physical item attack rate#
+GM_ITEM_MATKMAX#Max Magic item attack rate#
 GM_ITEM_MATKMIN#Minimize Magic item attack rate#
-RL_RICHS_COIN#Rich's Coin#
-RL_MASS_SPIRAL#Mass Spiral#
-RL_BANISHING_BUSTER#Vanishing Buster#
-RL_B_TRAP#Binding Trap#
-RL_FLICKER#Flicker#
-RL_S_STORM#Shattering Storm#
-RL_E_CHAIN#Eternal Chain#
-RL_QD_SHOT#Quick Draw Shot#
-RL_C_MARKER#Crimson Marker#
-RL_FIREDANCE#Fire Dance#
-RL_H_MINE#Howling Mine#
-RL_P_ALTER#Platinum Altar#
-RL_FALLEN_ANGEL#Fallen Angel#
-RL_R_TRIP#Round Trip#
-RL_D_TAIL#Dragon Tail#
-RL_FIRE_RAIN#Fire Rain#
-RL_HEAT_BARREL#Hit Barrel#
-RL_AM_BLAST#Anti Material Blast#
-RL_SLUGSHOT#Slug Shot#
-RL_HAMMER_OF_GOD#God's Hammer#
+RL_RICHS_COIN#Rich's Coin (Fortune of the Rich)#
+RL_MASS_SPIRAL#Mass Spiral (Absolute Penetration)#
+RL_BANISHING_BUSTER#Vanishing Buster (Exile)#
+RL_B_TRAP#Binding Trap (Dark Pit)#
+RL_FLICKER#Flicker (Flashing Signal)#
+RL_S_STORM#Shattering Storm (Grinding Storm)#
+RL_E_CHAIN#Eternal Chain (Infinite Chain)#
+RL_QD_SHOT#Quick Draw Shot (Tailwind Shot)#
+RL_C_MARKER#Crimson Marker (Blood Brand)#
+RL_FIREDANCE#Fire Dance (Dance of Massacre)#
+RL_H_MINE#Howling Mine (Destructive Cry)#
+RL_P_ALTER#Platinum Altar (White Gold Altar)#
+RL_FALLEN_ANGEL#Fallen Angel (Nephilim)#
+RL_R_TRIP#Round Trip (Circle Dance)#
+RL_D_TAIL#Dragon Tail (Magic Beast Tail)#
+RL_FIRE_RAIN#Fire Rain (Fire Deluge)#
+RL_HEAT_BARREL#Hit Barrel (Acceleration Bullet)#
+RL_AM_BLAST#Anti Material Blast (Obliterator)#
+RL_SLUGSHOT#Slug Shot (Fundamental Destruction)#
+RL_HAMMER_OF_GOD#God's Hammer (God's Wrath)#
+SJ_LIGHTOFMOON#Lunar Luminance#
+SJ_LUNARSTANCE#Lunar Stance#
+SJ_FULLMOONKICK#Full Moon Kick#
+SJ_LIGHTOFSTAR#Stellar Luminance#
+SJ_STARSTANCE#Stellar Stance#
+SJ_NEWMOONKICK#New Moon Kick#
+SJ_FLASHKICK#Flash Kick#
+SJ_STAREMPEROR#Star Emperor's Descent#
+SJ_NOVAEXPLOSING#Nova Explosion#
+SJ_UNIVERSESTANCE#Universal Stance#
+SJ_FALLINGSTAR#Falling Stars#
+SJ_GRAVITYCONTROL#Gravity Control#
+SJ_BOOKOFDIMENSION#Book of Dimensions#
+SJ_BOOKOFCREATINGSTAR#Star Creator's Book#
+SJ_DOCUMENT#Solar, Lunar, and Stellar Record#
+SJ_PURIFY#Solar, Lunar, and Stellar Purification#
+SJ_LIGHTOFSUN#Solar Luminance#
+SJ_SUNSTANCE#Solar Stance#
+SJ_SOLARBURST#Solar Explosion#
+SJ_PROMINENCEKICK#Blaze Kick#
+SP_SOULGOLEM#Golem Soul#
+SP_SOULSHADOW#Shadow Soul#
+SP_SOULFALCON#Falcon Soul#
+SP_SOULFAIRY#Fairy Soul#
+SP_CURSEEXPLOSION#Curse Explosion#
+SP_SOULCURSE#Evil Soul Curse#
+SP_SPA#Espa#
+SP_SHA#Esha#
+SP_SWHOO#Eswhoo#
+SP_SOULUNITY#Soul Bind#
+SP_SOULDIVISION#Soul Division#
+SP_SOULREAPER#Soul Harvest#
+SP_SOULREVOLVE#Soul Circulation#
+SP_SOULCOLLECT#Soul Collection#
+SP_SOULEXPLOSION#Soul Explosion#
+SP_SOULENERGY#Soul Energy Research#
+SP_KAUTE#Kaute#
 KO_YAMIKUMO#Shadow Hiding#
 KO_RIGHT#Righthand Mastery#
 KO_LEFT#Lefthand Mastery#
@@ -958,8 +812,8 @@ KO_BAKURETSU#Kunai Explosion#
 KO_HAPPOKUNAI#Kunai Splash#
 KO_MUCHANAGE#Rapid Throw#
 KO_HUUMARANKA#Swirling Petal#
-KO_MAKIBISHI#Makibishi#
-KO_MEIKYOUSISUI#Pure Soul#
+KO_MAKIBISHI#Makibishi (Caltrop Scatter)#
+KO_MEIKYOUSISUI#Pure Soul #
 KO_ZANZOU#Illusion - Shadow#
 KO_KYOUGAKU#Illusion - Shock#
 KO_JYUSATSU#Illusion - Death#
@@ -970,7 +824,7 @@ KO_DOHU_KOUKAI#Earth Charm#
 KO_KAIHOU#Release Ninja Spell#
 KO_ZENKAI#Cast Ninja Spell#
 KO_GENWAKU#Illusion - Bewitch#
-KO_IZAYOI#16th Night#
+KO_IZAYOI#16th Night #
 KG_KAGEHUMI#Shadow Trampling#
 KG_KYOMU#Empty Shadow#
 KG_KAGEMUSYA#Shadow Warrior#
@@ -978,15 +832,17 @@ OB_ZANGETSU#Distorted Crescent#
 OB_OBOROGENSOU#Moonlight Fantasy#
 OB_AKAITSUKI#Ominous Moonlight#
 ECL_SNOWFLIP#Snow Flip#
-ECL_PEONYMAMY#Peony Mommy#
-ECL_SADAGUI#Slapping Herb#
-ECL_SEQUOIADUST#Yggdrasil Dust#
-ECLAGE_RECALL#Return to Eclage#
+ECL_PEONYMAMY#Peonymamy#
+ECL_SADAGUI#Sadagui#
+ECL_SEQUOIADUST#Sequoia Dust#
+ECLAGE_RECALL#Move to Eclage#
+ALL_NIFLHEIM_RECALL#The World of the Dead!#
 ALL_PRONTERA_RECALL#Prontera Recall#
+ALL_GLASTHEIM_RECALL#Glast Heim Return#
 GC_DARKCROW#Dark Claw#
 RA_UNLIMIT#No Limits#
 GN_ILLUSIONDOPING#Hallucination Drug#
-RK_DRAGONBREATH_WATER#Dragon's Water Breath#
+RK_DRAGONBREATH_WATER#Dragon Water Breath#
 NC_MAGMA_ERUPTION#Lava Flow#
 WM_FRIGG_SONG#Frigg's Song#
 SO_ELEMENTAL_SHIELD#Elemental Shield#
@@ -1002,16 +858,16 @@ SU_HIDE#Hide#
 SU_SCRATCH#Scratch#
 SU_STOOP#Stoop#
 SU_LOPE#Lope#
-SU_SPRITEMABLE#Sprite Mable#
+SU_SPRITEMABLE#Sprite Marble#
 SU_POWEROFLAND#Power of Land#
-SU_SV_STEMSPEAR#SV Stem Spear#
-SU_CN_POWDERING#CN Powdering#
-SU_CN_METEOR#CN Meteor#
-SU_SV_ROOTTWIST#SV Root Twist#
+SU_SV_STEMSPEAR#Silvervine Stem Spear#
+SU_CN_POWDERING#Catnip Powdering#
+SU_CN_METEOR#Catnip Meteor#
+SU_SV_ROOTTWIST#Silvervine Root Twist#
 SU_POWEROFLIFE#Power of Life#
 SU_SCAROFTAROU#Scar of Tarou#
 SU_PICKYPECK#Picky Peck#
-SU_ARCLOUSEDASH#Arclouze Dash#
+SU_ARCLOUSEDASH#Arclouse Dash#
 SU_LUNATICCARROTBEAT#Lunatic Carrot Beat#
 SU_POWEROFSEA#Power of Sea#
 SU_TUNABELLY#Tuna Belly#
@@ -1019,22 +875,27 @@ SU_TUNAPARTY#Tuna Party#
 SU_BUNCHOFSHRIMP#Bunch of Shrimp#
 SU_FRESHSHRIMP#Fresh Shrimp#
 SU_SOULATTACK#Soul Attack#
-SU_POWEROFFLOCK#Power Of Lock#
-SU_SVG_SPIRIT#Sprit Of Savage#
+SU_POWEROFFLOCK#Power of Flock#
+SU_SVG_SPIRIT#Spirit of Savage#
 SU_HISS#Hiss#
 SU_NYANGGRASS#Nyang Grass#
 SU_GROOMING#Grooming#
 SU_PURRING#Purring#
 SU_SHRIMPARTY#Tasty Shrimp Party#
-SU_SPIRITOFLIFE#Spirit Of Life#
+SU_SPIRITOFLIFE#Spirit of Life#
 SU_MEOWMEOW#Meow Meow#
-SU_SPIRITOFLAND#Spirit Of Land#
+SU_SPIRITOFLAND#Spirit of Land#
 SU_CHATTERING#Chattering#
-SU_SPIRITOFSEA#Spirit Of Sea#
-WE_CALLALLFAMILY#Let's Go Family!#
-WE_ONEFOREVER#Love Conquers Death#
-WE_CHEERUP#Go! Parents Go!#
-SKID_CG_SPECIALSINGER#Skilled Special Singer#
+SU_SPIRITOFSEA#Spirit of Sea#
+WE_CALLALLFAMILY#Let's Go Family!.#
+WE_ONEFOREVER#Love Conquers Death.#
+WE_CHEERUP#Go Parents Go!#
+CG_SPECIALSINGER#Skilled Special Singer#
+AB_VITUPERATUM#VITUPERATUM / Criticism#
+AB_CONVENIO#CONVENIO / Gather#
+NV_BREAKTHROUGH#Breakthrough#
+NV_HELPANGEL#Help, Angel!#
+NV_TRANSCENDENCE#Transcendence#
 HLIF_HEAL#Healing Hands#
 HLIF_AVOID#Urgent Escape#
 HLIF_BRAIN#Brain Surgery#
@@ -1052,26 +913,26 @@ HVAN_CHAOTIC#Chaotic Blessings#
 HVAN_INSTRUCT#Instruction Change#
 HVAN_EXPLOSION#Self-Destruction#
 MH_SUMMON_LEGION#Summon Legion#
-MH_NEEDLE_OF_PARALYZE#Needle of Paralysis#
+MH_NEEDLE_OF_PARALYZE#Needle Of Paralyze#
 MH_POISON_MIST#Poison Mist#
 MH_PAIN_KILLER#Pain Killer#
-MH_LIGHT_OF_REGENE#Light of Regeneration#
+MH_LIGHT_OF_REGENE#Light Of Regenerate#
 MH_OVERED_BOOST#Over Boost#
 MH_ERASER_CUTTER#Eraser Cutter#
 MH_XENO_SLASHER#Xeno Slasher#
 MH_SILENT_BREEZE#Silent Breeze#
 MH_STYLE_CHANGE#Style Change#
-MH_SONIC_CRAW#Sonic Claw#
+MH_SONIC_CRAW#Sonic_Claw#
 MH_SILVERVEIN_RUSH#Silvervein Rush#
 MH_MIDNIGHT_FRENZY#Midnight Frenzy#
 MH_STAHL_HORN#Stahl Horn#
 MH_GOLDENE_FERSE#Goldene Ferse#
 MH_STEINWAND#Stein Wand#
-MH_HEILIGE_STANGE#Heilage Stange#
-MH_ANGRIFFS_MODUS#Angriffs Modus#
+MH_HEILIGE_STANGE#Heilige Stange#
+MH_ANGRIFFS_MODUS#Angriffs_Modus#
 MH_TINDER_BREAKER#Tinder Breaker#
-MH_CBC#C.B.C : Continual Break Combo#
-MH_EQC#E.Q.C : Eternal Quick Combo#
+MH_CBC#C.B.C (Continual Break Combo)#
+MH_EQC#E.Q.C (Eternal Quick Combo)#
 MH_MAGMA_FLOW#Magma Flow#
 MH_GRANITIC_ARMOR#Granitic Armor#
 MH_LAVA_SLIDE#Lava Slide#
@@ -1080,7 +941,7 @@ MH_VOLCANIC_ASH#Volcanic Ash#
 MS_BASH#Bash#
 MS_MAGNUM#Magnum Break#
 MS_BOWLINGBASH#Bowling Bash#
-MS_PARRYING#Parry#
+MS_PARRYING# #
 MS_REFLECTSHIELD#Shield Reflect#
 MS_BERSERK#Frenzy#
 MA_DOUBLE#Double Strafe#
@@ -1114,58 +975,13 @@ MER_DECAGI#Decrease AGI#
 MER_SCAPEGOAT#Scapegoat#
 MER_LEXDIVINA#Lex Divina#
 MER_ESTIMATION#Sense#
-MER_KYRIE#Kyrie Eleison#
-MER_BLESSING#Blessing#
-MER_INCAGI#Increase Agility#
 MER_INVINCIBLEOFF2#Mind Blaster#
-EL_CIRCLE_OF_FIRE#Circle of Fire#
-EL_FIRE_CLOAK#Fire Cloak#
-EL_FIRE_MANTLE#Fire Mantle#
-EL_WATER_SCREEN#Water Screen#
-EL_WATER_DROP#Water Drop#
-EL_WATER_BARRIER#Water Barrier#
-EL_WIND_STEP#Wind Step#
-EL_WIND_CURTAIN#Wind Curtain#
-EL_ZEPHYR#Zephyr#
-EL_SOLID_SKIN#Solid Skin#
-EL_STONE_SHIELD#Stone Shield#
-EL_POWER_OF_GAIA#Power of Gaia#
-EL_PYROTECHNIC#Pyrotechnic#
-EL_HEATER#Heater#
-EL_TROPIC#Tropic#
-EL_AQUAPLAY#Aquaplay#
-EL_COOLER#Cooler#
-EL_CHILLY_AIR#Chilly Air#
-EL_GUST#Gust#
-EL_BLAST#Blast Mine#
-EL_WILD_STORM#Wild Storm#
-EL_CURSED_SOIL#Cursed Soil#
-EL_UPHEAVAL#Upheaval#
-EL_FIRE_ARROW#Fire Arrow#
-EL_FIRE_BOMB#Fire Bomb#
-EL_FIRE_BOMB_ATK#Fire Bomb Attack#
-EL_FIRE_WAVE#Fire Wave#
-EL_FIRE_WAVE_ATK#Fire Wave Attack#
-EL_ICE_NEEDLE#Ice Needle#
-EL_WATER_SCREW#Water Screw#
-EL_WATER_SCREW_ATK#Water Screw Attack#
-EL_TIDAL_WEAPON#Tidal Weapon#
-EL_WIND_SLASH#Wind Slash#
-EL_HURRICANE#Hurricane#
-EL_HURRICANE_ATK#Hurricange Attack#
-EL_TYPOON_MIS#Typhoon Mist#
-EL_TYPOON_MIS_ATK#Typhoon Mist Attack#
-EL_STONE_HAMMER#Stone Hammer#
-EL_ROCK_CRUSHER#Rock Crusher#
-EL_ROCK_CRUSHER_ATK#Rock Crusher Attack#
-EL_STONE_RAIN#Stone Rain#
 GD_APPROVAL#Official Guild Approval#
 GD_KAFRACONTRACT#Contract With Kafra#
 GD_GUARDRESEARCH#Guardian Research#
 GD_GUARDUP#Strengthen Guardians#
 GD_EXTENSION#Guild Extension#
-GD_GLORYGUILD#Guild Glory#
-GD_LEADERSHIP#Guild Leadership#
+GD_LEADERSHIP#Skill Form: ^000099Passive^000000#
 GD_GLORYWOUNDS#Glorious Wounds#
 GD_SOULCOLD#Cold Heart#
 GD_HAWKEYES#Sharp Gaze#
@@ -1174,5 +990,4 @@ GD_REGENERATION#Regeneration#
 GD_RESTORE#Restoration#
 GD_EMERGENCYCALL#Urgent Call#
 GD_DEVELOPMENT#Permanent Development#
-GD_ITEMEMERGENCYCALL#Faux Urgent Call#
 GD_GUILD_STORAGE#Guild Storage Extension#

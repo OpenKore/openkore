@@ -1132,6 +1132,104 @@ Hunt Nidhoggur's Shadow#
 #
 
 // 오남경
+
+// 2019 Sweets Event
+
+3312#Catch Sweets Drops!#SG_FEEL#QUE_NOIMAGE#
+Sweets festival committee member <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI> hopes that Sweets Drops will be punished for stealing cacao beans.#
+Defeat Sweets Drops#
+
+3313#Stolen Cocoa Beans#SG_FEEL#QUE_NOIMAGE#
+Sweets festival committee member <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI> ^4d4dff Sweets Drops^000000 stole ^4d4dff stolen cacao beans^000000 for 20 Requested to retrieve the dog.#
+20 Stolen Cocoa Beans#
+
+3314#Delivery and Collection-Prontera#SG_FEEL#QUE_NOIMAGE#
+For the Sweets Festival, deliver ^4d4dff^000000 chocolates to <NAVI>[Mimi]<INFO>prontera,113,103,0,101,0</INFO></NAVI> at the Prontera Sweets Shop.#
+Chocolatete delivery to Mimi#
+
+3315#Delivery and Collection-Geffen#SG_FEEL#QUE_NOIMAGE#
+For the Sweets Festival, deliver ^4d4dff^000000 chocolates to <NAVI>[Ed]<INFO>geffen,59,165,0,101,0</INFO></NAVI> at the Geffen Sweets Shop.#
+Chocolatete delivery to Ed#
+
+3316#Delivery and Collection- Payon#SG_FEEL#QUE_NOIMAGE#
+For the Sweets Festival, deliver ^4d4dff^000000 chocolates to <NAVI>[Allen]<INFO>payon,160,126,0,101,0</INFO></NAVI> in the Payon Sweets shop.#
+Deliver Chocolatete to Allen#
+
+3317#Delivery and Collection-Aldebaran#SG_FEEL#QUE_NOIMAGE#
+For the Sweets Festival, deliver ^4d4dff^000000 chocolates to <NAVI>[Hans]<INFO>aldebaran,169,183,0,101,0</INFO></NAVI> at the Sweets Shop in Aldebaran.#
+Chocolatete Delivery to Hans#
+
+3318#Chocolatete delivery complete!#SG_FEEL#QUE_NOIMAGE#
+Delivered all chocolates for delivery to sweets stores in each major city. Report to Prontera's <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI>.#
+Report to Chocolatet#
+
+3319#Happiness sharing warmth 1#SG_FEEL#QUE_NOIMAGE#
+Prontera's <NAVI>[Crienne]<INFO>prontera,210,321,0,101,0</INFO></NAVI> has a lonely personality. We prepared a sweet crepe for Criene.#
+Crepe gift to Criene#
+
+3320#Happiness sharing warmth 2#SG_FEEL#QUE_NOIMAGE#
+Prontera's <NAVI>[Lasis]<INFO>prontera,103,308,0,101,0</INFO></NAVI> is missing her lover who went on an adventure. We prepared small and pretty strawberry whipped cream cupcakes for Lasis.#
+Cupcake Gift to Lasis#
+
+3321#Happiness sharing warmth 3#SG_FEEL#QUE_NOIMAGE#
+Prontera's <NAVI>[Eltsan]<INFO>prontera,100,183,0,101,0</INFO></NAVI> is heartbroken right now. We prepared a fresh fruit parfait for Eltsan.#
+Parfait Gift to Eltsan#
+
+3322#Happiness to share warmth 4#SG_FEEL#QUE_NOIMAGE#
+Prontera's <NAVI>[Ant]<INFO>prontera,271,339,0,101,0</INFO></NAVI> is celebrating her mother's death. We prepared moist macarons for Ant.#
+Macaron Gift to Ant#
+
+3323#Happiness sharing warmth 5#SG_FEEL#QUE_NOIMAGE#
+Prontera's <NAVI>[Chae]<INFO>prontera,269,55,0,101,0</INFO></NAVI> is struggling to choose a gift for her father. We prepared a Mont Blanc cake full of chestnut flavor for Chai.#
+A gift of Mont Blanc to Chae#
+
+3324#The joy of sharing warm happiness#SG_FEEL#QUE_NOIMAGE#
+We handed out sweets to all five customers. Let's report the results to the festival committee member <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI>.#
+Report to Chocolatet#
+
+3325#the joy of sharing sweet happiness again#SG_FEEL#QUE_NOIMAGE#
+Deliver the sweets menu to Prontera's customers again. <NAVI>[Crienne]<INFO>prontera,210,321,0,101,0</INFO></NAVI>, <NAVI>[Lasis]<INFO>prontera,103,308,0,101,0</INFO></NAVI >, <NAVI>[Eltsan]<INFO>prontera,100,183,0,101,0</INFO></NAVI>, <NAVI>[Ant]<INFO>prontera,271,339,0,101,0</INFO></ NAVI>, <NAVI>[Chae]<INFO>prontera,269,55,0,101,0</INFO></NAVI> This is 5 minutes.#
+Chocolatete delivery to each store#
+
+3326#Delivered to Crien#SG_FEEL#QUE_NOIMAGE#
+You have delivered the sweets menu to Criene. If you have finished delivering to all the guests, let's report it to <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI>.#
+Crienne delivery complete#
+
+3327#Delivered to Rasis#SG_FEEL#QUE_NOIMAGE#
+You have delivered the sweets menu to Lasis. If you have finished delivering to all the guests, let's report it to <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI>.#
+Lasis delivery complete#
+
+3328#Delivered to Eltsan#SG_FEEL#QUE_NOIMAGE#
+You have delivered the sweets menu to Eltsan. If you have finished delivering to all the guests, let's report it to <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI>.#
+Eltsan delivery complete#
+
+3329#Delivered to Ant#SG_FEEL#QUE_NOIMAGE#
+You have delivered the sweets menu to Ant. If you have finished delivering to all the guests, let's report it to <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI>.#
+Ant forwarding complete#
+
+3330#Delivered to Chai#SG_FEEL#QUE_NOIMAGE#
+You have delivered the sweets menu to Chai. If you have finished delivering to all the guests, let's report it to <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI>.#
+Chai delivery complete#
+
+3331#Today is also a happy festival sharing-waiting#SG_FEEL#QUE_NOIMAGE#
+After the waiting period ends, you can repeat the event quest through Prontera's <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI>.#
+Initialization at 04:00#
+
+3332#Delivery and Collection-Moroq#SG_FEEL#QUE_NOIMAGE#
+For the Sweets Festival, deliver chocolates to <NAVI>[Amandio]<INFO>morocc,170,75,0,101,0</INFO></NAVI> at the Morocc Sweets Shop.#
+Deliver Chocolatete to Amandio#
+
+3333#Sweet Drops punishment today too!#SG_FEEL#QUE_NOIMAGE#
+As long as Sweets Drops exists in the world, the fight against the Sweets Festival Committee will not end. <NAVI>[Chocolatet]<INFO>prontera,163,98,0,101,0</INFO></NAVI> asked you to kill 10 sweets drops.#
+Defeat Sweets Drops#
+
+3334#Sweet Drops Punishment-waiting today#SG_FEEL#QUE_NOIMAGE#
+After the waiting period ends, you can repeat the event quest through Prontera's <NAVI>[Chocolate]<INFO>prontera,163,98,0,101,0</INFO></NAVI>.#
+Initialization at 04:00#
+
+//-----------------2019 Sweets Event End-------------------
+
+
 //----------------------헌터전직------------------------------
 4000#Sherin's Job Interview#SG_FEEL#QUE_NOIMAGE#
 You've got to pass Sherin's test to take a step forward.#
@@ -1439,7 +1537,7 @@ The old scholar Defaria requested for some materials to unseal the scroll.#
 30 of each Holy Water, Rune of Darkness, Bloody Rune#
 
 7025#Pursuing Rayan Moore#SG_FEEL#QUE_NOIMAGE#
-You need to get all the required materials. Defaria said, 'I’ll be waiting for your return.'#
+You need to get all the required materials. Defaria said, 'I'll be waiting for your return.'#
 Conversation with Defaria#
 
 7026#Pursuing Rayan Moore#SG_FEEL#QUE_NOIMAGE#
@@ -1509,19 +1607,19 @@ Defaria#
 //----- EP 13
 //---- 캠프의 사육사
 7042#Part-time Job - Tatacho's feed#SG_FEEL#QUE_NOIMAGE#
-Please bring me 50 Fresh Fish. They’re feed for Tatachoes. I’m fresh out, and I’ll need to restock very soon. You can find them from Tatachoes in the fields.#
+Please bring me 50 Fresh Fish. They're feed for Tatachoes. I'm fresh out, and I'll need to restock very soon. You can find them from Tatachoes in the fields.#
 50 Fresh Fish#
 
 7043#Part-time Job - Cornus's feed#SG_FEEL#QUE_NOIMAGE#
-I’ve just run out of feed for Cornuses. Can you please bring me 30 Great Leaves and 30 Brown Roots? You can find them from Pinguiculas in the fields.#
+I've just run out of feed for Cornuses. Can you please bring me 30 Great Leaves and 30 Brown Roots? You can find them from Pinguiculas in the fields.#
 30 Great Leaf & 30 Brown Root#
 
 7044#Part-time Job - Hillslion's feed1#SG_FEEL#QUE_NOIMAGE#
-I’ve just run out of feed for Hillslions. Scholars think these guys are members of the cat family. I’ve been trying to feed them various things.. This time… I’d like to try Monster’s Feed. Can you please bring me 20 Monster’s Feeds and 30 Pet Foods?#
-20 Monster’s Feeds and 30 Pet Foods#
+I've just run out of feed for Hillslions. Scholars think these guys are members of the cat family. I've been trying to feed them various things.. This time… I'd like to try Monster's Feed. Can you please bring me 20 Monster's Feeds and 30 Pet Foods?#
+20 Monster's Feeds and 30 Pet Foods#
 
 7045#Part-time Job - Hillslion's feed2#SG_FEEL#QUE_NOIMAGE#
-This is perfect because I was going to try some new feed for Hillslions. I tried Monster’s Feed, but I don’t know if they liked it or not. Can you please bring me 50 Meats and 30 Pet Foods?#
+This is perfect because I was going to try some new feed for Hillslions. I tried Monster's Feed, but I don't know if they liked it or not. Can you please bring me 50 Meats and 30 Pet Foods?#
 50 Meats and 30 Pet Foods#
 
 7046#Part-time Job - warm rugs#SG_FEEL#QUE_NOIMAGE#
@@ -4625,99 +4723,6 @@ Vitre#
 The Secret Service have taken Vitre away for Espionage. You should probably go back to Lasda and let him know what happened to Vitre.#
 Lasda Midar#
 
-//----------Gaebolg Family Curse-----------
-18030#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Oh, thank you so much! You don't understand how much I dread those Airships. Now, would you please deliver these books to ^ff0000Mr. Karlomoff^000000 near the Juno Library?"#
-Mr. Karlomoff#
-
-18031#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"It would be a great help to me if you could get this report to her right away. Ah, her name is Rodafrian. I'm certain you can find her somewhere in that desert town."#
-Rodafrian#
-
-18032#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-Find Mondo in Mt. Mjolnir. Tell him your version of the story "The great serpent swallowed the sea. The eagle of the rainbow swallowed the serpent. Then the eagle built its nest. A nest upon the swallowed sea."#
-Mondo#
-
-18033#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Ahh, if you want to learn more, then you should try to find the kid that was singing the song. Hmm, he might be around ^3131ddthe river near here^000000. Hopefully it won't be too hard to find him."#
-Dazed Boy#
-
-18034#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-Deliver the herbs from the Exhausted-Looking Woman to Father Bamph in Prontera Church.#
-Father Bamph#
-
-18035#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Please visit Bonnie Imbullea in Mount Mjolnir to see if you can learn more about that song, or about what happened after the attempted exorcism of the Jormungand curse."#
-Bonnie Imbullea#
-
-18036#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-Head back to Prontera Church and tell Father Bamph what you learned from speaking to Bonnie Imbullea.#
-Father Bamph#
-
-18037#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Come with me, adventurer, to the secret ceremonial grounds for the royal family. Just use the switch hidden within the bookshelf and I will meet you there."#
-Hidden switch#
-
-18038#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-You've examined the body of the king's first son, the crown prince. Examine the body of the second prince.#
-Second prince#
-
-18039#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-You've examined the body of the king's second son. Examine the body of the third prince.#
-Third prince#
-
-18040#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Brave adventurer, would you please visit the Assassin Guild in Morroc and see if you can learn anything about how we can verify whether poison was used to kill the princes?"#
-Assassin Guild#
-
-18041#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"There is an Assassin's Private Pub in the 7 o'clock direction in Morroc. Go find someone named ^3131ffMarjana^000000 inside."#
-Marjana#
-
-18042#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Well, it's easier for me to visit Rodafrian now. She's much closer than Father Bamph, so I guess that I'll go talk to her first."#
-Rodafrian#
-
-18043#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Well, it's more important that I go see Father Bamph and investigate the princes bodies. I better head over to Prontera right away."#
-Father Bamph#
-
-18044#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Drat, she didn't give me any help... All I did was reveal a huge secret to her that she might spread around! Oh well, I guess I better head back to the priests..."#
-Prontera Church#
-
-18045#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Rodafrian seemed very happy and began to read through Karlomoff's report. For now, it would be best to return to Father Bamph."#
-Father Bamph#
-
-18046#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-"Then, would you please bring 1 Yellow Gemstone and 1 Green Potion to the secret ceremonial grounds as soon as you can? I will wait over there for you once again."#
-1 Yellow Gemstone and 1 Green Potion#
-
-18047#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-The solution worked to remove the scale marks from the princes. Report your findings to Father Bamph.#
-Father Bamph#
-
-18048#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-Father Bamph thanks you for helping them find out the truth. Speak to Father Biscuss and relate your findings to him as well.#
-Father Biscuss#
-
-18049#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-Father Bamph thanks you for helping them find out the truth. Speak to Bonnie Imbullea and tell her that it was not her fault.#
-Bonnie Imbullea#
-
-18050#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-Tell Bonnie Imbullea what you have discovered about the prince's deaths.#
-Bonnie Imbullea#
-
-18051#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-After telling Bonnie Imbullea the truth, you should speak to Rodfrian for the last time.#
-Rodafrian#
-
-18052#Gaebolg Family Curse#SG_FEEL#QUE_NOIMAGE#
-Speak to Father Bamph one more time.#
-#
-
 //--------Broken Matrushka--------
 18060#Missing boy Mikhail#SG_FEEL#QUE_GALLINA#
 You have agreed to find the Gallina's timid son Mikhail. He couldn't have gone far, search around and see if he is hiding somewhere.#
@@ -6289,7 +6294,7 @@ The old man in the village said that there is girl who shows up in the same plac
 #
 
 //-----------2009 A training place for novice
-		#Your first quest!#SG_FEEL#QUE_NOIMAGE#
+7117#Your first quest!#SG_FEEL#QUE_NOIMAGE#
 Cross the bridge to the right. Go through the castle entrance, into the Training Center, and talk to Sprakki inside.#
 #
 
@@ -13803,63 +13808,63 @@ Raccoon Hooray Team Captain is depressed for failing to make the Cookie house. Y
 Speak to Raccoon Hooray Captain#
 
 1281#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.2. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.2. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1282#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.5. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.5. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1283#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.12. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.12. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1284#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.20. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.20. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1285#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.25. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.25. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1286#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.1. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.1. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1287#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.15. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.15. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1288#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.7. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.7. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1289#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.17. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.17. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1290#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.24. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.24. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1291#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.3. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.3. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1292#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.10. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.10. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1293#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.11. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.11. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1294#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.19. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.19. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1295#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
-Finding Raccoon Hooray Team family! You've invited Raccoon Hooray’s No.23. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
+Finding Raccoon Hooray Team family! You've invited Raccoon Hooray's No.23. You should invite a total of 5 Raccoon Hooray Team members and report to Raccoon Hooray Captain in Prontera#
 find Raccoon Hooray family.#
 
 1296#Merry Christmas, Raccoon Hooray Team!#SG_FEEL#QUE_NOIMAGE#
@@ -17168,7 +17173,7 @@ On the second floor of Luina guild dungeon, fight off 40 Killer Mantises and 50 
 Monsters eliminated from the second floor of guild dungeon#
 
 7530# Luina Challenge 3#SG_FEEL#QUE_NOIMAGE#
-Fight off Gioia and Elvira in Hero’s Tear in Corridor of the Abyss in Luina.#
+Fight off Gioia and Elvira in Hero's Tear in Corridor of the Abyss in Luina.#
 Battle in Corridor of the Abyss#
 
 7531# Britoniah Challenge 1#SG_FEEL#QUE_NOIMAGE#
@@ -17180,7 +17185,7 @@ On the second floor of Britoniah guild dungeon, fight off 20 Abysmal Dark Frames
 Monsters eliminated from the second floor of guild dungeon#
 
 7533# Britoniah Challenge 3#SG_FEEL#QUE_NOIMAGE#
-Fight off Kades and Rudo, the guardians of the dead, in the Dead Man’s Hill in Corridor of the Abyss in Britoniah.#
+Fight off Kades and Rudo, the guardians of the dead, in the Dead Man's Hill in Corridor of the Abyss in Britoniah.#
 Battle in Corridor of the Abyss#
 
 7534# Greenwood Lake Challenge 1#SG_FEEL#QUE_NOIMAGE#
@@ -17719,7 +17724,7 @@ You have discovered the owner of the old ring.#
 #
 
 12327#The memory of old photo album#SG_FEEL#QUE_NOIMAGE#
-The merchant will be happy if he receives the photo album. Let’s find other photo albums that he may have lost and bring them to him.#
+The merchant will be happy if he receives the photo album. Let's find other photo albums that he may have lost and bring them to him.#
 #
 
 12328#Dol-Seoi's Sorrow#SG_FEEL#QUE_NOIMAGE#
@@ -18616,7 +18621,7 @@ Register for the ^8B4513Magic Competition^000000#
 
 9286#Stop Geffen Gangsters#SG_FEEL#QUE_NOIMAGE#
 Stop^0000FF Geffen Gangsters ^000000who is bullying^8B4513A student^000000#
-Let’s save ^8B4513 A student^000000#
+Let's save ^8B4513 A student^000000#
 
 9287#defeating Geffen Gangsters#SG_FEEL#QUE_NOIMAGE#
 You've defeated the ^8B4513Geffen Gangsters^000000 but there might be another encounter soon.#
@@ -18631,15 +18636,15 @@ A salary of a resident was returned from the ^8B4513Geffen Shoplifter^000000 I t
 Register for the ^8B4513Magic Competition^000000#
 
 9290#Participate in Magic competitions#SG_FEEL#QUE_NOIMAGE#
-Let’s participate in ^8B4513 Magic Competition^000000 after talking to the Receptionist at the south fountain..#
+Let's participate in ^8B4513 Magic Competition^000000 after talking to the Receptionist at the south fountain..#
 #
 
 9291# participate in Magic competitions#SG_FEEL#QUE_NOIMAGE#
-Let’s participate in ^8B4513 Magic Competition^000000 after talking to the Receptionist at the south fountain.#
+Let's participate in ^8B4513 Magic Competition^000000 after talking to the Receptionist at the south fountain.#
 #
 
 9292# participate in Magic competitions#SG_FEEL#QUE_NOIMAGE#
-Let’s participate in ^8B4513 Magic Competition^000000 after talking to the Receptionist at the south fountain.#
+Let's participate in ^8B4513 Magic Competition^000000 after talking to the Receptionist at the south fountain.#
 #
 
 9293# Register in Magic Competition#SG_FEEL#QUE_NOIMAGE#
@@ -19214,7 +19219,7 @@ Message from ^8B4513Professor Bernhard ^000000: I ask that you enter the ^0000FF
 Obtained shard from Ancient Gigantes. #
 
 9336#Go back to Professor Bernhard#SG_FEEL#QUE_NOIMAGE#
-Message from ^8B4513 Professor Bernhard^000000: I don’t have enough shards to create powerful weapons, come back when there is enough energy to open the dimensional door.#
+Message from ^8B4513 Professor Bernhard^000000: I don't have enough shards to create powerful weapons, come back when there is enough energy to open the dimensional door.#
 Reunited after 7 days.#
 
 9337#Wrapping up the Adventure#SG_FEEL#QUE_NOIMAGE#
@@ -20040,7 +20045,7 @@ A  small, white object quickly passed the entrance not so long ago. They are not
 Talk to nervous Jakk#
 
 11488#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
-Jakk said that Jakk's kitty went to the place called ’there'. Let's inform Jakk, who is trying to find the kitty.#
+Jakk said that Jakk's kitty went to the place called 'there'. Let's inform Jakk, who is trying to find the kitty.#
 Talk to Jakk#
 
 11489#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
@@ -20060,7 +20065,7 @@ If you go near the harbor, you can find many cats who want to take fish from you
 Investigation on Alberta harbor#
 
 11493#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
-You found a white cat, but it doesn't look like Jakk’s kitty. The pile of sand behind is suspicious. Let's investigate.#
+You found a white cat, but it doesn't look like Jakk's kitty. The pile of sand behind is suspicious. Let's investigate.#
 Investigation on the pile_of_sand#
 
 11494#Jakk and Jakk's cat#SG_FEEL#QUE_NOIMAGE#
@@ -21988,6 +21993,10 @@ Hunt the Dream Demon.#
 You can try again tomorrow.#
 #
 
+62961#Trick or Treat#SG_FEEL#QUE_NOIMAGE#
+Trick or Treat.#
+#
+
 62967#Nyah! Humbug!#SG_FEEL#QUE_NOIMAGE#
 Speak to Santa Claws, he's on the 2nd claw from the right.#
 #
@@ -23078,7 +23087,7 @@ I've been sent to speak to Maria ahead of the Detectives.#
 Speak to Maria.#
 
 63408#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
-Maria gave is information, I should speak to Moose & Squirrel again regarding instructions near the Guard Station.#
+Maria gave us information, I should speak to Moose & Squirrel again regarding instructions near the Guard Station.#
 Speak to Detective Moose.#
 
 63409#Blood in Prontera#SG_FEEL#QUE_NOIMAGE#
@@ -24029,11 +24038,11 @@ Come back to Jelloshaker(Payon) in 20 hours to see if there is more volunteer wo
 
 //꿈과 그림자 MD
 16215#The Shadowed Dream#SG_FEEL#QUE_NOIMAGE#
-You’ve agreed to accompany Loreche’s investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
+You've agreed to accompany Loreche's investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
 Dimensional Gap Investigation#
 
 16216#The Bubbly Illusion#SG_FEEL#QUE_NOIMAGE#
-You’ve agreed to accompany Loreche’s investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
+You've agreed to accompany Loreche's investigation. Speak with <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> to enter the Dimensional Gap.#
 Dimensional Gap Investigation#
 
 16217#Rest and Relaxation#SG_FEEL#QUE_NOIMAGE#
@@ -24041,7 +24050,7 @@ This is a daily quest, and you can re-take it when the cooldown resets. Speak to
 Resets at 4 am#
 
 16218#Modification and Calculation#SG_FEEL#QUE_NOIMAGE#
-Let’s go seek out <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> so we can enter the Dimensional Gap.#
+Let's go seek out <NAVI>[Eugenie]<INFO>dali02.gat,111,95,0,101,0</INFO></NAVI> so we can enter the Dimensional Gap.#
 Speak with Eugenie#
 
 16219#Kindness and Gratitude#SG_FEEL#QUE_NOIMAGE#
@@ -24098,7 +24107,7 @@ An Adventurer by the name “Murian” is currently on a quest for the Merchant 
 Box Retrieved#
 
 8335#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
-Let’s deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Let's deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
 Box Submitted#
 
 8336#Defeat 10 Bongun#SG_FEEL#QUE_NOIMAGE#
@@ -24130,7 +24139,7 @@ An Adventurer named Elbury is currently at the Sphinx B3F fulfilling a quest for
 Box Retrieved#
 
 8343#Return to Merchant Union#SG_FEEL#QUE_NOIMAGE#
-Let’s deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Let's deliver the Box to Masha, who works for the Alberta Merchant Union Human Resources Department.#
 Box Submitted#
 
 8344#Collection of Biolabs Data#SG_FEEL#QUE_NOIMAGE#
@@ -24138,7 +24147,7 @@ Check the small sign somewhere in the Biolabs 3F for a slot to insert a card. Ta
 Data Retrieved#
 
 8345#Deliver Card to Masha#SG_FEEL#QUE_NOIMAGE#
-Let’s deliver the data retrieval card to Masha, who works for the Alberta Merchant Union Human Resources Department.#
+Let's deliver the data retrieval card to Masha, who works for the Alberta Merchant Union Human Resources Department.#
 Card submitted#
 
 8346#Defeat 3 Eremes Guile#SG_FEEL#QUE_NOIMAGE#
@@ -24180,12 +24189,12 @@ To hire a street stall staffer, you must have an employment certificate given by
 
 //신찰스턴===MD 왕의 구두굽에서
 
-8401#Into the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+8401#Into the King's Heel#SG_FEEL#QUE_NOIMAGE#
 #
 Enter Dungeon#
 
-8538#Tomorrow at the King’s Heel#SG_FEEL#QUE_NOIMAGE#
-I never want to see another card again... But maybe I’ll feel differently tomorrow! Let’s go talk to Dr. Magnatum again tomorrow.#
+8538#Tomorrow at the King's Heel#SG_FEEL#QUE_NOIMAGE#
+I never want to see another card again... But maybe I'll feel differently tomorrow! Let's go talk to Dr. Magnatum again tomorrow.#
 Resets at 4 am#
 
 8527#Delay Insurance: EXP Card and step#SG_FEEL#QUE_NOIMAGE#
@@ -24196,7 +24205,7 @@ If you defeat 50 wild Steps and EXP Cards within the Summoning Room, you can rec
 Delay Insurance re-registration cannot be instantly processed. Please wait and try again.#
 Resets at 4 am#
 
-8529#Master of the King’s Heel#SG_FEEL#QUE_NOIMAGE#
+8529#Master of the King's Heel#SG_FEEL#QUE_NOIMAGE#
 #
 #
 
@@ -25304,3 +25313,496 @@ Delivery to Lysony#
 Delivery to Lumaca#
 #
 
+8311#We are hosting a big Melon Contest#SG_FEEL#QUE_NOIMAGE#
+Have you heard about Suspicious Melon.#
+#
+8312#We are hosting a big Melon Contest-Stand by#SG_FEEL#QUE_NOIMAGE#
+Suspicious melong size has been measured. We should try tomorrow again.#
+#
+
+
+8530#I will grind melons for you.#SG_FEEL#QUE_NOIMAGE#
+Sweet Melon Juice will be provided if Lavender brings 10 of Sweet Melons to Dalcom.#
+Bring 10 Sweet Melons#
+8531#Go to Aldebaran to find Flour#SG_FEEL#QUE_NOIMAGE#
+Lavender asked for organic flour, milk, and sweet melon. There is a man who is ready to sell organic flour in Aldeberan.#
+Chat with mysterious merchant#
+8532#Deliver Flour to Lavender#SG_FEEL#QUE_NOIMAGE#
+We've got flour. Let's bring milk and sweet melon to Lavender in Geffen.#
+Deliver flour to Lavender#
+8533#Melon Festival Hat(1)#SG_FEEL#QUE_NOIMAGE#
+Lavender's cousin 'Nannabi' is collecting Dalcom Skin. According to Lavender, probably we can make a special hat.#
+Chat with Nannabi#
+8534#Melon Festival Hat(2)#SG_FEEL#QUE_NOIMAGE#
+Geffen's Nannabi is having a problem with making a hat since there is not enough Dalcom skins. Let's bring 30 skins to him.#
+Deliver 30 Dalcom Skins#
+
+
+
+
+
+// The last update 14. 9. 17
+//-- Do not delete 1
+1#Blank#SG_FEEL#QUE_NOIMAGE#
+Turtle#
+Shell#
+
+
+// ===== TE God Item Upgrade Ganbantein
+14182#Talk to him again#SG_FEEL#QUE_NOIMAGE#
+I think I signed a suspicious document. Let's ask Feynman for sure!#
+Signature#
+
+14183#1st Item#SG_FEEL#QUE_NOIMAGE#
+Material : 2 Ripple, 2 Omen of Tempest, 2 Drifting Air, 2 Freya's Jewel, 2 Cat Tread, 1 Dusk Glow, and 1 Dawn Essence / Meet Feynman's student and listen to monster information to defeat at Valkyrie Realm#
+Item and Monster#
+
+14184#Next step#SG_FEEL#QUE_NOIMAGE#
+We made first item, Faith Silence. What is next step?#
+To Feynman#
+
+14185#2nd Item#SG_FEEL#QUE_NOIMAGE#
+Material : 2 Silver Ornament, 2 Snow Crystal, 2 Feather of Angel Wing, 2 Sputum of Bird, 2 Root of Stone, 1 Cold Moonlight, and 1 Hazy Starlight / Meet Feynman's student and listen to monster information to defeat at Britoniah#
+Item and Monster#
+
+14186#Next trial?#SG_FEEL#QUE_NOIMAGE#
+After many twists and turns, we made White snake's scales. I wonder what kind of trials will wait next. Let's ask Feynman.#
+To Feynman#
+
+14187#3rd Item#SG_FEEL#QUE_NOIMAGE#
+50 Flame Hearts and 150 Dwarf's Sweat that can be obtained by opening the treasure box on guild dungeon.#
+Required Items#
+
+14188#Next penance?#SG_FEEL#QUE_NOIMAGE#
+After all the hard work, we made Treasure Dwarf. Let's go to Feynman because I wonder what the next penance is.#
+To Feynman#
+
+14189#4th Monster#SG_FEEL#QUE_NOIMAGE#
+If you defeat 500 Zakudam, 500 Hell Apocalypse, and 300 Cobalt Mineral on Nidhoggu, you can get a Ganbantein!#
+Hunt Monsters!#
+
+
+
+// ===== TE God Item Upgrade Alvitr
+
+14190#Talk to him again#SG_FEEL#QUE_NOIMAGE#
+I think I signed a suspicious document. Let's ask Feynman for sure!#
+Signature#
+
+14191#1st Item#SG_FEEL#QUE_NOIMAGE#
+Material : 2 Breath of Spirit, 2 Spirit of Fish, 2 Thor's Gauntlets, 2 Iron Maiden, 2 Wheel of the Unknown, 1 Hero's Remains, 1 Goddess Tear, and 1 Valkyrie's Token / Meet Feynman's student and listen to monster information to defeat at Luina#
+Item and Monster#
+
+14192#Next step#SG_FEEL#QUE_NOIMAGE#
+We made first item, Warrior's Tears. What is next step?#
+To Feynman#
+
+14193#2nd Item#SG_FEEL#QUE_NOIMAGE#
+Material : 2 Wrath of Valkyrie, 2 Emblem of the Sun God, 2 Sinew of Bear, 2 Woman's Moustache, 2 Billow, 1 Brynhild Armor Piece, and 1 Andvari's Ring / Meet Feynman's student and listen to monster information to defeat at Balder#
+Item and Monster#
+
+14194#Next trial?#SG_FEEL#QUE_NOIMAGE#
+After many twists and turns, we made Warrior Anger. I wonder what kind of trials will wait next. Let's ask Feynman.#
+To Feynman#
+
+14195#3rd Item#SG_FEEL#QUE_NOIMAGE#
+20 Four Leaf Clover and 150 Warrior's Medal that can be obtained by opening the treasure box on guild dungeon.#
+Required Items#
+
+14196#Next penance?#SG_FEEL#QUE_NOIMAGE#
+After all the hard work, we made Guardian's Flower. Let's go to Feynman because I wonder what the next penance is.#
+To Feynman#
+
+
+14197#4th Monster#SG_FEEL#QUE_NOIMAGE#
+You can make Hervor Alvitr defeating 550 Aunoe, 550 Banshee Master, and 100 Fanat on Valfreyja!#
+Hunt Monsters!#
+
+
+
+// ===== Add
+14198#Monster Defeating#SG_FEEL#QUE_NOIMAGE#
+Let's report to Feynman after defeating the monster that 1st disciple tells us.#
+Hunt Monsters!#
+
+14199#Monster Defeating#SG_FEEL#QUE_NOIMAGE#
+After defeating the monsters taught by 2nd and 3rd disciples, come back and report.#
+Hunt Monsters!#
+
+14200#Monster Defeating#SG_FEEL#QUE_NOIMAGE#
+Let's defeat the missing monsters and report in again.#
+Missing Monsters#
+
+14201#Report to Feynman#SG_FEEL#QUE_NOIMAGE#
+You've defeated all the monsters. Let's check if all the items Feynman told us are there and report to him.#
+To Feynman#
+
+14202#Monster Defeating#SG_FEEL#QUE_NOIMAGE#
+Let's report to Feynman after defeating the monster that 1st disciple tells us.#
+Hunt Monsters!#
+
+14203#Monster Defeating#SG_FEEL#QUE_NOIMAGE#
+After defeating the monsters taught by 2nd and 3rd disciples, come back and report.#
+Hunt Monsters!#
+
+14204#Monster Defeating#SG_FEEL#QUE_NOIMAGE#
+Let's defeat the missing monsters and report in again.#
+Missing Monsters#
+
+14205#Report to Feynman#SG_FEEL#QUE_NOIMAGE#
+You've defeated all the monsters. Let's check if all the items Feynman told us are there and report to him.#
+To Feynman#
+
+14206#Ganbantein complete#SG_FEEL#QUE_NOIMAGE#
+Ganbantein has been made.#
+Ganbantein#
+
+14207#Hervor Alvitr Complete#SG_FEEL#QUE_NOIMAGE#
+Hervor Alvitr has been made.#
+Hervor Alvitr#
+
+12377#Playing weekend dungeon#SG_FEEL#QUE_NOIMAGE#
+This is a token that allows you to enter the Weekend Memorial dungeon. You can enter without restrictions for an hour.#
+Weekend dungeon#
+
+12378#Need to recover from fatigue#SG_FEEL#QUE_NOIMAGE#
+You can't enter the weekend dungeon because of accumulated fatigue. All fatigue will be recovered by midnight.#
+Accumulated Fatigue#
+
+
+12379#Need to recover from fatigue#SG_FEEL#QUE_NOIMAGE#
+You can't enter the friday dungeon because of accumulated fatigue. All fatigue will be recovered by midnight.#
+Accumulated Fatigue#
+
+
+//--- 2017년 6월 팝콘 페스타 --- 안지현
+16161#Hot Monster Hunt|#SG_FEEL#QUE_NOIMAGE#
+Hunt Hot Imp x 10 and Hot Explosion x 10 to get tasty Gold Corn and report back to <NAVI>[Dr. Corn]<INFO>comodo,161,177,0,101,0</INFO></NAVI> with your progress.#
+Report to Dr. Corn#
+   
+16162#Hot Monster Hunt- Stand by#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest that players can repeatedly get after stand by time during the event period. You can get the quest from Dr. Corn at Comodo.#
+Reset at 04:00#
+
+16163#Hot Monster Hunt- Repeat#SG_FEEL#QUE_NOIMAGE#
+Hunt Hot Imp x 10 and Hot Explosion x 10 again to get tasty Gold Corn and report back to <NAVI>[Dr. Corn]<INFO>comodo,161,177,0,101,0</INFO></NAVI> with your progress.#
+Report to Dr. Corn#
+
+16164#About a trip to Corodo#SG_FEEL#QUE_NOIMAGE#
+Corodo Helper <NAVI>[Pakiha]<INFO>comodo,264,123,0,101,0</INFO></NAVI>gave me a guide to Corodo. Check the Corodo Trip Sign to go to the island.#
+Check the Corodo Trip Sign#
+
+16165#Corodo the Volcanic Island!#SG_FEEL#QUE_NOIMAGE#
+Corodo Helper [Pakiha] gave me a guide to Corodo. Visit Corodo with Pakiha.#
+Visit Corodo#
+
+16166#Corodo the Volcanic Island! - Stand by#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest that players can repeatedly get after stand by time during the event period. You can get the quest from Corodo Helper at Comodo.#
+Reset at 04:00#
+
+16167#Corodo the Volcanic Island! - Repeat#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+16168#Costume Disposable 3D Glasses Rental#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest that players can repeatedly get after stand by time during the event period. Comodo Joy Booster <NAVI>[Yeon]<INFO>comodo,260,126,0,101,0</INFO></NAVI>gives out the quest to the player.#
+Reset at 04:00#
+
+16169#Rent Disposable Popcorn Hat Costume#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest that players can repeatedly get after stand by time during the event period. Comodo Joy Booster <NAVI>[Yeon]<INFO>comodo,260,126,0,101,0</INFO></NAVI>gives out the quest to the player.#
+Reset at 04:00#
+
+16170#Soda In Mouth Costume gift#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+16171#Guide of Popcorn Master#SG_FEEL#QUE_NOIMAGE#
+#
+#
+
+16172#Mighty Fine Bonfire#SG_FEEL#QUE_NOIMAGE#
+You inhaled the good smoke from the herbal bonfire. You can get back to it in 20 minutes.#
+Visit again in 20 minutes#
+
+16173#Wise and Fine Bonfire#SG_FEEL#QUE_NOIMAGE#
+You inhaled the good smoke from the herbal bonfire. You can get back to it in 20 minutes.#
+Visit again in 20 minutes#
+
+16174#Sharp and Fine Bonfire#SG_FEEL#QUE_NOIMAGE#
+You inhaled the good smoke from the herbal bonfire. You can get back to it in 10 minutes.#
+Visit again in 10 minutes#
+
+16175#Summer Solstice Day Bonfire#SG_FEEL#QUE_NOIMAGE#
+You inhaled the good smoke from the herbal bonfire. You can get back to it in 1 hour and 10 minutes.#
+Visit again in 70 minutes#
+
+16176#Summer Solstice Night Bonfire#SG_FEEL#QUE_NOIMAGE#
+You inhaled the good smoke from the herbal bonfire. You can get back to it in 50 minutes.#
+Visit again in 50 minutes#
+
+
+
+16378#Insect Monster Hunt#SG_FEEL#QUE_NOIMAGE#
+Received The Royal Hunt mission. Hunt Insect Monster x 30 that are at level 50 or above and report to <NAVI>[Deputy Officer Jang Ha-sung]<INFO>prt_fild01,107,180,0,101,0</INFO></NAVI>.#
+#
+
+16379#Insect Monster Hunt- Stand by#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest that players can repeatedly get after stand by time. You can get the quest from <NAVI>[Deputy Officer Jang Ha-sung]<INFO>prt_fild01,107,180,0,101,0</INFO></NAVI>.#
+Reset at 04:00#
+
+16380#Animal Monster Hunt#SG_FEEL#QUE_NOIMAGE#
+Received The Royal Hunt mission. Hunt Animal Monster x 30 that are at level 50 or above and report to <NAVI>[Deputy Officer Jang Ha-sung]<INFO>prt_fild01,107,180,0,101,0</INFO></NAVI>.#
+#
+
+16381#Animal Monster Hunt- Stand by#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest that players can repeatedly get after stand by time. You can get the quest from <NAVI>[Deputy Officer Jang Ha-sung]<INFO>prt_fild01,107,180,0,101,0</INFO></NAVI>.#
+Reset at 04:00#
+
+16382#Fish Monster Hunt#SG_FEEL#QUE_NOIMAGE#
+Received The Royal Hunt mission. Hunt Fish Monster x 30 that are at level 50 or above and report to <NAVI>[Deputy Officer Jang Ha-sung]<INFO>prt_fild01,107,180,0,101,0</INFO></NAVI>.#
+#
+
+16383#Fish Monster Hunt- Stand by#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest that players can repeatedly get after stand by time. You can get the quest from <NAVI>[Deputy Officer Jang Ha-sung]<INFO>prt_fild01,107,180,0,101,0</INFO></NAVI>.#
+Reset at 04:00#
+
+16384#Dragon Monster Hunt#SG_FEEL#QUE_NOIMAGE#
+Received The Royal Hunt mission. Hunt Dragon Monster x 30 that are at level 50 or above and report to <NAVI>[Deputy Officer Jang Ha-sung]<INFO>prt_fild01,107,180,0,101,0</INFO></NAVI>.#
+#
+
+16385#Dragon Monster Hunt- Stand by#SG_FEEL#QUE_NOIMAGE#
+This is a daily quest that players can repeatedly get after stand by time. You can get the quest from <NAVI>[Deputy Officer Jang Ha-sung]<INFO>prt_fild01,107,180,0,101,0</INFO></NAVI>.#
+Reset at 04:00#
+
+16386#Today's Help#SG_FEEL#QUE_NOIMAGE#
+Today's free fragrance test is finished. Bring one Rose of Choice before dawn to get perfume from <NAVI>[Master Cydorus]<INFO>prt_fild01,95,194,0,101,0</INFO></NAVI>.#
+Reset at 04:00#
+
+16387#Participate in The Royal Hunt#SG_FEEL#QUE_NOIMAGE#
+I have received a simple test to join The Royal Hunt. Hunt any 30 Insect Monsters and report to <NAVI>[Commander Nadezhda]<INFO>prt_fild01.gat,98,171,0,101,0</INFO></NAVI>.#
+The Royal Hunt Participation Test#
+
+11498#Jakk and Jakk's Days Like Jakk#SG_FEEL#QUE_NOIMAGE#
+When I came to my senses, I heard the whispers of ghosts. I was at Niflheim, the city of the dead. Let's hear what the ghosts have to say.#
+Talk to Hororong#
+
+11499#Jakk and Jakk's Days Like Jakk#SG_FEEL#QUE_NOIMAGE#
+Hororong says that Jakk at the square might know something. Let's ask Jakk at the square.#
+Talk to Jakk#
+
+11500#Jakk and Jakk's Days Like Jakk#SG_FEEL#QUE_NOIMAGE#
+I heard where Jakk was. Let's go back to Hururong.#
+Talk to Hururong#
+
+11501#Jakk and Jakk's Days Like Jakk#SG_FEEL#QUE_NOIMAGE#
+Defeat about 10 Runaway Jakks found in fields and dungeons and bring Pumpkin Decorations x 10 and Fully Dried White Stem x 20 to Hororong.#
+Jakk to Niflheim#
+
+11502#Jakk and Jakk's Days Like Jakk#SG_FEEL#QUE_NOIMAGE#
+I brought Jakk to Nifleheim. According to the ghosts, Jakk ends up developing stems when he stays in the land of the living for too long. Let him have a good rest.#
+Jakk's Rest#
+
+11503#Jakk and Jakk's Days Like Jakk#SG_FEEL#QUE_NOIMAGE#
+Defeat about 10 Runaway Jakks found in fields and dungeons and bring Pumpkin Decorations x 10 and Fully Dried White Stem x 20 to Hororing.#
+Jakk to Niflheim#
+
+11504#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+It's hard to understand, but I suppose I should get Fully Dried White Stem x 1 and return to Jakk.#
+Obtain a Fully Dried White Stem#
+
+11505#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+It seems that the cat was frightened by Jakk when he was brought in, and jumped out. Let's ask Harorong who was with Jakk then.#
+Talk to Harorong#
+
+11506#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+It's said that Nible at the entrance might have seen the kitty. Let's talk to Nible who is at the West Gate of Niflheim.#
+Nible at the West of Niflheim#
+
+11507#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+Nible says that it's not sure whether or not it was a cat, but a small white thing dashed through the gate not too long ago. Let's ask the one outside the gate.#
+Talk to the Shivering Jakk#
+
+11508#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+Jakk's cat went to the place called That Place. Let's tell Jakk who is looking for his kitty.#
+Talk to Jakk#
+
+11509#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+It seems that Jakk's kitty went to Midgard through the stem of Yggdrasil. It should pass Umbala, so let's investigate.#
+Investigate the North Gate of Umbala#
+
+11510#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+The Researcher told me that he showed the small and white thing the way to Morocc. Let's investigate the area around the North Gate of Morocc.#
+Investigate the gate of Morocc#
+
+11511#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+Merchant says that he showed the way to Alberta to someone. Let's investigate the North Gate of Alberta.#
+Investigate the gate of Alberta#
+
+11512#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+There are many cats that are trying to steal fish at the port. Let's investigate the area around the port.#
+Investigate Port Alberta#
+
+11513#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+I found a white cat, but it doesn't look like Jakk's cat. The sand pile behind there is suspicious. Let's investigate.#
+Investigate the sand pile#
+
+11514#Jakk and Jakk's Cat#SG_FEEL#QUE_NOIMAGE#
+I found a small animal's bones and a red choker with a bell. Let's go back to Jakk.#
+Talk to Jakk at Niflheim#
+
+11515#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+Jakk's Cat is being strange. Let's meet Jakk's Cat that is south of Jakk. #
+Talk to the cat#
+
+11516#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+The cat evolved into Teacher Scatleton, having learned much from his adventure. But he is now a different cat and can't go back to his old self. Let's bring the news to Jakk.#
+Talk to Jakk#
+
+11517#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+There are many cats at the center of the Valley of Gyol. Let's find the cat at the center of the Valley of Gyol.#
+Find the cat#
+
+11518#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+I found many Scatletons at the center of the Valley of Gyol, but they all seemed to be in bad condition. Let's get ^ff0000Black Fur x 5^000000 to make Scatleton warm#
+Black Fur x 5#
+
+11519#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+Scatletons are too enraged to continue the conversation. Let's to back to Jakk.#
+Talk to Jakk#
+
+11520#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+He says that he likes his cat, not just any cat. Let's talk to Teacher Scatleton again.#
+Talk to Teacher Scatleton#
+
+11521#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+It seems that Teacher Scatleton doesn't seem to be in the mood to talk. Let's go back to Jakk.#
+Talk to Jakk#
+
+11522#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+Jakk says he will wait for his cat and asks the player to look after the new cats. Get ^ff0000Fully Dried White Stem x 10 ^000000and help Scatleton at the Valley of Gyol.#
+To the Valley of Gyol#
+
+11523#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+Now that Scatleton can move, it seems hungry. Let's get ^ff0000Fresh Fish x 10 ^000000. #
+Fresh Fish x 10#
+
+11524#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+Scatleton is asking me to get additional ^ff0000Fully Dried White Stem x 20^000000. Let's get the stems.#
+Fully Dried White Stem x 20#
+
+11525#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+The scatleton has the same energy as the Teacher Scatleton. Let's ask the Teacher Scatleton.#
+Talk to Teacher Scatleton#
+
+11526#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+Even the Teacher Scatleton is going to go on a journey. Let's tell this news to Jakk.#
+Talk to Jakk#
+
+11527#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+Jakk seems to be tired. Let's visit after 04:00.#
+See you tomorrow, Jakk!#
+
+11528#Wind From the Black Hill#SG_FEEL#QUE_NOIMAGE#
+While this quest lasts, you can get Black Fur from monsters at the Valley of Gyol.#
+Black Fur Collector#
+
+11604#Jakk the Giant Pumpkin#SG_FEEL#QUE_NOIMAGE#
+To complete decorating the Halloween Festival ground, we need red and hot ^ff0000Elder Willow x 10^000000. Let's catch Elder Willow and return to Hurarong.#
+Elder Willow x 10#
+
+11605#Jakk the Giant Pumpkin#SG_FEEL#QUE_NOIMAGE#
+Have a look around Halloween Festival and complete ^ff0000Catch the Jakk Game^000000. You can go to Halloween Festival through Festival Guide.#
+Catch Jakk the Giant#
+
+11606#Jakk the Giant Pumpkin#SG_FEEL#QUE_NOIMAGE#
+Visit after 04:00 to go to Halloween Festival.#
+#
+// 19년 12월 눈꽃 축제
+
+17382#Snow Flower Bouquet Making#SG_FEEL#QUE_NOIMAGE#
+You want to make a Snow Flower Bouquet? Then bring 10 <ITEM>Magical Snow Flowers<INFO>25425</INFO></ITEM> and come back <NAVI>[here]<INFO>aldebaran,174,164,0,101,0</INFO></NAVI>.#
+Magical Snow Flower X 10#
+
+17383#Snow Flower Bouquet Making#SG_FEEL#QUE_NOIMAGE#
+Going forward, <NAVI>[Illusion Snow Magician]<INFO>aldebaran,172,162,0,101,0</INFO></NAVI> will be in charge of the Snow Bouquet Making event. If you’re interested, pay a visit.#
+To Illusion Snow Magician#
+
+17384#Heartwarming Winter Days#SG_FEEL#QUE_NOIMAGE#
+White snow to warm regions and warm cotton-padded coats to cold regions! Want to help out making heartwarming winter days? Then go to <NAVI>[Cotti]<INFO>aldebaran,124,238,0,101,0</INFO></NAVI> and Woolsie.#
+To Cotti#
+
+17385#Exchange Festa Cards#SG_FEEL#QUE_NOIMAGE#
+You found a special card from your Gift Box? Then take them to <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI> and Bling. You can get special gifts from them.#
+To Twinkle#
+
+17386#Mingle with participants#SG_FEEL#QUE_NOIMAGE#
+How about enjoying Snow Festa with other <NAVI>[participants]<INFO>aldebaran,162,127,0,101,0</INFO></NAVI>?#
+To the Clock Tower#
+
+17387#Snow Flower Bouquet Making#SG_FEEL#QUE_NOIMAGE#
+To make a Snow Bouquet, you need 10 <ITEM>Magical Snow Flowers<INFO>25425</INFO></ITEM>. Don't forget to bring one <ITEM>Carrot<INFO>515</INFO></ITEM> because snowmen want to have a nose. - <NAVI>[Marin]<INFO>aldebaran,172,162,0,101,0</INFO></NAVI>#
+Snow Flower x 10, Carrot x 1#
+
+17388#Stand by: The chill remains#SG_FEEL#QUE_NOIMAGE#
+You still have the effect of Magical Snow Flower. Please come back after dawn. - <NAVI>[Marin]<INFO>aldebaran,172,162,0,101,0</INFO></NAVI>#
+Reset at 04:00#
+
+17389#Heartwarming Winter Days#SG_FEEL#QUE_NOIMAGE#
+Snow for children who don’t get to see snow! Warm cotton-padded coat for children in cold regions! <NAVI>[We]<INFO>aldebaran,124,238,0,101,0</INFO></NAVI>take donations of Warm Cotton x 10!#
+Warm Cotton x 10#
+
+17390#Stand by: Packing cotton#SG_FEEL#QUE_NOIMAGE#
+We’re packing cotton. I think we’ll be done by dawn. Please come back after dawn! - <NAVI>[Cotti]<INFO>aldebaran,124,238,0,101,0</INFO></NAVI>#
+Reset at 04:00#
+
+17391#Exchange Festa Cards#SG_FEEL#QUE_NOIMAGE#
+Your lucky word is DECEMBER!! Open the Blue Snow Festa Card Pack that can be found in your Gift Box. Collect D, E, C, E, M, B, E, and R cards and bring them to me. That will be eight cards. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect DECEMBER cards#
+
+17392#Exchange Festa Cards#SG_FEEL#QUE_NOIMAGE#
+Your lucky word is SNOW!! Open the Blue Snow Festa Card Pack that can be found in your Gift Box. Bring S, N, O, and W cards to me. That will be four cards. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect SNOW Cards#
+
+17393#Exchange Festa Cards#SG_FEEL#QUE_NOIMAGE#
+Your lucky word is FESTIVAL!! Open the Blue Snow Festa Card Pack that can be found in your Gift Box. Bring F, E, S, T, I, V, A, and L cards to me. That will be eight cards. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect FESTIVAL Cards#
+
+17394#Exchange Festa Cards#SG_FEEL#QUE_NOIMAGE#
+Your lucky word is WHITE!! Open the Blue Snow Festa Card Pack that can be found in your Gift Box. Collect W, H, I, T, and E cards and bring them to me. There will be five of them. - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Collect WHITE Cards#
+
+17395#Stand by: 카드 교환은 1일 1회#SG_FEEL#QUE_NOIMAGE#
+You can only exchange letter cards once a day. Got it? So come back after dawn! - <NAVI>[Twinkle]<INFO>aldebaran,217,212,0,101,0</INFO></NAVI>#
+Reset at 04:00#
+
+17396#O time, halt your hasty feet.#SG_FEEL#QUE_NOIMAGE#
+Pacify <NAVI>[Sparkle]<INFO>aldebaran,159,127,0,101,0</INFO></NAVI> who is crying and listen to his story.#
+Talk to Sparkle#
+
+17397#O time, halt your hasty feet.#SG_FEEL#QUE_NOIMAGE#
+Bring me Sweet Potato x 3, Milk x 3, and Blue Card L, O, V, and E one each! - <NAVI>[Sparkle]<INFO>aldebaran,159,127,0,101,0</INFO></NAVI>#
+Winter Snack of Love#
+
+17398#O time, halt your hasty feet.#SG_FEEL#QUE_NOIMAGE#
+Right! Come on, let’s bring these lovely snacks to the <NAVI>[Villain]<INFO>aldebaran,242,118,0,101,0</INFO></NAVI>!#
+Winter Snacks for Villains 1#
+
+17399#O time, halt your hasty feet.#SG_FEEL#QUE_NOIMAGE#
+Come on, let’s bring these snacks for the next <NAVI>[Villain]<INFO>aldebaran,36,78,0,101,0</INFO></NAVI>!#
+Winter Snacks for Villains 2#
+
+17400#O time, halt your hasty feet.#SG_FEEL#QUE_NOIMAGE#
+Let’s go to the last <NAVI>[Villain]<INFO>aldebaran,138,181,0,101,0</INFO></NAVI>!#
+Winter Snacks for Villains 3#
+
+17401#O time, halt your hasty feet.#SG_FEEL#QUE_NOIMAGE#
+Now let’s go back to the Clock Tower and stop the <NAVI>[Villain Boss]<INFO>aldebaran,159,127,0,101,0</INFO></NAVI> from executing their plan!#
+To the Clock Tower#
+
+17402#Need attention#SG_FEEL#QUE_NOIMAGE#
+I knew that even villains would love winter snacks. Get Sweet Potato x 3 and Snow Festa Card Pack x 3 by defeating Your Gift Box x 5! - <NAVI>[Sparkle]<INFO>aldebaran,159,127,0,101,0</INFO></NAVI>#
+Gifts for the Villains#
+
+17403#Stand by: Need Attention#SG_FEEL#QUE_NOIMAGE#
+I knew that the winter snacks and the affectionate cards would work. Now take a good rest and help us again after dawn. - <NAVI>[Sparkle]<INFO>aldebaran,159,127,0,101,0</INFO></NAVI>#
+Reset at 04:00#

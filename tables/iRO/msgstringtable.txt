@@ -2004,8 +2004,8 @@ NoCtrl#
 Arena#
 (Character/Total Slot)#
 A#
- #
- #
+Premium#
+Service#
 D#
 E#
 Command List#
@@ -2794,7 +2794,7 @@ Trade window X#
 Auction X#
 Guild storage X#
 To sell item to NPC X#
-There is a restriction on movement#
+Movement restriction item#
 Please create a character.#
 You need to disarm the equipped projectiles.#
 You cannot enter the memorial dungeon due to excessive number of people.#
@@ -2866,7 +2866,7 @@ Sort out concurrent guild member#
 Loyalty : %s#
 Not confirmed#
 Party Name#
-Party Leader#
+PT lead#
 Exceed time limit. Shutting down client.#
 Invalid input. Client Shutting down.#
 Correct. Bonus buff will be rewarded.#
@@ -2974,7 +2974,7 @@ Refine Failed!#
 Back#
 Succeed#
 Returned#
-#
+with#
 Change homunculus' name to ^0000ff^0000ff %s^000000^000000 . Do you want to proceed?#
 Call message is opened. (Call function ON)#
 Call message is blocked. (Call function OFF)#
@@ -3192,8 +3192,8 @@ Loading the mailbox.\n^c92114Delete^000000unnecessary emails!!#
 NOW LOADING..#
 Title#
 Sender#
-#
-#
+It cannot be run simultaneously with the Ragnarok client. exit setup#
+Add-on settings#
 #
 #
 #
@@ -3224,20 +3224,20 @@ Transaction : #
 If you sell an item, you get zeny after the transaction.#
 If you buy an item, you pay zeny after the transaction.#
 #
-#
+The character is at a level where party access is not possible.#
 Job EXP: '%lld' #
 Got Job EXP %lld#
+Cannot open a stall at the current location.#
+sec, it will be possible.#
+Party member#
 #
 #
 #
 #
+Can't use it because the mini-party window is overlaid.#
 #
-#
-#
-#
-#
-#
-#
+Open on startup#
+Tipbox#
 #
 Try Again#
 [Try Again] is unavailable. Please choose refine ingredient again.#
@@ -3245,17 +3245,17 @@ Refinement Ores are not enough. [Try Again] is unavailable.#
 Zeny is not enough. [Try Again] is unavailable.#
 Blacksmith's Blessing is not enough. [Try Again] is unavailable.#
 Your item is destroyed.#
+All States reduced.#
+States reduced effect is removed.#
 #
 #
 #
 #
+Search#
 #
 #
 #
-#
-#
-#
-#
+No party member exists to delegate a party leader. Would you like to break up the party?#
 #
 #
 #
@@ -3271,12 +3271,12 @@ Your item is destroyed.#
 Dungeon Destroyed#
 [%s] got [+%d %s] successfully!#
 [%s] failed to refine [+%d %s].#
+You can leave after delegating a party leader.#
 #
 #
 #
 #
-#
-#
+%s cannot be moved in your current map.#
 Self \nFeeding#
 Homunculus cannot eat food when Rodex window is open.#
 Homunculus ate food. Left: '%s' %d ea.#
@@ -3305,78 +3305,78 @@ There is no attack target for Homun. Please set target with Alt + Right click.#
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Star Emperor(Female)#
+Soul Reaper(Female)#
+Star Emperor(Male)#
+Soul Reaper(Male)#
+HP and SP cannot be recovered naturally when your weight is %d percent full.#
+#
+#
+Unknown error. Please contact support.# //REFUSE_USA_UNKNOWN = 5200
+Unknown account .Please register an account.# //REFUSE_USA_NOT_USER = 5201
+Account blocked, Please contact support.# //REFUSE_USA_ID_BLOCK = 5202
+Account is currently inactive. Please contact support.# //REFUSE_USA_ID_INACTIVAT = 5203
+Wrong Password/User ID. Please check and try again.# //REFUSE_USA_PASSWORD = 5204
+Account is currently inactive. Please contact support.# //REFUSE_USA_EMAIL_CERT = 5205
+Account Blocked. Please contact support.# //REFUSE_USA_PAYPAL_BLOCK1 = 5206
+Account Blocked. Please contact support.# //REFUSE_USA_COUNTRY_REJECT = 5207
+Account Blocked. Please contact support.# //REFUSE_USA_PAYPAL_BLOCK2 = 5208
+Account Blocked. Please contact support.# //REFUSE_USA_WEB_BLOCK = 5209
+Underage account detected. Please contact support.# //REFUSE_USA_AGE = 5210
+Account has not recently updated its password. Please do so now.# //REFUSE_USA_PASSWORD_CHANGE = 5211
+There has been an error. Please contact support with this message.# //REFUSE_USA_INPUTDATA = 5212
+There has been an error. Please contact support with this message.# //REFUSE_USA_DATABASE = 5213
+There has been an error. Please contact support with this message.# //REFUSE_USA_SYSTEM = 5214
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Payment Information#
+Delete#
+Cancel Deletion#
+Start Game#
+Delete#
+Character List#
+Announcement#
+Create#
+Hair Style#
+Hair Color#
+#
+%dh %dm %ds#
+#
+Back#
+#
+#
+#
+Character Creation#
+Adventurer Agency Registration#
+Register for Adventurer Agency#
+Stop Recruiting#
+Memo#
+Quest#
+Field#
+Dungeon#
+MD#
+Eden Quest#
+Etc#
+Search#
+Reset#
+Join#
+Purpose#
+You may be punished if you use it for purposes that violate operating rules.#
+Post#
+Contains words that are not available#
+Join#
+1:1 Chat#
+Stop Recruiting#
+Edit#
+All#
+[%s] would like to join the party.#
 #
 #
 #
@@ -3386,20 +3386,39 @@ Confirm#
 #
 #
 #
+Taekwon#
 #
 #
 #
 #
 #
 #
+There is no block list#
+-Block list-#
 #
 #
 #
+Quest#
+Contents#
+Monster#
+Reward#
+EXP#
+JEXP#
+Item#
+Progress/Pending#
+Move to Bottom#
+Display in Easy Quest Window#
 #
 #
 #
 #
 #
+Leader#
+You are not at a level to join a party.#
+Failed to post on Adventurer Agency.#
+Posted on Adventurer Agency.#
+Enter your search#
+Tank#
 #
 #
 #
@@ -3412,57 +3431,38 @@ Confirm#
 #
 #
 #
+Strength and Attack have increased.#
+STR, INT, DEX and HIT increased.#
+Armor and HP increased.#
 #
 #
 #
+The connection is currently being delayed. Please try to reconnect shortly.#
+The connection is currently being delayed, so please try to reconnect shortly.#
 #
+This party leader is unable to receive requests.#
+This party could not be found.#
+DPS#
 #
+▲#
+▼#
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Show Souls ON#
+Show Souls OFF#
 #
 #
 #
 %d Day Login Reward#
+An error ocurred while loading account settings. (Please restart. )#
+Skill can only be used as a party.#
+Party Recuriting has been stopped.#
 #
 #
 #
-#
-#
-#
-#
-#
+ATK and MATK increased#
+ATK and MATK decreased.#
 %s Daily Login Reward#
 Event Period : %02d. %02d. ~ %02d. %02d. 24:00#
 %d Day#
@@ -3480,18 +3480,43 @@ There is no event period now.#
 #
 #
 #
-#
-#
+Can only be used by a party leader.#
+Partner's SP is insufficient or skill cannot be used now.#
 Notice about Forced Removal of Part time vending#
 Hello, Adventurer.\r\nWe closed your part time vending because there is a policy violation matter.\r\n If you need futher information, please send us 1:1 message.\r\nThanks.#
+Can insert more than 50%.#
 #
 #
-#
-#
-#
-#
-#
+Accept#
+Deny#
+Healer#
+This character could not be found.#
 Forced Removal#
+No party leader found for this party.#
+You cannot join this party due to low JobLV.#
+Currently the requester is in the area where can't join the party.#
+Party participation has been exceeded.#
+The party leader of the %s party has approved joining the party.#
+The party leader of the %s party refused to join the party.#
+%s is already joining the party.#
+You have accepted party sign up from %s.#
+You have refused party sign up from %s.#
+Application from %s was automatically rejected because you were unable to receive a request to join the party.#
+Adventurer Agency List#
+Sign up for party#
+Only the party leader can recruit the party member on the Adventurer Agency.#
+Unable to abort party recruitment.#
+Support#
+Zoom Out#
+#
+#
+#
+#
+Adventurer Agency#
+#
+The maximum level must be higher than the minimum level.#
+#
+This player's party join request has been blocked(Valid until client close)#
 #
 #
 #
@@ -3499,46 +3524,21 @@ Forced Removal#
 #
 #
 #
+Emblem Frame#
+Emblem will have a border.#
+Emblem will not have a border.#
+There is no equipped weapon.#
+Not enough Energy Balls.#
+"It contains a skill(%s) that cannot be learned.#
+/frame#
+This skill can be casted within the time limit after using Weapon Blocking.#
 #
 #
 #
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Loading a storage.#
 #
 Delete#
 Reply#
@@ -3551,41 +3551,41 @@ Search#
 Failed to feed cupet. You are not possible to feed right now.#
 Failed to feed homun. You are not possible to feed right now.#
 #
+%s %d#
+Trade failed.#
+Trade success.#
+Insufficient goods required for exchange.#
+It is already sold. Not enough remaining quantity.#
+Death#
+PvP#
+Expand number of items#
+Do you want to expand maximum number of items you can own by spending ^0000ff%s^000000? It will be expanded from \n(^0000ff%d^000000) to (^0000ff%d^000000).\n^ff0000 ※ It cannot be reverted.^000000#
+Failed to expand maximum number of items.#
+Please close other tasks before you expand the maximum number of items.#
+You do not own the required item to expand the amximum number of items.#
+Cannot expand the maximum number of items you can have.#
+Successfully expanded the maximum number of items you can have.#
+You can not contain more than %d of same items.#
+It is impossible to purchase due to exceeding the possession limit.#
+You only can purchase quantity of 1 at once.#
+#
+#
+Settings will be saved when properly closed.#
+#
+#
+#
+damage notation extension#
+map name#
 #
 #
 #
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+You cannot install more than %d.#
 Destination#
-#
-#
+Please try again soon.#
+The file cannot be registered.#
 Delete#
 Delete All#
 Are you sure you want to delete all mail in the mailbox?#
@@ -3593,12 +3593,16 @@ Receive#
 Receive All#
 Would you like to receive the attached items in the selected messages?#
 Do you want to receive all mail in the mailbox?#
+Skill Bar 2#
+Change Skill Bar#
 #
 #
 #
 #
 #
 #
+Cannot be turned off while loading.#
+There is no magic memorized using Reading Spellbook.#
 #
 #
 #
@@ -3628,14 +3632,19 @@ Do you want to receive all mail in the mailbox?#
 #
 #
 #
+You are a character who has not acquired basic skill.#
 #
 #
+Import#
 #
 #
 #
 #
 #
 #
+Cannot be combined. Refine rate is too high.#
+Refine rate is higher than the requirements of the combination.#
+Card is already enchanted or equipped.#
 #
 #
 #
@@ -3654,6 +3663,7 @@ Do you want to receive all mail in the mailbox?#
 #
 #
 #
+You cannot trade equipped items. Please unequip first.#
 #
 #
 #
@@ -3671,31 +3681,260 @@ Do you want to receive all mail in the mailbox?#
 #
 #
 #
+The purchase limit cannot exceed your possession.#
 #
 #
 #
 #
+You cant equip while trading.#
+Item exchange#
 #
+You can own %d same items at once.#
+You can trade %d same items at once.#
 #
 #
 #
 #
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+Total : %d z#
 Message#
+You can't purchase while you are opening a purchase.#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+RODEX all user received#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Open on startup#

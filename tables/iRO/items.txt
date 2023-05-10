@@ -1,3 +1,4 @@
+1#Child Admin Beta Egg#
 500#Warnut's Chocolate#
 501#Red Potion#
 502#Orange Potion#
@@ -53,7 +54,7 @@
 556#Rice Cake Stick#
 557#Neatly Sliced Rice Cake#
 558#Chocolate#
-559#Hand-made Chocolate#
+559#Handmade Chocolate#
 560#Handmade White Chocolate#
 561#White Chocolate#
 562#Double Crust Swiss Fondue#
@@ -620,6 +621,7 @@
 1293#Bellum Jamadhar#
 1294#Bellum Scale#
 1295#Bloody Tears#
+1296#Metal Katar#
 1297#Inverse Scale#
 1299#WoE TE Katar#
 1301#Axe#
@@ -681,6 +683,7 @@
 1393#End Sektura#
 1395#Bellum Buster#
 1396#Bellum Guillotine#
+1398#Metal Two Handed Axe#
 1399#TE WoE TwoHand Axe#
 1400#Vicious Mind Spear#
 1401#Javelin#
@@ -759,6 +762,7 @@
 1489#Marlin#
 1490#Giant Lance#
 1492#Bellum Glaive#
+1493#Metal Lance#
 1495#TE WoE Lance#
 1496#Thanatos Long Spear#
 1498#Crimson Lance#
@@ -839,6 +843,7 @@
 1584#Chilly Spell Book#
 1586#Bellum Bible#
 1587#Bellum Encyclopedia#
+1588#Metal Book#
 1591#WoE TE Book#
 1593#Book of Destiny#
 1596#Earth Pedigree Book#
@@ -975,21 +980,21 @@
 1752#Fire Arrow#
 1753#Steel Arrow#
 1754#Crystal Arrow#
-1755#Arrow of Wind#
+1755#Wind Arrow#
 1756#Stone Arrow#
 1757#Immaterial Arrow#
 1758#Stun Arrow#
-1759#Frozen Arrow#
+1759#Freezing Arrow#
 1760#Flash Arrow#
-1761#Cursed Arrow#
+1761#Curse Arrow#
 1762#Rusty Arrow#
 1763#Poison Arrow#
 1764#Sharp Arrow#
 1765#Oridecon Arrow#
 1766#Arrow of Counter Evil#
-1767#Arrow of Shadow#
+1767#Shadow Arrow#
 1768#Sleep Arrow#
-1769#Mute Arrow#
+1769#Silence Arrow#
 1770#Iron Arrow#
 1771#Venom Knife#
 1772#Holy Arrow#
@@ -1034,7 +1039,9 @@
 1837#Iron Nail#
 1839#Crimson Knuckle#
 1846#Illusion Combo Battle Glove#
+1847#Iron Nail#
 1862#Burning Knuckle-OS#
+1867#Safety Knuckle#
 1900#Vicious Mind Violin#
 1901#Violin#
 1902#Violin#
@@ -1129,6 +1136,7 @@
 2013#Empowered Crimson Staff#
 2014#Empowered Forest Staff#
 2016#Bellum Arc Wand#
+2018#Metal Staff#
 2019#WoE TE Two-Handed Staff#
 2020#Jormungand#
 2021#Ganbantein#
@@ -1138,6 +1146,9 @@
 2026#Vicious Mind Staff#
 2027#Sunflower Boy#
 2039#Illusion Wizardry Staff#
+2048#Iron Staff#
+2049#Staff of Blue Flame#
+2058#Detecting Staff#
 2101#Guard#
 2102#Guard#
 2103#Buckler#
@@ -1578,6 +1589,7 @@
 2589#Fallen Angel Wings#
 2590#Buwaya Sack Cloth#
 2591#Buwaya Sack Cloth(Bayani)#
+2593#Flower Garment#
 2596#Sharel Manteau#
 2598#Lamor Manteau#
 2601#Ring#
@@ -1850,6 +1862,7 @@
 2944#TE Protection Ring#
 2945#TE Rage Ring#
 2946#TE Defiance Ring#
+2948#Demons Wing#
 2949#Silversmith Bracelet#
 2950#Rune Ring#
 2951#Kvasir Ring (Blue)#
@@ -1880,6 +1893,7 @@
 2990#Pendant of Harmony#
 2991#Pendant of Chaos#
 2992#Pendant of Maelstorm#
+2994#Water Crystal Stone#
 2995#Supplement Part Dex#
 2996#Upgrade Part - Gun Barrel#
 3629#Brisingamen Token#
@@ -2368,7 +2382,7 @@
 4483#Sealed Dracula Card#
 4484#Sealed Mistress Card#
 4485#Sealed Gloom Card#
-4486#Sealed Berzebub Card#
+4486#Sealed Beelzebub Card#
 4487#Sealed Ifrit Card#
 4488#Sealed Dark Lord Card#
 4489#Sealed Pharaoh Card #
@@ -2637,7 +2651,7 @@
 4804#Catholic Lv1#
 4805#Archbishop Lv1#
 4806#MATK 3#
-4807#ASPD + 1#
+4807#ASPD+1#
 4808#Fighting Spirit 4#
 4809#Fighting Spirit 3#
 4810#Fighting Spirit 2#
@@ -2699,13 +2713,13 @@
 4867#Max HP + 3%#
 4868#Max HP + 4%#
 4869#ASPD 1#
-4870#SP + 25#
+4870#SP+25#
 4871#SP + 75#
 4872#ASPD 2#
 4873#ASPD 3#
 4875#Bear's Power#
 4876#Runaway Magic#
-4877#Speed Of Light#
+4877#Speed of Light#
 4878#Muscle Fool#
 4879#Hawkeye#
 4880#Lucky Day#
@@ -3308,6 +3322,7 @@
 5562#Love of Truth#
 5563#Dolor Hat#
 5564#Crown of Deceit#
+5566#Tiger Arhet Mask#
 5567#Sinulog Hat#
 5568#Rabbit Bonnet#
 5569#Gemini Diadem#
@@ -3481,6 +3496,7 @@
 5861#Siege Kafra Band#
 5862#Siege Sweet Gent#
 5863#Siege Zoro Mask#
+5866#Red Cherry Blossom#
 5873#HeadGear Of Siegfried#
 5874#Circlet Of Kriemhild#
 5875#Diadem Of Bruenhild#
@@ -3502,18 +3518,25 @@
 5907#Sea Captain Hat#
 5912#Costume Servant Deviling#
 5916#Exorcist Glasses#
+5917#Yellow Scarf#
 5918#Gambler's Seal#
 5921#Monster Fish Gills#
 5924#Dragon Knight Eye Patch#
+5931#Niflheim Bunny Hat#
+5932#Heavens Cage#
 5933#Crow Tengu Mask#
 5937#Flying Helmet#
 5938#Octopus Hat#
+5940#Boitata Hat#
 5945#Well-Chewed Pencil (Red)#
 5948#Loki's Assassin Mask#
 5949#Bra Hat#
 5963#Wing Headphone#
+5966#Kardui Ear#
 5967#Flying Galapago#
 5968#Clergy Nurse Cap#
+5969#Queen Anz Revenge#
+5970#Rune Helm#
 5971#Moon Eyepatch#
 5972#Chatty Parrot#
 5973#Ancient Elven Ear#
@@ -3527,9 +3550,11 @@
 6007#Freshly Boiled Octopus Rice Cake Soup#
 6009#Big Fan Of Magic#
 6010#Hoe#
-6011#Blue B Card#
-6017#Snow Flower Festival Card T#
-6018#Snow Flower Festival Card V#
+6011#Blue Card B#
+6012#Blue Card C#
+6015#Blue Card M#
+6017#Blue Card T#
+6018#Blue Card V#
 6020#Fur#
 6021#Peaked Hat#
 6022#Hard Skin#
@@ -3614,7 +3639,7 @@
 6128#Antidote#
 6144#Regrettable Tears#
 6145#Vulcan Bullet#
-6146#Magic Gear Fuel#
+6146#Madogear Fuel#
 6147#Liquid Condensed Bullet#
 6150#Mansion Key#
 6151#Giant Bradium Fragment#
@@ -3631,7 +3656,7 @@
 6190#Spell Book(Cold Bolt)#
 6191#Spell Book(Lightning Bolt)#
 6192#Spell Book(Storm Gust)#
-6193#Spell Book(Lord Of Vermilion)#
+6193#Spell Book(Lord of Vermilion)#
 6194#Spell Book(Meteor Storm)#
 6195#Spell Book(Comet)#
 6196#Spell Book(Tetra Vortex)#
@@ -3838,10 +3863,10 @@
 6509#Mysterious Flower#
 6510#Elegant Flower#
 6511#Beautiful Flower#
-6512#Charm Fire#
-6513#Charm Ice#
-6514#Charm Wind#
-6515#Charm Earth#
+6512#Fire Charm#
+6513#Ice Charm#
+6514#Wind Charm#
+6515#Earth Charm#
 6516#Bakonawa Doll#
 6517#Bangungot Doll#
 6518#Buwaya Doll#
@@ -3920,6 +3945,7 @@
 6651#Rusty Bracelet#
 6652#Old Photo Album#
 6653#Old Pill#
+6658#Halloween Coin#
 6665#RWC Enchant Reset Ticket#
 6671#Geffen Magic Contest Coin#
 6672#Gray Shard#
@@ -3940,6 +3966,14 @@
 6695#Golem's Fiery Stone Tooth#
 6696#Frilldora's Fiery Nape#
 6698#Hatchet#
+6699#Faith Silence#
+6700#White Snake's Scales#
+6701#Dwarf's Treasure#
+6702#Dwarf's Sweat#
+6703#Warrior's Tears#
+6704#Warrior's Anger#
+6705#Warrior's Medal#
+6706#Guardian's Flower#
 6707#Cash Hair Coupon#
 6708#Mana crystal#
 6712#Love Wand#
@@ -4015,6 +4049,8 @@
 6892#Invasion Book#
 6893#To Serve Man#
 6894#Champion Badge#
+6895#Processed Ancient Rune#
+6896#Processed Mystic Rune#
 6897#Blue Whale#
 6898#Santa Claws Token#
 6899#Giant Octopus#
@@ -4509,16 +4545,16 @@
 7456#Red Spice#
 7457#Cooking Oil#
 7460#Niflheim Express Ticket#
-7461#Blue A Card#
-7462#Blue E Card#
-7463#Blue F Card#
-7464#Blue H Card#
-7465#Blue L Card#
-7466#Blue N Card#
-7467#Blue O Card#
+7461#Blue Card A#
+7462#Blue Card E#
+7463#Blue Card F#
+7464#Blue Card H#
+7465#Blue Card L#
+7466#Blue Card N#
+7467#Blue Card O#
 7468#Blue P Card#
 7469#Blue U Card#
-7470#Blue W Card#
+7470#Blue Card W#
 7471#Blue Y Card#
 7472#Level 1 Cookbook#
 7473#Level 2 Cookbook#
@@ -4607,11 +4643,11 @@
 7576#Blue Jewel#
 7577#Yellow Jewel#
 7594#Sonia's Letter#
-7598#Blue I Card#
-7599#Blue D Card#
+7598#Blue Card I#
+7599#Blue Card D#
 7600#Blue K Card#
-7601#Blue S Card#
-7602#Blue R Card#
+7601#Blue Card S#
+7602#Blue Card R#
 7604#Flour#
 7605#Chicken Egg#
 7606#Token of the Ox#
@@ -4635,7 +4671,7 @@
 7643#Bloody Letter#
 7644#Unsent Mail#
 7663#Full Metal Jacket#
-7664#Grenade Launcher#
+7664#Projectile Mine#
 7665#Dragon Tail Missile#
 7666#Time Travel Scroll#
 7667#Abandoned Machine#
@@ -4644,6 +4680,7 @@
 7670#Sour Grass#
 7671#Firstaid Kit#
 7672#Relief Food#
+7685#Sour Melon#
 7704#Broken Thermometer#
 7705#Note of Geologist#
 7715#Hand-made Chocolate Recipe#
@@ -4749,6 +4786,7 @@
 7916#Silver Coin#
 7919#Festival Ticket#
 7923#Krathong#
+7925#Powerful Dimensional Essence#
 7931#Poison Kit#
 7932#Poison Herb Nerium#
 7933#Poison Herb Rantana#
@@ -4844,7 +4882,7 @@
 9098#Earth Deleter Egg#
 9099#Teddy Bear Egg#
 9100#Gremlin Egg#
-9101#Scatleton's Portable Cage#
+9101#Skeleton Transfer Station#
 9102#Mummy Egg#
 9103#Willow Egg#
 9104#Roween Egg#
@@ -4852,16 +4890,32 @@
 9106#Metaller Egg#
 9107#Ancient Mummy Egg#
 9108#Abandoned Teddy Bear Egg#
+9109#Sweets Drops Egg#
 9111#Phreeoni Egg#
 9112#Moonlight Egg#
-9113#Skelion Egg#
+9113#Roost of Skelion#
+9115#BaekSoJin's Egg#
+9123#Child Admin Beta Egg#
+9124#Child Admin Alpha Egg#
+9510#Costume Enchant Stone Box 17#
+9514#Physical Modification Permit#
+9515#Einbroch Weapon Box#
+9517#Unidentified Ore#
 9518#December Robotic Costume Box#
+9523#Metal Refine Ticket#
 9524#Overseas Care Package XXV#
+9529#Magic Modification Permit#
+9539#[Event] Blue Potion Box#
 9543#January Costume Box#
 9544#Overseas Care Package XXVI#
+9550#Gemstone of Time#
+9551#Unsealed Time Key#
 9563#2019 February Costume Box#
 9565#Overseas Care Package XXVII#
+9587#[Event]Life Potion 20 Box#
 9600#April 2019 Yggdrasil Ticket#
+9610#[Event]Mysterious Water#
+9611#Popcorn Festival Buff#
 9618#2019 May Costume Box#
 9620#May 2019 Yggdrasil Ticket#
 9621##
@@ -4918,6 +4972,8 @@
 10038#Horn Barrier#
 10040#Red Bell Necklace#
 10042#Dark Mane#
+10043#Little Headdress Beta#
+10044#Little Headdress Alpha#
 10516#Overseas Care Package XXVIII#
 10517#2019 March Costume Box#
 10520#April Costume Box#
@@ -4958,6 +5014,7 @@
 11515#Coconut#
 11516#Asai Fruit#
 11517#Purification Potion#
+11518#Novice Blue Potion#
 11519#Bifrost#
 11520#Mora Mandarin#
 11521#Pinguicula Berry Juice#
@@ -4992,7 +5049,7 @@
 11569#[Event] Orange Potion#
 11570#[Event] Red Potion#
 11571#[Event] Green Potion#
-11572#Jolly Blue Potion#
+11572#[Event] Blue Potion#
 11573#Jolly Condensed White Potion#
 11574#[Event] Yellow Slim Potion#
 11575#(Not for Sale) Lucky Cookie#
@@ -5000,6 +5057,9 @@
 11580#(Not for Sale) Lucky Candy#
 11581#(Not for Sale) Piece of Cake#
 11583#Jolly Chocolate Drink#
+11584#[Not for Sale] White Chocolate#
+11585#Hand-made Chocolate [Event]#
+11586#Handmade White Chocolate [Event]#
 11589#Iceflake#
 11592#Trans Candy Red#
 11593#Trans Candy Blue#
@@ -5011,21 +5071,31 @@
 11600#Shining Holy Water#
 11601#Delicious Anchovy#
 11602#Nepeta Cataria#
-11605#Cookies Bat#
+11605#Cookie Bats#
 11606#[Not for Sale] Light White Potion#
-11607#Sweet Crepe#
+11607#Sweets Crepe#
 11608#Chocolate Egg#
-11609#Tasty Cookie Egg#
+11609#Yummy Cookie Egg#
+11610#Sweet Melon#
+11611#Popcorn#
+11612#Aromatic Popcorn#
 11613#Harvest Biscuit#
 11616#Yummy Meat#
 11617#Silvervine Chocoball#
+11618#Chocolate Egg#
+11619#Yummy Coockie Egg#
+11621#Red Syrup#
+11622#Yellow Syrup#
+11623#White Syrup#
+11624#Blue Syrup#
+11625#Gourmet Butter Popcorn#
 11706#Steak#
 11707#Roast Beef#
 12000#Level 5 Frost Diver#
 12001#Level 3 Heal#
 12002#Level 5 Heal#
 12003#Level 1 Teleport#
-12004#Arrow Quiver#
+12004#Quiver#
 12005#Iron Arrow Quiver#
 12006#Steel Arrow Quiver#
 12007#Oridecon Arrow Quiver#
@@ -5040,7 +5110,7 @@
 12016#Speed Potion#
 12017#Slow Potion#
 12018#Firecracker#
-12019#Holy Egg#
+12019#Saint Egg#
 12020#Cursed Water#
 12021#Pork#
 12022#Galbi#
@@ -5159,9 +5229,9 @@
 12146#Poison Sphere Pack#
 12147#Freezing Sphere Pack#
 12148#Flare Sphere Pack#
-12149#Cartridge#
-12150#Blood Cartridge#
-12151#Silver Cartridge#
+12149#Bullet Case#
+12150#Bloody Bullet Case#
+12151#Silver Bullet Case#
 12153#Bowman Scroll 1#
 12154#Bowman Scroll 2#
 12155#Bowman Scroll 3#
@@ -5222,6 +5292,8 @@
 12219#LV10 Wind Walker Scroll#
 12220#LV5 Adrenaline Scroll#
 12221#Megaphone#
+12223#Sweets Macaron Cake#
+12224#Sweets Strawberry Parfait#
 12225#Sweet Candy Cane#
 12234#Fierce Cacao 99%#
 12235#Chocolate Strawberry#
@@ -5397,14 +5469,14 @@
 12493#Groovy Dragon Box#
 12494#[Event] Giant Fly Wing#
 12495#[Event] Battle Manual#
-12507#Yellow Butterfly Wing#
+12507#[Event]Yellow Butterfly Wing#
 12508#Green Butterfly Wing#
 12509#Red Butterfly Wing#
 12510#Blue Butterfly Wing#
 12512#[Event] Greed Scroll#
 12513#[Event] Glass of Illusion#
 12514#[Event] Abrasive#
-12515#Medium Life Potion#
+12515#[Event]Medium Life Potion#
 12516#[Event] Small Life Potion#
 12517#[Event] Regeneration Potion#
 12519#[Event] Small M. Defense Potion#
@@ -5471,7 +5543,7 @@
 12641#New Recruit Pack#
 12642#Fruit Of Mastela Box#
 12643#E Coin Pack50#
-12646#Donut#
+12646#Poring Pretzel#
 12647#Ink Ball#
 12654#Recruit's Mount Gift#
 12658#Transformation Scroll (Deviruchi)#
@@ -5536,6 +5608,7 @@
 12778#Baphomet Jr Ally Scroll#
 12786#Character Position Change Coupon#
 12790#Name Change Coupon#
+12791#Combat Pill#
 12806#Scaraba Scroll#
 12812#Snow Flip#
 12813#Peony Mommy#
@@ -5551,6 +5624,7 @@
 12849#Combination Kit#
 12853#Patron Scroll#
 12854#Voluminous Spray of Flowers#
+12858#RG Golden Potion#
 12859#Spring Lucky Pack#
 12860#Mommy Day Cake#
 12873#TE Potion Box#
@@ -5703,7 +5777,9 @@
 13075#Kurenai#
 13076#Raksasa Dagger#
 13078#Mikatsuki#
+13079#Metal Dagger#
 13083#TE WoE Knife#
+13085#Volcano Knife#
 13086#Goldsmithing Dagger#
 13088#Krishnagar#
 13089#Faceworm Leg#
@@ -5734,6 +5810,7 @@
 13120#Heaven's Feather & Hell's Fire#
 13122#Altair & Ares#
 13124#Altair & Ares#
+13125#Metal Revolver#
 13127#Crimson Revolver#
 13128#Vicious Mind Revolver#
 13136#Probation Revolver#
@@ -5786,13 +5863,13 @@
 13198#Tempest#
 13199#Tempest#
 13200#Bullet#
-13201#Surplus Silver Bullet#
-13202#Surplus Bloody Shell#
-13203#Surplus Incendiary Grenade#
-13204#Surplus Lightning Grenade#
-13205#Surplus Poison Grenade#
-13206#Surplus Flash Grenade#
-13207#Surplus Cryo Grenade#
+13201#Old Silver Bullet#
+13202#Old Bloody Shell#
+13203#Old Flare Sphere#
+13204#Old Lightning Sphere#
+13205#Old Poison Sphere#
+13206#Old Blind Sphere#
+13207#Old Freezing Sphere#
 13208#GongBug#
 13209#Full Metal Jacket#
 13210#Slug Shot L#
@@ -5800,10 +5877,10 @@
 13212#Slug Shot H#
 13213#Slug Shot SH#
 13214#Slug Shot XH#
-13215#Armor-Piercing Bullet#
+13215#Armor Piercing Bullet#
 13216#Blazing Bullet#
 13217#Freezing Bullet#
-13218#Lightning Bullet#
+13218#Electric Bullet#
 13219#Magic Stone Bullet#
 13220#Purifying Bullet#
 13221#Silver Bullet#
@@ -5878,11 +5955,14 @@
 13315#Huuma Thunderstorm#
 13316#Upg Huuma Shuriken#
 13317#TE WoE Huuma#
+13322#Metal Huuma Shuriken#
 13327#Crimson Huuma Shuriken#
 13328#Vicious Mind Huuma Shuriken#
 13332#Huuma Shuriken of Dancing Petals#
 13337#Illusion Huuma Fluttering Snow#
 13338#Illusion Wing Shuriken#
+13345#Huuma Shuriken Clear#
+13346#Grinder Huuma Shuriken#
 13400#Cutlus#
 13401#Excalibur#
 13402#Cutlas#
@@ -5918,6 +5998,7 @@
 13461#Sealed Evil Sword#
 13462#Sealed Maximum Sword#
 13469#Illusion Immaterial Sword#
+13485#Red Lotus Sword#
 13493#Cannon Rapier-OS#
 13503#Baphomet Horns Box#
 13505#Executioner Box#
@@ -6205,6 +6286,7 @@
 14520#Chemical Protection Weapon Scroll#
 14527#Dungeon Teleport Scroll#
 14529#Greed Scroll#
+14533#Advanced Battle Manual#
 14534#Small Life Potion#
 14535#Medium Life Potion#
 14536#Abrasive#
@@ -6246,6 +6328,12 @@
 14572#Holy Marble#
 14573#Red Burning Stone#
 14574#Vagabond's Skull#
+14575#Lutie Lady's Pancake#
+14576#Mastela Fruit Wine#
+14577#Spicy Fried Bao#
+14578#Steamed Bat Wing in Pumpkin#
+14579#Green Salad#
+14580#Fried Scorpion Tails#
 14582#Yellow Butterfly Wing#
 14583#Green Butterfly Wing#
 14584#Red Butterfly Wing#
@@ -6263,6 +6351,7 @@
 14645#Beelzebub Wing#
 14646#Orleans Full Course#
 14683#10th Anniversary Lucky Box#
+14704#Gemstone Shadow Box#
 14706#Pirate Eyepatch Box#
 14735#Hop into the Costume Box#
 14759#Shadow Armor Weapon Box#
@@ -6349,6 +6438,7 @@
 15104#Fisherman's Mail#
 15105#Kaftan#
 15106#Engineer Mail#
+15107#Entomologist Mail#
 15108#Venomous Insect Armor#
 15110#Supplement Part Str#
 15111#Upgrade Part - Plate#
@@ -6386,6 +6476,7 @@
 15165#Pure White Marching Hat#
 15166#Rosary's Necklace#
 15169#Kardui Robe#
+15174#Surfer Swimsuit#
 15175#Fire Dragon Armor#
 15176#Vigilante Suit#
 15177#Elemental Robe#
@@ -6397,26 +6488,69 @@
 15196#Sea Dragon Armor#
 15204#Abyss Dress#
 15205#Medical Scrubs#
+15209#Drakes Coat#
+15210#[Rental] Surfer Swimsuit#
 15212#YSF01 Plate#
 15246#True Hunting Mail#
 15247#Short-term Hunting Mail#
 15249#Antonio's Coat#
+15278#Overwelm Str Armor#
+15279#Overwelm Int Armor#
 15283#Mighty Black Threaded Armor#
 15343#Supplement Part Str#
 15344#Upgrade Part - Plate#
+15346#Overwelm Luk Armor#
+15347#Overwelm Vit Armor#
 15352#Nature Dress#
+15353#Overwelm Agi Armor#
+15354#Overwelm Dex Armor#
 15376#Illusion Armor Type A#
 15377#Illusion Armor Type B#
+15378#Lava Leather Armor#
+15379#Lava Leather Suits#
+15380#Lava Leather Robe#
 15384#Ritual Robe#
+15390#Regia Hunting Mail#
+15391#Red Dragon Plate#
+15392#Green Dragon Plate#
+15393#Gold Dragon Plate#
+15394#Purple Dragon Plate#
+15395#Blue Dragon Plate#
+15396#Silver Dragon Plate#
+15397#Soutane of Strength#
+15398#Soutane of Agility#
+15399#Soutane of Vitality#
+15400#Soutane of Dexterity#
+15401#Soutane of intelligence#
+15402#Soutane of Luck#
 15405#Fafnir Scale#
+15407#Whiteknight Armor#
+15409#Bloody Dress#
+15410#High Adventurer Suit#
 15417#Armor of Purple Thread#
 15419#Armor of White Thread#
 15420#Icefall Dress#
+15421#Okami Robe#
+15825#Costume Black Musang Hat#
 15838#Costume Vesper Headgear#
 15839#Costume Drooping Gunslinger#
 15840#Costume Bio Protector#
 15841#Costume Goggles Hat#
 15842#Costume Magic Time#
+15851#Costume Freyja Crown#
+15853#Costume Gold Ingot Poring#
+15858#Costume Choco Banana#
+15875#King of Spirit Circle#
+15876#RTC Second Best#
+15882#Rhythm Hairband#
+15888#Costume Devil's Hand#
+15889#Costume Boitata Cap#
+15890#Costume Black Death King's Hat#
+15891#Mountain Helmet#
+15892#Themis Helm#
+15904#Costume Love Guard#
+15905#Costume Helmet of Siegfried#
+15906#Northern Cross#
 16000#Erde#
 16001#Red Square Bag#
 16003#Carga Mace#
@@ -6434,6 +6568,7 @@
 16020#Bellum Stunner#
 16021#Bellum Flail#
 16022#Nemesis#
+16023#Metal Mace#
 16024#Quadrille#
 16025#TE WoE Mace#
 16026#RWC Memory Mace#
@@ -6455,6 +6590,8 @@
 16065#Illusion Iron Driver#
 16088#Saphir Hall-OS#
 16089#Ultio-OS#
+16097#Freezing Mace#
+16099#Rubber Hammer#
 16186#Baby Dragon Hat Box#
 16192#Quati Hat Box#
 16193#Tucan Hat Box#
@@ -6759,7 +6896,7 @@
 17452#Stocking +20 Basic Food Pack#
 17453#Christmas Stocking#
 17454#Christmas Stocking Crate#
-17458#Steam Ring box#
+17458#Steam Ring Box#
 17459#Steam Starter Package 1#
 17460#Steam Starter Package 2#
 17461#Early Winter Costume Box#
@@ -6781,7 +6918,7 @@
 17506#Paddys Costume Pack#
 17507#Kit Costume Box#
 17508#Kitcoin Purse#
-17509#Kitcoin 40 Box#
+17509#Nyangvine 40 Box#
 17514#Rideword Hat Box#
 17517#Overseas Care Boxception#
 17523#100 Silvervine Box#
@@ -6904,6 +7041,7 @@
 18111#Creeper Bow#
 18113#Bellum Arbalest#
 18114#Bellum Crossbow#
+18116#Metal Bow#
 18118#TE WoE Bow#
 18119#Thanatos Bow#
 18120#Evil Slayer Piercer Bow#
@@ -6916,9 +7054,13 @@
 18130#Crimson Bow#
 18145#Vigilante Bow#
 18149#Illusion Ballista#
+18164#Royal Bow#
+18170#Narcissus Bow#
 18178#Virtual Bow-OS#
 18179#MH-P89-OS#
 18180#AC-B44-OS#
+18189#Bloody Bow#
+18190#Bolt Shooter#
 18199#The Big Bow#
 18505#Umbala Spirit#
 18507#Elven Ears#
@@ -7016,6 +7158,7 @@
 18648#Tongue Charm#
 18649#Lude Mask#
 18650#RWC Shouting Mouth#
+18651#Ignis Cap#
 18652#Vanargand Helm#
 18653#Deviruchi Headphone#
 18655#Goedo Monocle#
@@ -7083,6 +7226,7 @@
 18734#TE WoE Magic eyes#
 18736#Unknown request#
 18737#Fortier Masque#
+18738#Boys White Hat#
 18739#Carnation Hairband#
 18740#White Phoenix Hair#
 18741#Costume Will O Wisp#
@@ -7134,6 +7278,7 @@
 18798#Pink Angel Hairband#
 18799#Nero Mask#
 18802#Poring Fedora Hat#
+18804#Thornbush Hairband#
 18805#Eclipse Hat#
 18806#Black Rabbit Hat#
 18807#White Citron Hat#
@@ -7206,6 +7351,8 @@
 18898#Yggdrasil Herald Crown#
 18900#Weisswurst#
 18901#Seppl Hat#
+18903#Frozen Land Rose#
+18904#Man's Pride#
 18907#Clinging Panda#
 18908#Isabella Red Ear#
 18909#Isabella Brown Ear#
@@ -7221,12 +7368,15 @@
 18919#Jakk's Castle Bat#
 18921#Costume Tarnished Lamp#
 18924#Gentleman Fez#
+18925#God of Winds Fan#
 18929#Elephant Model Hat#
 18930#Gorilla Model Hat#
 18931#Lion Model Hat#
 18932#Rhino Model Hat#
 18933#Mechanical Plant Hat#
+18935#There is Something#
 18937#Memory of Lovers#
+18938#Astro Circle#
 18944#Deviruchi Balloon#
 18945#Super Cute Doll Hat#
 18946#Very Cute Doll Hat#
@@ -7275,7 +7425,7 @@
 19011#Classic Earring 2 Week Rental Box#
 19012#Classic Elven Ear 2 Week Rental Box#
 19013#LuBu Helmet#
-19014#Classic Glove 2 Week Rental Box#
+19014#Gravekeeper's Blinker#
 19015#Classic Light Epsilon 2 Week Rental Box#
 19016#Classic Moonlight Sword 2 Week Rental Box#
 19017#Classic Necklace 2 Week Rental Box#
@@ -7288,7 +7438,7 @@
 19024#Feathers of Protection#
 19025#Classic Spanner 2 Week Rental Box#
 19026#Egir Helm#
-19027#Classic Refresh Shoes 2 Week Rental Box#
+19027#10 Type Glasses#
 19028#Classic Silf Manteau 2 Week Rental Box#
 19029#Classic Shell of Resistance 2 Week Rental Box#
 19030#Red Beret#
@@ -7301,6 +7451,7 @@
 19037#(null)#
 19038#12th Anniversary Crown#
 19039#12th Anniversary Elven Ears#
+19042#Maneater Flower Hairpin#
 19048#Elemental Tights#
 19079#Celestial Woman's Flower#
 19081#Faceworm Egg Shell#
@@ -7311,11 +7462,11 @@
 19101#Glast Heim Spectator#
 19102#Pale Moon Hat#
 19103#Classic New Hairstyle Coupon Box#
-19104#Classic Max Weight up Scroll Box#
+19104#Yellow Dragon Skywing#
 19105#Classic Max Weight up Scroll 10 Box#
 19106#Classic Marriage License Box#
 19107#Classic Enriched Oridecon 10 Box#
-19108#Classic Enriched Elunium 10 Box#
+19108#Wild Poring Rider#
 19109#Classic Magical Stone Box#
 19110#Classic Neuralizer Box#
 19111#Classic Dungeon Teleport 1 10 Box#
@@ -7324,15 +7475,33 @@
 19114#Sting Silk Ribbon#
 19115#Republic Hat#
 19116#Red Baby Dragon Hat#
+19117#Poring Sunglasses#
+19118#Poring Sunglasses+#
 19125#Cylinder Hairband#
+19135#Spirit of Chung E#
+19136#Spirit of Chung E#
 19137#Strawberry Mouth Guard#
 19138#Seraphim Coronet#
 19139#Survivor's Orb#
 19141#Maero Mask#
+19143#Poring Balloon#
+19146#Marin Balloon#
+19147#Drops Balloon#
+19148#Santa Poring Balloon#
+19149#Poporing Balloon#
+19150#Metalring Balloon#
+19151#Devilring Balloon#
+19152#Angelring Balloon#
+19153#Ghostring Balloon#
+19154#Arch Angelring Balloon#
 19156#Lunar Rainbow#
+19162#Scuba Mask#
 19163#Catherina Von Blood#
 19170#Guardian Processor#
 19171#Magician Knit Hat#
+19172#Pope Osuwari Head#
+19173#Floating Ice#
+19181#New Wave Sunglasses#
 19201#Classic Battle Manual 10 Box#
 19202#Classic Bubble Gum 10 Box#
 19203#Classic Rune Butterfly Wing 10 Box#
@@ -7349,6 +7518,7 @@
 19238#Poring Village Green Onion#
 19239#Poring Village Carrot#
 19241#Magical Booster#
+19244#Rosary Necklace#
 19245#Crimson Booster#
 19246#Royal Guard Necklace#
 19247#Illusion Fancy Flower#
@@ -7357,6 +7527,9 @@
 19264#Golden Fish Hat#
 19268#Giant Snake Breath#
 19269#Happy Flapping Angel Wings#
+19274#Openair Headset#
+19275#[Rental] Scuba Mask#
+19277#Soda In Mouth#
 19285#Siegfried's Helmet#
 19288#Costume Giant's Helm#
 19289#Costume Moon Eyepatch#
@@ -7365,25 +7538,32 @@
 19292#Costume Smokie Knit Cap#
 19293#Costume Under Rimmed Glasses#
 19294#Costume Cyber Cat Ear Headphones (Red)#
+19296#Fancy Feather Hat#
 19299#Tree Sprout#
+19300#Ruff Officer#
 19306#Heart Card in Mouth#
+19308#Amistr Beret#
+19314#Royal Mantle#
 19326#Book of Soyga#
 19327#Seraphim Feather#
 19329#Devil's Hand#
+19335#Sweets BongBong#
 19337#Safety Glasses#
 19338#Clover Silk Hat#
 19339#Egg Crispinette#
-19340#Holy Egg Shell#
-19341#Evil Egg Shell#
+19340#Saint Egg Shell#
+19341#Devil Egg Shell#
 19342#Bull Hat#
 19343#Circlet of Phoenix#
-19377#Shiny Marinade Beef#
+19355#Egg Minihat#
+19364#Engineer's Cap#
+19377#Mini Melon#
 19378#Chile Shrimp Gratin#
-19379#Red Mushroom Wine#
-19380#Peach Cake#
-19381#Lucky Soup#
-19382#Awfully Bitter Bracer#
-19383#Whole Roast#
+19379#Striking Hat#
+19380#Floating Ball#
+19381#Cloth of Protection#
+19382#Pop Popcorn Hat#
+19383#Slurp Slurp Hat#
 19384#Steamed Alligator with Vegetable#
 19385#Special Royal Jelly Herbal Tea#
 19386#Soul Haunted Bread#
@@ -7403,7 +7583,7 @@
 19400#Ascending Dragon Soup#
 19401#Classic Alice Doll Box#
 19402#Classic Chick Hat Box#
-19403#Classic Drooping Bunny Box#
+19403#Memories of Summer Noodles#
 19404#Classic Kettle Hat Box#
 19405#Autumn Taste#
 19406#Harvest Festa Hat#
@@ -7415,12 +7595,26 @@
 19412#Classic Vacation Hat Box#
 19413#Snow Flower#
 19414#Classic Evolved Pipe Box#
+19415#White Bird Rose#
+19416#Midgarts Glory#
+19424#Master's Head#
+19425#Master's Head#
 19426#King Of Spirit Circlet#
+19429#Zarathustra#
+19436#Vesper Headgear#
+19437#Little Garden#
 19444#Star Eyepatch#
-19453#Jejecap JP#
+19453#Jejecap Type J#
+19457#Lovely Heart Hat#
+19458#Lunatic on Shoulder#
+19459#Lunatic on Shoulder#
 19460#Black Veil#
+19463#Melonbread Cap#
+19464#Costume Melonbread Cap#
 19469#Sacred Crown#
 19495#Diabolus Wing#
+19498#Citrus Ribbon#
+19499#Fortunetelling Sealed#
 19502#Costume Goggles#
 19507#Costume Shining Sun#
 19509#Costume Butterfly Ears#
@@ -7465,11 +7659,12 @@
 19555#Costume Crescent Helm#
 19556#Costume Kabuki Mask#
 19566#Costume Samurai Mask#
+19569#Sprout Hat#
 19573#Costume Heart Wing Hairband#
 19574#Costume Lord of Death#
 19577#Costume 10th Anniversary Poring Hat#
 19580#Costume Sphinx Helm#
-19581#Costume Adventurer's Hat#
+19581#Adventurer's Cap#
 19582#Costume Cowboy Hat#
 19583#Costume Zorro Mask#
 19584#Costume Pirate Dagger#
@@ -7533,7 +7728,7 @@
 19680#Costume Tongue Mask#
 19681#Costume Silver Tiara#
 19682#Costume Santa Poring Hat#
-19683#Costume: Sweet Candy#
+19683#Sweets Candy#
 19684#Costume Happy Wig#
 19685#Costume Santa Poring Hat#
 19686#C Santa Hairband#
@@ -7600,6 +7795,7 @@
 19774#Costume Emperor Wreath#
 19775#Costume Marvelous Wig#
 19776#Costume Tomboy Fairy#
+19778#King Berry#
 19780#Costume Lunatic Knit Hat#
 19781#Costume: Angel Wing Ears#
 19783#Costume Granpa Stache#
@@ -7613,7 +7809,7 @@
 19800#Costume Carnation Hairband#
 19801#Costume Fox Hat#
 19802#Costume Drooping Nine Tail#
-19803#Costume Pinwheel Cap#
+19803#Costume Pinwheel Hat#
 19804#Costume Red Vane Hairpin#
 19805#Costume Taboo Curse Scroll#
 19806#Costume Full Bloom Hairpin#
@@ -7652,7 +7848,9 @@
 19840#Costume Hat of the Sun God#
 19841#Costume Dragonhelm Copper#
 19842#Costume Puppy Hat#
-19848#Costume Angeling Cap#
+19848#Costume Angeling Hat#
+19856#Costume Red Bean Shaved Ice Hat#
+19860#Costume Criatura Academy Hat#
 19871#Costume Musical Decoration#
 19873#Costume Carnival Hat#
 19874#Costume Carnival Circlet#
@@ -7766,7 +7964,7 @@
 20032#Mocked Muffler#
 20034#Costume Castle Bat#
 20035#Costume Miracle Blue Rose#
-20036#Costume Sword Master's Crown#
+20036#Costume Crown of the Sword Master#
 20037#Costume Owlduke Silk Hat#
 20038#Costume Haunted Armor Helm#
 20039#Costume Butterfly Wing Ears#
@@ -7784,7 +7982,9 @@
 20070#Costume Alpaca Hood#
 20071#Costume Warg in Mouth#
 20085#Costume Green Clover Hat#
+20090#Costume Egg Shell#
 20091#(null)#
+20092#Sale Sign#
 20094#Costume Green Ribbon Headband#
 20095#Costume Red Ribbon Headband#
 20096#Costume Blue Ribbon Headband#
@@ -7857,6 +8057,7 @@
 20218#Costume Spell Circuit#
 20219#(null)#
 20222#Costume Blue Christmas Cheer#
+20226#Hair Brush#
 20227#Costume Husky Hat#
 20230#Costume Bankruptcy Mask#
 20231#Costume Snowman Hat#
@@ -7954,7 +8155,7 @@
 20368#Costume Twin Ponytail (Orange)#
 20369#Costume Twin Ponytail (Blue)#
 20370#Costume Twin Ponytail (White)#
-20371#(null)#
+20371#Costume Special Kafra Hat#
 20372#(null)#
 20373#(null)#
 20374#(null)#
@@ -7974,6 +8175,7 @@
 20407#Costume Test Subject Aura (Red)#
 20430#Costume Loyal Servant of Morroc#
 20434#Costume Drooping Gunslinger#
+20440#Tone of Gold#
 20449#Costume Black and White Temptation#
 20450#Costume Gram Peony#
 20451#Costume Night Sky of Memory#
@@ -7985,7 +8187,8 @@
 20458#Costume Wild Poring Rider#
 20459#Costume Valhalla Idol#
 20468#Costume Harum Beret#
-20470#Costume Sweet Chocolate Hat#
+20470#Sweets Chocolate Hat#
+20490#Costume Full Bloom Hairpin (Blue)#
 20491#Costume Laser of Eagle#
 20495#Costume Coati Hat#
 20496#Costume Black Shiba Inu Hat#
@@ -7993,28 +8196,42 @@
 20498#Costume Elephant Hat#
 20499#Costume Cat Ear Hat#
 20500#Costume Archangel Wing#
+20507#Costume Poring Bag#
 20512#Costume Heroic Backpack#
 20514#Costume Sword of Thanatos#
 20515#Costume Magic Circle#
 20519#Costume Full Bloom Cherry Tree#
+20521#Costume Black Cat Backpack#
 20524#Costume: Shining Angel Wings#
 20534#Costume Big White Cat#
 20535#Costume Digital Space#
 20537#Costume Falling Red Foliage#
 20538#Costume Magic Circle Rainbow#
+20541#Costume Angel's Ribboned Wings#
+20543#Costume Halloween Poring Bag#
 20547#Costume Whisper's Blessing#
 20570#Costume Love Candy Pack#
 20571#Costume Valkyrie Wings#
+20572#Wing of Heart#
 20574#Costume Backpack (Red)#
 20575#Costume Backpack (Black)#
+20577#Costume Balloon Wing#
 20582#Costume Bear Backpack#
 20584#Costume Fox Tail#
+20585#Costume Angry Bear Bag#
+20586#Costume Loli Ruri's Moon#
 20589#Costume One Wing#
 20590#Costume Evil Druid Cross#
 20591#Costume Bow on Back#
 20593#Costume Frozen Crystal Wings#
 20594#Costume Big Ribbon Manteau#
+20595#Costume Novice Red Backpack#
+20599#Costume Sakura Wings#
+20602#Costume Seraphim Wings#
 20603# Costume Ulysses Wings#
+20604#Costume Blessed Veil#
+20605#Costume Leaf Umbrella#
+20607#Costume Baldr Wing#
 20700#Egir Manteau#
 20701#Sol Manteau#
 20702#TE WoE Muffler#
@@ -8033,6 +8250,7 @@
 20725#Ribbon Piamat#
 20726#Fire Dragon's Coat#
 20728#Water Dragon Coat#
+20729#Wind Dragon Coat#
 20730#Loyalists Hood#
 20732#Supplement Part Con#
 20733#Upgrade Part - Engine#
@@ -8054,6 +8272,7 @@
 20762#Costume GreatDevil Wing#
 20763#Costume Amistr Bag#
 20773#Excelion Wing#
+20774#King of Void's Garment#
 20778#Red Lotus Stole#
 20783#Hero Manteau#
 20788#Doram Manteau#
@@ -8075,6 +8294,8 @@
 20813#Survivor's Manteau#
 20814#Wakwak Manteau#
 20815#Seraphim Robe#
+20816#Yoichi's Muffler#
+20819#Oxygen Tank#
 20820#Elemental Cape#
 20821#Golden Scarf#
 20822#Mine Worker's Backpack#
@@ -8089,6 +8310,8 @@
 20845#Skin of Malach#
 20846#Temporal Manteau#
 20847#Illusion Survivor's Manteau#
+20854#Medical Cape#
+20855#[Rental] Oxygen Tank#
 20856#YSF01 Manteau#
 20859#Phreeoni Wings#
 20860#Battle Surcoat#
@@ -8097,23 +8320,46 @@
 20902#True Hunting Manteau#
 20903#Short-term Hunting Manteau#
 20922#Leviathan Muffler#
+20925#Commander Manteau#
 20931#Prism Rangers Scarf#
 20932#Old Morroc Shawl#
 20933#Illusion Engine Wing Type A#
 20934#Illusion Engine Wing Type B#
+20935#Lava Leather Manteau#
+20936#Lava Leather Muffler#
+20937#Lava Leather Hood#
 20940#Violet Halo#
 20941#Phoenix Muffler#
 20942#Manteau Of Guardsman#
+20943#Geffen Magic Muffler#
+20944#Anti Magic Manteau#
+20945#Regia Hunting Manteau#
+20946#Dragon Scale Hood#
+20947#Clergy's Manteau#
 20949#Skin of Ladon#
 20952#Mysterious Muffler#
+20953#High Adventurer Hood#
+20955#Christmas Guardian Tree#
 20962#Skin of Typhon#
+20963#Temporal Str Manteau#
+20964#Temporal Agi Manteau#
+20965#Temporal Vit Manteau#
+20966#Temporal Int Manteau#
+20967#Temporal Dex Manteau#
+20968#Temporal Luk Manteau#
 20969#Rainbow Muffler#
+20973#Spiritual Cloth#
+20985#Costume Gourd Sake Bottle#
+20986#Scientists Mantle#
 20988#Costume Mechanical Butterfly#
 20989#Costume Wind-up Screw#
 20990#Costume Rotating Gears#
+20991#Fairy of Eden#
+20993#Avoidance Cape#
 21001#Bellum Claymore#
 21002#Bellum Katzbalger#
 21003#Muramasa#
+21005#Metal Two Handed Sword#
 21006#TE WoE TwoHand Sword#
 21007#Heavy Sword#
 21009#Thanatos Great Sword#
@@ -8122,7 +8368,12 @@
 21015#Crimson Twohand Sword#
 21016#Vicious Mind Two-Handed Sword#
 21018#Lindy Hop#
+21038#Oriental Sword#
+21039#Two handed Sword of Kingdom#
 21047#Beam Claymore-OS#
+21053#Full Force#
+21054#Claw Sword#
+21058#Awakened Dragonic Slayer#
 21059#The Ultimate#
 21202#Costume Eat Coin#
 21205#Nut Cracker#
@@ -8160,6 +8411,8 @@
 22051#Lamor Shoes#
 22052#Gravekeeper Shoes#
 22055#Sharel Shoes#
+22056#Fallen Angel Shoes#
+22057#Flow Shoes#
 22058#Dragon Trainer Shoes#
 22059#Egir Shoes#
 22060#Hunter Shoes#
@@ -8181,21 +8434,22 @@
 22096#Fallen Angel Shoes#
 22097#Dragon Trainer Shoes#
 22099#Mechanic Shoes#
+22101#Angel Poring Shoes#
 22103#Excelion Leg#
 22104#Pororoca Shoes#
 22106#Giant Boots#
-22107#Modified Str Boots#
-22108#Modified Int Boots#
-22109#Modified Agi Boots#
-22110#Modified Vit Boots#
-22111#Modified Dex Boots#
-22112#Modified Luk Boots#
-22113#Modified Str Boots#
-22114#Modified Int Boots#
-22115#Modified Agi Boots#
-22116#Modified Vit Boots#
-22117#Modified Dex Boots#
-22118#Modified Luk Boots#
+22107#Modified Strength Boots#
+22108#Modified Intelligence Boots#
+22109#Modified Agility Boots#
+22110#Modified Vitality Boots#
+22111#Modified Dexterity Boots#
+22112#Modified Luck Boots#
+22113#Modified Strength Boots#
+22114#Modified Intelligence Boots#
+22115#Modified Agility Boots#
+22116#Modified Vitality Boots#
+22117#Modified Dexterity Boots#
+22118#Modified Luck Boots#
 22120#Shoes Of Punishment#
 22131#Spurred Boots#
 22133#Illusion Shoes#
@@ -8208,12 +8462,23 @@
 22170#Survivor's Shoes#
 22171#Ancient Hero Boots#
 22172#Gray Wing Boots#
+22174#Scaraba High Heels#
 22189#Pilgrim Shoes#
+22195#Booster Shoes#
 22196#Illusion Leg Type A#
 22197#Illusion Leg Type B#
 22198#Traveler Shoes#
+22199#Lava Leather Boots#
+22200#Lava Leather Shoes#
+22201#Lava Leather Sandles#
+22206#Regia Hunting Boots#
 22207#Imperial Boots#
+22208#Dragon Scale Boots#
+22209#Clergy's Boots#
 22210#Fluffy Fish Shoes#
+22215#High Adventurer's Sandals#
+22234#Frontier Boots#
+22238#Great Hero's Boots#
 22507#Old Scroll#
 22508#Eden Group Mark#
 22511#Fenrir's Power Scroll#
@@ -8228,9 +8493,9 @@
 22537#Prize Of Hero#
 22538#Hanbok bag#
 22540#Lux Anima Runestone#
-22542#Jolly Concentration Potion#
-22543#Jolly Berserk Potion#
-22544#Jolly Awakening Potion#
+22542#[Event] Concentration Potion#
+22543#[Event] Berserk Potion#
+22544#[Event] Awakening Potion#
 22545#[Event] Speed Potion#
 22546#[Event] Speed Potion#
 22547#[Event] Anti-Pain Med#
@@ -8256,6 +8521,8 @@
 22650#Lucy's August Lucky Box#
 22651#Lucy's August Lucky Box Crate#
 22652#Brilliant Hat Box#
+22658#Braised Short Ribs#
+22659#Braised Spare Ribs#
 22660#Sealed Envelope#
 22669#October Spooky Trade Box#
 22670#DARK INVITATION#
@@ -8277,12 +8544,12 @@
 22740#Sphere Pack Blind#
 22741#Sphere Pack Poison#
 22742#Sphere Pack Ice#
-22744#Ammo AP Bullet Case#
-22745#Ammo Blazing Bullet Case#
-22746#Ammo Freezing Bullet Case#
-22747#Ammo Lightning Bullet Case#
-22748#Ammo Magic Stone Bullet Case#
-22749#Ammo Purifying Bullet Case#
+22744#Armor Piercing Bullet Case#
+22745#Blazing Bullet Case#
+22746#Freezing Bullet Case#
+22747#Electric Bullet Case#
+22748#Magic Stone Bullet Case#
+22749#Purifying Bullet Case#
 22760#Argiope CaptureBox#
 22761#LuciolaVespa CaptureBox#
 22762#Centipede CaptureBox#
@@ -8295,8 +8562,10 @@
 22776#Grilled Carp Skewer#
 22815#July Groove Pack#
 22819#Citizen Oda's Miracle Elixr#
+22822#Summer Vacation Suit#
 22826#Costume Enchant Stone Box#
 22838#Something Candy Holder#
+22841#Pumpkin Candy#
 22847#Prontera Badge#
 22848#Prison Key#
 22849#Prontera Time Crystal#
@@ -8312,11 +8581,13 @@
 22913#Weapon +9 Refine Ticket#
 22915#Weapon +11 Refine Ticket#
 22916#Weapon +12 Refine Ticket#
+22917#+13 Weapon Upgrade Certificate#
 22926#Armor +7 Refine Ticket#
 22927#Armor +8 Refine Ticket#
 22928#Armor +9 Refine Ticket#
 22930#Armor +11 Refine Ticket#
 22931#Armor +12 Refine Ticket#
+22932#+13 Armor Upgrade Certificate#
 22943#Armor +10 Refine Ticket#
 22944#Weapon +10 Refine Ticket#
 22945#Cherry Blossom Rice Cake#
@@ -8328,35 +8599,66 @@
 22952#Lucky Soul Potion Box#
 22971#Mad Bunny Scroll#
 22972#Sealed Hat Box I#
+22973#Shadow Cube (Weapon)#
+22974#Shadow Cube (Armor)#
 22979#[Not for Sale] Battle Manual and Bubble Gum#
 22984#Kahluna Milk#
 22985#Basil#
 22988#Sealed Hat Box II#
+22991#Soccer Cake#
 22999#[Event] Transformation Pack#
 23008#[24H] Bubble Gum#
 23010#[24H] Battle Manual#
 23011#[24H] Life Insurance#
 23016#Cursed Fragment#
+23025#Pope Mercenary Scroll#
+23026#Casual Pope Mercenary Scroll#
+23027#Dandelion Ring#
+23036#Pope Mercenary Scroll#
+23037#Casual Pope Mercenary Scroll#
 23042#[Not for Sale] Yggdrasil Seed#
+23045#Montblanc Cake#
+23058#Costume Enchant Box 9#
+23061#Sharp Arrow Quiver#
+23063#Frozen Dream#
+23073#Angel Poring Shoes Box#
 23076#Build Up Potion SS#
 23077#Build Up Potion SC#
 23078#Build Up Potion AC#
+23079#Strawberry Cream Cake#
 23080#Cursed Crystal#
+23081#Kunai Scroll of Flame#
+23082#Kunai Scroll of Icicle#
+23083#Kunai Scroll of Storm#
+23084#Kunai Scroll of Sand#
+23085#Kunai Scroll of Poison#
+23086#Costume Enchant Stone Box 10#
 23087#Small Leather Bag#
+23115#Class Shadow Cube#
 23123#Flare Bullet Case#
 23124#Lightning Bullet Case#
 23125#Ice Bullet Case#
 23126#Poison Bullet Case#
 23127#Blinding Bullet Case#
+23135#Poring Capsule#
 23136#Butterfly Wing Box#
+23142#Minor Growth Potion#
+23143#Minor Growth JPotion#
+23144#Minor Growth Potion Box#
+23145#Minor Growth JPotion Box#
 23148#[2Day] Premium Subscription Box#
 23149#[3Day] Premium Subscription Box#
 23164#Granpa Speed Potion#
 23165#Premium Service Personnel#
 23169#Alchemist Box#
+23174#Costume Enchant Stone Box 11#
 23187#Sap Jelly#
 23188#Airship Part#
 23189#Small Doll Needle#
+23191#Varetyr Spear (level 5) Scroll#
+23192#Diamond Dust (level 5) Scroll#
+23193#Crimson Rock (level 5) Scroll#
+23194#Sienna Execrate (level 5) Scroll#
 23198#Premium Wooden Box#
 23199#Premium Golden Box#
 23200#Premium Platinum Box#
@@ -8372,31 +8674,45 @@
 23215#[9Day] Premium Subscription Box#
 23216#[10Day] Premium Subscription#
 23228#Hazy Mooncake#
+23236#Class Shadow Box(Weapon)#
+23237#Class Shadow Box(Armor)#
+23238#Class Shadow Box(Shoes)#
+23239#Class Shadow Box(Shield)#
+23240#Class Shadow Box (Pendant)#
+23241#Class Shadow Box (Earring)#
 23247#Status Shadow Item Combiner#
+23248#Gemstone Shadow Mix Recipe#
 23251#Rose Bundle A#
 23252#Orleans's Bundle A#
 23253#Black Shiba Inu Bundle A#
 23254#Valkyrie Bundle A#
 23255#Kardui Bundle A#
 23256#Spiritual Bandage#
-23257#Old Tree¡¯s Dew#
+23257#Old Tree's Dew#
 23258#Stinky Rotten Meat#
 23259#Strawberry Cream Cupcake#
 23260#Fruit Parfait#
-23261#Chewy Macaron#
+23261#Moist Macaron#
 23265#Sprint Bundle A#
 23266#Etran Bundle A#
 23277#Mado Emergency Gear#
+23280#Beginners Fly Wings#
+23281#Race Shadow Mix Box#
+23288#Zipped Fly Wings#
 23293#Bison Bundle A#
 23294#Pororoca Shoes Bundle A#
 23295#Lian Bundle B#
 23296#D.Burger#
 23297#Lovely Egg Box#
+23299#Enchant Stone Box 12#
 23302#Poring Treasure Box#
 23313#Grave Blessing 1#
 23314#Grave Blessing 2#
 23315#Grave Blessing 3#
 23316#Grave Blessing 4#
+23320#Melon Juice#
+23321#Sweet Melon Juice#
+23322#Melon Parfait#
 23340#[Event] Megaphone#
 23342#[1 Day] Consignment Merchant Envelope Lv1#
 23343#[1 Day] Consignment Merchant Envelope Lv2#
@@ -8416,27 +8732,38 @@
 23357#[3 Day] Personal Shopper Envelope Lv1#
 23358#Personal Shopper Envelope#
 23359#[3 Day] Personal Shopper Envelope Lv3#
+23361#Serum#
+23362#Meatball#
+23363#Watermelon Pudding#
+23367#Spaghetti and Sauce#
 23368#Special Shopper Catalog#
 23414#Overseas Care Package VIII#
 23415#Orleans Bundle C#
+23436#Holgren Shadow Hammer#
 23445#Home Food#
 23446#Savage Trap#
 23451#Devil Worshipper Box A#
 23452#Kardui Bundle B#
 23475#Infinity Drink#
 23477#September Costume Box#
+23504#[Event] Crate of 20 Orange Potions#
+23505#[Event] Crate of 20 Yellow Potions#
 23506#[Event] Box of 20 White Potion#
 23507#October Costume Box#
 23508#iRO 2017 Oct CosBox2#
 23516#November Costume Box Ani Maul#
+23524#Costume Enchant Stone Box 13#
 23533#Rose of Choice#
-23548#Ice Candy#
+23545#Silver Angel Idol#
+23546#Cursed Blood#
+23547#Gold Angel Idol#
+23548#Snow Candy#
 23549#Snow Cookie#
 23550#Winter Cookie#
-23551#Pestie Cookie#
+23551#Festi Cookie#
 23552#Flora Cookie#
 23553#Snow Flower Festival Giftbox#
-23554#Snow Flower Card Envelop#
+23554#Snow Festa Card Pack#
 23556#Dinner for Hunter#
 23588#Winter Wonderland Costume Box#
 23600#Prisoner Bundle A#
@@ -8444,14 +8771,25 @@
 23602#Giant Bundle A#
 23603#Sol Bundle B#
 23625#Bio Protector Bundle A#
+23629#Costume Enchant Stone Box 14#
 23657#[Event] Life Insurance#
 23658#Lamor Bundle B#
 23660#Dogly Bottle Z#
+23674#Sweets Festival Box#
+23675#Geffen Magic Armor Scroll#
+23676#Gray Abrasive (Physical)#
+23677#Gray Abrasive (Magic)#
+23678#Gray Abrasive (Ranged)#
+23679#Geffen Magic Accessory Scroll#
+23682#Costume Enchant Stone Box 15#
 23683#Lucky Bag#
 23684#Phantom's Spirit#
 23685#Flower of Phantom#
 23706#Charleston Upgrade Part (Melee)#
 23707#Charleston Upgrade Part (Range)#
+23711#Trap Box#
+23720#Shadow Enhancement Box#
+23723#Melon Bread#
 23725#[Event] Haute Cuisine#
 23726#[Event] Challenger Drink#
 23727#[Event] Unlimited Drink#
@@ -8462,6 +8800,9 @@
 23734#[Event] Abrasive Tool#
 23735#[Event] Rapid Potion#
 23736#[Event] Illusion Powder Bottle#
+23743#Festa Commemorative Can#
+23744#Cream Noodles#
+23770#Costume Enchant Stone Box 16#
 23772#OS Weapon Chest#
 23773#Weapon Modification Device Chest (Physical)#
 23774#Weapon Modification Device Chest (Magic)#
@@ -8474,9 +8815,18 @@
 23781#Finest Weapon Modification Device (Magic)#
 23799#Overseas Care Package XIX#
 23800#July Costume Box#
+23806#Ancient Heros Weapon Box#
+23815#Magma Essence#
+23898#[Event] Power Booster#
+23899#[Event] Miracle Elixir#
 23919#Kachua's Secret Key#
-23921#Event reward box#
+23921#Event Reward Box#
+23923#Poring Sunglasses Box#
+23926#Shadow Smelting Hammer#
 23962#Upgraded Malangdo Cat Can#
+23981#Turbulent Dragon's Power#
+23985#Dragon's Treasure#
+23986#Odin's Relic#
 23987#Overseas Care Package XXIII#
 23988#October Costume Treat Box#
 23996#Overseas Care Package XXIV#
@@ -8541,16 +8891,79 @@
 24069#Beholder Shadow Shoes#
 24070#Divine Shadow Shoes#
 24071#Dragoon Shadow Shoes#
+24072#Large Shadow Armor#
+24073#Medium Shadow Armor#
+24074#Small Shadow Armor#
+24075#Large Shadow Weapon#
+24076#Medium Shadow Weapon#
+24077#Small Shadow Weapon#
+24078#Shadow Spiritual Weapon #
 24081#Malicious Shadow Armor#
 24082#Malicious Shadow Shoes#
 24083#Malicious Shadow Shield#
+24084#Gemstone Shadow Armor#
+24085#Gemstone Shadow Shoes#
+24086#Gemstone Shadow Shield#
+24087#Gemstone Shadow Weapon#
+24088#Gemstone Shadow Earring#
+24089#Gemstone Shadow Pendant#
 24090#Stability Shadow Shield#
+24091#Plasterer's Shadow Armor#
+24093#Shadow Insomniac Armor #
+24095#Peerless Shadow Armor#
+24097#Shadow Adurate Armor #
 24099#Unfreezing Shadow Weapon#
 24100#Unfreezing Shadow Earring#
 24101#Unfreezing Shadow Pendant#
+24104#Neutral Shadow Weapon#
+24110#Shadow Caster Weapon #
 24111#Spellflow Shadow Shoes#
 24112#Spellflow Shadow Armor#
 24113#Spellflow Shadow Shield#
+24114#Shadow Greed Armor #
+24117#Shadow Greed Weapon #
+24120#Shadow Heal Armor #
+24123#Shadow Heal Weapon #
+24126#Shadow Hiding Armor #
+24129#Shadow Hiding Weapon #
+24132#Cloaking Shadow Armor#
+24135#Cloaking Shadow Weapon#
+24138#Teleport Shadow Armor#
+24141#Teleport Shadow Weapon#
+24144#Steal Shadow Armor#
+24147#Steal Shadow Weapon#
+24152#Solid Shadow Weapon#
+24154#Shadow Immortal Armor #
+24156#Shadow Executioner Weapon #
+24157#Shadow Exorcist Weapon #
+24158#Shadow Hunting Weapon #
+24159#Shadow Insect_Net Weapon #
+24160#Shadow Fishing Weapon #
+24161#Shadow Dragon_Killer Weapon #
+24162#Shadow Corrupt Weapon #
+24163#Vibration Shadow Weapon#
+24164#Shadow Holy_Water Weapon #
+24165#Scissors Shadow Weapon#
+24166#Penetration Shadow Earring#
+24167#Penetration Shadow Pendant#
+24168#Tempest Shadow Earring#
+24169#Tempest Shadow Pendant#
+24170#Shadow Magic Executioner Weapon #
+24171#Shadow Magic Exorcist Weapon #
+24172#Shadow Magic Hunting Weapon #
+24173#Shadow Magic Insect_Net Weapon #
+24174#Shadow Magic Fishing Weapon #
+24175#Shadow Magic Dragon_K Weapon #
+24176#Shadow Magic Corrupt Weapon #
+24177#Shadow Magic Vibration Weapon #
+24178#Shadow Magic Holy_Water Weapon #
+24179#Shadow Magic ScissorShadow Weapon #
+24180#Bearer's Shadow Armor#
+24181#Bearer's Shadow Shoes#
+24182#Bearer's Shadow Shield#
+24183#Bearer's Shadow Weapon#
+24184#Bearer's Shadow Earring#
+24185#Bearer's Shadow Pendant#
 24186#Basis Shadow Armor#
 24187#Hallowed Shadow Armor#
 24188#Saharic Shadow Armor#
@@ -8561,6 +8974,8 @@
 24193#Damned Shadow Armor#
 24194#Geist Shadow Armor#
 24195#Divine Shadow Armor#
+24196#Hasty Shadow Shoes#
+24197#Hasty Shadow Armor#
 24198#Basis Shadow Shield#
 24199#Hallowed Shadow Shield#
 24200#Saharic Shadow Shield#
@@ -8571,6 +8986,28 @@
 24205#Damned Shadow Shield#
 24206#Geist Shadow Shield#
 24207#Divine Shadow Shield#
+24210#Beginner's Shadow Shoes#
+24211#Beginner's Shadow Shield#
+24212#Rookie's Shadow Shoes#
+24213#Rookie's Shadow Shield#
+24214#Advanced Shadow Shoes#
+24215#Advanced Shadow Shield#
+24216#Shadow Attack Armor #
+24219#Shadow ColdBolt Armor #
+24220#Shadow FireBolt Armor #
+24221#Lightning Bolt Shadow Armor#
+24222#Shadow EarthSpike Armor #
+24223#Shadow Enhance_Force Weapon #
+24224#Shadow Force Weapon #
+24227#Shadow Enhance_Spirit Weapon #
+24228#Spirit Shadow Weapon#
+24231#Blitz Shadow Shoes#
+24232#Blitz Shadow Shield#
+24233#Shadow Exceed Weapon #
+24242#Shadow Caster Armor #
+24243#Reload Shoes Shadow#
+24244#Reload Shield Shadow#
+24245#Reload Shadow Armor#
 24246#Swordman Shadow Earring#
 24247#Merchant Shadow Earring#
 24248#Acolyte Shadow Earring#
@@ -8645,8 +9082,13 @@
 24317#Doram Magical Shadow Shield#
 24318#Super Novice Shadow Shield#
 24319#Gunslinger Shadow Shield#
+24322#Gemstone Shadow Earring II#
+24335#Gemstone Shadow Weapon II#
+24336#Gemstone Shadow Shield II#
 24339#Almighty Shadow Earring#
 24340#Almighty Shadow Pendant#
+24341#All Race Shadow Shoes#
+24342#All Race Shadow Shield#
 24360#Tension Shadow Weapon#
 24361#Tension Shadow Earring#
 24362#Tension Shadow Pendant#
@@ -8669,6 +9111,105 @@
 24409#Doram Physical Shadow Shoes#
 24410#Doram Magical Shadow Armor#
 24411#Doram Magical Shadow Shoes#
+24416#Shadow Transcendental Time Weapon#
+24417#Shadow Transcendental Time Armor#
+24418#Shadow Transcendental Time Shield#
+24419#Shadow Transcendental Time Shoes#
+24420#Shadow Transcendental Time Earring#
+24421#Shadow Transcendental Time Pendant#
+24425#Perfect Size Shadow Weapon#
+24426#Perfect Size Shadow Armor#
+24427#Magic Exorcist Corrupt Shadow Weapon#
+24428#Magic Vibration Dragon Killer Shadow Weapon#
+24429#Magic Scissors Hunting Shadow Weapon#
+24430#Magic Fishing Insect Shadow Weapon#
+24431#Magic Executioner Holy Water Shadow Weapon#
+24434#Executioner Holy Water Shadow Weapon#
+24435#Fishing Insect Shadow Weapon#
+24436#Scissors Hunting Shadow Weapon#
+24437#Vibration Dragon Killer Shadow Weapon#
+24438#Exorcist Corrupt Shadow Weapon#
+24440#Sonic Armor Shadow#
+24441#Sonic Shield Shadow#
+24442#Sonic Shoes Shadow#
+24443#Ignition Shadow Weapon#
+24444#Ignition Shadow Pendant#
+24445#Ignition Shadow Earring#
+24449#Firebreath Weapon Shadow#
+24450#Firebreath Pendant Shadow#
+24451#Firebreath Earring Shadow#
+24455#Aimed Shadow Weapon#
+24456#Aimed Shadow Pendant#
+24457#Aimed Shadow Earring#
+24458#Arrow Shadow Armor#
+24459#Arrow Shadow Shield#
+24460#Arrow Shadow Shoes#
+24461#Shooting Shadow Weapon#
+24462#Shooting Shadow Pendant#
+24463#Shooting Shadow Earrings#
+24479#Skyblow Shadow Weapon#
+24480#Skyblow Shadow Pendant#
+24481#Skyblow Shadow Earring#
+24488#Duple Shadow Armor#
+24489#Duple Shadow Shield#
+24490#Duple Shadow Shoes#
+24497#Magnus Shadow Weapon#
+24498#Magnus Shadow Pendant#
+24499#Magnus Shadow Earrings#
+24500#Rainstorm Shadow Armor#
+24501#Rainstorm Shadow Shield#
+24502#Rainstorm Shadow Shoes#
+24503#Arrow Vulcan Shadow Weapon#
+24504#Arrow Vulcan Shadow Pendant#
+24505#Arrow Vulcan Shadow Earrings#
+24509#Reverberation Shadow Weapon#
+24510#Reverberation Shadow Pendant#
+24511#Reverberation Shadow Earring#
+24518#Crimson Shadow Armor#
+24519#Crimson Shadow Shield#
+24520#Crimson Shadow Shoes #
+24521#Chain Shadow Weapon#
+24522#Chain Shadow Pendant#
+24523#Chain Shadow Earring#
+24524#Triangle Shadow Armor#
+24525#Triangle Shadow Shield#
+24526#Triangle Shadow Shoes#
+24527#Shadowspell Shadow Weapon#
+24528#Shadowspell Shadow Pendant#
+24529#Shadowspell Shadow Earring#
+24533#Feint Shadow Weapon#
+24534#Feint Shadow Pendant#
+24535#Feint Shadow Earrings#
+24536#Rolling Shadow Armor#
+24537#Rolling Shadow Shield#
+24538#Rolling Shadow Shoes#
+24545#Ripperslasher Shadow Weapon#
+24546#Ripperslasher Shadow Pendant#
+24547#Ripperslasher Shadow Earring#
+24548#Dust Shadow Armor#
+24549#Dust Shadow Shield#
+24550#Dust Shadow Shoes#
+24554#Psychic Shadow Armor#
+24555#Psychic Shadow Shield#
+24556#Psychic Shadow Shoes#
+24557#Varetyr Shadow Weapon#
+24558#Varetyr Shadow Pendant#
+24559#Varetyr Shadow Earring#
+24560#Cart Tornado Shadow Armor#
+24561#Cart Tornado Shadow Shield#
+24562#Cart Tornado Shadow Shoes#
+24563#Cart Cannon Shadow Weapon#
+24564#Cart Cannon Shadow Pendant#
+24565#Cart Cannon Shadow Earrings#
+24566#Spore Bomb Shadow Armor#
+24567#Spore Bomb Shadow Shield#
+24568#Spore Bomb Shadow Shoes#
+24578#Vanishing Cannon Shadow Armor#
+24579#Vanishing Cannon Shadow Shield#
+24580#Vanishing Cannon Shadow Shoes#
+24581#Genesis Shadow Weapon#
+24582#Genesis Shadow Pendant#
+24583#Genesis Shadow Earrings#
 25000#SP Absorption Stone (Upper)#
 25001#Def Stone(Middle)#
 25002#LUK Exchange Stone(Middle)#
@@ -8687,6 +9228,7 @@
 25015#EXP Stone(Lower)#
 25016#ATK Stone(Lower)#
 25017#MATK Stone(Lower)#
+25041#Pump of Spirit#
 25043#Thorny Vine Flute#
 25044#Hard Thorny Vine#
 25045#Luxurious Cloth#
@@ -8694,6 +9236,23 @@
 25047#Kahlunac#
 25048#Hearty Lunchbox#
 25049#Basilac Clam#
+25058#Twinkle Stone (Upper)#
+25059#Ghost Stone (Middle)#
+25060#Critical Stone#
+25061#Range Stone (Middle)#
+25062#Greed Stone (Lower)#
+25063#Health Stone (Lower)#
+25064#SP Stone (Lower)#
+25065#Detoxify Stone (Lower)#
+25066#Recovery Stone (Lower)#
+25067#Casting Stone (Garment)#
+25068#ASPDStone (Upper)#
+25069#Reload Stone (Upper)#
+25070#Reload Stone (Middle)#
+25071#Reload Stone (Lower)#
+25072#Kyrie Stone (Lower)#
+25087#Old Doll#
+25088#Dream Fragment#
 25127#Silent Energy Particle#
 25128#Weak Energy Particle#
 25129#Unstable Energy Particle#
@@ -8701,6 +9260,11 @@
 25131#Fallen Energy Particle#
 25132#Pumpkin Decorations#
 25133#Dry White Stem#
+25136#Electric Effect(middle)#
+25137#Green Floor Effect(bottom)#
+25138#Shrink Effect(middle)#
+25139#Identify Stone(bottom)#
+25141#Exp Stone(Middle)#
 25142#Doram token#
 25151#Rachel's Revolver#
 25152#Cherished Bouquet#
@@ -8719,6 +9283,15 @@
 25165#High Class Tea#
 25166#Very Shiny Ring#
 25167#Old Letter#
+25170#Minor Casting Stone(Garment)#
+25171#Exp Stone(Upper)#
+25172#Variable Casting Stone(Upper)#
+25173#Variable Casting Stone(Middle)#
+25174#Variable Casting Stone(Lower)#
+25175#Lex Aeterna Stone (Middle)#
+25176#Blue Aura Effect(Middle)#
+25177#Shadow Effect(Middle)#
+25178#Pink Glow Effect(Middle)#
 25179#Blessing Star#
 25180#Old Rings#
 25181#Wood Rosary#
@@ -8727,9 +9300,17 @@
 25184#Portable Sewingbox#
 25185#Locket Pendant#
 25187#Slug Bullet#
+25205#Shrink Effect(Lower)#
+25224#Whitebody Effect(Middle)#
+25225#Crimson Wave Effect(Middle)#
+25226#Water Field Effect (Lower)#
+25227#Heal Stone(Lower)#
+25228#Teleportation Stone(Lower)#
+25229#Steal Stone(Lower)#
 25231#Suspicious Bottle#
 25232#Cheap Lubricant#
 25233#Cotton Tufts#
+25235#Crafted Stone#
 25240#Independence Certificate#
 25245#Small pile of bones#
 25246#Juice Mix Package#
@@ -8768,16 +9349,21 @@
 25283#Brown Muffler#
 25284#Swamp Bug Shell#
 25285#Brown Rat Tail#
-25290#Sweets Festival Coin#
-25291#Product Chocolate#
-25292#Stolen Cocoa Beans#
+25290#Sweets Coin#
+25291#Chocolate Chunk#
+25292#Stolen Cacao Beans#
 25294#Clover Ticket#
-25295#Happy Three Leaf Clover#
+25295#Happiness Clover#
 25296#Something Fatal#
 25297#Frozen Stone Fragment#
 25298#Spirit Jewel#
 25299#Snowball#
 25300#Ktullanux Eye#
+25302#Double Attack Stone(Garment)#
+25303#Critical Stone(Garment)#
+25304#Critical Stone(Upper)#
+25305#Critical Stone(Lower)#
+25306#Variable Casting Stone(Garment)#
 25309#Dry Twig#
 25311#Dark Soul Fragment#
 25312#Old Doll#
@@ -8785,9 +9371,19 @@
 25314#Logbooks#
 25315#Shell Fragment#
 25316#Old Metal Pieces#
+25318#Dalcom Skin#
+25319#Cold Box#
+25320#Suspicious Melon#
+25340#Golden Corn#
+25341#Blazing Bead#
+25342#Healthy Herbs#
+25344#Flat Round Stone#
 25358#Data Retrieval Card#
 25359#Slightly Aged Antique Box#
 25360#Receipt#
+25365#Spaghetti#
+25366#Noodle Festival Coin#
+25367#Promotional Fan#
 25375#Essence of Powerful Soul#
 25376#Cupet Coin#
 25377#Luxurious Pet Food#
@@ -8797,17 +9393,66 @@
 25393#Tasty Corn#
 25394#Fruit lunch box#
 25395#Small Ember#
+25401#Dark Fur#
+25408#Memory of Gyol#
+25409#Champion Stone (Upper)#
+25410#Champion Stone (Middle)#
+25411#Champion Stone (Lower)#
+25412#Sura Stone (Garment)#
+25413#Sniper Stone (Upper)#
+25414#Sniper Stone (Middle)#
+25415#Sniper Stone (Lower)#
+25416#Ranger Stone (Garment)#
+25417#Professor Stone (Upper)#
+25418#Professor Stone (Middle)#
+25419#Professor Stone (Lower)#
+25420#Sorcerer Stone (Garment)#
+25421#Pumpkin Decorations#
+25422#Dry White Stem#
 25425#Magical Snow Flower#
 25426#Warm Cotton#
+25445#Lord Knight Stone(Upper)#
+25446#Lord Knight Stone(Middle)#
+25447#Lord Knight Stone(Lower)#
+25448#Rune Knight Stone(Garment)#
+25449#Genetic Stone(Garment)#
+25450#Biochemist Stone(Upper)#
+25451#Biochemist Stone(Middle)#
+25452#Biochemist Stone(Lower)#
+25453#High Wizard Stone(Upper)#
+25454#High Wizard Stone(Middle)#
+25455#High Wizard Stone(Lower)#
+25456#Warlock Stone(Garment)#
 25462#[Event] Costume Coupon#
 25464#World Moving Ticket#
 25479#Dogly Bottle#
+25490#Stalker Stone(Upper)#
+25491#Stalker Stone(Middle)#
+25492#Stalker Stone(Lower)#
+25493#Shadowchaser Stone(Garment)#
+25494#Mastersmith Stone(Upper)#
+25495#Mastersmith Stone(Middle)#
+25496#Mastersmith Stone(Lower)#
+25497#Mechanic Stone(Garment)#
+25498#Minstrel/Gypsy Stone(Upper)#
+25499#Minstrel/Gypsy Stone(Middle)#
+25500#Minstrel/Gypsy Stone(Lower)#
+25501#Maestro/Wanderer Stone(Garment)#
 25502#Rice Cake#
 25503#Flower Left by Phantom#
 25504#Phantom's Seal#
-25511#Solid chocolate#
+25511#Chocolate Plate#
 25512#Almond#
 25627#Gold Card#
+25643#Signed Book#
+25655#Dalcom Coin#
+25656#Stamp Notebook#
+25657#Tough Noodle Leather#
+25658#Noodle Sap#
+25659#Organic Wheat Flour#
+25664#Ribbon Noodle#
+25665#Dien's Envelope#
+25666#Subject Identification Card#
 25668#Damaged Weapon#
 25669#Mysterious Component#
 25670#Modification Module (DEF)#
@@ -8846,25 +9491,109 @@
 25703#Modification Module (Overpower)#
 25704#Modification Module (Fatal Flash)#
 25705#Modification Module (Lucky Strike)#
+25706#High Priest Stone(Upper)#
+25707#High Priest Stone(Middle)#
+25708#High Priest Stone(Lower)#
+25709#Arch Bishop Stone(Garment)#
+25710#Paladin Stone(Upper)#
+25711#Paladin Stone(Middle)#
+25712#Paladin Stone(Lower)#
+25713#Royal Guard Stone(Garment)#
+25714#Assassin Cross Stone(Upper)#
+25715#Assassin Cross Stone(Middle)#
+25716#Assassin Cross Stone(Lower)#
+25717#Guillotine Cross Stone(Garment)#
 25723#Cor Core#
+25728#Shadowdecon ore#
+25729#Shadowdecon#
+25730#Zelunium Ore#
+25731#Zelunium#
 25745#Piece of Five#
 25753#Khalitzburg Map Piece#
 25754#Scaled Map Piece			#
 25755#Undead Servant's Map Piece			#
 25756#Jellopy Map Piece			#
 25758#Drake's Map Piece			#
+25759#Dragon's Energy (Green)#
+25760#Dragon's Energy (Blue)#
+25761#Dragon's Energy (Red)#
+25762#Dragon's Energy (Gold)#
+25763#Dragon's Energy (Purple)#
+25764#Dragon's Energy (Silver)#
+25765#Dragon Bone (Large)#
+25766#Dragon Bone (Small)#
+25767#Angel's Dream#
+25768#Valkyrie Ingrid's Armor Fragment#
+25769#Valkyrie Reginleif's Armor Fragment#
+25770#Valkyrie Reginleif's Armor#
+25771#Valkyrie Ingrid's Armor#
+25797#Sura Stone II(Garment)#
+25798#Champion Stone II(Lower)#
+25799#Champion Stone II(Middle)#
+25800#Champion Stone II(Upper)#
+25801#Sorcerer Stone II(Garment)#
+25802#Scholar Stone II(Lower)#
+25803#Scholar Stone II(Middle)#
+25804#Scholar Stone II(Upper)#
+25805#Shadow Chaser Stone II(Garment)#
+25806#Stalker Stone II(Lower)#
+25807#Stalker Stone II(Middle)#
+25808#Stalker Stone II(Upper)#
+25809#Redium#
+25810#Rindium#
+25811#Odium#
+25812#Purdium#
+25813#Whidium#
+25814#Dynite#
+25815#Solidified Dust#
+25816#Dead Trap#
+25817#Bizarre Stone Fragment#
+25820#Metal Weapon Ticket#
+25842#Soul Reaper Stone(Garment)#
+25843#Soul Linker Stone(Upper)#
+25844#Soul Linker Stone(Middle)#
+25845#Soul Linker Stone(Lower)#
+25846#Taekwon Master Stone(Upper)#
+25847#Taekwon Master Stone(Middle)#
+25848#Taekwon Master Stone(Lower)#
+25849#Star Emperor Stone(Garment)#
+25850#Ninja Stone(Upper)#
+25851#Ninja Stone(Middle)#
+25852#Ninja Stone(Lower)#
+25853#Kagerou Stone(Garment)#
+25854#Oboro Stone(Garment)#
+25855#Gunslinger Stone(Upper)#
+25856#Gunslinger Stone(Middle)#
+25857#Gunslinger Stone(Lower)#
+25858#Rebellion Stone(Garment)#
+25859#Doram Stone(Upper)#
+25860#Doram Stone(Middle)#
+25861#Doram Stone(Lower)#
+25862#Doram Stone(Garment)#
 25876#Lottery ticket for harvest#
+25891#Mark of an Outstanding Hunter#
 26007#Illusion Spectral Spear#
+26016#Two handed Lnace of Kingdom#
+26023#Glacis Spear#
 26100#Paradise Foxtail II#
 26101#Paradise Foxtail III#
 26107#Elder Staff#
 26109#Illusion Staff of Bordeaux#
 26110#Candy Cane Rod#
+26111#Metal Foxtail#
+26118#Shadow Staff#
+26138#Wand of Flame#
+26139#Wand of Ice#
 26151#Rutilus Stick-OS #
+26154#Spirit Pendulum#
+26155#Meowmeow Foxtail#
+26162#Welding Wand#
 26164#Electric Fox-OS#
 26173#The Rowdy Pipe#
 26200#Hippie Rope#
-26219#The Ol¡¯ Clothesline#
+26214#Soul Bell#
+26215#Safety Whip#
+26219#The Ol' Clothesline#
 27012#Kick Step Card#
 27013#Kick and Kick Card#
 27014#Green Cenere Card#
@@ -8874,6 +9603,7 @@
 27018#GC109 Card#
 27019#DR815 Card#
 27020#T W O Card#
+27025#Dead King Card#
 27026#Fire Condor Card#
 27027#Fire Sandman Card#
 27028#Fire Frilldora Card#
@@ -9004,6 +9734,32 @@
 27318#Miguel Card#
 27319#R48-85-BESTIA Card#
 27320#E-EA1L Card#
+27330#Kronecker Card#
+27331#Kronecker G. Heine Card#
+27332#Skia Card#
+27333#Skia Nerius Card#
+27346#Firm Muspell Card#
+27347#Firm Kaho Card#
+27348#Firm Lava Golem Card#
+27349#Firm Explosion Card#
+27350#Firm Ground Deleter Card#
+27351#Firm Air Deleter Card#
+27352#Firm Nightmare Terror Card#
+27353#Firm Blazzer Card#
+27354#Polluted Raydric Card#
+27355#Polluted Raydrick Archer Card#
+27356#Frozen Gargoyle Card#
+27357#Polluted Sting Card#
+27358#Prison Breaker Card#
+27359#Ice Ghost Card#
+27360#Flame Ghost Card#
+27361#Polluted Wander Man Card#
+27362#Polluted Queen Spider Card#
+27363#Polluted Dark Lord Card#
+27389#Wolfe Card#
+27390#Wolfe Lugenburg Card#
+27391#Poe Card#
+27392#Poe Richard Card#
 28000#Thanatos Katar#
 28001#Evil Slayer Ripper Katar#
 28005#Ru Blue Katar#
@@ -9014,6 +9770,9 @@
 28022#Illusion Infiltrator#
 28023#Illusion Sharpened Legbone of Ghoul#
 28038#Meuchler-OS#
+28039#Katar of Shiver#
+28043#Piercing Katar#
+28045#Bolt Crusher#
 28050#Frozen Creul Katar#
 28100#Thanatos Axe#
 28101#Tornado Axe#
@@ -9022,7 +9781,10 @@
 28106#Crimson Twohand Axe#
 28107#Vicious Mind Two-Handed Axe#
 28116#Mine Worker's Pickaxe#
+28130#Avenger#
 28136#Blasti-OS#
+28139#Grudge#
+28140#Saw Axe#
 28200#End of Horizon#
 28201#Southern Cross#
 28202#Southern Cross#
@@ -9035,6 +9797,10 @@
 28225#Burning Rose#
 28226#Avenger#
 28253#HR-S55-OS#
+28255#Master Soul Rifle#
+28256#Demon Slayer Shot Gun#
+28257#Golden Rod Launcher#
+28258#Avengers Gattling Gun#
 28260#The Fastest Shooter#
 28303#Vesper Core 02#
 28305#Vesper Core 04#
@@ -9061,6 +9827,7 @@
 28381#Cute Grass Necklace#
 28382#Charming Grass Necklace#
 28386#Fallen Monk Rosary#
+28387#Bishop Necklace#
 28391#Thief Earring Shadow#
 28392#Archer Earring Shadow#
 28394#Spirit King's Ring#
@@ -9088,6 +9855,7 @@
 28438#Fairy Leaf Powder#
 28441#Vigilante Badge#
 28442#Hippie Feather#
+28483#Royal Guardian Ring#
 28484#Rebellion's Scarf#
 28485#Shinobi Sash H#
 28491#Hunting Knife#
@@ -9113,7 +9881,7 @@
 28551#Imperial Glove#
 28560#Yin Yang Talisman#
 28561#Ring of Hero#
-28562#True Hunting Physical Ring#
+28562#True Hunting Ring#
 28563#True Hunting Magical Ring#
 28564#Valkyrie Drop#
 28565#Perverse Demon Mask #
@@ -9129,7 +9897,12 @@
 28608#Elemental Origin#
 28612#Illusion Book of the Apocalypse#
 28618#Book of the Sun God#
+28619#Prisoner Diary#
 28629#Circuit Board-OS #
+28630#Exoricist's Bible#
+28631#One Sky One Sun#
+28634#On Bolt Magic#
+28635#Safety Manual#
 28640#Papa HooDoo Manual#
 28700#Ru Gold Dagger#
 28701#Ru Gold Knife#
@@ -9139,7 +9912,14 @@
 28717#Valkyrie Knife#
 28721#Monokage#
 28725#Illusion Moonlight Dagger#
+28744#Magic Sword#
 28755#Kuroiro-OS#
+28763#Sharp Wind Sword#
+28764#Fog Dew Sword#
+28769#Valkyrie Dagger#
+28770#Wound Maker#
+28771#Metal Detector Mk47#
+28772#Jewel Detector Mk47#
 28781#The Razor of Ramona#
 28900#Royal Guard Shield#
 28901#Mad Bunny Special#
@@ -9156,6 +9936,9 @@
 28931#Mad Bunny Buckler#
 28932#Mad Bunny Shield#
 28941#Excelion Shield#
+28942#Cursed Knight's Shield#
+28945#Bloody Knight's Shield#
+28946#Purified Knight's Shield#
 28951#Nero Shield#
 28955#Fotia Shield#
 28956##
@@ -9193,6 +9976,19 @@
 29031#MATK+1%(Lower)#
 29032#SP Absorption 1#
 29033#MDEF+4#
+29040#Ghost Effect#
+29041#Twinkle Effect#
+29046#Greed#
+29047#Fatal#
+29049#HP+100#
+29050#SP+50#
+29051#Detoxify#
+29052#Recovery#
+29053#Skill Delay 1 (Upper)#
+29054#Skill Delay 1 (Middle)#
+29055#Skill Delay 1 (Lower)#
+29056#Fixed Casting Decrease#
+29057#Kyrie Eleison#
 29061#Mettle Lv. 1#
 29062#Mettle Lv. 2#
 29063#Mettle Lv. 3#
@@ -9253,6 +10049,98 @@
 29118#Affection Lv. 8#
 29119#Affection Lv. 9#
 29120#Affection Lv. 10#
+29121#Justice of Goddess A#
+29122#Justice of Goddess S#
+29123#Love of Goddess A#
+29124#Love of Goddess S#
+29125#Insight of Goddess A#
+29126#Insight of Goddess S#
+29142#Electric Effect#
+29143#Green Floor Effect#
+29144#Shrink Effect#
+29145#Exp+2%#
+29146#Item Appraisal#
+29148#Leo Constellation Stone#
+29149#Pisces Constellation Stone#
+29150#Capricorn Constellation Stone#
+29151#Aquarius Constellation Stone#
+29152#Scorpio Constellation Stone#
+29153#Taurus Constellation Stone#
+29154#Reduce Minor Casting#
+29155#Lex Aeterna#
+29156#Reduce Variable Casting(Upper)#
+29157#Reduce Variable Casting(Middle)#
+29158#Reduce Variable Casting(Lower)#
+29159#Exp+2%#
+29160#Blue Aura Effect#
+29161#Pink Glow Effect#
+29162#Shadow Effect#
+29213#HIT + 6#
+29224#Whitebody Effect#
+29225#Water Field Effect#
+29226#Crimson Wave Effect#
+29227#Heal#
+29228#Steal#
+29229#Teleportation#
+29238#FLEE+10#
+29239#HIT+5#
+29241#Ancilla#
+29358#Variable Casting Stone#
+29359#Critical Stone(Upper)#
+29360#Critical Stone(Lower)#
+29361#Critical Stone(Garment)#
+29362#Double Attack Stone#
+29380#ATK + 5#
+29381#MATK + 5#
+29423#Champion Stone (Upper)#
+29424#Champion Stone (Middle)#
+29425#Champion Stone (Lower)#
+29426#Sura Stone (Garment)#
+29427#Sura Stone II(Garment)#
+29428#Sniper Stone (Upper)#
+29429#Sniper Stone (Middle)#
+29430#Sniper Stone (Lower)#
+29431#Ranger Stone (Garment)#
+29432#Professor Stone (Upper)#
+29433#Professor Stone (Middle)#
+29434#Professor Stone (Lower)#
+29435#Sorcerer Stone (Garment)#
+29460#Lord Knight Stone (Upper)#
+29461#Lord Knight Stone (Middle)#
+29462#Lord Knight Stone (Lower)#
+29463#Rune Knight Stone (Garment)#
+29464#Biochemist Stone(Upper)#
+29465#Biochemist Stone(Middle)#
+29466#Biochemist Stone(Lower)#
+29467#Genetic Stone(Garment)#
+29468#High Wizard Stone(Upper)#
+29469#High Wizard Stone(Middle)#
+29470#High Wizard Stone(Lower)#
+29471#Warlock Stone(Garment)#
+29477#Stalker Stone(Upper)#
+29478#Stalker Stone(Middle)#
+29479#Stalker Stone(Lower)#
+29480#Shadowchaser Stone(Garment)#
+29481#Mastersmith Stone(Upper)#
+29482#Mastersmith Stone(Middle)#
+29483#Mastersmith Stone(Lower)#
+29484#Mechanic Stone(Garment)#
+29485#Minstrel/Gypsy Stone(Upper)#
+29486#Minstrel/Gypsy Stone(Middle)#
+29487#Minstrel/Gypsy Stone(Lower)#
+29488#Maestro/Wanderer Stone(Garment)#
+29513#High Priest Stone(Upper)#
+29514#High Priest Stone(Middle)#
+29515#High Priest Stone(Lower)#
+29516#Arch Bishop Stone(Garment)#
+29517#Paladin Stone(Upper)#
+29518#Paladin Stone(Middle)#
+29519#Paladin Stone(Lower)#
+29520#Royal Guard Stone(Garment)#
+29521#Assassin Cross Stone(Upper)#
+29522#Assassin Cross Stone(Middle)#
+29523#Assassin Cross Stone(Lower)#
+29524#Guillotine Cross Stone(Garment)#
 29527#Modification Orb (DEF)#
 29528#Modification Orb (MDEF)#
 29529#Modification Orb (HP Recovery)#
@@ -9279,6 +10167,48 @@
 29550#Modification Orb (Overpower)#
 29551#Modification Orb (Fatal Flash)#
 29552#Modification Orb (Lucky Strike)#
+29611#Champion Stone II(Lower)#
+29612#Champion Stone II(Middle)#
+29613#Champion Stone II(Upper)#
+29614#Sorcerer Stone II(Garment)#
+29615#Scholar Stone II(Lower)#
+29616#Scholar Stone II(Middle)#
+29617#Scholar Stone II(Upper)#
+29618#Shadow Chaser Stone II(Garment)#
+29619#Stalker Stone II(Lower)#
+29620#Stalker Stone II(Middle)#
+29621#Stalker Stone II(Upper)#
+29651#Soul Linker Stone(Upper)#
+29652#Soul Linker Stone(Middle)#
+29653#Soul Linker Stone(Lower)#
+29654#Soul Reaper Stone(Garment)#
+29655#Taekwon Master Stone(Upper)#
+29656#Taekwon Master Stone(Middle)#
+29657#Taekwon Master Stone(Lower)#
+29658#Star Emperor Stone(Garment)#
+29659#Ninja Stone(Upper)#
+29660#Ninja Stone(Middle)#
+29661#Ninja Stone(Lower)#
+29662#Kagerou Stone(Garment)#
+29663#Oboro Stone(Garment)#
+29664#Gunslinger Stone(Upper)#
+29665#Gunslinger Stone(Middle)#
+29666#Gunslinger Stone(Lower)#
+29667#Rebellion Stone(Garment)#
+29668#Doram Stone(Upper)#
+29669#Doram Stone(Middle)#
+29670#Doram Stone(Lower)#
+29671#Doram Stone(Garment)#
+29706#Tenacity Lv. 1#
+29707#Tenacity Lv. 2#
+29708#Tenacity Lv. 3#
+29709#Tenacity Lv. 4#
+29710#Tenacity Lv. 5#
+29711#Tenacity Lv. 6#
+29712#Tenacity Lv. 7#
+29713#Tenacity Lv. 8#
+29714#Tenacity Lv. 9#
+29715#Tenacity Lv. 10#
 31016#Decorated Evil Tree Card#
 31017#Vicious Cookie Card#
 31018#Evil Dwelling Box Card#
@@ -9309,6 +10239,10 @@
 31055#Costume Poring Bubble Pipe#
 31056#Costume Exploding Wave (Red)#
 31057#Costume Eremes Scarf (Black)#
+31058#Costume Chewy Gelato#
+31059#Costume Seawater Hat#
+31060#Costume Starfish Headband#
+31061#Costume Claw Hairpin#
 31063#Costume Hair Buns (Blue)#
 31064#Costume Hair Buns (Red)#
 31065#Costume Hair Buns (Yellow)#
@@ -9333,6 +10267,7 @@
 31132#Costume Christmas Wreath#
 31140#Costume Black Cowboy Hat#
 31141#Costume Cactus Flower Corsage#
+31143#Costume Water Lantern#
 31144#Costume Native Feather Headband#
 31155#Costume Spinning Eyes#
 31158#Costume Squirrel Ear Hat#
@@ -9361,7 +10296,7 @@
 31188#Costume Mono Gothic Bonnet#
 31189#Costume Red Cat Ears Cape#
 31190#Costume Angel's Black Mini Silk Hat#
-31195#Costume Mini Chocolate Hat#
+31195#Chocolate Mini Hat#
 31197#Costume Egg Crispinette#
 31198#Costume Octopus Hat#
 31199#Costume Weird Beard#
@@ -9405,9 +10340,13 @@
 31250#Costume Wonderful Beast Ears#
 31251#Costume Cat's Mouth#
 31252#Costume White Cat Ears Hat#
+31255#Costume Sweet Melon Helmet#
 31256#Costume Jaguar Mask#
 31258#Costume Glowing White Blush#
-31259#Costume Bubbly Arc Angeling Hairband#
+31259#Costume Bubble Archangeling Hairband#
+31261#Costume Soda In Mouth#
+31262#Costume Disposable 3D Glasses#
+31263#Costume Disposable Popcorn Hat#
 31295#Costume Red Wing Hat#
 31296#Costume Strawberry in Mouth#
 31298#Costume Eden Group Hat II#
@@ -9415,7 +10354,11 @@
 31300#Costume Warm Cat Muffler#
 31301#Costume Blinking Eyes#
 31302#Costume Black Magenta Ribbon#
+31303#Costume Memory of the Pasta#
+31304#Costume Midsummer Fan#
 31318#Costume Gerhard Von Deviruchi 83 Years#
+31319#[Rental] Costume Midsummer Fan#
+31320#[Rental] Pinwheel Costume#
 31324#Costume Kitty DJ#
 31325#Costume Queen Scaraba Helm#
 31326#Costume Rolf Von Gigue 666#
@@ -9438,7 +10381,8 @@
 31384#Costume Fake Ears#
 31385#Costume Gothic Pumpkin Handicraft#
 31386#Costume Survivor's Orb#
-31389#Costume White Bird Rose#
+31387#Costume Jack#
+31389#White Bird Rose#
 31390#Costume Let It Snow#
 31391#Costume Floating Sage Stone#
 31392#Costume Radio Antenna#
@@ -9452,6 +10396,7 @@
 31408#Costume Ragnarok Rush Goat#
 31413#Costume Taurus Crown#
 31416#Costume Seraphim Coronet#
+31419#Costume Angel of Happiness#
 31420#Costume Shining Santa Poring#
 31432#Costume Floating Ice#
 31433#Costume Astro Circle#
@@ -9473,12 +10418,13 @@
 31452#Costume White Cat#
 31453#Costume Large Ribbon Muffler (Black)#
 31455#Costume Super Cute Dog#
+31459#Sweets BongBong#
 31461#Costume Marin Earrings#
 31462#Costume Cute Poring Earmuffs#
 31463#Costume Flying Drone#
-31465#Costume Robin Egg Mini Hat#
-31466#Costume holy Egg Shell#
-31467#Costume Evil Egg Shell#
+31465#Robins Egg Minihat#
+31466#Saint Egg Shell#
+31467#Devil Egg Shell#
 31470#Costume Tengu Scroll#
 31471#Costume Celestial Woman Flower#
 31472#Costume Fairy Feathers#
@@ -9486,6 +10432,7 @@
 31474#Costume Straight Long (Black)#
 31475#Costume Black Fox Ear Ribbon#
 31476#Costume Yellow Cherry Blossom Hat#
+31479#Costume Countless Stars#
 31482#Costume Lunatic Muffler#
 31486#Costume Diver's Goggles#
 31487#Costume Eye Bandage#
@@ -9505,12 +10452,16 @@
 31511#Costume Long Haired Cat Ears#
 31512#Costume Tuxedo Rabbit#
 31513#Costume Black Rabbit Ears#
+31516#Costume Mini Melon#
+31518#Costume Pop Popcorn Hat#
+31519#Costume Slurp Slurp Hat#
 31526#Costume Shaman Hat#
 31527#Costume Radiant Rainbow Wings#
 31528#Costume Stardust Hairband#
 31529#Costume Happy Rabbit Ribbon#
-31531#Costume Lovely Heart Cap#
+31531#Lovely Heart Hat#
 31533#Costume Warm Black Cat Muffler#
+31534#Rainbow Star#
 31538#Costume Lovely Feeling#
 31540#Costume Red Gemini Eyes#
 31541#Costume Drosera Hairpin#
@@ -9539,6 +10490,7 @@
 31580#Costume Autumn Taste#
 31586#Costume Poporing Muffler#
 31588#Costume Snow Flower#
+31591#Costume Saint's Crown#
 31593#Costume Yellow Scarf#
 31594#Costume Red Pencil in Mouth#
 31595#Costume Book of Soyga#
@@ -9548,6 +10500,7 @@
 31599#Costume Medium Wave#
 31600#Costume Kishu Dog#
 31601#Costume Under Rimmed Glasses (Blue)#
+31602#Costume Rune-Midgarts Glory#
 31608#Costume Magicstone of Grace#
 31609#Costume Noble Mask#
 31610#Costume Yellow Wizardry Hat#
@@ -9591,6 +10544,7 @@
 31668#Costume Majorous Horns#
 31669#Costume Evolved Whisper Mask#
 31670#Costume Miyabi Doll Hair#
+31674#Costume Jitterbug Cap#
 31682#Costume Drooping Elven Ears#
 31683#Costume Heart Wing Headband#
 31684#Costume Kururinpa Tails#
@@ -9598,6 +10552,7 @@
 31686#Costume Desert Wolf Baby#
 31687#Costume Alchemist Bag#
 31688#Costume Poring on Shoulder#
+31694#Costume Poring Letter#
 31695#Costume Tree Sprout#
 31696#Costume Shark Hat#
 31697#Costume Bird Nest#
@@ -9613,8 +10568,14 @@
 31716#Costume Twinkling Red Eyes#
 31717#Costume Medium Wave (Yellow)#
 31718#Costume Sky Lantern#
+31719#Costume Master of Fire#
+31721#Costume Ancient Resonance#
+31728#Costume Straw Cloche#
 31731#Costume Sweets Party#
+31733#Costume Phantom's Mask#
 31734#Costume Citrus Colored Ribbon#
+31735#Costume Yawata Seal#
+31766#Costume Peony Headdress#
 31784#Costume Experimental Goat Cap#
 31785#Costume Monster Fish Gills#
 31786#Costume Red Baby Dragon Hat#
@@ -9631,6 +10592,16 @@
 31800#Costume Brazil Twin Ribbon#
 31801#Costume Creative Convention Cap#
 31802#Costume Creative Convention Chapeau#
+31811#Costume Thief's Hood#
+31812#Costume Light Bulb Hairband#
+31813#Costume Lunatic On Shoulder#
+31814#Costume Lunatic Family Balloon#
+31815#Costume Prince of Rabbit#
+31816#Costume Three Rabbits Ribbon#
+31817#Costume Rabbit Two Sides Up#
+31819#Costume Dullahan Mask#
+31821#Costume Jeje Cap#
+31840#Costume DJ Headset#
 31842#Costume Striking Hat#
 31843#Costume Heavenly Order#
 31844#Costume Mob Scarf#
@@ -9638,6 +10609,12 @@
 31846#Costume Hair Ribbon Wig#
 31847#Costume Blinking Blue Eyes#
 31848#Costume Gothic Rose Bonnet#
+31850#Gift of Panagia#
+31852#Costume Witch's Cloak#
+31856#Costume Airy Twin Tails (Blonde)#
+31882#Costume Choco Stick In Mouth#
+31886#Costume Pierced Apple#
+31887#Costume Pure Love Muffler#
 31899#Costume Freyja's Crown#
 31902#Costume Cool Shades#
 31903#Costume White Snake#
@@ -9645,18 +10622,46 @@
 31905#Costume Ice Tails#
 31906#Costume Cat's Paw Knit Hat#
 31907#Costume Cat's Paw Knit Hat (Brown)#
+31910#Costume Shaving Cream#
 31911#Costume Little Garden#
 31912#Costume Black Veil#
 31913#Costume Feathered Black Cap#
 31914#Costume Mini Beret Hairband#
 31915#Costume Sweet Coronet#
 31916#Costume Bow Tie#
+31927#Costume Blue Well Chewed Pencil#
+31928#Costume Cylinder Hairband#
+31930#Costume Mic Stand#
+31931#Costume Half Rimmed Glasses#
+31932#Costume Suit Lapel#
+31933#Costume Light Purple Miyabi Doll Hair#
+31934#Costume Blinking Purple Eyes#
+31935#Costume Baby Dragon Hat#
 31936#Costume Honey Donuts#
+31937#Costume Unicorn Headdress#
 31938#Costume Long Twin Braids#
 31940#Costume flag mask#
+31941#Costume Storm Cell#
+31943#Costume Tree Frog Hood#
+31944#Costume Elegant Wave#
+31946#Costume Demon King's Eye#
+31947#Costume Dark Horn#
+31948#Costume Headband of Illusion's Eyes#
+31949#Costume Diablos Wings#
+31950#Costume Replica Nut Cracker#
+31951#Costume Happy Cat#
+31953#Costume Core Headset#
+31954#Costume Vassalage Necklace#
+31965#Costume Wave Perm Hair (Red)#
+31970#Ponytail Hair(brown)#
+31973#Costume Blossom Glasses#
 32005#Illusion Pole Axe#
+32018#Aquatic Spear#
 32019#Boost Lance-OS#
+32026#Blocking Spear#
 32032#The Berg Golden Spear#
+32109#Trumpet Shell#
+32110#Safety Lute#
 32114#Accolade Lute#
 32203#Accelerator Chip#
 32204#Immortal Dog Tag#
@@ -9668,15 +10673,170 @@
 32222#Brooch of Hero#
 32227#Fenrir Chain#
 32234#Unrivaled Ring#
+32235#Dragon Ring#
+32236#Clergy's Ring#
 32237#Celine's Brooch Type K#
 32242#Old Detachments Ring#
+32248#Safety Pendant R#
+32249#Safety Pendant B#
+32250#Safety Epaulet R#
+32251#Safety Epaulet B#
+32252#High Adventurer's Clip#
 32258#Ring of Jupiter#
 32262#Rasen Fuma's Orb#
 32263#Shield Ring#
 32265##
+32302#Crimson Rose#
+32303#Bolt Revolver#
+32352#Safety Saber#
 32356#The Twist of Fates#
 32410#The Spinebuster#
 99999##
+100009#Joy of Victory#
+100010#Perfect Size Lapine Box#
+100019#Costume Enchant Stone Box 18#
+100023#Ancient_Hero_Bravery#
+100025#Ancient_Hero_Wisdom#
+100029#ºÎ½ºÅÍ ÆÑ(1)#
+100030#Booster Pack (15)#
+100031#ºÎ½ºÅÍ ÆÑ(30)#
+100032#ºÎ½ºÅÍ ÆÑ(45)#
+100033#ºÎ½ºÅÍ ÆÑ(60)#
+100034#ºÎ½ºÅÍ ÆÑ(75)#
+100035#ºÎ½ºÅÍ ÆÑ(90)#
+100036#ºÎ½ºÅÍ ÆÑ(100)#
+100037#ºÎ½ºÅÍ ÆÑ(115)#
+100038#ºÎ½ºÅÍ ÆÑ(130)#
+100039#ºÎ½ºÅÍ ÆÑ(145)#
+100040#ºÎ½ºÅÍ ÆÑ(160)#
+100041#ºÎ½ºÅÍ ÆÑ(175)#
+100043#Booster Armor Upgrade Package#
+100044#Booster Weapon Upgrade Package#
+100045#Starter Armor Crate#
+100046#Attacker Booster Armor Crate#
+100047#Ranged Booster Crate#
+100048#Elemental Booster Crate#
+100049#Defiant Booster Crate#
+100051#ºÎ½ºÅÍ ÇÁ·Î¸ð¼Ç »çÀü¿¹¾à °¨»ç»óÀÚ#
+100052#Costume Enchant Stone Box 19#
+100054#Shadow Transcendental Time Crate#
+100061#[Event] Red Booster#
+100065#Spell Book(Storm Gust)#
+100066#Spell Book(Lord of Vermilion)#
+100067#Spell Book(Meteor Storm)#
+100068#Spell Book(Drain Life)#
+100069#Spell Book(Jack Frost)#
+100070#Spell Book(Earth Strain)#
+100071#Spell Book(Crimson Rock)#
+100072#Spell Book(Chain Lightning)#
+100073#Spell Book(Comet)#
+100074#Spell Book(Tetra Vortex)#
+100100#Temporal Manteau Box#
+100128#Noblesse Upgrade Ticket#
+100129#Imperial Upgrade Ticket#
+100130#Grace Upgrade Ticket#
+100131#Imperial Physical Modification Permit (Manteau)#
+100132#Imperial Magic Modification Permit (Manteau)#
+100133#Grace Physical Modification Permit (Manteau)#
+100134#Grace Magic Modification Permit (Manteau)#
+100135#Imperial Physical Modification Permit (Armor)#
+100136#Imperial Magic Modification Permit (Armor)#
+100137#Grace Physical Modification Permit (Armor)#
+100138#Grace Magic Modification Permit (Armor)#
+100142#Stable Dragon's Power#
+100144#Burning Dragon's Power#
+100145#Hot Dragon's Power#
+100147#Bath Salt A#
+100148#Bath Salt B#
+100149#Bath Salt C#
+100150#Aromatherapy Oil#
+100160#Automatic Module Box#
+100161#Epic Module Box#
+100162#Physical Automatic Modification Device Box#
+100163#Magic Automatic Modification Device Box#
+100164#Medium Automatic Modification Device (Physical)#
+100165#High Automatic Modification Device (Physical)#
+100166#Finest Automatic Modification Device (Physical)#
+100167#Medium Automatic Modification Device (Magic)#
+100168#High Automatic Modification Device (Magic)#
+100169#Finest Automatic Modification Device (Magic)#
+100171#Cannon Ball Box#
+100172#Iron Cannon Ball Box#
+100173#Soul Cannon Ball Box#
+100174#Poison Arrow Quiver#
+100176#Dark Cannon Ball Box#
+100177#Holy Cannon Ball Box#
+100178#Liquid Condensed Bullet Box#
+100179#Large Madogear Fuel Tank#
+100180#Repair A Box#
+100181#Repair B Box#
+100182#Repair C Box#
+100183#Flame Stone Bundle#
+100184#Ice Stone Bundle#
+100185#Wind Stone Bundle#
+100186#Shadow Orb Bundle#
+100187#Fire Charm Bundle#
+100188#Ice Charm Bundle#
+100189#Wind Charm Bundle#
+100190#Earth Charm Bundle#
+100191#Explosive Kunai Scroll#
+100192#Blue Gemstone Pouch#
+100193#Yellow Gemstone Pouch#
+100194#Red Gemstone Pouch#
+100195#Full Metal Jacket Case#
+100196#Projectile Mine Case#
+100197#Dragon Tail Missile Case#
+100231#Golden X Potion#
+100232#Red Herb Activator#
+100233#Blue Herb Activator#
+100251#Illusion Upgrade Cube#
+100252#Automatic Upgrade Cube#
+100271#Ancient Heros Weapon 9Up Box#
+100273#Ancient Hero's Boots Modifying Cube#
+100274#Oriental Sword Modification Cube#
+100275#Dragonic Slayer Modification Cube#
+100276#Shiver Katar Modification Cube#
+100277#Blade Katar Modification Cube#
+100327#Red Lotus Sword Modification Cube#
+100328#Slate Sword Modification Cube#
+100329#Narcis Bow Modification Cube#
+100330#Trumpet Shell Modification Cube#
+100331#Barbed Wire Whip Modification Cube#
+100342#Growth Potion (Small)#
+100343#Growth Potion (Medium)#
+100346#Job Potion (Small)#
+100360#Avenger Modification Cube#
+100361#Meteor Striker Modification Cube#
+100362#Madogum Modification Cube#
+100363#Fatalist Modification Cube#
+100371#Homunculus Tablet#
+100376#Royal Bow Modification Cube#
+100377#Scarlet Dragon Leather Bow Modification Cube#
+100378#Shadow Staff Modification Cube#
+100379#Chilling Cane Modification Cube#
+100388#Iron Nail Modification Cube#
+100390#Ray Knuckle Modification Cube#
+100393#Aquatic Spear Modification Cube#
+100394#¶óÀÌÆ® ºí·¹ÀÌµå °³Á¶ Å¥ºê#
+100395#Iron Staff Modification Cube#
+100396#Blue Crystal Staff Modification Cube#
+100397#Exorcist's Bible Modification Cube#
+100398#Saint Hall Modification Cube#
+100399#Meowmeow Foxtail Modification Cube#
+100400#Kiri no Tsuyu Modification Cube#
+100401#Huuma Shuriken Clear Modification Cube#
+100402#One Sky One Sun Modification Cube#
+100403#Spirit Pendulum Modification Cube#
+100404#Crimson Rose Modification Cube#
+100405#Master Soul Rifle Modification Cube#
+100406#Gold Road Launcher Modification Cube#
+100407#The Black Modification Cube#
+100408#Demon Slayer Shot Modification Cube#
+100412#Great Heros Bravery#
+100413#Great Heros Wisdom#
+100437#Ancient Heros Weapon Modification Cube#
+100461#Galaxy Costume Egg#
+100481#Battle Processor Accelerator#
 100536#Kachua's Secret Box#
 100537#Class Weapon Shadow Cube#
 100538#Class Armor Shadow Cube#
@@ -9684,29 +10844,921 @@
 100540#Class Shield Shadow Cube#
 100541#Class Pendant Shadow Cube#
 100542#Class Earring Shadow Cube#
+100710#EXP Advisor Modification#
+100742#Awakened Ancient Heros Weapon Box#
+100750#Advanced Refining Certificate Envelope#
+100751#Refining Certificate Envelope#
 100756#Steam Punk Costume Box#
+100801#Spring Costama Egg#
+100823#Lens Pore#
+100855#Booster Goal Box#
+100856#Booster Pack (1)#
+100857#Booster Pack (175)#
+100858#Booster Pack (30)#
+100859#Booster Pack (45)#
+100860#Booster Pack (60)#
+100861#Booster Pack (75)#
+100862#Booster Pack (90)#
+100863#Booster Pack (100)#
+100864#Booster Pack (115)#
+100865#Booster Pack (130)#
+100866#Booster Pack (145)#
+100867#Booster Pack (160)#
+100868#Moon Rabbit Costume Egg#
+100927#Secret Shadow Box#
+100941#Costume Animal Egg#
+101052#Holy Costume Egg#
+101083#Glacier-frozen Egg#
+101102#Overseas Care XXX#
+101104#Royal Egg#
+101150#Overseas Care 31#
+101198#Costume Fashion Show#
+101206#Overseas Care 32#
+101240#January Event's Reward Box#
+101241#Hyul's Special Rice Cake Soup#
+101283#Overseas Care 33#
+101285#Diabolic Egg#
+101301#Spring Blossom#
+101325#Overseas Care 34#
+101375#Dark Fantasy Costume Egg#
+101400#Overseas Care Package 35#
+101401#Oceanic Egg#
+101467#Overseas Care Package 36#
+101482#Freedom Stick Modification Cube#
+101483#Blessed Knife Modification Cube#
+101486#Inferno Egg#
+101568#Overseas Care Package 37#
+101593#Cutie Costume Egg#
+101647#Overseas Care Package 38#
+101651#Gourmet Egg#
+101669#Music Festival Egg#
+101698#Overseas Care Package 39#
+101707#Chilly Costume Egg#
+101790#Overseas Care Package 40#
+101824#Charming Egg#
+101833#Overseas Care Package 41#
+101854#Eerie Egg#
+101892#Overseas Care Package 44#
+102000#Overseas Care Package 42#
+102087#Flower Garden Egg#
+102117#Overseas Care Package 43#
+102212#Cute Character Egg#
+102237#Overseas Care Package 46#
+102263#Overseas Care Pacakage 45#
+102293#Spring Celebration Egg#
 200028#Frozen Costume Egg#
 200030#[30D] Mistress Wing Box#
+200048#Costume School Egg#
 200052#Costume Thanksgiving Egg#
 200055#Acid Bomb 50 Box#
 200056#Acid Bomb 500 Box#
 200064#Giant Flywing 2500 Box#
+200117#Kachua's Enriched Oridecon Box#
+200118#Kachua's Enriched Elunium Box#
+200119#Kachua's HD Bradium Box#
+200120#Kachua's HD Carnium Box#
+200121#Kachua's HD Elunium Box#
+200122#Kachua's HD Oridecon Box#
+300001#Poisonous Card#
+300002#Toxious Card#
+300003#White Porcellio Card#
+300004#Neo Mineral Card#
+300005#Abyssman Card#
+300006#Jewelry Ant Card#
+300007#Jewel Ungoliant Card#
+300008#Angelgiold Card#
+300009#Spectrum Plasma Card#
+300010#Arch Plasma Card#
+300011#Holy Frus Card#
+300012#Holy Skogul Card#
+300013#Reginleif Card#
+300014#Ingrid Card#
+300015#Purple Ferus Card#
+300016#Treasure Mimic Card#
+300017#Black Acidus Card#
+300018#Silver Acidus Card#
+300019#Bone Ferus Card#
+300020#Bone Acidus Card#
+300021#Bone Detardeurus Card#
+300076#Broken Security Beta Card#
+300077#Broken Cleaner Robot Omega Card#
+300078#Sweetie Card#
+300079#Red Pepper Card#
+300080#Great Red Pepper Card#
+300081#Research Assistant Bot Card#
+300082#Greater Research Assistant Bot Card#
+300083#Dried Rafflesia Card#
+300084#Greater Dried Rafflesia Card#
+300085#Special Alnoldi Card#
+300086#Greater Special Alnoldi Card#
+300087#Broken Gardener Beta Card#
+300088#Greater Broken Gardener Beta Card#
+300089#Verporta Card#
+300090#Verporte Card#
+300091#Papila Card#
+300092#Greater Papila Card#
+300093#Papila Ruba Card#
+300094#Greater Papila Ruba Card#
+300095#Papila Cae Card#
+300096#Greater Papila Cae Card#
+300097#Aries Card#
+300098#Greater Aries Card#
+300099#Silva Papilia Card#
+300100#Gran Papilia Card#
+300101#Broken Cleaner Card#
+300102#Bath Manager Card#
+300103#Azure Princess Card#
+300104#Bookworm Card#
+300105#Roaming Spellbook Card#
+300106#Red Pitaya Card#
+300107#Meow Card#
+300108#Sewage Venenum Card#
+300109#Sewage Cramp Card#
+300110#Sewage Waterfall Card#
+300111#Elite Bellare Card#
+300112#Magic-poisoned Dolor Card#
+300113#Unleashed Magic Card#
+300114#Magic-poisoned Plaga Card#
+300115#Magic-poisoned Sanare Card#
+300116#Powerful Magic Card#
+300117#Sharp Magic Card#
+300118#Boiling Phen Card#
+300119#Boiling Swordfish Card#
+300120#Boiling Piranha Card#
+300121#Boiling Marc Card#
+300122#Yellow Pitaya Card#
+300123#Purple Pitaya Card#
+300124#Blue Pitaya Card#
+300125#Green Pitaya Card#
+310000#Sniper Stone II(Upper)#
+310001#Sniper Stone II(Middle)#
+310002#Sniper Stone II(Lower)#
+310003#Ranger Stone II(Garment)#
+310004#Mastersmith Stone II(Upper)#
+310005#Mastersmith Stone II(Middle)#
+310006#Mastersmith Stone II(Lower)#
+310007#Mechanic Stone II(Garment)#
+310008#High Priest Stone II(Upper)#
+310009#High Priest Stone II(Middle)#
+310010#High Priest Stone II(Lower)#
+310011#Arch Bishop Stone II(Garment)#
+310076#Blessing of Strength#
+310077#Blessing of Agility#
+310078#Blessing of Vitality#
+310079#Blessing of Dexterity#
+310080#Blessing of intelligence#
+310081#Blessing of Luck#
+310082#Automatic Modification Orb (DEF)#
+310083#Automatic Modification Orb (MDEF)#
+310084#Automatic Modification Orb (VIT)#
+310085#Automatic Modification Orb (LUK)#
+310086#Automatic Modification Orb (STR)#
+310087#Automatic Modification Orb (AGI)#
+310088#Automatic Modification Orb (INT)#
+310089#Automatic Modification Orb (DEX)#
+310090#Automatic Modification Orb (HP Recovery)#
+310091#Automatic Modification Orb (SP Recovery)#
+310092#Automatic Modification Orb (Spell)#
+310093#Automatic Modification Orb (ASPD)#
+310094#Automatic Modification Orb (Fatal)#
+310095#Automatic Modification Orb (Expert Archer)#
+310096#Automatic Modification Orb (Health)#
+310097#Automatic Modification Orb (SPR)#
+310098#Automatic Modification Orb (Heal)#
+310099#Automatic Modification Orb (ATK)#
+310100#Automatic Modification Orb (MATK)#
+310101#Automatic Modification Orb (Sharpshooter)#
+310102#Automatic Modification Orb (Speed)#
+310103#Automatic Modification Orb (Caster)#
+310104#Automatic Modification Orb (Critical)#
+310105#Automatic Modification Orb (Magical Force)#
+310106#Automatic Modification Orb (Attacker Force)#
+310107#Automatic Modification Orb (Ranged Force)#
+310108#Automatic Modification Orb (Critical Force)#
+310109#Automatic Modification Orb (Recovery Force)#
+310110#Automatic Modification Orb (Post-skill Delay)#
+310111#Automatic Modification Orb (Fixed Cast Time)#
+310112#Automatic Modification Orb (Above All)#
+310113#Automatic Modification Orb (Drain Life)#
+310114#Automatic Modification Orb (Drain Soul)#
+310115#Automatic Modification Orb (Magic Healing)#
+310116#Automatic Modification Orb (Magic Soul)#
+310117#Automatic Modification Orb (Power Force)#
+310118#Automatic Modification Orb (Robust)#
+310119#Automatic Modification Orb (Powerful)#
+310120#Automatic Modification Orb (All-Force)#
+310121#Automatic Orb (Unlimited Vitality)#
+310122#Automatic Orb (Spell Buster)#
+310123#Automatic Orb (Fierce Shooter)#
+310124#Automatic Orb (Overpower)#
+310125#Automatic Orb (Fatal Flash)#
+310126#Automatic Orb (Lucky Strike)#
+310127#Automatic Orb (Draconic Breath)#
+310128#Automatic Orb (Wave Break)#
+310129#Automatic Orb (Hundred Spiral)#
+310130#Automatic Orb (Drive Press)#
+310131#Automatic Orb (Vanishing Cannon)#
+310132#Automatic Orb (Genesis Gloria)#
+310133#Automatic Orb (Boost Cannon)#
+310134#Automatic Orb (Ice Flame)#
+310135#Automatic Orb (Tornado Swing)#
+310136#Automatic Orb (Cannon Tornado)#
+310137#Automatic Orb (Crazy Mandragora)#
+310138#Automatic Orb (Acid Explosion)#
+310139#Automatic Orb (Sonic Impact)#
+310140#Automatic Orb (Cutter Slasher)#
+310141#Automatic Orb (Berserk Slash)#
+310142#Automatic Orb (Fatal Raid)#
+310143#Automatic Orb (Shadow Spell)#
+310144#Automatic Orb (Angle Shot)#
+310145#Automatic Orb (Crimson Strain)#
+310146#Automatic Orb (Jack Lightning)#
+310147#Automatic Orb (Comet Vortex)#
+310148#Automatic Orb (Double Bolt)#
+310149#Automatic Orb (Warmer Wave)#
+310150#Automatic Orb (Diamond Grave)#
+310151#Automatic Orb (Magnusmus)#
+310152#Automatic Orb (Holy Judex)#
+310153#Automatic Orb (Duplelica)#
+310154#Automatic Orb (Fallen Tiger)#
+310155#Automatic Orb (Rampage Arrow)#
+310156#Automatic Orb (Raging Crush)#
+310157#Automatic Orb (Cluster)#
+310158#Automatic Orb (Breeze Shooting)#
+310159#Automatic Orb (Aimed Storm)#
+310160#Automatic Orb (Metallic Echo)#
+310161#Automatic Orb (Reverberation)#
+310162#Automatic Orb (Vulcan Severe)#
+310163#Automatic Orb (Blaze Explosion)#
+310164#Automatic Orb (Moon Kick)#
+310165#Automatic Orb (Falling Flash)#
+310166#Automatic Orb (Eswoo)#
+310167#Automatic Orb (Espa)#
+310168#Automatic Orb (Curse Explosion)#
+310169#Automatic Orb (Death Hammer Dance)#
+310170#Automatic Orb (Fire Howling Tail)#
+310171#Automatic Orb (Storm Buster Trip)#
+310172#Automatic Orb (Petal Spear Blade)#
+310173#Automatic Orb (Cross Slash)#
+310174#Automatic Orb (Dragon Draft Wind)#
+310175#Automatic Orb (Power of Sea)#
+310176#Automatic Orb (Power of Land)#
+310177#Automatic Orb (Power of Life)#
+310178#Automatic Modification Orb (Mirror Counter)#
+310179#Automatic Modification Orb (Reflection Reject)#
+310330#Range Stone(Middle)#
+400001#Victory Wing Ear#
+400002#Victory Wing Ear#
+400011#Officer's Hat#
 400016#Turkey Hat#
+400020#Costume Beachball#
+400021#Red Clark Casquette#
+400022#Ignis Cap Type K#
+400023#The Agony of Thanatos#
+400044#Phantom of Masquerade#
 400046#Costume Pierced Apple#
+400047#Runaway Accelerator#
+400048#Gift of Panagia#
+400049#Stripe Hat#
 400052#Duel Dragon Hat#
+400054#Great Magician's Ceremonial Crown#
+400059#Scorpio Celestial Coronet#
+400060#Shiny Kitty Crown#
+400061#Sagittarius Diadem Type K#
 400073#Costume Romantic Rose#
 400077#Splash Cat Hat#
+400078#Goral Crown#
+400101#Gate of Netherworld#
+400113#Victory Wing Ear#
+400115#Costume Angeling Bread Hat#
+400124#Costume Majestic Goat of Dawn#
+400131#Costume Diadem of Brunhild#
+400132#Costume Afro Wig#
+400133#Costume Awakened Eden Group Hat#
+400144#Costume Glory Symbol#
+400157#Costume Astrologer's Cap#
+400158#Costume Demon Crown#
+400161#Costume Hat of King#
+400162#Costume Red Navy Hat#
+400163#Costume Whale Cap#
+400172#Costume Atihan Hat#
+400173#Costume Fancy Phantom Mask (Middle)#
+400174#Costume Buyers Hat#
+400175#Costume Camp Fire Cap#
+400176#Costume Fishbowl Parfait Hat#
+400177#Fafnir Helm#
+400182#Costume Doram Head Hat#
+400183#Costume Bunny Earmuffs(Upper)#
+400184#Costume Wheelwind Mask#
+400186#Costume Snake Hat#
+400193#Costume Navy Drooping Kitty#
+400194#Nostalgia Cherry Blossom#
+400195#Costume Pepperoni Pizza#
+400196#Costume Autumn Flavor(Upper)#
+400197#Costume Sweet Chef Hat#
+400203#Wolf Officer Hat#
+400221#Costume Jasper Crest#
+400223#Costume Fantastic Wig#
+400224#Costume Navy Hat#
+400225#Costume Fluffy Rabbit Cape#
+400253#Costume Macaron Bunny Hat#
+400254#Costume Gothic Heart Wing Band#
+400258#Costume Wanderer Curl#
+400259#Costume Music Note Hairband#
+400269#Costume Nostalgia Cherry Blossom#
+400270#Costume Kannam On Head#
+400271#Costume Shovel Hat#
+400272#Costume Flowers Prayer#
+400277#Costume Ferlock's Hat#
+400278#Costume Drooping Omega#
+400290#Costume Pink Angel Hairband#
+400292#Costume Angel Blessing#
+400313#Costume Galaxy Circlet#
+400314#Costume Northern Cross#
+400315#Costume Blue Emotion#
+410005#Costume Magic Heir#
+410006#Costume Sudden Wealth#
+410012#EXP Advisor#
+410013#EXP Advisor#
+410016#Battle Processor#
+410017#Battle Processor#
+410022#Costume Blue Mask#
+410023#Brazil Twin Ribbon#
+410027#Wonder Egg Basket#
+410047#Costume Hero Mask#
+410048#Costume Tiger#
+410049#Costume Blinking Golden Eyes#
+410051#Costume Falling Snow#
+410053#Costume Exorcist Glasses#
+410054#Long Ribbon#
+410055#Floating Parasol#
+410056#Costume Poulet#
+410061#Costume Deviruchi Apron#
+410062#Carefree Face#
+410063#Cherry Ribbon#
+410068#Costume Fish Marche#
+410073#Costume Diadem#
+410074#Costume Gravekeeper Blinker#
+410079#Deep Blue Sunglasses#
+410080#Deep Blue Sunglasses#
+410081#Costume Released Ground#
+410083#Costume Scuba Mask#
+410095#Costume White Cat On Shoulder#
+410096#Red Pope Ribbon#
+410097#Red Pope Ribbon#
+410098#Costume Nero Mask#
+410099#Costume Avenger#
+410107#Costume Rice Bale (Middle)#
+410122#Costume Blinking Small Eyes#
+410123#Costume Bear Head#
+410126#Costume Professor Mini Glasses#
+410127#Costume Spotlight#
+410128#Costume Power Mic#
+410129#Phantom Ears#
+410138#Costume Flower Pot Mask (Middle)#
+410141#Gorgon Coronet#
+410143#Costume Charlie's Mustache#
+410144#Costume Omega Golf Bag#
+410156#Costume Bouquet Valletta#
+410157#Costume Happening Clover#
+410170#Costume Star Eyepatch#
+410171#Costume Wishing Tree Hat#
+420002#Durahan's Mask#
+420003#CD in Mouth Type K#
+420006#Vassalage Necklace#
+420014#Costume Amatsu Wig#
+420015#Costume Camellia Demon Ribbon#
+420016#Costume Flying Katashiro#
 420026#Costume Piamette Ribbon#
+420027#Costume Fishbone Hair#
+420028#Imperial Glory#
+420030#Falconer Flute#
+420031#Ninja's Blue Mask#
 420033#Costume Airy Two Side Up (White)#
+420044#Costume Sailor's White Collar#
+420046#Costume Royal Mantle#
+420047#Costume Honorable Knight Cloak#
+420048#Costume White Coronet#
+420050#Hair Bun Wave#
+420052#Costume Chungee's Soul#
+420053#Costume Shadow Devil#
+420054#Costume Smokie Muffler#
+420063#Desert Scarf#
+420067#Costume Hopping Twin Pigtail#
+420069#Costume Lord of Royals#
+420070#Costume Cap of Blindness#
+420071#Costume Feather Stola#
+420072#Costume Knitting Low Twin(White)#
+420077#Costume Cat Footprints#
+420078#Costume Ghost Bat(Lower)#
+420079#Costume Inner Color Long#
+420081#Costume Carrot in Mouth#
+420082#Costume Side Roll Pony#
+420088#Costume Heart Angel#
+420103#Costume Charm of Mystic Frozen#
+420104#Costume Wild Long Hair#
+420107#Costume Twinkle Twin#
+420108#Costume Chocolate Bomb#
+420109#Costume Charm of Flame Heart#
+420111#Costume Rocking Short#
+420112#Guardian Claus#
+420132#Costume Charm of Great Nature#
+420133#Costume Dreaming Rose#
+420140#Costume Alpha Long Ponytail#
+420156#Costume Flower Knitting#
+420161#Costume Starry Long Wave#
+420162#Costume Starry Ribbon Twin Tail#
+436008#Big Tiger Hat#
+440001#Costume Wunderkammer#
+440003#Costume Novice Rabbit Hood#
+450001#Attacker Booster Plate#
+450002#Elemental Booster Robe#
+450003#Defiant Booster Robe#
+450004#Range Booster Suit#
+450018#Noblesse Breath Armor#
+450019#Noblesse Knight Armor#
+450020#Noblesse Spear Armor#
+450021#Noblesse Genesis Armor#
+450022#Noblesse Sharp Suit#
+450023#Noblesse Aim Suit#
+450024#Noblesse Severe Suit#
+450025#Noblesse Reverberation Suit#
+450026#Noblesse Adora Robe#
+450027#Noblesse Duple Robe#
+450028#Noblesse Tornado Armor#
+450029#Noblesse Vulcan Armor#
+450030#Noblesse Cart Cannon Suit#
+450031#Noblesse Cart Tornado Suit#
+450032#Noblesse Rolling Suit#
+450033#Noblesse Assassin Suit#
+450034#Noblesse Fatal Suit#
+450035#Noblesse Stalker Suit#
+450036#Noblesse Picky Robe#
+450037#Noblesse Catnip Robe#
+450038#Noblesse Trip Suit#
+450039#Noblesse Fire Rain Suit#
+450040#Noblesse Crimson Robe#
+450041#Noblesse Frost Robe#
+450042#Noblesse Psychic Robe#
+450043#Noblesse Dust Robe#
+450044#Noblesse Sun Suit#
+450045#Noblesse Full Moon Suit#
+450046#Noblesse Ninja Suit#
+450047#Noblesse Kunai Suit#
+450048#Noblesse Eswoo Robe#
+450049#Noblesse Curse Robe#
+450050#Noblesse Knuckle Suit#
+450051#Noblesse Tiger Cannon Suit#
+450052#Imperial Breath Armor#
+450053#Imperial Knight Armor#
+450054#Imperial Spear Armor#
+450055#Imperial Genesis Armor#
+450056#Imperial Sharp Suit#
+450057#Imperial Aim Suit#
+450058#Imperial Severe Suit#
+450059#Imperial Reverberation Suit#
+450060#Imperial Adora Robe#
+450061#Imperial Duple Robe#
+450062#Imperial Knuckle Suit#
+450063#Imperial Tiger Cannon Suit#
+450064#Imperial Tornado Armor#
+450065#Imperial Vulcan Armor#
+450066#Imperial Cart Cannon Suit#
+450067#Imperial Cart Tornado Suit#
+450068#Imperial Rolling Suit#
+450069#Imperial Assassin Suit#
+450070#Imperial Fatal Suit#
+450071#Imperial Stalker Suit#
+450072#Imperial Picky Robe#
+450073#Imperial Catnip Robe#
+450074#Imperial Trip Suit#
+450075#Imperial Fire Rain Suit#
+450076#Imperial Crimson Robe#
+450077#Imperial Frost Robe#
+450078#Imperial Psychic Robe#
+450079#Imperial Dust Robe#
+450080#Imperial Sun Suit#
+450081#Imperial Full Moon Suit#
+450082#Imperial Ninja Suit#
+450083#Imperial Kunai Suit#
+450084#Imperial Eswoo Robe#
+450085#Imperial Curse Robe#
+450086#Grace Breath Armor#
+450087#Grace Knight Armor#
+450088#Grace Spear Armor#
+450089#Grace Genesis Armor#
+450090#Grace Sharp Suit#
+450091#Grace Aim Suit#
+450092#Grace Severe Suit#
+450093#Grace Reverberation Suit#
+450094#Grace Adora Robe#
+450095#Grace Duple Robe#
+450096#Grace Knuckle Suit#
+450097#Grace Tiger Cannon Suit#
+450098#Grace Tornado Armor#
+450099#Grace Vulcan Armor#
+450100#Grace Cart Cannon Suit#
+450101#Grace Cart Tornado Suit#
+450102#Grace Rolling Suit#
+450103#Grace Assassin Suit#
+450104#Grace Fatal Suit#
+450105#Grace Stalker Suit#
+450106#Grace Picky Robe#
+450107#Grace Catnip Robe#
+450108#Grace Trip Suit#
+450109#Grace Fire Rain Suit#
+450110#Grace Crimson Robe#
+450111#Grace Frost Robe#
+450112#Grace Psychic Robe#
+450113#Grace Dust Robe#
+450114#Grace Sun Suit#
+450115#Grace Full Moon Suit#
+450116#Grace Ninja Suit#
+450117#Grace Kunai Suit#
+450118#Grace Eswoo Robe#
+450119#Grace Curse Robe#
+450121#Noblesse Super Novice Suit#
+450122#Noblesse Super Novice Robe#
+450123#Imperial Super Novice Suit#
+450124#Imperial Super Novice Robe#
+450125#Grace Super Novice Suit#
+450126#Grace Super Novice Robe#
+450127#Automatic Armor Type A#
+450128#Automatic Armor Type B#
+450132#Magical Cloth#
 450143#Samael Dress#
+450165#Striking Mail#
+450176#Powered Wing#
+450179#Celine Dress#
+450180#Cute Frog Raincoat#
+450189#Oceanus Blessing#
+450208#Paracelsus Coat#
+450209#Imp Powered Suit#
+450210#Fluffy Shark Pajama#
+450214#Dark Triad#
 460003#Feather Shield#
+460004#Illusion Shield I#
+460014#Illusion Shield II#
+460023#Shield of Phoenix#
+470000#Attacker Booster Greaves#
+470001#Elemental Booster Shoes#
+470002#Defiant Booster Shoes#
+470003#Range Booster Boots#
+470006#Sniping Shoes#
+470008#Fluffy Dandelion Shoes#
+470016#Noblesse Attack Boots#
+470017#Noblesse Magic Boots#
+470018#Imperial Attack Boots#
+470019#Imperial Magic Boots#
+470020#Grace Attack Boots#
+470021#Grace Magic Boots#
+470022#Automatic Leg Type A#
+470023#Automatic Leg Type B#
 470025#Cute Little Boar Shoes#
 470027#Juggernaut#
+470033#Elemental Boots#
+470036#Illusion Military Boots#
+470048#Striking Shoes#
 470061#Cylinder Boots#
+470075#Peep Toe Sandals#
+470084#Rune Greave#
+470112#Moaning of Evil Spirits#
+470130#End of the World#
+480000#Attacker Booster Manteau#
+480001#Elemental Booster Muffler#
+480002#Defiant Booster Muffler#
+480003#Range Booster Manteau#
+480012#Noblesse Attack Manteau#
+480014#Noblesse Magic Manteau#
+480016#Imperial Attack Manteau#
+480017#Imperial Magic Manteau#
+480018#Grace Attack Manteau#
+480019#Grace Magic Manteau#
+480020#Automatic Engine Wing Type A#
+480021#Automatic Engine Wing Type B#
+480023#Arabian Manteau#
+480025#Owl Baron Mantle#
 480045#Guardian Soul#
-480052##
+480052#Costume Sakura Ribbon#
+480053#Behemoth Muffler#
+480064#Storm Muffler#
+480069#Costume Angel Wings#
+480075#Baby Boar Bib#
+480077#Magma Manteau#
+480081#Glotoneria#
+480084#Fafnir Breath#
+480085#Devils Garment#
+480093#Costume Scepter#
+480094#Erymanthian Skin#
+480095#Costume Giant White Rabbit#
+480096#Costume Haori Coat#
+480097#Costume Snow Powder#
+480107#Costume Kings Twin Sword#
+480108#Costume Poring Basket#
+480110#Adventure Cat's Bag#
+480111#Flower Wings#
+480114#Striking Mikoshi#
+480119#Costume Niflheim Key#
+480122#Costume Samba Carnival Feather#
+480123#Costume Nydhog's Rumor#
+480126#Costume Giant Shark#
+480127#Costume Hooked Straw Hat#
+480129#Costume Triple Icecream#
+480130#Costume Beer Server#
+480131#Costume Swirling Flame#
+480134#Avareco#
+480137#Costume Filir Bag#
+480152#Costume Fork Spoon Set#
+480156#Aegis System#
+480158#Costume Lunatic Bag#
+480167#Costume Heart Stick Chocolate#
+480168#Costume Melody Wings#
+480169#Costume Diabolic Rock Guitar#
+480176#Costume Blue Rose Garden#
+480177#Costume Clutch Bouquet#
+480181#Costume Dragon Backpack#
+480187#Costume Wedding Ribbon#
+480204#Costume Back Ribbon Bell (Blue)#
+480205#Costume Astra Blessing#
+490004#Attacker Booster Ring#
+490005#Elemental Booster Earring#
+490006#Defiant Booster Earring#
+490007#Range Booster Brooch#
+490013#Devil Ring#
+490014#Noblesse Attack Ring#
+490015#Noblesse Magic Ring#
+490017#Imperial Attack Ring#
+490018#Imperial Magic Ring#
+490019#Grace Attack Ring#
+490020#Grace Magic Ring#
+490024#Automatic Booster R#
+490025#Automatic Booster L#
+490026#Automatic Battle Chip R#
+490027#Automatic Battle Chip L#
+490037#Dark Ring#
+490038#Sixth Sense Ring#
+490076#Ring of Nature#
 490079#Soul Expansion Ring#
+490083#Themis Balance#
+490096#Ring of Hunter#
+490098#Ring of Pazuzu#
+490102#Skull Ring#
+490104#Ring of Phoenix#
+490110#Anulus Ring#
+490113#Jasper Ring#
+490114#Paradise Lost#
+490118#Ring of Adoramus#
+490130#Sky Blow Ring#
+490141#Metal Pick#
+490145#Ring of Ceyneian#
+490146#Paracelsus Glove#
+490149#Glittering Cat Choker#
+490183#Military Glove#
+490193#Traveler Ring#
+490207#Memento Mori#
+500001#Booster Sword#
+500003#Light Blade#
+500004#Slate Sword#
+500007#Hypocrisy Machine#
+500008#Invidia Bundle#
+500013#Awakened Red Lotus Sword#
+500014#Awakened Slate Sword#
+500017#Awakened Light Blade#
+510001#Booster Dagger#
+510002#Booster Nindo#
+510006#Fatalist#
+510008#Wrath Rack#
+510009#Gula Teeth#
+510019#Awakened Madogum#
+510020#Awakened Fatalist#
+510022#Awakened Kiri no Tsuyu#
+510031#Rotten Garden Knife#
+510070#Blessed Knife#
+510071#Awakened Blessed Knife#
+520000#Booster Axe#
+520002#Pride Steel#
+520003#Scythe of Ice Flame#
+530000#Booster Spear#
+530002#Gluttony Stick#
+530006#Awakened Aquatic Spear#
+540000#Booster Spellbook#
+540004#Sloth Text#
+540005#Sloth Bible#
+540010#Awakened One Sky One Sun#
+540011#Awakened Exorcist's Bible#
+540018#Military Law Book#
+550002#Booster Foxtail#
+550006#Safety Foxtail#
+550007#Chilling Cane#
+550008#Greed Wand#
+550009#Addiction Plant#
+550012#Awakened Shadow Staff#
+550013#Awakened Chilling Cane#
+550014#Awakened Meowmeow Foxtail#
+550015#Awakened Spirit Pendulum#
+550080#Freedom Stick#
+550081#Awakened Freedom Stick#
+560000#Booster Knuckle#
+560002#Ray Knuckle#
+560004#Ira Fist#
+560008#Awakened Iron Nail#
+560009#Awakened Ray Knuckle#
+570000#Booster Guitar#
+570002#Trumpet Shell#
+570005#Pigritia Wave#
+570009#Awakened Trumpet Shell#
+580000#Booster Whip#
+580002#Barbed Wire Whip#
+580005#Pigritia Spark#
+580009#Awakened Barbed Wire Whip#
+590000#Booster Maul#
+590002#Meteor Striker#
+590003#Saint Mace#
+590006#Envy Blunt#
+590011#Awakened Meteor Striker#
+590012#Awakened Saint Hall#
+600001#Booster Two Handed Sword#
+600004#Dragonic Slayer#
+600008#Hypocrisy Edge#
+600009#Awakened Onimaru#
+610000#Booster Katar#
+610003#Blade Katar#
+610006#Avaritia Metal#
+610008#Awakened Shiver Katar#
+610009#Awakened Blade Katar#
+620004#Awakened Avenger#
+630003#Luxuria Pierce#
+640000#Booster Staff#
+640004#Blue Crystal Staff#
+640005#Pride Stone#
+640011#Awakened Iron Staff#
+640012#Awakened Blue Crystal Staff#
+650003#Wrath Wheel#
+650004#Awakened Humma Clear#
+700001#Booster Bow#
+700003#Scarlet Dragon Leather Bow#
+700007#Superbia String#
+700008#Gula Gun#
+700009#Pigritia Rhythm#
+700013#Awakened Narcis Bow#
+700018#Awakened Royal Bow#
+700019#Awakened Scarlet Dragon Bow#
+800002#Awakened Crimson Rose#
+810000#Lust Pointer#
+810001#Awakened Master Soul Rifle#
+820000#Lust Shatter#
+820001#Awakened Demon Slayer Shot#
+830000#Booster Gatling#
+830001#Lust Crusher#
+830002#Awakened The Black#
+830005#Antique Gatling Gun#
+840000#Lust Boom#
+840001#Awakened Golden Road Launcher#
+1000001#First Job Change Ticket#
+1000002#Second Job Change Ticket#
+1000003#Transcendent Job Change Ticket#
+1000004#Third Job Change Ticket#
+1000005#Booster Weapon Voucher#
+1000006#Booster Armor Voucher#
+1000008#Sniper Stone II(Upper)#
+1000009#Sniper Stone II(Middle)#
+1000010#Sniper Stone II(Lower)#
+1000011#Ranger Stone II(Garment)#
+1000012#Mastersmith Stone II(Upper)#
+1000013#Mastersmith Stone II(Middle)#
+1000014#Mastersmith Stone II(Lower)#
+1000015#Mechanic Stone II(Garment)#
+1000016#High Priest Stone II(Upper)#
+1000017#High Priest Stone II(Middle)#
+1000018#High Priest Stone II(Lower)#
+1000019#Arch Bishop Stone II(Garment)#
+1000092#Eliumina Radar#
+1000093#Red Pitaya Tail#
+1000094#Yellow Pitaya Tail#
+1000095#Blue Pitaya Tail#
+1000096#Green Pitaya Tail#
+1000097#Purple Pitaya Tail#
+1000098#Boss Pitaya Tail#
+1000099#Gardener's Cookie#
+1000100#Freezing Trap#
+1000101#Robot Part#
+1000102#Emergency Key#
+1000103#Barmeal Ticket#
+1000104#Magical Soapstone#
+1000105#Automatic Modification Module (DEF)#
+1000106#Automatic Modification Module (MDEF)#
+1000107#Automatic Modification Module (VIT)#
+1000108#Automatic Modification Module (LUK)#
+1000109#Automatic Modification Module (STR)#
+1000110#Automatic Modification Module (AGI)#
+1000111#Automatic Modification Module (INT)#
+1000112#Automatic Modification Module (DEX)#
+1000113#Automatic Modification Module (HP Recovery)#
+1000114#Automatic Modification Module (SP Recovery)#
+1000115#Automatic Modification Module (Spell)#
+1000116#Automatic Modification Module (ASPD)#
+1000117#Automatic Modification Module (Fatal)#
+1000118#Automatic Modification Module (Expert Archer)#
+1000119#Automatic Modification Module (Health)#
+1000120#Automatic Modification Module (SPR)#
+1000121#Automatic Modification Module (Heal)#
+1000122#Automatic Modification Module (ATK)#
+1000123#Automatic Modification Module (MATK)#
+1000124#Automatic Modification Module (Sharpshooter)#
+1000125#Automatic Modification Module (Speed)#
+1000126#Automatic Modification Module (Caster)#
+1000127#Automatic Modification Module (Critical)#
+1000128#Automatic Modification Module (Magical Force)#
+1000129#Automatic Modification Module (Attacker Force)#
+1000130#Automatic Modification Module (Ranged Force)#
+1000131#Automatic Modification Module (Critical Force)#
+1000132#Automatic Modification Module (Recovery Force)#
+1000133#Automatic Modification Module (Post-skill Delay)#
+1000134#Automatic Modification Module (Fixed Cast Time)#
+1000135#Automatic Modification Module (Above All)#
+1000136#Automatic Modification Module (Drain Life)#
+1000137#Automatic Modification Module (Drain Soul)#
+1000138#Automatic Modification Module (Magic Healing)#
+1000139#Automatic Modification Module (Magic Soul)#
+1000140#Automatic Modification Module (Power Force)#
+1000141#Automatic Modification Module (Robust)#
+1000142#Automatic Modification Module (Powerful)#
+1000143#Automatic Modification Module (All-Force)#
+1000144#Automatic Module (Unlimited Vitality)#
+1000145#Automatic Module (Spell Buster)#
+1000146#Automatic Module (Fierce Shooter)#
+1000147#Automatic Module (Overpower)#
+1000148#Automatic Module (Fatal Flash)#
+1000149#Automatic Module (Lucky Strike)#
+1000152#Automatic Module (Draconic Breath)#
+1000153#Automatic Module (Wave Break)#
+1000154#Automatic Module (Hundred Spiral)#
+1000155#Automatic Module (Drive Press)#
+1000156#Automatic Module (Vanishing Cannon)#
+1000157#Automatic Module (Genesis Gloria)#
+1000158#Automatic Module (Boost Cannon)#
+1000159#Automatic Module (Ice Flame)#
+1000160#Automatic Module (Tornado Swing)#
+1000161#Automatic Module (Cannon Tornado)#
+1000162#Automatic Module (Crazy Mandragora)#
+1000163#Automatic Module (Acid Explosion)#
+1000164#Automatic Module (Sonic Impact)#
+1000165#Automatic Module (Cutter Slasher)#
+1000166#Automatic Module (Berserk Slash)#
+1000167#Automatic Module (Fatal Raid)#
+1000168#Automatic Module (Shadow Spell)#
+1000169#Automatic Module (Angle Shot)#
+1000170#Automatic Module (Crimson Strain)#
+1000171#Automatic Module (Jack Lightning)#
+1000172#Automatic Module (Comet Vortex)#
+1000173#Automatic Module (Double Bolt)#
+1000174#Automatic Module (Warmer Wave)#
+1000175#Automatic Module (Diamond Grave)#
+1000176#Automatic Module (Magnusmus)#
+1000177#Automatic Module (Holy Judex)#
+1000178#Automatic Module (Duplelica)#
+1000179#Automatic Module (Fallen Tiger)#
+1000180#Automatic Module (Rampage Arrow)#
+1000181#Automatic Module (Raging Crush)#
+1000182#Automatic Module (Cluster)#
+1000183#Automatic Module (Breeze Shooting)#
+1000184#Automatic Module (Aimed Storm)#
+1000185#Automatic Module (Metallic Echo)#
+1000186#Automatic Module (Reverberation)#
+1000187#Automatic Module (Vulcan Severe)#
+1000188#Automatic Module (Blaze Explosion)#
+1000189#Automatic Module (Moon Kick)#
+1000190#Automatic Module (Falling Flash)#
+1000191#Automatic Module (Eswoo)#
+1000192#Automatic Module (Espa)#
+1000193#Automatic Module (Curse Explosion)#
+1000194#Automatic Module (Death Hammer Dance)#
+1000195#Automatic Module (Fire Howling Tail)#
+1000196#Automatic Module (Storm Buster Trip)#
+1000197#Automatic Module (Petal Spear Blade)#
+1000198#Automatic Module (Cross Slash)#
+1000199#Automatic Module (Dragon Draft Wind)#
+1000200#Automatic Module (Power of Sea)#
+1000201#Automatic Module (Power of Land)#
+1000202#Automatic Module (Power of Life)#
+1000207#Automatic Modification Module (Mirror Counter)#
+1000208#Automatic Modification Module (Reflection Reject)#
+1000225#Potato Chip#
+1000226#Broken Robot Core#
+1000227#Cloud Cotton#
+1000231#Broken Robot Part#
+1000232#Robot Communication Chip#
+1000253#ºÎ½ºÅÍ ¿þÆù ±³È¯±Ç#
+1000254#Booster Coin#
+1000283#(ÀÌº¥Æ®)¿¡ÇÇ¼Òµå16 Å¬¸®¾î Æ¼ÄÏ#
 1000391#Phantom's Invitation#
 1000392#Corridor of Phantom 1F Ticket#
 1000393#Corridor of Phantom 2F Ticket#
 1000394#Corridor of Phantom 3F Ticket#
+1000851#Small Brush#
+1000852#Soft Hanji#
+1000853#Chulho's Portrait#
+1001070#OCP Exchange Token#
+1100003#Concentrated Red Syrup Potion#
+1100004#Concentrated Blue Syrup Potion#
+1100005#Concentrated Golden Syrup Potion#
