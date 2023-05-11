@@ -32,6 +32,7 @@ ATTR_TOLERACE_SAINT#Holy Property Resistance +%d%%.#
 ATTR_TOLERACE_DARKNESS#Shadow Property Resistance +%d%%.#
 ATTR_TOLERACE_TELEKINESIS#Ghost Property Resistance +%d%%.#
 ATTR_TOLERACE_UNDEAD#Undead Property Resistance +%d%%.#
+ATTR_TOLERACE_ALLBUTNOTHING#All Property (except for Neutral) Resistance +%d%%#
 DAMAGE_PROPERTY_NOTHING_USER#Neutral Enemies Resistance +%d%%.#
 DAMAGE_PROPERTY_NOTHING_TARGET#Damage to Neutral Enemies +%d%%.#
 DAMAGE_PROPERTY_WATER_USER#Water Enemy Resistance +%d%%.#
@@ -50,8 +51,8 @@ DAMAGE_PROPERTY_DARKNESS_USER#Shadow Enemy Resistance +%d%%.#
 DAMAGE_PROPERTY_DARKNESS_TARGET#Damage to Shadow Enemies +%d%%.#
 DAMAGE_PROPERTY_TELEKINESIS_USER#Ghost Enemy Resistance +%d%%.#
 DAMAGE_PROPERTY_TELEKINESIS_TARGET#Damage to Ghost Enemies +%d%%.#
-DAMAGE_PROPERTY_UNDEAD_USER#Undead Property Enemy Resistance +%d%%.#
-DAMAGE_PROPERTY_UNDEAD_TARGET#Damage to Undead Property Enemies +%d%%.#
+DAMAGE_PROPERTY_UNDEAD_USER#Undead Enemy Resistance +%d%%.#
+DAMAGE_PROPERTY_UNDEAD_TARGET#Damage to Undead Enemies +%d%%.#
 MDAMAGE_PROPERTY_NOTHING_USER#Neutral Enemy Magic Resistance +%d%%.#
 MDAMAGE_PROPERTY_NOTHING_TARGET#Magic Damage to Neutral Enemies +%d%%.#
 MDAMAGE_PROPERTY_WATER_USER#Water Enemy Magic Resistance +%d%%.#
@@ -70,8 +71,9 @@ MDAMAGE_PROPERTY_DARKNESS_USER#Shadow Enemy Magic Resistance +%d%%.#
 MDAMAGE_PROPERTY_DARKNESS_TARGET#Magic Damage to Shadow Enemies +%d%%.#
 MDAMAGE_PROPERTY_TELEKINESIS_USER#Ghost Enemy Magic Resistance +%d%%.#
 MDAMAGE_PROPERTY_TELEKINESIS_TARGET#Magic Damage to Ghost Enemies +%d%%.#
-MDAMAGE_PROPERTY_UNDEAD_USER#Undead Property Enemy Magic Resistance +%d%%.#
+MDAMAGE_PROPERTY_UNDEAD_USER#Undead Enemy Magic Resistance +%d%%.#
 MDAMAGE_PROPERTY_UNDEAD_TARGET#Magic Damage to Undead Enemy +%d%%.#
+BODY_ATTR_NOTHING#User's Property Neutral.#
 BODY_ATTR_WATER#User's Property Water.#
 BODY_ATTR_GROUND#User's Property Earth.#
 BODY_ATTR_FIRE#User's Property Fire.#
@@ -142,7 +144,7 @@ RACE_IGNORE_MDEF_PERCENT_HUMAN#Bypass %d%% of Mdef on Demi-Human Enemies.#
 RACE_IGNORE_MDEF_PERCENT_ANGEL#Bypass %d%% of Mdef on Angel Enemies.#
 RACE_IGNORE_MDEF_PERCENT_DRAGON#Bypass %d%% of Mdef on Dragon Enemies.#
 CLASS_DAMAGE_NORMAL_TARGET#Damage to Normal Enemies +%d%%.#
-CLASS_DAMAGE_BOSS_TARGET#Damage to Damage to Boss Enemies +%d%%.#
+CLASS_DAMAGE_BOSS_TARGET#Damage to Boss Enemies +%d%%.#
 CLASS_DAMAGE_NORMAL_USER#Normal Enemy Resistance +%d%%.#
 CLASS_DAMAGE_BOSS_USER#Boss Enemy Resistance +%d%%.#
 CLASS_MDAMAGE_NORMAL#Magic Damage to Normal Enemies +%d%%.#
@@ -223,3 +225,13 @@ ADDSKILLMDAMAGE_SAINT#Magical Damage with Holy Property +%d%%#
 ADDSKILLMDAMAGE_DARKNESS#Magical Damage with Shadow Property +%d%%#
 ADDSKILLMDAMAGE_TELEKINESIS#Magical Damage with Ghost Property +%d%%#
 ADDSKILLMDAMAGE_UNDEAD#Magical Damage with Undead Property +%d%%#
+ADDEXPPERCENT_KILLRACE_NOTHING#Increases Formless monster acquisition experience by %d%%#
+ADDEXPPERCENT_KILLRACE_UNDEAD#Increases Undead monster acquisition experience by %d%%#
+ADDEXPPERCENT_KILLRACE_ANIMAL#Increases Brute monster acquisition experience by %d%%#
+ADDEXPPERCENT_KILLRACE_PLANT#Increases Plant monster acquisition experience by %d%%#
+ADDEXPPERCENT_KILLRACE_INSECT#Increases Insectmonster acquisition experience by %d%%#
+ADDEXPPERCENT_KILLRACE_FISHS#Increases Fishmonster acquisition experience by %d%%#
+ADDEXPPERCENT_KILLRACE_DEVIL#Increases Demonmonster acquisition experience by %d%%#
+ADDEXPPERCENT_KILLRACE_HUMAN#Increases Demi-Human monster acquisition experience by %d%%#
+ADDEXPPERCENT_KILLRACE_ANGEL#Increases Angel monster acquisition experience by %d%%#
+ADDEXPPERCENT_KILLRACE_DRAGON#Increases Dragon monster acquisition experience by %d%%#

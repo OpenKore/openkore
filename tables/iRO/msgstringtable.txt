@@ -32,7 +32,7 @@ Frame Skip Off#
 BGM On#
 BGM Off#
 /h or /help: Shows this Command Help List#
-/w or /who or /player or /who : wiew current the number of player#
+/w or /who or /player or /who : view current the number of player#
 /music: Turns BGM On or Off#
 /sound: Turns Sound Effects On or Off#
 /effect: Effects On or Off#
@@ -46,9 +46,9 @@ BGM Off#
 /inall: Allows whispers from anyone#
 /exall: Blocks whispers from everyone#
 Right click on a character and select [Register as a Friend] to add a person to your Friend List.#
-"F12 Brings up a Hotkey Window which allows you to drag and drop Recovery Items, Equipment and Skills into it for faster access.#"
+F12 Brings up a Hotkey Window which allows you to drag and drop Recovery Items, Equipment and Skills into it for faster access.#
 You can't type the same word/phrase more than 3 times.#
-"Chat Filter: Yeah, uh, I don't think so buddy...#"
+Chat Filter: Yeah, uh, I don't think so buddy...#
 You cannot overlap items on a window.#
 You cannot carry more items because you are overweight.#
 You cannot get the item.#
@@ -76,7 +76,7 @@ The deal has been canceled.#
 The deal has successfully completed.#
 The deal has failed.#
 Party has successfully been organized.#
-That Party Name already exists.#
+Invalid Party Name. Please try again.#
 The Character is already in a party.#
 The Character already joined another party.#
 Request for party rejected.#
@@ -106,7 +106,7 @@ Equip#
 Status#
 Inventory#
 /organize ''Party Name'' To organize a party. Type /leave To leave a Party.#
-"If you are the party master, you can invite someone into your party by right-clicking on a Character.#"
+If you are the party master, you can invite someone into your party by right-clicking on a Character.#
 Recover#
 Attack#
 Support#
@@ -130,8 +130,8 @@ Give Master Authority#
 View Information#
 Chat Room#
 Ppl#
-"/sit: Sit command. If you are sitting, you will stand instead.#"
-"/stand: Stand command. If you are standing, you will sit instead.#"
+/sit: Sit command. If you are sitting, you will stand instead.#
+/stand: Stand command. If you are standing, you will sit instead.#
 /chat: Creates a Chat Room#
 /q: Leaves a Chat Room#
 /deal ''Character Name'' Requests a deal with a character#
@@ -145,7 +145,7 @@ Congratulations! You are the MVP! Your reward item is#
 !#
 Congratulations! You are the MVP! Your reward EXP Points are#
 acquired!#
-"You are the MVP, but you can't take the reward because you are over your weight limit.#"
+You are the MVP, but you can't take the reward because you are over your weight limit.#
 There is no such character name or the user is offline.#
  doesn't want to receive your messages.#
  is not in the mood to talk with anyone.#
@@ -155,7 +155,7 @@ You got %s (%d).#
 [Alt] + [=]: Fix the interval error between letters.#
 [F10]: To toggle Chat Window size; [Alt] + [F10]: Toggle Chat Window On or Off#
 How to Whisper: Enter a Character's Name on the left side of chat window and type your message on the right side. The Tab key helps you move between these boxes.#
-"/!,/?,/ho,/lv,/lv2,/swt,/ic,/an,/ag,/$,/Ў¦.,/thx,/wah,/sry,/heh,/swt2,/hmm,/no1,/??,/omg,/oh,/X,/hp,/go,/sob,/gg,/kis,/kis2,/pif,/ok: Emotion icons corresponding to Alt + (1~9) Ctrl + (-=\\)#"
+/!,/?,/ho,/lv,/lv2,/swt,/ic,/an,/ag,/$,/….,/thx,/wah,/sry,/heh,/swt2,/hmm,/no1,/??,/omg,/oh,/X,/hp,/go,/sob,/gg,/kis,/kis2,/pif,/ok: Emotion icons corresponding to Alt + (1~9) Ctrl + (-=\\)#
 How to Speak to Party: Add % in front of every message.(Example: \%Hello\)#
 You haven't learned enough Basic Skills to Trade.#
 You haven't learned enough Basic Skills to use Emotion icons.#
@@ -273,11 +273,11 @@ Attack Snap On#
 Attack Snap Off#
 Skill Snap On#
 Skill Snap Off#
-"/snap: Turns snap On | Off for fights, /skillsnap: Turns snap On | Off for skills. /itemsnap: Turns snap On | Off for items on the grounds.#"
+/snap: Turns snap On | Off for fights, /skillsnap: Turns snap On | Off for skills. /itemsnap: Turns snap On | Off for items on the grounds.#
 Item Snap On#
 Item Snap Off#
 Snap#
-"You cannot carry more than 30,000 of one kind of item.#"
+You cannot carry more than 30,000 of one kind of item.#
 You cannot delete a Character with a level greater than 30. If you want to delete the character please contact a Game Master.#
 You cannot use an NPC shop while in a trade.#
 Name#
@@ -385,8 +385,8 @@ You haven't learned enough skills for aligning.#
 Alignning completed.#
 You already spent your point for today.#
 Hasn't been a month yet since you aligned this person.#
-"Remember, Spamming isn't nice.#"
-"Please refrain from ill-mannered conduct, thank you.#"
+Remember, Spamming isn't nice.#
+Please refrain from ill-mannered conduct, thank you.#
 Align with a Good Point#
 Align with a Bad Point#
 Request a deal with (%s)#
@@ -534,7 +534,7 @@ deleted#
 You paid with the personal regular base.#
 You paid with the personal regular base. Available time is xx hrs xx mins xx secs.#
 You are free!#
-"You are free for the test, your available time is xx hrs xx mins xx secs.#"
+You are free for the test, your available time is xx hrs xx mins xx secs.#
 You paid with the Internet Cafe regular base. Available time is xx hrs xx mins xx secs.#
 You paid with the Time Limit for Internet Cafe. Availabe time is xx hrs xx mins xx secs.#
 You are free for the test of Internet Cafe version .#
@@ -688,8 +688,8 @@ Your guild zeny limit prevents you from peforming this action.#
 Simplified effects have been activated.#
 Simplified effects have been deactivated.#
 Required Fee#
-"If you wish to drop an item, you must first open your Item Window (alt+e).#"
-"Open the item window, if yo want to throw out items#"
+If you wish to drop an item, you must first open your Item Window (alt+e).#
+Open the item window, if yo want to throw out items#
 #
 #
 Your lack of zeny or your zeny limit have prevented you from performing this action.#
@@ -744,11 +744,11 @@ nomsg#
 Set up has completed Reboot \n\n system #
 Set up failure!#
 Continue without adjusting keyboard secure#
-"Do not exist files need in Keyboard secure  \n\n(npkeyc.vxd, npkeyc.sys, npkeycs.sys)#"
-"Detected USB keyboard Do you want to install addtional function to insert \n\n keyboard secure? \n\n(after installing addtional function, must reboot system)#"
+Do not exist files need in Keyboard secure  \n\n(npkeyc.vxd, npkeyc.sys, npkeycs.sys)#
+Detected USB keyboard Do you want to install addtional function to insert \n\n keyboard secure? \n\n(after installing addtional function, must reboot system)#
 ftp://ragnarok.nefficient.co.kr/pub/ragnarok/ragnarok0526.exe#
 FindHack system has not installed normally. Please download ragnarok0226.exe and set up in the installed folder of Ragnarok.(%d)#
-"althogh there exists the Hacking tool,the vaccine process didn't operate normally. Ragnarok do not run#"
+althogh there exists the Hacking tool,the vaccine process didn't operate normally. Ragnarok do not run#
 Hacking tool didn't download normally. Please download ragnarok0226.exe and set up in the installed folder of Ragnarok.#
 there is registration error on NPX.DLL or has not file that need to drive FindHack.Please download ragnarok0226.exe and set up in the installed folder of Ragnarok.#
 Exceptional situation happened. Please call (02-3281-0361) . Return value(%d)#
@@ -759,7 +759,7 @@ Beloved #
 Chat logs are not accepted as evidence for any ill-mannered violation on account of possible file modifications. However this feature is provided for players' personal reference.#
 I love you.#
 Please adjust your monitor/video brightness if effects appear too bright.#
-"If full screen mode fails to work, it is suggested you alt+tab [or ctrl+esc] to inactivate and reactivate the Ragnarok Client.#"
+If full screen mode fails to work, it is suggested you alt+tab [or ctrl+esc] to inactivate and reactivate the Ragnarok Client.#
 (%d number) - charged server#
 (%d number) - free server#
 Free account member cannot acced charging account server#
@@ -768,7 +768,7 @@ Right click menu skills for F9 are Disabled.[/q1 OFF]#
 /quickspell: Right-click menu enables you to use skills assigned to the F9 hotkey. On | Off#
 Mouse wheel skills for F7 and F8 are Enabled.[/q2 ON]#
 Mouse wheel skills for F7 and F8 are Disabled.[/q2 OFF]#
-"/quickspell2: By rolling the mouse wheel up and down, you are able to use skills registered on F7 and F8 hotkeys. On | Off#"
+/quickspell2: By rolling the mouse wheel up and down, you are able to use skills registered on F7 and F8 hotkeys. On | Off#
 /q3: /quickspell (/q1) + /quickspell2 (/q2)#
 /bzz#
 /rice#
@@ -783,12 +783,12 @@ Mouse wheel skills for F7 and F8 are Disabled.[/q2 OFF]#
 /grat#
 /hp#
 /emotion: views the emoticon list.#
-"Skills assigned to shortcut windows 1, 2, 3 are Enabled. [/bm ON]#"
-"Skills assigned to shortcut windows 1, 2, 3 are Disabled. [/bm OFF]#"
+Skills assigned to shortcut windows 1, 2, 3 are Enabled. [/bm ON]#
+Skills assigned to shortcut windows 1, 2, 3 are Disabled. [/bm OFF]#
 /battlemode: allows you to use skills assigned to Shortcut Window 2 by pressing Q ~ O keys.#
 A ~ L keys allow you to use skills assigned to Shortcut Window 3.#
-"Please remember, programs running in the background while playing may affect the game's performance.#"
-"Dear angel, can you hear my voice?#"
+Please remember, programs running in the background while playing may affect the game's performance.#
+Dear angel, can you hear my voice?#
 I am#
 Super Novice~#
 Help me out~ Please~ T_T#
@@ -799,13 +799,13 @@ There is not a file or tampered on game guard. Install game guard set up file  #
 A part of Window system has damaged. Please re-intall internet explorer.#
 Fail to run game guard.nstall game guard set up file again#
 There detected illegal program. Quit unnecessary program and run again #
-"you have cancled updating game guard. If still can't access, please chect the internet or firewall #"
+you have cancled updating game guard. If still can't access, please chect the internet or firewall #
 Fail to access update server. Retry in a minute or please chect the internet or firewall #
 fail to complete game guard update. check the virus or run the game after setting ip the PC management program #
 /notrade: Declines trade offers automatically. On | Off#
 Auto decline trade offers has been Enabled. [/nt ON]#
 Auto decline trade offers has been Disabled. [/nt OFF]#
-"You cannot buy more than 30,000ea items at once.#"
+You cannot buy more than 30,000ea items at once.#
 You do not have enough ingredients.#
 Login information remains at %s.#
 Account has been locked for a hacking investigation. Please contact the GM Team for more information.#
@@ -822,7 +822,7 @@ Your Friend List is full.#
 You have become friends with (%s). #
 (%s) does not want to be friends with you.#
 This character will be blocked to use until %s.#
-"Price will be fixed at 10,000,000 zeny, even if you enter higher price.#"
+Price will be fixed at 10,000,000 zeny, even if you enter higher price.#
 (little)#
 (less)#
 (usual)#
@@ -856,7 +856,7 @@ A manner point has been successfully aligned.#
 You are in a PK area. Please beware of sudden attack.#
 Fail to update game guard with virus or crash into with spyware. Run again after using Vaccine program or sprware program #
 Program has encountered an error related to Windows compatibility. Please start the game again.#
-"You have been blocked from chatting, using skills and items.#"
+You have been blocked from chatting, using skills and items.#
 Login is temporarily unavailable while this character is being deleted.#
 Login is temporarily unavailable while your spouse character is being deleted.#
 Novice#
@@ -886,7 +886,7 @@ Blacksmith#
 Hunter#
 Assassin#
 Send an adoption request to %s#
-"When you become a child, you will be unable to become a Transcendent Class character, all stats will be limited to a maximum of 80, and Max HP/SP will be reduced. Are you sure that you want to be adopted?#"
+When you become a child, you will be unable to become a Transcendent Class character, all stats will be limited to a maximum of 80, and Max HP/SP will be reduced. Are you sure that you want to be adopted?#
 All abnormal status effects have been removed.#
 You will be immune to abnormal status effects for the next minute.#
 Your Max HP will stay increased for the next minute.#
@@ -918,8 +918,8 @@ You cannot adopt a married person.#
 This name is not registered in your Friend List. Please check the name again.#
 /hi or /hi message: Send greetings to people who are online and registered on your Friend List.#
 This character is not your guildsman. Please check the name again.#
-"Please be aware that the maximum selling price is fixed as 9,999. You cannot sell an item higher than that.#"
-"Whispers from friends are displayed as [ Friend ], and ones from guildsmen are displayed as [ Member ].#"
+Please be aware that the maximum selling price is fixed as 9,999. You cannot sell an item higher than that.#
+Whispers from friends are displayed as [ Friend ], and ones from guildsmen are displayed as [ Member ].#
 ( From character name: ) is from an anonymous character who is neither your friend nor guildsman.#
 /blacksmith: Shows top 10 Blacksmiths in the server.#
 /alchemist: Shows top 10 Alchemists in the server.#
@@ -937,7 +937,7 @@ fail to loading virus and hacking toolc\ check module. might be lack of memory s
 Homunculus Info#
 Homunculus Skill List#
 Please give your Homunculus a name no longer than 23 letters.#
-"You can name a Homunculus only once. You have entered the name, ^0000ff^0000ff %s^000000^000000. Would you like to continue?#"
+You can name a Homunculus only once. You have entered the name, ^0000ff^0000ff %s^000000^000000. Would you like to continue?#
 (Away)#
 [Automated Message]#
 Send an automated message while you are away.#
@@ -953,7 +953,7 @@ Please enter Away Message.#
 /pk: Shows top 10 Slayers in the server.#
 [POINT] You have been rewarded with %d Slayer rank points. Your point total is %d.#
 Evolution Available#
-"You have decided to delete this Homunculus ^ff0000^ff0000. When deleted, the homunculus and its history will be deleted and they cannot be restored in the future. Would you like to continue?#"
+You have decided to delete this Homunculus ^ff0000^ff0000. When deleted, the homunculus and its history will be deleted and they cannot be restored in the future. Would you like to continue?#
 Save Homunculus status as a file.#
 Do not save Homunculus status as a file.#
 Crusader#
@@ -1016,7 +1016,7 @@ Confirm Password#
 Password has been changed.#
 Password does not match.#
 Enter Password#
-"Your Homunculus is starving. Please feed it, otherwise it will leave you.#"
+Your Homunculus is starving. Please feed it, otherwise it will leave you.#
 EXP#
 [EVENT] You have won an event prize. Please claim your prize in game.#
 Hate#
@@ -1031,8 +1031,8 @@ Item has been added in the Item Window.#
 You have failed to add the item in the Item Window.#
 You have successfully mailed a message.#
 You have failed to mail a message. Recipient does not exist.#
-"[Solar, Lunar and Stellar Angel] Designated places and monsters have been reset.#"
-"The minimum starting bid for auctions is 10,000,000 zeny.#"
+[Solar, Lunar and Stellar Angel] Designated places and monsters have been reset.#
+The minimum starting bid for auctions is 10,000,000 zeny.#
 You have successfully started a new auction.#
 The auction has been canceled.#
 An auction with at least one bidder cannot be canceled.#
@@ -1064,10 +1064,10 @@ Current Bid / Max Bid#
 Seller#
 Buyer#
 Auction End Time#
-"%m/%d, %H00 PST#"
+%m/%d, %H00 PST#
 Time (Hr)#
 Fee#
-No items found.#
+No items found in auction search.#
 Your Sale List is empty.#
 Your Purchase List is empty.#
 Auction Information is incorrect or incomplete.#
@@ -1187,27 +1187,27 @@ Loyalty#
 Summons#
 Kill#
 You can feel hatred from your pet for neglecting to feed it.#
-"[POINT] You earned %d Taming Mission Ranking Points, giving you a total of %d points.#"
+[POINT] You earned %d Taming Mission Ranking Points, giving you a total of %d points.#
 [Taming Mission] Target Monster: %s#
 /hunting: You can check the your hunting list.#
-"[Angel's Question] Please tell me, how many %s skills do you have?#"
-"[Angel's Question] Please tell me, how much zeny you'll have if you divide it by 100,000?#"
-"[Angel's Question] Please tell me, what is today's date?#"
-"[Angel's Question] Please tell me, how many %s do you have?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in SiYeon's name?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in Munak's name?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in Bongun's name?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, Ragnarok?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, online?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, death?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, knight?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, gravity?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, dark?#"
-"[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, collecter?#"
+[Angel's Question] Please tell me, how many %s skills do you have?#
+[Angel's Question] Please tell me, how much zeny you'll have if you divide it by 100,000?#
+[Angel's Question] Please tell me, what is today's date?#
+[Angel's Question] Please tell me, how many %s do you have?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in SiYeon's name?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in Munak's name?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in Bongun's name?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, Ragnarok?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, online?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, death?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, knight?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, gravity?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, dark?#
+[Angel's Question] If A is 1, B is 2, and so on, and if Z is 26, what number do you get if you add the letters in the word, collecter?#
 [Angel's Answer] Thank you for letting me know~#
 [Angel's Answer] I'm very pleased with your answer. You are a splendid adventurer.#
 [Angel's Answer] You've disappointed me...#
-"[Point] You earned %d Ranking Points, giving you a total of %d Ranking Points.#"
+[Point] You earned %d Ranking Points, giving you a total of %d Ranking Points.#
 [%s]'s Points: %d Points#
 Unselected Characters will be deleted. Continue?#
 You cannot select more than 8.#
@@ -1218,13 +1218,13 @@ You can purchase only one kind of item at a time.#
 No characters were selected. You must select at least one character.#
 This character's name has already been changed. You cannot change a character's name more than once.#
 User Information is not correct.#
-"Another user is using this character name, so please select another one.#"
+Another user is using this character name, so please select another one.#
 The party member was not summoned because you are not the party leader.#
 There is no party member to summon in the current map.#
 You cannot find any trace of a Boss Monster in this area.#
-"Boss Monster, '%s' will appear in %02d hour(s) and %02d minute(s).#"
-"The location of Boss Monster, '%s', will be displayed on your Mini-Map.#"
-"Do you want to open '%s'? Once opened, the contents cannot be placed back inside. The item effect isn't doubled, even if the same items are used more than once.#"
+Boss Monster, '%s' will appear in %02d hour(s) and %02d minute(s).#
+The location of Boss Monster, '%s', will be displayed on your Mini-Map.#
+Do you want to open '%s'? Once opened, the contents cannot be placed back inside. The item effect isn't doubled, even if the same items are used more than once.#
 The Purchase has failed because the NPC does not exist.#
 The Purchase has failed because the Kafra Shop System is not working correctly.#
 You cannot purchase items while you are in a trade.#
@@ -1247,9 +1247,9 @@ Accuracy Rate (Hit) has increased.#
 Accuracy Rate has returned to normal.#
 Critical Attack (Critical) has increased.#
 Critical Attack has returned to normal.#
-You will receive 1.5 times more EXP from hunting monsters for the next 30 minutes.#
+You will receive more EXP from hunting monsters#
 This character will not receive any EXP penalty if killed within the next 30 minutes.#
-Regular item drops from monsters will be doubled for the next 30 minutes.#
+Regular item drops from monsters will be increased for a time.#
 Boss Monster Map Information for the next 10 minutes.#
 Do you really want to purchase this item? %d points will be deducted from your total Kafra Credit Points.#
 You do not have enough Kafra Credit Points.#
@@ -1261,7 +1261,7 @@ Input Number#
 %m/%d %H:%M#
 Boss Monster '%s' will appear within 1 minute.#
 Mercenary Soldier Skill List#
-"Do you agree to cast the magic spell that consumes 1 Black Gemstone and 1,000,000 Zeny?#"
+Do you agree to cast the magic spell that consumes 1 Black Gemstone and 1,000,000 Zeny?#
 [Point] You have gained %d Collector Rank Points; you now have a total of %d Collector Rank Points.#
 [Collector Rank] Target Item: %s#
 The mercenary contract has expired.#
@@ -1269,7 +1269,7 @@ The mercenary has died.#
 You have released the mercenary.#
 The mercenary has run away.#
 The '%s' item will disappear in %d seconds.#
-"VIP Bonus: EXP/JEXP + %d%%, Death Penalty %d%%, Item Drop + %d%%#"
+VIP Bonus: EXP/JEXP + %d%%, Death Penalty %d%%, Item Drop + %d%%#
 Please try again after 24 hours.#
 Mercenary will follow custom AI.#
 Mercenary will follow basic AI.#
@@ -1313,15 +1313,15 @@ Incorrect or nonexistent ID.#
 Do you really want to purchase '%s'? You will spend %d Regular Cash Points and %d Free Cash Points.#
 %d hour(s) has passed.#
 %d hour(s) %d minute(s) has passed.#
-"Please stop playing the game, and take a break. Exp and other features will be reduced to 50%.#"
+Please stop playing the game, and take a break. Exp and other features will be reduced to 50%.#
 Please stop playing the game since you'll need to rest. Exp and other features will be fixed to 0%.#
 Quest List#
 RO Shop#
-"Memorial Dungeon, '%s' is booked.#"
-"Failed to book Memorial Dungeon, '%s'.#"
-"Memorial Dungeon, '%s' is already booked.#"
-"Memorial Dungeon, '%s' is already in progress.#"
-"Failed to create Memorial Dungeon, '%s'.\n Please try again.#"
+Memorial Dungeon, '%s' is booked.#
+Failed to book Memorial Dungeon, '%s'.#
+Memorial Dungeon, '%s' is already booked.#
+Memorial Dungeon, '%s' is already in progress.#
+Failed to create Memorial Dungeon, '%s'.\n Please try again.#
 The character blocked the party invitation.#
 Block all party invitations.#
 Allow all party invitations.#
@@ -1362,7 +1362,7 @@ Check %s's Equipment Info#
 %s's Equipment#
 Show Equip#
 This service is only available for premium users.#
-"Free Trial users can only hold up to 50,000 zeny.#"
+Free Trial users can only hold up to 50,000 zeny.#
 Battlefield Chat has been activated.#
 Battlefield Chat has been deactivated.#
 Mercenary Info - Monster Type#
@@ -1370,21 +1370,21 @@ World Map#
 The Memorial Dungeon is now closed.#
 ^ff0000^ff0000Deleting a Mercenary Soldier^000000^000000 will also delete his growth history. Do you really want to proceed with the deletion?#
 The Memorial Dungeon is now open.#
-"This account has not been confirmed by connecting to the safe communication key. Please connect to the key first, and then log into the game.#"
+This account has not been confirmed by connecting to the safe communication key. Please connect to the key first, and then log into the game.#
 The number of accounts connected to this IP has exceeded the limit.#
 You have received a new quest.#
 ^777777Acquirement conditions : #
 View Skill Info.#
-"Once used, skill points cannot be re-allocated. Would you like to use the skill points?#"
+Once used, skill points cannot be re-allocated. Would you like to use the skill points?#
 1st#
 2nd#
 This account has been used for illegal program or hacking program.Block Time : %s#
-"The possibility of exposure to illegal program, PC virus infection or Hacking Tool has been detected. Please execute licensed client. Our team is trying to make a best environment for Ro players.#"
+The possibility of exposure to illegal program, PC virus infection or Hacking Tool has been detected. Please execute licensed client. Our team is trying to make a best environment for Ro players.#
 You are currently playing in the best game environment.#
-Job Exp points from hunting monsters are increased by 1.5x for 30 minutes.#
-Exp points from hunting monsters are increased by 1.25x for 30 minutes.#
-EXP points from hunting monsters are increased by 1x for 30 minutes.#
-EXP points from hunting monsters are increased by 1.5x for 60 minutes.#
+Job Exp points from hunting monsters are increased.#
+Exp points from hunting monsters are increased.#
+EXP points from hunting monsters are increased.#
+EXP points from hunting monsters are increased.#
 Unable to organize a party in this map.#
 (%s) are currently in restricted map to join a party.#
 Simple Item Shop#
@@ -1399,7 +1399,7 @@ You can't use skill because you have exceeded the number Ansila possession limit
 need Holy Water#
 need Ancilla to cast skill#
 Can't be duplicated with certain distance#
-"In order to use this skill, you need other skill#"
+In order to use this skill, you need other skill#
 Chat is not allowed in this map#
 3 hours have passed#
 5 hours have passed#
@@ -1427,7 +1427,7 @@ Paintbrush is needed#
 Surface painted is needed#
 Skill can't be used on designated spot #
 Assistant SP is not enough#
-"If the number of characters are over %d, new characters can't be made on this account#"
+If the number of characters are over %d, new characters can't be made on this account#
 Need throat pastilles#
 Need pitiful tears#
 Need throat protective pastilles#
@@ -1469,7 +1469,7 @@ Armor#
 Weapons#
 Ammo#
 Card#
-Fav#
+Etc.#
 Client response time has passed so connection is terminated#
 Incorrect version of hack shield file. Please reinstall the client#
 Need a Magic Book#
@@ -1530,15 +1530,15 @@ Can't cast anymore#
 [Acid Bottle] is needed#
 [ManEater Plant Bottle] is needed#
 [Mandragora Flowerpot] is needed#
-Party represent delegation#
-Are you really going to delegate party represent?#
-Can't delegate party represent.#
+Assign Party Leader#
+Switch Party Leader?#
+Can't re-assign party leader#
 uneditable#
 [%s] need %d#
 training point is adjusted downward#
 need to put on [%s] in order to use#
 Battle field entrance setting#
-"% you are in a state that doesn't allow you to move to battle field, therefore battle field request has been canceled#"
+% you are in a state that doesn't allow you to move to battle field, therefore battle field request has been canceled#
 #
 % Battlefield entrance is postponed. Waiting for other players#
 #
@@ -1575,7 +1575,7 @@ Material doesn't exist#
 Successful#
 failed#
 all materals are gone due to failure#
-"Because designated name of tab is too long, unable to change#"
+Because designated name of tab is too long, unable to change#
 unable to add more#
 failed to recognize #
 check bot#
@@ -1695,9 +1695,9 @@ Only alphabet and numbers are available.#
 Notice#
 Item purchase failed due to incorrect shop information.#
 Can drop from inventory window.#
-Time#
+hour(s)#
 Map#
-"You can't use, equip or disarm items when you're trading.#"
+You can't use, equip or disarm items when you're trading.#
 Unidentified value#
 /stateinfo : Shows explanation of status icon. On Off#
 State Info On : Shows explanation of status icon #
@@ -1782,19 +1782,19 @@ Search for Vends#
 Shop Name#
 Qty#
 Price#
-"Too many results, modify parameter.#"
+Too many results, modify parameter.#
 Open Shop?#
 fail to recognize SSO#
 unable to move applied area#
-Search Exact#
+Search Partial#
 dropped user#
 you do not agree on using game#
 it is not exiting game account#
 it is available only over 12 on the game#
 now is blocked situation for investigation on illegal use of game account#
 now is blocked situation for investigation on bug#
-"will increase base, jop exp level up 75% for 30 minute through monster hunting#"
-"will increase base, jop exp level up 50% for 30 minute through monster hunting#"
+will increase base, jop exp#
+will increase base, jop exp#
 no sale information is available#
 unable to search#
 Selected item does not exist#
@@ -1805,8 +1805,8 @@ no available vends#
 it is out of the item price#
 General#
 Costume#
-minute#
-second#
+minute(s)#
+second(s)#
 please enter the item name#
 item name doesn't exist#
 there is no available ma #
@@ -1827,7 +1827,7 @@ only available on style change grapler mode Novice#
 Party registration failed#
 No list has been found from searching#
 Deletion of advertisement has failed#
-"There is no qualified advertisement, therefore searching has failed#"
+There is no qualified advertisement, therefore searching has failed#
 You don't have any issued payment information#
 Get a screenshot during trading#
 [Trade_%s]#
@@ -1866,7 +1866,7 @@ available only on the dragon#
 unable to proceed due to exceeding capacity#
 need to identify real name. move to certification site#
 select slot you are going to save#
-"Congratulation %s,  Acquired '%s' !#"
+Congratulation %s,  Acquired '%s' !#
 unable to use in gloomy state#
 exceeded total price of purchased products#
 cannot subscribe the party at this map#
@@ -1880,9 +1880,9 @@ failed to pay the zeny #
 this is not a relevant job#
 this is not a relevant gender#
 succeeded identifying  user's information#
-"unmatched name , please retry#"
-"unmatched identification number, please retry#"
-"there's something wrong in this service, please retry after a while#"
+unmatched name , please retry#
+unmatched identification number, please retry#
+there's something wrong in this service, please retry after a while#
 unable to attack on riding system mode#
 unable to cast the skill on riding system mode#
 Pin number should be  4~6 space#
@@ -1898,14 +1898,14 @@ unable to use restricted number in 2nd password#
 unable to use resident registration number#
 security code#
 enter password (4~6 space)#
-°иБ¤єёѕИА» А§ЗПї© ГЯ°ЎАыАО ЖРЅєїцµе јіБ¤А» ±ЗАеЗХґПґЩ.#
-єёѕИ ЖРЅєїцµе »зїлА» ЗПБц ѕКЅАґПґЩ.#
-єёѕИ ЖРЅєїцµе »зїлјіБ¤їЎ ЅЗЖРЗЯЅАґПґЩ.#
-єёѕИ ЖРЅєїцµеё¦ »зїлЗХґПґЩ. ґЩАЅ·О±ЧАОєОЕН АыїлµЛґПґЩ.#
-єёѕИ ЖРЅєїцµе »зїл јіБ¤їЎ ЅЗЖРЗЯЅАґПґЩ.#
-°иБ¤єёѕИА» А§ЗПї© ГЯ°ЎАыАО ЖРЅєїцµеё¦ јіБ¤ЗХґПґЩ.#
-ѕЖ·ЎАЗ јэАЪ№цЖ°А» ё¶їмЅєё¦ АМїлЗПї© 4АЪё®ё¦ Е¬ёЇЗПјјїд.#
-"3ИёАМ»у АЯёшµИЖРЅєїцµе АФ·ВАё·О, Бѕ·бµЛґПґЩ.#"
+계정보안을 위하여 추가적인 패스워드 설정을 권장합니다.#
+보안 패스워드 사용을 하지 않습니다.#
+보안 패스워드 사용설정에 실패했습니다.#
+보안 패스워드를 사용합니다. 다음로그인부터 적용됩니다.#
+보안 패스워드 사용 설정에 실패했습니다.#
+계정보안을 위하여 추가적인 패스워드를 설정합니다.#
+아래의 숫자버튼을 마우스를 이용하여 4자리를 클릭하세요.#
+3회이상 잘못된패스워드 입력으로, 종료됩니다.#
 ITEM#
 SKILL#
 TACTIC#
@@ -1921,7 +1921,7 @@ When died#
 When invited to a party#
 Pickup Item#
 Over 85% Weight#
-"any work in progress (NPC dialog, manufacturing...)quit and try again.#"
+any work in progress (NPC dialog, manufacturing...)quit and try again.#
  Monster job hunting experience received by doubling %d is %.2f minutes.#
 SaveData_ExMacro%d#
  Set contents [%s] stored.#
@@ -1940,7 +1940,7 @@ the transaction exceeds your item limit.#
 the item requirement exceeds your item limit.#
 the item purchase exceeds your item limit.#
 Waiting for an advertisement.#
-ѕЖ·ЎАЗ ЖДАП°ъ ЕШЅєЖ®і»їлА» ЗФІІ\r\n¶у±ЧіЄ·ОЕ© °шЅДИЁЖдАМБц -> °н°ґјѕЕН -> №®АЗЗП±вё¦\r\nАМїлЗПї© єёі»БЦЅГ±в №Щ¶шґПґЩ.#
+아래의 파일과 텍스트내용을 함께\r\n라그나로크 공식홈페이지 -> 고객센터 -> 문의하기를\r\n이용하여 보내주시기 바랍니다.#
 There was an error in the billing system(%d)#
 failed purchases exceeds the rune items.#
 The number of individual items purchased exceeds the limit#
@@ -1981,7 +1981,7 @@ Input FileName -> Start#
 Open Option#
 Close Option#
 End#
-Time#
+BTime#
 Party & Friends#
 Chat#
 Shortcuts#
@@ -2001,13 +2001,13 @@ attack#
 skill#
 item#
 NoCtrl#
-Battlefield#
+Arena#
 (Character/Total Slot)#
-VIP Service#
-VIP #
+A#
+Premium#
 Service#
-VIP#
-VIP #
+D#
+E#
 Command List#
 LEVEL#
 MAP#
@@ -2018,8 +2018,8 @@ Swap to this character slot?#
 Failed to move the character slot.#
 Character name is incorrect.#
 View Quest Window#
-show quest#
-show quest#
+ access is restricted between the hours of midnight to 6:00am.#
+ access is restricted between the hours of ^ff0000midnight to 6:00am.^000000#
 You must leave your current guild to change character name.#
 You must leave your current party to change character name.#
 An unknown error has occurred. Name change failed.#
@@ -2030,7 +2030,7 @@ The chosen name contains characters that cannot be used.#
 Chosen name is forbidden to use.#
 Complete#
  %d minutes to obtain a %d%% EXP increase.#
-јТИЇ±оБц %02dГКіІѕТЅАґПґЩ.#
+소환까지 %02d초남았습니다.#
 Party name %s (%s) summoned. Consumed %d zeny.#
 Summon the target#
 Block List#
@@ -2047,11 +2047,11 @@ Not enough zeny to summon the party.#
 Write to the party advertising notes section.#
 Ads can be registered with the party.#
 Is already funding a party advertisement.#
+Contents#
 Gear#
-Gear#
-Misc#
+Fav#
 Lock Item Drop#
-Alarm#
+Find party alarm#
 Party formed#
 Party withdrew#
 Party invitation#
@@ -2107,27 +2107,27 @@ Request has duplicated.#
 Please re-access and register again.#
 Job is not suitable.#
 Only party member or guild leader can apply.#
-"there is already a team member in the battleground, it is not possible to apply.#"
+there is already a team member in the battleground, it is not possible to apply.#
 The battleground queue has been cancelled.#
 The battleground name is wrong.#
 You are not on the waiting list of entering the battleground.#
-"The battleground is not availble, the queue will now be cancelled.#"
+The battleground is not availble, the queue will now be cancelled.#
 Entering the battleground has cancelled.#
 Would you like to enter the battleground?#
 Entering the battleground registering system#
 Not possible to register entering and move to the battleground#
 1. It is not possible to register several battlegrounds at the same time.#
 2. You cannot register the battleground for Solo / Party / Guild at the same time.#
-"3. Party battleground is only available for registration from the party leader,#"
+3. Party battleground is only available for registration from the party leader,#
 the party members who are offline will miss the queue.#
-"4. Registering the battleground is possible from everywhere except the battleground map,#"
-"if the entering location is not a town, field or normal dungeon, character will be transferred to saved coordinates when returning.#"
+4. Registering the battleground is possible from everywhere except the battleground map,#
+if the entering location is not a town, field or normal dungeon, character will be transferred to saved coordinates when returning.#
 5. the rewards of battleground or other services can be found from battleground waiting room through the recruiting officer.#
 Entering the battleground registering Help word#
 %s battleground is going to start.#
 Would you like to move to the battleground?#
 [Note]#
-"If current location is not a town, field or normal dungeon#"
+If current location is not a town, field or normal dungeon#
 you will be moved to your saved point#
 after the battle is finished.#
 Waiting for other requests results.#
@@ -2139,7 +2139,7 @@ Required numbers for the battle: %d#
 My queue number: %d#
 Title :#
 Target :#
-Member organizing in the battle :#
+Required Members :#
 condition to join :#
 Rewards(win) :#
 Rewards(tie) :#
@@ -2165,7 +2165,7 @@ Move Slot#
 Move to this Slot#
 Change Name#
 Make Character#
-http://playragnarok.com/#
+http://ro.game.gnjoy.com/#
 (%s) Server#
 Item Combination(Choose all Ctrl+Click)#
 Choose same type of items more than 2.#
@@ -2181,15 +2181,15 @@ Previous server information#
 Show HP for attacked monster.#
 Do not show HP for attacked monster.#
 No item possible for combination#
-Active#
-Active#
-Inactive#
-Event#
+No item possible for combination#
+Activate#
+Inactivate#
+Recommend#
 Episode#
-Town#
+Local#
+Event#
 New#
-Update#
-Hunt#
+Hunt monster#
 Reward item#
 Required item#
 Time limit#
@@ -2208,14 +2208,14 @@ ALL#
 Map#
 Npc#
 Mob#
-Search word set (Ex: word word...)#
-Search#
+Search word set (Ex: word word…)#
 Scroll#
-Dungeon Scroll#
-Kafra#
-Airship#
-Airship#
-Kafra#
+Apply dungeon wart scoll action#
+Service#
+Grant moving location service#
+Plane#
+Apllying Flight machine movement#
+>> Failed to read target info!#
 << Informing >>#
 << Searching... >>#
 -----------#
@@ -2238,10 +2238,10 @@ Target : (%d, %d)#
 E%2d) %s(%d,%d)=>(%d,%d)#
 E%2d) %s#
 Still informing! Would you like to quit?#
-Navigation Help#
+Nevigation Help#
 ------------------- Command --------------------#
 1. /navigation      /navi#
-ex)/navi prontera 100/100 -> Map name, 100/100#"
+ex)/navi prontera 100/100 -> Map name, 100/100#
 Basic command is focussed on searching Zeny, Flight Machine.#
 2. /navigation2      /navi2#
   ex) /navi2 prontera 100/100 1/1/1#
@@ -2250,7 +2250,7 @@ Basic command is focussed on searching Zeny, Flight Machine.#
 4. $$lv30 Show monster list for the level#
 5. $$lv20~30 Show monster list for the level range#
 -------------------  Description  --------------------#
-"1.There are 4 seaching types. Whole, Map, NPC and Moster.#"
+1.There are 4 seaching types. Whole, Map, NPC and Moster.#
 2.Searching by the command. It will show you all the information that including the strings.#
   ex) Prontera Kafra -> searching result shows all the Kafra services in Prontera.#
 3.The information will be displayed if you select the thing from the list.#
@@ -2302,7 +2302,7 @@ No information in Naviation.#
 This map is not supportive by the Navigation.#
 Please set the target.#
 Arrived.#
-You are at your destination#
+The navigation is started.#
 The monster is in the map.#
 The map is in here.#
 Please move using the item.#
@@ -2347,7 +2347,7 @@ Please modify the password.#
 http://www.ragnarok.co.kr#
 You are in game connection ban period.#
 Your game would be shut off at %1.2d-%1.2d-%1.2d %1.2d:%1.2d:%1.2d by the game shut down system.#
-"Game shut down system is applied on your accout, You have  %1.2d hour %1.2d minutes. Please enjoy the game for this period.#"
+Game shut down system is applied on your accout, You have  %1.2d hour %1.2d minutes. Please enjoy the game for this period.#
 Replay#
 Macro#
 Webbrowser#
@@ -2377,9 +2377,9 @@ Game system#
 Game command#
 Game command ON/OFF#
 Macro#
-Card trade is not allowed in this area.#
-Using card is not allowed in this area.#
-The effect of "The Sun, the Moon and the Stars" would not be happened in this area.#
+Trade is not allowed in this area.#
+Using cart is not allowed in this area.#
+The effect of The Sun, the Moon and the Stars would not be happened in this area.#
 Ranking board#
 Rank#
 Name#
@@ -2410,14 +2410,14 @@ Currently accessed numbers are full.           ^0000ffCurrent standby numbers : 
 Currently accessed numbers are full.           ^0000ffCurrent standby numbers : %d                    Expected waiting time : %dmins %dsec#
 YOu are not the CBT users#
  -------------- Navigation commend --------------#
-"/navigation    /navi  :  /navi yuno 100/100           ->> Map name, location(100/100)#"
-"/navigation2  /navi2 :  /navi2 yuno 100/100 1/1/1 ->> Map name, location(100/100), scrool/zeny/plane (1:use 0: not use)#"
+/navigation    /navi  :  /navi yuno 100/100           ->> Map name, location(100/100)#
+/navigation2  /navi2 :  /navi2 yuno 100/100 1/1/1 ->> Map name, location(100/100), scrool/zeny/plane (1:use 0: not use)#
  -------------- Navigation search commend -------#
 $$all         : All list showing (you can divide the type of output in Type.)#
 $$lv30       : Its level monster(Numbers can be changable)#
 $$lv20~30  : Its Level Monster (Numbers can be changable)#
 1 vs 1#
-Special equipment#
+Special Equipment#
 the character job info is weird in slot %d. Please contact to the costomer service. ErrorCode(%d)#
 (%s) %d / %d#
 %s-%s(%d/%d)#
@@ -2463,11 +2463,11 @@ MOTP auth fail#
 JOB EXP from Monsters will increase %d%% for %dmins.#
 Owned Zeny : %s Zeny#
 Zeny#
-"You can keep up to 214,748,364,700,000,000 Zeny here.#"
+You can keep up to 214,748,364,700,000,000 Zeny here.#
 You have not enough money.#
 Even if you input over 1,000,000,000 Zeny, it will be sold as 1,000,000,000.#
 AuthTicket is Not Vaild#
-"ErrorCode : %d, ErrorValue : %d#"
+ErrorCode : %d, ErrorValue : %d#
 %d%% ( Basic 100%% + Premium %d%% + PCCafe %d%% + %s Server %d%% )#
 Basic item drop rate from monster hunting is increased for %dmins by %dtimes.#
 Basic item drop rate from monster hunting is increased for %dhour %.2dmins  by %dtimes.#
@@ -2477,15 +2477,1464 @@ Basic item drop rate from monster hunting is increased for %dhour %.2dmins  by %
 10000000#
 ^ff0000%d^0000ff0,000,000#
 It is more than ^0000ffZeny^000000.\n Is it correct?#
-Safe chcek for over 10,000,000Zeny#
+Safe check for over 10,000,000Zeny#
 https://www.warpportal.com/account/login.aspx?ReturnUrl=%2faccount%2fpayment.aspx#
-https://kepler.warpportal.com/steam/purchase/?step=1&steamid=76561198071003044&game=rose&accountname=khanhtest111&lang=en#
-In their efforts to continue to trace the path of Satan Morroc, brave adventurers crossed the legendary Bifrost bridge and discovered a lost city, Eclage#
-There they found that the Laphines of Eclage were completely separated from their brothers in Splendide because of the Hazy Forest Labyrinth.#
+https://kepler.warpportal.com/ro1/purchase/?step=1&steamid=%lld&accountname=#
 #
 #
 #
 #
 #
 #
-Go now#
+Only numbers can be input.#
+You cannot withdraw while exchange window and shop are activated.#
+Shortcut#
+Item Comparison#
+the Weapon is not suitable for the bullet you are equipping.#
+the bullet is not suitable for the weapon you are equipping.#
+the item is not register to sell. Please register the item you want to sell#
+ITEM#
+You cannot use the Guild storage.#
+You are not join in any guild. Please try again after joining guilds.#
+Other guild member is using it. Please try later.#
+Storage autority#
+Guild Storage#
+You have no right to use the Guild Storage.#
+Limited item sales registration window#
+Item DB name#
+item DB no.#
+Sales count#
+Sales start time#
+Sales time#
+Please put the amount you want to sell#
+Please put sales start time#
+the sales start time range is not suitable.#
+Please put the sales time#
+Please put the Item DB Name.#
+Item ID check has failed. Please try again.#
+>> ItemName : %s / Price : %dc / Count : %d / sales periiod : %d:%d:%d:%d ~ %d:%d:%d:%d#
+It has succefully registered.#
+it has failed to register. Please tray later.#
+There is an item already registered. Please try again.#
+It has failed to remove the item. Please try again.#
+%s item has removed.#
+Special#
+Flash sale item count renew#
+Sales closed#
+item count should be renewed#
+There is not eoungh item, so %d item has purchased.#
+%s item's flash sale started.#
+%s item is out of stock or sale period is finished.#
+/limited sales#
+http://www.ragnarokeurope.com/news/home-r70.html#
+http://www.ragnarokeurope.com/index.php?rubrique=70&Steam#
+Successfully purchased list#
+Your order has excceeded the amount of current stock#
+the character name is not possible to invite.#
+The character name is not possbile to invite to the guild.#
+It has failed to purchase due to some item's out of stock.#
+The warp spot cannot be memorized in current position.#
+Item cannot be purchased due to the bag's overweight.#
+No.#
+item#
+count#
+Name#
+CTime#
+Withdraw#
+the log is not exist.#
+Entire#
+Put#
+Out#
+Guild storage list#
+List only shows recent 100 items.#
+Guild Storage is closing after 2 min of usage.#
+Incorrect GameSamba ID. Please Try Again.#
+%s [%doption] : %d #
+Coin is required.#
+%d coin are required.#
+Gatling gun type should be equiped.#
+Shotgun type should be equiped.#
+Rifle type should be equiped.#
+Revolver type should be equiped.#
+Saint type bullet should be equiped.#
+Selling item list#
+Purchased item list#
+Grenade Launcher type should be equiped.#
+the skill effect such as [Hit Barrel],[Last Stand],[Platinum Altar] cannot be duplicated to use.#
+This skill cannot be used in this map.#
+When you are using the guild storage, all the items in the storage will be disappeared.#
+http://ragnarok.gamesamba.com/#
+Enter your password to log in#
+Pet evolution#
+Evolution#
+You need following materials to evolve.#
+Would you like to evolve it?#
+Unknown error#
+You didn't summon a pet.#
+The requested one is not the pet egg.#
+Not enough evolution materials#
+You are short of evolution materials.#
+The pet can be evolved under only Loyal status.#
+Auto feeding#
+The pet has been fed. '%s' Remaining: %d#
+Auto feeding activated.#
+Auto feeding inactivated.#
+Renewed#
+%d mininutes ago#
+%d hours ago#
+%d days ago#
+%d%% ( Premium %d%% + %s Server )#
+Sending mail#
+Mail sent#
+The item has been moved to the inventory.#
+Item claim has been failed.#
+Please clear the inventory.#
+Acquired Zeny.#
+Zeny claim has been failed.#
+Zeny maximum exceeded#
+Item attachment success#
+Addressee is required.#
+Title should be 4 to 24 chracters long.#
+Mail deilvery has been failed.#
+Delivery failed due to the improper item.#
+Inexistent addressee#
+%s [%d options]#
+Please fill out 1 to %d numerical value for level.#
+Inventory clearance needed#
+Daily mail sending limit has been exceeded.#
+You cannot open the mail#
+You currently belong to a clan.#
+Gold PC cafe point information#
+Taking off the pet accessory allows you to evolve the pet.#
+In %d minutes#
+In %d hours#
+In %d days#
+Press CHECK NAME button to check the C-CODE.#
+You can delete it after claiming all the attachments.#
+You cannot attach more Zeny than that you have#
+Charge: %s Zeny#
+Inexistent addressee#
+EXP  : %.1f%% (Basic %.1f%% Premium %.1f%% + %s %.1f%%)#
+DROP : %.1f%% (Basic %.1f%% Premium %.1f%% + %s %.1f%%)#
+DEATH: %.1f%% (Basic %.1f%% Premium %.1f%% + %s %.1f%%)#
+You can gather up to %d Gold PC cafe points.#
+This function unavailable in this server.#
+Using cart is restricted in this server.#
+Auction is restricted in this server.#
+Trade is restricted in this server.#
+Dropping items is restricted in this server.#
+You cannot use Vending function.#
+Summonee is short of SP#
+%s/%s#
+Length of mail should be less than 1K#
+Item attachment has been failed.#
+Maximum item weights for mail has been exceeded.#
+"Under service. Please try again in a moment.#
+You cannot open Lucky Roulette window.#
+You cannot close Lucky Roulette window.#
+You cannot start Lucky Roulette.#
+You need points to start Lucky Roulette.#
+You cannot claim the prize.#
+The maximum number of items has exceeded.#
+You are overburdened. Please clear some items from the inventory.#
+Vending skill failed#
+Roulette is rotating. Please try again after checking the winning items#
+Lucky Roulette#
+Alarms when items sold#
+Please check the charge#
+Check user name#
+Scheduled to be removed#
+Achievement Quests#
+Achievement Total Score#
+Achievement Rank#
+Remaining scores to the next rank: [%5d]#
+Progress#
+Recently Attained Achievements#
+Xianbei item list#
+Xianbei: %d / %d #
+You are short of Xianbei#
+%s #
+Overview#
+Basic#
+Character#
+Actions#
+Etc.#
+Adventure#
+Rune Midgards#
+Schwartzvald#
+Arunafeltz#
+New World#
+Localized Map#
+Dungeon#
+Battle#
+PvP#
+Training#
+Quest#
+Episode#
+Basic#
+Memorial Dungeon#
+Midgard#
+New World#
+Etc.#
+Great Achievement#
+Attained quest#
+You cannot add any more#
+You have achieved < %s >.#
+Only OTP users are allowed#
+If you press this button, you will get the prize and the roulette will be initialized.#
+If you press this button, the roulette will start from the line indicated by a blinking arrow.#
+Title#
+Title Off#
+You cannot create the guild in this area.#
+You cannot disband the guild in this area.#
+You cannot join the guild in this area.#
+You cannot leave the guild in this area.#
+You cannot expel guild members in this area.#
+You cannot change guild position in this area.#
+Please make more than 5 item slots in the inventory.#
+E X P: %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
+DROP : %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
+DEATH: %.1f%% (Basic 100.0%% PC cafe %.1f%% + %s %.1f%%)#
+Maximum number of item attachments has been exceeded.#
+Alarms when purchasing items#
+This item is banned to attach#
+Drawing the blank in the previous roulette, you cannot play the higher roulette.#
+Write reply#
+Read mail#
+Delete mail#
+Xianbei: %d#
+%s %s Xianbei#
+Xianbei#
+Total: %d Xianbei#
+%d -> %s Xianbei#
+%s Xianbei#
+                                          Current Xianbei: %s#
+    %s:  %s  Xianbei#
+%10s Xianbei#
+Total: %s Xianbei#
+※Charge 3% / Charging At least 1 Xianbei#
+Xianbei#
+^0000ff Xianbei^000000.\n Correct?#
+Over 1 billion Xianbei confirmation#
+If you fill over 1 billion, the price will be automatically set as 10 billion Xianbei.#
+If you fill over 9,999 Xianbei, the price will automatically set as 9,999 Xianbei.#
+There are items priced 0 Xianbei. You cannot open vending.#
+The opponent is over the Xianbei limit. Trade failed.#
+Please fill out %s item price less than 1 billion Xianbei.#
+%s:  %s  Xianbei => %s ea#
+Limited price: %s Xianbei#
+%s %s %d Xianbei#
+%d %s are sold. In total %d Xianbei. 3%% charge will be imposed.#
+RODEX#
+SEND#
+RECEIVE#
+Please close the mail writing window.#
+Server access denied(A)#
+Server access denied(B)#
+You should disarm the equipped arrows/bullets.#
+An item has been consumed in the inventory. RODEX writing window will be closed.#
+You don't have Magnifier.#
+To drop items, please close the mail writing window first.#
+The opponent has already requested you to be a friend.#
+SCRIPT ERROR AID#
+\nErrorfile : %s\nErrorLine : %d lines\nErrorContent: \n*Previous line: %s \n*Errorline : %s \n*Next line:\n %s#
+^ff0000Do you want to purchase the item? %d points and %d Xianbei will be used.#
+Close#
+Quest#
+View quest icons#
+Amenities#
+View amenity icons#
+Guild member/Party member#
+View guild member/party member#
+Record#
+MVP Monster#
+YOU#
+Do you want to delete it?#
+Quest NPC#
+Fill out the notes#
+Save#
+Leave notes#
+%s [%d Option] %d ea#
+%s [%d Option] %s Zeny#
+%s [%d Option] %d %s %d -> %s %s#
+%s [%d Option] %d %s %s %s#
+%s [%d Option] %d -> %s %s#
+%s [%d Option] %s %s#
+You should set more than the minimum trade unit: 100 Xianbei.#
+Hair color#
+Hairstyle#
+Dress color#
+Dress style#
+Unsupported map#
+Fill less than 2,147,483,647 Zeny.#
+Fill more than 1 Zeny.#
+You do not have Zeny.#
+Zeny stash#
+Deposit#
+Zeny in hand#
+Deposit#
+Withdraw#
+1 z UP#
+1 z Down#
+Max#
+No input#
+Short of Zeny#
+Needs input#
+Cannot input characters#
+Over maximum input#
+Below minimum input#
+Short of Zeny in hand#
+Short of Zeny in stash#
+Exceeded maximum Zeny in hand#
+Drop X#
+Kafra storage X#
+Cart X#
+Mail X#
+Trade window X#
+Auction X#
+Guild storage X#
+To sell item to NPC X#
+Movement restriction item#
+Please create a character.#
+You need to disarm the equipped projectiles.#
+You cannot enter the memorial dungeon due to excessive number of people.#
+Memorial dungeon enterance failed due to excessive number of people.#
+%.1f%% ( %s Server: %.1f%% + Premium:%.1f%% )#
+%.1f%% ( %s Server: %.1f%% + Premium:%.1f%% )#
+Unable to use due to the duplicated item.#
+Unable to use due to the duplicated effect.#
+Screen flicker effect ON#
+Screen flicker effect OFF#
+An illegal program has been detected.#
+Send mail#
+E X P: %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+DROP : %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+DEATH: %.1f%% (Basic 100.0%% VIP Bonus %.1f%% + %s %.1f%%)#
+You cannot use the tag as a name.#
+Styling shop#
+No coupons. Purchase items in Cash Shop#
+Please open the item coupon box in the inventory.#
+Do you want to delete it?#
+No more slots. Please remove some in Bookmarks.#
+Do you want to buy the current style?\n(※ You cannot receive a refund.)#
+The current style saved.#
+Not enough Zeny in hand. There are enough Zeny in Zeny stash.#
+moving...#
+You are not allowed to fly over the sovereign airspace of the country.#
+Airship flight is temporarily unavailable due to atmospheric instability caused by Mana.#
+Private airship#
+Please try again in a moment.#
+Not enough Zeny to use the private airship.#
+Not enough Cans to use the private airship.#
+You cannot meet the level to use the private airship.#
+You cannot move to the selected point by the private airship.#
+You cannot use the private airship where you are now.#
+Accessory#
+Second costume#
+Wardrobe#
+This hairstyle cannot be dyed.#
+Press an arrow to choose the style you want.#
+Come and see the new styles.\n(※ Purchased accessories will be sent via RODEX.)#
+Basic style#
+You can level up the skill from the base Lv. %d.#
+You cannot use the special character as a name.#
+Not enough MHP to use the skill.#
+Not enough MSP to use the skill.#
+Item compare#
+Lock Throw item#
+Screenshot has NOT attached.#
+Twitter#
+Message#
+Notice#
+Returned#
+Refresh#
+%dMinute(s)#
+%dHour(s)#
+%dDay(s)#
+Return#
+Do you want to delete the selected mail?#
+Show Location#
+Zoom In#
+Zoom Out#
+Map View#
+World View#
+No. of item categories#
+/minimap#
+Show Mini-Map button#
+Hide Mini-Map button#
+Sort out concurrent guild member#
+Loyalty : %s#
+Not confirmed#
+Party Name#
+PT lead#
+Exceed time limit. Shutting down client.#
+Invalid input. Client Shutting down.#
+Correct. Bonus buff will be rewarded.#
+Please input 4 characters at least.#
+Is [%s] correct?#
+There is no selected image.#
+Wrong input. (%d times remaining)#
+Report %d players?#
+Message has sent.#
+Necessary Data has not registered to crack down on illegal program.#
+Already registered on Macro watch list.#
+The Macro has registered.#
+Failed to register the image.#
+Failed to register the answer.#
+Hello. Checking for illegal programs.#
+Please enter the below characters within the designated time.#
+If failed 3 times, your account will be blocked permanently under the account policy.#
+Remaining Count : %d#
+Character#
+Range#
+Please use Left-click to select character.#
+Please use Right-click to select range.#
+Please use Enter key to set the range.#
+E X P : %.1f%% ( basic %.1f%% %s %.1f%%)#
+DROP  : %.1f%% ( basic %.1f%% %s %.1f%%)#
+DEATH : %.1f%% ( basic %.1f%% %s %.1f%%)#
+Sent to the re-named character. Changed character name : %s #
+Necessary materials to combine#
+Not enough materials to combine.#
+%d number of materials required.#
+Not enough refine grade to combine.#
+Do you want to sign in Adventure Agency?#
+You can leave your comment.#
+Please enter the characters from the image.#
+%d second(s) remaining#
+Please enter 6 digit OTP numbers#
+Auth. No.#
+Not 6 digit numbers. Please check again#
+It's been deleted.#
+Please select destination to private flight.#
+E X P : %d%% ( basic 100.0%% %s %d%%)#
+DROP  : %d%% ( basic 100.0%% %s %d%%)#
+DEATH : %d%% ( basic 100.0%% %s %d%%)#
+Moving to destination.#
+[%s] file is not existing. Activating default AI#
+ %.1f%% ( Basic 100.0%% + Premium %.1f%% + %s %.1f%%)#
+Do you want to vend a shop at this place?#
+Doram race cannot wear the costume.#
+The item has sent to RODEX.#
+30,000 z#
+100 Malangdo Special Can#
+Cannot proceed due to weight has reached to 80%.#
+Unsold item has sent to RODEX.#
+Equiped outfit#
+Entrust guild master#
+Do you really want to entrust GuildMaster to %s? To proceed, your guild position will be exchanged with %s.#
+Cancel#
+Do you want to close the shop??#
+%02dDay(s) %02dHour(s) %02dMinutes(s) %02dSecond(s)#
+No connection#
+Connection is full.#
+Please select the place where you want to vend a shop.#
+Changing your Pet name to ^0000ff^0000ff %s^000000^000000. Do you want to proceed?#
+Trade date : #
+Trade item : #
+Trade quantity : #
+Trade price(each) : #
+Trade price : #
+Vending sales item#
+Vending purchase item#
+Close vending sales agent#
+Close vending purchase agent#
+Balance:#
+Item list:#
+Vending agent#
+Returned item:#
+Returned quantity:#
+Returned date:#
+Trading amount has sent to RODEX.#
+Not available name.#
+Item has arrived.#
+Thanks for purchasing.#
+Cannot sell to NPC.#
+Lock selling item#
+Not able to find a place to summon in near.#
+Capture full screen#
+Capture part of screen#
+Send#
+Family Affairs agent#
+Acknowledgement of family member registrations.#
+Dear whom it may concern. \r\n\r\n Today, \"%s\" and \"%s\" 's son/daughter \"%s\" has fully separated and independent from your member of family.\r\n\r\nHereat, we inform you in writing.\r\n\r\nPlease contact to Prontera Family Affairs if you have any enquiries.\r\n\r\nThank you.#
+Equip#
+No imgae#
+[%s] has blocked Call Message.#
+You cannnot entrust GuildMaster due to WoE. Please try again later.#
+You cannnot entrust GuildMaster. It has not being passed 24 hours since you being entrusted.#
+Being a child, transcendent and stat ability could be limited. Also HP and SP could be decreased. Do you agree with this?#
+Refinement#
+Using Blacksmith Blessing.#
+Insufficient Zeny.#
+Not enought Blacksmith Blessing.#
+The item cannot be refined.#
+Refine succeeded!#
+Refine Failed!#
+Back#
+Succeed#
+Returned#
+with#
+Change homunculus' name to ^0000ff^0000ff %s^000000^000000 . Do you want to proceed?#
+Call message is opened. (Call function ON)#
+Call message is blocked. (Call function OFF)#
+Show call message#
+Failed to delete. The character already using the vending item.#
+Already vending a shop NPC.#
+You cannot vend a shop on this place.#
+You cannot vend a shop on the other character.#
+Failed to feed your pet. Plase close RODEX window.#
+Set item setting#
+Equip#
+The item will be broken if refine has failed.#
+The item will be downgraded if refine has failed.#
+The item will be downgraded or broken if refine has failed.#
+You cannot use RODEX while refining. RODEX has closed.#
+You cannot use RODEX while refining.#
+Please close other windows to continue.#
+Turn On Aura [Aura ON]#
+Turn Off Aura [Auta OFF]#
+Aura is turned off. Please turn it on and try again#
+You need %d bullet(s) to activate the skill.#
+Do you want to change the equipment set?#
+You can not do it while you are dead.#
+You can not do it while casting#
+You can not do it while trading#
+You can not do it while opening vendor#
+You can not do it while using NPC#
+You can not do it while using chatting room#
+Party members are not connected.#
+You need %d arrow(s) to activate the skill.#
+Align items#
+Please close item setting window to dump item.#
+There is no item to replace.#
+Deleted character#
+%Y.%m.%d#
+Access date: %s#
+You can not use bank while refining. Bank has closed.#
+You can not use bank while refining.#
+The item has bind to set equipment.#
+Human#
+Swordman, Mage, Merchant, Acolyte, Thief, Archer#
+Doram#
+Summoner#
+Delegate race of Midgard. Very talented race to solve a problem with inifite potential and great adaptability.#
+One of delegate race of Far-star continent with natural born curiosity and sparky character.#
+Weight limit has reached toover 70%. Or less then 10 invenrory space.#
+C#
+C#
+Doing in other activity.#
+Overheat limit : %d#
+You cannot invite or withdraw while in memorial dungeon.#
+Expletive has detected.\nPlease check again.#
+Please enter over %d characters. If you don't have user account, please click [Register] button on the bottom left.#
+Please enter the password over %d characters.#
+Please finish your current work and try it again.#
+%.1f%% (Internet-Cafe %.1f%% + TPLUS %.1f%% + %sServer %.1f%%)#
+The item cannot be registered.#
+/300#
+/4000#
+https://member.gnjoy.com.tw/mRO_SecPwd.aspx#
+The emblem you want to register does not exist. Insert it in the emblem file and try again#
+Ragnarok Ragnarok#
+If your screenshot or chat box includes other users besides yourself, first ask permission from the other users before using it.#
+You cannot change equipment in current condition#
+Getting the user's name#
+This message includes contents you are not able to use.#
+Failed to purchase item.#
+The lower numbers of the identification number does not match.#
+Close#
+Rule#
+Purchase 1x#
+Purchase 10x#
+Purchase 100x#
+Win 1st prize#
+Win 2nd prize#
+Win 3rd prize#
+Currently not in use#
+Currently not in use#
+Zeny Lottery winner#
+Lottery purchase amount#
+Participating character#
+1st Price#
+2nd Price#
+3rd Price#
+Purchase Reward Item#
+^1a1a1a Do you want to purchase ^b%d lottery tickets for \n^4435b2%dZeny^1a1a1a?#
+You have successfully purchased the lottery ticket.#
+Not enough Zeny to purchase lottey ticket.#
+You are only able to purchase the tickets upto 1000 times.#
+Yes#
+No#
+HP#
+SP#
+Lv#
+Lv#
+Exp#
+ all on#
+Play Replay Flie#
+P#
+Total#
+Basicinfo#
+Equip#
+Item#
+Skill#
+Guild#
+Party#
+Chatting#
+Shortcut#
+Status#
+ALL#
+User Defined File Name#
+Repeated File Check#
+on#
+<Basic Skin>#
+Select Skin#
+You cannot delete it because you are currently participating in the lottery#
+/achievement#
+Zeny Lottery ticket#
+Zenyy Lottery %dprize reward#
+%dprize reward: %s#
+Zeny Lottery Cumulative purchase reward#
+Cumulative %d times reward: %s#
+Zeny Lottery Refund#
+Refund amount: %d Zeny\r\nReason for Refund: Failed to draw lottery in the server#
+Add Mini Party Chat#
+Delete Mini Party Chat#
+The lottery draw had ended! Check the winner!#
+%dMonth %dDay#
+Till the next grade#
+All#
+Incomplete#
+(Accomplished!)#
+(Not Accomplished)#
+Change equipment#
+CHANGE#
+Power Parameter\n ^cc0000Melee PhysicalAttack^ffffff, Carrying Weight#
+Agility Parameter\n^cc0000Attack Speed^ffffff, Dodge, Physical Defense#
+HP Parameter\n^cc0000Max HP^ffffff, Physical Defense, Magic Defense#
+Intellect Parameter\n^cc0000Magic Attack^ffffff, Casting Time, Magic Defense#
+Handcraft Parameter\n^cc0000Long Range Physical Attack^ffffff, Accuracy, Casting Time, Magic Attack#
+Moon Parameter\n^cc0000Critical Rate^ffffff, Accuracy, Physical Attack, Magic Attack, Dodge#
+Physical Attack#
+Physical Defense#
+Accuracy#
+Critical Rate#
+Affiliated Guild#
+Points to level up each Parameter#
+Magic Attack#
+Magic Defense#
+Dodge#
+Attack Speed#
+Shortcut#
+Option#
+Skill Shortcut Key (F1 ~ F9)#
+Capture Image#
+Zoom In#
+Zoom Out#
+Guild#
+Bank#
+Mail#
+Cash Shop#
+Sit#
+Move#
+Rotate#
+The Party Leader can be dropped out only after another party member becomes a Party Leader.#
+Do you want to stop viewing this video?#
+ gear has been equipped in the gear equipment pop-up.#
+ gear has been removed in the gear equipment pop-up.#
+This is the last line.#
+%.1f%% ( Base 100%% + Premium %.1f%%+ %sServer %.1f%% )#
+Chinese character#
+Shortcut Settings#
+Your subscription will be ended on%s.#
+Cannot find the replay file.#
+Shoes#
+Head#
+Armor#
+Shoulders#
+Accessory#
+Costume#
+Sort Order#
+Normal Gear#
+Special Gear#
+Style#
+/quake : Screen Shaking Effect On/Off#
+/aura2 : You can completely turn off the aurora On/Off#
+Default Settings#
+Advanced Settings#
+The Default Settings will be applied. #
+The Default Settings will be applied. Do you agree?#
+The settings will be applied. Do you agree?#
+Need to restart to apply the settings. Do you agree?#
+Fog#
+Simplified aurora#
+Turn on aurora#
+Show Effect#
+Show Shadows#
+No Shift#
+Select Hardware T&L Acceleration Function#
+Select Game Resolution#
+Use full screen#
+Fix mouse#
+Effect Settings#
+Control Settings#
+Graphic Device Settings#
+Graphic Resolution Settings#
+Full Screen Settings#
+Fix mouse Settings#
+Commission : #
+Total commission amount : #
+Select receiver#
+Select receiving group#
+Change size(F10)#
+Loading the mailbox.\n^c92114Delete^000000unnecessary emails!!#
+NOW LOADING..#
+Title#
+Sender#
+It cannot be run simultaneously with the Ragnarok client. exit setup#
+Add-on settings#
+#
+#
+#
+#
+#
+#
+#
+Navi Icon Setting#
+Navi Info UI#
+Open Navi Info#
+Share now location#
+Search[0]#
+Search&Info#
+Location is not available#
+Result[%d]#
+Icon Setting for guide#
+Allow zeny for guide#
+Navigation Undock#
+#
+Selected location will be shared on chatting.#
+If you select 4. Service, it will guide considering Zeny&Airship.#
+5. [<-] Button : Guide Mode <-> Search Mode or,#
+Share Mode -> Search Mode#
+Got EXP %lld#
+EXP: '%lld' #
+^b- Vending Fee System^/b\nThere is a fee following the item price.\n\n ^b> Fee rate^/b\nThe rate of fee is following:\n\n0 z ~ 10,000 z\n = Fee rate : ^1567fe0%^000000\n10,001 z ~ 100,000 z\n = Fee rate : ^1567fe0%^000000\n100,001 z ~ 1,000,000 z\n = Fee rate : ^1567fe0%^000000\n1,000,001 z ~ 10,000,000 z\n  = Fee rate : ^1567fe0%^000000\n10,000,001 z ~ 100,000,000 z\n = Fee rate : ^1567fe5%^000000\nmore than 100,000,001 z\n = Fee rate : ^1567fe5%^000000\n#
+Transaction : #
+If you sell an item, you get zeny after the transaction.#
+If you buy an item, you pay zeny after the transaction.#
+#
+The character is at a level where party access is not possible.#
+Job EXP: '%lld' #
+Got Job EXP %lld#
+Cannot open a stall at the current location.#
+sec, it will be possible.#
+Party member#
+#
+#
+#
+#
+Can't use it because the mini-party window is overlaid.#
+#
+Open on startup#
+Tipbox#
+#
+Try Again#
+[Try Again] is unavailable. Please choose refine ingredient again.#
+Refinement Ores are not enough. [Try Again] is unavailable.#
+Zeny is not enough. [Try Again] is unavailable.#
+Blacksmith's Blessing is not enough. [Try Again] is unavailable.#
+Your item is destroyed.#
+All States reduced.#
+States reduced effect is removed.#
+#
+#
+#
+#
+Search#
+#
+#
+#
+No party member exists to delegate a party leader. Would you like to break up the party?#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Dungeon Destroyed#
+[%s] got [+%d %s] successfully!#
+[%s] failed to refine [+%d %s].#
+You can leave after delegating a party leader.#
+#
+#
+#
+#
+%s cannot be moved in your current map.#
+Self \nFeeding#
+Homunculus cannot eat food when Rodex window is open.#
+Homunculus ate food. Left: '%s' %d ea.#
+Homunculus' Self Feeding On#
+Homunculus' Self Feeding Off#
+Homunculus get \n10% of EXP from player.#
+Probability : %d%%#
+Homun cannot attack this target. Please set target again with Alt + Right click.#
+There is no attack target for Homun. Please set target with Alt + Right click.#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Star Emperor(Female)#
+Soul Reaper(Female)#
+Star Emperor(Male)#
+Soul Reaper(Male)#
+HP and SP cannot be recovered naturally when your weight is %d percent full.#
+#
+#
+Unknown error. Please contact support.# //REFUSE_USA_UNKNOWN = 5200
+Unknown account .Please register an account.# //REFUSE_USA_NOT_USER = 5201
+Account blocked, Please contact support.# //REFUSE_USA_ID_BLOCK = 5202
+Account is currently inactive. Please contact support.# //REFUSE_USA_ID_INACTIVAT = 5203
+Wrong Password/User ID. Please check and try again.# //REFUSE_USA_PASSWORD = 5204
+Account is currently inactive. Please contact support.# //REFUSE_USA_EMAIL_CERT = 5205
+Account Blocked. Please contact support.# //REFUSE_USA_PAYPAL_BLOCK1 = 5206
+Account Blocked. Please contact support.# //REFUSE_USA_COUNTRY_REJECT = 5207
+Account Blocked. Please contact support.# //REFUSE_USA_PAYPAL_BLOCK2 = 5208
+Account Blocked. Please contact support.# //REFUSE_USA_WEB_BLOCK = 5209
+Underage account detected. Please contact support.# //REFUSE_USA_AGE = 5210
+Account has not recently updated its password. Please do so now.# //REFUSE_USA_PASSWORD_CHANGE = 5211
+There has been an error. Please contact support with this message.# //REFUSE_USA_INPUTDATA = 5212
+There has been an error. Please contact support with this message.# //REFUSE_USA_DATABASE = 5213
+There has been an error. Please contact support with this message.# //REFUSE_USA_SYSTEM = 5214
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Payment Information#
+Delete#
+Cancel Deletion#
+Start Game#
+Delete#
+Character List#
+Announcement#
+Create#
+Hair Style#
+Hair Color#
+#
+%dh %dm %ds#
+#
+Back#
+#
+#
+#
+Character Creation#
+Adventurer Agency Registration#
+Register for Adventurer Agency#
+Stop Recruiting#
+Memo#
+Quest#
+Field#
+Dungeon#
+MD#
+Eden Quest#
+Etc#
+Search#
+Reset#
+Join#
+Purpose#
+You may be punished if you use it for purposes that violate operating rules.#
+Post#
+Contains words that are not available#
+Join#
+1:1 Chat#
+Stop Recruiting#
+Edit#
+All#
+[%s] would like to join the party.#
+#
+#
+#
+#
+#
+Confirm#
+#
+#
+#
+Taekwon#
+#
+#
+#
+#
+#
+#
+There is no block list#
+-Block list-#
+#
+#
+#
+Quest#
+Contents#
+Monster#
+Reward#
+EXP#
+JEXP#
+Item#
+Progress/Pending#
+Move to Bottom#
+Display in Easy Quest Window#
+#
+#
+#
+#
+#
+Leader#
+You are not at a level to join a party.#
+Failed to post on Adventurer Agency.#
+Posted on Adventurer Agency.#
+Enter your search#
+Tank#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Strength and Attack have increased.#
+STR, INT, DEX and HIT increased.#
+Armor and HP increased.#
+#
+#
+#
+The connection is currently being delayed. Please try to reconnect shortly.#
+The connection is currently being delayed, so please try to reconnect shortly.#
+#
+This party leader is unable to receive requests.#
+This party could not be found.#
+DPS#
+#
+▲#
+▼#
+#
+#
+#
+Show Souls ON#
+Show Souls OFF#
+#
+#
+#
+%d Day Login Reward#
+An error ocurred while loading account settings. (Please restart. )#
+Skill can only be used as a party.#
+Party Recuriting has been stopped.#
+#
+#
+#
+ATK and MATK increased#
+ATK and MATK decreased.#
+%s Daily Login Reward#
+Event Period : %02d. %02d. ~ %02d. %02d. 24:00#
+%d Day#
+Click to claim your \n %d Day \n Login Reward!#
+You claimed your \n %d Day \n Login Reward.#
+Ends in#
+Days#
+You failed to check. Please try again.#
+Daily Login#
+There is no event period now.#
+#
+#
+#
+#
+#
+#
+#
+Can only be used by a party leader.#
+Partner's SP is insufficient or skill cannot be used now.#
+Notice about Forced Removal of Part time vending#
+Hello, Adventurer.\r\nWe closed your part time vending because there is a policy violation matter.\r\n If you need futher information, please send us 1:1 message.\r\nThanks.#
+Can insert more than 50%.#
+#
+#
+Accept#
+Deny#
+Healer#
+This character could not be found.#
+Forced Removal#
+No party leader found for this party.#
+You cannot join this party due to low JobLV.#
+Currently the requester is in the area where can't join the party.#
+Party participation has been exceeded.#
+The party leader of the %s party has approved joining the party.#
+The party leader of the %s party refused to join the party.#
+%s is already joining the party.#
+You have accepted party sign up from %s.#
+You have refused party sign up from %s.#
+Application from %s was automatically rejected because you were unable to receive a request to join the party.#
+Adventurer Agency List#
+Sign up for party#
+Only the party leader can recruit the party member on the Adventurer Agency.#
+Unable to abort party recruitment.#
+Support#
+Zoom Out#
+#
+#
+#
+#
+Adventurer Agency#
+#
+The maximum level must be higher than the minimum level.#
+#
+This player's party join request has been blocked(Valid until client close)#
+#
+#
+#
+#
+#
+#
+#
+Emblem Frame#
+Emblem will have a border.#
+Emblem will not have a border.#
+There is no equipped weapon.#
+Not enough Energy Balls.#
+"It contains a skill(%s) that cannot be learned.#
+/frame#
+This skill can be casted within the time limit after using Weapon Blocking.#
+#
+#
+#
+#
+#
+#
+Loading a storage.#
+#
+Delete#
+Reply#
+Send#
+Check#
+Notice#
+Normal#
+Return#
+Search#
+Failed to feed cupet. You are not possible to feed right now.#
+Failed to feed homun. You are not possible to feed right now.#
+#
+%s %d#
+Trade failed.#
+Trade success.#
+Insufficient goods required for exchange.#
+It is already sold. Not enough remaining quantity.#
+Death#
+PvP#
+Expand number of items#
+Do you want to expand maximum number of items you can own by spending ^0000ff%s^000000? It will be expanded from \n(^0000ff%d^000000) to (^0000ff%d^000000).\n^ff0000 ※ It cannot be reverted.^000000#
+Failed to expand maximum number of items.#
+Please close other tasks before you expand the maximum number of items.#
+You do not own the required item to expand the amximum number of items.#
+Cannot expand the maximum number of items you can have.#
+Successfully expanded the maximum number of items you can have.#
+You can not contain more than %d of same items.#
+It is impossible to purchase due to exceeding the possession limit.#
+You only can purchase quantity of 1 at once.#
+#
+#
+Settings will be saved when properly closed.#
+#
+#
+#
+damage notation extension#
+map name#
+#
+#
+#
+#
+#
+#
+You cannot install more than %d.#
+Destination#
+Please try again soon.#
+The file cannot be registered.#
+Delete#
+Delete All#
+Are you sure you want to delete all mail in the mailbox?#
+Receive#
+Receive All#
+Would you like to receive the attached items in the selected messages?#
+Do you want to receive all mail in the mailbox?#
+Skill Bar 2#
+Change Skill Bar#
+#
+#
+#
+#
+#
+#
+Cannot be turned off while loading.#
+There is no magic memorized using Reading Spellbook.#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+You are a character who has not acquired basic skill.#
+#
+#
+Import#
+#
+#
+#
+#
+#
+#
+Cannot be combined. Refine rate is too high.#
+Refine rate is higher than the requirements of the combination.#
+Card is already enchanted or equipped.#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+You cannot trade equipped items. Please unequip first.#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+The purchase limit cannot exceed your possession.#
+#
+#
+#
+#
+You cant equip while trading.#
+Item exchange#
+#
+You can own %d same items at once.#
+You can trade %d same items at once.#
+#
+#
+#
+#
+#
+#
+Total : %d z#
+Message#
+You can't purchase while you are opening a purchase.#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+RODEX all user received#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+Open on startup#
