@@ -667,11 +667,13 @@ sub statusesString {
 }
 
 ##
-# String $Actor->statusesString()
-#
+# String $Actor->statusesStringAndTime(integer type)
+# types: 
+#     0 - long
+#     1 - short
 # Returns human-readable list and times of currently active statuses.
 sub statusesStringAndTime {
-	my ($self) = @_;
+	my ($self, $type) = @_;
 	my $msg;
 
 	if ($self->{statuses} && %{$self->{statuses}}) {
@@ -682,12 +684,13 @@ sub statusesStringAndTime {
 
 			my $time_end = $self->{'statuses'}{$key}{'time'} + ($self->{'statuses'}{$key}{'tick'}/1000);
 			my $status_remaining_time = int($time_end - time);
-			my $remaining_time = $status_remaining_time > 0 ? $status_remaining_time : 0;	
+			my $remaining_time = $status_remaining_time > 0 ? $status_remaining_time : -1;	
 
-			$msg .= TF("%s - %d seconds left\n", $status_name, $remaining_time);
+			$msg .= $type ? TF("%s (%d s), ", $status_name, $remaining_time) : TF("%s - %d seconds left\n", $status_name, $remaining_time);
 		}
 	}
-
+	
+	$msg =~ s/\,\s+$//g;
 	return $msg;
 }
 

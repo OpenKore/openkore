@@ -5525,22 +5525,22 @@ sub cmdStatus {
 		"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
-		"Statuses: %s\n" .
 		"Spirits/Coins/Amulets: %s\n\n" .
 		"Total Damage: \@<<<<<<<<<<<<< Dmg/sec: \@<<<<<<<<<<<<<<\n" .
 		"Total Time spent (sec): \@>>>>>>>>\n" .
 		"Last Monster took (sec): \@>>>>>>>",
-		$char->statusesString, (exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits} . "\tType: " . $char->{amuletType} : $char->{spirits}) : 0)),
+		(exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits} . "\tType: " . $char->{amuletType} : $char->{spirits}) : 0)),
 		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]).
 		('-'x56) . "\n";
+		$msg .= TF("Statuses: %s\n", $char->statusesStringAndTime(1));
 
 	message $msg, "info";
 }
 
 sub cmdStatuses {
-	message "Statuses:\n".$char->statusesStringAndTime;
+	message "Statuses:\n".$char->statusesStringAndTime(0);
 }
 
 sub cmdStorage {
