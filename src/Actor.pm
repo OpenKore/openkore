@@ -581,8 +581,6 @@ sub setStatus {
 		$self->{statuses}{$handle} = bless {}, 'OpenkoreFixup::EmptyObject';
 
 		if ($tick) {
-			$self->{statuses}{$handle}{time} = time;
-			$self->{statuses}{$handle}{tick} = $tick;
 			Scalar::Util::weaken($self->{statuses}{$handle}{_actor} = $self);
 
 			$taskManager->add(Task::Timeout->new(
@@ -595,6 +593,9 @@ sub setStatus {
 				seconds => $tick / 1000,
 			));
 		}
+
+		$self->{statuses}{$handle}{time} = time;
+		$self->{statuses}{$handle}{tick} = $tick ? $tick : 0;
 
 		if ($char->{party}{joined} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
 			$again = 'again' if $char->{party}{users}{$self->{ID}}{statuses}{$handle};
@@ -672,16 +673,21 @@ sub statusesString {
 sub statusesStringAndTime {
 	my ($self) = @_;
 	my $msg;
-	if($self->{statuses} && %{$self->{statuses}}) {
+
+	if ($self->{statuses} && %{$self->{statuses}}) {
 		my @keys = keys %{$self->{statuses}};
+
 		foreach my $key (@keys) {
-			eval {
-				my $time_end = $self->{'statuses'}{$key}{'time'} + ($self->{'statuses'}{$key}{'tick'}/1000);
-				my $status_remaining_time = int($time_end - time);
-				$msg .= TF("%s - %d seconds left\n", $statusName{$key}, $status_remaining_time);
-			}
+			my $status_name = $statusName{$key} ? $statusName{$key} : $key;
+
+			my $time_end = $self->{'statuses'}{$key}{'time'} + ($self->{'statuses'}{$key}{'tick'}/1000);
+			my $status_remaining_time = int($time_end - time);
+			my $remaining_time = $status_remaining_time > 0 ? $status_remaining_time : 0;	
+
+			$msg .= TF("%s - %d seconds left\n", $status_name, $remaining_time);
 		}
 	}
+
 	return $msg;
 }
 
