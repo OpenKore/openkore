@@ -152,6 +152,7 @@ avoidList_reconnect 1800
 avoidList_ignoreList
 
 avoidHiddenActors 0
+avoidHiddenMonsters 0
 
 cachePlayerNames 1
 cachePlayerNames_duration 900
@@ -288,6 +289,7 @@ teleportAuto_unstuck 0
 teleportAuto_lostTarget 0
 teleportAuto_dropTarget 0
 teleportAuto_dropTargetKS 0
+teleportAuto_dropTargetHidden 0
 teleportAuto_attackedWhenSitting 0
 teleportAuto_totalDmg 0
 teleportAuto_totalDmgInLock 0
