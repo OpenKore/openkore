@@ -5540,7 +5540,13 @@ sub cmdStatus {
 }
 
 sub cmdStatuses {
-	message "Statuses:\n".$char->statusesStringAndTime(0);
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command 'statuses'\n");
+	} elsif (!$char) {
+		error T("Character information not available.\n");
+	} else {
+		message "Statuses:\n".$char->statusesStringAndTime(0);
+	}
 }
 
 sub cmdStorage {
