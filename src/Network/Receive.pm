@@ -2249,18 +2249,23 @@ typedef enum <unnamed-tag> {
 
 		} elsif ($actor->isa('Actor::Monster')) {
 			debug sprintf("Monster Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			Plugins::callHook('monster_exist', {monster => $actor});
 
 		} elsif ($actor->isa('Actor::Pet')) {
 			debug sprintf("Pet Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			Plugins::callHook('pet_exist', {pet => $actor});
 
 		} elsif ($actor->isa('Actor::Slave')) {
 			debug sprintf("Slave Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			Plugins::callHook('slave_exist', {slave => $actor});
 
 		} elsif ($actor->isa('Actor::Elemental')) {
 			debug sprintf("Elemental Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			Plugins::callHook('elemental_exist', {elemental => $actor});
 
 		} else {
 			debug sprintf("Unknown Actor Exists: %s (%d)\n", $actor->name, $actor->{binID}), "parseMsg_presence", 1;
+			Plugins::callHook('unknown_exist', {unknown => $actor});
 		}
 
 	} elsif ($args->{switch} eq "0079" ||
@@ -2334,27 +2339,36 @@ typedef enum <unnamed-tag> {
 			Plugins::callHook('pet_moved', $actor);
 		} else {
 			debug "Unknown Actor Moved: " . $actor->nameIdx . " - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+			Plugins::callHook('unknown_moved', $actor);
 		}
 
 	} elsif ($args->{switch} eq "007C") {
 		# Actor Spawned
 		if ($actor->isa('Actor::Player')) {
 			debug "Player Spawned: " . $actor->nameIdx . " $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}}\n", "parseMsg";
+			Plugins::callHook('player_spawned', {player => $actor});
 		} elsif ($actor->isa('Actor::Monster')) {
 			debug "Monster Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			Plugins::callHook('monster_spawned', {monster => $actor});
 		} elsif ($actor->isa('Actor::Pet')) {
 			debug "Pet Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			Plugins::callHook('pet_spawned', {pet => $actor});
 		} elsif ($actor->isa('Actor::Slave')) {
 			debug "Slave Spawned: " . $actor->nameIdx . " $jobs_lut{$actor->{jobID}}\n", "parseMsg";
+			Plugins::callHook('slave_spawned', {slave => $actor});
 		} elsif ($actor->isa('Actor::Portal')) {
 			# Can this happen?
 			debug "Portal Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			Plugins::callHook('portal_spawned', {portal => $actor});
 		} elsif ($actor->isa('Actor::Elemental')) {
 			debug "Elemental Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			Plugins::callHook('elemental_spawned', {elemental => $actor});
 		} elsif ($actor->isa('NPC')) {
 			debug "NPC Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			Plugins::callHook('npc_spawned', {npc => $actor});
 		} else {
 			debug "Unknown Spawned: " . $actor->nameIdx . "\n", "parseMsg";
+			Plugins::callHook('unknown_spawned', {unknown => $actor});
 		}
 	}
 
