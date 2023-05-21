@@ -5541,11 +5541,11 @@ sub cmdStatus {
 
 sub cmdStatuses {
 	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command 'statuses'\n");
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
 	} elsif (!$char) {
 		error T("Character information not available.\n");
 	} else {
-		message "Statuses:\n".$char->statusesStringAndTime(0);
+		message TF("Statuses:\n%s", $char->statusesStringAndTime(0));
 	}
 }
 
