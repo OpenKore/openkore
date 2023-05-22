@@ -167,7 +167,7 @@ sub giveUp {
 	message TF("%s can't reach or damage target, dropping target\n", $slave), 'slave_attack';
 	if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 		message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-		useTeleport(1);
+		ai_useTeleport(1);
 	}
 }
 
@@ -246,7 +246,7 @@ sub dropTargetWhileMoving {
 	$slave->dequeue while ($slave->inQueue("attack"));
 	if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
 		message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-		useTeleport(1);
+		ai_useTeleport(1);
 	}
 }
 
@@ -330,7 +330,7 @@ sub main {
 		$slave->dequeue while ($slave->inQueue("attack"));
 		if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
 			message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-			useTeleport(1);
+			ai_useTeleport(1);
 		}
 
 	} elsif ($config{$slave->{configPrefix}.'runFromTarget'} && ($realMonsterDist < $config{$slave->{configPrefix}.'runFromTarget_dist'} || $hitYou)) {
@@ -424,7 +424,7 @@ sub main {
 				message TF("Unable to calculate a route to %s target, dropping target\n", $slave), 'slave_attack';
 				if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 					message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-					useTeleport(1);
+					ai_useTeleport(1);
 				} else {
 					debug "Attack $slave - successufully routing to $target\n", 'attack';
 				}
@@ -435,7 +435,7 @@ sub main {
 			message T("Unable to calculate a meetingPosition to target, dropping target\n"), 'slave_attack';
 			if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 				message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-				useTeleport(1);
+				ai_useTeleport(1);
 			}
 		}
 

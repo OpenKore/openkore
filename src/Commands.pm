@@ -5079,7 +5079,7 @@ sub cmdRespawn {
 	if ($char->{dead}) {
 		$messageSender->sendRestart(0);
 	} else {
-		main::useTeleport(2);
+		ai_useTeleport(2);
 	}
 }
 
@@ -5956,7 +5956,7 @@ sub cmdTeleport {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\d)/;
 	$arg1 = 1 unless $arg1;
-	main::useTeleport($arg1);
+	ai_useTeleport($arg1);
 }
 
 sub cmdTestShop {

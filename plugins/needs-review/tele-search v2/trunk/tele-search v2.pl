@@ -22,6 +22,7 @@ use Plugins;
 use Globals qw($char %config $net %timeout);
 use Log qw(message error);
 use Utils qw(timeOut);
+use AI;
 
 
 Plugins::register('Tele-Search v2', 'Alternative tele-search v2.', \&unload, \&unload);
@@ -71,10 +72,11 @@ sub search {
 			$allow_tele = 0;
 			$maploaded = 0;
 			# Attempt to teleport, give error and unload plugin if we cant.
-			if (!Misc::useTeleport(1)) {
+			if (!Misc::canUseTeleport(1)) {
 				error ("Unable to tele-search cause we can't teleport!\n");
 				return;
-			} 
+			}
+			ai_useTeleport(1);
 
 		# We're doing something else besides looking for monsters, reset the timeout.
 		} elsif (!checkIdle()) {
