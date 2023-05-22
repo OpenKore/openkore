@@ -686,7 +686,7 @@ sub statusesStringAndTime {
 			my $status_remaining_time = int($time_end - time);
 			my $remaining_time = $status_remaining_time > 0 ? $status_remaining_time : -1;	
 
-			$msg .= $type ? TF("%s (%d s), ", $status_name, $remaining_time) : TF("%s - %d seconds left\n", $status_name, $remaining_time);
+			$msg .= $type ? TF("%s (%d s), ", $status_name, $remaining_time) : TF("%s (%d seconds left)\n", $status_name, $remaining_time);
 		}
 	}
 	
