@@ -166,7 +166,7 @@ sub process {
 			AI::dequeue while (AI::inQueue("attack"));
 			if ($config{teleportAuto_dropTargetHidden}) {
 				message T("Teleport due to dropping hidden target\n");
-				useTeleport(1);
+				ai_useTeleport(1);
 			}
 		}
 	}
