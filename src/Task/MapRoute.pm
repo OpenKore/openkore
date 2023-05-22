@@ -28,10 +28,11 @@ use Translation qw(T TF);
 use Log qw(message debug warning error);
 use Network;
 use Plugins;
-use Misc qw(useTeleport portalExists);
+use Misc qw(canUseTeleport portalExists);
 use Utils qw(timeOut blockDistance existsInList);
 use Utils::PathFinding;
 use Utils::Exceptions;
+use AI qw(ai_useTeleport);
 
 
 # Error constants.
@@ -454,9 +455,10 @@ sub iterate {
 							debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "route_teleport";
 						} else {
 							message TF("Attempting to teleport near portal, try #%s\n", ($self->{teleportTries} + 1)), "route_teleport";
-							if (!useTeleport(1)) {
+							if (!canUseTeleport(1)) {
 								$self->{teleport} = 0;
 							} else {
+								ai_useTeleport(1);
 								$walk = 0;
 								$self->{sentTeleport} = 1;
 								$self->{teleportTime} = time;

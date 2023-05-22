@@ -783,6 +783,28 @@ sub route {
 	$self->queue('route', $task);
 }
 
+##
+# void $Actor->useTeleport(int level)
+#
+# level: 1 - Random, 2 - Respawn
+#
+# Instruct AI to use Teleport.
+sub useTeleport {
+	my ($self, $level) = @_;
+
+	if(!AI::inQueue("teleport","NPC")) {
+		require Task::Teleport::Random;
+		require Task::Teleport::Respawn;
+
+		my %tasks = qw(1 Task::Teleport::Random 2 Task::Teleport::Respawn);
+		my $task = $tasks{$level}->new(actor => $self);
+
+		$self->queue('teleport', $task);
+	} else {
+		error T("NPC or Teleport in queue, finish and try again\n");
+	}
+}
+
 sub processTask {
 	my $self = shift;
 	my $ai_name = shift;
