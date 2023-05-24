@@ -8,6 +8,7 @@ use Misc;
 use Globals qw($char %config $net %timeout %maps_lut $field);
 use Log qw(message error debug);
 use Utils;
+use AI;
 
 Plugins::register("teleToDest", "teleToDest", \&on_unload, \&on_unload);
 
@@ -200,7 +201,8 @@ sub on_ai_pre {
 	$timeout->{time} = time;
 	if (check_distance()) {
 		message "[teleToDest] Using teleport.\n", "info";
-		if (useTeleport(1)) {
+		if (canUseTeleport(1)) {
+			ai_useTeleport(1);
 			message "[teleToDest] Teleport sent.\n", "info";
 		} else {
 			message "[teleToDest] Cannot use teleport; teleToDest disabled.\n", "info";
