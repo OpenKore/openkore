@@ -2713,7 +2713,7 @@ sub cmdExp {
 			$total += $monsters_Killed[$i]{count};
 		}
 		$msg .= "\n" .
-			TF("Total number of killed monsters: %s\n", $total) .
+			TF("Total number of killed monsters: %s\n", $total+1) .
 			('-'x40) . "\n";
 		if ($arg1 eq "monster" || $arg1 eq "") {
 			message $msg, "list";
