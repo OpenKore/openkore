@@ -1,3 +1,35 @@
+4 versions here with each branch as a different version, ideally only the master branch is what you want, the other 3 are experimental.
+
+1. Master Branch:
+
+	*	Forked from the official OpenKore repository.
+	*	Modified files and tables to work with the Payon Tales server, this is the same if not identical to what is uploaded on the main website(https://payontales.com/).
+	*	Extracted filesize - 276 MB
+	
+2. Pruned-Minimal Branch:
+
+	*	Deleted unused tables, resulting in an 80MB reduction in file size.
+	*	Adjusted timeouts and default configurations for better CPU usage.
+	*	Sys.txt to load specific plugins only.
+	*	Extracted filesize - 199 MB
+	
+3. Pruned-More Branch:
+
+	*	Inherits changes from the Pruned-Minimal branch.
+	*	Deleted unused plugins, compilers, and Perl components, saves around 10-25% ram usage compared to the original.
+	*	Removed additional files from the tables folder to save RAM and file size(Korean text files, Description files).
+	*	Deleted alternative start options (e.g., WStart, VXStart) to save a few more on the filesize.
+	*	Extracted filesize - 125 MB
+
+4.	Pruned-Extreme Branch:
+
+	*	Includes all changes from the Pruned-More branch.
+	*	Increased sleeptime and timeout values.
+	*	Customized timers for specific plugins like eventsMaccro to reduce checking frequency.
+	*	Extracted filesize - 125 MB
+	Note: This branch may affect responsiveness and is not advisable if using combat-related macros.
+
+
 ![logo](https://upload.wikimedia.org/wikipedia/commons/b/b5/Kore_2g_logo.png)
 
 ![Language](https://img.shields.io/badge/language-Perl-blue.svg)
