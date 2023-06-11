@@ -27,6 +27,7 @@
 	*	Increased sleeptime and timeout values.
 	*	Customized timers for specific plugins like eventsMaccro to reduce checking frequency.
 	*	Extracted filesize - 125 MB
+	
 	Note: This branch may affect responsiveness and is not advisable if using combat-related macros.
 
 
