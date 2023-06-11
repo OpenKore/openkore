@@ -19,7 +19,6 @@ DUMP.txt
 
 # Auto generated files
 *.pyc
-*.dist
 *.o
 *.os
 .sconf_temp
@@ -48,4 +47,3 @@ tables/pserver/**/portalsLOS.txt
 tables/**/npcs.txt
 tables/**/monsters.txt
 *.xpm
-*.weight
