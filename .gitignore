@@ -42,8 +42,4 @@ src/test/http-reader-test
 tables/iRO/*-custom.txt
 
 # Auto-generated files.
-tables/**/portalsLOS.txt
-tables/pserver/**/portalsLOS.txt
-tables/**/npcs.txt
-tables/**/monsters.txt
 *.xpm

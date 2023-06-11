@@ -1,0 +1,67 @@
+lasa_fild01 47 297 #doint_evt01
+lasa_fild01 49 304 Vigilante Ajegna#doram0
+lasa_fild01 50 321 Applicant MacCarnie#dor
+lasa_fild01 62 321 Kid#doram03t
+lasa_fild01 53 322 Applicant Paul#doramt13
+lasa_fild01 60 322 Vigilante Aglio#doram02
+lasa_fild01 54 325 Vigilante Gnocchi#doram
+lasa_fild01 102 342 Vigilante Aglio#doram12
+lasa_fild01 103 344 Well-known Troublemaker
+lasa_fild01 132 374 Sloth#doram
+lasagna 171 105 Emergency Patient#dorco
+lasagna 222 123 Hypnotist#doram08t
+lasagna 224 126 Healer Haru#doram07t
+lasagna 230 127 Vigilante Aglio#doram09
+lasagna 260 134 Rasmus#dorcon01
+lasagna 298 84 Vigilante#dorcon01
+lasa_fild01 353 370 Shepherd#dorcon
+lasa_fild01 361 372 Cow#dorcon03
+lasa_fild01 356 374 Cow#dorcon01
+lasa_fild01 352 376 Cow#dorcon02
+prontera 163 178 Mado Gear Armorer#prt
+prontera 149 184 Helper
+prontera 150 191 Guild Warehouse Manager
+prontera 154 187 Guide#01prontera
+prontera 155 190 Kriemhild#15
+prontera 157 187 Smile Assistance#prt
+prontera 146 194 Swanhild#17
+prontera 165 194 Gondul#13
+iz_int02 18 30 iz_int02#intro_start
+prontera 153 193 Job Master
+prt_fild08 159 371 Poring War Recruiter#wo
+prt_fild08 203 222 #tr120008
+prontera 151 29 Kafra Employee
+prontera 160 29 Guide#04prontera
+prt_fild08 175 374 Bard#brising
+prt_fild08 299 332 Jellopy
+payon 84 153 Smile Assistance#payold
+payon 82 155 Scarlet Palace#f2-OP
+payon 89 155 Bright Arbor#f1-OP
+payon 103 155 Sacred Altar#f4-OP
+payon 97 155 Holy Shadow#f3-OP
+payon 79 124 Tool Dealer#oldpay2
+payon 82 116 Guide#oldpay
+prontera 150 193 Reset Girl
+prontera 125 208 Peco Peco Remover
+prontera 96 209 Rebellion Accessories
+prontera 92 209 Rebellion Weapons
+prontera 29 200 Guide#03prontera
+prontera 29 207 Kafra Employee
+prontera 58 182 Flower Girl#prt
+prontera 78 150 Dairenne#pront
+prontera 73 140 Milk Vendor
+prontera 106 116 Merideth#pront
+prontera 123 102 Merchant#pron
+prontera 146 95 Mergician#pron
+prontera 146 89 Kafra Employee
+prontera 143 87 Kafra Teleportation#pro
+prontera 145 87 Zonda Teleportation#pro
+gef_fild09 227 29 Bulletin Board
+gef_fild09 296 59 Hidden Cave#hellion
+gef_fild01 104 111 Spawn
+prt_fild05 270 212 Culvert Guardian
+prt_fild05 278 220 Signpost#Culvert
+prt_fild05 290 221 Tool Dealer#prt
+prt_fild05 290 224 Kafra Employee
+pay_fild01 152 171 Resin
+payon 76 106 Healer#payon
