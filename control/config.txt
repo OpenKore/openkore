@@ -3,7 +3,7 @@
 
 ######## Login options and server-specific options ########
 
-master
+master PayonTales
 server
 username
 password
