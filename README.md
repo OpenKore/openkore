@@ -1,34 +1,76 @@
 4 versions here with each branch as a different version, ideally only the master branch is what you want, the other 3 are experimental.
 
-1. Master Branch:
+##	1. Master Branch:
 
-	*	Forked from the official OpenKore repository.
-	*	Modified files and tables to work with the Payon Tales server, this is the same if not identical to what is uploaded on the main website(https://payontales.com/).
-	*	Extracted filesize - 276 MB
+	-	Forked from the official OpenKore repository.
+	-	Modified files and tables to work with the Payon Tales server, this is the same if not identical to what is uploaded on the main website(https://payontales.com/).
+	-	Extracted filesize - 276 MB
 	
-2. Pruned-Minimal Branch:
+##	2. Pruned-Minimal Branch:
 
-	*	Deleted unused tables, resulting in an 80MB reduction in file size.
-	*	Adjusted timeouts and default configurations for better CPU usage.
-	*	Sys.txt to load specific plugins only.
-	*	Extracted filesize - 199 MB
+	-	Deleted unused tables, resulting in an 80MB reduction in file size.
+	-	Adjusted timeouts and default configurations for better CPU usage.
+	-	Sys.txt to load specific plugins only.
+	-	Extracted filesize - 199 MB
 	
-3. Pruned-More Branch:
+##	3. Pruned-More Branch:
 
-	*	Inherits changes from the Pruned-Minimal branch.
-	*	Deleted unused plugins, compilers, and Perl components, saves around 10-25% ram usage compared to the original.
-	*	Removed additional files from the tables folder to save RAM and file size(Korean text files, Description files).
-	*	Deleted alternative start options (e.g., WStart, VXStart) to save a few more on the filesize.
-	*	Extracted filesize - 125 MB
+	-	Inherits changes from the Pruned-Minimal branch.
+	-	Deleted unused plugins, compilers, and Perl components, saves around 10-25% ram usage compared to the original.
+	-	Removed additional files from the tables folder to save RAM and file size(Korean text files, Description files).
+	-	Deleted alternative start options (e.g., WStart, VXStart) to save a few more on the filesize.
+	-	Extracted filesize - 125 MB
 
-4.	Pruned-Extreme Branch:
+##	4.	Pruned-Extreme Branch:
 
-	*	Includes all changes from the Pruned-More branch.
-	*	Increased sleeptime and timeout values.
-	*	Customized timers for specific plugins like eventsMaccro to reduce checking frequency.
-	*	Extracted filesize - 125 MB
+	-	Includes all changes from the Pruned-More branch.
+	-	Increased sleeptime and timeout values.
+	-	Customized timers for specific plugins like eventsMaccro to reduce checking frequency.
+	-	Extracted filesize - 125 MB
 	
 	Note: This branch may affect responsiveness and is not advisable if using combat-related macros.
+
+
+###	I also made some amateur observation and experementations and would share it below:<br>
+
+<br>
+For the ram usage:
+
+![ramusage](https://github.com/KoukatsuMahoutsukai/openkore-payontales/assets/123940777/3c944381-ad50-42b8-90f8-77ec800ce3a7)
+
+
+The process just started and right off the bat you can see big differences in ram usage, this is due to tables and plugins removed from the "More" and "Extreme" version.
+although from my observations after a few hours or so ram usage would drop for all of them and the difference in ram usage would be smaller maybe 10mb less ram usage for the "More" and "Extreme".<br>
+<br><br>
+
+
+###	For cpu usage:
+
+![cpu usage](https://github.com/KoukatsuMahoutsukai/openkore-payontales/assets/123940777/5cc3acfe-191d-4597-87e4-4ef6928fa566)
+
+
+The average value is the one to look for here with it being how many % it uses of the cpu, most of the difference in the cpu usage most likely came from the sleepTime differences.
+
+Master	=	2.195% (10000 sleepTime)
+
+Minimal	=	1.392% (50000 sleepTime)
+
+More	=	0.759% (200000 sleepTime)
+
+Extreme	=	0.636% (250000 sleepTime)<br>
+<br><br>
+
+###	For the exp/hr:
+
+![expperhr](https://github.com/KoukatsuMahoutsukai/openkore-payontales/assets/123940777/76358cdb-05ab-4221-ad09-583f90e0155b)
+
+
+I cant think of a metric to show the differences in the responsiveness of the bots other than observing it ingame, im showing the exp/hr for each to show that despite the minimal,more and extreme having 
+higher sleepTime or timeouts.
+
+IF the purpose for the bot is only farming then it wouldnt matter that much. say running two or three "More" version of the bots would probably be better than running one "Master" but
+then again if you are farming on a map with alot of aggressives or high level map then it might be better to have the lower sleepTime. I would try to gather more data on these and post it later on<br>
+<br><br>
 
 
 ![logo](https://upload.wikimedia.org/wikipedia/commons/b/b5/Kore_2g_logo.png)
