@@ -1,11 +1,12 @@
-4 versions here with each branch as a different version, ideally only the master branch is what you want, the other 3 are experimental.
+4 versions here with each branch as a different version, ideally only the master branch is what you want, the other 3 are experimental and you can ignore them.
 
 ##	1. Master Branch:
 
 	-	Forked from the official OpenKore repository.
 	-	Modified files and tables to work with the Payon Tales server, this is the same if not identical to what is uploaded on the main website(https://payontales.com/).
 	-	Extracted filesize - 276 MB
-	
+
+# Experimental Branches
 ##	2. Pruned-Minimal Branch:
 
 	-	Deleted unused tables, resulting in an 80MB reduction in file size.
