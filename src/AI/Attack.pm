@@ -298,7 +298,7 @@ sub main {
 	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 	my $realMyPos = calcPosition($char);
 	my $realMonsterPos = calcPosition($target);
-	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
+	my $realMonsterDist = distance($realMyPos, $realMonsterPos);
 
 	my $cleanMonster = checkMonsterCleanness($ID);
 
