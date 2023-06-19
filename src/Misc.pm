@@ -2799,7 +2799,7 @@ sub meetingPosition {
 				# 1. It must be walkable
 				next unless ($field->isWalkable($spot->{x}, $spot->{y}));
 
-				my $dist_to_target = blockDistance($spot, $possible_target_pos->{targetPosInStep});
+				my $dist_to_target = distance($spot, $possible_target_pos->{targetPosInStep});
 				next unless ($dist_to_target <= $attackMaxDistance);
 				next unless ($dist_to_target >= $min_destination_dist);
 
