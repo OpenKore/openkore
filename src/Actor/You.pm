@@ -288,7 +288,7 @@ sub attack {
 
 		my $i = 0;
 		my $Lequip = 0;
-		my $Runeq =0;
+		my $Runeq = 0;
 		my (%eq_list,$Req,$Leq,$arrow,$j);
 		while (exists $config{"autoSwitch_$i"}) {
 			if (!$config{"autoSwitch_$i"}) {
@@ -309,7 +309,7 @@ sub attack {
 					$Req = $char->inventory->getByName($config{"autoSwitch_${i}_rightHand"});
 					if ($Req && !$Req->{equipped}){
 						message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_$i"."_rightHand"}), "equip";
-						%eq_list = (rightHand => $Req->{binID});
+						%eq_list = (rightHand => $config{"autoSwitch_$i"."_rightHand"});
 					}
 
 				}
@@ -335,7 +335,7 @@ sub attack {
 
 						if ($Leq) {
 							message TF("Auto Equiping [L]: %s (%s)\n", $config{"autoSwitch_$i"."_leftHand"}, $Leq), "equip";
-							$eq_list{leftHand} = $Leq->{binID};
+							$eq_list{leftHand} = $config{"autoSwitch_${i}_leftHand"};
 						}
 					}
 				}
@@ -377,7 +377,7 @@ sub attack {
 			$Req = $char->inventory->getByName($config{"autoSwitch_default_rightHand"});
 			if ($Req && !$Req->{equipped}){
 				message TF("Auto Equiping [R]: %s\n", $config{"autoSwitch_default_rightHand"}), "equip";
-				%eq_list = (rightHand => $Req->{binID});
+				%eq_list = (rightHand => $config{"autoSwitch_default_rightHand"});
 			}
 
 		}
@@ -404,7 +404,7 @@ sub attack {
 
 				if ($Leq) {
 					message TF("Auto Equiping [L]: %s\n", $config{"autoSwitch_default_leftHand"}), "equip";
-					$eq_list{leftHand} = $Leq->{binID};
+					$eq_list{leftHand} = $config{"autoSwitch_default_leftHand"};
 				}
 			}
 		}
