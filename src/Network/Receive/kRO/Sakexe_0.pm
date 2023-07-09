@@ -385,8 +385,8 @@ sub new {
 		'024A' => ['mail_new', 'V Z40 Z24', [qw(mailID title sender)]], # 70
 		'0250' => ['auction_result', 'C', [qw(flag)]], # 3
 		'0252' => ['auction_item_request_search', 'v V2', [qw(size pages count)]], # -1
-		'0253' => ['starplace', 'C', [qw(which)]], # 3
-		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5
+		'0253' => ['taekwon_feel_save', 'C', [qw(which)]], # 3
+		'0255' => ['mail_setattachment', 'a2 C', [qw(ID fail)]], # 5		
 		'0256' => ['auction_add_item', 'a2 C', [qw(ID fail)]], # 5
 		'0257' => ['mail_delete', 'V v', [qw(mailID fail)]], # 8
 		'0259' => ['gameguard_grant', 'C', [qw(server)]], # 3
@@ -418,9 +418,9 @@ sub new {
 		'029D' => ['skills_list'], # -1 # mercenary skills
 		'02A2' => ['stat_info', 'v V', [qw(type val)]], # 8 was "mercenary_param_change"
 		'02A3' => ['gameguard_lingo_key', 'a4 a4 a4 a4', [qw(dwAlgNum dwAlgKey1 dwAlgKey2 dwSeed)]], # 18
-		'02A6' => ['gameguard_request'], # 22
-		'02AA' => ['cash_password_request', 'v', [qw(info)]], # 4
-		'02AC' => ['cash_password_result', 'v2', [qw(result error_count)]], # 6
+		'02A6' => ['gameguard_request'], # 22		
+		'02AA' => ['cash_request_password', 'v', [qw(info)]], # 4
+		'02AC' => ['cash_result_password', 'v2', [qw(result error_count)]], # 6
 		'02AD' => ['login_pin_code_request', 'v V', [qw(flag key)]], # 8
 		'02B1' => ['quest_all_list', 'v V a*', [qw(len quest_amount message)]],
 		'02B2' => ['quest_all_mission', 'v V a*', [qw(len mission_amount message)]],
@@ -439,7 +439,9 @@ sub new {
 		'02CB' => ['instance_window_start', 'Z61 v', [qw(name flag)]], # 65
 		'02CC' => ['instance_window_queue', 'C', [qw(flag)]], # 4
 		'02CD' => ['instance_window_join', 'Z61 V2', [qw(name time_remaining time_close)]], # 71
-		'02CE' => ['instance_window_leave', 'V a4', [qw(flag enter_limit_date)]], # 10
+		'02CE' => ['instance_window_leave', 'V a4', [qw(flag enter_limit_date)]], # 10		
+		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
+		'02F2' => ['progress_bar_stop'],
 		'02D0' => ['inventory_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'02D1' => ['storage_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
 		'02D2' => ['cart_items_nonstackable', 'v a*', [qw(len itemInfo)]],#-1
@@ -1024,6 +1026,225 @@ sub parse_cash_dealer {
 
 }
 
+sub character_creation_failed {
+	my ($self, $args) = @_;
+	if ($args->{flag} == 0x00) {
+		message T("Charname already exists.\n"), "info";
+	} elsif ($args->{flag} == 0xFF) {
+		message T("Char creation denied.\n"), "info";
+	} elsif ($args->{flag} == 0x01) {
+		message T("You are underaged.\n"), "info";
+	} else {
+		message T("Character creation failed. " .
+			"If you didn't make any mistake, then the name you chose already exists.\n"), "info";
+	}
+	if (charSelectScreen() == 1) {
+		$net->setState(3);
+		$firstLoginMap = 1;
+		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
+		$sentWelcomeMessage = 1;
+	}
+}
+
+# TODO: test optimized unpacking
+sub chat_users {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+
+	my $ID = substr($args->{RAW_MSG},4,4);
+	$currentChatRoom = $ID;
+
+	my $chat = $chatRooms{$currentChatRoom} ||= {};
+
+	$chat->{num_users} = 0;
+	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 28) {
+		my ($type, $chatUser) = unpack('V Z24', substr($msg, $i, 28));
+
+		$chatUser = bytesToString($chatUser);
+
+		if ($chat->{users}{$chatUser} eq "") {
+			binAdd(\@currentChatRoomUsers, $chatUser);
+			if ($type == 0) {
+				$chat->{users}{$chatUser} = 2;
+			} else {
+				$chat->{users}{$chatUser} = 1;
+			}
+			$chat->{num_users}++;
+		}
+	}
+
+	message TF("You have joined the Chat Room %s\n", $chat->{title});
+	
+	Plugins::callHook('chat_joined', {
+		chat => $chat,
+	});
+}
+
+sub cast_cancelled {
+	my ($self, $args) = @_;
+
+	# Cast is cancelled
+	my $ID = $args->{ID};
+
+	my $source = Actor::get($ID);
+	$source->{cast_cancelled} = time;
+	my $skill = $source->{casting}->{skill};
+	my $skillName = $skill ? $skill->getName() : T('Unknown');
+	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
+	message TF("%s failed to cast %s\n", $source, $skillName), $domain;
+	Plugins::callHook('packet_castCancelled', {
+		sourceID => $ID
+	});
+	delete $source->{casting};
+}
+
+# TODO: test optimized unpacking
+sub friend_list {
+	my ($self, $args) = @_;
+
+	# Friend list
+	undef @friendsID;
+	undef %friends;
+
+	my $ID = 0;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 32) {
+		binAdd(\@friendsID, $ID);
+
+		($friends{$ID}{'accountID'},
+		$friends{$ID}{'charID'},
+		$friends{$ID}{'name'}) = unpack('a4 a4 Z24', substr($args->{RAW_MSG}, $i, 32));
+
+		$friends{$ID}{'name'} = bytesToString($friends{$ID}{'name'});
+		$friends{$ID}{'online'} = 0;
+		$ID++;
+	}
+}
+
+# 029B
+sub mercenary_init {
+	my ($self, $args) = @_;
+
+	$char->{mercenary} = Actor::get ($args->{ID}); # TODO: was it added to an actorList yet?
+	$char->{mercenary}{map} = $field->baseName;
+	unless ($char->{slaves}{$char->{mercenary}{ID}}) {
+		AI::SlaveManager::addSlave ($char->{mercenary});
+	}
+
+	my $slave = $char->{mercenary};
+
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
+	}
+	$slave->{name} = bytesToString($args->{name});
+
+	Network::Receive::slave_calcproperty_handler($slave, $args);
+	
+	if ($config{mercenary_attackDistanceAuto} && $config{attackDistance} != $slave->{attack_range}) {
+		message TF("Autodetected attackDistance for mercenary = %s\n", $slave->{attack_range}), "success";
+		configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
+		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
+	}
+}
+
+# 022E
+sub homunculus_property {
+	my ($self, $args) = @_;
+
+	my $slave = $char->{homunculus} or return;
+
+	foreach (@{$args->{KEYS}}) {
+		$slave->{$_} = $args->{$_};
+	}
+	$slave->{name} = bytesToString($args->{name});
+
+	Network::Receive::slave_calcproperty_handler($slave, $args);
+	homunculus_state_handler($slave, $args);
+}
+
+sub homunculus_state_handler {
+	my ($slave, $args) = @_;
+	# Homunculus states:
+	# 0 - alive and unnamed
+	# 2 - rest
+	# 4 - dead
+
+	return unless $char->{homunculus};
+
+	if ($args->{state} == 0) {
+		$char->{homunculus}{renameflag} = 1;
+	} else {
+		$char->{homunculus}{renameflag} = 0;
+	}
+
+	if (($args->{state} & ~8) > 1) {
+		foreach my $handle (@{$char->{homunculus}{slave_skillsID}}) {
+			delete $char->{skills}{$handle};
+		}
+		$char->{homunculus}->clear();
+		undef @{$char->{homunculus}{slave_skillsID}};
+		if (defined $slave->{state} && $slave->{state} != $args->{state}) {
+			if ($args->{state} & 2) {
+				message T("Your Homunculus was vaporized!\n"), 'homunculus';
+			} elsif ($args->{state} & 4) {
+				message T("Your Homunculus died!\n"), 'homunculus';
+			}
+		}
+	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
+		if ($slave->{state} & 2) {
+			message T("Your Homunculus was recalled!\n"), 'homunculus';
+		} elsif ($slave->{state} & 4) {
+			message T("Your Homunculus was resurrected!\n"), 'homunculus';
+		}
+	}
+}
+
+sub gameguard_request {
+	my ($self, $args) = @_;
+
+	return if ($net->version == 1 && $config{gameGuard} ne '2');
+	Poseidon::Client::getInstance()->query(
+		substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE})
+	);
+	debug "Querying Poseidon\n", "poseidon";
+}
+
+# TODO: test optimized unpacking
+sub guild_member_setting_list {
+	my ($self, $args) = @_;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+
+	for (my $i = 4; $i < $msg_size; $i += 16) {
+		my ($gtIndex, $invite_punish, $ranking, $freeEXP) = unpack('V4', substr($msg, $i, 16)); # TODO: use ranking
+		# TODO: isn't there a nyble unpack or something and is this even correct?
+		$guild{positions}[$gtIndex]{invite} = ($invite_punish & 0x01) ? 1 : '';
+		$guild{positions}[$gtIndex]{punish} = ($invite_punish & 0x10) ? 1 : '';
+		$guild{positions}[$gtIndex]{gstorage} = ($invite_punish & 0x100) ? 1 : '';
+		$guild{positions}[$gtIndex]{feeEXP} = $freeEXP;
+	}
+}
+
+# TODO: test optimized unpacking
+sub guild_skills_list {
+	my ($self, $args) = @_;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	for (my $i = 6; $i < $args->{RAW_MSG_SIZE}; $i += 37) {
+
+		my ($skillID, $targetType, $level, $sp, $range,	$skillName, $up) = unpack('v V v3 Z24 C', substr($msg, $i, 37)); # TODO: use range
+
+		$skillName = bytesToString($skillName);
+		$guild{skills}{$skillName}{ID} = $skillID;
+		$guild{skills}{$skillName}{sp} = $sp;
+		$guild{skills}{$skillName}{up} = $up;
+		$guild{skills}{$skillName}{targetType} = $targetType;
+		if (!$guild{skills}{$skillName}{lv}) {
+			$guild{skills}{$skillName}{lv} = $level;
+		}
+	}
+}
+
 sub guild_chat {
 	my ($self, $args) = @_;
 	my ($chatMsgUser, $chatMsg, $parsed_msg); # Type: String
@@ -1106,6 +1327,238 @@ sub item_skill {
 		level => $skillLv,
 		name => $skillName
 	});
+}
+
+sub map_changed {
+	my ($self, $args) = @_;
+	$net->setState(4);
+
+	my $oldMap = $field ? $field->baseName : undef; # Get old Map name without InstanceID
+	my ($map) = $args->{map} =~ /([\s\S]*)\./;
+	my $map_noinstance;
+	($map_noinstance, undef) = Field::nameToBaseName(undef, $map); # Hack to clean up InstanceID
+
+	checkAllowedMap($map_noinstance);
+	if (!$field || $map ne $field->name()) {
+		eval {
+			$field = new Field(name => $map);
+		};
+		if (my $e = caught('FileNotFoundException', 'IOException')) {
+			error TF("Cannot load field %s: %s\n", $map_noinstance, $e);
+			undef $field;
+		} elsif ($@) {
+			die $@;
+		}
+	}
+
+	my %coords = (
+		x => $args->{x},
+		y => $args->{y}
+	);
+	$char->{pos} = {%coords};
+	$char->{pos_to} = {%coords};
+
+	undef $conState_tries;
+	for (my $i = 0; $i < @ai_seq; $i++) {
+		ai_setMapChanged($i);
+	}
+	AI::SlaveManager::setMapChanged ();
+	$ai_v{portalTrace_mapChanged} = time;
+
+	$map_ip = makeIP($args->{IP});
+	$map_port = $args->{port};
+	message(swrite(
+		"---------Map  Info----------", [],
+		"MAP Name: @<<<<<<<<<<<<<<<<<<",
+		[$args->{map}],
+		"MAP IP: @<<<<<<<<<<<<<<<<<<",
+		[$map_ip],
+		"MAP Port: @<<<<<<<<<<<<<<<<<<",
+		[$map_port],
+		"-------------------------------", []),
+		"connection");
+
+	message T("Closing connection to Map Server\n"), "connection";
+	$net->serverDisconnect unless ($net->version == 1);
+
+	# Reset item and skill times. The effect of items (like aspd potions)
+	# and skills (like Twohand Quicken) disappears when we change map server.
+	# NOTE: with the newer servers, this isn't true anymore
+	my $i = 0;
+	while (exists $config{"useSelf_item_$i"}) {
+		if (!$config{"useSelf_item_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"useSelf_item_$i"."_time"} = 0;
+		$i++;
+	}
+	$i = 0;
+	while (exists $config{"useSelf_skill_$i"}) {
+		if (!$config{"useSelf_skill_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"useSelf_skill_$i"."_time"} = 0;
+		$i++;
+	}
+	$i = 0;
+	while (exists $config{"doCommand_$i"}) {
+		if (!$config{"doCommand_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"doCommand_$i"."_time"} = 0;
+		$i++;
+	}
+	if ($char) {
+		delete $char->{statuses};
+		$char->{spirits} = 0;
+		delete $char->{permitSkill};
+		delete $char->{encoreSkill};
+	}
+	undef %guild;
+
+	Plugins::callHook('Network::Receive::map_changed', {
+		oldMap => $oldMap,
+	});
+	$timeout{ai}{time} = time;
+}
+
+# It seems that when we use this, the login won't go smooth
+# this sends a sync packet after the map is loaded
+=pod
+sub map_loaded {
+	# Note: ServerType0 overrides this function
+	my ($self, $args) = @_;
+
+	undef $conState_tries;
+	$char = $chars[$config{char}];
+	$syncMapSync = pack('V1', $args->{syncMapSync});
+
+	if ($net->version == 1) {
+		$net->setState(4);
+		message T("Waiting for map to load...\n"), "connection";
+		ai_clientSuspend(0, 10);
+		main::initMapChangeVars();
+	} else {
+		$messageSender->sendGuildMasterMemberCheck();
+
+		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
+		$messageSender->sendGuildRequestInfo(0);
+
+		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
+		$messageSender->sendGuildRequestInfo(1);
+		$messageSender->sendMapLoaded();
+		$messageSender->sendSync(1);
+		debug "Sent initial sync\n", "connection";
+		$timeout{'ai'}{'time'} = time;
+	}
+
+	if ($char && changeToInGameState()) {
+		$net->setState(Network::IN_GAME) if ($net->getState() != Network::IN_GAME);
+		$char->{pos} = {};
+		makeCoordsDir($char->{pos}, $args->{coords});
+		$char->{pos_to} = {%{$char->{pos}}};
+		message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
+		message(T("You are now in the game\n"), "connection");
+		Plugins::callHook('in_game');
+	}
+
+	$messageSender->sendIgnoreAll("all") if ($config{ignoreAll});
+}
+=cut
+
+sub monster_typechange {
+	my ($self, $args) = @_;
+
+	# Class change / monster type change
+	# 01B0 : long ID, byte WhateverThisIs, long type
+	my $ID = $args->{ID};
+	my $nameID = $args->{nameID};
+	my $monster = $monstersList->getByID($ID);
+	if ($monster) {
+		my $oldName = $monster->name;
+		if ($monsters_lut{$nameID}) {
+			$monster->setName($monsters_lut{$nameID});
+		} else {
+			$monster->setName(undef);
+		}
+		$monster->{nameID} = $nameID;
+		$monster->{dmgToParty} = 0;
+		$monster->{dmgFromParty} = 0;
+		$monster->{missedToParty} = 0;
+		message TF("Monster %s (%d) changed to %s\n", $oldName, $monster->{binID}, $monster->name);
+	}
+}
+
+sub npc_sell_list {
+	my ($self, $args) = @_;
+	#sell list, similar to buy list
+	if (length($args->{RAW_MSG}) > 4) {
+		my $msg = $args->{RAW_MSG};
+	}
+	
+	debug T("You can sell:\n"), "info";
+	for (my $i = 0; $i < length($args->{itemsdata}); $i += 10) {
+		my ($index, $price, $price_overcharge) = unpack("a2 L L", substr($args->{itemsdata},$i,($i + 10)));
+		my $item = $char->inventory->getByID($index);
+		$item->{sellable} = 1; # flag this item as sellable
+		debug TF("%s x %s for %sz each. \n", $item->{amount}, $item->{name}, $price_overcharge), "info";
+	}
+	
+	foreach my $item (@{$char->inventory->getItems()}) {
+		next if ($item->{equipped} || $item->{sellable});
+		$item->{unsellable} = 1; # flag this item as unsellable
+	}
+	
+	undef %talk;
+	message T("Ready to start selling items\n");
+
+	$ai_v{npc_talk}{talk} = 'sell';
+	# continue talk sequence now
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
+sub npc_talk {
+	my ($self, $args) = @_;
+	
+	#Auto-create Task::TalkNPC if not active
+	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
+		my $nameID = unpack 'V', $args->{ID};
+		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $args->{ID});
+		AI::queue("NPC", $task);
+		# TODO: The following npc_talk hook is only added on activation.
+		# Make the task module or AI listen to the hook instead
+		# and wrap up all the logic.
+		$task->activate;
+		Plugins::callHook('npc_autotalk', {
+			task => $task
+		});
+	}
+
+	$talk{ID} = $args->{ID};
+	$talk{nameID} = unpack 'V', $args->{ID};
+	$talk{msg} = bytesToString ($args->{msg});
+
+	# Remove RO color codes
+	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
+
+	$ai_v{npc_talk}{talk} = 'initiated';
+	$ai_v{npc_talk}{time} = time;
+
+	my $name = getNPCName($talk{ID});
+	Plugins::callHook('npc_talk', {
+						ID => $talk{ID},
+						nameID => $talk{nameID},
+						name => $name,
+						msg => $talk{msg},
+						});
+	message "$name: $talk{msg}\n", "npc";
 }
 
 sub public_chat {
@@ -1309,6 +1762,48 @@ sub skill_use {
 	}
 }
 
+sub skill_use_failed {
+	my ($self, $args) = @_;
+
+	# skill fail/delay
+	my $skillID = $args->{skillID};
+	my $btype = $args->{btype};
+	my $fail = $args->{fail};
+	my $type = $args->{type};
+
+	my %failtype = (
+		0 => T('Basic'),
+		1 => T('Insufficient SP'),
+		2 => T('Insufficient HP'),
+		3 => T('No Memo'),
+		4 => T('Mid-Delay'),
+		5 => T('No Zeny'),
+		6 => T('Wrong Weapon Type'),
+		7 => T('Red Gem Needed'),
+		8 => T('Blue Gem Needed'),
+		9 => TF('%s Overweight', '90%'),
+		10 => T('Requirement'),
+		13 => T('Need this within the water'),
+		19 => T('Full Amulet'),
+		29 => TF('Must have at least %s of base XP', '1%'),
+		83 => T('Location not allowed to create chatroom/market')
+		);
+
+	my $errorMessage;
+	if (exists $failtype{$type}) {
+		$errorMessage = $failtype{$type};
+	} else {
+		$errorMessage = 'Unknown error';
+	}
+
+	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
+	Plugins::callHook('packet_skillfail', {
+		skillID     => $skillID,
+		failType    => $type,
+		failMessage => $errorMessage
+	});
+}
+
 sub skill_use_location {
 	my ($self, $args) = @_;
 
@@ -1489,6 +1984,15 @@ sub character_block_info {
 	#TODO
 }
 
+sub party_dead {
+	my ($self, $args) = @_;
+
+	my $string = ($char->{party}{users}{$args->{ID}} && %{$char->{party}{users}{$args->{ID}}}) ? $char->{party}{users}{$args->{ID}}->name() : $args->{ID};
+	if ($args->{isDead} == 1) {
+		message TF("Party member %s is dead.\n", $string), "info";
+	}	
+}
+
 sub progress_bar_unit {
 	my($self, $args) = @_;
 	debug "Displays progress bar (GID: $args->{GID} time: $args->{time})\n";
@@ -1498,6 +2002,31 @@ sub inventory_expansion_info {
 	my($self, $args) = @_;
 	#sd->inventorySize - FIXED_INVENTORY_SIZE;
 	#hardcode inventorysize ? [sctnightcore]
+}
+
+#expand_inventory_result 
+use constant {
+	EXPAND_INVENTORY_RESULT_SUCCESS => 0x0,
+	EXPAND_INVENTORY_RESULT_FAILED => 0x1,
+	EXPAND_INVENTORY_RESULT_OTHER_WORK => 0x2,
+	EXPAND_INVENTORY_RESULT_MISSING_ITEM => 0x3,
+	EXPAND_INVENTORY_RESULT_MAX_SIZE => 0x4,
+};
+
+sub inventory_expansion_result {
+	my($self, $args) = @_;
+#msgstringtable
+	if ($args->{result} == EXPAND_INVENTORY_RESULT_SUCCESS) {
+		message TF("You have successfully expanded the possession limit"),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_FAILED) {
+		message TF("Failed to expand the maximum possession limit."),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_OTHER_WORK) {
+		message TF("To expand the possession limit, please close other windows"),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MISSING_ITEM) {	
+		message TF("Failed to expand the maximum possession limit, insufficient required item"),"info";
+	} elsif ($args->{result} == EXPAND_INVENTORY_RESULT_MAX_SIZE) {	
+		message TF("You can no longer expand the maximum possession limit."),"info";
+	}	
 }
 
 *changeToInGameState = *Network::Receive::changeToInGameState;

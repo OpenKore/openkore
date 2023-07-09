@@ -3156,8 +3156,8 @@ sub show_eq {
 		my $item;
 		@{$item}{@{$item_info->{keys}}} = unpack($item_info->{types}, substr($args->{equips_info}, $i, $item_info->{len}));
 		$item->{broken} = 0;
-		$item->{identified} = 1;
-		$msg .= sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item));
+		$item->{identified} = 1;		
+		message sprintf("%-20s: %s\n", $equipTypes_lut{$item->{equipped}}, itemName($item)), "list";
 	}
 	$msg .= sprintf("%s\n", ('-'x50));
 	message($msg, "list");
@@ -4495,29 +4495,19 @@ sub quest_all_list {
 			mission_len => 32,
 		};
 
-	} elsif ($args->{switch} eq '09F8') { # SERVERTYPE >= 20150513
-		$quest_info = {
-			quest_pack => 'V C V2 v',
-			quest_keys => [qw(quest_id active time_expire time_start mission_amount)],
-			quest_len => 15,
-			mission_pack => 'V3 v4 Z24',
-			mission_keys => [qw(hunt_id mob_type mob_id min_level max_level mob_count mob_goal mob_name_original)],
-			mission_len => 44,
-		};
-
-	} elsif ($args->{switch} eq '0AFF') { # SERVERTYPE >= 20150513
-		$quest_info = {
-			quest_pack => 'V C V2 v',
-			quest_keys => [qw(quest_id active time_expire time_start mission_amount)],
-			quest_len => 15,
-			mission_pack => 'V4 v4 Z24',
-			mission_keys => [qw(hunt_id hunt_id_cont mob_type mob_id min_level max_level mob_count mob_goal mob_name_original)],
-			mission_len => 48,
-		};
-
-	} else { # this can't happen
-		return;
-	}
+    } elsif ($args->{switch} eq '09F8') { # SERVERTYPE >= 20150513
+        $quest_info = {
+            quest_pack => 'V C V2 v',
+            quest_keys => [qw(quest_id active time_expire time_start mission_amount)],
+            quest_len => 15,
+            mission_pack => 'V3 v4 Z24',
+            mission_keys => [qw(hunt_id mob_type mob_id min_level max_level mob_count mob_goal mob_name_original)],
+            mission_len => 44,
+        };
+       
+    } else { # this can't happen
+        return;
+    }
 
 	# Long quest lists are split up over multiple packets. Only reset the quest list if we've switched maps.
 	our $quest_generation      ||= 0;
@@ -4592,16 +4582,16 @@ sub quest_all_mission {
 
 		debug "Quest ID: $char_quest->{quest_id} - active: $char_quest->{active}\n", "info";
 
-		$offset += $quest_info->{quest_len};
+        $offset += $quest_info->{quest_len};
 
-		for ( my $j = 0 ; $j < 3; $j++ ) {
+        for ( my $j = 0 ; $j < 3; $j++ ) {
 
 			if($j >= $char_quest->{mission_amount}) {
 				$offset += $quest_info->{mission_len};
 				next;
 			}
 
-			my $mission;
+            my $mission;
 
 			@{$mission}{@{$quest_info->{mission_keys}}} = unpack($quest_info->{mission_pack}, substr($args->{message}, $offset, $quest_info->{mission_len}));
 			$mission->{mob_name} = bytesToString($mission->{mob_name_original});
@@ -4631,38 +4621,38 @@ sub quest_add {
 
 	my $quest_info;
 
-	if ($args->{switch} eq '09F9') {  # SERVERTYPE >= 20150513
-		$quest_info = {
-			mission_pack => 'V3 v3 Z24',
-			mission_keys => [qw(hunt_id mob_type mob_id min_level max_level mob_count mob_name_original)],
-			mission_len => 42,
-		};
+    if ($args->{switch} eq '09F9') {  # SERVERTYPE >= 20150513
+        $quest_info = {
+            mission_pack => 'V3 v3 Z24',
+            mission_keys => [qw(hunt_id mob_type mob_id min_level max_level mob_count mob_name_original)],
+            mission_len => 42,
+        };
 
-	} elsif ($args->{switch} eq '0B0C') {  # SERVERTYPE >= 20150513
-		$quest_info = {
-			mission_pack => 'V4 v3 Z24',
-			mission_keys => [qw(hunt_id hunt_id_cont mob_type mob_id min_level max_level mob_count mob_name_original)],
-			mission_len => 46,
-		};
+    } elsif ($args->{switch} eq '0B0C') {  # SERVERTYPE >= 20150513
+        $quest_info = {
+            mission_pack => 'V4 v3 Z24',
+            mission_keys => [qw(hunt_id hunt_id_cont mob_type mob_id min_level max_level mob_count mob_name_original)],
+            mission_len => 46,
+        };
 
-	} else { # DEFAULT PACKET - 02B3
-		$quest_info = {
-			mission_pack => 'V v Z24',
-			mission_keys => [qw(mob_id mob_count mob_name_original)],
-			mission_len => 30,
-		};
-	}
+    } else { # DEFAULT PACKET - 02B3
+        $quest_info = {
+            mission_pack => 'V v Z24',
+            mission_keys => [qw(mob_id mob_count mob_name_original)],
+            mission_len => 30,
+        };
+    }
 
 	my $quest = \%{$questList->{$args->{questID}}};
 	$quest->{quest_id} = $args->{questID};
-	$quest->{active} = $args->{active};
-	$quest->{time_start} = $args->{time_start};
-	$quest->{time_expire} = $args->{time_expire};
-	$quest->{mission_amount} = $args->{mission_amount};
+    $quest->{active} = $args->{active};
+    $quest->{time_start} = $args->{time_start};
+    $quest->{time_expire} = $args->{time_expire};
+    $quest->{mission_amount} = $args->{mission_amount};
 
-	if ($args->{questID}) {
-		message TF("Quest: %s has been added.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
-	}
+    if ($args->{questID}) {
+        message TF("Quest: %s has been added.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
+    }
 
 	for ( my $j = 0 ; $j < 3; $j++ ) {
 		if($j >= $quest->{mission_amount}) {
@@ -4699,26 +4689,26 @@ sub quest_update_mission_hunt {
 
 	my $quest_info;
 
-	if ($args->{switch} eq '09FA') {
-		$quest_info = {
-			mission_pack => 'V2 v2',
-			mission_keys => [qw(questID hunt_id mob_goal mob_count)],
-			mission_len => 12,
-		};
+    if ($args->{switch} eq '09FA') {
+        $quest_info = {
+            mission_pack => 'V2 v2',
+            mission_keys => [qw(questID hunt_id mob_goal mob_count)],
+            mission_len => 12,
+        };
 
-	} elsif($args->{switch} eq '0AFE') {
+    } elsif($args->{switch} eq '0AFE') {
 		$quest_info = {
-			mission_pack => 'V3 v2',
-			mission_keys => [qw(questID hunt_id hunt_id_cont mob_goal mob_count)],
-			mission_len => 16,
-		};
+            mission_pack => 'V3 v2',
+            mission_keys => [qw(questID hunt_id hunt_id_cont mob_goal mob_count)],
+            mission_len => 16,
+        };
 	} else { # 02B5 and 08FE
-		$quest_info = {
-			mission_pack => 'V2 v2',
-			mission_keys => [qw(questID mob_id mob_goal mob_count)],
-			mission_len => 12,
-		};
-	}
+        $quest_info = {
+            mission_pack => 'V2 v2',
+            mission_keys => [qw(questID mob_id mob_goal mob_count)],
+            mission_len => 12,
+        };
+    }
 
 	# workaround 08FE dont have mission_count
 	if ($args->{switch} eq '08FE') {
@@ -4767,7 +4757,8 @@ sub quest_update_mission_hunt {
 
 		$quest_mission->{mob_count} = $mission->{mob_count};
 		$quest_mission->{mob_goal} = $mission->{mob_goal};
-
+		
+		
 		debug "- MobID: $mission->{mob_id} - Name: $mission->{mob_name} - Count: $mission->{mob_count} - Goal: $mission->{mob_goal}\n", "info";
 
 		if ($config{questDisplayStyle}) {
@@ -4778,7 +4769,7 @@ sub quest_update_mission_hunt {
 			}
 		}
 
-		$offset += $quest_info->{mission_len};
+        $offset += $quest_info->{mission_len};
 
 		Plugins::callHook('quest_mission_updated', {
 			questID => $quest_mission->{questID},
@@ -10455,8 +10446,12 @@ sub cash_buy_fail {
 sub equip_item {
 	my ($self, $args) = @_;
 	my $item = $char->inventory->getByID($args->{ID});
-	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999")) {
-		message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+	if ((!$args->{success} && $args->{switch} eq "00AA") || ($args->{success} && $args->{switch} eq "0999") || (($args->{success} == 1 || $args->{success} == 2 ) && $args->{switch} eq "0A98")) {
+		if ($args->{switch} == '0A98') {
+			message TF("[Equip Switch] You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+		} else {	
+			message TF("You can't put on %s (%d)\n", $item->{name}, $item->{binID});
+		}	
 	} else {
 		$item->{equipped} = $args->{type};
 
@@ -10495,8 +10490,13 @@ sub equip_item_switch {
 				if ($_ & $args->{type}) {
 					next if $_ == 10; # work around Arrow bug
 					next if $_ == 32768;
-					$char->{eqswitch}{$equipSlot_lut{$_}} = $item;
-					Plugins::callHook('equipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+					if ($args->{switch} == '0A98') {
+						$char->{eqswitch}{$equipSlot_lut{$_}} = $item;
+						Plugins::callHook('equipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
+					} else {	
+						$char->{equipment}{$equipSlot_lut{$_}} = $item;
+						Plugins::callHook('equipped_item', {slot => $equipSlot_lut{$_}, item => $item});
+					}
 				}
 			}
 		}
@@ -11477,10 +11477,7 @@ sub unequip_item_switch {
 				next if $_ == 32768;
 
 				delete $char->{eqswitch}{$equipSlot_lut{$_}};
-				Plugins::callHook('unequipped_item_sw', {
-					slot => $equipSlot_lut{$_},
-					item => $item
-				});
+				Plugins::callHook('unequipped_item_sw', {slot => $equipSlot_lut{$_}, item => $item});
 			}
 		}
 	}
@@ -11626,8 +11623,6 @@ sub skill_use_failed {
 	} else {
 		$errorMessage = T('Unknown error');
 	}
-
-	delete $char->{casting};
 
 	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
 	Plugins::callHook('packet_skillfail', {

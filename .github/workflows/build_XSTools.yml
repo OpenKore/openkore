@@ -11,7 +11,7 @@ name: Build XSTools
 on:
   push:
     branches:
-      - master
+      - '*'
     tags-ignore:
       - '*'
   pull_request:

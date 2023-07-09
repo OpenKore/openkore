@@ -1,0 +1,3 @@
+files:
+  - source: /src/po/*
+    translation: '%two_letters_code%'
