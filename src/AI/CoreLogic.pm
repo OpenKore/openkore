@@ -3170,6 +3170,8 @@ sub processAutoAttack {
 
 				# Never attack monsters that we failed to get LOS with
 				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+				# Avoid Hidden monsters
+				next if ($config{avoidHiddenMonsters} && ($monster->{statuses}->{EFFECTSTATE_BURROW} || $monster->{statuses}->{EFFECTSTATE_HIDING}));
 
 				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
 

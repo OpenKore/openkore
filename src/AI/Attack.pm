@@ -153,7 +153,25 @@ sub process {
 		main();
 	}
 
-	# Check for kill steal and mob-training while moving
+	# Check for hidden monsters
+	if (AI::inQueue("attack") && AI::is("move", "route", "attack")) {
+		my $ID = AI::args->{attackID};
+		my $monster = $monsters{$ID};
+		if (($monster->{statuses}->{EFFECTSTATE_BURROW} || $monster->{statuses}->{EFFECTSTATE_HIDING}) && 
+		$config{avoidHiddenMonsters}) {
+			message TF("Dropping target %s - will not attack hidden monsters\n", $monster), 'ai_attack';
+			$char->sendAttackStop;
+			$monster->{ignore} = 1;
+
+			AI::dequeue while (AI::inQueue("attack"));
+			if ($config{teleportAuto_dropTargetHidden}) {
+				message T("Teleport due to dropping hidden target\n");
+				ai_useTeleport(1);
+			}
+		}
+	}
+
+	# Check for kill steal, mob-training and hiding while moving
 	if ((AI::is("move", "route") && $args->{attackID} && AI::inQueue("attack")
 		&& timeOut($args->{movingWhileAttackingTimeout}, 0.2))) {
 
