@@ -448,85 +448,53 @@ sub modifyPacketIn {
 	}
 
 	# server list
-	if ($switch eq "0069" || $switch eq "0AC4" || $switch eq "0AC9") {
+	if ($switch eq "0069" || $switch eq "0276" || $switch eq "0A4D" || $switch eq "0AC4" || $switch eq "0AC9" || $switch eq "0B07" || $switch eq "0B60") {
 		use bytes; no encoding 'utf8';
 
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 
-		debug "Modifying Account Info packet...";
-		
 		# Show list of character servers.
-		my $serverCount = 0;
-		my @serverList;
-		my ($ip, $port, $name);
-		if($config{server} =~/\d+/) {
-			my %charServer;
-			foreach $charServer (@servers) {
-				if($serverCount == $config{server}) {
-					$ip = $self->{publicIP} || $self->{proxy}->sockhost;
-					$port = $self->{proxy}->sockport;
-					$name = $charServer->{name}.' (PROXIED)';
-					$self->{nextIp} = $charServer->{'ip'};
-					$self->{nextPort} = $charServer->{'port'};
-					$self->{charServerIp} = $charServer->{'ip'};
-					$self->{charServerPort} = $charServer->{'port'};
-				} else {
-					$ip = $charServer->{ip};
-					$port = $charServer->{port};
-					$name = $charServer->{name};
-				}
-
-				push @serverList, {
-					ip => $ip,
-					port => $port,
-					name => $name,
-					users => $charServer->{users},
-					display => $charServer->{display}, # don't show number of players
-					state => $charServer->{state},
-					property => $charServer->{property},
-					unknown => 0,
-					ip_port => $ip.':'.$port,
-				};
-
-				$serverCount++;
+		unless ($config{server} =~/\d+/) {
+			my @menuServerList;
+			foreach my $server (@servers) {
+				push @menuServerList, $server->{name};
 			}
-		} else {
-			$ip = $self->{publicIP} || $self->{proxy}->sockhost;
-			$name = $servers[0]{'name'}.' (PROXIED)';
-			$port = $self->{proxy}->sockport;
-			$self->{nextIp} = $servers[0]{'ip'};
-			$self->{nextPort} = $servers[0]{'port'};
-			$self->{charServerIp} = $servers[0]{'ip'};
-			$self->{charServerPort} = $servers[0]{'port'};
-			push @serverList, {
-					ip => $ip,
-					port => $port,
-					name => $name,
-					users => $charServer->{users},
-					display => $charServer->{display}, # don't show number of players
-					state => $charServer->{state},
-					property => $charServer->{property},
-					unknown => 0,
-					ip_port => $ip.':'.$port,
-				};
+			my $ret = $interface->showMenu(
+					T("Please select your login server."),
+					\@menuServerList,
+					title => T("Select Login Server"));
+			if ($ret == -1) {
+				quit();
+			} else {
+				main::configModify('server', $ret, 1);
+				undef $conState_tries;
+			}
 		}
 
+		debug "Modifying Account Info packet...\n";
+
+		my $xKoreCharServer = $servers[$config{server}];
+
+		$self->{nextIp} = $self->{charServerIp} = $xKoreCharServer->{ip};
+		$self->{nextPort} = $self->{charServerPort} = $xKoreCharServer->{port};
+
+		$xKoreCharServer->{ip} = $self->{publicIP} || $self->{proxy}->sockhost;
+		$xKoreCharServer->{port} = $self->{proxy}->sockport;
+		$xKoreCharServer->{ip_port} = "$xKoreCharServer->{ip}:$xKoreCharServer->{port}";
+
+		my @serverList;
+		push @serverList, $xKoreCharServer;
+
 		$msg = $packetParser->reconstruct({
-			len => 100,
 			switch => $switch,
 			sessionID => $sessionID,
 			accountID => $accountID,
 			sessionID2 => $sessionID2,
 			accountSex => $accountSex,
-			lastLoginIP => "",
-			lastLoginTime => "",
-			unknown => "",
 			servers => \@serverList,
 		});
-		
-		substr($msg, 2, 2) = pack('v', length($msg));
-		debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
+
 		message T("Closing connection to Account Server\n"), 'connection' if (!$self->{packetReplayTrial});
 		$self->serverDisconnect(1);
 
@@ -537,7 +505,7 @@ sub modifyPacketIn {
 		$self->{packetPending} = $msg;
 
 		# Proxy the Logon to Map server
-		debug "Modifying Map Logon packet...", "connection";
+		debug "Modifying Map Logon packet...\n", "connection";
 		
 		if ($switch eq '0AC5') { # cRO 2017
 			$server_info = {
@@ -553,7 +521,6 @@ sub modifyPacketIn {
 		}
 
 		my $ip = $self->{publicIP} || $self->{proxy}->sockhost;
-		my $port = $self->{proxy}->sockport;
 		
 		@{$mapInfo}{@{$server_info->{keys}}} = unpack($server_info->{types}, substr($msg, 2));
 
@@ -574,8 +541,8 @@ sub modifyPacketIn {
 			charID => $mapInfo->{'charID'},
 			mapName => $mapInfo->{'mapName'},
 			mapIP => inet_aton($ip),
-			mapPort => $port,
-			mapUrl => $ip.':'.$port,
+			mapPort => $self->{proxy}->sockport,
+			mapUrl => $ip.':'.$self->{proxy}->sockport,
 		});
 
 		$self->{nextIp} = $mapInfo->{'mapIP'};
@@ -648,7 +615,7 @@ sub modifyPacketIn {
 			$messageSender->{encryption}->{crypt_key} = $messageSender->{encryption}->{crypt_key_1};
 		}
 
-	} elsif ($switch eq "006A" || $switch eq "006C" || $switch eq "0081") {
+	} elsif ($switch eq "006A" || $switch eq "006C" || $switch eq "0081" || $switch eq "02CA" || $switch eq "083E" || $switch eq "0ACD" || $switch eq "0AE0") { # error while login in server
 		# An error occurred. Restart proxying
 		$self->{gotError} = 1;
 		$self->{nextIp} = undef;
