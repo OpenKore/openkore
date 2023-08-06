@@ -7217,9 +7217,7 @@ sub map_change {
 		ai_setMapChanged($i);
 	}
 	AI::SlaveManager::setMapChanged ();
-	if ($net->version == 0) {
-		$ai_v{portalTrace_mapChanged} = time;
-	}
+	$ai_v{portalTrace_mapChanged} = time;
 
 	my %coords = (
 		x => $args->{x},
