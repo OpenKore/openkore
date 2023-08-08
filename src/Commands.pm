@@ -591,7 +591,6 @@ sub initHandlers {
 			["moon", T("select mon as starplace")],
 			["star", T("select star as starplace")],
 			], \&cmdStarplace],
-		['statuses', T("Display character statuses and times."), \&cmdStatuses],
 		['storage', [
 			T("Handle items in Kafra storage."),
 			["", T("lists items in storage")],
@@ -5534,19 +5533,9 @@ sub cmdStatus {
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]).
 		('-'x56) . "\n";
-		$msg .= TF("Statuses: %s\n", $char->statusesStringAndTime(1));
+		$msg .= TF("Statuses: %s\n", $char->statusesStringAndTime(0));
 
 	message $msg, "info";
-}
-
-sub cmdStatuses {
-	if (!$net || $net->getState() != Network::IN_GAME) {
-		error TF("You must be logged in the game to use this command '%s'\n", shift);
-	} elsif (!$char) {
-		error T("Character information not available.\n");
-	} else {
-		message TF("Statuses:\n%s", $char->statusesStringAndTime(0));
-	}
 }
 
 sub cmdStorage {
