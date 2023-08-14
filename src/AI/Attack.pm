@@ -552,7 +552,7 @@ sub main {
 		} else {
 			$target->{attack_failed} = time;
 			AI::dequeue while (AI::inQueue("attack"));
-			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
+			message T("Unable to calculate a meetingPosition to target, dropping target. Check attackRouteMaxPathDistance in config.txt\n"), "ai_attack";
 			if ($config{'teleportAuto_dropTarget'}) {
 				message T("Teleport due to dropping attack target\n");
 				ai_useTeleport(1);
