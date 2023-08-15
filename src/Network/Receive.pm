@@ -2058,7 +2058,8 @@ sub actor_display {
 	if ( ($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0) ||
 		 (blockDistance(\%coordsFrom, \%coordsTo) > $config{clientSight}) ) {
 			warning TF("Ignoring bugged actor moved packet (%s) (%d, %d)->(%d, %d)\n", $args->{switch}, $coordsFrom{x}, $coordsFrom{y}, $coordsTo{x}, $coordsTo{y});
-			$actor->{avoid} = 1;
+			# seems this is just a position bug, lets just ignore the change in position
+			# $actor->{avoid} = 1;
 		return;
 	}
 
