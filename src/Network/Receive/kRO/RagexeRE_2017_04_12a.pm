@@ -18,7 +18,16 @@ use base qw(Network::Receive::kRO::RagexeRE_2017_02_08b);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+
+	my %handlers = qw(
+		account_server_info 0AC4
+		received_character_ID_and_Map 0AC5
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 1;
