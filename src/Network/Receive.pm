@@ -1861,21 +1861,6 @@ sub actor_display {
 		%coordsFrom = %coordsTo;
 	}
 
-	# Remove actors that are located outside the map
-	# This may be caused by:
-	#  - server sending us false actors
-	#  - actor packets not being parsed correctly
-	if (defined $field && ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y}))) {
-		warning TF("Ignoring actor with off map coordinates: (%d, %d)->(%d, %d), field max: (%d, %d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
-		return;
-	}
-
-	if ( ($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0) ||
-		 (blockDistance(\%coordsFrom, \%coordsTo) > $config{clientSight}) ) {
-			warning TF("Ignoring bugged actor moved packet (%s) (%d, %d)->(%d, %d)\n", $args->{switch}, $coordsFrom{x}, $coordsFrom{y}, $coordsTo{x}, $coordsTo{y});
-			return;
-	}
-
 =pod
 	# Zealotus bug
 	if ($args->{type} == 1200) {
@@ -2055,16 +2040,35 @@ sub actor_display {
 	$actor->{jobID} = $args->{type};
 	$actor->{type} = $args->{type};
 	$actor->{lv} = $args->{lv};
-	$actor->{pos} = {%coordsFrom};
-	$actor->{pos_to} = {%coordsTo};
 	$actor->{walk_speed} = $args->{walk_speed} / 1000 if (exists $args->{walk_speed} && $args->{switch} ne "0086");
-	$actor->{time_move} = time;
-	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
 	$actor->{len} = $args->{len} if $args->{len};
 	# 0086 would need that?
 	$actor->{object_type} = $args->{object_type} if (defined $args->{object_type});
 
-	# Remove actors with a distance greater than clientSight. Useful for vending (so you don't spam
+	# Remove actors that are located outside the map
+	# This may be caused by:
+	#  - server sending us false actors
+	#  - actor packets not being parsed correctly
+	if (defined $field && ($field->isOffMap($coordsFrom{x}, $coordsFrom{y}) || $field->isOffMap($coordsTo{x}, $coordsTo{y}))) {
+		warning TF("Ignoring actor with off map coordinates: (%d, %d)->(%d, %d), field max: (%d, %d)\n",$coordsFrom{x},$coordsFrom{y},$coordsTo{x},$coordsTo{y},$field->width(),$field->height());
+		$actor->{avoid} = 1;
+		return;
+	}
+
+	if ( ($coordsFrom{x} == 0 && $coordsFrom{y} == 0) || ($coordsTo{x} == 0 && $coordsTo{y} == 0) ||
+		 (blockDistance(\%coordsFrom, \%coordsTo) > $config{clientSight}) ) {
+			warning TF("Ignoring bugged actor moved packet (%s) (%d, %d)->(%d, %d)\n", $args->{switch}, $coordsFrom{x}, $coordsFrom{y}, $coordsTo{x}, $coordsTo{y});
+			# seems this is just a position bug, lets just ignore the change in position
+			# $actor->{avoid} = 1;
+		return;
+	}
+
+	$actor->{pos} = {%coordsFrom};
+	$actor->{pos_to} = {%coordsTo};
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
+
+	# Ignore actors with a distance greater than clientSight. Useful for vending (so you don't spam
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
 	# beyond clientSight.
 	if ($config{clientSight}) {
@@ -2074,10 +2078,13 @@ sub actor_display {
 
 		if ($realActorDist >= $config{clientSight}) {
 			my ($actor_type) = $object_class =~ /\:\:(\w+)$/;
-			warning TF("Removed out of sight %s: '%s' at (%d, %d) (distance: %d >= max %d)\n", $actor_type, $actor->{name}, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $config{clientSight});
-			return;
+			warning TF("Avoiding out of sight %s: '%s' at (%d, %d) (distance: %d >= max %d) - check clientSight in config.txt\n", $actor_type, $actor->{name}, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $config{clientSight});
+			$actor->{avoid} = 1;
+		} else {
+			$actor->{avoid} = 0;
 		}
 	}
+
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
 		# None of this stuff should matter if the actor isn't a player... => does matter for a guildflag npc!

@@ -3029,10 +3029,12 @@ sub processNameRequestQueue {
 		# a technique where they send actor_exists packets with ridiculous distances in order to automatically
 		# ban bots. By removingthose actors, we eliminate that possibility and emulate the client more closely.
 		if (defined $actor->{pos_to} && (my $block_dist = blockDistance($char->{pos_to}, $actor->{pos_to})) >= ($config{clientSight} || 16)) {
-			debug "Removed actor at $actor->{pos_to}{x} $actor->{pos_to}{y} (distance: $block_dist)\n";
+			debug "[NameRequestQueue] Removed from list actor at $actor->{pos_to}{x} $actor->{pos_to}{y} (distance: $block_dist)\n";
 			shift @{$queue};
 			next;
 		}
+
+		next if ($actor->{avoid});
 
 		$messageSender->sendGetPlayerInfo($ID) if (isSafeActorQuery($ID) == 1); # Do not Query GM's
 		$actor = shift @{$queue};
@@ -4010,6 +4012,7 @@ sub isSafeActorQuery {
 					return 0;
 				}
 			}
+			return 0 if($actor->{avoid});
 		}
 	}
 	return 1;
