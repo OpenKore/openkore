@@ -5803,7 +5803,12 @@ sub cmdTalk {
 				return;
 
 			} else {
-				my $npc = $npcsList->get($type);
+				my $npc;
+				if ($type =~ /^\d+/) {
+					$npc = $npcsList->get($type);
+				} else {
+					$npc = $npcsList->getByName($type);
+				}
 				if ($npc) {
 					$nameID = $npc->{nameID};
 				} else {
