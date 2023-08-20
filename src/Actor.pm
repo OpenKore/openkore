@@ -137,6 +137,29 @@ sub get {
 	}
 }
 
+##
+# Actor Actor::getByName(String name)
+# Returns: the associated Actor object or undef.
+# Requires: defined($name)
+# Ensures:  defined(result)
+#
+# Returns the Actor object for $name. This function will look at the various
+# actor lists. If $name is not in any of the actor lists, it will return
+# undef.
+sub getByName {
+	my ($name) = @_;
+	assert(defined $name, "Name must be provided to retrieve and Actor class") if DEBUG;
+
+	foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList, $elementalsList) {
+		for my $actor (@$list) {
+			if (lc($actor->{name}) eq lc($name)) {
+				return $actor;
+			}
+		}
+	}
+	return undef;
+}
+
 ### CATEGORY: Hash members
 
 ##

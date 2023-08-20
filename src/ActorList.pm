@@ -118,6 +118,26 @@ sub getByID {
 }
 
 ##
+# Actor $ActorList->getByName(String name)
+# Returns: the associated Actor object or undef.
+# Requires: defined($name)
+# Ensures:  defined(result)
+#
+# Returns the Actor object for $name. This function will look at the various
+# actor lists. If $name is not in any of the actor lists, it will return
+# undef.
+sub getByName {
+	my ($self, $name) = @_;
+	assert(defined $name, "This method requires a defined actor name") if DEBUG;
+	for my $actor (@$self) {
+		if (lc($actor->{name}) eq lc($name)) {
+			return $actor;
+		}
+	}
+	return undef;
+}
+
+##
 # boolean $ActorList->remove(Actor actor)
 # Requires: defined($actor) && defined($actor->{ID})
 #
