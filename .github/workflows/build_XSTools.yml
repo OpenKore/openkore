@@ -74,18 +74,15 @@ jobs:
     - name: (Windows 2019) Replace python to ${{ matrix.python }} ${{ matrix.architecture }}
       if: matrix.os == 'windows-2019' && steps.cache-python2.outputs.cache-hit != 'true'
       run: |
+        echo "::warning ::cache '${{ runner.os }}-python-${{ matrix.python }}' was NOT found, download the Python2"
         echo "== python version check:"
         python -V
         if ( Test-Path "C:/hostedtoolcache/windows/Python/" ) {
           echo '== Remove default Python 3:'
-          echo 'rm -r "C:/hostedtoolcache/windows/Python/*"'
-          rm -r "C:/hostedtoolcache/windows/Python/*"
+          echo 'rm -r "C:\hostedtoolcache\windows\Python\3.7.9\x64\python.exe"'
+          rm -r "C:\hostedtoolcache\windows\Python\3.7.9\x64\python.exe"
         }
-        echo "== new python version check:"
-        python -V
-        echo 'rm C:\ProgramData\Chocolatey\bin\python.exe'
-        rm C:\ProgramData\Chocolatey\bin\python.exe
-        echo "=================================="
+        echo "================================"
         echo "== download python ${{ matrix.python }} (${{ matrix.architecture }})"
         Invoke-WebRequest ${{ matrix.python_distr }} -OutFile python-2.7.18.msi
         echo "== install python-2.7.18.msi"
@@ -100,9 +97,9 @@ jobs:
           echo "C:\Strawberry\c\bin;C:\Strawberry\perl\site\bin;C:\Strawberry\perl\bin" | Out-File -FilePath $env:GITHUB_PATH -Append
         }
         if ( Test-Path "c:/Strawberry/" ) {
-          echo "== remove c:/Strawberry/*"
-          echo 'rm -r "c:/Strawberry/*"'
-          rm -r "c:/Strawberry/*"
+          echo "== remove c:/Strawberry/"
+          echo 'mv c:/Strawberry/ c:/Strawberry_old'
+          mv c:/Strawberry/ c:/Strawberry_old
         }
         echo "== remove g++ x64"
         echo 'rm c:/ProgramData/Chocolatey/bin/g++.exe'
@@ -128,10 +125,6 @@ jobs:
         echo "===================================="
         echo "== unpack strawberry-perl ${{ matrix.perl }}"
         7z.exe x strawberry.zip -o"C:/Strawberry"
-        rm strawberry.zip
-        echo "============================================"
-        echo "== a new version of Perl (should be '${{ matrix.perl }}'):"
-        perl --version
 
     ###############################
     # final check of all versions #
@@ -139,10 +132,10 @@ jobs:
 
     - name: Environment check
       run: |
-        echo "== python version check:"
+        echo "== python version check (should be '${{ matrix.python }}'):"
         python -V
         echo "======================"
-        echo "== perl version check:"
+        echo "== perl version check (should be '${{ matrix.perl }}'):"
         perl --version
         echo "======================"
         echo "== Time::HiRes module:"
@@ -224,8 +217,9 @@ jobs:
           echo "====================="
         }
         if ( Test-Path "c:/Strawberry/" ) {
-          echo 'rm -r "c:/Strawberry/*"'
-          rm -r "c:/Strawberry/*"
+          echo "== remove c:/Strawberry/"
+          echo 'mv c:/Strawberry/ c:/Strawberry_old'
+          mv c:/Strawberry/ c:/Strawberry_old
           echo "====================="
         }
         echo "rm XSTools.dll"
@@ -339,10 +333,10 @@ jobs:
 
     - name: Environment check
       run: |
-        echo "== python version check:"
+        echo "== python version check (should be '${{ matrix.python }}'):"
         python -V
         echo "======================"
-        echo "== perl version check:"
+        echo "== perl version check (should be '${{ matrix.perl }}'):"
         perl --version
         echo "======================"
         echo "== Time::HiRes module:"
