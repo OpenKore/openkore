@@ -3236,7 +3236,8 @@ sub setStatus {
 		for (keys %$handle) {
 			if (&$match($option, $_)) {
 				unless ($actor->{statuses}{$handle->{$_}}) {
-					$actor->{statuses}{$handle->{$_}} = 1;
+					$actor->{statuses}{$handle->{$_}}{time} = time;
+					$actor->{statuses}{$handle->{$_}}{tick} = 0;
 					message status_string($actor, $name . ': ' . ($statusName{$handle->{$_}} || $handle->{$_}), 'now'), "parseMsg_status$name", $verbosity;
 					$changed = 1;
 				}
