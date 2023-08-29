@@ -594,6 +594,9 @@ sub setStatus {
 			));
 		}
 
+		$self->{statuses}{$handle}{time} = time;
+		$self->{statuses}{$handle}{tick} = $tick ? $tick : 0;
+
 		if ($char->{party}{joined} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
 			$again = 'again' if $char->{party}{users}{$self->{ID}}{statuses}{$handle};
 			$char->{party}{users}{$self->{ID}}{statuses}{$handle} = {};
@@ -661,6 +664,34 @@ sub statusesString {
 	? join ', ', map { $statusName{$_} || $_ } keys %{$self->{statuses}}
 	# Translation Comment: No status effect on actor
 	: '';
+}
+
+##
+# String $Actor->statusesStringAndTime(integer type)
+# types: 
+#     0 - long
+#     1 - short
+# Returns human-readable list and times of currently active statuses.
+sub statusesStringAndTime {
+	my ($self, $type) = @_;
+	my $msg;
+
+	if ($self->{statuses} && %{$self->{statuses}}) {
+		my @keys = keys %{$self->{statuses}};
+
+		foreach my $key (@keys) {
+			my $status_name = $statusName{$key} ? $statusName{$key} : $key;
+
+			my $time_end = $self->{'statuses'}{$key}{'time'} + ($self->{'statuses'}{$key}{'tick'}/1000);
+			my $status_remaining_time = int($time_end - time);
+			my $remaining_time = $status_remaining_time > 0 ? $status_remaining_time : -1;	
+
+			$msg .= $type ? TF("%s (%d s), ", $status_name, $remaining_time) : TF("%s (%d seconds left)\n", $status_name, $remaining_time);
+		}
+	}
+	
+	$msg =~ s/\,\s+$//g;
+	return $msg;
 }
 
 ##
