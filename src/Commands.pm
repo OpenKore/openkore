@@ -5533,7 +5533,7 @@ sub cmdStatus {
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]).
 		('-'x56) . "\n";
-		$msg .= TF("Statuses: %s\n", $char->statusesStringAndTime(0));
+		$msg .= TF("Statuses: %s\n", $char->statusesStringAndTime(1));
 
 	message $msg, "info";
 }
