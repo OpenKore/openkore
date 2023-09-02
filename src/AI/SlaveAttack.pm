@@ -432,7 +432,7 @@ sub main {
 		} else {
 			$target->{$slave->{ai_attack_failed_timeout}} = time;
 			$slave->dequeue while ($slave->inQueue("attack"));
-			message T("Unable to calculate a meetingPosition to target, dropping target. Check slave attackRouteMaxPathDistance in config.txt\n"), 'slave_attack';
+			message TF("Unable to calculate a meetingPosition to target, dropping target. Check %s in config.txt\n", $config{$slave->{configPrefix}.'attackRouteMaxPathDistance'), 'slave_attack';
 			if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 				message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
 				ai_useTeleport(1);
