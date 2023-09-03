@@ -137,6 +137,7 @@ autoResponseOnHeal 0
 
 autoSpell
 autoSpell_safe
+autoPoison
 
 avoidGM_namePattern
 avoidGM_near 0
@@ -151,13 +152,13 @@ avoidList_reconnect 1800
 avoidList_ignoreList
 
 avoidHiddenActors 0
+avoidHiddenMonsters 0
 
 cachePlayerNames 1
 cachePlayerNames_duration 900
 cachePlayerNames_maxSize 100
 
-clientSight 15
-clientSight_removeBeyond 2
+clientSight 17
 
 dcPause 1
 dcOnDeath 0
@@ -190,6 +191,8 @@ itemsTakeAuto 2
 itemsTakeAuto_party 0
 itemsGatherAuto 2
 itemsGatherAuto_notInTown 0
+itemsGatherAutoMinPlayerDistance 6
+itemsGatherAutoMinPortalDistance 5
 itemsMaxWeight 89
 itemsMaxWeight_sellOrStore 48
 itemsMaxNum_sellOrStore 99
@@ -286,6 +289,7 @@ teleportAuto_unstuck 0
 teleportAuto_lostTarget 0
 teleportAuto_dropTarget 0
 teleportAuto_dropTargetKS 0
+teleportAuto_dropTargetHidden 0
 teleportAuto_attackedWhenSitting 0
 teleportAuto_totalDmg 0
 teleportAuto_totalDmgInLock 0
@@ -341,6 +345,7 @@ logConsole 1
 logAppendUsername 1
 logAppendServer 0
 monsterLog 0
+playerLog 0
 logDead 1
 
 questDisplayStyle 2
@@ -551,6 +556,7 @@ attackSkillSlot {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	maxAttempts 0
 	maxUses 0
 	target_hp
@@ -561,6 +567,7 @@ attackSkillSlot {
 	whenPartyMembersNearDist
 	inInventory
 	isSelfSkill 0
+	isStartSkill 0
 	equip_topHead
 	equip_midHead
 	equip_lowHead
@@ -586,6 +593,7 @@ attackComboSlot {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	whenPartyMembersNear
 	whenPartyMembersNearDist
 }
@@ -621,6 +629,7 @@ doCommand {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -669,6 +678,7 @@ useSelf_skill {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -721,6 +731,7 @@ partySkill {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -786,6 +797,7 @@ equipAuto {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	weight 0
 	whileSitting 0
 	hp
@@ -858,6 +870,7 @@ useSelf_item {
 	monsters
 	notMonsters
 	monstersCount
+	monstersCountDist
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0

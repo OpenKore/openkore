@@ -580,7 +580,7 @@ sub new {
 		'09A6' => ['banking_check', 'V2 v',[qw(zeny zeny2 reason)]],
 		'09A8' => ['banking_deposit', 'v V2 V',[qw(reason zeny zeny2 balance)]],
 		'09AA' => ['banking_withdraw', 'v V2 V',[qw(reason zeny zeny2 balance)]],
-		'09BB' => ['storage_opened'],
+		'09BB' => ['storage_opened', 'v2', [qw(items items_max)]],
 		'09BF' => ['storage_closed'],
 		'09CA' => ['area_spell_multiple3', 'v a*', [qw(len spellInfo)]], # -1
 		'09CB' => ['skill_used_no_damage', 'v V a4 a4 C', [qw(skillID amount targetID sourceID success)]],
@@ -592,6 +592,7 @@ sub new {
 		'09DB' => ['actor_moved', 'v C a4 a4 v3 V v5 a4 v6 a4 a2 v V C2 a6 C2 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss name)]],
 		'09DC' => ['actor_connected', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C2 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss name)]],
 		'09DD' => ['actor_exists', 'v C a4 a4 v3 V v11 a4 a2 v V C2 a3 C3 v2 V2 C Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize act lv font maxHP HP isBoss name)]],
+		'09DE' => ['private_message', 'v V Z24 C Z*', [qw(len charID privMsgUser isAdmin privMsg)]],
 		'09DF' => ['private_message_sent', 'C V', [qw(type charID)]],
 		'09E5' => ['shop_sold_long', 'v2 a4 V2', [qw(number amount charID time zeny)]],
 		'09E7' => ['unread_rodex', 'C', [qw(show)]],   # 3
@@ -734,6 +735,7 @@ sub new {
 		'0B32' => ['skills_list'],
 		'0B33' => ['skill_update', 'v V v3 C v', [qw(skillID type lv sp range up lv2)]], #17
 		'0B39' => ['item_list_nonstackable', 'v C a*', [qw(len type itemInfo)]],
+		'0B3D' => ['vender_items_list', 'v a4 a4 a*', [qw(len venderID venderCID itemList)]], # -1
 		'0B41' => ['inventory_item_added', 'a2 v V C2 a16 V C2 a4 v a25 C v C2', [qw(ID amount nameID identified broken cards type_equip type fail expire unknown options favorite viewID upgrade grade)]],
 		'0B44' => ['storage_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken cards options upgrade grade)]],
 		'0B45' => ['cart_item_added', 'a2 V V C3 a16 a25 C2', [qw(ID amount nameID type identified broken upgrade cards options upgrade grade)]],
@@ -748,6 +750,7 @@ sub new {
 		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
 		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], # -1
 		'0B7E' => ['guild_member_add', 'a4 a4 v5 V4 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)]], # 60 TODO
+		'0B8D' => ['repute_info', 'v C a*', [qw(len sucess reputeInfo)]], # -1
 	};
 
 	# Item RECORD Struct's
@@ -882,6 +885,7 @@ sub items_nonstackable {
 	) {
 		return $items->{type7};
 	} elsif ($args->{switch} eq '0B0A') { # item_list
+		return $items->{type7} if ($masterServer->{itemListUseOldType});
 		return $items->{type8};
 	} elsif ($args->{switch} eq '0B39') { # item_list
 		return $items->{type9};
@@ -926,6 +930,7 @@ sub items_stackable {
 	) {
 		return $items->{type6};
 	} elsif ($args->{switch} eq '0B09') { # item_list
+		return $items->{type6} if ($masterServer->{itemListUseOldType});
 		return $items->{type7};
 	} else {
 		warning "items_stackable: unsupported packet ($args->{switch})!\n";

@@ -478,6 +478,12 @@ sub initHandlers {
 			[T("<player name|PM list #> <message>"), T("send <message> to player through PM")]
 			], \&cmdPrivateMessage],
 		['pml', T("Quick PM list."), \&cmdPMList],
+		['poison', [
+			T("Apply Poison in Weapon."),
+			["", T("lists available Poisons")],
+			["use", T("use the Guillotine Cross Poisonous Weapon Skill")],
+			[T("<poison #>"), T("Apply poison using an item from the 'poison' list")],
+			], \&cmdPoison],
 		['portals', [
 			T("List portals that are on screen."),
 			["", T("list portals that are on screen")],
@@ -513,6 +519,7 @@ sub initHandlers {
 			[T("<item #>"), T("repair the specified player's item")],
 			[T("cancel"), T("cancel repair item")],
 			], \&cmdRepair],
+		['reputation', T("Show the Reputation Status"), \&cmdReputation],
 		['respawn', T("Respawn back to the save point."), \&cmdRespawn],
 		['revive', [
 			T("Use of the 'Token Of Siegfried' to self-revive."),
@@ -524,25 +531,30 @@ sub initHandlers {
 		['rodex', [
 			T("rodex use (Ragnarok Online Delivery Express)"),
 			["open", T("open rodex mailbox")],
+			["open <0 | 1 | 2>", T("open rodex mailbox with a specific type")],
 			["close", T("close rodex mailbox")],
 			["list", T("list your first page of rodex mail")],
 			["nextpage", T("request and get the next page of rodex mail")],
 			["maillist", T("show ALL messages from ALL pages of rodex mail")],
 			["refresh", T("send request to refresh and update rodex mailbox")],
-			["read <mail_id>", T("open the selected Rodex mail")],
-			["getitems", T("request ang get items of current rodex mail")],
-			["getzeny", T("request ang get zeny of current rodex mail")],
-			["write <player_name|self|none>", T("open a box to start write a rodex mail")],
+			["read <mail_# | mail_id>", T("open the selected Rodex mail")],
+			["getitems", T("get items of current rodex mail")],
+			["getitems <mail_# | mail_id>", T("get items of rodex mail")],
+			["getzeny", T("get zeny of current rodex mail")],
+			["getzeny <mail_# | mail_id>", T("get zeny of rodex mail")],
+			["write", T("open a box to start write a rodex mail")],
+			["write <player_name | self>", T("open a box to start write a rodex mail to the specified player")],
 			["settarget <player_name|self>", T("set target of rodex mail")],
 			["itemslist", T("show current list of items in mail box that you are writting")],
-			["settitle <title>", T("show current list of items in mail box that you are writting")],
+			["settitle <title>", T("set rodex mail title")],
 			["setbody <body>", T("set rodex mail body")],
 			["setzeny <zeny_amount>", T("set zeny amount in rodex mail")],
 			["add <item #> <amount>", T("add a item from inventory in rodex mail box")],
 			["remove <item #> <amount>", T("remove a item or amount of item from rodex mail")],
+			["draft", T("show draft rodex mail before sending")],
 			["send", T("send finished rodex mail")],
 			["cancel", T("close rodex mail write box")],
-			["delete <mail_id>", T("delete selected rodex mail")]
+			["delete <mail_# | mail_id>", T("delete selected rodex mail")]
 			], \&cmdRodex],
 		['roulette', [
 			T("Roulette System."),
@@ -611,7 +623,9 @@ sub initHandlers {
 			], \&cmdUseSkill],
 		['ss', [
 			T("Use skill on self."),
-			[T("<skill #> [<level>]"), T("use skill on self")]
+			[T("<skill #> [<level>]"), T("use skill on self")],
+			[T("start <skill #> [<level>]"), T("start use skill on self")],
+			[T("stop"), T("stop use skill on self")]
 			], \&cmdUseSkill],
 		['ssl', [
 			T("Use skill on slave."),
@@ -1119,13 +1133,11 @@ sub cmdArrowCraft {
 		return;
 	}
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	my ($command, $arg1) = parseArgs( $args );
 
-	#print "-$arg1-\n";
-	if ($arg1 eq "") {
+	if ($command eq "") {
 		if (@arrowCraftID) {
-			my $msg = center(T(" Item To Craft "), 50, '-') ."\n";
+			my $msg = center(" ". T("Item To Craft") ." ", 50, '-') ."\n";
 			for (my $i = 0; $i < @arrowCraftID; $i++) {
 				next if ($arrowCraftID[$i] eq "");
 				$msg .= swrite(
@@ -1136,30 +1148,75 @@ sub cmdArrowCraft {
 			message $msg, "list";
 		} else {
 			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
-			 	"Type 'arrowcraft use' to get list.\n");
+			 	"Type 'arrowcraft' to get list.\n");
 		}
-	} elsif ($arg1 eq "use") {
+	} elsif ($command eq "use") {
 		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
 			main::ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
 		} else {
-			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
+			error T("Error in function 'arrowcraft use' (Create Arrows)\n" .
 				"You don't have Arrow Making Skill.\n");
 		}
-	} elsif ($arg1 eq "forceuse") {
-		my $item = $char->inventory->get($arg2);
+	} elsif ($command eq "forceuse") {
+		my $item = $char->inventory->get($arg1);
 		if ($item) {
 			$messageSender->sendArrowCraft($item->{nameID});
+			$char->{selected_craft} = 1;
 		} else {
 			error TF("Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
-				"You don't have item %s in your inventory.\n", $arg2);
+				"You don't have item %s in your inventory.\n", $arg1);
 		}
 	} else {
-		if ($arrowCraftID[$arg1] ne "") {
-			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$arg1])->{nameID});
+		if ($arrowCraftID[$command] ne "") {
+			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$command])->{nameID});
+			$char->{selected_craft} = 1;
 		} else {
 			error T("Error in function 'arrowcraft' (Create Arrows)\n" .
 				"Usage: arrowcraft [<identify #>]\n" .
 				"Type 'arrowcraft use' to get list.\n");
+		}
+	}
+}
+
+sub cmdPoison {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	my (undef, $args) = @_;
+	my ($command) = parseArgs( $args );
+
+	if ($command eq "") {
+		if (@arrowCraftID) {
+			my $msg = center(" ". T("Poison List") ." ", 50, '-') ."\n";
+			for (my $i = 0; $i < @arrowCraftID; $i++) {
+				next if ($arrowCraftID[$i] eq "");
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$i, $char->inventory->get($arrowCraftID[$i])->{name}]);
+			}
+			$msg .= ('-'x50) . "\n";
+			message $msg, "list";
+		} else {
+			error T("Error in function 'poison' (Apply Poison)\n" .
+			 	"Type 'poison' to get list.\n");
+		}
+		
+	} elsif ($command eq "use") {
+		if (defined binFind(\@skillsID, 'GC_POISONINGWEAPON')) {
+			main::ai_skillUse('GC_POISONINGWEAPON', 5, 0, 0, $accountID);
+		} else {
+			error T("Error in function 'poison use' (Use Poison)\n" .
+				"You don't have Poisonous Weapon Skill.\n");
+		}
+	} else {
+		if ($arrowCraftID[$command] ne "") {
+			$messageSender->sendArrowCraft($char->inventory->get($arrowCraftID[$command])->{nameID});
+			$char->{selected_craft} = 1;
+		} else {
+			error T("Error in function 'poison' (Apply Poison)\n" .
+				"Usage: poison [<poison #>]\n" .
+				"Type 'poison' to get list.\n");
 		}
 	}
 }
@@ -4982,6 +5039,26 @@ sub cmdRepair {
 	}
 }
 
+sub cmdReputation {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+	} else {
+		my $msg = center(" ". T("Reputation Status") ." ", 80, '-') ."\n";
+		$msg .= swrite(
+			"@<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<< @<<<<<<<<<",
+			[T("Type"), T("Name"), T("Lvl"), T("Points")]
+		);
+		foreach my $reputation (@reputation_list) {
+			$msg .= swrite(
+				"@<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<< @<<<<<<<<<",
+				[$reputation->{type}, $reputation_list_name[$reputation->{type} - 1], int($reputation->{points}/1000), $reputation->{points}%1000]
+			);
+		}
+		$msg .= center("", 80, '-') ."\n";
+		message $msg;
+	}
+}
+
 sub cmdRespawn {
 	if (!$net || $net->getState() != Network::IN_GAME) {
 		error TF("You must be logged in the game to use this command '%s'\n", shift);
@@ -4990,7 +5067,7 @@ sub cmdRespawn {
 	if ($char->{dead}) {
 		$messageSender->sendRestart(0);
 	} else {
-		main::useTeleport(2);
+		ai_useTeleport(2);
 	}
 }
 
@@ -5019,9 +5096,6 @@ sub cmdSell {
 
 	} elsif ($args[0] eq "done") {
 		completeNpcSell(\@sellList);
-		@sellList = ();
-		message TF("Sold %s items.\n", @sellList.""), "success";
-
 	} elsif ($args[0] eq "cancel") {
 		@sellList = ();
 		completeNpcSell(\@sellList);
@@ -5356,6 +5430,23 @@ sub cmdStats {
 			$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'},
 			$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $guildName,
 			$haircolors{$char->hairColor()} . " (" . $char->hairColor() . ")"]);
+			if (exists $char->{need_pow}) {
+				$msg .= center("", 44, '-') ."\n";
+				$msg .= center(" ". T("Trait Stats") ." ", 44, '-') ."\n".
+				swrite(TF(
+				"Pow: \@<<<   #\@<< P.Atk:    \@<<<   Res:    \@<<<\n" .
+				"Sta: \@<<<   #\@<< S.Matk:   \@<<<   Mres:   \@<<<\n" .
+				"Wis: \@<<<   #\@<< H.Plus:   \@<<<\n" .
+				"Spl: \@<<<   #\@<< C.Rate:   \@<<<\n" .
+				"Con: \@<<<   #\@<< T.Status Points:          \@<<<\n" .
+				"Crt: \@<<<   #\@<<" ),
+				[$char->{'pow'} ? $char->{'pow'} : 0, $char->{'need_pow'}, $char->{'patk'}, $char->{'res'},
+				$char->{'sta'} ? $char->{'sta'} : 0, $char->{'need_sta'}, $char->{'smatk'}, $char->{'mres'},
+				$char->{'wis'} ? $char->{'wis'} : 0, $char->{'need_wis'}, $char->{'hplus'},
+				$char->{'spl'} ? $char->{'spl'} : 0, $char->{'need_spl'}, $char->{'crate'},
+				$char->{'con'} ? $char->{'con'} : 0, $char->{'need_con'}, $char->{'traitpoint'},
+				$char->{'crt'} ? $char->{'crt'} : 0, $char->{'need_crt'}]);
+			}
 
 		$msg .= T("You are sitting.\n") if $char->{sitting};
 		$msg .= ('-'x44) . "\n";
@@ -5422,16 +5513,16 @@ sub cmdStatus {
 		"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
-		"Statuses: %s\n" .
 		"Spirits/Coins/Amulets: %s\n\n" .
 		"Total Damage: \@<<<<<<<<<<<<< Dmg/sec: \@<<<<<<<<<<<<<<\n" .
 		"Total Time spent (sec): \@>>>>>>>>\n" .
 		"Last Monster took (sec): \@>>>>>>>",
-		$char->statusesString, (exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits} . "\tType: " . $char->{amuletType} : $char->{spirits}) : 0)),
+		(exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits} . "\tType: " . $char->{amuletType} : $char->{spirits}) : 0)),
 		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]).
 		('-'x56) . "\n";
+		$msg .= TF("Statuses: %s\n", $char->statusesStringAndTime(1));
 
 	message $msg, "info";
 }
@@ -5701,7 +5792,12 @@ sub cmdTalk {
 				return;
 
 			} else {
-				my $npc = $npcsList->get($type);
+				my $npc;
+				if ($type =~ /^\d+/) {
+					$npc = $npcsList->get($type);
+				} else {
+					$npc = $npcsList->getByName($type);
+				}
 				if ($npc) {
 					$nameID = $npc->{nameID};
 				} else {
@@ -5854,7 +5950,7 @@ sub cmdTeleport {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\d)/;
 	$arg1 = 1 unless $arg1;
-	main::useTeleport($arg1);
+	ai_useTeleport($arg1);
 }
 
 sub cmdTestShop {
@@ -6092,6 +6188,7 @@ sub cmdUseSkill {
 	my ($cmd, $args_string) = @_;
 	my ($target, $actorList, $skill, $level) = @_;
 	my @args = parseArgs($args_string);
+	my $isStartUseSkill = 0;
 
 	if ($cmd eq 'sl') {
 		my ($x, $y);
@@ -6124,7 +6221,24 @@ sub cmdUseSkill {
 		# ($x, $y) = ($pos->{x}, $pos->{y});
 
 	} elsif ($cmd eq 'ss') {
-		if (@args < 1 || @args > 2) {
+		if (defined $args[0] && $args[0] eq 'start') {
+			if (@args < 2 || @args > 3) {
+				error T("Syntax error in function 'ss start' (Start Use Skill on Self)\n" .
+				"Usage: ss start <skill #> [level]\n");
+				return;
+			}
+			$isStartUseSkill = 1;
+			$target = $char;
+			$level = $args[2];
+		} elsif (defined $args[0] && $args[0] eq 'stop') {
+			if (!$char->{last_skill_used_is_continuous}) {
+				error T("Skill Stop failed (continuous skills not detected)\n");
+				return;
+			}
+			message T("Sending Skill Stop\n"), "skill";
+			$messageSender->sendStopSkillUse($char->{last_continuous_skill_used});
+			return;
+		} elsif (@args < 1 || @args > 2) {
 			error T("Syntax error in function 'ss' (Use Skill on Self)\n" .
 				"Usage: ss <skill #> [level]\n");
 			return;
@@ -6196,7 +6310,8 @@ sub cmdUseSkill {
 		$target = { %{$pos} };
 	}
 
-	$skill = new Skill(auto => $args[0], level => $level);
+	my $skill_arg = $isStartUseSkill ? $args[1] : $args[0];
+	$skill = new Skill(auto => $skill_arg, level => $level);
 
 	if ($char->{skills}{$skill->getHandle()}{lv} == 0) {
 		error TF("Skill '%s' cannot be used because you have no such skill.\n", $skill->getName());
@@ -6212,6 +6327,7 @@ sub cmdUseSkill {
 		target => $target,
 		actorList => $actorList,
 		skill => $skill,
+		isStartUseSkill => $isStartUseSkill,
 		priority => Task::USER_PRIORITY
 	);
 	my $task = new Task::ErrorReport(task => $skillTask);
@@ -7141,6 +7257,11 @@ sub cmdAchieve {
 }
 
 sub cmdRodex {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+\s+(\S.*)/;
@@ -7150,13 +7271,29 @@ sub cmdRodex {
 			error T("Your rodex mail box is already opened.\n");
 			return;
 		}
-		message T("Sending request to open rodex mailbox.\n");
-		$messageSender->rodex_open_mailbox(0,0,0);
+		my $type = 0;
+		if($arg2 && $arg2=~/\d+/) {
+			$type = $arg2;
+			if($arg2 == 1) {
+				message T("Sending request to open rodex account mailbox.\n");
+			} elsif($arg2 == 2) {
+				message T("Sending request to open rodex returned mailbox.\n");
+			} else {
+				message T("Sending request to open rodex normal mailbox.\n");
+				$type = 0;
+			}
+		} else {
+			message T("Sending request to open rodex normal mailbox.\n");
+		}
+		$rodexCurrentType = $type;
+		$messageSender->rodex_open_mailbox($type,0,0);
 
 	} elsif ($arg1 eq 'close') {
 		if (!defined $rodexList) {
 			error T("Your rodex mail box is closed.\n");
 			return;
+		} elsif (defined $rodexWrite) {
+			$messageSender->rodex_cancel_write_mail();#we must first close the letter if it is open
 		}
 		message T("Your rodex mail box has been closed.\n");
 		$messageSender->rodex_close_mailbox();
@@ -7170,14 +7307,50 @@ sub cmdRodex {
 			message T("Your rodex mail box is empty.\n");
 			return;
 		}
-		my $msg .= center(" " . "Rodex Mail List" . " ", 79, '-') . "\n";
-		my $index = 0;
+		my $msg = center(" ". T("Rodex Mail List") ." ", 119, '-') . "\n" .
+						T(" #  ID       From                    Att  New  Expire    Title\n");
+
+		my @list;
 		foreach my $mail_id (keys %{$rodexList->{mails}}) {
 			my $mail = $rodexList->{mails}{$mail_id};
-			$msg .= swrite(sprintf("\@%s \@%s \@%s \@%s \@%s", ('>'x2), ('<'x8), ('<'x9), ('<'x28), ('<'x28)), [$index, $mail_id, $mail->{isRead} ? "read" : "not read", "From: ".$mail->{sender}, "Title: ".$mail->{title}]);
-			$index++;
+			$list[$mail->{page_index}] = swrite("@>  @<<<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<< @<<  @>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$mail->{page_index}, $mail->{mailID1}, $mail->{sender}, $mail->{attach} ? $mail->{attach} : "-", $mail->{isRead} ? T("No") : T("Yes"), $mail->{expireDay} ." ".T("Days"), $mail->{title}]);
 		}
-		$msg .= sprintf("%s\n", ('-'x79));
+		foreach my $list (@list) {
+			$msg .= $list;
+		}
+		$msg .= ('-'x119) . "\n";
+		message $msg, "list";
+
+	} elsif ($arg1 eq 'maillist') {
+		if (!defined $rodexList) {
+			error T("Your rodex mail box is closed.\n");
+			return;
+		}
+
+		my @pages;
+		foreach my $mail_id (keys %{$rodexList->{mails}}) {
+			my $mail = $rodexList->{mails}{$mail_id};
+
+			my $index;
+			if ($mail->{page} == 0) {
+				$index = $mail->{page_index};
+			} else {
+				$index = (($mail->{page} * $rodexList->{mails_per_page}) + $mail->{page_index});
+			}
+			$pages[$mail->{page}][$mail->{page_index}] = swrite("@>  @<<<<<<< @<<<<<<<<<<<<<<<<<<<<<< @<<< @<<  @>>>>>>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [$index, $mail->{mailID1}, $mail->{sender}, $mail->{attach} ? $mail->{attach} : "-", $mail->{isRead} ? T("No") : T("Yes"), $mail->{expireDay} ." ".T("Days"), $mail->{title}]);
+
+		}
+
+		my $msg;
+		foreach my $page_index (0..$#pages) {
+			$msg .= center(" ". TF("Rodex Mail Page %d", $page_index) ." ", 119, '-') . "\n" .
+							T(" #  ID       From                    Att  New  Expire    Title\n");
+
+			foreach my $mail_msg (@{$pages[$page_index]}) {
+				$msg .= $mail_msg;
+			}
+		}
+		$msg .= ('-'x119) . "\n";
 		message $msg, "list";
 
 	} elsif ($arg1 eq 'refresh') {
@@ -7186,24 +7359,37 @@ sub cmdRodex {
 			return;
 		}
 
-		$messageSender->rodex_refresh_maillist(0,0,0);
+		$messageSender->rodex_refresh_maillist($rodexCurrentType,0,0);
 
 	} elsif ($arg1 eq 'read') {
 		if (!defined $rodexList) {
 			error T("Your rodex mail box is closed.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
+		} elsif ($arg2 eq "" || $arg2 !~ /^\d+$/) {
 			error T("Syntax Error in function 'rodex read' (Read rodex mail)\n" .
-				"Usage: rodex read <mail_id>\n");
+				"Usage: rodex read <mail_# | mail_id>\n");
 			return;
 
-		} elsif (!exists $rodexList->{mails}{$arg2}) {
-			error TF("Mail of id %d doesn't exist.\n", $arg2);
+		} elsif ($arg2 =~/^\d{1,3}$/) {
+			foreach my $mail_id (keys %{$rodexList->{mails}}) {
+				my $page_index = $rodexList->{mails}{$mail_id}{page_index};
+				if ($page_index == $arg2) {
+					$arg2 = $mail_id;
+					last;
+				} else {
+					next;
+				}
+			}
+		}
+
+		if (!exists $rodexList->{mails}{$arg2}) {
+			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
 			return;
 		}
 
-		$messageSender->rodex_read_mail(0,$arg2,0);
+		my $openType = $rodexList->{mails}{$arg2}{openType};
+		$messageSender->rodex_read_mail($openType,$arg2,0);
 
 	} elsif ($arg1 eq 'write') {
 		if (!defined $rodexList) {
@@ -7214,16 +7400,12 @@ sub cmdRodex {
 			error T("You are already writing a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
-			error T("Syntax Error in function 'rodex write' (Start writting a rodex mail)\n" .
-				"Usage: rodex write <player_name|self|none>\n");
-			return;
 		} elsif ($arg2 eq "self") {
 			debug "Send rodex mail to yourself\n";
 			$arg2 = $char->{'name'};
+		} else {
+			message TF("Opening rodex mail write box. Recipient: %s\n", $arg2);
 		}
-		
-		message T("Opening rodex mail write box.\n");
 		$messageSender->rodex_open_write_mail($arg2);
 
 	} elsif ($arg1 eq 'cancel') {
@@ -7248,7 +7430,7 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif (exists $rodexWrite->{target}) {
+		} elsif (exists $rodexWrite->{target}{name}) {
 			error T("You have already set the mail target.\n");
 			return;
 
@@ -7297,7 +7479,7 @@ sub cmdRodex {
 			}
 		}
 
-		my $msg = center(T(" Rodex mail item list "), 50, '-') ."\n";
+		my $msg = center( " " .T("Rodex mail item list") ." ", 50, '-') ."\n";
 
 		$msg .= T("-- Usable --\n");
 		for (my $i = 0; $i < @useable; $i++) {
@@ -7390,7 +7572,7 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 eq "" || $arg2 !~ /\d+/) {
+		} elsif ($arg2 eq "" || $arg2 !~ /^\d+$/) {
 			error T("Syntax Error in function 'rodex setzeny' (Set zeny of rodex mail)\n" .
 				"Usage: rodex setzeny <zeny_amount>\n");
 			return;
@@ -7416,9 +7598,9 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
+		} elsif ($arg2 !~ /^\s*(\d+)\s*(\d*)\s*$/) {
 			error T("Syntax Error in function 'rodex add' (Add item to rodex mail)\n" .
-				"Usage: rodex add <item #>\n");
+				"Usage: rodex add <item #> [<amount>]\n");
 			return;
 		}
 
@@ -7428,34 +7610,52 @@ sub cmdRodex {
 			return;
 		}
 
-		my ($name, $amount) = $args =~ /(\d+)\s*(\d*)\s*$/;
-
-		my $rodex_item = $rodexWrite->{items}->get($name);
-		my $item = $char->inventory->get($name);
+		my ($index, $amount) = parseArgs($arg2);
+		$amount = defined $amount ? $amount : 1;
+		my $rodex_item = $rodexWrite->{items}->get($index);
+		my $item = $char->inventory->get($index);
 
 		if (!$item) {
 			error TF("Error in function 'rodex add' (Add item to rodex mail)\n" .
-				"Inventory Item %s does not exist.\n", $name);
+				"Inventory Item '%s' does not exist.\n", $index);
 			return;
 		} elsif ($item->{equipped}) {
-			error TF("Inventory Item '%s' is equipped.\n", $name);
+			error TF("Inventory Item '%s' is equipped.\n", $item);
 			return;
 		} elsif ($rodex_item && $rodex_item->{amount} == $item->{amount}) {
-			error TF("You can't add more of Item '%s' to rodex mail because you have already added all you have of it.\n", $name);
+			error TF("You can't add more of Item '%s' to rodex mail because you have already added all you have of it.\n", $item);
 			return;
 		} elsif ($rodex_item) {
 			my $max_add = ($item->{amount} - $rodex_item->{amount});
-			if (!defined($amount) || $amount > $max_add) {
-				$amount = $max_add;
-			}
-		} else {
-			if (!defined($amount) || $amount > $item->{amount}) {
-				$amount = $item->{amount};
-			}
+			$amount = $max_add if ($amount > $max_add);
+		} elsif ($amount > $item->{amount}) {
+			$amount = $item->{amount};
 		}
 
-		message TF("Adding amount %d of item %s to rodex mail.\n", $amount, $item);
+		message TF("Adding amount %d of item '%s' to rodex mail.\n", $amount, $item);
 		$messageSender->rodex_add_item($item->{ID}, $amount);
+
+	} elsif ($arg1 eq 'draft') {
+		if (!defined $rodexList) {
+			error T("Your rodex mail box is closed.\n");
+			return;
+
+		} elsif (!defined $rodexWrite) {
+			error T("You are not writing a rodex mail.\n");
+			return;
+		}
+
+		my $msg = center( " " .TF("Draft mail for %s", $rodexWrite->{target}{name}) ." ", 119, '-') ."\n";
+		$msg .= swrite("@>>>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<", [T("Recepient:"), $rodexWrite->{target}{name}, T("Base Level:"), $rodexWrite->{target}{base_level}]);
+		$msg .= swrite("@>>>>>>>>> @<<<<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<", [T("Char ID:"), $rodexWrite->{target}{char_id}, T("Class:"), $jobs_lut{$rodexWrite->{target}{class}}]);
+		$msg .= "------\n";
+		$msg .= swrite("@<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<", [T("Title:"), $rodexWrite->{title}]);
+		$msg .= T("Message:") ."    " .$rodexWrite->{body} ."\n";
+		$msg .= swrite("@<<<<<<<<<< @<<<<<<<<<", [T("Zeny:"), $rodexWrite->{zeny}]) if ($rodexWrite->{zeny});
+		$msg .= ('-'x119) . "\n";
+
+		message $msg, "list";
+		cmdRodex(undef, 'itemslist');
 
 	} elsif ($arg1 eq 'remove') {
 		if (!defined $rodexList) {
@@ -7466,26 +7666,25 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
+		} elsif ($arg2 !~ /^\s*(\d+)\s*(\d*)\s*$/) {
 			error T("Syntax Error in function 'rodex remove' (Remove item from rodex mail)\n" .
-				"Usage: rodex remove <item #>\n");
+				"Usage: rodex remove <item #> [<amount>]\n");
 			return;
 		}
 
-		my ($name, $amount) = $args =~ /(\d+)\s*(\d*)\s*$/;
+		my ($index, $amount) = parseArgs($arg2);
 
-		my $item = $rodexWrite->{items}->get($name);
+		my $item = $rodexWrite->{items}->get($index);
 		if (!$item) {
 			error TF("Error in function 'rodex remove' (Remove item from rodex mail)\n" .
-				"Rodex mail Item %s does not exist.\n", $name);
+				"Rodex mail Item '%s' does not exist.\n", $index);
 			return;
 		}
-
-		if (!defined($amount) || $amount > $item->{amount}) {
+		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
 
-		message TF("Removing amount %d of item %s from rodex mail.\n", $amount, $item);
+		message TF("Removing amount %d of item '%s' from rodex mail.\n", $amount, $item);
 		$messageSender->rodex_remove_item($item->{ID}, $amount);
 
 	} elsif ($arg1 eq 'send') {
@@ -7497,12 +7696,11 @@ sub cmdRodex {
 			error T("You are not writing a rodex mail.\n");
 			return;
 
-		} elsif (!exists $rodexWrite->{zeny} || !exists $rodexWrite->{body} || !exists $rodexWrite->{title} || !exists $rodexWrite->{target}) {
+		} elsif (!exists $rodexWrite->{target}) {
 			error T("Error in function 'rodex send' (Send finished rodex mail)\n" .
-				"You still have to set something to send the mail (title, body, zeny or target)\n");
+					"You must set target of rodex mail. Usage: rodex settarget <player_name|self>\n");
 			return;
 		}
-
 
 		my $zeny_tax = int($rodexWrite->{zeny} / 50);
 		my $items_tax = ($rodexWrite->{items}->size * 2500);
@@ -7525,17 +7723,41 @@ sub cmdRodex {
 			error T("You are writing a rodex mail.\n");
 			return;
 
-		} elsif (!exists $rodexList->{current_read}) {
+		} elsif ($arg2 eq "" and !exists $rodexList->{current_read}) {
 			error T("You are not reading a rodex mail.\n");
 			return;
 
-		} elsif (scalar @{$rodexList->{mails}{$rodexList->{current_read}}{items}} == 0) {
-			error T("The current rodex mail has no items.\n");
+		} elsif ($arg2 ne "" and $arg2 !~ /^\d+$/) {
+			error T("Syntax Error in function 'rodex getitems' (Get items of rodex mail)\n" .
+				"Usage: rodex getitems [<mail_# | mail_id>]\n");
+			return;
+
+		} elsif ($arg2 =~/^\d{1,3}$/) {
+			foreach my $mail_id (keys %{$rodexList->{mails}}) {
+				my $page_index = $rodexList->{mails}{$mail_id}{page_index};
+				if ($page_index == $arg2) {
+					$arg2 = $mail_id;
+					last;
+				} else {
+					next;
+				}
+			}
+
+		} else {
+			$arg2 = $rodexList->{current_read} if ($rodexList->{current_read});
+		}
+
+		if (!exists $rodexList->{mails}{$arg2}) {
+			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
+			return;
+		} elsif ($rodexList->{mails}{$arg2}{attach} ne 'i' and $rodexList->{mails}{$arg2}{attach} ne 'z+i') {
+			error TF("The rodex mail '%d' has no items.\n", $arg2);
 			return;
 		}
 
-		message T("Requesting items of current rodex mail.\n");
-		$messageSender->rodex_request_items($rodexList->{current_read}, 0, 0);
+		my $openType = $rodexList->{mails}{$arg2}{openType};
+		message TF("Requesting items of rodex mail '%d'.\n", $arg2);
+		$messageSender->rodex_request_items($arg2, 0, $openType);
 
 	} elsif ($arg1 eq 'getzeny') {
 		if (!defined $rodexList) {
@@ -7546,17 +7768,41 @@ sub cmdRodex {
 			error T("You are writing a rodex mail.\n");
 			return;
 
-		} elsif (!exists $rodexList->{current_read}) {
+		} elsif ($arg2 eq "" and !exists $rodexList->{current_read}) {
 			error T("You are not reading a rodex mail.\n");
 			return;
 
-		} elsif ($rodexList->{mails}{$rodexList->{current_read}}{zeny1} == 0) {
-			error T("The current rodex mail has no zeny.\n");
+		} elsif ($arg2 ne "" and $arg2 !~ /^\d+$/) {
+			error T("Syntax Error in function 'rodex getzeny' (Get zeny of rodex mail)\n" .
+				"Usage: rodex getzeny [<mail_# | mail_id>]\n");
+			return;
+
+		} elsif ($arg2 =~/^\d{1,3}$/) {
+			foreach my $mail_id (keys %{$rodexList->{mails}}) {
+				my $page_index = $rodexList->{mails}{$mail_id}{page_index};
+				if ($page_index == $arg2) {
+					$arg2 = $mail_id;
+					last;
+				} else {
+					next;
+				}
+			}
+
+		} else {
+			$arg2 = $rodexList->{current_read} if ($rodexList->{current_read});
+		}
+
+		if (!exists $rodexList->{mails}{$arg2}) {
+			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
+			return;
+		} elsif ($rodexList->{mails}{$arg2}{attach} ne 'z' and $rodexList->{mails}{$arg2}{attach} ne 'z+i') {
+			error TF("The rodex mail '%d' has no zeny.\n", $arg2);
 			return;
 		}
 
-		message T("Requesting zeny of current rodex mail.\n");
-		$messageSender->rodex_request_zeny($rodexList->{current_read}, 0, 0);
+		my $openType = $rodexList->{mails}{$arg2}{openType};
+		message TF("Requesting zeny of rodex mail '%d'.\n", $arg2);
+		$messageSender->rodex_request_zeny($arg2, 0, $openType);
 
 	} elsif ($arg1 eq 'nextpage') {
 		if (!defined $rodexList) {
@@ -7573,57 +7819,41 @@ sub cmdRodex {
 		}
 
 		message T("Requesting the next page of rodex mail.\n");
-		$messageSender->rodex_next_maillist(0, $rodexList->{current_page_last_mailID}, 0);
-
-	} elsif ($arg1 eq 'maillist') {
-		if (!defined $rodexList) {
-			error T("Your rodex mail box is closed.\n");
-			return;
-		}
-
-		my @pages;
-		foreach my $mail_id (keys %{$rodexList->{mails}}) {
-			my $mail = $rodexList->{mails}{$mail_id};
-
-			my $index;
-			if ($mail->{page} == 0) {
-				$index = $mail->{page_index};
-			} else {
-				$index = (($mail->{page} * $rodexList->{mails_per_page}) + $mail->{page_index});
-			}
-			$pages[$mail->{page}][$mail->{page_index}] = swrite("@<<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<< @<<< @<<<<<<<< @<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<", [$index, "From:", $mail->{sender}, "Read:", $mail->{isRead} ? "Yes" : "No", "ID:", $mail->{mailID1}, "Title:", $mail->{title}]);
-		}
-
-		my $print_msg;
-		foreach my $page_index (0..$#pages) {
-			$print_msg .= center(" " . "Rodex Mail Page ". $page_index . " ", 79, '-') . "\n";
-			foreach my $mail_msg (@{$pages[$page_index]}) {
-				$print_msg .= $mail_msg;
-			}
-		}
-		$print_msg .= sprintf("%s\n", ('-'x79));
-		message $print_msg, "list";
+		$messageSender->rodex_next_maillist($rodexCurrentType, $rodexList->{current_page_last_mailID}, 0);
 
 	} elsif ($arg1 eq 'delete') {
 		if (!defined $rodexList) {
 			error T("Your rodex mail box is closed.\n");
 			return;
 
-		} elsif ($arg2 eq "") {
+		} elsif ($arg2 eq "" || $arg2 !~ /^\d+$/) {
 			error T("Syntax Error in function 'rodex delete' (Delete rodex mail)\n" .
-				"Usage: rodex delete <mail_id>\n");
+				"Usage: rodex delete <mail_# | mail_id>\n");
 			return;
 
-		} elsif (!exists $rodexList->{mails}{$arg2}) {
-			error TF("Mail of id %d doesn't exist.\n", $arg2);
+		} elsif ($arg2 =~/^\d{1,3}$/) {
+			foreach my $mail_id (keys %{$rodexList->{mails}}) {
+				my $page_index = $rodexList->{mails}{$mail_id}{page_index};
+				if ($page_index == $arg2) {
+					$arg2 = $mail_id;
+					last;
+				} else {
+					next;
+				}
+			}
+		}
+
+		if (!exists $rodexList->{mails}{$arg2}) {
+			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
 			return;
 		}
 
-		$messageSender->rodex_delete_mail(0,$arg2,0);
+		my $openType = $rodexList->{mails}{$arg2}{openType};
+		$messageSender->rodex_delete_mail($openType,$arg2,0);
 
 	} else {
 		error T("Syntax Error in function 'rodex' (rodex mail)\n" .
-			"Usage: rodex [<open|close|list|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|send>]\n");
+			"Usage: rodex [<open|close|list|refresh|nextpage|maillist|read|getitems|getzeny|delete|write|cancel|settarget|settitle|setbody|setzeny|add|remove|itemslist|draft|send>]\n");
 	}
 }
 

@@ -52,6 +52,7 @@ our @EXPORT = (
 	ai_skillUse
 	ai_skillUse2
 	ai_storageAutoCheck
+	ai_useTeleport
 	ai_canOpenStorage
 	cartGet
 	cartAdd
@@ -575,7 +576,8 @@ sub ai_skillUse {
 		tag => shift,
 		ret => shift,
 		waitBeforeUse => { time => time, timeout => shift },
-		prefix => shift
+		prefix => shift,
+		isStartSkill => shift
 	);
 	$args{giveup}{time} = time;
 	$args{giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
@@ -602,7 +604,7 @@ sub ai_skillUse {
 #
 # FIXME: Finish and use Task::UseSkill instead.
 sub ai_skillUse2 {
-	my ($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix, $waitBeforeUse, $tag) = @_;
+	my ($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix, $waitBeforeUse, $tag, $isStartSkill) = @_;
 
 	ai_skillUse(
 		$skill->getHandle(),
@@ -612,7 +614,7 @@ sub ai_skillUse2 {
 		$skill->getTargetType == Skill::TARGET_LOCATION ? (@{$target->{pos_to}}{qw(x y)})
 			: $skill->getTargetType == Skill::TARGET_SELF ? ($skill->getOwner->{ID}, undef)
 			: ($target->{ID}, undef),
-		$tag, undef, $waitBeforeUse, $prefix
+		$tag, undef, $waitBeforeUse, $prefix, $isStartSkill
 	)
 }
 
@@ -708,6 +710,13 @@ sub cartAdd {
 sub ai_talkNPC {
 	require Task::TalkNPC;
 	AI::queue("NPC", new Task::TalkNPC(type => 'talknpc', x => $_[0], y => $_[1], sequence => $_[2]));
+}
+
+##
+# void ai_useTeleport(int level)
+# level: 1 - Random, 2 - Respawn
+sub ai_useTeleport {
+	$char->useTeleport(@_);
 }
 
 sub attack { $char->attack(@_) }
