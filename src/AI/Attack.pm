@@ -157,7 +157,7 @@ sub process {
 	if (AI::inQueue("attack") && AI::is("move", "route", "attack")) {
 		my $ID = AI::args->{attackID};
 		my $monster = $monsters{$ID};
-		if (($monster->{statuses}->{EFFECTSTATE_BURROW} || $monster->{statuses}->{EFFECTSTATE_HIDING}) && 
+		if (($monster->{statuses}->{EFFECTSTATE_BURROW} || $monster->{statuses}->{EFFECTSTATE_HIDING}) &&
 		$config{avoidHiddenMonsters}) {
 			message TF("Dropping target %s - will not attack hidden monsters\n", $monster), 'ai_attack';
 			$char->sendAttackStop;
@@ -552,7 +552,7 @@ sub main {
 		} else {
 			$target->{attack_failed} = time;
 			AI::dequeue while (AI::inQueue("attack"));
-			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
+			message TF("Unable to calculate a meetingPosition to target, dropping target. Check %s in config.txt\n", 'attackRouteMaxPathDistance'), "ai_attack";
 			if ($config{'teleportAuto_dropTarget'}) {
 				message T("Teleport due to dropping attack target\n");
 				ai_useTeleport(1);
