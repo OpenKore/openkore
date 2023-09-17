@@ -473,6 +473,8 @@ sub checkPathFree {
 sub canMove {
 	my ($self, $from, $to) = @_;
 
+	return 0 unless ($self->isWalkable($to->{x}, $to->{y}));
+
 	my $dist = blockDistance($from, $to);
 
 	# This 17 is actually set at
