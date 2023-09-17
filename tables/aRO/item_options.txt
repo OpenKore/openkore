@@ -1,0 +1,406 @@
+VAR_MAXHPAMOUNT#Max HP + %d#
+VAR_MAXSPAMOUNT#Max SP + %d#
+VAR_STRAMOUNT#STR + %d#
+VAR_AGIAMOUNT#AGI + %d#
+VAR_VITAMOUNT#VIT + %d#
+VAR_INTAMOUNT#INT + %d#
+VAR_DEXAMOUNT#DEX + %d#
+VAR_LUKAMOUNT#LUK + %d#
+VAR_MAXHPPERCENT#Max HP + %d%%#
+VAR_MAXSPPERCENT#Max SP + %d%%#
+VAR_HPACCELERATION#Increase HP recovery speed by %d%%#
+VAR_SPACCELERATION#Increase SP recovery speed by %d%%#
+VAR_ATKPERCENT#ATK + %d%%#
+VAR_MAGICATKPERCENT#MATK + %d%%#
+VAR_PLUSASPD#ASPD + %d#
+VAR_PLUSASPDPERCENT#Increase ASPD
+(Decrease delay after attack by %d%%)#
+VAR_ATTPOWER#ATK + %d#
+VAR_HITSUCCESSVALUE#HIT + %d#
+VAR_ATTMPOWER#MATK + %d#
+VAR_ITEMDEFPOWER#DEF + %d#
+VAR_MDEFPOWER#MDEF + %d#
+VAR_AVOIDSUCCESSVALUE#FLEE + %d#
+VAR_PLUSAVOIDSUCCESSVALUE#Perfect Dodge +%d#
+VAR_CRITICALSUCCESSVALUE#CRIT + %d#
+ATTR_TOLERACE_NOTHING#Increase resistance against
+Neutral property attack by %d%%#
+ATTR_TOLERACE_WATER#Increase resistance against
+Water property attack by %d%%#
+ATTR_TOLERACE_GROUND#Increase resistance against
+Earth property attack by %d%%#
+ATTR_TOLERACE_FIRE#Increase resistance against
+Fire property attack by %d%%#
+ATTR_TOLERACE_WIND#Increase resistance against
+Wind property attack by %d%%#
+ATTR_TOLERACE_POISON#Increase resistance against
+Poison property attack by %d%%#
+ATTR_TOLERACE_SAINT#Increase resistance against
+Holy property attack by %d%%#
+ATTR_TOLERACE_DARKNESS#Increase resistance against
+Shadow property attack by %d%%#
+ATTR_TOLERACE_TELEKINESIS#Increase resistance against
+Ghost property attack by %d%%#
+ATTR_TOLERACE_UNDEAD#Increase resistance against
+Undead property attack by %d%%#
+ATTR_TOLERACE_ALLBUTNOTHING#Increase resistance against
+All property attack (Except Neutral) by %d%%#
+DAMAGE_PROPERTY_NOTHING_USER#Decrease physical damage taken from
+Neutral property enemies by %d%%#
+DAMAGE_PROPERTY_NOTHING_TARGET#Increase physical damage to
+Neutral property enemies by %d%%#
+DAMAGE_PROPERTY_WATER_USER#Decrease physical damage taken from
+Water property enemies by %d%%#
+DAMAGE_PROPERTY_WATER_TARGET#Increase physical damage to
+Water property enemies by %d%%#
+DAMAGE_PROPERTY_GROUND_USER#Decrease physical damage taken from
+Earth property enemies by %d%%#
+DAMAGE_PROPERTY_GROUND_TARGET#Increase physical damage to
+Earth property enemies by %d%%#
+DAMAGE_PROPERTY_FIRE_USER#Decrease physical damage taken from
+Fire property enemies by %d%%#
+DAMAGE_PROPERTY_FIRE_TARGET#Increase physical damage to
+Fire property enemies by %d%%#
+DAMAGE_PROPERTY_WIND_USER#Decrease physical damage taken from
+Wind property enemies by %d%%#
+DAMAGE_PROPERTY_WIND_TARGET#Increase physical damage to
+Wind property enemies by %d%%#
+DAMAGE_PROPERTY_POISON_USER#Decrease physical damage taken from
+Poison property enemies by %d%%#
+DAMAGE_PROPERTY_POISON_TARGET#Increase physical damage to
+Poison property enemies by %d%%#
+DAMAGE_PROPERTY_SAINT_USER#Decrease physical damage taken from
+Holy property enemies by %d%%#
+DAMAGE_PROPERTY_SAINT_TARGET#Increase physical damage to
+Holy property enemies by %d%%#
+DAMAGE_PROPERTY_DARKNESS_USER#Decrease physical damage taken from
+Shadow property enemies by %d%%#
+DAMAGE_PROPERTY_DARKNESS_TARGET#Increase physical damage to
+Shadow property enemies by %d%%#
+DAMAGE_PROPERTY_TELEKINESIS_USER#Decrease physical damage taken from
+Ghost property enemies by %d%%#
+DAMAGE_PROPERTY_TELEKINESIS_TARGET#Increase physical damage to
+Ghost property enemies by %d%%#
+DAMAGE_PROPERTY_UNDEAD_USER#Decrease physical damage taken from
+Undead property enemies by %d%%#
+DAMAGE_PROPERTY_UNDEAD_TARGET#Increase physical damage to
+Undead property enemies by %d%%#
+MDAMAGE_PROPERTY_NOTHING_USER#Decrease magic damage taken from
+Neutral property enemies by %d%%#
+MDAMAGE_PROPERTY_NOTHING_TARGET#Increase magic damage to
+Neutral property enemies by %d%%#
+MDAMAGE_PROPERTY_WATER_USER#Decrease magic damage taken from
+Water property enemies by %d%%#
+MDAMAGE_PROPERTY_WATER_TARGET#Increase magic damage to
+Water property enemies by %d%%#
+MDAMAGE_PROPERTY_GROUND_USER#Decrease magic damage taken from
+Earth property enemies by %d%%#
+MDAMAGE_PROPERTY_GROUND_TARGET#Increase magic damage to
+Earth property enemies by %d%%#
+MDAMAGE_PROPERTY_FIRE_USER#Decrease magic damage taken from
+Fire property enemies by %d%%#
+MDAMAGE_PROPERTY_FIRE_TARGET#Increase magic damage to
+Fire property enemies by %d%%#
+MDAMAGE_PROPERTY_WIND_USER#Decrease magic damage taken from
+Wind property enemies by %d%%#
+MDAMAGE_PROPERTY_WIND_TARGET#Increase magic damage to
+Wind property enemies by %d%%#
+MDAMAGE_PROPERTY_POISON_USER#Decrease magic damage taken from
+Poison property enemies by %d%%#
+MDAMAGE_PROPERTY_POISON_TARGET#Increase magic damage to
+Poison property enemies by %d%%#
+MDAMAGE_PROPERTY_SAINT_USER#Decrease magic damage taken from
+Holy property enemies by %d%%#
+MDAMAGE_PROPERTY_SAINT_TARGET#Increase magic damage to
+Holy property enemies by %d%%#
+MDAMAGE_PROPERTY_DARKNESS_USER#Decrease magic damage taken from
+Shadow property enemies by %d%%#
+MDAMAGE_PROPERTY_DARKNESS_TARGET#Increase magic damage to
+Shadow property enemies by %d%%#
+MDAMAGE_PROPERTY_TELEKINESIS_USER#Decrease magic damage taken from
+Ghost property enemies by %d%%#
+MDAMAGE_PROPERTY_TELEKINESIS_TARGET#Increase magic damage to
+Ghost property enemies by %d%%#
+MDAMAGE_PROPERTY_UNDEAD_USER#Decrease magic damage taken from
+Undead property enemies by %d%%#
+MDAMAGE_PROPERTY_UNDEAD_TARGET#Increase magic damage to
+Undead property enemies by %d%%#
+BODY_ATTR_NOTHING#Permanent armor Property: Neutral#
+BODY_ATTR_WATER#Permanent armor Property: Water#
+BODY_ATTR_GROUND#Permanent armor Property: Earth#
+BODY_ATTR_FIRE#Permanent armor Property: Fire#
+BODY_ATTR_WIND#Permanent armor Property: Wind#
+BODY_ATTR_POISON#Permanent armor Property: Poison#
+BODY_ATTR_SAINT#Permanent armor Property: Holy#
+BODY_ATTR_DARKNESS#Permanent armor Property: Shadow#
+BODY_ATTR_TELEKINESIS#Permanent armor Property: Ghost#
+BODY_ATTR_UNDEAD#Permanent armor Property: Undead#
+RACE_TOLERACE_NOTHING#Increase resistance against
+Formless monsters by %d%%#
+RACE_TOLERACE_UNDEAD#Increase resistance against
+Undead monsters by %d%%#
+RACE_TOLERACE_ANIMAL#Increase resistance against
+Beast monsters by %d%%#
+RACE_TOLERACE_PLANT#Increase resistance against
+Plant monsters by %d%%#
+RACE_TOLERACE_INSECT#Increase resistance against
+Insect monsters by %d%%#
+RACE_TOLERACE_FISHS#Increase resistance against
+Fish monsters by %d%%#
+RACE_TOLERACE_DEVIL#Increase resistance against
+Demon monsters by %d%%#
+RACE_TOLERACE_HUMAN#Increase resistance against
+Demi-human monsters by %d%%#
+RACE_TOLERACE_ANGEL#Increase resistance against
+Angel monsters by %d%%#
+RACE_TOLERACE_DRAGON#Increase resistance against
+Dragon monsters by %d%%#
+RACE_DAMAGE_NOTHING#Increase physical damage to
+Formless monsters by %d%%#
+RACE_DAMAGE_UNDEAD#Increase physical damage to
+Undead monsters by %d%%#
+RACE_DAMAGE_ANIMAL#Increase physical damage to
+Beast monsters by %d%%#
+RACE_DAMAGE_PLANT#Increase physical damage to
+Plant monsters by %d%%#
+RACE_DAMAGE_INSECT#Increase physical damage to
+Insect monsters by %d%%#
+RACE_DAMAGE_FISHS#Increase physical damage to
+Fish monsters by %d%%#
+RACE_DAMAGE_DEVIL#Increase physical damage to
+Demon monsters by %d%%#
+RACE_DAMAGE_HUMAN#Increase physical damage to
+Demi-human monsters by %d%%#
+RACE_DAMAGE_ANGEL#Increase physical damage to
+Angel monsters by %d%%#
+RACE_DAMAGE_DRAGON#Increase physical damage to
+Dragon monsters by %d%%#
+RACE_MDAMAGE_NOTHING#Increase magic damage to
+Formless monsters by %d%%#
+RACE_MDAMAGE_UNDEAD#Increase magic damage to
+Undead monsters by %d%%#
+RACE_MDAMAGE_ANIMAL#Increase magic damage to
+Beast monsters by %d%%#
+RACE_MDAMAGE_PLANT#Increase magic damage to
+Plant monsters by %d%%#
+RACE_MDAMAGE_INSECT#Increase magic damage to
+Insect monsters by %d%%#
+RACE_MDAMAGE_FISHS#Increase magic damage to
+Fish monsters by %d%%#
+RACE_MDAMAGE_DEVIL#Increase magic damage to
+Demon monsters by %d%%#
+RACE_MDAMAGE_HUMAN#Increase magic damage to
+Demi-human monsters by %d%%#
+RACE_MDAMAGE_ANGEL#Increase magic damage to
+Angel monsters by %d%%#
+RACE_MDAMAGE_DRAGON#Increase magic damage to
+Dragon monsters by %d%%#
+RACE_CRI_PERCENT_NOTHING#CRIT +%d to Formless monsters#
+RACE_CRI_PERCENT_UNDEAD#CRIT +%d to Undead monsters#
+RACE_CRI_PERCENT_ANIMAL#CRIT +%d to Beast monsters#
+RACE_CRI_PERCENT_PLANT#CRIT +%d to Plant monsters#
+RACE_CRI_PERCENT_INSECT#CRIT +%d to Insect monsters#
+RACE_CRI_PERCENT_FISHS#CRIT +%d to Fish monsters#
+RACE_CRI_PERCENT_DEVIL#CRIT +%d to Demon monsters#
+RACE_CRI_PERCENT_HUMAN#CRIT +%d to Demi-human monsters#
+RACE_CRI_PERCENT_ANGEL#CRIT +%d to Angel monsters#
+RACE_CRI_PERCENT_DRAGON#CRIT +%d to Dragon monsters#
+RACE_IGNORE_DEF_PERCENT_NOTHING#Ignores DEF of
+Formless monsters by %d%%#
+RACE_IGNORE_DEF_PERCENT_UNDEAD#Ignores DEF of
+Undead monsters by %d%%#
+RACE_IGNORE_DEF_PERCENT_ANIMAL#Ignores DEF of
+Beast monsters by %d%%#
+RACE_IGNORE_DEF_PERCENT_PLANT#Ignores DEF of
+Plant monsters by %d%%#
+RACE_IGNORE_DEF_PERCENT_INSECT#Ignores DEF of
+Formless monsters by %d%%#
+RACE_IGNORE_DEF_PERCENT_FISHS#Ignores DEF of
+Fish monsters by %d%%#
+RACE_IGNORE_DEF_PERCENT_DEVIL#Ignores DEF of
+Demon monsters by %d%%#
+RACE_IGNORE_DEF_PERCENT_HUMAN#Ignores DEF of
+Demi-human monsters by %d%%#
+RACE_IGNORE_DEF_PERCENT_ANGEL#Ignores DEF of
+Angel monsters by %d%%#
+RACE_IGNORE_DEF_PERCENT_DRAGON#Ignores DEF of
+Dragon monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_NOTHING#Ignores MDEF of
+Formless monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_UNDEAD#Ignores MDEF of
+Undead monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_ANIMAL#Ignores MDEF of
+Beast monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_PLANT#Ignores MDEF of
+Plant monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_INSECT#Ignores MDEF of
+Insect monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_FISHS#Ignores MDEF of
+Fish monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_DEVIL#Ignores MDEF of
+Devil monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_HUMAN#Ignores MDEF of
+Demi-human monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_ANGEL#Ignores MDEF of
+Angel monsters by %d%%#
+RACE_IGNORE_MDEF_PERCENT_DRAGON#Ignores MDEF of
+Dragon monsters by %d%%#
+CLASS_DAMAGE_NORMAL_TARGET#Increase physical damage to
+Normal enemies by %d%%#
+CLASS_DAMAGE_BOSS_TARGET#Increase physical damage to
+Boss monsters by %d%%#
+CLASS_DAMAGE_NORMAL_USER#Decrease physical damage taken from
+Normal enemies by %d%%#
+CLASS_DAMAGE_BOSS_USER#Decrease physical damage taken from
+Boss monsters by %d%%#
+CLASS_MDAMAGE_NORMAL#Increase magic damage to
+Normal enemies by %d%%#
+CLASS_MDAMAGE_BOSS#Increase magic damage to
+Boss monsters by %d%%#
+CLASS_IGNORE_DEF_PERCENT_NORMAL#Ignores DEF of
+Normal enemies by %d%%#
+CLASS_IGNORE_DEF_PERCENT_BOSS#Ignores DEF of
+Boss monsters by %d%%#
+CLASS_IGNORE_MDEF_PERCENT_NORMAL#Ignores MDEF of
+Normal enemies by %d%%#
+CLASS_IGNORE_MDEF_PERCENT_BOSS#Ignores MDEF of
+Boss monsters by %d%%#
+DAMAGE_SIZE_SMALL_TARGET#Increase physical damage to
+Small enemies by %d%%#
+DAMAGE_SIZE_MIDIUM_TARGET#Increase physical damage to
+Medium enemies by %d%%#
+DAMAGE_SIZE_LARGE_TARGET#Increase physical damage to
+Large enemies by %d%%#
+DAMAGE_SIZE_SMALL_USER#Decrease damage taken from
+Small enemies by %d%%#
+DAMAGE_SIZE_MIDIUM_USER#Decrease damage taken from
+Medium enemies by %d%%#
+DAMAGE_SIZE_LARGE_USER#Decrease damage taken from
+Large enemies by %d%%#
+DAMAGE_SIZE_PERFECT#Remove weapon penalty#
+DAMAGE_CRI_TARGET#Increase critical damage by %d%%#
+DAMAGE_CRI_USER#Decrease critical damage taken by %d%%#
+RANGE_ATTACK_DAMAGE_TARGET#Increase ranged physical damage by %d%%#
+RANGE_ATTACK_DAMAGE_USER#Decrease ranged physical damage taken by %d%%#
+HEAL_VALUE#Increase healing effect by %d%%#
+HEAL_MODIFY_PERCENT#Increase healing receive by %d%%#
+DEC_SPELL_CAST_TIME#Decrease variable cast time by %d%%#
+DEC_SPELL_DELAY_TIME#Decrease delay after skill by %d%%#
+DEC_SP_CONSUMPTION#Decrease Skill SP Consumption by %d%%#
+WEAPON_ATTR_NOTHING#Permanent weapon Property: Neutral#
+WEAPON_ATTR_WATER#Permanent weapon Property: Water#
+WEAPON_ATTR_GROUND#Permanent weapon Property: Earth#
+WEAPON_ATTR_FIRE#Permanent weapon Property: Fire#
+WEAPON_ATTR_WIND#Permanent weapon Property: Wind#
+WEAPON_ATTR_POISON#Permanent weapon Property: Poison#
+WEAPON_ATTR_SAINT#Permanent weapon Property: Holy#
+WEAPON_ATTR_DARKNESS#Permanent weapon Property: Shadow#
+WEAPON_ATTR_TELEKINESIS#Permanent weapon Property: Ghost#
+WEAPON_ATTR_UNDEAD#Permanent weapon Property: Undead#
+WEAPON_INDESTRUCTIBLE#Undestroyable Weapon#
+BODY_INDESTRUCTIBLE#Undestroyable Armor#
+MDAMAGE_SIZE_SMALL_TARGET#Increase magic damage to
+Small enemies by %d%%#
+MDAMAGE_SIZE_MIDIUM_TARGET#Increase magic damage to
+Medium enemies by %d%%#
+MDAMAGE_SIZE_LARGE_TARGET#Increase magic damage to
+Large enemies by %d%%#
+MDAMAGE_SIZE_SMALL_USER#Decrease magic damage taken from
+Small enemies by %d%%#
+MDAMAGE_SIZE_MIDIUM_USER#Decrease magic damage taken from
+Medium enemies by %d%%#
+MDAMAGE_SIZE_LARGE_USER#Decrease magic damage taken from
+Large enemies by %d%%#
+ATTR_TOLERACE_ALL#Increase resistance against
+All property attack by %d%%#
+RACE_WEAPON_TOLERACE_NOTHING#Increase resistance against
+Formless monsters by %d%%#
+RACE_WEAPON_TOLERACE_UNDEAD#Increase resistance against
+Undead monsters by %d%%#
+RACE_WEAPON_TOLERACE_ANIMAL#Increase resistance against
+Beast monsters by %d%%#
+RACE_WEAPON_TOLERACE_PLANT#Increase resistance against
+Plant monsters by %d%%#
+RACE_WEAPON_TOLERACE_INSECT#Increase resistance against
+Insect monsters by %d%%#
+RACE_WEAPON_TOLERACE_FISHS#Increase resistance against
+Fish monsters by %d%%#
+RACE_WEAPON_TOLERACE_DEVIL#Increase resistance against
+Demon monsters by %d%%#
+RACE_WEAPON_TOLERACE_HUMAN#Increase resistance against
+Demi-human monsters by %d%%#
+RACE_WEAPON_TOLERACE_ANGEL#Increase resistance against
+Angel monsters by %d%%#
+RACE_WEAPON_TOLERACE_DRAGON#Increase resistance against
+Dragon monsters by %d%%#
+RANGE_WEAPON_ATTACK_DAMAGE_TARGET#Increase ranged physical damage by %d%%#
+RANGE_WEAPON_ATTACK_DAMAGE_USER#Decrease ranged physical damage taken by %d%%#
+RACE_TOLERACE_PLAYER_HUMAN#Increase resistance against
+Human Players by %d%%#
+RACE_TOLERACE_PLAYER_DORAM#Increase resistance against
+Doram Players by %d%%#
+RACE_DAMAGE_PLAYER_HUMAN#Increase physical damage to
+Human Players by %d%%#
+RACE_DAMAGE_PLAYER_DORAM#Increase physical damage to
+Doram Players by %d%%#
+RACE_MDAMAGE_PLAYER_HUMAN#Increase magic damage to
+Human Players by %d%%#
+RACE_MDAMAGE_PLAYER_DORAM#Increase magic damage to
+Doram Players by %d%%#
+RACE_CRI_PERCENT_PLAYER_HUMAN#CRIT +%d to Human Players#
+RACE_CRI_PERCENT_PLAYER_DORAM#CRIT +%d to Doram Players#
+RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN#Ignores DEF of
+Human Players by %d%%#
+RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM#Ignores DEF of
+Doram Players by %d%%#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN#Ignores MDEF of
+Human Players by %d%%#
+RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM#Ignores MDEF of
+Doram Players by %d%%#
+REFLECT_DAMAGE_PERCENT#Decrease reflected damage taken by %d%%#
+MELEE_ATTACK_DAMAGE_TARGET#Increase Melee physical damage by %d%%#
+MELEE_ATTACK_DAMAGE_USER#Decrease Melee physical damage taken by %d%%#
+ADDSKILLMDAMAGE_NOTHING#Increase Neutral property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_WATER#Increase Water property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_GROUND#Increase Earth property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_FIRE#Increase Fire property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_WIND#Increase Wind property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_POISON#Increase Poison property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_SAINT#Increase Holy property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_DARKNESS#Increase Shadow property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_TELEKINESIS#Increase Ghost property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_UNDEAD#Increase Undead property
+magic damage by %d%%#
+ADDSKILLMDAMAGE_ALL#Increase All property
+magic damage by %d%%#
+ADDEXPPERCENT_KILLRACE_NOTHING#Increase EXP from
+Formless monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_UNDEAD#Increase EXP from
+Undead monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_ANIMAL#Increase EXP from
+Beast monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_PLANT#Increase EXP from
+Plant monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_INSECT#Increase EXP from
+Insect monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_FISHS#Increase EXP from
+Fish monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_DEVIL#Increase EXP from
+Demon monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_HUMAN#Increase EXP from
+Demi-human monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_ANGEL#Increase EXP from
+Angel monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_DRAGON#Increase EXP from
+Dragon monsters by %d%%#
+ADDEXPPERCENT_KILLRACE_ALL#Increase EXP from
+All monsters by %d%%#

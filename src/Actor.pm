@@ -137,6 +137,29 @@ sub get {
 	}
 }
 
+##
+# Actor Actor::getByName(String name)
+# Returns: the associated Actor object or undef.
+# Requires: defined($name)
+# Ensures:  defined(result)
+#
+# Returns the Actor object for $name. This function will look at the various
+# actor lists. If $name is not in any of the actor lists, it will return
+# undef.
+sub getByName {
+	my ($name) = @_;
+	assert(defined $name, "Name must be provided to retrieve and Actor class") if DEBUG;
+
+	foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList, $elementalsList) {
+		for my $actor (@$list) {
+			if (lc($actor->{name}) eq lc($name)) {
+				return $actor;
+			}
+		}
+	}
+	return undef;
+}
+
 ### CATEGORY: Hash members
 
 ##
@@ -571,6 +594,9 @@ sub setStatus {
 			));
 		}
 
+		$self->{statuses}{$handle}{time} = time;
+		$self->{statuses}{$handle}{tick} = $tick ? $tick : 0;
+
 		if ($char->{party}{joined} && $char->{party}{users}{$self->{ID}} && $char->{party}{users}{$self->{ID}}{name}) {
 			$again = 'again' if $char->{party}{users}{$self->{ID}}{statuses}{$handle};
 			$char->{party}{users}{$self->{ID}}{statuses}{$handle} = {};
@@ -638,6 +664,34 @@ sub statusesString {
 	? join ', ', map { $statusName{$_} || $_ } keys %{$self->{statuses}}
 	# Translation Comment: No status effect on actor
 	: '';
+}
+
+##
+# String $Actor->statusesStringAndTime(integer type)
+# types: 
+#     0 - long
+#     1 - short
+# Returns human-readable list and times of currently active statuses.
+sub statusesStringAndTime {
+	my ($self, $type) = @_;
+	my $msg;
+
+	if ($self->{statuses} && %{$self->{statuses}}) {
+		my @keys = keys %{$self->{statuses}};
+
+		foreach my $key (@keys) {
+			my $status_name = $statusName{$key} ? $statusName{$key} : $key;
+
+			my $time_end = $self->{'statuses'}{$key}{'time'} + ($self->{'statuses'}{$key}{'tick'}/1000);
+			my $status_remaining_time = int($time_end - time);
+			my $remaining_time = $status_remaining_time > 0 ? $status_remaining_time : -1;	
+
+			$msg .= $type ? TF("%s (%d s), ", $status_name, $remaining_time) : TF("%s (%d seconds left)\n", $status_name, $remaining_time);
+		}
+	}
+	
+	$msg =~ s/\,\s+$//g;
+	return $msg;
 }
 
 ##
@@ -781,6 +835,28 @@ sub route {
 	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 
 	$self->queue('route', $task);
+}
+
+##
+# void $Actor->useTeleport(int level)
+#
+# level: 1 - Random, 2 - Respawn
+#
+# Instruct AI to use Teleport.
+sub useTeleport {
+	my ($self, $level) = @_;
+
+	if(!AI::inQueue("teleport","NPC")) {
+		require Task::Teleport::Random;
+		require Task::Teleport::Respawn;
+
+		my %tasks = qw(1 Task::Teleport::Random 2 Task::Teleport::Respawn);
+		my $task = $tasks{$level}->new(actor => $self);
+
+		$self->queue('teleport', $task);
+	} else {
+		error T("NPC or Teleport in queue, finish and try again\n");
+	}
 }
 
 sub processTask {

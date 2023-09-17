@@ -1543,8 +1543,8 @@ sub rodex_checkname {
 sub rodex_send_mail {
 	my ($self) = @_;
 
-	my $title = stringToBytes($rodexWrite->{title});
-	my $body = stringToBytes($rodexWrite->{body});
+	my $title = stringToBytes($rodexWrite->{title}) . chr(0);
+	my $body = stringToBytes($rodexWrite->{body}) . chr(0);
 	my $pack = $self->reconstruct({
 		switch => 'rodex_send_mail',
 		receiver => $rodexWrite->{target}{name},
@@ -3224,12 +3224,16 @@ sub sendCashShopBuy {
 
 sub sendStartSkillUse {
 	my ($self, $ID, $lv, $targetID) = @_;
+	$char->{last_skill_used_is_continuous} = 1;
+	$char->{last_continuous_skill_used} = $ID;
 	$self->sendToServer($self->reconstruct({switch => 'start_skill_use', lv => $lv, skillID => $ID, targetID => $targetID}));
 	debug "Start Skill Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendStopSkillUse {
 	my ($self, $ID) = @_;
+	$char->{last_skill_used_is_continuous} = 0;
+	$char->{last_continuous_skill_used} = 0;
 	$self->sendToServer($self->reconstruct({switch => 'stop_skill_use',skillID => $ID}));
 	debug "Stop Skill Use: $ID\n", "sendPacket", 2;
 }
@@ -3502,9 +3506,11 @@ sub sendMacroDetectorDownload {
 sub sendMacroDetectorAnswer {
 	my ($self, $answer) = @_;
 
+	my $answer_bytes = stringToBytes($answer);
+
 	$self->sendToServer($self->reconstruct({
 		switch => 'macro_detector_answer',
-		answer => $answer,
+		answer => $answer_bytes,
 	}));
 }
 

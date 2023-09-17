@@ -574,9 +574,9 @@ sub createMenuBar {
 	$self->addMenu($self->{guildMenu}, T('Auto reject guild request'), sub {Commands::run("guild join 0")}, T('Auto reject all incoming guild requests'));
 	$commandMenu->AppendSubMenu($self->{guildMenu}, T('&Guild'), T('Guild'));
 
-	$commandMenu->AppendSeparator;
+	#Alias menu
 	$self->{aliasMenu} = new Wx::Menu;
-	$commandMenu->AppendSubMenu($self->{aliasMenu}, T('&Alias'), T('Alias'));
+	$menu->Append($self->{aliasMenu}, T('&Alias'));
 
 	# Settings menu
 	my $settingsMenu = new Wx::Menu;
@@ -1082,6 +1082,7 @@ sub onMenuOpen {
 
 	for $menu (sort map {/^alias_(.+)$/} keys %config) {
 		$self->addMenu ($self->{aliasMenu}, $menu, sub { Commands::run ($menu) });
+		$self->{aliasMenu}->AppendSeparator;
 	}
 }
 
@@ -1590,7 +1591,11 @@ sub onCaptcha {
 	$dialog->Destroy;
 	return unless defined $result && $result ne '';
 
-	$messageSender->sendCaptchaAnswer ($result);
+	if ($conState == Network::IN_GAME) {
+		$messageSender->sendMacroDetectorAnswer($result);
+	} else {
+		$messageSender->sendCaptchaAnswer($result);
+	}
 
 	$args->{return} = 1;
 }

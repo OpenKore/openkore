@@ -81,7 +81,7 @@ sub process {
 				
 				if ($config{$slave->{configPrefix}.'teleportAuto_dropTargetKS'}) {
 					message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-					useTeleport(1);
+					ai_useTeleport(1);
 				}
 				return;
 			}
@@ -168,7 +168,7 @@ sub giveUp {
 	message TF("%s can't reach or damage target, dropping target\n", $slave), 'slave_attack';
 	if ($config{$slave->{configPrefix}.'teleportAuto_dropTarget'}) {
 		message TF("Teleport due to dropping %s attack target\n", $slave), 'teleport';
-		useTeleport(1);
+		ai_useTeleport(1);
 	}
 }
 

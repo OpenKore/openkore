@@ -221,7 +221,7 @@ sub avoidSkill {
 
                                 } elsif ($config{"avoidSkill_$i"."_method"} == 3) {
                                         message "Avoid skill $skillName, use random teleport.\n", $domain, 1;
-                                        main::useTeleport(1);
+                                        ai_useTeleport(1);
 
                                 } elsif ($config{"avoidSkill_$i"."_method"} == 4) {
                                         return unless ($source->isa("Actor::Monster"));

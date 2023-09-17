@@ -93,6 +93,7 @@ our @EXPORT = (
 	qw/chatLog
 	shopLog
 	monsterLog
+	playerLog
 	deadLog
 	searchStoreInfo/,
 
@@ -162,7 +163,7 @@ our @EXPORT = (
 	switchConfigFile
 	updateDamageTables
 	updatePlayerNameCache
-	useTeleport
+	canUseTeleport
 	top10Listing
 	whenGroundStatus
 	writeStorageLog
@@ -936,6 +937,14 @@ sub monsterLog {
 	open MONLOG, ">>:utf8", $Settings::monster_log_file;
 	print MONLOG "[".getFormattedDate(int(time))."] $crud\n";
 	close MONLOG;
+}
+
+sub playerLog {
+	my $crud = shift;
+	return if (!$config{'playerLog'});
+	open PLAYERLOG, ">>:utf8", $Settings::player_log_file;
+	print PLAYERLOG "[".getFormattedDate(int(time))."] $crud\n";
+	close PLAYERLOG;
 }
 
 sub deadLog {
@@ -2968,14 +2977,13 @@ sub processNameRequestQueue {
 		# Remove actors with a distance greater than clientSight. Some private servers (notably Freya) use
 		# a technique where they send actor_exists packets with ridiculous distances in order to automatically
 		# ban bots. By removingthose actors, we eliminate that possibility and emulate the client more closely.
-		my $max_sight_base = ($config{clientSight} || 15);
-		my $max_sight_extra = ($config{clientSight_removeBeyond} || 2);
-		my $max_sight = $max_sight_base + $max_sight_extra;
-		if (defined $actor->{pos_to} && (my $block_dist = blockDistance($char->{pos_to}, $actor->{pos_to})) >= $max_sight) {
-			debug "Removed actor at $actor->{pos_to}{x} $actor->{pos_to}{y} (distance: $block_dist)\n";
+		if (defined $actor->{pos_to} && (my $block_dist = blockDistance($char->{pos_to}, $actor->{pos_to})) >= ($config{clientSight} || 16)) {
+			debug "[NameRequestQueue] Removed from list actor at $actor->{pos_to}{x} $actor->{pos_to}{y} (distance: $block_dist)\n";
 			shift @{$queue};
 			next;
 		}
+
+		next if ($actor->{avoid});
 
 		$messageSender->sendGetPlayerInfo($ID) if (isSafeActorQuery($ID) == 1); # Do not Query GM's
 		$actor = shift @{$queue};
@@ -3177,7 +3185,8 @@ sub setStatus {
 		for (keys %$handle) {
 			if (&$match($option, $_)) {
 				unless ($actor->{statuses}{$handle->{$_}}) {
-					$actor->{statuses}{$handle->{$_}} = 1;
+					$actor->{statuses}{$handle->{$_}}{time} = time;
+					$actor->{statuses}{$handle->{$_}}{tick} = 0;
 					message status_string($actor, $name . ': ' . ($statusName{$handle->{$_}} || $handle->{$_}), 'now'), "parseMsg_status$name", $verbosity;
 					$changed = 1;
 				}
@@ -3393,11 +3402,11 @@ sub updateDamageTables {
 			}
 			if ($config{teleportAuto_atkMiss} && $monster->{atkMiss} >= $config{teleportAuto_atkMiss}) {
 				message T("Teleporting because of attack miss\n"), "teleport";
-				useTeleport(1);
+				ai_useTeleport(1);
 			}
 			if ($config{teleportAuto_atkCount} && $monster->{numAtkFromYou} >= $config{teleportAuto_atkCount}) {
 				message TF("Teleporting after attacking a monster %d times\n", $config{teleportAuto_atkCount}), "teleport";
-				useTeleport(1);
+				ai_useTeleport(1);
 			}
 
 			if (AI::action eq "attack" && mon_control($monster->{name},$monster->{nameID})->{attack_auto} == 3 && $damage) {
@@ -3536,7 +3545,7 @@ sub updateDamageTables {
 					$player->sendAttackStop;
 					$player->dequeue;
 				}
-				useTeleport(1, undef, 1) if ($teleport);
+				ai_useTeleport(1) if ($teleport);
 			}
 		}
 
@@ -3609,135 +3618,24 @@ sub updatePlayerNameCache {
 	}
 }
 
-##
-# useTeleport(level)
-# level: 1 to teleport to a random spot, 2 to respawn.
-sub useTeleport {
-	my ($use_lvl, $internal, $emergency) = @_;
+sub canUseTeleport {
+	my ($use_lvl) = @_;
 
-	my %args = (
-		level => $use_lvl, # 1 = Teleport, 2 = respawn
-		emergency => $emergency, # Needs a fast tele
-		internal => $internal # Did we call useTeleport from inside useTeleport?
-	);
+	# not in game
+	return 0 if $net->getState != Network::IN_GAME;
 
-	if ($use_lvl == 2 && $config{saveMap_warpChatCommand}) {
-		Plugins::callHook('teleport_sent', \%args);
-		sendMessage($messageSender, "c", $config{saveMap_warpChatCommand});
-		return 1;
-	}
-
-	if ($use_lvl == 1 && $config{teleportAuto_useChatCommand}) {
-		Plugins::callHook('teleport_sent', \%args);
-		sendMessage($messageSender, "c", $config{teleportAuto_useChatCommand});
-		return 1;
-	}
-
-	# for possible recursive calls
-	if (!defined $internal) {
-		$internal = $config{teleportAuto_useSkill};
-	}
-
-	# look if the character has the skill
-	my $sk_lvl = 0;
-	if ($char->{skills}{AL_TELEPORT}) {
-		$sk_lvl = $char->{skills}{AL_TELEPORT}{lv};
-	}
-
-	# only if we want to use skill ?
-	return if ($char->{muted});
-
-	if ($sk_lvl > 0 && $internal > 0 && ($use_lvl == 1 || !$config{'teleportAuto_useItemForRespawn'})) {
-		# We have the teleport skill, and should use it
-		my $skill = new Skill(handle => 'AL_TELEPORT');
-		if (defined AI::findAction('attack')) {
-			AI::clear("attack");
-			$char->sendAttackStop;
-		}
-		if ($use_lvl == 2 || $internal == 1 || ($internal == 2 && !isSafe())) {
-			# Send skill use packet to appear legitimate
-			# (Always send skill use packet for level 2 so that saveMap
-			# autodetection works)
-
-			if ($char->{sitting}) {
-				Plugins::callHook('teleport_sent', \%args);
-				main::ai_skillUse($skill->getHandle(), $use_lvl, 0, 0, $accountID);
-				return 1;
-			} else {
-				$messageSender->sendSkillUse($skill->getIDN(), $sk_lvl, $accountID);
-				undef $char->{permitSkill};
-			}
-
-			if (!$emergency && $use_lvl == 1) {
-				Plugins::callHook('teleport_sent', \%args);
-				$timeout{ai_teleport_retry}{time} = time;
-				AI::queue('teleport');
-				return 1;
-			}
-		}
-
-		delete $ai_v{temp}{teleport};
-		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
-		if ($use_lvl == 1) {
-			Plugins::callHook('teleport_sent', \%args);
-			$messageSender->sendWarpTele(26, "Random");
-			return 1;
-		} elsif ($use_lvl == 2) {
-			# check for possible skill level abuse
-			message T("Using Teleport Skill Level 2 though we not have it!\n"), "useTeleport" if ($sk_lvl == 1);
-
-			# If saveMap is not set simply use a wrong .gat.
-			# eAthena servers ignore it, but this trick doesn't work
-			# on official servers.
-			my $telemap = "prontera.gat";
-			$telemap = "$config{saveMap}.gat" if ($config{saveMap} ne "");
-			Plugins::callHook('teleport_sent', \%args);
-			$messageSender->sendWarpTele(26, $telemap);
-			return 1;
-		}
-	}
-	# We used all not item teleport options.
-	# Cheking inventory->isReady() before looking for items to teleport.
-	# Timing out if not ready.
-	if (!$char->inventory->isReady()){
-		$timeout{ai_teleport}{time} = time;
-		return 0;
-	}
-	# No skill try to equip a Tele clip or something,
-	# if teleportAuto_equip_* is set
-	if (Actor::Item::scanConfigAndCheck('teleportAuto_equip') && ($use_lvl == 1 || !$config{'teleportAuto_useItemForRespawn'})) {
-		return if AI::inQueue('teleport');
-		debug "Equipping Accessory to teleport\n", "useTeleport";
-		AI::queue('teleport', {lv => $use_lvl});
-		if ($emergency ||
-		    !$config{teleportAuto_useSkill} ||
-		    $config{teleportAuto_useSkill} == 3 ||
-		    $config{teleportAuto_useSkill} == 2 && isSafe()) {
-			$timeout{ai_teleport_delay}{time} = 1;
-		}
-		Actor::Item::scanConfigAndEquip('teleportAuto_equip');
-		#Commands::run('aiv');
-		return 1;
-	}
-
-	# else if $internal == 0 or $sk_lvl == 0
-	# try to use item
-
-	# could lead to problems if the ItemID would be different on some servers
-	# 1 Jan 2006 - instead of nameID, search for *wing in the inventory
-	# could lead to problems if the name is different on some servers
-	# 11 Mar 2010 - instead of name, use nameID, names can be different for different servers
+	# 1 - check for items
 	my $item;
-	if ($use_lvl == 1) { # Fly Wing
+	if($use_lvl == 1) {
 		if ($config{teleportAuto_item1}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item1});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item1}) if (!($item) && $config{teleportAuto_item1} =~ /^\d{3,}$/);
 		}
 		$item = $char->inventory->getByNameID(23280) unless $item; # Beginner's Fly Wing
 		$item = $char->inventory->getByNameID(12323) unless $item; # Novice Fly Wing
-		$item = $char->inventory->getByNameID(601) unless $item;     # Fly Wing
-	} elsif ($use_lvl == 2) { # Butterfly Wing
-		if ($config{teleportAuto_item2}) {
+		$item = $char->inventory->getByNameID(601) unless $item; # Fly Wing
+	} else {
+		 if ($config{teleportAuto_item2}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item2});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
 		}
@@ -3745,28 +3643,21 @@ sub useTeleport {
 		$item = $char->inventory->getByNameID(602) unless $item; # Butterfly Wing
 	}
 
-	if ($item) {
-		# We have Fly Wing/Butterfly Wing.
-		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
-		if (timeOut($timeout{ai_teleport})) {
-			Plugins::callHook('teleport_sent', \%args);
-			$messageSender->sendItemUse($item->{ID}, $accountID);
-			$timeout{ai_teleport}{time} = time;
-		}
-		return 1;
-	}
+	return 1 if $item;
+	
+	# Mute prevents talking, usage of skills, and commands.
+	return 0 if $char->{'muted'};
 
-	# no item, but skill is still available
-	if ( $sk_lvl > 0 ) {
-		message T("No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n"), "useTeleport";
-		return useTeleport($use_lvl, 1, $emergency);
-	}
+	# 2 - check for chat command
+	return 1 if ($config{teleportAuto_useChatCommand} && $use_lvl == 1);
+	return 1 if ($config{saveMap_warpChatCommand} && $use_lvl == 2);
+	
+	# 3 - check for equipments
+	return 1 if(Actor::Item::scanConfigAndCheck('teleportAuto_equip'));
 
-	if ($use_lvl == 1) {
-		message T("You don't have the Teleport skill or a Fly Wing\n"), "teleport";
-	} else {
-		message T("You don't have the Teleport skill or a Butterfly Wing\n"), "teleport";
-	}
+	# 4 - check for skill
+	my $skill_level = ($char->{skills}{AL_TELEPORT}{lv}) ? $char->{skills}{AL_TELEPORT}{lv} : 0;
+	return 1 if($skill_level >= $use_lvl);
 
 	return 0;
 }
@@ -3963,6 +3854,7 @@ sub isSafeActorQuery {
 					return 0;
 				}
 			}
+			return 0 if($actor->{avoid});
 		}
 	}
 	return 1;
@@ -4146,7 +4038,7 @@ sub avoidGM_near {
 		my $msg;
 		if ($config{avoidGM_near} == 1) {
 			# Mode 1: teleport & disconnect
-			useTeleport(1);
+			ai_useTeleport(1);
 			$msg = TF("GM '%s' (%d) is nearby (%s), teleport & disconnect for %d seconds", $player->{name}, $player->{nameID}, $field->baseName, $config{avoidGM_reconnect});
 			relog($config{avoidGM_reconnect}, 1);
 
@@ -4157,16 +4049,16 @@ sub avoidGM_near {
 
 		} elsif ($config{avoidGM_near} == 3) {
 			# Mode 3: teleport
-			useTeleport(1);
+			ai_useTeleport(1);
 			$msg = TF("GM '%s' (%d) is nearby(%s), teleporting", $player->{name}, $player->{nameID}, $field->baseName);
 
 		} elsif ($config{avoidGM_near} == 4) {
 			# Mode 4: respawn
-			useTeleport(2);
+			ai_useTeleport(2);
 			$msg = TF("GM '%s' (%d) is nearby (%s), respawning", $player->{name}, $player->{nameID}, $field->baseName);
 		} elsif ($config{avoidGM_near} >= 5) {
 			# Mode 5: respawn & disconnect
-			useTeleport(2);
+			ai_useTeleport(2);
 			$msg = TF("GM '%s' (%d) is nearby (%s), respawning & disconnect for %d seconds", $player->{name}, $player->{nameID}, $field->baseName, $config{avoidGM_reconnect});
 			relog($config{avoidGM_reconnect}, 1);
 		}
@@ -4238,7 +4130,7 @@ sub avoidList_near {
 			|| ($avoidID && $avoidID->{teleport_on_sight} &&  $avoidID->{disconnect_on_sight})
 			|| ($avoidJob && $avoidJob->{teleport_on_sight} &&  $avoidJob->{disconnect_on_sight}) ) {
 			# like avoidGM_near Mode 1: teleport & disconnect
-			useTeleport(1);
+			ai_useTeleport(1);
 			$msg = TF("Player %s (%d, %s) is nearby (%s), teleport & disconnect for %d seconds", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $field->baseName, $config{avoidList_reconnect});
 			relog($config{avoidList_reconnect}, 1);
 			$return = 1;
@@ -4247,7 +4139,7 @@ sub avoidList_near {
 			|| ($avoidID && $avoidID->{teleport_on_sight} &&  $avoidID->{disconnect_on_sight})
 			|| ($avoidJob && $avoidJob->{teleport_on_sight} &&  $avoidJob->{disconnect_on_sight}) ) {
 			# like avoidGM_near Mode 5: respawn & disconnect
-			useTeleport(2);
+			ai_useTeleport(2);
 			$msg = TF("Player %s (%d, %s) is nearby (%s), respawning & disconnect for %d seconds", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $field->baseName, $config{avoidList_reconnect});
 			relog($config{avoidList_reconnect}, 1);
 			$return = 1;
@@ -4261,13 +4153,13 @@ sub avoidList_near {
 
 		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 1) || ($avoidID && $avoidID->{teleport_on_sight} == 1) || ($avoidJob && $avoidJob->{teleport_on_sight} == 1) ) {
 			# like avoidGM_near Mode 3: teleport
-			useTeleport(1);
+			ai_useTeleport(1);
 			$msg = TF("Player %s (%d, %s) is nearby (%s), teleporting", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $field->baseName);
 			$return = 1;
 
 		} elsif ( ($avoidPlayer && $avoidPlayer->{teleport_on_sight} == 2) || ($avoidID && $avoidID->{teleport_on_sight} == 2) || ($avoidJob && $avoidJob->{teleport_on_sight} == 2) ) {
 			# like avoidGM_near Mode 4: respawn
-			useTeleport(2);
+			ai_useTeleport(2);
 			$msg = TF("Player %s (%d, %s) is nearby (%s), respawning", $player->{name}, $player->{nameID}, $jobs_lut{$player->{jobID}}, $field->baseName);
 			$return = 1;
 		}
@@ -4740,7 +4632,9 @@ sub checkSelfCondition {
 			if ($nowMonsters > 0 && $config{$prefix . "_notMonsters"}) {
 				for my $monster (@$monstersList) {
 					$nowMonsters-- if (existsInList($config{$prefix . "_notMonsters"}, $monster->{name}) ||
-										existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}));
+										existsInList($config{$prefix . "_notMonsters"}, $monster->{nameID}) ||
+										($config{$prefix."_monstersCountDist"} && !inRange(blockDistance(calcPosition($char), calcPosition($monster)), $config{$prefix."_monstersCountDist"}))
+									);
                 }
             }
 		return 0 unless (inRange($nowMonsters, $config{$prefix . "_monstersCount"}));
