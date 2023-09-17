@@ -210,7 +210,9 @@ sub iterate {
 	} elsif ($self->{stage} == CALCULATE_ROUTE) {
 		my $pos = $self->{actor}{pos};
 		my $pos_to = $self->{actor}{pos_to};
-
+		
+		debug "Route $self->{actor}: Calculating. Your pos ($pos->{x} $pos->{y}). Your pos_to ($pos_to->{x} $pos_to->{y}).\n", "route";
+		
 		my $begin = time;
 
 		if (!$self->{meetingSubRoute} && !$self->{LOSSubRoute} && $pos_to->{x} == $self->{dest}{pos}{x} && $pos_to->{y} == $self->{dest}{pos}{y}) {
@@ -230,10 +232,7 @@ sub iterate {
 			# Changed in pathfinding.xs
 			#unshift(@{$self->{solution}}, { x => $pos->{x}, y => $pos->{y}});
 
-			if (time - $begin < 0.01) {
-				# Optimization: immediately go to the next stage if we spent neglible time in this step.
-				$self->iterate();
-			}
+			$self->iterate();
 
 		} else {
 			debug "Something's wrong; there is no path from " . $self->{dest}{map}->baseName . "($pos->{x},$pos->{y}) to " . $self->{dest}{map}->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
@@ -292,8 +291,7 @@ sub iterate {
 		if (@{$self->{solution}} == 0) {
 			debug "Route $self->{actor}: DistFromGoal|pyDistFromGoal trimmed all solution steps.\n", "route";
 			$self->setDone();
-		} elsif (time - $begin < 0.01) {
-			# Optimization: immediately go to the next stage if we spent neglible time in this step.
+		} else {
 			$self->iterate();
 		}
 

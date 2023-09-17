@@ -171,6 +171,10 @@ sub iterate {
 		my $min_npc_dist = 8;
 		my $max_npc_dist = 10;
 		my $dist_to_npc = blockDistance($self->{actor}{pos}, $self->{mapSolution}[0]{pos});
+		
+		if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
+			$self->{mapSolution}[0]{retry} = 0;
+		}
 
 		# If current solution has conversation steps specified
 		if ( $self->{substage} eq 'Waiting for Warp' ) {
@@ -184,7 +188,8 @@ sub iterate {
 				warning TF("NPC error: %s.\n", $self->{mapSolution}[0]{error}), "route" if (exists $self->{mapSolution}[0]{error});
 
 				if ($self->{mapSolution}[0]{retry} < ($config{route_maxNpcTries} || 5)) {
-					warning "Retrying for the ".$self->{mapSolution}[0]{retry}." time...\n", "route";
+					$self->{mapSolution}[0]{retry}++;
+					warning "Retrying for the ".$self->{mapSolution}[0]{retry}."th time...\n", "route";
 					delete $self->{mapSolution}[0]{error};
 
 				} else {
