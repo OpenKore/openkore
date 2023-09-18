@@ -2846,9 +2846,7 @@ sub meetingPosition {
 					next SPOT unless ($flameBarrier->{'can_flee_to'});
 					
 					if ($behindFlameBarrier == 2) {
-						#warning "[Barrier Meeting 1] C $current_flamebarrier->{'barrierID'} | T $flameBarrier->{'barrierID'}\n";
 						if ($current_flamebarrier->{'barrierID'} == $flameBarrier->{'barrierID'}) {
-							#warning "[Barrier Meeting 2] Avoided same barrierID in Out of Range AAAAAAAAAAAAAAA 1111111111111111111111.\n";
 							next SPOT;
 						}
 					}
@@ -5517,6 +5515,18 @@ sub Barrier_area_spell_multiple3 {
 
 	if ($flameBarriers{sent}{count} == $flameBarriers{sent}{total}) {
 		delete $flameBarriers{sent};
+	}
+}
+
+sub Barrier_area_spell_disappears {
+	my ($unpackedID, $ID) = @_;
+	my $spell = $spells{$ID};
+	if (exists $spell->{'my_flamebarrier'} && exists $flameBarriers{exist}{$spell->{'barrierID'}} && exists $flameBarriers{exist}{$spell->{'barrierID'}}{$unpackedID}) {
+		delete $flameBarriers{exist}{$spell->{'barrierID'}}{$unpackedID};
+
+		if (scalar keys %{$flameBarriers{exist}{$spell->{'barrierID'}}} == 0) {
+			delete $flameBarriers{exist}{$spell->{'barrierID'}};
+		}
 	}
 }
 

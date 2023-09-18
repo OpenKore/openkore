@@ -10162,12 +10162,8 @@ sub area_spell_disappears {
 	my $spell = $spells{$ID};
 	debug "Area effect ".getSpellName($spell->{type})." ($spell->{binID}) from ".getActorName($spell->{sourceID})." disappeared from ($spell->{pos}{x}, $spell->{pos}{y})\n", "skill", 2;
 	
-	if (exists $spell->{'my_flamebarrier'} && exists $flameBarriers{exist}{$spell->{'barrierID'}} && exists $flameBarriers{exist}{$spell->{'barrierID'}}{$unpackedID}) {
-		delete $flameBarriers{exist}{$spell->{'barrierID'}}{$unpackedID};
-		
-		if (scalar keys %{$flameBarriers{exist}{$spell->{'barrierID'}}} == 0) {
-			delete $flameBarriers{exist}{$spell->{'barrierID'}};
-		}
+	if (exists $spell->{'barrierID'}) {
+		Misc::Barrier_area_spell_disappears($unpackedID, $ID);
 	}
 	
 	delete $spells{$ID};
