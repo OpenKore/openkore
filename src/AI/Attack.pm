@@ -489,9 +489,9 @@ sub main {
 	} elsif (
 		$config{'runFromTarget'} &&
 		(
-		($realMonsterDist < $config{'runFromTarget_dist'} && (!$config{"flameBarrier"} || !$config{"runFromTarget_dist_BehindWall"} || ($config{"flameBarrier"} && $config{"runFromTarget_dist_BehindWall"} && !$flameBarrier && !$flameBarrier_safeCheck)))
+		($realMonsterDist < $config{'runFromTarget_dist'} && (!$config{"flameBarrier"} || !$config{"runFromTarget_dist_BehindBarrier"} || ($config{"flameBarrier"} && $config{"runFromTarget_dist_BehindBarrier"} && !$flameBarrier && !$flameBarrier_safeCheck)))
 		||
-		($config{"flameBarrier"} && $config{"runFromTarget_dist_BehindWall"} && ($flameBarrier || $flameBarrier_safeCheck) && $realMonsterDist < $config{'runFromTarget_dist_BehindWall'})
+		($config{"flameBarrier"} && $config{"runFromTarget_dist_BehindBarrier"} && ($flameBarrier || $flameBarrier_safeCheck) && $realMonsterDist < $config{'runFromTarget_dist_BehindBarrier'})
 		)
 		
 	) {

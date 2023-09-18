@@ -2677,7 +2677,7 @@ sub meetingPosition {
 	my $runFromTarget_dist;
 	my $runFromTarget_minStep;
 	my $runFromTarget_maxPathDistance;
-	my $runFromTarget_dist_BehindWall;
+	my $runFromTarget_dist_BehindBarrier;
 
 	# actor is char
 	if ($actorType == 1) {
@@ -2686,7 +2686,7 @@ sub meetingPosition {
 		$runFromTarget = $config{runFromTarget};
 		$runFromTarget_dist = $config{runFromTarget_dist};
 		$runFromTarget_minStep = $config{runFromTarget_minStep};
-		$runFromTarget_dist_BehindWall = $config{runFromTarget_dist_BehindWall};
+		$runFromTarget_dist_BehindBarrier = $config{runFromTarget_dist_BehindBarrier};
 		$followDistanceMax = $config{followDistanceMax};
 		$attackCanSnipe = $config{attackCanSnipe};
 		if ($config{follow}) {
@@ -2853,13 +2853,13 @@ sub meetingPosition {
 						}
 					}
 					
-					my $min_barrier_dist = $config{'flameBarrier_distBehindWall'};
+					my $min_barrier_dist = $config{'flameBarrier_distBehindBarrier'};
 					
 					for my $barrier_x (keys %{$firePos}) {
 						BARRIER: for my $barrier_y (keys %{$firePos->{$barrier_x}}) {
 							my $test_barrier = $firePos->{$barrier_x}{$barrier_y};
 							next BARRIER unless ($test_barrier->{ID} eq $flameBarrier->{ID});
-							# Gotta be at least $config{'flameBarrier_distBehindWall'} cells away from the barrier that protects us
+							# Gotta be at least $config{'flameBarrier_distBehindBarrier'} cells away from the barrier that protects us
 							next SPOT if (blockDistance($spot, $test_barrier->{'pos'}) < $min_barrier_dist);
 						}
 					}

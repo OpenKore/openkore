@@ -16,7 +16,7 @@ flameBarrier_maxCastTime
 flameBarrier_minCastTime
 flameBarrier_recastAfter 8
 flameBarrier_notFleeAfter 8
-flameBarrier_distBehindWall 2
+flameBarrier_distBehindBarrier 2
 flameBarrier_sp > 40
 flameBarrier_whenStatusInactive EFST_POSTDELAY
 flameBarrier_attack_maxDistance 7
@@ -32,7 +32,7 @@ attackSkillSlot_0_whenStatusInactive EFST_POSTDELAY
 
 runFromTarget 1
 runFromTarget_inAdvance 0
-runFromTarget_dist_BehindWall 3
+runFromTarget_dist_BehindBarrier 3
 runFromTarget_dist 5
 runFromTarget_minStep 7
 runFromTarget_maxPathDistance 13
