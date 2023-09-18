@@ -6,7 +6,7 @@
 master
 server
 username
-password 
+password
 loginPinCode
 char
 
