@@ -893,7 +893,7 @@ getAuto {
 
 ######## Debugging options; only useful for developers ########
 
-debug 0
+debug 2
 debugPacket_unparsed 0
 debugPacket_received 0
 debugPacket_ro_sent 0
