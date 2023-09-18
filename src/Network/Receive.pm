@@ -4373,34 +4373,8 @@ sub area_spell_multiple3 {
 		$spells{$ID}{'time'} = time;
 		if ($type == 0x81) {
 			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
-			
-		} elsif ($type == 127 && $sourceID eq $accountID) {
-			$spells{$ID}{'disappear_time'} = $spells{$ID}{'time'} + 4 + $lvl;
-			if (exists $flameBarriers{sent}) {
-				
-				$flameBarriers{sent}{count}++;
-				$spells{$ID}{'my_flamebarrier'} = 1;
-				
-				if (!$flameBarriers{sent}{got_first} && $flameBarriers{sent}{count} == 1) {
-					$flameBarriers{sent}{got_first} = $spells{$ID}{'unpackedID'};
-				}
-				
-				$spells{$ID}{'barrierID'} = $flameBarriers{sent}{got_first};
-				
-				# Middle
-				if ($flameBarriers{sent}{x} == $x && $flameBarriers{sent}{y} == $y) {
-					$spells{$ID}{'middle'} = 1;
-				} else {
-					$spells{$ID}{'middle'} = 0;
-				}
-				
-				$flameBarriers{exist}{$flameBarriers{sent}{got_first}}{$spells{$ID}{'unpackedID'}} = 1;
-				
-				
-				if ($flameBarriers{sent}{count} == $flameBarriers{sent}{total}) {
-					delete $flameBarriers{sent};
-				}
-			}
+		} elsif ($type == 127 && $sourceID eq $accountID && exists $flameBarriers{sent}) {
+			Misc::Barrier_area_spell_multiple3($ID);
 		}
 		debug "Area effect ".getSpellName($type)." (type $type) (ID ".$spells{$ID}{'unpackedID'}.") ($binID) from ".getActorName($sourceID)." appeared on ($x, $y), isVisible = $isVisible, range = $range, lvl = $lvl\n", "skill", 2;
 	}

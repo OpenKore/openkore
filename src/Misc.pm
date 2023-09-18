@@ -5492,6 +5492,34 @@ sub Barrier_skill_use_location {
 	$flameBarriers{sent}{count} = 0;
 }
 
+sub Barrier_area_spell_multiple3 {
+	my ($ID) = @_;
+	
+	$spells{$ID}{'disappear_time'} = $spells{$ID}{'time'} + $spells{$ID}{'lvl'} + 4;
+
+	$flameBarriers{sent}{count}++;
+	$spells{$ID}{'my_flamebarrier'} = 1;
+
+	if (!$flameBarriers{sent}{got_first} && $flameBarriers{sent}{count} == 1) {
+		$flameBarriers{sent}{got_first} = $spells{$ID}{'unpackedID'};
+	}
+
+	$spells{$ID}{'barrierID'} = $flameBarriers{sent}{got_first};
+
+	# Middle
+	if ($flameBarriers{sent}{x} == $spells{$ID}{'pos'}{'x'} && $flameBarriers{sent}{y} == $spells{$ID}{'pos'}{'y'}) {
+		$spells{$ID}{'middle'} = 1;
+	} else {
+		$spells{$ID}{'middle'} = 0;
+	}
+
+	$flameBarriers{exist}{$flameBarriers{sent}{got_first}}{$spells{$ID}{'unpackedID'}} = 1;
+
+	if ($flameBarriers{sent}{count} == $flameBarriers{sent}{total}) {
+		delete $flameBarriers{sent};
+	}
+}
+
 ##
 # makeShop()
 #
