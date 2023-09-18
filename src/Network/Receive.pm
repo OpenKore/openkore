@@ -4376,29 +4376,29 @@ sub area_spell_multiple3 {
 			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
 		}
 		if ($type == 127 && $sourceID eq $accountID) {
-			if (exists $firewalls{sent}) {
+			if (exists $flameBarriers{sent}) {
 				
-				$firewalls{sent}{count}++;
-				$spells{$ID}{'my_firewall'} = 1;
+				$flameBarriers{sent}{count}++;
+				$spells{$ID}{'my_flamebarrier'} = 1;
 				
-				if (!$firewalls{sent}{got_first} && $firewalls{sent}{count} == 1) {
-					$firewalls{sent}{got_first} = $spells{$ID}{'unpackedID'};
+				if (!$flameBarriers{sent}{got_first} && $flameBarriers{sent}{count} == 1) {
+					$flameBarriers{sent}{got_first} = $spells{$ID}{'unpackedID'};
 				}
 				
-				$spells{$ID}{'barrierID'} = $firewalls{sent}{got_first};
+				$spells{$ID}{'barrierID'} = $flameBarriers{sent}{got_first};
 				
 				# Middle
-				if ($firewalls{sent}{x} == $x && $firewalls{sent}{y} == $y) {
+				if ($flameBarriers{sent}{x} == $x && $flameBarriers{sent}{y} == $y) {
 					$spells{$ID}{'middle'} = 1;
 				} else {
 					$spells{$ID}{'middle'} = 0;
 				}
 				
-				$firewalls{exist}{$firewalls{sent}{got_first}}{$spells{$ID}{'unpackedID'}} = 1;
+				$flameBarriers{exist}{$flameBarriers{sent}{got_first}}{$spells{$ID}{'unpackedID'}} = 1;
 				
 				
-				if ($firewalls{sent}{count} == $firewalls{sent}{total}) {
-					delete $firewalls{sent};
+				if ($flameBarriers{sent}{count} == $flameBarriers{sent}{total}) {
+					delete $flameBarriers{sent};
 				}
 			}
 		}
@@ -10188,11 +10188,11 @@ sub area_spell_disappears {
 	my $spell = $spells{$ID};
 	debug "Area effect ".getSpellName($spell->{type})." ($spell->{binID}) from ".getActorName($spell->{sourceID})." disappeared from ($spell->{pos}{x}, $spell->{pos}{y})\n", "skill", 2;
 	
-	if (exists $spell->{'my_firewall'} && exists $firewalls{exist}{$spell->{'barrierID'}} && exists $firewalls{exist}{$spell->{'barrierID'}}{$unpackedID}) {
-		delete $firewalls{exist}{$spell->{'barrierID'}}{$unpackedID};
+	if (exists $spell->{'my_flamebarrier'} && exists $flameBarriers{exist}{$spell->{'barrierID'}} && exists $flameBarriers{exist}{$spell->{'barrierID'}}{$unpackedID}) {
+		delete $flameBarriers{exist}{$spell->{'barrierID'}}{$unpackedID};
 		
-		if (scalar keys %{$firewalls{exist}{$spell->{'barrierID'}}} == 0) {
-			delete $firewalls{exist}{$spell->{'barrierID'}};
+		if (scalar keys %{$flameBarriers{exist}{$spell->{'barrierID'}}} == 0) {
+			delete $flameBarriers{exist}{$spell->{'barrierID'}};
 		}
 	}
 	

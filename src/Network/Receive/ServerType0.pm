@@ -1354,7 +1354,7 @@ sub skill_use_location {
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 	message $disp, $domain;
 	
-	delete $firewalls{sent} if (exists $firewalls{sent});
+	delete $flameBarriers{sent} if (exists $flameBarriers{sent});
 	if ($skillID == 18 && $sourceID eq $accountID) {
 		my $realMyPos = calcPosition($char);
 		my $pos;
@@ -1368,12 +1368,12 @@ sub skill_use_location {
 			}
 		}
 		
-		$firewalls{sent}{x} = $x;
-		$firewalls{sent}{y} = $y;
-		$firewalls{sent}{time} = time;
-		$firewalls{sent}{got_first} = 0;
-		$firewalls{sent}{total} = $total;
-		$firewalls{sent}{count} = 0;
+		$flameBarriers{sent}{x} = $x;
+		$flameBarriers{sent}{y} = $y;
+		$flameBarriers{sent}{time} = time;
+		$flameBarriers{sent}{got_first} = 0;
+		$flameBarriers{sent}{total} = $total;
+		$flameBarriers{sent}{count} = 0;
 	}
 
 	#EFST_MAGICPOWER OVERRIDE

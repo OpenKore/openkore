@@ -724,7 +724,7 @@ sub initMapChangeVars {
 	undef @itemsID;
 	undef @identifyID;
 	undef @spellsID;
-	undef %firewalls;
+	undef %flameBarriers;
 	undef @arrowCraftID;
 	undef %items;
 	undef %spells;

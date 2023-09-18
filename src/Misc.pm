@@ -2558,7 +2558,7 @@ sub canReachMeleeAttack {
 #
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
-	my ($actor, $actorType, $target, $attackMaxDistance, $runFromTargetActive, $behindFireWall, $current_flamebarrier) = @_;
+	my ($actor, $actorType, $target, $attackMaxDistance, $runFromTargetActive, $behindFlameBarrier, $current_flamebarrier) = @_;
 
 	# Actor was going from 'pos' to 'pos_to' in the last movement
 	my %myPos;
@@ -2585,7 +2585,7 @@ sub meetingPosition {
 	}
 	
 	my $firePos;
-	if ($behindFireWall) {
+	if ($behindFlameBarrier) {
 		$firePos = getFirePos(0);
 	}
 
@@ -2636,8 +2636,8 @@ sub meetingPosition {
 			if ($steps_count == 0) {
 				$timeForTargetToGetToStep = 0;
 				
-			} elsif ($behindFireWall && exists $firePos->{$targetPosInStep{x}} && exists $firePos->{$targetPosInStep{x}}{$targetPosInStep{y}}) {
-				# Target cannot get to this cell because there is a firewall in it
+			} elsif ($behindFlameBarrier && exists $firePos->{$targetPosInStep{x}} && exists $firePos->{$targetPosInStep{x}}{$targetPosInStep{y}}) {
+				# Target cannot get to this cell because there is a flamebarrier in it
 				last TARGETSTEP;
 				
 			} else {
@@ -2787,7 +2787,7 @@ sub meetingPosition {
 
 	my $best_spot;
 	my $best_time;
-	my $best_firewall;
+	my $best_flamebarrier;
 	foreach my $possible_target_pos (@target_pos_to_check) {
 		if ($possible_target_pos->{myDistToTargetPosInStep} >= $max_pathfinding_dist) {
 			$max_pathfinding_dist = $possible_target_pos->{myDistToTargetPosInStep} + 1;
@@ -2838,14 +2838,14 @@ sub meetingPosition {
 				}
 				
 				my $flameBarrier;
-				if ($behindFireWall) {
+				if ($behindFlameBarrier) {
 					$flameBarrier = check_flameBarrier($spot, $possible_target_pos->{targetPosInStep});
 					next SPOT unless ($flameBarrier);
 					
 					Misc::BarrierCanFleeTo($flameBarrier);
 					next SPOT unless ($flameBarrier->{'can_flee_to'});
 					
-					if ($behindFireWall == 2) {
+					if ($behindFlameBarrier == 2) {
 						#warning "[Barrier Meeting 1] C $current_flamebarrier->{'barrierID'} | T $flameBarrier->{'barrierID'}\n";
 						if ($current_flamebarrier->{'barrierID'} == $flameBarrier->{'barrierID'}) {
 							#warning "[Barrier Meeting 2] Avoided same barrierID in Out of Range AAAAAAAAAAAAAAA 1111111111111111111111.\n";
@@ -2894,14 +2894,14 @@ sub meetingPosition {
 				}
 
 				my $time_target_to_get_to_spot = calcTime($realTargetPos, $spot, $targetSpeed);
-				next if (($runFromTargetActive || $behindFireWall) && $time_actor_to_get_to_spot > $time_target_to_get_to_spot);
+				next if (($runFromTargetActive || $behindFlameBarrier) && $time_actor_to_get_to_spot > $time_target_to_get_to_spot);
 
 				my $sum_time = $time_actor_to_get_to_spot + $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
 				if (!defined($best_time) || $sum_time < $best_time) {
 					$best_time = $sum_time;
 					$best_spot = $spot;
-					if ($behindFireWall) {
-						$best_firewall = $flameBarrier;
+					if ($behindFlameBarrier) {
+						$best_flamebarrier = $flameBarrier;
 					}
 				}
 			}
@@ -2909,8 +2909,8 @@ sub meetingPosition {
 	}
 
 	if ($best_spot) {
-		if ($behindFireWall) {
-			$best_spot->{firewall} = $best_firewall;
+		if ($behindFlameBarrier) {
+			$best_spot->{flamebarrier} = $best_flamebarrier;
 		}
 		return $best_spot;
 	}

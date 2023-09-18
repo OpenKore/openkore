@@ -321,11 +321,11 @@ sub main {
 	my $cleanMonster = checkMonsterCleanness($ID);
 	
 	my $flameBarrier;
-	my $canCastFireWall;
+	my $canCastFlameBarrier;
 	if ($config{"flameBarrier"}) {
-		$canCastFireWall = checkSelfCondition("flameBarrier");
-		if (scalar keys %{$firewalls{exist}} == 3) {
-			$canCastFireWall = 0;
+		$canCastFlameBarrier = checkSelfCondition("flameBarrier");
+		if (scalar keys %{$flameBarriers{exist}} == 3) {
+			$canCastFlameBarrier = 0;
 		}
 		
 		$flameBarrier = Misc::check_flameBarrier($realMyPos, $realMonsterPos);
@@ -464,7 +464,7 @@ sub main {
 		if ($meeting_safe) {
 			if ($realMyPos->{x} ==  $meeting_safe->{x} && $realMyPos->{y} == $meeting_safe->{y}) {
 				warning TF("[Barrier | Unsafe flameBarrier | flameBarrier_safeCheck] %s (%d %d), Barrier at (%d %d), mob at (%d %d).\n", 1, $char, $realMyPos->{x}, $realMyPos->{y}, $meeting_safe->{pos}{x}, $meeting_safe->{pos}{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-				$flameBarrier_safeCheck = $meeting_safe->{firewall};
+				$flameBarrier_safeCheck = $meeting_safe->{flamebarrier};
 				Misc::BarrierDefineNeedRecast($flameBarrier_safeCheck);
 			} else {
 				$flameBarrier_safeCheck = 0;
@@ -556,15 +556,15 @@ sub main {
 				# Example at https://youtu.be/Kxym-WD5gAg?t=181
 				my $cell = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance}, 0, 2, $flameBarrier);
 				if ($cell) {
-					my $new_barrier = $cell->{firewall};
+					my $new_barrier = $cell->{flamebarrier};
 					warning TF("[Barrier Out of Range] %s (%d %d) behind barrier at (%d %d) (BID %d), moving to (%d %d) behind another closer barrier at (%d %d) (BID %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $flameBarrier->{pos}{x}, $flameBarrier->{pos}{y}, $flameBarrier->{'barrierID'}, $cell->{x}, $cell->{y}, $new_barrier->{pos}{x}, $new_barrier->{pos}{y}, $new_barrier->{'barrierID'}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 					$args->{avoiding} = 1;
 					# TODO Check if this runFromTarget => 1 should be bellow
 					$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, runFromTarget => 1);
 				
 				# There is no other barrier closer to the target, our barrier needs to be recast and we can do it
-				} elsif ($canCastFireWall && $flameBarrier->{'needs_recast'}) {
-					warning "[Barrier Out of Range] Need to  recast firewall as it will expire soon.\n";
+				} elsif ($canCastFlameBarrier && $flameBarrier->{'needs_recast'}) {
+					warning "[Barrier Out of Range] Need to  recast flamebarrier as it will expire soon.\n";
 			
 					my $bpos = Misc::getBarrierPos($realMyPos, $realMonsterPos, $target, 1);
 					if (defined $bpos) {
@@ -580,15 +580,15 @@ sub main {
 			} elsif ($flameBarrier_safeCheck) {
 				my $cell = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance}, 0, 2, $flameBarrier_safeCheck);
 				if ($cell) {
-					my $new_barrier = $cell->{firewall};
+					my $new_barrier = $cell->{flamebarrier};
 					warning TF("[Barrier Out of Range] %s (%d %d) behind barrier-safe at (%d %d) (BID %d), moving to (%d %d) behind another closer barrier at (%d %d) (BID %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $flameBarrier_safeCheck->{pos}{x}, $flameBarrier_safeCheck->{pos}{y}, $flameBarrier_safeCheck->{'barrierID'}, $cell->{x}, $cell->{y}, $new_barrier->{pos}{x}, $new_barrier->{pos}{y}, $new_barrier->{'barrierID'}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 					$args->{avoiding} = 1;
 					# TODO Check if this runFromTarget => 1 should be bellow
 					$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, runFromTarget => 1);
 				
 				# There is no other barrier closer to the target, our barrier needs to be recast and we can do it
-				} elsif ($canCastFireWall && $flameBarrier_safeCheck->{'needs_recast'}) {
-					warning "[Barrier Out of Range] Need to  recast firewall-safe as it will expire soon.\n";
+				} elsif ($canCastFlameBarrier && $flameBarrier_safeCheck->{'needs_recast'}) {
+					warning "[Barrier Out of Range] Need to  recast flamebarrier-safe as it will expire soon.\n";
 			
 					my $bpos = Misc::getBarrierPos($realMyPos, $realMonsterPos, $target, 1);
 					if (defined $bpos) {
@@ -609,9 +609,9 @@ sub main {
 					$args->{avoiding} = 1;
 					# TODO Check if this runFromTarget => 1 should be bellow
 					$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, runFromTarget => 1);
-				} elsif ($canCastFireWall) {
+				} elsif ($canCastFlameBarrier) {
 					warning TF("[Barrier Out of Range] %s (%d %d) no acceptable place behind barrier, mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-					warning "[Barrier Out of Range] Trying to cast firewall on attack.\n";
+					warning "[Barrier Out of Range] Trying to cast flamebarrier on attack.\n";
 					
 					my $bpos = Misc::getBarrierPos($realMyPos, $realMonsterPos, $target, 1);
 					if (defined $bpos) {
@@ -626,7 +626,7 @@ sub main {
 					}
 					# Here normally we would dequeue, but that accomplishes nothing and puts us in danger, better to just wait in place
 					#if (!defined $bpos) {
-					#	warning "[Barrier Out of Range] No acceptable place to cast firewall\n";
+					#	warning "[Barrier Out of Range] No acceptable place to cast flamebarrier\n";
 					#	$target->{attack_failedLOS} = time;
 					#	AI::dequeue while (AI::inQueue("attack"));
 					#}
@@ -756,8 +756,8 @@ sub main {
 			}
 		}
 	
-	} elsif ($config{"flameBarrier"} && $flameBarrier && $flameBarrier->{'needs_recast'} && $canCastFireWall) {
-		warning "[TEST Barrier] Need to  recast firewall as it will expire soon.\n";
+	} elsif ($config{"flameBarrier"} && $flameBarrier && $flameBarrier->{'needs_recast'} && $canCastFlameBarrier) {
+		warning "[TEST Barrier] Need to  recast flamebarrier as it will expire soon.\n";
 		
 		my $bpos = Misc::getBarrierPos($realMyPos, $realMonsterPos, $target, 1);
 		if (defined $bpos) {
@@ -768,8 +768,8 @@ sub main {
 			Misc::castBarrier($flameBarrier->{'pos'});
 		}
 	
-	} elsif ($config{"flameBarrier"} && !$flameBarrier && $flameBarrier_safeCheck && $flameBarrier_safeCheck->{'needs_recast'} && $canCastFireWall) {
-		warning "[TEST Barrier] Need to  recast firewall-safe as it will expire soon.\n";
+	} elsif ($config{"flameBarrier"} && !$flameBarrier && $flameBarrier_safeCheck && $flameBarrier_safeCheck->{'needs_recast'} && $canCastFlameBarrier) {
+		warning "[TEST Barrier] Need to  recast flamebarrier-safe as it will expire soon.\n";
 		
 		my $bpos = Misc::getBarrierPos($realMyPos, $realMonsterPos, $target, 1);
 		if (defined $bpos) {
@@ -790,9 +790,9 @@ sub main {
 			$args->{avoiding} = 1;
 			$char->route(undef, @{$cell}{qw(x y)}, noMapRoute => 1, avoidWalls => 0);
 			
-		} elsif ($canCastFireWall) {
+		} elsif ($canCastFlameBarrier) {
 			warning TF("[TEST Barrier] %s (%d %d) no acceptable place behind barrier, mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-			warning "[TEST Barrier] Trying to cast firewall on attack.\n";
+			warning "[TEST Barrier] Trying to cast flamebarrier on attack.\n";
 			
 			my $bpos = Misc::getBarrierPos($realMyPos, $realMonsterPos, $target, 1);
 			if (defined $bpos) {
@@ -808,7 +808,7 @@ sub main {
 			
 			# Only dequeue if we have not hit the mob yet
 			if (!defined $bpos && !($target->{dmgFromYou} > 0)) {
-				warning "[TEST Barrier] No acceptable place to cast firewall and target not hit yet, dequeueing\n";
+				warning "[TEST Barrier] No acceptable place to cast flamebarrier and target not hit yet, dequeueing\n";
 				$target->{attack_failedLOS} = time;
 				AI::dequeue while (AI::inQueue("attack"));
 			}
