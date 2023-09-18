@@ -1337,27 +1337,9 @@ sub skill_use_location {
 	# Print skill use message
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 	message $disp, $domain;
-	
-	delete $flameBarriers{sent} if (exists $flameBarriers{sent});
+
 	if ($skillID == 18 && $sourceID eq $accountID) {
-		my $realMyPos = calcPosition($char);
-		my $pos;
-		$pos->{x} = $x;
-		$pos->{y} = $y;
-		my $preview = Misc::previewBarrierPos($pos, $realMyPos, 1);
-		my $total = 0;
-		foreach my $x (keys %{$preview}) {
-			foreach my $y (keys %{$preview->{$x}}) {
-				$total++;
-			}
-		}
-		
-		$flameBarriers{sent}{x} = $x;
-		$flameBarriers{sent}{y} = $y;
-		$flameBarriers{sent}{time} = time;
-		$flameBarriers{sent}{got_first} = 0;
-		$flameBarriers{sent}{total} = $total;
-		$flameBarriers{sent}{count} = 0;
+		Misc::Barrier_skill_use_location($x, $y);
 	}
 
 	Plugins::callHook('packet_skilluse', {

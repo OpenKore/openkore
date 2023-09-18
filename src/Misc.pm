@@ -5468,6 +5468,30 @@ sub check_flameBarrier {
 	}
 }
 
+sub Barrier_skill_use_location {
+	my ($x, $y) = @_;
+	
+	my $pos;
+	$pos->{x} = $x;
+	$pos->{y} = $y;
+	my $realMyPos = calcPosition($char);
+	delete $flameBarriers{sent} if (exists $flameBarriers{sent});
+	my $preview = previewBarrierPos($pos, $realMyPos, 1);
+	my $total = 0;
+	foreach my $x (keys %{$preview}) {
+		foreach my $y (keys %{$preview->{$x}}) {
+			$total++;
+		}
+	}
+	
+	$flameBarriers{sent}{x} = $x;
+	$flameBarriers{sent}{y} = $y;
+	$flameBarriers{sent}{time} = time;
+	$flameBarriers{sent}{got_first} = 0;
+	$flameBarriers{sent}{total} = $total;
+	$flameBarriers{sent}{count} = 0;
+}
+
 ##
 # makeShop()
 #

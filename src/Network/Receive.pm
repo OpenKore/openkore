@@ -4371,11 +4371,11 @@ sub area_spell_multiple3 {
 		$spells{$ID}{'isVisible'} = $isVisible;
 		$spells{$ID}{'lvl'} = $lvl;
 		$spells{$ID}{'time'} = time;
-		$spells{$ID}{'disappear_time'} = $spells{$ID}{'time'} + 4 + $lvl;
 		if ($type == 0x81) {
 			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
-		}
-		if ($type == 127 && $sourceID eq $accountID) {
+			
+		} elsif ($type == 127 && $sourceID eq $accountID) {
+			$spells{$ID}{'disappear_time'} = $spells{$ID}{'time'} + 4 + $lvl;
 			if (exists $flameBarriers{sent}) {
 				
 				$flameBarriers{sent}{count}++;
