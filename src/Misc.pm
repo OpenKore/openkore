@@ -2558,7 +2558,7 @@ sub canReachMeleeAttack {
 #
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
-	my ($actor, $actorType, $target, $attackMaxDistance, $runFromTargetActive) = @_;
+	my ($actor, $actorType, $target, $attackMaxDistance, $runFromTargetActive, $behindFireWall, $current_flamebarrier) = @_;
 
 	# Actor was going from 'pos' to 'pos_to' in the last movement
 	my %myPos;
@@ -2582,6 +2582,11 @@ sub meetingPosition {
 	# Actor is currently moving
 	} else {
 		($realMyPos, undef) = calcPosFromTime(\%myPos, \%myPosTo, $mySpeed, $timeSinceActorMoved);
+	}
+	
+	my $firePos;
+	if ($behindFireWall) {
+		$firePos = getFirePos(0);
 	}
 
 	# Target was going from 'pos' to 'pos_to' in the last movement
@@ -2623,13 +2628,18 @@ sub meetingPosition {
 	# Target started moving from %targetPos to %targetPosTo and has not finished moving yet, it is currently at $realTargetPos, here we calculate every block still in its path and the time to reach them
 	if ($target_moving) {
 		my $steps_count = 0;
-		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
+		TARGETSTEP: foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
 			# Calculate the steps
 			%targetPosInStep = moveAlong(\%targetPos, \%targetPosTo, $currentStep);
 
 			# Calculate time to walk for target
 			if ($steps_count == 0) {
 				$timeForTargetToGetToStep = 0;
+				
+			} elsif ($behindFireWall && exists $firePos->{$targetPosInStep{x}} && exists $firePos->{$targetPosInStep{x}}{$targetPosInStep{y}}) {
+				# Target cannot get to this cell because there is a firewall in it
+				last TARGETSTEP;
+				
 			} else {
 				$timeForTargetToGetToStep = calcTime(\%targetPos, \%targetPosInStep, $targetSpeed) - $timeSinceTargetMoved;
 			}
@@ -2667,6 +2677,7 @@ sub meetingPosition {
 	my $runFromTarget_dist;
 	my $runFromTarget_minStep;
 	my $runFromTarget_maxPathDistance;
+	my $runFromTarget_dist_BehindWall;
 
 	# actor is char
 	if ($actorType == 1) {
@@ -2675,6 +2686,7 @@ sub meetingPosition {
 		$runFromTarget = $config{runFromTarget};
 		$runFromTarget_dist = $config{runFromTarget_dist};
 		$runFromTarget_minStep = $config{runFromTarget_minStep};
+		$runFromTarget_dist_BehindWall = $config{runFromTarget_dist_BehindWall};
 		$followDistanceMax = $config{followDistanceMax};
 		$attackCanSnipe = $config{attackCanSnipe};
 		if ($config{follow}) {
@@ -2749,9 +2761,6 @@ sub meetingPosition {
 	my $max_destination_dist;
 	if ($ranged && $runFromTarget) {
 		$min_destination_dist = $runFromTarget_dist;
-		if ($runFromTargetActive) {
-			$min_destination_dist = $runFromTarget_minStep;
-		}
 	}
 
 	my $max_path_dist;
@@ -2778,6 +2787,7 @@ sub meetingPosition {
 
 	my $best_spot;
 	my $best_time;
+	my $best_firewall;
 	foreach my $possible_target_pos (@target_pos_to_check) {
 		if ($possible_target_pos->{myDistToTargetPosInStep} >= $max_pathfinding_dist) {
 			$max_pathfinding_dist = $possible_target_pos->{myDistToTargetPosInStep} + 1;
@@ -2826,6 +2836,34 @@ sub meetingPosition {
 						next unless ($field->checkLOS($spot, $possible_target_pos->{targetPosInStep}, $attackCanSnipe));
 					}
 				}
+				
+				my $flameBarrier;
+				if ($behindFireWall) {
+					$flameBarrier = check_flameBarrier($spot, $possible_target_pos->{targetPosInStep});
+					next SPOT unless ($flameBarrier);
+					
+					Misc::BarrierCanFleeTo($flameBarrier);
+					next SPOT unless ($flameBarrier->{'can_flee_to'});
+					
+					if ($behindFireWall == 2) {
+						#warning "[Barrier Meeting 1] C $current_flamebarrier->{'barrierID'} | T $flameBarrier->{'barrierID'}\n";
+						if ($current_flamebarrier->{'barrierID'} == $flameBarrier->{'barrierID'}) {
+							#warning "[Barrier Meeting 2] Avoided same barrierID in Out of Range AAAAAAAAAAAAAAA 1111111111111111111111.\n";
+							next SPOT;
+						}
+					}
+					
+					my $min_barrier_dist = $config{'flameBarrier_distBehindWall'};
+					
+					for my $barrier_x (keys %{$firePos}) {
+						BARRIER: for my $barrier_y (keys %{$firePos->{$barrier_x}}) {
+							my $test_barrier = $firePos->{$barrier_x}{$barrier_y};
+							next BARRIER unless ($test_barrier->{ID} eq $flameBarrier->{ID});
+							# Gotta be at least $config{'flameBarrier_distBehindWall'} cells away from the barrier that protects us
+							next SPOT if (blockDistance($spot, $test_barrier->{'pos'}) < $min_barrier_dist);
+						}
+					}
+				}
 
 				# 4. The route should not exceed at any point $max_pathfinding_dist distance from the target.
 				my $solution = [];
@@ -2844,6 +2882,9 @@ sub meetingPosition {
 				next unless ($dist >= 0 && $dist <= $max_path_dist);
 
 				my $time_actor_to_get_to_spot = calcTime($realMyPos, $spot, $mySpeed);
+				
+				###
+				
 				my $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
 
 				if ($time_actor_to_get_to_spot >= $possible_target_pos->{timeForTargetToGetToStep}) {
@@ -2853,19 +2894,24 @@ sub meetingPosition {
 				}
 
 				my $time_target_to_get_to_spot = calcTime($realTargetPos, $spot, $targetSpeed);
-				next if ($runFromTargetActive && $time_actor_to_get_to_spot > $time_target_to_get_to_spot);
+				next if (($runFromTargetActive || $behindFireWall) && $time_actor_to_get_to_spot > $time_target_to_get_to_spot);
 
 				my $sum_time = $time_actor_to_get_to_spot + $time_actor_will_have_to_wait_in_spot_for_target_to_be_at_targetPosInStep;
-
 				if (!defined($best_time) || $sum_time < $best_time) {
 					$best_time = $sum_time;
 					$best_spot = $spot;
+					if ($behindFireWall) {
+						$best_firewall = $flameBarrier;
+					}
 				}
 			}
 		}
 	}
 
 	if ($best_spot) {
+		if ($behindFireWall) {
+			$best_spot->{firewall} = $best_firewall;
+		}
 		return $best_spot;
 	}
 }
@@ -3792,7 +3838,7 @@ sub canUseTeleport {
 		if ($config{teleportAuto_item1}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item1});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item1}) if (!($item) && $config{teleportAuto_item1} =~ /^\d{3,}$/);
-		}
+		} 
 		$item = $char->inventory->getByNameID(23280) unless $item; # Beginner's Fly Wing
 		$item = $char->inventory->getByNameID(12323) unless $item; # Novice Fly Wing
 		$item = $char->inventory->getByNameID(601) unless $item; # Fly Wing
@@ -5181,6 +5227,245 @@ sub checkMonsterCondition {
 
 	Plugins::callHook('checkMonsterCondition', \%args);
 	return $args{return};
+}
+
+sub castBarrier {
+	my ($pos) = @_;
+	ai_setSuspend(0);
+	
+	my $skill = new Skill(handle => 'MG_FIREWALL');
+	my $lvl = $config{"flameBarrier_lvl"};
+	my $maxCastTime = $config{"flameBarrier_maxCastTime"};
+	my $minCastTime = $config{"flameBarrier_minCastTime"};
+	
+	ai_skillUse(
+		$skill->getHandle(),
+		$lvl,
+		$maxCastTime,
+		$minCastTime,
+		$pos->{x},
+		$pos->{y}
+	);
+}
+
+sub previewBarrierPos {
+	my ($pos, $realMyPos, $verb) = @_;
+	
+	my %vec;
+	my $direction;
+	getVector(\%vec, $pos, $realMyPos);
+	$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+	if ($direction == 8) {
+		$direction = 0;
+	}
+	
+	my @change_x;
+	my @change_y;
+	my @middle;
+
+	if ($direction == 0) {# North
+		@change_x = (-1, 0, 1);
+		@change_y = ( 0, 0, 0);
+		@middle =   ( 0, 1, 0);
+
+	} elsif ($direction == 1) {# Northwest
+		@change_x = ( 1, 1 ,0, 0,-1);
+		@change_y = ( 1, 0, 0,-1,-1);
+		@middle =   ( 0, 0, 1, 0, 0);
+
+	} elsif ($direction == 2) {# West
+		@change_x = ( 0, 0, 0);
+		@change_y = (-1, 0, 1);
+		@middle =   ( 0, 1, 0);
+
+	} elsif ($direction == 3) {# Southwest
+		@change_x = (-1,-1, 0, 0, 1);
+		@change_y = ( 1, 0, 0,-1,-1);
+		@middle =   ( 0, 0, 1, 0, 0);
+
+	} elsif ($direction == 4) {# South
+		@change_x = (-1, 0, 1);
+		@change_y = ( 0, 0, 0);
+		@middle =   ( 0, 1, 0);
+
+	} elsif ($direction == 5) {# Southeast
+		@change_x = ( 1, 1 ,0, 0,-1);
+		@change_y = ( 1, 0, 0,-1,-1);
+		@middle =   ( 0, 0, 1, 0, 0);
+
+	} elsif ($direction == 6) {# East
+		@change_x = ( 0, 0, 0);
+		@change_y = (-1, 0, 1);
+		@middle =   ( 0, 1, 0);
+
+	} elsif ($direction == 7) {# Northeast
+		@change_x = (-1,-1, 0, 0, 1);
+		@change_y = ( 1, 0, 0,-1,-1);
+		@middle =   ( 0, 0, 1, 0, 0);
+	}
+	
+	my %positions;
+	foreach my $index (0..$#change_x) {
+		my $posx = $pos->{x} + $change_x[$index];
+		my $posy = $pos->{y} + $change_y[$index];
+		next unless ($field->isWalkable($posx, $posy));
+		my $mid = $middle[$index];
+		$positions{$posx}{$posy} = $mid;
+		warning "[check_flameBarrier] Preview barrier at $posx $posy\n" if ($verb == 1);
+	}
+	return \%positions;
+}
+
+sub getBarrierPos {
+	my ($me, $mob, $target, $optimal) = @_;
+	
+	my @cells;
+	my $dist = blockDistance($me, $mob);
+	my @dist_array = (0..$dist);
+	@dist_array = reverse @dist_array;
+	if ($optimal) {
+		pop @dist_array if (@dist_array > 1);
+		shift @dist_array if (@dist_array > 1);
+		shift @dist_array if (@dist_array > 1);
+		if (@dist_array > 1) {
+			my $size = $#dist_array;
+			my $middle = ceil($size/2);
+			my $low_priority = shift @dist_array;
+			splice @dist_array, $middle, 0, $low_priority;
+		}
+	}
+	
+	foreach my $c_dist (@dist_array) {
+		my %bpos = moveAlong($mob, $me, $c_dist);
+		push(@cells, \%bpos);
+	}
+	
+	DIST: foreach my $cell (@cells) {
+		my %bpos;
+		$bpos{x} = $cell->{x};
+		$bpos{y} = $cell->{y};
+		
+		next DIST unless ($field->isWalkable($bpos{x}, $bpos{y}));
+		
+		my $barrierPositions = previewBarrierPos($cell, $me, 0);
+		
+		MOB: for my $c_mob (@$monstersList) {
+			next MOB if ($c_mob->{ID} eq $target->{ID});
+			next MOB if ($c_mob->{dmgFromYou} > 0);
+			next MOB if ($c_mob->{dmgToYou} > 0);
+			next MOB if ($c_mob->{missedYou} > 0);
+			my $mobpos = calcPosition($c_mob);
+			next DIST if (exists $barrierPositions->{$mobpos->{x}} && exists $barrierPositions->{$mobpos->{x}}{$mobpos->{y}});
+		}
+		return { x => $bpos{x}, y => $bpos{y} };
+	}
+	return undef;
+}
+
+sub getFirePos {
+	my ($mustBeMiddle) = @_;
+	my %firePos;
+	for my $ID (@spellsID) {
+		my $spell = $spells{$ID};
+		next unless $spell;
+		next unless ($spell->{type} == 127);
+		next unless ($spell->{sourceID} eq $accountID);
+		next if ($mustBeMiddle && !$spell->{'middle'});
+		
+		if (exists $firePos{$spell->{pos}{x}} && exists $firePos{$spell->{pos}{x}}{$spell->{pos}{y}}) {
+			if ($spell->{'time'} > $firePos{$spell->{pos}{x}}{$spell->{pos}{y}}{'time'}) {
+				$firePos{$spell->{pos}{x}}{$spell->{pos}{y}} = $spell;
+			}
+		} else {
+			$firePos{$spell->{pos}{x}}{$spell->{pos}{y}} = $spell;
+		}
+		
+	}
+	return \%firePos;
+}
+
+sub BarrierDefineNeedRecast {
+	my ($flameBarrier) = @_;
+	if (timeOut($flameBarrier->{'time'},$config{"flameBarrier_recastAfter"})) {
+		$flameBarrier->{'needs_recast'} = 1;
+	} else {
+		$flameBarrier->{'needs_recast'} = 0;
+	}
+}
+
+sub BarrierCanFleeTo {
+	my ($flameBarrier) = @_;
+	if (timeOut($flameBarrier->{'time'},$config{"flameBarrier_notFleeAfter"})) {
+		$flameBarrier->{'can_flee_to'} = 0;
+	} else {
+		$flameBarrier->{'can_flee_to'} = 1;
+	}
+}
+
+sub getClosestAdjacentCell {
+	my ($me, $mob) = @_;
+	my @blocks = calcRectArea($me->{x}, $me->{y}, 1, $field);
+	
+	my $best_block;
+	my $shortest_dist;
+	
+	foreach my $block (@blocks) {
+		next if (!$field->isWalkable($block->{x}, $block->{y}));
+		my $dist = adjustedBlockDistance($mob, $block);
+		if (!defined $shortest_dist || $shortest_dist > $dist) {
+			$shortest_dist = $dist;
+			$best_block = $block;
+		}
+	}
+	return $best_block;
+}
+
+sub check_flameBarrier {
+	my ($me, $mob) = @_;
+	
+	my $mustBeMiddle = 0;
+	if ($config{"flameBarrier_mustBeMiddle"}) {
+		$mustBeMiddle = 1;
+	}
+	
+	my $firePos = getFirePos($mustBeMiddle);
+	
+	my $mob_attack_cell = getClosestAdjacentCell($me, $mob);
+	#warning "[check_flameBarrier] from $me->{x} $me->{y} | to $mob->{x} $mob->{y} | mob_attack_cell $mob_attack_cell->{x} $mob_attack_cell->{y}.\n";
+	
+	#warning Data::Dumper::Dumper \%firePos;
+	#warning "[check_flameBarrier] from $me->{x} $me->{y} | to $mob->{x} $mob->{y}.\n";
+	
+	# Simulate tracing a line to the location (Bresenham's algorithm)
+	
+	my $current_spell;
+	
+	my @cells;
+	my $dist = blockDistance($mob_attack_cell, $mob);
+	my @dist_array = (0..$dist);
+	@dist_array = reverse @dist_array;
+	shift @dist_array;
+	shift @dist_array;
+	
+	foreach my $c_dist (@dist_array) {
+		my %bpos = moveAlong($mob, $mob_attack_cell, $c_dist);
+		push(@cells, \%bpos);
+	}
+	
+	foreach my $cells (@cells) {
+		if (exists $firePos->{$cells->{x}} && exists $firePos->{$cells->{x}}{$cells->{y}}) {
+			if (!defined $current_spell || $firePos->{$cells->{x}}{$cells->{y}}{'time'} > $current_spell->{'time'}) {
+				$current_spell = $firePos->{$cells->{x}}{$cells->{y}};
+			}
+		}
+	}
+	
+	if (defined $current_spell) {
+		#warning "[check_flameBarrier] cell $current_spell->{pos}{x} $current_spell->{pos}{y} is between ($me->{x} $me->{y}) and ($mob->{x} $mob->{y}) and has my flame barrier.\n";
+		return $current_spell;
+	} else {
+		return 0;
+	}
 }
 
 ##

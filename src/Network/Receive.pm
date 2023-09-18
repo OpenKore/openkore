@@ -4359,6 +4359,7 @@ sub area_spell_multiple3 {
 		}
 
 		$spells{$ID}{'ID'} = $ID;
+		$spells{$ID}{'unpackedID'} = unpack('V',$ID);
 		$spells{$ID}{'sourceID'} = $sourceID;
 		$spells{$ID}{'pos'}{'x'} = $x;
 		$spells{$ID}{'pos'}{'y'} = $y;
@@ -4369,10 +4370,39 @@ sub area_spell_multiple3 {
 		$spells{$ID}{'range'} = $range;
 		$spells{$ID}{'isVisible'} = $isVisible;
 		$spells{$ID}{'lvl'} = $lvl;
+		$spells{$ID}{'time'} = time;
+		$spells{$ID}{'disappear_time'} = $spells{$ID}{'time'} + 4 + $lvl;
 		if ($type == 0x81) {
 			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
 		}
-		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y), isVisible = $isVisible, range = $range, lvl = $lvl\n", "skill", 2;
+		if ($type == 127 && $sourceID eq $accountID) {
+			if (exists $firewalls{sent}) {
+				
+				$firewalls{sent}{count}++;
+				$spells{$ID}{'my_firewall'} = 1;
+				
+				if (!$firewalls{sent}{got_first} && $firewalls{sent}{count} == 1) {
+					$firewalls{sent}{got_first} = $spells{$ID}{'unpackedID'};
+				}
+				
+				$spells{$ID}{'barrierID'} = $firewalls{sent}{got_first};
+				
+				# Middle
+				if ($firewalls{sent}{x} == $x && $firewalls{sent}{y} == $y) {
+					$spells{$ID}{'middle'} = 1;
+				} else {
+					$spells{$ID}{'middle'} = 0;
+				}
+				
+				$firewalls{exist}{$firewalls{sent}{got_first}}{$spells{$ID}{'unpackedID'}} = 1;
+				
+				
+				if ($firewalls{sent}{count} == $firewalls{sent}{total}) {
+					delete $firewalls{sent};
+				}
+			}
+		}
+		debug "Area effect ".getSpellName($type)." (type $type) (ID ".$spells{$ID}{'unpackedID'}.") ($binID) from ".getActorName($sourceID)." appeared on ($x, $y), isVisible = $isVisible, range = $range, lvl = $lvl\n", "skill", 2;
 	}
 
 	Plugins::callHook('packet_areaSpell', {
@@ -10154,8 +10184,18 @@ sub area_spell_disappears {
 	my ($self, $args) = @_;
 	# The area effect spell with ID dissappears
 	my $ID = $args->{ID};
+	my $unpackedID = unpack('V',$ID);
 	my $spell = $spells{$ID};
 	debug "Area effect ".getSpellName($spell->{type})." ($spell->{binID}) from ".getActorName($spell->{sourceID})." disappeared from ($spell->{pos}{x}, $spell->{pos}{y})\n", "skill", 2;
+	
+	if (exists $spell->{'my_firewall'} && exists $firewalls{exist}{$spell->{'barrierID'}} && exists $firewalls{exist}{$spell->{'barrierID'}}{$unpackedID}) {
+		delete $firewalls{exist}{$spell->{'barrierID'}}{$unpackedID};
+		
+		if (scalar keys %{$firewalls{exist}{$spell->{'barrierID'}}} == 0) {
+			delete $firewalls{exist}{$spell->{'barrierID'}};
+		}
+	}
+	
 	delete $spells{$ID};
 	binRemove(\@spellsID, $ID);
 }
