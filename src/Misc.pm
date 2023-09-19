@@ -5384,7 +5384,9 @@ sub getFirePos {
 
 sub BarrierDefineNeedRecast {
 	my ($flameBarrier) = @_;
-	if (timeOut($flameBarrier->{'time'},$config{"flameBarrier_recastAfter"})) {
+	if (timeOut($flameBarrier->{'time'},($flameBarrier->{'duration'} - $config{"flameBarrier_timeLeft_recastWhenLessThan"}))) {
+		$flameBarrier->{'needs_recast'} = 1;
+	} elsif ($flameBarrier->{'hits_left'} < $config{"flameBarrier_hitsLeft_recastWhenLessThan"}) {
 		$flameBarrier->{'needs_recast'} = 1;
 	} else {
 		$flameBarrier->{'needs_recast'} = 0;
@@ -5393,7 +5395,9 @@ sub BarrierDefineNeedRecast {
 
 sub BarrierCanFleeTo {
 	my ($flameBarrier) = @_;
-	if (timeOut($flameBarrier->{'time'},$config{"flameBarrier_notFleeAfter"})) {
+	if (timeOut($flameBarrier->{'time'},($flameBarrier->{'duration'} - $config{"flameBarrier_timeLeft_notFleeToWhenLessThan"}))) {
+		$flameBarrier->{'can_flee_to'} = 0;
+	} elsif ($flameBarrier->{'hits_left'} < $config{"flameBarrier_hitsLeft_notFleeToWhenLessThan"}) {
 		$flameBarrier->{'can_flee_to'} = 0;
 	} else {
 		$flameBarrier->{'can_flee_to'} = 1;
@@ -5493,7 +5497,9 @@ sub Barrier_skill_use_location {
 sub Barrier_area_spell_multiple3 {
 	my ($ID) = @_;
 	
-	$spells{$ID}{'disappear_time'} = $spells{$ID}{'time'} + $spells{$ID}{'lvl'} + 4;
+	$spells{$ID}{'duration'} = $spells{$ID}{'lvl'} + 4;
+	$spells{$ID}{'disappear_time'} = $spells{$ID}{'time'} + $spells{$ID}{'duration'};
+	$spells{$ID}{'hits_left'} = $spells{$ID}{'lvl'} + 4;
 
 	$flameBarriers{sent}{count}++;
 	$spells{$ID}{'my_flamebarrier'} = 1;
@@ -5526,6 +5532,24 @@ sub Barrier_area_spell_disappears {
 
 		if (scalar keys %{$flameBarriers{exist}{$spell->{'barrierID'}}} == 0) {
 			delete $flameBarriers{exist}{$spell->{'barrierID'}};
+		}
+	}
+}
+
+sub Barrier_skill_use {
+	my ($pos) = @_;
+	return unless (exists $flameBarriers{exist} && scalar keys %{$flameBarriers{exist}} > 0);
+		
+	for my $ID (@spellsID) {
+		my $spell = $spells{$ID};
+		next unless $spell;
+		next unless (exists $spell->{'my_flamebarrier'});
+		next unless (exists $spell->{'hits_left'} && $spell->{'hits_left'} > 0);
+		#next if ($mustBeMiddle && !$spell->{'middle'});
+		
+		if ($pos->{x} == $spell->{pos}{x} && $pos->{y} == $spell->{pos}{y}) {
+			$spell->{'hits_left'} -= 1;
+			warning "[FlameBarrier] Barrier at cell $pos->{x} $pos->{y} lost 1 HP point, remaining $spell->{'hits_left'}.\n";
 		}
 	}
 }

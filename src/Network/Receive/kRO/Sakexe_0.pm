@@ -1309,6 +1309,10 @@ sub skill_use {
 		});
 	message $disp, $domain, 1;
 
+	if ($args->{skillID} == 18 && $args->{sourceID} eq $accountID) {
+		Misc::Barrier_skill_use($target->{pos});
+	}
+
 	if ($args->{targetID} eq $accountID && $args->{damage} > 0) {
 		$damageTaken{$source->{name}}{$skill->getName()} += $args->{damage};
 	}

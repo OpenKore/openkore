@@ -14,8 +14,13 @@ flameBarrier 1
 flameBarrier_lvl 10
 flameBarrier_maxCastTime
 flameBarrier_minCastTime
-flameBarrier_recastAfter 8
-flameBarrier_notFleeAfter 8
+
+flameBarrier_timeLeft_recastWhenLessThan 6
+flameBarrier_timeLeft_notFleeToWhenLessThan 6
+
+flameBarrier_hitsLeft_recastWhenLessThan 4
+flameBarrier_hitsLeft_notFleeToWhenLessThan 4
+
 flameBarrier_distBehindBarrier 2
 flameBarrier_sp > 40
 flameBarrier_whenStatusInactive EFST_POSTDELAY
