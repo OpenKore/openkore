@@ -107,7 +107,7 @@ sub new {
 		ArgumentException->throw(error => "Invalid Coordinates argument.");
 	}
 
-	my $allowed = new Set(qw(maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
+	my $allowed = new Set(qw(maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined($args{$key})) {
 			$self->{$key} = $args{$key};
@@ -552,18 +552,7 @@ sub setMove {
 		y => $self->{next_pos}{y}
 	);
 	
-	my $sendAttack = 0;
-	if ($self->{actor}->isa('Actor::You') && $config{"attackSendAttackWithMove"}) {
-		$sendAttack = 1;
-		
-	} elsif (
-		($self->{actor}->isa("AI::Slave::Homunculus") || $self->{actor}->isa("Actor::Slave::Homunculus") || $self->{actor}->isa("AI::Slave::Mercenary") || $self->{actor}->isa("Actor::Slave::Mercenary")) &&
-		$config{$self->{actor}{configPrefix}.'attackSendAttackWithMove'}
-	) {
-		$sendAttack = 1;
-	}
-	
-	if ($sendAttack && $self->{lastStep} == 1 && $self->{attackID}) {
+	if ($self->{lastStep} == 1 && $self->{attackID} && $self->{sendAttackWithMove}) {
 		$task->{sendAttack} = 1;
 		$task->{attackID} = $self->{attackID};
 	} else {

@@ -557,11 +557,18 @@ sub main {
 
 			$args->{needReajust} = 0;
 			$args->{sentApproach} = 1;
+			
+			my $sendAttackWithMove = 0;
+			if ($config{"attackSendAttackWithMove"} && $args->{attackMethod}{type} eq "weapon") {
+				$sendAttackWithMove = 1;
+			}
+			
 			$char->route(
 				undef,
 				@{$pos}{qw(x y)},
 				maxRouteTime => $config{'attackMaxRouteTime'},
 				attackID => $ID,
+				sendAttackWithMove => $sendAttackWithMove,
 				avoidWalls => 0,
 				randomFactor => 0,
 				useManhattan => 1,
