@@ -78,10 +78,10 @@ ai_route_unstuck 2
 ai_items_take_delay 1.4
 
 # When your monster died, start checking for loot after x seconds
-ai_items_take_start 0.4
+ai_items_take_start 0.1
 
 # Stop checking for loot x seconds after it has begun checking
-ai_items_take_end 1.2
+ai_items_take_end 0.3
 
 # When standing near an item, send the 'take' packet every x seconds until
 # the item has been taken.
