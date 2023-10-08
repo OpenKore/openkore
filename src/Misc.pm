@@ -3034,7 +3034,7 @@ sub processNameRequestQueue {
 			next;
 		}
 
-		if(defined $actor && $actor->{avoid}) {
+		if (defined $actor && $actor->{avoid}) {
 			debug TF("[NameRequestQueue] Removed from list actor %s (flag avoid).\n", $actor);
 			shift @{$queue};
 			next;
