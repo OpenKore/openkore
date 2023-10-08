@@ -360,9 +360,6 @@ sub iterate {
 		$self->setError(NPC_NO_RESPONSE, T("The NPC did not respond."));
 
 	} elsif ($self->{stage} == TALKING_TO_NPC) {
-		# $config{npcTimeResponse} seconds have passed since we sent the last conversation step
-		# or $ai_npc_talk_wait_to_answer seconds have passed since the npc answered us.
-
 		if (%talk && $ai_v{'npc_talk'}{'talk'} eq 'initiated') {
 			debug "Spining until a response is needed from us\n", 'ai_npcTalk';
 			return;
@@ -389,7 +386,7 @@ sub iterate {
 
 		#We must always wait for the last sent step to be answered, if it hasn't then cancel this task.
 		if ($self->{wait_for_answer}) {
-			if (timeOut($ai_v{'npc_talk'}{'time'}, $ai_npc_talk_wait_to_answer)) {
+			if (timeOut($ai_v{'npc_talk'}{'time'}, $timeResponse)) {
 				$self->{error_code} = NPC_TIMEOUT_AFTER_ASWER;
 				$self->{error_message} = "We have waited for too long after we sent a response to the npc.";
 				$self->cancelTalk;
