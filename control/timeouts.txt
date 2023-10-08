@@ -162,7 +162,6 @@ ai_route_calcRoute 1
 ai_route_npcTalk 10
 
 # These timeouts are used in npc conversation (Task::TalkNPC)
-ai_npc_talk_wait_to_answer 1.5
 ai_npc_talk_wait_after_close_to_cancel 0.5
 ai_npc_talk_wait_after_cancel_to_destroy 0.5
 
