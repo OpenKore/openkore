@@ -3034,7 +3034,11 @@ sub processNameRequestQueue {
 			next;
 		}
 
-		next if ($actor->{avoid});
+		if (defined $actor && $actor->{avoid}) {
+			debug TF("[NameRequestQueue] Removed from list actor %s (flag avoid).\n", $actor);
+			shift @{$queue};
+			next;
+		}
 
 		$messageSender->sendGetPlayerInfo($ID) if (isSafeActorQuery($ID) == 1); # Do not Query GM's
 		$actor = shift @{$queue};
