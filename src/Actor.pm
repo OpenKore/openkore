@@ -767,7 +767,6 @@ sub attack {
 		pos_to => { %{$target->{pos_to}} },
 	);
 
-	$self->queue('checkMonsters') if !AI::inQueue("checkMonsters");
 	$self->queue('attack', \%args);
 
 	message sprintf($self->verb(T("%s are now attacking %s\n"), T("%s is now attacking %s\n")), $self, $target);

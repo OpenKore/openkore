@@ -189,15 +189,7 @@ sub finishAttacking {
 		});
 		monKilled();
 
-		# Pickup loot when monster's dead
-		if (AI::state == AI::AUTO && $config{itemsTakeAuto} && $monsters_old{$ID}{dmgFromPlayer}{$slave->{ID}} > 0 && !$monsters_old{$ID}{slave_ignore}) {
-			AI::clear("items_take");
-			AI::ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
-				$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
-		} elsif ($timeout{$slave->{ai_attack_waitAfterKill_timeout}}{'timeout'} > 0) {
-			# Cheap way to suspend all movement to make it look real
-			$slave->clientSuspend(0, $timeout{$slave->{ai_attack_waitAfterKill_timeout}}{'timeout'});
-		}
+		$slave->clientSuspend(0, $timeout{$slave->{ai_attack_waitAfterKill_timeout}}{'timeout'});
 
 		## kokal start
 		## mosters counting
