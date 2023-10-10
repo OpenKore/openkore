@@ -236,15 +236,8 @@ sub finishAttacking {
 		Plugins::callHook('target_died', {monster => $monsters_old{$ID}});
 		monKilled();
 
-		# Pickup loot when monster's dead
-		if (AI::state == AI::AUTO && $config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
-			AI::clear("items_take");
-			ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
-				      $monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
-		} else {
-			# Cheap way to suspend all movement to make it look real
-			ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
-		}
+		# Cheap way to suspend all movement to make it look real
+		ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
 
 		## kokal start
 		## mosters counting
