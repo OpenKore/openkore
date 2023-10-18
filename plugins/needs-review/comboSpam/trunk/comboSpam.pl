@@ -32,7 +32,7 @@ my $delay = 0.2;
 my $commands = Commands::register(
 	['combos', '', sub {
 		foreach my $skill (sort %sequence) {
-			next unless $skill->isa('Skill') && $report{$skill->getIDN()};
+			next unless defined $skill && $skill->isa('Skill') && $report{$skill->getIDN()};
 			message sprintf("%s: %s\n", $skill->getName(), $report{$skill->getIDN()}), 'info';
 		}
 	}]
