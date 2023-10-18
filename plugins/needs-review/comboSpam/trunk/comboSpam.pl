@@ -23,6 +23,7 @@ my %sequence = (
 	272 => new Skill(idn => 273), # Raging Quadruple Blow > Raging Thrust
 	273 => new Skill(idn => 371), # Raging Thrust         > Glacier Fist
 	371 => new Skill(idn => 372), # Glacier Fist          > Chain Crush Combo
+	372 => undef
 );
 
 my $time;
@@ -60,6 +61,8 @@ sub onLoop {
 	return unless AI::inQueue('attack');
 
 	my $skill = $sequence{$skillId};
+	return unless defined $skill && $skill->isa('Skill');
+
 	my $level = $char->getSkillLevel($skill);
 	my $handle = $skill->getHandle();
 	return unless $level > 0;
@@ -79,7 +82,8 @@ sub onSkillCast {
 
 sub onSkillFail {
 	my ($hookName, $args) = @_;
-	$args->{warn} = 0;
+	my $skillId = $args->{skillID};
+	$args->{warn} = exists $sequence{$skillId} ? 0 : 1;
 }
 
 sub onSkillUse {
