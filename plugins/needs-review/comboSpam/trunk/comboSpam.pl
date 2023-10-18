@@ -21,8 +21,8 @@ my %report = ();
 my %sequence = (
 	263 => new Skill(idn => 272), # Raging Trifecta Blow  > Raging Quadruple Blow
 	272 => new Skill(idn => 273), # Raging Quadruple Blow > Raging Thrust
-	273 => new Skill(idn => 371), # Raging·Thrust         > Glacier·Fist
-	371 => new Skill(idn => 372), # Glacier·Fist          > Chain·Crush·Combo
+	273 => new Skill(idn => 371), # Raging Thrust         > Glacier Fist
+	371 => new Skill(idn => 372), # Glacier Fist          > Chain Crush Combo
 );
 
 my $time;
