@@ -46,7 +46,14 @@ READLINE_LIB = 'readline'
 perlconfig = {}
 env = Environment()
 if win32:
-	env = Environment(ENV = {'PATH' : os.environ['PATH']}, tools = ['mingw', 'gcc', 'cc', 'g++', 'c++'])
+	env = Environment(
+		ENV = {
+			'PATH' : os.environ['PATH'], 
+			'TEMP' : os.environ['TEMP'],
+			'TMP' : os.environ['TMP'],
+		}, 
+		tools = ['mingw', 'gcc', 'cc', 'g++', 'c++'],
+	)
 
 if darwin:
 	env['LIBPATH'] = DARWIN_LIBRARY_DIRECTORIES
