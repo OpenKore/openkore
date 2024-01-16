@@ -86,6 +86,7 @@ attackCanSnipe 0
 attackCheckLOS 0
 attackRouteMaxPathDistance 13
 attackLooters 0
+attackLooters_dist 1
 attackChangeTarget 1
 aggressiveAntiKS 0
 

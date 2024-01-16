@@ -236,7 +236,7 @@ sub finishAttacking {
 		Plugins::callHook('target_died', {monster => $monsters_old{$ID}});
 		monKilled();
 
-		# Pickup loot when monster's dead
+    # Pickup loot when monster's dead
 		if (AI::state == AI::AUTO && $config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
 			AI::clear("items_take");
 			ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},

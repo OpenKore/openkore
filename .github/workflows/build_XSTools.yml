@@ -101,9 +101,16 @@ jobs:
           echo 'mv c:/Strawberry/ c:/Strawberry_old'
           mv c:/Strawberry/ c:/Strawberry_old
         }
-        echo "== remove g++ x64"
-        echo 'rm c:/ProgramData/Chocolatey/bin/g++.exe'
-        rm c:/ProgramData/Chocolatey/bin/g++.exe
+        if ( Test-Path "c:/ProgramData/Chocolatey/bin/g++.exe" -PathType leaf ) {
+          echo "== remove g++ x64"
+          echo 'rm c:/ProgramData/Chocolatey/bin/g++.exe'
+          rm c:/ProgramData/Chocolatey/bin/g++.exe
+        }
+        if ( Test-Path "c:/mingw64/bin/g++.exe" -PathType leaf) {
+          echo "== remove mingw64 g++"
+          echo 'rm c:/mingw64/bin/g++.exe'
+          rm c:/mingw64/bin/g++.exe
+        }
 
     - name: Check the Strawberry cache
       id: cache-strawberry
@@ -171,7 +178,7 @@ jobs:
     - name: Making artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
+        name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
         path: |
           src\auto\XSTools\XSTools_notes.txt
           src\auto\XSTools\XSTools.dll
@@ -251,13 +258,13 @@ jobs:
     - name: Restoring XTools from artifacts
       uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
+        name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
 
     - name: Checking for XSTools
       shell: bash
       run: |
-        echo -e "\e[34m# ls -lh | grep XSTools"
-        ls -lh | grep XSTools
+        echo -e "\e[34m# ls -lh | grep XSTools | grep -v notes"
+        ls -lh | grep XSTools | grep -v notes
 
     #############
     # make test #
@@ -267,6 +274,17 @@ jobs:
       run: |
         cd src\test
         perl unittests.pl
+
+    ###################
+    # OpenKore launch #
+    ###################
+
+    - name: Start OpenKore
+      run: |
+        perl ./openkore.pl --version
+        if ( $? -eq "True" ) {
+          echo "OpenKore started successfully"
+        }
 
 
 ###################
@@ -374,7 +392,7 @@ jobs:
     - name: Making artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
+        name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
         path: |
           src/auto/XSTools/XSTools_notes.txt
           src/auto/XSTools/XSTools.so
@@ -426,13 +444,13 @@ jobs:
     - name: Restoring XTools from artifacts
       uses: actions/download-artifact@v3
       with:
-        name: ${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
+        name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
 
     - name: Checking for XSTools
       shell: bash
       run: |
-        echo -e "\e[34m# ls -lh | grep XSTools"
-        ls -lh | grep XSTools
+        echo -e "\e[34m# ls -lh | grep XSTools | grep -v notes"
+        ls -lh | grep XSTools | grep -v notes
 
     #############
     # make test #
@@ -441,6 +459,17 @@ jobs:
     - name: Running tests
       run: |
         make test
+
+    ###################
+    # OpenKore launch #
+    ###################
+
+    - name: Start OpenKore
+      run: |
+        perl ./openkore.pl --version
+        if [[ $? -eq 0 ]]; then
+          echo "OpenKore started successfully"
+        fi
 
   #######################
   # start the third job #
