@@ -147,7 +147,7 @@ sub validate_condition {
 			$self->{fulfilled_quest_id} = undef;
 			$self->{fulfilled_mob_id} = undef;
 			$self->{fulfilled_member_index} = undef;
-			$self->{is_on_stand_by} = 1;
+			$self->{is_on_stand_by} = 0;
 			
 		} elsif ($callback_name eq 'inventory_ready') {
 			return $self->SUPER::validate_condition if ($self->{is_on_stand_by} == 0);
