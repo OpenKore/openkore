@@ -386,6 +386,10 @@ sub iterate {
 
 		#We must always wait for the last sent step to be answered, if it hasn't then cancel this task.
 		if ($self->{wait_for_answer}) {
+			if (${self}->{progress_bar}) {
+				$ai_v{'npc_talk'}{'time'} = time;
+				return;
+			}
 			if (timeOut($ai_v{'npc_talk'}{'time'}, $timeResponse)) {
 				$self->{error_code} = NPC_TIMEOUT_AFTER_ASWER;
 				$self->{error_message} = "We have waited for too long after we sent a response to the npc.";
