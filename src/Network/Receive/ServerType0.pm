@@ -1389,8 +1389,8 @@ sub skill_used_no_damage {
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 	if ($args->{sourceID} eq $accountID) {
 		my $pos = calcPosition($char);
-		$char->{pos} = $pos;
-		$char->{pos_to} = $pos;
+		%{$char->{pos}} = %{$pos};
+		%{$char->{pos_to}} = %{$pos};
 		$char->{time_move} = 0;
 		$char->{time_move_calc} = 0;
 	}
