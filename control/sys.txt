@@ -1,6 +1,10 @@
 ###### Localization settings ######
 locale
 
+###### Interface settings ######
+# Available interface list: Console, Tk, Vx, Win32, Wx
+interface
+
 ###### Localization compatibility ######
 # Enable to make Kore compatible with old 2.0 configs.
 locale_compat 0
