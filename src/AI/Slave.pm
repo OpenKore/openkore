@@ -374,6 +374,9 @@ sub processAutoAttack {
 	 && ((AI::action ne "move" && AI::action ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'})
 	 && (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity)
 	 && ($config{$slave->{configPrefix}.'attackAuto_inLockOnly'} <= 1 || $field->baseName eq $config{'lockMap'})
+	 && (!$config{$slave->{configPrefix}.'attackAuto_notWhile_storageAuto'} || !AI::inQueue("storageAuto"))
+	 && (!$config{$slave->{configPrefix}.'attackAuto_notWhile_buyAuto'} || !AI::inQueue("buyAuto"))
+	 && (!$config{$slave->{configPrefix}.'attackAuto_notWhile_sellAuto'} || !AI::inQueue("sellAuto"))
 	) {
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
