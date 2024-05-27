@@ -46,7 +46,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # setup matrix:
     # - windows-2019 + python 2.7.18 x86 + strawberry perl 5.12 x86 + strawberry g++ x86
@@ -208,7 +208,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     ########################
     # preparing Windows OS #
@@ -311,7 +311,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # setup matrix:
     # - ubuntu-20.04 + python 2.7.18 x64 + perl 5.12 x64
@@ -421,7 +421,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     ######################
     # preparing Linux OS #
@@ -483,7 +483,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: run "makedist.sh --help"
       shell: bash
