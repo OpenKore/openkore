@@ -46,7 +46,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # setup matrix:
     # - windows-2019 + python 2.7.18 x86 + strawberry perl 5.12 x86 + strawberry g++ x86
@@ -58,7 +58,7 @@ jobs:
 
     - name: (Windows 2022) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
       if: matrix.os == 'windows-2022'
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python }}
         architecture: ${{ matrix.architecture }}
@@ -66,7 +66,7 @@ jobs:
     - name: (Windows 2019) Check the Python2 cache
       if: matrix.os == 'windows-2019'
       id: cache-python2
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: c:\python27
         key: ${{ runner.os }}-python-${{ matrix.python }}
@@ -114,7 +114,7 @@ jobs:
 
     - name: Check the Strawberry cache
       id: cache-strawberry
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: c:\Strawberry
         key: ${{ runner.os }}-strawberry-${{ matrix.perl }}
@@ -176,7 +176,7 @@ jobs:
     ####################
 
     - name: Making artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
         path: |
@@ -208,7 +208,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     ########################
     # preparing Windows OS #
@@ -235,7 +235,7 @@ jobs:
     - name: Check the Strawberry cache
       id: cache-strawberry
       if: runner.os == 'Windows'
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: c:\Strawberry
         key: ${{ runner.os }}-strawberry-${{ matrix.perl }}
@@ -256,7 +256,7 @@ jobs:
         perl --version
 
     - name: Restoring XTools from artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
 
@@ -311,7 +311,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # setup matrix:
     # - ubuntu-20.04 + python 2.7.18 x64 + perl 5.12 x64
@@ -323,7 +323,7 @@ jobs:
 
     - name: (Ubuntu-22.04) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
       if: matrix.os == 'ubuntu-22.04'
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python }}
         architecture: ${{ matrix.architecture }}
@@ -390,7 +390,7 @@ jobs:
     ####################
 
     - name: Making artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
         path: |
@@ -421,7 +421,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     ######################
     # preparing Linux OS #
@@ -442,7 +442,7 @@ jobs:
         perl --version
 
     - name: Restoring XTools from artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: XSTools_${{ matrix.os }}_perl-${{ matrix.perl }}${{ matrix.architecture }}
 
@@ -483,7 +483,7 @@ jobs:
 
     steps:
     - name: GIT checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: run "makedist.sh --help"
       shell: bash
