@@ -161,6 +161,17 @@ sub clear {
 	}
 }
 
+sub clearExceptTimeouts {
+	undef @ai_seq;
+	undef @ai_seq_args;
+
+	foreach (keys %ai_v) {
+		if ($_ !~ /_time$/m) {
+			delete $ai_v{$_};
+		}
+	}
+}
+
 sub suspend {
 	my $i = (defined $_[0] ? $_[0] : 0);
 	$ai_seq_args[$i]{suspended} = time if $i < @ai_seq_args;
