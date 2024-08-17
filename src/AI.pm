@@ -134,7 +134,6 @@ sub clear {
 	if ($total == 0) {
 		undef @ai_seq;
 		undef @ai_seq_args;
-		undef %ai_v;
 
 	# If 1 arg was given find it in the queue
 	} elsif ($total == 1) {
@@ -157,17 +156,6 @@ sub clear {
 	} else {
 		foreach (@_) {
 			AI::clear($_);
-		}
-	}
-}
-
-sub clearExceptTimeouts {
-	undef @ai_seq;
-	undef @ai_seq_args;
-
-	foreach (keys %ai_v) {
-		if ($_ !~ /_time$/m) {
-			delete $ai_v{$_};
 		}
 	}
 }

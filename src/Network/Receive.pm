@@ -7215,7 +7215,7 @@ sub map_change {
 	}
 
 	if ($ai_v{temp}{clear_aiQueue}) {
-		AI::clearExceptTimeouts;
+		AI::clear;
 		AI::SlaveManager::clear();
 	}
 
