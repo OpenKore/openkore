@@ -82,6 +82,7 @@ use constant {
 #       This is used to check whether the target actor is still on screen.
 # - stopWhenHit - Specifies whether you want to stop using this skill if casting has
 #       been cancelled because you've been hit. The default is true.
+# - isStartUseSkill - Specifies that the skill will use 0B10 (start_skill_use) packet
 # `l`
 sub new {
 	my $class = shift;
@@ -94,6 +95,7 @@ sub new {
 
 	@{$self}{qw(actor skill)} = @args{qw(actor skill)};
 	$self->{stopWhenHit} = defined($args{stopWhenHit}) ? $args{stopWhenHit} : 1;
+	$self->{isStartUseSkill} = defined($args{isStartUseSkill}) ? $args{isStartUseSkill} : 0;
 	if ($args{target}) {
 		if (UNIVERSAL::isa($args{target}, 'Actor') && !$args{target}->isa('Actor::You') && !$args{actorList}) {
 			ArgumentException->throw("No actorList argument given.");
@@ -137,7 +139,7 @@ sub new {
 
 	my @holder = ($self);
 	Scalar::Util::weaken($holder[0]);
-	
+
 	my $workaround_skill_use = sub {
 		my ($handle) = @_;
 		sub {
@@ -147,19 +149,19 @@ sub new {
 			}, \@holder)
 		}
 	};
-	
+
 	$self->{hooks} = Plugins::addHooks(
 		['is_casting',       \&onSkillCast, \@holder],
 		['packet_skilluse',  \&onSkillUse,  \@holder],
-		
+
 		# server doesn't confirm skill use for MC_IDENTIFY
 		# FIXME: server doesn't send anything if there're no items to identify
 		['packet/identify_list' => $workaround_skill_use->('MC_IDENTIFY')],
-		
+
 		# server doesn't confirm skill use for MC_VENDING
 		# official servers send lone skill_cast packet
 		['packet/shop_skill' => $workaround_skill_use->('MC_VENDING')],
-		
+
 		['packet_skillfail', \&onSkillFail, \@holder],
 		['packet_castCancelled', \&onSkillCancelled, \@holder],
 		['Network::Receive::map_changed', \&onMapChanged, \@holder],
@@ -274,7 +276,11 @@ sub castSkill {
 
 	if ($skill->getTargetType() == Skill::TARGET_SELF) {
 		# A skill which is used on the character self.
-		$messageSender->sendSkillUse($skillID, $level, $self->{actor}{ID});
+		if ($self->{isStartUseSkill}) {
+			$messageSender->sendStartSkillUse($skillID, $level, $self->{actor}{ID});
+		} else {
+			$messageSender->sendSkillUse($skillID, $level, $self->{actor}{ID});
+		}
 
 	} elsif (UNIVERSAL::isa($self->{target}, 'Actor')) {
 		# The skill must be used on an actor.
@@ -371,6 +377,7 @@ sub iterate {
 			} else {
 				$self->setError(ERROR_MAX_TRIES, TF("Unable to cast skill %s in %d tries.",
 					$self->{skill}->getName(), $self->{maxCastTries}));
+				$char->{last_skill_used_is_continuous} = 0 if ($char->{last_skill_used_is_continuous});
 				debug "UseSkill - Timeout, maximum tries reached.\n", "Task::UseSkill" if DEBUG;
 			}
 

@@ -9,6 +9,22 @@
 #####################
 # Official RO Servers
 
+# https://www.gnjoy.asia
+[Asia (MSP) - aRO: Baphomet]
+ip 18.136.20.146
+port 6900
+master_version 15
+version 15
+serverType aRO
+serverEncoding Western
+addTableFolders aRO
+charBlockSize 175
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+pinCode 1
+
 # http://ragnarok.uol.com.br
 [Brazil - bRO: Valhalla]
 ip 200.229.50.36
@@ -105,8 +121,9 @@ rankingSystemType 1
 ignoreAntiCheatWarning 0
 
 # Renewal
-# http://playragnarok.com
-[International - iRO: Thor, Chaos]
+# http://renewal.playragnarok.com/
+[International - iRO: Chaos/Thor/Freya]
+title International - iRO: Chaos|Thor|Freya (Renewal-compatible)
 ip 128.241.92.36
 port 6800
 master_version 1
@@ -123,21 +140,6 @@ rankingSystemType 1
 itemListType 1
 itemListUseOldType 1
 ignoreAntiCheatWarning 0
-
-# http://playragnarok.com
-[International - iRO: Sakray]
-ip 128.241.92.36
-port 6800
-master_version 14
-version 18
-serverType iRO_Sakray
-serverEncoding Western
-addTableFolders iRO/Sakray;iRO
-charBlockSize 147
-#sendCryptKeys 0x00000000, 0x00000000, 0x00000000
-rankingSystemType 1
-blockingPlayerCancel 1
-charDeleteDateType 1
 
 # https://ragnarokonline.gungho.jp/
 # TODO: Breidablik, World group 1, World group 2, World group 3, World for stalls, Yggdrasill

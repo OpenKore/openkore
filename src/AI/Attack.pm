@@ -153,7 +153,25 @@ sub process {
 		main();
 	}
 
-	# Check for kill steal and mob-training while moving
+	# Check for hidden monsters
+	if (AI::inQueue("attack") && AI::is("move", "route", "attack")) {
+		my $ID = AI::args->{attackID};
+		my $monster = $monsters{$ID};
+		if (($monster->{statuses}->{EFFECTSTATE_BURROW} || $monster->{statuses}->{EFFECTSTATE_HIDING}) &&
+		$config{avoidHiddenMonsters}) {
+			message TF("Dropping target %s - will not attack hidden monsters\n", $monster), 'ai_attack';
+			$char->sendAttackStop;
+			$monster->{ignore} = 1;
+
+			AI::dequeue while (AI::inQueue("attack"));
+			if ($config{teleportAuto_dropTargetHidden}) {
+				message T("Teleport due to dropping hidden target\n");
+				ai_useTeleport(1);
+			}
+		}
+	}
+
+	# Check for kill steal, mob-training and hiding while moving
 	if ((AI::is("move", "route") && $args->{attackID} && AI::inQueue("attack")
 		&& timeOut($args->{movingWhileAttackingTimeout}, 0.2))) {
 
@@ -200,7 +218,7 @@ sub giveUp {
 	message T("Can't reach or damage target, dropping target\n"), "ai_attack";
 	if ($config{'teleportAuto_dropTarget'}) {
 		message T("Teleport due to dropping attack target\n");
-		useTeleport(1);
+		ai_useTeleport(1);
 	}
 }
 
@@ -218,7 +236,7 @@ sub finishAttacking {
 		Plugins::callHook('target_died', {monster => $monsters_old{$ID}});
 		monKilled();
 
-		# Pickup loot when monster's dead
+    # Pickup loot when monster's dead
 		if (AI::state == AI::AUTO && $config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
 			AI::clear("items_take");
 			ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
@@ -251,11 +269,12 @@ sub finishAttacking {
 
 	} elsif ($config{teleportAuto_lostTarget}) {
 		message T("Target lost, teleporting.\n"), "ai_attack";
-		useTeleport(1);
+		ai_useTeleport(1);
 	} else {
 		message T("Target lost\n"), "ai_attack";
 	}
 
+	$messageSender->sendStopSkillUse($char->{last_continuous_skill_used}) if $char->{last_skill_used_is_continuous};
 	Plugins::callHook('attack_end', {ID => $ID})
 
 }
@@ -274,7 +293,7 @@ sub dropTargetWhileMoving {
 	AI::dequeue while (AI::inQueue("attack"));
 	if ($config{teleportAuto_dropTargetKS}) {
 		message T("Teleport due to dropping attack target\n");
-		useTeleport(1);
+		ai_useTeleport(1);
 	}
 }
 
@@ -432,7 +451,7 @@ sub main {
 		AI::dequeue while (AI::inQueue("attack"));
 		if ($config{teleportAuto_dropTargetKS}) {
 			message T("Teleport due to dropping attack target\n"), "teleport";
-			useTeleport(1);
+			ai_useTeleport(1);
 		}
 
 	} elsif ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
@@ -525,7 +544,7 @@ sub main {
 				message T("Unable to calculate a route to target, dropping target\n"), "ai_attack";
 				if ($config{'teleportAuto_dropTarget'}) {
 					message T("Teleport due to dropping attack target\n");
-					useTeleport(1);
+					ai_useTeleport(1);
 				}
 			} else {
 				debug "Attack $char - successufully routing to $target\n", 'ai_attack';
@@ -533,10 +552,10 @@ sub main {
 		} else {
 			$target->{attack_failed} = time;
 			AI::dequeue while (AI::inQueue("attack"));
-			message T("Unable to calculate a meetingPosition to target, dropping target\n"), "ai_attack";
+			message TF("Unable to calculate a meetingPosition to target, dropping target. Check %s in config.txt\n", 'attackRouteMaxPathDistance'), "ai_attack";
 			if ($config{'teleportAuto_dropTarget'}) {
 				message T("Teleport due to dropping attack target\n");
-				useTeleport(1);
+				ai_useTeleport(1);
 			}
 		}
 
@@ -654,6 +673,7 @@ sub main {
 				"attackSkillSlot_${slot}",
 				undef,
 				"attackSkill",
+				$config{"attackSkillSlot_${slot}_isStartSkill"} ? 1 : 0,
 			);
 			$args->{monsterID} = $ID;
 			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);

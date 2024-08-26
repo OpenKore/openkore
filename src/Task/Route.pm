@@ -29,6 +29,7 @@ use base qw(Task::WithSubtask);
 use Task::Move;
 
 use Globals qw($field $net %config %timeout);
+use AI qw(ai_useTeleport);
 use Log qw(message debug warning);
 use Network;
 use Field;
@@ -464,7 +465,7 @@ sub iterate {
 				$msg .= T(" Teleporting to unstuck.") if ($config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'});
 				$msg .= "\n";
 				warning $msg, "route";
-				Misc::useTeleport(1) if $config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'};
+				ai_useTeleport(1) if $config{$self->{actor}{configPrefix}.'teleportAuto_unstuck'};
 				$self->setError(STUCK, T("Stuck during route."));
 				Plugins::callHook('route', {status => 'stuck'});
 			}
