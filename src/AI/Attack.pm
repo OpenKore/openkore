@@ -38,6 +38,7 @@ use Utils::PathFinding;
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
+	my $action = AI::action;
 
 	if (shouldAttack($action, $args)) {
 		my $ID;
