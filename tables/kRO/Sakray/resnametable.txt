@@ -1,4 +1,219 @@
-//-- 최종갱신 사크라이 2018-07-18
+// ==========================================================================
+// resnametable.txt 본서버 최종수정: 2021-01-21 - 에피소드18 기도의 방향
+// ==========================================================================
+// 에피소드 18 기도의 방향
+1@nyr.gnd#1@nyr.gnd#
+1@nyr.gat#1@nyr.gat#
+1@nyr.rsw#1@nyr.rsw#
+유저인터페이스\map\1@nyr.bmp#유저인터페이스\map\1@nyr.bmp#
+2@nyr.gnd#2@nyr.gnd#
+2@nyr.gat#2@nyr.gat#
+2@nyr.rsw#2@nyr.rsw#
+유저인터페이스\map\2@nyr.bmp#유저인터페이스\map\2@nyr.bmp#
+1@advs.gnd#1@advs.gnd#
+1@advs.gat#1@advs.gat#
+1@advs.rsw#1@advs.rsw#
+유저인터페이스\map\1@advs.bmp#유저인터페이스\map\1@advs.bmp#
+1@adv.gnd#1@adv.gnd#
+1@adv.gat#1@adv.gat#
+1@adv.rsw#1@adv.rsw#
+유저인터페이스\map\1@adv.bmp#유저인터페이스\map\1@adv.bmp#
+1@oz.gnd#1@oz.gnd#
+1@oz.gat#1@oz.gat#
+1@oz.rsw#1@oz.rsw#
+유저인터페이스\map\1@oz.bmp#유저인터페이스\map\1@oz.bmp#
+1@tcamp.gnd#1@tcamp.gnd#
+1@tcamp.gat#1@tcamp.gat#
+1@tcamp.rsw#1@tcamp.rsw#
+유저인터페이스\map\1@tcamp.bmp#유저인터페이스\map\1@tcamp.bmp#
+
+//성좌의 탑 
+1@ch_t.gnd#1@ch_t.gnd#
+1@ch_t.gat#1@ch_t.gat#
+1@ch_t.rsw#1@ch_t.rsw#
+유저인터페이스\map\1@ch_t.bmp#유저인터페이스\map\1@ch_t.bmp#
+2@ch_t.gnd#2@ch_t.gnd#
+2@ch_t.gat#2@ch_t.gat#
+2@ch_t.rsw#2@ch_t.rsw#
+유저인터페이스\map\2@ch_t.bmp#유저인터페이스\map\2@ch_t.bmp#
+3@ch_t.gnd#3@ch_t.gnd#
+3@ch_t.gat#3@ch_t.gat#
+3@ch_t.rsw#3@ch_t.rsw#
+유저인터페이스\map\3@ch_t.bmp#유저인터페이스\map\3@ch_t.bmp#
+
+// 영웅의 흔적 외전 회한의 무덤
+1@spa2.gnd#1@spa2.gnd#
+1@spa2.gat#1@spa2.gat#
+1@spa2.rsw#1@spa2.rsw#
+유저인터페이스\map\1@spa2.bmp#유저인터페이스\map\1@spa2.bmp#
+
+// 영웅의 흔적 외전 비공정추락지
+1@mjo1.gnd#1@mjo1.gnd#
+1@mjo1.gat#1@mjo1.gat#
+1@mjo1.rsw#1@mjo1.rsw#
+유저인터페이스\map\1@mjo1.bmp#유저인터페이스\map\1@mjo1.bmp#
+1@mjo2.gnd#1@mjo2.gnd#
+1@mjo2.gat#1@mjo2.gat#
+1@mjo2.rsw#1@mjo2.rsw#
+유저인터페이스\map\1@mjo2.bmp#유저인터페이스\map\1@mjo2.bmp#
+
+// 게펜 야간 투기장
+1@ge_sn.gnd#1@ge_sn.gnd#
+1@ge_sn.gat#1@ge_sn.gat#
+1@ge_sn.rsw#1@ge_sn.rsw#
+유저인터페이스\map\1@ge_sn.bmp#유저인터페이스\map\1@ge_sn.bmp#
+
+//4차 전직 마이스터
+1@4mst.gnd#1@4mst.gnd#
+1@4mst.gat#1@4mst.gat#
+1@4mst.rsw#1@4mst.rsw#
+유저인터페이스\map\1@4mst.bmp#유저인터페이스\map\1@4mst.bmp#
+
+// 4차 전직 쉐도우크로스 어비스체이서
+1@4sac.gnd#1@4sac.gnd#
+1@4sac.gat#1@4sac.gat#
+1@4sac.rsw#1@4sac.rsw#
+유저인터페이스\map\1@4sac.bmp#유저인터페이스\map\1@4sac.bmp#
+
+// 4차 전직 트루바두르 트루베르
+1@4tro.gnd#1@4tro.gnd#
+1@4tro.gat#1@4tro.gat#
+1@4tro.rsw#1@4tro.rsw#
+유저인터페이스\map\1@4tro.bmp#유저인터페이스\map\1@4tro.bmp#
+
+// 법계 전직MD : 마력의 샘
+1@4mag.gnd#1@4mag.gnd#
+1@4mag.gat#1@4mag.gat#
+1@4mag.rsw#1@4mag.rsw#
+유저인터페이스\map\1@4mag.bmp#유저인터페이스\map\1@4mag.bmp#
+
+// 윈드호크 전직전용MD : 루루카 깊은 숲
+1@4win.gnd#1@4win.gnd#
+1@4win.gat#1@4win.gat#
+1@4win.rsw#1@4win.rsw#
+유저인터페이스\map\1@4win.bmp#유저인터페이스\map\1@4win.bmp#
+
+//2020 4차 인퀴지터 전직
+1@4inq.gnd#1@4inq.gnd#
+1@4inq.gat#1@4inq.gat#
+1@4inq.rsw#1@4inq.rsw#
+유저인터페이스\map\1@4inq.bmp#유저인터페이스\map\1@4inq.bmp#
+
+//2020 4차 카디날 전직
+1@4cdn.gnd#1@4cdn.gnd#
+1@4cdn.gat#1@4cdn.gat#
+1@4cdn.rsw#1@4cdn.rsw#
+유저인터페이스\map\1@4cdn.bmp#유저인터페이스\map\1@4cdn.bmp#
+
+//2020 4차 임페리얼가드 전직
+1@4igd.gnd#1@4igd.gnd#
+1@4igd.gat#1@4igd.gat#
+1@4igd.rsw#1@4igd.rsw#
+유저인터페이스\map\1@4igd.bmp#유저인터페이스\map\1@4igd.bmp#
+
+//2020 4차 드래곤 전직
+1@4drk.gnd#1@4drk.gnd#
+1@4drk.gat#1@4drk.gat#
+1@4drk.rsw#1@4drk.rsw#
+유저인터페이스\map\1@4drk.bmp#유저인터페이스\map\1@4drk.bmp#
+
+// 글래스트 헤임 이벤트 도전모드
+1@gl_he2.gnd#1@gl_he2.gnd#
+1@gl_he2.gat#1@gl_he2.gat#
+1@gl_he2.rsw#1@gl_he2.rsw#
+유저인터페이스\map\1@gl_he2.bmp#유저인터페이스\map\1@gl_he2.bmp#
+
+// MD 타나토스 타워
+1@thts.gnd#1@thts.gnd#
+1@thts.gat#1@thts.gat#
+1@thts.rsw#1@thts.rsw#
+유저인터페이스\map\1@thts.bmp#유저인터페이스\map\1@thts.bmp#
+2@thts.gnd#2@thts.gnd#
+2@thts.gat#2@thts.gat#
+2@thts.rsw#2@thts.rsw#
+유저인터페이스\map\2@thts.bmp#유저인터페이스\map\2@thts.bmp#
+3@thts.gnd#3@thts.gnd#
+3@thts.gat#3@thts.gat#
+3@thts.rsw#3@thts.rsw#
+유저인터페이스\map\3@thts.bmp#유저인터페이스\map\3@thts.bmp#
+4@thts.gnd#4@thts.gnd#
+4@thts.gat#4@thts.gat#
+4@thts.rsw#4@thts.rsw#
+유저인터페이스\map\4@thts.bmp#유저인터페이스\map\4@thts.bmp#
+5@thts.gnd#5@thts.gnd#
+5@thts.gat#5@thts.gat#
+5@thts.rsw#5@thts.rsw#
+유저인터페이스\map\5@thts.bmp#유저인터페이스\map\5@thts.bmp#
+6@thts.gnd#6@thts.gnd#
+6@thts.gat#6@thts.gat#
+6@thts.rsw#6@thts.rsw#
+유저인터페이스\map\6@thts.bmp#유저인터페이스\map\6@thts.bmp#
+7@thts.gnd#7@thts.gnd#
+7@thts.gat#7@thts.gat#
+7@thts.rsw#7@thts.rsw#
+유저인터페이스\map\7@thts.bmp#유저인터페이스\map\7@thts.bmp#
+8@thts.gnd#8@thts.gnd#
+8@thts.gat#8@thts.gat#
+8@thts.rsw#8@thts.rsw#
+유저인터페이스\map\8@thts.bmp#유저인터페이스\map\8@thts.bmp#
+
+//EP 17.2 현자의 유산 - 어스름밤의 정원
+1@bamn.gnd#1@bamn.gnd#
+1@bamn.gat#1@bamn.gat#
+1@bamn.rsw#1@bamn.rsw#
+유저인터페이스\map\1@bamn.bmp#유저인터페이스\map\1@bamn.bmp#
+
+//EP 17.2 현자의 유산 - 숨겨진 화원
+1@herbs.gnd#1@herbs.gnd#
+1@herbs.gat#1@herbs.gat#
+1@herbs.rsw#1@herbs.rsw#
+유저인터페이스\map\1@herbs.bmp#유저인터페이스\map\1@herbs.bmp#
+
+//EP 17.2 현자의 유산 - 비공정 거치장
+1@bamq.gnd#1@bamq.gnd#
+1@bamq.gat#1@bamq.gat#
+1@bamq.rsw#1@bamq.rsw#
+유저인터페이스\map\1@bamq.bmp#유저인터페이스\map\1@bamq.bmp#
+
+//EP 17.2 현자의 유산 - 수상정원
+1@ghg.gnd#1@ghg.gnd#
+1@ghg.gat#1@ghg.gat#
+1@ghg.rsw#1@ghg.rsw#
+유저인터페이스\map\1@ghg.bmp#유저인터페이스\map\1@ghg.bmp#
+
+//EP 17.2 현자의 유산 - 시간에게 잊혀진 사육장
+1@lost.gnd#1@lost.gnd#
+1@lost.gat#1@lost.gat#
+1@lost.rsw#1@lost.rsw#
+유저인터페이스\map\1@lost.bmp#유저인터페이스\map\1@lost.bmp#
+
+// 글래스트헤임 도전모드
+1@gl_he.gnd#1@gl_he.gnd#
+1@gl_he.gat#1@gl_he.gat#
+1@gl_he.rsw#1@gl_he.rsw#
+유저인터페이스\map\1@gl_he.bmp#유저인터페이스\map\1@gl_he.bmp#
+
+// EDDA 생체연구소 - 원정의 여로
+1@gol1.gnd#1@gol1.gnd#
+1@gol1.gat#1@gol1.gat#
+1@gol1.rsw#1@gol1.rsw#
+유저인터페이스\map\1@gol1.bmp#유저인터페이스\map\1@gol1.bmp#
+1@gol2.gnd#1@gol2.gnd#
+1@gol2.gat#1@gol2.gat#
+1@gol2.rsw#1@gol2.rsw#
+유저인터페이스\map\1@gol2.bmp#유저인터페이스\map\1@gol2.bmp#
+
+// 2018 할로윈
+1@halo.gnd#1@halo.gnd#
+1@halo.gat#1@halo.gat#
+1@halo.rsw#1@halo.rsw#
+유저인터페이스\map\1@halo.bmp#유저인터페이스\map\1@halo.bmp#
+
+// EDDA 글래스트 헤임의 몰락
+1@gl_prq.gnd#1@gl_prq.gnd#
+1@gl_prq.gat#1@gl_prq.gat#
+1@gl_prq.rsw#1@gl_prq.rsw#
+유저인터페이스\map\1@gl_prq.bmp#유저인터페이스\map\1@gl_prq.bmp#
 
 // 에피소드 17.1 태동, 일루시온
 1@cor.gnd#1@cor.gnd#
@@ -587,11 +802,10 @@ gl_chyard_.rsw#gl_chyard_.rsw#
 
 
 //공성전 TE 복사맵
-
-te_prt_gld.gnd#prt_gld.gnd#
-te_prt_gld.gat#prt_gld.gat#
-te_prt_gld.rsw#prt_gld.rsw#
-유저인터페이스\map\te_prt_gld.bmp#유저인터페이스\map\prt_gld.bmp#
+te_prt_gld.gnd#te_prt_gld.gnd#
+te_prt_gld.gat#te_prt_gld.gat#
+te_prt_gld.rsw#te_prt_gld.rsw#
+유저인터페이스\map\te_prt_gld.bmp#유저인터페이스\map\te_prt_gld.bmp#
 
 te_prtcas01.gnd#prtg_cas01.gnd#
 te_prtcas01.gat#prtg_cas01.gat#
