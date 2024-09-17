@@ -38,12 +38,9 @@ use Utils::PathFinding;
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
+	my $action = AI::action;
 
-	if (
-		   (AI::action eq "attack" && $args->{ID})
-		|| (AI::action eq "route" && AI::action (1) eq "attack" && $args->{attackID})
-		|| (AI::action eq "move" && AI::action (2) eq "attack" && $args->{attackID})
-	) {
+	if (shouldAttack($action, $args)) {
 		my $ID;
 		my $ataqArgs;
 		if (AI::action eq "attack") {
@@ -203,6 +200,15 @@ sub process {
 	}
 
 	Benchmark::end("ai_attack") if DEBUG;
+}
+
+sub shouldAttack {
+    my ($action, $args) = @_;
+    return (
+        ($action eq "attack" && $args->{ID})
+        || ($action eq "route" && AI::action(1) eq "attack" && $args->{attackID})
+        || ($action eq "move" && AI::action(2) eq "attack" && $args->{attackID})
+    );
 }
 
 sub shouldGiveUp {
