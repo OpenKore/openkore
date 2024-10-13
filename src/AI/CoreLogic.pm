@@ -3080,6 +3080,7 @@ sub processAutoEquip {
 						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"} if (!$eq_list{$slot});
 					}
 				}
+				$ai_v{"equipAuto_$i" . "_time"} = time;
 			}
 		}
 
