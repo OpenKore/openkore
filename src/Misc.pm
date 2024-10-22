@@ -4950,8 +4950,9 @@ sub checkSelfCondition {
 		return 0 if $char->{party}{joined};
 	}
 
-	return 0 if ($config{$prefix . "_maxBase"} =~ /^\d{1,}$/ && $char->{lv} > $config{$prefix . "_maxBase"});
-	return 0 if ($config{$prefix . "_minBase"} =~ /^\d{1,}$/ && $char->{lv} < $config{$prefix . "_minBase"});
+	if ($config{$prefix . "_baseLvl"}) {
+		return 0 if (!inRange($char->{lv}, $config{$prefix . "_baseLvl"}));
+	}
 
 	my %hookArgs;
 	$hookArgs{prefix} = $prefix;
