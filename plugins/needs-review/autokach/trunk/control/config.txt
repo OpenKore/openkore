@@ -101,7 +101,7 @@ autoBreakTime {
 autoConfChange {
 	minTime
 	varTime
-	lvl
+	baseLvl
 	joblvl
 }
 
