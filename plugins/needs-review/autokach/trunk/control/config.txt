@@ -102,7 +102,7 @@ autoConfChange {
 	minTime
 	varTime
 	baseLvl
-	joblvl
+	jobLvl
 }
 
 autoMakeArrows 0

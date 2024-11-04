@@ -923,7 +923,7 @@ sub mainLoop_initialized {
 			if ($config{"autoConfChange_$i"}
 			 && ( !$config{"autoConfChange_${i}_minTime"} || timeOut($lastConfChangeTime, $ai_v{"autoConfChange_${i}_timeout"}) )
 			 && inRange($char->{lv}, $config{"autoConfChange_${i}_baseLvl"})
-			 && inRange($char->{lv_job}, $config{"autoConfChange_${i}_joblvl"})
+			 && inRange($char->{lv_job}, $config{"autoConfChange_${i}_jobLvl"})
 			 && ( !$config{"autoConfChange_${i}_isJob"} || $jobs_lut{$char->{jobID}} eq $config{"autoConfChange_${i}_isJob"} )
 			) {
 				$selected = $config{"autoConfChange_$i"};
