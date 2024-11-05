@@ -841,7 +841,7 @@ sub get_scalar_var {
 		elsif ( $variable_name eq '.name' )         { return $char && $char->{name}       || 0; }
 		elsif ( $variable_name eq '.hp' )           { return $char && $char->{hp}         || 0; }
 		elsif ( $variable_name eq '.sp' )           { return $char && $char->{sp}         || 0; }
-		elsif ( $variable_name eq '.lvl' )          { return $char && $char->{lv}         || 0; }
+		elsif ( $variable_name eq '.baselvl' )      { return $char && $char->{lv}         || 0; }
 		elsif ( $variable_name eq '.joblvl' )       { return $char && $char->{lv_job}     || 0; }
 		elsif ( $variable_name eq '.spirits' )      { return $char && $char->{spirits}    || 0; }
 		elsif ( $variable_name eq '.zeny' )         { return $char && $char->{zeny}       || 0; }
