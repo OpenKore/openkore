@@ -225,7 +225,7 @@ sub refreshGlobal {
 	
 	$varStack{".hp"} = $char->{hp};
 	$varStack{".sp"} = $char->{sp};
-	$varStack{".lvl"} = $char->{lv};
+	$varStack{".baselvl"} = $char->{lv};
 	$varStack{".joblvl"} = $char->{lv_job};
 	$varStack{".spirits"} = ($char->{spirits} or 0);
 	$varStack{".zeny"} = $char->{zeny};

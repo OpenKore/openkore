@@ -1098,7 +1098,7 @@ macro ArcherTraining20M {
 	pause @rand(2,3)
 	#Не всегда мона одеть новый лук сразу. 18 лвл минимум.
 	do iconf Great Bow [2] 0 0 0
-	if ($.lvl < 18) goto lowlvl
+	if ($.baselvl < 18) goto lowlvl
 		do conf autoSwitch_default_rightHand Great Bow [2]
 		do conf autoSwitch_default_leftHand Great Bow [2]
 		do eq Great Bow [2]
