@@ -196,6 +196,7 @@ sub new {
 		'02BA' => ['hotkey_change', 'v C V v', [qw(idx type id lvl)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(partyName)]],
 		'02C7' => ['party_join_request_by_name_reply', 'a4 C', [qw(accountID flag)]],
+		'02CF' => ['memorial_dungeon_command', 'V', [qw(command)]],
 		'02D8' => ['misc_config_set', 'V2', [qw(type flag)]],
 		'02DB' => ['battleground_chat', 'v Z*', [qw(len message)]],
 		'02F1' => ['notify_progress_bar_complete'],
