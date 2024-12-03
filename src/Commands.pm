@@ -410,6 +410,9 @@ sub initHandlers {
 			[T("<player #>"), T("look at player")]
 			], \&cmdLookPlayer],
 		['memo', T("Save current position for warp portal."), \&cmdMemo],
+		['memorial', [
+			["destroy",T("Destroy an instance.")]
+			], \&cmdMemorialDungeonDestroy],
 		['ml', T("List monsters that are on screen."), \&cmdMonsterList],
 		['move', [
 			T("Move your character."),
@@ -6067,8 +6070,8 @@ sub cmdUnequip {
 				$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
 				if ($item->{equipped}) {
 					push @equipment, \%eqp;
-				} 
-			} 
+				}
+			}
 		}
 		for my $e (@equipment) {
 			my $item = Actor::Item::get($e->{name}, undef, 0);
@@ -8639,6 +8642,19 @@ sub cmdMergeItem {
 
 	error T("No item was selected or at least need 2 same items.\n");
 	error T("To merge by item id: merge <itemid>\nOr one-by-one: merge <item #>,<item #>[,...]\n"), "info";
+}
+
+sub cmdMemorialDungeonDestroy {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my (undef, $args) = @_;
+
+	if ($args eq "destroy") {
+		$messageSender->sendMemorialDungeonCommand(3);
+	}
 }
 
 1;

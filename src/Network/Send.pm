@@ -777,9 +777,9 @@ sub reconstruct_buy_bulk_buyer {
 
 sub sendBuyBulkBuyer {
     my ($self, $buyerID, $r_array, $buyingStoreID) = @_;
-	
+
 	my $len = 12 + (scalar @{$r_array} * 8);
-	
+
     $self->sendToServer($self->reconstruct({
         switch => 'buy_bulk_buyer',
 		len => $len,
@@ -3523,6 +3523,19 @@ sub sendCaptchaPreviewRequest {
 		switch => 'captcha_preview_request',
 		captcha_key => $captcha_key,
 	}));
+}
+
+# 02CF CZ_MEMORIALDUNGEON_COMMAND
+# Destroy an instance from the status window
+sub sendMemorialDungeonCommand {
+	my ($self, $command) = @_;
+
+	$self->sendToServer($self->reconstruct({
+		switch => 'memorial_dungeon_command',
+		command => $command,
+	}));
+
+	debug "Sent Memorial Dungeon Command\n", "sendPacket";
 }
 
 1;
