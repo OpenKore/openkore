@@ -279,6 +279,8 @@ sub loadDataFiles {
 	Settings::addTableFile('monsters.txt',
 		internalName => 'monsters.txt',
 		loader => [\&parseDataFile2, \%monsters_lut], createIfMissing => 1);
+	Settings::addTableFile('pets.txt',
+		loader => [\&parseDataFile2, \%pets_lut], mustExist => 0);
 	Settings::addTableFile('npcs.txt',
 		internalName => 'npcs.txt',
 		loader => [\&parseNPCs, \%npcs_lut], createIfMissing => 1);
