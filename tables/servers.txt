@@ -155,57 +155,64 @@ charBlockSize 155
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
 # http://roz.gnjoy.com/
-[Korea - kRO: Zero]
-ip 112.175.128.137
-port 6950
-OTP_ip 112.175.128.135
+[Korea - kRO: Brynhildr, Mjolnir]
+ip kro-acc2.ragnarok.co.kr
+port 6900
+OTP_ip kro-acc2.ragnarok.co.kr
 OTP_port 6900
 master_version 0
 version 19
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
 serverType Zero
 serverEncoding Korean
 charBlockSize 155
 gameGuard 1
-addTableFolders kRO/Zero;kRO
+addTableFolders kRO/Zero
 pinCode 1
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
-sendCryptKeys 0x2FC330DD, 0x4D914DE2, 0x01C04E1F
 blockingPlayerCancel 1
+itemListType 1
+charDeleteDateType 1
+rankingSystemType 1
 
 # http://ro.gnjoy.com/
-[Korea - kRO: Sara/Rangidis/Thanatos]
-ip 112.175.128.137
-port 6900
+[Korea - kRO: Baphomet, Yggdrasil, Dark Lord]
+ip kro-agency.ragnarok.co.kr
+port 6951
+OTP_ip kro-acc1.ragnarok.co.kr
+OTP_port 6900
 master_version 0
 version 19
-serverType kRO_RagexeRE_0
+serverType kRO
 serverEncoding Korean
-charBlockSize 112
-storageEncryptKey 0x050B6F79,0x0202C179,0x00E20120,0x04FA43E3,0x0179B6C8,0x05973DF2,0x007D8D6B,0x08CB9ED9
+charBlockSize 175
 gameGuard 1
-addTableFolders kRO
+addTableFolders kRO/Main
+pinCode 1
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+blockingPlayerCancel 1
+itemListType 1
+charDeleteDateType 1
+rankingSystemType 1
 
 # http://ro.gnjoy.com/
 [Korea - kRO: Sakray]
-ip 112.175.128.138
+ip kro-acc3.ragnarok.co.kr
 port 6900
-master_version 2
-version 29
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
+OTP_ip kro-acc3.ragnarok.co.kr
+OTP_port 6900
+master_version 0
+version 19
 serverType Sakray
 serverEncoding Korean
-charBlockSize 155
-addTableFolders kRO/Sakray;kRO
-storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+charBlockSize 175
+gameGuard 1
+addTableFolders kRO/Sakray
 pinCode 1
-gameGuard 0
+storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+blockingPlayerCancel 1
+itemListType 1
+charDeleteDateType 1
+rankingSystemType 1
 
 # https://ru.4game.com/ro/play/
 [Russia - rRO: Renewal]
@@ -279,7 +286,7 @@ master_version 1
 version 20
 serverType kRO_RagexeRE_2009_11_04a
 serverEncoding Western
-addTableFolders translated/kRO_english;kRO
+addTableFolders translated/kRO_english;kRO/Main
 
 ####################
 # Dead
