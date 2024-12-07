@@ -28,33 +28,19 @@ actor_info 0A30
 actor_name 0095
 confirm_load 0B1B
 
-[vRO_2021-07-07]
-account_server_info 0B07
+[jRO_2021-04-21]
+account_server_info
 received_characters 099D
 charBlockSize 155
-received_character_ID_and_Map 0AC5
+received_character_ID_and_Map 0071
 map_login 0436
 map_loaded 02EB
+actor_exists 09FF
 skills_list 0B32
-actor_exists 09FF
 item_list_start 0B08
 expandedItemID 1
 actor_info 0A30
-actor_name 0095
-
-[twRO_2021-06-21]
-account_server_info 0B60
-received_characters 099D
-charBlockSize 155
-received_character_ID_and_Map 0AC5
-map_login 0436
-map_loaded 02EB
-skills_list 010F
-actor_exists 09FF
-item_list_start 0B08
-expandedItemID 1
-actor_info 0A30
-actor_name 0095
+actor_name 0ADF
 
 [kRO_2021-06-30]
 account_server_info 0AC4
@@ -86,16 +72,30 @@ actor_info 0A30
 actor_name 0ADF
 confirm_load 0B1B
 
-[jRO_2021-04-21]
-account_server_info
+[twRO_2021-06-21]
+account_server_info 0B60
 received_characters 099D
 charBlockSize 155
-received_character_ID_and_Map 0071
+received_character_ID_and_Map 0AC5
 map_login 0436
 map_loaded 02EB
+skills_list 010F
 actor_exists 09FF
-skills_list 0B32
 item_list_start 0B08
 expandedItemID 1
 actor_info 0A30
-actor_name 0ADF
+actor_name 0095
+
+[vRO_2021-07-07]
+account_server_info 0B07
+received_characters 099D
+charBlockSize 155
+received_character_ID_and_Map 0AC5
+map_login 0436
+map_loaded 02EB
+skills_list 0B32
+actor_exists 09FF
+item_list_start 0B08
+expandedItemID 1
+actor_info 0A30
+actor_name 0095
