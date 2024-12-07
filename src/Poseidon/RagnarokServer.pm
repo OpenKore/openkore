@@ -82,8 +82,7 @@ sub new {
 # Ensure: $self->getState() eq 'requesting'
 #
 # Send a GameGuard query to the RO client.
-sub query
-{
+sub query {
 	my ($self, $packet) = @_;
 	my $clients = $self->clients();
 
@@ -138,12 +137,10 @@ sub readResponse {
 
 #####################################################
 
-sub onClientNew
-{
+sub onClientNew {
 	my ($self, $client, $index) = @_;
 
-	if ( $state == 0 )
-	{
+	if ( $state == 0 ) {
 		# Initialize Decryption
 		$enc_val1 = 0;
 		$enc_val2 = 0;
@@ -155,8 +152,7 @@ sub onClientNew
 	print "[RagnarokServer]-> Ragnarok Online client ($index) connected.\n";
 }
 
-sub onClientExit
-{
+sub onClientExit {
 	my ($self, $client, $index) = @_;
 
 	$self->{challengeNum} = 0;
@@ -178,13 +174,11 @@ my $npcID0 = pack("V", "110000002");
 my $monsterID = pack("V", "110000003");
 my $itemID = pack("V", "50001");
 
-sub DecryptMessageID
-{
+sub DecryptMessageID {
 	my ($MID) = @_;
 
 	# Checking if Decryption is Activated
-	if ($enc_val1 != 0 && $enc_val2 != 0 && $enc_val3 != 0)
-	{
+	if ($enc_val1 != 0 && $enc_val2 != 0 && $enc_val3 != 0) {
 		# Saving Last Informations for Debug Log
 		my $oldMID = $MID;
 		my $oldKey = ($enc_val1 >> 16) & 0x7FFF;
@@ -442,11 +436,11 @@ sub ParsePacket {
 
 	} elsif ($switch eq '09A1') {
 		SendCharacterList($self, $client, $msg, $index);
+
 	} elsif ($switch eq '0066') { # client sends character choice packet
 
 		# If Using Packet Encrypted Client
-		if ( $self->{type}->{$config{server_type}}->{sendCryptKeys} )
-		{
+		if ( $self->{type}->{$config{server_type}}->{sendCryptKeys} ) {
 			# Enable Decryption
 			my @enc_values = split(/\s+/, $self->{type}->{$config{server_type}}->{sendCryptKeys});
 			($enc_val1, $enc_val2, $enc_val3) = (Math::BigInt->new(@enc_values[0]), Math::BigInt->new(@enc_values[1]), Math::BigInt->new(@enc_values[2]));
@@ -645,10 +639,8 @@ sub ParsePacket {
 		my $data;
 
 		# Temporary Hack to Initialized Crypted Client
-		if ( $self->{type}->{$config{server_type}}->{sendCryptKeys} )
-		{
-			for ( my $i = 0 ; $i < 64 ; $i++ )
-			{
+		if ( $self->{type}->{$config{server_type}}->{sendCryptKeys} ) {
+			for ( my $i = 0 ; $i < 64 ; $i++ ) {
 				$data = pack("C C", 0x70, 0x08);
 				SendData($client, $data);
 
@@ -943,8 +935,7 @@ sub ParsePacket {
 
 # PACKET SENDING S->C
 
-sub SendCharacterList
-{
+sub SendCharacterList {
 	my ($self, $client, $msg, $index) = @_;
 
 	# Log
@@ -1104,8 +1095,7 @@ sub SendMapLogin {
 	PerformMapLoadedTasks($self, $client, $msg, $index);
 }
 
-sub SendGoToCharSelection
-{
+sub SendGoToCharSelection {
 	my ($self, $client, $msg, $index) = @_;
 
 	# Log
@@ -1114,8 +1104,7 @@ sub SendGoToCharSelection
 	SendData($client, pack("v v", 0x00B3, 1));
 }
 
-sub SendQuitGame
-{
+sub SendQuitGame {
 	my ($self, $client, $msg, $index) = @_;
 
 	# Log
@@ -1124,16 +1113,14 @@ sub SendQuitGame
 	SendData($client, pack("v v", 0x018B, 0));
 }
 
-sub SendLookTo
-{
+sub SendLookTo {
 	my ($self, $client, $msg, $index, $ID, $to) = @_;
 
 	# Make Poseidon look to front
 	SendData($client, pack('v1 a4 C1 x1 C1', 0x009C, $ID, 0, $to));
 }
 
-sub SendUnitInfo
-{
+sub SendUnitInfo {
 	my ($self, $client, $msg, $index, $ID, $name, $partyName, $guildName, $guildTitle, $titleID) = @_;
 
 	# Let's not wait for the client to ask for the unit info
@@ -1146,8 +1133,7 @@ sub SendUnitInfo
 	}
 }
 
-sub SendUnitName
-{
+sub SendUnitName {
 	my ($self, $client, $msg, $index, $ID, $name, $charID, $prefix_name) = @_;
 
 	if ($self->{type}->{$config{server_type}}->{actor_name} eq '0ADF') {
@@ -1159,16 +1145,14 @@ sub SendUnitName
 	}
 }
 
-sub SendSystemChatMessage
-{
+sub SendSystemChatMessage {
 	my ($self, $client, $msg, $index, $message) = @_;
 
 	# '009A' => ['system_chat', 'v Z*', [qw(len message)]],
 	SendData($client, pack("v2 a32", 0x009A, 36, $message));
 }
 
-sub SendShowNPC
-{
+sub SendShowNPC {
 	my ($self, $client, $msg, $index, $obj_type, $GID, $SpriteID, $X, $Y, $MobName) = @_;
 
 	# Packet Structure
@@ -1210,8 +1194,7 @@ sub SendShowNPC
 	SendData($client, $data);
 }
 
-sub SendShowItemOnGround
-{
+sub SendShowItemOnGround {
 	my ($self, $client, $msg, $index, $ID, $SpriteID, $X, $Y) = @_;
 
 	if ($self->{type}->{$config{server_type}}->{expandedItemID} eq '1') {
@@ -1221,8 +1204,7 @@ sub SendShowItemOnGround
 	}
 }
 
-sub SendNPCTalk
-{
+sub SendNPCTalk {
 	my ($self, $client, $msg, $index, $npcID, $message) = @_;
 
 	# '00B4' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]]
@@ -1230,24 +1212,21 @@ sub SendNPCTalk
 	SendData($client, pack("v2 a4", 0x00B4, (length($dbuf) + 8), $npcID) . $dbuf);
 }
 
-sub SendNPCTalkContinue
-{
+sub SendNPCTalkContinue {
 	my ($self, $client, $msg, $index, $npcID) = @_;
 
 	# '00B5' => ['npc_talk_continue', 'a4', [qw(ID)]]
 	SendData($client, pack("v a4", 0x00B5, $npcID));
 }
 
-sub SendNpcTalkClose
-{
+sub SendNpcTalkClose {
 	my ($self, $client, $msg, $index, $npcID) = @_;
 
 	# '00B6' => ['npc_talk_close', 'a4', [qw(ID)]]
 	SendData($client, pack("v a4", 0x00B6, $npcID));
 }
 
-sub SendNpcTalkResponses
-{
+sub SendNpcTalkResponses {
 	my ($self, $client, $msg, $index, $npcID, $message) = @_;
 
 	# '00B7' => ['npc_talk', 'v a4 Z*', [qw(len ID msg)]]
@@ -1255,8 +1234,7 @@ sub SendNpcTalkResponses
 	SendData($client, pack("v2 a4", 0x00B7, (length($dbuf) + 8), $npcID) . $dbuf);
 }
 
-sub SendNpcImageShow
-{
+sub SendNpcImageShow {
 	my ($self, $client, $msg, $index, $image, $type) = @_;
 
 	# Type = 0xFF = Hide Image
@@ -1267,8 +1245,7 @@ sub SendNpcImageShow
 
 # SERVER TASKS
 
-sub PerformMapLoadedTasks
-{
+sub PerformMapLoadedTasks {
 	my ($self, $client, $msg, $index) = @_;
 
 	# Looking to Front
@@ -1286,8 +1263,7 @@ sub PerformMapLoadedTasks
 	SendUnitInfo($self, $client, $msg, $index, $npcID0, "Server Details Guide");
 
 	# Dev Mode (Char Slot 1)
-	if ($clientdata{$index}{mode})
-	{
+	if ($clientdata{$index}{mode}) {
 		# Show an NPC (Kafra)
 		SendShowNPC($self, $client, $msg, $index, 1, $npcID1, 114, $posX + 5, $posY + 3, "Kafra NPC");
 		SendLookTo($self, $client, $msg, $index, $npcID1, 4);
