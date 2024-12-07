@@ -169,8 +169,8 @@ my $posY = 113;
 my $charID = pack("V", "100001");
 my $sessionID = pack("V", "3000000000");
 my $sessionID2 = pack("V", 0xFF);
-my $npcID1 = pack("V", "110000001");
 my $npcID0 = pack("V", "110000002");
+my $npcID1 = pack("V", "110000001");
 my $monsterID = pack("V", "110000003");
 my $itemID = pack("V", "50001");
 
@@ -635,7 +635,7 @@ sub ParsePacket {
 		undef $clientdata{$index}{serverType};
 		#$clientdata{$index}{sendMapLogin} = $msg;
 
-	} elsif ($switch eq '007D') { # client sends the map loaded packet
+	} elsif ($switch eq '007D') { # client sends the map_loaded packet
 		my $data;
 
 		# Temporary Hack to Initialized Crypted Client
@@ -655,7 +655,7 @@ sub ParsePacket {
 		(($switch eq '00A7') && ($clientdata{$index}{serverType} == 12)) ||
 		($switch eq '0360')
 		) { # client sends sync packet
-		my $data = pack("C*", 0x7F, 0x00) . pack("V", getTickCount);
+		my $data = pack("v", 0x007F) . pack("V", getTickCount);
 		SendData($client, $data);
 
 		### Check if packet 0228 got tangled up with the sync packet
@@ -704,11 +704,11 @@ sub ParsePacket {
 		my $data;
 		if ($self->{challengeNum} == 0) {
 			print "Received GameGuard sync request. Client allowed to login account server.\n";
-			$data = pack("C*", 0x59, 0x02, 0x01);
+			$data = pack("v C", 0x0259, 0x01);
 			SendData($client, $data);
 		} else {
 			print "Received GameGuard sync request. Client allowed to login char/map server.\n";
-			$data = pack("C*", 0x59, 0x02, 0x02);
+			$data = pack("v C", 0x0259, 0x02);
 			SendData($client, $data);
 		}
 		$self->{challengeNum}++;
@@ -899,10 +899,10 @@ sub ParsePacket {
 
 				# Just provide feedback in the RO Client about the unhandled packet
 				# '008E' => ['self_chat', 'x2 Z*', [qw(message)]],
-				my $data = pack("v2 a31", 0x8E, 35, "Sent packet $switch (" . length($msg) . " bytes).");
+				my $data = pack("v2 a31", 0x008E, 35, "Sent packet $switch (" . length($msg) . " bytes).");
 				if (timeOut($clientdata{$index}{emoticonTime}, 1.8)) {
 					$clientdata{$index}{emoticonTime} = time;
-					$data .= pack("v1 a4 C1", 0xC0, $accountID, 1);
+					$data .= pack("v a4 C", 0x00C0, $accountID, 1);
 				}
 
 				# These following packets should reset the item inventory.
@@ -922,9 +922,9 @@ sub ParsePacket {
 				# '0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
 				my $ID = substr($msg, length($msg) - 4, 4);
 				if ($ID eq $npcID0) {
-					$data .= pack("v1 a4 a24", 0x95, $npcID0, "Server Details Guide");
+					$data .= pack("v a4 a24", 0x0095, $npcID0, "Server Details Guide");
 				} elsif ($ID eq $npcID1) {
-					$data .= pack("v1 a4 a24", 0x95, $npcID1, "Kafra");
+					$data .= pack("v a4 a24", 0x0095, $npcID1, "Kafra");
 				}
 
 				SendData($client, $data);
@@ -1056,25 +1056,26 @@ sub SendMapLogin {
 	my $data;
 	if ($clientdata{$index}{mode}) {
 		if ($self->{type}->{$config{server_type}}->{map_loaded} eq '0B32') {
-			$data = pack("v", 0x0B32).
-				pack("v", 94) .
-				# skillID targetType level sp range up lvl2
+			$data = pack("v", 0x0B32) .
+				pack("v", 94) . # len
+				# skillID targetType level sp range upgradable lvl2
 				pack("v V v3 C v", 1, 0, 9, 0, 1, 0, 0) .
 				pack("v V v3 C v", 24, 4, 1, 10, 10, 0, 0) . # self skill test
-				pack("v V v3 C v", 25, 2, 1, 10, 9, 0, 0) . # location skill test
-				pack("v V v3 C v", 26, 4, 2, 9, 1, 0, 0) . # self skill test
-				pack("v V v3 C v", 27, 2, 4, 26, 9, 0, 0) . # location skill test
+				pack("v V v3 C v", 25, 2, 1, 10, 9, 0, 0) .  # location skill test
+				pack("v V v3 C v", 26, 4, 2, 9, 1, 0, 0) .   # self skill test
+				pack("v V v3 C v", 27, 2, 4, 26, 9, 0, 0) .  # location skill test
 				pack("v V v3 C v", 28, 16, 10, 40, 9, 0, 0); # target skill test
 				SendData($client, $data);
 		} else {
-			$data = pack("C2 v1", 0x0F, 0x01, 226) .
-				# skillID targetType level sp range skillName
-				pack("v2 x2 v3 a24 C1", 1, 0, 9, 0, 1, "NV_BASIC" . chr(0) . "GetMapInfo" . chr(0x0A), 0) .
-				pack("v2 x2 v3 a24 C1", 24, 4, 1, 10, 10, "AL_RUWACH", 0) . # self skill test
-				pack("v2 x2 v3 a24 C1", 25, 2, 1, 10, 9, "AL_PNEUMA", 0) . # location skill test
-				pack("v2 x2 v3 a24 C1", 26, 4, 2, 9, 1, "AL_TELEPORT", 0) . # self skill test
-				pack("v2 x2 v3 a24 C1", 27, 2, 4, 26, 9, "AL_WARP", 0) . # location skill test
-				pack("v2 x2 v3 a24 C1", 28, 16, 10, 40, 9, "AL_HEAL", 0); # target skill test
+			$data = pack("v", 0x010F) .
+				pack("v", 226) . # len
+				# skillID targetType level sp range skillName upgradable
+				pack("v2 x2 v3 a24 C", 1, 0, 9, 0, 1, "NV_BASIC" . chr(0) . "GetMapInfo" . chr(0x0A), 0) .
+				pack("v2 x2 v3 a24 C", 24, 4, 1, 10, 10, "AL_RUWACH", 0) . # self skill test
+				pack("v2 x2 v3 a24 C", 25, 2, 1, 10, 9, "AL_PNEUMA", 0) .  # location skill test
+				pack("v2 x2 v3 a24 C", 26, 4, 2, 9, 1, "AL_TELEPORT", 0) . # self skill test
+				pack("v2 x2 v3 a24 C", 27, 2, 4, 26, 9, "AL_WARP", 0) .    # location skill test
+				pack("v2 x2 v3 a24 C", 28, 16, 10, 40, 9, "AL_HEAL", 0);   # target skill test
 				SendData($client, $data);
 		}
 	}
