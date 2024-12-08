@@ -701,7 +701,6 @@ sub initHandlers {
 			[T("<vender #> <vender_item #> [<amount>]"), T("buy items from vender shop")],
 			["end", T("leave current vender shop")]
 			], \&cmdVender],
-		['verbose', T("Toggle verbose on/off."), \&cmdVerbose],
 		['version', T("Display the version of openkore."), \&cmdVersion],
 		['vl', T("List nearby vending shops."), \&cmdVenderList],
 		['vs', T("Display the status of your vending shop."), \&cmdShopInfoSelf],
@@ -6571,16 +6570,7 @@ sub cmdBuyer {
 		}
 
 		$messageSender->sendBuyBulkBuyer($buyerID, [{ID => $c_item->{ID}, itemID => $c_item->{nameID}, amount => $amount}], $buyingStoreID);
-	}
 }
-
-
-sub cmdVerbose {
-	if ($config{'verbose'}) {
-		configModify("verbose", 0);
-	} else {
-		configModify("verbose", 1);
-	}
 }
 
 sub cmdVersion {
