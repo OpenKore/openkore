@@ -32,7 +32,7 @@ use Math::BigInt;
 use Log qw(message);
 use I18N qw(bytesToString stringToBytes);
 
-my %clientdata;
+my $clientdata;
 
 # Decryption Keys
 my $enc_val1 = 0;
@@ -256,21 +256,21 @@ sub ParsePacket {
 		# save servers.txt info
 		my $code = substr($msg, 2);
 		if (length($msg) == 2) {
-			$clientdata{$index}{secureLogin_type} = 0;
+			$clientdata->{$index}{secureLogin_type} = 0;
 		} elsif (length($msg) == 20) {
 			if ($code eq pack("C*", 0x04, 0x02, 0x7B, 0x8A, 0xA8, 0x90, 0x2F, 0xD8, 0xE8, 0x30, 0xF8, 0xA5, 0x25, 0x7A, 0x0D, 0x3B, 0xCE, 0x52)) {
-				$clientdata{$index}{secureLogin_type} = 1;
+				$clientdata->{$index}{secureLogin_type} = 1;
 			} elsif ($code eq pack("C*", 0x04, 0x02, 0x27, 0x6A, 0x2C, 0xCE, 0xAF, 0x88, 0x01, 0x87, 0xCB, 0xB1, 0xFC, 0xD5, 0x90, 0xC4, 0xED, 0xD2)) {
-				$clientdata{$index}{secureLogin_type} = 2;
+				$clientdata->{$index}{secureLogin_type} = 2;
 			} elsif ($code eq pack("C*", 0x04, 0x02, 0x42, 0x00, 0xB0, 0xCA, 0x10, 0x49, 0x3D, 0x89, 0x49, 0x42, 0x82, 0x57, 0xB1, 0x68, 0x5B, 0x85)) {
-				$clientdata{$index}{secureLogin_type} = 3;
+				$clientdata->{$index}{secureLogin_type} = 3;
 			} elsif ($code eq ("C*", 0x04, 0x02, 0x22, 0x37, 0xD7, 0xFC, 0x8E, 0x9B, 0x05, 0x79, 0x60, 0xAE, 0x02, 0x33, 0x6D, 0x0D, 0x82, 0xC6)) {
-				$clientdata{$index}{secureLogin_type} = 4;
+				$clientdata->{$index}{secureLogin_type} = 4;
 			} elsif ($code eq pack("C*", 0x04, 0x02, 0xc7, 0x0A, 0x94, 0xC2, 0x7A, 0xCC, 0x38, 0x9A, 0x47, 0xF5, 0x54, 0x39, 0x7C, 0xA4, 0xD0, 0x39)) {
-				$clientdata{$index}{secureLogin_type} = 5;
+				$clientdata->{$index}{secureLogin_type} = 5;
 			}
 		} else {
-			$clientdata{$index}{secureLogin_requestCode} = getHex($code);
+			$clientdata->{$index}{secureLogin_requestCode} = getHex($code);
 		}
 
 	} elsif ($switch eq '0ACF') { # Token Request
@@ -372,52 +372,52 @@ sub ParsePacket {
 		SendData($client, $data);
 
 		# save servers.txt info
-		$clientdata{$index}{masterLogin_packet} = $switch;
+		$clientdata->{$index}{masterLogin_packet} = $switch;
 
 		if (($switch eq '0064') || ($switch eq '01DD') || ($switch eq '0987') || ($switch eq '0AAC')) {
 			# '0064' => ['master_login', 'V Z24 Z24 C', [qw(version username password master_version)]]
 			# '01DD' => ['master_login', 'V Z24 a16 C', [qw(version username password_salted_md5 master_version)]],
 			# '0987' => ['master_login', 'V Z24 a32 C', [qw(version username password_md5_hex master_version)]]
 			# '0AAC' => ['master_login', 'V Z30 a32 C', [qw(version username password_hex master_version)]]
-			$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
-			$clientdata{$index}{master_version} = unpack("C", substr($msg, length($msg) - 1, 1));
+			$clientdata->{$index}{version} = unpack("V", substr($msg, 2, 4));
+			$clientdata->{$index}{master_version} = unpack("C", substr($msg, length($msg) - 1, 1));
 		} elsif ($switch eq '01FA') {
 			# '01FA' => ['master_login', 'V Z24 a16 C C', [qw(version username password_salted_md5 master_version clientInfo)]],
-			$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
-			$clientdata{$index}{master_version} = unpack("C", substr($msg, length($msg) - 2, 1));
+			$clientdata->{$index}{version} = unpack("V", substr($msg, 2, 4));
+			$clientdata->{$index}{master_version} = unpack("C", substr($msg, length($msg) - 2, 1));
 		} elsif ($switch eq '0825') {
 			# '0825' => ['token_login', 'v v x v Z24 a27 Z17 Z15 a*', [qw(len version master_version username password_rijndael mac ip token)]]
-			$clientdata{$index}{version} = unpack("v", substr($msg, 4, 2));
-			$clientdata{$index}{master_version} = unpack("v", substr($msg, 7, 2));
+			$clientdata->{$index}{version} = unpack("v", substr($msg, 4, 2));
+			$clientdata->{$index}{master_version} = unpack("v", substr($msg, 7, 2));
 		} elsif ( ($switch eq '0A76') || ($switch eq '0B04') ) {
 			# '0A76' => ['master_login', 'V Z40 a32 v', [qw(version username password_rijndael master_version)]]
 			# '0B04' => ['master_login', 'V Z30 Z52 Z100 v', [qw(version username accessToken billingAccessToken master_version)]]
-			$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
-			$clientdata{$index}{master_version} = unpack("v", substr($msg, length($msg) - 2, 2));
+			$clientdata->{$index}{version} = unpack("V", substr($msg, 2, 4));
+			$clientdata->{$index}{master_version} = unpack("v", substr($msg, length($msg) - 2, 2));
 		} elsif ($switch eq '02B0') {
 			# '02B0' => ['master_login', 'V Z24 a24 C Z16 Z14 C', [qw(version username password_rijndael master_version ip mac isGravityID)]],
-			$clientdata{$index}{version} = unpack("V", substr($msg, 2, 4));
-			$clientdata{$index}{master_version} = unpack("C", substr($msg, 53, 1));
+			$clientdata->{$index}{version} = unpack("V", substr($msg, 2, 4));
+			$clientdata->{$index}{master_version} = unpack("C", substr($msg, 53, 1));
 		} else {
 			# '0277' => ??
 			# unknown packet, cant get version/master version, should we use defaults?
-			$clientdata{$index}{version} = 55;
-			$clientdata{$index}{master_version} = 1;
+			$clientdata->{$index}{version} = 55;
+			$clientdata->{$index}{master_version} = 1;
 		}
 
-		$clientdata{$index}{masterLogin_packet} = $switch;
+		$clientdata->{$index}{masterLogin_packet} = $switch;
 
 		if ($switch eq '01DD') {
-			$clientdata{$index}{secureLogin} = 1;
-			undef $clientdata{$index}{secureLogin_account};
+			$clientdata->{$index}{secureLogin} = 1;
+			undef $clientdata->{$index}{secureLogin_account};
 		} elsif ($switch eq '01FA') {
-			$clientdata{$index}{secureLogin} = 3;
-			$clientdata{$index}{secureLogin_account} = unpack("C", substr($msg, 47, 1));
+			$clientdata->{$index}{secureLogin} = 3;
+			$clientdata->{$index}{secureLogin_account} = unpack("C", substr($msg, 47, 1));
 		} else {
-			undef $clientdata{$index}{secureLogin};
-			undef $clientdata{$index}{secureLogin_type};
-			undef $clientdata{$index}{secureLogin_account};
-			undef $clientdata{$index}{secureLogin_requestCode};
+			undef $clientdata->{$index}{secureLogin};
+			undef $clientdata->{$index}{secureLogin_type};
+			undef $clientdata->{$index}{secureLogin_account};
+			undef $clientdata->{$index}{secureLogin_requestCode};
 		}
 
 	#	send characters_info
@@ -440,7 +440,7 @@ sub ParsePacket {
 		SendCharacterList($self, $client, $msg, $index);
 
 		# save servers.txt info
-		$clientdata{$index}{gameLogin_packet} = $switch;
+		$clientdata->{$index}{gameLogin_packet} = $switch;
 
 	} elsif ($switch eq '09A1') {
 		SendCharacterList($self, $client, $msg, $index);
@@ -490,7 +490,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 0;
+		$clientdata->{$index}{serverType} = 0;
 
 	} elsif ($switch eq '0072' &&
 		(length($msg) == 19) &&
@@ -501,7 +501,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 0;
+		$clientdata->{$index}{serverType} = 0;
 
 	} elsif ($switch eq '009B' &&
 		(length($msg) == 32) &&
@@ -512,7 +512,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 3;
+		$clientdata->{$index}{serverType} = 3;
 
 	} elsif ($switch eq '00F5' &&
 		(length($msg) == 29) &&
@@ -523,7 +523,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 4;
+		$clientdata->{$index}{serverType} = 4;
 
 	} elsif ($switch eq '009B' &&
 		(length($msg) == 32) &&
@@ -534,7 +534,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 5;
+		$clientdata->{$index}{serverType} = 5;
 
 	} elsif ($switch eq '0072' &&
 		(length($msg) == 29) &&
@@ -545,7 +545,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 6;
+		$clientdata->{$index}{serverType} = 6;
 
 	} elsif ($switch eq '0072' &&
 		(length($msg) == 34) &&
@@ -556,7 +556,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 7;
+		$clientdata->{$index}{serverType} = 7;
 
 	} elsif ($switch eq '009B' &&
 		(length($msg) == 26) &&
@@ -567,7 +567,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 8;
+		$clientdata->{$index}{serverType} = 8;
 
 	} elsif ($switch eq '009B' &&
 		(length($msg) == 37) &&
@@ -578,7 +578,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 9;
+		$clientdata->{$index}{serverType} = 9;
 
 	} elsif ($switch eq '0072' &&
 		(length($msg) == 26) &&
@@ -589,7 +589,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 10;
+		$clientdata->{$index}{serverType} = 10;
 
 	} elsif ($switch eq '0072' &&
 		(length($msg) == 29) &&
@@ -600,7 +600,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 11;
+		$clientdata->{$index}{serverType} = 11;
 
 	} elsif ($switch eq '0094' &&
 		(length($msg) == 30) &&
@@ -611,7 +611,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = 12;
+		$clientdata->{$index}{serverType} = 12;
 
 	} elsif ($switch eq '0072' &&
 		(length($msg) == 29) &&
@@ -622,7 +622,7 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		$clientdata{$index}{serverType} = "1 or 2";
+		$clientdata->{$index}{serverType} = "1 or 2";
 
 	} elsif (($switch eq '0436' || $switch eq '022D' || $switch eq $self->{type}->{$config{server_type}}->{map_login}) &&
 		(length($msg) == 19 || length($msg) == 23) &&
@@ -630,7 +630,7 @@ sub ParsePacket {
 		(substr($msg, 6, 4) eq $charID) &&
 		(substr($msg, 10, 4) eq $sessionID)
 		) { # client sends the maplogin packet
-		$clientdata{$index}{serverType} = 0;
+		$clientdata->{$index}{serverType} = 0;
 
 		SendMapLogin($self, $client, $msg, $index);
 
@@ -646,8 +646,8 @@ sub ParsePacket {
 
 		SendMapLogin($self, $client, $msg, $index);
 		# save servers.txt info
-		undef $clientdata{$index}{serverType};
-		#$clientdata{$index}{sendMapLogin} = $msg;
+		undef $clientdata->{$index}{serverType};
+		#$clientdata->{$index}{sendMapLogin} = $msg;
 
 	} elsif ($switch eq '007D') { # client sends the map_loaded packet
 		my $data;
@@ -663,10 +663,10 @@ sub ParsePacket {
 			}
 		}
 	} elsif (
-		( ( ($switch eq '007E') || ($switch eq '035F') ) && (($clientdata{$index}{serverType} == 0) || ($clientdata{$index}{serverType} == 1) || ($clientdata{$index}{serverType} == 2) || ($clientdata{$index}{serverType} == 6) || ($clientdata{$index}{serverType} == 7) || ($clientdata{$index}{serverType} == 10) || ($clientdata{$index}{serverType} == 11))) ||
-		(($switch eq '0089') && (($clientdata{$index}{serverType} == 3) || ($clientdata{$index}{serverType} == 5) || ($clientdata{$index}{serverType} == 8) || ($clientdata{$index}{serverType} == 9))) ||
-		(($switch eq '0116') && ($clientdata{$index}{serverType} == 4)) ||
-		(($switch eq '00A7') && ($clientdata{$index}{serverType} == 12)) ||
+		( ( ($switch eq '007E') || ($switch eq '035F') ) && (($clientdata->{$index}{serverType} == 0) || ($clientdata->{$index}{serverType} == 1) || ($clientdata->{$index}{serverType} == 2) || ($clientdata->{$index}{serverType} == 6) || ($clientdata->{$index}{serverType} == 7) || ($clientdata->{$index}{serverType} == 10) || ($clientdata->{$index}{serverType} == 11))) ||
+		(($switch eq '0089') && (($clientdata->{$index}{serverType} == 3) || ($clientdata->{$index}{serverType} == 5) || ($clientdata->{$index}{serverType} == 8) || ($clientdata->{$index}{serverType} == 9))) ||
+		(($switch eq '0116') && ($clientdata->{$index}{serverType} == 4)) ||
+		(($switch eq '00A7') && ($clientdata->{$index}{serverType} == 12)) ||
 		($switch eq '0360')
 		) { # client sends sync packet
 		my $data = pack("v", 0x007F) . pack("V", getTickCount);
@@ -728,7 +728,7 @@ sub ParsePacket {
 		$self->{challengeNum}++;
 	} else {
 		if ($switch eq '0090' || ($msg =~ /\x90\x0($npcID1|$npcID0)/)) { # npc talk
-			undef $clientdata{$index}{npc_talk_code};
+			undef $clientdata->{$index}{npc_talk_code};
 			if ($msg =~ /\x90\x0$npcID1/) {
 				# Show the kafra image
 				SendNpcImageShow($self, $client, $msg, $index, "kafra_04.bmp", 0x02);
@@ -754,33 +754,28 @@ sub ParsePacket {
 				if ($response == 1) {
 					# Check server info
 					SendNPCTalk($self, $client, $msg, $index, $npcID, "[Hakore]");
-					SendNPCTalk($self, $client, $msg, $index, $npcID, "Your RO client uses the following server details:");
-					SendNPCTalk($self, $client, $msg, $index, $npcID, "^2222DDversion: $clientdata{$index}{version}");
-					SendNPCTalk($self, $client, $msg, $index, $npcID, "master_version: $clientdata{$index}{master_version}");
-					SendNPCTalk($self, $client, $msg, $index, "serverType: " . ((defined $clientdata{$index}{serverType}) ? $clientdata{$index}{serverType} : 'Unknown'));
-					if ($clientdata{$index}{secureLogin}) {
-						SendNPCTalk($self, $client, $msg, $index, $npcID, "secureLogin: $clientdata{$index}{secureLogin}");
-						if ($clientdata{$index}{secureLogin_requestCode}) {
-							SendNPCTalk($self, $client, $msg, $index, $npcID, $npcID, "secureLogin_requestCode: $clientdata{$index}{secureLogin_requestCode}");
-						} elsif (defined $clientdata{$index}{secureLogin_type}) {
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "secureLogin_type: $clientdata{$index}{secureLogin_type}");
+					SendNPCTalk($self, $client, $msg, $index, $npcID, "Your RO client uses the following server details:^2222DD");
+					SendNPCTalk($self, $client, $msg, $index, $npcID, "version: $clientdata->{$index}{version}");
+					SendNPCTalk($self, $client, $msg, $index, $npcID, "master_version: $clientdata->{$index}{master_version}");
+					SendNPCTalk($self, $client, $msg, $index, $npcID, "secureLogin_requestCode: $clientdata->{$index}{secureLogin_requestCode}") if ($clientdata->{$index}{secureLogin_requestCode});
+					SendNPCTalk($self, $client, $msg, $index, $npcID, "serverType: " . ((defined $clientdata->{$index}{serverType}) ? $clientdata->{$index}{serverType} : 'Unknown'));
+					if ($clientdata->{$index}{secureLogin}) {
+						SendNPCTalk($self, $client, $msg, $index, $npcID, "secureLogin: $clientdata->{$index}{secureLogin}");
+						if ($clientdata->{$index}{secureLogin_requestCode}) {
+							SendNPCTalk($self, $client, $msg, $index, $npcID, $npcID, "secureLogin_requestCode: $clientdata->{$index}{secureLogin_requestCode}");
+						} elsif (defined $clientdata->{$index}{secureLogin_type}) {
+							SendNPCTalk($self, $client, $msg, $index, $npcID, "secureLogin_type: $clientdata->{$index}{secureLogin_type}");
 						}
-						if ($clientdata{$index}{secureLogin_account}) {
-							SendNPCTalk($self, $client, $msg, $index, $npcID, "secureLogin_account: $clientdata{$index}{secureLogin_account}");
-						}
+						SendNPCTalk($self, $client, $msg, $index, $npcID, "secureLogin_account: $clientdata->{$index}{secureLogin_account}") if ($clientdata->{$index}{secureLogin_account});
 					}
-					if ($clientdata{$index}{masterLogin_packet}) {
-						SendNPCTalk($self, $client, $msg, $index, $npcID, "masterLogin_packet: $clientdata{$index}{masterLogin_packet}");
-					}
-					if ($clientdata{$index}{gameLogin_packet}) {
-						SendNPCTalk($self, $client, $msg, $index, $npcID, "gameLogin_packet: $clientdata{$index}{gameLogin_packet}");
-					}
+					SendNPCTalk($self, $client, $msg, $index, $npcID, "masterLogin_packet: $clientdata->{$index}{masterLogin_packet}") if ($clientdata->{$index}{masterLogin_packet});
+					SendNPCTalk($self, $client, $msg, $index, $npcID, "gameLogin_packet: $clientdata->{$index}{gameLogin_packet}") if ($clientdata->{$index}{gameLogin_packet});
 					SendNPCTalkContinue($self, $client, $msg, $index, $npcID);
 
-					if (defined $clientdata{$index}{serverType}) {
-						$clientdata{$index}{npc_talk_code} = 3;
+					if (defined $clientdata->{$index}{serverType}) {
+						$clientdata->{$index}{npc_talk_code} = 3;
 					} else {
-						$clientdata{$index}{npc_talk_code} = 2.5;
+						$clientdata->{$index}{npc_talk_code} = 2.5;
 					}
 
 				} elsif ($response == 2) {
@@ -814,64 +809,64 @@ sub ParsePacket {
 		} elsif ($switch eq '00B9') { # npc talk continue
 			my $npcID = substr($msg, 2, 4);
 			if ($npcID eq $npcID0) {
-				if ($clientdata{$index}{npc_talk_code} == 2) {
+				if ($clientdata->{$index}{npc_talk_code} == 2) {
 					# Show NPC response list
 					SendNpcTalkResponses($self, $client, $msg, $index, $npcID, "Yes, please:No, thanks:");
-					$clientdata{$index}{npc_talk_code} = 3;
+					$clientdata->{$index}{npc_talk_code} = 3;
 
 				} else {
 					SendNPCTalk($self, $client, $msg, $index, $npcID, "[Hakore]");
-					if (!$clientdata{$index}{npc_talk_code}) {
-						if (!defined $clientdata{$index}{serverType}) {
+					if (!$clientdata->{$index}{npc_talk_code}) {
+						if (!defined $clientdata->{$index}{serverType}) {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "However, I regret that OpenKore may not currently support your server.");
-						} elsif ($clientdata{$index}{serverType} == 7 || $clientdata{$index}{serverType} == 12) {
+						} elsif ($clientdata->{$index}{serverType} == 7 || $clientdata->{$index}{serverType} == 12) {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "However, I regret that OpenKore does not yet fully support your server this time.");
 						} else {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Based on my examination, I think OpenKore supports your server.");
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "I can tell you the possible server details you can use to make OpenKore to connect to your server.");
 						}
 						SendNPCTalkContinue($self, $client, $msg, $index, $npcID);
-						$clientdata{$index}{npc_talk_code} = 1;
+						$clientdata->{$index}{npc_talk_code} = 1;
 
-					} elsif ($clientdata{$index}{npc_talk_code} == 1) {
-						if ((!defined $clientdata{$index}{serverType}) || ($clientdata{$index}{serverType} == 7)) {
+					} elsif ($clientdata->{$index}{npc_talk_code} == 1) {
+						if ((!defined $clientdata->{$index}{serverType}) || ($clientdata->{$index}{serverType} == 7)) {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Would you still like to hear the details?");
 						} else {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Would you like to hear the details?");
 						}
 						SendNPCTalkContinue($self, $client, $msg, $index, $npcID);
-						$clientdata{$index}{npc_talk_code} = 2;
+						$clientdata->{$index}{npc_talk_code} = 2;
 
-					} elsif ($clientdata{$index}{npc_talk_code} == 2.5) {
-						if (!defined $clientdata{$index}{serverType}) {
+					} elsif ($clientdata->{$index}{npc_talk_code} == 2.5) {
+						if (!defined $clientdata->{$index}{serverType}) {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "As you can see, I can't find a matching serverType for your server.");
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Please make a trial-and-error using all available serverTypes, one of them might be able to work.");
-						} elsif ($clientdata{$index}{serverType} == 7 || $clientdata{$index}{serverType} == 12) {
+						} elsif ($clientdata->{$index}{serverType} == 7 || $clientdata->{$index}{serverType} == 12) {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Like I said, your server is not yet fully supported by OpenKore.");
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "You can login to the server and do most basic tasks, but you cannot attack, sit or stand, or use skills.");
 						}
 						SendNPCTalkContinue($self, $client, $msg, $index, $npcID);
-						$clientdata{$index}{npc_talk_code} = 4;
+						$clientdata->{$index}{npc_talk_code} = 4;
 
-					} elsif ($clientdata{$index}{npc_talk_code} == 3) {
+					} elsif ($clientdata->{$index}{npc_talk_code} == 3) {
 						SendNPCTalk($self, $client, $msg, $index, $npcID, "The values of ^2222DDip^000000 and ^2222DDport^000000 can be found on your client's (s)clientinfo.xml.");
 						SendNPCTalkContinue($self, $client, $msg, $index, $npcID);
-						$clientdata{$index}{npc_talk_code} = 4;
+						$clientdata->{$index}{npc_talk_code} = 4;
 
-					} elsif ($clientdata{$index}{npc_talk_code} == 4) {
-						if (!defined $clientdata{$index}{serverType}) {
+					} elsif ($clientdata->{$index}{npc_talk_code} == 4) {
+						if (!defined $clientdata->{$index}{serverType}) {
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "If none of the serverTypes work, please inform the developers about this so we can support your server in future releases of OpenKore.");
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Please visit ^2222DDhttps://forums.openkore.com/^000000");
 							SendNPCTalk($self, $client, $msg, $index, $npcID, "Thank you.");
 						} else {
-							if (($clientdata{$index}{serverType} == 7)
-								|| ($clientdata{$index}{serverType} == 8)
-								|| ($clientdata{$index}{serverType} == 9)
-								|| ($clientdata{$index}{serverType} == 10)
-								|| ($clientdata{$index}{serverType} == 11)
-								|| ($clientdata{$index}{serverType} == 12)
-								|| ($clientdata{$index}{masterLogin_packet})
-								|| ($clientdata{$index}{gameLogin_packet})
+							if (($clientdata->{$index}{serverType} == 7)
+								|| ($clientdata->{$index}{serverType} == 8)
+								|| ($clientdata->{$index}{serverType} == 9)
+								|| ($clientdata->{$index}{serverType} == 10)
+								|| ($clientdata->{$index}{serverType} == 11)
+								|| ($clientdata->{$index}{serverType} == 12)
+								|| ($clientdata->{$index}{masterLogin_packet})
+								|| ($clientdata->{$index}{gameLogin_packet})
 							) {
 								SendNPCTalk($self, $client, $msg, $index, $npcID, "Please note that you can only connect to your server using OpenKore GIT.");
 							} else {
@@ -908,7 +903,7 @@ sub ParsePacket {
 			} elsif ($switch eq '00BF') { # emoticon
 				my ($client, $code) = @_;
 				my $data = pack("v1 a4", 0xC0, $accountID) . substr($msg, 2, 1);
-				$clientdata{$index}{emoticonTime} = time;
+				$clientdata->{$index}{emoticonTime} = time;
 				SendData($client, $data);
 
 			} else {
@@ -920,8 +915,8 @@ sub ParsePacket {
 				# Just provide feedback in the RO Client about the unhandled packet
 				# '008E' => ['self_chat', 'x2 Z*', [qw(message)]],
 				my $data = pack("v2 a31", 0x008E, 35, "Sent packet $switch (" . length($msg) . " bytes).");
-				if (timeOut($clientdata{$index}{emoticonTime}, 1.8)) {
-					$clientdata{$index}{emoticonTime} = time;
+				if (timeOut($clientdata->{$index}{emoticonTime}, 1.8)) {
+					$clientdata->{$index}{emoticonTime} = time;
 					$data .= pack("v a4 C", 0x00C0, $accountID, 1);
 				}
 
