@@ -25,6 +25,7 @@ use Base::Server;
 use base qw(Base::Server);
 use Misc;
 use Utils qw(binSize getCoordString timeOut getHex getTickCount);
+use Utils::DataStructures qw(existsInList);
 use Poseidon::Config;
 use FileParsers;
 use Math::BigInt;
@@ -173,6 +174,7 @@ my $npcID0 = pack("V", "110000002");
 my $npcID1 = pack("V", "110000001");
 my $monsterID = pack("V", "110000003");
 my $itemID = pack("V", "50001");
+my $developMode = 0;
 
 sub DecryptMessageID {
 	my ($MID) = @_;
@@ -212,8 +214,11 @@ sub SendData {
 	if($config{debug}) {
 		my $packet_id = unpack("v", $data);
 		my $switch = sprintf("%04X", $packet_id);
-		print "\nSent packet $switch:\n";
-		visualDump($data, "$switch");
+
+		unless (existsInList($config{debugPacket_exclude}, $switch)) {
+			print "\nSent packet $switch:\n";
+			visualDump($data, "$switch");
+		}
 	}
 
 	$client->send($data);
@@ -230,8 +235,11 @@ sub ParsePacket {
 	my $port = pack("v", $self->getPort());
 	$host = '127.0.0.1' if ($host eq 'localhost');
 	my @ipElements = split /\./, $host;
-	print "\nReceived packet $switch:\n" if ($config{debug});
-	visualDump($msg, "$switch") if ($config{debug});
+
+	if ($config{debug} and !existsInList($config{debugPacket_exclude}, $switch)) {
+		print "\nReceived packet $switch:\n";
+		visualDump($msg, "$switch");
+	}
 
 	# Note:
 	# The switch packets are pRO specific and assumes the use of secureLogin 1. It may or may not work with other
@@ -449,7 +457,13 @@ sub ParsePacket {
 		# State
 		$state = 1;
 
-		$clientdata{$index}{mode} = unpack('C1', substr($msg, 2, 1));
+		$developMode = unpack('C1', substr($msg, 2, 1));
+
+		if ($developMode) {
+			print "You are using DEVELOPER mode!\n";
+		} else {
+			print "You are using NORMAL mode.\n";
+		}
 
 		if ($self->{type}->{$config{server_type}}->{received_character_ID_and_Map} eq '0AC5') {
 			# '0AC5' => ['received_character_ID_and_Map', 'a4 Z16 a4 v a128', [qw(charID mapName mapIP mapPort mapUrl)]],
@@ -722,6 +736,10 @@ sub ParsePacket {
 				SendNPCTalk($self, $client, $msg, $index, $npcID1, "[Kafra]");
 				SendNPCTalk($self, $client, $msg, $index, $npcID1, "Welcome to Kafra Corp. We will stay with you wherever you go.");
 				SendNPCTalkContinue($self, $client, $msg, $index, $npcID1);
+			} elsif (!$developMode) {
+				SendNPCTalk($self, $client, $msg, $index, $npcID0, "[Hakore]");
+				SendNPCTalk($self, $client, $msg, $index, $npcID0, "Hello! Poseidon server is ready. You can run OpenKore.");
+				SendNpcTalkClose($self, $client, $msg, $index, $npcID0);
 			} else {
 				SendNPCTalk($self, $client, $msg, $index, $npcID0, "[Hakore]");
 				SendNPCTalk($self, $client, $msg, $index, $npcID0, "Hello! I was examining your RO client's login packets while you were connecting to Poseidon.");
@@ -881,7 +899,7 @@ sub ParsePacket {
 			SendData($client, pack("v", 0x0B1D));
 		} elsif ($switch eq '01C0') { # Remaining time??
 			# SendData($client, pack("v V3", 0x01C0, 0xFF, 0xFF, 0xFF));
-		} elsif ($clientdata{$index}{mode}) {
+		} elsif ($developMode) {
 
 			if (($switch eq '00F7' || $switch eq '0193') && (length($msg) == 2)) { # storage close
 				my $data = pack("v1", 0xF8);
@@ -894,8 +912,10 @@ sub ParsePacket {
 				SendData($client, $data);
 
 			} else {
-				print "\nReceived packet $switch:\n";
-				visualDump($msg, "$switch") unless $config{debug};
+				unless ($config{debug}) {
+					print "\nReceived packet $switch:\n";
+					visualDump($msg, "$switch");
+				}
 
 				# Just provide feedback in the RO Client about the unhandled packet
 				# '008E' => ['self_chat', 'x2 Z*', [qw(message)]],
@@ -1054,7 +1074,7 @@ sub SendMapLogin {
 	}
 
 	my $data;
-	if ($clientdata{$index}{mode}) {
+	if ($developMode) {
 		if ($self->{type}->{$config{server_type}}->{map_loaded} eq '0B32') {
 			$data = pack("v", 0x0B32) .
 				pack("v", 94) . # len
@@ -1253,7 +1273,7 @@ sub PerformMapLoadedTasks {
 	SendLookTo($self, $client, $msg, $index, $accountID, 4);
 
 	# Let's not wait for the client to ask for the unit info
-	SendUnitInfo($self, $client, $msg, $index, $accountID, 'Poseidon' . (($clientdata{$index}{mode} ? ' Dev' : '')));
+	SendUnitInfo($self, $client, $msg, $index, $accountID, 'Poseidon' . (($developMode ? ' Dev' : '')));
 
 	# Global Announce
 	SendSystemChatMessage($self, $client, $msg, $index, "Welcome to the Poseidon Server !");
@@ -1264,7 +1284,7 @@ sub PerformMapLoadedTasks {
 	SendUnitInfo($self, $client, $msg, $index, $npcID0, "Server Details Guide");
 
 	# Dev Mode (Char Slot 1)
-	if ($clientdata{$index}{mode}) {
+	if ($developMode) {
 		# Show an NPC (Kafra)
 		SendShowNPC($self, $client, $msg, $index, 1, $npcID1, 114, $posX + 5, $posY + 3, "Kafra NPC");
 		SendLookTo($self, $client, $msg, $index, $npcID1, 4);

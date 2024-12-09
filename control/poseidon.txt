@@ -18,3 +18,4 @@ queryserver_port=24390
 server_type=Default
 
 debug=0
+#debugPacket_exclude=007F, 0360, 0187
