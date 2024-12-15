@@ -120,6 +120,23 @@ blockingPlayerCancel 1
 rankingSystemType 1
 ignoreAntiCheatWarning 0
 
+# https://roclassic.gnjoy.id/
+[Indonesia - idRO Classic: Baphomet]
+ip 202.93.25.134
+port 50001
+master_version 7
+version 24
+serverType idRO_Classic
+serverEncoding Thai
+addTableFolders idROClassic
+charBlockSize 175
+charDeleteDateType 1
+blockingPlayerCancel 1
+rankingSystemType 1
+itemListType 1
+pinCode 1
+gameGuard 1
+
 # Renewal
 # http://renewal.playragnarok.com/
 [International - iRO: Chaos/Thor/Freya]

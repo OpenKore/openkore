@@ -1,0 +1,658 @@
+achievement_tbl = {
+	[200000] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Dapatkan Aura Pertamamu!",
+		content = { summary = "Base Lv99 Tercapai!", details = "Dapatkan Base Level 99." },
+		resource = { [1] = { text = "Base Level 99" } },
+		reward = { title = 1000, buff = 10 },
+		score = 25
+	},
+	[200003] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Job Level Master!",
+		content = { summary = "Job Lv50 Tercapai!", details = "Capai Job Lv 50." },
+		resource = { [1] = { text = "Job Level 50" } },
+		reward = { title = 1003, buff = 10 },
+		score = 15
+	},
+	[200004] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "Job Level Grand Master!",
+		content = { summary = "Job Lv70 Tercapai!", details = "Capai Job Lv 70." },
+		resource = { [1] = { text = "Job Level 70" } },
+		reward = { title = 1004, buff = 10 },
+		score = 25
+	},
+	[200005] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Official Adventurer",
+		content = {
+			summary = "Berubah menjadi Job 1",
+			details = "Berubah menjadi Swordsman, Merchant, Thief, Mage, Acolyte, atau Archer."
+		},
+		resource = { [1] = { text = "Berubah menjadi Job 1" } },
+		reward = { title = 1005, buff = 12 },
+		score = 5
+	},
+	[200007] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "Veteran Adventurer! (1)",
+		content = {
+			summary = "Berubah menjadi Job 2 (2-1)",
+			details = "Berubah menjadi Knight, Blacksmith, Assassin, Wizard, Priest, atau Hunter."
+		},
+		resource = { [1] = { text = "Berubah menjadi Job 2 (2-1)" } },
+		reward = { title = 1006, buff = 12 },
+		score = 10
+	},
+	[200017] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Bearish Power!",
+		content = { summary = "Memiliki STR 90", details = "Tingkatkan STR sampai dengan 90." },
+		resource = { [1] = { text = "Memiliki STR 90" } },
+		reward = {},
+		score = 5
+	},
+	[200018] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Overflowing Magic!",
+		content = { summary = "Memiliki INT 90", details = "Tingkatkan INT sampai dengan 90." },
+		resource = { [1] = { text = "Memiliki INT 90 " } },
+		reward = {},
+		score = 5
+	},
+	[200019] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "A Healthy Mind in a Healthy Body!",
+		content = { summary = "Memiliki VIT 90", details = "Tingkatkan VIT sampai dengan 90." },
+		resource = { [1] = { text = "Memiliki VIT 90 " } },
+		reward = {},
+		score = 5
+	},
+	[200020] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Speedmania",
+		content = { summary = "Memiliki AGI 90", details = "Tingkatkan AGI sampai dengan 90." },
+		resource = { [1] = { text = "Memiliki AGI 90 " } },
+		reward = {},
+		score = 5
+	},
+	[200021] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Eagle Eye",
+		content = { summary = "Memiliki DEX 90", details = "Tingkatkan DEX sampai dengan 90." },
+		resource = { [1] = { text = "Memiliki DEX 90 " } },
+		reward = {},
+		score = 5
+	},
+	[200022] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Lucky Max",
+		content = { summary = "Memiliki LUK 90", details = "Tingkatkan LUK sampai dengan 90." },
+		resource = { [1] = { text = "Memiliki LUK 90 " } },
+		reward = {},
+		score = 5
+	},
+	[200029] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "Avatar of Love and Hatred",
+		content = {
+			summary = "Capai Base Lv 99 Sebagai Novice",
+			details = "Karakter Novice dengan Base Lv 99."
+		},
+		resource = { [1] = { text = "Capai Base Lv 99 Sebagai Novice" } },
+		reward = { buff = 10 },
+		score = 15
+	},
+	[200030] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "I really like you!",
+		content = {
+			summary = "Capai Base Lv 99 Sebagai Job 1",
+			details = "Karakter Job 1 dengan Base Lv 99."
+		},
+		resource = { [1] = { text = "Capai Base Lv 99 Sebagai Job 1" } },
+		reward = { buff = 10 },
+		score = 15
+	},
+	[220003] = {
+		UI_Type = 0,
+		group = "ADD_FRIEND",
+		major = 1,
+		minor = 2,
+		title = "Sahabat~ Sahabat~",
+		content = {
+			summary = "Tambahkan 1 player ke Friend List",
+			details = "Cari seorang teman untuk memulai petualanganmu."
+		},
+		resource = { [1] = { text = "Tambahkan 1 player ke Friend List" } },
+		reward = {},
+		score = 5
+	},
+	[220004] = {
+		UI_Type = 0,
+		group = "ADD_FRIEND",
+		major = 1,
+		minor = 2,
+		title = "Orang Populer",
+		content = {
+			summary = "Tambahkan 10 player ke Friend list",
+			details = "Semakin banyak teman, semakin bagus, tambahkan 10 player ke friend list."
+		},
+		resource = { [1] = { text = "Tambahkan 10 player ke Friend list" } },
+		reward = {},
+		score = 5
+	},
+	[220005] = {
+		UI_Type = 0,
+		group = "PARTY",
+		major = 1,
+		minor = 2,
+		title = "Let's Party~",
+		content = {
+			summary = "Membuat Party",
+			details = "Tidak ada lagi petualangan yang membosankan!! Ayo buat party!"
+		},
+		resource = { [1] = { text = "Membuat Party" } },
+		reward = {},
+		score = 5
+	},
+	[220009] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Memajukan Ekonomi Market (1)",
+		content = {
+			summary = "Habiskan paling tidak 100.000 Zeny di Vending",
+			details = "Ayo bersama kita memajukan ekonomi dengan menghabiskan 100.000 Zeny di Vending player lain!"
+		},
+		resource = {
+			[1] = { text = "Habiskan paling tidak 100.000 Zeny di Vending", count = 100000 },
+			count = 500000000
+		},
+		reward = {},
+		score = 5
+	},
+	[220010] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Memajukan Ekonomi Market (2)",
+		content = {
+			summary = "Habiskan paling tidak 1.000.000 Zeny di Vending",
+			details = "Ayo bersama kita memajukan ekonomi dengan menghabiskan 1 juta Zeny di Vending!"
+		},
+		resource = {
+			[1] = { text = "Habiskan paling tidak 1.000.000 Zeny di Vending", count = 1000000 },
+			count = 500000000
+		},
+		reward = {},
+		score = 10
+	},
+	[220011] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "Memajukan Ekonomi Market (3)",
+		content = {
+			summary = "Habiskan paling tidak 10.000.000 Zeny di Vending",
+			details = "Ayo bersama kita memajukan ekonomi dengan menghabiskan 5 juta Zeny di Vending!"
+		},
+		resource = {
+			[1] = { text = "Habiskan paling tidak 10.000.000 Zeny di Vending", count = 10000000 },
+			count = 500000000
+		},
+		reward = {},
+		score = 20
+	},
+	[220014] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tidak bisa berhenti menempa! (1)",
+		content = {
+			summary = "Sukses menempa Senjata Lv  1 sampai dengan +7",
+			details = "Sampai mana keberuntunganmu? Sukses menempa Senjata Lv 1 sampai dengan +7."
+		},
+		resource = { [1] = { text = "Sukses menempa Senjata Lv  1 sampai dengan +7" } },
+		reward = {},
+		score = 5
+	},
+	[220015] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tidak bisa berhenti menempa! (2)",
+		content = {
+			summary = "Sukses menempa Senjata Lv  1 sampai dengan +10",
+			details = "Sampai mana keberuntunganmu? Sukses menempa Senjata Lv 1 sampai dengan +10."
+		},
+		resource = { [1] = { text = "Sukses menempa Senjata Lv  1 sampai dengan +10" } },
+		reward = {},
+		score = 15
+	},
+	[220016] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tidak bisa berhenti menempa! (3)",
+		content = {
+			summary = "Sukses menempa Senjata Lv  2 sampai dengan +7",
+			details = "Sampai mana keberuntunganmu? Sukses menempa Senjata Lv 2 sampai dengan +7."
+		},
+		resource = { [1] = { text = "Sukses menempa Senjata Lv  2 sampai dengan +7" } },
+		reward = {},
+		score = 5
+	},
+	[220017] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tidak bisa berhenti menempa! (4)",
+		content = {
+			summary = "Sukses menempa Senjata Lv  2 sampai dengan +10",
+			details = "Sampai mana keberuntunganmu? Sukses menempa Senjata Lv 2 sampai dengan +10."
+		},
+		resource = { [1] = { text = "Sukses menempa Senjata Lv  2 sampai dengan +10" } },
+		reward = {},
+		score = 15
+	},
+	[220018] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tidak bisa berhenti menempa! (5)",
+		content = {
+			summary = "Sukses menempa Senjata Lv  3 sampai dengan +7",
+			details = "Sampai mana keberuntunganmu? Sukses menempa Senjata Lv 3 sampai dengan +7."
+		},
+		resource = { [1] = { text = "Sukses menempa Senjata Lv  3 sampai dengan +7" } },
+		reward = {},
+		score = 5
+	},
+	[220019] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tidak bisa berhenti menempa! (6)",
+		content = {
+			summary = "Sukses menempa Senjata Lv  3 sampai dengan +10",
+			details = "Sampai mana keberuntunganmu? Sukses menempa Senjata Lv 3 sampai dengan +10."
+		},
+		resource = { [1] = { text = "Sukses menempa Senjata Lv  3 sampai dengan +10" } },
+		reward = {},
+		score = 15
+	},
+	[220020] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tidak bisa berhenti menempa! (7)",
+		content = {
+			summary = "Sukses menempa Senjata Lv  4 sampai dengan +7",
+			details = "Sampai mana keberuntunganmu? Sukses menempa Senjata Lv 4 sampai dengan +7."
+		},
+		resource = { [1] = { text = "Sukses menempa Senjata Lv  4 sampai dengan +7" } },
+		reward = {},
+		score = 15
+	},
+	[220021] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "Tidak bisa berhenti menempa! (8)",
+		content = {
+			summary = "Sukses menempa Senjata Lv  4 sampai dengan +10",
+			details = "Sampai mana keberuntunganmu? Sukses menempa Senjata Lv 4 sampai dengan +10."
+		},
+		resource = { [1] = { text = "Sukses menempa Senjata Lv  4 sampai dengan +10" } },
+		reward = {},
+		score = 30
+	},
+	[240001] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 1",
+		content = { summary = "Capai Achievement Level 1", details = "Capai Achievement Level 1." },
+		resource = { [1] = { text = "Capai Achievement Level 1" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240002] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 2",
+		content = { summary = "Capai Achievement Level 2", details = "Capai Achievement Level 2." },
+		resource = { [1] = { text = "Capai Achievement Level 2" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240003] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 3",
+		content = { summary = "Capai Achievement Level 3", details = "Capai Achievement Level 3." },
+		resource = { [1] = { text = "Capai Achievement Level 3" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240004] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 4",
+		content = { summary = "Capai Achievement Level 4", details = "Capai Achievement Level 4." },
+		resource = { [1] = { text = "Capai Achievement Level 4" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240005] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 5",
+		content = { summary = "Capai Achievement Level 5", details = "Capai Achievement Level 5." },
+		resource = { [1] = { text = "Capai Achievement Level 5" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240006] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 6",
+		content = { summary = "Capai Achievement Level 6", details = "Capai Achievement Level 6." },
+		resource = { [1] = { text = "Capai Achievement Level 6" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240007] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 7",
+		content = { summary = "Capai Achievement Level 7", details = "Capai Achievement Level 7." },
+		resource = { [1] = { text = "Capai Achievement Level 7" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240008] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 8",
+		content = { summary = "Capai Achievement Level 8", details = "Capai Achievement Level 8." },
+		resource = { [1] = { text = "Capai Achievement Level 8" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240009] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 9",
+		content = { summary = "Capai Achievement Level 9", details = "Capai Achievement Level 9." },
+		resource = { [1] = { text = "Capai Achievement Level 9" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240010] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 10",
+		content = {
+			summary = "Capai Achievement Level 10",
+			details = "Capai Achievement Level 10. Kamu bisa mendapatkan Title berkat kerja kerasmu."
+		},
+		resource = { [1] = { text = "Capai Achievement Level 10" } },
+		reward = { title = 1023, buff = 12, item = 644 },
+		score = 5
+	},
+	[240011] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 11",
+		content = { summary = "Capai Achievement Level 11", details = "Capai Achievement Level 11." },
+		resource = { [1] = { text = "Capai Achievement Level 11" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240012] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 12",
+		content = { summary = "Capai Achievement Level 12", details = "Capai Achievement Level 12." },
+		resource = { [1] = { text = "Capai Achievement Level 12" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240013] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 13",
+		content = { summary = "Capai Achievement Level 13", details = "Capai Achievement Level 13." },
+		resource = { [1] = { text = "Capai Achievement Level 13" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240014] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 14",
+		content = { summary = "Capai Achievement Level 14", details = "Capai Achievement Level 14." },
+		resource = { [1] = { text = "Capai Achievement Level 14" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240015] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 15",
+		content = { summary = "Capai Achievement Level 15", details = "Capai Achievement Level 15." },
+		resource = { [1] = { text = "Capai Achievement Level 15" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240016] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 16",
+		content = { summary = "Capai Achievement Level 16", details = "Capai Achievement Level 16." },
+		resource = { [1] = { text = "Capai Achievement Level 16" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240017] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 17",
+		content = { summary = "Capai Achievement Level 17", details = "Capai Achievement Level 17." },
+		resource = { [1] = { text = "Capai Achievement Level 17" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240018] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 18",
+		content = { summary = "Capai Achievement Level 18", details = "Capai Achievement Level 18." },
+		resource = { [1] = { text = "Capai Achievement Level 18" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240019] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 19",
+		content = { summary = "Capai Achievement Level 19", details = "Capai Achievement Level 19." },
+		resource = { [1] = { text = "Capai Achievement Level 19" } },
+		reward = { buff = 12, item = 644 },
+		score = 5
+	},
+	[240020] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Capai Achievement Level 20",
+		content = {
+			summary = "Capai Achievement Level 20",
+			details = "Capai Achievement Level 20. Kamu bisa mendapatkan Title berkat kerja kerasmu."
+		},
+		resource = { [1] = { text = "Capai Achievement Level 20" } },
+		reward = { title = 1024, buff = 12, item = 644 },
+		score = 5
+	},
+	[315001] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Castle Rush Winner",
+		content = {
+			summary = "Kamu adalah bagian dari keluarga Guild Beater^Classic",
+			details = "Guild Pemenang Castle Rush: Beater^Classic"
+		},
+		resource = { [1] = { text = "Castle Rush Winner" } },
+		reward = { title = 2501 },
+		score = 50
+	},
+	[315002] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Bronze Founder",
+		content = {
+			summary = "Kamu telah berpartisipasi dalam pembelian Bronze Founder's Pack",
+			details = "Kamu telah berpartisipasi dalam pembelian Bronze Founder's Pack"
+		},
+		resource = { [1] = { text = "Bronze Founder" } },
+		reward = { title = 2502 },
+		score = 20
+	},
+	[315003] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Silver Founder",
+		content = {
+			summary = "Kamu telah berpartisipasi dalam pembelian Silver Founder's Pack",
+			details = "Kamu telah berpartisipasi dalam pembelian Silver Founder's Pack"
+		},
+		resource = { [1] = { text = "Silver Founder" } },
+		reward = { title = 2503 },
+		score = 20
+	},
+	[315004] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Gold Founder",
+		content = {
+			summary = "Kamu telah berpartisipasi dalam pembelian Gold Founder's Pack",
+			details = "Kamu telah berpartisipasi dalam pembelian Gold Founder's Pack"
+		},
+		resource = { [1] = { text = "Gold Founder" } },
+		reward = { title = 2504 },
+		score = 20
+	},
+	[315005] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "Platinum Founder",
+		content = {
+			summary = "Kamu telah berpartisipasi dalam pembelian Platinum Founder's Pack",
+			details = "Kamu telah berpartisipasi dalam pembelian Platinum Founder's Pack"
+		},
+		resource = { [1] = { text = "Platinum Founder" } },
+		reward = { title = 2505 },
+		score = 50
+	}
+}
