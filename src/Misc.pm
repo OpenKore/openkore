@@ -186,6 +186,7 @@ our @EXPORT = (
 	qw/lineIntersection
 	percent_hp
 	percent_sp
+	percent_ap
 	percent_weight/,
 
 	# Misc Functions
