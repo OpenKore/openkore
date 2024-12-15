@@ -523,6 +523,7 @@ attackSkillSlot {
 	minCastTime 0
 	hp
 	sp > 10
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
@@ -602,6 +603,7 @@ attackComboSlot {
 doCommand {
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
@@ -651,6 +653,7 @@ useSelf_skill {
 	minCastTime 0
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
@@ -704,6 +707,7 @@ partySkill {
 	minCastTime 0
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
@@ -803,6 +807,7 @@ equipAuto {
 	whileSitting 0
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
@@ -843,6 +848,7 @@ equipAuto {
 useSelf_item {
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp

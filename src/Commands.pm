@@ -5491,7 +5491,7 @@ sub cmdStatus {
 	}
 
 
-	my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
+	my ($hp_string, $sp_string, $ap_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
 
 	$hp_string = $char->{'hp'}."/".$char->{'hp_max'}." ("
 		.int($char->{'hp'}/$char->{'hp_max'} * 100)
@@ -5499,6 +5499,9 @@ sub cmdStatus {
 	$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
 		.int($char->{'sp'}/$char->{'sp_max'} * 100)
 		."%)" if $char->{'sp_max'};
+	$ap_string = $char->{'ap'}."/".$char->{'ap_max'}." ("
+		.int($char->{'ap'}/$char->{'ap_max'} * 100)
+		."%)" if $char->{'ap_max'};
 	$base_string = formatNumber($char->{'exp'})."/".formatNumber($char->{'exp_max'})." /$baseEXPKill ("
 		.sprintf("%.2f",$char->{'exp'}/$char->{'exp_max'} * 100)
 		."%)"
@@ -5522,6 +5525,7 @@ sub cmdStatus {
 		swrite(
 		TF("\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"\@<<<<<<<<<<<<<<<<<<<<<<<         SP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"AP:\@<<<<<<<<                                             \n" .
 		"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
@@ -5530,7 +5534,7 @@ sub cmdStatus {
 		"Total Time spent (sec): \@>>>>>>>>\n" .
 		"Last Monster took (sec): \@>>>>>>>",
 		(exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits} . "\tType: " . $char->{amuletType} : $char->{spirits}) : 0)),
-		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
+		[$char->{'name'}, $hp_string, $job_name_string, $sp_string, $ap_string,
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]).
 		('-'x56) . "\n";

@@ -4164,6 +4164,15 @@ sub percent_sp {
 	}
 }
 
+sub percent_ap {
+	my $r_hash = shift;
+	if (!$$r_hash{'ap_max'}) {
+		return 0;
+	} else {
+		return ($$r_hash{'ap'} / $$r_hash{'ap_max'} * 100);
+	}
+}
+
 sub percent_weight {
 	my $r_hash = shift;
 	if (!$$r_hash{'weight_max'}) {
@@ -4611,6 +4620,14 @@ sub checkSelfCondition {
 			return 0 if (!inRange($char->sp_percent, $1));
 		} else {
 			return 0 if (!inRange($char->{sp}, $config{$prefix."_sp"}));
+		}
+	}
+
+	if ($config{$prefix . "_ap"}) {
+		if ($config{$prefix."_ap"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->ap_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{ap}, $config{$prefix."_ap"}));
 		}
 	}
 
