@@ -38,12 +38,9 @@ use Utils::PathFinding;
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
 	my $args = AI::args;
+	my $action = AI::action;
 
-	if (
-		   (AI::action eq "attack" && $args->{ID})
-		|| (AI::action eq "route" && AI::action (1) eq "attack" && $args->{attackID})
-		|| (AI::action eq "move" && AI::action (2) eq "attack" && $args->{attackID})
-	) {
+	if (shouldAttack($action, $args)) {
 		my $ID;
 		my $ataqArgs;
 		if (AI::action eq "attack") {
@@ -205,6 +202,15 @@ sub process {
 	Benchmark::end("ai_attack") if DEBUG;
 }
 
+sub shouldAttack {
+    my ($action, $args) = @_;
+    return (
+        ($action eq "attack" && $args->{ID})
+        || ($action eq "route" && AI::action(1) eq "attack" && $args->{attackID})
+        || ($action eq "move" && AI::action(2) eq "attack" && $args->{attackID})
+    );
+}
+
 sub shouldGiveUp {
 	my ($args, $ID) = @_;
 	return !$config{attackNoGiveup} && (timeOut($args->{ai_attack_giveup}) || $args->{unstuck}{count} > 5);
@@ -236,7 +242,7 @@ sub finishAttacking {
 		Plugins::callHook('target_died', {monster => $monsters_old{$ID}});
 		monKilled();
 
-		# Pickup loot when monster's dead
+    # Pickup loot when monster's dead
 		if (AI::state == AI::AUTO && $config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
 			AI::clear("items_take");
 			ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},

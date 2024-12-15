@@ -410,6 +410,9 @@ sub initHandlers {
 			[T("<player #>"), T("look at player")]
 			], \&cmdLookPlayer],
 		['memo', T("Save current position for warp portal."), \&cmdMemo],
+		['memorial', [
+			["destroy",T("Destroy an instance.")]
+			], \&cmdMemorialDungeonDestroy],
 		['ml', T("List monsters that are on screen."), \&cmdMonsterList],
 		['move', [
 			T("Move your character."),
@@ -698,7 +701,6 @@ sub initHandlers {
 			[T("<vender #> <vender_item #> [<amount>]"), T("buy items from vender shop")],
 			["end", T("leave current vender shop")]
 			], \&cmdVender],
-		['verbose', T("Toggle verbose on/off."), \&cmdVerbose],
 		['version', T("Display the version of openkore."), \&cmdVersion],
 		['vl', T("List nearby vending shops."), \&cmdVenderList],
 		['vs', T("Display the status of your vending shop."), \&cmdShopInfoSelf],
@@ -1209,7 +1211,6 @@ sub cmdPoison {
 			error T("Error in function 'poison' (Apply Poison)\n" .
 			 	"Type 'poison' to get list.\n");
 		}
-		
 	} elsif ($command eq "use") {
 		if (defined binFind(\@skillsID, 'GC_POISONINGWEAPON')) {
 			main::ai_skillUse('GC_POISONINGWEAPON', 5, 0, 0, $accountID);
@@ -6051,6 +6052,33 @@ sub cmdUnequip {
 		return;
 	}
 
+	if ($arg1 eq "all") {
+		my @equipment;
+		# Find all equipped items
+		for my $item (@{$char->inventory}) {
+			 if ($item->equippable && $item->{type_equip} != 0) {
+				my %eqp;
+				$eqp{index} = $item->{ID};
+				$eqp{binID} = $item->{binID};
+				$eqp{name} = $item->{name};
+				$eqp{amount} = $item->{amount};
+				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
+				$eqp{type} = $itemTypes_lut{$item->{type}};
+				$eqp{equipped} .= " ($item->{equipped})";
+				# Translation Comment: Mark to tell item not identified
+				$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
+				if ($item->{equipped}) {
+					push @equipment, \%eqp;
+				}
+			}
+		}
+		for my $e (@equipment) {
+			my $item = Actor::Item::get($e->{name}, undef, 0);
+			$item->unequip();
+		}
+		return;
+	}
+
 	if ($equipSlot_rlut{$arg1}) {
 		$slot = $arg1;
 	} else {
@@ -6542,16 +6570,7 @@ sub cmdBuyer {
 		}
 
 		$messageSender->sendBuyBulkBuyer($buyerID, [{ID => $c_item->{ID}, itemID => $c_item->{nameID}, amount => $amount}], $buyingStoreID);
-	}
 }
-
-
-sub cmdVerbose {
-	if ($config{'verbose'}) {
-		configModify("verbose", 0);
-	} else {
-		configModify("verbose", 1);
-	}
 }
 
 sub cmdVersion {
@@ -6980,6 +6999,7 @@ sub cmdQuest {
 				my $msg = center (' ' . ($quests_lut{$args[1]}{title} || T('Quest Info')) . ' ', 79, '-') . "\n";
 				$msg .= "$quests_lut{$args[1]}{summary}\n" if $quests_lut{$args[1]}{summary};
 				$msg .= TF("Objective: %s\n", $quests_lut{$args[1]}{objective}) if $quests_lut{$args[1]}{objective};
+				$msg .= $quests_lut{$args[1]}{active} ? T("active") : T("inactive") . "\n";
 				message $msg;
 			} else {
 				message T("Unknown quest\n"), "info";
@@ -8612,6 +8632,19 @@ sub cmdMergeItem {
 
 	error T("No item was selected or at least need 2 same items.\n");
 	error T("To merge by item id: merge <itemid>\nOr one-by-one: merge <item #>,<item #>[,...]\n"), "info";
+}
+
+sub cmdMemorialDungeonDestroy {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my (undef, $args) = @_;
+
+	if ($args eq "destroy") {
+		$messageSender->sendMemorialDungeonCommand(3);
+	}
 }
 
 1;
