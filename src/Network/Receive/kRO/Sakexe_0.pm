@@ -307,7 +307,10 @@ sub new {
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type term ID)]], # 35
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
 		'01D6' => ['map_property2', 'v', [qw(type)]], # 4
-		'01D7' => ['sprite_change', 'a4 C v2', [qw(ID type value1 value2)]], # 11 # TODO: inconsistent with C structs
+		'01D7' => ($rpackets{'01D7'}{length} == 15) # or 11
+			? ['sprite_change', 'a4 C V2', [qw(ID type value1 value2)]] # 15
+			: ['sprite_change', 'a4 C v2', [qw(ID type value1 value2)]] # 11
+		,
 		'01D8' => ['actor_exists', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 54 # standing
 		'01D9' => ['actor_connected', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 53 # spawning
 		'01DA' => ['actor_moved', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 60 # walking

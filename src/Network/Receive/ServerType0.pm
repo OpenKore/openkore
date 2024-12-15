@@ -292,7 +292,10 @@ sub new {
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type term ID)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D6' => ['map_property2', 'v', [qw(type)]],
-		'01D7' => ['sprite_change', 'a4 C v2', [qw(ID type value1 value2)]], # 11
+		'01D7' => ($rpackets{'01D7'}{length} == 15) # or 11
+			? ['sprite_change', 'a4 C V2', [qw(ID type value1 value2)]] # 15
+			: ['sprite_change', 'a4 C v2', [qw(ID type value1 value2)]] # 11
+		,
 		# OLD' 01D8' => ['actor_exists', 'a4 v14 a4 x4 v x C a3 x2 C v',			[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
 		'01D8' => ['actor_exists', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords unknown1 unknown2 act lv)]], # standing
 		# OLD '01D9' => ['actor_connected', 'a4 v14 a4 x4 v x C a3 x2 v',				[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
