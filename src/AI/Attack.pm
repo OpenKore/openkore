@@ -145,9 +145,7 @@ sub process {
 			AI::dequeue while (AI::is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			# TODO: needReajust does nothing besides blocking attackWaitApproachFinish, should it do anything else?
-			$attackSeq->{needReajust} = 1;
-
+			$attackSeq->{sentApproach} = 0;
 		}
 
 		$timeout{ai_attack_route_adjust}{time} = time;
@@ -451,13 +449,12 @@ sub main {
 		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};;
 	}
 	
-	# Here we check if we have finished moving to the meeting position to attack our target, only checks this if attackWaitApproachFinish is set to 1 in config and needReajust is 0
+	# Here we check if we have finished moving to the meeting position to attack our target, only checks this if attackWaitApproachFinish is set to 1 in config
 	# If so sets sentApproach to 0
 	if (
 		   $config{"attackWaitApproachFinish"}
 		&& ($canAttack == 0 || $canAttack == -1)
 		&& $args->{sentApproach}
-		&& !$args->{needReajust}
 	) {
 		if (!timeOut($char->{time_move}, $char->{time_move_calc})) {
 			debug TF("[Out of Range - Still Approaching - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
@@ -484,7 +481,6 @@ sub main {
 			if ($pos) {
 				debug TF("[runFromTarget] (+$current_beyond | $current_dist/$max_sight) %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 				$args->{avoiding} = 1;
-				$args->{needReajust} = 0;
 				$char->route(
 					undef,
 					@{$pos}{qw(x y)},
@@ -574,7 +570,6 @@ sub main {
 		if ($pos) {
 			debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
 
-			$args->{needReajust} = 0;
 			$args->{sentApproach} = 1;
 			
 			my $sendAttackWithMove = 0;
