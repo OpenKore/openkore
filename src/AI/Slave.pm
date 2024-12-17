@@ -177,7 +177,6 @@ sub iterate {
 	$slave->processWasFound;
 	$slave->processTeleportToMaster;
 	$slave->processAutoAttack;
-	$slave->processCheckMonster;
 	$slave->processFollow;
 	$slave->processIdleWalk;
 }
@@ -362,7 +361,7 @@ sub processAutoAttack {
 	
 	return if (!$field);
 	if (
-	    ($slave->isIdle || $slave->is(qw/route checkMonsters/))
+	    ($slave->isIdle || $slave->is(qw/route/))
 	 &&   (
 	       AI::isIdle
 	    || AI::is(qw(follow sitAuto attack skill_use))
@@ -375,6 +374,9 @@ sub processAutoAttack {
 	 && ((AI::action ne "move" && AI::action ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'})
 	 && (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity)
 	 && ($config{$slave->{configPrefix}.'attackAuto_inLockOnly'} <= 1 || $field->baseName eq $config{'lockMap'})
+	 && (!$config{$slave->{configPrefix}.'attackAuto_notWhile_storageAuto'} || !AI::inQueue("storageAuto"))
+	 && (!$config{$slave->{configPrefix}.'attackAuto_notWhile_buyAuto'} || !AI::inQueue("buyAuto"))
+	 && (!$config{$slave->{configPrefix}.'attackAuto_notWhile_sellAuto'} || !AI::inQueue("sellAuto"))
 	) {
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
@@ -506,20 +508,6 @@ sub processAutoAttack {
 	}
 
 	#Benchmark::end("ai_homunculus_autoAttack") if DEBUG;
-}
-
-sub processCheckMonster {
-	my $slave = shift;
-	return if ($slave->inQueue("attack"));
-	return if (!$slave->inQueue("checkMonsters"));
-	return if (!$slave->is("checkMonsters"));
-
-	$timeout{$slave->{ai_check_monster_auto}}{'time'} = time if !$timeout{$slave->{ai_check_monster_auto}}{'time'};
-
-	if(timeOut($timeout{$slave->{ai_check_monster_auto}})) {
-		$slave->dequeue;
-		undef $timeout{$slave->{ai_check_monster_auto}}{'time'};
-	}
 }
 
 sub sendAttack {

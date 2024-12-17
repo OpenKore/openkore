@@ -132,7 +132,7 @@ sub new {
 		'00BE' => ['stat_info', 'v C', [qw(type val)]], # 5 was "stats_points_needed"
 		'00C0' => ['emoticon', 'a4 C', [qw(ID type)]], # 7
 		'00C2' => ['users_online', 'V', [qw(users)]], # 6
-		'00C3' => ['job_equipment_hair_change', 'a4 C2', [qw(ID part number)]], # 8
+		'00C3' => ['sprite_change', 'a4 C2', [qw(ID type value1)]], # 8
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]], # 6
 		'00C6' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
 		'00C7' => ['npc_sell_list', 'v a*', [qw(len itemsdata)]], # -1
@@ -307,7 +307,10 @@ sub new {
 		'01D3' => ['sound_effect', 'Z24 C V a4', [qw(name type term ID)]], # 35
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]], # 6
 		'01D6' => ['map_property2', 'v', [qw(type)]], # 4
-		'01D7' => ['player_equipment', 'a4 C v2', [qw(sourceID type ID1 ID2)]], # 11 # TODO: inconsistent with C structs
+		'01D7' => ($rpackets{'01D7'}{length} == 15) # or 11
+			? ['sprite_change', 'a4 C V2', [qw(ID type value1 value2)]] # 15
+			: ['sprite_change', 'a4 C v2', [qw(ID type value1 value2)]] # 11
+		,
 		'01D8' => ['actor_exists', 'a4 v14 a4 a2 v2 C2 a3 C3 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize act lv)]], # 54 # standing
 		'01D9' => ['actor_connected', 'a4 v14 a4 a2 v2 C2 a3 C2 v',		[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 53 # spawning
 		'01DA' => ['actor_moved', 'a4 v9 V v5 a4 a2 v2 C2 a6 C2 v',	[qw(ID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir guildID emblemID manner opt3 stance sex coords xSize ySize lv)]], # 60 # walking
@@ -466,6 +469,7 @@ sub new {
 		'02EF' => ['font', 'a4 v', [qw(ID fontID)]], # 8
 		'02F0' => ['progress_bar', 'V2', [qw(color time)]],
 		'02F2' => ['progress_bar_stop'],
+		'02F7' => ['guild_name', 'a4 a4 V C a4 Z24 a4', [qw(guildID emblemID mode is_master interSID guildName master_char_id)]], #47
 		'040C' => ['local_broadcast', 'v a4 v4 Z*', [qw(len color font_type font_size font_align font_y message)]], # -1
 		'043D' => ['skill_post_delay', 'v V', [qw(ID time)]],
 		'043E' => ['skill_post_delaylist', 'v a*', [qw(len skill_list)]],
@@ -1375,8 +1379,8 @@ sub skill_used_no_damage {
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
 	if ($args->{sourceID} eq $accountID) {
 		my $pos = calcPosition($char);
-		$char->{pos} = $pos;
-		$char->{pos_to} = $pos;
+		%{$char->{pos}} = %{$pos};
+		%{$char->{pos_to}} = %{$pos};
 		$char->{time_move} = 0;
 		$char->{time_move_calc} = 0;
 	}

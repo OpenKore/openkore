@@ -134,7 +134,6 @@ sub clear {
 	if ($total == 0) {
 		undef @ai_seq;
 		undef @ai_seq_args;
-		undef %ai_v;
 
 	# If 1 arg was given find it in the queue
 	} elsif ($total == 1) {
