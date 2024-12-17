@@ -220,7 +220,7 @@ sub calcPosFromPathfinding {
 }
 
 # Wrapper for calcTimeFromSolution so you don't need to call get_client_solution and calcTimeFromSolution when you only need the time
-# Used in Misc::meetingPosition to calculate if the target would have time to catch-up with the character when tunning away from it
+# Used in Misc::meetingPosition to calculate if the target would have time to catch-up with the character when running away from it
 sub calcTimeFromPathfinding {
 	my ($field, $pos, $pos_to, $speed) = @_;
 

@@ -89,12 +89,13 @@ attackLooters_dist 1
 attackChangeTarget 1
 aggressiveAntiKS 0
 
+attackUpdateMonsterPos 1
+
 attackBeyondMaxDistance_waitForAgressive 1
 attackBeyondMaxDistance_sendAttackWhileWaiting 1
 attackSendAttackWithMove 1 
 attackWaitApproachFinish 1
- 
-attackUpdateMonsterPos 0
+
 
 autoMoveOnDeath 0
 autoMoveOnDeath_x
