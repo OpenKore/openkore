@@ -174,7 +174,6 @@ sub iterate {
 	Misc::checkValidity("AI part 3");
 	processAutoEquip();
 	processAutoAttack();
-	processCheckMonster();
 	processItemsTake();
 	processItemsAutoGather();
 	processItemsGather();
@@ -3082,6 +3081,7 @@ sub processAutoEquip {
 						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"} if (!$eq_list{$slot});
 					}
 				}
+				$ai_v{"equipAuto_$i" . "_time"} = time;
 			}
 		}
 
@@ -3107,7 +3107,7 @@ sub processAutoAttack {
 	Benchmark::begin("ai_autoAttack") if DEBUG;
 
 	return if (!$field);
-	if ((AI::isIdle || AI::is(qw/route checkMonsters follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
+	if ((AI::isIdle || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
 	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
 	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
@@ -3307,7 +3307,7 @@ sub processItemsTake {
 sub processItemsAutoGather {
 	return if (AI::inQueue("gather", "take", "items_gather"));
 	if ( (AI::isIdle || AI::action eq "follow"
-		|| ( AI::is("route", "mapRoute", "checkMonsters") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2) ))
+		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2) ))
 	  && $config{'itemsGatherAuto'}
 	  && (!$config{itemsGatherAuto_notInTown} || !$field->isCity)
 	  && !$ai_v{sitAuto_forcedBySitCommand}
@@ -3726,19 +3726,6 @@ sub processPartyShareAuto {
 			}
 		}
 		$timeout{ai_partyShareCheck}{time} = time;
-	}
-}
-
-sub processCheckMonster {
-	return if AI::inQueue("attack");
-	return if !AI::inQueue("checkMonsters");
-	return if !AI::is("checkMonsters");
-
-	$timeout{'ai_check_monster_auto'}{'time'} = time if !$timeout{'ai_check_monster_auto'}{'time'};
-
-	if (timeOut($timeout{'ai_check_monster_auto'})) {
-		AI::dequeue;
-		undef $timeout{'ai_check_monster_auto'}{'time'};
 	}
 }
 

@@ -4505,40 +4505,47 @@ sub cash_shop_buy_result {
 
 }
 
-sub player_equipment {
+sub sprite_change {
 	my ($self, $args) = @_;
 
-	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
-	my $player = ($sourceID ne $accountID)? $playersList->getByID($sourceID) : $char;
+	my ($ID, $type, $value1, $value2) = @{$args}{qw(ID type value1 value2)};
+	my $player = ($ID ne $accountID)? $playersList->getByID($ID) : $char;
 	return unless $player;
 
 	if ($type == 0) {
-		# Player changed job
-		$player->{jobID} = $ID1;
+		$player->{jobID} = $value1;
+		message TF("%s changed Job to: %s\n", $player, $jobs_lut{$value1}), "parseMsg_statuslook";
 
 	} elsif ($type == 2) {
-		if ($ID1 ne $player->{weapon}) {
-			message TF("%s changed Weapon to %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
-			$player->{weapon} = $ID1;
+		if ($value1 ne $player->{weapon}) {
+			message TF("%s changed Weapon to %s (%d)\n", $player, itemName({nameID => $value1}), $value1), "parseMsg_statuslook", 2;
+			$player->{weapon} = $value1;
 		}
-		if ($ID2 ne $player->{shield}) {
-			message TF("%s changed Shield to %s\n", $player, itemName({nameID => $ID2})), "parseMsg_statuslook", 2;
-			$player->{shield} = $ID2;
+		if ($value2 ne $player->{shield}) {
+			message TF("%s changed Shield to %s (%d)\n", $player, itemName({nameID => $value2}), $value2), "parseMsg_statuslook", 2;
+			$player->{shield} = $value2;
 		}
 	} elsif ($type == 3) {
-		message TF("%s changed Lower headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
-		$player->{headgear}{low} = $ID1;
+		message TF("%s changed Lower headgear to %s (%d)\n", $player, headgearName($value1), $value1), "parseMsg_statuslook";
+		$player->{headgear}{low} = $value1;
 	} elsif ($type == 4) {
-		message TF("%s changed Upper headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
-		$player->{headgear}{top} = $ID1;
+		message TF("%s changed Upper headgear to %s (%d)\n", $player, headgearName($value1), $value1), "parseMsg_statuslook";
+		$player->{headgear}{top} = $value1;
 	} elsif ($type == 5) {
-		message TF("%s changed Middle headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
-		$player->{headgear}{mid} = $ID1;
+		message TF("%s changed Middle headgear to %s (%d)\n", $player, headgearName($value1), $value1), "parseMsg_statuslook";
+		$player->{headgear}{mid} = $value1;
+	} elsif ($args->{part} == 6) {
+ 		message TF("%s changed Hair color to: %s (%d)\n", $player, $haircolors{$value1}, $value1), "parseMsg_statuslook";
+		$player->{hair_color} = $value1;
 	} elsif ($type == 9) {
-		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
-			message TF("%s changed Shoes to: %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
+		if ($player->{shoes} && $value1 ne $player->{shoes}) {
+			message TF("%s changed Shoes to: %s\n", $player, itemName({nameID => $value1})), "parseMsg_statuslook", 2;
 		}
-		$player->{shoes} = $ID1;
+		$player->{shoes} = $value1;
+	} elsif ($type == 12) {
+ 		message TF("%s changed Robe to: SPRITE_ROBE_ID=%d\n", $player, $value1, $value1), "parseMsg_statuslook";
+	} else {
+		error TF("%s changed unknown sprite type (%d), write about it to OpenKore developer\n", $player, $type), "parseMsg_statuslook";
 	}
 }
 
@@ -7087,68 +7094,6 @@ sub item_upgrade {
 		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade";
 		$item->setName(itemName($item));
 	}
-}
-
-sub job_equipment_hair_change {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	my $actor = Actor::get($args->{ID});
-	assertClass($actor, "Actor") if DEBUG;
-
-	if ($args->{part} == 0) {
-		# Job change
-		$actor->{jobID} = $args->{number};
- 		message TF("%s changed job to: %s\n", $actor, $jobs_lut{$args->{number}}), "parseMsg/job", ($actor->isa('Actor::You') ? 0 : 2);
-
-	} elsif ($args->{part} == 3) {
-		# Bottom headgear change
- 		message TF("%s changed bottom headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
-		$actor->{headgear}{low} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
-
-	} elsif ($args->{part} == 4) {
-		# Top headgear change
- 		message TF("%s changed top headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
-		$actor->{headgear}{top} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
-
-	} elsif ($args->{part} == 5) {
-		# Middle headgear change
- 		message TF("%s changed middle headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
-		$actor->{headgear}{mid} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
-
-	} elsif ($args->{part} == 6) {
-		# Hair color change
-		$actor->{hair_color} = $args->{number};
- 		message TF("%s changed hair color to: %s (%s)\n", $actor, $haircolors{$args->{number}}, $args->{number}), "parseMsg/hairColor", ($actor->isa('Actor::You') ? 0 : 2);
-	}
-
-	#my %parts = (
-	#	0 => 'Body',
-	#	2 => 'Right Hand',
-	#	3 => 'Low Head',
-	#	4 => 'Top Head',
-	#	5 => 'Middle Head',
-	#	8 => 'Left Hand'
-	#);
-	#if ($part == 3) {
-	#	$part = 'low';
-	#} elsif ($part == 4) {
-	#	$part = 'top';
-	#} elsif ($part == 5) {
-	#	$part = 'mid';
-	#}
-	#
-	#my $name = getActorName($ID);
-	#if ($part == 3 || $part == 4 || $part == 5) {
-	#	my $actor = Actor::get($ID);
-	#	$actor->{headgear}{$part} = $items_lut{$number} if ($actor);
-	#	my $itemName = $items_lut{$itemID};
-	#	$itemName = 'nothing' if (!$itemName);
-	#	debug "$name changes $parts{$part} ($part) equipment to $itemName\n", "parseMsg";
-	#} else {
-	#	debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
-	#}
-
 }
 
 # Leap, Snap, Back Slide... Various knockback
@@ -11810,12 +11755,15 @@ sub skill_use_failed {
 
 	delete $char->{casting};
 
-	warning TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill";
-	Plugins::callHook('packet_skillfail', {
-		skillID     => $skillID,
-		failType    => $type,
-		failMessage => $errorMessage
-	});
+	my %hookArgs;
+	$hookArgs{skillID} = $skillID;
+	$hookArgs{failType} = $type;
+	$hookArgs{failMessage} = $errorMessage;
+	$hookArgs{warn} = 1;
+
+	Plugins::callHook('packet_skillfail', \%hookArgs);
+
+	warning(TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill") if ($hookArgs{warn});
 }
 
 sub open_store_status {
