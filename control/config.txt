@@ -10,6 +10,33 @@ password
 loginPinCode
 char
 
+flameBarrier 1
+flameBarrier_lvl 10
+flameBarrier_maxCastTime
+flameBarrier_minCastTime
+
+flameBarrier_timeLeft_recastWhenLessThan 6
+flameBarrier_timeLeft_notFleeToWhenLessThan 6
+
+flameBarrier_hitsLeft_recastWhenLessThan 4
+flameBarrier_hitsLeft_notFleeToWhenLessThan 4
+
+flameBarrier_distBehindBarrier 2
+flameBarrier_sp > 40
+flameBarrier_whenStatusInactive EFST_POSTDELAY
+flameBarrier_attack_maxDistance 7
+flameBarrier_runWhenUnsafeAndCantCast 1
+flameBarrier_mustBeMiddle 1
+
+attackSkillSlot_0 MG_FIREBOLT
+attackSkillSlot_0_lvl 10
+attackSkillSlot_0_sp > 30
+attackSkillSlot_0_disabled 0
+attackSkillSlot_0_dist 7
+attackSkillSlot_0_whenStatusInactive EFST_POSTDELAY
+
+runFromTarget_dist_BehindBarrier 3
+
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
 # They must be the same as Query Server config in Poseidon.txt
 poseidonServer 127.0.0.1
@@ -66,12 +93,12 @@ attackAuto 2
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
-attackAuto_inLockOnly 1
+attackAuto_inLockOnly 2
 attackAuto_notInTown 1
 attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
-attackAuto_considerDamagedAggressive 0
+attackAuto_considerDamagedAggressive 1
 attackBeyondMaxDistance_waitForAgressive 1
 attackDistance 1
 attackDistanceAuto 0
@@ -80,11 +107,11 @@ attackMaxRouteDistance 50
 attackMaxRouteTime 4
 attackMinPlayerDistance 2
 attackMinPortalDistance 4
-attackUseWeapon 1
+attackUseWeapon 0
 attackNoGiveup 0
-attackCanSnipe 0
-attackCheckLOS 0
-attackRouteMaxPathDistance 13
+attackCanSnipe 1
+attackCheckLOS 1
+attackRouteMaxPathDistance 28
 attackLooters 0
 attackLooters_dist 1
 attackChangeTarget 1
@@ -188,9 +215,9 @@ followLostStep 12
 followSitAuto 0
 followBot 0
 
-itemsTakeAuto 2
+itemsTakeAuto 0
 itemsTakeAuto_party 0
-itemsGatherAuto 2
+itemsGatherAuto 0
 itemsGatherAuto_notInTown 0
 itemsGatherAutoMinPlayerDistance 6
 itemsGatherAutoMinPortalDistance 5
@@ -201,7 +228,7 @@ cartMaxWeight 7900
 itemsTakeGreed 0
 itemsCheckWeight 1
 
-lockMap
+lockMap pay_fild08
 lockMap_x
 lockMap_y
 lockMap_randX
@@ -226,7 +253,7 @@ route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
 
-runFromTarget 0
+runFromTarget 1
 runFromTarget_inAdvance 0
 runFromTarget_dist 5
 runFromTarget_minStep 7
@@ -520,75 +547,6 @@ pet_return 20
 ######## Block options ########
 # You can copy & paste any block multiple times. So if you want to
 # configure two attack skills, just duplicate the attackSkillSlot block.
-
-attackSkillSlot {
-	lvl
-	dist 1
-	maxDist 1
-	maxCastTime 0
-	minCastTime 0
-	hp
-	sp > 10
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	previousDamage
-	stopWhenHit 0
-	inLockOnly 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	maxAttempts 0
-	maxUses 0
-	target_hp
-	target_whenStatusActive
-	target_whenStatusInactive
-	target_deltaHp
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	isSelfSkill 0
-	isStartSkill 0
-	equip_topHead
-	equip_midHead
-	equip_lowHead
-	equip_leftHand
-	equip_rightHand
-	equip_leftAccessory
-	equip_rightAccessory
-	equip_robe
-	equip_armor
-	equip_shoes
-	equip_arrow
-	manualAI 0
-}
 
 attackComboSlot {
 	afterSkill
@@ -951,7 +909,7 @@ getAuto {
 
 ######## Debugging options; only useful for developers ########
 
-debug 0
+debug 2
 debugPacket_unparsed 0
 debugPacket_received 0
 debugPacket_ro_sent 0
