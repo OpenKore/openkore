@@ -145,6 +145,7 @@ sub process {
 			AI::dequeue while (AI::is("move", "route"));
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
+			# TODO: needReajust does nothing besides blocking attackWaitApproachFinish, should it do anything else?
 			$attackSeq->{needReajust} = 1;
 
 		}
@@ -437,6 +438,8 @@ sub main {
 		$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
 	}
 	
+	# Here we check if the monster which we are waiting to get closer to us is in fact close enough
+	# If it is close enough delete the ai_attack_failed_waitForAgressive_give_up keys and loop attack logic
 	if (
 		   $config{"attackBeyondMaxDistance_waitForAgressive"}
 		&& $target->{dmgFromYou} > 0
@@ -448,6 +451,8 @@ sub main {
 		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};;
 	}
 	
+	# Here we check if we have finished moving to the meeting position to attack our target, only checks this if attackWaitApproachFinish is set to 1 in config and needReajust is 0
+	# If so sets sentApproach to 0
 	if (
 		   $config{"attackWaitApproachFinish"}
 		&& ($canAttack == 0 || $canAttack == -1)
@@ -463,6 +468,7 @@ sub main {
 		}
 	}
 
+	# TODO: Should this " || $hitYou" be here? It could be a melee mob which has a ranged skill like Seyren from biolab 3
 	if ($config{'runFromTarget'} && ($realMonsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 		my $max_sight = $config{clientSight} - 1;
 		my $current_beyond = 0;
@@ -491,6 +497,7 @@ sub main {
 				last;
 				
 			} elsif ($current_dist == $max_sight) {
+				# TODO: If we can't kite (for example if there are no valid cells) we sohuld just keep attacking instead of giving up
 				debug TF("%s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 				last;
 				
@@ -499,6 +506,8 @@ sub main {
 			}
 		}
 
+	# TODO: We could be a character which only uses skills to attack and all of them are on cooldown, yielding no valid attackmethod in this cycle, maybe we could default to kiting when runFromTarget is set and just waiting when not
+	# Maybe add a config key to determine what to do in this situation?
 	} elsif($canAttack  == -2) {
 		debug T("Can't determine a attackMethod (check attackUseWeapon and Skills blocks)\n"), "ai_attack";
 		$args->{ai_attack_failed_give_up}{timeout} = 6 if !$args->{ai_attack_failed_give_up}{timeout};
@@ -509,6 +518,9 @@ sub main {
 			giveUp($args, $ID, 0);
 		}
 	
+	# Here we decide what to do when a mob we have already hit is no longer in range or we have no LOS to it
+	# We also check if we have waited too long for the monster which we are waiting to get closer to us to approach
+	# TODO: Maybe we should separate this into 2 sections, one for out of range and another for no LOS
 	} elsif (
 		$config{"attackBeyondMaxDistance_waitForAgressive"} &&
 		$target->{dmgFromYou} > 0 &&
@@ -538,6 +550,7 @@ sub main {
 			}
 		}
 
+	# Here we decide what to do with a mob which is out of range or we have no LOS to
 	} elsif (
 		$canAttack < 1
 	) {
@@ -548,10 +561,10 @@ sub main {
 			debug "[Attack] [Melee] [No range] Too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 		
 		} elsif ($ranged && $canAttack == -1) {
-			debug "[Attack] [Ranged] [No LOS] No LOS\n", 'ai_attack';
+			debug "[Attack] [Ranged] [No LOS] No LOS from player to mob\n", 'ai_attack';
 			
 		} elsif ($melee && $canAttack == -1) {
-			debug "[Attack] [Melee] [No LOS] No LOS\n", 'ai_attack';
+			debug "[Attack] [Melee] [No LOS] No LOS from player to mob\n", 'ai_attack';
 			
 		}
 
@@ -586,8 +599,10 @@ sub main {
 			giveUp($args, $ID, 1);
 		}
 
-	} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
-	 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
+	} elsif (
+		   (!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
+		&& (!$config{'tankMode'} || !$target->{dmgFromYou})
+	 ) {
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 		if (!$args->{firstAttack}) {
 			$args->{firstAttack} = 1;
@@ -605,6 +620,7 @@ sub main {
 			$args->{unstuck}{count}++;
 		}
 
+		# Attack with weapon logic
 		if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
 			if (Actor::Item::scanConfigAndCheck("attackEquip")) {
 				#check if item needs to be equipped
@@ -626,6 +642,8 @@ sub main {
 					}
 				}
 			}
+
+		# Attack with skill logic
 		} elsif ($args->{attackMethod}{type} eq "skill") {
 			my $slot = $args->{attackMethod}{skillSlot};
 			delete $args->{attackMethod};
@@ -649,7 +667,9 @@ sub main {
 			$args->{monsterID} = $ID;
 			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 			debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
+			# TODO: We sould probably add a runFromTarget_inAdvance logic here also, we could want to kite using skills
 
+		# Attack with combo logic
 		} elsif ($args->{attackMethod}{type} eq "combo") {
 			my $slot = $args->{attackMethod}{comboSlot};
 			my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
