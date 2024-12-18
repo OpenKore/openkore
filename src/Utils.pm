@@ -260,14 +260,17 @@ sub canAttack {
 }
 
 # Only God and gravity developers know why this is done this way, but I tested in the client and it works 100% of the time
-#
-# Reference: hercules src\map\path.c distance_client
+# Probably done this way because the client actually calculates distance in 3D and takes in consideration height ou the GAT file
+# To save processing time the server just removes some distance (0.0625 in Hercules and 0.1 in rathena) to compensate
+# Bound to fail sometimes as the server itself will fail in some cases
+# This actually makes it so that openkore can target, in very specific cases, targets a bit further away than the client can (very large height diference)
+# Reference: rathena src\map\path.c distance_client
 sub getClientDist {
 	my ($pos1, $pos2) = @_;
 	my $xD = abs($pos1->{x} - $pos2->{x});
 	my $yD = abs($pos1->{y} - $pos2->{y});
 	my $temp_dist = sqrt(($xD*$xD) + ($yD*$yD));
-	$temp_dist -= 0.0625;
+	$temp_dist -= 0.1;
 	$temp_dist = 0 if($temp_dist < 0);
 	$temp_dist = int($temp_dist);
 	return $temp_dist
