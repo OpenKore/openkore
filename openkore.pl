@@ -41,6 +41,7 @@ sub __start {
 
 	use Globals;
 	use Interface;
+	Settings::parseInterfaceName();
 	$interface = Interface->loadInterface($Settings::interface);
 	$interface->title($Settings::NAME);
 	selfCheck();

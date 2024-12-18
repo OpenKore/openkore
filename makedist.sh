@@ -135,7 +135,7 @@ else
 fi
 
 if [[ "$BINDIST" == "1" ]]; then
-	for F in start.exe wxstart.exe NetRedirect.dll XSTools.dll start-poseidon.exe; do
+	for F in openkore.exe NetRedirect.dll XSTools.dll start-poseidon.exe; do
 		if [[ ! -f "$F" ]]; then
 			echo "Please put $F in the current folder."
 			exit 1
@@ -218,15 +218,9 @@ if [[ "$BINDIST" == "1" ]]; then
 	cp -v XSTools.dll NetRedirect.dll start-poseidon.exe "$PACKAGEDIR/" || err
 
 	# Win32 binary
-	cp -v start.exe "$PACKAGEDIR/" || err
+	cp -v openkore.exe "$PACKAGEDIR/" || err
 	zip -9r "$PACKAGE-$VERSION-win32.zip" "$PACKAGEDIR" || err
 	echo "$PACKAGE-$VERSION-win32.zip created"
-
-	# Win32 Wx binary
-	cp -v wxstart.exe "$PACKAGEDIR/" || err
-	rm -vf "$PACKAGEDIR/start.exe"
-	zip -9r "$PACKAGE-$VERSION-win32_WX.zip" "$PACKAGEDIR" || err
-	echo "$PACKAGE-$VERSION-win32_wx.zip created"
 
 elif [[ "$SEMIBINDIST" == "1" ]]; then
 	# Create tarball
