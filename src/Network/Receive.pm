@@ -4540,7 +4540,10 @@ sub sprite_change {
 		}
 		$player->{shoes} = $value1;
 	} elsif ($type == 12) {
- 		message TF("%s changed Robe to: SPRITE_ROBE_ID=%d\n", $player, $value1, $value1), "parseMsg_statuslook";
+ 		message TF("%s changed Robe to: SPRITE_ROBE_ID=%d\n", $player, $value1, $value1), "parseMsg_statuslook", 2;
+	} elsif ($args->{part} == 7 || $args->{part} == 13) {
+		# Type 7 looks like body palette or body color. Type 13 looks like body2
+		debug sprintf("%s changed type= %d. value1=%d, value2=%d\n", $player, $type, $value1, $value2);
 	} else {
 		error TF("%s changed unknown sprite type (%d), write about it to OpenKore developer\n", $player, $type), "parseMsg_statuslook";
 	}
