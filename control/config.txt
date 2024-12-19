@@ -72,7 +72,6 @@ attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
 attackAuto_considerDamagedAggressive 0
-attackBeyondMaxDistance_waitForAgressive 1
 attackDistance 1
 attackDistanceAuto 0
 attackMaxDistance 1
@@ -83,14 +82,19 @@ attackMinPortalDistance 4
 attackUseWeapon 1
 attackNoGiveup 0
 attackCanSnipe 0
-attackCheckLOS 0
-attackRouteMaxPathDistance 13
+attackCheckLOS 1
+attackRouteMaxPathDistance 20
 attackLooters 0
 attackLooters_dist 1
 attackChangeTarget 1
 aggressiveAntiKS 0
 
 attackUpdateMonsterPos 1
+
+attackBeyondMaxDistance_waitForAgressive 1
+attackBeyondMaxDistance_sendAttackWhileWaiting 1
+attackSendAttackWithMove 1
+attackWaitApproachFinish 1
 
 autoMoveOnDeath 0
 autoMoveOnDeath_x
@@ -225,6 +229,7 @@ route_removeMissingPortals_NPC 1
 route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
+route_randomFactor 0
 
 runFromTarget 0
 runFromTarget_inAdvance 0
@@ -386,7 +391,6 @@ mercenary_attackAuto_notWhile_storageAuto 1
 mercenary_attackAuto_notWhile_buyAuto 1
 mercenary_attackAuto_notWhile_sellAuto 1
 mercenary_attackAuto_considerDamagedAggressive 0
-mercenary_attackBeyondMaxDistance_waitForAgressive 1
 mercenary_attackAuto_onlyWhenSafe 0
 mercenary_attackAuto_duringRandomWalk 0
 mercenary_attackAuto_duringItemsTake 0
@@ -401,6 +405,10 @@ mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
 mercenary_attack_dance_melee 0
 mercenary_attack_dance_ranged 0
+
+mercenary_attackBeyondMaxDistance_waitForAgressive 1
+mercenary_attackBeyondMaxDistance_sendAttackWhileWaiting 1
+mercenary_attackSendAttackWithMove 1
 
 mercenary_lost_teleportToMaster_maxTries 6
 
@@ -449,7 +457,6 @@ homunculus_attackAuto_notWhile_storageAuto 1
 homunculus_attackAuto_notWhile_buyAuto 1
 homunculus_attackAuto_notWhile_sellAuto 1
 homunculus_attackAuto_considerDamagedAggressive 0
-homunculus_attackBeyondMaxDistance_waitForAgressive 1
 homunculus_attackAuto_onlyWhenSafe 0
 homunculus_attackAuto_duringRandomWalk 0
 homunculus_attackAuto_duringItemsTake 0
@@ -463,6 +470,10 @@ homunculus_attackRouteMaxPathDistance 20
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 homunculus_attack_dance_melee 0
+
+homunculus_attackBeyondMaxDistance_waitForAgressive 1
+homunculus_attackBeyondMaxDistance_sendAttackWhileWaiting 1
+homunculus_attackSendAttackWithMove 1
 
 homunculus_lost_teleportToMaster_maxTries 6
 
