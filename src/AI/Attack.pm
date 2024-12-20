@@ -274,59 +274,49 @@ sub finishAttacking {
 }
 
 sub find_kite_position {
-	my ($args, $inAdvance, $target, $realMyPos, $realMonsterPos) = @_;
-	my $max_sight = $config{clientSight} - 1;
-	my $current_beyond = 0;
-	my $increase = 3;
+	my ($args, $inAdvance, $target, $realMyPos, $realMonsterPos, $noAttackMethodFallback_runFromTarget) = @_;
 	
 	my $maxDistance;
-	if (defined $args->{attackMethod}{type} && defined $args->{attackMethod}{maxDistance}) {
+	if (!$noAttackMethodFallback_runFromTarget && defined $args->{attackMethod}{type} && defined $args->{attackMethod}{maxDistance}) {
 		$maxDistance = $args->{attackMethod}{maxDistance};
-	} elsif (exists $args->{last_attackMethod_maxDistance} && defined $args->{last_attackMethod_maxDistance}) {
-		$maxDistance = $args->{last_attackMethod_maxDistance};
+	} elsif ($noAttackMethodFallback_runFromTarget) {
+		$maxDistance = $config{'runFromTarget_noAttackMethodFallback_attackMaxDist'};
 	} else {
-		# TODO: Maybe add a config key to use as fallback when no skill or weapon can be found
+		# Should never happen.
 		return 0;
 	}
 
-	while (1) {
-		# We try to find a position to kite from at least runFromTarget_minStep away from the target but at maximun {attackMethod}{maxDistance} away from it
-		# If we can't find it we increase the max distance to target and try again, until we hit clientSight
-		my $current_dist = $maxDistance + $current_beyond;
-		if ($current_dist > $max_sight) {
-			$current_dist = $max_sight;
-		}
-		
-		my $pos = meetingPosition($char, 1, $target, $current_dist, 1);
-		if ($pos) {
-			if ($inAdvance) {
-				debug TF("[runFromTarget_inAdvance] %s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-			} else {
-				debug TF("[runFromTarget] (+$current_beyond | $current_dist/$max_sight) %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-			}
-			$args->{avoiding} = 1;
-			$char->route(
-				undef,
-				@{$pos}{qw(x y)},
-				noMapRoute => 1,
-				avoidWalls => 0,
-				randomFactor => 0,
-				useManhattan => 1,
-				runFromTarget => 1
-			);
-			return 1;
-	
-		} elsif ($current_dist == $max_sight) {
-			if ($inAdvance) {
-				debug TF("[runFromTarget_inAdvance] %s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-			} else {
-				debug TF("[runFromTarget] %s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
-			}
-			return 0;
-
+	# We try to find a position to kite from at least runFromTarget_minStep away from the target but at maximun {attackMethod}{maxDistance} away from it
+	my $pos = meetingPosition($char, 1, $target, $maxDistance, ($noAttackMethodFallback_runFromTarget ? 2 : 1));
+	if ($pos) {
+		if ($inAdvance) {
+			debug TF("[runFromTarget_inAdvance] %s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+		} elsif ($noAttackMethodFallback_runFromTarget) {
+			debug TF("[runFromTarget_noAttackMethodFallback] %s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		} else {
-			$current_beyond += $increase;
+			debug TF("[runFromTarget] (attackmaxDistance $maxDistance) %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
+		$args->{avoiding} = 1;
+		$char->route(
+			undef,
+			@{$pos}{qw(x y)},
+			noMapRoute => 1,
+			avoidWalls => 0,
+			randomFactor => 0,
+			useManhattan => 1,
+			runFromTarget => 1
+		);
+		return 1;
+
+	} else {
+		if ($inAdvance) {
+			debug TF("[runFromTarget_inAdvance] %s no acceptable place to kite in advance from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+		} elsif ($noAttackMethodFallback_runFromTarget) {
+			debug TF("[runFromTarget_noAttackMethodFallback] %s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+		} else {
+			debug TF("[runFromTarget] %s no acceptable place to kite from (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+		}
+		return 0;
 	}
 }
 
@@ -503,7 +493,6 @@ sub main {
 	#  1: sucess
 	my $canAttack;
 	if (defined $args->{attackMethod}{type} && defined $args->{attackMethod}{maxDistance}) {
-		$args->{last_attackMethod_maxDistance} = $args->{attackMethod}{maxDistance};
 		$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
 	} else {
 		$canAttack = -2;
@@ -552,7 +541,7 @@ sub main {
 		$config{'runFromTarget'} &&
 		$realMonsterDist < $config{'runFromTarget_dist'}
 	) {
-		my $try_runFromTarget = find_kite_position($args, 0, $target, $realMyPos, $realMonsterPos);
+		my $try_runFromTarget = find_kite_position($args, 0, $target, $realMyPos, $realMonsterPos, 0);
 		if ($try_runFromTarget) {
 			$found_action = 1;
 		} else {
@@ -568,20 +557,17 @@ sub main {
 	# We could extend _minStep a bit since we have no attackmethod or use another key (eg. config.txt - runFromTarget_minStep_whenNoAttackMethod)
 	if (
 		!$found_action &&
-		$config{'runFromTarget'} &&
-		#$config{'runFromTarget_inAdvance'} &&
-		$realMonsterDist < $config{'runFromTarget_minStep'} &&
-		$canAttack  == -2
+		$canAttack  == -2 &&
+		#$config{'runFromTarget'} &&
+		$config{'runFromTarget_noAttackMethodFallback'} &&
+		$realMonsterDist < $config{'runFromTarget_noAttackMethodFallback_minStep'}
 	) {
-		my $try_runFromTarget = find_kite_position($args, 0, $target, $realMyPos, $realMonsterPos);
+		my $try_runFromTarget = find_kite_position($args, 0, $target, $realMyPos, $realMonsterPos, 1);
 		if ($try_runFromTarget) {
 			$found_action = 1;
 		}
 	}
 
-	# TODO: We could be a character which only uses skills to attack and all of them are on cooldown, yielding no valid attackmethod in this cycle, maybe we could default to kiting when runFromTarget is set and just waiting when not
-	# Maybe add a config key to determine what to do in this situation?
-	# Maybe we could kite in advance in this situation also?
 	if (
 		!$found_action &&
 		$canAttack  == -2
@@ -644,7 +630,7 @@ sub main {
 	# Here we decide what to do with a mob which is out of range or we have no LOS to
 	if (
 		!$found_action &&
-		$canAttack < 1 &&
+		($canAttack == 0 || $canAttack == -1) &&
 		!$hitTarget_when_not_possible
 	) {
 		debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y})\n";
@@ -722,7 +708,7 @@ sub main {
 				delete $args->{attackMethod};
 
 				if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
-					find_kite_position($args, 1, $target, $realMyPos, $realMonsterPos);
+					find_kite_position($args, 1, $target, $realMyPos, $realMonsterPos, 0);
 				}
 			}
 			$found_action = 1;

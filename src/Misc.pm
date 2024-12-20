@@ -2543,7 +2543,7 @@ sub manualMove {
 # actorType: 1 - char | 2 - slave
 # target_actor: actor to meet.
 # attackMaxDistance: attack distance based on attack method.
-# runFromTargetActive: Wheter meetingPosition was called by a runFromTarget check
+# runFromTargetActive: Wheter meetingPosition was called by a runFromTarget check, if 2 then use runFromTarget_noAttackMethodFallback values
 #
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
@@ -2576,7 +2576,11 @@ sub meetingPosition {
 		$runFromTarget_maxPathDistance = $config{runFromTarget_maxPathDistance} || 13;
 		$runFromTarget = $config{runFromTarget};
 		$runFromTarget_dist = $config{runFromTarget_dist};
-		$runFromTarget_minStep = $config{runFromTarget_minStep};
+		if ($runFromTargetActive == 2) {
+			$runFromTarget_minStep = $config{runFromTarget_noAttackMethodFallback_minStep};
+		} else {
+			$runFromTarget_minStep = $config{runFromTarget_minStep};
+		}
 		$followDistanceMax = $config{followDistanceMax};
 		$attackCanSnipe = $config{attackCanSnipe};
 		if ($config{follow}) {
@@ -2601,7 +2605,11 @@ sub meetingPosition {
 		$runFromTarget_maxPathDistance = $config{$actor->{configPrefix}.'runFromTarget_maxPathDistance'} || 20;
 		$runFromTarget = $config{$actor->{configPrefix}.'runFromTarget'};
 		$runFromTarget_dist = $config{$actor->{configPrefix}.'runFromTarget_dist'};
-		$runFromTarget_minStep = $config{$actor->{configPrefix}.'runFromTarget_minStep'};
+		if ($runFromTargetActive == 2) {
+			$runFromTarget_minStep =  $config{$actor->{configPrefix}.'runFromTarget_noAttackMethodFallback_minStep'};
+		} else {
+			$runFromTarget_minStep =  $config{$actor->{configPrefix}.'runFromTarget_minStep'};
+		}
 		$followDistanceMax = $config{$actor->{configPrefix}.'followDistanceMax'};
 		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
 		$master = $char;
