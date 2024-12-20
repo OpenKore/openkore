@@ -549,12 +549,8 @@ sub main {
 		}
 	}
 	
-	# Here, if runFromTarget is active, and we can't attack right now (eg. all skills in cooldown) we check if the target mob is closer to us than the minimun distance specified in runFromTarget_minStep
-	# If so try to kite it using attackmethod maxdistance of the last attack
-	# will fail if we have not laid a single attack to this mob, not a problem if the mob is not agressive, a problem if it is
-	# TODO: below
-	# We could use a fallback value here like (eg. config.txt - attackMaxDistance_skillfallback)
-	# We could extend _minStep a bit since we have no attackmethod or use another key (eg. config.txt - runFromTarget_minStep_whenNoAttackMethod)
+	# Here, if runFromTarget is active, and we can't attack right now (eg. all skills in cooldown) we check if the target mob is closer to us than the minimun distance specified in runFromTarget_noAttackMethodFallback_minStep
+	# If so try to kite it using maxdistance of runFromTarget_noAttackMethodFallback_attackMaxDist
 	if (
 		!$found_action &&
 		$canAttack  == -2 &&
