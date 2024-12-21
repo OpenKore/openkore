@@ -34,6 +34,10 @@ use Utils;
 use Utils::Benchmark;
 use Utils::PathFinding;
 
+use constant {
+	MOVING_TO_ATTACK => 1,
+	ATTACKING => 2,
+};
 
 sub process {
 	Benchmark::begin("ai_attack") if DEBUG;
@@ -43,9 +47,11 @@ sub process {
 	if (shouldAttack($action, $args)) {
 		my $ID;
 		my $ataqArgs;
+		my $stage; # 1 - moving to attack | 2 - attacking
 		if (AI::action eq "attack") {
 			$ID = $args->{ID};
 			$ataqArgs = AI::args(0);
+			$stage = ATTACKING;
 		} else {
 			if (AI::action(1) eq "attack") {
 				$ataqArgs = AI::args(1);
@@ -54,6 +60,7 @@ sub process {
 				$ataqArgs = AI::args(2);
 			}
 			$ID = $args->{attackID};
+			$stage = MOVING_TO_ATTACK;
 		}
 
 		if (targetGone($ataqArgs, $ID)) {
@@ -65,118 +72,115 @@ sub process {
 		}
 
 		my $target = Actor::get($ID);
-		if ($target) {
-			my $party = $config{'attackAuto_party'} ? 1 : 0;
-			my $target_is_aggressive = is_aggressive($target, undef, 0, $party);
-			my @aggressives = ai_getAggressives(0, $party);
-			if ($config{attackChangeTarget} && !$target_is_aggressive && @aggressives) {
-				my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
-				if ($attackTarget) {
-					$char->sendAttackStop;
-					AI::dequeue while (AI::inQueue("attack"));
-					ai_setSuspend(0);
-					my $new_target = Actor::get($attackTarget);
-					warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
-					$char->attack($attackTarget);
-					AI::Attack::process();
-					return;
-				}
+		if (!$target) {
+			finishAttacking($ataqArgs, $ID);
+			return;
+		}
+		my $party = $config{'attackAuto_party'} ? 1 : 0;
+		my $target_is_aggressive = is_aggressive($target, undef, 0, $party);
+		my @aggressives = ai_getAggressives(0, $party);
+		if ($config{attackChangeTarget} && !$target_is_aggressive && @aggressives) {
+			my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
+			if ($attackTarget) {
+				$char->sendAttackStop;
+				AI::dequeue while (AI::inQueue("attack"));
+				ai_setSuspend(0);
+				my $new_target = Actor::get($attackTarget);
+				warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
+				$char->attack($attackTarget);
+				AI::Attack::process();
+				return;
 			}
-			
-			my $cleanMonster = checkMonsterCleanness($ID);
-			if (!$cleanMonster) {
-				message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
+		}
+
+		my $cleanMonster = checkMonsterCleanness($ID);
+		if (!$cleanMonster) {
+			message TF("Dropping target %s - will not kill steal others\n", $target), 'ai_attack';
+			$char->sendAttackStop;
+			$target->{ignore} = 1;
+			AI::dequeue while (AI::inQueue("attack"));
+			if ($config{teleportAuto_dropTargetKS}) {
+				message T("Teleport due to dropping attack target\n"), "teleport";
+				ai_useTeleport(1);
+			}
+			return;
+		}
+
+		if ((my $control = mon_control($target->{name},$target->{nameID}))) {
+			if ($control->{attack_auto} == 3 && ($target->{dmgToYou} || $target->{missedYou} || $target->{dmgFromYou})) {
+				message TF("Dropping target - %s (%s) has been provoked\n", $target->{name}, $target->{binID});
 				$char->sendAttackStop;
 				$target->{ignore} = 1;
 				AI::dequeue while (AI::inQueue("attack"));
-				
-				if ($config{teleportAuto_dropTargetKS}) {
-					message T("Teleport due to dropping attack target\n"), "teleport";
+				return;
+			}
+		}
+		
+		if ($stage == MOVING_TO_ATTACK) {
+			# Check for hidden monsters
+			if (($target->{statuses}->{EFFECTSTATE_BURROW} || $target->{statuses}->{EFFECTSTATE_HIDING}) && $config{avoidHiddenMonsters}) {
+				message TF("Dropping target %s - will not attack hidden monsters\n", $target), 'ai_attack';
+				$char->sendAttackStop;
+				$target->{ignore} = 1;
+
+				AI::dequeue while (AI::inQueue("attack"));
+				if ($config{teleportAuto_dropTargetHidden}) {
+					message T("Teleport due to dropping hidden target\n");
 					ai_useTeleport(1);
 				}
 				return;
 			}
-			
-			if ((my $control = mon_control($target->{name},$target->{nameID}))) {
-				if ($control->{attack_auto} == 3 && ($target->{dmgToYou} || $target->{missedYou} || $target->{dmgFromYou})) {
-					message TF("Dropping target - %s (%s) has been provoked\n", $target->{name}, $target->{binID});
-					$char->sendAttackStop;
-					$target->{ignore} = 1;
-					AI::dequeue while (AI::inQueue("attack"));
-					return;
+
+			# We're on route to the monster; check whether the monster has moved
+			if ($args->{attackID} && timeOut($timeout{ai_attack_route_adjust})) {
+				if (
+					$target->{type} ne 'Unknown' &&
+					$ataqArgs->{monsterLastMoveTime} &&
+					$ataqArgs->{monsterLastMoveTime} != $target->{time_move}
+				) {
+					# Monster has moved; stop moving and let the attack AI readjust route
+					warning "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
+					AI::dequeue while (AI::is("move", "route"));
+
+					$ataqArgs->{ai_attack_giveup}{time} = time;
+					$ataqArgs->{sentApproach} = 0;
+					undef $args->{unstuck}{time};
+					undef $args->{avoiding};
+					undef $args->{move_start};
+				} else {
+					$timeout{ai_attack_route_adjust}{time} = time;
 				}
 			}
 		}
-	}
-
-	if (AI::action eq "attack" && AI::args->{suspended}) {
-		$args->{ai_attack_giveup}{time} += time - $args->{suspended};
-		delete $args->{suspended};
-	}
-
-	if (AI::action eq "attack" && $args->{move_start}) {
-		# We've just finished moving to the monster.
-		# Don't count the time we spent on moving
-		$args->{ai_attack_giveup}{time} += time - $args->{move_start};
-		undef $args->{unstuck}{time};
-		undef $args->{move_start};
-
-	} elsif (AI::action eq "attack" && $args->{avoiding} && $args->{ID}) {
-		my $ID = $args->{ID};
-		my $target = Actor::get($ID);
-		$args->{ai_attack_giveup}{time} = time;
-		undef $args->{avoiding};
-		debug "Finished avoiding movement from target $target, updating ai_attack_giveup\n", "ai_attack";
-
-	} elsif (((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
-	   && $args->{attackID} && timeOut($timeout{ai_attack_route_adjust})) {
-		# We're on route to the monster; check whether the monster has moved
-		my $ID = $args->{attackID};
-		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
-		my $target = Actor::get($ID);
-
-		if (
-			$target->{type} ne 'Unknown' &&
-			$attackSeq->{monsterLastMoveTime} &&
-			$attackSeq->{monsterLastMoveTime} != $target->{time_move}
-		) {
-			# Monster has moved; stop moving and let the attack AI readjust route
-			warning "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
-			AI::dequeue while (AI::is("move", "route"));
-
-			$attackSeq->{ai_attack_giveup}{time} = time;
-			$attackSeq->{sentApproach} = 0;
-		}
-
-		$timeout{ai_attack_route_adjust}{time} = time;
-	}
-
-	if (AI::action eq "attack" && timeOut($args->{attackMainTimeout}, 0.1)) {
-		if ($char->{sitting}) {
-			ai_setSuspend(0);
-			stand();
-		} else {
-			main();
-		}
 		
-		$args->{attackMainTimeout} = time;
-	}
+		if ($stage == ATTACKING) {
+			if (AI::args->{suspended}) {
+				$args->{ai_attack_giveup}{time} += time - $args->{suspended};
+				delete $args->{suspended};
 
-	# Check for hidden monsters
-	if (AI::inQueue("attack") && AI::is("move", "route", "attack")) {
-		my $ID = AI::args->{attackID};
-		my $monster = $monsters{$ID};
-		if (($monster->{statuses}->{EFFECTSTATE_BURROW} || $monster->{statuses}->{EFFECTSTATE_HIDING}) &&
-		$config{avoidHiddenMonsters}) {
-			message TF("Dropping target %s - will not attack hidden monsters\n", $monster), 'ai_attack';
-			$char->sendAttackStop;
-			$monster->{ignore} = 1;
-
-			AI::dequeue while (AI::inQueue("attack"));
-			if ($config{teleportAuto_dropTargetHidden}) {
-				message T("Teleport due to dropping hidden target\n");
-				ai_useTeleport(1);
+			# We've just finished moving to the monster.
+			# Don't count the time we spent on moving
+			} elsif ($args->{move_start}) {
+				$args->{ai_attack_giveup}{time} += time - $args->{move_start};
+				undef $args->{unstuck}{time};
+				undef $args->{move_start};
+				
+			} elsif ($args->{avoiding}) {
+				$args->{ai_attack_giveup}{time} = time;
+				undef $args->{avoiding};
+				debug "Finished avoiding movement from target $target, updating ai_attack_giveup\n", "ai_attack";
 			}
+
+			if (timeOut($timeout{ai_attack_main})) {
+				if ($char->{sitting}) {
+					ai_setSuspend(0);
+					stand();
+				} else {
+					main();
+				}
+				$timeout{ai_attack_main}{time} = time;
+			}
+
 		}
 	}
 
@@ -732,7 +736,7 @@ sub main {
 			);
 			$args->{monsterID} = $ID;
 			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
-			debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
+			debug "[attackSkillSlot] Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
 			# TODO: We sould probably add a runFromTarget_inAdvance logic here also, we could want to kite using skills, but only instant cast ones like double strafe I believe
 			$found_action = 1;
 
