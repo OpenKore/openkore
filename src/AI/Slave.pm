@@ -228,7 +228,7 @@ sub processFollow {
 	) {
 		$slave->clear('move', 'route');
 		if (!$field->canMove($slave->{pos_to}, $char->{pos_to})) {
-			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, isFollow => 1);
+			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, isFollow => 1);
 			debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 
 		} elsif (timeOut($slave->{move_retry}, 0.5)) {
@@ -277,7 +277,7 @@ sub processIdleWalk {
 				splice(@cells, $index, 1);
 			}
 			return unless ($walk_pos);
-			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, avoidWalls => 0, isIdleWalk => 1);
+			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, isIdleWalk => 1);
 			debug TF("%s IdleWalk route\n", $slave), 'slave';
 		}
 	}
@@ -416,6 +416,7 @@ sub processAutoAttack {
 			my @aggressives;
 			my @partyMonsters;
 			my @cleanMonsters;
+			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 			my $myPos = calcPosition($slave);
 
 			# List aggressive monsters
@@ -430,6 +431,7 @@ sub processAutoAttack {
 				# Never attack monsters that we failed to get LOS with
 				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
+				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				my $pos = calcPosition($monster);
 				my $master_pos = $char->position;
 				
