@@ -4531,7 +4531,7 @@ sub sprite_change {
 	} elsif ($type == 5) {
 		message TF("%s changed Middle headgear to %s (%d)\n", $player, headgearName($value1), $value1), "parseMsg_statuslook";
 		$player->{headgear}{mid} = $value1;
-	} elsif ($args->{part} == 6) {
+	} elsif ($type == 6) {
  		message TF("%s changed Hair color to: %s (%d)\n", $player, $haircolors{$value1}, $value1), "parseMsg_statuslook";
 		$player->{hair_color} = $value1;
 	} elsif ($type == 9) {
@@ -4541,7 +4541,7 @@ sub sprite_change {
 		$player->{shoes} = $value1;
 	} elsif ($type == 12) {
  		message TF("%s changed Robe to: SPRITE_ROBE_ID=%d\n", $player, $value1, $value1), "parseMsg_statuslook", 2;
-	} elsif ($args->{part} == 7 || $args->{part} == 13) {
+	} elsif ($type== 7 || $type == 13) {
 		# Type 7 looks like body palette or body color. Type 13 looks like body2
 		debug sprintf("%s changed type= %d. value1=%d, value2=%d\n", $player, $type, $value1, $value2);
 	} else {
