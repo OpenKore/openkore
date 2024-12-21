@@ -190,9 +190,9 @@ sub process {
 sub shouldAttack {
     my ($action, $args) = @_;
     return (
-        ($action eq "attack" && $args->{ID})
-        || ($action eq "route" && AI::action(1) eq "attack" && $args->{attackID})
-        || ($action eq "move" && AI::action(2) eq "attack" && $args->{attackID})
+        ($action eq "attack" && $args->{ID}) ||
+        ($action eq "route" && AI::action(1) eq "attack" && $args->{attackID}) ||
+        ($action eq "move" && AI::action(2) eq "attack" && $args->{attackID})
     );
 }
 
@@ -274,7 +274,6 @@ sub finishAttacking {
 
 	$messageSender->sendStopSkillUse($char->{last_continuous_skill_used}) if $char->{last_skill_used_is_continuous};
 	Plugins::callHook('attack_end', {ID => $ID})
-
 }
 
 sub find_kite_position {
@@ -382,6 +381,7 @@ sub main {
 
 	# Determine what combo skill to use
 	delete $args->{attackMethod};
+	
 	my $i = 0;
 	while (exists $config{"attackComboSlot_$i"}) {
 		if (!$config{"attackComboSlot_$i"}) {
@@ -461,14 +461,11 @@ sub main {
 			}
 			$i++;
 		}
-
-		if ($config{'runFromTarget'} && $config{'runFromTarget_dist'} > $args->{attackMethod}{distance}) {
-			$args->{attackMethod}{distance} = $config{'runFromTarget_dist'};
-		}
 	}
 
 	$args->{attackMethod}{maxDistance} ||= $config{attackMaxDistance};
 	$args->{attackMethod}{distance} ||= $config{attackDistance};
+
 	if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {
 		$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
 	}
@@ -542,8 +539,8 @@ sub main {
 	# If so try to kite it
 	if (
 		!$found_action &&
-		$config{'runFromTarget'} &&
-		$realMonsterDist < $config{'runFromTarget_dist'}
+		$config{"runFromTarget"} &&
+		$realMonsterDist < $config{"runFromTarget_dist"}
 	) {
 		my $try_runFromTarget = find_kite_position($args, 0, $target, $realMyPos, $realMonsterPos, 0);
 		if ($try_runFromTarget) {
@@ -558,7 +555,7 @@ sub main {
 	if (
 		!$found_action &&
 		$canAttack  == -2 &&
-		#$config{'runFromTarget'} &&
+		#$config{"runFromTarget"} &&
 		$config{'runFromTarget_noAttackMethodFallback'} &&
 		$realMonsterDist < $config{'runFromTarget_noAttackMethodFallback_minStep'}
 	) {
@@ -639,15 +636,14 @@ sub main {
 
 		} elsif ($canAttack == -1) {
 			debug "[Attack] [$range_type_string] [No LOS] No LOS from player to mob\n", 'ai_attack';
-
 		}
 
-		$args->{move_start} = time;
-		$args->{monsterLastMoveTime} = $target->{time_move};
 		my $pos = meetingPosition($char, 1, $target, $args->{attackMethod}{maxDistance});
 		if ($pos) {
 			debug "Attack $char ($realMyPos->{x} $realMyPos->{y}) - moving to meeting position ($pos->{x} $pos->{y})\n", 'ai_attack';
 
+			$args->{move_start} = time;
+			$args->{monsterLastMoveTime} = $target->{time_move};
 			$args->{sentApproach} = 1;
 			
 			my $sendAttackWithMove = 0;
@@ -676,8 +672,8 @@ sub main {
 
 	if (
 		!$found_action &&
-		(!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'} || $failed_runFromTarget) &&
-		(!$config{'tankMode'} || !$target->{dmgFromYou})
+		(!$config{"runFromTarget"} || $realMonsterDist >= $config{"runFromTarget_dist"} || $failed_runFromTarget) &&
+		(!$config{"tankMode"} || !$target->{dmgFromYou})
 	 ) {
 		# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 		if (!$args->{firstAttack}) {
@@ -707,7 +703,7 @@ sub main {
 				$timeout{ai_attack}{time} = time;
 				delete $args->{attackMethod};
 
-				if ($config{'runFromTarget'} && $config{'runFromTarget_inAdvance'} && $realMonsterDist < $config{'runFromTarget_minStep'}) {
+				if ($config{"runFromTarget"} && $config{"runFromTarget_inAdvance"} && $realMonsterDist < $config{"runFromTarget_minStep"}) {
 					find_kite_position($args, 1, $target, $realMyPos, $realMonsterPos, 0);
 				}
 			}

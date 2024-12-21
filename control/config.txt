@@ -412,6 +412,7 @@ mercenary_attack_dance_ranged 0
 mercenary_attackBeyondMaxDistance_waitForAgressive 1
 mercenary_attackBeyondMaxDistance_sendAttackWhileWaiting 1
 mercenary_attackSendAttackWithMove 1
+mercenary_attackWaitApproachFinish 1
 
 mercenary_lost_teleportToMaster_maxTries 6
 
@@ -424,6 +425,9 @@ mercenary_runFromTarget_inAdvance 0
 mercenary_runFromTarget_dist 5
 mercenary_runFromTarget_minStep 7
 mercenary_runFromTarget_maxPathDistance 20
+mercenary_runFromTarget_noAttackMethodFallback 0
+mercenary_runFromTarget_noAttackMethodFallback_attackMaxDist 14
+mercenary_runFromTarget_noAttackMethodFallback_minStep 8
 
 mercenary_followDistanceMax 12
 mercenary_followDistanceMin 3
@@ -477,6 +481,7 @@ homunculus_attack_dance_melee 0
 homunculus_attackBeyondMaxDistance_waitForAgressive 1
 homunculus_attackBeyondMaxDistance_sendAttackWhileWaiting 1
 homunculus_attackSendAttackWithMove 1
+homunculus_attackWaitApproachFinish 1
 
 homunculus_lost_teleportToMaster_maxTries 6
 
@@ -488,6 +493,9 @@ homunculus_runFromTarget 0
 homunculus_runFromTarget_dist 5
 homunculus_runFromTarget_minStep 7
 homunculus_runFromTarget_maxPathDistance 20
+homunculus_runFromTarget_noAttackMethodFallback 0
+homunculus_runFromTarget_noAttackMethodFallback_attackMaxDist 14
+homunculus_runFromTarget_noAttackMethodFallback_minStep 8
 
 homunculus_followDistanceMax 12
 homunculus_followDistanceMin 3
