@@ -70,7 +70,7 @@ sub new {
 	if (!$self->{type}->{$config{server_type}}) {
 		die "Invalid serverType specified. Please check your poseidon config file.\n";
 	} else {
-		print "Building RagnarokServer with serverType $config{server_type}...\n";
+		print "Building Poseidon RO Server with serverType $config{server_type} ...\n";
 	}
 
 	return $self;
@@ -97,7 +97,7 @@ sub query {
 		}
 	}
 
-	print "[RagnarokServer]-> Error: no Ragnarok Online client connected.\n";
+	print "[Poseinon RO server] Error: no Ragnarok Online client connected.\n";
 }
 
 ##
@@ -150,7 +150,7 @@ sub onClientNew {
 
 	$self->{challengeNum} = 0;
 
-	print "[RagnarokServer]-> Ragnarok Online client ($index) connected.\n";
+	print "[Poseinon RO server] <- RO client ($index) connected.\n";
 }
 
 sub onClientExit {
@@ -158,7 +158,7 @@ sub onClientExit {
 
 	$self->{challengeNum} = 0;
 
-	print "[RagnarokServer]-> Ragnarok Online client ($index) disconnected.\n";
+	print "[Poseinon RO server] -> RO client ($index) disconnected.\n";
 }
 
 ## constants
@@ -286,7 +286,7 @@ sub ParsePacket {
 	} elsif (($switch eq '0064') || ($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0277') || ($switch eq '027C') || ($switch eq '02B0') || ($switch eq '0825') || ($switch eq '0987') || ($switch eq '0A76') || ($switch eq '0AAC') || ($switch eq '0B04')) { # master_login
 		# send account_server_info
 		my $sex = 1;
-		my $serverName = pack("a20", "Poseidon server"); # server name should be less than or equal to 20 characters
+		my $serverName = pack("a20", "Poseidon RO server"); # server name should be less than or equal to 20 characters
 		my $serverUsers = pack("V", @{$self->clients()} - 1);
 
 		my $data;

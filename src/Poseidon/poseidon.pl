@@ -51,10 +51,10 @@ sub initialize {
 	print "Starting servers...\n";
 
 	$roServer = new Poseidon::RagnarokServer($config{ragnarokserver_port}, $config{ragnarokserver_ip});
-	print "Ragnarok Online Server Ready At : " . $roServer->getHost() . ":" . $roServer->getPort() . "\n";
+	print "Poseidon RO server is ready   : " . $roServer->getHost() . ":" . $roServer->getPort() . "\n";
 
 	$queryServer = new Poseidon::QueryServer($config{queryserver_port}, $config{queryserver_ip}, $roServer);
-	print "Query Server Ready At : " . $queryServer->getHost() . ":" . $queryServer->getPort() . "\n";
+	print "Poseidon Query server is ready: " . $queryServer->getHost() . ":" . $queryServer->getPort() . "\n";
 
 	print ">>> Poseidon $version initialized (Debug : ". (($config{debug}) ? "On" : "Off") . ") <<<\n\n";
 	print "Please read " . POSEIDON_SUPPORT_URL . " for further instructions.\n";
