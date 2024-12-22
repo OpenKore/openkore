@@ -2777,8 +2777,9 @@ sub meetingPosition {
 				} else {
 					$masterPosNow = $realMasterPos;
 				}
-				next unless (blockDistance($spot, $masterPosNow) <= $followDistanceMax);
 				next unless ($spot->{x} != $masterPosNow->{x} || $spot->{y} != $masterPosNow->{y});
+				next unless (blockDistance($spot, $masterPosNow) <= $followDistanceMax);
+				next unless (blockDistance($targetPosInStep, $masterPosNow) <= $followDistanceMax);
 			}
 
 			# 8. We must be able to get to the spot before our target

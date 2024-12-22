@@ -72,7 +72,7 @@ sub process {
 		}
 
 		my $target = Actor::get($ID);
-		if (!$target) {
+		unless ($target && $target->{type} ne 'Unknown') {
 			finishAttacking($ataqArgs, $ID);
 			return;
 		}
@@ -138,15 +138,23 @@ sub process {
 					$ataqArgs->{monsterLastMoveTime} &&
 					$ataqArgs->{monsterLastMoveTime} != $target->{time_move}
 				) {
-					# Monster has moved; stop moving and let the attack AI readjust route
-					warning "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
-					AI::dequeue while (AI::is("move", "route"));
+					if (
+						($args->{monsterLastMovePosTo}{x} == $target->{pos_to}{x} && $args->{monsterLastMovePosTo}{y} == $target->{pos_to}{y})
+					) {
+						$args->{monsterLastMoveTime} = $target->{time_move};
+						$args->{monsterLastMovePosTo}{x} = $target->{pos_to}{x};
+						$args->{monsterLastMovePosTo}{y} = $target->{pos_to}{y};
+					} else {
+						# Monster has moved; stop moving and let the attack AI readjust route
+						warning "Target $target has moved since we started routing to it - Adjusting route\n", "ai_attack";
+						AI::dequeue while (AI::is("move", "route"));
 
-					$ataqArgs->{ai_attack_giveup}{time} = time;
-					$ataqArgs->{sentApproach} = 0;
-					undef $args->{unstuck}{time};
-					undef $args->{avoiding};
-					undef $args->{move_start};
+						$ataqArgs->{ai_attack_giveup}{time} = time;
+						$ataqArgs->{sentApproach} = 0;
+						undef $args->{unstuck}{time};
+						undef $args->{avoiding};
+						undef $args->{move_start};
+					}
 				} else {
 					$timeout{ai_attack_route_adjust}{time} = time;
 				}
@@ -339,7 +347,6 @@ sub main {
 	my $monsterPos = $target->{pos_to};
 	my $monsterDist = blockDistance($myPos, $monsterPos);
 
-	my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou, $youHitTarget);
 	my $realMyPos = calcPosFromPathfinding($field, $char);
 	my $realMonsterPos = calcPosFromPathfinding($field, $target);
 	
@@ -366,8 +373,8 @@ sub main {
 		debug "Update attack giveup time\n", "ai_attack", 2;
 	}
 	
-	$hitYou = ($args->{dmgToYou_last} != $target->{dmgToYou} || $args->{missedYou_last} != $target->{missedYou});
-	$youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromYou});
+	my $hitYou = ($args->{dmgToYou_last} != $target->{dmgToYou} || $args->{missedYou_last} != $target->{missedYou});
+	my $youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromYou});
 	
 	$args->{dmgToYou_last} = $target->{dmgToYou};
 	$args->{missedYou_last} = $target->{missedYou};
@@ -512,7 +519,7 @@ sub main {
 		defined $args->{ai_attack_failed_waitForAgressive_give_up}{time}
 	) {
 		debug "Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
-		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};;
+		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
 	}
 	
 	# Here we check if we have finished moving to the meeting position to attack our target, only checks this if attackWaitApproachFinish is set to 1 in config
@@ -764,6 +771,7 @@ sub main {
 	if (!$found_action && $config{tankMode}) {
 		if ($args->{dmgTo_last} != $target->{dmgTo}) {
 			$args->{ai_attack_giveup}{time} = time;
+			$char->sendAttackStop;
 		}
 		$args->{dmgTo_last} = $target->{dmgTo};
 		$found_action = 1;

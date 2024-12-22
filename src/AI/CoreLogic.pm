@@ -2343,7 +2343,10 @@ sub processRandomWalk_stopDuringSlaveAttack {
 		my $slave = AI::SlaveManager::mustStopForAttack();
 		if (defined $slave) {
 			message TF("%s started attacking during randomWalk - Stoping movement for it.\n", $slave), 'slave';
+			# TODO: Since meetingposition takes into account the movement of the character
+			# we shoudl probably not stop it, just not send new move commands after the current one
 			$char->sendAttackStop;
+			# TODO: This should probably just pause route instead of dequeuing it
 			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 		}
 	}
