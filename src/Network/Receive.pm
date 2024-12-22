@@ -2883,7 +2883,9 @@ sub reconstruct_minimap_indicator {
 # Sends information about owned homunculus to the client . [orn]
 # 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
 # 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
-# 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_3)
+# 0b2f <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN3) type 1
+# 0b76 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.L <max sp>.L <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN3) type 2
+# 0ba4 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.L <max sp>.L <exp>.eL <max exp>.eL <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN4)
 sub homunculus_property {
 	my ($self, $args) = @_;
 
@@ -4534,7 +4536,7 @@ sub sprite_change {
 	} elsif ($type == 5) {
 		message TF("%s changed Middle headgear to %s (%d)\n", $player, headgearName($value1), $value1), "parseMsg_statuslook";
 		$player->{headgear}{mid} = $value1;
-	} elsif ($args->{part} == 6) {
+	} elsif ($type == 6) {
  		message TF("%s changed Hair color to: %s (%d)\n", $player, $haircolors{$value1}, $value1), "parseMsg_statuslook";
 		$player->{hair_color} = $value1;
 	} elsif ($type == 9) {
@@ -4543,7 +4545,10 @@ sub sprite_change {
 		}
 		$player->{shoes} = $value1;
 	} elsif ($type == 12) {
- 		message TF("%s changed Robe to: SPRITE_ROBE_ID=%d\n", $player, $value1, $value1), "parseMsg_statuslook";
+ 		message TF("%s changed Robe to: SPRITE_ROBE_ID=%d\n", $player, $value1, $value1), "parseMsg_statuslook", 2;
+	} elsif ($type== 7 || $type == 13) {
+		# Type 7 looks like body palette or body color. Type 13 looks like body2
+		debug sprintf("%s changed type= %d. value1=%d, value2=%d\n", $player, $type, $value1, $value2);
 	} else {
 		error TF("%s changed unknown sprite type (%d), write about it to OpenKore developer\n", $player, $type), "parseMsg_statuslook";
 	}
