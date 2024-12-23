@@ -20,6 +20,16 @@ use constant MAX_DISTANCE => 17;
 
 sub checkSkillOwnership {}
 
+sub getSkillLevel {
+	my ($self, $skill) = @_;
+	my $handle = $skill->getHandle();
+	if ($self->{skills}{$handle}) {
+		return $self->{skills}{$handle}{lv};
+	} else {
+		return 0;
+	}
+}
+
 sub action {
 	my $slave = shift;
 	

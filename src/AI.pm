@@ -586,9 +586,12 @@ sub ai_skillUse {
 		delete $args{target};
 	}
 
-	if ($char->{skills}{$args{skillHandle}}{lv} < $args{lv}) {
-		debug "Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$char->{skills}{$args{skillHandle}}{lv}.".\n", "ai";
-		$args{lv} = $char->{skills}{$args{skillHandle}}{lv};
+	my $skill = Skill->new(auto => $args{skillHandle});
+	my $owner = $skill->getOwner();
+	my $lvl = $owner->getSkillLevel($skill);
+	if ($lvl < $args{lv}) {
+		debug "[$owner] Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$lvl.".\n", "ai";
+		$args{lv} = $lvl;
 	}
 
 	AI::queue("skill_use", \%args);

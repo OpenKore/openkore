@@ -3100,10 +3100,12 @@ sub cmdSlave {
 				T("   # Skill Name                     Lv      SP\n");
 			foreach my $handle (@{$slave->{slave_skillsID}}) {
 				my $skill = new Skill(handle => $handle);
-				my $sp = $char->{skills}{$handle}{sp} || '';
-				$msg .= swrite(
-					"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
-					[$skill->getIDN(), $skill->getName(), $char->getSkillLevel($skill), $sp]);
+				if ($slave->checkSkillOwnership($skill)) {
+					my $sp = $slave->{skills}{$handle}{sp} || '';
+					$msg .= swrite(
+						"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
+						[$skill->getIDN(), $skill->getName(), $slave->getSkillLevel($skill), $sp]);
+				}
 			}
 			$msg .= TF("\nSkill Points: %d\n", $slave->{points_skill}) if defined $slave->{points_skill};
 			$msg .= ('-'x46) . "\n";
