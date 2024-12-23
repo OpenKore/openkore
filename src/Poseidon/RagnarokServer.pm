@@ -1292,7 +1292,47 @@ sub PerformMapLoadedTasks {
 
 		# Show an item on ground
 		SendShowItemOnGround($self, $client, $msg, $index, $itemID, 512, $posX + 1, $posY - 1);
+
+		# Show an item in inventory
+		if ($self->{type}->{$config{server_type}}->{items_stackable_type} eq '7') {
+			SendShowItemInInventory($self, $client, $msg);
+		}
 	}
+}
+
+sub SendShowItemInInventory {
+	my ($self, $client, $msg) = @_;
+
+	# Send item_list_start
+	SendData($client, pack("v2 C", 0x0B08, 5, ''));
+
+	# Send item_list_stackable
+	# itemInfo
+	my $data = 	pack("v", 0x0B09) .
+				pack("v", 73) . # len
+				pack("C", 0) .  # type
+				# type7: len = 34
+				# a2 V C v V a16 l C
+				# ID nameID type amount type_equip cards expire identified
+				pack("a2 V C v V a16 l C", 0, 501, 0, 10, 0, '', '', 1). # 10x Red Potion
+				pack("a2 V C v V a16 l C", 1, 909, 3, 10, 0, '', '', 1); # 10x Jellopy
+	SendData($client, $data);
+
+	if ($self->{type}->{$config{server_type}}->{items_nonstackable_type} eq '8') {
+		# Send item_list_nonstackable
+		# itemInfo
+		$data = pack("v", 0x0B0A) .
+				pack("v", 72) . # len
+				pack("C", 0) .  # type
+				# type8: len = 67
+				# a2 V      C    V2                  C       a16   l      v2                        C           a25     C
+				# ID nameID type type_equip equipped upgrade cards expire bindOnEquipType sprite_id num_options options identified
+				pack("a2 V C V2 C a16 l v2 C a25 C", 2, 1243, 5, 2, 0, 5, '', 0, 0, 0, 0, '', 1); # +5 Novice Knife
+		SendData($client, $data);
+	}
+
+	# Send item_list_end
+	SendData($client, pack("v C2", 0x0B0B, 0, 0));
 }
 
 1;
