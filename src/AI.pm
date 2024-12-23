@@ -593,8 +593,12 @@ sub ai_skillUse {
 		debug "[$owner] Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$lvl.".\n", "ai";
 		$args{lv} = $lvl;
 	}
-
-	AI::queue("skill_use", \%args);
+	
+	if ($skill->getOwnerType == Skill::OWNER_CHAR) {
+		AI::queue("skill_use", \%args);
+	} else {
+		$owner->queue("skill_use", \%args);
+	}
 }
 
 ##
