@@ -338,6 +338,11 @@ sub main {
 	#my $realMasterDistToSlave = blockDistance($realMasterPos, $realMyPos);
 	#my $realMasterDistToTarget = blockDistance($realMasterPos, $realMonsterPos);
 	
+	if (!exists $args->{first_run}) {
+		$args->{first_run} = 1;
+	} elsif ($args->{first_run} == 1) {
+		$args->{first_run} = 0;
+	}
 	
 	#my $failed_to_attack_packet_recv = 0;
 	
@@ -361,6 +366,11 @@ sub main {
 	my $hitYou = ($args->{dmgToYou_last} != $target->{dmgToPlayer}{$slave->{ID}} || $args->{missedYou_last} != $target->{missedToPlayer}{$slave->{ID}});
 	my $youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromPlayer}{$slave->{ID}});
 	
+	# Hack - TODO: Fix me - If the homunculus dies trying to kill a monster and is resurrected still next to that monster it will think that it is still hitting the mob, this avoids that behaviour
+	if ($youHitTarget && $args->{first_run}) {
+		$youHitTarget = 0;
+	}
+	
 	$args->{dmgToYou_last} = $target->{dmgToPlayer}{$slave->{ID}};
 	$args->{missedYou_last} = $target->{missedToPlayer}{$slave->{ID}};
 	$args->{dmgFromYou_last} = $target->{dmgFromPlayer}{$slave->{ID}};
@@ -370,27 +380,33 @@ sub main {
 	# $target->{dmgFromPlayer}{$slave->{ID}} - $target->{dmgTo}
 	# $target->{dmgFromPlayer}{$slave->{ID}} - $target->{dmgFromYou}
 	
-	
 	### attackSkillSlot begin
 	for (my ($i, $prefix) = (0, 'attackSkillSlot_0'); $prefix = "attackSkillSlot_$i" and exists $config{$prefix}; $i++) {
 		next unless $config{$prefix};
-		if (checkSelfCondition($prefix) && checkMonsterCondition("${prefix}_target", $target)) {
-			my $skill = new Skill(auto => $config{$prefix});
-			next unless $slave->checkSkillOwnership ($skill);
+		
+		next unless (checkSelfCondition($prefix));
 
-			next if $config{"${prefix}_maxUses"} && $target->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
-			next unless (!$config{"${prefix}_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"${prefix}_maxAttempts"});
-			next unless (!$config{"${prefix}_monsters"} || existsInList($config{"${prefix}_monsters"}, $target->{'name'}) || existsInList($config{"${prefix}_monsters"}, $target->{nameID}));
-			next unless (!$config{"${prefix}_notMonsters"} || !(existsInList($config{"${prefix}_notMonsters"}, $target->{'name'}) || existsInList($config{"${prefix}_notMonsters"}, $target->{nameID})));
-			next unless (!$config{"${prefix}_previousDamage"} || inRange($target->{dmgTo}, $config{"${prefix}_previousDamage"}));
-			
-			$args->{attackSkillSlot_attempts}{$i}++;
-			$args->{attackMethod}{distance} = $config{"${prefix}_dist"};
-			$args->{attackMethod}{maxDistance} = $config{"${prefix}_maxDist"} || $config{"${prefix}_dist"};
-			$args->{attackMethod}{type} = "skill";
-			$args->{attackMethod}{skillSlot} = $i;
-			last;
-		}
+		next unless (checkMonsterCondition("${prefix}_target", $target));
+
+		my $skill = new Skill(auto => $config{$prefix});
+		next unless $slave->checkSkillOwnership ($skill);
+
+		next if $config{"${prefix}_maxUses"} && $target->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
+
+		next unless (!$config{"${prefix}_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"${prefix}_maxAttempts"});
+
+		next unless (!$config{"${prefix}_monsters"} || existsInList($config{"${prefix}_monsters"}, $target->{'name'}) || existsInList($config{"${prefix}_monsters"}, $target->{nameID}));
+
+		next unless (!$config{"${prefix}_notMonsters"} || !(existsInList($config{"${prefix}_notMonsters"}, $target->{'name'}) || existsInList($config{"${prefix}_notMonsters"}, $target->{nameID})));
+
+		next unless (!$config{"${prefix}_previousDamage"} || inRange($target->{dmgTo}, $config{"${prefix}_previousDamage"}));
+
+		$args->{attackSkillSlot_attempts}{$i}++;
+		$args->{attackMethod}{distance} = $config{"${prefix}_dist"};
+		$args->{attackMethod}{maxDistance} = $config{"${prefix}_maxDist"} || $config{"${prefix}_dist"};
+		$args->{attackMethod}{type} = "skill";
+		$args->{attackMethod}{skillSlot} = $i;
+		last;
 	}
 	### attackSkillSlot end
 	
