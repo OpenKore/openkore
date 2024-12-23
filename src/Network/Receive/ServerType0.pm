@@ -1328,6 +1328,10 @@ sub skill_use {
 		});
 	message $disp, $domain, 1;
 
+	if ($args->{skillID} == 18 && $args->{sourceID} eq $accountID) {
+		Misc::Barrier_skill_use($target->{pos});
+	}
+
 	if ($args->{targetID} eq $accountID && $args->{damage} > 0) {
 		$damageTaken{$source->{name}}{$skill->getName()} += $args->{damage};
 	}
@@ -1359,6 +1363,10 @@ sub skill_use_location {
 	# Print skill use message
 	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 	message $disp, $domain;
+
+	if ($skillID == 18 && $sourceID eq $accountID) {
+		Misc::Barrier_skill_use_location($x, $y);
+	}
 
 	#EFST_MAGICPOWER OVERRIDE
 	if ($args->{sourceID} eq $accountID	&& $char->statusActive('EFST_MAGICPOWER') && $args->{skillID} != 366) {

@@ -4361,6 +4361,7 @@ sub area_spell_multiple3 {
 		}
 
 		$spells{$ID}{'ID'} = $ID;
+		$spells{$ID}{'unpackedID'} = unpack('V',$ID);
 		$spells{$ID}{'sourceID'} = $sourceID;
 		$spells{$ID}{'pos'}{'x'} = $x;
 		$spells{$ID}{'pos'}{'y'} = $y;
@@ -4371,10 +4372,13 @@ sub area_spell_multiple3 {
 		$spells{$ID}{'range'} = $range;
 		$spells{$ID}{'isVisible'} = $isVisible;
 		$spells{$ID}{'lvl'} = $lvl;
+		$spells{$ID}{'time'} = time;
 		if ($type == 0x81) {
 			message TF("%s opened Warp Portal on (%d, %d)\n", getActorName($sourceID), $x, $y), "skill";
+		} elsif ($type == 127 && $sourceID eq $accountID && exists $flameBarriers{sent}) {
+			Misc::Barrier_area_spell_multiple3($ID);
 		}
-		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y), isVisible = $isVisible, range = $range, lvl = $lvl\n", "skill", 2;
+		debug "Area effect ".getSpellName($type)." (type $type) (ID ".$spells{$ID}{'unpackedID'}.") ($binID) from ".getActorName($sourceID)." appeared on ($x, $y), isVisible = $isVisible, range = $range, lvl = $lvl\n", "skill", 2;
 	}
 
 	Plugins::callHook('packet_areaSpell', {
@@ -10104,8 +10108,14 @@ sub area_spell_disappears {
 	my ($self, $args) = @_;
 	# The area effect spell with ID dissappears
 	my $ID = $args->{ID};
+	my $unpackedID = unpack('V',$ID);
 	my $spell = $spells{$ID};
 	debug "Area effect ".getSpellName($spell->{type})." ($spell->{binID}) from ".getActorName($spell->{sourceID})." disappeared from ($spell->{pos}{x}, $spell->{pos}{y})\n", "skill", 2;
+	
+	if (exists $spell->{'barrierID'}) {
+		Misc::Barrier_area_spell_disappears($unpackedID, $ID);
+	}
+	
 	delete $spells{$ID};
 	binRemove(\@spellsID, $ID);
 }
