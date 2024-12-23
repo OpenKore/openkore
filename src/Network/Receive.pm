@@ -9321,18 +9321,25 @@ sub skills_list {
 	# TODO: per-actor, if needed at all
 	# Skill::DynamicInfo::clear;
 	my ($ownerType, $hook, $actor) = @{{
-		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
 		'0235' => [Skill::OWNER_HOMUN, 'packet_homunSkills', $char->{homunculus}],
 		'029D' => [Skill::OWNER_MERC, 'packet_mercSkills', $char->{mercenary}],
-		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
 	}->{$args->{switch}}};
 
-	my $skillsIDref = $actor ? \@{$actor->{slave_skillsID}} : \@skillsID;
-	delete @{$char->{skills}}{@$skillsIDref};
+	my $skillsIDref;
+	if ($ownerType == Skill::OWNER_CHAR) {
+		$skillsIDref = \@skillsID;
+		delete @{$char->{skills}}{@$skillsIDref};
+	} elsif ($ownerType == Skill::OWNER_HOMUN) {
+		$skillsIDref = \@{$char->{homunculus}->{slave_skillsID}};
+		delete @{$char->{homunculus}->{skills}}{@$skillsIDref};
+	} elsif ($ownerType == Skill::OWNER_MERC) {
+		$skillsIDref = \@{$char->{mercenary}->{slave_skillsID}};
+		delete @{$char->{mercenary}->{skills}}{@$skillsIDref};
+	}
 	@$skillsIDref = ();
 
-	# TODO: $actor can be undefined here
-	undef @{$actor->{slave_skillsID}};
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $skill_info->{len}) {
 		my $skill;
 		@{$skill}{@{$skill_info->{keys}}} = unpack($skill_info->{types}, substr($msg, $i, $skill_info->{len}));
@@ -9340,7 +9347,7 @@ sub skills_list {
 		my $handle = Skill->new(idn => $skill->{ID})->getHandle;
 
 		foreach(@{$skill_info->{keys}}) {
-			$char->{skills}{$handle}{$_} = $skill->{$_};
+			$actor->{skills}{$handle}{$_} = $skill->{$_};
 		}
 
 		binAdd($skillsIDref, $handle) unless defined binFind($skillsIDref, $handle);

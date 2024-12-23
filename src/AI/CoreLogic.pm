@@ -751,7 +751,10 @@ sub processSkillUse {
 
 				# Give an error if we don't actually possess this skill
 				my $skill = new Skill(handle => $handle);
-				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->getHandle() ne $handle)) {
+				my $owner = $skill->getOwner();
+				my $lvl = $owner->getSkillLevel($skill);
+
+				if ($lvl <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->getHandle() ne $handle)) {
 					debug "Attempted to use skill (".$skill->getName().") which you do not have.\n";
 				}
 
