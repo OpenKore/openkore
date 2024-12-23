@@ -18,6 +18,7 @@ sub addSlave {
 	$actor->{slave_ai_seq} = [];
 	$actor->{slave_ai_seq_args} = [];
 	$actor->{slave_skillsID} = [];
+	$actor->{skills} = {};
 	$actor->{slave_AI} = AI::AUTO;
 
 	if ($actor->isa("Actor::Slave::Homunculus")) {
