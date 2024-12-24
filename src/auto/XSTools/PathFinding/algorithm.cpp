@@ -55,13 +55,13 @@ CalcPath_init (CalcPath_session *session)
 		session->second_weight_map = (unsigned int*) calloc(session->height * session->width, sizeof(unsigned int));
 	}
 
-	unsigned long goalAdress = (session->endY * session->width) + session->endX;
+	long goalAdress = (session->endY * session->width) + session->endX;
 	Node* goal = &session->currentMap[goalAdress];
 	goal->x = session->endX;
 	goal->y = session->endY;
 	goal->nodeAdress = goalAdress;
 
-	unsigned long startAdress = (session->startY * session->width) + session->startX;
+	long startAdress = (session->startY * session->width) + session->startX;
 	Node* start = &session->currentMap[startAdress];
 	start->x = session->startX;
 	start->y = session->startY;
@@ -88,7 +88,7 @@ CalcPath_pathStep (CalcPath_session *session)
 		session->run = 1;
 		session->openListSize = 0;
 		// Allocate enough memory in openList to hold the adress of all nodes in the map
-		session->openList = (unsigned long*) malloc((session->height * session->width) * sizeof(unsigned long));
+		session->openList = (long*) malloc((session->height * session->width) * sizeof(long));
 
 		// To initialize the pathfinding add only the start node to openList
 		openListAdd (session, start);
@@ -111,7 +111,7 @@ CalcPath_pathStep (CalcPath_session *session)
 
 	int neighbor_x;
 	int neighbor_y;
-	unsigned long neighbor_adress;
+	long neighbor_adress;
 	unsigned long distanceFromCurrent;
 	unsigned int c_randomFactor;
 
@@ -280,7 +280,7 @@ openListAdd (CalcPath_session *session, Node* currentNode)
 	// Increses openListSize by 1, since we just added a new member
 	session->openListSize++;
 
-	unsigned long parentIndex = (unsigned long)floor((currentNode->openListIndex - 1) / 2);
+	long parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
 	Node* parentNode;
 
 	// Repeat while currentNode still has a parent node, otherwise currentNode is the top node in the heap
@@ -303,7 +303,7 @@ openListAdd (CalcPath_session *session, Node* currentNode)
 			currentNode->openListIndex = parentIndex;
 
 			// Updates parentIndex to that of the current parent of 'currentNode'
-			parentIndex = (unsigned long)floor((currentNode->openListIndex - 1) / 2);
+			parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
 
 		} else {
 			break;
@@ -314,7 +314,7 @@ openListAdd (CalcPath_session *session, Node* currentNode)
 void 
 reajustOpenListItem (CalcPath_session *session, Node* currentNode)
 {
-	unsigned long parentIndex = (unsigned long)floor((currentNode->openListIndex - 1) / 2);
+	long parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
 	Node* parentNode;
 
 	// Repeat while currentNode still has a parent node, otherwise currentNode is the top node in the heap
@@ -337,7 +337,7 @@ reajustOpenListItem (CalcPath_session *session, Node* currentNode)
 			currentNode->openListIndex = parentIndex;
 
 			// Updates parentIndex to that of the current parent of 'currentNode'
-			parentIndex = (unsigned long)floor((currentNode->openListIndex - 1) / 2);
+			parentIndex = (long)floor((currentNode->openListIndex - 1) / 2);
 
 		} else {
 			break;
@@ -366,16 +366,16 @@ openListGetLowest (CalcPath_session *session)
 	lowestNode->whichlist = CLOSED;
 	lowestNode->openListIndex = 0;
 
-	unsigned long smallerChildIndex;
+	long smallerChildIndex;
 	Node* smallerChildNode;
 
-	unsigned long rightChildIndex = 2 * movedNode->openListIndex + 2;
+	long rightChildIndex = 2 * movedNode->openListIndex + 2;
 	Node* rightChildNode;
 
-	unsigned long leftChildIndex = 2 * movedNode->openListIndex + 1;
+	long leftChildIndex = 2 * movedNode->openListIndex + 1;
 	Node* leftChildNode;
 
-	unsigned long lastIndex = session->openListSize-1;
+	long lastIndex = session->openListSize-1;
 
 	while (leftChildIndex <= lastIndex) {
 

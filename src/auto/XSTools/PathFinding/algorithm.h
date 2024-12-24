@@ -9,12 +9,12 @@ typedef struct {
 	int x;
 	int y;
 
-	unsigned long nodeAdress;
+	long nodeAdress;
 
-	unsigned long predecessor;
+	long predecessor;
 
 	unsigned short whichlist;
-	unsigned long openListIndex;
+	long openListIndex;
 
 	unsigned long g;
 	unsigned long h;
@@ -51,11 +51,11 @@ typedef struct {
 	int initialized;
 	int run;
 
-	unsigned long openListSize;
+	long openListSize;
 
 	Node *currentMap;
 
-	unsigned long *openList;
+	long *openList;
 } CalcPath_session;
 
 CalcPath_session *CalcPath_new ();

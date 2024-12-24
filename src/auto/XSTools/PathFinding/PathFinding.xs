@@ -346,7 +346,7 @@ PathFinding__reset(session, weight_map, avoidWalls, customWeights, secondWeightM
 
 				unsigned int weight = SvIV(*ref_weight);
 
-				unsigned long current = (y * session->width) + x;
+				long current = (y * session->width) + x;
 
 				session->second_weight_map[current] = weight;
 			}
@@ -393,7 +393,7 @@ PathFinding_run(session, solution_array)
 			RETVAL = status;
 		} else {
 			AV *array;
-			unsigned long size;
+			long size;
 
 			size = (session->solution_size + 1);
  			array = (AV *) SvRV (solution_array);
@@ -401,7 +401,7 @@ PathFinding_run(session, solution_array)
 			av_extend (array, size);
 
 			Node currentNode = session->currentMap[(session->endY * session->width) + session->endX];
-			unsigned long current = session->solution_size;
+			long current = session->solution_size;
 
 			while (1)
 			{
@@ -438,7 +438,7 @@ PathFinding_runcount(session)
 		if (status < 0) {
 			RETVAL = status;
 		} else {
-			RETVAL = (unsigned long) session->solution_size;
+			RETVAL = (long) session->solution_size;
 		}
 	OUTPUT:
 		RETVAL
