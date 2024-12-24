@@ -39,8 +39,8 @@ our @EXPORT = (
 
 	# Math
 	qw(get_client_solution get_client_easy_solution get_solution calcPosFromPathfinding calcTimeFromPathfinding calcStepsWalkedFromTimeAndSolution calcTimeFromSolution
-	calcPosFromTime calcTime calcPosition fieldAreaCorrectEdges getSquareEdgesFromCoord
-	checkMovementDirection countSteps
+	calcPosFromTime calcTime calcPosition
+	checkMovementDirection
 	distance blockDistance specifiedBlockDistance adjustedBlockDistance getClientDist canAttack
 	intToSignedInt intToSignedShort
 	getVector moveAlong moveAlongVector
@@ -90,7 +90,7 @@ sub get_client_solution {
 	# To better simulate the client pathfinding we tell openkore's pathfinding to use the same Manhattan heuristic
 	# We also deactivate any custom pathfinding weights (randomFactor, avoidWalls, customWeights)
 	# TODO: This 35 probably should be something dynamic like (max(abs(pos_x-posto_x),abs(pos_y-posto_y)))
-	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = getSquareEdgesFromCoord($field, $pos, 35);
+	my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = $field->getSquareEdgesFromCoord($pos, 35);
 	my $dist_path = new PathFinding(
 		field => $field,
 		start => $pos,
@@ -488,34 +488,28 @@ sub calcPosition {
 	}
 }
 
-sub fieldAreaCorrectEdges {
-    my ($field, $x1, $y1, $x2, $y2) = @_;
-
-	if ($x1 < 0) {
-		$x1 = 0;
-	}
-
-	if ($y1 < 0) {
-		$y1 = 0;
-	}
-
-	if ($x2 >= $field->width) {
-		$x2 = $field->width-1;
-	}
-
-	if ($y2 >= $field->height) {
-		$y2 = $field->height-1;
-	}
-
-	return ($x1, $y1, $x2, $y2);
+# Only God and gravity developers know why this is done this way, but I tested in the client and it works 100% of the time
+#
+# Reference: hercules src\map\path.c distance_client
+# 956ns -> 618ns
+sub getClientDist {
+	my ($pos1, $pos2) = @_;
+	return PathFinding::getClientDist_XS($pos1->{x}, $pos1->{y}, $pos2->{x}, $pos2->{y});
 }
 
-sub getSquareEdgesFromCoord {
-    my ($field, $start, $dist_from_center) = @_;
-
-	my ($min_x, $min_y, $max_x, $max_y) = fieldAreaCorrectEdges($field, ($start->{x} - $dist_from_center), ($start->{y} - $dist_from_center), ($start->{x} + $dist_from_center), ($start->{y} + $dist_from_center));
-
-	return ($min_x, $min_y, $max_x, $max_y);
+##
+# blockDistance(pos1, pos2)
+# pos1, pos2: references to position hash tables.
+# Returns: the distance in number of blocks (integer).
+#
+# Calculates the distance in number of blocks between pos1 and pos2.
+# This is used for e.g. weapon range calculation.
+#
+# Reference: hercules src\map\path.c distance
+# 650ns -> 580ns
+sub blockDistance {
+	my ($pos1, $pos2) = @_;
+	return PathFinding::blockDistance_XS($pos1->{x}, $pos1->{y}, $pos2->{x}, $pos2->{y});
 }
 
 ##
@@ -540,36 +534,6 @@ sub checkMovementDirection {
 	my $obj1ToObj2Degree = vectorToDegree(\%objVec);
 	return abs($obj1ToObj2Degree - $movementDegree) <= $fuzziness ||
 		(($obj1ToObj2Degree - $movementDegree) % 360) <= $fuzziness;
-}
-
-##
-# countSteps(pos, pos_to)
-#
-# Returns: the number of steps from $pos to $pos_to.
-# Walls are not considered.
-sub countSteps {
-	my ($pos, $pos_to) = @_;
-	my $posX = $$pos{x};
-	my $posY = $$pos{y};
-	my $pos_toX = $$pos_to{x};
-	my $pos_toY = $$pos_to{y};
-	my $s = 0; # steps
-	while ($posX ne $pos_toX || $posY ne $pos_toY) {
-		$s++;
-		if ($posX < $pos_toX) {
-			$posX++;
-		}
-		if ($posX > $pos_toX) {
-			$posX--;
-		}
-		if ($posY < $pos_toY) {
-			$posY++;
-		}
-		if ($posY > $pos_toY) {
-			$posY--;
-		}
-	}
-	return $s;
 }
 
 ##

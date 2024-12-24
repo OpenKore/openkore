@@ -230,7 +230,14 @@ sub giveUp {
 
 sub targetGone {
 	my ($args, $ID) = @_;
-	return !$monsters{$args->{ID}} && (!$players{$args->{ID}} || $players{$args->{ID}}{dead});
+	my $target = Actor::get($ID, 1);
+	unless ($target) {
+		return 1;
+	}
+	if (exists $target->{dead} && $target->{dead} == 1) {
+		return 1;
+	}
+	return 0;
 }
 
 sub finishAttacking {

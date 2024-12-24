@@ -69,8 +69,7 @@ our @EXPORT = (
 	visualDump/,
 
 	# Field math
-	qw/calcRectArea
-	calcRectArea2
+	qw/calcRectArea2
 	objectInsideSpell
 	objectInsideCasting
 	objectIsMovingTowards
@@ -541,64 +540,6 @@ sub visualDump {
 ### CATEGORY: Field math
 #######################################
 #######################################
-
-##
-# calcRectArea($x, $y, $radius, $field)
-# Returns: an array with position hashes. Each has contains an x and a y key.
-#
-# Creates a rectangle with center ($x,$y) and radius $radius,
-# and returns a list of positions of the border of the rectangle.
-sub calcRectArea {
-	my ($x, $y, $radius, $field) = @_;
-	my (%topLeft, %topRight, %bottomLeft, %bottomRight);
-
-	sub capX {
-		return 0 if ($_[0] < 0);
-		return $_[1]->width - 1 if ($_[0] >= $_[1]->width);
-		return int $_[0];
-	}
-	sub capY {
-		return 0 if ($_[0] < 0);
-		return $_[1]->height - 1 if ($_[0] >= $_[1]->height);
-		return int $_[0];
-	}
-
-	# Get the avoid area as a rectangle
-	$topLeft{x} = capX($x - $radius, $field);
-	$topLeft{y} = capY($y + $radius, $field);
-	$topRight{x} = capX($x + $radius, $field);
-	$topRight{y} = capY($y + $radius, $field);
-	$bottomLeft{x} = capX($x - $radius, $field);
-	$bottomLeft{y} = capY($y - $radius, $field);
-	$bottomRight{x} = capX($x + $radius, $field);
-	$bottomRight{y} = capY($y - $radius, $field);
-
-	# Walk through the border of the rectangle
-	# Record the blocks that are walkable
-	my @walkableBlocks;
-	for (my $x = $topLeft{x}; $x <= $topRight{x}; $x++) {
-		if ($field->isWalkable($x, $topLeft{y})) {
-			push @walkableBlocks, {x => $x, y => $topLeft{y}};
-		}
-	}
-	for (my $x = $bottomLeft{x}; $x <= $bottomRight{x}; $x++) {
-		if ($field->isWalkable($x, $bottomLeft{y})) {
-			push @walkableBlocks, {x => $x, y => $bottomLeft{y}};
-		}
-	}
-	for (my $y = $bottomLeft{y} + 1; $y < $topLeft{y}; $y++) {
-		if ($field->isWalkable($topLeft{x}, $y)) {
-			push @walkableBlocks, {x => $topLeft{x}, y => $y};
-		}
-	}
-	for (my $y = $bottomRight{y} + 1; $y < $topRight{y}; $y++) {
-		if ($field->isWalkable($topRight{x}, $y)) {
-			push @walkableBlocks, {x => $topRight{x}, y => $y};
-		}
-	}
-
-	return @walkableBlocks;
-}
 
 ##
 # calcRectArea2($x, $y, $radius, $minRange)

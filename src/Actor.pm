@@ -116,7 +116,7 @@ sub new {
 # actor lists. If $ID is not in any of the actor lists, it will return
 # a new Actor::Unknown object.
 sub get {
-	my ($ID) = @_;
+	my ($ID, $retUndefwhenNotFound) = @_;
 	assert(defined $ID, "ID must be provided to retrieve and Actor class") if DEBUG;
 
 	if ($ID eq $accountID) {
@@ -132,6 +132,9 @@ sub get {
 			if ($actor) {
 				return $actor;
 			}
+		}
+		if ($retUndefwhenNotFound) {
+			return undef;
 		}
 		return new Actor::Unknown($ID);
 	}
