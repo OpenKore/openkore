@@ -173,15 +173,8 @@ sub get_solution {
 	my ($field, $pos, $pos_to) = @_;
 
 	# If there are no obstacles between Pos and PosTo use calcPosFromTime to save time.
-	my $easy_solution = get_client_easy_solution($pos, $pos_to);
-
-	my $dist = blockDistance($pos, $pos_to);
-	if ($dist < 2) {
-		return $easy_solution if $field->checkLOS($pos, $pos_to, 0);
-	}
-
-	if ($field->checkPathFree($easy_solution)) {
-		return $easy_solution;
+	if ($field->checkPathFree($pos, $pos_to)) {
+		return get_client_easy_solution($pos, $pos_to);
 
 	# If there are obstacles then use the client pathfinding to solve it
 	} else {
@@ -494,7 +487,7 @@ sub calcPosition {
 # 956ns -> 618ns
 sub getClientDist {
 	my ($pos1, $pos2) = @_;
-	return PathFinding::getClientDist_XS($pos1->{x}, $pos1->{y}, $pos2->{x}, $pos2->{y});
+	return PathFinding::getClientDist($pos1->{x}, $pos1->{y}, $pos2->{x}, $pos2->{y});
 }
 
 ##
@@ -509,7 +502,7 @@ sub getClientDist {
 # 650ns -> 580ns
 sub blockDistance {
 	my ($pos1, $pos2) = @_;
-	return PathFinding::blockDistance_XS($pos1->{x}, $pos1->{y}, $pos2->{x}, $pos2->{y});
+	return PathFinding::blockDistance($pos1->{x}, $pos1->{y}, $pos2->{x}, $pos2->{y});
 }
 
 ##
