@@ -12329,4 +12329,11 @@ sub repute_info {
 	}
 }
 
+# 0A15 - PACKET_ZC_GOLDPCCAFE_POINT
+# TODO: this package is not supported yet.
+sub gold_pc_cafe_point {
+	my ($self, $args) = @_;
+	debug TF("[gold_pc_cafe_point] isActive=%d, mode=%d, point=%d, playedTime=%d\n", $args->{isActive}, $args->{mode}, $args->{point}, $args->{playedTime});
+}
+
 1;
