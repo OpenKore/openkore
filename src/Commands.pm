@@ -3100,10 +3100,12 @@ sub cmdSlave {
 				T("   # Skill Name                     Lv      SP\n");
 			foreach my $handle (@{$slave->{slave_skillsID}}) {
 				my $skill = new Skill(handle => $handle);
-				my $sp = $char->{skills}{$handle}{sp} || '';
-				$msg .= swrite(
-					"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
-					[$skill->getIDN(), $skill->getName(), $char->getSkillLevel($skill), $sp]);
+				if ($slave->checkSkillOwnership($skill)) {
+					my $sp = $slave->{skills}{$handle}{sp} || '';
+					$msg .= swrite(
+						"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
+						[$skill->getIDN(), $skill->getName(), $slave->getSkillLevel($skill), $sp]);
+				}
 			}
 			$msg .= TF("\nSkill Points: %d\n", $slave->{points_skill}) if defined $slave->{points_skill};
 			$msg .= ('-'x46) . "\n";
@@ -6257,11 +6259,6 @@ sub cmdUseSkill {
 		} else {
 			$target = { x => $x, y => $y };
 		}
-		# This was the code for choosing a random location when x and y are not given:
-		# my $pos = calcPosition($char);
-		# my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2, $field);
-		# $pos = $positions[rand(@positions)];
-		# ($x, $y) = ($pos->{x}, $pos->{y});
 
 	} elsif ($cmd eq 'ss') {
 		if (defined $args[0] && $args[0] eq 'start') {

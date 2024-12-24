@@ -158,6 +158,10 @@ sub iterate {
 		$self->{retry}{count}++;
 		debug "Move $self->{actor} (to $self->{x} $self->{y}) - trying ($self->{retry}{count})\n", "move";
 		$self->{actor}->sendMove(@{$self}{qw(x y)});
+		if ($self->{sendAttack}) {
+			debug "[Test Move Attack Buffer] Sending attack with move.\n";
+			$self->{actor}->sendAttack($self->{attackID});
+		}
 		$self->{retry}{time} = time;
 	}
 }

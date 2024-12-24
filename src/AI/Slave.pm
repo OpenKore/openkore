@@ -20,6 +20,16 @@ use constant MAX_DISTANCE => 17;
 
 sub checkSkillOwnership {}
 
+sub getSkillLevel {
+	my ($self, $skill) = @_;
+	my $handle = $skill->getHandle();
+	if ($self->{skills}{$handle}) {
+		return $self->{skills}{$handle}{lv};
+	} else {
+		return 0;
+	}
+}
+
 sub action {
 	my $slave = shift;
 	
@@ -161,6 +171,7 @@ sub iterate {
 	##### MANUAL AI STARTS HERE #####
 	
 	AI::SlaveAttack::process($slave);
+	$slave->processSkillUse;
 	$slave->processTask('route', onError => sub {
 		my ($task, $error) = @_;
 		if (!($task->isa('Task::MapRoute') && $error->{code} == Task::MapRoute::TOO_MUCH_TIME())
@@ -228,7 +239,7 @@ sub processFollow {
 	) {
 		$slave->clear('move', 'route');
 		if (!$field->canMove($slave->{pos_to}, $char->{pos_to})) {
-			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, isFollow => 1);
+			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, isFollow => 1);
 			debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 
 		} elsif (timeOut($slave->{move_retry}, 0.5)) {
@@ -277,7 +288,7 @@ sub processIdleWalk {
 				splice(@cells, $index, 1);
 			}
 			return unless ($walk_pos);
-			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, avoidWalls => 0, isIdleWalk => 1);
+			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, isIdleWalk => 1);
 			debug TF("%s IdleWalk route\n", $slave), 'slave';
 		}
 	}
@@ -416,6 +427,7 @@ sub processAutoAttack {
 			my @aggressives;
 			my @partyMonsters;
 			my @cleanMonsters;
+			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 			my $myPos = calcPosition($slave);
 
 			# List aggressive monsters
@@ -430,6 +442,7 @@ sub processAutoAttack {
 				# Never attack monsters that we failed to get LOS with
 				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
+				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				my $pos = calcPosition($monster);
 				my $master_pos = $char->position;
 				
@@ -508,6 +521,107 @@ sub processAutoAttack {
 	}
 
 	#Benchmark::end("ai_homunculus_autoAttack") if DEBUG;
+}
+
+##### SKILL USE #####
+sub processSkillUse {
+	my ($slave) = @_;
+	
+	#FIXME: need to move closer before using skill on player,
+	#there might be line of sight problem too
+	#or the player disappers from the area
+
+	if ($slave->action eq "skill_use" && $slave->args->{suspended}) {
+		$slave->args->{giveup}{time} += time - $slave->args->{suspended};
+		$slave->args->{minCastTime}{time} += time - $slave->args->{suspended};
+		$slave->args->{maxCastTime}{time} += time - $slave->args->{suspended};
+		delete $slave->args->{suspended};
+	}
+
+	SKILL_USE: {
+		last SKILL_USE if ($slave->action ne "skill_use");
+		my $args = $slave->args;
+
+		if ($args->{monsterID} && $skillsArea{$args->{skillHandle}} == 2) {
+			delete $args->{monsterID};
+		}
+
+		if (timeOut($args->{waitBeforeUse})) {
+			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
+				# This skill is supposed to be used for attacking a monster, but that monster has died
+				$slave->dequeue;
+				${$args->{ret}} = 'target gone' if ($args->{ret});
+
+			# Use skill if we haven't done so yet
+			} elsif (!$args->{skill_used}) {
+				#if ($slave->{last_skill_used_is_continuous}) {
+				#	message T("Stoping rolling\n");
+				#	$messageSender->sendStopSkillUse($slave->{last_continuous_skill_used});
+				#} elsif(($slave->{last_skill_used} == 2027 || $slave->{last_skill_used} == 147) && !$slave->{selected_craft}) {
+				#	message T("No use skill due to not select the craft / poison\n");
+				#	last SKILL_USE;
+				#}
+				my $handle = $args->{skillHandle};
+				if (!defined $args->{skillID}) {
+					my $skill = new Skill(handle => $handle);
+					$args->{skillID} = $skill->getIDN();
+				}
+				my $skillID = $args->{skillID};
+
+				$args->{skill_used} = 1;
+				$args->{giveup}{time} = time;
+
+				# Stop attacking, otherwise skill use might fail
+				my $attackIndex = $slave->findAction("attack");
+				if (defined($attackIndex) && $slave->args($attackIndex)->{attackMethod}{type} eq "weapon") {
+					# 2005-01-24 pmak: Commenting this out since it may
+					# be causing bot to attack slowly when a buff runs
+					# out.
+					#$slave->stopAttack();
+				}
+
+				# Give an error if we don't actually possess this skill
+				my $skill = new Skill(handle => $handle);
+				my $owner = $skill->getOwner();
+				my $lvl = $owner->getSkillLevel($skill);
+
+				if ($lvl <= 0) {
+					debug "Attempted to use skill (".$skill->getName().") which you do not have.\n";
+				}
+
+				$args->{maxCastTime}{time} = time;
+				if ($skillsArea{$handle} == 2) {
+					$messageSender->sendSkillUse($skillID, $args->{lv}, $accountID);
+				} elsif ($args->{x} ne "") {
+					$messageSender->sendSkillUseLoc($skillID, $args->{lv}, $args->{x}, $args->{y});
+				} elsif ($args->{isStartSkill}) {
+					$messageSender->sendStartSkillUse($skillID, $args->{lv}, $args->{target});
+				} else {
+					$messageSender->sendSkillUse($skillID, $args->{lv}, $args->{target});
+				}
+				$args->{skill_use_last} = $slave->{skills}{$handle}{time_used};
+
+				delete $slave->{cast_cancelled};
+
+			} elsif (timeOut($args->{minCastTime})) {
+				if ($args->{skill_use_last} != $slave->{skills}{$args->{skillHandle}}{time_used}) {
+					$slave->dequeue;
+					${$args->{ret}} = 'ok' if ($args->{ret});
+
+				} elsif ($slave->{cast_cancelled} > $slave->{time_cast}) {
+					$slave->dequeue;
+					${$args->{ret}} = 'cancelled' if ($args->{ret});
+
+				} elsif (timeOut($slave->{time_cast}, $slave->{time_cast_wait} + 0.5)
+				  && ( (timeOut($slave->{giveup}) && (!$slave->{time_cast} || !$args->{maxCastTime}{timeout}) )
+				      || ( $args->{maxCastTime}{timeout} && timeOut($args->{maxCastTime})) )
+				) {
+					$slave->dequeue;
+					${$args->{ret}} = 'timeout' if ($args->{ret});
+				}
+			}
+		}
+	}
 }
 
 sub sendAttack {

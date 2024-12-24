@@ -114,6 +114,8 @@ sub nameString {
 	return T('You');
 }
 
+sub checkSkillOwnership { $_[1]->getOwnerType == Skill::OWNER_CHAR }
+
 ##
 # int $char->getSkillLevel(Skill skill)
 # Ensures: result >= 0
@@ -455,6 +457,11 @@ sub sendMove { $messageSender->sendMove(@_[1, 2]) }
 sub sendStopSkillUse {
 	my ($self) = @_;
 	$messageSender->sendStopSkillUse($self->{last_continuous_skill_used});
+}
+
+sub sendAttack {
+	my ($self, $attackID) = @_;
+	$messageSender->sendAction($attackID, ($config{'tankMode'}) ? 0 : 7);
 }
 
 1;
