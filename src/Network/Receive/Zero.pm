@@ -11,18 +11,21 @@
 ########################################################################
 # Korea (kRO) # by alisonrag / sctnightcore
 # The majority of private servers use eAthena, this is a clone of kRO
+
 package Network::Receive::Zero;
+
 use strict;
 use base qw(Network::Receive::ServerType0);
-use Log qw(debug);
-use Globals;
-use Translation;
-use I18N qw(bytesToString);
-use Utils::DataStructures;
 
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
+
+	my %packets = (
+		'0ADD' => ['item_appeared', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
+	);
+
+	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
 		received_characters 099D
@@ -50,28 +53,14 @@ sub new {
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
+	$self->{vender_items_list_item_pack} = 'V v2 C V C3 a16 a25';
+	$self->{npc_store_info_pack} = "V V C V";
+	$self->{buying_store_items_list_pack} = "V v C V";
+	$self->{makable_item_list_pack} = "V4";
+	$self->{rodex_read_mail_item_pack} = "v V C3 a16 a4 C a4 a25";
+	$self->{npc_market_info_pack} = "V C V2 v";
+
 	return $self;
-}
-
-sub party_users_info {
-	my ($self, $args) = @_;
- 	return unless Network::Receive::changeToInGameState();
- 
- 	$char->{party}{name} = bytesToString($args->{party_name});
-
-	for (my $i = 0; $i < length($args->{playerInfo}); $i += 54) {
-		my $ID = substr($args->{playerInfo}, $i, 4);
-		if (binFind(\@partyUsersID, $ID) eq "") {
-			binAdd(\@partyUsersID, $ID);
-		}
-		$char->{party}{users}{$ID} = new Actor::Party();
-		@{$char->{party}{users}{$ID}}{qw(ID GID name map admin online jobID lv)} = unpack('V V Z24 Z16 C2 v2', substr($args->{playerInfo}, $i, 54));
-		$char->{party}{users}{$ID}{name} = bytesToString($char->{party}{users}{$ID}{name});
-		$char->{party}{users}{$ID}{admin} = !$char->{party}{users}{$ID}{admin};
-		$char->{party}{users}{$ID}{online} = !$char->{party}{users}{$ID}{online};
-
-		debug TF("Party Member: %s (%s)\n", $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map}), "party", 1;
-	}
 }
 
 1;

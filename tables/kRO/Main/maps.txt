@@ -1,0 +1,1100 @@
+//-- 최종갱신 본서버 2019-05-20
+
+// 글래스트 헤임 도전모드
+1@gl_he.rsw#오염된 차원#
+
+// EDDA 생체연구소 - 원정의 여로
+1@gol1.rsw#생체 실험동#
+1@gol2.rsw#시체 보관소#
+
+// 일루전 오브 라비린스
+prt_mz03_i.rsw#뒤틀린 미궁 숲#
+
+// 2018 할로윈
+1@halo.rsw#할로윈 축제장#
+
+// EDDA 글래스트 헤임의 몰락
+1@gl_prq.rsw#글래스트 헤임의 몰락#
+
+// 레벨확장 컨텐츠
+mag_dun03.rsw#유노 노그로드 3층#
+gl_cas01_.rsw#글래스트헤임 성 어비스 1층#
+
+// 에피소드 17.1 태동, 일루시온 
+1@cor.rsw#코르 메모리얼#
+1@os_a.rsw#오스 점령전#
+1@os_b.rsw#봉쇄된 오스#
+1@rgsr.rsw#레겐쉬름#
+rgsr_in.rsw#레켄베르 부설 연구소#
+pub_cat.rsw#총알 탄 야옹이#
+sp_cor.rsw#특수경계지역 코르#
+sp_os.rsw#특수경계지역 오스#
+sp_rudus.rsw#폐기실험체 유기장 루두스 1층#
+sp_rudus2.rsw#폐기실험체 유기장 루두스 2층#
+sp_rudus3.rsw#폐기실험체 유기장 루두스 3층#
+
+// 성제 전직
+star_frst.rsw#유성림#
+star_in.rsw#유성림 실내#
+
+// 소울리퍼 전직
+1@soul.rsw#영혼의 통로#
+
+// 일루전 오브 루안다
+com_d02_i.rsw#북쪽 동굴 루안다#
+
+// 일루전 테디베어 나사리안 제국
+ein_d02_i.rsw#나사리안 제국#
+
+//-- 환영의 회랑
+vis_h01.rsw#환영의 회랑 1층#
+vis_h02.rsw#환영의 회랑 2층#
+vis_h03.rsw#환영의 회랑 3층#
+vis_h04.rsw#환영의 회랑 4층#
+
+//고성 상급 메모리얼던전
+2@gl_kh.rsw#옛기사단2층#
+1@gl_kh.rsw#옛기사단1층#
+
+// 11월 사냥대회
+hu_fild03.rsw#사냥터#
+prt_evt_in.rsw#사냥터의 오두막#
+
+// 꿈과 그림자 (지터벅 개편)
+1@jtb.rsw#꿈과 그림자#
+
+// X주년
+x_prt.rsw#차원너머의 프론테라#
+x_lhz.rsw#차원너머의 리히타르젠#
+x_ra.rsw#차원너머의 라헬#
+
+// 7월 국수 축제
+lasa_sea.rsw#냐일굴#
+1@drdo.rsw#전설의 도라도#
+
+//닌자 건슬 전직소
+que_ng.rsw#알 수 없는 곳#
+
+//화산섬 코로도
+1@crd.rsw#화산섬 코로도#
+
+// 일루전 거북섬 (구양궁)
+tur_d03_i.rsw#쓸쓸한 양거촌#
+tur_d04_i.rsw#스산한 구양궁#
+
+//포링마을
+1@begi.rsw#포링 마을#
+
+// 수상한 난파선
+1@tre.rsw#수상한 난파선#
+
+// 일루전 얼던 (프로즌)
+ice_d03_i.rsw#프로즌 메모리#
+
+// 일루전 게펜 (뱀파이어)
+gef_d01_i.rsw#250 페이지#
+
+// 일루전 페이욘 (문라이트)
+pay_d03_i.rsw#월야화의 악몽#
+
+// 치킨모드 호러 장난감 공장
+1@xm_d2.rsw#호러 장난감 공장#
+
+// 치킨모드 고성
+1@gl_k2.rsw#옛기사단1층#
+2@gl_k2.rsw#옛기사단2층#
+
+// 로컬라이징 락릿지
+har_in01.rsw#락 릿지#
+harboro1.rsw#락 릿지#
+harboro2.rsw#지하수로#
+rockmi1.rsw#락 릿지 광산#
+rockmi2.rsw#락 릿지 광산#
+rockrdg1.rsw#키와와 사막#
+rockrdg2.rsw#키와와 사막#
+
+// 요일던전
+1@md_gef.rsw#금요메모리얼#
+1@md_pay.rsw#주말메모리얼#
+
+// ep16.2
+1@slw.rsw#베르너연구소 중추실#
+1@swat.rsw#하트헌터 군수기지#
+que_swat.rsw#하트헌터 군수기지#
+slabw01.rsw#베르너 연구소#
+rebel_in.rsw#클라나 네미에리#
+
+// 교황 메모리얼 낮에나온 반달
+1@pop1.rsw#교황 집무실#
+1@pop2.rsw#집으로 가는 길#
+1@pop3.rsw#하늘 정원#
+
+// 신종족 도람 라자냐 마을
+lasagna.rsw#항구도시 라자냐#
+lasa_fild01.rsw#라비올 평원 경계초소#
+lasa_fild02.rsw#라비올 숲#
+lasa_dun01.rsw#용의 둥지#
+lasa_dun02.rsw#용의 둥지#
+lasa_dun03.rsw#용의 둥지#
+conch_in.rsw#콘-킬리나 호 내부#
+lasa_in01.rsw#라자냐 내부#
+lasa_dun_q.rsw#용의 둥지#
+
+//인트로 개편
+iz_int.rsw#좌초된 여객선#
+iz_int01.rsw#좌초된 여객선#
+iz_int02.rsw#좌초된 여객선#
+iz_int03.rsw#좌초된 여객선#
+iz_int04.rsw#좌초된 여객선#
+
+int_land.rsw#외딴섬#
+int_land01.rsw#외딴섬#
+int_land02.rsw#외딴섬#
+int_land03.rsw#외딴섬#
+int_land04.rsw#외딴섬#
+
+// ep16.1 영웅을 위한 연회 + 프론테라 리뉴얼
+1@mir.rsw#의식의 방#
+2@mir.rsw#의식의 방#
+1@sthb.rsw#공중요새 내부#
+1@sthc.rsw#공중요새 비밀의 방#
+1@sthd.rsw#공중요새 최상층#
+
+prt_cas.rsw#프론테라 중앙궁#
+prt_cas_q.rsw#프론테라 별궁#
+prt_prison.rsw#프론테라 지하감옥#
+prt_lib.rsw#왕가의 기억#
+prt_lib_q.rsw#과거 왕가의 기억#
+prt_q.rsw#침공당한 프론테라#
+prt_pri00.rsw#프론테라 감옥#
+
+
+
+//클랜 MD
+1@ffp.rsw#잔당들의 아지트#
+
+//무한MD
+1@infi.rsw#무한의 공간#
+
+// 파라마켓
+paramk.rsw#파라마켓#
+
+// ep15.2 판타스마고리카
+verus01.rsw#실험동-OPTATIO#
+verus02.rsw#연구동-WISH#
+un_bk_q.rsw#지하 벙커#
+un_bunker.rsw#지하 벙커#
+un_myst.rsw#지하 터널#
+1@uns.rsw#마지막 방#
+1@lab.rsw#중앙 실험실#
+
+// 전사자의 무덤
+lhz_dun_n.rsw#전사자의 무덤#
+lhz_d_n2.rsw#사념의 공간#
+
+// 영웅의 흔적3
+1@glast.rsw#과거의 글래스트헤임#
+1@air1.rsw#비공정#
+1@air2.rsw#비공정#
+
+// 리벨리온 전직맵
+job_gun.rsw#해방의 쉼터#
+
+// ep15.1 판타스마고리카
+ver_eju.rsw#유페로스 동쪽폐허#
+ver_tunn.rsw#베루스 외곽 터널#
+verus04.rsw#베루스 발굴지#
+verus03.rsw#베루스 중앙 광장#
+
+1@mcd.rsw#왕의 구두굽에서#
+
+//운영팀이벤트
+e_hugel.rsw#침공당한 휘겔#
+
+//시계탑나이트메어던전
+c_tower2_.rsw#뒤틀린 시간의 시계탑 2층#
+c_tower3_.rsw#뒤틀린 시간의 시계탑 3층#
+
+//이벤트
+silk_lair.rsw#비단뱀의 은신처#
+
+//EP.14.3
+moro_vol.rsw#화염분지#
+moro_cav.rsw#화염동굴#
+1@dth1.rsw#비오스의 섬#
+1@dth2.rsw#비오스의 섬#
+1@dth3.rsw#비오스의 섬#
+1@rev.rsw#모르스의 동굴#
+1@xm_d.rsw#호러 장난감 공장#
+1@eom.rsw#마신전#
+//지터벅 설정 삭제
+
+//영웅의흔적
+dali02.rsw#차원의 균열#
+1@face.rsw#페이스웜의 둥지#
+1@sara.rsw#사라의 기억#
+dali.rsw#차원의 균열#
+1@tnm1.rsw#마신의탑상층#
+1@tnm2.rsw#마신의탑최상층#
+1@tnm3.rsw#모로크성지하#
+1@ge_st.rsw#게펜 마법 대회#
+1@gef.rsw#게펜 마법 대회#
+1@gef_in.rsw#게펜 마법 대회#
+1@spa.rsw#망령의 왕궁#
+
+//몬스터웨이브
+1@def01.rsw#웨이브 던전 - 숲#
+1@def02.rsw#웨이브 던전 - 하늘#
+1@def03.rsw#웨이브 던전 - 용암#
+
+//폭탄방
+evt_bomb.rsw#이벤트 미궁#
+
+//고성메모리얼던전
+gl_cas02_.rsw#2층 회랑#
+gl_chyard_.rsw#수도원 묘지#
+2@gl_k.rsw#옛기사단2층#
+1@gl_k.rsw#옛기사단1층#
+
+//저레벨 공성전
+te_prt_gld.rsw#글로리아#
+te_prtcas01.rsw#게오보르그#
+te_prtcas02.rsw#리하르트#
+te_prtcas03.rsw#위그너#
+te_prtcas04.rsw#하이네#
+te_prtcas05.rsw#네리우스#
+teg_dun01.rsw#길드 지하 던전#
+te_alde_gld.rsw#카프라가텐#
+te_aldecas01.rsw#글라리스#
+te_aldecas02.rsw#디포르테#
+te_aldecas03.rsw#소린#
+te_aldecas04.rsw#비닛#
+te_aldecas05.rsw#더블류#
+teg_dun02.rsw#길드 지하 던전#
+
+//이즈루드 튜토리얼맵
+prt_fild08d.rsw#프론테라 필드#
+prt_fild08c.rsw#프론테라 필드#
+prt_fild08b.rsw#프론테라 필드#
+prt_fild08a.rsw#프론테라 필드#
+
+iz_ac01_d.rsw#아카데미1층#
+iz_ac02_d.rsw#아카데미2층#
+iz_ac01_c.rsw#아카데미1층#
+iz_ac02_c.rsw#아카데미2층#
+iz_ac01_b.rsw#아카데미1층#
+iz_ac02_b.rsw#아카데미2층#
+iz_ac01_a.rsw#아카데미1층#
+iz_ac02_a.rsw#아카데미2층#
+
+izlude_d.rsw#위성도시 이즈루드#
+izlude_c.rsw#위성도시 이즈루드#
+izlude_b.rsw#위성도시 이즈루드#
+izlude_a.rsw#위성도시 이즈루드#
+
+//이즈루드리뉴얼
+//iz_int.rsw#인트로#
+//iz_int01.rsw#인트로#
+//iz_int02.rsw#인트로#
+//iz_int03.rsw#인트로#
+//iz_int04.rsw#인트로#
+iz_ac01.rsw#아카데미1층#
+iz_ac02.rsw#아카데미2층#
+iz_ng01.rsw#닌자튜토리얼맵#
+treasure_n1.rsw#이즈루드 난파선 1층#
+treasure_n2.rsw#이즈루드 난파선 2층#
+
+moc_prydn1.rsw#모로크 피라미드 지하 1층 - 나이트#
+moc_prydn2.rsw#모로크 피라미드 지하 2층 - 나이트#
+
+eclage.rsw#라피네 수도 에클라쥬#
+ecl_fild01.rsw#꽃이 피어난 대지#
+ecl_in01.rsw#에클라쥬 내부#
+ecl_in02.rsw#에클라쥬 내부#
+ecl_in03.rsw#에클라쥬 내부#
+ecl_in04.rsw#에클라쥬 내부#
+1@ecl.rsw#에클라쥬 내부#
+ecl_tdun01.rsw#비프로스트 탑 1층#
+ecl_tdun02.rsw#비프로스트 탑 2층#
+ecl_tdun03.rsw#비프로스트 탑 3층#
+ecl_tdun04.rsw#비프로스트 탑 4층#
+ecl_hub01.rsw#에클라쥬 둘레길#
+que_avan01.rsw#에이반트 연구실#
+
+
+malaya.rsw#포트 말라야#
+ma_fild01.rsw#바르요 마히가와#
+ma_fild02.rsw#포레스트#
+ma_scene01.rsw#버코너워 호수#
+ma_in01.rsw#말라야 내부#
+ma_dun01.rsw#벙웅곳 병원 1층#
+1@ma_h.rsw#벙웅곳 병원 2층#
+1@ma_c.rsw#부워여 동굴#
+1@ma_b.rsw#버코너워 은신처#
+ma_zif01.rsw#지프니 내부#
+ma_zif02.rsw#지프니 내부#
+ma_zif03.rsw#지프니 내부#
+ma_zif04.rsw#지프니 내부#
+ma_zif05.rsw#지프니 내부#
+ma_zif06.rsw#지프니 내부#
+ma_zif07.rsw#지프니 내부#
+ma_zif08.rsw#지프니 내부#
+ma_zif09.rsw#지프니 내부#
+job_ko.rsw#숨겨진 장소#
+
+gld_dun01_2.rsw#길드 지하 던전 2층#
+gld_dun02_2.rsw#길드 지하 던전 2층#
+gld_dun03_2.rsw#길드 지하 던전 2층#
+gld_dun04_2.rsw#길드 지하 던전 2층#
+gld2_ald.rsw#심연의 회랑 : 영웅의 눈물#
+gld2_gef.rsw#심연의 회랑 : 망자의 언덕#
+gld2_pay.rsw#심연의 회랑 : 태고의 바람#
+gld2_prt.rsw#심연의 회랑 : 전사의 길#
+
+lhz_dun04.rsw#생체실험 연구소 지하 4층#
+que_lhz.rsw#생체실험 연구소 지하 4층#
+1@lhz.rsw#보르세브의 연구실#
+iz_dun05.rsw#이즈루드 해저동굴 던전 6층#
+malangdo.rsw#말랑도#
+mal_in01.rsw#말랑도 내부#
+mal_in02.rsw#배 내부#
+mal_dun01.rsw#별빛산호지대#
+1@cash.rsw#문어 동굴#
+1@pump.rsw#배수로#
+2@pump.rsw#배수로#
+dic_dun03.rsw#스카라바 홀#
+que_house_s.rsw#이상한 집#
+dewata.rsw#데와타#
+dew_in01.rsw#자티 부족 마을 내부#
+dew_fild01.rsw#데와타 필드_자티 부족 마을#
+dew_dun01.rsw#크라카토 화산섬#
+dew_dun02.rsw#이스타나 동굴#
+bif_fild01.rsw#비프로스트 남부#
+bif_fild02.rsw#비프로스트 북부#
+1@mist.rsw#안개 숲의 미궁#
+mora.rsw#라플레족 마을 모라#
+dicastes01.rsw#사파 수도 엘 디카스테스#
+dicastes02.rsw#브룸벨드 요르히 숲#
+dic_in01.rsw#디카스테스 내부#
+dic_fild01.rsw#카미달 산기슭#
+dic_fild02.rsw#카미달 산기슭#
+dic_dun01.rsw#카미달 터널#
+dic_dun02.rsw#스카라바 홀#
+job3_gen01.rsw#제네릭 연구소#
+s_atelier.rsw#그림자 공방#
+brasilis.rsw#브라질리스#
+bra_in01.rsw#브라질리스 내부#
+bra_fild01.rsw#브라질리스 필드#
+bra_dun01.rsw#브라질리스 폭포 안의 동굴 입구#
+bra_dun02.rsw#브라질리스 폭포 안의 동굴 내부#
+moc_para01.rsw#모로크 낙원단 내부#
+job3_arch01.rsw#아크비숍 전직 대기실#
+job3_arch02.rsw#휘겔 오딘 신전#
+job3_arch03.rsw#아크비숍 전직 대기실#
+job3_guil01.rsw#비밀 주점#
+job3_guil02.rsw#허름한 창고 내부#
+job3_guil03.rsw#외딴 저택#
+job3_rang01.rsw#레인저 전직 대기실#
+job3_rang02.rsw#레인저 전직 시험장#
+job3_rune01.rsw#룬나이트 기사단 내부#
+job3_rune02.rsw#룬나이트 전직 시험장#
+job3_rune03.rsw#룬나이트 전직 시험장#
+job3_war01.rsw#워록 전직 시험장#
+job3_war02.rsw#워록 전직 시험장#
+jupe_core2.rsw#유페로스 중심부#
+1@nyd.rsw#니드호그의 둥지#
+2@nyd.rsw#니드호그의 둥지#
+nyd_dun01.rsw#스플랑디드 난폭자의 상처 1층#
+nyd_dun02.rsw#스플랑디드 난폭자의 상처 2층#
+manuk.rsw#광산마을 마누크#
+man_fild02.rsw#마누크 필드#
+man_in01.rsw#마누크 내부#
+splendide.rsw#라피네 전진기지 스플랑디드#
+spl_fild01.rsw#스플랑디드 필드#
+spl_in01.rsw#스플랑디드 야전사령부 내부#
+spl_in02.rsw#스플랑디드 내부#
+bat_c01.rsw#크리거 폰 미드가르드#
+bat_c02.rsw#크리거 폰 미드가르드#
+bat_c03.rsw#크리거 폰 미드가르드#
+mid_camp.rsw#미드가르드 연합 주둔지#
+mid_campin.rsw#미드가르드 연합 주둔지 내부#
+man_fild01.rsw#마누크 필드#
+man_fild03.rsw#마누크 필드#
+spl_fild02.rsw#스플랑디드 필드#
+spl_fild03.rsw#스플랑디드 필드#
+moc_fild22b.rsw#소그라트 사막 차원의 균열#
+que_dan01.rsw#휘겔 필드#
+que_dan02.rsw#유노의 버려진 집 내부#
+schg_que01.rsw#모어스톤의 풀밭#
+schg_dun01.rsw#길드 지하 던전#
+arug_que01.rsw#모어스톤의 풀밭#
+arug_dun01.rsw#길드 지하 던전#
+1@orcs.rsw#오크 지하 동굴#
+2@orcs.rsw#오크 지하 동굴#
+1@cata.rsw#카타콤#
+2@cata.rsw#봉인된 신전#
+e_tower.rsw#미스티 아일랜드#
+1@tower.rsw#엔들레스 타워#
+2@tower.rsw#엔들레스 타워#
+3@tower.rsw#엔들레스 타워#
+4@tower.rsw#엔들레스 타워#
+5@tower.rsw#엔들레스 타워#
+6@tower.rsw#엔들레스 타워(알 수 없는 곳)#
+bat_room.rsw#전장 대기실#
+bat_a01.rsw#티에라 협곡#
+bat_a02.rsw#티에라 협곡#
+bat_b01.rsw#플라비우스#
+bat_b02.rsw#플라비우스#
+que_qsch01.rsw#허상의 오콜니르#
+que_qsch02.rsw#허상의 오콜니르#
+que_qsch03.rsw#허상의 오콜니르#
+que_qsch04.rsw#허상의 오콜니르#
+que_qsch05.rsw#허상의 오콜니르#
+que_qaru01.rsw#허상의 오콜니르#
+que_qaru02.rsw#허상의 오콜니르#
+que_qaru03.rsw#허상의 오콜니르#
+que_qaru04.rsw#허상의 오콜니르#
+que_qaru05.rsw#허상의 오콜니르#
+arug_cas01.rsw#마르돌#
+arug_cas02.rsw#시르#
+arug_cas03.rsw#호른#
+arug_cas04.rsw#게픈#
+arug_cas05.rsw#바나디스#
+aru_gld.rsw#발프레이야#
+moscovia.rsw#모스코비아#
+mosk_in.rsw#모스코비아 내부#
+mosk_ship.rsw#배#
+mosk_fild01.rsw#고래 섬#
+mosk_fild02.rsw#모스코비아 필드#
+mosk_dun01.rsw#모스코비아 숲#
+mosk_dun02.rsw#모스코비아 깊은 숲#
+mosk_dun03.rsw#모스코비아 깊고 깊은 숲#
+schg_cas01.rsw#히민#
+schg_cas02.rsw#안들랑그#
+schg_cas03.rsw#비드블라인#
+schg_cas04.rsw#흘료드#
+schg_cas05.rsw#스카티르닐#
+sch_gld.rsw#니다뵐#
+cave.rsw#동굴마을#
+moc_fild20.rsw#소그라트 사막 차원의 균열#
+moc_fild21.rsw#소그라트 사막 차원의 균열#
+moc_fild22.rsw#소그라트 사막 차원의 균열#
+bossnia_01.rsw#보스니아#
+bossnia_02.rsw#보스니아#
+bossnia_03.rsw#보스니아#
+bossnia_04.rsw#보스니아#
+itemmall.rsw#아이템 몰#
+poring_w01.rsw#포링대전 대기실#
+poring_w02.rsw#포링대전장#
+nameless_i.rsw#이름없는 섬#
+nameless_n.rsw#이름없는 섬#
+nameless_in.rsw#이름없는 섬 내부#
+abbey01.rsw#이름없는 섬 수도원 1층#
+abbey02.rsw#이름없는 섬 수도원 지하 1층#
+abbey03.rsw#이름없는 섬 수도원 지하 2층#
+que_temsky.rsw#교황 집무실(하늘정원)#
+z_agit.rsw#Z단의 아지트#
+veins.rsw#협곡마을 베인스#
+ve_in.rsw#베인스 내부#
+ve_in02.rsw#베인스 내부#
+ve_fild01.rsw#베인스 필드#
+ve_fild02.rsw#베인스 필드#
+ve_fild03.rsw#베인스 필드#
+ve_fild04.rsw#베인스 필드#
+//ve_fild05.rsw#베인스 필드#	2008년 리뉴얼
+ve_fild06.rsw#베인스 필드#
+ve_fild07.rsw#베인스 필드#
+thor_camp.rsw#베인스 토르 화산 병참기지#
+que_thor.rsw#베인스 토르 화산 던전#
+thor_v01.rsw#베인스 토르 화산 던전 1층#
+thor_v02.rsw#베인스 토르 화산 던전 2층#
+thor_v03.rsw#베인스 토르 화산 던전 3층#
+rachel.rsw#아루나펠츠 교국 수도 라헬#
+ra_in01.rsw#라헬 내부#
+ra_temple.rsw#프레이야 대신전(세스룸니르)#
+ra_temin.rsw#신전 내부#
+que_rachel.rsw#신전 내부#
+ra_temsky.rsw#교황 집무실(하늘 정원)#
+ra_fild01.rsw#라헬 아우둠라 초원#
+//ra_fild02.rsw#라헬 오즈 협곡#	2008년 리뉴얼
+ra_fild03.rsw#라헬 이다 평원#
+ra_fild04.rsw#라헬 아우둠라 초원#
+ra_fild05.rsw#라헬 아우둠라 초원#
+ra_fild06.rsw#포르투 루나#
+//ra_fild07.rsw#라헬 오즈 협곡#	2008년 리뉴얼
+ra_fild08.rsw#라헬 이다 평원#
+//ra_fild09.rsw#라헬 아우둠라 초원#	2008년 리뉴얼
+//ra_fild10.rsw#라헬 오즈 협곡#	2008년 리뉴얼
+//ra_fild11.rsw#라헬 이다 평원#	2008년 리뉴얼
+ra_fild12.rsw#라헬 이다 평원#
+//ra_fild13.rsw#라헬 눈물의 해안#	2008년 리뉴얼
+ra_san01.rsw#라헬 신전 성역 1층 북쪽 구역#
+ra_san02.rsw#라헬 신전 성역 1층 서쪽 구역#
+ra_san03.rsw#라헬 신전 성역 1층 동쪽 구역#
+ra_san04.rsw#라헬 신전 성역 1층 남쪽 구역#
+ra_san05.rsw#라헬 신전 성역 2층 중앙 구역#
+ice_dun01.rsw#라헬 얼음 동굴 1층#
+ice_dun02.rsw#라헬 얼음 동굴 2층#
+ice_dun03.rsw#라헬 얼음 동굴 3층#
+ice_dun04.rsw#라헬 얼음 동굴 봉인의 공간#
+hugel.rsw#전원도시 휘겔#
+hu_in01.rsw#휘겔 내부#
+que_bingo.rsw#빙고 경기장#
+que_hugel.rsw#오딘 신전 지하#
+p_track01.rsw#몬스터 레이스 경기장#
+p_track02.rsw#몬스터 레이스 경기장#
+odin_tem01.rsw#휘겔 오딘 신전 서쪽 지역#
+odin_tem02.rsw#휘겔 오딘 신전 남쪽 지역#
+odin_tem03.rsw#휘겔 오딘 신전 북쪽 지역#
+odin_past.rsw#고대 오딘 신전#
+hu_fild02.rsw#휘겔 필드#
+//hu_fild03.rsw#휘겔 필드#	2008년 리뉴얼
+hu_fild06.rsw#휘겔 필드#
+ein_fild01.rsw#아인브로크 필드#
+//ein_fild02.rsw#아인브로크 필드#	2008년 리뉴얼
+ein_fild05.rsw#아인브로크 필드#
+//yuno_fild10.rsw#유노 필드#	2008년 리뉴얼
+kh_kiehl02.rsw#키엘의 마지막 방#
+kh_kiehl01.rsw#키엘의 방#
+kh_dun02.rsw#기계인형공장 2층#
+kh_dun01.rsw#기계인형공장 1층#
+kh_mansion.rsw#킬 하이르 저택#
+kh_rossi.rsw#로시미에르가 저택#
+kh_school.rsw#킬 하이르 학원#
+kh_vila.rsw#킬 하이르 별장#
+auction_01.rsw#경매장#
+auction_02.rsw#경매장#
+que_job01.rsw#비밀주점#
+abyss_01.rsw#휘겔 어비스 호수 지하 동굴 1층#
+abyss_02.rsw#휘겔 어비스 호수 지하 동굴 2층#
+abyss_03.rsw#휘겔 어비스 호수 지하 동굴 3층#
+abyss_04.rsw#휘겔 어비스 호수 지하 동굴 4층#
+tha_t01.rsw#타나토스 타워 하층부 박물관 입구#
+tha_t02.rsw#타나토스 타워 하층부 박물관#
+tha_t03.rsw#타나토스 타워 하층부 버려진 공간#
+tha_t04.rsw#타나토스 타워 하층부 버려진 공간#
+tha_t05.rsw#타나토스 타워 상층부#
+tha_t06.rsw#타나토스 타워 상층부#
+tha_t07.rsw#타나토스 타워 상층부 천사의 방#
+tha_t08.rsw#타나토스 타워 상층부 천사의 방#
+tha_t09.rsw#타나토스 타워 상층부 고뇌의 방#
+tha_t10.rsw#타나토스 타워 상층부 슬픔의 방#
+tha_t11.rsw#타나토스 타워 상층부 절망의 방#
+tha_t12.rsw#타나토스 타워 상층부 증오의 방#
+thana_step.rsw#타나토스 타워 상층부 계단#
+thana_boss.rsw#타나토스 타워(알 수 없는 곳)#
+thana_scene01.rsw#타나토스 타워 앞#
+job_soul.rsw#당신의 마음#
+job_star.rsw#태양과 달과 별#
+//hu_fild07.rsw#휘겔 필드#	2008년 리뉴얼
+hu_fild05.rsw#휘겔 어비스 호수#
+hu_fild04.rsw#휘겔 필드#
+hu_fild01.rsw#타나토스 타워 앞#
+yuno_fild06.rsw#엘메스 플레투#
+quiz_02.rsw#퀴즈 경기장#
+jupe_cave.rsw#유페로스 동굴 입구#
+juperos_01.rsw#유페로스 폐허 외부#
+juperos_02.rsw#유페로스 폐허 내부#
+jupe_gate.rsw#유페로스 보안 구역#
+jupe_area1.rsw#유페로스 보안 구역#
+jupe_area2.rsw#유페로스 보안 구역#
+jupe_ele.rsw#유페로스 엘리베이터#
+jupe_ele_r.rsw#유페로스 엘리베이터실#
+jupe_core.rsw#유페로스 중심부#
+lighthalzen.rsw#기업도시 리히타르젠#
+lhz_in01.rsw#레켄베르 본사#
+lhz_in02.rsw#리히타르젠 내부#
+lhz_in03.rsw#리히타르젠 내부#
+lhz_cube.rsw#큐브 룸#
+lhz_que01.rsw#리히타르젠 내부#
+lhz_airport.rsw#리히타르젠 공항#
+airplane_01.rsw#비공정#
+lhz_dun01.rsw#생체실험 연구소 지하 1층#
+lhz_dun02.rsw#생체실험 연구소 지하 2층#
+lhz_dun03.rsw#생체실험 연구소 지하 3층#
+lhz_fild01.rsw#리히타르젠 필드#
+yuno_pre.rsw#슈발츠발드 정부 청사#
+y_airport.rsw#유노 공항#
+lhz_fild03.rsw#리히타르젠 필드#
+lhz_fild02.rsw#리히타르젠 필드(사신의 계곡)#
+ein_fild04.rsw#아인브로크 필드#
+ein_fild03.rsw#아인브로크 필드#
+ein_dun03.rsw#아인베흐 광산 3층#
+ein_dun02.rsw#아인베흐 광산 2층#
+ein_dun01.rsw#아인베흐 광산 1층#
+//ein_fild10.rsw#아인브로크 필드#	2008년 리뉴얼
+ein_fild09.rsw#아인브로크 필드#
+ein_fild08.rsw#아인브로크 필드#
+ein_fild07.rsw#아인브로크 필드#
+ein_fild06.rsw#아인브로크 필드#
+airplane.rsw#비공정#
+airport.rsw#아인브로크 공항#
+ein_in01.rsw#실내#
+einbech.rsw#채광마을 아인베흐#
+einbroch.rsw#강철도시 아인브로크#
+turbo_e_16.rsw#터보트랙 경기장#
+turbo_e_8.rsw#터보트랙 경기장#
+turbo_e_4.rsw#터보트랙 경기장#
+turbo_n_16.rsw#터보트랙 경기장#
+turbo_n_8.rsw#터보트랙 경기장#
+turbo_n_4.rsw#터보트랙 경기장#
+turbo_n_1.rsw#터보트랙 경기장#
+turbo_room.rsw#터보트랙 대기실#
+yuno_fild12.rsw#슈발츠발드 국경 검문소#
+yuno_fild11.rsw#유노 필드#
+yuno_fild09.rsw#슈발츠발드 경비대 야영지#
+yuno_fild08.rsw#유노 킬 하이르 학원#
+yuno_fild07.rsw#엘메스 협곡(심연의 골짜기)#
+//yuno_fild05.rsw#엘메스 플레투#	2008년 리뉴얼
+ayo_in02.rsw#아요타야 내부#
+ayo_in01.rsw#아요타야 내부#
+ayo_dun02.rsw#아요타야 고대 신전 내부#
+ayo_dun01.rsw#아요타야 고대 신전 미궁#
+ayo_fild02.rsw#아요타야 필드#
+ayo_fild01.rsw#아요타야 필드#
+ayothaya.rsw#아요타야#
+que_god02.rsw#퀘스트맵#
+que_god01.rsw#퀘스트맵#
+quiz_test.rsw#시험장#
+gefenia04.rsw#게페니아#
+gefenia03.rsw#게페니아#
+gefenia02.rsw#게페니아#
+gefenia01.rsw#게페니아#
+himinn.rsw#발키리 신전(히민)#
+jawaii_in.rsw#자와이 내부#
+jawaii.rsw#신혼섬 자와이#
+lou_in02.rsw#용지성 내부#
+lou_in01.rsw#용지성 내부#
+lou_dun03.rsw#용지성 센양궁#
+lou_dun02.rsw#용지성 왕릉 내부#
+lou_dun01.rsw#용지성 왕릉#
+lou_fild01.rsw#용지성 필드#
+louyang.rsw#고도 용지성#
+valkyrie.rsw#발키리 신전(위대한 전사의 전당)#
+nif_in.rsw#니플헤임 내부#
+yggdrasil01.rsw#흐베르겔미르의 샘(이그드라실줄기)#
+nif_fild02.rsw#니플헤임 굘의 골짜기#
+nif_fild01.rsw#니플헤임 외딴마을 스켈링튼#
+niflheim.rsw#죽은자의 나라 니플헤임#
+um_dun01.rsw#움발라 나무 속의 목공소#
+um_dun02.rsw#움발라 나무 속의 이계 통로#
+um_in.rsw#움발라 내부#
+um_fild01.rsw#움발라 루루카 숲#
+um_fild02.rsw#움발라 훔가 숲#
+um_fild03.rsw#움발라 카라라 늪#
+um_fild04.rsw#움발라 훔가 정글#
+umbala.rsw#우탄족마을 움발라#
+sec_in01.rsw#발할라궁 내부#
+sec_in02.rsw#발할라궁 내부#
+sec_pri.rsw#발할라궁 반성의 방(감옥)#
+gon_test.rsw#쿤룬 격투장#
+gon_dun01.rsw#쿤룬 서왕모 신전#
+gon_dun02.rsw#쿤룬 신선의 바둑판#
+gon_dun03.rsw#쿤룬 무릉도원#
+gon_fild01.rsw#쿤룬 필드#
+gon_in.rsw#쿤룬 내부#
+gonryun.rsw#신선의 섬 쿤룬(崑崙)#
+ama_test.rsw#아마쯔 모모타로 체험소#
+ama_dun03.rsw#아마쯔 지하 신사#
+ama_dun02.rsw#아마쯔 지하 숲 전장#
+ama_dun01.rsw#아마쯔 다다미 미궁#
+ama_fild01.rsw#아마쯔 필드#
+ama_in02.rsw#천수각 내부#
+ama_in01.rsw#아마쯔 내부#
+amatsu.rsw#천수의 나라 아마쯔#
+alde_alche.rsw#알케미스트 전직소#
+yuno_in05.rsw#이미르의 심장 동력실#
+yuno_in04.rsw#공화국 도서관#
+job_duncer.rsw#코모도 소극장#
+job_sage.rsw#세이지 전직 시험장#
+job_cru.rsw#크루세이더 전직 시험장#
+job_monk.rsw#성 카피톨리나 수도원#
+monk_test.rsw#성 카피톨리나 수도원#
+in_rogue.rsw#로그 길드 내부#
+mag_dun02.rsw#유노 노그로드 2층#
+mag_dun01.rsw#유노 노그로드 1층#
+yuno_fild04.rsw#엘메스 플레투#
+yuno_fild03.rsw#엘메스 플레투#
+yuno_fild02.rsw#킬 하이르의 별장#
+yuno_fild01.rsw#슈발츠발드 국경 검문소#
+yuno_in03.rsw#유노 내부#
+yuno_in02.rsw#세이지 케슬내부#
+yuno_in01.rsw#유노 내부#
+yuno.rsw#슈발츠발드 공화국 수도 유노#
+job_wiz.rsw#위져드 전직 시험장#
+job_prist.rsw#프리스트 전직 시험장#
+job_knt.rsw#나이트 전직 시험장#
+job_hunte.rsw#헌터 전직 시험장#
+gld_dun04.rsw#길드 지하 던전#
+gld_dun03.rsw#길드 지하 던전#
+gld_dun02.rsw#길드 지하 던전#
+gld_dun01.rsw#길드 지하 던전#
+payg_cas05.rsw#죽림현(竹林峴)#
+payg_cas04.rsw#홍루(紅樓)#
+payg_cas03.rsw#불영(佛影)#
+payg_cas02.rsw#천단(天壇)#
+payg_cas01.rsw#명정(明亭)#
+pay_gld.rsw#청림 호수#
+aldeg_cas05.rsw#로텐부르크#
+aldeg_cas04.rsw#뷔르츠부르크#
+aldeg_cas03.rsw#뉘렌베르크#
+aldeg_cas02.rsw#호헨슈반가우#
+aldeg_cas01.rsw#노이슈반스타인#
+alde_gld.rsw#알데바란 위성도시 루이나#
+gefg_cas05.rsw#멜세스데츠#
+gefg_cas04.rsw#베르겔#
+gefg_cas03.rsw#이스넬프#
+gefg_cas02.rsw#욜브리거#
+gefg_cas01.rsw#레프리온#
+prtg_cas05.rsw#괸들#
+prtg_cas04.rsw#스쾨굴#
+prtg_cas03.rsw#라즈리그스#
+prtg_cas02.rsw#스반힐트#
+prtg_cas01.rsw#크림힐트#
+prt_gld.rsw#발키리 렐름#
+tur_dun01.rsw#거북이 섬#
+tur_dun02.rsw#거북이 섬 던전#
+tur_dun03.rsw#양거촌#
+tur_dun04.rsw#구양궁#
+tur_dun05.rsw#지하 늪 지대#
+tur_dun06.rsw#지하 늪 지대#
+guild_vs5.rsw#길드 대항 경기장#
+guild_vs4.rsw#길드 대항 경기장#
+guild_vs3.rsw#길드 대항 경기장#
+guild_vs2.rsw#길드 대항 경기장#
+guild_vs1.rsw#길드 대항 경기장#
+guild_room.rsw#길드 대항 경기장 대기실#
+quiz_00.rsw#퀴즈 경기장#
+quiz_01.rsw#퀴즈 경기장#
+//gef_fild12.rsw#코트 숲#	2008년 리뉴얼
+gef_fild13.rsw#브리토리아#
+//gef_fild14.rsw#서쪽 오크 마을#	2008년 리뉴얼
+cmd_in02.rsw#코모도 내부#
+cmd_in01.rsw#코모도 내부#
+comodo.rsw#해변도시 코모도#
+beach_dun.rsw#코모도 서쪽 동굴 카루#
+beach_dun2.rsw#코모도 북쪽 동굴 루안다#
+beach_dun3.rsw#코모도 동쪽 동굴 마오#
+cmd_fild01.rsw#코모도 파푸치카 숲#
+cmd_fild02.rsw#코모도 코코모 해변#
+cmd_fild03.rsw#코모도 지나이 늪#
+cmd_fild04.rsw#코모도 코코모 해변#
+//cmd_fild05.rsw#코모도 파푸치카 숲 경계#	2008년 리뉴얼
+cmd_fild06.rsw#요새도시 산다르만 서쪽 지역#
+cmd_fild07.rsw#파로스 등대섬#
+cmd_fild08.rsw#요새도시 산다르만 동쪽 지역#
+cmd_fild09.rsw#요새도시 산다르만 남쪽 지역#
+xmas_in.rsw#루티에 내부#
+xmas_dun02.rsw#루티에 장난감 분류소#
+xmas_dun01.rsw#루티에 장난감 공장 창고#
+xmas_fild01.rsw#루티에 필드#
+xmas.rsw#눈의 마을 루티에(Lutie)#
+mjolnir_01.rsw#묘르닐 산맥 북쪽 지역#
+mjolnir_02.rsw#묘르닐 산맥 북쪽 지역#
+mjolnir_03.rsw#묘르닐 산맥 북쪽 지역#
+mjolnir_04.rsw#묘르닐 산맥 북쪽 지역#
+mjolnir_05.rsw#묘르닐 산맥 북쪽 지역#
+mjolnir_06.rsw#묘르닐 산맥 남쪽 지역#
+mjolnir_07.rsw#묘르닐 산맥 남쪽 지역#
+mjolnir_08.rsw#묘르닐 산맥 남쪽 지역#
+mjolnir_09.rsw#묘르닐 산맥 남쪽 산기슭#
+mjolnir_10.rsw#묘르닐 산맥 남쪽 지역#
+mjolnir_11.rsw#묘르닐 산맥 남쪽 지역#
+mjolnir_12.rsw#묘르닐 산맥 북쪽 산기슭#
+prt_fild00.rsw#프론테라 필드#
+prt_fild01.rsw#프론테라 필드#
+prt_fild02.rsw#프론테라 필드#
+prt_fild03.rsw#프론테라 필드#
+prt_fild04.rsw#프론테라 필드#
+prt_fild05.rsw#프론테라 필드#
+prt_fild06.rsw#프론테라 필드#
+prt_fild07.rsw#프론테라 필드#
+prt_fild08.rsw#프론테라 필드#
+prt_fild09.rsw#프론테라 필드#
+prt_fild10.rsw#프론테라 필드#
+prt_fild11.rsw#프론테라 필드#
+prt_monk.rsw#성 카피톨리나 수도원#
+gef_fild00.rsw#게펜 필드#
+gef_fild01.rsw#게펜 필드#
+gef_fild02.rsw#게펜 필드#
+gef_fild03.rsw#게펜 필드#
+gef_fild04.rsw#게펜 필드#
+gef_fild05.rsw#집시 마을#
+gef_fild06.rsw#게펜 필드#
+gef_fild07.rsw#게펜 필드#
+gef_fild08.rsw#게펜 필드#
+gef_fild09.rsw#게펜 필드#
+gef_fild10.rsw#오크 마을#
+in_orcs01.rsw#오크 마을 실내#
+gef_fild11.rsw#게펜 필드#
+moc_fild01.rsw#소그라트 사막#
+moc_fild02.rsw#소그라트 사막#
+moc_fild03.rsw#소그라트 사막#
+//moc_fild04.rsw#소그라트 사막#	2008 모로크
+//moc_fild05.rsw#소그라트 사막#	2008 모로크
+//moc_fild06.rsw#소그라트 사막#	2008 모로크
+moc_fild07.rsw#소그라트 사막#
+//moc_fild08.rsw#소그라트 사막#	2008 모로크
+//moc_fild09.rsw#소그라트 사막#	2008 모로크
+//moc_fild10.rsw#소그라트 사막#	2008 모로크
+moc_fild11.rsw#소그라트 사막#
+moc_fild12.rsw#소그라트 사막#
+moc_fild13.rsw#소그라트 사막#
+//moc_fild14.rsw#소그라트 사막#	2008 모로크
+//moc_fild15.rsw#소그라트 사막#	2008 모로크
+moc_fild16.rsw#소그라트 사막#
+in_moc_16.rsw#어새신 길드#
+moc_fild17.rsw#소그라트 사막#
+moc_fild18.rsw#소그라트 사막#
+moc_fild19.rsw#소그라트 사막#
+pay_fild01.rsw#페이욘 숲 속#
+pay_fild02.rsw#페이욘 숲 속#
+pay_fild03.rsw#페이욘 숲 속#
+pay_fild04.rsw#소그라트 사막#
+//pay_fild05.rsw#페이욘 숲 속#	2008년 리뉴얼
+pay_fild06.rsw#페이욘 숲 속#
+pay_fild07.rsw#페이욘 숲 속#
+pay_fild08.rsw#페이욘 숲 속#
+pay_fild09.rsw#페이욘 숲 속#
+pay_fild10.rsw#페이욘 숲 속#
+//pay_fild11.rsw#페이욘 숲 속#	2008년 리뉴얼
+new_1-1.rsw#초보자 수련장#
+new_2-1.rsw#초보자 수련장#
+new_3-1.rsw#초보자 수련장#
+new_4-1.rsw#초보자 수련장#
+new_5-1.rsw#초보자 수련장#
+new_1-2.rsw#초보자 수련장#
+new_2-2.rsw#초보자 수련장#
+new_3-2.rsw#초보자 수련장#
+new_4-2.rsw#초보자 수련장#
+new_5-2.rsw#초보자 수련장#
+new_1-3.rsw#초보자 수련장#
+new_2-3.rsw#초보자 수련장#
+new_3-3.rsw#초보자 수련장#
+new_4-3.rsw#초보자 수련장#
+new_5-3.rsw#초보자 수련장#
+new_1-4.rsw#초보자 수련장#
+new_2-4.rsw#초보자 수련장#
+new_3-4.rsw#초보자 수련장#
+new_4-4.rsw#초보자 수련장#
+//new_5-4.rsw#초보자 수련장#  폭탄방관련 삭제
+anthell01.rsw#모로크 개미지옥 던전 1층#
+anthell02.rsw#모로크 개미지옥 던전 2층#
+gef_dun00.rsw#게펜 지하 던전 1층#
+gef_dun01.rsw#게펜 지하 던전 2층#
+gef_dun02.rsw#게펜 지하 던전 3층#
+gef_dun03.rsw#게페니아 던전#
+iz_dun00.rsw#이즈루드 해저동굴 던전 1층#
+iz_dun01.rsw#이즈루드 해저동굴 던전 2층#
+iz_dun02.rsw#이즈루드 해저동굴 던전 3층#
+iz_dun03.rsw#이즈루드 해저동굴 던전 4층#
+iz_dun04.rsw#이즈루드 해저동굴 던전 5층#
+//iz_dun05.rsw#이즈루드 해저동굴 던전 6층#
+in_sphinx1.rsw#모로크 스핑크스 지하 1층#
+in_sphinx2.rsw#모로크 스핑크스 지하 2층#
+in_sphinx3.rsw#모로크 스핑크스 지하 3층#
+in_sphinx4.rsw#모로크 스핑크스 지하 4층#
+in_sphinx5.rsw#모로크 스핑크스 지하 5층#
+moc_pryd01.rsw#모로크 피라미드 1층#
+moc_pryd02.rsw#모로크 피라미드 2층#
+moc_pryd03.rsw#모로크 피라미드 3층#
+moc_pryd04.rsw#모로크 피라미드 4층#
+moc_pryd05.rsw#모로크 피라미드 지하 1층#
+moc_pryd06.rsw#모로크 피라미드 지하 2층#
+moc_prydb1.rsw#도둑 길드#
+mjo_dun01.rsw#묘르닐 폐광 1층#
+mjo_dun02.rsw#묘르닐 폐광 2층#
+mjo_dun03.rsw#묘르닐 폐광 3층#
+orcsdun01.rsw#게펜 오크 지하 동굴 1층#
+orcsdun02.rsw#게펜 오크 지하 동굴 2층#
+pay_dun00.rsw#페이욘 동굴 1층#
+pay_dun01.rsw#페이욘 동굴 2층#
+pay_dun02.rsw#페이욘 동굴 3층#
+pay_dun03.rsw#페이욘 동굴 4층(폐가촌)#
+pay_dun04.rsw#페이욘 동굴 5층(폐가촌)#
+prt_maze01.rsw#프론테라 미궁 숲 1층#
+prt_maze02.rsw#프론테라 미궁 숲 2층#
+prt_maze03.rsw#프론테라 미궁 숲 3층#
+prt_sewb1.rsw#프론테라 지하 수로 1층#
+prt_sewb2.rsw#프론테라 지하 수로 2층#
+prt_sewb3.rsw#프론테라 지하 수로 3층#
+prt_sewb4.rsw#프론테라 지하 수로 4층#
+treasure01.rsw#알베르타 침몰선 1층#
+treasure02.rsw#알베르타 침몰선 2층#
+hunter_1-1.rsw#헌터 전직소#
+hunter_2-1.rsw#헌터 전직소#
+hunter_3-1.rsw#헌터 전직소#
+in_hunter.rsw#헌터 전직소#
+knight_1-1.rsw#나이트 전직소#
+knight_2-1.rsw#나이트 전직소#
+knight_3-1.rsw#나이트 전직소#
+priest_1-1.rsw#프리스트 전직소#
+priest_2-1.rsw#프리스트 전직소#
+priest_3-1.rsw#프리스트 전직소#
+//sword_1-1.rsw#검사 전직소#
+//sword_2-1.rsw#검사 전직소#
+sword_3-1.rsw#검사 전직소#
+job_thief1.rsw#도둑 전직소#
+wizard_1-1.rsw#위자드 전직소#
+wizard_2-1.rsw#위자드 전직소#
+wizard_3-1.rsw#위자드 전직소#
+force_1-1.rsw#타임어택모드#
+force_2-1.rsw#타임어택모드#
+force_3-1.rsw#타임어택모드#
+force_1-2.rsw#타임어택모드#
+force_2-2.rsw#타임어택모드#
+force_3-2.rsw#타임어택모드#
+force_1-3.rsw#타임어택모드#
+force_2-3.rsw#타임어택모드#
+force_3-3.rsw#타임어택모드#
+ordeal_1-1.rsw#배틀오딜모드#
+ordeal_2-1.rsw#배틀오딜모드#
+ordeal_3-1.rsw#배틀오딜모드#
+ordeal_1-2.rsw#배틀오딜모드#
+ordeal_2-2.rsw#배틀오딜모드#
+ordeal_3-2.rsw#배틀오딜모드#
+ordeal_1-3.rsw#배틀오딜모드#
+ordeal_2-3.rsw#배틀오딜모드#
+ordeal_3-3.rsw#배틀오딜모드#
+ordeal_1-4.rsw#배틀오딜모드#
+ordeal_2-4.rsw#배틀오딜모드#
+ordeal_3-4.rsw#배틀오딜모드#
+alb_ship.rsw#알베르타 선박 내부#
+alberta.rsw#항구도시 알베르타#
+alberta_in.rsw#알베르타 내부#
+alb2trea.rsw#침몰선 부근의 섬#
+aldebaran.rsw#국경도시 알데바란#
+aldeba_in.rsw#알데바란 내부#
+gef_tower.rsw#게펜 중앙탑#
+geffen.rsw#마법도시 게펜#
+geffen_in.rsw#게펜 내부#
+//moc_castle.rsw#모로크 성내#	2008 모로크
+moc_ruins.rsw#사막도시 모로크#
+morocc.rsw#사막도시 모로크#
+morocc_in.rsw#모로크 내부#
+pay_arche.rsw#페이욘 궁수마을#
+payon.rsw#산악도시 페이욘#
+payon_in01.rsw#페이욘 내부#
+payon_in02.rsw#페이욘 내부#
+payon_in03.rsw#페이욘 내부#
+prontera.rsw#룬미드가츠 왕국 수도 프론테라#
+prt_in.rsw#프론테라 내부#
+prt_castle.rsw#프론테라 성 내부#
+prt_church.rsw#프론테라 성당 내부#
+izlude.rsw#위성도시 이즈루드#
+izlude_in.rsw#이즈루드 내부#
+izlu2dun.rsw#바이아란 섬#
+monk_in.rsw#성 카피톨리나 수도원 내부#
+prt_are_in.rsw#아레나 대기실#
+arena_room.rsw#아레나 대기실#
+prt_arena01.rsw#아레나#
+prt_are01.rsw#아레나#
+glast_01.rsw#글래스트헤임#
+alde_dun01.rsw#알데바란 시계탑 지하 1층#
+alde_dun02.rsw#알데바란 시계탑 지하 2층#
+alde_dun03.rsw#알데바란 시계탑 지하 3층#
+alde_dun04.rsw#알데바란 시계탑 지하 4층#
+c_tower1.rsw#알데바란 시계탑 지상 1층#
+c_tower2.rsw#알데바란 시계탑 지상 2층#
+c_tower3.rsw#알데바란 시계탑 지상 3층#
+c_tower4.rsw#알데바란 시계탑 지상 4층#
+gl_cas01.rsw#글래스트헤임 성 1층#
+gl_cas02.rsw#글래스트헤임 성 2층#
+gl_church.rsw#글래스트헤임 수도원#
+gl_chyard.rsw#글래스트헤임 지하 묘지#
+gl_dun01.rsw#글래스트헤임 지하 동굴 1층#
+gl_dun02.rsw#글래스트헤임 지하 동굴 2층#
+gl_in01.rsw#글래스트헤임 실내#
+gl_knt01.rsw#글래스트헤임 기사단 1층#
+gl_knt02.rsw#글래스트헤임 기사단 2층#
+gl_prison.rsw#글래스트헤임 지하 감옥 1층#
+gl_prison1.rsw#글래스트헤임 지하 감옥 2층#
+gl_sew01.rsw#글래스트헤임 지하 수로 1층#
+gl_sew02.rsw#글래스트헤임 지하 수로 2층#
+gl_sew03.rsw#글래스트헤임 지하 수로 3층#
+gl_sew04.rsw#글래스트헤임 지하 수로 4층#
+gl_step.rsw#글래스트헤임 계단 던전#
+pvp_y_room.rsw#PvP : 대기실#
+pvp_n_room.rsw#PvP : 대기실#
+pvp_c_room.rsw#PvP : 대기실#
+pvp_n_1-1.rsw#PvP : 샌드위치 룸#
+pvp_n_2-1.rsw#PvP : 샌드위치 룸#
+pvp_n_3-1.rsw#PvP : 샌드위치 룸#
+pvp_n_4-1.rsw#PvP : 샌드위치 룸#
+pvp_n_5-1.rsw#PvP : 샌드위치 룸#
+pvp_n_6-1.rsw#PvP : 샌드위치 룸#
+pvp_n_7-1.rsw#PvP : 샌드위치 룸#
+pvp_n_8-1.rsw#PvP : 샌드위치 룸#
+pvp_n_1-2.rsw#PvP : 락 온 룸#
+pvp_n_2-2.rsw#PvP : 락 온 룸#
+pvp_n_3-2.rsw#PvP : 락 온 룸#
+pvp_n_4-2.rsw#PvP : 락 온 룸#
+pvp_n_5-2.rsw#PvP : 락 온 룸#
+pvp_n_6-2.rsw#PvP : 락 온 룸#
+pvp_n_7-2.rsw#PvP : 락 온 룸#
+pvp_n_8-2.rsw#PvP : 락 온 룸#
+pvp_n_1-3.rsw#PvP : 포 룸#
+pvp_n_2-3.rsw#PvP : 포 룸#
+pvp_n_3-3.rsw#PvP : 포 룸#
+pvp_n_4-3.rsw#PvP : 포 룸#
+pvp_n_5-3.rsw#PvP : 포 룸#
+pvp_n_6-3.rsw#PvP : 포 룸#
+pvp_n_7-3.rsw#PvP : 포 룸#
+pvp_n_8-3.rsw#PvP : 포 룸#
+pvp_n_1-4.rsw#PvP : 언더 크로스 룸#
+pvp_n_2-4.rsw#PvP : 언더 크로스 룸#
+pvp_n_3-4.rsw#PvP : 언더 크로스 룸#
+pvp_n_4-4.rsw#PvP : 언더 크로스 룸#
+pvp_n_5-4.rsw#PvP : 언더 크로스 룸#
+pvp_n_6-4.rsw#PvP : 언더 크로스 룸#
+pvp_n_7-4.rsw#PvP : 언더 크로스 룸#
+pvp_n_8-4.rsw#PvP : 언더 크로스 룸#
+pvp_n_1-5.rsw#PvP : 콤파스 룸#
+pvp_n_2-5.rsw#PvP : 콤파스 룸#
+pvp_n_3-5.rsw#PvP : 콤파스 룸#
+pvp_n_4-5.rsw#PvP : 콤파스 룸#
+pvp_n_5-5.rsw#PvP : 콤파스 룸#
+pvp_n_6-5.rsw#PvP : 콤파스 룸#
+pvp_n_7-5.rsw#PvP : 콤파스 룸#
+pvp_n_8-5.rsw#PvP : 콤파스 룸#
+pvp_y_1-1.rsw#PvP : 프론테라#
+pvp_y_2-1.rsw#PvP : 프론테라#
+pvp_y_3-1.rsw#PvP : 프론테라#
+pvp_y_4-1.rsw#PvP : 프론테라#
+pvp_y_5-1.rsw#PvP : 프론테라#
+pvp_y_6-1.rsw#PvP : 프론테라#
+pvp_y_7-1.rsw#PvP : 프론테라#
+pvp_y_8-1.rsw#PvP : 프론테라#
+pvp_y_1-2.rsw#PvP : 이즈루드#
+pvp_y_2-2.rsw#PvP : 이즈루드#
+pvp_y_3-2.rsw#PvP : 이즈루드#
+pvp_y_4-2.rsw#PvP : 이즈루드#
+pvp_y_5-2.rsw#PvP : 이즈루드#
+pvp_y_6-2.rsw#PvP : 이즈루드#
+pvp_y_7-2.rsw#PvP : 이즈루드#
+pvp_y_8-2.rsw#PvP : 이즈루드#
+pvp_y_1-3.rsw#PvP : 페이욘#
+pvp_y_2-3.rsw#PvP : 페이욘#
+pvp_y_3-3.rsw#PvP : 페이욘#
+pvp_y_4-3.rsw#PvP : 페이욘#
+pvp_y_5-3.rsw#PvP : 페이욘#
+pvp_y_6-3.rsw#PvP : 페이욘#
+pvp_y_7-3.rsw#PvP : 페이욘#
+pvp_y_8-3.rsw#PvP : 페이욘#
+pvp_y_1-4.rsw#PvP : 알베르타#
+pvp_y_2-4.rsw#PvP : 알베르타#
+pvp_y_3-4.rsw#PvP : 알베르타#
+pvp_y_4-4.rsw#PvP : 알베르타#
+pvp_y_5-4.rsw#PvP : 알베르타#
+pvp_y_6-4.rsw#PvP : 알베르타#
+pvp_y_7-4.rsw#PvP : 알베르타#
+pvp_y_8-4.rsw#PvP : 알베르타#
+pvp_y_1-5.rsw#PvP : 모로크#
+pvp_y_2-5.rsw#PvP : 모로크#
+pvp_y_3-5.rsw#PvP : 모로크#
+pvp_y_4-5.rsw#PvP : 모로크#
+pvp_y_5-5.rsw#PvP : 모로크#
+pvp_y_6-5.rsw#PvP : 모로크#
+pvp_y_7-5.rsw#PvP : 모로크#
+pvp_y_8-5.rsw#PvP : 모로크#
+pvp_2vs2.rsw#PvP : 이벤트 경기장#
