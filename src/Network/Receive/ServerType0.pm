@@ -174,7 +174,10 @@ sub new {
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'],
-		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]],
+		'0110' => ($rpackets{'0110'}{length} == 14) # or 10
+			? ['skill_use_failed', 'v V2 C2', [qw(skillID btype itemId flag cause)]]
+			: ['skill_use_failed', 'v v2 C2', [qw(skillID btype itemId flag cause)]]
+		,
 		'0111' => ['skill_add', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]],
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'0117' => ['skill_use_location', 'v a4 v3 V', [qw(skillID sourceID lv x y tick)]],
