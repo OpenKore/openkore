@@ -134,7 +134,6 @@ sub clear {
 	if ($total == 0) {
 		undef @ai_seq;
 		undef @ai_seq_args;
-		undef %ai_v;
 
 	# If 1 arg was given find it in the queue
 	} elsif ($total == 1) {
@@ -587,12 +586,19 @@ sub ai_skillUse {
 		delete $args{target};
 	}
 
-	if ($char->{skills}{$args{skillHandle}}{lv} < $args{lv}) {
-		debug "Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$char->{skills}{$args{skillHandle}}{lv}.".\n", "ai";
-		$args{lv} = $char->{skills}{$args{skillHandle}}{lv};
+	my $skill = Skill->new(auto => $args{skillHandle});
+	my $owner = $skill->getOwner();
+	my $lvl = $owner->getSkillLevel($skill);
+	if ($lvl < $args{lv}) {
+		debug "[$owner] Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$lvl.".\n", "ai";
+		$args{lv} = $lvl;
 	}
-
-	AI::queue("skill_use", \%args);
+	
+	if ($skill->getOwnerType == Skill::OWNER_CHAR) {
+		AI::queue("skill_use", \%args);
+	} else {
+		$owner->queue("skill_use", \%args);
+	}
 }
 
 ##

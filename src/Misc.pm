@@ -186,6 +186,7 @@ our @EXPORT = (
 	qw/lineIntersection
 	percent_hp
 	percent_sp
+	percent_ap
 	percent_weight/,
 
 	# Misc Functions
@@ -1499,9 +1500,10 @@ sub checkFollowMode {
 
 sub isMySlaveID {
 	my ($ID, $exclude) = @_;
-	return 0 unless ($char);
-	return 0 unless ($char->{slaves});
 	return 0 if (defined $exclude && $ID eq $exclude);
+	return 0 unless ($char);
+	return 1 if (exists $char->{homunculus} && exists $char->{homunculus}{ID} && $char->{homunculus}{ID} eq $ID);
+	return 0 unless ($char->{slaves});
 	return 0 unless (exists $char->{slaves}{$ID});
 	return 1;
 }
@@ -4164,6 +4166,15 @@ sub percent_sp {
 	}
 }
 
+sub percent_ap {
+	my $r_hash = shift;
+	if (!$$r_hash{'ap_max'}) {
+		return 0;
+	} else {
+		return ($$r_hash{'ap'} / $$r_hash{'ap_max'} * 100);
+	}
+}
+
 sub percent_weight {
 	my $r_hash = shift;
 	if (!$$r_hash{'weight_max'}) {
@@ -4614,6 +4625,14 @@ sub checkSelfCondition {
 		}
 	}
 
+	if ($config{$prefix . "_ap"}) {
+		if ($config{$prefix."_ap"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->ap_percent, $1));
+		} else {
+			return 0 if (!inRange($char->{ap}, $config{$prefix."_ap"}));
+		}
+	}
+
 	if ($config{$prefix."_weight"}) {
 		if ($config{$prefix."_weight"} =~ /^(.*)\%$/) {
 			return 0 if $char->{weight_max} && !inRange($char->weight_percent, $1);
@@ -4666,16 +4685,24 @@ sub checkSelfCondition {
 		return 0 if ($char->{homunculus}->isIdle);
 	}
 
-	if ($config{$prefix."_homunculus_dead"}) {
-		return 0 if ($has_homunculus);
-		return 0 unless ($char->{homunculus});
-		return 0 unless ($char->{homunculus}{dead});
+	if ($config{$prefix."_homunculus_dead"} =~ /\S/) {
+		return 0 if (exists $char->{homunculus_info} && $config{$prefix."_homunculus_dead"} && $char->{homunculus_info}{dead} == 0);
+		return 0 if (exists $char->{homunculus_info} && !$config{$prefix."_homunculus_dead"} && $char->{homunculus_info}{dead} == 1);
 	}
 
-	if ($config{$prefix."_homunculus_resting"}) {
-		return 0 if ($has_homunculus);
-		return 0 unless ($char->{homunculus});
-		return 0 unless ($char->{homunculus}{vaporized});
+	if ($config{$prefix."_homunculus_resting"} =~ /\S/) {
+		return 0 if (exists $char->{homunculus_info} && $config{$prefix."_homunculus_resting"} && $char->{homunculus_info}{vaporized} == 0);
+		return 0 if (exists $char->{homunculus_info} && !$config{$prefix."_homunculus_resting"} && $char->{homunculus_info}{vaporized} == 1);
+	}
+
+	if ($config{$prefix."_homunculus_noinfo_dead"} =~ /\S/) {
+		return 0 if ($config{$prefix."_homunculus_noinfo_dead"} && exists $char->{homunculus_info} && exists $char->{homunculus_info}{dead} && defined $char->{homunculus_info}{dead});
+		return 0 if (!$config{$prefix."_homunculus_noinfo_dead"} && (!exists $char->{homunculus_info} || !exists $char->{homunculus_info}{dead} || !defined $char->{homunculus_info}{dead}));
+	}
+
+	if ($config{$prefix."_homunculus_noinfo_resting"} =~ /\S/) {
+		return 0 if ($config{$prefix."_homunculus_noinfo_resting"} && exists $char->{homunculus_info} && exists $char->{homunculus_info}{vaporized} && defined $char->{homunculus_info}{vaporized});
+		return 0 if (!$config{$prefix."_homunculus_noinfo_resting"} && (!exists $char->{homunculus_info} || !exists $char->{homunculus_info}{vaporized} || !defined $char->{homunculus_info}{vaporized}));
 	}
 
 	my $has_mercenary = $char->has_mercenary;
@@ -4734,14 +4761,22 @@ sub checkSelfCondition {
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill|attackComboSlot/i) {
 		my $skill = Skill->new(auto => $config{$prefix});
-		return 0 unless ($char->getSkillLevel($skill)
-						|| $config{$prefix."_equip_leftAccessory"}
-						|| $config{$prefix."_equip_rightAccessory"}
-						|| $config{$prefix."_equip_leftHand"}
-						|| $config{$prefix."_equip_rightHand"}
-						|| $config{$prefix."_equip_robe"}
-						);
-		return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
+		if ($char->checkSkillOwnership ($skill)) {
+			return 0 unless ($char->getSkillLevel($skill)
+							|| $config{$prefix."_equip_leftAccessory"}
+							|| $config{$prefix."_equip_rightAccessory"}
+							|| $config{$prefix."_equip_leftHand"}
+							|| $config{$prefix."_equip_rightHand"}
+							|| $config{$prefix."_equip_robe"}
+							);
+			return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
+			
+		} elsif ($has_homunculus && $char->{homunculus}->checkSkillOwnership($skill)) {
+			return 0 unless ($char->{homunculus}->getSkillLevel($skill));
+			
+		} elsif ($has_mercenary && $char->{mercenary}->checkSkillOwnership($skill)) {
+			return 0 unless ($char->{mercenary}->getSkillLevel($skill));
+		}
 	}
 
 	if (defined $config{$prefix . "_skill"}) {

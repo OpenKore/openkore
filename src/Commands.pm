@@ -410,6 +410,9 @@ sub initHandlers {
 			[T("<player #>"), T("look at player")]
 			], \&cmdLookPlayer],
 		['memo', T("Save current position for warp portal."), \&cmdMemo],
+		['memorial', [
+			["destroy",T("Destroy an instance.")]
+			], \&cmdMemorialDungeonDestroy],
 		['ml', T("List monsters that are on screen."), \&cmdMonsterList],
 		['move', [
 			T("Move your character."),
@@ -698,7 +701,6 @@ sub initHandlers {
 			[T("<vender #> <vender_item #> [<amount>]"), T("buy items from vender shop")],
 			["end", T("leave current vender shop")]
 			], \&cmdVender],
-		['verbose', T("Toggle verbose on/off."), \&cmdVerbose],
 		['version', T("Display the version of openkore."), \&cmdVersion],
 		['vl', T("List nearby vending shops."), \&cmdVenderList],
 		['vs', T("Display the status of your vending shop."), \&cmdShopInfoSelf],
@@ -2882,22 +2884,28 @@ sub cmdSlave {
 
 	my $slave;
 	if ($cmd eq 'homun') {
-		$slave = $char->{homunculus};
+		if ($char->has_homunculus && $char->{homunculus}{appear_time}) {
+			$slave = $char->{homunculus};
+		} else {
+			error T("Error: No slave detected.\n");
+		}
 	} elsif ($cmd eq 'merc') {
 		$slave = $char->{mercenary};
+		if ($char->has_mercenary && $char->{mercenary}{appear_time}) {
+			$slave = $char->{mercenary};
+		} else {
+			error T("Error: No slave detected.\n");
+		}
 	} else {
 		error T("Error: Unknown command in cmdSlave\n");
 	}
 	my $string = $cmd;
 
-	if (!$slave || !$slave->{appear_time}) {
-		error T("Error: No slave detected.\n");
-
-	} elsif ($slave->isa("AI::Slave::Homunculus") && $slave->{vaporized}) {
+	if ($slave->isa("AI::Slave::Homunculus") && $slave->{homunculus_info}{vaporized}) {
 			my $skill = new Skill(handle => 'AM_CALLHOMUN');
 			error TF("Homunculus is in rest, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 
-	} elsif ($slave->isa("AI::Slave::Homunculus") && $slave->{dead}) {
+	} elsif ($slave->isa("AI::Slave::Homunculus") && $slave->{homunculus_info}{dead}) {
 			my $skill = new Skill(handle => 'AM_RESURRECTHOMUN');
 			error TF("Homunculus is dead, use skills '%s' (ss %d).\n", $skill->getName, $skill->getIDN);
 
@@ -3086,10 +3094,12 @@ sub cmdSlave {
 				T("   # Skill Name                     Lv      SP\n");
 			foreach my $handle (@{$slave->{slave_skillsID}}) {
 				my $skill = new Skill(handle => $handle);
-				my $sp = $char->{skills}{$handle}{sp} || '';
-				$msg .= swrite(
-					"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
-					[$skill->getIDN(), $skill->getName(), $char->getSkillLevel($skill), $sp]);
+				if ($slave->checkSkillOwnership($skill)) {
+					my $sp = $slave->{skills}{$handle}{sp} || '';
+					$msg .= swrite(
+						"@>>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
+						[$skill->getIDN(), $skill->getName(), $slave->getSkillLevel($skill), $sp]);
+				}
 			}
 			$msg .= TF("\nSkill Points: %d\n", $slave->{points_skill}) if defined $slave->{points_skill};
 			$msg .= ('-'x46) . "\n";
@@ -5437,7 +5447,7 @@ sub cmdStats {
 				"Sta: \@<<<   #\@<< S.Matk:   \@<<<   Mres:   \@<<<\n" .
 				"Wis: \@<<<   #\@<< H.Plus:   \@<<<\n" .
 				"Spl: \@<<<   #\@<< C.Rate:   \@<<<\n" .
-				"Con: \@<<<   #\@<< T.Status Points:          \@<<<\n" .
+				"Con: \@<<<   #\@<< T.Status Points:         \@<<<\n" .
 				"Crt: \@<<<   #\@<<" ),
 				[$char->{'pow'} ? $char->{'pow'} : 0, $char->{'need_pow'}, $char->{'patk'}, $char->{'res'},
 				$char->{'sta'} ? $char->{'sta'} : 0, $char->{'need_sta'}, $char->{'smatk'}, $char->{'mres'},
@@ -5478,7 +5488,7 @@ sub cmdStatus {
 	}
 
 
-	my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
+	my ($hp_string, $sp_string, $ap_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
 
 	$hp_string = $char->{'hp'}."/".$char->{'hp_max'}." ("
 		.int($char->{'hp'}/$char->{'hp_max'} * 100)
@@ -5486,6 +5496,9 @@ sub cmdStatus {
 	$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
 		.int($char->{'sp'}/$char->{'sp_max'} * 100)
 		."%)" if $char->{'sp_max'};
+	$ap_string = $char->{'ap'}."/".$char->{'ap_max'}." ("
+		.int($char->{'ap'}/$char->{'ap_max'} * 100)
+		."%)" if $char->{'ap_max'};
 	$base_string = formatNumber($char->{'exp'})."/".formatNumber($char->{'exp_max'})." /$baseEXPKill ("
 		.sprintf("%.2f",$char->{'exp'}/$char->{'exp_max'} * 100)
 		."%)"
@@ -5509,6 +5522,7 @@ sub cmdStatus {
 		swrite(
 		TF("\@<<<<<<<<<<<<<<<<<<<<<<<         HP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"\@<<<<<<<<<<<<<<<<<<<<<<<         SP: \@>>>>>>>>>>>>>>>>>>\n" .
+		"                                 AP: \@>>>>>>>>>>>>>>>>>>\n" .
 		"Base: \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Job : \@<<    \@>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n" .
 		"Zeny: \@<<<<<<<<<<<<<<<<<     Weight: \@>>>>>>>>>>>>>>>>>>\n" .
@@ -5517,7 +5531,7 @@ sub cmdStatus {
 		"Total Time spent (sec): \@>>>>>>>>\n" .
 		"Last Monster took (sec): \@>>>>>>>",
 		(exists $char->{spirits} && $char->{spirits} != 0 ? ($char->{amuletType} ? $char->{spirits} . "\tType: " . $char->{amuletType} : $char->{spirits}) : 0)),
-		[$char->{'name'}, $hp_string, $job_name_string, $sp_string,
+		[$char->{'name'}, $hp_string, $job_name_string, $sp_string, $ap_string,
 		$char->{'lv'}, $base_string, $char->{'lv_job'}, $job_string, $zeny_string, $weight_string,
 		$totaldmg, $dmgpsec_string, $totalelasped_string, $elasped_string]).
 		('-'x56) . "\n";
@@ -6039,6 +6053,33 @@ sub cmdUnequip {
 		return;
 	}
 
+	if ($arg1 eq "all") {
+		my @equipment;
+		# Find all equipped items
+		for my $item (@{$char->inventory}) {
+			 if ($item->equippable && $item->{type_equip} != 0) {
+				my %eqp;
+				$eqp{index} = $item->{ID};
+				$eqp{binID} = $item->{binID};
+				$eqp{name} = $item->{name};
+				$eqp{amount} = $item->{amount};
+				$eqp{equipped} = ($item->{type} == 10 || $item->{type} == 16 || $item->{type} == 17 || $item->{type} == 19) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
+				$eqp{type} = $itemTypes_lut{$item->{type}};
+				$eqp{equipped} .= " ($item->{equipped})";
+				# Translation Comment: Mark to tell item not identified
+				$eqp{identified} = " -- " . T("Not Identified") if !$item->{identified};
+				if ($item->{equipped}) {
+					push @equipment, \%eqp;
+				}
+			}
+		}
+		for my $e (@equipment) {
+			my $item = Actor::Item::get($e->{name}, undef, 0);
+			$item->unequip();
+		}
+		return;
+	}
+
 	if ($equipSlot_rlut{$arg1}) {
 		$slot = $arg1;
 	} else {
@@ -6530,16 +6571,7 @@ sub cmdBuyer {
 		}
 
 		$messageSender->sendBuyBulkBuyer($buyerID, [{ID => $c_item->{ID}, itemID => $c_item->{nameID}, amount => $amount}], $buyingStoreID);
-	}
 }
-
-
-sub cmdVerbose {
-	if ($config{'verbose'}) {
-		configModify("verbose", 0);
-	} else {
-		configModify("verbose", 1);
-	}
 }
 
 sub cmdVersion {
@@ -8622,6 +8654,19 @@ sub cmdMergeItem {
 
 	error T("No item was selected or at least need 2 same items.\n");
 	error T("To merge by item id: merge <itemid>\nOr one-by-one: merge <item #>,<item #>[,...]\n"), "info";
+}
+
+sub cmdMemorialDungeonDestroy {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my (undef, $args) = @_;
+
+	if ($args eq "destroy") {
+		$messageSender->sendMemorialDungeonCommand(3);
+	}
 }
 
 1;

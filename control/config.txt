@@ -382,6 +382,9 @@ mercenary_attackAuto 2
 mercenary_attackAuto_party 1
 mercenary_attackAuto_notInTown 1
 mercenary_attackAuto_inLockOnly 1
+mercenary_attackAuto_notWhile_storageAuto 1
+mercenary_attackAuto_notWhile_buyAuto 1
+mercenary_attackAuto_notWhile_sellAuto 1
 mercenary_attackAuto_considerDamagedAggressive 0
 mercenary_attackBeyondMaxDistance_waitForAgressive 1
 mercenary_attackAuto_onlyWhenSafe 0
@@ -442,6 +445,9 @@ homunculus_attackAuto 2
 homunculus_attackAuto_party 1
 homunculus_attackAuto_notInTown 1
 homunculus_attackAuto_inLockOnly 1
+homunculus_attackAuto_notWhile_storageAuto 1
+homunculus_attackAuto_notWhile_buyAuto 1
+homunculus_attackAuto_notWhile_sellAuto 1
 homunculus_attackAuto_considerDamagedAggressive 0
 homunculus_attackBeyondMaxDistance_waitForAgressive 1
 homunculus_attackAuto_onlyWhenSafe 0
@@ -523,11 +529,14 @@ attackSkillSlot {
 	minCastTime 0
 	hp
 	sp > 10
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -602,11 +611,14 @@ attackComboSlot {
 doCommand {
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -651,11 +663,14 @@ useSelf_skill {
 	minCastTime 0
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -704,11 +719,14 @@ partySkill {
 	minCastTime 0
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -803,11 +821,14 @@ equipAuto {
 	whileSitting 0
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -843,11 +864,14 @@ equipAuto {
 useSelf_item {
 	hp
 	sp
+	ap
 	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
