@@ -9314,18 +9314,25 @@ sub skills_list {
 	# TODO: per-actor, if needed at all
 	# Skill::DynamicInfo::clear;
 	my ($ownerType, $hook, $actor) = @{{
-		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
 		'0235' => [Skill::OWNER_HOMUN, 'packet_homunSkills', $char->{homunculus}],
 		'029D' => [Skill::OWNER_MERC, 'packet_mercSkills', $char->{mercenary}],
-		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
 	}->{$args->{switch}}};
 
-	my $skillsIDref = $actor ? \@{$actor->{slave_skillsID}} : \@skillsID;
-	delete @{$char->{skills}}{@$skillsIDref};
+	my $skillsIDref;
+	if ($ownerType == Skill::OWNER_CHAR) {
+		$skillsIDref = \@skillsID;
+		delete @{$char->{skills}}{@$skillsIDref};
+	} elsif ($ownerType == Skill::OWNER_HOMUN) {
+		$skillsIDref = \@{$char->{homunculus}->{slave_skillsID}};
+		delete @{$char->{homunculus}->{skills}}{@$skillsIDref};
+	} elsif ($ownerType == Skill::OWNER_MERC) {
+		$skillsIDref = \@{$char->{mercenary}->{slave_skillsID}};
+		delete @{$char->{mercenary}->{skills}}{@$skillsIDref};
+	}
 	@$skillsIDref = ();
 
-	# TODO: $actor can be undefined here
-	undef @{$actor->{slave_skillsID}};
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $skill_info->{len}) {
 		my $skill;
 		@{$skill}{@{$skill_info->{keys}}} = unpack($skill_info->{types}, substr($msg, $i, $skill_info->{len}));
@@ -9333,7 +9340,7 @@ sub skills_list {
 		my $handle = Skill->new(idn => $skill->{ID})->getHandle;
 
 		foreach(@{$skill_info->{keys}}) {
-			$char->{skills}{$handle}{$_} = $skill->{$_};
+			$actor->{skills}{$handle}{$_} = $skill->{$_};
 		}
 
 		binAdd($skillsIDref, $handle) unless defined binFind($skillsIDref, $handle);
@@ -11695,12 +11702,6 @@ sub isvr_disconnect {
 sub skill_use_failed {
 	my ($self, $args) = @_;
 
-	# skill fail/delay
-	my $skillID = $args->{skillID};
-	my $btype = $args->{btype};
-	my $fail = $args->{fail};
-	my $type = $args->{type};
-
 	my %basefailtype = (
 		0 => $msgTable[160],#"skill failed"
 		1 => $msgTable[161],#"no emotions"
@@ -11749,10 +11750,13 @@ sub skill_use_failed {
 		);
 
 	my $errorMessage;
-	if ($skillID == 1 && $type == 0 && exists $basefailtype{$btype}) {
-		$errorMessage = $basefailtype{$btype};
-	} elsif (exists $failtype{$type}) {
-		$errorMessage = $failtype{$type};
+	if ($args->{skillID} == 1 && $args->{cause} == 0 && exists $basefailtype{$args->{btype}}) {
+		$errorMessage = $basefailtype{$args->{btype}};
+	} elsif (exists $failtype{$args->{cause}}) {
+		$errorMessage = $failtype{$args->{cause}};
+		if ($args->{cause} == 71) {
+			$errorMessage .= T(' - item ').$args->{itemId};
+		}
 	} else {
 		$errorMessage = T('Unknown error');
 	}
@@ -11760,14 +11764,17 @@ sub skill_use_failed {
 	delete $char->{casting};
 
 	my %hookArgs;
-	$hookArgs{skillID} = $skillID;
-	$hookArgs{failType} = $type;
+	$hookArgs{skillID} = $args->{skillID};
+	$hookArgs{btype} = $args->{btype};
+	$hookArgs{itemId} = $args->{itemId};
+	$hookArgs{flag} = $args->{flag};
+	$hookArgs{cause} = $args->{cause};
 	$hookArgs{failMessage} = $errorMessage;
 	$hookArgs{warn} = 1;
 
 	Plugins::callHook('packet_skillfail', \%hookArgs);
 
-	warning(TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill") if ($hookArgs{warn});
+	warning(TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $args->{skillID})->getName(), $errorMessage, $args->{cause}), "skill") if ($hookArgs{warn});
 	
 	# Ressurect Homunculus failed - which means we have no dead homunculus
 	if ($args->{skillID} == 247 && $args->{cause} == 0) {
@@ -12353,6 +12360,13 @@ sub repute_info {
 
 		push @reputation_list, $repute;
 	}
+}
+
+# 0A15 - PACKET_ZC_GOLDPCCAFE_POINT
+# TODO: this package is not supported yet.
+sub gold_pc_cafe_point {
+	my ($self, $args) = @_;
+	debug TF("[gold_pc_cafe_point] isActive=%d, mode=%d, point=%d, playedTime=%d\n", $args->{isActive}, $args->{mode}, $args->{point}, $args->{playedTime});
 }
 
 1;
