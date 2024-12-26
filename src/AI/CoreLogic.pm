@@ -2893,6 +2893,7 @@ sub processAutoSkillUse {
 ##### PARTY-SKILL USE #####
 sub processPartySkillUse {
 	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
+		my $realMyPos = calcPosition($field, $char);
 		my %party_skill;
 		PARTYSKILL:
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
@@ -2905,60 +2906,48 @@ sub processPartySkillUse {
 				next if $ID eq '' || $ID eq $party_skill{owner}{ID};
 
 				if ($ID eq $accountID) {
-					#
 				} elsif ($slavesList->getByID($ID)) {
 					next if ((!$char->{slaves} || !$char->{slaves}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
 					next if (($char->{slaves}{$ID} ne $slavesList->getByID($ID)) && !$config{"partySkill_$i"."_notPartyOnly"});
 				} elsif ($playersList->getByID($ID)) {
 					unless ($config{"partySkill_$i"."_notPartyOnly"}) {
 						next unless $char->{party}{joined} && $char->{party}{users}{$ID};
-
 						# party member should be online, otherwise it's another character on the same account (not in party)
 						next unless $char->{party}{users}{$ID} && $char->{party}{users}{$ID}{online};
 					}
 				}
-
 				my $player = Actor::get($ID);
-				next unless (
-					UNIVERSAL::isa($player, 'Actor::You')
-					|| UNIVERSAL::isa($player, 'Actor::Player')
-					|| UNIVERSAL::isa($player, 'Actor::Slave')
+				next unless (UNIVERSAL::isa($player, 'Actor::You') || UNIVERSAL::isa($player, 'Actor::Player') || UNIVERSAL::isa($player, 'Actor::Slave'));
+				next unless ( # target check
+					!$config{"partySkill_$i"."_target"}
+					|| existsInList($config{"partySkill_$i"."_target"}, $player->{name})
+					|| $player->{ID} eq $char->{ID} && existsInList($config{"partySkill_$i"."_target"}, '@main')
+					|| $char->has_homunculus && $player->{ID} eq $char->{homunculus}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@homunculus')
+					|| $char->has_mercenary && $player->{ID} eq $char->{mercenary}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@mercenary')
 				);
-				my $dist = $config{"partySkill_$i"."_dist"} || $config{partySkillDistance} || "0..8";
-				if (defined($config{"partySkill_$i"."_dist"}) && defined($config{"partySkill_$i"."_maxDist"})) { $dist = $config{"partySkill_$i"."_dist"} . ".." . $config{"partySkill_$i"."_maxDist"};}
-				if (
-					( # range check
-						$party_skill{owner}{ID} eq $player->{ID}
-						|| inRange(distance($party_skill{owner}{pos_to}, $player->{pos}), $dist)
-					)
-					&& ( # target check
-						!$config{"partySkill_$i"."_target"}
-						or existsInList($config{"partySkill_$i"."_target"}, $player->{name})
-						or $player->{ID} eq $char->{ID} && existsInList($config{"partySkill_$i"."_target"}, '@main')
-						or $char->{homunculus} && $player->{ID} eq $char->{homunculus}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@homunculus')
-						or $char->{mercenary} && $player->{ID} eq $char->{mercenary}{ID} && existsInList($config{"partySkill_$i"."_target"}, '@mercenary')
-					)
-					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
-				){
-					$party_skill{ID} = $party_skill{skillObject}->getHandle;
-					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || $char->getSkillLevel($party_skill{skillObject});
-					$party_skill{target} = $player->{name};
-					$party_skill{targetActor} = $player;
-					my $pos = $player->position;
-					$party_skill{x} = $pos->{x};
-					$party_skill{y} = $pos->{y};
-					$party_skill{targetID} = $ID;
-					$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
-					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
-					$party_skill{isSelfSkill} = $config{"partySkill_$i"."_isSelfSkill"};
-					$party_skill{prefix} = "partySkill_$i";
-					# This is used by setSkillUseTimer() to set
-					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
-					# when the skill is actually cast
-					$targetTimeout{$ID}{$party_skill{ID}} = $i;
-					last PARTYSKILL;
-				}
-
+				my $party_skill_dist = $config{"partySkill_$i"."_dist"} || $config{partySkillDistance} || "0..8";
+				if (defined($config{"partySkill_$i"."_dist"}) && defined($config{"partySkill_$i"."_maxDist"})) { $party_skill_dist = $config{"partySkill_$i"."_dist"} . ".." . $config{"partySkill_$i"."_maxDist"};}
+				my $realActorPos = calcPosition($field, $player);
+				my $distance = blockDistance($realMyPos, $realActorPos);
+				next unless ($party_skill{owner}{ID} eq $player->{ID} || inRange($distance, $party_skill_dist));
+				next unless (checkPlayerCondition("partySkill_$i"."_target", $ID));
+				
+				$party_skill{ID} = $party_skill{skillObject}->getHandle;
+				$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || $char->getSkillLevel($party_skill{skillObject});
+				$party_skill{target} = $player->{name};
+				$party_skill{targetActor} = $player;
+				$party_skill{x} = $realActorPos->{x};
+				$party_skill{y} = $realActorPos->{y};
+				$party_skill{targetID} = $ID;
+				$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
+				$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
+				$party_skill{isSelfSkill} = $config{"partySkill_$i"."_isSelfSkill"};
+				$party_skill{prefix} = "partySkill_$i";
+				# This is used by setSkillUseTimer() to set
+				# $ai_v{"partySkill_${i}_target_time"}{$targetID}
+				# when the skill is actually cast
+				$targetTimeout{$ID}{$party_skill{ID}} = $i;
+				last PARTYSKILL;
 			}
 		}
 
@@ -2969,9 +2958,11 @@ sub processPartySkillUse {
 
 			if ($char->{party}{joined} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
 				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
-			} elsif ($char->{mercenary} && $char->{mercenary}{hp} && $char->{mercenary}{hp_max}) {
+				
+			} elsif ($char->has_mercenary && $party_skill{targetID} eq $char->{mercenary}{ID} && $char->{mercenary}{hp} && $char->{mercenary}{hp_max}) {
 				$hp_diff = $char->{mercenary}{hp_max} - $char->{mercenary}{hp};
 				$modifier /= 2;
+				
 			} else {
 				if ($players{$party_skill{targetID}}) {
 					$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
@@ -3131,9 +3122,9 @@ sub processAutoAttack {
 		if ($config{'tankMode'}) {
 			for (@$playersList, @$slavesList) {
 				if (
-					$config{tankModeTarget} eq $_->{name}
-					or $char->{homunculus} && $config{tankModeTarget} eq '@homunculus' && $_->{ID} eq $char->{homunculus}{ID}
-					or $char->{mercenary} && $config{tankModeTarget} eq '@mercenary' && $_->{ID} eq $char->{mercenary}{ID}
+					($config{tankModeTarget} eq $_->{name})
+					|| ($char->has_homunculus && $config{tankModeTarget} eq '@homunculus' && $_->{ID} eq $char->{homunculus}{ID})
+					|| ($char->has_mercenary && $config{tankModeTarget} eq '@mercenary' && $_->{ID} eq $char->{mercenary}{ID})
 				) {
 					$foundTankee = 1;
 					last;

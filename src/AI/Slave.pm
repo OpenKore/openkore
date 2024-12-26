@@ -363,6 +363,9 @@ sub processClientSuspend {
 ##### AUTO-ATTACK #####
 sub processAutoAttack {
 	my $slave = shift;
+	
+	return if $slave->inQueue("attack");
+	
 	# The auto-attack logic is as follows:
 	# 1. Generate a list of monsters that we are allowed to attack.
 	# 2. Pick the "best" monster out of that list, and attack it.
@@ -371,57 +374,57 @@ sub processAutoAttack {
 	return if ($config{$slave->{configPrefix}.'attackAuto'} && $config{$slave->{configPrefix}.'attackAuto'} eq -1);
 	
 	return if (!$field);
-	if (
-	    ($slave->isIdle || $slave->is(qw/route/))
-	 &&   (
-	       AI::isIdle
-	    || AI::is(qw(follow sitAuto attack skill_use))
-		|| (AI::action eq "route" && AI::action(1) eq "attack")
-		|| (AI::action eq "move" && AI::action(2) eq "attack")
-		|| ($config{$slave->{configPrefix}.'attackAuto_duringItemsTake'} && AI::is(qw(take items_gather items_take)))
-		|| ($config{$slave->{configPrefix}.'attackAuto_duringRandomWalk'} && AI::is('route') && AI::args()->{isRandomWalk}))
-	 && timeOut($timeout{$slave->{ai_attack_auto_timeout}})
-	 && $slave->{master_dist} <= $config{$slave->{configPrefix}.'followDistanceMax'}
-	 && ((AI::action ne "move" && AI::action ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'})
-	 && (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity)
-	 && ($config{$slave->{configPrefix}.'attackAuto_inLockOnly'} <= 1 || $field->baseName eq $config{'lockMap'})
-	 && (!$config{$slave->{configPrefix}.'attackAuto_notWhile_storageAuto'} || !AI::inQueue("storageAuto"))
-	 && (!$config{$slave->{configPrefix}.'attackAuto_notWhile_buyAuto'} || !AI::inQueue("buyAuto"))
-	 && (!$config{$slave->{configPrefix}.'attackAuto_notWhile_sellAuto'} || !AI::inQueue("sellAuto"))
-	) {
+	next unless ($slave->isIdle || $slave->is(qw/route/));
 
-		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
-		my $foundTankee;
-		if ($config{$slave->{configPrefix}.'tankMode'}) {
-			if ($config{$slave->{configPrefix}.'tankModeTarget'} eq $char->{name}) {
-				$foundTankee = 1;
-			} else {
-				foreach (@playersID) {
-					next if (!$_);
-					if ($config{$slave->{configPrefix}.'tankModeTarget'} eq $players{$_}{'name'}) {
-						$foundTankee = 1;
-						last;
-					}
+	next unless (
+	    AI::isIdle ||
+	    AI::is(qw(follow sitAuto attack skill_use)) ||
+		(AI::action eq "route" && AI::action(1) eq "attack") ||
+		(AI::action eq "move" && AI::action(2) eq "attack") ||
+		($config{$slave->{configPrefix}.'attackAuto_duringItemsTake'} && AI::is(qw(take items_gather items_take))) ||
+		($config{$slave->{configPrefix}.'attackAuto_duringRandomWalk'} && AI::is('route') && AI::args()->{isRandomWalk})
+	);
+	next unless (timeOut($timeout{$slave->{ai_attack_auto_timeout}}));
+	next unless ($slave->{master_dist} <= $config{$slave->{configPrefix}.'followDistanceMax'});
+	#next unless ((AI::action ne "move" && AI::action ne "route") || blockDistance($char->{pos_to}, $slave->{pos_to}) <= $config{$slave->{configPrefix}.'followDistanceMax'});
+	next unless (!$config{$slave->{configPrefix}.'attackAuto_notInTown'} || !$field->isCity);
+	next unless ($config{$slave->{configPrefix}.'attackAuto_inLockOnly'} <= 1 || $field->baseName eq $config{'lockMap'});
+	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_storageAuto'} || !AI::inQueue("storageAuto"));
+	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_buyAuto'} || !AI::inQueue("buyAuto"));
+	next unless (!$config{$slave->{configPrefix}.'attackAuto_notWhile_sellAuto'} || !AI::inQueue("sellAuto"));
+
+	# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
+	my $foundTankee;
+	if ($config{$slave->{configPrefix}.'tankMode'}) {
+		if ($config{$slave->{configPrefix}.'tankModeTarget'} eq $char->{name}) {
+			$foundTankee = 1;
+		} else {
+			foreach (@playersID) {
+				next if (!$_);
+				if ($config{$slave->{configPrefix}.'tankModeTarget'} eq $players{$_}{'name'}) {
+					$foundTankee = 1;
+					last;
 				}
 			}
 		}
+	}
 
-		my $attackTarget;
-		my $priorityAttack;
+	my $attackTarget;
+	my $priorityAttack;
 
-		if (!$config{$slave->{configPrefix}.'tankMode'} || $foundTankee) {
-			# This variable controls how far monsters must be away from portals and players.
-			my $portalDist = $config{'attackMinPortalDistance'} || 0; # Homun do not have effect on portals
-			my $playerDist = $config{'attackMinPlayerDistance'};
-			$playerDist = 1 if ($playerDist < 1);
-		
-			my $routeIndex = $slave->findAction("route");
-			my $attackOnRoute;
-			if (defined $routeIndex) {
-				$attackOnRoute = $slave->args($routeIndex)->{attackOnRoute};
-			} else {
-				$attackOnRoute = 2;
-			}
+	if (!$config{$slave->{configPrefix}.'tankMode'} || $foundTankee) {
+		# This variable controls how far monsters must be away from portals and players.
+		my $portalDist = $config{'attackMinPortalDistance'} || 0; # Homun do not have effect on portals
+		my $playerDist = $config{'attackMinPlayerDistance'};
+		$playerDist = 1 if ($playerDist < 1);
+	
+		my $routeIndex = $slave->findAction("route");
+		my $attackOnRoute;
+		if (defined $routeIndex) {
+			$attackOnRoute = $slave->args($routeIndex)->{attackOnRoute};
+		} else {
+			$attackOnRoute = 2;
+		}
 
 			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 			my @aggressives;
@@ -430,17 +433,17 @@ sub processAutoAttack {
 			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 			my $myPos = calcPosition($slave);
 
-			# List aggressive monsters
-			my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
-			@aggressives = AI::ai_slave_getAggressives($slave, 1, $party) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
+		# List aggressive monsters
+		my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
+		@aggressives = AI::ai_slave_getAggressives($slave, 1, $party) if ($config{$slave->{configPrefix}.'attackAuto'} && $attackOnRoute);
 
-			# There are two types of non-aggressive monsters. We generate two lists:
-			foreach (@monstersID) {
-				next if (!$_ || !slave_checkMonsterCleanness($slave, $_));
-				my $monster = $monsters{$_};
+		# There are two types of non-aggressive monsters. We generate two lists:
+		foreach (@monstersID) {
+			next if (!$_ || !slave_checkMonsterCleanness($slave, $_));
+			my $monster = $monsters{$_};
 
-				# Never attack monsters that we failed to get LOS with
-				next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+			# Never attack monsters that we failed to get LOS with
+			next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
 				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				my $pos = calcPosition($monster);
@@ -448,76 +451,75 @@ sub processAutoAttack {
 				
 				next if (blockDistance($master_pos, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
-				# List monsters that master and other slaves are attacking
-				if (
-					   $config{$slave->{configPrefix}.'attackAuto_party'}
-					&& $attackOnRoute
-					&& timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
-					&& (
-						   ($monster->{missedFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
-						|| ($monster->{dmgFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
-						|| ($monster->{castOnByYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
-						|| $monster->{dmgToYou}
-						|| $monster->{missedYou}
-						|| $monster->{castOnToYou}
-						|| (scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedFromPlayer}}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
-						|| (scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
-						|| (scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnByPlayer}}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
-						|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}})
-						|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}})
-						|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnToPlayer}})
-					   )
-				 ) {
-					push @partyMonsters, $_;
-					next;
-				}
-
-				### List normal, non-aggressive monsters. ###
-
-				# Ignore monsters that
-				# - Are inside others' area spells (this includes being trapped).
-				# - Are moving towards other players.
-				next if (objectInsideSpell($monster) || objectIsMovingTowardsPlayer($monster));
-
-				my $safe = 1;
-				if ($config{$slave->{configPrefix}.'attackAuto_onlyWhenSafe'}) {
-					foreach (@playersID) {
-						next if ($_ eq $slave->{ID});
-						if ($_ && !$char->{party}{users}{$_}) {
-							$safe = 0;
-							last;
-						}
-					}
-				}
-				
-				my $control = mon_control($monster->{name}, $monster->{nameID});
-				if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
-				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
-				 && $attackOnRoute >= 2 && $safe
-				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
-				 && !$monster->{dmgFromYou}
-				 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
-					push @cleanMonsters, $_;
-				}
+			# List monsters that master and other slaves are attacking
+			if (
+				   $config{$slave->{configPrefix}.'attackAuto_party'}
+				&& $attackOnRoute
+				&& timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
+				&& (
+					   ($monster->{missedFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					|| ($monster->{dmgFromYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					|| ($monster->{castOnByYou} && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					|| $monster->{dmgToYou}
+					|| $monster->{missedYou}
+					|| $monster->{castOnToYou}
+					|| (scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedFromPlayer}}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					|| (scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgFromPlayer}}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					|| (scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnByPlayer}}) && $config{$slave->{configPrefix}.'attackAuto_party'} != 2)
+					|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{missedToPlayer}})
+					|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{dmgToPlayer}})
+					|| scalar(grep { isMySlaveID($_, $slave->{ID}) } keys %{$monster->{castOnToPlayer}})
+				   )
+			 ) {
+				push @partyMonsters, $_;
+				next;
 			}
 
-			### Step 2: Pick out the "best" monster ###
+			### List normal, non-aggressive monsters. ###
 
-			# We define whether we should attack only monsters in LOS or not
-			my $checkLOS = $config{$slave->{configPrefix}.'attackCheckLOS'};
-			my $canSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
-			$attackTarget = getBestTarget(\@aggressives,   $checkLOS, $canSnipe) ||
-			                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
-			                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
+			# Ignore monsters that
+			# - Are inside others' area spells (this includes being trapped).
+			# - Are moving towards other players.
+			next if (objectInsideSpell($monster) || objectIsMovingTowardsPlayer($monster));
+
+			my $safe = 1;
+			if ($config{$slave->{configPrefix}.'attackAuto_onlyWhenSafe'}) {
+				foreach (@playersID) {
+					next if ($_ eq $slave->{ID});
+					if ($_ && !$char->{party}{users}{$_}) {
+						$safe = 0;
+						last;
+					}
+				}
+			}
+			
+			my $control = mon_control($monster->{name}, $monster->{nameID});
+			if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
+			 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
+			 && $attackOnRoute >= 2 && $safe
+			 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
+			 && !$monster->{dmgFromYou}
+			 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
+				push @cleanMonsters, $_;
+			}
 		}
 
-		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
-		if ($attackTarget) {
-			$slave->setSuspend(0);
-			$slave->attack($attackTarget, $priorityAttack);
-		} else {
-			$timeout{$slave->{ai_attack_auto_timeout}}{time} = time;
-		}
+		### Step 2: Pick out the "best" monster ###
+
+		# We define whether we should attack only monsters in LOS or not
+		my $checkLOS = $config{$slave->{configPrefix}.'attackCheckLOS'};
+		my $canSnipe = $config{$slave->{configPrefix}.'attackCanSnipe'};
+		$attackTarget = getBestTarget(\@aggressives,   $checkLOS, $canSnipe) ||
+		                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
+		                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
+	}
+
+	# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
+	if ($attackTarget) {
+		$slave->setSuspend(0);
+		$slave->attack($attackTarget, $priorityAttack);
+	} else {
+		$timeout{$slave->{ai_attack_auto_timeout}}{time} = time;
 	}
 
 	#Benchmark::end("ai_homunculus_autoAttack") if DEBUG;

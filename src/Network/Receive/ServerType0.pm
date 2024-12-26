@@ -174,7 +174,10 @@ sub new {
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'],
-		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]],
+		'0110' => ($rpackets{'0110'}{length} == 14) # or 10
+			? ['skill_use_failed', 'v V2 C2', [qw(skillID btype itemId flag cause)]]
+			: ['skill_use_failed', 'v v2 C2', [qw(skillID btype itemId flag cause)]]
+		,
 		'0111' => ['skill_add', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]],
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]],
 		'0117' => ['skill_use_location', 'v a4 v3 V', [qw(skillID sourceID lv x y tick)]],
@@ -635,6 +638,7 @@ sub new {
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
 		'0A14' => ['rodex_check_player', 'V v2', [qw(char_id class base_level)]],
+		'0A15' => ['gold_pc_cafe_point', 'C2 V2', [qw(isActive mode point playedTime)]], # 12
 		'0A18' => ['map_loaded', 'V a3 C2 v C', [qw(syncMapSync coords xSize ySize font sex)]], # 14
 		'0A1A' => ['roulette_window', 'C V C2 v V3', [qw(result serial stage price additional_item gold silver bronze)]],
 		'0A1C' => ['roulette_info', 'v V a*', [qw(len serial roulette_info)]],
