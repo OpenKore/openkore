@@ -535,6 +535,8 @@ attackSkillSlot {
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -615,6 +617,8 @@ doCommand {
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -665,6 +669,8 @@ useSelf_skill {
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -719,6 +725,8 @@ partySkill {
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -819,6 +827,8 @@ equipAuto {
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle
@@ -860,6 +870,8 @@ useSelf_item {
 	homunculus_sp
 	homunculus_dead
 	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
 	homunculus_onAction
 	homunculus_notOnAction
 	homunculus_whenIdle

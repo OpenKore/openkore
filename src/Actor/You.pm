@@ -67,6 +67,11 @@ use Utils;
 # member points to character's homunculus object.
 
 ##
+# $char->{homunculus_info}
+#
+# If the has a homunculus (including dead or vaporized) this can hold some information about it
+
+##
 # Bytes $char->{charID}
 #
 # A unique character ID for this character (not the same as the account ID, or $char->{ID}).
@@ -89,17 +94,26 @@ sub new {
 sub has_homunculus {
 	my ($self) = @_;
 
-	if ($self && $self->{homunculus} && $self->{slaves} && scalar(keys(%{$self->{slaves}})) && $self->{homunculus}{ID} && exists $self->{slaves}{$self->{homunculus}{ID}}) {
+	if ($self &&
+		exists $self->{homunculus_info} &&
+		exists $self->{homunculus}  &&
+		$self->{slaves} &&
+		scalar(keys(%{$self->{slaves}})) &&
+		$self->{homunculus}{ID} &&
+		exists $self->{slaves}{$self->{homunculus}{ID}} &&
+		(!exists $char->{homunculus_info}{dead} || ! $char->{homunculus_info}{dead}) &&
+		(!exists $char->{homunculus_info}{vaporized} || ! $char->{homunculus_info}{vaporized})
+	) {
 		return 1;
 	}
-
+	
 	return 0;
 }
 
 sub has_mercenary {
 	my ($self) = @_;
 
-	if ($self && $self->{mercenary} && $self->{slaves} && scalar(keys(%{$self->{slaves}})) && $self->{mercenary}{ID} && exists $self->{slaves}{$self->{mercenary}{ID}}) {
+	if ($self && exists $self->{mercenary} && $self->{mercenary} && $self->{slaves} && scalar(keys(%{$self->{slaves}})) && $self->{mercenary}{ID} && exists $self->{slaves}{$self->{mercenary}{ID}}) {
 		return 1;
 	}
 
