@@ -4695,6 +4695,16 @@ sub checkSelfCondition {
 		return 0 if (exists $char->{homunculus_info} && !$config{$prefix."_homunculus_resting"} && $char->{homunculus_info}{vaporized} == 1);
 	}
 
+	if ($config{$prefix."_homunculus_noinfo_dead"} =~ /\S/) {
+		return 0 if ($config{$prefix."_homunculus_noinfo_dead"} && exists $char->{homunculus_info} && exists $char->{homunculus_info}{dead} && defined $char->{homunculus_info}{dead});
+		return 0 if (!$config{$prefix."_homunculus_noinfo_dead"} && (!exists $char->{homunculus_info} || !exists $char->{homunculus_info}{dead} || !defined $char->{homunculus_info}{dead}));
+	}
+
+	if ($config{$prefix."_homunculus_noinfo_resting"} =~ /\S/) {
+		return 0 if ($config{$prefix."_homunculus_noinfo_resting"} && exists $char->{homunculus_info} && exists $char->{homunculus_info}{vaporized} && defined $char->{homunculus_info}{vaporized});
+		return 0 if (!$config{$prefix."_homunculus_noinfo_resting"} && (!exists $char->{homunculus_info} || !exists $char->{homunculus_info}{vaporized} || !defined $char->{homunculus_info}{vaporized}));
+	}
+
 	my $has_mercenary = $char->has_mercenary;
 
 	if ($config{$prefix."_mercenary"} =~ /\S/) {
