@@ -2893,7 +2893,7 @@ sub processAutoSkillUse {
 ##### PARTY-SKILL USE #####
 sub processPartySkillUse {
 	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
-		my $realMyPos = calcPosition($field, $char);
+		my $realMyPos = calcPosFromPathfinding($field, $char);
 		my %party_skill;
 		PARTYSKILL:
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
@@ -2927,7 +2927,7 @@ sub processPartySkillUse {
 				);
 				my $party_skill_dist = $config{"partySkill_$i"."_dist"} || $config{partySkillDistance} || "0..8";
 				if (defined($config{"partySkill_$i"."_dist"}) && defined($config{"partySkill_$i"."_maxDist"})) { $party_skill_dist = $config{"partySkill_$i"."_dist"} . ".." . $config{"partySkill_$i"."_maxDist"};}
-				my $realActorPos = calcPosition($field, $player);
+				my $realActorPos = calcPosFromPathfinding($field, $player);
 				my $distance = blockDistance($realMyPos, $realActorPos);
 				next unless ($party_skill{owner}{ID} eq $player->{ID} || inRange($distance, $party_skill_dist));
 				next unless (checkPlayerCondition("partySkill_$i"."_target", $ID));
@@ -3224,6 +3224,9 @@ sub processAutoAttack {
 				 && !$monster->{dmgFromYou}
 				 # TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				 && ($control->{dist} eq '' || blockDistance($monster->{pos}, calcPosition($char)) <= $control->{dist})
+				 # TODO: Sometimes we had no LOS to attack mob and dropped it, but now it is following us and attacking us
+				 # which means we now have LOS to is, it we should have a way to delete ai_attack_unfail and ai_attack_failedLOS
+				 # timeouts in these cases.
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
 				 && timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout})) {
 					my %hookArgs;
