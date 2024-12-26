@@ -11739,7 +11739,7 @@ sub skill_use_failed {
 	} elsif (exists $failtype{$args->{cause}}) {
 		$errorMessage = $failtype{$args->{cause}};
 		if ($args->{cause} == 71) {
-			$errorMessage .= " - item ".$args->{itemId};
+			$errorMessage .= T(' - item ').$args->{itemId};
 		}
 	} else {
 		$errorMessage = T('Unknown error');
