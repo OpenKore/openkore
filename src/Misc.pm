@@ -1500,9 +1500,10 @@ sub checkFollowMode {
 
 sub isMySlaveID {
 	my ($ID, $exclude) = @_;
-	return 0 unless ($char);
-	return 0 unless ($char->{slaves});
 	return 0 if (defined $exclude && $ID eq $exclude);
+	return 0 unless ($char);
+	return 1 if (exists $char->{homunculus} && exists $char->{homunculus}{ID} && $char->{homunculus}{ID} eq $ID);
+	return 0 unless ($char->{slaves});
 	return 0 unless (exists $char->{slaves}{$ID});
 	return 1;
 }
@@ -4684,16 +4685,14 @@ sub checkSelfCondition {
 		return 0 if ($char->{homunculus}->isIdle);
 	}
 
-	if ($config{$prefix."_homunculus_dead"}) {
-		return 0 if ($has_homunculus);
-		return 0 unless ($char->{homunculus});
-		return 0 unless ($char->{homunculus}{dead});
+	if ($config{$prefix."_homunculus_dead"} =~ /\S/) {
+		return 0 if (exists $char->{homunculus_info} && $config{$prefix."_homunculus_dead"} && $char->{homunculus_info}{dead} == 0);
+		return 0 if (exists $char->{homunculus_info} && !$config{$prefix."_homunculus_dead"} && $char->{homunculus_info}{dead} == 1);
 	}
 
-	if ($config{$prefix."_homunculus_resting"}) {
-		return 0 if ($has_homunculus);
-		return 0 unless ($char->{homunculus});
-		return 0 unless ($char->{homunculus}{vaporized});
+	if ($config{$prefix."_homunculus_resting"} =~ /\S/) {
+		return 0 if (exists $char->{homunculus_info} && $config{$prefix."_homunculus_resting"} && $char->{homunculus_info}{vaporized} == 0);
+		return 0 if (exists $char->{homunculus_info} && !$config{$prefix."_homunculus_resting"} && $char->{homunculus_info}{vaporized} == 1);
 	}
 
 	my $has_mercenary = $char->has_mercenary;

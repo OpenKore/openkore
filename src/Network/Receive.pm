@@ -2519,10 +2519,9 @@ sub actor_died_or_disappeared {
 		my $slave = $slavesList->getByID($ID);
 		if ($args->{type} == 1) {
 			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{actorType});
-			$slave->{state} = 0;
 			if (isMySlaveID($ID)) {
-				$slave->{dead} = 1;
 				if ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus")) {
+					$char->{homunculus_info}{dead} = 1;
 					AI::SlaveManager::removeSlave($slave) if ($char->has_homunculus);
 
 				} elsif ($slave->isa("AI::Slave::Mercenary") || $slave->isa("Actor::Slave::Mercenary")) {
@@ -2885,9 +2884,10 @@ sub reconstruct_minimap_indicator {
 # 0ba4 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.L <max sp>.L <exp>.eL <max exp>.eL <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN4)
 sub homunculus_property {
 	my ($self, $args) = @_;
-
-	my $slave = $char->{homunculus} or return;
-
+	
+	return 0 unless enforce_homun_state();
+	
+	my $slave = $char->{homunculus};
 	$slave->{name} = bytesToString($args->{name});
 
 	slave_calcproperty_handler($slave, $args);
@@ -2908,77 +2908,78 @@ sub homunculus_property {
 	}
 }
 
+sub enforce_homun_state {
+	return 0 unless ($char);
+	if (exists $char->{homunculus} && defined $char->{homunculus}) {
+		return 1;
+	} else {
+		debug "[Homunculus] Received homunculus property without the homunculus objetive existing, creating a temporary one.\n";
+		$char->{homunculus} = Actor::new('Actor::Slave::Homunculus');
+		return 1;
+	}
+}
+
 sub homunculus_state_handler {
 	my ($slave, $args) = @_;
-	# Homunculus states:
-	# 0 - alive and unnamed
+	# Homunculus states bit:
+	# 0 - alive, unnamed and not vaporized
+	# 1 - named
 	# 2 - rest
 	# 4 - dead
 
-	return unless $char->{homunculus};
-	$char->{homunculus}->clear();
-
 	if (!defined $slave->{state}) {
 		if ($args->{state} & 1) {
-			$char->{homunculus}{renameflag} = 1;
+			$char->{homunculus_info}{renameflag} = 1;
 			message T("Your Homunculus has already been renamed\n"), 'homunculus';
 		} else {
-			$char->{homunculus}{renameflag} = 0;
+			$char->{homunculus_info}{renameflag} = 0;
 			message T("Your Homunculus has not been renamed\n"), 'homunculus';
 		}
 
 		if ($args->{state} & 2) {
-			$char->{homunculus}{vaporized} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 1;
 			message T("Your Homunculus is vaporized\n"), 'homunculus';
 		} else {
-			$char->{homunculus}{vaporized} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 0;
 			message T("Your Homunculus is not vaporized\n"), 'homunculus';
 		}
 
 		if ($args->{state} & 4) {
-			$char->{homunculus}{dead} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{dead} = 0;
 			message T("Your Homunculus is not dead\n"), 'homunculus';
 		} else {
-			$char->{homunculus}{dead} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{dead} = 1;
 			message T("Your Homunculus is dead\n"), 'homunculus';
 		}
 
 	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
 		if (($args->{state} & 1) && !($slave->{state} & 1)) {
-			$char->{homunculus}{renameflag} = 1;
+			$char->{homunculus_info}{renameflag} = 1;
 			message T("Your Homunculus was renamed\n"), 'homunculus';
 		}
 
 		if (($args->{state} & 2) && !($slave->{state} & 2)) {
-			$char->{homunculus}{vaporized} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 1;
 			message T("Your Homunculus was vaporized!\n"), 'homunculus';
 		}
 
 		if (($args->{state} & 4) && !($slave->{state} & 4)) {
-			$char->{homunculus}{dead} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{dead} = 0;
 			message T("Your Homunculus was resurrected!\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 1) && ($slave->{state} & 1)) {
-			$char->{homunculus}{renameflag} = 0;
+			$char->{homunculus_info}{renameflag} = 0;
 			message T("Your Homunculus was un-renamed? lol\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 2) && ($slave->{state} & 2)) {
-			$char->{homunculus}{vaporized} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 0;
 			message T("Your Homunculus was recalled!\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 4) && ($slave->{state} & 4)) {
-			$char->{homunculus}{dead} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{dead} = 1;
 			message T("Your Homunculus died!\n"), 'homunculus';
 		}
 	}
@@ -3006,20 +3007,24 @@ sub homunculus_info {
 	my ($self, $args) = @_;
 	debug "homunculus_info type: $args->{type}\n", "homunculus";
 	if ($args->{state} == HO_PRE_INIT) {
-		my $state = $char->{homunculus}{state}
-			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
 
 		# Some servers won't send 'homunculus_property' after a teleport, so we don't delete $char->{homunculus} object
+		if ($char->{homunculus_info}{dead} == 1) {
+			debug "[Homunculus] We received a homunculus_info packet while our homunculus is dead, assume it was resurrected.\n";
+			$char->{homunculus_info}{dead} = 0;
+		}
+		
 		$char->{homunculus} = Actor::get($args->{ID}) if ($char->{homunculus}{ID} ne $args->{ID});
-
-		$char->{homunculus}{state} = $state if (defined $state);
 		$char->{homunculus}{map} = $field->baseName;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
 			if ($char->{homunculus}->isa('AI::Slave::Homunculus')) {
 				# After a teleport the homunculus object is still AI::Slave::Homunculus, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Homunculus, so we change it back
 				bless $char->{homunculus}, 'Actor::Slave::Homunculus';
 			}
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			if (!$char->has_homunculus) {
+				debug "[Homunculus] Adding homunculus to SlaveManager after homunculus_info packet.\n";
+				AI::SlaveManager::addSlave($char->{homunculus});
+			}
 			$char->{homunculus}{appear_time} = time;
 		}
 	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
@@ -11304,12 +11309,16 @@ sub resurrection {
 		}
 
 		if (isMySlaveID($targetID)) {
-			my $slave = $slavesList->getByID($targetID);
-			if (defined $slave && ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus"))) {
+			enforce_homun_state();
+			my $slave = Actor::get($targetID);
+			if ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus")) {
 				message TF("Slave Resurrected: %s\n", $slave);
-				$slave->{state} = 4;
-				$slave->{dead} = 0;
-				AI::SlaveManager::addSlave($slave) if (!$char->has_homunculus);
+				$char->{homunculus_info}{dead} = 0;
+				if (!$char->has_homunculus) {
+					debug "[Homunculus] Adding homunculus to SlaveManager after homunculus_info packet.\n";
+					bless $char->{homunculus}, 'Actor::Slave::Homunculus';
+					AI::SlaveManager::addSlave($slave);
+				}
 			}
 		}
 		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
@@ -11759,6 +11768,23 @@ sub skill_use_failed {
 	Plugins::callHook('packet_skillfail', \%hookArgs);
 
 	warning(TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill") if ($hookArgs{warn});
+	
+	# Ressurect Homunculus failed - which means we have no dead homunculus
+	if ($args->{skillID} == 247 && $args->{cause} == 0) {
+		debug "[Homunculus] Ressurect Homunculus failed - which means we have no dead homunculus.\n";
+		$char->{homunculus_info}{dead} = 0;
+	}
+	
+	# Call Homunculus failed - which means we have no vaporized homunculus
+	if ($args->{skillID} == 243) {
+		if ($args->{cause} == 0) {
+			debug "[Homunculus] Call Homunculus failed - which means we have no vaporized homunculus.\n";
+			$char->{homunculus_info}{vaporized} = 0;
+		} elsif ($args->{cause} == 71) {
+			debug "[Homunculus] Call Homunculus failed because of missing item - which means we have a vaporized homunculus.\n";
+			$char->{homunculus_info}{vaporized} = 1;
+		}
+	}
 }
 
 sub open_store_status {

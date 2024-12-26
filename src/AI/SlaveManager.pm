@@ -30,6 +30,10 @@ sub addSlave {
 		$actor->{ai_dance_attack_melee_timeout} = 'ai_homunculus_dance_attack_melee';
 		$actor->{ai_attack_waitAfterKill_timeout} = 'ai_homunculus_attack_waitAfterKill';
 		$actor->{ai_attack_failed_timeout} = 'homunculus_attack_failed';
+		if (!exists $char->{homunculus_info}) {
+			$char->{homunculus_info} = {};
+		}
+		$actor->{homunculus_info} = $char->{homunculus_info}; # A reference
 		bless $actor, 'AI::Slave::Homunculus';
 		
 	} elsif ($actor->isa("Actor::Slave::Mercenary")) {

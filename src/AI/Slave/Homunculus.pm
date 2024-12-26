@@ -15,12 +15,16 @@ sub iterate {
 	my $slave = shift;
 
 	# homunculus is in rest
-	if ($slave->{vaporized}) {
-		#message TF("Slave %s vaporized\n", $slave), 'slave';
+	if ($slave->{homunculus_info}{vaporized}) {
+		message TF("Slave %s vaporized, removing from slave manager\n", $slave), 'slave';
+		AI::SlaveManager::removeSlave($slave);
+		return;
 
 	# homunculus is dead / not present
-	} elsif ($slave->{dead}) {
-		#message TF("Slave %s dead\n", $slave), 'slave';
+	} elsif ($slave->{homunculus_info}{dead}) {
+		message TF("Slave %s dead, removing from slave manager\n", $slave), 'slave';
+		AI::SlaveManager::removeSlave($slave);
+		return;
 
 	# homunculus is alive
 	} elsif ($slave->{appear_time} && $field->baseName eq $slave->{map}) {
