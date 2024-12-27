@@ -312,7 +312,7 @@ sub find_kite_position {
 		} elsif ($noAttackMethodFallback_runFromTarget) {
 			debug TF("[runFromTarget_noAttackMethodFallback] %s kiting in advance (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		} else {
-			debug TF("[runFromTarget] (attackmaxDistance $maxDistance) %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
+			debug TF("[runFromTarget] (attackmaxDistance %s) %s kiteing from (%d %d) to (%d %d), mob at (%d %d).\n", $maxDistance, $char, $realMyPos->{x}, $realMyPos->{y}, $pos->{x}, $pos->{y}, $realMonsterPos->{x}, $realMonsterPos->{y}), 'ai_attack';
 		}
 		$args->{avoiding} = 1;
 		$char->route(
@@ -595,14 +595,14 @@ sub main {
 	}
 	
 	if ($canAttack == 0 && $youHitTarget) {
-		debug TF("[$canAttack_fail_string - $range_type_string] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+		debug TF("[%s - %s] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $range_type_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
-			debug TF("[$canAttack_fail_string] Probably extra range provided by the server due to chasing, increasing range by 1.\n"), 'ai_attack';
+			debug TF("[%s] Probably extra range provided by the server due to chasing, increasing range by 1.\n", $canAttack_fail_string), 'ai_attack';
 			$args->{temporary_extra_range} = 1;
 			$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
 			$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{attackCanSnipe}, $args->{attackMethod}{maxDistance}, $config{clientSight});
 		} else {
-			debug TF("[$canAttack_fail_string] Reason unknown, allowing once.\n"), 'ai_attack';
+			debug TF("[%s] Reason unknown, allowing once.\n", $canAttack_fail_string), 'ai_attack';
 			$hitTarget_when_not_possible = 1;
 		}
 		if (
@@ -629,11 +629,11 @@ sub main {
 		$args->{ai_attack_failed_waitForAgressive_give_up}{time} = time if !$args->{ai_attack_failed_waitForAgressive_give_up}{time};
 		if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
 			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
-			warning TF("[$canAttack_fail_string - $range_type_string] Waited too long for target to get closer, dropping target. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+			warning TF("[%s - %s] Waited too long for target to get closer, dropping target. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $range_type_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 			giveUp($args, $ID, 0);
 		} else {
 			$messageSender->sendAction($ID, ($config{'tankMode'}) ? 0 : 7) if ($config{"attackBeyondMaxDistance_sendAttackWhileWaiting"});
-			debug TF("[$canAttack_fail_string - $range_type_string - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+			debug TF("[%s - %s - Waiting] %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d.\n", $canAttack_fail_string, $range_type_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 		}
 		$found_action = 1;
 	}
