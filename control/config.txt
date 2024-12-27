@@ -404,6 +404,7 @@ mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 1
 mercenary_attackRouteMaxPathDistance 20
+mercenary_attackUseWeapon 1
 mercenary_attackNoGiveup 0
 mercenary_attackChangeTarget 1
 mercenary_attack_dance_melee 0
@@ -474,6 +475,7 @@ homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 1
 homunculus_attackRouteMaxPathDistance 20
+homunculus_attackUseWeapon 1
 homunculus_attackNoGiveup 0
 homunculus_attackChangeTarget 1
 homunculus_attack_dance_melee 0

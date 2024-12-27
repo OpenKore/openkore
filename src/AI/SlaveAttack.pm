@@ -411,9 +411,15 @@ sub main {
 	### attackSkillSlot end
 	
 	if (!$args->{attackMethod}{type}) {
-		$args->{attackMethod}{type} = "weapon";
-		$args->{attackMethod}{distance} = $config{$slave->{configPrefix}.'attackDistance'};
-		$args->{attackMethod}{maxDistance} = $config{$slave->{configPrefix}.'attackMaxDistance'};
+		if ($config{$slave->{configPrefix}.'attackUseWeapon'}) {
+			$args->{attackMethod}{type} = "weapon";
+			$args->{attackMethod}{distance} = $config{$slave->{configPrefix}.'attackDistance'};
+			$args->{attackMethod}{maxDistance} = $config{$slave->{configPrefix}.'attackMaxDistance'};
+		} else {
+			undef $args->{attackMethod}{type};
+			$args->{attackMethod}{distance} = 1;
+			$args->{attackMethod}{maxDistance} = 1;
+		}
 	}
 	
 	if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {

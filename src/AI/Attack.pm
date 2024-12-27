@@ -437,13 +437,13 @@ sub main {
 	# Determine what skill to use to attack
 	if (!$args->{attackMethod}{type}) {
 		if ($config{'attackUseWeapon'}) {
+			$args->{attackMethod}{type} = "weapon";
 			$args->{attackMethod}{distance} = $config{'attackDistance'};
 			$args->{attackMethod}{maxDistance} = $config{'attackMaxDistance'};
-			$args->{attackMethod}{type} = "weapon";
 		} else {
+			undef $args->{attackMethod}{type};
 			$args->{attackMethod}{distance} = 1;
 			$args->{attackMethod}{maxDistance} = 1;
-			undef $args->{attackMethod}{type};
 		}
 
 		$i = 0;

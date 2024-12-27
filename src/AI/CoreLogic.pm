@@ -3215,27 +3215,32 @@ sub processAutoAttack {
 				}
 
 				my $control = mon_control($monster->{name}, $monster->{nameID});
-				if (!AI::is(qw/sitAuto take items_gather items_take/)
+				next unless (!AI::is(qw/sitAuto take items_gather items_take/)
 				 && $config{'attackAuto'} >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 				 && (!$config{'attackAuto_onlyWhenSafe'} || isSafe())
 				 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && $attackOnRoute >= 2
 				 && !$monster->{dmgFromYou}
-				 # TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-				 && ($control->{dist} eq '' || blockDistance($monster->{pos}, calcPosition($char)) <= $control->{dist})
-				 # TODO: Sometimes we had no LOS to attack mob and dropped it, but now it is following us and attacking us
-				 # which means we now have LOS to is, it we should have a way to delete ai_attack_unfail and ai_attack_failedLOS
-				 # timeouts in these cases.
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
-				 && timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout})) {
-					my %hookArgs;
-					$hookArgs{monster} = $monster;
-					$hookArgs{return} = 1;
-					Plugins::callHook('checkMonsterAutoAttack', \%hookArgs);
-					next if (!$hookArgs{return});
-					push @cleanMonsters, $_;
-				}
+				);
+
+				my $myPos = calcPosition($char);
+				my $target_pos = calcPosition($monster);
+				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
+				next unless ($control->{dist} eq '' || blockDistance($target_pos, $myPos) <= $control->{dist});
+
+				# TODO: Sometimes we had no LOS to attack mob and dropped it, but now it is following us and attacking us
+				# which means we now have LOS to is, it we should have a way to delete ai_attack_unfail and ai_attack_failedLOS
+				# timeouts in these cases.
+				next unless (timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout}));
+				next unless (timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+
+				my %hookArgs;
+				$hookArgs{monster} = $monster;
+				$hookArgs{return} = 1;
+				Plugins::callHook('checkMonsterAutoAttack', \%hookArgs);
+				next if (!$hookArgs{return});
+				push @cleanMonsters, $_;
 			}
 
 			### Step 2: Pick out the "best" monster ###

@@ -426,12 +426,12 @@ sub processAutoAttack {
 			$attackOnRoute = 2;
 		}
 
-			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
-			my @aggressives;
-			my @partyMonsters;
-			my @cleanMonsters;
-			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-			my $myPos = calcPosition($slave);
+		### Step 1: Generate a list of all monsters that we are allowed to attack. ###
+		my @aggressives;
+		my @partyMonsters;
+		my @cleanMonsters;
+		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
+		my $myPos = calcPosition($slave);
 
 		# List aggressive monsters
 		my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
@@ -445,11 +445,11 @@ sub processAutoAttack {
 			# Never attack monsters that we failed to get LOS with
 			next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
-				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-				my $pos = calcPosition($monster);
-				my $master_pos = $char->position;
-				
-				next if (blockDistance($master_pos, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
+			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
+			my $target_pos = calcPosition($monster);
+			my $master_pos = $char->position;
+
+			next if (blockDistance($master_pos, $target_pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
 			# List monsters that master and other slaves are attacking
 			if (
@@ -497,9 +497,10 @@ sub processAutoAttack {
 			if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
 			 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 			 && $attackOnRoute >= 2 && $safe
-			 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
+			 && !positionNearPlayer($target_pos, $playerDist) && !positionNearPortal($target_pos, $portalDist)
 			 && !$monster->{dmgFromYou}
-			 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
+			 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
+			) {
 				push @cleanMonsters, $_;
 			}
 		}
