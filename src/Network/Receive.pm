@@ -11125,7 +11125,7 @@ sub monster_ranged_attack {
 	}
 	$char->{movetoattack_pos} = {%coords2};
 	$char->{movetoattack_time} = time;
-	warning "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move";
+	debug "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move";
 
 	Plugins::callHook('monster_ranged_attack', {ID => $ID});
 }

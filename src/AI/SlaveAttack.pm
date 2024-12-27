@@ -124,7 +124,7 @@ sub process {
 							$slave->args->{monsterLastMovePosTo}{x} = $target->{pos_to}{x};
 							$slave->args->{monsterLastMovePosTo}{y} = $target->{pos_to}{y};
 						} else {
-							warning "$slave target $target has moved since we started routing to it - Adjusting route\n", 'slave_attack';
+							debug "$slave target $target has moved since we started routing to it - Adjusting route\n", 'slave_attack';
 							$reset = 1;
 						}
 
@@ -140,7 +140,7 @@ sub process {
 							$slave->args->{masterLastMovePosTo}{x} = $char->{pos_to}{x};
 							$slave->args->{masterLastMovePosTo}{y} = $char->{pos_to}{y};
 						} else {
-							warning "$slave master $char has moved since we started routing to target $target - Adjusting route\n", 'slave_attack';
+							debug "$slave master $char has moved since we started routing to target $target - Adjusting route\n", 'slave_attack';
 							$reset = 1;
 						}
 					}
@@ -479,7 +479,7 @@ sub main {
 			debug TF("[Slave] [Out of Range - Still Approaching - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
 			return;
 		} else {
-			warning TF("[Slave] [Out of Range - Ended Approaching] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+			debug TF("[Slave] [Out of Range - Ended Approaching] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d.\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
 			$args->{sentApproach} = 0;
 		}
 	}
@@ -527,21 +527,21 @@ sub main {
 		$args->{ai_attack_failed_give_up}{time} = time if !$args->{ai_attack_failed_give_up}{time};
 		if (timeOut($args->{ai_attack_failed_give_up})) {
 			delete $args->{ai_attack_failed_give_up}{time};
-			warning T("[Slave $slave] Unable to determine a attackMethod\n"), "ai_attack";
+			warning T("[$slave] Unable to determine a attackMethod (check attackUseWeapon and Skills blocks), dropping target.\n"), "ai_attack";
 			$found_action = 1;
 			giveUp($args, $ID, 0);
 		}
 	}
 	
 	if ($canAttack == 0 && $youHitTarget) {
-		warning TF("[Slave $slave] [$canAttack_fail_string - $range_type_string] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d)\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+		debug TF("[Slave $slave] [$canAttack_fail_string - $range_type_string] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d)\n", $slave, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
 		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
-			warning TF("[$canAttack_fail_string] Probably extra range provided by the server due to chasing, increasing range by 1.\n"), 'ai_attack';
+			debug TF("[$canAttack_fail_string] Probably extra range provided by the server due to chasing, increasing range by 1.\n"), 'ai_attack';
 			$args->{temporary_extra_range} = 1;
 			$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
 			$canAttack = canAttack($field, $realMyPos, $realMonsterPos, $config{$slave->{configPrefix}."attackCanSnipe"}, $args->{attackMethod}{maxDistance}, $config{clientSight});
 		} else {
-			warning TF("[Slave $slave] [$canAttack_fail_string] Reason unknown, allowing once.\n"), 'ai_attack';
+			debug TF("[Slave $slave] [$canAttack_fail_string] Reason unknown, allowing once.\n"), 'ai_attack';
 			$hitTarget_when_not_possible = 1;
 		}
 		if (
@@ -572,7 +572,7 @@ sub main {
 			giveUp($slave, $args, $ID, 0);
 		} else {
 			$slave->sendAttack($ID) if ($config{$slave->{configPrefix}."attackBeyondMaxDistance_sendAttackWhileWaiting"});
-			warning TF("[Slave $slave] [$canAttack_fail_string - $range_type_string - Waiting] (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d.\n", $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+			debug TF("[Slave $slave] [$canAttack_fail_string - $range_type_string - Waiting] (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d.\n", $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
 		}
 		$found_action = 1;
 	}
