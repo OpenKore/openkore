@@ -2931,7 +2931,7 @@ sub processPartySkillUse {
 				my $distance = blockDistance($realMyPos, $realActorPos);
 				next unless ($party_skill{owner}{ID} eq $player->{ID} || inRange($distance, $party_skill_dist));
 				next unless (checkPlayerCondition("partySkill_$i"."_target", $ID));
-				
+
 				$party_skill{ID} = $party_skill{skillObject}->getHandle;
 				$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || $char->getSkillLevel($party_skill{skillObject});
 				$party_skill{target} = $player->{name};
@@ -2958,11 +2958,11 @@ sub processPartySkillUse {
 
 			if ($char->{party}{joined} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
 				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
-				
+
 			} elsif ($char->has_mercenary && $party_skill{targetID} eq $char->{mercenary}{ID} && $char->{mercenary}{hp} && $char->{mercenary}{hp_max}) {
 				$hp_diff = $char->{mercenary}{hp_max} - $char->{mercenary}{hp};
 				$modifier /= 2;
-				
+
 			} else {
 				if ($players{$party_skill{targetID}}) {
 					$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
