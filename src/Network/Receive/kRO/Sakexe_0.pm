@@ -180,7 +180,10 @@ sub new {
 		'010D' => ['mvp_item_trow'], # 2
 		'010E' => ['skill_update', 'v4 C', [qw(skillID lv sp range up)]], # 11 # range = skill range, up = this skill can be leveled up further
 		'010F' => ['skills_list'], # -1
-		'0110' => ['skill_use_failed', 'v V C2', [qw(skillID btype fail type)]], # 10
+		'0110' => ($rpackets{'0110'}{length} == 14) # or 10
+			? ['skill_use_failed', 'v V2 C2', [qw(skillID btype itemId flag cause)]]
+			: ['skill_use_failed', 'v v2 C2', [qw(skillID btype itemId flag cause)]]
+		,
 		'0111' => ['skill_add', 'v V v3 Z24 C', [qw(skillID target lv sp range name upgradable)]], # 39
 		'0114' => ['skill_use', 'v a4 a4 V3 v3 C', [qw(skillID sourceID targetID tick src_speed dst_speed damage level option type)]], # 31
 		'0115' => ['skill_use_position', 'v a4 a4 V3 v5 C', [qw(skillID sourceID targetID tick src_speed dst_speed x y damage level option type)]], # 35
@@ -627,6 +630,7 @@ sub new {
 		'0A10' => ['storage_items_nonstackable', 'v Z24 a*', [qw(len title itemInfo)]],
 		'0A12' => ['rodex_open_write', 'Z24 C', [qw(name result)]],   # 27
 		'0A14' => ['rodex_check_player', 'V v2', [qw(char_id class base_level)]],
+		'0A15' => ['gold_pc_cafe_point', 'C2 V2', [qw(isActive mode point playedTime)]], # 12
 		'0A18' => ['map_loaded', 'V a3 C2 v C', [qw(syncMapSync coords xSize ySize font sex)]], # 14
 		'0A1A' => ['roulette_window', 'C V C2 v V3', [qw(result serial stage price additional_item gold silver bronze)]],
 		'0A1C' => ['roulette_info', 'v V a*', [qw(len serial roulette_info)]],
@@ -747,12 +751,14 @@ sub new {
 		'0B6F' => ['character_creation_successful', 'a*', [qw(charInfo)]],
 		'0B72' => ['received_characters', 'v a*', [qw(len charInfo)]],
 		'0B73' => ['revolving_entity', 'a4 v', [qw(sourceID entity)]],
+		'0B76' => ['homunculus_property', 'Z24 C v11 V6 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp_max points_skill attack_range)]],
 		'0B77' => ['npc_store_info', 'v a*', [qw(len itemList)]],#-1
 		'0B7B' => ['guild_info', 'a4 V9 a4 Z24 Z16 V a4 Z24', [qw(ID lv conMember maxMember average exp exp_next tax tendency_left_right tendency_down_up emblemID name castles_string zeny master_char_id master)]], #118
 		'0B7C' => ['guild_expulsion_list', 'v a*', [qw(len expulsion_list)]], # -1
 		'0B7D' => ['guild_members_list', 'v a*', [qw(len member_list)]], # -1
 		'0B7E' => ['guild_member_add', 'a4 a4 v5 V4 Z24', [qw(ID charID hair_style hair_color sex jobID lv contribution online position lastLoginTime name)]], # 60 TODO
 		'0B8D' => ['repute_info', 'v C a*', [qw(len sucess reputeInfo)]], # -1
+		'0BA4' => ['homunculus_property', 'Z24 C v11 V4 V4 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp2 exp_max exp_max2 points_skill attack_range)]],
 	};
 
 	# Item RECORD Struct's

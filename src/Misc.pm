@@ -69,8 +69,7 @@ our @EXPORT = (
 	visualDump/,
 
 	# Field math
-	qw/calcRectArea
-	calcRectArea2
+	qw/calcRectArea2
 	objectInsideSpell
 	objectInsideCasting
 	objectIsMovingTowards
@@ -541,64 +540,6 @@ sub visualDump {
 ### CATEGORY: Field math
 #######################################
 #######################################
-
-##
-# calcRectArea($x, $y, $radius, $field)
-# Returns: an array with position hashes. Each has contains an x and a y key.
-#
-# Creates a rectangle with center ($x,$y) and radius $radius,
-# and returns a list of positions of the border of the rectangle.
-sub calcRectArea {
-	my ($x, $y, $radius, $field) = @_;
-	my (%topLeft, %topRight, %bottomLeft, %bottomRight);
-
-	sub capX {
-		return 0 if ($_[0] < 0);
-		return $_[1]->width - 1 if ($_[0] >= $_[1]->width);
-		return int $_[0];
-	}
-	sub capY {
-		return 0 if ($_[0] < 0);
-		return $_[1]->height - 1 if ($_[0] >= $_[1]->height);
-		return int $_[0];
-	}
-
-	# Get the avoid area as a rectangle
-	$topLeft{x} = capX($x - $radius, $field);
-	$topLeft{y} = capY($y + $radius, $field);
-	$topRight{x} = capX($x + $radius, $field);
-	$topRight{y} = capY($y + $radius, $field);
-	$bottomLeft{x} = capX($x - $radius, $field);
-	$bottomLeft{y} = capY($y - $radius, $field);
-	$bottomRight{x} = capX($x + $radius, $field);
-	$bottomRight{y} = capY($y - $radius, $field);
-
-	# Walk through the border of the rectangle
-	# Record the blocks that are walkable
-	my @walkableBlocks;
-	for (my $x = $topLeft{x}; $x <= $topRight{x}; $x++) {
-		if ($field->isWalkable($x, $topLeft{y})) {
-			push @walkableBlocks, {x => $x, y => $topLeft{y}};
-		}
-	}
-	for (my $x = $bottomLeft{x}; $x <= $bottomRight{x}; $x++) {
-		if ($field->isWalkable($x, $bottomLeft{y})) {
-			push @walkableBlocks, {x => $x, y => $bottomLeft{y}};
-		}
-	}
-	for (my $y = $bottomLeft{y} + 1; $y < $topLeft{y}; $y++) {
-		if ($field->isWalkable($topLeft{x}, $y)) {
-			push @walkableBlocks, {x => $topLeft{x}, y => $y};
-		}
-	}
-	for (my $y = $bottomRight{y} + 1; $y < $topRight{y}; $y++) {
-		if ($field->isWalkable($topRight{x}, $y)) {
-			push @walkableBlocks, {x => $topRight{x}, y => $y};
-		}
-	}
-
-	return @walkableBlocks;
-}
 
 ##
 # calcRectArea2($x, $y, $radius, $minRange)
@@ -1500,9 +1441,10 @@ sub checkFollowMode {
 
 sub isMySlaveID {
 	my ($ID, $exclude) = @_;
-	return 0 unless ($char);
-	return 0 unless ($char->{slaves});
 	return 0 if (defined $exclude && $ID eq $exclude);
+	return 0 unless ($char);
+	return 1 if (exists $char->{homunculus} && exists $char->{homunculus}{ID} && $char->{homunculus}{ID} eq $ID);
+	return 0 unless ($char->{slaves});
 	return 0 unless (exists $char->{slaves}{$ID});
 	return 1;
 }
@@ -2543,7 +2485,7 @@ sub manualMove {
 # actorType: 1 - char | 2 - slave
 # target_actor: actor to meet.
 # attackMaxDistance: attack distance based on attack method.
-# runFromTargetActive: Wheter meetingPosition was called by a runFromTarget check
+# runFromTargetActive: Wheter meetingPosition was called by a runFromTarget check, if 2 then use runFromTarget_noAttackMethodFallback values
 #
 # Returns: the position where the character should go to meet a moving monster.
 sub meetingPosition {
@@ -2576,7 +2518,11 @@ sub meetingPosition {
 		$runFromTarget_maxPathDistance = $config{runFromTarget_maxPathDistance} || 13;
 		$runFromTarget = $config{runFromTarget};
 		$runFromTarget_dist = $config{runFromTarget_dist};
-		$runFromTarget_minStep = $config{runFromTarget_minStep};
+		if ($runFromTargetActive == 2) {
+			$runFromTarget_minStep = $config{runFromTarget_noAttackMethodFallback_minStep};
+		} else {
+			$runFromTarget_minStep = $config{runFromTarget_minStep};
+		}
 		$followDistanceMax = $config{followDistanceMax};
 		$attackCanSnipe = $config{attackCanSnipe};
 		if ($config{follow}) {
@@ -2601,7 +2547,11 @@ sub meetingPosition {
 		$runFromTarget_maxPathDistance = $config{$actor->{configPrefix}.'runFromTarget_maxPathDistance'} || 20;
 		$runFromTarget = $config{$actor->{configPrefix}.'runFromTarget'};
 		$runFromTarget_dist = $config{$actor->{configPrefix}.'runFromTarget_dist'};
-		$runFromTarget_minStep = $config{$actor->{configPrefix}.'runFromTarget_minStep'};
+		if ($runFromTargetActive == 2) {
+			$runFromTarget_minStep =  $config{$actor->{configPrefix}.'runFromTarget_noAttackMethodFallback_minStep'};
+		} else {
+			$runFromTarget_minStep =  $config{$actor->{configPrefix}.'runFromTarget_minStep'};
+		}
 		$followDistanceMax = $config{$actor->{configPrefix}.'followDistanceMax'};
 		$attackCanSnipe = $config{$actor->{configPrefix}.'attackCanSnipe'};
 		$master = $char;
@@ -2640,15 +2590,12 @@ sub meetingPosition {
 	my $targetCurrentStep;
 
 	my @target_pos_to_check;
-	my $myDistToTargetPosInStep;
 
 	# Target has finished moving
 	if ($timeSinceTargetMoved >= $timeTargetFinishMove) {
 		$realTargetPos = $target->{pos_to};
-		$myDistToTargetPosInStep = blockDistance($realMyPos, $realTargetPos);
 		$target_pos_to_check[0] = {
-			targetPosInStep => $realTargetPos,
-			myDistToTargetPosInStep => $myDistToTargetPosInStep
+			targetPosInStep => $realTargetPos
 		};
 
 	# Target is currently moving
@@ -2659,10 +2606,8 @@ sub meetingPosition {
 
 		my $steps_count = 0;
 		foreach my $currentStep ($targetCurrentStep..$targetTotalSteps) {
-			$myDistToTargetPosInStep = blockDistance($realMyPos, $target_solution->[$currentStep]);
 			$target_pos_to_check[$steps_count] = {
-				targetPosInStep => $target_solution->[$currentStep],
-				myDistToTargetPosInStep => $myDistToTargetPosInStep
+				targetPosInStep => $target_solution->[$currentStep]
 			};
 		} continue {
 			$steps_count++;
@@ -2696,16 +2641,7 @@ sub meetingPosition {
 
 	my $min_destination_dist = 1;
 	if ($runFromTarget) {
-		$min_destination_dist = $runFromTarget_dist;
-		if ($runFromTargetActive) {
-			$min_destination_dist = $runFromTarget_minStep;
-		}
-	}
-
-	# we can atack from 1 range further than expected on ortogonal only cells
-	my $max_destination_dist = ($attackMaxDistance+1);
-	if ($max_destination_dist >= $config{clientSight}) {
-		$max_destination_dist = ($config{clientSight}-1)
+		$min_destination_dist = $runFromTarget_minStep;
 	}
 
 	my $max_path_dist;
@@ -2716,56 +2652,42 @@ sub meetingPosition {
 	}
 	# Add 1 here to account for pos from solution so we don't have to do it multiple times later
 	$max_path_dist += 1;
-
-	my $max_pathfinding_dist = $max_destination_dist+5;
+	
+	my %allspots;
+	my @blocks = calcRectArea2($realMyPos->{x}, $realMyPos->{y}, $max_path_dist, 0);
+	foreach my $spot (@blocks) {
+		$allspots{$spot->{x}}{$spot->{y}} = 1;
+	}
 
 	my $best_spot;
 	my $best_targetPosInStep;
 	my $best_dist_to_target;
 	my $best_time;
 
-	my %allspots;
-	foreach my $possible_target_pos (@target_pos_to_check) {
-		if ($possible_target_pos->{myDistToTargetPosInStep} >= $max_pathfinding_dist) {
-			$max_pathfinding_dist = $possible_target_pos->{myDistToTargetPosInStep} + 1;
-		}
-
-		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = getSquareEdgesFromCoord($field, $possible_target_pos->{targetPosInStep}, $max_pathfinding_dist);
-
-		foreach my $distance ($min_destination_dist..$max_destination_dist) {
-
-			my @blocks = calcRectArea($possible_target_pos->{targetPosInStep}{x}, $possible_target_pos->{targetPosInStep}{y}, $distance, $field);
-
-			SPOT: foreach my $spot (@blocks) {
-				$allspots{$spot->{x}}{$spot->{y}}{min_pathfinding_x} = $min_pathfinding_x;
-				$allspots{$spot->{x}}{$spot->{y}}{min_pathfinding_y} = $min_pathfinding_y;
-				$allspots{$spot->{x}}{$spot->{y}}{max_pathfinding_x} = $max_pathfinding_x;
-				$allspots{$spot->{x}}{$spot->{y}}{max_pathfinding_y} = $max_pathfinding_y;
-			}
-		}
-	}
-
 	foreach my $x_spot (sort keys %allspots) {
 		foreach my $y_spot (sort keys %{$allspots{$x_spot}}) {
 			my $spot;
 			$spot->{x} = $x_spot;
 			$spot->{y} = $y_spot;
-			my $spot_info = $allspots{$x_spot}{$y_spot};
 
 			next unless ($spot->{x} != $realMyPos->{x} || $spot->{y} != $realMyPos->{y});
 
 			# Is this spot acceptable?
 
-			# 1. It must be walkable
+			# 1. It must be walkable.
 			next unless ($field->isWalkable($spot->{x}, $spot->{y}));
 
+			# 2. It must not be close to a portal.
 			next if (positionNearPortal($spot, $config{'attackMinPortalDistance'}));
 
-			# 5. It must be reachable and have at max $max_path_dist of route distance to it from our current position.
 			my $time_actor_to_get_to_spot;
 
 			my $solution = get_solution($field, $realMyPos, $spot);
+			
+			# 3. It must be reachable.
 			next if (scalar @{$solution} == 0);
+			
+			# 4. It must have at max $max_path_dist of route distance to it from our current position.
 			next if (scalar @{$solution} > $max_path_dist);
 
 			$time_actor_to_get_to_spot = calcTimeFromSolution($solution, $mySpeed);
@@ -2773,18 +2695,21 @@ sub meetingPosition {
 
 			my $total_time = ($timeSinceTargetMoved+$time_actor_to_get_to_spot);
 			my $temp_targetCurrentStep = calcStepsWalkedFromTimeAndSolution($target_solution, $targetSpeed, $total_time);
+			# Position target would be at if it doesn't change route (and is not following us)
 			my $targetPosInStep = $target_solution->[$temp_targetCurrentStep];
 
+			# 5. It must not be the same position the target will be in
 			next unless ($spot->{x} != $targetPosInStep->{x} || $spot->{y} != $targetPosInStep->{y});
-
-			my $dist_to_target = blockDistance($spot, $targetPosInStep);
-
-			next unless ($dist_to_target >= $min_destination_dist || $runFromTargetActive);
-
-			# 3. It must be able to attack the target (canAttack)
+			
+			# 6. We must be able to attack the target from this spot
 			next unless (canAttack($field, $spot, $targetPosInStep, $attackCanSnipe, $attackMaxDistance, $config{clientSight}) == 1);
+			
+			# 7. It must not be too close to the target if we have runfromtarget set
+			# TODO: Maybe we should assume the target will keep following us after it reaches its destination and take that into consideration when runfromtarget is set
+			my $dist_to_target = blockDistance($spot, $targetPosInStep);
+			next unless ($dist_to_target >= $min_destination_dist);
 
-			# 2. It must be within $followDistanceMax of MasterPos, if we have a master.
+			# 8. It must be within $followDistanceMax of MasterPos, if we have a master.
 			if ($realMasterPos) {
 				my $masterPosNow;
 				if ($master_moving) {
@@ -2794,10 +2719,13 @@ sub meetingPosition {
 				} else {
 					$masterPosNow = $realMasterPos;
 				}
-				next unless (blockDistance($spot, $masterPosNow) <= $followDistanceMax);
 				next unless ($spot->{x} != $masterPosNow->{x} || $spot->{y} != $masterPosNow->{y});
+				next unless (blockDistance($spot, $masterPosNow) <= $followDistanceMax);
+				next unless (blockDistance($targetPosInStep, $masterPosNow) <= $followDistanceMax);
 			}
 
+			# 8. We must be able to get to the spot before our target
+			# TODO: Fix me. The target does not need to get to the spot, but to at least 2 cells away to be able to attack us, so take that into account
 			if ($runFromTargetActive) {
 				my $time_target_to_get_to_spot = calcTimeFromPathfinding($field, $realTargetPos, $spot, $targetSpeed);
 				if ($time_actor_to_get_to_spot > $time_target_to_get_to_spot) {
@@ -2805,6 +2733,8 @@ sub meetingPosition {
 				}
 			}
 
+			# We then choose the spot which takes the least amount of time to reach
+			# TODO: Maybe this is not the best idea when runfromtarget is set
 			if (!defined($best_time) || $time_actor_to_get_to_spot < $best_time) {
 				$best_time = $time_actor_to_get_to_spot;
 				$best_spot = $spot;
@@ -4527,16 +4457,24 @@ sub checkSelfCondition {
 		return 0 if ($char->{homunculus}->isIdle);
 	}
 
-	if ($config{$prefix."_homunculus_dead"}) {
-		return 0 if ($has_homunculus);
-		return 0 unless ($char->{homunculus});
-		return 0 unless ($char->{homunculus}{dead});
+	if ($config{$prefix."_homunculus_dead"} =~ /\S/) {
+		return 0 if (exists $char->{homunculus_info} && $config{$prefix."_homunculus_dead"} && $char->{homunculus_info}{dead} == 0);
+		return 0 if (exists $char->{homunculus_info} && !$config{$prefix."_homunculus_dead"} && $char->{homunculus_info}{dead} == 1);
 	}
 
-	if ($config{$prefix."_homunculus_resting"}) {
-		return 0 if ($has_homunculus);
-		return 0 unless ($char->{homunculus});
-		return 0 unless ($char->{homunculus}{vaporized});
+	if ($config{$prefix."_homunculus_resting"} =~ /\S/) {
+		return 0 if (exists $char->{homunculus_info} && $config{$prefix."_homunculus_resting"} && $char->{homunculus_info}{vaporized} == 0);
+		return 0 if (exists $char->{homunculus_info} && !$config{$prefix."_homunculus_resting"} && $char->{homunculus_info}{vaporized} == 1);
+	}
+
+	if ($config{$prefix."_homunculus_noinfo_dead"} =~ /\S/) {
+		return 0 if ($config{$prefix."_homunculus_noinfo_dead"} && exists $char->{homunculus_info} && exists $char->{homunculus_info}{dead} && defined $char->{homunculus_info}{dead});
+		return 0 if (!$config{$prefix."_homunculus_noinfo_dead"} && (!exists $char->{homunculus_info} || !exists $char->{homunculus_info}{dead} || !defined $char->{homunculus_info}{dead}));
+	}
+
+	if ($config{$prefix."_homunculus_noinfo_resting"} =~ /\S/) {
+		return 0 if ($config{$prefix."_homunculus_noinfo_resting"} && exists $char->{homunculus_info} && exists $char->{homunculus_info}{vaporized} && defined $char->{homunculus_info}{vaporized});
+		return 0 if (!$config{$prefix."_homunculus_noinfo_resting"} && (!exists $char->{homunculus_info} || !exists $char->{homunculus_info}{vaporized} || !defined $char->{homunculus_info}{vaporized}));
 	}
 
 	my $has_mercenary = $char->has_mercenary;
@@ -4595,14 +4533,22 @@ sub checkSelfCondition {
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill|attackComboSlot/i) {
 		my $skill = Skill->new(auto => $config{$prefix});
-		return 0 unless ($char->getSkillLevel($skill)
-						|| $config{$prefix."_equip_leftAccessory"}
-						|| $config{$prefix."_equip_rightAccessory"}
-						|| $config{$prefix."_equip_leftHand"}
-						|| $config{$prefix."_equip_rightHand"}
-						|| $config{$prefix."_equip_robe"}
-						);
-		return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
+		if ($char->checkSkillOwnership ($skill)) {
+			return 0 unless ($char->getSkillLevel($skill)
+							|| $config{$prefix."_equip_leftAccessory"}
+							|| $config{$prefix."_equip_rightAccessory"}
+							|| $config{$prefix."_equip_leftHand"}
+							|| $config{$prefix."_equip_rightHand"}
+							|| $config{$prefix."_equip_robe"}
+							);
+			return 0 unless ($char->{sp} >= $skill->getSP($config{$prefix . "_lvl"} || $char->getSkillLevel($skill)));
+			
+		} elsif ($has_homunculus && $char->{homunculus}->checkSkillOwnership($skill)) {
+			return 0 unless ($char->{homunculus}->getSkillLevel($skill));
+			
+		} elsif ($has_mercenary && $char->{mercenary}->checkSkillOwnership($skill)) {
+			return 0 unless ($char->{mercenary}->getSkillLevel($skill));
+		}
 	}
 
 	if (defined $config{$prefix . "_skill"}) {

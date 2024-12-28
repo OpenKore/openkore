@@ -2522,10 +2522,9 @@ sub actor_died_or_disappeared {
 		my $slave = $slavesList->getByID($ID);
 		if ($args->{type} == 1) {
 			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{actorType});
-			$slave->{state} = 0;
 			if (isMySlaveID($ID)) {
-				$slave->{dead} = 1;
 				if ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus")) {
+					$char->{homunculus_info}{dead} = 1;
 					AI::SlaveManager::removeSlave($slave) if ($char->has_homunculus);
 
 				} elsif ($slave->isa("AI::Slave::Mercenary") || $slave->isa("Actor::Slave::Mercenary")) {
@@ -2883,12 +2882,15 @@ sub reconstruct_minimap_indicator {
 # Sends information about owned homunculus to the client . [orn]
 # 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
 # 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
-# 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_3)
+# 0b2f <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN3) type 1
+# 0b76 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.L <max sp>.L <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN3) type 2
+# 0ba4 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.L <max sp>.L <exp>.eL <max exp>.eL <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN4)
 sub homunculus_property {
 	my ($self, $args) = @_;
-
-	my $slave = $char->{homunculus} or return;
-
+	
+	return 0 unless enforce_homun_state();
+	
+	my $slave = $char->{homunculus};
 	$slave->{name} = bytesToString($args->{name});
 
 	slave_calcproperty_handler($slave, $args);
@@ -2909,77 +2911,78 @@ sub homunculus_property {
 	}
 }
 
+sub enforce_homun_state {
+	return 0 unless ($char);
+	if (exists $char->{homunculus} && defined $char->{homunculus}) {
+		return 1;
+	} else {
+		debug "[Homunculus] Received homunculus property without the homunculus objetive existing, creating a temporary one.\n";
+		$char->{homunculus} = Actor::new('Actor::Slave::Homunculus');
+		return 1;
+	}
+}
+
 sub homunculus_state_handler {
 	my ($slave, $args) = @_;
-	# Homunculus states:
-	# 0 - alive and unnamed
+	# Homunculus states bit:
+	# 0 - alive, unnamed and not vaporized
+	# 1 - named
 	# 2 - rest
 	# 4 - dead
 
-	return unless $char->{homunculus};
-	$char->{homunculus}->clear();
-
 	if (!defined $slave->{state}) {
 		if ($args->{state} & 1) {
-			$char->{homunculus}{renameflag} = 1;
+			$char->{homunculus_info}{renameflag} = 1;
 			message T("Your Homunculus has already been renamed\n"), 'homunculus';
 		} else {
-			$char->{homunculus}{renameflag} = 0;
+			$char->{homunculus_info}{renameflag} = 0;
 			message T("Your Homunculus has not been renamed\n"), 'homunculus';
 		}
 
 		if ($args->{state} & 2) {
-			$char->{homunculus}{vaporized} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 1;
 			message T("Your Homunculus is vaporized\n"), 'homunculus';
 		} else {
-			$char->{homunculus}{vaporized} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 0;
 			message T("Your Homunculus is not vaporized\n"), 'homunculus';
 		}
 
 		if ($args->{state} & 4) {
-			$char->{homunculus}{dead} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{dead} = 0;
 			message T("Your Homunculus is not dead\n"), 'homunculus';
 		} else {
-			$char->{homunculus}{dead} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{dead} = 1;
 			message T("Your Homunculus is dead\n"), 'homunculus';
 		}
 
 	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
 		if (($args->{state} & 1) && !($slave->{state} & 1)) {
-			$char->{homunculus}{renameflag} = 1;
+			$char->{homunculus_info}{renameflag} = 1;
 			message T("Your Homunculus was renamed\n"), 'homunculus';
 		}
 
 		if (($args->{state} & 2) && !($slave->{state} & 2)) {
-			$char->{homunculus}{vaporized} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 1;
 			message T("Your Homunculus was vaporized!\n"), 'homunculus';
 		}
 
 		if (($args->{state} & 4) && !($slave->{state} & 4)) {
-			$char->{homunculus}{dead} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{dead} = 0;
 			message T("Your Homunculus was resurrected!\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 1) && ($slave->{state} & 1)) {
-			$char->{homunculus}{renameflag} = 0;
+			$char->{homunculus_info}{renameflag} = 0;
 			message T("Your Homunculus was un-renamed? lol\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 2) && ($slave->{state} & 2)) {
-			$char->{homunculus}{vaporized} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 0;
 			message T("Your Homunculus was recalled!\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 4) && ($slave->{state} & 4)) {
-			$char->{homunculus}{dead} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{dead} = 1;
 			message T("Your Homunculus died!\n"), 'homunculus';
 		}
 	}
@@ -3007,20 +3010,24 @@ sub homunculus_info {
 	my ($self, $args) = @_;
 	debug "homunculus_info type: $args->{type}\n", "homunculus";
 	if ($args->{state} == HO_PRE_INIT) {
-		my $state = $char->{homunculus}{state}
-			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
 
 		# Some servers won't send 'homunculus_property' after a teleport, so we don't delete $char->{homunculus} object
+		if ($char->{homunculus_info}{dead} == 1) {
+			debug "[Homunculus] We received a homunculus_info packet while our homunculus is dead, assume it was resurrected.\n";
+			$char->{homunculus_info}{dead} = 0;
+		}
+		
 		$char->{homunculus} = Actor::get($args->{ID}) if ($char->{homunculus}{ID} ne $args->{ID});
-
-		$char->{homunculus}{state} = $state if (defined $state);
 		$char->{homunculus}{map} = $field->baseName;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
 			if ($char->{homunculus}->isa('AI::Slave::Homunculus')) {
 				# After a teleport the homunculus object is still AI::Slave::Homunculus, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Homunculus, so we change it back
 				bless $char->{homunculus}, 'Actor::Slave::Homunculus';
 			}
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			if (!$char->has_homunculus) {
+				debug "[Homunculus] Adding homunculus to SlaveManager after homunculus_info packet.\n";
+				AI::SlaveManager::addSlave($char->{homunculus});
+			}
 			$char->{homunculus}{appear_time} = time;
 		}
 	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
@@ -4534,7 +4541,7 @@ sub sprite_change {
 	} elsif ($type == 5) {
 		message TF("%s changed Middle headgear to %s (%d)\n", $player, headgearName($value1), $value1), "parseMsg_statuslook";
 		$player->{headgear}{mid} = $value1;
-	} elsif ($args->{part} == 6) {
+	} elsif ($type == 6) {
  		message TF("%s changed Hair color to: %s (%d)\n", $player, $haircolors{$value1}, $value1), "parseMsg_statuslook";
 		$player->{hair_color} = $value1;
 	} elsif ($type == 9) {
@@ -4543,7 +4550,10 @@ sub sprite_change {
 		}
 		$player->{shoes} = $value1;
 	} elsif ($type == 12) {
- 		message TF("%s changed Robe to: SPRITE_ROBE_ID=%d\n", $player, $value1, $value1), "parseMsg_statuslook";
+ 		message TF("%s changed Robe to: SPRITE_ROBE_ID=%d\n", $player, $value1, $value1), "parseMsg_statuslook", 2;
+	} elsif ($type== 7 || $type == 13) {
+		# Type 7 looks like body palette or body color. Type 13 looks like body2
+		debug sprintf("%s changed type= %d. value1=%d, value2=%d\n", $player, $type, $value1, $value2);
 	} else {
 		error TF("%s changed unknown sprite type (%d), write about it to OpenKore developer\n", $player, $type), "parseMsg_statuslook";
 	}
@@ -9316,18 +9326,25 @@ sub skills_list {
 	# TODO: per-actor, if needed at all
 	# Skill::DynamicInfo::clear;
 	my ($ownerType, $hook, $actor) = @{{
-		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
 		'0235' => [Skill::OWNER_HOMUN, 'packet_homunSkills', $char->{homunculus}],
 		'029D' => [Skill::OWNER_MERC, 'packet_mercSkills', $char->{mercenary}],
-		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
 	}->{$args->{switch}}};
 
-	my $skillsIDref = $actor ? \@{$actor->{slave_skillsID}} : \@skillsID;
-	delete @{$char->{skills}}{@$skillsIDref};
+	my $skillsIDref;
+	if ($ownerType == Skill::OWNER_CHAR) {
+		$skillsIDref = \@skillsID;
+		delete @{$char->{skills}}{@$skillsIDref};
+	} elsif ($ownerType == Skill::OWNER_HOMUN) {
+		$skillsIDref = \@{$char->{homunculus}->{slave_skillsID}};
+		delete @{$char->{homunculus}->{skills}}{@$skillsIDref};
+	} elsif ($ownerType == Skill::OWNER_MERC) {
+		$skillsIDref = \@{$char->{mercenary}->{slave_skillsID}};
+		delete @{$char->{mercenary}->{skills}}{@$skillsIDref};
+	}
 	@$skillsIDref = ();
 
-	# TODO: $actor can be undefined here
-	undef @{$actor->{slave_skillsID}};
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $skill_info->{len}) {
 		my $skill;
 		@{$skill}{@{$skill_info->{keys}}} = unpack($skill_info->{types}, substr($msg, $i, $skill_info->{len}));
@@ -9335,7 +9352,7 @@ sub skills_list {
 		my $handle = Skill->new(idn => $skill->{ID})->getHandle;
 
 		foreach(@{$skill_info->{keys}}) {
-			$char->{skills}{$handle}{$_} = $skill->{$_};
+			$actor->{skills}{$handle}{$_} = $skill->{$_};
 		}
 
 		binAdd($skillsIDref, $handle) unless defined binFind($skillsIDref, $handle);
@@ -11108,7 +11125,7 @@ sub monster_ranged_attack {
 	}
 	$char->{movetoattack_pos} = {%coords2};
 	$char->{movetoattack_time} = time;
-	warning "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move";
+	debug "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move";
 
 	Plugins::callHook('monster_ranged_attack', {ID => $ID});
 }
@@ -11309,12 +11326,16 @@ sub resurrection {
 		}
 
 		if (isMySlaveID($targetID)) {
-			my $slave = $slavesList->getByID($targetID);
-			if (defined $slave && ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus"))) {
+			enforce_homun_state();
+			my $slave = Actor::get($targetID);
+			if ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus")) {
 				message TF("Slave Resurrected: %s\n", $slave);
-				$slave->{state} = 4;
-				$slave->{dead} = 0;
-				AI::SlaveManager::addSlave($slave) if (!$char->has_homunculus);
+				$char->{homunculus_info}{dead} = 0;
+				if (!$char->has_homunculus) {
+					debug "[Homunculus] Adding homunculus to SlaveManager after homunculus_info packet.\n";
+					bless $char->{homunculus}, 'Actor::Slave::Homunculus';
+					AI::SlaveManager::addSlave($slave);
+				}
 			}
 		}
 		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
@@ -11691,12 +11712,6 @@ sub isvr_disconnect {
 sub skill_use_failed {
 	my ($self, $args) = @_;
 
-	# skill fail/delay
-	my $skillID = $args->{skillID};
-	my $btype = $args->{btype};
-	my $fail = $args->{fail};
-	my $type = $args->{type};
-
 	my %basefailtype = (
 		0 => $msgTable[160],#"skill failed"
 		1 => $msgTable[161],#"no emotions"
@@ -11745,10 +11760,13 @@ sub skill_use_failed {
 		);
 
 	my $errorMessage;
-	if ($skillID == 1 && $type == 0 && exists $basefailtype{$btype}) {
-		$errorMessage = $basefailtype{$btype};
-	} elsif (exists $failtype{$type}) {
-		$errorMessage = $failtype{$type};
+	if ($args->{skillID} == 1 && $args->{cause} == 0 && exists $basefailtype{$args->{btype}}) {
+		$errorMessage = $basefailtype{$args->{btype}};
+	} elsif (exists $failtype{$args->{cause}}) {
+		$errorMessage = $failtype{$args->{cause}};
+		if ($args->{cause} == 71) {
+			$errorMessage .= T(' - item ').$args->{itemId};
+		}
 	} else {
 		$errorMessage = T('Unknown error');
 	}
@@ -11756,14 +11774,34 @@ sub skill_use_failed {
 	delete $char->{casting};
 
 	my %hookArgs;
-	$hookArgs{skillID} = $skillID;
-	$hookArgs{failType} = $type;
+	$hookArgs{skillID} = $args->{skillID};
+	$hookArgs{btype} = $args->{btype};
+	$hookArgs{itemId} = $args->{itemId};
+	$hookArgs{flag} = $args->{flag};
+	$hookArgs{cause} = $args->{cause};
 	$hookArgs{failMessage} = $errorMessage;
 	$hookArgs{warn} = 1;
 
 	Plugins::callHook('packet_skillfail', \%hookArgs);
 
-	warning(TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill") if ($hookArgs{warn});
+	warning(TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $args->{skillID})->getName(), $errorMessage, $args->{cause}), "skill") if ($hookArgs{warn});
+	
+	# Ressurect Homunculus failed - which means we have no dead homunculus
+	if ($args->{skillID} == 247 && $args->{cause} == 0) {
+		debug "[Homunculus] Ressurect Homunculus failed - which means we have no dead homunculus.\n";
+		$char->{homunculus_info}{dead} = 0;
+	}
+	
+	# Call Homunculus failed - which means we have no vaporized homunculus
+	if ($args->{skillID} == 243) {
+		if ($args->{cause} == 0) {
+			debug "[Homunculus] Call Homunculus failed - which means we have no vaporized homunculus.\n";
+			$char->{homunculus_info}{vaporized} = 0;
+		} elsif ($args->{cause} == 71) {
+			debug "[Homunculus] Call Homunculus failed because of missing item - which means we have a vaporized homunculus.\n";
+			$char->{homunculus_info}{vaporized} = 1;
+		}
+	}
 }
 
 sub open_store_status {
@@ -12332,6 +12370,13 @@ sub repute_info {
 
 		push @reputation_list, $repute;
 	}
+}
+
+# 0A15 - PACKET_ZC_GOLDPCCAFE_POINT
+# TODO: this package is not supported yet.
+sub gold_pc_cafe_point {
+	my ($self, $args) = @_;
+	debug TF("[gold_pc_cafe_point] isActive=%d, mode=%d, point=%d, playedTime=%d\n", $args->{isActive}, $args->{mode}, $args->{point}, $args->{playedTime});
 }
 
 1;
