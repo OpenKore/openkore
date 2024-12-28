@@ -633,6 +633,7 @@ sub processEscapeUnknownMaps {
 		if ($config{route_escape_randomWalk} && !$skip) { #randomly search for portals...
 			my ($randX, $randY);
 			my $i = 500;
+			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 			my $pos = calcPosition($char);
 			do {
 				if ((rand(2)+1)%2) {
@@ -2345,7 +2346,10 @@ sub processRandomWalk_stopDuringSlaveAttack {
 		my $slave = AI::SlaveManager::mustStopForAttack();
 		if (defined $slave) {
 			message TF("%s started attacking during randomWalk - Stoping movement for it.\n", $slave), 'slave';
+			# TODO: Since meetingposition takes into account the movement of the character
+			# we shoudl probably not stop it, just not send new move commands after the current one
 			$char->sendAttackStop;
+			# TODO: This should probably just pause route instead of dequeuing it
 			AI::dequeue() while (AI::is(qw/move route mapRoute/) && AI::args()->{isRandomWalk});
 		}
 	}
@@ -2889,7 +2893,7 @@ sub processAutoSkillUse {
 ##### PARTY-SKILL USE #####
 sub processPartySkillUse {
 	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
-		my $realMyPos = calcPosition($char);
+		my $realMyPos = calcPosFromPathfinding($field, $char);
 		my %party_skill;
 		PARTYSKILL:
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
@@ -2923,11 +2927,11 @@ sub processPartySkillUse {
 				);
 				my $party_skill_dist = $config{"partySkill_$i"."_dist"} || $config{partySkillDistance} || "0..8";
 				if (defined($config{"partySkill_$i"."_dist"}) && defined($config{"partySkill_$i"."_maxDist"})) { $party_skill_dist = $config{"partySkill_$i"."_dist"} . ".." . $config{"partySkill_$i"."_maxDist"};}
-				my $realActorPos = calcPosition($player);
+				my $realActorPos = calcPosFromPathfinding($field, $player);
 				my $distance = blockDistance($realMyPos, $realActorPos);
 				next unless ($party_skill{owner}{ID} eq $player->{ID} || inRange($distance, $party_skill_dist));
 				next unless (checkPlayerCondition("partySkill_$i"."_target", $ID));
-				
+
 				$party_skill{ID} = $party_skill{skillObject}->getHandle;
 				$party_skill{lvl} = $config{"partySkill_$i"."_lvl"} || $char->getSkillLevel($party_skill{skillObject});
 				$party_skill{target} = $player->{name};
@@ -2954,11 +2958,11 @@ sub processPartySkillUse {
 
 			if ($char->{party}{joined} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
 				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
-				
+
 			} elsif ($char->has_mercenary && $party_skill{targetID} eq $char->{mercenary}{ID} && $char->{mercenary}{hp} && $char->{mercenary}{hp_max}) {
 				$hp_diff = $char->{mercenary}{hp_max} - $char->{mercenary}{hp};
 				$modifier /= 2;
-				
+
 			} else {
 				if ($players{$party_skill{targetID}}) {
 					$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
@@ -3211,23 +3215,32 @@ sub processAutoAttack {
 				}
 
 				my $control = mon_control($monster->{name}, $monster->{nameID});
-				if (!AI::is(qw/sitAuto take items_gather items_take/)
+				next unless (!AI::is(qw/sitAuto take items_gather items_take/)
 				 && $config{'attackAuto'} >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 				 && (!$config{'attackAuto_onlyWhenSafe'} || isSafe())
 				 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && $attackOnRoute >= 2
 				 && !$monster->{dmgFromYou}
-				 && ($control->{dist} eq '' || blockDistance($monster->{pos}, calcPosition($char)) <= $control->{dist})
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})
-				 && timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout})) {
-					my %hookArgs;
-					$hookArgs{monster} = $monster;
-					$hookArgs{return} = 1;
-					Plugins::callHook('checkMonsterAutoAttack', \%hookArgs);
-					next if (!$hookArgs{return});
-					push @cleanMonsters, $_;
-				}
+				);
+
+				my $myPos = calcPosition($char);
+				my $target_pos = calcPosition($monster);
+				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
+				next unless ($control->{dist} eq '' || blockDistance($target_pos, $myPos) <= $control->{dist});
+
+				# TODO: Sometimes we had no LOS to attack mob and dropped it, but now it is following us and attacking us
+				# which means we now have LOS to is, it we should have a way to delete ai_attack_unfail and ai_attack_failedLOS
+				# timeouts in these cases.
+				next unless (timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout}));
+				next unless (timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
+
+				my %hookArgs;
+				$hookArgs{monster} = $monster;
+				$hookArgs{return} = 1;
+				Plugins::callHook('checkMonsterAutoAttack', \%hookArgs);
+				next if (!$hookArgs{return});
+				push @cleanMonsters, $_;
 			}
 
 			### Step 2: Pick out the "best" monster ###
@@ -3475,6 +3488,7 @@ sub processAutoTeleport {
 				$timeout{ai_teleport_away}{time} = time;
 				return;
 			} elsif ($teleAuto < 0 && !$char->{dead}) {
+				# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 				my $pos = calcPosition($monsters{$_});
 				my $myPos = calcPosition($char);
 				my $dist = blockDistance($pos, $myPos);

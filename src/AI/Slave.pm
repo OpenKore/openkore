@@ -239,7 +239,7 @@ sub processFollow {
 	) {
 		$slave->clear('move', 'route');
 		if (!$field->canMove($slave->{pos_to}, $char->{pos_to})) {
-			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, isFollow => 1);
+			$slave->route(undef, @{$char->{pos_to}}{qw(x y)}, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, isFollow => 1);
 			debug TF("%s follow route (distance: %d)\n", $slave, $slave->{master_dist}), 'slave';
 
 		} elsif (timeOut($slave->{move_retry}, 0.5)) {
@@ -288,7 +288,7 @@ sub processIdleWalk {
 				splice(@cells, $index, 1);
 			}
 			return unless ($walk_pos);
-			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, avoidWalls => 0, isIdleWalk => 1);
+			$slave->route(undef, @{$walk_pos}{qw(x y)}, attackOnRoute => 2, noMapRoute => 1, avoidWalls => 0, randomFactor => 0, useManhattan => 1, isIdleWalk => 1);
 			debug TF("%s IdleWalk route\n", $slave), 'slave';
 		}
 	}
@@ -426,11 +426,12 @@ sub processAutoAttack {
 			$attackOnRoute = 2;
 		}
 
-			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
-			my @aggressives;
-			my @partyMonsters;
-			my @cleanMonsters;
-			my $myPos = calcPosition($slave);
+		### Step 1: Generate a list of all monsters that we are allowed to attack. ###
+		my @aggressives;
+		my @partyMonsters;
+		my @cleanMonsters;
+		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
+		my $myPos = calcPosition($slave);
 
 		# List aggressive monsters
 		my $party = $config{$slave->{configPrefix}.'attackAuto_party'} ? 1 : 0;
@@ -444,10 +445,11 @@ sub processAutoAttack {
 			# Never attack monsters that we failed to get LOS with
 			next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 
-				my $pos = calcPosition($monster);
-				my $master_pos = $char->position;
-				
-				next if (blockDistance($master_pos, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
+			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
+			my $target_pos = calcPosition($monster);
+			my $master_pos = $char->position;
+
+			next if (blockDistance($master_pos, $target_pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
 			# List monsters that master and other slaves are attacking
 			if (
@@ -495,9 +497,10 @@ sub processAutoAttack {
 			if ($config{$slave->{configPrefix}.'attackAuto'} >= 2
 			 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
 			 && $attackOnRoute >= 2 && $safe
-			 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
+			 && !positionNearPlayer($target_pos, $playerDist) && !positionNearPortal($target_pos, $portalDist)
 			 && !$monster->{dmgFromYou}
-			 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})) {
+			 && timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout})
+			) {
 				push @cleanMonsters, $_;
 			}
 		}

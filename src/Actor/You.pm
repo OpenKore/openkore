@@ -473,4 +473,9 @@ sub sendStopSkillUse {
 	$messageSender->sendStopSkillUse($self->{last_continuous_skill_used});
 }
 
+sub sendAttack {
+	my ($self, $attackID) = @_;
+	$messageSender->sendAction($attackID, ($config{'tankMode'}) ? 0 : 7);
+}
+
 1;
