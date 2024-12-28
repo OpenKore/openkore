@@ -37,6 +37,8 @@ ai_attack 1
 ai_homunculus_attack 1
 ai_mercenary_attack 1
 
+ai_attack_after_skill 0.5
+
 ai_homunculus_dance_attack_melee 0.2
 
 ai_mercenary_dance_attack_melee 0.2

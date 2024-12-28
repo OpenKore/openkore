@@ -707,7 +707,7 @@ sub main {
 		}
 
 		# Attack with weapon logic
-		if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
+		if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack}) && timeOut($timeout{ai_attack_after_skill})) {
 			if (Actor::Item::scanConfigAndCheck("attackEquip")) {
 				#check if item needs to be equipped
 				Actor::Item::scanConfigAndEquip("attackEquip");
@@ -748,6 +748,9 @@ sub main {
 			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 			debug "[attackSkillSlot] Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
 			# TODO: We sould probably add a runFromTarget_inAdvance logic here also, we could want to kite using skills, but only instant cast ones like double strafe I believe
+
+			$timeout{ai_attack_after_skill}{time} = time;
+			delete $args->{attackMethod};
 			$found_action = 1;
 
 		# Attack with combo logic
