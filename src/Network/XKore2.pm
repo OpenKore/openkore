@@ -19,7 +19,6 @@ package Network::XKore2;
 
 use strict;
 use Globals qw(%config %rpackets $masterServer $char);
-use Utils qw(makeCoordsDir makeCoordsXY makeCoordsFromTo calcPosition);
 use Utils::Exceptions;
 use Plugins;
 use Base::Ragnarok::SessionStore;
@@ -101,21 +100,21 @@ sub sync_request_ex {
 
 sub map_loaded {
 	my (undef, $args) = @_;
-	
+
 	$args->{mangle} = 2;
 }
 
 sub map_changed {
 	my (undef, $args) = @_;
-	
+
 	$mapServerChange = Storable::dclone($args);
-	
+
 	$args->{mangle} = 2;
 }
 
 sub initialize_message_id_encryption {
 	my (undef, $args) = @_;
-	
+
 	$args->{mangle} = 2;
 }
 
@@ -123,13 +122,13 @@ sub stateChanged {
 	$accountServer->setServerType($masterServer->{serverType});
 	$charServer->setServerType($masterServer->{serverType});
 	$mapServer->setServerType($masterServer->{serverType});
-	
+
 	if ($Globals::net->getState() == Network::IN_GAME && $mapServerChange ne '') {
 		$Globals::net->clientSend($mapServer->{recvPacketParser}->reconstruct({
 			%$mapServerChange,
 			switch => 'map_change',
 		}));
-		
+
 		$mapServerChange = undef;
 	}
 }
