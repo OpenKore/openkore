@@ -2887,9 +2887,9 @@ sub reconstruct_minimap_indicator {
 # 0ba4 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.L <max sp>.L <exp>.eL <max exp>.eL <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN4)
 sub homunculus_property {
 	my ($self, $args) = @_;
-	
+
 	return 0 unless enforce_homun_state();
-	
+
 	my $slave = $char->{homunculus};
 	$slave->{name} = bytesToString($args->{name});
 
@@ -2904,10 +2904,14 @@ sub homunculus_property {
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
 	# or make function in Actor class
 	if ($config{homunculus_attackDistanceAuto} && exists $slave->{attack_range}) {
-		configModify('homunculus_attackDistance', $slave->{attack_range}, 1) if ($config{homunculus_attackDistanceAuto} > $slave->{attack_range});
-		configModify('homunculus_attackMaxDistance', $slave->{attack_range}, 1) if ($config{homunculus_attackMaxDistance} != $slave->{attack_range});
-		message TF("Autodetected attackDistance for homunculus = %s\n", $config{homunculus_attackDistanceAuto}), "success";
-		message TF("Autodetected homunculus_attackMaxDistance for homunculus = %s\n", $config{homunculus_attackMaxDistance}), "success";
+		if($config{homunculus_attackDistance} > $slave->{attack_range}) { # decrease attack range if necessary
+			configModify('homunculus_attackDistance', $slave->{attack_range}, 1);
+			message TF("Autodetected attackDistance for homunculus = %s\n", $config{homunculus_attackDistance}), "success";
+		}
+		if ($config{homunculus_attackMaxDistance} != $slave->{attack_range}) { # set max distance using information coming from the server
+			configModify('homunculus_attackMaxDistance', $slave->{attack_range}, 1);
+			message TF("Autodetected homunculus_attackMaxDistance for homunculus = %s\n", $config{homunculus_attackMaxDistance}), "success";
+		}
 	}
 }
 
@@ -3016,7 +3020,7 @@ sub homunculus_info {
 			debug "[Homunculus] We received a homunculus_info packet while our homunculus is dead, assume it was resurrected.\n";
 			$char->{homunculus_info}{dead} = 0;
 		}
-		
+
 		$char->{homunculus} = Actor::get($args->{ID}) if ($char->{homunculus}{ID} ne $args->{ID});
 		$char->{homunculus}{map} = $field->baseName;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
@@ -5477,7 +5481,7 @@ sub character_moves {
 	my $dist = blockDistance($char->{pos}, $char->{pos_to});
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
 	$char->{time_move} = time;
-	
+
 	my $speed = ($char->{walk_speed} || 0.12);
 	my $my_solution = get_solution($field, $char->{pos}, $char->{pos_to});
 	my $time = calcTimeFromSolution($my_solution, $speed);
@@ -10201,10 +10205,14 @@ sub attack_range {
 
 	$char->{attack_range} = $type;
 	if ($config{attackDistanceAuto}) {
-		configModify('attackDistance', $type, 1) if ($config{attackDistance} > $type);
-		configModify('attackMaxDistance', $type, 1) if ($config{attackMaxDistance} != $type);
-		message TF("Autodetected attackDistance = %s\n", $config{attackDistance}), "success";
-		message TF("Autodetected attackMaxDistance = %s\n", $config{attackMaxDistance}), "success";
+		if($config{attackDistance} > $type) { # decrease attack range if necessary
+			configModify('attackDistance', $type, 1);
+			message TF("Autodetected attackDistance = %s\n", $config{attackDistance}), "success";
+		}
+		if ($config{attackMaxDistance} != $type) { # set max distance using information coming from the server
+			configModify('attackMaxDistance', $type, 1) if ($config{attackMaxDistance} != $type);
+			message TF("Autodetected attackMaxDistance = %s\n", $config{attackMaxDistance}), "success";
+		}
 	}
 }
 
@@ -11088,10 +11096,14 @@ sub mercenary_init {
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
 	if ($config{mercenary_attackDistanceAuto} && exists $slave->{attack_range}) {
-		configModify('mercenary_attackDistance', $slave->{attack_range}, 1) if ($config{mercenary_attackDistance} > $slave->{attack_range});
-		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1) if ($config{mercenary_attackMaxDistance} != $slave->{attack_range});
-		message TF("Autodetected attackDistance for mercenary = %s\n", $config{mercenary_attackDistance}), "success";
-		message TF("Autodetected attackMaxDistance for mercenary = %s\n", $config{mercenary_attackMaxDistance}), "success";
+		if($config{mercenary_attackDistance} > $slave->{attack_range}) { # decrease attack range if necessary
+			configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
+			message TF("Autodetected attackDistance for mercenary = %s\n", $config{mercenary_attackDistance}), "success";
+		}
+		if ($config{mercenary_attackMaxDistance} != $slave->{attack_range}) { # set max distance using information coming from the server
+			configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
+			message TF("Autodetected mercenary_attackMaxDistance for mercenary = %s\n", $config{mercenary_attackMaxDistance}), "success";
+		}
 	}
 }
 
@@ -11785,13 +11797,13 @@ sub skill_use_failed {
 	Plugins::callHook('packet_skillfail', \%hookArgs);
 
 	warning(TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $args->{skillID})->getName(), $errorMessage, $args->{cause}), "skill") if ($hookArgs{warn});
-	
+
 	# Ressurect Homunculus failed - which means we have no dead homunculus
 	if ($args->{skillID} == 247 && $args->{cause} == 0) {
 		debug "[Homunculus] Ressurect Homunculus failed - which means we have no dead homunculus.\n";
 		$char->{homunculus_info}{dead} = 0;
 	}
-	
+
 	# Call Homunculus failed - which means we have no vaporized homunculus
 	if ($args->{skillID} == 243) {
 		if ($args->{cause} == 0) {

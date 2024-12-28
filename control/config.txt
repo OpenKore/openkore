@@ -73,7 +73,7 @@ attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
 attackAuto_considerDamagedAggressive 0
 attackDistance 1
-attackDistanceAuto 0
+attackDistanceAuto 1
 attackMaxDistance 1
 attackMaxRouteDistance 50
 attackMaxRouteTime 4
@@ -399,7 +399,7 @@ mercenary_attackAuto_duringRandomWalk 0
 mercenary_attackAuto_duringItemsTake 0
 mercenary_attackDistance 1
 mercenary_attackMaxDistance 1
-mercenary_attackDistanceAuto 0
+mercenary_attackDistanceAuto 1
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
 mercenary_attackCheckLOS 1
@@ -470,7 +470,7 @@ homunculus_attackAuto_duringRandomWalk 0
 homunculus_attackAuto_duringItemsTake 0
 homunculus_attackDistance 1
 homunculus_attackMaxDistance 1
-homunculus_attackDistanceAuto 0
+homunculus_attackDistanceAuto 1
 homunculus_attackMaxRouteTime 4
 homunculus_attackCanSnipe 0
 homunculus_attackCheckLOS 1
