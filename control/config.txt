@@ -91,9 +91,11 @@ aggressiveAntiKS 0
 
 attackUpdateMonsterPos 1
 
-attackBeyondMaxDistance_waitForAgressive 1
-attackBeyondMaxDistance_sendAttackWhileWaiting 1
-attackSendAttackWithMove 1
+# the following attack keys are meant to work only in private server (rAthena/Hercules)
+# if you enable this in a official server you character will act weird, because character can't attack beyond the range
+attackBeyondMaxDistance_waitForAgressive 0
+attackBeyondMaxDistance_sendAttackWhileWaiting 0
+attackSendAttackWithMove 0
 attackWaitApproachFinish 1
 
 autoMoveOnDeath 0

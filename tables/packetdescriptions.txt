@@ -906,7 +906,7 @@
 0368 Actor Get Info
 0369 Actor Get Info (Name)
 0436 Map Login
-0437 Character Move
+0437 Actor Action (Attack, Sit or Stand)
 0438 Skill Use
 0439 Item Use
 0443 Skill Select
