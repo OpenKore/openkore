@@ -432,14 +432,13 @@ mercenary_runFromTarget_noAttackMethodFallback 0
 mercenary_runFromTarget_noAttackMethodFallback_attackMaxDist 14
 mercenary_runFromTarget_noAttackMethodFallback_minStep 8
 
-mercenary_followDistanceMax 12
+mercenary_idleWalkType 1
 mercenary_followDistanceMin 3
+mercenary_followDistanceMax 12
 
 mercenary_moveNearWhenIdle 1
 mercenary_moveNearWhenIdle_minDistance 3
 mercenary_moveNearWhenIdle_maxDistance 8
-
-mercenary_idleWalkType 1
 
 mercenary_route_step 10
 
@@ -501,14 +500,13 @@ homunculus_runFromTarget_noAttackMethodFallback 0
 homunculus_runFromTarget_noAttackMethodFallback_attackMaxDist 14
 homunculus_runFromTarget_noAttackMethodFallback_minStep 8
 
-homunculus_followDistanceMax 12
+homunculus_idleWalkType 1
 homunculus_followDistanceMin 3
+homunculus_followDistanceMax 12
 
 homunculus_moveNearWhenIdle 1
 homunculus_moveNearWhenIdle_minDistance 3
 homunculus_moveNearWhenIdle_maxDistance 8
-
-homunculus_idleWalkType 1
 
 homunculus_route_step 10
 
