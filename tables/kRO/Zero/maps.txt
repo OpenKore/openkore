@@ -1,5 +1,80 @@
 //-- 제로
-//-- 최종갱신 오후 5:27 2018-01-26 제로
+//-- 최종갱신 오후 2:16 2019-05-27 제로
+
+//리히타르젠
+lighthalzen.rsw#기업도시 리히타르젠#
+lhz_in01.rsw#레켄베르 본사#
+lhz_in02.rsw#리히타르젠 내부#
+lhz_in03.rsw#리히타르젠 내부#
+lhz_cube.rsw#연구동 지하#
+lhz_que01.rsw#리히타르젠 내부#
+lhz_airport.rsw#리히타르젠 공항#
+airplane_01.rsw#비공정#
+lhz_dun01.rsw#생체실험 연구소 지하 1층#
+lhz_dun02.rsw#생체실험 연구소 지하 2층#
+lhz_dun03.rsw#생체실험 연구소 지하 3층#
+lhz_fild01.rsw#리히타르젠 필드#
+lhz_fild03.rsw#리히타르젠 필드#
+lhz_fild02.rsw#리히타르젠 필드(사신의 계곡)#
+
+//아인브로크, 아인베흐
+einbech.rsw#채광마을 아인베흐#
+einbroch.rsw#강철도시 아인브로크#
+ein_in01.rsw#실내#
+airplane.rsw#비공정#
+airport.rsw#아인브로크 공항#
+ein_dun01.rsw#아인베흐 광산 1층#
+ein_dun02.rsw#아인베흐 광산 2층#
+ein_dun03.rsw#아인베흐 광산 3층#
+ein_fild01.rsw#아인브로크 필드#
+//ein_fild02.rsw#아인브로크 필드#	2008년 리뉴얼
+ein_fild03.rsw#아인브로크 필드#
+ein_fild04.rsw#아인브로크 필드#
+ein_fild05.rsw#아인브로크 필드#
+ein_fild06.rsw#아인브로크 필드#
+ein_fild07.rsw#아인브로크 필드#
+ein_fild08.rsw#아인브로크 필드#
+ein_fild09.rsw#아인브로크 필드#
+//ein_fild10.rsw#아인브로크 필드#	2008년 리뉴얼
+
+// 휘겔
+hugel.rsw#전원도시 휘겔#
+hu_in01.rsw#휘겔 내부#
+que_bingo.rsw#휘겔 마을회관#
+que_hugel.rsw#오딘 신전 지하#
+p_track01.rsw#몬스터 레이스 경기장#
+p_track02.rsw#몬스터 레이스 경기장#
+odin_tem01.rsw#휘겔 오딘 신전 서쪽 지역#
+odin_tem02.rsw#휘겔 오딘 신전 남쪽 지역#
+odin_tem03.rsw#휘겔 오딘 신전 북쪽 지역#
+odin_past.rsw#고대 오딘 신전#
+hu_fild02.rsw#휘겔 필드#
+hu_fild06.rsw#휘겔 필드#
+abyss_01.rsw#휘겔 어비스 호수 지하 동굴 1층#
+abyss_02.rsw#휘겔 어비스 호수 지하 동굴 2층#
+abyss_03.rsw#휘겔 어비스 호수 지하 동굴 3층#
+abyss_04.rsw#휘겔 어비스 호수 지하 동굴 4층#
+1@odin.rsw#영광의 오딘 신전#
+
+// 왕실사냥터
+hu_fild03.rsw#사냥터#
+prt_evt_in.rsw#사냥터의 오두막#
+
+// 말랑도
+malangdo.rsw#말랑도#
+mal_in01.rsw#말랑도 내부#
+mal_in02.rsw#배 내부#
+mal_dun01.rsw#별빛 산호지대#
+// ---- 신규
+mal_dun02.rsw#깊은 산호지대#
+// -- 사용안함
+1@cash.rsw#문어 동굴#
+1@pump.rsw#배수로#
+2@pump.rsw#배수로#
+
+
+// 제로 아마쯔 모모타로
+1@momo.rsw#모모타로 체험관#
 
 // 제로 2nd memorial
 1@ant01.rsw#개미지옥#
@@ -125,8 +200,8 @@ prt_pri00.rsw#프론테라 감옥#
 //무한MD
 1@infi.rsw#무한의 공간#
 
-// 파라마켓
-paramk.rsw#파라마켓#
+// 파라마켓-> 마누스로 명칭 변경 (제로)
+paramk.rsw#공방 마누스#
 
 // ep15.2 판타스마고리카
 verus01.rsw#실험동-OPTATIO#
@@ -291,10 +366,6 @@ ma_zif08.rsw#지프니 내부#
 ma_zif09.rsw#지프니 내부#
 job_ko.rsw#숨겨진 장소#
 
-gld_dun01_2.rsw#길드 지하 던전 2층#
-gld_dun02_2.rsw#길드 지하 던전 2층#
-gld_dun03_2.rsw#길드 지하 던전 2층#
-gld_dun04_2.rsw#길드 지하 던전 2층#
 gld2_ald.rsw#심연의 회랑 : 영웅의 눈물#
 gld2_gef.rsw#심연의 회랑 : 망자의 언덕#
 gld2_pay.rsw#심연의 회랑 : 태고의 바람#
@@ -304,13 +375,7 @@ lhz_dun04.rsw#생체실험 연구소 지하 4층#
 que_lhz.rsw#생체실험 연구소 지하 4층#
 1@lhz.rsw#보르세브의 연구실#
 iz_dun05.rsw#이즈루드 해저동굴 던전 6층#
-malangdo.rsw#말랑도#
-mal_in01.rsw#말랑도 내부#
-mal_in02.rsw#배 내부#
-mal_dun01.rsw#별빛산호지대#
-1@cash.rsw#문어 동굴#
-1@pump.rsw#배수로#
-2@pump.rsw#배수로#
+
 dic_dun03.rsw#스카라바 홀#
 que_house_s.rsw#이상한 집#
 dewata.rsw#데와타#
@@ -486,21 +551,7 @@ ice_dun01.rsw#라헬 얼음 동굴 1층#
 ice_dun02.rsw#라헬 얼음 동굴 2층#
 ice_dun03.rsw#라헬 얼음 동굴 3층#
 ice_dun04.rsw#라헬 얼음 동굴 봉인의 공간#
-hugel.rsw#전원도시 휘겔#
-hu_in01.rsw#휘겔 내부#
-que_bingo.rsw#빙고 경기장#
-que_hugel.rsw#오딘 신전 지하#
-p_track01.rsw#몬스터 레이스 경기장#
-p_track02.rsw#몬스터 레이스 경기장#
-odin_tem01.rsw#휘겔 오딘 신전 서쪽 지역#
-odin_tem02.rsw#휘겔 오딘 신전 남쪽 지역#
-odin_tem03.rsw#휘겔 오딘 신전 북쪽 지역#
-hu_fild02.rsw#휘겔 필드#
-//hu_fild03.rsw#휘겔 필드#	2008년 리뉴얼
-hu_fild06.rsw#휘겔 필드#
-ein_fild01.rsw#아인브로크 필드#
-//ein_fild02.rsw#아인브로크 필드#	2008년 리뉴얼
-ein_fild05.rsw#아인브로크 필드#
+//휘겔 부분 상단으로 이동
 //yuno_fild10.rsw#유노 필드#	2008년 리뉴얼
 kh_kiehl02.rsw#키엘의 마지막 방#
 kh_kiehl01.rsw#키엘의 방#
@@ -513,9 +564,6 @@ kh_vila.rsw#킬 하이르 별장#
 auction_01.rsw#경매장#
 auction_02.rsw#경매장#
 que_job01.rsw#비밀주점#
-abyss_01.rsw#휘겔 어비스 호수 지하 동굴 1층#
-abyss_02.rsw#휘겔 어비스 호수 지하 동굴 2층#
-abyss_03.rsw#휘겔 어비스 호수 지하 동굴 3층#
 tha_t01.rsw#타나토스 타워 하층부 박물관 입구#
 tha_t02.rsw#타나토스 타워 하층부 박물관#
 tha_t03.rsw#타나토스 타워 하층부 버려진 공간#
@@ -548,36 +596,8 @@ jupe_area2.rsw#유페로스 보안 구역#
 jupe_ele.rsw#유페로스 엘리베이터#
 jupe_ele_r.rsw#유페로스 엘리베이터실#
 jupe_core.rsw#유페로스 중심부#
-lighthalzen.rsw#기업도시 리히타르젠#
-lhz_in01.rsw#레켄베르 본사#
-lhz_in02.rsw#리히타르젠 내부#
-lhz_in03.rsw#리히타르젠 내부#
-lhz_cube.rsw#큐브 룸#
-lhz_que01.rsw#리히타르젠 내부#
-lhz_airport.rsw#리히타르젠 공항#
-airplane_01.rsw#비공정#
-lhz_dun01.rsw#생체실험 연구소 지하 1층#
-lhz_dun02.rsw#생체실험 연구소 지하 2층#
-lhz_dun03.rsw#생체실험 연구소 지하 3층#
-lhz_fild01.rsw#리히타르젠 필드#
-yuno_pre.rsw#슈발츠발드 정부 청사#
-y_airport.rsw#유노 공항#
-lhz_fild03.rsw#리히타르젠 필드#
-lhz_fild02.rsw#리히타르젠 필드(사신의 계곡)#
-ein_fild04.rsw#아인브로크 필드#
-ein_fild03.rsw#아인브로크 필드#
-ein_dun02.rsw#아인베흐 광산 2층#
-ein_dun01.rsw#아인베흐 광산 1층#
-//ein_fild10.rsw#아인브로크 필드#	2008년 리뉴얼
-ein_fild09.rsw#아인브로크 필드#
-ein_fild08.rsw#아인브로크 필드#
-ein_fild07.rsw#아인브로크 필드#
-ein_fild06.rsw#아인브로크 필드#
-airplane.rsw#비공정#
-airport.rsw#아인브로크 공항#
-ein_in01.rsw#실내#
-einbech.rsw#채광마을 아인베흐#
-einbroch.rsw#강철도시 아인브로크#
+// 리히타르젠 정보 5회차 상단 이동
+// 아인브로크 정보 5회차 상단 이동
 turbo_e_16.rsw#터보트랙 경기장#
 turbo_e_8.rsw#터보트랙 경기장#
 turbo_e_4.rsw#터보트랙 경기장#
@@ -637,7 +657,7 @@ gon_test.rsw#쿤룬 격투장#
 gon_dun01.rsw#쿤룬 서왕모 신전#
 gon_dun02.rsw#쿤룬 신선의 바둑판#
 gon_dun03.rsw#쿤룬 무릉도원#
-gon_fild01.rsw#쿤룬 필드#
+gon_fild01.rsw#쿤룬 신선의 놀이터#
 gon_in.rsw#쿤룬 내부#
 gonryun.rsw#신선의 섬 쿤룬(崑崙)#
 ama_test.rsw#아마쯔 모모타로 체험소#
@@ -657,6 +677,7 @@ job_cru.rsw#크루세이더 전직 시험장#
 job_monk.rsw#성 카피톨리나 수도원#
 monk_test.rsw#성 카피톨리나 수도원#
 in_rogue.rsw#로그 길드 내부#
+mag_dun03.rsw#유노 노그로드 3층#
 mag_dun02.rsw#유노 노그로드 2층#
 mag_dun01.rsw#유노 노그로드 1층#
 yuno_fild04.rsw#엘메스 플레투#
@@ -667,37 +688,51 @@ yuno_in03.rsw#유노 내부#
 yuno_in02.rsw#세이지 케슬내부#
 yuno_in01.rsw#유노 내부#
 yuno.rsw#슈발츠발드 공화국 수도 유노#
+yuno_pre.rsw#슈발츠발드 정부 청사#
+y_airport.rsw#유노 공항#
 job_wiz.rsw#위져드 전직 시험장#
 job_prist.rsw#프리스트 전직 시험장#
 job_knt.rsw#나이트 전직 시험장#
 job_hunte.rsw#헌터 전직 시험장#
-gld_dun04.rsw#길드 지하 던전#
-gld_dun03.rsw#길드 지하 던전#
-gld_dun02.rsw#길드 지하 던전#
-gld_dun01.rsw#길드 지하 던전#
-payg_cas05.rsw#청림 호수 길드#
-payg_cas04.rsw#청림 호수 길드#
-payg_cas03.rsw#청림 호수 길드#
-payg_cas02.rsw#청림 호수 길드#
-payg_cas01.rsw#청림 호수 길드#
+
+gld_dun01.rsw#청림 호수 던전 1층#
+gld_dun02.rsw#위성도시 루이나 던전 1층#
+gld_dun03.rsw#발키리 렐름 던전 1층#
+gld_dun04.rsw#브리토리아 던전 1층#
+
 pay_gld.rsw#청림 호수#
-aldeg_cas05.rsw#루이나 길드#
-aldeg_cas04.rsw#루이나 길드#
-aldeg_cas03.rsw#루이나 길드#
-aldeg_cas02.rsw#루이나 길드#
-aldeg_cas01.rsw#루이나 길드#
+payg_cas01.rsw#명정(明亭)#
+payg_cas02.rsw#천단(天壇)#
+payg_cas03.rsw#불영(佛影)#
+payg_cas04.rsw#홍루(紅樓)#
+payg_cas05.rsw#죽림현(竹林峴)#
+
 alde_gld.rsw#알데바란 위성도시 루이나#
-gefg_cas05.rsw#브리토리아 길드#
-gefg_cas04.rsw#브리토리아 길드#
-gefg_cas03.rsw#브리토리아 길드#
-gefg_cas02.rsw#브리토리아 길드#
-gefg_cas01.rsw#브리토리아 길드#
-prtg_cas05.rsw#발키리 렐름 길드#
-prtg_cas04.rsw#발키리 렐름 길드#
-prtg_cas03.rsw#발키리 렐름 길드#
-prtg_cas02.rsw#발키리 렐름 길드#
-prtg_cas01.rsw#발키리 렐름 길드#
+aldeg_cas01.rsw#노이슈반스타인#
+aldeg_cas02.rsw#호헨슈반가우#
+aldeg_cas03.rsw#뉘렌베르크#
+aldeg_cas04.rsw#뷔르츠부르크#
+aldeg_cas05.rsw#로텐부르크#
+
+gef_fild13.rsw#브리토리아#
+gefg_cas01.rsw#레프리온#
+gefg_cas02.rsw#욜브리거#
+gefg_cas03.rsw#이스넬프#
+gefg_cas04.rsw#베르겔#
+gefg_cas05.rsw#멜세스데츠#
+
 prt_gld.rsw#발키리 렐름#
+prtg_cas01.rsw#크림힐트#
+prtg_cas02.rsw#스반힐트#
+prtg_cas03.rsw#라즈리그스#
+prtg_cas04.rsw#스쾨굴#
+prtg_cas05.rsw#괸들#
+
+gld_dun01_2.rsw#청림 호수 던전 2층#
+gld_dun02_2.rsw#위성도시 루이나 던전 2층#
+gld_dun03_2.rsw#발키리 렐름 던전 2층#
+gld_dun04_2.rsw#브리토리아 던전 2층#
+
 tur_dun01.rsw#거북이 섬#
 tur_dun02.rsw#거북이 섬 던전#
 tur_dun03.rsw#양거촌#
@@ -713,7 +748,7 @@ guild_room.rsw#길드 대항 경기장 대기실#
 quiz_00.rsw#퀴즈 경기장#
 quiz_01.rsw#퀴즈 경기장#
 //gef_fild12.rsw#코트 숲#	2008년 리뉴얼
-gef_fild13.rsw#브리토리아#
+//gef_fild13.rsw#브리토리아# (길드던전쪽에 표기로 위치변경)
 //gef_fild14.rsw#서쪽 오크 마을#	2008년 리뉴얼
 cmd_in02.rsw#코모도 내부#
 cmd_in01.rsw#코모도 내부#

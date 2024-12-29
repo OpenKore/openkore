@@ -1,0 +1,3197 @@
+achievement_tbl = {
+	[120001] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 북쪽 필드 탐험(1)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 북쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120002] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 북쪽 필드 탐험(2)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 북쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120003] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 북쪽 필드 탐험(3)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 북쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120004] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 서쪽 필드 탐험(1)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 서쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 서쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120005] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 서쪽 필드 탐험(2)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 서쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 서쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120006] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 동쪽 필드 탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 동쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 동쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120007] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 남쪽 필드 탐험(1)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 남쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120008] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 남쪽 필드 탐험(2)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 남쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120009] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 남쪽 필드 탐험(3)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 남쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120010] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 남쪽 필드 탐험(4)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "프론테라 남쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "프론테라 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120011] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 동쪽 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 동쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 동쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120012] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 동남쪽 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 동남쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 동남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120013] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 서북쪽 필드 탐험(1)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 서북쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 서북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120014] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 서북쪽 필드 탐험(2)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 서북쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 서북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120015] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 서북쪽 필드 탐험(3)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 서북쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 서북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120016] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 남쪽 필드 탐험(1)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 남쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120017] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 남쪽 필드 탐험(2)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 남쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120018] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험(1)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120019] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험(2)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120020] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험(3)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120021] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험(4)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120022] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험(5)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120023] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험(6)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120024] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘 남서쪽 필드 탐험(1)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "페이욘 남서쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "페이욘 남서쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120025] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘 남서쪽 필드 탐험(2)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "페이욘 남서쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "페이욘 남서쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120026] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘 남서쪽 필드 탐험(3)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "페이욘 남서쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "페이욘 남서쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120027] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘 남서쪽 필드 탐험(4)",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "페이욘 남서쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "페이욘 남서쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120028] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘 동쪽 필드 탐험(1)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "페이욘 동쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "페이욘 동쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120029] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘 동쪽 필드 탐험(2)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "페이욘 동쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "페이욘 동쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120030] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘 동쪽 필드 탐험(3)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "페이욘 동쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "페이욘 동쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120031] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘 동쪽 필드 탐험(4)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "페이욘 동쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "페이욘 동쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120032] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 북쪽 필드 탐험(1)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 북쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120033] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 북쪽 필드 탐험(2)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 북쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120034] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 북쪽 필드 탐험(3)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 북쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120035] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 북쪽 필드 탐험(4)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 북쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120036] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 북쪽 필드 탐험(5)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 북쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 북쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120037] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 남쪽 필드 탐험(1)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 남쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120038] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 남쪽 필드 탐험(2)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 남쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120039] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 남쪽 필드 탐험(3)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 남쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120040] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 남쪽 필드 탐험(4)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 남쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120041] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 남쪽 필드 탐험(5)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 남쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120042] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 남쪽 필드 탐험(6)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 남쪽 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120043] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "알데바란 남쪽 필드 탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "알데바란 남쪽 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "알데바란 남쪽 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120044] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "코모도 필드 탐험(1)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "코모도 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "코모도 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120045] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "코모도 필드 탐험(2)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "코모도 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "코모도 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120046] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "코모도 필드 탐험(3)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "코모도 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "코모도 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120047] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "코모도 필드 탐험(4)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "코모도 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "코모도 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120048] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "코모도 필드 탐험(5)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "코모도 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "코모도 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120049] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "코모도 필드 탐험(6)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "코모도 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "코모도 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120050] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "코모도 필드 탐험(7)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "코모도 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "코모도 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120051] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "코모도 필드 탐험(8)",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "코모도 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "코모도 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[120114] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "개미지옥 던전 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "개미지옥 던전의 보물을 발견한다" },
+		resource = { [1] = { text = "개미지옥 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[120116] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "코모도 던전 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "코모도 던전의 보물을 발견한다" },
+		resource = { [1] = { text = "코모도 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121000] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 정예 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 정예 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 정예 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121001] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘 정예 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "페이욘 정예 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "페이욘 정예 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121002] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121003] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121004] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "게펜 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "게펜 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121005] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "오크마을 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "오크마을 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "오크마을 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121006] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121007] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121008] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121009] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막 필드 탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "소그라트 사막 필드의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "소그라트 사막 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121010] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "프론테라 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "프론테라 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121011] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "프론테라 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "프론테라 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121012] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "루티에 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "루티에 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "루티에 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121013] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "움발라 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "움발라 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "움발라 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121014] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "움발라 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "움발라 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "움발라 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121015] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "움발라 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "움발라 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "움발라 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121016] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "움발라 필드 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "움발라 필드의 보물을 발견한다" },
+		resource = { [1] = { text = "움발라 필드의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121017] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "알베르타 침몰선 던전 탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "알베르타 침몰선 던전의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "알베르타 침몰선 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121018] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "오크 지하 던전 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "오크 지하 던전의 보물을 발견한다" },
+		resource = { [1] = { text = "오크 지하 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121019] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "이즈루드 해저 던전 탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV50",
+			details = "이즈루드 해저 던전의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "이즈루드 해저 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121020] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "묘르닐 폐광 던전 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "묘르닐 폐광 던전의 보물을 발견한다" },
+		resource = { [1] = { text = "묘르닐 폐광 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121021] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "피라미드 던전 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "피라미드 던전의 보물을 발견한다" },
+		resource = { [1] = { text = "피라미드 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121022] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "스핑크스 던전 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "스핑크스 던전의 보물을 발견한다" },
+		resource = { [1] = { text = "스핑크스 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121023] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "페이욘 던전 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "페이욘 던전의 보물을 발견한다" },
+		resource = { [1] = { text = "페이욘 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121024] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "지하 수로 던전 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "지하 수로 던전의 보물을 발견한다" },
+		resource = { [1] = { text = "지하 수로 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[121025] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "장난감 공장 던전 탐험",
+		content = { summary = "숨겨진 보물 발견 LV50", details = "장난감 공장 던전의 보물을 발견한다" },
+		resource = { [1] = { text = "장난감 공장 던전의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 20
+	},
+	[129001] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "프론테라의 탐험가",
+		content = { summary = "목표 필드 탐험 완료", details = "프론테라 주변 탐험 완료" },
+		resource = {
+			[1] = { text = "프론테라 북쪽 필드 탐험(1) 완료", shortcut = 120001 },
+			[2] = { text = "프론테라 북쪽 필드 탐험(2) 완료", shortcut = 120002 },
+			[3] = { text = "프론테라 북쪽 필드 탐험(3) 완료", shortcut = 120003 },
+			[4] = { text = "프론테라 서쪽 필드 탐험(1) 완료", shortcut = 120004 },
+			[5] = { text = "프론테라 서쪽 필드 탐험(2) 완료", shortcut = 120005 },
+			[6] = { text = "프론테라 동쪽 필드 탐험(1) 완료", shortcut = 120006 },
+			[7] = { text = "프론테라 남쪽 필드 탐험(1) 완료", shortcut = 120007 },
+			[8] = { text = "프론테라 남쪽 필드 탐험(2) 완료", shortcut = 120008 },
+			[9] = { text = "프론테라 남쪽 필드 탐험(3) 완료", shortcut = 120009 },
+			[10] = { text = "프론테라 남쪽 필드 탐험(4) 완료", shortcut = 120010 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129002] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "게펜의 탐험가",
+		content = { summary = "목표 필드 탐험 완료", details = "게펜 주변 탐험 완료" },
+		resource = {
+			[1] = { text = "게펜 동쪽 필드 탐험(1) 완료", shortcut = 120011 },
+			[2] = { text = "게펜 동남쪽 필드 탐험(1) 완료", shortcut = 120012 },
+			[3] = { text = "게펜 서북쪽 필드 탐험(1) 완료", shortcut = 120013 },
+			[4] = { text = "게펜 서북쪽 필드 탐험(2) 완료", shortcut = 120014 },
+			[5] = { text = "게펜 서북쪽 필드 탐험(3) 완료", shortcut = 120015 },
+			[6] = { text = "게펜 남쪽 필드 탐험(1) 완료", shortcut = 120016 },
+			[7] = { text = "게펜 남쪽 필드 탐험(2) 완료", shortcut = 120017 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129003] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "소그라트 사막의 탐험가",
+		content = { summary = "목표 필드 탐험 완료", details = "소그라트 사막 주변 탐험 완료" },
+		resource = {
+			[1] = { text = "소그라트 사막 필드 탐험(1) 완료", shortcut = 120018 },
+			[2] = { text = "소그라트 사막 필드 탐험(2) 완료", shortcut = 120019 },
+			[3] = { text = "소그라트 사막 필드 탐험(3) 완료", shortcut = 120020 },
+			[4] = { text = "소그라트 사막 필드 탐험(4) 완료", shortcut = 120021 },
+			[5] = { text = "소그라트 사막 필드 탐험(5) 완료", shortcut = 120022 },
+			[6] = { text = "소그라트 사막 필드 탐험(6) 완료", shortcut = 120023 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129004] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "페이욘의 탐험가",
+		content = { summary = "목표 필드 탐험 완료", details = "페이욘 주변 탐험 완료" },
+		resource = {
+			[1] = { text = "페이욘 남서쪽 필드 탐험(1) 완료", shortcut = 120024 },
+			[2] = { text = "페이욘 남서쪽 필드 탐험(2) 완료", shortcut = 120025 },
+			[3] = { text = "페이욘 남서쪽 필드 탐험(3) 완료", shortcut = 120026 },
+			[4] = { text = "페이욘 남서쪽 필드 탐험(4) 완료", shortcut = 120027 },
+			[5] = { text = "페이욘 동쪽 필드 탐험(1) 완료", shortcut = 120028 },
+			[6] = { text = "페이욘 동쪽 필드 탐험(2) 완료", shortcut = 120029 },
+			[7] = { text = "페이욘 동쪽 필드 탐험(3) 완료", shortcut = 120030 },
+			[8] = { text = "페이욘 동쪽 필드 탐험(4) 완료", shortcut = 120031 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129005] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 북쪽의 탐험가",
+		content = { summary = "목표 필드 탐험 완료", details = "묘르닐 북쪽 주변 탐험 완료" },
+		resource = {
+			[1] = { text = "묘르닐 북쪽 필드 탐험(1) 완료", shortcut = 120032 },
+			[2] = { text = "묘르닐 북쪽 필드 탐험(2) 완료", shortcut = 120033 },
+			[3] = { text = "묘르닐 북쪽 필드 탐험(3) 완료", shortcut = 120034 },
+			[4] = { text = "묘르닐 북쪽 필드 탐험(4) 완료", shortcut = 120035 },
+			[5] = { text = "묘르닐 북쪽 필드 탐험(5) 완료", shortcut = 120036 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129006] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "묘르닐 남쪽의 탐험가",
+		content = { summary = "목표 필드 탐험 완료", details = "묘르닐 남쪽 주변 탐험 완료" },
+		resource = {
+			[1] = { text = "묘르닐 남쪽 필드 탐험(1) 완료", shortcut = 120037 },
+			[2] = { text = "묘르닐 남쪽 필드 탐험(2) 완료", shortcut = 120038 },
+			[3] = { text = "묘르닐 남쪽 필드 탐험(3) 완료", shortcut = 120039 },
+			[4] = { text = "묘르닐 남쪽 필드 탐험(4) 완료", shortcut = 120040 },
+			[5] = { text = "묘르닐 남쪽 필드 탐험(5) 완료", shortcut = 120041 },
+			[6] = { text = "묘르닐 남쪽 필드 탐험(6) 완료", shortcut = 120042 },
+			[7] = { text = "알데바란 남쪽 필드 탐험(1) 완료", shortcut = 120043 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129007] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "코모도의 탐험가",
+		content = { summary = "목표 필드 탐험 완료", details = "코모도 주변 탐험 완료" },
+		resource = {
+			[1] = { text = "코모도 필드 탐험(1) 완료", shortcut = 120044 },
+			[2] = { text = "코모도 필드 탐험(2) 완료", shortcut = 120045 },
+			[3] = { text = "코모도 필드 탐험(3) 완료", shortcut = 120046 },
+			[4] = { text = "코모도 필드 탐험(4) 완료", shortcut = 120047 },
+			[5] = { text = "코모도 필드 탐험(5) 완료", shortcut = 120048 },
+			[6] = { text = "코모도 필드 탐험(6) 완료", shortcut = 120049 },
+			[7] = { text = "코모도 필드 탐험(7) 완료", shortcut = 120050 },
+			[8] = { text = "코모도 필드 탐험(8) 완료", shortcut = 120051 }
+		},
+		reward = { item = 644 },
+		score = 20
+	},
+	[129008] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "룬 미드가츠의 탐험가",
+		content = { summary = "목표 필드 탐험 완료", details = "룬 미드가츠 주변 탐험 완료" },
+		resource = {
+			[1] = { text = "프론테라의 탐험가", shortcut = 129001 },
+			[2] = { text = "게펜의 탐험가", shortcut = 129002 },
+			[3] = { text = "소그라트 사막의 탐험가", shortcut = 129003 },
+			[4] = { text = "페이욘의 탐험가", shortcut = 129004 },
+			[5] = { text = "묘르닐 북쪽의 탐험가", shortcut = 129005 },
+			[6] = { text = "묘르닐 남쪽의 탐험가", shortcut = 129006 },
+			[7] = { text = "코모도의 탐험가", shortcut = 129007 }
+		},
+		reward = { item = 23725 },
+		score = 50
+	},
+	[129999] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "첫 직업을 가져 봅시다.",
+		content = { summary = "노비스로 잡레벨 10을 달성했다", details = "전직을 해 봅시다." },
+		resource = { [1] = { text = "대도시의 직업 길드를 찾아가 전직 할 수 있습니다." } },
+		score = 0
+	},
+	[130001] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 0,
+		title = "초급 오크 전사",
+		content = {
+			summary = "오크 워리어와 전투",
+			details = "오크 워리어와의 전투에서 승리해 오크 전사로 인정 받자."
+		},
+		resource = { [1] = { text = "오크 워리어와 100번 싸워 이겨라", count = 100 } },
+		reward = {},
+		score = 10
+	},
+	[130002] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 0,
+		title = "중급 오크 전사",
+		content = {
+			summary = "오크 워리어와 전투",
+			details = "오크 워리어와의 전투에서 승리해 오크 전사로 인정 받자."
+		},
+		resource = { [1] = { text = "오크 워리어와 1000번 싸워 이겨라", count = 1000 } },
+		reward = {},
+		score = 30
+	},
+	[130003] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 0,
+		title = "오크 학살자",
+		content = {
+			summary = "오크 워리어와 전투",
+			details = "오크 워리어와의 전투에서 승리해 모두에게 두려움을 주는 학살자로 거듭나다."
+		},
+		resource = { [1] = { text = "오크 워리어와 10000번 싸워 이겨라", count = 10000 } },
+		reward = { title = 1035 },
+		score = 30
+	},
+	[130004] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 0,
+		title = "오크 히어로",
+		content = {
+			summary = "오크 워리어와 전투",
+			details = "오크 워리어와의 전투에서 승리해 독보적인 오크로 다시 태어나라..!"
+		},
+		resource = { [1] = { text = "오크 워리어와 30000번 싸워 이겨라", count = 30000 } },
+		reward = { item = 5375, title = 1036 },
+		score = 100
+	},
+	[200000] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "60레벨 달성!",
+		content = { summary = "Base Lv60 달성!", details = "베이스 60레벨을 달성한다." },
+		resource = { [1] = { text = "베이스 레벨 60" } },
+		reward = { title = 1000, buff = 10, item = 25461 },
+		score = 50
+	},
+	[200003] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 1,
+		minor = 0,
+		title = "잡레벨 마스터!",
+		content = { summary = "Job Lv50 달성!", details = "잡 50레벨을 달성한다." },
+		resource = { [1] = { text = "잡 레벨 50" } },
+		reward = { title = 1003, buff = 10, item = 25461 },
+		score = 30
+	},
+	[200005] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "정식모험가",
+		content = {
+			summary = "1차 직업군으로 전직한다",
+			details = "검사, 상인, 도둑, 마법사, 복사, 궁수 중 하나로 전직한다."
+		},
+		resource = { [1] = { text = "1차 직업군으로 전직" } },
+		reward = { buff = 12 },
+		score = 10
+	},
+	[200006] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "전승직업군으로 첫 발!",
+		content = {
+			summary = "전승 1차 직업군으로 전직한다",
+			details = "전승 검사, 상인, 도둑, 마법사, 복사, 궁수 중 하나로 전직한다."
+		},
+		resource = { [1] = { text = "전승 1차 직업군으로 전직" } },
+		reward = { title = 1006, buff = 12 },
+		score = 20
+	},
+	[200007] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "베테랑 모험가! (1)",
+		content = {
+			summary = "2-1차 직업군으로 전직한다",
+			details = "나이트, 블랙스미스, 어쌔신, 위저드, 프리스트, 헌터 중 하나로 전직한다."
+		},
+		resource = { [1] = { text = "2-1차 직업군으로 전직" } },
+		reward = { buff = 12 },
+		score = 25
+	},
+	[200008] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "베테랑 모험가! (2)",
+		content = {
+			summary = "2-2차 직업군으로 전직한다",
+			details = "크루세이더, 알케미스트, 로그, 세이지, 몽크, 바드, 댄서 중 하나로 전직한다."
+		},
+		resource = { [1] = { text = "2-2차 직업군으로 전직" } },
+		reward = { buff = 12 },
+		score = 25
+	},
+	[200009] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "용사 (1)",
+		content = {
+			summary = "전승 2-1차 직업군으로 전직한다",
+			details = "로드나이트, 화이트스미스, 어쌔신크로스, 하이위저드, 하이프리스트, 스나이퍼 중 하나로 전직한다."
+		},
+		resource = { [1] = { text = "전승 2-1차 직업군으로 전직" } },
+		reward = { buff = 12 },
+		score = 30
+	},
+	[200010] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "용사 (2)",
+		content = {
+			summary = "전승 2-2차 직업군으로 전직한다",
+			details = "팔라딘, 크리에이터, 스토커, 프로페서, 챔피온, 집시, 크로운 중 하나로 전직한다."
+		},
+		resource = { [1] = { text = "전승 2-2차 직업군으로 전직" } },
+		reward = { buff = 12 },
+		score = 30
+	},
+	[200017] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "곰 같은 힘이여!",
+		content = {
+			summary = "순수 STR 90 를 달성한다",
+			details = "스테이터스 STR 포인트를 순수 90 이상까지 달성한다."
+		},
+		resource = { [1] = { text = "순수 STR 90를 달성" } },
+		reward = {},
+		score = 10
+	},
+	[200018] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "넘치는 마력!",
+		content = {
+			summary = "순수 INT 90 를 달성한다",
+			details = "스테이터스 INT 포인트를 순수 90 이상까지 달성한다."
+		},
+		resource = { [1] = { text = "순수 INT 90 를 달성" } },
+		reward = {},
+		score = 10
+	},
+	[200019] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "건강한 육체에 건강한 정신!",
+		content = {
+			summary = "순수 VIT 90 를 달성한다",
+			details = "스테이터스 VIT 포인트를 순수 90 이상까지 달성한다."
+		},
+		resource = { [1] = { text = "순수 VIT 90 를 달성" } },
+		reward = {},
+		score = 10
+	},
+	[200020] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "속도광",
+		content = {
+			summary = "순수 AGI 90 를 달성한다",
+			details = "스테이터스 AGI 포인트를 순수 90 이상까지 달성한다."
+		},
+		resource = { [1] = { text = "순수 AGI 90 를 달성" } },
+		reward = {},
+		score = 10
+	},
+	[200021] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "매의 눈",
+		content = {
+			summary = "순수 DEX 90 를 달성한다",
+			details = "스테이터스 DEX 포인트를 순수 90 이상까지 달성한다."
+		},
+		resource = { [1] = { text = "순수 DEX 90 를 달성" } },
+		reward = {},
+		score = 10
+	},
+	[200022] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "럭키 맥스",
+		content = {
+			summary = "순수 LUK 90 를 달성한다",
+			details = "스테이터스 LUK 포인트를 순수 90 이상까지 달성한다."
+		},
+		resource = { [1] = { text = "순수 LUK 90 를 달성" } },
+		reward = {},
+		score = 10
+	},
+	[200029] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "애증의 화신",
+		content = {
+			summary = "노비스로 99 베이스 레벨을 달성한다",
+			details = "직업이 노비스 상태에서 베이스 레벨을 99 까지 달성한다."
+		},
+		resource = { [1] = { text = "노비스 상태에서 99 베이스 레벨을 달성" } },
+		reward = { buff = 10, item = 25461 },
+		score = 30
+	},
+	[200030] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "정말 좋아한다구요!",
+		content = {
+			summary = "1차 직업군으로 99 베이스 레벨 달성한다",
+			details = "1차 직업군으로 전직한 상태에서 캐릭터의 베이스 레벨을 99 까지 달성한다."
+		},
+		resource = { [1] = { text = "1차 직업군으로 99 베이스 레벨 달성" } },
+		reward = { buff = 10, item = 25461 },
+		score = 30
+	},
+	[200031] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "발할라에서 환생!",
+		content = {
+			summary = "전승 노비스로 전직한다",
+			details = "전승 노비스로 전직한다. 발키리와의 대화를 통해서만 가능하다."
+		},
+		resource = { [1] = { text = "전승 노비스로 전직" } },
+		reward = { buff = 12, item = 22808 },
+		score = 10
+	},
+	[200032] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "2차 직업 오오라 획득!",
+		content = {
+			summary = "2차 직업군으로 99 베이스 레벨을 달성한다.",
+			details = "2차 직업군으로 전직한 상태에서 캐릭터의 베이스 레벨을 99 까지 달성한다."
+		},
+		resource = { [1] = { text = "2차 전직 후, 99 베이스 레벨 달성" } },
+		reward = { buff = 12, item = 25461 },
+		score = 30
+	},
+	[200035] = {
+		UI_Type = 0,
+		group = "JOB_CHANGE",
+		major = 1,
+		minor = 0,
+		title = "전승 2차직업 오오라 획득!",
+		content = {
+			summary = "전승 2차직업군으로 120 베이스 레벨을 달성한다.",
+			details = "전승 2차직업군으로 전직한 상태에서 캐릭터의 베이스 레벨을 120 까지 달성한다."
+		},
+		resource = { [1] = { text = "전승 2차 전직 후, 120 베이스 레벨 달성" } },
+		reward = { buff = 10, item = 25461 },
+		score = 60
+	},
+	[230100] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "포링은 사랑입니다",
+		content = {
+			summary = "목표 과제를 모두 완료한다",
+			details = "자다가도 포링 생각에 깨어나는 당신은 진정한 포링 매니아!"
+		},
+		resource = {
+			[1] = { text = "과제 '포링 - 길들이기' 완료", shortcut = 230101 },
+			[2] = { text = "과제 '드롭프스 - 길들이기' 완료", shortcut = 230102 },
+			[3] = { text = "과제 '포포링 - 길들이기' 완료", shortcut = 230103 },
+			[4] = { text = "과제 '풋내기 포링 - 길들이기' 완료", shortcut = 230104 }
+		},
+		reward = { title = 1025, buff = 12 },
+		score = 50
+	},
+	[230110] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "곤충학자",
+		content = {
+			summary = "목표 과제를 모두 완료한다",
+			details = "자다가도 채집 생각에 깨어나는 당신은 진정한 곤충학자!"
+		},
+		resource = {
+			[1] = { text = "과제 '촌촌 - 길들이기' 완료", shortcut = 230111 },
+			[2] = { text = "과제 '스틸 촌촌 - 길들이기' 완료", shortcut = 230112 },
+			[3] = { text = "과제 '헌터 플라이 - 길들이기' 완료", shortcut = 230113 },
+			[4] = { text = "과제 '로커 - 길들이기' 완료", shortcut = 230114 },
+			[5] = { text = "과제 '스포아 - 길들이기' 완료", shortcut = 230115 },
+			[6] = { text = "과제 '포이즌 스포아 - 길들이기' 완료", shortcut = 230116 }
+		},
+		reward = { title = 1026, buff = 12 },
+		score = 50
+	},
+	[230120] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 3,
+		minor = 1,
+		title = "동물들도 우리 친구이지요",
+		content = {
+			summary = "목표 과제를 모두 완료한다",
+			details = "자다가도 동물 친구들 생각에 깨어나는 당신은 진정한 동물 애호가!"
+		},
+		resource = {
+			[1] = { text = "과제 '루나틱 - 길들이기' 완료", shortcut = 230121 },
+			[2] = { text = "과제 '픽키 - 길들이기' 완료", shortcut = 230122 },
+			[3] = { text = "과제 '세비지 베베 - 길들이기' 완료", shortcut = 230123 },
+			[4] = { text = "과제 '어린 데저트 울프 - 길들이기' 완료", shortcut = 230124 },
+			[5] = { text = "과제 '스모키 - 길들이기' 완료", shortcut = 230125 },
+			[6] = { text = "과제 '요요 - 길들이기' 완료", shortcut = 230126 },
+			[7] = { text = "과제 '페코페코 - 길들이기' 완료", shortcut = 230127 },
+			[8] = { text = "과제 '쁘띠 - 길들이기' 완료", shortcut = 230128 }
+		},
+		reward = { title = 1027, buff = 12 },
+		score = 50
+	},
+	[230101] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "포링 - 길들이기",
+		content = {
+			summary = "포링을 테이밍에 성공한다",
+			details = "포링을 펫으로 만들자. '덜익은 사과' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "포링을 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230102] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "드롭프스 - 길들이기",
+		content = {
+			summary = "드롭프스를 테이밍에 성공한다",
+			details = "드롭프스를 펫으로 만들자. '오렌지 쥬스' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "드롭프스를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230103] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "포포링 - 길들이기",
+		content = {
+			summary = "포포링을 테이밍에 성공한다",
+			details = "포포링을 펫으로 만들자. '쓰디쓴 풀' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "포포링을 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230104] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "풋내기 포링 - 길들이기",
+		content = {
+			summary = "풋내기 포링을 테이밍에 성공한다",
+			details = "풋내기 포링을 펫으로 만들자. '풋사과' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "풋내기 포링을 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230111] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "촌촌 - 길들이기",
+		content = {
+			summary = "촌촌을 테이밍에 성공한다",
+			details = "촌촌을 펫으로 만들자. '썩은 생선' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "촌촌을 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230112] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "스틸 촌촌 - 길들이기",
+		content = {
+			summary = "스틸 촌촌을 테이밍에 성공한다",
+			details = "스틸 촌촌을 펫으로 만들자. '녹슬어버린 철' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "스틸 촌촌을 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230113] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "헌터 플라이 - 길들이기",
+		content = {
+			summary = "헌터 플라이를 테이밍에 성공한다",
+			details = "헌터 플라이를 펫으로 만들자. '몬스터 쥬스' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "헌터 플라이를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230114] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "로커 - 길들이기",
+		content = {
+			summary = "로커를 테이밍에 성공한다",
+			details = "로커를 펫으로 만들자. '노래하는 꽃' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "로커를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230115] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "스포아 - 길들이기",
+		content = {
+			summary = "스포아를 테이밍에 성공한다",
+			details = "스포아를 펫으로 만들자. '아침이슬을 머금은 이끼' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "스포아를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230116] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "포이즌 스포아 - 길들이기",
+		content = {
+			summary = "포이즌 스포아를 테이밍에 성공한다",
+			details = "포이즌 스포아를 펫으로 만들자. '맹독초' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "포이즌 스포아를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230121] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "루나틱 - 길들이기",
+		content = {
+			summary = "루나틱을 테이밍에 성공한다",
+			details = "루나틱을 펫으로 만들자. '무지개 당근' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "루나틱을 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230122] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "픽키 - 길들이기",
+		content = {
+			summary = "픽키를 테이밍에 성공한다",
+			details = "픽키를 펫으로 만들자. '멋쟁이 지렁이' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "픽키를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230123] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "세비지 베베 - 길들이기",
+		content = {
+			summary = "세비지 베베을 테이밍에 성공한다",
+			details = "세비지 베베을 펫으로 만들자. '달콤한 우유' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "세비지 베베을 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230124] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "어린 데저트 울프 - 길들이기",
+		content = {
+			summary = "어린 데저트 울프를 테이밍에 성공한다",
+			details = "어린 데저트 울프를 펫으로 만들자. '말린 뼈다귀' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "어린 데저트 울프를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230125] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "스모키 - 길들이기",
+		content = {
+			summary = "스모키를 테이밍에 성공한다",
+			details = "스모키를 펫으로 만들자. '구운 고구마' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "스모키를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230126] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "요요 - 길들이기",
+		content = {
+			summary = "요요를 테이밍에 성공한다",
+			details = "요요를 펫으로 만들자. '열대의 바나나' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "요요를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230127] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "페코페코 - 길들이기",
+		content = {
+			summary = "페코페코를 테이밍에 성공한다",
+			details = "페코페코를 펫으로 만들자. '토실토실 지렁이' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "페코페코를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[230128] = {
+		UI_Type = 0,
+		group = "TAMING",
+		major = 3,
+		minor = 1,
+		title = "쁘띠 - 길들이기",
+		content = {
+			summary = "쁘띠를 테이밍에 성공한다",
+			details = "쁘띠를 펫으로 만들자. '반짝이는 돌' 아이템으로 꼬실 수 있다."
+		},
+		resource = { [1] = { text = "쁘띠를 테이밍에 성공" } },
+		reward = {},
+		score = 10
+	},
+	[220000] = {
+		UI_Type = 0,
+		group = "CHATTING",
+		major = 1,
+		minor = 2,
+		title = "커뮤니티 시작",
+		content = {
+			summary = "대화창을 생성한다",
+			details = "대화창을 생성해보자. 단축키는 ALT + C (기본) 이다."
+		},
+		resource = { [1] = { text = "대화창을 생성" } },
+		reward = {},
+		score = 10
+	},
+	[220001] = {
+		UI_Type = 0,
+		group = "CHATTING_DYING",
+		major = 1,
+		minor = 2,
+		title = "입만 동동 뜸",
+		content = {
+			summary = "죽은 상태에서 대화방을 생성한다",
+			details = "입만 살아가지곤.. 죽은 상태에서 대화창을 생성해보자. 단축키는 ALT + C (기본) 이다."
+		},
+		resource = { [1] = { text = "죽은 상태에서 대화창을 생성" } },
+		reward = {},
+		score = 10
+	},
+	[220002] = {
+		UI_Type = 0,
+		group = "CHATTING20",
+		major = 1,
+		minor = 2,
+		title = "수다 삼매경",
+		content = {
+			summary = "대화창 인원을 20명 채운다",
+			details = "모두 모여 수다를 떨어본다. 생성한 대화방에 인원을 20명 가득 채운다."
+		},
+		resource = { [1] = { text = "대화창 인원을 20명 채움" } },
+		reward = {},
+		score = 10
+	},
+	[220003] = {
+		UI_Type = 0,
+		group = "ADD_FRIEND",
+		major = 1,
+		minor = 2,
+		title = "친구야~ 친구야~",
+		content = {
+			summary = "친구를 1명 등록한다",
+			details = "모험을 함께 할 친구를 모집하자. 친구 1명을 등록한다."
+		},
+		resource = { [1] = { text = "친구를 1명 등록" } },
+		reward = {},
+		score = 10
+	},
+	[220004] = {
+		UI_Type = 0,
+		group = "ADD_FRIEND",
+		major = 1,
+		minor = 2,
+		title = "인기쟁이",
+		content = {
+			summary = "친구를 10명 등록한다",
+			details = "친구는 많을수록 좋다. 10명과 친구를 맺는다."
+		},
+		resource = { [1] = { text = "친구를 10명 등록" } },
+		reward = {},
+		score = 10
+	},
+	[220005] = {
+		UI_Type = 0,
+		group = "PARTY",
+		major = 1,
+		minor = 2,
+		title = "Let's Party~",
+		content = {
+			summary = "파티를 결성한다",
+			details = "홀로 힘겨운 모험은 그만! 파티로 함께 헤쳐 나가자."
+		},
+		resource = { [1] = { text = "파티를 결성" } },
+		reward = {},
+		score = 10
+	},
+	[220006] = {
+		UI_Type = 0,
+		group = "MARRY",
+		major = 1,
+		minor = 2,
+		title = "결혼은 하셨는지..?",
+		content = {
+			summary = "결혼에 성공한다",
+			details = "어렵고 힘든 세상, 사랑만이 서로를 지켜준다. 표식이 될 수 있는 결혼을 해보자."
+		},
+		resource = { [1] = { text = "결혼에 성공" } },
+		reward = { title = 1022 },
+		score = 20
+	},
+	[220007] = {
+		UI_Type = 0,
+		group = "BABY",
+		major = 1,
+		minor = 2,
+		title = "키워주실래요?",
+		content = {
+			summary = "부모에게 입양 된다",
+			details = "부모의 도움을 받아 험한 세상을 헤쳐 나가자."
+		},
+		resource = { [1] = { text = "부모에게 입양 됨" } },
+		reward = { title = 1032 },
+		score = 20
+	},
+	[220008] = {
+		UI_Type = 0,
+		group = "BABY",
+		major = 1,
+		minor = 2,
+		title = "부모가 된다는 것",
+		content = {
+			summary = "아이를 입양 한다",
+			details = "아이가 있어 행복하다. 입양을 통해 예쁜 가족 이야기를 만들어 보자."
+		},
+		resource = { [1] = { text = "아이를 입양 함" } },
+		reward = { title = 1033 },
+		score = 20
+	},
+	[220009] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "시장 경제 활성화 (1)",
+		content = {
+			summary = "노점을 통해 1만 제니 이상 소비한다",
+			details = "돈은 돌고 도는 법. 다른 플레이어의 노점에서 아이템을 1만 제니 만큼 구매한다. "
+		},
+		resource = { [1] = { text = "노점을 통해 1만 제니 이상 소비", count = 10000 }, count = 500000000 },
+		reward = {},
+		score = 10
+	},
+	[220010] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "시장 경제 활성화 (2)",
+		content = {
+			summary = "노점을 통해 100만 제니 이상 소비한다",
+			details = "돈은 돌고 도는 법. 다른 플레이어의 노점에서 아이템을 100만 제니 만큼 구매한다. "
+		},
+		resource = { [1] = { text = "노점을 통해 100만 제니 이상 소비", count = 1000000 }, count = 500000000 },
+		reward = {},
+		score = 15
+	},
+	[220011] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "시장 경제 활성화 (3)",
+		content = {
+			summary = "노점을 통해 500만 제니 이상 소비한다",
+			details = "돈은 돌고 도는 법. 다른 플레이어의 노점에서 아이템을 500만 제니 만큼 구매한다. "
+		},
+		resource = { [1] = { text = "노점을 통해 500만 제니 이상 소비", count = 5000000 }, count = 500000000 },
+		reward = {},
+		score = 20
+	},
+	[220012] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "시장 경제 활성화 (4)",
+		content = {
+			summary = "노점을 통해 1억 제니 이상 소비한다",
+			details = "돈은 돌고 도는 법. 다른 플레이어의 노점에서 아이템을 1억만 제니 만큼 구매한다. "
+		},
+		resource = { [1] = { text = "노점을 통해 1억 제니 이상 소비", count = 100000000 }, count = 500000000 },
+		reward = {},
+		score = 30
+	},
+	[220013] = {
+		UI_Type = 1,
+		group = "SPEND_ZENY",
+		major = 1,
+		minor = 1,
+		title = "시장 경제 활성화 (5)",
+		content = {
+			summary = "노점을 통해 5억 제니 이상 소비한다",
+			details = "돈은 돌고 도는 법. 다른 플레이어의 노점에서 아이템을 5억만 제니 만큼 구매한다. "
+		},
+		resource = { [1] = { text = "노점을 통해 5억 제니 이상 소비", count = 500000000 } },
+		reward = {},
+		score = 50
+	},
+	[220014] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "제련은 그만둘 수 없어! (1)",
+		content = {
+			summary = "무기 1레벨급을 7제련까지 성공한다",
+			details = "나의 행운은 어디까지인가? 무기 1레벨급을 7제련까지 성공한다."
+		},
+		resource = { [1] = { text = "무기 1레벨급을 7제련까지 성공" } },
+		reward = {},
+		score = 10
+	},
+	[220015] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "제련은 그만둘 수 없어! (2)",
+		content = {
+			summary = "무기 1레벨급을 12제련까지 성공한다",
+			details = "나의 행운은 어디까지인가? 무기 1레벨급을 12제련까지 성공한다."
+		},
+		resource = { [1] = { text = "무기 1레벨급을 12제련까지 성공" } },
+		reward = {},
+		score = 15
+	},
+	[220016] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "제련은 그만둘 수 없어! (3)",
+		content = {
+			summary = "무기 2레벨급을 7제련까지 성공한다",
+			details = "나의 행운은 어디까지인가? 무기 2레벨급을 7제련까지 성공한다."
+		},
+		resource = { [1] = { text = "무기 2레벨급을 7제련까지 성공" } },
+		reward = {},
+		score = 10
+	},
+	[220017] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "제련은 그만둘 수 없어! (4)",
+		content = {
+			summary = "무기 2레벨급을 12제련까지 성공한다",
+			details = "나의 행운은 어디까지인가? 무기 2레벨급을 12제련까지 성공한다."
+		},
+		resource = { [1] = { text = "무기 2레벨급을 12제련까지 성공" } },
+		reward = {},
+		score = 15
+	},
+	[220018] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "제련은 그만둘 수 없어! (5)",
+		content = {
+			summary = "무기 3레벨급을 7제련까지 성공한다",
+			details = "나의 행운은 어디까지인가? 무기 3레벨급을 7제련까지 성공한다."
+		},
+		resource = { [1] = { text = "무기 3레벨급을 7제련까지 성공" } },
+		reward = {},
+		score = 15
+	},
+	[220019] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "제련은 그만둘 수 없어! (6)",
+		content = {
+			summary = "무기 3레벨급을 12제련까지 성공한다",
+			details = "나의 행운은 어디까지인가? 무기 3레벨급을 12제련까지 성공한다."
+		},
+		resource = { [1] = { text = "무기 3레벨급을 12제련까지 성공" } },
+		reward = {},
+		score = 20
+	},
+	[220020] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "제련은 그만둘 수 없어! (7)",
+		content = {
+			summary = "무기 4레벨급을 7제련까지 성공한다",
+			details = "나의 행운은 어디까지인가? 무기 4레벨급을 7제련까지 성공한다."
+		},
+		resource = { [1] = { text = "무기 4레벨급을 7제련까지 성공" } },
+		reward = {},
+		score = 20
+	},
+	[220021] = {
+		UI_Type = 0,
+		group = "ENCHANT_SUCCESS",
+		major = 1,
+		minor = 1,
+		title = "제련은 그만둘 수 없어! (8)",
+		content = {
+			summary = "무기 4레벨급을 12제련까지 성공한다",
+			details = "나의 행운은 어디까지인가? 무기 4레벨급을 12제련까지 성공한다."
+		},
+		resource = { [1] = { text = "무기 4레벨급을 12제련까지 성공" } },
+		reward = {},
+		score = 30
+	},
+	[220022] = {
+		UI_Type = 0,
+		group = "ENCHANT_FAIL",
+		major = 1,
+		minor = 1,
+		title = "인간의 욕심은 끝이 없고..",
+		content = {
+			summary = "제련 실패를 경험한다",
+			details = "인간의 욕심은 끝이 없고 같은 실수를 반복한다. 하지만 실수속에서 교훈을 찾고 성장하기도 한다. 제련 실패를 경험해 보자."
+		},
+		resource = { [1] = { text = "제련 실패를 경험" } },
+		reward = {},
+		score = 10
+	},
+	[220023] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "심봤다! (1)",
+		content = {
+			summary = "100 제니 이상 값어치 하는 아이템 획득한다",
+			details = "나에게도 이런 행운이! NPC 에게 판매 시 값어치 100 제니 이상의 아이템을 획득한다."
+		},
+		resource = { [1] = { text = "100 제니 이상 값어치 하는 아이템 획득" } },
+		reward = {},
+		score = 10
+	},
+	[220024] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "심봤다! (2)",
+		content = {
+			summary = "1000 제니 이상 값어치 하는 아이템 획득한다",
+			details = "나에게도 이런 행운이! NPC 에게 판매 시 값어치 1000 제니 이상의 아이템을 획득한다."
+		},
+		resource = { [1] = { text = "1000 제니 이상 값어치 하는 아이템 획득" } },
+		reward = {},
+		score = 10
+	},
+	[220025] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "심봤다! (3)",
+		content = {
+			summary = "5000 제니 이상 값어치 하는 아이템 획득한다",
+			details = "나에게도 이런 행운이! NPC 에게 판매 시 값어치 5000 제니 이상의 아이템을 획득한다."
+		},
+		resource = { [1] = { text = "5000 제니 이상 값어치 하는 아이템 획득" } },
+		reward = {},
+		score = 15
+	},
+	[220026] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "심봤다! (4)",
+		content = {
+			summary = "1만 제니 이상 값어치 하는 아이템 획득한다",
+			details = "나에게도 이런 행운이! NPC 에게 판매 시 값어치 1만 제니 이상의 아이템을 획득한다."
+		},
+		resource = { [1] = { text = "1만 제니 이상 값어치 하는 아이템 획득" } },
+		reward = {},
+		score = 15
+	},
+	[220027] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "심봤다! (5)",
+		content = {
+			summary = "5만 제니 이상 값어치 하는 아이템 획득한다",
+			details = "나에게도 이런 행운이! NPC 에게 판매 시 값어치 5만 제니 이상의 아이템을 획득한다."
+		},
+		resource = { [1] = { text = "5만 제니 이상 값어치 하는 아이템 획득" } },
+		reward = {},
+		score = 20
+	},
+	[220028] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "심봤다! (6)",
+		content = {
+			summary = "10만 제니 이상 값어치 하는 아이템 획득한다",
+			details = "나에게도 이런 행운이! NPC 에게 판매 시 값어치 10만 제니 이상의 아이템을 획득한다."
+		},
+		resource = { [1] = { text = "10만 제니 이상 값어치 하는 아이템 획득" } },
+		reward = {},
+		score = 20
+	},
+	[220029] = {
+		UI_Type = 0,
+		group = "GET_ITEM",
+		major = 1,
+		minor = 1,
+		title = "심봤다! (7)",
+		content = {
+			summary = "15만 제니 이상 값어치 하는 아이템 획득한다",
+			details = "나에게도 이런 행운이! NPC 에게 판매 시 값어치 15만 제니 이상의 아이템을 획득한다."
+		},
+		resource = { [1] = { text = "15만 제니 이상 값어치 하는 아이템 획득" } },
+		reward = {},
+		score = 30
+	},
+	[220030] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "부자왕 (1)",
+		content = {
+			summary = "소지금 1만 제니 이상 보유한다",
+			details = "돈이 전부는 아니지만 없어서도 안된다. 소지금 1만 제니를 모아본다."
+		},
+		resource = { [1] = { text = "1만 제니 이상 보유" } },
+		reward = {},
+		score = 10
+	},
+	[220031] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "부자왕 (2)",
+		content = {
+			summary = "소지금 10만 제니 이상 보유한다",
+			details = "돈이 전부는 아니지만 없어서도 안된다. 소지금 10만 제니를 모아본다."
+		},
+		resource = { [1] = { text = "10만 제니 이상 소지" } },
+		reward = {},
+		score = 15
+	},
+	[220032] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "부자왕 (3)",
+		content = {
+			summary = "소지금 100만 제니 이상 보유한다",
+			details = "돈이 전부는 아니지만 없어서도 안된다. 소지금 100만 제니를 모아본다."
+		},
+		resource = { [1] = { text = "100만 제니 이상 소지" } },
+		reward = {},
+		score = 20
+	},
+	[220033] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "부자왕 (4)",
+		content = {
+			summary = "소지금 1000만 제니 이상 보유한다",
+			details = "돈이 전부는 아니지만 없어서도 안된다. 소지금 1000만 제니를 모아본다."
+		},
+		resource = { [1] = { text = "1000만 제니 이상 소지" } },
+		reward = {},
+		score = 25
+	},
+	[220034] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "부자왕 (5)",
+		content = {
+			summary = "소지금 1억 제니 이상 보유한다",
+			details = "돈이 전부는 아니지만 없어서도 안된다. 소지금 1억 제니를 모아본다."
+		},
+		resource = { [1] = { text = "1억 제니 이상 소지" } },
+		reward = {},
+		score = 30
+	},
+	[220035] = {
+		UI_Type = 0,
+		group = "GET_ZENY",
+		major = 1,
+		minor = 1,
+		title = "부자왕 (6)",
+		content = {
+			summary = "소지금 10억 제니 이상 보유한다",
+			details = "돈이 전부는 아니지만 없어서도 안된다. 소지금 10억만 제니를 모아본다."
+		},
+		resource = { [1] = { text = "10억 제니 이상 소지" } },
+		reward = {},
+		score = 40
+	},
+	[230201] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "포링 탐구생활 (1)",
+		content = {
+			summary = "목표의 대상들을 사냥한다",
+			details = "서식지 환경에 따른 외형이 도드라진 것이 특징이다. 쉬운 상대이니 가볍게 접해보자."
+		},
+		resource = {
+			[1] = { text = "포링 10회 사냥", count = 10 },
+			[2] = { text = "풋내기 포링 10회 사냥", count = 10 },
+			[3] = { text = "드롭프스 10회 사냥", count = 10 },
+			[4] = { text = "포포링 10회 사냥", count = 10 },
+			[5] = { text = "마린 10회 사냥", count = 10 }
+		},
+		reward = {},
+		score = 10
+	},
+	[230202] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "포링 탐구생활 (2)",
+		content = {
+			summary = "목표의 대상들을 사냥한다",
+			details = "세상엔 강한 포링도 존재한다. 얼마나 강한지 직접 경험해보자."
+		},
+		resource = {
+			[1] = { text = "마스터링 1회 사냥", count = 1 },
+			[2] = { text = "데빌링 1회 사냥", count = 1 },
+			[3] = { text = "엔젤링 1회 사냥", count = 1 },
+			[4] = { text = "아크엔젤링 1회 사냥", count = 1 },
+			[5] = { text = "고스트링 1회 사냥", count = 1 }
+		},
+		reward = {},
+		score = 20
+	},
+	[240000] = {
+		UI_Type = 0,
+		group = "GOAL_LEVEL",
+		major = 6,
+		minor = 0,
+		title = "달성과제 도입 후 첫 접속",
+		content = {
+			summary = "달성과제 시스템 도입 후 첫 접속을 완료.",
+			details = "달성과제 시스템이 도입된 이후에 첫 접속을 기념한다."
+		},
+		resource = { [1] = { text = "달성과제 시스템 도입 후 첫 접속을 완료" } },
+		reward = {},
+		score = 10
+	},
+	[240001] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 1 도달",
+		content = { summary = "달성등급 1을 도달한다", details = "달성등급 1을 도달한다." },
+		resource = { [1] = { text = "달성등급 1을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240002] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 2 도달",
+		content = { summary = "달성등급 2을 도달한다", details = "달성등급 2을 도달한다." },
+		resource = { [1] = { text = "달성등급 2을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240003] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 3 도달",
+		content = { summary = "달성등급 3을 도달한다", details = "달성등급 3을 도달한다." },
+		resource = { [1] = { text = "달성등급 3을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240004] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 4 도달",
+		content = { summary = "달성등급 4을 도달한다", details = "달성등급 4을 도달한다." },
+		resource = { [1] = { text = "달성등급 4을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240005] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 5 도달",
+		content = { summary = "달성등급 5을 도달한다", details = "달성등급 5을 도달한다." },
+		resource = { [1] = { text = "달성등급 5을 도달" } },
+		reward = { buff = 12, item = 23725 },
+		score = 10
+	},
+	[240006] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 6 도달",
+		content = { summary = "달성등급 6을 도달한다", details = "달성등급 6을 도달한다." },
+		resource = { [1] = { text = "달성등급 6을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240007] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 7 도달",
+		content = { summary = "달성등급 7을 도달한다", details = "달성등급 7을 도달한다." },
+		resource = { [1] = { text = "달성등급 7을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240008] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 8 도달",
+		content = { summary = "달성등급 8을 도달한다", details = "달성등급 8을 도달한다." },
+		resource = { [1] = { text = "달성등급 8을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240009] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 9 도달",
+		content = { summary = "달성등급 9을 도달한다", details = "달성등급 9을 도달한다." },
+		resource = { [1] = { text = "달성등급 9을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240010] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 10 도달",
+		content = {
+			summary = "달성등급 10을 도달한다",
+			details = "달성등급 10을 도달한다. 노력상으로 칭호를 받을 수 있다."
+		},
+		resource = { [1] = { text = "달성등급 10을 도달" } },
+		reward = { title = 1023, buff = 12, item = 23725 },
+		score = 10
+	},
+	[240011] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 11 도달",
+		content = { summary = "달성등급 11을 도달한다", details = "달성등급 11을 도달한다." },
+		resource = { [1] = { text = "달성등급 11을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240012] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 12 도달",
+		content = { summary = "달성등급 12을 도달한다", details = "달성등급 12을 도달한다." },
+		resource = { [1] = { text = "달성등급 12을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240013] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 13 도달",
+		content = { summary = "달성등급 13을 도달한다", details = "달성등급 13을 도달한다." },
+		resource = { [1] = { text = "달성등급 13을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240014] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 14 도달",
+		content = { summary = "달성등급 14을 도달한다", details = "달성등급 14을 도달한다." },
+		resource = { [1] = { text = "달성등급 14을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240015] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 15 도달",
+		content = { summary = "달성등급 15을 도달한다", details = "달성등급 15을 도달한다." },
+		resource = { [1] = { text = "달성등급 15을 도달" } },
+		reward = { buff = 12, item = 23725 },
+		score = 10
+	},
+	[240016] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 16 도달",
+		content = { summary = "달성등급 16을 도달한다", details = "달성등급 16을 도달한다." },
+		resource = { [1] = { text = "달성등급 16을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240017] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 17 도달",
+		content = { summary = "달성등급 17을 도달한다", details = "달성등급 17을 도달한다." },
+		resource = { [1] = { text = "달성등급 17을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240018] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 18 도달",
+		content = { summary = "달성등급 18을 도달한다", details = "달성등급 18을 도달한다." },
+		resource = { [1] = { text = "달성등급 18을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240019] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 19 도달",
+		content = { summary = "달성등급 19을 도달한다", details = "달성등급 19을 도달한다." },
+		resource = { [1] = { text = "달성등급 19을 도달" } },
+		reward = { buff = 12, item = 23657 },
+		score = 10
+	},
+	[240020] = {
+		UI_Type = 0,
+		group = "GOAL_ACHIEVE",
+		major = 6,
+		minor = 0,
+		title = "달성등급 20 도달",
+		content = {
+			summary = "달성등급 20을 도달한다",
+			details = "달성등급 20을 도달한다. 노력상으로 칭호를 받을 수 있다."
+		},
+		resource = { [1] = { text = "달성등급 20을 도달" } },
+		reward = { title = 1024, buff = 12, item = 23725 },
+		score = 10
+	},
+	[121026] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "거북이 섬 던전  탐험",
+		content = { summary = "숨겨진 보물 발견 LV70", details = "거북이 섬 던전 의 보물을 발견한다" },
+		resource = { [1] = { text = "거북이 섬 던전 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121027] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "시계탑 지하 1층  탐험",
+		content = { summary = "숨겨진 보물 발견 LV70", details = "시계탑 지하 1층 의 보물을 발견한다" },
+		resource = { [1] = { text = "시계탑 지하 1층 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121028] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "시계탑 지상 1층  탐험",
+		content = { summary = "숨겨진 보물 발견 LV70", details = "시계탑 지상 1층 의 보물을 발견한다" },
+		resource = { [1] = { text = "시계탑 지상 1층 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121029] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "니플헤임 외딴마을  탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV70",
+			details = "니플헤임 외딴마을 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "니플헤임 외딴마을 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121030] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "이그드라실 줄기  탐험",
+		content = { summary = "숨겨진 보물 발견 LV70", details = "이그드라실 줄기 의 보물을 발견한다" },
+		resource = { [1] = { text = "이그드라실 줄기 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121031] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "글래스트헤임  탐험",
+		content = { summary = "숨겨진 보물 발견 LV70", details = "글래스트헤임 의 보물을 발견한다" },
+		resource = { [1] = { text = "글래스트헤임 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121032] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "글래스트헤임 계단던전  탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV70",
+			details = "글래스트헤임 계단던전 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "글래스트헤임 계단던전 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121033] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "글래스트헤임 지하수로  탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV70",
+			details = "글래스트헤임 지하수로 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "글래스트헤임 지하수로 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121034] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "글래스트헤임 지하감옥  탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV70",
+			details = "글래스트헤임 지하감옥 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "글래스트헤임 지하감옥 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121035] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "글래스트헤임 기사단  탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV70",
+			details = "글래스트헤임 기사단 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "글래스트헤임 기사단 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121036] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "글래스트헤임 지하동굴  탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV70",
+			details = "글래스트헤임 지하동굴 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "글래스트헤임 지하동굴 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121037] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "글래스트헤임 수도원  탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV70",
+			details = "글래스트헤임 수도원 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "글래스트헤임 수도원 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121038] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "글래스트헤임 지하묘지  탐험",
+		content = {
+			summary = "숨겨진 보물 발견 LV70",
+			details = "글래스트헤임 지하묘지 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "글래스트헤임 지하묘지 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121039] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 0,
+		title = "글래스트헤임 성  탐험",
+		content = { summary = "숨겨진 보물 발견 LV70", details = "글래스트헤임 성 의 보물을 발견한다" },
+		resource = { [1] = { text = "글래스트헤임 성 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[300000] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "언데드 슬레이어",
+		content = { summary = "목표의 대상들을 사냥한다", details = "언데드를 사냥하고 칭호를 얻자." },
+		resource = {
+			[1] = { text = "좀비 500회 사냥", count = 500 },
+			[2] = { text = "스켈레톤 500회 사냥", count = 500 }
+		},
+		reward = { title = 1042, item = 604 },
+		score = 10
+	},
+	[300001] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "드라이어드 슬레이어",
+		content = {
+			summary = "목표의 대상들을 사냥한다",
+			details = "드라이어드를 사냥하고 칭호를 얻자."
+		},
+		resource = { [1] = { text = "드라이어드 1,000회 사냥", count = 1000 } },
+		reward = { title = 1038, item = 25429 },
+		score = 20
+	},
+	[300002] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "스트라우프 슬레이어",
+		content = {
+			summary = "목표의 대상들을 사냥한다",
+			details = "스트라우프를 사냥하고 칭호를 얻자."
+		},
+		resource = { [1] = { text = "스트라우프 1,000회 사냥", count = 1000 } },
+		reward = { title = 1043, item = 25429 },
+		score = 20
+	},
+	[300003] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "데스 슬레이어",
+		content = {
+			summary = "목표의 대상들을 사냥한다",
+			details = "죽은자의 나라의 몬스터를 사냥하고 칭호를 얻자."
+		},
+		resource = {
+			[1] = { text = "듀라한 250회 사냥", count = 250 },
+			[2] = { text = "하이로조이스트 250회 사냥", count = 250 },
+			[3] = { text = "블러디머더러 250회 사냥", count = 250 },
+			[4] = { text = "지벳트 250회 사냥", count = 250 }
+		},
+		reward = { title = 1041, item = 25429 },
+		score = 20
+	},
+	[300004] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "터틀 슬레이어",
+		content = {
+			summary = "목표의 대상들을 사냥한다",
+			details = "거북이들을 사냥하고 칭호를 얻자."
+		},
+		resource = {
+			[1] = { text = "힛터 250회 사냥", count = 250 },
+			[2] = { text = "프리저 250회 사냥", count = 250 },
+			[3] = { text = "퍼머터 250회 사냥", count = 250 },
+			[4] = { text = "어절터 250회 사냥", count = 250 }
+		},
+		reward = { title = 1037, item = 25429 },
+		score = 20
+	},
+	[300005] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "타임 슬레이어",
+		content = {
+			summary = "목표의 대상들을 사냥한다",
+			details = "클락과 알람을 사냥하고 칭호를 얻자."
+		},
+		resource = {
+			[1] = { text = "클락 500회 사냥", count = 500 },
+			[2] = { text = "알람 500회 사냥", count = 500 }
+		},
+		reward = { title = 1039, item = 25429 },
+		score = 20
+	},
+	[300006] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "레이드릭 슬레이어",
+		content = {
+			summary = "목표의 대상들을 사냥한다",
+			details = "레이드릭을 사냥하고 칭호를 얻자."
+		},
+		resource = {
+			[1] = { text = "레이드릭 500회 사냥", count = 500 },
+			[2] = { text = "레이드릭아쳐 500회 사냥", count = 500 }
+		},
+		reward = { title = 1040, item = 25429 },
+		score = 30
+	},
+	[300007] = {
+		UI_Type = 1,
+		group = "BATTLE",
+		major = 3,
+		minor = 1,
+		title = "스팅 슬레이어",
+		content = { summary = "목표의 대상들을 사냥한다", details = "스팅을 사냥하고 칭호를 얻자." },
+		resource = { [1] = { text = "스팅 1,000회 사냥", count = 1000 } },
+		reward = { title = 1044, item = 25429 },
+		score = 30
+	},
+	[129901] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "베이스레벨 50을 달성합시다..",
+		content = { summary = "베이스레벨 50까지 레벨업하자", details = "2차 전직을 위한 기초 과정" },
+		resource = { [1] = { text = "베이스레벨 50까지 레벨업하자" } },
+		score = 0
+	},
+	[129902] = {
+		UI_Type = 0,
+		group = "GOAL_STATUS",
+		major = 1,
+		minor = 0,
+		title = "2차 전직 가능",
+		content = {
+			summary = "이 업적이 완료되셨나요?",
+			details = "\t\t\t<TIPBOX>[2차 직업 정보]<INFO>4244</INFO></TIPBOX>\n\t\t\t"
+		},
+		resource = {
+			[1] = { text = "베이스레벨 50을 달성", shortcut = 129901 },
+			[2] = { text = "잡레벨 50을 달성", shortcut = 200003 }
+		},
+		score = 0
+	},
+	[121040] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "슈발츠발드 국경 검문소  탐험",
+		content = {
+			summary = "숨겨진 보물 발견",
+			details = "슈발츠발드 국경 검문소 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "슈발츠발드 국경 검문소 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121041] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "킬 하이르의 별장  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "킬 하이르의 별장 의 보물을 발견한다" },
+		resource = { [1] = { text = "킬 하이르의 별장 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121042] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "엘메스 플레투  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "엘메스 플레투 의 보물을 발견한다" },
+		resource = { [1] = { text = "엘메스 플레투 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121043] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "엘메스 플레투  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "엘메스 플레투 의 보물을 발견한다" },
+		resource = { [1] = { text = "엘메스 플레투 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121044] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "엘메스 플레투  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "엘메스 플레투 의 보물을 발견한다" },
+		resource = { [1] = { text = "엘메스 플레투 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121045] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "엘메스 협곡 심연의 골짜기  탐험",
+		content = {
+			summary = "숨겨진 보물 발견",
+			details = "엘메스 협곡 심연의 골짜기 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "엘메스 협곡 심연의 골짜기 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121046] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "킬 하이르 학원  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "킬 하이르 학원 의 보물을 발견한다" },
+		resource = { [1] = { text = "킬 하이르 학원 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121047] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "슈발츠발드 경비대 야영지  탐험",
+		content = {
+			summary = "숨겨진 보물 발견",
+			details = "슈발츠발드 경비대 야영지 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "슈발츠발드 경비대 야영지 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121048] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "유노 필드  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "유노 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "유노 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121049] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "슈발츠발드 국경 검문소  탐험",
+		content = {
+			summary = "숨겨진 보물 발견",
+			details = "슈발츠발드 국경 검문소 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "슈발츠발드 국경 검문소 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121050] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "유노 노그로드 1층  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "유노 노그로드 1층 의 보물을 발견한다" },
+		resource = { [1] = { text = "유노 노그로드 1층 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121051] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "유페로스 폐허 외부  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "유페로스 폐허 외부 의 보물을 발견한다" },
+		resource = { [1] = { text = "유페로스 폐허 외부 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121052] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "휘겔 오딘 신전 서쪽  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "휘겔 오딘 신전 서쪽 의 보물을 발견한다" },
+		resource = { [1] = { text = "휘겔 오딘 신전 서쪽 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121053] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "휘겔 필드  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "휘겔 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "휘겔 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121054] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "휘겔 필드  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "휘겔 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "휘겔 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121055] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 5,
+		title = "휘겔 어비스 호수 지하동굴  탐험",
+		content = {
+			summary = "숨겨진 보물 발견",
+			details = "휘겔 어비스 호수 지하동굴 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "휘겔 어비스 호수 지하동굴 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121056] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "아인브로크 필드  탐험(1)",
+		content = { summary = "숨겨진 보물 발견", details = "아인브로크 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "아인브로크 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121057] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "아인브로크 필드  탐험(2)",
+		content = { summary = "숨겨진 보물 발견", details = "아인브로크 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "아인브로크 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121058] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "아인브로크 필드  탐험(3)",
+		content = { summary = "숨겨진 보물 발견", details = "아인브로크 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "아인브로크 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121059] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "아인브로크 필드  탐험(4)",
+		content = { summary = "숨겨진 보물 발견", details = "아인브로크 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "아인브로크 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121060] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "아인브로크 필드  탐험(5)",
+		content = { summary = "숨겨진 보물 발견", details = "아인브로크 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "아인브로크 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121061] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "아인브로크 필드  탐험(6)",
+		content = { summary = "숨겨진 보물 발견", details = "아인브로크 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "아인브로크 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121062] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "아인브로크 필드  탐험(7)",
+		content = { summary = "숨겨진 보물 발견", details = "아인브로크 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "아인브로크 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121063] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "아인브로크 필드  탐험(8)",
+		content = { summary = "숨겨진 보물 발견", details = "아인브로크 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "아인브로크 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121064] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "아인베흐 광산 1층  탐험",
+		content = { summary = "숨겨진 보물 발견", details = "아인베흐 광산 1층 의 보물을 발견한다" },
+		resource = { [1] = { text = "아인베흐 광산 1층 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121065] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "리히타르젠 필드  탐험(1)",
+		content = { summary = "숨겨진 보물 발견", details = "리히타르젠 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "리히타르젠 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121066] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "리히타르젠 필드  탐험(2)",
+		content = { summary = "숨겨진 보물 발견", details = "리히타르젠 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "리히타르젠 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121067] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "리히타르젠 필드  탐험(3)",
+		content = { summary = "숨겨진 보물 발견", details = "리히타르젠 필드 의 보물을 발견한다" },
+		resource = { [1] = { text = "리히타르젠 필드 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	},
+	[121068] = {
+		UI_Type = 0,
+		group = "ADVENTURE",
+		major = 2,
+		minor = 1,
+		title = "생체실험 연구소 지하 1층  탐험",
+		content = {
+			summary = "숨겨진 보물 발견",
+			details = "생체실험 연구소 지하 1층 의 보물을 발견한다"
+		},
+		resource = { [1] = { text = "생체실험 연구소 지하 1층 의 보물을 발견한다" } },
+		reward = { item = 22876 },
+		score = 10
+	}
+}
