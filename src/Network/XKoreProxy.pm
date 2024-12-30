@@ -207,10 +207,22 @@ sub clientSend {
 
 	return unless ($self->proxyAlive);
 
-	$msg = $self->modifyPacketIn($msg) unless ($dontMod);
+	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+
+	if ($switch eq "08B9") { # login_pin_code_request
+		my $seed = unpack("V", substr($msg,  2, 4));
+		my $accountID = unpack("a4", substr($msg, 6, 4));
+		my $flag = unpack("v", substr($msg, 10, 2));
+
+		if ($flag == 1 and $config{loginPinCode}) {
+			$messageSender->sendLoginPinCode($seed, 0);
+		}
+	}
+
+	$msg = $self->modifyPacketIn($msg, $switch) unless ($dontMod);
 	if ($config{debugPacket_ro_received}) {
 		debug "Modified packet sent to client\n";
-		visualDump($msg, 'clientSend');
+		visualDump($msg, 'sendToClient');
 	}
 
 	# queue message instead of sending directly
@@ -422,11 +434,10 @@ sub checkPacketReplay {
 }
 
 sub modifyPacketIn {
-	my ($self, $msg) = @_;
+	my ($self, $msg, $switch) = @_;
 
 	return undef if (length($msg) < 1);
 
-	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($switch eq "02AE") {
 		$msg = "";
 	}
@@ -500,20 +511,20 @@ sub modifyPacketIn {
 
 	} elsif ($switch eq "0071" || $switch eq "0AC5") { # login in map-server
 		my ($mapInfo, $server_info);
-		
+
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 
 		# Proxy the Logon to Map server
 		debug "Modifying Map Logon packet...\n", "connection";
-		
+
 		if ($switch eq '0AC5') { # cRO 2017
 			$server_info = {
 				types => 'a4 Z16 a4 v a128',
 				keys => [qw(charID mapName mapIP mapPort mapUrl)],
 			};
-			
-		} else { 
+
+		} else {
 			$server_info = {
 				types => 'a4 Z16 a4 v',
 				keys => [qw(charID mapName mapIP mapPort)],
@@ -521,7 +532,7 @@ sub modifyPacketIn {
 		}
 
 		my $ip = $self->{publicIP} || $self->{proxy}->sockhost;
-		
+
 		@{$mapInfo}{@{$server_info->{keys}}} = unpack($server_info->{types}, substr($msg, 2));
 
 		if (exists $mapInfo->{mapUrl} && $mapInfo->{'mapUrl'} =~ /.*\:\d+/) { # in cRO we have server.alias.com:port
@@ -561,17 +572,17 @@ sub modifyPacketIn {
 			message T("Closing connection to Map Server\n"), "connection" if (!$self->{packetReplayTrial});
 		}
 		$self->serverDisconnect(1);
-		
+
 	} elsif($switch eq "0092" || $switch eq "0AC7" || $switch eq "0A4C") { # In Game Map-server changed
 		my ($mapInfo, $server_info);
-		
+
 		if ($switch eq '0AC7') { # cRO 2017
 			$server_info = {
 				types => 'Z16 v2 a4 v a128',
 				keys => [qw(map x y IP port url)],
 			};
-			
-		} else { 
+
+		} else {
 			$server_info = {
 				types => 'Z16 v2 a4 v',
 				keys => [qw(map x y IP port)],
@@ -580,9 +591,9 @@ sub modifyPacketIn {
 
 		my $ip = $self->{publicIP} || $self->{proxy}->sockhost;
 		my $port = $self->{proxy}->sockport;
-		
+
 		@{$mapInfo}{@{$server_info->{keys}}} = unpack($server_info->{types}, substr($msg, 2));
-		
+
 		if (exists $mapInfo->{url} && $mapInfo->{'url'} =~ /.*\:\d+/) { # in cRO we have server.alias.com:port
 			@{$mapInfo}{@{[qw(ip port)]}} = split (/\:/, $mapInfo->{'url'});
 			$mapInfo->{ip} =~ s/^\s+|\s+$//g;
@@ -594,7 +605,7 @@ sub modifyPacketIn {
 		if($masterServer->{'private'}) {
 			$mapInfo->{ip} = $masterServer->{ip};
 		}
-	
+
 		$msg = $packetParser->reconstruct({
 			switch => $switch,
 			map => $mapInfo->{'map'},
@@ -608,7 +619,7 @@ sub modifyPacketIn {
 		$self->{nextIp} = $mapInfo->{ip};
 		$self->{nextPort} = $mapInfo->{'port'};
 		debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
-		
+
 		# reset key when change map-server
 		if ($currentClientKey && $messageSender->{encryption}->{crypt_key}) {
 			$currentClientKey = $messageSender->{encryption}->{crypt_key_1};
