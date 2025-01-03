@@ -90,9 +90,9 @@ use Exporter;
 use base qw(Exporter);
 use Encode;
 use Utils::Exceptions;
+use JSON::Tiny qw( &decode_json &encode_json );
 
 our @EXPORT_OK = qw(serialize unserialize);
-
 
 ##
 # Bytes Bus::Messages::serialize(String ID, arguments)
@@ -104,50 +104,10 @@ our @EXPORT_OK = qw(serialize unserialize);
 #
 # This symbol is exportable.
 sub serialize {
-	my ($ID, $arguments) = @_;
-
-	# Header
-	my $options = (!$arguments || ref($arguments) eq 'HASH') ? 0 : 1;
-	my $ID_bytes = toBytes(\$ID);
-	my $data = pack("N C C a*",
-		0,			# Message length
-		$options,		# Options
-		length($$ID_bytes),	# ID length
-		$$ID_bytes);		# ID
-
-	if ($options == 0 && $arguments) {
-		# Key-value map arguments.
-		my ($key, $value);
-		while (($key, $value) = each %{$arguments}) {
-			my $key_bytes = toBytes(\$key);
-			my ($type, $value_bytes);
-			$value_bytes = valueToData(\$type, \$value);
-
-			$data .= pack("C a* C a3 a*",
-				length($$key_bytes),
-				$$key_bytes,
-
-				$type,
-				toInt24(length($$value_bytes)),
-				$$value_bytes
-			);
-		}
-
-	} elsif ($options == 1) {
-		# Array arguments.
-		foreach my $entry (@{$arguments}) {
-			my ($type, $value_bytes);
-			$value_bytes = valueToData(\$type, \$entry);
-			$data .= pack("C a3 a*",
-				$type,
-				toInt24(length($$value_bytes)),
-				$$value_bytes
-			);
-		}
-	}
-
-	substr($data, 0, 4, pack("N", length($data)));
-	return $data;
+	my ( $ID, $arguments ) = @_;
+	my $data = eval { encode_json( { ID => $ID, args => $arguments } ) };
+	$data = 'null' if !defined $data;
+	pack( 'V', 4 + length $data ) . $data;
 }
 
 ##
@@ -167,144 +127,18 @@ sub serialize {
 # This symbol is exportable.
 sub unserialize {
 	my ($data, $r_ID, $processed) = @_;
-	my $dataLen = length($data);
-	return undef if ($dataLen < 4);
+	my $dataLen = length $data;
+	return if $dataLen < 4;
 
 	# Header
-	my $messageLen = unpack("N", $data);
-	return undef if ($dataLen < $messageLen);
-	my ($options, $ID) = unpack("x[N] C C/a", $data);
-	Encode::_utf8_on($ID);
-	if (!Encode::is_utf8($ID, 1)) {
-		UTF8MalformedException->throw("Malformed UTF-8 data in message ID.");
-	}
+	my $messageLen = unpack 'V', $data;
+	return if $dataLen < $messageLen;
 
-	my $offset = 6 + length($ID);
+	my $msg = decode_json( substr $data, 4, $messageLen - 4 );
 
-	my $args;
-	if ($options == 0) {
-		# Key-value map arguments.
-		$args = {};
-		while ($offset < $messageLen) {
-			# Key and type.
-			my ($key, $type) = unpack("x[$offset] C/a C", $data);
-			Encode::_utf8_on($key);
-			if (!Encode::_utf8_on($key)) {
-				UTF8MalformedException->throw("Malformed UTF-8 data in key.");
-			}
-			$offset += 2 + length($key);
-
-			# Value length.
-			my ($valueLen) = substr($data, $offset, 3);
-			$valueLen = fromInt24($valueLen);
-			$offset += 3;
-
-			# Value.
-			my ($value) = substr($data, $offset, $valueLen);
-			dataToValue($type, \$value);
-
-			$args->{$key} = $value;
-			$offset += $valueLen;
-		}
-
-	} else {
-		# Array arguments.
-		$args = [];
-		while ($offset < $messageLen) {
-			# Type and length.
-			my ($type, $len) = unpack("x[$offset] C a3", $data);
-			$len = fromInt24($len);
-			$offset += 4;
-
-			# Value.
-			my ($value) = substr($data, $offset, $len);
-			dataToValue($type, \$value);
-
-			push @{$args}, $value;
-			$offset += $len;
-		}
-	}
-
-	$$r_ID = $ID;
-	$$processed = $messageLen if ($processed);
-	return $args;
-}
-
-# Converts a String to Bytes, with as little copying as possible.
-#
-# r_string: A reference to a String.
-# Returns: A reference to the UTF-8 data as Bytes.
-sub toBytes {
-	my ($r_string) = @_;
-	if (Encode::is_utf8($$r_string)) {
-		my $data = Encode::encode_utf8($$r_string);
-		return \$data;
-	} else {
-		return $r_string;
-	}
-}
-
-# Bytes toInt24(int i)
-# Ensures: length(result) == 3
-#
-# Converts a Perl scalar to a 24-bit unsigned big-endian integer.
-sub toInt24 {
-	my ($i) = @_;
-	return substr(pack("N", $i), 1, 3);
-}
-
-# int fromInt24(Bytes data)
-# Requires: length($data) == 3
-#
-# Convert a 24-bit unsigned big-endian integer to a Perl scalar.
-sub fromInt24 {
-	my ($data) = @_;
-	return unpack("N", "\0" . $data);
-}
-
-# Bytes* valueToData(int* type, Scalar* value)
-#
-# Autodetect the format of $data, and return a reference to a byte
-# string, to be used in serializing a message. The data type is
-# returned in $type.
-sub valueToData {
-	my ($type, $value) = @_;
-	if (!defined $$value) {
-		my $data = '';
-		$$type = 0;
-		return \$data;
-	} elsif ($$value =~ /^\d+$/) {
-		# Integer.
-		$$type = 2;
-		my $data = pack("N", $$value);
-		return \$data;
-	} elsif (Encode::is_utf8($$value)) {
-		# UTF-8 string.
-		$$type = 1;
-		my $data = Encode::encode_utf8($$value);
-		return \$data;
-	} else {
-		# Binary string.
-		$$type = 0;
-		return $value;
-	}
-}
-
-sub dataToValue {
-	my ($type, $r_value) = @_;
-	if ($type == 1) {
-		Encode::_utf8_on($$r_value);
-		if (!Encode::_utf8_on($$r_value)) {
-			UTF8MalformedException->throw("Malformed UTF-8 data in value.");
-		}
-	} elsif ($type == 2) {
-		if (length($$r_value) == 4) {
-			$$r_value = unpack("N", $$r_value);
-		} else {
-			DataFormatException->throw("Integer value with invalid length (" .
-				length($$r_value) . ") found.");
-		}
-	}
+	$$r_ID = $msg->{ID};
+	$$processed = $messageLen;
+	$msg->{args};
 }
 
 # sub testPerformance {
