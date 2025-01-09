@@ -4623,7 +4623,7 @@ sub quest_all_list {
 			mission_len => 44,
 		};
 
-	} elsif ($args->{switch} eq '0AFF') { # SERVERTYPE >= 20150513
+	} elsif ($args->{switch} eq '0AFF') { # SERVERTYPE >= 20181010
 		$quest_info = {
 			quest_pack => 'V C V2 v',
 			quest_keys => [qw(quest_id active time_expire time_start mission_amount)],
@@ -4657,6 +4657,8 @@ sub quest_all_list {
         $offset += $quest_info->{quest_len};
 
         next if !exists $quest->{mission_amount};
+		
+        debug "- Mission amount: $quest->{mission_amount}\n", "info";
 
         for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
             my $mission;
@@ -4737,6 +4739,8 @@ sub quest_all_mission {
 			});
 		}
 	}
+
+	Plugins::callHook('quest_mission');
 }
 
 # 02b3 <quest id>.L <active>.B <start time>.L <expire time>.L <mobs>.W { <mob id>.L <mob count>.W <mob name>.24B }*3 (ZC_ADD_QUEST)
@@ -4906,6 +4910,8 @@ sub quest_update_mission_hunt {
 			goal => $quest_mission->{mob_goal}
 		});
 	}
+	
+	Plugins::callHook('quest_update_mission');
 }
 
 # 02B4
@@ -4913,6 +4919,8 @@ sub quest_delete {
 	my ($self, $args) = @_;
 	message TF("Quest: %s has been deleted.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
 	delete $questList->{$args->{questID}};
+	
+	Plugins::callHook('quest_delete');
 }
 
 # 02B7
@@ -4925,6 +4933,8 @@ sub quest_active {
 	, "info";
 
 	$questList->{$args->{questID}}->{active} = $args->{active};
+	
+	Plugins::callHook('quest_active');
 }
 
 # 02C1
