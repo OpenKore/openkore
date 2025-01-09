@@ -4680,7 +4680,7 @@ sub quest_all_list {
 		}
 	}
 
-	Plugins::callHook('quest_list');
+	Plugins::callHook('quest_all_list_end');
 }
 
 # 02b2 <packet len>.W <num>.L { <quest id>.L <start time>.L <expire time>.L <mobs>.W { <mob id>.L <mob count>.W <mob name>.24B }*3 }*num
@@ -4740,7 +4740,7 @@ sub quest_all_mission {
 		}
 	}
 
-	Plugins::callHook('quest_mission');
+	Plugins::callHook('quest_all_mission_end');
 }
 
 # 02b3 <quest id>.L <active>.B <start time>.L <expire time>.L <mobs>.W { <mob id>.L <mob count>.W <mob name>.24B }*3 (ZC_ADD_QUEST)
@@ -4911,7 +4911,7 @@ sub quest_update_mission_hunt {
 		});
 	}
 	
-	Plugins::callHook('quest_update_mission');
+	Plugins::callHook('quest_update_mission_hunt_end');
 }
 
 # 02B4

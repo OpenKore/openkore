@@ -7,7 +7,7 @@ use eventMacro::Utilities qw( find_variable );
 use base 'eventMacro::Condition';
 
 sub _hooks {
-	['quest_list','quest_mission','quest_added','quest_update_mission','quest_delete','quest_active'];
+	['quest_all_list_end','quest_all_mission_end','quest_added','quest_update_mission_hunt_end','quest_delete','quest_active'];
 }
 
 sub _parse_syntax {
