@@ -6,9 +6,8 @@ use eventMacro::Utilities qw( find_variable );
 
 use base 'eventMacro::Condition';
 
-# Using 'inventory_ready' is not optimal, but it works.
 sub _hooks {
-	['packet_mapChange','inventory_ready','packet/quest_all_list','packet/quest_all_list2','packet/quest_all_list3','packet/quest_all_mission','packet/quest_add','packet/quest_delete','packet/quest_update_mission_hunt','packet/quest_active'];
+	['quest_all_list_end','quest_all_mission_end','quest_added','quest_update_mission_hunt_end','quest_delete','quest_active'];
 }
 
 sub _parse_syntax {
@@ -70,10 +69,11 @@ sub check_quests {
 	foreach my $member_index ( 0..$#{ $self->{members_array} } ) {
 		my $quest_ID = $self->{members_array}->[$member_index];
 		next unless (defined $quest_ID);
-		next if (exists $questList->{$quest_ID} && exists $questList->{$quest_ID}->{active} && $questList->{$quest_ID}->{active});
-		$self->{fulfilled_ID} = $quest_ID;
-		$self->{fulfilled_member_index} = $member_index;
-		last;
+		if (!keys %{$questList} || !exists $questList->{$quest_ID} || !exists $questList->{$quest_ID}->{active} || !$questList->{$quest_ID}->{active}) {
+			$self->{fulfilled_ID} = $quest_ID;
+			$self->{fulfilled_member_index} = $member_index;
+			last;
+		}
 	}
 }
 
@@ -81,19 +81,7 @@ sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'hook') {
-		
-		if ($callback_name eq 'packet_mapChange') {
-			$self->{fulfilled_ID} = undef;
-			$self->{fulfilled_member_index} = undef;
-			$self->{is_on_stand_by} = 1;
-			
-		} elsif ($callback_name eq 'inventory_ready') {
-			return $self->SUPER::validate_condition if ($self->{is_on_stand_by} == 0);
-			$self->{is_on_stand_by} = 0;
-			
-		} else {
-			$self->{is_on_stand_by} = 0;
-		}
+		$self->{is_on_stand_by} = 0;
 		
 	} elsif ($callback_type eq 'variable') {
 		$self->update_vars($callback_name, $args);
