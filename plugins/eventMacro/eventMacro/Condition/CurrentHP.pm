@@ -7,7 +7,7 @@ use base 'eventMacro::Conditiontypes::NumericConditionState';
 use Globals qw( $char );
 
 sub _hooks {
-	[ 'packet/sendMapLoaded', 'packet/hp_sp_changed', 'packet/stat_info' ];
+	['Network::Receive::map_changed','in_game','packet/stat_info','packet/hp_sp_changed'];
 }
 
 sub _get_val {
