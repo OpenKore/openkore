@@ -7,7 +7,7 @@ use base 'eventMacro::Conditiontypes::NumericConditionState';
 use Globals qw( $char );
 
 sub _hooks {
-	['packet_mapChange','inventory_ready','item_gathered','inventory_item_removed'];
+	['inventory_clear','inventory_ready','item_gathered','inventory_item_removed'];
 }
 
 sub _get_val {
@@ -22,7 +22,7 @@ sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'hook') {
-		return $self->SUPER::validate_condition(0) if ($callback_name eq 'packet_mapChange');
+		return $self->SUPER::validate_condition(0) if ($callback_name eq 'inventory_clear');
 	} elsif ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);
 	}

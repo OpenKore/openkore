@@ -9,7 +9,7 @@ use base 'eventMacro::Condition';
 use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
-	['packet_mapChange','equipped_item','unequipped_item','inventory_ready'];
+	['inventory_clear','equipped_item','unequipped_item','inventory_ready'];
 }
 
 #slot_index to index_name: %equipSlot_lut
@@ -142,9 +142,9 @@ sub update_vars {
 		}
 	}
 	
-	if (!defined $self->{fulfilled_slot} || $changed_fulfilled_index) {
+	#if (!defined $self->{fulfilled_slot} || $changed_fulfilled_index) {
 		$self->check_all_equips($recheck_index);
-	}
+	#}
 }
 
 sub check_all_equips {
@@ -178,14 +178,15 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		if ($callback_name eq 'equipped_item') {
-			return $self->SUPER::validate_condition if (defined $self->{fulfilled_slot} || !exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
-			$self->check_slot($args->{slot}, $args->{item});
+			#return $self->SUPER::validate_condition if (defined $self->{fulfilled_slot} || !exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
+			#$self->check_slot($args->{slot}, $args->{item});
+			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
 
 		} elsif ($callback_name eq 'unequipped_item') {
-			return $self->SUPER::validate_condition unless (defined $self->{fulfilled_slot} || $self->{fulfilled_slot} ne $args->{slot});
+			#return $self->SUPER::validate_condition unless (defined $self->{fulfilled_slot} || $self->{fulfilled_slot} ne $args->{slot});
 			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
 			
-		} elsif ($callback_name eq 'packet_mapChange') {
+		} elsif ($callback_name eq 'inventory_clear') {
 			$self->{fulfilled_slot} = undef;
 			$self->{fulfilled_item} = undef;
 			$self->{fulfilled_member_index} = undef;
