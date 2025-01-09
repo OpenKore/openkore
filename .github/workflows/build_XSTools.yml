@@ -77,10 +77,12 @@ jobs:
         echo "::warning ::cache '${{ runner.os }}-python-${{ matrix.python }}' was NOT found, download the Python2"
         echo "== python version check:"
         python -V
-        if ( Test-Path "C:/hostedtoolcache/windows/Python/" ) {
+        $python_path = python -c "import os, sys; print(os.path.dirname(sys.executable))"
+        echo $python_path
+        if ( Test-Path $python_path ) {
           echo '== Remove default Python 3:'
-          echo 'rm -r "C:\hostedtoolcache\windows\Python\3.7.9\x64\python.exe"'
-          rm -r "C:\hostedtoolcache\windows\Python\3.7.9\x64\python.exe"
+          echo "rm -r $python_path\python.exe"
+          rm -r $python_path\python.exe
         }
         echo "================================"
         echo "== download python ${{ matrix.python }} (${{ matrix.architecture }})"
