@@ -426,17 +426,10 @@ sub main {
 		$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
 	}
 
-	my $melee;
-	my $ranged;
 	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
 		debug "[Slave $slave] Deleting ai_attack_failed_give_up time.\n";
 		delete $args->{ai_attack_failed_give_up}{time};
 		
-	} elsif ($args->{attackMethod}{maxDistance} == 1) {
-		$melee = 1;
-
-	} elsif ($args->{attackMethod}{maxDistance} > 1) {
-		$ranged = 1;
 	}
 	
 	#$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
@@ -451,8 +444,7 @@ sub main {
 	} else {
 		$canAttack = -2;
 	}
-	
-	my $range_type_string = ($melee ? "Melee" : ($ranged ? "Ranged" : "None"));
+
 	my $canAttack_fail_string = (($canAttack == -2) ? "No Method" : (($canAttack == -1) ? "No LOS" : (($canAttack == 0) ? "No Range" : "OK")));
 	
 	# Here we check if the monster which we are waiting to get closer to us is in fact close enough
@@ -534,7 +526,7 @@ sub main {
 	}
 	
 	if ($canAttack == 0 && $youHitTarget) {
-		debug TF("[%s] [%s - %s] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d)\n", $slave, $canAttack_fail_string, $range_type_string, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+		debug TF("[%s] [%s] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d)\n", $slave, $canAttack_fail_string, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
 		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
 			debug TF("[$canAttack_fail_string] Probably extra range provided by the server due to chasing, increasing range by 1.\n"), 'ai_attack';
 			$args->{temporary_extra_range} = 1;
@@ -568,11 +560,11 @@ sub main {
 		$args->{ai_attack_failed_waitForAgressive_give_up}{time} = time if !$args->{ai_attack_failed_waitForAgressive_give_up}{time};
 		if (timeOut($args->{ai_attack_failed_waitForAgressive_give_up})) {
 			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
-			warning TF("[%s] [%s - %s] Waited too long for target to get closer, dropping target. (you (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d)\n", $slave, $canAttack_fail_string, $range_type_string, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+			warning TF("[%s] [%s] Waited too long for target to get closer, dropping target. (you (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d)\n", $slave, $canAttack_fail_string, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
 			giveUp($slave, $args, $ID, 0);
 		} else {
 			$slave->sendAttack($ID) if ($config{$slave->{configPrefix}."attackBeyondMaxDistance_sendAttackWhileWaiting"});
-			debug TF("[%s] [%s - %s] [Waiting] (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d.\n", $slave, $canAttack_fail_string, $range_type_string, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
+			debug TF("[%s] [%s] [Waiting] (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d.\n", $slave, $canAttack_fail_string, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}), 'ai_attack';
 		}
 		$found_action = 1;
 	}
@@ -585,10 +577,10 @@ sub main {
 	) {
 		debug "Attack $slave ($realMyPos->{x} $realMyPos->{y}) - target $target ($realMonsterPos->{x} $realMonsterPos->{y})\n";
 		if ($canAttack == 0) {
-			debug "[Slave $slave] [Attack] [$range_type_string] [No range] Too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
+			debug "[Slave $slave] [Attack] [No range] Too far from us to attack, distance is $realMonsterDist, attack maxDistance is $args->{attackMethod}{maxDistance}\n", 'ai_attack';
 
 		} elsif ($canAttack == -1) {
-			debug "[Slave $slave] [Attack] [$range_type_string] [No LOS] No LOS from player to mob\n", 'ai_attack';
+			debug "[Slave $slave] [Attack] [No LOS] No LOS from player to mob\n", 'ai_attack';
 		}
 
 		my $pos = meetingPosition($slave, 2, $target, $args->{attackMethod}{maxDistance});
@@ -652,7 +644,7 @@ sub main {
 		}
 
 		if ($args->{attackMethod}{type} eq "weapon") {
-			if ($config{$slave->{configPrefix}.'attack_dance_melee'} && $melee) {
+			if ($config{$slave->{configPrefix}.'attack_dance_melee'}) {
 				if (timeOut($timeout{$slave->{ai_dance_attack_melee_timeout}})) {
 					my $cell = get_dance_position($slave, $target);
 					debug TF("Slave %s will dance type %d from (%d, %d) to (%d, %d), target %s at (%d, %d).\n", $slave, $config{$slave->{configPrefix}.'attack_dance_melee'}, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y});
@@ -662,7 +654,7 @@ sub main {
 					$timeout{$slave->{ai_dance_attack_melee_timeout}}{time} = time;
 				}
 				
-			} elsif ($config{$slave->{configPrefix}.'attack_dance_ranged'} && $ranged) {
+			} elsif ($config{$slave->{configPrefix}.'attack_dance_ranged'}) {
 				if (timeOut($timeout{$slave->{ai_dance_attack_ranged_timeout}})) {
 					my $cell = get_dance_position($slave, $target);
 					debug TF("Slave %s will range dance type %d from (%d, %d) to (%d, %d), target %s at (%d, %d).\n", $slave, $config{$slave->{configPrefix}.'attack_dance_ranged'}, $realMyPos->{x}, $realMyPos->{y}, $cell->{x}, $cell->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y});
