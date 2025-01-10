@@ -10,8 +10,9 @@ use base 'eventMacro::Condition';
 use Globals qw( $field );
 
 sub _hooks {
-	['packet_mapChange'];
+	['Network::Receive::map_changed','in_game','packet_mapChange'];
 }
+
 
 sub _parse_syntax {
 	my ( $self, $condition_code ) = @_;
@@ -30,6 +31,10 @@ sub _parse_syntax {
 
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
+
+	unless ( defined $field ) {
+		$self->SUPER::validate_condition( 0 );
+	}
 	
 	$self->{lastMap} = $field->baseName;
 	

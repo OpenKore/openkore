@@ -4561,6 +4561,7 @@ sub sprite_change {
 	} else {
 		error TF("%s changed unknown sprite type (%d), write about it to OpenKore developer\n", $player, $type), "parseMsg_statuslook";
 	}
+	Plugins::callHook('sprite_job_change');
 }
 
 sub progress_bar {
