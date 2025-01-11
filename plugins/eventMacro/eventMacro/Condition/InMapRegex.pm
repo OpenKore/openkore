@@ -7,7 +7,7 @@ use base 'eventMacro::Conditiontypes::RegexConditionState';
 use Globals qw( $field );
 
 sub _hooks {
-	['packet_mapChange'];
+	['Network::Receive::map_changed','in_game','packet_mapChange'];
 }
 
 sub validate_condition {
@@ -15,6 +15,10 @@ sub validate_condition {
 	
 	if ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);
+	}
+	
+	unless ( defined $field ) {
+		$self->SUPER::validate_condition( 0 );
 	}
 	
 	$self->{lastMap} = $field->baseName;
