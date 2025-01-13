@@ -523,17 +523,23 @@ sub main {
 	
 	# Here we check if we have finished moving to the meeting position to attack our target, only checks this if attackWaitApproachFinish is set to 1 in config
 	# If so sets sentApproach to 0
-	if (
-		$config{"attackWaitApproachFinish"} &&
-		($canAttack == 0 || $canAttack == -1) &&
-		$args->{sentApproach}
-	) {
-		if (!timeOut($char->{time_move}, $char->{time_move_calc})) {
-			debug TF("[Out of Range - Still Approaching - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
-			return;
+	if ($args->{sentApproach}) {
+		if ($config{"attackWaitApproachFinish"}) {
+			if (!timeOut($char->{time_move}, $char->{time_move_calc})) {
+				debug TF("[attackWaitApproachFinish - Waiting] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+				return;
+			} else {
+				debug TF("[attackWaitApproachFinish - Ended Approaching] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+				$args->{sentApproach} = 0;
+			}
 		} else {
-			debug TF("[Out of Range - Ended Approaching] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
-			$args->{sentApproach} = 0;
+			if ($canAttack == 2) {
+				debug TF("[Approaching - Can now attack] %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+				$args->{sentApproach} = 0;
+			} elsif (timeOut($char->{time_move}, $char->{time_move_calc})) {
+				debug TF("[Approaching - Ended] Still no LOS/Range - %s (%d %d), target %s (%d %d), distance %d, maxDistance %d, dmgFromYou %d.\n", $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
+				$args->{sentApproach} = 0;
+			}
 		}
 	}
 	

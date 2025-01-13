@@ -1427,6 +1427,7 @@ sub processAutoStorage {
 					getNPCInfo($config{storageAuto_npc}, $realpos);
 
 					ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{'storageAuto_npc_steps'});
+					AI::args->{'is_storageAuto'} = 1;
 				}
 
 				#delete $ai_v{temp}{storage_opened};
