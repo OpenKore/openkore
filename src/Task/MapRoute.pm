@@ -29,7 +29,7 @@ use Log qw(message debug warning error);
 use Network;
 use Plugins;
 use Misc qw(canUseTeleport portalExists);
-use Utils qw(timeOut blockDistance existsInList);
+use Utils qw(timeOut blockDistance existsInList calcPosFromPathfinding);
 use Utils::PathFinding;
 use Utils::Exceptions;
 use AI qw(ai_useTeleport);
@@ -170,7 +170,8 @@ sub iterate {
 	} elsif ( $self->{mapSolution}[0]{steps} ) {
 		my $min_npc_dist = 8;
 		my $max_npc_dist = 10;
-		my $dist_to_npc = blockDistance($self->{actor}{pos}, $self->{mapSolution}[0]{pos});
+		my $realPos = calcPosFromPathfinding($field, $self->{actor});
+		my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
 		
 		if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
 			$self->{mapSolution}[0]{retry} = 0;
@@ -193,17 +194,17 @@ sub iterate {
 					delete $self->{mapSolution}[0]{error};
 
 				} else {
-
-
+					if (!exists $self->{mapSolution}[0]{plugin_retry}) {
+						$self->{mapSolution}[0]{plugin_retry} = 0;
+					}
 					my %plugin_args = (
-						x            => $self->{mapSolution}[0]{pos}{x},
-						y            => $self->{mapSolution}[0]{pos}{y},
-						steps        => $self->{mapSolution}[0]{steps},
-						portal       => $self->{mapSolution}[0]{portal},
-						plugin_retry => $self->{mapSolution}[0]{plugin_retry}
+						'x'            => $self->{mapSolution}[0]{pos}{x},
+						'y'            => $self->{mapSolution}[0]{pos}{y},
+						'steps'        => $self->{mapSolution}[0]{steps},
+						'portal'       => $self->{mapSolution}[0]{portal},
+						'plugin_retry' => $self->{mapSolution}[0]{plugin_retry},
+						'return'       => 0
 					);
-					$plugin_args{plugin_retry} = 0 if (!defined $plugin_args{plugin_retry});
-					$plugin_args{return} = 0;
 
 					Plugins::callHook('npc_teleport_missing' => \%plugin_args);
 
