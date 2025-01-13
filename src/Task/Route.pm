@@ -522,9 +522,9 @@ sub iterate {
 				}
 				
 				if ($current_pos_to->{x} == $self->{next_pos}{x} && $current_pos_to->{y} == $self->{next_pos}{y}) {
-					debug "[Test] [Route] Not sending next step ($self->{next_pos}{x}, $self->{next_pos}{y}) because our pos_to is the same as it.\n", "route";
+					debug "[Route] Not sending next step ($self->{next_pos}{x}, $self->{next_pos}{y}) because our pos_to is the same as it.\n", "route";
 					if ($self->{lastStep} == 1 && !$self->{sendAttackWithMove} && $self->{meetingSubRoute}) {
-						debug "[Test] [Route] Also ending task now ang giving back control to AI::Attack.\n", "route";
+						debug "[Route] Also ending task now ang giving back control to AI::Attack.\n", "route";
 						Plugins::callHook('route', {status => 'success'});
 						$self->setDone();
 					}
