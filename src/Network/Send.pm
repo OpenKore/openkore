@@ -3538,4 +3538,11 @@ sub sendMemorialDungeonCommand {
 	debug "Sent Memorial Dungeon Command\n", "sendPacket";
 }
 
+# 0A16 CZ_DYNAMICNPC_CREATE_REQUEST
+sub sendNPCCreateRequest {
+	my ($self, $name) = @_;
+	$self->sendToServer($self->reconstruct({switch => 'dynamicnpc_create_request', ID => $name}));
+	debug "Sent request to create NPC by name: $name\n", "sendPacket", 2;
+}
+
 1;

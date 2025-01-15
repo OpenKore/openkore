@@ -550,6 +550,15 @@ use constant {
 	MCR_INPROGRESS => 2,
 };
 
+# dynamicnpc_create_result
+use constant {
+	DYNAMICNPC_RESULT_SUCCESS => 0x0,
+	DYNAMICNPC_RESULT_UNKNOWN => 0x1,
+	DYNAMICNPC_RESULT_UNKNOWNNPC => 0x2,
+	DYNAMICNPC_RESULT_DUPLICATE => 0x3,
+	DYNAMICNPC_RESULT_OUTOFTIME => 0x4
+};
+
 # Display gained exp.
 # 07F6 <account id>.L <amount>.L <var id>.W <exp type>.W (ZC_NOTIFY_EXP)
 # 0ACC <account id>.L <amount>.Q <var id>.W <exp type>.W (ZC_NOTIFY_EXP2)
@@ -4658,7 +4667,7 @@ sub quest_all_list {
         $offset += $quest_info->{quest_len};
 
         next if !exists $quest->{mission_amount};
-		
+
         debug "- Mission amount: $quest->{mission_amount}\n", "info";
 
         for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
@@ -4911,7 +4920,7 @@ sub quest_update_mission_hunt {
 			goal => $quest_mission->{mob_goal}
 		});
 	}
-	
+
 	Plugins::callHook('quest_update_mission_hunt_end');
 }
 
@@ -4920,7 +4929,7 @@ sub quest_delete {
 	my ($self, $args) = @_;
 	message TF("Quest: %s has been deleted.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
 	delete $questList->{$args->{questID}};
-	
+
 	Plugins::callHook('quest_delete');
 }
 
@@ -4934,7 +4943,7 @@ sub quest_active {
 	, "info";
 
 	$questList->{$args->{questID}}->{active} = $args->{active};
-	
+
 	Plugins::callHook('quest_active');
 }
 
@@ -12228,14 +12237,14 @@ sub captcha_upload_request_status {
 # Status of Macro Reporter
 sub macro_reporter_status {
 	my ($self, $args) = @_;
-	my $status = "Unknown";
+	my $status = T("Unknown");
 
 	if ($args->{status} == MCR_MONITORING) {
-		$status = "Monitoring";
+		$status = T("Monitoring");
 	} elsif ($args->{status} == MCR_NO_DATA) {
-		$status = "No Data";
+		$status = T("No Data");
 	} elsif ($args->{status} == MCR_INPROGRESS) {
-		$status = "In Progress";
+		$status = T("In Progress");
 	}
 
 	message TF("Macro Reporter - Status: %s \n", $status), "captcha";
@@ -12308,14 +12317,14 @@ sub macro_detector_show {
 # Status of Macro Detector
 sub macro_detector_status {
 	my ($self, $args) = @_;
-	my $status = "Unknown";
+	my $status = T("Unknown");
 
 	if ($args->{status} == MCD_TIMEOUT) {
-		$status = "Timeout";
+		$status = T("Timeout");
 	} elsif ($args->{status} == MCD_INCORRECT) {
-		$status = "Incorrect";
+		$status = T("Incorrect");
 	} elsif ($args->{status} == MCD_GOOD) {
-		$status = "Correct";
+		$status = T("Correct");
 	}
 
 	message TF("Macro Detector Status: %s \n", $status), "captcha";
@@ -12400,6 +12409,26 @@ sub repute_info {
 sub gold_pc_cafe_point {
 	my ($self, $args) = @_;
 	debug TF("[gold_pc_cafe_point] isActive=%d, mode=%d, point=%d, playedTime=%d\n", $args->{isActive}, $args->{mode}, $args->{point}, $args->{playedTime});
+}
+
+# 0A17 - PACKET_ZC_DYNAMICNPC_CREATE_RESULT
+sub dynamicnpc_create_result {
+	my ($self, $args) = @_;
+	my $status;
+
+	if ($args->{result} == DYNAMICNPC_RESULT_SUCCESS ) {
+		$status = T("Success");
+	} elsif ($args->{result} == DYNAMICNPC_RESULT_UNKNOWN) {
+		$status = T("Unknown");
+	} elsif ($args->{result} == DYNAMICNPC_RESULT_UNKNOWNNPC) {
+		$status = T("Unknown NPC");
+	} elsif ($args->{result} == DYNAMICNPC_RESULT_DUPLICATE) {
+		$status = T("Duplicate");
+	} elsif ($args->{result} == DYNAMICNPC_RESULT_OUTOFTIME) {
+		$status = T("Out of time");
+	}
+
+	message TF("Dynamic NPC create result - Status: %s\n", $status);
 }
 
 1;
