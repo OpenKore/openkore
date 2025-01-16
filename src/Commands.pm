@@ -421,6 +421,11 @@ sub initHandlers {
 			[T("<portal #>"), T("move to nearby portal")],
 			["stop", T("stop all movement")]
 			], \&cmdMove],
+		['nc', [
+			T("NPC Create."),
+			["", T("Create NPC by default name 'GOLDPCCAFE'")],
+			[T("<name>"), T("Create NPC by <name>")],
+			], \&cmdNPCCreateRequest],
 		['nl', T("List NPCs that are on screen."), \&cmdNPCList],
 		['openbuyershop', undef, \&cmdOpenBuyerShop],
 		['openshop', T("Open your vending shop."), \&cmdOpenShop],
@@ -8652,6 +8657,18 @@ sub cmdMemorialDungeonDestroy {
 	if ($args eq "destroy") {
 		$messageSender->sendMemorialDungeonCommand(3);
 	}
+}
+
+sub cmdNPCCreateRequest {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+
+	my (undef, $args) = @_;
+	$args = 'GOLDPCCAFE' if (!defined $args);
+
+	$messageSender->sendNPCCreateRequest($args);
 }
 
 1;
