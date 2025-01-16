@@ -3767,9 +3767,9 @@ sub getBestTarget {
 				$monster->{attack_failedLOS} = time;
 				next;
 			}
-			my $priority = $priority{$name} ? $priority{$name} : 0;
 			
 			my $name = lc $monster->{name};
+			my $priority = $priority{$name} ? $priority{$name} : 0;
 			if (!defined($bestTarget) || ($priority > $highestPri)) {
 				$highestPri = $priority{$name};
 				$smallestDist = $dist;
