@@ -727,7 +727,7 @@ sub main {
 			delete $args->{attackMethod};
 
 			$ai_v{"attackSkillSlot_${slot}_time"} = time;
-			$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
+			$ai_v{temp}{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
 
 			ai_setSuspend(0);
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
@@ -759,7 +759,7 @@ sub main {
 			delete $args->{attackMethod};
 
 			$ai_v{"attackComboSlot_${slot}_time"} = time;
-			$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
+			$ai_v{temp}{"attackComboSlot_${slot}_target_time"}{$ID} = time;
 
 			ai_skillUse2(
 				$skill,
