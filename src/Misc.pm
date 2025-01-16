@@ -3722,15 +3722,16 @@ sub getBestTarget {
 
 		my $name = lc $monster->{name};
 		my $dist = adjustedBlockDistance($myPos, $pos);
+		my $priority = $priority{$name} ? $priority{$name} : 0;
 
-		if (!defined($bestTarget) || ($priority{$name} > $highestPri)) {
-			$highestPri = $priority{$name};
+		if (!defined($bestTarget) || ($priority > $highestPri)) {
+			$highestPri = $priority;
 			$smallestDist = $dist;
 			$bestTarget = $_;
 		}
-		if ((!defined($bestTarget) || $priority{$name} == $highestPri)
+		if ((!defined($bestTarget) || $priority == $highestPri)
 		  && (!defined($smallestDist) || $dist < $smallestDist)) {
-			$highestPri = $priority{$name};
+			$highestPri = $priority;
 			$smallestDist = $dist;
 			$bestTarget = $_;
 		}

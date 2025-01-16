@@ -3158,6 +3158,7 @@ sub processAutoAttack {
 			my @aggressives;
 			my @partyMonsters;
 			my @cleanMonsters;
+			my @droppedMonsters;
 
 			# List aggressive monsters
 			@aggressives = ai_getAggressives(1) if $attackOnRoute;
@@ -3216,6 +3217,15 @@ sub processAutoAttack {
 				}
 
 				my $control = mon_control($monster->{name}, $monster->{nameID});
+				# List dropped targets and already engaged targets
+				if(
+					$monster->{droppedForAggressive} || # check for dropped target
+					($monster->{dmgFromYou} && $config{'attackAuto'} >= 1 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)) # if received damage then check if we can continue the attack
+				) {
+					push @droppedMonsters, $_;
+					next;
+				}
+
 				next unless (!AI::is(qw/sitAuto take items_gather items_take/)
 				 && $config{'attackAuto'} >= 2
 				 && ($control->{attack_auto} == 1 || $control->{attack_auto} == 3)
@@ -3251,6 +3261,7 @@ sub processAutoAttack {
 			my $canSnipe = $config{attackCanSnipe};
 			$attackTarget = getBestTarget(\@aggressives, $checkLOS, $canSnipe) ||
 			                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
+			                getBestTarget(\@droppedMonsters, $checkLOS, $canSnipe) ||
 			                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
 		}
 
