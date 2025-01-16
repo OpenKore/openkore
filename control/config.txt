@@ -75,7 +75,6 @@ attackAuto_considerDamagedAggressive 0
 attackDistance 1
 attackDistanceAuto 1
 attackMaxDistance 1
-attackMaxRouteDistance 50
 attackMaxRouteTime 4
 attackMinPlayerDistance 2
 attackMinPortalDistance 4
