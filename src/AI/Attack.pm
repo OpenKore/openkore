@@ -87,6 +87,7 @@ sub process {
 				ai_setSuspend(0);
 				my $new_target = Actor::get($attackTarget);
 				warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
+				$target->{droppedForAggressive} = 1;
 				$char->attack($attackTarget);
 				AI::Attack::process();
 				return;
