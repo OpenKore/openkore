@@ -3771,13 +3771,13 @@ sub getBestTarget {
 			my $name = lc $monster->{name};
 			my $priority = $priority{$name} ? $priority{$name} : 0;
 			if (!defined($bestTarget) || ($priority > $highestPri)) {
-				$highestPri = $priority{$name};
+				$highestPri = $priority;
 				$smallestDist = $dist;
 				$bestTarget = $noLOSMonsters[$index];
 			}
 			if ((!defined($bestTarget) || $priority == $highestPri)
 			  && (!defined($smallestDist) || $dist < $smallestDist)) {
-				$highestPri = $priority{$name};
+				$highestPri = $priority;
 				$smallestDist = $dist;
 				$bestTarget = $noLOSMonsters[$index];
 			}
