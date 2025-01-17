@@ -399,39 +399,33 @@ sub main {
 	
 	my $i = 0;
 	while (exists $config{"attackComboSlot_$i"}) {
-		if (!$config{"attackComboSlot_$i"}) {
-			$i++;
-			next;
-		}
+		next unless (defined $config{"attackComboSlot_$i"});
 
-		if ($config{"attackComboSlot_${i}_afterSkill"}
-		 && Skill->new(auto => $config{"attackComboSlot_${i}_afterSkill"})->getIDN == $char->{last_skill_used}
-		 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
-		 && ( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) )
-		 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} || !$config{"attackComboSlot_${i}_isSelfSkill"})
-		 && checkSelfCondition("attackComboSlot_$i")
-		 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}) ||
-				existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{nameID}))
-		 && (!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) ||
-				existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{nameID})))
-		 && checkMonsterCondition("attackComboSlot_${i}_target", $target)) {
+		next unless (checkSelfCondition("attackComboSlot_$i"));
+		next unless ($config{"attackComboSlot_${i}_afterSkill"});
+		next unless (Skill->new(auto => $config{"attackComboSlot_${i}_afterSkill"})->getIDN == $char->{last_skill_used});
+		next unless (( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} ));
+		next unless (( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) ));
+		next unless (( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} || !$config{"attackComboSlot_${i}_isSelfSkill"}));
+		next unless ((!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}) || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{nameID})));
+		next unless ((!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) || existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{nameID}))));
+		next unless (checkMonsterCondition("attackComboSlot_${i}_target", $target));
 
-			$args->{attackComboSlot_uses}{$i}++;
-			delete $char->{last_skill_used};
-			if ($config{"attackComboSlot_${i}_autoCombo"}) {
-				$char->{combo_packet} = 1500 if ($char->{combo_packet} > 1500);
-				# eAthena seems to have a bug where the combo_packet overflows and gives an
-				# abnormally high number. This causes kore to get stuck in a waitBeforeUse timeout.
-				$config{"attackComboSlot_${i}_waitBeforeUse"} = ($char->{combo_packet} / 1000);
-			}
-			delete $char->{combo_packet};
-			$args->{attackMethod}{type} = "combo";
-			$args->{attackMethod}{comboSlot} = $i;
-			$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
-			$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_maxDist"} || $config{"attackComboSlot_${i}_dist"};
-			$args->{attackMethod}{isSelfSkill} = $config{"attackComboSlot_${i}_isSelfSkill"};
-			last;
+		$args->{attackComboSlot_uses}{$i}++;
+		delete $char->{last_skill_used};
+		if ($config{"attackComboSlot_${i}_autoCombo"}) {
+			$char->{combo_packet} = 1500 if ($char->{combo_packet} > 1500);
+			# eAthena seems to have a bug where the combo_packet overflows and gives an
+			# abnormally high number. This causes kore to get stuck in a waitBeforeUse timeout.
+			$config{"attackComboSlot_${i}_waitBeforeUse"} = ($char->{combo_packet} / 1000);
 		}
+		delete $char->{combo_packet};
+		$args->{attackMethod}{type} = "combo";
+		$args->{attackMethod}{comboSlot} = $i;
+		$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
+		$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_maxDist"} || $config{"attackComboSlot_${i}_dist"};
+		last;
+	} continue {
 		$i++;
 	}
 
@@ -449,31 +443,28 @@ sub main {
 
 		$i = 0;
 		while (exists $config{"attackSkillSlot_$i"}) {
-			if (!$config{"attackSkillSlot_$i"}) {
-				$i++;
-				next;
-			}
+			next unless (defined $config{"attackSkillSlot_$i"});
 
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$i"});
-			if ($skill->getOwnerType == Skill::OWNER_CHAR
-				&& checkSelfCondition("attackSkillSlot_$i")
-				&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
-				    $target->{skillUses}{$skill->getHandle()} < $config{"attackSkillSlot_$i"."_maxUses"})
-				&& (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"})
-				&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}) ||
-					existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{nameID}))
-				&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !(existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}) ||
-					existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{nameID})))
-				&& (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($target->{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}))
-				&& checkMonsterCondition("attackSkillSlot_${i}_target", $target)
-			) {
-				$args->{attackSkillSlot_attempts}{$i}++;
-				$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
-				$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_maxDist"} || $config{"attackSkillSlot_$i"."_dist"};
-				$args->{attackMethod}{type} = "skill";
-				$args->{attackMethod}{skillSlot} = $i;
-				last;
-			}
+			next unless ($skill);
+			next unless ($skill->getOwnerType == Skill::OWNER_CHAR);
+			
+			my $handle = $skill->getHandle();
+			
+			next unless (checkSelfCondition("attackSkillSlot_$i"));
+			next unless ((!$config{"attackSkillSlot_$i"."_maxUses"} || $target->{skillUses}{$handle} < $config{"attackSkillSlot_$i"."_maxUses"}));
+			next unless ((!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"}));
+			next unless ((!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}) || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{nameID})));
+			next unless ((!$config{"attackSkillSlot_$i"."_notMonsters"} || !(existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}) ||existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{nameID}))));
+			next unless ((!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($target->{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"})));
+			next unless (checkMonsterCondition("attackSkillSlot_${i}_target", $target));
+			
+			$args->{attackMethod}{type} = "skill";
+			$args->{attackMethod}{skillSlot} = $i;
+			$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
+			$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_maxDist"} || $config{"attackSkillSlot_$i"."_dist"};
+			last;
+		} continue {
 			$i++;
 		}
 	}
@@ -729,12 +720,15 @@ sub main {
 
 			$ai_v{"attackSkillSlot_${slot}_time"} = time;
 			$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
+			
+			$args->{attackSkillSlot_attempts}{$slot}++;
 
 			ai_setSuspend(0);
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
+			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 			ai_skillUse2(
 				$skill,
-				$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+				$skill_lvl,
 				$config{"attackSkillSlot_${slot}_maxCastTime"},
 				$config{"attackSkillSlot_${slot}_minCastTime"},
 				$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target,
@@ -743,34 +737,34 @@ sub main {
 				"attackSkill",
 				$config{"attackSkillSlot_${slot}_isStartSkill"} ? 1 : 0,
 			);
-			$args->{monsterID} = $ID;
-			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 			debug "[attackSkillSlot] Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
 			# TODO: We sould probably add a runFromTarget_inAdvance logic here also, we could want to kite using skills, but only instant cast ones like double strafe I believe
 
 			$timeout{ai_attack_after_skill}{time} = time;
-			delete $args->{attackMethod};
+
+			$args->{monsterID} = $ID;
 			$found_action = 1;
 
 		# Attack with combo logic
 		} elsif ($args->{attackMethod}{type} eq "combo") {
 			my $slot = $args->{attackMethod}{comboSlot};
-			my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
-			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
 			delete $args->{attackMethod};
 
 			$ai_v{"attackComboSlot_${slot}_time"} = time;
 			$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
 
+			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
+			my $skill_lvl = $config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 			ai_skillUse2(
 				$skill,
-				$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+				$skill_lvl,
 				$config{"attackComboSlot_${slot}_maxCastTime"},
 				$config{"attackComboSlot_${slot}_minCastTime"},
-				$isSelfSkill ? $char : $target,
+				$config{"attackComboSlot_${slot}_isSelfSkill"} ? $char : $target,
 				undef,
 				$config{"attackComboSlot_${slot}_waitBeforeUse"},
 			);
+
 			$args->{monsterID} = $ID;
 			$found_action = 1;
 		}

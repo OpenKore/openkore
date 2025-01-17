@@ -381,32 +381,29 @@ sub main {
 	# $target->{dmgFromPlayer}{$slave->{ID}} - $target->{dmgFromYou}
 	
 	### attackSkillSlot begin
-	for (my ($i, $prefix) = (0, 'attackSkillSlot_0'); $prefix = "attackSkillSlot_$i" and exists $config{$prefix}; $i++) {
-		next unless $config{$prefix};
-		
-		next unless (checkSelfCondition($prefix));
+	my $i = 0;
+	while (exists $config{"attackSkillSlot_$i"}) {
+		next unless (defined $config{"attackSkillSlot_$i"});
 
-		next unless (checkMonsterCondition("${prefix}_target", $target));
+		my $skill = new Skill(auto => $config{"attackSkillSlot_$i"});
+		next unless ($skill);
+		next unless ($slave->checkSkillOwnership ($skill));
 
-		my $skill = new Skill(auto => $config{$prefix});
-		next unless $slave->checkSkillOwnership ($skill);
+		next unless (checkSelfCondition("attackSkillSlot_$i"));
+		next if $config{"attackSkillSlot_$i"."_maxUses"} && $target->{skillUses}{$skill->getHandle()} >= $config{"attackSkillSlot_$i"."_maxUses"};
+		next unless (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"});
+		next unless (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}) || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{nameID}));
+		next unless (!$config{"attackSkillSlot_$i"."_notMonsters"} || !(existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}) || existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{nameID})));
+		next unless (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($target->{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}));
+		next unless (checkMonsterCondition("attackSkillSlot_$i"."_target", $target));
 
-		next if $config{"${prefix}_maxUses"} && $target->{skillUses}{$skill->getHandle()} >= $config{"${prefix}_maxUses"};
-
-		next unless (!$config{"${prefix}_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"${prefix}_maxAttempts"});
-
-		next unless (!$config{"${prefix}_monsters"} || existsInList($config{"${prefix}_monsters"}, $target->{'name'}) || existsInList($config{"${prefix}_monsters"}, $target->{nameID}));
-
-		next unless (!$config{"${prefix}_notMonsters"} || !(existsInList($config{"${prefix}_notMonsters"}, $target->{'name'}) || existsInList($config{"${prefix}_notMonsters"}, $target->{nameID})));
-
-		next unless (!$config{"${prefix}_previousDamage"} || inRange($target->{dmgTo}, $config{"${prefix}_previousDamage"}));
-
-		$args->{attackSkillSlot_attempts}{$i}++;
-		$args->{attackMethod}{distance} = $config{"${prefix}_dist"};
-		$args->{attackMethod}{maxDistance} = $config{"${prefix}_maxDist"} || $config{"${prefix}_dist"};
 		$args->{attackMethod}{type} = "skill";
 		$args->{attackMethod}{skillSlot} = $i;
+		$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
+		$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_maxDist"} || $config{"attackSkillSlot_$i"."_dist"};
 		last;
+	} continue {
+		$i++;
 	}
 	### attackSkillSlot end
 	
@@ -688,12 +685,15 @@ sub main {
 
 			$ai_v{"attackSkillSlot_${slot}_time"} = time;
 			$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
+			
+			$args->{attackSkillSlot_attempts}{$i}++;
 
 			ai_setSuspend(0);
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
+			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"};# || $char->getSkillLevel($skill);?
 			ai_skillUse2(
 				$skill,
-				$config{"attackSkillSlot_${slot}_lvl"},# || $char->getSkillLevel($skill),?
+				$skill_lvl,
 				$config{"attackSkillSlot_${slot}_maxCastTime"},
 				$config{"attackSkillSlot_${slot}_minCastTime"},
 				$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $slave : $target,
@@ -702,10 +702,11 @@ sub main {
 				"attackSkill",
 				$config{"attackSkillSlot_${slot}_isStartSkill"} ? 1 : 0,
 			);
-			$args->{monsterID} = $ID;
-			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"};# || $char->getSkillLevel($skill);?
+
 			debug "[Slave $slave] [attackSkillSlot] Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
 			# TODO: We sould probably add a runFromTarget_inAdvance logic here also, we could want to kite using skills, but only instant cast ones like double strafe I believe
+			
+			$args->{monsterID} = $ID;
 			$found_action = 1;
 		}
 
