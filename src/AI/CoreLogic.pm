@@ -828,7 +828,7 @@ sub processTake {
 				$field->baseName,
 				$pos->{x},
 				$pos->{y},
-				maxRouteDistance => $config{'attackMaxRouteDistance'},
+				maxRouteDistance => $config{'attackRouteMaxPathDistance'},
 				noSitAuto => 1,
 				distFromGoal => 1,
 				isItemTake => 1
@@ -3403,7 +3403,7 @@ sub processItemsGather {
 				$field->baseName,
 				$pos->{x},
 				$pos->{y},
-				maxRouteDistance => $config{'attackMaxRouteDistance'},
+				maxRouteDistance => $config{'attackRouteMaxPathDistance'},
 				noSitAuto => 1,
 				distFromGoal => 1,
 				isItemGather => 1

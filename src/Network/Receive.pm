@@ -11553,7 +11553,7 @@ sub skill_cast {
 			getVector(\%vec, \%coords, $char->{pos_to});
 			moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{pos_to}, \%coords));
 			ai_route($field->baseName, $pos{x}, $pos{y},
-				maxRouteDistance => $config{attackMaxRouteDistance},
+				maxRouteDistance => $config{attackRouteMaxPathDistance},
 				maxRouteTime => $config{attackMaxRouteTime},
 				noMapRoute => 1);
 			message TF("Avoid casting Skill - switch position to : %s,%s\n", $pos{x}, $pos{y}), 1;
