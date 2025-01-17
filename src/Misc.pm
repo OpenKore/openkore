@@ -55,6 +55,7 @@ use Actor::Unknown;
 use Time::HiRes qw(time usleep);
 use Translation;
 use Utils::Exceptions;
+use Utils::PathFinding;
 
 our @EXPORT = (
 	# Config modifiers
@@ -3691,8 +3692,9 @@ sub getBestTarget {
 	my $playerDist = $config{'attackMinPlayerDistance'} || 1;
 
 	my @noLOSMonsters;
+	my @noLOSMonsters_pos;
 	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-	my $myPos = calcPosition($char);
+	my $myPos = calcPosFromPathfinding($field, $char);
 	my ($highestPri, $smallestDist, $bestTarget);
 
 	# First of all we check monsters in LOS, then the rest of monsters
@@ -3700,7 +3702,7 @@ sub getBestTarget {
 	foreach (@{$possibleTargets}) {
 		my $monster = $monsters{$_};
 		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-		my $pos = calcPosition($monster);
+		my $pos = calcPosFromPathfinding($field, $monster);
 		next if (positionNearPlayer($pos, $playerDist)
 			|| positionNearPortal($pos, $portalDist)
 		);
@@ -3717,44 +3719,67 @@ sub getBestTarget {
 
 		if (!$field->checkLOS($myPos, $pos, $attackCanSnipe)) {
 			push(@noLOSMonsters, $_);
+			push(@noLOSMonsters_pos, $pos);
 			next;
 		}
 
 		my $name = lc $monster->{name};
 		my $dist = adjustedBlockDistance($myPos, $pos);
+		my $priority = $priority{$name} ? $priority{$name} : 0;
 
-		if (!defined($bestTarget) || ($priority{$name} > $highestPri)) {
-			$highestPri = $priority{$name};
+		if (!defined($bestTarget) || ($priority > $highestPri)) {
+			$highestPri = $priority;
 			$smallestDist = $dist;
 			$bestTarget = $_;
 		}
-		if ((!defined($bestTarget) || $priority{$name} == $highestPri)
+		if ((!defined($bestTarget) || $priority == $highestPri)
 		  && (!defined($smallestDist) || $dist < $smallestDist)) {
-			$highestPri = $priority{$name};
+			$highestPri = $priority;
 			$smallestDist = $dist;
 			$bestTarget = $_;
 		}
 	}
 	if ($attackCheckLOS && !$bestTarget && scalar(@noLOSMonsters) > 0) {
-		foreach (@noLOSMonsters) {
+		my $pathfinding = new PathFinding;
+		my ($min_pathfinding_x, $min_pathfinding_y, $max_pathfinding_x, $max_pathfinding_y) = $field->getSquareEdgesFromCoord($myPos, $config{attackRouteMaxPathDistance});
+		foreach my $index (0..$#noLOSMonsters) {
+			
 			# The most optimal solution is to include the path lenghts' comparison, however it will take
 			# more time and CPU resources, so, we use rough solution with priority and distance comparison
 
-			my $monster = $monsters{$_};
+			my $monster = $monsters{$noLOSMonsters[$index]};
 			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-			my $pos = calcPosition($monster);
-			my $name = lc $monster->{name};
-			my $dist = adjustedBlockDistance($myPos, $pos);
-			if (!defined($bestTarget) || ($priority{$name} > $highestPri)) {
-				$highestPri = $priority{$name};
-				$smallestDist = $dist;
-				$bestTarget = $_;
+			my $pos = $noLOSMonsters_pos[$index];
+			$pathfinding->reset(
+				start => $myPos,
+				dest  => $pos,
+				field => $field,
+				avoidWalls => 0,
+				randomFactor => 0,
+				useManhattan => 0,
+				min_x => $min_pathfinding_x,
+				max_x => $max_pathfinding_x,
+				min_y => $min_pathfinding_y,
+				max_y => $max_pathfinding_y
+			);
+			my $dist = $pathfinding->runcount;
+			if ($dist <= 0 || $dist > $config{attackRouteMaxPathDistance}) {
+				$monster->{attack_failedLOS} = time;
+				next;
 			}
-			if ((!defined($bestTarget) || $priority{$name} == $highestPri)
-			  && (!defined($smallestDist) || $dist < $smallestDist)) {
-				$highestPri = $priority{$name};
+			
+			my $name = lc $monster->{name};
+			my $priority = $priority{$name} ? $priority{$name} : 0;
+			if (!defined($bestTarget) || ($priority > $highestPri)) {
+				$highestPri = $priority;
 				$smallestDist = $dist;
-				$bestTarget = $_;
+				$bestTarget = $noLOSMonsters[$index];
+			}
+			if ((!defined($bestTarget) || $priority == $highestPri)
+			  && (!defined($smallestDist) || $dist < $smallestDist)) {
+				$highestPri = $priority;
+				$smallestDist = $dist;
+				$bestTarget = $noLOSMonsters[$index];
 			}
 		}
 	}

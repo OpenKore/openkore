@@ -87,6 +87,7 @@ sub process {
 				ai_setSuspend(0);
 				my $new_target = Actor::get($attackTarget);
 				warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
+				$target->{droppedForAggressive} = 1;
 				$char->attack($attackTarget);
 				AI::Attack::process();
 				return;
@@ -115,7 +116,7 @@ sub process {
 				return;
 			}
 		}
-		
+
 		if ($stage == MOVING_TO_ATTACK) {
 			# Check for hidden monsters
 			if (($target->{statuses}->{EFFECTSTATE_BURROW} || $target->{statuses}->{EFFECTSTATE_HIDING}) && $config{avoidHiddenMonsters}) {
@@ -160,7 +161,7 @@ sub process {
 				}
 			}
 		}
-		
+
 		if ($stage == ATTACKING) {
 			if (AI::args->{suspended}) {
 				$args->{ai_attack_giveup}{time} += time - $args->{suspended};
@@ -172,7 +173,7 @@ sub process {
 				$args->{ai_attack_giveup}{time} += time - $args->{move_start};
 				undef $args->{unstuck}{time};
 				undef $args->{move_start};
-				
+
 			} elsif ($args->{avoiding}) {
 				$args->{ai_attack_giveup}{time} = time;
 				undef $args->{avoiding};
@@ -293,7 +294,7 @@ sub finishAttacking {
 
 sub find_kite_position {
 	my ($args, $inAdvance, $target, $realMyPos, $realMonsterPos, $noAttackMethodFallback_runFromTarget) = @_;
-	
+
 	my $maxDistance;
 	if (!$noAttackMethodFallback_runFromTarget && defined $args->{attackMethod}{type} && defined $args->{attackMethod}{maxDistance}) {
 		$maxDistance = $args->{attackMethod}{maxDistance};
@@ -356,16 +357,16 @@ sub main {
 
 	my $realMyPos = calcPosFromPathfinding($field, $char);
 	my $realMonsterPos = calcPosFromPathfinding($field, $target);
-	
+
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
-	
+
 	my $failed_to_attack_packet_recv = 0;
-	
+
 	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
 		$args->{temporary_extra_range} = 0;
 	}
-	
+
 	if (exists $target->{movetoattack_pos} && exists $char->{movetoattack_pos}) {
 		$failed_to_attack_packet_recv = 1;
 		$args->{temporary_extra_range} = 0;
@@ -379,15 +380,15 @@ sub main {
 		$args->{ai_attack_giveup}{time} = time;
 		debug "Update attack giveup time\n", "ai_attack", 2;
 	}
-	
+
 	my $hitYou = ($args->{dmgToYou_last} != $target->{dmgToYou} || $args->{missedYou_last} != $target->{missedYou});
 	my $youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromYou});
-	
+
 	$args->{dmgToYou_last} = $target->{dmgToYou};
 	$args->{missedYou_last} = $target->{missedYou};
 	$args->{dmgFromYou_last} = $target->{dmgFromYou};
 	$args->{missedFromYou_last} = $target->{missedFromYou};
-	
+
 	$args->{lastSkillTime} = $char->{last_skill_time};
 
 	Benchmark::end("ai_attack (part 1.1)") if DEBUG;
@@ -395,42 +396,36 @@ sub main {
 
 	# Determine what combo skill to use
 	delete $args->{attackMethod};
-	
+
 	my $i = 0;
 	while (exists $config{"attackComboSlot_$i"}) {
-		if (!$config{"attackComboSlot_$i"}) {
-			$i++;
-			next;
-		}
+		next unless (defined $config{"attackComboSlot_$i"});
 
-		if ($config{"attackComboSlot_${i}_afterSkill"}
-		 && Skill->new(auto => $config{"attackComboSlot_${i}_afterSkill"})->getIDN == $char->{last_skill_used}
-		 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
-		 && ( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) )
-		 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} || !$config{"attackComboSlot_${i}_isSelfSkill"})
-		 && checkSelfCondition("attackComboSlot_$i")
-		 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}) ||
-				existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{nameID}))
-		 && (!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) ||
-				existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{nameID})))
-		 && checkMonsterCondition("attackComboSlot_${i}_target", $target)) {
+		next unless (checkSelfCondition("attackComboSlot_$i"));
+		next unless ($config{"attackComboSlot_${i}_afterSkill"});
+		next unless (Skill->new(auto => $config{"attackComboSlot_${i}_afterSkill"})->getIDN == $char->{last_skill_used});
+		next unless (( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} ));
+		next unless (( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) ));
+		next unless (( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} || !$config{"attackComboSlot_${i}_isSelfSkill"}));
+		next unless ((!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}) || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{nameID})));
+		next unless ((!$config{"attackComboSlot_${i}_notMonsters"} || !(existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}) || existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{nameID}))));
+		next unless (checkMonsterCondition("attackComboSlot_${i}_target", $target));
 
-			$args->{attackComboSlot_uses}{$i}++;
-			delete $char->{last_skill_used};
-			if ($config{"attackComboSlot_${i}_autoCombo"}) {
-				$char->{combo_packet} = 1500 if ($char->{combo_packet} > 1500);
-				# eAthena seems to have a bug where the combo_packet overflows and gives an
-				# abnormally high number. This causes kore to get stuck in a waitBeforeUse timeout.
-				$config{"attackComboSlot_${i}_waitBeforeUse"} = ($char->{combo_packet} / 1000);
-			}
-			delete $char->{combo_packet};
-			$args->{attackMethod}{type} = "combo";
-			$args->{attackMethod}{comboSlot} = $i;
-			$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
-			$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_maxDist"} || $config{"attackComboSlot_${i}_dist"};
-			$args->{attackMethod}{isSelfSkill} = $config{"attackComboSlot_${i}_isSelfSkill"};
-			last;
+		$args->{attackComboSlot_uses}{$i}++;
+		delete $char->{last_skill_used};
+		if ($config{"attackComboSlot_${i}_autoCombo"}) {
+			$char->{combo_packet} = 1500 if ($char->{combo_packet} > 1500);
+			# eAthena seems to have a bug where the combo_packet overflows and gives an
+			# abnormally high number. This causes kore to get stuck in a waitBeforeUse timeout.
+			$config{"attackComboSlot_${i}_waitBeforeUse"} = ($char->{combo_packet} / 1000);
 		}
+		delete $char->{combo_packet};
+		$args->{attackMethod}{type} = "combo";
+		$args->{attackMethod}{comboSlot} = $i;
+		$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
+		$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_maxDist"} || $config{"attackComboSlot_${i}_dist"};
+		last;
+	} continue {
 		$i++;
 	}
 
@@ -448,31 +443,28 @@ sub main {
 
 		$i = 0;
 		while (exists $config{"attackSkillSlot_$i"}) {
-			if (!$config{"attackSkillSlot_$i"}) {
-				$i++;
-				next;
-			}
+			next unless (defined $config{"attackSkillSlot_$i"});
 
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$i"});
-			if ($skill->getOwnerType == Skill::OWNER_CHAR
-				&& checkSelfCondition("attackSkillSlot_$i")
-				&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
-				    $target->{skillUses}{$skill->getHandle()} < $config{"attackSkillSlot_$i"."_maxUses"})
-				&& (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"})
-				&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}) ||
-					existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{nameID}))
-				&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !(existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}) ||
-					existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{nameID})))
-				&& (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($target->{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}))
-				&& checkMonsterCondition("attackSkillSlot_${i}_target", $target)
-			) {
-				$args->{attackSkillSlot_attempts}{$i}++;
-				$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
-				$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_maxDist"} || $config{"attackSkillSlot_$i"."_dist"};
-				$args->{attackMethod}{type} = "skill";
-				$args->{attackMethod}{skillSlot} = $i;
-				last;
-			}
+			next unless ($skill);
+			next unless ($skill->getOwnerType == Skill::OWNER_CHAR);
+
+			my $handle = $skill->getHandle();
+
+			next unless (checkSelfCondition("attackSkillSlot_$i"));
+			next unless ((!$config{"attackSkillSlot_$i"."_maxUses"} || $target->{skillUses}{$handle} < $config{"attackSkillSlot_$i"."_maxUses"}));
+			next unless ((!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"}));
+			next unless ((!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}) || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{nameID})));
+			next unless ((!$config{"attackSkillSlot_$i"."_notMonsters"} || !(existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}) ||existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{nameID}))));
+			next unless ((!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($target->{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"})));
+			next unless (checkMonsterCondition("attackSkillSlot_${i}_target", $target));
+
+			$args->{attackMethod}{type} = "skill";
+			$args->{attackMethod}{skillSlot} = $i;
+			$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
+			$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_maxDist"} || $config{"attackSkillSlot_$i"."_dist"};
+			last;
+		} continue {
 			$i++;
 		}
 	}
@@ -490,11 +482,11 @@ sub main {
 	if (defined $args->{attackMethod}{type} && exists $args->{ai_attack_failed_give_up} && defined $args->{ai_attack_failed_give_up}{time}) {
 		debug "Deleting ai_attack_failed_give_up time.\n";
 		delete $args->{ai_attack_failed_give_up}{time};
-		
+
 	}
-	
+
 	$args->{attackMethod}{maxDistance} += $args->{temporary_extra_range};
-	
+
 	# -2: undefined attackMethod
 	# -1: No LOS
 	#  0: out of range
@@ -507,7 +499,7 @@ sub main {
 	}
 
 	my $canAttack_fail_string = (($canAttack == -2) ? "No Method" : (($canAttack == -1) ? "No LOS" : (($canAttack == 0) ? "No Range" : "OK")));
-	
+
 	# Here we check if the monster which we are waiting to get closer to us is in fact close enough
 	# If it is close enough delete the ai_attack_failed_waitForAgressive_give_up keys and loop attack logic
 	if (
@@ -520,7 +512,7 @@ sub main {
 		debug "Deleting ai_attack_failed_waitForAgressive_give_up time.\n";
 		delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};
 	}
-	
+
 	# Here we check if we have finished moving to the meeting position to attack our target, only checks this if attackWaitApproachFinish is set to 1 in config
 	# If so sets sentApproach to 0
 	if ($args->{sentApproach}) {
@@ -542,7 +534,7 @@ sub main {
 			}
 		}
 	}
-	
+
 	my $found_action = 0;
 	my $failed_runFromTarget = 0;
 	my $hitTarget_when_not_possible = 0;
@@ -561,7 +553,7 @@ sub main {
 			$failed_runFromTarget = 1;
 		}
 	}
-	
+
 	# Here, if runFromTarget is active, and we can't attack right now (eg. all skills in cooldown) we check if the target mob is closer to us than the minimun distance specified in runFromTarget_noAttackMethodFallback_minStep
 	# If so try to kite it using maxdistance of runFromTarget_noAttackMethodFallback_attackMaxDist
 	if (
@@ -591,7 +583,7 @@ sub main {
 			giveUp($args, $ID, 0);
 		}
 	}
-	
+
 	if ($canAttack == 0 && $youHitTarget) {
 		debug TF("[%s] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
@@ -612,7 +604,7 @@ sub main {
 			delete $args->{ai_attack_failed_waitForAgressive_give_up}{time};;
 		}
 	}
-	
+
 	# Here we decide what to do when a mob we have already hit is no longer in range or we have no LOS to it
 	# We also check if we have waited too long for the monster which we are waiting to get closer to us to approach
 	# TODO: Maybe we should separate this into 2 sections, one for out of range and another for no LOS - low priority
@@ -657,12 +649,12 @@ sub main {
 			$args->{move_start} = time;
 			$args->{monsterLastMoveTime} = $target->{time_move};
 			$args->{sentApproach} = 1;
-			
+
 			my $sendAttackWithMove = 0;
 			if ($config{"attackSendAttackWithMove"} && $args->{attackMethod}{type} eq "weapon") {
 				$sendAttackWithMove = 1;
 			}
-			
+
 			$char->route(
 				undef,
 				@{$pos}{qw(x y)},
@@ -729,11 +721,14 @@ sub main {
 			$ai_v{"attackSkillSlot_${slot}_time"} = time;
 			$ai_v{temp}{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
 
+			$args->{attackSkillSlot_attempts}{$slot}++;
+
 			ai_setSuspend(0);
 			my $skill = new Skill(auto => $config{"attackSkillSlot_$slot"});
+			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 			ai_skillUse2(
 				$skill,
-				$config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+				$skill_lvl,
 				$config{"attackSkillSlot_${slot}_maxCastTime"},
 				$config{"attackSkillSlot_${slot}_minCastTime"},
 				$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target,
@@ -742,40 +737,40 @@ sub main {
 				"attackSkill",
 				$config{"attackSkillSlot_${slot}_isStartSkill"} ? 1 : 0,
 			);
-			$args->{monsterID} = $ID;
-			my $skill_lvl = $config{"attackSkillSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 			debug "[attackSkillSlot] Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $skill_lvl)\n~, "ai_attack";
 			# TODO: We sould probably add a runFromTarget_inAdvance logic here also, we could want to kite using skills, but only instant cast ones like double strafe I believe
 
 			$timeout{ai_attack_after_skill}{time} = time;
-			delete $args->{attackMethod};
+
+			$args->{monsterID} = $ID;
 			$found_action = 1;
 
 		# Attack with combo logic
 		} elsif ($args->{attackMethod}{type} eq "combo") {
 			my $slot = $args->{attackMethod}{comboSlot};
-			my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
-			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
 			delete $args->{attackMethod};
 
 			$ai_v{"attackComboSlot_${slot}_time"} = time;
 			$ai_v{temp}{"attackComboSlot_${slot}_target_time"}{$ID} = time;
 
+			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
+			my $skill_lvl = $config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
 			ai_skillUse2(
 				$skill,
-				$config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill),
+				$skill_lvl,
 				$config{"attackComboSlot_${slot}_maxCastTime"},
 				$config{"attackComboSlot_${slot}_minCastTime"},
-				$isSelfSkill ? $char : $target,
+				$config{"attackComboSlot_${slot}_isSelfSkill"} ? $char : $target,
 				undef,
 				$config{"attackComboSlot_${slot}_waitBeforeUse"},
 			);
+
 			$args->{monsterID} = $ID;
 			$found_action = 1;
 		}
 
 	}
-	
+
 	if (!$found_action && $config{tankMode}) {
 		if ($args->{dmgTo_last} != $target->{dmgTo}) {
 			$args->{ai_attack_giveup}{time} = time;
