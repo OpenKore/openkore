@@ -3027,7 +3027,7 @@ sub processMonsterSkillUse {
 					my $target = $config{"${prefix}_isSelfSkill"} ? $char : $monster;
 					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix);
 					$ai_v{$prefix . "_time"} = time;
-					$ai_v{$prefix . "_target_time"}{$monsterID} = time;
+					$ai_v{temp}{$prefix . "_target_time"}{$monsterID} = time;
 					last;
 				}
 			}
