@@ -45,6 +45,7 @@ sub new {
 	
 	$self->{brush}{text}        = new Wx::Brush(new Wx::Colour(0, 255, 0), wxSOLID);
 	$self->{brush}{dest}        = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
+	$self->{brush}{attackdest}  = new Wx::Brush(new Wx::Colour(255, 80, 80), wxSOLID);
 	$self->{brush}{party}       = new Wx::Brush(new Wx::Colour(0, 0, 255), wxSOLID);
 	$self->{textColor}{party}   = new Wx::Colour (0, 0, 255);
 	$self->{brush}{player}      = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
@@ -136,20 +137,30 @@ sub set {
 	}
 }
 
-# UNUSED
-sub setDest {
-	my ($self, $x, $y) = @_;
-	$self->setRoute(defined $x ? [x => $x, y => $y] : undef);
-}
-
 sub setRoute {
-	my ($self, $solution) = @_;
+	my ($self, $solution, $attack) = @_;
 	
 	if (defined $solution) {
 		$self->{route} = $solution;
+		$self->{routeAttack} = $attack;
 		$self->{needUpdate} = 1;
 	} elsif (defined $self->{route}) {
 		undef $self->{route};
+		undef $self->{routeAttack};
+		$self->{needUpdate} = 1;
+	}
+}
+
+sub setRoute2 {
+	my ($self, $solution, $attack) = @_;
+	
+	if (defined $solution) {
+		$self->{route2} = $solution;
+		$self->{routeAttack2} = $attack;
+		$self->{needUpdate} = 1;
+	} elsif (defined $self->{route2}) {
+		undef $self->{route2};
+		undef $self->{routeAttack2};
 		$self->{needUpdate} = 1;
 	}
 }
@@ -722,13 +733,17 @@ sub _onPaint {
 	}
 	
 	if ($self->{route} && @{$self->{route}}) {
-		$dc->SetBrush($self->{brush}{dest});
+		if ($self->{routeAttack}) {
+			$dc->SetBrush($self->{brush}{attackdest});
+		} else {
+			$dc->SetBrush($self->{brush}{dest});
+		}
 		
 		if ($config{wx_map_route} == 2) {
 			$dc->SetPen(wxRED_PEN);
 			foreach my $pos (@{$self->{route}}) {
 				($x, $y) = $self->_posXYToView ($pos->{x}, $pos->{y});
-				$dc->DrawEllipse($x - 1, $y - 1, 1, 1);
+				$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
 			}
 		} elsif ($config{wx_map_route} == 1) {
 			$dc->SetPen(wxWHITE_PEN);
@@ -739,6 +754,34 @@ sub _onPaint {
 			}
 		} else {
 			($x, $y) = $self->_posXYToView ($self->{route}[-1]{x}, $self->{route}[-1]{y});
+			$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
+		}
+		
+		$dc->SetPen(wxBLACK_PEN);
+	}
+	
+	if ($self->{route2} && @{$self->{route2}}) {
+		if ($self->{routeAttack2}) {
+			$dc->SetBrush($self->{brush}{attackdest});
+		} else {
+			$dc->SetBrush($self->{brush}{dest});
+		}
+		
+		if ($config{wx_map_route} == 2) {
+			$dc->SetPen(wxRED_PEN);
+			foreach my $pos (@{$self->{route2}}) {
+				($x, $y) = $self->_posXYToView ($pos->{x}, $pos->{y});
+				$dc->DrawEllipse($x - $actor_r, $y - $actor_r, $actor_d, $actor_d);
+			}
+		} elsif ($config{wx_map_route} == 1) {
+			$dc->SetPen(wxWHITE_PEN);
+			my $i = 0;
+			for (grep {not $i++ % ($portal_d * 2)} reverse @{$self->{route2}}) {
+				($x, $y) = $self->_posXYToView ($_->{x}, $_->{y});
+				$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
+			}
+		} else {
+			($x, $y) = $self->_posXYToView ($self->{route2}[-1]{x}, $self->{route2}[-1]{y});
 			$dc->DrawEllipse($x - $portal_r, $y - $portal_r, $portal_d, $portal_d);
 		}
 		

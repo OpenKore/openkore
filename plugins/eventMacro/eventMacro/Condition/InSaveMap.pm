@@ -10,7 +10,7 @@ use base 'eventMacro::Condition';
 use Globals qw( $field %config );
 
 sub _hooks {
-	['packet_mapChange','configModify','pos_load_config.txt','in_game'];
+	['Network::Receive::map_changed','in_game','packet_mapChange','configModify','pos_load_config.txt'];
 }
 
 sub _parse_syntax {
@@ -31,24 +31,15 @@ sub _parse_syntax {
 
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
-
-	if ($callback_type eq 'hook') {
-		
-		if ($callback_name eq 'configModify' && $args->{key} eq 'saveMap') {
-			$self->{lastSaveMap} = $args->{val} || '';
-			
-		} elsif ($callback_name eq 'pos_load_config.txt' || $callback_name eq 'in_game') {
-			$self->{lastSaveMap} = $config{'saveMap'} || '';
-			
-		} elsif ($callback_name eq 'packet_mapChange') {
-			$self->{lastMap} = $field ? $field->baseName : '';
-		}
 	
-	} elsif ($callback_type eq 'recheck') {
+	if ($callback_type eq 'hook' && $callback_name eq 'configModify' && $args->{key} eq 'saveMap') {
+		$self->{lastSaveMap} = $args->{val} || '';
+	} else {
 		$self->{lastSaveMap} = $config{'saveMap'} || '';
-		$self->{lastMap} = $field ? $field->baseName : '';
 	}
-	
+
+	$self->{lastMap} = $field ? $field->baseName : '';
+
 	if ( $self->{lastSaveMap} eq '' || $self->{lastMap} eq '' ) {
 		$self->SUPER::validate_condition( 0 );
 	} else {

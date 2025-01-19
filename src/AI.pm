@@ -171,7 +171,22 @@ sub mapChanged {
 }
 
 sub findAction {
-	return binFind(\@ai_seq, $_[0]);
+	my $wanted_action = shift;
+	my $skip = shift;
+	if (!defined $skip) {
+		$skip = 0;
+	}
+	
+	foreach my $i (0..$#ai_seq) {
+		next unless ($ai_seq[$i] eq $wanted_action);
+		if ($skip) {
+			$skip--;
+		} else {
+			return $i;
+		}
+	}
+	
+	return undef;
 }
 
 sub inQueue {
@@ -380,6 +395,7 @@ sub ai_slave_getAggressives {
 		next if (!timeOut($monster->{attack_failedLOS}, $timeout{ai_attack_failedLOS}{timeout}));
 		next if (!timeOut($monster->{$slave->{ai_attack_failed_timeout}}, $timeout{ai_attack_unfail}{timeout}));
 		next if (!Misc::slave_checkMonsterCleanness($slave, $ID));
+		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 		my $pos = calcPosition($monster);
 		next if (blockDistance($char->position, $pos) > ($config{$slave->{configPrefix}.'followDistanceMax'} + $config{$slave->{configPrefix}.'attackMaxDistance'}));
 
@@ -586,12 +602,19 @@ sub ai_skillUse {
 		delete $args{target};
 	}
 
-	if ($char->{skills}{$args{skillHandle}}{lv} < $args{lv}) {
-		debug "Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$char->{skills}{$args{skillHandle}}{lv}.".\n", "ai";
-		$args{lv} = $char->{skills}{$args{skillHandle}}{lv};
+	my $skill = Skill->new(auto => $args{skillHandle});
+	my $owner = $skill->getOwner();
+	my $lvl = $owner->getSkillLevel($skill);
+	if ($lvl < $args{lv}) {
+		debug "[$owner] Attempted to use skill (".$args{skillHandle}.") level ".$args{lv}." which you do not have, adjusting to level ".$lvl.".\n", "ai";
+		$args{lv} = $lvl;
 	}
-
-	AI::queue("skill_use", \%args);
+	
+	if ($skill->getOwnerType == Skill::OWNER_CHAR) {
+		AI::queue("skill_use", \%args);
+	} else {
+		$owner->queue("skill_use", \%args);
+	}
 }
 
 ##

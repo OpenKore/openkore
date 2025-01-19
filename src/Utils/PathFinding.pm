@@ -75,11 +75,13 @@ sub new {
 # Optional arguments:
 # `l
 # - timeout: the number of milliseconds to run each step for, defaults to 1500
-# - avoidWalls: of walls should be avoided during pathing, defaults to 1
+# - avoidWalls: if walls should be avoided during pathing, defaults to 1
 # - min_x: limits the map in a certain minimum x coordinate, defaults to 0
 # - max_x: limits the map in a certain maximum x coordinate, defaults to width-1
 # - min_y: limits the map in a certain minimum y coordinate, defaults to 0
 # - max_y: limits the map in a certain maximum y coordinate, defaults to height-1
+# - customWeights: if secondWeightMap should be used during pathing, defaults to 0
+# - secondWeightMap: An array of hashes containing 3 keys, 'x', 'y' and 'weight', for all the cells which had their weight changed, 'weight' is the weight of the cell, defaults to undef
 # `l`
 sub reset {
 	my $class = shift;
@@ -102,11 +104,18 @@ sub reset {
 	$hookArgs{return} = 1;
 	Plugins::callHook('PathFindingReset', \%hookArgs);
 	if ($hookArgs{return}) {
+		$args{avoidWalls} = 1 unless (defined $args{avoidWalls});
 		$args{weight_map} = \($args{field}->{weightMap}) unless (defined $args{weight_map});
+
+		$args{customWeights} = 0 unless (defined $args{customWeights});
+		$args{secondWeightMap} = undef unless (defined $args{secondWeightMap});
+
+		$args{randomFactor} = 0 unless (defined $args{randomFactor});
+		$args{useManhattan} = 0 unless (defined $args{useManhattan});
+		
 		$args{width} = $args{field}{width} unless (defined $args{width});
 		$args{height} = $args{field}{height} unless (defined $args{height});
 		$args{timeout} = 1500 unless (defined $args{timeout});
-		$args{avoidWalls} = 1 unless (defined $args{avoidWalls});
 		$args{min_x} = 0 unless (defined $args{min_x});
 		$args{max_x} = ($args{width}-1) unless (defined $args{max_x});
 		$args{min_y} = 0 unless (defined $args{min_y});
@@ -114,9 +123,13 @@ sub reset {
 	}
 
 	return $class->_reset(
-		$args{weight_map},
-		$args{avoidWalls},
-		$args{width},
+		$args{weight_map}, 
+		$args{avoidWalls}, 
+		$args{customWeights},
+		$args{secondWeightMap},
+		$args{randomFactor},
+		$args{useManhattan},
+		$args{width}, 
 		$args{height},
 		$args{start}{x},
 		$args{start}{y},
@@ -133,7 +146,7 @@ sub reset {
 
 ##
 # $PathFinding->run(solution_array)
-# solution_array: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path.
+# solution_array: Reference to an array in which the solution is stored. It will contain hashes of x and y coordinates from the start to the end of the path, including the starting pos
 # Returns:
 #    -3 when pathfinding is not yet complete.
 #    -2 when Pathfinding->reset was not called.

@@ -8,7 +8,7 @@ use Globals qw( $char );
 use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
-	['in_game','packet/player_equipment'];
+	['Network::Receive::map_changed','in_game','sprite_job_change'];
 }
 
 sub _parse_syntax {
@@ -63,9 +63,7 @@ sub update_vars {
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
-	if ($callback_type eq 'hook') {
-		return $self->SUPER::validate_condition if ($callback_name eq 'packet/player_equipment' && (!$args || !exists $args->{type} || $args->{type} != 0));
-	} elsif ($callback_type eq 'variable') {
+	if ($callback_type eq 'variable') {
 		$self->update_vars($callback_name, $args);
 	}
 	

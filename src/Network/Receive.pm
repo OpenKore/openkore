@@ -550,6 +550,15 @@ use constant {
 	MCR_INPROGRESS => 2,
 };
 
+# dynamicnpc_create_result
+use constant {
+	DYNAMICNPC_RESULT_SUCCESS => 0x0,
+	DYNAMICNPC_RESULT_UNKNOWN => 0x1,
+	DYNAMICNPC_RESULT_UNKNOWNNPC => 0x2,
+	DYNAMICNPC_RESULT_DUPLICATE => 0x3,
+	DYNAMICNPC_RESULT_OUTOFTIME => 0x4
+};
+
 # Display gained exp.
 # 07F6 <account id>.L <amount>.L <var id>.W <exp type>.W (ZC_NOTIFY_EXP)
 # 0ACC <account id>.L <amount>.Q <var id>.W <exp type>.W (ZC_NOTIFY_EXP2)
@@ -1267,6 +1276,8 @@ sub map_loaded {
 	message(TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1);
 	$char->{time_move} = 0;
 	$char->{time_move_calc} = 0;
+	$char->{solution} = [];
+	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
 
 	# set initial status from data received from the char server (seems needed on eA, dunno about kRO)}
 	if ($masterServer->{private}){ setStatus($char, $char->{opt1}, $char->{opt2}, $char->{option}); }
@@ -2072,6 +2083,7 @@ sub actor_display {
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
 	# beyond clientSight.
 	if ($config{clientSight}) {
+		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 		my $realMyPos = calcPosition($char);
 		my $realActorPos = calcPosition($actor);
 		my $realActorDist = blockDistance($realMyPos, $realActorPos);
@@ -2519,10 +2531,9 @@ sub actor_died_or_disappeared {
 		my $slave = $slavesList->getByID($ID);
 		if ($args->{type} == 1) {
 			message TF("Slave Died: %s (%d) %s\n", $slave->name, $slave->{binID}, $slave->{actorType});
-			$slave->{state} = 0;
 			if (isMySlaveID($ID)) {
-				$slave->{dead} = 1;
 				if ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus")) {
+					$char->{homunculus_info}{dead} = 1;
 					AI::SlaveManager::removeSlave($slave) if ($char->has_homunculus);
 
 				} elsif ($slave->isa("AI::Slave::Mercenary") || $slave->isa("Actor::Slave::Mercenary")) {
@@ -2880,12 +2891,15 @@ sub reconstruct_minimap_indicator {
 # Sends information about owned homunculus to the client . [orn]
 # 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
 # 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
-# 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_3)
+# 0b2f <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN3) type 1
+# 0b76 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.L <max sp>.L <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN3) type 2
+# 0ba4 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.L <max sp>.L <exp>.eL <max exp>.eL <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN4)
 sub homunculus_property {
 	my ($self, $args) = @_;
 
-	my $slave = $char->{homunculus} or return;
+	return 0 unless enforce_homun_state();
 
+	my $slave = $char->{homunculus};
 	$slave->{name} = bytesToString($args->{name});
 
 	slave_calcproperty_handler($slave, $args);
@@ -2899,84 +2913,89 @@ sub homunculus_property {
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
 	# or make function in Actor class
 	if ($config{homunculus_attackDistanceAuto} && exists $slave->{attack_range}) {
-		configModify('homunculus_attackDistance', $slave->{attack_range}, 1) if ($config{homunculus_attackDistanceAuto} > $slave->{attack_range});
-		configModify('homunculus_attackMaxDistance', $slave->{attack_range}, 1) if ($config{homunculus_attackMaxDistance} != $slave->{attack_range});
-		message TF("Autodetected attackDistance for homunculus = %s\n", $config{homunculus_attackDistanceAuto}), "success";
-		message TF("Autodetected homunculus_attackMaxDistance for homunculus = %s\n", $config{homunculus_attackMaxDistance}), "success";
+		if($config{homunculus_attackDistance} > $slave->{attack_range}) { # decrease attack range if necessary
+			configModify('homunculus_attackDistance', $slave->{attack_range}, 1);
+			message TF("Autodetected attackDistance for homunculus = %s\n", $config{homunculus_attackDistance}), "success";
+		}
+		if ($config{homunculus_attackMaxDistance} != $slave->{attack_range}) { # set max distance using information coming from the server
+			configModify('homunculus_attackMaxDistance', $slave->{attack_range}, 1);
+			message TF("Autodetected homunculus_attackMaxDistance for homunculus = %s\n", $config{homunculus_attackMaxDistance}), "success";
+		}
+	}
+}
+
+sub enforce_homun_state {
+	return 0 unless ($char);
+	if (exists $char->{homunculus} && defined $char->{homunculus}) {
+		return 1;
+	} else {
+		debug "[Homunculus] Received homunculus property without the homunculus objetive existing, creating a temporary one.\n";
+		$char->{homunculus} = Actor::new('Actor::Slave::Homunculus');
+		return 1;
 	}
 }
 
 sub homunculus_state_handler {
 	my ($slave, $args) = @_;
-	# Homunculus states:
-	# 0 - alive and unnamed
+	# Homunculus states bit:
+	# 0 - alive, unnamed and not vaporized
+	# 1 - named
 	# 2 - rest
 	# 4 - dead
 
-	return unless $char->{homunculus};
-	$char->{homunculus}->clear();
-
 	if (!defined $slave->{state}) {
 		if ($args->{state} & 1) {
-			$char->{homunculus}{renameflag} = 1;
+			$char->{homunculus_info}{renameflag} = 1;
 			message T("Your Homunculus has already been renamed\n"), 'homunculus';
 		} else {
-			$char->{homunculus}{renameflag} = 0;
+			$char->{homunculus_info}{renameflag} = 0;
 			message T("Your Homunculus has not been renamed\n"), 'homunculus';
 		}
 
 		if ($args->{state} & 2) {
-			$char->{homunculus}{vaporized} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 1;
 			message T("Your Homunculus is vaporized\n"), 'homunculus';
 		} else {
-			$char->{homunculus}{vaporized} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 0;
 			message T("Your Homunculus is not vaporized\n"), 'homunculus';
 		}
 
 		if ($args->{state} & 4) {
-			$char->{homunculus}{dead} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{dead} = 0;
 			message T("Your Homunculus is not dead\n"), 'homunculus';
 		} else {
-			$char->{homunculus}{dead} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{dead} = 1;
 			message T("Your Homunculus is dead\n"), 'homunculus';
 		}
 
 	} elsif (defined $slave->{state} && $slave->{state} != $args->{state}) {
 		if (($args->{state} & 1) && !($slave->{state} & 1)) {
-			$char->{homunculus}{renameflag} = 1;
+			$char->{homunculus_info}{renameflag} = 1;
 			message T("Your Homunculus was renamed\n"), 'homunculus';
 		}
 
 		if (($args->{state} & 2) && !($slave->{state} & 2)) {
-			$char->{homunculus}{vaporized} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 1;
 			message T("Your Homunculus was vaporized!\n"), 'homunculus';
 		}
 
 		if (($args->{state} & 4) && !($slave->{state} & 4)) {
-			$char->{homunculus}{dead} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{dead} = 0;
 			message T("Your Homunculus was resurrected!\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 1) && ($slave->{state} & 1)) {
-			$char->{homunculus}{renameflag} = 0;
+			$char->{homunculus_info}{renameflag} = 0;
 			message T("Your Homunculus was un-renamed? lol\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 2) && ($slave->{state} & 2)) {
-			$char->{homunculus}{vaporized} = 0;
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			$char->{homunculus_info}{vaporized} = 0;
 			message T("Your Homunculus was recalled!\n"), 'homunculus';
 		}
 
 		if (!($args->{state} & 4) && ($slave->{state} & 4)) {
-			$char->{homunculus}{dead} = 1;
-			AI::SlaveManager::removeSlave($char->{homunculus}) if ($char->has_homunculus);
+			$char->{homunculus_info}{dead} = 1;
 			message T("Your Homunculus died!\n"), 'homunculus';
 		}
 	}
@@ -3004,20 +3023,24 @@ sub homunculus_info {
 	my ($self, $args) = @_;
 	debug "homunculus_info type: $args->{type}\n", "homunculus";
 	if ($args->{state} == HO_PRE_INIT) {
-		my $state = $char->{homunculus}{state}
-			if ($char->{homunculus} && $char->{homunculus}{ID} && $char->{homunculus}{ID} ne $args->{ID});
 
 		# Some servers won't send 'homunculus_property' after a teleport, so we don't delete $char->{homunculus} object
-		$char->{homunculus} = Actor::get($args->{ID}) if ($char->{homunculus}{ID} ne $args->{ID});
+		if ($char->{homunculus_info}{dead} == 1) {
+			debug "[Homunculus] We received a homunculus_info packet while our homunculus is dead, assume it was resurrected.\n";
+			$char->{homunculus_info}{dead} = 0;
+		}
 
-		$char->{homunculus}{state} = $state if (defined $state);
+		$char->{homunculus} = Actor::get($args->{ID}) if ($char->{homunculus}{ID} ne $args->{ID});
 		$char->{homunculus}{map} = $field->baseName;
 		unless ($char->{slaves}{$char->{homunculus}{ID}}) {
 			if ($char->{homunculus}->isa('AI::Slave::Homunculus')) {
 				# After a teleport the homunculus object is still AI::Slave::Homunculus, but AI::SlaveManager::addSlave requires it to be Actor::Slave::Homunculus, so we change it back
 				bless $char->{homunculus}, 'Actor::Slave::Homunculus';
 			}
-			AI::SlaveManager::addSlave($char->{homunculus}) if (!$char->has_homunculus);
+			if (!$char->has_homunculus) {
+				debug "[Homunculus] Adding homunculus to SlaveManager after homunculus_info packet.\n";
+				AI::SlaveManager::addSlave($char->{homunculus});
+			}
 			$char->{homunculus}{appear_time} = time;
 		}
 	} elsif ($args->{state} == HO_RELATIONSHIP_CHANGED) {
@@ -4502,41 +4525,52 @@ sub cash_shop_buy_result {
 
 }
 
-sub player_equipment {
+sub sprite_change {
 	my ($self, $args) = @_;
 
-	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
-	my $player = ($sourceID ne $accountID)? $playersList->getByID($sourceID) : $char;
+	my ($ID, $type, $value1, $value2) = @{$args}{qw(ID type value1 value2)};
+	my $player = ($ID ne $accountID)? $playersList->getByID($ID) : $char;
 	return unless $player;
 
 	if ($type == 0) {
-		# Player changed job
-		$player->{jobID} = $ID1;
+		$player->{jobID} = $value1;
+		message TF("%s changed Job to: %s\n", $player, $jobs_lut{$value1}), "parseMsg_statuslook";
 
 	} elsif ($type == 2) {
-		if ($ID1 ne $player->{weapon}) {
-			message TF("%s changed Weapon to %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
-			$player->{weapon} = $ID1;
+		if ($value1 ne $player->{weapon}) {
+			message TF("%s changed Weapon to %s (%d)\n", $player, itemName({nameID => $value1}), $value1), "parseMsg_statuslook", 2;
+			$player->{weapon} = $value1;
 		}
-		if ($ID2 ne $player->{shield}) {
-			message TF("%s changed Shield to %s\n", $player, itemName({nameID => $ID2})), "parseMsg_statuslook", 2;
-			$player->{shield} = $ID2;
+		if ($value2 ne $player->{shield}) {
+			message TF("%s changed Shield to %s (%d)\n", $player, itemName({nameID => $value2}), $value2), "parseMsg_statuslook", 2;
+			$player->{shield} = $value2;
 		}
 	} elsif ($type == 3) {
-		message TF("%s changed Lower headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
-		$player->{headgear}{low} = $ID1;
+		message TF("%s changed Lower headgear to %s (%d)\n", $player, headgearName($value1), $value1), "parseMsg_statuslook";
+		$player->{headgear}{low} = $value1;
 	} elsif ($type == 4) {
-		message TF("%s changed Upper headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
-		$player->{headgear}{top} = $ID1;
+		message TF("%s changed Upper headgear to %s (%d)\n", $player, headgearName($value1), $value1), "parseMsg_statuslook";
+		$player->{headgear}{top} = $value1;
 	} elsif ($type == 5) {
-		message TF("%s changed Middle headgear to %s (%d)\n", $player, headgearName($ID1), $ID1), "parseMsg_statuslook";
-		$player->{headgear}{mid} = $ID1;
+		message TF("%s changed Middle headgear to %s (%d)\n", $player, headgearName($value1), $value1), "parseMsg_statuslook";
+		$player->{headgear}{mid} = $value1;
+	} elsif ($type == 6) {
+ 		message TF("%s changed Hair color to: %s (%d)\n", $player, $haircolors{$value1}, $value1), "parseMsg_statuslook";
+		$player->{hair_color} = $value1;
 	} elsif ($type == 9) {
-		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
-			message TF("%s changed Shoes to: %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
+		if ($player->{shoes} && $value1 ne $player->{shoes}) {
+			message TF("%s changed Shoes to: %s\n", $player, itemName({nameID => $value1})), "parseMsg_statuslook", 2;
 		}
-		$player->{shoes} = $ID1;
+		$player->{shoes} = $value1;
+	} elsif ($type == 12) {
+ 		message TF("%s changed Robe to: SPRITE_ROBE_ID=%d\n", $player, $value1, $value1), "parseMsg_statuslook", 2;
+	} elsif ($type== 7 || $type == 13) {
+		# Type 7 looks like body palette or body color. Type 13 looks like body2
+		debug sprintf("%s changed type= %d. value1=%d, value2=%d\n", $player, $type, $value1, $value2);
+	} else {
+		error TF("%s changed unknown sprite type (%d), write about it to OpenKore developer\n", $player, $type), "parseMsg_statuslook";
 	}
+	Plugins::callHook('sprite_job_change');
 }
 
 sub progress_bar {
@@ -4599,7 +4633,7 @@ sub quest_all_list {
 			mission_len => 44,
 		};
 
-	} elsif ($args->{switch} eq '0AFF') { # SERVERTYPE >= 20150513
+	} elsif ($args->{switch} eq '0AFF') { # SERVERTYPE >= 20181010
 		$quest_info = {
 			quest_pack => 'V C V2 v',
 			quest_keys => [qw(quest_id active time_expire time_start mission_amount)],
@@ -4634,6 +4668,8 @@ sub quest_all_list {
 
         next if !exists $quest->{mission_amount};
 
+        debug "- Mission amount: $quest->{mission_amount}\n", "info";
+
         for ( my $j = 0 ; $j < $quest->{mission_amount}; $j++ ) {
             my $mission;
 
@@ -4654,7 +4690,7 @@ sub quest_all_list {
 		}
 	}
 
-	Plugins::callHook('quest_list');
+	Plugins::callHook('quest_all_list_end');
 }
 
 # 02b2 <packet len>.W <num>.L { <quest id>.L <start time>.L <expire time>.L <mobs>.W { <mob id>.L <mob count>.W <mob name>.24B }*3 }*num
@@ -4713,6 +4749,8 @@ sub quest_all_mission {
 			});
 		}
 	}
+
+	Plugins::callHook('quest_all_mission_end');
 }
 
 # 02b3 <quest id>.L <active>.B <start time>.L <expire time>.L <mobs>.W { <mob id>.L <mob count>.W <mob name>.24B }*3 (ZC_ADD_QUEST)
@@ -4882,6 +4920,8 @@ sub quest_update_mission_hunt {
 			goal => $quest_mission->{mob_goal}
 		});
 	}
+
+	Plugins::callHook('quest_update_mission_hunt_end');
 }
 
 # 02B4
@@ -4889,6 +4929,8 @@ sub quest_delete {
 	my ($self, $args) = @_;
 	message TF("Quest: %s has been deleted.\n", $quests_lut{$args->{questID}} ? "$quests_lut{$args->{questID}}{title} ($args->{questID})" : $args->{questID}), "info";
 	delete $questList->{$args->{questID}};
+
+	Plugins::callHook('quest_delete');
 }
 
 # 02B7
@@ -4901,6 +4943,8 @@ sub quest_active {
 	, "info";
 
 	$questList->{$args->{questID}}->{active} = $args->{active};
+
+	Plugins::callHook('quest_active');
 }
 
 # 02C1
@@ -5457,7 +5501,12 @@ sub character_moves {
 	my $dist = blockDistance($char->{pos}, $char->{pos_to});
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist\n", "parseMsg_move";
 	$char->{time_move} = time;
-	$char->{time_move_calc} = calcTime($char->{pos}, $char->{pos_to}, ($char->{walk_speed} || 0.12));
+
+	my $speed = ($char->{walk_speed} || 0.12);
+	my $my_solution = get_solution($field, $char->{pos}, $char->{pos_to});
+	my $time = calcTimeFromSolution($my_solution, $speed);
+	$char->{solution} = $my_solution;
+	$char->{time_move_calc} = $time;
 
 	# Correct the direction in which we're looking
 	my (%vec, $degree);
@@ -7081,68 +7130,6 @@ sub item_upgrade {
 	}
 }
 
-sub job_equipment_hair_change {
-	my ($self, $args) = @_;
-	return unless changeToInGameState();
-
-	my $actor = Actor::get($args->{ID});
-	assertClass($actor, "Actor") if DEBUG;
-
-	if ($args->{part} == 0) {
-		# Job change
-		$actor->{jobID} = $args->{number};
- 		message TF("%s changed job to: %s\n", $actor, $jobs_lut{$args->{number}}), "parseMsg/job", ($actor->isa('Actor::You') ? 0 : 2);
-
-	} elsif ($args->{part} == 3) {
-		# Bottom headgear change
- 		message TF("%s changed bottom headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
-		$actor->{headgear}{low} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
-
-	} elsif ($args->{part} == 4) {
-		# Top headgear change
- 		message TF("%s changed top headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
-		$actor->{headgear}{top} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
-
-	} elsif ($args->{part} == 5) {
-		# Middle headgear change
- 		message TF("%s changed middle headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->isa('Actor::You');
-		$actor->{headgear}{mid} = $args->{number} if ($actor->isa('Actor::Player') || $actor->isa('Actor::You'));
-
-	} elsif ($args->{part} == 6) {
-		# Hair color change
-		$actor->{hair_color} = $args->{number};
- 		message TF("%s changed hair color to: %s (%s)\n", $actor, $haircolors{$args->{number}}, $args->{number}), "parseMsg/hairColor", ($actor->isa('Actor::You') ? 0 : 2);
-	}
-
-	#my %parts = (
-	#	0 => 'Body',
-	#	2 => 'Right Hand',
-	#	3 => 'Low Head',
-	#	4 => 'Top Head',
-	#	5 => 'Middle Head',
-	#	8 => 'Left Hand'
-	#);
-	#if ($part == 3) {
-	#	$part = 'low';
-	#} elsif ($part == 4) {
-	#	$part = 'top';
-	#} elsif ($part == 5) {
-	#	$part = 'mid';
-	#}
-	#
-	#my $name = getActorName($ID);
-	#if ($part == 3 || $part == 4 || $part == 5) {
-	#	my $actor = Actor::get($ID);
-	#	$actor->{headgear}{$part} = $items_lut{$number} if ($actor);
-	#	my $itemName = $items_lut{$itemID};
-	#	$itemName = 'nothing' if (!$itemName);
-	#	debug "$name changes $parts{$part} ($part) equipment to $itemName\n", "parseMsg";
-	#} else {
-	#	debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
-	#}
-
-}
-
 # Leap, Snap, Back Slide... Various knockback
 sub high_jump {
 	my ($self, $args) = @_;
@@ -7234,6 +7221,8 @@ sub map_change {
 	$char->{pos_to} = {%coords};
 	$char->{time_move} = 0;
 	$char->{time_move_calc} = 0;
+	$char->{solution} = [];
+	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
 	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $char->{pos}{x}, $char->{pos}{y}), "connection";
 	if ($net->version == 1) {
 		ai_clientSuspend(0, $timeout{'ai_clientSuspend'}{'timeout'});
@@ -7286,6 +7275,8 @@ sub map_changed {
 	$char->{pos_to} = {%coords};
 	$char->{time_move} = 0;
 	$char->{time_move_calc} = 0;
+	$char->{solution} = [];
+	push(@{$char->{solution}}, { x => $char->{pos}{x}, y => $char->{pos}{y} });
 
 	undef $conState_tries;
 	main::initMapChangeVars();
@@ -9359,18 +9350,25 @@ sub skills_list {
 	# TODO: per-actor, if needed at all
 	# Skill::DynamicInfo::clear;
 	my ($ownerType, $hook, $actor) = @{{
-		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'010F' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
 		'0235' => [Skill::OWNER_HOMUN, 'packet_homunSkills', $char->{homunculus}],
 		'029D' => [Skill::OWNER_MERC, 'packet_mercSkills', $char->{mercenary}],
-		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills'],
+		'0B32' => [Skill::OWNER_CHAR, 'packet_charSkills', $char],
 	}->{$args->{switch}}};
 
-	my $skillsIDref = $actor ? \@{$actor->{slave_skillsID}} : \@skillsID;
-	delete @{$char->{skills}}{@$skillsIDref};
+	my $skillsIDref;
+	if ($ownerType == Skill::OWNER_CHAR) {
+		$skillsIDref = \@skillsID;
+		delete @{$char->{skills}}{@$skillsIDref};
+	} elsif ($ownerType == Skill::OWNER_HOMUN) {
+		$skillsIDref = \@{$char->{homunculus}->{slave_skillsID}};
+		delete @{$char->{homunculus}->{skills}}{@$skillsIDref};
+	} elsif ($ownerType == Skill::OWNER_MERC) {
+		$skillsIDref = \@{$char->{mercenary}->{slave_skillsID}};
+		delete @{$char->{mercenary}->{skills}}{@$skillsIDref};
+	}
 	@$skillsIDref = ();
 
-	# TODO: $actor can be undefined here
-	undef @{$actor->{slave_skillsID}};
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $skill_info->{len}) {
 		my $skill;
 		@{$skill}{@{$skill_info->{keys}}} = unpack($skill_info->{types}, substr($msg, $i, $skill_info->{len}));
@@ -9378,7 +9376,7 @@ sub skills_list {
 		my $handle = Skill->new(idn => $skill->{ID})->getHandle;
 
 		foreach(@{$skill_info->{keys}}) {
-			$char->{skills}{$handle}{$_} = $skill->{$_};
+			$actor->{skills}{$handle}{$_} = $skill->{$_};
 		}
 
 		binAdd($skillsIDref, $handle) unless defined binFind($skillsIDref, $handle);
@@ -10227,10 +10225,14 @@ sub attack_range {
 
 	$char->{attack_range} = $type;
 	if ($config{attackDistanceAuto}) {
-		configModify('attackDistance', $type, 1) if ($config{attackDistance} > $type);
-		configModify('attackMaxDistance', $type, 1) if ($config{attackMaxDistance} != $type);
-		message TF("Autodetected attackDistance = %s\n", $config{attackDistance}), "success";
-		message TF("Autodetected attackMaxDistance = %s\n", $config{attackMaxDistance}), "success";
+		if($config{attackDistance} > $type) { # decrease attack range if necessary
+			configModify('attackDistance', $type, 1);
+			message TF("Autodetected attackDistance = %s\n", $config{attackDistance}), "success";
+		}
+		if ($config{attackMaxDistance} != $type) { # set max distance using information coming from the server
+			configModify('attackMaxDistance', $type, 1) if ($config{attackMaxDistance} != $type);
+			message TF("Autodetected attackMaxDistance = %s\n", $config{attackMaxDistance}), "success";
+		}
 	}
 }
 
@@ -11114,10 +11116,14 @@ sub mercenary_init {
 	# ST0's counterpart for ST kRO, since it attempts to support all servers
 	# TODO: we do this for homunculus, mercenary and our char... make 1 function and pass actor and attack_range?
 	if ($config{mercenary_attackDistanceAuto} && exists $slave->{attack_range}) {
-		configModify('mercenary_attackDistance', $slave->{attack_range}, 1) if ($config{mercenary_attackDistance} > $slave->{attack_range});
-		configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1) if ($config{mercenary_attackMaxDistance} != $slave->{attack_range});
-		message TF("Autodetected attackDistance for mercenary = %s\n", $config{mercenary_attackDistance}), "success";
-		message TF("Autodetected attackMaxDistance for mercenary = %s\n", $config{mercenary_attackMaxDistance}), "success";
+		if($config{mercenary_attackDistance} > $slave->{attack_range}) { # decrease attack range if necessary
+			configModify('mercenary_attackDistance', $slave->{attack_range}, 1);
+			message TF("Autodetected attackDistance for mercenary = %s\n", $config{mercenary_attackDistance}), "success";
+		}
+		if ($config{mercenary_attackMaxDistance} != $slave->{attack_range}) { # set max distance using information coming from the server
+			configModify('mercenary_attackMaxDistance', $slave->{attack_range}, 1);
+			message TF("Autodetected mercenary_attackMaxDistance for mercenary = %s\n", $config{mercenary_attackMaxDistance}), "success";
+		}
 	}
 }
 
@@ -11146,16 +11152,14 @@ sub monster_ranged_attack {
 
 	my $monster = $monstersList->getByID($ID);
 	if ($monster) {
-		$monster->{pos} = {%coords1};
-		$monster->{pos_to} = {%coords1};
-		$monster->{time_move} = time;
-		$monster->{time_move_calc} = 0;
+		$monster->{movetoattack_pos} = {%coords1};
+		$monster->{movetoattack_time} = time;
 	}
-	$char->{pos} = {%coords2};
-	$char->{pos_to} = {%coords2};
-	$char->{time_move} = time;
-	$char->{time_move_calc} = 0;
-	debug "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move", 2;
+	$char->{movetoattack_pos} = {%coords2};
+	$char->{movetoattack_time} = time;
+	debug "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move";
+
+	Plugins::callHook('monster_ranged_attack', {ID => $ID});
 }
 
 sub mvp_item {
@@ -11354,12 +11358,16 @@ sub resurrection {
 		}
 
 		if (isMySlaveID($targetID)) {
-			my $slave = $slavesList->getByID($targetID);
-			if (defined $slave && ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus"))) {
+			enforce_homun_state();
+			my $slave = Actor::get($targetID);
+			if ($slave->isa("AI::Slave::Homunculus") || $slave->isa("Actor::Slave::Homunculus")) {
 				message TF("Slave Resurrected: %s\n", $slave);
-				$slave->{state} = 4;
-				$slave->{dead} = 0;
-				AI::SlaveManager::addSlave($slave) if (!$char->has_homunculus);
+				$char->{homunculus_info}{dead} = 0;
+				if (!$char->has_homunculus) {
+					debug "[Homunculus] Adding homunculus to SlaveManager after homunculus_info packet.\n";
+					bless $char->{homunculus}, 'Actor::Slave::Homunculus';
+					AI::SlaveManager::addSlave($slave);
+				}
 			}
 		}
 		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
@@ -11545,7 +11553,7 @@ sub skill_cast {
 			getVector(\%vec, \%coords, $char->{pos_to});
 			moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{pos_to}, \%coords));
 			ai_route($field->baseName, $pos{x}, $pos{y},
-				maxRouteDistance => $config{attackMaxRouteDistance},
+				maxRouteDistance => $config{attackRouteMaxPathDistance},
 				maxRouteTime => $config{attackMaxRouteTime},
 				noMapRoute => 1);
 			message TF("Avoid casting Skill - switch position to : %s,%s\n", $pos{x}, $pos{y}), 1;
@@ -11736,12 +11744,6 @@ sub isvr_disconnect {
 sub skill_use_failed {
 	my ($self, $args) = @_;
 
-	# skill fail/delay
-	my $skillID = $args->{skillID};
-	my $btype = $args->{btype};
-	my $fail = $args->{fail};
-	my $type = $args->{type};
-
 	my %basefailtype = (
 		0 => $msgTable[160],#"skill failed"
 		1 => $msgTable[161],#"no emotions"
@@ -11790,10 +11792,13 @@ sub skill_use_failed {
 		);
 
 	my $errorMessage;
-	if ($skillID == 1 && $type == 0 && exists $basefailtype{$btype}) {
-		$errorMessage = $basefailtype{$btype};
-	} elsif (exists $failtype{$type}) {
-		$errorMessage = $failtype{$type};
+	if ($args->{skillID} == 1 && $args->{cause} == 0 && exists $basefailtype{$args->{btype}}) {
+		$errorMessage = $basefailtype{$args->{btype}};
+	} elsif (exists $failtype{$args->{cause}}) {
+		$errorMessage = $failtype{$args->{cause}};
+		if ($args->{cause} == 71) {
+			$errorMessage .= T(' - item ').$args->{itemId};
+		}
 	} else {
 		$errorMessage = T('Unknown error');
 	}
@@ -11801,14 +11806,34 @@ sub skill_use_failed {
 	delete $char->{casting};
 
 	my %hookArgs;
-	$hookArgs{skillID} = $skillID;
-	$hookArgs{failType} = $type;
+	$hookArgs{skillID} = $args->{skillID};
+	$hookArgs{btype} = $args->{btype};
+	$hookArgs{itemId} = $args->{itemId};
+	$hookArgs{flag} = $args->{flag};
+	$hookArgs{cause} = $args->{cause};
 	$hookArgs{failMessage} = $errorMessage;
 	$hookArgs{warn} = 1;
 
 	Plugins::callHook('packet_skillfail', \%hookArgs);
 
-	warning(TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $skillID)->getName(), $errorMessage, $type), "skill") if ($hookArgs{warn});
+	warning(TF("Skill %s failed: %s (error number %s)\n", Skill->new(idn => $args->{skillID})->getName(), $errorMessage, $args->{cause}), "skill") if ($hookArgs{warn});
+
+	# Ressurect Homunculus failed - which means we have no dead homunculus
+	if ($args->{skillID} == 247 && $args->{cause} == 0) {
+		debug "[Homunculus] Ressurect Homunculus failed - which means we have no dead homunculus.\n";
+		$char->{homunculus_info}{dead} = 0;
+	}
+
+	# Call Homunculus failed - which means we have no vaporized homunculus
+	if ($args->{skillID} == 243) {
+		if ($args->{cause} == 0) {
+			debug "[Homunculus] Call Homunculus failed - which means we have no vaporized homunculus.\n";
+			$char->{homunculus_info}{vaporized} = 0;
+		} elsif ($args->{cause} == 71) {
+			debug "[Homunculus] Call Homunculus failed because of missing item - which means we have a vaporized homunculus.\n";
+			$char->{homunculus_info}{vaporized} = 1;
+		}
+	}
 }
 
 sub open_store_status {
@@ -12212,14 +12237,14 @@ sub captcha_upload_request_status {
 # Status of Macro Reporter
 sub macro_reporter_status {
 	my ($self, $args) = @_;
-	my $status = "Unknown";
+	my $status = T("Unknown");
 
 	if ($args->{status} == MCR_MONITORING) {
-		$status = "Monitoring";
+		$status = T("Monitoring");
 	} elsif ($args->{status} == MCR_NO_DATA) {
-		$status = "No Data";
+		$status = T("No Data");
 	} elsif ($args->{status} == MCR_INPROGRESS) {
-		$status = "In Progress";
+		$status = T("In Progress");
 	}
 
 	message TF("Macro Reporter - Status: %s \n", $status), "captcha";
@@ -12292,14 +12317,14 @@ sub macro_detector_show {
 # Status of Macro Detector
 sub macro_detector_status {
 	my ($self, $args) = @_;
-	my $status = "Unknown";
+	my $status = T("Unknown");
 
 	if ($args->{status} == MCD_TIMEOUT) {
-		$status = "Timeout";
+		$status = T("Timeout");
 	} elsif ($args->{status} == MCD_INCORRECT) {
-		$status = "Incorrect";
+		$status = T("Incorrect");
 	} elsif ($args->{status} == MCD_GOOD) {
-		$status = "Correct";
+		$status = T("Correct");
 	}
 
 	message TF("Macro Detector Status: %s \n", $status), "captcha";
@@ -12377,6 +12402,33 @@ sub repute_info {
 
 		push @reputation_list, $repute;
 	}
+}
+
+# 0A15 - PACKET_ZC_GOLDPCCAFE_POINT
+# TODO: this package is not supported yet.
+sub gold_pc_cafe_point {
+	my ($self, $args) = @_;
+	debug TF("[gold_pc_cafe_point] isActive=%d, mode=%d, point=%d, playedTime=%d\n", $args->{isActive}, $args->{mode}, $args->{point}, $args->{playedTime});
+}
+
+# 0A17 - PACKET_ZC_DYNAMICNPC_CREATE_RESULT
+sub dynamicnpc_create_result {
+	my ($self, $args) = @_;
+	my $status;
+
+	if ($args->{result} == DYNAMICNPC_RESULT_SUCCESS ) {
+		$status = T("Success");
+	} elsif ($args->{result} == DYNAMICNPC_RESULT_UNKNOWN) {
+		$status = T("Unknown");
+	} elsif ($args->{result} == DYNAMICNPC_RESULT_UNKNOWNNPC) {
+		$status = T("Unknown NPC");
+	} elsif ($args->{result} == DYNAMICNPC_RESULT_DUPLICATE) {
+		$status = T("Duplicate");
+	} elsif ($args->{result} == DYNAMICNPC_RESULT_OUTOFTIME) {
+		$status = T("Out of time");
+	}
+
+	message TF("Dynamic NPC create result - Status: %s\n", $status);
 }
 
 1;

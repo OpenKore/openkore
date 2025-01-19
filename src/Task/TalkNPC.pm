@@ -349,6 +349,33 @@ sub iterate {
 				return unless ($self->addSteps($self->{sequence}));
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
+			} else {
+				
+				if (!exists $self->{plugin_retry}) {
+					$self->{plugin_retry} = 0;
+				}
+				my %plugin_args = (
+					'x'            => $self->{x},
+					'y'            => $self->{y},
+					'nameID'       => $self->{nameID},
+					'sequence'     => $self->{sequence},
+					'plugin_retry' => $self->{plugin_retry},
+					'return'       => 0
+				);
+
+				Plugins::callHook('TalkNPC_npc_missing' => \%plugin_args);
+
+				if ($plugin_args{return}) {
+					$self->{plugin_retry}++;
+					$self->{x} = $plugin_args{x};
+					$self->{y} = $plugin_args{y};
+					$self->{nameID} = $plugin_args{nameID};
+					$self->{sequence} = $plugin_args{sequence};
+					warning "[TalkNPC] Could not find NPC, retry set by hookcall.\n", 'ai_npcTalk';
+					
+				} else {
+					$self->setError(NPC_NOT_FOUND, TF("Could not find an NPC."));
+				}
 			}
 		}
 

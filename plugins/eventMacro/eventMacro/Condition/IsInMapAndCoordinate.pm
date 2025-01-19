@@ -191,9 +191,10 @@ sub validate_condition {
 		}
 		
 	} elsif ($callback_type eq 'recheck') {
+		$self->{is_on_stand_by} = 0;
 		$self->check_location;
-		
 	}
+	
 	return $self->SUPER::validate_condition( (defined $self->{fulfilled_coordinate} ? 1 : 0) );
 }
 
