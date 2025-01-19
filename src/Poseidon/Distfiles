@@ -4,5 +4,5 @@ EmbedServer.pm
 poseidon.pl
 QueryServer.pm
 RagnarokServer.pm
-servertypes.txt
-TECHNICAL.TXT
+ServerTypes.txt
+Readme.txt

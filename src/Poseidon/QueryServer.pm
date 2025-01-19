@@ -6,7 +6,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# Copyright (c) 2005-2006 OpenKore Development Team
+# Copyright (c) 2005-2025 OpenKore Development Team
 ###########################################################
 package Poseidon::QueryServer;
 
