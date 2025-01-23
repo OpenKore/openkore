@@ -1,0 +1,18 @@
+name: Feature Request
+description: Suggest an idea for this project
+labels: ["feature request"]
+body:
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: Provide a clear description of what you want to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: |
+        Is there anything else you can add about the proposal?
+        You might want to link to related issues here if you haven't already.
