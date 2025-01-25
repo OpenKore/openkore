@@ -6,9 +6,8 @@ use eventMacro::Utilities qw( find_variable );
 
 use base 'eventMacro::Condition';
 
-# Using 'inventory_ready' is not optimal, but it works.
 sub _hooks {
-	['packet_mapChange','inventory_ready','packet/quest_all_list','packet/quest_all_list2','packet/quest_all_list3','packet/quest_all_mission','packet/quest_add','packet/quest_delete','packet/quest_update_mission_hunt','packet/quest_active'];
+	['quest_all_list_end','quest_all_mission_end','quest_added','quest_update_mission_hunt_end','quest_delete','quest_active'];
 }
 
 sub _parse_syntax {
@@ -102,6 +101,7 @@ sub update_vars {
 
 sub check_quests {
 	my ( $self, $list ) = @_;
+	my $found = 0;
 	$self->{fulfilled_quest_id} = undef;
 	$self->{fulfilled_mob_id} = undef;
 	$self->{fulfilled_member_index} = undef;
@@ -118,24 +118,31 @@ sub check_quests {
 		next unless ($quest->{active});
 		
 		next unless (exists $quest->{missions});
+		next unless (keys %{$quest->{missions}});
 		
-		my $quest_hunt_ID;
-		foreach (keys %{$questList->{$quest_ID}->{missions}}) {
-			my $mission = \%{$questList->{$quest_ID}->{missions}->{$_}};
+		#my $quest_hunt_ID;
+		#my $count;
+		#my $goal;
+		
+		foreach my $key (keys %{$quest->{missions}}) {
+			next unless (defined $key);
+			my $mission = \%{$quest->{missions}{$key}};
 			if ((exists $mission->{mob_id} && $mission->{mob_id} == $mob_ID) || (exists $mission->{hunt_id} && $mission->{hunt_id} == $mob_ID)) {
-				$quest_hunt_ID = $_;
-				last;
+				next unless (exists $mission->{'mob_count'} && defined $mission->{'mob_count'});
+				next unless (exists $mission->{'mob_goal'} && defined $mission->{'mob_goal'});
+				next unless ($mission->{'mob_count'} == $mission->{'mob_goal'});
+				$found = 1;
+				#$quest_hunt_ID = $key;
+                #$count = $mission->{'mob_count'};
+                #$goal = $mission->{'mob_goal'};
+				
+				$self->{fulfilled_quest_id} = $quest_ID;
+				$self->{fulfilled_mob_id} = $mob_ID;
+				$self->{fulfilled_member_index} = $member_index;
 			}
+			last if ($found);
 		}
-		
-		next unless (exists $quest->{missions}->{$quest_hunt_ID}->{mob_count});
-		next unless (exists $quest->{missions}->{$quest_hunt_ID}->{mob_goal});
-		next unless ($quest->{missions}->{$quest_hunt_ID}->{mob_count} == $quest->{missions}->{$quest_hunt_ID}->{mob_goal});
-		
-		$self->{fulfilled_quest_id} = $quest_ID;
-		$self->{fulfilled_mob_id} = $mob_ID;
-		$self->{fulfilled_member_index} = $member_index;
-		last;
+		last if ($found);
 	}
 }
 
@@ -143,20 +150,7 @@ sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
 	if ($callback_type eq 'hook') {
-		
-		if ($callback_name eq 'packet_mapChange') {
-			$self->{fulfilled_quest_id} = undef;
-			$self->{fulfilled_mob_id} = undef;
-			$self->{fulfilled_member_index} = undef;
-			$self->{is_on_stand_by} = 1;
-			
-		} elsif ($callback_name eq 'inventory_ready') {
-			return $self->SUPER::validate_condition if ($self->{is_on_stand_by} == 0);
-			$self->{is_on_stand_by} = 0;
-			
-		} else {
-			$self->{is_on_stand_by} = 0;
-		}
+		$self->{is_on_stand_by} = 0;
 		
 	} elsif ($callback_type eq 'variable') {
 		$self->update_vars($callback_name, $args);

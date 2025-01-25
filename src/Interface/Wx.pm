@@ -912,27 +912,67 @@ sub updateStatusBar {
 	$setStatus->('aiText', $aiText);
 }
 
+sub get_task {
+	my ($args) = @_;
+	if (UNIVERSAL::isa($args, 'Task::Route')) {
+		return $args;
+	} elsif (UNIVERSAL::isa($args, 'Task::MapRoute') && $args->getSubtask && UNIVERSAL::isa($args->getSubtask, 'Task::Route')) {
+		return $args->getSubtask;
+	} else {
+		return undef;
+	}
+}
+
 sub updateMapViewer {
 	my $self = shift;
 	my $map = $self->{mapViewer};
 	return unless ($map && $field && $char);
 
 	my $myPos;
+	# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
+	# Maybe a new Wx mode?
 	$myPos = calcPosition($char);
 
 	$map->set($field->baseName, $myPos->{x}, $myPos->{y}, $field, $char->{look});
 
-	my ($i, $args, $routeTask, $solution);
-	if (
-		defined ($i = AI::findAction ('route')) && ($args = AI::args ($i)) && (
-			($routeTask = $args->getSubtask) && %{$routeTask} && ($solution = $routeTask->{solution}) && @$solution
-			||
-			$args->{dest} && $args->{dest}{pos} && ($solution = [{x => $args->{dest}{pos}{x}, y => $args->{dest}{pos}{y}}])
-		)
-	) {
-		$map->setRoute ([@$solution]);
-	} else {
+	my ($i, $args, $routeTask, $solution, $set_route, $task);
+	$i = AI::findAction ('route');
+	if (defined $i) {
+		$args = AI::args($i);
+		$task = get_task($args);
+		if (defined $task) {
+			if (scalar @{$task->{solution}} > 0) {
+				my $attack = $task->{attackID} ? 1 : 0;
+				$map->setRoute ([@{$task->{solution}}], $attack);
+				$set_route = 1;
+			}
+		}
+	}
+	if (!$set_route) {
 		$map->setRoute;
+	}
+	
+	undef $i;
+	undef $args;
+	undef $routeTask;
+	undef $solution;
+	undef $set_route;
+	undef $task;
+	
+	$i = AI::findAction ('route', 1);
+	if (defined $i) {
+		$args = AI::args($i);
+		$task = get_task($args);
+		if (defined $task) {
+			if (scalar @{$task->{solution}} > 0) {
+				my $attack = $task->{attackID} ? 1 : 0;
+				$map->setRoute2 ([@{$task->{solution}}], $attack);
+				$set_route = 1;
+			}
+		}
+	}
+	if (!$set_route) {
+		$map->setRoute2;
 	}
 
 	$map->setPlayers ([values %players]);
@@ -1147,7 +1187,7 @@ sub onAdvancedConfig {
 	$cfg->addCategory('server', 'Grid', ['master', 'server', 'username', 'password', 'char']);
 	$cfg->addCategory('X-Kore', 'Grid', ['XKore', 'XKore_silent', 'XKore_bypassBotDetection', 'XKore_exeName', 'XKore_listenIp', 'XKore_listenPort', 'XKore_publicIp', 'secureAdminPassword', 'adminPassword', 'callSign', 'commandPrefix']);
 	$cfg->addCategory('lockMap', 'Grid', ['lockMap', 'lockMap_x', 'lockMap_y', 'lockMap_randX', 'lockMap_randY']);
-	$cfg->addCategory('attack', 'Grid', ['attackAuto', 'attackAuto_party', 'attackAuto_onlyWhenSafe', 'attackAuto_followTarget', 'attackAuto_inLockOnly', 'attackDistance', 'attackDistanceAuto', 'attackMaxDistance', 'attackMaxRouteDistance', 'attackMaxRouteTime', 'attackMinPlayerDistance', 'attackMinPortalDistance', 'attackUseWeapon', 'attackNoGiveup', 'attackCanSnipe', 'attackCheckLOS', 'attackLooters', 'attackChangeTarget', 'aggressiveAntiKS']);
+	$cfg->addCategory('attack', 'Grid', ['attackAuto', 'attackAuto_party', 'attackAuto_onlyWhenSafe', 'attackAuto_followTarget', 'attackAuto_inLockOnly', 'attackDistance', 'attackDistanceAuto', 'attackMaxDistance', 'attackRouteMaxPathDistance', 'attackMaxRouteTime', 'attackMinPlayerDistance', 'attackMinPortalDistance', 'attackUseWeapon', 'attackNoGiveup', 'attackCanSnipe', 'attackCheckLOS', 'attackLooters', 'attackChangeTarget', 'aggressiveAntiKS']);
 	$cfg->addCategory('route', 'Grid', ['route_escape_reachedNoPortal', 'route_escape_randomWalk', 'route_escape_shout', 'route_randomWalk', 'route_randomWalk_inTown', 'route_randomWalk_maxRouteTime', 'route_maxWarpFee', 'route_maxNpcTries', 'route_teleport', 'route_teleport_minDistance', 'route_teleport_maxTries', 'route_teleport_notInMaps', 'route_step']);
 	$cfg->addCategory('teleport', 'Grid', ['teleportAuto_hp', 'teleportAuto_sp', 'teleportAuto_idle', 'teleportAuto_portal', 'teleportAuto_search', 'teleportAuto_minAggressives', 'teleportAuto_minAggressivesInLock', 'teleportAuto_onlyWhenSafe', 'teleportAuto_maxDmg', 'teleportAuto_maxDmgInLock', 'teleportAuto_deadly', 'teleportAuto_useSkill', 'teleportAuto_useChatCommand', 'teleportAuto_allPlayers', 'teleportAuto_atkCount', 'teleportAuto_atkMiss', 'teleportAuto_unstuck', 'teleportAuto_dropTarget', 'teleportAuto_dropTargetKS', 'teleportAuto_attackedWhenSitting', 'teleportAuto_totalDmg', 'teleportAuto_totalDmgInLock', 'teleportAuto_equip_leftAccessory', 'teleportAuto_equip_rightAccessory', 'teleportAuto_lostHomunculus']);
 	$cfg->addCategory('follow', 'Grid', ['follow', 'followTarget', 'followEmotion', 'followEmotion_distance', 'followFaceDirection', 'followDistanceMax', 'followDistanceMin', 'followLostStep', 'followSitAuto', 'followBot']);

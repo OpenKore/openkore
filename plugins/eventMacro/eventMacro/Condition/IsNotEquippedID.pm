@@ -7,7 +7,7 @@ use base 'eventMacro::Condition';
 use eventMacro::Utilities qw( find_variable );
 
 sub _hooks {
-	['packet_mapChange','equipped_item','unequipped_item','inventory_ready'];
+	['inventory_clear','equipped_item','unequipped_item','inventory_ready'];
 }
 
 #slot_index to index_name: %equipSlot_lut
@@ -141,9 +141,9 @@ sub update_vars {
 		}
 	}
 	
-	if (!defined $self->{fulfilled_slot} || $changed_fulfilled_slot) {
+	#if (!defined $self->{fulfilled_slot} || $changed_fulfilled_slot) {
 		$self->check_all_equips($recheck_index);
-	}
+	#}
 }
 
 sub check_all_equips {
@@ -180,23 +180,28 @@ sub validate_condition {
 	
 	if ($callback_type eq 'hook') {
 		if ($callback_name eq 'equipped_item') {
-			return $self->SUPER::validate_condition unless (defined $self->{fulfilled_slot});
-			return $self->SUPER::validate_condition unless ($args->{slot} eq $self->{fulfilled_slot} && $self->{is_fulfilled_empty} == 1);
+			#return $self->SUPER::validate_condition unless (defined $self->{fulfilled_slot});
+			#return $self->SUPER::validate_condition unless ($args->{slot} eq $self->{fulfilled_slot} && $self->{is_fulfilled_empty} == 1);
 			$self->{fulfilled_slot} = undef;
 			$self->{is_fulfilled_empty} = undef;
-			$self->check_slot($args->{slot}, $args->{item});
+			#$self->check_slot($args->{slot}, $args->{item});
+			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
 			
 		} elsif ($callback_name eq 'unequipped_item') {
-			return $self->SUPER::validate_condition unless (exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
-			if (defined $self->{fulfilled_slot}) {
-				return $self->SUPER::validate_condition if ($self->{fulfilled_slot} ne $args->{slot});
-			} else {
-				$self->{fulfilled_slot} = $args->{slot};
-			}
-			$self->{is_fulfilled_empty} = 1;
-			
-		} elsif ($callback_name eq 'packet_mapChange') {
+			#return $self->SUPER::validate_condition unless (exists $self->{slot_name_to_member_to_check_array}{$args->{slot}});
+			#if (defined $self->{fulfilled_slot}) {
+			#	return $self->SUPER::validate_condition if ($self->{fulfilled_slot} ne $args->{slot});
+			#} else {
+			#	$self->{fulfilled_slot} = $args->{slot};
+			#}
+			#$self->{is_fulfilled_empty} = 1;
 			$self->{fulfilled_slot} = undef;
+			$self->{is_fulfilled_empty} = undef;
+			$self->check_all_equips($self->{slot_name_to_member_to_check_array});
+			
+		} elsif ($callback_name eq 'inventory_clear') {
+			$self->{fulfilled_slot} = undef;
+			$self->{is_fulfilled_empty} = undef;
 			$self->{is_on_stand_by} = 1;
 			
 		} elsif ($callback_name eq 'inventory_ready') {

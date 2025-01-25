@@ -22,6 +22,10 @@ sub validate_condition {
 		$self->update_validator_var($callback_name, $args);
 	}
 	
+	unless ( defined $field ) {
+		$self->SUPER::validate_condition( 0 );
+	}
+	
 	$self->{lastMap} = $field->baseName;
 	
 	return $self->eventMacro::Condition::validate_condition( $self->validator_check_opposite($self->{lastMap}) );

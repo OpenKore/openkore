@@ -59,18 +59,18 @@ sub update {
 	return unless $conState == Network::IN_GAME;
 	
 	$self->set ('feed',
-		$char->{homunculus} && $char->{homunculus}{state} == HO_STATE_ALIVE
+		$char->has_homunculus
 	);
 	$self->set ('vaporize',
-		$char->{homunculus} && $char->{homunculus}{state} == HO_STATE_ALIVE
+		$char->has_homunculus
 		&& $char->{skills}{(HO_SKILL_VAPORIZE)} && $char->{skills}{(HO_SKILL_VAPORIZE)}{lv}
 	);
 	$self->set ('call',
-		(!$char->{homunculus} || !defined $char->{homunculus}{state} || $char->{homunculus}{state} == HO_STATE_REST)
+		(!$char->has_homunculus || !exists $char->{homunculus_info} || (exists $char->{homunculus_info} && $char->{homunculus_info}{vaporized}))
 		&& $char->{skills}{(HO_SKILL_CALL)} && $char->{skills}{(HO_SKILL_CALL)}{lv}
 	);
 	$self->set ('resurrect',
-		(!$char->{homunculus} || (!defined $char->{homunculus}{state} && $char->{homunculus}{state} == HO_STATE_DEAD))
+		(!$char->has_homunculus || !exists $char->{homunculus_info} || (exists $char->{homunculus_info} && $char->{homunculus_info}{dead}))
 		&& $char->{skills}{(HO_SKILL_RESURRECT)} && $char->{skills}{(HO_SKILL_RESURRECT)}{lv}
 	);
 	

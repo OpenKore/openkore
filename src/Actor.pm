@@ -116,7 +116,7 @@ sub new {
 # actor lists. If $ID is not in any of the actor lists, it will return
 # a new Actor::Unknown object.
 sub get {
-	my ($ID) = @_;
+	my ($ID, $retUndefwhenNotFound) = @_;
 	assert(defined $ID, "ID must be provided to retrieve and Actor class") if DEBUG;
 
 	if ($ID eq $accountID) {
@@ -132,6 +132,9 @@ sub get {
 			if ($actor) {
 				return $actor;
 			}
+		}
+		if ($retUndefwhenNotFound) {
+			return undef;
 		}
 		return new Actor::Unknown($ID);
 	}
@@ -455,7 +458,7 @@ sub verb {
 sub position {
 	my ($self) = @_;
 
-	return calcPosition($self);
+	return calcPosFromPathfinding($field, $self);
 }
 
 ##
@@ -823,7 +826,7 @@ sub route {
 		y => $y,
 		maxDistance => $args{maxRouteDistance},
 		maxTime => $args{maxRouteTime},
-		map { $_ => $args{$_} } qw(distFromGoal pyDistFromGoal notifyUponArrival avoidWalls)
+		map { $_ => $args{$_} } qw(distFromGoal pyDistFromGoal notifyUponArrival avoidWalls randomFactor useManhattan)
 	);
 
 	if ($map && !$args{noMapRoute}) {
@@ -831,7 +834,7 @@ sub route {
 	} else {
 		$task = new Task::Route(field => $field, @params);
 	}
-	$task->{$_} = $args{$_} for qw(attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
+	$task->{$_} = $args{$_} for qw(attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 
 	$self->queue('route', $task);
 }
@@ -918,7 +921,7 @@ sub processTask {
 sub sendAttackStop {
 	my ($self) = @_;
 
-	$self->sendMove(@{calcPosition($self)}{qw(x y)});
+	$self->sendMove(@{calcPosFromPathfinding($field, $self)}{qw(x y)});
 }
 
 ##

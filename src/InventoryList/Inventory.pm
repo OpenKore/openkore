@@ -63,4 +63,11 @@ sub onitemListEnd {
 	}
 }
 
+sub clear {
+	my ($self) = @_;
+	Plugins::callHook('inventory_clear');
+	$self->SUPER::clear();
+}
+
+
 1;

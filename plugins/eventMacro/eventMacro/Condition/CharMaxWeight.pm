@@ -7,7 +7,15 @@ use base 'eventMacro::Conditiontypes::NumericConditionState';
 use Globals qw( $char );
 
 sub _hooks {
-	['packet/stat_info'];
+	['inventory_clear','inventory_ready','packet/stat_info'];
+}
+
+sub _parse_syntax {
+	my ( $self, $condition_code ) = @_;
+	
+	$self->{is_on_stand_by} = 1;
+	
+	$self->SUPER::_parse_syntax($condition_code);
 }
 
 sub _get_val {
@@ -17,13 +25,24 @@ sub _get_val {
 sub validate_condition {
 	my ( $self, $callback_type, $callback_name, $args ) = @_;
 	
-	my $result = 0;
+	if ($callback_name eq 'inventory_clear') {
+		$self->{is_on_stand_by} = 1;
+	} elsif ($callback_name eq 'inventory_ready') {
+		$self->{is_on_stand_by} = 0;
+	}
 	
-	if ($callback_type eq 'hook') {
-		return $self->SUPER::validate_condition if $callback_name eq 'packet/stat_info' && $args && $args->{type} != 25;
-	} elsif ($callback_type eq 'variable') {
+	if ($callback_type eq 'variable') {
 		$self->update_validator_var($callback_name, $args);
 	}
+
+	if ($callback_type eq 'recheck') {
+		$self->{is_on_stand_by} = 0;
+	}
+	
+	if ($self->{is_on_stand_by} == 1) {
+		return $self->SUPER::validate_condition(0);
+	}
+	
 	return $self->SUPER::validate_condition(  $self->validator_check );
 }
 
