@@ -50,7 +50,7 @@ sub new {
 	$self->{npc_market_info_pack} = "V C V2 v";
 	$self->{npc_store_info_pack} = "V V C V";
 	$self->{vender_items_list_item_pack} = 'V v2 C V C3 a16 a25';
-
+	$self->{vender_items_list_item_pack_self} = 'V v2 C V C3 a16 a25';
 
 	return $self;
 }
