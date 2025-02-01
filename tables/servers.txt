@@ -136,6 +136,7 @@ rankingSystemType 1
 itemListType 1
 pinCode 1
 gameGuard 1
+field_morocc morocc-old
 
 # Renewal
 # http://renewal.playragnarok.com/
