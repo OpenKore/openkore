@@ -22,8 +22,17 @@ use base qw(Network::Receive::kRO::RagexeRE_2010_04_06a);
 
 sub new {
 	my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
 
-	return $class->SUPER::new(@_);
+	my %packets = (
+		'006B' => ['received_characters_info', 'v C3 x20 a*', [qw(len total_slot premium_start_slot premium_end_slot charInfo)]], # last known struct
+	);
+
+	foreach my $switch (keys %packets) {
+		$self->{packet_list}{$switch} = $packets{$switch};
+	}
+
+	return $self;
 }
 
 1;
