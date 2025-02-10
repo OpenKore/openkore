@@ -1,0 +1,79 @@
+name: Bug Report
+description: Create an Issue that details broken or unexpected behaviour
+labels: ["bug"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Openkore version git
+      description: |
+        Please specify the version of OpenKore. <br>
+        [How to check version git you bot](https://github.com/OpenKore/openkore/wiki/How-to-check-version-git-you-bot).
+        You can also use the console command: [version](https://openkore.com/wiki/version).
+      placeholder: version git:***_YYYY-MM-DD ctime:YYYY-MM-DD
+    validations:
+      required: true
+  - type: dropdown
+    id: XKore
+    attributes:
+      label: XKore Mode
+      description: Specify the value of the [XKore](https://openkore.com/wiki/XKore) config parameter (see config.txt file).
+      multiple: true
+      options:
+        - XKore 0
+        - XKore 1
+        - XKore 2
+        - XKore 3
+        - Empty
+    validations:
+      required: true
+  - type: input
+    id: ROserver
+    attributes:
+      label: RO Server Name
+      description: Specify the server name Ragnarok.
+      placeholder: idRO, FreeRO, tRO
+    validations:
+      required: true
+  - type: input
+    id: ROserverLink
+    attributes:
+      label: Link to RO server
+      description: Please provide a link to the server home page.
+      placeholder: https://***.com
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Result
+      description: Describe the issue that you experienced in detail.
+      placeholder: |
+        1. In this environment...
+        2. With this config...
+        3. Trigger event '...'
+        4. See error...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant Log Output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: Shell
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Result
+      description: Describe what you would expect to happen in detail.
+    validations:
+      required: true
+  - type: textarea
+    id: howto
+    attributes:
+      label: How to Reproduce
+      description: If you have not stated in the description of the result already, please give us a short guide how we can reproduce your issue.
+    validations:
+      required: true
