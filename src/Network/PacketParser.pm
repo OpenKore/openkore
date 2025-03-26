@@ -406,7 +406,7 @@ sub process {
 			my $switch = Network::MessageTokenizer::getMessageID($message);
 
 			# FIXME?
-			$self->parse_pre($handleContainer->{hook_prefix}, $switch, $message);
+			$self->parse_pre($handleContainer->{hook_prefix}, $switch, $message, \$message);
 
 			my $willMangle = $handleContainer->can('willMangle') && $handleContainer->willMangle($switch);
 
@@ -459,7 +459,7 @@ sub process {
 }
 
 sub parse_pre {
-	my ($self, $mode, $switch, $msg) = @_;
+	my ($self, $mode, $switch, $msg, $realMsg) = @_;
 	my $values = {
 		'Network::Receive' => ['<< Received packet:', 'received', 'Recv', 'parseMsg/pre'],
 		'Network::ClientReceive' => ['<< Sent by RO client:', 'ro_sent', 'ROSend', 'RO_sendMsg_pre'],
@@ -495,7 +495,7 @@ sub parse_pre {
 		switch => $switch,
 		msg => $msg,
 		msg_size => length($msg),
-		realMsg => \$msg
+		realMsg => $realMsg
 	});
 }
 
