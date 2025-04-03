@@ -575,6 +575,7 @@ attackSkillSlot {
 	mercenary_whenNotIdle
 	onAction
     inQueue
+    notInQueue
 	whenStatusActive
 	whenStatusInactive
 	whenFollowing
@@ -658,6 +659,7 @@ doCommand {
 	mercenary_whenNotIdle
 	onAction
     inQueue
+    notInQueue
 	whenStatusActive
 	whenStatusInactive
 	whenFollowing
@@ -711,6 +713,7 @@ useSelf_skill {
 	mercenary_whenNotIdle
 	onAction
     inQueue
+    notInQueue
 	whenStatusActive
 	whenStatusInactive
 	whenFollowing
@@ -768,6 +771,7 @@ partySkill {
 	mercenary_whenNotIdle
 	onAction
     inQueue
+    notInQueue
 	whenStatusActive
 	whenStatusInactive
 	whenFollowing
@@ -871,6 +875,7 @@ equipAuto {
 	mercenary_whenNotIdle
 	onAction
     inQueue
+    notInQueue
 	whenStatusActive
 	whenStatusInactive
 	whenFollowing
@@ -915,6 +920,7 @@ useSelf_item {
 	mercenary_whenNotIdle
 	onAction
     inQueue
+    notInQueue
 	whenStatusActive
 	whenStatusInactive
 	whenFollowing
