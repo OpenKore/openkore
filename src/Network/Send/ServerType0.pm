@@ -330,6 +330,7 @@ sub new {
 		'0AC1' => ['rodex_refresh_maillist', 'C V6', [qw(type mailID1 mailID2 mailReturnID1 mailReturnID2 mailAccountID1 mailAccountID2)]], # 26 -- RodexRefreshMaillist
 		'0ACE' => ['equip_switch_single', 'a2', [qw(ID)]],
 		'0ACF' => ['master_login', 'a4 Z25 a32 a5', [qw(game_code username password_rijndael flag)]],
+		'0AD0' => ['otp_code', 'Z9', [qw(code)]],
 		'0AE8' => ['change_dress'],
 		'0AEF' => ['attendance_reward_request'],
 		'0AF4' => ['skill_use_location', 'v4 C', [qw(lv skillID x y unknown)]], #11

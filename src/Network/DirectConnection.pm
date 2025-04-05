@@ -463,7 +463,10 @@ sub checkConnection {
 			undef $secureLoginKey;
 
 		} elsif (timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
-			if ($config{dcOnMaxReconnections} && $config{dcOnMaxReconnections} <= $reconnectCount) {
+			if ($waiting_for_motp) {
+				$timeout_ex{'master'}{'time'} = time;
+				return;
+			} elsif ($config{dcOnMaxReconnections} && $config{dcOnMaxReconnections} <= $reconnectCount) {
 				error T("Auto disconnecting on MaxReconnections!\n");
 				chatLog("k", T("*** Exceeded the maximum number attempts to reconnect, auto disconnect! ***\n"));
 				$quit = 1;

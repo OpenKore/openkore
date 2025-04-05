@@ -8023,9 +8023,42 @@ sub received_login_token {
 	my ($self, $args) = @_;
 	# XKore mode 1 / 3.
 	return if ($self->{net}->version == 1);
-	my $master = $masterServers{$config{master}};
-	# rathena use 0064 not 0825
-	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTP_ip}, $master->{OTP_port});
+
+	$timeout_ex{'master'}{'time'} = time;
+	$timeout{'master'}{'time'} = time;
+	$waiting_for_motp = 0;
+
+	if($args->{login_type} == 0) {
+		my $master = $masterServers{$config{master}};
+		# rathena use 0064 not 0825
+		$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTP_ip}, $master->{OTP_port});
+	} elsif($args->{login_type} == 400) {
+		$waiting_for_motp = 1;
+		my $code = $interface->query(T("Please enter the MOTP code."));
+		$messageSender->sendMotpToServer($code);
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout{'master'}{'time'} = time;
+	} elsif($args->{login_type} == 500) {
+		error TF("Wrong MOTP for account [%s]\n", $config{'username'}), "connection";
+		$timeout_ex{master}{time} = 0;
+		$conState_tries = 0;
+	} elsif($args->{login_type} == 600) {
+		error TF("Password Error for account [%s]\n", $config{'username'}), "connection";
+		Plugins::callHook('invalid_password');
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'} && !UNIVERSAL::isa($net, 'Network::XKoreProxy')) {
+			my $password = $interface->query(T("Enter your Ragnarok Online password again."), isPassword => 1);
+			if (defined($password)) {
+				configModify('password', $password, 1);
+				$timeout_ex{master}{time} = 0;
+				$conState_tries = 0;
+			} else {
+				quit();
+				return;
+			}
+		}
+	} else {
+		error TF("Unknown MOTP login_type [%s]\n", $args->{login_type}), "connection";
+	}
 }
 
 # this info will be sent to xkore 2 clients
