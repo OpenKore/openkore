@@ -1,0 +1,39 @@
+# remove the comment '#' from the line to add @go support
+#@go 0 prontera 156 191
+#@go 1 morocc 156 93
+#@go 2 geffen 119 59
+#@go 3 payon 162 233
+#@go 4 alberta 192 147
+#@go 5 izlude 128 146
+#@go 6 aldebaran 140 131
+#@go 7 xmas 147 134
+#@go 8 comodo 209 143
+#@go 9 yuno 157 51
+#@go 10 amatsu 198 84
+#@go 11 gonryun 160 120
+#@go 12 umbala 89 157
+#@go 13 niflheim 21 153
+#@go 14 louyang 217 40
+#@go 15 iz_int 18 26 # pre-re
+#@go 15 new_1-1 53 111 # renewal
+#@go 16 sec_pri 23 61 # jail
+#@go 17 jawaii 249 127
+#@go 18 ayothaya 151 117
+#@go 19 einbroch 64 200
+#@go 20 lighthalzen 158 92
+#@go 21 einbech 70 95
+#@go 22 hugel 96 145
+#@go 23 rachel 130 110
+#@go 24 veins 216 123
+#@go 25 moscovia 223 184
+#@go 26 mid_camp 180 240
+#@go 27 manuk 282 138
+#@go 28 splendide 201 147
+#@go 29 brasilis 182 239
+#@go 30 dicastes01 198 187
+#@go 31 mora 44 151
+#@go 32 dewata 200 180
+#@go 33 malangdo 140 114
+#@go 34 malaya 242 211
+#@go 35 eclage 110 39
+#@go 36 lasagna 193 182

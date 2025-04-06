@@ -167,6 +167,11 @@ sub iterate {
 		delete $self->{guess_portal};
 		shift @{$self->{mapSolution}};
 
+	} elsif ( $self->{mapSolution}[0]{is_command} ) {
+		my $go_cmd = $self->{mapSolution}[0]{command};
+		debug "MapRoute - Using go command: $go_cmd\n", "route";
+		$self->{substage} = 'Waiting for Warp';
+		$messageSender->sendChat($go_cmd);
 	} elsif ( $self->{mapSolution}[0]{steps} ) {
 		my $min_npc_dist = 8;
 		my $max_npc_dist = 10;

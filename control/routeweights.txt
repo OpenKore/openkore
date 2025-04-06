@@ -28,6 +28,10 @@ PORTAL 20
 # by using a NPC. Only change this, if you exactly know what you're doing!
 NPC 200
 
+# Command @go weight. This can be used to avoid/prefer going to the destination
+# by using a '@go' Command. Only change this, if you exactly know what you're doing!
+COMMAND 20
+
 # Maps where you can exit to the same place you came from,
 # which confuses routing if added to portals thoughtlessly.
 bat_room 10000
