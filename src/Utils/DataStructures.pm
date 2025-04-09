@@ -30,7 +30,7 @@ our %EXPORT_TAGS = (
 	finders => [qw( existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip
 			findIndexStringList_lc findLastIndex findKey findKeyString )],
 	# Misc array functions.
-	misc    => [qw( compactArray hashCopyByKey minHeapAdd shuffleArray )]
+	misc    => [qw( compactArray hashCopyByKey minHeapAdd shuffleArray hashSafeGetValue)]
 );
 our @EXPORT_OK = (
 	@{$EXPORT_TAGS{arrays}},
@@ -472,6 +472,34 @@ sub hashCopyByKey {
 	foreach (@keys) {
 		$target->{$_} = $source->{$_} if exists $source->{$_};
 	}
+}
+
+##
+# hashSafeGetValue(\%hash, $key1, $key2, ..., $keyN);
+#
+# Safely retrieves a deeply nested value from a hashref without autovivifying intermediate levels.
+#
+# Perl will autovivify intermediate hash levels when using chained dereferencing like:
+# my $val = $hash{a}{b}{c};
+# If $hash{a} or $hash{a}{b} don’t exist, they will be created as empty hashes. This can lead to bugs or memory bloat in long-lived processes.
+# This function prevents unwanted creation of hash keys ("autovivification") when checking nested hash structures. It works for arbitrarily deep levels of nested hash keys.
+#
+# Example:
+# my $value = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest, 'map');
+# if (defined $value) {
+# 	print "Map name: $value\n";
+# }
+
+sub hashSafeGetValue {
+    my ($hashref, @keys) = @_;
+    my $val = $hashref;
+
+    for my $key (@keys) {
+        return undef unless ref($val) eq 'HASH' && exists $val->{$key};
+        $val = $val->{$key};
+    }
+
+    return $val;
 }
 
 sub minHeapAdd {

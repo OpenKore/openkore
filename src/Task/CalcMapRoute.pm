@@ -30,6 +30,7 @@ use Translation qw(T TF);
 use Log qw(debug);
 use Utils qw(timeOut);
 use Utils::Exceptions;
+use Utils::DataStructures qw(hashSafeGetValue);
 
 # Stage constants.
 use constant {
@@ -256,19 +257,27 @@ sub searchStep {
 
 		# support to multiple targets
 		foreach my $target ( @{ $self->{targets} } ) {
-			my $map = $portals_lut{$portal}{dest}{$dest}{map} ? $portals_lut{$portal}{dest}{$dest}{map} : ($portals_commands{$dest}{dest}{$dest}{map}) ? $portals_commands{$dest}{dest}{$dest}{map} : undef;
-			next if $map ne $target->{map}; # checks if the current destination map matches any of the search targets.
+			my $map_name = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest, 'map')
+						|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest, 'map') 
+						|| undef;
 
+			my $map_destination = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest)
+							|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest)
+							|| undef;
+
+			next if $map_name ne $target->{map}; # checks if the current destination map matches any of the search targets.
 			# if no x or y consider that is already at destination
 			if ( !$target->{x} || !$target->{y} ) {
 				$self->{found} = $parent;
 			}
 			# uses getRoute to check whether you have reached exactly the desired point on the map.
-			elsif ( Task::Route->getRoute($self->{solution}, $target->{field}, $portals_lut{$portal}{dest}{$dest}, $target) ) {
+			elsif ( Task::Route->getRoute($self->{solution}, $target->{field}, $map_destination, $target) ) {
 				my $walk = $self->{found} = "$target->{map} $target->{x} $target->{y}=$target->{map} $target->{x} $target->{y}";
 				$closelist->{$walk}         = { %{ $closelist->{$parent} } };
 				$closelist->{$walk}{walk}   = scalar @{ $self->{solution} } + $closelist->{$parent}{walk};
 				$closelist->{$walk}{parent} = $parent;
+				$closelist->{$walk}{is_command} = 0;
+				$closelist->{$walk}{command} = undef;
 			}
 
 			# Reconstructs the solution path by traversing the parents backwards, stacking the portals used in the final route.
