@@ -1939,7 +1939,7 @@ sub actor_display {
 			$actor = new Actor::Player();
 			$actor->{appear_time} = time;
 			# New actor_display packets include the player's name
-			$actor->{name} = $name if defined $name;
+			$actor->setName($name) if defined $name;
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
@@ -1991,7 +1991,7 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Pet();
 			$actor->{appear_time} = time;
-			$actor->{name} = $name;
+			$actor->setName($name) if defined $name;
 #			if ($monsters_lut{$args->{type}}) {
 #				$actor->setName($monsters_lut{$args->{type}});
 #			}
@@ -2016,7 +2016,7 @@ sub actor_display {
 				$actor->setName($monsters_lut{$args->{type}});
 			}
 			# New actor_display packets include the Monster name
-			$actor->{name} = $name if defined $name;
+			$actor->setName($name) if defined $name;
 			$actor->{name_given} = "Unknown";
 			$actor->{binType} = $args->{type};
 			$mustAdd = 1;
@@ -2030,7 +2030,7 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::NPC();
 			$actor->{appear_time} = time;
-			$actor->{name} = $name if defined $name;
+			$actor->setName($name) if defined $name;
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
@@ -2042,7 +2042,8 @@ sub actor_display {
 			$actor->{appear_time} = time;
 			$mustAdd = 1;
 		}
-		$actor->{name} = $jobs_lut{$args->{type}};
+		
+		$actor->setName($jobs_lut{$args->{type}});
 	}
 
 	#### Step 2: update actor information ####
@@ -2900,7 +2901,7 @@ sub homunculus_property {
 	return 0 unless enforce_homun_state();
 
 	my $slave = $char->{homunculus};
-	$slave->{name} = bytesToString($args->{name});
+	$slave->setName(bytesToString($args->{name}));
 
 	slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
