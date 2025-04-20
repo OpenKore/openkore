@@ -432,7 +432,6 @@ sub setName {
 	Plugins::callHook('actor_setName', \%hookArgs);
 	
 	if ($hookArgs{return}) {
-		return unless ($hookArgs{new_name} ne $newName);
 		$newName = $hookArgs{new_name};
 	}
 	
