@@ -421,7 +421,21 @@ sub setName {
 	my ($self, $name) = @_;
 
 	my $oldName = $self->{name};
-	$self->{name} = $name;
+	
+	my $newName = $name;
+	
+	my %hookArgs = (
+		actor => $self,
+		new_name => $newName,
+		return => 0
+	);
+	Plugins::callHook('actor_setName', \%hookArgs);
+	
+	if ($hookArgs{return}) {
+		$newName = $hookArgs{new_name};
+	}
+	
+	$self->{name} = $newName;
 	$self->{onNameChange}->call($self, { oldName => $oldName });
 	$self->{onUpdate}->call($self);
 }
