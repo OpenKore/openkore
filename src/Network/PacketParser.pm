@@ -411,7 +411,9 @@ sub process {
 			my $willMangle = $handleContainer->can('willMangle') && $handleContainer->willMangle($switch);
 
 			if ($args = $self->parse($message, $handleContainer, @handleArguments)) {
-				$args->{mangle} ||= $willMangle && $handleContainer->mangle($args);
+				if ($willMangle) {
+					$args->{mangle} = $handleContainer->mangle($args);
+				}
 			} else {
 				$args = {
 					switch => $switch,
