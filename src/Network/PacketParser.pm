@@ -324,7 +324,7 @@ sub unhandledMessage {
 # sub willMangle {
 #     my (undef, $args) = @_;
 #     if ($args->{messageID} eq '008A') {
-#         $args->{willMangle} = 1;
+#         $args->{return} = 1;
 #     }
 # }
 #
@@ -333,6 +333,7 @@ sub unhandledMessage {
 #     my $message_args = $args->{messageArgs};
 #     if ($message_args->{switch} eq '008A') {
 #         ...Modify $message_args as necessary....
+#         $args->{return} = 2; Modify {return} as necessary....
 #     }
 # }
 # </pre>
