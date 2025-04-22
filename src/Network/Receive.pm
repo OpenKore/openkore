@@ -11595,7 +11595,7 @@ sub switch_character {
 	my ($self, $args) = @_;
 	# User is switching characters in X-Kore
 	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
-	$net->serverDisconnect();
+	$net->serverDisconnect() if(UNIVERSAL::isa($net, 'Network::DirectConnection'));
 
 	# FIXME better support for multiple received_characters packets
 	undef @chars;
