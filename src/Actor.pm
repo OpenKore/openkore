@@ -840,7 +840,7 @@ sub route {
 		y => $y,
 		maxDistance => $args{maxRouteDistance},
 		maxTime => $args{maxRouteTime},
-		map { $_ => $args{$_} } qw(distFromGoal pyDistFromGoal notifyUponArrival avoidWalls randomFactor useManhattan)
+		map { $_ => $args{$_} } qw(targetNpcPos distFromGoal pyDistFromGoal notifyUponArrival avoidWalls randomFactor useManhattan)
 	);
 
 	if ($map && !$args{noMapRoute}) {
@@ -848,7 +848,7 @@ sub route {
 	} else {
 		$task = new Task::Route(field => $field, @params);
 	}
-	$task->{$_} = $args{$_} for qw(attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
+	$task->{$_} = $args{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
 
 	$self->queue('route', $task);
 }
