@@ -267,7 +267,7 @@ sub iterate {
 			$self->iterate();
 
 		} else {
-			debug "Something's wrong; there is no path from " . $self->{dest}{map}->baseName . "($calc_pos->{x},$calc_pos->{y}) to " . $self->{dest}{map}->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "debug";
+			debug "Something's wrong; there is no path from " . $self->{dest}{map}->baseName . "($calc_pos->{x},$calc_pos->{y}) to " . $self->{dest}{map}->baseName . "($self->{dest}{pos}{x},$self->{dest}{pos}{y}).\n", "route";
 			$self->setError(CANNOT_CALCULATE_ROUTE, "Unable to calculate a route.");
 		}
 
@@ -327,7 +327,7 @@ sub iterate {
 		if ($current_calc_pos->{x} == $solution->[$#{$solution}]{x} && $current_calc_pos->{y} == $solution->[$#{$solution}]{y}) {
 			# Actor position is the destination; we've arrived at the destination
 			if ($self->{notifyUponArrival}) {
-				message TF("%s reached the destination.\n", $self->{actor}), "success";
+				message TF("%s reached the destination.\n", $self->{actor}), "route";
 			} else {
 				debug "$self->{actor} reached the destination.\n", "route";
 			}
@@ -442,7 +442,7 @@ sub iterate {
 		if ($stepsleft == 0) {
 			# No more points to cover; we've arrived at the destination
 			if ($self->{notifyUponArrival}) {
-				message TF("%s reached the destination.\n", $self->{actor}), "success";
+				message TF("%s reached the destination.\n", $self->{actor}), "route";
 			} else {
 				debug "$self->{actor} reached the destination.\n", "route";
 			}
@@ -454,7 +454,7 @@ sub iterate {
 			# 2 more steps to cover (current position and the destination)
 			debug "Stoping 1 cell away from destination because there is an obstacle in it.\n", "route";
 			if ($self->{notifyUponArrival}) {
-				message TF("%s reached the destination.\n", $self->{actor}), "success";
+				message TF("%s reached the destination.\n", $self->{actor}), "route";
 			} else {
 				debug "$self->{actor} reached the destination.\n", "route";
 			}
@@ -564,20 +564,20 @@ sub iterate {
 						}
 					}
 					if ($found) {
-						debug "[Route] [targetNpcPos] Found target npc.\n";
+						debug "[Route] [targetNpcPos] Found target npc.\n", "route";
 						if ($self->{pyDistFromGoal} || $self->{distFromGoal}) {
 							if ($self->{distFromGoal} && blockDistance($self->{dest}{pos}, $current_calc_pos) <= $self->{distFromGoal}) {
-								debug "[Route] [targetNpcPos] [distFromGoal] Target npc is already close enough, ending movement.\n";
+								debug "[Route] [targetNpcPos] [distFromGoal] Target npc is already close enough, ending movement.\n", "route";
 								$self->setDone();
 								return;
 								
 							} elsif ($self->{pyDistFromGoal} && distance($self->{dest}{pos}, $current_calc_pos) <= $self->{pyDistFromGoal}) {
-								debug "[Route] [targetNpcPos] [pyDistFromGoal] Target npc is already close enough, ending movement.\n";
+								debug "[Route] [targetNpcPos] [pyDistFromGoal] Target npc is already close enough, ending movement.\n", "route";
 								$self->setDone();
 								return;
 							}
 						} else {
-							debug "[Route] [targetNpcPos] Target npc is already on screen, ending movement.\n";
+							debug "[Route] [targetNpcPos] Target npc is already on screen, ending movement.\n", "route";
 							$self->setDone();
 							return;
 						}
@@ -585,12 +585,12 @@ sub iterate {
 					
 				} elsif ($self->{pyDistFromGoal} || $self->{distFromGoal}) {
 					if ($self->{distFromGoal} && blockDistance($self->{dest}{pos}, $current_calc_pos) <= $self->{distFromGoal}) {
-						debug "[Route] [distFromGoal] Target cell is already close enough, ending movement.\n";
+						debug "[Route] [distFromGoal] Target cell is already close enough, ending movement.\n", "route";
 						$self->setDone();
 						return;
 						
 					} elsif ($self->{pyDistFromGoal} && distance($self->{dest}{pos}, $current_calc_pos) <= $self->{pyDistFromGoal}) {
-						debug "[Route] [pyDistFromGoal] Target cell is already close enough, ending movement.\n";
+						debug "[Route] [pyDistFromGoal] Target cell is already close enough, ending movement.\n", "route";
 						$self->setDone();
 						return;
 					}
@@ -609,7 +609,7 @@ sub iterate {
                 if ($self->{actor}->isa('Actor::You') && $self->{isRandomWalk} && $self->{actor}{slaves}) {
 					my $slave = AI::SlaveManager::mustWaitMinDistance();
 					if (defined $slave) {
-						debug TF("Waiting for slave %s before next randomWalk step.\n", $slave), 'slave', 2;
+						debug TF("Waiting for slave %s before next randomWalk step.\n", $slave), 'route', 2;
 						return;
 					}
 				}

@@ -113,9 +113,9 @@ sub handleNPCTalk {
 		debug "Npc has restarted conversation after talk cancel was sent.\n", "ai_npcTalk";
 
 		if ($self->noMoreSteps) {
-			debug "Continuing the talk within the same task, no conversation steps left.\n", 'ai_npcTalk';
+			debug "Continuing the talk within the same task, no conversation steps left.\n", "ai_npcTalk";
 		} else {
-			debug "Continuing the talk within the same task and remaining conversation steps.\n", 'ai_npcTalk';
+			debug "Continuing the talk within the same task and remaining conversation steps.\n", "ai_npcTalk";
 		}
 
 		$self->find_and_set_target;
@@ -133,26 +133,26 @@ sub handleNPCTalk {
 			return;
 		}
 		$self->{stage} = AFTER_NPC_CLOSE;
-		message TF("%s: Done talking\n", $self->{target}), "npc";
+		message TF("%s: Done talking\n", $self->{target}), "ai_npcTalk";
 
 	} elsif ($self->noMoreSteps) {
 		if ($hook_name eq 'packet/npc_talk_continue') {
-			message TF("%s: Type 'talk cont' to continue talking\n", $self->{target}), "npc";
+			message TF("%s: Type 'talk cont' to continue talking\n", $self->{target}), "ai_npcTalk";
 
 		} elsif ($hook_name eq 'packet/npc_talk_number') {
-			message TF("%s: Type 'talk num <number #>' to input a number.\n", $self->{target}), "npc";
+			message TF("%s: Type 'talk num <number #>' to input a number.\n", $self->{target}), "ai_npcTalk";
 
 		} elsif ($hook_name eq 'npc_talk_responses') {
-			message TF("%s: Type 'talk resp #' to choose a response.\n", $self->{target}), "npc";
+			message TF("%s: Type 'talk resp #' to choose a response.\n", $self->{target}), "ai_npcTalk";
 
 		} elsif ($hook_name eq 'packet/npc_store_begin') {
-			message TF("%s: Type 'store' to start buying, type 'sell' to start selling or type 'canceltransaction' to cancel\n", $self->{target}), "npc";
+			message TF("%s: Type 'store' to start buying, type 'sell' to start selling or type 'canceltransaction' to cancel\n", $self->{target}), "ai_npcTalk";
 
 		} elsif ($hook_name eq 'packet/npc_talk_text') {
-			message TF("%s: Type 'talk text' (Respond to NPC)\n", $self->{target}), "npc";
+			message TF("%s: Type 'talk text' (Respond to NPC)\n", $self->{target}), "ai_npcTalk";
 
 		} elsif ($hook_name eq 'packet/cash_dealer') {
-			message TF("%s: Type 'cashbuy' to start buying\n", $self->{target}), "npc";
+			message TF("%s: Type 'cashbuy' to start buying\n", $self->{target}), "ai_npcTalk";
 		}
 	}
 	$self->{time} = time;
@@ -220,7 +220,7 @@ sub serverDisconnectSuccess {
 	my (undef, undef, $holder) = @_;
 	return if $holder->[0]->{disconnected};
 
-	debug "Disconnected during TalkNPC, cancelling task...\n";
+	debug "Disconnected during TalkNPC, cancelling task...\n", "ai_npcTalk";
 	$holder->[0]->{disconnected} = 1;
 }
 
@@ -283,9 +283,9 @@ sub iterate {
 
 		#A conversation started right after mapchange/disconnection (eg. payon guards)
 		if (%talk) {
-			debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", 'ai_npcTalk';
+			debug "Done talking with $self->{target}, but another NPC initiated a talk instantly\n", "ai_npcTalk";
 			# TODO: maybe better create a new task and pass remaining steps to it
-			debug "Continuing the talk within the same task and remaining conversation steps\n", 'ai_npcTalk';
+			debug "Continuing the talk within the same task and remaining conversation steps\n", "ai_npcTalk";
 			$self->{map_change} = 0;
 			$self->{disconnected} = 0;
 			$self->find_and_set_target;
@@ -294,7 +294,7 @@ sub iterate {
 
 		#If there's no conversation clear this task
 		} else {
-			debug "Ending Task::TalkNPC due to mapchange or disconnection, ";
+			debug "Ending Task::TalkNPC due to mapchange or disconnection, ", "ai_npcTalk";
 
 			if ($self->{stage} == TALKING_TO_NPC) {
 				debug "conversation interrupted and finished.\n";
@@ -334,7 +334,7 @@ sub iterate {
 			}
 
 		} elsif (defined $self->{error_code}) {
-			debug "Can't talk with $self->{target}, because of errors\n", 'ai_npcTalk';
+			debug "Can't talk with $self->{target}, because of errors\n", "ai_npcTalk";
 			$self->setError($self->{error_code}, $self->{error_message});
 		} else {
 			my $target = $self->find_and_set_target;
@@ -371,7 +371,7 @@ sub iterate {
 					$self->{y} = $plugin_args{y};
 					$self->{nameID} = $plugin_args{nameID};
 					$self->{sequence} = $plugin_args{sequence};
-					warning "[TalkNPC] Could not find NPC, retry set by hookcall.\n", 'ai_npcTalk';
+					warning "[TalkNPC] Could not find NPC, retry set by hookcall.\n", "ai_npcTalk";
 					
 				} else {
 					$self->setError(NPC_NOT_FOUND, TF("Could not find an NPC."));
@@ -388,7 +388,7 @@ sub iterate {
 
 	} elsif ($self->{stage} == TALKING_TO_NPC) {
 		if (%talk && $ai_v{'npc_talk'}{'talk'} eq 'initiated') {
-			debug "Spining until a response is needed from us\n", 'ai_npcTalk';
+			debug "Spining until a response is needed from us\n", "ai_npcTalk";
 			return;
 		}
 
@@ -396,7 +396,7 @@ sub iterate {
 		if ($self->{sent_talk_response_cancel}) {
 			undef %talk;
 			if (defined $self->{error_code}) {
-				debug "Done talking with $self->{target}, but with conversation sequence errors\n", 'ai_npcTalk';
+				debug "Done talking with $self->{target}, but with conversation sequence errors\n", "ai_npcTalk";
 				$self->setError($self->{error_code}, $self->{error_message});
 			} else {
 				$self->conversation_end;
@@ -428,7 +428,7 @@ sub iterate {
 		# Wait x seconds.
 		if ($self->{steps}[0] =~ /^w(\d+)/i) {
 			my $time = $1;
-			debug "$self->{target}: Waiting for $time seconds...\n", 'ai_npcTalk';
+			debug "$self->{target}: Waiting for $time seconds...\n", "ai_npcTalk";
 			$ai_v{'npc_talk'}{'time'} = time + $time;
 			$self->{time} = time + $time;
 			shift @{$self->{steps}};
@@ -457,7 +457,7 @@ sub iterate {
 			if ( $self->noMoreSteps || $self->{steps}[0] !~ /^c/i ) {
 				unshift(@{$self->{steps}}, 'c');
 			}
-			debug "$self->{target}: Auto-continuing talking\n", 'ai_npcTalk';
+			debug "$self->{target}: Auto-continuing talking\n", "ai_npcTalk";
 		}
 
 		#This is done to restart the conversation (check if this is necessary)
@@ -496,7 +496,7 @@ sub iterate {
 
 		# Initiate NPC conversation.
 		if ( $step =~ /^x/i ) {
-			debug "$self->{target}: Initiating the talk\n", 'ai_npcTalk';
+			debug "$self->{target}: Initiating the talk\n", "ai_npcTalk";
 			$self->{target}->sendTalk;
 
 		# Select an answer
@@ -534,7 +534,7 @@ sub iterate {
 
 					#Normal number response is valid
 					if ($choice < $#{$talk{responses}}) {
-						debug "$self->{target}: Sending talk response #$choice\n", 'ai_npcTalk';
+						debug "$self->{target}: Sending talk response #$choice\n", "ai_npcTalk";
 						$messageSender->sendTalkResponse($talk{ID}, $choice + 1);
 
 					#Normal number response is a fake "Cancel Chat" response.
@@ -560,7 +560,7 @@ sub iterate {
 		# Click Next.
 		} elsif ($current_talk_step eq 'next') {
 			if ($step =~ /^c/i) {
-				debug "$self->{target}: Sending talk continue (next)\n", 'ai_npcTalk';
+				debug "$self->{target}: Sending talk continue (next)\n", "ai_npcTalk";
 				$messageSender->sendTalkContinue($talk{ID});
 
 			# Wrong sequence
@@ -573,7 +573,7 @@ sub iterate {
 		} elsif ($current_talk_step eq 'number') {
 			if ( $step =~ /^d(\d+)/i ) {
 				my $number = $1;
-				debug "$self->{target}: Sending the number: $number\n", 'ai_npcTalk';
+				debug "$self->{target}: Sending the number: $number\n", "ai_npcTalk";
 				$messageSender->sendTalkNumber($talk{ID}, $number);
 
 			# Wrong sequence
@@ -586,7 +586,7 @@ sub iterate {
 		} elsif ($current_talk_step eq 'text') {
 			if ( $step =~ /^t=(.*)/i ) {
 				my $text = $1;
-				debug "$self->{target}: Sending the text: $text\n", 'ai_npcTalk';
+				debug "$self->{target}: Sending the text: $text\n", "ai_npcTalk";
 				$messageSender->sendTalkText($talk{ID}, $text);
 
 			# Wrong sequence
@@ -644,7 +644,7 @@ sub iterate {
 						push (@bulkitemlist,{itemID  => $itemID, amount => $amount});
 					} else {
 						# ? Maybe better to use something else, but not error?
-						error TF("Shop item %s not found.\n", $index);
+						error TF("Shop item %s not found.\n", $index), "ai_npcTalk";
 					}
 					shift @{$self->{steps}};
 				}
@@ -713,7 +713,7 @@ sub iterate {
 		}
 		$self->{time} = time;
 		$self->{stage} = AFTER_NPC_CANCEL;
-		debug "$self->{target}: Sending talk cancel after NPC has done talking\n", 'ai_npcTalk';
+		debug "$self->{target}: Sending talk cancel after NPC has done talking\n", "ai_npcTalk";
 		$messageSender->sendTalkCancel($self->{ID});
 
 	# After a 'npc_talk_cancel' and a timeout we decide what to do next
@@ -722,7 +722,7 @@ sub iterate {
 
 		if (defined $self->{error_code}) {
 			$self->setError($self->{error_code}, $self->{error_message});
-			debug $self->{error_message} . "\n", 'ai_npcTalk';
+			debug $self->{error_message} . "\n", "ai_npcTalk";
 			return;
 		}
 
@@ -735,7 +735,7 @@ sub iterate {
 		} elsif (!%talk) {
 			# Usual 'x' step
 			if ($self->{steps}[0] =~ /x/i) {
-				debug "$self->{target}: Reinitiating the talk\n", 'ai_npcTalk';
+				debug "$self->{target}: Reinitiating the talk\n", "ai_npcTalk";
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
 
@@ -762,27 +762,27 @@ sub manage_wrong_sequence {
 	error $self->{error_message}."\n";
 
 	my $method = (defined $config{'npcWrongStepsMethod'} ? $config{'npcWrongStepsMethod'} : 0);
-	warning "Using method '".$method."' defined on config key 'npcWrongStepsMethod' to deal with the error.\n";
+	warning "Using method '".$method."' defined on config key 'npcWrongStepsMethod' to deal with the error.\n", "ai_npcTalk";
 
 	# Will clean all remaining steps and wait for command
 	if ($method == 0) {
-		warning "Cleaning all remaining conversation steps, please input more steps using commands.\n";
+		warning "Cleaning all remaining conversation steps, please input more steps using commands.\n", "ai_npcTalk";
 		$self->{steps} = [];
 
 	# Will move to the next step
 	} elsif ($method == 1) {
-		warning "Cleaning the current wrong step and moving to the next in queue.\n";
+		warning "Cleaning the current wrong step and moving to the next in queue.\n", "ai_npcTalk";
 		shift @{$self->{steps}};
 
 	# Will try to end the conversation using a custom logic
 	} elsif ($method == 2) {
-		warning "Now openkore will try to auto-end this npc conversation.\n";
+		warning "Now openkore will try to auto-end this npc conversation.\n", "ai_npcTalk";
 		$self->{trying_to_cancel} = 1;
 		$self->cancelTalk;
 
 	# Will relog to get out of the npc conversation
 	} elsif ($method == 3) {
-		warning "Now openkore will relog to try to end this conversation.\n";
+		warning "Now openkore will relog to try to end this conversation.\n", "ai_npcTalk";
 		relog();
 	}
 }
@@ -814,7 +814,7 @@ sub cancelTalk {
 	my ($self) = @_;
 
 	if (defined $self->{error_message}) {
-		debug "Trying to auto close the conversation due to error.\n", 'ai_npcTalk';
+		debug "Trying to auto close the conversation due to error.\n", "ai_npcTalk";
 	}
 
 	if ($ai_v{'npc_talk'}{'talk'} eq 'select') {
