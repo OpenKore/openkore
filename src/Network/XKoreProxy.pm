@@ -326,7 +326,7 @@ sub checkProxy {
 
 		close $self->{proxy} if $self->{proxy};
 		$self->{waitClientDC} = undef;
-		debug "Removing pending packet from queue\n", "xkoreProxy" if (defined $self->{packetPending});
+		debug "Removing pending packet from queue\n" if (defined $self->{packetPending}), "xkoreProxy";
 		$self->{packetPending} = '';
 
 		# FIXME: there's a racing condition here. If the RO client tries to connect
