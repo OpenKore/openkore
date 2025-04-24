@@ -47,7 +47,6 @@ sub start {
 		Sakray
 		tRO
 		twRO
-		vRO
 		Zero
 		kRO_RagexeRE_0
 	)) {
