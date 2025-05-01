@@ -166,7 +166,7 @@ sub iterate {
 			}
 		}
 		$self->{stage} = CALCULATE_ROUTE;
-		debug "CalcMapRoute - initialized.\n", "route";
+		debug "CalcMapRoute - initialized.\n", "calc_map_route";
 
 	} elsif ( $self->{stage} == CALCULATE_ROUTE ) {
 		my $time = time;
@@ -179,15 +179,15 @@ sub iterate {
 			delete $self->{closelist};
 			delete $_->{field} foreach @{ $self->{targets} };
 			$self->setDone();
-			debug "Map Solution Ready for traversal.\n", "route";
-			debug sprintf("%s\n", $self->getRouteString()), "route";
+			debug "Map Solution Ready for traversal.\n", "calc_map_route";
+			debug sprintf("%s\n", $self->getRouteString()), "calc_map_route";
 
 		} elsif ($self->{done}) {
 			my $destpos = $self->{targets}[0]->{x} ? " (".$self->{targets}[0]->{x}.",".$self->{targets}[0]->{y}.")" : undef;
 			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s%s",
 				$self->{source}{field}->baseName, $self->{source}{x}, $self->{source}{y},
 				$self->{targets}[0]->{map} || T("unknown"), $destpos));
-			debug "CalcMapRoute failed.\n", "route";
+			debug "CalcMapRoute failed.\n", "calc_map_route";
 		}
 	}
 }
@@ -235,7 +235,7 @@ sub searchStep {
 	}
 
 	my $parent = (sort {$openlist->{$a}{walk} <=> $openlist->{$b}{walk}} keys %{$openlist})[0];
-	debug "$parent, $openlist->{$parent}{walk}\n", "route/path";
+	debug "$parent, $openlist->{$parent}{walk}\n", "calc_map_route";
 
 	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
 	#foreach my $parent (keys %{$openlist})
