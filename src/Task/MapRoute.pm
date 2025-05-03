@@ -172,6 +172,18 @@ sub iterate {
 		debug "MapRoute - Using go command: $go_cmd\n", "route";
 		$self->{substage} = 'Waiting for Warp';
 		$messageSender->sendChat($go_cmd);
+
+	} elsif ( $self->{mapSolution}[0]{is_teleportToSaveMap} ) {
+	
+		if (!canUseTeleport(2)) {
+			debug "MapRoute - Cannot use teleportToSaveMap now, recalculating\n", "route";
+			$self->initMapCalculator();	# redo MAP router
+		} else {
+			debug "MapRoute - Using go teleportToSaveMap\n", "route";
+			$self->{substage} = 'Waiting for Warp';
+			ai_useTeleport(2);
+		}
+
 	} elsif ( $self->{mapSolution}[0]{steps} ) {
 		my $min_npc_dist = 8;
 		my $max_npc_dist = 10;

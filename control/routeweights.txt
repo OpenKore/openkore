@@ -32,6 +32,10 @@ NPC 200
 # by using a '@go' Command. Only change this, if you exactly know what you're doing!
 COMMAND 20
 
+# Use teleport lv 2 or butterfly wing. This can be used to avoid/prefer going to the destination
+# by using a teleport lv 2 or butterfly wing. Only change this, if you exactly know what you're doing!
+WARPTOSAVEMAP 200
+
 # Maps where you can exit to the same place you came from,
 # which confuses routing if added to portals thoughtlessly.
 bat_room 10000

@@ -4201,6 +4201,14 @@ sub compilePortals {
 		}
 	}
 
+	foreach my $portal (keys %portals_spawns) {
+		foreach my $dest (keys %{$portals_spawns{$portal}{dest}}) {
+			next if $portals_spawns{$portal}{dest}{$dest}{map} eq '';
+			$mapSpawns{$portals_spawns{$portal}{dest}{$dest}{map}}{$dest}{x} = $portals_spawns{$portal}{dest}{$dest}{x};
+			$mapSpawns{$portals_spawns{$portal}{dest}{$dest}{map}}{$dest}{y} = $portals_spawns{$portal}{dest}{$dest}{y};
+		}
+	}
+
 	$pathfinding = new PathFinding if (!$checkOnly);
 
 	# Calculate LOS values from each spawn point per map to other portals on same map
