@@ -1939,7 +1939,7 @@ sub actor_display {
 			$actor = new Actor::Player();
 			$actor->{appear_time} = time;
 			# New actor_display packets include the player's name
-			$actor->{name} = $name if defined $name;
+			$actor->setName($name) if defined $name;
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
@@ -1991,7 +1991,7 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Pet();
 			$actor->{appear_time} = time;
-			$actor->{name} = $name;
+			$actor->setName($name) if defined $name;
 #			if ($monsters_lut{$args->{type}}) {
 #				$actor->setName($monsters_lut{$args->{type}});
 #			}
@@ -2016,7 +2016,7 @@ sub actor_display {
 				$actor->setName($monsters_lut{$args->{type}});
 			}
 			# New actor_display packets include the Monster name
-			$actor->{name} = $name if defined $name;
+			$actor->setName($name) if defined $name;
 			$actor->{name_given} = "Unknown";
 			$actor->{binType} = $args->{type};
 			$mustAdd = 1;
@@ -2030,7 +2030,7 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::NPC();
 			$actor->{appear_time} = time;
-			$actor->{name} = $name if defined $name;
+			$actor->setName($name) if defined $name;
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
@@ -2042,7 +2042,8 @@ sub actor_display {
 			$actor->{appear_time} = time;
 			$mustAdd = 1;
 		}
-		$actor->{name} = $jobs_lut{$args->{type}};
+		
+		$actor->setName($jobs_lut{$args->{type}});
 	}
 
 	#### Step 2: update actor information ####
@@ -2900,7 +2901,7 @@ sub homunculus_property {
 	return 0 unless enforce_homun_state();
 
 	my $slave = $char->{homunculus};
-	$slave->{name} = bytesToString($args->{name});
+	$slave->setName(bytesToString($args->{name}));
 
 	slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
@@ -3726,7 +3727,7 @@ sub inventory_item_added {
 
 		# TODO: move this stuff to AI()
 		if (defined($ai_v{npc_talk})) { # avoid autovivification
-			if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}, $ai_v{npc_talk}{itemID}) {
+			if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}) {
 
 				$ai_v{'npc_talk'}{'talk'} = 'buy';
 				$ai_v{'npc_talk'}{'time'} = time;
@@ -7456,12 +7457,12 @@ sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
 	# "Close" icon appreared on the NPC message dialog
-	if (!defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
+	if (!defined $ai_v{'npc_talk'} || !exists  $ai_v{'npc_talk'}{'ID'} || !defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
 		debug "We received an strange 'npc_talk_done', just ignoring it\n", "npc";
 		return;
 	}
 
-	return if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
+	return if (exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
 
 	my $ID = $args->{ID};
 	my $name = getNPCName($ID);
@@ -11594,7 +11595,7 @@ sub switch_character {
 	my ($self, $args) = @_;
 	# User is switching characters in X-Kore
 	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
-	$net->serverDisconnect();
+	$net->serverDisconnect() if(UNIVERSAL::isa($net, 'Network::DirectConnection'));
 
 	# FIXME better support for multiple received_characters packets
 	undef @chars;

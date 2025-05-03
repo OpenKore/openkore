@@ -1836,7 +1836,7 @@ sub processAutoSell {
 
 				return;
 
-			} elsif ($ai_v{'npc_talk'}{'talk'} ne 'sell') {
+			} elsif (!defined $ai_v{'npc_talk'} || $ai_v{'npc_talk'}{'talk'} ne 'sell') {
 				if (timeOut($args->{'sentNpcTalk_time'}, $timeout{ai_sellAuto_wait_giveup_npc}{timeout})) {
 					$args->{'error'} = 'Npc did not respond';
 					$args->{'done'} = 1;
@@ -2125,7 +2125,7 @@ sub processAutoBuy {
 
 			return;
 
-		} elsif ($ai_v{'npc_talk'}{'talk'} ne 'store') {
+		} elsif (!defined $ai_v{'npc_talk'} || $ai_v{'npc_talk'}{'talk'} ne 'store') {
 			if (timeOut($args->{'sentNpcTalk_time'}, $timeout{ai_buyAuto_wait_giveup_npc}{timeout})) {
 				$args->{'error'} = 'Npc did not respond';
 				$args->{'done'} = 1;
@@ -3322,7 +3322,7 @@ sub processItemsTake {
 
 ##### ITEMS AUTO-GATHER #####
 sub processItemsAutoGather {
-	return if (AI::inQueue("gather", "take", "items_gather"));
+	return if (AI::inQueue("take", "items_gather"));
 	if ( (AI::isIdle || AI::action eq "follow"
 		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2) ))
 	  && $config{'itemsGatherAuto'}

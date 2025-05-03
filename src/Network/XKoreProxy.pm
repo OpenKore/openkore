@@ -221,7 +221,7 @@ sub clientSend {
 
 	$msg = $self->modifyPacketIn($msg, $switch) unless ($dontMod);
 	if ($config{debugPacket_ro_received}) {
-		debug "Modified packet sent to client\n";
+		debug "Modified packet sent to client\n", "xkoreProxy";
 		visualDump($msg, 'sendToClient');
 	}
 
@@ -235,7 +235,7 @@ sub clientFlush {
 	return unless (length($clientBuffer));
 
 	$self->{proxy}->send($clientBuffer);
-	debug "Client network buffer flushed out\n";
+	debug "Client network buffer flushed out\n", "xkoreProxy";
 	$clientBuffer = '';
 }
 
@@ -326,7 +326,7 @@ sub checkProxy {
 
 		close $self->{proxy} if $self->{proxy};
 		$self->{waitClientDC} = undef;
-		debug "Removing pending packet from queue\n" if (defined $self->{packetPending});
+		debug "Removing pending packet from queue\n", "xkoreProxy" if (defined $self->{packetPending});
 		$self->{packetPending} = '';
 
 		# FIXME: there's a racing condition here. If the RO client tries to connect
@@ -417,12 +417,12 @@ sub checkPacketReplay {
 	if ($self->{replayTimeout}{time} && timeOut($self->{replayTimeout})) {
 		if ($self->{packetReplayTrial} < 3) {
 			warning TF("Client did not respond in time.\n" .
-				"Trying to replay the packet for %s of 3 times\n", $self->{packetReplayTrial}++);
+				"Trying to replay the packet for %s of 3 times\n", $self->{packetReplayTrial}++), "connection";
 			$self->clientSend($self->{packetPending});
 			$self->{replayTimeout}{time} = time;
 			$self->{replayTimeout}{timeout} = 2.5;
 		} else {
-			error T("Client did not respond. Forcing disconnection\n");
+			error T("Client did not respond. Forcing disconnection\n"), "connection";
 			close($self->{proxy});
 			return;
 		}
@@ -444,7 +444,7 @@ sub modifyPacketIn {
 
 	# packet replay check: reset status for every different packet received
 	if ($self->{packetPending} && ($self->{packetPending} ne $msg)) {
-		debug "Removing pending packet from queue\n";
+		debug "Removing pending packet from queue\n", "connection";
 		use bytes; no encoding 'utf8';
 		delete $self->{replayTimeout};
 		$self->{packetPending} = '';
@@ -452,7 +452,7 @@ sub modifyPacketIn {
 	} elsif ($self->{packetPending} && ($self->{packetPending} eq $msg)) {
 		# avoid doubled 0259 message: could mess the character selection and hang up the client
 		if ($switch eq "0259") {
-			debug T("Logon-grant packet received twice! Avoiding bug in client.\n");
+			debug T("Logon-grant packet received twice! Avoiding bug in client.\n"), "connection";
 			$self->{packetPending} = undef;
 			return undef;
 		}
@@ -483,7 +483,7 @@ sub modifyPacketIn {
 			}
 		}
 
-		debug "Modifying Account Info packet...\n";
+		debug "Modifying Account Info packet...\n", "xkoreProxy";
 
 		my $xKoreCharServer = $servers[$config{server}];
 
@@ -516,7 +516,7 @@ sub modifyPacketIn {
 		$self->{packetPending} = $msg;
 
 		# Proxy the Logon to Map server
-		debug "Modifying Map Logon packet...\n", "connection";
+		debug "Modifying Map Logon packet...\n", "xkoreProxy";
 
 		if ($switch eq '0AC5') { # cRO 2017
 			$server_info = {

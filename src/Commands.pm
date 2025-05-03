@@ -5104,7 +5104,7 @@ sub cmdSell {
 	}
 	my @args = parseArgs($_[1]);
 
-	if ($args[0] eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
+	if ($args[0] eq "" && defined $ai_v{'npc_talk'} && exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
 		$messageSender->sendNPCBuySellList($talk{ID}, 1);
 
 	} elsif ($args[0] eq "list") {
@@ -5700,7 +5700,7 @@ sub cmdStore {
 		$msg .= ('-'x68) . "\n";
 		message $msg, "list";
 
-	} elsif ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
+	} elsif ($arg1 eq "" && defined $ai_v{'npc_talk'} && exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
 	 && ($net && $net->getState() == Network::IN_GAME)) {
 		$messageSender->sendNPCBuySellList($talk{'ID'}, 0);
 
@@ -7915,7 +7915,7 @@ sub cmdCancelTransaction {
 		return;
 	}
 
-	if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' || $ai_v{'npc_talk'}{'talk'} eq 'store') {
+	if (defined $ai_v{'npc_talk'} && exists $ai_v{'npc_talk'}{'talk'} && ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' || $ai_v{'npc_talk'}{'talk'} eq 'store')) {
 		cancelNpcBuySell();
 	} else {
 		error T("You are not on a sell or store npc interaction.\n");
