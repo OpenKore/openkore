@@ -288,6 +288,9 @@ sub loadDataFiles {
 	Settings::addTableFile('portals.txt',
 		internalName => 'portals.txt',
 		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed]);
+	Settings::addTableFile('portals_commands.txt',
+		internalName => 'portals_commands.txt',
+		loader => [\&parsePortalsCommands, \%portals_commands], mustExist => 0);
 	Settings::addTableFile('portalsLOS.txt',
 		internalName => 'portalsLOS.txt',
 		loader => [\&parsePortalsLOS, \%portals_los], createIfMissing => 1);

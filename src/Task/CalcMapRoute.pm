@@ -25,11 +25,12 @@ use Task;
 use base qw(Task);
 use Task::Route;
 use Field;
-use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights);
+use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands);
 use Translation qw(T TF);
 use Log qw(debug);
 use Utils qw(timeOut);
 use Utils::Exceptions;
+use Utils::DataStructures qw(hashSafeGetValue);
 
 # Stage constants.
 use constant {
@@ -95,11 +96,11 @@ sub new {
 	} else {
 		$self->{budget} = $char->{zeny};
 	}
-	
+
 	$self->{maxTime} = $args{maxTime} || $timeout{ai_route_calcRoute}{timeout};
-	
+
 	my $tickets = $char->inventory->getByNameID(7060);
-	
+
 	if ($tickets) {
 		$self->{tickets_amount} = $tickets->{amount};
 	} else {
@@ -165,6 +166,7 @@ sub iterate {
 				}
 			}
 		}
+		$self->populateOpenListWithGoCommands();
 		$self->{stage} = CALCULATE_ROUTE;
 		debug "CalcMapRoute - initialized.\n", "calc_map_route";
 
@@ -225,23 +227,25 @@ sub getFullRouteString {
 
 sub searchStep {
 	my ($self) = @_;
-	my $openlist = $self->{openlist};
-	my $closelist = $self->{closelist};
+	# declare portals list
+	my $openlist = $self->{openlist}; # Nodes not visited yet
+	my $closelist = $self->{closelist}; # Nodes already visited
 
+	# exit early if no more paths to check
 	unless ($openlist && %{$openlist}) {
 		$self->{done} = 1;
 		$self->{found} = '';
 		return 0;
 	}
 
+	# selects the node with the lowest walk cost
 	my $parent = (sort {$openlist->{$a}{walk} <=> $openlist->{$b}{walk}} keys %{$openlist})[0];
 	debug "$parent, $openlist->{$parent}{walk}\n", "calc_map_route";
 
 	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
 	#foreach my $parent (keys %{$openlist})
-	{
 		my ($portal, $dest) = split /=/, $parent;
-		
+		# skip if budget exceeded
 		if ($self->{budget} ne '' && $self->{budget} < ($openlist->{$parent}{zeny} - $openlist->{$parent}{zeny_covered_by_tickets})) {
 			# This link is too expensive
 			delete $openlist->{$parent};
@@ -252,19 +256,32 @@ sub searchStep {
 			$closelist->{$parent} = delete $openlist->{$parent};
 		}
 
+		# support to multiple targets
 		foreach my $target ( @{ $self->{targets} } ) {
-			next if $portals_lut{$portal}{dest}{$dest}{map} ne $target->{map};
+			my $map_name = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest, 'map')
+						|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest, 'map') 
+						|| undef;
 
+			my $map_destination = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest)
+							|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest)
+							|| undef;
+
+			next if $map_name ne $target->{map}; # checks if the current destination map matches any of the search targets.
+			# if no x or y consider that is already at destination
 			if ( !$target->{x} || !$target->{y} ) {
 				$self->{found} = $parent;
-			} elsif ( Task::Route->getRoute($self->{solution}, $target->{field}, $portals_lut{$portal}{dest}{$dest}, $target) ) {
+			}
+			# uses getRoute to check whether you have reached exactly the desired point on the map.
+			elsif ( Task::Route->getRoute($self->{solution}, $target->{field}, $map_destination, $target) ) {
 				my $walk = $self->{found} = "$target->{map} $target->{x} $target->{y}=$target->{map} $target->{x} $target->{y}";
 				$closelist->{$walk}         = { %{ $closelist->{$parent} } };
 				$closelist->{$walk}{walk}   = scalar @{ $self->{solution} } + $closelist->{$parent}{walk};
 				$closelist->{$walk}{parent} = $parent;
+				$closelist->{$walk}{is_command} = 0;
+				$closelist->{$walk}{command} = undef;
 			}
 
-
+			# Reconstructs the solution path by traversing the parents backwards, stacking the portals used in the final route.
 			if ( $self->{found} ) {
 				$self->{done} = 1;
 				$self->{mapSolution} = [];
@@ -283,6 +300,8 @@ sub searchStep {
 					$arg{zeny_covered_by_tickets} = $closelist->{$this}{zeny_covered_by_tickets};
 					$arg{amount_of_tickets_used} = $closelist->{$this}{amount_of_tickets_used};
 					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
+					$arg{is_command} =  $closelist->{$this}{is_command} || 0;
+					$arg{command} = $closelist->{$this}{command};
 
 					unshift @{$self->{mapSolution}}, \%arg;
 					$this = $closelist->{$this}{parent};
@@ -291,23 +310,25 @@ sub searchStep {
 			}
 		}
 
-		# Get all children of each openlist.
+		# get all children of each openlist.
+		# explore connected portals and NPC warps
 		foreach my $child (keys %{$portals_los{$dest}}) {
-			next unless $portals_los{$dest}{$child};
+			next unless $portals_los{$dest}{$child}; # next if no child
+			# iterates through the child's/portals that have connection to destination
 			foreach my $subchild (grep { $portals_lut{$child}{dest}{$_}{enabled} } keys %{$portals_lut{$child}{dest}}) {
 				my $destID = $subchild;
 				my $mapName = $portals_lut{$child}{source}{map};
 				#############################################################
 				my $penalty = int($routeWeights{lc($mapName)}) +
-					int(($portals_lut{$child}{dest}{$subchild}{steps} ne '') ? $routeWeights{NPC} : $routeWeights{PORTAL});
-				my $thisWalk = $penalty + $closelist->{$parent}{walk} + $portals_los{$dest}{$child};
-				if (!exists $closelist->{"$child=$subchild"}) {
-					if ( !exists $openlist->{"$child=$subchild"} || $openlist->{"$child=$subchild"}{walk} > $thisWalk ) {
+					int(($portals_lut{$child}{dest}{$subchild}{steps} ne '') ? $routeWeights{NPC} : $routeWeights{PORTAL}); # get node/child penalty based on routeWeights
+				my $thisWalk = $penalty + $closelist->{$parent}{walk} + $portals_los{$dest}{$child}; # calculate the final node/child penalty routeWeights + walk distance + accumulated cost
+				if (!exists $closelist->{"$child=$subchild"}) { # check if node is already explorated
+					if ( !exists $openlist->{"$child=$subchild"} || $openlist->{"$child=$subchild"}{walk} > $thisWalk ) { # check the current node cost less
 						$openlist->{"$child=$subchild"}{parent} = $parent;
 						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
 						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};
 						$openlist->{"$child=$subchild"}{allow_ticket} = $portals_lut{$child}{dest}{$subchild}{allow_ticket};
-						if ($openlist->{"$child=$subchild"}{allow_ticket} && $self->{tickets_amount} > $openlist->{"$child=$subchild"}{amount_of_tickets_used}) {
+						if ($openlist->{"$child=$subchild"}{allow_ticket} && $self->{tickets_amount} > $openlist->{"$child=$subchild"}{amount_of_tickets_used}) { # checks if route allow use ticket and how many we spent so far
 							$openlist->{"$child=$subchild"}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets} + $openlist->{"$child=$subchild"}{zeny};
 							$openlist->{"$child=$subchild"}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used} + 1;
 						} else {
@@ -317,6 +338,36 @@ sub searchStep {
 					}
 				}
 			}
+		}
+}
+
+# Add @go commands to openlist
+sub populateOpenListWithGoCommands {
+	my ($self) = @_;
+
+	# set current map vars
+	my $current_map = $self->{source}{map};
+	my $current_x   = $self->{source}{x};
+	my $current_y   = $self->{source}{y};
+	my $from_node   = "$current_map $current_x $current_y";
+
+	# iterate through the commands
+	foreach my $portal (keys %portals_commands) {
+		foreach my $dest (keys %{$portals_commands{$portal}{dest}}) {
+			my $to_node = $portals_commands{$portal}{dest}{$dest}{map} . " " . $portals_commands{$portal}{dest}{$dest}{x} . " " . $portals_commands{$portal}{dest}{$dest}{y};
+			my $key = "$from_node=$to_node";
+
+			# add @go option as a synthetic portal
+			$self->{openlist}{$key} = {
+				parent                   => undef,
+				walk                     => $routeWeights{COMMAND} || 20,
+				zeny                     => 0,
+				allow_ticket             => 0,
+				zeny_covered_by_tickets  => 0,
+				amount_of_tickets_used   => 0,
+				is_command               => 1,
+				command                  => $portals_commands{$portal}{dest}{$dest}{command},
+			};
 		}
 	}
 }
