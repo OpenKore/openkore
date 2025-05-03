@@ -906,7 +906,8 @@ sub waitingForSteps {
 
 sub addSteps {
 	my ($self, $steps) = @_;
-	my @new_steps = parseArgs($steps);
+	
+	my @new_steps = parse_portal_conversation_args($steps);
 
 	debug "Task::TalkNPC::addSteps has been called with value '".$steps."'.\n", "ai_npcTalk";
 
