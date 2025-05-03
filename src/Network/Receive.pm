@@ -3727,7 +3727,7 @@ sub inventory_item_added {
 
 		# TODO: move this stuff to AI()
 		if (defined($ai_v{npc_talk})) { # avoid autovivification
-			if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}, $ai_v{npc_talk}{itemID}) {
+			if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}) {
 
 				$ai_v{'npc_talk'}{'talk'} = 'buy';
 				$ai_v{'npc_talk'}{'time'} = time;
@@ -7457,12 +7457,12 @@ sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
 	# "Close" icon appreared on the NPC message dialog
-	if (!defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
+	if (!defined $ai_v{'npc_talk'} || !exists  $ai_v{'npc_talk'}{'ID'} || !defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
 		debug "We received an strange 'npc_talk_done', just ignoring it\n", "npc";
 		return;
 	}
 
-	return if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
+	return if (exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
 
 	my $ID = $args->{ID};
 	my $name = getNPCName($ID);
