@@ -98,6 +98,18 @@ sub new {
 		$self->{budget} = $char->{zeny};
 	}
 
+	if (exists $args{noGoCommand}) {
+		$self->{noGoCommand} = $args{noGoCommand}
+	} else {
+		$self->{noGoCommand} = 0;
+	}
+
+	if (exists $args{noTeleSpawn}) {
+		$self->{noTeleSpawn} = $args{noTeleSpawn}
+	} else {
+		$self->{noTeleSpawn} = 0;
+	}
+
 	$self->{maxTime} = $args{maxTime} || $timeout{ai_route_calcRoute}{timeout};
 
 	my $tickets = $char->inventory->getByNameID(7060);
@@ -167,9 +179,11 @@ sub iterate {
 				}
 			}
 		}
-		$self->populateOpenListWithGoCommands();
 
-		if (canUseTeleport(2) && isSaveMapSetAndValid()) {
+		$self->populateOpenListWithGoCommands() unless ($self->{noGoCommand});
+
+		delete $self->{tempPortalsSaveMap} if (exists $self->{tempPortalsSaveMap});
+		if (!$self->{noTeleSpawn} && canUseTeleport(2) && isSaveMapSetAndValid()) {
 			$self->populateOpenListWithWarpToSaveMap();
 		}
 
