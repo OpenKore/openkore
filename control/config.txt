@@ -242,6 +242,8 @@ runFromTarget_noAttackMethodFallback_attackMaxDist 14
 runFromTarget_noAttackMethodFallback_minStep 8
 
 saveMap
+saveMap_x
+saveMap_y
 saveMap_warpToBuyOrSell 1
 saveMap_warpChatCommand
 memo1

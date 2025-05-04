@@ -53,6 +53,7 @@ our @EXPORT = qw(
 	parsePortals
 	parsePortalsLOS
 	parsePortalsCommands
+	parsePortalsSpawns
 	parsePriority
 	parseResponses
 	parseRecvpackets
@@ -723,6 +724,33 @@ sub parsePortalsCommands {
 			my $portal = $command;
 			my $dest = "$dest_map $dest_x $dest_y";
 			$$r_hash{$dest}{'dest'}{$dest}{'command'} = $portal;
+			$$r_hash{$dest}{'dest'}{$dest}{'map'} = $dest_map;
+			$$r_hash{$dest}{'dest'}{$dest}{'x'} = $dest_x;
+			$$r_hash{$dest}{'dest'}{$dest}{'y'} = $dest_y;
+			$$r_hash{$dest}{dest}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
+		}
+	}
+	return 1;
+}
+
+sub parsePortalsSpawns {
+	my $file = shift;
+	my $r_hash = shift;
+	my $r_array = shift;
+	undef %{$r_hash};
+	undef @{$r_array};
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		next if $line =~ /^#/;
+		$line =~ s/\cM|\cJ//g;
+		$line =~ s/\s+/ /g;
+		$line =~ s/^\s+|\s+$//g;
+		$line =~ s/(.*)[\s\t]+#.*$/$1/;
+
+		if ($line =~ /^savepoint\s+"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*;$/) {
+			my ($dest_map, $dest_x, $dest_y) = ($1, $2, $3);
+			my $dest = "$dest_map $dest_x $dest_y";
 			$$r_hash{$dest}{'dest'}{$dest}{'map'} = $dest_map;
 			$$r_hash{$dest}{'dest'}{$dest}{'x'} = $dest_x;
 			$$r_hash{$dest}{'dest'}{$dest}{'y'} = $dest_y;

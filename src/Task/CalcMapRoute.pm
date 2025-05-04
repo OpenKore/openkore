@@ -25,9 +25,10 @@ use Task;
 use base qw(Task);
 use Task::Route;
 use Field;
-use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands);
+use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns);
 use Translation qw(T TF);
-use Log qw(debug);
+use Log qw(debug warning error);
+use Misc qw(canUseTeleport);
 use Utils qw(timeOut);
 use Utils::Exceptions;
 use Utils::DataStructures qw(hashSafeGetValue);
@@ -95,6 +96,18 @@ sub new {
 		}
 	} else {
 		$self->{budget} = $char->{zeny};
+	}
+
+	if (exists $args{noGoCommand}) {
+		$self->{noGoCommand} = $args{noGoCommand}
+	} else {
+		$self->{noGoCommand} = 0;
+	}
+
+	if (exists $args{noTeleSpawn}) {
+		$self->{noTeleSpawn} = $args{noTeleSpawn}
+	} else {
+		$self->{noTeleSpawn} = 0;
 	}
 
 	$self->{maxTime} = $args{maxTime} || $timeout{ai_route_calcRoute}{timeout};
@@ -166,9 +179,16 @@ sub iterate {
 				}
 			}
 		}
-		$self->populateOpenListWithGoCommands();
+
+		$self->populateOpenListWithGoCommands() unless ($self->{noGoCommand});
+
+		delete $self->{tempPortalsSaveMap} if (exists $self->{tempPortalsSaveMap});
+		if (!$self->{noTeleSpawn} && canUseTeleport(2) && isSaveMapSetAndValid()) {
+			$self->populateOpenListWithWarpToSaveMap();
+		}
+
 		$self->{stage} = CALCULATE_ROUTE;
-		debug "CalcMapRoute - initialized.\n", "calc_map_route";
+		debug "CalcMapRoute - initialized with '".(scalar keys %{$openlist})."' options.\n", "calc_map_route";
 
 	} elsif ( $self->{stage} == CALCULATE_ROUTE ) {
 		my $time = time;
@@ -260,10 +280,12 @@ sub searchStep {
 		foreach my $target ( @{ $self->{targets} } ) {
 			my $map_name = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest, 'map')
 						|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest, 'map') 
+						|| hashSafeGetValue($self->{tempPortalsSaveMap}, $dest, 'dest', $dest, 'map') 
 						|| undef;
 
 			my $map_destination = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest)
 							|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest)
+							|| hashSafeGetValue($self->{tempPortalsSaveMap}, $dest, 'dest', $dest)
 							|| undef;
 
 			next if $map_name ne $target->{map}; # checks if the current destination map matches any of the search targets.
@@ -279,6 +301,7 @@ sub searchStep {
 				$closelist->{$walk}{parent} = $parent;
 				$closelist->{$walk}{is_command} = 0;
 				$closelist->{$walk}{command} = undef;
+				$closelist->{$walk}{is_teleportToSaveMap} = 0;
 			}
 
 			# Reconstructs the solution path by traversing the parents backwards, stacking the portals used in the final route.
@@ -302,6 +325,7 @@ sub searchStep {
 					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
 					$arg{is_command} =  $closelist->{$this}{is_command} || 0;
 					$arg{command} = $closelist->{$this}{command};
+					$arg{is_teleportToSaveMap} = $closelist->{$this}{is_teleportToSaveMap} || 0;
 
 					unshift @{$self->{mapSolution}}, \%arg;
 					$this = $closelist->{$this}{parent};
@@ -371,5 +395,57 @@ sub populateOpenListWithGoCommands {
 		}
 	}
 }
+
+# Add teleport lv 2 (or butterfly wing) to openlist
+sub populateOpenListWithWarpToSaveMap {
+	my ($self) = @_;
+
+	# set current map vars
+	my $current_map = $self->{source}{map};
+	my $current_x   = $self->{source}{x};
+	my $current_y   = $self->{source}{y};
+	my $from_node   = "$current_map $current_x $current_y";
+	
+	my $dest_map = hashSafeGetValue(\%config, 'saveMap');
+	my $dest_x = hashSafeGetValue(\%config, 'saveMap_x');
+	my $dest_y = hashSafeGetValue(\%config, 'saveMap_y');
+	
+	my $dest = $dest_map . " " . $dest_x . " " . $dest_y;
+
+	debug "CalcMapRoute - Adding savemap '".( $dest )."' to openlist.\n", "calc_map_route";
+
+	my $key = "$from_node=$dest";
+
+	$self->{openlist}{$key} = {
+		parent                   => undef,
+		walk                     => $routeWeights{WARPTOSAVEMAP} || 200,
+		zeny                     => 0,
+		allow_ticket             => 0,
+		zeny_covered_by_tickets  => 0,
+		amount_of_tickets_used   => 0,
+		is_teleportToSaveMap     => 1,
+	};
+
+	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'map'} = $dest_map;
+	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'x'} = $dest_x;
+	$self->{tempPortalsSaveMap}{$dest}{'dest'}{$dest}{'y'} = $dest_y;
+	$self->{tempPortalsSaveMap}{$dest}{dest}{$dest}{enabled} = 1;
+}
+
+sub isSaveMapSetAndValid {
+	my $dest_map = hashSafeGetValue(\%config, 'saveMap');
+	my $dest_x = hashSafeGetValue(\%config, 'saveMap_x');
+	my $dest_y = hashSafeGetValue(\%config, 'saveMap_y');
+	return 0 unless (defined $dest_map);
+	return 0 unless (defined $dest_x);
+	return 0 unless (defined $dest_y);
+	my $dest = $dest_map . " " . $dest_x . " " . $dest_y;
+
+	return 0 unless (hashSafeGetValue(\%portals_spawns, $dest, 'dest', $dest));
+
+	return 1;
+}
+
+
 
 1;

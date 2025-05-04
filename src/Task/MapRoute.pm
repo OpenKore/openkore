@@ -89,7 +89,7 @@ sub new {
 		ArgumentException->throw(error => "Task::MapRoute: Invalid arguments.");
 	}
 
-	my $allowed = new Set(qw(targetNpcPos maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
+	my $allowed = new Set(qw(noGoCommand noTeleSpawn targetNpcPos maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined $args{$key}) {
 			$self->{$key} = $args{$key};
@@ -112,6 +112,9 @@ sub new {
 		$self->{randomFactor} = 0;
 	}
 	$self->{useManhattan} = 0 if (!defined $self->{useManhattan});
+
+	$self->{noGoCommand} = 0 if (!defined $self->{noGoCommand});
+	$self->{noTeleSpawn} = 0 if (!defined $self->{noTeleSpawn});
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
 	# to avoid circular references (memory leaks).
@@ -168,10 +171,45 @@ sub iterate {
 		shift @{$self->{mapSolution}};
 
 	} elsif ( $self->{mapSolution}[0]{is_command} ) {
-		my $go_cmd = $self->{mapSolution}[0]{command};
-		debug "MapRoute - Using go command: $go_cmd\n", "route";
-		$self->{substage} = 'Waiting for Warp';
-		$messageSender->sendChat($go_cmd);
+		$self->{timeout} = time unless $self->{timeout};
+
+		if (timeOut($self->{timeout}, 1)) {
+			delete $self->{timeout};
+
+			if ($self->{mapSolution}[0]{retry} < 5) {
+				$self->{mapSolution}[0]{retry}++;
+				my $go_cmd = $self->{mapSolution}[0]{command};
+				debug "MapRoute - Using go command: $go_cmd (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
+				$self->{substage} = 'Waiting for Warp';
+				$messageSender->sendChat($go_cmd);
+			} else {
+				error TF("Failed to move using go command after %s tries, recalculating route and forbidding it.\n", $self->{mapSolution}[0]{retry}), "map_route";
+				$self->{noGoCommand} = 1;
+				$self->initMapCalculator();	# redo MAP router
+			}
+		}
+
+	} elsif ( $self->{mapSolution}[0]{is_teleportToSaveMap} ) {
+
+		if (!canUseTeleport(2)) {
+			debug "MapRoute - Cannot use teleportToSaveMap now, recalculating\n", "route";
+			$self->{noTeleSpawn} = 1;
+			$self->initMapCalculator();	# redo MAP router
+			
+		} else {
+
+			if ($self->{mapSolution}[0]{retry} < 5) {
+				$self->{mapSolution}[0]{retry}++;
+				debug "MapRoute - Using go teleportToSaveMap (".$self->{mapSolution}[0]{retry}."th time)\n", "route";
+				$self->{substage} = 'Waiting for Warp';
+				ai_useTeleport(2);
+			} else {
+				error TF("Failed to move to savepoint using teleport/butterfly wing after %s tries, recalculating route and forbidding it.\n", $self->{mapSolution}[0]{retry}), "map_route";
+				$self->{noTeleSpawn} = 1;
+				$self->initMapCalculator();	# redo MAP router
+			}
+		}
+
 	} elsif ( $self->{mapSolution}[0]{steps} ) {
 		my $min_npc_dist = 8;
 		my $max_npc_dist = 10;
@@ -557,7 +595,9 @@ sub initMapCalculator {
 		sourceY => $self->{actor}{pos}{y},
 		map => $self->{dest}{map},
 		x => $self->{dest}{pos}{x},
-		y => $self->{dest}{pos}{y}
+		y => $self->{dest}{pos}{y},
+		noGoCommand => $self->{noGoCommand},
+		noTeleSpawn => $self->{noTeleSpawn},
 	);
 	$self->setSubtask($task);
 }
