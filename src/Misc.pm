@@ -3558,7 +3558,7 @@ sub canUseTeleport {
 	my ($use_lvl) = @_;
 
 	# not in game
-	return 0 if $net->getState != Network::IN_GAME;
+	return 0 if $net && $net->getState != Network::IN_GAME; # $net check is to not crash test
 
 	# 1 - check for items
 	my $item;
