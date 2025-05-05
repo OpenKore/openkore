@@ -1,14 +1,14 @@
 # Ragnarok Server
 # Here you'll define the IP Address and the Port where Poseidon
 # will keep waiting for your ragnarok online client to connect.
-ragnarokserver_ip=127.0.0.1
-ragnarokserver_port=6900
+poseidonRoServerIp=127.0.0.1
+poseidonRoServerPort=6900
 
 # Query Server
 # Here you'll define the IP Address and the Port where Poseidon
 # will keep waiting for open kore to connect and send the GG/HS queries.
-queryserver_ip=127.0.0.1
-queryserver_port=24390
+poseidonQueryServerIp=0.0.0.0
+poseidonQueryServerPort=24390
 
 # Server Type
 # Here you have to specify your current server type in order
@@ -18,3 +18,4 @@ queryserver_port=24390
 server_type=Default
 
 debug=0
+#debugPacket_exclude=007F, 0360, 0187
