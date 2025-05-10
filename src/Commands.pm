@@ -4136,7 +4136,7 @@ sub cmdMove {
 				if ($portalsID[$map_or_portal]) {
 					message TF("Move into portal number %s (%s,%s)\n",
 						$map_or_portal, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'});
-					main::ai_route($field->baseName, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'}, attackOnRoute => 2, noSitAuto => 1);
+					main::ai_route($field->baseName, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
 				} else {
 					error T("No portals exist.\n");
 				}
@@ -4171,7 +4171,7 @@ sub cmdMove {
 							$map_name, $map_or_portal), "route";
 					}
 					main::ai_route($map_or_portal, $x, $y,
-					attackOnRoute => 2,
+					attackOnRoute => 1,
 					noSitAuto => 1,
 					notifyUponArrival => 1,
 					distFromGoal => $dist);

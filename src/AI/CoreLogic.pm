@@ -2416,7 +2416,7 @@ sub processRandomWalk {
 				$randX,
 				$randY,
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
-				attackOnRoute => 2,
+				attackOnRoute => (defined $config{attackAuto}) ? $config{attackAuto} : 2,
 				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),
 				isRandomWalk => 1
 			);
@@ -3161,7 +3161,7 @@ sub processAutoAttack {
 			my @droppedMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getAggressives(1) if $attackOnRoute;
+			@aggressives = ai_getAggressives($attackOnRoute) if $attackOnRoute;
 
 			# List party monsters
 			foreach (@monstersID) {
