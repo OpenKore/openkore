@@ -1469,7 +1469,7 @@ sub is_aggressive {
 
 	if (
 		($plugin_args{return}) ||
-		($type && $control->{attack_auto} == 2) ||
+		($type == 2 && $control->{attack_auto} == 2) ||
 		(($monster->{dmgToYou} || $monster->{missedYou} || $monster->{castOnToYou})) ||
 		($config{"attackAuto_considerDamagedAggressive"} && $monster->{dmgFromYou} > 0) ||
 		($party &&
