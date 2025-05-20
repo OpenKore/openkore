@@ -1,0 +1,1038 @@
+1@4cdn.rsw#Caverna Fantasma#
+1@4drk.rsw#Teste Draconiano#
+1@4igd.rsw#Arena da Justiça#
+1@4inq.rsw#Porão da Abadia#
+1@4mag.rsw#Fonte da Magia#
+1@4mst.rsw#Coração de Juperos#
+1@4sac.rsw#Mansão Sombria#
+1@4tro.rsw#Baú de Kvasir#
+1@4win.rsw#Profundezas de Luluka#
+1@adv.rsw#Aposento do Clérigo#
+1@advs.rsw#Aposento Clerical#
+1@air1.rsw#Aeroplano#
+1@air2.rsw#Aeroplano#
+1@begi.rsw#Vila dos Poring#
+1@cash.rsw#Caverna do Polvo#
+1@cata.rsw#Catacumbas#
+1@ch_t.rsw#Torre da Constelação#
+1@ch_u.rsw#Torre Submersa#
+1@cor.rsw#Memorial COR#
+1@crd.rsw#Vulcão de Comodo#
+1@def01.rsw#Memorial das Ondas - Floresta#
+1@def02.rsw#Memorial das Ondas - Céu#
+1@def03.rsw#Memorial das Ondas - Lava#
+1@drdo.rsw#El Dourado#
+1@dth1.rsw#Ilha Bios (Manhã)#
+1@dth2.rsw#Ilha Bios (Tarde)#
+1@dth3.rsw#Ilha Bios (Noite)#
+1@ecl.rsw#Orbe de Eclage#
+1@eom.rsw#Templo do Demônio Rei#
+1@exds.rsw#Monte Desconhecido#
+1@exhn.rsw#Memórias de Aprendiz#
+1@exnw.rsw#Clana Nemieri#
+1@exse.rsw#Escritório do Cosmos#
+1@exsh.rsw#Profundezas da Floresta#
+1@exsr.rsw#Mundo Interior#
+1@face.rsw#Covil de Vermes#
+1@ffp.rsw#Esconderijo Submarino#
+1@ge_sn.rsw#Torneio Noturno#
+1@ge_st.rsw#Torneio de Magia#
+1@gef.rsw#Geffen#
+1@gef_in.rsw#Interior de Geffen#
+1@gl_he.rsw#Dimensão Contaminada#
+1@gl_k.rsw#Cavalaria de Glast Heim (1)#
+1@gl_k2.rsw#Cavalaria de Glast Heim (1)#
+1@gl_kh.rsw#Cavalaria de Glast Heim (1)#
+1@gl_prq.rsw#Edda de Glast Heim#
+1@glast.rsw#Ruínas Antigas#
+1@gol1.rsw#Edda do Biolaboratório#
+1@gol2.rsw#Edda do Biolaboratório#
+1@halo.rsw#Evento de Halloween#
+1@infi.rsw#Espaço Infinito#
+1@jtb.rsw#Pesadelo Musical#
+1@lab.rsw#Laboratório Central#
+1@lhz.rsw#Laboratório de Wolfchev#
+1@ma_b.rsw#Lago de Bakonawa#
+1@ma_c.rsw#Caverna Buwaya#
+1@ma_h.rsw#Hospital Abandonado (2)#
+1@mcd.rsw#Aos Pés do Rei#
+1@md_gef.rsw#Túmulo do Monarca#
+1@md_pay.rsw#Cripta#
+1@mir.rsw#Salão de Ymir#
+1@mist.rsw#Labirinto da Neblina#
+1@mjo1.rsw#Local da Queda do Aeroplano#
+1@mjo2.rsw#Gruta de Mjolnir#
+1@nyd.rsw#Ninho de Nidhogg#
+1@nyr.rsw#Jardins de Sessrumnir#
+1@orcs.rsw#Caverna dos Orcs (1)#
+1@os_a.rsw#Missão de Ocupação OS#
+1@os_b.rsw#OS Restrito#
+1@oz.rsw#Labirinto de Oz#
+1@pop1.rsw#Edda de Arunafeltz (1)#
+1@pop2.rsw#Edda de Arunafeltz (2)#
+1@pop3.rsw#Edda de Arunafeltz (3)#
+1@pump.rsw#Esgotos de Malangdo#
+1@rev.rsw#Caverna de Mors#
+1@rgsr.rsw#Regenschirm#
+1@sara.rsw#Payon#
+1@slw.rsw#Laboratório Werner#
+1@soul.rsw#Limbo#
+1@spa.rsw#Palácio das Mágoas#
+1@spa2.rsw#Mausoléu Maldito#
+1@sthb.rsw#Sussurro Sombrio#
+1@sthc.rsw#Sala Secreta#
+1@sthd.rsw#Topo da Fortaleza#
+1@swat.rsw#Base Militar#
+1@tcamp.rsw#Campo Militar do Vulcão#
+1@thts.rsw#Torre de Thanatos#
+1@tnm1.rsw#Torre do Demônio#
+1@tnm2.rsw#Torre do Demônio#
+1@tnm3.rsw#Castelo de Morroc#
+1@tower.rsw#Torre sem Fim#
+1@tre.rsw#Navio Naufragado#
+1@uns.rsw#Sala Final#
+1@vrsn.rsw#Base Secreta do Dr. Eggman#
+1@xm_d.rsw#Fábrica do Terror#
+1@xm_d2.rsw#Fábrica de Brinquedos#
+2@cata.rsw#Altar do Selo#
+2@ch_t.rsw#Torre da Constelação#
+2@exds.rsw#Monte Desconhecido#
+2@gl_k.rsw#Cavalaria de Glast Heim (2)#
+2@gl_k2.rsw#Cavalaria de Glast Heim (2)#
+2@gl_kh.rsw#Cavalaria de Glast Heim (2)#
+2@mir.rsw#Salão de Ymir#
+2@nyd.rsw#Ninho de Nidhogg#
+2@nyr.rsw#Armazém de Corações do Santuário#
+2@orcs.rsw#Caverna dos Orcs (2)#
+2@pump.rsw#Esgotos de Malangdo#
+2@thts.rsw#Aviso do Anjo#
+2@tower.rsw#Torre sem Fim#
+3@ch_t.rsw#Torre da Constelação#
+3@thts.rsw#Quarto do Ódio#
+3@tower.rsw#Torre sem Fim#
+4@thts.rsw#Quarto da Agonia#
+4@tower.rsw#Torre sem Fim#
+5@thts.rsw#Quarto da Tristeza#
+5@tower.rsw#Torre sem Fim#
+6@thts.rsw#Quarto do Desespero#
+6@tower.rsw#Topo da Torre sem Fim#
+7@thts.rsw#Quarto da Raiva#
+8@thts.rsw#Memória de Thanatos#
+abbey01.rsw#Monastério (1)#
+abbey02.rsw#Monastério (2)#
+abbey03.rsw#Monastério (3)#
+abyss_01.rsw#Caverna Subterrânea do Lago do Abismo (1)#
+abyss_02.rsw#Caverna Subterrânea do Lago do Abismo (2)#
+abyss_03.rsw#Caverna Subterrânea do Lago do Abismo (3)#
+abyss_04.rsw#Caverna Subterrânea do Lago do Abismo (4)#
+airplane.rsw#Aeroplano#
+airplane_01.rsw#Aeroplano#
+airport.rsw#Aeroporto#
+alb2trea.rsw#Ilha de Alberta#
+alb_ship.rsw#Navio de Alberta#
+alberta.rsw#Alberta#
+alberta_in.rsw#Interior de Alberta#
+alde_alche.rsw#Guilda dos Alquimistas#
+alde_dun01.rsw#Subsolo da Torre do Relógio (1)#
+alde_dun02.rsw#Subsolo da Torre do Relógio (2)#
+alde_dun03.rsw#Subsolo da Torre do Relógio (3)#
+alde_dun04.rsw#Subsolo da Torre do Relógio (4)#
+alde_gld.rsw#Feudo de Luina#
+aldeba_in.rsw#Interior de Al De Baran#
+aldebaran.rsw#Al De Baran#
+aldeg_cas01.rsw#Neuschwanstein (L1)#
+aldeg_cas02.rsw#Hohenschwangau (L2)#
+aldeg_cas03.rsw#Nuernberg (L3)#
+aldeg_cas04.rsw#Wuerzburg (L4)#
+aldeg_cas05.rsw#Rothenburg (L5)#
+ama_dun01.rsw#Labirinto de Tatames#
+ama_dun02.rsw#Floresta Subterrânea#
+ama_dun03.rsw#Templo Subterrâneo#
+ama_fild01.rsw#Arredores de Amatsu#
+ama_in01.rsw#Interior de Amatsu#
+ama_in02.rsw#Castelo TenguGak#
+ama_test.rsw#História de Momotaro#
+amatsu.rsw#Amatsu#
+amicitia1.rsw#Laboratório Abandonado Amicitia (1)#
+amicitia2.rsw#Laboratório Abandonado Amicitia (2)#
+ant_d02_i.rsw#Ilusão das Gêmeas#
+anthell01.rsw#Formigueiro Infernal (1)#
+anthell02.rsw#Formigueiro Infernal (2)#
+arena_room.rsw#Arena de Izlude#
+aru_gld.rsw#Feudo de Valfreyja#
+arug_cas01.rsw#Mardol (A1)#
+arug_cas02.rsw#Syr (A2)#
+arug_cas03.rsw#Horn (A3)#
+arug_cas04.rsw#Gefn (A4)#
+arug_cas05.rsw#Vanadis (A5)#
+arug_dun01.rsw#Calabouço de Valfreyja#
+arug_que01.rsw#Pradaria de Morestone#
+auction_01.rsw#Centro Comercial#
+auction_02.rsw#Ordem dos Exploradores#
+ayo_dun01.rsw#Labirinto Ancestral#
+ayo_dun02.rsw#Santuário Ancestral#
+ayo_fild01.rsw#Arredores de Ayothaya (1)#
+ayo_fild02.rsw#Arredores de Ayothaya (2)#
+ayo_in01.rsw#Interior de Ayothaya#
+ayo_in02.rsw#Castelo de Ayothaya#
+ayothaya.rsw#Ayothaya#
+bat_a01.rsw#Desfiladeiro Tierra#
+bat_a02.rsw#Desfiladeiro Tierra#
+bat_b01.rsw#Arena Flavius#
+bat_b02.rsw#Arena Flavius#
+bat_c01.rsw#Krieger von Midgard#
+bat_c02.rsw#Krieger von Midgard#
+bat_c03.rsw#Krieger von Midgard#
+bat_room.rsw#Sala de Espera das Batalhas Campais#
+beach_dun.rsw#Karu, a Caverna do Oeste#
+beach_dun2.rsw#Luanda, a Caverna do Norte#
+beach_dun3.rsw#Mao, a Caverna do Leste#
+bif_fild01.rsw#Sul de Bifröst#
+bif_fild02.rsw#Norte de Bifröst#
+bl_death.rsw#Biosfera - Cemitério#
+bl_grass.rsw#Biosfera - Savana#
+bl_ice.rsw#Biosfera - Tundra#
+bl_lava.rsw#Biosfera - Inferno#
+bossnia_01.rsw#Cheffênia (1)#
+bossnia_02.rsw#Cheffênia (2)#
+bossnia_03.rsw#Cheffênia (3)#
+bossnia_04.rsw#Cheffênia (4)#
+bra_dun01.rsw#Caverna das Cataratas#
+bra_dun02.rsw#Profundezas das Cataratas#
+bra_fild01.rsw#Floresta de Brasilis#
+bra_in01.rsw#Interior de Brasilis#
+brasilis.rsw#Brasilis#
+brz_gld.rsw#Palácio do Milênio#
+brz_god.rsw#Aruanda#
+brz_n.rsw#Festival de Brasilis#
+c_tower1.rsw#Torre do Relógio (1)#
+c_tower2.rsw#Torre do Relógio (2)#
+c_tower2_.rsw#Torre Distorcida (2)#
+c_tower3.rsw#Torre do Relógio (3)#
+c_tower3_.rsw#Torre Distorcida (3)#
+c_tower4.rsw#Torre do Relógio (4)#
+cave.rsw#Caverna#
+clock_01.rsw#Câmara Desconhecida da Torre do Relógio#
+cmd_fild01.rsw#Floresta Papuchica#
+cmd_fild02.rsw#Praia Kokomo#
+cmd_fild03.rsw#Mangue Zenhai#
+cmd_fild04.rsw#Praia Kokomo#
+cmd_fild06.rsw#Fortaleza Oeste de Sanderman#
+cmd_fild07.rsw#Ilha do Farol de Pharos#
+cmd_fild08.rsw#Fortaleza Leste de Sanderman#
+cmd_fild09.rsw#Fortaleza Sul de Sanderman#
+cmd_in01.rsw#Interior de Comodo (1)#
+cmd_in02.rsw#Interior de Comodo (2)#
+com_d02_i.rsw#Ilusão de Luanda#
+comodo.rsw#Comodo#
+conch_in.rsw#Conchiolina#
+dali.rsw#Espaço Dimensional#
+dali02.rsw#Espaço Dimensional (2)#
+dew_dun01.rsw#Vulcão Krakatau#
+dew_dun02.rsw#Caverna Istana#
+dew_fild01.rsw#Arredores de Dewata#
+dew_in01.rsw#Interior de Dewata#
+dewata.rsw#Dewata#
+dic_dun01.rsw#Túnel Kamidal#
+dic_dun02.rsw#Caverna Scaraba#
+dic_dun03.rsw#Caverna Scaraba - Pesadelo#
+dic_fild01.rsw#Monte Kamidal (1)#
+dic_fild02.rsw#Monte Kamidal (2)#
+dic_in01.rsw#Interior de El Dicastes#
+dicastes01.rsw#El Dicastes#
+dicastes02.rsw#Floresta Brumbeld Jorhi#
+e_hugel.rsw#Evento de Hugel#
+e_tower.rsw#Ilha Misty#
+ecl_fild01.rsw#Campo Florescente#
+ecl_hub01.rsw#Perímetros de Eclage#
+ecl_in01.rsw#Praça de Eclage#
+ecl_in02.rsw#Interior de Eclage (2)#
+ecl_in03.rsw#Interior de Eclage (3)#
+ecl_in04.rsw#Interior de Eclage (4)#
+ecl_tdun01.rsw#Torre de Bifröst (1)#
+ecl_tdun02.rsw#Torre de Bifröst (2)#
+ecl_tdun03.rsw#Torre de Bifröst (3)#
+ecl_tdun04.rsw#Torre de Bifröst (4)#
+eclage.rsw#Eclage#
+ein_d02_i.rsw#Ilusão do Ursinho#
+ein_dun01.rsw#Calabouço da Mina (1)#
+ein_dun02.rsw#Calabouço da Mina (2)#
+ein_dun03.rsw#Calabouço da Mina (3)#
+ein_fild01.rsw#Arredores de Einbroch (1)#
+ein_fild03.rsw#Arredores de Einbroch (3)#
+ein_fild04.rsw#Arredores de Einbroch (4)#
+ein_fild05.rsw#Arredores de Einbroch (5)#
+ein_fild06.rsw#Arredores de Einbroch (6)#
+ein_fild07.rsw#Arredores de Einbroch (7)#
+ein_fild08.rsw#Arredores de Einbroch (8)#
+ein_fild09.rsw#Arredores de Einbroch (9)#
+ein_in01.rsw#Interior da Cidade#
+einbech.rsw#Einbech#
+einbroch.rsw#Einbroch#
+evt_bomb.rsw#Campo Morto#
+force_1-1.rsw#Arena de Izlude#
+force_1-2.rsw#Arena de Izlude#
+force_1-3.rsw#Arena de Izlude#
+force_2-1.rsw#Arena de Izlude#
+force_2-2.rsw#Arena de Izlude#
+force_2-3.rsw#Arena de Izlude#
+force_3-1.rsw#Arena de Izlude#
+force_3-2.rsw#Arena de Izlude#
+force_3-3.rsw#Arena de Izlude#
+force_map1.rsw#Labirinto das Valquírias#
+force_map2.rsw#Labirinto das Valquírias#
+force_map3.rsw#Labirinto das Valquírias#
+gef_d01_i.rsw#Ilusão do Vampiro#
+gef_dun00.rsw#Calabouço de Geffen (0)#
+gef_dun01.rsw#Calabouço de Geffen (1)#
+gef_dun02.rsw#Calabouço de Geffen (2)#
+gef_dun03.rsw#Calabouço de Geffen (3)#
+gef_f10_a.rsw#Arredores de Geffen (10)#
+gef_f10_b.rsw#Arredores de Geffen (10)#
+gef_f10_c.rsw#Arredores de Geffen (10)#
+gef_fild00.rsw#Arredores de Geffen (0)#
+gef_fild01.rsw#Arredores de Geffen (1)#
+gef_fild02.rsw#Arredores de Geffen (2)#
+gef_fild03.rsw#Arredores de Geffen (3)#
+gef_fild04.rsw#Arredores de Geffen (4)#
+gef_fild05.rsw#Arredores de Geffen (5)#
+gef_fild06.rsw#Arredores de Geffen (6)#
+gef_fild07.rsw#Arredores de Geffen (7)#
+gef_fild08.rsw#Arredores de Geffen (8)#
+gef_fild09.rsw#Arredores de Geffen (9)#
+gef_fild10.rsw#Arredores de Geffen (10)#
+gef_fild11.rsw#Arredores de Geffen (11)#
+gef_fild13.rsw#Feudo de Britoniah#
+gef_tower.rsw#Torre de Geffen#
+gefenia01.rsw#Geffenia (1)#
+gefenia02.rsw#Geffenia (2)#
+gefenia03.rsw#Geffenia (3)#
+gefenia04.rsw#Geffenia (4)#
+geffen.rsw#Geffen#
+geffen_in.rsw#Interior de Geffen#
+gefg_cas01.rsw#Repherion (B1)#
+gefg_cas02.rsw#Eeyorbriggar (B2)#
+gefg_cas03.rsw#Yesnelph (B3)#
+gefg_cas04.rsw#Bergel (B4)#
+gefg_cas05.rsw#Mersetzdeitz (B5)#
+gl_cas01.rsw#Castelo de Glast Heim (1)#
+gl_cas01_.rsw#Porão de Glast Heim#
+gl_cas02.rsw#Castelo de Glast Heim (2)#
+gl_cas02_.rsw#Castelo Amaldiçoado#
+gl_church.rsw#Abadia de Glast Heim#
+gl_chyard.rsw#Cemitério de Glast Heim#
+gl_chyard_.rsw#Cemitério Amaldiçoado#
+gl_dun01.rsw#Caverna Profunda de Glast Heim (1)#
+gl_dun02.rsw#Caverna Profunda de Glast Heim (2)#
+gl_in01.rsw#Biblioteca de Glast Heim#
+gl_knt01.rsw#Cavalaria de Glast Heim (1)#
+gl_knt02.rsw#Cavalaria de Glast Heim (2)#
+gl_prison.rsw#Prisão de Glast Heim (1)#
+gl_prison1.rsw#Prisão de Glast Heim (2)#
+gl_sew01.rsw#Esgotos de Glast Heim (1)#
+gl_sew02.rsw#Esgotos de Glast Heim (2)#
+gl_sew03.rsw#Esgotos de Glast Heim (3)#
+gl_sew04.rsw#Esgotos de Glast Heim (4)#
+gl_step.rsw#Escadarias de Glast Heim#
+glast_01.rsw#Glast Heim#
+gld2_ald.rsw#Lágrimas do Herói#
+gld2_gef.rsw#Colina dos Mortos#
+gld2_pay.rsw#Ventos Ancestrais#
+gld2_prt.rsw#Caminho do Guerreiro#
+gld_dun01.rsw#Calabouço do Bosque Celestial (1)#
+gld_dun01_2.rsw#Calabouço do Bosque Celestial (2)#
+gld_dun02.rsw#Calabouço de Luina (1)#
+gld_dun02_2.rsw#Calabouço de Luina (2)#
+gld_dun03.rsw#Calabouço das Valquírias (1)#
+gld_dun03_2.rsw#Calabouço das Valquírias (2)#
+gld_dun04.rsw#Calabouço de Britoniah (1)#
+gld_dun04_2.rsw#Calabouço de Britoniah (2)#
+gon_dun01.rsw#Santuário de Xi Wang Mu#
+gon_dun02.rsw#Tabuleiro de Go#
+gon_dun03.rsw#Terra das Fadas#
+gon_fild01.rsw#Arredores de Kunlun#
+gon_in.rsw#Interior de Kunlun#
+gon_test.rsw#Salão de Batalhas#
+gonryun.rsw#Kunlun#
+grademk.rsw#Butique#
+guild_room.rsw#Sala de Espera#
+guild_vs1.rsw#Batalha de Guildas#
+guild_vs2.rsw#Batalha de Guildas#
+guild_vs3.rsw#Batalha de Guildas#
+guild_vs4.rsw#Batalha de Guildas#
+guild_vs5.rsw#Batalha de Guildas#
+gw_fild01.rsw#Bosque do Lobo Cinzento (1)#
+gw_fild02.rsw#Bosque do Lobo Cinzento (2)#
+har_in01.rsw#Interior de Rockridge#
+harboro1.rsw#Rockridge#
+harboro2.rsw#Esgotos de Rockridge#
+himinn.rsw#Himinn#
+hu_fild01.rsw#Arredores de Hugel (1)#
+hu_fild02.rsw#Arredores de Hugel (2)#
+hu_fild03.rsw#Campo de Caça#
+hu_fild04.rsw#Arredores de Hugel (4)#
+hu_fild05.rsw#Lago do Abismo#
+hu_fild06.rsw#Arredores de Hugel (6)#
+hu_in01.rsw#Interior de Hugel#
+hugel.rsw#Hugel#
+hunter_1-1.rsw#Guilda dos Caçadores#
+hunter_2-1.rsw#Guilda dos Caçadores#
+hunter_3-1.rsw#Guilda dos Caçadores#
+ice_d03_i.rsw#Ilusão do Gelo#
+ice_dun01.rsw#Caverna de Gelo (1)#
+ice_dun02.rsw#Caverna de Gelo (2)#
+ice_dun03.rsw#Caverna de Gelo (3)#
+ice_dun04.rsw#Caverna de Gelo (4)#
+in_hunter.rsw#Guilda dos Caçadores#
+in_moc_16.rsw#Guilda dos Mercenários#
+in_orcs01.rsw#Casa dos Orc#
+in_rogue.rsw#Guilda dos Arruaceiros#
+in_sphinx1.rsw#Esfinge (1)#
+in_sphinx2.rsw#Esfinge (2)#
+in_sphinx3.rsw#Esfinge (3)#
+in_sphinx4.rsw#Esfinge (4)#
+in_sphinx5.rsw#Esfinge (5)#
+int_land.rsw#Ilhota#
+int_land01.rsw#Ilhota#
+int_land02.rsw#Ilhota#
+int_land03.rsw#Ilhota#
+int_land04.rsw#Ilhota#
+itemmall.rsw#Mercado#
+iz_ac01.rsw#Instituto do Aprendiz (1)#
+iz_ac01_a.rsw#Instituto do Aprendiz (1)#
+iz_ac01_b.rsw#Instituto do Aprendiz (1)#
+iz_ac01_c.rsw#Instituto do Aprendiz (1)#
+iz_ac01_d.rsw#Instituto do Aprendiz (1)#
+iz_ac02.rsw#Instituto do Aprendiz (2)#
+iz_ac02_a.rsw#Instituto do Aprendiz (2)#
+iz_ac02_b.rsw#Instituto do Aprendiz (2)#
+iz_ac02_c.rsw#Instituto do Aprendiz (2)#
+iz_ac02_d.rsw#Instituto do Aprendiz (2)#
+iz_d04_i.rsw#Ilusão Submarina (1)#
+iz_d05_i.rsw#Ilusão Submarina (2)#
+iz_dun00.rsw#Túnel Submarino (0)#
+iz_dun01.rsw#Túnel Submarino (1)#
+iz_dun02.rsw#Túnel Submarino (2)#
+iz_dun03.rsw#Túnel Submarino (3)#
+iz_dun04.rsw#Túnel Submarino (4)#
+iz_dun05.rsw#Túnel Submarino (5)#
+iz_int.rsw#Navio Naufragado#
+iz_int01.rsw#Navio Naufragado#
+iz_int02.rsw#Navio Naufragado#
+iz_int03.rsw#Navio Naufragado#
+iz_int04.rsw#Navio Naufragado#
+iz_ng01.rsw#Escola Ninja#
+izlu2dun.rsw#Ilha Byalan#
+izlude.rsw#Izlude#
+izlude_a.rsw#Izlude#
+izlude_b.rsw#Izlude#
+izlude_c.rsw#Izlude#
+izlude_d.rsw#Izlude#
+izlude_in.rsw#Interior de Izlude#
+jawaii.rsw#Jawaii#
+jawaii_in.rsw#Interior de Jawaii#
+job3_arch01.rsw#Teste dos Arcebispos#
+job3_arch02.rsw#Templo de Odin#
+job3_arch03.rsw#Teste dos Arcebispos#
+job3_gen01.rsw#Guilda dos Bioquímicos#
+job3_guil01.rsw#Taverna Secreta#
+job3_guil02.rsw#Dentro da Casa#
+job3_guil03.rsw#Mansão Escondida#
+job3_rang01.rsw#Teste dos Sentinelas#
+job3_rang02.rsw#Teste dos Sentinelas#
+job3_rune01.rsw#Guilda dos Cavaleiros Rúnicos#
+job3_rune02.rsw#Teste dos Cavaleiros Rúnicos#
+job3_rune03.rsw#Teste dos Cavaleiros Rúnicos#
+job3_war01.rsw#Guilda dos Arcanos#
+job3_war02.rsw#Guilda dos Arcanos#
+job4_bio.rsw#Estufa Secreta#
+job4_mag.rsw#Fonte da Magia#
+job4_tro.rsw#Baú Vazio de Kvasir#
+job_cru.rsw#Teste dos Templários#
+job_duncer.rsw#Teatro de Comodo#
+job_gun.rsw#Teste dos Insurgentes#
+job_hunte.rsw#Teste dos Caçadores#
+job_knt.rsw#Teste dos Cavaleiros#
+job_ko.rsw#Lugar Escondido#
+job_monk.rsw#Abadia de Santa Capitolina#
+job_prist.rsw#Teste dos Sacerdotes#
+job_sage.rsw#Teste dos Sábios#
+job_soul.rsw#Seu Coração#
+job_star.rsw#O Sol, a Lua e as Estrelas#
+job_thief1.rsw#Fazenda de Cogumelos#
+job_wiz.rsw#Teste dos Bruxos#
+jupe_area1.rsw#Zona Restrita de Juperos#
+jupe_area2.rsw#Zona Restrita de Juperos#
+jupe_cave.rsw#Entrada de Juperos#
+jupe_core.rsw#Centro de Juperos#
+jupe_core2.rsw#Centro de Juperos#
+jupe_ele.rsw#Elevador de Juperos#
+jupe_ele_r.rsw#Elevador de Juperos#
+jupe_gate.rsw#Zona Restrita de Juperos#
+juperos_01.rsw#Ruínas de Juperos (1)#
+juperos_02.rsw#Ruínas de Juperos (2)#
+kh_dun01.rsw#Fábrica de Robôs (1)#
+kh_dun02.rsw#Fábrica de Robôs (2)#
+kh_kiehl01.rsw#Aposentos de Kiehl#
+kh_kiehl02.rsw#Sala de Kiehl#
+kh_mansion.rsw#Mansão de Kiel Hyre#
+kh_rossi.rsw#Mansão Rosimier#
+kh_school.rsw#Academia Kiel Hyre#
+kh_vila.rsw#Cabana de Kiel Hyre#
+knight_1-1.rsw#Cavalaria#
+knight_2-1.rsw#Cavalaria#
+knight_3-1.rsw#Cavalaria#
+lasa_dun01.rsw#Ninho do Dragão (1)#
+lasa_dun02.rsw#Ninho do Dragão (2)#
+lasa_dun03.rsw#Ninho do Dragão (3)#
+lasa_dun_q.rsw#Ninho do Dragão#
+lasa_fild01.rsw#Planícies Ravioli#
+lasa_fild02.rsw#Floresta Ravioli#
+lasa_in01.rsw#Interior de Lasagna#
+lasa_sea.rsw#Mar de Lasagna#
+lasagna.rsw#Lasagna#
+lhz_airport.rsw#Aeroporto de Lighthalzen#
+lhz_cube.rsw#Sala Cúbica#
+lhz_d_n2.rsw#Zona Segura da Tumba#
+lhz_dun01.rsw#Biolaboratório (1)#
+lhz_dun02.rsw#Biolaboratório (2)#
+lhz_dun03.rsw#Biolaboratório (3)#
+lhz_dun04.rsw#Biolaboratório (4)#
+lhz_dun_n.rsw#Biolaboratório (Pesadelo)#
+lhz_fild01.rsw#Arredores de Lighthalzen (1)#
+lhz_fild02.rsw#Arredores de Lighthalzen (2)#
+lhz_fild03.rsw#Arredores de Lighthalzen (3)#
+lhz_in01.rsw#Corporação Rekenber#
+lhz_in02.rsw#Interior de Lighthalzen#
+lhz_in03.rsw#Interior de Lighthalzen#
+lhz_que01.rsw#Interior de Lighthalzen#
+lighthalzen.rsw#Lighthalzen#
+lou_dun01.rsw#Tumba Real (1)#
+lou_dun02.rsw#Tumba Real (2)#
+lou_dun03.rsw#Suei Long Gon#
+lou_fild01.rsw#Arredores de Louyang#
+lou_in01.rsw#Interior de Louyang#
+lou_in02.rsw#Interior de Louyang#
+louyang.rsw#Louyang#
+ma_dun01.rsw#Hospital Abandonado (1)#
+ma_fild01.rsw#Baryo Mahiwaga#
+ma_fild02.rsw#Floresta#
+ma_in01.rsw#Interior de Malaya#
+ma_scene01.rsw#Lago Bakonawa#
+ma_zif01.rsw#Jeepney#
+ma_zif02.rsw#Jeepney#
+ma_zif03.rsw#Jeepney#
+ma_zif04.rsw#Jeepney#
+ma_zif05.rsw#Jeepney#
+ma_zif06.rsw#Jeepney#
+ma_zif07.rsw#Jeepney#
+ma_zif08.rsw#Jeepney#
+ma_zif09.rsw#Jeepney#
+mag_dun01.rsw#Caverna de Magma (1)#
+mag_dun02.rsw#Caverna de Magma (2)#
+mag_dun03.rsw#Caverna de Magma (3)#
+mal_dun01.rsw#Área de Coral Estrelado#
+mal_in01.rsw#Interior de Malangdo#
+mal_in02.rsw#Navio Navi#
+malangdo.rsw#Malangdo#
+malaya.rsw#Porto Malaya#
+man_fild01.rsw#Arredores de Manuka (1)#
+man_fild02.rsw#Arredores de Manuka (2)#
+man_fild03.rsw#Arredores de Manuka (3)#
+man_in01.rsw#Interior de Manuka#
+manuk.rsw#Manuka#
+mid_camp.rsw#Acampamento da Expedição da Aliança#
+mid_campin.rsw#Interior do Acampamento#
+mjo_dun01.rsw#Mina Abandonada (1)#
+mjo_dun02.rsw#Mina Abandonada (2)#
+mjo_dun03.rsw#Mina Abandonada (3)#
+mjolnir_01.rsw#Monte Mjolnir (1)#
+mjolnir_02.rsw#Monte Mjolnir (2)#
+mjolnir_03.rsw#Monte Mjolnir (3)#
+mjolnir_04.rsw#Monte Mjolnir (4)#
+mjolnir_05.rsw#Monte Mjolnir (5)#
+mjolnir_06.rsw#Monte Mjolnir (6)#
+mjolnir_07.rsw#Monte Mjolnir (7)#
+mjolnir_08.rsw#Monte Mjolnir (8)#
+mjolnir_09.rsw#Monte Mjolnir (9)#
+mjolnir_10.rsw#Monte Mjolnir (10)#
+mjolnir_11.rsw#Monte Mjolnir (11)#
+mjolnir_12.rsw#Monte Mjolnir (12)#
+moc_fild01.rsw#Deserto de Sograt (1)#
+moc_fild02.rsw#Deserto de Sograt (2)#
+moc_fild03.rsw#Deserto de Sograt (3)#
+moc_fild07.rsw#Deserto de Sograt (7)#
+moc_fild11.rsw#Deserto de Sograt (11)#
+moc_fild12.rsw#Deserto de Sograt (12)#
+moc_fild13.rsw#Deserto de Sograt (13)#
+moc_fild16.rsw#Deserto de Sograt (16)#
+moc_fild17.rsw#Deserto de Sograt (17)#
+moc_fild18.rsw#Deserto de Sograt (18)#
+moc_fild19.rsw#Deserto de Sograt (19)#
+moc_fild20.rsw#Deserto de Sograt (20)#
+moc_fild21.rsw#Deserto de Sograt (21)#
+moc_fild22.rsw#Deserto de Sograt (22)#
+moc_fild22b.rsw#Deserto de Sograt (22)#
+moc_para01.rsw#Grupo do Éden#
+moc_para0a.rsw#Grupo do Éden#
+moc_para0b.rsw#Grupo do Éden#
+moc_para0c.rsw#Grupo do Éden#
+moc_pryd01.rsw#Pirâmide (1)#
+moc_pryd02.rsw#Pirâmide (2)#
+moc_pryd03.rsw#Pirâmide (3)#
+moc_pryd04.rsw#Pirâmide (4)#
+moc_pryd05.rsw#Subsolo da Pirâmide (1)#
+moc_pryd06.rsw#Subsolo da Pirâmide (2)#
+moc_prydb1.rsw#Guilda dos Gatunos#
+moc_prydn1.rsw#Subsolo da Pirâmide (1) - Pesadelo#
+moc_prydn2.rsw#Subsolo da Pirâmide (2) - Pesadelo#
+moc_ruins.rsw#Ruínas de Morroc#
+monk_in.rsw#Interior da Abadia#
+monk_test.rsw#Teste dos Monges#
+mora.rsw#Mora#
+moro_cav.rsw#Caverna de Fogo#
+moro_vol.rsw#Círculo de Fogo#
+morocc.rsw#Morroc#
+morocc_in.rsw#Interior de Morroc#
+moscovia.rsw#Moscóvia#
+mosk_dun01.rsw#Floresta Encantada (1)#
+mosk_dun02.rsw#Floresta Encantada (2)#
+mosk_dun03.rsw#Floresta Encantada (3)#
+mosk_fild01.rsw#Ilha Baleia#
+mosk_fild02.rsw#Arredores de Moscóvia#
+mosk_in.rsw#Interior de Moscóvia#
+mosk_ship.rsw#Navio de Moscóvia#
+nameless_i.rsw#Ilha Esquecida#
+nameless_in.rsw#Interior da Ilha Esquecida#
+nameless_n.rsw#Ilha Esquecida#
+new_1-1.rsw#Campo de Treinamento#
+new_1-2.rsw#Campo de Treinamento#
+new_1-3.rsw#Jardins do Instituto do Aprendiz#
+new_1-4.rsw#Campo de Treinamento#
+new_2-1.rsw#Campo de Treinamento#
+new_2-2.rsw#Campo de Treinamento#
+new_2-3.rsw#Campo de Treinamento#
+new_2-4.rsw#Campo de Treinamento#
+new_3-1.rsw#Campo de Treinamento#
+new_3-2.rsw#Campo de Treinamento#
+new_3-3.rsw#Campo de Treinamento#
+new_3-4.rsw#Campo de Treinamento#
+new_4-1.rsw#Campo de Treinamento#
+new_4-2.rsw#Campo de Treinamento#
+new_4-3.rsw#Campo de Treinamento#
+new_4-4.rsw#Campo de Treinamento#
+new_5-1.rsw#Campo de Treinamento#
+new_5-2.rsw#Campo de Treinamento#
+new_5-3.rsw#Campo de Treinamento#
+nif_dun01.rsw#Calabouço de Nifflheim (1)#
+nif_dun02.rsw#Calabouço de Nifflheim (2)#
+nif_fild01.rsw#Skellington#
+nif_fild02.rsw#Vale de Gyoll#
+nif_in.rsw#Interior de Nifflheim#
+niflheim.rsw#Nifflheim#
+nyd_dun01.rsw#A Grande Ferida (1)#
+nyd_dun02.rsw#A Grande Ferida (2)#
+odin_past.rsw#Antigo Templo de Odin#
+odin_tem01.rsw#Templo de Odin (1)#
+odin_tem02.rsw#Templo de Odin (2)#
+odin_tem03.rsw#Templo de Odin (3)#
+orcsdun01.rsw#Caverna dos Orcs (1)#
+orcsdun01_a.rsw#Caverna dos Orcs (1)#
+orcsdun01_b.rsw#Caverna dos Orcs (1)#
+orcsdun01_c.rsw#Caverna dos Orcs (1)#
+orcsdun02.rsw#Caverna dos Orcs (2)#
+ordeal_1-1.rsw#Batalha de Provação#
+ordeal_1-2.rsw#Batalha de Provação#
+ordeal_1-3.rsw#Batalha de Provação#
+ordeal_1-4.rsw#Batalha de Provação#
+ordeal_2-1.rsw#Batalha de Provação#
+ordeal_2-2.rsw#Batalha de Provação#
+ordeal_2-3.rsw#Batalha de Provação#
+ordeal_2-4.rsw#Batalha de Provação#
+ordeal_3-1.rsw#Batalha de Provação#
+ordeal_3-2.rsw#Batalha de Provação#
+ordeal_3-3.rsw#Batalha de Provação#
+ordeal_3-4.rsw#Batalha de Provação#
+oz_dun01.rsw#Labirinto Oz (1)#
+oz_dun02.rsw#Labirinto Oz (2)#
+p_track01.rsw#Corrida de Monstros#
+p_track02.rsw#Corrida de Monstros#
+paramk.rsw#Mercado Paralelo do Éden#
+pay_arche.rsw#Vila dos Arqueiros#
+pay_d03_i.rsw#Ilusão da Lua#
+pay_dun00.rsw#Caverna de Payon (0)#
+pay_dun00_a.rsw#Caverna de Payon (0)#
+pay_dun00_b.rsw#Caverna de Payon (0)#
+pay_dun00_c.rsw#Caverna de Payon (0)#
+pay_dun01.rsw#Caverna de Payon (1)#
+pay_dun02.rsw#Caverna de Payon (2)#
+pay_dun03.rsw#Caverna de Payon (3)#
+pay_dun04.rsw#Caverna de Payon (4)#
+pay_fild01.rsw#Floresta de Payon (1)#
+pay_fild02.rsw#Floresta de Payon (2)#
+pay_fild03.rsw#Floresta de Payon (3)#
+pay_fild04.rsw#Floresta de Payon (4)#
+pay_fild06.rsw#Floresta de Payon (6)#
+pay_fild07.rsw#Floresta de Payon (7)#
+pay_fild08.rsw#Floresta de Payon (8)#
+pay_fild09.rsw#Floresta de Payon (9)#
+pay_fild10.rsw#Floresta de Payon (10)#
+pay_gld.rsw#Feudo do Bosque Celestial#
+payg_cas01.rsw#Árvore brilhante (BC1)#
+payg_cas02.rsw#Altar Sagrado (BC2)#
+payg_cas03.rsw#Sombra Sagrada (BC3)#
+payg_cas04.rsw#Palácio Escarlate (BC4)#
+payg_cas05.rsw#Colina Bamboo Grove (BC5)#
+payon.rsw#Payon#
+payon_in01.rsw#Interior de Payon#
+payon_in02.rsw#Interior da Vila dos Arqueiros#
+payon_in03.rsw#Interior de Payon#
+poring_w01.rsw#Sala de Espera da Guerra dos Porings#
+poring_w02.rsw#Guerra dos Porings#
+priest_1-1.rsw#Sanctum#
+priest_2-1.rsw#Sanctum#
+priest_3-1.rsw#Sanctum#
+prontera.rsw#Prontera#
+prt_are01.rsw#Teste dos Arruaceiros#
+prt_are_in.rsw#Sala de Espera da Arena de Izlude#
+prt_arena01.rsw#Arena de Prontera#
+prt_cas.rsw#Palácio de Prontera#
+prt_cas_q.rsw#Aposentos dos Nobres#
+prt_castle.rsw#Castelo de Prontera#
+prt_church.rsw#Catedral de Prontera#
+prt_evt_in.rsw#Cabana#
+prt_fild00.rsw#Arredores de Prontera (0)#
+prt_fild01.rsw#Arredores de Prontera (1)#
+prt_fild02.rsw#Arredores de Prontera (2)#
+prt_fild03.rsw#Arredores de Prontera (3)#
+prt_fild04.rsw#Arredores de Prontera (4)#
+prt_fild05.rsw#Arredores de Prontera (5)#
+prt_fild06.rsw#Arredores de Prontera (6)#
+prt_fild07.rsw#Arredores de Prontera (7)#
+prt_fild08.rsw#Arredores de Prontera (8)#
+prt_fild08a.rsw#Arredores de Prontera (8)#
+prt_fild08b.rsw#Arredores de Prontera (8)#
+prt_fild08c.rsw#Arredores de Prontera (8)#
+prt_fild08d.rsw#Arredores de Prontera (8)#
+prt_fild09.rsw#Arredores de Prontera (9)#
+prt_fild10.rsw#Arredores de Prontera (10)#
+prt_fild11.rsw#Arredores de Prontera (11)#
+prt_gld.rsw#Feudo das Valquírias#
+prt_in.rsw#Interior de Prontera#
+prt_lib.rsw#Memorial das Famílias Reais (Presente)#
+prt_lib_q.rsw#Memorial das Famílias Reais (Passado)#
+prt_maze01.rsw#Labirinto da Floresta (1)#
+prt_maze02.rsw#Labirinto da Floresta (2)#
+prt_maze03.rsw#Labirinto da Floresta (3)#
+prt_mk.rsw#Bazar de Prontera#
+prt_monk.rsw#Abadia de Santa Capitolina#
+prt_mz03_i.rsw#Ilusão do Labirinto#
+prt_pri00.rsw#Carceragem de Prontera#
+prt_prison.rsw#Prisão de Prontera#
+prt_q.rsw#Prontera Destruída#
+prt_sewb1.rsw#Esgotos de Prontera (1)#
+prt_sewb2.rsw#Esgotos de Prontera (2)#
+prt_sewb3.rsw#Esgotos de Prontera (3)#
+prt_sewb4.rsw#Esgotos de Prontera (4)#
+prtg_cas01.rsw#Kriemhild (V1)#
+prtg_cas02.rsw#Swanhild (V2)#
+prtg_cas03.rsw#Fadhgridh (V3)#
+prtg_cas04.rsw#Skoegul (V4)#
+prtg_cas05.rsw#Gondul (V5)#
+pub_cat.rsw#Miado de Bala#
+pvp_2vs2.rsw#PvP : Colisseu#
+pvp_c_room.rsw#Sala de Espera#
+pvp_n_1-1.rsw#PvP : Sala Sanduíche#
+pvp_n_1-2.rsw#PvP : Sala Desafio Adiante#
+pvp_n_1-3.rsw#PvP : Sala Tetra#
+pvp_n_1-4.rsw#PvP : Sala Encruzilhada#
+pvp_n_1-5.rsw#PvP : Sala Bússola#
+pvp_n_2-1.rsw#PvP : Sala Sanduíche#
+pvp_n_2-2.rsw#PvP : Sala Desafio Adiante#
+pvp_n_2-3.rsw#PvP : Sala Tetra#
+pvp_n_2-4.rsw#PvP : Sala Encruzilhada#
+pvp_n_2-5.rsw#PvP : Sala Bússola#
+pvp_n_3-1.rsw#PvP : Sala Sanduíche#
+pvp_n_3-2.rsw#PvP : Sala Desafio Adiante#
+pvp_n_3-3.rsw#PvP : Sala Tetra#
+pvp_n_3-4.rsw#PvP : Sala Encruzilhada#
+pvp_n_3-5.rsw#PvP : Sala Bússola#
+pvp_n_4-1.rsw#PvP : Sala Sanduíche#
+pvp_n_4-2.rsw#PvP : Sala Desafio Adiante#
+pvp_n_4-3.rsw#PvP : Sala Tetra#
+pvp_n_4-4.rsw#PvP : Sala Encruzilhada#
+pvp_n_4-5.rsw#PvP : Sala Bússola#
+pvp_n_5-1.rsw#PvP : Sala Sanduíche#
+pvp_n_5-2.rsw#PvP : Sala Desafio Adiante#
+pvp_n_5-3.rsw#PvP : Sala Tetra#
+pvp_n_5-4.rsw#PvP : Sala Encruzilhada#
+pvp_n_5-5.rsw#PvP : Sala Bússola#
+pvp_n_6-1.rsw#PvP : Sala Sanduíche#
+pvp_n_6-2.rsw#PvP : Sala Desafio Adiante#
+pvp_n_6-3.rsw#PvP : Sala Tetra#
+pvp_n_6-4.rsw#PvP : Sala Encruzilhada#
+pvp_n_6-5.rsw#PvP : Sala Bússola#
+pvp_n_7-1.rsw#PvP : Sala Sanduíche#
+pvp_n_7-2.rsw#PvP : Sala Desafio Adiante#
+pvp_n_7-3.rsw#PvP : Sala Tetra#
+pvp_n_7-4.rsw#PvP : Sala Encruzilhada#
+pvp_n_7-5.rsw#PvP : Sala Bússola#
+pvp_n_8-1.rsw#PvP : Sala Sanduíche#
+pvp_n_8-2.rsw#PvP : Sala Desafio Adiante#
+pvp_n_8-3.rsw#PvP : Sala Tetra#
+pvp_n_8-4.rsw#PvP : Sala Encruzilhada#
+pvp_n_8-5.rsw#PvP : Sala Bússola#
+pvp_n_room.rsw#Sala de Espera#
+pvp_y_1-1.rsw#PvP : Prontera#
+pvp_y_1-2.rsw#PvP : Izlude#
+pvp_y_1-3.rsw#PvP : Payon#
+pvp_y_1-4.rsw#PvP : Alberta#
+pvp_y_1-5.rsw#PvP : Morroc#
+pvp_y_2-1.rsw#PvP : Prontera#
+pvp_y_2-2.rsw#PvP : Izlude#
+pvp_y_2-3.rsw#PvP : Payon#
+pvp_y_2-4.rsw#PvP : Alberta#
+pvp_y_2-5.rsw#PvP : Morroc#
+pvp_y_3-1.rsw#PvP : Prontera#
+pvp_y_3-2.rsw#PvP : Izlude#
+pvp_y_3-3.rsw#PvP : Payon#
+pvp_y_3-4.rsw#PvP : Alberta#
+pvp_y_3-5.rsw#PvP : Morroc#
+pvp_y_4-1.rsw#PvP : Prontera#
+pvp_y_4-2.rsw#PvP : Izlude#
+pvp_y_4-3.rsw#PvP : Payon#
+pvp_y_4-4.rsw#PvP : Alberta#
+pvp_y_4-5.rsw#PvP : Morroc#
+pvp_y_5-1.rsw#PvP : Prontera#
+pvp_y_5-2.rsw#PvP : Izlude#
+pvp_y_5-3.rsw#PvP : Payon#
+pvp_y_5-4.rsw#PvP : Alberta#
+pvp_y_5-5.rsw#PvP : Morroc#
+pvp_y_6-1.rsw#PvP : Prontera#
+pvp_y_6-2.rsw#PvP : Izlude#
+pvp_y_6-3.rsw#PvP : Payon#
+pvp_y_6-4.rsw#PvP : Alberta#
+pvp_y_6-5.rsw#PvP : Morroc#
+pvp_y_7-1.rsw#PvP : Prontera#
+pvp_y_7-2.rsw#PvP : Izlude#
+pvp_y_7-3.rsw#PvP : Payon#
+pvp_y_7-4.rsw#PvP : Alberta#
+pvp_y_7-5.rsw#PvP : Morroc#
+pvp_y_8-1.rsw#PvP : Prontera#
+pvp_y_8-2.rsw#PvP : Izlude#
+pvp_y_8-3.rsw#PvP : Payon#
+pvp_y_8-4.rsw#PvP : Alberta#
+pvp_y_8-5.rsw#PvP : Morroc#
+pvp_y_room.rsw#Sala de Espera#
+que_avan01.rsw#Perímetros de Eclage#
+que_bingo.rsw#Casa de Bingo#
+que_dan01.rsw#Arredores de Hugel#
+que_dan02.rsw#Casa Abandonada de Juno#
+que_god01.rsw#Sala Divina#
+que_god02.rsw#Sala da Lowen#
+que_house_s.rsw#Fazenda de Homunculus#
+que_hugel.rsw#Subsolo do Templo de Odin#
+que_job01.rsw#Taverna Particular#
+que_lhz.rsw#Biolaboratório#
+que_ng.rsw#Guilda#
+que_qaru01.rsw#Visão de Okolnir#
+que_qaru02.rsw#Visão de Okolnir#
+que_qaru03.rsw#Visão de Okolnir#
+que_qaru04.rsw#Visão de Okolnir#
+que_qaru05.rsw#Visão de Okolnir#
+que_qsch01.rsw#Visão de Okolnir#
+que_qsch02.rsw#Visão de Okolnir#
+que_qsch03.rsw#Visão de Okolnir#
+que_qsch04.rsw#Visão de Okolnir#
+que_qsch05.rsw#Visão de Okolnir#
+que_rachel.rsw#Interior do Santuário#
+que_san04.rsw#Interior do Santuário#
+que_swat.rsw#Base Militar da Caça-Coração#
+que_temsky.rsw#Jardins Sagrados#
+que_thor.rsw#Interior do Vulcão#
+que_thr.rsw#Interior do Vulcão de Thor#
+quiz_00.rsw#Sala do Quiz#
+quiz_01.rsw#Sala do Quiz#
+quiz_02.rsw#Sala do Quiz#
+quiz_test.rsw#Sala do Quiz#
+ra_fild01.rsw#Pradaria Audhumbla#
+ra_fild02.rsw#Cânion de Oz#
+ra_fild03.rsw#Planície de Ida#
+ra_fild04.rsw#Pradaria Audhumbla#
+ra_fild05.rsw#Pradaria Audhumbla#
+ra_fild06.rsw#Portus Luna#
+ra_fild07.rsw#Cânion de Oz#
+ra_fild08.rsw#Planície de Ida#
+ra_fild09.rsw#Pradaria Audhumbla#
+ra_fild10.rsw#Cânion de Oz#
+ra_fild11.rsw#Planície de Ida#
+ra_fild12.rsw#Planície de Ida#
+ra_fild13.rsw#Costa das Lágrimas#
+ra_in01.rsw#Interior de Rachel#
+ra_san01.rsw#Santuário de Freya (1)#
+ra_san02.rsw#Santuário de Freya (2)#
+ra_san03.rsw#Santuário de Freya (3)#
+ra_san04.rsw#Santuário de Freya (4)#
+ra_san05.rsw#Santuário de Freya (5)#
+ra_temin.rsw#Interior do Santuário#
+ra_temple.rsw#Santuário de Freya (Sessrumnir)#
+ra_temsky.rsw#Jardins Sagrados#
+rachel.rsw#Rachel#
+rebel_in.rsw#Clana Nemieri#
+rgsr_in.rsw#Regenschirm#
+rockmi1.rsw#Minas de Rockridge (1)#
+rockmi2.rsw#Minas de Rockridge (2)#
+rockrdg1.rsw#Deserto Kiwawa (1)#
+rockrdg2.rsw#Deserto Kiwawa (2)#
+s_atelier.rsw#Ateliê#
+sch_gld.rsw#Feudo de Nithafjoll#
+schg_cas01.rsw#Himinn (N1)#
+schg_cas02.rsw#Andlangr (N2)#
+schg_cas03.rsw#Vidblainn (N3)#
+schg_cas04.rsw#Hljod (N4)#
+schg_cas05.rsw#Skatyrnir (N5)#
+schg_dun01.rsw#Calabouço de Nithafjoll#
+schg_que01.rsw#Pradaria de Morestone#
+sec_in01.rsw#Administração (1)#
+sec_in02.rsw#Administração (2)#
+sec_pri.rsw#Administração (3)#
+silk_lair.rsw#Esconderijo do Polvo#
+slabw01.rsw#Laboratório Werner#
+sp_cor.rsw#Distrito COR#
+sp_os.rsw#Distrito OS#
+sp_rudus.rsw#Rudus, depósito de rejeitos (1)#
+sp_rudus2.rsw#Rudus, depósito de rejeitos (2)#
+sp_rudus3.rsw#Rudus, depósito de rejeitos (3)#
+sp_rudus4.rsw#Rudus, depósito de rejeitos (4)#
+spl_fild01.rsw#Arredores de Esplendor (1)#
+spl_fild02.rsw#Arredores de Esplendor (2)#
+spl_fild03.rsw#Arredores de Esplendor (3)#
+spl_in01.rsw#Interior de Esplendor#
+spl_in02.rsw#Interior de Esplendor#
+splendide.rsw#Esplendor#
+star_frst.rsw#Dojang do Bosque Meteoro#
+star_in.rsw#Interior do Dojang#
+sword_3-1.rsw#Hall da Prova dos Espadachins#
+te_alde_gld.rsw#Kafragarten#
+te_aldecas01.rsw#Sofia (K1)#
+te_aldecas02.rsw#Denise (K2)#
+te_aldecas03.rsw#Marianne (K3)#
+te_aldecas04.rsw#Bianca (K4)#
+te_aldecas05.rsw#Deborah (K5)#
+te_aldecas1.rsw#Sofia (K1)#
+te_aldecas2.rsw#Denise (K2)#
+te_aldecas3.rsw#Marianne (K3)#
+te_aldecas4.rsw#Bianca (K4)#
+te_aldecas5.rsw#Deborah (K5)#
+te_prt_gld.rsw#Feudo de Gloria#
+te_prtcas01.rsw#Gaebolg (G1)#
+te_prtcas02.rsw#Richard (G2)#
+te_prtcas03.rsw#Wigner (G3)#
+te_prtcas04.rsw#Heine (G4)#
+te_prtcas05.rsw#Nerius (G5)#
+teg_dun01.rsw#Calabouço de Gloria#
+teg_dun02.rsw#Calabouço de Kafragarten#
+tha_t01.rsw#Torre de Thanatos (1)#
+tha_t02.rsw#Torre de Thanatos (2)#
+tha_t03.rsw#Torre de Thanatos (3)#
+tha_t04.rsw#Torre de Thanatos (4)#
+tha_t05.rsw#Torre de Thanatos (5)#
+tha_t06.rsw#Torre de Thanatos (6)#
+tha_t07.rsw#Torre de Thanatos (7)#
+tha_t08.rsw#Torre de Thanatos (8)#
+tha_t09.rsw#Torre de Thanatos (9)#
+tha_t10.rsw#Torre de Thanatos (10)#
+tha_t11.rsw#Torre de Thanatos (11)#
+tha_t12.rsw#Torre de Thanatos (12)#
+thana_boss.rsw#Topo da Torre de Thanatos#
+thana_scene01.rsw#Entrada da Torre de Thanatos#
+thana_step.rsw#Escadaria da Torre de Thanatos#
+thor_camp.rsw#Base Militar#
+thor_v01.rsw#Vulcão de Thor (1)#
+thor_v02.rsw#Vulcão de Thor (2)#
+thor_v03.rsw#Vulcão de Thor (3)#
+tra_fild.rsw#Centro de Treinamento de Prontera#
+treasure01.rsw#Navio Fantasma (1)#
+treasure02.rsw#Navio Fantasma (2)#
+treasure_n1.rsw#Navio Abandonado (1)#
+treasure_n2.rsw#Navio Abandonado (2)#
+tur_d03_i.rsw#Ilusão da Tartaruga (1)#
+tur_d04_i.rsw#Ilusão da Tartaruga (2)#
+tur_dun01.rsw#Ilha da Tartaruga#
+tur_dun02.rsw#Subsolo da Ilha da Tartaruga#
+tur_dun03.rsw#Vila das Boas Tartarugas#
+tur_dun04.rsw#Palácio Tartaruga#
+tur_dun05.rsw#Pântano Subterrâneo#
+tur_dun06.rsw#Pântano Subterrâneo#
+turbo_e_16.rsw#Maratona Turbo Track#
+turbo_e_4.rsw#Maratona Turbo Track#
+turbo_e_8.rsw#Maratona Turbo Track#
+turbo_n_1.rsw#Maratona Turbo Track#
+turbo_n_16.rsw#Maratona Turbo Track#
+turbo_n_4.rsw#Maratona Turbo Track#
+turbo_n_8.rsw#Maratona Turbo Track#
+turbo_room.rsw#Estádio Turbo Track#
+um_dun01.rsw#Loja de Carpintaria#
+um_dun02.rsw#Estrada para o Além#
+um_fild01.rsw#Floresta de Luluka#
+um_fild02.rsw#Floresta de Hoomga#
+um_fild03.rsw#Pântano de Kalala#
+um_fild04.rsw#Selva de Hoomga#
+um_in.rsw#Interior de Umbala#
+umbala.rsw#Umbala#
+un_bk_q.rsw#Abrigo Subterrâneo#
+un_bunker.rsw#Abrigo Subterrâneo#
+un_myst.rsw#Túnel do Abrigo#
+valkyrie.rsw#Templo das Valquírias#
+ve_fild01.rsw#Arredores de Veins (1)#
+ve_fild02.rsw#Arredores de Veins (2)#
+ve_fild03.rsw#Arredores de Veins (3)#
+ve_fild04.rsw#Arredores de Veins (4)#
+ve_fild05.rsw#Arredores de Veins (5)#
+ve_fild06.rsw#Arredores de Veins (6)#
+ve_fild07.rsw#Arredores de Veins (7)#
+ve_in.rsw#Interior de Veins#
+ve_in02.rsw#Fábrica de Veins#
+veins.rsw#Veins#
+ver_eju.rsw#Ruína Oeste de Juperos#
+ver_tunn.rsw#Túnel de Verus#
+verus01.rsw#Laboratório OPTATIO de Experimentos#
+verus02.rsw#Instituto WISH de Pesquisa#
+verus03.rsw#Praça Central de Verus#
+verus04.rsw#Centro de Verus#
+vis_h01.rsw#Arena Fantasma (1)#
+vis_h02.rsw#Arena Fantasma (2)#
+vis_h03.rsw#Arena Fantasma (3)#
+vis_h04.rsw#Arena Fantasma (4)#
+wizard_1-1.rsw#Teste dos Bruxos#
+wizard_2-1.rsw#Teste dos Bruxos#
+wizard_3-1.rsw#Teste dos Bruxos#
+wolfvill.rsw#Aldeia do Lobo Cinzento#
+x_lhz.rsw#Lighthalzen Dimensional#
+x_prt.rsw#Prontera Dimensional#
+x_ra.rsw#Rachel Dimensional#
+xmas.rsw#Lutie#
+xmas_dun01.rsw#Fábrica de Brinquedos (1)#
+xmas_dun02.rsw#Fábrica de Brinquedos (2)#
+xmas_fild01.rsw#Arredores de Lutie#
+xmas_in.rsw#Interior de Lutie#
+y_airport.rsw#Aeroporto de Juno#
+yggdrasil01.rsw#Fonte de Hvergelmir#
+yuno.rsw#Juno#
+yuno_fild01.rsw#Fronteira de Al De Baran#
+yuno_fild02.rsw#Arredores de Juno (2)#
+yuno_fild03.rsw#Planalto de Elmes#
+yuno_fild04.rsw#Planalto de Elmes#
+yuno_fild06.rsw#Planalto de Elmes#
+yuno_fild07.rsw#Desfiladeiro Elmes#
+yuno_fild08.rsw#Academia Kiel Hyre#
+yuno_fild09.rsw#Acampamento dos Guardas de Schwaltzwald#
+yuno_fild11.rsw#Arredores de Juno (11)#
+yuno_fild12.rsw#Controle da Fronteira#
+yuno_in01.rsw#Interior de Juno#
+yuno_in02.rsw#Castelo dos Sábios#
+yuno_in03.rsw#Interior de Juno#
+yuno_in04.rsw#Biblioteca de Juno#
+yuno_in05.rsw#Subsolo do Castelo#
+yuno_pre.rsw#Sede do Governo de Schwaltzwald#
+z_agit.rsw#Esconderijo da Gangue Z#

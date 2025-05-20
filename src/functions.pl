@@ -571,6 +571,11 @@ sub processServerSettings {
 		Settings::addTablesFolders($masterServer->{addTableFolders});
 	}
 
+	# Process adding Custom fields folders
+	if($masterServer->{addFieldsFolders}) {
+		Settings::addFieldsFolders($masterServer->{addFieldsFolders});
+	}
+
 	# Process setting custom recvpackets option
 	Settings::setRecvPacketsName($masterServer->{recvpackets} && $masterServer->{recvpackets} ne '' ? $masterServer->{recvpackets} : Settings::getRecvPacketsFilename() );
 }
