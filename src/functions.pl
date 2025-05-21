@@ -567,12 +567,12 @@ sub processServerSettings {
 	}
 
 	# Process adding Custom Table folders
-	if($masterServer->{addTableFolders}) {
+	if ($masterServer->{addTableFolders}) {
 		Settings::addTablesFolders($masterServer->{addTableFolders});
 	}
 
 	# Process adding Custom fields folders
-	if($masterServer->{addFieldsFolders}) {
+	if ($masterServer->{addFieldsFolders}) {
 		Settings::addFieldsFolders($masterServer->{addFieldsFolders});
 	}
 

@@ -14,7 +14,7 @@ sub new {
 	
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
-    my %handlers = qw(
+	my %handlers = qw(
 		received_login_token 0AE3
 		account_server_info 0C32
 	);
