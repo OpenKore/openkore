@@ -10,7 +10,7 @@ sub new {
 	my $self = $class->SUPER::new(@_);
 	
 	my %packets = (
-        '0C26' => ['master_login', 'a4 Z51 a32 a5', [qw(game_code username password_rijndael flag)]],
+		'0C26' => ['master_login', 'a4 Z51 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0825' => ['token_login', 'v V C Z51 a17 a15 a*', [qw(len version master_version username mac_hyphen_separated ip token)]],
 	);
 
