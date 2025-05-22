@@ -89,7 +89,7 @@ sub new {
 		ArgumentException->throw(error => "Task::MapRoute: Invalid arguments.");
 	}
 
-	my $allowed = new Set(qw(noGoCommand noTeleSpawn targetNpcPos maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
+	my $allowed = new Set(qw(noGoCommand noTeleSpawn noAirship targetNpcPos maxDistance maxTime distFromGoal pyDistFromGoal avoidWalls randomFactor useManhattan notifyUponArrival attackID attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget));
 	foreach my $key (keys %args) {
 		if ($allowed->has($key) && defined $args{$key}) {
 			$self->{$key} = $args{$key};
@@ -115,12 +115,14 @@ sub new {
 
 	$self->{noGoCommand} = 0 if (!defined $self->{noGoCommand});
 	$self->{noTeleSpawn} = 0 if (!defined $self->{noTeleSpawn});
+	$self->{noAirship} = 0 if (!defined $self->{noAirship});
 
 	# Watch for map change events. Pass a weak reference to ourselves in order
 	# to avoid circular references (memory leaks).
 	my @holder = ($self);
 	Scalar::Util::weaken($holder[0]);
 	$self->{mapChangedHook} = Plugins::addHook('Network::Receive::map_changed', \&mapChanged, \@holder);
+	$self->{localBroadcastHook} = Plugins::addHook('packet_localBroadcast', \&localBroadcast, \@holder);
 
 	return $self;
 }
@@ -128,6 +130,7 @@ sub new {
 sub DESTROY {
 	my ($self) = @_;
 	Plugins::delHook($self->{mapChangedHook}) if $self->{mapChangedHook};
+	Plugins::delHook($self->{localBroadcastHook}) if $self->{localBroadcastHook};
 	$self->SUPER::DESTROY();
 }
 
@@ -207,6 +210,44 @@ sub iterate {
 				error TF("Failed to move to savepoint using teleport/butterfly wing after %s tries, recalculating route and forbidding it.\n", $self->{mapSolution}[0]{retry}), "map_route";
 				$self->{noTeleSpawn} = 1;
 				$self->initMapCalculator();	# redo MAP router
+			}
+		}
+
+	} elsif ( $self->{mapSolution}[0]{is_airship} ) {
+		if (!$self->{timeout} || timeOut($self->{timeout}, 0.5)) {
+			$self->{timeout} = time;
+
+			if (!defined $self->{localBroadcast}) {
+				warning "MapRoute - Wainting for broadcast with message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+			} elsif ($self->{localBroadcast} !~ /$self->{mapSolution}[0]{airship_message}/) {
+				warning "MapRoute - last broadcast '".($self->{localBroadcast})."' does not match expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+			} else {
+				warning "MapRoute - last broadcast '".($self->{localBroadcast})."' matches expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+				
+				if ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos} ) ) {
+					# Airship portal is reachable from current position
+					my $task = new Task::Route(
+						actor => $self->{actor},
+						x => $self->{mapSolution}[0]{pos}{x},
+						y => $self->{mapSolution}[0]{pos}{y},
+						field => $field,
+						maxTime => $self->{maxTime},
+						avoidWalls => $self->{avoidWalls},
+						randomFactor => $self->{randomFactor},
+						useManhattan => $self->{useManhattan},
+						solution => \@solution
+					);
+					$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
+					$self->setSubtask($task);
+
+				} else {
+					warning TF("No LOS from %s (%s,%s) to Airship Portal at (%s,%s).\n",
+						$field->baseName, @{$self->{actor}{pos}}{qw(x y)},
+						$self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}),
+						"map_route";
+					error T("Cannot reach portal from current position\n"), "map_route";
+					shift @{$self->{mapSolution}};
+				}
 			}
 		}
 
@@ -598,6 +639,7 @@ sub initMapCalculator {
 		y => $self->{dest}{pos}{y},
 		noGoCommand => $self->{noGoCommand},
 		noTeleSpawn => $self->{noTeleSpawn},
+		noAirship => $self->{noAirship},
 	);
 	$self->setSubtask($task);
 }
@@ -683,6 +725,15 @@ sub mapChanged {
 	my (undef, undef, $holder) = @_;
 	my $self = $holder->[0];
 	$self->{mapChanged} = 1;
+	undef $self->{localBroadcast};
+}
+
+sub localBroadcast {
+	my (undef, $args, $holder) = @_;
+	my $self = $holder->[0];
+	my $message = $args->{Msg};
+	warning "[MapRoute] Received localBroadcast '".($message)."'.\n";
+	$self->{localBroadcast} = $message;
 }
 
 1;
