@@ -981,7 +981,7 @@ sub character_creation_successful {
 
 	Plugins::callHook('char_created', {char => $character});
 
-	if (charSelectScreen() == 1) {
+	if ($net->getState() == 3 && charSelectScreen() == 1) {
 		$firstLoginMap = 1;
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
@@ -1074,6 +1074,12 @@ sub parse_account_server_info {
 			len => 36,
 			types => 'a4 v Z20 v5',
 			keys => [qw(ip port name state users property sid unknown)],
+		};
+	} elsif ($args->{switch} eq '0C32' && $masterServer->{serverType} eq "ROla") { # ROla
+		$server_info = {
+			len => 165,
+			types => 'a4 v Z20 v3 a128 a5',
+			keys => [qw(ip port name users state property ip_port unknown)],
 		};
 	} else { # 0069 [default] and 0276 [pRO]
 		$server_info = {

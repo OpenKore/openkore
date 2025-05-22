@@ -1,0 +1,9 @@
+0 Castanho Escuro
+1 Castanho/Loiro
+2 Roxo
+3 Castanho Claro
+4 Verde
+5 Azul
+6 Branco
+7 Castanho Escuro
+8 Vermelho
