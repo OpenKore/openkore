@@ -218,7 +218,8 @@ our @EXPORT = (
 	solveItemLink
 	solveMessage
 	solveMSG
-	absunit/,
+	absunit
+	autoNpcTalk/,
 
 	# Npc buy and sell
 	qw/cancelNpcBuySell
@@ -5515,6 +5516,24 @@ sub absunit {
 		return 1;
 	} else {
 		return -1;
+	}
+}
+
+sub autoNpcTalk {
+	my ($ID, $nameID) = @_;
+
+	my $Index = AI::findAction("NPC");
+	if (!defined $Index) {
+		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID);
+		AI::queue("NPC", $task);
+		# TODO: The following npc_talk hook is only added on activation.
+		# Make the task module or AI listen to the hook instead
+		# and wrap up all the logic.
+		$task->activate;
+		Plugins::callHook('npc_autotalk', {
+			task => $task
+		});
 	}
 }
 
