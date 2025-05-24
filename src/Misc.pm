@@ -5522,19 +5522,24 @@ sub absunit {
 sub autoNpcTalk {
 	my ($ID, $nameID) = @_;
 
-	my $Index = AI::findAction("NPC");
-	if (!defined $Index) {
-		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID);
-		AI::queue("NPC", $task);
-		# TODO: The following npc_talk hook is only added on activation.
-		# Make the task module or AI listen to the hook instead
-		# and wrap up all the logic.
-		$task->activate;
-		Plugins::callHook('npc_autotalk', {
-			task => $task
-		});
-	}
+	return if (defined AI::findAction("NPC"));
+
+	my $routeIndex = AI::findAction("route");
+	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && UNIVERSAL::isa(AI::args($routeIndex)->getSubtask, 'Task::TalkNPC'));
+
+	my $routeIndex = AI::findAction("route", 1);
+	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && UNIVERSAL::isa(AI::args($routeIndex)->getSubtask, 'Task::TalkNPC'));
+
+	debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
+	my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID);
+	AI::queue("NPC", $task);
+	# TODO: The following npc_talk hook is only added on activation.
+	# Make the task module or AI listen to the hook instead
+	# and wrap up all the logic.
+	$task->activate;
+	Plugins::callHook('npc_autotalk', {
+		task => $task
+	});
 }
 
 return 1;
