@@ -194,6 +194,7 @@ our @EXPORT = (
 	compilePortals_check
 	portalExists
 	portalExists2
+	portalExistsAirship
 	redirectXKoreMessages
 	monKilled
 	getActorName
@@ -4306,6 +4307,18 @@ sub portalExists2 {
 		 && $entry->{source}{pos}{x} == $srcx
 		 && $entry->{source}{pos}{y} == $srcy
 		 && $entry->{dest}{$destID}) {
+			return $_;
+		}
+	}
+	return;
+}
+
+sub portalExistsAirship {
+	my ($map, $r_pos) = @_;
+	foreach (keys %portals_airships) {
+		if ($portals_airships{$_}{source}{map} eq $map
+		    && $portals_airships{$_}{source}{x} == $r_pos->{x}
+		    && $portals_airships{$_}{source}{y} == $r_pos->{y}) {
 			return $_;
 		}
 	}

@@ -218,11 +218,11 @@ sub iterate {
 			$self->{timeout} = time;
 
 			if (!defined $self->{localBroadcast}) {
-				warning "MapRoute - Wainting for broadcast with message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+				debug "MapRoute - Wainting for broadcast with message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
 			} elsif ($self->{localBroadcast} !~ /$self->{mapSolution}[0]{airship_message}/) {
-				warning "MapRoute - last broadcast '".($self->{localBroadcast})."' does not match expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+				debug "MapRoute - last broadcast '".($self->{localBroadcast})."' does not match expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
 			} else {
-				warning "MapRoute - last broadcast '".($self->{localBroadcast})."' matches expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
+				debug "MapRoute - last broadcast '".($self->{localBroadcast})."' matches expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
 				
 				if ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos} ) ) {
 					# Airship portal is reachable from current position
