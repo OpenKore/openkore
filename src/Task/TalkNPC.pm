@@ -20,8 +20,9 @@ use utf8;
 
 use Modules 'register';
 use Task;
+use AI;
 use base qw(Task);
-use Globals qw($char %timeout $npcsList $monstersList %ai_v $messageSender %config $storeList $net %talk);
+use Globals qw($char %timeout $npcsList $monstersList $portalsList %ai_v $messageSender %config $storeList $net %talk);
 use Log qw(message debug error warning);
 use Utils;
 use Commands;
@@ -255,7 +256,7 @@ sub setTarget {
 
 sub find_and_set_target {
 	my ($self) = @_;
-	my $target = $self->findTarget($npcsList) || $self->findTarget($monstersList);
+	my $target = $self->findTarget($npcsList) || $self->findTarget($monstersList) || $self->findTarget($portalsList);
 
 	if ($target) {
 		return unless $self->setTarget($target);
@@ -312,7 +313,12 @@ sub iterate {
 		}
 
 	} elsif ($self->{stage} == NOT_STARTED) {
-		if ((!%talk || $ai_v{'npc_talk'}{'talk'} eq 'close') && $self->{type} eq 'autotalk') {
+
+		if (!$self->addSteps($self->{sequence})) {
+			$self->manage_wrong_sequence(TF("Failed to add NPC talk sequence."));
+			return;
+
+		} elsif ((!%talk || $ai_v{'npc_talk'}{'talk'} eq 'close') && $self->{type} eq 'autotalk') {
 			debug "Talking was initiated by the other side and finished instantly\n", "ai_npcTalk";
 			#We must still send talk cancel or otherwise the character can't move.
 			$self->{stage} = AFTER_NPC_CLOSE;
@@ -339,14 +345,15 @@ sub iterate {
 		} else {
 			my $target = $self->find_and_set_target;
 
-			unless (exists $talk{nameID} || $self->{steps}[0] eq 'x') {
-				$self->addSteps('x');
+			if (!exists $talk{nameID}) {
+				unless ($self->{steps}[0] eq 'x' || $self->{steps}[0] eq 'k') {
+					$self->addSteps('x', 1);
+				}
 				undef $ai_v{'npc_talk'}{'time'};
 				undef $ai_v{'npc_talk'}{'talk'};
 			}
 
 			if ($target || %talk) {
-				return unless ($self->addSteps($self->{sequence}));
 				$self->{stage} = TALKING_TO_NPC;
 				$self->{time} = time;
 			} else {
@@ -494,8 +501,16 @@ sub iterate {
 
 		debug "Iteration at Task::TalkNPC, current_talk_step '".$current_talk_step."', next step '".$step."'.\n", "ai_npcTalk", 2;
 
+		# Apprach the NPC
+		if ( $step =~ /^k/i ) {
+			debug "$self->{target}: Initiating the talk by approaching\n", "ai_npcTalk";
+			ai_route(
+				$self->{target}{map}, $self->{target}{pos}{x}, $self->{target}{pos}{y},
+				targetNpcPos => 1,
+			);
+
 		# Initiate NPC conversation.
-		if ( $step =~ /^x/i ) {
+		} elsif ( $step =~ /^x/i ) {
 			debug "$self->{target}: Initiating the talk\n", "ai_npcTalk";
 			$self->{target}->sendTalk;
 
@@ -905,7 +920,7 @@ sub waitingForSteps {
 }
 
 sub addSteps {
-	my ($self, $steps) = @_;
+	my ($self, $steps, $unshift) = @_;
 	
 	my @new_steps = parse_portal_conversation_args($steps);
 
@@ -914,13 +929,17 @@ sub addSteps {
 	foreach my $step (@new_steps) {
 		return 0 unless $self->validateStep($step);
 	}
-	push(@{$self->{steps}}, @new_steps);
+	if ($unshift) {
+		unshift(@{$self->{steps}}, @new_steps);
+	} else {
+		push(@{$self->{steps}}, @new_steps);
+	}
 	return 1;
 }
 
 sub validateStep {
 	my ($self, $step) = @_;
-	return 1 if ($step =~ /^(?:c|w\d+|n|t=.+|d\d+|a=.+|r(?:\d+|=.+|~\/.*?\/i?)|x|s|b|e|b\d+,\d+)$/);
+	return 1 if ($step =~ /^(?:c|w\d+|n|t=.+|d\d+|a=.+|r(?:\d+|=.+|~\/.*?\/i?)|x|s|b|e|b\d+,\d+|k)$/);
 	$self->{error_code} = WRONG_SYNTAX_IN_STEPS;
 	$self->{error_message} = TF("Invalid NPC conversation code: %s.", $step);
 	return 0;

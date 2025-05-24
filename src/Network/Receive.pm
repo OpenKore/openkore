@@ -7411,20 +7411,9 @@ sub hat_effect {
 sub npc_talk {
 	my ($self, $args) = @_;
 
-	#Auto-create Task::TalkNPC if not active
-	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
-		my $nameID = unpack 'V', $args->{ID};
-		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $args->{ID});
-		AI::queue("NPC", $task);
-		# TODO: The following npc_talk hook is only added on activation.
-		# Make the task module or AI listen to the hook instead
-		# and wrap up all the logic.
-		$task->activate;
-		Plugins::callHook('npc_autotalk', {
-			task => $task
-		});
-	}
+	my $ID = $args->{ID};
+	my $nameID = unpack 'V', $ID;
+	autoNpcTalk($ID, $nameID);
 
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};
@@ -7509,20 +7498,7 @@ sub npc_talk_responses {
 
 	my $ID = substr($msg, 4, 4);
 	my $nameID = unpack 'V', $ID;
-
-	# Auto-create Task::TalkNPC if not active
-	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
-		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID);
-		AI::queue("NPC", $task);
-		# TODO: The following npc_talk hook is only added on activation.
-		# Make the task module or AI listen to the hook instead
-		# and wrap up all the logic.
-		$task->activate;
-		Plugins::callHook('npc_autotalk', {
-			task => $task
-		});
-	}
+	autoNpcTalk($ID, $nameID);
 
 	$talk{ID} = $ID;
 	$talk{nameID} = $nameID;
