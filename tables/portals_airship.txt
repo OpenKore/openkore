@@ -1,0 +1,5 @@
+
+airpship "airplane_01",243,73,"(Welcome to Izlude)","izlude",200,73;
+airpship "airplane_01",243,73,"(Welcome to Rachel)","ra_fild12",292,204;
+airpship "airplane_01",243,73,"(Welcome to Juno)","yuno",12,261;
+

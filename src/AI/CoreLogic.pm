@@ -514,6 +514,11 @@ sub processPortalRecording {
 		return;
 	}
 
+	if (defined portalExistsAirship($sourceMap, \%sourcePos)) {
+		debug "This portal is already in portals_airships.txt\n", "portalRecord";
+		return;
+	}
+
 
 	# And finally, record the portal information
 	my ($destMap, $destID, %destPos);

@@ -25,7 +25,7 @@ use Task;
 use base qw(Task);
 use Task::Route;
 use Field;
-use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns);
+use Globals qw(%config $field %portals_lut %portals_los %timeout $char %routeWeights %portals_commands %portals_spawns %portals_airships);
 use Translation qw(T TF);
 use Log qw(debug warning error);
 use Misc qw(canUseTeleport);
@@ -110,6 +110,12 @@ sub new {
 		$self->{noTeleSpawn} = 0;
 	}
 
+	if (exists $args{noAirship}) {
+		$self->{noAirship} = $args{noAirship}
+	} else {
+		$self->{noAirship} = 0;
+	}
+
 	$self->{maxTime} = $args{maxTime} || $timeout{ai_route_calcRoute}{timeout};
 
 	my $tickets = $char->inventory->getByNameID(7060);
@@ -185,6 +191,23 @@ sub iterate {
 		delete $self->{tempPortalsSaveMap} if (exists $self->{tempPortalsSaveMap});
 		if (!$self->{noTeleSpawn} && canUseTeleport(2) && isSaveMapSetAndValid()) {
 			$self->populateOpenListWithWarpToSaveMap();
+		}
+
+		# Initializes the openlist with airships walkable from the starting point.
+		unless ($self->{noAirship}) {
+			foreach my $portal (keys %portals_airships) {
+				my $entry = $portals_airships{$portal};
+				next if ($entry->{source}{map} ne $self->{source}{field}->baseName);
+				my $ret = Task::Route->getRoute($self->{solution}, $self->{source}{field}, $self->{source}, $entry->{source});
+				if ($ret) {
+					for my $dest (grep { $entry->{dest}{$_}{enabled} } keys %{$entry->{dest}}) {
+						my $penalty = $routeWeights{AIRSHIP};
+						$openlist->{"$portal=$dest"}{walk} = $penalty + scalar @{$self->{solution}};
+						$openlist->{"$portal=$dest"}{is_airship} = 1;
+						$openlist->{"$portal=$dest"}{airship_message} = $entry->{dest}{$dest}{message};
+					}
+				}
+			}
 		}
 
 		$self->{stage} = CALCULATE_ROUTE;
@@ -281,11 +304,13 @@ sub searchStep {
 			my $map_name = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest, 'map')
 						|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest, 'map') 
 						|| hashSafeGetValue($self->{tempPortalsSaveMap}, $dest, 'dest', $dest, 'map') 
+						|| hashSafeGetValue(\%portals_airships, $portal, 'dest', $dest, 'map')
 						|| undef;
 
 			my $map_destination = hashSafeGetValue(\%portals_lut, $portal, 'dest', $dest)
 							|| hashSafeGetValue(\%portals_commands, $dest, 'dest', $dest)
 							|| hashSafeGetValue($self->{tempPortalsSaveMap}, $dest, 'dest', $dest)
+							|| hashSafeGetValue(\%portals_airships, $portal, 'dest', $dest)
 							|| undef;
 
 			next if $map_name ne $target->{map}; # checks if the current destination map matches any of the search targets.
@@ -302,6 +327,8 @@ sub searchStep {
 				$closelist->{$walk}{is_command} = 0;
 				$closelist->{$walk}{command} = undef;
 				$closelist->{$walk}{is_teleportToSaveMap} = 0;
+				$closelist->{$walk}{is_airship} = 0;
+				$closelist->{$walk}{airship_message} = undef;
 			}
 
 			# Reconstructs the solution path by traversing the parents backwards, stacking the portals used in the final route.
@@ -326,6 +353,8 @@ sub searchStep {
 					$arg{is_command} =  $closelist->{$this}{is_command} || 0;
 					$arg{command} = $closelist->{$this}{command};
 					$arg{is_teleportToSaveMap} = $closelist->{$this}{is_teleportToSaveMap} || 0;
+					$arg{is_airship} = $closelist->{$this}{is_airship} || 0;
+					$arg{airship_message} = $closelist->{$this}{airship_message};
 
 					unshift @{$self->{mapSolution}}, \%arg;
 					$this = $closelist->{$this}{parent};
@@ -359,6 +388,25 @@ sub searchStep {
 							$openlist->{"$child=$subchild"}{zeny_covered_by_tickets} = $closelist->{$parent}{zeny_covered_by_tickets};
 							$openlist->{"$child=$subchild"}{amount_of_tickets_used} = $closelist->{$parent}{amount_of_tickets_used};
 						}
+					}
+				}
+			}
+
+			next if ($self->{noAirship} || !exists $portals_airships{$child});
+			# iterates airships
+			foreach my $subchild (grep { $portals_airships{$child}{dest}{$_}{enabled} } keys %{$portals_airships{$child}{dest}}) {
+				my $destID = $subchild;
+				my $mapName = $portals_airships{$child}{source}{map};
+				#############################################################
+				my $penalty = int($routeWeights{lc($mapName)}) + $routeWeights{AIRSHIP}; # get node/child penalty based on routeWeights
+				my $thisWalk = $penalty + $closelist->{$parent}{walk} + $portals_los{$dest}{$child}; # calculate the final node/child penalty routeWeights + walk distance + accumulated cost
+				if (!exists $closelist->{"$child=$subchild"}) { # check if node is already explorated
+					if ( !exists $openlist->{"$child=$subchild"} || $openlist->{"$child=$subchild"}{walk} > $thisWalk ) { # check the current node cost less
+						$openlist->{"$child=$subchild"}{parent} = $parent;
+						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
+						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny};
+						$openlist->{"$child=$subchild"}{airship_message} = $portals_airships{$child}{dest}{$subchild}{message};
+						$openlist->{"$child=$subchild"}{is_airship} = 1;
 					}
 				}
 			}
