@@ -150,6 +150,11 @@ sub iterate {
 	# If the Route task bails out with an error then our subtaskDone() method will set
 	# an error in this task too. In that case we don't want to continue.
 	return if ($self->getSubtask() || $self->getStatus() != Task::RUNNING);
+	
+	my %hookArgs;
+	$hookArgs{args} = $self;
+	Plugins::callHook("MapRoute_iterate_start", \%hookArgs);
+	return if ($hookArgs{return});
 
 	my @solution;
 	if (!$self->{mapSolution}) {

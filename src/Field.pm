@@ -744,14 +744,32 @@ sub loadByName {
 sub nameToBaseName {
 	my ($self, $name) = @_;
 
-	my ($instanceID);
+	my ($instanceID, $baseName);
+	
+	my %hookArgs = (
+		field => $self,
+		name => $name,
+		return => 0
+	);
+	Plugins::callHook('field_nameToBaseName', \%hookArgs);
 
-	if ($name =~ /^(\w{3})(\d@.*)/) { # instanced maps, ex: 0021@cata
+	if ($hookArgs{return}) {
+		if (exists $hookArgs{baseName}) {
+			$baseName = $hookArgs{baseName};
+		}
+		if (exists $hookArgs{instanceID}) {
+			$instanceID = $hookArgs{instanceID};
+		}
+		
+	} elsif ($name =~ /^(\w{3})(\d@.*)/) { # instanced maps, ex: 0021@cata
 		$instanceID = $1;
-		$name = $2;
+		$baseName = $2;
+		
+	} else {
+		$baseName = $name;
 	}
 
-	return ($name, $instanceID);
+	return ($baseName, $instanceID);
 }
 
 sub sourceName {

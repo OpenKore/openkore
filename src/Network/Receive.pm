@@ -2311,6 +2311,7 @@ typedef enum <unnamed-tag> {
 			Plugins::callHook('player_connected', {player => $actor});
 		} else {
 			debug "Unknown Connected: $args->{type} - \n", "parseMsg";
+			Plugins::callHook('unknown_connected', {unknown => $actor});
 		}
 
 	} elsif ($args->{switch} eq "007B" ||
@@ -5850,9 +5851,13 @@ sub deal_begin {
 	if ($args->{type} == 0) {
 		error T("That person is too far from you to trade.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %outgoingDeal;
+		
 	} elsif ($args->{type} == 2) {
 		error T("That person is in another deal.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %outgoingDeal;
+		
 	} elsif ($args->{type} == 3) {
 		if (%incomingDeal) {
 			$currentDeal{name} = $incomingDeal{name};
@@ -5871,12 +5876,17 @@ sub deal_begin {
 		}
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
 		Plugins::callHook('engaged_deal', {name => $currentDeal{name}});
+		
 	} elsif ($args->{type} == 5) {
 		error T("That person is opening storage.\n"), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
+		undef %outgoingDeal;
+		
 	} else {
 		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
+		undef %outgoingDeal;
+		
 	}
 }
 
@@ -7843,6 +7853,11 @@ sub deal_add_you {
 	}
 
 	my $id = unpack('v',$args->{ID});
+	
+	if ($id == 0) {
+		message "You added Zeny to Deal (suposedly $currentDeal{'you_zeny'} z).\n";
+		return;
+	}
 
 	return unless ($id > 0);
 

@@ -857,6 +857,10 @@ sub processEquip {
 
 sub processDeal {
 	if (AI::action ne "deal" && %currentDeal) {
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook('deal_queue' => \%plugin_args);
+		return if ($plugin_args{return});
+		
 		AI::queue('deal');
 	} elsif (AI::action eq "deal") {
 		if (%currentDeal) {
@@ -881,6 +885,10 @@ sub processDeal {
 sub processDealAuto {
 	# dealAuto 1=refuse 2,3=accept
 	if ($config{'dealAuto'} && %incomingDeal) {
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook('deal_incoming' => \%plugin_args);
+		return if ($plugin_args{return});
+		
 		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
 			$messageSender->sendDealReply(4);
 			$timeout{'ai_dealAutoCancel'}{'time'} = time;
@@ -1190,10 +1198,15 @@ sub processAutoStorage {
 	if (AI::is("", "route", "sitAuto", "follow")
 		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
 		  && !$ai_v{sitAuto_forcedBySitCommand}
-		  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
+		  && ai_canOpenStorage()
+		  && (
+			     ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
 		      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
-			  || ($config{itemsMaxNum_sellOrStore} && $char->inventory->size() >= $config{itemsMaxNum_sellOrStore}))
-		  && !AI::inQueue("storageAuto") && $char->inventory->isReady()) {
+			  || ($config{itemsMaxNum_sellOrStore} && $char->inventory->size() >= $config{itemsMaxNum_sellOrStore})
+			  )
+		  && !AI::inQueue("storageAuto") && $char->inventory->isReady()
+		  
+	) {
 		my %plugin_args = ( return => 0 );
 		Plugins::callHook('AI_storage_auto_weight_start' => \%plugin_args);
 		return if ($plugin_args{return});
@@ -2434,6 +2447,13 @@ sub processFollow {
 		AI::clear("follow") if (AI::findAction("follow") ne undef); # if follow is disabled and there's still "follow" in AI queue, remove it
 		return;
 	}
+	
+	return unless (
+		(AI::isIdle || (AI::is('route') && AI::args()->{isRandomWalk})) ||
+		(AI::action eq "follow") ||
+		((AI::action eq "route" && AI::action(1) eq "follow") || (AI::action eq "move" && AI::action(2) eq "follow"))
+	);
+	
 	# stop follow when talking with NPC
 	if (AI::action eq 'route' && defined(AI::args(0)->getSubtask())) {
 		my $rrr = AI::args(0)->getSubtask();
