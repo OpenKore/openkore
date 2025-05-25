@@ -929,7 +929,7 @@ sub define_next_valid_command {
 		# Goto flow command
 		######################################
 		} elsif ($self->{current_line} =~ /^goto\s/) {
-			my ($label) = $self->{current_line} =~ /^goto\s+([a-zA-Z][a-zA-Z\d]*)/;
+			my ($label) = $self->{current_line} =~ /^goto\s+([a-zA-Z][a-zA-Z\d_]*)/;
 			if (exists $self->{label}->{$label}) {
 				debug "[eventMacro] Script is a goto flow command.\n", "eventMacro", 3;
 				$self->line_index($self->{label}->{$label});
@@ -1984,7 +1984,7 @@ sub find_and_define_key_index {
 			$self->error("Empty key of hash or index of array after parsing");
 			return;
 
-		} elsif ($type eq 'hash' && $parsed_key_index !~ /[a-zA-Z\d]+/) {
+		} elsif ($type eq 'hash' && $parsed_key_index !~ /[a-zA-Z\d_]+/) {
 			$self->error("Invalid syntax in key of hash (only use letters and numbers)");
 			return;
 
@@ -2094,7 +2094,7 @@ sub parse_keywords {
 
 	return unless @pair;
 	if ($pair[0] eq 'arg') {
-		return $command =~ /$macro_keywords_character(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d]*))\s*\)/
+		return $command =~ /$macro_keywords_character(arg)\s*\(\s*(".*?",\s*(\d+|\$[a-zA-Z][a-zA-Z\d_]*))\s*\)/
 	} elsif ($pair[0] eq 'random') {
 		return $command =~ /$macro_keywords_character(random)\s*\(\s*(".*?")\s*\)/
 	}

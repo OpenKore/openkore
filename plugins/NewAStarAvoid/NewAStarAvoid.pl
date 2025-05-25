@@ -8,6 +8,7 @@ use Plugins;
 use Utils;
 use Log qw(message debug error warning);
 use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
 
 Plugins::register('NewAStarAvoid', 'Enables smart pathing using the dynamic aspect of D* Lite pathfinding', \&onUnload);
 
@@ -78,8 +79,8 @@ my %area_spell_type_obstacles = (
 );
 
 my %portals_obstacles = (
-	weight => 1000,
-	dist => 10,
+	weight => 5000,
+	dist => 12,
 );
 
 my %obstaclesList;
@@ -424,6 +425,8 @@ sub on_PathFindingReset {
 	return unless (@obstacles > 0);
 	
 	my $args = $hookargs->{args};
+
+	return if ($args->{field}->name ne $field->name);
 	
 	#Log::warning "[test] on_PathFindingReset: Using grided info for ".@obstacles." obstacles.\n";
 	
@@ -479,7 +482,7 @@ sub create_changes_array {
 	
 	my @changes_array;
 	
-	my ($min_x, $min_y, $max_x, $max_y) = Utils::getSquareEdgesFromCoord($field, $obstacle_pos, $max_distance);
+	my ($min_x, $min_y, $max_x, $max_y) = $field->getSquareEdgesFromCoord($obstacle_pos, $max_distance);
 	
 	my @y_range = ($min_y..$max_y);
 	my @x_range = ($min_x..$max_x);
