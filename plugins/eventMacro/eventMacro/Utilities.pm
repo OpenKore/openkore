@@ -573,7 +573,7 @@ sub find_accessed_variable {
 			return if ($complement !~ /^\d+$/ && !find_variable($complement));
 
 		} elsif ($type eq 'accessed_hash') {
-			return if ($complement !~ /^[a-zA-Z\d]+$/ && !find_variable($complement));
+			return if ($complement !~ /^[a-zA-Z\d_]+$/ && !find_variable($complement));
 		}
 
 		my $original_name = ('$'.$name.$open_bracket.$complement.$close_bracket);

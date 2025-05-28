@@ -106,17 +106,26 @@ sub process {
 			}
 			return;
 		}
-
-		if ((my $control = mon_control($target->{name},$target->{nameID}))) {
-			if ($control->{attack_auto} == 3 && ($target->{dmgToYou} || $target->{missedYou} || $target->{dmgFromYou})) {
-				message TF("Dropping target - %s (%s) has been provoked\n", $target->{name}, $target->{binID});
-				$char->sendAttackStop;
+		
+		my $control = mon_control($target->{name},$target->{nameID});
+		if ($control->{attack_auto} == 3 && ($target->{dmgToYou} || $target->{missedYou} || $target->{dmgFromYou})) {
+			message TF("Dropping target - %s (%s) has been provoked\n", $target->{name}, $target->{binID});
+			$char->sendAttackStop;
 				$target->{ignore} = 1;
-				AI::dequeue while (AI::inQueue("attack"));
-				return;
-			}
+			AI::dequeue while (AI::inQueue("attack"));
+			return;
 		}
-
+		
+		my %plugin_args;
+		$plugin_args{target} = $target;
+		$plugin_args{control} = $control;
+		$plugin_args{stage} = $stage;
+		$plugin_args{party} = $party;
+		$plugin_args{target_is_aggressive} = $target_is_aggressive;
+		$plugin_args{return} = 0;
+		Plugins::callHook('AI::Attack::process' => \%plugin_args);
+		return if ($plugin_args{return});
+		
 		if ($stage == MOVING_TO_ATTACK) {
 			# Check for hidden monsters
 			if (($target->{statuses}->{EFFECTSTATE_BURROW} || $target->{statuses}->{EFFECTSTATE_HIDING}) && $config{avoidHiddenMonsters}) {

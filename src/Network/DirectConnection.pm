@@ -327,6 +327,10 @@ sub checkConnection {
 	my $self = shift;
 
 	return if ($Settings::no_connect);
+	
+	my %plugin_args = ( return => 0 );
+	Plugins::callHook('checkConnection' => \%plugin_args);
+	return if ($plugin_args{return});
 
 	if ($self->getState() == Network::NOT_CONNECTED && (!$self->{remote_socket} || !$self->{remote_socket}->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServer = $masterServers{$config{master}};

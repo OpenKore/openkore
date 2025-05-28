@@ -349,6 +349,8 @@ sub configModify {
 	$config{$key} = $val;
 	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
+	
+	Plugins::callHook('post_configModify');
 }
 
 ##
@@ -361,7 +363,9 @@ sub bulkConfigModify {
 	my $r_hash = shift;
 	my $silent = shift;
 	my $oldval;
-
+	
+	
+	my %create_keys;
 	foreach my $key (keys %{$r_hash}) {
 		Plugins::callHook('configModify', {
 			key => $key,
@@ -370,6 +374,10 @@ sub bulkConfigModify {
 		});
 
 		$oldval = $config{$key};
+		
+		if (!exists $config{$key}) {
+			$create_keys{$key} = 1;
+		}
 
 		$config{$key} = $r_hash->{$key};
 
@@ -379,7 +387,20 @@ sub bulkConfigModify {
 			message TF("Config '%s' set to %s (was %s)\n", $key, $r_hash->{$key}, $oldval), "info" unless ($silent);
 		}
 	}
+	
+	if (scalar keys %create_keys > 0) {
+		my $f;
+		if (open($f, ">>", Settings::getConfigFilename())) {
+			foreach my $key (keys %create_keys) {
+				print $f "$key\n";
+			}
+			close($f);
+		}
+	}
+
 	saveConfigFile();
+	
+	Plugins::callHook('post_configModify');
 }
 
 ##
@@ -4688,6 +4709,16 @@ sub checkSelfCondition {
 			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
 			my $item = $char->inventory->getByName($itemName);
+ 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
+		}
+	}
+
+	if ($config{$prefix."_inInventoryID"}) {
+		return 0 if (!$char->inventory->isReady());
+		foreach my $input (split / *, */, $config{$prefix."_inInventoryID"}) {
+			my ($itemName, $count) = $input =~ /^(.*?)(?:\s*([><]=? *\d+))?$/;
+			$count = '>0' if $count eq '';
+			my $item = $char->inventory->getByNameID($itemName);
  			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
 		}
 	}

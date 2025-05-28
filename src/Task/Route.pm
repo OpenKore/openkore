@@ -596,6 +596,12 @@ sub iterate {
 					}
 				}
 				
+				my %hookArgs;
+				$hookArgs{args} = $self;
+				$hookArgs{pos} = $current_calc_pos;
+				Plugins::callHook("route_before_move", \%hookArgs);
+				return if ($hookArgs{return});
+				
 				if (!$self->{start} && $current_pos_to->{x} == $self->{next_pos}{x} && $current_pos_to->{y} == $self->{next_pos}{y}) {
 					debug "[Route] Not sending next step ($self->{next_pos}{x}, $self->{next_pos}{y}) because our pos_to is the same as it.\n", "route";
 					if ($self->{lastStep} == 1 && !$self->{sendAttackWithMove} && $self->{meetingSubRoute}) {
