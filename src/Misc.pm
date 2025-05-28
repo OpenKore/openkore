@@ -194,6 +194,7 @@ our @EXPORT = (
 	compilePortals_check
 	portalExists
 	portalExists2
+	portalExistsAirship
 	redirectXKoreMessages
 	monKilled
 	getActorName
@@ -4231,6 +4232,16 @@ sub compilePortals {
 		}
 	}
 
+	foreach my $portal (keys %portals_airships) {
+		$mapPortals{$portals_airships{$portal}{source}{map}}{$portal}{x} = $portals_airships{$portal}{source}{x};
+		$mapPortals{$portals_airships{$portal}{source}{map}}{$portal}{y} = $portals_airships{$portal}{source}{y};
+		foreach my $dest (keys %{$portals_airships{$portal}{dest}}) {
+			next if $portals_airships{$portal}{dest}{$dest}{map} eq '';
+			$mapSpawns{$portals_airships{$portal}{dest}{$dest}{map}}{$dest}{x} = $portals_airships{$portal}{dest}{$dest}{x};
+			$mapSpawns{$portals_airships{$portal}{dest}{$dest}{map}}{$dest}{y} = $portals_airships{$portal}{dest}{$dest}{y};
+		}
+	}
+
 	$pathfinding = new PathFinding if (!$checkOnly);
 
 	# Calculate LOS values from each spawn point per map to other portals on same map
@@ -4318,6 +4329,18 @@ sub portalExists2 {
 		 && $entry->{source}{pos}{x} == $srcx
 		 && $entry->{source}{pos}{y} == $srcy
 		 && $entry->{dest}{$destID}) {
+			return $_;
+		}
+	}
+	return;
+}
+
+sub portalExistsAirship {
+	my ($map, $r_pos) = @_;
+	foreach (keys %portals_airships) {
+		if ($portals_airships{$_}{source}{map} eq $map
+		    && $portals_airships{$_}{source}{x} == $r_pos->{x}
+		    && $portals_airships{$_}{source}{y} == $r_pos->{y}) {
 			return $_;
 		}
 	}
