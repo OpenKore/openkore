@@ -1331,12 +1331,25 @@ sub processAutoStorage {
 		my $do_route;
 
 		if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem}) {
-			# Stop if the specified NPC is invalid
-			$args->{npc} = {};
-			getNPCInfo($config{storageAuto_standpoint} || $config{'storageAuto_npc'}, $args->{npc});
-			if (!defined($args->{npc}{ok})) {
-				$args->{done} = 1;
-				return;
+
+			if (!exists $args->{npc} || !exists $args->{npc}{ok}) {
+				# Check if NPC info is provided in args
+				if (exists $args->{npc}) {
+					debug "[storageAuto] Using npc information from arguments.\n";
+					if (exists $args->{npc}{map} && $args->{npc}{map} ne "" && exists $args->{npc}{pos} && exists $args->{npc}{pos}{x} && $args->{npc}{pos}{x} ne "" && exists $args->{npc}{pos}{y} && $args->{npc}{pos}{y} ne "") {
+						$args->{npc}{ok} = 1;
+					}
+				# If not, get from config
+				} else {
+					debug "[storageAuto] Using npc information from config.\n";
+					$args->{npc} = {};
+					getNPCInfo($config{storageAuto_standpoint} || $config{'storageAuto_npc'}, $args->{npc});
+				}
+				if (!defined($args->{npc}{ok})) {
+					error "[storageAuto] Invalid npc information given.\n";
+					$args->{done} = 1;
+					return;
+				}
 			}
 
 			if (!AI::args->{distance}) {
@@ -1423,23 +1436,31 @@ sub processAutoStorage {
 						return;
 					}
 
-					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
-						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
-						$config{'storageAuto_npc_steps'} = "c r1";
-						debug "Using standard iRO npc storage steps.\n", "npc";
-					} elsif ($config{'storageAuto_npc_type'} eq "2") {
-						$config{'storageAuto_npc_steps'} = "c c r1";
-						debug "Using iRO comodo (location) npc storage steps.\n", "npc";
-					} elsif ($config{'storageAuto_npc_type'} eq "3") {
-						message T("Using storage steps defined in config.\n"), "info";
-					} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
-						error T("Something is wrong with storageAuto_npc_type in your config.\n");
+					my $steps;
+					# Determine steps based on args or config
+					if ($args->{npc} && $args->{npc}{sequence}) {
+						$steps = $args->{npc}{sequence};
+					} else {
+						# Use config steps based on storageAuto_npc_type
+						if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
+							warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
+							$steps = "c r1";
+							debug "Using standard iRO npc storage steps.\n", "npc";
+						} elsif ($config{'storageAuto_npc_type'} eq "2") {
+							$steps = "c c r1";
+							debug "Using iRO comodo (location) npc storage steps.\n", "npc";
+						} elsif ($config{'storageAuto_npc_type'} eq "3") {
+							message T("Using storage steps defined in config.\n"), "info";
+							$steps = $config{'storageAuto_npc_steps'};
+						} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
+							error T("Something is wrong with storageAuto_npc_type in your config.\n");
+							$steps = $config{'storageAuto_npc_steps'} || "c r1"; # default
+						}
 					}
 
-					my $realpos = {};
-					getNPCInfo($config{storageAuto_npc}, $realpos);
-
-					ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{'storageAuto_npc_steps'});
+					my $x = $args->{npc}{pos}{x};
+					my $y = $args->{npc}{pos}{y};
+					ai_talkNPC($x, $y, $steps);
 					AI::args->{'is_storageAuto'} = 1;
 				}
 
