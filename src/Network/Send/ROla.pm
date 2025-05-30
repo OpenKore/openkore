@@ -94,19 +94,6 @@ sub sendMapLogin {
 		sex			=> $sex,
 	});
 
-	my $crcCheckSum = 0x00;
-	for my $byte (unpack('C*', $msg)) {
-		$crcCheckSum ^= $byte;
-		for (1..8) {
-			if ($crcCheckSum & 0x80) {
-				$crcCheckSum = (($crcCheckSum << 1) ^ 0x07) & 0xFF;
-			} else {
-				$crcCheckSum = ($crcCheckSum << 1) & 0xFF;
-			}
-		}
-	}
-
-	$msg .= pack('C', $crcCheckSum);
 	$self->sendToServer($msg);
 
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
