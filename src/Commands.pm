@@ -4136,7 +4136,7 @@ sub cmdMove {
 				if ($portalsID[$map_or_portal]) {
 					message TF("Move into portal number %s (%s,%s)\n",
 						$map_or_portal, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'});
-					main::ai_route($field->baseName, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'}, attackOnRoute => 2, noSitAuto => 1);
+					main::ai_route($field->baseName, $portals{$portalsID[$map_or_portal]}{'pos'}{'x'}, $portals{$portalsID[$map_or_portal]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
 				} else {
 					error T("No portals exist.\n");
 				}
@@ -4171,7 +4171,7 @@ sub cmdMove {
 							$map_name, $map_or_portal), "route";
 					}
 					main::ai_route($map_or_portal, $x, $y,
-					attackOnRoute => 2,
+					attackOnRoute => 1,
 					noSitAuto => 1,
 					notifyUponArrival => 1,
 					distFromGoal => $dist);
@@ -5104,7 +5104,7 @@ sub cmdSell {
 	}
 	my @args = parseArgs($_[1]);
 
-	if ($args[0] eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
+	if ($args[0] eq "" && defined $ai_v{'npc_talk'} && exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell') {
 		$messageSender->sendNPCBuySellList($talk{ID}, 1);
 
 	} elsif ($args[0] eq "list") {
@@ -5700,7 +5700,7 @@ sub cmdStore {
 		$msg .= ('-'x68) . "\n";
 		message $msg, "list";
 
-	} elsif ($arg1 eq "" && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
+	} elsif ($arg1 eq "" && defined $ai_v{'npc_talk'} && exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell'
 	 && ($net && $net->getState() == Network::IN_GAME)) {
 		$messageSender->sendNPCBuySellList($talk{'ID'}, 0);
 
@@ -7915,7 +7915,7 @@ sub cmdCancelTransaction {
 		return;
 	}
 
-	if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' || $ai_v{'npc_talk'}{'talk'} eq 'store') {
+	if (defined $ai_v{'npc_talk'} && exists $ai_v{'npc_talk'}{'talk'} && ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell' || $ai_v{'npc_talk'}{'talk'} eq 'store')) {
 		cancelNpcBuySell();
 	} else {
 		error T("You are not on a sell or store npc interaction.\n");

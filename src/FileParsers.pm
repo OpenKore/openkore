@@ -52,6 +52,9 @@ our @EXPORT = qw(
 	parseMonControl
 	parsePortals
 	parsePortalsLOS
+	parsePortalsCommands
+	parsePortalsSpawns
+	parsePortalsAirship
 	parsePriority
 	parseResponses
 	parseRecvpackets
@@ -698,6 +701,96 @@ sub parsePortals {
 			}
 		}
 
+	}
+	return 1;
+}
+
+sub parsePortalsCommands {
+	my $file = shift;
+	my $r_hash = shift;
+	my $r_array = shift;
+	undef %{$r_hash};
+	undef @{$r_array};
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		next if $line =~ /^#/;
+		$line =~ s/\cM|\cJ//g;
+		$line =~ s/\s+/ /g;
+		$line =~ s/^\s+|\s+$//g;
+		$line =~ s/(.*)[\s\t]+#.*$/$1/;
+
+		if ($line =~ /^(\@go\s\d{1,3})\s([\w|@|-]+)\s(\d{1,3})\s(\d{1,3})/) {
+			my ($command, $dest_map, $dest_x, $dest_y) = ($1, $2, $3, $4);
+			my $portal = $command;
+			my $dest = "$dest_map $dest_x $dest_y";
+			$$r_hash{$dest}{'dest'}{$dest}{'command'} = $portal;
+			$$r_hash{$dest}{'dest'}{$dest}{'map'} = $dest_map;
+			$$r_hash{$dest}{'dest'}{$dest}{'x'} = $dest_x;
+			$$r_hash{$dest}{'dest'}{$dest}{'y'} = $dest_y;
+			$$r_hash{$dest}{dest}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
+		}
+	}
+	return 1;
+}
+
+sub parsePortalsSpawns {
+	my $file = shift;
+	my $r_hash = shift;
+	my $r_array = shift;
+	undef %{$r_hash};
+	undef @{$r_array};
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		next if $line =~ /^#/;
+		$line =~ s/\cM|\cJ//g;
+		$line =~ s/\s+/ /g;
+		$line =~ s/^\s+|\s+$//g;
+		$line =~ s/(.*)[\s\t]+#.*$/$1/;
+
+		if ($line =~ /^savepoint\s+"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*;$/) {
+			my ($dest_map, $dest_x, $dest_y) = ($1, $2, $3);
+			my $dest = "$dest_map $dest_x $dest_y";
+			$$r_hash{$dest}{'dest'}{$dest}{'map'} = $dest_map;
+			$$r_hash{$dest}{'dest'}{$dest}{'x'} = $dest_x;
+			$$r_hash{$dest}{'dest'}{$dest}{'y'} = $dest_y;
+			$$r_hash{$dest}{dest}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
+		}
+	}
+	return 1;
+}
+
+sub parsePortalsAirship {
+	my $file = shift;
+	my $r_hash = shift;
+	my $r_array = shift;
+	undef %{$r_hash};
+	undef @{$r_array};
+	my $reader = new Utils::TextReader($file);
+	while (!$reader->eof()) {
+		my $line = $reader->readLine();
+		next if $line =~ /^#/;
+		$line =~ s/\cM|\cJ//g;
+		$line =~ s/\s+/ /g;
+		$line =~ s/^\s+|\s+$//g;
+		$line =~ s/(.*)[\s\t]+#.*$/$1/;
+
+		#airpship "airplane_01","We are heading to Izlude.","izlude",200,73;
+		if ($line =~ /^airpship\s+"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*,\s*"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*;$/) {
+			my ($source_map, $source_x, $source_y, $message, $dest_map, $dest_x, $dest_y) = ($1, $2, $3, $4, $5, $6, $7);
+			my $portal = "$source_map $source_x $source_y";
+			my $dest = "$dest_map $dest_x $dest_y";
+			$$r_hash{$portal}{'source'}{'map'} = $source_map;
+			$$r_hash{$portal}{'source'}{'x'} = $source_x;
+			$$r_hash{$portal}{'source'}{'y'} = $source_y;
+			$$r_hash{$portal}{'dest'}{$dest}{'map'} = $dest_map;
+			$$r_hash{$portal}{'dest'}{$dest}{'x'} = $dest_x;
+			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $dest_y;
+			$$r_hash{$portal}{'dest'}{$dest}{'message'} = $message;
+			$$r_hash{$portal}{'dest'}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
+			#$$r_hash{$portal}{'dest'}{$dest}{active} = 0;
+		}
 	}
 	return 1;
 }

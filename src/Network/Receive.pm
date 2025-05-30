@@ -981,7 +981,7 @@ sub character_creation_successful {
 
 	Plugins::callHook('char_created', {char => $character});
 
-	if (charSelectScreen() == 1) {
+	if ($net->getState() == 3 && charSelectScreen() == 1) {
 		$firstLoginMap = 1;
 		$startingzeny = $chars[$config{'char'}]{'zeny'} unless defined $startingzeny;
 		$sentWelcomeMessage = 1;
@@ -1074,6 +1074,12 @@ sub parse_account_server_info {
 			len => 36,
 			types => 'a4 v Z20 v5',
 			keys => [qw(ip port name state users property sid unknown)],
+		};
+	} elsif ($args->{switch} eq '0C32' && $masterServer->{serverType} eq "ROla") { # ROla
+		$server_info = {
+			len => 165,
+			types => 'a4 v Z20 v3 a128 a5',
+			keys => [qw(ip port name users state property ip_port unknown)],
 		};
 	} else { # 0069 [default] and 0276 [pRO]
 		$server_info = {
@@ -1939,7 +1945,7 @@ sub actor_display {
 			$actor = new Actor::Player();
 			$actor->{appear_time} = time;
 			# New actor_display packets include the player's name
-			$actor->{name} = $name if defined $name;
+			$actor->setName($name) if defined $name;
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
@@ -1991,7 +1997,7 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::Pet();
 			$actor->{appear_time} = time;
-			$actor->{name} = $name;
+			$actor->setName($name) if defined $name;
 #			if ($monsters_lut{$args->{type}}) {
 #				$actor->setName($monsters_lut{$args->{type}});
 #			}
@@ -2016,7 +2022,7 @@ sub actor_display {
 				$actor->setName($monsters_lut{$args->{type}});
 			}
 			# New actor_display packets include the Monster name
-			$actor->{name} = $name if defined $name;
+			$actor->setName($name) if defined $name;
 			$actor->{name_given} = "Unknown";
 			$actor->{binType} = $args->{type};
 			$mustAdd = 1;
@@ -2030,7 +2036,7 @@ sub actor_display {
 		if (!defined $actor) {
 			$actor = new Actor::NPC();
 			$actor->{appear_time} = time;
-			$actor->{name} = $name if defined $name;
+			$actor->setName($name) if defined $name;
 			$mustAdd = 1;
 		}
 		$actor->{nameID} = $nameID;
@@ -2042,7 +2048,8 @@ sub actor_display {
 			$actor->{appear_time} = time;
 			$mustAdd = 1;
 		}
-		$actor->{name} = $jobs_lut{$args->{type}};
+		
+		$actor->setName($jobs_lut{$args->{type}});
 	}
 
 	#### Step 2: update actor information ####
@@ -2310,6 +2317,7 @@ typedef enum <unnamed-tag> {
 			Plugins::callHook('player_connected', {player => $actor});
 		} else {
 			debug "Unknown Connected: $args->{type} - \n", "parseMsg";
+			Plugins::callHook('unknown_connected', {unknown => $actor});
 		}
 
 	} elsif ($args->{switch} eq "007B" ||
@@ -2900,7 +2908,7 @@ sub homunculus_property {
 	return 0 unless enforce_homun_state();
 
 	my $slave = $char->{homunculus};
-	$slave->{name} = bytesToString($args->{name});
+	$slave->setName(bytesToString($args->{name}));
 
 	slave_calcproperty_handler($slave, $args);
 	homunculus_state_handler($slave, $args);
@@ -3726,7 +3734,7 @@ sub inventory_item_added {
 
 		# TODO: move this stuff to AI()
 		if (defined($ai_v{npc_talk})) { # avoid autovivification
-			if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}, $ai_v{npc_talk}{itemID}) {
+			if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}) {
 
 				$ai_v{'npc_talk'}{'talk'} = 'buy';
 				$ai_v{'npc_talk'}{'time'} = time;
@@ -5849,9 +5857,13 @@ sub deal_begin {
 	if ($args->{type} == 0) {
 		error T("That person is too far from you to trade.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %outgoingDeal;
+		
 	} elsif ($args->{type} == 2) {
 		error T("That person is in another deal.\n"), "deal";
 		Plugins::callHook('error_deal', {type => $args->{type}});
+		undef %outgoingDeal;
+		
 	} elsif ($args->{type} == 3) {
 		if (%incomingDeal) {
 			$currentDeal{name} = $incomingDeal{name};
@@ -5870,12 +5882,17 @@ sub deal_begin {
 		}
 		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
 		Plugins::callHook('engaged_deal', {name => $currentDeal{name}});
+		
 	} elsif ($args->{type} == 5) {
 		error T("That person is opening storage.\n"), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
+		undef %outgoingDeal;
+		
 	} else {
 		error TF("Deal request failed (unknown error %s).\n", $args->{type}), "deal";
 		Plugins::callHook('error_deal', {type =>$args->{type}});
+		undef %outgoingDeal;
+		
 	}
 }
 
@@ -7410,20 +7427,9 @@ sub hat_effect {
 sub npc_talk {
 	my ($self, $args) = @_;
 
-	#Auto-create Task::TalkNPC if not active
-	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
-		my $nameID = unpack 'V', $args->{ID};
-		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $args->{ID});
-		AI::queue("NPC", $task);
-		# TODO: The following npc_talk hook is only added on activation.
-		# Make the task module or AI listen to the hook instead
-		# and wrap up all the logic.
-		$task->activate;
-		Plugins::callHook('npc_autotalk', {
-			task => $task
-		});
-	}
+	my $ID = $args->{ID};
+	my $nameID = unpack 'V', $ID;
+	autoNpcTalk($ID, $nameID);
 
 	$talk{ID} = $args->{ID};
 	$talk{nameID} = unpack 'V', $args->{ID};
@@ -7456,12 +7462,12 @@ sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
 	# "Close" icon appreared on the NPC message dialog
-	if (!defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
+	if (!defined $ai_v{'npc_talk'} || !exists  $ai_v{'npc_talk'}{'ID'} || !defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
 		debug "We received an strange 'npc_talk_done', just ignoring it\n", "npc";
 		return;
 	}
 
-	return if ($ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
+	return if (exists $ai_v{'npc_talk'}{'talk'} && $ai_v{'npc_talk'}{'talk'} eq 'buy_or_sell');
 
 	my $ID = $args->{ID};
 	my $name = getNPCName($ID);
@@ -7508,20 +7514,7 @@ sub npc_talk_responses {
 
 	my $ID = substr($msg, 4, 4);
 	my $nameID = unpack 'V', $ID;
-
-	# Auto-create Task::TalkNPC if not active
-	if (!AI::is("NPC") && !(AI::is("route") && $char->args->getSubtask && UNIVERSAL::isa($char->args->getSubtask, 'Task::TalkNPC'))) {
-		debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-		my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID);
-		AI::queue("NPC", $task);
-		# TODO: The following npc_talk hook is only added on activation.
-		# Make the task module or AI listen to the hook instead
-		# and wrap up all the logic.
-		$task->activate;
-		Plugins::callHook('npc_autotalk', {
-			task => $task
-		});
-	}
+	autoNpcTalk($ID, $nameID);
 
 	$talk{ID} = $ID;
 	$talk{nameID} = $nameID;
@@ -7842,6 +7835,11 @@ sub deal_add_you {
 	}
 
 	my $id = unpack('v',$args->{ID});
+	
+	if ($id == 0) {
+		message "You added Zeny to Deal (suposedly $currentDeal{'you_zeny'} z).\n";
+		return;
+	}
 
 	return unless ($id > 0);
 
@@ -11594,7 +11592,7 @@ sub switch_character {
 	my ($self, $args) = @_;
 	# User is switching characters in X-Kore
 	$net->setState(Network::CONNECTED_TO_MASTER_SERVER);
-	$net->serverDisconnect();
+	$net->serverDisconnect() if(UNIVERSAL::isa($net, 'Network::DirectConnection'));
 
 	# FIXME better support for multiple received_characters packets
 	undef @chars;

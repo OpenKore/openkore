@@ -514,6 +514,11 @@ sub processPortalRecording {
 		return;
 	}
 
+	if (defined portalExistsAirship($sourceMap, \%sourcePos)) {
+		debug "This portal is already in portals_airships.txt\n", "portalRecord";
+		return;
+	}
+
 
 	# And finally, record the portal information
 	my ($destMap, $destID, %destPos);
@@ -857,6 +862,10 @@ sub processEquip {
 
 sub processDeal {
 	if (AI::action ne "deal" && %currentDeal) {
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook('deal_queue' => \%plugin_args);
+		return if ($plugin_args{return});
+		
 		AI::queue('deal');
 	} elsif (AI::action eq "deal") {
 		if (%currentDeal) {
@@ -881,6 +890,10 @@ sub processDeal {
 sub processDealAuto {
 	# dealAuto 1=refuse 2,3=accept
 	if ($config{'dealAuto'} && %incomingDeal) {
+		my %plugin_args = ( return => 0 );
+		Plugins::callHook('deal_incoming' => \%plugin_args);
+		return if ($plugin_args{return});
+		
 		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
 			$messageSender->sendDealReply(4);
 			$timeout{'ai_dealAutoCancel'}{'time'} = time;
@@ -1190,10 +1203,15 @@ sub processAutoStorage {
 	if (AI::is("", "route", "sitAuto", "follow")
 		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
 		  && !$ai_v{sitAuto_forcedBySitCommand}
-		  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
+		  && ai_canOpenStorage()
+		  && (
+			     ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
 		      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
-			  || ($config{itemsMaxNum_sellOrStore} && $char->inventory->size() >= $config{itemsMaxNum_sellOrStore}))
-		  && !AI::inQueue("storageAuto") && $char->inventory->isReady()) {
+			  || ($config{itemsMaxNum_sellOrStore} && $char->inventory->size() >= $config{itemsMaxNum_sellOrStore})
+			  )
+		  && !AI::inQueue("storageAuto") && $char->inventory->isReady()
+		  
+	) {
 		my %plugin_args = ( return => 0 );
 		Plugins::callHook('AI_storage_auto_weight_start' => \%plugin_args);
 		return if ($plugin_args{return});
@@ -1318,12 +1336,25 @@ sub processAutoStorage {
 		my $do_route;
 
 		if (!$config{storageAuto_useChatCommand} && !$config{storageAuto_useItem}) {
-			# Stop if the specified NPC is invalid
-			$args->{npc} = {};
-			getNPCInfo($config{storageAuto_standpoint} || $config{'storageAuto_npc'}, $args->{npc});
-			if (!defined($args->{npc}{ok})) {
-				$args->{done} = 1;
-				return;
+
+			if (!exists $args->{npc} || !exists $args->{npc}{ok}) {
+				# Check if NPC info is provided in args
+				if (exists $args->{npc}) {
+					debug "[storageAuto] Using npc information from arguments.\n";
+					if (exists $args->{npc}{map} && $args->{npc}{map} ne "" && exists $args->{npc}{pos} && exists $args->{npc}{pos}{x} && $args->{npc}{pos}{x} ne "" && exists $args->{npc}{pos}{y} && $args->{npc}{pos}{y} ne "") {
+						$args->{npc}{ok} = 1;
+					}
+				# If not, get from config
+				} else {
+					debug "[storageAuto] Using npc information from config.\n";
+					$args->{npc} = {};
+					getNPCInfo($config{storageAuto_standpoint} || $config{'storageAuto_npc'}, $args->{npc});
+				}
+				if (!defined($args->{npc}{ok})) {
+					error "[storageAuto] Invalid npc information given.\n";
+					$args->{done} = 1;
+					return;
+				}
 			}
 
 			if (!AI::args->{distance}) {
@@ -1410,23 +1441,31 @@ sub processAutoStorage {
 						return;
 					}
 
-					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
-						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
-						$config{'storageAuto_npc_steps'} = "c r1";
-						debug "Using standard iRO npc storage steps.\n", "npc";
-					} elsif ($config{'storageAuto_npc_type'} eq "2") {
-						$config{'storageAuto_npc_steps'} = "c c r1";
-						debug "Using iRO comodo (location) npc storage steps.\n", "npc";
-					} elsif ($config{'storageAuto_npc_type'} eq "3") {
-						message T("Using storage steps defined in config.\n"), "info";
-					} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
-						error T("Something is wrong with storageAuto_npc_type in your config.\n");
+					my $steps;
+					# Determine steps based on args or config
+					if ($args->{npc} && $args->{npc}{sequence}) {
+						$steps = $args->{npc}{sequence};
+					} else {
+						# Use config steps based on storageAuto_npc_type
+						if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
+							warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
+							$steps = "c r1";
+							debug "Using standard iRO npc storage steps.\n", "npc";
+						} elsif ($config{'storageAuto_npc_type'} eq "2") {
+							$steps = "c c r1";
+							debug "Using iRO comodo (location) npc storage steps.\n", "npc";
+						} elsif ($config{'storageAuto_npc_type'} eq "3") {
+							message T("Using storage steps defined in config.\n"), "info";
+							$steps = $config{'storageAuto_npc_steps'};
+						} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
+							error T("Something is wrong with storageAuto_npc_type in your config.\n");
+							$steps = $config{'storageAuto_npc_steps'} || "c r1"; # default
+						}
 					}
 
-					my $realpos = {};
-					getNPCInfo($config{storageAuto_npc}, $realpos);
-
-					ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, $config{'storageAuto_npc_steps'});
+					my $x = $args->{npc}{pos}{x};
+					my $y = $args->{npc}{pos}{y};
+					ai_talkNPC($x, $y, $steps);
 					AI::args->{'is_storageAuto'} = 1;
 				}
 
@@ -1836,7 +1875,7 @@ sub processAutoSell {
 
 				return;
 
-			} elsif ($ai_v{'npc_talk'}{'talk'} ne 'sell') {
+			} elsif (!defined $ai_v{'npc_talk'} || $ai_v{'npc_talk'}{'talk'} ne 'sell') {
 				if (timeOut($args->{'sentNpcTalk_time'}, $timeout{ai_sellAuto_wait_giveup_npc}{timeout})) {
 					$args->{'error'} = 'Npc did not respond';
 					$args->{'done'} = 1;
@@ -2125,7 +2164,7 @@ sub processAutoBuy {
 
 			return;
 
-		} elsif ($ai_v{'npc_talk'}{'talk'} ne 'store') {
+		} elsif (!defined $ai_v{'npc_talk'} || $ai_v{'npc_talk'}{'talk'} ne 'store') {
 			if (timeOut($args->{'sentNpcTalk_time'}, $timeout{ai_buyAuto_wait_giveup_npc}{timeout})) {
 				$args->{'error'} = 'Npc did not respond';
 				$args->{'done'} = 1;
@@ -2416,7 +2455,7 @@ sub processRandomWalk {
 				$randX,
 				$randY,
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
-				attackOnRoute => 2,
+				attackOnRoute => (defined $config{attackAuto}) ? $config{attackAuto} : 2,
 				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0),
 				isRandomWalk => 1
 			);
@@ -2434,6 +2473,13 @@ sub processFollow {
 		AI::clear("follow") if (AI::findAction("follow") ne undef); # if follow is disabled and there's still "follow" in AI queue, remove it
 		return;
 	}
+	
+	return unless (
+		(AI::isIdle || (AI::is('route') && AI::args()->{isRandomWalk})) ||
+		(AI::action eq "follow") ||
+		((AI::action eq "route" && AI::action(1) eq "follow") || (AI::action eq "move" && AI::action(2) eq "follow"))
+	);
+	
 	# stop follow when talking with NPC
 	if (AI::action eq 'route' && defined(AI::args(0)->getSubtask())) {
 		my $rrr = AI::args(0)->getSubtask();
@@ -3161,7 +3207,7 @@ sub processAutoAttack {
 			my @droppedMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getAggressives(1) if $attackOnRoute;
+			@aggressives = ai_getAggressives($attackOnRoute) if $attackOnRoute;
 
 			# List party monsters
 			foreach (@monstersID) {
@@ -3322,7 +3368,7 @@ sub processItemsTake {
 
 ##### ITEMS AUTO-GATHER #####
 sub processItemsAutoGather {
-	return if (AI::inQueue("gather", "take", "items_gather"));
+	return if (AI::inQueue("take", "items_gather"));
 	if ( (AI::isIdle || AI::action eq "follow"
 		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2) ))
 	  && $config{'itemsGatherAuto'}

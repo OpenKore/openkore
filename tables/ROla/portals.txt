@@ -1001,7 +1001,7 @@ gef_fild08 360 187 gef_fild07 18 191
 gef_fild09 23 56 gef_fild13 380 56
 gef_fild09 225 25 gef_fild10 251 371
 gef_fild09 368 95 gef_fild01 16 102
-gef_fild10 27 219 gef_fild14 371 219
+#gef_fild10 27 219 gef_fild14 371 219
 gef_fild10 63 337 in_orcs01 30 154
 gef_fild10 104 21 gef_fild11 111 364
 gef_fild10 136 331 in_orcs01 124 171
@@ -1329,7 +1329,7 @@ iz_dun03 29 63 iz_dun02 339 331
 iz_dun03 264 245 iz_dun04 26 24
 iz_dun04 26 24 iz_dun03 264 245
 izlu2dun 108 83 iz_dun00 168 173
-izlude 30 78 prt_fild08 371 212
+izlude 20 98 prt_fild08 371 212
 izlude 52 140 izlude_in 74 158
 izlude 109 151 izlude_in 65 84
 izlude 148 148 izlude_in 116 46
@@ -1462,7 +1462,37 @@ mjolnir_11 174 20 prt_fild02 173 382
 mjolnir_12 44 17 prt_maze01 17 115
 mjolnir_12 199 378 aldebaran 138 34
 mjolnir_12 220 26 mjolnir_05 220 382
-moc_castle 94 183 morocc 160 183
+#moc_castle 94 183 morocc 160 183
+#moc_castle 107 163 moc_castle 124 163
+#moc_castle 120 163 moc_castle 103 163
+#moc_castle 134 156 moc_castle 134 136
+#moc_castle 134 139 moc_castle 134 150
+#moc_castle 149 163 moc_castle 162 163
+#moc_castle 158 163 moc_castle 145 163
+#moc_castle 170 160 moc_castle 170 128
+#moc_castle 170 131 moc_castle 170 163
+#moc_castle 134 124 moc_castle 134 101
+#moc_castle 134 101 moc_castle 134 128
+#moc_castle 120 75 moc_castle 56 34
+#moc_castle 59 34 moc_castle 124 75
+#moc_castle 59 69 moc_castle 52 117
+#moc_castle 51 114 moc_castle 54 65
+#moc_castle 54 139 moc_castle 54 160
+#moc_castle 54 156 moc_castle 54 134
+#moc_castle 40 163 moc_castle 25 163
+#moc_castle 29 163 moc_castle 44 163
+#moc_castle 16 160 moc_castle 16 125
+#moc_castle 16 131 moc_castle 16 164
+#moc_castle 69 163 moc_castle 86 163
+#moc_castle 82 163 moc_castle 66 163
+#moc_castle 94 156 moc_castle 94 140
+#moc_castle 94 143 moc_castle 94 160
+#moc_castle 94 116 moc_castle 88 90
+#moc_castle 88 93 moc_castle 94 119
+#moc_castle 80 89 moc_castle 60 89
+#moc_castle 63 89 moc_castle 83 89
+#moc_castle 92 82 moc_castle 92 63
+#moc_castle 92 67 moc_castle 92 85
 moc_fild01 22 242 prt_fild09 383 223
 moc_fild01 56 384 prt_fild08 55 21
 moc_fild01 239 382 prt_fild08 233 16
@@ -1477,7 +1507,7 @@ moc_fild02 378 272 pay_gld 16 276
 moc_fild03 17 37 moc_fild13 308 49
 moc_fild03 70 341 moc_fild02 332 19
 moc_fild03 179 16 pay_fild11 38 330
-moc_fild03 303 170 pay_fild01 14 152
+moc_fild03 303 170 pay_fild01 13 152
 moc_fild07 198 21 morocc 160 297
 moc_fild11 26 161 moc_fild12 289 168
 moc_fild11 212 29 moc_fild17 218 369
@@ -1617,7 +1647,7 @@ pay_dun03 127 62 pay_dun04 40 37
 pay_dun03 155 161 pay_dun02 137 128
 pay_dun04 40 37 pay_dun03 127 62
 pay_dun04 202 206 pay_dun03 127 62
-pay_fild01 14 152 moc_fild03 303 170
+pay_fild01 13 152 moc_fild03 303 170
 pay_fild01 278 14 pay_fild02 83 386
 pay_fild01 353 14 pay_fild02 167 390
 pay_fild01 379 201 pay_fild07 16 200
@@ -1804,6 +1834,8 @@ prontera 204 192 prt_in 68 130
 prontera 208 154 prt_in 172 33
 prontera 237 317 prt_church 100 56
 prontera 289 203 prt_fild06 23 193
+prontera 121 72 prt_cas 18 29 c r0
+prt_cas 27 27 dali 109 86 c r3 c c r0
 prt_castle 28 121 prt_castle 40 138
 prt_castle 31 113 prt_castle 54 113
 prt_castle 40 138 prt_castle 28 121
@@ -3170,17 +3202,17 @@ moc_para01 102 92 moc_para01 111 33
 moc_para01 57 27 moc_para01 162 26
 moc_para01 158 26 moc_para01 55 27
 #moc_para01 48 16 moc_para01 48 164
-#moc_para01 48 16 moc_paraup 48 164
+moc_para01 48 16 moc_paraup 48 164
 #moc_para01 47 161 moc_para01 47 18
-#moc_paraup 47 161 moc_para01 47 18
+moc_paraup 47 161 moc_para01 47 18
 #moc_para01 41 187 moc_para01 179 93
-$moc_paraup 41 187 moc_paraup 179 93
+moc_paraup 41 187 moc_paraup 179 93
 #moc_para01 179 90 moc_para01 41 185
-#moc_paraup 179 90 moc_paraup 41 185
-#moc_paraup 29 187 moc_para01 180 159
-#moc_para01 180 156 moc_paraup 29 185
-#moc_paraup 17 187 moc_para01 132 159
-#moc_para01 132 156 moc_paraup 17 185
+moc_paraup 179 90 moc_paraup 41 185
+moc_paraup 29 187 moc_para01 180 159
+moc_para01 180 156 moc_paraup 29 185
+moc_paraup 17 187 moc_para01 132 159
+moc_para01 132 156 moc_paraup 17 185
 
 # Port Malaya
 alberta 237 71 malaya 271 55 10000 c r1 n
@@ -3258,7 +3290,7 @@ mal_in02 142 60 mal_in02 162 61
 
 # following is a single warp, depends of entrance npc used
 # currently unsupported, do not enable that
-#moc_para01 30 10 prontera 116 72
+moc_para01 30 10 prontera 116 72
 
 #------------------------------
 xmas 139 307 evt_xmas 129 129 0 c r1
@@ -3327,12 +3359,12 @@ ashroom 90 66 ashroom 37 27
 pallet 24 44 ashroom 81 58
 pallet 41 68 ashroom 22 94
 pallet 51 28 ashroom 24 78
-#pallet 53 49 plt_in 35 55
+pallet 53 49 plt_in 35 55
 
-#plt_in 19 62 plt_in 114 61
-#plt_in 35 52 pallet 53 49
-#plt_in 111 61 plt_in 19 62
-#plt_in 131 69 saladuelo 44 17
+plt_in 19 62 plt_in 114 61
+plt_in 35 52 pallet 53 49
+plt_in 111 61 plt_in 19 62
+plt_in 131 69 saladuelo 44 17
 
 saladuelo 44 17 plt_in 127 68
 
@@ -3542,3 +3574,32 @@ un_bunker 229 163 un_bunker 159 52
 un_bunker 164 51 un_bunker 233 164
 un_bunker 366 164 un_bunker 31 51
 un_bunker 27 52 un_bunker 361 163
+
+# Apprentice Field
+iz_int 27 30 iz_int 51 30
+iz_int 47 30 iz_int 27 30
+iz_int 56 15 int_land 85 107
+int_land 49 57 izlude 196 209
+iz_int01 27 30 iz_int01 51 30
+iz_int01 47 30 iz_int01 27 30
+iz_int01 56 15 int_land01 85 107
+int_land01 49 57 izlude 196 209
+iz_int02 27 30 iz_int02 51 30
+iz_int02 47 30 iz_int02 27 30
+iz_int02 56 15 int_land02 85 107
+int_land02 49 57 izlude 196 209
+iz_int03 27 30 iz_int03 51 30
+iz_int03 47 30 iz_int03 27 30
+iz_int03 56 15 int_land03 85 107
+int_land03 49 57 izlude 196 209
+iz_int04 27 30 iz_int04 51 30
+iz_int04 47 30 iz_int04 27 30
+iz_int04 56 15 int_land04 85 107
+int_land04 49 57 izlude 196 209
+prontera 134 221 prt_in 131 71
+moc_para01 47 161 moc_para01 48 16
+moc_para01 179 90 moc_para01 41 187
+moc_para01 41 187 moc_para01 179 93
+izlude 110 182 izlude_in 65 87
+gef_fild06 20 304 glast_01 377 304
+glast_01 377 304 gef_fild06 27 304

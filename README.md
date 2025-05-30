@@ -41,7 +41,7 @@ git clone https://github.com/OpenKore/openkore.git
     - Search in [Forum](https://forums.openkore.com/).
     - Search in [Github issues](https://github.com/openkore/openkore/issues?utf8=%E2%9C%93&q=).
  3. **Cant find what you need? / Do not understand?**
-    - Ask in [IRC Channel](https://webchat.freenode.net/#openkore).
+    - Ask in [Discord](https://discord.com/invite/hdAhPM6).
  4. **Is it a problem in Openkore?**
     - Read [things to know](https://github.com/OpenKore/openkore#things-to-know) before [reporting](https://github.com/OpenKore/openkore/issues/new).
 
@@ -58,22 +58,23 @@ git clone https://github.com/OpenKore/openkore.git
 
 | Server | Description | Protection | Status | Supporter |
 | --- | --- | --- | --- | --- |
-| [aRO](https://www.gnjoy.asia/) | Asia RO | CheatDefender | Not working | N/A |
-| [bRO](http://ragnarok.uol.com.br/) | Brazil RO | EAC | Not working | N/A |
-| [cRO](http://ro.qiquanwl.com) | China RO | nProtect | Botable | N/A |
-| [euRO](https://eu.4game.com/ro/) | Europe RO | Frost Security | Not working | N/A |
-| [euRO-Prime](https://eu.4game.com/roprime/) | Europe RO (Prime) | Frost Security | Not working | N/A |
-| [iRO Renewal](http://renewal.playragnarok.com/) | International RO | EAC | Not working | N/A |
-| [idRO](https://ro.gnjoy.id/) | Indonesia RO | EAC | Not Working | N/A |
-| [idRO-Retro](https://roretro.gnjoy.id/) | Indonesia RO (Retro) | Delphine | Not Working | N/A |
-| [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | nProtect | Need Verification | N/A |
-| [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Botable | N/A |
-| [kRO-Zero](http://roz.gnjoy.com/) | Korea RO (Zero) | nProtect | Botable | N/A |
-| [ruRO-Prime](https://ru.4game.com/roprime/) | Russia RO (Prime) | Frost Security | Not Working | ya4ept |
-| [tRO](https://ro.gnjoy.in.th/) | Thailand RO | EAC | Not Working | N/A |
-| [tRO-Classic](https://roc.gnjoy.in.th/) | Thailand RO (Classic) | EAC  | Not Working | N/A |
+| [aRO Baphomet](https://www.gnjoy.asia/) | Asia RO | CheatDefender | Not working | N/A |
+| [bRO](https://playragnarokonlinebr.com/) | Brazil RO | EAC | Not working | N/A |
+| [cRO](https://ro.zhaouc.com/) | China RO | nProtect | Not working | N/A |
+| [euRO Prime](https://eu.4game.com/roprime/) | Europe RO | Frost Security | Not working | N/A |
+| [iRO Сhaos/Thor/Freya](http://renewal.playragnarok.com/) | International RO | EAC | Not working | N/A |
+| [idRO Classic](https://roclassic.gnjoy.id/) | Indonesia RO | nProtect | Not Working | N/A |
+| [idRO Yggdrasil](https://ro.gnjoy.id/) | Indonesia RO (Forever Love) | EAC | Not Working | N/A |
+| [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | nProtect | Not working | N/A |
+| [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Not working | N/A |
+| [kRO Zero](http://roz.gnjoy.com/) | Korea RO | nProtect | Not working | N/A |
+| [ROla](https://www.gnjoylatam.com/) | Latam RO | nProtect | Not working | N/A |
+| [ruRO Prime](https://ru.4game.com/roprime/) | Russia RO | Frost Security | Not Working | ya4ept |
+| [tRO Chaos/Thor](https://ro.gnjoy.in.th/) | Thailand RO (Online) | nProtect | Not Working | N/A |
+| [tRO Classic](https://roc.gnjoy.in.th/) | Thailand RO (Classic) | nProtect | Not Working | N/A |
+| [tRO Baphomet](https://rolth.maxion.gg/) | Thailand (Landverse) | Custom | Not Working | N/A |
+| [tRO Baphomet](https://rolg.maxion.gg/) | Thailand (Landverse Genesis) | Custom | Not Working | N/A |
 | [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | CheatDefender | Not Working | N/A |
-| [vRO](https://ro.vtcgame.vn/) | Vietnam RO | nProtect | Not Working | N/A |
 
 ## Contributing
 
@@ -83,9 +84,7 @@ OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/co
 
 * [OpenKore Wiki](https://openkore.com/wiki/)
 * [OpenKore forum](https://forums.openkore.com/)
-* [IRC Channel](https://webchat.freenode.net/#openkore)
-* [Connect IRC with Kiwiirc](https://kiwiirc.com/client/irc.freenode.net/?nick=IRC-Source_?#openkore)
-* [Brazilian Community](http://openkorebrasil.org/)
+* [Discord](https://discord.com/invite/hdAhPM6)
 * [Russian Community](https://RO-fan.ru/)
 
 ## **Warning**
@@ -94,9 +93,9 @@ Other communities or websites are not affiliated to openkore.com
 
 ## Other Links
 
-1. [Openkore History](http://openkore.com/index.php/OpenKore)
+1. [Openkore History](https://openkore.com/wiki/OpenKore)
 2. [Legacy Changelog](https://github.com/OpenKore/openkore/blob/master/LegacyChangelog.md)
-3. [Openkore RoadMap](http://openkore.com/index.php/Roadmap)
+3. [Openkore RoadMap](https://openkore.com/wiki/roadmap)
 4. [Feature Requests and TODO Wiki](https://openkore.com/wiki/Category:Feature_Request) and [Feature Requests GitHub](https://github.com/OpenKore/openkore/issues?q=is%3Aopen+is%3Aissue+label%3A%22feature+request%22)
 
 ## License
@@ -106,4 +105,4 @@ Basically, this means that you're free to use and allowed to modify and distribu
 However, if you distribute modified versions, you **MUST** also distribute the source code.
 
 
-See http://www.gnu.org/licenses/gpl.html for the full license.
+See https://www.gnu.org/licenses/gpl-3.0.html for the full license.

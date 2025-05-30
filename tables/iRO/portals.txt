@@ -2780,7 +2780,7 @@ lhz_airport 143 49 lhz_airport 142 40 0 c r0 c r0
 izlude 206 55 airplane_01 244 58 1200 c r0 c r0
 
 # Rachel airship
-#(portal with dialog) ra_fild12 295 208 airplane_01 245 60 1200 c r0
+ra_fild12 295 208 airplane_01 245 60 1200 k c r0
 
 prt_fild03 371 256 prt_monk 25 248
 prt_monk 245 137 monk_in 98 183

@@ -288,6 +288,15 @@ sub loadDataFiles {
 	Settings::addTableFile('portals.txt',
 		internalName => 'portals.txt',
 		loader => [\&parsePortals, \%portals_lut, \@portals_lut_missed]);
+	Settings::addTableFile('portals_commands.txt',
+		internalName => 'portals_commands.txt',
+		loader => [\&parsePortalsCommands, \%portals_commands], mustExist => 0);
+	Settings::addTableFile('portals_spawns.txt',
+		internalName => 'portals_spawns.txt',
+		loader => [\&parsePortalsSpawns, \%portals_spawns], mustExist => 0);
+	Settings::addTableFile('portals_airship.txt',
+		internalName => 'portals_airship.txt',
+		loader => [\&parsePortalsAirship, \%portals_airships], mustExist => 0);
 	Settings::addTableFile('portalsLOS.txt',
 		internalName => 'portalsLOS.txt',
 		loader => [\&parsePortalsLOS, \%portals_los], createIfMissing => 1);

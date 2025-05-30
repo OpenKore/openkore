@@ -56,13 +56,6 @@ jobs:
     # preparing Windows OS #
     ########################
 
-    - name: (Windows 2022) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
-      if: matrix.os == 'windows-2022'
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python }}
-        architecture: ${{ matrix.architecture }}
-
     - name: (Windows 2019) Check the Python2 cache
       if: matrix.os == 'windows-2019'
       id: cache-python2
@@ -91,6 +84,13 @@ jobs:
         cmd /c start /wait msiexec.exe /passive /i python-2.7.18.msi /norestart /L*V "python_install.log" ADDLOCAL=ALL ALLUSERS=1 TARGETDIR=c:\python27
         echo "== add the path to python27 to the PATH variable"
         echo "c:\python27" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+    - name: (Windows 2022) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
+      if: matrix.os == 'windows-2022'
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python }}
+        architecture: ${{ matrix.architecture }}
 
     - name: Remove default Strawberry perl and g++
       run: |
@@ -301,12 +301,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - os: ubuntu-20.04
+        - os: ubuntu-22.04
           python: 2.7
           architecture: x64
           perl: 5.12
 
-        - os: ubuntu-22.04
+        - os: ubuntu-latest
           python: 3
           architecture: x64
           perl: latest
@@ -316,31 +316,33 @@ jobs:
       uses: actions/checkout@v4
 
     # setup matrix:
-    # - ubuntu-20.04 + python 2.7.18 x64 + perl 5.12 x64
-    # - ubuntu-22.04 + python 3      x64 + perl last (5.38) x64
+    # - ubuntu-22.04          + python 2.7.18 x64 + perl 5.12        x64
+    # - ubuntu-latest (24.04) + python 3      x64 + perl last (5.40) x64
 
     ######################
     # preparing Linux OS #
     ######################
 
-    - name: (Ubuntu-22.04) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
+    - name: (${{ matrix.os }}) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
       if: matrix.os == 'ubuntu-22.04'
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python }}
-        architecture: ${{ matrix.architecture }}
-
-    - name: (Ubuntu-20.04) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
-      if: matrix.os == 'ubuntu-20.04'
       run: |
         echo "== python version check:"
         python -V
+        echo "== sudo apt-get install python2.7:"
+        sudo apt-get install python2.7
         echo "== rename symbolic link"
         sudo rm -f /usr/bin/python
         cd /usr/bin/ && sudo ln -rs python2.7 python
         # ls -l /usr/bin/ |grep python
         echo "== new python version check:"
         python -V
+
+    - name: (${{ matrix.os }}) Setup python ${{ matrix.python }} ${{ matrix.architecture }}
+      if: matrix.os == 'ubuntu-latest'
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python }}
+        architecture: ${{ matrix.architecture }}
 
     - name: Setup perl ${{ matrix.perl }} on linux
       uses: shogo82148/actions-setup-perl@v1
@@ -379,8 +381,8 @@ jobs:
           PERL: ${{ matrix.perl }}
           ARCHITECTURE: ${{ matrix.architecture }}
       run: |
-        sudo apt update
-        sudo apt install -y libreadline6-dev libcurl4-openssl-dev
+        sudo apt-get update
+        sudo apt-get install -y libreadline6-dev libcurl4-openssl-dev
         make all
         echo "======================================================"
         echo "DONE:"
@@ -413,11 +415,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - os: ubuntu-20.04
+        - os: ubuntu-22.04
           architecture: x64
           perl: 5.12
 
-        - os: ubuntu-22.04
+        - os: ubuntu-latest
           architecture: x64
           perl: latest
 

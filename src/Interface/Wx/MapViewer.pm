@@ -374,7 +374,7 @@ sub _onRightClick {
 		AI::clear(qw/move route mapRoute/);
 		message TF("Walking to waypoint: %s, %s\n", $x, $y), "success";
 		main::ai_route($map, $x, $y,
-		attackOnRoute => 2,
+		attackOnRoute => 1,
 		noSitAuto => 1,
 		notifyUponArrival => 1);
 	}

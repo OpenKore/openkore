@@ -17,12 +17,15 @@ use Log qw(message debug warning);
 use Translation;
 use Utils qw(existsInList);
 
+use base qw(Network::PacketParser);
+
 sub new {
-	my $self = {};
+	my ( $class ) = @_;
+	my $self = $class->SUPER::new( @_ );
 	
 	$self->{hook_prefix} = 'Network::ClientReceive';
 	
-	bless $self, $_[0];
+	return $self;
 }
 
 sub handleChat {
