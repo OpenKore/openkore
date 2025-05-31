@@ -11521,7 +11521,7 @@ the ground. ^0000FFFAW^777777 of another player can
 also be canceled. Has 5 cells range.
 Consumes 1 ^990099Monkey Wrench^777777.^000000
 #
-SC_STARTMARK#
+SC_FATALMENACE#
 Fatal Menace
 Max Level: 10
 ^CC3399Requirement: Intimidate 5^000000

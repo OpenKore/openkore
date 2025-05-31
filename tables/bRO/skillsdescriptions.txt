@@ -8526,7 +8526,7 @@ Nível Máximo: 1
 Tipo: ^777777  Suporte / Artilharia ^000000
 Descrição: ^777777  Remove uma Artilharia Caçadora do chão, que pode ser própria ou de outros em até 5 células de distância. ^000000
 #
-SC_STARTMARK#
+SC_FATALMENACE#
 Acerto de Contas
 Nível Máximo: 5
 ^777777Pré requisitos: Rapto 5 ^000000
