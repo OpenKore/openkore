@@ -5382,7 +5382,8 @@ sub setCharDeleteDate {
 }
 
 sub cancelNpcBuySell {
-	undef $ai_v{'npc_talk'};
+	undef %talk;
+	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
 
 	if ($in_market) {
 		$messageSender->sendMarketClose;
@@ -5400,7 +5401,8 @@ sub completeNpcSell {
 		$messageSender->sendSellBulk($items);
 	}
 
-	undef $ai_v{'npc_talk'};
+	undef %talk;
+	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
 
 	if ($messageSender->{send_sell_buy_complete}) {
 		$messageSender->sendSellBuyComplete;
@@ -5419,7 +5421,8 @@ sub completeNpcBuy {
 		}
 	}
 
-	undef $ai_v{'npc_talk'};
+	undef %talk;
+	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
 
 	if ($in_market) {
 		$messageSender->sendMarketClose;
