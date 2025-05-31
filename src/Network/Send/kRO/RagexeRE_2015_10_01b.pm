@@ -62,12 +62,14 @@ sub new {
 		search_store_info 0819
 		search_store_request_next_page 0835
 		search_store_select 0838
+		char_create 0A39
 	);
 
 
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
+	$self->{char_create_version} = 0x0A39;
 #	$self->cryptKeys(0x45B945B9,0x45B945B9,0x45B945B9);
 
 	return $self;
