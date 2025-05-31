@@ -3732,15 +3732,6 @@ sub inventory_item_added {
 
 		$args->{item} = $item;
 
-		# TODO: move this stuff to AI()
-		if (defined($ai_v{'npc_talk'})) { # avoid autovivification
-			if (grep {$_ eq $item->{nameID}} @{$ai_v{'npc_talk'}{itemsIDlist}}) {
-
-				$ai_v{'npc_talk'}{'talk'} = 'buy';
-				$ai_v{'npc_talk'}{'time'} = time;
-			}
-		}
-
 		if (AI::state == AI::AUTO) {
 			# Auto-drop item
 			if (pickupitems($item->{name}, $item->{nameID}) == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
@@ -7463,7 +7454,7 @@ sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
 
-	if (!defined $ai_v{'npc_talk'} || !exists $ai_v{'npc_talk'}{'ID'} || !defined $ai_v{'npc_talk'}{'ID'}) {
+	if (!exists $ai_v{'npc_talk'} || !defined $ai_v{'npc_talk'} || !exists $ai_v{'npc_talk'}{'ID'} || !defined $ai_v{'npc_talk'}{'ID'}) {
 		debug "We received an strange 'npc_talk_done', just ignoring it\n", "npc";
 		return;
 	}
