@@ -357,9 +357,30 @@ sub main {
 
 	# Update information about the monster and the current situation
 	my $args = AI::args;
-
 	my $ID = $args->{ID};
 	my $target = Actor::get($ID);
+
+	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
+		$args->{temporary_extra_range} = 0;
+	}
+
+	my $failed_to_attack_packet_recv = 0;
+	if (exists $target->{movetoattack_pos} && exists $char->{movetoattack_pos}) {
+		$failed_to_attack_packet_recv = 1;
+		my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
+		my $target_time_to_move = calcTimeFromSolution($target_solution, $target->{walk_speed});
+		my $time_since_target_moved = time - $target->{time_move};
+		if ($time_since_target_moved > $target_time_to_move) {
+			debug "[Attack] Fixing failed to attack target, setting target $target position to: $target->{pos}{x} $target->{pos}{y}\n", "ai_attack";
+			$target->{pos}{x} = $target->{movetoattack_pos}{x};
+			$target->{pos}{y} = $target->{movetoattack_pos}{y};
+			$target->{pos_to}{x} = $target->{movetoattack_pos}{x};
+			$target->{pos_to}{y} = $target->{movetoattack_pos}{y};
+			$target->{time_move} = time;
+			$target->{time_move_calc} = 0;
+		}
+	}
+
 	my $myPos = $char->{pos_to};
 	my $monsterPos = $target->{pos_to};
 	my $monsterDist = blockDistance($myPos, $monsterPos);
@@ -370,16 +391,6 @@ sub main {
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
 
-	my $failed_to_attack_packet_recv = 0;
-
-	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
-		$args->{temporary_extra_range} = 0;
-	}
-
-	if (exists $target->{movetoattack_pos} && exists $char->{movetoattack_pos}) {
-		$failed_to_attack_packet_recv = 1;
-		$args->{temporary_extra_range} = 0;
-	}
 
 	# If the damage numbers have changed, update the giveup time so we don't timeout
 	if ($args->{dmgToYou_last}   != $target->{dmgToYou}
