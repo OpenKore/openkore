@@ -3733,8 +3733,8 @@ sub inventory_item_added {
 		$args->{item} = $item;
 
 		# TODO: move this stuff to AI()
-		if (defined($ai_v{npc_talk})) { # avoid autovivification
-			if (grep {$_ eq $item->{nameID}} @{$ai_v{npc_talk}{itemsIDlist}}) {
+		if (defined($ai_v{'npc_talk'})) { # avoid autovivification
+			if (grep {$_ eq $item->{nameID}} @{$ai_v{'npc_talk'}{itemsIDlist}}) {
 
 				$ai_v{'npc_talk'}{'talk'} = 'buy';
 				$ai_v{'npc_talk'}{'time'} = time;
@@ -7443,8 +7443,9 @@ sub npc_talk {
 	$talk{msg} .= "\n" if $talk{msg};
 	$talk{msg} .= $msg;
 
-	$ai_v{npc_talk}{talk} = 'initiated';
-	$ai_v{npc_talk}{time} = time;
+	$ai_v{'npc_talk'}{'ID'} = $talk{ID};
+	$ai_v{'npc_talk'}{talk} = 'initiated';
+	$ai_v{'npc_talk'}{time} = time;
 
 	my $name = getNPCName($talk{ID});
 	Plugins::callHook('npc_talk', {
@@ -7461,8 +7462,8 @@ sub npc_talk {
 sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
-	# "Close" icon appreared on the NPC message dialog
-	if (!defined $ai_v{'npc_talk'} || !exists  $ai_v{'npc_talk'}{'ID'} || !defined $ai_v{'npc_talk'}{'ID'} || $ai_v{'npc_talk'}{'ID'} ne $args->{ID}) {
+
+	if (!defined $ai_v{'npc_talk'} || !exists $ai_v{'npc_talk'}{'ID'} || !defined $ai_v{'npc_talk'}{'ID'}) {
 		debug "We received an strange 'npc_talk_done', just ignoring it\n", "npc";
 		return;
 	}
@@ -7472,6 +7473,7 @@ sub npc_talk_close {
 	my $ID = $args->{ID};
 	my $name = getNPCName($ID);
 
+	$ai_v{'npc_talk'}{'ID'} = $talk{ID};
 	$ai_v{'npc_talk'}{'talk'} = 'close';
 	$ai_v{'npc_talk'}{'time'} = time;
 	undef %talk;
@@ -7486,6 +7488,7 @@ sub npc_talk_continue {
 	my $ID = substr($args->{RAW_MSG}, 2, 4);
 	my $name = getNPCName($ID);
 
+	$ai_v{'npc_talk'}{'ID'} = $ID;
 	$ai_v{'npc_talk'}{'talk'} = 'next';
 	$ai_v{'npc_talk'}{'time'} = time;
 }
@@ -7498,6 +7501,7 @@ sub npc_talk_number {
 	my $ID = $args->{ID};
 
 	my $name = getNPCName($ID);
+	$ai_v{'npc_talk'}{'ID'} = $ID;
 	$ai_v{'npc_talk'}{'talk'} = 'number';
 	$ai_v{'npc_talk'}{'time'} = time;
 }
@@ -7536,6 +7540,7 @@ sub npc_talk_responses {
 
 	$talk{responses}[@{$talk{responses}}] = T("Cancel Chat");
 
+	$ai_v{'npc_talk'}{'ID'} = $talk{ID};
 	$ai_v{'npc_talk'}{'talk'} = 'select';
 	$ai_v{'npc_talk'}{'time'} = time;
 
@@ -7557,6 +7562,7 @@ sub npc_talk_text {
 	my $ID = $args->{ID};
 
 	my $name = getNPCName($ID);
+	$ai_v{'npc_talk'}{'ID'} = $ID;
 	$ai_v{'npc_talk'}{'talk'} = 'text';
 	$ai_v{'npc_talk'}{'time'} = time;
 }
@@ -7567,6 +7573,7 @@ sub npc_store_begin {
 	my ($self, $args) = @_;
 	undef %talk;
 	$talk{ID} = $args->{ID};
+	$ai_v{'npc_talk'}{'ID'} = $talk{ID};
 	$ai_v{'npc_talk'}{'talk'} = 'buy_or_sell';
 	$ai_v{'npc_talk'}{'time'} = time;
 
@@ -7616,7 +7623,7 @@ sub npc_store_info {
 		debug "Item added to Store: $item->{name} - $item->{price}z\n", "parseMsg", 2;
 	}
 
-	$ai_v{npc_talk}{talk} = 'store';
+	$ai_v{'npc_talk'}{talk} = 'store';
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
 
@@ -7650,7 +7657,7 @@ sub npc_sell_list {
 	undef %talk;
 	message T("Ready to start selling items\n");
 
-	$ai_v{npc_talk}{talk} = 'sell';
+	$ai_v{'npc_talk'}{talk} = 'sell';
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
 }
@@ -10007,9 +10014,9 @@ sub cash_dealer {
 	my ($self, $args) = @_;
 
 	undef %talk;
-	$ai_v{npc_talk}{talk} = 'cash';
+	$ai_v{'npc_talk'}{talk} = 'cash';
 	# continue talk sequence now
-	$ai_v{npc_talk}{time} = time;
+	$ai_v{'npc_talk'}{time} = time;
 
 	# Parse item_list => ['V2 C v', [qw(price price_discount type nameid)]]
 	$cashList->clear;
