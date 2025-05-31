@@ -2086,24 +2086,6 @@ sub actor_display {
 	$actor->{time_move} = time;
 	$actor->{time_move_calc} = calcTime(\%coordsFrom, \%coordsTo, $actor->{walk_speed});
 
-	# Ignore actors with a distance greater than clientSight. Useful for vending (so you don't spam
-	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
-	# beyond clientSight.
-	if ($config{clientSight}) {
-		# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
-		my $realMyPos = calcPosition($char);
-		my $realActorPos = calcPosition($actor);
-		my $realActorDist = blockDistance($realMyPos, $realActorPos);
-
-		if ($realActorDist >= $config{clientSight}) {
-			my ($actor_type) = $object_class =~ /\:\:(\w+)$/;
-			warning TF("Avoiding out of sight %s: '%s' at (%d, %d) (distance: %d >= max %d) - check clientSight in config.txt\n", $actor_type, $actor->{name}, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $config{clientSight});
-			$actor->{avoid} = 1;
-		} else {
-			$actor->{avoid} = 0;
-		}
-	}
-
 
 	if (UNIVERSAL::isa($actor, "Actor::Player")) {
 		# None of this stuff should matter if the actor isn't a player... => does matter for a guildflag npc!
