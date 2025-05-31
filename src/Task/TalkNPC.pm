@@ -344,6 +344,7 @@ sub iterate {
 			$self->setError($self->{error_code}, $self->{error_message});
 		} else {
 			my $target = $self->find_and_set_target;
+			return if (defined $self->getError());
 
 			if (!exists $talk{nameID}) {
 				unless ($self->{steps}[0] eq 'x' || $self->{steps}[0] eq 'k') {
