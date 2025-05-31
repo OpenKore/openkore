@@ -623,6 +623,11 @@ sub iterate {
 
 sub setNpcTalk {
 	my ($self) = @_;
+
+	if (%talk) {
+		warning "[mapRoute] [setNpcTalk] % talk is defined for some reason.\n", "ai_npcTalk";
+	}
+	
 	$self->{substage} = 'Waiting for Warp';
 	@{$self}{qw(old_x old_y)} = @{$self->{actor}{pos}}{qw(x y)};
 	$self->{old_map} = $field->baseName;
