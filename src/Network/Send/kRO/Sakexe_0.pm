@@ -285,6 +285,7 @@ sub new {
 		'0A21' => ['roulette_claim_prize'],
 		'0A25' => ['achievement_get_reward', 'V', [qw(achievementID)]],
 		'0A2E' => ['send_change_title', 'V', [qw(ID)]],
+		'0A39' => ['char_create', 'a24 C v4 C', [qw(name slot hair_color hair_style job_id unknown sex)]],
 		'0A46' => ['stylist_change', 'v6' ,[qw(hair_color hair_style cloth_color head_top head_mid head_bottom)]],
 		'0A49' => ['private_airship_request', 'Z16 v' ,[qw(map_name nameID)]],
 		'0A52' => ['captcha_register', 'Z16 v', [qw(answer image_size)]],
