@@ -7787,7 +7787,7 @@ MAX Lv : 1
 Skill  : ^777777Aktif / Disarm FAW ^000000
 Deskripsi : ^777777Melepaskan target FAW. Skill ini juga bisa dipakai terhadap FAW pemain lain. ^000000
 #
-SC_STARTMARK#
+SC_FATALMENACE#
 MAX Lv : 5
 ^777777Syarat Skill : Intimidation 5 ^000000
 Skill  : ^777777Aktif / Damage ^000000
