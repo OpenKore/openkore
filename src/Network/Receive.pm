@@ -11133,6 +11133,9 @@ sub monster_ranged_attack {
 		$monster->{movetoattack_pos} = {%coords1};
 		$monster->{movetoattack_time} = time;
 	}
+	
+	$char->{movetoattack_targetID} = $ID;
+
 	$char->{movetoattack_pos} = {%coords2};
 	$char->{movetoattack_time} = time;
 	debug "Received Failed to attack target - you: $coords2{x},$coords2{y} - monster: $coords1{x},$coords1{y} - range $range\n", "parseMsg_move";
