@@ -364,20 +364,41 @@ sub main {
 		$args->{temporary_extra_range} = 0;
 	}
 
-	my $failed_to_attack_packet_recv = 0;
-	if (exists $target->{movetoattack_pos} && exists $char->{movetoattack_pos}) {
-		$failed_to_attack_packet_recv = 1;
-		my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
-		my $target_time_to_move = calcTimeFromSolution($target_solution, $target->{walk_speed});
-		my $time_since_target_moved = time - $target->{time_move};
-		if ($time_since_target_moved > $target_time_to_move) {
-			debug "[Attack] Fixing failed to attack target, setting target $target position to: $target->{pos}{x} $target->{pos}{y}\n", "ai_attack";
-			$target->{pos}{x} = $target->{movetoattack_pos}{x};
-			$target->{pos}{y} = $target->{movetoattack_pos}{y};
-			$target->{pos_to}{x} = $target->{movetoattack_pos}{x};
-			$target->{pos_to}{y} = $target->{movetoattack_pos}{y};
-			$target->{time_move} = time;
-			$target->{time_move_calc} = 0;
+	if (exists $char->{movetoattack_pos}) {
+		if (!exists $char->{movetoattack_targetID} || $char->{movetoattack_targetID} ne $ID || $char->{time_move} > $char->{movetoattack_time}) {
+			delete $char->{movetoattack_pos};
+		} else {
+			my $time_since_char_moved = time - $char->{time_move};
+			if ($time_since_char_moved > $char->{time_move_calc}) {
+				debug "[Attack] [Char] Fixing failed to attack target, setting char position to: $char->{movetoattack_pos}{x} $char->{movetoattack_pos}{y}\n", "ai_attack";
+				$char->{pos}{x} = $char->{movetoattack_pos}{x};
+				$char->{pos}{y} = $char->{movetoattack_pos}{y};
+				$char->{pos_to}{x} = $char->{movetoattack_pos}{x};
+				$char->{pos_to}{y} = $char->{movetoattack_pos}{y};
+				$char->{time_move} = time;
+				$char->{time_move_calc} = 0;
+				delete $char->{movetoattack_pos};
+			}
+		}
+	}
+
+	if (exists $target->{movetoattack_pos}) {
+		if ($target->{time_move} > $target->{movetoattack_time}) {
+			delete $target->{movetoattack_pos};
+		} else {
+			my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
+			my $target_time_to_move = calcTimeFromSolution($target_solution, $target->{walk_speed});
+			my $time_since_target_moved = time - $target->{time_move};
+			if ($time_since_target_moved > $target_time_to_move) {
+				debug "[Attack] [Target] Fixing failed to attack target, setting target $target position to: $target->{movetoattack_pos}{x} $target->{movetoattack_pos}{y}\n", "ai_attack";
+				$target->{pos}{x} = $target->{movetoattack_pos}{x};
+				$target->{pos}{y} = $target->{movetoattack_pos}{y};
+				$target->{pos_to}{x} = $target->{movetoattack_pos}{x};
+				$target->{pos_to}{y} = $target->{movetoattack_pos}{y};
+				$target->{time_move} = time;
+				$target->{time_move_calc} = 0;
+				delete $target->{movetoattack_pos};
+			}
 		}
 	}
 
@@ -401,9 +422,15 @@ sub main {
 		debug "Update attack giveup time\n", "ai_attack", 2;
 	}
 
+	if (!exists $args->{firstLoop}) {
+		$args->{firstLoop} = 1;
+	} else {
+		$args->{firstLoop} = 0;
+	}
+	
 	my $hitYou = ($args->{dmgToYou_last} != $target->{dmgToYou} || $args->{missedYou_last} != $target->{missedYou});
-	my $youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromYou});
-
+	my $youHitTarget = ($args->{dmgFromYou_last} != $target->{dmgFromYou} || $args->{missedFromYou_last} != $target->{missedFromYou});
+	
 	$args->{dmgToYou_last} = $target->{dmgToYou};
 	$args->{missedYou_last} = $target->{missedYou};
 	$args->{dmgFromYou_last} = $target->{dmgFromYou};
@@ -603,8 +630,8 @@ sub main {
 			giveUp($args, $ID, 0);
 		}
 	}
-
-	if ($canAttack == 0 && $youHitTarget) {
+	
+	if (!$args->{firstLoop} && $canAttack == 0 && $youHitTarget) {
 		debug TF("[%s] We were able to hit target even though it is out of range or LOS, accepting and continuing. (you %s (%d %d), target %s (%d %d) [(%d %d) -> (%d %d)], distance %d, maxDistance %d, dmgFromYou %d)\n", $canAttack_fail_string, $char, $realMyPos->{x}, $realMyPos->{y}, $target, $realMonsterPos->{x}, $realMonsterPos->{y}, $target->{pos}{x}, $target->{pos}{y}, $target->{pos_to}{x}, $target->{pos_to}{y}, $realMonsterDist, $args->{attackMethod}{maxDistance}, $target->{dmgFromYou}), 'ai_attack';
 		if ($clientDist > $args->{attackMethod}{maxDistance} && $clientDist <= ($args->{attackMethod}{maxDistance} + 1) && $args->{temporary_extra_range} == 0) {
 			debug TF("[%s] Probably extra range provided by the server due to chasing, increasing range by 1.\n", $canAttack_fail_string), 'ai_attack';
