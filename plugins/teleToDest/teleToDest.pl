@@ -90,7 +90,7 @@ sub validate_teleToDestMap {
 	my $map_name = $val;
 	$map_name =~ s/^(\w{3})?(\d@.*)/$2/;
 	my $file = $map_name.'.fld';
-	$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
+	$file = File::Spec->catfile(File::Spec->splitdir(Settings::getFieldsFolders()), $file) if (Settings::getFieldsFolders());
 	$file .= ".gz" if (! -f $file); # compressed file
 	unless ($maps_lut{"${map_name}.rsw"} || -f $file) {
 		message "[teleToDest] Map '".$val."' does not exist, plugin won't be activated.\n","system";

@@ -89,13 +89,13 @@ our $welcomeText = TF("Welcome to %s.", $NAME);
 our @controlFolders;
 our @tablesFolders;
 our @pluginsFolders;
+our @fieldsFolders;
 # The registered data files.
 our $files;
 # System configuration.
 our %sys;
 our %options;
 
-our $fields_folder;
 our $logs_folder;
 our $maps_folder;
 
@@ -163,7 +163,6 @@ our @EXPORT_OK = qw(%sys %options);
 sub parseArguments {
 	# my %options;
 
-	undef $fields_folder;
 	undef $logs_folder;
 	undef $maps_folder;
 	undef $config_file;
@@ -185,7 +184,7 @@ sub parseArguments {
 		'control=s',		\$options{control},
 		'tables=s',			\$options{tables},
 		'plugins=s',		\$options{plugins},
-		'fields=s',			\$fields_folder,
+		'fields=s',			\$options{fields},
 		'logs=s',			\$logs_folder,
 		'maps=s',			\$maps_folder,
 
@@ -223,6 +222,11 @@ sub parseArguments {
 		setPluginsFolders(split($pathDelimiter, $options{plugins}));
 	} else {
 		setPluginsFolders("plugins");
+	}
+	if ($options{fields}) {
+		setFieldsFolders(split($pathDelimiter, $options{fields}));
+	} else {
+		setFieldsFolders("fields");
 	}
 
 	$fields_folder = "fields" if (!defined $fields_folder);
@@ -411,6 +415,35 @@ sub setPluginsFolders {
 # Get the folders in which to look for plugins.
 sub getPluginsFolders {
 	return @pluginsFolders;
+}
+
+##
+# void Settings::setFieldsFolders(Array<String> folders)
+#
+# Set the folders in which to look for fields.
+sub setFieldsFolders {
+	@fieldsFolders = @_;
+}
+
+# FIXME: should be f(Array<String> folders), not f(String folders)?
+sub addFieldsFolders {
+	if (defined(my $root = getFieldspackFolder())) {
+		unshift @fieldsFolders, grep -d, map { File::Spec->catdir($root, $_) } split ';', shift
+	}
+}
+
+# undef if there is folder(s) specified in --fields, otherwise fields path
+# TODO: way to reconfigure only that path? (by now it's always 'fields')
+sub getFieldspackFolder {
+	return $fieldsFolders[$#fieldsFolders];
+}
+
+##
+# Array<String> Settings::getFieldsFolders()
+#
+# Get the folders in which to look for fields.
+sub getFieldsFolders {
+	return @fieldsFolders;
 }
 
 ##
