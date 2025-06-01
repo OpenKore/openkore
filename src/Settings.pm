@@ -229,7 +229,6 @@ sub parseArguments {
 		setFieldsFolders("fields");
 	}
 
-	$fields_folder = "fields" if (!defined $fields_folder);
 	$logs_folder = "logs" if (!defined $logs_folder);
 	$maps_folder = "map" unless defined $maps_folder;
 	$base_chat_log_file ||= File::Spec->catfile($logs_folder, "chat.txt");
