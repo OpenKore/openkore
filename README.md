@@ -68,7 +68,7 @@ git clone https://github.com/OpenKore/openkore.git
 | [jRO](https://ragnarokonline.gungho.jp/) | Japan RO | nProtect | Not working | N/A |
 | [kRO](http://ro.gnjoy.com/) | Korea RO | nProtect | Not working | N/A |
 | [kRO Zero](http://roz.gnjoy.com/) | Korea RO | nProtect | Not working | N/A |
-| [laRO](https://www.gnjoylatam.com/) | Latam RO | nProtect | Not working | N/A |
+| [ROla](https://www.gnjoylatam.com/) | Latam RO | nProtect | Not working | N/A |
 | [ruRO Prime](https://ru.4game.com/roprime/) | Russia RO | Frost Security | Not Working | ya4ept |
 | [tRO Chaos/Thor](https://ro.gnjoy.in.th/) | Thailand RO (Online) | nProtect | Not Working | N/A |
 | [tRO Classic](https://roc.gnjoy.in.th/) | Thailand RO (Classic) | nProtect | Not Working | N/A |

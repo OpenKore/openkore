@@ -4,11 +4,13 @@
 ######## Login options and server-specific options ########
 
 master Latam - ROla: Freya/Nidhogg/Yggdrasil
-server
-username
-password
-loginPinCode
-char
+server 0
+username 
+password 
+loginPinCode 
+char 0
+# Please Read the Users Manual
+# The Manual is located at https://openkore.com/wiki/Manual
 
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
 # They must be the same as Query Server config in Poseidon.txt
@@ -206,7 +208,7 @@ cartMaxWeight 7900
 itemsTakeGreed 0
 itemsCheckWeight 1
 
-lockMap
+lockMap pay_fild08
 lockMap_x
 lockMap_y
 lockMap_randX
@@ -280,7 +282,7 @@ skillsAddAuto_list
 tankMode 0
 tankModeTarget
 
-teleportAuto_hp 10
+teleportAuto_hp 30
 teleportAuto_sp 0
 teleportAuto_idle 0
 teleportAuto_portal 0
@@ -401,7 +403,7 @@ mercenary_attackAuto_onlyWhenSafe 0
 mercenary_attackAuto_duringRandomWalk 0
 mercenary_attackAuto_duringItemsTake 0
 mercenary_attackDistance 1
-mercenary_attackMaxDistance 1
+mercenary_attackMaxDistance 9
 mercenary_attackDistanceAuto 1
 mercenary_attackMaxRouteTime 4
 mercenary_attackCanSnipe 0
@@ -546,75 +548,13 @@ pet_return 20
 # You can copy & paste any block multiple times. So if you want to
 # configure two attack skills, just duplicate the attackSkillSlot block.
 
-attackSkillSlot {
-	lvl
-	dist 1
-	maxDist 1
-	maxCastTime 0
-	minCastTime 0
-	hp
+attackSkillSlot Lightning Bolt {
+	lvl 3
+	dist 5
 	sp > 10
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	previousDamage
-	stopWhenHit 0
-	inLockOnly 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	maxAttempts 0
-	maxUses 0
-	target_hp
-	target_whenStatusActive
-	target_whenStatusInactive
-	target_deltaHp
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	isSelfSkill 0
-	isStartSkill 0
-	equip_topHead
-	equip_midHead
-	equip_lowHead
-	equip_leftHand
-	equip_rightHand
-	equip_leftAccessory
-	equip_rightAccessory
-	equip_robe
-	equip_armor
-	equip_shoes
-	equip_arrow
-	manualAI 0
+	stopWhenHit 1
+	inLockOnly 1
+	notInTown 1
 }
 
 attackComboSlot {
@@ -682,33 +622,12 @@ doCommand {
 	manualAI 0
 }
 
-useSelf_skill {
-	lvl
-	maxCastTime 0
-	minCastTime 0
-	hp
+useSelf_item Novice Potion, Potato, Carrot, Red Herb, Green Herb, Apple, Meat, Milk, Yellow Herb, Orange {
+	hp < 80
 	sp
-	ap
-	homunculus
 	homunculus_hp
 	homunculus_sp
 	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
 	onAction
 	whenStatusActive
 	whenStatusInactive
@@ -719,15 +638,12 @@ useSelf_skill {
 	monsters
 	notMonsters
 	monstersCount
-	monstersCountDist
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
 	notInTown 0
 	timeout 0
 	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
 	inInventory
 	manualAI 0
 }
@@ -1002,4 +918,3 @@ logToFile_Errors
 logToFile_Messages
 logToFile_Warnings
 history_max 50
-macro_orphans terminate
