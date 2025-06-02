@@ -766,7 +766,7 @@ sub main {
 			delete $args->{attackMethod};
 
 			$ai_v{"attackSkillSlot_${slot}_time"} = time;
-			$ai_v{temp}{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
+			$ai_v{"attackSkillSlot_${slot}_target_time"}{$ID} = time;
 
 			$args->{attackSkillSlot_attempts}{$slot}++;
 
@@ -798,7 +798,7 @@ sub main {
 			delete $args->{attackMethod};
 
 			$ai_v{"attackComboSlot_${slot}_time"} = time;
-			$ai_v{temp}{"attackComboSlot_${slot}_target_time"}{$ID} = time;
+			$ai_v{"attackComboSlot_${slot}_target_time"}{$ID} = time;
 
 			my $skill = Skill->new(auto => $config{"attackComboSlot_$slot"});
 			my $skill_lvl = $config{"attackComboSlot_${slot}_lvl"} || $char->getSkillLevel($skill);
