@@ -40,7 +40,6 @@ use Utils::Exceptions;
 use Network::MessageTokenizer;
 
 my $clientBuffer;
-my %flushTimer;
 my $currentClientKey = 0;
 
 # Members:
@@ -81,6 +80,17 @@ sub new {
 		no encoding 'utf8';
 		$self->{packetPending} = '';
 		$clientBuffer = '';
+	}
+
+	eval {
+		$clientPacketHandler = Network::ClientReceive->new;
+		$packetParser = Network::Receive->create($self, $masterServer->{serverType});
+		$messageSender = Network::Send->create($self, $masterServer->{serverType});
+	};
+	if (my $e = caught('Exception::Class::Base')) {
+		$interface->errorDialog($e->message());
+		$quit = 1;
+		return;
 	}
 
 	message T("X-Kore mode intialized.\n"), "startup";
@@ -366,25 +376,20 @@ sub checkServer {
 
 	# Connect to the next server for proxying the packets
 	if (!$self->serverAlive()) {
+		
+		# if no next server was defined by received packets, setup a primary server.
+		my $master = $masterServer = $masterServers{$config{'master'}};
 
 		# Setup the next server to connect.
 		if (!$self->{nextIp} || !$self->{nextPort}) {
-			# if no next server was defined by received packets, setup a primary server.
-			my $master = $masterServer = $masterServers{$config{'master'}};
-
-			$self->{nextIp} = $master->{ip};
-			$self->{nextPort} = $master->{port};
-			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
-			eval {
-				$clientPacketHandler = Network::ClientReceive->new;
-				$packetParser = Network::Receive->create($self, $masterServer->{serverType});
-				$messageSender = Network::Send->create($self, $masterServer->{serverType});
-			};
-			if (my $e = caught('Exception::Class::Base')) {
-				$interface->errorDialog($e->message());
-				$quit = 1;
-				return;
+			if ($master->{OTP_ip} && $master->{OTP_port}) {
+				$self->{nextIp} = $master->{OTP_ip};
+				$self->{nextPort} = $master->{OTP_port};
+			} else {
+				$self->{nextIp} = $master->{ip};
+				$self->{nextPort} = $master->{port};
 			}
+			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
 		}
 
 		$self->serverConnect($self->{nextIp}, $self->{nextPort}) unless ($self->{gotError});
@@ -459,7 +464,7 @@ sub modifyPacketIn {
 	}
 
 	# server list
-	if ($switch eq "0069" || $switch eq "0276" || $switch eq "0A4D" || $switch eq "0AC4" || $switch eq "0AC9" || $switch eq "0B07" || $switch eq "0B60") {
+	if ($switch eq "0069" || $switch eq "0276" || $switch eq "0A4D" || $switch eq "0AC4" || $switch eq "0AC9" || $switch eq "0B07" || $switch eq "0B60" || $switch eq "0C32") {
 		use bytes; no encoding 'utf8';
 
 		# queue the packet as requiring client's response in time
@@ -627,13 +632,15 @@ sub modifyPacketIn {
 		}
 
 	} elsif ($switch eq "006A" || $switch eq "006C" || $switch eq "0081" || $switch eq "02CA" || $switch eq "083E" || $switch eq "0ACD" || $switch eq "0AE0") { # error while login in server
+		# Show error message
+		error T("Server reported an error, disconnecting...\n"), "connection";
 		# An error occurred. Restart proxying
 		$self->{gotError} = 1;
 		$self->{nextIp} = undef;
 		$self->{nextPort} = undef;
 		$self->{charServerIp} = undef;
 		$self->{charServerPort} = undef;
-		$self->serverDisconnect(1);
+		$self->serverDisconnect();
 
 	} elsif ($switch eq "00B3") {
 		$self->{nextIp} = $self->{charServerIp};
@@ -643,6 +650,14 @@ sub modifyPacketIn {
 	} elsif ($switch eq "0259") {
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
+	} elsif ($switch eq "0AE3") { # If token was received, we need to connect to login server
+		# Get master config
+		my $master = $masterServer = $masterServers{$config{'master'}};
+		# Set next server to connect
+		$self->{nextIp} = $master->{ip};
+		$self->{nextPort} = $master->{port};
+		message T("Closing connection to Token Server\n"), 'connection' if (!$self->{packetReplayTrial});
+		$self->serverDisconnect(1);
 	}
 
 	return $msg;
