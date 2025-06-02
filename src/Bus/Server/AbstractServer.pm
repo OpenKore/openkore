@@ -123,8 +123,10 @@ sub onClientData {
 	my $parser = $client->{BAS_parser};
 	$parser->add($data);
 
-	my $ID;
-	while (my $args = $parser->readNext(\$ID)) {
+	while () {
+		my $ID;
+		my $args = $parser->readNext(\$ID);
+		last if !$ID;
 		$self->messageReceived($client, $ID, $args);
 	}
 }

@@ -68,6 +68,7 @@ sub new {
 	my %args = @_;
 	my $self = bless {}, $class;
 
+	$self->{verbose} = $args{verbose};
 	$self->{host} = $args{host};
 	$self->{port} = $args{port};
 	$self->{userAgent}   = $args{userAgent} || "OpenKore";
@@ -80,6 +81,7 @@ sub new {
 	# connected to the bus.
 	$self->{sendQueue} = [];
 	$self->{seq} = 0;
+	$self->{onConnected} = new CallbackList();
 	$self->{onMessageReceived} = new CallbackList();
 	$self->{onDialogRequested} = new CallbackList();
 
@@ -104,38 +106,39 @@ sub iterate {
 
 	} elsif ($state == STARTING_SERVER) {
 		if (time - $self->{startTime} > RESTART_INTERVAL) {
-			#print "Starting\n";
+			print "Starting\n" if $self->{verbose};
 			my $starter = $self->{starter};
 			my $state = $starter->iterate();
 			if ($state == Bus::Server::Starter::STARTED) {
 				$self->{state} = HANDSHAKING;
 				$self->{host}  = $starter->getHost();
 				$self->{port}  = $starter->getPort();
-				#print "Bus server started at $self->{host}:$self->{port}\n";
+				print "Bus server started at $self->{host}:$self->{port}\n" if $self->{verbose};
 				$self->reconnect();
 				$self->{startTime} = time;
 
 			} elsif ($state == Bus::Server::Starter::FAILED) {
 				# Cannot start; try again.
-				#print "Start failed.\n";
+				print "Start failed.\n" if $self->{verbose};
 				$self->{starter} = new Bus::Server::Starter();
 				$self->{startTime} = time;
 			}
 		}
 
 	} elsif ($state == HANDSHAKING) {
-		#print "Handshaking\n";
+		print "Handshaking\n" if $self->{verbose};
 		my $ID;
 		my $args = $self->readNext(\$ID);
 		if ($args) {
-			#print "Sending HELLO\n";
+			print "Sending HELLO\n" if $self->{verbose};
 			$self->{ID} = $args->{yourID};
 			$self->{client}->send("HELLO", {
 				userAgent   => $self->{userAgent},
 				privateOnly => $self->{privateOnly}
 			});
 			$self->{state} = CONNECTED;
-			#print "Connected\n";
+			print "Connected\n" if $self->{verbose};
+			$self->onConnected->call($self);
 		}
 
 	} elsif ($state == CONNECTED) {
@@ -201,12 +204,12 @@ sub ID {
 sub reconnect {
 	my ($self) = @_;
 	eval {
-		#print "(Re)connecting\n";
+		print "(Re)connecting\n" if $self->{verbose};
 		$self->{client} = new Bus::SimpleClient($self->{host}, $self->{port});
 		$self->{state} = HANDSHAKING;
 	};
 	if (caught('SocketException')) {
-		#print "Cannot connect: $@\n";
+		print "Cannot connect: $@\n" if $self->{verbose};
 		$self->{state} = NOT_CONNECTED;
 		$self->{connectTime} = time;
 	} elsif ($@) {
@@ -243,7 +246,7 @@ sub readNext {
 		$args = $self->{client}->readNext($MID);
 	};
 	if (caught('IOException')) {
-		#print "Disconnected from IPC server.\n";
+		print "Disconnected from IPC server.\n" if $self->{verbose};
 		$self->handleIOException();
 		return undef;
 	} elsif ($@) {
@@ -273,6 +276,7 @@ sub send {
 			$self->{client}->send($MID, $args);
 		};
 		if (caught('IOException')) {
+			print "Failed to send $MID: " . $self->handleIOException . "\n";
 			$self->handleIOException();
 			push @{$self->{sendQueue}}, [$MID, $args];
 			return 0;
@@ -394,6 +398,16 @@ sub requestDialog {
 # `l`
 sub onMessageReceived {
 	return $_[0]->{onMessageReceived};
+}
+
+##
+# CallbackList $Bus_Client->onConnected()
+#
+# This event is triggered when the client connects.  It may happen more than
+# once, if the client has to reconnect for any reason.  The event argument
+# is undef.
+sub onConnected {
+	return $_[0]->{onConnected};
 }
 
 sub onDialogRequested {
