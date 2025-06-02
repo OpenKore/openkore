@@ -24,7 +24,7 @@ XKore 1
 XKore_port 2350
 XKore_dll NetRedirect.dll
 XKore_injectDLL 0
-XKore_autoAttachIfOneExe 1
+XKore_autoAttachIfOneExe 0
 XKore_silent 1
 XKore_bypassBotDetection 0
 XKore_exeName ragexe.exe
@@ -264,7 +264,7 @@ sitAuto_sp_lower 0
 sitAuto_sp_upper 0
 sitAuto_follow 0
 sitAuto_over_50 0
-sitAuto_idle 1
+sitAuto_idle 0
 sitAuto_look
 sitAuto_look_from_wall
 sitTensionRelax 0
