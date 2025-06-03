@@ -11,27 +11,49 @@
 
 using namespace std;
 
+// ————— Informações “mockadas” (constantes configuráveis) —————
+
+// Endereços de função/injeção no cliente (valores de exemplo)
+static const DWORD MOCK_CLIENT_SUB_ADDRESS               = 0xB7A330;
+static const DWORD MOCK_CRAGCONNECTION_INSTANCE_ADDRESS  = 0xB7A890;
+static const DWORD MOCK_RECV_PTR_ADDRESS                 = 0x144DDB8;
+
+// IP e portas padrão
+static const char* MOCK_KORE_SERVER_IP   = "127.0.0.1";
+static const int   MOCK_DEFAULT_KORE_PORT = 2350;
+
+// Timeouts e intervalos (ms)
+static const int   MOCK_TIMEOUT_MS            = 600000;
+static const int   MOCK_RECONNECT_INTERVAL_MS = 3000;
+static const int   MOCK_PING_INTERVAL_MS      = 5000;
+static const int   MOCK_SLEEP_TIME_MS         = 10;
+
+// Tamanho de buffer
+static const int   MOCK_BUF_SIZE = 1024 * 32;
+
+// ————— Fim das informações “mockadas” —————
+
 // Enum para tipo de pacote
 enum e_PacketType {
     RECEIVED = 0,
-    SENDED = 1
+    SENDED   = 1
 };
 
 // Ponteiro para a função recv original
 typedef int (WINAPI* recv_func_t)(SOCKET s, char* buf, int len, int flags);
 recv_func_t original_recv = nullptr;
 
-// Variáveis globais
-bool hook_applied = false;
-bool koreClientIsAlive = false;
-bool keepMainThread = true;
+// Variáveis globais de estado
+bool hook_applied        = false;
+bool koreClientIsAlive   = false;
+bool keepMainThread      = true;
 HANDLE hThread;
 
-// Endereços e funções do cliente
-DWORD clientSubAddress = 0xB7A330; // Endereço da função no cliente
-DWORD CRagConnection_instanceR_address = 0xB7A890; // Instância
+// Endereços e funções do cliente — agora apontando para os mocks
+DWORD clientSubAddress               = MOCK_CLIENT_SUB_ADDRESS;            // Endereço da função no cliente
+DWORD CRagConnection_instanceR_address = MOCK_CRAGCONNECTION_INSTANCE_ADDRESS; // Instância
 
-// Typedef para a função do cliente
+// Typedef para a função de envio internamente no cliente
 typedef int(__thiscall* SendToClientFunc)(void* CragConnection, size_t size, char* buffer);
 SendToClientFunc sendFunc;
 
@@ -39,20 +61,22 @@ typedef void* (__stdcall* originalInstanceR)(void);
 originalInstanceR instanceR;
 
 // Sockets e buffers
-static SOCKET koreClient = INVALID_SOCKET;
-static SOCKET roServer = INVALID_SOCKET;
-static string roSendBuf("");
-static string xkoreSendBuf("");
-bool imalive = false;
+static SOCKET koreClient    = INVALID_SOCKET;
+static SOCKET roServer      = INVALID_SOCKET;
+static string roSendBuf     = "";
+static string xkoreSendBuf  = "";
+bool imalive                = false;
 
-// Constantes
-#define BUF_SIZE 1024 * 32
-int XKORE_SERVER_PORT = 2350; // Agora é variável
-#define TIMEOUT 600000
-#define RECONNECT_INTERVAL 3000
-#define PING_INTERVAL 5000
-#define SLEEP_TIME 10
-#define SF_CLOSED -1
+// Porta atual do X-Kore (pode ser substituída em tempo de execução)
+int XKORE_SERVER_PORT = MOCK_DEFAULT_KORE_PORT;
+
+// Constantes derivadas dos mocks
+#define BUF_SIZE             MOCK_BUF_SIZE
+#define TIMEOUT              MOCK_TIMEOUT_MS
+#define RECONNECT_INTERVAL   MOCK_RECONNECT_INTERVAL_MS
+#define PING_INTERVAL        MOCK_PING_INTERVAL_MS
+#define SLEEP_TIME           MOCK_SLEEP_TIME_MS
+#define SF_CLOSED            -1
 
 // Estrutura de pacote
 struct Packet {
@@ -63,29 +87,29 @@ struct Packet {
 
 // Declaração das funções
 DWORD WINAPI KeyboardMonitorThread(LPVOID lpParam);
-DWORD WINAPI koreConnectionMain(LPVOID lpParam);
-bool isConnected(SOCKET s);
-SOCKET createSocket(int port);
-int readSocket(SOCKET s, char* buf, int len);
-Packet* unpackPacket(const char* buf, int buflen, int& next);
-void processPacket(Packet* packet);
+DWORD WINAPI koreConnectionMain   (LPVOID lpParam);
+bool    isConnected               (SOCKET s);
+SOCKET  createSocket              (int port);
+int     readSocket                (SOCKET s, char* buf, int len);
+Packet* unpackPacket              (const char* buf, int buflen, int& next);
+void    processPacket             (Packet* packet);
 
-// Console para debug
+// Console para depuração
 void AllocateConsole() {
     AllocConsole();
     freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
     freopen_s((FILE**)stderr, "CONOUT$", "w", stderr);
-    freopen_s((FILE**)stdin, "CONIN$", "r", stdin);
+    freopen_s((FILE**)stdin,  "CONIN$",  "r", stdin);
 #ifdef UNICODE
-    SetConsoleTitle(L"Debug Console"); // Wide string for Visual Studio Unicode
+    SetConsoleTitle(L"Console de Depuração");
 #else
-    SetConsoleTitle("Debug Console"); // ANSI string for gcc/MinGW
+    SetConsoleTitle("Console de Depuração");
 #endif
 }
 
-// Função para debug
+// Função para depuração
 void debug(const char* msg) {
-    std::cout << "[DEBUG] " << msg << std::endl;
+    std::cout << "[DEPURAÇÃO] " << msg << std::endl;
 }
 
 // Função para converter bytes para hex
@@ -101,10 +125,11 @@ std::string BytesToHex(const char* data, int length) {
 
 // Função para enviar dados para Kore
 void sendDataToKore(char* buffer, int len, e_PacketType type) {
-    bool isAlive = koreClientIsAlive;
-    if (isAlive) {
-        char* newbuf = (char*)malloc(len + 3);
+    if (koreClientIsAlive) {
+        char* newbuf        = (char*)malloc(len + 3);
         unsigned short sLen = (unsigned short)len;
+
+        // Prefixo “R” ou “S”
         if (type == e_PacketType::RECEIVED) {
             memcpy(newbuf, "R", 1);
         }
@@ -116,7 +141,8 @@ void sendDataToKore(char* buffer, int len, e_PacketType type) {
         xkoreSendBuf.append(newbuf, len + 3);
         free(newbuf);
 
-        std::cout << "Dados adicionados ao buffer (" << len + 3 << " bytes, tipo: " << (type == RECEIVED ? "R" : "S") << ")" << std::endl;
+        std::cout << "Dados adicionados ao buffer (" << (len + 3)
+                  << " bytes, tipo: " << (type == RECEIVED ? "R" : "S") << ")" << std::endl;
     }
 }
 
@@ -128,10 +154,10 @@ int WINAPI hooked_recv(SOCKET s, char* buf, int len, int flags) {
     int result = original_recv(s, buf, len, flags);
 
     if (result > 0) {
-        std::cout << "=== RECV INTERCEPTED ===" << std::endl;
+        std::cout << "=== RECV INTERCEPTADO ===" << std::endl;
         std::cout << "Socket: " << s << std::endl;
-        std::cout << "Length: " << result << " bytes" << std::endl;
-        std::cout << "Data (hex):\n" << BytesToHex(buf, result) << std::endl;
+        std::cout << "Tamanho: " << result << " bytes" << std::endl;
+        std::cout << "Dados (hex):\n" << BytesToHex(buf, result) << std::endl;
 
         // Salva o socket do servidor RO
         roServer = s;
@@ -139,7 +165,7 @@ int WINAPI hooked_recv(SOCKET s, char* buf, int len, int flags) {
         // Envia dados para Kore
         sendDataToKore(buf, result, e_PacketType::RECEIVED);
 
-        std::cout << "===================" << std::endl;
+        std::cout << "=========================" << std::endl;
     }
 
     return result;
@@ -147,9 +173,10 @@ int WINAPI hooked_recv(SOCKET s, char* buf, int len, int flags) {
 
 // Função para aplicar o hook
 bool ApplyHook() {
-    DWORD recv_ptr_address = 0x144DDB8;
+    DWORD recv_ptr_address = MOCK_RECV_PTR_ADDRESS;
 
-    std::cout << "Tentando aplicar hook no endereço: 0x" << std::hex << recv_ptr_address << std::endl;
+    std::cout << "Tentando aplicar hook no endereço: 0x"
+              << std::hex << recv_ptr_address << std::dec << std::endl;
 
     if (IsBadReadPtr((void*)(uintptr_t)recv_ptr_address, sizeof(DWORD))) {
         std::cout << "ERRO: Endereço inválido para leitura!" << std::endl;
@@ -157,7 +184,8 @@ bool ApplyHook() {
     }
 
     original_recv = *(recv_func_t*)(uintptr_t)recv_ptr_address;
-    std::cout << "Ponteiro original recv: 0x" << std::hex << (uintptr_t)original_recv << std::endl;
+    std::cout << "Ponteiro original recv: 0x" << std::hex
+              << (uintptr_t)original_recv << std::dec << std::endl;
 
     if (original_recv == nullptr) {
         std::cout << "ERRO: Ponteiro original é nulo!" << std::endl;
@@ -165,7 +193,8 @@ bool ApplyHook() {
     }
 
     *(recv_func_t*)(uintptr_t)recv_ptr_address = hooked_recv;
-    std::cout << "Novo ponteiro (hook): 0x" << std::hex << (uintptr_t)hooked_recv << std::endl;
+    std::cout << "Novo ponteiro (hook): 0x" << std::hex
+              << (uintptr_t)hooked_recv << std::dec << std::endl;
 
     recv_func_t current_ptr = *(recv_func_t*)(uintptr_t)recv_ptr_address;
     if (current_ptr == hooked_recv) {
@@ -181,7 +210,7 @@ bool ApplyHook() {
 // Função para remover o hook
 void RemoveHook() {
     if (original_recv) {
-        DWORD recv_ptr_address = 0x144DDB8;
+        DWORD recv_ptr_address = MOCK_RECV_PTR_ADDRESS;
         *(recv_func_t*)(uintptr_t)recv_ptr_address = original_recv;
         std::cout << "Hook removido!" << std::endl;
     }
@@ -191,7 +220,7 @@ void RemoveHook() {
 bool isConnected(SOCKET s) {
     if (s == INVALID_SOCKET) return false;
 
-    fd_set readfds;
+    fd_set  readfds;
     FD_ZERO(&readfds);
     FD_SET(s, &readfds);
 
@@ -202,7 +231,7 @@ bool isConnected(SOCKET s) {
     return true;
 }
 
-// Criar socket
+// Criar socket (usa IP e porta do mock)
 SOCKET createSocket(int port) {
     sockaddr_in addr;
     SOCKET sock;
@@ -212,10 +241,11 @@ SOCKET createSocket(int port) {
     if (sock == INVALID_SOCKET)
         return INVALID_SOCKET;
 
+    // Modo não bloqueante temporário para conectar
     ioctlsocket(sock, FIONBIO, &arg);
-    addr.sin_family = AF_INET;
-    addr.sin_port = htons(port);
-    addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    addr.sin_family      = AF_INET;
+    addr.sin_port        = htons(port);
+    addr.sin_addr.s_addr = inet_addr(MOCK_KORE_SERVER_IP);
 
     while (connect(sock, (struct sockaddr*)&addr, sizeof(sockaddr_in)) == SOCKET_ERROR) {
         if (WSAGetLastError() == WSAEISCONN)
@@ -237,7 +267,7 @@ SOCKET createSocket(int port) {
 
 // Ler dados do socket
 int readSocket(SOCKET s, char* buf, int len) {
-    fd_set readfds;
+    fd_set  readfds;
     FD_ZERO(&readfds);
     FD_SET(s, &readfds);
 
@@ -245,7 +275,7 @@ int readSocket(SOCKET s, char* buf, int len) {
     int result = select(0, &readfds, NULL, NULL, &timeout);
 
     if (result == SOCKET_ERROR) return SF_CLOSED;
-    if (result == 0) return 0; // Timeout
+    if (result == 0)            return 0; // Timeout
 
     int bytes = recv(s, buf, len, 0);
     if (bytes == 0 || bytes == SOCKET_ERROR) return SF_CLOSED;
@@ -255,16 +285,16 @@ int readSocket(SOCKET s, char* buf, int len) {
 
 // Função para desempacotar pacotes
 Packet* unpackPacket(const char* buf, int buflen, int& next) {
-    if (buflen < 3) return NULL; // Precisa de pelo menos 3 bytes (ID + length)
+    if (buflen < 3) return NULL; // Precisa de pelo menos 3 bytes (ID + comprimento)
 
-    char id = buf[0];
+    char            id  = buf[0];
     unsigned short len = *(unsigned short*)(buf + 1);
 
     if (buflen < 3 + len) return NULL; // Pacote incompleto
 
     Packet* packet = (Packet*)malloc(sizeof(Packet));
-    packet->ID = id;
-    packet->len = len;
+    packet->ID   = id;
+    packet->len  = len;
     packet->data = (char*)malloc(len);
     memcpy(packet->data, buf + 3, len);
 
@@ -274,11 +304,13 @@ Packet* unpackPacket(const char* buf, int buflen, int& next) {
 
 // Processar pacote recebido do Kore
 void processPacket(Packet* packet) {
-    sendFunc = (SendToClientFunc)(uintptr_t)(clientSubAddress);
+    // A cada chamada, recarrega as funções a partir dos mocks
+    sendFunc  = (SendToClientFunc)(uintptr_t)(clientSubAddress);
     instanceR = (originalInstanceR)(uintptr_t)(CRagConnection_instanceR_address);
+
     switch (packet->ID) {
     case 'S': // Enviar pacote para o servidor RO
-        debug("Sending Data From Openkore to Server...");
+        debug("Enviando dados do OpenKore para o servidor...");
         if (roServer != INVALID_SOCKET && isConnected(roServer)) {
             sendFunc(instanceR(), packet->len, packet->data);
             std::cout << "Pacote enviado para servidor RO (" << packet->len << " bytes)" << std::endl;
@@ -289,79 +321,85 @@ void processPacket(Packet* packet) {
         break;
 
     case 'R': // Injetar pacote no cliente RO usando função interna
+        // Aqui você poderia chamar outra rotina, se necessário
         break;
 
     case 'K': default: // Keep-alive
-        debug("Received Keep-Alive Packet...");
+        debug("Pacote Keep-Alive recebido...");
         break;
     }
 }
 
 // Thread principal de conexão com Kore
 DWORD WINAPI koreConnectionMain(LPVOID lpParam) {
-    char buf[BUF_SIZE + 1];
-    char pingPacket[3];
+    char          buf[BUF_SIZE + 1];
+    char          pingPacket[3];
     unsigned short pingPacketLength = 0;
-    DWORD koreClientTimeout, koreClientPingTimeout, reconnectTimeout;
-    string koreClientRecvBuf;
+    DWORD         koreClientTimeout, koreClientPingTimeout, reconnectTimeout;
+    string        koreClientRecvBuf;
 
-    debug("Thread started...");
-    koreClientTimeout = GetTickCount();
+    debug("Thread iniciada...");
+    koreClientTimeout     = GetTickCount();
     koreClientPingTimeout = GetTickCount();
-    reconnectTimeout = 0;
+    reconnectTimeout      = 0;
 
     memcpy(pingPacket, "K", 1);
     memcpy(pingPacket + 1, &pingPacketLength, 2);
 
     while (keepMainThread) {
-        bool isAlive = koreClientIsAlive;
+        bool isAlive        = koreClientIsAlive;
         bool isAliveChanged = false;
 
-        // Tentar conectar ao servidor X-Kore se necessário
+        // Tenta (re)conectar ao servidor X-Kore, se necessário
         koreClientIsAlive = koreClient != INVALID_SOCKET;
 
-        if ((!isAlive || !isConnected(koreClient) || GetTickCount() - koreClientTimeout > TIMEOUT)
-            && GetTickCount() - reconnectTimeout > RECONNECT_INTERVAL) {
-            debug("Connecting to X-Kore server...");
+        if ((!isAlive
+             || !isConnected(koreClient)
+             || GetTickCount() - koreClientTimeout > TIMEOUT)
+            && GetTickCount() - reconnectTimeout > RECONNECT_INTERVAL) 
+        {
+            debug("Conectando ao servidor X-Kore...");
 
             if (koreClient != INVALID_SOCKET)
                 closesocket(koreClient);
-            koreClient = createSocket(XKORE_SERVER_PORT);
 
-            isAlive = koreClient != INVALID_SOCKET;
+            koreClient = createSocket(XKORE_SERVER_PORT);
+            isAlive    = koreClient != INVALID_SOCKET;
             isAliveChanged = true;
+
             if (!isAlive)
-                debug("Failed...");
+                debug("Falha na conexão ao X-Kore...");
             else
                 koreClientTimeout = GetTickCount();
+
             reconnectTimeout = GetTickCount();
         }
 
-        // Receber dados do servidor X-Kore
+        // Recebe dados do servidor X-Kore
         if (isAlive) {
             if (!imalive) {
-                debug("Connected to xKore-Server");
+                debug("Conectado ao servidor xKore");
                 imalive = true;
             }
 
             int ret = readSocket(koreClient, buf, BUF_SIZE);
             if (ret == SF_CLOSED) {
-                debug("X-Kore server exited");
+                debug("Servidor X-Kore desconectou");
                 closesocket(koreClient);
                 koreClient = INVALID_SOCKET;
-                isAlive = false;
+                isAlive        = false;
                 isAliveChanged = true;
                 imalive = false;
             }
             else if (ret > 0) {
-                // Dados disponíveis
                 Packet* packet;
-                int next = 0;
-                debug("Received Packet from OpenKore...");
+                int     next = 0;
+                debug("Pacote recebido do OpenKore...");
                 koreClientRecvBuf.append(buf, ret);
 
-                while ((packet = unpackPacket(koreClientRecvBuf.c_str(), (int)koreClientRecvBuf.size(), next))) {
-                    // Pacote está completo
+                while ((packet = unpackPacket(koreClientRecvBuf.c_str(),
+                                              (int)koreClientRecvBuf.size(), next))) 
+                {
                     processPacket(packet);
                     free(packet->data);
                     free(packet);
@@ -372,19 +410,22 @@ DWORD WINAPI koreConnectionMain(LPVOID lpParam) {
             }
         }
 
-        // Enviar dados para o servidor X-Kore
-        if (xkoreSendBuf.size()) {
+        // Envia dados para o servidor X-Kore
+        if (!xkoreSendBuf.empty()) {
             if (isAlive) {
                 send(koreClient, (char*)xkoreSendBuf.c_str(), (int)xkoreSendBuf.size(), 0);
             }
             else {
-                // Kore não está rodando; enviar diretamente para o servidor RO
+                // Caso o Kore não esteja disponível, encaminha direto ao RO
                 Packet* packet;
-                int next;
+                int     next;
 
-                while ((packet = unpackPacket(xkoreSendBuf.c_str(), (int)xkoreSendBuf.size(), next))) {
-                    if (packet->ID == 'S')
+                while ((packet = unpackPacket(xkoreSendBuf.c_str(),
+                                              (int)xkoreSendBuf.size(), next))) 
+                {
+                    if (packet->ID == 'S') {
                         send(roServer, (char*)packet->data, packet->len, 0);
+                    }
                     free(packet->data);
                     free(packet);
                     xkoreSendBuf.erase(0, next);
@@ -393,7 +434,7 @@ DWORD WINAPI koreConnectionMain(LPVOID lpParam) {
             xkoreSendBuf.clear();
         }
 
-        // Ping para manter conexão viva
+        // Enviar ping para manter conexão viva
         if (koreClientIsAlive && GetTickCount() - koreClientPingTimeout > PING_INTERVAL) {
             send(koreClient, pingPacket, 3, 0);
             koreClientPingTimeout = GetTickCount();
@@ -439,19 +480,19 @@ DWORD WINAPI KeyboardMonitorThread(LPVOID lpParam) {
     return 0;
 }
 
-// Função para obter porta do usuário
+// Função para obter porta do usuário (substitui diretamente MOCK_DEFAULT_KORE_PORT)
 int getUserPort() {
-    int port = 2350; // valor padrão
+    int  port = MOCK_DEFAULT_KORE_PORT; 
     char input[256];
-    
-    std::cout << "Digite a porta do X-Kore (padrão 2350): ";
+
+    std::cout << "Digite a porta do X-Kore (padrão " << MOCK_DEFAULT_KORE_PORT << "): ";
     if (fgets(input, sizeof(input), stdin)) {
         int inputPort = atoi(input);
         if (inputPort > 0 && inputPort <= 65535) {
             port = inputPort;
         }
     }
-    
+
     std::cout << "Usando porta: " << port << std::endl;
     return port;
 }
@@ -460,11 +501,11 @@ int getUserPort() {
 void init() {
     AllocateConsole();
     std::cout << "=== RECV HOOK DLL ===" << std::endl;
-    std::cout << "Arquitetura: x86 (32-bit)" << std::endl;
-    
-    // Solicita porta do usuário
+    std::cout << "Arquitetura: x86 (32 bits)" << std::endl;
+
+    // Solicita porta do usuário para sobrepor o mock
     XKORE_SERVER_PORT = getUserPort();
-    
+
     std::cout << "\nControles:" << std::endl;
     std::cout << "F11 - Aplicar hook" << std::endl;
     std::cout << "F12 - Remover hook" << std::endl;
@@ -474,13 +515,13 @@ void init() {
     WSADATA wsaData;
     WSAStartup(MAKEWORD(2, 2), &wsaData);
 
-    debug("Creating Main thread...");
+    debug("Criando thread principal...");
     hThread = CreateThread(NULL, 0, koreConnectionMain, NULL, 0, NULL);
     if (hThread) {
-        debug("Main Thread created...");
+        debug("Thread principal criada...");
     }
     else {
-        debug("Failed to Create Thread...");
+        debug("Falha ao criar thread principal...");
     }
 
     // Cria thread para monitorar teclado
@@ -492,7 +533,7 @@ void init() {
 
 // Função finish
 void finish() {
-    debug("Closing threads...");
+    debug("Fechando threads...");
     keepMainThread = false;
 
     if (hook_applied) {
@@ -508,18 +549,17 @@ void finish() {
 
 // DLL Entry Point
 BOOL APIENTRY DllMain(HMODULE hModule,
-    DWORD  ul_reason_for_call,
-    LPVOID lpReserved
-)
+                      DWORD   ul_reason_for_call,
+                      LPVOID  lpReserved) 
 {
-    switch (ul_reason_for_call)
-    {
+    switch (ul_reason_for_call) {
     case DLL_PROCESS_ATTACH:
         init();
         break;
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
-    case DLL_PROCESS_DETACH:;
+    case DLL_PROCESS_DETACH:
+        ;
     }
     return TRUE;
 }
