@@ -14,32 +14,75 @@ sub new {
 		'0C26' => ['master_login', 'a4 Z51 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0825' => ['token_login', 'v V C Z51 a17 a15 a*', [qw(len version master_version username mac_hyphen_separated ip token)]],
 		'0436' => ['map_login', 'a4 a4 a4 V V C', [qw(accountID charID sessionID unknown tick sex)]],
+		'0360' => ['sync', '', []],
+		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0361' => ['actor_look_at', 'v', [qw(headDir)]],
+		'0362' => ['item_take', 'a2', [qw(ID)]],
+		'0363' => ['item_drop', 'v2', [qw(index amount)]],
+		'0364' => ['storage_item_add', 'v2', [qw(index amount)]],
+		'0365' => ['storage_item_remove', 'v2', [qw(index amount)]],
+		'0366' => ['skill_use_location', 'v3', [qw(lv skillID x y)]],
+		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
+		'07E4' => ['item_list_window_selected', 'v v', [qw(index amount)]],
+		'098F' => ['char_delete2_accept', 'a4 Z40 Z40 Z40', [qw(charID email1 email2 email3)]],
+		'0998' => ['send_equip', 'v2', [qw(index viewID)]],
+		'08B5' => ['pet_capture', 'a4', [qw(targetID)]],
+		'0202' => ['friend_request', 'a*', [qw(username)]],
+		'02C4' => ['party_join_request_by_name', 'Z24', [qw(playerName)]],
+		'07D7' => ['party_setting', 'C v', [qw(settingFlag value)]],
+		'0811' => ['buy_bulk_openShop', 'v Z*', [qw(limit items)]],
+		'0815' => ['buy_bulk_closeShop', '', []],
+		'0817' => ['buy_bulk_request', 'a4 v', [qw(sellerID itemIndex)]],
+		'0819' => ['buy_bulk_buyer', 'v2', [qw(itemID amount)]],
+		'09F3' => ['rodex_request_items', 'C', [qw(option)]],
+		'0AC0' => ['rodex_open_mailbox', '', []],
+		'0AC1' => ['rodex_refresh_maillist', '', []],
+		'09E9' => ['rodex_close_mailbox', '', []],
+		'022D' => ['homunculus_command', 'C', [qw(command)]],
+		'023B' => ['storage_password', 'Z24', [qw(password)]],
 	);
+
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-        master_login 0C26
-        map_loaded 007D
-        character_move 035F
-        master_login 0C26
-        token_login 0825
-        char_create 0A39
-        map_login 0436
-        actor_action 0437
-        blocking_play_cancel 0447
-        request_cashitems 08C9
-        sync 0360
-        actor_look_at 0361
-        item_take 0362
-        item_drop 0363
-        actor_info_request 0368
-        rodex_request_items 09F3
-        rodex_open_mailbox 0AC0
-        rodex_close_mailbox 09E9
-        rodex_refresh_maillist 0AC1
-        gameguard_reply 09D0
-    );
+    master_login 0C26
+    token_login 0825
+    map_login 0436
+	char_create 0A39
+    map_loaded 007D
+    character_move 035F
+    sync 0360
+    actor_action 0437
+    actor_look_at 0361
+    item_take 0362
+    item_drop 0363
+    blocking_play_cancel 0447
+    storage_item_add 0364
+    storage_item_remove 0365
+    skill_use_location 0366
+	request_cashitems 08C9
+    skill_use 0438
+	actor_info_request 0368
+    item_list_window_selected 07E4
+    char_delete2_accept 098F
+	gameguard_reply 09D0
+    send_equip 0998
+    pet_capture 08B5
+    friend_request 0202
+    party_join_request_by_name 02C4
+    party_setting 07D7
+    buy_bulk_openShop 0811
+    buy_bulk_closeShop 0815
+    buy_bulk_request 0817
+    buy_bulk_buyer 0819
+    rodex_open_mailbox 0AC0
+    rodex_refresh_maillist 0AC1
+    rodex_close_mailbox 09E9
+    rodex_request_items 09F3
+    homunculus_command 022D
+    storage_password 023B
+	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
@@ -109,19 +152,6 @@ sub sendMapLogin {
 		sex			=> $sex,
 	});
 
-	my $crcCheckSum = 0x00;
-	for my $byte (unpack('C*', $msg)) {
-		$crcCheckSum ^= $byte;
-		for (1..8) {
-			if ($crcCheckSum & 0x80) {
-				$crcCheckSum = (($crcCheckSum << 1) ^ 0x07) & 0xFF;
-			} else {
-				$crcCheckSum = ($crcCheckSum << 1) & 0xFF;
-			}
-		}
-	}
-
-	$msg .= pack('C', $crcCheckSum);
 	$self->sendToServer($msg);
 
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
