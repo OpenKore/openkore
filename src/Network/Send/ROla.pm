@@ -40,48 +40,51 @@ sub new {
 		'09E9' => ['rodex_close_mailbox', '', []],
 		'022D' => ['homunculus_command', 'C', [qw(command)]],
 		'023B' => ['storage_password', 'Z24', [qw(password)]],
+		'00A0' => ['inventory_item_list', 'v V C a*', [qw(len sync type data)]],
+		'00B9' => ['npc_response_select', 'v', [qw(index)]],
 	);
 
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
 	my %handlers = qw(
-    master_login 0C26
-    token_login 0825
-    map_login 0436
-	char_create 0A39
-    map_loaded 007D
-    character_move 035F
-    sync 0360
-    actor_action 0437
-    actor_look_at 0361
-    item_take 0362
-    item_drop 0363
-    blocking_play_cancel 0447
-    storage_item_add 0364
-    storage_item_remove 0365
-    skill_use_location 0366
-	request_cashitems 08C9
-    skill_use 0438
-	actor_info_request 0368
-    item_list_window_selected 07E4
-    char_delete2_accept 098F
-	gameguard_reply 09D0
-    send_equip 0998
-    pet_capture 08B5
-    friend_request 0202
-    party_join_request_by_name 02C4
-    party_setting 07D7
-    buy_bulk_openShop 0811
-    buy_bulk_closeShop 0815
-    buy_bulk_request 0817
-    buy_bulk_buyer 0819
-    rodex_open_mailbox 0AC0
-    rodex_refresh_maillist 0AC1
-    rodex_close_mailbox 09E9
-    rodex_request_items 09F3
-    homunculus_command 022D
-    storage_password 023B
+		master_login 0C26
+		token_login 0825
+		map_login 0436
+		char_create 0A39
+		map_loaded 007D
+		character_move 035F
+		sync 0360
+		actor_action 0437
+		actor_look_at 0361
+		item_take 0362
+		item_drop 0363
+		blocking_play_cancel 0447
+		storage_item_add 0364
+		storage_item_remove 0365
+		skill_use_location 0366
+		request_cashitems 08C9
+		skill_use 0438
+		actor_info_request 0368
+		item_list_window_selected 07E4
+		char_delete2_accept 098F
+		gameguard_reply 09D0
+		send_equip 0998
+		pet_capture 08B5
+		friend_request 0202
+		party_join_request_by_name 02C4
+		party_setting 07D7
+		buy_bulk_openShop 0811
+		buy_bulk_closeShop 0815
+		buy_bulk_request 0817
+		buy_bulk_buyer 0819
+		rodex_open_mailbox 0AC0
+		rodex_refresh_maillist 0AC1
+		rodex_close_mailbox 09E9
+		rodex_request_items 09F3
+		homunculus_command 022D
+		storage_password 023B
+		npc_response_select 00B9
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
@@ -111,30 +114,52 @@ sub reconstruct_master_login {
 }
 
 sub sendTokenToServer {
-	my ($self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port) = @_;
-	my $len =  $length + 92;
+    my ($self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port) = @_;
+    
+    my $len = $length + 92;
+    $net->serverDisconnect();
+    $net->serverConnect($otp_ip, $otp_port);
+    
+    my $ip = '192.168.0.2';
+    
+    # Gera endereço MAC aleatório se não configurado
+    my $mac = $config{macAddress} || sprintf("%02x%02x%02x%02x%02x%02x", (int(rand(256)) & 0xFC) | 0x02, map { int(rand(256)) } 1..5);
+    
+    my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
+    
+    my $msg = $self->reconstruct({
+        switch => 'token_login',
+        len => $len,
+        version => $version || $self->version,
+        master_version => $master_version,
+        username => $username,
+        mac_hyphen_separated => $mac_hyphen_separated,
+        ip => $ip,
+        token => $token,
+    });
+    
+    $self->sendToServer($msg);
+    debug "Sent sendTokenLogin\n", "sendPacket", 2;
+}
 
-	$net->serverDisconnect();
-	$net->serverConnect($otp_ip, $otp_port);
+sub add_checksum {
+	my ($self, $msg) = @_;
 
-	my $ip = '192.168.0.2';
-	my $mac = $config{macAddress} || '111111111111'; # gibberish
-	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
+	my $crc = 0x00;
+	for my $byte (unpack('C*', $msg)) {
+		$crc ^= $byte;
+		for (1..8) {
+			if ($crc & 0x80) {
+				$crc = (($crc << 1) ^ 0x07) & 0xFF;
+			} else {
+				$crc = ($crc << 1) & 0xFF;
+			}
+		}
+	}
 
-	my $msg = $self->reconstruct({
-		switch => 'token_login',
-		len => $len,
-		version => $version || $self->version,
-		master_version => $master_version,
-		username => $username,
-		mac_hyphen_separated => $mac_hyphen_separated,
-		ip => $ip,
-		token => $token,
-	});
-
-	$self->sendToServer($msg);
-
-	debug "Sent sendTokenLogin\n", "sendPacket", 2;
+	# Anexa o checksum ao final da mensagem
+	$msg .= pack('C', $crc);
+	return $msg;
 }
 
 sub sendMapLogin {
@@ -152,8 +177,9 @@ sub sendMapLogin {
 		sex			=> $sex,
 	});
 
+	$msg = $self->add_checksum($msg);
 	$self->sendToServer($msg);
-
+	
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 

@@ -221,6 +221,7 @@ addTableFolders ROla
 charBlockSize 155
 gameGuard 1
 pinCode 1
+itemListType 1
 charDeleteDateType 1
 
 # https://ru.4game.com/ro/play/
