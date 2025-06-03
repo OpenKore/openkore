@@ -1,3 +1,4 @@
+# File contributed by #cry1493, #cry1493, #matheus8666, #megafuji, #ovorei, #__codeplay
 package Network::Send::ROla;
 use strict;
 use base qw(Network::Send::ServerType0);
@@ -9,11 +10,13 @@ use Log qw(debug);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0C26' => ['master_login', 'a4 Z51 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0825' => ['token_login', 'v V C Z51 a17 a15 a*', [qw(len version master_version username mac_hyphen_separated ip token)]],
 		'0436' => ['map_login', 'a4 a4 a4 V V C', [qw(accountID charID sessionID unknown tick sex)]],
+		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
+		'0ADD' => ['item_appeared', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0360' => ['sync', '', []],
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0361' => ['actor_look_at', 'v', [qw(headDir)]],
@@ -40,8 +43,6 @@ sub new {
 		'09E9' => ['rodex_close_mailbox', '', []],
 		'022D' => ['homunculus_command', 'C', [qw(command)]],
 		'023B' => ['storage_password', 'Z24', [qw(password)]],
-		'00A0' => ['inventory_item_list', 'v V C a*', [qw(len sync type data)]],
-		'00B9' => ['npc_response_select', 'v', [qw(index)]],
 	);
 
 
@@ -84,13 +85,13 @@ sub new {
 		rodex_request_items 09F3
 		homunculus_command 022D
 		storage_password 023B
-		npc_response_select 00B9
+		actor_name_request 0369
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 
 	$self->{char_create_version} = 0x0A39;
-	
+
 	return $self;
 }
 
@@ -114,52 +115,30 @@ sub reconstruct_master_login {
 }
 
 sub sendTokenToServer {
-    my ($self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port) = @_;
-    
-    my $len = $length + 92;
-    $net->serverDisconnect();
-    $net->serverConnect($otp_ip, $otp_port);
-    
-    my $ip = '192.168.0.2';
-    
-    # Gera endereço MAC aleatório se não configurado
-    my $mac = $config{macAddress} || sprintf("%02x%02x%02x%02x%02x%02x", (int(rand(256)) & 0xFC) | 0x02, map { int(rand(256)) } 1..5);
-    
-    my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
-    
-    my $msg = $self->reconstruct({
-        switch => 'token_login',
-        len => $len,
-        version => $version || $self->version,
-        master_version => $master_version,
-        username => $username,
-        mac_hyphen_separated => $mac_hyphen_separated,
-        ip => $ip,
-        token => $token,
-    });
-    
-    $self->sendToServer($msg);
-    debug "Sent sendTokenLogin\n", "sendPacket", 2;
-}
+	my ($self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port) = @_;
+	my $len =  $length + 92;
 
-sub add_checksum {
-	my ($self, $msg) = @_;
+	$net->serverDisconnect();
+	$net->serverConnect($otp_ip, $otp_port);
 
-	my $crc = 0x00;
-	for my $byte (unpack('C*', $msg)) {
-		$crc ^= $byte;
-		for (1..8) {
-			if ($crc & 0x80) {
-				$crc = (($crc << 1) ^ 0x07) & 0xFF;
-			} else {
-				$crc = ($crc << 1) & 0xFF;
-			}
-		}
-	}
+	my $ip = '192.168.0.2';
+	my $mac = $config{macAddress} || sprintf("02%010x", int(rand(1 << 40)));
+	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
 
-	# Anexa o checksum ao final da mensagem
-	$msg .= pack('C', $crc);
-	return $msg;
+	my $msg = $self->reconstruct({
+		switch => 'token_login',
+		len => $len,
+		version => $version || $self->version,
+		master_version => $master_version,
+		username => $username,
+		mac_hyphen_separated => $mac_hyphen_separated,
+		ip => $ip,
+		token => $token,
+	});
+
+	$self->sendToServer($msg);
+
+	debug "Sent sendTokenLogin\n", "sendPacket", 2;
 }
 
 sub sendMapLogin {
@@ -177,9 +156,21 @@ sub sendMapLogin {
 		sex			=> $sex,
 	});
 
-	$msg = $self->add_checksum($msg);
+	my $crcCheckSum = 0x00;
+	for my $byte (unpack('C*', $msg)) {
+		$crcCheckSum ^= $byte;
+		for (1..8) {
+			if ($crcCheckSum & 0x80) {
+				$crcCheckSum = (($crcCheckSum << 1) ^ 0x07) & 0xFF;
+			} else {
+				$crcCheckSum = ($crcCheckSum << 1) & 0xFF;
+			}
+		}
+	}
+
+	$msg .= pack('C', $crcCheckSum);
 	$self->sendToServer($msg);
-	
+
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
