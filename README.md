@@ -76,6 +76,22 @@ git clone https://github.com/OpenKore/openkore.git
 | [tRO Baphomet](https://rolg.maxion.gg/) | Thailand (Landverse Genesis) | Custom | Not Working | N/A |
 | [twRO](https://ro.gnjoy.com.tw/) | Taiwan RO | CheatDefender | Not Working | N/A |
 
+## Additional Tools
+
+### 📡 ROla Sniff - Packet Parser
+OpenKore includes a dedicated packet analysis tool for Ragnarok Online:
+* **Location**: [`packet parser/`](./packet%20parser/)
+* **Language**: C# (.NET 7.0)
+* **Purpose**: Real-time network packet capture and analysis
+* **Features**:
+  - Live packet capture with TCP filtering
+  - Hexadecimal and ASCII data visualization  
+  - Opcode identification and classification
+  - Advanced search capabilities (text/hex)
+  - Packet statistics and analysis
+
+For detailed documentation, see [ROla Sniff README](./packet%20parser/README.md).
+
 ## Contributing
 
 OpenKore is developed by a [team](https://github.com/OpenKore/openkore/graphs/contributors) located around the world. Check out the [documentation](https://openkore.com/wiki/Manual) and if necessary, submit a pull request.

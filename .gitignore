@@ -58,3 +58,18 @@ revc/Recv/x86
 revc/Recv/.vs
 revc/Recv/.vscode
 revc/Recv/recv.vcxproj.user
+
+# Packet Parser C# Project
+packet parser/.vs/
+packet parser/PACKET PARSE RO/bin/
+packet parser/PACKET PARSE RO/obj/
+packet parser/PACKET PARSE RO/*.user
+packet parser/PACKET PARSE RO/config.xml
+*.exe
+*.pdb
+*.cache
+*.props
+*.targets
+*/.vs/
+*/bin/
+*/obj/
