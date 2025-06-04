@@ -15,8 +15,6 @@ sub new {
 		'0C26' => ['master_login', 'a4 Z51 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0825' => ['token_login', 'v V C Z51 a17 a15 a*', [qw(len version master_version username mac_hyphen_separated ip token)]],
 		'0436' => ['map_login', 'a4 a4 a4 V V C', [qw(accountID charID sessionID unknown tick sex)]],
-		'009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
-		'0ADD' => ['item_appeared', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type )]],
 		'0360' => ['sync', '', []],
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0361' => ['actor_look_at', 'v', [qw(headDir)]],
