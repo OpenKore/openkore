@@ -69,12 +69,12 @@ sub binAdd {
 	my $r_array = shift;
 	my $ID = shift;
 	my $i;
-	for ($i = 0; $i <= @{$r_array};$i++) {
-		if ($$r_array[$i] eq "") {
-			$$r_array[$i] = $ID;
-			return $i;
-		}
-	}
+       for ($i = 0; $i <= @{$r_array};$i++) {
+               if (!defined $$r_array[$i]) {
+                       $$r_array[$i] = $ID;
+                       return $i;
+               }
+       }
 }
 
 ##
@@ -141,13 +141,13 @@ sub binRemoveAndShift {
 	my $found;
 	my $i;
 	my @newArray;
-	for ($i = 0; $i < @{$r_array};$i++) {
-		if ($$r_array[$i] ne $ID || $found ne "") {
-			push @newArray, $$r_array[$i];
-		} else {
-			$found = $i;
-		}
-	}
+       for ($i = 0; $i < @{$r_array};$i++) {
+               if ($$r_array[$i] ne $ID || defined $found) {
+                       push @newArray, $$r_array[$i];
+               } else {
+                       $found = $i;
+               }
+       }
 	@{$r_array} = @newArray;
 	return $found;
 }
@@ -202,11 +202,11 @@ sub binSize {
 
 	my $found = 0;
 	my $i;
-	for ($i = 0; $i < @{$r_array};$i++) {
-		if ($$r_array[$i] ne "") {
-			$found++;
-		}
-	}
+       for ($i = 0; $i < @{$r_array};$i++) {
+               if (defined $$r_array[$i]) {
+                       $found++;
+               }
+       }
 	return $found;
 }
 
