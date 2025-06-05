@@ -14,9 +14,9 @@ using namespace std;
 // ————— Informações “mockadas” (constantes configuráveis) —————
 
 // Endereços de função/injeção no cliente (valores de exemplo)
-static const DWORD MOCK_CLIENT_SUB_ADDRESS               = 0xB7A330;
-static const DWORD MOCK_CRAGCONNECTION_INSTANCE_ADDRESS  = 0xB7A890;
-static const DWORD MOCK_RECV_PTR_ADDRESS                 = 0x144DDB8;
+static const DWORD MOCK_CLIENT_SUB_ADDRESS               = 0xB7A3A0;
+static const DWORD MOCK_CRAGCONNECTION_INSTANCE_ADDRESS  = 0xB7A900;
+static const DWORD MOCK_RECV_PTR_ADDRESS                 = 0x144EDB8;
 
 // IP e portas padrão
 static const char* MOCK_KORE_SERVER_IP   = "127.0.0.1";
