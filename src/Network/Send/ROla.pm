@@ -1,4 +1,4 @@
-# File contributed by #cry1493, #cry1493, #matheus8666, #megafuji, #ovorei, #__codeplay
+# File contributed by #gaaradodesertoo, #cry1493, #cry1493, #matheus8666, #megafuji, #ovorei, #__codeplay
 package Network::Send::ROla;
 use strict;
 use base qw(Network::Send::ServerType0);
@@ -15,16 +15,22 @@ sub new {
 		'0C26' => ['master_login', 'a4 Z51 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0825' => ['token_login', 'v V C Z51 a17 a15 a*', [qw(len version master_version username mac_hyphen_separated ip token)]],
 		'0436' => ['map_login', 'a4 a4 a4 V V C', [qw(accountID charID sessionID unknown tick sex)]],
-		'0360' => ['sync', '', []],
+		'0360' => ['sync', 'V', [qw(time)]],
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
+		'0094' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0361' => ['actor_look_at', 'v', [qw(headDir)]],
+		'009B' => ['actor_look_at_extended', 'v C', [qw(head body)]],
+		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0362' => ['item_take', 'a2', [qw(ID)]],
+		'009F' => ['item_take_extended', 'a4', [qw(ID)]],
 		'0363' => ['item_drop', 'v2', [qw(index amount)]],
+		'00A2' => ['item_drop_extended', 'a2 v', [qw(ID amount)]],
+		'00A7' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0364' => ['storage_item_add', 'v2', [qw(index amount)]],
 		'0365' => ['storage_item_remove', 'v2', [qw(index amount)]],
 		'0366' => ['skill_use_location', 'v3', [qw(lv skillID x y)]],
 		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
-		'07E4' => ['item_list_window_selected', 'v v', [qw(index amount)]],
+		'07E4' => ['item_list_window_selected', 'v V V a*', [qw(len type act itemInfo)]],
 		'098F' => ['char_delete2_accept', 'a4 Z40 Z40 Z40', [qw(charID email1 email2 email3)]],
 		'0998' => ['send_equip', 'v2', [qw(index viewID)]],
 		'08B5' => ['pet_capture', 'a4', [qw(targetID)]],
@@ -40,9 +46,8 @@ sub new {
 		'0AC1' => ['rodex_refresh_maillist', '', []],
 		'09E9' => ['rodex_close_mailbox', '', []],
 		'022D' => ['homunculus_command', 'C', [qw(command)]],
-		'023B' => ['storage_password', 'Z24', [qw(password)]],
+		'023B' => ['storage_password', 'v a*', [qw(type data)]],
 	);
-
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 
@@ -55,16 +60,20 @@ sub new {
 		character_move 035F
 		sync 0360
 		actor_action 0437
+		actor_info_request 0368
 		actor_look_at 0361
+		actor_look_at_extended 009B
 		item_take 0362
+		item_take_extended 009F
 		item_drop 0363
+		item_drop_extended 00A2
+		item_use 00A7
 		blocking_play_cancel 0447
 		storage_item_add 0364
 		storage_item_remove 0365
 		skill_use_location 0366
 		request_cashitems 08C9
 		skill_use 0438
-		actor_info_request 0368
 		item_list_window_selected 07E4
 		char_delete2_accept 098F
 		gameguard_reply 09D0
@@ -112,15 +121,35 @@ sub reconstruct_master_login {
 	}
 }
 
+sub add_checksum {
+	my ($self, $msg) = @_;
+
+	my $crc = 0x00;
+	for my $byte (unpack('C*', $msg)) {
+		$crc ^= $byte;
+		for (1..8) {
+			if ($crc & 0x80) {
+				$crc = (($crc << 1) ^ 0x07) & 0xFF;
+			} else {
+				$crc = ($crc << 1) & 0xFF;
+			}
+		}
+	}
+
+	# Anexa o checksum ao final da mensagem
+	$msg .= pack('C', $crc);
+	return $msg;
+}
+
 sub sendTokenToServer {
 	my ($self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port) = @_;
-	my $len =  $length + 92;
+	my $len = $length + 92;
 
 	$net->serverDisconnect();
 	$net->serverConnect($otp_ip, $otp_port);
 
 	my $ip = '192.168.0.2';
-	my $mac = $config{macAddress} || sprintf("02%010x", int(rand(1 << 40)));
+	my $mac = $config{macAddress} || sprintf("%02x%02x%02x%02x%02x%02x", (int(rand(256)) & 0xFC) | 0x02, map { int(rand(256)) } 1..5);
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
 
 	my $msg = $self->reconstruct({
@@ -154,19 +183,7 @@ sub sendMapLogin {
 		sex			=> $sex,
 	});
 
-	my $crcCheckSum = 0x00;
-	for my $byte (unpack('C*', $msg)) {
-		$crcCheckSum ^= $byte;
-		for (1..8) {
-			if ($crcCheckSum & 0x80) {
-				$crcCheckSum = (($crcCheckSum << 1) ^ 0x07) & 0xFF;
-			} else {
-				$crcCheckSum = ($crcCheckSum << 1) & 0xFF;
-			}
-		}
-	}
-
-	$msg .= pack('C', $crcCheckSum);
+	$msg = $self->add_checksum($msg);
 	$self->sendToServer($msg);
 
 	debug "Sent sendMapLogin\n", "sendPacket", 2;

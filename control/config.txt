@@ -193,9 +193,10 @@ followLostStep 12
 followSitAuto 0
 followBot 0
 
-itemsTakeAuto 1
+itemsTakeAuto 2
 itemsTakeAuto_party 0
-itemsGatherAuto 1
+itemsGatherAuto 0
+itemsTakeAuto_new 1
 itemsGatherAuto_distance 5
 itemsGatherAuto_wait 1
 itemsGatherAuto_maxWeight 90

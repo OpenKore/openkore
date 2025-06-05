@@ -4927,6 +4927,7 @@
 11567#Poção para Aprendizes#
 11569#Poção Laranja de Aprendiz#
 11573#[Evento] Poção Branca Compacta#
+11574#[Evento] Poção Amarela Compacta#
 11575#Biscoito da Sorte#
 11578#Pirulito de Bengala de Natal#
 11580#Bala Natalina#
@@ -10977,6 +10978,9 @@
 103648#Medicina Visionária#
 103649#Poção Grande de Alívio#
 103650#Poção Média de Alívio#
+104132#Artefato Oval#
+104381#[Evento] Artefato Oval#
+104450#Caixa de Visuais LATAM
 200001#Caixa Grande de Expansão de Inventário#
 200003#Combo Bênção e Oridecon#
 200004#Combo Bênção e Elunium#
