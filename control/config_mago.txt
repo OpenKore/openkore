@@ -3,7 +3,7 @@
 XKore_port 2351 # Caso queira abrir multi cliente
 
 # Sobrescreve as configurações específicas para o mago
-attackSkillSlot FW_FIREBALL {
+attackSkillSlot MG_FIREBALL {
     lvl 10
     maxUses 0
     sp > 20
@@ -11,7 +11,7 @@ attackSkillSlot FW_FIREBALL {
     whenElement Fire
 }
 
-attackSkillSlot FW_FROST_NOVA {
+attackSkillSlot MG_FROST_NOVA {
     lvl 5
     maxUses 3
     sp > 15
@@ -19,7 +19,7 @@ attackSkillSlot FW_FROST_NOVA {
     area 1
 }
 
-attackSkillSlot FW_LIGHTNING_BOLT {
+attackSkillSlot MG_LIGHTNING_BOLT {
     lvl 10
     maxUses 2
     sp > 25
@@ -35,17 +35,17 @@ statsAdd_over_99 0
 
 # Habilidades automáticas, com foco em elementais e área
 skillsAddAuto 1
-skillsAddAuto_list FW_FIREBALL 10, FW_FROST_NOVA 5, FW_LIGHTNING_BOLT 10
+skillsAddAuto_list MG_FIREBALL 10, MG_FROST_NOVA 5, MG_LIGHTNING_BOLT 10
 
 # Definindo as condições de uso das habilidades, com base em elementos e área
-useSelf_skill FW_FIREBALL {
+useSelf_skill MG_FIREBALL {
     lvl 10
     whenStatusInactive
     whenElement Fire
     notInTown 1
 }
 
-useSelf_skill FW_FROST_NOVA {
+useSelf_skill MG_FROST_NOVA {
     lvl 5
     whenStatusInactive
     whenElement Water
@@ -53,7 +53,7 @@ useSelf_skill FW_FROST_NOVA {
     notInTown 1
 }
 
-useSelf_skill FW_LIGHTNING_BOLT {
+useSelf_skill MG_LIGHTNING_BOLT {
     lvl 10
     whenStatusInactive
     notInTown 1
@@ -61,7 +61,7 @@ useSelf_skill FW_LIGHTNING_BOLT {
 }
 
 # Definindo uso de habilidades em área com verificação de proximidade
-useSelf_skill FW_FROST_NOVA {
+useSelf_skill MG_FROST_NOVA {
     lvl 5
     whenStatusInactive
     area 1
