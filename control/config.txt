@@ -195,7 +195,7 @@ followBot 0
 
 itemsTakeAuto 2
 itemsTakeAuto_party 0
-itemsGatherAuto 0
+itemsGatherAuto 2
 itemsTakeAuto_new 1
 itemsGatherAuto_distance 5
 itemsGatherAuto_wait 1
