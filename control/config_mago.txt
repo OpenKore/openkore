@@ -1,70 +1,38 @@
 # Inclui todas as configurações do config.txt como base
 !include config.txt
-XKore_port 2351 # Caso queira abrir multi cliente
+XKore_port 2351
 
 # Sobrescreve as configurações específicas para o mago
 attackSkillSlot MG_FIREBALL {
-    lvl 10
-    maxUses 0
-    sp > 20
-    hp > 30%
-    whenElement Fire
+	lvl 10
+	maxUses 0
+	sp > 20
+	hp > 30%
+	whenElement Fire
 }
 
-attackSkillSlot MG_FROST_NOVA {
-    lvl 5
-    maxUses 3
-    sp > 15
-    whenElement Water
-    area 1
-}
+#attackSkillSlot WZ_FROSTNOVA {
+#	lvl 5
+#	maxUses 3
+#	sp > 15
+#	whenElement Water
+#	area 1
+#}
 
-attackSkillSlot MG_LIGHTNING_BOLT {
-    lvl 10
-    maxUses 2
-    sp > 25
-    hp > 30%
+attackSkillSlot MG_LIGHTNINGBOLT {
+	lvl 10
+	maxUses 2
+	sp > 25
+	hp > 30%
     # Padrão caso nenhuma outra habilidade seja adequada
 }
 
 # Stats do mago
 statsAddAuto 1
-statsAddAuto_list 20 int, 10 vit, 50 int, 10 agi, 80 int, 20 vit, 60 int
+statsAddAuto_list 20 int, 10 vit, 10 dex, 50 int, 30 dex, 80 int, 20 vit
 statsAddAuto_dontUseBonus 1
 statsAdd_over_99 0
 
 # Habilidades automáticas, com foco em elementais e área
 skillsAddAuto 1
-skillsAddAuto_list MG_FIREBALL 10, MG_FROST_NOVA 5, MG_LIGHTNING_BOLT 10
-
-# Definindo as condições de uso das habilidades, com base em elementos e área
-useSelf_skill MG_FIREBALL {
-    lvl 10
-    whenStatusInactive
-    whenElement Fire
-    notInTown 1
-}
-
-useSelf_skill MG_FROST_NOVA {
-    lvl 5
-    whenStatusInactive
-    whenElement Water
-    area 1 # Ativa em área
-    notInTown 1
-}
-
-useSelf_skill MG_LIGHTNING_BOLT {
-    lvl 10
-    whenStatusInactive
-    notInTown 1
-    # Será usada caso não tenha outra habilidade aplicável (rápida)
-}
-
-# Definindo uso de habilidades em área com verificação de proximidade
-useSelf_skill MG_FROST_NOVA {
-    lvl 5
-    whenStatusInactive
-    area 1
-    inRange 5
-    whenElement Water
-}
+skillsAddAuto_list MG_FIREBALL 10, MG_LIGHTNINGBOLT 10
