@@ -1,3 +1,4 @@
+// File contributed by #Francisco Wallison, #megafuji, originally by #__codeplay
 #define WIN32_LEAN_AND_MEAN
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include <winsock2.h>
@@ -14,9 +15,9 @@ using namespace std;
 // ————— Informações “mockadas” (constantes configuráveis) —————
 
 // Endereços de função/injeção no cliente (valores de exemplo)
-static const DWORD MOCK_CLIENT_SUB_ADDRESS               = 0xB7A3A0;
-static const DWORD MOCK_CRAGCONNECTION_INSTANCE_ADDRESS  = 0xB7A900;
-static const DWORD MOCK_RECV_PTR_ADDRESS                 = 0x144EDB8;
+static const DWORD MOCK_CLIENT_SUB_ADDRESS               = 0xB7EF50;
+static const DWORD MOCK_CRAGCONNECTION_INSTANCE_ADDRESS  = 0xB7F4B0;
+static const DWORD MOCK_RECV_PTR_ADDRESS                 = 0x1455BB8;
 
 // IP e portas padrão
 static const char* MOCK_KORE_SERVER_IP   = "127.0.0.1";
