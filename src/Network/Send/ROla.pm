@@ -19,12 +19,12 @@ sub new {
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0094' => ['actor_info_request', 'a4', [qw(ID)]],
 		'0361' => ['actor_look_at', 'v', [qw(headDir)]],
-		'009B' => ['actor_look_at_extended', 'v C', [qw(head body)]],
+		'009B' => ['actor_look_at', 'v C', [qw(head body)]],
 		'035F' => ['character_move', 'a3', [qw(coords)]],
 		'0362' => ['item_take', 'a2', [qw(ID)]],
-		'009F' => ['item_take_extended', 'a4', [qw(ID)]],
+		'009F' => ['item_take', 'a4', [qw(ID)]],
 		'0363' => ['item_drop', 'v2', [qw(index amount)]],
-		'00A2' => ['item_drop_extended', 'a2 v', [qw(ID amount)]],
+		'00A2' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'00A7' => ['item_use', 'a2 a4', [qw(ID targetID)]],
 		'0364' => ['storage_item_add', 'v2', [qw(index amount)]],
 		'0365' => ['storage_item_remove', 'v2', [qw(index amount)]],
@@ -60,12 +60,12 @@ sub new {
 		character_move 035F
 		sync 0360
 		actor_action 0437
-		actor_info_request 0368
-		actor_look_at 0361
+		actor_info_request 0094
+		actor_look_at 009B
 		actor_look_at_extended 009B
-		item_take 0362
+		item_take 009F
 		item_take_extended 009F
-		item_drop 0363
+		item_drop 00A2
 		item_drop_extended 00A2
 		item_use 00A7
 		blocking_play_cancel 0447
@@ -92,7 +92,7 @@ sub new {
 		rodex_request_items 09F3
 		homunculus_command 022D
 		storage_password 023B
-		actor_name_request 0369
+		actor_name_request 0094
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
