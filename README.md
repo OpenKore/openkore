@@ -29,7 +29,7 @@ To run OpenKore you will need:
 git clone https://github.com/OpenKore/openkore.git
 ```
 
-2. Configure OpenKore: [documentation](https://openkore.com/wiki/Category:Control).
+2. Configure OpenKore: [documentation](https://openkore.com/wiki/Category:control).
 3. Run openkore.pl _(You can run start.exe or wxstart.exe if you use Windows)_.
 
 ## F.A.Q. (Frequently Asked Questions)

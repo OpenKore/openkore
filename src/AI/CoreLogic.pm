@@ -48,6 +48,7 @@ use Utils::Exceptions;
 sub iterate {
 	Benchmark::begin("ai_prepare") if DEBUG;
 	processWipeOldActors();
+	processActorAvoid();
 	processGetPlayerInfo();
 	processMisc();
 	processReAddMissingPortals();
@@ -262,6 +263,39 @@ sub processWipeOldActors {
 
 		$timeout{'ai_wipe_check'}{'time'} = time;
 		debug "Wiped old\n", "ai", 2;
+	}
+}
+
+sub processActorAvoid {
+	my $realMyPos = calcPosFromPathfinding($field, $char);
+	my $max_dist = $config{clientSight} + 1;
+	my $max_to_delete = $max_dist*2;
+
+	if (timeOut($timeout{'avoidDistantActors'}{'time'}, 1)) {
+		$timeout{'avoidDistantActors'}{'time'} = time;
+		foreach my $list ($playersList, $monstersList, $npcsList, $petsList, $portalsList, $slavesList, $elementalsList) {
+			for my $actor (@$list) {
+				my $realActorPos = calcPosition($actor);
+				my $realActorDist = blockDistance($realMyPos, $realActorPos);
+
+				if ($realActorDist > $max_to_delete) {
+					warning TF("Removing way out of sight actor %s at (%d, %d) (distance: %d > max %d)\n", $actor, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $max_to_delete);
+					$list->remove($actor);
+
+				} elsif ($realActorDist > $max_dist) {
+					if ($actor->{avoid} == 0) {
+						warning TF("Avoiding out of sight actor %s at (%d, %d) (distance: %d > max %d)\n", $actor, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $max_dist);
+					}
+					$actor->{avoid} = 1;
+
+				} else {
+					if ($actor->{avoid} == 1) {
+						warning TF("Stopped avoiding now in bounds actor %s at (%d, %d) (distance: %d <= max %d)\n", $actor, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $max_dist);
+					}
+					$actor->{avoid} = 0;
+				}
+			}
+		}
 	}
 }
 
@@ -1200,9 +1234,11 @@ sub processAutoMakeArrow {
 sub processAutoStorage {
 	return if ($shopstarted || $buyershopstarted);
 	# storageAuto - chobit aska 20030128
-	if (AI::is("", "route", "sitAuto", "follow")
+	if ((AI::isIdle || AI::is("route", "sitAuto", "follow"))
 		  && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
 		  && !$ai_v{sitAuto_forcedBySitCommand}
+		  && !AI::inQueue("buyAuto")
+		  && !AI::inQueue("sellAuto")
 		  && ai_canOpenStorage()
 		  && (
 			     ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
@@ -1227,11 +1263,13 @@ sub processAutoStorage {
 			Plugins::callHook('AI_storage_auto_queued');
 		}
 
-	} elsif (AI::is("", "route", "attack")
+	} elsif ((AI::isIdle || AI::is("route", "attack"))
 		  && $config{storageAuto}
 		  && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand} || $config{storageAuto_useItem})
 		  && !$ai_v{sitAuto_forcedBySitCommand}
 		  && !AI::inQueue("storageAuto")
+		  && !AI::inQueue("buyAuto")
+		  && !AI::inQueue("sellAuto")
 		  && $char->inventory->isReady()) {
 
 		my %plugin_args = ( return => 0 );
@@ -1734,11 +1772,13 @@ sub processAutoStorage {
 #####AUTO SELL#####
 sub processAutoSell {
 	return if ($shopstarted || $buyershopstarted);
-	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "sitAuto" || AI::action eq "follow")
+	if ((AI::isIdle || AI::action eq "route" || AI::action eq "sitAuto" || AI::action eq "follow")
 		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
 			|| ($config{'itemsMaxNum_sellOrStore'} && $char->inventory->size() >= $config{'itemsMaxNum_sellOrStore'})
 			|| (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
 			)
+	    && !AI::inQueue("storageAuto")
+	    && !AI::inQueue("buyAuto")
 		&& $config{'sellAuto'}
 		&& $config{'sellAuto_npc'} ne ""
 		&& !$ai_v{sitAuto_forcedBySitCommand}
@@ -1928,7 +1968,13 @@ sub processAutoSell {
 sub processAutoBuy {
 	return if ($shopstarted || $buyershopstarted);
 	my $needitem;
-	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && $char->inventory->isReady()) {
+	if (
+		 (AI::isIdle || AI::action eq "route" || AI::action eq "follow")
+	  && timeOut($timeout{'ai_buyAuto'})
+	  && $char->inventory->isReady()
+	  && !AI::inQueue("sellAuto")
+	  && !AI::inQueue("storageAuto")
+	) {
 		my %plugin_args = ( return => 0 );
 		Plugins::callHook('AI_buy_auto_start' => \%plugin_args);
 		return if ($plugin_args{return});
@@ -3073,7 +3119,7 @@ sub processMonsterSkillUse {
 					my $target = $config{"${prefix}_isSelfSkill"} ? $char : $monster;
 					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix);
 					$ai_v{$prefix . "_time"} = time;
-					$ai_v{temp}{$prefix . "_target_time"}{$monsterID} = time;
+					$ai_v{$prefix . "_target_time"}{$monsterID} = time;
 					last;
 				}
 			}
@@ -3150,6 +3196,8 @@ sub processAutoAttack {
 
 	Benchmark::begin("ai_autoAttack") if DEBUG;
 
+	return if (AI::inQueue("attack"));
+	
 	return if (!$field);
 	if ((AI::isIdle || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2

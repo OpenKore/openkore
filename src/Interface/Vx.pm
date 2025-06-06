@@ -1062,6 +1062,12 @@ sub packet {
 		my $privMsg = substr($msg, 28, $msg_size - 29);
 		$self->pm_add($privMsgUser);
 
+	} elsif ($switch eq "09DE") {
+		# Private message
+		my ($privMsgU) = substr($msg, 8, 25) =~ /([\s\S]*?)\000/;
+		my $privMsgUser = bytesToString($privMsgU);
+		$self->pm_add($privMsgUser);
+
 	} elsif ($switch eq "01A4") {
 		#01a4 < type >.B < ID >.l < val >.l 
 		#pet spawn
@@ -1069,7 +1075,7 @@ sub packet {
 		if ($monsters{$ID}) {
 			$self->removeObj($ID);
 		}
-	}
+	} 
 }
 
 

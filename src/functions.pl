@@ -738,6 +738,7 @@ sub initMapChangeVars {
 	undef %spells;
 	undef %incomingParty;
 	undef %talk;
+	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
 	$ai_v{temp} = {};
 	undef $venderID;
 	undef $venderCID;
