@@ -10,6 +10,7 @@
 #include <fstream>
 #include <unordered_map>
 #include <algorithm>
+#include <cstring>
 
 #pragma comment(lib, "ws2_32.lib")
 
@@ -43,6 +44,9 @@ bool removeHookRequiresCtrl = false;
 bool removeHookRequiresShift = false;
 int applyHookVK = VK_F11;
 int removeHookVK = VK_F12;
+
+// Configuração para múltiplos clientes
+bool allowMultiClient = false;
 
 // Variáveis globais de estado
 bool hook_applied        = false;
@@ -239,12 +243,57 @@ int ParseKeyString(const std::string& keyStr, bool& requiresCtrl, bool& requires
     return VK_F11;
 }
 
+// Função para criar arquivo de configuração padrão
+bool CreateDefaultConfig(const std::string& filename) {
+    std::ofstream fout(filename);
+    if (!fout.is_open()) {
+        std::cout << "[ERRO] Não foi possível criar o arquivo de configuração: " << filename << std::endl;
+        return false;
+    }
+
+    fout << "# Arquivo de configuração para recv.cpp\n";
+    fout << "# Endereços de memória do cliente RO (valores em hexadecimal)\n";
+    fout << "clientSubAddress=B7EF50\n";
+    fout << "instanceRAddress=B7F4B0\n";
+    fout << "recvPtrAddress=1455BB8\n";
+    fout << "\n";
+    fout << "# Configurações do servidor xKore\n";
+    fout << "koreServerIP=127.0.0.1\n";
+    fout << "koreServerPort=2350\n";
+    fout << "\n";
+    fout << "# Configurações de hotkeys (opcional)\n";
+    fout << "# Formato: [Ctrl+][Shift+]TECLA\n";
+    fout << "# Teclas disponíveis: F1-F12, A-Z, 0-9, ESC, SPACE, ENTER, TAB, INSERT, DELETE, HOME, END, PAGEUP, PAGEDOWN, LEFT, RIGHT, UP, DOWN\n";
+    fout << "# Exemplos: F1, Ctrl+F5, Shift+F2, Ctrl+Shift+F9, Ctrl+A, Alt+Tab (não suportado), etc.\n";
+    fout << "applyHookKey=Ctrl+F11\n";
+    fout << "removeHookKey=Ctrl+F12\n";
+    fout << "\n";
+    fout << "# Configuração para múltiplos clientes\n";
+    fout << "# Se true, pergunta a porta no terminal a cada execução\n";
+    fout << "# Se false, usa sempre a porta padrão do koreServerPort\n";
+    fout << "allowMultiClient=true\n";
+
+    fout.close();
+    
+    std::cout << "[INFO] Arquivo de configuração padrão criado: " << filename << std::endl;
+    return true;
+}
+
 // Função para ler o arquivo de configuração
 bool LoadConfig(const std::string& filename) {
     std::ifstream fin(filename);
     if (!fin.is_open()) {
-        std::cout << "[ERRO] Não foi possível abrir o arquivo de configuração: " << filename << std::endl;
-        return false;
+        std::cout << "[INFO] Arquivo de configuração não encontrado. Criando arquivo padrão..." << std::endl;
+        if (!CreateDefaultConfig(filename)) {
+            return false;
+        }
+        
+        // Tenta abrir novamente após criar
+        fin.open(filename);
+        if (!fin.is_open()) {
+            std::cout << "[ERRO] Não foi possível abrir o arquivo de configuração criado: " << filename << std::endl;
+            return false;
+        }
     }
 
     std::string line;
@@ -305,6 +354,13 @@ bool LoadConfig(const std::string& filename) {
         // Processa as strings das teclas
         applyHookVK = ParseKeyString(applyHookKey, applyHookRequiresCtrl, applyHookRequiresShift);
         removeHookVK = ParseKeyString(removeHookKey, removeHookRequiresCtrl, removeHookRequiresShift);
+
+        // Configuração de múltiplos clientes (opcional, padrão false)
+        if (mapa.count("allowMultiClient") > 0) {
+            std::string allowMultiStr = mapa.at("allowMultiClient");
+            std::transform(allowMultiStr.begin(), allowMultiStr.end(), allowMultiStr.begin(), ::tolower);
+            allowMultiClient = (allowMultiStr == "true" || allowMultiStr == "1" || allowMultiStr == "yes");
+        }
     }
     catch (std::exception& e) {
         std::cout << "[ERRO] Exceção ao converter valor: " << e.what() << std::endl;
@@ -318,7 +374,8 @@ bool LoadConfig(const std::string& filename) {
         << "  koreServerIP     = " << koreServerIP << "\n"
         << "  koreServerPort   = " << koreServerPort << "\n"
         << "  applyHookKey     = " << applyHookKey << "\n"
-        << "  removeHookKey    = " << removeHookKey << std::endl;
+        << "  removeHookKey    = " << removeHookKey << "\n"
+        << "  allowMultiClient = " << (allowMultiClient ? "true" : "false") << std::endl;
 
     return true;
 }
@@ -640,6 +697,38 @@ DWORD WINAPI KeyboardMonitorThread(LPVOID lpParam) {
     return 0;
 }
 
+// Função para solicitar porta do usuário (para allowMultiClient=true)
+DWORD GetUserPort() {
+    char input[256];
+    std::cout << "\n[MULTI-CLIENT MODE]" << std::endl;
+    std::cout << "Digite a porta do servidor xKore (padrão: " << koreServerPort << "): ";
+    
+    if (fgets(input, sizeof(input), stdin)) {
+        // Remove quebra de linha
+        input[strcspn(input, "\r\n")] = 0;
+        
+        // Se string vazia (só Enter), usa porta padrão
+        if (strlen(input) == 0) {
+            std::cout << "Usando porta padrão: " << koreServerPort << std::endl;
+            return koreServerPort;
+        }
+        
+        // Tenta converter para número
+        int inputPort = atoi(input);
+        if (inputPort > 0 && inputPort <= 65535) {
+            std::cout << "Usando porta customizada: " << inputPort << std::endl;
+            return static_cast<DWORD>(inputPort);
+        }
+        else {
+            std::cout << "Porta inválida! Usando porta padrão: " << koreServerPort << std::endl;
+            return koreServerPort;
+        }
+    }
+    
+    std::cout << "Erro na leitura! Usando porta padrão: " << koreServerPort << std::endl;
+    return koreServerPort;
+}
+
 // Função init (agora cria primeiro a KeyboardMonitorThread, depois a koreConnectionMain)
 void init() {
     AllocateConsole();
@@ -651,6 +740,11 @@ void init() {
         std::cout << "[FATAL] Falha ao carregar config_recv.txt. Abortando." << std::endl;
         keepMainThread = false;
         return;
+    }
+
+    // Se allowMultiClient estiver habilitado, pergunta a porta ao usuário
+    if (allowMultiClient) {
+        koreServerPort = GetUserPort();
     }
 
     std::cout << "\n[INFO] Controls:\n" << std::endl;

@@ -13,4 +13,9 @@ koreServerPort=2350
 # Teclas disponíveis: F1-F12, A-Z, 0-9, ESC, SPACE, ENTER, TAB, INSERT, DELETE, HOME, END, PAGEUP, PAGEDOWN, LEFT, RIGHT, UP, DOWN
 # Exemplos: F1, Ctrl+F5, Shift+F2, Ctrl+Shift+F9, Ctrl+A, Alt+Tab (não suportado), etc.
 applyHookKey=Ctrl+F11
-removeHookKey=Ctrl+F12 
+removeHookKey=Ctrl+F12
+
+# Configuração para múltiplos clientes
+# Se true, pergunta a porta no terminal a cada execução
+# Se false, usa sempre a porta padrão do koreServerPort
+allowMultiClient=false 
