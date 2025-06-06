@@ -1,0 +1,16 @@
+# Arquivo de configuração para recv.cpp
+# Endereços de memória do cliente RO (valores em hexadecimal)
+clientSubAddress=B7EF50
+instanceRAddress=B7F4B0
+recvPtrAddress=1455BB8
+
+# Configurações do servidor xKore
+koreServerIP=127.0.0.1
+koreServerPort=2350
+
+# Configurações de hotkeys (opcional)
+# Formato: [Ctrl+][Shift+]TECLA
+# Teclas disponíveis: F1-F12, A-Z, 0-9, ESC, SPACE, ENTER, TAB, INSERT, DELETE, HOME, END, PAGEUP, PAGEDOWN, LEFT, RIGHT, UP, DOWN
+# Exemplos: F1, Ctrl+F5, Shift+F2, Ctrl+Shift+F9, Ctrl+A, Alt+Tab (não suportado), etc.
+applyHookKey=Ctrl+F11
+removeHookKey=Ctrl+F12 
