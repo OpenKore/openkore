@@ -3,7 +3,7 @@
 
 ######## Login options and server-specific options ########
 
-master Latam - ROla: Freya/Nidhogg/Yggdrasil
+master Latam - ROla: Freya/Nidhogg
 server
 username
 password
@@ -71,7 +71,7 @@ attackAuto_notInTown 1
 attackAuto_notWhile_storageAuto 1
 attackAuto_notWhile_buyAuto 1
 attackAuto_notWhile_sellAuto 1
-attackAuto_considerDamagedAggressive 1
+attackAuto_considerDamagedAggressive 0
 attackDistance 1
 attackDistanceAuto 1
 attackMaxDistance 1
@@ -79,11 +79,11 @@ attackMaxRouteTime 4
 attackMinPlayerDistance 2
 attackMinPortalDistance 4
 attackUseWeapon 1
-attackNoGiveup 1
+attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 1
 attackRouteMaxPathDistance 20
-attackLooters 1
+attackLooters 0
 attackLooters_dist 1
 attackChangeTarget 1
 aggressiveAntiKS 0
@@ -195,22 +195,16 @@ followBot 0
 
 itemsTakeAuto 2
 itemsTakeAuto_party 0
-itemsGatherAuto 2
-itemsTakeAuto_new 1
-itemsGatherAuto_distance 5
-itemsGatherAuto_wait 1
-itemsGatherAuto_maxWeight 90
-itemsGatherAuto_notInTown 0
+itemsGatherAuto 1
+itemsGatherAuto_notInTown 1
 itemsGatherAutoMinPlayerDistance 6
 itemsGatherAutoMinPortalDistance 5
 itemsMaxWeight 89
-itemsMaxWeight_sellOrStore 70
+itemsMaxWeight_sellOrStore 48
 itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 itemsTakeGreed 0
 itemsCheckWeight 1
-pickupByOthers 0
-pickupByOthers_take 0
 
 lockMap
 lockMap_x
@@ -224,7 +218,7 @@ route_escape_shout
 route_avoidWalls 1
 route_randomWalk 1
 route_randomWalk_inTown 0
-route_randomWalk_maxRouteTime 5
+route_randomWalk_maxRouteTime 75
 route_maxWarpFee
 route_maxNpcTries 5
 route_teleport 0
@@ -237,7 +231,6 @@ route_removeMissingPortals 0
 route_tryToGuessMissingPortalByDistance 1
 route_reAddMissingPortals 1
 route_randomFactor 0
-route_randomWalk_step 5
 
 runFromTarget 0
 runFromTarget_inAdvance 0
@@ -249,8 +242,6 @@ runFromTarget_noAttackMethodFallback_attackMaxDist 14
 runFromTarget_noAttackMethodFallback_minStep 8
 
 saveMap
-saveMap_x
-saveMap_y
 saveMap_warpToBuyOrSell 1
 saveMap_warpChatCommand
 memo1
@@ -265,13 +256,13 @@ shop_useSkill 1
 buyerShopAuto_open 0
 buyerShop_random 0
 
-sitAuto_hp_lower 0
-sitAuto_hp_upper 100
+sitAuto_hp_lower 30
+sitAuto_hp_upper 60
 sitAuto_sp_lower 0
 sitAuto_sp_upper 0
 sitAuto_follow 0
 sitAuto_over_50 0
-sitAuto_idle 0
+sitAuto_idle 1
 sitAuto_look
 sitAuto_look_from_wall
 sitTensionRelax 0
@@ -287,23 +278,23 @@ skillsAddAuto_list
 tankMode 0
 tankModeTarget
 
-teleportAuto_hp < 25
+teleportAuto_hp 30
 teleportAuto_sp 0
 teleportAuto_idle 0
 teleportAuto_portal 0
 teleportAuto_search 0
-teleportAuto_minAggressives 4
-teleportAuto_minAggressivesInLock 0
+teleportAuto_minAggressives 5
+teleportAuto_minAggressivesInLock 3
 teleportAuto_onlyWhenSafe 0
 teleportAuto_maxDmg 500
 teleportAuto_maxDmgInLock 0
 teleportAuto_deadly 1
-teleportAuto_useSkill 1
+teleportAuto_useSkill 0
 teleportAuto_useChatCommand
 teleportAuto_allPlayers 0
 teleportAuto_notPlayers
 teleportAuto_atkCount 0
-teleportAuto_atkMiss 5
+teleportAuto_atkMiss 10
 teleportAuto_unstuck 0
 teleportAuto_lostTarget 0
 teleportAuto_dropTarget 0
@@ -316,7 +307,7 @@ teleportAuto_equip_leftAccessory
 teleportAuto_equip_rightAccessory
 teleportAuto_lostHomunculus
 teleportAuto_useItemForRespawn
-teleportAuto_item1
+teleportAuto_item1 Asa de Mosca de Iniciante
 teleportAuto_item2
 
 dealAuto 1
@@ -359,7 +350,7 @@ logGuildChat 1
 logSystemChat 1
 logLocalBroadcast 1
 logShop 1
-logEmoticons 0
+logEmoticons
 logConsole 1
 logAppendUsername 1
 logAppendServer 0
@@ -448,21 +439,99 @@ doCommand {
 	manualAI 0
 }
 
-
-useSelf_skill_smartHeal 0
-
-useSelf_item [Evento] Poção de Aprendiz,Poção para Aprendizes {
-	hp < 70%
+useSelf_item Poção Laranja {
+	hp > 50%
+	sp
+	ap
+	homunculus
+	homunculus_hp
+	homunculus_sp
+	homunculus_dead
+	homunculus_resting
+	homunculus_noinfo_dead
+	homunculus_noinfo_resting
+	homunculus_onAction
+	homunculus_notOnAction
+	homunculus_whenIdle
+	homunculus_whenNotIdle
+	mercenary
+	mercenary_hp
+	mercenary_sp
+	mercenary_whenStatusActive
+	mercenary_whenStatusInactive
+	mercenary_onAction
+	mercenary_notOnAction
+	mercenary_whenIdle
+	mercenary_whenNotIdle
+	onAction
+	whenStatusActive
 	whenStatusInactive
-	notWhileSitting 1
+	whenFollowing
+	spirit
+	amuletType
+	aggressives
+	monsters
+	notMonsters
+	monstersCount
+	monstersCountDist
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
 	timeout 0
-}
-useSelf_item Asa de Mosca de Iniciante,Asa de Mosca {
-	hp < 25%
-	timeout 5
-	whenStatusInactive
+	disabled 0
+	whenPartyMembersNear
+	whenPartyMembersNearDist
+	inInventory
+	manualAI 0
 }
 
+######## Autostorage/autosell ########
+
+buyAuto {
+	npc
+	npc_steps b
+	isMarket 0
+	standpoint
+	distance 3
+	price
+	minAmount 2
+	maxAmount 3
+	batchSize
+	onlyIdentified
+	disabled 0
+	maxBase
+	minBase
+}
+
+sellAuto 0
+sellAuto_npc
+sellAuto_standpoint
+sellAuto_distance 3
+sellAuto_maxDistance
+sellAuto_npc_steps s
+
+storageAuto 0
+storageAuto_npc payon 181 104
+storageAuto_distance 5
+storageAuto_npc_type 1
+storageAuto_npc_steps c r1 n
+storageAuto_password 1111
+storageAuto_keepOpen 0
+storageAuto_useChatCommand
+relogAfterStorage 1
+storageEncryptKey 0x050B6F79, 0x00202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+npcTimeResponse
+npcWrongStepsMethod 0
+
+getAuto {
+	minAmount
+	maxAmount
+	batchSize
+	passive
+	disabled 0
+}
 
 ######## Debugging options; only useful for developers ########
 

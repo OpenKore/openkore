@@ -381,6 +381,9 @@ sub loadDataFiles {
 	Settings::addTableFile('achievement_list.txt',
 		internalName => 'achievement_list.txt',
 		loader => [\&parseAchievementFile, \%achievements], mustExist => 0);
+	Settings::addTableFile('monsters_name.txt',
+		internalName => 'monsters_name.txt',
+		loader => [\&parseROLUT, \%monsters_name], mustExist => 0);
 
 	use utf8;
 
@@ -570,8 +573,13 @@ sub processServerSettings {
 	}
 
 	# Process adding Custom Table folders
-	if($masterServer->{addTableFolders}) {
+	if ($masterServer->{addTableFolders}) {
 		Settings::addTablesFolders($masterServer->{addTableFolders});
+	}
+
+	# Process adding Custom fields folders
+	if ($masterServer->{addFieldsFolders}) {
+		Settings::addFieldsFolders($masterServer->{addFieldsFolders});
 	}
 
 	# Process setting custom recvpackets option
