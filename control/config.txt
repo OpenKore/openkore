@@ -3,7 +3,7 @@
 
 ######## Login options and server-specific options ########
 
-master Latam - ROla: Freya/Nidhogg
+master Latam - ROla: Freya/Nidhogg/Yggdrasil
 server
 username
 password
@@ -439,51 +439,16 @@ doCommand {
 	manualAI 0
 }
 
-useSelf_item Poção Laranja {
-	hp > 50%
-	sp
-	ap
-	homunculus
-	homunculus_hp
-	homunculus_sp
-	homunculus_dead
-	homunculus_resting
-	homunculus_noinfo_dead
-	homunculus_noinfo_resting
-	homunculus_onAction
-	homunculus_notOnAction
-	homunculus_whenIdle
-	homunculus_whenNotIdle
-	mercenary
-	mercenary_hp
-	mercenary_sp
-	mercenary_whenStatusActive
-	mercenary_whenStatusInactive
-	mercenary_onAction
-	mercenary_notOnAction
-	mercenary_whenIdle
-	mercenary_whenNotIdle
-	onAction
-	whenStatusActive
+useSelf_item [Evento] Poção de Aprendiz,Poção para Aprendizes {
+	hp < 70%
 	whenStatusInactive
-	whenFollowing
-	spirit
-	amuletType
-	aggressives
-	monsters
-	notMonsters
-	monstersCount
-	monstersCountDist
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
+	notWhileSitting 1
 	timeout 0
-	disabled 0
-	whenPartyMembersNear
-	whenPartyMembersNearDist
-	inInventory
-	manualAI 0
+}
+useSelf_item Asa de Mosca de Iniciante,Asa de Mosca {
+	hp < 25%
+	timeout 5
+	whenStatusInactive
 }
 
 ######## Autostorage/autosell ########
