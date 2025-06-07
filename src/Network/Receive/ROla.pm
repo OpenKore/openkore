@@ -32,7 +32,7 @@ sub new {
             '0A37' => ['inventory_item_added', 'a2 v V C3 a16 V C2 a4 v a25 C v', [qw(ID amount nameID identified broken upgrade cards type_equip type fail expire unknown options favorite viewID)]],
             '0ADD' => ['item_appeared', 'a4 V v C v2 C2 v C v', [qw(ID nameID type identified x y subx suby amount show_effect effect_type)]],
             '00A1' => ['item_disappeared', 'a4', [qw(ID)]],
-            '009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID identified x y amount subx suby)]],
+            '009D' => ['item_exists', 'a4 v C v3 C2', [qw(ID nameID type identified x y amount)]],
             '01C8' => ['item_used', 'a2 V a4 v C', [qw(ID itemID actorID remaining success)]],
             '08B9' => ['login_pin_code_request', 'V a4 v', [qw(seed accountID flag)]],
             '0446' => ['minimap_indicator', 'a4 v4', [qw(npcID x y effect qtype)]],
