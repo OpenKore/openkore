@@ -12,8 +12,8 @@ char
 
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
 # They must be the same as Query Server config in Poseidon.txt
-poseidonServer 127.0.0.1
-poseidonPort 24390
+poseidonQueryServerIp 127.0.0.1
+poseidonQueryServerPort 24390
 
 bindIp
 forceMapIP
