@@ -3680,7 +3680,7 @@ sub writeStorageLog {
 		print $f TF("---------- Storage %s -----------\n", getFormattedDate(int(time)));
 		for my $item (@{$char->storage}) {
 
-			my $display = sprintf "%2d %s x %s", $item->{binID}, $item->{name}, $item->{amount};
+			my $display = sprintf "%2d [%6d] %s x %s", $item->{binID}, $item->{nameID}, $item->{name}, $item->{amount};
 			# Translation Comment: Mark to show not identified items
 			$display .= " -- " . T("Not Identified") if !$item->{identified};
 			# Translation Comment: Mark to show broken items
