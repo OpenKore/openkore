@@ -45,16 +45,18 @@ sub new {
             '00B0' => ['stat_info', 'v V', [qw(type val)]],
             '00B1' => ['stat_info', 'v V', [qw(type val)]], # 8 was "exp_zeny_info"
             '00F8' => ['storage_closed'],
-            '0A0A' => ['storage_item_added', 'a2 V V C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
+            '00F4' => ['storage_item_added', 'a2 V v C3 a8', [qw(ID amount nameID identified broken upgrade cards)]],
             '00F6' => ['storage_item_removed', 'a2 V', [qw(ID amount)]],
             '00F2' => ['storage_opened', 'v2', [qw(items items_max)]],
             '023A' => ['storage_password_request', 'v', [qw(flag)]],
             '023E' => ['storage_password_request', 'v', [qw(flag)]],
             '023C' => ['storage_password_result', 'v2', [qw(type val)]],
-            '00CB' => ['sell_result', 'C', [qw(fail)]], # 3
+            '00CB' => ['sell_result', 'C', [qw(fail)]],
             '0187' => ['sync_request', 'a4', [qw(ID)]],
             '09A1' => ['sync_received_characters'],
             '019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
+            '0283' => ['recv_seed', 'a16', [qw(seed)]],
+            '007D' => ['map_loaded', 'x*', []],
     );
 
     $self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -63,7 +65,7 @@ sub new {
         account_server_info 0C32
         received_characters 099D
         received_characters_info 082D
-        sync_received_characters 09A0
+        sync_received_characters 09A1
     );
 
     $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
