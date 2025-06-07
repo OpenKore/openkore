@@ -19,7 +19,7 @@ sub new {
 		'0360' => ['sync', '', []],
 		'0437' => ['actor_action', 'a4 C', [qw(targetID type)]],
 		'0361' => ['actor_look_at', 'v', [qw(headDir)]],
-		'009F' => ['item_take', 'a4', [qw(ID)]],
+		'0362' => ['item_take', 'a4', [qw(ID)]],
 		'00A2' => ['item_drop', 'a2 v', [qw(ID amount)]],
 		'0364' => ['storage_item_add', 'v2', [qw(index amount)]],
 		'0365' => ['storage_item_remove', 'v2', [qw(index amount)]],
