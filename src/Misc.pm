@@ -194,7 +194,6 @@ our @EXPORT = (
 	compilePortals_check
 	portalExists
 	portalExists2
-	portalExistsAirship
 	redirectXKoreMessages
 	monKilled
 	getActorName
@@ -219,8 +218,7 @@ our @EXPORT = (
 	solveItemLink
 	solveMessage
 	solveMSG
-	absunit
-	autoNpcTalk/,
+	absunit/,
 
 	# Npc buy and sell
 	qw/cancelNpcBuySell
@@ -351,8 +349,6 @@ sub configModify {
 	$config{$key} = $val;
 	Settings::update_log_filenames() if $key =~ /^(username|char|server)$/o;
 	saveConfigFile();
-	
-	Plugins::callHook('post_configModify');
 }
 
 ##
@@ -365,9 +361,7 @@ sub bulkConfigModify {
 	my $r_hash = shift;
 	my $silent = shift;
 	my $oldval;
-	
-	
-	my %create_keys;
+
 	foreach my $key (keys %{$r_hash}) {
 		Plugins::callHook('configModify', {
 			key => $key,
@@ -376,10 +370,6 @@ sub bulkConfigModify {
 		});
 
 		$oldval = $config{$key};
-		
-		if (!exists $config{$key}) {
-			$create_keys{$key} = 1;
-		}
 
 		$config{$key} = $r_hash->{$key};
 
@@ -389,20 +379,7 @@ sub bulkConfigModify {
 			message TF("Config '%s' set to %s (was %s)\n", $key, $r_hash->{$key}, $oldval), "info" unless ($silent);
 		}
 	}
-	
-	if (scalar keys %create_keys > 0) {
-		my $f;
-		if (open($f, ">>", Settings::getConfigFilename())) {
-			foreach my $key (keys %create_keys) {
-				print $f "$key\n";
-			}
-			close($f);
-		}
-	}
-
 	saveConfigFile();
-	
-	Plugins::callHook('post_configModify');
 }
 
 ##
@@ -3096,7 +3073,7 @@ sub setPartySkillTimer {
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$handle};
 	$ai_v{"partySkill_${i}_time"} = time if $i ne "";
-	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i ne "";
+	$ai_v{temp}{"partySkill_${i}_target_time"}{$targetID} = time if $i ne "";
 }
 
 ##
@@ -4232,16 +4209,6 @@ sub compilePortals {
 		}
 	}
 
-	foreach my $portal (keys %portals_airships) {
-		$mapPortals{$portals_airships{$portal}{source}{map}}{$portal}{x} = $portals_airships{$portal}{source}{x};
-		$mapPortals{$portals_airships{$portal}{source}{map}}{$portal}{y} = $portals_airships{$portal}{source}{y};
-		foreach my $dest (keys %{$portals_airships{$portal}{dest}}) {
-			next if $portals_airships{$portal}{dest}{$dest}{map} eq '';
-			$mapSpawns{$portals_airships{$portal}{dest}{$dest}{map}}{$dest}{x} = $portals_airships{$portal}{dest}{$dest}{x};
-			$mapSpawns{$portals_airships{$portal}{dest}{$dest}{map}}{$dest}{y} = $portals_airships{$portal}{dest}{$dest}{y};
-		}
-	}
-
 	$pathfinding = new PathFinding if (!$checkOnly);
 
 	# Calculate LOS values from each spawn point per map to other portals on same map
@@ -4329,18 +4296,6 @@ sub portalExists2 {
 		 && $entry->{source}{pos}{x} == $srcx
 		 && $entry->{source}{pos}{y} == $srcy
 		 && $entry->{dest}{$destID}) {
-			return $_;
-		}
-	}
-	return;
-}
-
-sub portalExistsAirship {
-	my ($map, $r_pos) = @_;
-	foreach (keys %portals_airships) {
-		if ($portals_airships{$_}{source}{map} eq $map
-		    && $portals_airships{$_}{source}{x} == $r_pos->{x}
-		    && $portals_airships{$_}{source}{y} == $r_pos->{y}) {
 			return $_;
 		}
 	}
@@ -4733,16 +4688,6 @@ sub checkSelfCondition {
 			my ($itemName, $count) = $input =~ /(.*?)(?:\s+([><]=? *\d+))?$/;
 			$count = '>0' if $count eq '';
 			my $item = $char->inventory->getByName($itemName);
- 			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
-		}
-	}
-
-	if ($config{$prefix."_inInventoryID"}) {
-		return 0 if (!$char->inventory->isReady());
-		foreach my $input (split / *, */, $config{$prefix."_inInventoryID"}) {
-			my ($itemName, $count) = $input =~ /^(.*?)(?:\s*([><]=? *\d+))?$/;
-			$count = '>0' if $count eq '';
-			my $item = $char->inventory->getByNameID($itemName);
  			return 0 if !inRange(!$item ? 0 : $item->{amount}, $count);
 		}
 	}
@@ -5382,8 +5327,7 @@ sub setCharDeleteDate {
 }
 
 sub cancelNpcBuySell {
-	undef %talk;
-	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
+	undef $ai_v{'npc_talk'};
 
 	if ($in_market) {
 		$messageSender->sendMarketClose;
@@ -5401,8 +5345,7 @@ sub completeNpcSell {
 		$messageSender->sendSellBulk($items);
 	}
 
-	undef %talk;
-	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
+	undef $ai_v{'npc_talk'};
 
 	if ($messageSender->{send_sell_buy_complete}) {
 		$messageSender->sendSellBuyComplete;
@@ -5421,8 +5364,7 @@ sub completeNpcBuy {
 		}
 	}
 
-	undef %talk;
-	delete $ai_v{'npc_talk'} if (exists $ai_v{'npc_talk'});
+	undef $ai_v{'npc_talk'};
 
 	if ($in_market) {
 		$messageSender->sendMarketClose;
@@ -5574,29 +5516,6 @@ sub absunit {
 	} else {
 		return -1;
 	}
-}
-
-sub autoNpcTalk {
-	my ($ID, $nameID) = @_;
-
-	return if (defined AI::findAction("NPC"));
-
-	my $routeIndex = AI::findAction("route");
-	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && UNIVERSAL::isa(AI::args($routeIndex)->getSubtask, 'Task::TalkNPC'));
-
-	my $routeIndex = AI::findAction("route", 1);
-	return if (defined $routeIndex && AI::args($routeIndex)->getSubtask && UNIVERSAL::isa(AI::args($routeIndex)->getSubtask, 'Task::TalkNPC'));
-
-	debug "An unexpected npc conversation has started, auto-creating a TalkNPC Task\n";
-	my $task = Task::TalkNPC->new(type => 'autotalk', nameID => $nameID, ID => $ID);
-	AI::queue("NPC", $task);
-	# TODO: The following npc_talk hook is only added on activation.
-	# Make the task module or AI listen to the hook instead
-	# and wrap up all the logic.
-	$task->activate;
-	Plugins::callHook('npc_autotalk', {
-		task => $task
-	});
 }
 
 return 1;
