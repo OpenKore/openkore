@@ -25,6 +25,7 @@ sub new {
             '09FD' => ['actor_moved', 'v C a4 a4 v3 V v2 V2 v V v6 a4 a2 v V C2 a6 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss opt4 name)]],
             '0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
             '00CA' => ['buy_result', 'C', [qw(fail)]],
+            '0A0B' => ['cart_item_added', 'a2 V V C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
             '0087' => ['character_moves', 'a4 a6', [qw(move_start_time coords)]],
             '0ACC' => ['exp', 'a4 V2 v2', [qw(ID val val2 type flag)]],
             '09CF' => ['gameguard_request'],
@@ -44,7 +45,7 @@ sub new {
             '00B0' => ['stat_info', 'v V', [qw(type val)]],
             '00B1' => ['stat_info', 'v V', [qw(type val)]], # 8 was "exp_zeny_info"
             '00F8' => ['storage_closed'],
-            '00F4' => ['storage_item_added', 'a2 V v C3 a8', [qw(ID amount nameID identified broken upgrade cards)]],
+            '0A0A' => ['storage_item_added', 'a2 V V C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
             '00F6' => ['storage_item_removed', 'a2 V', [qw(ID amount)]],
             '00F2' => ['storage_opened', 'v2', [qw(items items_max)]],
             '023A' => ['storage_password_request', 'v', [qw(flag)]],

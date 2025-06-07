@@ -36,9 +36,6 @@ COMMAND 20
 # by using a teleport lv 2 or butterfly wing. Only change this, if you exactly know what you're doing!
 WARPTOSAVEMAP 200
 
-# Use airship
-AIRSHIP 2000
-
 # Maps where you can exit to the same place you came from,
 # which confuses routing if added to portals thoughtlessly.
 bat_room 10000

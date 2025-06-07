@@ -412,6 +412,16 @@ sub main {
 	my $realMonsterDist = blockDistance($realMyPos, $realMonsterPos);
 	my $clientDist = getClientDist($realMyPos, $realMonsterPos);
 
+	my $failed_to_attack_packet_recv = 0;
+
+	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
+		$args->{temporary_extra_range} = 0;
+	}
+
+	if (exists $target->{movetoattack_pos} && exists $char->{movetoattack_pos}) {
+		$failed_to_attack_packet_recv = 1;
+		$args->{temporary_extra_range} = 0;
+	}
 
 	# If the damage numbers have changed, update the giveup time so we don't timeout
 	if ($args->{dmgToYou_last}   != $target->{dmgToYou}
