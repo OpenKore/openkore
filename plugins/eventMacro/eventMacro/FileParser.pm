@@ -174,7 +174,6 @@ sub parseMacroFile {
 			}
 			elsif ($_ =~ /^}.*?{$/ && $inBlock > 0) {push(@perl_lines, $_)}
 			elsif ($_ =~ /{$/) {$inBlock++;	push(@perl_lines, $_)}
-			elsif ($_ =~ /^}.*/ && $inBlock > 0) {$inBlock--;	push(@perl_lines, $_)}
 			else {push(@perl_lines, $_)}
 			next;
 

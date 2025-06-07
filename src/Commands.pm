@@ -4145,7 +4145,7 @@ sub cmdMove {
 				$map_or_portal =~ s/^(\w{3})?(\d@.*)/$2/; # remove instance. is it possible to move to an instance? if not, we could throw an error here
 				# TODO: implement Field::sourceName function here once they are implemented there - 2013.11.26
 				my $file = $map_or_portal.'.fld2';
-				$file = File::Spec->catfile($Settings::fields_folder, $file) if ($Settings::fields_folder);
+				$file = File::Spec->catfile(File::Spec->splitdir(Settings::getFieldsFolders()), $file) if (Settings::getFieldsFolders());
 				$file .= ".gz" if (! -f $file); # compressed file
 				if ($maps_lut{"${map_or_portal}.rsw"} || -f $file) {
 					my $move_field = new Field(name => $map_or_portal);
@@ -4895,10 +4895,10 @@ sub cmdPortalList {
 		debug "Input: $args\n";
 		my ($srcMap, $srcX, $srcY, $dstMap, $dstX, $dstY, $seq) = $args =~ /^add ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3}) ([a-zA-Z\_\-0-9]*) (\d{1,3}) (\d{1,3})(.*)$/; #CHECKING
 		my $srcfile = $srcMap.'.fld2';
-		$srcfile = File::Spec->catfile($Settings::fields_folder, $srcfile) if ($Settings::fields_folder);
+		$srcfile = File::Spec->catfile(File::Spec->splitdir(Settings::getFieldsFolders()), $srcfile) if (Settings::getFieldsFolders());
 		$srcfile .= ".gz" if (! -f $srcfile); # compressed file
 		my $dstfile = $dstMap.'.fld2';
-		$dstfile = File::Spec->catfile($Settings::fields_folder, $dstfile) if ($Settings::fields_folder);
+		$dstfile = File::Spec->catfile(File::Spec->splitdir(Settings::getFieldsFolders()), $dstfile) if (Settings::getFieldsFolders());
 		$dstfile .= ".gz" if (! -f $dstfile); # compressed file
 		error TF("Files '%s' or '%s' does not exist.\n", $srcfile, $dstfile) if (! -f $srcfile || ! -f $dstfile);
 		if ($srcX > 0 && $srcY > 0 && $dstX > 0 && $dstY > 0

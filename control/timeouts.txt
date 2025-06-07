@@ -208,8 +208,8 @@ ai_route_escape 8
 # Don't change the following timeouts!
 ai_sync 7
 
-injectSync 20
-injectKeepAlive 48
+injectSync 12
+injectKeepAlive 240
 welcomeText 4
 patchserver 120
 

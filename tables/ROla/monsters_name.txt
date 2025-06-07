@@ -1,0 +1,2583 @@
+oIYB#Escorpião#
+oYYB#Poring#
+ooYB#Ovo de Besouro-Ladrão#
+o4YB#Zangão#
+pIYB#Farmiliar#
+pYYB#Besouro-Ladrão#
+poYB#Fabre#
+p4YB#Pupa#
+qIYB#Condor#
+qYYB#Salgueiro#
+qoYB#ChonChon#
+q4YB#Sapo de Rodda#
+rIYB#Lobo#
+rYYB#Esporo#
+roYB#Zumbi#
+r4YB#Esqueleto Arqueiro#
+sIYB#Besouro-Ladrão Fêmea#
+sYYB#Creamy#
+soYB#PecoPeco#
+s4YB#Mandrágora#
+tIYB#Besouro-Ladrão Macho#
+tYYB#Lobisomem#
+toYB#Guerreiro Orc#
+t4YB#Rabo de Verme#
+uIYB#Jiboia#
+uYYB#Munak#
+uoYB#Raptic#
+u4YB#Esqueleto Soldado#
+vIYB#Isis#
+vYYB#Anaconda#
+voYB#Poporing#
+v4YB#Verit#
+wIYB#Salgueiro Ancião#
+wYYB#Sapo de Thara#
+woYB#Mosca Caçadora#
+w4YB#Carniçal#
+xIYB#Sorrateiro#
+xYYB#Bafomé #
+xoYB#Golem#
+x4YB#Múmia#
+yIYB#Chonchon de Aço#
+yYYB#Cavalo Marinho#
+yoYB#Osíris#
+y4YB#Obeaune#
+zIYB#Cavalo-Marinho#
+zYYB#Doppelganger#
+zoYB#Ovo de PecoPeco#
+z4YB#Picky#
+0IYB#Picky com Casca#
+0YYB#Rocker#
+0oYB#Muka#
+04YB#Fumacento#
+1IYB#Yoyo#
+1YYB#Metaller#
+1oYB#Abelha-Rainha#
+14YB#Pé-Grande#
+2IYB#Pesadelo#
+2YYB#Poring Noel#
+2oYB#Lunático#
+24YB#Megalodon#
+3IYB#Strouf#
+3YYB#Vadon#
+3oYB#Cornutus#
+34YB#Hidra#
+4IYB#Peixe-Espada#
+4YYB#Kukre#
+4oYB#Esqueleto Pirata#
+44YB#Kaho#
+5IYB#Caranguejo#
+5YYB#Molusco#
+5oYB#Tartaruga#
+54YB#Esqueleto#
+6IYB#Esporo Venenoso#
+6YYB#Planta Vermelha#
+6oYB#Planta Azul#
+64YB#Planta Verde#
+7IYB#Planta Amarela#
+7YYB#Planta Branca#
+7oYB#Planta Brilhante#
+74YB#Cogumelo Negro#
+8IYB#Cogumelo Vermelho#
+8YYB#Besouro-Ladrão Dourado#
+8oYB#Orc Herói#
+84YB#Vocal#
+9IYB#Eclipse#
+9YYB#Lobo Errante#
+9oYB#Libélula#
+94YB#Mastering#
++IYB#Sapo-Cururu#
++YYB#Ambernite#
++oYB#Andre#
++4YB#Angeling#
+/IYB#Ovo de Andre#
+/YYB#Anúbis#
+/oYB#Argiope#
+/4YB#Argos#
+AIcB#Bafomé Jr.#
+AYcB#Bathory#
+AocB#Caramelo#
+A4cB#Koko#
+BIcB#Deniro#
+BYcB#Lobo do Deserto#
+BocB#Filhote de Lobo#
+B4cB#Deviace#
+CIcB#Deviruchi#
+CYcB#Dokebi#
+CocB#Drainliar#
+C4cB#Drake#
+DIcB#Drops#
+DYcB#Poeira#
+DocB#Eddga#
+D4cB#Eggyra#
+EIcB#Druida Maligno#
+EYcB#Flora#
+EocB#Frilldora#
+E4cB#Ghostring#
+FIcB#Gierath#
+FYcB#Goblin de Adaga#
+FocB#Goblin de Mangual#
+F4cB#Goblin de Machado#
+GIcB#Goblin de Martelo#
+GYcB#Goblin de Maça#
+GocB#Hode#
+G4cB#Besouro-Chifre#
+HIcB#Horong#
+HYcB#Jakk#
+HocB#Coringa#
+H4cB#Khalitzburg#
+IIcB#Kobold de Machado#
+IYcB#Kobold de Martelo#
+IocB#Kobold de Maça#
+I4cB#Kobold#
+JIcB#Kobold#
+JYcB#Magnólia#
+JocB#Louva-a-Deus#
+J4cB#Marduk#
+KIcB#Marina#
+KYcB#Esfera Marinha#
+KocB#Marionete#
+K4cB#Marse#
+LIcB#Martin#
+LYcB#Matyr#
+LocB#Maya#
+L4cB#Medusa#
+MIcB#Minorous#
+MYcB#Flor do Luar#
+MocB#Névoa#
+M4cB#Orc Esqueleto#
+NIcB#Orc Zumbi#
+NYcB#Pasana#
+NocB#Petite#
+N4cB#Petite Voador#
+OIcB#Faraó #
+OYcB#Fen#
+OocB#Freeoni#
+O4cB#Piere#
+PIcB#Plâncton#
+PYcB#Rafflesia#
+PocB#Raydric#
+P4cB#Réquiem#
+QIcB#Arenoso#
+QYcB#Selvagem#
+QocB#Bebê Selvagem#
+Q4cB#Rei Escorpião#
+RIcB#Esqueleto Operário#
+RYcB#Sohee#
+RocB#Soldado Andre#
+R4cB#Soldado Deniro#
+SIcB#Soldado Piere#
+SYcB#Percevejo#
+SocB#Tarou#
+S4cB#Vitata#
+TIcB#Zenorc#
+TYcB#Zerom#
+TocB#Sussurro#
+T4cB#Nove Caudas#
+UIcB#Fafnir#
+UYcB#Cogumelo#
+UocB#ChonChon#
+U4cB#Fabre#
+VIcB#Sussurro#
+VYcB#Cochicho#
+VocB#Bongun#
+V4cB#Orc Arqueiro#
+WIcB#Senhor dos Orcs#
+WYcB#Mímico#
+WocB#Alma Penada#
+W4cB#Alarme#
+XIcB#Arclouse#
+XYcB#Rideword#
+XocB#Esqueleto Prisioneiro#
+X4cB#Zumbi Prisioneiro#
+YIcB#Sacerdote Maldito#
+YYcB#Punk#
+YocB#Jirtas#
+Y4cB#Mysteltainn#
+ZIcB#Tirfing#
+ZYcB#Executor#
+ZocB#Anolian#
+Z4cB#Sting#
+aIcB#Andarilho#
+aYcB#Cãibra#
+aocB#Filamentous#
+a4cB#Escaravelho#
+bIcB#Mão de Ferro#
+bYcB#Grand Orc#
+bocB#Choco#
+b4cB#Talo de Verme#
+cIcB#Penomena#
+cYcB#Lobo do Deserto#
+cocB#Selvagem#
+c4cB#Grand Orc#
+dIcB#Guerreiro Orc#
+dYcB#Esporo Venenoso#
+docB#Choco#
+d4cB#Kobold#
+eIcB#Goblin#
+eYcB#Fen#
+eocB#Fabre#
+e4cB#Pupa#
+fIcB#Creamy#
+fYcB#Ovo de PecoPeco#
+focB#PecoPeco#
+f4cB#Yoyo#
+gIcB#Guerreiro Orc#
+gYcB#Ovo de Andre#
+gocB#Andre#
+g4cB#Piere#
+hIcB#Deniro#
+hYcB#Picky#
+hocB#Picky#
+h4cB#Cavaleiro do Abismo#
+iIcB#Marin#
+iYcB#Sasquatch#
+iocB#Jakk#
+i4cB#Goblin Natalino#
+jIcB#Cookie#
+jYcB#Antonio#
+jocB#Soldadinho de Chumbo#
+j4cB#Presente#
+kIcB#Chepet#
+kYcB#Cavaleiro da Tempestade#
+kocB#Hatii#
+k4cB#Gárgula#
+lIcB#Raggler#
+lYcB#Nereida#
+locB#Peste#
+l4cB#Injustiçado#
+mIcB#Goblin Arqueiro#
+mYcB#Grifo#
+mocB#Moldura Maldita#
+m4cB#Rosa Selvagem#
+nIcB#Dragão Mutante#
+nYcB#Xamã do Vento#
+nocB#Tritão#
+n4cB#Cookie#
+oIcB#Estrela do Mar#
+oYcB#Carat#
+oocB#Cavaleiro Sanguinário#
+o4cB#Relógio#
+pIcB#Gerente#
+pYcB#Crocodilo#
+pocB#Senhor das Trevas#
+p4cB#Senhora Orc#
+qIcB#Megalith#
+qYcB#Alice#
+qocB#Raydric Arqueiro#
+q4cB#Guardião da Floresta#
+rIcB#Golem Estalactítico#
+rYcB#Trilobita#
+rocB#Goblin a Vapor#
+r4cB#Verme Sábio#
+sIcB#Kobold Arqueiro#
+sYcB#Quimera#
+socB#Hugeling#
+s4cB#Arqueiro Guardião#
+tIcB#Cavaleiro Guardião#
+tYcB#Soldado Guardião#
+tocB#Emperium#
+t4cB#Maya Macho#
+uIcB#Esqueleto General#
+uYcB#Aparição#
+uocB#Diabinho#
+u4cB#Creamy Ameaçador#
+vIcB#Mantis Assassino#
+vYcB#Barão Coruja#
+vocB#Líder Kobold#
+v4cB#Múmia Anciã #
+wIcB#Zumbi Mestre#
+wYcB#Líder Goblin#
+wocB#Lagarta#
+w4cB#Am Mut#
+xIcB#Ilusão das Trevas#
+xYcB#Zangão Gigante#
+xocB#Aranha Gigante#
+x4cB#Verme Ancião#
+yIcB#Leib Olmai#
+yYcB#Gato de Nove Caudas#
+yocB#Panzer Goblin#
+y4cB#Gajomart#
+zIcB#Majoruros#
+zYcB#Gullinbursti#
+zocB#General Tartaruga#
+z4cB#Yakuza#
+0IcB#Batedor#
+0YcB#Agressor#
+0ocB#Solidificador#
+04cB#Foca#
+1IcB#Aquecedor#
+1YcB#Congelador#
+1ocB#Duque Coruja#
+14cB#Lavadeira#
+2IcB#Coelho#
+2YcB#Lontra#
+2ocB#Tesouro#
+24cB#Tesouro#
+3IcB#Tesouro#
+3YcB#Tesouro#
+3ocB#Tesouro#
+34cB#Tesouro#
+4IcB#Tesouro#
+4YcB#Tesouro#
+4ocB#Tesouro#
+44cB#Tesouro#
+5IcB#Tesouro#
+5YcB#Tesouro#
+5ocB#Tesouro#
+54cB#Tesouro#
+6IcB#Tesouro#
+6YcB#Tesouro#
+6ocB#Tesouro#
+64cB#Tesouro#
+7IcB#Tesouro#
+7YcB#Tesouro#
+7ocB#Tesouro#
+74cB#Tesouro#
+8IcB#Tesouro#
+8YcB#Tesouro#
+8ocB#Tesouro#
+84cB#Tesouro#
+9IcB#Tesouro#
+9YcB#Tesouro#
+9ocB#Tesouro#
+94cB#Tesouro#
++IcB#Tesouro#
++YcB#Tesouro#
++ocB#Tesouro#
++4cB#Tesouro#
+/IcB#Tesouro#
+/YcB#Tesouro#
+/ocB#Tesouro#
+/4cB#Tesouro#
+AIgB#Tesouro#
+AYgB#Tesouro#
+AogB#Agressor#
+A4gB#Apocalipse#
+BIgB#Golem de Lava#
+BYgB#Labareda#
+BogB#Planta Carnívora#
+B4gB#Grand Peco#
+CIgB#Succubus#
+CYgB#Anjo Fajuto#
+CogB#Bode#
+C4gB#Senhor dos Mortos#
+DIgB#Incubus#
+DYgB#Papel#
+DogB#Harpia#
+D4gB#Ancião#
+EIgB#Pungus#
+EYgB#Pesadelo Sombrio#
+EogB#Furador#
+E4gB#Grizzly#
+FIgB#Diabolik#
+FYgB#Estrondo#
+FogB#Exterminador#
+F4gB#Deletério#
+GIgB#Rochoso#
+GYgB#Ferrão#
+GogB#ArchAngeling#
+G4gB#Drácula#
+HIgB#Violinista#
+HYgB#Pingu#
+HogB#Giro-Goblin#
+H4gB#Rybio#
+IIgB#Fendark#
+IYgB#Múmia#
+IogB#Zumbi#
+I4gB#Cristal#
+JIgB#Cristal#
+JYgB#Cristal#
+JogB#Cristal#
+J4gB#Cristal#
+KIgB#Cristal#
+KYgB#Cristal#
+KogB#Cristal#
+K4gB#Cristal#
+LIgB#Bafomé #
+LYgB#Karakasa#
+LogB#Shinobi#
+L4gB#Sapo Venenoso#
+MIgB#Zumbi Atirador#
+MYgB#Miyabi Ningyo#
+MogB#Tengu#
+M4gB#Kapha#
+NIgB#Borboleta Sanguinária#
+NYgB#Pirralho#
+NogB#Pessegueira Encantada#
+N4gB#Pessegueira#
+OIgB#Ermitão Maligno#
+OYgB#Ginseng Selvagem#
+OogB#Ginseng#
+O4gB#Filhote de Leopardo#
+PIgB#Ninfa Perversa#
+PYgB#Zipper#
+PogB#Serpente Suprema#
+P4gB#Farmiliar#
+QIgB#Esqueleto Arqueiro#
+QYgB#Ísis#
+QogB#Mosca Caçadora#
+Q4gB#Carniçal#
+RIgB#Sorrateiro#
+RYgB#Obeaune#
+RogB#Cavalo-Marinho#
+R4gB#Pesadelo#
+SIgB#Esporo Venenoso#
+SYgB#Argiope#
+SogB#Argos#
+S4gB#Bafomé Jr.#
+TIgB#Lobo do Deserto#
+TYgB#Deviruchi#
+TogB#Drainliar#
+T4gB#Druida Maligno#
+UIgB#Jakk#
+UYgB#Coringa#
+UogB#Khalitzburg#
+U4gB#Grand Orc#
+VIgB#Talo de Verme#
+VYgB#Penomena#
+VogB#Sasquatch#
+V4gB#Soldadinho de Chumbo#
+WIgB#Chepet#
+WYgB#Raggler#
+WogB#Injustiçado#
+W4gB#Grifo#
+XIgB#Moldura Maldita#
+XYgB#Dragão Mutante#
+XogB#Xamã do Vento#
+X4gB#Tritão#
+YIgB#Senhora Orc#
+YYgB#Raydric Arqueiro#
+YogB#Trilobita#
+Y4gB#Kobold Arqueiro#
+ZIgB#Quimera#
+ZYgB#Louva-deus#
+ZogB#Marduk#
+Z4gB#Marionete#
+aIgB#Matyr#
+aYgB#Minorous#
+aogB#Orc Esqueleto#
+a4gB#Orc Zumbi#
+bIgB#Pasana#
+bYgB#Petite#
+bogB#Petite#
+b4gB#Raydric#
+cIgB#Réquiem#
+cYgB#Esqueleto Operário#
+cogB#Zerom#
+c4gB#Nove Caudas#
+dIgB#Bongun#
+dYgB#Orc Arqueiro#
+dogB#Mímico#
+d4gB#Alma Penada#
+eIgB#Alarme#
+eYgB#Arclouse#
+eogB#Rideword#
+e4gB#Esqueleto Prisioneiro#
+fIgB#Zumbi Prisioneiro#
+fYgB#Punk#
+fogB#Jirtas#
+f4gB#Rybio#
+gIgB#Fendark#
+gYgB#Mysteltainn#
+gogB#Tirfing#
+g4gB#Executor#
+hIgB#Anolian#
+hYgB#Sting#
+hogB#Andarilho#
+h4gB#Dokebi#
+iIgB#Samurai Encarnado#
+iYgB#Múmia Anciã #
+iogB#Pé-Grande#
+i4gB#Labareda#
+jIgB#Ilusão das Trevas#
+jYgB#Ermitão Maligno#
+jogB#Congelador#
+j4gB#Gárgula#
+kIgB#Filhote de Hatii#
+kYgB#Zangão Gigante#
+kogB#Goblin Natalino#
+k4gB#Marin#
+lIgB#Arenoso#
+lYgB#Shinobi#
+logB#Besouro-Ladrão Macho#
+l4gB#Cochicho#
+mIgB#Aquecedor#
+mYgB#Batedor#
+mogB#Solidificador#
+m4gB#Ninfa Perversa#
+nIgB#Aparição#
+nYgB#Drácula#
+nogB#Serpente Suprema#
+n4gB#Samurai Encarnado#
+oIgB#Angeling#
+oYgB#Cavaleiro Sanguinário#
+oogB#Ghostring#
+o4gB#Demolidor#
+pIgB#Orc Natalino#
+pYgB#Dríade#
+pogB#Encouraçado#
+p4gB#Atirador de Pedras#
+qIgB#Bomba de Pedras#
+qYgB#Golem de Madeira#
+qogB#Artilheiro Wootan#
+q4gB#Guerreiro Wootan#
+rIgB#Parasita#
+rYgB#Erva-Daninha#
+rogB#Árvore Maldita#
+r4gB#Dullahan#
+sIgB#Loli Ruri#
+sYgB#Mascarado#
+sogB#Serial Killer#
+s4gB#Quve#
+tIgB#Lude#
+tYgB#Poltergeist#
+togB#Amon Ra#
+t4gB#Pesadelo Sombrio#
+uIgB#Incubus#
+uYgB#Deviling#
+uogB#Yao Jun#
+u4gB#Mao Guai#
+vIgB#Zhu Po Long#
+vYgB#Filhote Hatii#
+vogB#Mi Gao#
+v4gB#Jing Guai#
+wIgB#Tao Gunka#
+wYgB#Tamruan#
+wogB#Gato de Folha#
+w4gB#Kraben#
+xIgB#Alice#
+xYgB#Verme Ancião#
+xogB#Zumbi Atirador#
+x4gB#Filhote de Leopardo#
+yIgB#Bathory#
+yYgB#Borboleta Sanguinária#
+yogB#Gerente#
+y4gB#Relógio#
+zIgB#Cãibra#
+zYgB#Zhu Po Long#
+zogB#Deviace#
+z4gB#Drops#
+0IgB#Ancião#
+0YgB#Salgueiro Ancião#
+0ogB#Estrondo#
+04gB#Flora#
+1IgB#Foca#
+1YgB#Planta Carnívora#
+1ogB#Goblin#
+14gB#Goblin#
+2IgB#Goblin#
+2YgB#Goblin#
+2ogB#Goblin#
+24gB#Goblin Arqueiro#
+3IgB#Líder Goblin#
+3YgB#Golem#
+3ogB#Guardião da Floresta#
+34gB#Horong#
+4IgB#Hidra#
+4YgB#Kapha#
+4ogB#Karakasa#
+44gB#Kobold#
+5IgB#Kobold#
+5YgB#Kobold#
+5ogB#Líder Kobold#
+54gB#Golem de Lava#
+6IgB#Pessegueira Encantada#
+6YgB#Mandrágora#
+6ogB#Marte#
+64gB#Miyabi Ningyo#
+7IgB#Névoa#
+7YgB#Parasita#
+7ogB#Sapo Venenoso#
+74gB#Giro-Goblin#
+8IgB#Escorpião#
+8YgB#Fumacento#
+8ogB#Esqueleto Soldado#
+84gB#Tamruan#
+9IgB#Tengu#
+9YgB#Vocal#
+9ogB#Ginseng Selvagem#
+94gB#Metaling#
++IgB#Mineral#
++YgB#Obsidiana#
++ogB#Mineiros#
++4gB#Fornalha Velha#
+/IgB#Ungoliant#
+/YgB#Porcellio#
+/ogB#Nuvem Tóxica#
+/4gB#Nuvem Venenosa#
+AIkB#Ursinho#
+AYkB#RSX-0806#
+AokB#Fornalha Velha#
+A4kB#Porcellio#
+BIkB#Lunático#
+BYkB#Yakuza#
+BokB#Múmia Anciã #
+B4kB#Munak#
+CIkB#Bongun#
+CYkB#Yao Jun#
+CokB#Espectro de Hellion#
+C4kB#Lif#
+DIkB#Amistr#
+DYkB#Filir#
+DokB#Vanilmirth#
+D4kB#Lif H#
+EIkB#Amistr H#
+EYkB#Filir H#
+EokB#Vanilmirth H#
+E4kB#Lif#
+FIkB#Amistr#
+FYkB#Filir#
+FokB#Vanilmirth#
+F4kB#Lif H#
+GIkB#Amistr H#
+GYkB#Filir H#
+GokB#Vanilmirth H#
+G4kB#Anopheles#
+HIkB#Holden#
+HYkB#Vento da Colina#
+HokB#Lady Branca#
+H4kB#Chung E#
+IIkB#Chung E#
+IYkB#Gremlin#
+IokB#Beholder#
+I4kB#Seyren Windsor#
+JIkB#Eremes Guile#
+JYkB#Harword Alteisen#
+JokB#Margaretha Sorin#
+J4kB#Cecil Damon#
+KIkB#Kathryne Keyron#
+KYkB#Lorde Seyren#
+KokB#Algoz Eremes#
+K4kB#Mestre-ferreiro Howard#
+LIkB#Sacerdotisa Margaretha#
+LYkB#Atiradora Cecil#
+LokB#Arquimaga Kathryne#
+L4kB#Lorde Seyren#
+MIkB#Algoz Eremes#
+MYkB#Mestre-ferreiro Harword#
+MokB#Sumo Margaretha#
+M4kB#Atiradora Cecil#
+NIkB#Arquimaga Kathryne#
+NYkB#Egnigem Cenia#
+NokB#Wickebine Tres#
+N4kB#Armeyer Dinze#
+OIkB#Errende Ebecee#
+OYkB#Kavach Icarus#
+OokB#Laurell Weinder#
+O4kB#Espadachim Egnigem#
+PIkB#Wickebine Tres#
+PYkB#Armeyer Dinze#
+PokB#Errende Ebecee#
+P4kB#Kavach Icarus#
+QIkB#Laurell Weinder#
+QYkB#Canhão de Fóton#
+QokB#Canhão de Fóton#
+Q4kB#Canhão de Fóton#
+RIkB#Canhão de Fóton#
+RYkB#Archdam#
+RokB#Dimik Roxo#
+R4kB#Dimik Verde#
+SIkB#Dimik Azul#
+SYkB#Dimik Laranja#
+SokB#Dimik Vermelho#
+S4kB#Monemus#
+TIkB#Venatu Vermelho#
+TYkB#Venatu Roxo#
+TokB#Venatu Verde#
+T4kB#Venatu Laranja#
+UIkB#Venatu Azul#
+UYkB#Vento da Colina#
+UokB#Gemini-S58#
+U4kB#Remover#
+VIkB#Canhão de Fóton#
+VYkB#Archdam#
+VokB#Vesper#
+V4kB#Filhote de Orc#
+WIkB#Grove#
+WYkB#Lady Tanee#
+WokB#Lady Branca#
+W4kB#Coelho da Páscoa#
+XIkB#Kraben#
+XYkB#Breeze#
+XokB#Plasma#
+X4kB#Plasma#
+YIkB#Plasma#
+YYkB#Plasma#
+YokB#Plasma#
+Y4kB#Palavra Morta#
+ZIkB#Mímico Antigo#
+ZYkB#Observação#
+ZokB#Abrigo#
+Z4kB#Retribuição#
+aIkB#Conforto#
+aYkB#Odium de Thanatos#
+aokB#Despero de Thanatos#
+a4kB#Maero de Thanatos#
+bIkB#Pesar de Thanatos#
+bYkB#Memória de Thanatos#
+bokB#Odium de Thanatos#
+b4kB#Despero de Thanatos#
+cIkB#Maero de Thanatos#
+cYkB#Pesar de Thanatos#
+cokB#Acidus#
+c4kB#Ferus#
+dIkB#Novus Escarlate#
+dYkB#Acidus#
+dokB#Ferus#
+d4kB#Novus Dourado#
+eIkB#Detardeurus#
+eYkB#Hydrolancer#
+eokB#Ovo de Dragão#
+e4kB#Jakk do Halloween#
+fIkB#Cecil Damon#
+fYkB#Canhão de Fóton#
+fokB#Poring#
+f4kB#Lunático#
+gIkB#Bebê Selvagem#
+gYkB#Filhote de Lobo#
+gokB#Bafomé Jr.#
+g4kB#Deviruchi#
+hIkB#Doppelganger Cruel#
+hYkB#Baú do Ibeu#
+hokB#Planta Vermelha#
+h4kB#Kiel#
+iIkB#Kiel-D-01#
+iYkB#Alicel#
+iokB#Aliot#
+i4kB#Aliza#
+jIkB#Constant#
+jYkB#Alicel#
+jokB#Aliot#
+j4kB#Cookie#
+kIkB#Carat#
+kYkB#Presente#
+kokB#Rosa Selvagem#
+k4kB#Constant#
+lIkB#Aliza#
+lYkB#Jiboia#
+lokB#Anaconda#
+l4kB#Medusa#
+mIkB#Valquíria Randgris#
+mYkB#Valquíria#
+mokB#Skogul#
+m4kB#Frus#
+nIkB#Skeggiold#
+nYkB#Skeggiold#
+nokB#Hydrolancer#
+n4kB#Acidus#
+oIkB#Ferus#
+oYkB#Acidus#
+ookB#Ferus#
+o4kB#Skogul#
+pIkB#Frus#
+pYkB#Skeggiold#
+pokB#Skeggiold#
+p4kB#Cavaleiro Sanguinário#
+qIkB#Hydrolancer#
+qYkB#Pesar Noturno#
+qokB#Agav#
+q4kB#Echio#
+rIkB#Vanberk#
+rYkB#Isilla#
+rokB#Hodremlin#
+r4kB#Rastreador#
+sIkB#Yeti#
+sYkB#Siroma#
+sokB#Titã de Gelo#
+s4kB#Gazeti#
+tIkB#Ktullanux#
+tYkB#Muscipular#
+tokB#Drosera#
+t4kB#Roween#
+uIkB#Galion#
+uYkB#Stapo#
+uokB#Atroce#
+u4kB#Agav#
+vIkB#Echio#
+vYkB#Titã de Gelo#
+vokB#Estalactite#
+v4kB#Rafflesia#
+wIkB#Galion#
+wYkB#Bola de Futebol#
+wokB#Megalith#
+w4kB#Roween#
+xIkB#Aunoe#
+xYkB#Baú do Tesouro#
+xokB#Seyren#
+x4kB#Eremes#
+yIkB#Harword#
+yYkB#Margaretha#
+yokB#Cecil#
+y4kB#Katrine#
+zIkB#Seyren#
+zYkB#Eremes#
+zokB#Harword#
+z4kB#Margaretha#
+0IkB#Cecil#
+0YkB#Kathryne#
+0okB#Sussurro do Halloween#
+04kB#Deviruchi do Halloween#
+1IkB#Ladrão de Biscoitos#
+1YkB#Aguaring#
+1okB#Espadachim Guardião#
+14kB#Arqueiro Guardião#
+2IkB#Salamandra#
+2YkB#Ifrit#
+2okB#Kasa#
+24kB#Salamandra#
+3IkB#Kasa#
+3YkB#Magmaring#
+3okB#Imp#
+34kB#Golpeador#
+4IkB#Byorgue#
+4YkB#Selvagem Dourado#
+4okB#Emperium#
+44kB#Flor do Luar#
+5IkB#Gourd#
+5YkB#Alarme#
+5okB#Bathory#
+54kB#Pé-Grande#
+6IkB#Lobo do Deserto#
+6YkB#Deviruchi#
+6okB#Congelador#
+64kB#Filhote de Hatii#
+7IkB#Goblin Natalino#
+7YkB#Névoa#
+7okB#Sasquatch#
+74kB#Tesouro#
+8IkB#Tesouro#
+8YkB#Yakuza#
+8okB#Valquíria#
+84kB#Runa Guardiã #
+9IkB#Runa Guardiã #
+9YkB#Tesouro#
+9okB#Tesouro#
+94kB#Tesouro#
++IkB#Tesouro#
++YkB#Tesouro#
++okB#Tesouro#
++4kB#Tesouro#
+/IkB#Tesouro#
+/YkB#Tesouro#
+/okB#Piamette#
+/4kB#Dama dos Desejos#
+AIoB#Guardião#
+AYoB#Vigia#
+AooB#Piamette#
+A4oB#Flor Azul#
+BIoB#Flor Vermelha#
+BYoB#Flor Amarela#
+BooB#Barricada#
+B4oB#Cavaleiro Guardião#
+CIoB#Coelho#
+CYoB#Massacre#
+CooB#Zumbi Dilacerado#
+C4oB#Cão Infernal#
+DIoB#Banshee#
+DYoB#Banshee#
+DooB#Crânio Flamejante#
+D4oB#Necromante#
+EIoB#Bispo Decadente#
+EYoB#Mosca Infernal#
+EooB#Mosca Belzebu#
+E4oB#Belzebu#
+FIoB#Tristan III#
+FYoB#Mina#
+FooB#Dororu#
+F4oB#Nami#
+GIoB#Elfin#
+GYoB#Clara#
+GooB#Dali#
+G4oB#Kanaya#
+HIoB#Hiyori#
+HYoB#Kero#
+HooB#Suki#
+H4oB#Rodin#
+IIoB#Lancer#
+IYoB#Nathan#
+IooB#Roan#
+I4oB#Orizaro#
+JIoB#Thyla#
+JYoB#Ben#
+JooB#Pinaka#
+J4oB#Kuhlmann#
+KIoB#Roux#
+KYoB#David#
+KooB#Ellen#
+K4oB#Luise#
+LIoB#Frank#
+LYoB#Ryan#
+LooB#Paolo#
+L4oB#Jens#
+MIoB#Thierry#
+MYoB#Steven#
+MooB#Wayne#
+M4oB#Carniçal#
+NIoB#Zumbi#
+NYoB#Leshij#
+NooB#Les#
+N4oB#Baba-Yaga#
+OIoB#Kikimora#
+OYoB#Mavka#
+OooB#Gorynych#
+O4oB#Mavka#
+PIoB#Imperador Morroc#
+PYoB#Morroc Ferido#
+PooB#Sombra da Inveja#
+P4oB#Sombra da Gula#
+QIoB#Sombra da Vaidade#
+QYoB#Sombra da Ira#
+QooB#Sombra da Inveja#
+Q4oB#Sombra da Gula#
+RIoB#Sombra da Vaidade#
+RYoB#Sombra da Ira#
+RooB#Bafomé Selado#
+R4oB#Naght Sieger#
+SIoB#Entweihen Crothen#
+SYoB#Esqueleto Espinhoso#
+SooB#Esqueleto Espinhoso#
+S4oB#Esqueleto Espinhoso#
+TIoB#Esqueleto Espinhoso#
+TYoB#Barricada#
+TooB#Suprimentos#
+T4oB#Suprimentos#
+UIoB#Bandeira Neutra#
+UYoB#Bandeira de Leão#
+UooB#Bandeira de Águia#
+U4oB#Cristal Azul#
+VIoB#Cristal Vermelho#
+VYoB#Guardião Guerreiro#
+VooB#Guardião Arqueiro#
+V4oB#Senhora das Banshees#
+WIoB#Mestre Beholder#
+WYoB#Cobalto#
+WooB#Metaling Pesado#
+W4oB#Apocalipse Infernal#
+XIoB#Zakudam#
+XYoB#Kublin#
+XooB#Grand Orc#
+X4oB#Orc Arqueiro#
+YIoB#Orc Esqueleto#
+YYoB#Senhora Orc#
+YooB#Dandelion#
+Y4oB#Tatacho#
+ZIoB#Centopeia#
+ZYoB#Nepenthes#
+ZooB#Leão da Montanha#
+Z4oB#Mamute Rochoso#
+aIoB#Leão de Vinhas#
+aYoB#Cornus#
+aooB#Naga#
+a4oB#Vespa Vagalume#
+bIoB#Pinguicula#
+bYoB#Tatacho#
+booB#Leão da Montanha#
+b4oB#Larva de Centopeia#
+cIoB#Fanat#
+cYoB#Buzzy Bol#
+cooB#Angeling#
+c4oB#Deviling#
+dIoB#Boitatá #
+dYoB#Iara#
+dooB#Espírito da Água#
+d4oB#Mula Sem Cabeça#
+eIoB#Espírito da Terra#
+eYoB#Espírito do Vento#
+eooB#Curupira#
+e4oB#Rato#
+fIoB#Espírito da Água#
+fYoB#Anêmona#
+fooB#Draco#
+f4oB#Ovo de Draco#
+gIoB#Pinguicula Sombria#
+gYoB#Elemental da Água#
+gooB#Ratatosk#
+g4oB#Duneyrr#
+hIoB#Árvore Anciã #
+hYoB#Rhyncho#
+hooB#Phylla#
+h4oB#Sombra de Nidhogg#
+iIoB#Sombra Obscura#
+iYoB#Golem de Bradium#
+iooB#Dandelion Fugitivo#
+i4oB#Sombra Obscura#
+jIoB#Mestre dos Pernilongos#
+jYoB#Pernilongo#
+jooB#Coelho Chinês#
+j4oB#Ninfa Chinesa#
+kIoB#Lady Chinesa#
+kYoB#Buzzy Brother#
+kooB#Muka#
+k4oB#Egnigem Cenia#
+lIoB#Baú de Tesouro#
+lYoB#Doppelganger#
+looB#Lebre da Neve#
+l4oB#Ursinho de Natal#
+mIoB#Padre Escondido#
+mYoB#Dandelion Executivo#
+mooB#Filhote de Lobo#
+m4oB#Pedra da Futilidade#
+nIoB#Pesadelo da Valquíria#
+nYoB#Valquíria#
+nooB#Valquíria#
+n4oB#Executor#
+oIoB#Augertus#
+oYoB#Mysteltainn#
+oooB#Artilharia#
+o4oB#Artilharia Arcana#
+pIoB#Artilharia Arcana#
+pYoB#Artilharia Arcana#
+pooB#Artilharia Arcana#
+p4oB#Naga#
+qIoB#Pinguicula#
+qYoB#Golem#
+qooB#Elemental#
+q4oB#Dimik#
+rIoB#Mímico#
+rYoB#Mascarado#
+rooB#Alice#
+r4oB#Sombra da Decepção#
+sIoB#Sombra da Ilusão#
+sYoB#Sombra do Prazer#
+sooB#Cristal Mãe#
+s4oB#Cristal Enorme#
+tIoB#Scaraba Chifre#
+tYoB#Chifres Duplos#
+tooB#Scaraba Galhado#
+t4oB#Scaraba Ancinho#
+uIoB#Rainha Scaraba#
+uYoB#Ovo de Scaraba#
+uooB#Ovo de Chifres Duplos#
+u4oB#Ovo de Galhado#
+vIoB#Ovo de Ancinho#
+vYoB#Dolomedes#
+vooB#Botaring#
+v4oB#Agni#
+wIoB#Agni#
+wYoB#Agni#
+wooB#Varuna#
+w4oB#Varuna#
+xIoB#Varuna#
+xYoB#Vayu#
+xooB#Vayu#
+x4oB#Vayu#
+yIoB#Chandra#
+yYoB#Chandra#
+yooB#Chandra#
+y4oB#Bombring#
+zIoB#Mensageiro do Inferno#
+zYoB#Mensageiro do Paraíso#
+zooB#Rafflesia Alnoldi#
+z4oB#Comodo#
+0IoB#Cendrawasih#
+0YoB#Banaspaty#
+0ooB#Butoijo#
+04oB#Leak#
+1IoB#Banaspaty#
+1YoB#Poring Dourado#
+1ooB#Hrist#
+14oB#Scaraba Chifre#
+2IoB#Chifres Duplos#
+2YoB#Scaraba Galhado#
+2ooB#Scaraba Ancinho#
+24oB#Imperatriz Scaraba#
+3IoB#Ovo de Scaraba Chifre#
+3YoB#Ovo de Chifres Duplos#
+3ooB#Ovo de Scaraba Galhado#
+34oB#Ovo de Scaraba Ancinho#
+4IoB#Scaraba Galhado#
+4YoB#Scaraba Ancinho#
+4ooB#Scaraba Chifre#
+44oB#Scaraba Chifres Duplos#
+5IoB#Scaraba Galhado#
+5YoB#Scaraba Ancinho#
+5ooB#Fumacento Natalino#
+54oB#Fumacento em Meias#
+6IoB#Sropho#
+6YoB#Kraken#
+6ooB#Dofle#
+64oB#Sedora#
+7IoB#Perna de Kraken#
+7YoB#Dramoh Rei#
+7ooB#Galapago#
+74oB#Eddga#
+8IoB#Bafomé Jr.#
+8YoB#Diabolik#
+8ooB#Ktullanux#
+84oB#Ghosting de Halloween#
+9IoB#Dragão Púrpura#
+9YoB#Aranha Pom#
+9ooB#Louva-a-deus Angra#
+94oB#Chapim#
++IoB#Trepadeira#
++YoB#Pequeno Fatum#
++ooB#Plagiador#
++4oB#Lembrança da Guardiã #
+/IoB#Lembrança da Guardiã #
+/YoB#Lembrança da Guardiã #
+/ooB#Lembrança da Guardiã #
+/4oB#Lembrança da Guardiã #
+AIsB#Lembrança da Guardiã #
+AYsB#Sombra do Dragão#
+AosB#Vadon Residual#
+A4sB#Marse Residual#
+BIsB#Caranguejo Residual#
+BYsB#Cornutus Residual#
+BosB#Molusco Residual#
+B4sB#Kukre Residual#
+CIsB#Strouf Residual#
+CYsB#Peixe Residual#
+CosB#Marc Residual#
+C4sB#Anolian Residual#
+DIsB#Obeaune Residual#
+DYsB#Kapha Residual#
+DosB#Celacanto#
+D4sB#Celacanto Sombrio#
+EIsB#Celacanto Cruel#
+EYsB#Celacanto Mutante#
+EosB#Celacanto Violento#
+E4sB#Alga#
+FIsB#Polvo Pequeno#
+FYsB#Tentáculo de Polvo#
+FosB#Polvo Gigante#
+F4sB#Kukre Residual#
+GIsB#Strouf Residual#
+GYsB#Eruma Vermelho#
+GosB#Siorava#
+G4sB#Montaria Selvagem#
+HIsB#Dama dos Desejos#
+HYsB#Jirtas#
+HosB#Randel Lawrence#
+H4sB#Flamer Emule#
+IIsB#Celia Alde#
+IYsB#Chen Liu#
+IosB#Gertie We#
+I4sB#Alphoccio Basil#
+JIsB#Trentini#
+JYsB#Paladino Randel#
+JosB#Criador Flamel#
+J4sB#Professora Celia#
+KIsB#Mestre Chen#
+KYsB#Desordeira Gertie#
+KosB#Menestrel Alphochio#
+K4sB#Cigana Trentini#
+LIsB#Paladino Randel#
+LYsB#Criador Flamer#
+LosB#Professora Celia#
+L4sB#Mestre Chen#
+MIsB#Desordeira Gertie#
+MYsB#Menestrel Alphoccio#
+MosB#Cigana Trentini#
+M4sB#Cobaia Faminta#
+NIsB#Cobaia Faminta#
+NYsB#Mestre#
+NosB#Soldado#
+N4sB#Guerreiro Wootan#
+OIsB#Mi Gao#
+OYsB#Pyuriel Furiosa#
+OosB#Guerreira Laura#
+O4sB#Gioia#
+PIsB#Elvira#
+PYsB#General Daehyun#
+PosB#Samurai Soheon#
+P4sB#Guardião Morto Kades#
+QIsB#Rudo#
+QYsB#Piamette#
+QosB#Piamette#
+Q4sB#Jardineiro#
+RIsB#Jardineiro#
+RYsB#Vigia do Jardim#
+RosB#Vigia do Jardim#
+R4sB#Donzela dos Desejos#
+SIsB#Armeyer Dinze#
+SYsB#Armeyer Dinze#
+SosB#Errende Ebecee#
+S4sB#Errende Ebecee#
+TIsB#Kavach Icarus#
+TYsB#Kavach Icarus#
+TosB#Laurell Weinder#
+T4sB#Laurell Weinder#
+UIsB#Wickebine Tres#
+UYsB#Wickebine Tres#
+UosB#Egnigem Cenia#
+U4sB#Egnigem Cenia#
+VIsB#Doppelganger#
+VYsB#Guerreira Laura#
+VosB#Elvira#
+V4sB#Samurai Soheon#
+WIsB#Rudo#
+WYsB#Sombra Abissal#
+WosB#Moldura Abissal#
+W4sB#Sacerdote Abissal#
+XIsB#Kobold Abissal#
+XYsB#Kobold Abissal#
+XosB#Kobold Abissal#
+X4sB#Arqueiro Abissal#
+YIsB#Velha Arca do Tesouro#
+YYsB#Abóbora Orgânica#
+YosB#Abóbora Inorgânica#
+Y4sB#Bungisngis#
+ZIsB#Engkanto#
+ZYsB#Manananggal#
+ZosB#Mangkukulam#
+Z4sB#Tikbalang#
+aIsB#Tiyanak#
+aYsB#Wakwak#
+aosB#Jejeling#
+a4sB#Bangungot#
+bIsB#Bangungot#
+bYsB#Buwaya#
+bosB#Bakonawa#
+b4sB#Bakonawa#
+cIsB#Bakonawa#
+cYsB#Bangungot#
+cosB#Gongo#
+c4sB#Ovo de Buwaya#
+dIsB#Escravo de Buwaya#
+dYsB#Alga de Malaya#
+dosB#Buwaya#
+d4sB#Ponto Fraco#
+eIsB#Wakwak#
+eYsB#Tesouro de Bakonawa#
+eosB#Manananggal#
+e4sB#Mangkukulam#
+fIsB#Tiyanak#
+fYsB#Clone das Sombras#
+fosB#Cavalo Azul Furioso#
+f4sB#Pequeno Cavalo Azul#
+gIsB#Tentáculo de Polvo#
+gYsB#Polvo Rei#
+gosB#Minorous Pesadelo#
+g4sB#Múmia Pesadelo#
+hIsB#Verit Pesadelo#
+hYsB#Mímico Pesadelo#
+hosB#Mímico Pesadelo#
+h4sB#Arclouse Pesadelo#
+iIsB#Arclouse Pesadelo#
+iYsB#Múmia Anciã Pesadelo#
+iosB#Múmia Anciã Pesadelo#
+i4sB#Amon Ra do Pesadelo#
+jIsB#Minorous Feroz#
+jYsB#Menblatt#
+josB#Petal#
+j4sB#Cenere#
+kIsB#Antigo Livro Danificado#
+kYsB#Lichtern Laguz#
+kosB#Lichtern Anzus#
+k4sB#Lichtern Kenaz#
+lIsB#Lichtern Inguz#
+lYsB#Gerente de Bifröst#
+losB#Monte de Terra#
+l4sB#Pedra#
+mIsB#Monte de Mato#
+mYsB#Suspeito#
+mosB#Devoto de Morroc#
+m4sB#Filhote Foragido#
+nIsB#Rei Poring#
+nYsB#Polvo Rei#
+nosB#Carneiro Perdido#
+n4sB#Cavaleiro#
+oIsB#Mercenário#
+oYsB#Ferreiro#
+oosB#Caçadora#
+o4sB#Bruxa#
+pIsB#Sacerdotisa#
+pYsB#Templária#
+posB#Arruaceira#
+p4sB#Alquimista#
+qIsB#Bardo#
+qYsB#Odalisca#
+qosB#Sábio#
+q4sB#Monge#
+rIsB#Cavaleiro Seyren#
+rYsB#Mercenário Eremes#
+rosB#Ferreiro Howard#
+r4sB#Caçadora Cecil#
+sIsB#Bruxa Kathryne#
+sYsB#Sacerdotisa Margaretha#
+sosB#Templária Egnigem#
+s4sB#Arruaceira Wikebine#
+tIsB#Alquimista Armeyer#
+tYsB#Bardo Kavach#
+tosB#Odalisca Trentinni#
+t4sB#Sábio Laurell#
+uIsB#Monge Errende#
+uYsB#Aprendiz#
+uosB#Superaprendiz#
+u4sB#Aira#
+vIsB#Kuluna#
+vYsB#Mallina#
+vosB#Ezella#
+v4sB#Lune#
+wIsB#Morin#
+wYsB#Nasarin#
+wosB#Poring Suspeito#
+w4sB#Bebê Suspeito#
+xIsB#Tesouro#
+xYsB#Tesouro#
+xosB#Tesouro#
+x4sB#Tesouro#
+yIsB#Tesouro#
+yYsB#Tesouro#
+yosB#Tesouro#
+y4sB#Tesouro#
+zIsB#Tesouro#
+zYsB#Tesouro#
+zosB#Tesouro#
+z4sB#Bafomé Invocado#
+0IsB#Senhor Invocado#
+0YsB#Besouro Invocado#
+0osB#Cavaleiro Invocado#
+04sB#Alma da Escuridão#
+1IsB#Alma Andarilha#
+1YsB#Árvore Maldita Decorada#
+1osB#Antonio Sombrio#
+14sB#Cookie Aterrorizante#
+2IsB#Soldadinho Corrompido#
+2YsB#Presente das Trevas#
+2osB#Lude Grotesco#
+24sB#Poltergeist Sangrento#
+3IsB#Marionete Demoníaca#
+3YsB#Ursinho Abominável#
+3osB#Celine Kimi#
+34sB#Celine Kimi#
+4IsB#Presentinho#
+4YsB#Presente Gigante#
+4osB#Condor de Fogo#
+44sB#Arenoso de Fogo#
+5IsB#Frilldora de Fogo#
+5YsB#Golem de Fogo#
+5osB#Fosso de Fogo#
+54sB#Besouro Rola Brasa#
+6IsB#Sonia#
+6YsB#Mímico Enfurecido#
+6osB#Lamento de Nidhogg#
+64sB#Brinaranha Jovem#
+7IsB#Kasa Enfurecido#
+7YsB#Salamandra Enfurecida#
+7osB#Brinaranha#
+74sB#Skoll#
+8IsB#Núcleo de Brinaranha#
+8YsB#Núcleo de Skoll#
+8osB#Lamento dos Deuses#
+84sB#Reencarnação de Morroc#
+9IsB#Deus Morroc#
+9YsB#Morroc Caído#
+9osB#Mana da Escuridão#
+94sB#Mana da Aurora#
++IsB#Mana da Vitalidade#
++YsB#Mana da Terra#
++osB#Mana do Oceano#
++4sB#Lamento da Inveja#
+/IsB#Lamento da Ira#
+/YsB#Necromante de Morroc#
+/osB#Necromante de Morroc#
+/4sB#Morroc Falso#
+AIwB#Imperador Morroc#
+AYwB#Imperador Morroc#
+AowB#Morroc Exórdio#
+A4wB#Carniçal Profano#
+BIwB#Múmia Profana#
+BYwB#Esqueleto Profano#
+BowB#Aparição Profana#
+B4wB#Verit Profano#
+CIwB#Lude Profano#
+CYwB#Grand Pere#
+CowB#Jitterbug#
+C4wB#Jitterbug#
+DIwB#Pere#
+DYwB#Pere#
+DowB#Pere#
+D4wB#Pere#
+EIwB#Lamento da Inveja#
+EYwB#Lamento da Gula#
+EowB#Lamento da Ira#
+E4wB#Ceifador Ankou#
+FIwB#Necromante Caído#
+FYwB#Bebê Orc Caído#
+FowB#Filhote de Lobo Caído#
+F4wB#Farmiliar Caído#
+GIwB#Orc Caído#
+GYwB#Lobo Caído#
+GowB#Fen Caído#
+G4wB#Verit Caído#
+HIwB#Megalodon Caído#
+HYwB#Orc Zumbi Caído#
+HowB#Construtor#
+H4wB#Construtora#
+IIwB#Zumbichano#
+IYwB#Jakk Fugitivo#
+IowB#Santa Poring#
+I4wB#Merry Santa Orc#
+JIwB#Verme com Rosto#
+JYwB#Rainha Verme#
+JowB#Verme Sombrio com Rosto#
+J4wB#Inseto Venenoso#
+KIwB#Rainha Verme#
+KYwB#Rainha Verme#
+KowB#Rainha Verme#
+K4wB#Rainha Verme#
+LIwB#Ovo de Verme com Rosto#
+LYwB#Larva de Verme#
+LowB#Lorde Irine#
+L4wB#Guarda de Payon#
+MIwB#Soldado de Payon#
+MYwB#Lobo da Guarda#
+MowB#Lobo da Guarda Feroz#
+M4wB#Alphard#
+NIwB#Sirius#
+NYwB#Gatuna de Geffen#
+NowB#Valentão de Geffen#
+N4wB#Bandido de Geffen#
+OIwB#Mirzam#
+OYwB#Muliphen#
+OowB#Wezen#
+O4wB#Wei#
+PIwB#Sargas#
+PYwB#Shaula#
+PowB#Ahdara#
+P4wB#Procyon#
+QIwB#Atria#
+QYwB#Fay Kanavion#
+QowB#Fenris Fenrir#
+Q4wB#Alfonso#
+RIwB#Alfonso Jr.#
+RYwB#Gatuna de Geffen#
+RowB#Valentão de Geffen#
+R4wB#Bandido de Geffen#
+SIwB#Loki#
+SYwB#Selo Místico#
+SowB#Habitante das Sombras#
+S4wB#Convidado do Inferno#
+TIwB#Espírito das Trevas#
+TYwB#Fanático das Trevas#
+TowB#Mina de Gelo#
+T4wB#Cruz de Chamas#
+UIwB#Soldado Amaldiçoado#
+UYwB#Sentinela Amaldiçoado#
+UowB#Alma Estilhaçada#
+U4wB#Lamento Errante#
+VIwB#Suplício Perdido#
+VYwB#Memória Ressentida#
+VowB#Juramento Desolado#
+V4wB#Rancor Antigo#
+WIwB#Massacre Prazeroso#
+WYwB#Legado Esquecido#
+WowB#Passado Irreversível#
+W4wB#Angústia Torturante#
+XIwB#Amargura Perpétua#
+XYwB#Besouro Misterioso#
+XowB#Zumbi Amaldiçoado#
+X4wB#Alma Amaldiçoada#
+YIwB#Carniçal Amaldiçoado#
+YYwB#Arclouse Amaldiçoado#
+YowB#Raydric Amaldiçoado#
+Y4wB#Arqueiro Amaldiçoado#
+ZIwB#Amaldiçoado do Abismo#
+ZYwB#Khalitzburg Amaldiçoado#
+ZowB#Sanguinário Amaldiçoado#
+Z4wB#Cavaleiro Desmorto#
+aIwB#Cavaleira Desmorta#
+aYwB#Amdarais#
+aowB#Origem da Maldição#
+a4wB#Khalitzburg Amaldiçoada#
+bIwB#Druida Amaldiçoado#
+bYwB#Andarilho Amaldiçoado#
+bowB#Aparição Amaldiçoada#
+b4wB#Bafomé Amaldiçoado#
+cIwB#Bafomé Jr. Amaldiçoado#
+cYwB#Quimera Amaldiçoada#
+cowB#Poring#
+c4wB#Poporing#
+dIwB#Drops#
+dYwB#Lunático#
+dowB#Salgueiro#
+d4wB#Picky#
+eIwB#Picky#
+eYwB#Zumbi#
+eowB#Esporo Venenoso#
+e4wB#Unicórnio#
+fIwB#Esqueleão#
+fYwB#Charleston 01#
+fowB#Charleston 02#
+f4wB#Charleston 03#
+gIwB#Roboring#
+gYwB#Rock Step#
+gowB#Transistor#
+g4wB#Kick & Kick#
+hIwB#Robô Escavador#
+hYwB#Robô de Reconhecimento#
+howB#Robô Reparador#
+h4wB#Robô Explorador#
+iIwB#Adorador do Infortúnio#
+iYwB#Adorador do Infortúnio#
+iowB#Propaganda Ilegal#
+i4wB#Bomba#
+jIwB#T_W_O#
+jYwB#Fumaça Verde#
+jowB#Robô Reparador Turbo#
+j4wB#Robô Explorador Turbo#
+kIwB#Robô de Sucata#
+kYwB#GC109#
+kowB#DR815#
+k4wB#Glitch do Sistema#
+lIwB#Zumbi Fedorento#
+lYwB#Carniçal Fedorento#
+lowB#Vigia do Tempo#
+l4wB#Marca-Tempo#
+mIwB#Despertador#
+mYwB#Diretor#
+mowB#Neo Punk#
+m4wB#Ancião Ancestral#
+nIwB#Visconde Coruja#
+nYwB#Visconde Coruja#
+nowB#Marquês Coruja#
+n4wB#Rideword Distorcido#
+oIwB#Mímico Distorcido#
+oYwB#Alvo#
+oowB#Não-alvo#
+o4wB#Poporing de Evento#
+pIwB#Pouring Marinho#
+pYwB#Desmorta Sombria#
+powB#Desmorto Sombrio#
+p4wB#Amdarais Sombrio#
+qIwB#Khalitzburg Sombria#
+qYwB#Sanguinário Sombrio#
+qowB#Cavaleiro Sombrio#
+q4wB#Arqueiro Sombrio#
+rIwB#Larva#
+rYwB#Carniçal Sombrio#
+rowB#Alma Penada Sombria#
+r4wB#Zumbi Sombrio#
+sIwB#Origem da Escuridão#
+sYwB#Raydric Sombrio#
+sowB#Khalitzburg Sombria#
+s4wB#Quinding#
+tIwB#Legionário Imortal#
+tYwB#Zumbi da Guarda#
+towB#Lobo de Gelo#
+t4wB#Tappy#
+uIwB#Observador#
+uYwB#Bijou#
+uowB#Amdarais Imortal#
+u4wB#Amdarais Mortal#
+vIwB#Arqueiro Imortal#
+vYwB#Esqueleto Imortal#
+vowB#Soldado Imortal#
+v4wB#Cavaleiro Imortal#
+wIwB#Xamã Imortal#
+wYwB#Zumbi Imortal#
+wowB#Legionário Imortal#
+w4wB#Guardião da Chave#
+xIwB#Carniçal Imortal#
+xYwB#Dilacerado Imortal#
+xowB#Habitante Imortal#
+x4wB#Convidado Imortal#
+yIwB#Espírito Imortal#
+yYwB#Jack Wolf#
+yowB#Jack Wolf#
+y4wB#Intruso#
+zIwB#Prato Luxuoso#
+zYwB#Legionário Imortal#
+zowB#Legionário Imortal#
+z4wB#Legionário Imortal#
+0IwB#General Imortal#
+0YwB#Dilacerado Mortal#
+0owB#Bebê Poring#
+04wB#Omeleting#
+1IwB#Omeleting#
+1YwB#Lunático Folhado#
+1owB#Fabre Gramíneo#
+14wB#Zangão Selvagem#
+2IwB#Sapo de Rodda Doce#
+2YwB#Filhote de Lobo Caçador#
+2owB#Esporo de Água Doce#
+24wB#Basilisco Guerreiro#
+3IwB#Basilisco General#
+3YwB#Aranha Pomar#
+3owB#Mandrágora da Selva#
+34wB#Basilisco Guarda#
+4IwB#Gemaring#
+4YwB#Plâncton Morto#
+4owB#Poporing Anti-Ataques#
+44wB#Poporing Anti-Magia#
+5IwB#Esqueleto Marinheiro#
+5YwB#Esqueleto Frágil#
+5owB#Soldado Frágil#
+54wB#Ovo Nível 10#
+6IwB#Ovo Nível 50#
+6YwB#Ovo Nível 100#
+6owB#Ovo Nível 150#
+64wB#Ovo Nível 10 (Fogo)#
+7IwB#Massacre Ágil#
+7YwB#Yoyo Ágil#
+7owB#Lobo Ágil#
+74wB#Violinista Ágil#
+8IwB#Vanberk Ágil#
+8YwB#Ursinho Ágil#
+8owB#Talo de Verme Ágil#
+84wB#Esporo Ágil#
+9IwB#Sohee Ágil#
+9YwB#Rochoso Ágil#
+9owB#Siroma Ágil#
+94wB#Molusco Ágil#
++IwB#Bebê Selvagem Ágil#
++YwB#Marinheiro Ágil#
++owB#Rideword Ágil#
++4wB#Retribuição Ágil#
+/IwB#Dimik Ágil#
+/YwB#Prisioneiro Brutal#
+/owB#Zumbi Mestre Alfa#
+/4wB#Zumbi Feroz#
+AI0B#Zakudam Fugaz#
+AY0B#Yoyo Brutal#
+Ao0B#Rabo de Verme Alfa#
+A40B#Guerreiro Wootan Feroz#
+BI0B#Leshij Fugaz#
+BY0B#Xamã do Vento Brutal#
+Bo0B#Salgueiro Alfa#
+B40B#Rosa Selvagem Feroz#
+CI0B#Ninfa Perversa Fugaz#
+CY0B#Sussurro Brutal#
+Co0B#Esqueleto Frágil Alfa#
+C40B#Andarilho Feroz#
+DI0B#Violinista Fugaz#
+DY0B#Violinista Brutal#
+Do0B#Nuvem Venenosa Alfa#
+D40B#Venatu Feroz#
+EI0B#Baba-Yaga Fugaz#
+EY0B#Vadon Brutal#
+Eo0B#Ungoliant Alfa#
+E40B#Espírito do Vento Feroz#
+FI0B#Tiyanak Fugaz#
+FY0B#Besouro-Ladrão Brutal#
+Fo0B#Besouro-Ladrão Alfa#
+F40B#Besouro-Ladrão Feroz#
+GI0B#Sapo de Thara Fugaz#
+GY0B#Tatacho Brutal#
+Go0B#Tarou Alfa#
+G40B#Tamruan Feroz#
+HI0B#Sting Fugaz#
+HY0B#Chonchon de Aço Brutal#
+Ho0B#Stapo Alfa#
+H40B#Estalactítico Feroz#
+II0B#Percevejo Fugaz#
+IY0B#Solidificador Brutal#
+Io0B#Esqueleto Soldado Alfa#
+I40B#Esqueleto Soldado Feroz#
+JI0B#Conforto Fugaz#
+JY0B#Yeti Brutal#
+Jo0B#Jiboia Alfa#
+J40B#Fumacento Feroz#
+KI0B#Rochoso Fugaz#
+KY0B#Skogul Brutal#
+Ko0B#Esqueleto General Alfa#
+K40B#Esqueleto General Feroz#
+LI0B#Operário Fugaz#
+LY0B#Sorrateiro Brutal#
+Lo0B#Sorrateiro Alfa#
+L40B#Shinobi Feroz#
+MI0B#Abrigo Fugaz#
+MY0B#Cecil Damon Brutal#
+Mo0B#Lontra Alfa#
+M40B#Sedora Feroz#
+NI0B#Escorpião Fugaz#
+NY0B#Selvagem Brutal#
+No0B#Selvagem Alfa#
+N40B#Arenoso Feroz#
+OI0B#Salamandra Fugaz#
+OY0B#Roween Brutal#
+Oo0B#Sapo de Rodda Alfa#
+O40B#Sapo de Rodda Feroz#
+PI0B#Rocker Fugaz#
+PY0B#Rideword Brutal#
+Po0B#Pirralho Alfa#
+P40B#Retribuição Feroz#
+QI0B#Retribuição Fugaz#
+QY0B#Réquiem Brutal#
+Qo0B#Remover Alfa#
+Q40B#Eruma Vermelho Fugaz#
+RI0B#Raydric Ágil#
+RY0B#Raydric Brutal#
+Ro0B#Laurell Weinder Alfa#
+R40B#Scaraba Ancinho Feroz#
+SI0B#Raggler Fugaz#
+SY0B#Rafflesia Ágil#
+So0B#Poring Alfa#
+S40B#Poring Feroz#
+TI0B#Poring Fugaz#
+TY0B#Poring Ágil#
+To0B#Porcellio Brutal#
+T40B#Poporing Alfa#
+UI0B#Poporing Feroz#
+UY0B#Poporing Fugaz#
+Uo0B#Sapo Venenoso Ágil#
+U40B#Esporo Venenoso Brutal#
+VI0B#Plasma Alfa#
+VY0B#Plâncton Feroz#
+Vo0B#Mineiros Fugaz#
+V40B#Espírito da Água Ágil#
+WI0B#Pinguicula Brutal#
+WY0B#Pinguicula Alfa#
+Wo0B#Picky Feroz#
+W40B#Fen Fugaz#
+XI0B#Petite Ágil#
+XY0B#Petite Brutal#
+Xo0B#Penomena Alfa#
+X40B#Penomena Feroz#
+YI0B#PecoPeco Fugaz#
+YY0B#Pasana Ágil#
+Yo0B#Parasita Brutal#
+Y40B#Duque Coruja Alfa#
+ZI0B#Guerreiro Orc Feroz#
+ZY0B#Orc Zumbi Fugaz#
+Zo0B#Orc Esqueleto Ágil#
+Z40B#Senhora Orc Brutal#
+aI0B#Observação Alfa#
+aY0B#Nuvem Tóxica Feroz#
+ao0B#Novus Fugaz#
+a40B#Novus Ágil#
+bI0B#Novus Brutal#
+bY0B#Novus Alfa#
+bo0B#Pesadelo Sombrio Feroz#
+b40B#Aparição Fugaz#
+cI0B#Andarilho Ágil#
+cY0B#Nepenthes Brutal#
+co0B#Necromante Alfa#
+c40B#Presente Feroz#
+dI0B#Muscipular Fugaz#
+dY0B#Múmia Ágil#
+do0B#Múmia Brutal#
+d40B#Muka Alfa#
+eI0B#Sombra da Inveja Feroz#
+eY0B#Sombra da Inveja Fugaz#
+eo0B#Sombra da Inveja Ágil#
+e40B#Holden Brutal#
+fI0B#Miyabi Ningyo Alfa#
+fY0B#Minorous Fugaz#
+fo0B#Minorous Ágil#
+f40B#Mineral Brutal#
+gI0B#Plagiador Alfa#
+gY0B#Mímico Feroz#
+go0B#Mímico Fugaz#
+g40B#Metaller Ágil#
+hI0B#Metaling Brutal#
+hY0B#Metaling Alfa#
+ho0B#Tritão Feroz#
+h40B#Menblatt Fugaz#
+iI0B#Medusa Ágil#
+iY0B#Martin Brutal#
+io0B#Marionete Alfa#
+i40B#Marin Feroz#
+jI0B#Marduk Fugaz#
+jY0B#Louva-a-Deus Ágil#
+jo0B#Mandrágora Brutal#
+j40B#Manananggal Alfa#
+kI0B#Majoruros Feroz#
+kY0B#Magnólia Fugaz#
+ko0B#Magmaring Ágil#
+k40B#Lunático Brutal#
+lI0B#Lunático Alfa#
+lY0B#Lude Feroz#
+lo0B#Vespa Vagalume Fugaz#
+l40B#Loli Ruri Ágil#
+mI0B#Pessegueira Brutal#
+mY0B#Bebê Poring Alfa#
+mo0B#Pequeno Fatum Feroz#
+m40B#Jing Guai Fugaz#
+nI0B#Les Ágil#
+nY0B#Leib Olmai Brutal#
+no0B#Gato de Folha Alfa#
+n40B#Arruaceira Feroz#
+oI0B#Mercenário Fugaz#
+oY0B#Kobold Arqueiro Ágil#
+oo0B#Kobold Brutal#
+o40B#Golpeador Alfa#
+pI0B#Encouraçado Feroz#
+pY0B#Kasa Fugaz#
+po0B#Karakasa Ágil#
+p40B#Ísis Brutal#
+qI0B#Isilla Alfa#
+qY0B#Injustiçado Feroz#
+qo0B#Mi Gao Fugaz#
+q40B#Titã de Gelo Ágil#
+rI0B#Iara Brutal#
+rY0B#Yao Jun Alfa#
+ro0B#Mosca Caçadora Feroz#
+r40B#Zangão Fugaz#
+sI0B#Scaraba Chifre Ágil#
+sY0B#Besouro-Chifre Brutal#
+so0B#Hodremlin Alfa#
+s40B#Hode Feroz#
+tI0B#Vento da Colina Fugaz#
+tY0B#Vento da Colina Ágil#
+to0B#Grand Orc Brutal#
+t40B#Harpia Alfa#
+uI0B#Harpia Feroz#
+uY0B#Grove Fugaz#
+uo0B#Guardião Ágil#
+u40B#Grand Peco Brutal#
+vI0B#Grand Peco Alfa#
+vY0B#Golem Feroz#
+vo0B#Goblin Fugaz#
+v40B#Goblin Ágil#
+wI0B#Bode Brutal#
+wY0B#Bode Alfa#
+wo0B#Kobold Abissal Feroz#
+w40B#Kobold Abissal Fugaz#
+xI0B#Sombra Abissal Ágil#
+xY0B#Sombra Abissal Brutal#
+xo0B#Zangão Gigante Alfa#
+x40B#Carniçal Feroz#
+yI0B#Carniçal Fugaz#
+yY0B#Planta Carnívora Ágil#
+yo0B#Planta Carnívora Brutal#
+y40B#Gárgula Alfa#
+zI0B#Gárgula Feroz#
+zY0B#Galion Fugaz#
+zo0B#Foca Ágil#
+z40B#Congelador Brutal#
+0I0B#Congelador Alfa#
+0Y0B#Ferus Feroz#
+0o0B#Farmiliar Fugaz#
+040B#Anjo Fajuto Ágil#
+1I0B#Fabre Brutal#
+1Y0B#Fabre Alfa#
+1o0B#Estrondo Feroz#
+140B#Druida Maligno Fugaz#
+2I0B#Salgueiro Ancião Ágil#
+2Y0B#Salgueiro Ancião Brutal#
+2o0B#Echio Alfa#
+240B#Poeira Feroz#
+3I0B#Dríade Ágil#
+3Y0B#Drosera Brutal#
+3o0B#Drops Alfa#
+340B#Furador Feroz#
+4I0B#Drainliar Fugaz#
+4Y0B#Lavadeira Ágil#
+4o0B#Draco Brutal#
+440B#Dolomedes Alfa#
+5I0B#Dokebi Feroz#
+5Y0B#Mascarado Fugaz#
+5o0B#Deviruchi Brutal#
+540B#Filhote de Lobo Alfa#
+6I0B#Filhote de Lobo Feroz#
+6Y0B#Deniro Fugaz#
+6o0B#Palavra Morta Ágil#
+640B#Palavra Morta Brutal#
+7I0B#Palavra Morta Alfa#
+7Y0B#Sacerdote Maldito Feroz#
+7o0B#Zhu Po Long Fugaz#
+740B#Creamy Ágil#
+8I0B#Cornutus Brutal#
+8Y0B#Cookie Alfa#
+8o0B#Constant Feroz#
+840B#Comodo Fugaz#
+9I0B#Koko Ágil#
+9Y0B#Koko Brutal#
+9o0B#Relógio Alfa#
+940B#Relógio Feroz#
++I0B#ChonChon Fugaz#
++Y0B#Centopéia Ágil#
++o0B#Cenere Brutal#
++40B#Celia Alde Alfa#
+/I0B#Lagarta Feroz#
+/Y0B#Carat Fugaz#
+/o0B#Caramelo Ágil#
+/40B#Bungisngis Brutal#
+AI4B#Breeze Alfa#
+AY4B#Breeze Feroz#
+Ao4B#Golem de Bradium Fugaz#
+A44B#Borboleta Ágil#
+BI4B#Pé-Grande Alfa#
+BY4B#Bathory Feroz#
+Bo4B#Sra das Banshees Fugaz#
+B44B#Banshee Ágil#
+CI4B#Banaspaty Brutal#
+CY4B#Agressor Alfa#
+Co4B#Argos Feroz#
+C44B#Argiope Fugaz#
+DI4B#Argiope Ágil#
+DY4B#Arclouse Brutal#
+Do4B#Arclouse Alfa#
+D44B#Apocalipse Feroz#
+EI4B#Scaraba Galhado Fugaz#
+EY4B#Antigo Livro Ágil#
+Eo4B#Antigo Livro Brutal#
+E44B#Anolian Feroz#
+FI4B#Angra Fugaz#
+FY4B#Angra Ágil#
+Fo4B#Andre Brutal#
+F44B#Mímico Antigo Alfa#
+GI4B#Anaconda Feroz#
+GY4B#Ambernite Fugaz#
+Go4B#Rafflesia Alnoldi Ágil#
+G44B#Crocodilo Brutal#
+HI4B#Aliza Alfa#
+HY4B#Alicel Feroz#
+Ho4B#Alarme Fugaz#
+H44B#Agav Ágil#
+II4B#Acidus Brutal#
+IY4B#Acidus Alfa#
+Io4B#Amering Gigante#
+I44B#Drops Encorpado#
+JI4B#Dourading Gigante#
+JY4B#Rei Poring#
+Jo4B#Marin Encorpado#
+J44B#Poporing Encorpado#
+KI4B#Poring Encorpado#
+KY4B#Orc Zumbi Putrefato#
+Ko4B#Orc Zumbi#
+K44B#Orc Guerreiro Antigo#
+LI4B#Orc Arqueiro Antigo#
+LY4B#Orc Falso#
+Lo4B#Senhor dos Orcs Antigo#
+L44B#Flor dos Orcs#
+MI4B#Alvo de Prática#
+MY4B#Alphoccio Basil#
+Mo4B#Feiticeira Celia#
+M44B#Shura Chen#
+NI4B#Trovador Alphoccio#
+NY4B#Sicário Eremes#
+No4B#Arcebispa Margaretha#
+N44B#Sentinela Cecil#
+OI4B#Mecânico Harword#
+OY4B#Arcana Kathryne#
+Oo4B#Cavaleiro Rúnico Seyren#
+O44B#Guardião Real Randel#
+PI4B#Bioquímico Flamel#
+PY4B#Renegada Gertie#
+Po4B#Musa Trentini#
+P44B#Eremes Guile#
+QI4B#Margaretha Sorin#
+QY4B#Kathryne Keyron#
+Qo4B#Cecil Damon#
+Q44B#Harword Alteisen#
+RI4B#Seyren Windsor#
+RY4B#Cobaia Eremes#
+Ro4B#Cobaia Margaretha#
+R44B#Cobaia Kathryne#
+SI4B#Cobaia Cecil#
+SY4B#Cobaia Harword#
+So4B#Cobaia Seyren#
+S44B#Randel Lawrence#
+TI4B#Flamel Emule#
+TY4B#Celia Alde#
+To4B#Chen Liu#
+T44B#Gertie We#
+UI4B#Trentini#
+UY4B#Cobaia Randel#
+Uo4B#Cobaia Flamel#
+U44B#Cobaia Celia#
+VI4B#Cobaia Chen#
+VY4B#Cobaia Gertie#
+Vo4B#Cobaia Alphoccio#
+V44B#Cobaia Trentini#
+WI4B#Sarah#
+WY4B#Gigante Antimagia#
+Wo4B#Gigante Imaterial#
+W44B#Gigante Ancestral#
+XI4B#Gigante#
+XY4B#Gigante#
+Xo4B#Gigante#
+X44B#Gárgula Ancestral#
+YI4B#Galion Ancestral#
+YY4B#Dragão Ancestral#
+Yo4B#Quimera Ancestral#
+Y44B#Wyvern Azul#
+ZI4B#Wyvern Dourado#
+ZY4B#Beholder Invasor#
+Zo4B#Capitão Ferlock#
+Z44B#Wyvern Gigante#
+aI4B#Gremlin Invasor#
+aY4B#Giro-Goblin Invasor#
+ao4B#Wyvern Azul#
+a44B#Wyvern Dourado#
+bI4B#Beholder Invasor#
+bY4B#Capitão Ferlock#
+bo4B#Wyvern Gigante#
+b44B#Gremlin Invasor#
+cI4B#Giro-Goblin Invasor#
+cY4B#Búfalo Bandido#
+co4B#Búfalo Atirador#
+c44B#Búfalo Ladrão#
+dI4B#Bandido de Elite#
+dY4B#Atirador de Elite#
+do4B#Ladrão de Elite#
+d44B#Aranha Mecânica#
+eI4B#Coiote#
+eY4B#Gaster#
+eo4B#Tapuru#
+e44B#Gabiru#
+fI4B#Bandeira#
+fY4B#Crente Agressiva#
+fo4B#Crente Agressivo#
+f44B#Sacerdote Violento#
+gI4B#Cachorro#
+gY4B#Guarda de Freya#
+go4B#Coração Congelado#
+g44B#Loomin#
+hI4B#Espectro de Gelo#
+hY4B#Crente Agressiva#
+ho4B#Crente Agressivo#
+h44B#Sacerdote Violento#
+iI4B#Cachorro#
+iY4B#Guarda de Freya#
+io4B#Coração Congelado#
+i44B#Espectro de Ktullanux#
+jI4B#Loomin#
+jY4B#Papisa Casual#
+jo4B#Papisa#
+j44B#Espectro de Gelo#
+kI4B#Papisa Casual#
+kY4B#Papisa#
+ko4B#Rancor de Arma#
+k44B#Elena Bolkova#
+lI4B#Quimera Humana#
+lY4B#Malícia#
+lo4B#Caça-Coração#
+l44B#Caça-Coração Gigante#
+mI4B#Quimera Disforme#
+mY4B#Fofinho#
+mo4B#Caça-Coração Guarda#
+m44B#Chama Etérea#
+nI4B#Chama Etérea#
+nY4B#Chama Etérea#
+no4B#Quimera Venenosa#
+n44B#Y.S.F.01#
+oI4B#Bebê Ísis#
+oY4B#Dummy - Pequeno#
+oo4B#Dummy - Médio#
+o44B#Dummy - Grande#
+pI4B#Dummy - Amorfo#
+pY4B#Dummy - Dragão#
+po4B#Dummy - Bruto#
+p44B#Dummy - Humanoide#
+qI4B#Dummy - Inseto#
+qY4B#Dummy - Peixe#
+qo4B#Dummy - Demônio#
+q44B#Dummy - Planta#
+rI4B#Dummy - Anjo#
+rY4B#Dummy - Morto-Vivo#
+ro4B#Dummy - Neutro#
+r44B#Dummy - Água#
+sI4B#Dummy - Terra#
+sY4B#Dummy - Fogo#
+so4B#Dummy - Vento#
+s44B#Dummy - Veneno#
+tI4B#Dummy - Sagrado#
+tY4B#Dummy - Sombrio#
+to4B#Dummy - Fantasma#
+t44B#Dummy - Maldito#
+uI4B#Arqueiro Cruel#
+uY4B#Bongun Ressentido#
+uo4B#Aventureiro#
+u44B#Veritas#
+vI4B#Ilusão do Luar#
+vY4B#Munak Ressentida#
+vo4B#Raposa Raivosa#
+v44B#Sohee Ressentida#
+wI4B#Deletério#
+wY4B#Diabolik#
+wo4B#Ovo Decorado#
+w44B#Lunático de Trevo#
+xI4B#Agressor Ominoso#
+xY4B#Batedor Ominoso#
+xo4B#Congelador Ominoso#
+x44B#Aquecedor Ominoso#
+yI4B#Marechal Tartaruga#
+yY4B#Solidificador Ominoso#
+yo4B#Agressor Ominoso#
+y44B#Mattiliar#
+zI4B#Morto-Vivo#
+zY4B#Zumbi Ilusional#
+zo4B#Carniçal Ilusional#
+z44B#Doce Pesadelo#
+0I4B#Cogumelo Brilhante#
+0Y4B#Bomi#
+0o4B#Conde Drácula#
+044B#Meloring Gigante#
+1I4B#Meloring#
+1Y4B#Meloring Sombrio#
+1o4B#Pesar Noturno#
+144B#Kiel D-01#
+2I4B#Flor do Luar#
+2Y4B#Orc Herói#
+2o4B#Estrondo Vulcânico#
+244B#Imp Vulcânico#
+3I4B#Erva Mágica#
+3Y4B#PecoPeco Vulcânico#
+3o4B#Picky Vulcânico#
+344B#Salamandra de Lava#
+4I4B#Estrondo Morno#
+4Y4B#Imp Morno#
+4o4B#Lady Branca#
+444B#Freeoni#
+5I4B#Serial Killer Nightmare#
+5Y4B#Dullahan Nightmare#
+5o4B#Runa Guardiã #
+544B#Runa Guardiã #
+6I4B#Árvore Maldita Nightmare#
+6Y4B#Loli Ruri Nightmare#
+6o4B#R48-85-BESTIA#
+644B#Caput#
+7I4B#A013-Bellare#
+7Y4B#A013-Caput#
+7o4B#A013-Dolor#
+744B#Biobateria#
+8I4B#Vítima#
+8Y4B#EL-A17T#
+8o4B#E-13EN0#
+844B#E-EA1L#
+9I4B#E-EA2S#
+9Y4B#Buraco#
+9o4B#Miguel#
+944B#Miguel#
++I4B#Gás Venenoso#
++Y4B#Veneno Químico#
++o4B#Bellare#
++44B#Sanare#
+/I4B#Dolor#
+/Y4B#Venenum#
+/o4B#Caput#
+/44B#Bellare Mutante#
+AI8B#Sanare Mutante#
+AY8B#Plaga#
+Ao8B#Plaga Mutante#
+A48B#Dolor Mutante#
+BI8B#Venenum Mutante#
+BY8B#Caput Mutante#
+Bo8B#Gazeti de Cristal#
+B48B#Yeti de Cristal#
+CI8B#Titã de Cristal#
+CY8B#Cristal de Gelo#
+Co8B#Ktullanux de Cristal#
+C48B#Vrid#
+DI8B#Zeith#
+DY8B#Mi Gao#
+Do8B#Quinding Gigante#
+D48B#Ursinho Vermelho#
+EI8B#Ursinho Amarelo#
+EY8B#Ursinho Verde#
+Eo8B#Ursinho Branco#
+E48B#Urzinho Azul#
+FI8B#Ursinho Brilhante#
+FY8B#Mineradores#
+Fo8B#Fragmento de Alma#
+F48B#Obsidiana Sinistra#
+GI8B#Ursinho Vermelho#
+GY8B#Ursinho Amarelo#
+Go8B#Ursinho Verde#
+G48B#Ursinho Branco#
+HI8B#Urzinho Azul#
+HY8B#Bafomé Voraz#
+Ho8B#Bafomé Jr. Cruel#
+H48B#Eclipse Bárbaro#
+II8B#Ungoliant Violento#
+IY8B#Vocal Cruel#
+Io8B#Lobo Selvagem#
+I48B#Pé-Grande Furioso#
+JI8B#Koko Silvestre#
+JY8B#Planta Carnívora Murcha#
+Jo8B#Grizzly Atroz#
+J48B#Encouraçado Agitado#
+KI8B#Louva-a-deus Bravo#
+KY8B#Trilobita Ancestral#
+Ko8B#Golem Ancestral#
+K48B#Megalith Ancestral#
+LI8B#Disparador de Pedras#
+LY8B#Arqueiro Wootan#
+Lo8B#Lutador Wootan#
+L48B#Defensor Wootan#
+MI8B#Tao Gunka Ancestral#
+MY8B#Arqueiro Wootan#
+Mo8B#Lutador Wootan#
+M48B#Megalith Ancestral#
+NI8B#Familiar#
+NY8B#Familiar#
+No8B#Familiar#
+N48B#Familiar#
+OI8B#Familiar#
+OY8B#Familiar#
+Oo8B#Esqueleto#
+O48B#Esqueleto#
+PI8B#Esqueleto#
+PY8B#Esqueleto#
+Po8B#Esqueleto#
+P48B#Esqueleto#
+QI8B#Zumbi#
+QY8B#Zumbi#
+Qo8B#Zumbi#
+Q48B#Zumbi#
+RI8B#Zumbi#
+RY8B#Zumbi#
+Ro8B#Drainliar#
+R48B#Drainliar#
+SI8B#Carniçal#
+SY8B#Carniçal#
+So8B#Jakk#
+S48B#Jakk#
+TI8B#Monarca Lich#
+TY8B#Monarca Lich#
+To8B#Pesadelo#
+T48B#Pesadelo#
+UI8B#Júnior Caótico#
+UY8B#Andrea#
+Uo8B#Agnes#
+U48B#Bafomé Caótico#
+VI8B#Bafinho Caótico#
+VY8B#Cecília#
+Vo8B#Ghostring Caótico#
+V48B#Mosca Caótica#
+WI8B#Mantis Caótico#
+WY8B#Louva-Caos#
+Wo8B#Poporing Caótico#
+W48B#Sorrateiro Caótico#
+XI8B#Silvano#
+XY8B#Talo Caótico#
+Xo8B#Patinho#
+X48B#Papare#
+YI8B#Estrelita#
+YY8B#Miojinho#
+Yo8B#Macarroneta#
+Y48B#Melancia#
+ZI8B#Macarrão Estragado#
+ZY8B#Torvelinho#
+Zo8B#Alga-Chicote#
+Z48B#Raydric Poluto#
+aI8B#Raydric Atirador#
+aY8B#Gárgula Congelada#
+ao8B#Sting Poluto#
+a48B#Foragido#
+bI8B#Xamã do Gelo#
+bY8B#Xamã do Fogo#
+bo8B#Brasa#
+b48B#Pesadelo Sinistro#
+cI8B#Deleter Voador#
+cY8B#Deleter#
+co8B#Explosão#
+c48B#Kaho Torrente#
+dI8B#Golem de Magma#
+dY8B#Muspellskoll#
+do8B#Andarilho Poluto#
+d48B#Aranha Rainha#
+eI8B#Lorde das Trevas#
+eY8B#Alhoring#
+eo8B#Poring Espacial#
+e48B#Lunatico Espacial#
+fI8B#Fabre Espacial#
+fY8B#Picky Espacial#
+fo8B#Condor Espacial#
+f48B#Salgueiro Espacial#
+gI8B#Esporo Espacial#
+gY8B#Poporing Espacial#
+go8B#Fumacento Espacial#
+g48B#Dokebi Espacial#
+hI8B#Pé-Grande Espacial#
+hY8B#Rabo de Verme Espacial#
+ho8B#Lobo Espacial#
+h48B#Jiboia Espacial#
+iI8B#Anaconda Espacial#
+iY8B#Marin Espacial#
+io8B#Muka Espacial#
+i48B#PecoPeco Espacial#
+jI8B#Deniro Espacial#
+jY8B#Pierre Espacial#
+jo8B#Andre Espacial#
+j48B#Golem Espacial#
+kI8B#Escorpiao Espacial#
+kY8B#Chon Chon Espacial#
+ko8B#Metaller Espacial#
+k48B#Arenoso Espacial#
+lI8B#Raggler Espacial#
+lY8B#Lavadeira Espacial#
+lo8B#Grove Espacial#
+l48B#Lontra Espacial#
+mI8B#Pingu Espacial#
+mY8B#Foca Espacial#
+mo8B#Crocodilo Espacial#
+m48B#Megalodon Espacial#
+nI8B#Trilobita Espacial#
+nY8B#Megalith Espacial#
+no8B#Driade Espacial#
+n48B#Sapo Espacial#
+oI8B#Errante Espacial#
+oY8B#Vocal Espacial#
+oo8B#Eclipse Espacial#
+o48B#Quimera Espacial#
+pI8B#Eddga Espacial#
+pY8B#Osiris Espacial#
+po8B#Freeoni Espacial#
+p48B#Orc Heroi Espacial#
+qI8B#Tao Gunka Espacial#
+qY8B#Sapo Escravo#
+qo8B#Lobo Escravo#
+q48B#Rocker Escravo#
+rI8B#Lunatico Escravo#
+rY8B#Gargula Escrava#
+ro8B#Pe-Grande Escravo#
+r48B#Múmia Escrava#
+sI8B#Arenoso Escravo#
+sY8B#Orc Escravo#
+so8B#Megalith Escravo#
+s48B#Poring de Ouro#
+tI8B#Bafomé #
+tY8B#Ilusão das Trevas#
+to8B#Rosa Selvagem#
+t48B#Lenha Viva#
+uI8B#Selvagem Faminto#
+uY8B#Siroma Natalino#
+uo8B#Caixa de Presente#
+u48B#Cogumelo Negro#
+vI8B#Cogumelo Vermelho#
+vY8B#Angeling Manipulado#
+vo8B#Dr. Eggman#
+v48B#Dr. Eggman#
+wI8B#Aquecedor Manipulado#
+wY8B#Knuckles#
+wo8B#Megalith Manipulado#
+w48B#Metal Sonic#
+xI8B#Selvagem Manipulado#
+xY8B#Esporo Manipulado#
+xo8B#Sonic#
+x48B#Sonic#
+yI8B#Tails#
+yY8B#Chao#
+yo8B#Deviace Abismal#
+y48B#Marse Abismal#
+zI8B#Tritão Abismal#
+zY8B#Obeaune Abismal#
+zo8B#Fen Abismal#
+z48B#Sedora Abismal#
+0I8B#Sropho Abismal#
+0Y8B#Strouf Abismal#
+0o8B#Peixe Abismal#
+048B#Bruxa do Mar#
+1I8B#Deviace Abismal#
+1Y8B#Dramoh Abismal#
+1o8B#Kraken Abismal#
+148B#Marse Abismal#
+2I8B#Tritão Abismal#
+2Y8B#Obeaune Abismal#
+2o8B#Fen Abismal#
+248B#Sedora Abismal#
+3I8B#Sropho Abismal#
+3Y8B#Strouf Abismal#
+3o8B#Peixe Abismal#
+348B#Búfalo Bandido#
+4I8B#Fantasma de Rá #
+4Y8B#Fantasma de Vesper#
+4o8B#Fantasma do Atroce#
+448B#Fantasma da Lady#
+5I8B#Fantasma do Bode#
+5Y8B#Fantasma de Belzebu#
+5o8B#Fantasma do Alphoccio#
+548B#Fantasma da Celia#
+6I8B#Fantasma do Chen#
+6Y8B#Fantasma de Eremes#
+6o8B#Fantasma do Flamel#
+648B#Fantasma da Gertie#
+7I8B#Fantasma de Howard#
+7Y8B#Fantasma de Kathryne#
+7o8B#Fantasma de Sorin#
+748B#Fantasma do Randel#
+8I8B#Fantasma de Seyren#
+8Y8B#Fantasma da Cecil#
+8o8B#Fantasma da Trentini#
+848B#Fantasma de Egnigem#
+9I8B#Fantasma do Robô #
+9Y8B#Fantasma de Daehyon#
+9o8B#Fantasma das Trevas#
+948B#Fantasma da Serpente#
++I8B#Fantasma do Dragão#
++Y8B#Fantasma do Sósia#
++o8B#Fantasma de Drácula#
++48B#Fantasma do Pirata#
+/I8B#Fantasma de Eddga#
+/Y8B#Fantasma do Esqueleto#
+/o8B#Fantasma do Espinho#
+/48B#Fantasma do Espinho#
+AJAB#Fantasma do Espinho#
+AZAB#Fantasma do Espinho#
+ApAB#Fantasma do Bispo#
+A5AB#Fantasma do Hatii#
+BJAB#Fantasma de Gioia#
+BZAB#Fantasma do Pesar#
+BpAB#Fantasma do Ladrão#
+B5AB#Fantasma do Rei#
+CJAB#Fantasma do Piano#
+CZAB#Fantasma da Malícia#
+CpAB#Fantasma do Ifrit#
+C5AB#Fantasma do Samurai#
+DJAB#Fantasma de Kades#
+DZAB#Fantasma de Kiel#
+DpAB#Fantasma da Rena#
+D5AB#Fantasma do Kraken#
+EJAB#Fantasma do Gelo#
+EZAB#Fantasma da Palmeira#
+EpAB#Fantasma do Leak#
+E5AB#Fantasma da Morte#
+FJAB#Fantasma de Maya#
+FZAB#Fantasma da Aranha#
+FpAB#Fantasma de Mímico#
+F5AB#Fantasma da Abelha#
+GJAB#Fantasma do Fofinho#
+GZAB#Fantasma da Raposa#
+GpAB#Fantasma de Sieger#
+G5AB#Fantasma do Orc#
+HJAB#Fantasma do Herói#
+HZAB#Fantasma de Osíris#
+HpAB#Fantasma do Faraó #
+H5AB#Fantasma de Freeoni#
+IJAB#Fantasma da Pyuriel#
+IZAB#Fantasma da Rainha#
+IpAB#Fantasma da Randgris#
+I5AB#Fantasma do RSX#
+JJAB#Fantasma da Sombra#
+JZAB#Fantasma do Gunka#
+JpAB#Fantasma de Thanatos#
+J5AB#Fantasma do Vigia#
+KJAB#Fantasma do General#
+KZAB#Fantasma da Quimera#
+KpAB#Larva de Formiga#
+K5AB#Ovo de Formiga#
+LJAB#Farmiliar Intrépido#
+LZAB#Andre Diligente#
+LpAB#Deniro Diligente#
+L5AB#Piere Diligente#
+MJAB#Giearth Intrépido#
+MZAB#Guerreiro Andre#
+MpAB#Vitata Diligente#
+M5AB#Maya Silente#
+NJAB#Andre Operário#
+NZAB#Deniro Operário#
+NpAB#Piere Operário#
+N5AB#Vitata Operária#
+OJAB#Mercadora Anônima#
+OZAB#Espadachim Anônima#
+OpAB#Eremes Guile#
+O5AB#Noviço Anônimo#
+PJAB#Guarda da Rekenber#
+PZAB#Segurança da Rekenber#
+PpAB#Cientista da Regenschrim#
+P5AB#Cobaia Anônima#
+QJAB#Garimpeiros#
+QZAB#Acidus Negro#
+QpAB#Acidus Prateado#
+Q5AB#Angelgolt#
+RJAB#Angelgolt#
+RZAB#Acidus Esqueleto#
+RpAB#Detale Esqueleto#
+R5AB#Ferus Esqueleto#
+SJAB#Ferus Roxo#
+SZAB#Acidus Esqueleto#
+SpAB#Ferus Esqueleto#
+S5AB#Valquíria#
+TJAB#Geodoliant#
+TZAB#Mineral de Jade#
+TpAB#Mineral de Ametista#
+T5AB#Mineral de Jaspe#
+UJAB#Mineral de Selenita#
+UZAB#Valquíria#
+UpAB#Frus Angelical#
+U5AB#Skogul Angelical#
+VJAB#Valquíria Ingrid#
+VZAB#Geodo#
+VpAB#Geodoliant#
+V5AB#Joialiant#
+WJAB#Mineral de Jade#
+WZAB#Mineral de Ametista#
+WpAB#Mineral de Jaspe#
+W5AB#Mineral de Selenita#
+XJAB#Plasma Angelical#
+XZAB#Plasma Espectral#
+XpAB#Nuvem Nociva#
+X5AB#Porcellio Albino#
+YJAB#Valquíria Reginleif#
+YZAB#Nuvem Perigosa#
+YpAB#Mímico Precioso#
+Y5AB#Gerente Alpha#
+ZJAB#Princesa Azure#
+ZZAB#Bellare Elite#
+ZpAB#Gerente Beta#
+Z5AB#Beta Quebrada#
+aJAB#Gerente da Sauna#
+aZAB#Auxiliar do Banho#
+apAB#Empregada Quebrada#
+a5AB#Auxiliar Quebrada#
+bJAB#Guarda Beta#
+bZAB#Guarda Quebrada#
+bpAB#Almoxarife#
+b5AB#Traça-de-Livro#
+cJAB#Cãibra Poluído#
+cZAB#Dolor Viciada#
+cpAB#Partes de Guardião#
+c5AB#Caçador de Coração#
+dJAB#Caçador de Coração#
+dZAB#Marc Escaldado#
+dpAB#Ômega Faxineira#
+d5AB#Ômega Quebrada#
+eJAB#Fen Escaldado#
+eZAB#Carpa Escaldada#
+epAB#Pitaya Azul#
+e5AB#Árvore de Pitaya#
+fJAB#Pitaya Verde#
+fZAB#Pitaya Vermelha#
+fpAB#Pitaya Roxa#
+f5AB#Pitaya Amarela#
+gJAB#Plaga Viciada#
+gZAB#Magia Potente#
+gpAB#Magia Intensa#
+g5AB#Magia Liberta#
+hJAB#Grimório Errante#
+hZAB#Sanare Viciada#
+hpAB#Peixe Escaldado#
+h5AB#Venenum Poluído#
+iJAB#Cachoeira Poluída#
+iZAB#Caçador de Coração#
+ipAB#Pitaya Azul#
+i5AB#Pitaya Verde#
+jJAB#Pitaya Vermelha#
+jZAB#Pitaya Roxa#
+jpAB#Pitaya Amarela#
+j5AB#Alnoldi Comum#
+kJAB#Alnoldi Superior#
+kZAB#Fada das Águas#
+kpAB#Fada das Chamas#
+k5AB#Assistente#
+lJAB#Assistente Superior#
+lZAB#Jardineira Quebrada#
+lpAB#Jardineira Superior#
+l5AB#Raflésia Seca#
+mJAB#Raflésia Superior#
+mZAB#Papilia Rubra#
+mpAB#Papila#
+m5AB#Papila Azul#
+nJAB#Papila Cae#
+nZAB#Papila Anil#
+npAB#Papila Lilás#
+n5AB#Papila Vermelha#
+oJAB#Papila Ruba#
+oZAB#Papila Escarlate#
+opAB#Pitaya Azul#
+o5AB#Árvore de Pitaya#
+pJAB#Pitaya Verde#
+pZAB#Pitaya Vermelha#
+ppAB#Pitaya Roxa#
+p5AB#Pitaya Amarela#
+qJAB#Pimentinha#
+qZAB#Pimentão#
+qpAB#Papilia Violeta#
+q5AB#Sweety#
+rJAB#Verporta#
+rZAB#Verporte#
+rpAB#Mini Beta#
+r5AB#Mini Alpha#
+sJAB#Assistente#
+sZAB#Bellare Elite#
+spAB#Jardineira Quebrada#
+s5AB#Anopheles#
+tJAB#Livro Fugitivo#
+tZAB#Rei Poring#
+tpAB#Rei Poring#

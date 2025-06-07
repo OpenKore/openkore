@@ -25,6 +25,7 @@ sub new {
             '09FD' => ['actor_moved', 'v C a4 a4 v3 V v2 V2 v V v6 a4 a2 v V C2 a6 C2 v2 V2 C v Z*', [qw(len object_type ID charID walk_speed opt1 opt2 option type hair_style weapon shield lowhead tick tophead midhead hair_color clothes_color head_dir costume guildID emblemID manner opt3 stance sex coords xSize ySize lv font maxHP HP isBoss opt4 name)]],
             '0088' => ['actor_movement_interrupted', 'a4 v2', [qw(ID x y)]],
             '00CA' => ['buy_result', 'C', [qw(fail)]],
+            '0A0B' => ['cart_item_added', 'a2 V V C4 a16 a25', [qw(ID amount nameID type identified broken upgrade cards options)]],
             '0087' => ['character_moves', 'a4 a6', [qw(move_start_time coords)]],
             '0ACC' => ['exp', 'a4 V2 v2', [qw(ID val val2 type flag)]],
             '09CF' => ['gameguard_request'],
@@ -50,10 +51,12 @@ sub new {
             '023A' => ['storage_password_request', 'v', [qw(flag)]],
             '023E' => ['storage_password_request', 'v', [qw(flag)]],
             '023C' => ['storage_password_result', 'v2', [qw(type val)]],
-            '00CB' => ['sell_result', 'C', [qw(fail)]], # 3
+            '00CB' => ['sell_result', 'C', [qw(fail)]],
             '0187' => ['sync_request', 'a4', [qw(ID)]],
             '09A1' => ['sync_received_characters'],
             '019B' => ['unit_levelup', 'a4 V', [qw(ID type)]],
+            '0283' => ['recv_seed', 'a16', [qw(seed)]],
+            '007D' => ['map_loaded', 'x*', []],
     );
 
     $self->{packet_list}{$_} = $packets{$_} for keys %packets;
@@ -62,7 +65,7 @@ sub new {
         account_server_info 0C32
         received_characters 099D
         received_characters_info 082D
-        sync_received_characters 09A0
+        sync_received_characters 09A1
     );
 
     $self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;

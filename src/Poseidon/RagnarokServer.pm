@@ -236,8 +236,19 @@ sub ParsePacket {
 	my $port = pack("v", $self->getPort());
 	$host = '127.0.0.1' if ($host eq 'localhost');
 	my @ipElements = split /\./, $host;
+	if($switch eq '0436' || $switch eq '007D'){
+		if($switch eq '007D'){
+			
+			$msg = substr($msg, 6);
+			$switch = '0360';
+			print "\nReceived packet $msg:\n" if ($config{debug});
+		}
+		$msg = substr($msg, 0, -1);
+	}
 	print "\nReceived packet $switch:\n" if ($config{debug});
 	visualDump($msg, "$switch") if ($config{debug});
+	
+
 
 	# Note:
 	# The switch packets are pRO specific and assumes the use of secureLogin 1. It may or may not work with other
@@ -271,7 +282,7 @@ sub ParsePacket {
 			$clientdata{$index}{secureLogin_requestCode} = getHex($code);
 		}
 
-	} elsif ($switch eq '0ACF') { # Token Request
+	} elsif (($switch eq '0ACF') || ($switch eq '0C26')) { # Token Request
 			my $data;
 			# send Token
 			$data = pack("v", 0x0AE3) . # header
@@ -280,7 +291,6 @@ sub ParsePacket {
 					pack("Z20","S1000") . # flag
 					pack("Z*", "OpenkoreClientToken"); # login_token
 			SendData($client, $data);
-
 	} elsif (($switch eq '0064') || ($switch eq '01DD') || ($switch eq '01FA') || ($switch eq '0277') || ($switch eq '027C') || ($switch eq '02B0') || ($switch eq '0825') || ($switch eq '0987') || ($switch eq '0A76') || ($switch eq '0AAC') || ($switch eq '0B04')) { # master_login
 		# send account_server_info
 		my $sex = 1;
@@ -337,6 +347,17 @@ sub ParsePacket {
 				pack("v", 0x6985) . # property
 				pack("x128").# ip_port
 				pack("x4"); # unknown
+		} elsif ($switch eq '0825' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0C32') { # received ROLA Token
+			$data = pack("v", 0x0C32) . # header
+				pack("v", 0xE5) . # length
+				pack("H*", "B2D05E00") . # sessionID
+				pack("H*", "1E8481") . # accountID
+				pack("x59") .
+				$serverName .
+				pack("H*", "e22a00000000") .
+				pack("a18", $host.":".$self->getPort()). # ip:port
+				pack("x110") . # padding
+				pack("H*", "01789d0000"); # end servers list
 		} elsif ($switch eq '0825' || $self->{type}->{$config{server_type}}->{account_server_info} eq '0AC4') { # received kRO Zero Token
 			$data = pack("v", 0x0AC4) . # header
 				pack("v", 0xE0) . # length
@@ -617,13 +638,8 @@ sub ParsePacket {
 		$clientdata{$index}{serverType} = "1 or 2";
 
 	} elsif (($switch eq '0436' || $switch eq '022D' || $switch eq $self->{type}->{$config{server_type}}->{map_login}) &&
-		(length($msg) == 19 || length($msg) == 23) &&
-		(substr($msg, 2, 4) eq $accountID) &&
-		(substr($msg, 6, 4) eq $charID) &&
-		(substr($msg, 10, 4) eq $sessionID)
-		) { # client sends the maplogin packet
+		(length($msg) == 19 || length($msg) == 23)) { # client sends the maplogin packet
 		$clientdata{$index}{serverType} = 0;
-
 		SendMapLogin($self, $client, $msg, $index);
 
 		$client->{connectedToMap} = 1;
@@ -1048,6 +1064,8 @@ sub SendMapLogin {
 
 	if ( $config{server_type} =~ /^kRO/ ) { # kRO
 		SendData($client, pack("v", 0x0ADE) . pack("V", 0x00));
+	} elsif($config{server_type} =~ /^ROLA/){
+		SendData($client, pack("v", 0x0ADE) . pack("V", 0x46));
 	}
 
 	# mapLogin packet
@@ -1057,6 +1075,7 @@ sub SendMapLogin {
 	} elsif ($self->{type}->{$config{server_type}}->{map_loaded} eq '02EB') {
 		# '02EB' => ['map_loaded', 'V a3 a a v', [qw(syncMapSync coords xSize ySize font)]], # 13
 		SendData($client, pack("v", 0x02EB) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x00, 0x00) .  pack("C*", 0x00, 0x00));
+		SendData($client, pack("v", 0x0B32) . pack("v", 0x0013) . pack("V", 0x00000001) .  pack("V", 0x00000000) .  pack("v", 0x0100) .  pack("v", 0x0100) .  pack("v", 0x0000));
 	} else {
 		# '0073' => ['map_loaded','x4 a3',[qw(coords)]]
 		SendData($client, pack("v", 0x0073) . pack("V", getTickCount) . getCoordString($posX, $posY, 1) . pack("C*", 0x00, 0x00));
@@ -1087,7 +1106,18 @@ sub SendMapLogin {
 				SendData($client, $data);
 		}
 	}
-
+	if($config{server_type} =~ /^ROLA/){
+		SendData($client, pack("H*", 'd7013df21100020000000000000000'));
+		SendData($client, pack("H*", 'd7013df21100030000000000000000d7013df2110002b1040000000000003a010100b0000000960000003a010100d7013df2110003240a0000000000003a010100b00019004c4f0000b00018000c170000'));
+		SendData($client, pack("H*", '84093df2110022030f2700000f2700000100000079cb3c6800000000'));
+		SendData($client, pack("H*", '84093df2110038030f2700000f270000a3ff3401c80000000000000084093df21100e103c027090058a0080001000000000000000000000084093df21100e20340771b00edef1a00010000000000000000000000'));
+		SendData($client, pack("H*", 'c90200'));
+		SendData($client, pack("H*", 'dc0a00000000'));
+		SendData($client, pack("H*", '080b050000'));
+		SendData($client, pack("H*", '090b1303000200c5480f000304000000000000000000000000000000000000000000000000000103002f2d0000002c01000000000000000000000000000000000000000000000000010400233000000264000000000000000000000000000000000000000000000000000105002430000002130000000000000000000000000000000000000000000000000001060025300000020e00000000000000000000000000000000000000000000000000010700e42e00000205000000000000000000000000000000000000000000000000000108008b5d0000020100000000000000000000000000000000000000000000000000010900825d0000020100000000000000000000000000000000000000000000000000010a0078170000030100000000000000000000000000000000000000000000000000010b00e3300000021400000000000000000000000000000000000000000000000000010c005a5d0000020a00000000000000000000000000000000000000000000000000010d00fb980100020a00000000000000000000000000000000000000000000000000010e00768b0100020100000000000000000000000000000000000000000000000000010f0044890100020600000000000000000000000000000000000000000000000000011000f78b0100020a00000000000000000000000000000000000000000000000000011100e4300000023200000000000000000000000000000000000000000000000000011200668f01000201000000000000000000000000000000000000000000000000000113002a470f00032c01000000000000000000000000000000000000000000000000011400e998010002010000000000000000000000000000000000000000000000000001150078630000030a000000000000000000000000000000000000000000000000000116005b5d0000020500000000000000000000000000000000000000000000000000011700d1300000020200000000000000000000000000000000000000000000000000011800fd980100020100000000000000000000000000000000000000000000000000010a0bce00001900b1040000050200000002000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000011a00fd080000041000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000011b001f6a06000400100000001000000000000000000000000000000000000000000000000000240a0000000000000000000000000000000000000000000000000000010b0b0000'));
+		SendData($client, pack("H*", 'b0002a0011000000'));
+		SendData($client, pack("H*", '230a4800010000000a00000000000a0000001200000080a9030001010000000000000000000000000000000000000000000000000000000000000000000000000000007f37376800'));
+	}
 	# '013A' => ['attack_range', 'v', [qw(type)]],
 	SendData($client, pack("v2", , 0x013A, 1));
 
