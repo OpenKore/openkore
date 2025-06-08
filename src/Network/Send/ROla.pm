@@ -1,4 +1,4 @@
-# File contributed by #gaaradodesertoo, #cry1493, #matheus8666, #megafuji, #ovorei, #__codeplay, #roxleopardo
+# File contributed by #gaaradodesertoo, #cry1493, #matheus8666, #megafuji, #ovorei, #__codeplay, #roxleopardo, #freezing7
 package Network::Send::ROla;
 
 use strict;
@@ -11,7 +11,7 @@ use Log qw(debug);
 sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
-	
+
 	my %packets = (
 		'0C26' => ['master_login', 'a4 Z51 a32 a5', [qw(game_code username password_rijndael flag)]],
 		'0825' => ['token_login', 'v V C Z51 a17 a15 a*', [qw(len version master_version username mac_hyphen_separated ip token)]],
@@ -21,8 +21,8 @@ sub new {
 		'0361' => ['actor_look_at', 'v', [qw(headDir)]],
 		'009F' => ['item_take', 'a4', [qw(ID)]],
 		'00A2' => ['item_drop', 'a2 v', [qw(ID amount)]],
-		'0364' => ['storage_item_add', 'v2', [qw(index amount)]],
-		'0365' => ['storage_item_remove', 'v2', [qw(index amount)]],
+		'0364' => ['storage_item_add', 'a2 V', [qw(ID amount)]],
+		'0365' => ['storage_item_remove', 'a2 V', [qw(ID amount)]],
 		'0366' => ['skill_use_location', 'v3', [qw(lv skillID x y)]],
 		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'07E4' => ['item_list_window_selected', 'v v', [qw(index amount)]],
@@ -41,7 +41,7 @@ sub new {
 		'0AC1' => ['rodex_refresh_maillist', '', []],
 		'09E9' => ['rodex_close_mailbox', '', []],
 		'022D' => ['homunculus_command', 'C', [qw(command)]],
-		'023B' => ['storage_password', 'Z24', [qw(password)]],
+		'023B' => ['storage_password', 'v a*', [qw(type data)]],
 		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]],
 
 	);
@@ -52,7 +52,7 @@ sub new {
     master_login 0C26
     token_login 0825
     map_login 0436
-	char_create 0A39
+    char_create 0A39
     map_loaded 007D
     character_move 035F
     sync 0360
@@ -64,12 +64,12 @@ sub new {
     storage_item_add 0364
     storage_item_remove 0365
     skill_use_location 0366
-	request_cashitems 08C9
+    request_cashitems 08C9
     skill_use 0438
-	actor_info_request 0368
+    actor_info_request 0368
     item_list_window_selected 07E4
     char_delete2_accept 098F
-	gameguard_reply 09D0
+    gameguard_reply 09D0
     send_equip 0998
     pet_capture 08B5
     friend_request 0202
@@ -85,13 +85,13 @@ sub new {
     rodex_request_items 09F3
     homunculus_command 022D
     storage_password 023B
-	itemList 096E
+	  itemList 096E
 	);
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	$self->{char_create_version} = 0x0A39;
 	$self->{send_sell_buy_complete} = 1;
-	
+
 	return $self;
 }
 
@@ -117,11 +117,11 @@ sub reconstruct_master_login {
 sub sendTokenToServer {
     my ($self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port) = @_;
     my $len = $length + 92;
-    
+
     my $ip = '192.168.0.2';
     my $mac = $config{macAddress} || sprintf("%02x%02x%02x%02x%02x%02x", (int(rand(256)) & 0xFC) | 0x02, map { int(rand(256)) } 1..5);
     my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
-    
+
     $net->serverDisconnect();
     $net->serverConnect($otp_ip, $otp_port);
 
@@ -135,7 +135,7 @@ sub sendTokenToServer {
         ip => $ip,
         token => $token,
     });
-    
+
     $self->sendToServer($msg);
 
     debug "Sent sendTokenLogin\n", "sendPacket", 2;
@@ -178,7 +178,7 @@ sub sendMapLogin {
 
 	$msg = $self->add_checksum($msg);
 	$self->sendToServer($msg);
-	
+
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
