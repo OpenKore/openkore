@@ -43,7 +43,6 @@ sub new {
 		'022D' => ['homunculus_command', 'C', [qw(command)]],
 		'023B' => ['storage_password', 'v a*', [qw(type data)]],
 		'096E' => ['merge_item_request', 'v a*', [qw(length itemList)]],
-
 	);
 
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
