@@ -1,4 +1,4 @@
-# File contributed by #gaaradodesertoo, #cry1493, #cry1493, #matheus8666, #megafuji, #ovorei, #__codeplay
+# File contributed by #gaaradodesertoo, #cry1493, #matheus8666, #megafuji, #ovorei, #__codeplay, #roxleopardo
 package Network::Send::ROla;
 
 use strict;
@@ -90,6 +90,7 @@ sub new {
 
 	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
 	$self->{char_create_version} = 0x0A39;
+	$self->{send_sell_buy_complete} = 1;
 	
 	return $self;
 }
