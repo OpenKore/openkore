@@ -1244,6 +1244,7 @@ sub processAutoStorage {
 			     ($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
 		      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
 			  || ($config{itemsMaxNum_sellOrStore} && $char->inventory->size() >= $config{itemsMaxNum_sellOrStore})
+			  || ($config{storageAuto_onStart} && !$char->storage->wasOpenedThisSession())
 			  )
 		  && !AI::inQueue("storageAuto") && $char->inventory->isReady()
 		  
@@ -1257,8 +1258,8 @@ sub processAutoStorage {
 		my $attackOnRoute = 2;
 		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
 		# Only autostorage when we're on an attack route, or not moving
-		if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
-			message T("Auto-storaging due to excess weight\n");
+		if ($attackOnRoute > 1 && (ai_storageAutoCheck() || ($config{storageAuto_onStart} && !$char->storage->wasOpenedThisSession()))) {
+			message T("Auto-storaging due to excess weight, excess items or storageAuto_onStart\n");
 			AI::queue("storageAuto");
 			Plugins::callHook('AI_storage_auto_queued');
 		}
