@@ -348,6 +348,24 @@ prt_fild08a 170 378 prontera 156 22
 prt_fild08a 233 16 moc_fild01 239 382
 prt_fild08a 371 212 izlude 24 98
 
+#izlude_a
+izlude_a 213 161 arena_room 100 30 0 0
+izlude_a 20 98 prt_fild08 367 212 0 0
+izlude_a 110 182 izlude_in 65 87 0 0
+izlude_a 52 172 izlude_in 74 161 0 0
+izlude_a 125 257 iz_ac01 99 29 0 0
+izlude_a 130 257 iz_ac01 99 29 0 0
+#prt_fild08a
+prt_fild08a 371 212 izlude_a 24 98
+
+#izlude_c
+izlude_c 213 161 arena_room 100 30 0 0
+izlude_c 20 98 prt_fild08 367 212 0 0
+izlude_c 110 182 izlude_in 65 87 0 0
+izlude_c 52 172 izlude_in 74 161 0 0
+izlude_c 125 257 iz_ac01 99 29 0 0
+izlude_c 130 257 iz_ac01 99 29 0 0
+
 #################### Criatura Academy ####################
 izlude 125 257 iz_ac01 99 29
 izlude 130 257 iz_ac01 99 29
