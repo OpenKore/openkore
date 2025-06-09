@@ -224,6 +224,7 @@ gameGuard 1
 pinCode 1
 itemListType 1
 charDeleteDateType 1
+blockingPlayerCancel 1
 
 # https://ru.4game.com/ro/play/
 [Russia - rRO: Renewal]
