@@ -43,19 +43,58 @@ all 0 1 0
 
 ##### HEAL/SUPPORT ITEMS #####
 # Adjust these to your needs
+11567 200 1 0 # [Evento] Poção de Aprendiz
+11569 200 1 0 # [Evento] Poção Laranja de Aprendiz
+501 200 1 0 # Poção Vermelha
+502 200 1 0 # Poção Laranja
+503 200 1 0 # Poção Amarela
+504 200 1 0  # Poção Branca
+505 200 1 0  # Poção Azul
+506 200 1 0  # Poção Verde
+545 200 1 0 # Poção Vermelha Compacta
+546 200 1 0 # Poção Amarela Compacta
+547 200 1 0 # Poção Branca Compacta
+601 500 1 0 # Asa de Mosca
+602 50 1 0 # Butterfly Wing
+12323 1000 1 0 # Asa de Mosca de Iniciante
+12324 100 1 0 #Asa de Borboleta de Iniciante#
+23280 500 1 0 # Asas de Mosquito
 
-602 10 1 0 # Butterfly Wing
-601 100 1 0 # Fly Wing
-
-505 0 1 0 # Blue Potion
-545 50 1 0 # Condensed Red Potion
-547 50 1 0 # Condensed White Potion
-546 50 1 0 # Condensed Yellow Potion
-506 0 1 0 # Green Potion
-501 25 1 0 # Red Potion
-502 25 1 0 # Orange Potion
-504 25 1 0  # White Potion
-503 25 1 0 # Yellow potion
+##### Itens que não são armazenaveis - Causam desconexão ao armazenar
+23278 1 1 0 # Ajudante Baixinho
+17575 1 1 0 #Baú Prateado do Dudu#
+17576 1 1 0 #Baú Prateado da Lili#
+12325 100 1 0 #Lupa de Iniciante#
+23937 1 1 0 # Caixa de Jornada (1)
+23938 1 1 0 # Caixa de Jornada (10)
+23939 1 1 0 # Caixa de Jornada (20)
+23940 1 1 0 # Caixa de Jornada (30)
+23941 1 1 0 # Caixa de Jornada (40)
+23942 1 1 0 # Caixa de Jornada (50)
+23944 1 1 0 # Caixa de Jornada (70)
+23945 1 1 0 # Caixa de Jornada (80)
+23946 1 1 0 # Caixa de Jornada (90)
+22522 1 1 0 # Caixa de Jornada (100)
+22523 1 1 0 # Caixa de Jornada (120)
+22525 1 1 0 # Caixa de Jornada (140)
+22527 1 1 0 # Caixa de Jornada (160)
+23947 20 1 0 # [Evento] Prato Feito
+7059 1 1 0 #Vale-Armazém#
+7060 1 1 0 #Vale-Teletransporte#
+7061 1 1 0 #Vale-Carrinho#
+7622 1 1 0 #Cupom de Corte de Cabelo#
+7623 1 1 0 #Cupom de Mudança de Nome#
+22907 1 1 0 #Sino Prateado do Dudu#
+22908 1 1 0 #Sino Prateado da Lili#
+1381 1 1 0 #Machado de Batalha de Iniciante#
+1545 1 1 0 #Maça de Iniciante#
+1639 1 1 0 #Cajado de Iniciante#
+1742 1 1 0 #Arco Composto de Iniciante#
+2393 1 1 0 #Túnica de Iniciante#
+13040 1 1 0 #Punhal de Iniciante#
+13041 1 1 0 #Main Gauche de Iniciante#
+13295 1 1 0 #Shuriken de Iniciante#
+13415 1 1 0 #Alfanje de Iniciante#
 
 ##### ARROWS #####
 # You may want to modify these if you're an archer/hunter
