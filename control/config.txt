@@ -477,8 +477,11 @@ sellAuto_maxDistance
 sellAuto_npc_steps s
 
 storageAuto 0
-storageAuto_npc payon 181 104
-storageAuto_distance 5
+storageAuto_onStart 0
+storageAuto_npc
+storageAuto_standpoint
+storageAuto_distance 3
+storageAuto_maxDistance
 storageAuto_npc_type 1
 storageAuto_npc_steps c r1 n
 storageAuto_password 1111

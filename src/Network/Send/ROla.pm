@@ -31,7 +31,7 @@ sub new {
 		'08B5' => ['pet_capture', 'a4', [qw(targetID)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(playerName)]],
-		'07D7' => ['party_setting', 'C v', [qw(settingFlag value)]],
+		'07D7' => ['party_setting', 'V', [qw(exp)]],
 		'0811' => ['buy_bulk_openShop', 'v Z*', [qw(limit items)]],
 		'0815' => ['buy_bulk_closeShop', '', []],
 		'0817' => ['buy_bulk_request', 'a4 v', [qw(sellerID itemIndex)]],
