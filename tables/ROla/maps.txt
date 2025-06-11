@@ -889,7 +889,7 @@ moro_cav.rsw#Cavena de Fogo #
 1@eom.rsw#Templo do Demônio Rei #
 1@jtb.rsw#Pesadelo Musical #
 
-//Hero's Trail pt.1, 2
+//Heros Trail pt.1, 2
 dali.rsw#Espaço Dimensional (1) #
 dali02.rsw#Espaço Dimensional (2) #
 1@face.rsw#Covil de Vermes #
@@ -978,19 +978,21 @@ prt_fild08c.rsw#Arredores de Prontera (08) #
 prt_fild08b.rsw#Arredores de Prontera (08) #
 prt_fild08a.rsw#Arredores de Prontera (08) #
 
-iz_ac01_d.rsw#Instituto do Aprendiz #
-iz_ac02_d.rsw#Instituto do Aprendiz #
-iz_ac01_c.rsw#Instituto do Aprendiz #
-iz_ac02_c.rsw#Instituto do Aprendiz #
-iz_ac01_b.rsw#Instituto do Aprendiz #
-iz_ac02_b.rsw#Instituto do Aprendiz #
-iz_ac01_a.rsw#Instituto do Aprendiz #
-iz_ac02_a.rsw#Instituto do Aprendiz #
+iz_ac01.rsw#Academy 1F#
+iz_ac02.rsw#Academy 2F#
+iz_ac01_a.rsw#Academy 1F#
+iz_ac02_a.rsw#Academy 2F#
+iz_ac01_b.rsw#Academy 1F#
+iz_ac02_b.rsw#Academy 2F#
+iz_ac01_c.rsw#Academy 1F#
+iz_ac02_c.rsw#Academy 2F#
+iz_ac01_d.rsw#Academy 1F#
+iz_ac02_d.rsw#Academy 2F#
 
-izlude_d.rsw#Izlude #
-izlude_c.rsw#Izlude #
-izlude_b.rsw#Izlude #
 izlude_a.rsw#Izlude #
+izlude_b.rsw#Izlude #
+izlude_c.rsw#Izlude #
+izlude_d.rsw#Izlude #
 
 //Izlude Renewal
 //iz_int.rsw#Intro#
@@ -998,8 +1000,7 @@ izlude_a.rsw#Izlude #
 //iz_int02.rsw#Intro#
 //iz_int03.rsw#Intro#
 //iz_int04.rsw#Intro#
-iz_ac01.rsw#Instituto do Aprendiz #
-iz_ac02.rsw#Instituto do Aprendiz #
+
 iz_ng01.rsw#Escola Ninja #
 treasure_n1.rsw#Navio Fantasma 01 - Pesadelo #
 treasure_n2.rsw#Navio Fantasma 02 - Pesadelo #

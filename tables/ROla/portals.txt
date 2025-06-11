@@ -348,28 +348,6 @@ prt_fild08a 170 378 prontera 156 22
 prt_fild08a 233 16 moc_fild01 239 382
 prt_fild08a 371 212 izlude 24 98
 
-#izlude_a
-izlude_a 213 161 arena_room 100 30 0 0
-izlude_a 20 98 prt_fild08 367 212 0 0
-izlude_a 110 182 izlude_in 65 87 0 0
-izlude_a 52 172 izlude_in 74 161 0 0
-izlude_a 125 257 iz_ac01 99 29 0 0
-izlude_a 130 257 iz_ac01 99 29 0 0
-#prt_fild08a
-prt_fild08a 371 212 izlude_a 24 98
-
-#izlude_c
-izlude_c 213 161 arena_room 100 30 0 0
-izlude_c 20 98 prt_fild08 367 212 0 0
-izlude_c 110 182 izlude_in 65 87 0 0
-izlude_c 52 172 izlude_in 74 161 0 0
-izlude_c 125 257 iz_ac01 99 29 0 0
-izlude_c 130 257 iz_ac01 99 29 0 0
-
-#################### Criatura Academy ####################
-izlude 125 257 iz_ac01 99 29
-izlude 130 257 iz_ac01 99 29
-iz_ac01 100 24 izlude 127 253
 # Eden Teleport Officer
 iz_ac01 106 36 moc_para01 31 14 0 c r0 c
 # Garden
@@ -3335,3 +3313,270 @@ ve_fild07b 154 371 ve_fild07a 154 371 0 c r1
 ve_fild07b 154 371 ve_fild07 154 371 0 c r0
 ve_fild07 154 371 ve_fild07a 154 371 0 c r1
 ve_fild07 154 371 ve_fild07b 154 371 0 c r2
+#izlude
+izlude 20 98 prt_fild08 367 212
+izlude 110 182 izlude_in 65 87
+izlude 52 172 izlude_in 74 161
+izlude 213 161 arena_room 100 30
+izlude 125 257 iz_ac01 99 29
+izlude 130 257 iz_ac01 99 29
+
+#izlude_a
+izlude_a 213 161 arena_room 100 30
+izlude_a 20 98 prt_fild08 367 212
+izlude_a 110 182 izlude_in 65 87
+izlude_a 52 172 izlude_in 74 161
+izlude_a 125 257 iz_ac01 99 29
+izlude_a 130 257 iz_ac01 99 29
+
+#izlude_b
+izlude_b 213 161 arena_room 100 30
+izlude_b 20 98 prt_fild08 367 212
+izlude_b 110 182 izlude_in 65 87
+izlude_b 52 172 izlude_in 74 161
+izlude_b 125 257 iz_ac01 99 29
+izlude_b 130 257 iz_ac01 99 29
+
+#izlude_c
+izlude_c 213 161 arena_room 100 30
+izlude_c 20 98 prt_fild08 367 212
+izlude_c 110 182 izlude_in 65 87
+izlude_c 52 172 izlude_in 74 161
+izlude_c 125 257 iz_ac01 99 29
+izlude_c 130 257 iz_ac01 99 29
+
+#izlude_d
+izlude_d 213 161 arena_room 100 30
+izlude_d 20 98 prt_fild08 367 212
+izlude_d 110 182 izlude_in 65 87
+izlude_d 52 172 izlude_in 74 161
+izlude_d 125 257 iz_ac01 99 29
+izlude_d 130 257 iz_ac01 99 29
+
+#iz_int
+iz_int 27 30 iz_int 51 30
+iz_int 47 30 iz_int 22 30
+iz_int 56 15 int_land 85 107
+
+#iz_int01
+iz_int01 27 30 iz_int01 51 30
+iz_int01 47 30 iz_int01 22 30
+iz_int01 56 15 int_land 85 107
+
+#iz_int02
+iz_int02 27 30 iz_int02 51 30
+iz_int02 47 30 iz_int02 22 30
+iz_int02 56 15 int_land 85 107
+
+#iz_int03
+iz_int03 27 30 iz_int03 51 30
+iz_int03 47 30 iz_int03 22 30
+iz_int03 56 15 int_land 85 107
+
+#iz_int04
+iz_int04 27 30 iz_int04 51 30
+iz_int04 47 30 iz_int04 22 30
+iz_int04 56 15 int_land 85 107
+
+#################### Criatura Academy ####################
+#iz_ac01
+iz_ac01 78 25 iz_ac02 201 27 0 0
+iz_ac01 122 25 iz_ac02 214 27 0 0
+iz_ac01 100 24 izlude 127 253 0 0
+
+#iz_ac01_a
+iz_ac01_a 78 25 iz_ac02_a 201 27 0 0
+iz_ac01_a 122 25 iz_ac02_a 214 27 0 0
+iz_ac01_a 100 24 izlude 127 253 0 0
+
+#iz_ac01_b
+iz_ac01_b 78 25 iz_ac02_b 201 27 0 0
+iz_ac01_b 122 25 iz_ac02_b 214 27 0 0
+iz_ac01_b 100 24 izlude 127 253 0 0
+
+#iz_ac01_c
+iz_ac01_c 78 25 iz_ac02_c 201 27 0 0
+iz_ac01_c 122 25 iz_ac02_c 214 27 0 0
+iz_ac01_c 100 24 izlude 127 253 0 0
+
+#iz_ac01_d
+iz_ac01_d 78 25 iz_ac02_d 201 27 0 0
+iz_ac01_d 122 25 iz_ac02_d 214 27 0 0
+iz_ac01_d 100 24 izlude 127 253 0 0
+
+#iz_ac02
+iz_ac02 194 44 iz_ac02 80 48 0 0
+iz_ac02 83 48 iz_ac02 197 44 0 0
+iz_ac02 221 44 iz_ac02 127 48 0 0
+iz_ac02 124 48 iz_ac02 218 44 0 0
+iz_ac02 194 60 iz_ac02 80 78 0 0
+iz_ac02 83 78 iz_ac02 197 60 0 0
+iz_ac02 221 60 iz_ac02 128 78 0 0
+iz_ac02 124 78 iz_ac02 218 60 0 0
+iz_ac02 194 76 iz_ac02 80 107 0 0
+iz_ac02 83 107 iz_ac02 197 76 0 0
+iz_ac02 221 76 iz_ac02 127 108 0 0
+iz_ac02 124 108 iz_ac02 218 76 0 0
+iz_ac02 194 92 iz_ac02 80 137 0 0
+iz_ac02 83 137 iz_ac02 197 92 0 0
+iz_ac02 221 92 iz_ac02 127 137 0 0
+iz_ac02 124 137 iz_ac02 218 92 0 0
+iz_ac02 194 108 iz_ac02 80 168 0 0
+iz_ac02 83 168 iz_ac02 197 108 0 0
+iz_ac02 221 108 iz_ac02 127 167 0 0
+iz_ac02 124 167 iz_ac02 218 108 0 0
+iz_ac02 208 121 iz_ac02 103 186 0 0
+iz_ac02 103 183 iz_ac02 208 118 0 0
+iz_ac02 198 27 iz_ac01 78 28 0 0
+iz_ac02 217 27 iz_ac01 122 28 0 0
+
+#iz_ac02_a
+iz_ac02_a 194 44 iz_ac02_a 80 48 0 0
+iz_ac02_a 83 48 iz_ac02_a 197 44 0 0
+iz_ac02_a 221 44 iz_ac02_a 127 48 0 0
+iz_ac02_a 124 48 iz_ac02_a 218 44 0 0
+iz_ac02_a 194 60 iz_ac02_a 80 78 0 0
+iz_ac02_a 83 78 iz_ac02_a 197 60 0 0
+iz_ac02_a 221 60 iz_ac02_a 128 78 0 0
+iz_ac02_a 124 78 iz_ac02_a 218 60 0 0
+iz_ac02_a 194 76 iz_ac02_a 80 107 0 0
+iz_ac02_a 83 107 iz_ac02_a 197 76 0 0
+iz_ac02_a 221 76 iz_ac02_a 127 108 0 0
+iz_ac02_a 124 108 iz_ac02_a 218 76 0 0
+iz_ac02_a 194 92 iz_ac02_a 80 137 0 0
+iz_ac02_a 83 137 iz_ac02_a 197 92 0 0
+iz_ac02_a 221 92 iz_ac02_a 127 137 0 0
+iz_ac02_a 124 137 iz_ac02_a 218 92 0 0
+iz_ac02_a 194 108 iz_ac02_a 80 168 0 0
+iz_ac02_a 83 168 iz_ac02_a 197 108 0 0
+iz_ac02_a 221 108 iz_ac02_a 127 167 0 0
+iz_ac02_a 124 167 iz_ac02_a 218 108 0 0
+iz_ac02_a 208 121 iz_ac02_a 103 186 0 0
+iz_ac02_a 103 183 iz_ac02_a 208 118 0 0
+iz_ac02_a 198 27 iz_ac01_a 78 28 0 0
+iz_ac02_a 217 27 iz_ac01_a 122 28 0 0
+
+#iz_ac02_b
+iz_ac02_b 194 44 iz_ac02_b 80 48 0 0
+iz_ac02_b 83 48 iz_ac02_b 197 44 0 0
+iz_ac02_b 221 44 iz_ac02_b 127 48 0 0
+iz_ac02_b 124 48 iz_ac02_b 218 44 0 0
+iz_ac02_b 194 60 iz_ac02_b 80 78 0 0
+iz_ac02_b 83 78 iz_ac02_b 197 60 0 0
+iz_ac02_b 221 60 iz_ac02_b 128 78 0 0
+iz_ac02_b 124 78 iz_ac02_b 218 60 0 0
+iz_ac02_b 194 76 iz_ac02_b 80 107 0 0
+iz_ac02_b 83 107 iz_ac02_b 197 76 0 0
+iz_ac02_b 221 76 iz_ac02_b 127 108 0 0
+iz_ac02_b 124 108 iz_ac02_b 218 76 0 0
+iz_ac02_b 194 92 iz_ac02_b 80 137 0 0
+iz_ac02_b 83 137 iz_ac02_b 197 92 0 0
+iz_ac02_b 221 92 iz_ac02_b 127 137 0 0
+iz_ac02_b 124 137 iz_ac02_b 218 92 0 0
+iz_ac02_b 194 108 iz_ac02_b 80 168 0 0
+iz_ac02_b 83 168 iz_ac02_b 197 108 0 0
+iz_ac02_b 221 108 iz_ac02_b 127 167 0 0
+iz_ac02_b 124 167 iz_ac02_b 218 108 0 0
+iz_ac02_b 208 121 iz_ac02_b 103 186 0 0
+iz_ac02_b 103 183 iz_ac02_b 208 118 0 0
+iz_ac02_b 198 27 iz_ac01_b 78 28 0 0
+iz_ac02_b 217 27 iz_ac01_b 122 28 0 0
+
+#iz_ac02_c
+iz_ac02_c 194 44 iz_ac02_c 80 48 0 0
+iz_ac02_c 83 48 iz_ac02_c 197 44 0 0
+iz_ac02_c 221 44 iz_ac02_c 127 48 0 0
+iz_ac02_c 124 48 iz_ac02_c 218 44 0 0
+iz_ac02_c 194 60 iz_ac02_c 80 78 0 0
+iz_ac02_c 83 78 iz_ac02_c 197 60 0 0
+iz_ac02_c 221 60 iz_ac02_c 128 78 0 0
+iz_ac02_c 124 78 iz_ac02_c 218 60 0 0
+iz_ac02_c 194 76 iz_ac02_c 80 107 0 0
+iz_ac02_c 83 107 iz_ac02_c 197 76 0 0
+iz_ac02_c 221 76 iz_ac02_c 127 108 0 0
+iz_ac02_c 124 108 iz_ac02_c 218 76 0 0
+iz_ac02_c 194 92 iz_ac02_c 80 137 0 0
+iz_ac02_c 83 137 iz_ac02_c 197 92 0 0
+iz_ac02_c 221 92 iz_ac02_c 127 137 0 0
+iz_ac02_c 124 137 iz_ac02_c 218 92 0 0
+iz_ac02_c 194 108 iz_ac02_c 80 168 0 0
+iz_ac02_c 83 168 iz_ac02_c 197 108 0 0
+iz_ac02_c 221 108 iz_ac02_c 127 167 0 0
+iz_ac02_c 124 167 iz_ac02_c 218 108 0 0
+iz_ac02_c 208 121 iz_ac02_c 103 186 0 0
+iz_ac02_c 103 183 iz_ac02_c 208 118 0 0
+iz_ac02_c 198 27 iz_ac01_c 78 28 0 0
+iz_ac02_c 217 27 iz_ac01_c 122 28 0 0
+
+#iz_ac02_d
+iz_ac02_d 194 44 iz_ac02_d 80 48 0 0
+iz_ac02_d 83 48 iz_ac02_d 197 44 0 0
+iz_ac02_d 221 44 iz_ac02_d 127 48 0 0
+iz_ac02_d 124 48 iz_ac02_d 218 44 0 0
+iz_ac02_d 194 60 iz_ac02_d 80 78 0 0
+iz_ac02_d 83 78 iz_ac02_d 197 60 0 0
+iz_ac02_d 221 60 iz_ac02_d 128 78 0 0
+iz_ac02_d 124 78 iz_ac02_d 218 60 0 0
+iz_ac02_d 194 76 iz_ac02_d 80 107 0 0
+iz_ac02_d 83 107 iz_ac02_d 197 76 0 0
+iz_ac02_d 221 76 iz_ac02_d 127 108 0 0
+iz_ac02_d 124 108 iz_ac02_d 218 76 0 0
+iz_ac02_d 194 92 iz_ac02_d 80 137 0 0
+iz_ac02_d 83 137 iz_ac02_d 197 92 0 0
+iz_ac02_d 221 92 iz_ac02_d 127 137 0 0
+iz_ac02_d 124 137 iz_ac02_d 218 92 0 0
+iz_ac02_d 194 108 iz_ac02_d 80 168 0 0
+iz_ac02_d 83 168 iz_ac02_d 197 108 0 0
+iz_ac02_d 221 108 iz_ac02_d 127 167 0 0
+iz_ac02_d 124 167 iz_ac02_d 218 108 0 0
+iz_ac02_d 208 121 iz_ac02_d 103 186 0 0
+iz_ac02_d 103 183 iz_ac02_d 208 118 0 0
+iz_ac02_d 198 27 iz_ac01_d 78 28 0 0
+iz_ac02_d 217 27 iz_ac01_d 122 28 0 0
+
+#int_land
+int_land 49 57 izlude 196 209
+
+#int_land01
+int_land01 49 57 izlude 196 209
+
+#int_land02
+int_land02 49 57 izlude 196 209
+
+#int_land03
+int_land03 49 57 izlude 196 209
+
+#int_land04
+int_land04 49 57 izlude 196 209
+
+#prt_fild08a
+prt_fild08a 371 212 izlude 24 98
+prt_fild08a 168 376 prontera 156 26
+prt_fild08a 16 239 prt_fild07 379 239
+prt_fild08a 16 187 prt_fild07 380 186
+prt_fild08a 233 16 moc_fild01 238 378
+prt_fild08a 55 21 moc_fild01 56 380
+
+#prt_fild08b
+prt_fild08b 371 212 izlude 24 98
+prt_fild08b 168 376 prontera 156 26
+prt_fild08b 16 239 prt_fild07 379 239
+prt_fild08b 16 187 prt_fild07 380 186
+prt_fild08b 233 16 moc_fild01 238 378
+prt_fild08b 55 21 moc_fild01 56 380
+
+#prt_fild08c
+prt_fild08c 371 212 izlude 24 98
+prt_fild08c 168 376 prontera 156 26
+prt_fild08c 16 239 prt_fild07 379 239
+prt_fild08c 16 187 prt_fild07 380 186
+prt_fild08c 233 16 moc_fild01 238 378
+prt_fild08c 55 21 moc_fild01 56 380
+
+#prt_fild08d
+prt_fild08d 371 212 izlude 24 98
+prt_fild08d 168 376 prontera 156 26
+prt_fild08d 16 239 prt_fild07 379 239
+prt_fild08d 16 187 prt_fild07 380 186
+prt_fild08d 233 16 moc_fild01 238 378
+prt_fild08d 55 21 moc_fild01 56 380
