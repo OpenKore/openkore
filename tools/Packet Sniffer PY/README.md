@@ -1,161 +1,110 @@
-# ROla Packet Sniffer - Python Version
+# Packet Analyzer - Ferramenta de Análise de Pacotes RO
 
-Versão em Python do analisador de pacotes para Ragnarok Online. Oferece captura e análise de tráfego TCP em tempo real com interface de terminal colorida.
+## O que faz?
+Captura pacotes de rede do Ragnarok Online e gera automaticamente sugestões de formato Perl para usar no OpenKore.
 
-## 🚀 Instalação Rápida
+## Uso Básico
 
-### Pré-requisitos
-
-**Windows:**
-- Python 3.7+
-- [Npcap](https://npcap.com/dist/npcap-1.79.exe) (executar como Administrador)
-- Terminal como Administrador
-
-**Linux:**
+### Comando Simples
 ```bash
-sudo apt-get install libpcap-dev
+python packet_analyzer.py <IP> <PORTA> [opções]
 ```
 
-**macOS:**
+### Exemplo com Faixa de IPs (Gravity)
 ```bash
-# Nenhum pré-requisito adicional
+python packet_analyzer.py 172.65.0.0/16 * -o FreyaFull -i 4
 ```
 
-### Dependências
+**Explicação do comando:**
+- `172.65.0.0/16` = Monitora TODOS os IPs da faixa 172.65.x.x (rede da Gravity)
+- `*` = Monitora TODAS as portas (não apenas uma específica)
+- `-o FreyaFull` = Salva os resultados na pasta "FreyaFull"
+- `-i 4` = Usa a interface de rede número 4
+
+### Outras Opções Úteis
 ```bash
-pip install -r requirements.txt
+# Ver quais interfaces estão disponíveis
+python packet_analyzer.py --list-interfaces
+
+# Modo silencioso (sem mostrar pacotes na tela)
+python packet_analyzer.py 172.65.0.0/16 * -o FreyaFull -i 4 -q
+
+# IP específico, porta específica
+python packet_analyzer.py 192.168.1.100 6900 -o MeuServidor
 ```
 
-## 📖 Uso
+## O que é gerado?
 
-### Listar interfaces disponíveis
+### 1. Arquivo `perl_suggestions.txt`
+Contém sugestões prontas para usar no OpenKore:
+```perl
+# 0x0825 - login_packet  
+'0825' => ['login_packet', 'v V Z51 a17', [qw(len version username mac)]],
+
+# 0x0437 - actor_action
+'0437' => ['actor_action', 'a4 C', [qw(targetID action)]],
+```
+
+### 2. Pasta `examples/`
+Exemplos reais de cada tipo de pacote capturado para você verificar se está correto.
+
+### 3. Arquivo `packet_analysis_report.json`
+Relatório completo com estatísticas (mais técnico).
+
+## Instalação Rápida
+
 ```bash
-python packet_sniffer.py --list-interfaces
+pip install scapy colorama
 ```
 
-Agora você verá uma saída mais amigável:
-```
-Interfaces de rede disponíveis:
+**Windows**: Baixe e instale Npcap primeiro.
 
- 1. Wi-Fi - Microsoft Wi-Fi Direct Virtual Adapter
-    Descrição: Microsoft Wi-Fi Direct Virtual Adapter
-    Nome técnico: \Device\NPF_{7BB8E731-9A60-441E-AF44-2E033ECD64D2}
+## Permissões
 
- 2. Ethernet - Realtek PCIe GbE Family Controller
-    Descrição: Realtek PCIe GbE Family Controller
-    Nome técnico: \Device\NPF_{99D7525F-6F6E-49F7-88EA-FD2B047D7237}
+- **Windows**: Execute PowerShell como Administrador
+- **Linux/Mac**: Use `sudo python packet_analyzer.py ...`
 
- 3. Loopback Interface
-    Nome técnico: \Device\NPF_Loopback
+## Fluxo de Trabalho
 
-Dica: Use o número, nome amigável ou nome técnico com -i
-```
+1. **Execute o comando** durante uma sessão do jogo
+2. **Pare com Ctrl+C** quando tiver capturado o suficiente
+3. **Abra o arquivo `perl_suggestions.txt`** na pasta de output
+4. **Copie as sugestões** para seu arquivo de recv/send do OpenKore
+5. **Teste** se os pacotes funcionam
 
-### Captura básica
+## Exemplo Prático
+
 ```bash
-# Usando número da interface
-python packet_sniffer.py 172.65.200.86 6900 -i 2
+# 1. Inicie a captura
+python packet_analyzer.py 172.65.0.0/16 * -o MinhaAnalise -i 4
 
-# Usando nome amigável
-python packet_sniffer.py 172.65.200.86 6900 -i "Wi-Fi"
+# 2. Faça login no jogo, ande um pouco, use algumas skills
+# 3. Pare com Ctrl+C
 
-# Auto-detectar interface (recomendado para teste)
-python packet_sniffer.py 172.65.200.86 6900
+# 4. Veja os resultados
+cat MinhaAnalise/perl_suggestions.txt
 ```
 
-### Salvar logs (versão estendida)
-```bash
-# Captura com log em arquivo
-python packet_logger.py 172.65.200.86 6900 -o session.json
+## Dicas
 
-# Modo silencioso (apenas salva arquivo)
-python packet_logger.py 172.65.200.86 6900 -q
+- **Capture por 5-10 minutos** fazendo várias ações no jogo
+- **Quanto mais ações diferentes**, melhores as sugestões
+- **Use `-q`** se quiser ver menos informações na tela
+- **Use `--list-interfaces`** se não souber qual interface usar
 
-# Analisar arquivo salvo
-python packet_logger.py --analyze session.json
-```
+## Formatos Perl Mais Comuns
 
-## 🎯 Principais Melhorias
+| Código | O que é | Exemplo |
+|---------|---------|---------|
+| `a4` | ID de 4 bytes | Player ID, Item ID |
+| `Z24` | Texto de até 24 chars | Nome do player |
+| `v` | Número pequeno (0-65535) | HP, SP, quantidade |
+| `V` | Número grande | Experiência, Zeny |
+| `C` | Número tiny (0-255) | Level, tipo |
 
-### ✅ Nomenclatura Amigável de Interfaces
-- `Wi-Fi - Microsoft Wi-Fi Direct Virtual Adapter`
+## Troubleshooting
 
-### ✅ Múltiplas Formas de Selecionar Interface
-- Por número: `-i 1`
-- Por nome amigável: `-i "Wi-Fi"`
-- Por busca parcial: `-i ethernet`
-- Por nome técnico: `-i "\Device\NPF_{...}"`
-
-### ✅ Interface Colorida
-- 🟢 **Verde**: Pacotes recebidos (RECV)
-- 🔵 **Azul**: Pacotes enviados (SEND)  
-- 🟡 **Amarelo**: Dados hex e dicas
-- 🔴 **Vermelho**: ASCII e erros
-- 🟦 **Ciano**: Informações gerais
-
-## 📊 Exemplo de Saída
-
-```
-================================================================================
-ROla Packet Sniffer - Python Version
-Target: 35.198.41.33:10009
-Interface: Wi-Fi - Microsoft Wi-Fi Direct Virtual Adapter
-================================================================================
-
-Iniciando captura...
-Filtro: tcp and host 35.198.41.33 and port 10009
-Interface: \Device\NPF_{99D7525F-6F6E-49F7-88EA-FD2B047D7237}
-Pressione Ctrl+C para parar
-
-[14:30:25.123] RECV Opcode: 0x0080 | Size: 24 bytes
-0000:  80 00 16 00 01 00 00 00  00 00 00 00 00 00 00 00  | ................
-0010:  00 00 00 00 00 00 00 00                           | ........        
-Raw: 80 00 16 00 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
---------------------------------------------------------------------------------
-
-============================================================
-ESTATÍSTICAS
-============================================================
-Tempo de execução: 30.5s
-Total de pacotes: 142
-Pacotes recebidos: 89
-Pacotes enviados: 53
-Taxa: 4.66 pacotes/s
-
-Top 10 Opcodes:
-Opcode   Count    Avg Size   Type
-----------------------------------------
-0x0080   45       24.0       Fixed
-0x009A   23       32.5       Variable
-0x007F   18       8.0        Fixed
-```
-
-## 🛠️ Solução de Problemas
-
-### Interface não aparece com nome amigável
-- Execute `ipconfig /all` no Windows para ver nomes reais
-- Use o nome técnico como fallback
-- Verifique se os drivers de rede estão atualizados
-
-### Permissões insuficientes
-- **Windows**: Execute como Administrador
-- **Linux/macOS**: Use `sudo`
-
-### Nenhum pacote capturado
-1. Verifique se há tráfego ativo na porta
-2. Teste sem especificar interface (`-i`)
-3. Confirme IP e porta
-4. Verifique firewall
-
-## 📝 Arquivos
-
-- **`packet_sniffer.py`**: Versão básica para uso interativo
-- **`packet_logger.py`**: Versão avançada com logging em JSON
-- **`requirements.txt`**: Dependências Python
-
-## 💡 Dicas
-
-- Use `--list-interfaces` sempre que trocar de rede
-- Modo silencioso é ideal para logging automatizado
-- Arquivos JSON podem ser analisados com ferramentas externas
-- Ctrl+C para parar graciosamente e ver estatísticas finais
+**Não vê pacotes?**
+- Confirme o IP do servidor com `ping`
+- Teste com uma interface diferente
+- Use `sudo` (Linux/Mac) ou Admin (Windows)
