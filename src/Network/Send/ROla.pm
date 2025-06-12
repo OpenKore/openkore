@@ -27,7 +27,6 @@ sub new {
 		'0438' => ['skill_use', 'v2 a4', [qw(lv skillID targetID)]],
 		'07E4' => ['item_list_window_selected', 'v v', [qw(index amount)]],
 		'098F' => ['char_delete2_accept', 'a4 Z40 Z40 Z40', [qw(charID email1 email2 email3)]],
-		'0998' => ['send_equip', 'v2', [qw(index viewID)]],
 		'08B5' => ['pet_capture', 'a4', [qw(targetID)]],
 		'0202' => ['friend_request', 'a*', [qw(username)]],
 		'02C4' => ['party_join_request_by_name', 'Z24', [qw(playerName)]],
