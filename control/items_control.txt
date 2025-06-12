@@ -36,7 +36,6 @@
 # An auto-sell list and auto-storage list is provided by default, modify it
 # as you see fit.
 
-
 # All items not mentioned in this file will be automatically stored in storage.
 all 0 1 0
 
