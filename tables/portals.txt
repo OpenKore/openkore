@@ -3584,15 +3584,15 @@ prt_fild08c 371 212 izlude_c 20 98
 izlude_c 20 98 prt_fild08c 367 212
 
 #ROla Warps
-orcsdun01_c 28 158 orcsdun01 28 158 0 c r0
-orcsdun01_c 28 158 orcsdun01_a 28 158 0 c r1
-orcsdun01_c 28 158 orcsdun01_b 28 158 0 c r2
 orcsdun01 28 158 orcsdun01_a 28 158 0 c r1
 orcsdun01 28 158 orcsdun01_b 28 158 0 c r2
 orcsdun01 28 158 orcsdun01_c 28 158 0 c r3
 orcsdun01_b 28 158 orcsdun01 28 158 0 c r0
 orcsdun01_b 28 158 orcsdun01_a 28 158 0 c r1
 orcsdun01_b 28 158 orcsdun01_c 28 158 0 c r3
+orcsdun01_c 28 158 orcsdun01 28 158 0 c r0
+orcsdun01_c 28 158 orcsdun01_a 28 158 0 c r1
+orcsdun01_c 28 158 orcsdun01_b 28 158 0 c r2
 orcsdun01_a 28 158 orcsdun01 28 158 0 c r0
 orcsdun01_a 28 158 orcsdun01_b 28 158 0 c r2
 orcsdun01_a 28 158 orcsdun01_c 28 158 0 c r3
