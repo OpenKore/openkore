@@ -1,43 +1,42 @@
-# In this file you can control which items to put in storage,
-# to sell, or to leave in the inventory.
+# Neste arquivo você pode controlar quais itens guardar no armazém,
+# vender ou deixar no inventário.
 #
-# Syntax:
-# (item name) (minimum) (auto-store) (auto-sell) [put in cart] [get from cart]
-# item name	: Name of the item.
-# miminum	: The minimum amount of this item that you want to keep in inventory.
-# autostore	: Set to 1 to walk back to a Kapra NPC to put in storage.
-# autosell	: Set to 1 to sell item at a buy/sell NPC.
-# put in cart	: Set to 1 to automatically put this item in cart.
-# get from cart : Set to 1 to automatically get this item from cart.
+# Sintaxe:
+# (nome do item) (mínimo) (auto-guardar) (auto-vender) [colocar no carrinho] [pegar do carrinho]
+# nome do item   : Nome do item.
+# mínimo         : Quantidade mínima deste item que você deseja manter no inventário.
+# auto-guardar   : Defina como 1 para ir até uma Kafra e guardar no armazém.
+# auto-vender    : Defina como 1 para vender o item em um NPC de compra/venda.
+# colocar no carrinho : Defina como 1 para colocar automaticamente este item no carrinho.
+# pegar do carrinho   : Defina como 1 para pegar automaticamente este item do carrinho.
 #
-# The example below will sell all jellopies, store all knifes and puts
-# all flowers in cart:
-#	Jellopy 0 0 1
-#	Knife 0 1 0
-#	Flower 0 0 0 1
+# O exemplo abaixo irá vender todas as Jellopies, guardar todas as Facas e colocar
+# todas as Flores no carrinho:
+#   Jellopy 0 0 1
+#   Knife 0 1 0
+#   Flower 0 0 0 1
 #
-# This example will get Red Potions from cart if you have less than 25
-# of them in your inventory:
-# 	Red Potion 25 0 0 0 1
+# Este exemplo irá pegar Poções Vermelhas do carrinho se você tiver menos de 25
+# delas no seu inventário:
+#   Red Potion 25 0 0 0 1
 #
-# The item name isn't case sensitive. Only items found in this file will
-# be stored or sold.
+# O nome do item não diferencia maiúsculas de minúsculas. Apenas itens listados neste arquivo
+# serão guardados ou vendidos.
 #
-# If auto-store and auto-sell are 1, Kore will do storage first (unless
-# storage is full) then sell.
+# Se auto-guardar e auto-vender forem 1, o Kore irá guardar no armazém primeiro (a menos
+# que o armazém esteja cheio), depois vender.
 #
-# Kore will not sell or store equipped items. For example, if you're using
-# a knife and you have a line to auto-sell all knives, kore will sell any
-# extras it picks up, not the knife it's using.
+# O Kore não irá vender ou guardar itens equipados. Por exemplo, se você estiver usando
+# uma faca e tiver uma linha para vender todas as facas, o kore irá vender apenas as extras,
+# não a que está equipada.
 #
-# Don't forget to set the storageAuto, sellAuto and related configuration
-# options in config.txt, or this file won't have any effect.
+# Não se esqueça de configurar as opções storageAuto, sellAuto e outras relacionadas
+# no config.txt, ou este arquivo não terá efeito.
 #
-# An auto-sell list and auto-storage list is provided by default, modify it
-# as you see fit.
+# Uma lista padrão de auto-venda e auto-armazém é fornecida, modifique conforme desejar.
 
 
-# All items not mentioned in this file will be automatically stored in storage.
+# Todos os itens não mencionados neste arquivo serão automaticamente guardados no armazém.
 all 0 1 0
 
 
