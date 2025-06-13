@@ -127,6 +127,7 @@ sub sendTokenToServer {
     my $mac = $config{macAddress} || sprintf("%02x%02x%02x%02x%02x%02x", (int(rand(256)) & 0xFC) | 0x02, map { int(rand(256)) } 1..5);
     my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
 
+	$self->{enable_checksum} = 0;
     $net->serverDisconnect();
     $net->serverConnect($otp_ip, $otp_port);
 
@@ -146,26 +147,6 @@ sub sendTokenToServer {
     debug "Sent sendTokenLogin\n", "sendPacket", 2;
 }
 
-sub add_checksum {
-	my ($self, $msg) = @_;
-
-	my $crc = 0x00;
-	for my $byte (unpack('C*', $msg)) {
-		$crc ^= $byte;
-		for (1..8) {
-			if ($crc & 0x80) {
-				$crc = (($crc << 1) ^ 0x07) & 0xFF;
-			} else {
-				$crc = ($crc << 1) & 0xFF;
-			}
-		}
-	}
-
-	# Anexa o checksum ao final da mensagem
-	$msg .= pack('C', $crc);
-	return $msg;
-}
-
 sub sendMapLogin {
 	my ($self, $accountID, $charID, $sessionID, $sex) = @_;
 	my $msg;
@@ -181,7 +162,6 @@ sub sendMapLogin {
 		sex			=> $sex,
 	});
 
-	$msg = $self->add_checksum($msg);
 	$self->sendToServer($msg);
 
 	debug "Sent sendMapLogin\n", "sendPacket", 2;

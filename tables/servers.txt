@@ -220,7 +220,7 @@ storageEncryptKey 0x050B6F79, 0x0202C179, 0x0E20120, 0x04FA43E3, 0x0179B6C8, 0x0
 addTableFolders ROla
 addFieldsFolders ROla
 charBlockSize 155
-gameGuard 1
+gameGuard 0
 pinCode 1
 itemListType 1
 charDeleteDateType 1

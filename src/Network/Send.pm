@@ -38,9 +38,8 @@ use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
-use Log qw(debug);
+use Log qw(warning debug);
 
-my $counter = 0;
 
 sub new {
 	my ( $class ) = @_;
@@ -50,6 +49,9 @@ sub new {
 	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})$/ ) {
 		$self->cryptKeys( hex $1, hex $2, hex $3 );
 	}
+
+	$self->{enable_checksum} = 0;
+	$self->{counter_checksum} = 0;
 
 	return $self;
 }
@@ -288,18 +290,16 @@ sub sendToServer {
 
 	# Packet Prefix Encryption Support
 	$self->encryptMessageID(\$msg);
-	my @ignored_ids = ('0C26', '0825', '08B8', '0065', '0066', '09A1', '0B1D', '0A30', '0436');
+
+	# Append checksum
 	
-	if(!grep { $_ eq $messageID } @ignored_ids){
-		$counter += 1;
-		my $checksum = calc_checksum($counter, $msg);
+	if($self->{net}->{enable_checksum}) {
+		my $checksum = calc_checksum($self->{net}->{counter_checksum}, $msg);
+		$self->{net}->{counter_checksum} += 1;
 		my $checksum_hex = sprintf("%02X", $checksum);  # ← ESTA LINHA
 		$msg = $msg . pack("C", $checksum);
 	}
-	if($messageID eq '0C26' || $messageID eq '0436'){
-		$counter = 0;	
-	}
-	
+
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
 
@@ -1457,8 +1457,9 @@ sub sendTokenToServer {
 	my $ip = '192.168.0.14';
 	my $mac = '20CF3095572A';
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
-
+	
 	$net->serverDisconnect();
+	$self->{enable_checksum} = 0;
 	$net->serverConnect($otp_ip, $otp_port);# OTP - One Time Password
 
 	my $msg = $self->reconstruct({
