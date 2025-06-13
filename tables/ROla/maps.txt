@@ -973,10 +973,10 @@ int_land03.rsw#Ilhota #
 int_land04.rsw#Ilhota #
 
 //Izlude Tutorial
-prt_fild08d.rsw#Arredores de Prontera (08) #
-prt_fild08c.rsw#Arredores de Prontera (08) #
-prt_fild08b.rsw#Arredores de Prontera (08) #
 prt_fild08a.rsw#Arredores de Prontera (08) #
+prt_fild08b.rsw#Arredores de Prontera (08) #
+prt_fild08c.rsw#Arredores de Prontera (08) #
+prt_fild08d.rsw#Arredores de Prontera (08) #
 
 iz_ac01.rsw#Academy 1F#
 iz_ac02.rsw#Academy 2F#

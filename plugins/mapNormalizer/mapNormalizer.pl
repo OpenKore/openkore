@@ -33,7 +33,12 @@ my @map_normalizations = (
 	{ pattern => qr/^ve_fild07[a-b]$/,       normalized => 've_fild07' },
 	{ pattern => qr/^gef_f10_[abc]$/,        normalized => 'gef_fild10' },
 	{ pattern => qr/^gl_church_[ab]$/,       normalized => 'gl_church' },
-    { pattern => qr/^iz_int0[1-4]$/,          normalized => 'iz_int' },
+    { pattern => qr/^iz_int0[1-4]$/,         normalized => 'iz_int' },
+	{ pattern => qr/^int_land0[1-4]$/,       normalized => 'int_land' },
+	{ pattern => qr/^iz_ac01_[abcd]$/,        normalized => 'iz_ac01' },
+	{ pattern => qr/^iz_ac02_[abcd]$/,   	 normalized => 'iz_ac02' },
+	{ pattern => qr/^izlude_[abcd]$/,      	 normalized => 'izlude' },
+	{ pattern => qr/^prt_fild08[abcd]$/,      	 normalized => 'prt_fild08' },
 );
 
 sub normalizeMapName {
