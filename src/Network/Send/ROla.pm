@@ -35,7 +35,6 @@ sub new {
 		'0815' => ['buy_bulk_closeShop', '', []],
 		'0817' => ['buy_bulk_request', 'a4 v', [qw(sellerID itemIndex)]],
 		'0819' => ['buy_bulk_buyer', 'v2', [qw(itemID amount)]],
-		'09F3' => ['rodex_request_items', 'C', [qw(option)]],
 		'0AC0' => ['rodex_open_mailbox', '', []],
 		'0AC1' => ['rodex_refresh_maillist', '', []],
 		'09E9' => ['rodex_close_mailbox', '', []],
