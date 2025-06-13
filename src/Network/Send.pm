@@ -41,6 +41,7 @@ use Misc;
 use Log qw(debug);
 
 my $counter = 0;
+my $enable = 0;
 
 sub new {
 	my ( $class ) = @_;
@@ -288,18 +289,21 @@ sub sendToServer {
 
 	# Packet Prefix Encryption Support
 	$self->encryptMessageID(\$msg);
-	my @ignored_ids = ('0C26', '0825', '08B8', '0065', '0066', '09A1', '0B1D', '0A30', '0436');
-	
-	if(!grep { $_ eq $messageID } @ignored_ids){
-		$counter += 1;
+
+	# Append checksum
+	if($enable) {
 		my $checksum = calc_checksum($counter, $msg);
+		$counter += 1;
 		my $checksum_hex = sprintf("%02X", $checksum);  # ← ESTA LINHA
 		$msg = $msg . pack("C", $checksum);
 	}
-	if($messageID eq '0C26' || $messageID eq '0436'){
-		$counter = 0;	
-	}
 	
+	# Start checksum
+	if ($messageID eq '0066') {
+		$enable = 1;
+		$counter = 0;
+	}
+
 	$net->serverSend($msg);
 	$bytesSent += length($msg);
 
@@ -1457,6 +1461,10 @@ sub sendTokenToServer {
 	my $ip = '192.168.0.14';
 	my $mac = '20CF3095572A';
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
+	
+	# Reset checksum
+	$enable = 0;
+	$counter = 0;
 
 	$net->serverDisconnect();
 	$net->serverConnect($otp_ip, $otp_port);# OTP - One Time Password

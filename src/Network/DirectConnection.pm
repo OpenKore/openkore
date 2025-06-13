@@ -605,6 +605,7 @@ sub checkConnection {
 				return if ($conState == 1.5);
 			}
 
+			$messageSender->sendPing() if $master->{serverType} eq 'ROla';
 			$messageSender->sendMapLogin($accountID, $charID, $sessionID, $accountSex2);
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
