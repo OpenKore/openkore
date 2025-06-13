@@ -38,10 +38,8 @@ use Globals qw(%ai_v %config $bytesSent %packetDescriptions $enc_val1 $enc_val2 
 use I18N qw(bytesToString stringToBytes);
 use Utils qw(existsInList getHex getTickCount getCoordString makeCoordsDir);
 use Misc;
-use Log qw(debug);
+use Log qw(warning debug);
 
-my $counter = 0;
-my $enable = 0;
 
 sub new {
 	my ( $class ) = @_;
@@ -51,6 +49,9 @@ sub new {
 	if ( $cryptKeys && $cryptKeys =~ /^(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})\s*,\s*(0x[0-9A-Fa-f]{8})$/ ) {
 		$self->cryptKeys( hex $1, hex $2, hex $3 );
 	}
+
+	$self->{enable_checksum} = 0;
+	$self->{counter_checksum} = 0;
 
 	return $self;
 }
@@ -291,17 +292,12 @@ sub sendToServer {
 	$self->encryptMessageID(\$msg);
 
 	# Append checksum
-	if($enable) {
-		my $checksum = calc_checksum($counter, $msg);
-		$counter += 1;
+	
+	if($self->{net}->{enable_checksum}) {
+		my $checksum = calc_checksum($self->{net}->{counter_checksum}, $msg);
+		$self->{net}->{counter_checksum} += 1;
 		my $checksum_hex = sprintf("%02X", $checksum);  # ← ESTA LINHA
 		$msg = $msg . pack("C", $checksum);
-	}
-	
-	# Start checksum
-	if ($messageID eq '0066') {
-		$enable = 1;
-		$counter = 0;
 	}
 
 	$net->serverSend($msg);
@@ -1462,11 +1458,8 @@ sub sendTokenToServer {
 	my $mac = '20CF3095572A';
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
 	
-	# Reset checksum
-	$enable = 0;
-	$counter = 0;
-
 	$net->serverDisconnect();
+	$self->{enable_checksum} = 0;
 	$net->serverConnect($otp_ip, $otp_port);# OTP - One Time Password
 
 	my $msg = $self->reconstruct({

@@ -127,6 +127,7 @@ sub sendTokenToServer {
     my $mac = $config{macAddress} || sprintf("%02x%02x%02x%02x%02x%02x", (int(rand(256)) & 0xFC) | 0x02, map { int(rand(256)) } 1..5);
     my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
 
+	$self->{enable_checksum} = 0;
     $net->serverDisconnect();
     $net->serverConnect($otp_ip, $otp_port);
 
