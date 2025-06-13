@@ -10,6 +10,7 @@ use Plugins;
 use Globals;
 use Settings;
 use Utils;
+use utf8;
 use Log        qw(message debug error);
 use JSON::Tiny qw(from_json to_json);
 

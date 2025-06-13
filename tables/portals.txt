@@ -3582,3 +3582,5 @@ un_bunker 366 164 un_bunker 31 51
 un_bunker 27 52 un_bunker 361 163
 prt_fild08c 371 212 izlude_c 20 98
 izlude_c 20 98 prt_fild08c 367 212
+iz_int 56 15 iz_int 27 30
+iz_int 27 30 iz_int 51 30
