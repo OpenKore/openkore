@@ -718,26 +718,27 @@ sub loadDistanceMap {
 # Throws IOException if a read error occured while reading the field file
 # and/or the distance map file.
 sub loadByName {
-	my ($self, $name, $loadWeightMap) = @_;
-	my $baseName;
-	($baseName, $self->{instanceID}) = $self->nameToBaseName($name);
-	$self->{baseName} = $baseName;
-	my $file = $self->sourceName . ".fld2";
+    my ($self, $name, $loadWeightMap) = @_;
+    my $baseName;
+    ($baseName, $self->{instanceID}) = $self->nameToBaseName($name);
+    $self->{baseName} = $baseName;
+    my $fileName = $self->sourceName . ".fld2";
+    my @folders = Settings::getFieldsFolders();
+    my $file;
 
-	if (Settings::getFieldsFolders()) {
-		$file = File::Spec->catfile(File::Spec->splitdir(Settings::getFieldsFolders()), $file);
-	}
-	if (! -f $file) {
-		$file .= ".gz";
-	}
+    foreach my $folder (@folders) {
+        $file = File::Spec->catfile($folder, $fileName);
+        $file .= ".gz" if (!-f $file && -f $file . ".gz");
+        last if -f $file;
+    }
 
-	if (-f $file) {
-		$self->loadFile($file, $loadWeightMap);
-		$self->{baseName} = $baseName;
-		$self->{name} = $name;
-	} else {
-		FileNotFoundException->throw("No corresponding field file found for field '$name'.");
-	}
+    if (-f $file) {
+        $self->loadFile($file, $loadWeightMap);
+        $self->{baseName} = $baseName;
+        $self->{name} = $name;
+    } else {
+        FileNotFoundException->throw("No corresponding field file found for field '$name'.");
+    }
 }
 
 # Map a field name to its field file's base name.
