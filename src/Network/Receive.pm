@@ -34,6 +34,7 @@ use Compress::Zlib;
 use AI;
 use Globals;
 use Field;
+use InventoryList;
 #use Settings;
 use Log qw(message warning error debug);
 use FileParsers qw(updateMonsterLUT updateNPCLUT);
@@ -3933,7 +3934,13 @@ sub vender_items_list {
 
 	my $player = Actor::get($args->{venderID});
 
-	$venderItemList->clear;
+	eval {
+		$venderItemList->clear();
+	};
+	if ($@) {
+		warning "Error clearing venderItemList: $@\n";
+		$venderItemList = InventoryList->new;
+	}
 
 	my $msg = TF("%s\n" .
 		"#  Name                                      Type                           Price Amount\n",
@@ -3944,7 +3951,19 @@ sub vender_items_list {
  		@$item{qw( price amount ID type nameID identified broken upgrade cards options location sprite_id )} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
 
 		$item->{name} = itemName($item);
-		$venderItemList->add($item);
+		
+		# Check if item with same ID already exists before adding
+		if (defined $item->{ID}) {
+			my $existing_item = $venderItemList->getByID($item->{ID});
+			if (!$existing_item) {
+				$venderItemList->add($item);
+			} else {
+				debug("Skipping duplicate vender item with ID: " . unpack("V", $item->{ID}) . " (Name: $item->{name})\n", "vending", 2);
+				next; # Skip this item and continue to next iteration
+			}
+		} else {
+			$venderItemList->add($item);
+		}
 
 		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 

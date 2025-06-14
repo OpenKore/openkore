@@ -73,3 +73,5 @@ packet parser/PACKET PARSE RO/config.xml
 */.vs/
 */bin/
 */obj/
+/build
+/.vscode

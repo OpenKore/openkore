@@ -50,7 +50,7 @@ sub loadMonDB2 {
     while (<$fh>) {
         next unless m/^(\d+),/; 
         my @fields = split /,/;
-        my ($ID, $iROName) = ($fields[0], $fields[3]);
+        my ($ID, $iROName) = ($fields[0], $fields[1]);
         $mob_db_cache{$ID} = $iROName;
         $i++;
     }
@@ -78,7 +78,7 @@ sub loadMonDB {
     while (<$fh>) {
         next unless m/^(\d+),/; 
         my @fields = split /,/;
-        my ($ID, $iROName) = ($fields[0], $fields[3]);
+        my ($ID, $iROName) = ($fields[0], $fields[1]);
         $mob_db_cache{$ID} = $iROName;
         $i++;
     }
@@ -100,14 +100,20 @@ sub onActorDisplay {
     return unless $actor;
 
     if (exists $mob_db_cache{$args->{type}}) {
-        $actor->{name} = $mob_db_cache{$args->{type}};
-        $actor->{name_given} = $mob_db_cache{$args->{type}};
-        debug "[mobName] Renamed monster [$actor->{ID}] to \"$actor->{name}\"\n", "mobName";
+        my $cleanName = $mob_db_cache{$args->{type}};
+        $cleanName =~ s/[\r\n]//g;  # Remove quebras de linha
+        $cleanName =~ s/^\s+|\s+$//g;  # Remove espaços no início e fim
+        $actor->{name} = $cleanName;
+        $actor->{name_given} = $cleanName;
+        debug "[mobName] Renamed monster [$actor->{ID}] to \"$actor->{name}\"", "mobName";
     } else {
 		# change name to id
-		$actor->{name} = $args->{type};
-		$actor->{name_given} = $args->{type};
-		debug "[mobName] Renamed monster [$actor->{ID}] to \"$actor->{name}\"\n", "mobName";
+		my $cleanName = $args->{type};
+		$cleanName =~ s/[\r\n]//g;  # Remove quebras de linha
+		$cleanName =~ s/^\s+|\s+$//g;  # Remove espaços no início e fim
+		$actor->{name} = $cleanName;
+		$actor->{name_given} = $cleanName;
+		debug "[mobName] Renamed monster [$actor->{ID}] to \"$actor->{name}\"", "mobName";
 	}
 }
 
