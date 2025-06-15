@@ -3580,4 +3580,6 @@ prt_fild08d 168 376 prontera 156 26
 prt_fild08d 16 239 prt_fild07 379 239
 prt_fild08d 16 187 prt_fild07 380 186
 prt_fild08d 233 16 moc_fild01 238 378
-prt_fild08d 55 21 moc_fild01 56 380
+prt_fild08d 55 21 moc_fild01 56 380bra_fild01 72 34 brasilis 308 336
+brasilis 308 336 bra_fild01 74 34
+bra_fild01 72 34 brasilis 309 334
