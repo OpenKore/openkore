@@ -8031,6 +8031,12 @@ sub received_login_token {
 	# XKore mode 1 / 3.
 	return if ($self->{net}->version == 1);
 	my $master = $masterServers{$config{master}};
+
+	if (length($args->{login_token}) == 0) {
+		$messageSender->sendOtp();
+		return;
+	}
+
 	# rathena use 0064 not 0825
 	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTP_ip}, $master->{OTP_port});
 }

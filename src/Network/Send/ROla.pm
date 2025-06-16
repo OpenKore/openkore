@@ -165,4 +165,32 @@ sub sendMapLogin {
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
 }
 
+sub generateTotp {
+	my $base32_seed = $config{otpSeed};  # seed
+	my $time_step = 30;  # 30 seconds interval
+	my $digits = 6;      # length of OTP
+	my $t0 = 0;          # epoch start
+	my $timestamp = time();
+	my $counter = int(($timestamp - $t0) / $time_step);
+	my $counter_bytes = pack("Q>", $counter);
+
+	require MIME::Base32;
+	my $key = MIME::Base32::decode_base32($base32_seed);
+
+	require Digest::SHA;
+	my $hmac = Digest::SHA::hmac_sha1($counter_bytes, $key);
+
+	my $offset = ord(substr($hmac, -1)) & 0x0f;
+	my $code = unpack("N", substr($hmac, $offset, 4)) & 0x7fffffff;
+	$code = $code % (10 ** $digits);
+	return $code;
+}
+
+sub sendOtp {
+	my ($self) = @_;
+	my $totp = generateTotp();
+	my $packet = pack('v a6 C', 0x0C23, $totp, 0); 
+	$self->sendToServer($packet);
+}
+
 1;
