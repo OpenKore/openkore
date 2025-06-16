@@ -9,6 +9,7 @@ username
 password
 loginPinCode
 char
+otpSeed
 
 # Poseidon Settings: https://openkore.com/wiki/Poseidon
 # They must be the same as Query Server config in Poseidon.txt
