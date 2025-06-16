@@ -4866,8 +4866,18 @@ sub quest_update_mission_hunt {
 
 		my $mission_id;
 
+		# Mission is saved as questID and server sent questID/hunt_id_cont
+		if (exists $quest->{missions} && exists $mission->{questID} && exists $mission->{hunt_id_cont}) {
+			foreach my $current_key (keys %{$quest->{missions}}) {
+				my $quest_mission = $quest->{missions}->{$current_key};
+				if (exists $quest_mission->{hunt_id_cont} && $quest_mission->{hunt_id_cont} == $mission->{hunt_id_cont}) {
+					$mission_id = $current_key;
+					last;
+				}
+			}
+		}
 		# Mission is saved as hunt_id and server sent hunt_id
-		if (exists $mission->{hunt_id} && exists $quest->{missions}->{$mission->{hunt_id}}) {
+		elsif (exists $mission->{hunt_id} && exists $quest->{missions}->{$mission->{hunt_id}}) {
 			$mission_id = $mission->{hunt_id};
 
 		# Mission is saved as mob_id and server sent mob_id
