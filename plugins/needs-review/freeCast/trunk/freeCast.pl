@@ -88,7 +88,7 @@ sub cast {
 
 		if ($config{'runFromTargetFree'} && ($realMonsterDist < $config{'runFromTargetFree_min'})) {
 			#my $begin = time;
-			my @blocks = calcRectArea($myPos->{x}, $myPos->{y},$config{'runFromTargetFree_mid'}, $field);
+			my @blocks = $field->calcRectArea($myPos->{x}, $myPos->{y},$config{'runFromTargetFree_mid'});
 
 			my $highest;
 			foreach (@blocks) {
