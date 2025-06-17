@@ -8031,6 +8031,11 @@ sub received_login_token {
 	# XKore mode 1 / 3.
 	return if ($self->{net}->version == 1);
 	my $master = $masterServers{$config{master}};
+	
+	if($args->{flag} == '9101') {
+		error T("fail to recognizing OTP(500)\n");
+		return;
+	}
 
 	if (length($args->{login_token}) == 0) {
 		$messageSender->sendOtp();
