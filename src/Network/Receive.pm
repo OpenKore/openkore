@@ -8030,20 +8030,22 @@ sub received_login_token {
 	my ($self, $args) = @_;
 	# XKore mode 1 / 3.
 	return if ($self->{net}->version == 1);
+
 	my $master = $masterServers{$config{master}};
-	
-	if($args->{flag} == '9101') {
+	my $flag = $args->{flag};
+	my $login_token = $args->{login_token};
+
+	if($flag == '9101') {
 		error T("fail to recognizing OTP(500)\n");
 		return;
-	}
-
-	if (length($args->{login_token}) == 0) {
+	} elsif ($flag == 'S1004' && length($login_token) == 0) {
+		message T("Server requested OTP for login\n"), "connection";
 		$messageSender->sendOtp();
 		return;
 	}
 
 	# rathena use 0064 not 0825
-	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTP_ip}, $master->{OTP_port});
+	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $login_token, $args->{len}, $master->{OTP_ip}, $master->{OTP_port});
 }
 
 # this info will be sent to xkore 2 clients
