@@ -8006,7 +8006,7 @@ sub received_login_token {
     my $master = $masterServers{$config{master}};
     my $login_type = $args->{login_type};
 
-    if ($login_type eq 0) {
+    if ($login_type == 0) {
         # rAthena uses 0064 not 0825
         $messageSender->sendTokenToServer(
             $config{username},
@@ -8019,7 +8019,7 @@ sub received_login_token {
             $master->{OTP_port}
         );
     
-    } elsif ($login_type eq 400 || $login_type == 1000) {
+    } elsif ($login_type == 400 || $login_type == 1000) {
         die 'ERROR: otpSeed is not set in config.txt' unless $config{otpSeed};
 
         my $otp;
