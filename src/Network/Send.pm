@@ -1480,6 +1480,22 @@ sub sendTokenToServer {
 	debug "Sent sendTokenLogin\n", "sendPacket", 2;
 }
 
+# Send OTP code for authentication (packet 0C23)
+# 0C23 <otp>.a6 <padding>.C
+# otp: 6-digit One-Time Password (TOTP)
+# padding: 0x00 (always 0)
+sub sendOtpToServer {
+    my ($self, $otp) = @_;
+
+    $self->sendToServer($self->reconstruct({
+        switch => 'send_otp_login',
+        otp    => $otp,
+        padding => 0x00,
+    }));
+
+    debug "Sent OTP login packet: $otp\n", "sendPacket", 2;
+}
+
 # encrypt password kRO/cRO version 2017-2018
 sub encrypt_password {
 	my ($self, $password) = @_;
