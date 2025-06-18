@@ -8046,6 +8046,7 @@ sub received_login_token {
     
     } else {
         error "Unknown login_type $login_type\n", 'connection';
+		Misc::quit();
     }
 }
 
