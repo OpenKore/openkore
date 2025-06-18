@@ -8024,7 +8024,7 @@ sub received_login_token {
 
         my $otp;
         Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
-        debug "Generated OTP: $otp\n", 'parseMsg', 2;
+    	unless (defined $otp && length $otp) $otp = $interface->query(T('No Plugin returned a code, please enter your OTP: '));
         $messageSender->sendOtpToServer($otp);
     } 
     elsif ($login_type == 500) {
