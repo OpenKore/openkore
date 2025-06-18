@@ -37,13 +37,13 @@ sub generate {
 
 sub _generate_otp {
     my ($base32_secret) = @_;
-    my $secret = _base32_decode($base32_secret);
+    my $secret = base32_decode($base32_secret);
     my $time_step = 30;
     my $counter = int(time() / $time_step);
     my $high = ($counter >> 32) & 0xFFFFFFFF;
     my $low  = $counter & 0xFFFFFFFF;
     my $msg = pack("NN", $high, $low);
-    my $hash = _hmac_sha1($secret, $msg);
+    my $hash = hmac_sha1($secret, $msg);
 
     my $offset = ord(substr($hash, -1)) & 0x0f;
     my $binary = ((ord(substr($hash, $offset, 1)) & 0x7f) << 24) |
@@ -55,7 +55,7 @@ sub _generate_otp {
     return sprintf("%06d", $otp);
 }
 
-sub _base32_decode {
+sub base32_decode {
     my ($str) = @_;
     $str =~ tr/A-Z2-7//cd;
     my %map = map { substr("ABCDEFGHIJKLMNOPQRSTUVWXYZ234567", $_, 1) => $_ } 0..31;
@@ -68,7 +68,7 @@ sub _base32_decode {
     return $bytes;
 }
 
-sub _sha1 {
+sub sha1 {
     my $msg = shift;
 
     my @h = (
@@ -90,7 +90,7 @@ sub _sha1 {
         my @w = unpack("N16", $chunk);
         push @w, 0 for (16..79);
         for my $i (16..79) {
-            $w[$i] = _rol($w[$i-3] ^ $w[$i-8] ^ $w[$i-14] ^ $w[$i-16], 1);
+            $w[$i] = rol($w[$i-3] ^ $w[$i-8] ^ $w[$i-14] ^ $w[$i-16], 1);
         }
 
         my ($a, $b, $c, $d, $e) = @h;
@@ -111,10 +111,10 @@ sub _sha1 {
                 $k = 0xCA62C1D6;
             }
 
-            my $temp = (_rol($a,5) + $f + $e + $k + $w[$i]) & 0xFFFFFFFF;
+            my $temp = (rol($a,5) + $f + $e + $k + $w[$i]) & 0xFFFFFFFF;
             $e = $d;
             $d = $c;
-            $c = _rol($b,30);
+            $c = rol($b,30);
             $b = $a;
             $a = $temp;
         }
@@ -129,12 +129,12 @@ sub _sha1 {
     return pack("N5", @h);
 }
 
-sub _rol {
+sub rol {
     my ($val, $bits) = @_;
     return (($val << $bits) | ($val >> (32 - $bits))) & 0xFFFFFFFF;
 }
 
-sub _hmac_sha1 {
+sub hmac_sha1 {
     my ($key, $data) = @_;
     my $block_size = 64;
     if (length($key) > $block_size) {
@@ -143,7 +143,11 @@ sub _hmac_sha1 {
     $key .= chr(0) x ($block_size - length($key));
     my $o_key_pad = $key ^ (chr(0x5c) x $block_size);
     my $i_key_pad = $key ^ (chr(0x36) x $block_size);
-    return _sha1($o_key_pad . sha1($i_key_pad . $data));
+    return sha1($o_key_pad . sha1($i_key_pad . $data));
+}
+
+sub unload {
+    Plugins::delHooks($hooks);
 }
 
 1;
