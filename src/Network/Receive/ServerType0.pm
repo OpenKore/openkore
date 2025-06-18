@@ -769,6 +769,7 @@ sub new {
 		'0B8D' => ['repute_info', 'v C a*', [qw(len sucess reputeInfo)]], # -1
 		# 'C350' => ['senbei_vender_items_list'], #new senbei vender, need research
 		'0BA4' => ['homunculus_property', 'Z24 C v11 V4 V4 v2', [qw(name state level hunger intimacy atk matk hit critical def mdef flee aspd hp hp_max sp sp_max exp exp2 exp_max exp_max2 points_skill attack_range)]],
+		'0C23' => ['send_otp_login', 'a6 C', [qw(otp padding)]],
 	};
 
 	# Item RECORD Struct's
