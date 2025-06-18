@@ -114,7 +114,7 @@ EIcB#Druida Maligno#
 EYcB#Flora#
 EocB#Frilldora#
 E4cB#Ghostring#
-FIcB#Gierath#
+FIcB#Giearth#
 FYcB#Goblin de Adaga#
 FocB#Goblin de Mangual#
 F4cB#Goblin de Machado#
