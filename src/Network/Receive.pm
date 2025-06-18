@@ -8024,7 +8024,15 @@ sub received_login_token {
 
         my $otp;
         Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
-    	unless (defined $otp && length $otp) $otp = $interface->query(T('No Plugin returned a code, please enter your OTP: '));
+    	unless (defined $otp && length $otp) { 
+			error "No Plugin returned a OTP code for account $config{username}\n", 'connection';
+			$otp = $interface->query(T(', please enter your OTP: ')); 
+		}
+        $messageSender->sendOtpToServer($otp);
+
+	} elsif ($login_type == 300) {
+        error "OTP token malformed for account $config{username}\n", 'connection';
+        my $otp = $interface->query(T('Please enter the OTP code: '));
         $messageSender->sendOtpToServer($otp);
     
     } elsif ($login_type == 500) {
@@ -8038,7 +8046,6 @@ sub received_login_token {
     
     } else {
         error "Unknown login_type $login_type\n", 'connection';
-        Misc::quit();
     }
 }
 
