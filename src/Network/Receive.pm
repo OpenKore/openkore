@@ -7998,12 +7998,48 @@ sub remain_time_info {
 }
 
 sub received_login_token {
-	my ($self, $args) = @_;
-	# XKore mode 1 / 3.
-	return if ($self->{net}->version == 1);
-	my $master = $masterServers{$config{master}};
-	# rathena use 0064 not 0825
-	$messageSender->sendTokenToServer($config{username}, $config{password}, $master->{master_version}, $master->{version}, $args->{login_token}, $args->{len}, $master->{OTP_ip}, $master->{OTP_port});
+    my ($self, $args) = @_;
+
+    # Skip in XKore mode 1 / 3
+    return if $self->{net}->version == 1;
+
+    my $master = $masterServers{$config{master}};
+    my $login_type = $args->{login_type};
+
+    if ($login_type == 0) {
+        # rAthena uses 0064 not 0825
+        $messageSender->sendTokenToServer(
+            $config{username},
+            $config{password},
+            $master->{master_version},
+            $master->{version},
+            $args->{login_token},
+            $args->{len},
+            $master->{OTP_ip},
+            $master->{OTP_port}
+        );
+    } 
+    elsif ($login_type == 400 || $login_type == 1000) {
+        die 'ERROR: otpSeed is not set in config.txt' unless $config{otpSeed};
+
+        my $otp;
+        Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
+        debug "Generated OTP: $otp\n", 'parseMsg', 2;
+        $messageSender->sendOtpToServer($otp);
+    } 
+    elsif ($login_type == 500) {
+        error "Wrong OTP for account $config{username}\n", 'connection';
+        my $otp = $interface->query(T('Please enter the OTP code: '));
+        $messageSender->sendOtpToServer($otp);
+    } 
+    elsif ($login_type == 600) {
+        error "Password Error for account $config{username}\n", 'connection';
+        Misc::quit();
+    } 
+    else {
+        error "Unknown login_type $login_type\n", 'connection';
+        Misc::quit();
+    }
 }
 
 # this info will be sent to xkore 2 clients
