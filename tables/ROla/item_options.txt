@@ -83,7 +83,6 @@ BODY_ATTR_SAINT#Propriedade Sagrado#
 BODY_ATTR_DARKNESS#Propriedade Sombrio#
 BODY_ATTR_TELEKINESIS#Propriedade Fantasma#
 BODY_ATTR_UNDEAD#Propriedade Maldito#
-BODY_ATTR_ALL#None#
 RACE_TOLERACE_NOTHING#Resistência a Amorfo +%d%%#
 RACE_TOLERACE_UNDEAD#Resistência a Morto-Vivo +%d%%#
 RACE_TOLERACE_ANIMAL#Resistência a Bruto +%d%%#
@@ -170,8 +169,6 @@ HEAL_MODIFY_PERCENT#Cura Receb. e Recup. de HP por itens +%d%%#
 DEC_SPELL_CAST_TIME#Conjuração variável -%d%%#
 DEC_SPELL_DELAY_TIME#Pós-conjuração -%d%%#
 DEC_SP_CONSUMPTION#Custo de SP das habilidades -%d%%#
-HP_DRAIN#None#
-SP_DRAIN#None#
 WEAPON_ATTR_NOTHING#Propriedade Neutro#
 WEAPON_ATTR_WATER#Propriedade Água#
 WEAPON_ATTR_GROUND#Propriedade Terra#
@@ -204,17 +201,11 @@ RACE_WEAPON_TOLERACE_DRAGON#Resistência a Dragão +%d%%#
 RANGE_WEAPON_ATTACK_DAMAGE_TARGET#Dano físico a distância +%d%%#
 RANGE_WEAPON_ATTACK_DAMAGE_USER#Resist. a dano a distância +%d%%#
 RACE_TOLERACE_PLAYER_HUMAN#Resistência a Humano +%d%%#
-RACE_TOLERACE_PLAYER_DORAM#None#
 RACE_DAMAGE_PLAYER_HUMAN#Dano físico contra Humano +%d%%#
-RACE_DAMAGE_PLAYER_DORAM#None#
 RACE_MDAMAGE_PLAYER_HUMAN#Dano mágico contra Humano +%d%%#
-RACE_MDAMAGE_PLAYER_DORAM#None#
 RACE_CRI_PERCENT_PLAYER_HUMAN#CRIT +%d contra Humano#
-RACE_CRI_PERCENT_PLAYER_DORAM#None#
 RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN#Ignora %d%% da DEF de Humano#
-RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM#None#
 RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN#Ignora %d%% da DEFM de Humano#
-RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM#None#
 REFLECT_DAMAGE_PERCENT#Resistência a dano refletido +%d%%#
 MELEE_ATTACK_DAMAGE_TARGET#Dano físico corpo a corpo +%d%%#
 MELEE_ATTACK_DAMAGE_USER#Resist. a dano corpo a corpo +%d%%#
@@ -252,4 +243,3 @@ VAR_RESAMOUNT#RES + %d#
 VAR_MRESAMOUNT#RESM + %d#
 VAR_HEAL_PLUS#H.Mais + %d#
 VAR_CRITICAL_RATE#C.Crit + %d#
-EnumVAR_LAST#END#
