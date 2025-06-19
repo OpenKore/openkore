@@ -353,7 +353,6 @@ sub checkConnection {
 		}
 		$reconnectCount++;
 		$self->serverConnect($master->{ip}, $master->{port});
-		$messageSender->resetChecksum() if (grep { $masterServer->{serverType} eq $_ } qw(ROla));
 		# call plugin's hook to determine if we can continue the work
 		if ($self->serverAlive) {
 			Plugins::callHook('Network::serverConnect/master');
@@ -423,7 +422,7 @@ sub checkConnection {
 	} elsif ($self->getState() == 1.3) {
 		$conState = 1;
 		my $master = $masterServer = $masterServers{$config{'master'}};
-		$messageSender->resetChecksum() if (grep { $masterServer->{serverType} eq $_ } qw(ROla));
+
 		if ($master->{secureLogin} >= 1) {
 			my $code;
 
@@ -534,12 +533,10 @@ sub checkConnection {
 			}
 			# TODO: the connect code needs a major rewrite =/
 			unless($masterServer->{captcha}) {
-				$messageSender->resetChecksum() if (grep { $masterServer->{serverType} eq $_ } qw(ROla));
 				$messageSender->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
 				$timeout{'gamelogin'}{'time'} = time;
 			}
 		} elsif($self->serverAlive() && $masterServer->{captcha}) {
-			$messageSender->resetChecksum() if (grep { $masterServer->{serverType} eq $_ } qw(ROla));
 			if ($captcha_state == 0) { # send initiate once, then wait for servers captcha_answer packet
 				$messageSender->sendCaptchaInitiate();
 				$captcha_state = -1;
@@ -569,7 +566,6 @@ sub checkConnection {
 				Plugins::callHook('Network::serverConnect/charselect');
 				return if ($conState == 1.5);
 			}
-			$messageSender->resetChecksum() if (grep { $masterServer->{serverType} eq $_ } qw(ROla));
 			$messageSender->sendCharLogin($config{'char'});
 			$timeout{'charlogin'}{'time'} = time;
 
@@ -607,7 +603,7 @@ sub checkConnection {
 				Plugins::callHook('Network::serverConnect/mapserver');
 				return if ($conState == 1.5);
 			}
-			$messageSender->initChecksum() if (grep { $masterServer->{serverType} eq $_ } qw(ROla));
+
 			$messageSender->sendPing() if (grep { $masterServer->{serverType} eq $_ } qw(ROla));
 			$messageSender->sendMapLogin($accountID, $charID, $sessionID, $accountSex2);
 			$timeout_ex{master}{time} = time;
