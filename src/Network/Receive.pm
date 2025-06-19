@@ -8021,8 +8021,8 @@ sub received_login_token {
             $master->{version},
             $args->{login_token},
             $args->{len},
-            $master->{OTP_ip},
-            $master->{OTP_port}
+            $master->{ip},
+            $master->{port}
         );
     
     } elsif ($login_type == 400 || $login_type == 1000) {

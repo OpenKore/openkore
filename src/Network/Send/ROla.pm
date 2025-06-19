@@ -90,11 +90,11 @@ sub reconstruct_master_login {
 }
 
 sub sendTokenToServer {
-	my ( $self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port ) = @_;
+	my ( $self, $username, $password, $master_version, $version, $token, $length, $ip, $port ) = @_;
 	my $len = $length + 92;
 
 	$net->serverDisconnect();
-	$net->serverConnect( $otp_ip, $otp_port );
+	$net->serverConnect( $ip, $port );
 
 	my $ip                   = sprintf("192.168.%02d.%02d", (map { int(rand(255)) } 1..2));
 	my $mac                  = $config{macAddress} || sprintf("E0311E%02X%02X%02X", (map { int(rand(256)) } 1..3));

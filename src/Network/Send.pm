@@ -1399,7 +1399,7 @@ sub sendRefineUIClose {
 }
 
 sub sendTokenToServer {
-	my ($self, $username, $password, $master_version, $version, $token, $length, $otp_ip, $otp_port) = @_;
+	my ($self, $username, $password, $master_version, $version, $token, $length, $ip, $port) = @_;
 	my $len =  $length + 92;
 
 	my $password_rijndael = $self->encrypt_password($password);
@@ -1408,7 +1408,7 @@ sub sendTokenToServer {
 	my $mac_hyphen_separated = join '-', $mac =~ /(..)/g;
 
 	$net->serverDisconnect();
-	$net->serverConnect($otp_ip, $otp_port);# OTP - One Time Password
+	$net->serverConnect($ip, $port);# OTP - One Time Password
 
 	my $msg = $self->reconstruct({
 		switch => 'token_login',

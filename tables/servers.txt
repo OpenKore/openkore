@@ -209,10 +209,10 @@ gameGuard 0
 
 # https://ro.gnjoylatam.com/
 [Latam - ROla: Freya/Nidhogg/Yggdrasil]
-ip lt-account-01.gnjoylatam.com
-port 6951
 OTP_ip lt-account-01.gnjoylatam.com
-OTP_port 6900
+OTP_port 6951
+ip lt-account-01.gnjoylatam.com
+port 6900
 master_version 1
 version 22
 serverType ROla
