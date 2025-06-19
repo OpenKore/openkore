@@ -339,6 +339,7 @@ sub new {
 		'0B19' => ['inventory_expansion_rejected'], #2
 		'0B1C' => ['ping'], #2
 		'0B21' => ['hotkey_change', 'v2 C V v', [qw(tab idx type id lvl)]],
+		'0C23' => ['send_otp_login', 'a6 C', [qw(otp padding)]],
 	);
 	$self->{packet_list}{$_} = $packets{$_} for keys %packets;
 

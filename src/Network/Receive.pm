@@ -8027,35 +8027,56 @@ sub remain_time_info {
 }
 
 sub received_login_token {
-	my ($self, $args) = @_;
-	
-	# XKore mode 1 / 3.
-	return if ($self->{net}->version == 1);
+    my ($self, $args) = @_;
 
-	my $master = $masterServers{$config{master}};
-	my $flag = $args->{flag};
-	my $login_token = $args->{login_token};
+    # Skip in XKore mode 1 / 3
+    return if $self->{net}->version == 1;
 
-	if($flag == '9101') {
-		error T("fail to recognizing OTP(500)\n");
-		return;
-	} elsif ($flag == 'S1004' && length($login_token) == 0) {
-		message T("Server requested OTP for login\n"), "connection";
-		$messageSender->sendOtp();
-		return;
-	}
+    my $master = $masterServers{$config{master}};
+    my $login_type = $args->{login_type};
 
-	# rathena use 0064 not 0825
-	$messageSender->sendTokenToServer(
-        $config{username},
-        $config{password},
-        $master->{master_version},
-        $master->{version},
-        $login_token,
-        $args->{len},
-        $master->{OTP_ip},
-        $master->{OTP_port}
-    );
+    if ($login_type == 0) {
+        # rAthena uses 0064 not 0825
+        $messageSender->sendTokenToServer(
+            $config{username},
+            $config{password},
+            $master->{master_version},
+            $master->{version},
+            $args->{login_token},
+            $args->{len},
+            $master->{OTP_ip},
+            $master->{OTP_port}
+        );
+    
+    } elsif ($login_type == 400 || $login_type == 1000) {
+        die 'ERROR: otpSeed is not set in config.txt' unless $config{otpSeed};
+
+        my $otp;
+        Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
+    	unless (defined $otp && length $otp) { 
+			error "No Plugin returned a OTP code for account $config{username}\n", 'connection';
+			$otp = $interface->query(T(', please enter your OTP: ')); 
+		}
+        $messageSender->sendOtpToServer($otp);
+
+	} elsif ($login_type == 300) {
+        error "OTP token malformed for account $config{username}\n", 'connection';
+        my $otp = $interface->query(T('Please enter the OTP code: '));
+        $messageSender->sendOtpToServer($otp);
+    
+    } elsif ($login_type == 500) {
+        error "Wrong OTP for account $config{username}\n", 'connection';
+        my $otp = $interface->query(T('Please enter the OTP code: '));
+        $messageSender->sendOtpToServer($otp);
+    
+    } elsif ($login_type == 600) {
+        error "Password Error for account $config{username}\n", 'connection';
+        Misc::quit();
+    
+    } else {
+        error "Unknown login_type $login_type\n", 'connection';
+		Misc::quit();
+    }
 }
 
 # this info will be sent to xkore 2 clients
