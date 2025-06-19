@@ -1268,9 +1268,9 @@ sub map_loaded {
 		$messageSender->sendSync(1);
 
 		# Request for Guild Information
-		$messageSender->sendGuildRequestInfo(0) if ($masterServer->{serverType} ne 'twRO'); # twRO does not send this packet
+		$messageSender->sendGuildRequestInfo(0) unless (grep { $masterServer->{serverType} eq $_ } qw(twRO ROla)); # some servers does not send this packet
 
-		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal twRO)); # tested at bRO 2013.11.30, request for cashitemslist
+		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal twRO ROla)); # tested at bRO 2013.11.30, request for cashitemslist
 		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 
 		# request to unfreeze char - alisonrag
