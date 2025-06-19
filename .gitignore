@@ -49,6 +49,3 @@ tables/**/npcs.txt
 tables/**/monsters.txt
 *.xpm
 *.weight
-
-# Custom control configs
-control_*/
