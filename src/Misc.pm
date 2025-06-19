@@ -2520,10 +2520,11 @@ sub meetingPosition {
 		return;
 	}
 
-	my $extra_time = $timeout{'meetingPosition_extra_time'}{'timeout'} ? $timeout{'meetingPosition_extra_time'}{'timeout'} : 0.2;
+	my $extra_time_actor = $timeout{'meetingPosition_extra_time_actor'}{'timeout'} ? $timeout{'meetingPosition_extra_time_actor'}{'timeout'} : 0.2;
+	my $extra_time_target = $timeout{'meetingPosition_extra_time_target'}{'timeout'} ? $timeout{'meetingPosition_extra_time_target'}{'timeout'} : 0.2;
 
 	my $mySpeed = ($actor->{walk_speed} || 0.12);
-	my $timeSinceActorMoved = time - $actor->{time_move} + $extra_time;
+	my $timeSinceActorMoved = time - $actor->{time_move} + $extra_time_actor;
 
 	my $my_solution;
 	my $timeActorFinishMove;
@@ -2604,7 +2605,7 @@ sub meetingPosition {
 	}
 
 	my $targetSpeed = ($target->{walk_speed} || 0.12);
-	my $timeSinceTargetMoved = time - $target->{time_move} + $extra_time;
+	my $timeSinceTargetMoved = time - $target->{time_move} + $extra_time_target;
 
 	my $target_solution = get_solution($field, $target->{pos}, $target->{pos_to});
 
@@ -2647,7 +2648,7 @@ sub meetingPosition {
 	my $masterSpeed;
 	if ($masterPos) {
 		$masterSpeed = ($master->{walk_speed} || 0.12);
-		$timeSinceMasterMoved = time - $master->{time_move} + $extra_time;
+		$timeSinceMasterMoved = time - $master->{time_move} + $extra_time_actor;
 
 		$master_solution = get_solution($field, $master->{pos}, $master->{pos_to});
 
