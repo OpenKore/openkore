@@ -3773,6 +3773,10 @@ sub getBestTarget {
 			my $monster = $monsters{$noLOSMonsters[$index]};
 			# TODO: Is there any situation where we should use calcPosFromPathfinding or calcPosFromTime here?
 			my $pos = $noLOSMonsters_pos[$index];
+
+			# avoid get targets away from attackRouteMaxPathDistance
+			next if(blockDistance($myPos, $pos) >= $config{attackRouteMaxPathDistance});
+
 			$pathfinding->reset(
 				start => $myPos,
 				dest  => $pos,
