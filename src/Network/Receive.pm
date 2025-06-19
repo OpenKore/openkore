@@ -1144,7 +1144,7 @@ sub reconstruct_account_server_info {
 			keys => [qw(ip port name state users property sid unknown)],
 		};
 	} elsif ($args->{switch} eq '0C32') {
-		$server_info = {
+		$serverInfo = {
 			len => 165,
 			types => 'a4 v Z20 v3 a128 a5',
 			keys => [qw(ip port name users state property ip_port unknown)],
