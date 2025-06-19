@@ -319,9 +319,9 @@ sub parse_master_login {
 sub reconstruct_master_login {
 	my ($self, $args) = @_;
 
-	$args->{ip} = '192.168.0.2' unless exists $args->{ip}; # gibberish
+	$args->{ip} = sprintf("192.168.%02d.%02d", (map { int(rand(255)) } 1..2)) unless exists $args->{ip};
 	unless (exists $args->{mac}) {
-	    $args->{mac} = $config{macAddress} || '111111111111'; # gibberish
+	    $args->{mac} = $config{macAddress} || sprintf("E0311E%02X%02X%02X", (map { int(rand(256)) } 1..3));
 	    $args->{mac} = uc($args->{mac});
 	    $args->{mac_hyphen_separated} = join '-', $args->{mac} =~ /(..)/g;
 	}
@@ -414,7 +414,7 @@ sub reconstruct_game_login {
 	if (exists $args->{mac}) {
 		my $key = pack('C16', (0x06, 0xA9, 0x21, 0x40, 0x36, 0xB8, 0xA1, 0x5B, 0x51, 0x2E, 0x03, 0xD5, 0x34, 0x12, 0x00, 0x06));
 		my $chain = pack('C16', (0x3D, 0xAF, 0xBA, 0x42, 0x9D, 0x9E, 0xB4, 0x30, 0xB4, 0x22, 0xDA, 0x80, 0x2C, 0x9F, 0xAC, 0x41));
-		my $mac = $config{macAddress} || "F2ADCC03771E";
+		my $mac = $config{macAddress} || sprintf("E0311E%02X%02X%02X", (map { int(rand(256)) } 1..3));
 		$mac = uc($mac);
 		my $in = pack('a16', $mac);
 
