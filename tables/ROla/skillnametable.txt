@@ -640,6 +640,7 @@ NPC_LEASH#Puxar#
 NPC_WIDELEASH#Puxão#
 NPC_WIDECRITICALWOUND#Ferida Mortal#
 NPC_EARTHQUAKE_K#Terremoto#
+NPC_IMMUNE_PROPERTY#Imunidade Elemental#
 NPC_WIDEBLEEDING2#Sangria#
 NPC_WIDESILENCE2#Som do Silêncio#
 NPC_WIDESTUN2#Atordoamento Titânico#

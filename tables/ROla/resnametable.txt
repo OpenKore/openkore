@@ -1698,7 +1698,7 @@ moc_para0b.rsw#moc_para01.rsw#
 moc_para0c.gnd#moc_para01.gnd#
 moc_para0c.gat#moc_para01.gat#
 moc_para0c.rsw#moc_para01.rsw#
-//유저인터페이스\map\moc_para0a.bmp#유저인터페이스\map\moc_para01.bmp#
+//유저인터페이스\map\moc_para0c.bmp#유저인터페이스\map\moc_para01.bmp#
 
 pay_dun00_a.gnd#pay_dun00.gnd#
 pay_dun00_a.gat#pay_dun00.gat#
@@ -1885,3 +1885,29 @@ ve_fild07b.gnd#ve_fild07.gnd#
 ve_fild07b.gat#ve_fild07.gat#
 ve_fild07b.rws#ve_fild07.rws#
 유저인터페이스\map\ve_fild07b.bmp#유저인터페이스\map\ve_fild07.bmp#
+
+// 드래곤길들이기-라이브 적용 버전
+httyd_01.gnd#hu_fild05.gnd#
+httyd_01.gat#hu_fild05.gat#
+httyd_01.rsw#hu_fild05.rsw#
+유저인터페이스\map\httyd_01.bmp#유저인터페이스\map\hu_fild05.bmp#
+
+httyd_02.gnd#abyss_01.gnd#
+httyd_02.gat#abyss_01.gat#
+httyd_02.rsw#abyss_01.rsw#
+유저인터페이스\map\httyd_02.bmp#유저인터페이스\map\abyss_01.bmp#
+
+mag_dun02a.gnd#mag_dun02.gnd#
+mag_dun02a.gat#mag_dun02.gat#
+mag_dun02a.rws#mag_dun02.rws#
+유저인터페이스\map\mag_dun02a.bmp#유저인터페이스\map\mag_dun02.bmp#
+
+mag_dun02b.gnd#mag_dun02.gnd#
+mag_dun02b.gat#mag_dun02.gat#
+mag_dun02b.rws#mag_dun02.rws#
+유저인터페이스\map\mag_dun02b.bmp#유저인터페이스\map\mag_dun02.bmp#
+
+prt_mk_a.gnd#prt_mk.gnd#
+prt_mk_a.gat#prt_mk.gat#
+prt_mk_a.rws#prt_mk.rws#
+유저인터페이스\map\prt_mk_a.bmp#유저인터페이스\map\prt_mk.bmp#
