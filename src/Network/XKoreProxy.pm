@@ -421,12 +421,12 @@ sub checkServer {
 
 		# Setup the next server to connect.
 		if (!$self->{nextIp} || !$self->{nextPort}) {
-			if ($master->{ip} && $master->{port}) {
-				$self->{nextIp} = $master->{ip};
-				$self->{nextPort} = $master->{port};
-			} else {
+			if ($master->{OTP_ip} && $master->{OTP_port}) {
 				$self->{nextIp} = $master->{OTP_ip};
 				$self->{nextPort} = $master->{OTP_port};
+			} else {
+				$self->{nextIp} = $master->{ip};
+				$self->{nextPort} = $master->{port};
 			}
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
 		}
