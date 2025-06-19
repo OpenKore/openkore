@@ -215,3 +215,5 @@ patchserver 120
 
 # Time to wait before load map in xKore mode
 ai_clientSuspend 1
+
+meetingPosition_extra_time 0.2
