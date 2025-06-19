@@ -148,6 +148,44 @@ sub serverSend {
 	my $self = shift;
 	my $msg = shift;
 
+	if (!defined $msg || length($msg) >= 2) {
+		# Get packet switch
+		my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+		# Handle 'master_login'
+		if ($switch eq "0C26" && $config{username} && $config{password}) {
+			# Log master login packet
+			warning "Modifying packet 'master_login'...\n", "xkoreProxy";
+			# Parse master login packet
+			my ($game_code, $username, $password_rijndael, $flag) = unpack('a4 Z51 a32 a5', substr($msg, 2));
+			# Rebuild master login packet
+			$msg = $messageSender->reconstruct({
+				switch => 'master_login',
+				game_code => $game_code,
+				username => $config{username},
+				password => $config{password},
+				flag => $flag,
+			});
+		}
+		# Handle 'token_login'
+		elsif ($switch eq "0825" && $config{username} && $config{password}) {
+			# Log token login packet
+			warning "Modifying packet 'token_login'...\n", "xkoreProxy";
+			# Parse token login packet
+			my ($len, $version, $master_version, $username, $mac_hyphen_separated, $ip, $token) = unpack('v V C Z51 a17 a15 a*', substr($msg, 2));
+			# Rebuild token login packet
+			$msg = $messageSender->reconstruct({
+				switch => "token_login",
+				len => $len,
+				version => $version,
+				master_version => $master_version,
+				username => $config{username},
+				mac_hyphen_separated => $mac_hyphen_separated,
+				ip => inet_aton($self->{publicIP} || $self->{proxy}->sockhost),
+				token => $token,
+			});
+		}
+	}
+
 	$self->{server}->serverSend($msg);
 }
 
@@ -261,6 +299,9 @@ sub clientRecv {
 		return undef;
 	}
 
+	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	$msg = $self->modifyPacketOut($msg, $switch);
+
 	if($self->getState() eq Network::IN_GAME || $self->getState() eq Network::CONNECTED_TO_CHAR_SERVER) {
 		$self->onClientData($msg);
 		return undef;
@@ -279,7 +320,6 @@ sub onClientData {
 	}
 	$self->decryptMessageID(\$msg);
 
-	$msg = $self->{tokenizer}->slicePacket($msg, \$additional_data); # slice packet if needed
 
 	$self->{tokenizer}->add($msg, 1);
 
@@ -376,18 +416,17 @@ sub checkServer {
 
 	# Connect to the next server for proxying the packets
 	if (!$self->serverAlive()) {
-		
 		# if no next server was defined by received packets, setup a primary server.
 		my $master = $masterServer = $masterServers{$config{'master'}};
 
 		# Setup the next server to connect.
 		if (!$self->{nextIp} || !$self->{nextPort}) {
-			if ($master->{OTP_ip} && $master->{OTP_port}) {
-				$self->{nextIp} = $master->{OTP_ip};
-				$self->{nextPort} = $master->{OTP_port};
-			} else {
+			if ($master->{ip} && $master->{port}) {
 				$self->{nextIp} = $master->{ip};
 				$self->{nextPort} = $master->{port};
+			} else {
+				$self->{nextIp} = $master->{OTP_ip};
+				$self->{nextPort} = $master->{OTP_port};
 			}
 			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
 		}
@@ -651,14 +690,28 @@ sub modifyPacketIn {
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 	} elsif ($switch eq "0AE3") { # If token was received, we need to connect to login server
-		# Get master config
-		my $master = $masterServer = $masterServers{$config{'master'}};
-		# Set next server to connect
-		$self->{nextIp} = $master->{ip};
-		$self->{nextPort} = $master->{port};
-		message T("Closing connection to Token Server\n"), 'connection' if (!$self->{packetReplayTrial});
-		$self->serverDisconnect(1);
-	}
+        # Parse token response
+        my ($len, $login_type, $flag, $login_token) = unpack('v l Z20 Z*', substr($msg, 2));
+        # If token response contains a login token, we need to connect to the master server
+        if (length($login_token)) {
+            # Get master config
+            my $master = $masterServer = $masterServers{$config{'master'}};
+            # Set next server to connect
+            $self->{nextIp} = $master->{ip};
+            $self->{nextPort} = $master->{port};
+        } else {
+            error T("Authentication failed, token not received: $flag.\n"), "connection";
+        }
+        # Disconnect from token server
+        message T("Closing connection to Token Server\n"), 'connection' if (!$self->{packetReplayTrial});
+        $self->serverDisconnect(1);
+    }
+
+	return $msg;
+}
+
+sub modifyPacketOut {
+	my ($self, $msg, $switch) = @_;
 
 	return $msg;
 }

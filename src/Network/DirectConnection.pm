@@ -352,7 +352,11 @@ sub checkConnection {
 			return;
 		}
 		$reconnectCount++;
-		$self->serverConnect($master->{ip}, $master->{port});
+		if (defined $master->{OTP_ip} && defined $master->{OTP_port}) {
+			$self->serverConnect($master->{OTP_ip}, $master->{OTP_port});
+		} else {
+			$self->serverConnect($master->{ip}, $master->{port});
+		}
 		# call plugin's hook to determine if we can continue the work
 		if ($self->serverAlive) {
 			Plugins::callHook('Network::serverConnect/master');
