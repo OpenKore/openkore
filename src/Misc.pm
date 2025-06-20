@@ -3469,44 +3469,6 @@ sub updateDamageTables {
 						$monster, $player, $player->verb(T('your'), T('its')), $config{$player->{configPrefix}.'teleportAuto_hp'}), "teleport";
 					$teleport = 1;
 
-				} elsif (
-					$config{$player->{configPrefix}.'attackChangeTarget'}
-					&& (
-						$player->action eq 'route' && $player->action(1) eq 'attack'
-						or $player->action eq 'move' && $player->action(2) eq 'attack'
-					)
-					&& $player->args->{attackID} && $player->args->{attackID} ne $sourceID
-				) {
-					my $attackTarget = Actor::get($player->args->{attackID});
-					my $attackSeq = ($player->action eq 'route') ? $player->args(1) : $player->args(2);
-					if (
-						!($accountID eq $targetID ? $attackTarget->{dmgToYou} : $attackTarget->{dmgToPlayer}{$targetID})
-						&& !($accountID eq $targetID ? $attackTarget->{dmgToYou} : $attackTarget->{dmgFromPlayer}{$targetID})
-						&& distance($monster->{pos_to}, calcPosition($player)) <= $attackSeq->{attackMethod}{distance}
-					) {
-						my $ignore = 0;
-						# Don't attack ignored monsters
-						if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
-							$ignore = 1 if ( ($control->{attack_auto} == -1)
-								|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
-								|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-								|| ($control->{attack_hp}  ne "" && $control->{attack_hp} > $char->{hp})
-								|| ($control->{attack_sp}  ne "" && $control->{attack_sp} > $char->{sp})
-								|| ($accountID eq $targetID && $control->{attack_auto} == 3 && ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou}))
-								);
-						}
-						unless ($ignore) {
-							# Change target to closer aggressive monster
-							message TF("%s %s target to aggressive %s\n",
-								$player, $player->verb(T('change'), T('changes')), $monster);
-							$player->sendAttackStop;
-							$player->dequeue;
-							$player->dequeue if $player->action eq 'route';
-							$player->dequeue;
-							$player->attack($sourceID);
-						}
-					}
-
 				} elsif ($accountID eq $targetID && $player->action eq "attack" && mon_control($monster->{name}, $monster->{nameID})->{attack_auto} == 3
 					&& ($monster->{dmgToYou} || $monster->{missedYou} || $monster->{dmgFromYou})) {
 
@@ -3740,7 +3702,8 @@ sub getBestTarget {
 		next if (positionNearPlayer($pos, $playerDist)
 			|| positionNearPortal($pos, $portalDist)
 		);
-		if ((my $control = mon_control($monster->{name},$monster->{nameID}))) {
+		my $control = mon_control($monster->{name},$monster->{nameID});
+		if (defined $control) {
 			next if ( ($control->{attack_auto} == -1)
 				|| ($control->{attack_lvl} ne "" && $control->{attack_lvl} > $char->{lv})
 				|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
@@ -3750,6 +3713,15 @@ sub getBestTarget {
 				|| ($control->{attack_auto} == 0 && !($monster->{dmgToYou} || $monster->{missedYou}))
 			);
 		}
+		
+		my %plugin_args;
+		$plugin_args{target} = $monster;
+		$plugin_args{control} = $control;
+		$plugin_args{attackCheckLOS} = $attackCheckLOS;
+		$plugin_args{attackCanSnipe} = $attackCanSnipe;
+		$plugin_args{return} = 0;
+		Plugins::callHook('getBestTarget' => \%plugin_args);
+		next if ($plugin_args{return});
 
 		if (!$field->checkLOS($myPos, $pos, $attackCanSnipe)) {
 			push(@noLOSMonsters, $_);
