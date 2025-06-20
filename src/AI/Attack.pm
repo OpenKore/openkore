@@ -33,6 +33,8 @@ use Skill;
 use Utils;
 use Utils::Benchmark;
 use Utils::PathFinding;
+use Data::Dumper;
+$Data::Dumper::Sortkeys = 1;
 
 use constant {
 	MOVING_TO_ATTACK => 1,
@@ -76,21 +78,36 @@ sub process {
 			finishAttacking($ataqArgs, $ID);
 			return;
 		}
+
 		my $party = $config{'attackAuto_party'} ? 1 : 0;
 		my $target_is_aggressive = is_aggressive($target, undef, 0, $party);
-		my @aggressives = ai_getAggressives(0, $party);
-		if ($config{attackChangeTarget} && !$target_is_aggressive && @aggressives) {
-			my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
-			if ($attackTarget) {
-				$char->sendAttackStop;
-				AI::dequeue while (AI::inQueue("attack"));
-				ai_setSuspend(0);
-				my $new_target = Actor::get($attackTarget);
-				warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
-				$target->{droppedForAggressive} = 1;
-				$char->attack($attackTarget);
-				AI::Attack::process();
-				return;
+
+		if ($config{attackChangeTarget}) {
+			my $routeIndex = AI::findAction("route");
+			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
+			my $attackOnRoute;
+			if (defined $routeIndex) {
+				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};
+			} else {
+				$attackOnRoute = 2;
+			}
+
+			my @aggressives = ai_getAggressives($attackOnRoute, $party);
+
+			if (!$target_is_aggressive && @aggressives) {
+				my $attackTarget = getBestTarget(\@aggressives, $config{attackCheckLOS}, $config{attackCanSnipe});
+				if ($attackTarget && $attackTarget ne $target->{ID}) {
+					$char->sendAttackStop;
+					AI::dequeue 
+					while (AI::inQueue("attack"));
+					ai_setSuspend(0);
+					my $new_target = Actor::get($attackTarget);
+					warning TF("Your target is not aggressive: %s, changing target to aggressive: %s.\n", $target, $new_target), 'ai_attack';
+					$target->{droppedForAggressive} = 1;
+					$char->attack($attackTarget);
+					AI::Attack::process();
+					return;
+				}
 			}
 		}
 
@@ -358,6 +375,15 @@ sub main {
 	# Update information about the monster and the current situation
 	my $args = AI::args;
 	my $ID = $args->{ID};
+
+	if (!defined $ID) {
+		warning "[attack main] Bug where ID is undefined found.\n";
+		warning "Args Dump: " . Dumper($args);
+		warning "ML Dump: " . Dumper(\@$monstersList);
+		warning "ai_seq Dump: " . Dumper(\@ai_seq);
+		warning "ai_seq_args Dump: " . Dumper(\@ai_seq_args);
+	}
+
 	my $target = Actor::get($ID);
 
 	if (!exists $args->{temporary_extra_range} || !defined $args->{temporary_extra_range}) {
