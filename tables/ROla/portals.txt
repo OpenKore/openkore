@@ -3584,3 +3584,13 @@ prt_fild08d 55 21 moc_fild01 56 380
 bra_fild01 72 34 brasilis 308 336
 brasilis 308 336 bra_fild01 74 34
 bra_fild01 72 34 brasilis 309 334
+
+yuno_fild12 23 226 yuno_fild12 23 339
+yuno_fild11 364 218 yuno_fild12 23 226
+yuno_fild11 364 218 yuno_fild12 26 230
+yuno_fild11 364 218 yuno_fild12 23 226
+yuno_fild11 364 218 yuno_fild12 23 226
+c_tower3 252 24 c_tower2 223 267
+c_tower2 223 267 c_tower3 252 29
+alde_dun03 130 125 alde_dun03 278 194
+alde_dun03 130 125 alde_dun03 191 45
