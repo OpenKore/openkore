@@ -5,6 +5,7 @@ use strict;
 use base qw(Network::Send::ServerType0);
 use Globals qw($net %config);
 use Utils qw(getTickCount);
+use TOTP qw(generate_otp);
 
 use Log qw(debug);
 
@@ -163,6 +164,13 @@ sub sendMapLogin {
 	$self->sendToServer($msg);
 
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
+}
+
+sub sendOtp {
+	my ($self) = @_;
+	my $totp = generate_otp($config{otpSeed});
+	my $packet = pack('v a6 C', 0x0C23, $totp, 0); 
+	$self->sendToServer($packet);
 }
 
 1;

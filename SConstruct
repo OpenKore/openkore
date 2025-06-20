@@ -22,8 +22,8 @@ EXTRA_LIBRARY_DIRECTORIES = []
 EXTRA_COMPILER_FLAGS = ['-Wall', '-O3', '-pipe']
 
 # Brew's readline
-DARWIN_INCLUDE_DIRECTORIES = ['/usr/local/opt/readline/include']
-DARWIN_LIBRARY_DIRECTORIES = ['/usr/local/opt/readline/lib']
+DARWIN_INCLUDE_DIRECTORIES = ['/opt/homebrew/opt/readline/include']
+DARWIN_LIBRARY_DIRECTORIES = ['/opt/homebrew/opt/readline/lib']
 
 # Fixes for OS X (src/auto/XSTools/darwin/include)
 DARWIN_INCLUDE_DIRECTORIES += ['darwin/include']
