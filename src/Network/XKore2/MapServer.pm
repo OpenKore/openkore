@@ -184,7 +184,6 @@ sub map_loaded {
 	$self->send_inventory($client, $char);
 	$self->send_ground_items($client);
 	$self->send_portals($client);
-	$self->send_npcs($client);
 	$self->send_monsters($client);
 	$self->send_npcs($client);
 	$self->send_pets($client);
@@ -454,7 +453,47 @@ sub send_player_info {
 	my ($self, $client, $char) = @_;
 	my $data = undef;
 
+	# Send skill information
+	if($self->{packet_lut}{skills_list} eq "0B32") {
+		foreach my $ID (@skillsID) {
+			$data .= pack('v V v3 C v',
+				$char->{skills}{$ID}{ID}, $char->{skills}{$ID}{targetType},
+				$char->{skills}{$ID}{lv}, $char->{skills}{$ID}{sp},
+				$char->{skills}{$ID}{range}, $char->{skills}{$ID}{up},
+				$char->{skills}{$ID}{lv2});
+		}
+		$data = pack('C2 v', 0x32, 0x0B, length($data) + 4) . $data;
+	} else {
+		foreach my $ID (@skillsID) {
+			$data .= pack('v2 x2 v3 a24 C',
+				$char->{skills}{$ID}{ID}, $char->{skills}{$ID}{targetType},
+				$char->{skills}{$ID}{lv}, $char->{skills}{$ID}{sp},
+				$char->{skills}{$ID}{range}, $ID, $char->{skills}{$ID}{up});
+		}
+		$data = pack('C2 v', 0x0F, 0x01, length($data) + 4) . $data;
+	}
+	$client->send($data);
+
+	# Send weapon/shield appearance
+	$data .= pack('C2 a4 C v2', 0xD7, 0x01, $char->{ID}, 2, $char->{weapon}, $char->{shield});
+
+	# Send attack range
+	$data  = pack('C2 v', 0x3A, 0x01, $char->{attack_range});
+
+	# More stats
+	$data  = pack('C2 v V', 0xB0, 0x00, 0, $char->{walk_speed} * 1000);		# Walk speed
+	$data .= pack('C2 v V', 0xB0, 0x00, 5, $char->{hp});				# Current HP
+	$data .= pack('C2 v V', 0xB0, 0x00, 6, $char->{hp_max});			# Max HP
+	$data .= pack('C2 v V', 0xB0, 0x00, 7, $char->{sp});				# Current SP
+	$data .= pack('C2 v V', 0xB0, 0x00, 8, $char->{sp_max});			# Max SP
+	$data .= pack('C2 v V', 0xB0, 0x00, 12, $char->{points_skill});		# Skill points left
+	$data .= pack('C2 v V', 0xB0, 0x00, 24, $char->{weight} * 10);		# Current weight
+	$data .= pack('C2 v V', 0xB0, 0x00, 25, $char->{weight_max} * 10);		# Max weight
+	$data .= pack('C2 v V', 0xB0, 0x00, 53, $char->{attack_delay});		# Attack speed
+	$client->send($data);
+
 	# Player stats.
+	$data = undef;
 	$data = pack('C2 v1 C12 v12 x4',
 		0xBD, 0x00,
 		$char->{points_free},
@@ -473,18 +512,6 @@ sub send_player_info {
 	);
 	$client->send($data);
 
-	# More stats
-	$data  = pack('C2 v V', 0xB0, 0x00, 0, $char->{walk_speed} * 1000);		# Walk speed
-	$data .= pack('C2 v V', 0xB0, 0x00, 5, $char->{hp});				# Current HP
-	$data .= pack('C2 v V', 0xB0, 0x00, 6, $char->{hp_max});			# Max HP
-	$data .= pack('C2 v V', 0xB0, 0x00, 7, $char->{sp});				# Current SP
-	$data .= pack('C2 v V', 0xB0, 0x00, 8, $char->{sp_max});			# Max SP
-	$data .= pack('C2 v V', 0xB0, 0x00, 12, $char->{points_skill});		# Skill points left
-	$data .= pack('C2 v V', 0xB0, 0x00, 24, $char->{weight} * 10);		# Current weight
-	$data .= pack('C2 v V', 0xB0, 0x00, 25, $char->{weight_max} * 10);		# Max weight
-	$data .= pack('C2 v V', 0xB0, 0x00, 53, $char->{attack_delay});		# Attack speed
-	$client->send($data);
-
 	# Base stat info (str, agi, vit, int, dex, luk) this time with bonus
 	$data  = pack('C2 V3', 0x41, 0x01, 13, $char->{str}, $char->{str_bonus});
 	$data .= pack('C2 V3', 0x41, 0x01, 14, $char->{agi}, $char->{agi_bonus});
@@ -499,10 +526,6 @@ sub send_player_info {
 		$char->{ID}, $char->{look}{head}, $char->{look}{body})
 	);
 
-	# Send attack range
-	$data  = pack('C2 v', 0x3A, 0x01, $char->{attack_range});
-	# Send weapon/shield appearance
-	$data .= pack('C2 a4 C v2', 0xD7, 0x01, $char->{ID}, 2, $char->{weapon}, $char->{shield});
 	# Send status info
 	$data .= pack('v a4 v3 x', 0x119, $char->{ID}, $char->{opt1}, $char->{opt2}, $char->{option});
 	$client->send($data);
@@ -526,7 +549,7 @@ sub send_player_info {
 			}
 		}
 	}
-
+	
 	$client->send($data) if (length($data) > 0);
 
 	# Send spirit sphere information
@@ -534,17 +557,6 @@ sub send_player_info {
 	# Send exp-required-to-level-up info
 	$data .= pack('C2 v V', 0xB1, 0x00, 22, $char->{exp_max});
 	$data .= pack('C2 v V', 0xB1, 0x00, 23, $char->{exp_job_max});
-	$client->send($data);
-
-	# Send skill information
-	$data = undef;
-	foreach my $ID (@skillsID) {
-		$data .= pack('v2 x2 v3 a24 C',
-			$char->{skills}{$ID}{ID}, $char->{skills}{$ID}{targetType},
-			$char->{skills}{$ID}{lv}, $char->{skills}{$ID}{sp},
-			$char->{skills}{$ID}{range}, $ID, $char->{skills}{$ID}{up});
-	}
-	$data = pack('C2 v', 0x0F, 0x01, length($data) + 4) . $data;
 	$client->send($data);
 
 	# Send Hotkeys
@@ -717,9 +729,7 @@ sub send_npc_info {
 
 sub send_avoid_sprite_error_hack {
 	my ($self, $client, $char) = @_;
-	my $data = pack('C15', 0x29, 0x02, 0xA7, 0x94, 0x04, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40);
-	$client->send($data);
-	$data = $self->{recvPacketParser}->reconstruct({
+	my $data = $self->{recvPacketParser}->reconstruct({
 		switch => '0229',
 		ID => $char->{ID},
 		opt1 => $char->{opt1},
@@ -756,6 +766,13 @@ sub map_login {
 			}));
 		}
 
+		if (exists $self->{recvPacketParser}{packet_lut}{inventory_expansion_result}) {
+			$client->send($self->{recvPacketParser}->reconstruct({
+				switch => 'inventory_expansion_result',
+				result => 0,
+			}));
+		}
+	
 		if (exists $self->{recvPacketParser}{packet_lut}{account_id}) {
 			$client->send($self->{recvPacketParser}->reconstruct({
 				switch => 'account_id',

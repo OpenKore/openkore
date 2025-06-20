@@ -18,8 +18,16 @@ use strict;
 use base qw(Network::Receive::kRO::RagexeRE_2014_09_17c);
 
 sub new {
-	my ($class) = @_;
-	return $class->SUPER::new(@_);
+		my ($class) = @_;
+	my $self = $class->SUPER::new(@_);
+
+	my %handlers = qw(
+		map_loaded 0A18
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+	
+	return $self;
 }
 
 1;
