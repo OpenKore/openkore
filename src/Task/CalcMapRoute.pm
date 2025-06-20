@@ -72,6 +72,14 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_);
 
+	$self->{mapChangeWeight} = $args{mapChangeWeight} || 1;
+	$self->{route_error} = 0;
+	# limit coming from configuration: 0 off, absent = 5
+	$self->{maxRouteErrors} =
+		exists $config{route_maxRouteErrors}
+			? $config{route_maxRouteErrors}
+			: 5;
+
 	if ( $args{map} && !$args{targets} ) {
 		$args{targets} = [ { map => $args{map}, x => $args{x}, y => $args{y} } ];
 	}
@@ -224,11 +232,24 @@ sub iterate {
 			delete $self->{closelist};
 			delete $_->{field} foreach @{ $self->{targets} };
 			$self->setDone();
-			debug "Map Solution Ready for traversal.\n", "calc_map_route";
-			debug sprintf("%s\n", $self->getRouteString()), "calc_map_route";
-
+            debug "Map Solution Ready for traversal.\n", "calc_map_route";
+            debug sprintf("%s\n", $self->getRouteString()), "calc_map_route";
+            $self->{route_error} = 0;
 		} elsif ($self->{done}) {
 			my $destpos = $self->{targets}[0]->{x} ? " (".$self->{targets}[0]->{x}.",".$self->{targets}[0]->{y}.")" : undef;
+			
+			$self->{route_error}++;
+			my $lim = $self->{maxRouteErrors};
+			my $msg = sprintf "Route calculation failed (%d consecutiva%s).",
+                  $self->{route_error},
+                  $self->{route_error} == 1 ? "" : "s";
+			debug   $msg; 
+			if ( $lim > 0 && $self->{route_error} >= $lim ) {
+				warning "Limit ($lim) ​​reached - sending respawn…";
+				Commands::run("respawn");
+				$self->{route_error} = 0;
+			}
+
 			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s%s",
 				$self->{source}{field}->baseName, $self->{source}{x}, $self->{source}{y},
 				$self->{targets}[0]->{map} || T("unknown"), $destpos));
