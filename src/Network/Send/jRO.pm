@@ -60,7 +60,7 @@ sub sendMasterLogin {
 
 	die "don't forget to add jRO_auth plugin to sys.txt\n".
 		"https://openkore.com/wiki/loadPlugins_list\n" unless ($username_salted and $password_salted);
-	my $mac = $config{macAddress} || '111111111111'; # gibberish
+	my $mac = $config{macAddress} || sprintf("E0311E%02X%02X%02X", (map { int(rand(256)) } 1..3));
 	   $mac = uc($mac);
 	$msg = $self->reconstruct({
 		switch => 'master_login',

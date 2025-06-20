@@ -352,9 +352,11 @@ sub checkConnection {
 			return;
 		}
 		$reconnectCount++;
-		$self->{enable_checksum} = 0;
-		$self->serverConnect($master->{ip}, $master->{port});
-
+		if (defined $master->{OTP_ip} && defined $master->{OTP_port}) {
+			$self->serverConnect($master->{OTP_ip}, $master->{OTP_port});
+		} else {
+			$self->serverConnect($master->{ip}, $master->{port});
+		}
 		# call plugin's hook to determine if we can continue the work
 		if ($self->serverAlive) {
 			Plugins::callHook('Network::serverConnect/master');
@@ -424,6 +426,7 @@ sub checkConnection {
 	} elsif ($self->getState() == 1.3) {
 		$conState = 1;
 		my $master = $masterServer = $masterServers{$config{'master'}};
+
 		if ($master->{secureLogin} >= 1) {
 			my $code;
 
@@ -569,7 +572,6 @@ sub checkConnection {
 				Plugins::callHook('Network::serverConnect/charselect');
 				return if ($conState == 1.5);
 			}
-
 			$messageSender->sendCharLogin($config{'char'});
 			$timeout{'charlogin'}{'time'} = time;
 
@@ -610,7 +612,7 @@ sub checkConnection {
 				return if ($conState == 1.5);
 			}
 
-			$messageSender->sendPing() if $master->{serverType} eq 'ROla';
+			$messageSender->sendPing() if (grep { $masterServer->{serverType} eq $_ } qw(ROla));
 			$messageSender->sendMapLogin($accountID, $charID, $sessionID, $accountSex2);
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};

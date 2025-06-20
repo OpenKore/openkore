@@ -260,3 +260,8 @@
 260 FOOTPRINT_EF_butterfly_purple
 261 FOOTPRINT_EF_butterfly_yellow
 262 HAT_EF_hanmac_munch
+263 FOOTPRINT_EF_victory2025
+264 FOOTPRINT_EF_dragon_face_2d
+265 FOOTPRINT_EF_dragon_face_3d
+266 HAT_EF_C_Over_Cloud
+267 HAT_EF_C_Aurora_On_Clouds

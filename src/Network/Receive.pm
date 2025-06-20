@@ -1076,7 +1076,7 @@ sub parse_account_server_info {
 			types => 'a4 v Z20 v5',
 			keys => [qw(ip port name state users property sid unknown)],
 		};
-	} elsif ($args->{switch} eq '0C32' && $masterServer->{serverType} eq "ROla") { # ROla
+	} elsif ($args->{switch} eq '0C32') {
 		$server_info = {
 			len => 165,
 			types => 'a4 v Z20 v3 a128 a5',
@@ -1143,6 +1143,12 @@ sub reconstruct_account_server_info {
 			len => 36,
 			types => 'a4 v Z20 v5',
 			keys => [qw(ip port name state users property sid unknown)],
+		};
+	} elsif ($args->{switch} eq '0C32') {
+		$serverInfo = {
+			len => 165,
+			types => 'a4 v Z20 v3 a128 a5',
+			keys => [qw(ip port name users state property ip_port unknown)],
 		};
 	} else {
 		$serverInfo = {
@@ -1263,9 +1269,9 @@ sub map_loaded {
 		$messageSender->sendSync(1);
 
 		# Request for Guild Information
-		$messageSender->sendGuildRequestInfo(0) if ($masterServer->{serverType} ne 'twRO'); # twRO does not send this packet
+		$messageSender->sendGuildRequestInfo(0) unless (grep { $masterServer->{serverType} eq $_ } qw(twRO ROla)); # some servers does not send this packet
 
-		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal twRO)); # tested at bRO 2013.11.30, request for cashitemslist
+		$messageSender->sendRequestCashItemsList() if (grep { $masterServer->{serverType} eq $_ } qw(bRO idRO_Renewal twRO ROla)); # tested at bRO 2013.11.30, request for cashitemslist
 		$messageSender->sendCashShopOpen() if ($config{whenInGame_requestCashPoints});
 
 		# request to unfreeze char - alisonrag
@@ -8044,8 +8050,8 @@ sub received_login_token {
             $master->{version},
             $args->{login_token},
             $args->{len},
-            $master->{OTP_ip},
-            $master->{OTP_port}
+            $master->{ip},
+            $master->{port}
         );
     
     } elsif ($login_type == 400 || $login_type == 1000) {

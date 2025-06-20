@@ -30,7 +30,7 @@ use Task::Move;
 
 use Globals qw($field $net %config %timeout $npcsList);
 use AI qw(ai_useTeleport);
-use Log qw(message debug warning);
+use Log qw(message error debug warning);
 use Network;
 use Field;
 use Translation qw(T TF);
@@ -461,7 +461,42 @@ sub iterate {
 
 			Plugins::callHook('route', {status => 'success'});
 			$self->setDone();
+		} elsif ($stepsleft <= 2 && isCellOccupied($solution->[-1]) && $self->{attackID}) {
+			# If the destination cell is occupied, then we can't walk there but we need to attack
 
+			# Get the cells around the destination cell
+			my @cells = calcRectArea2($solution->[-1]{x}, $solution->[-1]{y}, 1, 1);
+			my $walk_pos;
+			my $index;
+			while (@cells) {
+				$index = int(rand(@cells));
+				my $cell = $cells[$index];
+				next if ((!$field->isWalkable($cell->{x}, $cell->{y})) || ($field->isCellOccupied($cell->{x}, $cell->{y})));
+				
+				$walk_pos = $cell;
+				last;
+			} continue {
+				splice(@cells, $index, 1);
+			}
+			# If the cells around the destination cell are all occupied, then we can't walk there
+			if (!(defined $walk_pos)) {
+				# Log error message
+				error TF("Destination cell (%d,%d) is occupied and there are no walkable cells around it.\n",
+					$solution->[-1]{x}, $solution->[-1]{y}), "route";
+				# Emit error message
+				$self->setError(STUCK, T("Stuck during route."));
+				Plugins::callHook('route', {status => 'stuck'});
+			} else {
+				# If we have a walkable cell, then walk there
+				warning TF("Destination cell (%d,%d) is occupied, replacing it with (%d,%d).\n",
+					$solution->[-1]{x}, $solution->[-1]{y}, $walk_pos->{x}, $walk_pos->{y}), "route";
+				#
+				$self->{dest}{pos}{x} = $walk_pos->{x};
+				$self->{dest}{pos}{y} = $walk_pos->{y};
+				#
+				$self->{route_out_time} = time;
+				$self->resetRoute();
+			}
 		} elsif (timeOut($self->{route_out_time}, 3)) {
 			# Because of attack monster, get item or something else we are out of our route for a long time
 			# recalculate again

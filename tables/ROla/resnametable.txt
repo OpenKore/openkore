@@ -1701,7 +1701,7 @@ moc_para0b.rsw#moc_para01.rsw#
 moc_para0c.gnd#moc_para01.gnd#
 moc_para0c.gat#moc_para01.gat#
 moc_para0c.rsw#moc_para01.rsw#
-//유저인터페이스\map\moc_para0a.bmp#유저인터페이스\map\moc_para01.bmp#
+//유저인터페이스\map\moc_para0c.bmp#유저인터페이스\map\moc_para01.bmp#
 
 pay_dun00_a.gnd#pay_dun00.gnd#
 pay_dun00_a.gat#pay_dun00.gat#
@@ -1748,225 +1748,169 @@ orcsdun01_c.gat#orcsdun01.gat#
 orcsdun01_c.rsw#orcsdun01.rsw#
 유저인터페이스\map\orcsdun01_c.bmp#유저인터페이스\map\orcsdun01.bmp#
 
-// Multi-channel support for Veins Fields
-ve_fild07_a.gnd#ve_fild07.gnd#
-ve_fild07_a.gat#ve_fild07.gat#
-ve_fild07_a.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_a.bmp#유저인터페이스\map\ve_fild07.bmp#
+// 추가 맵 채널링
+abbey03a.gnd#abbey03.gnd#
+abbey03a.gat#abbey03.gat#
+abbey03a.rsw#abbey03.rsw#
+유저인터페이스\map\abbey03a.bmp#유저인터페이스\map\abbey03.bmp#
 
-ve_fild07_b.gnd#ve_fild07.gnd#
-ve_fild07_b.gat#ve_fild07.gat#
-ve_fild07_b.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_b.bmp#유저인터페이스\map\ve_fild07.bmp#
+abbey03b.gnd#abbey03.gnd#
+abbey03b.gat#abbey03.gat#
+abbey03b.rsw#abbey03.rsw#
+유저인터페이스\map\abbey03b.bmp#유저인터페이스\map\abbey03.bmp#
 
-ve_fild07_c.gnd#ve_fild07.gnd#
-ve_fild07_c.gat#ve_fild07.gat#
-ve_fild07_c.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_c.bmp#유저인터페이스\map\ve_fild07.bmp#
+abyss_03a.gnd#abyss_03.gnd#
+abyss_03a.gat#abyss_03.gat#
+abyss_03a.rsw#abyss_03.rsw#
+유저인터페이스\map\abyss_03a.bmp#유저인터페이스\map\abyss_03.bmp#
 
-ve_fild03_a.gnd#ve_fild03.gnd#
-ve_fild03_a.gat#ve_fild03.gat#
-ve_fild03_a.rsw#ve_fild03.rsw#
-유저인터페이스\map\ve_fild03_a.bmp#유저인터페이스\map\ve_fild03.bmp#
+abyss_03b.gnd#abyss_03.gnd#
+abyss_03b.gat#abyss_03.gat#
+abyss_03b.rsw#abyss_03.rsw#
+유저인터페이스\map\abyss_03b.bmp#유저인터페이스\map\abyss_03.bmp#
 
-ve_fild03_b.gnd#ve_fild03.gnd#
-ve_fild03_b.gat#ve_fild03.gat#
-ve_fild03_b.rsw#ve_fild03.rsw#
-유저인터페이스\map\ve_fild03_b.bmp#유저인터페이스\map\ve_fild03.bmp#
+dic_dun02a.gnd#dic_dun02.gnd#
+dic_dun02a.gat#dic_dun02.gat#
+dic_dun02a.rsw#dic_dun02.rsw#
+유저인터페이스\map\dic_dun02a.bmp#유저인터페이스\map\dic_dun02.bmp#
 
-ve_fild03_c.gnd#ve_fild03.gnd#
-ve_fild03_c.gat#ve_fild03.gat#
-ve_fild03_c.rsw#ve_fild03.rsw#
-유저인터페이스\map\ve_fild03_c.bmp#유저인터페이스\map\ve_fild03.bmp#
+dic_dun02b.gnd#dic_dun02.gnd#
+dic_dun02b.gat#dic_dun02.gat#
+dic_dun02b.rsw#dic_dun02.rsw#
+유저인터페이스\map\dic_dun02b.bmp#유저인터페이스\map\dic_dun02.bmp#
 
-// Additional Veins Fields multi-channel support
-ve_fild01_a.gnd#ve_fild01.gnd#
-ve_fild01_a.gat#ve_fild01.gat#
-ve_fild01_a.rsw#ve_fild01.rsw#
-유저인터페이스\map\ve_fild01_a.bmp#유저인터페이스\map\ve_fild01.bmp#
+gl_church_a.gnd#gl_church.gnd#
+gl_church_a.gat#gl_church.gat#
+gl_church_a.rsw#gl_church.rsw#
+유저인터페이스\map\gl_church_a.bmp#유저인터페이스\map\gl_church.bmp#
 
-ve_fild01_b.gnd#ve_fild01.gnd#
-ve_fild01_b.gat#ve_fild01.gat#
-ve_fild01_b.rsw#ve_fild01.rsw#
-유저인터페이스\map\ve_fild01_b.bmp#유저인터페이스\map\ve_fild01.bmp#
+gl_church_b.gnd#gl_church.gnd#
+gl_church_b.gat#gl_church.gat#
+gl_church_b.rsw#gl_church.rsw#
+유저인터페이스\map\gl_church_b.bmp#유저인터페이스\map\gl_church.bmp#
 
-ve_fild01_c.gnd#ve_fild01.gnd#
-ve_fild01_c.gat#ve_fild01.gat#
-ve_fild01_c.rsw#ve_fild01.rsw#
-유저인터페이스\map\ve_fild01_c.bmp#유저인터페이스\map\ve_fild01.bmp#
+juperos_01a.gnd#juperos_01.gnd#
+juperos_01a.gat#juperos_01.gat#
+juperos_01a.rws#juperos_01.rws#
+유저인터페이스\map\juperos_01a.bmp#유저인터페이스\map\juperos_01.bmp#
 
-ve_fild02_a.gnd#ve_fild02.gnd#
-ve_fild02_a.gat#ve_fild02.gat#
-ve_fild02_a.rsw#ve_fild02.rsw#
-유저인터페이스\map\ve_fild02_a.bmp#유저인터페이스\map\ve_fild02.bmp#
+juperos_01b.gnd#juperos_01.gnd#
+juperos_01b.gat#juperos_01.gat#
+juperos_01b.rws#juperos_01.rws#
+유저인터페이스\map\juperos_01b.bmp#유저인터페이스\map\juperos_01.bmp#
 
-ve_fild02_b.gnd#ve_fild02.gnd#
-ve_fild02_b.gat#ve_fild02.gat#
-ve_fild02_b.rsw#ve_fild02.rsw#
-유저인터페이스\map\ve_fild02_b.bmp#유저인터페이스\map\ve_fild02.bmp#
+lou_fild01a.gnd#lou_fild01.gnd#
+lou_fild01a.gat#lou_fild01.gat#
+lou_fild01a.rws#lou_fild01.rws#
+유저인터페이스\map\lou_fild01a.bmp#유저인터페이스\map\lou_fild01.bmp#
 
-ve_fild02_c.gnd#ve_fild02.gnd#
-ve_fild02_c.gat#ve_fild02.gat#
-ve_fild02_c.rsw#ve_fild02.rsw#
-유저인터페이스\map\ve_fild02_c.bmp#유저인터페이스\map\ve_fild02.bmp#
+lou_fild01b.gnd#lou_fild01.gnd#
+lou_fild01b.gat#lou_fild01.gat#
+lou_fild01b.rws#lou_fild01.rws#
+유저인터페이스\map\lou_fild01b.bmp#유저인터페이스\map\lou_fild01.bmp#
 
-ve_fild04_a.gnd#ve_fild04.gnd#
-ve_fild04_a.gat#ve_fild04.gat#
-ve_fild04_a.rsw#ve_fild04.rsw#
-유저인터페이스\map\ve_fild04_a.bmp#유저인터페이스\map\ve_fild04.bmp#
+mag_dun01a.gnd#mag_dun01.gnd#
+mag_dun01a.gat#mag_dun01.gat#
+mag_dun01a.rws#mag_dun01.rws#
+유저인터페이스\map\mag_dun01a.bmp#유저인터페이스\map\mag_dun01.bmp#
 
-ve_fild04_b.gnd#ve_fild04.gnd#
-ve_fild04_b.gat#ve_fild04.gat#
-ve_fild04_b.rsw#ve_fild04.rsw#
-유저인터페이스\map\ve_fild04_b.bmp#유저인터페이스\map\ve_fild04.bmp#
+mag_dun01b.gnd#mag_dun01.gnd#
+mag_dun01b.gat#mag_dun01.gat#
+mag_dun01b.rws#mag_dun01.rws#
+유저인터페이스\map\mag_dun01b.bmp#유저인터페이스\map\mag_dun01.bmp#
 
-ve_fild04_c.gnd#ve_fild04.gnd#
-ve_fild04_c.gat#ve_fild04.gat#
-ve_fild04_c.rsw#ve_fild04.rsw#
-유저인터페이스\map\ve_fild04_c.bmp#유저인터페이스\map\ve_fild04.bmp#
+mjolnir_07a.gnd#mjolnir_07.gnd#
+mjolnir_07a.gat#mjolnir_07.gat#
+mjolnir_07a.rws#mjolnir_07.rws#
+유저인터페이스\map\mjolnir_07a.bmp#유저인터페이스\map\mjolnir_07.bmp#
 
-ve_fild05_a.gnd#ve_fild05.gnd#
-ve_fild05_a.gat#ve_fild05.gat#
-ve_fild05_a.rsw#ve_fild05.rsw#
-유저인터페이스\map\ve_fild05_a.bmp#유저인터페이스\map\ve_fild05.bmp#
+mjolnir_07b.gnd#mjolnir_07.gnd#
+mjolnir_07b.gat#mjolnir_07.gat#
+mjolnir_07b.rws#mjolnir_07.rws#
+유저인터페이스\map\mjolnir_07b.bmp#유저인터페이스\map\mjolnir_07.bmp#
 
-ve_fild05_b.gnd#ve_fild05.gnd#
-ve_fild05_b.gat#ve_fild05.gat#
-ve_fild05_b.rsw#ve_fild05.rsw#
-유저인터페이스\map\ve_fild05_b.bmp#유저인터페이스\map\ve_fild05.bmp#
+odin_tem02a.gnd#odin_tem02.gnd#
+odin_tem02a.gat#odin_tem02.gat#
+odin_tem02a.rws#odin_tem02.rws#
+유저인터페이스\map\odin_tem02a.bmp#유저인터페이스\map\odin_tem02.bmp#
 
-ve_fild05_c.gnd#ve_fild05.gnd#
-ve_fild05_c.gat#ve_fild05.gat#
-ve_fild05_c.rsw#ve_fild05.rsw#
-유저인터페이스\map\ve_fild05_c.bmp#유저인터페이스\map\ve_fild05.bmp#
+odin_tem02b.gnd#odin_tem02.gnd#
+odin_tem02b.gat#odin_tem02.gat#
+odin_tem02b.rws#odin_tem02.rws#
+유저인터페이스\map\odin_tem02b.bmp#유저인터페이스\map\odin_tem02.bmp#
 
-ve_fild06_a.gnd#ve_fild06.gnd#
-ve_fild06_a.gat#ve_fild06.gat#
-ve_fild06_a.rsw#ve_fild06.rsw#
-유저인터페이스\map\ve_fild06_a.bmp#유저인터페이스\map\ve_fild06.bmp#
+ra_fild12a.gnd#ra_fild12.gnd#
+ra_fild12a.gat#ra_fild12.gat#
+ra_fild12a.rws#ra_fild12.rws#
+유저인터페이스\map\ra_fild12a.bmp#유저인터페이스\map\ra_fild12.bmp#
 
-ve_fild06_b.gnd#ve_fild06.gnd#
-ve_fild06_b.gat#ve_fild06.gat#
-ve_fild06_b.rsw#ve_fild06.rsw#
-유저인터페이스\map\ve_fild06_b.bmp#유저인터페이스\map\ve_fild06.bmp#
+ra_fild12b.gnd#ra_fild12.gnd#
+ra_fild12b.gat#ra_fild12.gat#
+ra_fild12b.rws#ra_fild12.rws#
+유저인터페이스\map\ra_fild12b.bmp#유저인터페이스\map\ra_fild12.bmp#
 
-ve_fild06_c.gnd#ve_fild06.gnd#
-ve_fild06_c.gat#ve_fild06.gat#
-ve_fild06_c.rsw#ve_fild06.rsw#
-유저인터페이스\map\ve_fild06_c.bmp#유저인터페이스\map\ve_fild06.bmp#
+ra_san01a.gnd#ra_san01.gnd#
+ra_san01a.gat#ra_san01.gat#
+ra_san01a.rws#ra_san01.rws#
+유저인터페이스\map\ra_san01a.bmp#유저인터페이스\map\ra_san01.bmp#
 
-// Extended channel support for ve_fild07 (d through z)
-ve_fild07_d.gnd#ve_fild07.gnd#
-ve_fild07_d.gat#ve_fild07.gat#
-ve_fild07_d.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_d.bmp#유저인터페이스\map\ve_fild07.bmp#
+ra_san01b.gnd#ra_san01.gnd#
+ra_san01b.gat#ra_san01.gat#
+ra_san01b.rws#ra_san01.rws#
+유저인터페이스\map\ra_san01b.bmp#유저인터페이스\map\ra_san01.bmp#
 
-ve_fild07_e.gnd#ve_fild07.gnd#
-ve_fild07_e.gat#ve_fild07.gat#
-ve_fild07_e.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_e.bmp#유저인터페이스\map\ve_fild07.bmp#
+thor_v03a.gnd#thor_v03.gnd#
+thor_v03a.gat#thor_v03.gat#
+thor_v03a.rws#thor_v03.rws#
+유저인터페이스\map\thor_v03a.bmp#유저인터페이스\map\thor_v03.bmp#
 
-ve_fild07_f.gnd#ve_fild07.gnd#
-ve_fild07_f.gat#ve_fild07.gat#
-ve_fild07_f.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_f.bmp#유저인터페이스\map\ve_fild07.bmp#
+thor_v03b.gnd#thor_v03.gnd#
+thor_v03b.gat#thor_v03.gat#
+thor_v03b.rws#thor_v03.rws#
+유저인터페이스\map\thor_v03b.bmp#유저인터페이스\map\thor_v03.bmp#
 
-ve_fild07_g.gnd#ve_fild07.gnd#
-ve_fild07_g.gat#ve_fild07.gat#
-ve_fild07_g.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_g.bmp#유저인터페이스\map\ve_fild07.bmp#
+ve_fild03a.gnd#ve_fild03.gnd#
+ve_fild03a.gat#ve_fild03.gat#
+ve_fild03a.rws#ve_fild03.rws#
+유저인터페이스\map\ve_fild03a.bmp#유저인터페이스\map\ve_fild03.bmp#
 
-ve_fild07_h.gnd#ve_fild07.gnd#
-ve_fild07_h.gat#ve_fild07.gat#
-ve_fild07_h.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_h.bmp#유저인터페이스\map\ve_fild07.bmp#
+ve_fild03b.gnd#ve_fild03.gnd#
+ve_fild03b.gat#ve_fild03.gat#
+ve_fild03b.rws#ve_fild03.rws#
+유저인터페이스\map\ve_fild03b.bmp#유저인터페이스\map\ve_fild03.bmp#
 
-ve_fild07_i.gnd#ve_fild07.gnd#
-ve_fild07_i.gat#ve_fild07.gat#
-ve_fild07_i.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_i.bmp#유저인터페이스\map\ve_fild07.bmp#
+ve_fild07a.gnd#ve_fild07.gnd#
+ve_fild07a.gat#ve_fild07.gat#
+ve_fild07a.rws#ve_fild07.rws#
+유저인터페이스\map\ve_fild07a.bmp#유저인터페이스\map\ve_fild07.bmp#
 
-ve_fild07_j.gnd#ve_fild07.gnd#
-ve_fild07_j.gat#ve_fild07.gat#
-ve_fild07_j.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_j.bmp#유저인터페이스\map\ve_fild07.bmp#
+ve_fild07b.gnd#ve_fild07.gnd#
+ve_fild07b.gat#ve_fild07.gat#
+ve_fild07b.rws#ve_fild07.rws#
+유저인터페이스\map\ve_fild07b.bmp#유저인터페이스\map\ve_fild07.bmp#
 
-ve_fild07_k.gnd#ve_fild07.gnd#
-ve_fild07_k.gat#ve_fild07.gat#
-ve_fild07_k.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_k.bmp#유저인터페이스\map\ve_fild07.bmp#
+// 드래곤길들이기-라이브 적용 버전
+httyd_01.gnd#hu_fild05.gnd#
+httyd_01.gat#hu_fild05.gat#
+httyd_01.rsw#hu_fild05.rsw#
+유저인터페이스\map\httyd_01.bmp#유저인터페이스\map\hu_fild05.bmp#
 
-ve_fild07_l.gnd#ve_fild07.gnd#
-ve_fild07_l.gat#ve_fild07.gat#
-ve_fild07_l.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_l.bmp#유저인터페이스\map\ve_fild07.bmp#
+httyd_02.gnd#abyss_01.gnd#
+httyd_02.gat#abyss_01.gat#
+httyd_02.rsw#abyss_01.rsw#
+유저인터페이스\map\httyd_02.bmp#유저인터페이스\map\abyss_01.bmp#
 
-ve_fild07_m.gnd#ve_fild07.gnd#
-ve_fild07_m.gat#ve_fild07.gat#
-ve_fild07_m.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_m.bmp#유저인터페이스\map\ve_fild07.bmp#
+mag_dun02a.gnd#mag_dun02.gnd#
+mag_dun02a.gat#mag_dun02.gat#
+mag_dun02a.rws#mag_dun02.rws#
+유저인터페이스\map\mag_dun02a.bmp#유저인터페이스\map\mag_dun02.bmp#
 
-ve_fild07_n.gnd#ve_fild07.gnd#
-ve_fild07_n.gat#ve_fild07.gat#
-ve_fild07_n.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_n.bmp#유저인터페이스\map\ve_fild07.bmp#
+mag_dun02b.gnd#mag_dun02.gnd#
+mag_dun02b.gat#mag_dun02.gat#
+mag_dun02b.rws#mag_dun02.rws#
+유저인터페이스\map\mag_dun02b.bmp#유저인터페이스\map\mag_dun02.bmp#
 
-ve_fild07_o.gnd#ve_fild07.gnd#
-ve_fild07_o.gat#ve_fild07.gat#
-ve_fild07_o.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_o.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_p.gnd#ve_fild07.gnd#
-ve_fild07_p.gat#ve_fild07.gat#
-ve_fild07_p.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_p.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_q.gnd#ve_fild07.gnd#
-ve_fild07_q.gat#ve_fild07.gat#
-ve_fild07_q.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_q.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_r.gnd#ve_fild07.gnd#
-ve_fild07_r.gat#ve_fild07.gat#
-ve_fild07_r.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_r.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_s.gnd#ve_fild07.gnd#
-ve_fild07_s.gat#ve_fild07.gat#
-ve_fild07_s.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_s.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_t.gnd#ve_fild07.gnd#
-ve_fild07_t.gat#ve_fild07.gat#
-ve_fild07_t.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_t.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_u.gnd#ve_fild07.gnd#
-ve_fild07_u.gat#ve_fild07.gat#
-ve_fild07_u.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_u.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_v.gnd#ve_fild07.gnd#
-ve_fild07_v.gat#ve_fild07.gat#
-ve_fild07_v.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_v.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_w.gnd#ve_fild07.gnd#
-ve_fild07_w.gat#ve_fild07.gat#
-ve_fild07_w.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_w.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_x.gnd#ve_fild07.gnd#
-ve_fild07_x.gat#ve_fild07.gat#
-ve_fild07_x.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_x.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_y.gnd#ve_fild07.gnd#
-ve_fild07_y.gat#ve_fild07.gat#
-ve_fild07_y.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_y.bmp#유저인터페이스\map\ve_fild07.bmp#
-
-ve_fild07_z.gnd#ve_fild07.gnd#
-ve_fild07_z.gat#ve_fild07.gat#
-ve_fild07_z.rsw#ve_fild07.rsw#
-유저인터페이스\map\ve_fild07_z.bmp#유저인터페이스\map\ve_fild07.bmp#
+prt_mk_a.gnd#prt_mk.gnd#
+prt_mk_a.gat#prt_mk.gat#
+prt_mk_a.rws#prt_mk.rws#
+유저인터페이스\map\prt_mk_a.bmp#유저인터페이스\map\prt_mk.bmp#
