@@ -280,6 +280,7 @@ sub processActorAvoid {
 
 				if ($realActorDist > $max_to_delete) {
 					warning TF("Removing way out of sight actor %s at (%d, %d) (distance: %d > max %d)\n", $actor, $actor->{pos_to}{x}, $actor->{pos_to}{y}, $realActorDist, $max_to_delete);
+					Plugins::callHook('actor_avoid_removal', {actor => $actor});
 					$list->remove($actor);
 
 				} elsif ($realActorDist > $max_dist) {
@@ -3250,13 +3251,18 @@ sub processAutoAttack {
 
 			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
 
+			my @skillCancelMonsters;
+			my @looterMonsters;
+
 			my @aggressives;
+
 			my @partyMonsters;
 			my @cleanMonsters;
 			my @droppedMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getAggressives($attackOnRoute) if $attackOnRoute;
+			my $party = $config{'attackAuto_party'} ? 1 : 0;
+			@aggressives = ai_getAggressives($attackOnRoute, $party) if $attackOnRoute;
 
 			# List party monsters
 			foreach (@monstersID) {
@@ -3273,6 +3279,16 @@ sub processAutoAttack {
 				next if ($monster->{avoid});
 
 				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
+
+				if ($monster->{monsterSkillCancel}) {
+					push @skillCancelMonsters, $_;
+					next;
+				}
+
+				if ($monster->{attackLooters}) {
+					push @looterMonsters, $_;
+					next;
+				}
 
 				# List monsters that our slaves are attacking
 				if (
@@ -3354,7 +3370,9 @@ sub processAutoAttack {
 			# We define whether we should attack only monsters in LOS or not
 			my $checkLOS = $config{attackCheckLOS};
 			my $canSnipe = $config{attackCanSnipe};
-			$attackTarget = getBestTarget(\@aggressives, $checkLOS, $canSnipe) ||
+			$attackTarget = getBestTarget(\@skillCancelMonsters, $checkLOS, $canSnipe) ||
+			                getBestTarget(\@looterMonsters, $checkLOS, $canSnipe) ||
+			                getBestTarget(\@aggressives, $checkLOS, $canSnipe) ||
 			                getBestTarget(\@partyMonsters, $checkLOS, $canSnipe) ||
 			                getBestTarget(\@droppedMonsters, $checkLOS, $canSnipe) ||
 			                getBestTarget(\@cleanMonsters, $checkLOS, $canSnipe);
