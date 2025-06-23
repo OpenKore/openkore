@@ -30,10 +30,12 @@ my $hooks = Plugins::addHooks(
 	['configModify', \&onConfigModify, undef],
 	['start3',       \&onstart3, undef],
 	['pos_load_config.txt',       \&checkConfig, undef],
+	['check_triggered_automacros',       \&manage_check_triggered_automacros, undef],
 );
 
 my $chooks = Commands::register(
-	['eventMacro', "eventMacro plugin", \&commandHandler]
+	['eventMacro', "eventMacro plugin", \&commandHandler],
+	['emacro', "eventMacro plugin", \&commandHandler]
 );
 
 my $file_handle;
@@ -51,6 +53,31 @@ sub Unload {
 	}
 	Plugins::delHooks($hooks);
 	Commands::unregister($chooks);
+}
+
+sub manage_check_triggered_automacros {
+	my ($hook, $args) = @_;
+	
+	if (!defined $eventMacro) {
+		$args->{return} = 0;
+		return;
+	} elsif ($eventMacro->{number_of_triggered_automacros} == 0) {
+		$args->{return} = 0;
+		return;
+	}
+	
+	foreach my $array_member (@{$eventMacro->{triggered_prioritized_automacros_index_list}}) {
+
+		my $automacro = $eventMacro->{Automacro_List}->get($array_member->{index});
+
+		next unless $automacro->is_timed_out;
+		
+		$args->{return} = 1;
+		return;
+	}
+	
+	$args->{return} = 0;
+	return;
 }
 
 sub checkConfig {

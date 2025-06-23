@@ -72,14 +72,6 @@ sub new {
 	my %args = @_;
 	my $self = $class->SUPER::new(@_);
 
-	$self->{mapChangeWeight} = $args{mapChangeWeight} || 1;
-	$self->{route_error} = 0;
-	# limit coming from configuration: 0 off, absent = 5
-	$self->{maxRouteErrors} =
-		exists $config{route_maxRouteErrors}
-			? $config{route_maxRouteErrors}
-			: 5;
-
 	if ( $args{map} && !$args{targets} ) {
 		$args{targets} = [ { map => $args{map}, x => $args{x}, y => $args{y} } ];
 	}
@@ -232,24 +224,11 @@ sub iterate {
 			delete $self->{closelist};
 			delete $_->{field} foreach @{ $self->{targets} };
 			$self->setDone();
-            debug "Map Solution Ready for traversal.\n", "calc_map_route";
-            debug sprintf("%s\n", $self->getRouteString()), "calc_map_route";
-            $self->{route_error} = 0;
+			debug "Map Solution Ready for traversal.\n", "calc_map_route";
+			debug sprintf("%s\n", $self->getRouteString()), "calc_map_route";
+
 		} elsif ($self->{done}) {
 			my $destpos = $self->{targets}[0]->{x} ? " (".$self->{targets}[0]->{x}.",".$self->{targets}[0]->{y}.")" : undef;
-			
-			$self->{route_error}++;
-			my $lim = $self->{maxRouteErrors};
-			my $msg = sprintf "Route calculation failed (%d consecutiva%s).",
-                  $self->{route_error},
-                  $self->{route_error} == 1 ? "" : "s";
-			debug   $msg; 
-			if ( $lim > 0 && $self->{route_error} >= $lim ) {
-				warning "Limit ($lim) ​​reached - sending respawn…";
-				Commands::run("respawn");
-				$self->{route_error} = 0;
-			}
-
 			$self->setError(CANNOT_CALCULATE_ROUTE, TF("Cannot calculate a route from %s (%d,%d) to %s%s",
 				$self->{source}{field}->baseName, $self->{source}{x}, $self->{source}{y},
 				$self->{targets}[0]->{map} || T("unknown"), $destpos));
@@ -304,7 +283,7 @@ sub searchStep {
 
 	# selects the node with the lowest walk cost
 	my $parent = (sort {$openlist->{$a}{walk} <=> $openlist->{$b}{walk}} keys %{$openlist})[0];
-	debug "$parent, $openlist->{$parent}{walk}\n", "calc_map_route";
+	debug "[CalcMapRoute - searchStep - Loop] $parent, $openlist->{$parent}{walk}\n", "calc_map_route";
 
 	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
 	#foreach my $parent (keys %{$openlist})
@@ -370,7 +349,11 @@ sub searchStep {
 					$arg{allow_ticket} = $closelist->{$this}{allow_ticket};
 					$arg{zeny_covered_by_tickets} = $closelist->{$this}{zeny_covered_by_tickets};
 					$arg{amount_of_tickets_used} = $closelist->{$this}{amount_of_tickets_used};
-					$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
+					if ($closelist->{$this}{is_airship}) {
+						$arg{steps} = $portals_airships{$from}{dest}{$to}{steps};
+					} else {
+						$arg{steps} = $portals_lut{$from}{dest}{$to}{steps};
+					}
 					$arg{is_command} =  $closelist->{$this}{is_command} || 0;
 					$arg{command} = $closelist->{$this}{command};
 					$arg{is_teleportToSaveMap} = $closelist->{$this}{is_teleportToSaveMap} || 0;
@@ -398,6 +381,7 @@ sub searchStep {
 				my $thisWalk = $penalty + $closelist->{$parent}{walk} + $portals_los{$dest}{$child}; # calculate the final node/child penalty routeWeights + walk distance + accumulated cost
 				if (!exists $closelist->{"$child=$subchild"}) { # check if node is already explorated
 					if ( !exists $openlist->{"$child=$subchild"} || $openlist->{"$child=$subchild"}{walk} > $thisWalk ) { # check the current node cost less
+						debug "[CalcMapRoute - searchStep - Add] from '$parent' to '$child=$subchild' cost '$thisWalk'\n", "calc_map_route", 2;
 						$openlist->{"$child=$subchild"}{parent} = $parent;
 						$openlist->{"$child=$subchild"}{walk} = $thisWalk;
 						$openlist->{"$child=$subchild"}{zeny} = $closelist->{$parent}{zeny} + $portals_lut{$child}{dest}{$subchild}{cost};

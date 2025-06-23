@@ -3270,8 +3270,8 @@ Controle das Chamas
 Tipo: ^777777Passiva^000000
 Resultado: ^777777Aumenta o conhecimento do
 Alquimista na operação das máquinas de cultivo.
-O nível desta habilidade afeta o sucesso no
-processo de cultivo. Eleva também a resistência
+O nível desta habilidade aumenta as chances de sucesso
+da habilidade Cultivo. Eleva a resistência
 do usuário aos danos causados pelo elemento Fogo.^000000
 #
 AM_CALLHOMUN#
@@ -3318,10 +3318,10 @@ Curar Homunculus
 Tipo: ^777777Suporte^000000
 Alvo: ^777777Homunculus^000000
 Resultado: ^777777Recupera o HP de seu Homunculus.
-O funcionamento da habilidade é idêntica à
-habilidade [Curar], e dependente da sua Int e com
-os mesmos custos de SP. Não funciona para curar
-outros jogadores ou a si mesmo.^000000
+O funcionamento da habilidade é idêntica a
+habilidade [Curar] com os mesmos custos de SP.
+O valor de Cura dependente de sua INT.
+Não cura outros jogadores ou a si mesmo.^000000
 #
 AM_RESURRECTHOMUN#
 Ressuscitar Homunculus ^777777(Resurrect)^000000
@@ -8143,6 +8143,8 @@ Rugido da Fera
 Descrição: ^777777O gato mia para enxotar um rato.^000000
 #
 ALL_PARTYFLEE#
+Vento Uivante !!
+Descrição: ^777777Vento com pétalas de flores.^000000
 #
 ALL_ANGEL_PROTECT#
 Muito Obrigado!!

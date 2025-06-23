@@ -3430,7 +3430,7 @@ Falha na solicita??o para recusar todos os chats e sussurros para todos.#
 Status poss?vel para todos os chats e sussurros para todos.#
 Falha na solicita??o para habilitar todos os chats e sussurros para todos#
 Abertura#
-Voc? gostaria de retornar ? tela de login?#
+Você gostaria de retornar à tela de login?#
 Força e Ataque físico melhorados.#
 Força, Inteligência, Destreza e Precisão melhoradas.#
 Defesa e HP melhorados.#
@@ -4214,10 +4214,10 @@ O invent?rio est? pesado.#
 O n?mero m?ximo de itens foi excedido.#
 A IU n?o est? aberta.#
 As informa??es n?o est?o na tabela.#
->> ItemName: {0} / {1} ea / Per?odo de vendas. {3}/{2} {4:02}:{5:02} ~ {8}/{7}/{6} {9:02}:{10:02}#
-Per?odo de vendas: {1}/{0} {2:02}:{3:02}#
+>> ItemName: {0} / {1} ea / Período de vendas. {3}/{2} {4:02}:{5:02} ~ {8}/{7}/{6} {9:02}:{10:02}#
+Período de vendas: {1}/{0} {2:02}:{3:02}#
 ~ {1}/{0}/{2} {3:02}:{4:02}#
-Ser? poss?vel em poucos segundos.#
+Será possível em poucos segundos.#
 C#
 Notifica??o de login#
 Outras configura??es#
@@ -4327,8 +4327,8 @@ Cancelar#
 Lotado#
 Este servidor atingiu o limite de criação de personagens enquanto você estava fazendo a criação. Por favor, escolha o outro servidor disponível.#
 Não aplicável#
-MSI_ERASE_PROHIBIT_UNUSED#
-MSI_ERASE_PROHIBIT_SUCCEED#
-MSI_ERASE_PROHIBIT_FAILED#
-MSI_PROHIBIT_TIME_LOG#
+Log do Chat não foi deletado: O tempo negativo é menor que o tempo de banimento do chat existente.#
+O log do chat foi excluído com sucesso#
+Falha ao excluir o log do chat: Não há log de banimento do chat.#
+Ban: {0} minutos LogTime: {1} ano, {2} mês, {3} dia, {4} hora, {5} minuto, {6} segundos.#
 Calma lá!\nO jogo estará disponível apenas no dia 28 de Maio.\nMas o nome dos seus personagens já foram reservados, não se preocupe!\nObrigado!#

@@ -1,6 +1,4 @@
-# File contributed by #gaaradodesertoo, #cry1493, #matheus8666, #megafuji, #ovorei, #__codeplay, #roxleopardo, #freezing7
 package Network::Send::ROla;
-
 use strict;
 use base    qw(Network::Send::ServerType0);
 use Globals qw($net %config);
@@ -117,7 +115,7 @@ sub sendTokenToServer {
 
 	$self->sendToServer( $msg );
 
-    debug "Sent sendTokenLogin\n", "sendPacket", 2;
+	debug "Sent sendTokenLogin\n", "sendPacket", 2;
 }
 
 sub sendMapLogin {
@@ -140,13 +138,6 @@ sub sendMapLogin {
 	$self->sendToServer( $msg );
 
 	debug "Sent sendMapLogin\n", "sendPacket", 2;
-}
-
-sub sendOtp {
-	my ($self) = @_;
-	my $totp = generate_otp($config{otpSeed});
-	my $packet = pack('v a6 C', 0x0C23, $totp, 0); 
-	$self->sendToServer($packet);
 }
 
 1;

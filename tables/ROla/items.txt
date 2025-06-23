@@ -872,7 +872,6 @@
 1669#Cajado de Cinzas#
 1670#Cajado do RWC#
 1671#Báculo del cazador del mal#
-1671#Báculo del cazador del mal#
 1672#Cajado de Combate#
 1676#Cajado Demoníaco#
 1680#Varinha Rubi#

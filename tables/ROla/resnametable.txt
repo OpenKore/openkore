@@ -109,8 +109,6 @@ gl_chyard_.gat#gl_chyard_.gat#
 gl_chyard_.rsw#gl_chyard_.rsw#
 유저인터페이스\map\gl_chyard_.bmp#유저인터페이스\map\gl_chyard_.bmp#
 
-/*
-글래스트 헤임 상급 봉인
 //옛글래스트헤임 메모리얼 맵복사
 1@gl_kh.gnd#1@gl_k.gnd#
 1@gl_kh.gat#1@gl_k.gat#
@@ -121,7 +119,6 @@ gl_chyard_.rsw#gl_chyard_.rsw#
 2@gl_kh.gat#2@gl_k.gat#
 2@gl_kh.rsw#2@gl_k.rsw#
 유저인터페이스\map\2@gl_kh.bmp#유저인터페이스\map\2@gl_k.bmp#
-*/
 
 //공성전 TE 복사맵
 

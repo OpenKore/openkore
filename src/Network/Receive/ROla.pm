@@ -1,4 +1,3 @@
-# File contributed by #gaaradodesertoo, #cry1493, #cry1493, #matheus8666, #megafuji, #ovorei, #__codeplay
 package Network::Receive::ROla;
 
 use strict;

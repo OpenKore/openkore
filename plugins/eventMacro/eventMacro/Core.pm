@@ -478,7 +478,7 @@ sub create_callbacks {
 
 				next unless (defined $cond_indexes);
 
-				if ($hash_complement =~ /^[a-zA-Z\d]+$/) {
+				if ($hash_complement =~ /^[a-zA-Z\d_]+$/) {
 					foreach my $condition_index (@{$cond_indexes}) {
 						$self->{Event_Related_Static_Variables}{accessed_hash}{$var}{$hash_complement}{$automacro_index}{$condition_index} = 1;
 					}
@@ -636,7 +636,7 @@ sub activated_sub_callback {
 		if ($call->{type} eq 'accessed_array') {
 			next if ($value !~ /^\d+$/);
 		} elsif ($call->{type} eq 'accessed_hash') {
-			next if ($value !~ /^[a-zA-Z\d]+$/);
+			next if ($value !~ /^[a-zA-Z\d_]+$/);
 		}
 
 		my $call_complements = $self->{Dynamic_Variable_Complements}{$call->{type}}{$call->{name}}{$call->{complement}};
@@ -1411,6 +1411,10 @@ sub manage_event_callbacks {
 	}
 
 	if (defined $event_type_automacro_call_index) {
+		
+		my %hookArgs;
+		Plugins::callHook("eventMacro_before_call_check", \%hookArgs);
+		return if ($hookArgs{return});
 
 		my $automacro = $self->{Automacro_List}->get($event_type_automacro_call_index);
 
@@ -1479,9 +1483,13 @@ sub AI_start_checker {
 		if (!$automacro->get_parameter('self_interruptible') && defined $self->{Macro_Runner} && !$self->{Macro_Runner}->self_interruptible && $self->{Macro_Runner}->get_caller_name eq $automacro->get_name()) {
 			next;
 		}
+		
+		my %hookArgs;
+		Plugins::callHook("eventMacro_before_call_check", \%hookArgs);
+		return if ($hookArgs{return});
 
 		message "[eventMacro] Conditions met for automacro '".$automacro->get_name()."', calling macro '".$automacro->get_parameter('call')."'\n", "system";
-
+	
 		$self->call_macro($automacro);
 
 		return;

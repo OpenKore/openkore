@@ -189,7 +189,7 @@ AM_BIOTECHNOLOGY#Biotecnologia#
 AM_CREATECREATURE#Criar Criatura#
 AM_CULTIVATION#Cultivo#
 AM_FLAMECONTROL#Controle das Chamas#
-AM_CALLHOMUN#Criar Homunculus#
+AM_CALLHOMUN#Despertar Homunculus#
 AM_REST#Vaporizar#
 AM_DRILLMASTER#Semeadeira#
 AM_HEALHOMUN#Curar Homunculus#
@@ -588,7 +588,7 @@ NPC_MAGICMIRROR#Reflexão Mágica#
 NPC_SLOWCAST#Conjuração Lenta#
 NPC_CRITICALWOUND#Ferimento Mortal#
 NPC_STONESKIN#Pele Rochosa#
-NPC_ANTIMAGIC#Anti Magia#
+NPC_ANTIMAGIC#Antimagia#
 NPC_WIDECURSE#Espírito dos Amaldiçoados#
 NPC_WIDESTUN#Atordoamento Titânico#
 NPC_VAMPIRE_GIFT#Beijo do Vampiro#
@@ -660,7 +660,7 @@ RG_CLOSECONFINE#Confinamento#
 WZ_SIGHTBLASTER#Explosão Protetora#
 SA_CREATECON#Criar Conversor Elemental#
 SA_ELEMENTWATER#Mudança Elemental - Água#
-HT_PHANTASMIC#Flecha Fantasma#
+HT_PHANTASMIC#Flecha Ilusória#
 BA_PANGVOICE#Voz Dolorosa#
 DC_WINKCHARM#Piscadela#
 BS_UNFAIRLYTRICK#Venda Duvidosa#
@@ -901,7 +901,7 @@ SO_STRIKING#Encanto de Órion#
 SO_WARMER#Aquecer Terreno#
 SO_VACUUM_EXTREME#Tornado#
 SO_VARETYR_SPEAR#Lanças dos Aesir#
-SO_ARRULLO#Onda Hipnótica#
+SO_ARRULLO#Arrullo#
 SO_EL_CONTROL#Domínio Elemental#
 SO_SUMMON_AGNI#Invocar Agni#
 SO_SUMMON_AQUA#Invocar Varuna#
@@ -1128,13 +1128,13 @@ AG_SOUL_VC_STRIKE#Espíritos Ancestrais#
 AG_STRANTUM_TREMOR#Stratum Tremor#
 AG_ALL_BLOOM#Florescer#
 AG_CRYSTAL_IMPACT#Impacto de Cristal#
-AG_TORNADO_STORM#Lufada de Vento#
+AG_TORNADO_STORM#Ciclone#
 AG_TWOHANDSTAFF#Perícia com Cajado de Duas Mãos#
 AG_FLORAL_FLARE_ROAD#Vereda Floral Incandescente#
 AG_ASTRAL_STRIKE#Colisão Astral#
 AG_CLIMAX#Intensificação#
 AG_ROCK_DOWN#Deslize de Pedras#
-AG_STORM_CANNON#Ciclone#
+AG_STORM_CANNON#Lufada de Vento#
 AG_CRIMSON_ARROW#Dardo de Fogo#
 AG_FROZEN_SLASH#Cacos de Gelo#
 IQ_POWERFUL_FAITH#Mantra da Força#
@@ -1164,7 +1164,7 @@ IG_ULTIMATE_SACRIFICE#Ultimato#
 IG_HOLY_SHIELD#Escudo Divino#
 IG_GRAND_JUDGEMENT#Lança do Suplício#
 IG_JUDGEMENT_CROSS#Crux Judicium#
-IG_SHIELD_SHOOTING#Atirar Escudo#
+IG_SHIELD_SHOOTING#Arremessar Escudo#
 IG_OVERSLASH#Talho do Destino#
 IG_CROSS_RAIN#Crux Tempestas#
 CD_REPARATIO#Reparatio#
@@ -1328,7 +1328,7 @@ HN_SELFSTUDY_SOCERY#Mágico Autodidata#
 HN_DOUBLEBOWLINGBASH#Golpe de Tyr#
 HN_MEGA_SONIC_BLOW#Lâminas Devastadoras#
 HN_SHIELD_CHAIN_RUSH#Choque Violento#
-HN_SPIRAL_PIERCE_MAX#Furar em Espiral#
+HN_SPIRAL_PIERCE_MAX#Cortar em Espiral#
 HN_METEOR_STORM_BUSTER#Chuva de Meteoritos#
 HN_JUPITEL_THUNDER_STORM#Tempestade de Júpiter#
 HN_JACK_FROST_NOVA#Esquife Congelante#
@@ -1419,7 +1419,7 @@ MS_MAGNUM#Impacto Explosivo#
 MS_BOWLINGBASH#Impacto de Tyr#
 MS_PARRYING#Aparar Golpe#
 MS_REFLECTSHIELD#Escudo Refletor#
-MS_BERSERK#Fúria Insana#
+MS_BERSERK#Frenesi#
 MA_DOUBLE#Rajada de Flechas#
 MA_SHOWER#Chuva de Flechas#
 MA_SKIDTRAP#Armadilha Escorregadia#
@@ -1427,7 +1427,7 @@ MA_LANDMINE#Armadilha Atordoante#
 MA_SANDMAN#Armadilha Sonífera#
 MA_FREEZINGTRAP#Armadilha Congelante#
 MA_REMOVETRAP#Remover Armadilha#
-MA_CHARGEARROW#Carregar Flechas#
+MA_CHARGEARROW#Disparo Violento#
 MA_SHARPSHOOTING#Tiro Preciso#
 ML_PIERCE#Perfurar#
 ML_BRANDISH#Brandir Lança#
@@ -1446,11 +1446,11 @@ MER_RECUPERATE#Restabelecer#
 MER_MENTALCURE#Cura Mental#
 MER_COMPRESS#Compressa#
 MER_PROVOKE#Provocar#
-MER_AUTOBERSERK#Instinto de Sobrevivência Automático#
+MER_AUTOBERSERK#Instinto de Sobrevivência#
 MER_DECAGI#Diminuir Agilidade#
 MER_SCAPEGOAT#Bode Expiatório#
 MER_LEXDIVINA#Lex Divina#
-MER_ESTIMATION#Propriedades do Monstro#
+MER_ESTIMATION#Sentido Sobrenatural#
 MER_KYRIE#Kyrie Eleison#
 MER_BLESSING#Bênção#
 MER_INCAGI#Aumentar Agilidade#

@@ -54,10 +54,10 @@ ai_homunculus_route_adjust 0.3
 ai_mercenary_route_adjust 0.3
 
 # Ignore monster for x seconds if there is no route to it
-ai_attack_failedLOS 5
+ai_attack_failedLOS 12
 
 # Give up attacking a monster if it can't be reached within x seconds
-ai_attack_giveup 10
+ai_attack_giveup 6
 
 ai_homunculus_check_monster_auto 0.2
 ai_mercenary_check_monster_auto 0.2
@@ -70,33 +70,33 @@ ai_homunculus_attack_waitAfterKill 0.3
 ai_mercenary_attack_waitAfterKill 0.3
 
 # Every x seconds loop the attack logic routine (send move, attack, skill, avoid, etc)
-ai_attack_main 0.2
+ai_attack_main 0.1
 ai_homunculus_attack_main 0.1
 ai_mercenary_attack_main 0.1
 
 ai_attack_unstuck 2.75
-ai_attack_unfail 7
+ai_attack_unfail 12
 
-ai_route_unstuck 1
+ai_route_unstuck 2
 
 # Pause for the specified number of seconds after taking something,
 # it increases the interval between taking several items and between
 # taking the last item and continuing the actions.
-ai_items_take_delay 0.5
+ai_items_take_delay 1
 
 # When your monster died, start checking for loot after x seconds
-ai_items_take_start 0.6
+ai_items_take_start 0.3
 
 # Stop checking for loot x seconds after it has begun checking
-ai_items_take_end 0.9
+ai_items_take_end 0.6
 
 # When standing near an item, send the 'take' packet every x seconds until
 # the item has been taken.
 ai_take .4
 
 # Give up if unable to pickup item after x seconds
-ai_take_giveup 1
-ai_items_gather_giveup 1
+ai_take_giveup 3
+ai_items_gather_giveup 3
 
 # Every x seconds, check items for gathering
 ai_items_gather_auto .3
@@ -206,10 +206,10 @@ ai_repair 4
 ai_route_escape 8
 
 # Don't change the following timeouts!
-ai_sync 7
+ai_sync 12
 
-injectSync 12
-injectKeepAlive 240
+injectSync 5
+injectKeepAlive 12
 welcomeText 4
 patchserver 120
 

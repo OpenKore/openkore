@@ -777,8 +777,8 @@ sub parsePortalsAirship {
 		$line =~ s/(.*)[\s\t]+#.*$/$1/;
 
 		#airpship "airplane_01","We are heading to Izlude.","izlude",200,73;
-		if ($line =~ /^airpship\s+"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*,\s*"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*;$/) {
-			my ($source_map, $source_x, $source_y, $message, $dest_map, $dest_x, $dest_y) = ($1, $2, $3, $4, $5, $6, $7);
+		if ($line =~ /^airpship\s+"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*"([^"]+)"\s*,\s*"([\w-]+)"\s*,\s*(\d+)\s*,\s*(\d+)\s*(,\s*(.+)\s*)?;$/) {
+			my ($source_map, $source_x, $source_y, $message, $dest_map, $dest_x, $dest_y, $steps) = ($1, $2, $3, $4, $5, $6, $7, $9);
 			my $portal = "$source_map $source_x $source_y";
 			my $dest = "$dest_map $dest_x $dest_y";
 			$$r_hash{$portal}{'source'}{'map'} = $source_map;
@@ -789,6 +789,9 @@ sub parsePortalsAirship {
 			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $dest_y;
 			$$r_hash{$portal}{'dest'}{$dest}{'message'} = $message;
 			$$r_hash{$portal}{'dest'}{$dest}{enabled} = 1; # is available permanently (can be used when calculating a route)
+			if (defined $steps && $steps) {
+				$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $steps;
+			}
 			#$$r_hash{$portal}{'dest'}{$dest}{active} = 0;
 		}
 	}

@@ -548,10 +548,8 @@ sub initHandlers {
 			["read <mail_# | mail_id>", T("open the selected Rodex mail")],
 			["getitems", T("get items of current rodex mail")],
 			["getitems <mail_# | mail_id>", T("get items of rodex mail")],
-			["getitems all", T("get items from all rodex mails")],
 			["getzeny", T("get zeny of current rodex mail")],
 			["getzeny <mail_# | mail_id>", T("get zeny of rodex mail")],
-			["getzeny all", T("get zeny from all rodex mails")],
 			["write", T("open a box to start write a rodex mail")],
 			["write <player_name | self>", T("open a box to start write a rodex mail to the specified player")],
 			["settarget <player_name|self>", T("set target of rodex mail")],
@@ -7743,42 +7741,6 @@ sub cmdRodex {
 		message T("Sending rodex mail.\n");
 		$messageSender->rodex_send_mail();
 
-	} elsif (($arg1 eq 'getitems' || $arg1 eq 'getzeny') && $arg2 eq 'all') {
-		if (!defined $rodexList) {
-			error T("Rodex foi fechado.\n");
-			return;
-		} elsif (defined $rodexWrite) {
-			error T("Você está escrevendo um Rodex.\n");
-			return;
-		}
-
-		message TF("Starting '%s all' Processamento de Rodex.\n", $arg1);
-
-		foreach my $mail_id (keys %{$rodexList->{mails}}) {
-			my $mail = $rodexList->{mails}{$mail_id};
-			my $openType = $mail->{openType};
-
-			message TF("Processando rodex ID: %d\n", $mail_id);
-
-			if ($arg1 eq 'getitems') {
-				if ($mail->{attach} eq 'i' || $mail->{attach} eq 'z+i') {
-					$messageSender->rodex_read_mail($openType, $mail_id, 0);
-					$messageSender->rodex_request_items($mail_id, 0, $openType);
-					$messageSender->rodex_delete_mail($openType, $mail_id, 0);
-					message TF("Itens do email ID: %d\n", $mail_id);
-				}
-			} elsif ($arg1 eq 'getzeny') {
-				if ($mail->{attach} eq 'z' || $mail->{attach} eq 'z+i') {
-					$messageSender->rodex_read_mail($openType, $mail_id, 0);
-					$messageSender->rodex_request_zeny($mail_id, 0, $openType);
-					$messageSender->rodex_delete_mail($openType, $mail_id, 0);
-					message TF("Zeny do email ID: %d\n", $mail_id);
-				}
-			}
-		}
-
-		message TF("Processamento '%s all' finalizado.\n", $arg1);
-
 	} elsif ($arg1 eq 'getitems') {
 		if (!defined $rodexList) {
 			error T("Your rodex mail box is closed.\n");
@@ -7792,9 +7754,9 @@ sub cmdRodex {
 			error T("You are not reading a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 ne "" and $arg2 !~ /^\d+$/ and $arg2 ne "all") {
+		} elsif ($arg2 ne "" and $arg2 !~ /^\d+$/) {
 			error T("Syntax Error in function 'rodex getitems' (Get items of rodex mail)\n" .
-				"Usage: rodex getitems [<mail_# | mail_id> | all]\n");
+				"Usage: rodex getitems [<mail_# | mail_id>]\n");
 			return;
 
 		} elsif ($arg2 =~/^\d{1,3}$/) {
@@ -7837,9 +7799,9 @@ sub cmdRodex {
 			error T("You are not reading a rodex mail.\n");
 			return;
 
-		} elsif ($arg2 ne "" and $arg2 !~ /^\d+$/ and $arg2 ne "all") {
+		} elsif ($arg2 ne "" and $arg2 !~ /^\d+$/) {
 			error T("Syntax Error in function 'rodex getzeny' (Get zeny of rodex mail)\n" .
-				"Usage: rodex getzeny [<mail_# | mail_id> | all]\n");
+				"Usage: rodex getzeny [<mail_# | mail_id>]\n");
 			return;
 
 		} elsif ($arg2 =~/^\d{1,3}$/) {

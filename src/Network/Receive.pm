@@ -34,7 +34,6 @@ use Compress::Zlib;
 use AI;
 use Globals;
 use Field;
-use InventoryList;
 #use Settings;
 use Log qw(message warning error debug);
 use FileParsers qw(updateMonsterLUT updateNPCLUT);
@@ -3940,13 +3939,7 @@ sub vender_items_list {
 
 	my $player = Actor::get($args->{venderID});
 
-	eval {
-		$venderItemList->clear();
-	};
-	if ($@) {
-		warning "Error clearing venderItemList: $@\n";
-		$venderItemList = InventoryList->new;
-	}
+	$venderItemList->clear;
 
 	my $msg = TF("%s\n" .
 		"#  Name                                      Type                           Price Amount\n",
@@ -3957,19 +3950,7 @@ sub vender_items_list {
  		@$item{qw( price amount ID type nameID identified broken upgrade cards options location sprite_id )} = unpack $item_pack, substr $args->{itemList}, $i, $item_len;
 
 		$item->{name} = itemName($item);
-		
-		# Check if item with same ID already exists before adding
-		if (defined $item->{ID}) {
-			my $existing_item = $venderItemList->getByID($item->{ID});
-			if (!$existing_item) {
-				$venderItemList->add($item);
-			} else {
-				debug("Skipping duplicate vender item with ID: " . unpack("V", $item->{ID}) . " (Name: $item->{name})\n", "vending", 2);
-				next; # Skip this item and continue to next iteration
-			}
-		} else {
-			$venderItemList->add($item);
-		}
+		$venderItemList->add($item);
 
 		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
@@ -4872,18 +4853,8 @@ sub quest_update_mission_hunt {
 
 		my $mission_id;
 
-		# Mission is saved as questID and server sent questID/hunt_id_cont
-		if (exists $quest->{missions} && exists $mission->{questID} && exists $mission->{hunt_id_cont}) {
-			foreach my $current_key (keys %{$quest->{missions}}) {
-				my $quest_mission = $quest->{missions}->{$current_key};
-				if (exists $quest_mission->{hunt_id_cont} && $quest_mission->{hunt_id_cont} == $mission->{hunt_id_cont}) {
-					$mission_id = $current_key;
-					last;
-				}
-			}
-		}
 		# Mission is saved as hunt_id and server sent hunt_id
-		elsif (exists $mission->{hunt_id} && exists $quest->{missions}->{$mission->{hunt_id}}) {
+		if (exists $mission->{hunt_id} && exists $quest->{missions}->{$mission->{hunt_id}}) {
 			$mission_id = $mission->{hunt_id};
 
 		# Mission is saved as mob_id and server sent mob_id
@@ -7111,35 +7082,44 @@ sub item_exists {
 # Makes an item disappear from the ground.
 # 00A1 <id>.L (ZC_ITEM_DISAPPEAR)
 sub item_disappeared {
-	my ($self, $args) = @_;
+	my ( $self, $args ) = @_;
 	return unless changeToInGameState();
 
-	my $item = $itemsList->getByID($args->{ID});
-	if ($item) {
-		if ($config{attackLooters} && AI::action ne "sitAuto" && pickupitems($item->{name}, $item->{nameID}) > 0) {
-			for my Actor::Monster $monster (@$monstersList) { # attack looter code
-				if (my $control = mon_control($monster->name,$monster->{nameID})) {
-					next if ( ($control->{attack_auto}  ne "" && $control->{attack_auto} == -1)
-						|| ($control->{attack_lvl}  ne "" && $control->{attack_lvl} > $char->{lv})
-						|| ($control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job})
-						|| ($control->{attack_hp}   ne "" && $control->{attack_hp} > $char->{hp})
-						|| ($control->{attack_sp}   ne "" && $control->{attack_sp} > $char->{sp})
-						);
+	my $item = $itemsList->getByID( $args->{ID} );
+	if ( $item ) {
+		if ( $config{attackLooters} && AI::action ne "sitAuto" && pickupitems( $item->{name}, $item->{nameID} ) > 0 ) {
+			for my Actor::Monster $monster ( @$monstersList ) {    # attack looter code
+				if ( my $control = mon_control( $monster->name, $monster->{nameID} ) ) {
+					next
+						if ( ( $control->{attack_auto} ne "" && $control->{attack_auto} == -1 )
+						|| ( $control->{attack_lvl} ne ""  && $control->{attack_lvl} > $char->{lv} )
+						|| ( $control->{attack_jlvl} ne "" && $control->{attack_jlvl} > $char->{lv_job} )
+						|| ( $control->{attack_hp} ne ""   && $control->{attack_hp} > $char->{hp} )
+						|| ( $control->{attack_sp} ne ""   && $control->{attack_sp} > $char->{sp} ) );
 				}
-				if (distance($item->{pos}, $monster->{pos}) <= ($config{attackLooters_dist} || 0)) {
-					attack($monster->{ID});
-					message TF("Attack Looter: %s looted %s\n", $monster->nameIdx, $item->{name}), "looter";
-					last;
+				if ( distance( $item->{pos}, $monster->{pos} ) <= ( $config{attackLooters_dist} || 0 ) ) {
+					my %plugin_args;
+					$plugin_args{monster} = $monster;
+					$plugin_args{item}    = $item;
+					$plugin_args{return}  = 0;
+					Plugins::callHook( 'check_attackLooter' => \%plugin_args );
+					unless ( $plugin_args{return} ) {
+						message TF( "Looter: %s looted %s - Adding it to looters list to be attacked\n",
+							$monster->nameIdx, $item->{name} ),
+							"looter";
+						$monster->{attackLooters} = 1;
+						last;
+					}
 				}
 			}
 		}
 
 		debug "Item Disappeared: $item->{name} ($item->{binID})\n", "parseMsg_presence";
 		my $ID = $args->{ID};
-		$items_old{$ID} = $item->deepCopy();
+		$items_old{$ID}              = $item->deepCopy();
 		$items_old{$ID}{disappeared} = 1;
-		$items_old{$ID}{gone_time} = time;
-		$itemsList->removeByID($ID);
+		$items_old{$ID}{gone_time}   = time;
+		$itemsList->removeByID( $ID );
 	}
 }
 
@@ -11587,10 +11567,9 @@ sub skill_cast {
 	$control = mon_control($monster->name,$monster->{nameID}) if ($monster);
 	if (AI::state == AI::AUTO && $control->{skillcancel_auto}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
-			message TF("Monster Skill - switch Target to : %s (%d)\n", $monster->name, $monster->{binID});
-			$char->sendAttackStop;
-			AI::dequeue;
-			attack($sourceID);
+			message TF( "Monster Skill - %s (%d) - Adding it to monsterSkillCancel list to be attacked\n",
+				$monster->name, $monster->{binID} );
+			$monster->{monsterSkillCancel} = 1;
 		}
 
 		# Skill area casting -> running to monster's back

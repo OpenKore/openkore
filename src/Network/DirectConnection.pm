@@ -504,7 +504,6 @@ sub checkConnection {
 			$conState_tries++;
 			$captcha_state = 0;
 
-			$self->{enable_checksum} = 0;
 			if ($master->{charServer_ip}) {
 				$self->serverConnect($master->{charServer_ip}, $master->{charServer_port});
 			} elsif ($servers[$config{'server'}]) {
@@ -564,7 +563,6 @@ sub checkConnection {
 		if(!$self->serverAlive() && $config{'char'} ne "" && !$conState_tries) {
 			message T("Connecting to Character Select Server...\n"), "connection";
 			$conState_tries++;
-			$self->{enable_checksum} = 0;
 			$self->serverConnect($servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
 
 			# call plugin's hook to determine if we can continue the connection
@@ -602,8 +600,6 @@ sub checkConnection {
 				$ip = $master->{mapServer_ip} || $config{forceMapIP} || $map_ip;
 				$port = $master->{mapServer_port} || $map_port;
 			}
-			$self->{enable_checksum} = 1;
-			$self->{counter_checksum} = 0;
 			$self->serverConnect($ip, $port);
 
 			# call plugin's hook to determine if we can continue the connection

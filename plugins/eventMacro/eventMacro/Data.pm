@@ -11,7 +11,7 @@ our @perl_name;
 
 our $valid_var_characters = qr/\.?[a-zA-Z][a-zA-Z\d_]*/;
 
-our $general_variable_qr = qr/(?:\$$valid_var_characters(?:\[\d+\]|\{[a-zA-Z\d]+\})?|\@$valid_var_characters|\%$valid_var_characters)/;
+our $general_variable_qr = qr/(?:\$$valid_var_characters(?:\[\d+\]|\{[a-zA-Z\d_]+\})?|\@$valid_var_characters|\%$valid_var_characters)/;
 
 our $general_wider_variable_qr = qr/(?:\$$valid_var_characters(?:\[.+?\]|\{.+?\})?|\@$valid_var_characters|\%$valid_var_characters)/;
 
@@ -21,7 +21,7 @@ our $array_variable_qr = qr/\@$valid_var_characters/;
 our $accessed_array_variable_qr = qr/\$$valid_var_characters\[\d+\]/;
 
 our $hash_variable_qr = qr/\%$valid_var_characters/;
-our $accessed_hash_variable_qr = qr/\$$valid_var_characters\{[a-zA-Z\d]+\}/;
+our $accessed_hash_variable_qr = qr/\$$valid_var_characters\{[a-zA-Z\d_]+\}/;
 
 our $macro_keywords_character = '&';
 

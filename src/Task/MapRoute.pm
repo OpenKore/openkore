@@ -221,6 +221,51 @@ sub iterate {
 	} elsif ( $self->{mapSolution}[0]{is_airship} ) {
 		if (!$self->{timeout} || timeOut($self->{timeout}, 0.5)) {
 			$self->{timeout} = time;
+			
+			my $min_npc_dist = 8;
+			my $max_npc_dist = 10;
+			my $realPos = calcPosFromPathfinding($field, $self->{actor});
+			my $dist_to_npc = blockDistance($realPos, $self->{mapSolution}[0]{pos});
+
+			if ( $self->{mapSolution}[0]{steps} && $dist_to_npc > $max_npc_dist) {
+				if (!exists $self->{mapSolution}[0]{retry} || !defined $self->{mapSolution}[0]{retry}) {
+					$self->{mapSolution}[0]{retry} = 0;
+				}
+
+				if ( $self->{maxTime} && time - $self->{time_start} > $self->{maxTime} ) {
+					# We spent too long a time.
+					debug "MapRoute - We spent too much time; bailing out.\n", "map_route";
+					$self->setError(TOO_MUCH_TIME, "Too much time spent on route traversal.");
+
+				} elsif ( Task::Route->getRoute(\@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos}) ) {
+					# NPC is reachable from current position
+					# >> Then "route" to it
+
+					debug "Walking towards the Airship NPC, min_npc_dist $min_npc_dist, max_npc_dist $max_npc_dist, current dist_to_npc $dist_to_npc\n", "map_route";
+					my $task = new Task::Route(
+						actor => $self->{actor},
+						x => $self->{mapSolution}[0]{pos}{x},
+						y => $self->{mapSolution}[0]{pos}{y},
+						field => $field,
+						maxTime => $self->{maxTime},
+						distFromGoal => $min_npc_dist,
+						avoidWalls => $self->{avoidWalls},
+						randomFactor => $self->{randomFactor},
+						useManhattan => $self->{useManhattan},
+						targetNpcPos => 1,
+						solution => \@solution
+					);
+					$self->setSubtask($task);
+
+				} else {
+					# Error, NPC is not reachable from current pos
+					debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "map_route";
+					error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field->baseName, @{$self->{actor}{pos}}{qw(x y)}, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
+					shift @{$self->{mapSolution}};
+				}
+
+				return;
+			}
 
 			if (!defined $self->{localBroadcast}) {
 				debug "MapRoute - Wainting for broadcast with message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
@@ -229,30 +274,98 @@ sub iterate {
 			} else {
 				debug "MapRoute - last broadcast '".($self->{localBroadcast})."' matches expected message '".($self->{mapSolution}[0]{airship_message})."'\n", "route";
 				
-				if ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos} ) ) {
-					# Airship portal is reachable from current position
-					my $task = new Task::Route(
-						actor => $self->{actor},
-						x => $self->{mapSolution}[0]{pos}{x},
-						y => $self->{mapSolution}[0]{pos}{y},
-						field => $field,
-						maxTime => $self->{maxTime},
-						avoidWalls => $self->{avoidWalls},
-						randomFactor => $self->{randomFactor},
-						useManhattan => $self->{useManhattan},
-						solution => \@solution
-					);
-					$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
-					$self->setSubtask($task);
+				if ( $self->{mapSolution}[0]{steps}) {
 
-				} else {
-					warning TF("No LOS from %s (%s,%s) to Airship Portal at (%s,%s).\n",
-						$field->baseName, @{$self->{actor}{pos}}{qw(x y)},
-						$self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}),
-						"map_route";
-					error T("Cannot reach portal from current position\n"), "map_route";
-					shift @{$self->{mapSolution}};
-				}
+						if ( $self->{substage} eq 'Waiting for Warp' ) {
+							$self->{timeout} = time unless $self->{timeout};
+
+							if (exists $self->{mapSolution}[0]{error} || timeOut($self->{timeout}, $timeout{ai_route_npcTalk}{timeout} || 10)) {
+								delete $self->{substage};
+								delete $self->{timeout};
+
+								warning TF("Failed to teleport using airship NPC at %s (%s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}), "map_route";
+								warning TF("NPC error: %s.\n", $self->{mapSolution}[0]{error}), "map_route" if (exists $self->{mapSolution}[0]{error});
+
+								if ($self->{mapSolution}[0]{retry} < ($config{route_maxNpcTries} || 5)) {
+									$self->{mapSolution}[0]{retry}++;
+									warning "Retrying airship teleport for the ".$self->{mapSolution}[0]{retry}."th time...\n", "map_route";
+									delete $self->{mapSolution}[0]{error};
+
+								} else {
+									if (!exists $self->{mapSolution}[0]{plugin_retry}) {
+										$self->{mapSolution}[0]{plugin_retry} = 0;
+									}
+									my %plugin_args = (
+										'x'            => $self->{mapSolution}[0]{pos}{x},
+										'y'            => $self->{mapSolution}[0]{pos}{y},
+										'steps'        => $self->{mapSolution}[0]{steps},
+										'portal'       => $self->{mapSolution}[0]{portal},
+										'plugin_retry' => $self->{mapSolution}[0]{plugin_retry},
+										'return'       => 0
+									);
+
+									Plugins::callHook('npc_airship_teleport_missing' => \%plugin_args);
+
+									if ($plugin_args{return}) {
+										$self->{mapSolution}[0]{retry} = 0;
+										$self->{mapSolution}[0]{plugin_retry}++;
+										$self->{mapSolution}[0]{pos}{x} = $plugin_args{x};
+										$self->{mapSolution}[0]{pos}{y} = $plugin_args{y};
+										$self->setNpcTalk();
+									} else {
+										# NPC sequence is a failure
+										if ($config{route_removeMissingPortals_NPC}) {
+											# We delete that portal and try again
+											my $missed = {};
+											$missed->{time} = time;
+											$missed->{name} = "$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}";
+											$missed->{portal} = $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+											push(@portals_lut_missed, $missed);
+											delete $portals_lut{"$self->{mapSolution}[0]{map} $self->{mapSolution}[0]{pos}{x} $self->{mapSolution}[0]{pos}{y}"};
+										}
+
+										error TF("Failed to teleport using airship NPC at %s (%s,%s) after %s tries, ignoring NPC and recalculating route.\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{mapSolution}[0]{retry}), "map_route";
+										$self->initMapCalculator();	# redo MAP router
+									}
+								}
+							}
+
+						} else {
+							my ($from,$to) = split /=/, $self->{mapSolution}[0]{portal};
+							debug TF("[mapRoute] Calling setNpcTalk to teleport using airship NPC at %s (%s,%s) - dest (%s %s,%s).\n", $field->baseName, $self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}, $self->{dest}{map}, $self->{dest}{pos}{x}, $self->{dest}{pos}{y}), "route";
+							# We have enough money for this service.
+							$self->setNpcTalk();
+						}
+
+					} else {
+						if ( Task::Route->getRoute( \@solution, $field, $self->{actor}{pos}, $self->{mapSolution}[0]{pos} ) ) {
+							# Airship portal is reachable from current position
+							my $task = new Task::Route(
+								actor => $self->{actor},
+								x => $self->{mapSolution}[0]{pos}{x},
+								y => $self->{mapSolution}[0]{pos}{y},
+								field => $field,
+								maxTime => $self->{maxTime},
+								avoidWalls => $self->{avoidWalls},
+								randomFactor => $self->{randomFactor},
+								useManhattan => $self->{useManhattan},
+								solution => \@solution
+							);
+							$task->{$_} = $self->{$_} for qw(targetNpcPos attackID sendAttackWithMove attackOnRoute noSitAuto LOSSubRoute meetingSubRoute isRandomWalk isFollow isIdleWalk isSlaveRescue isMoveNearSlave isEscape isItemTake isItemGather isDeath isToLockMap runFromTarget);
+							$self->setSubtask($task);
+
+						} else {
+							warning TF("No LOS from %s (%s,%s) to Airship Portal at (%s,%s).\n",
+								$field->baseName, @{$self->{actor}{pos}}{qw(x y)},
+								$self->{mapSolution}[0]{pos}{x}, $self->{mapSolution}[0]{pos}{y}),
+								"map_route";
+							error T("Cannot reach portal from current position\n"), "map_route";
+							shift @{$self->{mapSolution}};
+						}
+					}
+
+
+				
 			}
 		}
 
@@ -743,7 +856,7 @@ sub localBroadcast {
 	my (undef, $args, $holder) = @_;
 	my $self = $holder->[0];
 	my $message = $args->{Msg};
-	warning "[MapRoute] Received localBroadcast '".($message)."'.\n";
+	debug "[MapRoute] Received localBroadcast '".($message)."'.\n";
 	$self->{localBroadcast} = $message;
 }
 

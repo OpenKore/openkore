@@ -276,7 +276,7 @@ sub iterate {
 	my $ai_npc_talk_wait_to_answer = $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} ? $timeout{'ai_npc_talk_wait_to_answer'}{'timeout'} : 1.5;
 	my $ai_npc_talk_wait_after_close_to_cancel = $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_close_to_cancel'}{'timeout'} : 0.5;
 	my $ai_npc_talk_wait_after_cancel_to_destroy = $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} ? $timeout{'ai_npc_talk_wait_after_cancel_to_destroy'}{'timeout'} : 0.5;
-	my $ai_npc_talk_wait_before_continue = $timeout{'ai_npc_talk_wait_before_continue'}{'timeout'} ? $timeout{'ai_npc_talk_wait_before_continue'}{'timeout'} : 0.5;
+	my $ai_npc_talk_wait_before_continue = $timeout{'ai_npc_talk_wait_before_continue'}{'timeout'} ? $timeout{'ai_npc_talk_wait_before_continue'}{'timeout'} : 0.7;
 	if ($self->{map_change} || $self->{disconnected}) {
 
 		#A conversation started right after mapchange/disconnection (eg. payon guards)

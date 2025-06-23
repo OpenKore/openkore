@@ -1,42 +1,42 @@
-# Packet Analyzer - Ferramenta de Análise de Pacotes RO
+# Packet Analyzer - RO Packet Analysis Tool
 
-## O que faz?
-Captura pacotes de rede do Ragnarok Online e gera automaticamente sugestões de formato Perl para usar no OpenKore.
+## What does it do?
+Captures Ragnarok Online network packets and automatically generates Perl format suggestions for use in OpenKore.
 
-## Uso Básico
+## Basic Usage
 
-### Comando Simples
+### Simple Command
 ```bash
-python packet_analyzer.py <IP> <PORTA> [opções]
+python packet_analyzer.py <IP> <PORT> [options]
 ```
 
-### Exemplo com Faixa de IPs (Gravity)
+### Example with IP Range (Gravity)
 ```bash
 python packet_analyzer.py 172.65.0.0/16 * -o FreyaFull -i 4
 ```
 
-**Explicação do comando:**
-- `172.65.0.0/16` = Monitora TODOS os IPs da faixa 172.65.x.x (rede da Gravity)
-- `*` = Monitora TODAS as portas (não apenas uma específica)
-- `-o FreyaFull` = Salva os resultados na pasta "FreyaFull"
-- `-i 4` = Usa a interface de rede número 4
+**Command explanation:**
+- `172.65.0.0/16` = Monitors ALL IPs in the 172.65.x.x range (Gravity network)
+- `*` = Monitors ALL ports (not just a specific one)
+- `-o FreyaFull` = Saves results to the "FreyaFull" folder
+- `-i 4` = Uses network interface number 4
 
-### Outras Opções Úteis
+### Other Useful Options
 ```bash
-# Ver quais interfaces estão disponíveis
+# See which interfaces are available
 python packet_analyzer.py --list-interfaces
 
-# Modo silencioso (sem mostrar pacotes na tela)
+# Silent mode (don't show packets on screen)
 python packet_analyzer.py 172.65.0.0/16 * -o FreyaFull -i 4 -q
 
-# IP específico, porta específica
-python packet_analyzer.py 192.168.1.100 6900 -o MeuServidor
+# Specific IP, specific port
+python packet_analyzer.py 192.168.1.100 6900 -o MyServer
 ```
 
-## O que é gerado?
+## What is generated?
 
-### 1. Arquivo `perl_suggestions.txt`
-Contém sugestões prontas para usar no OpenKore:
+### 1. File `perl_suggestions.txt`
+Contains ready-to-use suggestions for OpenKore:
 ```perl
 # 0x0825 - login_packet  
 '0825' => ['login_packet', 'v V Z51 a17', [qw(len version username mac)]],
@@ -45,66 +45,66 @@ Contém sugestões prontas para usar no OpenKore:
 '0437' => ['actor_action', 'a4 C', [qw(targetID action)]],
 ```
 
-### 2. Pasta `examples/`
-Exemplos reais de cada tipo de pacote capturado para você verificar se está correto.
+### 2. Folder `examples/`
+Real examples of each captured packet type for you to verify if it's correct.
 
-### 3. Arquivo `packet_analysis_report.json`
-Relatório completo com estatísticas (mais técnico).
+### 3. File `packet_analysis_report.json`
+Complete report with statistics (more technical).
 
-## Instalação Rápida
+## Quick Installation
 
 ```bash
 pip install scapy colorama
 ```
 
-**Windows**: Baixe e instale Npcap primeiro.
+**Windows**: Download and install Npcap first.
 
-## Permissões
+## Permissions
 
-- **Windows**: Execute PowerShell como Administrador
+- **Windows**: Run PowerShell as Administrator
 - **Linux/Mac**: Use `sudo python packet_analyzer.py ...`
 
-## Fluxo de Trabalho
+## Workflow
 
-1. **Execute o comando** durante uma sessão do jogo
-2. **Pare com Ctrl+C** quando tiver capturado o suficiente
-3. **Abra o arquivo `perl_suggestions.txt`** na pasta de output
-4. **Copie as sugestões** para seu arquivo de recv/send do OpenKore
-5. **Teste** se os pacotes funcionam
+1. **Run the command** during a game session
+2. **Stop with Ctrl+C** when you've captured enough
+3. **Open the `perl_suggestions.txt` file** in the output folder
+4. **Copy the suggestions** to your OpenKore recv/send file
+5. **Test** if the packets work
 
-## Exemplo Prático
+## Practical Example
 
 ```bash
-# 1. Inicie a captura
-python packet_analyzer.py 172.65.0.0/16 * -o MinhaAnalise -i 4
+# 1. Start capture
+python packet_analyzer.py 172.65.0.0/16 * -o MyAnalysis -i 4
 
-# 2. Faça login no jogo, ande um pouco, use algumas skills
-# 3. Pare com Ctrl+C
+# 2. Log into the game, walk around, use some skills
+# 3. Stop with Ctrl+C
 
-# 4. Veja os resultados
-cat MinhaAnalise/perl_suggestions.txt
+# 4. View results
+cat MyAnalysis/perl_suggestions.txt
 ```
 
-## Dicas
+## Tips
 
-- **Capture por 5-10 minutos** fazendo várias ações no jogo
-- **Quanto mais ações diferentes**, melhores as sugestões
-- **Use `-q`** se quiser ver menos informações na tela
-- **Use `--list-interfaces`** se não souber qual interface usar
+- **Capture for 5-10 minutes** doing various actions in game
+- **The more different actions**, the better the suggestions
+- **Use `-q`** if you want to see less information on screen
+- **Use `--list-interfaces`** if you don't know which interface to use
 
-## Formatos Perl Mais Comuns
+## Most Common Perl Formats
 
-| Código | O que é | Exemplo |
+| Code | What it is | Example |
 |---------|---------|---------|
-| `a4` | ID de 4 bytes | Player ID, Item ID |
-| `Z24` | Texto de até 24 chars | Nome do player |
-| `v` | Número pequeno (0-65535) | HP, SP, quantidade |
-| `V` | Número grande | Experiência, Zeny |
-| `C` | Número tiny (0-255) | Level, tipo |
+| `a4` | 4-byte ID | Player ID, Item ID |
+| `Z24` | Text up to 24 chars | Player name |
+| `v` | Small number (0-65535) | HP, SP, quantity |
+| `V` | Large number | Experience, Zeny |
+| `C` | Tiny number (0-255) | Level, type |
 
 ## Troubleshooting
 
-**Não vê pacotes?**
-- Confirme o IP do servidor com `ping`
-- Teste com uma interface diferente
-- Use `sudo` (Linux/Mac) ou Admin (Windows)
+**Don't see packets?**
+- Confirm server IP with `ping`
+- Test with a different interface
+- Use `sudo` (Linux/Mac) or Admin (Windows)
