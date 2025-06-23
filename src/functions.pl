@@ -381,9 +381,6 @@ sub loadDataFiles {
 	Settings::addTableFile('achievement_list.txt',
 		internalName => 'achievement_list.txt',
 		loader => [\&parseAchievementFile, \%achievements], mustExist => 0);
-	Settings::addTableFile('monsters_name.txt',
-		internalName => 'monsters_name.txt',
-		loader => [\&parseROLUT, \%monsters_name], mustExist => 0);
 
 	use utf8;
 
