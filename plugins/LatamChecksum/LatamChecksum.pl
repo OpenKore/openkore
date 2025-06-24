@@ -93,8 +93,7 @@ sub serverSendPre {
 	my $msg       = $args->{msg};
 	my $messageID = uc( unpack( "H2", substr( $$msg, 1, 1 ) ) ) . uc( unpack( "H2", substr( $$msg, 0, 1 ) ) );
 
-	if ( $::net->version == 1 ) {
-		debug "Checksum disabled - XKore mode 1 detected.\n", "latamChecksum";
+	if ( ref($::net) eq 'Network::XKore' ) {
 		return;
 	}
 
