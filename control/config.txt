@@ -25,10 +25,14 @@ XKore 0
 XKore_port 2350
 XKore_dll NetRedirect.dll
 XKore_injectDLL 0
-XKore_autoAttachIfOneExe 1
+XKore_autoAttachIfOneExe 0
 XKore_silent 1
 XKore_bypassBotDetection 0
 XKore_exeName ragexe.exe
+
+# XKore 1 / Proxy configuration
+XKore_hookIp 127.0.0.1
+XKore_hookport 2350
 
 # XKore 2 / Proxy configuration
 XKore_listenIp 127.0.0.1

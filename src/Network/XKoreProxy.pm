@@ -320,6 +320,7 @@ sub onClientData {
 	}
 	$self->decryptMessageID(\$msg);
 
+	$msg = $self->{tokenizer}->slicePacket($msg, \$additional_data); # slice packet if needed
 
 	$self->{tokenizer}->add($msg, 1);
 

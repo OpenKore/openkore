@@ -25,7 +25,7 @@ use Misc;
 use AI;
 use utf8;
 use Network::Send ();
-use Log           qw(message warning error);
+use Log           qw(message warning error debug);
 
 my $counter = 0;
 my $enabled = 0;
@@ -92,6 +92,11 @@ sub serverSendPre {
 	my ( $self, $args ) = @_;
 	my $msg       = $args->{msg};
 	my $messageID = uc( unpack( "H2", substr( $$msg, 1, 1 ) ) ) . uc( unpack( "H2", substr( $$msg, 0, 1 ) ) );
+
+	if ( $::net->version == 1 ) {
+		debug "Checksum disabled - XKore mode 1 detected.\n", "latamChecksum";
+		return;
+	}
 
 	if ( $counter == 0 ) {
 		if ( $messageID eq '0B1C' ) {

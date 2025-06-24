@@ -41,13 +41,13 @@ my $currentClientKey = 0;
 # Initialize X-Kore mode. Throws Network::XKore::CannotStart on error.
 sub new {
 	my $class = shift;
-	my $port = $config{XKore_port} || 2350;
+	my $port = $config{XKore_hookport} || 2350;
 	my $self = bless {}, $class;
 
 	undef $@;
 	$self->{server} = new IO::Socket::INET->new(
 		Listen		=> 5,
-		LocalAddr	=> 'localhost',
+		LocalAddr	=> $config{XKore_hookIp} || 'localhost',
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self->{server}) {
