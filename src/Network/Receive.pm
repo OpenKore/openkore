@@ -8057,12 +8057,10 @@ sub received_login_token {
 
         error(($login_type == 300 ? "OTP token malformed" : "Wrong OTP") . " for account $config{username}\n", 'connection');
 
-        die 'ERROR: otpSeed is not set in config.txt' unless $config{otpSeed};
-
-        unless (Plugins::isLoaded('otp')) {
-            error "OTP plugin not loaded. Cannot generate OTP for $config{username}\n", 'connection';
-            Misc::quit();
-        }
+        unless ($config{otpSeed}) {
+			error 'ERROR: otpSeed is not set in config.txt', 'connection';
+			Misc::quit();
+		}
 
         my $otp;
         Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
