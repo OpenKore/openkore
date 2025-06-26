@@ -1,6 +1,6 @@
 # ====================
 # ROLA_strings v1.0
-#
+# Plugin author: Rubim, UnknownXD
 # ====================
 
 package LATAMTranslate;

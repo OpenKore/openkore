@@ -1,3 +1,6 @@
+# Plugin author: Rubim
+# Plugin modified by: UnknownXD, richardkomarcheski
+
 package mapNormalizer;
 
 use strict;
