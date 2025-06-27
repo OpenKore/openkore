@@ -8022,6 +8022,7 @@ sub received_login_token {
     my $login_type = $args->{login_type};
 
     if ($login_type == 0) {
+		$self->{otp_fail_count} = 0;
         # rAthena uses 0064 not 0825
         $messageSender->sendTokenToServer(
             $config{username},
@@ -8045,14 +8046,31 @@ sub received_login_token {
 		}
         $messageSender->sendOtpToServer($otp);
 
-	} elsif ($login_type == 300) {
-        error "OTP token malformed for account $config{username}\n", 'connection';
-        my $otp = $interface->query(T('Please enter the OTP code: '));
-        $messageSender->sendOtpToServer($otp);
-    
-    } elsif ($login_type == 500) {
-        error "Wrong OTP for account $config{username}\n", 'connection';
-        my $otp = $interface->query(T('Please enter the OTP code: '));
+	} elsif ($login_type == 300 || $login_type == 500) {
+		$self->{otp_fail_count}++;
+		error "OTP failure attempt $self->{otp_fail_count} for $config{username}\n", 'connection';
+
+		if ($self->{otp_fail_count} >= 3) {
+			error "Exceeded maximum OTP attempts for account $config{username}. Aborting.\n", 'connection';
+			Misc::quit();
+		}
+
+        error(($login_type == 300 ? "OTP token malformed" : "Wrong OTP") . " for account $config{username}\n", 'connection');
+
+        unless ($config{otpSeed}) {
+			error 'ERROR: otpSeed is not set in config.txt', 'connection';
+			Misc::quit();
+		}
+
+        my $otp;
+        Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
+
+        unless (defined $otp && length $otp) {
+            error "No Plugin returned an OTP code for account $config{username}\n", 'connection';
+            debug "If OTP keeps failing, make sure your system clock is accurate (e.g., synced with NTP)\n", 'connection';
+            $otp = $interface->query(T('Please enter the OTP code: '));
+        }
+
         $messageSender->sendOtpToServer($otp);
     
     } elsif ($login_type == 600) {
