@@ -211,7 +211,7 @@ sub slicePacket {
 	if ( defined($$additional_data) && length($$additional_data) > 0 && $::net->getState() >= 4 ) {		
 		my $checksum_byte = substr($$additional_data, 0, 1);
 		$$additional_data = substr($$additional_data, 1);
-		message TF("Removed checksum byte %s from %s [%d bytes] [additional data: %d bytes]\n", unpack("H*", $checksum_byte), $switch, length($packet), length($$additional_data)), "connection";
+		debug TF("Removed checksum byte %s from %s [%d bytes] [additional data: %d bytes]\n", unpack("H*", $checksum_byte), $switch, length($packet), length($$additional_data)), "connection";
 	}
 
 	return $packet; # real packet

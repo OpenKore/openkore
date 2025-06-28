@@ -194,7 +194,7 @@ sub serverSend {
 			# Generate otp
 			my $generated_otp;
 			Plugins::callHook('request_otp_login', { otp => \$generated_otp, seed => $config{otpSeed} });
-			warning "generated OTP $generated_otp\n", "xkoreProxy";
+			debug "Generated OTP $generated_otp\n", "xkoreProxy";
 			# Rebuild send otp login packet
 			$msg = $messageSender->reconstruct({
 				switch => "send_otp_login",
