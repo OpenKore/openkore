@@ -51,9 +51,6 @@ sub new {
 sub guild_name {
 	my ($self, $args) = @_;
 
-	# Skip in XKore mode 1 / 3
-	return if $self->{net}->version == 1;
-
 	my $guildID = $args->{guildID};
 	my $emblemID = $args->{emblemID};
 	my $mode = $args->{mode};
@@ -63,6 +60,9 @@ sub guild_name {
 	$char->{guild}{emblem} = $emblemID;
 
 	debug "guild name: $guildName\n";
+
+	# Skip in XKore mode 1 / 3
+	return if $self->{net}->version == 1;
 
 	# emulate client behavior
 	$messageSender->sendGuildRequestInfo(3);
