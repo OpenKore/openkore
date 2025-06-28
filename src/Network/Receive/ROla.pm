@@ -2,6 +2,9 @@ package Network::Receive::ROla;
 
 use strict;
 use base qw(Network::Receive::ServerType0);
+use Globals qw($char $messageSender);
+use I18N qw(bytesToString);
+use Log qw(debug);
 
 sub new {
 	my ( $class ) = @_;
@@ -43,6 +46,28 @@ sub new {
 	$self->{rodex_read_mail_item_pack}    = 'v V C3 a16 a4 C a4 a25';
 
 	return $self;
+}
+
+sub guild_name {
+	my ($self, $args) = @_;
+
+	my $guildID = $args->{guildID};
+	my $emblemID = $args->{emblemID};
+	my $mode = $args->{mode};
+	my $guildName = bytesToString($args->{guildName});
+	$char->{guild}{name} = $guildName;
+	$char->{guildID} = $guildID;
+	$char->{guild}{emblem} = $emblemID;
+
+	debug "guild name: $guildName\n";
+
+	# Skip in XKore mode 1 / 3
+	return if $self->{net}->version == 1;
+
+	# emulate client behavior
+	$messageSender->sendGuildRequestInfo(3);
+	$messageSender->sendGuildRequestInfo(1);		# Requests for Members list, list job title
+
 }
 
 1;
