@@ -51,6 +51,9 @@ sub new {
 sub guild_name {
 	my ($self, $args) = @_;
 
+	# Skip in XKore mode 1 / 3
+	return if $self->{net}->version == 1;
+
 	my $guildID = $args->{guildID};
 	my $emblemID = $args->{emblemID};
 	my $mode = $args->{mode};
