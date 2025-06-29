@@ -6,7 +6,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# Copyright (c) 2005-2006 OpenKore Development Team
+# Copyright (c) 2005-2025 OpenKore Development Team
 ############################################################
 ##
 # MODULE DESCRIPTION: Poseidon GameGuard query handler.
@@ -24,7 +24,6 @@ use Utils qw(dataWaiting);
 use Plugins;
 use Misc;
 
-use constant DEFAULT_POSEIDON_SERVER_PORT => 24390;
 use constant POSEIDON_SUPPORT_URL => 'https://openkore.com/wiki/Poseidon';
 
 our $instance;
@@ -139,8 +138,8 @@ sub getResult {
 sub getInstance {
 	if (!$instance) {
 		$instance = Poseidon::Client->_new(
-			$config{poseidonServer} || 'localhost',
-			$config{poseidonPort} || DEFAULT_POSEIDON_SERVER_PORT);
+			$config{poseidonQueryServerIp} || 'localhost',
+			$config{poseidonQueryServerPort} || 24390);
 	}
 	return $instance;
 }

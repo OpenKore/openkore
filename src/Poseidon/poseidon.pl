@@ -7,7 +7,7 @@
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
-# Copyright (c) 2021 OpenKore Development Team
+# Copyright (c) 2025 OpenKore Development Team
 #
 # Credits:
 # isieo - schematic of XKore 2 and other interesting ideas
@@ -50,11 +50,11 @@ sub initialize {
 
 	print "Starting servers...\n";
 
-	$roServer = new Poseidon::RagnarokServer($config{ragnarokserver_port}, $config{ragnarokserver_ip});
-	print "Ragnarok Online Server Ready At : " . $roServer->getHost() . ":" . $roServer->getPort() . "\n";
+	$roServer = new Poseidon::RagnarokServer($config{poseidonRoServerPort}, $config{poseidonRoServerIp});
+	print "Poseidon RO server is ready   : " . $roServer->getHost() . ":" . $roServer->getPort() . "\n";
 
-	$queryServer = new Poseidon::QueryServer($config{queryserver_port}, $config{queryserver_ip}, $roServer);
-	print "Query Server Ready At : " . $queryServer->getHost() . ":" . $queryServer->getPort() . "\n";
+	$queryServer = new Poseidon::QueryServer($config{poseidonQueryServerPort}, $config{poseidonQueryServerIp}, $roServer);
+	print "Poseidon Query server is ready: " . $queryServer->getHost() . ":" . $queryServer->getPort() . "\n";
 
 	print ">>> Poseidon $version initialized (Debug : ". (($config{debug}) ? "On" : "Off") . ") <<<\n\n";
 	print "Please read " . POSEIDON_SUPPORT_URL . " for further instructions.\n";
