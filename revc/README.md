@@ -38,8 +38,18 @@ cd revc
 
 ### 1. Instalação do Plugin
 1. **Copie** o arquivo `recv.asi` para a pasta onde está instalado o cliente Ragnarok Online
-2. **Inicie** o cliente Ragnarok Online normalmente
-3. O plugin será **carregado automaticamente** e abrirá um console de debug
+2. **Inicie** o cliente Ragnarok Online pela primeira vez
+3. O plugin será **carregado automaticamente** e criará um arquivo `config_recv.txt` com configurações padrão
+4. **IMPORTANTE**: Feche o cliente RO e **configure o arquivo `config_recv.txt`** antes de usar:
+   - Configure os endereços de memória corretos para sua versão do cliente RO:
+     - `clientSubAddress` - Endereço da função de envio
+     - `instanceRAddress` - Endereço da instância do CRagConnection  
+     - `recvPtrAddress` - Endereço do ponteiro da função recv
+   - **⚠️ ALERTA**: Os endereços `clientSubAddress`, `instanceRAddress` e `recvPtrAddress` podem ser extraídos usando **IDA Pro** ou ferramentas similares de engenharia reversa para analisar o executável do cliente RO
+   - Configure IP e porta do servidor xKore se necessário
+   - Configure teclas de atalho personalizadas (opcional)
+   - Configure modo multi-cliente (opcional)
+5. **Reinicie** o cliente Ragnarok Online após configurar o arquivo
 
 ### 2. Configuração da Porta
 Quando o Ragnarok for iniciado, o console de debug aparecerá perguntando:
