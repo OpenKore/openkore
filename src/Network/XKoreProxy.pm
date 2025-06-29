@@ -184,24 +184,6 @@ sub serverSend {
 				token => $token,
 			});
 		}
-
-		# Handle 'send_otp_login'
-		elsif ($switch eq "0C23" && $config{otpSeed}) {
-			# Log send otp login packet
-			warning "Modifying packet 'send_otp_login'...\n", "xkoreProxy";
-			# Parse send otp login packet
-			my ($otp, $padding) = unpack('a6 C', substr($msg, 2));
-			# Generate otp
-			my $generated_otp;
-			Plugins::callHook('request_otp_login', { otp => \$generated_otp, seed => $config{otpSeed} });
-			debug "Generated OTP $generated_otp\n", "xkoreProxy";
-			# Rebuild send otp login packet
-			$msg = $messageSender->reconstruct({
-				switch => "send_otp_login",
-				otp => $generated_otp,
-				padding => $padding,
-			});
-		}
 	}
 
 	$self->{server}->serverSend($msg);
@@ -282,6 +264,20 @@ sub clientSend {
 
 		if ($flag == 1 and $config{loginPinCode}) {
 			$messageSender->sendLoginPinCode($seed, 0);
+		}
+	}
+
+	elsif ($switch eq "0AE3") { # received_login_token
+		my $login_type = unpack('l', substr($msg, 4, 8));
+
+		# OTP request
+		if ( ($login_type eq 400 || $login_type eq 1000) && $config{otpSeed} ) {
+			my $otp;
+			Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
+
+			if (defined $otp && length $otp) {
+				$messageSender->sendOtpToServer($otp);
+			}
 		}
 	}
 
@@ -716,7 +712,11 @@ sub modifyPacketIn {
 	} elsif ($switch eq "0AE3") { # If token was received, we need to connect to login server
 			# Parse token response
 			my ($len, $login_type, $flag, $login_token) = unpack('v l Z20 Z*', substr($msg, 2));
-			if ($login_type eq 0) {
+
+			# Check if this is not OTP related:
+			# - OTP failure attempt (300 or 500)
+			# - OTP request (400 or 1000)
+			if ( $login_type ne 300 && $login_type ne 400 && $login_type ne 500 && $login_type ne 1000 ) {
 				# If token response contains a login token, we need to connect to the master server
 				if (length($login_token)) {
 						# Get master config
