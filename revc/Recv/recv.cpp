@@ -107,7 +107,7 @@ void AllocateConsole() {
 
 // Função para depuração
 void debug(const char* msg) {
-    std::cout << "[DEPURAÇÃO] " << msg << std::endl;
+    std::cout << "[DEBUG] " << msg << std::endl;
 }
 
 // Função para converter bytes para hex
@@ -152,10 +152,10 @@ int WINAPI hooked_recv(SOCKET s, char* buf, int len, int flags) {
     int result = original_recv(s, buf, len, flags);
 
     if (result > 0) {
-        std::cout << "=== RECV INTERCEPTED ===" << std::endl;
+        std::cout << "=== RECV INTERCEPTADO ===" << std::endl;
         std::cout << "Socket: " << s << std::endl;
-        std::cout << "Length: " << result << " bytes" << std::endl;
-        std::cout << "Data (hex):\n" << BytesToHex(buf, result) << std::endl;
+        std::cout << "Tamanho: " << result << " bytes" << std::endl;
+        std::cout << "Dados (hex):\n" << BytesToHex(buf, result) << std::endl;
 
         // Salva o socket do servidor RO
         roServer = s;
@@ -247,12 +247,18 @@ int ParseKeyString(const std::string& keyStr, bool& requiresCtrl, bool& requires
 bool CreateDefaultConfig(const std::string& filename) {
     std::ofstream fout(filename);
     if (!fout.is_open()) {
-        std::cout << "[ERRO] Não foi possível criar o arquivo de configuração: " << filename << std::endl;
+        std::cout << "[ERRO] Nao foi possivel criar o arquivo de configuracao: " << filename << std::endl;
         return false;
     }
 
+    fout << "# ================================================\n";
     fout << "# Arquivo de configuração para recv.cpp\n";
+    fout << "# ================================================\n";
+    fout << "# IMPORTANTE: Configure os endereços corretos antes de usar!\n";
+    fout << "# Os valores abaixo são apenas exemplos/padrão\n";
+    fout << "#\n";
     fout << "# Endereços de memória do cliente RO (valores em hexadecimal)\n";
+    fout << "# Estes valores devem ser obtidos através de análise do cliente\n";
     fout << "clientSubAddress=B7EF50\n";
     fout << "instanceRAddress=B7F4B0\n";
     fout << "recvPtrAddress=1455BB8\n";
@@ -275,7 +281,7 @@ bool CreateDefaultConfig(const std::string& filename) {
 
     fout.close();
     
-    std::cout << "[INFO] Arquivo de configuração padrão criado: " << filename << std::endl;
+    std::cout << "[SUCESSO] Arquivo de configuracao padrao criado: " << filename << std::endl;
     return true;
 }
 
@@ -283,15 +289,28 @@ bool CreateDefaultConfig(const std::string& filename) {
 bool LoadConfig(const std::string& filename) {
     std::ifstream fin(filename);
     if (!fin.is_open()) {
-        std::cout << "[INFO] Arquivo de configuração não encontrado. Criando arquivo padrão..." << std::endl;
+        std::cout << "\n=== AVISO IMPORTANTE ===" << std::endl;
+        std::cout << "[AVISO] Arquivo de configuracao '" << filename << "' nao encontrado!" << std::endl;
+        std::cout << "[INFO] Criando arquivo de configuracao padrao..." << std::endl;
+        
         if (!CreateDefaultConfig(filename)) {
             return false;
         }
         
+        std::cout << "\n*** ATENCAO: CONFIGURE O ARQUIVO ANTES DE USAR! ***" << std::endl;
+        std::cout << "1. Abra o arquivo '" << filename << "' que foi criado" << std::endl;
+        std::cout << "2. Configure os enderecos de memoria corretos:" << std::endl;
+        std::cout << "   - clientSubAddress" << std::endl;
+        std::cout << "   - instanceRAddress" << std::endl;
+        std::cout << "   - recvPtrAddress" << std::endl;
+        std::cout << "3. Configure o IP e porta do servidor xKore se necessario" << std::endl;
+        std::cout << "4. Reinicie o programa apos configurar" << std::endl;
+        std::cout << "========================\n" << std::endl;
+        
         // Tenta abrir novamente após criar
         fin.open(filename);
         if (!fin.is_open()) {
-            std::cout << "[ERRO] Não foi possível abrir o arquivo de configuração criado: " << filename << std::endl;
+            std::cout << "[ERRO] Nao foi possivel abrir o arquivo de configuracao criado: " << filename << std::endl;
             return false;
         }
     }
@@ -363,11 +382,11 @@ bool LoadConfig(const std::string& filename) {
         }
     }
     catch (std::exception& e) {
-        std::cout << "[ERRO] Exceção ao converter valor: " << e.what() << std::endl;
+        std::cout << "[ERRO] Excecao ao converter valor: " << e.what() << std::endl;
         return false;
     }
 
-    std::cout << "[INFO] Configuration loaded successfully:\n\n"
+    std::cout << "[INFO] Configuracao carregada com sucesso:\n\n"
         << "  clientSubAddress = 0x" << std::hex << clientSubAddress << "\n"
         << "  instanceRAddress = 0x" << std::hex << CRagConnection_instanceR_address << "\n"
         << "  recvPtrAddress   = 0x" << std::hex << recvPtrAddress << std::dec << "\n"
@@ -384,31 +403,31 @@ bool LoadConfig(const std::string& filename) {
 bool ApplyHook() {
     DWORD recv_ptr_address = recvPtrAddress; // lido do config
 
-    std::cout << "Attempting to apply hook at address: 0x" << std::hex << recv_ptr_address << std::dec << std::endl;
+    std::cout << "Tentando aplicar hook no endereco: 0x" << std::hex << recv_ptr_address << std::dec << std::endl;
 
     if (IsBadReadPtr((void*)recv_ptr_address, sizeof(DWORD))) {
-        std::cout << "ERRO: Endereço inválido para leitura!" << std::endl;
+        std::cout << "ERRO: Endereco invalido para leitura!" << std::endl;
         return false;
     }
 
     original_recv = *(recv_func_t*)recv_ptr_address;
-    std::cout << "Original recv pointer: 0x" << std::hex << (DWORD)original_recv << std::dec << std::endl;
+    std::cout << "Ponteiro recv original: 0x" << std::hex << (DWORD)original_recv << std::dec << std::endl;
 
     if (original_recv == nullptr) {
-        std::cout << "ERRO: Ponteiro original é nulo!" << std::endl;
+        std::cout << "ERRO: Ponteiro original eh nulo!" << std::endl;
         return false;
     }
 
     *(recv_func_t*)recv_ptr_address = hooked_recv;
-    std::cout << "New pointer (hook): 0x" << std::hex << (DWORD)hooked_recv << std::dec << std::endl;
+    std::cout << "Novo ponteiro (hook): 0x" << std::hex << (DWORD)hooked_recv << std::dec << std::endl;
 
     recv_func_t current_ptr = *(recv_func_t*)recv_ptr_address;
     if (current_ptr == hooked_recv) {
-        std::cout << "Hook applied successfully!" << std::endl;
+        std::cout << "Hook aplicado com sucesso!" << std::endl;
         return true;
     }
     else {
-        std::cout << "ERRO: Hook não foi aplicado corretamente!" << std::endl;
+        std::cout << "ERRO: Hook nao foi aplicado corretamente!" << std::endl;
         return false;
     }
 }
@@ -513,13 +532,13 @@ void processPacket(Packet* packet) {
     instanceR = (originalInstanceR)(CRagConnection_instanceR_address);
     switch (packet->ID) {
     case 'S': // Enviar pacote para o servidor RO
-        debug("Sending Data From Openkore to Server...");
+        debug("Enviando dados do Openkore para o servidor...");
         if (roServer != INVALID_SOCKET && isConnected(roServer)) {
             sendFunc(instanceR(), packet->len, packet->data);
             std::cout << "Pacote enviado para servidor RO (" << packet->len << " bytes)" << std::endl;
         }
         else {
-            std::cout << "ERRO: Socket do servidor RO não disponível" << std::endl;
+            std::cout << "ERRO: Socket do servidor RO nao disponivel" << std::endl;
         }
         break;
 
@@ -528,7 +547,7 @@ void processPacket(Packet* packet) {
         break;
 
     case 'K': default: // Keep-alive
-        debug("Received Keep-Alive Packet...");
+        debug("Pacote Keep-Alive recebido...");
         break;
     }
 }
@@ -541,7 +560,7 @@ DWORD WINAPI koreConnectionMain(LPVOID lpParam) {
     DWORD koreClientTimeout, koreClientPingTimeout, reconnectTimeout;
     string koreClientRecvBuf;
 
-    debug("Thread started...");
+    debug("Thread iniciada...");
     koreClientTimeout = GetTickCount();
     koreClientPingTimeout = GetTickCount();
     reconnectTimeout = 0;
@@ -559,7 +578,7 @@ DWORD WINAPI koreConnectionMain(LPVOID lpParam) {
 
         // Se ainda não conectado e não marcamos a mensagem, imprimimos "Aplique o Hook e abra o Openkore" UMA ÚNICA VEZ
         if ((!isAlive || !isConnected(koreClient)) && !waitingPrinted) {
-            std::cout << "\n- If you have already applied the hook (" << applyHookKey << "), open Openkore." << std::endl;
+            std::cout << "\n- Se voce ja aplicou o hook (" << applyHookKey << "), abra o Openkore." << std::endl;
             waitingPrinted = true;
         }
 
@@ -592,13 +611,13 @@ DWORD WINAPI koreConnectionMain(LPVOID lpParam) {
         // Receber dados do servidor xKore
         if (isAlive) {
             if (!imalive) {
-                debug("Connected to xKore-Server");  // Imprime apenas UMA VEZ, ao receber o primeiro pacote
+                debug("Conectado ao servidor xKore");  // Imprime apenas UMA VEZ, ao receber o primeiro pacote
                 imalive = true;
             }
 
             int ret = readSocket(koreClient, buf, BUF_SIZE);
             if (ret == SF_CLOSED) {
-                debug("xKore server exited");
+                debug("Servidor xKore desconectado");
                 closesocket(koreClient);
                 koreClient = INVALID_SOCKET;
                 isAlive = false;
@@ -608,7 +627,7 @@ DWORD WINAPI koreConnectionMain(LPVOID lpParam) {
             else if (ret > 0) {
                 Packet* packet;
                 int next = 0;
-                debug("Received Packet from xKore...");
+                debug("Pacote recebido do xKore...");
                 koreClientRecvBuf.append(buf, ret);
 
                 while ((packet = unpackPacket(koreClientRecvBuf.c_str(), koreClientRecvBuf.size(), next))) {
@@ -700,8 +719,8 @@ DWORD WINAPI KeyboardMonitorThread(LPVOID lpParam) {
 // Função para solicitar porta do usuário (para allowMultiClient=true)
 DWORD GetUserPort() {
     char input[256];
-    std::cout << "\n[MULTI-CLIENT MODE]" << std::endl;
-    std::cout << "Digite a porta do servidor xKore (padrão: " << koreServerPort << "): ";
+    std::cout << "\n[MODO MULTI-CLIENTE]" << std::endl;
+    std::cout << "Digite a porta do servidor xKore (padrao: " << koreServerPort << "): ";
     
     if (fgets(input, sizeof(input), stdin)) {
         // Remove quebra de linha
@@ -709,7 +728,7 @@ DWORD GetUserPort() {
         
         // Se string vazia (só Enter), usa porta padrão
         if (strlen(input) == 0) {
-            std::cout << "Usando porta padrão: " << koreServerPort << std::endl;
+            std::cout << "Usando porta padrao: " << koreServerPort << std::endl;
             return koreServerPort;
         }
         
@@ -720,12 +739,12 @@ DWORD GetUserPort() {
             return static_cast<DWORD>(inputPort);
         }
         else {
-            std::cout << "Porta inválida! Usando porta padrão: " << koreServerPort << std::endl;
+            std::cout << "Porta invalida! Usando porta padrao: " << koreServerPort << std::endl;
             return koreServerPort;
         }
     }
     
-    std::cout << "Erro na leitura! Usando porta padrão: " << koreServerPort << std::endl;
+    std::cout << "Erro na leitura! Usando porta padrao: " << koreServerPort << std::endl;
     return koreServerPort;
 }
 
@@ -733,7 +752,7 @@ DWORD GetUserPort() {
 void init() {
     AllocateConsole();
     std::cout << "=== RECV HOOK DLL ===" << std::endl;
-    std::cout << "Architecture: x86 (32-bit)" << std::endl;
+    std::cout << "Arquitetura: x86 (32-bit)" << std::endl;
 
     // Tenta carregar arquivo de configuração (incluindo IP e porta)
     if (!LoadConfig("config_recv.txt")) {
@@ -747,9 +766,9 @@ void init() {
         koreServerPort = GetUserPort();
     }
 
-    std::cout << "\n[INFO] Controls:\n" << std::endl;
-    std::cout << "  " << applyHookKey << " - Apply hook" << std::endl;
-    std::cout << "  " << removeHookKey << " - Remove hook" << std::endl;
+    std::cout << "\n[INFO] Controles:\n" << std::endl;
+    std::cout << "  " << applyHookKey << " - Aplicar hook" << std::endl;
+    std::cout << "  " << removeHookKey << " - Remover hook" << std::endl;
     std::cout << "====================\n" << std::endl;
 
     // Inicializa Winsock
@@ -763,19 +782,19 @@ void init() {
     }
 
     // Agora cria a thread principal de conexão com Kore
-    debug("Creating Main thread...");
+    debug("Criando thread principal...");
     hThread = CreateThread(NULL, 0, koreConnectionMain, NULL, 0, NULL);
     if (hThread) {
-        debug("Main Thread created...");
+        debug("Thread principal criada...");
     }
     else {
-        debug("Failed to Create Thread...");
+        debug("Falha ao criar thread...");
     }
 }
 
 // Função finish (igual, RemoveHook se necessário)
 void finish() {
-    debug("Closing threads...");
+    debug("Fechando threads...");
     keepMainThread = false;
 
     if (hook_applied) {
