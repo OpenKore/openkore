@@ -267,6 +267,20 @@ sub clientSend {
 		}
 	}
 
+	elsif ($switch eq "0AE3") { # received_login_token
+		my $login_type = unpack('l', substr($msg, 4, 8));
+
+		# OTP request
+		if ( ($login_type eq 400 || $login_type eq 1000) && $config{otpSeed} ) {
+			my $otp;
+			Plugins::callHook('request_otp_login', { otp => \$otp, seed => $config{otpSeed} });
+
+			if (defined $otp && length $otp) {
+				$messageSender->sendOtpToServer($otp);
+			}
+		}
+	}
+
 	$msg = $self->modifyPacketIn($msg, $switch) unless ($dontMod);
 	if ($config{debugPacket_ro_received}) {
 		debug "Modified packet sent to client\n", "xkoreProxy";
@@ -530,6 +544,9 @@ sub modifyPacketIn {
 
 		debug "Modifying Account Info packet...\n", "xkoreProxy";
 
+		# Parse account info packet
+		my ($len, $sessionID, $accountID, $sessionID2, $lastLoginIP, $lastLoginTime, $accountSex, $serverInfo) = unpack('v a4 a4 a4 a4 a26 C x17 a*', substr($msg, 2));
+
 		my $xKoreCharServer = $servers[$config{server}];
 
 		$self->{nextIp} = $self->{charServerIp} = $xKoreCharServer->{ip};
@@ -544,9 +561,11 @@ sub modifyPacketIn {
 
 		$msg = $packetParser->reconstruct({
 			switch => $switch,
+			len => 62 + length($xKoreCharServer),
 			sessionID => $sessionID,
 			accountID => $accountID,
 			sessionID2 => $sessionID2,
+			lastLoginIP => $lastLoginIP,
 			accountSex => $accountSex,
 			servers => \@serverList,
 		});
@@ -691,21 +710,27 @@ sub modifyPacketIn {
 		# queue the packet as requiring client's response in time
 		$self->{packetPending} = $msg;
 	} elsif ($switch eq "0AE3") { # If token was received, we need to connect to login server
-        # Parse token response
-        my ($len, $login_type, $flag, $login_token) = unpack('v l Z20 Z*', substr($msg, 2));
-        # If token response contains a login token, we need to connect to the master server
-        if (length($login_token)) {
-            # Get master config
-            my $master = $masterServer = $masterServers{$config{'master'}};
-            # Set next server to connect
-            $self->{nextIp} = $master->{ip};
-            $self->{nextPort} = $master->{port};
-        } else {
-            error T("Authentication failed, token not received: $flag.\n"), "connection";
-        }
-        # Disconnect from token server
-        message T("Closing connection to Token Server\n"), 'connection' if (!$self->{packetReplayTrial});
-        $self->serverDisconnect(1);
+			# Parse token response
+			my ($len, $login_type, $flag, $login_token) = unpack('v l Z20 Z*', substr($msg, 2));
+
+			# Check if this is not OTP related:
+			# - OTP failure attempt (300 or 500)
+			# - OTP request (400 or 1000)
+			if ( $login_type ne 300 && $login_type ne 400 && $login_type ne 500 && $login_type ne 1000 ) {
+				# If token response contains a login token, we need to connect to the master server
+				if (length($login_token)) {
+						# Get master config
+						my $master = $masterServer = $masterServers{$config{'master'}};
+						# Set next server to connect
+						$self->{nextIp} = $master->{ip};
+						$self->{nextPort} = $master->{port};
+				} else {
+						error T("Authentication failed, token not received: $flag.\n"), "connection";
+				}
+				# Disconnect from token server
+				message T("Closing connection to Token Server\n"), 'connection' if (!$self->{packetReplayTrial});
+				$self->serverDisconnect(1);
+			}
     }
 
 	return $msg;

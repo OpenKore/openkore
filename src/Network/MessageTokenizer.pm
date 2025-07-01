@@ -25,6 +25,8 @@ use Modules 'register';
 use bytes;
 no encoding 'utf8';
 use enum qw(KNOWN_MESSAGE UNKNOWN_MESSAGE ACCOUNT_ID);
+use Translation qw(T TF);
+use Log qw(message warning error debug);
 
 ##
 # Network::MessageTokenizer->new(Hash* rpackets)
@@ -204,6 +206,14 @@ sub slicePacket {
 			}
 		}
 	}
+
+	# Remove checksum byte from the packet we just read if connected to map server (ref: LatamChecksum.pl)
+	if ( defined($$additional_data) && length($$additional_data) > 0 && $::net->getState() >= 4 ) {		
+		my $checksum_byte = substr($$additional_data, 0, 1);
+		$$additional_data = substr($$additional_data, 1);
+		debug TF("Removed checksum byte %s from %s [%d bytes] [additional data: %d bytes]\n", unpack("H*", $checksum_byte), $switch, length($packet), length($$additional_data)), "connection";
+	}
+
 	return $packet; # real packet
 }
 
