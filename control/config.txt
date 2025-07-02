@@ -15,6 +15,7 @@ otpSeed
 # They must be the same as Query Server config in Poseidon.txt
 poseidonServer 127.0.0.1
 poseidonPort 24390
+poseidonTimeout 5
 
 bindIp
 forceMapIP

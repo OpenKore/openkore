@@ -99,3 +99,18 @@ item_list_start 0B08
 expandedItemID 1
 actor_info 0A30
 actor_name 0ADF
+
+[ROla_2025-06-17]
+checksum 1
+account_server_info
+received_characters 099D
+charBlockSize 155
+received_character_ID_and_Map 0AC5
+map_login 0B1C
+map_loaded 02EB
+skills_list 010F
+actor_exists 09FF
+item_list_start 0B08
+expandedItemID 1
+actor_info 0A30
+actor_name 0095
