@@ -129,7 +129,10 @@ sub getState {
 #
 # Read the response for the last GameGuard query.
 sub readResponse {
+	my ($self) = @_;
+
 	my $resp = $_[0]->{response};
+	chop($resp) if ($self->{type}->{$config{server_type}}->{checksum} == 1);
 	$_[0]->{response} = undef;
 	$_[0]->{state} = 'ready';
 	return $resp;
@@ -259,7 +262,7 @@ sub ParsePacket {
 	### These variables control the account information ###
 	my $host = $self->getHost();
 	my $port = pack("v", $self->getPort());
-	$host = '127.0.0.1' if ($host eq 'localhost');
+	$host = $config{fake_ip} ? $config{fake_ip} : ($host eq 'localhost' ? '127.0.0.1' : $host);
 	my @ipElements = split /\./, $host;
 	# if($switch eq '0436' || $switch eq '007D'){
 	# 	if($switch eq '007D'){
@@ -519,11 +522,22 @@ sub ParsePacket {
 			SendData($client, $data);
 		}
 
-	} elsif ($switch eq  $self->{type}->{$config{server_type}}->{map_login} &&
+	} elsif ($switch eq $self->{type}->{$config{server_type}}->{map_login} &&
 		(length($msg) == 19) &&
 		(substr($msg, 2, 4) eq $accountID) &&
 		(substr($msg, 6, 4) eq $charID) &&
 		(substr($msg, 10, 4) eq $sessionID)
+		) { # client sends the maplogin packet
+
+		SendMapLogin($self, $client, $msg, $index);
+		# save servers.txt info
+		$clientdata{$index}{serverType} = 0;
+
+	} elsif ($switch eq $self->{type}->{$config{server_type}}->{map_login} &&
+		(length($msg) == 27) &&
+		(substr($msg, 5, 4) eq $accountID) &&
+		(substr($msg, 9, 4) eq $charID) &&
+		(substr($msg, 13, 4) eq $sessionID)
 		) { # client sends the maplogin packet
 
 		SendMapLogin($self, $client, $msg, $index);
