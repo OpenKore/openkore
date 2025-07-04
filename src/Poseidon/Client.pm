@@ -123,7 +123,7 @@ sub getResult {
 
 	if ($self->{timestamp} && time - $self->{timestamp} > $self->{timeout}){
 		# Handle gameguard query timeout.
-		return $self->_disconnect_error("The Poseidon server reply timeout reached. Check your Ragnarok Online client.");
+		return $self->_disconnect_error("The Poseidon server reply timeout reached. Check your Ragnarok Online client.\n");
 	}
 
 	if (!$self->{socket} || !$self->{socket}->connected
