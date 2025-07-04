@@ -4656,6 +4656,8 @@ sub checkSelfCondition {
 	}
 
 
+	if ($config{$prefix . "_inQueue"}) { return 0 unless AI::inQueue($config{$prefix . "_inQueue"}); }
+	if ($config{$prefix . "_notInQueue"}) { return 0 if AI::inQueue($config{$prefix . "_notInQueue"}); }
 	if ($config{$prefix . "_onAction"}) { return 0 unless (existsInList($config{$prefix . "_onAction"}, AI::action())); }
 	if ($config{$prefix . "_notOnAction"}) { return 0 if (existsInList($config{$prefix . "_notOnAction"}, AI::action())); }
 	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange(defined $char->{spirits} ? $char->{spirits} : 0, $config{$prefix . "_spirit"})); }
