@@ -5,6 +5,7 @@ use warnings;
 use Time::HiRes qw(sleep);
 use Bus::Server::AbstractServer;
 use base qw(Bus::Server::AbstractServer);
+use Log qw(debug message);
 use utf8;
 
 # Client state constants.
@@ -44,19 +45,20 @@ sub log {
 sub onClientNew {
 	my ($self, $client, $index) = @_;
 	$self->SUPER::onClientNew($client, $index);
-
 	# Initiate handshake.
 	$self->log("New client connected: $client->{ID}\n");
 	$self->send($client->{ID}, "HELLO", { yourID => $client->{ID} });
 	$client->{userAgent} = "Unknown";
 	$client->{name}      = "Unknown:$client->{ID}";
 	$client->{state}     = NOT_IDENTIFIED;
+	message (scalar(localtime) . " Client connected (FD: " . $client->getFD() . ")\n");
 }
 
 # A client disconnected.
 sub onClientExit {
 	my ($self, $client) = @_;
 	$self->SUPER::onClientExit($client);
+	message (scalar(localtime) . " Client disconnected (FD: " . $client->getFD() . ")\n");
 	$self->log("Client exited: $client->{ID}\n");
 	if ($client->{state} == IDENTIFIED) {
 		$self->broadcast('LEAVE', { clientID  => $client->{ID} });
@@ -185,6 +187,13 @@ sub processLIST_CLIENTS {
 		$args2{IRY} = 1;
 		$self->send($client->{ID}, "LIST_CLIENTS", \%args2);
 	}
+}
+
+sub iterate {
+	my ($self, $timeout) = @_;
+	$self->{loop_i} = 1 if (!exists $self->{loop_i} || $self->{loop_i} > 100);
+	message("[Bus::Server::MainServer] " .scalar(localtime) . " Iterate ".($self->{loop_i}++)."\n", "bus");
+	$self->SUPER::iterate($timeout);
 }
 
 1;
