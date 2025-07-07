@@ -952,14 +952,15 @@ sub launchScript {
 # Checks whether the socket $r_handle has pending incoming data.
 # If there is, then you can read from $r_handle without being blocked.
 sub dataWaiting {
-	my $r_fh = shift;
+	my ($r_fh, $timeout) = @_;
 	return 0 if (!defined $r_fh || !defined $$r_fh);
+	$timeout = 0.01 unless (defined $timeout);
 
 	my $bits = '';
 	vec($bits, fileno($$r_fh), 1) = 1;
-	# The timeout was 0.005
-	return (select($bits, undef, undef, 0) > 0);
-	#return select($bits, $bits, $bits, 0) > 1);
+
+	my $nfound = select($bits, undef, undef, $timeout);
+	return ($nfound > 0);
 }
 
 ##

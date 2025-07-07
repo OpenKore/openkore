@@ -35,7 +35,8 @@ sub new {
 }
 
 sub DESTROY {
-	$_[0]->{BSC_sock}->close if ($_[0]->{BSC_sock}->connected);
+	my ($self) = @_;
+	$self->close();
 }
 
 ##
@@ -95,7 +96,7 @@ sub send {
 	};
 	if ($@) {
 		# Client disconnected
-		$self->{BSC_sock}->close;
+		$self->close();
 		return 0;
 	}
 	return 1;
@@ -109,6 +110,7 @@ sub send {
 #
 # You must not call $BaseServerClient->send() anymore after having called this function.
 sub close {
+	eval { $_[0]->{BSC_sock}->shutdown(2); };  # Graceful shutdown
 	$_[0]->{BSC_sock}->close;
 }
 

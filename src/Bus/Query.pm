@@ -51,7 +51,8 @@ sub DESTROY {
 sub getState {
 	my ($self) = @_;
 	if ($self->{state} == WAITING) {
-		if (time - $self->{start_time} > $self->{timeout}) {
+		my $max_timeout = $self->{timeout} > 0 ? $self->{timeout} : 5;
+		if (time - $self->{start_time} > $max_timeout) {
 			# Timeout for query reached.
 			$self->{bus}->onMessageReceived->remove($self->{receivedEvent});
 			delete $self->{receivedEvent};
