@@ -1,6 +1,5 @@
-# Adventure Agency Plugin 
-# Made possible by Ricardo Ribeiro and Mateus Backhaus
 # Description: Simple POC for Adventure Agency integration
+# Authors: Ricardo Ribeiro and Mateus Backhaus
 
 package AdventureAgency;
 
@@ -42,14 +41,127 @@ sub Init {
 					["list",            T("Display current parties available on Adventure Agency.")],
 					["headers",         T("Display headers for the Adventure Agency workflow.")],
 					["join <ID>",       T("Join the Adventure with the given numeric ID.")],
-					["create <params>", T("Create a new party (e.g. minlv=50 maxlv=99 memo='My Party' tanker=1 type=0).")],
-					["update <params>", T("Update your party (e.g. minlv=50 maxlv=99 memo='My Party' tanker=1 type=0).")],
+					["create <params>", T("Create a new party (e.g. minlv=50 maxlv=99 memo='R>All' tanker=1 type=0).")],
+					["update <params>", T("Update your party (e.g. minlv=50 maxlv=99 memo='R>You' tanker=1 type=0).")],
 					["delete",          T("Delete your own party from Adventure Agency.")]
 				],
 				\&cmdAdventureAgency
 			]
 		);
 	}
+}
+
+# Cache to avoid reading servers.txt multiple times
+my %serverConfigCache = ();
+ 
+sub getApiHeaders {
+    my %headers = (
+        GID       => unpack('V', $char->{charID}),
+        AID       => $AdventureAgencyContext->{AID},
+        AuthToken => $AdventureAgencyContext->{AuthToken},
+        CharName  => $char->{name},
+    );
+    
+    # Get server configuration
+    my $master = $masterServers{ $config{master} };
+    my %serverConfig = getServerConfig($master->{serverType});
+    $headers{WorldName} = $serverConfig{worlds}{$config{server}} // '';
+    
+    return %headers;
+} 
+
+sub getServerConfig {
+    my ($serverType) = @_;
+	
+    return %{$serverConfigCache{$serverType}} if exists $serverConfigCache{$serverType};
+    
+    my %config = (
+        worlds => {0 => 'Freya', 1 => 'Nidhogg', 2 => 'Yggdrasil'},  # Default fallback for ROla
+        ip => 'lt-account-01.gnjoylatam.com',  # fallback
+        api_port => 2052  # Adventure Agency API port
+    );
+    
+    my $foundInFile = 0;
+     
+    my $serversFile = Settings::getTableFilename("servers.txt");
+    
+    if (-f $serversFile) {
+        if (open(my $fh, '<:encoding(UTF-8)', $serversFile)) {
+            my $currentSection = '';
+            my $foundServerType = '';
+            my $currentIP = '';
+            
+            while (my $line = <$fh>) {
+                chomp $line;
+                $line =~ s/^\s+|\s+$//g; # trim whitespace
+                
+                # Skip comments and empty lines
+                next if $line =~ /^#/ || $line eq '';
+                
+                # Parse section headers like [Latam - ROla: Freya/Nidhogg/Yggdrasil]
+                if ($line =~ /^\[(.+)\]$/) {
+                    $currentSection = $1;
+                    $foundServerType = '';
+                    $currentIP = '';
+                    next;
+                }
+                
+                # Look for serverType line
+                if ($line =~ /^serverType\s+(.+)$/) {
+                    $foundServerType = $1;
+                    next;
+                }
+                
+                # Look for IP line
+                if ($line =~ /^ip\s+(.+)$/) {
+                    $currentIP = $1;
+                    next;
+                }
+                
+                # If we found the right serverType and have both section and IP
+                if ($foundServerType eq $serverType && $currentSection && $currentIP) {
+                    # Store the IP
+                    $config{ip} = $currentIP;
+                    $foundInFile = 1;
+                    
+                    # Extract world names from section title
+                    # Example: "Latam - ROla: Freya/Nidhogg/Yggdrasil" -> "Freya/Nidhogg/Yggdrasil"
+                    if ($currentSection =~ /:?\s*([^:]+)$/) {
+                        my $worldsStr = $1;
+                        # Split by / or comma and clean up
+                        my @worlds = split(/[\/,]/, $worldsStr);
+                        
+                        # Clear default worlds and replace with file data
+                        $config{worlds} = {};
+                        for my $i (0..$#worlds) {
+                            my $world = $worlds[$i];
+                            $world =~ s/^\s+|\s+$//g; # trim
+                            $config{worlds}{$i} = $world if $world;
+                        }
+                        last;
+                    }
+                }
+            }
+            close($fh);
+        } else {
+            warning TF("Could not read %s: %s. Using hardcoded values.\n", $serversFile, $!);
+        }
+    } else {
+        warning TF("File not found: %s. Using hardcoded values.\n", $serversFile);
+    }
+      
+    # Cache the result
+    $serverConfigCache{$serverType} = \%config;
+    
+    return %config;
+}
+
+sub buildApiUrl {
+    my ($endpoint) = @_;
+    my $master = $masterServers{ $config{master} };
+    my %serverConfig = getServerConfig($master->{serverType});
+    
+    return "http://$serverConfig{ip}:$serverConfig{api_port}$endpoint";
 }
 
 sub cmdAdventureAgency {
@@ -63,13 +175,8 @@ sub cmdAdventureAgency {
 	my @args = Commands::parseArgs($args_string, 2);
 		
 	if ($args[0] eq 'list') {
-		my $GID       = unpack('V', $char->{charID});
-		my $AID       = $AdventureAgencyContext->{AID};
-		my %hardcoded = (0 => 'Freya', 1 => 'Nidhogg', 2 => 'Yggdrasil');
-		my $WorldName = $hardcoded{$config{server}} // '';
-		my $AuthToken = $AdventureAgencyContext->{AuthToken};
-
-		listParties($GID, $AID, $WorldName, $AuthToken);
+		my %headers = getApiHeaders();
+		listParties($headers{GID}, $headers{AID}, $headers{WorldName}, $headers{AuthToken});
 		return;
 	}
 
@@ -91,7 +198,7 @@ sub cmdAdventureAgency {
 		message "Hex Packet: $hex\n";
 		$messageSender->sendToServer($packet);
 
-		message TF("→ Sent join request for party ID %d (GID: %d, AID: %d)\n", $partyIndex, $targetGID, $targetAID);
+		message TF("[AdventureAgency] Sent join request for party ID %d (GID: %d, AID: %d)\n", $partyIndex, $targetGID, $targetAID);
 		return;
 	}
 
@@ -120,7 +227,6 @@ sub cmdAdventureAgency {
 		return;
 	}
 	
-	# Debug command - should be removed on release
 	if ($args[0] eq 'headers'){
 		listHeaders();
 		return;
@@ -129,7 +235,7 @@ sub cmdAdventureAgency {
 
 sub createParty {
     my ($params) = @_;
-    return unless validateAuth();
+    return unless validateApiHeaders();
     
     # Default party parameters
     my %party_params = (
@@ -168,33 +274,27 @@ sub createParty {
             elsif ($param =~ /^assist=([01])$/) { $party_params{Assist} = $1; }
             elsif ($param =~ /^type=(\d+)$/) { $party_params{Type} = $1; }
             elsif ($param !~ /^memo=/) {
-                warning TF("Unknown parameter: %s\n", $param);
+                warning TF("[AdventureAgency] Unknown parameter: %s\n", $param);
             }
         }
     }
 
-    # Get authentication data
-    my $GID = unpack('V', $char->{charID});
-    my $AID = $AdventureAgencyContext->{AID};
-    my %hardcoded = (0 => 'Freya', 1 => 'Nidhogg', 2 => 'Yggdrasil');
-    my $WorldName = $hardcoded{$config{server}} // '';
-    my $AuthToken = $AdventureAgencyContext->{AuthToken};
-    my $CharName = $char->{name};
+    my %headers = getApiHeaders();
 
-    message TF("Creating party: %s (Lv %d-%d)\n", $party_params{Memo}, $party_params{MinLV}, $party_params{MaxLV});
+    message TF("[AdventureAgency] Creating party: %s (Lv %d-%d)\n", $party_params{Memo}, $party_params{MinLV}, $party_params{MaxLV});
     
     # Send party creation request
     my $ua = LWP::UserAgent->new(timeout => 30);
-
+    my $apiUrl = buildApiUrl('/party/add');    
     my $resp = $ua->request(
-        POST 'http://lt-account-01.gnjoylatam.com:2052/party/add',
+        POST $apiUrl,
         'Content-Type' => 'multipart/form-data',
         Content => [
-            AID       => $AID,
-            GID       => $GID,
-            AuthToken => $AuthToken,
-            WorldName => $WorldName,
-            CharName  => $CharName,
+            AID       => $headers{AID},
+            GID       => $headers{GID},
+            AuthToken => $headers{AuthToken},
+            WorldName => $headers{WorldName},
+            CharName  => $headers{CharName},
             MinLV     => $party_params{MinLV},
             MaxLV     => $party_params{MaxLV},
             Tanker    => $party_params{Tanker},
@@ -214,43 +314,40 @@ sub createParty {
         my $data = eval { decode_json($body) };
        
         if ($data && $data->{Type} == 1) {
-            message TF("Party created successfully!\n");
+            message TF("[AdventureAgency] Party created successfully on Adventure Agency!\n");
             if ($data->{PartyID}) {
-                message TF("Party ID: %s\n", $data->{PartyID});
+                message TF("[AdventureAgency] Party ID: %s\n", $data->{PartyID});
             }               
         } else {
-            message TF("Party creation response: %s\n", $body);
+            message TF("[AdventureAgency] Party creation response: %s\n", $body);
             if ($data && $data->{Message}) {
-                message TF("Server message: %s\n", $data->{Message});
+                message TF("[AdventureAgency] Server message: %s\n", $data->{Message});
             }
         }
     } else {
-        error TF("Failed to create party: %s\n", $resp->status_line);
+        error TF("[AdventureAgency] Failed to create party: %s\n", $resp->status_line);
     }
 }
 
 sub deleteParty {
-    return unless validateAuth();
-    
-    # Get authentication data
-    my $GID = unpack('V', $char->{charID});
-    my $AID = $AdventureAgencyContext->{AID};
-    my %hardcoded = (0 => 'Freya', 1 => 'Nidhogg', 2 => 'Yggdrasil');
-    my $WorldName = $hardcoded{$config{server}} // '';
-    my $AuthToken = $AdventureAgencyContext->{AuthToken};
+    return unless validateApiHeaders();
+     
+    my %headers = getApiHeaders();
 
-    message T("Removing your party from Adventure Agency\n");
+    message T("[AdventureAgency] Removing your party from Adventure Agency\n");
       
     # Send deletion request
     my $ua = LWP::UserAgent->new(timeout => 30);
+    my $apiUrl = buildApiUrl('/party/del');    
     my $resp = $ua->request(
-        POST 'http://lt-account-01.gnjoylatam.com:2052/party/del',
+        POST $apiUrl,
         'Content-Type' => 'multipart/form-data',
         Content => [
-            AID       => $AID,
-            WorldName => $WorldName,
-            AuthToken => $AuthToken,
-            MasterAID => $AID,   # Use own AID to delete own party
+            AID       => $headers{AID},
+            GID       => $headers{GID},
+            WorldName => $headers{WorldName},
+            AuthToken => $headers{AuthToken},
+            MasterAID => $headers{AID},   # Use own AID to delete own party
         ],
     );
 
@@ -259,29 +356,24 @@ sub deleteParty {
         my $body = Encode::encode('utf8', Encode::decode('latin1', $resp->content));
         my $data = eval { decode_json($body) };
         if ($data && $data->{Type} == 1) {
-            message TF("Party deleted successfully!\n");  
+            message TF("[AdventureAgency] Party deleted successfully!\n");  
         } else {
-            message TF("Party deletion response: %s\n", $body);
+            message TF("[AdventureAgency] Party deletion response: %s\n", $body);
             if ($data && $data->{Message}) {
-                message TF("Server message: %s\n", $data->{Message});
+                message TF("[AdventureAgency] Server message: %s\n", $data->{Message});
             }
         }
     } else {
-        error TF("Failed to delete party: %s\n", $resp->status_line);
+        error TF("[AdventureAgency] Failed to delete party: %s\n", $resp->status_line);
     }
 }
 
-sub validateAuth {
-    # Validate authentication data required for Adventure Agency API
-    my $GID = unpack('V', $char->{charID});
-    my $AID = $AdventureAgencyContext->{AID};
-    my %hardcoded = (0 => 'Freya', 1 => 'Nidhogg', 2 => 'Yggdrasil');
-    my $WorldName = $hardcoded{$config{server}} // '';
-    my $AuthToken = $AdventureAgencyContext->{AuthToken};
+sub validateApiHeaders { 
 
-    # Check if all required authentication data is available
-    unless (defined $GID && defined $AID && length $WorldName && defined $AuthToken) {
-        error T("Authentication data not available. Make sure you're logged in.\n");
+    my %headers = getApiHeaders();
+ 
+    unless (defined $headers{GID} && defined $headers{AID} && length $headers{WorldName} && defined $headers{AuthToken}) {
+        error T("[AdventureAgency] API headers not available. Make sure you're logged in.\n");
         return 0;
     }
     return 1;
@@ -291,7 +383,7 @@ sub listParties {
     my ($GID, $AID, $WorldName, $AuthToken) = @_;
 
     unless (defined $GID && defined $AID && length $WorldName && defined $AuthToken) {
-        error T("Missing headers – please run 'agency headers' first\n");
+        error T("[AdventureAgency] Missing headers – please run 'agency headers' first\n");
         return;
     }
 
@@ -299,12 +391,12 @@ sub listParties {
     @allParties = ();
 
     my $ua    = LWP::UserAgent->new;
-    my $url   = 'http://lt-account-01.gnjoylatam.com:2052/party/list';
+    my $url   = buildApiUrl('/party/list');
     my $page = 1;
 	my $totalPage;
 	
 	do {
-		message TF("→ Fetching page %d …\n", $page);
+		message TF("[AdventureAgency] Fetching page %d …\n", $page);
 
 		my $resp = $ua->request(
 			POST $url,
@@ -319,14 +411,14 @@ sub listParties {
 		);
 
 		unless ($resp->is_success) {
-			error TF("HTTP POST failed on page %d: %s\n", $page, $resp->status_line);
+			error TF("[AdventureAgency] HTTP POST failed on page %d: %s\n", $page, $resp->status_line);
 			return;
 		}
 
 		my $body = Encode::encode('utf8', Encode::decode('latin1', $resp->content));
 		my $data = eval { decode_json($body) };
 		if ($@) {
-			error TF("JSON decode error on page %d: %s\n", $page, $@);
+			error TF("[AdventureAgency] JSON decode error on page %d: %s\n", $page, $@);
 			return;
 		}
 
@@ -336,7 +428,7 @@ sub listParties {
 
 		my $entries = $data->{data};
 		unless (ref($entries) eq 'ARRAY') {
-			warning TF("No 'data' array on page %d. Stopping.\n", $page);
+			warning TF("[AdventureAgency] No 'data' array on page %d. Stopping.\n", $page);
 			last;
 		}
 
@@ -355,7 +447,7 @@ sub listParties {
         push @r, 'H' if $p->{Healer};
         push @r, 'A' if $p->{Assist};
         message TF(
-            "ID:%3d| Lv:%3d–%3d| Party:%-24s| Rec:%-4s| Owner:%s\n",
+            "ID:%3d|Lv:%3d–%3d|Party:%-24s|Rec:%-4s|Owner:%s\n",
             $i++,
             $p->{MinLV},
             $p->{MaxLV},
@@ -368,9 +460,8 @@ sub listParties {
 }
 
 sub listHeaders {
-	my $currentGID = unpack('V', $char->{charID});
-	my %hardcodedWorlds = ( 0 => 'Freya', 1 => 'Nidhogg', 2 => 'Yggdrasil' );
-	message "\r\n\r\nAID: $AdventureAgencyContext->{AID} | GID: $currentGID | WorldName: $hardcodedWorlds{$config{server}} | AuthToken: $AdventureAgencyContext->{AuthToken}\r\n\r\n";
+	my %headers = getApiHeaders();
+	message "\r\n\r\n[AdventureAgency] AID: $headers{AID} | GID: $headers{GID} | WorldName: $headers{WorldName} | AuthToken: $headers{AuthToken}\r\n\r\n";
 }
 
 sub serverReceivedPackets {
@@ -394,7 +485,7 @@ sub getPartyTarget {
     $index--;
 
     if (!defined $allParties[$index]) {
-        error TF("No party found at index %d\n", $index + 1);
+        error TF("[AdventureAgency] No party found at index %d\n", $index + 1);
         return;
     }
 
