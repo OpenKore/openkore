@@ -1,13 +1,6 @@
-# This script was made possible by Ricardo Ribeiro and BackhausMat
-
-#	TODO:
-# log when party request was accepted, rejected or full
-# create group on agency
-# delete group on agency
-# change group on agency
-# search for especific group on agency
-
-# this script is yet a POC. if the community adopts it, we can work to make it more robust and native on openkore.
+# Adventure Agency Plugin 
+# Made possible by Ricardo Ribeiro and Mateus Backhaus
+# Description: Simple POC for Adventure Agency integration
 
 package AdventureAgency;
 
@@ -46,9 +39,12 @@ sub Init {
 				'agency',
 				[
 					T("Manages the Adventure Agency."),
-					["list",         T("Display current parties available on Adventure Agency.")],
-					["headers",      T("Display headers for the Adventure Agency workflow.")],
-					["join <ID>",    T("Join the Adventure with the given numeric ID.")]
+					["list",            T("Display current parties available on Adventure Agency.")],
+					["headers",         T("Display headers for the Adventure Agency workflow.")],
+					["join <ID>",       T("Join the Adventure with the given numeric ID.")],
+					["create <params>", T("Create a new party (e.g. minlv=50 maxlv=99 memo='My Party' tanker=1 type=0).")],
+					["update <params>", T("Update your party (e.g. minlv=50 maxlv=99 memo='My Party' tanker=1 type=0).")],
+					["delete",          T("Delete your own party from Adventure Agency.")]
 				],
 				\&cmdAdventureAgency
 			]
@@ -90,7 +86,6 @@ sub cmdAdventureAgency {
 			return;
 		}
 
-
 		my $packet = build_party_packet($targetGID, $targetAID);
 		my $hex = uc unpack('H*', $packet);
 		message "Hex Packet: $hex\n";
@@ -99,12 +94,197 @@ sub cmdAdventureAgency {
 		message TF("→ Sent join request for party ID %d (GID: %d, AID: %d)\n", $partyIndex, $targetGID, $targetAID);
 		return;
 	}
+
+	if ($args[0] eq 'create') {
+		my $createArgs = $args_string;
+		$createArgs =~ s/^create\s*//;
+		if (!defined $createArgs || !length $createArgs) {
+			$createArgs = "";
+		}
+		createParty($createArgs);
+		return;
+	}
+
+	if ($args[0] eq 'update') {
+		my $updateArgs = $args_string;
+		$updateArgs =~ s/^update\s*//;
+		if (!defined $updateArgs || !length $updateArgs) {
+			$updateArgs = "";
+		}
+		createParty($updateArgs);
+		return;
+	}
+
+	if ($args[0] eq 'delete') { 
+		deleteParty();
+		return;
+	}
 	
-	#Hey bro, this is here just for debug purposes, it should be remove on release.
+	# Debug command - should be removed on release
 	if ($args[0] eq 'headers'){
 		listHeaders();
 		return;
 	}
+}
+
+sub createParty {
+    my ($params) = @_;
+    return unless validateAuth();
+    
+    # Default party parameters
+    my %party_params = (
+        MinLV => 1,
+        MaxLV => 99,
+        Memo => 'R>All', 
+        Tanker => 1,
+        Dealer => 1,
+        Healer => 1,
+        Assist => 1,
+        Type => 0  
+    );
+
+    # Parse custom parameters if provided
+    if (defined $params && length $params) {
+
+        # Extract memo with quotes if present
+        if ($params =~ /memo='([^']*)'/) {
+            $party_params{Memo} = $1;
+            $params =~ s/memo='[^']*'//;
+        } elsif ($params =~ /memo=(\S+)/) {
+            $party_params{Memo} = $1;
+            $params =~ s/memo=\S+//;
+        }
+        
+        # Process other parameters
+        my @param_list = split /\s+/, $params;
+
+        for my $param (@param_list) {
+            next unless length $param;
+            if ($param =~ /^minlv=(\d+)$/) { $party_params{MinLV} = $1; }
+            elsif ($param =~ /^maxlv=(\d+)$/) { $party_params{MaxLV} = $1; }
+            elsif ($param =~ /^tanker=([01])$/) { $party_params{Tanker} = $1; }
+            elsif ($param =~ /^dealer=([01])$/) { $party_params{Dealer} = $1; }
+            elsif ($param =~ /^healer=([01])$/) { $party_params{Healer} = $1; }
+            elsif ($param =~ /^assist=([01])$/) { $party_params{Assist} = $1; }
+            elsif ($param =~ /^type=(\d+)$/) { $party_params{Type} = $1; }
+            elsif ($param !~ /^memo=/) {
+                warning TF("Unknown parameter: %s\n", $param);
+            }
+        }
+    }
+
+    # Get authentication data
+    my $GID = unpack('V', $char->{charID});
+    my $AID = $AdventureAgencyContext->{AID};
+    my %hardcoded = (0 => 'Freya', 1 => 'Nidhogg', 2 => 'Yggdrasil');
+    my $WorldName = $hardcoded{$config{server}} // '';
+    my $AuthToken = $AdventureAgencyContext->{AuthToken};
+    my $CharName = $char->{name};
+
+    message TF("Creating party: %s (Lv %d-%d)\n", $party_params{Memo}, $party_params{MinLV}, $party_params{MaxLV});
+    
+    # Send party creation request
+    my $ua = LWP::UserAgent->new(timeout => 30);
+
+    my $resp = $ua->request(
+        POST 'http://lt-account-01.gnjoylatam.com:2052/party/add',
+        'Content-Type' => 'multipart/form-data',
+        Content => [
+            AID       => $AID,
+            GID       => $GID,
+            AuthToken => $AuthToken,
+            WorldName => $WorldName,
+            CharName  => $CharName,
+            MinLV     => $party_params{MinLV},
+            MaxLV     => $party_params{MaxLV},
+            Tanker    => $party_params{Tanker},
+            Healer    => $party_params{Healer},
+            Dealer    => $party_params{Dealer},
+            Assist    => $party_params{Assist},
+            Type      => $party_params{Type},
+            Memo      => $party_params{Memo},
+        ],
+    );
+
+    # Process response
+    if ($resp->is_success) {
+       
+        my $body = Encode::encode('utf8', Encode::decode('latin1', $resp->content));
+       
+        my $data = eval { decode_json($body) };
+       
+        if ($data && $data->{Type} == 1) {
+            message TF("Party created successfully!\n");
+            if ($data->{PartyID}) {
+                message TF("Party ID: %s\n", $data->{PartyID});
+            }               
+        } else {
+            message TF("Party creation response: %s\n", $body);
+            if ($data && $data->{Message}) {
+                message TF("Server message: %s\n", $data->{Message});
+            }
+        }
+    } else {
+        error TF("Failed to create party: %s\n", $resp->status_line);
+    }
+}
+
+sub deleteParty {
+    return unless validateAuth();
+    
+    # Get authentication data
+    my $GID = unpack('V', $char->{charID});
+    my $AID = $AdventureAgencyContext->{AID};
+    my %hardcoded = (0 => 'Freya', 1 => 'Nidhogg', 2 => 'Yggdrasil');
+    my $WorldName = $hardcoded{$config{server}} // '';
+    my $AuthToken = $AdventureAgencyContext->{AuthToken};
+
+    message T("Removing your party from Adventure Agency\n");
+      
+    # Send deletion request
+    my $ua = LWP::UserAgent->new(timeout => 30);
+    my $resp = $ua->request(
+        POST 'http://lt-account-01.gnjoylatam.com:2052/party/del',
+        'Content-Type' => 'multipart/form-data',
+        Content => [
+            AID       => $AID,
+            WorldName => $WorldName,
+            AuthToken => $AuthToken,
+            MasterAID => $AID,   # Use own AID to delete own party
+        ],
+    );
+
+    # Process response
+    if ($resp->is_success) {
+        my $body = Encode::encode('utf8', Encode::decode('latin1', $resp->content));
+        my $data = eval { decode_json($body) };
+        if ($data && $data->{Type} == 1) {
+            message TF("Party deleted successfully!\n");  
+        } else {
+            message TF("Party deletion response: %s\n", $body);
+            if ($data && $data->{Message}) {
+                message TF("Server message: %s\n", $data->{Message});
+            }
+        }
+    } else {
+        error TF("Failed to delete party: %s\n", $resp->status_line);
+    }
+}
+
+sub validateAuth {
+    # Validate authentication data required for Adventure Agency API
+    my $GID = unpack('V', $char->{charID});
+    my $AID = $AdventureAgencyContext->{AID};
+    my %hardcoded = (0 => 'Freya', 1 => 'Nidhogg', 2 => 'Yggdrasil');
+    my $WorldName = $hardcoded{$config{server}} // '';
+    my $AuthToken = $AdventureAgencyContext->{AuthToken};
+
+    # Check if all required authentication data is available
+    unless (defined $GID && defined $AID && length $WorldName && defined $AuthToken) {
+        error T("Authentication data not available. Make sure you're logged in.\n");
+        return 0;
+    }
+    return 1;
 }
 
 sub listParties {
@@ -114,6 +294,9 @@ sub listParties {
         error T("Missing headers – please run 'agency headers' first\n");
         return;
     }
+
+    # Clear cache before fetching
+    @allParties = ();
 
     my $ua    = LWP::UserAgent->new;
     my $url   = 'http://lt-account-01.gnjoylatam.com:2052/party/list';
@@ -163,7 +346,7 @@ sub listParties {
 	} while ($page <= $totalPage);
 
     @allParties = sort { $a->{MinLV} <=> $b->{MinLV} } @allParties;
-    message T("\n\n------------------------------- Adventure Agency Party List (All Pages) ------------------------------------------\n\n");
+    message T("\n\n------------------- Adventure Agency Party List (All Pages) -------------------\n\n");
     my $i = 1;
     for my $p (@allParties) {
         my @r;
@@ -172,7 +355,7 @@ sub listParties {
         push @r, 'H' if $p->{Healer};
         push @r, 'A' if $p->{Assist};
         message TF(
-            "ID: %3d | Lv: %3d–%3d | Party: %-24s | Rec: %-4s | Owner: %s\n",
+            "ID:%3d| Lv:%3d–%3d| Party:%-24s| Rec:%-4s| Owner:%s\n",
             $i++,
             $p->{MinLV},
             $p->{MaxLV},
@@ -181,7 +364,7 @@ sub listParties {
             $p->{CharName},
         );
     }
-    message T("----------------------------------------------------------------------------------------------------------------------\n");
+    message T("--------------------------------------------------------------------------------------\n");
 }
 
 sub listHeaders {
