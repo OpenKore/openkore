@@ -8059,7 +8059,10 @@ sub received_login_token {
         error "Password Error for account $config{username}\n", 'connection';
         Misc::quit();
     
-    } else {
+    } elsif ($login_type == 900) {
+		error "You need to setup your OTP for account $config{username}\n", 'connection';
+		Misc::quit();
+	} else {
         error "Unknown login_type $login_type\n", 'connection';
 		Misc::quit();
     }
