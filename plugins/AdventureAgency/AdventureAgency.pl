@@ -154,14 +154,14 @@ sub createParty {
     return unless validateApiheader();
     
     my %party_params = (
-        MinLV => 1,
-        MaxLV => 99,
-        Memo => 'R>All', 
+        MinLV  => 1,
+        MaxLV  => 99,
+        Memo   => 'R>All', 
         Tanker => 1,
         Dealer => 1,
         Healer => 1,
         Assist => 1,
-        Type => 0  
+        Type   => 0  
     );
 
     if (defined $params && length $params) {
@@ -354,7 +354,7 @@ sub listParties {
         push @r, 'H' if $p->{Healer};
         push @r, 'A' if $p->{Assist};
         message TF(
-            "ID:%3d|Lv:%3d–%3d|Party:%-24s|Rec:%-4s|Owner:%s\n",
+            "ID:%3d| Lv:%3d–%3d| Party:%-24s| Rec:%-4s| Owner:%s\n",
             $i++,
             $p->{MinLV},
             $p->{MaxLV},
