@@ -109,6 +109,11 @@ sub cmdAdventureAgency {
 			return;
 		}
 
+		if ($char->{party} && $char->{party}{name} && $char->{party}{name} ne '') {
+			error TF("[AdventureAgency] You are already in a party: $char->{party}{name}\n");
+			return;
+		}
+
 		if ($char->{lv} < $targetMinLV || $char->{lv} > $targetMaxLV) {
 			error TF("[AdventureAgency] Your level ($char->{lv}) does not match this party's required range: $targetMinLV–$targetMaxLV.\n");
 			return;
@@ -409,7 +414,7 @@ sub getPartyTarget {
     $index--;
 
     if (!defined $allParties[$index]) {
-        error TF("[AdventureAgency] No party found at index %d\n", $index + 1);
+        error TF("[AdventureAgency] No party found at index %d, run 'agency list' first.\n", $index + 1);
         return;
     }
 
