@@ -103,18 +103,21 @@ sub cmdAdventureAgency {
 			return;
 		}
 		
-		my ($targetGID, $targetAID) = getPartyTarget($partyIndex);
+		my ($targetGID, $targetAID, $targetMinLV, $targetMaxLV) = getPartyTarget($partyIndex);
 		unless (defined $targetGID && defined $targetAID) {
 			error T("Invalid party index or data missing.\n");
 			return;
 		}
 
+		if ($char->{lv} < $targetMinLV || $char->{lv} > $targetMaxLV) {
+			error TF("[AdventureAgency] Your level ($char->{lv}) does not match this party's required range: $targetMinLV–$targetMaxLV.\n");
+			return;
+		}
+
 		my $packet = build_party_packet($targetGID, $targetAID);
-		my $hex = uc unpack('H*', $packet);
-		message "Hex Packet: $hex\n";
 		$messageSender->sendToServer($packet);
 
-		message TF("[AdventureAgency] Sent join request for party ID %d (GID: %d, AID: %d)\n", $partyIndex, $targetGID, $targetAID);
+		message TF("[AdventureAgency] Sent join request for party ID %d.\n", $partyIndex);
 		return;
 	}
 
@@ -291,7 +294,7 @@ sub listParties {
     my ($GID, $AID, $WorldName, $AuthToken, $master) = @_;
 
     unless (defined $GID && defined $AID && length $WorldName && defined $AuthToken) {
-        error T("[AdventureAgency] Missing header – please run 'agency header' first\n");
+        error T("[AdventureAgency] Missing headers.\n");
         return;
     }
 
@@ -302,9 +305,9 @@ sub listParties {
     my $page = 1;
 	my $totalPage;
 	
+	message TF("[AdventureAgency] Loading party listings from the Adventure Agency, please wait...\n");
+	
 	do {
-		message TF("[AdventureAgency] Fetching page %d …\n", $page);
-
 		my $resp = $ua->request(
 			POST $url,
 			Content_Type => 'form-data',
@@ -345,7 +348,7 @@ sub listParties {
 	} while ($page <= $totalPage);
 
     @allParties = sort { $a->{MinLV} <=> $b->{MinLV} } @allParties;
-    message T("\n\n------------------- Adventure Agency Party List (All Pages) -------------------\n\n");
+    message T("\n------------------- Adventure Agency Party List (All Pages) -------------------\n\n");
     my $i = 1;
     for my $p (@allParties) {
         my @r;
@@ -376,11 +379,25 @@ sub serverReceivedPackets {
     my $msg = $args->{msg};
     my $messageID = uc(unpack("H2", substr($$msg, 1, 1))) . uc(unpack("H2", substr($$msg, 0, 1)));
 
-    return unless $messageID eq '0C32';
+    return unless $messageID eq '0C32' || $messageID eq '0AFA' || $messageID eq '0AE4';
 
 	if($messageID eq '0C32'){
 		$AdventureAgencyContext->{AuthToken} = unpack("A16", substr($$msg, 47, 16));
 		$AdventureAgencyContext->{AID} = unpack('V', substr($$msg, 8, 4));
+		return;
+	}
+
+	if($messageID eq '0AFA'){
+		my $partyOwner = unpack("Z24", substr($$msg, 2, 24));
+		my $partyName  = unpack("Z24", substr($$msg, 26, 24));
+		error "[AdventureAgency] $partyOwner DENIED your entrance on party $partyName.\n";
+		return;
+	}
+
+	if($messageID eq '0AE4'){
+		my $partyName = unpack("Z24", substr($$msg, 23, 24));
+		message "[AdventureAgency] You were accepted into $partyName party.\n";
+		return;
 	}
 
 	return;
@@ -399,8 +416,10 @@ sub getPartyTarget {
     my $entry = $allParties[$index];
     my $targetGID = $entry->{GID};
     my $targetAID = $entry->{AID};
+	my $targetMinLV = $entry->{MinLV};
+	my $targetMaxLV = $entry->{MaxLV};
 
-    return ($targetGID, $targetAID);
+    return ($targetGID, $targetAID, $targetMinLV, $targetMaxLV);
 }
 
 sub build_party_packet {
