@@ -74,12 +74,12 @@ ama_dun01 229 7 ama_in02 119 181 0 c r0 n
 #prontera 35 208 aldebaran 168 112 2000 1 c r2 c r5
 #prontera 35 208 comodo 209 143 3000 1 c r2 c r6
 #prontera 35 208 umbala 100 154 3000 1 c r2 c r7
-#payon 175 226 prontera 116 72 1200 c r2 c r0
-#payon 175 226 alberta 117 56 1200 c r2 c r1
-#payon 175 226 morocc 156 47 1200 c r2 c r2
-#payon 181 104 prontera 116 72 1200 c r2 c r0
-#payon 181 104 alberta 117 56 1200 c r2 c r1
-#payon 181 104 morocc 156 47 1200 c r2 c r2
+#payon 175 226 prontera 116 72 1200 c r3 c r0
+payon 175 226 alberta 117 56 1200 c r3 c r1
+payon 175 226 morocc 156 47 1200 c r3 c r2
+#payon 181 104 prontera 116 72 1200 c r3 c r0
+payon 181 104 alberta 117 56 1200 c r3 c r1
+payon 181 104 morocc 156 47 1200 c r3 c r2
 #alberta 113 60 payon 161 58 1200 c r2 c r0
 #alberta 113 60 morocc 156 47 1800 c r2 c r1
 #alberta 113 60 prontera 116 72 1800 c r2 c r2
@@ -144,8 +144,8 @@ yuno 327 108 aldebaran 168 112 2000 1 c r2 c r0
 yuno 142 183 prontera 116 72 1800 1 c c r0 c n
 morocc 156 97 prontera 116 72 2000 1 c r2 c r0
 comodo 195 150 morocc 156 47 2000 1 c c r2 c r0
-payon 181 104 prontera 116 72 2000 1 c r2 c r0
-payon 175 226 prontera 116 72 1200 1 c r2 c r0
+payon 181 104 prontera 116 72 2000 1 c r3 c r0
+payon 175 226 prontera 116 72 1200 1 c r3 c r0
 alberta 113 60 payon 161 58 2000 1 c r2 c r0
 rachel 109 138 veins 205 101 2200 1 c r2 c r0
 rachel 109 138 yuno 158 125 3000 1 c r2 c r1
