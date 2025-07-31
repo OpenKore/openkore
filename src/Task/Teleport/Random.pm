@@ -41,6 +41,7 @@ sub getInventoryItem {
 sub canUseSkill {
 	my ($self) =  @_;
 	return 0 if ($self->{actor}->{muted});
+	return 0 if defined $config{'teleportAuto_useSkill'} && $config{'teleportAuto_useSkill'} == 0;
 	return $self->{actor}->getSkillLevel(new Skill(handle => 'AL_TELEPORT')) ? 1 : 0;
 }
 
