@@ -46,7 +46,7 @@ use Compress::Zlib;
 use File::Spec;
 use Log qw(message);
 
-use Globals qw($masterServer %mapAlias_lut %maps_lut %cities_lut);
+use Globals qw($masterServer %mapAlias_lut %maps_lut %cities_lut %config);
 use Modules 'register';
 use Settings;
 use FastUtils;
@@ -418,10 +418,10 @@ sub canMove {
 
 	my $dist = blockDistance($from, $to);
 
-	# This 17 is actually set at
+	# This value is actually set at
 	# hercules conf\map\battle\client.conf max_walk_path (which is by default 17, can be higher)
-	# TODO: Change this 17 to a config key with default value 17
-	if ($dist > 17) {
+	my $maxWalkPath = $config{maxWalkPathDistance} || 17;
+	if ($dist > $maxWalkPath) {
 		return 0;
 	}
 
