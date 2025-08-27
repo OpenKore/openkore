@@ -487,7 +487,8 @@ sub ParsePacket {
 		# save servers.txt info
 		$clientdata{$index}{serverType} = 0;
 
-	} elsif ($switch eq $self->{type}->{$config{server_type}}->{map_login} &&
+	} elsif ($switch eq '0B1C' &&
+        $self->{type}->{$config{server_type}}->{checksum} == 1 &&
 		(length($msg) == 27) &&
 		(substr($msg, 5, 4) eq $accountID) &&
 		(substr($msg, 9, 4) eq $charID) &&
