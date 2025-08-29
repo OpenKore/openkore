@@ -19,6 +19,12 @@ sub new {
 	my ($class) = @_;
 	my $self = $class->SUPER::new(@_);
 
+	my %handlers = qw(
+		received_characters 0B72
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
 	return $self;
 }
 
