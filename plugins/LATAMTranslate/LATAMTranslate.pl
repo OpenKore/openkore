@@ -1,7 +1,7 @@
 # ====================
-# ROLA_strings v1.1
+# LATAMTranslate v1.2
 # Plugin author: Rubim, UnknownXD
-# Plugin modified by: roxleopardo, Driw, brunosmoraes
+# Plugin modified by: roxleopardo
 # ====================
 
 package LATAMTranslate;
@@ -12,6 +12,7 @@ use Globals;
 use Settings;
 use Utils;
 use utf8;
+use bytes;
 use Log qw(message debug error);
 use JSON::Tiny qw(from_json to_json);
 
@@ -31,7 +32,8 @@ sub checkServer {
 	if ( grep { $master->{serverType} eq $_ } qw(ROla) ) {
 		my $base_hooks = Plugins::addHooks(
 			['actor_setName', \&setName, undef],
-			['packet_localBroadcast', \&localBroadcast, undef],
+            ['packet_pre/public_chat', \&messagePre, undef],
+			['packet_pre/local_broadcast', \&messagePre, undef],
 			['packet_pre/npc_talk', \&npcTalkPre, undef],
 			['packet_pre/npc_talk_responses', \&npcTalkRespPre, undef],
 		);
@@ -41,17 +43,17 @@ sub checkServer {
 }
 # Load actor_name.json
 sub loadJSON {
-	message "Loading strings.json...\n", "rolaStrings";
+	message "Loading strings.json...\n", "LATAMTranslate";
 	%strings_cache = ();
 
 	my $file = "$plugin_path/strings.json";
 	unless ( -r $file ) {
-		error( "[rolaStrings] Can't read $file\n" );
+		error( "[LATAMTranslate] Can't read $file\n" );
 		return;
 	}
 
 	open my $fh, '<', $file or do {
-		error( "[rolaStrings] Failed to open $file: $!\n" );
+		error( "[LATAMTranslate] Failed to open $file: $!\n" );
 		return;
 	};
 
@@ -61,13 +63,13 @@ sub loadJSON {
 
 	my $data = eval { from_json( $json_text ) };	# ← FIXED
 	if ( $@ || ref( $data ) ne 'HASH' ) {
-		error( "[rolaStrings] Failed to parse JSON: $@\n" );
+		error( "[LATAMTranslate] Failed to parse JSON: $@\n" );
 		return;
 	}
 
 	%strings_cache = %{$data};
 	my $count = scalar( keys %strings_cache );
-	message "[rolaStrings] Loaded $count actor names from strings.json\n", "rolaStrings";
+	message "[LATAMTranslate] Loaded $count actor names from strings.json\n", "LATAMTranslate";
 }
 
 # Plugin cleanup
@@ -79,7 +81,7 @@ sub unload {
 
 sub debug {
 	my (undef, $args) = @_;
-	message "[ROLA DEBUG] Debug: " . Data::Dumper::Dumper($args) . "\n", "debug";
+	message "[LATAMTranslate] Debug: " . Data::Dumper::Dumper($args) . "\n", "debug";
 }
 
 sub translate_token {
@@ -87,12 +89,12 @@ sub translate_token {
 
 	if (exists $strings_cache{$token}) {
 		my $string = $strings_cache{$token};
-		utf8::downgrade($string, 1);
+        utf8::decode($string);
 		return $string;
 	} else {
 		# print warning of missing token and the hex
 		my $hex = unpack("H*", $token);
-		message("[ROLA] Missing token: $token (hex: $hex)\n");
+		message("[LATAMTranslate] Missing token: $token (hex: $hex)\n");
 		return "[MISSING:$token]";
 	}
 }
@@ -140,29 +142,27 @@ sub npcTalkRespPre {
 	my $translated = $raw_msg;
 	$translated =~ s/\x1C([^\x1C]+)\x1C/translate_token($1)/ge;
   
-	my $new_size = length($translated);
+	my $new_size = bytes::length($translated);
 	substr($translated, 2, 2, pack('v', $new_size));
 
 	$args->{RAW_MSG} = $translated;
 	$args->{RAW_MSG_SIZE} = $new_size;
 }
 
-sub localBroadcast {
-	my ( $self, $args ) = @_;
-	my $message = $args->{Msg} || '';
+sub messagePre {
+	my ($hookName, $args) = @_;
 
-	if ( substr( $message, 0, 1 ) eq "\x1C" ) {
-		my $clean_message = $message;
-		$message =~ s/\x1C//g;
+	my $new_message = $args->{message};
 
-		if ( exists $strings_cache{$message} ) {
-			$message = $strings_cache{$message};
-		} else {
-			error( "[ROLA] String '$message' not found in strings.json\n" );
-			return; 
+	# Check for ∟...∟ (0x1C) encoded strings
+	if (defined $new_message && $new_message =~ /\x1C([^\x1C]+)\x1C/) {
+		my $token = $1;
+		my $translated = translate_token($token);
+
+		if ($translated !~ /^\[MISSING:/) {
+			$args->{message} = $translated;
 		}
 	}
-
-	message "[ROLA] $message\n", "schat";
 }
 1;
+
