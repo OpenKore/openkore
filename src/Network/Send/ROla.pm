@@ -39,7 +39,7 @@ sub new {
 		map_login 0436
 		party_join_request_by_name 02C4
 		party_setting 07D7
-		pet_capture 08B5
+		pet_capture 019F
 		send_equip 0998
 		skill_use 0438
 		skill_use_location 0366

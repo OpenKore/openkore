@@ -1,10 +1,10 @@
 
-airpship "airplane_01",243,74,"(We have arrived at Izlude)","izlude",200,73,x;
-airpship "airplane_01",243,74,"(We have arrived at Rachel)","ra_fild12",292,204,x;
-airpship "airplane_01",243,74,"(We have arrived at Juno)","y_airport",143,39,x;
+airpship "airplane_01",243,74,"(We have arrived at Izlude|Chegamos a Izlude)","izlude",200,73,x;
+airpship "airplane_01",243,74,"(We have arrived at Rachel|Chegamos a Rachel)","ra_fild12",292,204,x;
+airpship "airplane_01",243,74,"(We have arrived at Juno|Chegamos a Juno)","y_airport",143,39,x;
 
 
-airpship "airplane",243,73,"(We have arrived at Juno)","y_airport",143,39,x;
-airpship "airplane",243,73,"(We have arrived at Einbroch)","airport",143,39,x;
-airpship "airplane",243,73,"(We have arrived at Lighthalzen)","lhz_airport",143,39,x;
-airpship "airplane",243,73,"(We have arrived at Hugel)","hugel",183,149,x;
+airpship "airplane",243,73,"(We have arrived at Juno|Chegamos a Juno)","y_airport",143,39,x;
+airpship "airplane",243,73,"(We have arrived at Einbroch|Chegamos a Einbroch)","airport",143,39,x;
+airpship "airplane",243,73,"(We have arrived at Lighthalzen|Chegamos a Lighthalzen)","lhz_airport",143,39,x;
+airpship "airplane",243,73,"(We have arrived at Hugel|Chegamos a Hugel)","hugel",183,149,x;
