@@ -1,5 +1,5 @@
 # ====================
-# LATAMTranslate v1.2
+# LATAMTranslate v1.3
 # Plugin author: Rubim, UnknownXD
 # Plugin modified by: roxleopardo
 # ====================
@@ -32,8 +32,9 @@ sub checkServer {
 	if ( grep { $master->{serverType} eq $_ } qw(ROla) ) {
 		my $base_hooks = Plugins::addHooks(
 			['actor_setName', \&setName, undef],
-            ['packet_pre/public_chat', \&messagePre, undef],
+			['packet_pre/public_chat', \&messagePre, undef],
 			['packet_pre/local_broadcast', \&messagePre, undef],
+			['packet_pre/system_chat', \&systemChatPre, undef],
 			['packet_pre/npc_talk', \&npcTalkPre, undef],
 			['packet_pre/npc_talk_responses', \&npcTalkRespPre, undef],
 		);
@@ -89,7 +90,7 @@ sub translate_token {
 
 	if (exists $strings_cache{$token}) {
 		my $string = $strings_cache{$token};
-        utf8::decode($string);
+        	utf8::decode($string);
 		return $string;
 	} else {
 		# print warning of missing token and the hex
@@ -97,6 +98,33 @@ sub translate_token {
 		message("[LATAMTranslate] Missing token: $token (hex: $hex)\n");
 		return "[MISSING:$token]";
 	}
+}
+
+# Handles composite tokens of the type: ∟ID\x1Darg0\x1Darg1...∟
+# Also supports U+2194 (↔) as a fallback separator in case it's rendered that way.
+sub translate_composite_token {
+    my ($blob) = @_;
+
+    # Split into ID and parameters using 0x1D (GS) or U+2194 (↔) as separators
+    my @parts = split(/\x1D|\x{2194}/, $blob);
+    my $id    = shift @parts;
+
+    # Try to find a template by ID; if not found, fallback to simple token translation (logs as MISSING)
+    unless (exists $strings_cache{$id}) {
+        return translate_token($blob);
+    }
+
+    my $template = $strings_cache{$id};
+    utf8::decode($template);
+
+    # Replace placeholders {0}, {1}, {2} with the corresponding arguments
+    for my $i (0..$#parts) {
+        my $arg = $parts[$i] // '';
+        utf8::decode($arg);
+        $template =~ s/\{\Q$i\E\}/$arg/g;
+    }
+
+    return $template;
 }
 
 sub setName {
@@ -164,5 +192,27 @@ sub messagePre {
 		}
 	}
 }
-1;
 
+
+sub systemChatPre {
+    my ($hookName, $args) = @_;
+
+    my $msg = $args->{message};
+    return unless defined $msg;
+
+    # Replace all occurrences of ∟...∟ (0x1C)
+    # If the blob contains 0x1D (GS) or U+2194 (↔), it will be treated as a composite token (ID + params),
+    # otherwise, it will be treated as a simple token.
+    $msg =~ s{\x1C([^\x1C]+)\x1C}{
+        my $blob = $1;
+        if (index($blob, "\x1D") >= 0 || $blob =~ /\x{2194}/) {
+            translate_composite_token($blob)
+        } else {
+            translate_token($blob)
+        }
+    }gex;
+
+    $args->{message} = $msg;
+}
+
+1;
