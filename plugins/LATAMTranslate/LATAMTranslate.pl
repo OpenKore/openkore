@@ -1,5 +1,5 @@
 # ====================
-# LATAMTranslate v1.3
+# LATAMTranslate v1.4
 # Plugin author: Rubim, UnknownXD
 # Plugin modified by: roxleopardo
 # ====================
@@ -18,19 +18,21 @@ use JSON::Tiny qw(from_json to_json);
 
 our %strings_cache;
 
-Plugins::register( 'LATAMTranslate', 'Fixes issues with localized strings.', \&onUnload );
-
-my $hooks = Plugins::addHooks(
-	['start3', \&checkServer, undef],
-);
 my $base_hooks;
 
 my $plugin_path = $Plugins::current_plugin_folder;
 
-sub checkServer {
+load();
+my $hooks = Plugins::addHooks(
+	['start3', \&load, undef],
+);
+
+Plugins::register( 'LATAMTranslate', 'Fixes issues with localized strings.', \&unload );
+
+sub load {
 	my $master = $masterServers{ $config{master} };
 	if ( grep { $master->{serverType} eq $_ } qw(ROla) ) {
-		my $base_hooks = Plugins::addHooks(
+		$base_hooks = Plugins::addHooks(
 			['actor_setName', \&setName, undef],
 			['packet_pre/public_chat', \&messagePre, undef],
 			['packet_pre/local_broadcast', \&messagePre, undef],
@@ -42,6 +44,14 @@ sub checkServer {
 	}
 
 }
+
+# Plugin cleanup
+sub unload {
+	Plugins::delHooks($hooks) if ($hooks);
+	Plugins::delHooks($base_hooks) if ($base_hooks);
+	%strings_cache = ();
+}
+
 # Load actor_name.json
 sub loadJSON {
 	message "Loading strings.json...\n", "LATAMTranslate";
@@ -71,13 +81,6 @@ sub loadJSON {
 	%strings_cache = %{$data};
 	my $count = scalar( keys %strings_cache );
 	message "[LATAMTranslate] Loaded $count actor names from strings.json\n", "LATAMTranslate";
-}
-
-# Plugin cleanup
-sub unload {
-	Plugins::delHooks( $base_hooks );
-	Plugins::delHooks( $hooks ) if ( $hooks );
-	%strings_cache = ();
 }
 
 sub debug {
@@ -192,7 +195,6 @@ sub messagePre {
 		}
 	}
 }
-
 
 sub systemChatPre {
     my ($hookName, $args) = @_;
