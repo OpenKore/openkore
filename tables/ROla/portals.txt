@@ -452,7 +452,7 @@ mid_camp 336 171 man_fild01 36 235 c r0 n
 man_fild01 35 232 mid_camp 341 176
 man_fild01 103 55 man_fild03 84 366
 man_fild03 84 369 man_fild01 103 58
-man_fild01 372 230 man_fild02 34 261
+man_fild01 373 238 man_fild02 34 261
 man_fild02 32 261 man_fild01 369 230
 man_fild02 139 41 manuk 112 356
 manuk 114 357 man_fild02 138 43
