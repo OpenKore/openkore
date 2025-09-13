@@ -2846,6 +2846,8 @@ ice_dun01 157 10 ra_fild01 233 327
 ice_dun01 146 161 ice_dun02 151 139
 ice_dun02 151 145 ice_dun01 146 157
 ice_dun02 150 285 ice_dun03 149 24
+ice_dun02 150 13 ice_d03_i 149 24
+ice_d03_i 149 19 ice_dun02 150 17
 ice_dun03 149 19 ice_dun02 150 280
 ice_dun04 33 140 ice_dun03 149 130
 kh_dun01 3 234 yuno_fild08 74 174
