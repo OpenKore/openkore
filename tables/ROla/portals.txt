@@ -452,7 +452,7 @@ mid_camp 336 171 man_fild01 36 235 c r0 n
 man_fild01 35 232 mid_camp 341 176
 man_fild01 103 55 man_fild03 84 366
 man_fild03 84 369 man_fild01 103 58
-man_fild01 372 230 man_fild02 34 261
+man_fild01 373 238 man_fild02 34 261
 man_fild02 32 261 man_fild01 369 230
 man_fild02 139 41 manuk 112 356
 manuk 114 357 man_fild02 138 43
@@ -2846,6 +2846,8 @@ ice_dun01 157 10 ra_fild01 233 327
 ice_dun01 146 161 ice_dun02 151 139
 ice_dun02 151 145 ice_dun01 146 157
 ice_dun02 150 285 ice_dun03 149 24
+ice_dun02 150 13 ice_d03_i 149 24
+ice_d03_i 149 19 ice_dun02 150 17
 ice_dun03 149 19 ice_dun02 150 280
 ice_dun04 33 140 ice_dun03 149 130
 kh_dun01 3 234 yuno_fild08 74 174
