@@ -7515,6 +7515,11 @@ sub npc_talk_responses {
 	$talk = bytesToString($talk);
 
 	my @preTalkResponses = split /:/, $talk;
+
+	Plugins::callHook('pre/npc_talk_responses', {
+						responses => \@preTalkResponses,
+						});
+
 	$talk{responses} = [];
 	foreach my $response (@preTalkResponses) {
 		# Remove RO color codes

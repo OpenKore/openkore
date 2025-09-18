@@ -1,5 +1,5 @@
 # ====================
-# LATAMTranslate v1.4
+# LATAMTranslate v1.5
 # Plugin author: Rubim, UnknownXD
 # Plugin modified by: roxleopardo
 # ====================
@@ -12,12 +12,19 @@ use Globals;
 use Settings;
 use Utils;
 use utf8;
-use bytes;
 use Log qw(message debug error);
 use JSON::Tiny qw(from_json to_json);
 
 our %strings_cache;
-our $RE_TOKEN_BLOB = qr/\x1C((?:[[:print:]]|\x1D|\x{2194})+?)\x1C/;
+
+our $RE_TOKEN_BLOB = qr{
+    \x1C
+    (
+        [^\x1C]*
+        (?: \x1C [^\x1C]* \x1C [^\x1C]* )*
+    )
+    \x1C
+}x;
 
 my $base_hooks;
 
@@ -35,11 +42,11 @@ sub load {
 	if ( grep { $master->{serverType} eq $_ } qw(ROla) ) {
 		$base_hooks = Plugins::addHooks(
 			['actor_setName', \&setName, undef],
-			['packet_pre/public_chat', \&messagePre, undef],
-			['packet_pre/local_broadcast', \&messagePre, undef],
-			['packet_pre/system_chat', \&messagePre, undef],
+			['packet_pre/public_chat', \&publicChatPre, undef],
+			['packet_pre/local_broadcast', \&localBroadcastPre, undef],
+			['packet_pre/system_chat', \&systemChatPre, undef],
 			['packet_pre/npc_talk', \&npcTalkPre, undef],
-			['packet_pre/npc_talk_responses', \&npcTalkRespPre, undef]
+			['pre/npc_talk_responses', \&npcTalkRespPre, undef]
 		);
 		loadJSON();
 	}
@@ -119,12 +126,13 @@ sub translate_composite_token {
     }
 
     my $template = $strings_cache{$id};
-    utf8::decode($template);
 
     # Replace placeholders {0}, {1}, {2} with the corresponding arguments
     for my $i (0..$#parts) {
         my $arg = $parts[$i] // '';
-        utf8::decode($arg);
+        if ($arg =~ /^\x1C([[:print:]]+?)\x1C$/) {
+            $arg = translate_token($1);
+        }
         $template =~ s/\{\Q$i\E\}/$arg/g;
     }
 
@@ -155,20 +163,18 @@ sub _translate_args_field {
 }
 
 sub setName {
-	my ($hookName, $args) = @_;
+    my (undef, $args) = @_;
+    my $name = $args->{new_name};
+    return unless defined $name;
 
-	my $new_name = $args->{new_name};
+    my $orig = $name;
+    _translate_tokens_inplace(\$name);
 
-	# Check for ∟...∟ (0x1C) encoded strings
-	if (defined $new_name && $new_name =~ /\x1C([[:print:]]+?)\x1C/) {
-		my $token = $1;
-		my $translated = translate_token($token);
+    return if $name eq $orig;
+    return if $name =~ /\[MISSING:/;
 
-		if ($translated !~ /^\[MISSING:/) {
-			$args->{new_name} = $translated;
-			$args->{return} = 1;  # Let the main setName apply our translation
-		}
-	}
+    $args->{new_name} = $name;
+    $args->{return}   = 1;
 }
 
 sub npcTalkPre {
@@ -178,18 +184,25 @@ sub npcTalkPre {
 
 sub npcTalkRespPre {
     my (undef, $args) = @_;
-    my $raw = $args->{RAW_MSG} // '';
+    my $responses = $args->{responses};
 
-    _translate_tokens_inplace(\$raw);
-
-    my $new_size = bytes::length($raw);
-    substr($raw, 2, 2, pack('v', $new_size));
-
-    $args->{RAW_MSG} = $raw;
-    $args->{RAW_MSG_SIZE} = $new_size;
+    for my $i (0 .. $#$responses) {
+        utf8::encode($responses->[$i]);
+        _translate_tokens_inplace(\$responses->[$i]);
+    }
 }
 
-sub messagePre {
+sub publicChatPre {
+    my (undef, $args) = @_;
+    _translate_args_field($args, 'message');
+}
+
+sub localBroadcastPre {
+    my (undef, $args) = @_;
+    _translate_args_field($args, 'message');
+}
+
+sub systemChatPre {
     my (undef, $args) = @_;
     _translate_args_field($args, 'message');
 }
