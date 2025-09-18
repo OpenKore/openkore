@@ -17,6 +17,7 @@ use Log qw(message debug error);
 use JSON::Tiny qw(from_json to_json);
 
 our %strings_cache;
+our $RE_TOKEN_BLOB = qr/\x1C((?:[[:print:]]|\x1D|\x{2194})+?)\x1C/;
 
 my $base_hooks;
 
@@ -36,9 +37,9 @@ sub load {
 			['actor_setName', \&setName, undef],
 			['packet_pre/public_chat', \&messagePre, undef],
 			['packet_pre/local_broadcast', \&messagePre, undef],
-			['packet_pre/system_chat', \&systemChatPre, undef],
+			['packet_pre/system_chat', \&messagePre, undef],
 			['packet_pre/npc_talk', \&npcTalkPre, undef],
-			['packet_pre/npc_talk_responses', \&npcTalkRespPre, undef],
+			['packet_pre/npc_talk_responses', \&npcTalkRespPre, undef]
 		);
 		loadJSON();
 	}
@@ -130,13 +131,36 @@ sub translate_composite_token {
     return $template;
 }
 
+sub _translate_blob {
+    my ($blob) = @_;
+    return (index($blob, "\x1D") >= 0 || $blob =~ /\x{2194}/)
+        ? translate_composite_token($blob)
+        : translate_token($blob);
+}
+
+sub _translate_tokens_inplace {
+    my ($sref) = @_;
+    return unless defined $$sref;
+    return unless index($$sref, "\x1C") >= 0;   # fast-path
+
+    $$sref =~ s/$RE_TOKEN_BLOB/_translate_blob($1)/gex;
+}
+
+sub _translate_args_field {
+    my ($args, $field) = @_;
+    my $val = $args->{$field};
+    return unless defined $val;
+    _translate_tokens_inplace(\$val);
+    $args->{$field} = $val;
+}
+
 sub setName {
 	my ($hookName, $args) = @_;
 
 	my $new_name = $args->{new_name};
 
 	# Check for ∟...∟ (0x1C) encoded strings
-	if (defined $new_name && $new_name =~ /\x1C([^\x1C]+)\x1C/) {
+	if (defined $new_name && $new_name =~ /\x1C([[:print:]]+?)\x1C/) {
 		my $token = $1;
 		my $translated = translate_token($token);
 
@@ -148,73 +172,26 @@ sub setName {
 }
 
 sub npcTalkPre {
-	my ( $self, $args ) = @_;
-	my $message = $args->{msg} || '';
-
-	my @tokens = $message =~ /\x1C([^\x1C]+)\x1C/g;
-
-	if (@tokens) {
-		my $last_token = $tokens[-1];
-		my $translated = translate_token($last_token);
-		$args->{msg} = $translated;
-	}
+    my (undef, $args) = @_;
+    _translate_args_field($args, 'msg');
 }
 
 sub npcTalkRespPre {
-	my (undef, $args) = @_;
+    my (undef, $args) = @_;
+    my $raw = $args->{RAW_MSG} // '';
 
-	my $raw_msg = $args->{RAW_MSG} || '';
-	my $original_msg = $raw_msg;  # For debug
+    _translate_tokens_inplace(\$raw);
 
-	my $hex_msg = unpack('H*', $raw_msg);
+    my $new_size = bytes::length($raw);
+    substr($raw, 2, 2, pack('v', $new_size));
 
-	#message Misc::visualDump($raw_msg);
-
-	my $translated = $raw_msg;
-	$translated =~ s/\x1C([^\x1C]+)\x1C/translate_token($1)/ge;
-  
-	my $new_size = bytes::length($translated);
-	substr($translated, 2, 2, pack('v', $new_size));
-
-	$args->{RAW_MSG} = $translated;
-	$args->{RAW_MSG_SIZE} = $new_size;
+    $args->{RAW_MSG} = $raw;
+    $args->{RAW_MSG_SIZE} = $new_size;
 }
 
 sub messagePre {
-	my ($hookName, $args) = @_;
-
-	my $new_message = $args->{message};
-
-	# Check for ∟...∟ (0x1C) encoded strings
-	if (defined $new_message && $new_message =~ /\x1C([^\x1C]+)\x1C/) {
-		my $token = $1;
-		my $translated = translate_token($token);
-
-		if ($translated !~ /^\[MISSING:/) {
-			$args->{message} = $translated;
-		}
-	}
-}
-
-sub systemChatPre {
-    my ($hookName, $args) = @_;
-
-    my $msg = $args->{message};
-    return unless defined $msg;
-
-    # Replace all occurrences of ∟...∟ (0x1C)
-    # If the blob contains 0x1D (GS) or U+2194 (↔), it will be treated as a composite token (ID + params),
-    # otherwise, it will be treated as a simple token.
-    $msg =~ s{\x1C([^\x1C]+)\x1C}{
-        my $blob = $1;
-        if (index($blob, "\x1D") >= 0 || $blob =~ /\x{2194}/) {
-            translate_composite_token($blob)
-        } else {
-            translate_token($blob)
-        }
-    }gex;
-
-    $args->{message} = $msg;
+    my (undef, $args) = @_;
+    _translate_args_field($args, 'message');
 }
 
 1;
