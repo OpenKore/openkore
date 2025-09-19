@@ -7777,7 +7777,7 @@ sub cmdRodex {
 		if (!exists $rodexList->{mails}{$arg2}) {
 			error TF("The rodex mail of ID '%d' doesn't exist.\n", $arg2);
 			return;
-		} elsif ($rodexList->{mails}{$arg2}{attach} ne 'i' and $rodexList->{mails}{$arg2}{attach} ne 'z+i') {
+		} elsif (!grep { $_ eq $rodexList->{mails}{$arg2}{attach} } qw(i z+i gift)) {
 			error TF("The rodex mail '%d' has no items.\n", $arg2);
 			return;
 		}
