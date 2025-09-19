@@ -1,5 +1,5 @@
 # ====================
-# LATAMTranslate v1.4
+# LATAMTranslate v1.5
 # Plugin author: Rubim, UnknownXD
 # Plugin modified by: roxleopardo
 # ====================
@@ -12,11 +12,19 @@ use Globals;
 use Settings;
 use Utils;
 use utf8;
-use bytes;
 use Log qw(message debug error);
 use JSON::Tiny qw(from_json to_json);
 
 our %strings_cache;
+
+our $RE_TOKEN_BLOB = qr{
+    \x1C
+    (
+        [^\x1C]*
+        (?: \x1C [^\x1C]* \x1C [^\x1C]* )*
+    )
+    \x1C
+}x;
 
 my $base_hooks;
 
@@ -34,11 +42,11 @@ sub load {
 	if ( grep { $master->{serverType} eq $_ } qw(ROla) ) {
 		$base_hooks = Plugins::addHooks(
 			['actor_setName', \&setName, undef],
-			['packet_pre/public_chat', \&messagePre, undef],
-			['packet_pre/local_broadcast', \&messagePre, undef],
+			['packet_pre/public_chat', \&publicChatPre, undef],
+			['packet_pre/local_broadcast', \&localBroadcastPre, undef],
 			['packet_pre/system_chat', \&systemChatPre, undef],
 			['packet_pre/npc_talk', \&npcTalkPre, undef],
-			['packet_pre/npc_talk_responses', \&npcTalkRespPre, undef],
+			['pre/npc_talk_responses', \&npcTalkRespPre, undef]
 		);
 		loadJSON();
 	}
@@ -118,103 +126,85 @@ sub translate_composite_token {
     }
 
     my $template = $strings_cache{$id};
-    utf8::decode($template);
 
     # Replace placeholders {0}, {1}, {2} with the corresponding arguments
     for my $i (0..$#parts) {
         my $arg = $parts[$i] // '';
-        utf8::decode($arg);
+        if ($arg =~ /^\x1C([[:print:]]+?)\x1C$/) {
+            $arg = translate_token($1);
+        }
         $template =~ s/\{\Q$i\E\}/$arg/g;
     }
 
     return $template;
 }
 
+sub _translate_blob {
+    my ($blob) = @_;
+    return (index($blob, "\x1D") >= 0 || $blob =~ /\x{2194}/)
+        ? translate_composite_token($blob)
+        : translate_token($blob);
+}
+
+sub _translate_tokens_inplace {
+    my ($sref) = @_;
+    return unless defined $$sref;
+    return unless index($$sref, "\x1C") >= 0;   # fast-path
+
+    $$sref =~ s/$RE_TOKEN_BLOB/_translate_blob($1)/gex;
+}
+
+sub _translate_args_field {
+    my ($args, $field) = @_;
+    my $val = $args->{$field};
+    return unless defined $val;
+    _translate_tokens_inplace(\$val);
+    $args->{$field} = $val;
+}
+
 sub setName {
-	my ($hookName, $args) = @_;
+    my (undef, $args) = @_;
+    my $name = $args->{new_name};
+    return unless defined $name;
 
-	my $new_name = $args->{new_name};
+    my $orig = $name;
+    _translate_tokens_inplace(\$name);
 
-	# Check for ∟...∟ (0x1C) encoded strings
-	if (defined $new_name && $new_name =~ /\x1C([^\x1C]+)\x1C/) {
-		my $token = $1;
-		my $translated = translate_token($token);
+    return if $name eq $orig;
+    return if $name =~ /\[MISSING:/;
 
-		if ($translated !~ /^\[MISSING:/) {
-			$args->{new_name} = $translated;
-			$args->{return} = 1;  # Let the main setName apply our translation
-		}
-	}
+    $args->{new_name} = $name;
+    $args->{return}   = 1;
 }
 
 sub npcTalkPre {
-	my ( $self, $args ) = @_;
-	my $message = $args->{msg} || '';
-
-	my @tokens = $message =~ /\x1C([^\x1C]+)\x1C/g;
-
-	if (@tokens) {
-		my $last_token = $tokens[-1];
-		my $translated = translate_token($last_token);
-		$args->{msg} = $translated;
-	}
+    my (undef, $args) = @_;
+    _translate_args_field($args, 'msg');
 }
 
 sub npcTalkRespPre {
-	my (undef, $args) = @_;
+    my (undef, $args) = @_;
+    my $responses = $args->{responses};
 
-	my $raw_msg = $args->{RAW_MSG} || '';
-	my $original_msg = $raw_msg;  # For debug
-
-	my $hex_msg = unpack('H*', $raw_msg);
-
-	#message Misc::visualDump($raw_msg);
-
-	my $translated = $raw_msg;
-	$translated =~ s/\x1C([^\x1C]+)\x1C/translate_token($1)/ge;
-  
-	my $new_size = bytes::length($translated);
-	substr($translated, 2, 2, pack('v', $new_size));
-
-	$args->{RAW_MSG} = $translated;
-	$args->{RAW_MSG_SIZE} = $new_size;
+    for my $i (0 .. $#$responses) {
+        utf8::encode($responses->[$i]);
+        _translate_tokens_inplace(\$responses->[$i]);
+    }
 }
 
-sub messagePre {
-	my ($hookName, $args) = @_;
+sub publicChatPre {
+    my (undef, $args) = @_;
+    _translate_args_field($args, 'message');
+}
 
-	my $new_message = $args->{message};
-
-	# Check for ∟...∟ (0x1C) encoded strings
-	if (defined $new_message && $new_message =~ /\x1C([^\x1C]+)\x1C/) {
-		my $token = $1;
-		my $translated = translate_token($token);
-
-		if ($translated !~ /^\[MISSING:/) {
-			$args->{message} = $translated;
-		}
-	}
+sub localBroadcastPre {
+    my (undef, $args) = @_;
+    _translate_args_field($args, 'message');
 }
 
 sub systemChatPre {
-    my ($hookName, $args) = @_;
-
-    my $msg = $args->{message};
-    return unless defined $msg;
-
-    # Replace all occurrences of ∟...∟ (0x1C)
-    # If the blob contains 0x1D (GS) or U+2194 (↔), it will be treated as a composite token (ID + params),
-    # otherwise, it will be treated as a simple token.
-    $msg =~ s{\x1C([^\x1C]+)\x1C}{
-        my $blob = $1;
-        if (index($blob, "\x1D") >= 0 || $blob =~ /\x{2194}/) {
-            translate_composite_token($blob)
-        } else {
-            translate_token($blob)
-        }
-    }gex;
-
-    $args->{message} = $msg;
+    my (undef, $args) = @_;
+    _translate_args_field($args, 'message');
 }
 
 1;
