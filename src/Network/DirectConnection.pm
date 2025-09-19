@@ -168,7 +168,7 @@ sub serverConnect {
 sub serverSend {
 	my $self = shift;
 	my $msg = shift;
-	if ($self->serverAlive) {
+	if ($self->serverAlive && defined $self->serverPeerHost, $self->serverPeerPort) {
 		if (Plugins::hasHook('Network::serverSend/pre')) {
 			Plugins::callHook('Network::serverSend/pre', {msg => \$msg});
 		}
