@@ -1589,9 +1589,12 @@ sub parse_portal_conversation_args {
         # Check current position
         $i = pos($command);
 
-        # Handle quoted strings
-        if ($command =~ /\G(["'])(.*?)\1\s*/gc) {
-            push @args, $2;
+        # Handle key=value where value can be quoted string (remove quotes)
+        if ($command =~ /\G(\w+)=("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')\s*/gc) {
+			my ($key, $val) = ($1, $2);
+            # Remove the quotes around $val
+            $val =~ s/^["'](.*)["']$/$1/;
+            push @args, "$key=$val";
         }
         # Handle regex r~/.../flags
         elsif ($command =~ /\Gr~\/((?:\\\/|[^\/])+)\/([a-z]*)\s*/gc) {
