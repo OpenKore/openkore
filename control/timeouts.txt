@@ -26,8 +26,8 @@ poseidon_wait_reply 15
 # Activate AI after x seconds after the map's loaded
 ai 1
 
-ai_move_retry 0.25
-ai_move_giveup 1
+ai_move_retry 0.4
+ai_move_giveup 1.2
 
 ai_homunculus_standby 0.5
 ai_mercenary_standby 0.5
