@@ -3603,5 +3603,3 @@ moc_para01 47 161 moc_para01 48 16
 moc_para01 179 90 moc_para01 41 187
 moc_para01 41 187 moc_para01 179 93
 izlude 110 182 izlude_in 65 87
-gef_fild06 20 304 glast_01 377 304
-glast_01 377 304 gef_fild06 27 304
