@@ -12482,4 +12482,36 @@ sub dynamicnpc_create_result {
 	message TF("Dynamic NPC create result - Status: %s\n", $status);
 }
 
+# 0840 - PACKET_HC_NOTIFY_ACCESSIBLE_MAPNAME
+sub parse_notify_accessible_mapname {
+    my ($self, $args) = @_;
+
+    my $mapList = {
+        len => 20,
+        types => 'V Z16',
+        keys => [qw(unknown map_name)],
+    };
+
+    @{$args->{map_list}} = map {
+        my %map;
+        @map{@{$mapList->{keys}}} = unpack($mapList->{types}, $_);
+        \%map;
+    } unpack "(a$mapList->{len})*", $args->{mapList};
+}
+
+sub notify_accessible_mapname {
+    my ($self, $args) = @_;
+	my $map_index = 0;
+
+    foreach my $i (0 .. $#{$args->{map_list}}) {
+        my $map = $args->{map_list}[$i];
+        error("[notify_accessible_mapname] unknown = $map->{unknown}, name = $map->{map_name}\n");
+        if (defined $config{saveMap} && $map->{map_name} =~ /$config{saveMap}/) {
+            $map_index = $i;
+        }
+    }
+
+	$messageSender->sendSelectAccessibleMapname($map_index);
+}
+
 1;

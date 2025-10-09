@@ -3562,4 +3562,28 @@ sub sendNPCCreateRequest {
 	debug "Sent request to create NPC by name: $name\n", "sendPacket", 2;
 }
 
+# 0841 CH_SELECT_ACCESSIBLE_MAPNAME     
+sub sendSelectAccessibleMapname {
+    my ($self, $map_slot) = @_;
+
+    $self->sendToServer($self->reconstruct({
+        switch 		=> 'select_accessible_mapname',
+        char_slot	=> $config{char},
+        map_slot	=> $map_slot,
+    }));
+}
+
+# 0BAF CZ_USE_PACKAGEITEM
+sub sendUsePackageItem {
+    my ($self, $index, $itemID, $boxIndex) = @_;
+
+    $self->sendToServer($self->reconstruct({
+        switch   	=> 'use_packageitem',
+        index    	=> $index,
+        accountID	=> $accountID,
+        itemID   	=> $itemID,
+        boxIndex 	=> $boxIndex,
+    }));
+}
+
 1;
