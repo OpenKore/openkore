@@ -96,6 +96,7 @@ sub new {
 	$self->{identified} = 0;
 	$self->{nameID} = 0;
 	$self->{binID} = -1;
+	$self->{serverID} = -1;
 	return $self;
 }
 
