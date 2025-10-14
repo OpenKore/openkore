@@ -30,8 +30,7 @@ sub getInventoryItem {
 		$item = $self->{actor}->inventory->getByName($config{teleportAuto_item2});
 		$item = $self->{actor}->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
 	}
-	$item = $self->{actor}->inventory->getByNameID(12324) unless $item; # Novice Butterfly Wing
-	$item = $self->{actor}->inventory->getByNameID(602) unless $item; # Butterfly Wing
+	$item = Misc::getButterflyWing() unless $item;
 	return $item;
  }
 

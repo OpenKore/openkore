@@ -3563,16 +3563,13 @@ sub canUseTeleport {
 			$item = $char->inventory->getByName($config{teleportAuto_item1});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item1}) if (!($item) && $config{teleportAuto_item1} =~ /^\d{3,}$/);
 		}
-		$item = $char->inventory->getByNameID(23280) unless $item; # Beginner's Fly Wing
-		$item = $char->inventory->getByNameID(12323) unless $item; # Novice Fly Wing
-		$item = $char->inventory->getByNameID(601) unless $item; # Fly Wing
+		$item = getFlyWing() unless $item;
 	} else {
 		 if ($config{teleportAuto_item2}) {
 			$item = $char->inventory->getByName($config{teleportAuto_item2});
 			$item = $char->inventory->getByNameID($config{teleportAuto_item2}) if (!($item) && $config{teleportAuto_item2} =~ /^\d{3,}$/);
 		}
-		$item = $char->inventory->getByNameID(12324) unless $item; # Novice Butterfly Wing
-		$item = $char->inventory->getByNameID(602) unless $item; # Butterfly Wing
+		$item = getButterflyWing() unless $item;
 	}
 
 	return 1 if $item;
@@ -5586,6 +5583,35 @@ sub autoNpcTalk {
 	Plugins::callHook('npc_autotalk', {
 		task => $task
 	});
+}
+
+sub getFlyWing {
+	# 12887 - Unlimited Fly Wing
+	# 23280 - Mosquito Wings (only if lv < 99)
+	# 23338 - [Event] Fly Wing
+	# 12323 - Novice Fly Wing
+	# 601   - Fly Wing
+	for my $id (12887, 23280, 23338, 12323, 601) {
+        next if $id == 23280 && $char->{lv} >= 99;
+        my $item = $char->inventory->getByNameID($id);
+        return $item if $item;
+    }
+    return undef;
+}
+
+sub getButterflyWing {
+	# 12324 - Novice Butterfly Wing
+	# 602   - Butterfly Wing
+	for my $id (12324, 602) {
+        my $item = $char->inventory->getByNameID($id);
+        return $item if $item;
+    }
+    return undef;
+}
+
+sub getEdenGroupMark {
+	# 22508 - Eden Group Mark
+	return $char->inventory->getByNameID(22508);
 }
 
 return 1;
