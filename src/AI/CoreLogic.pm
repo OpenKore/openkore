@@ -1285,6 +1285,8 @@ sub processAutoStorage {
 		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
 			next unless ($config{"getAuto_$i"});
 			next if ($config{"getAuto_$i"."_disabled"});
+			next if ($config{"getAuto_$i"."_minBase"} =~ /^\d+$/ && $char->{lv} <= $config{"getAuto_$i"."_minBase"});
+			next if ($config{"getAuto_$i"."_maxBase"} =~ /^\d+$/ && $char->{lv} >= $config{"getAuto_$i"."_maxBase"});
 			if ($char->storage->isReady() && !$char->storage->getByName($config{"getAuto_$i"})) {
 				foreach my $nameID (keys %items_lut) {
 					if (lc($items_lut{$nameID}) eq lc($config{"getAuto_$i"}) && $items_lut{$nameID} ne $config{"getAuto_$i"}) {
