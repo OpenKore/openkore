@@ -822,6 +822,7 @@ sub initHandlers {
 			["", T("delay the next console commands for 1 second")],
 			[T("<seconds>"), T("delay the next console commands by a specified number of seconds")]
 			], undef],
+		['eden', "Use Eden Group Mark", \&cmdEden],
 	);
 
 	# Built-in aliases
@@ -8678,6 +8679,20 @@ sub cmdNPCCreateRequest {
 	$args = 'GOLDPCCAFE' if (!defined $args);
 
 	$messageSender->sendNPCCreateRequest($args);
+}
+
+sub cmdEden {
+	if (!$net || $net->getState() != Network::IN_GAME) {
+		error TF("You must be logged in the game to use this command '%s'\n", shift);
+		return;
+	}
+	my $item = Misc::getEdenGroupMark();
+	if ($item) {
+		$item->use;	
+	}
+	else {
+		error "Error in function 'eden' (Use Eden Group Mark)\nInventory Item Eden Group Mark does not exist.\n";
+	}
 }
 
 1;
