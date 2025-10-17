@@ -380,7 +380,7 @@ dali02 45 96 moc_fild22 36 196 c r0 c n
 #moc_para01 17 33 moc_fild20 342 198 c r0 n
 #moc_fild20 368 197 moc_fild22b c r1 n
 moc_fild22b 182 179 mid_camp 210 291 c c c c r0 c c n
-mid_camp 207 234 spl_fild02 51 240 10000 c c r2
+#mid_camp 207 234 spl_fild02 51 240 10000 c c r2
 mid_camp 207 234 man_fild02 133 47 10000 c c r4
 spl_fild02 53 242 mid_camp 180 247 10000 c c r4
 spl_fild02 53 242 bif_fild02 291 232 55000 c c r2
@@ -392,9 +392,9 @@ man_fild02 135 49 dic_fild01 159 264 20000 c c r4
 dic_fild01 161 266 man_fild02 135 49 20000 c c r2
 
 #Splendide
-mid_camp 13 138 spl_fild02 379 143 c r0 n
+mid_camp 13 143 spl_fild02 379 143 c r0 n
 spl_fild02 382 143 mid_camp 16 143
-mid_camp 9 213 spl_fild02 380 217 c r0 n
+#mid_camp 9 213 spl_fild02 380 217 c r0 n
 spl_fild02 383 216 mid_camp 12 215
 spl_fild02 310 10 spl_fild03 306 376
 spl_fild03 306 379 spl_fild02 311 12
