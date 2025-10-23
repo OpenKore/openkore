@@ -1,5 +1,7 @@
 ![logo](https://upload.wikimedia.org/wikipedia/commons/b/b5/Kore_2g_logo.png)
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/OpenKore/openkore)
+
 ![Language](https://img.shields.io/badge/language-Perl-blue.svg)
 
 ![Stars](https://img.shields.io/github/stars/OpenKore/openkore)
