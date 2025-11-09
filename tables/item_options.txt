@@ -1,240 +1,269 @@
 # see kRO client: data.grf\luafiles514\lua files\Datainfo\addrandomoptionnametable.lub
 # https://github.com/llchrisll/ROenglishRE/blob/master/Renewal/data/luafiles514/lua%20files/datainfo/addrandomoptionnametable.lub
-VAR_MAXHPAMOUNT#MaxHP +%d#
-VAR_MAXSPAMOUNT#MaxSP +%d#
-VAR_STRAMOUNT#STR +%d#
-VAR_AGIAMOUNT#AGI +%d#
-VAR_VITAMOUNT#VIT +%d#
-VAR_INTAMOUNT#INT +%d#
-VAR_DEXAMOUNT#DEX +%d#
-VAR_LUKAMOUNT#LUK +%d#
-VAR_MAXHPPERCENT#MaxHP +%d%%#
-VAR_MAXSPPERCENT#MaxSP +%d%%#
-VAR_HPACCELERATION#HP regen +%d%%#
-VAR_SPACCELERATION#SP regen +%d%%#
-VAR_ATKPERCENT#ATK +%d%%#
-VAR_MAGICATKPERCENT#MATK +%d%%#
-VAR_PLUSASPD#ASPD +%d#
-VAR_PLUSASPDPERCENT#Delay after attack -%d%%#
-VAR_ATTPOWER#ATK +%d#
-VAR_HITSUCCESSVALUE#HIT +%d#
-VAR_ATTMPOWER#MATK +%d#
-VAR_ITEMDEFPOWER#DEF +%d#
-VAR_MDEFPOWER#MDEF +%d#
-VAR_AVOIDSUCCESSVALUE#FLEE +%d#
-VAR_PLUSAVOIDSUCCESSVALUE#Perfect dodge +%d#
-VAR_CRITICALSUCCESSVALUE#CRIT +%d#
-ATTR_TOLERACE_NOTHING#Neutral elemental resistance +%d%%#
-ATTR_TOLERACE_WATER#Water elemental resistance +%d%%#
-ATTR_TOLERACE_GROUND#Earth elemental resistance +%d%%#
-ATTR_TOLERACE_FIRE#Fire elemental resistance +%d%%#
-ATTR_TOLERACE_WIND#Wind elemental resistance +%d%%#
-ATTR_TOLERACE_POISON#Poison elemental resistance +%d%%#
-ATTR_TOLERACE_SAINT#Holy elemental resistance +%d%%#
-ATTR_TOLERACE_DARKNESS#Shadow elemental resistance +%d%%#
-ATTR_TOLERACE_TELEKINESIS#Ghost elemental resistance +%d%%#
-ATTR_TOLERACE_UNDEAD#Undead elemental resistance +%d%%#
-ATTR_TOLERACE_ALLBUTNOTHING#All elementals resistance +%d%%#
-DAMAGE_PROPERTY_NOTHING_USER#Neutral monster resistance +%d%%#
-DAMAGE_PROPERTY_NOTHING_TARGET#ATK +%d%% against Neutral monster#
-DAMAGE_PROPERTY_WATER_USER#Water monster resistance +%d%%#
-DAMAGE_PROPERTY_WATER_TARGET#ATK +%d%% against Water monster#
-DAMAGE_PROPERTY_GROUND_USER#Earth monster resistance +%d%%#
-DAMAGE_PROPERTY_GROUND_TARGET#ATK +%d%% against Earth monster#
-DAMAGE_PROPERTY_FIRE_USER#Fire monster resistance +%d%%#
-DAMAGE_PROPERTY_FIRE_TARGET#ATK +%d%% against Fire monster#
-DAMAGE_PROPERTY_WIND_USER#Wind monster resistance +%d%%#
-DAMAGE_PROPERTY_WIND_TARGET#ATK +%d%% against Wind monster#
-DAMAGE_PROPERTY_POISON_USER#Poison monster resistance +%d%%#
-DAMAGE_PROPERTY_POISON_TARGET#ATK +%d%% against Poison monster#
-DAMAGE_PROPERTY_SAINT_USER#Holy monster resistance +%d%%#
-DAMAGE_PROPERTY_SAINT_TARGET#ATK +%d%% against Holy monster#
-DAMAGE_PROPERTY_DARKNESS_USER#Shadow monster resistance +%d%%#
-DAMAGE_PROPERTY_DARKNESS_TARGET#ATK +%d%% against Shadow monster#
-DAMAGE_PROPERTY_TELEKINESIS_USER#Ghost monster resistance +%d%%#
-DAMAGE_PROPERTY_TELEKINESIS_TARGET#ATK +%d%% against Ghost monster#
-DAMAGE_PROPERTY_UNDEAD_USER#Undead monster resistance +%d%%#
-DAMAGE_PROPERTY_UNDEAD_TARGET#ATK +%d%% against Undead monster#
-MDAMAGE_PROPERTY_NOTHING_USER#Neutral monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_NOTHING_TARGET#MATK +%d%% against Neutral monster#
-MDAMAGE_PROPERTY_WATER_USER#Water monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_WATER_TARGET#MATK +%d%% against Water monster#
-MDAMAGE_PROPERTY_GROUND_USER#Earth monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_GROUND_TARGET#MATK +%d%% against  Earth monster#
-MDAMAGE_PROPERTY_FIRE_USER#Fire monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_FIRE_TARGET#MATK +%d%% against Fire monster#
-MDAMAGE_PROPERTY_WIND_USER#Wind monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_WIND_TARGET#MATK +%d%% against Wind monster#
-MDAMAGE_PROPERTY_POISON_USER#Poison monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_POISON_TARGET#MATK +%d%% against Poison monster#
-MDAMAGE_PROPERTY_SAINT_USER#Holy monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_SAINT_TARGET#MATK +%d%% against Holy monster#
-MDAMAGE_PROPERTY_DARKNESS_USER#Shadow monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_DARKNESS_TARGET#MATK +%d%% against Shadow monster#
-MDAMAGE_PROPERTY_TELEKINESIS_USER#Ghost monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_TELEKINESIS_TARGET#MATK +%d%% against Ghost monster#
-MDAMAGE_PROPERTY_UNDEAD_USER#Undead monster magic resistance +%d%%#
-MDAMAGE_PROPERTY_UNDEAD_TARGET#MATK +%d%% against Undead monster#
-BODY_ATTR_NOTHING#Armor element: Neutral#
-BODY_ATTR_WATER#Armor element: Water#
-BODY_ATTR_GROUND#Armor element: Earth#
-BODY_ATTR_FIRE#Armor element: Fire#
-BODY_ATTR_WIND#Armor element: Wind#
-BODY_ATTR_POISON#Armor element: Poison#
-BODY_ATTR_SAINT#Armor element: Holy#
-BODY_ATTR_DARKNESS#Armor element: Shadow#
-BODY_ATTR_TELEKINESIS#Armor element: Ghost#
-BODY_ATTR_UNDEAD#Armor element: Undead#
-RACE_TOLERACE_NOTHING#Formless monster resistance +%d%%#
-RACE_TOLERACE_UNDEAD#Undead monster resistance +%d%%#
-RACE_TOLERACE_ANIMAL#Brute monster resistance +%d%%#
-RACE_TOLERACE_PLANT#Plant monster resistance +%d%%#
-RACE_TOLERACE_INSECT#Insect monster resistance +%d%%#
-RACE_TOLERACE_FISHS#Fish monster resistance +%d%%#
-RACE_TOLERACE_DEVIL#Demon monster resistance +%d%%#
-RACE_TOLERACE_HUMAN#Demihuman monster resistance +%d%%#
-RACE_TOLERACE_ANGEL#Angel monster resistance +%d%%#
-RACE_TOLERACE_DRAGON#Dragon monster resistance +%d%%#
-RACE_DAMAGE_NOTHING#ATK +%d%% against Formless monster#
-RACE_DAMAGE_UNDEAD#ATK +%d%% against Undead monster#
-RACE_DAMAGE_ANIMAL#ATK +%d%% against Brute monster#
-RACE_DAMAGE_PLANT#ATK +%d%% against Plant monster#
-RACE_DAMAGE_INSECT#ATK +%d%% against Insect monster#
-RACE_DAMAGE_FISHS#ATK +%d%% against Fish monster#
-RACE_DAMAGE_DEVIL#ATK +%d%% against Demon monster#
-RACE_DAMAGE_HUMAN#ATK +%d%% against Demihuman monster#
-RACE_DAMAGE_ANGEL#ATK +%d%% against Angel monster#
-RACE_DAMAGE_DRAGON#ATK +%d%% against Dragon monster#
-RACE_MDAMAGE_NOTHING#MATK +%d%% against Formless monster#
-RACE_MDAMAGE_UNDEAD#MATK +%d%% against Undead monster#
-RACE_MDAMAGE_ANIMAL#MATK +%d%% against Brute monster#
-RACE_MDAMAGE_PLANT#MATK +%d%% against Plant monster#
-RACE_MDAMAGE_INSECT#MATK +%d%% against Insect monster#
-RACE_MDAMAGE_FISHS#MATK +%d%% against Fish monster#
-RACE_MDAMAGE_DEVIL#MATK +%d%% against Devil monster#
-RACE_MDAMAGE_HUMAN#MATK +%d%% against Demihuman monster#
-RACE_MDAMAGE_ANGEL#MATK +%d%% against Angel monster#
-RACE_MDAMAGE_DRAGON#MATK +%d%% against Dragon monster#
-RACE_CRI_PERCENT_NOTHING#CRIT +%d against Formless monster#
-RACE_CRI_PERCENT_UNDEAD#CRIT +%d against Undead monster#
-RACE_CRI_PERCENT_ANIMAL#CRIT +%d against Brute monster#
-RACE_CRI_PERCENT_PLANT#CRIT +%d against Plant monster#
-RACE_CRI_PERCENT_INSECT#CRIT +%d against Insect monster#
-RACE_CRI_PERCENT_FISHS#CRIT +%d against Fish monster#
-RACE_CRI_PERCENT_DEVIL#CRIT +%d against Demon monster#
-RACE_CRI_PERCENT_HUMAN#CRIT +%d against Demihuman monster#
-RACE_CRI_PERCENT_ANGEL#CRIT +%d against Angel monster#
-RACE_CRI_PERCENT_DRAGON#CRIT +%d against Dragon monster#
-RACE_IGNORE_DEF_PERCENT_NOTHING#Pierces %d%% DEF of Formless monster#
-RACE_IGNORE_DEF_PERCENT_UNDEAD#Pierces %d%% DEF of Undead monster#
-RACE_IGNORE_DEF_PERCENT_ANIMAL#Pierces %d%% DEF of Brute monster#
-RACE_IGNORE_DEF_PERCENT_PLANT#Pierces %d%% DEF of Plant monster#
-RACE_IGNORE_DEF_PERCENT_INSECT#Pierces %d%% DEF of Insect monster#
-RACE_IGNORE_DEF_PERCENT_FISHS#Pierces %d%% DEF of Fish monster#
-RACE_IGNORE_DEF_PERCENT_DEVIL#Pierces %d%% DEF of Demon monster#
-RACE_IGNORE_DEF_PERCENT_HUMAN#Pierces %d%% DEF of Demihuman monster#
-RACE_IGNORE_DEF_PERCENT_ANGEL#Pierces %d%% DEF of Angel monster#
-RACE_IGNORE_DEF_PERCENT_DRAGON#Pierces %d%% DEF of Dragon monster#
-RACE_IGNORE_MDEF_PERCENT_NOTHING#Pierces %d%% MDEF of Formless monster#
-RACE_IGNORE_MDEF_PERCENT_UNDEAD#Pierces %d%% MDEF of Undead monster#
-RACE_IGNORE_MDEF_PERCENT_ANIMAL#Pierces %d%% MDEF of Brute monster#
-RACE_IGNORE_MDEF_PERCENT_PLANT#Pierces %d%% MDEF of Plant monster#
-RACE_IGNORE_MDEF_PERCENT_INSECT#Pierces %d%% MDEF of Insect monster#
-RACE_IGNORE_MDEF_PERCENT_FISHS#Pierces %d%% MDEF of Fish monster#
-RACE_IGNORE_MDEF_PERCENT_DEVIL#Pierces %d%% MDEF of Demon monster#
-RACE_IGNORE_MDEF_PERCENT_HUMAN#Pierces %d%% MDEF of Demihuman monster#
-RACE_IGNORE_MDEF_PERCENT_ANGEL#Pierces %d%% MDEF of Angel monster#
-RACE_IGNORE_MDEF_PERCENT_DRAGON#Pierces %d%% MDEF of Dragon monster#
-CLASS_DAMAGE_NORMAL_TARGET#ATK +%d%% against Normal monster#
-CLASS_DAMAGE_BOSS_TARGET#ATK +%d%% against Boss monster#
-CLASS_DAMAGE_NORMAL_USER#Normal monster resistance +%d%%#
-CLASS_DAMAGE_BOSS_USER#Boss monster resistance +%d%%#
-CLASS_MDAMAGE_NORMAL#MATK +%d%% against Normal monster#
-CLASS_MDAMAGE_BOSS#MATK +%d%% against Boss monster#
-CLASS_IGNORE_DEF_PERCENT_NORMAL#Pierces %d%% DEF of Normal monster#
-CLASS_IGNORE_DEF_PERCENT_BOSS#Pierces %d%% DEF of Boss monster#
-CLASS_IGNORE_MDEF_PERCENT_NORMAL#Pierces %d%% MDEF of Normal monster#
-CLASS_IGNORE_MDEF_PERCENT_BOSS#Pierces %d%% MDEF of Boss monster#
-DAMAGE_SIZE_SMALL_TARGET#ATK +%d%% against Small size monster#
-DAMAGE_SIZE_MIDIUM_TARGET#ATK +%d%% against Medium size monster#
-DAMAGE_SIZE_LARGE_TARGET#ATK +%d%% against Large size monster#
-DAMAGE_SIZE_SMALL_USER#Small monster resistance +%d%%#
-DAMAGE_SIZE_MIDIUM_USER#Medium monster resistance +%d%%#
-DAMAGE_SIZE_LARGE_USER#Large monster resistance +%d%%#
-DAMAGE_SIZE_PERFECT#Nullify weapon's damage size penalty#
-DAMAGE_CRI_TARGET#Critical attack +%d%%#
-DAMAGE_CRI_USER#Critical damage -%d%%#
-RANGE_ATTACK_DAMAGE_TARGET#Long range physical attack +%d%%#
-RANGE_ATTACK_DAMAGE_USER#Long range physical damage -%d%%#
-HEAL_VALUE#Healing skills +%d%%#
-HEAL_MODIFY_PERCENT#Restoration gained from Healing skills +%d%%#
-DEC_SPELL_CAST_TIME#Variable cast time -%d%%#
-DEC_SPELL_DELAY_TIME#After cast delay -%d%%#
-DEC_SP_CONSUMPTION#Reduces SP cost by %d%%#
-WEAPON_ATTR_NOTHING#Weapon element: Neutral#
-WEAPON_ATTR_WATER#Weapon element: Water#
-WEAPON_ATTR_GROUND#Weapon element: Earth#
-WEAPON_ATTR_FIRE#Weapon element: Fire#
-WEAPON_ATTR_WIND#Weapon element: Wind#
-WEAPON_ATTR_POISON#Weapon element: Poison#
-WEAPON_ATTR_SAINT#Weapon element: Holy#
-WEAPON_ATTR_DARKNESS#Weapon element: Shadow#
-WEAPON_ATTR_TELEKINESIS#Weapon element: Ghost#
-WEAPON_ATTR_UNDEAD#Weapon element: Undead#
-WEAPON_INDESTRUCTIBLE#Indestructible in battle#
-BODY_INDESTRUCTIBLE#Indestructible in battle#
-MDAMAGE_SIZE_SMALL_TARGET#MATK against Small size monster +%d%%#
-MDAMAGE_SIZE_MIDIUM_TARGET#MATK against Medium size monster +%d%%#
-MDAMAGE_SIZE_LARGE_TARGET#MATK against Large size monster +%d%%#
-MDAMAGE_SIZE_SMALL_USER#Small monster magic resistance +%d%%#
-MDAMAGE_SIZE_MIDIUM_USER#Medium monster magic resistance +%d%%#
-MDAMAGE_SIZE_LARGE_USER#Large monster magic resistance +%d%%#
-ATTR_TOLERACE_ALL#Elemental attacks resistance +%d%%#
-RACE_WEAPON_TOLERACE_NOTHING#Formless monster resistance +%d%%#
-RACE_WEAPON_TOLERACE_UNDEAD#Undead monster resistance +%d%%#
-RACE_WEAPON_TOLERACE_ANIMAL#Brute monster resistance +%d%%#
-RACE_WEAPON_TOLERACE_PLANT#Plant monster resistance +%d%%#
-RACE_WEAPON_TOLERACE_INSECT#Insect monster resistance +%d%%#
-RACE_WEAPON_TOLERACE_FISHS#Fish monster resistance +%d%%#
-RACE_WEAPON_TOLERACE_DEVIL#Demon monster resistance +%d%%#
-RACE_WEAPON_TOLERACE_HUMAN#Demihuman monster resistance +%d%%#
-RACE_WEAPON_TOLERACE_ANGEL#Angel monster resistance +%d%%#
-RACE_WEAPON_TOLERACE_DRAGON#Dragon monster resistance +%d%%#
-RANGE_WEAPON_ATTACK_DAMAGE_TARGET#Long range physical attack +%d%%#
-RANGE_WEAPON_ATTACK_DAMAGE_USER#Long range physical damage -%d%%#
-RACE_TOLERACE_PLAYER_HUMAN#Demi-Human players resistance + %d%%#
-RACE_TOLERACE_PLAYER_DORAM#Doram players resistance +%d%%#
-RACE_DAMAGE_PLAYER_HUMAN#ATK against Demi-Human players +%d%%#
-RACE_DAMAGE_PLAYER_DORAM#ATK against Doram players +%d%%#
-RACE_MDAMAGE_PLAYER_HUMAN#MATK against Demi-Human players +%d%%#
-RACE_MDAMAGE_PLAYER_DORAM#MATK against Doram players +%d%%#
-RACE_CRI_PERCENT_PLAYER_HUMAN#Critical +%d for Demi-Human players#
-RACE_CRI_PERCENT_PLAYER_DORAM#Critical +%d for Doram players#
-RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN#Pierces %d%% DEF of Demi-Human players#
-RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM#Pierces %d%% DEF of Doram players#
-RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN#Pierces %d%% MDEF of Demi-Human players#
-RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM#Pierces %d%% MDEF of Doram players#
-REFLECT_DAMAGE_PERCENT#Recieved reflected damage -%d%%#
-MELEE_ATTACK_DAMAGE_TARGET#Melee physical damage +%d%%#
-MELEE_ATTACK_DAMAGE_USER#Melee physical damage -%d%%#
-ADDSKILLMDAMAGE_NOTHING#Neutral elemental magic skill damage +%d%%#
-ADDSKILLMDAMAGE_WATER#Water elemental magic skill damage +%d%%#
-ADDSKILLMDAMAGE_GROUND#Earth elemental magic skill damage +%d%%#
-ADDSKILLMDAMAGE_FIRE#Fire elemental magic skill damage +%d%%#
-ADDSKILLMDAMAGE_WIND#Wind elemental magic skill damage +%d%%#
-ADDSKILLMDAMAGE_POISON#Poison elemental magic skill damage +%d%%#
-ADDSKILLMDAMAGE_SAINT#Holy elemental magic skill damage +%d%%#
-ADDSKILLMDAMAGE_DARKNESS#Shadow elemental magic skill damage +%d%%#
-ADDSKILLMDAMAGE_TELEKINESIS#Ghost elemental magic skill damage +%d%%#
-ADDSKILLMDAMAGE_UNDEAD#Undead elemental magic skill damage +%d%%#
-ADDEXPPERCENT_KILLRACE_NOTHING#Experience gained from Formless race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_UNDEAD#Experience gained from Undead race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_ANIMAL#Experience gained from Brute race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_PLANT#Experience gained from Plant race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_INSECT#Experience gained from Insect race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_FISHS#Experience gained from Fish race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_DEVIL#Experience gained from Demon race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_HUMAN#Experience gained from Demi-Human race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_ANGEL#Experience gained from Angel race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_DRAGON#Experience gained from Dragon race monsters +%d%%#
-ADDEXPPERCENT_KILLRACE_ALL#Experience gained from all race monsters +%d%%#
+#Re = Resistence
+#PD = Phisical Damage
+#MD = Magic Damage
+#IDEF = Ignore DEF
+#IMDEF = Ignore MDEF
+#D = Damage
+#CD = Critical Damage
+#W = Weapon
+#A = Armor
+#RW = Ranged Weapon
+#SD = Skill Damage
+
+		1 => 'MaxHP +%d',
+		2 => 'MaxSP +%d',
+		3 => 'STR +%d',
+		4 => 'AGI +%d',
+		5 => 'VIT +%d',
+		6 => 'INT +%d',
+		7 => 'DEX +%d',
+		8 => 'LUK +%d',
+		9 => 'MaxHP +%d%%',
+		10 => 'MaxSP +%d%%',
+		11 => 'HP regeneration +%d%%',
+		12 => 'SP regeneration +%d%%',
+		13 => 'ATK +%d%%',
+		14 => 'MATK +%d%%',
+		15 => 'ASPD +%d',
+		16 => 'ASPD +%d%%',
+		17 => 'ATK +%d',
+		18 => 'HIT +%d',
+		19 => 'MATK +%d',
+		20 => 'DEF +%d',
+		21 => 'MDEF +%d',
+		22 => 'FLEE +%d',
+		23 => 'Perfect dodge +%d',
+		24 => 'CRIT +%d',
+		25 => 'Re Neutral %d%%',
+		26 => 'Re Water %d%%',
+		27 => 'Re Earth %d%%',
+		28 => 'Re Fire %d%%',
+		29 => 'Re Wind %d%%',
+		30 => 'Re Poison %d%%',
+		31 => 'Re Holy %d%%',
+		32 => 'Re Shadow %d%%',
+		33 => 'Re Ghost %d%%',
+		34 => 'Re Undead %d%%',
+		35 => 'Re all properties %d%%',
+		36 => 'PD Neutral -%d%%',
+		37 => 'PD Neutral +%d%%',
+		38 => 'PD Water -%d%%',
+		39 => 'PD Water +%d%%',
+		40 => 'PD Earth -%d%%',
+		41 => 'PD Earth +%d%%',
+		42 => 'PD Fire -%d%%',
+		43 => 'PD Fire +%d%%',
+		44 => 'PD Wind -%d%%',
+		45 => 'PD Wind +%d%%',
+		46 => 'PD Poison -%d%%',
+		47 => 'PD Poison +%d%%',
+		48 => 'PD Holy -%d%%',
+		49 => 'PD Holy +%d%%',
+		50 => 'PD Shadow -%d%%',
+		51 => 'PD Shadow +%d%%',
+		52 => 'PD Ghost -%d%%',
+		53 => 'PD Ghost +%d%%',
+		54 => 'PD Undead -%d%%',
+		55 => 'PD Undead +%d%%',
+		56 => 'MD Neutral -%d%%',
+		57 => 'MD  Neutral +%d%%',
+		58 => 'MD Water -%d%%',
+		59 => 'MD  Water +%d%%',
+		60 => 'MD Earth -%d%%',
+		61 => 'MD  Earth +%d%%',
+		62 => 'MD Fire -%d%%',
+		63 => 'MD  Fire +%d%%',
+		64 => 'MD Wind -%d%%',
+		65 => 'MD  Wind +%d%%',
+		66 => 'MD Poison -%d%%',
+		67 => 'MD  Poison +%d%%',
+		68 => 'MD Holy -%d%%',
+		69 => 'MD  Holy +%d%%',
+		70 => 'MD Shadow -%d%%',
+		71 => 'MD  Shadow +%d%%',
+		72 => 'MD Ghost -%d%%',
+		73 => 'MD  Ghost +%d%%',
+		74 => 'MD Undead -%d%%',
+		75 => 'MD  Undead +%d%%',
+		76 => 'Armor Neutral',
+		77 => 'Armor Water',
+		78 => 'Armor Earth',
+		79 => 'Armor Fire',
+		80 => 'Armor Wind',
+		81 => 'Armor Poison',
+		82 => 'Armor Holy',
+		83 => 'Armor Shadow',
+		84 => 'Armor Ghost',
+		85 => 'Armor Undead',
+		86 => 'Armor all properties',
+		87 => 'Re Formless +%d%%',
+		88 => 'Re Undead +%d%%',
+		89 => 'Re Brute +%d%%',
+		90 => 'Re Plant +%d%%',
+		91 => 'Re Insect +%d%%',
+		92 => 'Re Fish +%d%%',
+		93 => 'Re Demon +%d%%',
+		94 => 'Re Demihuman +%d%%',
+		95 => 'Re Angel +%d%%',
+		96 => 'Re Dragon +%d%%',
+		97 => 'PD Formless +%d%%',
+		98 => 'PD Undead +%d%%',
+		99 => 'PD Brute +%d%%',
+		100 => 'PD Plant +%d%%',
+		101 => 'PD Insect +%d%%',
+		102 => 'PD Fish +%d%%',
+		103 => 'PD Demon +%d%%',
+		104 => 'PD Demihuman +%d%%',
+		105 => 'PD Angel +%d%%',
+		106 => 'PD Dragon +%d%%',
+		107 => 'MD  Formless +%d%%',
+		108 => 'MD  Undead +%d%%',
+		109 => 'MD  Brute +%d%%',
+		110 => 'MD  Plant +%d%%',
+		111 => 'MD  Insect +%d%%',
+		112 => 'MD  Fish +%d%%',
+		113 => 'MD  Demon +%d%%',
+		114 => 'MD  Demihuman +%d%%',
+		115 => 'MD  Angel +%d%%',
+		116 => 'MD  Dragon +%d%%',
+		117 => 'CD Formless +%d%%',
+		118 => 'CD Undead +%d%%',
+		119 => 'CD Brute +%d%%',
+		120 => 'CD Plant +%d%%',
+		121 => 'CD Insect +%d%%',
+		122 => 'CD Fish +%d%%',
+		123 => 'CD Demon +%d%%',
+		124 => 'CD Demihuman +%d%%',
+		125 => 'CD Angel +%d%%',
+		126 => 'CD Dragon +%d%%',
+		127 => 'IDEF Formless +%d%%',
+		128 => 'IDEF Undead +%d%%',
+		129 => 'IDEF Brute +%d%%',
+		130 => 'IDEF Plant +%d%%',
+		131 => 'IDEF Insect +%d%%',
+		132 => 'IDEF Fish +%d%%',
+		133 => 'IDEF Demon +%d%%',
+		134 => 'IDEF Demihuman +%d%%',
+		135 => 'IDEF Angel +%d%%',
+		136 => 'IDEF Dragon +%d%%',
+		137 => 'IMEF Formless +%d%%',
+		138 => 'IMEF Undead +%d%%',
+		139 => 'IMEF Brute +%d%%',
+		140 => 'IMEF Plant +%d%%',
+		141 => 'IMEF Insect +%d%%',
+		142 => 'IMEF Fish +%d%%',
+		143 => 'IMEF Demon +%d%%',
+		144 => 'IMEF Demihuman +%d%%',
+		145 => 'IMEF Angel +%d%%',
+		146 => 'IMEF Dragon +%d%%',
+		147 => 'PD Normal +%d%%',
+		148 => 'PD Boss +%d%%',
+		149 => 'PD Normal -%d%%',
+		150 => 'PD Boss -%d%%',
+		151 => 'MD  Normal +%d%%',
+		152 => 'MD  Boss +%d%%',
+		153 => 'IDEF Normal +%d%%',
+		154 => 'IDEF Boss +%d%%',
+		155 => 'IMEF Normal +%d%%',
+		156 => 'IMEF Boss +%d%%',
+		157 => 'PD Small +%d%%',
+		158 => 'PD Medium +%d%%',
+		159 => 'PD Large +%d%%',
+		160 => 'PD Small -%d%%',
+		161 => 'PD Medium -%d%%',
+		162 => 'PD Large -%d%%',
+		163 => 'D SIZES +%d%%',
+		164 => 'CD +%d%%',
+		165 => 'CD -%d%%',
+		166 => 'RD +%d%%',
+		167 => 'RD received -%d%%',
+		168 => 'Healing amount +%d',
+		169 => 'Healing effectiveness +%d%%',
+		170 => 'Fixed cast -%d%%',
+		171 => 'skill delay -%d%%',
+		172 => 'SP cost -%d%%',
+		173 => 'Chance to drain HP on attack (%d%%)',
+		174 => 'Chance to drain SP on attack (%d%%)',
+		175 => 'W Neutral',
+		176 => 'W Water',
+		177 => 'W Earth',
+		178 => 'W Fire',
+		179 => 'W Wind',
+		180 => 'W Poison',
+		181 => 'W Holy',
+		182 => 'W Shadow',
+		183 => 'W Ghost',
+		184 => 'W Undead',
+		185 => 'W Indestructible',
+		186 => 'A Indestructible',
+		187 => 'MD Small +%d%%',
+		188 => 'MD Medium +%d%%',
+		189 => 'MD Large +%d%%',
+		190 => 'MD Small -%d%%',
+		191 => 'MD Medium -%d%%',
+		192 => 'MD Large -%d%%',
+		193 => 'Re Properties %d%%',
+		194 => 'W Re Formless +%d%%',
+		195 => 'W Re Undead +%d%%',
+		196 => 'W Re Brute +%d%%',
+		197 => 'W Re Plant +%d%%',
+		198 => 'W Re Insect +%d%%',
+		199 => 'W Re Fish +%d%%',
+		200 => 'W Re Demon +%d%%',
+		201 => 'W Re Demihuman +%d%%',
+		202 => 'W Re Angel +%d%%',
+		203 => 'W Re Dragon +%d%%',
+		204 => 'RW +%d%%',
+		205 => 'RW -%d%%',
+		206 => 'Re Human +%d%%',
+		207 => 'Re Doram +%d%%',
+		208 => 'PD Human +%d%%',
+		209 => 'PD Doram +%d%%',
+		210 => 'MD Human +%d%%',
+		211 => 'MD Doram +%d%%',
+		212 => 'CD Human +%d%%',
+		213 => 'CD Doram +%d%%',
+		214 => 'IDEF Human +%d%%',
+		215 => 'IDEF Doram +%d%%',
+		216 => 'IMDEF Human +%d%%',
+		217 => 'IMDEF Doram +%d%%',
+		218 => 'Reflect D +%d%%',
+		219 => 'Melee D +%d%%',
+		220 => 'Melee D received -%d%%',
+		221 => 'SD (Neutral) +%d%%',
+		222 => 'SD (Water) +%d%%',
+		223 => 'SD (Earth) +%d%%',
+		224 => 'SD (Fire) +%d%%',
+		225 => 'SD (Wind) +%d%%',
+		226 => 'SD (Poison) +%d%%',
+		227 => 'SD (Holy) +%d%%',
+		228 => 'SD (Shadow) +%d%%',
+		229 => 'SD (Ghost) +%d%%',
+		230 => 'SD (Undead) +%d%%',
+		231 => 'SD (All elements) +%d%%',
+		232 => 'EXP Formless +%d%%',
+		233 => 'EXP Undead +%d%%',
+		234 => 'EXP Brute +%d%%',
+		235 => 'EXP Plant +%d%%',
+		236 => 'EXP Insect +%d%%',
+		237 => 'EXP Fish +%d%%',
+		238 => 'EXP Demon +%d%%',
+		239 => 'EXP Human +%d%%',
+		240 => 'EXP Angel +%d%%',
+		241 => 'EXP Dragon +%d%%',
+		242 => 'EXP all races +%d%%',
+		243 => 'POW +%d',
+		244 => 'SPL +%d',
+		245 => 'STA +%d',
+		246 => 'WIS +%d',
+		247 => 'CON +%d',
+		248 => 'CRT +%d',
+		249 => 'PATK +%d',
+		250 => 'SMATK +%d',
+		251 => 'RES +%d',
+		252 => 'MRES +%d',
+		253 => 'Heal +%d',
+		254 => 'Crit rate +%d',
+		255 => 'Unused (EnumVAR_LAST)',
