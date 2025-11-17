@@ -233,6 +233,14 @@ sub iterate {
 				$self->{source}{field}->baseName, $self->{source}{x}, $self->{source}{y},
 				$self->{targets}[0]->{map} || T("unknown"), $destpos));
 			debug "CalcMapRoute failed.\n", "calc_map_route";
+			Plugins::callHook('fail_calc_map_route', { 
+				map_from	=> $self->{source}{field}->baseName,
+				map_from_x	=> $self->{source}{x},
+				map_from_y	=> $self->{source}{y},
+				map_to   	=> $self->{targets}[0]->{map},
+				map_to_x   	=> $self->{targets}[0]->{x} ? $self->{targets}[0]->{x} : undef,
+				map_to_y   	=> $self->{targets}[0]->{y} ? $self->{targets}[0]->{y} : undef
+			});
 		}
 	}
 }
