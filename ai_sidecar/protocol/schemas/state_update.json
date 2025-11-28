@@ -1,0 +1,241 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-mmorpg.local/schemas/state_update.json",
+  "title": "StateUpdateMessage",
+  "description": "Game state update sent from OpenKore to AI Sidecar on each tick",
+  "type": "object",
+  "required": ["type", "timestamp", "tick"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "state_update",
+      "description": "Message type identifier"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp in milliseconds"
+    },
+    "tick": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Server tick number"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Game state payload",
+      "properties": {
+        "character": {
+          "$ref": "#/definitions/character"
+        },
+        "actors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/actor"
+          },
+          "description": "Visible actors (monsters, players, NPCs)"
+        },
+        "inventory": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inventoryItem"
+          },
+          "description": "Inventory items"
+        },
+        "map": {
+          "$ref": "#/definitions/map"
+        },
+        "ai_mode": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2,
+          "default": 1,
+          "description": "OpenKore AI mode (0=manual, 1=auto, 2=?)"
+        }
+      }
+    }
+  },
+  "definitions": {
+    "position": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["x", "y"]
+    },
+    "character": {
+      "type": "object",
+      "description": "Player character state",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Character name"
+        },
+        "job_id": {
+          "type": "integer",
+          "description": "Job/class ID"
+        },
+        "base_level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 999
+        },
+        "job_level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 999
+        },
+        "hp": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "hp_max": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sp": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sp_max": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "position": {
+          "$ref": "#/definitions/position"
+        },
+        "moving": {
+          "type": "boolean"
+        },
+        "sitting": {
+          "type": "boolean"
+        },
+        "attacking": {
+          "type": "boolean"
+        },
+        "target_id": {
+          "type": ["integer", "null"]
+        },
+        "status_effects": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "weight_max": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "zeny": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "actor": {
+      "type": "object",
+      "description": "Single actor (monster, player, NPC)",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Unique actor ID"
+        },
+        "type": {
+          "type": "integer",
+          "description": "Actor type (0=unknown, 1=player, 2=monster, 3=NPC, etc.)"
+        },
+        "name": {
+          "type": "string"
+        },
+        "position": {
+          "$ref": "#/definitions/position"
+        },
+        "hp": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "hp_max": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "moving": {
+          "type": "boolean"
+        },
+        "destination": {
+          "$ref": "#/definitions/position"
+        },
+        "attacking": {
+          "type": "boolean"
+        },
+        "target_id": {
+          "type": ["integer", "null"]
+        },
+        "mob_id": {
+          "type": ["integer", "null"],
+          "description": "Monster database ID"
+        }
+      }
+    },
+    "inventoryItem": {
+      "type": "object",
+      "required": ["index", "item_id"],
+      "properties": {
+        "index": {
+          "type": "integer",
+          "description": "Inventory slot index"
+        },
+        "item_id": {
+          "type": "integer",
+          "description": "Item database ID"
+        },
+        "name": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "equipped": {
+          "type": "boolean",
+          "default": false
+        },
+        "identified": {
+          "type": "boolean",
+          "default": true
+        },
+        "type": {
+          "type": "integer"
+        }
+      }
+    },
+    "map": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Map name"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

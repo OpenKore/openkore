@@ -1,0 +1,86 @@
+{
+  "version": "1.0.0",
+  "description": "Stat point cost tables for Ragnarok Online",
+  "formula": "cost = 1 + floor((stat_value - 1) / 10)",
+  "comment": "Each stat point has an increasing cost as the stat value rises",
+  
+  "cost_table": {
+    "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1, "7": 1, "8": 1, "9": 1,
+    "10": 2, "11": 2, "12": 2, "13": 2, "14": 2, "15": 2, "16": 2, "17": 2, "18": 2, "19": 2,
+    "20": 3, "21": 3, "22": 3, "23": 3, "24": 3, "25": 3, "26": 3, "27": 3, "28": 3, "29": 3,
+    "30": 4, "31": 4, "32": 4, "33": 4, "34": 4, "35": 4, "36": 4, "37": 4, "38": 4, "39": 4,
+    "40": 5, "41": 5, "42": 5, "43": 5, "44": 5, "45": 5, "46": 5, "47": 5, "48": 5, "49": 5,
+    "50": 6, "51": 6, "52": 6, "53": 6, "54": 6, "55": 6, "56": 6, "57": 6, "58": 6, "59": 6,
+    "60": 7, "61": 7, "62": 7, "63": 7, "64": 7, "65": 7, "66": 7, "67": 7, "68": 7, "69": 7,
+    "70": 8, "71": 8, "72": 8, "73": 8, "74": 8, "75": 8, "76": 8, "77": 8, "78": 8, "79": 8,
+    "80": 9, "81": 9, "82": 9, "83": 9, "84": 9, "85": 9, "86": 9, "87": 9, "88": 9, "89": 9,
+    "90": 10, "91": 10, "92": 10, "93": 10, "94": 10, "95": 10, "96": 10, "97": 10, "98": 10, "99": 10,
+    "100": 11, "101": 11, "102": 11, "103": 11, "104": 11, "105": 11, "106": 11, "107": 11, "108": 11, "109": 11,
+    "110": 12, "111": 12, "112": 12, "113": 12, "114": 12, "115": 12, "116": 12, "117": 12, "118": 12, "119": 12,
+    "120": 13, "121": 13, "122": 13, "123": 13, "124": 13, "125": 13, "126": 13, "127": 13, "128": 13, "129": 13,
+    "130": 14
+  },
+  
+  "cumulative_costs": {
+    "comment": "Total points needed to reach each stat level from 1",
+    "10": 9,
+    "20": 27,
+    "30": 54,
+    "40": 90,
+    "50": 135,
+    "60": 189,
+    "70": 252,
+    "80": 324,
+    "90": 405,
+    "99": 495,
+    "100": 505,
+    "110": 616,
+    "120": 736,
+    "130": 865
+  },
+  
+  "soft_caps": {
+    "pre_renewal": 99,
+    "renewal": 130,
+    "description": "Stats above soft cap have diminishing returns"
+  },
+  
+  "hard_caps": {
+    "base_stat": 99,
+    "with_bonuses": 130,
+    "description": "Maximum stat values (base vs with equipment/buffs)"
+  },
+  
+  "stat_effects": {
+    "STR": {
+      "primary": "Physical attack power",
+      "secondary": "Weight capacity",
+      "note": "Every 5 STR = +1 weight capacity per point"
+    },
+    "AGI": {
+      "primary": "Attack speed (ASPD)",
+      "secondary": "Flee rate",
+      "note": "Every 5 AGI = +1 flee"
+    },
+    "VIT": {
+      "primary": "Max HP",
+      "secondary": "Physical defense, HP regeneration",
+      "note": "Every 5 VIT = +1 defense"
+    },
+    "INT": {
+      "primary": "Magic attack power (MATK)",
+      "secondary": "Max SP, SP regeneration, magic defense",
+      "note": "Every 5 INT = +1 MDEF"
+    },
+    "DEX": {
+      "primary": "Hit rate, weapon attack",
+      "secondary": "Cast time reduction, ranged attack",
+      "note": "Every 5 DEX = +1 hit"
+    },
+    "LUK": {
+      "primary": "Critical rate",
+      "secondary": "Perfect dodge, status resistance",
+      "note": "Every 5 LUK = +1 perfect dodge"
+    }
+  }
+}

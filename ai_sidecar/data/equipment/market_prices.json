@@ -1,0 +1,123 @@
+{
+  "1101": {
+    "item_id": 1101,
+    "min_price": 200,
+    "avg_price": 500,
+    "max_price": 1000,
+    "npc_sell_price": 250,
+    "npc_buy_price": 100,
+    "sample_count": 50,
+    "last_updated": 1700000000,
+    "volatility": 0.3
+  },
+  "1104": {
+    "item_id": 1104,
+    "min_price": 1000,
+    "avg_price": 2000,
+    "max_price": 3500,
+    "npc_sell_price": 1500,
+    "npc_buy_price": 750,
+    "sample_count": 45,
+    "last_updated": 1700000000,
+    "volatility": 0.4
+  },
+  "1116": {
+    "item_id": 1116,
+    "min_price": 10000,
+    "avg_price": 25000,
+    "max_price": 50000,
+    "npc_sell_price": 15000,
+    "npc_buy_price": 7500,
+    "sample_count": 30,
+    "last_updated": 1700000000,
+    "volatility": 0.5
+  },
+  "1613": {
+    "item_id": 1613,
+    "min_price": 500000,
+    "avg_price": 800000,
+    "max_price": 1200000,
+    "npc_sell_price": 600000,
+    "npc_buy_price": 300000,
+    "sample_count": 15,
+    "last_updated": 1700000000,
+    "volatility": 0.6
+  },
+  "2315": {
+    "item_id": 2315,
+    "min_price": 50000,
+    "avg_price": 100000,
+    "max_price": 200000,
+    "npc_sell_price": 80000,
+    "npc_buy_price": 40000,
+    "sample_count": 25,
+    "last_updated": 1700000000,
+    "volatility": 0.4
+  },
+  "4001": {
+    "item_id": 4001,
+    "min_price": 5000,
+    "avg_price": 10000,
+    "max_price": 20000,
+    "npc_sell_price": 0,
+    "npc_buy_price": 0,
+    "sample_count": 100,
+    "last_updated": 1700000000,
+    "volatility": 0.7
+  },
+  "4054": {
+    "item_id": 4054,
+    "min_price": 100000,
+    "avg_price": 250000,
+    "max_price": 500000,
+    "npc_sell_price": 0,
+    "npc_buy_price": 0,
+    "sample_count": 80,
+    "last_updated": 1700000000,
+    "volatility": 0.8
+  },
+  "501": {
+    "item_id": 501,
+    "min_price": 30,
+    "avg_price": 50,
+    "max_price": 80,
+    "npc_sell_price": 50,
+    "npc_buy_price": 25,
+    "sample_count": 200,
+    "last_updated": 1700000000,
+    "volatility": 0.2
+  },
+  "502": {
+    "item_id": 502,
+    "min_price": 150,
+    "avg_price": 200,
+    "max_price": 300,
+    "npc_sell_price": 200,
+    "npc_buy_price": 100,
+    "sample_count": 180,
+    "last_updated": 1700000000,
+    "volatility": 0.2
+  },
+  "503": {
+    "item_id": 503,
+    "min_price": 300,
+    "avg_price": 400,
+    "max_price": 600,
+    "npc_sell_price": 400,
+    "npc_buy_price": 200,
+    "sample_count": 150,
+    "last_updated": 1700000000,
+    "volatility": 0.25
+  },
+  "504": {
+    "item_id": 504,
+    "min_price": 700,
+    "avg_price": 1000,
+    "max_price": 1500,
+    "npc_sell_price": 1000,
+    "npc_buy_price": 500,
+    "sample_count": 120,
+    "last_updated": 1700000000,
+    "volatility": 0.3
+  }
+}

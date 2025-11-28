@@ -1,0 +1,146 @@
+{
+  "Storm Gust": {
+    "shape": "circle",
+    "range": 5,
+    "cast_range": 9,
+    "cells_affected": 81,
+    "hits_per_target": 10,
+    "damage_falloff": false,
+    "sp_cost": 78
+  },
+  "Meteor Storm": {
+    "shape": "circle",
+    "range": 3,
+    "cast_range": 9,
+    "cells_affected": 37,
+    "hits_per_target": 7,
+    "damage_falloff": false,
+    "sp_cost": 70
+  },
+  "Lord of Vermillion": {
+    "shape": "circle",
+    "range": 5,
+    "cast_range": 9,
+    "cells_affected": 81,
+    "hits_per_target": 8,
+    "damage_falloff": false,
+    "sp_cost": 60
+  },
+  "Magnus Exorcismus": {
+    "shape": "cross",
+    "range": 3,
+    "cast_range": 9,
+    "cells_affected": 25,
+    "hits_per_target": 10,
+    "damage_falloff": false,
+    "sp_cost": 80
+  },
+  "Heaven's Drive": {
+    "shape": "circle",
+    "range": 2,
+    "cast_range": 9,
+    "cells_affected": 25,
+    "hits_per_target": 5,
+    "damage_falloff": false,
+    "sp_cost": 28
+  },
+  "Fire Wall": {
+    "shape": "line",
+    "range": 2,
+    "cast_range": 9,
+    "cells_affected": 3,
+    "hits_per_target": 8,
+    "damage_falloff": false,
+    "sp_cost": 40
+  },
+  "Arrow Shower": {
+    "shape": "circle",
+    "range": 2,
+    "cast_range": 9,
+    "cells_affected": 25,
+    "hits_per_target": 1,
+    "damage_falloff": true,
+    "sp_cost": 15
+  },
+  "Bowling Bash": {
+    "shape": "line",
+    "range": 3,
+    "cast_range": 1,
+    "cells_affected": 7,
+    "hits_per_target": 1,
+    "damage_falloff": false,
+    "sp_cost": 13
+  },
+  "Grand Cross": {
+    "shape": "self_circle",
+    "range": 5,
+    "cast_range": 0,
+    "cells_affected": 81,
+    "hits_per_target": 1,
+    "damage_falloff": false,
+    "sp_cost": 37
+  },
+  "Magnum Break": {
+    "shape": "self_circle",
+    "range": 2,
+    "cast_range": 0,
+    "cells_affected": 25,
+    "hits_per_target": 1,
+    "damage_falloff": false,
+    "sp_cost": 30
+  },
+  "Grimtooth": {
+    "shape": "circle",
+    "range": 3,
+    "cast_range": 3,
+    "cells_affected": 37,
+    "hits_per_target": 1,
+    "damage_falloff": false,
+    "sp_cost": 5
+  },
+  "Cart Revolution": {
+    "shape": "self_circle",
+    "range": 1,
+    "cast_range": 0,
+    "cells_affected": 9,
+    "hits_per_target": 1,
+    "damage_falloff": false,
+    "sp_cost": 12
+  },
+  "Desperado": {
+    "shape": "self_circle",
+    "range": 7,
+    "cast_range": 0,
+    "cells_affected": 153,
+    "hits_per_target": 10,
+    "damage_falloff": true,
+    "sp_cost": 32
+  },
+  "Tomahawk": {
+    "shape": "circle",
+    "range": 2,
+    "cast_range": 9,
+    "cells_affected": 25,
+    "hits_per_target": 1,
+    "damage_falloff": false,
+    "sp_cost": 3
+  },
+  "Throw Spirit Sphere": {
+    "shape": "line",
+    "range": 5,
+    "cast_range": 9,
+    "cells_affected": 1,
+    "hits_per_target": 1,
+    "damage_falloff": false,
+    "sp_cost": 8
+  },
+  "Falcon Assault": {
+    "shape": "circle",
+    "range": 2,
+    "cast_range": 9,
+    "cells_affected": 25,
+    "hits_per_target": 5,
+    "damage_falloff": false,
+    "sp_cost": 30
+  }
+}

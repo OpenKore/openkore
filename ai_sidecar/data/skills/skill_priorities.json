@@ -1,0 +1,398 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Ragnarok Online Build-specific Skill Priorities",
+  
+  "builds": {
+    "melee_dps": {
+      "description": "High damage output melee builds focused on physical attacks",
+      "jobs": ["knight", "assassin", "blacksmith"],
+      "priority_order": [
+        "KN_TWOHANDQUICKEN",
+        "SM_BASH",
+        "KN_BOWLINGBASH",
+        "SM_MAGNUM",
+        "SM_PROVOKE",
+        "SM_SWORD",
+        "SM_TWOHAND",
+        "KN_AUTOCOUNTER",
+        "SM_ENDURE"
+      ],
+      "stat_priority": ["str", "agi", "vit", "dex", "int", "luk"]
+    },
+    
+    "tank": {
+      "description": "Defensive builds focused on taking damage and protecting allies",
+      "jobs": ["crusader", "knight"],
+      "priority_order": [
+        "CR_AUTOGUARD",
+        "CR_DEFENDER",
+        "CR_REFLECTSHIELD",
+        "CR_SHIELDCHARGE",
+        "CR_SHIELDBOOMERANG",
+        "SM_PROVOKE",
+        "SM_ENDURE",
+        "CR_DEVOTION",
+        "CR_HOLYCROSS"
+      ],
+      "stat_priority": ["vit", "dex", "str", "agi", "int", "luk"]
+    },
+    
+    "agi_crit": {
+      "description": "High attack speed and critical hit builds",
+      "jobs": ["assassin", "knight", "rogue"],
+      "priority_order": [
+        "TF_DOUBLE",
+        "AS_RIGHT",
+        "AS_LEFT",
+        "AS_KATAR",
+        "AS_SONICBLOW",
+        "AS_CLOAKING",
+        "TF_HIDING",
+        "TF_MISS",
+        "AS_ENCHANTPOISON"
+      ],
+      "stat_priority": ["agi", "luk", "str", "dex", "vit", "int"]
+    },
+    
+    "sonic_assassin": {
+      "description": "Burst damage assassin using Sonic Blow",
+      "jobs": ["assassin"],
+      "priority_order": [
+        "AS_KATAR",
+        "AS_SONICBLOW",
+        "AS_CLOAKING",
+        "AS_ENCHANTPOISON",
+        "AS_POISONREACT",
+        "AS_GRIMTOOTH",
+        "TF_HIDING",
+        "TF_POISON",
+        "TF_DOUBLE"
+      ],
+      "stat_priority": ["str", "agi", "dex", "vit", "int", "luk"]
+    },
+    
+    "backstab_rogue": {
+      "description": "Rogue focused on backstab and ambush tactics",
+      "jobs": ["rogue"],
+      "priority_order": [
+        "TF_HIDING",
+        "RG_TUNNELDRIVE",
+        "RG_BACKSTAB",
+        "RG_RAID",
+        "RG_SNATCHER",
+        "RG_STEALCOIN",
+        "TF_DOUBLE",
+        "TF_STEAL",
+        "RG_STRIPWEAPON"
+      ],
+      "stat_priority": ["str", "agi", "dex", "vit", "int", "luk"]
+    },
+    
+    "wizard_aoe": {
+      "description": "AoE magic damage wizard",
+      "jobs": ["wizard"],
+      "priority_order": [
+        "WZ_STORMGUST",
+        "WZ_METEOR",
+        "WZ_VERMILION",
+        "WZ_JUPITEL",
+        "MG_FIREBOLT",
+        "MG_COLDBOLT",
+        "MG_LIGHTNINGBOLT",
+        "MG_THUNDERSTORM",
+        "MG_FROSTDIVER",
+        "MG_SAFETYWALL"
+      ],
+      "stat_priority": ["int", "dex", "vit", "agi", "str", "luk"]
+    },
+    
+    "bolt_wizard": {
+      "description": "Single-target bolt spam wizard",
+      "jobs": ["wizard", "mage"],
+      "priority_order": [
+        "MG_FIREBOLT",
+        "MG_COLDBOLT",
+        "MG_LIGHTNINGBOLT",
+        "WZ_JUPITEL",
+        "MG_SOULSTRIKE",
+        "MG_FROSTDIVER",
+        "MG_SAFETYWALL",
+        "MG_SRECOVERY",
+        "MG_SIGHT"
+      ],
+      "stat_priority": ["int", "dex", "vit", "agi", "str", "luk"]
+    },
+    
+    "full_support_priest": {
+      "description": "Full support priest focused on healing and buffs",
+      "jobs": ["priest"],
+      "priority_order": [
+        "AL_HEAL",
+        "AL_BLESSING",
+        "AL_INCAGI",
+        "PR_KYRIE",
+        "PR_MAGNIFICAT",
+        "PR_GLORIA",
+        "PR_SANCTUARY",
+        "PR_RESURRECTION",
+        "AL_ANGELUS",
+        "AL_CURE"
+      ],
+      "stat_priority": ["int", "dex", "vit", "agi", "str", "luk"]
+    },
+    
+    "battle_priest": {
+      "description": "Offensive priest with combat capabilities",
+      "jobs": ["priest"],
+      "priority_order": [
+        "PR_MAGNUS",
+        "PR_TURNUNDEAD",
+        "PR_MACEMASTERY",
+        "AL_HEAL",
+        "AL_BLESSING",
+        "PR_KYRIE",
+        "PR_LEXAETERNA",
+        "PR_LEXDIVINA",
+        "AL_DEMONBANE"
+      ],
+      "stat_priority": ["str", "int", "dex", "vit", "agi", "luk"]
+    },
+    
+    "holy_crusader": {
+      "description": "Holy damage crusader",
+      "jobs": ["crusader"],
+      "priority_order": [
+        "CR_GRANDCROSS",
+        "CR_HOLYCROSS",
+        "CR_TRUST",
+        "CR_AUTOGUARD",
+        "SM_ENDURE",
+        "CR_PROVIDENCE",
+        "CR_REFLECTSHIELD",
+        "AL_HEAL",
+        "AL_DP"
+      ],
+      "stat_priority": ["str", "int", "vit", "dex", "agi", "luk"]
+    },
+    
+    "devotion_crusader": {
+      "description": "Party protection crusader",
+      "jobs": ["crusader"],
+      "priority_order": [
+        "CR_DEVOTION",
+        "CR_DEFENDER",
+        "CR_AUTOGUARD",
+        "CR_REFLECTSHIELD",
+        "CR_SHIELDCHARGE",
+        "SM_ENDURE",
+        "SM_PROVOKE",
+        "AL_HEAL",
+        "CR_PROVIDENCE"
+      ],
+      "stat_priority": ["vit", "int", "dex", "str", "agi", "luk"]
+    },
+    
+    "hunter_trapper": {
+      "description": "Trap-focused hunter",
+      "jobs": ["hunter"],
+      "priority_order": [
+        "HT_CLAYMORETRAP",
+        "HT_BLASTMINE",
+        "HT_LANDMINE",
+        "HT_ANKLESNARE",
+        "HT_SANDMAN",
+        "HT_FREEZINGTRAP",
+        "HT_REMOVETRAP",
+        "AC_DOUBLE",
+        "AC_CONCENTRATION"
+      ],
+      "stat_priority": ["dex", "int", "agi", "vit", "str", "luk"]
+    },
+    
+    "hunter_falcon": {
+      "description": "Falcon assault hunter",
+      "jobs": ["hunter"],
+      "priority_order": [
+        "HT_FALCON",
+        "HT_BLITZBEAT",
+        "HT_STEELCROW",
+        "HT_DETECTING",
+        "AC_VULTURE",
+        "AC_DOUBLE",
+        "AC_CONCENTRATION",
+        "AC_OWL",
+        "HT_BEASTBANE"
+      ],
+      "stat_priority": ["agi", "int", "dex", "luk", "vit", "str"]
+    },
+    
+    "ds_sniper": {
+      "description": "Double Strafe focused archer/hunter",
+      "jobs": ["hunter", "archer"],
+      "priority_order": [
+        "AC_DOUBLE",
+        "AC_SHOWER",
+        "AC_CONCENTRATION",
+        "AC_VULTURE",
+        "AC_OWL",
+        "HT_FALCON",
+        "HT_BLITZBEAT",
+        "HT_ANKLESNARE"
+      ],
+      "stat_priority": ["dex", "agi", "vit", "int", "str", "luk"]
+    },
+    
+    "forger_blacksmith": {
+      "description": "Crafting and forging blacksmith",
+      "jobs": ["blacksmith"],
+      "priority_order": [
+        "BS_DAGGER",
+        "BS_SWORD",
+        "BS_TWOHANDSWORD",
+        "BS_AXE",
+        "BS_MACE",
+        "BS_SPEAR",
+        "BS_ORIDEOCON",
+        "BS_WEAPONRESEARCH",
+        "BS_HILTBINDING"
+      ],
+      "stat_priority": ["dex", "luk", "str", "int", "vit", "agi"]
+    },
+    
+    "battle_blacksmith": {
+      "description": "Combat-focused blacksmith",
+      "jobs": ["blacksmith"],
+      "priority_order": [
+        "BS_ADRENALINE",
+        "BS_WEAPONPERFECT",
+        "BS_OVERTHRUST",
+        "BS_MAXIMIZE",
+        "BS_HAMMERFALL",
+        "MC_MAMMONITE",
+        "BS_SKINTEMPER",
+        "BS_WEAPONRESEARCH"
+      ],
+      "stat_priority": ["str", "agi", "vit", "dex", "int", "luk"]
+    },
+    
+    "acid_alchemist": {
+      "description": "Acid Terror alchemist",
+      "jobs": ["alchemist"],
+      "priority_order": [
+        "AM_ACIDTERROR",
+        "AM_DEMONSTRATION",
+        "AM_PHARMACY",
+        "AM_LEARNINGPOTION",
+        "AM_AXEMASTERY",
+        "AM_POTIONPITCHER",
+        "AM_CP_ARMOR",
+        "AM_CP_HELM"
+      ],
+      "stat_priority": ["int", "dex", "str", "vit", "agi", "luk"]
+    },
+    
+    "homunculus_alchemist": {
+      "description": "Homunculus-focused alchemist",
+      "jobs": ["alchemist"],
+      "priority_order": [
+        "AM_BIOETHICS",
+        "AM_CREATECREATURE",
+        "AM_CALLHOMUN",
+        "AM_RESURRECTHOMUN",
+        "AM_REST",
+        "AM_PHARMACY",
+        "AM_POTIONPITCHER",
+        "AM_LEARNINGPOTION"
+      ],
+      "stat_priority": ["int", "vit", "dex", "str", "agi", "luk"]
+    },
+    
+    "spear_knight": {
+      "description": "Spear-focused mounted knight",
+      "jobs": ["knight"],
+      "priority_order": [
+        "KN_SPEARMASTERY",
+        "KN_PIERCE",
+        "KN_SPEARSTAB",
+        "KN_BRANDISHSPEAR",
+        "KN_SPEARBOOMERANG",
+        "KN_RIDING",
+        "KN_CAVALIERMASTERY",
+        "SM_ENDURE"
+      ],
+      "stat_priority": ["str", "agi", "vit", "dex", "int", "luk"]
+    },
+    
+    "hybrid_support": {
+      "description": "Hybrid support that can deal damage and heal",
+      "jobs": ["priest", "crusader"],
+      "priority_order": [
+        "AL_HEAL",
+        "AL_BLESSING",
+        "AL_INCAGI",
+        "PR_KYRIE",
+        "SM_BASH",
+        "SM_PROVOKE",
+        "PR_LEXAETERNA",
+        "PR_SANCTUARY"
+      ],
+      "stat_priority": ["int", "str", "dex", "vit", "agi", "luk"]
+    },
+    
+    "strip_rogue": {
+      "description": "Equipment stripping rogue for PvP",
+      "jobs": ["rogue"],
+      "priority_order": [
+        "RG_STRIPWEAPON",
+        "RG_STRIPSHIELD",
+        "RG_STRIPARMOR",
+        "RG_STRIPHELM",
+        "RG_BACKSTAB",
+        "TF_HIDING",
+        "RG_TUNNELDRIVE",
+        "RG_RAID"
+      ],
+      "stat_priority": ["dex", "str", "agi", "vit", "int", "luk"]
+    }
+  },
+  
+  "role_skill_mapping": {
+    "tank": {
+      "primary_skills": ["CR_AUTOGUARD", "CR_DEFENDER", "SM_PROVOKE", "SM_ENDURE"],
+      "secondary_skills": ["CR_REFLECTSHIELD", "CR_DEVOTION", "CR_SHIELDCHARGE"],
+      "utility_skills": ["AL_HEAL", "CR_PROVIDENCE"]
+    },
+    "melee_dps": {
+      "primary_skills": ["SM_BASH", "KN_BOWLINGBASH", "AS_SONICBLOW", "RG_BACKSTAB"],
+      "secondary_skills": ["KN_TWOHANDQUICKEN", "SM_MAGNUM", "AS_ENCHANTPOISON"],
+      "utility_skills": ["SM_PROVOKE", "SM_ENDURE", "AS_CLOAKING"]
+    },
+    "ranged_dps": {
+      "primary_skills": ["AC_DOUBLE", "AC_SHOWER", "HT_BLITZBEAT"],
+      "secondary_skills": ["AC_CONCENTRATION", "HT_FALCON", "HT_STEELCROW"],
+      "utility_skills": ["HT_ANKLESNARE", "HT_DETECTING", "AC_VULTURE"]
+    },
+    "magic_dps": {
+      "primary_skills": ["WZ_STORMGUST", "WZ_METEOR", "WZ_VERMILION", "WZ_JUPITEL"],
+      "secondary_skills": ["MG_FIREBOLT", "MG_COLDBOLT", "MG_LIGHTNINGBOLT"],
+      "utility_skills": ["MG_SAFETYWALL", "MG_SIGHT", "MG_FROSTDIVER"]
+    },
+    "support": {
+      "primary_skills": ["AL_HEAL", "PR_SANCTUARY", "PR_RESURRECTION"],
+      "secondary_skills": ["AL_BLESSING", "AL_INCAGI", "PR_KYRIE", "PR_MAGNIFICAT"],
+      "utility_skills": ["AL_CURE", "PR_STRECOVERY", "AL_WARP", "AL_TELEPORT"]
+    },
+    "hybrid": {
+      "primary_skills": ["AL_HEAL", "SM_BASH", "CR_HOLYCROSS"],
+      "secondary_skills": ["AL_BLESSING", "SM_PROVOKE", "PR_KYRIE"],
+      "utility_skills": ["SM_ENDURE", "AL_CURE", "PR_LEXAETERNA"]
+    }
+  },
+  
+  "emergency_skills": {
+    "heal": ["AL_HEAL", "AM_POTIONPITCHER", "PR_SANCTUARY"],
+    "defensive": ["SM_ENDURE", "CR_AUTOGUARD", "CR_DEFENDER", "PR_KYRIE"],
+    "escape": ["AL_TELEPORT", "TF_HIDING", "AS_CLOAKING", "RG_TUNNELDRIVE"],
+    "crowd_control": ["MG_FROSTDIVER", "HT_ANKLESNARE", "BS_HAMMERFALL", "PR_LEXDIVINA"]
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "2301": {
+    "name": "Cotton Shirt",
+    "type": "armor",
+    "slot": "armor",
+    "defense": 10,
+    "weight": 10,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2311": {
+    "name": "Mink Coat",
+    "type": "armor",
+    "slot": "armor",
+    "defense": 30,
+    "weight": 200,
+    "slots": 1,
+    "required_level": 3,
+    "jobs": ["all"]
+  },
+  "2314": {
+    "name": "Chain Mail",
+    "type": "armor",
+    "slot": "armor",
+    "defense": 55,
+    "weight": 330,
+    "slots": 1,
+    "required_level": 1,
+    "jobs": ["swordman", "knight", "crusader"]
+  },
+  "2315": {
+    "name": "Full Plate",
+    "type": "armor",
+    "slot": "armor",
+    "defense": 70,
+    "weight": 450,
+    "slots": 1,
+    "required_level": 4,
+    "jobs": ["swordman", "knight", "crusader", "lord_knight", "paladin"]
+  },
+  "2321": {
+    "name": "Formal Suit",
+    "type": "armor",
+    "slot": "armor",
+    "defense": 40,
+    "weight": 30,
+    "slots": 1,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2401": {
+    "name": "Sandals",
+    "type": "footgear",
+    "slot": "footgear",
+    "defense": 5,
+    "weight": 20,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2405": {
+    "name": "Shoes",
+    "type": "footgear",
+    "slot": "footgear",
+    "defense": 10,
+    "weight": 35,
+    "slots": 1,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2501": {
+    "name": "Hood",
+    "type": "headgear",
+    "slot": "head_top",
+    "defense": 4,
+    "weight": 20,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2505": {
+    "name": "Bunny Band",
+    "type": "headgear",
+    "slot": "head_top",
+    "defense": 2,
+    "luk_bonus": 2,
+    "weight": 10,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2601": {
+    "name": "Guard",
+    "type": "shield",
+    "slot": "shield",
+    "defense": 20,
+    "weight": 30,
+    "slots": 1,
+    "required_level": 1,
+    "jobs": ["swordman", "knight", "crusader"]
+  },
+  "2609": {
+    "name": "Buckler",
+    "type": "shield",
+    "slot": "shield",
+    "defense": 40,
+    "weight": 60,
+    "slots": 1,
+    "required_level": 1,
+    "jobs": ["swordman", "thief", "merchant", "knight", "assassin"]
+  },
+  "2701": {
+    "name": "Adventurer's Backpack",
+    "type": "garment",
+    "slot": "garment",
+    "defense": 15,
+    "weight": 20,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  }
+}

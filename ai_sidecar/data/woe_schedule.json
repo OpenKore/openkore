@@ -1,0 +1,49 @@
+{
+  "schedules": [
+    {
+      "day_of_week": 2,
+      "start_hour": 20,
+      "start_minute": 0,
+      "duration_minutes": 120,
+      "edition": "fe",
+      "castles": ["aldebaran", "geffen"],
+      "description": "Wednesday WoE FE - Aldebaran & Geffen"
+    },
+    {
+      "day_of_week": 2,
+      "start_hour": 22,
+      "start_minute": 0,
+      "duration_minutes": 60,
+      "edition": "te",
+      "castles": ["valfreyja"],
+      "description": "Wednesday WoE TE - Valfreyja"
+    },
+    {
+      "day_of_week": 5,
+      "start_hour": 20,
+      "start_minute": 0,
+      "duration_minutes": 120,
+      "edition": "se",
+      "castles": ["schwaltzvald", "arunafeltz"],
+      "description": "Saturday WoE SE - Schwaltzvald & Arunafeltz"
+    },
+    {
+      "day_of_week": 6,
+      "start_hour": 16,
+      "start_minute": 0,
+      "duration_minutes": 120,
+      "edition": "fe",
+      "castles": ["prontera", "payon"],
+      "description": "Sunday WoE FE - Prontera & Payon"
+    }
+  ],
+  "timezone": "server",
+  "notes": {
+    "day_of_week": "0=Monday, 1=Tuesday, 2=Wednesday, 3=Thursday, 4=Friday, 5=Saturday, 6=Sunday",
+    "editions": {
+      "fe": "First Edition - Classic castle defense with Emperium",
+      "se": "Second Edition - Guardian stones and barricades system",
+      "te": "Training Edition - Limited participants, shorter duration"
+    }
+  }
+}

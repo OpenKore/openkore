@@ -1,0 +1,81 @@
+{
+  "phases": {
+    "night": {
+      "monster_spawn_rate": 1.2,
+      "monster_aggro_range": 1.3,
+      "exp_modifier": 1.0,
+      "drop_modifier": 1.0,
+      "npc_availability": 0.7,
+      "visibility_range": 0.7,
+      "skill_modifiers": {
+        "Moon Slasher": 1.5,
+        "Night Attack": 1.3,
+        "Shadow Leap": 1.2,
+        "Darkness": 1.4,
+        "Sunshine": 0.5,
+        "Solar Burst": 0.6
+      }
+    },
+    "day": {
+      "monster_spawn_rate": 1.0,
+      "monster_aggro_range": 1.0,
+      "exp_modifier": 1.0,
+      "drop_modifier": 1.0,
+      "npc_availability": 1.0,
+      "visibility_range": 1.0,
+      "skill_modifiers": {
+        "Moon Slasher": 0.7,
+        "Night Attack": 0.8,
+        "Sunshine": 1.5,
+        "Solar Burst": 1.4,
+        "Holy Light": 1.2
+      }
+    },
+    "dusk": {
+      "monster_spawn_rate": 1.1,
+      "monster_aggro_range": 1.1,
+      "exp_modifier": 1.0,
+      "drop_modifier": 1.0,
+      "npc_availability": 0.9,
+      "visibility_range": 0.85,
+      "skill_modifiers": {
+        "Moon Slasher": 1.2,
+        "Sunshine": 0.9
+      }
+    },
+    "dawn": {
+      "monster_spawn_rate": 1.05,
+      "monster_aggro_range": 1.05,
+      "exp_modifier": 1.0,
+      "drop_modifier": 1.0,
+      "npc_availability": 0.9,
+      "visibility_range": 0.9,
+      "skill_modifiers": {
+        "Sunshine": 1.2,
+        "Moon Slasher": 0.9
+      }
+    }
+  },
+  "night_only_monsters": {
+    "prt_fild01": ["Nightmare", "Skel Worker", "Whisper"],
+    "pay_fild04": ["Cramp", "Skeleton", "Soldier Skeleton"],
+    "glast_01": ["Hunter Fly", "Whisper", "Zombie"],
+    "ra_fild01": ["Nightmare Terror", "Wraith Dead"],
+    "nif_fild01": ["Disguise", "Dullahan", "Loli Ruri"]
+  },
+  "day_only_monsters": {
+    "prt_fild08": ["Poring", "Drops", "Poporing"],
+    "pay_fild03": ["Spore", "Fabre", "Chonchon"],
+    "moc_fild02": ["Drops", "Peco Peco", "Muka"]
+  },
+  "npc_night_availability": {
+    "weapon_shop": false,
+    "armor_shop": false,
+    "item_shop": false,
+    "tavern": true,
+    "inn": true,
+    "quest_npc": false,
+    "warehouse": true
+  },
+  "notes": "Night provides increased spawn rates and aggro ranges but reduced NPC availability. Some skills are more effective at night (Moon Slasher) while others excel during day (Sunshine)."
+}

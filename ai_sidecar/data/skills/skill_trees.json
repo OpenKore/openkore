@@ -1,0 +1,1741 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Ragnarok Online Skill Trees - Phase 4 Combat AI",
+  
+  "swordsman": {
+    "SM_SWORD": {
+      "id": 1,
+      "name": "Sword Mastery",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "SM_TWOHAND": {
+      "id": 2,
+      "name": "Two-Handed Sword Mastery",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "SM_SWORD", "level": 1}]
+    },
+    "SM_RECOVERY": {
+      "id": 3,
+      "name": "Increase HP Recovery",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "SM_BASH": {
+      "id": 5,
+      "name": "Bash",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 1,
+      "prerequisites": []
+    },
+    "SM_PROVOKE": {
+      "id": 6,
+      "name": "Provoke",
+      "max_level": 10,
+      "type": "debuff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": []
+    },
+    "SM_MAGNUM": {
+      "id": 7,
+      "name": "Magnum Break",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 2,
+      "prerequisites": [{"skill": "SM_BASH", "level": 5}]
+    },
+    "SM_ENDURE": {
+      "id": 8,
+      "name": "Endure",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "SM_PROVOKE", "level": 5}]
+    }
+  },
+  
+  "knight": {
+    "KN_SPEARMASTERY": {
+      "id": 54,
+      "name": "Spear Mastery",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "KN_PIERCE": {
+      "id": 55,
+      "name": "Pierce",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 2,
+      "prerequisites": [{"skill": "KN_SPEARMASTERY", "level": 1}]
+    },
+    "KN_BRANDISHSPEAR": {
+      "id": 56,
+      "name": "Brandish Spear",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "direction",
+      "range": 4,
+      "prerequisites": [
+        {"skill": "KN_RIDING", "level": 1},
+        {"skill": "KN_SPEARSTAB", "level": 3}
+      ]
+    },
+    "KN_SPEARSTAB": {
+      "id": 57,
+      "name": "Spear Stab",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 4,
+      "prerequisites": [{"skill": "KN_PIERCE", "level": 5}]
+    },
+    "KN_SPEARBOOMERANG": {
+      "id": 58,
+      "name": "Spear Boomerang",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "KN_SPEARSTAB", "level": 3}]
+    },
+    "KN_TWOHANDQUICKEN": {
+      "id": 60,
+      "name": "Two-Hand Quicken",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "SM_TWOHAND", "level": 1}]
+    },
+    "KN_AUTOCOUNTER": {
+      "id": 61,
+      "name": "Counter Attack",
+      "max_level": 5,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "SM_TWOHAND", "level": 1}]
+    },
+    "KN_BOWLINGBASH": {
+      "id": 62,
+      "name": "Bowling Bash",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "single",
+      "range": 2,
+      "prerequisites": [
+        {"skill": "SM_BASH", "level": 10},
+        {"skill": "SM_MAGNUM", "level": 3},
+        {"skill": "KN_TWOHANDQUICKEN", "level": 10},
+        {"skill": "KN_AUTOCOUNTER", "level": 5}
+      ]
+    },
+    "KN_RIDING": {
+      "id": 63,
+      "name": "Peco Peco Ride",
+      "max_level": 1,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "SM_ENDURE", "level": 1}]
+    },
+    "KN_CAVALIERMASTERY": {
+      "id": 64,
+      "name": "Cavalry Mastery",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "KN_RIDING", "level": 1}]
+    }
+  },
+  
+  "crusader": {
+    "CR_TRUST": {
+      "id": 248,
+      "name": "Faith",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "CR_AUTOGUARD": {
+      "id": 249,
+      "name": "Auto Guard",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": []
+    },
+    "CR_SHIELDCHARGE": {
+      "id": 250,
+      "name": "Shield Charge",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "single",
+      "range": 3,
+      "prerequisites": [{"skill": "CR_AUTOGUARD", "level": 5}]
+    },
+    "CR_SHIELDBOOMERANG": {
+      "id": 251,
+      "name": "Shield Boomerang",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "CR_SHIELDCHARGE", "level": 3}]
+    },
+    "CR_REFLECTSHIELD": {
+      "id": 252,
+      "name": "Shield Reflect",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "CR_SHIELDBOOMERANG", "level": 3}]
+    },
+    "CR_HOLYCROSS": {
+      "id": 253,
+      "name": "Holy Cross",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 2,
+      "prerequisites": [{"skill": "CR_TRUST", "level": 7}]
+    },
+    "CR_GRANDCROSS": {
+      "id": 254,
+      "name": "Grand Cross",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "self",
+      "range": 2,
+      "prerequisites": [
+        {"skill": "CR_HOLYCROSS", "level": 6},
+        {"skill": "CR_TRUST", "level": 10}
+      ]
+    },
+    "CR_DEVOTION": {
+      "id": 255,
+      "name": "Devotion",
+      "max_level": 5,
+      "type": "supportive",
+      "target": "single",
+      "range": 7,
+      "prerequisites": [
+        {"skill": "CR_REFLECTSHIELD", "level": 5},
+        {"skill": "CR_GRANDCROSS", "level": 4}
+      ]
+    },
+    "CR_PROVIDENCE": {
+      "id": 256,
+      "name": "Providence",
+      "max_level": 5,
+      "type": "buff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "AL_DP", "level": 5},
+        {"skill": "AL_HEAL", "level": 5}
+      ]
+    },
+    "CR_DEFENDER": {
+      "id": 257,
+      "name": "Defending Aura",
+      "max_level": 5,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "CR_SHIELDBOOMERANG", "level": 1}]
+    },
+    "CR_SPEARQUICKEN": {
+      "id": 258,
+      "name": "Spear Quicken",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "KN_SPEARMASTERY", "level": 10}]
+    }
+  },
+  
+  "thief": {
+    "TF_DOUBLE": {
+      "id": 48,
+      "name": "Double Attack",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "TF_MISS": {
+      "id": 49,
+      "name": "Improve Dodge",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "TF_STEAL": {
+      "id": 50,
+      "name": "Steal",
+      "max_level": 10,
+      "type": "active",
+      "target": "single",
+      "range": 1,
+      "prerequisites": []
+    },
+    "TF_HIDING": {
+      "id": 51,
+      "name": "Hiding",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "TF_STEAL", "level": 5}]
+    },
+    "TF_POISON": {
+      "id": 52,
+      "name": "Envenom",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 1,
+      "prerequisites": []
+    },
+    "TF_DETOXIFY": {
+      "id": 53,
+      "name": "Detoxify",
+      "max_level": 1,
+      "type": "supportive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "TF_POISON", "level": 3}]
+    }
+  },
+  
+  "assassin": {
+    "AS_RIGHT": {
+      "id": 132,
+      "name": "Righthand Mastery",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "AS_LEFT": {
+      "id": 133,
+      "name": "Lefthand Mastery",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "AS_RIGHT", "level": 2}]
+    },
+    "AS_KATAR": {
+      "id": 134,
+      "name": "Katar Mastery",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "AS_CLOAKING": {
+      "id": 135,
+      "name": "Cloaking",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "TF_HIDING", "level": 2}]
+    },
+    "AS_SONICBLOW": {
+      "id": 136,
+      "name": "Sonic Blow",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [{"skill": "AS_KATAR", "level": 4}]
+    },
+    "AS_GRIMTOOTH": {
+      "id": 137,
+      "name": "Grimtooth",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "single",
+      "range": 4,
+      "prerequisites": [
+        {"skill": "AS_SONICBLOW", "level": 5},
+        {"skill": "AS_CLOAKING", "level": 2}
+      ]
+    },
+    "AS_ENCHANTPOISON": {
+      "id": 138,
+      "name": "Enchant Poison",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "TF_POISON", "level": 1}]
+    },
+    "AS_POISONREACT": {
+      "id": 139,
+      "name": "Poison React",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "AS_ENCHANTPOISON", "level": 3}]
+    },
+    "AS_VENOMDUST": {
+      "id": 140,
+      "name": "Venom Dust",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "ground",
+      "range": 2,
+      "prerequisites": [{"skill": "AS_ENCHANTPOISON", "level": 5}]
+    },
+    "AS_SPLASHER": {
+      "id": 141,
+      "name": "Venom Splasher",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [
+        {"skill": "AS_VENOMDUST", "level": 5},
+        {"skill": "AS_POISONREACT", "level": 5}
+      ]
+    }
+  },
+  
+  "rogue": {
+    "RG_SNATCHER": {
+      "id": 210,
+      "name": "Snatcher",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "TF_STEAL", "level": 1}]
+    },
+    "RG_STEALCOIN": {
+      "id": 211,
+      "name": "Steal Coin",
+      "max_level": 10,
+      "type": "active",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [{"skill": "RG_SNATCHER", "level": 4}]
+    },
+    "RG_BACKSTAB": {
+      "id": 212,
+      "name": "Back Stab",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [{"skill": "RG_STEALCOIN", "level": 4}]
+    },
+    "RG_TUNNELDRIVE": {
+      "id": 213,
+      "name": "Tunnel Drive",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "TF_HIDING", "level": 1}]
+    },
+    "RG_RAID": {
+      "id": 214,
+      "name": "Raid",
+      "max_level": 5,
+      "type": "offensive_aoe",
+      "target": "self",
+      "range": 3,
+      "prerequisites": [
+        {"skill": "RG_BACKSTAB", "level": 2},
+        {"skill": "RG_TUNNELDRIVE", "level": 2}
+      ]
+    },
+    "RG_STRIPWEAPON": {
+      "id": 215,
+      "name": "Strip Weapon",
+      "max_level": 5,
+      "type": "debuff",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [{"skill": "RG_STRIPARMOR", "level": 5}]
+    },
+    "RG_STRIPSHIELD": {
+      "id": 216,
+      "name": "Strip Shield",
+      "max_level": 5,
+      "type": "debuff",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [{"skill": "RG_STRIPHELM", "level": 5}]
+    },
+    "RG_STRIPARMOR": {
+      "id": 217,
+      "name": "Strip Armor",
+      "max_level": 5,
+      "type": "debuff",
+      "target": "single",
+      "range": 1,
+      "prerequisites": []
+    },
+    "RG_STRIPHELM": {
+      "id": 218,
+      "name": "Strip Helm",
+      "max_level": 5,
+      "type": "debuff",
+      "target": "single",
+      "range": 1,
+      "prerequisites": []
+    },
+    "RG_INTIMIDATE": {
+      "id": 219,
+      "name": "Intimidate",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [
+        {"skill": "RG_BACKSTAB", "level": 4},
+        {"skill": "RG_RAID", "level": 5}
+      ]
+    },
+    "RG_GRAFFITI": {
+      "id": 220,
+      "name": "Graffiti",
+      "max_level": 1,
+      "type": "active",
+      "target": "ground",
+      "range": 5,
+      "prerequisites": [{"skill": "RG_GANGSTER", "level": 1}]
+    },
+    "RG_FLAGGRAFFITI": {
+      "id": 221,
+      "name": "Flag Graffiti",
+      "max_level": 5,
+      "type": "active",
+      "target": "ground",
+      "range": 5,
+      "prerequisites": [{"skill": "RG_GRAFFITI", "level": 1}]
+    },
+    "RG_CLEANER": {
+      "id": 222,
+      "name": "Remover",
+      "max_level": 1,
+      "type": "active",
+      "target": "ground",
+      "range": 5,
+      "prerequisites": [{"skill": "RG_GRAFFITI", "level": 1}]
+    },
+    "RG_GANGSTER": {
+      "id": 223,
+      "name": "Gangster's Paradise",
+      "max_level": 1,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "RG_COMPULSION": {
+      "id": 224,
+      "name": "Compulsion Discount",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "RG_GANGSTER", "level": 1}]
+    },
+    "RG_PLAGIARISM": {
+      "id": 225,
+      "name": "Plagiarism",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "RG_INTIMIDATE", "level": 5}]
+    }
+  },
+  
+  "mage": {
+    "MG_SRECOVERY": {
+      "id": 9,
+      "name": "Increase SP Recovery",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "MG_SIGHT": {
+      "id": 10,
+      "name": "Sight",
+      "max_level": 1,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": []
+    },
+    "MG_NAPALMBEAT": {
+      "id": 11,
+      "name": "Napalm Beat",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": []
+    },
+    "MG_SAFETYWALL": {
+      "id": 12,
+      "name": "Safety Wall",
+      "max_level": 10,
+      "type": "supportive",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "MG_NAPALMBEAT", "level": 7},
+        {"skill": "MG_SOULSTRIKE", "level": 5}
+      ]
+    },
+    "MG_SOULSTRIKE": {
+      "id": 13,
+      "name": "Soul Strike",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "MG_NAPALMBEAT", "level": 4}]
+    },
+    "MG_COLDBOLT": {
+      "id": 14,
+      "name": "Cold Bolt",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": []
+    },
+    "MG_FROSTDIVER": {
+      "id": 15,
+      "name": "Frost Diver",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "MG_COLDBOLT", "level": 5}]
+    },
+    "MG_STONECURSE": {
+      "id": 16,
+      "name": "Stone Curse",
+      "max_level": 10,
+      "type": "debuff",
+      "target": "single",
+      "range": 2,
+      "prerequisites": []
+    },
+    "MG_FIREBALL": {
+      "id": 17,
+      "name": "Fire Ball",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "MG_FIREBOLT", "level": 4}]
+    },
+    "MG_FIREWALL": {
+      "id": 18,
+      "name": "Fire Wall",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "MG_FIREBALL", "level": 5},
+        {"skill": "MG_SIGHT", "level": 1}
+      ]
+    },
+    "MG_FIREBOLT": {
+      "id": 19,
+      "name": "Fire Bolt",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": []
+    },
+    "MG_LIGHTNINGBOLT": {
+      "id": 20,
+      "name": "Lightning Bolt",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": []
+    },
+    "MG_THUNDERSTORM": {
+      "id": 21,
+      "name": "Thunderstorm",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "MG_LIGHTNINGBOLT", "level": 4}]
+    }
+  },
+  
+  "wizard": {
+    "WZ_FIREPILLAR": {
+      "id": 80,
+      "name": "Fire Pillar",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "MG_FIREWALL", "level": 1}]
+    },
+    "WZ_SIGHTRASHER": {
+      "id": 81,
+      "name": "Sight Rasher",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "self",
+      "range": 3,
+      "prerequisites": [
+        {"skill": "MG_SIGHT", "level": 1},
+        {"skill": "MG_LIGHTNINGBOLT", "level": 1}
+      ]
+    },
+    "WZ_METEOR": {
+      "id": 83,
+      "name": "Meteor Storm",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "WZ_SIGHTRASHER", "level": 2},
+        {"skill": "MG_THUNDERSTORM", "level": 1}
+      ]
+    },
+    "WZ_JUPITEL": {
+      "id": 84,
+      "name": "Jupiter Thunder",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "MG_THUNDERSTORM", "level": 1},
+        {"skill": "MG_NAPALMBEAT", "level": 1}
+      ]
+    },
+    "WZ_VERMILION": {
+      "id": 85,
+      "name": "Lord of Vermilion",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "WZ_JUPITEL", "level": 5}]
+    },
+    "WZ_WATERBALL": {
+      "id": 86,
+      "name": "Water Ball",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "MG_COLDBOLT", "level": 1},
+        {"skill": "MG_LIGHTNINGBOLT", "level": 1}
+      ]
+    },
+    "WZ_ICEWALL": {
+      "id": 87,
+      "name": "Ice Wall",
+      "max_level": 10,
+      "type": "supportive",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "MG_STONECURSE", "level": 1},
+        {"skill": "MG_FROSTDIVER", "level": 1}
+      ]
+    },
+    "WZ_FROSTNOVA": {
+      "id": 88,
+      "name": "Frost Nova",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "self",
+      "range": 5,
+      "prerequisites": [{"skill": "WZ_ICEWALL", "level": 1}]
+    },
+    "WZ_STORMGUST": {
+      "id": 89,
+      "name": "Storm Gust",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "WZ_FROSTNOVA", "level": 1}]
+    },
+    "WZ_EARTHSPIKE": {
+      "id": 90,
+      "name": "Earth Spike",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "MG_STONECURSE", "level": 1}]
+    },
+    "WZ_HEAVENDRIVE": {
+      "id": 91,
+      "name": "Heaven's Drive",
+      "max_level": 5,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "WZ_EARTHSPIKE", "level": 3}]
+    },
+    "WZ_QUAGMIRE": {
+      "id": 92,
+      "name": "Quagmire",
+      "max_level": 5,
+      "type": "debuff",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "WZ_HEAVENDRIVE", "level": 1}]
+    },
+    "WZ_ESTIMATION": {
+      "id": 93,
+      "name": "Sense",
+      "max_level": 1,
+      "type": "active",
+      "target": "single",
+      "range": 9,
+      "prerequisites": []
+    }
+  },
+  
+  "acolyte": {
+    "AL_DP": {
+      "id": 23,
+      "name": "Divine Protection",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "AL_DEMONBANE": {
+      "id": 24,
+      "name": "Demon Bane",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "AL_DP", "level": 3}]
+    },
+    "AL_RUWACH": {
+      "id": 25,
+      "name": "Ruwach",
+      "max_level": 1,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": []
+    },
+    "AL_PNEUMA": {
+      "id": 26,
+      "name": "Pneuma",
+      "max_level": 1,
+      "type": "supportive",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "AL_WARP", "level": 4}]
+    },
+    "AL_TELEPORT": {
+      "id": 27,
+      "name": "Teleport",
+      "max_level": 2,
+      "type": "supportive",
+      "target": "self",
+      "prerequisites": [{"skill": "AL_RUWACH", "level": 1}]
+    },
+    "AL_WARP": {
+      "id": 28,
+      "name": "Warp Portal",
+      "max_level": 4,
+      "type": "supportive",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "AL_TELEPORT", "level": 2}]
+    },
+    "AL_HEAL": {
+      "id": 29,
+      "name": "Heal",
+      "max_level": 10,
+      "type": "heal",
+      "target": "single",
+      "range": 9,
+      "prerequisites": []
+    },
+    "AL_INCAGI": {
+      "id": 30,
+      "name": "Increase Agility",
+      "max_level": 10,
+      "type": "buff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "AL_HEAL", "level": 3}]
+    },
+    "AL_DECAGI": {
+      "id": 31,
+      "name": "Decrease Agility",
+      "max_level": 10,
+      "type": "debuff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "AL_INCAGI", "level": 1}]
+    },
+    "AL_HOLYWATER": {
+      "id": 32,
+      "name": "Aqua Benedicta",
+      "max_level": 1,
+      "type": "active",
+      "target": "self",
+      "prerequisites": []
+    },
+    "AL_CRUCIS": {
+      "id": 33,
+      "name": "Signum Crucis",
+      "max_level": 10,
+      "type": "debuff",
+      "target": "self",
+      "range": 7,
+      "prerequisites": [{"skill": "AL_DEMONBANE", "level": 3}]
+    },
+    "AL_ANGELUS": {
+      "id": 34,
+      "name": "Angelus",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "range": 9,
+      "prerequisites": [{"skill": "AL_DP", "level": 3}]
+    },
+    "AL_BLESSING": {
+      "id": 35,
+      "name": "Blessing",
+      "max_level": 10,
+      "type": "buff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "AL_DP", "level": 5}]
+    },
+    "AL_CURE": {
+      "id": 36,
+      "name": "Cure",
+      "max_level": 1,
+      "type": "supportive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "AL_HEAL", "level": 2}]
+    }
+  },
+  
+  "priest": {
+    "MG_SRECOVERY": {
+      "id": 9,
+      "name": "Increase SP Recovery",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "PR_MACEMASTERY": {
+      "id": 66,
+      "name": "Mace Mastery",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "PR_IMPOSITIO": {
+      "id": 67,
+      "name": "Impositio Manus",
+      "max_level": 5,
+      "type": "buff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": []
+    },
+    "PR_SUFFRAGIUM": {
+      "id": 68,
+      "name": "Suffragium",
+      "max_level": 3,
+      "type": "buff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "PR_IMPOSITIO", "level": 2}]
+    },
+    "PR_ASPERSIO": {
+      "id": 69,
+      "name": "Aspersio",
+      "max_level": 5,
+      "type": "buff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "AL_HOLYWATER", "level": 1},
+        {"skill": "PR_IMPOSITIO", "level": 3}
+      ]
+    },
+    "PR_BENEDICTIO": {
+      "id": 70,
+      "name": "B.S Sacramenti",
+      "max_level": 5,
+      "type": "buff",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "PR_ASPERSIO", "level": 5},
+        {"skill": "PR_GLORIA", "level": 3}
+      ]
+    },
+    "PR_SANCTUARY": {
+      "id": 71,
+      "name": "Sanctuary",
+      "max_level": 10,
+      "type": "heal",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "AL_HEAL", "level": 1}]
+    },
+    "PR_SLOWPOISON": {
+      "id": 72,
+      "name": "Slow Poison",
+      "max_level": 4,
+      "type": "supportive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": []
+    },
+    "PR_STRECOVERY": {
+      "id": 73,
+      "name": "Status Recovery",
+      "max_level": 1,
+      "type": "supportive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "PR_SLOWPOISON", "level": 1}]
+    },
+    "PR_KYRIE": {
+      "id": 74,
+      "name": "Kyrie Eleison",
+      "max_level": 10,
+      "type": "buff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "AL_ANGELUS", "level": 2}]
+    },
+    "PR_MAGNIFICAT": {
+      "id": 75,
+      "name": "Magnificat",
+      "max_level": 5,
+      "type": "buff",
+      "target": "self",
+      "range": 9,
+      "prerequisites": []
+    },
+    "PR_GLORIA": {
+      "id": 76,
+      "name": "Gloria",
+      "max_level": 5,
+      "type": "buff",
+      "target": "self",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "PR_KYRIE", "level": 4},
+        {"skill": "PR_MAGNIFICAT", "level": 3}
+      ]
+    },
+    "PR_LEXDIVINA": {
+      "id": 77,
+      "name": "Lex Divina",
+      "max_level": 10,
+      "type": "debuff",
+      "target": "single",
+      "range": 5,
+      "prerequisites": [{"skill": "AL_RUWACH", "level": 1}]
+    },
+    "PR_TURNUNDEAD": {
+      "id": 78,
+      "name": "Turn Undead",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 5,
+      "prerequisites": [
+        {"skill": "PR_LEXDIVINA", "level": 3},
+        {"skill": "AL_CRUCIS", "level": 3}
+      ]
+    },
+    "PR_LEXAETERNA": {
+      "id": 79,
+      "name": "Lex Aeterna",
+      "max_level": 1,
+      "type": "debuff",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "PR_LEXDIVINA", "level": 5}]
+    },
+    "PR_MAGNUS": {
+      "id": 80,
+      "name": "Magnus Exorcismus",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "PR_TURNUNDEAD", "level": 3},
+        {"skill": "MG_SAFETYWALL", "level": 3}
+      ]
+    },
+    "PR_RESURRECTION": {
+      "id": 54,
+      "name": "Resurrection",
+      "max_level": 4,
+      "type": "supportive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "PR_STRECOVERY", "level": 1},
+        {"skill": "PR_SANCTUARY", "level": 4}
+      ]
+    }
+  },
+  
+  "archer": {
+    "AC_OWL": {
+      "id": 38,
+      "name": "Owl's Eye",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "AC_VULTURE": {
+      "id": 39,
+      "name": "Vulture's Eye",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "AC_OWL", "level": 3}]
+    },
+    "AC_CONCENTRATION": {
+      "id": 40,
+      "name": "Improve Concentration",
+      "max_level": 10,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "AC_VULTURE", "level": 1}]
+    },
+    "AC_DOUBLE": {
+      "id": 41,
+      "name": "Double Strafe",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 14,
+      "prerequisites": []
+    },
+    "AC_SHOWER": {
+      "id": 42,
+      "name": "Arrow Shower",
+      "max_level": 10,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 14,
+      "prerequisites": [{"skill": "AC_DOUBLE", "level": 5}]
+    }
+  },
+  
+  "hunter": {
+    "HT_SKIDTRAP": {
+      "id": 115,
+      "name": "Skid Trap",
+      "max_level": 5,
+      "type": "active",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": []
+    },
+    "HT_LANDMINE": {
+      "id": 116,
+      "name": "Land Mine",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [{"skill": "HT_SKIDTRAP", "level": 1}]
+    },
+    "HT_ANKLESNARE": {
+      "id": 117,
+      "name": "Ankle Snare",
+      "max_level": 5,
+      "type": "active",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [{"skill": "HT_SKIDTRAP", "level": 1}]
+    },
+    "HT_SHOCKWAVE": {
+      "id": 118,
+      "name": "Shockwave Trap",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [{"skill": "HT_ANKLESNARE", "level": 1}]
+    },
+    "HT_SANDMAN": {
+      "id": 119,
+      "name": "Sandman",
+      "max_level": 5,
+      "type": "active",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [{"skill": "HT_FLASHER", "level": 1}]
+    },
+    "HT_FLASHER": {
+      "id": 120,
+      "name": "Flasher",
+      "max_level": 5,
+      "type": "active",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [{"skill": "HT_SKIDTRAP", "level": 1}]
+    },
+    "HT_FREEZINGTRAP": {
+      "id": 121,
+      "name": "Freezing Trap",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [{"skill": "HT_FLASHER", "level": 1}]
+    },
+    "HT_BLASTMINE": {
+      "id": 122,
+      "name": "Blast Mine",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [
+        {"skill": "HT_LANDMINE", "level": 1},
+        {"skill": "HT_SANDMAN", "level": 1},
+        {"skill": "HT_FREEZINGTRAP", "level": 1}
+      ]
+    },
+    "HT_CLAYMORETRAP": {
+      "id": 123,
+      "name": "Claymore Trap",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [
+        {"skill": "HT_BLASTMINE", "level": 1},
+        {"skill": "HT_SHOCKWAVE", "level": 1}
+      ]
+    },
+    "HT_REMOVETRAP": {
+      "id": 124,
+      "name": "Remove Trap",
+      "max_level": 1,
+      "type": "active",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [{"skill": "HT_LANDMINE", "level": 1}]
+    },
+    "HT_TALKIEBOX": {
+      "id": 125,
+      "name": "Talkie Box",
+      "max_level": 1,
+      "type": "active",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [{"skill": "HT_REMOVETRAP", "level": 1}]
+    },
+    "HT_BEASTBANE": {
+      "id": 126,
+      "name": "Beast Bane",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "HT_FALCON": {
+      "id": 127,
+      "name": "Falcon Mastery",
+      "max_level": 1,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "HT_BEASTBANE", "level": 1}]
+    },
+    "HT_STEELCROW": {
+      "id": 128,
+      "name": "Steel Crow",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "HT_FALCON", "level": 1}]
+    },
+    "HT_BLITZBEAT": {
+      "id": 129,
+      "name": "Blitz Beat",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "single",
+      "range": 5,
+      "prerequisites": [{"skill": "HT_FALCON", "level": 1}]
+    },
+    "HT_DETECTING": {
+      "id": 130,
+      "name": "Detect",
+      "max_level": 4,
+      "type": "active",
+      "target": "ground",
+      "range": 3,
+      "prerequisites": [
+        {"skill": "AC_CONCENTRATION", "level": 1},
+        {"skill": "HT_FALCON", "level": 1}
+      ]
+    },
+    "HT_SPRINGTRAP": {
+      "id": 131,
+      "name": "Spring Trap",
+      "max_level": 5,
+      "type": "active",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [
+        {"skill": "HT_FALCON", "level": 1},
+        {"skill": "HT_REMOVETRAP", "level": 1}
+      ]
+    }
+  },
+  
+  "merchant": {
+    "MC_INCCARRY": {
+      "id": 42,
+      "name": "Enlarge Weight Limit",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "MC_DISCOUNT": {
+      "id": 43,
+      "name": "Discount",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "MC_OVERCHARGE": {
+      "id": 44,
+      "name": "Overcharge",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "MC_DISCOUNT", "level": 3}]
+    },
+    "MC_PUSHCART": {
+      "id": 45,
+      "name": "Pushcart",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "MC_IDENTIFY": {
+      "id": 46,
+      "name": "Item Appraisal",
+      "max_level": 1,
+      "type": "active",
+      "target": "self",
+      "prerequisites": []
+    },
+    "MC_VENDING": {
+      "id": 47,
+      "name": "Vending",
+      "max_level": 10,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "MC_PUSHCART", "level": 3}]
+    },
+    "MC_MAMMONITE": {
+      "id": 48,
+      "name": "Mammonite",
+      "max_level": 10,
+      "type": "offensive",
+      "target": "single",
+      "range": 1,
+      "prerequisites": []
+    }
+  },
+  
+  "blacksmith": {
+    "BS_IRON": {
+      "id": 94,
+      "name": "Iron Tempering",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "BS_STEEL": {
+      "id": 95,
+      "name": "Steel Tempering",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_IRON", "level": 1}]
+    },
+    "BS_ENCHANTEDSTONE": {
+      "id": 96,
+      "name": "Enchanted Stone Craft",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_IRON", "level": 1}]
+    },
+    "BS_ORIDEOCON": {
+      "id": 97,
+      "name": "Oridecon Research",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [
+        {"skill": "BS_ENCHANTEDSTONE", "level": 1},
+        {"skill": "BS_STEEL", "level": 1}
+      ]
+    },
+    "BS_DAGGER": {
+      "id": 98,
+      "name": "Smith Dagger",
+      "max_level": 3,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_ORIDEOCON", "level": 1}]
+    },
+    "BS_SWORD": {
+      "id": 99,
+      "name": "Smith Sword",
+      "max_level": 3,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_DAGGER", "level": 1}]
+    },
+    "BS_TWOHANDSWORD": {
+      "id": 100,
+      "name": "Smith Two-handed Sword",
+      "max_level": 3,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_SWORD", "level": 1}]
+    },
+    "BS_AXE": {
+      "id": 101,
+      "name": "Smith Axe",
+      "max_level": 3,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_SWORD", "level": 2}]
+    },
+    "BS_MACE": {
+      "id": 102,
+      "name": "Smith Mace",
+      "max_level": 3,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_KNUCKLE", "level": 1}]
+    },
+    "BS_KNUCKLE": {
+      "id": 103,
+      "name": "Smith Knuckle",
+      "max_level": 3,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_DAGGER", "level": 1}]
+    },
+    "BS_SPEAR": {
+      "id": 104,
+      "name": "Smith Spear",
+      "max_level": 3,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_DAGGER", "level": 2}]
+    },
+    "BS_HILTBINDING": {
+      "id": 106,
+      "name": "Hilt Binding",
+      "max_level": 1,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "BS_FINDINGORE": {
+      "id": 107,
+      "name": "Ore Discovery",
+      "max_level": 1,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_HILTBINDING", "level": 1}]
+    },
+    "BS_WEAPONRESEARCH": {
+      "id": 108,
+      "name": "Weaponry Research",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_HILTBINDING", "level": 1}]
+    },
+    "BS_REPAIRWEAPON": {
+      "id": 109,
+      "name": "Weapon Repair",
+      "max_level": 1,
+      "type": "active",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [{"skill": "BS_WEAPONRESEARCH", "level": 1}]
+    },
+    "BS_SKINTEMPER": {
+      "id": 110,
+      "name": "Skin Tempering",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "BS_HAMMERFALL": {
+      "id": 111,
+      "name": "Hammer Fall",
+      "max_level": 5,
+      "type": "offensive_aoe",
+      "target": "ground",
+      "range": 2,
+      "prerequisites": []
+    },
+    "BS_ADRENALINE": {
+      "id": 112,
+      "name": "Adrenaline Rush",
+      "max_level": 5,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_HAMMERFALL", "level": 2}]
+    },
+    "BS_WEAPONPERFECT": {
+      "id": 113,
+      "name": "Weapon Perfection",
+      "max_level": 5,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [
+        {"skill": "BS_WEAPONRESEARCH", "level": 2},
+        {"skill": "BS_ADRENALINE", "level": 2}
+      ]
+    },
+    "BS_OVERTHRUST": {
+      "id": 114,
+      "name": "Over Thrust",
+      "max_level": 5,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_WEAPONPERFECT", "level": 3}]
+    },
+    "BS_MAXIMIZE": {
+      "id": 115,
+      "name": "Maximize Power",
+      "max_level": 5,
+      "type": "buff",
+      "target": "self",
+      "prerequisites": [{"skill": "BS_OVERTHRUST", "level": 2}]
+    }
+  },
+  
+  "alchemist": {
+    "AM_AXEMASTERY": {
+      "id": 226,
+      "name": "Axe Mastery",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "AM_LEARNINGPOTION": {
+      "id": 227,
+      "name": "Potion Research",
+      "max_level": 10,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "AM_PHARMACY": {
+      "id": 228,
+      "name": "Prepare Potion",
+      "max_level": 10,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "AM_LEARNINGPOTION", "level": 5}]
+    },
+    "AM_DEMONSTRATION": {
+      "id": 229,
+      "name": "Bomb",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "ground",
+      "range": 9,
+      "prerequisites": [{"skill": "AM_PHARMACY", "level": 4}]
+    },
+    "AM_ACIDTERROR": {
+      "id": 230,
+      "name": "Acid Terror",
+      "max_level": 5,
+      "type": "offensive",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "AM_DEMONSTRATION", "level": 3}]
+    },
+    "AM_POTIONPITCHER": {
+      "id": 231,
+      "name": "Aid Potion",
+      "max_level": 5,
+      "type": "heal",
+      "target": "single",
+      "range": 9,
+      "prerequisites": [{"skill": "AM_PHARMACY", "level": 3}]
+    },
+    "AM_CANNIBALIZE": {
+      "id": 232,
+      "name": "Summon Flora",
+      "max_level": 5,
+      "type": "active",
+      "target": "ground",
+      "range": 4,
+      "prerequisites": [{"skill": "AM_PHARMACY", "level": 6}]
+    },
+    "AM_SPHEREMINE": {
+      "id": 233,
+      "name": "Summon Marine Sphere",
+      "max_level": 5,
+      "type": "active",
+      "target": "ground",
+      "range": 2,
+      "prerequisites": [{"skill": "AM_PHARMACY", "level": 2}]
+    },
+    "AM_CP_WEAPON": {
+      "id": 234,
+      "name": "Chemical Protection Weapon",
+      "max_level": 5,
+      "type": "buff",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [{"skill": "AM_CP_ARMOR", "level": 3}]
+    },
+    "AM_CP_SHIELD": {
+      "id": 235,
+      "name": "Chemical Protection Shield",
+      "max_level": 5,
+      "type": "buff",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [{"skill": "AM_CP_HELM", "level": 3}]
+    },
+    "AM_CP_ARMOR": {
+      "id": 236,
+      "name": "Chemical Protection Armor",
+      "max_level": 5,
+      "type": "buff",
+      "target": "single",
+      "range": 1,
+      "prerequisites": [{"skill": "AM_CP_SHIELD", "level": 3}]
+    },
+    "AM_CP_HELM": {
+      "id": 237,
+      "name": "Chemical Protection Helm",
+      "max_level": 5,
+      "type": "buff",
+      "target": "single",
+      "range": 1,
+      "prerequisites": []
+    },
+    "AM_BIOETHICS": {
+      "id": 238,
+      "name": "Bioethics",
+      "max_level": 1,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": []
+    },
+    "AM_BIOTECHNOLOGY": {
+      "id": 239,
+      "name": "Biotechnology",
+      "max_level": 5,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "AM_BIOETHICS", "level": 1}]
+    },
+    "AM_CREATECREATURE": {
+      "id": 240,
+      "name": "Creature Creation",
+      "max_level": 5,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "AM_BIOTECHNOLOGY", "level": 5}]
+    },
+    "AM_CULTIVATION": {
+      "id": 241,
+      "name": "Cultivation",
+      "max_level": 2,
+      "type": "active",
+      "target": "ground",
+      "range": 1,
+      "prerequisites": [{"skill": "AM_BIOETHICS", "level": 1}]
+    },
+    "AM_FLAMECONTROL": {
+      "id": 242,
+      "name": "Flame Control",
+      "max_level": 1,
+      "type": "passive",
+      "target": "self",
+      "prerequisites": [{"skill": "AM_BIOETHICS", "level": 1}]
+    },
+    "AM_CALLHOMUN": {
+      "id": 243,
+      "name": "Call Homunculus",
+      "max_level": 1,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "AM_CREATECREATURE", "level": 1}]
+    },
+    "AM_REST": {
+      "id": 244,
+      "name": "Vaporize",
+      "max_level": 1,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "AM_CALLHOMUN", "level": 1}]
+    },
+    "AM_RESURRECTHOMUN": {
+      "id": 247,
+      "name": "Resurrect Homunculus",
+      "max_level": 5,
+      "type": "active",
+      "target": "self",
+      "prerequisites": [{"skill": "AM_CALLHOMUN", "level": 1}]
+    }
+  }
+}

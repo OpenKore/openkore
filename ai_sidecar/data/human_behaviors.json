@@ -1,0 +1,203 @@
+{
+  "idle_behaviors": [
+    {
+      "type": "sit",
+      "duration_ms": 5000,
+      "weight": 0.3,
+      "cooldown_ms": 30000,
+      "description": "Sit down to rest"
+    },
+    {
+      "type": "jump",
+      "duration_ms": 500,
+      "weight": 0.1,
+      "cooldown_ms": 10000,
+      "description": "Jump in place"
+    },
+    {
+      "type": "emote",
+      "emote": "/heh",
+      "duration_ms": 1000,
+      "weight": 0.2,
+      "cooldown_ms": 15000,
+      "description": "Show emote"
+    },
+    {
+      "type": "open_inventory",
+      "duration_ms": 3000,
+      "weight": 0.2,
+      "cooldown_ms": 20000,
+      "description": "Check inventory"
+    },
+    {
+      "type": "open_map",
+      "duration_ms": 2000,
+      "weight": 0.1,
+      "cooldown_ms": 15000,
+      "description": "Check map"
+    },
+    {
+      "type": "look_around",
+      "duration_ms": 1500,
+      "weight": 0.1,
+      "cooldown_ms": 10000,
+      "description": "Look around area"
+    },
+    {
+      "type": "open_status",
+      "duration_ms": 2500,
+      "weight": 0.15,
+      "cooldown_ms": 25000,
+      "description": "Check character status"
+    },
+    {
+      "type": "open_skills",
+      "duration_ms": 3000,
+      "weight": 0.12,
+      "cooldown_ms": 30000,
+      "description": "Check skills"
+    },
+    {
+      "type": "open_equipment",
+      "duration_ms": 2800,
+      "weight": 0.13,
+      "cooldown_ms": 25000,
+      "description": "Check equipment"
+    }
+  ],
+  "social_behaviors": [
+    {
+      "type": "wave",
+      "target": "nearby_player",
+      "weight": 0.4,
+      "duration_ms": 1000,
+      "description": "Wave at nearby player"
+    },
+    {
+      "type": "say_hi",
+      "messages": ["hey", "hi", "yo", "hello"],
+      "weight": 0.3,
+      "duration_ms": 2000,
+      "description": "Greet nearby player"
+    },
+    {
+      "type": "emote_at",
+      "emote": "/lv",
+      "weight": 0.2,
+      "duration_ms": 1000,
+      "description": "Show love emote"
+    },
+    {
+      "type": "approach_player",
+      "weight": 0.1,
+      "duration_ms": 3000,
+      "description": "Walk closer to player"
+    },
+    {
+      "type": "emote_ok",
+      "emote": "/ok",
+      "weight": 0.15,
+      "duration_ms": 1000,
+      "description": "Show OK emote"
+    },
+    {
+      "type": "emote_thx",
+      "emote": "/thx",
+      "weight": 0.18,
+      "duration_ms": 1000,
+      "description": "Show thanks emote"
+    }
+  ],
+  "typo_patterns": {
+    "adjacent_keys": {
+      "a": ["s", "q", "w", "z"],
+      "s": ["a", "d", "w", "x", "z"],
+      "d": ["s", "f", "e", "r", "c", "x"],
+      "e": ["w", "r", "d", "f"],
+      "r": ["e", "t", "f", "g"],
+      "t": ["r", "y", "g", "h"],
+      "y": ["t", "u", "h", "j"],
+      "u": ["y", "i", "j", "k"],
+      "i": ["u", "o", "k", "l"],
+      "o": ["i", "p", "k", "l"],
+      "p": ["o", "l"],
+      "f": ["d", "g", "r", "t", "v", "c"],
+      "g": ["f", "h", "t", "y", "b", "v"],
+      "h": ["g", "j", "y", "u", "n", "b"],
+      "j": ["h", "k", "u", "i", "m", "n"],
+      "k": ["j", "l", "i", "o", "m"],
+      "l": ["k", "o", "p"],
+      "c": ["x", "v", "d", "f"],
+      "v": ["c", "b", "f", "g"],
+      "b": ["v", "n", "g", "h"],
+      "n": ["b", "m", "h", "j"],
+      "m": ["n", "j", "k"]
+    },
+    "common_typos": {
+      "the": ["teh", "hte"],
+      "and": ["adn", "nad"],
+      "that": ["taht", "htat"],
+      "what": ["waht", "hwat"],
+      "have": ["ahve", "hvae"],
+      "from": ["form", "fomr"],
+      "they": ["tehy", "htey"],
+      "this": ["tihs", "htis"],
+      "with": ["wiht", "wtih"],
+      "your": ["yuor", "yoru"]
+    }
+  },
+  "gaming_abbreviations": {
+    "please": "pls",
+    "thanks": "thx",
+    "thank you": "ty",
+    "okay": "ok",
+    "because": "cuz",
+    "you": "u",
+    "are": "r",
+    "before": "b4",
+    "later": "l8r",
+    "tonight": "2nite",
+    "tomorrow": "tmrw",
+    "awesome": "awesom",
+    "nothing": "nothin",
+    "something": "somethin",
+    "going": "goin",
+    "want to": "wanna",
+    "got to": "gotta",
+    "have to": "hafta",
+    "out of": "outta",
+    "kind of": "kinda",
+    "sort of": "sorta",
+    "about": "bout",
+    "around": "round",
+    "probably": "prob",
+    "definitely": "def",
+    "favorite": "fav",
+    "maximum": "max",
+    "minimum": "min"
+  },
+  "emoticons": {
+    "happy": [":)", "^^", ":D", "=)", "^_^", "😊"],
+    "sad": [":(", "T_T", ";_;", "=(", "😢"],
+    "laugh": ["lol", "haha", "xD", "rofl", "lmao", "😂"],
+    "love": ["<3", "♥", "❤️"],
+    "confused": ["???", "?", "o.O", "O_o", "🤔"],
+    "surprised": ["!", "!!", "o_o", "O_O", "😮"],
+    "angry": [">:(", "DX", "😠"],
+    "neutral": [".", "..."],
+    "sweat": ["^^;", "swt", "😅"],
+    "cry": ["T_T", "QQ", "😭"]
+  },
+  "common_chat_responses": {
+    "greeting": ["hi", "hey", "yo", "hello", "sup"],
+    "thanks": ["thx", "thanks", "ty", "tysm", "appreciate it"],
+    "agreement": ["ok", "sure", "ye", "yeah", "yup", "k", "alright"],
+    "disagreement": ["no", "nope", "nah", "dont think so"],
+    "help": ["need help?", "what's up?", "sup", "whats wrong?"],
+    "busy": ["busy atm", "in combat", "sec", "1 sec", "give me a min"],
+    "farewell": ["bye", "cya", "later", "gtg", "gotta go", "bb"],
+    "apology": ["sry", "sorry", "my bad", "mb"],
+    "confusion": ["what?", "huh?", "?", "wut"],
+    "excitement": ["nice!", "cool!", "awesome!", "gg!", "sweet!"]
+  }
+}

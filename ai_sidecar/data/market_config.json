@@ -1,0 +1,31 @@
+{
+  "price_thresholds": {
+    "max_price_multiplier": 3.0,
+    "min_price_multiplier": 0.1,
+    "scam_threshold": 0.05
+  },
+  "trading": {
+    "min_profit_margin": 0.05,
+    "max_risk_tolerance": 0.5,
+    "arbitrage_min_profit": 1000,
+    "flip_min_profit": 5000
+  },
+  "vending": {
+    "undercut_amount": 100,
+    "price_decay_per_hour": 0.02,
+    "peak_hours": [18, 19, 20, 21, 22],
+    "max_vending_slots": 12,
+    "default_markup_percent": 10.0
+  },
+  "analysis": {
+    "history_days": 30,
+    "trend_calculation_days": 7,
+    "volatility_threshold": 0.3,
+    "min_data_points": 5
+  },
+  "cleanup": {
+    "auto_cleanup_enabled": true,
+    "cleanup_interval_hours": 24,
+    "data_retention_days": 30
+  }
+}

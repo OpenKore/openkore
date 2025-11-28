@@ -1,0 +1,61 @@
+{
+  "race_cards": {
+    "formless": [
+      {"card": "Peco Peco Egg Card", "card_id": 4007, "bonus": 0.20},
+      {"card": "Skeleton Worker Card", "card_id": 4092, "bonus": 0.15}
+    ],
+    "undead": [
+      {"card": "Strouf Card", "card_id": 4111, "bonus": 0.20},
+      {"card": "Zombie Prisoner Card", "card_id": 4275, "bonus": 0.15},
+      {"card": "Wraith Card", "card_id": 4190, "bonus": 0.15}
+    ],
+    "brute": [
+      {"card": "Minorous Card", "card_id": 4126, "bonus": 0.15},
+      {"card": "Goblin Card", "card_id": 4060, "bonus": 0.20},
+      {"card": "Savage Babe Card", "card_id": 4017, "bonus": 0.10}
+    ],
+    "plant": [
+      {"card": "Mandragora Card", "card_id": 4030, "bonus": 0.15},
+      {"card": "Geographer Card", "card_id": 4083, "bonus": 0.10}
+    ],
+    "insect": [
+      {"card": "Andre Card", "card_id": 4043, "bonus": 0.20},
+      {"card": "Kukre Card", "card_id": 4027, "bonus": 0.15}
+    ],
+    "fish": [
+      {"card": "Flora Card", "card_id": 4080, "bonus": 0.10},
+      {"card": "Sword Fish Card", "card_id": 4089, "bonus": 0.15}
+    ],
+    "demon": [
+      {"card": "Shinobi Card", "card_id": 4230, "bonus": 0.15},
+      {"card": "Cornutus Card", "card_id": 4067, "bonus": 0.10}
+    ],
+    "demi_human": [
+      {"card": "Hydra Card", "card_id": 4001, "bonus": 0.20},
+      {"card": "Skeleton Soldier Card", "card_id": 4086, "bonus": 0.20},
+      {"card": "Thara Frog Card", "card_id": 4058, "bonus": 0.30}
+    ],
+    "angel": [
+      {"card": "Dryad Card", "card_id": 4177, "bonus": 0.10},
+      {"card": "Bacsojin Card", "card_id": 4372, "bonus": 0.05}
+    ],
+    "dragon": [
+      {"card": "Kaho Card", "card_id": 4065, "bonus": 0.15},
+      {"card": "Dragon Tail Card", "card_id": 4178, "bonus": 0.10}
+    ]
+  },
+  "size_cards": {
+    "small": [
+      {"card": "Desert Wolf Card", "card_id": 4082, "bonus": 0.15},
+      {"card": "Rocker Card", "card_id": 4021, "bonus": 0.05}
+    ],
+    "medium": [
+      {"card": "Skeleton Worker Card", "card_id": 4092, "bonus": 0.15},
+      {"card": "Zerom Card", "card_id": 4064, "bonus": 0.10}
+    ],
+    "large": [
+      {"card": "Minorous Card", "card_id": 4126, "bonus": 0.15},
+      {"card": "Golem Card", "card_id": 4072, "bonus": 0.10}
+    ]
+  }
+}

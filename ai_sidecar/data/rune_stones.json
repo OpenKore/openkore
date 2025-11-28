@@ -1,0 +1,315 @@
+{
+  "runes": {
+    "rune_of_storm": {
+      "display_name": "Rune of Storm (Berkana)",
+      "skill_id": 2004,
+      "cooldown_seconds": 60,
+      "duration_seconds": 10,
+      "sp_cost": 0,
+      "rune_points_cost": 1,
+      "effect_type": "aoe_damage",
+      "is_aoe": true,
+      "range": 9,
+      "description": "Creates a storm that deals wind damage in area"
+    },
+    "rune_of_crash": {
+      "display_name": "Rune of Crash (Raido)",
+      "skill_id": 2005,
+      "cooldown_seconds": 60,
+      "duration_seconds": 0,
+      "sp_cost": 0,
+      "rune_points_cost": 1,
+      "effect_type": "single_damage",
+      "is_aoe": false,
+      "range": 9,
+      "description": "Deals massive single target damage"
+    },
+    "rune_of_fighting": {
+      "display_name": "Rune of Fighting (Thurisaz)",
+      "skill_id": 2006,
+      "cooldown_seconds": 300,
+      "duration_seconds": 300,
+      "sp_cost": 0,
+      "rune_points_cost": 1,
+      "effect_type": "buff_attack",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Increases attack power and grants offensive buffs"
+    },
+    "rune_of_refresh": {
+      "display_name": "Rune of Refresh (Isa)",
+      "skill_id": 2007,
+      "cooldown_seconds": 60,
+      "duration_seconds": 0,
+      "sp_cost": 0,
+      "rune_points_cost": 1,
+      "effect_type": "heal_restore",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Restores HP and removes negative status effects"
+    },
+    "rune_of_birth": {
+      "display_name": "Rune of Birth (Eihwaz)",
+      "skill_id": 2008,
+      "cooldown_seconds": 180,
+      "duration_seconds": 60,
+      "sp_cost": 0,
+      "rune_points_cost": 2,
+      "effect_type": "auto_revive",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Auto-revive with HP if killed within duration"
+    },
+    "rune_of_detection": {
+      "display_name": "Rune of Detection (Sowilo)",
+      "skill_id": 2009,
+      "cooldown_seconds": 60,
+      "duration_seconds": 300,
+      "sp_cost": 0,
+      "rune_points_cost": 1,
+      "effect_type": "reveal_hidden",
+      "is_aoe": true,
+      "range": 11,
+      "description": "Reveals hidden enemies and increases accuracy"
+    },
+    "rune_of_release": {
+      "display_name": "Rune of Release (Nauthiz)",
+      "skill_id": 2010,
+      "cooldown_seconds": 60,
+      "duration_seconds": 0,
+      "sp_cost": 0,
+      "rune_points_cost": 1,
+      "effect_type": "debuff_clear",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Removes all negative status effects from self"
+    },
+    "rune_of_abundance": {
+      "display_name": "Rune of Abundance (Dagaz)",
+      "skill_id": 2011,
+      "cooldown_seconds": 180,
+      "duration_seconds": 300,
+      "sp_cost": 0,
+      "rune_points_cost": 2,
+      "effect_type": "buff_all",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Increases all stats and regeneration rate"
+    },
+    "rune_of_millennium": {
+      "display_name": "Rune of Millennium (Ansuz)",
+      "skill_id": 2012,
+      "cooldown_seconds": 120,
+      "duration_seconds": 60,
+      "sp_cost": 0,
+      "rune_points_cost": 2,
+      "effect_type": "buff_defense",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Greatly increases physical and magical defense"
+    },
+    "rune_of_destruction": {
+      "display_name": "Rune of Destruction (Hagalaz)",
+      "skill_id": 2013,
+      "cooldown_seconds": 90,
+      "duration_seconds": 0,
+      "sp_cost": 0,
+      "rune_points_cost": 2,
+      "effect_type": "ultimate_damage",
+      "is_aoe": true,
+      "range": 5,
+      "description": "Massive area damage, ignores defense"
+    },
+    "rune_of_lux_anima": {
+      "display_name": "Lux Anima",
+      "skill_id": 2014,
+      "cooldown_seconds": 180,
+      "duration_seconds": 60,
+      "sp_cost": 0,
+      "rune_points_cost": 3,
+      "effect_type": "buff_critical",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Dramatically increases critical rate and damage"
+    },
+    "rune_of_turisus": {
+      "display_name": "Turisus",
+      "skill_id": 2015,
+      "cooldown_seconds": 90,
+      "duration_seconds": 180,
+      "sp_cost": 0,
+      "rune_points_cost": 2,
+      "effect_type": "buff_tank",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Increases MaxHP and reduces damage taken"
+    },
+    "rune_of_isa": {
+      "display_name": "Isa",
+      "skill_id": 2016,
+      "cooldown_seconds": 60,
+      "duration_seconds": 30,
+      "sp_cost": 0,
+      "rune_points_cost": 1,
+      "effect_type": "crowd_control",
+      "is_aoe": true,
+      "range": 9,
+      "description": "Freezes enemies in area, preventing movement"
+    },
+    "rune_of_hagalaz": {
+      "display_name": "Hagalaz",
+      "skill_id": 2017,
+      "cooldown_seconds": 60,
+      "duration_seconds": 0,
+      "sp_cost": 0,
+      "rune_points_cost": 1,
+      "effect_type": "armor_break",
+      "is_aoe": true,
+      "range": 7,
+      "description": "Breaks enemy armor and reduces defense"
+    },
+    "rune_of_othilia": {
+      "display_name": "Othilia",
+      "skill_id": 2018,
+      "cooldown_seconds": 120,
+      "duration_seconds": 180,
+      "sp_cost": 0,
+      "rune_points_cost": 2,
+      "effect_type": "buff_speed",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Increases movement and attack speed"
+    },
+    "rune_of_uruz": {
+      "display_name": "Uruz",
+      "skill_id": 2019,
+      "cooldown_seconds": 90,
+      "duration_seconds": 60,
+      "sp_cost": 0,
+      "rune_points_cost": 2,
+      "effect_type": "buff_strength",
+      "is_aoe": false,
+      "range": 0,
+      "description": "Massively increases STR and ATK"
+    }
+  },
+  "rune_point_generation": {
+    "base_per_minute": 10,
+    "combat_bonus": 5,
+    "skill_usage_bonus": 2,
+    "critical_hit_bonus": 3,
+    "kill_bonus": 5
+  },
+  "crafting_requirements": {
+    "rune_of_storm": {
+      "materials": ["Blank Rune Stone", "Wind of Verdure", "Crystal Blue"],
+      "success_rate": 80,
+      "rune_mastery_level": 1
+    },
+    "rune_of_crash": {
+      "materials": ["Blank Rune Stone", "Rough Wind", "Red Blood"],
+      "success_rate": 80,
+      "rune_mastery_level": 1
+    },
+    "rune_of_fighting": {
+      "materials": ["Blank Rune Stone", "Great Nature", "Flame Heart"],
+      "success_rate": 70,
+      "rune_mastery_level": 2
+    },
+    "rune_of_refresh": {
+      "materials": ["Blank Rune Stone", "Mystic Frozen", "Wind of Verdure"],
+      "success_rate": 75,
+      "rune_mastery_level": 1
+    },
+    "rune_of_birth": {
+      "materials": ["Blank Rune Stone", "Rough Oridecon", "Crystal Blue"],
+      "success_rate": 60,
+      "rune_mastery_level": 3
+    },
+    "rune_of_detection": {
+      "materials": ["Blank Rune Stone", "Great Nature", "Crystal Blue"],
+      "success_rate": 80,
+      "rune_mastery_level": 1
+    },
+    "rune_of_release": {
+      "materials": ["Blank Rune Stone", "Rough Oridecon", "Wind of Verdure"],
+      "success_rate": 75,
+      "rune_mastery_level": 1
+    },
+    "rune_of_abundance": {
+      "materials": ["Blank Rune Stone", "Rough Elunium", "Flame Heart"],
+      "success_rate": 60,
+      "rune_mastery_level": 3
+    },
+    "rune_of_millennium": {
+      "materials": ["Blank Rune Stone", "Rough Elunium", "Great Nature"],
+      "success_rate": 65,
+      "rune_mastery_level": 2
+    },
+    "rune_of_destruction": {
+      "materials": ["Blank Rune Stone", "Rough Oridecon", "Flame Heart"],
+      "success_rate": 50,
+      "rune_mastery_level": 4
+    },
+    "rune_of_lux_anima": {
+      "materials": ["Blank Rune Stone", "Rough Elunium", "Mystic Frozen"],
+      "success_rate": 45,
+      "rune_mastery_level": 5
+    },
+    "rune_of_turisus": {
+      "materials": ["Blank Rune Stone", "Rough Oridecon", "Great Nature"],
+      "success_rate": 60,
+      "rune_mastery_level": 3
+    },
+    "rune_of_isa": {
+      "materials": ["Blank Rune Stone", "Mystic Frozen", "Crystal Blue"],
+      "success_rate": 80,
+      "rune_mastery_level": 1
+    },
+    "rune_of_hagalaz": {
+      "materials": ["Blank Rune Stone", "Rough Wind", "Flame Heart"],
+      "success_rate": 75,
+      "rune_mastery_level": 1
+    },
+    "rune_of_othilia": {
+      "materials": ["Blank Rune Stone", "Rough Wind", "Great Nature"],
+      "success_rate": 65,
+      "rune_mastery_level": 2
+    },
+    "rune_of_uruz": {
+      "materials": ["Blank Rune Stone", "Rough Oridecon", "Red Blood"],
+      "success_rate": 60,
+      "rune_mastery_level": 3
+    }
+  },
+  "tactical_sets": {
+    "boss_hunting": [
+      "rune_of_crash",
+      "rune_of_fighting",
+      "rune_of_destruction",
+      "rune_of_lux_anima"
+    ],
+    "farming": [
+      "rune_of_storm",
+      "rune_of_abundance",
+      "rune_of_othilia"
+    ],
+    "tanking": [
+      "rune_of_turisus",
+      "rune_of_millennium",
+      "rune_of_birth",
+      "rune_of_refresh"
+    ],
+    "pvp": [
+      "rune_of_isa",
+      "rune_of_hagalaz",
+      "rune_of_detection",
+      "rune_of_fighting"
+    ],
+    "emergency": [
+      "rune_of_birth",
+      "rune_of_refresh",
+      "rune_of_release"
+    ]
+  }
+}

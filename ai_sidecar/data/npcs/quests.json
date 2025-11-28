@@ -1,0 +1,65 @@
+{
+  "1001": {
+    "name": "Novice Training",
+    "description": "Complete basic training tasks to learn the fundamentals of Ragnarok Online",
+    "npc_id": 10001,
+    "npc_name": "Training Instructor",
+    "min_level": 1,
+    "max_level": 10,
+    "required_job": null,
+    "objectives": [
+      {
+        "objective_id": "talk_weapon_dealer",
+        "objective_type": "talk_to_npc",
+        "target_id": 10002,
+        "target_name": "Weapon Dealer",
+        "required_count": 1,
+        "current_count": 0
+      },
+      {
+        "objective_id": "kill_porings",
+        "objective_type": "kill_monster",
+        "target_id": 1002,
+        "target_name": "Poring",
+        "required_count": 10,
+        "current_count": 0
+      }
+    ],
+    "rewards": [
+      {"reward_type": "exp_base", "amount": 100},
+      {"reward_type": "exp_job", "amount": 50},
+      {"reward_type": "item", "item_id": 501, "amount": 10}
+    ],
+    "next_quests": [1002],
+    "is_repeatable": false,
+    "is_daily": false
+  },
+  "1002": {
+    "name": "First Steps",
+    "description": "Visit Prontera and meet with the Job Change NPC",
+    "npc_id": 10001,
+    "npc_name": "Training Instructor",
+    "prerequisite_quests": [1001],
+    "min_level": 10,
+    "max_level": 999,
+    "objectives": [
+      {
+        "objective_id": "visit_prontera",
+        "objective_type": "visit_location",
+        "target_id": 0,
+        "target_name": "Prontera",
+        "required_count": 1,
+        "current_count": 0,
+        "map_name": "prontera",
+        "x": 156,
+        "y": 191
+      }
+    ],
+    "rewards": [
+      {"reward_type": "exp_base", "amount": 500},
+      {"reward_type": "zeny", "amount": 1000}
+    ],
+    "is_repeatable": false,
+    "is_daily": false
+  }
+}

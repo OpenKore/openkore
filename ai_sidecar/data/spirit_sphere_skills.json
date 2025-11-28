@@ -1,0 +1,63 @@
+{
+  "skills": {
+    "Throw Spirit Sphere": {
+      "spheres_required": 1,
+      "spheres_consumed": 1
+    },
+    "Occult Impaction": {
+      "spheres_required": 1,
+      "spheres_consumed": 1
+    },
+    "Chain Combo": {
+      "spheres_required": 0,
+      "spheres_consumed": 0
+    },
+    "Combo Finish": {
+      "spheres_required": 0,
+      "spheres_consumed": 0
+    },
+    "Tiger Knuckle Fist": {
+      "spheres_required": 0,
+      "spheres_consumed": 0
+    },
+    "Chain Crush Combo": {
+      "spheres_required": 0,
+      "spheres_consumed": 0
+    },
+    "Asura Strike": {
+      "spheres_required": 5,
+      "spheres_consumed": 5
+    },
+    "Guillotine Fist": {
+      "spheres_required": 5,
+      "spheres_consumed": 5
+    },
+    "Raging Quadruple Blow": {
+      "spheres_required": 0,
+      "spheres_consumed": 0
+    },
+    "Raging Thrust": {
+      "spheres_required": 0,
+      "spheres_consumed": 0
+    },
+    "Raging Palm Strike": {
+      "spheres_required": 5,
+      "spheres_consumed": 5
+    },
+    "Earth Shaker": {
+      "spheres_required": 1,
+      "spheres_consumed": 1
+    },
+    "Sky Net Blow": {
+      "spheres_required": 1,
+      "spheres_consumed": 1
+    }
+  },
+  "generation_skills": [
+    "Summon Spirit Sphere",
+    "Zen",
+    "Dangerous Soul Collect",
+    "Spiritual Sphere Absorption",
+    "Fury"
+  ]
+}

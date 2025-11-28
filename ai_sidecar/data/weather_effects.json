@@ -1,0 +1,226 @@
+{
+  "weather_types": {
+    "clear": {
+      "visibility_modifier": 1.0,
+      "movement_speed_modifier": 1.0,
+      "element_modifiers": {},
+      "skill_modifiers": {},
+      "duration_minutes": 60
+    },
+    "sunny": {
+      "visibility_modifier": 1.0,
+      "movement_speed_modifier": 1.0,
+      "element_modifiers": {
+        "fire": 1.2,
+        "water": 0.9
+      },
+      "skill_modifiers": {
+        "Fire Bolt": 1.2,
+        "Fire Ball": 1.2,
+        "Fire Wall": 1.3,
+        "Meteor Storm": 1.2,
+        "Frost Diver": 0.9,
+        "Cold Bolt": 0.9
+      },
+      "duration_minutes": 90
+    },
+    "cloudy": {
+      "visibility_modifier": 0.95,
+      "movement_speed_modifier": 1.0,
+      "element_modifiers": {},
+      "skill_modifiers": {},
+      "duration_minutes": 45
+    },
+    "rain": {
+      "visibility_modifier": 0.8,
+      "movement_speed_modifier": 0.95,
+      "element_modifiers": {
+        "water": 1.2,
+        "fire": 0.8,
+        "wind": 1.1
+      },
+      "skill_modifiers": {
+        "Water Ball": 1.3,
+        "Cold Bolt": 1.2,
+        "Storm Gust": 1.2,
+        "Fire Bolt": 0.7,
+        "Fire Ball": 0.7,
+        "Fire Wall": 0.6,
+        "Lightning Bolt": 1.1
+      },
+      "duration_minutes": 30
+    },
+    "heavy_rain": {
+      "visibility_modifier": 0.65,
+      "movement_speed_modifier": 0.9,
+      "element_modifiers": {
+        "water": 1.4,
+        "fire": 0.6,
+        "wind": 1.2
+      },
+      "skill_modifiers": {
+        "Water Ball": 1.5,
+        "Cold Bolt": 1.3,
+        "Storm Gust": 1.4,
+        "Fire Bolt": 0.5,
+        "Fire Ball": 0.5,
+        "Fire Wall": 0.4,
+        "Deluge": 1.5
+      },
+      "duration_minutes": 20
+    },
+    "storm": {
+      "visibility_modifier": 0.6,
+      "movement_speed_modifier": 0.9,
+      "element_modifiers": {
+        "water": 1.5,
+        "fire": 0.5,
+        "wind": 1.3
+      },
+      "skill_modifiers": {
+        "Thunderstorm": 1.5,
+        "Lord of Vermillion": 1.3,
+        "Lightning Bolt": 1.4,
+        "Water Ball": 1.4,
+        "Storm Gust": 1.5,
+        "Fire Bolt": 0.4,
+        "Fire Wall": 0.3
+      },
+      "duration_minutes": 25
+    },
+    "snow": {
+      "visibility_modifier": 0.7,
+      "movement_speed_modifier": 0.85,
+      "element_modifiers": {
+        "water": 1.3,
+        "fire": 0.7
+      },
+      "skill_modifiers": {
+        "Frost Diver": 1.2,
+        "Storm Gust": 1.3,
+        "Cold Bolt": 1.3,
+        "Ice Wall": 1.4,
+        "Fire Bolt": 0.8
+      },
+      "duration_minutes": 40
+    },
+    "blizzard": {
+      "visibility_modifier": 0.5,
+      "movement_speed_modifier": 0.75,
+      "element_modifiers": {
+        "water": 1.5,
+        "fire": 0.5,
+        "wind": 1.2
+      },
+      "skill_modifiers": {
+        "Frost Diver": 1.4,
+        "Storm Gust": 1.5,
+        "Cold Bolt": 1.5,
+        "Ice Wall": 1.6,
+        "Blizzard": 1.8,
+        "Fire Bolt": 0.5,
+        "Fire Wall": 0.4
+      },
+      "duration_minutes": 20
+    },
+    "fog": {
+      "visibility_modifier": 0.5,
+      "movement_speed_modifier": 0.95,
+      "element_modifiers": {},
+      "skill_modifiers": {
+        "Hiding": 1.3,
+        "Cloaking": 1.2,
+        "Shadow Leap": 1.2
+      },
+      "duration_minutes": 35
+    },
+    "mist": {
+      "visibility_modifier": 0.75,
+      "movement_speed_modifier": 0.98,
+      "element_modifiers": {
+        "water": 1.1
+      },
+      "skill_modifiers": {
+        "Hiding": 1.2,
+        "Water Ball": 1.1
+      },
+      "duration_minutes": 45
+    },
+    "sandstorm": {
+      "visibility_modifier": 0.6,
+      "movement_speed_modifier": 0.85,
+      "element_modifiers": {
+        "earth": 1.3,
+        "wind": 1.2,
+        "water": 0.8
+      },
+      "skill_modifiers": {
+        "Earth Spike": 1.3,
+        "Heaven's Drive": 1.3,
+        "Sandman": 1.4,
+        "Water Ball": 0.8
+      },
+      "duration_minutes": 30
+    }
+  },
+  "map_weather": {
+    "prontera": {
+      "possible": ["clear", "cloudy", "rain"],
+      "default": "clear"
+    },
+    "prt_fild08": {
+      "possible": ["clear", "cloudy", "rain", "sunny"],
+      "default": "clear"
+    },
+    "xmas": {
+      "fixed": "snow"
+    },
+    "xmas_dun01": {
+      "fixed": "snow"
+    },
+    "xmas_fild01": {
+      "fixed": "snow"
+    },
+    "moc_fild17": {
+      "possible": ["sunny", "sandstorm"],
+      "default": "sunny"
+    },
+    "moc_fild18": {
+      "possible": ["sunny", "sandstorm"],
+      "default": "sunny"
+    },
+    "pay_fild01": {
+      "possible": ["clear", "cloudy", "rain", "storm"],
+      "default": "clear"
+    },
+    "louyang": {
+      "possible": ["clear", "fog", "mist"],
+      "default": "clear"
+    },
+    "ra_fild01": {
+      "possible": ["clear", "sunny", "cloudy"],
+      "default": "clear"
+    },
+    "ice_dun01": {
+      "fixed": "blizzard"
+    },
+    "ice_dun02": {
+      "fixed": "blizzard"
+    },
+    "ice_dun03": {
+      "fixed": "blizzard"
+    },
+    "gef_fild00": {
+      "possible": ["clear", "cloudy", "rain"],
+      "default": "clear"
+    },
+    "gl_church": {
+      "fixed": "fog"
+    },
+    "nif_fild01": {
+      "possible": ["fog", "mist", "cloudy"],
+      "default": "fog"
+    }
+  },
+  "notes": "Weather significantly affects elemental damage and specific skills. Fire skills are stronger in sunny weather but weaker in rain. Water and ice skills excel in rain/snow conditions. Visibility and movement penalties vary by weather severity."
+}

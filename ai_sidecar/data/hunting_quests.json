@@ -1,0 +1,175 @@
+{
+  "hunting_quests": [
+    {
+      "quest_id": 5001,
+      "quest_name": "Orc Village Extermination",
+      "targets": [
+        {
+          "monster_id": 1023,
+          "monster_name": "Orc Warrior",
+          "required_kills": 50,
+          "spawn_maps": ["gef_fild10", "gef_fild14"],
+          "element": "earth",
+          "race": "demi_human",
+          "size": "medium"
+        },
+        {
+          "monster_id": 1153,
+          "monster_name": "Orc Lady",
+          "required_kills": 30,
+          "spawn_maps": ["gef_fild10", "gef_fild14"],
+          "element": "earth",
+          "race": "demi_human",
+          "size": "medium"
+        }
+      ],
+      "base_exp_reward": 50000,
+      "job_exp_reward": 25000,
+      "zeny_reward": 10000,
+      "min_level": 25,
+      "max_level": 50,
+      "is_party_shared": true
+    },
+    {
+      "quest_id": 5002,
+      "quest_name": "Payon Cave Cleanup",
+      "targets": [
+        {
+          "monster_id": 1166,
+          "monster_name": "Skeleton",
+          "required_kills": 80,
+          "spawn_maps": ["pay_dun00", "pay_dun01"],
+          "element": "undead",
+          "race": "undead",
+          "size": "medium"
+        },
+        {
+          "monster_id": 1015,
+          "monster_name": "Zombie",
+          "required_kills": 60,
+          "spawn_maps": ["pay_dun00", "pay_dun01"],
+          "element": "undead",
+          "race": "undead",
+          "size": "medium"
+        }
+      ],
+      "base_exp_reward": 40000,
+      "job_exp_reward": 20000,
+      "zeny_reward": 8000,
+      "min_level": 20,
+      "max_level": 40,
+      "is_party_shared": true
+    },
+    {
+      "quest_id": 5003,
+      "quest_name": "Clock Tower Assault",
+      "targets": [
+        {
+          "monster_id": 1148,
+          "monster_name": "Alarm",
+          "required_kills": 100,
+          "spawn_maps": ["c_tower2", "c_tower3"],
+          "element": "neutral",
+          "race": "formless",
+          "size": "medium"
+        }
+      ],
+      "base_exp_reward": 120000,
+      "job_exp_reward": 60000,
+      "zeny_reward": 20000,
+      "min_level": 50,
+      "max_level": 70,
+      "is_party_shared": true
+    },
+    {
+      "quest_id": 5004,
+      "quest_name": "Ant Hell Infestation",
+      "targets": [
+        {
+          "monster_id": 1095,
+          "monster_name": "Andre",
+          "required_kills": 50,
+          "spawn_maps": ["anthell01", "anthell02"],
+          "element": "earth",
+          "race": "insect",
+          "size": "small"
+        },
+        {
+          "monster_id": 1091,
+          "monster_name": "Deniro",
+          "required_kills": 50,
+          "spawn_maps": ["anthell01", "anthell02"],
+          "element": "fire",
+          "race": "insect",
+          "size": "small"
+        },
+        {
+          "monster_id": 1094,
+          "monster_name": "Piere",
+          "required_kills": 50,
+          "spawn_maps": ["anthell01", "anthell02"],
+          "element": "water",
+          "race": "insect",
+          "size": "small"
+        }
+      ],
+      "base_exp_reward": 90000,
+      "job_exp_reward": 45000,
+      "zeny_reward": 15000,
+      "min_level": 30,
+      "max_level": 55,
+      "is_party_shared": true
+    },
+    {
+      "quest_id": 5005,
+      "quest_name": "Thor Volcano Threat",
+      "targets": [
+        {
+          "monster_id": 1675,
+          "monster_name": "Blazzer",
+          "required_kills": 100,
+          "spawn_maps": ["thor_v02", "thor_v03"],
+          "element": "fire",
+          "race": "formless",
+          "size": "medium"
+        },
+        {
+          "monster_id": 1664,
+          "monster_name": "Harpy",
+          "required_kills": 80,
+          "spawn_maps": ["thor_v02", "thor_v03"],
+          "element": "wind",
+          "race": "demon",
+          "size": "medium"
+        }
+      ],
+      "base_exp_reward": 2000000,
+      "job_exp_reward": 1000000,
+      "zeny_reward": 50000,
+      "min_level": 85,
+      "max_level": 110,
+      "is_party_shared": true
+    },
+    {
+      "quest_id": 5006,
+      "quest_name": "Scaraba Nest Clearing",
+      "targets": [
+        {
+          "monster_id": 2083,
+          "monster_name": "Scaraba",
+          "required_kills": 150,
+          "spawn_maps": ["dicastes01", "dic_fild01"],
+          "element": "earth",
+          "race": "insect",
+          "size": "medium"
+        }
+      ],
+      "base_exp_reward": 5000000,
+      "job_exp_reward": 2500000,
+      "zeny_reward": 100000,
+      "min_level": 100,
+      "max_level": 130,
+      "is_party_shared": true
+    }
+  ]
+}

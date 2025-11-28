@@ -1,0 +1,37 @@
+{
+  "follow": {
+    "description": "Follow the command sender",
+    "usage": "follow",
+    "aliases": ["f"],
+    "min_args": 0,
+    "max_args": 0
+  },
+  "attack": {
+    "description": "Attack nearest enemy or specified target",
+    "usage": "attack [target]",
+    "aliases": ["atk", "a"],
+    "min_args": 0,
+    "max_args": 1
+  },
+  "retreat": {
+    "description": "Retreat from combat",
+    "usage": "retreat",
+    "aliases": ["back", "run"],
+    "min_args": 0,
+    "max_args": 0
+  },
+  "heal": {
+    "description": "Heal the sender or specified target",
+    "usage": "heal [target]",
+    "aliases": ["h"],
+    "min_args": 0,
+    "max_args": 1
+  },
+  "buff": {
+    "description": "Buff party members",
+    "usage": "buff",
+    "aliases": ["b"],
+    "min_args": 0,
+    "max_args": 0
+  }
+}

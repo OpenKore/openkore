@@ -1,0 +1,268 @@
+{
+  "circles": {
+    "fire_insignia": {
+      "display_name": "Fire Insignia",
+      "skill_id": 2230,
+      "duration_seconds": 60,
+      "radius": 0,
+      "sp_cost": 22,
+      "cooldown_seconds": 2,
+      "effect_type": "elemental_mastery",
+      "element": "fire",
+      "damage_bonus_percent": 50,
+      "description": "Increases fire elemental damage by 50%"
+    },
+    "water_insignia": {
+      "display_name": "Water Insignia",
+      "skill_id": 2231,
+      "duration_seconds": 60,
+      "radius": 0,
+      "sp_cost": 22,
+      "cooldown_seconds": 2,
+      "effect_type": "elemental_mastery",
+      "element": "water",
+      "damage_bonus_percent": 50,
+      "description": "Increases water elemental damage by 50%"
+    },
+    "wind_insignia": {
+      "display_name": "Wind Insignia",
+      "skill_id": 2232,
+      "duration_seconds": 60,
+      "radius": 0,
+      "sp_cost": 22,
+      "cooldown_seconds": 2,
+      "effect_type": "elemental_mastery",
+      "element": "wind",
+      "damage_bonus_percent": 50,
+      "description": "Increases wind elemental damage by 50%"
+    },
+    "earth_insignia": {
+      "display_name": "Earth Insignia",
+      "skill_id": 2233,
+      "duration_seconds": 60,
+      "radius": 0,
+      "sp_cost": 22,
+      "cooldown_seconds": 2,
+      "effect_type": "elemental_mastery",
+      "element": "earth",
+      "damage_bonus_percent": 50,
+      "description": "Increases earth elemental damage by 50%"
+    },
+    "poison_buster": {
+      "display_name": "Poison Buster",
+      "skill_id": 2234,
+      "duration_seconds": 30,
+      "radius": 3,
+      "sp_cost": 70,
+      "cooldown_seconds": 3,
+      "effect_type": "damage_field",
+      "element": "poison",
+      "damage_per_tick": 800,
+      "tick_interval": 1,
+      "description": "Creates poison field dealing continuous damage"
+    },
+    "psychic_wave": {
+      "display_name": "Psychic Wave",
+      "skill_id": 2235,
+      "duration_seconds": 15,
+      "radius": 3,
+      "sp_cost": 48,
+      "cooldown_seconds": 5,
+      "effect_type": "debuff_field",
+      "debuff_types": ["silence", "confusion"],
+      "success_rate": 80,
+      "description": "Creates field that silences and confuses enemies"
+    },
+    "cloud_kill": {
+      "display_name": "Cloud Kill",
+      "skill_id": 2236,
+      "duration_seconds": 45,
+      "radius": 5,
+      "sp_cost": 48,
+      "cooldown_seconds": 5,
+      "effect_type": "damage_field",
+      "element": "poison",
+      "damage_per_tick": 600,
+      "tick_interval": 1,
+      "description": "Large poison cloud dealing continuous damage"
+    },
+    "striking": {
+      "display_name": "Striking",
+      "skill_id": 2237,
+      "duration_seconds": 20,
+      "radius": 3,
+      "sp_cost": 50,
+      "cooldown_seconds": 3,
+      "effect_type": "damage_boost_field",
+      "magic_attack_bonus": 100,
+      "description": "Increases magic attack power in area"
+    },
+    "warmer": {
+      "display_name": "Warmer",
+      "skill_id": 2238,
+      "duration_seconds": 40,
+      "radius": 4,
+      "sp_cost": 52,
+      "cooldown_seconds": 3,
+      "effect_type": "healing_field",
+      "hp_per_tick": 300,
+      "tick_interval": 3,
+      "removes_frozen": true,
+      "description": "Creates healing field that removes frozen status"
+    },
+    "vacuum_extreme": {
+      "display_name": "Vacuum Extreme",
+      "skill_id": 2239,
+      "duration_seconds": 5,
+      "radius": 5,
+      "sp_cost": 34,
+      "cooldown_seconds": 5,
+      "effect_type": "crowd_control",
+      "pulls_enemies": true,
+      "stun_duration": 2,
+      "description": "Pulls enemies to center and stuns them"
+    },
+    "summon_fire_ball": {
+      "display_name": "Summon Fire Ball",
+      "skill_id": 2443,
+      "duration_seconds": 30,
+      "radius": 2,
+      "sp_cost": 50,
+      "cooldown_seconds": 0,
+      "effect_type": "summon",
+      "summon_type": "fire_ball",
+      "element": "fire",
+      "max_summons": 4,
+      "description": "Summons fire ball familiar"
+    },
+    "summon_water_ball": {
+      "display_name": "Summon Water Ball",
+      "skill_id": 2444,
+      "duration_seconds": 30,
+      "radius": 2,
+      "sp_cost": 50,
+      "cooldown_seconds": 0,
+      "effect_type": "summon",
+      "summon_type": "water_ball",
+      "element": "water",
+      "max_summons": 4,
+      "description": "Summons water ball familiar"
+    },
+    "summon_lightning_ball": {
+      "display_name": "Summon Lightning Ball",
+      "skill_id": 2445,
+      "duration_seconds": 30,
+      "radius": 2,
+      "sp_cost": 50,
+      "cooldown_seconds": 0,
+      "effect_type": "summon",
+      "summon_type": "lightning_ball",
+      "element": "wind",
+      "max_summons": 4,
+      "description": "Summons lightning ball familiar"
+    },
+    "summon_stone": {
+      "display_name": "Summon Stone",
+      "skill_id": 2446,
+      "duration_seconds": 30,
+      "radius": 2,
+      "sp_cost": 50,
+      "cooldown_seconds": 0,
+      "effect_type": "summon",
+      "summon_type": "stone",
+      "element": "earth",
+      "max_summons": 4,
+      "description": "Summons stone familiar"
+    }
+  },
+  "circle_mechanics": {
+    "max_non_insignia_circles": 2,
+    "insignia_stacks": false,
+    "placement_range": 9,
+    "casting_time_ms": {
+      "insignia": 1000,
+      "standard": 1500,
+      "summon": 2000
+    }
+  },
+  "elemental_bonuses": {
+    "fire_insignia": {
+      "fire_bolt": 1.5,
+      "fire_ball": 1.5,
+      "fire_wall": 1.5,
+      "meteor_storm": 1.5,
+      "crimson_rock": 1.5,
+      "earth_grave": 1.5
+    },
+    "water_insignia": {
+      "cold_bolt": 1.5,
+      "frost_diver": 1.5,
+      "storm_gust": 1.5,
+      "frost_misty": 1.5,
+      "jack_frost": 1.5,
+      "water_ball": 1.5
+    },
+    "wind_insignia": {
+      "lightning_bolt": 1.5,
+      "thunderstorm": 1.5,
+      "jupitel_thunder": 1.5,
+      "lord_of_vermilion": 1.5,
+      "chain_lightning": 1.5,
+      "lightning_land": 1.5
+    },
+    "earth_insignia": {
+      "earth_spike": 1.5,
+      "heaven_drive": 1.5,
+      "earth_strain": 1.5,
+      "stone_rain": 1.5,
+      "diamond_dust": 1.5
+    }
+  },
+  "tactical_combinations": {
+    "boss_setup": [
+      {
+        "insignia": "fire_insignia",
+        "circles": ["striking", "poison_buster"]
+      },
+      {
+        "insignia": "water_insignia",
+        "circles": ["striking", "psychic_wave"]
+      }
+    ],
+    "farming_setup": [
+      {
+        "insignia": "fire_insignia",
+        "circles": ["cloud_kill", "vacuum_extreme"]
+      }
+    ],
+    "support_setup": [
+      {
+        "insignia": "earth_insignia",
+        "circles": ["warmer", "striking"]
+      }
+    ],
+    "pvp_setup": [
+      {
+        "insignia": "water_insignia",
+        "circles": ["psychic_wave", "vacuum_extreme"]
+      }
+    ]
+  },
+  "synergies": {
+    "vacuum_extreme_combos": [
+      "cloud_kill",
+      "poison_buster",
+      "meteor_storm",
+      "storm_gust"
+    ],
+    "striking_pairs": [
+      "poison_buster",
+      "psychic_wave",
+      "cloud_kill"
+    ],
+    "warmer_supports": [
+      "striking",
+      "earth_insignia"
+    ]
+  }
+}

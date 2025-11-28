@@ -1,0 +1,53 @@
+{
+  "weapon_shops": {
+    "prontera": [
+      {
+        "npc_id": 30001,
+        "name": "Weapon Dealer",
+        "x": 175,
+        "y": 138,
+        "items": [
+          {"item_id": 1201, "name": "Knife", "price": 50},
+          {"item_id": 1204, "name": "Cutter", "price": 1250},
+          {"item_id": 1207, "name": "Main Gauche", "price": 2400},
+          {"item_id": 1601, "name": "Rod", "price": 50},
+          {"item_id": 1701, "name": "Bow", "price": 1000}
+        ]
+      }
+    ]
+  },
+  "armor_shops": {
+    "prontera": [
+      {
+        "npc_id": 30002,
+        "name": "Armor Dealer",
+        "x": 179,
+        "y": 184,
+        "items": [
+          {"item_id": 2101, "name": "Guard", "price": 500},
+          {"item_id": 2103, "name": "Buckler", "price": 14000},
+          {"item_id": 2301, "name": "Cotton Shirt", "price": 10},
+          {"item_id": 2401, "name": "Sandals", "price": 400}
+        ]
+      }
+    ]
+  },
+  "tool_shops": {
+    "prontera": [
+      {
+        "npc_id": 30003,
+        "name": "Tool Dealer",
+        "x": 134,
+        "y": 221,
+        "items": [
+          {"item_id": 501, "name": "Red Potion", "price": 50},
+          {"item_id": 502, "name": "Orange Potion", "price": 200},
+          {"item_id": 503, "name": "Yellow Potion", "price": 550},
+          {"item_id": 506, "name": "Green Potion", "price": 40},
+          {"item_id": 601, "name": "Fly Wing", "price": 60},
+          {"item_id": 602, "name": "Butterfly Wing", "price": 300}
+        ]
+      }
+    ]
+  }
+}

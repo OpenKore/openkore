@@ -1,0 +1,82 @@
+{
+  "recipes": [
+    {
+      "recipe_id": 1001,
+      "recipe_name": "Forge Blade",
+      "crafting_type": "forge",
+      "result_item_id": 1101,
+      "result_item_name": "Blade [4]",
+      "result_quantity": 1,
+      "materials": [
+        {"item_id": 998, "item_name": "Iron", "quantity_required": 35, "is_consumed": true},
+        {"item_id": 999, "item_name": "Steel", "quantity_required": 15, "is_consumed": true},
+        {"item_id": 1010, "item_name": "Iron Hammer", "quantity_required": 1, "is_consumed": false}
+      ],
+      "required_skill": "Smith Sword",
+      "required_skill_level": 3,
+      "required_base_level": 1,
+      "base_success_rate": 50.0,
+      "dex_bonus": 0.2,
+      "luk_bonus": 0.1,
+      "npc_name": "Blacksmith Master",
+      "npc_map": "geffen"
+    },
+    {
+      "recipe_id": 1002,
+      "recipe_name": "Brew Red Potion",
+      "crafting_type": "brew",
+      "result_item_id": 501,
+      "result_item_name": "Red Potion",
+      "result_quantity": 3,
+      "materials": [
+        {"item_id": 507, "item_name": "Red Herb", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 1,
+      "required_job": "Alchemist",
+      "required_base_level": 1,
+      "base_success_rate": 100.0,
+      "dex_bonus": 0.0,
+      "luk_bonus": 0.0
+    },
+    {
+      "recipe_id": 1003,
+      "recipe_name": "Brew White Potion",
+      "crafting_type": "brew",
+      "result_item_id": 504,
+      "result_item_name": "White Potion",
+      "result_quantity": 3,
+      "materials": [
+        {"item_id": 509, "item_name": "White Herb", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 2,
+      "required_job": "Alchemist",
+      "required_base_level": 1,
+      "base_success_rate": 95.0,
+      "dex_bonus": 0.3,
+      "luk_bonus": 0.1
+    },
+    {
+      "recipe_id": 1004,
+      "recipe_name": "Forge Stiletto",
+      "crafting_type": "forge",
+      "result_item_id": 1207,
+      "result_item_name": "Stiletto [4]",
+      "result_quantity": 1,
+      "materials": [
+        {"item_id": 998, "item_name": "Iron", "quantity_required": 25, "is_consumed": true},
+        {"item_id": 999, "item_name": "Steel", "quantity_required": 10, "is_consumed": true},
+        {"item_id": 1010, "item_name": "Iron Hammer", "quantity_required": 1, "is_consumed": false}
+      ],
+      "required_skill": "Smith Dagger",
+      "required_skill_level": 2,
+      "required_base_level": 1,
+      "base_success_rate": 60.0,
+      "dex_bonus": 0.3,
+      "luk_bonus": 0.15
+    }
+  ]
+}

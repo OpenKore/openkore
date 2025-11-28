@@ -1,0 +1,336 @@
+{
+  "quests": [
+    {
+      "quest_id": 1001,
+      "quest_name": "Prontera Culvert Access",
+      "quest_type": "access",
+      "description": "Gain access to Prontera Culverts dungeon by speaking with the Knight Guard",
+      "min_level": 20,
+      "max_level": 999,
+      "start_npc": "Soldier",
+      "start_map": "prontera",
+      "end_npc": "Knight Guard",
+      "end_map": "prt_fild05",
+      "objectives": [
+        {
+          "objective_id": 1,
+          "objective_type": "talk_npc",
+          "target_id": 10001,
+          "target_name": "Knight Guard",
+          "required_count": 1,
+          "map_name": "prt_fild05"
+        }
+      ],
+      "rewards": [
+        {
+          "reward_type": "exp",
+          "reward_name": "Base EXP",
+          "quantity": 5000
+        }
+      ],
+      "base_exp_reward": 5000,
+      "requirements": []
+    },
+    {
+      "quest_id": 1002,
+      "quest_name": "Poring Hunt",
+      "quest_type": "tutorial",
+      "description": "Hunt 50 Porings for the Eden Group",
+      "min_level": 1,
+      "max_level": 25,
+      "start_npc": "Eden Group Member",
+      "start_map": "moc_para01",
+      "end_npc": "Eden Group Member",
+      "end_map": "moc_para01",
+      "objectives": [
+        {
+          "objective_id": 1,
+          "objective_type": "kill_monster",
+          "target_id": 1002,
+          "target_name": "Poring",
+          "required_count": 50
+        }
+      ],
+      "rewards": [
+        {
+          "reward_type": "exp",
+          "reward_name": "Base EXP",
+          "quantity": 15000
+        },
+        {
+          "reward_type": "job_exp",
+          "reward_name": "Job EXP",
+          "quantity": 7500
+        }
+      ],
+      "base_exp_reward": 15000,
+      "job_exp_reward": 7500,
+      "requirements": []
+    },
+    {
+      "quest_id": 2001,
+      "quest_name": "Orc Village Extermination",
+      "quest_type": "hunting",
+      "description": "Help eliminate the Orc threat by hunting Orc Warriors and Orc Ladies",
+      "min_level": 25,
+      "max_level": 50,
+      "start_npc": "Captain",
+      "start_map": "geffen",
+      "end_npc": "Captain",
+      "end_map": "geffen",
+      "objectives": [
+        {
+          "objective_id": 1,
+          "objective_type": "kill_monster",
+          "target_id": 1023,
+          "target_name": "Orc Warrior",
+          "required_count": 50
+        },
+        {
+          "objective_id": 2,
+          "objective_type": "kill_monster",
+          "target_id": 1153,
+          "target_name": "Orc Lady",
+          "required_count": 30
+        }
+      ],
+      "rewards": [
+        {
+          "reward_type": "exp",
+          "reward_name": "Base EXP",
+          "quantity": 50000
+        },
+        {
+          "reward_type": "job_exp",
+          "reward_name": "Job EXP",
+          "quantity": 25000
+        },
+        {
+          "reward_type": "zeny",
+          "reward_name": "Zeny",
+          "quantity": 10000
+        }
+      ],
+      "base_exp_reward": 50000,
+      "job_exp_reward": 25000,
+      "zeny_reward": 10000,
+      "requirements": []
+    },
+    {
+      "quest_id": 3001,
+      "quest_name": "Job Change: Swordsman",
+      "quest_type": "job_change",
+      "description": "Complete the Swordsman job change test",
+      "min_level": 10,
+      "max_level": 999,
+      "job_requirements": ["Novice"],
+      "start_npc": "Swordsman Guild",
+      "start_map": "izlude_in",
+      "end_npc": "Swordsman Guild Master",
+      "end_map": "izlude_in",
+      "objectives": [
+        {
+          "objective_id": 1,
+          "objective_type": "talk_npc",
+          "target_id": 20001,
+          "target_name": "Swordsman Guild Master",
+          "required_count": 1
+        },
+        {
+          "objective_id": 2,
+          "objective_type": "collect_item",
+          "target_id": 1010,
+          "target_name": "Phracon",
+          "required_count": 5
+        }
+      ],
+      "rewards": [
+        {
+          "reward_type": "job_exp",
+          "reward_name": "Job Change",
+          "quantity": 1
+        }
+      ],
+      "job_exp_reward": 5000,
+      "requirements": [
+        {
+          "requirement_type": "level",
+          "requirement_name": "Base Level 10",
+          "required_value": 10
+        },
+        {
+          "requirement_type": "job",
+          "requirement_name": "Novice Job",
+          "required_value": "Novice"
+        }
+      ]
+    },
+    {
+      "quest_id": 4001,
+      "quest_name": "Endless Tower Entry",
+      "quest_type": "instance",
+      "description": "Gain access to the Endless Tower instance",
+      "min_level": 50,
+      "max_level": 999,
+      "start_npc": "Captain Janssen",
+      "start_map": "alberta",
+      "end_npc": "Tower Keeper",
+      "end_map": "e_tower",
+      "objectives": [
+        {
+          "objective_id": 1,
+          "objective_type": "talk_npc",
+          "target_id": 30001,
+          "target_name": "Captain Janssen",
+          "required_count": 1
+        },
+        {
+          "objective_id": 2,
+          "objective_type": "visit_map",
+          "target_id": 0,
+          "target_name": "Endless Tower",
+          "required_count": 1,
+          "map_name": "e_tower"
+        }
+      ],
+      "rewards": [
+        {
+          "reward_type": "exp",
+          "reward_name": "Base EXP",
+          "quantity": 100000
+        }
+      ],
+      "base_exp_reward": 100000,
+      "requirements": [
+        {
+          "requirement_type": "level",
+          "requirement_name": "Base Level 50",
+          "required_value": 50
+        }
+      ]
+    },
+    {
+      "quest_id": 5001,
+      "quest_name": "Collecting Herbs",
+      "quest_type": "gathering",
+      "description": "Collect various herbs for the alchemist",
+      "min_level": 15,
+      "max_level": 40,
+      "start_npc": "Alchemist",
+      "start_map": "alberta",
+      "end_npc": "Alchemist",
+      "end_map": "alberta",
+      "is_repeatable": true,
+      "objectives": [
+        {
+          "objective_id": 1,
+          "objective_type": "collect_item",
+          "target_id": 507,
+          "target_name": "Red Herb",
+          "required_count": 10
+        },
+        {
+          "objective_id": 2,
+          "objective_type": "collect_item",
+          "target_id": 508,
+          "target_name": "Yellow Herb",
+          "required_count": 10
+        },
+        {
+          "objective_id": 3,
+          "objective_type": "collect_item",
+          "target_id": 509,
+          "target_name": "White Herb",
+          "required_count": 5
+        }
+      ],
+      "rewards": [
+        {
+          "reward_type": "zeny",
+          "reward_name": "Zeny",
+          "quantity": 5000
+        },
+        {
+          "reward_type": "item",
+          "reward_id": 506,
+          "reward_name": "Green Potion",
+          "quantity": 5
+        }
+      ],
+      "zeny_reward": 5000,
+      "requirements": []
+    },
+    {
+      "quest_id": 6001,
+      "quest_name": "Biweekly Gramps Quest",
+      "quest_type": "gramps",
+      "description": "Complete Gramps hunting quest for massive EXP",
+      "min_level": 100,
+      "max_level": 175,
+      "is_daily": true,
+      "cooldown_hours": 24,
+      "start_npc": "Gramps",
+      "start_map": "moc_para01",
+      "end_npc": "Gramps",
+      "end_map": "moc_para01",
+      "objectives": [
+        {
+          "objective_id": 1,
+          "objective_type": "kill_monster",
+          "target_id": 1689,
+          "target_name": "Stapo",
+          "required_count": 400
+        }
+      ],
+      "rewards": [
+        {
+          "reward_type": "exp",
+          "reward_name": "Base EXP",
+          "quantity": 5000000
+        },
+        {
+          "reward_type": "job_exp",
+          "reward_name": "Job EXP",
+          "quantity": 2500000
+        }
+      ],
+      "base_exp_reward": 5000000,
+      "job_exp_reward": 2500000,
+      "requirements": [
+        {
+          "requirement_type": "level",
+          "requirement_name": "Base Level 100",
+          "required_value": 100
+        }
+      ]
+    },
+    {
+      "quest_id": 7001,
+      "quest_name": "Seasonal Event: Halloween",
+      "quest_type": "seasonal",
+      "description": "Participate in the Halloween event",
+      "min_level": 1,
+      "max_level": 999,
+      "start_npc": "Event Coordinator",
+      "start_map": "prontera",
+      "objectives": [
+        {
+          "objective_id": 1,
+          "objective_type": "collect_item",
+          "target_id": 7939,
+          "target_name": "Pumpkin",
+          "required_count": 20
+        }
+      ],
+      "rewards": [
+        {
+          "reward_type": "item",
+          "reward_id": 5917,
+          "reward_name": "Pumpkin Hat",
+          "quantity": 1
+        }
+      ],
+      "requirements": []
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "sword_1": {
+    "name": "Mercenary Soldier",
+    "role": "sword",
+    "level": 30,
+    "contract_duration": 1800,
+    "skills": ["Bash", "Provoke"],
+    "faith_requirement": 0
+  },
+  "sword_2": {
+    "name": "Mercenary Soldier (Lv 2)",
+    "role": "sword",
+    "level": 40,
+    "contract_duration": 1800,
+    "skills": ["Bash", "Provoke", "Guard"],
+    "faith_requirement": 100
+  },
+  "sword_3": {
+    "name": "Mercenary Swordman",
+    "role": "sword",
+    "level": 50,
+    "contract_duration": 2100,
+    "skills": ["Bash", "Provoke", "Guard", "Magnum Break"],
+    "faith_requirement": 300
+  },
+  "sword_4": {
+    "name": "Mercenary Swordman (Lv 4)",
+    "role": "sword",
+    "level": 60,
+    "contract_duration": 2400,
+    "skills": ["Bash", "Provoke", "Guard", "Magnum Break"],
+    "faith_requirement": 600
+  },
+  "sword_5": {
+    "name": "Mercenary Knight",
+    "role": "sword",
+    "level": 70,
+    "contract_duration": 2700,
+    "skills": ["Bash", "Provoke", "Guard", "Magnum Break", "Bowling Bash"],
+    "faith_requirement": 1000
+  },
+  "sword_6": {
+    "name": "Mercenary Knight (Lv 6)",
+    "role": "sword",
+    "level": 80,
+    "contract_duration": 3000,
+    "skills": ["Bash", "Provoke", "Guard", "Magnum Break", "Bowling Bash"],
+    "faith_requirement": 1500
+  },
+  "sword_7": {
+    "name": "Mercenary Elite Swordman",
+    "role": "sword",
+    "level": 85,
+    "contract_duration": 3300,
+    "skills": ["Bash", "Provoke", "Guard", "Magnum Break", "Bowling Bash", "Pierce"],
+    "faith_requirement": 2100
+  },
+  "sword_8": {
+    "name": "Mercenary Elite Swordman (Lv 8)",
+    "role": "sword",
+    "level": 90,
+    "contract_duration": 3300,
+    "skills": ["Bash", "Provoke", "Guard", "Magnum Break", "Bowling Bash", "Pierce"],
+    "faith_requirement": 2800
+  },
+  "sword_9": {
+    "name": "Mercenary Grand Knight",
+    "role": "sword",
+    "level": 95,
+    "contract_duration": 3600,
+    "skills": ["Bash", "Provoke", "Guard", "Magnum Break", "Bowling Bash", "Pierce", "Berserk"],
+    "faith_requirement": 3600
+  },
+  "sword_10": {
+    "name": "Mercenary Grand Knight (Lv 10)",
+    "role": "sword",
+    "level": 99,
+    "contract_duration": 3600,
+    "skills": ["Bash", "Provoke", "Guard", "Magnum Break", "Bowling Bash", "Pierce", "Berserk"],
+    "faith_requirement": 4500
+  },
+  "archer_1": {
+    "name": "Mercenary Archer",
+    "role": "archer",
+    "level": 30,
+    "contract_duration": 1800,
+    "skills": ["Double Strafe"],
+    "faith_requirement": 0
+  },
+  "archer_2": {
+    "name": "Mercenary Archer (Lv 2)",
+    "role": "archer",
+    "level": 40,
+    "contract_duration": 1800,
+    "skills": ["Double Strafe", "Arrow Shower"],
+    "faith_requirement": 100
+  },
+  "archer_3": {
+    "name": "Mercenary Bowman",
+    "role": "archer",
+    "level": 50,
+    "contract_duration": 2100,
+    "skills": ["Double Strafe", "Arrow Shower", "Charge Arrow"],
+    "faith_requirement": 300
+  },
+  "archer_4": {
+    "name": "Mercenary Bowman (Lv 4)",
+    "role": "archer",
+    "level": 60,
+    "contract_duration": 2400,
+    "skills": ["Double Strafe", "Arrow Shower", "Charge Arrow"],
+    "faith_requirement": 600
+  },
+  "archer_5": {
+    "name": "Mercenary Hunter",
+    "role": "archer",
+    "level": 70,
+    "contract_duration": 2700,
+    "skills": ["Double Strafe", "Arrow Shower", "Charge Arrow", "Sharp Shooting"],
+    "faith_requirement": 1000
+  },
+  "archer_6": {
+    "name": "Mercenary Hunter (Lv 6)",
+    "role": "archer",
+    "level": 80,
+    "contract_duration": 3000,
+    "skills": ["Double Strafe", "Arrow Shower", "Charge Arrow", "Sharp Shooting"],
+    "faith_requirement": 1500
+  },
+  "archer_7": {
+    "name": "Mercenary Elite Archer",
+    "role": "archer",
+    "level": 85,
+    "contract_duration": 3300,
+    "skills": ["Double Strafe", "Arrow Shower", "Charge Arrow", "Sharp Shooting", "Focused Arrow Strike"],
+    "faith_requirement": 2100
+  },
+  "archer_8": {
+    "name": "Mercenary Elite Archer (Lv 8)",
+    "role": "archer",
+    "level": 90,
+    "contract_duration": 3300,
+    "skills": ["Double Strafe", "Arrow Shower", "Charge Arrow", "Sharp Shooting", "Focused Arrow Strike"],
+    "faith_requirement": 2800
+  },
+  "archer_9": {
+    "name": "Mercenary Sniper",
+    "role": "archer",
+    "level": 95,
+    "contract_duration": 3600,
+    "skills": ["Double Strafe", "Arrow Shower", "Charge Arrow", "Sharp Shooting", "Focused Arrow Strike", "True Sight"],
+    "faith_requirement": 3600
+  },
+  "archer_10": {
+    "name": "Mercenary Sniper (Lv 10)",
+    "role": "archer",
+    "level": 99,
+    "contract_duration": 3600,
+    "skills": ["Double Strafe", "Arrow Shower", "Charge Arrow", "Sharp Shooting", "Focused Arrow Strike", "True Sight"],
+    "faith_requirement": 4500
+  },
+  "lancer_1": {
+    "name": "Mercenary Lancer",
+    "role": "lancer",
+    "level": 30,
+    "contract_duration": 1800,
+    "skills": ["Pierce"],
+    "faith_requirement": 0
+  },
+  "lancer_2": {
+    "name": "Mercenary Lancer (Lv 2)",
+    "role": "lancer",
+    "level": 40,
+    "contract_duration": 1800,
+    "skills": ["Pierce", "Spear Stab"],
+    "faith_requirement": 100
+  },
+  "lancer_3": {
+    "name": "Mercenary Spearman",
+    "role": "lancer",
+    "level": 50,
+    "contract_duration": 2100,
+    "skills": ["Pierce", "Spear Stab", "Spear Boomerang"],
+    "faith_requirement": 300
+  },
+  "lancer_4": {
+    "name": "Mercenary Spearman (Lv 4)",
+    "role": "lancer",
+    "level": 60,
+    "contract_duration": 2400,
+    "skills": ["Pierce", "Spear Stab", "Spear Boomerang"],
+    "faith_requirement": 600
+  },
+  "lancer_5": {
+    "name": "Mercenary Crusader",
+    "role": "lancer",
+    "level": 70,
+    "contract_duration": 2700,
+    "skills": ["Pierce", "Spear Stab", "Spear Boomerang", "Spiral Pierce"],
+    "faith_requirement": 1000
+  },
+  "lancer_6": {
+    "name": "Mercenary Crusader (Lv 6)",
+    "role": "lancer",
+    "level": 80,
+    "contract_duration": 3000,
+    "skills": ["Pierce", "Spear Stab", "Spear Boomerang", "Spiral Pierce"],
+    "faith_requirement": 1500
+  },
+  "lancer_7": {
+    "name": "Mercenary Elite Lancer",
+    "role": "lancer",
+    "level": 85,
+    "contract_duration": 3300,
+    "skills": ["Pierce", "Spear Stab", "Spear Boomerang", "Spiral Pierce", "Brandish Spear"],
+    "faith_requirement": 2100
+  },
+  "lancer_8": {
+    "name": "Mercenary Elite Lancer (Lv 8)",
+    "role": "lancer",
+    "level": 90,
+    "contract_duration": 3300,
+    "skills": ["Pierce", "Spear Stab", "Spear Boomerang", "Spiral Pierce", "Brandish Spear"],
+    "faith_requirement": 2800
+  },
+  "lancer_9": {
+    "name": "Mercenary Lord Knight",
+    "role": "lancer",
+    "level": 95,
+    "contract_duration": 3600,
+    "skills": ["Pierce", "Spear Stab", "Spear Boomerang", "Spiral Pierce", "Brandish Spear", "Clashing Spiral"],
+    "faith_requirement": 3600
+  },
+  "lancer_10": {
+    "name": "Mercenary Lord Knight (Lv 10)",
+    "role": "lancer",
+    "level": 99,
+    "contract_duration": 3600,
+    "skills": ["Pierce", "Spear Stab", "Spear Boomerang", "Spiral Pierce", "Brandish Spear", "Clashing Spiral"],
+    "faith_requirement": 4500
+  }
+}

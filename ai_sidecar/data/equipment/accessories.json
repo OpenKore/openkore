@@ -1,0 +1,79 @@
+{
+  "2601": {
+    "name": "Ring",
+    "type": "accessory",
+    "slot": "accessory",
+    "defense": 0,
+    "str_bonus": 1,
+    "weight": 10,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2602": {
+    "name": "Earring",
+    "type": "accessory",
+    "slot": "accessory",
+    "defense": 0,
+    "int_bonus": 1,
+    "weight": 10,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2603": {
+    "name": "Necklace",
+    "type": "accessory",
+    "slot": "accessory",
+    "defense": 0,
+    "vit_bonus": 1,
+    "weight": 10,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2604": {
+    "name": "Glove",
+    "type": "accessory",
+    "slot": "accessory",
+    "defense": 0,
+    "dex_bonus": 1,
+    "weight": 10,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2605": {
+    "name": "Brooch",
+    "type": "accessory",
+    "slot": "accessory",
+    "defense": 0,
+    "agi_bonus": 1,
+    "weight": 10,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2607": {
+    "name": "Clip",
+    "type": "accessory",
+    "slot": "accessory",
+    "defense": 0,
+    "slots": 1,
+    "weight": 10,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "2608": {
+    "name": "Rosary",
+    "type": "accessory",
+    "slot": "accessory",
+    "defense": 0,
+    "luk_bonus": 1,
+    "mdef": 5,
+    "weight": 10,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["all"]
+  }
+}

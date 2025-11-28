@@ -1,0 +1,356 @@
+{
+  "rotations": {
+    "champion": {
+      "farming": {
+        "opener": [
+          "Summon Spirit Sphere",
+          "Summon Spirit Sphere",
+          "Summon Spirit Sphere",
+          "Summon Spirit Sphere",
+          "Summon Spirit Sphere"
+        ],
+        "steps": [
+          {
+            "skill_name": "Triple Attack",
+            "priority": "high",
+            "conditions": null,
+            "cast_time_ms": 0,
+            "after_cast_delay_ms": 500,
+            "cooldown_ms": 0,
+            "comment": "Main farming skill"
+          },
+          {
+            "skill_name": "Chain Combo",
+            "priority": "high",
+            "conditions": {
+              "combo_after": "Triple Attack"
+            },
+            "cast_time_ms": 0,
+            "after_cast_delay_ms": 700,
+            "cooldown_ms": 0,
+            "comment": "Combo after Triple Attack"
+          },
+          {
+            "skill_name": "Combo Finish",
+            "priority": "high",
+            "conditions": {
+              "combo_after": "Chain Combo"
+            },
+            "cast_time_ms": 0,
+            "after_cast_delay_ms": 900,
+            "cooldown_ms": 0,
+            "comment": "Combo finisher"
+          }
+        ],
+        "finisher": [],
+        "emergency": ["Heal", "Flee"]
+      },
+      "boss": {
+        "opener": ["Dangerous Soul Collect", "Zen"],
+        "steps": [
+          {
+            "skill_name": "Asura Strike",
+            "priority": "critical",
+            "conditions": {
+              "spirit_spheres": 5,
+              "min_sp_percent": 50.0
+            },
+            "cast_time_ms": 2000,
+            "after_cast_delay_ms": 2500,
+            "cooldown_ms": 10000,
+            "comment": "Burst damage when fully charged"
+          },
+          {
+            "skill_name": "Guillotine Fist",
+            "priority": "high",
+            "conditions": {
+              "spirit_spheres": 5,
+              "min_sp_percent": 30.0,
+              "target_hp_percent": 20.0
+            },
+            "cast_time_ms": 1500,
+            "after_cast_delay_ms": 2000,
+            "cooldown_ms": 15000,
+            "comment": "Execute below 20% HP"
+          },
+          {
+            "skill_name": "Triple Attack",
+            "priority": "medium",
+            "conditions": null,
+            "cast_time_ms": 0,
+            "after_cast_delay_ms": 500,
+            "cooldown_ms": 0
+          }
+        ],
+        "finisher": [],
+        "emergency": ["Snap", "Heal"]
+      }
+    },
+    "high_wizard": {
+      "farming": {
+        "opener": ["Magic Rod", "Amplify Magic Power"],
+        "steps": [
+          {
+            "skill_name": "Storm Gust",
+            "priority": "high",
+            "conditions": {
+              "min_targets_in_range": 3,
+              "min_sp_percent": 20.0
+            },
+            "cast_time_ms": 2000,
+            "after_cast_delay_ms": 1500,
+            "cooldown_ms": 5000,
+            "comment": "AoE freeze for groups"
+          },
+          {
+            "skill_name": "Meteor Storm",
+            "priority": "high",
+            "conditions": {
+              "min_targets_in_range": 5,
+              "min_sp_percent": 25.0
+            },
+            "cast_time_ms": 3000,
+            "after_cast_delay_ms": 2000,
+            "cooldown_ms": 8000,
+            "comment": "Large AoE for big packs"
+          },
+          {
+            "skill_name": "Jupitel Thunder",
+            "priority": "medium",
+            "conditions": {
+              "target_count": 1,
+              "min_sp_percent": 10.0
+            },
+            "cast_time_ms": 1000,
+            "after_cast_delay_ms": 800,
+            "cooldown_ms": 0,
+            "comment": "Single target filler"
+          }
+        ],
+        "finisher": [],
+        "emergency": ["Safety Wall", "Quagmire", "Teleport"]
+      },
+      "boss": {
+        "opener": ["Magic Rod", "Amplify Magic Power", "Soul Drain"],
+        "steps": [
+          {
+            "skill_name": "Jupitel Thunder",
+            "priority": "high",
+            "conditions": {
+              "has_buff": "Amplify Magic Power",
+              "min_sp_percent": 15.0
+            },
+            "cast_time_ms": 1000,
+            "after_cast_delay_ms": 800,
+            "cooldown_ms": 0,
+            "comment": "Main boss DPS"
+          },
+          {
+            "skill_name": "Storm Gust",
+            "priority": "medium",
+            "conditions": {
+              "min_sp_percent": 20.0
+            },
+            "cast_time_ms": 2000,
+            "after_cast_delay_ms": 1500,
+            "cooldown_ms": 5000,
+            "comment": "Utility freeze"
+          }
+        ],
+        "finisher": [],
+        "emergency": ["Safety Wall", "Ice Wall", "Teleport"]
+      }
+    },
+    "sniper": {
+      "farming": {
+        "opener": [],
+        "steps": [
+          {
+            "skill_name": "Double Strafe",
+            "priority": "high",
+            "conditions": null,
+            "cast_time_ms": 0,
+            "after_cast_delay_ms": 400,
+            "cooldown_ms": 0,
+            "comment": "Main farming skill"
+          },
+          {
+            "skill_name": "Sharp Shooting",
+            "priority": "medium",
+            "conditions": {
+              "min_sp_percent": 15.0
+            },
+            "cast_time_ms": 1500,
+            "after_cast_delay_ms": 1000,
+            "cooldown_ms": 3000,
+            "comment": "Burst damage"
+          }
+        ],
+        "finisher": [],
+        "emergency": ["Ankle Snare", "Skid Trap"]
+      },
+      "boss": {
+        "opener": ["Ankle Snare", "Claymore Trap", "Blast Mine"],
+        "steps": [
+          {
+            "skill_name": "Sharp Shooting",
+            "priority": "high",
+            "conditions": {
+              "min_sp_percent": 15.0
+            },
+            "cast_time_ms": 1500,
+            "after_cast_delay_ms": 1000,
+            "cooldown_ms": 3000
+          },
+          {
+            "skill_name": "Double Strafe",
+            "priority": "medium",
+            "conditions": null,
+            "cast_time_ms": 0,
+            "after_cast_delay_ms": 400,
+            "cooldown_ms": 0
+          }
+        ],
+        "finisher": ["Detonator"],
+        "emergency": ["Ankle Snare", "Freezing Trap"]
+      }
+    },
+    "warlock": {
+      "farming": {
+        "opener": ["Radius", "Magic Crasher"],
+        "steps": [
+          {
+            "skill_name": "Crimson Rock",
+            "priority": "high",
+            "conditions": {
+              "min_sp_percent": 20.0,
+              "min_targets_in_range": 1
+            },
+            "cast_time_ms": 2500,
+            "after_cast_delay_ms": 1800,
+            "cooldown_ms": 5000,
+            "comment": "High damage fire spell"
+          },
+          {
+            "skill_name": "Chain Lightning",
+            "priority": "high",
+            "conditions": {
+              "min_sp_percent": 15.0,
+              "min_targets_in_range": 3
+            },
+            "cast_time_ms": 2000,
+            "after_cast_delay_ms": 1500,
+            "cooldown_ms": 4000,
+            "comment": "Chain lightning for groups"
+          },
+          {
+            "skill_name": "Earth Strain",
+            "priority": "medium",
+            "conditions": {
+              "min_sp_percent": 10.0
+            },
+            "cast_time_ms": 1500,
+            "after_cast_delay_ms": 1200,
+            "cooldown_ms": 0
+          }
+        ],
+        "finisher": [],
+        "emergency": ["Teleport", "White Imprison"]
+      },
+      "boss": {
+        "opener": ["Radius", "Magic Crasher", "Soul Expansion"],
+        "steps": [
+          {
+            "skill_name": "Comet",
+            "priority": "critical",
+            "conditions": {
+              "min_sp_percent": 50.0,
+              "target_hp_percent": 50.0
+            },
+            "cast_time_ms": 5000,
+            "after_cast_delay_ms": 3000,
+            "cooldown_ms": 20000,
+            "comment": "Ultimate burst"
+          },
+          {
+            "skill_name": "Crimson Rock",
+            "priority": "high",
+            "conditions": {
+              "min_sp_percent": 20.0
+            },
+            "cast_time_ms": 2500,
+            "after_cast_delay_ms": 1800,
+            "cooldown_ms": 5000
+          },
+          {
+            "skill_name": "Chain Lightning",
+            "priority": "medium",
+            "conditions": {
+              "min_sp_percent": 15.0
+            },
+            "cast_time_ms": 2000,
+            "after_cast_delay_ms": 1500,
+            "cooldown_ms": 4000
+          }
+        ],
+        "finisher": [],
+        "emergency": ["White Imprison", "Teleport"]
+      }
+    },
+    "ranger": {
+      "farming": {
+        "opener": ["Warg Strike"],
+        "steps": [
+          {
+            "skill_name": "Aimed Bolt",
+            "priority": "high",
+            "conditions": null,
+            "cast_time_ms": 500,
+            "after_cast_delay_ms": 300,
+            "cooldown_ms": 0,
+            "comment": "Main attack"
+          },
+          {
+            "skill_name": "Arrow Storm",
+            "priority": "high",
+            "conditions": {
+              "min_targets_in_range": 3,
+              "min_sp_percent": 20.0
+            },
+            "cast_time_ms": 2000,
+            "after_cast_delay_ms": 1500,
+            "cooldown_ms": 5000,
+            "comment": "AoE clear"
+          }
+        ],
+        "finisher": [],
+        "emergency": ["Camouflage", "Electric Shocker"]
+      },
+      "boss": {
+        "opener": ["Warg Strike", "Electric Shocker", "Cluster Bomb"],
+        "steps": [
+          {
+            "skill_name": "Aimed Bolt",
+            "priority": "high",
+            "conditions": null,
+            "cast_time_ms": 500,
+            "after_cast_delay_ms": 300,
+            "cooldown_ms": 0
+          },
+          {
+            "skill_name": "Arrow Storm",
+            "priority": "medium",
+            "conditions": {
+              "min_sp_percent": 20.0
+            },
+            "cast_time_ms": 2000,
+            "after_cast_delay_ms": 1500,
+            "cooldown_ms": 5000
+          }
+        ],
+        "finisher": ["Detonator"],
+        "emergency": ["Camouflage", "Electric Shocker"]
+      }
+    }
+  }
+}

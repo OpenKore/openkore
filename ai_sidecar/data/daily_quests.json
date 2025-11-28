@@ -1,0 +1,248 @@
+{
+  "gramps_quests": [
+    {
+      "level_min": 85,
+      "level_max": 99,
+      "monsters": [
+        {
+          "monster_id": 1675,
+          "monster_name": "Blazzer",
+          "required_kills": 400,
+          "exp_reward": 1500000,
+          "job_exp_reward": 750000,
+          "spawn_maps": ["thor_v02", "thor_v03"]
+        },
+        {
+          "monster_id": 1664,
+          "monster_name": "Harpy",
+          "required_kills": 400,
+          "exp_reward": 1400000,
+          "job_exp_reward": 700000,
+          "spawn_maps": ["jupe_core", "jupe_ele"]
+        }
+      ]
+    },
+    {
+      "level_min": 100,
+      "level_max": 110,
+      "monsters": [
+        {
+          "monster_id": 1689,
+          "monster_name": "Stapo",
+          "required_kills": 400,
+          "exp_reward": 5000000,
+          "job_exp_reward": 2500000,
+          "spawn_maps": ["abyss_01", "abyss_02"]
+        },
+        {
+          "monster_id": 1978,
+          "monster_name": "Pitman",
+          "required_kills": 400,
+          "exp_reward": 4800000,
+          "job_exp_reward": 2400000,
+          "spawn_maps": ["man_fild03"]
+        }
+      ]
+    },
+    {
+      "level_min": 111,
+      "level_max": 130,
+      "monsters": [
+        {
+          "monster_id": 2025,
+          "monster_name": "Muscipular",
+          "required_kills": 400,
+          "exp_reward": 15000000,
+          "job_exp_reward": 7500000,
+          "spawn_maps": ["spl_fild02", "spl_fild03"]
+        },
+        {
+          "monster_id": 2095,
+          "monster_name": "Pinguicula Dark",
+          "required_kills": 400,
+          "exp_reward": 14000000,
+          "job_exp_reward": 7000000,
+          "spawn_maps": ["spl_fild02"]
+        }
+      ]
+    },
+    {
+      "level_min": 131,
+      "level_max": 150,
+      "monsters": [
+        {
+          "monster_id": 2263,
+          "monster_name": "Sweet Roda Frog",
+          "required_kills": 400,
+          "exp_reward": 35000000,
+          "job_exp_reward": 17500000,
+          "spawn_maps": ["bif_fild01", "bif_fild02"]
+        }
+      ]
+    }
+  ],
+  "eden_quests": {
+    "1-10": [
+      {
+        "quest_id": 10001,
+        "quest_name": "Poring Hunting",
+        "monsters": ["Poring"],
+        "target_count": 30,
+        "exp_reward": 5000,
+        "job_exp_reward": 2500,
+        "zeny_reward": 1000
+      },
+      {
+        "quest_id": 10002,
+        "quest_name": "Lunatic & Fabre Hunt",
+        "monsters": ["Lunatic", "Fabre"],
+        "target_count": 30,
+        "exp_reward": 6000,
+        "job_exp_reward": 3000,
+        "zeny_reward": 1500
+      }
+    ],
+    "11-25": [
+      {
+        "quest_id": 10011,
+        "quest_name": "Rocker Hunting",
+        "monsters": ["Rocker"],
+        "target_count": 50,
+        "exp_reward": 15000,
+        "job_exp_reward": 7500,
+        "zeny_reward": 3000
+      },
+      {
+        "quest_id": 10012,
+        "quest_name": "Spore & Thief Bug",
+        "monsters": ["Spore", "Thief Bug"],
+        "target_count": 50,
+        "exp_reward": 18000,
+        "job_exp_reward": 9000,
+        "zeny_reward": 3500
+      }
+    ],
+    "26-40": [
+      {
+        "quest_id": 10021,
+        "quest_name": "Hornet Hunting",
+        "monsters": ["Hornet"],
+        "target_count": 50,
+        "exp_reward": 35000,
+        "job_exp_reward": 17500,
+        "zeny_reward": 5000
+      },
+      {
+        "quest_id": 10022,
+        "quest_name": "Mantis Extermination",
+        "monsters": ["Mantis"],
+        "target_count": 50,
+        "exp_reward": 40000,
+        "job_exp_reward": 20000,
+        "zeny_reward": 6000
+      }
+    ],
+    "41-55": [
+      {
+        "quest_id": 10031,
+        "quest_name": "Orc Hunting",
+        "monsters": ["Orc Zombie", "Orc Skeleton"],
+        "target_count": 50,
+        "exp_reward": 80000,
+        "job_exp_reward": 40000,
+        "zeny_reward": 10000
+      }
+    ],
+    "56-70": [
+      {
+        "quest_id": 10041,
+        "quest_name": "Golem & Zerom",
+        "monsters": ["Golem", "Zerom"],
+        "target_count": 50,
+        "exp_reward": 150000,
+        "job_exp_reward": 75000,
+        "zeny_reward": 15000
+      }
+    ],
+    "71-85": [
+      {
+        "quest_id": 10051,
+        "quest_name": "Scaraba Hunting",
+        "monsters": ["Scaraba", "Scaraba Egg"],
+        "target_count": 50,
+        "exp_reward": 1000000,
+        "job_exp_reward": 500000,
+        "zeny_reward": 25000,
+        "is_board_quest": true
+      }
+    ],
+    "86-100": [
+      {
+        "quest_id": 10061,
+        "quest_name": "Naga Hunt",
+        "monsters": ["Naga"],
+        "target_count": 50,
+        "exp_reward": 3000000,
+        "job_exp_reward": 1500000,
+        "zeny_reward": 50000
+      }
+    ]
+  },
+  "board_quests": {
+    "eden": [
+      {
+        "monster_name": "Poring",
+        "monster_id": 1002,
+        "required_kills": 30,
+        "reward_zeny": 5000,
+        "reward_exp": 3000
+      },
+      {
+        "monster_name": "Drops",
+        "monster_id": 1113,
+        "required_kills": 30,
+        "reward_zeny": 5000,
+        "reward_exp": 3000
+      },
+      {
+        "monster_name": "Poporing",
+        "monster_id": 1031,
+        "required_kills": 30,
+        "reward_zeny": 8000,
+        "reward_exp": 10000
+      }
+    ],
+    "prontera": [
+      {
+        "monster_name": "Poring",
+        "monster_id": 1002,
+        "required_kills": 20,
+        "reward_zeny": 3000,
+        "reward_exp": 2000
+      },
+      {
+        "monster_name": "Fabre",
+        "monster_id": 1007,
+        "required_kills": 20,
+        "reward_zeny": 3000,
+        "reward_exp": 2000
+      }
+    ],
+    "geffen": [
+      {
+        "monster_name": "Orc Warrior",
+        "monster_id": 1023,
+        "required_kills": 40,
+        "reward_zeny": 12000,
+        "reward_exp": 25000
+      },
+      {
+        "monster_name": "Orc Lady",
+        "monster_id": 1153,
+        "required_kills": 30,
+        "reward_zeny": 10000,
+        "reward_exp": 20000
+      }
+    ]
+  }
+}

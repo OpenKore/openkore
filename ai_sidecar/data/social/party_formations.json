@@ -1,0 +1,35 @@
+{
+  "standard": {
+    "name": "Standard Formation",
+    "description": "Balanced formation for general party play",
+    "positions": {
+      "tank": {"x_offset": 0, "y_offset": 0},
+      "healer": {"x_offset": -2, "y_offset": 0},
+      "dps_melee": {"x_offset": 1, "y_offset": 1},
+      "dps_ranged": {"x_offset": -2, "y_offset": 2},
+      "support": {"x_offset": -1, "y_offset": -1}
+    }
+  },
+  "defensive": {
+    "name": "Defensive Formation",
+    "description": "Tight formation for dangerous areas",
+    "positions": {
+      "tank": {"x_offset": 0, "y_offset": 0},
+      "healer": {"x_offset": -1, "y_offset": 0},
+      "dps_melee": {"x_offset": 1, "y_offset": 0},
+      "dps_ranged": {"x_offset": 0, "y_offset": -1},
+      "support": {"x_offset": 0, "y_offset": 1}
+    }
+  },
+  "spread": {
+    "name": "Spread Formation",
+    "description": "Wide formation for AoE damage distribution",
+    "positions": {
+      "tank": {"x_offset": 0, "y_offset": 0},
+      "healer": {"x_offset": -3, "y_offset": 0},
+      "dps_melee": {"x_offset": 2, "y_offset": 2},
+      "dps_ranged": {"x_offset": -3, "y_offset": 3},
+      "support": {"x_offset": -2, "y_offset": -2}
+    }
+  }
+}

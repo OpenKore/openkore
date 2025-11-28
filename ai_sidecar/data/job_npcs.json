@@ -1,0 +1,202 @@
+{
+  "version": "1.0.0",
+  "description": "Job change NPC locations for Ragnarok Online",
+  "comment": "Coordinates are for reference - actual coordinates may vary by server",
+  "Swordman": {
+    "map_name": "izlude",
+    "x": 53,
+    "y": 137,
+    "npc_name": "Swordman Guildsman",
+    "npc_id": "sword_gld"
+  },
+  "Mage": {
+    "map_name": "geffen_in",
+    "x": 165,
+    "y": 117,
+    "npc_name": "Mage Guildsman",
+    "npc_id": "mage_gld"
+  },
+  "Archer": {
+    "map_name": "payon_in01",
+    "x": 64,
+    "y": 73,
+    "npc_name": "Archer Guildsman",
+    "npc_id": "archer_gld"
+  },
+  "Merchant": {
+    "map_name": "alberta_in",
+    "x": 36,
+    "y": 37,
+    "npc_name": "Merchant Guildsman",
+    "npc_id": "merchant_gld"
+  },
+  "Thief": {
+    "map_name": "moc_ruins",
+    "x": 129,
+    "y": 131,
+    "npc_name": "Thief Guildsman",
+    "npc_id": "thief_gld"
+  },
+  "Acolyte": {
+    "map_name": "prt_church",
+    "x": 63,
+    "y": 19,
+    "npc_name": "Acolyte Guildsman",
+    "npc_id": "acolyte_gld"
+  },
+  "Knight": {
+    "map_name": "prt_in",
+    "x": 88,
+    "y": 101,
+    "npc_name": "Knight Guildsman",
+    "npc_id": "knight_gld"
+  },
+  "Crusader": {
+    "map_name": "prt_castle",
+    "x": 45,
+    "y": 169,
+    "npc_name": "Crusader Guildsman",
+    "npc_id": "crusader_gld"
+  },
+  "Wizard": {
+    "map_name": "geffen_in",
+    "x": 170,
+    "y": 108,
+    "npc_name": "Wizard Guildsman",
+    "npc_id": "wizard_gld"
+  },
+  "Sage": {
+    "map_name": "yuno_in01",
+    "x": 31,
+    "y": 176,
+    "npc_name": "Sage Guildsman",
+    "npc_id": "sage_gld"
+  },
+  "Hunter": {
+    "map_name": "pay_arche",
+    "x": 117,
+    "y": 17,
+    "npc_name": "Hunter Guildsman",
+    "npc_id": "hunter_gld"
+  },
+  "Priest": {
+    "map_name": "prt_church",
+    "x": 88,
+    "y": 103,
+    "npc_name": "Priest Guildsman",
+    "npc_id": "priest_gld"
+  },
+  "Monk": {
+    "map_name": "monk_in",
+    "x": 99,
+    "y": 58,
+    "npc_name": "Monk Guildsman",
+    "npc_id": "monk_gld"
+  },
+  "Assassin": {
+    "map_name": "in_moc_16",
+    "x": 19,
+    "y": 33,
+    "npc_name": "Assassin Guildsman",
+    "npc_id": "assassin_gld"
+  },
+  "Rogue": {
+    "map_name": "in_rogue",
+    "x": 376,
+    "y": 102,
+    "npc_name": "Rogue Guildsman",
+    "npc_id": "rogue_gld"
+  },
+  "Blacksmith": {
+    "map_name": "ein_in01",
+    "x": 22,
+    "y": 14,
+    "npc_name": "Blacksmith Guildsman",
+    "npc_id": "blacksmith_gld"
+  },
+  "Alchemist": {
+    "map_name": "alde_alche",
+    "x": 100,
+    "y": 100,
+    "npc_name": "Alchemist Guildsman",
+    "npc_id": "alchemist_gld"
+  },
+  "Bard": {
+    "map_name": "comodo",
+    "x": 211,
+    "y": 155,
+    "npc_name": "Bard Guildsman",
+    "npc_id": "bard_gld"
+  },
+  "Dancer": {
+    "map_name": "comodo",
+    "x": 193,
+    "y": 151,
+    "npc_name": "Dancer Guildsman",
+    "npc_id": "dancer_gld"
+  },
+  "Lord Knight": {
+    "map_name": "prontera",
+    "x": 156,
+    "y": 191,
+    "npc_name": "Valkyrie",
+    "npc_id": "valkyrie_npc",
+    "comment": "Transcendent class - requires rebirth"
+  },
+  "High Wizard": {
+    "map_name": "prontera",
+    "x": 156,
+    "y": 191,
+    "npc_name": "Valkyrie",
+    "npc_id": "valkyrie_npc",
+    "comment": "Transcendent class - requires rebirth"
+  },
+  "Sniper": {
+    "map_name": "prontera",
+    "x": 156,
+    "y": 191,
+    "npc_name": "Valkyrie",
+    "npc_id": "valkyrie_npc",
+    "comment": "Transcendent class - requires rebirth"
+  },
+  "High Priest": {
+    "map_name": "prontera",
+    "x": 156,
+    "y": 191,
+    "npc_name": "Valkyrie",
+    "npc_id": "valkyrie_npc",
+    "comment": "Transcendent class - requires rebirth"
+  },
+  "Assassin Cross": {
+    "map_name": "prontera",
+    "x": 156,
+    "y": 191,
+    "npc_name": "Valkyrie",
+    "npc_id": "valkyrie_npc",
+    "comment": "Transcendent class - requires rebirth"
+  },
+  "Rune Knight": {
+    "map_name": "prt_in",
+    "x": 88,
+    "y": 101,
+    "npc_name": "Rune Knight Master",
+    "npc_id": "rune_knight_npc",
+    "comment": "Third job - requires quest chain"
+  },
+  "Warlock": {
+    "map_name": "geffen_in",
+    "x": 170,
+    "y": 108,
+    "npc_name": "Warlock Master",
+    "npc_id": "warlock_npc",
+    "comment": "Third job - requires quest chain"
+  },
+  "Royal Guard": {
+    "map_name": "prt_castle",
+    "x": 45,
+    "y": 169,
+    "npc_name": "Royal Guard Master",
+    "npc_id": "royal_guard_npc",
+    "comment": "Third job - requires quest chain"
+  }
+}

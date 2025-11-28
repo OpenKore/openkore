@@ -1,0 +1,142 @@
+{
+  "prontera": {
+    "region": "Valkyrie Realm (Prontera)",
+    "castles": [
+      {
+        "id": 1,
+        "name": "Kriemhild",
+        "map": "prtg_cas01",
+        "difficulty": "medium"
+      },
+      {
+        "id": 2,
+        "name": "Swanhild",
+        "map": "prtg_cas02",
+        "difficulty": "medium"
+      },
+      {
+        "id": 3,
+        "name": "Fadhgridh",
+        "map": "prtg_cas03",
+        "difficulty": "hard"
+      },
+      {
+        "id": 4,
+        "name": "Skoegul",
+        "map": "prtg_cas04",
+        "difficulty": "easy"
+      },
+      {
+        "id": 5,
+        "name": "Gondul",
+        "map": "prtg_cas05",
+        "difficulty": "medium"
+      }
+    ]
+  },
+  "geffen": {
+    "region": "Britoniah Guild (Geffen)",
+    "castles": [
+      {
+        "id": 6,
+        "name": "Repherion",
+        "map": "gefg_cas01",
+        "difficulty": "medium"
+      },
+      {
+        "id": 7,
+        "name": "Eeyolbriggar",
+        "map": "gefg_cas02",
+        "difficulty": "easy"
+      },
+      {
+        "id": 8,
+        "name": "Yesnelph",
+        "map": "gefg_cas03",
+        "difficulty": "hard"
+      },
+      {
+        "id": 9,
+        "name": "Bergel",
+        "map": "gefg_cas04",
+        "difficulty": "medium"
+      },
+      {
+        "id": 10,
+        "name": "Mersetzdeitz",
+        "map": "gefg_cas05",
+        "difficulty": "medium"
+      }
+    ]
+  },
+  "payon": {
+    "region": "Nithafjoll Guild (Payon)",
+    "castles": [
+      {
+        "id": 11,
+        "name": "Bright Arbor",
+        "map": "payg_cas01",
+        "difficulty": "easy"
+      },
+      {
+        "id": 12,
+        "name": "Scarlet Palace",
+        "map": "payg_cas02",
+        "difficulty": "medium"
+      },
+      {
+        "id": 13,
+        "name": "Holy Shadow",
+        "map": "payg_cas03",
+        "difficulty": "medium"
+      },
+      {
+        "id": 14,
+        "name": "Sacred Altar",
+        "map": "payg_cas04",
+        "difficulty": "hard"
+      },
+      {
+        "id": 15,
+        "name": "Bamboo Grove Hill",
+        "map": "payg_cas05",
+        "difficulty": "medium"
+      }
+    ]
+  },
+  "al_de_baran": {
+    "region": "Luina Guild (Al De Baran)",
+    "castles": [
+      {
+        "id": 16,
+        "name": "Neuschwanstein",
+        "map": "aldeg_cas01",
+        "difficulty": "medium"
+      },
+      {
+        "id": 17,
+        "name": "Hohenschwangau",
+        "map": "aldeg_cas02",
+        "difficulty": "easy"
+      },
+      {
+        "id": 18,
+        "name": "Nuernberg",
+        "map": "aldeg_cas03",
+        "difficulty": "medium"
+      },
+      {
+        "id": 19,
+        "name": "Wuerzburg",
+        "map": "aldeg_cas04",
+        "difficulty": "hard"
+      },
+      {
+        "id": 20,
+        "name": "Rothenburg",
+        "map": "aldeg_cas05",
+        "difficulty": "medium"
+      }
+    ]
+  }
+}

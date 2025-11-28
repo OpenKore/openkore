@@ -1,0 +1,54 @@
+{
+  "npcs": [
+    {
+      "npc_id": 10001,
+      "name": "Training Instructor",
+      "npc_type": "quest",
+      "map_name": "new_1-1",
+      "x": 53,
+      "y": 114,
+      "quests": [1001, 1002],
+      "keywords": ["training", "novice", "help"]
+    },
+    {
+      "npc_id": 10002,
+      "name": "Weapon Dealer",
+      "npc_type": "shop",
+      "map_name": "prontera",
+      "x": 175,
+      "y": 138,
+      "shop_items": [1201, 1204, 1207, 1601, 1701],
+      "keywords": ["weapon", "buy", "sell"]
+    },
+    {
+      "npc_id": 10003,
+      "name": "Job Change NPC",
+      "npc_type": "service",
+      "map_name": "prontera",
+      "x": 234,
+      "y": 324,
+      "services": ["job_change"],
+      "keywords": ["job", "class", "change", "advance"]
+    },
+    {
+      "npc_id": 10004,
+      "name": "Healer",
+      "npc_type": "service",
+      "map_name": "prontera",
+      "x": 156,
+      "y": 190,
+      "services": ["heal"],
+      "keywords": ["heal", "restore", "hp", "sp"]
+    },
+    {
+      "npc_id": 10005,
+      "name": "Warper",
+      "npc_type": "warp",
+      "map_name": "prontera",
+      "x": 147,
+      "y": 247,
+      "services": ["teleport"],
+      "keywords": ["warp", "teleport", "travel"]
+    }
+  ]
+}

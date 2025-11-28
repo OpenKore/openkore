@@ -1,0 +1,604 @@
+{
+  "endless_tower": {
+    "instance_name": "Endless Tower",
+    "instance_type": "endless_tower",
+    "difficulty": "hard",
+    "entry_npc": "Captain Janssen",
+    "entry_map": "alberta",
+    "entry_position": [214, 77],
+    "time_limit_minutes": 240,
+    "cooldown_hours": 168,
+    "floors": 100,
+    "requirements": {
+      "min_level": 50,
+      "min_party_size": 1,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": [],
+      "chance_items": {
+        "Glittering Jacket": 0.01,
+        "Treasure Box": 0.5,
+        "Old Card Album": 0.05
+      },
+      "instance_points": 100
+    },
+    "boss_names": ["Amon Ra", "Drake", "Osiris", "Naght Sieger"],
+    "recommended_level": 99,
+    "recommended_party_size": 4,
+    "estimated_clear_time_minutes": 180
+  },
+  "old_glast_heim": {
+    "instance_name": "Old Glast Heim",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "hard",
+    "entry_npc": "Hugin's Follower",
+    "entry_map": "glast_01",
+    "entry_position": [204, 270],
+    "time_limit_minutes": 120,
+    "cooldown_hours": 24,
+    "floors": 2,
+    "requirements": {
+      "min_level": 130,
+      "min_party_size": 1,
+      "max_party_size": 6,
+      "rebirth_required": true
+    },
+    "rewards": {
+      "guaranteed_items": ["Coagulated Spell"],
+      "chance_items": {
+        "Temporal Crystal": 0.1,
+        "Gray Shard": 0.5,
+        "Old Glast Heim Coin": 1.0
+      },
+      "experience_base": 1000000,
+      "experience_job": 500000
+    },
+    "boss_names": ["Corrupted Raydric", "Root of Corruption"],
+    "recommended_level": 150,
+    "recommended_party_size": 2,
+    "estimated_clear_time_minutes": 45
+  },
+  "nydhogg_nest": {
+    "instance_name": "Nydhogg's Nest",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "nightmare",
+    "entry_npc": "Yggdrasil Gatekeeper",
+    "entry_map": "splendide",
+    "entry_position": [271, 237],
+    "time_limit_minutes": 90,
+    "cooldown_hours": 24,
+    "floors": 2,
+    "requirements": {
+      "min_level": 140,
+      "required_quest": "Two Tribes",
+      "min_party_size": 2,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": ["Yggdrasil Seed"],
+      "chance_items": {
+        "Nydhogg's Shadow Garb": 0.05,
+        "Split Armor of God": 0.02,
+        "Spiritual Ring": 0.1
+      },
+      "experience_base": 1500000,
+      "experience_job": 750000
+    },
+    "boss_names": ["Nydhoggur Shadow"],
+    "recommended_level": 150,
+    "recommended_party_size": 6,
+    "estimated_clear_time_minutes": 60
+  },
+  "biolabs_3": {
+    "instance_name": "Biolabs F3",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "hard",
+    "entry_npc": "Biolabs Guard",
+    "entry_map": "lhz_dun02",
+    "entry_position": [156, 151],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 95,
+      "min_party_size": 1,
+      "max_party_size": 3
+    },
+    "rewards": {
+      "guaranteed_items": [],
+      "chance_items": {
+        "Old Purple Box": 0.8,
+        "Vanberk Card": 0.01,
+        "Isilla Card": 0.01,
+        "Errende Card": 0.01
+      },
+      "experience_base": 500000,
+      "experience_job": 250000
+    },
+    "boss_names": ["Vanberk", "Isilla", "Errende Ebecee"],
+    "recommended_level": 99,
+    "recommended_party_size": 2,
+    "estimated_clear_time_minutes": 30
+  },
+  "sealed_shrine": {
+    "instance_name": "Sealed Shrine",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "normal",
+    "entry_npc": "Shrine Gatekeeper",
+    "entry_map": "monk_test",
+    "entry_position": [306, 143],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 75,
+      "required_quest": "Sealing Shrine",
+      "min_party_size": 1,
+      "max_party_size": 3
+    },
+    "rewards": {
+      "guaranteed_items": [],
+      "chance_items": {
+        "Baphomet Card": 0.02,
+        "Cursed Baphomet Doll": 0.1,
+        "Satanic Chain": 0.05
+      },
+      "experience_base": 300000,
+      "experience_job": 150000
+    },
+    "boss_names": ["Baphomet"],
+    "recommended_level": 90,
+    "recommended_party_size": 2,
+    "estimated_clear_time_minutes": 25
+  },
+  "orc_memory": {
+    "instance_name": "Orc's Memory",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "easy",
+    "entry_npc": "Orc Warrior",
+    "entry_map": "gef_fild10",
+    "entry_position": [242, 197],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 2,
+    "requirements": {
+      "min_level": 70,
+      "min_party_size": 1,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": ["Orc Hero Token"],
+      "chance_items": {
+        "Orcish Axe": 0.2,
+        "Orc Hero Card": 0.01
+      },
+      "experience_base": 200000,
+      "experience_job": 100000
+    },
+    "boss_names": ["Orc Hero", "Orc Lord"],
+    "recommended_level": 85,
+    "recommended_party_size": 3,
+    "estimated_clear_time_minutes": 30
+  },
+  "sara_memory": {
+    "instance_name": "Sara's Memory",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "hard",
+    "entry_npc": "Sarah's Follower",
+    "entry_map": "moc_ruins",
+    "entry_position": [72, 164],
+    "time_limit_minutes": 120,
+    "cooldown_hours": 168,
+    "floors": 1,
+    "requirements": {
+      "min_level": 140,
+      "required_quest": "Continental Guard",
+      "min_party_size": 1,
+      "max_party_size": 3
+    },
+    "rewards": {
+      "guaranteed_items": ["Temporal Crystal"],
+      "chance_items": {
+        "Temporal Boots": 0.3,
+        "Sarah's Left Earring": 0.05,
+        "Sarah's Right Earring": 0.05
+      },
+      "experience_base": 2000000,
+      "experience_job": 1000000
+    },
+    "boss_names": ["Awakened Ferre"],
+    "recommended_level": 160,
+    "recommended_party_size": 1,
+    "estimated_clear_time_minutes": 40
+  },
+  "central_lab": {
+    "instance_name": "Central Laboratory",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "nightmare",
+    "entry_npc": "Lab Researcher",
+    "entry_map": "lhz_dun04",
+    "entry_position": [147, 106],
+    "time_limit_minutes": 90,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 160,
+      "min_party_size": 1,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": ["Lab Research Note"],
+      "chance_items": {
+        "Modified Suit": 0.15,
+        "Modified Muffler": 0.15,
+        "Modified Boots": 0.15
+      },
+      "experience_base": 3000000,
+      "experience_job": 1500000
+    },
+    "boss_names": ["MVP Egnigem", "MVP Seyren", "MVP Kathryne"],
+    "recommended_level": 170,
+    "recommended_party_size": 6,
+    "estimated_clear_time_minutes": 60
+  },
+  "malangdo_culvert": {
+    "instance_name": "Malangdo Culvert",
+    "instance_type": "party_instance",
+    "difficulty": "normal",
+    "entry_npc": "Culvert Entrance",
+    "entry_map": "malangdo",
+    "entry_position": [141, 117],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 60,
+      "min_party_size": 1,
+      "max_party_size": 6
+    },
+    "rewards": {
+      "guaranteed_items": ["Can"],
+      "chance_items": {
+        "Starfish": 0.5,
+        "Crab Shell": 0.3
+      },
+      "experience_base": 100000,
+      "experience_job": 50000
+    },
+    "boss_names": ["Weird Coelacanth"],
+    "recommended_level": 70,
+    "recommended_party_size": 2,
+    "estimated_clear_time_minutes": 20
+  },
+  "eclage_interior": {
+    "instance_name": "Eclage Interior",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "hard",
+    "entry_npc": "Eclage Guard",
+    "entry_map": "ecl_in01",
+    "entry_position": [47, 60],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 130,
+      "required_quest": "Eclage Entrance",
+      "min_party_size": 1,
+      "max_party_size": 6
+    },
+    "rewards": {
+      "guaranteed_items": ["Eclage Coin"],
+      "chance_items": {
+        "Contaminated Magic": 0.3,
+        "Mist Powder": 0.5
+      },
+      "experience_base": 800000,
+      "experience_job": 400000
+    },
+    "boss_names": ["Contaminated Raydric Archer"],
+    "recommended_level": 145,
+    "recommended_party_size": 2,
+    "estimated_clear_time_minutes": 30
+  },
+  "ghost_palace": {
+    "instance_name": "Ghost Palace",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "nightmare",
+    "entry_npc": "Palace Gatekeeper",
+    "entry_map": "ayo_dun02",
+    "entry_position": [262, 255],
+    "time_limit_minutes": 120,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 130,
+      "required_quest": "Sara's Memory",
+      "min_party_size": 1,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": ["Ghost Palace Token"],
+      "chance_items": {
+        "Royal Jelly": 0.3,
+        "Ghost Palace Treasure": 0.1,
+        "Cursed Knight Shield": 0.05
+      },
+      "experience_base": 2500000,
+      "experience_job": 1250000,
+      "instance_points": 50
+    },
+    "boss_names": ["Corrupted Wanderer", "Corrupted Palace Guard"],
+    "recommended_level": 150,
+    "recommended_party_size": 4,
+    "estimated_clear_time_minutes": 60
+  },
+  "horror_toy_factory": {
+    "instance_name": "Horror Toy Factory",
+    "instance_type": "party_instance",
+    "difficulty": "normal",
+    "entry_npc": "Toy Factory Worker",
+    "entry_map": "xmas",
+    "entry_position": [143, 311],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 95,
+      "min_party_size": 2,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": ["Toy Part"],
+      "chance_items": {
+        "Angeling Card": 0.01,
+        "Christmas Toy": 0.3,
+        "Wrapped Gift Box": 0.5
+      },
+      "experience_base": 400000,
+      "experience_job": 200000
+    },
+    "boss_names": ["Nightmare Amon Ra"],
+    "recommended_level": 100,
+    "recommended_party_size": 4,
+    "estimated_clear_time_minutes": 35
+  },
+  "bakonawa_lake": {
+    "instance_name": "Bakonawa Lake",
+    "instance_type": "party_instance",
+    "difficulty": "hard",
+    "entry_npc": "Lake Entrance",
+    "entry_map": "ma_scene01",
+    "entry_position": [174, 179],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 140,
+      "required_quest": "Bakonawa Extermination",
+      "min_party_size": 3,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": ["Bakonawa Doll"],
+      "chance_items": {
+        "Bakonawa Card": 0.02,
+        "Giggling Box": 0.3
+      },
+      "experience_base": 1200000,
+      "experience_job": 600000
+    },
+    "boss_names": ["Bakonawa"],
+    "recommended_level": 150,
+    "recommended_party_size": 6,
+    "estimated_clear_time_minutes": 30
+  },
+  "bangungot_hospital": {
+    "instance_name": "Bangungot Hospital 2F",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "hard",
+    "entry_npc": "Hospital Receptionist",
+    "entry_map": "ma_dun01",
+    "entry_position": [147, 10],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 100,
+      "min_party_size": 1,
+      "max_party_size": 3
+    },
+    "rewards": {
+      "guaranteed_items": ["Nurse's Wig"],
+      "chance_items": {
+        "Bangungot Card": 0.01,
+        "Hospital Treasure": 0.2
+      },
+      "experience_base": 600000,
+      "experience_job": 300000
+    },
+    "boss_names": ["Bangungot"],
+    "recommended_level": 120,
+    "recommended_party_size": 2,
+    "estimated_clear_time_minutes": 25
+  },
+  "buwaya_cave": {
+    "instance_name": "Buwaya Cave",
+    "instance_type": "party_instance",
+    "difficulty": "hard",
+    "entry_npc": "Cave Guide",
+    "entry_map": "ma_fild02",
+    "entry_position": [315, 315],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 130,
+      "required_quest": "Buwaya Hunt",
+      "min_party_size": 3,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": ["Buwaya Egg"],
+      "chance_items": {
+        "Buwaya Card": 0.02,
+        "Shining Spear Blade": 0.1
+      },
+      "experience_base": 1000000,
+      "experience_job": 500000
+    },
+    "boss_names": ["Buwaya"],
+    "recommended_level": 145,
+    "recommended_party_size": 6,
+    "estimated_clear_time_minutes": 30
+  },
+  "faceworm_nest": {
+    "instance_name": "Faceworm Nest",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "nightmare",
+    "entry_npc": "Faceworm Researcher",
+    "entry_map": "dali",
+    "entry_position": [134, 118],
+    "time_limit_minutes": 120,
+    "cooldown_hours": 168,
+    "floors": 1,
+    "requirements": {
+      "min_level": 160,
+      "required_quest": "Dali Investigation",
+      "min_party_size": 4,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": ["Contaminated Magic"],
+      "chance_items": {
+        "Faceworm Queen Card": 0.01,
+        "Gigantic Faceworm Skin": 0.2,
+        "Faceworm Nest Treasure": 0.1
+      },
+      "experience_base": 5000000,
+      "experience_job": 2500000,
+      "instance_points": 150
+    },
+    "boss_names": ["Faceworm Queen"],
+    "recommended_level": 170,
+    "recommended_party_size": 8,
+    "estimated_clear_time_minutes": 90
+  },
+  "hazy_forest": {
+    "instance_name": "Hazy Forest",
+    "instance_type": "solo_instance",
+    "difficulty": "normal",
+    "entry_npc": "Forest Ranger",
+    "entry_map": "bif_fild01",
+    "entry_position": [161, 334],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 100,
+      "min_party_size": 1,
+      "max_party_size": 1
+    },
+    "rewards": {
+      "guaranteed_items": ["Mora Coin"],
+      "chance_items": {
+        "Loki's Whispers": 0.1,
+        "Mora Treasure": 0.2
+      },
+      "experience_base": 500000,
+      "experience_job": 250000
+    },
+    "boss_names": ["Wandering Minstrel"],
+    "recommended_level": 110,
+    "recommended_party_size": 1,
+    "estimated_clear_time_minutes": 30
+  },
+  "demon_tower": {
+    "instance_name": "Demon Tower",
+    "instance_type": "endless_tower",
+    "difficulty": "hell",
+    "entry_npc": "Tower Guardian",
+    "entry_map": "c_tower1",
+    "entry_position": [199, 159],
+    "time_limit_minutes": 300,
+    "cooldown_hours": 168,
+    "floors": 50,
+    "requirements": {
+      "min_level": 175,
+      "rebirth_required": true,
+      "min_party_size": 1,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": [],
+      "chance_items": {
+        "Demon God Helm": 0.01,
+        "Demon Tower Treasure": 0.2
+      },
+      "instance_points": 200
+    },
+    "boss_names": ["Demon Lord"],
+    "recommended_level": 185,
+    "recommended_party_size": 6,
+    "estimated_clear_time_minutes": 240
+  },
+  "wolfchev_laboratory": {
+    "instance_name": "Wolfchev's Laboratory",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "hard",
+    "entry_npc": "Lab Assistant",
+    "entry_map": "moscovia",
+    "entry_position": [197, 85],
+    "time_limit_minutes": 60,
+    "cooldown_hours": 24,
+    "floors": 1,
+    "requirements": {
+      "min_level": 110,
+      "required_quest": "Koshei Investigation",
+      "min_party_size": 2,
+      "max_party_size": 12
+    },
+    "rewards": {
+      "guaranteed_items": ["Lab Coin"],
+      "chance_items": {
+        "Koshei Card": 0.01,
+        "Modified Weapon": 0.1
+      },
+      "experience_base": 700000,
+      "experience_job": 350000
+    },
+    "boss_names": ["Koshei the Deathless"],
+    "recommended_level": 125,
+    "recommended_party_size": 4,
+    "estimated_clear_time_minutes": 35
+  },
+  "isle_of_bios": {
+    "instance_name": "Isle of Bios",
+    "instance_type": "memorial_dungeon",
+    "difficulty": "normal",
+    "entry_npc": "Island Guide",
+    "entry_map": "lighthalzen",
+    "entry_position": [342, 223],
+    "time_limit_minutes": 90,
+    "cooldown_hours": 168,
+    "floors": 3,
+    "requirements": {
+      "min_level": 140,
+      "min_party_size": 1,
+      "max_party_size": 6
+    },
+    "rewards": {
+      "guaranteed_items": ["Bios Token"],
+      "chance_items": {
+        "Bios Card Pack": 0.15,
+        "Experiment Specimen": 0.3
+      },
+      "experience_base": 1500000,
+      "experience_job": 750000
+    },
+    "boss_names": ["Mutated Chimera"],
+    "recommended_level": 150,
+    "recommended_party_size": 3,
+    "estimated_clear_time_minutes": 50
+  }
+}

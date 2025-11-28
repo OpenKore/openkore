@@ -1,0 +1,208 @@
+{
+  "assassin_cross": [
+    {
+      "combo_id": "sinx_sonic_chain",
+      "combo_name": "Sonic Blow Chain",
+      "job_class": "assassin_cross",
+      "steps": [
+        {"skill_name": "Enchant Deadly Poison", "skill_level": 5, "delay_after_ms": 500, "sp_cost": 40},
+        {"skill_name": "Soul Breaker", "skill_level": 10, "delay_after_ms": 1000, "sp_cost": 40, "requires_hit": true},
+        {"skill_name": "Sonic Blow", "skill_level": 10, "delay_after_ms": 0, "sp_cost": 50}
+      ],
+      "requires_target": true,
+      "min_sp": 130,
+      "required_weapon": "katar",
+      "total_duration_ms": 3500,
+      "dps_multiplier": 2.5,
+      "pve_rating": 8,
+      "pvp_rating": 9,
+      "aoe_capable": false
+    },
+    {
+      "combo_id": "sinx_grimtooth",
+      "combo_name": "Grimtooth Ambush",
+      "job_class": "assassin_cross",
+      "steps": [
+        {"skill_name": "Cloaking", "skill_level": 10, "delay_after_ms": 500, "sp_cost": 15},
+        {"skill_name": "Grimtooth", "skill_level": 5, "delay_after_ms": 1000, "sp_cost": 5}
+      ],
+      "requires_target": false,
+      "min_sp": 20,
+      "required_weapon": "katar",
+      "total_duration_ms": 2000,
+      "dps_multiplier": 1.8,
+      "pve_rating": 6,
+      "pvp_rating": 8,
+      "aoe_capable": true
+    }
+  ],
+  "lord_knight": [
+    {
+      "combo_id": "lk_spiral_combo",
+      "combo_name": "Spiral Pierce Combo",
+      "job_class": "lord_knight",
+      "steps": [
+        {"skill_name": "Concentration", "skill_level": 5, "delay_after_ms": 0, "sp_cost": 14},
+        {"skill_name": "Spiral Pierce", "skill_level": 5, "delay_after_ms": 1500, "sp_cost": 18, "requires_hit": true}
+      ],
+      "requires_target": true,
+      "min_sp": 32,
+      "required_weapon": "spear",
+      "total_duration_ms": 2500,
+      "dps_multiplier": 2.0,
+      "pve_rating": 9,
+      "pvp_rating": 7,
+      "aoe_capable": false
+    },
+    {
+      "combo_id": "lk_bowling_bash",
+      "combo_name": "Bowling Bash Chain",
+      "job_class": "lord_knight",
+      "steps": [
+        {"skill_name": "Provoke", "skill_level": 10, "delay_after_ms": 500, "sp_cost": 4},
+        {"skill_name": "Bowling Bash", "skill_level": 10, "delay_after_ms": 1000, "sp_cost": 13}
+      ],
+      "requires_target": true,
+      "min_sp": 17,
+      "required_weapon": "two_hand_sword",
+      "total_duration_ms": 2000,
+      "dps_multiplier": 1.8,
+      "pve_rating": 8,
+      "pvp_rating": 6,
+      "aoe_capable": true
+    }
+  ],
+  "high_wizard": [
+    {
+      "combo_id": "hwiz_storm_combo",
+      "combo_name": "Storm Gust Combo",
+      "job_class": "high_wizard",
+      "steps": [
+        {"skill_name": "Quagmire", "skill_level": 5, "delay_after_ms": 1000, "sp_cost": 5},
+        {"skill_name": "Storm Gust", "skill_level": 10, "delay_after_ms": 5000, "sp_cost": 78}
+      ],
+      "requires_target": false,
+      "min_sp": 83,
+      "total_duration_ms": 11000,
+      "dps_multiplier": 3.0,
+      "pve_rating": 10,
+      "pvp_rating": 6,
+      "aoe_capable": true
+    },
+    {
+      "combo_id": "hwiz_meteor_combo",
+      "combo_name": "Meteor Storm Combo",
+      "job_class": "high_wizard",
+      "steps": [
+        {"skill_name": "Land Protector", "skill_level": 5, "delay_after_ms": 500, "sp_cost": 66},
+        {"skill_name": "Meteor Storm", "skill_level": 10, "delay_after_ms": 5000, "sp_cost": 70}
+      ],
+      "requires_target": false,
+      "min_sp": 136,
+      "total_duration_ms": 10000,
+      "dps_multiplier": 2.8,
+      "pve_rating": 9,
+      "pvp_rating": 7,
+      "aoe_capable": true
+    }
+  ],
+  "sniper": [
+    {
+      "combo_id": "sniper_ds_spam",
+      "combo_name": "Double Strafe Spam",
+      "job_class": "sniper",
+      "steps": [
+        {"skill_name": "True Sight", "skill_level": 10, "delay_after_ms": 0, "sp_cost": 10},
+        {"skill_name": "Double Strafe", "skill_level": 10, "delay_after_ms": 800, "sp_cost": 12},
+        {"skill_name": "Double Strafe", "skill_level": 10, "delay_after_ms": 800, "sp_cost": 12},
+        {"skill_name": "Double Strafe", "skill_level": 10, "delay_after_ms": 800, "sp_cost": 12}
+      ],
+      "requires_target": true,
+      "min_sp": 46,
+      "required_weapon": "bow",
+      "total_duration_ms": 3200,
+      "dps_multiplier": 2.2,
+      "pve_rating": 7,
+      "pvp_rating": 8,
+      "aoe_capable": false
+    }
+  ],
+  "high_priest": [
+    {
+      "combo_id": "hp_magnus_combo",
+      "combo_name": "Magnus Exorcismus Combo",
+      "job_class": "high_priest",
+      "steps": [
+        {"skill_name": "Blessing", "skill_level": 10, "delay_after_ms": 500, "sp_cost": 28},
+        {"skill_name": "Aspersio", "skill_level": 5, "delay_after_ms": 500, "sp_cost": 15},
+        {"skill_name": "Magnus Exorcismus", "skill_level": 10, "delay_after_ms": 5000, "sp_cost": 80}
+      ],
+      "requires_target": false,
+      "min_sp": 123,
+      "total_duration_ms": 8000,
+      "dps_multiplier": 2.5,
+      "pve_rating": 9,
+      "pvp_rating": 4,
+      "aoe_capable": true
+    }
+  ],
+  "whitesmith": [
+    {
+      "combo_id": "ws_cart_combo",
+      "combo_name": "Cart Termination Combo",
+      "job_class": "whitesmith",
+      "steps": [
+        {"skill_name": "Power Maximize", "skill_level": 5, "delay_after_ms": 0, "sp_cost": 10},
+        {"skill_name": "Cart Termination", "skill_level": 10, "delay_after_ms": 1500, "sp_cost": 15}
+      ],
+      "requires_target": true,
+      "min_sp": 25,
+      "required_weapon": "axe",
+      "total_duration_ms": 2000,
+      "dps_multiplier": 2.3,
+      "pve_rating": 8,
+      "pvp_rating": 9,
+      "aoe_capable": false
+    }
+  ],
+  "champion": [
+    {
+      "combo_id": "champ_asura",
+      "combo_name": "Asura Strike Combo",
+      "job_class": "champion",
+      "steps": [
+        {"skill_name": "Fury", "skill_level": 1, "delay_after_ms": 500, "sp_cost": 1},
+        {"skill_name": "Bladestop", "skill_level": 5, "delay_after_ms": 500, "sp_cost": 10, "cancellable": false},
+        {"skill_name": "Asura Strike", "skill_level": 5, "delay_after_ms": 3000, "sp_cost": 0}
+      ],
+      "requires_target": true,
+      "min_sp": 11,
+      "required_weapon": "knuckle",
+      "required_buffs": ["Fury"],
+      "total_duration_ms": 6000,
+      "dps_multiplier": 5.0,
+      "pve_rating": 10,
+      "pvp_rating": 10,
+      "aoe_capable": false
+    }
+  ],
+  "paladin": [
+    {
+      "combo_id": "pal_sacrifice",
+      "combo_name": "Sacrifice Combo",
+      "job_class": "paladin",
+      "steps": [
+        {"skill_name": "Divine Protection", "skill_level": 10, "delay_after_ms": 0, "sp_cost": 30},
+        {"skill_name": "Sacrifice", "skill_level": 5, "delay_after_ms": 1000, "sp_cost": 50}
+      ],
+      "requires_target": true,
+      "min_sp": 80,
+      "required_weapon": "spear",
+      "total_duration_ms": 1500,
+      "dps_multiplier": 1.9,
+      "pve_rating": 7,
+      "pvp_rating": 8,
+      "aoe_capable": false
+    }
+  ]
+}

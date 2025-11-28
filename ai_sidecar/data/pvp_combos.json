@@ -1,0 +1,282 @@
+{
+  "combos": {
+    "champion": [
+      {
+        "name": "asura_combo",
+        "skills": ["Snap", "Zen", "Asura Strike"],
+        "total_cast_time_ms": 2500,
+        "total_damage": 999999,
+        "cc_type": null,
+        "requirements": {
+          "spirit_spheres": 5,
+          "sp_percent": 100,
+          "fury_active": true
+        },
+        "description": "One-shot combo with full SP and 5 spheres"
+      },
+      {
+        "name": "raging_combo",
+        "skills": ["Throw Spirit Sphere", "Raging Quadruple Blow", "Raging Thrust"],
+        "total_cast_time_ms": 2000,
+        "total_damage": 40000,
+        "cc_type": "stun",
+        "requirements": {
+          "spirit_spheres": 3,
+          "fury_active": true
+        },
+        "description": "Sustained damage combo with stun"
+      }
+    ],
+    "assassin_cross": [
+      {
+        "name": "edp_burst",
+        "skills": ["Enchant Deadly Poison", "Soul Destroyer", "Soul Destroyer", "Soul Destroyer"],
+        "total_cast_time_ms": 3000,
+        "total_damage": 50000,
+        "cc_type": null,
+        "requirements": {
+          "has_edp": false,
+          "sp_percent": 60
+        },
+        "description": "Triple Soul Destroyer under EDP"
+      },
+      {
+        "name": "sonic_blow_combo",
+        "skills": ["Grimtooth", "Sonic Blow", "Soul Breaker"],
+        "total_cast_time_ms": 2500,
+        "total_damage": 35000,
+        "cc_type": null,
+        "requirements": {
+          "katar_equipped": true
+        },
+        "description": "Grimtooth setup into Sonic Blow finisher"
+      }
+    ],
+    "guillotine_cross": [
+      {
+        "name": "cross_ripper_slasher",
+        "skills": ["Dark Claw", "Cross Ripper Slasher", "Soul Destroyer"],
+        "total_cast_time_ms": 3500,
+        "total_damage": 60000,
+        "cc_type": "blind",
+        "requirements": {
+          "poison_coating_active": true
+        },
+        "description": "Dark Claw debuff into Cross Ripper Slasher"
+      }
+    ],
+    "warlock": [
+      {
+        "name": "comet_combo",
+        "skills": ["Reading Spellbook", "Tetra Vortex", "Comet"],
+        "total_cast_time_ms": 8000,
+        "total_damage": 80000,
+        "cc_type": "stun",
+        "requirements": {
+          "preserved_points": 5,
+          "sphere_mine_placed": true
+        },
+        "description": "High burst magic combo with stun"
+      },
+      {
+        "name": "chain_lightning",
+        "skills": ["White Imprison", "Chain Lightning", "Earth Strain"],
+        "total_cast_time_ms": 4000,
+        "total_damage": 45000,
+        "cc_type": "freeze",
+        "requirements": {
+          "white_imprison_available": true
+        },
+        "description": "Lock target and burst with Chain Lightning"
+      }
+    ],
+    "ranger": [
+      {
+        "name": "warg_strike",
+        "skills": ["Warg Strike", "Aimed Bolt", "Double Strafe"],
+        "total_cast_time_ms": 3000,
+        "total_damage": 35000,
+        "cc_type": null,
+        "requirements": {
+          "warg_active": true,
+          "arrows_equipped": true
+        },
+        "description": "Warg-enhanced ranged combo"
+      },
+      {
+        "name": "fear_breeze",
+        "skills": ["Camouflage", "Fear Breeze", "Arrow Storm"],
+        "total_cast_time_ms": 3500,
+        "total_damage": 50000,
+        "cc_type": null,
+        "requirements": {
+          "fear_breeze_active": false
+        },
+        "description": "Stealth into multi-hit barrage"
+      }
+    ],
+    "rune_knight": [
+      {
+        "name": "hundred_spears",
+        "skills": ["Ignition Break", "Hundred Spear", "Dragon Breath"],
+        "total_cast_time_ms": 4000,
+        "total_damage": 55000,
+        "cc_type": "stun",
+        "requirements": {
+          "dragon_active": true,
+          "rune_points": 100
+        },
+        "description": "Dragon-powered burst combo"
+      },
+      {
+        "name": "sonic_wave_combo",
+        "skills": ["Sonic Wave", "Wind Cutter", "Ignition Break"],
+        "total_cast_time_ms": 3500,
+        "total_damage": 45000,
+        "cc_type": null,
+        "requirements": {
+          "two_hand_sword": true
+        },
+        "description": "Ranged poke into melee finish"
+      }
+    ],
+    "sorcerer": [
+      {
+        "name": "psychic_wave_combo",
+        "skills": ["Summon Fire", "Psychic Wave", "Diamond Dust"],
+        "total_cast_time_ms": 5000,
+        "total_damage": 50000,
+        "cc_type": "freeze",
+        "requirements": {
+          "spirit_active": true
+        },
+        "description": "Spirit-enhanced magic burst"
+      }
+    ],
+    "archbishop": [
+      {
+        "name": "judex_combo",
+        "skills": ["Lex Aeterna", "Adoramus", "Judex"],
+        "total_cast_time_ms": 4000,
+        "total_damage": 40000,
+        "cc_type": "blind",
+        "requirements": {
+          "sp_percent": 50
+        },
+        "description": "Holy damage burst with Lex Aeterna multiplier"
+      }
+    ],
+    "shadow_chaser": [
+      {
+        "name": "triangle_shot",
+        "skills": ["Triangle Shot", "Fatal Menace", "Raid"],
+        "total_cast_time_ms": 3000,
+        "total_damage": 40000,
+        "cc_type": null,
+        "requirements": {
+          "bow_equipped": true
+        },
+        "description": "Ranged triangle setup into melee finish"
+      }
+    ],
+    "mechanic": [
+      {
+        "name": "arm_cannon_combo",
+        "skills": ["Arm Cannon", "Power Swing", "Axe Tornado"],
+        "total_cast_time_ms": 3500,
+        "total_damage": 45000,
+        "cc_type": "stun",
+        "requirements": {
+          "madogear_active": true
+        },
+        "description": "Madogear ranged into melee combo"
+      }
+    ],
+    "genetic": [
+      {
+        "name": "cart_cannon_combo",
+        "skills": ["Spore Explosion", "Cart Cannon", "Crazy Weed"],
+        "total_cast_time_ms": 4000,
+        "total_damage": 50000,
+        "cc_type": null,
+        "requirements": {
+          "cart_active": true,
+          "cannon_balls": 10
+        },
+        "description": "Cart-based AoE combo"
+      }
+    ],
+    "royal_guard": [
+      {
+        "name": "overbrand_combo",
+        "skills": ["Shield Press", "Overbrand", "Cannon Spear"],
+        "total_cast_time_ms": 3500,
+        "total_damage": 40000,
+        "cc_type": "stun",
+        "requirements": {
+          "shield_equipped": true,
+          "spear_equipped": true
+        },
+        "description": "Shield stun into spear burst"
+      }
+    ],
+    "shura": [
+      {
+        "name": "gates_of_hell",
+        "skills": ["Lightning Ride", "Gates of Hell", "Rampage Blaster"],
+        "total_cast_time_ms": 4000,
+        "total_damage": 70000,
+        "cc_type": null,
+        "requirements": {
+          "spirit_spheres": 5,
+          "sp_percent": 80
+        },
+        "description": "Ultimate sustained burst combo"
+      }
+    ]
+  },
+  "defensive_combos": {
+    "archbishop": [
+      {
+        "name": "defensive_sanctuary",
+        "skills": ["Sanctuary", "Safety Wall", "Pneuma"],
+        "total_cast_time_ms": 3000,
+        "description": "Multi-layer defensive protection"
+      }
+    ],
+    "champion": [
+      {
+        "name": "survival_combo",
+        "skills": ["Dodge", "Root", "Snap"],
+        "total_cast_time_ms": 1500,
+        "description": "Emergency escape sequence"
+      }
+    ],
+    "assassin_cross": [
+      {
+        "name": "stealth_escape",
+        "skills": ["Cloaking", "Backslide", "Hide"],
+        "total_cast_time_ms": 1000,
+        "description": "Quick stealth escape"
+      }
+    ]
+  },
+  "support_combos": {
+    "archbishop": [
+      {
+        "name": "buff_rotation",
+        "skills": ["Blessing", "Increase Agility", "Assumptio", "Kyrie Eleison"],
+        "total_cast_time_ms": 6000,
+        "description": "Full support buff rotation"
+      }
+    ],
+    "sorcerer": [
+      {
+        "name": "elemental_support",
+        "skills": ["Summon Fire", "Elemental Shield", "Warmer"],
+        "total_cast_time_ms": 5000,
+        "description": "Elemental support setup"
+      }
+    ]
+  }
+}

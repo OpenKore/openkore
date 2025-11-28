@@ -1,0 +1,110 @@
+{
+  "cards": [
+    {
+      "card_id": 4001,
+      "card_name": "Poring Card",
+      "slot_type": "armor",
+      "effects": {"luk": 2, "perfect_dodge": 1},
+      "combo_with": [],
+      "market_value": 50000,
+      "drop_source": "Poring"
+    },
+    {
+      "card_id": 4077,
+      "card_name": "Drake Card",
+      "slot_type": "weapon",
+      "effects": {"damage_vs_size": "ignore_size_penalty"},
+      "combo_with": [],
+      "market_value": 5000000,
+      "drop_source": "Drake"
+    },
+    {
+      "card_id": 4121,
+      "card_name": "Phreeoni Card",
+      "slot_type": "weapon",
+      "effects": {"hit": 100},
+      "combo_with": [],
+      "market_value": 50000000,
+      "drop_source": "Phreeoni (MVP)"
+    },
+    {
+      "card_id": 4302,
+      "card_name": "Tao Gunka Card",
+      "slot_type": "armor",
+      "effects": {"max_hp": 100, "def": -50, "mdef": -50},
+      "combo_with": [],
+      "market_value": 100000000,
+      "drop_source": "Tao Gunka (MVP)"
+    },
+    {
+      "card_id": 4058,
+      "card_name": "Thief Bug Card",
+      "slot_type": "weapon",
+      "effects": {"agi": 1},
+      "combo_with": [4059, 4060],
+      "market_value": 100000,
+      "drop_source": "Thief Bug"
+    },
+    {
+      "card_id": 4059,
+      "card_name": "Female Thief Bug Card",
+      "slot_type": "shield",
+      "effects": {"agi": 1},
+      "combo_with": [4058, 4060],
+      "market_value": 150000,
+      "drop_source": "Female Thief Bug"
+    },
+    {
+      "card_id": 4060,
+      "card_name": "Male Thief Bug Card",
+      "slot_type": "armor",
+      "effects": {"agi": 2},
+      "combo_with": [4058, 4059],
+      "market_value": 200000,
+      "drop_source": "Male Thief Bug"
+    },
+    {
+      "card_id": 4131,
+      "card_name": "Sidewinder Card",
+      "slot_type": "weapon",
+      "effects": {"double_attack_rate": 20},
+      "combo_with": [],
+      "market_value": 800000,
+      "drop_source": "Sidewinder"
+    },
+    {
+      "card_id": 4140,
+      "card_name": "Marse Card",
+      "slot_type": "weapon",
+      "effects": {"damage_vs_water": 20},
+      "combo_with": [],
+      "market_value": 300000,
+      "drop_source": "Marse"
+    },
+    {
+      "card_id": 4047,
+      "card_name": "Ghostring Card",
+      "slot_type": "armor",
+      "effects": {"property": "ghost", "hp": -25},
+      "combo_with": [],
+      "market_value": 80000000,
+      "drop_source": "Ghostring"
+    }
+  ],
+  "combos": [
+    {
+      "combo_id": 1,
+      "combo_name": "Thief Set",
+      "required_cards": [4058, 4059, 4060],
+      "combo_effect": "+20% Critical Rate, +10 Perfect Dodge",
+      "stat_bonus": {"crit_rate": 20, "perfect_dodge": 10}
+    },
+    {
+      "combo_id": 2,
+      "combo_name": "Insect Combo",
+      "required_cards": [4026, 4045],
+      "combo_effect": "+10% damage to Plant monsters",
+      "stat_bonus": {"damage_vs_plant": 10}
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "mora_enchants": {
+    "temporal_boots": {
+      "item_id": 22000,
+      "item_name": "Temporal Boots",
+      "slots": {
+        "slot_1": {
+          "enchants": [
+            {"enchant_id": 4950, "enchant_name": "Expert Archer 1", "stat_bonus": {"ranged_damage": 5}, "weight": 30, "is_desirable": true},
+            {"enchant_id": 4951, "enchant_name": "Expert Archer 2", "stat_bonus": {"ranged_damage": 8}, "weight": 15, "is_desirable": true},
+            {"enchant_id": 4952, "enchant_name": "Expert Archer 3", "stat_bonus": {"ranged_damage": 10}, "weight": 5, "is_desirable": true},
+            {"enchant_id": 4800, "enchant_name": "STR +1", "stat_bonus": {"str": 1}, "weight": 50, "is_desirable": false}
+          ],
+          "cost_zeny": 100000,
+          "can_reset": true,
+          "reset_cost_zeny": 50000
+        },
+        "slot_2": {
+          "enchants": [
+            {"enchant_id": 4702, "enchant_name": "STR +2", "stat_bonus": {"str": 2}, "weight": 100, "is_desirable": true},
+            {"enchant_id": 4703, "enchant_name": "STR +3", "stat_bonus": {"str": 3}, "weight": 50, "is_desirable": true},
+            {"enchant_id": 4712, "enchant_name": "AGI +2", "stat_bonus": {"agi": 2}, "weight": 100, "is_desirable": true},
+            {"enchant_id": 4713, "enchant_name": "AGI +3", "stat_bonus": {"agi": 3}, "weight": 50, "is_desirable": true}
+          ],
+          "cost_zeny": 150000,
+          "can_reset": true,
+          "reset_cost_zeny": 75000
+        }
+      }
+    }
+  },
+  "malangdo_enchants": {
+    "meow_meow_cap": {
+      "item_id": 5230,
+      "item_name": "Meow Meow Cap",
+      "slots": {
+        "slot_1": {
+          "enchants": [
+            {"enchant_id": 4800, "enchant_name": "STR +1", "stat_bonus": {"str": 1}, "weight": 100, "is_desirable": false},
+            {"enchant_id": 4801, "enchant_name": "STR +2", "stat_bonus": {"str": 2}, "weight": 50, "is_desirable": true},
+            {"enchant_id": 4810, "enchant_name": "INT +1", "stat_bonus": {"int": 1}, "weight": 100, "is_desirable": false},
+            {"enchant_id": 4811, "enchant_name": "INT +2", "stat_bonus": {"int": 2}, "weight": 50, "is_desirable": true}
+          ],
+          "cost_zeny": 50000,
+          "cost_items": [
+            {"item_id": 6422, "item_name": "Malangdo Coin", "quantity_required": 5, "is_consumed": true}
+          ],
+          "can_reset": true,
+          "reset_cost_zeny": 25000
+        }
+      }
+    }
+  },
+  "instance_enchants": {
+    "fallen_warrior_manteau": {
+      "item_id": 2524,
+      "item_name": "Fallen Warrior Manteau",
+      "slots": {
+        "slot_1": {
+          "enchants": [
+            {"enchant_id": 4700, "enchant_name": "STR +1", "stat_bonus": {"str": 1}, "weight": 150, "is_desirable": false},
+            {"enchant_id": 4701, "enchant_name": "STR +2", "stat_bonus": {"str": 2}, "weight": 75, "is_desirable": true},
+            {"enchant_id": 4702, "enchant_name": "STR +3", "stat_bonus": {"str": 3}, "weight": 25, "is_desirable": true},
+            {"enchant_id": 4710, "enchant_name": "AGI +1", "stat_bonus": {"agi": 1}, "weight": 150, "is_desirable": false},
+            {"enchant_id": 4711, "enchant_name": "AGI +2", "stat_bonus": {"agi": 2}, "weight": 75, "is_desirable": true}
+          ],
+          "cost_zeny": 0,
+          "cost_items": [
+            {"item_id": 6608, "item_name": "Coagulated Spell", "quantity_required": 50, "is_consumed": true}
+          ],
+          "can_reset": false
+        }
+      }
+    }
+  }
+}

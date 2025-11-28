@@ -1,0 +1,29 @@
+{
+  "1": {
+    "set_id": 1,
+    "name": "Rogue Set",
+    "pieces": [2309, 2407, 2504],
+    "bonuses": {
+      "2": ["AGI +5", "Flee +10"],
+      "3": ["AGI +10", "Flee +20", "ASPD +5%"]
+    }
+  },
+  "2": {
+    "set_id": 2,
+    "name": "Wizard Set",
+    "pieces": [1613, 2334, 2504],
+    "bonuses": {
+      "2": ["INT +5", "MATK +5%"],
+      "3": ["INT +10", "MATK +10%", "Cast Time -10%"]
+    }
+  },
+  "3": {
+    "set_id": 3,
+    "name": "Tank Set",
+    "pieces": [2315, 2609, 2507],
+    "bonuses": {
+      "2": ["VIT +5", "DEF +50"],
+      "3": ["VIT +10", "DEF +100", "Damage Reduction 5%"]
+    }
+  }
+}

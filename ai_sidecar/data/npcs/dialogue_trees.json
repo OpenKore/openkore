@@ -1,0 +1,80 @@
+{
+  "quest_offer_generic": {
+    "id": "quest_offer_generic",
+    "name": "Generic Quest Offer",
+    "nodes": {
+      "start": {
+        "text": "Greetings, adventurer! I have a task that needs doing. Would you be willing to help?",
+        "choices": [
+          {"index": 0, "text": "Yes, I'll help!", "leads_to": "accept"},
+          {"index": 1, "text": "Not right now.", "is_exit": true}
+        ]
+      },
+      "accept": {
+        "text": "Excellent! Here's what I need you to do...",
+        "choices": []
+      }
+    }
+  },
+  "quest_complete_generic": {
+    "id": "quest_complete_generic",
+    "name": "Generic Quest Complete",
+    "nodes": {
+      "start": {
+        "text": "You've completed the task! Here's your reward.",
+        "choices": [
+          {"index": 0, "text": "Thank you!", "is_exit": true}
+        ]
+      }
+    }
+  },
+  "kafra_service": {
+    "id": "kafra_service",
+    "name": "Kafra Service Menu",
+    "nodes": {
+      "start": {
+        "text": "Welcome to Kafra Corp. How may I help you?",
+        "choices": [
+          {"index": 0, "text": "Use Storage", "leads_to": "storage"},
+          {"index": 1, "text": "Save Location", "leads_to": "save"},
+          {"index": 2, "text": "Teleport Service", "leads_to": "teleport"},
+          {"index": 3, "text": "Cancel", "is_exit": true}
+        ]
+      },
+      "storage": {
+        "text": "Opening storage... (60 zeny)",
+        "choices": []
+      },
+      "save": {
+        "text": "Respawn point saved!",
+        "choices": []
+      },
+      "teleport": {
+        "text": "Where would you like to go?",
+        "choices": []
+      }
+    }
+  },
+  "refiner_service": {
+    "id": "refiner_service",
+    "name": "Equipment Refiner",
+    "nodes": {
+      "start": {
+        "text": "I can upgrade your equipment. What would you like to refine?",
+        "choices": [
+          {"index": 0, "text": "Refine weapon", "leads_to": "weapon"},
+          {"index": 1, "text": "Refine armor", "leads_to": "armor"},
+          {"index": 2, "text": "Cancel", "is_exit": true}
+        ]
+      },
+      "weapon": {
+        "text": "Select the weapon to refine...",
+        "choices": []
+      },
+      "armor": {
+        "text": "Select the armor to refine...",
+        "choices": []
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-mmorpg.local/schemas/heartbeat.json",
+  "title": "HeartbeatMessage",
+  "description": "Keep-alive and health check messages for IPC connection",
+  "type": "object",
+  "required": ["type", "timestamp"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "heartbeat",
+      "description": "Message type identifier"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix timestamp in milliseconds"
+    },
+    "source": {
+      "type": "string",
+      "enum": ["openkore", "sidecar"],
+      "description": "Source of the heartbeat"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["healthy", "degraded", "recovering"],
+      "default": "healthy",
+      "description": "Health status of the source"
+    },
+    "stats": {
+      "type": "object",
+      "description": "Optional statistics about the sender",
+      "properties": {
+        "uptime_seconds": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Uptime in seconds"
+        },
+        "ticks_processed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of ticks processed"
+        },
+        "messages_sent": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of messages sent"
+        },
+        "messages_received": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of messages received"
+        },
+        "errors_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of errors encountered"
+        },
+        "avg_latency_ms": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Average message latency in milliseconds"
+        },
+        "memory_mb": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Memory usage in megabytes"
+        },
+        "cpu_percent": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "CPU usage percentage"
+        }
+      }
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the sender component"
+    }
+  }
+}

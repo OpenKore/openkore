@@ -1,0 +1,275 @@
+{
+  "version": "1.0.0",
+  "description": "Job advancement paths and requirements for Ragnarok Online",
+  "jobs": [
+    {
+      "job_id": 0,
+      "job_name": "Novice",
+      "from_job": null,
+      "job_tier": 1,
+      "requirements": {
+        "base_level": 1,
+        "job_level": 1,
+        "zeny_cost": 0,
+        "test_required": false
+      },
+      "next_jobs": ["Swordman", "Mage", "Archer", "Merchant", "Thief", "Acolyte"]
+    },
+    {
+      "job_id": 1,
+      "job_name": "Swordman",
+      "from_job": "Novice",
+      "job_tier": 2,
+      "requirements": {
+        "base_level": 1,
+        "job_level": 10,
+        "zeny_cost": 0,
+        "test_required": false
+      },
+      "next_jobs": ["Knight", "Crusader"]
+    },
+    {
+      "job_id": 2,
+      "job_name": "Mage",
+      "from_job": "Novice",
+      "job_tier": 2,
+      "requirements": {
+        "base_level": 1,
+        "job_level": 10,
+        "zeny_cost": 0,
+        "test_required": false
+      },
+      "next_jobs": ["Wizard", "Sage"]
+    },
+    {
+      "job_id": 3,
+      "job_name": "Archer",
+      "from_job": "Novice",
+      "job_tier": 2,
+      "requirements": {
+        "base_level": 1,
+        "job_level": 10,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "hunting_quest",
+        "test_params": {
+          "monster": "Zombie",
+          "count": 50
+        }
+      },
+      "next_jobs": ["Hunter", "Dancer", "Bard"]
+    },
+    {
+      "job_id": 4,
+      "job_name": "Merchant",
+      "from_job": "Novice",
+      "job_tier": 2,
+      "requirements": {
+        "base_level": 1,
+        "job_level": 10,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "item_quest",
+        "test_params": {
+          "items": [
+            {"item_id": 1019, "name": "Trunk", "count": 20}
+          ]
+        }
+      },
+      "next_jobs": ["Blacksmith", "Alchemist"]
+    },
+    {
+      "job_id": 5,
+      "job_name": "Thief",
+      "from_job": "Novice",
+      "job_tier": 2,
+      "requirements": {
+        "base_level": 1,
+        "job_level": 10,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "mushroom_quest"
+      },
+      "next_jobs": ["Assassin", "Rogue"]
+    },
+    {
+      "job_id": 6,
+      "job_name": "Acolyte",
+      "from_job": "Novice",
+      "job_tier": 2,
+      "requirements": {
+        "base_level": 1,
+        "job_level": 10,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "undead_quest"
+      },
+      "next_jobs": ["Priest", "Monk"]
+    },
+    {
+      "job_id": 7,
+      "job_name": "Knight",
+      "from_job": "Swordman",
+      "job_tier": 3,
+      "requirements": {
+        "base_level": 50,
+        "job_level": 40,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "combat_test"
+      },
+      "next_jobs": ["Lord Knight"]
+    },
+    {
+      "job_id": 8,
+      "job_name": "Crusader",
+      "from_job": "Swordman",
+      "job_tier": 3,
+      "requirements": {
+        "base_level": 50,
+        "job_level": 40,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "combat_test"
+      },
+      "next_jobs": ["Paladin"]
+    },
+    {
+      "job_id": 9,
+      "job_name": "Wizard",
+      "from_job": "Mage",
+      "job_tier": 3,
+      "requirements": {
+        "base_level": 50,
+        "job_level": 40,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "magic_quiz"
+      },
+      "next_jobs": ["High Wizard"]
+    },
+    {
+      "job_id": 10,
+      "job_name": "Sage",
+      "from_job": "Mage",
+      "job_tier": 3,
+      "requirements": {
+        "base_level": 50,
+        "job_level": 40,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "magic_quiz"
+      },
+      "next_jobs": ["Professor"]
+    },
+    {
+      "job_id": 11,
+      "job_name": "Hunter",
+      "from_job": "Archer",
+      "job_tier": 3,
+      "requirements": {
+        "base_level": 50,
+        "job_level": 40,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "trap_maze"
+      },
+      "next_jobs": ["Sniper"]
+    },
+    {
+      "job_id": 12,
+      "job_name": "Priest",
+      "from_job": "Acolyte",
+      "job_tier": 3,
+      "requirements": {
+        "base_level": 50,
+        "job_level": 40,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "undead_quest"
+      },
+      "next_jobs": ["High Priest"]
+    },
+    {
+      "job_id": 13,
+      "job_name": "Assassin",
+      "from_job": "Thief",
+      "job_tier": 3,
+      "requirements": {
+        "base_level": 50,
+        "job_level": 40,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "combat_test"
+      },
+      "next_jobs": ["Assassin Cross"]
+    },
+    {
+      "job_id": 14,
+      "job_name": "Lord Knight",
+      "from_job": "Knight",
+      "job_tier": 4,
+      "requirements": {
+        "base_level": 99,
+        "job_level": 50,
+        "zeny_cost": 0,
+        "test_required": false
+      },
+      "next_jobs": ["Rune Knight"]
+    },
+    {
+      "job_id": 15,
+      "job_name": "Paladin",
+      "from_job": "Crusader",
+      "job_tier": 4,
+      "requirements": {
+        "base_level": 99,
+        "job_level": 50,
+        "zeny_cost": 0,
+        "test_required": false
+      },
+      "next_jobs": ["Royal Guard"]
+    },
+    {
+      "job_id": 16,
+      "job_name": "High Wizard",
+      "from_job": "Wizard",
+      "job_tier": 4,
+      "requirements": {
+        "base_level": 99,
+        "job_level": 50,
+        "zeny_cost": 0,
+        "test_required": false
+      },
+      "next_jobs": ["Warlock"]
+    },
+    {
+      "job_id": 17,
+      "job_name": "Rune Knight",
+      "from_job": "Lord Knight",
+      "job_tier": 4,
+      "requirements": {
+        "base_level": 99,
+        "job_level": 50,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "quest_chain"
+      },
+      "next_jobs": []
+    },
+    {
+      "job_id": 18,
+      "job_name": "Warlock",
+      "from_job": "High Wizard",
+      "job_tier": 4,
+      "requirements": {
+        "base_level": 99,
+        "job_level": 50,
+        "zeny_cost": 0,
+        "test_required": true,
+        "test_type": "quest_chain"
+      },
+      "next_jobs": []
+    }
+  ]
+}

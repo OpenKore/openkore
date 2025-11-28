@@ -1,0 +1,559 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Ragnarok Online Skill Effects - Damage formulas, SP costs, cooldowns",
+  
+  "SM_BASH": {
+    "id": 5,
+    "sp_cost": [8, 8, 8, 8, 8, 15, 15, 15, 15, 15],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": "ATK * (1.0 + level * 0.3)",
+    "damage_type": "physical",
+    "hits": 1,
+    "effects": []
+  },
+  "SM_PROVOKE": {
+    "id": 6,
+    "sp_cost": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [
+      {"type": "atk_increase", "value": [5, 8, 11, 14, 17, 20, 23, 26, 29, 32]},
+      {"type": "def_decrease", "value": [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]}
+    ],
+    "duration": [30, 30, 30, 30, 30, 30, 30, 30, 30, 30]
+  },
+  "SM_MAGNUM": {
+    "id": 7,
+    "sp_cost": [30, 30, 30, 30, 30, 30, 30, 30, 30, 30],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 2.0,
+    "damage_formula": "ATK * (1.2 + level * 0.2)",
+    "damage_type": "physical",
+    "element": "fire",
+    "hits": 1,
+    "effects": [{"type": "knockback", "value": 2}],
+    "aoe_radius": 2
+  },
+  "SM_ENDURE": {
+    "id": 8,
+    "sp_cost": [10, 10, 10, 10, 10, 10, 10, 10, 10, 10],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 10.0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [{"type": "endure", "value": [7, 7, 7, 7, 7, 7, 7, 7, 7, 7]}],
+    "duration": [10, 13, 16, 19, 22, 25, 28, 31, 34, 37]
+  },
+  
+  "KN_PIERCE": {
+    "id": 55,
+    "sp_cost": [7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": "ATK * (1.0 + level * 0.1) * target_size_hits",
+    "damage_type": "physical",
+    "hits": "1-3 based on target size",
+    "effects": []
+  },
+  "KN_SPEARSTAB": {
+    "id": 57,
+    "sp_cost": [9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": "ATK * (1.2 + level * 0.2)",
+    "damage_type": "physical",
+    "hits": 1,
+    "effects": [{"type": "knockback", "value": 6}]
+  },
+  "KN_TWOHANDQUICKEN": {
+    "id": 60,
+    "sp_cost": [14, 18, 22, 26, 30, 34, 38, 42, 46, 50],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [{"type": "aspd_increase", "value": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}],
+    "duration": [30, 60, 90, 120, 150, 180, 210, 240, 270, 300]
+  },
+  "KN_BOWLINGBASH": {
+    "id": 62,
+    "sp_cost": [13, 14, 15, 16, 17, 18, 19, 20, 21, 22],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": "ATK * (1.4 + level * 0.4)",
+    "damage_type": "physical",
+    "hits": 2,
+    "effects": [{"type": "gutter_line", "value": true}]
+  },
+  
+  "CR_AUTOGUARD": {
+    "id": 249,
+    "sp_cost": [12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [{"type": "block_chance", "value": [5, 10, 14, 18, 21, 24, 26, 28, 29, 30]}],
+    "duration": [300, 300, 300, 300, 300, 300, 300, 300, 300, 300]
+  },
+  "CR_SHIELDCHARGE": {
+    "id": 250,
+    "sp_cost": [10, 10, 10, 10, 10],
+    "cast_time": [0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": "ATK * (1.2 + level * 0.2)",
+    "damage_type": "physical",
+    "hits": 1,
+    "effects": [
+      {"type": "knockback", "value": 5},
+      {"type": "stun_chance", "value": [15, 20, 25, 30, 35]}
+    ]
+  },
+  "CR_DEFENDER": {
+    "id": 257,
+    "sp_cost": [30, 30, 30, 30, 30],
+    "cast_time": [0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [
+      {"type": "ranged_reduction", "value": [20, 35, 50, 65, 80]},
+      {"type": "move_speed_penalty", "value": [40, 35, 30, 25, 20]}
+    ],
+    "duration": [180, 180, 180, 180, 180]
+  },
+  "CR_HOLYCROSS": {
+    "id": 253,
+    "sp_cost": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0.5,
+    "damage_formula": "ATK * (1.35 + level * 0.35)",
+    "damage_type": "physical",
+    "element": "holy",
+    "hits": 2,
+    "effects": [{"type": "blind_chance", "value": 3}]
+  },
+  "CR_GRANDCROSS": {
+    "id": 254,
+    "sp_cost": [37, 44, 51, 58, 65, 72, 79, 86, 93, 100],
+    "cast_time": [3.0, 2.7, 2.4, 2.1, 1.8, 1.5, 1.2, 0.9, 0.6, 0.3],
+    "cooldown": 3.0,
+    "damage_formula": "(ATK + MATK) * (1.0 + level * 0.4)",
+    "damage_type": "hybrid",
+    "element": "holy",
+    "hits": 3,
+    "effects": [{"type": "self_damage_percent", "value": 20}],
+    "aoe_radius": 2
+  },
+  "CR_DEVOTION": {
+    "id": 255,
+    "sp_cost": [25, 25, 25, 25, 25],
+    "cast_time": [3.0, 3.0, 3.0, 3.0, 3.0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [{"type": "absorb_damage", "value": true}],
+    "duration": [30, 45, 60, 75, 90]
+  },
+  
+  "AS_SONICBLOW": {
+    "id": 136,
+    "sp_cost": [16, 18, 20, 22, 24, 26, 28, 30, 32, 34],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 2.0,
+    "damage_formula": "ATK * (0.5 + level * 0.05) * 8",
+    "damage_type": "physical",
+    "hits": 8,
+    "effects": [{"type": "stun_chance", "value": [0, 0, 0, 0, 10, 15, 20, 25, 30, 50]}]
+  },
+  "AS_CLOAKING": {
+    "id": 135,
+    "sp_cost": [15, 15, 15, 15, 15, 15, 15, 15, 15, 15],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [
+      {"type": "invisibility", "value": true},
+      {"type": "move_speed_bonus", "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+    ],
+    "sp_drain_per_sec": [0.5, 0.5, 0.5, 0.4, 0.4, 0.4, 0.3, 0.3, 0.2, 0.1]
+  },
+  "AS_GRIMTOOTH": {
+    "id": 137,
+    "sp_cost": [3, 3, 3, 3, 3],
+    "cast_time": [0, 0, 0, 0, 0],
+    "cooldown": 0.5,
+    "damage_formula": "ATK * (1.2 + level * 0.2)",
+    "damage_type": "physical",
+    "hits": 1,
+    "effects": []
+  },
+  "AS_ENCHANTPOISON": {
+    "id": 138,
+    "sp_cost": [20, 20, 20, 20, 20, 20, 20, 20, 20, 20],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [
+      {"type": "weapon_element", "value": "poison"},
+      {"type": "poison_chance", "value": [2.5, 5, 7.5, 10, 12.5, 15, 17.5, 20, 22.5, 25]}
+    ],
+    "duration": [40, 50, 60, 70, 80, 90, 100, 110, 120, 130]
+  },
+  
+  "RG_BACKSTAB": {
+    "id": 212,
+    "sp_cost": [16, 16, 16, 16, 16, 16, 16, 16, 16, 16],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": "ATK * (0.4 + level * 0.4)",
+    "damage_type": "physical",
+    "hits": 1,
+    "effects": [{"type": "must_be_behind", "value": true}]
+  },
+  "RG_RAID": {
+    "id": 214,
+    "sp_cost": [20, 20, 20, 20, 20],
+    "cast_time": [0, 0, 0, 0, 0],
+    "cooldown": 1.0,
+    "damage_formula": "ATK * (1.2 + level * 0.2)",
+    "damage_type": "physical",
+    "hits": 1,
+    "effects": [
+      {"type": "blind_chance", "value": 50},
+      {"type": "stun_chance", "value": 50}
+    ],
+    "aoe_radius": 3
+  },
+  
+  "MG_FIREBOLT": {
+    "id": 19,
+    "sp_cost": [12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+    "cast_time": [0.7, 1.4, 2.1, 2.8, 3.5, 4.2, 4.9, 5.6, 6.3, 7.0],
+    "cooldown": 0,
+    "damage_formula": "MATK * (1.0 + level * 0.0)",
+    "damage_type": "magical",
+    "element": "fire",
+    "hits": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "effects": []
+  },
+  "MG_COLDBOLT": {
+    "id": 14,
+    "sp_cost": [12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+    "cast_time": [0.7, 1.4, 2.1, 2.8, 3.5, 4.2, 4.9, 5.6, 6.3, 7.0],
+    "cooldown": 0,
+    "damage_formula": "MATK * (1.0 + level * 0.0)",
+    "damage_type": "magical",
+    "element": "water",
+    "hits": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "effects": []
+  },
+  "MG_LIGHTNINGBOLT": {
+    "id": 20,
+    "sp_cost": [12, 14, 16, 18, 20, 22, 24, 26, 28, 30],
+    "cast_time": [0.7, 1.4, 2.1, 2.8, 3.5, 4.2, 4.9, 5.6, 6.3, 7.0],
+    "cooldown": 0,
+    "damage_formula": "MATK * (1.0 + level * 0.0)",
+    "damage_type": "magical",
+    "element": "wind",
+    "hits": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "effects": []
+  },
+  "MG_SOULSTRIKE": {
+    "id": 13,
+    "sp_cost": [18, 14, 24, 20, 30, 26, 36, 32, 42, 38],
+    "cast_time": [0.5, 0.7, 0.9, 1.1, 1.3, 1.5, 1.7, 1.9, 2.1, 2.3],
+    "cooldown": 0,
+    "damage_formula": "MATK * (1.0 + level * 0.0)",
+    "damage_type": "magical",
+    "element": "ghost",
+    "hits": [1, 1, 2, 2, 3, 3, 4, 4, 5, 5],
+    "effects": [{"type": "bonus_vs_undead", "value": 5}]
+  },
+  "MG_FIREBALL": {
+    "id": 17,
+    "sp_cost": [25, 25, 25, 25, 25, 25, 25, 25, 25, 25],
+    "cast_time": [1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5, 1.5],
+    "cooldown": 0,
+    "damage_formula": "MATK * (0.8 + level * 0.1)",
+    "damage_type": "magical",
+    "element": "fire",
+    "hits": 1,
+    "effects": [],
+    "aoe_radius": 2
+  },
+  "MG_FROSTDIVER": {
+    "id": 15,
+    "sp_cost": [25, 24, 23, 22, 21, 20, 19, 18, 17, 16],
+    "cast_time": [0.8, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.2, 2.4, 2.6],
+    "cooldown": 0,
+    "damage_formula": "MATK * (1.0 + level * 0.1)",
+    "damage_type": "magical",
+    "element": "water",
+    "hits": 1,
+    "effects": [{"type": "freeze_chance", "value": [38, 45, 52, 58, 63, 68, 72, 76, 79, 82]}]
+  },
+  "MG_THUNDERSTORM": {
+    "id": 21,
+    "sp_cost": [29, 34, 39, 44, 49, 54, 59, 64, 69, 74],
+    "cast_time": [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0],
+    "cooldown": 0,
+    "damage_formula": "MATK * (0.8 + level * 0.0)",
+    "damage_type": "magical",
+    "element": "wind",
+    "hits": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "effects": [],
+    "aoe_radius": 3
+  },
+  
+  "WZ_STORMGUST": {
+    "id": 89,
+    "sp_cost": [78, 78, 78, 78, 78, 78, 78, 78, 78, 78],
+    "cast_time": [5.3, 6.1, 6.9, 7.7, 8.5, 9.3, 10.1, 10.9, 11.7, 12.5],
+    "cooldown": 5.0,
+    "damage_formula": "MATK * (1.0 + level * 0.4)",
+    "damage_type": "magical",
+    "element": "water",
+    "hits": 10,
+    "effects": [{"type": "freeze_chance", "value": 15}],
+    "aoe_radius": 5
+  },
+  "WZ_METEOR": {
+    "id": 83,
+    "sp_cost": [20, 24, 30, 34, 40, 44, 50, 54, 60, 64],
+    "cast_time": [9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0, 17.0, 18.0],
+    "cooldown": 2.0,
+    "damage_formula": "MATK * (1.25 + level * 0.25)",
+    "damage_type": "magical",
+    "element": "fire",
+    "hits": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "effects": [{"type": "stun_chance", "value": [26, 28, 30, 32, 34, 36, 38, 40, 42, 44]}],
+    "aoe_radius": 7
+  },
+  "WZ_VERMILION": {
+    "id": 85,
+    "sp_cost": [60, 64, 68, 72, 76, 80, 84, 88, 92, 96],
+    "cast_time": [5.3, 6.1, 6.9, 7.7, 8.5, 9.3, 10.1, 10.9, 11.7, 12.5],
+    "cooldown": 5.0,
+    "damage_formula": "MATK * (1.0 + level * 0.8)",
+    "damage_type": "magical",
+    "element": "wind",
+    "hits": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+    "effects": [{"type": "blind_chance", "value": 50}],
+    "aoe_radius": 5
+  },
+  "WZ_JUPITEL": {
+    "id": 84,
+    "sp_cost": [20, 23, 26, 29, 32, 35, 38, 41, 44, 47],
+    "cast_time": [2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5],
+    "cooldown": 0,
+    "damage_formula": "MATK * (1.0 + level * 0.0)",
+    "damage_type": "magical",
+    "element": "wind",
+    "hits": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "effects": [{"type": "knockback", "value": [2, 3, 3, 4, 4, 5, 5, 6, 6, 7]}]
+  },
+  
+  "AL_HEAL": {
+    "id": 29,
+    "sp_cost": [13, 16, 19, 22, 25, 28, 31, 34, 37, 40],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 1.0,
+    "damage_formula": "(BaseLv + INT) * level * 0.4 + (BaseLv + INT) * 0.1",
+    "damage_type": "heal",
+    "hits": 1,
+    "effects": [{"type": "damage_vs_undead", "value": true}]
+  },
+  "AL_INCAGI": {
+    "id": 30,
+    "sp_cost": [18, 21, 24, 27, 30, 33, 36, 39, 42, 45],
+    "cast_time": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [
+      {"type": "agi_increase", "value": [3, 4, 5, 6, 7, 8, 9, 10, 11, 12]},
+      {"type": "move_speed_increase", "value": 25}
+    ],
+    "duration": [60, 80, 100, 120, 140, 160, 180, 200, 220, 240]
+  },
+  "AL_BLESSING": {
+    "id": 35,
+    "sp_cost": [28, 32, 36, 40, 44, 48, 52, 56, 60, 64],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [
+      {"type": "str_increase", "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
+      {"type": "int_increase", "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
+      {"type": "dex_increase", "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+    ],
+    "duration": [60, 80, 100, 120, 140, 160, 180, 200, 220, 240]
+  },
+  
+  "PR_KYRIE": {
+    "id": 74,
+    "sp_cost": [20, 20, 20, 20, 20, 25, 25, 25, 25, 25],
+    "cast_time": [2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0],
+    "cooldown": 2.0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [
+      {"type": "hp_shield_percent", "value": [12, 14, 16, 18, 20, 22, 24, 26, 28, 30]},
+      {"type": "max_hits_blocked", "value": [3, 4, 4, 5, 5, 6, 6, 7, 7, 10]}
+    ],
+    "duration": [120, 120, 120, 120, 120, 120, 120, 120, 120, 120]
+  },
+  "PR_MAGNIFICAT": {
+    "id": 75,
+    "sp_cost": [40, 40, 40, 40, 40],
+    "cast_time": [4.0, 4.0, 4.0, 4.0, 4.0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [{"type": "sp_regen_double", "value": true}],
+    "duration": [30, 45, 60, 75, 90]
+  },
+  "PR_SANCTUARY": {
+    "id": 71,
+    "sp_cost": [15, 18, 21, 24, 27, 30, 33, 36, 39, 42],
+    "cast_time": [4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5],
+    "cooldown": 0,
+    "damage_formula": "(BaseLv + INT) * level * 0.2",
+    "damage_type": "heal",
+    "hits": "continuous",
+    "effects": [{"type": "damage_vs_undead", "value": true}],
+    "aoe_radius": 3,
+    "duration": [4, 7, 10, 13, 16, 19, 22, 25, 28, 31]
+  },
+  "PR_RESURRECTION": {
+    "id": 54,
+    "sp_cost": [60, 60, 60, 60],
+    "cast_time": [6.0, 4.0, 2.0, 0.0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [{"type": "revive_hp_percent", "value": [10, 30, 50, 80]}]
+  },
+  
+  "AC_DOUBLE": {
+    "id": 41,
+    "sp_cost": [12, 12, 12, 12, 12, 12, 12, 12, 12, 12],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": "ATK * (1.0 + level * 0.1)",
+    "damage_type": "physical",
+    "element": "weapon",
+    "hits": 2,
+    "effects": []
+  },
+  "AC_SHOWER": {
+    "id": 42,
+    "sp_cost": [15, 15, 15, 15, 15, 15, 15, 15, 15, 15],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": "ATK * (0.75 + level * 0.05)",
+    "damage_type": "physical",
+    "element": "weapon",
+    "hits": 1,
+    "effects": [{"type": "knockback", "value": 2}],
+    "aoe_radius": 3
+  },
+  "AC_CONCENTRATION": {
+    "id": 40,
+    "sp_cost": [25, 30, 35, 40, 45, 50, 55, 60, 65, 70],
+    "cast_time": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [
+      {"type": "agi_increase", "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
+      {"type": "dex_increase", "value": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
+      {"type": "detect_hidden", "value": true}
+    ],
+    "duration": [60, 80, 100, 120, 140, 160, 180, 200, 220, 240]
+  },
+  
+  "HT_BLITZBEAT": {
+    "id": 129,
+    "sp_cost": [10, 13, 16, 19, 22],
+    "cast_time": [0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": "(DEX/10 + INT/2 + SteelCrow*3 + 40) * level",
+    "damage_type": "physical",
+    "element": "neutral",
+    "hits": [1, 2, 3, 4, 5],
+    "effects": []
+  },
+  
+  "BS_ADRENALINE": {
+    "id": 112,
+    "sp_cost": [20, 23, 26, 29, 32],
+    "cast_time": [0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [{"type": "aspd_increase_percent", "value": [10, 15, 20, 25, 30]}],
+    "duration": [30, 60, 90, 120, 150]
+  },
+  "BS_OVERTHRUST": {
+    "id": 114,
+    "sp_cost": [15, 18, 21, 24, 27],
+    "cast_time": [0, 0, 0, 0, 0],
+    "cooldown": 0,
+    "damage_formula": null,
+    "damage_type": null,
+    "hits": 0,
+    "effects": [
+      {"type": "atk_increase_percent", "value": [5, 10, 15, 20, 25]},
+      {"type": "weapon_break_chance", "value": 0.1}
+    ],
+    "duration": [20, 40, 60, 80, 100]
+  },
+  
+  "AM_ACIDTERROR": {
+    "id": 230,
+    "sp_cost": [15, 15, 15, 15, 15],
+    "cast_time": [1.0, 1.0, 1.0, 1.0, 1.0],
+    "cooldown": 0.5,
+    "damage_formula": "ATK * (1.0 + level * 0.4)",
+    "damage_type": "physical",
+    "element": "neutral",
+    "hits": 1,
+    "effects": [
+      {"type": "armor_break_chance", "value": [3, 7, 10, 12, 13]},
+      {"type": "bleed_chance", "value": 50}
+    ]
+  },
+  "AM_POTIONPITCHER": {
+    "id": 231,
+    "sp_cost": [1, 1, 1, 1, 1],
+    "cast_time": [1.0, 1.0, 1.0, 1.0, 1.0],
+    "cooldown": 0,
+    "damage_formula": "potion_heal * (1.0 + level * 0.1 + INT * 0.01)",
+    "damage_type": "heal",
+    "hits": 1,
+    "effects": []
+  }
+}

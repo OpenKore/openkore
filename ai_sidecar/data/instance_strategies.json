@@ -1,0 +1,428 @@
+{
+  "endless_tower": {
+    "speed_run": false,
+    "full_clear": true,
+    "loot_priority": ["Old Card Album", "Glittering Jacket", "Treasure Box"],
+    "consumable_budget": {
+      "White Potion": 100,
+      "Blue Potion": 50,
+      "Yggdrasil Leaf": 5,
+      "Fly Wing": 20
+    },
+    "death_limit": 5,
+    "floor_strategies": {
+      "1": {
+        "floor_number": 1,
+        "buff_requirements": ["Blessing", "Increase AGI", "Assumptio"],
+        "special_mechanics": ["First floor - prepare buffs"]
+      },
+      "25": {
+        "floor_number": 25,
+        "buff_requirements": ["Assumptio", "Kyrie Eleison", "Aspersio"],
+        "special_mechanics": ["MVP Floor - Amon Ra", "Prepare Yggdrasil Leaf"]
+      },
+      "50": {
+        "floor_number": 50,
+        "buff_requirements": ["Assumptio", "Gloria", "Water Endow"],
+        "special_mechanics": ["MVP Floor - Drake", "Use ranged positioning"]
+      },
+      "75": {
+        "floor_number": 75,
+        "buff_requirements": ["Assumptio", "Magnificat", "Holy Light"],
+        "special_mechanics": ["MVP Floor - Osiris", "Bring Holy Water"]
+      },
+      "100": {
+        "floor_number": 100,
+        "buff_requirements": ["All Available Buffs"],
+        "special_mechanics": ["Final MVP - Naght Sieger", "Maximum preparation required"]
+      }
+    },
+    "boss_strategies": {
+      "Amon Ra": {
+        "boss_name": "Amon Ra",
+        "boss_hp_estimate": 1214138,
+        "phase_triggers": [50.0, 25.0],
+        "phase_mechanics": {
+          "1": ["Normal attacks", "Hell Judgement"],
+          "2": ["Increased casting", "Meteor Storm"],
+          "3": ["Summons Mummy", "AoE spam"]
+        },
+        "positioning": "ranged",
+        "priority_skills": ["Asura Strike", "Soul Breaker", "Acid Demonstration"],
+        "avoid_skills": ["Hell Judgement", "Meteor Storm"],
+        "enrage_timer_seconds": null,
+        "adds_spawn": true,
+        "adds_priority": "kill_after",
+        "safe_zones": [[120, 120], [140, 140]],
+        "danger_zones": [[100, 100]]
+      },
+      "Drake": {
+        "boss_name": "Drake",
+        "boss_hp_estimate": 802340,
+        "phase_triggers": [30.0],
+        "phase_mechanics": {
+          "1": ["Normal melee", "Water Ball"],
+          "2": ["Enrage mode", "Increased damage"]
+        },
+        "positioning": "melee",
+        "priority_skills": ["Mammonite", "Cart Revolution", "Triple Attack"],
+        "avoid_skills": ["Water Ball"],
+        "enrage_timer_seconds": 600,
+        "adds_spawn": false,
+        "adds_priority": "ignore",
+        "safe_zones": [],
+        "danger_zones": []
+      },
+      "Osiris": {
+        "boss_name": "Osiris",
+        "boss_hp_estimate": 415400,
+        "phase_triggers": [50.0],
+        "phase_mechanics": {
+          "1": ["Bash", "Soul Strike"],
+          "2": ["Increased aggression", "Sphinx summons"]
+        },
+        "positioning": "ranged",
+        "priority_skills": ["Meteor Storm", "Lord of Vermillion", "Storm Gust"],
+        "avoid_skills": ["Meteor Storm"],
+        "enrage_timer_seconds": null,
+        "adds_spawn": true,
+        "adds_priority": "kill_first",
+        "safe_zones": [[150, 150]],
+        "danger_zones": []
+      },
+      "Naght Sieger": {
+        "boss_name": "Naght Sieger",
+        "boss_hp_estimate": 3802000,
+        "phase_triggers": [75.0, 50.0, 25.0],
+        "phase_mechanics": {
+          "1": ["Normal attacks", "Dark Strike"],
+          "2": ["Shadow summons", "AoE spam"],
+          "3": ["Darkness Breath", "Mass heal"],
+          "4": ["Berserk mode", "Maximum damage"]
+        },
+        "positioning": "kite",
+        "priority_skills": ["Holy Cross", "Jupitel Thunder", "Champion skills"],
+        "avoid_skills": ["Darkness Breath", "Meteor Storm"],
+        "enrage_timer_seconds": 900,
+        "adds_spawn": true,
+        "adds_priority": "kill_first",
+        "safe_zones": [[180, 180], [200, 200]],
+        "danger_zones": [[100, 100], [120, 120]]
+      }
+    },
+    "tank_duties": ["Maintain aggro", "Position boss", "Protect party"],
+    "healer_duties": ["Heal party", "Remove debuffs", "Resurrection ready"],
+    "dps_duties": ["Focus boss", "Kill adds if priority", "Max damage output"]
+  },
+  "old_glast_heim": {
+    "speed_run": false,
+    "full_clear": true,
+    "loot_priority": ["Temporal Crystal", "Gray Shard", "Coagulated Spell"],
+    "consumable_budget": {
+      "White Potion": 50,
+      "Blue Potion": 30,
+      "Yggdrasil Berry": 2
+    },
+    "death_limit": 3,
+    "floor_strategies": {
+      "1": {
+        "floor_number": 1,
+        "buff_requirements": ["Blessing", "Increase AGI"],
+        "priority_targets": ["Corrupted Raydric"],
+        "special_mechanics": ["Clear path to boss room"]
+      },
+      "2": {
+        "floor_number": 2,
+        "buff_requirements": ["Assumptio", "Kyrie Eleison"],
+        "priority_targets": ["Root of Corruption"],
+        "special_mechanics": ["Boss floor", "Full party coordination"]
+      }
+    },
+    "boss_strategies": {
+      "Corrupted Raydric": {
+        "boss_name": "Corrupted Raydric",
+        "boss_hp_estimate": 500000,
+        "phase_triggers": [],
+        "phase_mechanics": {},
+        "positioning": "melee",
+        "priority_skills": ["Bowling Bash", "Brandish Spear"],
+        "avoid_skills": ["Sonic Blow"],
+        "adds_spawn": false,
+        "adds_priority": "ignore"
+      },
+      "Root of Corruption": {
+        "boss_name": "Root of Corruption",
+        "boss_hp_estimate": 1200000,
+        "phase_triggers": [70.0, 30.0],
+        "phase_mechanics": {
+          "1": ["Normal attacks"],
+          "2": ["Summons adds"],
+          "3": ["Berserk mode"]
+        },
+        "positioning": "ranged",
+        "priority_skills": ["Fire Bolt", "Cold Bolt", "Lightning Bolt"],
+        "avoid_skills": ["AoE attacks"],
+        "adds_spawn": true,
+        "adds_priority": "kill_first"
+      }
+    },
+    "tank_duties": ["Hold boss aggro"],
+    "healer_duties": ["Heal tank", "Sanctuary placement"],
+    "dps_duties": ["Burst damage on boss"]
+  },
+  "nydhogg_nest": {
+    "speed_run": false,
+    "full_clear": true,
+    "loot_priority": ["Nydhogg's Shadow Garb", "Spiritual Ring", "Split Armor of God"],
+    "consumable_budget": {
+      "White Potion": 80,
+      "Blue Potion": 40,
+      "Yggdrasil Seed": 3
+    },
+    "death_limit": 8,
+    "floor_strategies": {
+      "1": {
+        "floor_number": 1,
+        "buff_requirements": ["Full party buffs"],
+        "priority_targets": ["Nydhoggur's Shadow"],
+        "special_mechanics": ["Extremely dangerous", "Party coordination essential"]
+      }
+    },
+    "boss_strategies": {
+      "Nydhoggur Shadow": {
+        "boss_name": "Nydhoggur Shadow",
+        "boss_hp_estimate": 3205000,
+        "phase_triggers": [80.0, 60.0, 40.0, 20.0],
+        "phase_mechanics": {
+          "1": ["Breath attacks"],
+          "2": ["Wing buffet", "Tail swipe"],
+          "3": ["Dragon fear", "Mass debuffs"],
+          "4": ["Summon minions"],
+          "5": ["Enrage - maximum damage"]
+        },
+        "positioning": "ranged",
+        "priority_skills": ["Acid Demonstration", "Soul Breaker", "Storm Gust"],
+        "avoid_skills": ["Breath of Fire", "Dragon Fear"],
+        "enrage_timer_seconds": 1200,
+        "adds_spawn": true,
+        "adds_priority": "kill_first",
+        "safe_zones": [[200, 200], [220, 220]],
+        "danger_zones": [[100, 100], [120, 100]]
+      }
+    },
+    "tank_duties": ["Survive breath attacks", "Position dragon"],
+    "healer_duties": ["Mass heal ready", "Resurrection prepared", "Debuff removal"],
+    "dps_duties": ["Focus on boss", "Kill adds immediately", "Max burst damage"]
+  },
+  "biolabs_3": {
+    "speed_run": true,
+    "full_clear": false,
+    "loot_priority": ["Vanberk Card", "Isilla Card", "Errende Card"],
+    "consumable_budget": {
+      "White Potion": 30,
+      "Blue Potion": 20
+    },
+    "death_limit": 2,
+    "boss_strategies": {
+      "Vanberk": {
+        "boss_name": "Vanberk",
+        "positioning": "melee",
+        "priority_skills": ["Asura Strike"],
+        "adds_spawn": false,
+        "adds_priority": "ignore"
+      },
+      "Isilla": {
+        "boss_name": "Isilla",
+        "positioning": "ranged",
+        "priority_skills": ["Soul Breaker"],
+        "adds_spawn": false,
+        "adds_priority": "ignore"
+      },
+      "Errende Ebecee": {
+        "boss_name": "Errende Ebecee",
+        "positioning": "melee",
+        "priority_skills": ["Bowling Bash"],
+        "adds_spawn": false,
+        "adds_priority": "ignore"
+      }
+    },
+    "tank_duties": [],
+    "healer_duties": [],
+    "dps_duties": ["Speed kill all three bosses"]
+  },
+  "ghost_palace": {
+    "speed_run": false,
+    "full_clear": true,
+    "loot_priority": ["Ghost Palace Treasure", "Royal Jelly", "Cursed Knight Shield"],
+    "consumable_budget": {
+      "White Potion": 70,
+      "Blue Potion": 40,
+      "Holy Water": 10
+    },
+    "death_limit": 5,
+    "boss_strategies": {
+      "Corrupted Wanderer": {
+        "boss_name": "Corrupted Wanderer",
+        "boss_hp_estimate": 800000,
+        "positioning": "ranged",
+        "priority_skills": ["Magnus Exorcismus", "Turn Undead"],
+        "avoid_skills": ["Dark Strike"],
+        "adds_spawn": true,
+        "adds_priority": "kill_after"
+      },
+      "Corrupted Palace Guard": {
+        "boss_name": "Corrupted Palace Guard",
+        "boss_hp_estimate": 1500000,
+        "phase_triggers": [50.0],
+        "phase_mechanics": {
+          "1": ["Shield defend"],
+          "2": ["Berserk - increased attack"]
+        },
+        "positioning": "melee",
+        "priority_skills": ["Pierce", "Bowling Bash"],
+        "adds_spawn": false,
+        "adds_priority": "ignore"
+      }
+    },
+    "tank_duties": ["Control boss positioning"],
+    "healer_duties": ["Heal continuously", "Holy attacks on undead"],
+    "dps_duties": ["Burst damage", "Control adds"]
+  },
+  "sara_memory": {
+    "speed_run": true,
+    "full_clear": false,
+    "loot_priority": ["Temporal Boots", "Sarah's Earrings", "Temporal Crystal"],
+    "consumable_budget": {
+      "White Potion": 40,
+      "Blue Potion": 25,
+      "Yggdrasil Berry": 1
+    },
+    "death_limit": 2,
+    "boss_strategies": {
+      "Awakened Ferre": {
+        "boss_name": "Awakened Ferre",
+        "boss_hp_estimate": 2000000,
+        "phase_triggers": [60.0, 30.0],
+        "phase_mechanics": {
+          "1": ["Normal magic attacks"],
+          "2": ["Summons illusions"],
+          "3": ["Enrage - AoE spam"]
+        },
+        "positioning": "ranged",
+        "priority_skills": ["Soul Breaker", "Asura Strike"],
+        "avoid_skills": ["Meteor Storm", "Storm Gust"],
+        "enrage_timer_seconds": 600,
+        "adds_spawn": true,
+        "adds_priority": "kill_first",
+        "safe_zones": [[200, 150]],
+        "danger_zones": [[100, 100]]
+      }
+    },
+    "tank_duties": [],
+    "healer_duties": [],
+    "dps_duties": ["Solo speed clear", "Dodge AoE", "Burst on adds"]
+  },
+  "faceworm_nest": {
+    "speed_run": false,
+    "full_clear": true,
+    "loot_priority": ["Faceworm Queen Card", "Gigantic Faceworm Skin"],
+    "consumable_budget": {
+      "White Potion": 100,
+      "Blue Potion": 60,
+      "Yggdrasil Seed": 5,
+      "Fly Wing": 10
+    },
+    "death_limit": 10,
+    "boss_strategies": {
+      "Faceworm Queen": {
+        "boss_name": "Faceworm Queen",
+        "boss_hp_estimate": 8500000,
+        "phase_triggers": [80.0, 60.0, 40.0, 20.0],
+        "phase_mechanics": {
+          "1": ["Normal attacks", "Poison breath"],
+          "2": ["Larva summons"],
+          "3": ["Cocoon phase - damage reduction"],
+          "4": ["Mass AoE"],
+          "5": ["Berserk - party wipe potential"]
+        },
+        "positioning": "ranged",
+        "priority_skills": ["Acid Demonstration", "Fire Bolt", "Cold Bolt"],
+        "avoid_skills": ["Poison Breath", "AoE skills"],
+        "enrage_timer_seconds": 1500,
+        "adds_spawn": true,
+        "adds_priority": "kill_first",
+        "safe_zones": [[250, 200], [200, 250]],
+        "danger_zones": [[150, 150]]
+      }
+    },
+    "tank_duties": ["Maintain aggro", "Position away from party", "Survive breath attacks"],
+    "healer_duties": ["Mass heal ready", "Cure poison constantly", "Resurrection on standby"],
+    "dps_duties": ["Burn adds instantly", "Sustained boss damage", "Dodge mechanics"]
+  },
+  "bakonawa_lake": {
+    "speed_run": false,
+    "full_clear": true,
+    "loot_priority": ["Bakonawa Card", "Giggling Box"],
+    "consumable_budget": {
+      "White Potion": 60,
+      "Blue Potion": 35
+    },
+    "death_limit": 6,
+    "boss_strategies": {
+      "Bakonawa": {
+        "boss_name": "Bakonawa",
+        "boss_hp_estimate": 2200000,
+        "phase_triggers": [50.0],
+        "phase_mechanics": {
+          "1": ["Normal attacks", "Water attacks"],
+          "2": ["Tidal wave", "Increased speed"]
+        },
+        "positioning": "ranged",
+        "priority_skills": ["Lightning Bolt", "Jupitel Thunder"],
+        "avoid_skills": ["Tidal Wave"],
+        "adds_spawn": false,
+        "adds_priority": "ignore"
+      }
+    },
+    "tank_duties": ["Control positioning"],
+    "healer_duties": ["Heal burst damage"],
+    "dps_duties": ["Lightning element preferred"]
+  },
+  "central_lab": {
+    "speed_run": false,
+    "full_clear": true,
+    "loot_priority": ["Modified Suit", "Modified Muffler", "Modified Boots"],
+    "consumable_budget": {
+      "White Potion": 120,
+      "Blue Potion": 70,
+      "Yggdrasil Leaf": 3
+    },
+    "death_limit": 12,
+    "boss_strategies": {
+      "MVP Egnigem": {
+        "boss_name": "MVP Egnigem",
+        "positioning": "ranged",
+        "priority_skills": ["Soul Breaker"],
+        "adds_spawn": false,
+        "adds_priority": "ignore"
+      },
+      "MVP Seyren": {
+        "boss_name": "MVP Seyren",
+        "positioning": "melee",
+        "priority_skills": ["Asura Strike"],
+        "adds_spawn": false,
+        "adds_priority": "ignore"
+      },
+      "MVP Kathryne": {
+        "boss_name": "MVP Kathryne",
+        "positioning": "ranged",
+        "priority_skills": ["Storm Gust"],
+        "adds_spawn": false,
+        "adds_priority": "ignore"
+      }
+    },
+    "tank_duties": ["Separate bosses", "Control aggro"],
+    "healer_duties": ["Emergency heal ready", "Dispel boss buffs"],
+    "dps_duties": ["Focus one boss at a time", "Interrupt casting"]
+  }
+}

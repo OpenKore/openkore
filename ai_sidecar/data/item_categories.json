@@ -1,0 +1,93 @@
+{
+  "categories": {
+    "weapons": {
+      "ids": [1101, 1102, 1103, 1104, 1105, 1106, 1107, 1108, 1109, 1110, 1201, 1202, 1203, 1204, 1205, 1301, 1302, 1303, 1304, 1305],
+      "avg_markup": 1.2,
+      "description": "Swords, daggers, maces, axes, and other weapons"
+    },
+    "armor": {
+      "ids": [2101, 2102, 2103, 2104, 2105, 2201, 2202, 2203, 2204, 2205, 2301, 2302, 2303, 2304, 2305],
+      "avg_markup": 1.15,
+      "description": "Armor, shields, garments, and footgear"
+    },
+    "cards": {
+      "ids": [4001, 4002, 4003, 4004, 4005, 4077, 4121, 4123, 4131, 4142, 4367, 4399],
+      "avg_markup": 1.5,
+      "volatile": true,
+      "description": "Monster cards for equipment slotting"
+    },
+    "consumables": {
+      "ids": [501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 601, 602, 603, 604, 605, 645],
+      "avg_markup": 1.1,
+      "description": "Potions, food, and consumable items"
+    },
+    "materials": {
+      "ids": [901, 902, 903, 904, 905, 906, 907, 908, 909, 910, 911, 912, 913, 914, 915, 7001, 7002, 7003],
+      "avg_markup": 1.05,
+      "description": "Crafting materials and drops"
+    },
+    "ammunition": {
+      "ids": [1750, 1751, 1752, 1753, 1754, 1755, 1756, 1757, 1758, 1759, 1760, 1761, 1762, 1763, 1764, 1765],
+      "avg_markup": 1.08,
+      "description": "Arrows and ammunition"
+    },
+    "headgear": {
+      "ids": [2201, 2202, 2203, 2204, 2205, 2206, 2207, 2208, 2209, 2210, 5001, 5002, 5003, 5004, 5005],
+      "avg_markup": 1.3,
+      "description": "Upper, middle, and lower headgear"
+    },
+    "accessories": {
+      "ids": [2601, 2602, 2603, 2604, 2605, 2606, 2607, 2608, 2609, 2610, 2611, 2612, 2613, 2614, 2615],
+      "avg_markup": 1.25,
+      "description": "Rings, earrings, and accessories"
+    }
+  },
+  "high_value_items": [
+    4001, 4002, 4003, 4004, 4077, 4121, 4123, 4131, 4142, 4367, 4399,
+    2357, 2421, 1185, 1234, 1264, 1365, 1472, 1522, 1620, 1630
+  ],
+  "seasonal_items": {
+    "halloween": {
+      "items": [5186, 5187, 5188, 5189],
+      "period": "October 20-31",
+      "price_multiplier": 1.5
+    },
+    "christmas": {
+      "items": [5190, 5191, 5192, 5193],
+      "period": "December 15-31",
+      "price_multiplier": 1.4
+    },
+    "valentines": {
+      "items": [7182, 7183, 7184],
+      "period": "February 10-20",
+      "price_multiplier": 1.3
+    },
+    "summer": {
+      "items": [5194, 5195, 5196],
+      "period": "June-August",
+      "price_multiplier": 1.2
+    }
+  },
+  "mvp_cards": {
+    "god_tier": [4121, 4123, 4131, 4142, 4367, 4399],
+    "high_tier": [4077, 4118, 4128, 4132, 4134, 4135, 4143, 4144, 4145, 4146, 4147, 4148],
+    "mid_tier": [4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010]
+  },
+  "investment_categories": {
+    "safe": {
+      "categories": ["consumables", "materials"],
+      "expected_roi": 0.05,
+      "risk_level": 0.1
+    },
+    "moderate": {
+      "categories": ["weapons", "armor", "accessories"],
+      "expected_roi": 0.15,
+      "risk_level": 0.3
+    },
+    "aggressive": {
+      "categories": ["cards", "headgear"],
+      "expected_roi": 0.30,
+      "risk_level": 0.6
+    }
+  }
+}

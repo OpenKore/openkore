@@ -49,3 +49,113 @@ tables/**/npcs.txt
 tables/**/monsters.txt
 *.xpm
 *.weight
+
+
+# ================================
+# Python AI Sidecar Ignores
+# ================================
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Type checking
+.mypy_cache/
+.ruff_cache/
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ================================
+# Virtual Environments
+# ================================
+.venv/
+venv/
+ENV/
+env/
+.env
+*.env
+.env.local
+.env.*.local
+
+# ================================
+# IDE / Editor Ignores
+# ================================
+.vscode/
+.idea/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+
+# ================================
+# OS-Specific Ignores
+# ================================
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ================================
+# AI Sidecar Specific
+# ================================
+
+# Database files
+ai_sidecar/data/*.db
+ai_sidecar/data/*.sqlite
+ai_sidecar/data/*.sqlite3
+
+# Logs and runtime
+ai_sidecar/logs/
+ai_sidecar/.cache/
+*.log
+*.pid
+*.sock
+
+# ================================
+# ML / Model Files
+# ================================
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.onnx
+*.pt
+*.pth
+models/
+
+# ================================
+# Secrets and Credentials
+# ================================
+*.pem
+*.key
+secrets.json
+credentials.json
+.secrets/

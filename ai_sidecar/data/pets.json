@@ -1,0 +1,162 @@
+{
+  "poring": {
+    "food": "Apple Juice",
+    "capture_rate": 0.20,
+    "intimacy_bonus_threshold": 910,
+    "evolution": {"target": "drops", "item": "Unripe Apple"},
+    "skills": ["Heal"],
+    "stat_bonus": {"luk": 2, "crit": 1}
+  },
+  "drops": {
+    "food": "Orange Juice",
+    "capture_rate": 0.15,
+    "intimacy_bonus_threshold": 910,
+    "evolution": {"target": "poporing", "item": "Bitter Herb"},
+    "skills": ["Heal"],
+    "stat_bonus": {"dex": 1, "hit": 3}
+  },
+  "poporing": {
+    "food": "Green Herb",
+    "capture_rate": 0.10,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Heal", "Poison Attack"],
+    "stat_bonus": {"vit": 1, "poison_resist": 5}
+  },
+  "lunatic": {
+    "food": "Carrot Juice",
+    "capture_rate": 0.25,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Flee"],
+    "stat_bonus": {"luk": 3}
+  },
+  "picky": {
+    "food": "Earthworm",
+    "capture_rate": 0.25,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Peck"],
+    "stat_bonus": {"str": 1}
+  },
+  "chonchon": {
+    "food": "Pet Food",
+    "capture_rate": 0.20,
+    "intimacy_bonus_threshold": 910,
+    "evolution": {"target": "steel_chonchon", "item": "Rusty Iron"},
+    "skills": ["Speed Up"],
+    "stat_bonus": {"agi": 1, "flee": 2}
+  },
+  "steel_chonchon": {
+    "food": "Iron Ore",
+    "capture_rate": 0.12,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Speed Up", "Defense"],
+    "stat_bonus": {"def": 2, "flee": 2}
+  },
+  "hunter_fly": {
+    "food": "Monster Juice",
+    "capture_rate": 0.08,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Leech"],
+    "stat_bonus": {"agi": 2, "aspd": 1}
+  },
+  "rocker": {
+    "food": "Singing Plant",
+    "capture_rate": 0.18,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Shock"],
+    "stat_bonus": {"int": 1, "matk": 1}
+  },
+  "spore": {
+    "food": "Pet Food",
+    "capture_rate": 0.20,
+    "intimacy_bonus_threshold": 910,
+    "evolution": {"target": "poison_spore", "item": "Poison Spore"},
+    "skills": ["Poison Attack"],
+    "stat_bonus": {"vit": 1, "hp": 50}
+  },
+  "poison_spore": {
+    "food": "Pet Food",
+    "capture_rate": 0.12,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Poison Attack", "Defense"],
+    "stat_bonus": {"vit": 2, "poison_resist": 10}
+  },
+  "yoyo": {
+    "food": "Banana Juice",
+    "capture_rate": 0.15,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Item Loot"],
+    "stat_bonus": {"perfect_dodge": 2, "crit": 2}
+  },
+  "smokie": {
+    "food": "Sweet Potato",
+    "capture_rate": 0.12,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Hide"],
+    "stat_bonus": {"agi": 1, "perfect_dodge": 1}
+  },
+  "sohee": {
+    "food": "Orange Juice",
+    "capture_rate": 0.10,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["SP Recovery"],
+    "stat_bonus": {"sp": 100, "sp_regen": 1}
+  },
+  "isis": {
+    "food": "Pet Food",
+    "capture_rate": 0.10,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Magic Attack"],
+    "stat_bonus": {"int": 2, "matk": 1}
+  },
+  "petite": {
+    "food": "Pet Food",
+    "capture_rate": 0.08,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Defense Boost"],
+    "stat_bonus": {"vit": 1, "def": 3}
+  },
+  "deviruchi": {
+    "food": "Shoot",
+    "capture_rate": 0.05,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Magic Attack", "Evil Eye"],
+    "stat_bonus": {"str": 1, "int": 1, "atk": 1, "matk": 1}
+  },
+  "baphomet_jr": {
+    "food": "Honey",
+    "capture_rate": 0.05,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Power Attack"],
+    "stat_bonus": {"str": 1, "dex": 2, "atk": 2}
+  },
+  "succubus": {
+    "food": "Hot Blood",
+    "capture_rate": 0.03,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Drain", "Charm"],
+    "stat_bonus": {"vit": 1, "hp": 100}
+  },
+  "incubus": {
+    "food": "Vital Flower",
+    "capture_rate": 0.03,
+    "intimacy_bonus_threshold": 910,
+    "evolution": null,
+    "skills": ["Dark Strike"],
+    "stat_bonus": {"int": 1, "sp": 50}
+  }
+}

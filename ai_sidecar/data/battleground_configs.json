@@ -1,0 +1,205 @@
+{
+  "modes": {
+    "tierra": {
+      "mode_id": "tierra_canyon",
+      "full_name": "Tierra Canyon",
+      "objective": "capture_flag",
+      "team_size": 15,
+      "duration_minutes": 20,
+      "score_to_win": 3,
+      "map": "bat_a01",
+      "spawn_positions": {
+        "guillaume": [50, 374],
+        "croix": [342, 16]
+      },
+      "flag_positions": {
+        "guillaume": [50, 374],
+        "croix": [342, 16]
+      },
+      "base_positions": {
+        "guillaume": [50, 374],
+        "croix": [342, 16]
+      },
+      "strategic_points": [
+        {"position": [175, 195], "name": "center", "importance": 10},
+        {"position": [100, 280], "name": "mid_left", "importance": 7},
+        {"position": [250, 110], "name": "mid_right", "importance": 7}
+      ],
+      "rewards": {
+        "winner_badges": 3,
+        "loser_badges": 1,
+        "mvp_bonus": 1
+      }
+    },
+    "flavius_td": {
+      "mode_id": "flavius_team_deathmatch",
+      "full_name": "Flavius Team Deathmatch",
+      "objective": "team_deathmatch",
+      "team_size": 13,
+      "duration_minutes": 15,
+      "score_to_win": 99,
+      "map": "bat_b01",
+      "spawn_positions": {
+        "guillaume": [390, 10],
+        "croix": [10, 290]
+      },
+      "strategic_points": [
+        {"position": [200, 150], "name": "center", "importance": 10},
+        {"position": [300, 50], "name": "guillaume_side", "importance": 5},
+        {"position": [100, 250], "name": "croix_side", "importance": 5}
+      ],
+      "rewards": {
+        "winner_badges": 2,
+        "loser_badges": 1,
+        "mvp_bonus": 1
+      }
+    },
+    "flavius_ctf": {
+      "mode_id": "flavius_capture_flag",
+      "full_name": "Flavius Capture the Flag",
+      "objective": "capture_flag",
+      "team_size": 13,
+      "duration_minutes": 20,
+      "score_to_win": 3,
+      "map": "bat_b02",
+      "spawn_positions": {
+        "guillaume": [390, 10],
+        "croix": [10, 290]
+      },
+      "flag_positions": {
+        "guillaume": [390, 10],
+        "croix": [10, 290]
+      },
+      "base_positions": {
+        "guillaume": [390, 10],
+        "croix": [10, 290]
+      },
+      "strategic_points": [
+        {"position": [200, 150], "name": "center", "importance": 10}
+      ],
+      "rewards": {
+        "winner_badges": 3,
+        "loser_badges": 1,
+        "mvp_bonus": 1
+      }
+    },
+    "kvm": {
+      "mode_id": "krieger_von_midgard",
+      "full_name": "Krieger von Midgard",
+      "objective": "domination",
+      "team_size": 5,
+      "duration_minutes": 5,
+      "score_to_win": 5,
+      "map": "bat_c01",
+      "spawn_positions": {
+        "guillaume": [53, 128],
+        "croix": [146, 55]
+      },
+      "control_points": [
+        {"position": [100, 90], "name": "center", "importance": 10}
+      ],
+      "strategic_points": [
+        {"position": [100, 90], "name": "center", "importance": 10}
+      ],
+      "rewards": {
+        "winner_badges": 1,
+        "loser_badges": 0,
+        "mvp_bonus": 1
+      },
+      "special_rules": [
+        "Fast-paced 5v5",
+        "No respawn delay",
+        "First to 5 points wins"
+      ]
+    },
+    "eos": {
+      "mode_id": "eye_of_storm",
+      "full_name": "Eye of Storm",
+      "objective": "conquest",
+      "team_size": 10,
+      "duration_minutes": 20,
+      "score_to_win": 1500,
+      "map": "bat_c02",
+      "spawn_positions": {
+        "guillaume": [50, 374],
+        "croix": [342, 16]
+      },
+      "control_points": [
+        {"position": [100, 200], "name": "north", "importance": 8},
+        {"position": [200, 100], "name": "east", "importance": 8},
+        {"position": [100, 100], "name": "south", "importance": 8},
+        {"position": [200, 200], "name": "west", "importance": 8}
+      ],
+      "strategic_points": [
+        {"position": [150, 150], "name": "center", "importance": 10}
+      ],
+      "rewards": {
+        "winner_badges": 3,
+        "loser_badges": 1,
+        "mvp_bonus": 2
+      },
+      "special_rules": [
+        "Hold bases to gain points",
+        "More bases = faster points",
+        "First to 1500 points wins"
+      ]
+    },
+    "conquest": {
+      "mode_id": "conquest",
+      "full_name": "Conquest",
+      "objective": "conquest",
+      "team_size": 12,
+      "duration_minutes": 25,
+      "score_to_win": 2000,
+      "map": "bat_c03",
+      "spawn_positions": {
+        "guillaume": [50, 374],
+        "croix": [342, 16]
+      },
+      "control_points": [
+        {"position": [150, 300], "name": "north_base", "importance": 10},
+        {"position": [250, 150], "name": "east_base", "importance": 10},
+        {"position": [150, 100], "name": "south_base", "importance": 10},
+        {"position": [50, 150], "name": "west_base", "importance": 10},
+        {"position": [175, 195], "name": "center", "importance": 15}
+      ],
+      "strategic_points": [
+        {"position": [175, 195], "name": "center", "importance": 15}
+      ],
+      "rewards": {
+        "winner_badges": 4,
+        "loser_badges": 1,
+        "mvp_bonus": 2
+      },
+      "special_rules": [
+        "5 capture points",
+        "Control majority for points",
+        "Center gives double points"
+      ]
+    }
+  },
+  "general_rules": {
+    "death_penalty_seconds": 15,
+    "respawn_immunity_seconds": 5,
+    "afk_kick_minutes": 3,
+    "deserter_penalty_minutes": 5,
+    "max_consumable_items": 100
+  },
+  "rewards": {
+    "badges": {
+      "valor": "Valor Badge",
+      "bravery": "Bravery Badge",
+      "heroism": "Heroism Badge"
+    },
+    "conversion_rate": {
+      "valor_to_bravery": 5,
+      "bravery_to_heroism": 5
+    }
+  },
+  "queue_requirements": {
+    "min_level": 80,
+    "max_level": 175,
+    "party_allowed": false,
+    "guild_restriction": false
+  }
+}

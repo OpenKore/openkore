@@ -1,0 +1,116 @@
+{
+  "profiles": {
+    "beginner": {
+      "profile_name": "Beginner Player",
+      "min_reaction_ms": 300,
+      "max_reaction_ms": 800,
+      "fatigue_multiplier_per_hour": 0.1,
+      "typo_chance": 0.05,
+      "misclick_chance": 0.03,
+      "micro_delay_chance": 0.4,
+      "consecutive_action_speedup": 0.95,
+      "description": "New or inexperienced player with slower reactions"
+    },
+    "average": {
+      "profile_name": "Average Player",
+      "min_reaction_ms": 200,
+      "max_reaction_ms": 500,
+      "fatigue_multiplier_per_hour": 0.08,
+      "typo_chance": 0.02,
+      "misclick_chance": 0.01,
+      "micro_delay_chance": 0.3,
+      "consecutive_action_speedup": 0.9,
+      "description": "Typical player with moderate experience"
+    },
+    "experienced": {
+      "profile_name": "Experienced Player",
+      "min_reaction_ms": 150,
+      "max_reaction_ms": 350,
+      "fatigue_multiplier_per_hour": 0.05,
+      "typo_chance": 0.01,
+      "misclick_chance": 0.005,
+      "micro_delay_chance": 0.25,
+      "consecutive_action_speedup": 0.85,
+      "description": "Skilled player with good muscle memory"
+    },
+    "pro": {
+      "profile_name": "Professional Player",
+      "min_reaction_ms": 100,
+      "max_reaction_ms": 250,
+      "fatigue_multiplier_per_hour": 0.03,
+      "typo_chance": 0.005,
+      "misclick_chance": 0.002,
+      "micro_delay_chance": 0.2,
+      "consecutive_action_speedup": 0.8,
+      "description": "Elite player with exceptional reflexes"
+    },
+    "casual": {
+      "profile_name": "Casual Player",
+      "min_reaction_ms": 250,
+      "max_reaction_ms": 600,
+      "fatigue_multiplier_per_hour": 0.12,
+      "typo_chance": 0.03,
+      "misclick_chance": 0.02,
+      "micro_delay_chance": 0.45,
+      "consecutive_action_speedup": 0.92,
+      "description": "Relaxed player, not always fully focused"
+    }
+  },
+  "time_of_day_factors": {
+    "0-6": 1.3,
+    "6-8": 1.15,
+    "8-10": 1.05,
+    "10-14": 1.0,
+    "14-16": 1.05,
+    "16-18": 1.0,
+    "18-20": 0.95,
+    "20-22": 1.0,
+    "22-24": 1.2
+  },
+  "reaction_type_ranges": {
+    "instant": {
+      "min_ms": 100,
+      "max_ms": 200,
+      "description": "Emergency reactions (dodge, emergency heal)"
+    },
+    "quick": {
+      "min_ms": 200,
+      "max_ms": 400,
+      "description": "Practiced actions (attack, common skills)"
+    },
+    "normal": {
+      "min_ms": 400,
+      "max_ms": 800,
+      "description": "Average responses (general actions)"
+    },
+    "considered": {
+      "min_ms": 800,
+      "max_ms": 1500,
+      "description": "Requires thinking (complex decisions)"
+    },
+    "distracted": {
+      "min_ms": 1500,
+      "max_ms": 3000,
+      "description": "Multi-tasking or distracted"
+    },
+    "afk_return": {
+      "min_ms": 3000,
+      "max_ms": 10000,
+      "description": "Coming back from being AFK"
+    }
+  },
+  "typing_speed_wpm": {
+    "slow": {"min": 25, "max": 40},
+    "average": {"min": 40, "max": 60},
+    "fast": {"min": 60, "max": 80},
+    "very_fast": {"min": 80, "max": 100}
+  },
+  "fatigue_thresholds": {
+    "none": {"hours": 0, "multiplier": 1.0},
+    "slight": {"hours": 1, "multiplier": 1.05},
+    "moderate": {"hours": 2, "multiplier": 1.15},
+    "significant": {"hours": 4, "multiplier": 1.25},
+    "severe": {"hours": 6, "multiplier": 1.4},
+    "extreme": {"hours": 8, "multiplier": 1.5}
+  }
+}

@@ -1,0 +1,310 @@
+{
+  "achievements": [
+    {
+      "achievement_id": 101,
+      "achievement_name": "Monster Slayer I",
+      "category": "battle",
+      "tier": "bronze",
+      "description": "Kill 1000 monsters",
+      "target_value": 1000,
+      "title_reward": "Monster Slayer",
+      "achievement_points": 10
+    },
+    {
+      "achievement_id": 102,
+      "achievement_name": "Monster Slayer II",
+      "category": "battle",
+      "tier": "silver",
+      "description": "Kill 10000 monsters",
+      "target_value": 10000,
+      "title_reward": "Monster Hunter",
+      "achievement_points": 25
+    },
+    {
+      "achievement_id": 103,
+      "achievement_name": "Monster Slayer III",
+      "category": "battle",
+      "tier": "gold",
+      "description": "Kill 50000 monsters",
+      "target_value": 50000,
+      "title_reward": "Monster Exterminator",
+      "achievement_points": 50
+    },
+    {
+      "achievement_id": 104,
+      "achievement_name": "Monster Slayer IV",
+      "category": "battle",
+      "tier": "platinum",
+      "description": "Kill 100000 monsters",
+      "target_value": 100000,
+      "title_reward": "Monster Annihilator",
+      "achievement_points": 100
+    },
+    {
+      "achievement_id": 105,
+      "achievement_name": "Boss Hunter I",
+      "category": "battle",
+      "tier": "silver",
+      "description": "Defeat 10 boss monsters",
+      "target_value": 10,
+      "title_reward": "Boss Challenger",
+      "achievement_points": 20
+    },
+    {
+      "achievement_id": 106,
+      "achievement_name": "Boss Hunter II",
+      "category": "battle",
+      "tier": "gold",
+      "description": "Defeat 50 boss monsters",
+      "target_value": 50,
+      "title_reward": "Boss Conqueror",
+      "achievement_points": 50
+    },
+    {
+      "achievement_id": 107,
+      "achievement_name": "MVP Slayer",
+      "category": "battle",
+      "tier": "platinum",
+      "description": "Defeat 10 MVP monsters",
+      "target_value": 10,
+      "title_reward": "MVP Hunter",
+      "achievement_points": 100,
+      "item_rewards": [[617, 5]]
+    },
+    {
+      "achievement_id": 201,
+      "achievement_name": "World Traveler I",
+      "category": "adventure",
+      "tier": "bronze",
+      "description": "Visit 10 different maps",
+      "target_value": 10,
+      "achievement_points": 5
+    },
+    {
+      "achievement_id": 202,
+      "achievement_name": "World Traveler II",
+      "category": "adventure",
+      "tier": "silver",
+      "description": "Visit 50 different maps",
+      "target_value": 50,
+      "title_reward": "Explorer",
+      "achievement_points": 15
+    },
+    {
+      "achievement_id": 203,
+      "achievement_name": "World Traveler III",
+      "category": "adventure",
+      "tier": "gold",
+      "description": "Visit 100 different maps",
+      "target_value": 100,
+      "title_reward": "Master Explorer",
+      "achievement_points": 30
+    },
+    {
+      "achievement_id": 204,
+      "achievement_name": "Dungeon Crawler I",
+      "category": "adventure",
+      "tier": "bronze",
+      "description": "Enter 5 different dungeons",
+      "target_value": 5,
+      "achievement_points": 10
+    },
+    {
+      "achievement_id": 205,
+      "achievement_name": "Dungeon Crawler II",
+      "category": "adventure",
+      "tier": "silver",
+      "description": "Enter 20 different dungeons",
+      "target_value": 20,
+      "title_reward": "Dungeon Explorer",
+      "achievement_points": 25
+    },
+    {
+      "achievement_id": 301,
+      "achievement_name": "Wealthy I",
+      "category": "collection",
+      "tier": "bronze",
+      "description": "Accumulate 1,000,000 Zeny",
+      "target_value": 1000000,
+      "achievement_points": 10
+    },
+    {
+      "achievement_id": 302,
+      "achievement_name": "Wealthy II",
+      "category": "collection",
+      "tier": "silver",
+      "description": "Accumulate 10,000,000 Zeny",
+      "target_value": 10000000,
+      "title_reward": "Merchant Prince",
+      "achievement_points": 25
+    },
+    {
+      "achievement_id": 303,
+      "achievement_name": "Wealthy III",
+      "category": "collection",
+      "tier": "gold",
+      "description": "Accumulate 100,000,000 Zeny",
+      "target_value": 100000000,
+      "title_reward": "Tycoon",
+      "achievement_points": 50
+    },
+    {
+      "achievement_id": 304,
+      "achievement_name": "Card Collector I",
+      "category": "collection",
+      "tier": "bronze",
+      "description": "Collect 10 different cards",
+      "target_value": 10,
+      "achievement_points": 15
+    },
+    {
+      "achievement_id": 305,
+      "achievement_name": "Card Collector II",
+      "category": "collection",
+      "tier": "silver",
+      "description": "Collect 50 different cards",
+      "target_value": 50,
+      "title_reward": "Card Collector",
+      "achievement_points": 35
+    },
+    {
+      "achievement_id": 306,
+      "achievement_name": "Card Collector III",
+      "category": "collection",
+      "tier": "gold",
+      "description": "Collect 100 different cards",
+      "target_value": 100,
+      "title_reward": "Card Master",
+      "achievement_points": 75
+    },
+    {
+      "achievement_id": 401,
+      "achievement_name": "Social Butterfly I",
+      "category": "social",
+      "tier": "bronze",
+      "description": "Join a party 10 times",
+      "target_value": 10,
+      "achievement_points": 5
+    },
+    {
+      "achievement_id": 402,
+      "achievement_name": "Social Butterfly II",
+      "category": "social",
+      "tier": "silver",
+      "description": "Join a party 50 times",
+      "target_value": 50,
+      "title_reward": "Party Animal",
+      "achievement_points": 15
+    },
+    {
+      "achievement_id": 403,
+      "achievement_name": "Guild Member",
+      "category": "social",
+      "tier": "bronze",
+      "description": "Join a guild",
+      "target_value": 1,
+      "title_reward": "Guild Member",
+      "achievement_points": 10
+    },
+    {
+      "achievement_id": 404,
+      "achievement_name": "War Hero I",
+      "category": "social",
+      "tier": "gold",
+      "description": "Participate in 10 WoE sessions",
+      "target_value": 10,
+      "title_reward": "War Hero",
+      "achievement_points": 50
+    },
+    {
+      "achievement_id": 501,
+      "achievement_name": "Job Master: First Class",
+      "category": "job",
+      "tier": "silver",
+      "description": "Reach Job Level 50 as a 1st class",
+      "target_value": 50,
+      "title_reward": "Job Expert",
+      "achievement_points": 20
+    },
+    {
+      "achievement_id": 502,
+      "achievement_name": "Job Master: Second Class",
+      "category": "job",
+      "tier": "gold",
+      "description": "Reach Job Level 70 as a 2nd class",
+      "target_value": 70,
+      "title_reward": "Job Master",
+      "achievement_points": 40
+    },
+    {
+      "achievement_id": 503,
+      "achievement_name": "Multi-Class Hero",
+      "category": "job",
+      "tier": "platinum",
+      "description": "Max out 3 different job classes",
+      "target_value": 3,
+      "title_reward": "Multi-Class Hero",
+      "achievement_points": 150
+    },
+    {
+      "achievement_id": 601,
+      "achievement_name": "Quest Enthusiast I",
+      "category": "special",
+      "tier": "bronze",
+      "description": "Complete 10 quests",
+      "target_value": 10,
+      "achievement_points": 10
+    },
+    {
+      "achievement_id": 602,
+      "achievement_name": "Quest Enthusiast II",
+      "category": "special",
+      "tier": "silver",
+      "description": "Complete 50 quests",
+      "target_value": 50,
+      "title_reward": "Quest Master",
+      "achievement_points": 30
+    },
+    {
+      "achievement_id": 603,
+      "achievement_name": "Quest Enthusiast III",
+      "category": "special",
+      "tier": "gold",
+      "description": "Complete 100 quests",
+      "target_value": 100,
+      "title_reward": "Quest Legend",
+      "achievement_points": 60
+    },
+    {
+      "achievement_id": 604,
+      "achievement_name": "Daily Dedication",
+      "category": "special",
+      "tier": "silver",
+      "description": "Complete daily quests for 30 days",
+      "target_value": 30,
+      "title_reward": "Dedicated",
+      "achievement_points": 40
+    },
+    {
+      "achievement_id": 605,
+      "achievement_name": "Instance Master",
+      "category": "special",
+      "tier": "gold",
+      "description": "Complete 50 instance runs",
+      "target_value": 50,
+      "title_reward": "Instance Master",
+      "achievement_points": 50
+    },
+    {
+      "achievement_id": 606,
+      "achievement_name": "Endless Tower Climber",
+      "category": "special",
+      "tier": "platinum",
+      "description": "Reach floor 100 in Endless Tower",
+      "target_value": 100,
+      "title_reward": "Tower Conqueror",
+      "achievement_points": 100,
+      "item_rewards": [[617, 10]]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "locations": [
+    {
+      "map": "prontera",
+      "x": 155,
+      "y": 180,
+      "traffic_score": 95,
+      "competition_count": 25,
+      "avg_sales_per_hour": 8.5,
+      "category_preference": ["weapons", "armor", "accessories"]
+    },
+    {
+      "map": "prontera",
+      "x": 165,
+      "y": 175,
+      "traffic_score": 90,
+      "competition_count": 30,
+      "avg_sales_per_hour": 7.2,
+      "category_preference": ["cards", "headgear"]
+    },
+    {
+      "map": "prontera",
+      "x": 145,
+      "y": 185,
+      "traffic_score": 85,
+      "competition_count": 20,
+      "avg_sales_per_hour": 6.8,
+      "category_preference": ["consumables", "materials"]
+    },
+    {
+      "map": "geffen",
+      "x": 120,
+      "y": 80,
+      "traffic_score": 75,
+      "competition_count": 15,
+      "avg_sales_per_hour": 5.5,
+      "category_preference": ["weapons", "cards"]
+    },
+    {
+      "map": "morocc",
+      "x": 160,
+      "y": 95,
+      "traffic_score": 70,
+      "competition_count": 12,
+      "avg_sales_per_hour": 4.8,
+      "category_preference": ["armor", "accessories"]
+    },
+    {
+      "map": "payon",
+      "x": 175,
+      "y": 135,
+      "traffic_score": 65,
+      "competition_count": 10,
+      "avg_sales_per_hour": 4.2,
+      "category_preference": ["ammunition", "materials"]
+    },
+    {
+      "map": "alberta",
+      "x": 120,
+      "y": 65,
+      "traffic_score": 60,
+      "competition_count": 8,
+      "avg_sales_per_hour": 3.5,
+      "category_preference": ["consumables", "materials"]
+    },
+    {
+      "map": "izlude",
+      "x": 135,
+      "y": 120,
+      "traffic_score": 55,
+      "competition_count": 6,
+      "avg_sales_per_hour": 3.0,
+      "category_preference": ["weapons", "ammunition"]
+    }
+  ],
+  "location_notes": {
+    "prontera": "Capital city - highest traffic, most competition",
+    "geffen": "Magic city - good for magic items",
+    "morocc": "Desert city - moderate traffic",
+    "payon": "Archer town - good for bows and arrows",
+    "alberta": "Port city - materials and consumables",
+    "izlude": "Swordsman town - weapons and armor"
+  }
+}

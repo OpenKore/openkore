@@ -1,0 +1,49 @@
+{
+  "periods": {
+    "dawn": {
+      "start_hour": 5,
+      "end_hour": 6,
+      "is_day": true,
+      "description": "Early morning transition period"
+    },
+    "morning": {
+      "start_hour": 7,
+      "end_hour": 11,
+      "is_day": true,
+      "description": "Full morning period"
+    },
+    "noon": {
+      "start_hour": 12,
+      "end_hour": 13,
+      "is_day": true,
+      "description": "Midday peak period"
+    },
+    "afternoon": {
+      "start_hour": 14,
+      "end_hour": 17,
+      "is_day": true,
+      "description": "Afternoon period"
+    },
+    "dusk": {
+      "start_hour": 18,
+      "end_hour": 19,
+      "is_day": false,
+      "description": "Evening transition period"
+    },
+    "evening": {
+      "start_hour": 20,
+      "end_hour": 23,
+      "is_day": false,
+      "description": "Night period"
+    },
+    "night": {
+      "start_hour": 0,
+      "end_hour": 4,
+      "is_day": false,
+      "description": "Deep night period"
+    }
+  },
+  "game_time_ratio": 4,
+  "real_hours_per_game_day": 6,
+  "notes": "RO uses 4:1 ratio - 1 real hour = 4 game hours, completing 1 full day cycle every 6 real hours"
+}

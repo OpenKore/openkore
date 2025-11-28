@@ -1,0 +1,116 @@
+{
+  "melee_dps": {
+    "build_name": "Melee DPS",
+    "description": "Physical damage dealer focusing on ATK and ASPD",
+    "priority_stats": ["STR", "AGI", "DEX"],
+    "priority_equipment": {
+      "weapon": {
+        "priorities": ["atk", "slots", "aspd_bonus"],
+        "recommended_cards": [4054, 4062, 4108]
+      },
+      "armor": {
+        "priorities": ["defense", "str_bonus", "agi_bonus"],
+        "recommended_cards": [4019, 4003]
+      },
+      "accessories": {
+        "priorities": ["str_bonus", "atk", "crit_bonus"],
+        "recommended_cards": []
+      }
+    }
+  },
+  "tank": {
+    "build_name": "Tank",
+    "description": "High defense and HP for survival",
+    "priority_stats": ["VIT", "STR", "DEX"],
+    "priority_equipment": {
+      "weapon": {
+        "priorities": ["defense", "vit_bonus"],
+        "recommended_cards": [4062]
+      },
+      "armor": {
+        "priorities": ["defense", "vit_bonus", "hp_bonus"],
+        "recommended_cards": [4019, 4003]
+      },
+      "shield": {
+        "priorities": ["defense", "mdef", "vit_bonus"],
+        "recommended_cards": []
+      }
+    }
+  },
+  "magic_dps": {
+    "build_name": "Magic DPS",
+    "description": "Magic damage dealer focusing on MATK and INT",
+    "priority_stats": ["INT", "DEX", "VIT"],
+    "priority_equipment": {
+      "weapon": {
+        "priorities": ["matk", "int_bonus", "dex_bonus"],
+        "recommended_cards": []
+      },
+      "armor": {
+        "priorities": ["int_bonus", "sp_bonus", "mdef"],
+        "recommended_cards": [4031]
+      },
+      "accessories": {
+        "priorities": ["int_bonus", "matk", "sp_bonus"],
+        "recommended_cards": [4002]
+      }
+    }
+  },
+  "support": {
+    "build_name": "Support",
+    "description": "Healing and buffing support role",
+    "priority_stats": ["INT", "DEX", "VIT"],
+    "priority_equipment": {
+      "weapon": {
+        "priorities": ["matk", "int_bonus", "dex_bonus"],
+        "recommended_cards": []
+      },
+      "armor": {
+        "priorities": ["int_bonus", "vit_bonus", "sp_bonus"],
+        "recommended_cards": [4003, 4031]
+      },
+      "accessories": {
+        "priorities": ["int_bonus", "sp_bonus"],
+        "recommended_cards": []
+      }
+    }
+  },
+  "ranged_dps": {
+    "build_name": "Ranged DPS",
+    "description": "Ranged physical damage dealer",
+    "priority_stats": ["DEX", "AGI", "STR"],
+    "priority_equipment": {
+      "weapon": {
+        "priorities": ["atk", "dex_bonus", "slots"],
+        "recommended_cards": [4054, 4041]
+      },
+      "armor": {
+        "priorities": ["dex_bonus", "agi_bonus", "defense"],
+        "recommended_cards": [4080]
+      },
+      "accessories": {
+        "priorities": ["dex_bonus", "atk", "agi_bonus"],
+        "recommended_cards": [4004]
+      }
+    }
+  },
+  "hybrid": {
+    "build_name": "Hybrid",
+    "description": "Balanced build for versatility",
+    "priority_stats": ["ALL"],
+    "priority_equipment": {
+      "weapon": {
+        "priorities": ["atk", "matk", "slots"],
+        "recommended_cards": [4054]
+      },
+      "armor": {
+        "priorities": ["defense", "hp_bonus"],
+        "recommended_cards": [4019]
+      },
+      "accessories": {
+        "priorities": ["slots"],
+        "recommended_cards": []
+      }
+    }
+  }
+}

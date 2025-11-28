@@ -1,0 +1,145 @@
+{
+  "weekday_patterns": {
+    "typical_start_hours": [18, 19, 20, 21, 22],
+    "typical_end_hours": [22, 23, 0, 1],
+    "average_session_minutes": 120,
+    "max_session_minutes": 240,
+    "min_session_minutes": 30,
+    "description": "Working days - typically evening play sessions"
+  },
+  "weekend_patterns": {
+    "typical_start_hours": [10, 11, 12, 14, 15, 16, 17, 18, 19],
+    "typical_end_hours": [23, 0, 1, 2],
+    "average_session_minutes": 180,
+    "max_session_minutes": 360,
+    "min_session_minutes": 60,
+    "description": "Weekends - longer, more flexible sessions"
+  },
+  "break_patterns": {
+    "short_break_after_minutes": 45,
+    "short_break_duration_seconds": [30, 120],
+    "short_break_probability": 0.3,
+    "long_break_after_minutes": 120,
+    "long_break_duration_seconds": [300, 900],
+    "long_break_probability": 0.6,
+    "bathroom_break_interval_minutes": [60, 180],
+    "bathroom_break_duration_seconds": [60, 300],
+    "bathroom_break_probability": 0.2,
+    "description": "Natural break patterns humans follow"
+  },
+  "afk_patterns": {
+    "random_afk_chance_per_hour": 0.3,
+    "afk_duration_seconds": [30, 300],
+    "extended_afk_duration_seconds": [300, 1800],
+    "extended_afk_chance": 0.1,
+    "afk_triggers": [
+      "doorbell",
+      "phone_call",
+      "food_delivery",
+      "bathroom",
+      "drink_refill",
+      "pet_attention",
+      "family_interruption",
+      "checking_phone",
+      "answering_door",
+      "getting_snack"
+    ],
+    "description": "Random AFK events that happen to humans"
+  },
+  "session_state_transitions": {
+    "starting_duration_minutes": 5,
+    "warming_up_duration_minutes": 15,
+    "active_to_focused_activity_threshold": 10,
+    "focused_to_active_activity_threshold": 5,
+    "fatigue_onset_hours": 2,
+    "winding_down_before_end_minutes": 15,
+    "description": "How session states transition over time"
+  },
+  "daily_play_limits": {
+    "weekday_max_hours": 4,
+    "weekend_max_hours": 6,
+    "school_night_max_hours": 3,
+    "work_night_max_hours": 3,
+    "description": "Realistic maximum play times considering responsibilities"
+  },
+  "activity_intensity": {
+    "idle": {
+      "base_actions_per_minute": 1,
+      "variance": 0.5
+    },
+    "farming": {
+      "base_actions_per_minute": 8,
+      "variance": 2.0
+    },
+    "grinding": {
+      "base_actions_per_minute": 10,
+      "variance": 3.0
+    },
+    "boss_fight": {
+      "base_actions_per_minute": 15,
+      "variance": 4.0
+    },
+    "trading": {
+      "base_actions_per_minute": 3,
+      "variance": 1.0
+    },
+    "socializing": {
+      "base_actions_per_minute": 2,
+      "variance": 1.0
+    },
+    "organizing": {
+      "base_actions_per_minute": 4,
+      "variance": 1.5
+    }
+  },
+  "realistic_play_windows": {
+    "weekday_morning": {
+      "hours": [6, 7, 8],
+      "probability": 0.05,
+      "typical_duration_minutes": 30,
+      "description": "Quick session before work/school"
+    },
+    "weekday_lunch": {
+      "hours": [12, 13],
+      "probability": 0.1,
+      "typical_duration_minutes": 45,
+      "description": "Lunch break gaming"
+    },
+    "weekday_evening": {
+      "hours": [18, 19, 20, 21],
+      "probability": 0.7,
+      "typical_duration_minutes": 120,
+      "description": "Main evening session"
+    },
+    "weekday_late_night": {
+      "hours": [22, 23, 0, 1],
+      "probability": 0.4,
+      "typical_duration_minutes": 90,
+      "description": "Late night session"
+    },
+    "weekend_morning": {
+      "hours": [9, 10, 11],
+      "probability": 0.3,
+      "typical_duration_minutes": 120,
+      "description": "Weekend morning session"
+    },
+    "weekend_afternoon": {
+      "hours": [14, 15, 16, 17],
+      "probability": 0.6,
+      "typical_duration_minutes": 180,
+      "description": "Weekend afternoon session"
+    },
+    "weekend_evening": {
+      "hours": [19, 20, 21, 22],
+      "probability": 0.8,
+      "typical_duration_minutes": 180,
+      "description": "Weekend evening session"
+    },
+    "weekend_late_night": {
+      "hours": [23, 0, 1, 2],
+      "probability": 0.5,
+      "typical_duration_minutes": 120,
+      "description": "Weekend late night session"
+    }
+  }
+}

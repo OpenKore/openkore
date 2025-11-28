@@ -1,0 +1,183 @@
+{
+  "events": {
+    "christmas": {
+      "event_type": "christmas",
+      "event_name": "Christmas Event",
+      "description": "Annual Christmas celebration with special monsters, quests, and rewards",
+      "start_month": 12,
+      "start_day": 15,
+      "end_month": 1,
+      "end_day": 5,
+      "is_recurring": true,
+      "event_maps": ["xmas", "xmas_in", "xmas_dun01", "xmas_fild01"],
+      "special_monsters": ["Antonio", "Myst Case", "Cookie", "Stormy Knight"],
+      "special_quests": ["santa_helper", "gift_delivery", "christmas_cake"],
+      "exp_bonus": 1.5,
+      "drop_bonus": 1.3
+    },
+    "halloween": {
+      "event_type": "halloween",
+      "event_name": "Halloween Event",
+      "description": "Spooky Halloween event with undead monsters and special rewards",
+      "start_month": 10,
+      "start_day": 20,
+      "end_month": 11,
+      "end_day": 5,
+      "is_recurring": true,
+      "event_maps": ["niflheim", "nif_fild01", "nif_fild02"],
+      "special_monsters": ["Nightmare", "Zombie", "Ghoul", "Ancient Mummy"],
+      "special_quests": ["trick_or_treat", "haunted_mansion", "pumpkin_gathering"],
+      "exp_bonus": 1.3,
+      "drop_bonus": 1.4
+    },
+    "valentine": {
+      "event_type": "valentine",
+      "event_name": "Valentine's Day Event",
+      "description": "Romantic Valentine's Day celebration with love-themed rewards",
+      "start_month": 2,
+      "start_day": 10,
+      "end_month": 2,
+      "end_day": 20,
+      "is_recurring": true,
+      "event_maps": ["prontera", "alberta", "payon"],
+      "special_quests": ["love_letter", "chocolate_delivery", "cupid_arrow"],
+      "exp_bonus": 1.2,
+      "drop_bonus": 1.2
+    },
+    "easter": {
+      "event_type": "easter",
+      "event_name": "Easter Egg Hunt",
+      "description": "Easter celebration with egg hunting and special rewards",
+      "start_month": 3,
+      "start_day": 25,
+      "end_month": 4,
+      "end_day": 10,
+      "is_recurring": true,
+      "event_maps": ["prontera", "payon", "geffen", "morocc"],
+      "special_monsters": ["Easter Egg", "Choco Bunny"],
+      "special_quests": ["egg_hunt", "basket_weaving", "bunny_helper"],
+      "exp_bonus": 1.25,
+      "drop_bonus": 1.3
+    },
+    "summer": {
+      "event_type": "summer",
+      "event_name": "Summer Festival",
+      "description": "Hot summer festival with beach activities and rewards",
+      "start_month": 7,
+      "start_day": 1,
+      "end_month": 8,
+      "end_day": 31,
+      "is_recurring": true,
+      "event_maps": ["comodo", "beach_dun", "izlude"],
+      "special_monsters": ["Beach Crab", "Merman", "Sea Otter"],
+      "special_quests": ["surf_competition", "sand_castle", "beach_volleyball"],
+      "exp_bonus": 1.3,
+      "drop_bonus": 1.2
+    },
+    "anniversary": {
+      "event_type": "anniversary",
+      "event_name": "RO Anniversary",
+      "description": "Ragnarok Online anniversary celebration",
+      "start_month": 8,
+      "start_day": 25,
+      "end_month": 9,
+      "end_day": 10,
+      "is_recurring": true,
+      "event_maps": ["prontera", "izlude", "geffen"],
+      "special_monsters": ["Poring King", "Angeling", "Ghostring"],
+      "special_quests": ["anniversary_cake", "celebration_dance", "memory_quest"],
+      "exp_bonus": 2.0,
+      "drop_bonus": 2.0
+    },
+    "thanksgiving": {
+      "event_type": "thanksgiving",
+      "event_name": "Thanksgiving Feast",
+      "description": "Thanksgiving harvest celebration with food-themed rewards",
+      "start_month": 11,
+      "start_day": 20,
+      "end_month": 11,
+      "end_day": 30,
+      "is_recurring": true,
+      "event_maps": ["prontera", "payon", "geffen"],
+      "special_monsters": ["Turkey", "Cornucopia"],
+      "special_quests": ["feast_preparation", "harvest_gathering", "turkey_hunt"],
+      "exp_bonus": 1.4,
+      "drop_bonus": 1.3
+    },
+    "new_year": {
+      "event_type": "new_year",
+      "event_name": "New Year Celebration",
+      "description": "New Year's Eve and Day celebration with fireworks",
+      "start_month": 12,
+      "start_day": 30,
+      "end_month": 1,
+      "end_day": 3,
+      "is_recurring": true,
+      "event_maps": ["prontera", "alberta", "izlude"],
+      "special_quests": ["firework_display", "new_year_wish", "countdown_party"],
+      "exp_bonus": 1.5,
+      "drop_bonus": 1.5
+    }
+  },
+  "event_rewards": {
+    "christmas": {
+      "special_items": [
+        {"id": 12355, "name": "Santa Poring Card", "probability": 0.01},
+        {"id": 5136, "name": "Santa Hat", "probability": 0.05},
+        {"id": 559, "name": "Christmas Cake", "probability": 0.2}
+      ]
+    },
+    "halloween": {
+      "special_items": [
+        {"id": 5182, "name": "Pumpkin Hat", "probability": 0.05},
+        {"id": 7278, "name": "Cursed Ruby", "probability": 0.1},
+        {"id": 529, "name": "Candy", "probability": 0.3}
+      ]
+    },
+    "valentine": {
+      "special_items": [
+        {"id": 558, "name": "Chocolate", "probability": 0.3},
+        {"id": 7182, "name": "Cacao", "probability": 0.2},
+        {"id": 617, "name": "Old Purple Box", "probability": 0.05}
+      ]
+    },
+    "anniversary": {
+      "special_items": [
+        {"id": 616, "name": "Old Card Album", "probability": 0.1},
+        {"id": 12128, "name": "Cookie Bag", "probability": 0.2},
+        {"id": 7227, "name": "TCG Card", "probability": 0.15}
+      ]
+    }
+  },
+  "daily_quests": {
+    "christmas": [
+      {
+        "quest_id": 10001,
+        "quest_name": "Daily Gift Delivery",
+        "description": "Deliver 10 gifts to NPCs in Prontera",
+        "requirements": {"items": [{"id": 644, "name": "Gift Box", "count": 10}]},
+        "rewards": [
+          {"reward_type": "exp", "reward_id": 0, "reward_name": "Base EXP", "quantity": 50000},
+          {"reward_type": "item", "reward_id": 12354, "reward_name": "Christmas Cookie", "quantity": 5}
+        ],
+        "is_daily": true,
+        "is_repeatable": true
+      }
+    ],
+    "halloween": [
+      {
+        "quest_id": 10002,
+        "quest_name": "Trick or Treat",
+        "description": "Collect candy from monsters",
+        "requirements": {"monsters": [{"name": "Zombie", "count": 50}]},
+        "rewards": [
+          {"reward_type": "exp", "reward_id": 0, "reward_name": "Base EXP", "quantity": 40000},
+          {"reward_type": "item", "reward_id": 529, "reward_name": "Candy", "quantity": 10}
+        ],
+        "is_daily": true,
+        "is_repeatable": true
+      }
+    ]
+  },
+  "notes": "Events are recurring annually. Bonuses stack with other environmental modifiers. Some events have daily repeatable quests for additional rewards."
+}

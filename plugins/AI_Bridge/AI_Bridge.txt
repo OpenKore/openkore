@@ -1,0 +1,58 @@
+###############################################################################
+# AI_Bridge Plugin Configuration
+###############################################################################
+#
+# Configuration file for the God-Tier AI Bridge plugin.
+# Place this file in plugins/AI_Bridge/ alongside AI_Bridge.pl
+#
+# These settings can also be placed in control/config.txt
+#
+###############################################################################
+
+# -----------------------------------------------------------------------------
+# Core Settings
+# -----------------------------------------------------------------------------
+
+# Enable/disable the AI Bridge plugin
+# 0 = Disabled, 1 = Enabled
+# When disabled, OpenKore uses its built-in AI
+AI_Bridge_enabled 1
+
+# ZMQ socket address for connecting to AI Sidecar
+# Format: tcp://hostname:port
+# Default: tcp://127.0.0.1:5555
+AI_Bridge_address tcp://127.0.0.1:5555
+
+# -----------------------------------------------------------------------------
+# Timing Settings (milliseconds)
+# -----------------------------------------------------------------------------
+
+# Socket timeout for send/receive operations
+# Lower = more responsive but more CPU usage
+# Higher = less CPU but potential latency
+# Range: 10-1000ms, Default: 50ms
+AI_Bridge_timeout_ms 50
+
+# Time between reconnection attempts when disconnected
+# Lower = faster recovery, more connection attempts
+# Higher = slower recovery, fewer connection attempts
+# Range: 1000-60000ms, Default: 5000ms
+AI_Bridge_reconnect_ms 5000
+
+# Heartbeat interval for health monitoring
+# 0 = Disable heartbeats
+# Range: 0, 1000-60000ms, Default: 5000ms
+AI_Bridge_heartbeat_ms 5000
+
+# -----------------------------------------------------------------------------
+# Debug Settings
+# -----------------------------------------------------------------------------
+
+# Enable debug logging to OpenKore console
+# 0 = Normal logging, 1 = Verbose debug output
+AI_Bridge_debug 0
+
+# Log full game state (WARNING: very verbose!)
+# Only enable for troubleshooting
+# 0 = Disabled, 1 = Log full state JSON
+AI_Bridge_log_state 0

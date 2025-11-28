@@ -1,0 +1,114 @@
+# =============================================================================
+# AI Sidecar Runtime Configuration
+# =============================================================================
+# This file provides default configuration values that can be overridden
+# by environment variables. Environment variables take precedence.
+# =============================================================================
+
+# ZeroMQ IPC Configuration
+zmq:
+  # Socket bind address (REP socket)
+  bind_address: "tcp://127.0.0.1:5555"
+  
+  # Timeouts in milliseconds
+  recv_timeout_ms: 100
+  send_timeout_ms: 100
+  
+  # High water mark for message queue
+  hwm: 1000
+  
+  # Socket linger time on close (ms)
+  linger_ms: 0
+  
+  # TCP keepalive settings
+  tcp_keepalive: true
+
+# Tick Processor Configuration
+tick:
+  # Tick interval in milliseconds (100ms = 10 ticks/sec)
+  interval_ms: 100
+  
+  # Maximum processing time before warning
+  max_processing_time_ms: 80
+  
+  # Number of state history entries to keep
+  state_history_size: 100
+  
+  # Enable timing warnings when tick exceeds max time
+  enable_timing_warnings: true
+
+# Logging Configuration
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  level: "INFO"
+  
+  # Output format: json, console, text
+  format: "console"
+  
+  # File logging
+  to_file: false
+  file_path: "logs/ai_sidecar.log"
+  
+  # Include timestamp in logs
+  include_timestamp: true
+
+# Decision Engine Configuration
+decision:
+  # Stub mode returns empty decisions (for testing)
+  stub_mode: true
+  
+  # Fallback mode when ML is unavailable: cpu, gpu, none
+  fallback_mode: "cpu"
+  
+  # Decision timeout in milliseconds
+  timeout_ms: 50
+  
+  # Minimum confidence threshold (0.0 - 1.0)
+  min_confidence: 0.5
+
+# Health Check / Heartbeat Configuration
+heartbeat:
+  # Heartbeat interval in ms (0 = disabled)
+  interval_ms: 5000
+  
+  # Timeout before marking unhealthy
+  timeout_ms: 10000
+
+# Performance Configuration
+performance:
+  # Maximum memory usage in MB (0 = unlimited)
+  max_memory_mb: 512
+  
+  # Enable profiling
+  enable_profiling: false
+  
+  # Profiling output directory
+  profile_output_dir: "profiles"
+
+# Feature Flags
+features:
+  # Debug mode (verbose output)
+  debug_mode: false
+  
+  # Metrics collection
+  enable_metrics: false
+  
+  # Metrics export port
+  metrics_port: 9090
+
+# Action Type Mappings (for reference)
+# These map internal action types to OpenKore commands
+action_mappings:
+  move: "move"
+  attack: "attack"
+  skill: "skill"
+  use_item: "useSelf"
+  sit: "sit"
+  stand: "stand"
+  pick_item: "take"
+  talk_npc: "talk"
+  teleport: "teleport"
+  flee: "move"  # Flee is a specialized move
+  emote: "e"
+  say: "c"
+  party_say: "p"

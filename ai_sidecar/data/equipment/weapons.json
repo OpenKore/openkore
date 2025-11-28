@@ -1,0 +1,136 @@
+{
+  "1101": {
+    "name": "Sword",
+    "type": "weapon",
+    "weapon_type": "one_hand_sword",
+    "atk": 25,
+    "weight": 50,
+    "slots": 3,
+    "required_level": 1,
+    "jobs": ["swordman", "knight", "crusader", "lord_knight", "paladin"]
+  },
+  "1104": {
+    "name": "Falchion",
+    "type": "weapon",
+    "weapon_type": "one_hand_sword",
+    "atk": 39,
+    "weight": 60,
+    "slots": 3,
+    "required_level": 2,
+    "jobs": ["swordman", "knight", "crusader", "lord_knight", "paladin", "merchant", "blacksmith", "whitesmith"]
+  },
+  "1116": {
+    "name": "Katana",
+    "type": "weapon",
+    "weapon_type": "one_hand_sword",
+    "atk": 60,
+    "weight": 100,
+    "slots": 3,
+    "required_level": 4,
+    "jobs": ["knight", "lord_knight"]
+  },
+  "1201": {
+    "name": "Knife",
+    "type": "weapon",
+    "weapon_type": "dagger",
+    "atk": 17,
+    "weight": 40,
+    "slots": 3,
+    "required_level": 1,
+    "jobs": ["all"]
+  },
+  "1219": {
+    "name": "Gladius",
+    "type": "weapon",
+    "weapon_type": "dagger",
+    "atk": 105,
+    "weight": 70,
+    "slots": 2,
+    "required_level": 3,
+    "jobs": ["swordman", "knight", "assassin", "rogue", "crusader"]
+  },
+  "1250": {
+    "name": "Jur",
+    "type": "weapon",
+    "weapon_type": "katar",
+    "atk": 125,
+    "weight": 80,
+    "slots": 2,
+    "required_level": 3,
+    "jobs": ["assassin", "assassin_cross"]
+  },
+  "1401": {
+    "name": "Javelin",
+    "type": "weapon",
+    "weapon_type": "one_hand_spear",
+    "atk": 28,
+    "weight": 70,
+    "slots": 3,
+    "required_level": 1,
+    "jobs": ["swordman", "knight", "crusader"]
+  },
+  "1410": {
+    "name": "Pike",
+    "type": "weapon",
+    "weapon_type": "two_hand_spear",
+    "atk": 60,
+    "weight": 80,
+    "slots": 3,
+    "required_level": 3,
+    "jobs": ["swordman", "knight", "crusader"]
+  },
+  "1601": {
+    "name": "Rod",
+    "type": "weapon",
+    "weapon_type": "staff",
+    "atk": 15,
+    "matk": 30,
+    "weight": 40,
+    "slots": 3,
+    "required_level": 1,
+    "jobs": ["acolyte", "mage", "priest", "wizard"]
+  },
+  "1613": {
+    "name": "Wizardry Staff",
+    "type": "weapon",
+    "weapon_type": "staff",
+    "atk": 120,
+    "matk": 200,
+    "int_bonus": 6,
+    "dex_bonus": 2,
+    "weight": 240,
+    "slots": 0,
+    "required_level": 4,
+    "jobs": ["wizard", "high_wizard", "warlock"]
+  },
+  "1701": {
+    "name": "Bow",
+    "type": "weapon",
+    "weapon_type": "bow",
+    "atk": 15,
+    "weight": 50,
+    "slots": 3,
+    "required_level": 1,
+    "jobs": ["archer", "hunter", "bard", "dancer"]
+  },
+  "1716": {
+    "name": "Gakkung Bow",
+    "type": "weapon",
+    "weapon_type": "bow",
+    "atk": 100,
+    "weight": 110,
+    "slots": 1,
+    "required_level": 3,
+    "jobs": ["hunter", "sniper"]
+  },
+  "1801": {
+    "name": "Waghnakh",
+    "type": "weapon",
+    "weapon_type": "knuckle",
+    "atk": 30,
+    "weight": 40,
+    "slots": 0,
+    "required_level": 1,
+    "jobs": ["monk", "champion"]
+  }
+}

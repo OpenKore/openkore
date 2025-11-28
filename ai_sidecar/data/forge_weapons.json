@@ -1,0 +1,80 @@
+{
+  "weapons": [
+    {
+      "weapon_id": 1101,
+      "weapon_name": "Blade [4]",
+      "weapon_level": 1,
+      "base_materials": [
+        {"item_id": 998, "item_name": "Iron", "quantity_required": 35, "is_consumed": true},
+        {"item_id": 999, "item_name": "Steel", "quantity_required": 15, "is_consumed": true},
+        {"item_id": 1010, "item_name": "Iron Hammer", "quantity_required": 1, "is_consumed": false}
+      ],
+      "element_stone": {"item_id": 994, "item_name": "Flame Heart", "quantity_required": 1, "is_consumed": true},
+      "star_crumb_count": 0,
+      "base_success_rate": 100.0
+    },
+    {
+      "weapon_id": 1207,
+      "weapon_name": "Stiletto [4]",
+      "weapon_level": 2,
+      "base_materials": [
+        {"item_id": 998, "item_name": "Iron", "quantity_required": 25, "is_consumed": true},
+        {"item_id": 999, "item_name": "Steel", "quantity_required": 10, "is_consumed": true},
+        {"item_id": 1011, "item_name": "Emveretarcon", "quantity_required": 1, "is_consumed": false}
+      ],
+      "element_stone": {"item_id": 994, "item_name": "Flame Heart", "quantity_required": 1, "is_consumed": true},
+      "star_crumb_count": 0,
+      "base_success_rate": 85.0
+    },
+    {
+      "weapon_id": 1108,
+      "weapon_name": "Haedonggum [2]",
+      "weapon_level": 3,
+      "base_materials": [
+        {"item_id": 984, "item_name": "Oridecon", "quantity_required": 2, "is_consumed": true},
+        {"item_id": 999, "item_name": "Steel", "quantity_required": 30, "is_consumed": true},
+        {"item_id": 1000, "item_name": "Star Crumb", "quantity_required": 2, "is_consumed": true}
+      ],
+      "element_stone": {"item_id": 994, "item_name": "Flame Heart", "quantity_required": 2, "is_consumed": true},
+      "star_crumb_count": 2,
+      "base_success_rate": 70.0
+    },
+    {
+      "weapon_id": 1147,
+      "weapon_name": "Town Sword [2]",
+      "weapon_level": 3,
+      "base_materials": [
+        {"item_id": 984, "item_name": "Oridecon", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 999, "item_name": "Steel", "quantity_required": 20, "is_consumed": true}
+      ],
+      "element_stone": {"item_id": 994, "item_name": "Flame Heart", "quantity_required": 1, "is_consumed": true},
+      "star_crumb_count": 0,
+      "base_success_rate": 75.0
+    },
+    {
+      "weapon_id": 1163,
+      "weapon_name": "Claymore [2]",
+      "weapon_level": 3,
+      "base_materials": [
+        {"item_id": 984, "item_name": "Oridecon", "quantity_required": 2, "is_consumed": true},
+        {"item_id": 999, "item_name": "Steel", "quantity_required": 35, "is_consumed": true}
+      ],
+      "element_stone": {"item_id": 994, "item_name": "Flame Heart", "quantity_required": 2, "is_consumed": true},
+      "star_crumb_count": 0,
+      "base_success_rate": 65.0
+    },
+    {
+      "weapon_id": 1164,
+      "weapon_name": "Broad Sword [2]",
+      "weapon_level": 4,
+      "base_materials": [
+        {"item_id": 984, "item_name": "Oridecon", "quantity_required": 3, "is_consumed": true},
+        {"item_id": 999, "item_name": "Steel", "quantity_required": 40, "is_consumed": true},
+        {"item_id": 1000, "item_name": "Star Crumb", "quantity_required": 1, "is_consumed": true}
+      ],
+      "element_stone": {"item_id": 994, "item_name": "Flame Heart", "quantity_required": 3, "is_consumed": true},
+      "star_crumb_count": 1,
+      "base_success_rate": 55.0
+    }
+  ]
+}

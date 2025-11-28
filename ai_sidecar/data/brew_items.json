@@ -1,0 +1,123 @@
+{
+  "items": [
+    {
+      "item_id": 501,
+      "item_name": "Red Potion",
+      "potion_type": "healing",
+      "materials": [
+        {"item_id": 507, "item_name": "Red Herb", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 1,
+      "base_success_rate": 100.0,
+      "batch_size": 3
+    },
+    {
+      "item_id": 504,
+      "item_name": "White Potion",
+      "potion_type": "healing",
+      "materials": [
+        {"item_id": 509, "item_name": "White Herb", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 2,
+      "base_success_rate": 95.0,
+      "batch_size": 3
+    },
+    {
+      "item_id": 505,
+      "item_name": "Blue Potion",
+      "potion_type": "healing",
+      "materials": [
+        {"item_id": 510, "item_name": "Blue Herb", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 3,
+      "base_success_rate": 90.0,
+      "batch_size": 2
+    },
+    {
+      "item_id": 545,
+      "item_name": "Condensed Red Potion",
+      "potion_type": "condensed",
+      "materials": [
+        {"item_id": 501, "item_name": "Red Potion", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 5,
+      "base_success_rate": 80.0,
+      "batch_size": 1
+    },
+    {
+      "item_id": 546,
+      "item_name": "Condensed White Potion",
+      "potion_type": "condensed",
+      "materials": [
+        {"item_id": 504, "item_name": "White Potion", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 6,
+      "base_success_rate": 75.0,
+      "batch_size": 1
+    },
+    {
+      "item_id": 656,
+      "item_name": "Awakening Potion",
+      "potion_type": "stat_boost",
+      "materials": [
+        {"item_id": 507, "item_name": "Red Herb", "quantity_required": 2, "is_consumed": true},
+        {"item_id": 508, "item_name": "Yellow Herb", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 4,
+      "base_success_rate": 85.0,
+      "batch_size": 2
+    },
+    {
+      "item_id": 657,
+      "item_name": "Berserk Potion",
+      "potion_type": "stat_boost",
+      "materials": [
+        {"item_id": 507, "item_name": "Red Herb", "quantity_required": 3, "is_consumed": true},
+        {"item_id": 510, "item_name": "Blue Herb", "quantity_required": 1, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 5,
+      "base_success_rate": 75.0,
+      "batch_size": 1
+    },
+    {
+      "item_id": 713,
+      "item_name": "Empty Bottle",
+      "potion_type": "bottle",
+      "materials": [
+        {"item_id": 909, "item_name": "Jellopy", "quantity_required": 1, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 1,
+      "base_success_rate": 100.0,
+      "batch_size": 1
+    },
+    {
+      "item_id": 12422,
+      "item_name": "Increase AGI Scroll",
+      "potion_type": "genetics",
+      "materials": [
+        {"item_id": 507, "item_name": "Red Herb", "quantity_required": 5, "is_consumed": true},
+        {"item_id": 508, "item_name": "Yellow Herb", "quantity_required": 3, "is_consumed": true},
+        {"item_id": 713, "item_name": "Empty Bottle", "quantity_required": 2, "is_consumed": true}
+      ],
+      "required_skill": "Pharmacy",
+      "required_skill_level": 7,
+      "base_success_rate": 70.0,
+      "batch_size": 1
+    }
+  ]
+}

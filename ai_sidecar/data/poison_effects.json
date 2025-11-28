@@ -1,0 +1,306 @@
+{
+  "poisons": {
+    "poison": {
+      "display_name": "Poison",
+      "skill_id": 212,
+      "damage_per_second": 15,
+      "duration_seconds": 30,
+      "additional_effects": ["reduce_defense"],
+      "success_rate": 100,
+      "bottle_weight": 10,
+      "crafting_difficulty": "easy"
+    },
+    "venom_dust": {
+      "display_name": "Venom Dust",
+      "skill_id": 226,
+      "damage_per_second": 0,
+      "duration_seconds": 15,
+      "additional_effects": ["poison_cloud"],
+      "success_rate": 100,
+      "bottle_weight": 10,
+      "crafting_difficulty": "medium"
+    },
+    "enchant_deadly_poison": {
+      "display_name": "Enchant Deadly Poison",
+      "skill_id": 378,
+      "damage_per_second": 50,
+      "duration_seconds": 40,
+      "additional_effects": [
+        "ignore_def",
+        "critical_boost",
+        "hp_drain"
+      ],
+      "success_rate": 100,
+      "bottle_weight": 10,
+      "crafting_difficulty": "hard"
+    },
+    "venom_splasher": {
+      "display_name": "Venom Splasher",
+      "skill_id": 494,
+      "damage_per_second": 0,
+      "duration_seconds": 15,
+      "additional_effects": ["delayed_explosion"],
+      "success_rate": 100,
+      "bottle_weight": 10,
+      "crafting_difficulty": "medium"
+    },
+    "poison_smoke": {
+      "display_name": "Poison Smoke",
+      "skill_id": 2015,
+      "damage_per_second": 25,
+      "duration_seconds": 10,
+      "additional_effects": ["blind", "area_denial"],
+      "success_rate": 90,
+      "bottle_weight": 10,
+      "crafting_difficulty": "medium"
+    },
+    "venom_knife": {
+      "display_name": "Venom Knife",
+      "skill_id": 2020,
+      "damage_per_second": 0,
+      "duration_seconds": 0,
+      "additional_effects": ["instant_damage", "armor_break"],
+      "success_rate": 100,
+      "bottle_weight": 5,
+      "crafting_difficulty": "medium"
+    },
+    "weapon_blocking": {
+      "display_name": "Weapon Blocking",
+      "skill_id": 2021,
+      "damage_per_second": 0,
+      "duration_seconds": 180,
+      "additional_effects": ["disable_weapon"],
+      "success_rate": 85,
+      "bottle_weight": 10,
+      "crafting_difficulty": "hard"
+    },
+    "blood_sucker": {
+      "display_name": "Blood Sucker",
+      "skill_id": 2022,
+      "damage_per_second": 30,
+      "duration_seconds": 20,
+      "additional_effects": ["hp_steal", "sp_steal"],
+      "success_rate": 100,
+      "bottle_weight": 10,
+      "crafting_difficulty": "medium"
+    },
+    "paralyze": {
+      "display_name": "Paralyze",
+      "skill_id": 12717,
+      "damage_per_second": 10,
+      "duration_seconds": 60,
+      "additional_effects": ["slow", "aspd_reduce"],
+      "success_rate": 80,
+      "bottle_weight": 10,
+      "crafting_difficulty": "medium"
+    },
+    "pyrexia": {
+      "display_name": "Pyrexia",
+      "skill_id": 12718,
+      "damage_per_second": 15,
+      "duration_seconds": 60,
+      "additional_effects": ["confusion", "reduce_hit"],
+      "success_rate": 80,
+      "bottle_weight": 10,
+      "crafting_difficulty": "medium"
+    },
+    "toxin": {
+      "display_name": "Toxin",
+      "skill_id": 12719,
+      "damage_per_second": 20,
+      "duration_seconds": 60,
+      "additional_effects": ["damage_amplify", "defense_reduce"],
+      "success_rate": 80,
+      "bottle_weight": 10,
+      "crafting_difficulty": "medium"
+    },
+    "leech_end": {
+      "display_name": "Leech End",
+      "skill_id": 12720,
+      "damage_per_second": 5,
+      "duration_seconds": 60,
+      "additional_effects": ["heal_block", "regen_block"],
+      "success_rate": 80,
+      "bottle_weight": 10,
+      "crafting_difficulty": "hard"
+    },
+    "oblivion_curse": {
+      "display_name": "Oblivion Curse",
+      "skill_id": 12721,
+      "damage_per_second": 25,
+      "duration_seconds": 60,
+      "additional_effects": ["silence", "blind"],
+      "success_rate": 75,
+      "bottle_weight": 10,
+      "crafting_difficulty": "hard"
+    },
+    "death_hurt": {
+      "display_name": "Death Hurt",
+      "skill_id": 12722,
+      "damage_per_second": 40,
+      "duration_seconds": 60,
+      "additional_effects": ["bleeding", "critical_damage"],
+      "success_rate": 70,
+      "bottle_weight": 10,
+      "crafting_difficulty": "very_hard"
+    },
+    "disheart": {
+      "display_name": "Disheart",
+      "skill_id": 12723,
+      "damage_per_second": 35,
+      "duration_seconds": 60,
+      "additional_effects": ["fear", "defense_break"],
+      "success_rate": 75,
+      "bottle_weight": 10,
+      "crafting_difficulty": "hard"
+    }
+  },
+  "status_effects": {
+    "reduce_defense": {
+      "description": "Reduces target's physical defense",
+      "percent_reduction": 25
+    },
+    "poison_cloud": {
+      "description": "Creates area of poison damage",
+      "aoe_range": 3
+    },
+    "ignore_def": {
+      "description": "Attacks ignore enemy defense",
+      "ignore_percent": 100
+    },
+    "critical_boost": {
+      "description": "Increases critical damage",
+      "damage_multiplier": 1.5
+    },
+    "hp_drain": {
+      "description": "Drains HP over time",
+      "drain_percent": 3
+    },
+    "delayed_explosion": {
+      "description": "Explodes after duration or on death",
+      "explosion_damage_multiplier": 3.0
+    },
+    "blind": {
+      "description": "Reduces accuracy",
+      "hit_reduction": 50
+    },
+    "area_denial": {
+      "description": "Creates dangerous zone",
+      "duration": 10
+    },
+    "instant_damage": {
+      "description": "Immediate damage on hit",
+      "damage_percent": 120
+    },
+    "armor_break": {
+      "description": "Can break enemy armor",
+      "break_chance": 15
+    },
+    "disable_weapon": {
+      "description": "Prevents weapon usage",
+      "duration": 180
+    },
+    "hp_steal": {
+      "description": "Steals HP from target",
+      "steal_percent": 10
+    },
+    "sp_steal": {
+      "description": "Steals SP from target",
+      "steal_percent": 5
+    },
+    "slow": {
+      "description": "Reduces movement speed",
+      "speed_reduction": 50
+    },
+    "aspd_reduce": {
+      "description": "Reduces attack speed",
+      "aspd_reduction": 30
+    },
+    "confusion": {
+      "description": "Confuses target",
+      "duration": 10
+    },
+    "reduce_hit": {
+      "description": "Reduces hit rate",
+      "hit_reduction": 30
+    },
+    "damage_amplify": {
+      "description": "Increases damage taken",
+      "amplify_percent": 20
+    },
+    "defense_reduce": {
+      "description": "Reduces all defenses",
+      "reduction_percent": 30
+    },
+    "heal_block": {
+      "description": "Prevents healing",
+      "duration": 60
+    },
+    "regen_block": {
+      "description": "Prevents HP/SP regeneration",
+      "duration": 60
+    },
+    "silence": {
+      "description": "Prevents skill usage",
+      "duration": 30
+    },
+    "bleeding": {
+      "description": "Causes bleeding damage",
+      "damage_percent": 5
+    },
+    "critical_damage": {
+      "description": "Takes additional critical damage",
+      "damage_multiplier": 1.3
+    },
+    "fear": {
+      "description": "Reduces attack power",
+      "attack_reduction": 40
+    },
+    "defense_break": {
+      "description": "Completely breaks defense",
+      "duration": 30
+    }
+  },
+  "crafting_recipes": {
+    "poison": {
+      "materials": ["Empty Bottle", "Poison Herb"],
+      "success_rate_base": 95,
+      "pharmacy_skill_required": 1
+    },
+    "toxin": {
+      "materials": ["Empty Bottle", "Karvodailnirol", "Poison Herb"],
+      "success_rate_base": 80,
+      "pharmacy_skill_required": 5
+    },
+    "paralyze": {
+      "materials": ["Empty Bottle", "Nerium", "Poison Herb"],
+      "success_rate_base": 80,
+      "pharmacy_skill_required": 5
+    },
+    "pyrexia": {
+      "materials": ["Empty Bottle", "Scopolia", "Poison Herb"],
+      "success_rate_base": 80,
+      "pharmacy_skill_required": 5
+    },
+    "leech_end": {
+      "materials": ["Empty Bottle", "Rantana", "Poison Herb"],
+      "success_rate_base": 70,
+      "pharmacy_skill_required": 7
+    },
+    "oblivion_curse": {
+      "materials": ["Empty Bottle", "Mandragora Flowerpot", "Poison Herb"],
+      "success_rate_base": 70,
+      "pharmacy_skill_required": 7
+    },
+    "death_hurt": {
+      "materials": ["Empty Bottle", "Izidor", "Poison Herb"],
+      "success_rate_base": 60,
+      "pharmacy_skill_required": 10
+    },
+    "disheart": {
+      "materials": ["Empty Bottle", "Drosera", "Poison Herb"],
+      "success_rate_base": 70,
+      "pharmacy_skill_required": 7
+    }
+  }
+}

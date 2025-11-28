@@ -1,0 +1,279 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$comment": "Ragnarok Online Skill Elements - Element assignments for skills",
+  
+  "elements": {
+    "neutral": {
+      "strong_against": [],
+      "weak_against": ["ghost"],
+      "immune_to": []
+    },
+    "fire": {
+      "strong_against": ["earth", "undead"],
+      "weak_against": ["water"],
+      "immune_to": []
+    },
+    "water": {
+      "strong_against": ["fire"],
+      "weak_against": ["wind"],
+      "immune_to": []
+    },
+    "earth": {
+      "strong_against": ["wind"],
+      "weak_against": ["fire"],
+      "immune_to": []
+    },
+    "wind": {
+      "strong_against": ["water"],
+      "weak_against": ["earth"],
+      "immune_to": []
+    },
+    "holy": {
+      "strong_against": ["dark", "undead"],
+      "weak_against": [],
+      "immune_to": ["holy"]
+    },
+    "dark": {
+      "strong_against": ["holy"],
+      "weak_against": [],
+      "immune_to": ["dark", "undead"]
+    },
+    "ghost": {
+      "strong_against": ["neutral"],
+      "weak_against": [],
+      "immune_to": []
+    },
+    "poison": {
+      "strong_against": [],
+      "weak_against": ["holy"],
+      "immune_to": ["poison"]
+    },
+    "undead": {
+      "strong_against": [],
+      "weak_against": ["holy", "fire"],
+      "immune_to": ["dark", "undead"]
+    }
+  },
+  
+  "skill_elements": {
+    "SM_BASH": "neutral",
+    "SM_PROVOKE": null,
+    "SM_MAGNUM": "fire",
+    "SM_ENDURE": null,
+    
+    "KN_PIERCE": "neutral",
+    "KN_SPEARSTAB": "neutral",
+    "KN_BRANDISHSPEAR": "neutral",
+    "KN_SPEARBOOMERANG": "neutral",
+    "KN_TWOHANDQUICKEN": null,
+    "KN_AUTOCOUNTER": "neutral",
+    "KN_BOWLINGBASH": "neutral",
+    
+    "CR_AUTOGUARD": null,
+    "CR_SHIELDCHARGE": "neutral",
+    "CR_SHIELDBOOMERANG": "neutral",
+    "CR_REFLECTSHIELD": null,
+    "CR_HOLYCROSS": "holy",
+    "CR_GRANDCROSS": "holy",
+    "CR_DEVOTION": null,
+    "CR_PROVIDENCE": null,
+    "CR_DEFENDER": null,
+    "CR_SPEARQUICKEN": null,
+    
+    "TF_DOUBLE": "weapon",
+    "TF_POISON": "poison",
+    "TF_HIDING": null,
+    "TF_STEAL": null,
+    "TF_DETOXIFY": null,
+    
+    "AS_RIGHT": "weapon",
+    "AS_LEFT": "weapon",
+    "AS_KATAR": "weapon",
+    "AS_CLOAKING": null,
+    "AS_SONICBLOW": "neutral",
+    "AS_GRIMTOOTH": "neutral",
+    "AS_ENCHANTPOISON": "poison",
+    "AS_POISONREACT": "poison",
+    "AS_VENOMDUST": "poison",
+    "AS_SPLASHER": "poison",
+    
+    "RG_SNATCHER": null,
+    "RG_STEALCOIN": null,
+    "RG_BACKSTAB": "neutral",
+    "RG_TUNNELDRIVE": null,
+    "RG_RAID": "neutral",
+    "RG_STRIPWEAPON": null,
+    "RG_STRIPSHIELD": null,
+    "RG_STRIPARMOR": null,
+    "RG_STRIPHELM": null,
+    "RG_INTIMIDATE": "neutral",
+    "RG_PLAGIARISM": null,
+    
+    "MG_SRECOVERY": null,
+    "MG_SIGHT": null,
+    "MG_NAPALMBEAT": "ghost",
+    "MG_SAFETYWALL": null,
+    "MG_SOULSTRIKE": "ghost",
+    "MG_COLDBOLT": "water",
+    "MG_FROSTDIVER": "water",
+    "MG_STONECURSE": "earth",
+    "MG_FIREBALL": "fire",
+    "MG_FIREWALL": "fire",
+    "MG_FIREBOLT": "fire",
+    "MG_LIGHTNINGBOLT": "wind",
+    "MG_THUNDERSTORM": "wind",
+    
+    "WZ_FIREPILLAR": "fire",
+    "WZ_SIGHTRASHER": "fire",
+    "WZ_METEOR": "fire",
+    "WZ_JUPITEL": "wind",
+    "WZ_VERMILION": "wind",
+    "WZ_WATERBALL": "water",
+    "WZ_ICEWALL": "water",
+    "WZ_FROSTNOVA": "water",
+    "WZ_STORMGUST": "water",
+    "WZ_EARTHSPIKE": "earth",
+    "WZ_HEAVENDRIVE": "earth",
+    "WZ_QUAGMIRE": "earth",
+    "WZ_ESTIMATION": null,
+    
+    "AL_DP": null,
+    "AL_DEMONBANE": null,
+    "AL_RUWACH": "holy",
+    "AL_PNEUMA": null,
+    "AL_TELEPORT": null,
+    "AL_WARP": null,
+    "AL_HEAL": "holy",
+    "AL_INCAGI": null,
+    "AL_DECAGI": null,
+    "AL_HOLYWATER": "holy",
+    "AL_CRUCIS": "holy",
+    "AL_ANGELUS": "holy",
+    "AL_BLESSING": "holy",
+    "AL_CURE": "holy",
+    
+    "PR_MACEMASTERY": null,
+    "PR_IMPOSITIO": null,
+    "PR_SUFFRAGIUM": null,
+    "PR_ASPERSIO": "holy",
+    "PR_BENEDICTIO": "holy",
+    "PR_SANCTUARY": "holy",
+    "PR_SLOWPOISON": null,
+    "PR_STRECOVERY": null,
+    "PR_KYRIE": null,
+    "PR_MAGNIFICAT": null,
+    "PR_GLORIA": null,
+    "PR_LEXDIVINA": "holy",
+    "PR_TURNUNDEAD": "holy",
+    "PR_LEXAETERNA": null,
+    "PR_MAGNUS": "holy",
+    "PR_RESURRECTION": "holy",
+    
+    "AC_OWL": null,
+    "AC_VULTURE": null,
+    "AC_CONCENTRATION": null,
+    "AC_DOUBLE": "weapon",
+    "AC_SHOWER": "weapon",
+    
+    "HT_SKIDTRAP": "neutral",
+    "HT_LANDMINE": "earth",
+    "HT_ANKLESNARE": "neutral",
+    "HT_SHOCKWAVE": "neutral",
+    "HT_SANDMAN": "earth",
+    "HT_FLASHER": "neutral",
+    "HT_FREEZINGTRAP": "water",
+    "HT_BLASTMINE": "wind",
+    "HT_CLAYMORETRAP": "fire",
+    "HT_REMOVETRAP": null,
+    "HT_TALKIEBOX": null,
+    "HT_BEASTBANE": null,
+    "HT_FALCON": null,
+    "HT_STEELCROW": null,
+    "HT_BLITZBEAT": "neutral",
+    "HT_DETECTING": null,
+    "HT_SPRINGTRAP": null,
+    
+    "MC_INCCARRY": null,
+    "MC_DISCOUNT": null,
+    "MC_OVERCHARGE": null,
+    "MC_PUSHCART": null,
+    "MC_IDENTIFY": null,
+    "MC_VENDING": null,
+    "MC_MAMMONITE": "neutral",
+    
+    "BS_IRON": null,
+    "BS_STEEL": null,
+    "BS_ENCHANTEDSTONE": null,
+    "BS_ORIDEOCON": null,
+    "BS_HILTBINDING": null,
+    "BS_FINDINGORE": null,
+    "BS_WEAPONRESEARCH": null,
+    "BS_REPAIRWEAPON": null,
+    "BS_SKINTEMPER": null,
+    "BS_HAMMERFALL": "neutral",
+    "BS_ADRENALINE": null,
+    "BS_WEAPONPERFECT": null,
+    "BS_OVERTHRUST": null,
+    "BS_MAXIMIZE": null,
+    
+    "AM_AXEMASTERY": null,
+    "AM_LEARNINGPOTION": null,
+    "AM_PHARMACY": null,
+    "AM_DEMONSTRATION": "fire",
+    "AM_ACIDTERROR": "neutral",
+    "AM_POTIONPITCHER": null,
+    "AM_CANNIBALIZE": null,
+    "AM_SPHEREMINE": null,
+    "AM_CP_WEAPON": null,
+    "AM_CP_SHIELD": null,
+    "AM_CP_ARMOR": null,
+    "AM_CP_HELM": null,
+    "AM_BIOETHICS": null,
+    "AM_CALLHOMUN": null,
+    "AM_REST": null,
+    "AM_RESURRECTHOMUN": null
+  },
+  
+  "element_modifiers": {
+    "neutral": {
+      "neutral": 1.0, "fire": 1.0, "water": 1.0, "earth": 1.0, "wind": 1.0,
+      "holy": 1.0, "dark": 1.0, "ghost": 0.0, "poison": 1.0, "undead": 1.0
+    },
+    "fire": {
+      "neutral": 1.0, "fire": 0.25, "water": 0.5, "earth": 1.5, "wind": 1.0,
+      "holy": 0.75, "dark": 0.75, "ghost": 1.0, "poison": 1.0, "undead": 1.25
+    },
+    "water": {
+      "neutral": 1.0, "fire": 1.5, "water": 0.25, "earth": 1.0, "wind": 0.5,
+      "holy": 0.75, "dark": 0.75, "ghost": 1.0, "poison": 1.0, "undead": 1.0
+    },
+    "earth": {
+      "neutral": 1.0, "fire": 0.5, "water": 1.0, "earth": 0.25, "wind": 1.5,
+      "holy": 0.75, "dark": 0.75, "ghost": 1.0, "poison": 1.0, "undead": 1.0
+    },
+    "wind": {
+      "neutral": 1.0, "fire": 1.0, "water": 1.5, "earth": 0.5, "wind": 0.25,
+      "holy": 0.75, "dark": 0.75, "ghost": 1.0, "poison": 1.0, "undead": 1.0
+    },
+    "holy": {
+      "neutral": 1.0, "fire": 1.0, "water": 1.0, "earth": 1.0, "wind": 1.0,
+      "holy": 0.0, "dark": 2.0, "ghost": 1.0, "poison": 1.0, "undead": 2.0
+    },
+    "dark": {
+      "neutral": 1.0, "fire": 1.0, "water": 1.0, "earth": 1.0, "wind": 1.0,
+      "holy": 2.0, "dark": 0.0, "ghost": 1.0, "poison": 0.5, "undead": 0.0
+    },
+    "ghost": {
+      "neutral": 0.0, "fire": 1.0, "water": 1.0, "earth": 1.0, "wind": 1.0,
+      "holy": 1.0, "dark": 1.0, "ghost": 1.75, "poison": 1.0, "undead": 1.0
+    },
+    "poison": {
+      "neutral": 1.0, "fire": 1.0, "water": 1.0, "earth": 1.0, "wind": 1.0,
+      "holy": 1.0, "dark": 0.5, "ghost": 1.0, "poison": 0.0, "undead": 0.5
+    },
+    "undead": {
+      "neutral": 1.0, "fire": 1.0, "water": 1.0, "earth": 1.0, "wind": 1.0,
+      "holy": 2.0, "dark": 0.0, "ghost": 1.0, "poison": 0.5, "undead": 0.0
+    }
+  }
+}

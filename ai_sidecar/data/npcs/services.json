@@ -1,0 +1,84 @@
+{
+  "kafra": {
+    "prontera": [
+      {
+        "npc_id": 20001,
+        "name": "Kafra Employee",
+        "x": 150,
+        "y": 180,
+        "services": ["storage", "teleport", "save"],
+        "service_cost": 60
+      },
+      {
+        "npc_id": 20002,
+        "name": "Kafra Employee",
+        "x": 282,
+        "y": 200,
+        "services": ["storage", "teleport", "save"],
+        "service_cost": 60
+      }
+    ],
+    "geffen": [
+      {
+        "npc_id": 20003,
+        "name": "Kafra Employee",
+        "x": 120,
+        "y": 60,
+        "services": ["storage", "teleport", "save"],
+        "service_cost": 60
+      }
+    ],
+    "morocc": [
+      {
+        "npc_id": 20004,
+        "name": "Kafra Employee",
+        "x": 156,
+        "y": 97,
+        "services": ["storage", "teleport", "save"],
+        "service_cost": 60
+      }
+    ]
+  },
+  "refiner": {
+    "prontera": [
+      {
+        "npc_id": 20101,
+        "name": "Hollgrehenn",
+        "x": 175,
+        "y": 135,
+        "service_cost": 2000
+      }
+    ],
+    "payon": [
+      {
+        "npc_id": 20102,
+        "name": "Vestri",
+        "x": 144,
+        "y": 170,
+        "service_cost": 2000
+      }
+    ]
+  },
+  "identifier": {
+    "prontera": [
+      {
+        "npc_id": 20201,
+        "name": "Identify Master",
+        "x": 246,
+        "y": 128,
+        "service_cost": 40
+      }
+    ]
+  },
+  "repairman": {
+    "prontera": [
+      {
+        "npc_id": 20301,
+        "name": "Repairman",
+        "x": 158,
+        "y": 119,
+        "service_cost": 500
+      }
+    ]
+  }
+}

@@ -1,0 +1,412 @@
+{
+  "lif": {
+    "base_stats": {
+      "hp": 150,
+      "sp": 40,
+      "str": 12,
+      "agi": 20,
+      "vit": 15,
+      "int": 35,
+      "dex": 24,
+      "luk": 12
+    },
+    "growth_rates": {
+      "hp": [60, 100],
+      "sp": [4, 9],
+      "str": [1, 4],
+      "agi": [1, 5],
+      "vit": [1, 5],
+      "int": [4, 9],
+      "dex": [3, 7],
+      "luk": [1, 4]
+    },
+    "skills": {
+      "Healing Hands": 5,
+      "Urgent Escape": 5,
+      "Brain Surgery": 3,
+      "Mental Change": 1
+    },
+    "evolution": {
+      "standard": "lif2",
+      "s_evolution": "eira"
+    }
+  },
+  "lif2": {
+    "base_stats": {
+      "hp": 180,
+      "sp": 50,
+      "str": 15,
+      "agi": 25,
+      "vit": 20,
+      "int": 45,
+      "dex": 30,
+      "luk": 15
+    },
+    "growth_rates": {
+      "hp": [80, 140],
+      "sp": [6, 12],
+      "str": [2, 5],
+      "agi": [2, 6],
+      "vit": [2, 6],
+      "int": [5, 11],
+      "dex": [4, 9],
+      "luk": [2, 5]
+    },
+    "skills": {
+      "Healing Hands": 5,
+      "Urgent Escape": 5,
+      "Brain Surgery": 3,
+      "Mental Change": 1,
+      "Sonic Claw": 5
+    },
+    "evolution": null
+  },
+  "eira": {
+    "base_stats": {
+      "hp": 200,
+      "sp": 60,
+      "str": 15,
+      "agi": 28,
+      "vit": 22,
+      "int": 55,
+      "dex": 35,
+      "luk": 15
+    },
+    "growth_rates": {
+      "hp": [100, 160],
+      "sp": [8, 15],
+      "str": [2, 5],
+      "agi": [3, 7],
+      "vit": [3, 7],
+      "int": [6, 13],
+      "dex": [5, 11],
+      "luk": [2, 5]
+    },
+    "skills": {
+      "Healing Hands": 5,
+      "Urgent Escape": 5,
+      "Brain Surgery": 3,
+      "Mental Change": 1,
+      "Sonic Claw": 5,
+      "Eraser Cutter": 5,
+      "Silent Breeze": 5,
+      "Eira's Wisdom": 1
+    },
+    "evolution": null
+  },
+  "amistr": {
+    "base_stats": {
+      "hp": 320,
+      "sp": 25,
+      "str": 20,
+      "agi": 17,
+      "vit": 35,
+      "int": 11,
+      "dex": 24,
+      "luk": 13
+    },
+    "growth_rates": {
+      "hp": [150, 220],
+      "sp": [2, 6],
+      "str": [3, 7],
+      "agi": [1, 4],
+      "vit": [4, 10],
+      "int": [1, 3],
+      "dex": [2, 6],
+      "luk": [1, 4]
+    },
+    "skills": {
+      "Amistr Bulwark": 5,
+      "Adamantium Skin": 5,
+      "Bloodlust": 3,
+      "Castling": 1
+    },
+    "evolution": {
+      "standard": "amistr2",
+      "s_evolution": "bayeri"
+    }
+  },
+  "amistr2": {
+    "base_stats": {
+      "hp": 400,
+      "sp": 30,
+      "str": 28,
+      "agi": 20,
+      "vit": 45,
+      "int": 13,
+      "dex": 28,
+      "luk": 15
+    },
+    "growth_rates": {
+      "hp": [200, 280],
+      "sp": [3, 8],
+      "str": [4, 9],
+      "agi": [2, 5],
+      "vit": [5, 12],
+      "int": [1, 4],
+      "dex": [3, 8],
+      "luk": [2, 5]
+    },
+    "skills": {
+      "Amistr Bulwark": 5,
+      "Adamantium Skin": 5,
+      "Bloodlust": 3,
+      "Castling": 1,
+      "Amistr Buff": 5
+    },
+    "evolution": null
+  },
+  "bayeri": {
+    "base_stats": {
+      "hp": 500,
+      "sp": 35,
+      "str": 32,
+      "agi": 22,
+      "vit": 55,
+      "int": 15,
+      "dex": 30,
+      "luk": 15
+    },
+    "growth_rates": {
+      "hp": [250, 340],
+      "sp": [4, 10],
+      "str": [5, 11],
+      "agi": [2, 6],
+      "vit": [6, 14],
+      "int": [1, 4],
+      "dex": [4, 9],
+      "luk": [2, 5]
+    },
+    "skills": {
+      "Amistr Bulwark": 5,
+      "Adamantium Skin": 5,
+      "Bloodlust": 3,
+      "Castling": 1,
+      "Amistr Buff": 5,
+      "Stahl Horn": 5,
+      "Goldene Ferse": 5,
+      "Bayeri's Fortress": 1
+    },
+    "evolution": null
+  },
+  "filir": {
+    "base_stats": {
+      "hp": 90,
+      "sp": 25,
+      "str": 29,
+      "agi": 35,
+      "vit": 9,
+      "int": 8,
+      "dex": 30,
+      "luk": 18
+    },
+    "growth_rates": {
+      "hp": [40, 75],
+      "sp": [2, 5],
+      "str": [3, 8],
+      "agi": [4, 10],
+      "vit": [1, 3],
+      "int": [1, 2],
+      "dex": [3, 8],
+      "luk": [2, 6]
+    },
+    "skills": {
+      "Flitting": 5,
+      "Moonlight": 5,
+      "Accelerated Flight": 3,
+      "S.B.R.44": 1
+    },
+    "evolution": {
+      "standard": "filir2",
+      "s_evolution": "sera"
+    }
+  },
+  "filir2": {
+    "base_stats": {
+      "hp": 110,
+      "sp": 30,
+      "str": 38,
+      "agi": 45,
+      "vit": 12,
+      "int": 10,
+      "dex": 38,
+      "luk": 22
+    },
+    "growth_rates": {
+      "hp": [50, 95],
+      "sp": [3, 7],
+      "str": [4, 10],
+      "agi": [5, 12],
+      "vit": [1, 4],
+      "int": [1, 3],
+      "dex": [4, 10],
+      "luk": [3, 8]
+    },
+    "skills": {
+      "Flitting": 5,
+      "Moonlight": 5,
+      "Accelerated Flight": 3,
+      "S.B.R.44": 1,
+      "Arrow Shower": 5
+    },
+    "evolution": null
+  },
+  "sera": {
+    "base_stats": {
+      "hp": 130,
+      "sp": 35,
+      "str": 42,
+      "agi": 55,
+      "vit": 15,
+      "int": 12,
+      "dex": 45,
+      "luk": 26
+    },
+    "growth_rates": {
+      "hp": [60, 115],
+      "sp": [4, 9],
+      "str": [5, 12],
+      "agi": [6, 14],
+      "vit": [2, 5],
+      "int": [1, 4],
+      "dex": [5, 12],
+      "luk": [4, 10]
+    },
+    "skills": {
+      "Flitting": 5,
+      "Moonlight": 5,
+      "Accelerated Flight": 3,
+      "S.B.R.44": 1,
+      "Arrow Shower": 5,
+      "Sonic Claw": 5,
+      "Silvervine Stem Spear": 5,
+      "Sera's Agility": 1
+    },
+    "evolution": null
+  },
+  "vanilmirth": {
+    "base_stats": {
+      "hp": 80,
+      "sp": 11,
+      "str": 11,
+      "agi": 11,
+      "vit": 11,
+      "int": 11,
+      "dex": 11,
+      "luk": 11
+    },
+    "growth_rates": {
+      "hp": [45, 90],
+      "sp": [4, 9],
+      "str": [1, 5],
+      "agi": [1, 5],
+      "vit": [1, 5],
+      "int": [4, 9],
+      "dex": [1, 5],
+      "luk": [1, 5]
+    },
+    "skills": {
+      "Caprice": 5,
+      "Chaotic Blessings": 5,
+      "Instruction Change": 3,
+      "Bio Explosion": 1
+    },
+    "evolution": {
+      "standard": "vanilmirth2",
+      "s_evolution": "dieter"
+    }
+  },
+  "vanilmirth2": {
+    "base_stats": {
+      "hp": 100,
+      "sp": 16,
+      "str": 14,
+      "agi": 14,
+      "vit": 14,
+      "int": 20,
+      "dex": 14,
+      "luk": 14
+    },
+    "growth_rates": {
+      "hp": [60, 120],
+      "sp": [5, 12],
+      "str": [2, 6],
+      "agi": [2, 6],
+      "vit": [2, 6],
+      "int": [5, 12],
+      "dex": [2, 6],
+      "luk": [2, 6]
+    },
+    "skills": {
+      "Caprice": 5,
+      "Chaotic Blessings": 5,
+      "Instruction Change": 3,
+      "Bio Explosion": 1,
+      "Parasite": 5
+    },
+    "evolution": null
+  },
+  "dieter": {
+    "base_stats": {
+      "hp": 140,
+      "sp": 22,
+      "str": 16,
+      "agi": 16,
+      "vit": 20,
+      "int": 32,
+      "dex": 16,
+      "luk": 16
+    },
+    "growth_rates": {
+      "hp": [80, 150],
+      "sp": [7, 15],
+      "str": [2, 7],
+      "agi": [2, 7],
+      "vit": [3, 8],
+      "int": [6, 14],
+      "dex": [2, 7],
+      "luk": [2, 7]
+    },
+    "skills": {
+      "Caprice": 5,
+      "Chaotic Blessings": 5,
+      "Instruction Change": 3,
+      "Bio Explosion": 1,
+      "Parasite": 5,
+      "Lava Slide": 5,
+      "Volcanic Ash": 5,
+      "Dieter's Chaos": 1
+    },
+    "evolution": null
+  },
+  "eleanor": {
+    "base_stats": {
+      "hp": 160,
+      "sp": 45,
+      "str": 20,
+      "agi": 30,
+      "vit": 25,
+      "int": 40,
+      "dex": 32,
+      "luk": 18
+    },
+    "growth_rates": {
+      "hp": [100, 170],
+      "sp": [6, 13],
+      "str": [3, 8],
+      "agi": [4, 9],
+      "vit": [3, 8],
+      "int": [5, 12],
+      "dex": [4, 10],
+      "luk": [2, 6]
+    },
+    "skills": {
+      "Sonic Claw": 5,
+      "Stahl Horn": 5,
+      "Healing Hands": 5,
+      "Chaotic Blessings": 5,
+      "Eleanor's Mastery": 1
+    },
+    "evolution": null
+  }
+}

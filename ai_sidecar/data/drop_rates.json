@@ -1,0 +1,141 @@
+{
+  "drop_rates": {
+    "501": {"rate": 0.50, "sources": ["Poring", "Drops", "Poporing"], "item_name": "Red Potion"},
+    "502": {"rate": 0.45, "sources": ["Poring", "Drops"], "item_name": "Orange Potion"},
+    "503": {"rate": 0.40, "sources": ["Fabre", "Lunatic"], "item_name": "Yellow Potion"},
+    "504": {"rate": 0.35, "sources": ["Peco Peco", "Rocker"], "item_name": "White Potion"},
+    "505": {"rate": 0.30, "sources": ["Spore", "Thief Bug"], "item_name": "Blue Potion"},
+    "507": {"rate": 0.25, "sources": ["Hornet", "Rocker"], "item_name": "Red Herb"},
+    "645": {"rate": 0.20, "sources": ["Various"], "item_name": "Center Potion"},
+    "901": {"rate": 0.60, "sources": ["Worm Tail"], "item_name": "Daenggie"},
+    "902": {"rate": 0.55, "sources": ["Various insects"], "item_name": "Tree Root"},
+    "903": {"rate": 0.52, "sources": ["Fabre"], "item_name": "Scorpion Tail"},
+    "904": {"rate": 0.48, "sources": ["Rocker"], "item_name": "Scorpion Claw"},
+    "905": {"rate": 0.45, "sources": ["Wolves"], "item_name": "Stem"},
+    "906": {"rate": 0.42, "sources": ["Horn", "Savage"], "item_name": "Pointed Scale"},
+    "907": {"rate": 0.40, "sources": ["Pecopeco"], "item_name": "Resin"},
+    "908": {"rate": 0.38, "sources": ["Spore"], "item_name": "Spawn"},
+    "909": {"rate": 0.35, "sources": ["Jellyfish"], "item_name": "Jellopy"},
+    "910": {"rate": 0.32, "sources": ["Gargoyle"], "item_name": "Garlet"},
+    "911": {"rate": 0.30, "sources": ["Scorpion"], "item_name": "Scell"},
+    "912": {"rate": 0.28, "sources": ["Zerom"], "item_name": "Zargon"},
+    "913": {"rate": 0.25, "sources": ["Muka"], "item_name": "Tooth of Bat"},
+    "914": {"rate": 0.22, "sources": ["Plankton"], "item_name": "Fluff"},
+    "915": {"rate": 0.20, "sources": ["Condor"], "item_name": "Chrysalis"},
+    "7001": {"rate": 0.50, "sources": ["Poring", "Drops"], "item_name": "Mould Powder"},
+    "7002": {"rate": 0.10, "sources": ["Elder Willow"], "item_name": "Ogre Tooth"},
+    "7003": {"rate": 0.08, "sources": ["Orc Warrior"], "item_name": "Anolian Skin"},
+    "4001": {"rate": 0.0001, "sources": ["Poring"], "item_name": "Poring Card"},
+    "4002": {"rate": 0.0001, "sources": ["Fabre"], "item_name": "Fabre Card"},
+    "4003": {"rate": 0.0001, "sources": ["Pupa"], "item_name": "Pupa Card"},
+    "4004": {"rate": 0.0001, "sources": ["Drops"], "item_name": "Drops Card"},
+    "4005": {"rate": 0.0001, "sources": ["Santa Poring"], "item_name": "Santa Poring Card"},
+    "4077": {"rate": 0.00001, "sources": ["Drake"], "item_name": "Drake Card"},
+    "4131": {"rate": 0.000005, "sources": ["Ghostring"], "item_name": "Ghostring Card"},
+    "4142": {"rate": 0.000005, "sources": ["Angeling"], "item_name": "Angeling Card"}
+  },
+  "mvp_drops": {
+    "4121": {
+      "boss": "Baphomet",
+      "rate": 0.01,
+      "item_name": "Baphomet Card",
+      "map": "prt_maze03"
+    },
+    "4123": {
+      "boss": "Dark Lord",
+      "rate": 0.01,
+      "item_name": "Dark Lord Card",
+      "map": "gl_chyard"
+    },
+    "4128": {
+      "boss": "Orc Hero",
+      "rate": 0.01,
+      "item_name": "Orc Hero Card",
+      "map": "gef_fild14"
+    },
+    "4132": {
+      "boss": "Mistress",
+      "rate": 0.01,
+      "item_name": "Mistress Card",
+      "map": "mjolnir_04"
+    },
+    "4134": {
+      "boss": "Moonlight Flower",
+      "rate": 0.01,
+      "item_name": "Moonlight Flower Card",
+      "map": "pay_dun04"
+    },
+    "4135": {
+      "boss": "Pharaoh",
+      "rate": 0.01,
+      "item_name": "Pharaoh Card",
+      "map": "moc_pryd06"
+    },
+    "4143": {
+      "boss": "Orc Lord",
+      "rate": 0.01,
+      "item_name": "Orc Lord Card",
+      "map": "gef_fild10"
+    },
+    "4144": {
+      "boss": "Osiris",
+      "rate": 0.01,
+      "item_name": "Osiris Card",
+      "map": "moc_pryd04"
+    },
+    "4145": {
+      "boss": "Doppelganger",
+      "rate": 0.01,
+      "item_name": "Doppelganger Card",
+      "map": "gef_dun02"
+    },
+    "4146": {
+      "boss": "Eddga",
+      "rate": 0.01,
+      "item_name": "Eddga Card",
+      "map": "pay_fild11"
+    },
+    "4147": {
+      "boss": "Maya",
+      "rate": 0.01,
+      "item_name": "Maya Card",
+      "map": "anthell02"
+    },
+    "4148": {
+      "boss": "Phreeoni",
+      "rate": 0.01,
+      "item_name": "Phreeoni Card",
+      "map": "moc_fild17"
+    },
+    "4367": {
+      "boss": "Thanatos",
+      "rate": 0.01,
+      "item_name": "Thanatos Card",
+      "map": "thana_boss"
+    },
+    "4399": {
+      "boss": "Gloom Under Night",
+      "rate": 0.01,
+      "item_name": "Gloom Under Night Card",
+      "map": "ra_san05"
+    }
+  },
+  "rare_equipment": {
+    "1185": {"rate": 0.001, "sources": ["Goblin Leader"], "item_name": "Blade"},
+    "1234": {"rate": 0.001, "sources": ["Samurai"], "item_name": "Muramasa"},
+    "1264": {"rate": 0.001, "sources": ["Orc Hero"], "item_name": "Bloody Axe"},
+    "1365": {"rate": 0.001, "sources": ["Baphomet"], "item_name": "Sabbath"},
+    "1472": {"rate": 0.001, "sources": ["Osiris"], "item_name": "Soul Staff"},
+    "1522": {"rate": 0.001, "sources": ["GTB"], "item_name": "Stunner"},
+    "1620": {"rate": 0.001, "sources": ["Moonlight"], "item_name": "Staff of Healing"},
+    "1630": {"rate": 0.001, "sources": ["Pharaoh"], "item_name": "Slash"}
+  },
+  "common_drops": {
+    "909": {"rate": 0.80, "sources": ["Various slimes"], "item_name": "Jellopy"},
+    "914": {"rate": 0.75, "sources": ["Various insects"], "item_name": "Fluff"},
+    "915": {"rate": 0.70, "sources": ["Condor"], "item_name": "Chrysalis"},
+    "948": {"rate": 0.65, "sources": ["Various undead"], "item_name": "Bear's Footskin"},
+    "949": {"rate": 0.60, "sources": ["Bats"], "item_name": "Feather"},
+    "950": {"rate": 0.55, "sources": ["Snakes"], "item_name": "Heart of Mermaid"}
+  }
+}

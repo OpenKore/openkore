@@ -1,0 +1,362 @@
+{
+  "first_edition": {
+    "aldebaran": {
+      "neuschwanstein": {
+        "map": "aldeg_cas01",
+        "emperium": [216, 169],
+        "spawn": [218, 170],
+        "realm": "Schwarzwald",
+        "difficulty": 7,
+        "guild_dungeon": "gld_dun02",
+        "treasure_spawn_rate": 0.25
+      },
+      "hohenschwangau": {
+        "map": "aldeg_cas02",
+        "emperium": [84, 72],
+        "spawn": [91, 181],
+        "realm": "Schwarzwald",
+        "difficulty": 6,
+        "guild_dungeon": "gld_dun02",
+        "treasure_spawn_rate": 0.25
+      },
+      "nuernberg": {
+        "map": "aldeg_cas03",
+        "emperium": [110, 108],
+        "spawn": [118, 76],
+        "realm": "Schwarzwald",
+        "difficulty": 6,
+        "guild_dungeon": "gld_dun02",
+        "treasure_spawn_rate": 0.25
+      },
+      "wuerzburg": {
+        "map": "aldeg_cas04",
+        "emperium": [92, 181],
+        "spawn": [45, 88],
+        "realm": "Schwarzwald",
+        "difficulty": 5,
+        "guild_dungeon": "gld_dun02",
+        "treasure_spawn_rate": 0.25
+      },
+      "rothenburg": {
+        "map": "aldeg_cas05",
+        "emperium": [93, 123],
+        "spawn": [45, 87],
+        "realm": "Schwarzwald",
+        "difficulty": 5,
+        "guild_dungeon": "gld_dun02",
+        "treasure_spawn_rate": 0.25
+      }
+    },
+    "geffen": {
+      "repherion": {
+        "map": "gefg_cas01",
+        "emperium": [197, 181],
+        "spawn": [198, 182],
+        "realm": "Rune-Midgard",
+        "difficulty": 8,
+        "guild_dungeon": "gld_dun04",
+        "treasure_spawn_rate": 0.25
+      },
+      "eeyolbriggar": {
+        "map": "gefg_cas02",
+        "emperium": [176, 178],
+        "spawn": [54, 118],
+        "realm": "Rune-Midgard",
+        "difficulty": 7,
+        "guild_dungeon": "gld_dun04",
+        "treasure_spawn_rate": 0.25
+      },
+      "yesnelph": {
+        "map": "gefg_cas03",
+        "emperium": [244, 166],
+        "spawn": [245, 167],
+        "realm": "Rune-Midgard",
+        "difficulty": 7,
+        "guild_dungeon": "gld_dun04",
+        "treasure_spawn_rate": 0.25
+      },
+      "bergel": {
+        "map": "gefg_cas04",
+        "emperium": [174, 178],
+        "spawn": [174, 177],
+        "realm": "Rune-Midgard",
+        "difficulty": 6,
+        "guild_dungeon": "gld_dun04",
+        "treasure_spawn_rate": 0.25
+      },
+      "mersetzdeitz": {
+        "map": "gefg_cas05",
+        "emperium": [194, 184],
+        "spawn": [194, 184],
+        "realm": "Rune-Midgard",
+        "difficulty": 6,
+        "guild_dungeon": "gld_dun04",
+        "treasure_spawn_rate": 0.25
+      }
+    },
+    "payon": {
+      "bright_arbor": {
+        "map": "payg_cas01",
+        "emperium": [139, 139],
+        "spawn": [87, 29],
+        "realm": "Rune-Midgard",
+        "difficulty": 7,
+        "guild_dungeon": "gld_dun01",
+        "treasure_spawn_rate": 0.25
+      },
+      "scarlet_palace": {
+        "map": "payg_cas02",
+        "emperium": [142, 130],
+        "spawn": [27, 30],
+        "realm": "Rune-Midgard",
+        "difficulty": 6,
+        "guild_dungeon": "gld_dun01",
+        "treasure_spawn_rate": 0.25
+      },
+      "holy_shadow": {
+        "map": "payg_cas03",
+        "emperium": [153, 137],
+        "spawn": [153, 137],
+        "realm": "Rune-Midgard",
+        "difficulty": 6,
+        "guild_dungeon": "gld_dun01",
+        "treasure_spawn_rate": 0.25
+      },
+      "sacred_altar": {
+        "map": "payg_cas04",
+        "emperium": [143, 123],
+        "spawn": [256, 40],
+        "realm": "Rune-Midgard",
+        "difficulty": 5,
+        "guild_dungeon": "gld_dun01",
+        "treasure_spawn_rate": 0.25
+      },
+      "bamboo_grove_hill": {
+        "map": "payg_cas05",
+        "emperium": [153, 141],
+        "spawn": [53, 266],
+        "realm": "Rune-Midgard",
+        "difficulty": 5,
+        "guild_dungeon": "gld_dun01",
+        "treasure_spawn_rate": 0.25
+      }
+    },
+    "prontera": {
+      "kriemhild": {
+        "map": "prtg_cas01",
+        "emperium": [197, 197],
+        "spawn": [197, 197],
+        "realm": "Rune-Midgard",
+        "difficulty": 9,
+        "guild_dungeon": "gld_dun03",
+        "treasure_spawn_rate": 0.25
+      },
+      "swanhild": {
+        "map": "prtg_cas02",
+        "emperium": [157, 174],
+        "spawn": [157, 174],
+        "realm": "Rune-Midgard",
+        "difficulty": 8,
+        "guild_dungeon": "gld_dun03",
+        "treasure_spawn_rate": 0.25
+      },
+      "fadhgridh": {
+        "map": "prtg_cas03",
+        "emperium": [16, 143],
+        "spawn": [16, 143],
+        "realm": "Rune-Midgard",
+        "difficulty": 8,
+        "guild_dungeon": "gld_dun03",
+        "treasure_spawn_rate": 0.25
+      },
+      "skoegul": {
+        "map": "prtg_cas04",
+        "emperium": [259, 265],
+        "spawn": [259, 265],
+        "realm": "Rune-Midgard",
+        "difficulty": 7,
+        "guild_dungeon": "gld_dun03",
+        "treasure_spawn_rate": 0.25
+      },
+      "gondul": {
+        "map": "prtg_cas05",
+        "emperium": [266, 266],
+        "spawn": [266, 266],
+        "realm": "Rune-Midgard",
+        "difficulty": 7,
+        "guild_dungeon": "gld_dun03",
+        "treasure_spawn_rate": 0.25
+      }
+    }
+  },
+  "second_edition": {
+    "schwaltzvald": {
+      "himinn": {
+        "map": "schg_cas01",
+        "spawn": [120, 290],
+        "realm": "Schwarzwald",
+        "difficulty": 9,
+        "stones": [
+          {"position": [174, 95], "id": 1, "max_hp": 50000},
+          {"position": [180, 95], "id": 2, "max_hp": 50000}
+        ],
+        "barricades": [
+          {"position": [162, 95], "id": 1, "max_hp": 150000},
+          {"position": [168, 95], "id": 2, "max_hp": 150000}
+        ],
+        "flags": [
+          {"position": [174, 80], "type": "neutral"},
+          {"position": [180, 80], "type": "neutral"}
+        ],
+        "treasure_spawn_rate": 0.35
+      },
+      "andlangr": {
+        "map": "schg_cas02",
+        "spawn": [50, 24],
+        "realm": "Schwarzwald",
+        "difficulty": 8,
+        "stones": [
+          {"position": [164, 98], "id": 1, "max_hp": 50000},
+          {"position": [170, 98], "id": 2, "max_hp": 50000}
+        ],
+        "barricades": [
+          {"position": [152, 98], "id": 1, "max_hp": 150000},
+          {"position": [158, 98], "id": 2, "max_hp": 150000}
+        ],
+        "flags": [
+          {"position": [164, 83], "type": "neutral"},
+          {"position": [170, 83], "type": "neutral"}
+        ],
+        "treasure_spawn_rate": 0.35
+      },
+      "viblainn": {
+        "map": "schg_cas03",
+        "spawn": [50, 24],
+        "realm": "Schwarzwald",
+        "difficulty": 8,
+        "stones": [
+          {"position": [151, 94], "id": 1, "max_hp": 50000},
+          {"position": [157, 94], "id": 2, "max_hp": 50000}
+        ],
+        "barricades": [
+          {"position": [139, 94], "id": 1, "max_hp": 150000},
+          {"position": [145, 94], "id": 2, "max_hp": 150000}
+        ],
+        "flags": [
+          {"position": [151, 79], "type": "neutral"},
+          {"position": [157, 79], "type": "neutral"}
+        ],
+        "treasure_spawn_rate": 0.35
+      }
+    },
+    "arunafeltz": {
+      "mardol": {
+        "map": "arug_cas01",
+        "spawn": [157, 369],
+        "realm": "Arunafeltz",
+        "difficulty": 9,
+        "stones": [
+          {"position": [149, 54], "id": 1, "max_hp": 50000},
+          {"position": [155, 54], "id": 2, "max_hp": 50000}
+        ],
+        "barricades": [
+          {"position": [137, 54], "id": 1, "max_hp": 150000},
+          {"position": [143, 54], "id": 2, "max_hp": 150000}
+        ],
+        "flags": [
+          {"position": [149, 39], "type": "neutral"},
+          {"position": [155, 39], "type": "neutral"}
+        ],
+        "treasure_spawn_rate": 0.35
+      },
+      "cyr": {
+        "map": "arug_cas02",
+        "spawn": [157, 366],
+        "realm": "Arunafeltz",
+        "difficulty": 8,
+        "stones": [
+          {"position": [151, 46], "id": 1, "max_hp": 50000},
+          {"position": [157, 46], "id": 2, "max_hp": 50000}
+        ],
+        "barricades": [
+          {"position": [139, 46], "id": 1, "max_hp": 150000},
+          {"position": [145, 46], "id": 2, "max_hp": 150000}
+        ],
+        "flags": [
+          {"position": [151, 31], "type": "neutral"},
+          {"position": [157, 31], "type": "neutral"}
+        ],
+        "treasure_spawn_rate": 0.35
+      },
+      "horn": {
+        "map": "arug_cas03",
+        "spawn": [141, 293],
+        "realm": "Arunafeltz",
+        "difficulty": 8,
+        "stones": [
+          {"position": [141, 45], "id": 1, "max_hp": 50000},
+          {"position": [147, 45], "id": 2, "max_hp": 50000}
+        ],
+        "barricades": [
+          {"position": [129, 45], "id": 1, "max_hp": 150000},
+          {"position": [135, 45], "id": 2, "max_hp": 150000}
+        ],
+        "flags": [
+          {"position": [141, 30], "type": "neutral"},
+          {"position": [147, 30], "type": "neutral"}
+        ],
+        "treasure_spawn_rate": 0.35
+      },
+      "gefn": {
+        "map": "arug_cas04",
+        "spawn": [141, 293],
+        "realm": "Arunafeltz",
+        "difficulty": 7,
+        "stones": [
+          {"position": [141, 42], "id": 1, "max_hp": 50000},
+          {"position": [147, 42], "id": 2, "max_hp": 50000}
+        ],
+        "barricades": [
+          {"position": [129, 42], "id": 1, "max_hp": 150000},
+          {"position": [135, 42], "id": 2, "max_hp": 150000}
+        ],
+        "flags": [
+          {"position": [141, 27], "type": "neutral"},
+          {"position": [147, 27], "type": "neutral"}
+        ],
+        "treasure_spawn_rate": 0.35
+      },
+      "bandis": {
+        "map": "arug_cas05",
+        "spawn": [141, 293],
+        "realm": "Arunafeltz",
+        "difficulty": 7,
+        "stones": [
+          {"position": [152, 93], "id": 1, "max_hp": 50000},
+          {"position": [158, 93], "id": 2, "max_hp": 50000}
+        ],
+        "barricades": [
+          {"position": [140, 93], "id": 1, "max_hp": 150000},
+          {"position": [146, 93], "id": 2, "max_hp": 150000}
+        ],
+        "flags": [
+          {"position": [152, 78], "type": "neutral"},
+          {"position": [158, 78], "type": "neutral"}
+        ],
+        "treasure_spawn_rate": 0.35
+      }
+    }
+  },
+  "training_edition": {
+    "valfreyja": {
+      "map": "te_prtcas01",
+      "spawn": [15, 15],
+      "realm": "Training",
+      "difficulty": 5,
+      "emperium": [15, 15],
+      "max_players": 16,
+      "duration_minutes": 30,
+      "treasure_spawn_rate": 0.15
+    }
+  }
+}

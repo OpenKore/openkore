@@ -1,0 +1,227 @@
+{
+  "traps": {
+    "ankle_snare": {
+      "display_name": "Ankle Snare",
+      "skill_id": 1110,
+      "duration_seconds": 250,
+      "max_level": 5,
+      "sp_cost": 12,
+      "delay_ms": 1000,
+      "effect": "immobilize",
+      "range": 0,
+      "damage": 0,
+      "can_detonate": false,
+      "is_hidden": false
+    },
+    "blast_mine": {
+      "display_name": "Blast Mine",
+      "skill_id": 1111,
+      "duration_seconds": 25,
+      "max_level": 5,
+      "sp_cost": 10,
+      "delay_ms": 1500,
+      "effect": "damage",
+      "range": 1,
+      "damage": 450,
+      "can_detonate": true,
+      "is_hidden": true
+    },
+    "claymore_trap": {
+      "display_name": "Claymore Trap",
+      "skill_id": 1109,
+      "duration_seconds": 20,
+      "max_level": 5,
+      "sp_cost": 15,
+      "delay_ms": 1500,
+      "effect": "damage_aoe",
+      "range": 3,
+      "damage": 700,
+      "can_detonate": true,
+      "is_hidden": true
+    },
+    "freezing_trap": {
+      "display_name": "Freezing Trap",
+      "skill_id": 1113,
+      "duration_seconds": 150,
+      "max_level": 5,
+      "sp_cost": 10,
+      "delay_ms": 1000,
+      "effect": "freeze",
+      "range": 1,
+      "damage": 0,
+      "can_detonate": false,
+      "is_hidden": true
+    },
+    "land_mine": {
+      "display_name": "Land Mine",
+      "skill_id": 1112,
+      "duration_seconds": 200,
+      "max_level": 5,
+      "sp_cost": 10,
+      "delay_ms": 1000,
+      "effect": "damage_earth",
+      "range": 1,
+      "damage": 440,
+      "can_detonate": false,
+      "is_hidden": true
+    },
+    "sandman": {
+      "display_name": "Sandman",
+      "skill_id": 1114,
+      "duration_seconds": 150,
+      "max_level": 5,
+      "sp_cost": 12,
+      "delay_ms": 1000,
+      "effect": "sleep",
+      "range": 1,
+      "damage": 0,
+      "can_detonate": false,
+      "is_hidden": true
+    },
+    "shockwave_trap": {
+      "display_name": "Shockwave Trap",
+      "skill_id": 1115,
+      "duration_seconds": 200,
+      "max_level": 5,
+      "sp_cost": 45,
+      "delay_ms": 1500,
+      "effect": "knockback_drain",
+      "range": 3,
+      "damage": 0,
+      "can_detonate": false,
+      "is_hidden": true
+    },
+    "skid_trap": {
+      "display_name": "Skid Trap",
+      "skill_id": 1116,
+      "duration_seconds": 300,
+      "max_level": 5,
+      "sp_cost": 10,
+      "delay_ms": 1000,
+      "effect": "push",
+      "range": 1,
+      "damage": 0,
+      "can_detonate": false,
+      "is_hidden": false
+    },
+    "spring_trap": {
+      "display_name": "Spring Trap",
+      "skill_id": 1117,
+      "duration_seconds": 0,
+      "max_level": 5,
+      "sp_cost": 10,
+      "delay_ms": 0,
+      "effect": "remove",
+      "range": 0,
+      "damage": 0,
+      "can_detonate": false,
+      "is_hidden": false
+    },
+    "cluster_bomb": {
+      "display_name": "Cluster Bomb",
+      "skill_id": 2282,
+      "duration_seconds": 15,
+      "max_level": 5,
+      "sp_cost": 20,
+      "delay_ms": 2000,
+      "effect": "damage_multi",
+      "range": 5,
+      "damage": 1200,
+      "can_detonate": true,
+      "is_hidden": true
+    },
+    "detonator": {
+      "display_name": "Detonator",
+      "skill_id": 2283,
+      "duration_seconds": 0,
+      "max_level": 1,
+      "sp_cost": 15,
+      "delay_ms": 0,
+      "effect": "detonate_all",
+      "range": 9,
+      "damage": 0,
+      "can_detonate": false,
+      "is_hidden": false
+    },
+    "electric_shocker": {
+      "display_name": "Electric Shocker",
+      "skill_id": 2279,
+      "duration_seconds": 15,
+      "max_level": 5,
+      "sp_cost": 35,
+      "delay_ms": 1500,
+      "effect": "stun_drain",
+      "range": 3,
+      "damage": 250,
+      "can_detonate": false,
+      "is_hidden": true
+    },
+    "magenta_trap": {
+      "display_name": "Magenta Trap",
+      "skill_id": 2340,
+      "duration_seconds": 15,
+      "max_level": 1,
+      "sp_cost": 10,
+      "delay_ms": 1000,
+      "effect": "debuff",
+      "range": 3,
+      "damage": 0,
+      "can_detonate": false,
+      "is_hidden": true
+    },
+    "fire_trap": {
+      "display_name": "Fire Trap",
+      "skill_id": 2338,
+      "duration_seconds": 15,
+      "max_level": 5,
+      "sp_cost": 10,
+      "delay_ms": 1000,
+      "effect": "damage_fire",
+      "range": 2,
+      "damage": 800,
+      "can_detonate": false,
+      "is_hidden": true
+    },
+    "ice_trap": {
+      "display_name": "Ice Trap",
+      "skill_id": 2339,
+      "duration_seconds": 15,
+      "max_level": 5,
+      "sp_cost": 10,
+      "delay_ms": 1000,
+      "effect": "damage_water",
+      "range": 2,
+      "damage": 800,
+      "can_detonate": false,
+      "is_hidden": true
+    }
+  },
+  "max_traps_by_level": {
+    "1": 3,
+    "2": 3,
+    "3": 4,
+    "4": 4,
+    "5": 5
+  },
+  "trap_combinations": {
+    "boss_setup": [
+      "ankle_snare",
+      "claymore_trap",
+      "blast_mine"
+    ],
+    "farming_setup": [
+      "blast_mine",
+      "freezing_trap"
+    ],
+    "pvp_setup": [
+      "ankle_snare",
+      "sandman",
+      "claymore_trap"
+    ],
+    "defensive_setup": [
+      "skid_trap",
+      "freezing_trap",
+      "ankle_snare"
+    ]
+  }
+}

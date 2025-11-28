@@ -1,0 +1,43 @@
+{
+  "weapon_rates": {
+    "1": {"base_rate": 100, "safe": true},
+    "2": {"base_rate": 100, "safe": true},
+    "3": {"base_rate": 100, "safe": true},
+    "4": {"base_rate": 100, "safe": true},
+    "5": {"base_rate": 60, "safe": false},
+    "6": {"base_rate": 40, "safe": false},
+    "7": {"base_rate": 40, "safe": false},
+    "8": {"base_rate": 20, "safe": false},
+    "9": {"base_rate": 20, "safe": false},
+    "10": {"base_rate": 9, "safe": false}
+  },
+  "armor_rates": {
+    "1": {"base_rate": 100, "safe": true},
+    "2": {"base_rate": 100, "safe": true},
+    "3": {"base_rate": 100, "safe": true},
+    "4": {"base_rate": 100, "safe": true},
+    "5": {"base_rate": 60, "safe": false},
+    "6": {"base_rate": 40, "safe": false},
+    "7": {"base_rate": 40, "safe": false},
+    "8": {"base_rate": 20, "safe": false},
+    "9": {"base_rate": 20, "safe": false},
+    "10": {"base_rate": 10, "safe": false}
+  },
+  "ore_types": {
+    "phracon": {"weapon_level": 1, "item_id": 1010},
+    "emveretarcon": {"weapon_level": 2, "item_id": 1011},
+    "oridecon": {"weapon_level": [3, 4], "item_id": 984},
+    "elunium": {"armor": true, "item_id": 985},
+    "hd_oridecon": {"weapon_level": [3, 4], "item_id": 6224, "safe": true},
+    "hd_elunium": {"armor": true, "item_id": 6225, "safe": true},
+    "enriched_oridecon": {"weapon_level": [3, 4], "item_id": 6240, "bonus": 10},
+    "enriched_elunium": {"armor": true, "item_id": 6241, "bonus": 10}
+  },
+  "safe_limits": {
+    "weapon_level_1": 7,
+    "weapon_level_2": 6,
+    "weapon_level_3": 5,
+    "weapon_level_4": 4,
+    "armor": 4
+  }
+}

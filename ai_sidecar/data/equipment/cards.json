@@ -1,0 +1,107 @@
+{
+  "4001": {
+    "name": "Poring Card",
+    "type": "card",
+    "slot_type": "armor",
+    "effects": ["LUK +2", "Perfect Dodge +1"],
+    "description": "Increases LUK and perfect dodge"
+  },
+  "4002": {
+    "name": "Fabre Card",
+    "type": "card",
+    "slot_type": "weapon",
+    "effects": ["ATK +5 vs Insect race"],
+    "description": "Increases physical damage against Insect race monsters"
+  },
+  "4003": {
+    "name": "Pupa Card",
+    "type": "card",
+    "slot_type": "armor",
+    "effects": ["HP +700"],
+    "description": "Increases maximum HP"
+  },
+  "4004": {
+    "name": "Drops Card",
+    "type": "card",
+    "slot_type": "weapon",
+    "effects": ["DEX +1", "HIT +3"],
+    "description": "Increases DEX and HIT"
+  },
+  "4011": {
+    "name": "Chonchon Card",
+    "type": "card",
+    "slot_type": "footgear",
+    "effects": ["AGI +1", "Flee +2"],
+    "description": "Increases AGI and Flee"
+  },
+  "4019": {
+    "name": "Pecopeco Card",
+    "type": "card",
+    "slot_type": "armor",
+    "effects": ["HP +10%"],
+    "description": "Increases maximum HP by 10%"
+  },
+  "4023": {
+    "name": "Orc Warrior Card",
+    "type": "card",
+    "slot_type": "headgear",
+    "effects": ["ATK +10 vs Brute race"],
+    "description": "Increases physical damage against Brute race monsters"
+  },
+  "4031": {
+    "name": "Isis Card",
+    "type": "card",
+    "slot_type": "headgear",
+    "effects": ["SP +50"],
+    "description": "Increases maximum SP"
+  },
+  "4041": {
+    "name": "Mummy Card",
+    "type": "card",
+    "slot_type": "weapon",
+    "effects": ["HIT +20"],
+    "description": "Greatly increases HIT rate"
+  },
+  "4043": {
+    "name": "Orc Skeleton Card",
+    "type": "card",
+    "slot_type": "weapon",
+    "effects": ["ATK +15 vs Holy property"],
+    "description": "Increases physical damage against Holy property monsters"
+  },
+  "4054": {
+    "name": "Hydra Card",
+    "type": "card",
+    "slot_type": "weapon",
+    "effects": ["ATK +20% vs Demi-Human race"],
+    "description": "Powerful damage boost against Demi-Human monsters and players"
+  },
+  "4062": {
+    "name": "Skeleton Card",
+    "type": "card",
+    "slot_type": "weapon",
+    "effects": ["ATK +10"],
+    "description": "Increases base ATK"
+  },
+  "4080": {
+    "name": "Zerom Card",
+    "type": "card",
+    "slot_type": "armor",
+    "effects": ["DEX +3"],
+    "description": "Increases DEX"
+  },
+  "4108": {
+    "name": "Soldier Skeleton Card",
+    "type": "card",
+    "slot_type": "weapon",
+    "effects": ["Critical +9"],
+    "description": "Greatly increases critical hit rate"
+  },
+  "4119": {
+    "name": "Drainliar Card",
+    "type": "card",
+    "slot_type": "weapon",
+    "effects": ["ATK +15 vs Water property"],
+    "description": "Increases physical damage against Water property monsters"
+  }
+}

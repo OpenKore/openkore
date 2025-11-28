@@ -1,0 +1,275 @@
+{
+  "Storm Gust": {
+    "fixed_cast_ms": 1000,
+    "variable_cast_ms": 6000,
+    "after_cast_delay_ms": 5000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Meteor Storm": {
+    "fixed_cast_ms": 1500,
+    "variable_cast_ms": 7000,
+    "after_cast_delay_ms": 5000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Lord of Vermillion": {
+    "fixed_cast_ms": 1000,
+    "variable_cast_ms": 4500,
+    "after_cast_delay_ms": 5000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Jupitel Thunder": {
+    "fixed_cast_ms": 500,
+    "variable_cast_ms": 2000,
+    "after_cast_delay_ms": 2000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Heaven's Drive": {
+    "fixed_cast_ms": 500,
+    "variable_cast_ms": 1500,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Fire Bolt": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 700,
+    "after_cast_delay_ms": 800,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Cold Bolt": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 700,
+    "after_cast_delay_ms": 800,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Lightning Bolt": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 700,
+    "after_cast_delay_ms": 800,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Soul Strike": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 500,
+    "after_cast_delay_ms": 1200,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Fire Ball": {
+    "fixed_cast_ms": 500,
+    "variable_cast_ms": 1500,
+    "after_cast_delay_ms": 1500,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Sonic Blow": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 2000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 500
+  },
+  "Soul Breaker": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 500,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Spiral Pierce": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1500,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 300
+  },
+  "Bowling Bash": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 800,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 300
+  },
+  "Magnum Break": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1500,
+    "skill_cooldown_ms": 2000,
+    "animation_delay_ms": 500
+  },
+  "Asura Strike": {
+    "fixed_cast_ms": 1000,
+    "variable_cast_ms": 2000,
+    "after_cast_delay_ms": 3000,
+    "skill_cooldown_ms": 10000,
+    "animation_delay_ms": 500
+  },
+  "Magnus Exorcismus": {
+    "fixed_cast_ms": 1000,
+    "variable_cast_ms": 4000,
+    "after_cast_delay_ms": 5000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Sanctuary": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 1000,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Double Strafe": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 800,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 200
+  },
+  "Arrow Shower": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1500,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 500
+  },
+  "Sharp Shooting": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 1000,
+    "after_cast_delay_ms": 1500,
+    "skill_cooldown_ms": 3000,
+    "animation_delay_ms": 300
+  },
+  "Cart Termination": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1500,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 500
+  },
+  "Grimtooth": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 200
+  },
+  "Pneuma": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 1000,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Safety Wall": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 1500,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Ice Wall": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 1000,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Fire Wall": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 1500,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Quagmire": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 1000,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Land Protector": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 2000,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Heal": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Blessing": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Increase Agility": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Teleport": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 500,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 1000
+  },
+  "Warp Portal": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 2500,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Sacrifice": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 500
+  },
+  "Shield Chain": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 1000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 300
+  },
+  "Backstab": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 0,
+    "after_cast_delay_ms": 300,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 200
+  },
+  "Turn Undead": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 1000,
+    "after_cast_delay_ms": 3000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  },
+  "Resurrection": {
+    "fixed_cast_ms": 0,
+    "variable_cast_ms": 6000,
+    "after_cast_delay_ms": 2000,
+    "skill_cooldown_ms": 0,
+    "animation_delay_ms": 0
+  }
+}

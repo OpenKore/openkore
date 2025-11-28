@@ -1,0 +1,52 @@
+{
+  "GD_APPROVAL": {
+    "name": "Official Guild Approval",
+    "max_level": 1,
+    "description": "Increases max guild members to 56"
+  },
+  "GD_KAFRACONTRACT": {
+    "name": "Kafra Contract",
+    "max_level": 1,
+    "description": "Allows access to guild Kafra"
+  },
+  "GD_GUARDRESEARCH": {
+    "name": "Guardian Research",
+    "max_level": 1,
+    "description": "Enables hiring castle guardians"
+  },
+  "GD_GUARDUP": {
+    "name": "Strengthen Guardians",
+    "max_level": 1,
+    "description": "Increases guardian HP"
+  },
+  "GD_EXTENSION": {
+    "name": "Guild Extension",
+    "max_level": 10,
+    "description": "Increases max guild members (+6 per level)"
+  },
+  "GD_GLORYGUILD": {
+    "name": "Guild Glory",
+    "max_level": 5,
+    "description": "Increases guild EXP gain"
+  },
+  "GD_LEADERSHIP": {
+    "name": "Great Leadership",
+    "max_level": 5,
+    "description": "Increases STR/VIT/DEX of guild members"
+  },
+  "GD_GLORYWOUNDS": {
+    "name": "Glorious Wounds",
+    "max_level": 5,
+    "description": "Increases ATK/MATK of guild members"
+  },
+  "GD_SOULCOLD": {
+    "name": "Cold Heart",
+    "max_level": 5,
+    "description": "Increases AGI/LUK of guild members"
+  },
+  "GD_HAWKEYES": {
+    "name": "Sharp Gaze",
+    "max_level": 5,
+    "description": "Increases HIT/FLEE of guild members"
+  }
+}

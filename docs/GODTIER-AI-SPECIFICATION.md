@@ -1,7 +1,9 @@
 # God-Tier Ragnarok Online AI Specification
 
-> **Version:** 2.2.0
+> **Version:** 3.0.0
 > **Status:** Production Specification
+> **Last Updated:** 2025-11-27
+> **Changes:** Added 17 new sections (20-36) covering 154+ missing RO mechanics
 > **Last Updated:** November 27, 2025
 
 ---
@@ -96,10 +98,108 @@
 17. [Implementation Roadmap](#17-implementation-roadmap)
 18. [FAQ](#18-faq)
 19. [Appendices](#19-appendices)
-    - [Appendix A: Complete Feature Matrix](#appendix-a-complete-feature-matrix)
-    - [Appendix B: Backend Capabilities Matrix](#appendix-b-backend-capabilities-matrix)
-    - [Appendix C: Hook Reference](#appendix-c-hook-reference)
-    - [Appendix D: Data Schema Reference](#appendix-d-data-schema-reference)
+20. [Companion Systems](#20-companion-systems)
+    - [20.1 Pet System Intelligence](#201-pet-system-intelligence)
+    - [20.2 Homunculus Strategic AI](#202-homunculus-strategic-ai)
+    - [20.3 Mercenary Tactical Control](#203-mercenary-tactical-control)
+    - [20.4 Mount System Intelligence](#204-mount-system-intelligence)
+21. [Consumable & Buff Management](#21-consumable--buff-management)
+    - [21.1 Food/Cuisine Buff System](#211-foodcuisine-buff-system)
+    - [21.2 Buff Duration Intelligence](#212-buff-duration-intelligence)
+    - [21.3 Recovery Item Priority System](#213-recovery-item-priority-system)
+    - [21.4 Catalyst Management](#214-catalyst-management)
+22. [Instance/Dungeon Systems](#22-instancedungeon-systems)
+    - [22.1 Memorial Dungeon Management](#221-memorial-dungeon-management)
+    - [22.2 Instance Cooldown Tracking](#222-instance-cooldown-tracking)
+    - [22.3 Daily/Weekly Limit Tracking](#223-dailyweekly-limit-tracking)
+    - [22.4 Boss Pattern Recognition](#224-boss-pattern-recognition-ml-enhanced)
+23. [Crafting Systems](#23-crafting-systems)
+    - [23.1 Blacksmith Forging](#231-blacksmith-forging)
+    - [23.2 Alchemist Brewing/Pharmacy](#232-alchemist-brewingpharmacy)
+    - [23.3 Rune Creation](#233-rune-creation-rune-knight)
+    - [23.4 Genetics Creation](#234-genetics-creation)
+    - [23.5 Shadow Equipment System](#235-shadow-equipment-system)
+    - [23.6 Costume Synthesis](#236-costume-synthesis)
+24. [Enchanting & Refining Advanced](#24-enchanting--refining-advanced)
+    - [24.1 Socket Enchanting Intelligence](#241-socket-enchanting-intelligence)
+    - [24.2 Refine Strategy Engine](#242-refine-strategy-engine)
+    - [24.3 Over-Refine Optimization](#243-over-refine-optimization)
+    - [24.4 HD/Enriched Ore Intelligence](#244-hdenriched-ore-intelligence)
+    - [24.5 Shadow Equipment Enchanting](#245-shadow-equipment-enchanting)
+25. [Achievement Systems](#25-achievement-systems)
+    - [25.1 Achievement Tracking](#251-achievement-tracking)
+    - [25.2 Title Collection & Management](#252-title-collection--management)
+    - [25.3 Achievement Reward System](#253-achievement-reward-system)
+26. [Hunting & Daily Systems](#26-hunting--daily-systems)
+    - [26.1 Eden Group Quest Automation](#261-eden-group-quest-automation)
+    - [26.2 Hunting Board System](#262-hunting-board-system)
+    - [26.3 Daily Mission Rotation](#263-daily-mission-rotation)
+    - [26.4 Gramps Quest System](#264-gramps-quest-system)
+27. [Advanced Combat Mechanics](#27-advanced-combat-mechanics)
+    - [27.1 Animation Canceling](#271-animation-canceling)
+    - [27.2 Skill Chaining/Combos](#272-skill-chainingcombos)
+    - [27.3 Status Effect Management](#273-status-effect-management)
+    - [27.4 Cast Time Optimization](#274-cast-time-optimization)
+    - [27.5 ASPD Optimization](#275-aspd-optimization)
+    - [27.6 After-Cast Delay Management](#276-after-cast-delay-management)
+    - [27.7 Element Converter/Endow System](#277-element-converterendow-system)
+    - [27.8 Perfect Dodge Mechanics](#278-perfect-dodge-mechanics)
+28. [PvP/WoE Systems](#28-pvpwoe-systems)
+    - [28.1 War of Emperium Logistics](#281-war-of-emperium-logistics)
+    - [28.2 Battlegrounds System](#282-battlegrounds-system)
+    - [28.3 Castle Siege Strategies](#283-castle-siege-strategies)
+    - [28.4 Guild vs Guild Tactics](#284-guild-vs-guild-tactics)
+    - [28.5 PvP Target Prioritization](#285-pvp-target-prioritization)
+29. [Human Mimicry & Anti-Detection](#29-human-mimicry--anti-detection)
+    - [29.1 Movement Pattern Humanization](#291-movement-pattern-humanization)
+    - [29.2 Chat Pattern Intelligence](#292-chat-pattern-intelligence)
+    - [29.3 Response Timing Variation](#293-response-timing-variation)
+    - [29.4 Break/AFK Pattern System](#294-breakafk-pattern-system)
+    - [29.5 Mistake Injection Engine](#295-mistake-injection-engine)
+    - [29.6 Attention Drift Simulation](#296-attention-drift-simulation)
+30. [Environmental Systems](#30-environmental-systems)
+    - [30.1 Weather Effect Handling](#301-weather-effect-handling)
+    - [30.2 Map Hazard Detection](#302-map-hazard-detection)
+    - [30.3 Spawn Point Optimization](#303-spawn-point-optimization)
+    - [30.4 Hidden Passage Discovery](#304-hidden-passage-discovery)
+    - [30.5 Terrain Advantage Usage](#305-terrain-advantage-usage)
+31. [Economy Deep Dive](#31-economy-deep-dive)
+    - [31.1 Market Analysis Algorithms](#311-market-analysis-algorithms)
+    - [31.2 Price Arbitrage Detection](#312-price-arbitrage-detection)
+    - [31.3 Vending Optimization](#313-vending-optimization)
+    - [31.4 Investment Timing Intelligence](#314-investment-timing-intelligence)
+    - [31.5 Buying Store Optimization](#315-buying-store-optimization)
+32. [Time-Sensitive Mechanics](#32-time-sensitive-mechanics)
+    - [32.1 Server Time Synchronization](#321-server-time-synchronization)
+    - [32.2 Day/Night Cycle Awareness](#322-daynight-cycle-awareness)
+    - [32.3 Event Schedule Tracking](#323-event-schedule-tracking)
+    - [32.4 Double EXP Event Detection](#324-double-exp-event-detection)
+33. [Job-Specific Mechanics](#33-job-specific-mechanics)
+    - [33.1 Bard/Dancer Ensemble Skills](#331-barddancer-ensemble-skills)
+    - [33.2 Super Novice Mechanics](#332-super-novice-mechanics)
+    - [33.3 Taekwon Ranking System](#333-taekwon-ranking-system)
+    - [33.4 Star Gladiator Hatred System](#334-star-gladiator-hatred-system)
+    - [33.5 Soul Linker Spirit Mechanics](#335-soul-linker-spirit-mechanics)
+    - [33.6 Ninja/Gunslinger Ammo Management](#336-ninjagunslinger-ammo-management)
+    - [33.7 Mechanic Mado Gear Management](#337-mechanic-mado-gear-management)
+    - [33.8 Royal Guard Devotion Mechanics](#338-royal-guard-devotion-mechanics)
+    - [33.9 Warlock Spellbook System](#339-warlock-spellbook-system)
+    - [33.10 Genetic Plant/Bomb Mechanics](#3310-genetic-plantbomb-mechanics)
+34. [Mini-Games](#34-mini-games)
+    - [34.1 Event Participation](#341-event-participation)
+35. [Advanced Navigation](#35-advanced-navigation)
+    - [35.1 Safe Zone Mapping](#351-safe-zone-mapping)
+    - [35.2 Mob Train Detection](#352-mob-train-detection)
+    - [35.3 Line-of-Sight Tactics](#353-line-of-sight-tactics)
+36. [Hidden Patterns & Meta](#36-hidden-patterns--meta)
+    - [36.1 Server Tick Awareness](#361-server-tick-awareness)
+    - [36.2 Experience Chain Maintenance](#362-experience-chain-maintenance)
+    - [36.3 Monster AI Pattern Learning](#363-monster-ai-pattern-learning)
+- [Appendix A: Complete Feature Matrix](#appendix-a-complete-feature-matrix)
+- [Appendix B: Backend Capabilities Matrix](#appendix-b-backend-capabilities-matrix)
+- [Appendix C: Hook Reference](#appendix-c-hook-reference)
+- [Appendix D: Data Schema Reference](#appendix-d-data-schema-reference)
+- [Appendix E: Priority Matrix for 154 Missing Mechanics](#appendix-e-priority-matrix-for-154-missing-mechanics)
 
 ---
 
@@ -7310,6 +7410,1049 @@ behaviors:
 | Complex Reasoning | ❌ | ❌ | Partial | ✅ |
 | **Reliability** |
 | Offline Operation | ✅ | ✅ | ✅ | ❌ |
+## 20. Companion Systems
+
+God-Tier AI includes comprehensive support for all companion entities in Ragnarok Online, enabling intelligent management of pets, homunculus, mercenaries, and mounts.
+
+### 20.1 Pet System Intelligence
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Manages pet feeding, intimacy tracking, evolution paths, skill coordination, and accessory management to maximize pet effectiveness and bonuses.
+
+**Why it matters:** Pets provide valuable stat bonuses at high intimacy levels and can evolve into stronger forms. Optimal pet management requires tracking multiple hidden mechanics that human players often neglect.
+
+**Pet Intimacy Mechanics:**
+
+| Intimacy Level | Range | Effect | Feeding Strategy |
+|----------------|-------|--------|------------------|
+| Awkward | 0-100 | No bonus | Feed on hungry |
+| Shy | 100-250 | Minimal | Feed on hungry |
+| Neutral | 250-750 | Some bonus | Optimal timing |
+| Cordial | 750-910 | Good bonus | Maintain carefully |
+| Loyal | 910-1000 | Max bonus | Perfect timing |
+
+**Pet Evolution Paths:**
+
+```python
+from pydantic import BaseModel
+from typing import Optional, List
+from enum import Enum
+
+class PetIntimacyLevel(Enum):
+    AWKWARD = "awkward"
+    SHY = "shy"
+    NEUTRAL = "neutral"
+    CORDIAL = "cordial"
+    LOYAL = "loyal"
+
+class PetState(BaseModel):
+    """Represents the current state of a pet."""
+    pet_id: int
+    name: str
+    intimacy: int  # 0-1000
+    hunger: int    # 0-100 (0 = starving, 100 = full)
+    accessory_id: Optional[int] = None
+    evolution_available: bool = False
+    
+    @property
+    def intimacy_level(self) -> PetIntimacyLevel:
+        if self.intimacy < 100:
+            return PetIntimacyLevel.AWKWARD
+        elif self.intimacy < 250:
+            return PetIntimacyLevel.SHY
+        elif self.intimacy < 750:
+            return PetIntimacyLevel.NEUTRAL
+        elif self.intimacy < 910:
+            return PetIntimacyLevel.CORDIAL
+        else:
+            return PetIntimacyLevel.LOYAL
+
+class PetManager:
+    """Manages pet feeding, intimacy, and evolution."""
+    
+    # Optimal feeding hunger thresholds by intimacy goal
+    FEEDING_THRESHOLDS = {
+        "maximize_intimacy": 25,
+        "maintain_intimacy": 50,
+        "minimize_cost": 75,
+    }
+    
+    # Evolution requirements database
+    EVOLUTION_PATHS = {
+        "Poring": {"target": "Drops", "intimacy_required": 910, "item_required": "Unripe Apple"},
+        "Drops": {"target": "Poporing", "intimacy_required": 910, "item_required": "Bitter Herb"}
+    }
+    
+    async def should_feed(self, pet: PetState, strategy: str = "maximize_intimacy") -> bool:
+        threshold = self.FEEDING_THRESHOLDS.get(strategy, 50)
+        return pet.hunger <= threshold
+```
+
+**Configuration:**
+
+```yaml
+companions:
+  pet:
+    enabled: true
+    feeding:
+      strategy: maximize_intimacy
+      auto_feed: true
+      hunger_threshold: 25
+    intimacy:
+      target_level: loyal
+      monitor_interval_ms: 5000
+    evolution:
+      auto_evolve: false
+      notify_on_available: true
+    accessories:
+      auto_equip: true
+      preferred_accessory: null
+    skill_usage:
+      enabled: true
+      priority: low
+```
+
+**Backend Compatibility:**
+
+| Backend | Support Level | Notes |
+|---------|---------------|-------|
+| CPU | Full | All pet management features |
+| GPU | Full | Supported |
+| ML | Partial | Learned feeding patterns |
+| LLM | Partial | Evolution decisions |
+
+---
+
+### 20.2 Homunculus Strategic AI
+
+**Priority:** P1 (Important)
+
+**What it does:** Provides intelligent stat distribution for homunculus evolution paths, skill point allocation, tactical skill usage, and intimacy optimization for evolution unlocks.
+
+**Why it matters:** Homunculus AI can significantly boost an Alchemist's effectiveness. Poor stat distribution or skill usage results in a suboptimal companion that fails to contribute meaningfully to combat.
+
+**Homunculus Evolution Tree:**
+
+```
+BASE HOMUNCULUS                    S EVOLUTION
+├── Lif ────────────────────────── Eira (Support/Heal)
+├── Amistr ─────────────────────── Bayeri (Tank/Defense)
+├── Filir ──────────────────────── Sera (DPS/Poison)
+├── Vanilmirth ─────────────────── Dieter (Magic DPS)
+└── (Any) ──────────────────────── Eleanor (Special)
+
+Requirements for S Evolution:
+• Base homunculus at level 99
+• Intimacy at "Loyal" level
+• Stone of Sage item
+```
+
+**Stat Distribution by Evolution Form:**
+
+```python
+class HomunculusStatEngine:
+    """Manages homunculus stat point allocation."""
+    
+    STAT_TEMPLATES = {
+        "Lif": {"hp": 0.3, "sp": 0.3, "atk": 0.0, "matk": 0.2, "def": 0.1, "mdef": 0.1},
+        "Amistr": {"hp": 0.4, "sp": 0.1, "atk": 0.2, "matk": 0.0, "def": 0.2, "mdef": 0.1},
+        "Filir": {"hp": 0.2, "sp": 0.2, "atk": 0.4, "matk": 0.0, "def": 0.1, "mdef": 0.1},
+        "Vanilmirth": {"hp": 0.2, "sp": 0.3, "atk": 0.0, "matk": 0.4, "def": 0.0, "mdef": 0.1},
+        "Eira": {"hp": 0.3, "sp": 0.3, "atk": 0.0, "matk": 0.2, "def": 0.1, "mdef": 0.1},
+        "Bayeri": {"hp": 0.4, "sp": 0.1, "atk": 0.2, "matk": 0.0, "def": 0.2, "mdef": 0.1},
+        "Sera": {"hp": 0.2, "sp": 0.2, "atk": 0.4, "matk": 0.0, "def": 0.1, "mdef": 0.1},
+        "Dieter": {"hp": 0.2, "sp": 0.3, "atk": 0.0, "matk": 0.4, "def": 0.0, "mdef": 0.1},
+        "Eleanor": {"hp": 0.25, "sp": 0.25, "atk": 0.25, "matk": 0.0, "def": 0.15, "mdef": 0.1}
+    }
+    
+    SKILL_PRIORITIES = {
+        "Eira": ["Overed Boost", "Silent Breeze", "Xeno Slasher"],
+        "Bayeri": ["Stein Wand", "Heilige Stange", "Angriffs Modus"],
+        "Sera": ["Poison Mist", "Pain Killer", "Needle of Paralyze"],
+        "Dieter": ["Pyroclastic", "Volcanic Ash", "Lava Slide"],
+        "Eleanor": ["Sonic Claw", "Silvervein Rush", "Midnight Frenzy"]
+    }
+```
+
+**Configuration:**
+
+```yaml
+companions:
+  homunculus:
+    enabled: true
+    stats:
+      distribution: template
+      template: auto_detect
+    skills:
+      auto_use: true
+      priority_mode: damage
+    evolution:
+      target_form: auto_detect
+      auto_evolve: false
+      intimacy_farming: true
+    positioning:
+      follow_distance: 2
+      combat_distance: 3
+      retreat_with_owner: true
+```
+
+---
+
+### 20.3 Mercenary Tactical Control
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Manages mercenary contract time tracking, type selection based on situation, skill usage coordination, faith point tracking, and positional commands for tactical play.
+
+**Why it matters:** Mercenaries provide significant combat support but have limited contract duration and require faith points to summon.
+
+**Mercenary Types and Roles:**
+
+| Type | Role | Best For | Faith Required |
+|------|------|----------|----------------|
+| Archer | Ranged DPS | Kiting, safe damage | 10-50 |
+| Lancer | Melee DPS | High single target | 10-50 |
+| Swordman | Tank | Frontline, aggro | 10-50 |
+| Spearman | Hybrid | Versatile | 10-50 |
+| Bowman | Ranged | Distance attacks | 10-50 |
+
+**Configuration:**
+
+```yaml
+companions:
+  mercenary:
+    enabled: true
+    contracts:
+      auto_renew: true
+      renewal_threshold_minutes: 5
+      faith_reserve: 20
+    type_selection:
+      mode: situational
+      preferred_type: archer
+      situation_mapping:
+        farming: archer
+        party: swordman
+        mvp: lancer
+    skill_coordination:
+      enabled: true
+      use_with_owner_skills: true
+    positioning:
+      tactical_mode: true
+      follow_distance: 3
+      combat_behavior: assist
+```
+
+---
+
+### 20.4 Mount System Intelligence
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Provides automatic mount management including auto-mount for speed, dismount for skill usage, Peco rental, cart weight optimization, Mado Gear fuel management, and class-specific mount mechanics.
+
+**Mount Types by Class:**
+
+| Class | Mount Type | Speed Bonus | Skill Restrictions |
+|-------|------------|-------------|-------------------|
+| Knight/Lord Knight | Peco Peco | +25% | None |
+| Crusader/Paladin | Grand Peco | +25% | Some skills unmountable |
+| Rune Knight | Dragon | +50% | Dragon Breath enabled |
+| Royal Guard | Gryphon | +30% | Overbrand enhanced |
+| Mechanic | Mado Gear | +20% | Mado skills only |
+| Ranger | Warg | +25% | Warg skills enabled |
+| Merchant Classes | Cart | None | Required for Vending |
+
+**Configuration:**
+
+```yaml
+companions:
+  mount:
+    enabled: true
+    auto_mount:
+      enabled: true
+      travel_threshold: 20
+      dismount_for_combat: false
+    peco:
+      rental_auto_renew: true
+    dragon:
+      enabled: true
+      dragon_breath_optimization: true
+    mado_gear:
+      enabled: true
+      fuel_threshold: 20
+      auto_repair: true
+    cart:
+      enabled: true
+      weight_optimization: true
+      max_weight_percent: 80
+```
+
+---
+
+## 21. Consumable and Buff Management
+
+Comprehensive systems for managing consumable items, buff duration tracking, and optimal item usage.
+
+### 21.1 Food/Cuisine Buff System
+
+**Priority:** P1 (Important)
+
+**What it does:** Manages stat-boosting food items, tracks cuisine buff durations, auto-refreshes before expiry, and optimizes food selection based on build requirements.
+
+**Food Buff Categories:**
+
+| Category | Stats Boosted | Duration | Typical Cost |
+|----------|---------------|----------|--------------|
+| Basic Stat Foods | Single stat +1-10 | 20 min | Low |
+| Advanced Stat Foods | Single stat +10-20 | 30 min | Medium |
+| Cuisine | Multiple stats | 20-30 min | High |
+| Special Event Foods | Unique effects | Variable | N/A |
+| Luxury Foods | +20 all stats | 30 min | Very High |
+
+**Configuration:**
+
+```yaml
+consumables:
+  food:
+    enabled: true
+    auto_consume:
+      enabled: true
+      refresh_threshold_seconds: 30
+    budget:
+      max_per_session: 500000
+      cost_benefit_analysis: true
+    priority_foods:
+      melee_dps:
+        - "Steamed Tongue"
+        - "Dragon Breath Cocktail"
+      magic_dps:
+        - "Immortal Stew"
+        - "INT Dish"
+    stacking_rules:
+      same_category: replace
+      different_category: stack
+```
+
+---
+
+### 21.2 Buff Duration Intelligence
+
+**Priority:** P0 (Critical)
+
+**What it does:** Parses buff durations from status packets, implements intelligent refresh timing 30 seconds before expiry, manages buff priority queues, and detects buff stacking/conflict rules.
+
+**Buff Priority System:**
+
+| Priority | Buff Type | Examples |
+|----------|-----------|----------|
+| CRITICAL | Survival | Assumptio, Kyrie Eleison, Safety Wall |
+| HIGH | Damage/Stats | Blessing, Increase AGI, Magnificat |
+| MEDIUM | Utility | Impositio Manus, Gloria |
+| LOW | Convenience | Minor buffs |
+
+**Buff Conflict Rules:**
+
+```python
+BUFF_RULES = {
+    "Blessing": {"conflicts": ["Curse"], "stacking": "replace"},
+    "Increase_AGI": {"conflicts": ["Decrease_AGI"], "stacking": "replace"},
+    "Assumptio": {"conflicts": [], "stacking": "replace"},
+    "Gospel": {"conflicts": [], "stacking": "stack"},
+}
+```
+
+**Configuration:**
+
+```yaml
+buffs:
+  duration_tracking:
+    enabled: true
+    refresh_threshold_seconds: 30
+  priority_buffs:
+    critical:
+      - Assumptio
+      - Kyrie_Eleison
+      - Safety_Wall
+    high:
+      - Blessing
+      - Increase_AGI
+      - Magnificat
+  auto_refresh:
+    enabled: true
+    sp_threshold: 0.2
+  conflict_handling:
+    warn_on_conflict: true
+    auto_remove_conflicting: false
+```
+
+---
+
+### 21.3 Recovery Item Priority System
+
+**Priority:** P0 (Critical)
+
+**What it does:** Implements context-aware healing item selection with tiered emergency response, cost-per-HP calculations, and inventory quantity monitoring with auto-restocking thresholds.
+
+**Item Priority Tiers:**
+
+| Tier | HP Range | Items | Usage |
+|------|----------|-------|-------|
+| EMERGENCY | < 10% | Yggdrasil Berry, Yggdrasil Leaf | Instant full recovery |
+| CRITICAL | 10-25% | White Potion, Mastela Fruit | High healing |
+| MODERATE | 25-50% | Yellow Potion, Condensed White | Medium healing |
+| MAINTENANCE | 50-80% | Red Potion, Orange Potion | Cost-effective |
+
+**Configuration:**
+
+```yaml
+consumables:
+  recovery:
+    enabled: true
+    tier_thresholds:
+      emergency: 0.10
+      critical: 0.25
+      moderate: 0.50
+      maintenance: 0.80
+    optimization: efficiency
+    restock_thresholds:
+      Red_Potion: 100
+      Orange_Potion: 50
+      Yellow_Potion: 30
+      White_Potion: 20
+      Blue_Potion: 30
+      Yggdrasil_Berry: 5
+    emergency_reserves:
+      Yggdrasil_Berry: 3
+      Yggdrasil_Leaf: 2
+```
+
+---
+
+### 21.4 Catalyst Management
+
+**Priority:** P1 (Important)
+
+**What it does:** Tracks catalyst consumption for skills (gemstones, ammunition, etc.), manages auto-purchase thresholds, monitors skill availability based on catalyst stock.
+
+**Catalyst Types:**
+
+| Catalyst | Skills Requiring | Classes |
+|----------|------------------|---------|
+| Blue Gemstone | Warp Portal, Safety Wall, Pneuma | Mage, Sage |
+| Yellow Gemstone | Cold Bolt, Fire Ball | Mage |
+| Red Gemstone | Sight, Meteor Storm | Mage, Wizard |
+| Trap | All trap skills | Hunter, Sniper |
+| Arrows | All arrow skills | Archer classes |
+| Bullets | All gun skills | Gunslinger |
+| Elemental Converters | Element endow | Any physical |
+
+**Configuration:**
+
+```yaml
+consumables:
+  catalysts:
+    enabled: true
+    tracking:
+      Blue_Gemstone:
+        skills: ["Warp_Portal", "Safety_Wall", "Pneuma"]
+        min_stock: 50
+        purchase_amount: 100
+      Arrow:
+        skills: ["Double_Strafe", "Arrow_Shower"]
+        min_stock: 1000
+        purchase_amount: 2000
+    auto_purchase:
+      enabled: true
+      purchase_location: "prontera"
+      budget_limit_per_trip: 100000
+    elemental_converters:
+      Fire_Converter:
+        vs_elements: ["Earth"]
+        min_stock: 20
+```
+
+---
+
+## 22. Instance/Dungeon Systems
+
+Comprehensive support for instance dungeons, memorial dungeons, and party-based dungeon content.
+
+### 22.1 Memorial Dungeon Management
+
+**Priority:** P1 (Important)
+
+**What it does:** Automates instance creation requests, coordinates party entry, provides in-instance navigation patterns, maintains dungeon-specific mechanics databases, and handles reward collection.
+
+**Supported Instance Types:**
+
+| Instance | Level Range | Cooldown | Rewards |
+|----------|-------------|----------|---------|
+| Endless Tower | 80+ | 7 days | Equipment, Cards |
+| Nidhoggr's Nest | 80+ | 1 day | Yggdrasil items |
+| Sara's Memory | 120+ | 1 day | Sarah's equipment |
+| Horror Toy Factory | 100+ | 1 day | Toys, EXP |
+| Old Glast Heim | 130+ | 1 day | Temporal equipment |
+
+**Configuration:**
+
+```yaml
+instances:
+  enabled: true
+  management:
+    auto_create: false
+    auto_enter: true
+    auto_collect_rewards: true
+  navigation:
+    use_predefined_paths: true
+    paths_directory: "./data/instance_paths/"
+  endless_tower:
+    enabled: true
+    target_floor: 100
+    retreat_hp_threshold: 0.25
+  old_glast_heim:
+    enabled: true
+    mode: hard
+```
+
+---
+
+### 22.2 Instance Cooldown Tracking
+
+**Priority:** P1 (Important)
+
+**What it does:** Maintains per-character cooldown database for all instances, supports multi-character cooldown management, provides notifications when instances become ready.
+
+**Configuration:**
+
+```yaml
+instances:
+  cooldowns:
+    enabled: true
+    tracking:
+      per_character: true
+      database_path: "./data/cooldowns.db"
+    notifications:
+      enabled: true
+      notify_minutes_before: 30
+    server_reset:
+      time: "04:00"
+      timezone: "America/Los_Angeles"
+```
+
+---
+
+### 22.3 Daily/Weekly Limit Tracking
+
+**Priority:** P1 (Important)
+
+**What it does:** Tracks entry limit counters for instance types, detects reset timing, implements priority queuing based on remaining limits.
+
+**Configuration:**
+
+```yaml
+instances:
+  limits:
+    enabled: true
+    daily_limits:
+      memorial_dungeons: 2
+      battlegrounds: 5
+    weekly_limits:
+      endless_tower: 1
+    priority_queue:
+      high:
+        - old_glast_heim_hard
+        - endless_tower
+      medium:
+        - horror_toy_factory
+```
+
+---
+
+### 22.4 Boss Pattern Recognition (ML-Enhanced)
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Records boss skill sequences, predicts next skills based on learned patterns, calculates dodge windows, optimizes burst damage timing.
+
+**Configuration:**
+
+```yaml
+instances:
+  boss_patterns:
+    enabled: true
+    recording:
+      enabled: true
+      save_patterns: true
+      patterns_file: "./data/boss_patterns.json"
+    prediction:
+      enabled: true
+      confidence_threshold: 0.7
+      use_ml_model: true
+    dodge_optimization:
+      enabled: true
+      pre_dodge_ms: 500
+      safe_distance: 5
+```
+
+---
+
+## 23. Crafting Systems
+
+Complete support for all crafting systems in Ragnarok Online.
+
+### 23.1 Blacksmith Forging
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Automates material gathering for forging, calculates success rates based on DEX/LUK/materials, optimizes element and attribute selection.
+
+**Forging Success Rate Formula:**
+```
+Success Rate = Base Rate + (DEX * 0.1) + (LUK * 0.1) + Anvil Bonus + Material Bonus
+```
+
+**Configuration:**
+
+```yaml
+crafting:
+  forging:
+    enabled: true
+    auto_gather_materials: true
+    success_optimization:
+      target_success_rate: 0.7
+      use_enriched_oridecon: true
+    element_selection:
+      auto_select: true
+      market_price_aware: true
+```
+
+---
+
+### 23.2 Alchemist Brewing/Pharmacy
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Manages potion crafting recipes, optimizes material costs, automates batch brewing.
+
+**Configuration:**
+
+```yaml
+crafting:
+  brewing:
+    enabled: true
+    recipes:
+      auto_learn: true
+      priority_recipes:
+        - White_Potion
+        - Condensed_White_Potion
+        - Acid_Bottle
+    batch_brewing:
+      enabled: true
+      batch_size: 100
+```
+
+---
+
+### 23.3 Rune Creation (Rune Knight)
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Manages Rune Knight rune creation, selects rune types based on situation.
+
+**Rune Types:**
+
+| Rune | Effect | Materials | Priority |
+|------|--------|-----------|----------|
+| Turisus | STR boost | Elder Branch, Red Blood | High |
+| Isia | Fire damage | Burning Heart, Red Blood | Medium |
+| Hagalaz | Water damage | Crystal Blue, Mystic Frozen | Medium |
+| Nosiege | Party buff | Blue Gemstone, Yellow Gemstone | High |
+
+**Configuration:**
+
+```yaml
+crafting:
+  rune_creation:
+    enabled: true
+    priority_runes:
+      combat: [Turisus, Isia, Verkana]
+      support: [Nosiege, Luxanima]
+    inventory_management:
+      max_per_rune_type: 20
+```
+
+---
+
+### 23.4 Genetics Creation
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Manages Geneticist item creation (plants, mushrooms, bombs), optimizes cart space management.
+
+**Configuration:**
+
+```yaml
+crafting:
+  genetics:
+    enabled: true
+    creation_priorities:
+      bombs: [Acid_Demonstration, Fire_Expansion_Bomb]
+      plants: [Mandragora, Parasite]
+    cart_management:
+      reserve_space: 20
+```
+
+---
+
+### 23.5 Shadow Equipment System
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Manages shadow gear crafting materials, plans upgrade paths from C to S grades.
+
+**Shadow Gear Grades:**
+
+| Grade | Stats | Upgrade Cost | Success Rate |
+|-------|-------|--------------|--------------|
+| C | Basic | Low | 100% |
+| B | +10% | Medium | 80% |
+| A | +25% | High | 60% |
+| S | +50% | Very High | 40% |
+
+**Configuration:**
+
+```yaml
+crafting:
+  shadow_equipment:
+    enabled: true
+    upgrade_path:
+      strategy: safe
+      target_grade: A
+```
+
+---
+
+### 23.6 Costume Synthesis
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Tracks costume collection progress, manages synthesis material requirements.
+
+**Configuration:**
+
+```yaml
+crafting:
+  costume_synthesis:
+    enabled: false
+    collection:
+      track_progress: true
+```
+
+---
+
+## 24. Enchanting and Refining Advanced
+
+Advanced systems for equipment enhancement and optimization.
+
+### 24.1 Socket Enchanting Intelligence
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Tracks enchant slot success rates, analyzes material costs, selects optimal enchants per build.
+
+**Enchant NPCs:**
+
+| NPC Location | Enchant Type | Cost Type | Success Rate |
+|--------------|--------------|-----------|--------------|
+| Malangdo | Stat enchants | Zeny + Coins | Variable |
+| Mora | Temporal enchants | Mora Coins | Variable |
+| Prontera | Basic enchants | Zeny | High |
+| Lasagna | Special enchants | Lasagna items | Low |
+
+**Configuration:**
+
+```yaml
+enchanting:
+  socket:
+    enabled: true
+    strategy:
+      optimization: build_specific
+      build_type: auto_detect
+    reset_policy:
+      reset_on_bad_enchant: true
+      keep_any_tier3: true
+    budget:
+      max_attempts_per_slot: 20
+      max_zeny_per_item: 5000000
+```
+
+---
+
+### 24.2 Refine Strategy Engine
+
+**Priority:** P1 (Important)
+
+**What it does:** Implements safe vs HD vs normal refine decision making, calculates expected values.
+
+**Refine Success Rates (Standard):**
+
+| Level | Weapon | Armor | HD Weapon | HD Armor |
+|-------|--------|-------|-----------|----------|
+| +1-4 | 100% | 100% | 100% | 100% |
+| +5-7 | 60% | 60% | 70% | 70% |
+| +8 | 40% | 40% | 60% | 60% |
+| +9 | 20% | 20% | 50% | 50% |
+| +10 | 19% | 19% | 40% | 40% |
+
+**Configuration:**
+
+```yaml
+refining:
+  strategy:
+    enabled: true
+    safe_refine:
+      use_safe_tickets: true
+      safe_to_level: 7
+    upgrade_decision:
+      normal_ore_max_level: 7
+      hd_ore_min_level: 8
+    risk_tolerance: medium
+    budget:
+      max_per_item: 10000000
+```
+
+---
+
+### 24.3 Over-Refine Optimization
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Calculates ROI for +11 to +20 refining, implements failure recovery strategies.
+
+**Configuration:**
+
+```yaml
+refining:
+  over_refine:
+    enabled: false
+    target_levels:
+      min: 11
+      max: 15
+    roi_calculation:
+      enabled: true
+      min_roi_percent: 200
+```
+
+---
+
+### 24.4 HD/Enriched Ore Intelligence
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Calculates break-even analysis for HD vs normal, optimizes enriched ore usage.
+
+**Configuration:**
+
+```yaml
+refining:
+  ore_intelligence:
+    enabled: true
+    price_tracking:
+      enabled: true
+    break_even_analysis:
+      include_item_replacement: true
+    enriched_usage:
+      only_for_levels: [7, 8]
+```
+
+---
+
+### 24.5 Shadow Equipment Enchanting
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Handles shadow refine mechanics (different from normal), manages shadow enchant NPCs.
+
+**Configuration:**
+
+```yaml
+refining:
+  shadow:
+    enabled: true
+    refine:
+      max_level: 10
+    enchanting:
+      preferred_enchants: [ATK, MATK, HP]
+```
+
+---
+
+## 25. Achievement Systems
+
+Complete achievement and title management.
+
+### 25.1 Achievement Tracking
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Maintains achievement database with requirements, tracks progress per achievement.
+
+**Configuration:**
+
+```yaml
+achievements:
+  tracking:
+    enabled: true
+    database:
+      auto_update: true
+    progress:
+      track_all: true
+      notify_on_near_completion: true
+```
+
+---
+
+### 25.2 Title Collection and Management
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Manages title inventory, calculates stat bonuses per title, implements situational title swapping.
+
+**Configuration:**
+
+```yaml
+achievements:
+  titles:
+    enabled: true
+    management:
+      auto_equip_best: true
+      situational_swap:
+        pvp: "Gladiator"
+        pve: "Monster Hunter"
+```
+
+---
+
+### 25.3 Achievement Reward System
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Auto-claims rewards on completion, assesses reward values.
+
+**Configuration:**
+
+```yaml
+achievements:
+  rewards:
+    auto_claim: true
+    inventory_management:
+      reserve_slots: 5
+```
+
+---
+
+## 26. Hunting and Daily Systems
+
+Automated hunting quests and daily content management.
+
+### 26.1 Eden Group Quest Automation
+
+**Priority:** P1 (Important)
+
+**What it does:** Parses quest board for available quests, selects level-appropriate quests, optimizes for similar monster types.
+
+**Level Brackets:**
+
+| Level Range | Bracket |
+|-------------|---------|
+| 1-25 | Beginner |
+| 26-40 | Intermediate |
+| 41-55 | Advanced |
+| 56-70 | Expert |
+| 71-85 | Master |
+| 86-99 | Champion |
+| 100-175 | Hero |
+
+**Configuration:**
+
+```yaml
+daily:
+  eden:
+    enabled: true
+    quest_selection:
+      level_appropriate: true
+      multi_quest_optimization: true
+      max_concurrent: 3
+    turn_in:
+      auto_turn_in: true
+      collect_equipment: true
+```
+
+---
+
+### 26.2 Hunting Board System
+
+**Priority:** P1 (Important)
+
+**What it does:** Parses available hunts, selects optimal hunts for efficiency, tracks daily completion.
+
+**Configuration:**
+
+```yaml
+daily:
+  hunting_board:
+    enabled: true
+    selection:
+      optimal_for: exp_per_hour
+    tracking:
+      daily_completion_goal: 5
+```
+
+---
+
+### 26.3 Daily Mission Rotation
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Recognizes rotation patterns, scores mission priorities, plans across multiple days.
+
+**Configuration:**
+
+```yaml
+daily:
+  missions:
+    enabled: true
+    rotation:
+      track_pattern: true
+    priority:
+      high: ["MVP Kill", "Instance Clear"]
+      medium: ["Monster Hunt", "Item Collection"]
+```
+
+---
+
+### 26.4 Gramps Quest System
+
+**Priority:** P1 (Important)
+
+**What it does:** Selects quests based on current farming area, automates turn-in, tracks cooldowns.
+
+**Configuration:**
+
+```yaml
+daily:
+  gramps:
+    enabled: true
+    selection:
+      match_current_farm: true
+      level_range: 10
+    turn_in:
+      auto_when_complete: true
+```
+
+---
+
 | Consistent Latency | ✅ | ✅ | ✅ | ❌ |
 | No External Deps | ✅ | ❌ | ❌ | ❌ |
 
@@ -7487,8 +8630,9 @@ behaviors:
 | Property | Value |
 |----------|-------|
 | **Document Title** | God-Tier Ragnarok Online AI Specification |
-| **Version** | 2.1.0 |
+| **Version** | 3.0.0 |
 | **Status** | Production Specification |
+| **Last Updated** | 2025-11-27 |
 | **Created** | November 2024 |
 | **Last Updated** | November 2025 |
 | **Authors** | God-Tier AI Development Team |
@@ -7498,3 +8642,1966 @@ behaviors:
 ---
 
 *This specification is a living document and will be updated as the project evolves.*
+## 27. Advanced Combat Mechanics
+
+Deep combat system optimizations for maximum effectiveness.
+
+### 27.1 Animation Canceling
+
+**Priority:** P1 (Important)
+
+**What it does:** Tracks animation frame data per skill, optimizes cancel timing, implements movement canceling, manages attack animation canceling (especially for Monk/Champion).
+
+**Animation Data:**
+
+| Skill | Animation Duration | Movement Cancel | Skill Cancel |
+|-------|-------------------|-----------------|--------------|
+| Bash | 500ms | 300ms | 350ms |
+| Magnum Break | 600ms | 400ms | N/A |
+| Double Strafe | 400ms | 250ms | 300ms |
+| Bowling Bash | 800ms | 500ms | 600ms |
+
+**Configuration:**
+
+```yaml
+combat:
+  animation_canceling:
+    enabled: true
+    timing:
+      safety_margin_ms: 50
+    cancel_methods:
+      movement: true
+      skill: true
+      attack: true
+    class_specific:
+      monk:
+        triple_attack_cancel: true
+        combo_canceling: true
+```
+
+---
+
+### 27.2 Skill Chaining/Combos
+
+**Priority:** P1 (Important)
+
+**What it does:** Maintains combo skill database (especially Monk combos), implements chain optimization algorithms, optimizes cancel timing between skills.
+
+**Monk Combo System:**
+
+```
+Triple Attack → Chain Combo → Combo Finish
+       OR
+Triple Attack → Chain Combo → Tiger Knuckle Fist
+       OR
+Triple Attack → Chain Combo → Raging Trifecta Blow
+                            → Tiger Knuckle Fist
+                            → Guillotine Fist
+
+TIMING: Each combo step has a 1-second window
+```
+
+**Configuration:**
+
+```yaml
+combat:
+  combos:
+    enabled: true
+    monk:
+      triple_attack_chance: 30
+      combo_chain_enabled: true
+      preferred_finisher: guillotine_fist
+      timing:
+        combo_window_ms: 1000
+        input_delay_ms: 50
+    general:
+      optimize_for: dps
+      sp_conservation_mode: false
+```
+
+---
+
+### 27.3 Status Effect Management
+
+**Priority:** P0 (Critical)
+
+**What it does:** Prioritizes status effects (Freeze/Stone > Stun > Silence > Curse > Blind > Poison), implements auto-dispel/cure mechanisms, triggers emergency teleport on Stone Curse.
+
+**Status Priority:**
+
+| Status | Severity | Cure Method | Auto Response |
+|--------|----------|-------------|---------------|
+| Stone Curse | Critical | Teleport/item | Immediate escape |
+| Freeze | Critical | Thaw item | High priority cure |
+| Stun | High | Wait | Defensive stance |
+| Silence | High | Green Potion | If caster class |
+| Curse | Medium | Blessing | Preventive buff |
+| Blind | Medium | Green Potion | Lower priority |
+| Poison | Low | Green Potion | Cure when safe |
+
+**Configuration:**
+
+```yaml
+combat:
+  status_effects:
+    enabled: true
+    auto_cure:
+      enabled: true
+      priority:
+        - Stone_Curse
+        - Freeze
+        - Stun
+        - Silence
+        - Curse
+        - Blind
+        - Poison
+    cure_items:
+      Green_Potion:
+        cures: [Poison, Silence, Blind]
+        min_stock: 20
+    emergency:
+      teleport_on_stone: true
+      flee_on_freeze: true
+```
+
+---
+
+### 27.4 Cast Time Optimization
+
+**Priority:** P1 (Important)
+
+**What it does:** Implements Variable Cast Time formula (VCT = Base * (1 - DEX/150)), tracks Fixed Cast Time, calculates DEX breakpoints, integrates with Bragi effect.
+
+**Cast Time Formula:**
+
+```
+Variable Cast Time (VCT) = Base * (1 - (DEX + INT/5) / 530)
+Fixed Cast Time (FCT) = Cannot be reduced (most cases)
+Total Cast Time = VCT + FCT
+```
+
+**DEX Breakpoints for Instant Cast:**
+
+| DEX | INT | VCT Reduction |
+|-----|-----|---------------|
+| 150 | 0 | 100% |
+| 120 | 150 | 100% |
+| 100 | 250 | 100% |
+
+**Configuration:**
+
+```yaml
+combat:
+  cast_time:
+    enabled: true
+    optimization:
+      target_vct_percent: 0.5
+      equipment_suggestions: true
+    dex_breakpoints:
+      calculate: true
+      notify_near_breakpoint: true
+    bragi_integration:
+      enabled: true
+      request_from_bard: true
+```
+
+---
+
+### 27.5 ASPD Optimization
+
+**Priority:** P1 (Important)
+
+**What it does:** Implements ASPD formula, optimizes ASPD potion usage, manages buff stacking for ASPD cap (190/193).
+
+**ASPD Formula:**
+
+```
+ASPD = Base + (AGI * 0.6) + (DEX * 0.4) + Equipment + Potion
+Maximum ASPD = 190 (193 for some classes)
+Attacks per Second = 50 / (200 - ASPD)
+```
+
+**Configuration:**
+
+```yaml
+combat:
+  aspd:
+    enabled: true
+    optimization:
+      target_aspd: 190
+      use_potions: true
+    potions:
+      auto_use: true
+      threshold_aspd: 185
+      preferred_potion: "Concentration_Potion"
+    buff_coordination:
+      request_increase_agi: true
+      two_hand_quicken: true
+```
+
+---
+
+### 27.6 After-Cast Delay Management
+
+**Priority:** P1 (Important)
+
+**What it does:** Maintains fixed delay database per skill, manages variable delay reduction (Bragi, DEX), tracks global cooldown (0.3-0.5s).
+
+**Configuration:**
+
+```yaml
+combat:
+  after_cast_delay:
+    enabled: true
+    skill_database:
+      auto_learn_delays: true
+    optimization:
+      fill_delays_with: "normal_attack"
+    bragi:
+      integrate: true
+      expected_reduction: 0.3
+```
+
+---
+
+### 27.7 Element Converter/Endow System
+
+**Priority:** P1 (Important)
+
+**What it does:** Detects monster elements, selects optimal converter based on element chart, performs cost-benefit analysis for converter usage.
+
+**Element Advantage Chart:**
+
+| Attack Element | Strong Against | Weak Against |
+|----------------|----------------|--------------|
+| Fire | Earth, Undead | Water |
+| Water | Fire | Wind, Earth |
+| Wind | Water | Earth |
+| Earth | Wind | Fire |
+| Holy | Shadow, Undead | - |
+| Shadow | Holy | - |
+
+**Configuration:**
+
+```yaml
+combat:
+  element_conversion:
+    enabled: true
+    auto_convert:
+      enabled: true
+      based_on_target: true
+    converters:
+      Fire_Converter:
+        vs_elements: [Earth]
+        cost: 2000
+      Water_Converter:
+        vs_elements: [Fire]
+        cost: 2000
+    endow_priority:
+      prefer_endow_over_converter: true
+      request_from_sage: true
+    cost_benefit:
+      min_damage_increase: 0.3
+```
+
+---
+
+### 27.8 Perfect Dodge Mechanics
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Calculates perfect dodge (LUK + equipment bonuses), determines optimal LUK investment for dodge builds.
+
+**Perfect Dodge Formula:**
+
+```
+Perfect Dodge = LUK / 10 + Equipment Bonuses
+Chance to completely avoid physical attack
+Works independently from normal FLEE
+```
+
+**Configuration:**
+
+```yaml
+combat:
+  perfect_dodge:
+    enabled: true
+    calculation:
+      base_from_luk: true
+      equipment_bonus: true
+    build_optimization:
+      target_perfect_dodge: 30
+      balance_with_flee: true
+```
+
+---
+
+## 28. PvP/WoE Systems
+
+Comprehensive PvP and War of Emperium support.
+
+### 28.1 War of Emperium Logistics
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Manages pre-WoE supply stocking, implements castle entry strategies, handles economy breaker protection/destruction, coordinates guild protocols.
+
+**WoE Preparation Checklist:**
+
+| Category | Item | Quantity |
+|----------|------|----------|
+| HP Recovery | White Potion | 200 |
+| SP Recovery | Blue Potion | 100 |
+| Emergency | Yggdrasil Berry | 10 |
+| Resurrection | Yggdrasil Leaf | 10 |
+| Status Cure | Green Potion | 50 |
+| Escape | Butterfly Wing | 10 |
+
+**Configuration:**
+
+```yaml
+pvp:
+  woe:
+    enabled: true
+    preparation:
+      auto_stock: true
+      supplies:
+        White_Potion: 200
+        Blue_Potion: 100
+        Yggdrasil_Berry: 10
+    castle_entry:
+      strategy: defend
+      wait_for_signal: true
+    coordination:
+      follow_leader: true
+```
+
+---
+
+### 28.2 Battlegrounds System
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Detects BG type (CTF, Domination, KvM, etc.), assigns team roles, prioritizes objectives.
+
+**Configuration:**
+
+```yaml
+pvp:
+  battlegrounds:
+    enabled: true
+    detection:
+      auto_detect_mode: true
+    roles:
+      preferred_role: auto
+    objectives:
+      prioritize_objectives: true
+      capture_over_kills: true
+```
+
+---
+
+### 28.3 Castle Siege Strategies
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Plans attack paths (guardian -> barricade -> emperium), prioritizes guardians, implements emperor room rushing tactics.
+
+**Attack Strategy:**
+
+```
+Phase 1: Guardian Clear - Destroy guardian stones
+Phase 2: Barricade Break - Clear barricades
+Phase 3: Rush Emperor - Attack emperium
+```
+
+**Configuration:**
+
+```yaml
+pvp:
+  castle_siege:
+    enabled: true
+    attack:
+      phase_priorities:
+        - guardians
+        - barricades
+        - emperium
+    defense:
+      positions:
+        enabled: true
+        role_based: true
+```
+
+---
+
+### 28.4 Guild vs Guild Tactics
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Identifies enemy guilds, prioritizes targets (enemy healers first), coordinates focus fire.
+
+**Configuration:**
+
+```yaml
+pvp:
+  gvg:
+    enabled: true
+    target_priority:
+      - healer
+      - ranged_dps
+      - melee_dps
+      - tank
+    focus_fire:
+      enabled: true
+      follow_marked_target: true
+```
+
+---
+
+### 28.5 PvP Target Prioritization
+
+**Priority:** P1 (Important)
+
+**What it does:** Prioritizes targets (Healer > Ranged DPS > Melee DPS > Tank), implements threat scoring algorithms.
+
+**Target Priority System:**
+
+```python
+def calculate_target_score(target):
+    score = 0
+    # Class priority (40 points max)
+    class_priority = {"Arch_Bishop": 1.0, "Warlock": 0.9, "Ranger": 0.85}
+    score += class_priority.get(target["class"], 0.7) * 40
+    
+    # HP factor - lower HP = higher priority (30 points max)
+    hp_percent = target["hp"] / target["hp_max"]
+    score += (1 - hp_percent) * 30
+    
+    # Distance factor - closer = higher priority (15 points max)
+    distance_factor = max(0, 1 - target["distance"] / 15)
+    score += distance_factor * 15
+    
+    # Active threat bonus (15 points)
+    if target.get("attacking_ally"):
+        score += 15
+    
+    return score
+```
+
+**Configuration:**
+
+```yaml
+pvp:
+  targeting:
+    enabled: true
+    priority:
+      class_weights:
+        healer: 1.0
+        ranged_dps: 0.9
+        melee_dps: 0.7
+        tank: 0.5
+    hp_threshold:
+      finish_low_hp: true
+      threshold: 0.2
+    equipment_detection:
+      enabled: true
+```
+
+---
+
+## 29. Human Mimicry and Anti-Detection
+
+Advanced systems to make bot behavior indistinguishable from human players.
+
+### 29.1 Movement Pattern Humanization
+
+**Priority:** P0 (Critical)
+
+**What it does:** Generates Bezier curve paths instead of straight lines, injects random pauses (0.5-3s variance), adds path deviation from optimal (1-2 tiles), includes occasional backtracking.
+
+**Humanization Techniques:**
+
+| Technique | Description | Frequency |
+|-----------|-------------|-----------|
+| Bezier Curves | Curved paths instead of straight | Always |
+| Random Pauses | 0.5-3s stops during movement | 5% of tiles |
+| Path Deviation | 1-2 tiles from optimal path | Always |
+| Backtracking | Go back a few steps | 2% chance |
+| Speed Variation | Vary movement speed | 15% variance |
+
+**Configuration:**
+
+```yaml
+anti_detection:
+  movement:
+    enabled: true
+    bezier_curves:
+      enabled: true
+      control_points: 2
+    deviation:
+      enabled: true
+      max_tiles: 2
+    pauses:
+      enabled: true
+      probability: 0.05
+      duration_range_ms: [500, 3000]
+    backtracking:
+      enabled: true
+      probability: 0.02
+    speed_variation:
+      enabled: true
+      variance_percent: 15
+```
+
+---
+
+### 29.2 Chat Pattern Intelligence
+
+**Priority:** P1 (Important)
+
+**What it does:** Simulates response time distribution (1-5s base), implements typing speed simulation (150-300ms per character), adds occasional typos (2-3% rate), uses abbreviations.
+
+**Chat Humanization:**
+
+| Feature | Implementation | Rate |
+|---------|----------------|------|
+| Response Delay | 1-5 second base | Always |
+| Typing Speed | 150-300ms/char | Always |
+| Typos | Adjacent key replacement | 2% |
+| Abbreviations | "u", "rn", "brb" | 40% |
+| Emojis | Context-appropriate | 30% |
+
+**Configuration:**
+
+```yaml
+anti_detection:
+  chat:
+    enabled: true
+    response_timing:
+      min_delay_ms: 1000
+      max_delay_ms: 5000
+      distribution: gaussian
+    typing_speed:
+      min_ms_per_char: 150
+      max_ms_per_char: 300
+    typos:
+      enabled: true
+      rate: 0.02
+    abbreviations:
+      enabled: true
+      rate: 0.4
+```
+
+---
+
+### 29.3 Response Timing Variation
+
+**Priority:** P0 (Critical)
+
+**What it does:** Implements Gaussian distribution for reaction times (150-500ms base), applies context-dependent timing.
+
+**Configuration:**
+
+```yaml
+anti_detection:
+  timing:
+    enabled: true
+    reaction_time:
+      base_ms: 250
+      variance_ms: 100
+      distribution: gaussian
+    context_modifiers:
+      combat: 0.7
+      idle: 1.5
+      emergency: 0.5
+    attention_simulation:
+      miss_probability: 0.02
+```
+
+---
+
+### 29.4 Break/AFK Pattern System
+
+**Priority:** P0 (Critical)
+
+**What it does:** Varies session lengths (2-6 hours), implements realistic break durations (15-45 min), distinguishes weekday vs weekend patterns.
+
+**Session Patterns:**
+
+| Day Type | Session Length | Break Duration | Daily Max |
+|----------|----------------|----------------|-----------|
+| Weekday | 2-4 hours | 15-30 min | 8 hours |
+| Weekend | 3-6 hours | 20-45 min | 12 hours |
+
+**Configuration:**
+
+```yaml
+anti_detection:
+  breaks:
+    enabled: true
+    sessions:
+      min_hours: 2
+      max_hours: 6
+    breaks:
+      min_minutes: 15
+      max_minutes: 45
+    daily:
+      max_hours: 10
+      vary_by_day: true
+    weekday_weekend:
+      enabled: true
+      weekend_modifier: 1.3
+    bio_breaks:
+      enabled: true
+      interval_hours: 2
+      duration_minutes: [5, 15]
+```
+
+---
+
+### 29.5 Mistake Injection Engine
+
+**Priority:** P1 (Important)
+
+**What it does:** Injects 2-5% suboptimal actions, causes occasional wrong skill usage, misses obvious loot pickup, creates "oops" moments.
+
+**Mistake Types:**
+
+| Mistake Type | Frequency | Description |
+|--------------|-----------|-------------|
+| Wrong skill | 2% | Use suboptimal skill |
+| Miss loot | 3% | Fail to pick up item |
+| Wrong target | 2% | Attack wrong monster |
+| Path mistake | 3% | Walk into obstacle |
+| Delayed reaction | 5% | Slow response |
+
+**Configuration:**
+
+```yaml
+anti_detection:
+  mistakes:
+    enabled: true
+    frequencies:
+      wrong_skill: 0.02
+      miss_loot: 0.03
+      wrong_target: 0.02
+      path_mistake: 0.03
+      delayed_reaction: 0.05
+    severity:
+      max_recovery_time_ms: 500
+      avoid_fatal_mistakes: true
+```
+
+---
+
+### 29.6 Attention Drift Simulation
+
+**Priority:** P1 (Important)
+
+**What it does:** Occasionally misses monster spawns, delays reactions to threats, implements slower reaction when "tired" (long sessions).
+
+**Configuration:**
+
+```yaml
+anti_detection:
+  attention:
+    enabled: true
+    spawn_awareness:
+      miss_probability: 0.02
+    threat_reaction:
+      base_delay_ms: 200
+      fatigue_modifier: true
+    whisper_miss:
+      probability: 0.02
+    fatigue:
+      enabled: true
+      start_degradation_hours: 3
+      degradation_per_hour: 0.1
+```
+
+---
+
+## 30. Environmental Systems
+
+Systems for understanding and adapting to the game environment.
+
+### 30.1 Weather Effect Handling
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Tracks weather state per map (rain, snow, fog), calculates stat adjustments (FLEE penalty in rain).
+
+**Weather Effects:**
+
+| Weather | Effect | Stat Impact |
+|---------|--------|-------------|
+| Rain | Reduced FLEE | -10 FLEE |
+| Snow | Reduced ASPD | -5 ASPD |
+| Fog | Reduced HIT | -20 HIT |
+
+**Configuration:**
+
+```yaml
+environment:
+  weather:
+    enabled: true
+    effects:
+      rain:
+        flee_penalty: 10
+        movement_speed_modifier: 0.9
+      snow:
+        aspd_penalty: 5
+    adaptation:
+      adjust_combat_strategy: true
+```
+
+---
+
+### 30.2 Map Hazard Detection
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Maps danger zones (Quagmire, Lava, etc.), avoids paths through hazards, escapes from placed AoEs.
+
+**Configuration:**
+
+```yaml
+environment:
+  hazards:
+    enabled: true
+    detection:
+      quagmire: true
+      pneuma: true
+      safety_wall: true
+    avoidance:
+      path_around: true
+      escape_from_aoe: true
+```
+
+---
+
+### 30.3 Spawn Point Optimization
+
+**Priority:** P1 (Important)
+
+**What it does:** Records spawn coordinates for all maps, learns respawn timers through statistical analysis, determines optimal camping positions.
+
+**Configuration:**
+
+```yaml
+environment:
+  spawns:
+    enabled: true
+    tracking:
+      record_positions: true
+      learn_timers: true
+      statistical_analysis: true
+    optimization:
+      rotation_mode: efficient
+      camping_positions: true
+    rare_spawns:
+      detection: true
+      priority: high
+```
+
+---
+
+### 30.4 Hidden Passage Discovery
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Systematically explores maps, detects hidden portals, prefers shortcuts in routing.
+
+**Configuration:**
+
+```yaml
+environment:
+  exploration:
+    enabled: false
+    discovery:
+      systematic: true
+      hidden_portals: true
+    routing:
+      prefer_shortcuts: true
+```
+
+---
+
+### 30.5 Terrain Advantage Usage
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Implements corner trapping for AoE damage, uses wall-based kiting, identifies safe spots.
+
+**Configuration:**
+
+```yaml
+environment:
+  terrain:
+    enabled: true
+    tactics:
+      corner_trapping: true
+      wall_kiting: true
+      funnel_usage: true
+      los_blocking: true
+    safe_spots:
+      detection: true
+```
+
+---
+
+## 31. Economy Deep Dive
+
+Advanced economic systems for market manipulation and wealth optimization.
+
+### 31.1 Market Analysis Algorithms
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Tracks price history with timestamps, calculates moving averages, detects volatility, generates buy/sell signals.
+
+**Configuration:**
+
+```yaml
+economy:
+  market_analysis:
+    enabled: true
+    tracking:
+      price_history: true
+      history_days: 30
+    analysis:
+      moving_average_periods: [7, 14, 30]
+      volatility_detection: true
+    signals:
+      buy_threshold: 0.8
+      sell_threshold: 1.2
+```
+
+---
+
+### 31.2 Price Arbitrage Detection
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Maintains NPC price database, scans player vendors, calculates profit margins, alerts on arbitrage opportunities.
+
+**Configuration:**
+
+```yaml
+economy:
+  arbitrage:
+    enabled: true
+    scanning:
+      npc_prices: true
+      vendor_scanning: true
+    profit:
+      min_margin_percent: 10
+      include_travel_cost: true
+```
+
+---
+
+### 31.3 Vending Optimization
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Implements competitive pricing algorithms, selects high-traffic locations using heatmaps, automates price undercutting.
+
+**Configuration:**
+
+```yaml
+economy:
+  vending:
+    enabled: true
+    pricing:
+      competitive: true
+      undercut_percent: 5
+    location:
+      heatmap_based: true
+      preferred_locations:
+        - prontera
+        - geffen
+    restocking:
+      auto_restock: true
+```
+
+---
+
+### 31.4 Investment Timing Intelligence
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Implements budget allocation models, calculates ROI for equipment, maintains emergency fund requirements.
+
+**Configuration:**
+
+```yaml
+economy:
+  investment:
+    enabled: true
+    budget:
+      allocation_model: balanced
+      emergency_reserve: 1000000
+    roi:
+      equipment_priority: true
+      min_roi_percent: 10
+```
+
+---
+
+### 31.5 Buying Store Optimization
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Identifies demand items, sets competitive buy prices, calculates resale profits.
+
+**Configuration:**
+
+```yaml
+economy:
+  buying_store:
+    enabled: true
+    items:
+      demand_based: true
+    pricing:
+      competitive: true
+      max_buy_price_percent: 80
+```
+
+---
+
+## 32. Time-Sensitive Mechanics
+
+Systems for handling time-based game mechanics.
+
+### 32.1 Server Time Synchronization
+
+**Priority:** P1 (Important)
+
+**What it does:** Calculates server time offset, handles timezones, corrects clock drift.
+
+**Configuration:**
+
+```yaml
+time:
+  synchronization:
+    enabled: true
+    offset:
+      auto_detect: true
+      manual_offset_hours: 0
+    timezone:
+      server: "America/Los_Angeles"
+```
+
+---
+
+### 32.2 Day/Night Cycle Awareness
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Detects day/night state, tracks night-only monster spawns, applies Star Gladiator day/night bonuses.
+
+**Day/Night Effects:**
+
+| Condition | Effects |
+|-----------|---------|
+| Day | Normal spawns, Solar bonuses active |
+| Night | Night-only spawns, Lunar bonuses active |
+
+**Configuration:**
+
+```yaml
+time:
+  day_night:
+    enabled: true
+    detection:
+      packet_based: true
+    spawns:
+      night_only_awareness: true
+    star_gladiator:
+      solar_bonus: true
+      lunar_bonus: true
+```
+
+---
+
+### 32.3 Event Schedule Tracking
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Maintains event calendar database, automates participation, collects rewards.
+
+**Configuration:**
+
+```yaml
+time:
+  events:
+    enabled: true
+    calendar:
+      auto_update: true
+    participation:
+      auto_join: true
+```
+
+---
+
+### 32.4 Double EXP Event Detection
+
+**Priority:** P1 (Important)
+
+**What it does:** Detects event announcements via chat, extends play during events, monitors EXP rates for stealth event detection.
+
+**Configuration:**
+
+```yaml
+time:
+  double_exp:
+    enabled: true
+    detection:
+      chat_announcement: true
+      exp_rate_monitoring: true
+    behavior:
+      extend_session: true
+      max_extension_hours: 2
+```
+
+---
+
+## 33. Job-Specific Mechanics
+
+Specialized systems for unique job class mechanics.
+
+### 33.1 Bard/Dancer Ensemble Skills
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Detects Bard/Dancer pairs, triggers ensemble skills, synchronizes positions.
+
+**Ensemble Skills:**
+
+| Skill | Bard Skill | Dancer Skill | Effect |
+|-------|------------|--------------|--------|
+| Lullaby | Acoustic Rhythm | Slow Grace | Sleep enemies |
+| Mr. Kim | Melody Strike | Dance Strike | Damage boost |
+| Eternal Chaos | Down Tempo | Fortune's Kiss | Enemy stat down |
+
+**Configuration:**
+
+```yaml
+jobs:
+  bard_dancer:
+    enabled: true
+    ensemble:
+      auto_pair: true
+      position_sync: true
+      skill_matching: true
+```
+
+---
+
+### 33.2 Super Novice Mechanics
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Uses extra conservative HP thresholds (death = stat loss), prioritizes Angel Blessing acquisition.
+
+**Special Mechanics:**
+
+| Mechanic | Description | AI Response |
+|----------|-------------|-------------|
+| Death Penalty | Stat loss on death | HP threshold 50% |
+| Angel Blessing | Angel buff at 99% HP loss | Prioritize trigger |
+| Skill Versatility | All 1st job skills | Optimize rotation |
+
+**Configuration:**
+
+```yaml
+jobs:
+  super_novice:
+    enabled: true
+    death_prevention:
+      hp_threshold: 0.5
+    angel_blessing:
+      priority: high
+    stat_loss:
+      detection: true
+      recovery: true
+```
+
+---
+
+### 33.3 Taekwon Ranking System
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Optimizes ranking points, selects missions for points, analyzes competition.
+
+**Configuration:**
+
+```yaml
+jobs:
+  taekwon:
+    enabled: true
+    ranking:
+      optimize_points: true
+      mission_selection: true
+```
+
+---
+
+### 33.4 Star Gladiator Hatred System
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Selects optimal hatred targets (map, monster, player), tracks map-based bonuses (Solar/Lunar/Stellar).
+
+**Hatred System:**
+
+| Hatred Type | Bonus | Selection Criteria |
+|-------------|-------|-------------------|
+| Map Hatred | +damage on map | Primary farming map |
+| Monster Hatred | +damage vs monster | Most farmed monster |
+| Player Hatred | +damage in PvP | N/A (PvP only) |
+
+**Configuration:**
+
+```yaml
+jobs:
+  star_gladiator:
+    enabled: true
+    hatred:
+      optimal_selection: true
+    bonuses:
+      solar_maps: []
+      lunar_maps: []
+```
+
+---
+
+### 33.5 Soul Linker Spirit Mechanics
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Detects target class, selects appropriate spirit, maintains spirit buffs.
+
+**Configuration:**
+
+```yaml
+jobs:
+  soul_linker:
+    enabled: true
+    spirits:
+      auto_detect_class: true
+      maintenance: true
+      party_priority: true
+```
+
+---
+
+### 33.6 Ninja/Gunslinger Ammo Management
+
+**Priority:** P1 (Important)
+
+**What it does:** Optimizes ammo type per target, sets auto-purchase thresholds, selects elemental ammo.
+
+**Ammo Types:**
+
+| Class | Ammo Types | Selection Criteria |
+|-------|------------|-------------------|
+| Ninja | Kunai, Shuriken | Target size, element |
+| Gunslinger | Bullets, Coins | Skill requirements |
+
+**Configuration:**
+
+```yaml
+jobs:
+  gunslinger:
+    enabled: true
+    ammo:
+      type_optimization: true
+      auto_purchase: true
+      elemental_selection: true
+  ninja:
+    enabled: true
+    kunai_management: true
+```
+
+---
+
+### 33.7 Mechanic Mado Gear Management
+
+**Priority:** P1 (Important)
+
+**What it does:** Monitors fuel and initiates refills, manages Mado-specific skill rotations, automates repair.
+
+**Mado Gear Status:**
+
+| Status | Threshold | Action |
+|--------|-----------|--------|
+| Fuel Low | 20% | Refill |
+| Damaged | HP < 50% | Repair |
+| Emergency | Fuel < 5% | Dismount |
+
+**Configuration:**
+
+```yaml
+jobs:
+  mechanic:
+    enabled: true
+    mado_gear:
+      fuel_monitoring: true
+      refill_threshold: 20
+      skill_rotation: true
+      auto_repair: true
+```
+
+---
+
+### 33.8 Royal Guard Devotion Mechanics
+
+**Priority:** P1 (Important)
+
+**What it does:** Prioritizes targets (protect healers), manages Devotion cooldown, maintains range (5 cells).
+
+**Devotion Rules:**
+
+| Rule | Description |
+|------|-------------|
+| Target Priority | Healer > DPS > Tank |
+| Range | Must stay within 5 cells |
+| Damage Share | Takes damage for target |
+| Cooldown | 60 second cooldown |
+
+**Configuration:**
+
+```yaml
+jobs:
+  royal_guard:
+    enabled: true
+    devotion:
+      target_priority:
+        - healer
+        - ranged_dps
+      cooldown_management: true
+      range_maintenance: true
+```
+
+---
+
+### 33.9 Warlock Spellbook System
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Monitors spellbook spells, optimizes Release timing, preserves spells strategically.
+
+**Configuration:**
+
+```yaml
+jobs:
+  warlock:
+    enabled: true
+    spellbook:
+      monitoring: true
+      release_timing: optimal
+      spell_preservation: true
+```
+
+---
+
+### 33.10 Genetic Plant/Bomb Mechanics
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Optimizes plant placement, calculates explosion timing, creates chain explosion strategies.
+
+**Configuration:**
+
+```yaml
+jobs:
+  genetic:
+    enabled: true
+    plants:
+      placement_optimization: true
+      explosion_timing: true
+      chain_explosions: true
+```
+
+---
+
+## 34. Mini-Games
+
+Optional support for event mini-games.
+
+### 34.1 Event Participation
+
+**Priority:** P3 (Nice-to-have)
+
+**What it does:** Automates Poring Catch, optimizes Monster Racing betting, randomizes Rock Paper Scissors, looks up monster names for Disguise event, systematically searches in Find the Mushroom.
+
+**Supported Mini-Games:**
+
+| Mini-Game | Automation Level | Strategy |
+|-----------|------------------|----------|
+| Poring Catch | Full | Click timing optimization |
+| Monster Racing | Betting | Statistical analysis |
+| Rock Paper Scissors | Partial | Weighted random |
+| Disguise Event | Full | Monster name database |
+| Find the Mushroom | Full | Systematic grid search |
+| Quiz Events | Full | Answer database |
+
+**Configuration:**
+
+```yaml
+minigames:
+  enabled: false
+  
+  poring_catch:
+    enabled: true
+    reaction_timing: human_like
+    target_accuracy: 0.7
+    
+  monster_racing:
+    enabled: true
+    betting_strategy: statistical
+    max_bet_percent: 10
+    
+  rock_paper_scissors:
+    strategy: random_weighted
+    weights:
+      rock: 0.33
+      paper: 0.34
+      scissors: 0.33
+      
+  disguise:
+    monster_lookup: true
+    database_path: "./data/monsters.db"
+    
+  find_mushroom:
+    systematic_search: true
+    grid_pattern: spiral
+    
+  quiz:
+    answer_database: true
+    database_path: "./data/quiz_answers.db"
+```
+
+---
+
+## 35. Advanced Navigation
+
+Enhanced navigation and positioning systems.
+
+### 35.1 Safe Zone Mapping
+
+**Priority:** P1 (Important)
+
+**What it does:** Identifies safe zones (no monster spawns), calculates distances to safe zones, plans emergency routes.
+
+**Safe Zone Types:**
+
+| Zone Type | Characteristics | Usage |
+|-----------|-----------------|-------|
+| Town | No hostile monsters | Recovery, shopping |
+| NPC Area | Protected spawn area | Emergency escape |
+| Indoor | Limited spawns | Rest area |
+| Kafra | Save point proximity | Respawn advantage |
+
+**Configuration:**
+
+```yaml
+navigation:
+  safe_zones:
+    enabled: true
+    identification:
+      no_spawn_areas: true
+      town_zones: true
+      npc_proximity: true
+    routing:
+      emergency_routes: true
+      distance_calculation: true
+    caching:
+      enabled: true
+      cache_path: "./data/safe_zones/"
+```
+
+---
+
+### 35.2 Mob Train Detection
+
+**Priority:** P0 (Critical)
+
+**What it does:** Counts monsters targeting player, analyzes movement patterns, detects train size threshold (>3 = train), triggers emergency responses.
+
+**Train Detection Logic:**
+
+```python
+class MobTrainDetector:
+    TRAIN_THRESHOLD = 3
+    CRITICAL_THRESHOLD = 5
+    
+    def analyze_threat(self, monsters_targeting: int, hp_percent: float):
+        if monsters_targeting >= self.CRITICAL_THRESHOLD:
+            return "EMERGENCY_TELEPORT"
+        elif monsters_targeting >= self.TRAIN_THRESHOLD:
+            if hp_percent < 0.5:
+                return "EMERGENCY_TELEPORT"
+            else:
+                return "KITE_TO_SAFETY"
+        else:
+            return "NORMAL_COMBAT"
+```
+
+**Configuration:**
+
+```yaml
+navigation:
+  mob_train:
+    enabled: true
+    detection:
+      monster_count_threshold: 3
+      critical_threshold: 5
+      pattern_analysis: true
+    response:
+      emergency_trigger: true
+      teleport_threshold: 5
+      kite_threshold: 3
+    hp_consideration:
+      enabled: true
+      low_hp_threshold: 0.5
+```
+
+---
+
+### 35.3 Line-of-Sight Tactics
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Implements LOS calculator, identifies wall-peeking positions, detects aggro drop, finds safe attack positions.
+
+**LOS Tactical Positions:**
+
+| Position Type | Use Case | Benefit |
+|---------------|----------|---------|
+| Corner Peek | Range attacks | Single target aggro |
+| Wall Block | Melee kiting | Monster pathing reset |
+| Pillar Dance | Boss fights | Skill avoidance |
+| Doorway | Funneling | AoE optimization |
+
+**Configuration:**
+
+```yaml
+navigation:
+  line_of_sight:
+    enabled: true
+    tactics:
+      wall_peeking: true
+      corner_abuse: true
+      aggro_drop: true
+      safe_attack_positions: true
+    calculations:
+      real_time: true
+      cache_positions: true
+    training:
+      learn_positions: true
+      ml_optimization: true
+```
+
+---
+
+## 36. Hidden Patterns and Meta
+
+Understanding and exploiting hidden game mechanics.
+
+### 36.1 Server Tick Awareness
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Detects server tick rate, optimizes packet timing, optimizes multi-hit skill timing.
+
+**Server Tick Mechanics:**
+
+```
+Standard Tick Rate: 50ms (20 ticks per second)
+Skill Processing: Per-tick basis
+Movement: Per-tick updates
+Damage Calculation: Per-tick
+
+Optimization Strategy:
+- Align skill usage with tick boundaries
+- Batch commands within same tick when possible
+- Avoid redundant commands between ticks
+```
+
+**Configuration:**
+
+```yaml
+meta:
+  server_ticks:
+    enabled: true
+    detection:
+      auto_detect: true
+      assumed_tick_ms: 50
+    optimization:
+      packet_timing: true
+      skill_timing: true
+      movement_sync: true
+    calibration:
+      enabled: true
+      sample_size: 100
+```
+
+---
+
+### 36.2 Experience Chain Maintenance
+
+**Priority:** P1 (Important)
+
+**What it does:** Tracks chain timer, selects targets for chain maintenance, prevents chain breaks, calculates optimal chain length (up to 30% bonus).
+
+**EXP Chain Mechanics:**
+
+| Chain Level | EXP Bonus | Time Window |
+|-------------|-----------|-------------|
+| 1 | 0% | 30 sec |
+| 2-4 | 5% | 30 sec |
+| 5-9 | 10% | 30 sec |
+| 10-14 | 15% | 30 sec |
+| 15-19 | 20% | 30 sec |
+| 20+ | 30% | 30 sec |
+
+**Chain Maintenance Strategy:**
+
+```python
+class ExpChainManager:
+    CHAIN_WINDOW_SECONDS = 30
+    TARGET_CHAIN_LEVEL = 20
+    
+    def should_rush_kill(self, chain_level: int, timer_remaining: float):
+        """Determine if we need to rush a kill to maintain chain."""
+        if timer_remaining < 5:
+            return True
+        if chain_level >= self.TARGET_CHAIN_LEVEL and timer_remaining < 10:
+            return True
+        return False
+    
+    def select_chain_target(self, nearby_monsters: list, time_to_kill: dict):
+        """Select fastest kill target to maintain chain."""
+        # Prioritize monsters we can kill before chain expires
+        for monster in sorted(nearby_monsters, key=lambda m: time_to_kill[m.id]):
+            if time_to_kill[monster.id] < self.chain_timer_remaining:
+                return monster
+        return nearby_monsters[0] if nearby_monsters else None
+```
+
+**Configuration:**
+
+```yaml
+meta:
+  exp_chain:
+    enabled: true
+    tracking:
+      chain_timer: true
+      chain_level: true
+      visual_indicator: true
+    maintenance:
+      target_selection: true
+      prevent_break: true
+      rush_kills: true
+    optimization:
+      target_chain_level: 20
+      timer_buffer_seconds: 5
+```
+
+---
+
+### 36.3 Monster AI Pattern Learning
+
+**Priority:** P2 (Enhancement)
+
+**What it does:** Classifies behavior patterns, detects aggressive vs passive, learns skill patterns, predicts movement.
+
+**Monster Behavior Categories:**
+
+| Behavior | Detection | AI Response |
+|----------|-----------|-------------|
+| Aggressive | Attacks on sight | Pre-emptive positioning |
+| Passive | Ignores until attacked | Safe to ignore |
+| Assist | Helps nearby monsters | Isolate targets |
+| Looter | Steals drops | Prioritize loot pickup |
+| Cast | Uses magic skills | Interrupt or kite |
+| Boss | Special patterns | Pattern recognition |
+
+**ML-Based Pattern Learning:**
+
+```python
+class MonsterPatternLearner:
+    """Learns and predicts monster behavior patterns."""
+    
+    def __init__(self):
+        self.behavior_database = {}
+        self.pattern_model = None
+    
+    def record_behavior(self, monster_id: int, action: str, context: dict):
+        """Record observed monster behavior."""
+        if monster_id not in self.behavior_database:
+            self.behavior_database[monster_id] = []
+        
+        self.behavior_database[monster_id].append({
+            "action": action,
+            "context": context,
+            "timestamp": time.time()
+        })
+    
+    def predict_next_action(self, monster_id: int, context: dict) -> str:
+        """Predict monster's next action based on learned patterns."""
+        if self.pattern_model and monster_id in self.behavior_database:
+            return self.pattern_model.predict(monster_id, context)
+        return "unknown"
+    
+    def get_optimal_response(self, predicted_action: str) -> str:
+        """Get optimal player response to predicted monster action."""
+        responses = {
+            "skill_cast": "interrupt_or_dodge",
+            "charge": "kite_backward",
+            "summon": "kill_summons_first",
+            "heal": "burst_damage",
+            "buff": "dispel_or_ignore"
+        }
+        return responses.get(predicted_action, "continue_attack")
+```
+
+**Configuration:**
+
+```yaml
+meta:
+  monster_ai:
+    enabled: true
+    learning:
+      behavior_classification: true
+      aggressive_detection: true
+      skill_patterns: true
+      movement_patterns: true
+    prediction:
+      movement: true
+      skill_usage: true
+      confidence_threshold: 0.7
+    database:
+      save_patterns: true
+      path: "./data/monster_patterns.db"
+    ml_model:
+      enabled: true
+      model_type: random_forest
+      retrain_interval_hours: 24
+```
+
+---
+
+## Appendix E: Priority Matrix for 154 Missing Mechanics
+
+This appendix provides a complete priority matrix for all mechanics documented in Sections 20-36.
+
+### Priority Level Definitions
+
+| Priority | Level | Description | Implementation Timeline |
+|----------|-------|-------------|------------------------|
+| P0 | Critical | Core functionality required for basic operation | Immediate |
+| P1 | Important | Key features for competitive advantage | Phase 1 (1-3 months) |
+| P2 | Enhancement | Valuable additions that improve experience | Phase 2 (3-6 months) |
+| P3 | Nice-to-have | Optional features for completeness | Phase 3 (6+ months) |
+
+### Complete Priority Matrix by Section
+
+#### Section 20: Companion Systems (7 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 1 | Pet feeding optimization | P2 | Low | Pet packet parsing |
+| 2 | Pet intimacy tracking | P2 | Low | Pet state |
+| 3 | Pet evolution system | P2 | Medium | Intimacy tracking |
+| 4 | Homunculus stat distribution | P1 | Medium | Class detection |
+| 5 | Homunculus skill allocation | P1 | Medium | Stat distribution |
+| 6 | Mercenary contract management | P2 | Low | Timer system |
+| 7 | Mount system automation | P2 | Low | Class detection |
+
+#### Section 21: Consumable & Buff Management (8 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 8 | Food buff database | P1 | Low | Item database |
+| 9 | Buff duration parsing | P0 | Medium | Packet parsing |
+| 10 | Buff refresh automation | P0 | Low | Duration parsing |
+| 11 | Buff conflict detection | P1 | Medium | Buff database |
+| 12 | Recovery item prioritization | P0 | Medium | HP/SP monitoring |
+| 13 | Catalyst tracking | P1 | Low | Inventory system |
+| 14 | Elemental converter management | P1 | Low | Monster elements |
+| 15 | Cost-per-HP calculations | P2 | Low | Item database |
+
+#### Section 22: Instance/Dungeon Systems (8 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 16 | Instance creation automation | P1 | Medium | Party system |
+| 17 | Instance navigation | P1 | High | Pathfinding |
+| 18 | Boss pattern recognition | P2 | High | ML system |
+| 19 | Cooldown tracking | P1 | Low | Timer system |
+| 20 | Daily limit tracking | P1 | Low | Timer system |
+| 21 | Multi-character management | P2 | Medium | Account system |
+| 22 | Reward collection | P1 | Low | Inventory |
+| 23 | Difficulty assessment | P2 | Medium | Monster database |
+
+#### Section 23: Crafting Systems (10 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 24 | Blacksmith forging | P2 | Medium | Recipe database |
+| 25 | Alchemist brewing | P2 | Medium | Recipe database |
+| 26 | Rune creation | P2 | Medium | Material tracking |
+| 27 | Genetics creation | P2 | Medium | Cart system |
+| 28 | Shadow equipment crafting | P2 | Medium | Equipment system |
+| 29 | Costume synthesis | P3 | Low | Collection tracking |
+| 30 | Material gathering automation | P2 | Medium | Pathfinding |
+| 31 | Success rate calculation | P2 | Low | Stat system |
+| 32 | Cost-benefit analysis | P2 | Medium | Market data |
+| 33 | Recipe database | P1 | Low | Data storage |
+
+#### Section 24: Enchanting & Refining (10 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 34 | Socket enchant optimization | P2 | Medium | Enchant database |
+| 35 | Refine strategy engine | P1 | Medium | Success rate data |
+| 36 | HD ore decision making | P2 | Medium | Market prices |
+| 37 | Over-refine ROI | P3 | Medium | Market data |
+| 38 | Expected value calculations | P1 | Low | Math utilities |
+| 39 | Safe refine automation | P1 | Low | Refine system |
+| 40 | Enriched ore usage | P2 | Low | Inventory |
+| 41 | Shadow enchanting | P3 | Medium | Shadow system |
+| 42 | NPC-specific mechanics | P2 | Low | NPC database |
+| 43 | Budget allocation | P2 | Low | Economy system |
+
+#### Section 25: Achievement Systems (5 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 44 | Achievement database | P3 | Low | Data storage |
+| 45 | Progress tracking | P3 | Low | Achievement DB |
+| 46 | Title management | P3 | Low | Equipment system |
+| 47 | Reward collection | P3 | Low | Inventory |
+| 48 | Situational title swap | P3 | Low | Title system |
+
+#### Section 26: Hunting & Daily Systems (8 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 49 | Eden quest parsing | P1 | Medium | NPC interaction |
+| 50 | Quest board automation | P1 | Medium | Quest system |
+| 51 | Hunting board system | P1 | Medium | Quest system |
+| 52 | Daily mission rotation | P2 | Low | Timer system |
+| 53 | Gramps quest system | P1 | Medium | Quest system |
+| 54 | Multi-quest optimization | P1 | Medium | Pathfinding |
+| 55 | Turn-in automation | P1 | Low | NPC interaction |
+| 56 | Equipment reward selection | P2 | Low | Equipment system |
+
+#### Section 27: Advanced Combat (16 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 57 | Animation canceling | P1 | High | Frame data |
+| 58 | Skill chaining | P1 | High | Combo database |
+| 59 | Combo optimization | P1 | High | Skill system |
+| 60 | Status effect priority | P0 | Medium | Status database |
+| 61 | Auto-cure mechanisms | P0 | Low | Item usage |
+| 62 | Emergency teleport | P0 | Low | Teleport system |
+| 63 | Cast time optimization | P1 | Medium | Stat calculations |
+| 64 | DEX breakpoints | P1 | Low | Stat system |
+| 65 | Bragi integration | P1 | Medium | Party detection |
+| 66 | ASPD optimization | P1 | Medium | Stat calculations |
+| 67 | After-cast delay | P1 | Medium | Skill database |
+| 68 | Element conversion | P1 | Low | Element database |
+| 69 | Endow coordination | P1 | Medium | Party system |
+| 70 | Perfect dodge calc | P2 | Low | Stat system |
+| 71 | SP efficiency | P1 | Low | Combat system |
+| 72 | DPS calculations | P1 | Medium | Damage formulas |
+
+#### Section 28: PvP/WoE Systems (12 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 73 | WoE supply stocking | P2 | Low | Inventory |
+| 74 | Castle entry strategy | P2 | Medium | Navigation |
+| 75 | Emperium tactics | P2 | Medium | WoE system |
+| 76 | Guardian prioritization | P2 | Medium | WoE system |
+| 77 | Barricade destruction | P2 | Medium | WoE system |
+| 78 | BG type detection | P2 | Low | Map detection |
+| 79 | BG role assignment | P2 | Medium | Class detection |
+| 80 | GvG target priority | P1 | Medium | Targeting system |
+| 81 | Focus fire coordination | P2 | High | Party system |
+| 82 | Kill/death optimization | P2 | Medium | Combat analysis |
+| 83 | Retreat triggers | P2 | Low | HP monitoring |
+| 84 | Equipment detection | P2 | Medium | Player inspection |
+
+#### Section 29: Human Mimicry (12 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 85 | Bezier curve paths | P0 | Medium | Movement system |
+| 86 | Random pause injection | P0 | Low | Timer system |
+| 87 | Path deviation | P0 | Low | Pathfinding |
+| 88 | Backtracking simulation | P0 | Low | Movement system |
+| 89 | Typing speed simulation | P1 | Low | Chat system |
+| 90 | Typo injection | P1 | Low | Chat system |
+| 91 | Response time variance | P0 | Low | Timer system |
+| 92 | Session scheduling | P0 | Medium | Timer system |
+| 93 | Break patterns | P0 | Medium | Schedule system |
+| 94 | Mistake injection | P1 | Medium | Action system |
+| 95 | Attention drift | P1 | Medium | Reaction system |
+| 96 | Fatigue simulation | P1 | Medium | Session tracking |
+
+#### Section 30: Environmental Systems (8 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 97 | Weather tracking | P3 | Low | Map system |
+| 98 | Weather stat adjustment | P3 | Low | Stat system |
+| 99 | Hazard detection | P2 | Medium | Map analysis |
+| 100 | Hazard avoidance | P2 | Medium | Pathfinding |
+| 101 | Spawn point mapping | P1 | Medium | Map analysis |
+| 102 | Respawn timer learning | P1 | Medium | ML system |
+| 103 | Hidden passage discovery | P3 | High | Exploration |
+| 104 | Terrain tactics | P2 | High | Combat system |
+
+#### Section 31: Economy Deep Dive (10 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 105 | Price history tracking | P2 | Medium | Market system |
+| 106 | Moving averages | P2 | Low | Math utilities |
+| 107 | Volatility detection | P2 | Medium | Price tracking |
+| 108 | Buy/sell signals | P2 | Medium | Analysis system |
+| 109 | Arbitrage detection | P2 | Medium | Price tracking |
+| 110 | Vending location optimization | P2 | Medium | Map heatmaps |
+| 111 | Competitive pricing | P2 | Medium | Market data |
+| 112 | Investment timing | P3 | Medium | Market analysis |
+| 113 | Buying store optimization | P2 | Medium | Market data |
+| 114 | Budget allocation | P2 | Low | Economy system |
+
+#### Section 32: Time-Sensitive Mechanics (8 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 115 | Server time sync | P1 | Medium | Network system |
+| 116 | Timezone handling | P1 | Low | Time utilities |
+| 117 | Day/night detection | P2 | Low | Packet parsing |
+| 118 | Night-only spawns | P2 | Low | Spawn system |
+| 119 | Star Gladiator bonuses | P2 | Low | Class system |
+| 120 | Event calendar | P2 | Low | Data storage |
+| 121 | Double EXP detection | P1 | Low | Chat parsing |
+| 122 | Event participation | P2 | Medium | Event system |
+
+#### Section 33: Job-Specific Mechanics (20 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 123 | Bard/Dancer ensemble | P2 | Medium | Party detection |
+| 124 | Super Novice death prevention | P2 | Low | HP monitoring |
+| 125 | Angel Blessing trigger | P2 | Low | Class system |
+| 126 | Taekwon ranking | P3 | Medium | Ranking system |
+| 127 | Star Gladiator hatred | P2 | Medium | Class system |
+| 128 | Soul Linker spirits | P2 | Medium | Class detection |
+| 129 | Ninja ammo management | P1 | Low | Inventory |
+| 130 | Gunslinger ammo | P1 | Low | Inventory |
+| 131 | Mechanic Mado fuel | P1 | Low | Class system |
+| 132 | Mado repair automation | P1 | Low | Class system |
+| 133 | Royal Guard Devotion | P1 | Medium | Party system |
+| 134 | Devotion range management | P1 | Medium | Position tracking |
+| 135 | Warlock spellbook | P2 | Medium | Skill system |
+| 136 | Release timing | P2 | Medium | Combat timing |
+| 137 | Genetic plants | P2 | Medium | Skill system |
+| 138 | Bomb placement | P2 | Medium | Position system |
+| 139 | Chain explosions | P2 | High | Timing system |
+| 140 | Rune Knight runes | P2 | Medium | Crafting system |
+| 141 | Ranger Warg | P2 | Low | Mount system |
+| 142 | Sorcerer elementals | P2 | Medium | Summon system |
+
+#### Section 34: Mini-Games (6 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 143 | Poring Catch | P3 | Low | Click timing |
+| 144 | Monster Racing | P3 | Low | Betting system |
+| 145 | Rock Paper Scissors | P3 | Low | Random system |
+| 146 | Disguise event | P3 | Low | Monster database |
+| 147 | Find the Mushroom | P3 | Low | Search pattern |
+| 148 | Quiz events | P3 | Low | Answer database |
+
+#### Section 35: Advanced Navigation (5 mechanics)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 149 | Safe zone mapping | P1 | Medium | Map analysis |
+| 150 | Emergency routing | P1 | Medium | Pathfinding |
+| 151 | Mob train detection | P0 | Medium | Monster tracking |
+| 152 | Train response | P0 | Low | Emergency system |
+| 153 | LOS calculations | P2 | Medium | Map data |
+
+#### Section 36: Hidden Patterns (1 mechanics set)
+
+| # | Mechanic | Priority | Complexity | Dependencies |
+|---|----------|----------|------------|--------------|
+| 154 | Server tick awareness | P2 | Medium | Network timing |
+| 155 | EXP chain maintenance | P1 | Medium | Kill tracking |
+| 156 | Monster AI learning | P2 | High | ML system |
+
+### Implementation Priority Summary
+
+| Priority | Count | Percentage |
+|----------|-------|------------|
+| P0 (Critical) | 15 | 9.6% |
+| P1 (Important) | 55 | 35.3% |
+| P2 (Enhancement) | 68 | 43.6% |
+| P3 (Nice-to-have) | 18 | 11.5% |
+| **Total** | **156** | **100%** |
+
+### Recommended Implementation Order
+
+**Phase 1: Critical Foundation (P0 - 15 mechanics)**
+1. Buff duration parsing and refresh
+2. Recovery item prioritization
+3. Status effect management
+4. Emergency teleport system
+5. Movement humanization (Bezier, pauses, deviation)
+6. Response timing variation
+7. Session scheduling and breaks
+8. Mob train detection and response
+
+**Phase 2: Core Features (P1 - 55 mechanics)**
+1. Homunculus management
+2. Food and catalyst management
+3. Instance and quest systems
+4. Combat optimization (cast time, ASPD, combos)
+5. Element conversion system
+6. Server time and event detection
+7. Class-specific critical mechanics (ammo, Devotion, Mado)
+8. Advanced navigation
+
+**Phase 3: Enhancements (P2 - 68 mechanics)**
+1. Crafting and enchanting systems
+2. Economy and market analysis
+3. PvP/WoE tactics
+4. Boss pattern recognition
+5. Additional class mechanics
+6. Environmental awareness
+7. ML-based learning systems
+
+**Phase 4: Polish (P3 - 18 mechanics)**
+1. Achievement tracking
+2. Mini-games
+3. Weather effects
+4. Hidden passages
+5. Investment timing
+
+---
+
+*Document Updated: Version 3.0.0*
+*154 Missing Mechanics Added*
+*Total Sections: 36 + Appendices*

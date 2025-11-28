@@ -1,0 +1,710 @@
+{
+  "1": {
+    "floor_number": 1,
+    "monster_types": ["Poring", "Drops"],
+    "monster_count": 15,
+    "recommended_level": 1,
+    "danger_rating": 1
+  },
+  "2": {
+    "floor_number": 2,
+    "monster_types": ["Poporing", "Marin"],
+    "monster_count": 15,
+    "recommended_level": 10,
+    "danger_rating": 1
+  },
+  "3": {
+    "floor_number": 3,
+    "monster_types": ["Poison Spore", "Spore"],
+    "monster_count": 16,
+    "recommended_level": 15,
+    "danger_rating": 1
+  },
+  "4": {
+    "floor_number": 4,
+    "monster_types": ["Rocker", "Wolf"],
+    "monster_count": 16,
+    "recommended_level": 20,
+    "danger_rating": 2
+  },
+  "5": {
+    "floor_number": 5,
+    "monster_types": ["Condor", "Savage"],
+    "monster_count": 17,
+    "recommended_level": 25,
+    "danger_rating": 2
+  },
+  "6": {
+    "floor_number": 6,
+    "monster_types": ["Stainer", "Steel Chonchon"],
+    "monster_count": 17,
+    "recommended_level": 30,
+    "danger_rating": 2
+  },
+  "7": {
+    "floor_number": 7,
+    "monster_types": ["Metaller", "Frilldora"],
+    "monster_count": 18,
+    "recommended_level": 35,
+    "danger_rating": 2
+  },
+  "8": {
+    "floor_number": 8,
+    "monster_types": ["Orc Warrior", "Orc Lady"],
+    "monster_count": 18,
+    "recommended_level": 40,
+    "danger_rating": 3
+  },
+  "9": {
+    "floor_number": 9,
+    "monster_types": ["Smokie", "Yoyo"],
+    "monster_count": 19,
+    "recommended_level": 45,
+    "danger_rating": 3
+  },
+  "10": {
+    "floor_number": 10,
+    "monster_types": ["Elder Willow", "Wormtail"],
+    "monster_count": 19,
+    "recommended_level": 50,
+    "danger_rating": 3
+  },
+  "11": {
+    "floor_number": 11,
+    "monster_types": ["Goblin", "Goblin Archer"],
+    "monster_count": 20,
+    "recommended_level": 52,
+    "danger_rating": 3
+  },
+  "12": {
+    "floor_number": 12,
+    "monster_types": ["Magnolia", "Geographer"],
+    "monster_count": 20,
+    "recommended_level": 54,
+    "danger_rating": 3
+  },
+  "13": {
+    "floor_number": 13,
+    "monster_types": ["Archer Skeleton", "Soldier Skeleton"],
+    "monster_count": 21,
+    "recommended_level": 56,
+    "danger_rating": 4
+  },
+  "14": {
+    "floor_number": 14,
+    "monster_types": ["Drainliar", "Familiars"],
+    "monster_count": 21,
+    "recommended_level": 58,
+    "danger_rating": 4
+  },
+  "15": {
+    "floor_number": 15,
+    "monster_types": ["Zerom", "Anolian"],
+    "monster_count": 22,
+    "recommended_level": 60,
+    "danger_rating": 4
+  },
+  "16": {
+    "floor_number": 16,
+    "monster_types": ["Golem", "Sandman"],
+    "monster_count": 22,
+    "recommended_level": 62,
+    "danger_rating": 4
+  },
+  "17": {
+    "floor_number": 17,
+    "monster_types": ["Alligator", "Dragon Tail"],
+    "monster_count": 23,
+    "recommended_level": 64,
+    "danger_rating": 4
+  },
+  "18": {
+    "floor_number": 18,
+    "monster_types": ["Clock", "Alarm"],
+    "monster_count": 23,
+    "recommended_level": 66,
+    "danger_rating": 5
+  },
+  "19": {
+    "floor_number": 19,
+    "monster_types": ["Bathory", "Dokebi"],
+    "monster_count": 24,
+    "recommended_level": 68,
+    "danger_rating": 5
+  },
+  "20": {
+    "floor_number": 20,
+    "monster_types": ["Myst", "Cruiser"],
+    "monster_count": 24,
+    "recommended_level": 70,
+    "danger_rating": 5
+  },
+  "21": {
+    "floor_number": 21,
+    "monster_types": ["Raydric", "Raydric Archer"],
+    "monster_count": 25,
+    "recommended_level": 72,
+    "danger_rating": 5
+  },
+  "22": {
+    "floor_number": 22,
+    "monster_types": ["Injustice", "Zherlthsh"],
+    "monster_count": 25,
+    "recommended_level": 74,
+    "danger_rating": 5
+  },
+  "23": {
+    "floor_number": 23,
+    "monster_types": ["Wanderer", "Ancient Mummy"],
+    "monster_count": 26,
+    "recommended_level": 76,
+    "danger_rating": 6
+  },
+  "24": {
+    "floor_number": 24,
+    "monster_types": ["Sleeper", "Miyabi Doll"],
+    "monster_count": 26,
+    "recommended_level": 78,
+    "danger_rating": 6
+  },
+  "25": {
+    "floor_number": 25,
+    "monster_types": [],
+    "monster_count": 0,
+    "boss_name": "Amon Ra",
+    "mvp_floor": true,
+    "recommended_level": 80,
+    "danger_rating": 7
+  },
+  "26": {
+    "floor_number": 26,
+    "monster_types": ["Khalitzburg", "Bloody Knight"],
+    "monster_count": 27,
+    "recommended_level": 80,
+    "danger_rating": 6
+  },
+  "27": {
+    "floor_number": 27,
+    "monster_types": ["Gryphon", "Dark Frame"],
+    "monster_count": 27,
+    "recommended_level": 81,
+    "danger_rating": 6
+  },
+  "28": {
+    "floor_number": 28,
+    "monster_types": ["Anubis", "Ancient Mimic"],
+    "monster_count": 28,
+    "recommended_level": 82,
+    "danger_rating": 6
+  },
+  "29": {
+    "floor_number": 29,
+    "monster_types": ["Wraith", "Evil Druid"],
+    "monster_count": 28,
+    "recommended_level": 83,
+    "danger_rating": 6
+  },
+  "30": {
+    "floor_number": 30,
+    "monster_types": ["Requiem", "Breeze"],
+    "monster_count": 29,
+    "recommended_level": 84,
+    "danger_rating": 6
+  },
+  "31": {
+    "floor_number": 31,
+    "monster_types": ["Alice", "Violy"],
+    "monster_count": 29,
+    "recommended_level": 85,
+    "danger_rating": 7
+  },
+  "32": {
+    "floor_number": 32,
+    "monster_types": ["Elder", "Wraith Dead"],
+    "monster_count": 30,
+    "recommended_level": 86,
+    "danger_rating": 7
+  },
+  "33": {
+    "floor_number": 33,
+    "monster_types": ["Pest", "Chonchon"],
+    "monster_count": 30,
+    "recommended_level": 87,
+    "danger_rating": 7
+  },
+  "34": {
+    "floor_number": 34,
+    "monster_types": ["Angeling", "Ghostring"],
+    "monster_count": 31,
+    "recommended_level": 88,
+    "danger_rating": 7
+  },
+  "35": {
+    "floor_number": 35,
+    "monster_types": ["High Orc", "Orc Archer"],
+    "monster_count": 31,
+    "recommended_level": 89,
+    "danger_rating": 7
+  },
+  "36": {
+    "floor_number": 36,
+    "monster_types": ["Minorous", "Savage Babe"],
+    "monster_count": 32,
+    "recommended_level": 90,
+    "danger_rating": 7
+  },
+  "37": {
+    "floor_number": 37,
+    "monster_types": ["Side Winder", "Sidewinder"],
+    "monster_count": 32,
+    "recommended_level": 90,
+    "danger_rating": 7
+  },
+  "38": {
+    "floor_number": 38,
+    "monster_types": ["Penomena", "Sohee"],
+    "monster_count": 33,
+    "recommended_level": 91,
+    "danger_rating": 8
+  },
+  "39": {
+    "floor_number": 39,
+    "monster_types": ["Marine Sphere", "Kukre"],
+    "monster_count": 33,
+    "recommended_level": 92,
+    "danger_rating": 8
+  },
+  "40": {
+    "floor_number": 40,
+    "monster_types": ["Caterpillar", "Creamy Fear"],
+    "monster_count": 34,
+    "recommended_level": 93,
+    "danger_rating": 8
+  },
+  "41": {
+    "floor_number": 41,
+    "monster_types": ["Beetle King", "Hunter Fly"],
+    "monster_count": 34,
+    "recommended_level": 94,
+    "danger_rating": 8
+  },
+  "42": {
+    "floor_number": 42,
+    "monster_types": ["Mantis", "Hydra"],
+    "monster_count": 35,
+    "recommended_level": 95,
+    "danger_rating": 8
+  },
+  "43": {
+    "floor_number": 43,
+    "monster_types": ["Flora", "Geographer"],
+    "monster_count": 35,
+    "recommended_level": 96,
+    "danger_rating": 8
+  },
+  "44": {
+    "floor_number": 44,
+    "monster_types": ["Argiope", "Argos"],
+    "monster_count": 36,
+    "recommended_level": 97,
+    "danger_rating": 8
+  },
+  "45": {
+    "floor_number": 45,
+    "monster_types": ["Vocal", "Mimic"],
+    "monster_count": 36,
+    "recommended_level": 98,
+    "danger_rating": 8
+  },
+  "46": {
+    "floor_number": 46,
+    "monster_types": ["Isis", "Marduk"],
+    "monster_count": 37,
+    "recommended_level": 98,
+    "danger_rating": 8
+  },
+  "47": {
+    "floor_number": 47,
+    "monster_types": ["Verit", "Pasana"],
+    "monster_count": 37,
+    "recommended_level": 99,
+    "danger_rating": 9
+  },
+  "48": {
+    "floor_number": 48,
+    "monster_types": ["Bathory", "Wind Ghost"],
+    "monster_count": 38,
+    "recommended_level": 99,
+    "danger_rating": 9
+  },
+  "49": {
+    "floor_number": 49,
+    "monster_types": ["Marionette", "Joker"],
+    "monster_count": 38,
+    "recommended_level": 99,
+    "danger_rating": 9
+  },
+  "50": {
+    "floor_number": 50,
+    "monster_types": [],
+    "monster_count": 0,
+    "boss_name": "Drake",
+    "mvp_floor": true,
+    "recommended_level": 90,
+    "danger_rating": 8
+  },
+  "51": {
+    "floor_number": 51,
+    "monster_types": ["Stem Worm", "Demon Pungus"],
+    "monster_count": 39,
+    "recommended_level": 99,
+    "danger_rating": 9
+  },
+  "52": {
+    "floor_number": 52,
+    "monster_types": ["Gig", "Arclouse"],
+    "monster_count": 39,
+    "recommended_level": 99,
+    "danger_rating": 9
+  },
+  "53": {
+    "floor_number": 53,
+    "monster_types": ["Punk", "Goblin Leader"],
+    "monster_count": 40,
+    "recommended_level": 99,
+    "danger_rating": 9
+  },
+  "54": {
+    "floor_number": 54,
+    "monster_types": ["Zenorc", "Greatest General"],
+    "monster_count": 40,
+    "recommended_level": 99,
+    "danger_rating": 9
+  },
+  "55": {
+    "floor_number": 55,
+    "monster_types": ["Deviruchi", "Whisper"],
+    "monster_count": 41,
+    "recommended_level": 99,
+    "danger_rating": 9
+  },
+  "56": {
+    "floor_number": 56,
+    "monster_types": ["Nightmare", "Baphomet Jr"],
+    "monster_count": 41,
+    "recommended_level": 120,
+    "danger_rating": 9
+  },
+  "57": {
+    "floor_number": 57,
+    "monster_types": ["Incubus", "Succubus"],
+    "monster_count": 42,
+    "recommended_level": 120,
+    "danger_rating": 9
+  },
+  "58": {
+    "floor_number": 58,
+    "monster_types": ["Loli Ruri", "Shinobi"],
+    "monster_count": 42,
+    "recommended_level": 125,
+    "danger_rating": 9
+  },
+  "59": {
+    "floor_number": 59,
+    "monster_types": ["Hermit", "Karakasa"],
+    "monster_count": 43,
+    "recommended_level": 125,
+    "danger_rating": 9
+  },
+  "60": {
+    "floor_number": 60,
+    "monster_types": ["Miyabi Doll", "Tengu"],
+    "monster_count": 43,
+    "recommended_level": 130,
+    "danger_rating": 9
+  },
+  "61": {
+    "floor_number": 61,
+    "monster_types": ["Zealotus", "Archangeling"],
+    "monster_count": 44,
+    "recommended_level": 130,
+    "danger_rating": 9
+  },
+  "62": {
+    "floor_number": 62,
+    "monster_types": ["Harpy", "Grand Peco"],
+    "monster_count": 44,
+    "recommended_level": 135,
+    "danger_rating": 9
+  },
+  "63": {
+    "floor_number": 63,
+    "monster_types": ["Clock Tower Manager", "Alarm"],
+    "monster_count": 45,
+    "recommended_level": 135,
+    "danger_rating": 9
+  },
+  "64": {
+    "floor_number": 64,
+    "monster_types": ["Jakk", "Coco"],
+    "monster_count": 45,
+    "recommended_level": 140,
+    "danger_rating": 9
+  },
+  "65": {
+    "floor_number": 65,
+    "monster_types": ["Am Mut", "Mummy"],
+    "monster_count": 46,
+    "recommended_level": 140,
+    "danger_rating": 9
+  },
+  "66": {
+    "floor_number": 66,
+    "monster_types": ["Pirate Skeleton", "Skel Prisoner"],
+    "monster_count": 46,
+    "recommended_level": 145,
+    "danger_rating": 9
+  },
+  "67": {
+    "floor_number": 67,
+    "monster_types": ["Zombie Prisoner", "Injustice"],
+    "monster_count": 47,
+    "recommended_level": 145,
+    "danger_rating": 9
+  },
+  "68": {
+    "floor_number": 68,
+    "monster_types": ["Penomena", "Strouf"],
+    "monster_count": 47,
+    "recommended_level": 150,
+    "danger_rating": 9
+  },
+  "69": {
+    "floor_number": 69,
+    "monster_types": ["Dark Lord", "Owl Baron"],
+    "monster_count": 48,
+    "recommended_level": 150,
+    "danger_rating": 9
+  },
+  "70": {
+    "floor_number": 70,
+    "monster_types": ["Dark Illusion", "Executioner"],
+    "monster_count": 48,
+    "recommended_level": 155,
+    "danger_rating": 9
+  },
+  "71": {
+    "floor_number": 71,
+    "monster_types": ["Ancient Worm", "Gargoyle"],
+    "monster_count": 49,
+    "recommended_level": 155,
+    "danger_rating": 10
+  },
+  "72": {
+    "floor_number": 72,
+    "monster_types": ["Demon Pungus", "Neraid"],
+    "monster_count": 49,
+    "recommended_level": 160,
+    "danger_rating": 10
+  },
+  "73": {
+    "floor_number": 73,
+    "monster_types": ["Wooden Golem", "Stone Shooter"],
+    "monster_count": 50,
+    "recommended_level": 160,
+    "danger_rating": 10
+  },
+  "74": {
+    "floor_number": 74,
+    "monster_types": ["Kaho", "Miyabi Doll"],
+    "monster_count": 50,
+    "recommended_level": 165,
+    "danger_rating": 10
+  },
+  "75": {
+    "floor_number": 75,
+    "monster_types": [],
+    "monster_count": 0,
+    "boss_name": "Osiris",
+    "mvp_floor": true,
+    "recommended_level": 99,
+    "danger_rating": 9
+  },
+  "76": {
+    "floor_number": 76,
+    "monster_types": ["Doppelganger", "Mysteltainn"],
+    "monster_count": 51,
+    "recommended_level": 165,
+    "danger_rating": 10
+  },
+  "77": {
+    "floor_number": 77,
+    "monster_types": ["Chimera", "Majoruros"],
+    "monster_count": 51,
+    "recommended_level": 170,
+    "danger_rating": 10
+  },
+  "78": {
+    "floor_number": 78,
+    "monster_types": ["Bloody Knight", "Abysmal Knight"],
+    "monster_count": 52,
+    "recommended_level": 170,
+    "danger_rating": 10
+  },
+  "79": {
+    "floor_number": 79,
+    "monster_types": ["Cat O' Nine Tails", "Moonlight Flower"],
+    "monster_count": 52,
+    "recommended_level": 175,
+    "danger_rating": 10
+  },
+  "80": {
+    "floor_number": 80,
+    "monster_types": ["Phreeoni", "Apocalypse"],
+    "monster_count": 53,
+    "recommended_level": 175,
+    "danger_rating": 10
+  },
+  "81": {
+    "floor_number": 81,
+    "monster_types": ["Eddga", "High Orc"],
+    "monster_count": 53,
+    "recommended_level": 180,
+    "danger_rating": 10
+  },
+  "82": {
+    "floor_number": 82,
+    "monster_types": ["Mistress", "Giant Whisper"],
+    "monster_count": 54,
+    "recommended_level": 180,
+    "danger_rating": 10
+  },
+  "83": {
+    "floor_number": 83,
+    "monster_types": ["Maya Purple", "Baphomet Jr"],
+    "monster_count": 54,
+    "recommended_level": 185,
+    "danger_rating": 10
+  },
+  "84": {
+    "floor_number": 84,
+    "monster_types": ["Stormy Knight", "Hatii"],
+    "monster_count": 55,
+    "recommended_level": 185,
+    "danger_rating": 10
+  },
+  "85": {
+    "floor_number": 85,
+    "monster_types": ["Garm", "Shinobi"],
+    "monster_count": 55,
+    "recommended_level": 190,
+    "danger_rating": 10
+  },
+  "86": {
+    "floor_number": 86,
+    "monster_types": ["Detale", "Demon Pungus"],
+    "monster_count": 56,
+    "recommended_level": 190,
+    "danger_rating": 10
+  },
+  "87": {
+    "floor_number": 87,
+    "monster_types": ["Tao Gunka", "Gajomart"],
+    "monster_count": 56,
+    "recommended_level": 195,
+    "danger_rating": 10
+  },
+  "88": {
+    "floor_number": 88,
+    "monster_types": ["RSX-0806", "Eremes"],
+    "monster_count": 57,
+    "recommended_level": 195,
+    "danger_rating": 10
+  },
+  "89": {
+    "floor_number": 89,
+    "monster_types": ["Atroce", "Ancient Mimic"],
+    "monster_count": 57,
+    "recommended_level": 200,
+    "danger_rating": 10
+  },
+  "90": {
+    "floor_number": 90,
+    "monster_types": ["Vesper", "Gold Acidus"],
+    "monster_count": 58,
+    "recommended_level": 200,
+    "danger_rating": 10
+  },
+  "91": {
+    "floor_number": 91,
+    "monster_types": ["Ktullanux", "Thanatos"],
+    "monster_count": 58,
+    "recommended_level": 205,
+    "danger_rating": 10
+  },
+  "92": {
+    "floor_number": 92,
+    "monster_types": ["Kiel D-01", "Kavach"],
+    "monster_count": 59,
+    "recommended_level": 205,
+    "danger_rating": 10
+  },
+  "93": {
+    "floor_number": 93,
+    "monster_types": ["Randgris", "Valkyrie"],
+    "monster_count": 59,
+    "recommended_level": 210,
+    "danger_rating": 10
+  },
+  "94": {
+    "floor_number": 94,
+    "monster_types": ["Beelzebub", "Dark Lord"],
+    "monster_count": 60,
+    "recommended_level": 210,
+    "danger_rating": 10
+  },
+  "95": {
+    "floor_number": 95,
+    "monster_types": ["Ifrit", "Salamander"],
+    "monster_count": 60,
+    "recommended_level": 215,
+    "danger_rating": 10
+  },
+  "96": {
+    "floor_number": 96,
+    "monster_types": ["Fallen Bishop", "Dark Priest"],
+    "monster_count": 61,
+    "recommended_level": 215,
+    "danger_rating": 10
+  },
+  "97": {
+    "floor_number": 97,
+    "monster_types": ["Gloom Under Night", "Zombie Slaughter"],
+    "monster_count": 61,
+    "recommended_level": 220,
+    "danger_rating": 10
+  },
+  "98": {
+    "floor_number": 98,
+    "monster_types": ["Detardeurus", "Ancient Mimic"],
+    "monster_count": 62,
+    "recommended_level": 220,
+    "danger_rating": 10
+  },
+  "99": {
+    "floor_number": 99,
+    "monster_types": ["Satan Morroc", "Wounded Morroc"],
+    "monster_count": 62,
+    "recommended_level": 225,
+    "danger_rating": 10
+  },
+  "100": {
+    "floor_number": 100,
+    "monster_types": [],
+    "monster_count": 0,
+    "boss_name": "Naght Sieger",
+    "mvp_floor": true,
+    "recommended_level": 150,
+    "danger_rating": 10
+  }
+}

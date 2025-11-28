@@ -1,0 +1,291 @@
+{
+  "maps": {
+    "prontera": {
+      "map_type": "town",
+      "environment": "outdoor",
+      "has_day_night": true,
+      "has_weather": true,
+      "level_requirement": 0,
+      "exp_modifier": 1.0,
+      "drop_modifier": 1.0,
+      "movement_modifier": 1.0
+    },
+    "prt_fild08": {
+      "map_type": "field",
+      "environment": "outdoor",
+      "has_day_night": true,
+      "has_weather": true,
+      "level_requirement": 0,
+      "exp_modifier": 1.0,
+      "drop_modifier": 1.0,
+      "movement_modifier": 1.0
+    },
+    "pay_fild04": {
+      "map_type": "field",
+      "environment": "outdoor",
+      "has_day_night": true,
+      "has_weather": true,
+      "level_requirement": 10,
+      "exp_modifier": 1.05,
+      "drop_modifier": 1.0,
+      "movement_modifier": 1.0
+    },
+    "moc_fild17": {
+      "map_type": "field",
+      "environment": "desert",
+      "has_day_night": true,
+      "has_weather": true,
+      "level_requirement": 20,
+      "exp_modifier": 1.1,
+      "drop_modifier": 1.0,
+      "movement_modifier": 0.95
+    },
+    "gl_prison": {
+      "map_type": "dungeon",
+      "environment": "underground",
+      "has_day_night": false,
+      "has_weather": false,
+      "fixed_time_period": "night",
+      "level_requirement": 40,
+      "exp_modifier": 1.2,
+      "drop_modifier": 1.15,
+      "movement_modifier": 1.0
+    },
+    "gl_church": {
+      "map_type": "dungeon",
+      "environment": "indoor",
+      "has_day_night": false,
+      "has_weather": false,
+      "fixed_time_period": "night",
+      "fixed_weather": "fog",
+      "level_requirement": 35,
+      "exp_modifier": 1.15,
+      "drop_modifier": 1.1,
+      "movement_modifier": 1.0
+    },
+    "gef_dun01": {
+      "map_type": "dungeon",
+      "environment": "underground",
+      "has_day_night": false,
+      "has_weather": false,
+      "fixed_time_period": "night",
+      "level_requirement": 20,
+      "exp_modifier": 1.1,
+      "drop_modifier": 1.05,
+      "movement_modifier": 1.0
+    },
+    "tha_t01": {
+      "map_type": "dungeon",
+      "environment": "underground",
+      "has_day_night": false,
+      "has_weather": false,
+      "fixed_time_period": "night",
+      "level_requirement": 80,
+      "exp_modifier": 1.5,
+      "drop_modifier": 1.5,
+      "movement_modifier": 1.0
+    },
+    "1@tower": {
+      "map_type": "instance",
+      "environment": "indoor",
+      "has_day_night": false,
+      "has_weather": false,
+      "quest_requirement": 12021,
+      "level_requirement": 60,
+      "exp_modifier": 1.3,
+      "drop_modifier": 1.4,
+      "movement_modifier": 1.0
+    },
+    "1@gl_k": {
+      "map_type": "instance",
+      "environment": "underground",
+      "has_day_night": false,
+      "has_weather": false,
+      "fixed_time_period": "night",
+      "quest_requirement": 3040,
+      "level_requirement": 80,
+      "exp_modifier": 1.4,
+      "drop_modifier": 1.5,
+      "movement_modifier": 1.0
+    },
+    "pvp_y_1-1": {
+      "map_type": "pvp",
+      "environment": "indoor",
+      "has_day_night": false,
+      "has_weather": false,
+      "level_requirement": 0,
+      "exp_modifier": 0.0,
+      "drop_modifier": 0.0,
+      "movement_modifier": 1.0
+    },
+    "guild_vs1": {
+      "map_type": "pvp",
+      "environment": "outdoor",
+      "has_day_night": false,
+      "has_weather": false,
+      "level_requirement": 0,
+      "exp_modifier": 0.0,
+      "drop_modifier": 0.0,
+      "movement_modifier": 1.0
+    },
+    "prtg_cas01": {
+      "map_type": "woe",
+      "environment": "indoor",
+      "has_day_night": false,
+      "has_weather": false,
+      "level_requirement": 50,
+      "exp_modifier": 0.0,
+      "drop_modifier": 0.0,
+      "movement_modifier": 1.0
+    },
+    "bat_c01": {
+      "map_type": "battleground",
+      "environment": "outdoor",
+      "has_day_night": false,
+      "has_weather": false,
+      "level_requirement": 80,
+      "exp_modifier": 0.0,
+      "drop_modifier": 0.0,
+      "movement_modifier": 1.0
+    },
+    "xmas": {
+      "map_type": "town",
+      "environment": "outdoor",
+      "has_day_night": true,
+      "has_weather": true,
+      "fixed_weather": "snow",
+      "level_requirement": 0,
+      "exp_modifier": 1.0,
+      "drop_modifier": 1.0,
+      "movement_modifier": 0.95
+    },
+    "xmas_dun01": {
+      "map_type": "dungeon",
+      "environment": "frozen",
+      "has_day_night": false,
+      "has_weather": false,
+      "fixed_weather": "snow",
+      "level_requirement": 30,
+      "exp_modifier": 1.2,
+      "drop_modifier": 1.2,
+      "movement_modifier": 0.9
+    },
+    "ice_dun01": {
+      "map_type": "dungeon",
+      "environment": "frozen",
+      "has_day_night": false,
+      "has_weather": false,
+      "fixed_weather": "blizzard",
+      "level_requirement": 50,
+      "exp_modifier": 1.3,
+      "drop_modifier": 1.25,
+      "movement_modifier": 0.85
+    },
+    "ayo_dun02": {
+      "map_type": "dungeon",
+      "environment": "underwater",
+      "has_day_night": false,
+      "has_weather": false,
+      "level_requirement": 60,
+      "exp_modifier": 1.25,
+      "drop_modifier": 1.2,
+      "movement_modifier": 0.9
+    },
+    "thor_v01": {
+      "map_type": "dungeon",
+      "environment": "volcanic",
+      "has_day_night": false,
+      "has_weather": false,
+      "level_requirement": 70,
+      "exp_modifier": 1.4,
+      "drop_modifier": 1.35,
+      "movement_modifier": 0.95
+    },
+    "ra_san03": {
+      "map_type": "dungeon",
+      "environment": "underground",
+      "has_day_night": false,
+      "has_weather": false,
+      "fixed_time_period": "night",
+      "level_requirement": 90,
+      "exp_modifier": 1.5,
+      "drop_modifier": 1.5,
+      "movement_modifier": 1.0
+    },
+    "niflheim": {
+      "map_type": "town",
+      "environment": "outdoor",
+      "has_day_night": true,
+      "has_weather": true,
+      "level_requirement": 0,
+      "exp_modifier": 1.0,
+      "drop_modifier": 1.0,
+      "movement_modifier": 1.0
+    },
+    "nif_fild01": {
+      "map_type": "field",
+      "environment": "outdoor",
+      "has_day_night": true,
+      "has_weather": true,
+      "level_requirement": 50,
+      "exp_modifier": 1.2,
+      "drop_modifier": 1.15,
+      "movement_modifier": 1.0
+    },
+    "louyang": {
+      "map_type": "town",
+      "environment": "outdoor",
+      "has_day_night": true,
+      "has_weather": true,
+      "level_requirement": 0,
+      "exp_modifier": 1.0,
+      "drop_modifier": 1.0,
+      "movement_modifier": 1.0
+    },
+    "beach_dun": {
+      "map_type": "dungeon",
+      "environment": "underwater",
+      "has_day_night": false,
+      "has_weather": false,
+      "level_requirement": 30,
+      "exp_modifier": 1.15,
+      "drop_modifier": 1.1,
+      "movement_modifier": 0.9
+    }
+  },
+  "environment_effects": {
+    "outdoor": {
+      "description": "Fully affected by day/night cycles and weather",
+      "visibility_base": 1.0
+    },
+    "indoor": {
+      "description": "Protected from weather, fixed lighting",
+      "visibility_base": 0.95
+    },
+    "underground": {
+      "description": "Always dark, no weather effects",
+      "visibility_base": 0.8
+    },
+    "underwater": {
+      "description": "Water element bonus, reduced movement",
+      "visibility_base": 0.75,
+      "element_bonus": {"water": 1.2}
+    },
+    "volcanic": {
+      "description": "Fire element bonus, heat effects",
+      "visibility_base": 0.9,
+      "element_bonus": {"fire": 1.3}
+    },
+    "frozen": {
+      "description": "Ice element bonus, cold effects",
+      "visibility_base": 0.85,
+      "element_bonus": {"water": 1.2}
+    },
+    "desert": {
+      "description": "Earth/wind bonus, heat effects",
+      "visibility_base": 0.9,
+      "element_bonus": {"earth": 1.1, "wind": 1.1}
+    }
+  },
+  "notes": "Map environments determine whether day/night and weather systems apply. Dungeons typically have fixed conditions. Instances ignore environmental factors. PvP/WoE maps have no EXP/drop modifiers."
+}

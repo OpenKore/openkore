@@ -1,0 +1,168 @@
+# =============================================================================
+# Character Progression Configuration
+# =============================================================================
+# Configuration for autonomous character progression systems including
+# lifecycle management, stat distribution, and job advancement.
+# =============================================================================
+
+# Lifecycle State Machine Configuration
+lifecycle:
+  enabled: true
+  
+  # Initial state detection (auto_detect or specific state)
+  initial_state: "auto_detect"  # auto_detect, NOVICE, FIRST_JOB, etc.
+  
+  # State persistence
+  persist_state: true
+  state_file: "data/lifecycle_state.json"
+  
+  # Lifecycle goals by state
+  goals:
+    NOVICE:
+      target_job_level: 10
+      recommended_maps:
+        - "prt_fild01"
+        - "pay_fild01"
+      focus: "Reach job level 10 for first job"
+    
+    FIRST_JOB:
+      target_base_level: 50
+      target_job_level: 40
+      focus: "Level to 50/40 for second job"
+    
+    SECOND_JOB:
+      target_base_level: 99
+      target_job_level: 50
+      focus: "Reach 99/50 for rebirth or third job"
+    
+    REBIRTH:
+      focus: "Complete transcendence process"
+    
+    THIRD_JOB:
+      target_base_level: 175
+      target_job_level: 60
+      focus: "Reach max level for third job"
+    
+    ENDGAME:
+      focus: "Optimize gear and participate in endgame content"
+      activities:
+        - "MVP hunting"
+        - "WoE"
+        - "Gear optimization"
+    
+    OPTIMIZING:
+      focus: "Continuous improvement and alternative builds"
+
+# Stat Distribution Configuration
+stats:
+  enabled: true
+  auto_allocate: true
+  
+  # Build selection
+  build:
+    # Build type: melee_dps, agi_crit, tank, magic_dps, support, hybrid, custom
+    type: "auto_detect"  # Auto-detect from job class
+    
+    # Soft cap for diminishing returns (99 for pre-renewal, 130 for renewal)
+    soft_cap: 99
+    
+    # Custom build ratios (only used if type: custom)
+    # Must sum to 1.0
+    custom:
+      str_ratio: 0.20
+      agi_ratio: 0.15
+      vit_ratio: 0.20
+      int_ratio: 0.15
+      dex_ratio: 0.20
+      luk_ratio: 0.10
+  
+  # Allocation timing
+  allocation:
+    on_level_up: true       # Allocate immediately when points available
+    batch_mode: false       # Or wait and allocate in batches
+    batch_size: 10          # Points per batch (if batch_mode: true)
+  
+  # Build templates per job class (for auto-detect)
+  job_build_mapping:
+    # Swordman tree → Melee DPS
+    - jobs: ["Swordman", "Knight", "Lord Knight", "Rune Knight"]
+      build: "melee_dps"
+    
+    # Crusader tree → Tank
+    - jobs: ["Crusader", "Paladin", "Royal Guard"]
+      build: "tank"
+    
+    # Thief tree → AGI Crit
+    - jobs: ["Thief", "Assassin", "Rogue", "Assassin Cross", "Guillotine Cross", "Shadow Chaser"]
+      build: "agi_crit"
+    
+    # Mage tree → Magic DPS
+    - jobs: ["Mage", "Wizard", "Sage", "High Wizard", "Professor", "Warlock", "Sorcerer"]
+      build: "magic_dps"
+    
+    # Acolyte tree → Support
+    - jobs: ["Acolyte", "Priest", "Monk", "High Priest", "Champion", "Arch Bishop", "Sura"]
+      build: "support"
+    
+    # Merchant tree → Hybrid
+    - jobs: ["Merchant", "Blacksmith", "Alchemist", "Whitesmith", "Creator", "Mechanic", "Genetic"]
+      build: "hybrid"
+    
+    # Archer tree → AGI/DEX DPS
+    - jobs: ["Archer", "Hunter", "Dancer", "Bard", "Sniper", "Gypsy", "Clown", "Ranger", "Wanderer", "Minstrel"]
+      build: "agi_crit"
+
+# Job Advancement Configuration
+job_advancement:
+  enabled: true
+  
+  # Auto job change when requirements met
+  auto_advance: true
+  
+  # Preferred job path (for classes with multiple options)
+  # Format: "current_job": "preferred_next_job"
+  preferred_path:
+    "Swordman": "Knight"      # Knight or Crusader
+    "Mage": "Wizard"           # Wizard or Sage
+    "Archer": "Hunter"         # Hunter or Dancer/Bard
+    "Merchant": "Blacksmith"   # Blacksmith or Alchemist
+    "Thief": "Assassin"        # Assassin or Rogue
+    "Acolyte": "Priest"        # Priest or Monk
+  
+  # Job test automation
+  tests:
+    enabled: true
+    auto_complete: true       # Attempt to auto-complete job tests
+    timeout_minutes: 60       # Maximum time for test completion
+  
+  # Rebirth/Transcendence settings
+  rebirth:
+    enabled: true             # Set false for renewal servers without rebirth
+    auto_rebirth: true        # Automatically rebirth at 99/50
+    preserve_stats: false     # Whether to keep stat distribution
+
+# Progression Priority Weights
+priorities:
+  # When multiple progression actions available, use these weights
+  lifecycle_transition: 1.0   # Highest priority
+  job_advancement: 0.9
+  stat_allocation: 0.8
+  skill_allocation: 0.7       # For future implementation
+
+# Performance Settings
+performance:
+  # Cache settings
+  cache_job_paths: true
+  cache_npc_locations: true
+  
+  # Validation
+  validate_on_startup: true
+  strict_validation: false    # Fail on missing data vs. warn
+
+# Feature Flags
+features:
+  # Enable specific progression features
+  lifecycle_fsm: true
+  stat_distribution: true
+  job_advancement: true
+  skill_distribution: false   # Phase 4 feature
