@@ -22,7 +22,15 @@ use base qw(Network::Receive::kRO::Sakexe_2007_05_07a);
 
 sub new {
 	my ($class) = @_;
-	return $class->SUPER::new(@_);
+	my $self = $class->SUPER::new(@_);
+
+	my %handlers = qw(
+		account_id 0283
+	);
+
+	$self->{packet_lut}{$_} = $handlers{$_} for keys %handlers;
+
+	return $self;
 }
 
 1;
