@@ -477,6 +477,7 @@ sub checkConnection {
 				$quit = 1;
 				return;
 			}
+			Plugins::callHook('timeout_accountserver');
 			message TF("Timeout on Account Server, reconnecting. Wait %s seconds...\n", $timeout{'reconnect'}{'timeout'}), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
