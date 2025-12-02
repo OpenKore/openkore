@@ -553,6 +553,7 @@ sub checkConnection {
 				return;
 			}
 		} elsif (timeOut($timeout{'gamelogin'}) && ($config{'server'} ne "" || $masterServer->{'charServer_ip'})) {
+			Plugins::callHook('timeout_characterserver');
 			error TF("Timeout on Character Server, reconnecting. Wait %s seconds...\n", $timeout{'reconnect'}{'timeout'}), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -575,6 +576,7 @@ sub checkConnection {
 			$timeout{'charlogin'}{'time'} = time;
 
 		} elsif (timeOut($timeout{'charlogin'}) && $config{'char'} ne "") {
+			Plugins::callHook('timeout_characterselectserver');
 			error T("Timeout on Character Select Server, reconnecting...\n"), "connection";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
