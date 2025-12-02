@@ -616,6 +616,7 @@ sub checkConnection {
 
 		} elsif (timeOut($timeout{maplogin})) {
 			message T("Timeout on Map Server, connecting to Account Server...\n"), "connection";
+			Plugins::callHook('timeout_mapserver');
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			$self->serverDisconnect;
 			$self->setState(Network::NOT_CONNECTED);
