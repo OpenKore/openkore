@@ -25,7 +25,14 @@ my @TILE_TYPE = (
 my $i = 0;
 foreach my $name (sort(listMaps("."))) {
 	$i++;
-	gat_to_fld2("$name.gat", "$name.fld2", readWaterLevel("$name.rsw"));
+	print "[gat_to_fld2] Converting map '".$name."'\n";
+	undef $@;
+	eval  {
+		gat_to_fld2("$name.gat", "$name.fld2", readWaterLevel("$name.rsw"));
+	};
+	if ($@) {
+		print "[gat_to_fld2] Error converting map '".$name."': ".$@."\n";
+	}
 }
 
 sub listMaps {
@@ -51,8 +58,7 @@ sub readWaterLevel {
 	my ($f, $buf);
 
 	if (!open($f, "<", $rswFile)) {
-		print "Cannot open $rswFile for reading.\n";
-		exit 1;
+		die "Cannot open $rswFile for reading.\n";
 	}
 	seek $f, 166, 0;
 	read $f, $buf, 4;
@@ -70,12 +76,10 @@ sub gat_to_fld2 {
 	my ($in, $out, $data);
 
 	if (!open $in, "<", $gat) {
-		print "Cannot open $gat for reading.\n";
-		exit 1;
+		die "Cannot open $gat for reading.\n";
 	}
 	if (!open $out, ">", $fld2) {
-		print "Cannot open $fld2 for writing.\n";
-		exit 1;
+		die "Cannot open $fld2 for writing.\n";
 	}
 
 	binmode $in;
@@ -99,7 +103,7 @@ sub gat_to_fld2 {
 		
 		# warn us for unknown/new block types
 		if ($type > $#TILE_TYPE) {
-			#print "An unknown blocktype ($type) was found, please report this to the OpenKore devs.\n";
+			print "[gat_to_fld2] An unknown blocktype ($type) was found, please report this to the OpenKore devs.\n";
 			#exit 1;
 			#Treat as unwalkable
 			print $out pack("C", $TILE_TYPE[1]);
